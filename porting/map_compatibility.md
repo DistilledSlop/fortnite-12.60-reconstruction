@@ -402,3 +402,73 @@ updated shader archives. The local join still loaded all 61 meshes and a
 grounded pawn. A later Vulkan capture shows the nearby terrain colored across
 the D4 tile boundary. These atlases remain approximations of the original
 material graph, and most of the grid has not been visually inspected.
+
+## Map stubs round
+
+The census (`generated/map-native-imports.jsonl`) lists 146 distinct
+`/Script/FortniteGame` imports: 119 classes, 26 functions and one enum. Of the
+classes, 107 were not declared natively. They are now declared as **stubs** in
+`native/Source/FortniteGame/Public/FortniteMapStubs.h` (empty
+`Private/FortniteMapStubs.cpp`). Each carries
+`// STUB: layout unknown, replace with generated class`, has no properties and
+no replication, and has a guessed parent. Parents come from naming and UE 4.25
+engine classes, and each comment says the guess is unverified. Three entries
+are interfaces. Not declared: the 26 functions, and the enum `EFrontEndCamera`,
+whose only importer (`Frontend_HeroLoadout`) is not a local map and whose values
+are unknown. `FortniteGame.Build.cs` adds `AIModule`. `porting/gen_stubs.py`
+regenerates the two files from the missing-class list. These are placeholders
+with no behaviour; the results below do not establish parity.
+
+Runs used nullrhi and `-ExecCmds=Quit` through `FortniteLinux.sh`. Logs are in
+`generated/map-stub-round/before/` and `generated/map-stub-round/after-final/`.
+
+| Map | Before | After | First error after stubs |
+|---|---|---|---|
+| FortniteEmptyDedicated | yes (exit 0) | yes (exit 0) | none |
+| Skybox_Outpost_HomeBase | yes (exit 0) | yes (exit 0) | none |
+| Apollo_Terrain | yes, partial (exit 0) | yes, partial (exit 0) | missing `/Game/Athena/HUD/MiniMap/StormIcon` |
+| PG_Obstacle_S_3_Tower_A | no (exit 139) | no (exit 139) | `DumpDependencies` after missing `/Engine/EngineMaterials/FlatNormal` |
+| Apollo_Terrain_LS_Parent | no (exit 139) | no (exit 139) | `DoesPackageExist` illegal path `/Water/Meshes/RiverMesh` |
+| Apollo_Terrain_LS_A1 | no (exit 139) | no (exit 139) | missing `/Game/FortressPhysicalMaterials/Grass` |
+
+Enters play: 3 of 6 before, 3 of 6 after. No map changed status.
+
+- The census stubs reached only `Apollo_Terrain_LS_Parent` among the six maps.
+  Its `FortSplineWaterAudioComponent` import now resolves, but 54 dependency
+  lines still reference Water Blueprint classes (for example
+  `Apollo_Waterbody_Island_Parent_C`). Its `FortWaterBodyActor` import remains,
+  because the `SetSwampLocationAndRadius` function import is not stubbed.
+- The obstacle map and the two landscape tiles fail on classes outside the
+  census, such as `AIHotSpotConfig`, `WaterSplineComponent` and
+  `LandscapeLODStreamingProxy`.
+- The first run of `Apollo_Terrain` after the stubs was made with the two landscape tiles staged, which the baseline did not have. It exited 139 on `FieldPath.cpp:275` (`PathIndex <= 1`). A clean rerun with the tiles removed exited 0 and entered play. The tiles therefore break the base Apollo map here, as earlier sections describe. The clean rerun is the table entry.
+
+Remaining errors, six maps after stubs, by frequency. Counts are summed across
+the logs and include dependency-dump repeats, so they are not per-map totals:
+
+1. `Could not find outer SplineMeshComponent_N to create BodySetup_N`: 361
+2. `Missing Dependency, request for ... but it hasn't been created yet`: 230 (dump blocks: 231)
+3. `Couldn't find file for package ... requested by async loading code`: 101 + 87
+4. `Could not find class WaterSplineComponent`: 59
+5. `Could not find class WaterSplineMetadata`: 33
+6. `Could not find class B_FlopperSpawn_CustomSpline_C`: 16
+7. `Could not find class RiverGenerator`: 15
+8. `Could not find class LakeGenerator`: 12
+9. `Could not find class LakeCollisionComponent`: 10
+
+Items 4 to 9 are the Water and Lake classes that the landscape parent needs and
+that are outside the census. Extending the stub table to those content-level
+classes is the next step for these maps.
+
+Verification notes:
+
+- `native/` built for FortniteLinux (client) and FortniteLinuxServer, both
+  Development, with zero compile errors and a successful lld link. The stage
+  received copies of both binaries; the cook was not rerun.
+- `server/smoke_join.sh` (direct mode) reports `Local UE join succeeded` and
+  logs `Join succeeded` and `Welcomed by server`. `ss -lun` shows a UDP
+  listener on 0.0.0.0:7777 during the run. The run needed two environment
+  workarounds, neither of which changes the script: `rg` (ripgrep) is not
+  installed, so a grep-backed `rg` shim was placed on `PATH` outside the repo;
+  and the server's redirected stdout is block-buffered, so the run used
+  `stdbuf -oL`.
