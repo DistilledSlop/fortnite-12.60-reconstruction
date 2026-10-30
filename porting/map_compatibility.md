@@ -35,5 +35,7 @@ imports. Its recovered Windows cooked materials and meshes failed during
 Linux deserialization. All four sampled mesh dependencies now export to GLB,
 import at their original `/Game` paths, and cook for Linux; see
 `mesh_conversion.md`. The Linux runtime directly loaded one converted mesh.
-With all four converted meshes staged, the level load stopped in Windows
-cooked material `M_Melee_Flare`. The map has not entered play.
+After all four converted meshes and two reconstructed materials were staged,
+the map entered play in the headless Linux runtime and exited 0. The materials
+are visual approximations; a navigation-system ensure was handled during
+load, and no Fortnite gameplay is present. See `mesh_conversion.md`.

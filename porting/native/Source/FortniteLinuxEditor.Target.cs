@@ -7,5 +7,6 @@ public class FortniteLinuxEditorTarget : TargetRules
         Type = TargetType.Editor;
         DefaultBuildSettings = BuildSettingsVersion.Latest;
         ExtraModuleNames.Add("FortniteGame");
+        ExtraModuleNames.Add("FortnitePortEditor");
     }
 }

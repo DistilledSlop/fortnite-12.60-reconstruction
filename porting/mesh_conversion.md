@@ -88,3 +88,26 @@ for `M_Melee_Flare` found an unlit translucent material that imports
 encoding. The stock UE texture importer accepted that PNG at its original
 `/Game` path. These steps recover source pixels and basic material metadata;
 the material graph is the next reconstruction step.
+
+## First Linux material replacements
+
+The editor-only `FortniteMaterialRebuild` commandlet creates simple UE
+materials at original `/Game` package paths. It accepts `-Material`,
+`-Blend=Translucent|Additive`, and an optional `-Texture` object path. With a
+texture it connects RGB to emissive and, for translucent materials, alpha to
+opacity. Without one it uses white emissive. Both forms are **approximations**;
+they do not reproduce Fortnite's material expression graph or timing.
+
+`M_Melee_Flare` is reported as unlit/translucent and imports `T_Starburst`.
+Its 512×512 PNG was imported with UE's stock texture factory. The commandlet
+saved `M_Melee_Flare` at its original path, and the Linux cook produced both
+texture and material packages. Replacing those Windows cooked packages in the
+ignored stage moved the map failure to `M_Slowfield_Flare_01`.
+
+That second material is reported as unlit/additive with no imported texture.
+The commandlet saved an emissive approximation and cooked it. With both
+replacements staged, `/Game/Maps/Skybox/Skybox_Outpost_HomeBase` reached
+`Bringing ... up for play` in the headless Linux runtime and exited 0 after
+`-ExecCmds=Quit`. A navigation-system ensure was handled during load, and the
+map has no suitable player start. This validates deserialization and level
+startup, not visual parity or Fortnite gameplay.

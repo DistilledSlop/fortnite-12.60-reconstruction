@@ -8,6 +8,11 @@
       "Name": "FortniteGame",
       "Type": "Runtime",
       "LoadingPhase": "Default"
+    },
+    {
+      "Name": "FortnitePortEditor",
+      "Type": "Editor",
+      "LoadingPhase": "Default"
     }
   ],
   "Plugins": [
