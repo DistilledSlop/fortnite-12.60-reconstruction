@@ -47,4 +47,9 @@ Tags: [log] our Wine client/server logs, [exe] strings in the Shipping exe, [ini
 | 4 | Server loads Apollo_Terrain plus the 87 streamed levels, so static NetGUID paths match. Blocked by cooked-BP load crashes (README) | Low |
 | 5 | Backend: ticket, websocket, session, key endpoints, then beacon hosts; XMPP last | Medium; beacons and XMPP Low |
 
+**Status from the direct-connect runs** (`direct_connect_results.md`; observed, not inferred):
+
+- Step 0: the client logs `LogNetVersion: FortniteGame 1.0.0, NetCL: 12896485, EngineNetVer: 15, GameNetVer: 0 (Checksum: 683914758)` and loads `net.MagicHeader:1110` from its loose config. The server logs `net.MagicHeader = 1110`, `net.MaxChannelSize = 65535`, and `Network encryption key not configured.` The server's `LogNetVersion` line still reports checksum 326778485. The override's `Local network version checksum: 683914758` line has not appeared, because no NMT_Hello reached the server. Step 0 is partly observed.
+- Step 1: not reached. The client never sent NMT_Hello. A bare `ip:port` first token is rewritten to `-ip:port` by UE's command-line whitelist, and a loose `GameDefaultMap` override did not redirect the frontend browse. `-nomcp` is untested because the server did not reach its listen call within the run. In a solo server start, the server stopped after `LogNet: Browse: /Game/Maps/FortniteEmptyDedicated?Name=Player` and stayed at 0% CPU. Map load stalls under the current host load are the blocker to resolve first.
+
 **Module changes:** in `FortniteGame.cpp` StartupModule bind the version overrides and `OnReceivedNetworkEncryptionToken`. Gate `AFortGameModeAthena::StartPlay` Apollo spawns behind an "original client" flag. Add `GeneralProjectSettings ProjectVersion=1.0.0`. Add the AES plugin to the uproject. Add `[SystemSettings] net.MagicHeader=1110` and the PacketHandlerComponents section to `native/Config/DefaultEngine.ini`.
