@@ -128,6 +128,13 @@ void AFortGameModeAthena::StartPlay()
     Super::StartPlay();
     if (!GetWorld() || !GetWorld()->GetMapName().EndsWith(TEXT("Apollo_Terrain")))
         return;
+    // Invented Apollo stand-in actors are not part of the original protocol. The
+    // original client path skips them so no unknown class reaches that client.
+    if (FParse::Param(FCommandLine::Get(), TEXT("FortniteOriginalClient")))
+    {
+        UE_LOG(LogTemp, Display, TEXT("Apollo stand-in actors skipped: -FortniteOriginalClient"));
+        return;
+    }
 
     // The original cooked landscape levels cannot load on Linux. Place the
     // locally converted meshes at their saved root transforms instead.

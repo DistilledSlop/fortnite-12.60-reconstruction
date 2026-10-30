@@ -123,3 +123,21 @@ commandlet logs every instance parameter the simplified parent has no
 counterpart for. `Config/DefaultGame.ini` always-cooks those folders and the
 background mesh folder; `stage_apollo_background.py` stages them.
 
+## Network staged plan step 0
+
+`Config/DefaultEngine.ini` sets `net.MagicHeader=1110`, `net.MaxChannelSize=65535`,
+`AESHandlerComponent` encryption, and disables Oodle with `bEnableOodle=False`.
+`FortniteGame.cpp` reports network version checksum 683914758 and accepts any
+remote version, logging the first value seen. The Oodle handler cannot be created
+without the Oodle Net SDK, so it reserves no packet bit on either peer.
+
+Encryption keys are never stored in the repository. The server answers
+`?EncryptionToken=` requests with a 32-byte key from the environment:
+
+- `FORTNITE_NET_ENCRYPTION_KEY`: 64 hex characters or base64 of 32 bytes, or
+- `FORTNITE_NET_ENCRYPTION_KEY_FILE`: a file containing one such value.
+
+Without either variable the direct connection still works. Passing
+`-FortniteOriginalClient` skips the invented Apollo stand-in actors in
+`AFortGameModeAthena::StartPlay`.
+
