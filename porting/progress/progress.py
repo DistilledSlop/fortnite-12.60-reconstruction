@@ -589,14 +589,27 @@ def group_header(node, w, depth):
     return lines, 4 + line_h * len(lines), font
 
 
-def render_treemap(groups, width, height, css_class="tm"):
-    """Squarified treemap: categories > components > sub-components as nested tiles."""
+def render_treemap(groups, width, height, css_class="tm", interactive=False, sort_mode="weight"):
+    """Squarified treemap: categories > components > sub-components as nested tiles.
+
+    interactive=True renders for the dashboard page: tiles carry data-id and
+    classes, no native <title> (the page shows a custom tooltip), and every
+    tile that can hold text gets its label — CSS hides text at the root level
+    and reveals it when a tile is zoomed into. interactive=False is the static
+    fallback and the standalone progress.svg: a label only when the tile fits
+    one, otherwise just the percentage. sort_mode orders siblings at every
+    level: weight (area, default) or progress (largest percent first)."""
     parts = []
     leaves_out = []   # (node, rect)
     groups_out = []   # (node, rect, depth, header lines, head height, font)
 
+    def key(n):
+        if sort_mode == "progress":
+            return (-n["pct"], -n["weight"])
+        return -n["weight"]  # stable: equal weights keep document order
+
     def place(nodes, x, y, w, h, depth):
-        ordered = sorted(nodes, key=lambda n: -n["weight"])
+        ordered = sorted(nodes, key=key)
         rects = squarify([n["weight"] for n in ordered], x, y, w, h)
         for node, (rx, ry, rw, rh) in zip(ordered, rects):
             if "children" in node:
@@ -614,15 +627,17 @@ def render_treemap(groups, width, height, css_class="tm"):
 
     parts.append(f'<rect class="{css_class}-bg" x="0" y="0" width="{width}" height="{height}"/>')
     for node, x, y, w, h, depth, lines, head, font in groups_out:
-        title = html.escape(tooltip_text(node))
         cls = "grp0" if depth == 0 else "grp1"
-        parts.append(f'<g><title>{title}</title>')
+        if interactive:
+            parts.append(f'<g class="tile grp" data-id="{esc(node["id"])}">')
+        else:
+            parts.append(f'<g><title>{html.escape(tooltip_text(node))}</title>')
         parts.append(f'<rect class="{css_class}-{cls}" x="{x:.1f}" y="{y:.1f}" width="{max(w, 0):.1f}" height="{max(h, 0):.1f}"/>')
         if lines and w > 90 and h > head + 6:
             line_h = 16 if font == 13 else 14
             for i, ln in enumerate(lines):
                 baseline = y + 4 + i * line_h + (11 if font == 13 else 9)
-                parts.append(f'<text class="{css_class}-head" x="{x + 6:.1f}" y="{baseline:.1f}" font-size="{font}">{html.escape(ln)}</text>')
+                parts.append(f'<text class="grp-head {css_class}-head" x="{x + 6:.1f}" y="{baseline:.1f}" font-size="{font}">{html.escape(ln)}</text>')
         parts.append('</g>')
 
     for node, x, y, w, h in leaves_out:
@@ -630,23 +645,48 @@ def render_treemap(groups, width, height, css_class="tm"):
         ink = text_on(fill)
         inset = 1.0
         rx, ry, rw, rh = x + inset, y + inset, max(w - 2 * inset, 0), max(h - 2 * inset, 0)
-        parts.append(f'<g><title>{html.escape(tooltip_text(node))}</title>')
+        if interactive:
+            parts.append(f'<g class="tile leaf" data-id="{esc(node["id"])}">')
+        else:
+            parts.append(f'<g><title>{html.escape(tooltip_text(node))}</title>')
         parts.append(f'<rect x="{rx:.1f}" y="{ry:.1f}" width="{rw:.1f}" height="{rh:.1f}" rx="3" fill="{fill}"/>')
-        label_drawn = False
-        if rw >= 60 and rh >= 40:
+        if interactive:
+            # Emit the label whenever it fits; the page hides it at the root
+            # level and reveals it zoomed in, where the tile is large enough.
             lines = wrap_fit(node["name"], rw - 12, 11)
-            # Room for the wrapped lines plus the large percentage beneath them.
-            if lines and 15 + 13 * (len(lines) - 1) + 25 <= rh:
-                pct_s = fmt_pct(node["pct"])
-                ty = ry + 15
-                for ln in lines:
-                    parts.append(f'<text x="{rx + 6:.1f}" y="{ty:.1f}" font-size="11" fill="{ink}">{html.escape(ln)}</text>')
-                    ty += 13
-                parts.append(f'<text x="{rx + 6:.1f}" y="{ry + rh - 7:.1f}" font-size="15" font-weight="700" fill="{ink}">{pct_s}</text>')
-                label_drawn = True
-        if not label_drawn and rw >= 36 and rh >= 22:
-            # Too small for the name: keep the percentage; the full label is in the hover title.
-            parts.append(f'<text x="{rx + 5:.1f}" y="{ry + rh / 2 + 5:.1f}" font-size="12" font-weight="700" fill="{ink}">{fmt_pct(node["pct"])}</text>')
+            pct_s = fmt_pct(node["pct"])
+            if lines:
+                head_h = 15 + 13 * (len(lines) - 1)
+                if head_h + 25 <= rh:
+                    ty = ry + 15
+                    for ln in lines:
+                        parts.append(f'<text class="leaf-label" x="{rx + 6:.1f}" y="{ty:.1f}" font-size="11" fill="{ink}">{html.escape(ln)}</text>')
+                        ty += 13
+                    parts.append(f'<text class="leaf-pct" x="{rx + 6:.1f}" y="{ry + rh - 7:.1f}" font-size="15" font-weight="700" fill="{ink}">{pct_s}</text>')
+                elif head_h + 15 <= rh:
+                    ty = ry + 15
+                    for ln in lines:
+                        parts.append(f'<text class="leaf-label" x="{rx + 6:.1f}" y="{ty:.1f}" font-size="11" fill="{ink}">{html.escape(ln)}</text>')
+                        ty += 13
+                    parts.append(f'<text class="leaf-pct" x="{rx + 6:.1f}" y="{ty:.1f}" font-size="11" font-weight="700" fill="{ink}">{pct_s}</text>')
+            elif rw >= 26 and rh >= 16:
+                parts.append(f'<text class="leaf-pct" x="{rx + 5:.1f}" y="{ry + rh / 2 + 5:.1f}" font-size="12" font-weight="700" fill="{ink}">{pct_s}</text>')
+        else:
+            label_drawn = False
+            if rw >= 60 and rh >= 40:
+                lines = wrap_fit(node["name"], rw - 12, 11)
+                # Room for the wrapped lines plus the large percentage beneath them.
+                if lines and 15 + 13 * (len(lines) - 1) + 25 <= rh:
+                    pct_s = fmt_pct(node["pct"])
+                    ty = ry + 15
+                    for ln in lines:
+                        parts.append(f'<text x="{rx + 6:.1f}" y="{ty:.1f}" font-size="11" fill="{ink}">{html.escape(ln)}</text>')
+                        ty += 13
+                    parts.append(f'<text x="{rx + 6:.1f}" y="{ry + rh - 7:.1f}" font-size="15" font-weight="700" fill="{ink}">{pct_s}</text>')
+                    label_drawn = True
+            if not label_drawn and rw >= 36 and rh >= 22:
+                # Too small for the name: keep the percentage; the full label is in the hover title.
+                parts.append(f'<text x="{rx + 5:.1f}" y="{ry + rh / 2 + 5:.1f}" font-size="12" font-weight="700" fill="{ink}">{fmt_pct(node["pct"])}</text>')
         parts.append('</g>')
 
     return "\n".join(parts)
@@ -672,6 +712,331 @@ def svg_block(groups, width, height, extra_head=""):
             f'width="100%" role="img" aria-label="Treemap of port progress: area is effort weight, colour is percent complete" '
             f'font-family="system-ui,-apple-system,Segoe UI,sans-serif">'
             f'<style>{TREEMAP_CSS}</style>{extra_head}{body}</svg>')
+
+
+def add_parents(groups):
+    for g in groups:
+        for node in walk_spec_nodes(g):
+            node["parent"] = None if node is g else g["id"]
+    return groups
+
+
+def walk_spec_nodes(node):
+    yield node
+    for child in node.get("children", []):
+        yield from walk_spec_nodes(child)
+
+
+def interactive_treemap(groups, width, height):
+    """Treemap for the dashboard page: one static camera group holding two
+    precomputed layers (sorted by weight and by progress); the page's inline
+    script swaps layers, zooms the camera and toggles label visibility.
+    No layout math in JS."""
+    layer_w = render_treemap(groups, width, height, interactive=True)
+    layer_p = render_treemap(groups, width, height, interactive=True, sort_mode="progress")
+    return (f'<svg id="treemap" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {width} {height}" '
+            f'width="100%" role="img" aria-label="Treemap of port progress: click a tile to zoom in" '
+            f'font-family="system-ui,-apple-system,Segoe UI,sans-serif">'
+            f'<style>{TREEMAP_CSS}{TM_SVG_CSS}</style>'
+            f'<g class="tm-cam" id="tm-cam">'
+            f'<g class="layer layer-weight">{layer_w}</g>'
+            f'<g class="layer layer-progress">{layer_p}</g>'
+            f'</g></svg>')
+
+
+TM_SVG_CSS = """
+#treemap .tile{cursor:pointer;transition:opacity .25s}
+#treemap .tile rect{vector-effect:non-scaling-stroke}
+#treemap .leaf-label,#treemap .leaf-pct,#treemap .grp-head{transition:opacity .3s}
+#treemap.at-root .leaf-label,#treemap.at-root .leaf-pct{opacity:0;pointer-events:none}
+#treemap.zoomed .tile{opacity:.22}
+#treemap.zoomed .tile.keep{opacity:1}
+#treemap.zoomed .tile.active,#treemap.zoomed .tile.active .tile{opacity:1}
+#treemap .tm-cam{transition:transform .5s cubic-bezier(.4,0,.2,1)}
+#treemap.sort-progress .layer-weight{display:none}
+#treemap:not(.sort-progress) .layer-progress{display:none}
+""".strip()
+
+
+TM_PAGE_CSS = """
+.tm-bar{display:none;align-items:center;gap:10px;flex-wrap:wrap;margin:12px 0 8px}
+html.tmjs .tm-bar{display:flex}
+.tm-crumbs{display:flex;align-items:center;gap:2px;flex-wrap:wrap;font-size:.9rem}
+.tm-crumbs button{background:none;border:0;padding:3px 8px;font:inherit;font-size:.9rem;color:var(--ink);cursor:pointer;border-radius:5px}
+.tm-crumbs button:hover{background:var(--card)}
+.tm-crumbs button.on{color:var(--accent);font-weight:700}
+.tm-crumbs .sep{color:var(--ink2);padding:0 2px}
+.tm-bar .spacer{flex:1}
+.tm-bar .btn,.sort button{border:1px solid var(--line);background:var(--card);border-radius:5px;padding:3px 10px;font:inherit;font-size:.85rem;cursor:pointer;color:var(--ink)}
+.sort{display:flex;align-items:center;gap:5px;font-size:.85rem;color:var(--ink2)}
+.sort button.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.tm-wrap{position:relative}
+.tm-tip{position:absolute;z-index:6;max-width:340px;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:9px 11px;pointer-events:none;box-shadow:0 6px 18px rgba(0,0,0,.16);font-size:.85rem}
+.tm-tip .t-name{font-weight:700}
+.tm-tip .t-sub{color:var(--ink2);margin-top:2px}
+.tm-tip .t-ev{margin-top:7px;color:var(--ink2);font-size:.8rem}
+.tm-detail{margin-top:12px;background:var(--card);border-radius:8px;padding:12px 14px}
+.tm-detail h3{margin:0 0 8px;font-size:1.05rem}
+.d-stats{display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-size:.9rem;margin-bottom:8px}
+.d-stats .swatch{width:10px;height:10px;display:inline-block;border-radius:2px}
+.d-stats .d-w,.d-stats .d-basis{color:var(--ink2)}
+.d-kids{margin-top:6px;display:grid;gap:2px}
+.d-kids button{display:flex;justify-content:space-between;gap:10px;align-items:baseline;background:none;border:0;border-radius:5px;padding:4px 8px;cursor:pointer;font:inherit;font-size:.9rem;color:var(--ink);text-align:left}
+.d-kids button:hover{background:var(--surface)}
+.d-kids .d-k-w{color:var(--ink2);font-size:.8rem}
+""".strip()
+
+
+TM_PAGE_JS = """
+(function () {
+  "use strict";
+  var svg = document.getElementById("treemap");
+  var cam = document.getElementById("tm-cam");
+  var tip = document.getElementById("tm-tip");
+  var detail = document.getElementById("tm-detail");
+  var crumbs = document.getElementById("tm-crumbs");
+  var wrap = document.getElementById("tm-wrap");
+  if (!svg || !cam || !window.TM_DATA) return;
+  document.documentElement.classList.add("tmjs");
+
+  var vb = (svg.getAttribute("viewBox") || "").split(/\\s+/);
+  var W = +vb[2], H = +vb[3];
+  var byId = {};
+  (function idx(nodes) {
+    nodes.forEach(function (n) { byId[n.id] = n; if (n.children) idx(n.children); });
+  })(window.TM_DATA);
+  var BINS = ["#a8102a", "#e0573a", "#f2b705", "#3b9a3f", "#006b3c"];
+  function colorFor(p) { return BINS[Math.min(4, Math.max(0, Math.floor(p / 20)))]; }
+  function fmtPct(p) { return p < 10 ? p.toFixed(1) + "%" : Math.round(p) + "%"; }
+
+  var sortMode = "weight";
+  function layerSel() { return sortMode === "weight" ? ".layer-weight" : ".layer-progress"; }
+  function tileEl(id) { return svg.querySelector(layerSel() + ' .tile[data-id="' + id + '"]'); }
+  function tiles() { return Array.prototype.slice.call(svg.querySelectorAll(layerSel() + " .tile")); }
+  function rectOf(t) {
+    var r = t.querySelector("rect");
+    return { x: +r.getAttribute("x"), y: +r.getAttribute("y"), w: +r.getAttribute("width"), h: +r.getAttribute("height") };
+  }
+  function pathOf(id) {
+    var out = [], n = byId[id];
+    while (n) { out.push(n); n = n.parent ? byId[n.parent] : null; }
+    return out.reverse();
+  }
+
+  var stack = [];
+  function clearMarks() {
+    tiles().forEach(function (t) { t.classList.remove("active", "keep"); t.style.opacity = ""; });
+  }
+  function applyCam(t) { cam.style.transform = t; }
+  function fit() {
+    stack = [];
+    svg.classList.remove("zoomed");
+    svg.classList.add("at-root");
+    clearMarks();
+    renderCrumbs();
+    applyCam("translate(0px,0px) scale(1)");
+  }
+  function zoomTo(id) {
+    var el = tileEl(id);
+    if (!el) return;
+    var r = rectOf(el);
+    var m = 0.08;
+    var s = Math.min(W * (1 - 2 * m) / r.w, H * (1 - 2 * m) / r.h);
+    if (!(s > 1.02)) { fit(); return; }
+    var tx = W / 2 - s * (r.x + r.w / 2);
+    var ty = H / 2 - s * (r.y + r.h / 2);
+    stack = pathOf(id);
+    svg.classList.add("zoomed");
+    svg.classList.remove("at-root");
+    clearMarks();
+    el.classList.add("active");
+    pathOf(id).slice(0, -1).forEach(function (n) {
+      var a = tileEl(n.id);
+      if (a) a.classList.add("keep");
+    });
+    renderCrumbs();
+    applyCam("translate(" + tx + "px," + ty + "px) scale(" + s + ")");
+  }
+  function renderCrumbs() {
+    crumbs.innerHTML = "";
+    var all = document.createElement("button");
+    all.textContent = "All";
+    all.className = stack.length ? "" : "on";
+    all.onclick = fit;
+    crumbs.appendChild(all);
+    stack.forEach(function (n, i) {
+      var sep = document.createElement("span");
+      sep.className = "sep";
+      sep.textContent = "›";
+      crumbs.appendChild(sep);
+      var b = document.createElement("button");
+      b.textContent = n.name;
+      b.className = i === stack.length - 1 ? "on" : "";
+      b.onclick = function () { zoomTo(n.id); };
+      crumbs.appendChild(b);
+    });
+  }
+
+  var hot = null;
+  function mark(t) {
+    tiles().forEach(function (x) {
+      if (x !== t && !t.contains(x) && !x.contains(t)) x.style.opacity = "0.28";
+    });
+  }
+  function unmark() {
+    tiles().forEach(function (x) { x.style.opacity = ""; });
+  }
+  svg.addEventListener("pointerover", function (e) {
+    var t = e.target.closest ? e.target.closest(".tile") : null;
+    if (!t || t === hot) return;
+    unmark();
+    hot = t;
+    mark(t);
+    showTip(t);
+  });
+  svg.addEventListener("pointerout", function (e) {
+    var t = e.target.closest ? e.target.closest(".tile") : null;
+    if (!t || t !== hot) return;
+    var to = e.relatedTarget && e.relatedTarget.closest ? e.relatedTarget.closest(".tile") : null;
+    if (to === t) return;
+    hot = null;
+    unmark();
+    tip.hidden = true;
+  });
+  function showTip(t) {
+    var n = byId[t.getAttribute("data-id")];
+    if (!n) return;
+    var frac = n.done != null && n.total ? " (" + n.done + "/" + n.total + ")" : "";
+    var sub = fmtPct(n.pct) + " complete" + frac + " · effort weight " + n.weight;
+    sub += n.basis ? " · basis " + n.basis : "";
+    tip.innerHTML = "";
+    var a = document.createElement("div");
+    a.className = "t-name";
+    a.textContent = n.name;
+    var b = document.createElement("div");
+    b.className = "t-sub";
+    b.textContent = sub;
+    tip.appendChild(a);
+    tip.appendChild(b);
+    if (n.evidence) {
+      var c = document.createElement("div");
+      c.className = "t-ev";
+      c.textContent = n.evidence;
+      tip.appendChild(c);
+    }
+    tip.hidden = false;
+  }
+  function moveTip(e) {
+    if (!hot) return;
+    var wr = wrap.getBoundingClientRect();
+    var x = e.clientX - wr.left + 14;
+    var y = e.clientY - wr.top + 14;
+    if (x + tip.offsetWidth > wr.width - 8) x = e.clientX - wr.left - tip.offsetWidth - 10;
+    if (y + tip.offsetHeight > wr.height - 8) y = e.clientY - wr.top - tip.offsetHeight - 10;
+    tip.style.left = Math.max(4, x) + "px";
+    tip.style.top = Math.max(4, y) + "px";
+  }
+  svg.addEventListener("pointermove", moveTip);
+
+  function showDetail(n) {
+    detail.innerHTML = "";
+    var h = document.createElement("h3");
+    h.textContent = n.name;
+    detail.appendChild(h);
+    var s = document.createElement("div");
+    s.className = "d-stats";
+    var sw = document.createElement("span");
+    sw.className = "swatch";
+    sw.style.background = colorFor(n.pct);
+    var strong = document.createElement("strong");
+    strong.textContent = fmtPct(n.pct);
+    s.appendChild(sw);
+    s.appendChild(strong);
+    if (n.done != null && n.total) {
+      var f = document.createElement("span");
+      f.className = "d-w";
+      f.textContent = n.done + " of " + n.total;
+      s.appendChild(f);
+    }
+    var w = document.createElement("span");
+    w.className = "d-w";
+    w.textContent = "effort weight " + n.weight;
+    s.appendChild(w);
+    if (n.basis) {
+      var bb = document.createElement("span");
+      bb.className = "d-basis";
+      bb.textContent = "basis: " + n.basis;
+      s.appendChild(bb);
+    }
+    detail.appendChild(s);
+    if (n.evidence) {
+      var p = document.createElement("p");
+      p.textContent = n.evidence;
+      detail.appendChild(p);
+    }
+    if (n.rationale) {
+      var r = document.createElement("p");
+      r.className = "ev";
+      r.textContent = n.rationale;
+      detail.appendChild(r);
+    }
+    if (n.children) {
+      var kids = document.createElement("div");
+      kids.className = "d-kids";
+      n.children.forEach(function (c) {
+        var btn = document.createElement("button");
+        var name = document.createElement("span");
+        name.textContent = c.name;
+        var pct = document.createElement("span");
+        pct.textContent = fmtPct(c.pct);
+        var ww = document.createElement("span");
+        ww.className = "d-k-w";
+        ww.textContent = "weight " + c.weight;
+        btn.appendChild(name);
+        btn.appendChild(pct);
+        btn.appendChild(ww);
+        btn.onclick = function () { zoomTo(c.id); showDetail(c); };
+        kids.appendChild(btn);
+      });
+      detail.appendChild(kids);
+    }
+    detail.hidden = false;
+  }
+
+  svg.addEventListener("click", function (e) {
+    var t = e.target.closest ? e.target.closest(".tile") : null;
+    if (!t) return;
+    var id = t.getAttribute("data-id");
+    zoomTo(id);
+    showDetail(byId[id]);
+  });
+
+  Array.prototype.forEach.call(document.querySelectorAll(".sort button"), function (b) {
+    b.onclick = function () {
+      sortMode = b.getAttribute("data-sort");
+      svg.classList.toggle("sort-progress", sortMode === "progress");
+      Array.prototype.forEach.call(document.querySelectorAll(".sort button"), function (x) {
+        x.classList.toggle("on", x === b);
+      });
+      hot = null;
+      unmark();
+      tip.hidden = true;
+      fit();
+    };
+  });
+
+  window.addEventListener("keydown", function (e) {
+    if (e.key !== "Escape") return;
+    if (stack.length > 1) zoomTo(stack[stack.length - 2].id);
+    else fit();
+  });
+
+  var fitBtn = document.getElementById("tm-fit");
+  if (fitBtn) fitBtn.onclick = fit;
+
+  fit();
+})();
+"""
 
 
 # ---------------------------------------------------------------- rendering helpers
@@ -777,12 +1142,13 @@ def index_html(res, head, subject, date, model, when_note):
         for m in res["milestones"])
     cats = "".join(f'<div class="stat"><div class="lbl">{esc(g["name"])}</div><div class="big" style="font-size:1.3rem">{fmt_pct(g["pct"])}</div></div>'
                    for g in res["groups"])
-    svg = svg_block(res["groups"], TREEMAP_W, TREEMAP_H)
+    svg = interactive_treemap(res["groups"], TREEMAP_W, TREEMAP_H)
+    tm_json = json.dumps(add_parents(res["groups"])).replace("</", "<\\/")
     return f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Fortnite 12.60 port progress</title>
-<style>{PAGE_CSS}</style></head>
+<style>{PAGE_CSS}{TM_PAGE_CSS}</style></head>
 <body><main>
 <header>
 <h1>Fortnite 12.60 Linux port: progress</h1>
@@ -809,9 +1175,19 @@ def index_html(res, head, subject, date, model, when_note):
 <ul class="ms">{milestones}</ul>
 
 <h2>Treemap</h2>
-<p class="meta">Tile area = estimated effort weight. Tile colour = percent complete (red to green, five bins). Labels are wrapped at word boundaries and never cut off; tiles too small for their name show only the percentage. Hover a tile for its full label, done/total, source and evidence.</p>
+<p class="meta">Tile area = estimated effort weight. Tile colour = percent complete (red to green, five bins). Click a tile to zoom in; labels reveal on zoom and are never cut off. Hover for the summary, click to read the evidence below. Breadcrumbs, <em>Fit all</em> or <em>Esc</em> go back; the sort toggle re-lays out the tiles by progress instead of area.</p>
 {legend_html()}
-<div class="tm-wrap">{svg}</div>
+<div class="tm-bar" id="tm-bar">
+<nav class="tm-crumbs" id="tm-crumbs" aria-label="Zoom level"></nav>
+<span class="spacer"></span>
+<button class="btn" id="tm-fit" type="button">Fit all</button>
+<div class="sort"><span>Sort tiles by</span>
+<button data-sort="weight" class="on" type="button">area (weight)</button>
+<button data-sort="progress" type="button">progress</button>
+</div>
+</div>
+<div class="tm-wrap" id="tm-wrap">{svg}<div class="tm-tip" id="tm-tip" hidden></div></div>
+<div class="tm-detail" id="tm-detail" hidden></div>
 
 <h2>Category summary</h2>
 <div class="stats">{cats}</div>
@@ -825,7 +1201,9 @@ def index_html(res, head, subject, date, model, when_note):
 
 <h2>How this is measured</h2>
 <p class="meta">Weights and manual percentages are edited in <code>porting/progress/components.json</code>. The generator is <code>porting/progress/progress.py</code>, which reads committed files via <code>git archive</code> at HEAD and ignored local outputs. It records one history point per commit through <code>.githooks/post-commit</code>. Measures only count what is committed; uncommitted stubs and generated artifacts do not add progress unless they are local outputs named in a measure. The dashboard splits the overall into the evidence-based share (basis <em>git</em>, <em>local</em> or <em>documented</em>) and the manual-estimate share, so the size of the subjective part is always visible next to the figure it affects.</p>
-<footer>Generated offline by porting/progress/progress.py. No external scripts or fonts are loaded.</footer>
+<footer>Generated offline by porting/progress/progress.py. No external scripts or fonts are loaded; the interactivity is a small inline script, and without JavaScript the same treemap renders as a static picture.</footer>
+<script>window.TM_DATA = {tm_json};</script>
+<script>{TM_PAGE_JS}</script>
 </main></body></html>
 """
 

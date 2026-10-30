@@ -97,6 +97,28 @@ stay at or above 14.9 under simulated protan and deutan vision, and at or above 
 under normal vision. Every tile also prints its percentage, so colour is never the
 only cue. The page follows the OS light or dark setting.
 
+## Interactive view
+
+`index.html`'s treemap is interactive; `progress.svg` stays a static picture of
+the same layout. All of it is one inline script plus CSS — no external assets,
+and with JavaScript disabled the page falls back to the static treemap.
+
+- **Zoom.** Click any tile (category or component) and a camera zooms into it.
+  Leaf labels are hidden at the root level and revealed when zoomed in, where
+  the tiles are large enough to hold them — the root view shows only the nine
+  category headers, so it stays readable. Breadcrumbs, the *Fit all* button or
+  `Esc` go back. Hovering dims the other tiles and shows a tooltip with the
+  name, percent, done/total, weight, basis and evidence; clicking fills a
+  detail panel below the treemap (with the component's children as further
+  drill-down links for categories).
+- **Sort.** The *Sort tiles by* toggle re-lays out the whole treemap by percent
+  complete instead of by area. Both layouts are precomputed by the generator
+  (two layers inside one camera group); the script only swaps which layer is
+  visible, so no layout math runs in the browser.
+- **Geometry.** Zoom is a CSS transform on the camera group (`vector-effect:
+  non-scaling-stroke` keeps borders crisp); the tile rectangles themselves are
+  never modified by the script.
+
 ## Treemap labels
 
 Labels are never cut off. Group headers and tile names wrap at word boundaries; a
