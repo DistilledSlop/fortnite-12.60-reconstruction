@@ -149,3 +149,27 @@ Recreate it with `bash porting/prepare_water_plugin.sh` (copies from `/opt/fortn
 then applies `patches/ue425-water-plugin-*`). It provides `/Script/Water` classes such as
 `WaterSplineComponent` for the cooked Apollo maps. GPU Gerstner wave data, ocean collision and
 exclusion volumes are stubbed (see `map_compatibility.md`, "Water plugin backport").
+
+## Editor target and cook check
+
+Cause of the editor exit 1. `UE4Editor-Cmd FortniteLinux.uproject -run=Cook ...` (and any unattended run) stopped on a message dialog:
+`Plugin 'Oodle' failed to load because module 'OodleCompressionFormat' could not be found`. The Oodle, Landmass, GeometryProcessing and Water plugins were enabled in the uproject after the editor binaries were last built (07:56), so their modules had never been compiled. The Oodle SDK is not the cause: `OodleCompressionFormat` builds with `HAS_OODLE_DATA_SDK=0` and needs no SDK.
+
+Fix. The uproject is unchanged: Oodle and AESHandlerComponent stay enabled, and the server config still drops OodleHandlerComponent. Rebuilding `FortniteLinuxEditor` compiled the plugin modules, but it first failed on editor-only code in the gitignored Water copy. The copy now has these shims for 4.26-only APIs:
+
+- `Plugins/Water/Source/Runtime/Private/ConvertWaterBodyActorsCommandlet.cpp`: `ULevel::GetPackage()` becomes `GetOutermost()` (lines 104, 189), and the `GetLoadedExternalActorPackages()` append is removed.
+- `Plugins/Water/Source/Runtime/Private/WaterVertexFactory.cpp`: line 100 uses the local `WATER_IMPLEMENT_TEMPLATE_VERTEX_FACTORY_TYPE_EX` macro, and the macro takes its type name from `TEXT(#FactoryClass)` (line 80). The engine macro does the same. The earlier hard-coded `"TWaterVertexFactory"` gave the `<false>` and `<true>` instances the same name, and the cook then failed with `MaterialShader.cpp:1597` (`!MeshShaderMap->HasShader(...)`).
+
+Note: `porting/patches/ue425-water-plugin-backport.patch` (outside `porting/native/`) does not yet contain these three edits, so `prepare_water_plugin.sh` would recreate the broken copy. It needs regenerating.
+
+Evidence (logs in `/tmp/fn-editor-check/`, not tracked):
+
+- Before: exit 1 at the Oodle dialog (`repro1.log`).
+- `FortniteLinuxEditor` rebuild before the shims: exit 6, 6 errors in the Water sources listed above (`build-editor-1.log`).
+- After the shims: `FortniteLinuxEditor`, `FortniteLinux`, `FortniteLinuxServer` and `ShaderCompileWorker` each built with exit 0, Development.
+- `UE4Editor-Cmd ... -ExecCmds=Quit -nullrhi`: exit 0, `Mounting plugin Oodle` with no Oodle dialog. The only dialog left is the default-property warning for missing `/Water/...` content (`repro2.log`).
+- Cook, `-run=Cook -TargetPlatform=LinuxNoEditor -Map=/Engine/Maps/Entry -unattended -nop4`: exit 0 with Water enabled, `Cooked packages 408 Packages Remain 0 Total 408` (`cook-final.log`). Before the vertex factory name fix it crashed (`cook.log`). With Water disabled temporarily it passed (`cook-nowater.log`), which isolated the Water shim as the cause. The uproject was restored from a backup and verified.
+- Stage: `RunUAT.sh BuildCookRun -skipbuild -skipcook -stage -platform=Linux -clientconfig=Development -stagingdirectory=<new dir>`, no `-archive`: `STAGE_EXIT=0`, 2.7 GB (`stage.log`). The stage was deleted afterwards.
+- Staged `FortniteLinux.sh /Engine/Maps/Entry -nullrhi -nosound -unattended -ExecCmds=Quit`: exit 0, `LogLoad: LoadMap: /Engine/Maps/Entry` (`stage-run.log`).
+- Join smoke, direct mode: `porting/server/smoke_join.sh` hardcodes `porting/generated/linux-stage`, which was not modified. The same steps ran against a hardlinked copy of that stage with the new `FortniteLinux` and `FortniteLinuxServer` binaries. Result: `Local network version checksum: 683914758`, `IpNetDriver listening on port 7777`, `ss -lun` shows `UNCONN 0.0.0.0:7777` while the server runs, `Join succeeded:`, and `Welcomed by server (Level: /Game/Maps/FortniteEmptyDedicated, Game: /Script/FortniteGame.FortGameModeAthena)`.
+- The existing `porting/generated/linux-stage` still holds the old executables until it is restaged.

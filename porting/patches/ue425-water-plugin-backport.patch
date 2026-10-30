@@ -10,6 +10,29 @@ diff -ruN a/Source/Runtime/Private/BuoyancyComponent.cpp b/Source/Runtime/Privat
  
  TAutoConsoleVariable<int32> CVarWaterDebugBuoyancy(
  	TEXT("r.Water.DebugBuoyancy"),
+diff -ruN a/Source/Runtime/Private/ConvertWaterBodyActorsCommandlet.cpp b/Source/Runtime/Private/ConvertWaterBodyActorsCommandlet.cpp
+--- a/Source/Runtime/Private/ConvertWaterBodyActorsCommandlet.cpp	2026-10-30 04:35:47.000000000 +0000
++++ b/Source/Runtime/Private/ConvertWaterBodyActorsCommandlet.cpp	2026-10-30 22:48:32.675803036 +0000
+@@ -101,7 +101,7 @@
+ 	}
+ 
+ 	UWorld* MainWorld = MainLevel->GetWorld();
+-	UPackage* MainPackage = MainLevel->GetPackage();
++	UPackage* MainPackage = MainLevel->GetOutermost();
+ 
+ 	TSet<ULevel*> LevelsToConvert;
+ 	LevelsToConvert.Add(MainLevel);
+@@ -186,9 +186,8 @@
+ 			}
+ 		}
+ 
+-		UPackage* LevelPackage = Level->GetPackage();
++		UPackage* LevelPackage = Level->GetOutermost();
+ 		PackagesToSave.Add(LevelPackage);
+-		PackagesToSave.Append(Level->GetLoadedExternalActorPackages());
+ 	}
+ 
+ 	if (UseSourceControl())
 diff -ruN a/Source/Runtime/Private/GerstnerWaterWaveViewExtension.cpp b/Source/Runtime/Private/GerstnerWaterWaveViewExtension.cpp
 --- a/Source/Runtime/Private/GerstnerWaterWaveViewExtension.cpp	2026-10-30 04:35:47.000000000 +0000
 +++ b/Source/Runtime/Private/GerstnerWaterWaveViewExtension.cpp	2026-10-30 22:30:02.644181530 +0000
@@ -113,8 +136,8 @@ diff -ruN a/Source/Runtime/Private/WaterSubsystem.cpp b/Source/Runtime/Private/W
  
 diff -ruN a/Source/Runtime/Private/WaterVertexFactory.cpp b/Source/Runtime/Private/WaterVertexFactory.cpp
 --- a/Source/Runtime/Private/WaterVertexFactory.cpp	2026-10-30 04:35:47.000000000 +0000
-+++ b/Source/Runtime/Private/WaterVertexFactory.cpp	2026-10-30 22:31:36.562164030 +0000
-@@ -74,7 +74,23 @@
++++ b/Source/Runtime/Private/WaterVertexFactory.cpp	2026-10-30 22:57:21.571645670 +0000
+@@ -74,13 +74,29 @@
  // Always implement the basic vertex factory so that it's there for both editor and non-editor builds :
  IMPLEMENT_TEMPLATE_TYPE_LAYOUT(template<>, TWaterVertexFactoryShaderParameters</*bWithWaterSelectionSupport = */ false>);
  IMPLEMENT_VERTEX_FACTORY_PARAMETER_TYPE(TWaterVertexFactory</*bWithWaterSelectionSupport = */ false>, SF_Vertex, TWaterVertexFactoryShaderParameters</*bWithWaterSelectionSupport = */ false>);
@@ -122,7 +145,7 @@ diff -ruN a/Source/Runtime/Private/WaterVertexFactory.cpp b/Source/Runtime/Priva
 +// UE 4.25 has no IMPLEMENT_TEMPLATE_VERTEX_FACTORY_TYPE_EX. This mirrors IMPLEMENT_VERTEX_FACTORY_TYPE_EX with a template prefix.
 +#define WATER_IMPLEMENT_TEMPLATE_VERTEX_FACTORY_TYPE_EX(TemplatePrefix, FactoryClass, ShaderFilename, bUsedWithMaterials, bSupportsStaticLighting, bSupportsDynamicLighting, bPrecisePrevWorldPos, bSupportsPositionOnly, bSupportsCachingMeshDrawCommands, bSupportsPrimitiveIdStream) \
 +	TemplatePrefix FVertexFactoryType FactoryClass::StaticType( \
-+		TEXT("TWaterVertexFactory"), \
++		TEXT(#FactoryClass), \
 +		TEXT(ShaderFilename), \
 +		bUsedWithMaterials, \
 +		bSupportsStaticLighting, \
@@ -139,6 +162,13 @@ diff -ruN a/Source/Runtime/Private/WaterVertexFactory.cpp b/Source/Runtime/Priva
  
  #if WITH_WATER_SELECTION_SUPPORT
  
+ // In editor builds, also implement the vertex factory that supports water selection:
+ IMPLEMENT_TEMPLATE_TYPE_LAYOUT(template<>, TWaterVertexFactoryShaderParameters</*bWithWaterSelectionSupport = */ true>);
+ IMPLEMENT_VERTEX_FACTORY_PARAMETER_TYPE(TWaterVertexFactory</*bWithWaterSelectionSupport = */ true>, SF_Vertex, TWaterVertexFactoryShaderParameters</*bWithWaterSelectionSupport = */ true>);
+-IMPLEMENT_TEMPLATE_VERTEX_FACTORY_TYPE_EX(template<>, TWaterVertexFactory</*bWithWaterSelectionSupport = */ true>, "/Plugin/Water/Private/WaterMeshVertexFactory.ush", true, false, true, true, false, false, true);
++WATER_IMPLEMENT_TEMPLATE_VERTEX_FACTORY_TYPE_EX(template<>, TWaterVertexFactory</*bWithWaterSelectionSupport = */ true>, "/Plugin/Water/Private/WaterMeshVertexFactory.ush", true, false, true, true, false, false, true);
+ 
+ #endif // WITH_WATER_SELECTION_SUPPORT
 diff -ruN a/Source/Runtime/Water.Build.cs b/Source/Runtime/Water.Build.cs
 --- a/Source/Runtime/Water.Build.cs	2026-10-30 04:35:47.000000000 +0000
 +++ b/Source/Runtime/Water.Build.cs	2026-10-30 22:28:12.739841525 +0000

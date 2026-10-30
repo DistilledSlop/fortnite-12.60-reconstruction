@@ -36,6 +36,7 @@ Source/Editor/Public/WaterEditorSubsystem.h
 Source/Editor/WaterEditor.Build.cs
 Source/Runtime/Private/NiagaraDataInterfaceWater.cpp
 Source/Runtime/Private/NiagaraWaterFunctionLibrary.cpp
+Source/Runtime/Private/SimpleSuspensionShim.h
 Source/Runtime/Private/WaterBooleanUtils.h
 Source/Runtime/Public/NiagaraDataInterfaceWater.h
 Source/Runtime/Public/NiagaraWaterFunctionLibrary.h
