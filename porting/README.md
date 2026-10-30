@@ -108,6 +108,12 @@ Use `--function-report` on a cooked Blueprint to report its native superclass,
 function overrides, flags, and serialized parameter types. The report is a
 reconstruction aid; it does not include native C++ implementations.
 
+`bash porting/prepare_ue_fieldpath.sh` applies an optional diagnostic patch
+to the adjacent UE 4.25 checkout. It logs a cooked field path and its owner
+before UE's existing unresolved-path assertion, to identify missing native
+reflection fields during Blueprint reconstruction. The repository stores only
+the patch; the supplied UE source remains outside Git.
+
 See `server_surface.md` for the observed backend dependencies and
 `server/README.md` for the local HTTP probe.
 See `asset_compatibility.md` for the first runtime package-loading probe.

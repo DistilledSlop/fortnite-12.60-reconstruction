@@ -8,6 +8,7 @@
 #include "GameFramework/WorldSettings.h"
 #include "NavAreas/NavAreaMeta.h"
 #include "NavigationSystem.h"
+#include "Kismet/BlueprintFunctionLibrary.h"
 #include "FortniteMapClasses.generated.h"
 
 // Initial reflection-compatible bases for loading a recovered map. Gameplay
@@ -79,6 +80,11 @@ class FORTNITEGAME_API AFortSkydivingShadowProxy : public AActor
     GENERATED_BODY()
 
 public:
+    AFortSkydivingShadowProxy();
+
+    UPROPERTY(VisibleAnywhere)
+    USceneComponent* DefaultSceneRoot;
+
     UFUNCTION(BlueprintNativeEvent)
     void ShowShadowProxy();
     virtual void ShowShadowProxy_Implementation();
@@ -98,4 +104,20 @@ UCLASS()
 class FORTNITEGAME_API AFortAthenaMapInfo : public AActor
 {
     GENERATED_BODY()
+
+public:
+    AFortAthenaMapInfo();
+
+    UPROPERTY(VisibleAnywhere)
+    USceneComponent* RootComponent0;
+};
+
+UCLASS()
+class FORTNITEGAME_API UFortKismetLibrary : public UBlueprintFunctionLibrary
+{
+    GENERATED_BODY()
+
+public:
+    UFUNCTION(BlueprintPure, Category="Fortnite|Platform")
+    static bool IsMobilePlatform();
 };

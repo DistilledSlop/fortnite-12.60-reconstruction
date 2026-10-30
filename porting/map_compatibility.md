@@ -74,3 +74,14 @@ still fails on further native classes and methods, including
 `FortKismetLibrary`, `FortAsyncAction_AuthorityMatchReady`, and imported
 default scene components. These declarations are load compatibility work,
 not recovered Fortnite behavior.
+
+The next probe identified two imported default scene components. Adding
+`DefaultSceneRoot` to `FortSkydivingShadowProxy` and `RootComponent0` to
+`FortAthenaMapInfo` removed those import warnings. The safe-zone Blueprint
+also imports `FortKismetLibrary.IsMobilePlatform`; the new native function
+returns the platform result (false for Linux), and its missing-class warning
+disappeared. Loading now reaches deeper Blueprint data but still fails with a
+UE linker assertion while `FortAsyncAction_AuthorityMatchReady` and other
+game-state classes/functions are absent. A local UE patch can log unresolved
+field paths if the related field-path assertion recurs; it does not suppress
+either assertion. The full Blueprint and gameplay logic remain unimplemented.

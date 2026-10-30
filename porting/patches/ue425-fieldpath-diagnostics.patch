@@ -1,0 +1,17 @@
+diff --git a/Engine/Source/Runtime/CoreUObject/Private/UObject/FieldPath.cpp b/Engine/Source/Runtime/CoreUObject/Private/UObject/FieldPath.cpp
+index 8a5edfaae..693f3993b 100644
+--- a/Engine/Source/Runtime/CoreUObject/Private/UObject/FieldPath.cpp
++++ b/Engine/Source/Runtime/CoreUObject/Private/UObject/FieldPath.cpp
+@@ -265,6 +265,12 @@ FField* FFieldPath::TryToResolvePath(UStruct* InCurrentStruct, FFieldPath::EPath
+ 	if (Owner && Path.Num())
+ 	{
+ 		int32 PathIndex = Path.Num() - 1;
++		if (PathIndex > 1)
++		{
++			UE_LOG(LogClass, Error, TEXT("Unresolved cooked field path: %s; owner=%s; current=%s"),
++				*PathToString(Path), *Owner->GetPathName(),
++				InCurrentStruct ? *InCurrentStruct->GetPathName() : TEXT("none"));
++		}
+ 		check(PathIndex <= 1);
+ 		Result = FindFProperty<FField>(Owner, Path[PathIndex]);
+ 		if (Result)
