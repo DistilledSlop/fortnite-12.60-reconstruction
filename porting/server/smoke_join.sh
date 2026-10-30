@@ -70,6 +70,10 @@ if [[ "$map" == *'?game=/Script/FortniteGame.FortGameModeAthena'* ]]; then
             printf 'Apollo network pawn did not settle on terrain. See %s\n' "$server_log" >&2
             exit 1
         fi
+        if ! rg -a -q 'Apollo sun light ready: authority=0' "$client_log"; then
+            printf 'Apollo light did not replicate to the client. See %s\n' "$client_log" >&2
+            exit 1
+        fi
     fi
 fi
 

@@ -1,11 +1,24 @@
 #pragma once
 
+#include "Engine/DirectionalLight.h"
 #include "GameFramework/Character.h"
 #include "GameFramework/GameModeBase.h"
 #include "Engine/StaticMeshActor.h"
 #include "FortniteAthenaGameplay.generated.h"
 
 class UCameraComponent;
+
+UCLASS()
+class FORTNITEGAME_API AApolloSunLight : public ADirectionalLight
+{
+    GENERATED_BODY()
+
+public:
+    AApolloSunLight(const FObjectInitializer& ObjectInitializer);
+
+protected:
+    virtual void BeginPlay() override;
+};
 
 // Initial native player hierarchy. Movement is UE character movement until
 // the recovered Fortnite abilities, inventory, and cosmetics are rebuilt.

@@ -61,6 +61,9 @@ not a reconstruction of Fortnite movement or gameplay rules.
 converted Apollo landscape tiles. `AFortGameModeAthena` reads their transforms
 from the ignored staged `Config/ApolloLandscapeGrid.json`; each client loads
 the corresponding cooked mesh when it receives the replicated tile ID.
+`AApolloSunLight` is a temporary replicated directional light because the
+original streamed lighting levels do not load. It exposes the pale converted
+terrain under software Vulkan; it does not recreate Apollo's sky or materials.
 `python3 porting/stage_apollo_grid_meshes.py` stages the Linux packages and
 shader archives. All generated meshes, materials, and the manifest are ignored
 by Git.

@@ -56,8 +56,9 @@ client and the separate Unreal Engine source checkout remain outside Git.
   streamed levels and Fortnite gameplay remain absent.
 - Triangle collision was built for all 61 converted tiles and cooked for Linux.
   The local join probe confirmed that a replicated pawn spawns above D4 and
-  settles into Walking movement on its terrain. The visible Apollo render is
-  still unverified; a headless Xvfb capture was black.
+  settles into Walking movement on its terrain. A temporary replicated light
+  enabled a software Vulkan capture of pale terrain geometry from the pawn
+  camera. Sky and landscape textures remain missing.
 - The embedded `FortniteGame.uproject` was extracted to ignored output. It
   declares six project modules and 123 enabled plugins. Sixty-three of those
   enabled plugins are absent from the public UE 4.25 engine tree, so the

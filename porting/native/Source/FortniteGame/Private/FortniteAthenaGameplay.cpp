@@ -3,6 +3,7 @@
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/InputComponent.h"
+#include "Components/LightComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Dom/JsonObject.h"
 #include "Engine/World.h"
@@ -17,6 +18,23 @@
 #include "Net/UnrealNetwork.h"
 #include "Serialization/JsonSerializer.h"
 #include "TimerManager.h"
+
+AApolloSunLight::AApolloSunLight(const FObjectInitializer& ObjectInitializer)
+    : Super(ObjectInitializer)
+{
+    bReplicates = true;
+    bAlwaysRelevant = true;
+    SetReplicateMovement(true);
+    GetLightComponent()->SetMobility(EComponentMobility::Movable);
+    GetLightComponent()->SetIntensity(5.0f);
+    GetLightComponent()->SetCastShadows(false);
+}
+
+void AApolloSunLight::BeginPlay()
+{
+    Super::BeginPlay();
+    UE_LOG(LogTemp, Display, TEXT("Apollo sun light ready: authority=%d"), HasAuthority() ? 1 : 0);
+}
 
 AFortPlayerPawn::AFortPlayerPawn()
 {
@@ -116,6 +134,8 @@ void AFortGameModeAthena::StartPlay()
         Spawned++;
     }
     UE_LOG(LogTemp, Display, TEXT("Apollo terrain grid: %d/%d meshes spawned"), Spawned, Entries.Num());
+    GetWorld()->SpawnActor<AApolloSunLight>(AApolloSunLight::StaticClass(),
+        FVector::ZeroVector, FRotator(-50.0f, -35.0f, 0.0f));
     if (FParse::Param(FCommandLine::Get(), TEXT("FortniteProbeTerrainCollision")))
     {
         const FVector Start(16000.0f, -16000.0f, 10000.0f);

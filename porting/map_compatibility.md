@@ -234,5 +234,8 @@ join, all 61 tiles loaded on both peers and the server's five second probe
 reported `grounded=1`, `mode=Walking`, and a stationary pawn at
 `(16000, -16000, -907.845)`. That verifies the D4 spawn and standing path;
 movement across tile boundaries and collision on other tiles still need tests.
-An Xvfb screenshot of the current Apollo run was entirely black, so visible
-terrain appearance remains unverified.
+An Xvfb screenshot before adding a light was entirely black. A temporary
+replicated directional light now illuminates the reconstructed terrain. A
+software Vulkan capture shows pale terrain relief from the D4 pawn camera.
+The black sky and flat generated materials expose the missing sky, lighting,
+and landscape texture layers; this is not the original island appearance.
