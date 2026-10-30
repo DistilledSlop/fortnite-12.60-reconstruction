@@ -48,15 +48,35 @@ bash porting/prepare_ue_gltf.sh
   -run=ImportAssets \
   -source=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/converted/FortniteGame/Content/Environments/Homebase/Meshes/SM_HB_Rock_Cliff.glb \
   -dest=/Game/Environments/Homebase/Meshes \
-  -factoryname=GLTFImportFactory -nosourcecontrol -unattended -nullrhi -nop4
+  -factoryname=GLTFImportFactory -FortniteMatchAssetPath \
+  -nosourcecontrol -unattended -nullrhi -nop4
 ```
 
-The first headless import exited 0 with no errors and saved a 96,356-byte
-static mesh package plus a small material package. The importer placed them
+The first headless import, without `-FortniteMatchAssetPath`, exited 0 with no
+errors and saved a 96,356-byte static mesh package plus a small material
+package. The importer placed them
 under `/Game/Environments/Homebase/Meshes/SM_HB_Rock_Cliff/`, naming the mesh
 `0_SM_HB_Rock_Cliff`. This path does not match the original asset reference;
-the packages still need relocation and validation in a Linux cook before the
-recovered level can use them. Generated editor assets remain ignored by Git.
+the `-FortniteMatchAssetPath` option in the patch now makes a single imported
+mesh use the GLB basename and destination folder instead. That saved
+`/Game/Environments/Homebase/Meshes/SM_HB_Rock_Cliff` at the original path.
+The option also sets `CTF_UseSimpleAsComplex` before the editor builds the
+mesh. This avoids a PhysX RTree recursion crash seen while importing the
+larger center-command mesh, but drops its original collision behavior.
+
+The matched rock mesh cooked for `LinuxNoEditor`. After its cooked files
+replaced the sampled Windows package in the ignored staged runtime, the
+`-FortniteProbeAsset` probe loaded it as `StaticMesh`, reported one LOD with
+920 vertices, and exited 0. The source package had three LODs; CUE4Parse
+exports only the highest LOD in the current GLB path, and UE's glTF importer
+builds a single LOD. This is a geometry milestone, not full mesh parity.
+
+All four static meshes in the sampled `Skybox_Outpost_HomeBase` dependency
+set exported to GLB, imported under their original `/Game` paths, and cooked
+for Linux. The next level load advanced past the earlier mesh failure and
+stopped in Windows cooked material `M_Melee_Flare`, whose `.uexp` triggered a
+seek past EOF. Material conversion and reconstruction are still required.
+Generated editor assets, cooked assets, and runtime logs remain ignored by Git.
 
 Both patches are committed here as patch files. They modify the adjacent
 source checkouts only when the preparation scripts run; no supplied source or

@@ -1,16 +1,28 @@
 diff --git a/Engine/Plugins/Editor/GLTFImporter/Source/GLTFImporter/Private/GLTFImportFactory.cpp b/Engine/Plugins/Editor/GLTFImporter/Source/GLTFImporter/Private/GLTFImportFactory.cpp
-index 5c532bdeb..39af713ac 100644
+index 5c532bdeb..f5fd3604d 100644
 --- a/Engine/Plugins/Editor/GLTFImporter/Source/GLTFImporter/Private/GLTFImportFactory.cpp
 +++ b/Engine/Plugins/Editor/GLTFImporter/Source/GLTFImporter/Private/GLTFImportFactory.cpp
-@@ -8,6 +8,7 @@
+@@ -8,8 +8,11 @@
  #include "UI/GLTFOptionsWindow.h"
  
  #include "Engine/StaticMesh.h"
 +#include "HAL/FileManager.h"
++#include "Misc/CommandLine.h"
  #include "Misc/FeedbackContext.h"
  #include "Misc/FileHelper.h"
++#include "Misc/Parse.h"
  #include "Misc/Paths.h"
-@@ -30,6 +31,11 @@ namespace GLTFImporterImpl
+ 
+ #include "AssetRegistryModule.h"
+@@ -22,6 +25,7 @@
+ #include "Materials/Material.h"
+ #include "MessageLogModule.h"
+ #include "PackageTools.h"
++#include "PhysicsEngine/BodySetup.h"
+ #include "UObject/StrongObjectPtr.h"
+ 
+ #define LOCTEXT_NAMESPACE "GLTFFactory"
+@@ -30,6 +34,11 @@ namespace GLTFImporterImpl
  {
  	bool ShowOptionsWindow(const FString& Filepath, const FString& PackagePath, UGLTFImportOptions& ImporterOptions)
  	{
@@ -22,7 +34,7 @@ index 5c532bdeb..39af713ac 100644
  		TSharedPtr<SWindow> ParentWindow;
  		if (FModuleManager::Get().IsModuleLoaded("MainFrame"))
  		{
-@@ -86,6 +92,13 @@ UGLTFImportFactory::UGLTFImportFactory(const FObjectInitializer& ObjectInitializ
+@@ -86,6 +95,13 @@ UGLTFImportFactory::UGLTFImportFactory(const FObjectInitializer& ObjectInitializ
  	Formats.Add(TEXT("glb;GL Transmission Format (Binary)"));
  }
  
@@ -36,6 +48,28 @@ index 5c532bdeb..39af713ac 100644
  UObject* UGLTFImportFactory::FactoryCreateFile(UClass* InClass, UObject* InParent, FName InName, EObjectFlags Flags, const FString& Filename,
                                                 const TCHAR* Parms, FFeedbackContext* Warn, bool& bOutOperationCanceled)
  {
+@@ -120,8 +136,21 @@ UObject* UGLTFImportFactory::FactoryCreateFile(UClass* InClass, UObject* InParen
+ 		const FString AssetName      = Context.Asset.Name;
+ 		const FString NewPackageName = UPackageTools::SanitizePackageName(*(FPaths::GetPath(InParent->GetName()) / AssetName));
+ 		UObject*      ParentPackage  = NewPackageName == InParent->GetName() ? InParent : CreatePackage(nullptr, *NewPackageName);
++		if (IsRunningCommandlet() && FParse::Param(FCommandLine::Get(), TEXT("FortniteMatchAssetPath")) && Context.Asset.Meshes.Num() == 1)
++		{
++			Context.Asset.Meshes[0].Name = FPaths::GetBaseFilename(Filename);
++			ParentPackage = CreatePackage(nullptr, *FPaths::GetPath(InParent->GetName()));
++		}
+ 
+ 		const TArray<UStaticMesh*>& CreatedMeshes = Context.CreateMeshes(ParentPackage, Flags, false);
++		if (IsRunningCommandlet() && FParse::Param(FCommandLine::Get(), TEXT("FortniteMatchAssetPath")))
++		{
++			for (UStaticMesh* Mesh : CreatedMeshes)
++			{
++				Mesh->CreateBodySetup();
++				Mesh->BodySetup->CollisionTraceFlag = CTF_UseSimpleAsComplex;
++			}
++		}
+ 		Context.CreateMaterials(ParentPackage, Flags);
+ 		UpdateMeshes();
+ 
 diff --git a/Engine/Plugins/Editor/GLTFImporter/Source/GLTFImporter/Private/GLTFImportFactory.h b/Engine/Plugins/Editor/GLTFImporter/Source/GLTFImporter/Private/GLTFImportFactory.h
 index ff5b070dd..18a43fac4 100644
 --- a/Engine/Plugins/Editor/GLTFImporter/Source/GLTFImporter/Private/GLTFImportFactory.h

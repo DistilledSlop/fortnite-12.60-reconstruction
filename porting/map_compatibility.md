@@ -32,7 +32,8 @@ the repository contains only the new code and this analysis.
 
 `Skybox_Outpost_HomeBase` is another candidate with only ten direct asset
 imports. Its recovered Windows cooked materials and meshes failed during
-Linux deserialization. A first static mesh conversion path now exports two of
-its meshes to GLB and imports one as a UE 4.25 editor mesh; see
-`mesh_conversion.md`. That editor mesh has not yet been cooked and does not
-yet have the original asset path, so this map still does not enter play.
+Linux deserialization. All four sampled mesh dependencies now export to GLB,
+import at their original `/Game` paths, and cook for Linux; see
+`mesh_conversion.md`. The Linux runtime directly loaded one converted mesh.
+With all four converted meshes staged, the level load stopped in Windows
+cooked material `M_Melee_Flare`. The map has not entered play.

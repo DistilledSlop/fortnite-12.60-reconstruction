@@ -1,3 +1,4 @@
+#include "Engine/StaticMesh.h"
 #include "Engine/Texture2D.h"
 #include "Misc/CommandLine.h"
 #include "Misc/CoreDelegates.h"
@@ -32,6 +33,12 @@ private:
                 ? Texture->PlatformData->Mips[0].BulkData.GetBulkDataSize() : 0;
             UE_LOG(LogTemp, Display, TEXT("Fortnite texture probe: %dx%d, %d mips, first mip %lld bytes"),
                 Texture->GetSizeX(), Texture->GetSizeY(), Texture->GetNumMips(), FirstMipBytes);
+        }
+        if (const UStaticMesh* Mesh = Cast<UStaticMesh>(Asset))
+        {
+            const int32 LODs = Mesh->GetNumLODs();
+            UE_LOG(LogTemp, Display, TEXT("Fortnite static mesh probe: %d LODs, LOD0 vertices %d"),
+                LODs, LODs > 0 ? Mesh->GetNumVertices(0) : 0);
         }
     }
 };
