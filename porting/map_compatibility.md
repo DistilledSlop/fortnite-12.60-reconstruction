@@ -192,3 +192,11 @@ relevant for this single tile probe.
 The A1 mesh has only the GLB's default material, one mesh LOD, and no verified
 landscape collision or texture layers. D4 is exported but has not yet been
 imported or staged. The other streamed tiles and game systems remain absent.
+
+The inspector's `--export-landscape-grid` mode processes all 64 regular grid
+positions with one hidden key prompt and writes an ignored transform manifest.
+It exported 61 nonempty landscape meshes, about 434 MiB of GLB data. A7 and
+A8 have no package in this build; B8 has a landscape actor with zero
+components. All 61 mesh exports completed without a CUE4Parse error. These
+are source geometry for reconstruction; they have not all been imported,
+cooked, staged, or tested in a running island.
