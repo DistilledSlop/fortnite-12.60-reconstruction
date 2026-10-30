@@ -1,0 +1,50 @@
+diff --git a/Engine/Plugins/Editor/GLTFImporter/Source/GLTFImporter/Private/GLTFImportFactory.cpp b/Engine/Plugins/Editor/GLTFImporter/Source/GLTFImporter/Private/GLTFImportFactory.cpp
+index 5c532bdeb..39af713ac 100644
+--- a/Engine/Plugins/Editor/GLTFImporter/Source/GLTFImporter/Private/GLTFImportFactory.cpp
++++ b/Engine/Plugins/Editor/GLTFImporter/Source/GLTFImporter/Private/GLTFImportFactory.cpp
+@@ -8,6 +8,7 @@
+ #include "UI/GLTFOptionsWindow.h"
+ 
+ #include "Engine/StaticMesh.h"
++#include "HAL/FileManager.h"
+ #include "Misc/FeedbackContext.h"
+ #include "Misc/FileHelper.h"
+ #include "Misc/Paths.h"
+@@ -30,6 +31,11 @@ namespace GLTFImporterImpl
+ {
+ 	bool ShowOptionsWindow(const FString& Filepath, const FString& PackagePath, UGLTFImportOptions& ImporterOptions)
+ 	{
++		if (IsRunningCommandlet())
++		{
++			return true;
++		}
++
+ 		TSharedPtr<SWindow> ParentWindow;
+ 		if (FModuleManager::Get().IsModuleLoaded("MainFrame"))
+ 		{
+@@ -86,6 +92,13 @@ UGLTFImportFactory::UGLTFImportFactory(const FObjectInitializer& ObjectInitializ
+ 	Formats.Add(TEXT("glb;GL Transmission Format (Binary)"));
+ }
+ 
++bool UGLTFImportFactory::FactoryCanImport(const FString& Filename)
++{
++	const FString Extension = FPaths::GetExtension(Filename);
++	return (Extension.Equals(TEXT("gltf"), ESearchCase::IgnoreCase) || Extension.Equals(TEXT("glb"), ESearchCase::IgnoreCase))
++		&& IFileManager::Get().FileExists(*Filename);
++}
++
+ UObject* UGLTFImportFactory::FactoryCreateFile(UClass* InClass, UObject* InParent, FName InName, EObjectFlags Flags, const FString& Filename,
+                                                const TCHAR* Parms, FFeedbackContext* Warn, bool& bOutOperationCanceled)
+ {
+diff --git a/Engine/Plugins/Editor/GLTFImporter/Source/GLTFImporter/Private/GLTFImportFactory.h b/Engine/Plugins/Editor/GLTFImporter/Source/GLTFImporter/Private/GLTFImportFactory.h
+index ff5b070dd..18a43fac4 100644
+--- a/Engine/Plugins/Editor/GLTFImporter/Source/GLTFImporter/Private/GLTFImportFactory.h
++++ b/Engine/Plugins/Editor/GLTFImporter/Source/GLTFImporter/Private/GLTFImportFactory.h
+@@ -14,6 +14,7 @@ class UGLTFImportFactory : public UFactory
+ 	GENERATED_UCLASS_BODY()
+ 
+ public:
++	virtual bool FactoryCanImport(const FString& Filename) override;
+ 	virtual UObject* FactoryCreateFile(UClass* InClass, UObject* InParent, FName InName, EObjectFlags Flags, const FString& Filename,
+ 	                                   const TCHAR* Parms, FFeedbackContext* Warn, bool& bOutOperationCanceled) override;
+ 

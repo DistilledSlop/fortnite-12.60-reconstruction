@@ -1,12 +1,17 @@
+using CUE4Parse;
 using CUE4Parse.Encryption.Aes;
 using CUE4Parse.FileProvider;
 using CUE4Parse.UE4.Assets;
 using CUE4Parse.UE4.AssetRegistry;
+using CUE4Parse.UE4.Assets.Exports.StaticMesh;
 using CUE4Parse.UE4.Objects.Core.Misc;
 using CUE4Parse.UE4.Objects.UObject;
 using CUE4Parse.UE4.Readers;
 using CUE4Parse.UE4.Versions;
 using System.Text.Json;
+using CUE4Parse_Conversion.Dto;
+using CUE4Parse_Conversion.Formats.Meshes;
+using CUE4Parse_Conversion.Options;
 
 bool showAll = args.Contains("--all");
 bool showPseudo = args.Contains("--pseudo");
@@ -17,6 +22,9 @@ bool allKeys = args.Contains("--all-keys");
 bool savePackage = args.Contains("--save-package");
 bool saveFolder = args.Contains("--save-folder");
 bool saveClosure = args.Contains("--save-closure");
+bool exportGlb = args.Contains("--export-glb");
+bool ue426 = args.Contains("--ue426");
+Globals.FatalObjectSerializationErrors = exportGlb;
 string? maxArgument = args.SingleOrDefault(arg => arg.StartsWith("--max-packages=", StringComparison.Ordinal));
 int maxPackages = 250;
 if (maxArgument is not null && (!int.TryParse(maxArgument[15..], out maxPackages) || maxPackages < 1))
@@ -24,13 +32,14 @@ if (maxArgument is not null && (!int.TryParse(maxArgument[15..], out maxPackages
     Console.Error.WriteLine("--max-packages must be a positive integer");
     return 2;
 }
-string[] positional = args.Where(arg => arg != maxArgument && arg is not ("--all" or "--pseudo" or "--imports" or "--registry" or "--scan-maps" or "--all-keys" or "--save-package" or "--save-folder" or "--save-closure")).ToArray();
+string[] positional = args.Where(arg => arg != maxArgument && arg is not ("--all" or "--pseudo" or "--imports" or "--registry" or "--scan-maps" or "--all-keys" or "--save-package" or "--save-folder" or "--save-closure" or "--export-glb" or "--ue426")).ToArray();
 bool packageLess = registryMode || scanMaps;
 if ((registryMode && scanMaps) || (packageLess ? positional.Length > 1 : positional.Length is < 1 or > 2))
 {
     Console.Error.WriteLine("Usage: Cue4Inspect <asset-path-without-extension> [pak-directory] [--all] [--pseudo] [--imports] [--save-package] [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect <folder-prefix> [pak-directory] --save-folder [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect <asset-path> [pak-directory] --save-closure [--max-packages=250] [--all-keys]");
+    Console.Error.WriteLine("   or: Cue4Inspect <static-mesh-path> [pak-directory] --export-glb [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect --registry [pak-directory] [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect --scan-maps [pak-directory] [--all-keys]");
     return 2;
@@ -52,7 +61,13 @@ try
     var provider = new DefaultFileProvider(
         pakDirectory,
         SearchOption.TopDirectoryOnly,
-        new VersionContainer(EGame.GAME_UE4_25_Plus),
+        new VersionContainer(ue426 ? EGame.GAME_UE4_26 : EGame.GAME_UE4_25_Plus,
+            optionOverrides: new Dictionary<string, bool>
+            {
+                ["StaticMesh.Fortnite1260NoForceOpaque"] = true,
+                ["RawIndexBuffer.HasShouldExpandTo32Bit"] = false,
+                ["StaticMesh.HasRayTracingGeometry"] = false
+            }),
         StringComparer.OrdinalIgnoreCase);
     provider.ReadScriptData = showPseudo;
     provider.Initialize();
@@ -137,9 +152,10 @@ try
                 {
                     if (root.StartsWith("/Game/", StringComparison.Ordinal))
                         pending.Enqueue("FortniteGame/Content" + root[5..]);
+                    else if (root.StartsWith("/Engine/", StringComparison.Ordinal))
+                        pending.Enqueue("Engine/Content" + root[7..]);
                     else if (root.StartsWith("/", StringComparison.Ordinal) &&
-                             !root.StartsWith("/Script/", StringComparison.Ordinal) &&
-                             !root.StartsWith("/Engine/", StringComparison.Ordinal))
+                             !root.StartsWith("/Script/", StringComparison.Ordinal))
                         Console.Error.WriteLine($"Unmapped package root: {root}");
                 }
             }
@@ -176,6 +192,31 @@ try
     }
 
     var packageData = provider.LoadPackage(assetPath!);
+    if (exportGlb)
+    {
+        var mesh = packageData.GetExports().OfType<UStaticMesh>().FirstOrDefault()
+            ?? throw new InvalidDataException("Package has no static mesh export");
+        if (packageData is Package meshPackage)
+            Console.WriteLine($"Package flags: {meshPackage.Summary.PackageFlags}");
+        Console.WriteLine($"Mesh cooked={mesh.bCooked}, render data={mesh.RenderData is not null}, render LODs={mesh.RenderData?.LODs?.Length ?? 0}, materials={mesh.StaticMaterials.Length}");
+        using var dto = new StaticMeshDto(mesh, EMeshQuality.Highest);
+        var options = new ExportOptions(meshFormat: EMeshFormat.Gltf2, exportMaterials: false);
+        var files = new GltfMeshFormat().BuildStaticMesh(mesh.Name, assetPath!, options, dto);
+        var destination = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "../../../../generated/converted"));
+        var relative = assetPath!.Replace('\\', '/').TrimStart('/');
+        if (relative.Split('/').Any(part => part is ".." or "."))
+            throw new InvalidDataException("Unsafe asset path");
+        foreach (var file in files)
+        {
+            var target = Path.GetFullPath(Path.Combine(destination, relative + file.NameSuffix + "." + file.Extension));
+            if (!target.StartsWith(destination + Path.DirectorySeparatorChar, StringComparison.Ordinal))
+                throw new InvalidDataException("Export path escapes output directory");
+            Directory.CreateDirectory(Path.GetDirectoryName(target)!);
+            File.WriteAllBytes(target, file.Data);
+            Console.WriteLine($"Exported {target} ({file.Data.Length} bytes)");
+        }
+        return 0;
+    }
     if (showImports && packageData is Package legacyPackage)
     {
         Console.WriteLine($"Imports: {legacyPackage.ImportMap.Length}");
@@ -209,7 +250,7 @@ try
 }
 catch (Exception error)
 {
-    Console.Error.WriteLine($"Inspection failed: {error.GetType().Name}: {error.Message}");
+    Console.Error.WriteLine(exportGlb ? $"Inspection failed: {error}" : $"Inspection failed: {error.GetType().Name}: {error.Message}");
     return 1;
 }
 

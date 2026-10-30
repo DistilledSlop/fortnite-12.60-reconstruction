@@ -1,0 +1,13 @@
+diff --git a/CUE4Parse/UE4/Assets/Exports/StaticMesh/FStaticMeshSection.cs b/CUE4Parse/UE4/Assets/Exports/StaticMesh/FStaticMeshSection.cs
+index e60e0d02..0294f18e 100644
+--- a/CUE4Parse/UE4/Assets/Exports/StaticMesh/FStaticMeshSection.cs
++++ b/CUE4Parse/UE4/Assets/Exports/StaticMesh/FStaticMeshSection.cs
+@@ -63,7 +63,7 @@ public FStaticMeshSection(FArchive Ar)
+         if (Ar.Game == GAME_NeedForSpeedMobile) CustomData = Ar.Read<int>();
+         if (Ar.Game is GAME_AssaultFireFuture) return;
+         if (Ar.Game is GAME_ArenaBreakoutMobile) Ar.Position += 4;
+-        bForceOpaque = FRenderingObjectVersion.Get(Ar) >= FRenderingObjectVersion.Type.StaticMeshSectionForceOpaqueField && Ar.ReadBoolean();
++        bForceOpaque = !Ar.Versions["StaticMesh.Fortnite1260NoForceOpaque"] && FRenderingObjectVersion.Get(Ar) >= FRenderingObjectVersion.Type.StaticMeshSectionForceOpaqueField && Ar.ReadBoolean();
+         if (Ar.Game is GAME_MortalKombat1 or GAME_TheFinals or GAME_ArcRaiders) Ar.Position += 8;
+         if (Ar.Game == GAME_BlueProtocol) CustomData = Ar.Read<short>(); // Must be read before bVisibleInRayTracing
+         if (Ar.Game is GAME_WutheringWaves) Ar.SkipFixedArray(sizeof(int));

@@ -101,6 +101,7 @@ See `server_surface.md` for the observed backend dependencies and
 `server/README.md` for the local HTTP probe.
 See `asset_compatibility.md` for the first runtime package-loading probe.
 See `map_compatibility.md` for the first recovered map launches.
+See `mesh_conversion.md` for the first static mesh conversion and editor import.
 
 ## Work needed for the requested result
 

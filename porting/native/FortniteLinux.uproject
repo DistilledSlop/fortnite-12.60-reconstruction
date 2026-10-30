@@ -11,6 +11,7 @@
     }
   ],
   "Plugins": [
+    { "Name": "GLTFImporter", "Enabled": true },
     { "Name": "SteamVR", "Enabled": false },
     { "Name": "UdpMessaging", "Enabled": false }
   ]

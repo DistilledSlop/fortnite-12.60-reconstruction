@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Engine/LevelScriptActor.h"
+#include "Engine/StaticMeshActor.h"
 #include "GameFramework/WorldSettings.h"
 #include "NavAreas/NavAreaMeta.h"
 #include "FortniteMapClasses.generated.h"
@@ -15,6 +16,12 @@ class FORTNITEGAME_API AFortLevelScriptActor : public ALevelScriptActor
 
 UCLASS()
 class FORTNITEGAME_API AFortWorldSettings : public AWorldSettings
+{
+    GENERATED_BODY()
+};
+
+UCLASS()
+class FORTNITEGAME_API AFortStaticMeshActor : public AStaticMeshActor
 {
     GENERATED_BODY()
 };

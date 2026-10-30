@@ -29,3 +29,10 @@ does not restore a Blueprint-based level.
 
 All recovered map and asset bytes, scans, and logs are ignored generated data;
 the repository contains only the new code and this analysis.
+
+`Skybox_Outpost_HomeBase` is another candidate with only ten direct asset
+imports. Its recovered Windows cooked materials and meshes failed during
+Linux deserialization. A first static mesh conversion path now exports two of
+its meshes to GLB and imports one as a UE 4.25 editor mesh; see
+`mesh_conversion.md`. That editor mesh has not yet been cooked and does not
+yet have the original asset path, so this map still does not enter play.

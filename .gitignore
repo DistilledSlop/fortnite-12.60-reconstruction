@@ -13,6 +13,8 @@
 /porting/native/Intermediate/
 /porting/native/Saved/
 /porting/native/DerivedDataCache/
+/porting/native/Content/**
+!/porting/native/Content/.gitkeep
 **/__pycache__/
 **/bin/
 **/obj/
