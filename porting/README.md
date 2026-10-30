@@ -64,6 +64,10 @@ and can contain unresolved expressions, so it is a reconstruction aid rather
 than buildable source. Package compatibility still needs to be tested asset by
 asset. The CUE4Parse checkout is a local dependency, not vendored.
 In one sampled UI Blueprint, 5 of 9 function scripts decoded.
+Add `--save-package` to write the selected package and its payload files into
+ignored `porting/generated/extracted/`. This was verified on a UI Blueprint:
+both its `.uasset` and `.uexp` were recovered. The output remains cooked data;
+it is not an editor source asset or a Linux-ready package.
 Add `--all-keys` when inspecting packages in the three GUID-keyed chunks;
 the tool prompts for those keys without saving them. It mounted all 31 paks
 and parsed a material package from `pakchunk1002` in a local test.
@@ -100,8 +104,11 @@ must not be described as a playable port until it actually loads content and
 implements gameplay. See its README for the build command.
 
 UE 4.25's original `Setup.sh` manifest failed because Epic's old dependency
-URL returned HTTP 403. An updated manifest was supplied locally and the
-setup retry is in progress. The engine and game module remain unbuilt.
+URL returned HTTP 403. The locally supplied replacement manifest let `Setup.sh`
+finish. The Linux Development `FortniteLinux` game target compiled and linked.
+Its first headless run reached engine startup, then failed loading uncooked
+engine content. The editor target is being built so the minimal project can be
+cooked. This native target still has no Fortnite gameplay or assets.
 
 If you have Git access to `EpicGames/UnrealEngine`, run
 `bash porting/fetch_ue425_manifest.sh` to fetch the updated `4.25` branch

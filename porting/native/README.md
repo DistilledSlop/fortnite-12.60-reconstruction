@@ -11,7 +11,12 @@ After the UE 4.25 source checkout is set up, build a Linux Development target:
 ```sh
 /opt/fortnite/UnrealEngine/Engine/Build/BatchFiles/Linux/Build.sh \
   FortniteLinux Linux Development \
-  /opt/fortnite/FortniteClient-12.60-CL-13477524/porting/native/FortniteLinux.uproject
+  -project=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/native/FortniteLinux.uproject \
+  -NoHotReload
 ```
 
 The editor target is needed later to create and cook Linux-compatible assets.
+The game target currently links successfully, but a direct headless run fails
+while loading uncooked engine content. It also needs the UE checkout's OpenVR
+library on `LD_LIBRARY_PATH` until the project disables or packages that
+dependency. No gameplay startup has been verified.

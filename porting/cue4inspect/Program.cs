@@ -10,10 +10,11 @@ bool showAll = args.Contains("--all");
 bool showPseudo = args.Contains("--pseudo");
 bool registryMode = args.Contains("--registry");
 bool allKeys = args.Contains("--all-keys");
-string[] positional = args.Where(arg => arg is not ("--all" or "--pseudo" or "--registry" or "--all-keys")).ToArray();
+bool savePackage = args.Contains("--save-package");
+string[] positional = args.Where(arg => arg is not ("--all" or "--pseudo" or "--registry" or "--all-keys" or "--save-package")).ToArray();
 if (registryMode ? positional.Length > 1 : positional.Length is < 1 or > 2)
 {
-    Console.Error.WriteLine("Usage: Cue4Inspect <asset-path-without-extension> [pak-directory] [--all] [--pseudo] [--all-keys]");
+    Console.Error.WriteLine("Usage: Cue4Inspect <asset-path-without-extension> [pak-directory] [--all] [--pseudo] [--save-package] [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect --registry [pak-directory] [--all-keys]");
     return 2;
 }
@@ -65,6 +66,24 @@ try
             .Take(showAll ? int.MaxValue : 25))
             Console.WriteLine($"{group.Key}: {group.Count()}");
         return 0;
+    }
+
+    if (savePackage)
+    {
+        var destination = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "../../../../generated/extracted"));
+        var files = provider.SavePackage(assetPath!);
+        foreach (var (name, bytes) in files)
+        {
+            var relative = name.Replace('\\', '/');
+            if (Path.IsPathRooted(relative) || relative.Split('/').Any(part => part is ".." or "."))
+                throw new InvalidDataException("Package contains an unsafe path");
+            var target = Path.GetFullPath(Path.Combine(destination, relative));
+            if (!target.StartsWith(destination + Path.DirectorySeparatorChar, StringComparison.Ordinal))
+                throw new InvalidDataException("Package path escapes output directory");
+            Directory.CreateDirectory(Path.GetDirectoryName(target)!);
+            File.WriteAllBytes(target, bytes);
+            Console.WriteLine($"Saved {relative} ({bytes.Length} bytes)");
+        }
     }
 
     var exports = provider.LoadPackage(assetPath!).GetExports();
