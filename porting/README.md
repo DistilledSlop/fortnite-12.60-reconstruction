@@ -4,6 +4,28 @@ This repository tracks new porting code and notes only. The supplied Windows
 client and the separate Unreal Engine source checkout remain outside Git.
 `../Fortnite/` is a read-only input to this work.
 
+## Goal
+
+Reconstruct Fortnite 12.60 as a working UE project that plays against a
+reconstructed local server:
+
+- **Client:** the exact same client as the supplied 12.60 original — every
+  feature and structure — rebuilt into a UE project. Decompiling it into
+  source is the point, not a fallback. Constraint: do not strip features from
+  the client to make networking work.
+- **Server:** every structure and feature the original dedicated server would
+  have. Epic never distributed the Fortnite server, so it is reconstructed
+  from the engine source plus local stand-ins for the Epic backend services
+  (account, profile, matchmaking, session, party and XMPP).
+- **Done:** login, lobby, matchmaking and a match with audio and visuals
+  working, verified end to end. The supplied 12.60 build is the reference
+  for completeness.
+
+The original Windows binary under Wine is a working oracle for dynamic
+analysis (decrypted code, observed requests, gates and endpoints), not the
+deliverable. References elsewhere to the "original unmodified client"
+express the no-stripping constraint, not the deliverable.
+
 ## Current evidence
 
 - The client is `FortniteClient-12.60-CL-13477524`, a packaged Win64 build.

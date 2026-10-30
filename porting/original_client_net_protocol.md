@@ -1,5 +1,9 @@
 # What a replacement server must do for the original 12.60 client
 
+The client is the exact same client as the 12.60 original — feature-complete
+and unstripped, rebuilt as a UE project (see `README.md` Goal) — so every
+requirement below applies to it as well as to the original binary.
+
 Tags: [log] our Wine client/server logs, [exe] strings in the Shipping exe, [ini] `generated/DefaultEngine.ini`, [src] UE 4.25.0 at `/opt/fortnite/UnrealEngine`. Nothing here has been run against a live handshake yet; items marked (unverified) are inference.
 
 ## 1. Handshake and version gating

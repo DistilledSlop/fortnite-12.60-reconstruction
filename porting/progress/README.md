@@ -6,9 +6,13 @@ per-component table, `progress.json`, and a history page with one point per comm
 
 **Definition of 100%:** the entire game can be launched into the menu, joined into
 a game and matchmade on the reconstructed server, and played with sound and visuals
-100% working. In other words, the original unmodified Fortnite 12.60 client under
-Linux/Wine reaches the lobby, matchmakes to our reconstructed UE dedicated server
-and plays a match with all visuals and audio.
+100% working. In other words, the client — the exact same client as the 12.60
+original, feature-complete and unstripped, rebuilt as a UE project — reaches the
+lobby, matchmakes to the reconstructed UE dedicated server (which carries every
+structure and feature the original dedicated server would have) and plays a match
+with all visuals and audio. The supplied 12.60 build is the completeness
+reference; the original binary under Wine is an analysis oracle, not the
+deliverable. See `../../README.md` for the full goal statement.
 
 The overall figure is an effort-weighted estimate of reconstruction work. It is not
 a measure of that definition, which is far from met. The page also lists four binary
