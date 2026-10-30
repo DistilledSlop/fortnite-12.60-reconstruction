@@ -11,11 +11,11 @@ if [[ ! -f "$engine_dir/Engine/Plugins/Editor/GLTFImporter/GLTFImporter.uplugin"
 fi
 
 if git -C "$engine_dir" apply --reverse --check "$patch_file" 2>/dev/null; then
-    printf 'Headless glTF import patch is already applied.\n'
+    printf 'Fortnite glTF import patch is already applied.\n'
 elif git -C "$engine_dir" apply --check "$patch_file"; then
     git -C "$engine_dir" apply "$patch_file"
-    printf 'Applied headless glTF import patch to local UE checkout.\n'
+    printf 'Applied Fortnite glTF import patch to local UE checkout.\n'
 else
-    printf 'UE checkout does not match the headless glTF patch.\n' >&2
+    printf 'UE checkout does not match the Fortnite glTF patch.\n' >&2
     exit 1
 fi

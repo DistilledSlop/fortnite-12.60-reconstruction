@@ -43,9 +43,13 @@ class or `LOAD_FAILED`. Recovered asset files must be copied into the matching
 For `Texture2D`, the probe also logs dimensions, mip count, and first-mip byte
 count. It does not validate visible rendering when run with `-nullrhi`.
 
-`FortniteMapClasses.h` contains the first three Fortnite class definitions
+`FortniteMapClasses.h` contains initial Fortnite class definitions
 needed to deserialize the supplied `FortniteEmptyDedicated` map. After staging
 its recovered `.umap` and `.uexp` under `FortniteLinux/Content/Maps/`, launch
 the staged executable with `/Game/Maps/FortniteEmptyDedicated` as its map
 argument. This map enters play, but the class definitions are only starting
 points for full gameplay reconstruction.
+
+`-FortniteProbeMapMeshes` logs any static mesh actor with invalid component
+bounds after a map begins play. It helped identify a UE glTF importer stride
+bug while testing the recovered skybox map under Vulkan.

@@ -1,3 +1,107 @@
+diff --git a/Engine/Plugins/Editor/GLTFImporter/Source/GLTFCore/Private/GLTF/GLTFAccessor.cpp b/Engine/Plugins/Editor/GLTFImporter/Source/GLTFCore/Private/GLTF/GLTFAccessor.cpp
+index 66dfd44d7..b6e12c228 100644
+--- a/Engine/Plugins/Editor/GLTFImporter/Source/GLTFCore/Private/GLTF/GLTFAccessor.cpp
++++ b/Engine/Plugins/Editor/GLTFImporter/Source/GLTFCore/Private/GLTF/GLTFAccessor.cpp
+@@ -82,7 +82,7 @@ namespace GLTF
+ 		}
+ 
+ 		template <typename DstT, uint32 ElementCount>
+-		void CopyNormalized(DstT* Dst, const void* Src, FAccessor::EComponentType ComponentType, uint32 Count)
++		void CopyNormalized(DstT* Dst, const void* Src, FAccessor::EComponentType ComponentType, uint32 Count, uint32 ByteStride)
+ 		{
+ 			// convert to 0..1
+ 			if (ComponentType == FAccessor::EComponentType::U8)
+@@ -96,26 +96,41 @@ namespace GLTF
+ 					{
+ 						VecDst[J] = P[J] * S;
+ 					}
+-					P += ElementCount;
++					P += ByteStride;
+ 				}
+ 			}
+ 			else if (ComponentType == FAccessor::EComponentType::U16)
+ 			{
+-				const uint16*   P = static_cast<const uint16*>(Src);
++				const uint8*    P = static_cast<const uint8*>(Src);
+ 				constexpr float S = 1.0f / 65535.0f;
+ 				for (uint32 Index = 0; Index < Count; ++Index)
+ 				{
+ 					DstT& VecDst = *Dst++;
+ 					for (uint32 J = 0; J < ElementCount; ++J)
+ 					{
+-						VecDst[J] = P[J] * S;
++						VecDst[J] = reinterpret_cast<const uint16*>(P)[J] * S;
+ 					}
+-					P += ElementCount;
++					P += ByteStride;
+ 				}
+ 			}
+ 			else
+ 				check(false);
+ 		}
++
++		void CopyStrided(void* Dst, const void* Src, uint32 Count, uint32 ElementSize, uint32 ByteStride)
++		{
++			if (ByteStride == ElementSize)
++			{
++				memcpy(Dst, Src, Count * ElementSize);
++				return;
++			}
++			uint8* Output = static_cast<uint8*>(Dst);
++			const uint8* Input = static_cast<const uint8*>(Src);
++			for (uint32 Index = 0; Index < Count; ++Index)
++			{
++				memcpy(Output + Index * ElementSize, Input + Index * ByteStride, ElementSize);
++			}
++		}
+ 	}
+ 
+ 	FAccessor::FAccessor(uint32 InCount, EType InType, EComponentType InCompType, bool InNormalized)
+@@ -490,12 +505,12 @@ namespace GLTF
+ 			if (ComponentType == EComponentType::F32)
+ 			{
+ 				// copy float vec2 directly from buffer
+-				memcpy(Buffer, Src, Count * sizeof(FVector2D));
++				CopyStrided(Buffer, Src, Count, sizeof(FVector2D), ByteStride);
+ 				return;
+ 			}
+ 			else if (Normalized)
+ 			{
+-				CopyNormalized<FVector2D, 2>(Buffer, Src, ComponentType, Count);
++				CopyNormalized<FVector2D, 2>(Buffer, Src, ComponentType, Count, ByteStride);
+ 				return;
+ 			}
+ 		}
+@@ -511,12 +526,12 @@ namespace GLTF
+ 			if (ComponentType == EComponentType::F32)
+ 			{
+ 				// copy float vec3 directly from buffer
+-				memcpy(Buffer, Src, Count * sizeof(FVector));
++				CopyStrided(Buffer, Src, Count, sizeof(FVector), ByteStride);
+ 				return;
+ 			}
+ 			else if (Normalized)
+ 			{
+-				CopyNormalized<FVector, 3>(Buffer, Src, ComponentType, Count);
++				CopyNormalized<FVector, 3>(Buffer, Src, ComponentType, Count, ByteStride);
+ 				return;
+ 			}
+ 		}
+@@ -532,12 +547,12 @@ namespace GLTF
+ 			if (ComponentType == EComponentType::F32)
+ 			{
+ 				// copy float vec4 directly from buffer
+-				memcpy(Buffer, Src, Count * sizeof(FVector4));
++				CopyStrided(Buffer, Src, Count, sizeof(FVector4), ByteStride);
+ 				return;
+ 			}
+ 			else if (Normalized)
+ 			{
+-				CopyNormalized<FVector4, 4>(Buffer, Src, ComponentType, Count);
++				CopyNormalized<FVector4, 4>(Buffer, Src, ComponentType, Count, ByteStride);
+ 				return;
+ 			}
+ 		}
 diff --git a/Engine/Plugins/Editor/GLTFImporter/Source/GLTFImporter/Private/GLTFImportFactory.cpp b/Engine/Plugins/Editor/GLTFImporter/Source/GLTFImporter/Private/GLTFImportFactory.cpp
 index 5c532bdeb..f5fd3604d 100644
 --- a/Engine/Plugins/Editor/GLTFImporter/Source/GLTFImporter/Private/GLTFImportFactory.cpp

@@ -71,6 +71,17 @@ replaced the sampled Windows package in the ignored staged runtime, the
 exports only the highest LOD in the current GLB path, and UE's glTF importer
 builds a single LOD. This is a geometry milestone, not full mesh parity.
 
+The first Vulkan map probe exposed invalid bounds on
+`SM_HB_Center_Command`. The GLB position accessor itself contained only
+finite coordinates, but its vertex data is interleaved with a 108-byte
+stride. UE 4.25's glTF importer copied float vector arrays as if each entry
+were tightly packed, ignoring `byteStride`. The updated local importer patch
+copies each strided vector and handles strided normalized attributes. All
+four meshes were reimported and recooked. The resulting Vulkan run has no
+invalid mesh bounds. After each cook, the staged shader archives also need to
+be copied from `Saved/Cooked/LinuxNoEditor/FortniteLinux/Content/`; otherwise
+the staged runtime reports missing shader hashes for the newly cooked assets.
+
 All four static meshes in the sampled `Skybox_Outpost_HomeBase` dependency
 set exported to GLB, imported under their original `/Game` paths, and cooked
 for Linux. The next level load advanced past the earlier mesh failure and
@@ -110,4 +121,7 @@ replacements staged, `/Game/Maps/Skybox/Skybox_Outpost_HomeBase` reached
 `Bringing ... up for play` in the headless Linux runtime and exited 0 after
 `-ExecCmds=Quit`. A navigation-system ensure was handled during load, and the
 map has no suitable player start. This validates deserialization and level
-startup, not visual parity or Fortnite gameplay.
+startup, not visual parity or Fortnite gameplay. With corrected meshes and
+current shader archives, the map also enters play under Vulkan on Mesa
+Lavapipe via Xvfb, creates a swapchain, and exits 0. The runtime diagnostic
+`-FortniteProbeMapMeshes` logs actors whose static-mesh bounds contain NaNs.

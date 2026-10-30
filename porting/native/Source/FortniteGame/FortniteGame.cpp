@@ -1,5 +1,9 @@
 #include "Engine/StaticMesh.h"
+#include "Engine/StaticMeshActor.h"
 #include "Engine/Texture2D.h"
+#include "Engine/World.h"
+#include "EngineUtils.h"
+#include "Components/StaticMeshComponent.h"
 #include "Misc/CommandLine.h"
 #include "Misc/CoreDelegates.h"
 #include "Misc/Parse.h"
@@ -13,9 +17,32 @@ public:
     {
         FDefaultGameModuleImpl::StartupModule();
         FCoreDelegates::OnPostEngineInit.AddStatic(&FFortniteGameModule::ProbeAsset);
+        FWorldDelegates::OnPostWorldInitialization.AddStatic(&FFortniteGameModule::OnWorldInitialized);
     }
 
 private:
+    static void OnWorldInitialized(UWorld* World, const UWorld::InitializationValues)
+    {
+        if (!FParse::Param(FCommandLine::Get(), TEXT("FortniteProbeMapMeshes")))
+            return;
+        World->OnWorldBeginPlay.AddLambda([World]()
+        {
+            for (TActorIterator<AStaticMeshActor> It(World); It; ++It)
+            {
+                UStaticMeshComponent* Component = It->GetStaticMeshComponent();
+                if (!Component)
+                    continue;
+                const FBoxSphereBounds Bounds = Component->Bounds;
+                if (Bounds.ContainsNaN())
+                    UE_LOG(LogTemp, Error, TEXT("Invalid map mesh bounds: actor=%s mesh=%s origin=%s extent=%s radius=%g transform=%s local=%s"),
+                        *It->GetPathName(), Component->GetStaticMesh() ? *Component->GetStaticMesh()->GetPathName() : TEXT("none"),
+                        *Bounds.Origin.ToString(), *Bounds.BoxExtent.ToString(), Bounds.SphereRadius,
+                        *Component->GetComponentTransform().ToString(),
+                        Component->GetStaticMesh() ? *Component->GetStaticMesh()->GetBounds().ToString() : TEXT("none"));
+            }
+        });
+    }
+
     static void ProbeAsset()
     {
         FString AssetPath;
