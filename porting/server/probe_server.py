@@ -12,6 +12,8 @@ from pathlib import Path
 from string import Template
 from urllib.parse import parse_qsl, urlsplit
 
+import local_ws
+
 
 def compile_route(path):
     parts = path.strip("/").split("/") if path != "/" else []
@@ -74,16 +76,21 @@ def make_handler(routes, record_path, stub=None):
 
         def handle_request(self):
             url = urlsplit(self.path)
+            if stub is not None and self.headers.get("Upgrade", "").lower() == "websocket":
+                serve = stub.websocket_route(url.path, dict(parse_qsl(url.query)))
+                if serve is not None:
+                    self.serve_websocket(url, serve)
+                    return
             length = int(self.headers.get("Content-Length", "0"))
             if length < 0 or length > 1024 * 1024:
                 self.send_json(413, {"error": "request body exceeds 1 MiB"})
                 return
             body = self.rfile.read(length)
+            form = {}
             if url.path == "/__health":
                 status, response = 200, {"status": "ready"}
             else:
                 status, response = 501, {"error": "no fixture for this request"}
-                form = {}
                 if "x-www-form-urlencoded" in self.headers.get("Content-Type", ""):
                     form = dict(parse_qsl(body.decode("utf-8", "replace")))
                 if stub is not None:
@@ -95,6 +102,25 @@ def make_handler(routes, record_path, stub=None):
                         response = substitute(fixture_body, match.groupdict())
                         break
 
+            self.record_request(url, body, form, status)
+            self.send_json(status, response)
+
+        def serve_websocket(self, url, serve):
+            """Run a websocket route. The socket stays open until serve() returns."""
+            self.close_connection = True
+            conn = local_ws.accept_upgrade(self)
+            if conn is None:
+                self.record_request(url, b"", {}, 400)
+                return
+            try:
+                serve(conn)
+            except (local_ws.WebSocketClosed, OSError):
+                pass
+            finally:
+                conn.close()
+            self.record_request(url, b"", {}, 101)
+
+        def record_request(self, url, body, form, status):
             entry = {
                 "time": datetime.now(timezone.utc).isoformat(),
                 "method": self.command,
@@ -118,7 +144,6 @@ def make_handler(routes, record_path, stub=None):
             with lock:
                 with record_path.open("a", encoding="utf-8") as stream:
                     stream.write(json.dumps(entry, sort_keys=True) + "\n")
-            self.send_json(status, response)
 
         def send_json(self, status, response):
             content_type = "application/json"

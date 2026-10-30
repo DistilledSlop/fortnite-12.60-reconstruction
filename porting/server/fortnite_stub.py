@@ -5,6 +5,8 @@ Tokens and ids are fixed, non-secret placeholders for the local backend only.
 """
 import re
 
+import matchmaking
+
 ACCOUNT_ID = "00000000000000000000000000000001"
 DISPLAY_NAME = "LocalPlayer"
 FAR_FUTURE = "2099-01-01T00:00:00.000Z"
@@ -121,7 +123,24 @@ def profile(account_id, query, command):
     }
 
 
+def found(result, path):
+    """Unwrap a (status, body) result, or answer not_found when a lookup returned None."""
+    return result if result is not None else not_found(path)
+
+
 ROUTES = [
+    # Lobby to match (see porting/server/README.md, "Matchmaking"). The /fortnite prefix is
+    # observed for game/v2 paths; the optional prefix also accepts the bare form in routes.json.
+    ("GET", r"(?:/fortnite)?/api/game/v2/matchmakingservice/ticket/player/([^/]+)",
+     lambda m, q, f: matchmaking.ticket(m.group(1), q, DISPLAY_NAME)),
+    ("GET", r"(?:/fortnite)?/api/matchmaking/session/([^/]+)",
+     lambda m, q, f: found(matchmaking.session(m.group(1)), m.group(0))),
+    ("GET", r"(?:/fortnite)?/api/game/v2/matchmaking/account/([^/]+)/session/([^/]+)",
+     lambda m, q, f: found(matchmaking.session_key(m.group(1), m.group(2)), m.group(0))),
+    # Unobserved guesses from routes.json (method and body shape not verified). Empty bodies keep
+    # the client on its no-data path instead of an error.
+    ("GET", r"(?:/fortnite)?/api/game/v2/clientfeaturekeys/[^/]+", lambda m, q, f: (200, {})),
+    ("GET", r"/api/public/payment/accounts/[^/]+/billingaccounts", lambda m, q, f: (200, [])),
     ("GET", r"/fortnite/api/receipts/v1/account/[^/]+/receipts", lambda m, q, f: (200, [])),
     ("GET", r"/socialban/api/public/v1/[^/]+", lambda m, q, f: (200, {"bans": [], "warnings": []})),
     ("GET", r"/party/api/v1/Fortnite/user/[^/]+", lambda m, q, f: (200, {"current": [], "pending": [], "invites": [], "pings": []})),
@@ -160,6 +179,11 @@ ROUTES = [
     ("GET", r"/fortnite/api/cloudstorage/system", lambda m, q, f: (200, [])),
     ("POST", r"/datarouter/api/v1/public/data", lambda m, q, f: (204, None)),
 ]
+
+
+def websocket_route(path, query):
+    """Return serve(conn) for a websocket upgrade on path, or None to answer it as plain HTTP."""
+    return matchmaking.websocket_route(path, query)
 
 
 def respond(method, path, query, form):
