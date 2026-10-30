@@ -55,9 +55,12 @@ FModel/CUE4Parse is needed for the general case.
 package through the adjacent CUE4Parse checkout. It prompts for the primary
 key with hidden input and prints export types and names. The tool has parsed
 both a sound class and a cooked UI Blueprint using `GAME_UE4_25_Plus` without
-a mapping file. Use `--all` to list every export. Package compatibility still
-needs to be tested asset by asset. The CUE4Parse checkout is a local
-dependency, not vendored.
+a mapping file. Use `--all` to list every export, or `--pseudo` to ask
+CUE4Parse to decode Blueprint bytecode into pseudocode. Redirect pseudocode
+to `porting/generated/`; it is extracted game data. The pseudocode is partial
+and can contain unresolved expressions, so it is a reconstruction aid rather
+than buildable source. Package compatibility still needs to be tested asset by
+asset. The CUE4Parse checkout is a local dependency, not vendored.
 
 See `server_surface.md` for the observed backend dependencies.
 
@@ -81,10 +84,14 @@ The first executable milestone is a Linux project that loads one recovered
 level and character. It will establish which cooked assets can be reused and
 which require conversion or reconstruction.
 
-UE 4.25's `Setup.sh` currently fails because Epic's dependency URL returns
-HTTP 403 (also over HTTPS). The separate v16 clang toolchain archive is
-available. A buildable source/dependency set is still needed for the Linux
-engine and game module.
+`porting/native/` is a minimal build harness with the `/Script/FortniteGame`
+module name. It has no EAC integration and contains no supplied assets. It
+must not be described as a playable port until it actually loads content and
+implements gameplay. See its README for the build command.
+
+UE 4.25's original `Setup.sh` manifest failed because Epic's old dependency
+URL returned HTTP 403. An updated manifest was supplied locally and the
+setup retry is in progress. The engine and game module remain unbuilt.
 
 If you have Git access to `EpicGames/UnrealEngine`, run
 `bash porting/fetch_ue425_manifest.sh` to fetch the updated `4.25` branch

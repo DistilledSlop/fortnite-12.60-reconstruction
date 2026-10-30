@@ -9,6 +9,10 @@
 /porting/generated/
 /porting/build/
 /porting/.venv/
+/porting/native/Binaries/
+/porting/native/Intermediate/
+/porting/native/Saved/
+/porting/native/DerivedDataCache/
 **/__pycache__/
 **/bin/
 **/obj/

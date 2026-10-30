@@ -6,9 +6,12 @@ import sys
 
 
 allowed_exact = {".gitignore", ".gitattributes", ".githooks/pre-commit"}
+allowed_exact.add("porting/native/FortniteLinux.uproject")
 forbidden_directories = (
     "porting/generated/", "porting/build/", "porting/.venv/",
     "porting/cue4inspect/bin/", "porting/cue4inspect/obj/",
+    "porting/native/Binaries/", "porting/native/Intermediate/",
+    "porting/native/Saved/", "porting/native/DerivedDataCache/",
 )
 forbidden_suffixes = {
     ".pak", ".sig", ".exe", ".dll", ".so", ".dylib", ".uasset",
@@ -27,7 +30,7 @@ for raw in filter(None, entries):
         errors.append(f"outside porting allowlist: {path}")
     if path.startswith(forbidden_directories):
         errors.append(f"generated or build output: {path}")
-    if any(path.lower().endswith(suffix) for suffix in forbidden_suffixes):
+    if path not in allowed_exact and any(path.lower().endswith(suffix) for suffix in forbidden_suffixes):
         errors.append(f"binary asset extension: {path}")
     try:
         size = int(subprocess.check_output(["git", "cat-file", "-s", ":" + path]))

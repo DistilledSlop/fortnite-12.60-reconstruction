@@ -1,13 +1,15 @@
 using CUE4Parse.Encryption.Aes;
 using CUE4Parse.FileProvider;
 using CUE4Parse.UE4.Objects.Core.Misc;
+using CUE4Parse.UE4.Objects.UObject;
 using CUE4Parse.UE4.Versions;
 
 bool showAll = args.Contains("--all");
-string[] positional = args.Where(arg => arg != "--all").ToArray();
+bool showPseudo = args.Contains("--pseudo");
+string[] positional = args.Where(arg => arg is not ("--all" or "--pseudo")).ToArray();
 if (positional.Length < 1 || positional.Length > 2)
 {
-    Console.Error.WriteLine("Usage: Cue4Inspect <asset-path-without-extension> [pak-directory] [--all]");
+    Console.Error.WriteLine("Usage: Cue4Inspect <asset-path-without-extension> [pak-directory] [--all] [--pseudo]");
     return 2;
 }
 
@@ -29,6 +31,7 @@ try
         SearchOption.TopDirectoryOnly,
         new VersionContainer(EGame.GAME_UE4_25_Plus),
         StringComparer.OrdinalIgnoreCase);
+    provider.ReadScriptData = showPseudo;
     provider.Initialize();
 
     string key = ReadHiddenKey("Primary AES key: ");
@@ -43,6 +46,16 @@ try
     if (!showAll) Console.WriteLine("First 20 exports (use --all for the full list):");
     foreach (var item in showAll ? exports : exports.Take(20))
         Console.WriteLine($"{item.GetType().Name}: {item.Name}");
+    if (showPseudo)
+    {
+        var functions = exports.OfType<UFunction>().ToArray();
+        Console.WriteLine($"Decoded function scripts: {functions.Count(function => function.ScriptBytecode is { Length: > 0 })}/{functions.Length}");
+        foreach (var blueprintClass in exports.OfType<UClass>())
+        {
+            Console.WriteLine($"\nBlueprint pseudocode: {blueprintClass.Name}");
+            Console.WriteLine(blueprintClass.DecompileBlueprintToPseudo());
+        }
+    }
     return 0;
 }
 catch (Exception error)

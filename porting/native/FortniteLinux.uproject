@@ -1,0 +1,13 @@
+{
+  "FileVersion": 3,
+  "EngineAssociation": "",
+  "Category": "",
+  "Description": "Linux reconstruction build harness for Fortnite 12.60",
+  "Modules": [
+    {
+      "Name": "FortniteGame",
+      "Type": "Runtime",
+      "LoadingPhase": "Default"
+    }
+  ]
+}
