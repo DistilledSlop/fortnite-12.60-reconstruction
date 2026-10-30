@@ -5,6 +5,7 @@
 #include "Components/InputComponent.h"
 #include "Components/DirectionalLightComponent.h"
 #include "Components/StaticMeshComponent.h"
+#include "Components/SkyAtmosphereComponent.h"
 #include "Dom/JsonObject.h"
 #include "Engine/World.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -19,6 +20,15 @@
 #include "Serialization/JsonSerializer.h"
 #include "TimerManager.h"
 
+AApolloSkyAtmosphere::AApolloSkyAtmosphere(const FObjectInitializer& ObjectInitializer)
+    : Super(ObjectInitializer)
+{
+    bReplicates = true;
+    bAlwaysRelevant = true;
+    SkyAtmosphere = CreateDefaultSubobject<USkyAtmosphereComponent>(TEXT("SkyAtmosphere"));
+    RootComponent = SkyAtmosphere;
+}
+
 AApolloSunLight::AApolloSunLight(const FObjectInitializer& ObjectInitializer)
     : Super(ObjectInitializer)
 {
@@ -30,6 +40,7 @@ AApolloSunLight::AApolloSunLight(const FObjectInitializer& ObjectInitializer)
     SunLight->SetMobility(EComponentMobility::Movable);
     SunLight->SetIntensity(5.0f);
     SunLight->SetCastShadows(false);
+    SunLight->bUsedAsAtmosphereSunLight = true;
 }
 
 void AApolloSunLight::BeginPlay()
@@ -137,6 +148,8 @@ void AFortGameModeAthena::StartPlay()
     }
     UE_LOG(LogTemp, Display, TEXT("Apollo terrain grid: %d/%d meshes spawned"), Spawned, Entries.Num());
     SpawnApolloBackground();
+    GetWorld()->SpawnActor<AApolloSkyAtmosphere>(AApolloSkyAtmosphere::StaticClass(),
+        FVector::ZeroVector, FRotator::ZeroRotator);
     GetWorld()->SpawnActor<AApolloSunLight>(AApolloSunLight::StaticClass(),
         FVector::ZeroVector, FRotator(-50.0f, -35.0f, 0.0f));
     if (FParse::Param(FCommandLine::Get(), TEXT("FortniteProbeTerrainCollision")))

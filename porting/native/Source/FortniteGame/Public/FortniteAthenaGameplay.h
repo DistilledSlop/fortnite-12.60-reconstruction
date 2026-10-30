@@ -8,6 +8,20 @@
 
 class UCameraComponent;
 class UDirectionalLightComponent;
+class USkyAtmosphereComponent;
+
+UCLASS()
+class FORTNITEGAME_API AApolloSkyAtmosphere : public AActor
+{
+    GENERATED_BODY()
+
+public:
+    AApolloSkyAtmosphere(const FObjectInitializer& ObjectInitializer);
+
+private:
+    UPROPERTY(VisibleAnywhere)
+    USkyAtmosphereComponent* SkyAtmosphere;
+};
 
 UCLASS()
 class FORTNITEGAME_API AApolloSunLight : public AActor

@@ -239,6 +239,17 @@ placements as replicated static mesh actors. Their original materials,
 translucency, Blueprint behavior, and the rest of the streamed level still need
 reconstruction.
 
+The background GLB import also creates dependent material and per-mesh
+packages. The staging script copies the full cooked `Converted` tree, not just
+the 11 top-level mesh packages. A Linux Vulkan capture confirmed the placed
+cloud geometry, while showing its placeholder material as solid white. The
+native map now spawns a replicated UE sky atmosphere and marks its directional
+light as the atmosphere sun; a second Vulkan capture showed a blue sky gradient
+instead of the previous black background. This atmosphere is a rendering
+baseline, not a recovered Fortnite sky or cloud shader. The original cloud
+override `M_Volcano_Cloud_Cove` is an instance of a 111-expression translucent
+unlit material, so the cloud appearance still needs a dedicated reconstruction.
+
 ## Terrain collision probe
 
 The imported meshes initially had `CTF_UseSimpleAsComplex` with no box,

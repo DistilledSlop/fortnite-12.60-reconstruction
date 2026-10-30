@@ -18,16 +18,16 @@ def main() -> int:
     mesh_names = sorted({entry["mesh"] for entry in entries})
     cooked = porting / "native/Saved/Cooked/LinuxNoEditor/FortniteLinux/Content"
     staged_game = porting / "generated/linux-stage/LinuxNoEditor/FortniteLinux"
+    background = cooked / "Athena/Apollo/Maps/Background/Converted"
     for mesh in mesh_names:
-        package = cooked / "Athena/Apollo/Maps/Background/Converted" / mesh
-        payload = [path for path in package.parent.glob(package.name + ".*")
-                   if path.suffix in PAYLOAD_SUFFIXES]
-        if not any(path.suffix == ".uasset" for path in payload):
+        if not (background / f"{mesh}.uasset").is_file():
+            package = background / mesh
             raise FileNotFoundError(f"Missing cooked background mesh: {package}")
-        for source in payload:
-            target = staged_game / "Content" / source.relative_to(cooked)
-            target.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copy2(source, target)
+    payload = [path for path in background.rglob("*") if path.suffix in PAYLOAD_SUFFIXES]
+    for source in payload:
+        target = staged_game / "Content" / source.relative_to(cooked)
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(source, target)
     archives = sorted(cooked.glob("ShaderArchive-*-SF_VULKAN_SM5.ushaderbytecode"))
     if len(archives) != 2:
         raise FileNotFoundError("Expected global and game Vulkan shader archives")
@@ -36,7 +36,8 @@ def main() -> int:
     target = staged_game / "Config/ApolloBackground.json"
     target.parent.mkdir(parents=True, exist_ok=True)
     shutil.copy2(manifest, target)
-    print(f"Staged {len(mesh_names)} background mesh packages, {len(entries)} placements, and shader archives")
+    print(f"Staged {len(mesh_names)} background meshes, {len(payload)} cooked payload files, "
+          f"{len(entries)} placements, and shader archives")
     return 0
 
 
