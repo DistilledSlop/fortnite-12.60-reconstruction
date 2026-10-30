@@ -136,6 +136,7 @@ void AFortGameModeAthena::StartPlay()
         Spawned++;
     }
     UE_LOG(LogTemp, Display, TEXT("Apollo terrain grid: %d/%d meshes spawned"), Spawned, Entries.Num());
+    SpawnApolloBackground();
     GetWorld()->SpawnActor<AApolloSunLight>(AApolloSunLight::StaticClass(),
         FVector::ZeroVector, FRotator(-50.0f, -35.0f, 0.0f));
     if (FParse::Param(FCommandLine::Get(), TEXT("FortniteProbeTerrainCollision")))
@@ -150,6 +151,53 @@ void AFortGameModeAthena::StartPlay()
     }
     for (FConstPlayerControllerIterator It = GetWorld()->GetPlayerControllerIterator(); It; ++It)
         PositionPawnOnTerrain(It->Get());
+}
+
+void AFortGameModeAthena::SpawnApolloBackground()
+{
+    const FString ManifestPath = FPaths::Combine(FPaths::ProjectConfigDir(), TEXT("ApolloBackground.json"));
+    FString ManifestText;
+    if (!FFileHelper::LoadFileToString(ManifestText, *ManifestPath))
+    {
+        UE_LOG(LogTemp, Warning, TEXT("Apollo background manifest missing: %s"), *ManifestPath);
+        return;
+    }
+    TArray<TSharedPtr<FJsonValue>> Entries;
+    const TSharedRef<TJsonReader<>> Reader = TJsonReaderFactory<>::Create(ManifestText);
+    if (!FJsonSerializer::Deserialize(Reader, Entries))
+    {
+        UE_LOG(LogTemp, Warning, TEXT("Apollo background manifest invalid: %s"), *ManifestPath);
+        return;
+    }
+    int32 Spawned = 0;
+    for (const TSharedPtr<FJsonValue>& Entry : Entries)
+    {
+        const TSharedPtr<FJsonObject> Object = Entry.IsValid() ? Entry->AsObject() : nullptr;
+        if (!Object.IsValid())
+            continue;
+        FString MeshId;
+        const TArray<TSharedPtr<FJsonValue>>* Location = nullptr;
+        const TArray<TSharedPtr<FJsonValue>>* Rotation = nullptr;
+        const TArray<TSharedPtr<FJsonValue>>* Scale = nullptr;
+        if (!Object->TryGetStringField(TEXT("mesh"), MeshId) || MeshId.IsEmpty() ||
+            !Object->TryGetArrayField(TEXT("location"), Location) || !Location || Location->Num() != 3 ||
+            !Object->TryGetArrayField(TEXT("rotation"), Rotation) || !Rotation || Rotation->Num() != 3 ||
+            !Object->TryGetArrayField(TEXT("scale"), Scale) || !Scale || Scale->Num() != 3)
+            continue;
+        const FTransform Transform(
+            FRotator((*Rotation)[0]->AsNumber(), (*Rotation)[1]->AsNumber(), (*Rotation)[2]->AsNumber()),
+            FVector((*Location)[0]->AsNumber(), (*Location)[1]->AsNumber(), (*Location)[2]->AsNumber()),
+            FVector((*Scale)[0]->AsNumber(), (*Scale)[1]->AsNumber(), (*Scale)[2]->AsNumber()));
+        AApolloBackgroundMesh* Actor = GetWorld()->SpawnActorDeferred<AApolloBackgroundMesh>(
+            AApolloBackgroundMesh::StaticClass(), Transform, nullptr, nullptr,
+            ESpawnActorCollisionHandlingMethod::AlwaysSpawn);
+        if (!Actor)
+            continue;
+        Actor->SetMeshId(MeshId);
+        UGameplayStatics::FinishSpawningActor(Actor, Transform);
+        Spawned++;
+    }
+    UE_LOG(LogTemp, Display, TEXT("Apollo background: %d/%d placed meshes spawned"), Spawned, Entries.Num());
 }
 
 void AFortGameModeAthena::RestartPlayer(AController* NewPlayer)
@@ -231,5 +279,46 @@ void AApolloLandscapeTile::LoadTileMesh()
     }
     UE_LOG(LogTemp, Display, TEXT("Apollo terrain tile %s ready: authority=%d mesh=%s"),
         *TileId, HasAuthority() ? 1 : 0,
+        GetStaticMeshComponent()->GetStaticMesh() ? TEXT("yes") : TEXT("no"));
+}
+
+AApolloBackgroundMesh::AApolloBackgroundMesh()
+{
+    bReplicates = true;
+    bAlwaysRelevant = true;
+    SetReplicateMovement(true);
+    GetStaticMeshComponent()->SetMobility(EComponentMobility::Movable);
+    GetStaticMeshComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+    GetStaticMeshComponent()->SetCastShadow(false);
+}
+
+void AApolloBackgroundMesh::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+    Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+    DOREPLIFETIME(AApolloBackgroundMesh, MeshId);
+}
+
+void AApolloBackgroundMesh::SetMeshId(const FString& NewMeshId)
+{
+    MeshId = NewMeshId;
+    LoadMesh();
+}
+
+void AApolloBackgroundMesh::OnRep_MeshId()
+{
+    LoadMesh();
+}
+
+void AApolloBackgroundMesh::LoadMesh()
+{
+    if (MeshId.IsEmpty() || MeshId.Contains(TEXT("/")) || MeshId.Contains(TEXT(".")))
+        return;
+    const FString Path = FString::Printf(
+        TEXT("/Game/Athena/Apollo/Maps/Background/Converted/%s.%s"), *MeshId, *MeshId);
+    UStaticMesh* Mesh = Cast<UStaticMesh>(StaticLoadObject(UStaticMesh::StaticClass(), nullptr, *Path));
+    if (Mesh)
+        GetStaticMeshComponent()->SetStaticMesh(Mesh);
+    UE_LOG(LogTemp, Display, TEXT("Apollo background mesh %s ready: authority=%d mesh=%s"),
+        *MeshId, HasAuthority() ? 1 : 0,
         GetStaticMeshComponent()->GetStaticMesh() ? TEXT("yes") : TEXT("no"));
 }

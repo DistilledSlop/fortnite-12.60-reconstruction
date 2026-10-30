@@ -65,6 +65,7 @@ public:
 
 private:
     void PositionPawnOnTerrain(AController* Player);
+    void SpawnApolloBackground();
 };
 
 // Linux cooked geometry reconstructed from Apollo's landscape components.
@@ -86,4 +87,25 @@ private:
     void OnRep_TileId();
 
     void LoadTileMesh();
+};
+
+// Recovered Apollo_Background placements, with Linux cooked mesh copies.
+UCLASS()
+class FORTNITEGAME_API AApolloBackgroundMesh : public AStaticMeshActor
+{
+    GENERATED_BODY()
+
+public:
+    AApolloBackgroundMesh();
+    virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+    void SetMeshId(const FString& NewMeshId);
+
+private:
+    UPROPERTY(ReplicatedUsing=OnRep_MeshId)
+    FString MeshId;
+
+    UFUNCTION()
+    void OnRep_MeshId();
+
+    void LoadMesh();
 };

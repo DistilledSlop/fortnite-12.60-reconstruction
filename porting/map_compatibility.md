@@ -224,6 +224,20 @@ backdrops, and auroras. The level also contains Blueprint actors and a
 is a placement inventory for reconstructing the background, not a Linux
 load of that streamed level.
 
+The background recovery now exports the 11 referenced `/Game` static mesh
+packages as ignored GLBs. `python3 porting/prepare_apollo_background_import.py`
+turns the actor report into an ignored UE import settings file and a placement
+manifest. It retains 27 components whose mesh object name matches the package
+name. Five components remain unresolved: two lighthouse beam cylinders stored
+as imports in `S_BackDrop_4`, a built-in engine plane, a `MeshNetwork` plane,
+and one empty reference. The 27 placements retain their saved component world
+position, rotation, and scale. Import these meshes with `ImportAssets` and
+`-FortniteMatchAssetPath -nosourcecontrol`, then cook LinuxNoEditor and run
+`python3 porting/stage_apollo_background.py`. The native game mode spawns the
+placements as replicated static mesh actors. Their original materials,
+translucency, Blueprint behavior, and the rest of the streamed level still need
+reconstruction.
+
 ## Terrain collision probe
 
 The imported meshes initially had `CTF_UseSimpleAsComplex` with no box,
