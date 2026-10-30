@@ -50,10 +50,14 @@ def main() -> int:
         old = mesh_sources.setdefault(mesh, source)
         if old != source:
             raise ValueError(f"Mesh name collides across packages: {mesh}")
+        overrides = component.get("overrideMaterials", [])
+        first_override = overrides[0] if overrides else None
         placements.append({
             "mesh": mesh,
             "owner": component["owner"],
             "component": component["name"],
+            "materialPackage": first_override.get("package") if first_override else None,
+            "materialName": first_override.get("name") if first_override else None,
             "location": component["location"],
             "rotation": component["rotation"],
             "scale": component["scale"],

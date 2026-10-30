@@ -231,7 +231,8 @@ manifest. It retains 27 components whose mesh object name matches the package
 name. Five components remain unresolved: two lighthouse beam cylinders stored
 as imports in `S_BackDrop_4`, a built-in engine plane, a `MeshNetwork` plane,
 and one empty reference. The 27 placements retain their saved component world
-position, rotation, and scale. Import these meshes with `ImportAssets` and
+position, rotation, scale, and first per-component material override. Import
+these meshes with `ImportAssets` and
 `-FortniteMatchAssetPath -nosourcecontrol`, then cook LinuxNoEditor and run
 `python3 porting/stage_apollo_background.py`. The native game mode spawns the
 placements as replicated static mesh actors. Their original materials,

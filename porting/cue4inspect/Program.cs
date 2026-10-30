@@ -482,6 +482,12 @@ try
                     mesh = mesh.Name,
                     meshPackage = mesh.IsImport && mapPackage is not null
                         ? RootImportName(mapPackage, mapPackage.ImportMap[-mesh.Index - 1]) : null,
+                    overrideMaterials = component.OverrideMaterials.Select(material => new
+                    {
+                        name = material?.Name,
+                        package = material is { IsImport: true } && mapPackage is not null
+                            ? RootImportName(mapPackage, mapPackage.ImportMap[-material.Index - 1]) : null
+                    }).ToArray(),
                     location = new[] { transform.Translation.X, transform.Translation.Y, transform.Translation.Z },
                     rotation = new[] { transform.Rotator().Pitch, transform.Rotator().Yaw, transform.Rotator().Roll },
                     scale = new[] { transform.Scale3D.X, transform.Scale3D.Y, transform.Scale3D.Z }
@@ -595,6 +601,31 @@ try
                 parent = (material as UMaterialInstance)?.Parent?.Name,
                 staticPermutation = (material as UMaterialInstance)?.bHasStaticPermutationResource
             }).ToArray(),
+            instanceParameters = packageData.GetExports().OfType<UMaterialInstanceConstant>()
+                .Select(instance => new
+                {
+                    name = instance.Name,
+                    textures = instance.TextureParameterValues.Select(value => new
+                    {
+                        parameter = value.Name,
+                        texture = value.ParameterValue?.Name,
+                        package = value.ParameterValue is { IsImport: true } && packageData is Package p
+                            ? RootImportName(p, p.ImportMap[-value.ParameterValue.Index - 1]) : null
+                    }).ToArray(),
+                    scalars = instance.ScalarParameterValues.Select(value => new
+                    {
+                        parameter = value.Name,
+                        value = value.ParameterValue
+                    }).ToArray(),
+                    vectors = instance.VectorParameterValues.Select(value => new
+                    {
+                        parameter = value.Name,
+                        value = value.ParameterValue is not { } color ? null : new[]
+                        {
+                            color.R, color.G, color.B, color.A
+                        }
+                    }).ToArray()
+                }).ToArray(),
             textureSamples = packageData.GetExports().OfType<UMaterialExpressionTextureSample>()
                 .Select(sample => new
                 {
