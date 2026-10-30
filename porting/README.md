@@ -82,11 +82,12 @@ See `server_surface.md` for the observed backend dependencies.
 
 1. **Asset access:** obtain the needed keys and mappings, read every pak index,
    and inventory package dependencies. All indexes are now readable; mappings,
-   package decoding, and dependency analysis remain. Compare UE 4.25 and 4.26
-   pak readers.
+   package decoding, and dependency analysis remain. Backport the version 10
+   path-hash reader from UE 4.26 or repack recovered packages for the runtime.
 2. **Linux client:** reconstruct game classes and content in a new UE project;
    convert or rebuild platform-specific assets; build and cook for Linux.
-   This new client will have no EAC integration.
+   The empty native project now builds, cooks, and launches a staged Linux
+   executable. It has no EAC integration.
 3. **Local server:** identify the client protocols and state machine, then
    implement the minimum local services for login, lobby, matchmaking, and a
    game session. Expand service coverage as client behavior requires.
@@ -105,10 +106,13 @@ implements gameplay. See its README for the build command.
 
 UE 4.25's original `Setup.sh` manifest failed because Epic's old dependency
 URL returned HTTP 403. The locally supplied replacement manifest let `Setup.sh`
-finish. The Linux Development `FortniteLinux` game target compiled and linked.
-Its first headless run reached engine startup, then failed loading uncooked
-engine content. The editor target is being built so the minimal project can be
-cooked. This native target still has no Fortnite gameplay or assets.
+finish. The Linux Development game and editor targets compiled. The editor
+cooked the engine Entry map for `LinuxNoEditor`, and Unreal's staging tool
+assembled a Linux distribution. In a network-isolated headless smoke test, the
+staged executable loaded `/Engine/Maps/Entry` with `GameModeBase` and exited
+with code 0. This proves the build and packaging path for the newly authored
+module. It is not a playable Fortnite client and contains no supplied game
+content, reconstructed Fortnite classes, or local server.
 
 If you have Git access to `EpicGames/UnrealEngine`, run
 `bash porting/fetch_ue425_manifest.sh` to fetch the updated `4.25` branch
