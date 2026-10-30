@@ -20,6 +20,9 @@
     { "Name": "AESHandlerComponent", "Enabled": true },
     { "Name": "Oodle", "Enabled": true },
     { "Name": "SteamVR", "Enabled": false },
-    { "Name": "UdpMessaging", "Enabled": false }
+    { "Name": "UdpMessaging", "Enabled": false },
+    { "Name": "Landmass", "Enabled": true },
+    { "Name": "GeometryProcessing", "Enabled": true },
+    { "Name": "Water", "Enabled": true }
   ]
 }

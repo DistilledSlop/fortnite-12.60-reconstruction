@@ -472,3 +472,81 @@ Verification notes:
   installed, so a grep-backed `rg` shim was placed on `PATH` outside the repo;
   and the server's redirected stdout is block-buffered, so the run used
   `stdbuf -oL`.
+
+## Water plugin backport
+
+Status: built. `FortniteLinux` (client) and `FortniteLinuxServer` both compile and link as Development with the Water plugin enabled. The map and smoke checks below pass with the new binaries. The Water classes now load, so the two `WaterSplineComponent` and `WaterSplineMetadata` class errors are gone. No map changed its enter-play status.
+
+Source: `Engine/Plugins/Experimental/Water` from the UE 4.26.0 checkout, copied to `porting/native/Plugins/Water/`. No 4.25 engine checkout has this plugin. Both engine checkouts are unchanged. The 4.26 plugin has no `Content/` directory, so its default `/Water/...` assets are not available here.
+
+Project changes: `FortniteLinux.uproject` enables `Landmass`, `GeometryProcessing` and `Water`. Niagara is not enabled because its Water data interface was removed (see below).
+
+Local changes in the plugin copy. Each is a shim for an API that exists in 4.26 and not in 4.25:
+
+- `Water.uplugin`: `WaterEditor` module removed, and the `BlueprintMaterialTextureNodes` dependency removed. The Niagara dependency is also removed.
+- `Source/Runtime/Water.Build.cs`: `DeveloperSettings` removed from the module list (the class is in Engine in 4.25). Niagara modules removed.
+- `Niagara*` (`NiagaraDataInterfaceWater.{h,cpp}`, `NiagaraWaterFunctionLibrary.{h,cpp}`) removed. They need `HasPreSimulateTick`, which 4.25 Niagara lacks.
+- `Private/SimpleSuspensionShim.h` (new): replaces `Engine/Physics/SimpleSuspension.h` (4.26 only) for `BuoyancyComponent.cpp`. Keeps the 4.26 formulas for one and two springs. Three or more springs use an equal split, which is an approximation.
+- `Private/WaterBooleanUtils.h`: the 1340-line DynamicMesh `MeshBoolean` file is replaced with a stub `BuildOceanCollisionComponents` that emits no boxes or convex sets. The ocean therefore has no generated collision in this port, and exclusion volumes are ignored.
+- `Private/GerstnerWaterWaveViewExtension.cpp`: the bodies of `SetupViewFamily` and `PreRenderView_RenderThread` are disabled. They write `FSceneView::WaterDataBuffer` and `WaterIndirectionBuffer`, which are added to `SceneView.h` in 4.26 and not in 4.25. The GPU Gerstner wave buffers are therefore not uploaded.
+- `Private/WaterBodyActor.cpp`: the `FAreaNavModifier::SetExpandTopByCellHeight` call is removed (4.26 navigation API). The `FixUpUnderwaterPostProcessMaterial` fix-up gate is set to `false`.
+- `Private/WaterBodyExclusionVolume.cpp` (editor-only code): the `SupportMultipleWaterBodiesPerExclusionVolume` fix-up gate is set to `false`.
+- `Private/WaterSubsystem.cpp`: the `UCollisionProfile::OnLoadProfileConfig` hookup and `FCollisionProfilePrivateAccessor::AddProfileTemplate` are removed. The water collision profile is not registered in this port.
+- `Private/WaterQuadTree.cpp`: `FMath::Floor` becomes `FMath::FloorToFloat`.
+- `Private/WaterVertexFactory.cpp`: a local macro, `WATER_IMPLEMENT_TEMPLATE_VERTEX_FACTORY_TYPE_EX`, mirrors the 4.25 `IMPLEMENT_VERTEX_FACTORY_TYPE_EX` with a template prefix. 4.25 has no template variant.
+
+4.26 APIs that would need engine patches for full fidelity. None were patched:
+
+- `FSceneView::WaterDataBuffer` and `WaterIndirectionBuffer` (Epic water changes in 4.26 `SceneView.h`). This is the main gap, because GPU Gerstner waves are disabled.
+- `FFortniteMainBranchObjectVersion::FixUpUnderwaterPostProcessMaterial` and `SupportMultipleWaterBodiesPerExclusionVolume`. These enum entries are not in 4.25.
+- `DynamicMesh` `Operations/MeshBoolean.h`.
+- `Engine/Physics/SimpleSuspension.h`.
+- Navigation `FAreaNavModifier::SetExpandTopByCellHeight`.
+- `UCollisionProfile::OnLoadProfileConfig` and `FCollisionProfilePrivateAccessor`.
+- `IMPLEMENT_TEMPLATE_VERTEX_FACTORY_TYPE_EX`.
+- Niagara `HasPreSimulateTick`.
+- `DeveloperSettings` as a module name.
+
+Build runs (6 of a budget of 12, all `Build.sh ... Linux Development -NoHotReload`):
+
+1. 2 errors: `SimpleSuspension.h` missing, Niagara `HasPreSimulateTick`.
+2. 9 errors: Gerstner view extension, nav modifier, Fortnite version gate, `MeshBoolean.h`.
+3. 9 errors: `FMath::Floor`, collision profile API, vertex factory macro.
+4. 1 error: vertex factory `GetType()` needs `template<>`.
+5. `FortniteLinux` links, exit 0.
+6. `FortniteLinuxServer` links, exit 0.
+
+Restage: the new `FortniteLinux` and `FortniteLinuxServer` binaries were copied into `porting/generated/linux-stage/LinuxNoEditor/FortniteLinux/Binaries/Linux/`. The stage `FortniteLinux.uproject` was replaced with the native copy. `FortniteLinux/Plugins/Water/` (uplugin and Shaders) and `Engine/Plugins/Experimental/Landmass/Landmass.uplugin` were added. The Water code is monolithic in the executable, and no plugin `.so` was produced. The cook was not rerun. BuildCookRun -archive was not run.
+
+Map results (stage, `-nullrhi -nosound -unattended -ExecCmds=Quit`). Logs are in `generated/map-stub-round/water-after/`:
+
+| Map | Before (after-final) | After (Water) |
+|---|---|---|
+| FortniteEmptyDedicated | yes (exit 0) | yes (exit 0) |
+| Skybox_Outpost_HomeBase | yes (exit 0) | yes (exit 0) |
+| Apollo_Terrain | yes, partial (exit 0) | yes, partial (exit 0) |
+| PG_Obstacle_S_3_Tower_A | no (exit 139) | no (exit 139), AsyncLoading.cpp:7910 assertion |
+| Apollo_Terrain_LS_Parent | no (exit 139), illegal path `/Water/Meshes/RiverMesh` | no (exit 139), FieldPath.cpp:275 `PathIndex <= 1` |
+| Apollo_Terrain_LS_A1 | no (exit 139), missing `/Game/FortressPhysicalMaterials/Grass` | no (exit 139), AsyncLoading.cpp:7910 assertion |
+
+Enter play: 3 of 6 before and 3 of 6 after. The two landscape tiles were staged only for their two runs and then removed. The Apollo_Terrain run was done with the tiles absent.
+
+Error counts across all six logs:
+
+- `Could not find class WaterSplineComponent`: 59 to 0.
+- `Could not find class WaterSplineMetadata`: 33 to 0.
+- `Could not find class B_FlopperSpawn_CustomSpline_C`: 18 to 18.
+- `Could not find outer SplineMeshComponent_N`: 361 to 361.
+- `Could not find outer <water body or spline name>` (new): 639 lines, all naming water bodies or splines such as `Apollo_Waterbody_*`, `Waterbody_River_*` and `B_FlopperSpawn_CustomSpline*`. The water classes now load, but their outer objects are not present in these maps.
+- Remaining class misses after the change: Blueprint `Apollo_Waterbody_*_C`, `LandscapeWaterInfo_C`, `BP_Gerstner_Wave_Controller_C`, `BP_FluidSim_FN_C`, `AIHotSpotConfig`, `BuildingActorHotSpotConfig`, `LandscapeLODStreamingProxy`.
+- `Couldn't find file for package`: 188 to 202. The new misses are the 4.26 Water default assets `/Water/Meshes/LakeMesh`, `/Water/Meshes/RiverMesh` and `/Water/Materials/MPC/MPC_Water`.
+- Counts are summed across the logs and include dependency-dump repeats, as in the earlier tables.
+
+Startup log: the server logs `Mounting plugin Water`. `WaterSubsystem` CDO construction logs `Failed to find /Water/Meshes/LakeMesh` and `RiverMesh`. These are non-fatal.
+
+Smoke test: `porting/server/smoke_join.sh` in direct mode, run with `stdbuf -oL` and the grep-backed `rg` shim on `PATH`, prints `Local UE join succeeded`. The logs show `Join succeeded` (server) and `Welcomed by server` (client). `ss -lun` showed `0.0.0.0:7777` during the run.
+
+Not verified:
+
+- The editor target was not rebuilt. `UE4Editor-Cmd` on this uproject exits 1 at a plugin dialog ("Plugin 'Oodle' failed to load because module 'OodleCompressionFormat' could not be found"). The Water plugin logged only `Mounting plugin Water`. The Water `WITH_EDITOR` paths are untested, and an editor build is needed before the next cook.
+- The Water plugin is Epic-authored source. Committing it to the repository needs a licensing check.

@@ -1,0 +1,197 @@
+diff -ruN a/Source/Runtime/Private/BuoyancyComponent.cpp b/Source/Runtime/Private/BuoyancyComponent.cpp
+--- a/Source/Runtime/Private/BuoyancyComponent.cpp	2026-10-30 04:35:47.000000000 +0000
++++ b/Source/Runtime/Private/BuoyancyComponent.cpp	2026-10-30 22:28:12.740270975 +0000
+@@ -5,7 +5,7 @@
+ #include "DrawDebugHelpers.h"
+ #include "WaterSplineComponent.h"
+ #include "WaterVersion.h"
+-#include "Physics/SimpleSuspension.h"
++#include "SimpleSuspensionShim.h"
+ 
+ TAutoConsoleVariable<int32> CVarWaterDebugBuoyancy(
+ 	TEXT("r.Water.DebugBuoyancy"),
+diff -ruN a/Source/Runtime/Private/GerstnerWaterWaveViewExtension.cpp b/Source/Runtime/Private/GerstnerWaterWaveViewExtension.cpp
+--- a/Source/Runtime/Private/GerstnerWaterWaveViewExtension.cpp	2026-10-30 04:35:47.000000000 +0000
++++ b/Source/Runtime/Private/GerstnerWaterWaveViewExtension.cpp	2026-10-30 22:30:02.644181530 +0000
+@@ -26,6 +26,7 @@
+ 
+ void FGerstnerWaterWaveViewExtension::SetupViewFamily(FSceneViewFamily& InViewFamily)
+ {
++#if 0 // UE 4.26 engine API (FSceneView::WaterDataBuffer, ERHIAccess). Disabled in the UE 4.25 port.
+ 	if (bRebuildGPUData && WaterBodies)
+ 	{
+ 		TResourceArray<FVector4> WaterIndirectionBuffer;
+@@ -110,13 +111,11 @@
+ 
+ 		bRebuildGPUData = false;
+ 	}
++#endif
+ }
+ 
+ void FGerstnerWaterWaveViewExtension::PreRenderView_RenderThread(FRHICommandListImmediate& RHICmdList, FSceneView& InView)
+ {
+-	if (DataSRV && IndirectionSRV)
+-	{
+-		InView.WaterDataBuffer = DataSRV;
+-		InView.WaterIndirectionBuffer = IndirectionSRV;
+-	}
++	// UE 4.26 engine API (FSceneView::WaterDataBuffer). Disabled in the UE 4.25 port.
++
+ }
+diff -ruN a/Source/Runtime/Private/WaterBodyActor.cpp b/Source/Runtime/Private/WaterBodyActor.cpp
+--- a/Source/Runtime/Private/WaterBodyActor.cpp	2026-10-30 04:35:47.000000000 +0000
++++ b/Source/Runtime/Private/WaterBodyActor.cpp	2026-10-30 22:30:02.644010749 +0000
+@@ -324,7 +324,7 @@
+ 			CompositeNavModifier.CreateAreaModifiers(PrimComp, WaterNavAreaClass);
+ 			for (FAreaNavModifier& AreaNavModifier : CompositeNavModifier.GetMutableAreas())
+ 			{
+-				AreaNavModifier.SetExpandTopByCellHeight(true);
++				// SetExpandTopByCellHeight is UE 4.26 only; not applied in the 4.25 port.
+ 			}
+ 
+ 			Data.Modifiers.Add(CompositeNavModifier);
+@@ -1247,7 +1247,7 @@
+ 		}
+ 	}
+ 
+-	if (GetLinkerCustomVersion(FFortniteMainBranchObjectVersion::GUID) < FFortniteMainBranchObjectVersion::FixUpUnderwaterPostProcessMaterial)
++	if (false /* FFortniteMainBranchObjectVersion::FixUpUnderwaterPostProcessMaterial: UE 4.26 only, fix-up skipped in the 4.25 port */)
+ 	{
+ 		// Get back the underwater post process material from where it was before : 
+ 		// UnderwaterPostProcessMaterial_DEPRECATED takes priority as it was used to override the material from WeightedBlendables that was set via the BP : 
+diff -ruN a/Source/Runtime/Private/WaterBodyExclusionVolume.cpp b/Source/Runtime/Private/WaterBodyExclusionVolume.cpp
+--- a/Source/Runtime/Private/WaterBodyExclusionVolume.cpp	2026-10-30 04:35:47.000000000 +0000
++++ b/Source/Runtime/Private/WaterBodyExclusionVolume.cpp	2026-10-30 22:30:02.643614811 +0000
+@@ -77,7 +77,7 @@
+ 
+ #if WITH_EDITOR
+ 	// Perform data deprecation: 
+-	if (GetLinkerCustomVersion(FFortniteMainBranchObjectVersion::GUID) < FFortniteMainBranchObjectVersion::SupportMultipleWaterBodiesPerExclusionVolume)
++	if (false /* FFortniteMainBranchObjectVersion::SupportMultipleWaterBodiesPerExclusionVolume: UE 4.26 only, fix-up skipped in the 4.25 port */)
+ 	{
+ 		if (WaterBodyToIgnore_DEPRECATED != nullptr)
+ 		{
+diff -ruN a/Source/Runtime/Private/WaterQuadTree.cpp b/Source/Runtime/Private/WaterQuadTree.cpp
+--- a/Source/Runtime/Private/WaterQuadTree.cpp	2026-10-30 04:35:47.000000000 +0000
++++ b/Source/Runtime/Private/WaterQuadTree.cpp	2026-10-30 22:31:02.455052597 +0000
+@@ -582,7 +582,7 @@
+ 	const FVector2D SampleGridWorldPosition(GetTileRegion().Min - FVector2D(GetLeafSize() * 0.5f));
+ 	const FVector2D CornerSampleGridPosition(InWorldLocationXY - SampleGridWorldPosition);
+ 	const FVector2D NormalizedGridPosition(CornerSampleGridPosition / GetLeafSize());
+-	const FVector2D CornerSampleWorldPosition00 = FVector2D(FMath::Floor(NormalizedGridPosition.X), FMath::Floor(NormalizedGridPosition.Y)) * GetLeafSize() + SampleGridWorldPosition;
++	const FVector2D CornerSampleWorldPosition00 = FVector2D(FMath::FloorToFloat(NormalizedGridPosition.X), FMath::FloorToFloat(NormalizedGridPosition.Y)) * GetLeafSize() + SampleGridWorldPosition;
+ 	
+ 	// 4 world positions to use for sampling
+ 	FVector2D CornerSampleWorldPositions[] =
+diff -ruN a/Source/Runtime/Private/WaterSubsystem.cpp b/Source/Runtime/Private/WaterSubsystem.cpp
+--- a/Source/Runtime/Private/WaterSubsystem.cpp	2026-10-30 04:35:47.000000000 +0000
++++ b/Source/Runtime/Private/WaterSubsystem.cpp	2026-10-30 22:31:02.456062905 +0000
+@@ -229,13 +229,12 @@
+ 	GetWorld()->OnBeginPostProcessSettings.AddUObject(this, &UWaterSubsystem::ComputeUnderwaterPostProcess);
+ 	GetWorld()->InsertPostProcessVolume(&UnderwaterPostProcessVolume);
+ 
+-	UCollisionProfile::Get()->OnLoadProfileConfig.AddUObject(this, &UWaterSubsystem::OnLoadProfileConfig);
++	// UCollisionProfile::OnLoadProfileConfig is UE 4.26 only; not hooked in the UE 4.25 port.
+ 	AddWaterCollisionProfile();
+ }
+ 
+ void UWaterSubsystem::Deinitialize()
+ {
+-	UCollisionProfile::Get()->OnLoadProfileConfig.RemoveAll(this);
+ 
+ 	FConsoleVariableDelegate NullCallback;
+ 	CVarShallowWaterSimulationRenderTargetSize->SetOnChangedCallback(NullCallback);
+@@ -297,7 +296,8 @@
+ #if WITH_EDITORONLY_DATA
+ 		WaterBodyCollisionProfile.HelpMessage = TEXT("Default Water Collision Profile (Created by Water Plugin)");
+ #endif
+-		FCollisionProfilePrivateAccessor::AddProfileTemplate(WaterBodyCollisionProfile);
++		// FCollisionProfilePrivateAccessor is UE 4.26 only; the water profile is not registered in the UE 4.25 port.
++		(void)WaterBodyCollisionProfile;
+ 	}
+ }
+ 
+diff -ruN a/Source/Runtime/Private/WaterVertexFactory.cpp b/Source/Runtime/Private/WaterVertexFactory.cpp
+--- a/Source/Runtime/Private/WaterVertexFactory.cpp	2026-10-30 04:35:47.000000000 +0000
++++ b/Source/Runtime/Private/WaterVertexFactory.cpp	2026-10-30 22:31:36.562164030 +0000
+@@ -74,7 +74,23 @@
+ // Always implement the basic vertex factory so that it's there for both editor and non-editor builds :
+ IMPLEMENT_TEMPLATE_TYPE_LAYOUT(template<>, TWaterVertexFactoryShaderParameters</*bWithWaterSelectionSupport = */ false>);
+ IMPLEMENT_VERTEX_FACTORY_PARAMETER_TYPE(TWaterVertexFactory</*bWithWaterSelectionSupport = */ false>, SF_Vertex, TWaterVertexFactoryShaderParameters</*bWithWaterSelectionSupport = */ false>);
+-IMPLEMENT_TEMPLATE_VERTEX_FACTORY_TYPE_EX(template<>, TWaterVertexFactory</*bWithWaterSelectionSupport = */ false>, "/Plugin/Water/Private/WaterMeshVertexFactory.ush", true, false, true, true, false, false, true);
++// UE 4.25 has no IMPLEMENT_TEMPLATE_VERTEX_FACTORY_TYPE_EX. This mirrors IMPLEMENT_VERTEX_FACTORY_TYPE_EX with a template prefix.
++#define WATER_IMPLEMENT_TEMPLATE_VERTEX_FACTORY_TYPE_EX(TemplatePrefix, FactoryClass, ShaderFilename, bUsedWithMaterials, bSupportsStaticLighting, bSupportsDynamicLighting, bPrecisePrevWorldPos, bSupportsPositionOnly, bSupportsCachingMeshDrawCommands, bSupportsPrimitiveIdStream) \
++	TemplatePrefix FVertexFactoryType FactoryClass::StaticType( \
++		TEXT("TWaterVertexFactory"), \
++		TEXT(ShaderFilename), \
++		bUsedWithMaterials, \
++		bSupportsStaticLighting, \
++		bSupportsDynamicLighting, \
++		bPrecisePrevWorldPos, \
++		bSupportsPositionOnly, \
++		bSupportsCachingMeshDrawCommands, \
++		bSupportsPrimitiveIdStream, \
++		IMPLEMENT_VERTEX_FACTORY_VTABLE(FactoryClass) \
++		); \
++	TemplatePrefix FVertexFactoryType* FactoryClass::GetType() const { return &StaticType; }
++
++WATER_IMPLEMENT_TEMPLATE_VERTEX_FACTORY_TYPE_EX(template<>, TWaterVertexFactory</*bWithWaterSelectionSupport = */ false>, "/Plugin/Water/Private/WaterMeshVertexFactory.ush", true, false, true, true, false, false, true);
+ 
+ #if WITH_WATER_SELECTION_SUPPORT
+ 
+diff -ruN a/Source/Runtime/Water.Build.cs b/Source/Runtime/Water.Build.cs
+--- a/Source/Runtime/Water.Build.cs	2026-10-30 04:35:47.000000000 +0000
++++ b/Source/Runtime/Water.Build.cs	2026-10-30 22:28:12.739841525 +0000
+@@ -25,17 +25,13 @@
+ 		PrivateDependencyModuleNames.AddRange(
+ 			new string[] {
+ 				"RenderCore",
+-				"NiagaraCore",
+-				"Niagara",
+-				"NiagaraShader",
+ 				"Projects",
+ 				"Landscape",
+ 				"GeometricObjects",
+ 				"DynamicMesh",
+ 				"ChaosCore",
+ 				"Chaos",
+-				"PhysicsCore",
+-				"DeveloperSettings"
++				"PhysicsCore"
+ 			}
+ 		);
+ 
+diff -ruN a/Water.uplugin b/Water.uplugin
+--- a/Water.uplugin	2026-10-30 04:35:47.000000000 +0000
++++ b/Water.uplugin	2026-10-30 22:28:12.740007795 +0000
+@@ -19,11 +19,6 @@
+ 			"Name": "Water",
+ 			"Type": "Runtime",
+ 			"LoadingPhase": "PostConfigInit"
+-		},
+-		{
+-			"Name": "WaterEditor",
+-			"Type": "Editor",
+-			"LoadingPhase": "PostEngineInit"
+ 		}
+ 	],
+ 	"Plugins": [
+@@ -32,16 +27,8 @@
+ 			"Enabled": true
+ 		},
+ 		{
+-			"Name": "Niagara",
+-			"Enabled": true
+-		},
+-		{
+ 			"Name": "GeometryProcessing",
+ 			"Enabled": true
+-		},
+-		{
+-			"Name": "BlueprintMaterialTextureNodes",
+-			"Enabled": true
+ 		}
+ 	]
+-}
+\ No newline at end of file
++}

@@ -141,3 +141,11 @@ Without either variable the direct connection still works. Passing
 `-FortniteOriginalClient` skips the invented Apollo stand-in actors in
 `AFortGameModeAthena::StartPlay`.
 
+
+## Water plugin (UE 4.26 backport)
+
+`Plugins/Water/` is Epic's 4.26 Experimental/Water plugin adapted to 4.25 and stays out of Git.
+Recreate it with `bash porting/prepare_water_plugin.sh` (copies from `/opt/fortnite/UnrealEngine4260`,
+then applies `patches/ue425-water-plugin-*`). It provides `/Script/Water` classes such as
+`WaterSplineComponent` for the cooked Apollo maps. GPU Gerstner wave data, ocean collision and
+exclusion volumes are stubbed (see `map_compatibility.md`, "Water plugin backport").
