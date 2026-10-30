@@ -72,3 +72,30 @@ public:
     UPROPERTY(VisibleAnywhere)
     UWorldTileManager* WorldTileManager;
 };
+
+UCLASS()
+class FORTNITEGAME_API AFortSkydivingShadowProxy : public AActor
+{
+    GENERATED_BODY()
+
+public:
+    UFUNCTION(BlueprintNativeEvent)
+    void ShowShadowProxy();
+    virtual void ShowShadowProxy_Implementation();
+
+    UFUNCTION(BlueprintNativeEvent)
+    void HideShadowProxy();
+    virtual void HideShadowProxy_Implementation();
+};
+
+UCLASS()
+class FORTNITEGAME_API AFortSafeZoneStorm : public AActor
+{
+    GENERATED_BODY()
+};
+
+UCLASS()
+class FORTNITEGAME_API AFortAthenaMapInfo : public AActor
+{
+    GENERATED_BODY()
+};

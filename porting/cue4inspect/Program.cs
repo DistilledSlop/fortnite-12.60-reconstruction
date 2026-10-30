@@ -26,13 +26,15 @@ bool scanMaps = args.Contains("--scan-maps");
 bool scanNative = args.Contains("--scan-native");
 bool allKeys = args.Contains("--all-keys");
 bool savePackage = args.Contains("--save-package");
+bool saveList = args.Contains("--save-list");
 bool saveFolder = args.Contains("--save-folder");
 bool saveClosure = args.Contains("--save-closure");
 bool exportGlb = args.Contains("--export-glb");
 bool exportPng = args.Contains("--export-png");
 bool materialReport = args.Contains("--material-report");
+bool functionReport = args.Contains("--function-report");
 bool ue426 = args.Contains("--ue426");
-Globals.FatalObjectSerializationErrors = exportGlb || exportPng || materialReport;
+Globals.FatalObjectSerializationErrors = exportGlb || exportPng || materialReport || functionReport;
 string? maxArgument = args.SingleOrDefault(arg => arg.StartsWith("--max-packages=", StringComparison.Ordinal));
 int maxPackages = 250;
 if (maxArgument is not null && (!int.TryParse(maxArgument[15..], out maxPackages) || maxPackages < 1))
@@ -40,16 +42,18 @@ if (maxArgument is not null && (!int.TryParse(maxArgument[15..], out maxPackages
     Console.Error.WriteLine("--max-packages must be a positive integer");
     return 2;
 }
-string[] positional = args.Where(arg => arg != maxArgument && arg is not ("--all" or "--pseudo" or "--imports" or "--registry" or "--scan-maps" or "--scan-native" or "--all-keys" or "--save-package" or "--save-folder" or "--save-closure" or "--export-glb" or "--export-png" or "--material-report" or "--ue426")).ToArray();
+string[] positional = args.Where(arg => arg != maxArgument && arg is not ("--all" or "--pseudo" or "--imports" or "--registry" or "--scan-maps" or "--scan-native" or "--all-keys" or "--save-package" or "--save-list" or "--save-folder" or "--save-closure" or "--export-glb" or "--export-png" or "--material-report" or "--function-report" or "--ue426")).ToArray();
 bool packageLess = registryMode || scanMaps || scanNative;
 if (new[] { registryMode, scanMaps, scanNative }.Count(mode => mode) > 1 || (packageLess ? positional.Length > 1 : positional.Length is < 1 or > 2))
 {
     Console.Error.WriteLine("Usage: Cue4Inspect <asset-path-without-extension> [pak-directory] [--all] [--pseudo] [--imports] [--save-package] [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect <folder-prefix> [pak-directory] --save-folder [--all-keys]");
+    Console.Error.WriteLine("   or: Cue4Inspect <newline-list-file> [pak-directory] --save-list [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect <asset-path> [pak-directory] --save-closure [--max-packages=250] [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect <static-mesh-path> [pak-directory] --export-glb [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect <texture-path> [pak-directory] --export-png [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect <material-path> [pak-directory] --material-report [--all-keys]");
+    Console.Error.WriteLine("   or: Cue4Inspect <blueprint-path> [pak-directory] --function-report [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect --registry [pak-directory] [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect --scan-maps [pak-directory] [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect --scan-native [pak-directory] [--all-keys]");
@@ -212,12 +216,78 @@ try
         return 0;
     }
 
+    if (saveList)
+    {
+        var listPath = Path.GetFullPath(assetPath!);
+        var packages = File.ReadLines(listPath)
+            .Select(line => line.Trim())
+            .Where(line => line.Length > 0 && !line.StartsWith('#'))
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .ToArray();
+        int failed = 0;
+        foreach (var package in packages)
+        {
+            if (!(package.StartsWith("FortniteGame/Content/", StringComparison.Ordinal) ||
+                  package.StartsWith("Engine/Content/", StringComparison.Ordinal)) ||
+                package.Split('/').Any(part => part is ".." or "."))
+            {
+                Console.Error.WriteLine($"Unsafe package path: {package}");
+                failed++;
+                continue;
+            }
+            try
+            {
+                SaveRecoveredFiles(provider.SavePackage(package));
+            }
+            catch (Exception error)
+            {
+                Console.Error.WriteLine($"Could not recover {package}: {error.GetType().Name}: {error.Message}");
+                failed++;
+            }
+        }
+        Console.Error.WriteLine($"List recovery: {packages.Length - failed}/{packages.Length} packages");
+        return failed == 0 ? 0 : 1;
+    }
+
     if (savePackage)
     {
         SaveRecoveredFiles(provider.SavePackage(assetPath!));
     }
 
     var packageData = provider.LoadPackage(assetPath!);
+    if (functionReport)
+    {
+        var functionExports = packageData.GetExports().ToArray();
+        Console.WriteLine(JsonSerializer.Serialize(new
+        {
+            path = assetPath,
+            classes = functionExports.OfType<UClass>().Select(blueprint => new
+            {
+                name = blueprint.Name,
+                super = blueprint.SuperStruct.Name,
+                properties = blueprint.ChildProperties?.Select(property => new
+                {
+                    name = property.Name.Text,
+                    type = property.GetType().Name
+                }).ToArray()
+            }).ToArray(),
+            functions = functionExports.OfType<UFunction>().Select(function => new
+            {
+                name = function.Name,
+                super = function.SuperStruct.Name,
+                flags = function.FunctionFlags.ToString(),
+                parameters = function.ChildProperties?.OfType<FProperty>()
+                    .Where(property => property.PropertyFlags.HasFlag(EPropertyFlags.Parm))
+                    .Select(property => new
+                    {
+                        name = property.Name.Text,
+                        type = property.GetType().Name,
+                        flags = property.PropertyFlags.ToString()
+                    }).ToArray()
+            }).ToArray()
+        }, new JsonSerializerOptions { WriteIndented = true }));
+        return 0;
+    }
     if (exportPng)
     {
         var texture = packageData.GetExports().OfType<UTexture2D>().FirstOrDefault()

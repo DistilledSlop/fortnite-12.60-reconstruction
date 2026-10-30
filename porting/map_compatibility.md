@@ -62,3 +62,15 @@ four refer to cooked Blueprint classes in unstaged packages:
 this partial state, but 108 package lookup errors remain, including streaming
 landscape levels, virtual textures, materials, and gameplay data. It does not
 yet represent a working Apollo island.
+
+The four direct Blueprint packages were then recovered and staged. This
+exposed their native parents and functions. Cooked function metadata confirms
+that `BP_DisplayShadowProxy_01_C` overrides zero-parameter
+`ShowShadowProxy` and `HideShadowProxy` events from
+`FortSkydivingShadowProxy`; the other parents are `FortSafeZoneStorm` and
+`FortAthenaMapInfo`. Initial native parent classes and those two event
+declarations were added. The load now reaches further into the Blueprints but
+still fails on further native classes and methods, including
+`FortKismetLibrary`, `FortAsyncAction_AuthorityMatchReady`, and imported
+default scene components. These declarations are load compatibility work,
+not recovered Fortnite behavior.

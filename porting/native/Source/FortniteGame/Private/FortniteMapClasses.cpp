@@ -6,3 +6,6 @@ AFortWorldManager::AFortWorldManager()
     RootComponent = MySceneComponent;
     WorldTileManager = CreateDefaultSubobject<UWorldTileManager>(TEXT("WorldTileManager_0"));
 }
+
+void AFortSkydivingShadowProxy::ShowShadowProxy_Implementation() {}
+void AFortSkydivingShadowProxy::HideShadowProxy_Implementation() {}

@@ -82,6 +82,11 @@ asset and dependency graph.
 Use `--save-folder` with a package folder prefix to recover a subtree with one
 key prompt. It recovered 292 packages from the sound-class folder in a local
 test. All recovered files stay ignored by Git.
+Use `--save-list` with a newline file of package paths to recover selected
+packages with one key prompt. `python3 porting/stage_recovered.py <same-list>`
+copies complete recovered packages to the ignored Linux stage, skipping any
+package whose staged files already exist. This avoids mixing Windows cooked
+payloads with converted Linux packages at the same path.
 Use `--imports` on a package to list its native `/Script/` imports, including
 classes and functions required by cooked Blueprints. Redirect large results
 to ignored generated output.
@@ -99,6 +104,9 @@ and parsed a material package from `pakchunk1002` in a local test.
 asset registry and reports asset classes and dependency-node counts. The main
 registry reports 191,666 asset records, including 22,211 Blueprints, 2,379
 animation Blueprints, 2,175 widget Blueprints, and 3,694 worlds.
+Use `--function-report` on a cooked Blueprint to report its native superclass,
+function overrides, flags, and serialized parameter types. The report is a
+reconstruction aid; it does not include native C++ implementations.
 
 See `server_surface.md` for the observed backend dependencies and
 `server/README.md` for the local HTTP probe.
