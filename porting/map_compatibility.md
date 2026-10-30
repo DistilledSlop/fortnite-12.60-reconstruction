@@ -301,9 +301,9 @@ parent samples the already recovered `T_Apollo_Cliff_D_01`, mixes
 Grass Low, Grass and Grass2 by height and patch noise, blends to cliff by
 slope, and applies wrapped sun shading. The grass colors, thresholds and
 contrast values from the `M_BackDrop_1`, `M_BackDrop_3` and `M_BackDrop_4`
-instances are applied (22 parameters applied across the 7 instances in this
-batch; 8 had no counterpart: 4x `RefractionDepthBias`, `Rocks 1 Scale`,
-`Rocks2 Scale`, `Contrast rocks`, `Offset`). Parent defaults the cook did not
+instances are applied: 15 backdrop parameters applied, 6 without counterpart
+(3x `RefractionDepthBias`, `Rocks 1 Scale`, `Rocks2 Scale`, `Contrast rocks`).
+With the cloud instance, 22 applied and 8 unmatched in the batch. Parent defaults the cook did not
 report (grass tone height, waterline height and blur) are my assumptions. The
 `BackDrop3_N` and `BackDrop4_N` normal textures are not extracted and unused.
 `M_BackDrop_2`, `M_BackDrop_6`, `M_BackDrop_7`, `M_SnowTops`, the `1B` and `4B`
@@ -315,7 +315,7 @@ At run time `AApolloBackgroundMesh` replicates the component's original
 override package and, per mesh slot, looks for a rebuilt material at the
 original path before falling back to the placeholder. A software-Vulkan join
 (`capture_apollo_visual.sh`) logged 27/27 placements on server and client, with
-rebuilt materials on all 16 cloud actors and on 9 backdrop actors
+rebuilt materials on all 16 cloud actors and on 10 backdrop actors
 (`S_BackDrop_1`, `_3`, `_4`). In a fixed capture, the cloud region's share of
 pixels darker than 80/255 fell from 22.7% to 0.0% and its mean brightness rose
 from 165 to 211: the dark flat-lit slabs became soft white clouds
