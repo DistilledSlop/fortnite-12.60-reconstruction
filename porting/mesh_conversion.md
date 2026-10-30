@@ -123,5 +123,7 @@ replacements staged, `/Game/Maps/Skybox/Skybox_Outpost_HomeBase` reached
 map has no suitable player start. This validates deserialization and level
 startup, not visual parity or Fortnite gameplay. With corrected meshes and
 current shader archives, the map also enters play under Vulkan on Mesa
-Lavapipe via Xvfb, creates a swapchain, and exits 0. The runtime diagnostic
+Lavapipe via Xvfb, creates a swapchain, and exits 0. The navigation-system
+ensure disappeared after `UFortNavSystem` was added; the class currently
+inherits UE behavior without Fortnite-specific logic. The runtime diagnostic
 `-FortniteProbeMapMeshes` logs actors whose static-mesh bounds contain NaNs.

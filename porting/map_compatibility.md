@@ -37,5 +37,8 @@ import at their original `/Game` paths, and cook for Linux; see
 `mesh_conversion.md`. The Linux runtime directly loaded one converted mesh.
 After all four converted meshes and two reconstructed materials were staged,
 the map entered play in the headless Linux runtime and exited 0. The materials
-are visual approximations; a navigation-system ensure was handled during
-load, and no Fortnite gameplay is present. See `mesh_conversion.md`.
+are visual approximations, and no Fortnite gameplay is present. The recovered
+config names `/Script/FortniteGame.FortNavSystem`; defining an initial native
+subclass of UE's `UNavigationSystemV1` removed the navigation-system ensure.
+The map now also enters play under Vulkan with corrected mesh imports and
+current shader archives. See `mesh_conversion.md`.
