@@ -1,0 +1,14 @@
+# Track only work created for the Linux port. The supplied Fortnite tree stays local.
+/*
+!/.gitignore
+!/.gitattributes
+!/.githooks/
+!/porting/
+
+# Generated output, build products, and temporary files.
+/porting/generated/
+/porting/build/
+/porting/.venv/
+**/__pycache__/
+*.pyc
+*.log
