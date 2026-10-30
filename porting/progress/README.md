@@ -35,8 +35,8 @@ python3 porting/progress/progress.py --no-record # render HEAD without touching 
 bash porting/progress/serve.sh                  # http://192.168.4.186:8765/ and localhost
 ```
 
-`--seed` replays about 55 commits in about five seconds. It is the only way to refresh
-history for old commits.
+`--seed` replays every commit (about six seconds for 59 commits). It is the only way to
+refresh history for old commits. A normal run measures only HEAD.
 
 ## Editing estimates
 
