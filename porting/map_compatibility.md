@@ -209,10 +209,20 @@ run created a swapchain, loaded all 61 meshes, advanced to frame 1, and
 exited 0. Its visible appearance was not inspected.
 
 The original streamed level packages are still absent, so Apollo logs lookup
-errors for them. The reconstructed meshes have one mesh LOD and mostly generic
-materials; D4 has a first baked texture proxy described below. Gameplay actors,
+errors for them. The reconstructed meshes have one mesh LOD and baked visual
+proxy materials described below. Gameplay actors,
 props, foliage, water, navigation, and Fortnite rules are still missing. This
 grid milestone does not make the island playable.
+
+The inspector's `--actor-report` mode records exported actor classes and
+static mesh component references with saved transforms. On the cooked
+`Apollo_Background` streaming level it found 83 exports, including 27
+`FortStaticMeshActor` instances and 32 static mesh components. Those
+components refer to 11 distinct `/Game` mesh packages: cloud sheets,
+backdrops, and auroras. The level also contains Blueprint actors and a
+`MeshNetwork` component absent from the current Linux project. This report
+is a placement inventory for reconstructing the background, not a Linux
+load of that streamed level.
 
 ## Terrain collision probe
 

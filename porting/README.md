@@ -73,6 +73,10 @@ client and the separate Unreal Engine source checkout remain outside Git.
   project still requires substantial game and plugin code reconstruction.
 - The supplied client does not include the Fortnite project source, editor
   assets, or a Linux executable.
+- `cue4inspect --actor-report` now inventories static mesh references and
+  saved transforms in cooked maps. `Apollo_Background` has 32 static mesh
+  components referencing 11 distinct game mesh packages; its sky and
+  Blueprint behavior still need reconstruction.
 - An adjacent FModel/CUE4Parse checkout can serve as a reference for pak and
   asset parsing. The user's `/opt/fortnite/assetextract.md` is also local
   reference material; neither checkout nor the article belongs in this Git

@@ -7,6 +7,7 @@ using CUE4Parse.UE4.Assets.Exports.StaticMesh;
 using CUE4Parse.UE4.Assets.Exports.Actor;
 using CUE4Parse.UE4.Assets.Exports.Component.Landscape;
 using CUE4Parse.UE4.Assets.Exports.Component;
+using CUE4Parse.UE4.Assets.Exports.Component.StaticMesh;
 using CUE4Parse.UE4.Assets.Exports.Material;
 using CUE4Parse.UE4.Assets.Exports.Texture;
 using CUE4Parse.UE4.Objects.Core.Misc;
@@ -37,6 +38,7 @@ bool exportLandscape = args.Contains("--export-landscape");
 bool exportLandscapeGrid = args.Contains("--export-landscape-grid");
 bool exportLandscapeWeightmapGrid = args.Contains("--export-landscape-weightmap-grid");
 bool landscapeReport = args.Contains("--landscape-report");
+bool actorReport = args.Contains("--actor-report");
 bool exportPng = args.Contains("--export-png");
 bool exportLandscapeWeightmaps = args.Contains("--export-landscape-weightmaps");
 bool materialReport = args.Contains("--material-report");
@@ -45,7 +47,7 @@ bool versionReport = args.Contains("--versions");
 bool sizeList = args.Contains("--sizes");
 bool ue426 = args.Contains("--ue426");
 bool loose = args.Contains("--loose");
-Globals.FatalObjectSerializationErrors = exportGlb || exportLandscape || exportLandscapeGrid || exportLandscapeWeightmapGrid || exportPng || exportLandscapeWeightmaps || materialReport || functionReport || landscapeReport;
+Globals.FatalObjectSerializationErrors = exportGlb || exportLandscape || exportLandscapeGrid || exportLandscapeWeightmapGrid || exportPng || exportLandscapeWeightmaps || materialReport || functionReport || landscapeReport || actorReport;
 string? maxArgument = args.SingleOrDefault(arg => arg.StartsWith("--max-packages=", StringComparison.Ordinal));
 int maxPackages = 250;
 if (maxArgument is not null && (!int.TryParse(maxArgument[15..], out maxPackages) || maxPackages < 1))
@@ -53,7 +55,7 @@ if (maxArgument is not null && (!int.TryParse(maxArgument[15..], out maxPackages
     Console.Error.WriteLine("--max-packages must be a positive integer");
     return 2;
 }
-string[] positional = args.Where(arg => arg != maxArgument && arg is not ("--all" or "--pseudo" or "--imports" or "--registry" or "--scan-maps" or "--scan-native" or "--all-keys" or "--save-package" or "--save-list" or "--sizes" or "--save-folder" or "--save-closure" or "--export-glb" or "--export-landscape" or "--export-landscape-grid" or "--export-landscape-weightmap-grid" or "--export-png" or "--export-landscape-weightmaps" or "--material-report" or "--function-report" or "--landscape-report" or "--versions" or "--ue426" or "--loose")).ToArray();
+string[] positional = args.Where(arg => arg != maxArgument && arg is not ("--all" or "--pseudo" or "--imports" or "--registry" or "--scan-maps" or "--scan-native" or "--all-keys" or "--save-package" or "--save-list" or "--sizes" or "--save-folder" or "--save-closure" or "--export-glb" or "--export-landscape" or "--export-landscape-grid" or "--export-landscape-weightmap-grid" or "--export-png" or "--export-landscape-weightmaps" or "--material-report" or "--function-report" or "--landscape-report" or "--actor-report" or "--versions" or "--ue426" or "--loose")).ToArray();
 bool packageLess = registryMode || scanMaps || scanNative || exportLandscapeGrid || exportLandscapeWeightmapGrid;
 if (new[] { registryMode, scanMaps, scanNative, exportLandscapeGrid, exportLandscapeWeightmapGrid }.Count(mode => mode) > 1 || (packageLess ? positional.Length > 1 : positional.Length is < 1 or > 2))
 {
@@ -71,6 +73,7 @@ if (new[] { registryMode, scanMaps, scanNative, exportLandscapeGrid, exportLands
     Console.Error.WriteLine("   or: Cue4Inspect <landscape-map-path> [source-directory] --export-landscape-weightmaps [--loose]");
     Console.Error.WriteLine("   or: Cue4Inspect <material-path> [pak-directory] --material-report [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect <landscape-map-path> [pak-directory] --landscape-report [--all-keys]");
+    Console.Error.WriteLine("   or: Cue4Inspect <map-path> [pak-directory] --actor-report [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect <blueprint-path> [pak-directory] --function-report [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect <package-path> [pak-directory] --versions [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect --registry [pak-directory] [--all-keys]");
@@ -453,6 +456,36 @@ try
                         type = property.GetType().Name,
                         flags = property.PropertyFlags.ToString()
                     }).ToArray()
+            }).ToArray()
+        }, new JsonSerializerOptions { WriteIndented = true }));
+        return 0;
+    }
+    if (actorReport)
+    {
+        var mapExports = packageData.GetExports().ToArray();
+        var mapPackage = packageData as Package;
+        Console.WriteLine(JsonSerializer.Serialize(new
+        {
+            path = assetPath,
+            exportTypes = mapExports.GroupBy(item => item.ExportType)
+                .OrderByDescending(group => group.Count())
+                .Select(group => new { type = group.Key, count = group.Count() }).ToArray(),
+            staticMeshComponents = mapExports.OfType<UStaticMeshComponent>().Select(component =>
+            {
+                var mesh = component.GetStaticMesh();
+                var transform = component.GetComponentTransform();
+                return new
+                {
+                    name = component.Name,
+                    path = component.GetPathName(),
+                    owner = component.GetTypedOuter<AActor>()?.Name ?? component.Outer?.Name.Text,
+                    mesh = mesh.Name,
+                    meshPackage = mesh.IsImport && mapPackage is not null
+                        ? RootImportName(mapPackage, mapPackage.ImportMap[-mesh.Index - 1]) : null,
+                    location = new[] { transform.Translation.X, transform.Translation.Y, transform.Translation.Z },
+                    rotation = new[] { transform.Rotator().Pitch, transform.Rotator().Yaw, transform.Rotator().Roll },
+                    scale = new[] { transform.Scale3D.X, transform.Scale3D.Y, transform.Scale3D.Z }
+                };
             }).ToArray()
         }, new JsonSerializerOptions { WriteIndented = true }));
         return 0;
