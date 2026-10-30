@@ -669,6 +669,11 @@ code{font-size:.9em}
 .swatch{display:inline-block;width:18px;height:18px;border-radius:3px;border:1px solid var(--line)}
 .tm-wrap{width:100%}
 .tm-wrap svg{display:block;width:100%;height:auto}
+@media (max-width:640px){
+  /* Keep tile labels legible: the chart scrolls inside its own box, the page does not. */
+  .tm-wrap{overflow-x:auto}
+  .tm-wrap svg{min-width:760px}
+}
 table{width:100%;border-collapse:collapse;font-size:.9rem}
 th,td{text-align:left;padding:5px 6px;border-bottom:1px solid var(--line);vertical-align:top}
 th{color:var(--ink2);font-weight:600}
