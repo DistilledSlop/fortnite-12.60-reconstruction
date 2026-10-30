@@ -23,7 +23,10 @@ Class names are NOT in the exe as plaintext next to these records. Each block
 is emitted with name null unless --name-map supplies a block-VA-to-name JSON.
 
 Usage:
-  python3 -I porting/extract_reflection.py [--exe PATH] [--out PATH] [--name-map JSON]
+  python3 -I porting/extract_reflection.py [--exe PATH] [--out PATH] [--name-map JSON] [--all-groups]
+
+--all-groups keeps every dependency-0 group (for engine classes such as AActor); its output
+list is not limited to Fort/Athena names. Write it to a scratch path.
 """
 import argparse
 import collections
@@ -169,8 +172,9 @@ def scan_class_blocks(img):
 
 
 def scan_function_params(img):
-    """FFunctionParams is 72 bytes: 7 pointers, NumProperties, ObjectFlags, FunctionFlags, RPCId, RPCResponseId.
-    Returns dict NameUTF8 VA -> list of (block VA, FunctionFlags)."""
+    """FFunctionParams is 72 bytes: OuterFunc, SuperFunc, NameUTF8, OwningClassName, DelegateName, StructureSize,
+    PropertyArray, NumProperties(i32 @56), ObjectFlags(u32 @60), FunctionFlags(u32 @64), RPCId, RPCResponseId.
+    Returns dict NameUTF8 VA -> list of candidate records (one per FFunctionParams that carries that name)."""
     m = img.m
     by_name = collections.defaultdict(list)
     for s in img.data_sections():
@@ -192,8 +196,31 @@ def scan_function_params(img):
                 continue
             if not img.cstr(name):
                 continue
-            by_name[name].append((base_va + i * 8, funcf))
+            by_name[name].append({
+                "block": base_va + i * 8,
+                "outer_fn": arr[i + 0] or None,
+                "owning_class": img.cstr(arr[i + 3]) if arr[i + 3] else None,
+                "flags": funcf,
+                "prop_arr": arr[i + 6] or None,
+                "nprop": nprop,
+            })
     return by_name
+
+
+# Kind -> pointer fields that follow the Offset (FPropertyParamsBaseWithOffset) in the param struct.
+# Offsets are from the start of the param struct (EPropertyGenFlags kinds, UObjectGlobals.h, UE 4.25).
+TYPE_REF_FIELDS = {
+    "Object": [("class", 40)],
+    "WeakObject": [("class", 40)],
+    "LazyObject": [("class", 40)],
+    "SoftObject": [("class", 40)],
+    "Class": [("meta_class", 40), ("class", 48)],
+    "SoftClass": [("meta_class", 40)],
+    "Interface": [("interface_class", 40)],
+    "Struct": [("struct", 40)],
+    "Enum": [("enum", 40)],
+    "Byte": [("enum", 40)],
+}
 
 
 def decode_props(img, prop_arr_va, nprop):
@@ -223,15 +250,28 @@ def decode_props(img, prop_arr_va, nprop):
             elem, outer = struct.unpack_from("<IQ", img.m, o + 36)
             entry["element_size"] = elem
             entry["size_of_outer"] = outer
+            # FBoolPropertyParams::SetBitFunc is non-null only for bitfield members (uint8 X : 1).
+            set_bit = struct.unpack_from("<Q", img.m, o + 48)[0]
+            entry["bitfield"] = bool(set_bit)
             entry["offset"] = None
         else:
             entry["offset"] = struct.unpack_from("<i", img.m, o + 36)[0]
+        refs = {}
+        for key, field_off in TYPE_REF_FIELDS.get(kind, []):
+            fn = struct.unpack_from("<Q", img.m, o + field_off)[0]
+            if fn:
+                refs[key] = "0x%x" % fn
+        if refs:
+            entry["type_refs"] = refs
         props.append(entry)
     # array inner entries follow their outer Array property with the same name and no flags
     for j in range(1, len(props)):
         a, b = props[j - 1], props[j]
         if a.get("kind") == "Array" and b.get("name") == a.get("name") and not b.get("replicated"):
             b["array_inner_of"] = a.get("name")
+        # enum properties are followed by an "UnderlyingType" Byte record with no flags
+        if a.get("kind") == "Enum" and b.get("name") == "UnderlyingType" and b.get("kind") == "Byte":
+            b["enum_underlying_of"] = a.get("name")
     return props
 
 
@@ -252,7 +292,7 @@ def decode_class(img, block_off, fn_by_name):
             cfn, nameva = struct.unpack_from("<QQ", m, fo)
             name = img.cstr(nameva)
             cands = fn_by_name.get(nameva, [])
-            flags = sorted({f for _, f in cands})
+            flags = sorted({c["flags"] for c in cands})
             entry = {"name": name, "create_func": "0x%x" % cfn, "flags": ["0x%x" % f for f in flags]}
             if len(flags) == 1:
                 f = flags[0]
@@ -264,6 +304,15 @@ def decode_class(img, block_off, fn_by_name):
             else:
                 entry["replicated_function"] = None
                 entry["note"] = "ambiguous: several FFunctionParams share this name pointer"
+            outers = sorted({c["outer_fn"] for c in cands if c["outer_fn"]})
+            if len(outers) == 1:
+                entry["outer_fn"] = "0x%x" % outers[0]
+            # Parameters are decoded only when every candidate agrees on the same parameter table.
+            shapes = {(c["flags"], c["prop_arr"], c["nprop"]) for c in cands}
+            if len(shapes) == 1 and cands[0]["prop_arr"]:
+                entry["params"] = decode_props(img, cands[0]["prop_arr"], cands[0]["nprop"])
+            elif len(shapes) > 1:
+                entry["params_note"] = "ambiguous: candidates disagree on parameter table"
             funcs.append(entry)
     props = decode_props(img, prop_p, nProp) if prop_p else []
     cfg_name = img.cstr(cfg) if cfg else None
@@ -301,6 +350,9 @@ def main():
     ap.add_argument("--exe", default=DEFAULT_EXE)
     ap.add_argument("--out", default=DEFAULT_OUT)
     ap.add_argument("--name-map", default=None, help="optional JSON {block_va: class_name}")
+    ap.add_argument("--all-groups", action="store_true",
+                    help="emit every class block (all dependency-0 groups, no Fort/Athena name filter). "
+                         "Needed for engine classes such as AActor; use a separate --out path.")
     args = ap.parse_args()
 
     img = Image(args.exe)
@@ -336,7 +388,7 @@ def main():
     summary = []
     classes = []
     for key, offs in sorted(groups.items(), key=lambda kv: -len(kv[1])):
-        if key is None or len(offs) < 20:
+        if not args.all_groups and (key is None or len(offs) < 20):
             continue
         blocks = [decode_class(img, o, fn_by_name) for o in offs]
         fort_hits = 0
@@ -346,15 +398,15 @@ def main():
                          [p["name"] for p in blk["properties"] if p.get("name")]
             fort_hits += sum(1 for n in names_here if FORT_TOKEN.search(n))
             rep_blocks += 1 if blk["replicated_properties"] else 0
-        summary.append({"dependency0_fn": "0x%x" % key, "class_blocks": len(offs),
+        summary.append({"dependency0_fn": "0x%x" % key if key else None, "class_blocks": len(offs),
                         "fort_or_athena_names": fort_hits, "blocks_with_replicated_props": rep_blocks})
-        if fort_hits == 0:
+        if fort_hits == 0 and not args.all_groups:
             continue
         for blk in blocks:
             if blk["block_va"].lower() in names:
                 blk["name"] = names[blk["block_va"].lower()]
                 blk["name_status"] = "from --name-map"
-            blk["dependency0_fn"] = "0x%x" % key
+            blk["dependency0_fn"] = "0x%x" % key if key else None
             classes.append(blk)
     classes.sort(key=lambda c: int(c["block_va"], 16))
 
@@ -371,6 +423,7 @@ def main():
         "module_membership": "unresolved: dependency0 groups are not mapped to module names by this script",
         "package_record_/Script/FortniteGame": pkg_info,
         "all_class_candidates": len(cand_offs),
+        "all_groups": args.all_groups,
         "dependency0_groups": summary,
         "targets": target_status,
         "classes_in_groups_with_fort_names": classes,
