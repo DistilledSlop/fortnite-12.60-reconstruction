@@ -2,6 +2,9 @@
 
 #include "Engine/LevelScriptActor.h"
 #include "Engine/StaticMeshActor.h"
+#include "GameFramework/Actor.h"
+#include "Components/ActorComponent.h"
+#include "Components/SceneComponent.h"
 #include "GameFramework/WorldSettings.h"
 #include "NavAreas/NavAreaMeta.h"
 #include "NavigationSystem.h"
@@ -39,4 +42,33 @@ UCLASS()
 class FORTNITEGAME_API UFortNavSystem : public UNavigationSystemV1
 {
     GENERATED_BODY()
+};
+
+// The Apollo persistent level serializes these manager objects. Their
+// Fortnite gameplay responsibilities are still to be recovered.
+UCLASS()
+class FORTNITEGAME_API AFortPoiManager : public AActor
+{
+    GENERATED_BODY()
+};
+
+UCLASS()
+class FORTNITEGAME_API UWorldTileManager : public UActorComponent
+{
+    GENERATED_BODY()
+};
+
+UCLASS()
+class FORTNITEGAME_API AFortWorldManager : public AActor
+{
+    GENERATED_BODY()
+
+public:
+    AFortWorldManager();
+
+    UPROPERTY(VisibleAnywhere)
+    USceneComponent* MySceneComponent;
+
+    UPROPERTY(VisibleAnywhere)
+    UWorldTileManager* WorldTileManager;
 };

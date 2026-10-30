@@ -23,6 +23,7 @@ bool showPseudo = args.Contains("--pseudo");
 bool showImports = args.Contains("--imports");
 bool registryMode = args.Contains("--registry");
 bool scanMaps = args.Contains("--scan-maps");
+bool scanNative = args.Contains("--scan-native");
 bool allKeys = args.Contains("--all-keys");
 bool savePackage = args.Contains("--save-package");
 bool saveFolder = args.Contains("--save-folder");
@@ -39,9 +40,9 @@ if (maxArgument is not null && (!int.TryParse(maxArgument[15..], out maxPackages
     Console.Error.WriteLine("--max-packages must be a positive integer");
     return 2;
 }
-string[] positional = args.Where(arg => arg != maxArgument && arg is not ("--all" or "--pseudo" or "--imports" or "--registry" or "--scan-maps" or "--all-keys" or "--save-package" or "--save-folder" or "--save-closure" or "--export-glb" or "--export-png" or "--material-report" or "--ue426")).ToArray();
-bool packageLess = registryMode || scanMaps;
-if ((registryMode && scanMaps) || (packageLess ? positional.Length > 1 : positional.Length is < 1 or > 2))
+string[] positional = args.Where(arg => arg != maxArgument && arg is not ("--all" or "--pseudo" or "--imports" or "--registry" or "--scan-maps" or "--scan-native" or "--all-keys" or "--save-package" or "--save-folder" or "--save-closure" or "--export-glb" or "--export-png" or "--material-report" or "--ue426")).ToArray();
+bool packageLess = registryMode || scanMaps || scanNative;
+if (new[] { registryMode, scanMaps, scanNative }.Count(mode => mode) > 1 || (packageLess ? positional.Length > 1 : positional.Length is < 1 or > 2))
 {
     Console.Error.WriteLine("Usage: Cue4Inspect <asset-path-without-extension> [pak-directory] [--all] [--pseudo] [--imports] [--save-package] [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect <folder-prefix> [pak-directory] --save-folder [--all-keys]");
@@ -51,6 +52,7 @@ if ((registryMode && scanMaps) || (packageLess ? positional.Length > 1 : positio
     Console.Error.WriteLine("   or: Cue4Inspect <material-path> [pak-directory] --material-report [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect --registry [pak-directory] [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect --scan-maps [pak-directory] [--all-keys]");
+    Console.Error.WriteLine("   or: Cue4Inspect --scan-native [pak-directory] [--all-keys]");
     return 2;
 }
 
@@ -109,7 +111,7 @@ try
         return 0;
     }
 
-    if (scanMaps)
+    if (scanMaps || scanNative)
     {
         var maps = provider.Files.Values
             .Where(file => file.Path.EndsWith(".umap", StringComparison.OrdinalIgnoreCase))
@@ -124,14 +126,29 @@ try
                 if (provider.LoadPackage(map) is not Package package)
                     throw new InvalidDataException("Not a legacy package");
                 var roots = package.ImportMap.Select(import => RootImportName(package, import)).ToArray();
-                Console.WriteLine(JsonSerializer.Serialize(new
+                if (scanNative)
                 {
-                    path = map.Path,
-                    imports = package.ImportMap.Length,
-                    exports = package.ExportMap.Length,
-                    scriptModules = roots.Where(root => root.StartsWith("/Script/", StringComparison.Ordinal)).Distinct().Order().ToArray(),
-                    assetImports = roots.Count(root => root.StartsWith("/Game/", StringComparison.Ordinal))
-                }));
+                    var nativeImports = package.ImportMap
+                        .Select(import => new { root = RootImportName(package, import), kind = import.ClassName.Text, name = import.ObjectName.Text })
+                        .Where(import => import.root.StartsWith("/Script/", StringComparison.Ordinal) &&
+                                         import.kind is "Class" or "Struct" or "Enum" or "Function")
+                        .Select(import => $"{import.root}.{import.name}|{import.kind}")
+                        .Distinct()
+                        .Order()
+                        .ToArray();
+                    Console.WriteLine(JsonSerializer.Serialize(new { path = map.Path, nativeImports }));
+                }
+                else
+                {
+                    Console.WriteLine(JsonSerializer.Serialize(new
+                    {
+                        path = map.Path,
+                        imports = package.ImportMap.Length,
+                        exports = package.ExportMap.Length,
+                        scriptModules = roots.Where(root => root.StartsWith("/Script/", StringComparison.Ordinal)).Distinct().Order().ToArray(),
+                        assetImports = roots.Count(root => root.StartsWith("/Game/", StringComparison.Ordinal))
+                    }));
+                }
             }
             catch (Exception error)
             {

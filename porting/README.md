@@ -89,6 +89,9 @@ Use `--scan-maps` to inventory import counts and script modules for every
 mounted `.umap` package. `--save-closure --max-packages=250` recovers one
 package plus reachable `/Game` imports, stopping at the package cap. It does
 not synthesize missing native classes or replace engine content.
+Use `--scan-native` to list class, struct, enum, and function imports for
+every map as JSON lines. It found 146 distinct `/Script/FortniteGame` imports
+across the 3,694 maps; the generated full census stays outside Git.
 Add `--all-keys` when inspecting packages in the three GUID-keyed chunks;
 the tool prompts for those keys without saving them. It mounted all 31 paks
 and parsed a material package from `pakchunk1002` in a local test.

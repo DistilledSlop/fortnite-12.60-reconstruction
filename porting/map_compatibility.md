@@ -42,3 +42,23 @@ config names `/Script/FortniteGame.FortNavSystem`; defining an initial native
 subclass of UE's `UNavigationSystemV1` removed the navigation-system ensure.
 The map now also enters play under Vulkan with corrected mesh imports and
 current shader archives. See `mesh_conversion.md`.
+
+## Apollo persistent map probe
+
+`cue4inspect --scan-native` parsed all 3,694 map headers and listed native
+class, struct, enum, and function imports per map in ignored JSONL. Across
+those maps it found 465 distinct native imports, including 146 under
+`/Script/FortniteGame`. `Apollo_Terrain` directly imports `FortPoiManager`,
+`FortWorldManager`, and `WorldTileManager` in addition to the map classes
+already present. The world manager's serialized default subobject is named
+`MySceneComponent`, and the level contains a `WorldTileManager_0` subobject.
+
+Initial reflected classes with these names and subobject shapes were added
+to the native module. A headless load of the recovered `Apollo_Terrain` map
+then reduced `Could not find class` errors from seven to four. The remaining
+four refer to cooked Blueprint classes in unstaged packages:
+`BP_DisplayShadowProxy_01_C`, `BP_SafeZoneStorm_C`,
+`BP_SetupNamedPoiColors_C`, and `DefaultMapInfo_C`. The map enters play in
+this partial state, but 108 package lookup errors remain, including streaming
+landscape levels, virtual textures, materials, and gameplay data. It does not
+yet represent a working Apollo island.
