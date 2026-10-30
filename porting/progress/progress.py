@@ -418,9 +418,17 @@ def measure_tree(model, files, replay):
     leaves = [leaf for g in groups for leaf in walk_leaves(g)]
     total_w = sum(leaf["weight"] for leaf in leaves)
     overall = sum(leaf["weight"] * leaf["pct"] for leaf in leaves) / total_w if total_w else 0.0
+    manual_w = sum(leaf["weight"] for leaf in leaves if leaf["basis"] == "manual")
+    manual_c = sum(leaf["weight"] * leaf["pct"] for leaf in leaves if leaf["basis"] == "manual")
+    evidence_c = overall * total_w - manual_c if total_w else 0.0
     milestones = model.get("milestones", [])
     return {
         "overall_pct": round(overall, 3),
+        # The objective part of the overall: everything except manual estimates.
+        "measured_pct": round(evidence_c / total_w, 3) if total_w else 0.0,
+        "estimated_pct": round(manual_c / total_w, 3) if total_w else 0.0,
+        "manual_weight_pct": round(100.0 * manual_w / total_w, 3) if total_w else 0.0,
+        "manual_full_pct": round((evidence_c + manual_w * 100.0) / total_w, 3) if total_w else 0.0,
         "total_weight": round(total_w, 3),
         "groups": groups,
         "leaves": leaves,
@@ -743,9 +751,12 @@ def index_html(res, head, subject, date, model, when_note):
 
 <div class="stats">
 <div class="stat"><div class="lbl">Overall (effort-weighted)</div><div class="big">{overall:.1f}%</div></div>
+<div class="stat"><div class="lbl">Evidence-based (measured + documented)</div><div class="big">{res["measured_pct"]:.1f}%</div></div>
+<div class="stat"><div class="lbl">Manual estimates &middot; {res["manual_weight_pct"]:.1f}% of weight</div><div class="big">{res["estimated_pct"]:.1f}%</div></div>
 <div class="stat"><div class="lbl">Components measured</div><div class="big">{len(res["leaves"])}</div></div>
 <div class="stat"><div class="lbl">Milestones reached</div><div class="big">{res["milestones_done"]} / {res["milestones_total"]}</div></div>
 </div>
+<p class="meta">The objective lower bound is {res["measured_pct"]:.1f}%: progress measured from committed sources, local outputs or documented counts. The remaining {res["estimated_pct"]:.1f}% of the overall is manual estimates; if all of that work were complete, the overall would be {res["manual_full_pct"]:.1f}%.</p>
 
 <h2>Milestones toward the Definition</h2>
 <ul class="ms">{milestones}</ul>
@@ -766,7 +777,7 @@ def index_html(res, head, subject, date, model, when_note):
 </table></div>
 
 <h2>How this is measured</h2>
-<p class="meta">Weights and manual percentages are edited in <code>porting/progress/components.json</code>. The generator is <code>porting/progress/progress.py</code>, which reads committed files via <code>git archive</code> at HEAD and ignored local outputs. It records one history point per commit through <code>.githooks/post-commit</code>. Measures only count what is committed; uncommitted stubs and generated artifacts do not add progress unless they are local outputs named in a measure.</p>
+<p class="meta">Weights and manual percentages are edited in <code>porting/progress/components.json</code>. The generator is <code>porting/progress/progress.py</code>, which reads committed files via <code>git archive</code> at HEAD and ignored local outputs. It records one history point per commit through <code>.githooks/post-commit</code>. Measures only count what is committed; uncommitted stubs and generated artifacts do not add progress unless they are local outputs named in a measure. The dashboard splits the overall into the evidence-based share (basis <em>git</em>, <em>local</em> or <em>documented</em>) and the manual-estimate share, so the size of the subjective part is always visible next to the figure it affects.</p>
 <footer>Generated offline by porting/progress/progress.py. No external scripts or fonts are loaded.</footer>
 </main></body></html>
 """
@@ -809,20 +820,26 @@ def history_html(history, model):
         grid.append(f'<line x1="{pl}" x2="{W - pr}" y1="{y:.1f}" y2="{y:.1f}" style="stroke:var(--line)" stroke-width="1"/>'
                     f'<text x="{pl - 6}" y="{y + 4:.1f}" text-anchor="end" font-size="11" style="fill:var(--ink2)">{t}%</text>')
     pts = []
+    meas_pts = []
     dots = []
     for i, e in enumerate(entries):
         x, y = xy(i, e["overall_pct"])
         pts.append(f"{x:.1f},{y:.1f}")
+        if "measured_pct" in e:
+            mx, my = xy(i, e["measured_pct"])
+            meas_pts.append(f"{mx:.1f},{my:.1f}")
         tip = esc(f'{e["short"]} {e["date"][:10]}: {e["overall_pct"]:.2f}% | {e["subject"]}')
         dots.append(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="4" fill="var(--accent)"><title>{tip}</title></circle>')
     line = f'<polyline points="{" ".join(pts)}" fill="none" stroke="var(--accent)" stroke-width="2"/>' if n > 1 else ""
+    meas_line = (f'<polyline points="{" ".join(meas_pts)}" fill="none" stroke="var(--ink2)" '
+                 f'stroke-width="1.5" stroke-dasharray="5 4"/>' if len(meas_pts) > 1 else "")
     xlabels = ""
     if n:
         first, last = entries[0], entries[-1]
         xlabels = (f'<text x="{pl}" y="{H - 10}" font-size="11" fill="var(--ink2)">{esc(first["short"])}</text>'
                    f'<text x="{W - pr}" y="{H - 10}" text-anchor="end" font-size="11" fill="var(--ink2)">{esc(last["short"])}</text>')
     chart = (f'<svg viewBox="0 0 {W} {H}" width="100%" role="img" aria-label="Overall progress per commit">'
-             f'{"".join(grid)}{line}{"".join(dots)}{xlabels}</svg>')
+             f'{"".join(grid)}{meas_line}{line}{"".join(dots)}{xlabels}</svg>')
 
     cat_ids = [g["id"] for g in model["tree"]]
     cat_names = {g["id"]: g["name"] for g in model["tree"]}
@@ -850,7 +867,7 @@ svg text{{font-family:system-ui,-apple-system,Segoe UI,sans-serif}}
 <p class="warn">Definition of 100% is the original unmodified Fortnite 12.60 client under Linux/Wine reaching the lobby, matchmaking to our reconstructed server and playing a match with all visuals and audio. Overall values here are estimates, not that definition.</p>
 <h2>Overall progress per commit</h2>
 <div class="tm-wrap">{chart}</div>
-<p class="meta">Points marked replay used the current components.json manual estimates and current ignored local outputs, so they are indicative. Hook-recorded points measure HEAD at commit time.</p>
+<p class="meta">Solid line: overall including manual estimates. Dashed line: evidence-based progress only (basis <em>git</em>, <em>local</em> or <em>documented</em>), i.e. the objective lower bound. Points marked replay used the current components.json manual estimates and current ignored local outputs, so they are indicative. Hook-recorded points measure HEAD at commit time.</p>
 <h2>Commits</h2>
 <div class="tablewrap"><table>
 <thead><tr><th>Date (UTC)</th><th>Commit</th><th>Subject</th><th>Overall</th>{head_cells}<th>Source</th></tr></thead>
@@ -870,6 +887,7 @@ def entry_from(res, sha, subject, date, seeded):
         "subject": subject,
         "date": date,
         "overall_pct": res["overall_pct"],
+        "measured_pct": res["measured_pct"],
         "categories": {g["id"]: round(g["pct"], 3) for g in res["groups"]},
         "leaves": {leaf["id"]: leaf["pct"] for leaf in res["leaves"]},
         "carried": sorted(leaf["id"] for leaf in res["leaves"] if leaf.get("carried")),
@@ -945,6 +963,10 @@ def main(argv=None):
             "subject": subject,
             "date": date,
             "overall_pct": head_res["overall_pct"],
+            "measured_pct": head_res["measured_pct"],
+            "estimated_pct": head_res["estimated_pct"],
+            "manual_weight_pct": head_res["manual_weight_pct"],
+            "manual_full_pct": head_res["manual_full_pct"],
             "milestones": head_res["milestones"],
             "milestones_done": head_res["milestones_done"],
             "milestones_total": head_res["milestones_total"],

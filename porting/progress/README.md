@@ -18,6 +18,18 @@ The overall figure is an effort-weighted estimate of reconstruction work. It is 
 a measure of that definition, which is far from met. The page also lists four binary
 milestones toward the definition in `components.json`.
 
+The dashboard splits the overall so the subjective part is always visible:
+
+- **Evidence-based** (`measured_pct`): the share of the overall from leaves whose
+  basis is `git`, `local` or `documented` — counts from committed sources, ignored
+  local outputs, or documented totals. This is the objective lower bound.
+- **Manual estimates** (`estimated_pct`): the share from `manual` leaves, with
+  their weight share (`manual_weight_pct`) and the overall if all of that work
+  were complete (`manual_full_pct`).
+
+`progress.json` and every history entry carry the same fields; the history chart
+plots the evidence-based series as a dashed line under the overall.
+
 ## Files
 
 | File | Tracked | Purpose |
