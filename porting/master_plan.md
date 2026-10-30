@@ -1,0 +1,42 @@
+# Master plan to the stated goal
+
+Goal: a UE project rebuildable from source that joins a full reconstructed
+server with vanilla parity. `progress/components.json` is the measure; a
+milestone is done only with logged evidence. Rules for every wave: at most
+three agents at once, one owner for `native/` and the UE build, no keys or
+credentials in Git, no EAC/BattlEye/AppES bypass, and the orchestrator reviews
+and commits.
+
+## Critical path
+
+1. **Know what the binary gives us** (exe analysis, Ghidra at
+   `/opt/fortnite/ghidra-install/ghidra_12.2_PUBLIC`). If the code is readable,
+   export class layouts, vtables and reflection tables. If it is packed, stop
+   and ask the human before any runtime dump.
+2. **Network parity step 0** (version override, MagicHeader, AES/Oodle, key
+   delegate). Gate: server logs checksum 683914758 and the native join passes.
+3. **Reflection-exact base classes**: FortWorldSettings, FortGameStateAthena,
+   FortPlayerStateAthena, FortPlayerControllerAthena, FortPlayerPawnAthena,
+   FortAthenaMapInfo. Gate: class checksums match in client and server logs.
+4. **Original client joins the server** (direct connect first, then lobby,
+   ticket websocket, session, beacons). Gate: Welcome and Join succeeded,
+   stays connected.
+5. **Cooked Blueprints load**: fix the field-path crashes or rebuild each
+   gameplay Blueprint natively. Gate: Apollo loads with its 87 streamed levels.
+6. **Gameplay systems** in weight order: Athena framework, weapons, building,
+   inventory, abilities, storm, bus and gliding, AI, world managers.
+7. **Content**: skeletal meshes and animation, materials, VFX, lighting,
+   cinematics.
+8. **Audio and frontend**: sound classes, playback backend, CommonUI/UMG
+   modules, lobby flow, HUD.
+9. **Parity verification**: play a full match against the 12.60 build as the
+   reference; record each difference.
+
+## Standing constraints
+
+- Disk is near full. Keep large artifacts out of the repo and clean only
+  intermediates an agent created.
+- Pak access needs the AES keys, entered by the human through hidden prompts.
+  Agents cannot supply them; work needing them is queued for the human.
+- Source-level identity with Epic's unreleased code is not reachable by
+  analysis alone. Parity is judged by behavior and wire format.
