@@ -1,0 +1,52 @@
+diff --git a/Engine/Source/Runtime/Core/Public/UObject/FortniteMainBranchObjectVersion.h b/Engine/Source/Runtime/Core/Public/UObject/FortniteMainBranchObjectVersion.h
+index a969aa84a..7c43b23f5 100644
+--- a/Engine/Source/Runtime/Core/Public/UObject/FortniteMainBranchObjectVersion.h
++++ b/Engine/Source/Runtime/Core/Public/UObject/FortniteMainBranchObjectVersion.h
+@@ -102,6 +102,12 @@ struct CORE_API FFortniteMainBranchObjectVersion
+ 		// Anim layer node names are now conformed by Guid
+ 		AnimLayerGuidConformation,
+ 
++		// Ocean collision component has become dynamic
++		MakeOceanCollisionTransient,
++
++		// FFieldPath stores its owning struct and a short property path
++		FFieldPathOwnerSerialization,
++
+ 		// -----<new versions can be added above this line>-------------------------------------------------
+ 		VersionPlusOne,
+ 		LatestVersion = VersionPlusOne - 1
+diff --git a/Engine/Source/Runtime/CoreUObject/Private/UObject/FieldPath.cpp b/Engine/Source/Runtime/CoreUObject/Private/UObject/FieldPath.cpp
+index 8a5edfaae..ba564f9a1 100644
+--- a/Engine/Source/Runtime/CoreUObject/Private/UObject/FieldPath.cpp
++++ b/Engine/Source/Runtime/CoreUObject/Private/UObject/FieldPath.cpp
+@@ -9,6 +9,7 @@
+ #include "UObject/Package.h"
+ #include "UObject/UObjectArray.h"
+ #include "UObject/ReleaseObjectVersion.h"
++#include "UObject/FortniteMainBranchObjectVersion.h"
+ #include "UObject/LinkerLoad.h"
+ #include "UObject/UObjectThreadContext.h"
+ #include "UObject/PropertyHelper.h"
+@@ -265,6 +266,12 @@ FField* FFieldPath::TryToResolvePath(UStruct* InCurrentStruct, FFieldPath::EPath
+ 	if (Owner && Path.Num())
+ 	{
+ 		int32 PathIndex = Path.Num() - 1;
++		if (PathIndex > 1)
++		{
++			UE_LOG(LogClass, Error, TEXT("Unresolved cooked field path: %s; owner=%s; current=%s"),
++				*PathToString(Path), *Owner->GetPathName(),
++				InCurrentStruct ? *InCurrentStruct->GetPathName() : TEXT("none"));
++		}
+ 		check(PathIndex <= 1);
+ 		Result = FindFProperty<FField>(Owner, Path[PathIndex]);
+ 		if (Result)
+@@ -342,7 +349,8 @@ FArchive& operator<<(FArchive& Ar, FFieldPath& InOutPropertyPath)
+ 		{
+ 			InOutPropertyPath.Path.Empty();
+ 		}
+-		if (Ar.CustomVer(FReleaseObjectVersion::GUID) >= FReleaseObjectVersion::FFieldPathOwnerSerialization)
++		if (Ar.CustomVer(FReleaseObjectVersion::GUID) >= FReleaseObjectVersion::FFieldPathOwnerSerialization ||
++			Ar.CustomVer(FFortniteMainBranchObjectVersion::GUID) >= FFortniteMainBranchObjectVersion::FFieldPathOwnerSerialization)
+ 		{
+ 			UStruct* SerializedOwner = InOutPropertyPath.ResolvedOwner.Get();
+ 			Ar << SerializedOwner;

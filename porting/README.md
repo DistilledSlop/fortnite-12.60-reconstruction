@@ -32,6 +32,14 @@ client and the separate Unreal Engine source checkout remain outside Git.
   `FortniteEmptyDedicated` map enters play in the staged Linux runtime after
   adding three initial Fortnite class definitions. A more complex obstacle
   map still fails on missing native classes and content dependencies.
+- Four static meshes converted from the recovered skybox map load on Linux
+  with two reconstructed materials. The map enters play under Vulkan. A new
+  Linux dedicated server and client complete a local UE join into that map.
+  This proves the native build and join path, not original Fortnite gameplay.
+- Apollo's persistent map loads in a partial state without four direct
+  Blueprint packages. Three of those packages independently crash during
+  cooked script field-path loading. A UE 4.26 field-path version backport did
+  not resolve the crashes; many map and gameplay dependencies are still absent.
 - The embedded `FortniteGame.uproject` was extracted to ignored output. It
   declares six project modules and 123 enabled plugins. Sixty-three of those
   enabled plugins are absent from the public UE 4.25 engine tree, so the
@@ -108,11 +116,19 @@ Use `--function-report` on a cooked Blueprint to report its native superclass,
 function overrides, flags, and serialized parameter types. The report is a
 reconstruction aid; it does not include native C++ implementations.
 
-`bash porting/prepare_ue_fieldpath.sh` applies an optional diagnostic patch
-to the adjacent UE 4.25 checkout. It logs a cooked field path and its owner
-before UE's existing unresolved-path assertion, to identify missing native
-reflection fields during Blueprint reconstruction. The repository stores only
-the patch; the supplied UE source remains outside Git.
+`bash porting/prepare_ue_fieldpath.sh` backports UE 4.26's Fortnite branch
+field-path owner version check into the adjacent UE 4.25 checkout and logs a
+cooked field path before UE's unresolved-path assertion. The script is
+idempotent. `bash porting/prepare_ue_linker.sh` optionally adds invalid export
+index details to a linker assertion. These patches help diagnose Blueprint
+compatibility; the three sampled Apollo gameplay Blueprints still crash on
+load. The repository stores only patches; the supplied UE source remains
+outside Git.
+
+`python3 porting/probe_apollo_blueprints.py` tests the four staged Apollo
+Blueprint dependencies separately and restores the stage after each run.
+Its per-case logs stay ignored. The staged executable and `.sym` file must
+match to get an accurate crash stack.
 
 See `server_surface.md` for the observed backend dependencies and
 `server/README.md` for the local HTTP probe.
@@ -137,9 +153,10 @@ See `mesh_conversion.md` for the first static mesh conversion and editor import.
    and gameplay against the supplied 12.60 build. The result must be tested
    end to end; file presence alone does not establish feature parity.
 
-The first executable milestone is a Linux project that loads one recovered
-level and character. It will establish which cooked assets can be reused and
-which require conversion or reconstruction.
+The first Linux executable now loads recovered levels and converted meshes,
+and joins a new local UE dedicated server. A recovered Fortnite character,
+original gameplay rules, account services, and full island content have not
+yet been reconstructed.
 
 `porting/native/` is a minimal build harness with the `/Script/FortniteGame`
 module name. It has no EAC integration and contains no supplied assets. It

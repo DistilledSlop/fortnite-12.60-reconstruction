@@ -1,0 +1,21 @@
+diff --git a/Engine/Source/Runtime/CoreUObject/Public/UObject/Linker.h b/Engine/Source/Runtime/CoreUObject/Public/UObject/Linker.h
+index 9e1fb9d7c..54e99c52d 100644
+--- a/Engine/Source/Runtime/CoreUObject/Public/UObject/Linker.h
++++ b/Engine/Source/Runtime/CoreUObject/Public/UObject/Linker.h
+@@ -137,12 +137,14 @@ public:
+ 	 */
+ 	FORCEINLINE FObjectExport& Exp(FPackageIndex Index)
+ 	{
+-		check(Index.IsExport() && ExportMap.IsValidIndex(Index.ToExport()));
++		checkf(Index.IsExport() && ExportMap.IsValidIndex(Index.ToExport()),
++			TEXT("Invalid cooked export index %d; export count %d"), Index.ForDebugging(), ExportMap.Num());
+ 		return ExportMap[Index.ToExport()];
+ 	}
+ 	FORCEINLINE FObjectExport const& Exp(FPackageIndex Index) const
+ 	{
+-		check(Index.IsExport() && ExportMap.IsValidIndex(Index.ToExport()));
++		checkf(Index.IsExport() && ExportMap.IsValidIndex(Index.ToExport()),
++			TEXT("Invalid cooked export index %d; export count %d"), Index.ForDebugging(), ExportMap.Num());
+ 		return ExportMap[Index.ToExport()];
+ 	}
+ 	/**

@@ -85,3 +85,25 @@ UE linker assertion while `FortAsyncAction_AuthorityMatchReady` and other
 game-state classes/functions are absent. A local UE patch can log unresolved
 field paths if the related field-path assertion recurs; it does not suppress
 either assertion. The full Blueprint and gameplay logic remain unimplemented.
+
+`python3 porting/probe_apollo_blueprints.py` temporarily stages each of the
+four direct Blueprint packages alone, then restores all staged files. Its
+logs stay under ignored `porting/generated/apollo-blueprint-isolation/`.
+Without these packages, the partial map enters play but reports four missing
+classes. `DefaultMapInfo` alone also enters play. Each of the shadow, storm,
+and POI Blueprints fails independently while its cooked script is loaded.
+The shadow package exposes an unresolved `InstancedStaticMesh` field path in
+its construction script. The other two reached an invalid export index while
+deserializing `FFieldPath` from `UStruct::SerializeExpr`; with the original UE
+4.25 code, both reported index 1024 despite different package export counts.
+
+UE 4.26's `FieldPath.cpp` additionally checks the Fortnite branch custom
+version before reading the serialized owner. The adjacent 4.26 source and
+CUE4Parse agree on the version sequence. `prepare_ue_fieldpath.sh` now
+backports that check and the two intervening version constants to the local
+4.25 checkout. This changed the invalid index values but did not remove the
+crashes; the shadow field path assertion also remains. The mismatch therefore
+needs further cooked script and custom version inspection. The linker patch
+is a diagnostic that prints the invalid index and export count; it does not
+make an invalid index valid. Crash stacks were verified with the matching
+`.sym` file for the staged binary.
