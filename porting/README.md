@@ -78,6 +78,9 @@ asset and dependency graph.
 Use `--save-folder` with a package folder prefix to recover a subtree with one
 key prompt. It recovered 292 packages from the sound-class folder in a local
 test. All recovered files stay ignored by Git.
+Use `--imports` on a package to list its native `/Script/` imports, including
+classes and functions required by cooked Blueprints. Redirect large results
+to ignored generated output.
 Add `--all-keys` when inspecting packages in the three GUID-keyed chunks;
 the tool prompts for those keys without saving them. It mounted all 31 paks
 and parsed a material package from `pakchunk1002` in a local test.

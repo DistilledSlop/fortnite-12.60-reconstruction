@@ -1,5 +1,6 @@
 using CUE4Parse.Encryption.Aes;
 using CUE4Parse.FileProvider;
+using CUE4Parse.UE4.Assets;
 using CUE4Parse.UE4.AssetRegistry;
 using CUE4Parse.UE4.Objects.Core.Misc;
 using CUE4Parse.UE4.Objects.UObject;
@@ -8,14 +9,15 @@ using CUE4Parse.UE4.Versions;
 
 bool showAll = args.Contains("--all");
 bool showPseudo = args.Contains("--pseudo");
+bool showImports = args.Contains("--imports");
 bool registryMode = args.Contains("--registry");
 bool allKeys = args.Contains("--all-keys");
 bool savePackage = args.Contains("--save-package");
 bool saveFolder = args.Contains("--save-folder");
-string[] positional = args.Where(arg => arg is not ("--all" or "--pseudo" or "--registry" or "--all-keys" or "--save-package" or "--save-folder")).ToArray();
+string[] positional = args.Where(arg => arg is not ("--all" or "--pseudo" or "--imports" or "--registry" or "--all-keys" or "--save-package" or "--save-folder")).ToArray();
 if (registryMode ? positional.Length > 1 : positional.Length is < 1 or > 2)
 {
-    Console.Error.WriteLine("Usage: Cue4Inspect <asset-path-without-extension> [pak-directory] [--all] [--pseudo] [--save-package] [--all-keys]");
+    Console.Error.WriteLine("Usage: Cue4Inspect <asset-path-without-extension> [pak-directory] [--all] [--pseudo] [--imports] [--save-package] [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect <folder-prefix> [pak-directory] --save-folder [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect --registry [pak-directory] [--all-keys]");
     return 2;
@@ -91,7 +93,26 @@ try
         SaveRecoveredFiles(provider.SavePackage(assetPath!));
     }
 
-    var exports = provider.LoadPackage(assetPath!).GetExports();
+    var packageData = provider.LoadPackage(assetPath!);
+    if (showImports && packageData is Package legacyPackage)
+    {
+        Console.WriteLine($"Imports: {legacyPackage.ImportMap.Length}");
+        foreach (var import in legacyPackage.ImportMap)
+        {
+            var root = import;
+            for (int depth = 0; depth < legacyPackage.ImportMap.Length; depth++)
+            {
+                if (root.OuterIndex is not { IsImport: true } outer) break;
+                int index = -outer.Index - 1;
+                if (index < 0 || index >= legacyPackage.ImportMap.Length) break;
+                root = legacyPackage.ImportMap[index];
+            }
+            if (root.ObjectName.Text.StartsWith("/Script/", StringComparison.Ordinal))
+                Console.WriteLine($"{root.ObjectName.Text} | {import.ClassName.Text} | {import.ObjectName.Text}");
+        }
+    }
+
+    var exports = packageData.GetExports();
     Console.WriteLine($"Package: {assetPath}");
     Console.WriteLine($"Exports: {exports.Count()}");
     foreach (var group in exports.GroupBy(item => item.GetType().Name).OrderByDescending(group => group.Count()))

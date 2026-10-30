@@ -41,6 +41,13 @@ the referenced native classes, functions, and content graph must be provided
 or the Blueprint must be reimplemented. This probe does not indicate that the
 Blueprint bytes themselves are corrupt.
 
+`cue4inspect --imports` found 77 script imports in that Blueprint: 30 from
+`UMG`, 18 from `CommonUI`, 10 from `FortniteGame`, 9 from `Engine`, 5 from
+`CoreUObject`, and 5 from `FortniteUI`. The missing modules supply concrete
+types and methods such as `CommonButton`, `BP_OnHovered`,
+`FortPlayerProfileBannerEditorTile`, and `FortBannerUtilities`. These counts
+apply to this one package and are not a full project-wide class census.
+
 ## Texture probe
 
 The recovered `T_UI_Icon_Mic_64` package loaded in the same staged Linux
