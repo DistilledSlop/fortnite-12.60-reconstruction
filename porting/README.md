@@ -87,6 +87,11 @@ client and the separate Unreal Engine source checkout remain outside Git.
   repository. The article's embedded-key pattern is an example, not a
   guaranteed layout for this client.
 
+`bash porting/capture_apollo_visual.sh <name> [port] [seconds]` runs a
+headless dedicated server and a software-Vulkan client on a private Xvfb
+display, then saves `generated/<name>.png` plus both logs. It avoids port 7777
+and display :99, so it can run beside other probes.
+
 Run `bash porting/run_apollo_linux.sh` to start the staged local dedicated
 server and visible Linux client together. It uses the converted terrain and
 current native pawn, and stops the server when the client exits. This is a
