@@ -14,11 +14,16 @@ client and the separate Unreal Engine source checkout remain outside Git.
   pak versions through 9, so its `UnrealPak` cannot simply read these files.
 - Some paks contain a nonzero encryption-key GUID. A GUID identifies a key;
   it is not the key itself. No keys are stored in this repository.
-- The supplied candidate key successfully decrypted and validated 28 pak
-  indexes. Three paks (`pakchunk1000`, `1001`, `1002`) need other keys.
-- Those 28 indexes list 967,056 files, including project metadata, plugins,
-  configuration, maps, and cooked assets. The static client scan found 59 API
-  path templates; this is a partial view of the server interface.
+- The supplied primary key and three per-chunk keys successfully decrypted and
+  validated all 31 pak indexes. Together they list 967,504 files. Keys are
+  entered through hidden prompts and are not written to Git or generated files.
+- The index includes project metadata, plugins, configuration, maps, and
+  cooked assets. The static client scan found 59 API path templates; this is a
+  partial view of the server interface.
+- The embedded `FortniteGame.uproject` was extracted to ignored output. It
+  declares six project modules and 123 enabled plugins. Sixty-three of those
+  enabled plugins are absent from the public UE 4.25 engine tree, so the
+  project still requires substantial game and plugin code reconstruction.
 - The supplied client does not include the Fortnite project source, editor
   assets, or a Linux executable.
 - An adjacent FModel/CUE4Parse checkout can serve as a reference for pak and
@@ -42,10 +47,16 @@ Run `python3 porting/list_pak_assets.py > porting/generated/assets.json` to
 list package filenames from the indexes unlocked by a key. The output is
 generated metadata and stays outside Git. The script does not extract files.
 
+Run `python3 porting/extract_small_file.py` to extract the embedded project
+descriptor into ignored output. This handles small uncompressed or zlib files;
+FModel/CUE4Parse is needed for the general case.
+
 ## Work needed for the requested result
 
 1. **Asset access:** obtain the needed keys and mappings, read every pak index,
-   and inventory package dependencies. Compare UE 4.25 and 4.26 pak readers.
+   and inventory package dependencies. All indexes are now readable; mappings,
+   package decoding, and dependency analysis remain. Compare UE 4.25 and 4.26
+   pak readers.
 2. **Linux client:** reconstruct game classes and content in a new UE project;
    convert or rebuild platform-specific assets; build and cook for Linux.
    This new client will have no EAC integration.

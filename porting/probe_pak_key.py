@@ -66,6 +66,7 @@ def main() -> None:
         "--pak-dir", type=Path,
         default=default_root / "Fortnite/FortniteGame/Content/Paks",
     )
+    parser.add_argument("--pak", type=Path, help="Test one pak instead of the whole directory")
     args = parser.parse_args()
     key_hex = getpass.getpass("AES key (input hidden, never saved): ").strip().removeprefix("0x")
     try:
@@ -74,7 +75,8 @@ def main() -> None:
         raise SystemExit("Expected a hexadecimal AES key") from error
     if len(key) != 32:
         raise SystemExit("Expected a 32-byte AES-256 key")
-    results = [probe(path, key) for path in sorted(args.pak_dir.glob("*.pak"))]
+    paths = [args.pak] if args.pak else sorted(args.pak_dir.glob("*.pak"))
+    results = [probe(path, key) for path in paths]
     print(json.dumps({
         "tested": len(results),
         "working": sum(result["key_works"] for result in results),

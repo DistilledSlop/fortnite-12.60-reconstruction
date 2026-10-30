@@ -6,10 +6,12 @@ import sys
 
 
 allowed_exact = {".gitignore", ".gitattributes", ".githooks/pre-commit"}
+forbidden_directories = ("porting/generated/", "porting/build/", "porting/.venv/")
 forbidden_suffixes = {
     ".pak", ".sig", ".exe", ".dll", ".so", ".dylib", ".uasset",
     ".umap", ".ubulk", ".uexp", ".mp4", ".wav", ".png", ".jpg",
-    ".bin", ".zip", ".7z", ".rar",
+    ".bin", ".zip", ".7z", ".rar", ".uproject", ".uplugin",
+    ".upluginmanifest", ".usmap", ".locres", ".archive",
 }
 
 entries = subprocess.check_output(
@@ -20,6 +22,8 @@ for raw in filter(None, entries):
     path = raw.decode("utf-8", "surrogateescape")
     if path not in allowed_exact and not path.startswith("porting/"):
         errors.append(f"outside porting allowlist: {path}")
+    if path.startswith(forbidden_directories):
+        errors.append(f"generated or build output: {path}")
     if any(path.lower().endswith(suffix) for suffix in forbidden_suffixes):
         errors.append(f"binary asset extension: {path}")
     try:
