@@ -21,7 +21,9 @@ import re
 TARGETS = ["FortWorldSettings", "FortGameStateAthena", "FortPlayerStateAthena",
            "FortPlayerControllerAthena", "FortPlayerPawnAthena", "FortAthenaMapInfo",
            "FortPoiManager", "FortWorldManager"]
-# UE class names: prefix letter (A, U, F, I, E, T, S) then an uppercase letter, no path separators.
+# UHT passes TEXT(#TClass) with the C++ prefix, so the literal is "AFortGameStateAthena" (A = actor,
+# U = other UObject). Targets are listed without the prefix; a hit is name[1:] in TARGETS.
+# Prefix letter, then an uppercase letter (no path separators, no "/Script/..." package names).
 CLASS_NAME = re.compile(r"^[AUFIETS][A-Z][A-Za-z0-9_]{2,80}$")
 MAX_CALLERS = 40
 MAX_DEPTH = 2
@@ -117,7 +119,8 @@ def name_for_block(block_va):
                 for addr, text in wide_literals(fn).items():
                     names.setdefault(text, []).append({"fn": str(fn.getEntryPoint()), "literal": addr, "depth": depth})
             if names:
-                evidence["candidates"].update({k: v for k, v in names.items()})
+                for k, v in names.items():
+                    evidence["candidates"].setdefault(k, []).extend(v)
                 if len(names) == 1:
                     text = list(names.keys())[0]
                     evidence["status"] = "named"
@@ -157,7 +160,8 @@ def main():
         if i and i % 500 == 0:
             _log(f"  {i}/{len(blocks)} blocks, {len(name_map)} named")
 
-    target_hits = {name: va for va, name in name_map.items() if name in TARGETS}
+    # va -> name for the 8 targets. Match the bare name (prefix letter stripped) against TARGETS.
+    target_hits = {va: name for va, name in name_map.items() if name[1:] in TARGETS}
     statuses = {}
     for ev in evidence_list:
         statuses[ev["status"]] = statuses.get(ev["status"], 0) + 1

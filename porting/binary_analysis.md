@@ -115,3 +115,71 @@ The decryption finishes between about 25 and 32 s after process start. The first
 3. `.data` is runtime state from this run. It is not the disk file, and it does not carry the original initial values.
 4. The per-section share in `dump.json` used to collide on the name `.text`. It is keyed by name and address from this point on. The numbers above were recomputed from the dump with the same 64-byte stride.
 5. Rerun: `sudo -n python3 -I porting/dump_runtime_image.py` (start it before the client), then `porting/dump_to_pe.py porting/generated/dump/FortniteClient-Win64-Shipping.runtime.bin -o porting/generated/dump/FortniteClient-Win64-Shipping.runtime.exe`.
+
+## 7. Class name recovery
+
+Scope: names for the FClassParams blocks in the runtime dump (section 6). Read-only Ghidra analysis of `porting/generated/dump/FortniteClient-Win64-Shipping.runtime.exe`. The original exe and `Fortnite/` were not touched. Section 3 above is superseded for names: the eight targets now resolve.
+
+### Analysis runs
+
+- **Full run, project `fortnite` (default analyzers, 16 GB heap).** It died with `java.lang.OutOfMemoryError: Java heap space` after about 70 min, inside `AddressTableAnalyzer` (Create Address Tables), stack `AddressSet.subtract`. Nothing was saved. The project directory is empty and was not reused.
+- **Slim run, project `fortnite-slim`.** Import with `-noanalysis` (log `porting/generated/ghidra/slim-import.log`). Then `analyzeHeadless ... -process <exe> -preScript SlimAnalysisOptions.java -max-cpu 8 -analysisTimeoutPerFile 3000`, with `GHIDRA_HEADLESS_MAXMEM=48G` and a 90-minute timeout. Result: "Analysis succeeded", "Save succeeded", 1442 s (about 24 min). The project is about 1.5 GB.
+- **Options used** (`porting/ghidra/SlimAnalysisOptions.java`, names from `ListAnalyzers.java`):
+  - Off: Create Address Tables and its Data Reference / Reference sub-options, Decompiler Parameter ID, Decompiler Switch Analysis, Apply Data Archives, Function ID, Stack, Windows x86 PE RTTI, Non-Returning Functions - Discovered, Function Start Search, x86 Constant Reference Analyzer, Call Convention ID, ASCII Strings, Embedded Media, TEB, Aggressive Instruction Finder.
+  - On: Windows x86 PE Exception Handling, Disassemble Entry Points, Reference, Data Reference, Subroutine References, Non-Returning Functions - Known, Scalar Operand References, External Entry References, Call-Fixup Installer.
+
+### Method
+
+UHT (`Engine/Source/Programs/UnrealHeaderTool/Private/CodeGenerator.cpp`, around line 2511) emits, for each native class:
+
+`static FCompiledInDefer Z_CompiledInDefer_UClass_X(Z_Construct_UClass_X, &X::StaticClass, TEXT("/Script/FortniteGame"), TEXT("AFortX"), false, ...)`
+
+The class-name literal is `#TClass`, so it keeps the C++ prefix: `"AFortGameStateAthena"`, not `"FortGameStateAthena"`. The chain is:
+
+ClassParams block (.rdata) <- `Z_Construct_UClass_X` (lea of the block) <- registration initializer (lea of the construct function and of the name literal).
+
+`porting/ghidra/export_class_names.py` walks it from the block. It takes the functions that reference the block (the construct functions), then the UTF-16 literals in each one, then the same for their callers, up to depth 2. A literal matching `^[AUFIETS][A-Z][A-Za-z0-9_]{2,80}$` names the block if it is the only candidate. More than one candidate gives `ambiguous`. Nothing gives `unresolved` or `no_code_reference`.
+
+Not tried: the literal-order alternative (the FPackageParams singleton order). Not tried either: walking from the Class::Member strings (see limits).
+
+Dry run: a small UHT-shaped test binary compiled with gcc (scratch, not in the repo) gave named, depth-2 named, ambiguous, unresolved and no-code results as designed. It gave the same results with the slim option set.
+
+### Results
+
+- **Blocks:** 6,967 (all groups: `extract_reflection.py --all-groups`). Named 6,957. Status: named 6,957, no_code_reference 10, ambiguous 0. Duplicate names: 0.
+- **Fort/Athena-group subset:** the 2,740 blocks from the default extraction are all named. The earlier export on that subset resolved only 3 of the 8 targets. The other five sit outside that group filter, so the reflection was regenerated with `--all-groups`. The previous file is kept as `porting/generated/reflection/fortnite_game_reflection.fort-groups-2740.bak.json`.
+- **The 8 targets, all resolved** (block VA: name):
+  - `0x1462f0c20`: AFortAthenaMapInfo
+  - `0x1463ea150`: AFortGameStateAthena
+  - `0x1464ad0a0`: AFortPlayerControllerAthena
+  - `0x1464cd530`: AFortPlayerPawnAthena
+  - `0x1464d3e50`: AFortPlayerStateAthena
+  - `0x1464e7140`: AFortPoiManager
+  - `0x14657b630`: AFortWorldManager
+  - `0x14657f0c0`: AFortWorldSettings
+- **Unnamed (10):** 0x1470b7990, 0x1470b8278, 0x1470b8aa8, 0x1470b8bd8, 0x1470d4428, 0x1470d4da8, 0x1470d4e88, 0x1470d4ef8, 0x1470d5118, 0x1470d5608. None is a target. Not investigated; the dump is a single snapshot (see limits).
+
+### Evidence and sanity checks
+
+1. **AActor (`0x146b59ff0`) passes.** It is named AActor. Its replicated set is exactly the 10 expected: AttachmentReplication, Instigator, Owner, RemoteRole, ReplicatedMovement, Role, bCanBeDamaged, bHidden, bReplicateMovement, bTearOff. This matches the validation in section 3.
+2. **Cooked cross-check is weak.** `DefaultMapInfo-functions.json` says DefaultMapInfo_C has super FortAthenaMapInfo. The name AFortAthenaMapInfo exists under that name, so this checks existence only.
+3. **Class::Member names are inconclusive.** The strings `FortPlayerStateAthena::SetDisconnected`, `FortGameStateAthena::NotifyGameMemberAdded`, `FortPlayerControllerAthena::HandleGameMemberAdded`, `FortPlayerPawnAthena::InitAbilitySystemComponentFromPlayerState` and similar are in .rdata. Their member names do not appear in any UFUNCTION table of the 6,967 blocks. Most likely these are C++ methods with no UFUNCTION, which the reflection does not record. Ghidra finds no code references to these strings, so they cannot be used to walk back to a block.
+4. **Parent chain not validated.** `base_fn` of every Fort class is 0x142a02c30, and AActor's is 0x1446fdba0. Neither equals the construct function of any block in the set, so parents cannot be named from this data.
+
+### Limits
+
+- The method depends on UHT's output shape (prefixed literal in the compiled-in initializer). The dry run confirms the mechanics. The 6,957 unique names are consistent with that shape, but they are not checked against a second source beyond the AActor replicated set.
+- The dump is a snapshot at about 32.5 s. Code decrypted later (login, lobby, gameplay) may be missing; the 10 unnamed blocks may be such cases.
+- The second `.text` section (RVA 0x8D2C000) is not decoded. Functions there are not in the analysis.
+- Within the slim option set, the reference-producing analyzers are on. The x86 Constant Reference Analyzer is off; the dry run showed the LEA references still exist without it.
+
+### Tool fixes made here
+
+- `porting/ghidra/run_export_class_names.py`: PyGhidra defaults to `nested_project_location=True`, so it looked for `<dir>/<name>/<name>.gpr`. It found nothing and imported a fresh, unanalyzed copy. The runner now passes `nested_project_location=False`. It defaults to project `fortnite-slim`, with overrides `FN_GHIDRA_PROJECT_DIR`, `FN_GHIDRA_PROJECT` and `FN_GHIDRA_PROGRAM`. The original runner had the same bug against project `fortnite`.
+- `porting/ghidra/export_class_names.py`: target matching compared unprefixed names to prefixed literals and never matched. It now compares the name without its prefix letter.
+
+### Rerun
+
+- Reflection (all groups): `python3 -I porting/extract_reflection.py --all-groups` (25 s). The regenerated file is the default output.
+- Names: `porting/.venv/bin/python -I porting/ghidra/run_export_class_names.py` (about 20 s). It writes `porting/generated/reflection/class_name_map.json` and `class_name_map.evidence.json`. The project must not be locked by an analysis run.
+- Slim analysis: `GHIDRA_HEADLESS_MAXMEM=48G analyzeHeadless /opt/fortnite/ghidra-projects fortnite-slim -process FortniteClient-Win64-Shipping.runtime.exe -preScript SlimAnalysisOptions.java -max-cpu 8 -analysisTimeoutPerFile 3000` (run from `porting/ghidra` with `-scriptPath`). The import is `-import ... -loader PeLoader -noanalysis` into the same project first.
