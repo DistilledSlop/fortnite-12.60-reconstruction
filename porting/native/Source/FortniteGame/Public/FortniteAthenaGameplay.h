@@ -112,11 +112,15 @@ class FORTNITEGAME_API AApolloBackgroundMesh : public AStaticMeshActor
 public:
     AApolloBackgroundMesh();
     virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
-    void SetMeshId(const FString& NewMeshId);
+    void SetMeshId(const FString& NewMeshId, const FString& NewMaterialPackage);
 
 private:
     UPROPERTY(ReplicatedUsing=OnRep_MeshId)
     FString MeshId;
+
+    // Original per-component material override package, such as a cloud instance.
+    UPROPERTY(ReplicatedUsing=OnRep_MeshId)
+    FString MaterialPackage;
 
     UFUNCTION()
     void OnRep_MeshId();

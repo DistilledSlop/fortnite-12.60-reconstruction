@@ -14,6 +14,8 @@
 #include "Kismet/GameplayStatics.h"
 #include "Misc/FileHelper.h"
 #include "Misc/CommandLine.h"
+#include "Materials/MaterialInterface.h"
+#include "Misc/PackageName.h"
 #include "Misc/Parse.h"
 #include "Misc/Paths.h"
 #include "Net/UnrealNetwork.h"
@@ -26,6 +28,8 @@ AApolloSkyAtmosphere::AApolloSkyAtmosphere(const FObjectInitializer& ObjectIniti
     bReplicates = true;
     bAlwaysRelevant = true;
     SkyAtmosphere = CreateDefaultSubobject<USkyAtmosphereComponent>(TEXT("SkyAtmosphere"));
+    // The background meshes sit 1-3 million units away; default haze erases them.
+    SkyAtmosphere->AerialPespectiveViewDistanceScale = 0.1f;
     RootComponent = SkyAtmosphere;
 }
 
@@ -67,6 +71,28 @@ void AFortPlayerPawn::BeginPlay()
     Super::BeginPlay();
     UE_LOG(LogTemp, Display, TEXT("FortPlayerPawn ready: %s authority=%d"),
         *GetPathName(), HasAuthority() ? 1 : 0);
+    // Visual probe: -FortniteProbeLook=<yaw>,<pitch>[,<lift>] turns the local camera once it is possessed.
+    FString Look;
+    if (FParse::Value(FCommandLine::Get(), TEXT("FortniteProbeLook="), Look, false) && !HasAuthority())
+    {
+        FString YawText, PitchText, LiftText;
+        if (Look.Split(TEXT(","), &YawText, &PitchText))
+        {
+            // Optional third value lifts only the local camera, to see past nearby hills.
+            FString PitchOnly = PitchText;
+            if (PitchText.Split(TEXT(","), &PitchOnly, &LiftText))
+                PlayerCamera->SetRelativeLocation(FVector(0.0f, 0.0f, 64.0f + FCString::Atof(*LiftText)));
+            const FRotator Rotation(FCString::Atof(*PitchOnly), FCString::Atof(*YawText), 0.0f);
+            FTimerHandle Handle;
+            GetWorldTimerManager().SetTimer(Handle, FTimerDelegate::CreateLambda([this, Rotation]()
+            {
+                APlayerController* Controller = Cast<APlayerController>(GetController());
+                UE_LOG(LogTemp, Display, TEXT("Apollo probe look: controller=%d"), Controller ? 1 : 0);
+                if (Controller)
+                    Controller->SetControlRotation(Rotation);
+            }), 1.0f, true);
+        }
+    }
 }
 
 void AFortPlayerPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -206,7 +232,9 @@ void AFortGameModeAthena::SpawnApolloBackground()
             ESpawnActorCollisionHandlingMethod::AlwaysSpawn);
         if (!Actor)
             continue;
-        Actor->SetMeshId(MeshId);
+        FString MaterialPackage;
+        Object->TryGetStringField(TEXT("materialPackage"), MaterialPackage);
+        Actor->SetMeshId(MeshId, MaterialPackage);
         UGameplayStatics::FinishSpawningActor(Actor, Transform);
         Spawned++;
     }
@@ -309,11 +337,13 @@ void AApolloBackgroundMesh::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>
 {
     Super::GetLifetimeReplicatedProps(OutLifetimeProps);
     DOREPLIFETIME(AApolloBackgroundMesh, MeshId);
+    DOREPLIFETIME(AApolloBackgroundMesh, MaterialPackage);
 }
 
-void AApolloBackgroundMesh::SetMeshId(const FString& NewMeshId)
+void AApolloBackgroundMesh::SetMeshId(const FString& NewMeshId, const FString& NewMaterialPackage)
 {
     MeshId = NewMeshId;
+    MaterialPackage = NewMaterialPackage;
     LoadMesh();
 }
 
@@ -331,7 +361,43 @@ void AApolloBackgroundMesh::LoadMesh()
     UStaticMesh* Mesh = Cast<UStaticMesh>(StaticLoadObject(UStaticMesh::StaticClass(), nullptr, *Path));
     if (Mesh)
         GetStaticMeshComponent()->SetStaticMesh(Mesh);
-    UE_LOG(LogTemp, Display, TEXT("Apollo background mesh %s ready: authority=%d mesh=%s"),
+    // -FortniteHideBackground=<MeshId> hides one background mesh type to identify it in captures.
+    FString Hidden;
+    if (FParse::Value(FCommandLine::Get(), TEXT("FortniteHideBackground="), Hidden) && Hidden == MeshId)
+        GetStaticMeshComponent()->SetVisibility(false);
+    int32 Rebuilt = 0;
+    // Prefer rebuilt materials stored at the original asset paths: the per-component
+    // override first, then each mesh slot's material by name.
+    auto LoadRebuilt = [](const FString& Package) -> UMaterialInterface*
+    {
+        if (!Package.StartsWith(TEXT("/Game/")) || Package.Contains(TEXT(".")) ||
+            !FPackageName::DoesPackageExist(Package))
+            return nullptr;
+        return Cast<UMaterialInterface>(StaticLoadObject(UMaterialInterface::StaticClass(), nullptr,
+            *FString::Printf(TEXT("%s.%s"), *Package, *FPackageName::GetShortName(Package))));
+    };
+    // -FortniteNoRebuiltBackground keeps the importer's placeholder materials for before/after captures.
+    if (Mesh && !FParse::Param(FCommandLine::Get(), TEXT("FortniteNoRebuiltBackground")))
+    {
+        for (int32 Slot = 0; Slot < Mesh->StaticMaterials.Num(); ++Slot)
+        {
+            UMaterialInterface* Replacement = nullptr;
+            if (Slot == 0 && !MaterialPackage.IsEmpty())
+                Replacement = LoadRebuilt(MaterialPackage);
+            // The glTF importer names the slot by index; the placeholder material keeps the original name.
+            const FStaticMaterial& Entry = Mesh->StaticMaterials[Slot];
+            const FString SlotMaterial = Entry.MaterialInterface ? Entry.MaterialInterface->GetName()
+                                                                  : Entry.MaterialSlotName.ToString();
+            if (!Replacement && SlotMaterial.StartsWith(TEXT("M_")))
+                Replacement = LoadRebuilt(TEXT("/Game/Athena/Apollo/Environments/Landscape/Background/") + SlotMaterial);
+            if (Replacement)
+            {
+                GetStaticMeshComponent()->SetMaterial(Slot, Replacement);
+                Rebuilt++;
+            }
+        }
+    }
+    UE_LOG(LogTemp, Display, TEXT("Apollo background mesh %s ready: authority=%d mesh=%s rebuilt_materials=%d"),
         *MeshId, HasAuthority() ? 1 : 0,
-        GetStaticMeshComponent()->GetStaticMesh() ? TEXT("yes") : TEXT("no"));
+        GetStaticMeshComponent()->GetStaticMesh() ? TEXT("yes") : TEXT("no"), Rebuilt);
 }

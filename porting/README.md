@@ -79,8 +79,9 @@ client and the separate Unreal Engine source checkout remain outside Git.
   meshes are converted and Linux cooked; 27 placements spawn as replicated
   native actors. The remaining five references need separate handling.
   A replicated UE sky atmosphere replaces the black background in the current
-  render. The original cloud and backdrop materials, Blueprint behavior, and
-  Fortnite sky system still need reconstruction.
+  render. Simplified rebuilt cloud and three backdrop materials now render in
+  a software-Vulkan join; the other backdrop and aurora materials, Blueprint
+  behavior, and the Fortnite sky system still need reconstruction.
 - An adjacent FModel/CUE4Parse checkout can serve as a reference for pak and
   asset parsing. The user's `/opt/fortnite/assetextract.md` is also local
   reference material; neither checkout nor the article belongs in this Git
@@ -90,7 +91,9 @@ client and the separate Unreal Engine source checkout remain outside Git.
 `bash porting/capture_apollo_visual.sh <name> [port] [seconds]` runs a
 headless dedicated server and a software-Vulkan client on a private Xvfb
 display, then saves `generated/<name>.png` plus both logs. It avoids port 7777
-and display :99, so it can run beside other probes.
+and display :99, so it can run beside other probes. Set
+`CAPTURE_CLIENT_ARGS='-FortniteProbeLook=60,-3,80000'` to turn and raise the
+client camera.
 
 Run `bash porting/run_apollo_linux.sh` to start the staged local dedicated
 server and visible Linux client together. It uses the converted terrain and

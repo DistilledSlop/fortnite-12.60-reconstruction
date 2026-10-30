@@ -265,6 +265,70 @@ removed. The original package cannot currently be recooked directly on
 Linux; recovering its appearance requires reconstructing missing graph
 behavior or translating the cooked shader data.
 
+## Rebuilt cloud and backdrop materials
+
+The 65 null expression references in `M_Volcano_Cloud` are not corruption.
+The 46 surviving expression exports are exactly 21 scalar parameters, 13
+vector parameters, 7 material function calls, 2 collection parameters, 2
+static switches, and 1 texture sample. Every math node (the missing
+`Multiply_4` and the rest) is gone, and the base `UMaterialExpression` reports
+`IsEditorOnly() == true` in both the 4.25 and 4.26 sources. That is consistent
+with the cooker stripping nodes the runtime does not need; the arithmetic then
+lives only in the Windows shader map. I did not locate per-class overrides, so
+treat this as a strong match rather than a proof. It also means the original
+cannot be recooked, whatever engine version reads it.
+
+What the cooked data does keep was enough for a simplified rebuild. The
+commandlet `FortniteBackgroundMaterials` creates an unlit translucent
+`M_Volcano_Cloud` at its original path, using the recovered parameter names
+and defaults (`Tile_N_X/Y`, `FlattenDetailNormal`, `SoftenShadow`,
+`LightColorDay`, `ShadowColorDay`, `AngleFadeSensitivity` and `...U`, `Opacity`,
+`OpacityUnder`, `CameraDistanceFade`) and the decoded `T_StormCloudMobile`
+(64x64; its RG channels are a detail normal and its alpha is noise). The shade
+is a sun-wrapped lerp from shadow to light color, and the opacity is a
+view-angle fade with near-camera fade and the "Under" values when seen from
+below. The shading and opacity formulas are my reconstruction. The original
+function calls (`Color_Time_of_Day`, `FadeBasedOnViewAngle`,
+`Near_Camera_Fade`, `FlattenNormal`) are not extracted, the time-of-day
+variants other than Day are unused, and the vertex offset animation
+(`WorldPositionOffset`, `Speed`, `Offset`) is omitted. The `M_Volcano_Cloud_Cove`
+instance is recreated with its parent link: of its 9 recovered overrides,
+7 apply; `RefractionDepthBias` and `Offset` have no counterpart.
+
+`M_BackDrop_P` is an opaque unlit material whose report predates the
+expression dump, so only its texture and function names are known. A simplified
+parent samples the already recovered `T_Apollo_Cliff_D_01`, mixes
+Grass Low, Grass and Grass2 by height and patch noise, blends to cliff by
+slope, and applies wrapped sun shading. The grass colors, thresholds and
+contrast values from the `M_BackDrop_1`, `M_BackDrop_3` and `M_BackDrop_4`
+instances are applied (22 parameters applied across the 7 instances in this
+batch; 8 had no counterpart: 4x `RefractionDepthBias`, `Rocks 1 Scale`,
+`Rocks2 Scale`, `Contrast rocks`, `Offset`). Parent defaults the cook did not
+report (grass tone height, waterline height and blur) are my assumptions. The
+`BackDrop3_N` and `BackDrop4_N` normal textures are not extracted and unused.
+`M_BackDrop_2`, `M_BackDrop_6`, `M_BackDrop_7`, `M_SnowTops`, the `1B` and `4B`
+overrides and the aurora materials still use importer placeholders: their
+packages are not on disk and extracting them needs the hidden-key prompt, for
+example `--material-report` on each path.
+
+At run time `AApolloBackgroundMesh` replicates the component's original
+override package and, per mesh slot, looks for a rebuilt material at the
+original path before falling back to the placeholder. A software-Vulkan join
+(`capture_apollo_visual.sh`) logged 27/27 placements on server and client, with
+rebuilt materials on all 16 cloud actors and on 9 backdrop actors
+(`S_BackDrop_1`, `_3`, `_4`). In a fixed capture, the cloud region's share of
+pixels darker than 80/255 fell from 22.7% to 0.0% and its mean brightness rose
+from 165 to 211: the dark flat-lit slabs became soft white clouds
+(`apollo-cloud-before.png`, `apollo-cloud-after.png`). The backdrops were
+invisible behind foreground hills and, from 2 million units away, washed out
+by default aerial perspective. The sky atmosphere's aerial perspective scale
+is now 0.1, and the capture's `-FortniteProbeLook=yaw,pitch[,lift]` raises
+the local camera. From 800 m up, the previously white `S_BackDrop_4` island
+renders green with grey rock patches. `-FortniteNoRebuiltBackground` restores
+the placeholders for comparison and `-FortniteHideBackground=<MeshId>` hides
+one mesh type. The captures stay under ignored `generated/`. This is a
+visual approximation, not a match to the original shaders.
+
 ## Terrain collision probe
 
 The imported meshes initially had `CTF_UseSimpleAsComplex` with no box,

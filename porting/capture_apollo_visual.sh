@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Join a local Apollo dedicated server with a software-Vulkan client under a
 # private Xvfb display and save one screenshot. Usage:
-#   capture_apollo_visual.sh <name> [port] [seconds-before-capture]
+#   [CAPTURE_CLIENT_ARGS='-FortniteProbeLook=60,5'] capture_apollo_visual.sh <name> [port] [seconds]
 # Writes generated/<name>.png and <name>.log (client) and <name>-server.log.
 set -euo pipefail
 
@@ -32,9 +32,10 @@ for ((attempt=0; attempt<150; attempt++)); do
     sleep 0.1
 done
 
-export CAPTURE_PNG="$png" CAPTURE_DELAY="$delay"
+ulimit -c 0
+export CAPTURE_PNG="$png" CAPTURE_DELAY="$delay" CAPTURE_CLIENT_ARGS="${CAPTURE_CLIENT_ARGS:-}"
 xvfb-run -a -s '-screen 0 1280x720x24' bash -c '
-    "$0" 127.0.0.1:"$1" -vulkan -ResX=1280 -ResY=720 -windowed -nosound -log > "$2" 2>&1 &
+    "$0" 127.0.0.1:"$1" -vulkan -ResX=1280 -ResY=720 -windowed -nosound -log $CAPTURE_CLIENT_ARGS > "$2" 2>&1 &
     client_pid=$!
     sleep "$CAPTURE_DELAY"
     ffmpeg -loglevel error -y -f x11grab -video_size 1280x720 -i "$DISPLAY" -frames:v 1 "$CAPTURE_PNG" || true
