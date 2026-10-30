@@ -391,14 +391,6 @@ class FORTNITEGAME_API AFortGameModePvE : public AGameModeBase
 };
 
 // STUB: layout unknown, replace with generated class
-// Parent guessed: AGameStateBase. Naming convention; unverified.
-UCLASS()
-class FORTNITEGAME_API AFortGameStateAthena : public AGameStateBase
-{
-    GENERATED_BODY()
-};
-
-// STUB: layout unknown, replace with generated class
 // Parent guessed: UActorComponent. Naming convention; unverified.
 UCLASS()
 class FORTNITEGAME_API UFortGameplayMessageDispatcherComponent : public UActorComponent
@@ -595,25 +587,9 @@ class FORTNITEGAME_API AFortPOICameraActor : public ACameraActor
 };
 
 // STUB: layout unknown, replace with generated class
-// Parent guessed: APawn. Naming convention; unverified.
-UCLASS()
-class FORTNITEGAME_API AFortPawn : public APawn
-{
-    GENERATED_BODY()
-};
-
-// STUB: layout unknown, replace with generated class
 // Parent guessed: AActor. Naming convention; unverified.
 UCLASS()
 class FORTNITEGAME_API AFortPlacementActor : public AActor
-{
-    GENERATED_BODY()
-};
-
-// STUB: layout unknown, replace with generated class
-// Parent guessed: APlayerController. Naming convention; unverified.
-UCLASS()
-class FORTNITEGAME_API AFortPlayerController : public APlayerController
 {
     GENERATED_BODY()
 };

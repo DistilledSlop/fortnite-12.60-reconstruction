@@ -39,33 +39,8 @@ private:
     UDirectionalLightComponent* SunLight;
 };
 
-// Initial native player hierarchy. Movement is UE character movement until
-// the recovered Fortnite abilities, inventory, and cosmetics are rebuilt.
-UCLASS()
-class FORTNITEGAME_API AFortPlayerPawn : public ACharacter
-{
-    GENERATED_BODY()
-
-public:
-    AFortPlayerPawn();
-    virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
-
-protected:
-    virtual void BeginPlay() override;
-
-private:
-    UPROPERTY(VisibleAnywhere)
-    UCameraComponent* PlayerCamera;
-
-    void MoveForward(float Value);
-    void MoveRight(float Value);
-};
-
-UCLASS()
-class FORTNITEGAME_API AFortPlayerPawnAthena : public AFortPlayerPawn
-{
-    GENERATED_BODY()
-};
+// AFortPlayerPawn and AFortPlayerPawnAthena are generated (Generated/). The hand-written placeholder
+// pawn with camera and input bindings was removed when the reflection-derived class replaced it.
 
 UCLASS()
 class FORTNITEGAME_API AFortGameModeAthena : public AGameModeBase

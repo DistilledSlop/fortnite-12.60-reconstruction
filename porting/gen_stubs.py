@@ -66,10 +66,14 @@ def cpp_name(census, key):
         return 'U' + census
     return parent_name[0] + census
 
+# Census names now generated from the reflection tables (porting/promote_native_classes.sh). They are
+# not stubbed again: a stub with the same name would duplicate the generated class.
+GENERATED_NATIVE = {'FortGameStateAthena', 'FortPlayerController', 'FortPawn'}
+
 def main(census_list_path, out_h, out_cpp):
-    census = [l.strip() for l in open(census_list_path) if l.strip()]
+    census = [l.strip() for l in open(census_list_path) if l.strip() and l.strip() not in GENERATED_NATIVE]
     missing = set(census)
-    assigned = set(T)
+    assigned = set(T) - GENERATED_NATIVE
     if missing != assigned:
         print('MISMATCH only-in-census:', sorted(missing - assigned), 'only-in-table:', sorted(assigned - missing), file=sys.stderr)
         sys.exit(1)

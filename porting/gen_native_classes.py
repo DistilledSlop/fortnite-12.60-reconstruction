@@ -97,9 +97,14 @@ def lower_keys(mapping):
 class Resolver:
     """Maps reflection pointers to C++ spellings. Unresolved references become TODO_* tokens."""
 
-    def __init__(self, type_map):
+    def __init__(self, type_map, known_fns=None):
         self.types = lower_keys(type_map)
+        # Construct functions of every named class, including those outside the native set.
+        self.known = {str(k).lower() for k in (known_fns or [])}
         self.todos = []
+        self.tokens = []        # every TODO token issued, in order (promote mode slices this per item)
+        self.class_refs = set()  # class names referenced by emitted pointer/class types (forward declarations)
+        self.skipped = []        # promote mode: skip records for the current class
 
     def name(self, fn):
         return self.types.get(fn.lower()) if fn else None
@@ -107,12 +112,24 @@ class Resolver:
     def todo(self, what, ref):
         token = "TODO_%s_%s" % (what, (ref or "none").replace("0x", ""))
         self.todos.append("%s not resolved (%s)" % (what, ref))
+        self.tokens.append(token)
         return token
 
     def todo_named(self, what, name):
         token = "TODO_%s_%s" % (what, re.sub(r"\W", "_", name or "unnamed"))
         self.todos.append("%s type not decoded (%s)" % (what, name))
+        self.tokens.append(token)
         return token
+
+    def class_name(self, fn, what):
+        name = self.name(fn)
+        if name:
+            self.class_refs.add(name)
+            return name
+        if fn and fn.lower() in self.known:
+            # A named class that is not in the native set: its path cannot be declared in this module.
+            return self.todo("ClassOutsideNativeSet", fn)
+        return self.todo(what, fn)
 
     def ctype(self, entry, children):
         kind = entry.get("kind")
@@ -128,15 +145,15 @@ class Resolver:
         if kind == "Struct":
             return self.name(refs.get("struct")) or self.todo("Struct", refs.get("struct"))
         if kind in ("Object", "WeakObject", "LazyObject", "SoftObject"):
-            target = self.name(refs.get("class")) or self.todo("Class", refs.get("class"))
+            target = self.class_name(refs.get("class"), "Class")
             wrap = {"Object": "%s*", "WeakObject": "TWeakObjectPtr<%s>",
                     "LazyObject": "TLazyObjectPtr<%s>", "SoftObject": "TSoftObjectPtr<%s>"}[kind]
             return wrap % target
         if kind == "Class":
-            target = self.name(refs.get("meta_class")) or self.todo("MetaClass", refs.get("meta_class"))
+            target = self.class_name(refs.get("meta_class"), "MetaClass")
             return "TSubclassOf<%s>" % target
         if kind == "SoftClass":
-            target = self.name(refs.get("meta_class")) or self.todo("MetaClass", refs.get("meta_class"))
+            target = self.class_name(refs.get("meta_class"), "MetaClass")
             return "TSoftClassPtr<%s>" % target
         if kind == "Interface":
             target = self.name(refs.get("interface_class")) or self.todo("Interface", refs.get("interface_class"))
@@ -222,14 +239,28 @@ def property_specifiers(entry):
     return specs
 
 
-def build_members(props, resolver):
+def build_members(props, resolver, promote=False):
     members = []
+    seen = set()
     pairs, notes = split_properties(props)
     for index, (entry, children) in enumerate(pairs):
+        mark = len(resolver.tokens)
         ctype = resolver.ctype(entry, children)
+        new_tokens = resolver.tokens[mark:]
         bitfield = entry.get("kind") == "Bool" and bool(entry.get("bitfield"))
         dim = int(entry.get("array_dim") or 1)
         name = entry.get("name") or "UnnamedProperty%d" % index
+        if promote:
+            # Promote mode emits only properties whose every type resolves to a declared native class.
+            if new_tokens:
+                resolver.skipped.append(skip_record("property", entry, name, category_of(new_tokens),
+                                                    "unresolved type: " + ", ".join(sorted(set(new_tokens))), new_tokens))
+                continue
+            if name in seen:
+                resolver.skipped.append(skip_record("property", entry, name, "duplicate_name",
+                                                    "duplicate property name in the table", []))
+                continue
+            seen.add(name)
         if bitfield:
             decl = "uint8 %s : 1;" % name
         elif entry.get("kind") == "Bool":
@@ -265,10 +296,15 @@ def decode_params(params, resolver):
         if pf & CPF_RETURN_PARM:
             ret = ctype
             continue
-        if pf & (CPF_OUT_PARM | CPF_REFERENCE_PARM):
+        # Spelling follows UHT's own out-of-line signatures: T& for out, const T& (T* const& for pointers)
+        # for a const reference, and by value otherwise (a CPF_ConstParm without a reference is emitted by value).
+        if pf & CPF_OUT_PARM:
             ctype = ctype + "&"
-        elif pf & CPF_CONST_PARM:
-            ctype = "const " + ctype + "&"
+        elif pf & CPF_REFERENCE_PARM:
+            if pf & CPF_CONST_PARM:
+                ctype = ctype + " const&" if ctype.endswith("*") else "const " + ctype + "&"
+            else:
+                ctype = ctype + "&"
         args.append("%s %s" % (ctype, entry.get("name") or "Param%d" % len(args)))
     return ret, args
 
@@ -316,7 +352,8 @@ def uproperty_line(specs):
     return "UPROPERTY(%s)" % ", ".join(specs) if specs else "UPROPERTY()"
 
 
-def uclass_line(block):
+def uclass_line(block, minimal_api=True):
+    """minimal_api=False for promoted classes: UHT rejects minimalapi on a class that uses the MODULE_API macro."""
     flags = hx(block.get("class_flags"))
     specs = []
     cfg = block.get("config_name")
@@ -328,7 +365,7 @@ def uclass_line(block):
         specs.append("abstract")
     if flags & CLASS_TRANSIENT:
         specs.append("transient")
-    if flags & CLASS_MINIMAL_API:
+    if flags & CLASS_MINIMAL_API and minimal_api:
         specs.append("minimalapi")
     if flags & CLASS_DEPRECATED:
         specs.append("deprecated")
@@ -741,7 +778,9 @@ def self_test():
     check("Client flag", fn["ClientTell"]["specifiers"] == ["Client"])
     check("NetMulticast flag", fn["MulticastBoom"]["specifiers"] == ["NetMulticast"])
     check("UFUNCTION signature", fn["ServerDo"]["decl"] == "void ServerDo(int32 Amount);")
-    check("const FString& param", fn["ClientTell"]["decl"] == "void ClientTell(const FString& Text);")
+    # A CPF_ConstParm without CPF_ReferenceParm is emitted by value (as UHT spells it). Promote mode adds
+    # const& for replicated non-scalar parameters (rpc_arg).
+    check("const value param is by value", fn["ClientTell"]["decl"] == "void ClientTell(FString Text);")
     check("undecoded flags reported", bool(fn["Unknown"]["todo"]) and fn["Unknown"]["flags"] is None)
     header = render_header(model, "SELFTEST_API", "self-test")
     cpp = render_cpp(model, "self-test")
@@ -797,6 +836,429 @@ def self_test():
     return 0
 
 
+# ---------------------------------------------------------------- promotion into native/Source (first pass)
+# --promote builds the closure listed in porting/native_class_set.txt. It emits only what resolves:
+# a property whose type needs a struct, enum, delegate, interface or a class outside the set is skipped
+# and recorded. Functions are emitted only when they are RPCs (wire-relevant) or RepNotify targets.
+
+PROMOTE_PACKAGES = ("/Script/FortniteGame", "/Script/PlayspaceFramework")
+ENGINE_PACKAGES = ("/Script/Engine", "/Script/CoreUObject")
+FUNC_NET_ANY = FUNC_NET | FUNC_NET_SERVER | FUNC_NET_CLIENT | FUNC_NET_MULTICAST
+ENGINE_CLASS_DECL_RE = re.compile(
+    r"^\s*class\s+(?:[A-Z][A-Z0-9_]*_API\s+)?([AU][A-Za-z0-9_]*)\s*(?:final\s*)?:\s*public\b", re.M)
+
+
+def category_of(tokens):
+    """Report category for the first TODO token (sorted), so skips group by what blocked them."""
+    for token in sorted(tokens):
+        if token.startswith("TODO_ClassOutsideNativeSet_"):
+            return "class_outside_native_set"
+        if token.startswith(("TODO_Class_", "TODO_MetaClass_", "TODO_SoftClass_")):
+            return "class_unnamed"
+        if token.startswith("TODO_Struct_"):
+            return "struct"
+        if token.startswith("TODO_Enum_"):
+            return "enum"
+        if token.startswith("TODO_Delegate_"):
+            return "delegate"
+        if token.startswith("TODO_Interface_"):
+            return "interface"
+        if token.startswith(("TODO_ArrayElem_", "TODO_SetElem_", "TODO_MapKey_", "TODO_MapValue_")):
+            return "container_element"
+        match = re.match(r"TODO_Kind(\w+?)_", token)
+        if match:
+            return "kind_" + match.group(1)
+        return "other"
+    return "other"
+
+
+def skip_record(item, entry, name, category, reason, tokens):
+    entry = entry or {}
+    flags = hx(entry.get("property_flags")) if entry.get("property_flags") else 0
+    return {"item": item, "name": name, "kind": entry.get("kind"), "property_flags": entry.get("property_flags"),
+            "replicated": bool(flags & CPF_NET), "category": category, "reason": reason,
+            "tokens": sorted(set(tokens))}
+
+
+def skip_function(fn, category, reason, tokens=()):
+    return {"item": "function", "name": fn.get("name"), "category": category, "reason": reason,
+            "flags": fn.get("flags"), "net_roles": fn.get("net_roles"), "tokens": sorted(set(tokens))}
+
+
+def function_specifiers(flags):
+    specs = []
+    if flags & FUNC_NET_SERVER:
+        specs.append("Server")
+    if flags & FUNC_NET_CLIENT:
+        specs.append("Client")
+    if flags & FUNC_NET_MULTICAST:
+        specs.append("NetMulticast")
+    # UHT requires an explicit delivery mode on every replicated function.
+    specs.append("Reliable" if flags & FUNC_NET_RELIABLE else "Unreliable")
+    return specs
+
+
+SCALAR_ARG_PREFIXES = ("bool", "int8", "int16", "int32", "int64", "uint8", "uint16", "uint32", "uint64",
+                       "float", "double", "TEnumAsByte<")
+
+
+def rpc_arg(decl):
+    """UHT: a replicated function's non-scalar parameter must be passed by const reference."""
+    ctype, name = decl.rsplit(" ", 1)
+    if ctype.endswith(("&", "*")) or ctype.startswith(SCALAR_ARG_PREFIXES):
+        return decl
+    return "const %s& %s" % (ctype, name)
+
+
+def function_view(fn, owner_fns):
+    """(flags, params, problem) for one function. An ambiguous name join (fn["candidates"]) is resolved to
+    the single candidate whose outer_fn is the construct function of this class (owner_fns)."""
+    if fn.get("candidates"):
+        owned = [c for c in fn["candidates"] if str(c.get("outer_fn") or "").lower() in owner_fns]
+        if len(owned) != 1:
+            return None, None, "%d of %d candidate FFunctionParams belong to this class (need 1)" % (
+                len(owned), len(fn["candidates"]))
+        return hx(owned[0]["flags"]), owned[0].get("params"), None
+    flag_values = fn.get("flags") or []
+    flags = hx(flag_values[0]) if len(flag_values) == 1 else None
+    if flags is None:
+        return None, None, "flags not joined (%s)" % (fn.get("note") or "ambiguous")
+    if fn.get("params") is None:
+        return flags, None, "parameter table not decoded (%s)" % (fn.get("params_note") or "no FFunctionParams")
+    return flags, fn["params"], None
+
+
+def build_functions_promoted(functions, resolver, notify_names, owner_fns):
+    """RPCs and RepNotify targets only. A function whose flags cannot be classified is recorded, since it might be an RPC."""
+    emitted = []
+    for fn in functions:
+        name = fn.get("name") or "UnnamedFunction"
+        flags, params, problem = function_view(fn, owner_fns)
+        if flags is None:
+            resolver.skipped.append(skip_function(fn, "flags_ambiguous", "RPC status unknown: " + problem))
+            continue
+        is_rpc = bool(flags & FUNC_NET_ANY)
+        if not is_rpc and name not in notify_names:
+            continue
+        if is_rpc and not flags & (FUNC_NET_SERVER | FUNC_NET_CLIENT | FUNC_NET_MULTICAST):
+            resolver.skipped.append(skip_function(fn, "net_flag_without_role",
+                                                  "net flag without a Server/Client/NetMulticast role"))
+            continue
+        if is_rpc and flags & (FUNC_CONST | FUNC_STATIC):
+            resolver.skipped.append(skip_function(fn, "static_or_const_rpc", "static or const RPC is not emitted"))
+            continue
+        if params is None:
+            resolver.skipped.append(skip_function(fn, "params_not_decoded", problem))
+            continue
+        mark = len(resolver.tokens)
+        ret, args = decode_params(params, resolver)
+        new_tokens = resolver.tokens[mark:]
+        if new_tokens:
+            resolver.skipped.append(skip_function(fn, category_of(new_tokens),
+                                                  "unresolved parameter type: " + ", ".join(sorted(set(new_tokens))),
+                                                  new_tokens))
+            continue
+        if ret != "void":
+            resolver.skipped.append(skip_function(fn, "non_void_return", "return type %s is not emitted" % ret))
+            continue
+        if is_rpc:
+            args = [rpc_arg(arg) for arg in args]
+        emitted.append({"name": name, "rpc": is_rpc,
+                        "specifiers": function_specifiers(flags) if is_rpc else [], "args": args})
+    return emitted
+
+
+def build_class_promoted(block, name, resolver, parent_entry, owner_fns):
+    resolver.todos = []
+    resolver.class_refs = set()
+    resolver.skipped = []
+    members, _notes = build_members(block.get("properties") or [], resolver, promote=True)
+    notify_names = {m["rep_notify"] for m in members if m["rep_notify"]}
+    functions = build_functions_promoted(block.get("functions") or [], resolver, notify_names, owner_fns)
+    emitted_onrep = {f["name"] for f in functions if not f["rpc"]}
+    for m in members:
+        if m["rep_notify"] and m["rep_notify"] not in emitted_onrep:
+            resolver.skipped.append(skip_record("rep_notify", None, m["name"], "rep_notify_dropped",
+                                                "RepNotify %s not emitted; property kept as Replicated" % m["rep_notify"], []))
+            m["specifiers"] = ["Replicated" if s.startswith("ReplicatedUsing=") else s for s in m["specifiers"]]
+            m["rep_notify"] = None
+    parent = parent_entry.get("parent_name")
+    return {
+        "name": name,
+        "block_va": block.get("block_va"),
+        "parent": parent,
+        "package": parent_entry.get("package"),
+        "uclass": uclass_line(block, minimal_api=False),
+        "members_table_order": members,
+        "members_decl_order": list(reversed(members)),
+        "functions": functions,
+        "forward_decls": sorted(ref for ref in resolver.class_refs if ref not in (name, parent)),
+        "skipped": list(resolver.skipped),
+        "functions_in_table": len(block.get("functions") or []),
+        "rpc_in_reflection": sum(1 for f in (block.get("functions") or [])
+                                 if function_view(f, owner_fns)[0] is not None
+                                 and function_view(f, owner_fns)[0] & FUNC_NET_ANY),
+    }
+
+
+def render_promoted_header(model, api, parent_include, source_label):
+    name = model["name"]
+    rep = [m for m in model["members_table_order"] if m["replicated"]]
+    lines = [
+        "// Generated by porting/gen_native_classes.py --promote from %s." % source_label,
+        "// Do not edit by hand: run porting/promote_native_classes.sh. Names, types, property order, replication",
+        "// and RPC roles come from the shipping exe. Bodies are not recovered; see porting/native_classes_status.md.",
+        "#pragma once",
+        "",
+        "#include \"CoreMinimal.h\"",
+        "#include \"%s\"" % parent_include,
+        "",
+    ]
+    lines.extend("class %s;" % ref for ref in model["forward_decls"])
+    if model["forward_decls"]:
+        lines.append("")
+    lines.append("#include \"%s.generated.h\"" % name)
+    lines.append("")
+    lines.append(model["uclass"])
+    lines.append("class %s %s : public %s" % (api, name, model["parent"]))
+    lines.append("{")
+    lines.append("\tGENERATED_BODY()")
+    lines.append("")
+    lines.append("public:")
+    for m in model["members_decl_order"]:
+        lines.append("\t// table index %s, flags %s" % (m["table_index"], m["property_flags"]))
+        lines.append("\t%s" % uproperty_line(m["specifiers"]))
+        lines.append("\t%s" % m["decl"])
+        lines.append("")
+    for f in model["functions"]:
+        lines.append("\tUFUNCTION(%s)" % ", ".join(f["specifiers"]))
+        lines.append("\tvoid %s(%s);" % (f["name"], ", ".join(f["args"])))
+        if f["rpc"]:
+            lines.append("\tvoid %s_Implementation(%s);" % (f["name"], ", ".join(f["args"])))
+        lines.append("")
+    if rep:
+        lines.append("\tvirtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;")
+    lines.append("};")
+    lines.append("")
+    return "\n".join(lines) + "\n"
+
+
+def render_promoted_cpp(model, source_label):
+    name = model["name"]
+    rep = [m for m in model["members_table_order"] if m["replicated"]]
+    lines = [
+        "// Generated by porting/gen_native_classes.py --promote from %s. Do not edit by hand." % source_label,
+        "#include \"%s.h\"" % name,
+    ]
+    if rep:
+        lines.append("#include \"Net/UnrealNetwork.h\"")
+    lines.append("")
+    for f in model["functions"]:
+        impl = "%s_Implementation" % f["name"] if f["rpc"] else f["name"]
+        lines.append("void %s::%s(%s)" % (name, impl, ", ".join(f["args"])))
+        lines.append("{")
+        lines.append("\t// Body not recovered: reflection-derived stub.")
+        lines.append("}")
+        lines.append("")
+    if rep:
+        lines.append("void %s::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const" % name)
+        lines.append("{")
+        lines.append("\tSuper::GetLifetimeReplicatedProps(OutLifetimeProps);")
+        lines.append("")
+        for m in rep:
+            lines.append("\tDOREPLIFETIME(%s, %s);" % (name, m["name"]))
+        lines.append("}")
+        lines.append("")
+    return "\n".join(lines) + "\n"
+
+
+def build_engine_header_index(root):
+    """Map engine class name -> header path relative to the Classes directory (the include root)."""
+    if not os.path.isdir(root):
+        raise SystemExit("engine Classes directory not found: %s" % root)
+    index = {}
+    for dirpath, dirnames, filenames in os.walk(root):
+        dirnames.sort()
+        for filename in sorted(filenames):
+            if not filename.endswith(".h"):
+                continue
+            path = os.path.join(dirpath, filename)
+            with open(path, "r", encoding="utf-8", errors="replace") as fh:
+                text = fh.read()
+            rel = os.path.relpath(path, root).replace(os.sep, "/")
+            for match in ENGINE_CLASS_DECL_RE.finditer(text):
+                index.setdefault(match.group(1), rel)
+    return index
+
+
+def count_by(records, key):
+    out = {}
+    for record in records:
+        value = str(record.get(key))
+        out[value] = out.get(value, 0) + 1
+    return dict(sorted(out.items(), key=lambda kv: (-kv[1], kv[0])))
+
+
+def promote(args):
+    missing = [flag for flag, value in (("--class-list", args.class_list), ("--evidence", args.evidence),
+                                        ("--engine-classes", args.engine_classes), ("--source-root", args.source_root),
+                                        ("--report-dir", args.report_dir), ("--name-map", args.name_map),
+                                        ("--parent-map", args.parent_map),
+                                        ("--class-ref-map", args.class_ref_map)) if not value]
+    if missing:
+        raise SystemExit("--promote needs: %s" % ", ".join(missing))
+    data = load_json(args.reflection)
+    blocks = data.get("classes_in_groups_with_fort_names") or data.get("classes") or []
+    blocks_by_va = {str(b.get("block_va", "")).lower(): b for b in blocks}
+    names = {k.lower(): v for k, v in load_json(args.name_map).items()}
+    parents = lower_keys(load_json(args.parent_map))
+    evidence = load_json(args.evidence)
+    evidence_fns = {}
+    for rec in evidence.get("blocks", []):
+        fns = []
+        for fn in rec.get("construct_fns") or []:
+            fn = str(fn).lower()
+            fns.append(fn if fn.startswith("0x") else "0x" + fn)
+        evidence_fns[str(rec.get("block_va", "")).lower()] = fns
+
+    with open(args.class_list, "r", encoding="utf-8") as fh:
+        class_list = [line.split("#", 1)[0].strip() for line in fh]
+    class_list = [name for name in class_list if name]
+    if len(set(class_list)) != len(class_list):
+        raise SystemExit("duplicate entries in %s" % args.class_list)
+    listed = set(class_list)
+    name_to_block = {v: k for k, v in names.items()}
+
+    # Closure check: every class is in a promote package, and each parent is listed or an engine class.
+    errors = []
+    for name in class_list:
+        block = name_to_block.get(name)
+        entry = parents.get(block or "") or {}
+        if block is None or not entry:
+            errors.append("%s: no named block with a parent record" % name)
+        elif entry.get("package") not in PROMOTE_PACKAGES:
+            errors.append("%s: package %s is not a promote package" % (name, entry.get("package")))
+        else:
+            parent = entry.get("parent_name")
+            if parent not in listed:
+                parent_entry = parents.get(str(entry.get("parent_va") or "").lower()) or {}
+                if parent_entry.get("package") not in ENGINE_PACKAGES:
+                    errors.append("%s: parent %s (package %s) is neither listed nor an engine class"
+                                  % (name, parent, parent_entry.get("package")))
+    if errors:
+        raise SystemExit("closure check failed:\n  " + "\n  ".join(errors))
+
+    # Type map: only the native set and engine classes. Any other named class becomes a TODO token.
+    type_map = {}
+    known = set()
+    for block, name in names.items():
+        fns = evidence_fns.get(block, [])
+        known.update(fns)
+        package = (parents.get(block) or {}).get("package")
+        if name in listed or package in ENGINE_PACKAGES:
+            for fn in fns:
+                type_map[fn] = name
+    # Class references in the tables point at jmp thunks to a class's NoRegister function (resolve_class_refs.py).
+    class_refs = load_json(args.class_ref_map).get("resolved", {})
+    for ref, block in class_refs.items():
+        name = names.get(block.lower())
+        if not name:
+            continue
+        known.add(ref.lower())
+        if name in listed or (parents.get(block.lower()) or {}).get("package") in ENGINE_PACKAGES:
+            type_map[ref.lower()] = name
+    resolver = Resolver(type_map, known_fns=known)
+    engine_index = build_engine_header_index(args.engine_classes)
+    source_label = os.path.relpath(args.reflection, REPO)
+
+    index = []
+    all_skipped = []
+    for name in class_list:
+        block = name_to_block[name]
+        owner_fns = set(evidence_fns.get(block, []))
+        model = build_class_promoted(blocks_by_va[block], name, resolver, parents[block], owner_fns)
+        parent = model["parent"]
+        if parent in listed:
+            parent_include = "%s.h" % parent
+        elif parent in engine_index:
+            parent_include = engine_index[parent]
+        else:
+            raise SystemExit("%s: no engine header found for parent %s" % (name, parent))
+        module = model["package"].rsplit("/", 1)[-1]
+        api = "%s_API" % module.upper()
+        header = render_promoted_header(model, api, parent_include, source_label)
+        cpp = render_promoted_cpp(model, source_label)
+        if "TODO" in header or "TODO" in cpp:
+            raise SystemExit("%s: unresolved TODO token reached the output" % name)
+        out_dir = os.path.join(args.source_root, module, "Generated")
+        os.makedirs(out_dir, exist_ok=True)
+        with open(os.path.join(out_dir, name + ".h"), "w", encoding="utf-8", newline="\n") as fh:
+            fh.write(header)
+        with open(os.path.join(out_dir, name + ".cpp"), "w", encoding="utf-8", newline="\n") as fh:
+            fh.write(cpp)
+
+        kept = model["members_table_order"]
+        skipped_props = [r for r in model["skipped"] if r["item"] == "property"]
+        for record in model["skipped"]:
+            record["class"] = name
+            all_skipped.append(record)
+        index.append({
+            "name": name, "block_va": model["block_va"], "module": module, "package": model["package"],
+            "parent": parent, "parent_include": parent_include,
+            "properties_total": len(kept) + len(skipped_props),
+            "properties_emitted": len(kept),
+            "properties_skipped": len(skipped_props),
+            "replicated_total": sum(1 for m in kept if m["replicated"]) + sum(1 for r in skipped_props if r["replicated"]),
+            "replicated_emitted": sum(1 for m in kept if m["replicated"]),
+            "replicated_skipped": sum(1 for r in skipped_props if r["replicated"]),
+            "rep_notify_downgraded": sum(1 for r in model["skipped"] if r["item"] == "rep_notify"),
+            "functions_in_table": model["functions_in_table"],
+            "rpc_in_reflection": model["rpc_in_reflection"],
+            "rpc_emitted": sum(1 for f in model["functions"] if f["rpc"]),
+            "rep_notify_functions_emitted": sum(1 for f in model["functions"] if not f["rpc"]),
+            "functions_skipped": sum(1 for r in model["skipped"] if r["item"] == "function"),
+            "forward_declarations": len(model["forward_decls"]),
+        })
+
+    props = [r for r in all_skipped if r["item"] == "property"]
+    funcs = [r for r in all_skipped if r["item"] == "function"]
+    notify = [r for r in all_skipped if r["item"] == "rep_notify"]
+    for record in props:
+        record["property"] = record.pop("name")
+    summary = {
+        "classes": len(class_list),
+        "properties_total": sum(r["properties_total"] for r in index),
+        "properties_emitted": sum(r["properties_emitted"] for r in index),
+        "properties_skipped": len(props),
+        "replicated_total": sum(r["replicated_total"] for r in index),
+        "replicated_emitted": sum(r["replicated_emitted"] for r in index),
+        "replicated_skipped": sum(1 for r in props if r["replicated"]),
+        "skipped_by_category": count_by(props, "category"),
+        "skipped_by_kind": count_by(props, "kind"),
+        "functions_skipped": len(funcs),
+        "functions_skipped_by_category": count_by(funcs, "category"),
+        "rep_notify_downgraded": len(notify),
+        "rpc_in_reflection": sum(r["rpc_in_reflection"] for r in index),
+        "rpc_emitted": sum(r["rpc_emitted"] for r in index),
+    }
+    os.makedirs(args.report_dir, exist_ok=True)
+    with open(os.path.join(args.report_dir, "skipped_properties.json"), "w", encoding="utf-8", newline="\n") as fh:
+        json.dump({"summary": summary, "properties": props, "functions": funcs, "rep_notify": notify},
+                  fh, indent=1)
+        fh.write("\n")
+    with open(os.path.join(args.report_dir, "native_classes_index.json"), "w", encoding="utf-8", newline="\n") as fh:
+        json.dump({"summary": summary, "classes": index}, fh, indent=1)
+        fh.write("\n")
+    print(json.dumps(summary, indent=1))
+    print("promoted %d classes into %s" % (len(index), args.source_root), file=sys.stderr)
+    return 0
+
+
+def load_json(path):
+    with open(path, "r", encoding="utf-8") as fh:
+        return json.load(fh)
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--reflection", default=DEFAULT_REFLECTION)
@@ -812,10 +1274,20 @@ def main(argv=None):
     ap.add_argument("--compare-class", default=None)
     ap.add_argument("--report", default=None, help="write the comparison report to this path")
     ap.add_argument("--self-test", action="store_true")
+    ap.add_argument("--promote", action="store_true",
+                    help="write the native set into --source-root/<Module>/Generated (see promote_native_classes.sh)")
+    ap.add_argument("--class-list", default=None, help="--promote: closure list, one class per line")
+    ap.add_argument("--evidence", default=None, help="--promote: class_name_map.evidence.json (construct functions)")
+    ap.add_argument("--engine-classes", default=None, help="--promote: engine Runtime/Engine/Classes directory")
+    ap.add_argument("--source-root", default=None, help="--promote: native/Source directory")
+    ap.add_argument("--report-dir", default=None, help="--promote: where the skip and index reports are written")
+    ap.add_argument("--class-ref-map", default=None, help="--promote: class_ref_map.json from resolve_class_refs.py")
     args = ap.parse_args(argv)
 
     if args.self_test:
         return self_test()
+    if args.promote:
+        return promote(args)
 
     with open(args.reflection, "r", encoding="utf-8") as fh:
         data = json.load(fh)

@@ -1,4 +1,5 @@
 #include "FortniteAthenaGameplay.h"
+#include "AFortPlayerPawnAthena.h"
 
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
@@ -51,71 +52,6 @@ void AApolloSunLight::BeginPlay()
 {
     Super::BeginPlay();
     UE_LOG(LogTemp, Display, TEXT("Apollo sun light ready: authority=%d"), HasAuthority() ? 1 : 0);
-}
-
-AFortPlayerPawn::AFortPlayerPawn()
-{
-    bReplicates = true;
-    SetReplicateMovement(true);
-    GetCharacterMovement()->MaxWalkSpeed = 600.0f;
-    bUseControllerRotationYaw = true;
-    GetCharacterMovement()->bOrientRotationToMovement = false;
-    PlayerCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("PlayerCamera"));
-    PlayerCamera->SetupAttachment(GetCapsuleComponent());
-    PlayerCamera->SetRelativeLocation(FVector(0.0f, 0.0f, 64.0f));
-    PlayerCamera->bUsePawnControlRotation = true;
-}
-
-void AFortPlayerPawn::BeginPlay()
-{
-    Super::BeginPlay();
-    UE_LOG(LogTemp, Display, TEXT("FortPlayerPawn ready: %s authority=%d"),
-        *GetPathName(), HasAuthority() ? 1 : 0);
-    // Visual probe: -FortniteProbeLook=<yaw>,<pitch>[,<lift>] turns the local camera once it is possessed.
-    FString Look;
-    if (FParse::Value(FCommandLine::Get(), TEXT("FortniteProbeLook="), Look, false) && !HasAuthority())
-    {
-        FString YawText, PitchText, LiftText;
-        if (Look.Split(TEXT(","), &YawText, &PitchText))
-        {
-            // Optional third value lifts only the local camera, to see past nearby hills.
-            FString PitchOnly = PitchText;
-            if (PitchText.Split(TEXT(","), &PitchOnly, &LiftText))
-                PlayerCamera->SetRelativeLocation(FVector(0.0f, 0.0f, 64.0f + FCString::Atof(*LiftText)));
-            const FRotator Rotation(FCString::Atof(*PitchOnly), FCString::Atof(*YawText), 0.0f);
-            FTimerHandle Handle;
-            GetWorldTimerManager().SetTimer(Handle, FTimerDelegate::CreateLambda([this, Rotation]()
-            {
-                APlayerController* Controller = Cast<APlayerController>(GetController());
-                UE_LOG(LogTemp, Display, TEXT("Apollo probe look: controller=%d"), Controller ? 1 : 0);
-                if (Controller)
-                    Controller->SetControlRotation(Rotation);
-            }), 1.0f, true);
-        }
-    }
-}
-
-void AFortPlayerPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{
-    Super::SetupPlayerInputComponent(PlayerInputComponent);
-    PlayerInputComponent->BindAxis(TEXT("MoveForward"), this, &AFortPlayerPawn::MoveForward);
-    PlayerInputComponent->BindAxis(TEXT("MoveRight"), this, &AFortPlayerPawn::MoveRight);
-    PlayerInputComponent->BindAxis(TEXT("Turn"), this, &APawn::AddControllerYawInput);
-    PlayerInputComponent->BindAxis(TEXT("LookUp"), this, &APawn::AddControllerPitchInput);
-    PlayerInputComponent->BindAction(TEXT("Jump"), IE_Pressed, this, &ACharacter::Jump);
-    PlayerInputComponent->BindAction(TEXT("Jump"), IE_Released, this, &ACharacter::StopJumping);
-}
-
-void AFortPlayerPawn::MoveForward(float Value)
-{
-    if (Controller && Value != 0.0f)
-        AddMovementInput(GetActorForwardVector(), Value);
-}
-
-void AFortPlayerPawn::MoveRight(float Value)
-{
-    if (Controller && Value != 0.0f)
-        AddMovementInput(GetActorRightVector(), Value);
 }
 
 AFortGameModeAthena::AFortGameModeAthena()
@@ -251,6 +187,9 @@ void AFortGameModeAthena::SpawnApolloBackground()
 void AFortGameModeAthena::RestartPlayer(AController* NewPlayer)
 {
     Super::RestartPlayer(NewPlayer);
+    if (NewPlayer && NewPlayer->GetPawn())
+        UE_LOG(LogTemp, Display, TEXT("Athena pawn spawned: class=%s authority=%d"),
+            *NewPlayer->GetPawn()->GetClass()->GetName(), NewPlayer->GetPawn()->HasAuthority() ? 1 : 0);
     if (!NewPlayer || !NewPlayer->GetPawn() || !GetWorld() ||
         !GetWorld()->GetMapName().EndsWith(TEXT("Apollo_Terrain")))
         return;

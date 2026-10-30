@@ -182,8 +182,45 @@ private:
         LogCVar(TEXT("net.AllowEncryption"));
         TArray<uint8> Key;
         UE_LOG(LogFortniteNet, Log, TEXT("Network encryption key %s."), LoadNetworkEncryptionKey(Key) ? TEXT("configured") : TEXT("not configured"));
+        LogNativeClassLoads();
     }
 
+    // Loads every promoted class by its /Script path, which is part of the wire format, and logs its
+    // superclass. UObject names drop the C++ prefix letter: AFortPawn is /Script/FortniteGame.FortPawn. Both peers print these lines, so a missing class or a broken chain shows in the logs.
+    // The list is the closure in porting/native_class_set.txt.
+    static void LogNativeClassLoads()
+    {
+        static const TCHAR* ClassPaths[] = {
+            TEXT("/Script/FortniteGame.FortGameStateAthena"),
+            TEXT("/Script/FortniteGame.FortPlayerStateAthena"),
+            TEXT("/Script/FortniteGame.FortPlayerControllerAthena"),
+            TEXT("/Script/FortniteGame.FortPlayerPawnAthena"),
+            TEXT("/Script/FortniteGame.FortWorldSettings"),
+            TEXT("/Script/FortniteGame.FortAthenaMapInfo"),
+            TEXT("/Script/FortniteGame.FortPoiManager"),
+            TEXT("/Script/FortniteGame.FortWorldManager"),
+            TEXT("/Script/FortniteGame.FortPlayerStateZone"),
+            TEXT("/Script/FortniteGame.FortPlayerState"),
+            TEXT("/Script/FortniteGame.FortGameStateZone"),
+            TEXT("/Script/FortniteGame.FortGameState_InGame"),
+            TEXT("/Script/FortniteGame.FortGameState"),
+            TEXT("/Script/FortniteGame.FortGameStateBase"),
+            TEXT("/Script/FortniteGame.FortPlayerControllerZone"),
+            TEXT("/Script/FortniteGame.FortPlayerControllerGameplay"),
+            TEXT("/Script/FortniteGame.FortPlayerController"),
+            TEXT("/Script/FortniteGame.FortPlayerPawn"),
+            TEXT("/Script/FortniteGame.FortPawn"),
+            TEXT("/Script/PlayspaceFramework.PlayspaceGameState"),
+            TEXT("/Script/PlayspaceFramework.PlayspacePlayerController"),
+        };
+        for (const TCHAR* Path : ClassPaths)
+        {
+            const UClass* Class = StaticLoadClass(UObject::StaticClass(), nullptr, Path);
+            UE_LOG(LogFortniteNet, Log, TEXT("Native class %s: %s, super %s"), Path,
+                Class ? TEXT("loaded") : TEXT("MISSING"),
+                Class && Class->GetSuperClass() ? *Class->GetSuperClass()->GetPathName() : TEXT("none"));
+        }
+    }
 
     static void OnWorldInitialized(UWorld* World, const UWorld::InitializationValues)
     {

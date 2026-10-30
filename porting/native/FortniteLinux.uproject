@@ -10,6 +10,11 @@
       "LoadingPhase": "Default"
     },
     {
+      "Name": "PlayspaceFramework",
+      "Type": "Runtime",
+      "LoadingPhase": "Default"
+    },
+    {
       "Name": "FortnitePortEditor",
       "Type": "Editor",
       "LoadingPhase": "Default"

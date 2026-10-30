@@ -129,22 +129,23 @@ about 0.6 s, with no exceptions.
 - **Not emitted:** function bodies, virtual qualifiers, includes, forward
   declarations and `GENERATED_BODY` beyond the minimum.
 
-## Promotion to native/Source
+## Promotion to native/Source (first pass, done)
 
-Nothing here is promoted yet. The steps, once names exist:
+`porting/promote_native_classes.sh` runs `gen_native_classes.py --promote` on the closure in
+`porting/native_class_set.txt`. It writes `native/Source/<Module>/Generated/<Name>.{h,cpp}` (package
+`/Script/FortniteGame` -> `FortniteGame`, `/Script/PlayspaceFramework` -> `PlayspaceFramework`) and the reports
+`porting/generated/reflection/skipped_properties.json` and `native_classes_index.json`. Status and blockers:
+`porting/native_classes_status.md`.
 
-1. Build the name map (`block_va` to class name) and the type map (`Z_Construct`
-   function to C++ name). Sources to use: the other agent's Ghidra/Wine work
-   and cooked package imports under `porting/generated/extracted/`.
-2. Regenerate with `--name-map` and `--type-map`. Use `--all-groups` for engine
-   parents such as `AActor`.
-3. Review `TODO-LIST` in each header. Resolve every `TODO_*` token, the parent,
-   delegates and missing includes by hand.
-4. Check the generated declarations against the original `ClassChecksum` values
-   for each class (see `original_client_net_protocol.md` section 2).
-5. Copy each header to `native/Source/FortniteGame/Public/<Name>.h` and each
-   `.cpp` to `native/Source/FortniteGame/Private/<Name>.cpp`. Replace any
-   hand-written placeholder (for example `FortniteMapClasses.h`,
-   `FortniteAthenaGameplay.h`) instead of duplicating the class.
-6. Build `FortniteLinux` and `FortniteLinuxServer`, restage, and run
-   `porting/server/smoke_join.sh`. Confirm the checksum lines match on both peers.
+Promote mode differs from the draft in these ways:
+
+- A property whose type does not resolve is skipped and recorded (struct, enum, delegate, interface, or a class
+  outside the native set). Nothing is emitted with a `TODO_*` token; the script refuses to write one.
+- Class references are resolved through `resolve_class_refs.py`: the reference points at a `jmp` thunk to the class's
+  NoRegister function, and the thunk is followed in the runtime dump.
+- Functions: only net UFUNCTIONs (RPCs) and RepNotify targets are emitted. An ambiguous name join is resolved to the
+  candidate whose `outer_fn` is the class's own construct function (the extractor keeps the candidates).
+- Each emitted RPC gets an `_Implementation` stub (UHT requires it), and each RepNotify gets an empty body.
+- UCLASS has no `minimalapi` (UHT rejects it with the module API macro).
+
+The draft mode (no `--promote`) is unchanged and still writes `TODO_*` tokens into `porting/generated/native_classes`.

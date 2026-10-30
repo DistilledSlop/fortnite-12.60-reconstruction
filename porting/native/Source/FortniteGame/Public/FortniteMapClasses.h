@@ -4,23 +4,19 @@
 #include "Engine/StaticMeshActor.h"
 #include "GameFramework/Actor.h"
 #include "Components/ActorComponent.h"
-#include "Components/SceneComponent.h"
-#include "GameFramework/WorldSettings.h"
 #include "NavAreas/NavAreaMeta.h"
 #include "NavigationSystem.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "FortniteMapClasses.generated.h"
 
+// Classes that are not in the promoted native set (porting/native_class_set.txt) stay hand-written here.
+// AFortWorldSettings, AFortAthenaMapInfo, AFortPoiManager and AFortWorldManager are generated in
+// Generated/ from the reflection tables and are not declared here.
+
 // Initial reflection-compatible bases for loading a recovered map. Gameplay
 // behavior and serialized Fortnite properties still need reconstruction.
 UCLASS()
 class FORTNITEGAME_API AFortLevelScriptActor : public ALevelScriptActor
-{
-    GENERATED_BODY()
-};
-
-UCLASS()
-class FORTNITEGAME_API AFortWorldSettings : public AWorldSettings
 {
     GENERATED_BODY()
 };
@@ -45,33 +41,10 @@ class FORTNITEGAME_API UFortNavSystem : public UNavigationSystemV1
     GENERATED_BODY()
 };
 
-// The Apollo persistent level serializes these manager objects. Their
-// Fortnite gameplay responsibilities are still to be recovered.
-UCLASS()
-class FORTNITEGAME_API AFortPoiManager : public AActor
-{
-    GENERATED_BODY()
-};
-
 UCLASS()
 class FORTNITEGAME_API UWorldTileManager : public UActorComponent
 {
     GENERATED_BODY()
-};
-
-UCLASS()
-class FORTNITEGAME_API AFortWorldManager : public AActor
-{
-    GENERATED_BODY()
-
-public:
-    AFortWorldManager();
-
-    UPROPERTY(VisibleAnywhere)
-    USceneComponent* MySceneComponent;
-
-    UPROPERTY(VisibleAnywhere)
-    UWorldTileManager* WorldTileManager;
 };
 
 UCLASS()
@@ -98,18 +71,6 @@ UCLASS()
 class FORTNITEGAME_API AFortSafeZoneStorm : public AActor
 {
     GENERATED_BODY()
-};
-
-UCLASS()
-class FORTNITEGAME_API AFortAthenaMapInfo : public AActor
-{
-    GENERATED_BODY()
-
-public:
-    AFortAthenaMapInfo();
-
-    UPROPERTY(VisibleAnywhere)
-    USceneComponent* RootComponent0;
 };
 
 UCLASS()

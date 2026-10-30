@@ -43,19 +43,23 @@ class or `LOAD_FAILED`. Recovered asset files must be copied into the matching
 For `Texture2D`, the probe also logs dimensions, mip count, and first-mip byte
 count. It does not validate visible rendering when run with `-nullrhi`.
 
-`FortniteMapClasses.h` contains initial Fortnite class definitions
-needed to deserialize the supplied `FortniteEmptyDedicated` map. After staging
-its recovered `.umap` and `.uexp` under `FortniteLinux/Content/Maps/`, launch
-the staged executable with `/Game/Maps/FortniteEmptyDedicated` as its map
-argument. This map enters play, but the class definitions are only starting
+`Generated/` (FortniteGame) and `PlayspaceFramework/Generated/` hold the classes promoted from
+the reflection tables (`porting/promote_native_classes.sh`; do not hand-edit). They cover the
+Athena join chain (`FortPlayerPawnAthena`, `FortPlayerStateAthena`, `FortGameStateAthena`,
+`FortPlayerControllerAthena`, `FortWorldSettings`, and the Playspace parents). Their properties and
+RPCs are partial, and bodies are stubs. See `porting/native_classes_status.md`.
+
+`FortniteMapClasses.h` still holds the hand-written classes outside that set that the
+`FortniteEmptyDedicated` map needs. After staging its recovered `.umap` and `.uexp` under
+`FortniteLinux/Content/Maps/`, launch the staged executable with
+`/Game/Maps/FortniteEmptyDedicated` as its map argument. The map enters play, and these are starting
 points for full gameplay reconstruction.
 
-`FortniteAthenaGameplay.h` defines initial native `FortGameModeAthena`,
-`FortPlayerPawn`, and `FortPlayerPawnAthena` classes. The game mode selects the
-Athena pawn, which uses standard UE character movement and replicates on a
-dedicated server. `Config/DefaultInput.ini` binds movement, view, and jump
-controls. These are newly authored placeholders for the original class names,
-not a reconstruction of Fortnite movement or gameplay rules.
+`FortniteAthenaGameplay.h` defines the native `FortGameModeAthena` (server-only, still on
+`AGameModeBase`). It selects the generated `FortPlayerPawnAthena` as its default pawn and keeps the
+Apollo stand-in spawns. `Config/DefaultInput.ini` still binds movement, view, and jump controls, but the
+generated pawn has no input bindings. These are placeholders, not a reconstruction of Fortnite movement
+or gameplay rules.
 
 `AApolloLandscapeTile` is a temporary replicated static mesh actor for the 61
 converted Apollo landscape tiles. `AFortGameModeAthena` reads their transforms

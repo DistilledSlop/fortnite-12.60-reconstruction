@@ -1,0 +1,31 @@
+# Native class set for the first promotion (porting/promote_native_classes.sh).
+# Closure of the eight targets: every ancestor that is not an engine 4.25 class.
+# gen_native_classes.py --promote checks the closure: each parent is listed here or is in
+# /Script/Engine or /Script/CoreUObject. Package is taken from class_parent_map.json.
+
+# Targets
+AFortGameStateAthena
+AFortPlayerStateAthena
+AFortPlayerControllerAthena
+AFortPlayerPawnAthena
+AFortWorldSettings
+AFortAthenaMapInfo
+AFortPoiManager
+AFortWorldManager
+
+# Fort ancestors (/Script/FortniteGame)
+AFortPlayerStateZone
+AFortPlayerState
+AFortGameStateZone
+AFortGameState_InGame
+AFortGameState
+AFortGameStateBase
+AFortPlayerControllerZone
+AFortPlayerControllerGameplay
+AFortPlayerController
+AFortPlayerPawn
+AFortPawn
+
+# Playspace ancestors (/Script/PlayspaceFramework, a separate module)
+APlayspaceGameState
+APlayspacePlayerController

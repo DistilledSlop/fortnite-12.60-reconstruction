@@ -311,8 +311,21 @@ def decode_class(img, block_off, fn_by_name):
             shapes = {(c["flags"], c["prop_arr"], c["nprop"]) for c in cands}
             if len(shapes) == 1 and cands[0]["prop_arr"]:
                 entry["params"] = decode_props(img, cands[0]["prop_arr"], cands[0]["nprop"])
+            elif len(shapes) == 1 and cands:
+                # One joined FFunctionParams without a property array: the function takes no parameters.
+                entry["params"] = []
             elif len(shapes) > 1:
                 entry["params_note"] = "ambiguous: candidates disagree on parameter table"
+            if len(cands) > 1:
+                # Every candidate is kept. outer_fn is the construct function of the owning class, so a
+                # reader can pick the candidate that belongs to this block (see gen_native_classes.py).
+                entry["candidates"] = [{
+                    "owning_class": c["owning_class"],
+                    "outer_fn": "0x%x" % c["outer_fn"] if c["outer_fn"] else None,
+                    "flags": "0x%x" % c["flags"],
+                    "nprop": c["nprop"],
+                    "params": decode_props(img, c["prop_arr"], c["nprop"]) if c["prop_arr"] else [],
+                } for c in cands]
             funcs.append(entry)
     props = decode_props(img, prop_p, nProp) if prop_p else []
     cfg_name = img.cstr(cfg) if cfg else None

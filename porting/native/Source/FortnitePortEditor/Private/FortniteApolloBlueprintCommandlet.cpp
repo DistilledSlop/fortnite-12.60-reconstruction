@@ -4,6 +4,8 @@
 #include "Engine/Blueprint.h"
 #include "Engine/SCS_Node.h"
 #include "Engine/SimpleConstructionScript.h"
+#include "AFortPoiManager.h"
+#include "AFortAthenaMapInfo.h"
 #include "FortniteMapClasses.h"
 #include "HAL/FileManager.h"
 #include "Kismet2/KismetEditorUtilities.h"
