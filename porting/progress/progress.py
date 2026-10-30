@@ -570,6 +570,40 @@ def tooltip_text(node):
             f"{node.get('evidence', '')}")
 
 
+def fit_tile_label(name, pct_s, rw, rh):
+    """Font sizes for a leaf tile's name and percentage so both fit.
+
+    Returns (lines, name_size, pct_size); lines is None for a
+    percentage-only tile, and (None, None, None) when even the percentage
+    does not fit (the label is then tooltip-only). The uniform bases are an
+    11px name and a 12px percentage; a cramped tile first loses percentage
+    size, then name size (which also reduces the number of wrapped lines),
+    and finally the name entirely. Fit model: the first baseline sits
+    4px+size down, lines advance size+2 px, and text occupies 0.756em
+    above and 0.2358em below its baseline (the widest common sans metrics,
+    the same model the geometry checker validates against)."""
+    def width_ok(text, fs):
+        return text_width(text, fs) <= rw - 8
+
+    def name_pct_height(n, ns, ps):
+        base = 4 + ns + n * (ns + 2)  # baseline of the pct line
+        return base + 0.2358 * ps <= rh + 0.5
+
+    for ns in (11, 10, 9, 8, 7):
+        lines = wrap_fit(name, rw - 12, ns)
+        if lines is None:
+            continue
+        for ps in (12, 11, 10, 9, 8, 7, 6):
+            if 0.756 * ps + 0.2358 * ns > ns + 2:  # pct would overlap the name
+                continue
+            if width_ok(pct_s, ps) and name_pct_height(len(lines), ns, ps):
+                return lines, ns, ps
+    for ps in (12, 11, 10, 9, 8, 7, 6):
+        if width_ok(pct_s, ps) and 0.496 * ps <= rh / 2 + 0.5:
+            return None, None, ps
+    return None, None, None
+
+
 def group_header(node, w, depth):
     """Group header: the full label wrapped at word boundaries.
 
@@ -651,26 +685,18 @@ def render_treemap(groups, width, height, css_class="tm", interactive=False, sor
             parts.append(f'<g><title>{html.escape(tooltip_text(node))}</title>')
         parts.append(f'<rect x="{rx:.1f}" y="{ry:.1f}" width="{rw:.1f}" height="{rh:.1f}" rx="3" fill="{fill}"/>')
         if interactive:
-            # Emit the label whenever it fits; the page hides it at the root
-            # level and reveals it zoomed in, where the tile is large enough.
-            lines = wrap_fit(node["name"], rw - 12, 11)
-            pct_s = fmt_pct(node["pct"])
-            if lines:
-                head_h = 15 + 13 * (len(lines) - 1)
-                if head_h + 25 <= rh:
-                    ty = ry + 15
-                    for ln in lines:
-                        parts.append(f'<text class="leaf-label" x="{rx + 6:.1f}" y="{ty:.1f}" font-size="11" fill="{ink}">{html.escape(ln)}</text>')
-                        ty += 13
-                    parts.append(f'<text class="leaf-pct" x="{rx + 6:.1f}" y="{ry + rh - 7:.1f}" font-size="15" font-weight="700" fill="{ink}">{pct_s}</text>')
-                elif head_h + 15 <= rh:
-                    ty = ry + 15
-                    for ln in lines:
-                        parts.append(f'<text class="leaf-label" x="{rx + 6:.1f}" y="{ty:.1f}" font-size="11" fill="{ink}">{html.escape(ln)}</text>')
-                        ty += 13
-                    parts.append(f'<text class="leaf-pct" x="{rx + 6:.1f}" y="{ty:.1f}" font-size="11" font-weight="700" fill="{ink}">{pct_s}</text>')
-            elif rw >= 26 and rh >= 16:
-                parts.append(f'<text class="leaf-pct" x="{rx + 5:.1f}" y="{ry + rh / 2 + 5:.1f}" font-size="12" font-weight="700" fill="{ink}">{pct_s}</text>')
+            # Every tile shows its percentage. The uniform bases are an 11px
+            # name and a 12px percentage; a cramped tile first loses
+            # percentage size, then name size, then the name itself (the
+            # full label stays in the tooltip and detail panel).
+            lines, ns, ps = fit_tile_label(node["name"], fmt_pct(node["pct"]), rw, rh)
+            if lines is None:
+                if ps is not None:
+                    parts.append(f'<text class="leaf-pct" x="{rx + 5:.1f}" y="{ry + rh / 2 + 0.26 * ps:.1f}" font-size="{ps}" font-weight="700" fill="{ink}">{fmt_pct(node["pct"])}</text>')
+            else:
+                for i, ln in enumerate(lines):
+                    parts.append(f'<text class="leaf-label" x="{rx + 6:.1f}" y="{ry + 4 + ns + i * (ns + 2):.1f}" font-size="{ns}" fill="{ink}">{html.escape(ln)}</text>')
+                parts.append(f'<text class="leaf-pct" x="{rx + 6:.1f}" y="{ry + 4 + ns + len(lines) * (ns + 2):.1f}" font-size="{ps}" font-weight="700" fill="{ink}">{fmt_pct(node["pct"])}</text>')
         else:
             label_drawn = False
             if rw >= 60 and rh >= 40:

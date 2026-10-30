@@ -125,6 +125,16 @@ Labels are never cut off. Group headers and tile names wrap at word boundaries; 
 tile too small for its name shows only its percentage, and every tile's full label,
 done/total, source and evidence are in the hover title.
 
+On the dashboard page every tile shows its percentage, and sizes stay uniform
+unless a tile genuinely cannot hold them: the bases are an 11px name and a 12px
+percentage (`fit_tile_label` in `progress.py`). A cramped tile first shrinks the
+percentage, then the name (which also reduces the number of wrapped lines), and
+only then drops the name altogether, leaving the percentage alone. The fit model
+is the same font metrics the geometry checker validates against: the first
+baseline sits 4px+size down, lines advance size+2 px, and text occupies 0.756em
+above and 0.2358em below its baseline. The static `progress.svg` keeps the
+conservative one-size behaviour: a label only when the tile fits one.
+
 Wrap widths come from a per-character advance table in `progress.py` (`CHAR_W`):
 the maximum advance across DejaVu Sans Bold and Liberation Sans Bold (the two
 widest common sans families a viewer is likely to use, and wider than SF Pro,
