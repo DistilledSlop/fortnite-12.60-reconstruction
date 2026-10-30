@@ -81,3 +81,10 @@ Generated editor assets, cooked assets, and runtime logs remain ignored by Git.
 Both patches are committed here as patch files. They modify the adjacent
 source checkouts only when the preparation scripts run; no supplied source or
 game asset is committed to this repository.
+
+The inspector also supports `--material-report` and `--export-png`. A report
+for `M_Melee_Flare` found an unlit translucent material that imports
+`T_Starburst`; the latter exported as a 512×512 PNG using managed ImageSharp
+encoding. The stock UE texture importer accepted that PNG at its original
+`/Game` path. These steps recover source pixels and basic material metadata;
+the material graph is the next reconstruction step.

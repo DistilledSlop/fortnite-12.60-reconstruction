@@ -4,6 +4,8 @@ using CUE4Parse.FileProvider;
 using CUE4Parse.UE4.Assets;
 using CUE4Parse.UE4.AssetRegistry;
 using CUE4Parse.UE4.Assets.Exports.StaticMesh;
+using CUE4Parse.UE4.Assets.Exports.Material;
+using CUE4Parse.UE4.Assets.Exports.Texture;
 using CUE4Parse.UE4.Objects.Core.Misc;
 using CUE4Parse.UE4.Objects.UObject;
 using CUE4Parse.UE4.Readers;
@@ -12,6 +14,9 @@ using System.Text.Json;
 using CUE4Parse_Conversion.Dto;
 using CUE4Parse_Conversion.Formats.Meshes;
 using CUE4Parse_Conversion.Options;
+using CUE4Parse_Conversion.Textures;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.PixelFormats;
 
 bool showAll = args.Contains("--all");
 bool showPseudo = args.Contains("--pseudo");
@@ -23,8 +28,10 @@ bool savePackage = args.Contains("--save-package");
 bool saveFolder = args.Contains("--save-folder");
 bool saveClosure = args.Contains("--save-closure");
 bool exportGlb = args.Contains("--export-glb");
+bool exportPng = args.Contains("--export-png");
+bool materialReport = args.Contains("--material-report");
 bool ue426 = args.Contains("--ue426");
-Globals.FatalObjectSerializationErrors = exportGlb;
+Globals.FatalObjectSerializationErrors = exportGlb || exportPng || materialReport;
 string? maxArgument = args.SingleOrDefault(arg => arg.StartsWith("--max-packages=", StringComparison.Ordinal));
 int maxPackages = 250;
 if (maxArgument is not null && (!int.TryParse(maxArgument[15..], out maxPackages) || maxPackages < 1))
@@ -32,7 +39,7 @@ if (maxArgument is not null && (!int.TryParse(maxArgument[15..], out maxPackages
     Console.Error.WriteLine("--max-packages must be a positive integer");
     return 2;
 }
-string[] positional = args.Where(arg => arg != maxArgument && arg is not ("--all" or "--pseudo" or "--imports" or "--registry" or "--scan-maps" or "--all-keys" or "--save-package" or "--save-folder" or "--save-closure" or "--export-glb" or "--ue426")).ToArray();
+string[] positional = args.Where(arg => arg != maxArgument && arg is not ("--all" or "--pseudo" or "--imports" or "--registry" or "--scan-maps" or "--all-keys" or "--save-package" or "--save-folder" or "--save-closure" or "--export-glb" or "--export-png" or "--material-report" or "--ue426")).ToArray();
 bool packageLess = registryMode || scanMaps;
 if ((registryMode && scanMaps) || (packageLess ? positional.Length > 1 : positional.Length is < 1 or > 2))
 {
@@ -40,6 +47,8 @@ if ((registryMode && scanMaps) || (packageLess ? positional.Length > 1 : positio
     Console.Error.WriteLine("   or: Cue4Inspect <folder-prefix> [pak-directory] --save-folder [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect <asset-path> [pak-directory] --save-closure [--max-packages=250] [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect <static-mesh-path> [pak-directory] --export-glb [--all-keys]");
+    Console.Error.WriteLine("   or: Cue4Inspect <texture-path> [pak-directory] --export-png [--all-keys]");
+    Console.Error.WriteLine("   or: Cue4Inspect <material-path> [pak-directory] --material-report [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect --registry [pak-directory] [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect --scan-maps [pak-directory] [--all-keys]");
     return 2;
@@ -192,6 +201,59 @@ try
     }
 
     var packageData = provider.LoadPackage(assetPath!);
+    if (exportPng)
+    {
+        var texture = packageData.GetExports().OfType<UTexture2D>().FirstOrDefault()
+            ?? throw new InvalidDataException("Package has no Texture2D export");
+        var decoded = texture.Decode()
+            ?? throw new InvalidDataException("Texture has no decodable mip data");
+        var png = EncodeRgbaPng(decoded);
+        var destination = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "../../../../generated/converted"));
+        var relative = assetPath!.Replace('\\', '/').TrimStart('/');
+        if (relative.Split('/').Any(part => part is ".." or "."))
+            throw new InvalidDataException("Unsafe asset path");
+        var target = Path.GetFullPath(Path.Combine(destination, relative + ".png"));
+        if (!target.StartsWith(destination + Path.DirectorySeparatorChar, StringComparison.Ordinal))
+            throw new InvalidDataException("Export path escapes output directory");
+        Directory.CreateDirectory(Path.GetDirectoryName(target)!);
+        File.WriteAllBytes(target, png);
+        Console.WriteLine($"Exported {target} ({decoded.Width}x{decoded.Height}, {png.Length} bytes)");
+        return 0;
+    }
+    if (materialReport)
+    {
+        var materials = packageData.GetExports().OfType<UMaterialInterface>().ToArray();
+        var imports = packageData is Package materialPackage
+            ? materialPackage.ImportMap
+                .Select(import => new
+                {
+                    root = RootImportName(materialPackage, import),
+                    className = import.ClassName.Text,
+                    objectName = import.ObjectName.Text
+                })
+                .Where(import => import.root.StartsWith("/Game/", StringComparison.Ordinal) ||
+                                 import.root.StartsWith("/Engine/", StringComparison.Ordinal))
+                .ToArray()
+            : [];
+        Console.WriteLine(JsonSerializer.Serialize(new
+        {
+            path = assetPath,
+            materials = materials.Select(material => new
+            {
+                name = material.Name,
+                type = material.GetType().Name,
+                blendMode = (material as UMaterial)?.BlendMode.ToString(),
+                shadingModel = (material as UMaterial)?.ShadingModel.ToString(),
+                twoSided = (material as UMaterial)?.TwoSided,
+                expressionCount = (material as UMaterial)?.Expressions.Length,
+                referencedTextures = (material as UMaterial)?.ReferencedTextures.Select(reference => reference?.Name).ToArray(),
+                parent = (material as UMaterialInstance)?.Parent?.Name,
+                staticPermutation = (material as UMaterialInstance)?.bHasStaticPermutationResource
+            }).ToArray(),
+            imports
+        }, new JsonSerializerOptions { WriteIndented = true }));
+        return 0;
+    }
     if (exportGlb)
     {
         var mesh = packageData.GetExports().OfType<UStaticMesh>().FirstOrDefault()
@@ -250,8 +312,43 @@ try
 }
 catch (Exception error)
 {
-    Console.Error.WriteLine(exportGlb ? $"Inspection failed: {error}" : $"Inspection failed: {error.GetType().Name}: {error.Message}");
+    Console.Error.WriteLine(exportGlb || exportPng || materialReport ? $"Inspection failed: {error}" : $"Inspection failed: {error.GetType().Name}: {error.Message}");
     return 1;
+}
+
+static byte[] EncodeRgbaPng(CTexture texture)
+{
+    var pixelCount = checked(texture.Width * texture.Height);
+    byte[] rgba;
+    switch (texture.PixelFormat)
+    {
+        case EPixelFormat.PF_R8G8B8A8:
+            rgba = texture.Data;
+            break;
+        case EPixelFormat.PF_B8G8R8A8:
+        case EPixelFormat.PF_A8R8G8B8:
+            rgba = (byte[])texture.Data.Clone();
+            for (var i = 0; i < rgba.Length; i += 4)
+                (rgba[i], rgba[i + 2]) = (rgba[i + 2], rgba[i]);
+            break;
+        case EPixelFormat.PF_R8:
+        case EPixelFormat.PF_G8:
+            rgba = new byte[checked(pixelCount * 4)];
+            for (var i = 0; i < pixelCount; i++)
+            {
+                rgba[4 * i] = rgba[4 * i + 1] = rgba[4 * i + 2] = texture.Data[i];
+                rgba[4 * i + 3] = 255;
+            }
+            break;
+        default:
+            throw new NotSupportedException($"PNG conversion does not support decoded {texture.PixelFormat}");
+    }
+    if (rgba.Length != checked(pixelCount * 4))
+        throw new InvalidDataException("Decoded texture byte count does not match its dimensions");
+    using var image = Image.LoadPixelData<Rgba32>(rgba, texture.Width, texture.Height);
+    using var buffer = new MemoryStream();
+    image.SaveAsPng(buffer);
+    return buffer.ToArray();
 }
 
 static string ReadHiddenKey(string prompt)
