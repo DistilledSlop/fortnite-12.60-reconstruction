@@ -1,15 +1,16 @@
 #pragma once
 
-#include "Engine/DirectionalLight.h"
 #include "GameFramework/Character.h"
+#include "GameFramework/Actor.h"
 #include "GameFramework/GameModeBase.h"
 #include "Engine/StaticMeshActor.h"
 #include "FortniteAthenaGameplay.generated.h"
 
 class UCameraComponent;
+class UDirectionalLightComponent;
 
 UCLASS()
-class FORTNITEGAME_API AApolloSunLight : public ADirectionalLight
+class FORTNITEGAME_API AApolloSunLight : public AActor
 {
     GENERATED_BODY()
 
@@ -18,6 +19,10 @@ public:
 
 protected:
     virtual void BeginPlay() override;
+
+private:
+    UPROPERTY(VisibleAnywhere)
+    UDirectionalLightComponent* SunLight;
 };
 
 // Initial native player hierarchy. Movement is UE character movement until

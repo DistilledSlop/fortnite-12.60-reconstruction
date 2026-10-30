@@ -68,6 +68,12 @@ terrain under software Vulkan; it does not recreate Apollo's sky or materials.
 shader archives. All generated meshes, materials, and the manifest are ignored
 by Git.
 
+`FortniteMaterialRebuild` accepts `-Blend=Opaque`, `-UVChannel=1`, and an
+optional `-Mesh=/Game/...` to build a lit atlas material and assign it to a
+converted terrain mesh. D4's `Terrain_D4` atlas came from
+`python3 porting/bake_apollo_tile.py D4`; its imported editor texture, material,
+mesh edit, cooked packages, and staged payloads remain ignored.
+
 `-FortniteProbeTerrainCollision` performs one vertical line trace through D4
 after Apollo's converted grid spawns. The editor commandlet
 `-run=FortniteTerrainCollision -Tile=D4` rebuilds one imported tile with

@@ -3,7 +3,7 @@
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/InputComponent.h"
-#include "Components/LightComponent.h"
+#include "Components/DirectionalLightComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Dom/JsonObject.h"
 #include "Engine/World.h"
@@ -25,9 +25,11 @@ AApolloSunLight::AApolloSunLight(const FObjectInitializer& ObjectInitializer)
     bReplicates = true;
     bAlwaysRelevant = true;
     SetReplicateMovement(true);
-    GetLightComponent()->SetMobility(EComponentMobility::Movable);
-    GetLightComponent()->SetIntensity(5.0f);
-    GetLightComponent()->SetCastShadows(false);
+    SunLight = CreateDefaultSubobject<UDirectionalLightComponent>(TEXT("SunLight"));
+    RootComponent = SunLight;
+    SunLight->SetMobility(EComponentMobility::Movable);
+    SunLight->SetIntensity(5.0f);
+    SunLight->SetCastShadows(false);
 }
 
 void AApolloSunLight::BeginPlay()

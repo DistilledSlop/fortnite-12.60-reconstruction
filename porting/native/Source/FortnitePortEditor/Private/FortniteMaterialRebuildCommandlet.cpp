@@ -1,11 +1,13 @@
 #include "FortniteMaterialRebuildCommandlet.h"
 
 #include "AssetRegistryModule.h"
+#include "Engine/StaticMesh.h"
 #include "Engine/Texture2D.h"
 #include "HAL/FileManager.h"
 #include "Materials/Material.h"
 #include "Materials/MaterialExpressionConstant3Vector.h"
 #include "Materials/MaterialExpressionTextureSample.h"
+#include "Materials/MaterialExpressionTextureCoordinate.h"
 #include "Misc/PackageName.h"
 #include "Misc/Parse.h"
 #include "Misc/Paths.h"
@@ -24,15 +26,20 @@ int32 UFortniteMaterialRebuildCommandlet::Main(const FString& Params)
 {
     FString MaterialPath;
     FString TexturePath;
+    FString MeshPath;
     FString Blend;
+    int32 UVChannel = 0;
     FParse::Value(*Params, TEXT("Texture="), TexturePath);
+    FParse::Value(*Params, TEXT("Mesh="), MeshPath);
     FParse::Value(*Params, TEXT("Blend="), Blend);
+    FParse::Value(*Params, TEXT("UVChannel="), UVChannel);
     if (!FParse::Value(*Params, TEXT("Material="), MaterialPath) ||
         !FPackageName::IsValidLongPackageName(MaterialPath) ||
         !MaterialPath.StartsWith(TEXT("/Game/")) ||
-        (Blend != TEXT("Translucent") && Blend != TEXT("Additive")))
+        (Blend != TEXT("Translucent") && Blend != TEXT("Additive") && Blend != TEXT("Opaque")) ||
+        UVChannel < 0 || UVChannel > 7 || (!MeshPath.IsEmpty() && Blend != TEXT("Opaque")))
     {
-        UE_LOG(LogTemp, Error, TEXT("Use -Material=/Game/path/name -Blend=Translucent|Additive [-Texture=/Game/path/name.name]"));
+        UE_LOG(LogTemp, Error, TEXT("Use -Material=/Game/path/name -Blend=Translucent|Additive|Opaque [-Texture=/Game/path/name.name] [-UVChannel=0..7] [-Mesh=/Game/path/name.name for Opaque]"));
         return 2;
     }
 
@@ -46,8 +53,9 @@ int32 UFortniteMaterialRebuildCommandlet::Main(const FString& Params)
     UPackage* Package = CreatePackage(nullptr, *MaterialPath);
     UMaterial* Material = NewObject<UMaterial>(Package, *FPackageName::GetShortName(MaterialPath),
         RF_Public | RF_Standalone);
-    Material->BlendMode = Blend == TEXT("Additive") ? BLEND_Additive : BLEND_Translucent;
-    Material->SetShadingModel(MSM_Unlit);
+    Material->BlendMode = Blend == TEXT("Additive") ? BLEND_Additive :
+        Blend == TEXT("Opaque") ? BLEND_Opaque : BLEND_Translucent;
+    Material->SetShadingModel(Blend == TEXT("Opaque") ? MSM_DefaultLit : MSM_Unlit);
 
     if (Texture)
     {
@@ -55,7 +63,17 @@ int32 UFortniteMaterialRebuildCommandlet::Main(const FString& Params)
         Sample->Texture = Texture;
         Sample->SamplerType = SAMPLERTYPE_Color;
         Material->Expressions.Add(Sample);
-        Material->EmissiveColor.Connect(0, Sample); // RGB
+        if (UVChannel > 0)
+        {
+            UMaterialExpressionTextureCoordinate* Coordinates = NewObject<UMaterialExpressionTextureCoordinate>(Material);
+            Coordinates->CoordinateIndex = UVChannel;
+            Material->Expressions.Add(Coordinates);
+            Sample->Coordinates.Connect(0, Coordinates);
+        }
+        if (Material->BlendMode == BLEND_Opaque)
+            Material->BaseColor.Connect(0, Sample); // RGB
+        else
+            Material->EmissiveColor.Connect(0, Sample); // RGB
         if (Material->BlendMode == BLEND_Translucent)
             Material->Opacity.Connect(4, Sample); // Alpha
     }
@@ -64,7 +82,10 @@ int32 UFortniteMaterialRebuildCommandlet::Main(const FString& Params)
         UMaterialExpressionConstant3Vector* Color = NewObject<UMaterialExpressionConstant3Vector>(Material);
         Color->Constant = FLinearColor::White;
         Material->Expressions.Add(Color);
-        Material->EmissiveColor.Connect(0, Color);
+        if (Material->BlendMode == BLEND_Opaque)
+            Material->BaseColor.Connect(0, Color);
+        else
+            Material->EmissiveColor.Connect(0, Color);
     }
     Material->PostEditChange();
 
@@ -80,5 +101,26 @@ int32 UFortniteMaterialRebuildCommandlet::Main(const FString& Params)
     }
 
     UE_LOG(LogTemp, Display, TEXT("Saved reconstructed material: %s"), *Filename);
+    if (!MeshPath.IsEmpty())
+    {
+        UStaticMesh* Mesh = LoadObject<UStaticMesh>(nullptr, *MeshPath);
+        if (!Mesh)
+        {
+            UE_LOG(LogTemp, Error, TEXT("Mesh did not load: %s"), *MeshPath);
+            return 5;
+        }
+        Mesh->SetMaterial(0, Material);
+        Mesh->PostEditChange();
+        UPackage* MeshPackage = Mesh->GetOutermost();
+        MeshPackage->MarkPackageDirty();
+        const FString MeshFilename = FPackageName::LongPackageNameToFilename(
+            MeshPackage->GetName(), FPackageName::GetAssetPackageExtension());
+        if (!UPackage::SavePackage(MeshPackage, Mesh, RF_Standalone, *MeshFilename, GError))
+        {
+            UE_LOG(LogTemp, Error, TEXT("Could not save mesh with reconstructed material: %s"), *MeshFilename);
+            return 6;
+        }
+        UE_LOG(LogTemp, Display, TEXT("Applied reconstructed material to %s"), *MeshPath);
+    }
     return 0;
 }

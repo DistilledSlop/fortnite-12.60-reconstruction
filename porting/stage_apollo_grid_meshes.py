@@ -33,6 +33,9 @@ def main() -> int:
     if not materials:
         raise FileNotFoundError(f"Missing cooked terrain materials: {material_dir}")
     stems.extend(str(material.relative_to(cooked).with_suffix("")) for material in materials)
+    texture_dir = cooked / "Athena/Apollo/Maps/Landscape/Converted/Textures"
+    textures = sorted(texture_dir.glob("*.uasset")) if texture_dir.exists() else []
+    stems.extend(str(texture.relative_to(cooked).with_suffix("")) for texture in textures)
 
     files: list[Path] = []
     for stem in stems:
@@ -54,7 +57,7 @@ def main() -> int:
     config_manifest = staged_game / "Config/ApolloLandscapeGrid.json"
     config_manifest.parent.mkdir(parents=True, exist_ok=True)
     shutil.copy2(manifest_path, config_manifest)
-    print(f"Staged {len(entries)} terrain meshes, {len(materials)} materials, shader archives, and {config_manifest}")
+    print(f"Staged {len(entries)} terrain meshes, {len(materials)} materials, {len(textures)} textures, shader archives, and {config_manifest}")
     return 0
 
 

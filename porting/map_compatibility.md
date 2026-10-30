@@ -209,8 +209,8 @@ run created a swapchain, loaded all 61 meshes, advanced to frame 1, and
 exited 0. Its visible appearance was not inspected.
 
 The original streamed level packages are still absent, so Apollo logs lookup
-errors for them. The reconstructed meshes have only approximate generated
-materials, one mesh LOD, and no reconstructed texture layers. Gameplay actors,
+errors for them. The reconstructed meshes have one mesh LOD and mostly generic
+materials; D4 has a first baked texture proxy described below. Gameplay actors,
 props, foliage, water, navigation, and Fortnite rules are still missing. This
 grid milestone does not make the island playable.
 
@@ -240,8 +240,8 @@ software Vulkan capture shows pale terrain relief from the D4 pawn camera.
 The same view was captured after a visible Linux client joined the local
 dedicated server; both peers logged the light and D4 mesh, and the server
 logged a successful join. The captures stay under ignored `porting/generated/`.
-The black sky and flat generated materials expose the missing sky, lighting,
-and landscape texture layers; this is not the original island appearance.
+The black sky and mostly flat generated materials expose the missing sky and
+landscape texture layers; this is not the original island appearance.
 
 ## Landscape layer data
 
@@ -267,5 +267,15 @@ Its Sand function samples `T_Apollo_Sand_D_01`; Gravel samples both
 `T_Apollo_Dirt_D_01` and `T_Apollo_Gravel_D_01`. Those original diffuse
 textures were decoded to ignored PNGs. `--material-report` now includes each
 material function's texture-sample references so the remaining layer graphs
-can be traced. No reconstructed runtime material consumes these masks yet;
-their UV mapping, blend rules, and Linux material cook remain to be built.
+can be traced.
+
+`python3 porting/bake_apollo_tile.py D4` combines the decoded D4 masks with
+the recovered Grass, Gravel, Dirt, Forest Floor, Cliff, and Asphalt diffuse
+images. Its output atlas is ignored generated data. The original material
+functions use more complex blends, tinting, normals, and masks, so this bake
+is a visual proxy. The imported `Terrain_D4` texture and an opaque Linux
+material sample the converted mesh's second UV channel. The editor commandlet
+assigned that material to the D4 mesh, and the Linux cook produced its mesh,
+material, texture, and shader data. A software Vulkan capture shows textured
+green and brown D4 terrain beside white neighboring tiles. The remaining 60
+tiles still need material assignment and visual checks.

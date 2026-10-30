@@ -63,7 +63,8 @@ client and the separate Unreal Engine source checkout remain outside Git.
 - The original landscape weightmaps were decoded for all 61 nonempty tiles:
   221 components and 311 PNG masks, with their layer/channel mappings saved
   outside Git. Original Sand, Gravel, Dirt, and Moss diffuse textures were
-  decoded separately. The Linux materials do not use these inputs yet.
+  decoded separately. A first baked material for D4 now uses its masks and
+  recovered diffuse images; the other tiles still have generic materials.
 
 - The embedded `FortniteGame.uproject` was extracted to ignored output. It
   declares six project modules and 123 enabled plugins. Sixty-three of those
