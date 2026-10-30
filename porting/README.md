@@ -49,6 +49,11 @@ client and the separate Unreal Engine source checkout remain outside Git.
   recovered Apollo persistent map. A landscape parent level and one tile were
   probed separately; their missing classes and Windows cooked render data
   prevent the streamed island from loading yet.
+- The 61 nonempty Apollo grid tiles were exported as GLBs, imported and cooked
+  as Linux static meshes, and staged outside Git. The new Athena game mode
+  spawns the grid from an ignored transform manifest; all 61 meshes loaded on
+  both peers during a local join and under software Vulkan. The original
+  streamed levels and Fortnite gameplay remain absent.
 - The embedded `FortniteGame.uproject` was extracted to ignored output. It
   declares six project modules and 123 enabled plugins. Sixty-three of those
   enabled plugins are absent from the public UE 4.25 engine tree, so the

@@ -71,11 +71,11 @@ bash porting/server/smoke_join.sh \
 ```
 
 This probe checks that the server spawns `AFortPlayerPawnAthena` and the
-client receives its replicated pawn. It also checks that the reconstructed A1
-terrain mesh actor loads on both peers. The pawn currently has basic walking,
+client receives its replicated pawn. It also checks that all 61 reconstructed
+Apollo terrain meshes load on both peers. The pawn currently has basic walking,
 mouse look, and jumping input; it does not implement Fortnite abilities,
-inventory, combat, cosmetics, or the original client protocol. Apollo has
-only one reconstructed terrain tile and no player start, so this is not a
+inventory, combat, cosmetics, or the original client protocol. Apollo still
+lacks its streamed gameplay levels, props, and player start, so this is not a
 playable island.
 
 The earlier join probes use UE's `GameModeBase` and the newly authored client module. The

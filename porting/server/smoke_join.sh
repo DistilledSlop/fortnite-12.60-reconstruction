@@ -16,7 +16,7 @@ if [[ ! -x "$server" || ! -x "$client" ]]; then
     exit 2
 fi
 
-timeout 20s "$server" "$map" \
+timeout 30s "$server" "$map" \
     -nullrhi -nosound -unattended -port=7777 -log > "$server_log" 2>&1 &
 server_pid=$!
 trap 'kill "$server_pid" 2>/dev/null || true; wait "$server_pid" 2>/dev/null || true' EXIT
@@ -33,7 +33,7 @@ if ! rg -a -q 'IpNetDriver listening on port 7777' "$server_log"; then
 fi
 
 set +e
-timeout 10s "$client" 127.0.0.1:7777 -nullrhi -nosound -unattended -log > "$client_log" 2>&1
+timeout 20s "$client" 127.0.0.1:7777 -nullrhi -nosound -unattended -log > "$client_log" 2>&1
 client_status=$?
 set -e
 if [[ $client_status -ne 0 && $client_status -ne 124 ]]; then
@@ -50,11 +50,18 @@ if [[ "$map" == *'?game=/Script/FortniteGame.FortGameModeAthena'* ]]; then
         printf 'Athena pawn did not spawn on both peers. See %s and %s\n' "$server_log" "$client_log" >&2
         exit 1
     fi
-    if [[ "$map" == /Game/Athena/Apollo/Maps/Apollo_Terrain* ]] &&
-       { ! rg -a -q 'Apollo A1 mesh ready: .*authority=1 mesh=yes' "$server_log" ||
-         ! rg -a -q 'Apollo A1 mesh ready: .*authority=0 mesh=yes' "$client_log"; }; then
-        printf 'Apollo A1 mesh did not load on both peers. See %s and %s\n' "$server_log" "$client_log" >&2
-        exit 1
+    if [[ "$map" == /Game/Athena/Apollo/Maps/Apollo_Terrain* ]]; then
+        if ! rg -a -q 'Apollo terrain grid: 61/61 meshes spawned' "$server_log"; then
+            printf 'Apollo terrain grid did not spawn. See %s\n' "$server_log" >&2
+            exit 1
+        fi
+        server_tiles=$( { rg -a -o 'Apollo terrain tile [A-H][1-8] ready: authority=1 mesh=yes' "$server_log" || true; } | sort -u | wc -l)
+        client_tiles=$( { rg -a -o 'Apollo terrain tile [A-H][1-8] ready: authority=0 mesh=yes' "$client_log" || true; } | sort -u | wc -l)
+        if [[ $server_tiles -ne 61 || $client_tiles -ne 61 ]]; then
+            printf 'Apollo terrain mesh count differs: server=%s client=%s (expected 61). See %s and %s\n' \
+                "$server_tiles" "$client_tiles" "$server_log" "$client_log" >&2
+            exit 1
+        fi
     fi
 fi
 

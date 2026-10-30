@@ -2,9 +2,14 @@
 
 #include "Components/InputComponent.h"
 #include "Components/StaticMeshComponent.h"
+#include "Dom/JsonObject.h"
 #include "Engine/World.h"
 #include "GameFramework/CharacterMovementComponent.h"
-#include "UObject/ConstructorHelpers.h"
+#include "Kismet/GameplayStatics.h"
+#include "Misc/FileHelper.h"
+#include "Misc/Paths.h"
+#include "Net/UnrealNetwork.h"
+#include "Serialization/JsonSerializer.h"
 
 AFortPlayerPawn::AFortPlayerPawn()
 {
@@ -51,33 +56,89 @@ AFortGameModeAthena::AFortGameModeAthena()
 void AFortGameModeAthena::StartPlay()
 {
     Super::StartPlay();
-    if (GetWorld() && GetWorld()->GetMapName().EndsWith(TEXT("Apollo_Terrain")))
+    if (!GetWorld() || !GetWorld()->GetMapName().EndsWith(TEXT("Apollo_Terrain")))
+        return;
+
+    // The original cooked landscape levels cannot load on Linux. Place the
+    // locally converted meshes at their saved root transforms instead.
+    const FString ManifestPath = FPaths::Combine(FPaths::ProjectConfigDir(), TEXT("ApolloLandscapeGrid.json"));
+    FString ManifestText;
+    if (!FFileHelper::LoadFileToString(ManifestText, *ManifestPath))
     {
-        // The original cooked A1 tile cannot be loaded on Linux yet. Stage a
-        // reconstructed mesh at its saved root transform instead.
+        UE_LOG(LogTemp, Warning, TEXT("Apollo terrain manifest missing: %s"), *ManifestPath);
+        return;
+    }
+    TArray<TSharedPtr<FJsonValue>> Entries;
+    const TSharedRef<TJsonReader<>> Reader = TJsonReaderFactory<>::Create(ManifestText);
+    if (!FJsonSerializer::Deserialize(Reader, Entries))
+    {
+        UE_LOG(LogTemp, Warning, TEXT("Apollo terrain manifest invalid: %s"), *ManifestPath);
+        return;
+    }
+
+    int32 Spawned = 0;
+    for (const TSharedPtr<FJsonValue>& Entry : Entries)
+    {
+        const TSharedPtr<FJsonObject> Object = Entry.IsValid() ? Entry->AsObject() : nullptr;
+        if (!Object.IsValid())
+            continue;
+        FString Tile;
+        const TArray<TSharedPtr<FJsonValue>>* Location = nullptr;
+        const TArray<TSharedPtr<FJsonValue>>* Scale = nullptr;
+        if (!Object->TryGetStringField(TEXT("tile"), Tile) || Tile.Len() != 2 ||
+            !Object->TryGetArrayField(TEXT("location"), Location) || !Location || Location->Num() != 3 ||
+            !Object->TryGetArrayField(TEXT("scale"), Scale) || !Scale || Scale->Num() != 3)
+            continue;
         const FTransform TileTransform(
             FRotator::ZeroRotator,
-            FVector(113792.0f, -130048.0f, 100.0f),
-            FVector(128.0f, 128.0f, 100.0f));
-        GetWorld()->SpawnActor<AApolloLandscapeTileA1>(AApolloLandscapeTileA1::StaticClass(), TileTransform);
+            FVector((*Location)[0]->AsNumber(), (*Location)[1]->AsNumber(), (*Location)[2]->AsNumber()),
+            FVector((*Scale)[0]->AsNumber(), (*Scale)[1]->AsNumber(), (*Scale)[2]->AsNumber()));
+        AApolloLandscapeTile* TileActor = GetWorld()->SpawnActorDeferred<AApolloLandscapeTile>(
+            AApolloLandscapeTile::StaticClass(), TileTransform, nullptr, nullptr,
+            ESpawnActorCollisionHandlingMethod::AlwaysSpawn);
+        if (!TileActor)
+            continue;
+        TileActor->SetTileId(Tile);
+        UGameplayStatics::FinishSpawningActor(TileActor, TileTransform);
+        Spawned++;
     }
+    UE_LOG(LogTemp, Display, TEXT("Apollo terrain grid: %d/%d meshes spawned"), Spawned, Entries.Num());
 }
 
-AApolloLandscapeTileA1::AApolloLandscapeTileA1()
+AApolloLandscapeTile::AApolloLandscapeTile()
 {
     bReplicates = true;
     bAlwaysRelevant = true;
     SetReplicateMovement(false);
-    static ConstructorHelpers::FObjectFinder<UStaticMesh> TerrainMesh(
-        TEXT("/Game/Athena/Apollo/Maps/Landscape/Converted/LandscapeStreamingProxy_A1.LandscapeStreamingProxy_A1"));
-    if (TerrainMesh.Succeeded())
-        GetStaticMeshComponent()->SetStaticMesh(TerrainMesh.Object);
+    GetStaticMeshComponent()->SetMobility(EComponentMobility::Movable);
 }
 
-void AApolloLandscapeTileA1::BeginPlay()
+void AApolloLandscapeTile::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
-    Super::BeginPlay();
-    UE_LOG(LogTemp, Display, TEXT("Apollo A1 mesh ready: %s authority=%d mesh=%s"),
-        *GetPathName(), HasAuthority() ? 1 : 0,
+    Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+    DOREPLIFETIME(AApolloLandscapeTile, TileId);
+}
+
+void AApolloLandscapeTile::SetTileId(const FString& NewTileId)
+{
+    TileId = NewTileId;
+    LoadTileMesh();
+}
+
+void AApolloLandscapeTile::OnRep_TileId()
+{
+    LoadTileMesh();
+}
+
+void AApolloLandscapeTile::LoadTileMesh()
+{
+    const FString Name = FString::Printf(TEXT("LandscapeStreamingProxy_%s"), *TileId);
+    const FString Path = FString::Printf(
+        TEXT("/Game/Athena/Apollo/Maps/Landscape/Converted/%s.%s"), *Name, *Name);
+    UStaticMesh* Mesh = Cast<UStaticMesh>(StaticLoadObject(UStaticMesh::StaticClass(), nullptr, *Path));
+    if (Mesh)
+        GetStaticMeshComponent()->SetStaticMesh(Mesh);
+    UE_LOG(LogTemp, Display, TEXT("Apollo terrain tile %s ready: authority=%d mesh=%s"),
+        *TileId, HasAuthority() ? 1 : 0,
         GetStaticMeshComponent()->GetStaticMesh() ? TEXT("yes") : TEXT("no"));
 }

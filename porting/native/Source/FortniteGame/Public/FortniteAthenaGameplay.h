@@ -40,15 +40,23 @@ public:
     virtual void StartPlay() override;
 };
 
-// Linux cooked geometry reconstructed from Apollo's A1 landscape component.
+// Linux cooked geometry reconstructed from Apollo's landscape components.
 UCLASS()
-class FORTNITEGAME_API AApolloLandscapeTileA1 : public AStaticMeshActor
+class FORTNITEGAME_API AApolloLandscapeTile : public AStaticMeshActor
 {
     GENERATED_BODY()
 
 public:
-    AApolloLandscapeTileA1();
+    AApolloLandscapeTile();
+    virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+    void SetTileId(const FString& NewTileId);
 
-protected:
-    virtual void BeginPlay() override;
+private:
+    UPROPERTY(ReplicatedUsing=OnRep_TileId)
+    FString TileId;
+
+    UFUNCTION()
+    void OnRep_TileId();
+
+    void LoadTileMesh();
 };

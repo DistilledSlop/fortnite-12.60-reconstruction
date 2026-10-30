@@ -57,10 +57,13 @@ dedicated server. `Config/DefaultInput.ini` binds movement, view, and jump
 controls. These are newly authored placeholders for the original class names,
 not a reconstruction of Fortnite movement or gameplay rules.
 
-`AApolloLandscapeTileA1` is a temporary replicated static mesh actor for one
-converted Apollo landscape tile. Its mesh is imported and cooked locally;
-`python3 porting/stage_apollo_a1_mesh.py` stages the Linux package and shader
-archives. The generated mesh and material are ignored by Git.
+`AApolloLandscapeTile` is a temporary replicated static mesh actor for the 61
+converted Apollo landscape tiles. `AFortGameModeAthena` reads their transforms
+from the ignored staged `Config/ApolloLandscapeGrid.json`; each client loads
+the corresponding cooked mesh when it receives the replicated tile ID.
+`python3 porting/stage_apollo_grid_meshes.py` stages the Linux packages and
+shader archives. All generated meshes, materials, and the manifest are ignored
+by Git.
 
 `-FortniteProbeMapMeshes` logs any static mesh actor with invalid component
 bounds after a map begins play. It helped identify a UE glTF importer stride

@@ -179,24 +179,37 @@ mesh. Its saved root transform is location `(113792, -130048, 100)` and scale
 `(128, 128, 100)`. D4 yielded four components and a GLB with varying vertex
 heights, so the conversion path is not limited to flat terrain.
 
-The A1 GLB was imported into the editor as
+The A1 GLB first imported as
 `/Game/Athena/Apollo/Maps/Landscape/Converted/LandscapeStreamingProxy_A1`,
-then cooked for Linux. `python3 porting/stage_apollo_a1_mesh.py` copies that
-mesh, its generated material, and the current Linux shader archives into the
-ignored stage. A headless asset probe loaded the cooked mesh with 16,384
-vertices. The native `AApolloLandscapeTileA1` actor places it at the saved
-root transform when `AFortGameModeAthena` runs Apollo. A dedicated server join
-confirmed the mesh actor on both server and client; the actor is marked always
-relevant for this single tile probe.
-
-The A1 mesh has only the GLB's default material, one mesh LOD, and no verified
-landscape collision or texture layers. D4 is exported but has not yet been
-imported or staged. The other streamed tiles and game systems remain absent.
+then cooked for Linux. A headless asset probe loaded it with 16,384 vertices.
+The initial `AApolloLandscapeTileA1` actor placed it at the saved root
+transform and replicated it to a joining client. This established the
+single tile conversion path before expanding to the grid.
 
 The inspector's `--export-landscape-grid` mode processes all 64 regular grid
 positions with one hidden key prompt and writes an ignored transform manifest.
 It exported 61 nonempty landscape meshes, about 434 MiB of GLB data. A7 and
 A8 have no package in this build; B8 has a landscape actor with zero
 components. All 61 mesh exports completed without a CUE4Parse error. These
-are source geometry for reconstruction; they have not all been imported,
-cooked, staged, or tested in a running island.
+are source geometry for reconstruction.
+
+`python3 porting/prepare_apollo_grid_import.py` creates ignored Unreal import
+settings for the meshes that have no editor source asset yet. The editor
+`ImportAssets` commandlet imported all 61 GLBs under `/Game/.../Converted/`.
+It was run with `-importsettings=porting/generated/import-apollo-grid.json`,
+`-FortniteMatchAssetPath`, `-nosourcecontrol`, `-unattended`, and `-nullrhi`.
+The Linux cook produced 61 static mesh packages and four generated materials.
+`python3 porting/stage_apollo_grid_meshes.py` stages those packages, current
+shader archives, and the ignored transform manifest. The native
+`AApolloLandscapeTile` class reads each tile ID replicated by
+`AFortGameModeAthena`, loads its Linux cooked mesh, and places it at the saved
+transform. A headless standalone run logged 61/61 meshes, and a dedicated
+server join logged all 61 loaded on both server and client. A software Vulkan
+run created a swapchain, loaded all 61 meshes, advanced to frame 1, and
+exited 0. Its visible appearance was not inspected.
+
+The original streamed level packages are still absent, so Apollo logs lookup
+errors for them. The reconstructed meshes have only approximate generated
+materials, one mesh LOD, and unverified landscape collision and texture
+layers. Gameplay actors, props, foliage, water, navigation, and Fortnite rules
+are still missing. This grid milestone does not make the island playable.
