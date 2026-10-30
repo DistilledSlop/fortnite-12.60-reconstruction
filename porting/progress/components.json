@@ -114,8 +114,8 @@
           "id": "assets.blueprint_load",
           "name": "Cooked Blueprint packages load",
           "weight": 30,
-          "measure": {"kind": "manual", "pct": 4},
-          "rationale": "Four Apollo Blueprint packages were replaced by authored Blueprints that load. The original cooked gameplay Blueprints still crash on load. The registry lists 22,211 Blueprints."
+          "measure": {"kind": "fraction", "done": 4, "total": 22211, "source": "documented"},
+          "rationale": "Four Apollo Blueprint packages were replaced by authored Blueprints that load. The asset registry (cue4inspect --registry, porting/README.md) reports 22,211 Blueprints in total. The original cooked gameplay Blueprints still crash on load."
         },
         {
           "id": "assets.cinematics",
@@ -439,8 +439,8 @@
           "id": "audio.sound_classes",
           "name": "Sound classes and mixes load",
           "weight": 15,
-          "measure": {"kind": "manual", "pct": 15},
-          "rationale": "The Master.Master SoundClass loads from recovered packages in the Linux runtime (asset_compatibility.md). Mixes beyond that have not been checked."
+          "measure": {"kind": "fraction", "done": 1, "total": 306, "source": "documented"},
+          "rationale": "Only Master.Master is logged as loaded (asset_compatibility.md). The documented sound-class package set is 292 packages in FortSoundClassesAndModes plus 14 in Athena/Sounds/Events/SoundClasses, 306 in total. Mixes beyond that have not been checked."
         },
         {
           "id": "audio.playback",
