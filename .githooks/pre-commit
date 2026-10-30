@@ -6,7 +6,10 @@ import sys
 
 
 allowed_exact = {".gitignore", ".gitattributes", ".githooks/pre-commit"}
-forbidden_directories = ("porting/generated/", "porting/build/", "porting/.venv/")
+forbidden_directories = (
+    "porting/generated/", "porting/build/", "porting/.venv/",
+    "porting/cue4inspect/bin/", "porting/cue4inspect/obj/",
+)
 forbidden_suffixes = {
     ".pak", ".sig", ".exe", ".dll", ".so", ".dylib", ".uasset",
     ".umap", ".ubulk", ".uexp", ".mp4", ".wav", ".png", ".jpg",

@@ -10,5 +10,7 @@
 /porting/build/
 /porting/.venv/
 **/__pycache__/
+**/bin/
+**/obj/
 *.pyc
 *.log

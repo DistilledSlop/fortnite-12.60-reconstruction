@@ -51,6 +51,16 @@ Run `python3 porting/extract_small_file.py` to extract the embedded project
 descriptor into ignored output. This handles small uncompressed or zlib files;
 FModel/CUE4Parse is needed for the general case.
 
+`dotnet run --project porting/cue4inspect -- <asset-path>` inspects one cooked
+package through the adjacent CUE4Parse checkout. It prompts for the primary
+key with hidden input and prints export types and names. The tool has parsed
+both a sound class and a cooked UI Blueprint using `GAME_UE4_25_Plus` without
+a mapping file. Use `--all` to list every export. Package compatibility still
+needs to be tested asset by asset. The CUE4Parse checkout is a local
+dependency, not vendored.
+
+See `server_surface.md` for the observed backend dependencies.
+
 ## Work needed for the requested result
 
 1. **Asset access:** obtain the needed keys and mappings, read every pak index,
@@ -70,6 +80,11 @@ FModel/CUE4Parse is needed for the general case.
 The first executable milestone is a Linux project that loads one recovered
 level and character. It will establish which cooked assets can be reused and
 which require conversion or reconstruction.
+
+UE 4.25's `Setup.sh` currently fails because Epic's dependency URL returns
+HTTP 403 (also over HTTPS). The separate v16 clang toolchain archive is
+available. A buildable source/dependency set is still needed for the Linux
+engine and game module.
 
 ## Format references
 
