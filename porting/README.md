@@ -60,6 +60,10 @@ client and the separate Unreal Engine source checkout remain outside Git.
   enabled a software Vulkan capture of pale terrain geometry from the pawn
   camera, including after a visible client joined the local server. Sky and
   landscape textures remain missing.
+- The original landscape weightmaps were decoded for all 61 nonempty tiles:
+  221 components and 311 PNG masks, with their layer/channel mappings saved
+  outside Git. Original Sand, Gravel, Dirt, and Moss diffuse textures were
+  decoded separately. The Linux materials do not use these inputs yet.
 
 - The embedded `FortniteGame.uproject` was extracted to ignored output. It
   declares six project modules and 123 enabled plugins. Sixty-three of those
@@ -77,6 +81,11 @@ Run `bash porting/run_apollo_linux.sh` to start the staged local dedicated
 server and visible Linux client together. It uses the converted terrain and
 current native pawn, and stops the server when the client exits. This is a
 prototype entry point for inspection, not the original Fortnite experience.
+
+`dotnet porting/cue4inspect/bin/Release/net10.0/Cue4Inspect.dll --export-landscape-weightmap-grid`
+repeats the weightmap export with one hidden
+primary AES prompt. Use `--loose` for packages already under ignored
+`porting/generated/extracted/`; that mode needs no key.
 
 Run `python3 porting/inspect_install.py > porting/generated/inventory.json` to
 regenerate the local inventory. The generated file is ignored by Git.

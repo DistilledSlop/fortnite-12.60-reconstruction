@@ -35,14 +35,17 @@ bool saveClosure = args.Contains("--save-closure");
 bool exportGlb = args.Contains("--export-glb");
 bool exportLandscape = args.Contains("--export-landscape");
 bool exportLandscapeGrid = args.Contains("--export-landscape-grid");
+bool exportLandscapeWeightmapGrid = args.Contains("--export-landscape-weightmap-grid");
 bool landscapeReport = args.Contains("--landscape-report");
 bool exportPng = args.Contains("--export-png");
+bool exportLandscapeWeightmaps = args.Contains("--export-landscape-weightmaps");
 bool materialReport = args.Contains("--material-report");
 bool functionReport = args.Contains("--function-report");
 bool versionReport = args.Contains("--versions");
 bool sizeList = args.Contains("--sizes");
 bool ue426 = args.Contains("--ue426");
-Globals.FatalObjectSerializationErrors = exportGlb || exportLandscape || exportLandscapeGrid || exportPng || materialReport || functionReport || landscapeReport;
+bool loose = args.Contains("--loose");
+Globals.FatalObjectSerializationErrors = exportGlb || exportLandscape || exportLandscapeGrid || exportLandscapeWeightmapGrid || exportPng || exportLandscapeWeightmaps || materialReport || functionReport || landscapeReport;
 string? maxArgument = args.SingleOrDefault(arg => arg.StartsWith("--max-packages=", StringComparison.Ordinal));
 int maxPackages = 250;
 if (maxArgument is not null && (!int.TryParse(maxArgument[15..], out maxPackages) || maxPackages < 1))
@@ -50,9 +53,9 @@ if (maxArgument is not null && (!int.TryParse(maxArgument[15..], out maxPackages
     Console.Error.WriteLine("--max-packages must be a positive integer");
     return 2;
 }
-string[] positional = args.Where(arg => arg != maxArgument && arg is not ("--all" or "--pseudo" or "--imports" or "--registry" or "--scan-maps" or "--scan-native" or "--all-keys" or "--save-package" or "--save-list" or "--sizes" or "--save-folder" or "--save-closure" or "--export-glb" or "--export-landscape" or "--export-landscape-grid" or "--export-png" or "--material-report" or "--function-report" or "--landscape-report" or "--versions" or "--ue426")).ToArray();
-bool packageLess = registryMode || scanMaps || scanNative || exportLandscapeGrid;
-if (new[] { registryMode, scanMaps, scanNative, exportLandscapeGrid }.Count(mode => mode) > 1 || (packageLess ? positional.Length > 1 : positional.Length is < 1 or > 2))
+string[] positional = args.Where(arg => arg != maxArgument && arg is not ("--all" or "--pseudo" or "--imports" or "--registry" or "--scan-maps" or "--scan-native" or "--all-keys" or "--save-package" or "--save-list" or "--sizes" or "--save-folder" or "--save-closure" or "--export-glb" or "--export-landscape" or "--export-landscape-grid" or "--export-landscape-weightmap-grid" or "--export-png" or "--export-landscape-weightmaps" or "--material-report" or "--function-report" or "--landscape-report" or "--versions" or "--ue426" or "--loose")).ToArray();
+bool packageLess = registryMode || scanMaps || scanNative || exportLandscapeGrid || exportLandscapeWeightmapGrid;
+if (new[] { registryMode, scanMaps, scanNative, exportLandscapeGrid, exportLandscapeWeightmapGrid }.Count(mode => mode) > 1 || (packageLess ? positional.Length > 1 : positional.Length is < 1 or > 2))
 {
     Console.Error.WriteLine("Usage: Cue4Inspect <asset-path-without-extension> [pak-directory] [--all] [--pseudo] [--imports] [--save-package] [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect <folder-prefix> [pak-directory] --save-folder [--all-keys]");
@@ -62,7 +65,10 @@ if (new[] { registryMode, scanMaps, scanNative, exportLandscapeGrid }.Count(mode
     Console.Error.WriteLine("   or: Cue4Inspect <static-mesh-path> [pak-directory] --export-glb [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect <landscape-map-path> [pak-directory] --export-landscape [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect --export-landscape-grid [pak-directory] [--max-packages=64] [--all-keys]");
+    Console.Error.WriteLine("   or: Cue4Inspect --export-landscape-weightmap-grid [pak-directory] [--max-packages=64] [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect <texture-path> [pak-directory] --export-png [--all-keys]");
+    Console.Error.WriteLine("   or: Cue4Inspect <texture-path> [extracted-root] --export-png --loose");
+    Console.Error.WriteLine("   or: Cue4Inspect <landscape-map-path> [source-directory] --export-landscape-weightmaps [--loose]");
     Console.Error.WriteLine("   or: Cue4Inspect <material-path> [pak-directory] --material-report [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect <landscape-map-path> [pak-directory] --landscape-report [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect <blueprint-path> [pak-directory] --function-report [--all-keys]");
@@ -74,43 +80,53 @@ if (new[] { registryMode, scanMaps, scanNative, exportLandscapeGrid }.Count(mode
 }
 
 string? assetPath = packageLess ? null : positional[0];
-string pakDirectory = positional.Length == (packageLess ? 1 : 2)
+string sourceDirectory = positional.Length == (packageLess ? 1 : 2)
     ? positional[^1]
-    : Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "../../../../../Fortnite/FortniteGame/Content/Paks"));
+    : Path.GetFullPath(Path.Combine(AppContext.BaseDirectory,
+        loose ? "../../../../generated/extracted" : "../../../../../Fortnite/FortniteGame/Content/Paks"));
 
-if (!Directory.Exists(pakDirectory))
+if (!Directory.Exists(sourceDirectory))
 {
-    Console.Error.WriteLine($"Pak directory does not exist: {pakDirectory}");
+    Console.Error.WriteLine($"Source directory does not exist: {sourceDirectory}");
     return 2;
 }
 
 try
 {
-    var provider = new DefaultFileProvider(
-        pakDirectory,
-        SearchOption.TopDirectoryOnly,
-        new VersionContainer(ue426 ? EGame.GAME_UE4_26 : EGame.GAME_UE4_25_Plus,
-            optionOverrides: new Dictionary<string, bool>
-            {
-                ["StaticMesh.Fortnite1260NoForceOpaque"] = true,
-                ["RawIndexBuffer.HasShouldExpandTo32Bit"] = false,
-                ["StaticMesh.HasRayTracingGeometry"] = false
-            }),
-        StringComparer.OrdinalIgnoreCase);
+    var versions = new VersionContainer(ue426 ? EGame.GAME_UE4_26 : EGame.GAME_UE4_25_Plus,
+        optionOverrides: new Dictionary<string, bool>
+        {
+            ["StaticMesh.Fortnite1260NoForceOpaque"] = true,
+            ["RawIndexBuffer.HasShouldExpandTo32Bit"] = false,
+            ["StaticMesh.HasRayTracingGeometry"] = false
+        });
+    var provider = loose
+        ? new DefaultFileProvider(new DirectoryInfo(Path.Combine(sourceDirectory, "FortniteGame")),
+            [new DirectoryInfo(Path.Combine(sourceDirectory, "Engine"))],
+            SearchOption.AllDirectories, versions, StringComparer.OrdinalIgnoreCase)
+        : new DefaultFileProvider(sourceDirectory, SearchOption.TopDirectoryOnly,
+            versions, StringComparer.OrdinalIgnoreCase);
     provider.ReadScriptData = showPseudo;
     provider.Initialize();
 
-    string key = ReadHiddenKey("Primary AES key: ");
-    int mounted = provider.SubmitKey(new FGuid(), new FAesKey("0x" + key));
-    Console.WriteLine($"Mounted {mounted} pak(s) with the primary key.");
-    if (allKeys)
+    if (loose)
     {
-        foreach (var guid in provider.RequiredKeys.Where(guid => guid.IsValid()).OrderBy(guid => guid.ToString(EGuidFormats.Digits)))
+        Console.WriteLine($"Indexed {provider.LooseFileCount} loose package(s).");
+    }
+    else
+    {
+        string key = ReadHiddenKey("Primary AES key: ");
+        int mounted = provider.SubmitKey(new FGuid(), new FAesKey("0x" + key));
+        Console.WriteLine($"Mounted {mounted} pak(s) with the primary key.");
+        if (allKeys)
         {
-            string extraKey = ReadHiddenKey($"AES key for GUID {guid.ToString(EGuidFormats.Digits)}: ");
-            mounted += provider.SubmitKey(guid, new FAesKey("0x" + extraKey));
+            foreach (var guid in provider.RequiredKeys.Where(guid => guid.IsValid()).OrderBy(guid => guid.ToString(EGuidFormats.Digits)))
+            {
+                string extraKey = ReadHiddenKey($"AES key for GUID {guid.ToString(EGuidFormats.Digits)}: ");
+                mounted += provider.SubmitKey(guid, new FAesKey("0x" + extraKey));
+            }
+            Console.WriteLine($"Mounted {mounted} pak(s) in total.");
         }
-        Console.WriteLine($"Mounted {mounted} pak(s) in total.");
     }
 
     if (exportLandscapeGrid)
@@ -169,6 +185,45 @@ try
         Directory.CreateDirectory(Path.GetDirectoryName(manifestPath)!);
         File.WriteAllText(manifestPath, JsonSerializer.Serialize(manifest, new JsonSerializerOptions { WriteIndented = true }));
         Console.WriteLine($"Landscape grid exported: {succeeded} meshes, {empty} empty, {absent} absent, {failed} failed; manifest: {manifestPath}");
+        return failed == 0 ? 0 : 1;
+    }
+
+    if (exportLandscapeWeightmapGrid)
+    {
+        int succeeded = 0, empty = 0, absent = 0, failed = 0;
+        foreach (char row in "ABCDEFGH")
+        {
+            for (int column = 1; column <= 8; column++)
+            {
+                if (succeeded + empty + absent + failed >= maxPackages) break;
+                var tile = $"{row}{column}";
+                var path = $"FortniteGame/Content/Athena/Apollo/Maps/Landscape/Apollo_Terrain_LS_{tile}";
+                try
+                {
+                    var package = provider.LoadPackage(path);
+                    if (!package.GetExports().OfType<ALandscapeProxy>()
+                        .Any(actor => actor.LandscapeComponents.Length > 0))
+                    {
+                        Console.WriteLine($"Landscape {tile} has no components; skipping weightmaps");
+                        empty++;
+                        continue;
+                    }
+                    ExportLandscapeWeightmaps(package, path);
+                    succeeded++;
+                }
+                catch (KeyNotFoundException)
+                {
+                    Console.WriteLine($"Landscape {tile} has no package in this pak set");
+                    absent++;
+                }
+                catch (Exception error)
+                {
+                    Console.Error.WriteLine($"Landscape {tile} failed: {error.GetType().Name}: {error.Message}");
+                    failed++;
+                }
+            }
+        }
+        Console.WriteLine($"Landscape weightmap grid exported: {succeeded} tiles, {empty} empty, {absent} absent, {failed} failed");
         return failed == 0 ? 0 : 1;
     }
 
@@ -412,6 +467,7 @@ try
             {
                 name = actor.Name,
                 type = actor.GetType().Name,
+                material = actor.LandscapeMaterial.Name,
                 componentSizeQuads = actor.ComponentSizeQuads,
                 root = actor.GetOrDefault<FPackageIndex?>("RootComponent")?.Load<USceneComponent>() is { } root
                     ? new
@@ -430,7 +486,17 @@ try
                         sectionBase = new[] { component.SectionBaseX, component.SectionBaseY },
                         location = new[] { component.RelativeLocation.X, component.RelativeLocation.Y, component.RelativeLocation.Z },
                         scale = new[] { component.RelativeScale3D.X, component.RelativeScale3D.Y, component.RelativeScale3D.Z },
-                        quads = component.ComponentSizeQuads
+                        quads = component.ComponentSizeQuads,
+                        materialInstances = component.GetOrDefault<FPackageIndex[]>("MaterialInstances", [])
+                            .Select(reference => reference.Name).ToArray(),
+                        weightmapTextures = component.GetOrDefault<FPackageIndex[]>("WeightmapTextures", [])
+                            .Select(reference => reference.Name).ToArray(),
+                        layers = component.WeightmapLayerAllocations.Select(layer => new
+                        {
+                            name = layer.GetLayerName(),
+                            textureIndex = layer.WeightmapTextureIndex,
+                            channel = layer.WeightmapTextureChannel
+                        }).ToArray()
                     };
                 }).ToArray()
             }).ToArray()
@@ -459,6 +525,11 @@ try
         Directory.CreateDirectory(Path.GetDirectoryName(target)!);
         File.WriteAllBytes(target, png);
         Console.WriteLine($"Exported {target} ({decoded.Width}x{decoded.Height}, {png.Length} bytes)");
+        return 0;
+    }
+    if (exportLandscapeWeightmaps)
+    {
+        ExportLandscapeWeightmaps(packageData, assetPath!);
         return 0;
     }
     if (materialReport)
@@ -491,6 +562,14 @@ try
                 parent = (material as UMaterialInstance)?.Parent?.Name,
                 staticPermutation = (material as UMaterialInstance)?.bHasStaticPermutationResource
             }).ToArray(),
+            textureSamples = packageData.GetExports().OfType<UMaterialExpressionTextureSample>()
+                .Select(sample => new
+                {
+                    name = sample.Name,
+                    texture = sample.Texture?.Name,
+                    samplerType = sample.SamplerType.ToString(),
+                    properties = sample.Properties.Select(property => property.Name.Text).ToArray()
+                }).ToArray(),
             imports
         }, new JsonSerializerOptions { WriteIndented = true }));
         return 0;
@@ -582,6 +661,60 @@ static void ExportLandscapes(IPackage package, string assetPath)
             Console.WriteLine($"Exported {target} ({file.Data.Length} bytes)");
         }
     }
+}
+
+static void ExportLandscapeWeightmaps(IPackage package, string assetPath)
+{
+    var destination = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "../../../../generated/converted"));
+    var relative = assetPath.Replace('\\', '/').TrimStart('/');
+    if (relative.Split('/').Any(part => part is ".." or "."))
+        throw new InvalidDataException("Unsafe asset path");
+    var folder = Path.GetFullPath(Path.Combine(destination, relative, "weightmaps"));
+    if (!folder.StartsWith(destination + Path.DirectorySeparatorChar, StringComparison.Ordinal))
+        throw new InvalidDataException("Export path escapes output directory");
+    Directory.CreateDirectory(folder);
+
+    var components = new List<object>();
+    foreach (var actor in package.GetExports().OfType<ALandscapeProxy>())
+    {
+        foreach (var reference in actor.LandscapeComponents)
+        {
+            var component = reference.Load<ULandscapeComponent>()
+                ?? throw new InvalidDataException($"Missing landscape component in {actor.Name}");
+            if (!component.Name.All(character => char.IsLetterOrDigit(character) || character == '_'))
+                throw new InvalidDataException($"Unsafe component name: {component.Name}");
+            var filenames = new List<string>();
+            var textures = component.GetWeightmapTextures();
+            for (var index = 0; index < textures.Length; index++)
+            {
+                var decoded = textures[index].Decode()
+                    ?? throw new InvalidDataException($"Weightmap {index} on {component.Name} has no decodable mip");
+                var png = EncodeRgbaPng(decoded);
+                var filename = $"{component.Name}-{index}.png";
+                File.WriteAllBytes(Path.Combine(folder, filename), png);
+                filenames.Add(filename);
+                Console.WriteLine($"Exported {filename} ({decoded.Width}x{decoded.Height}, {png.Length} bytes)");
+            }
+            components.Add(new
+            {
+                actor = actor.Name,
+                component = component.Name,
+                sectionBase = new[] { component.SectionBaseX, component.SectionBaseY },
+                textures = filenames,
+                layers = component.WeightmapLayerAllocations.Select(layer => new
+                {
+                    name = layer.GetLayerName(),
+                    textureIndex = layer.WeightmapTextureIndex,
+                    channel = layer.WeightmapTextureChannel
+                }).ToArray()
+            });
+        }
+    }
+    if (components.Count == 0)
+        throw new InvalidDataException("Package has no landscape components");
+    var manifest = Path.Combine(folder, "layers.json");
+    File.WriteAllText(manifest, JsonSerializer.Serialize(components, new JsonSerializerOptions { WriteIndented = true }));
+    Console.WriteLine($"Exported {components.Count} component layer records to {manifest}");
 }
 
 static byte[] EncodeRgbaPng(CTexture texture)

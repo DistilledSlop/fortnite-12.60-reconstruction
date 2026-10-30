@@ -242,3 +242,30 @@ dedicated server; both peers logged the light and D4 mesh, and the server
 logged a successful join. The captures stay under ignored `porting/generated/`.
 The black sky and flat generated materials expose the missing sky, lighting,
 and landscape texture layers; this is not the original island appearance.
+
+## Landscape layer data
+
+The inspector can read already extracted packages with `--loose`, which scans
+the ignored `porting/generated/extracted/` tree and requires no AES prompt.
+For example, `--export-png --loose` decoded the original
+`T_Apollo_Moss_D_01` texture from its extracted package. The
+`--landscape-report --loose` result for A1 identifies `M_CommonLandscape`,
+one component, and Sand, Gravel, and Mud layer channels. Its decoded 128×128
+weightmap paints the entire component with Sand.
+
+`--export-landscape-weightmaps` writes each component's decoded PNG weightmap
+and a `layers.json` mapping channel numbers to original layer names. Its
+`--export-landscape-weightmap-grid` form reads the regular A1–H8 tiles with
+one hidden primary-key prompt. It exported 61 tiles, 221 components, and 311
+weightmap textures with zero failures. A7 and A8 are absent, and B8 has no
+components. Across the grid, the masks name nine layers: Gravel, Mud, Sand,
+Asphalt, BiomeA, BiomeB, BiomeC, BiomeD, and DataLayer. D4's four components
+contain varying Gravel, Mud, Asphalt, and biome weights.
+
+The `M_CommonLandscape` material imports separate common-layer functions.
+Its Sand function samples `T_Apollo_Sand_D_01`; Gravel samples both
+`T_Apollo_Dirt_D_01` and `T_Apollo_Gravel_D_01`. Those original diffuse
+textures were decoded to ignored PNGs. `--material-report` now includes each
+material function's texture-sample references so the remaining layer graphs
+can be traced. No reconstructed runtime material consumes these masks yet;
+their UV mapping, blend rules, and Linux material cook remain to be built.
