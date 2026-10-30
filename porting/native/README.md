@@ -40,3 +40,5 @@ The optional `-FortniteProbeAsset=/Game/Path/Asset.Asset` switch asks the game
 module to load one asset after engine initialization and logs its resolved
 class or `LOAD_FAILED`. Recovered asset files must be copied into the matching
 `FortniteLinux/Content/` path in the ignored staged build before this test.
+For `Texture2D`, the probe also logs dimensions, mip count, and first-mip byte
+count. It does not validate visible rendering when run with `-nullrhi`.

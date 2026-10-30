@@ -23,8 +23,11 @@ client and the separate Unreal Engine source checkout remain outside Git.
   cooked assets. The static client scan found 59 API path templates; this is a
   partial view of the server interface.
 - A staged Linux UE 4.25 runtime successfully loaded one recovered Windows
-  cooked `SoundClass` after its referenced packages were supplied. This tests
-  a small class of platform-neutral assets, not maps or gameplay content.
+  cooked `SoundClass` after its referenced packages were supplied. It also
+  loaded a 64×64 UI texture and reported its mip data. A UI Blueprint failed
+  because Fortnite and CommonUI native classes were absent. These are focused
+  compatibility probes, not a playable game. A software Vulkan run also
+  initialized a swapchain and loaded the texture without drawing it.
 - The embedded `FortniteGame.uproject` was extracted to ignored output. It
   declares six project modules and 123 enabled plugins. Sixty-three of those
   enabled plugins are absent from the public UE 4.25 engine tree, so the
