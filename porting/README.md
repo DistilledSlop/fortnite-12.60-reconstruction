@@ -14,11 +14,33 @@ client and the separate Unreal Engine source checkout remain outside Git.
   pak versions through 9, so its `UnrealPak` cannot simply read these files.
 - Some paks contain a nonzero encryption-key GUID. A GUID identifies a key;
   it is not the key itself. No keys are stored in this repository.
+- The supplied candidate key successfully decrypted and validated 28 pak
+  indexes. Three paks (`pakchunk1000`, `1001`, `1002`) need other keys.
+- Those 28 indexes list 967,056 files, including project metadata, plugins,
+  configuration, maps, and cooked assets. The static client scan found 59 API
+  path templates; this is a partial view of the server interface.
 - The supplied client does not include the Fortnite project source, editor
   assets, or a Linux executable.
+- An adjacent FModel/CUE4Parse checkout can serve as a reference for pak and
+  asset parsing. The user's `/opt/fortnite/assetextract.md` is also local
+  reference material; neither checkout nor the article belongs in this Git
+  repository. The article's embedded-key pattern is an example, not a
+  guaranteed layout for this client.
 
 Run `python3 porting/inspect_install.py > porting/generated/inventory.json` to
 regenerate the local inventory. The generated file is ignored by Git.
+
+Run `python3 porting/inspect_client_routes.py > porting/generated/routes.json`
+to inventory API path templates embedded in the client. This is only a static
+route list; it does not determine the full network protocol or server behavior.
+
+Run `python3 porting/probe_pak_key.py` to test a candidate AES-256 key. The
+script prompts with hidden input and prints only validation results. Never put
+keys in source files, shell arguments, Git, or generated reports.
+
+Run `python3 porting/list_pak_assets.py > porting/generated/assets.json` to
+list package filenames from the indexes unlocked by a key. The output is
+generated metadata and stays outside Git. The script does not extract files.
 
 ## Work needed for the requested result
 
