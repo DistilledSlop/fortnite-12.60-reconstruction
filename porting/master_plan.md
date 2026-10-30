@@ -40,3 +40,22 @@ and commits.
   Agents cannot supply them; work needing them is queued for the human.
 - Source-level identity with Epic's unreleased code is not reachable by
   analysis alone. Parity is judged by behavior and wire format.
+
+## Needs the human (AES key via hidden prompt; agents cannot do these)
+
+Queued while the user is away. Each adds `--all-keys` for the GUID-keyed paks.
+
+1. `dotnet porting/cue4inspect/bin/Release/net10.0/Cue4Inspect.dll FortniteGame/Content/Maps/Frontend --save-closure --max-packages=400 --all-keys`
+2. Same for `FortniteGame/Content/Maps/FortniteTransition` (cap 200).
+3. Same for `FortniteGame/Content/Maps/UI/Frontend_Lobby_Default` (cap 400).
+
+Why: the Frontend widget graph, 2,171 unseen WidgetBlueprints and pakchunk
+1000-1002 are unmeasured without the key (see `ui_audio_census.md`).
+
+## Decisions made autonomously
+
+- 2026-10-30: the supplied `.id0/.id1/.nam` IDA files are untrusted (user); the
+  exe `.text` is encrypted on disk, so code is recovered from a read-only
+  runtime dump of our own Wine run (user: approved).
+- Audio on this host: use `SDL_AUDIODRIVER=dummy` (or `disk` for verification)
+  until a real sink exists.
