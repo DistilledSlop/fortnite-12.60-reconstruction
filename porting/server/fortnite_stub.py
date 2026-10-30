@@ -109,6 +109,15 @@ def profile(account_id, query, command):
 
 
 ROUTES = [
+    ("GET", r"/friends/api/v1/[^/]+/summary", lambda m, q, f: (200, {
+        "friends": [], "incoming": [], "outgoing": [], "suggested": [], "blocklist": [],
+        "settings": {"acceptInvites": "public"},
+        "limitsReached": {"incoming": False, "outgoing": False, "accepted": False}})),
+    ("GET", r"/friends/api/v1/[^/]+/(blocklist|recent/[^/]+)", lambda m, q, f: (200, [])),
+    ("GET", r"/friends/api/v1/[^/]+/settings", lambda m, q, f: (200, {"acceptInvites": "public"})),
+    ("GET", r"/presence/api/v1/_/[^/]+/settings/subscriptions", lambda m, q, f: (200, [])),
+    ("GET", r"/fortnite/api/game/v2/privacy/account/[^/]+", lambda m, q, f: (200, {"acceptInvites": "public"})),
+    ("GET", r"/content/api/pages/fortnite-game", lambda m, q, f: (200, {"_title": "Fortnite Game", "_activeDate": "2026-01-01T00:00:00.000Z", "lastModified": "2026-01-01T00:00:00.000Z", "_locale": "en-US"})),
     ("GET", r"/fortnite/api/storefront/v2/keychain", lambda m, q, f: (200, ["00000000000000000000000000000000:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=:/Game/Local/Unused"])),
     ("POST", r"/fortnite/api/game/v2/profile/([^/]+)/(client|dedicated_server)/([A-Za-z]+)", lambda m, q, f: profile(m.group(1), q, m.group(3))),
     ("GET", r"/fortnite/api/cloudstorage/user/[^/]+", lambda m, q, f: (200, [])),

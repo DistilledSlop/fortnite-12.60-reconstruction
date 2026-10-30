@@ -17,6 +17,14 @@ if [[ -z "${FN_NETNS_INNER:-}" ]]; then
 fi
 
 ip link set lo up
+# Hosts and certificate are derived files, created on first use.
+if [[ ! -f "$generated/hosts" ]]; then
+    python3 "$porting_dir/server/gen_hosts.py" "$generated/DefaultEngine.ini" "$generated/hosts"
+fi
+if [[ ! -f "$generated/tls/cert.pem" ]]; then
+    "$porting_dir/server/gen_tls_cert.sh" "$generated/hosts" "$generated/tls"
+fi
+chown -R "$FN_USER" "$generated/hosts" "$generated/tls"
 mount --bind "$generated/hosts" /etc/hosts
 user=$FN_USER
 client_log="$generated/wine-prefix/drive_c/users/$user/AppData/Local/FortniteGame/Saved/Logs/FortniteGame.log"
@@ -33,5 +41,6 @@ sudo -n -u "$user" env WINEPREFIX="$generated/wine-prefix" WINEDEBUG=-all \
     xvfb-run -a -s '-screen 0 1280x720x24' timeout "${seconds}s" \
     bash -c 'cd "$0" && exec wine FortniteClient-Win64-Shipping.exe "$@"' "$bin_dir" \
     -NOEPICPORTAL -nosound -NoSplash -log -epicapp=Fortnite -epicenv=Prod \
-    -epiclocale=en-us -skippatchcheck -nobe -noeac -fromfl=none "$@" \
+    -epiclocale=en-us -skippatchcheck -nobe -noeac -fromfl=none \
+    -AUTH_LOGIN=unused -AUTH_PASSWORD=localexchangecode -AUTH_TYPE=exchangecode "$@" \
     > "$generated/original-client-run.out" 2>&1 || true
