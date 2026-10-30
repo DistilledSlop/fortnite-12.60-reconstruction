@@ -11,6 +11,7 @@ using CUE4Parse.UE4.Assets.Exports.Component.StaticMesh;
 using CUE4Parse.UE4.Assets.Exports.Material;
 using CUE4Parse.UE4.Assets.Exports.Texture;
 using CUE4Parse.UE4.Objects.Core.Misc;
+using CUE4Parse.UE4.Objects.Engine;
 using CUE4Parse.UE4.Objects.UObject;
 using CUE4Parse.UE4.Readers;
 using CUE4Parse.UE4.Versions;
@@ -601,6 +602,42 @@ try
                 parent = (material as UMaterialInstance)?.Parent?.Name,
                 staticPermutation = (material as UMaterialInstance)?.bHasStaticPermutationResource
             }).ToArray(),
+            materialProperties = materials.Select(material => new
+            {
+                name = material.Name,
+                expressionRefs = (material as UMaterial)?.Expressions.Select(reference => new
+                {
+                    name = reference.Name,
+                    index = reference.Index,
+                    isImport = reference.IsImport
+                }).ToArray(),
+                rootInputs = new[] { "BaseColor", "EmissiveColor", "Opacity", "OpacityMask", "Normal", "WorldPositionOffset" }
+                    .Select(inputName => new
+                    {
+                        name = inputName,
+                        input = material.GetOrDefault<FExpressionInput?>(inputName)
+                    })
+                    .Where(item => item.input is not null)
+                    .Select(item => new
+                    {
+                        item.name,
+                        expression = item.input!.Expression?.Name,
+                        expressionIndex = item.input.Expression?.Index,
+                        expressionName = item.input.ExpressionName.Text,
+                        item.input.OutputIndex,
+                        item.input.Mask,
+                        item.input.MaskR,
+                        item.input.MaskG,
+                        item.input.MaskB,
+                        item.input.MaskA
+                    }).ToArray(),
+                properties = material.Properties.Select(property => new
+                {
+                    name = property.Name.Text,
+                    type = property.PropertyType.Text,
+                    value = property.Tag?.ToString()
+                }).ToArray()
+            }).ToArray(),
             instanceParameters = packageData.GetExports().OfType<UMaterialInstanceConstant>()
                 .Select(instance => new
                 {
@@ -624,6 +661,20 @@ try
                         {
                             color.R, color.G, color.B, color.A
                         }
+                    }).ToArray()
+                }).ToArray(),
+            expressionExports = packageData.GetExports()
+                .Where(item => item.ExportType.StartsWith("MaterialExpression", StringComparison.Ordinal))
+                .Select(item => new
+                {
+                    name = item.Name,
+                    exportType = item.ExportType,
+                    parserType = item.GetType().Name,
+                    properties = item.Properties.Select(property => new
+                    {
+                        name = property.Name.Text,
+                        type = property.PropertyType.Text,
+                        value = property.Tag?.ToString()
                     }).ToArray()
                 }).ToArray(),
             textureSamples = packageData.GetExports().OfType<UMaterialExpressionTextureSample>()

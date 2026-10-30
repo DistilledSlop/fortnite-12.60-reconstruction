@@ -250,6 +250,21 @@ baseline, not a recovered Fortnite sky or cloud shader. The original cloud
 override `M_Volcano_Cloud_Cove` is an instance of a 111-expression translucent
 unlit material, so the cloud appearance still needs a dedicated reconstruction.
 
+The inspector now records each material's expression export types, retained
+property values, expression references, and root input names. For
+`M_Volcano_Cloud`, the cooked package declares 111 expression references, but
+65 are null and only 46 expression objects remain. Its `EmissiveColor` input
+names `MaterialExpressionMultiply_4`, which is absent from those exports.
+This is incomplete source graph data, even though some parameters, function
+calls, and a cloud detail texture remain readable. A reversible editor probe
+of the original extracted package first failed because it is unversioned.
+Allowing unversioned and cooked content through the editor gates reached the
+Windows material shader map, then failed at `MaterialShader.cpp:405`
+(`IsContentValid`). The temporary editor settings and package copy were
+removed. The original package cannot currently be recooked directly on
+Linux; recovering its appearance requires reconstructing missing graph
+behavior or translating the cooked shader data.
+
 ## Terrain collision probe
 
 The imported meshes initially had `CTF_UseSimpleAsComplex` with no box,

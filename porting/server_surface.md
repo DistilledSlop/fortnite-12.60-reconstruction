@@ -37,6 +37,15 @@ metadata and can return observed response fixtures, so endpoint behavior can
 be developed against a running client. It currently provides no login,
 matchmaking, XMPP, or game-session implementation. See its README for usage.
 
+The install has a main `FortniteClient-Win64-Shipping.exe` and separate EAC and
+BattlEye launcher executables. A bounded Wine probe of the main executable
+with `-nullrhi -nosound -NoSplash -unattended -log` and an isolated ignored
+Wine prefix exited with code 1. Its console output showed an engine exit and
+shutdown of `LauncherPlatform`, `LauncherCheck`, and `Solaris`, without a
+request trace. This does not establish a working client startup sequence or
+anti-cheat removal from the original binary. The new native project remains
+the path where EAC is absent by construction.
+
 The new `FortniteLinuxServer` target now provides a native UE dedicated server
 for the reconstructed project. A local new-client/new-server probe completed
 UE login and join on `FortniteEmptyDedicated`; this does not supply Fortnite's
