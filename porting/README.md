@@ -58,7 +58,8 @@ client and the separate Unreal Engine source checkout remain outside Git.
   The local join probe confirmed that a replicated pawn spawns above D4 and
   settles into Walking movement on its terrain. A temporary replicated light
   enabled a software Vulkan capture of pale terrain geometry from the pawn
-  camera. Sky and landscape textures remain missing.
+  camera, including after a visible client joined the local server. Sky and
+  landscape textures remain missing.
 - The embedded `FortniteGame.uproject` was extracted to ignored output. It
   declares six project modules and 123 enabled plugins. Sixty-three of those
   enabled plugins are absent from the public UE 4.25 engine tree, so the

@@ -237,5 +237,8 @@ movement across tile boundaries and collision on other tiles still need tests.
 An Xvfb screenshot before adding a light was entirely black. A temporary
 replicated directional light now illuminates the reconstructed terrain. A
 software Vulkan capture shows pale terrain relief from the D4 pawn camera.
+The same view was captured after a visible Linux client joined the local
+dedicated server; both peers logged the light and D4 mesh, and the server
+logged a successful join. The captures stay under ignored `porting/generated/`.
 The black sky and flat generated materials expose the missing sky, lighting,
 and landscape texture layers; this is not the original island appearance.
