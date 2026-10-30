@@ -35,6 +35,9 @@ Inputs:
 
 - `--name-map {block_va: "ClassName"}`. The only source of class names.
   Keys are the `block_va` strings written by the extractor (`"0x146b59ff0"`).
+- `--parent-map {block_va: {parent_name, parent_va, ...}}` from
+  `porting/resolve_class_parents.py` (`porting/generated/reflection/class_parent_map.json`). When given it is the
+  only source of the parent. See `binary_analysis.md` section 8.
 - `--type-map {fn_va: "TypeName"}`. Maps the `Z_Construct_*` function
   pointers the extractor records (`type_refs`: class, meta_class,
   interface_class, struct, enum, and the parent `base_fn`) to C++ names.
@@ -101,13 +104,12 @@ about 0.6 s, with no exceptions.
 
 - **Names.** No block has a name yet. Every name comes from `--name-map`.
   Unnamed blocks produce no output.
-- **Parent.** `base_fn` is taken as `dependency[1]` on the assumption that
-  `dependency[0]` is the package singleton. That is consistent with AActor but
-  has not been checked against any other named class. Only 307 of 2,740 parents
-  resolve, and only through the type map. The `FFunctionParams.OuterFunc` value
-  (0x1446ab350 for AActor's functions) might identify a block's own create
-  function. Not confirmed: that value is not the `base_fn` of any block in the
-  table, so it cannot be the create function of a class with children.
+- **Parent.** `base_fn` is `dependency_fns[1]`, which is the module package, not
+  the parent. The parent is `dependency_fns[0]` (UHT emits super first, package
+  last). Use `--parent-map`. Without it the generator falls back to `base_fn`
+  and will usually emit a TODO parent. Five CoreUObject intrinsic parents
+  (UClass, UEnum, UScriptStruct, UPackageMap, UInterface) have no block and stay
+  unresolved in the map; their names come from child headers.
 - **Struct layouts.** The struct's own `NetSerialize` and any custom bit format
   are not recovered. Structs are declared by name, but the generator does not
   write their definitions, and rep order inside a struct cannot be checked from

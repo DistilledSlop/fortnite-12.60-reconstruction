@@ -183,3 +183,89 @@ Dry run: a small UHT-shaped test binary compiled with gcc (scratch, not in the r
 - Reflection (all groups): `python3 -I porting/extract_reflection.py --all-groups` (25 s). The regenerated file is the default output.
 - Names: `porting/.venv/bin/python -I porting/ghidra/run_export_class_names.py` (about 20 s). It writes `porting/generated/reflection/class_name_map.json` and `class_name_map.evidence.json`. The project must not be locked by an analysis run.
 - Slim analysis: `GHIDRA_HEADLESS_MAXMEM=48G analyzeHeadless /opt/fortnite/ghidra-projects fortnite-slim -process FortniteClient-Win64-Shipping.runtime.exe -preScript SlimAnalysisOptions.java -max-cpu 8 -analysisTimeoutPerFile 3000` (run from `porting/ghidra` with `-scriptPath`). The import is `-import ... -loader PeLoader -noanalysis` into the same project first.
+
+## 8. Parent chain resolution
+
+Scope: the super class (parent) of each named FClassParams block, for `porting/gen_native_classes.py`. Read-only over the runtime dump (section 6), the reflection JSON, the Ghidra evidence (section 7) and the UE 4.25.0 headers at `/opt/fortnite/UnrealEngine` (`Build.version` is 4.25.0). Tool: `porting/resolve_class_parents.py` (usage in its docstring). Output: `porting/generated/reflection/class_parent_map.json`, `{block_va: {name, parent_name, parent_va, chain_ok, parent_source, chain, package}}`. Git-ignored with the rest of `porting/generated/`. No Ghidra run was needed: the evidence file already gives each block's construct function, and every parent is an exact address match.
+
+### Method [observed + inferred]
+
+1. **Which entry is the parent.** UHT 4.25 (`Programs/UnrealHeaderTool/Private/CodeGenerator.cpp`, around line 2200) builds `DependentSingletons` as the super class's `Z_Construct_UClass_*` first, when there is a super class, then the module's `Z_Construct_UPackage__Script_*` last. A class with no super class (UObject) has only the package. The data agree: 6,753 blocks have two entries, the first matching a named block's construct function. The 203 with an unmatched first entry are described in step 4. `base_fn` in `extract_reflection.py` is `dependency_fns[1]`, which is the **package**, not the parent. `gen_native_classes.py` used it as the parent before this section.
+2. **Construct function per block.** Taken from `class_name_map.evidence.json` (`construct_fns`): one function per block, no duplicates across 6,957 blocks.
+3. **Thunks.** A first entry that is not a construct function is followed through single jmps (`E9 rel32`, `FF 25`) when an image is given. Result: 0 thunks needed. The unmatched first entries are not thunks: their bytes are ordinary `sub rsp,N` prologues.
+4. **Orphan parents.** An unmatched first entry is a class with no FClassParams block. Five such constructs exist in this build and are CoreUObject intrinsics: `0x142e73ed0` (UInterface, 199 children), `0x142e497d0` (UClass, 1 child), `0x142e49a40` (UEnum), `0x142e49c00` (UPackageMap), `0x142e49c80` (UScriptStruct). Byte scans of their bodies show no RIP-relative reference to a block. They are named only from child headers: every child with a UCLASS/UINTERFACE header must name the same base. Children: 73 header-known children, 73 agree. This is a consistency check, not an independent validation.
+5. **Packages.** For each second entry, a LEA to an `FPackageParams` record whose name starts with `/Script/` was found for all 6,957 named blocks (for example `/Script/FortniteGame` 2,842, `/Script/FortniteUI` 1,681, `/Script/Engine` 967). The package is therefore always last, which confirms step 1.
+6. **Chain.** Follow parents through blocks. `chain_ok` is True only when the chain reaches a root named UObject with every link a block.
+
+### Results [observed]
+
+| Measure | Value |
+|---|---|
+| Blocks in map | 6,967 (6,957 named, 10 unnamed) |
+| Named blocks with a parent that is a block (or the root UObject) | 6,754 of 6,957 (6,753 block, 1 root) |
+| Named blocks whose parent is an orphan CoreUObject intrinsic | 203 |
+| Named blocks with `chain_ok` (through blocks to UObject) | 6,747 of 6,957 |
+| Named blocks whose parent is a block but whose chain ends in an orphan | 7 (for example UFortAbilitySystemInterface -> UAbilitySystemInterface -> UInterface) |
+| Unnamed blocks | 10, parent_source `no_dependencies`, see below |
+
+**Interfaces.** One UINTERFACE gives one U-prefixed UClass block with CLASS_Interface (`0x4000`, `ObjectMacros.h` line 201) whose parent is UInterface. No I-prefixed block exists in the set. The brief's "two classes" premise is not borne out in this build: 199 interface UClasses have the UInterface orphan as parent, plus 3 interfaces that derive from other interfaces.
+
+**Target chains** (`[observed]`, from the map):
+
+- AFortPlayerStateAthena -> AFortPlayerStateZone -> AFortPlayerState -> APlayerState -> AInfo -> AActor -> UObject
+- AFortGameStateAthena -> AFortGameStateZone -> AFortGameState_InGame -> AFortGameState -> AFortGameStateBase -> APlayspaceGameState -> AGameState -> AGameStateBase -> AInfo -> AActor -> UObject
+- AFortPlayerControllerAthena -> AFortPlayerControllerZone -> AFortPlayerControllerGameplay -> AFortPlayerController -> APlayspacePlayerController -> APlayerController -> AController -> AActor -> UObject
+- AFortPlayerPawnAthena -> AFortPlayerPawn -> AFortPawn -> ACharacter -> APawn -> AActor -> UObject
+- AFortWorldSettings -> AWorldSettings -> AInfo -> AActor -> UObject
+- AFortAthenaMapInfo -> AActor -> UObject
+- AFortPoiManager -> AActor -> UObject
+- AFortWorldManager -> AInfo -> AActor -> UObject
+
+The first four match the pattern in the brief. The Fort classes have no header in the tree, so they are unchecked against headers. Their packages are all `/Script/FortniteGame`.
+
+### Accuracy against the UE 4.25.0 headers [observed]
+
+Every named class with a `UCLASS`/`UINTERFACE` declaration in `Engine/Source` or `Engine/Plugins` was compared with the first base class in its header, when that base is itself a UCLASS. The UObject root is compared as "no UCLASS parent" (its header base is `UObjectBaseUtility`).
+
+- **Accuracy: 2,053 of 2,058 = 0.9976** (binary parent matches header base).
+- **Engine list, 12 of 12:** AActor<-UObject, APawn<-AActor, ACharacter<-APawn, APlayerController<-AController, APlayerState<-AInfo, AGameStateBase<-AInfo, AGameModeBase<-AInfo, AWorldSettings<-AInfo, UActorComponent<-UObject, USceneComponent<-UActorComponent, AInfo<-AActor, AController<-AActor.
+- **Header coverage.** 4,786 UCLASS/UINTERFACE names are declared in the tree; 2,132 of them are named in the binary. 2,654 declared names have no block. This includes editor and tool classes that are not shipped, which were not analysed.
+
+**Five mismatches, all engine skew, not extraction errors:**
+
+| Class | Binary parent | 4.25.0 header |
+|---|---|---|
+| UAnimSequencerInstance | UAnimCustomInstance | UAnimInstance |
+| UGameplayTagsDeveloperSettings | UDeveloperSettings | UObject |
+| UAnimCompress | UObject | UAnimBoneCompressionCodec |
+| UAnimCompress_LeastDestructive | UAnimCompress | UAnimCompress_BitwiseCompressOnly |
+| UOnlineBlueprintCallProxyBase | UObject | UBlueprintAsyncActionBase |
+
+Evidence: the first one is observed. UAnimCustomInstance is named in the binary and is absent from every 4.25.0 header, so the shipped engine is not the 4.25.0 tree. The others are inferred. In each, the binary is self-consistent under the UHT rule, and the header differs in a way that fits a different engine revision. UAnimBoneCompressionCodec is also not a named block in the binary.
+
+### Failures and limits
+
+- Orphan parents (the 5 CoreUObject intrinsics) are named from child headers, not from the binary. Their own parents (UClass -> UStruct -> UField -> UObject) are not in the map.
+- 7 blocks have a block parent whose chain ends at an orphan, so `chain_ok` is False for them.
+- The Fort classes have no header, so the 8 target chains are checked for shape only (against the pattern in the brief), not against source.
+- `base_fn` is still `dependency_fns[1]` (the package) in the reflection JSON. Use `class_parent_map.json` for parents.
+
+### The 10 unnamed blocks (bounded attempt, not resolved) [observed]
+
+Addresses `0x1470b7990`, `0x1470b8278`, `0x1470b8aa8`, `0x1470b8bd8`, `0x1470d4428`, `0x1470d4da8`, `0x1470d4e88`, `0x1470d4ef8`, `0x1470d5118`, `0x1470d5608`. None of them gets a name. Checks performed:
+
+- **Layout.** Word 0 is a code pointer, words 1 to 6 are zero, and the flags word (`0x4542xxxx`) is not a valid EClassFlags value. Against the UE 4.25 FEnumParams and FStructParams, the name fields are zero, so they do not match either. They are probably not FClassParams.
+- **Code references.** A RIP-relative LEA or MOV to any of the 10 is absent from both executable sections of the dump. The second `.text` is still encrypted in the dump in parts, so this is not conclusive.
+- **Data references.** No data section contains a pointer to any of the 10.
+- **Pointed-to functions.** Six of the first-pointer functions begin with `lea rax,[rip+X]` and return it, and the rest start with a register save or `mov eax,imm`. None has the prologue of a `Z_Construct_UClass_*` function.
+
+Conclusion: no names, no parents. Confidence that these are real classes: low. The 10 stay in the map with `parent_source: no_dependencies`.
+
+### Rerun
+
+```
+python3 -I porting/resolve_class_parents.py [--no-validate]   # map + summary (about 2 s with the dump and headers)
+python3 -I porting/resolve_class_parents.py --self-test
+python3 -I porting/gen_native_classes.py --parent-map porting/generated/reflection/class_parent_map.json ...
+```
+

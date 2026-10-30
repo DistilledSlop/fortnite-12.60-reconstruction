@@ -7,6 +7,9 @@ Input:
   --type-map JSON     {fn_va: "TypeName"} for Z_Construct_* function pointers (class, struct, enum and
                       parent references). Without it, every such reference is emitted as a TODO_* token
                       that fails to compile on purpose.
+  --parent-map JSON   output of porting/resolve_class_parents.py ({block_va: {parent_name, parent_va, ...}}).
+                      When given, it is the only source of the parent (Super). Without it, the parent comes
+                      from base_fn through --type-map, which is dependency_fns[1] (the package), not the parent.
 
 Output, for every block that has a name, under porting/generated/native_classes/ (git-ignored):
   <Name>.h    UCLASS, UPROPERTY, UFUNCTION declarations
@@ -23,7 +26,7 @@ Validation: --compare-header PATH --compare-class NAME diffs the generated class
 
 Usage:
   python3 -I porting/gen_native_classes.py [--reflection JSON] [--name-map JSON] [--type-map JSON]
-          [--out DIR] [--api MACRO] [--order declaration|table]
+          [--parent-map JSON] [--out DIR] [--api MACRO] [--order declaration|table]
           [--compare-header HDR --compare-class NAME [--report PATH]]
   python3 -I porting/gen_native_classes.py --self-test
 """
@@ -332,11 +335,18 @@ def uclass_line(block):
     return "UCLASS(%s)" % ", ".join(specs) if specs else "UCLASS()"
 
 
-def build_class(block, name, resolver, order):
-    """Build the class model. Parent and member types use resolver; order is 'declaration' or 'table'."""
+def build_class(block, name, resolver, order, parent_entry=None):
+    """Build the class model. Parent and member types use resolver; order is 'declaration' or 'table'.
+
+    parent_entry is this block's record from --parent-map (or None when no map was given). When it is
+    given it decides the parent alone; an empty record means the parent is unresolved."""
     resolver.todos = []
-    parent_fn = block.get("base_fn")
-    parent = resolver.name(parent_fn)
+    if parent_entry is not None:
+        parent_fn = parent_entry.get("parent_va")
+        parent = parent_entry.get("parent_name")
+    else:
+        parent_fn = block.get("base_fn")
+        parent = resolver.name(parent_fn)
     if parent is None:
         parent_expr = "TODO_Parent_%s" % (parent_fn or "none").replace("0x", "")
         resolver.todos.append("parent not resolved (base_fn %s)" % parent_fn)
@@ -720,6 +730,12 @@ def self_test():
     check("ReplicatedUsing from rep notify", "ReplicatedUsing=OnRep_Owner" in model["members_table_order"][1]["specifiers"])
     check("declaration order is reverse of table", [m["name"] for m in model["members_decl_order"]] == list(reversed(names)))
     check("parent resolved via type map", model["parent"] == "UObject")
+    mapped = build_class(dict(SELF_TEST_BLOCK, base_fn="0x3000"), "ASelfTest", Resolver(SELF_TEST_TYPES),
+                         "declaration", {"parent_name": "AParentFromMap", "parent_va": "0x5000"})
+    check("parent map overrides base_fn", mapped["parent"] == "AParentFromMap" and mapped["parent_fn"] == "0x5000")
+    check("parent map cpp calls Super", "Super::GetLifetimeReplicatedProps" in render_cpp(mapped, "self-test"))
+    empty = build_class(SELF_TEST_BLOCK, "ASelfTest", Resolver(SELF_TEST_TYPES), "declaration", {})
+    check("empty parent-map record is unresolved", empty["parent"] is None and empty["parent_expr"] == "TODO_Parent_none")
     fn = {f["name"]: f for f in model["functions"]}
     check("Server + Reliable flags", fn["ServerDo"]["specifiers"] == ["Server", "Reliable"])
     check("Client flag", fn["ClientTell"]["specifiers"] == ["Client"])
@@ -786,6 +802,8 @@ def main(argv=None):
     ap.add_argument("--reflection", default=DEFAULT_REFLECTION)
     ap.add_argument("--name-map", default=None, help="JSON {block_va: class_name}")
     ap.add_argument("--type-map", default=None, help="JSON {fn_va: C++ type name} for Z_Construct functions")
+    ap.add_argument("--parent-map", default=None,
+                    help="JSON from resolve_class_parents.py {block_va: {parent_name, parent_va, ...}}")
     ap.add_argument("--out", default=DEFAULT_OUT)
     ap.add_argument("--api", default="FORTNITEGAME_API", help="API export macro; empty for none")
     ap.add_argument("--order", choices=("declaration", "table"), default="declaration")
@@ -810,6 +828,10 @@ def main(argv=None):
     if args.type_map:
         with open(args.type_map, "r", encoding="utf-8") as fh:
             type_map = json.load(fh)
+    parents = None
+    if args.parent_map:
+        with open(args.parent_map, "r", encoding="utf-8") as fh:
+            parents = lower_keys(json.load(fh))
     resolver = Resolver(type_map)
     source_label = os.path.relpath(args.reflection, REPO)
 
@@ -827,7 +849,10 @@ def main(argv=None):
     os.makedirs(args.out, exist_ok=True)
     for block in named:
         name = names[block["block_va"].lower()]
-        model = build_class(block, name, resolver, args.order)
+        parent_entry = None
+        if parents is not None:
+            parent_entry = parents.get(block["block_va"].lower(), {})
+        model = build_class(block, name, resolver, args.order, parent_entry)
         if args.compare_header and args.compare_class == name:
             compare_with_header(model, args.compare_header, report)
         if args.compare_header and args.compare_class:
