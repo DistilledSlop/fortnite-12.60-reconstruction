@@ -104,13 +104,13 @@ the same layout. All of it is one inline script plus CSS — no external assets,
 and with JavaScript disabled the page falls back to the static treemap.
 
 - **Zoom.** Click any tile (category or component) and a camera zooms into it.
-  Leaf labels are hidden at the root level and revealed when zoomed in, where
-  the tiles are large enough to hold them — the root view shows only the nine
-  category headers, so it stays readable. Breadcrumbs, the *Fit all* button or
-  `Esc` go back. Hovering dims the other tiles and shows a tooltip with the
-  name, percent, done/total, weight, basis and evidence; clicking fills a
-  detail panel below the treemap (with the component's children as further
-  drill-down links for categories).
+  The percentage shows on every tile at all zoom levels; name labels are hidden
+  at the root level and revealed when zoomed in, where the tiles are large
+  enough to hold them, so the root view stays readable. Breadcrumbs, the *Fit
+  all* button or `Esc` go back. Hovering shows a tooltip with the name,
+  percent, done/total, weight, basis and evidence; clicking fills a detail
+  panel below the treemap (with the component's children as further drill-down
+  links for categories).
 - **Sort.** The *Sort tiles by* toggle re-lays out the whole treemap by percent
   complete instead of by area. Both layouts are precomputed by the generator
   (two layers inside one camera group); the script only swaps which layer is

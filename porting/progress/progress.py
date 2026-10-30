@@ -748,7 +748,7 @@ TM_SVG_CSS = """
 #treemap .tile{cursor:pointer;transition:opacity .25s}
 #treemap .tile rect{vector-effect:non-scaling-stroke}
 #treemap .leaf-label,#treemap .leaf-pct,#treemap .grp-head{transition:opacity .3s}
-#treemap.at-root .leaf-label,#treemap.at-root .leaf-pct{opacity:0;pointer-events:none}
+#treemap.at-root .leaf-label{opacity:0;pointer-events:none}
 #treemap.zoomed .tile{opacity:.22}
 #treemap.zoomed .tile.keep{opacity:1}
 #treemap.zoomed .tile.active,#treemap.zoomed .tile.active .tile{opacity:1}
@@ -878,20 +878,10 @@ TM_PAGE_JS = """
   }
 
   var hot = null;
-  function mark(t) {
-    tiles().forEach(function (x) {
-      if (x !== t && !t.contains(x) && !x.contains(t)) x.style.opacity = "0.28";
-    });
-  }
-  function unmark() {
-    tiles().forEach(function (x) { x.style.opacity = ""; });
-  }
   svg.addEventListener("pointerover", function (e) {
     var t = e.target.closest ? e.target.closest(".tile") : null;
     if (!t || t === hot) return;
-    unmark();
     hot = t;
-    mark(t);
     showTip(t);
   });
   svg.addEventListener("pointerout", function (e) {
@@ -900,7 +890,6 @@ TM_PAGE_JS = """
     var to = e.relatedTarget && e.relatedTarget.closest ? e.relatedTarget.closest(".tile") : null;
     if (to === t) return;
     hot = null;
-    unmark();
     tip.hidden = true;
   });
   function showTip(t) {
@@ -1019,7 +1008,6 @@ TM_PAGE_JS = """
         x.classList.toggle("on", x === b);
       });
       hot = null;
-      unmark();
       tip.hidden = true;
       fit();
     };
@@ -1175,7 +1163,7 @@ def index_html(res, head, subject, date, model, when_note):
 <ul class="ms">{milestones}</ul>
 
 <h2>Treemap</h2>
-<p class="meta">Tile area = estimated effort weight. Tile colour = percent complete (red to green, five bins). Click a tile to zoom in; labels reveal on zoom and are never cut off. Hover for the summary, click to read the evidence below. Breadcrumbs, <em>Fit all</em> or <em>Esc</em> go back; the sort toggle re-lays out the tiles by progress instead of area.</p>
+<p class="meta">Tile area = estimated effort weight. Tile colour = percent complete (red to green, five bins). The percentage shows on every tile at all times; name labels reveal on zoom and are never cut off. Hover for the summary, click to read the evidence below. Breadcrumbs, <em>Fit all</em> or <em>Esc</em> go back; the sort toggle re-lays out the tiles by progress instead of area.</p>
 {legend_html()}
 <div class="tm-bar" id="tm-bar">
 <nav class="tm-crumbs" id="tm-crumbs" aria-label="Zoom level"></nav>
