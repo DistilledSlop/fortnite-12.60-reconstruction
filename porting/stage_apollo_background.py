@@ -28,6 +28,18 @@ def main() -> int:
         target = staged_game / "Content" / source.relative_to(cooked)
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(source, target)
+    # Rebuilt materials live at their original paths, with the textures they sample.
+    rebuilt = [cooked / "Athena/Environments/Materials/Cloud",
+               cooked / "Athena/Apollo/Environments/Landscape/Background",
+               cooked / "VisualThreatManager/StormVisuals/LargeClouds",
+               cooked / "Environments/Apollo/Sets/Terrain/Textures"]
+    rebuilt_files = [path for folder in rebuilt if folder.is_dir()
+                     for path in folder.rglob("*") if path.suffix in PAYLOAD_SUFFIXES]
+    for source in rebuilt_files:
+        target = staged_game / "Content" / source.relative_to(cooked)
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(source, target)
+    payload += rebuilt_files
     archives = sorted(cooked.glob("ShaderArchive-*-SF_VULKAN_SM5.ushaderbytecode"))
     if len(archives) != 2:
         raise FileNotFoundError("Expected global and game Vulkan shader archives")

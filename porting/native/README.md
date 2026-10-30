@@ -108,3 +108,18 @@ the storm actor the component names required by the recovered map, but its
 material, mesh, and gameplay behavior still need reconstruction. The shadow
 actor's instanced mesh is intentionally absent because its saved Windows
 component buffer does not deserialize in the stock Linux runtime.
+
+## Rebuilt Apollo cloud and backdrop materials
+
+`python3 porting/prepare_apollo_background_materials.py` turns the material
+reports under ignored `generated/` into `apollo-background-materials.json`
+(parameter defaults, instance overrides) and texture import settings. After
+importing those textures with `ImportAssets`, run
+`UE4Editor-Cmd FortniteLinux.uproject -run=FortniteBackgroundMaterials
+-Spec=<that json>` to create `M_Volcano_Cloud` and its `M_Volcano_Cloud_Cove`
+instance, plus `M_BackDrop_P` and its `M_BackDrop_1/3/4` instances, at the
+original `/Game` paths. `-SkipCloud` and `-SkipBackdrop` limit a run. The
+commandlet logs every instance parameter the simplified parent has no
+counterpart for. `Config/DefaultGame.ini` always-cooks those folders and the
+background mesh folder; `stage_apollo_background.py` stages them.
+
