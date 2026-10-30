@@ -9,13 +9,14 @@ server="$game_dir/Binaries/Linux/FortniteLinuxServer"
 client="$stage_dir/FortniteLinux.sh"
 server_log="$porting_dir/generated/dedicated-server-client-test.log"
 client_log="$porting_dir/generated/local-client-join-test.log"
+map=${1:-/Game/Maps/FortniteEmptyDedicated}
 
 if [[ ! -x "$server" || ! -x "$client" ]]; then
     printf 'Stage the Linux client and FortniteLinuxServer binaries first.\n' >&2
     exit 2
 fi
 
-timeout 20s "$server" /Game/Maps/FortniteEmptyDedicated \
+timeout 20s "$server" "$map" \
     -nullrhi -nosound -unattended -port=7777 -log > "$server_log" 2>&1 &
 server_pid=$!
 trap 'kill "$server_pid" 2>/dev/null || true; wait "$server_pid" 2>/dev/null || true' EXIT

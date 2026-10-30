@@ -45,8 +45,15 @@ ignored staged build's `FortniteLinux/Binaries/Linux/` directory. With the
 recovered `FortniteEmptyDedicated` map already staged, the server entered play
 and listened on UDP 7777. A local instance of the new Linux client completed
 UE challenge, login, and join, then loaded that map. Run
-`bash porting/server/smoke_join.sh` to repeat the bounded probe; it writes logs
-only under ignored `porting/generated/`.
+`bash porting/server/smoke_join.sh` to repeat the bounded probe, or pass a
+staged map path as its first argument. It writes logs only under ignored
+`porting/generated/`.
+
+The same probe with
+`/Game/Maps/Skybox/Skybox_Outpost_HomeBase` also succeeded: the server entered
+the recovered skybox map and logged `Join succeeded`; the client received its
+welcome and brought the skybox world up for play. The probe used `-nullrhi`
+for both processes and ran for a bounded ten seconds.
 
 This uses UE's `GameModeBase` and the newly authored client module. The
 original Fortnite client protocol, account/profile services, game rules,
