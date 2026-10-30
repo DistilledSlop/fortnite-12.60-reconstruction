@@ -64,6 +64,13 @@ and can contain unresolved expressions, so it is a reconstruction aid rather
 than buildable source. Package compatibility still needs to be tested asset by
 asset. The CUE4Parse checkout is a local dependency, not vendored.
 In one sampled UI Blueprint, 5 of 9 function scripts decoded.
+Add `--all-keys` when inspecting packages in the three GUID-keyed chunks;
+the tool prompts for those keys without saving them. It mounted all 31 paks
+and parsed a material package from `pakchunk1002` in a local test.
+`dotnet run --project porting/cue4inspect -- --registry` parses the embedded
+asset registry and reports asset classes and dependency-node counts. The main
+registry reports 191,666 asset records, including 22,211 Blueprints, 2,379
+animation Blueprints, 2,175 widget Blueprints, and 3,694 worlds.
 
 See `server_surface.md` for the observed backend dependencies.
 

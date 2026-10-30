@@ -1,21 +1,26 @@
 using CUE4Parse.Encryption.Aes;
 using CUE4Parse.FileProvider;
+using CUE4Parse.UE4.AssetRegistry;
 using CUE4Parse.UE4.Objects.Core.Misc;
 using CUE4Parse.UE4.Objects.UObject;
+using CUE4Parse.UE4.Readers;
 using CUE4Parse.UE4.Versions;
 
 bool showAll = args.Contains("--all");
 bool showPseudo = args.Contains("--pseudo");
-string[] positional = args.Where(arg => arg is not ("--all" or "--pseudo")).ToArray();
-if (positional.Length < 1 || positional.Length > 2)
+bool registryMode = args.Contains("--registry");
+bool allKeys = args.Contains("--all-keys");
+string[] positional = args.Where(arg => arg is not ("--all" or "--pseudo" or "--registry" or "--all-keys")).ToArray();
+if (registryMode ? positional.Length > 1 : positional.Length is < 1 or > 2)
 {
-    Console.Error.WriteLine("Usage: Cue4Inspect <asset-path-without-extension> [pak-directory] [--all] [--pseudo]");
+    Console.Error.WriteLine("Usage: Cue4Inspect <asset-path-without-extension> [pak-directory] [--all] [--pseudo] [--all-keys]");
+    Console.Error.WriteLine("   or: Cue4Inspect --registry [pak-directory] [--all-keys]");
     return 2;
 }
 
-string assetPath = positional[0];
-string pakDirectory = positional.Length == 2
-    ? positional[1]
+string? assetPath = registryMode ? null : positional[0];
+string pakDirectory = positional.Length == (registryMode ? 1 : 2)
+    ? positional[^1]
     : Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "../../../../../Fortnite/FortniteGame/Content/Paks"));
 
 if (!Directory.Exists(pakDirectory))
@@ -37,8 +42,32 @@ try
     string key = ReadHiddenKey("Primary AES key: ");
     int mounted = provider.SubmitKey(new FGuid(), new FAesKey("0x" + key));
     Console.WriteLine($"Mounted {mounted} pak(s) with the primary key.");
+    if (allKeys)
+    {
+        foreach (var guid in provider.RequiredKeys.Where(guid => guid.IsValid()).OrderBy(guid => guid.ToString(EGuidFormats.Digits)))
+        {
+            string extraKey = ReadHiddenKey($"AES key for GUID {guid.ToString(EGuidFormats.Digits)}: ");
+            mounted += provider.SubmitKey(guid, new FAesKey("0x" + extraKey));
+        }
+        Console.WriteLine($"Mounted {mounted} pak(s) in total.");
+    }
 
-    var exports = provider.LoadPackage(assetPath).GetExports();
+    if (registryMode)
+    {
+        var registryBytes = provider.SaveAsset("FortniteGame/AssetRegistry.bin");
+        var registry = new FAssetRegistryState(new FByteArchive("AssetRegistry.bin", registryBytes, provider.Versions));
+        Console.WriteLine($"Registry assets: {registry.PreallocatedAssetDataBuffers.Length}");
+        Console.WriteLine($"Dependency nodes: {registry.PreallocatedDependsNodeDataBuffers.Length}");
+        Console.WriteLine($"Package records: {registry.PreallocatedPackageDataBuffers.Length}");
+        foreach (var group in registry.PreallocatedAssetDataBuffers
+            .GroupBy(asset => asset.AssetClass.Text)
+            .OrderByDescending(group => group.Count())
+            .Take(showAll ? int.MaxValue : 25))
+            Console.WriteLine($"{group.Key}: {group.Count()}");
+        return 0;
+    }
+
+    var exports = provider.LoadPackage(assetPath!).GetExports();
     Console.WriteLine($"Package: {assetPath}");
     Console.WriteLine($"Exports: {exports.Count()}");
     foreach (var group in exports.GroupBy(item => item.GetType().Name).OrderByDescending(group => group.Count()))
