@@ -276,6 +276,14 @@ functions use more complex blends, tinting, normals, and masks, so this bake
 is a visual proxy. The imported `Terrain_D4` texture and an opaque Linux
 material sample the converted mesh's second UV channel. The editor commandlet
 assigned that material to the D4 mesh, and the Linux cook produced its mesh,
-material, texture, and shader data. A software Vulkan capture shows textured
-green and brown D4 terrain beside white neighboring tiles. The remaining 60
-tiles still need material assignment and visual checks.
+material, texture, and shader data. A software Vulkan capture showed textured
+green and brown D4 terrain beside white neighboring tiles.
+
+The same bake then generated atlases for all 61 tiles. The editor imported 60
+more textures and `FortniteMaterialRebuild -AllApolloTiles` created 60 more
+materials, reusing D4's existing material. The Linux cook produced 61 terrain
+texture packages and 61 tile materials; the stage now includes them and the
+updated shader archives. The local join still loaded all 61 meshes and a
+grounded pawn. A later Vulkan capture shows the nearby terrain colored across
+the D4 tile boundary. These atlases remain approximations of the original
+material graph, and most of the grid has not been visually inspected.

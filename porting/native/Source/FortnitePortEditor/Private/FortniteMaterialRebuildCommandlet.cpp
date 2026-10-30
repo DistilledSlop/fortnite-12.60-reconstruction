@@ -24,6 +24,41 @@ UFortniteMaterialRebuildCommandlet::UFortniteMaterialRebuildCommandlet()
 
 int32 UFortniteMaterialRebuildCommandlet::Main(const FString& Params)
 {
+    if (FParse::Param(*Params, TEXT("AllApolloTiles")))
+    {
+        int32 Created = 0;
+        int32 Existing = 0;
+        int32 Failed = 0;
+        for (TCHAR Row = TEXT('A'); Row <= TEXT('H'); ++Row)
+        {
+            for (int32 Column = 1; Column <= 8; ++Column)
+            {
+                const FString Tile = FString::Printf(TEXT("%c%d"), Row, Column);
+                if (Tile == TEXT("A7") || Tile == TEXT("A8") || Tile == TEXT("B8"))
+                    continue;
+                const FString Base = TEXT("/Game/Athena/Apollo/Maps/Landscape/Converted/");
+                const FString MaterialPath = Base + TEXT("Materials/M_Terrain_") + Tile;
+                const FString Filename = FPackageName::LongPackageNameToFilename(
+                    MaterialPath, FPackageName::GetAssetPackageExtension());
+                if (IFileManager::Get().FileExists(*Filename))
+                {
+                    Existing++;
+                    continue;
+                }
+                const FString ChildParams = FString::Printf(
+                    TEXT("-Material=%s -Blend=Opaque -Texture=%sTextures/Terrain_%s.Terrain_%s -UVChannel=1 -Mesh=%sLandscapeStreamingProxy_%s.LandscapeStreamingProxy_%s"),
+                    *MaterialPath, *Base, *Tile, *Tile, *Base, *Tile, *Tile);
+                if (Main(ChildParams) == 0)
+                    Created++;
+                else
+                    Failed++;
+            }
+        }
+        UE_LOG(LogTemp, Display, TEXT("Apollo terrain material batch: %d created, %d existing, %d failed"),
+            Created, Existing, Failed);
+        return Created + Existing == 61 && Failed == 0 ? 0 : 7;
+    }
+
     FString MaterialPath;
     FString TexturePath;
     FString MeshPath;

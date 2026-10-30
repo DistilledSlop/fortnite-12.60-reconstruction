@@ -73,6 +73,9 @@ optional `-Mesh=/Game/...` to build a lit atlas material and assign it to a
 converted terrain mesh. D4's `Terrain_D4` atlas came from
 `python3 porting/bake_apollo_tile.py D4`; its imported editor texture, material,
 mesh edit, cooked packages, and staged payloads remain ignored.
+`-AllApolloTiles` creates the remaining tile materials in one editor run after
+the atlases are imported. The current Linux cook and stage contain 61 tile
+materials and 61 terrain textures.
 
 `-FortniteProbeTerrainCollision` performs one vertical line trace through D4
 after Apollo's converted grid spawns. The editor commandlet

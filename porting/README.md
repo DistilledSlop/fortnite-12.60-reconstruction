@@ -63,8 +63,9 @@ client and the separate Unreal Engine source checkout remain outside Git.
 - The original landscape weightmaps were decoded for all 61 nonempty tiles:
   221 components and 311 PNG masks, with their layer/channel mappings saved
   outside Git. Original Sand, Gravel, Dirt, and Moss diffuse textures were
-  decoded separately. A first baked material for D4 now uses its masks and
-  recovered diffuse images; the other tiles still have generic materials.
+  decoded separately. All 61 converted tiles now have baked visual proxy
+  atlases from their masks and recovered diffuse images, imported and cooked
+  as Linux textures and materials. The original material graph is still absent.
 
 - The embedded `FortniteGame.uproject` was extracted to ignored output. It
   declares six project modules and 123 enabled plugins. Sixty-three of those
@@ -87,6 +88,14 @@ prototype entry point for inspection, not the original Fortnite experience.
 repeats the weightmap export with one hidden
 primary AES prompt. Use `--loose` for packages already under ignored
 `porting/generated/extracted/`; that mode needs no key.
+
+After the original diffuse PNGs are decoded, run
+`python3 porting/bake_apollo_tile.py D4` for one visual atlas or repeat for the
+61 tile IDs in `porting/generated/converted/apollo-landscape-grid.json`.
+`python3 porting/prepare_apollo_texture_import.py` creates the ignored batch
+import settings for any missing editor textures.
+`FortniteMaterialRebuild -AllApolloTiles` assigns the imported atlases to the
+converted meshes.
 
 Run `python3 porting/inspect_install.py > porting/generated/inventory.json` to
 regenerate the local inventory. The generated file is ignored by Git.
