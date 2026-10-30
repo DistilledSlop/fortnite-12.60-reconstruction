@@ -5,6 +5,7 @@
 # the first command-line token is rewritten to "-address" by UE's command-line
 # whitelist and ignored; a loose GameDefaultMap override did not redirect the
 # client's default-map browse. The client still reaches the frontend login.
+# Readiness uses the UDP socket (IpNetDriver), not TCP. The server stdout is line-buffered (stdbuf).
 # No -AUTH_* flags and no matchmaking. EAC and BattlEye stay disabled with the
 # same flags as run_original_client.sh. Nothing is patched in the Wine process
 # or on disk: the curl-verify memory patch is deliberately not used.
@@ -98,23 +99,42 @@ if [[ -n "${FN_SERVER_ARGS:-}" ]]; then
     read -r -a server_args <<< "$FN_SERVER_ARGS"
 fi
 
+server_ue_log="$generated/linux-stage/LinuxNoEditor/FortniteLinux/Saved/Logs/FortniteLinux.log"
 server_pid=
 cleanup() {
-    [[ -n "$server_pid" ]] && kill "$server_pid" 2>/dev/null || true
+    if [[ -n "$server_pid" ]]; then
+        kill "$server_pid" 2>/dev/null || true
+        # sudo relays TERM to the server, but stop the binary directly as well (only this stage's binary).
+        sudo -n -u "$user" pkill -TERM -f -- "$server" 2>/dev/null || true
+    fi
     kill "$probe" 2>/dev/null || true
-    wait 2>/dev/null || true
+    # Bounded wait on our own children only (never a bare `wait`, which could block on anything else).
+    wait "$server_pid" "$probe" 2>/dev/null || true
+    # The engine's own log (separate from the stdout capture above) is kept for the record.
+    if [[ -f "$server_ue_log" ]]; then
+        cp "$server_ue_log" "$out/server-UE.log" 2>/dev/null || true
+        chown "$user" "$out/server-UE.log" 2>/dev/null || true
+    fi
 }
 trap cleanup EXIT
 
+# stdbuf -oL -eL: UE writes stdout through libc, so line buffering makes the captured log
+# current while the server runs. The engine also writes $server_ue_log (see cleanup).
 sudo -n -u "$user" env "${server_env[@]}" timeout "$((seconds + 60))s" \
-    "$server" "$FN_MAP" "${server_args[@]}" -nullrhi -nosound -unattended -port=7777 -log \
+    stdbuf -oL -eL "$server" "$FN_MAP" "${server_args[@]}" -nullrhi -nosound -unattended -port=7777 -log \
     -FortniteOriginalClient > "$server_log" 2>&1 &
 server_pid=$!
 
-# Readiness is checked on the socket: the server's stdout is block-buffered into the
-# log, so a log line can appear much later than the listen itself.
-# The server can take a minute to reach listen under load (Ghidra shares the host CPU).
-listening() { ss -ltn 2>/dev/null | grep -q ':7777 '; }
+# Readiness is checked on the UDP socket: IpNetDriver is UDP, so a TCP listen check
+# (`ss -ltn`) never sees port 7777. Falls back to /proc/net/udp{,6} when `ss` is absent.
+# The server can take a while to reach listen under load (Ghidra shares the host CPU).
+listening() {
+    if command -v ss >/dev/null 2>&1; then
+        ss -lunH 2>/dev/null | awk '$4 ~ /:7777$/ { found = 1 } END { exit !found }'
+    else
+        awk '$2 ~ /:1E61$/ { found = 1 } END { exit !found }' /proc/net/udp /proc/net/udp6 2>/dev/null
+    fi
+}
 for _ in {1..900}; do
     if listening; then
         break
@@ -123,9 +143,11 @@ for _ in {1..900}; do
     sleep 0.2
 done
 if ! listening; then
-    printf 'Server did not listen on port 7777. See %s\n' "$server_log" >&2
+    printf 'Server did not listen on UDP port 7777. See %s\n' "$server_log" >&2
+    tail -n 20 "$server_log" >&2 || true
     exit 1
 fi
+printf 'Server listening on UDP 7777.\n' >&2
 
 # Client flags match run_original_client.sh minus the AUTH flags; the target comes from the Engine.ini block.
 sudo -n -u "$user" env WINEPREFIX="$generated/wine-prefix" WINEDEBUG=-all \

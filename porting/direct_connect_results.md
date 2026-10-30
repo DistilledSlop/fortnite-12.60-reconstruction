@@ -1,9 +1,15 @@
 # Direct connect results: original Win64 client to native Linux server
 
 Stage 1 of `original_client_net_protocol.md` (section 4). Runner:
-`porting/run_original_direct.sh [seconds]`. Both processes run in one private
+`porting/run_original_direct.sh [seconds] [client args...]`. Both processes run in one private
 network namespace (`unshare -n -m`). Logs are under `porting/generated/direct-connect/`
-(ignored by Git). This doc records what was observed, not what was expected.
+(ignored by Git; per-run copies under `runs/`). This doc records what was observed, not what was expected.
+
+**Correction.** An earlier version of this doc said the native server stalls between Browse and
+listen. That was wrong. The stall was a harness bug: `IpNetDriver` is UDP, and the runner checked
+for a TCP listener (`ss -ltn`), so it never saw port 7777. The server listens within milliseconds
+of its Browse (see "Retracted: server stall" below). The runner is fixed (UDP check, line-buffered
+server stdout).
 
 ## Setup
 
@@ -14,7 +20,7 @@ network namespace (`unshare -n -m`). Logs are under `porting/generated/direct-co
   -epicenv=Prod -NOEPICPORTAL`. No `patch_curl_verify.py` memory write.
 - Server: staged `FortniteLinuxServer` (built 21:09, after `FortniteGame.cpp` 21:07),
   map `/Game/Maps/FortniteEmptyDedicated`, `-nullrhi -nosound -unattended -port=7777
-  -log -FortniteOriginalClient`. No encryption key was set.
+  -log -FortniteOriginalClient`, run as `stdbuf -oL -eL` (line-buffered stdout). No encryption key was set.
 - Client loose config: a marked block in `Saved/Config/WindowsClient/Engine.ini` (written
   by the runner, replaced on each run): `[SystemSettings] net.MagicHeader=1110`,
   `[PacketHandlerComponents] EncryptionComponent=AESHandlerComponent`,
@@ -49,18 +55,23 @@ option is blocked by this, not by the server.
 ## Attempt 2: GameDefaultMap=127.0.0.1:7777 in loose Engine.ini
 
 The same `StartGameInstance` fallback path is reached when the first token is absent,
-and it uses `GameMapsSettings.GameDefaultMap` + `LocalMapOptions`. Setting
-`GameDefaultMap` in the loose `Engine.ini` therefore makes the client browse straight
-to the server address. The default-map browse was already observed in attempt 1
-(`Browse: /Game/Maps/Frontend?Name=Player`), which confirms this path runs.
+and it uses `GameMapsSettings.GameDefaultMap` + `LocalMapOptions`. The default-map browse
+was observed in attempt 1 (`Browse: /Game/Maps/Frontend?Name=Player`).
 
 Result: the client still browsed to `/Game/Maps/Frontend?Name=Player` and showed the
 frontend login (`LogNet: Browse: /Game/Maps/Frontend?Name=Player`, 21:45:16 in the run
-after the readiness fix). The loose `GameDefaultMap=127.0.0.1:7777` line had no effect:
-the value in `Saved/Config/WindowsClient/Engine.ini` was present in the file and the
-client's `StartGameInstance` default-map browse still used the cooked
-`/Game/Maps/Frontend`. The cause is not yet identified; likely the property is not read
-from the loose config for this class, or Fortnite's game instance overrides the path.
+after the readiness fix). The loose `GameDefaultMap=127.0.0.1:7777` line had no effect.
+
+Cause (from source; not tested with a different value): `GameDefaultMap` is declared as
+`FSoftObjectPath` in a `config=Engine` class (`Engine/Source/Runtime/EngineSettings/Classes/GameMapsSettings.h:169`,
+`UCLASS(config=Engine, defaultconfig)` at line 69). A string like `127.0.0.1:7777` is not an
+object path, so the config value cannot be imported. The earlier guess (the property is not read
+from loose config) is not supported by this: the loose `Engine.ini` is applied (`LogConfig: Applying CVar
+settings from Section [/Script/Engine.NetworkSettings] File [...Saved/Config/WindowsClient/Engine.ini]`).
+
+Other command-line route checked: `-ini:Engine:[section]:Key=Value` overrides are compiled only when
+`ALLOW_INI_OVERRIDE_FROM_COMMANDLINE` (`Core/Public/Misc/ConfigCacheIni.h:27`) is set, that is
+`UE_SERVER || !UE_BUILD_SHIPPING`. The client is Shipping, so this route is closed.
 
 Server side in attempt 2, from `porting/generated/direct-connect/server.log`:
 
@@ -72,88 +83,102 @@ Server side in attempt 2, from `porting/generated/direct-connect/server.log`:
 
 No NMT_Hello, no Remote network version line and no client connection was logged.
 
-Runner notes from this attempt:
+Runner notes from this attempt (corrected): the stdout capture was line-buffered in the
+runner's view, and the runner's readiness check used TCP (`ss -ltn`). The TCP check was
+the bug; see "Retracted: server stall". The runner now checks UDP port 7777 (`ss -lunH`,
+with a `/proc/net/udp` fallback) and runs the server under `stdbuf -oL -eL`.
 
-- The server stdout is block-buffered into its log file. The readiness check on
-  the log could not see the `listening` line until the process exited. The runner
-  now checks the socket with `ss -ltn`.
-- The first attempt-2 run was interrupted (the server was stopped by hand) and the
-  runner read a half-rewritten copy of itself; those runs are not evidence about the
-  client. Attempt 2 is the run that followed.
+## Attempt 3: `-nomcp` (run 01) and `-nomcp -MeshParent` (run 02)
 
-## Attempt 3: `-nomcp` (documented in the exe as "never expected except in -nomcp")
+Command: `porting/run_original_direct.sh 90 -nomcp`, then
+`porting/run_original_direct.sh 90 -nomcp -MeshParent=127.0.0.1 -MeshParentPort=7777`, with the
+same loose `Engine.ini` block as attempt 2. No `-AUTH_*` flags. Logs in `runs/01-nomcp/` and
+`runs/02-nomcp-meshparent/`.
 
-Command: `porting/run_original_direct.sh 90 -nomcp`, with the same loose `Engine.ini`
-block as attempt 2. The exe contains a `-nomcp` branch; the string is the only evidence
-for it so far.
+Server, both runs: the runner printed `Server listening on UDP 7777.` On the engine log
+(`Saved/Logs/FortniteLinux.log`, copied to `server-UE.log`):
 
-Result: not tested. The server did not reach its listen call within the runner's
-150 s server lifetime (`timeout` wrapper: seconds + 60), so the runner printed
-`Server did not listen on port 7777` and never started the client. The server log
-(block-buffered) ends at `[2XYXYXY] Clearnupworld ... -> (nil)` followed by
-`LogNet: Browse: ...`-less silence, and the process sleeps at 0% CPU.
+- Run 01: `LogNet: Browse: /Game/Maps/FortniteEmptyDedicated?Name=Player` at 22:00:57.779,
+  `LogNet: GameNetDriver IpNetDriver_2147482579 IpNetDriver listening on port 7777` at 22:00:57.786.
+- Run 02: Browse at 22:03:47.788, listening at 22:03:47.795.
 
-## Solo server check (no client, no netns, no probe)
+Client, run 01, from `client-FortniteGame.log`:
 
-`FortniteLinuxServer /Game/Maps/FortniteEmptyDedicated -nullrhi -nosound -unattended
--port=7777 -log -FortniteOriginalClient -stdout` on the host (run for 120 s, then
-stopped by hand):
+- `LogInit: Filtered Command Line: -nosound -NoSplash -log -epiclocale=en-us -skippatchcheck -nobe -noeac -fromfl=none -nomcp`
+- `LogNetVersion: FortniteGame 1.0.0, NetCL: 12896485, EngineNetVer: 15, GameNetVer: 0 (Checksum: 683914758)` (the client's own value; the override was loaded)
+- `LogNet: Browse: /Game/Maps/Frontend?Name=Player`, `LogLoad: Took 7.449360 seconds to LoadMap(/Game/Maps/Frontend)`
+- `LogFortLogin: Could not auto-login. Starting manual login process`
+- `LogFortLogin: Activating widget SignIn for login stage SignIn.`
+- `LogAppES: Display: postponed 2` (last line before the 90 s timeout)
+- MCP calls fail: `LogOnline: Warning: MCP: Http Unexpected Result: HttpResult: 0 ... Raw=connection_failure`,
+  `LogOnlineIdentity: Warning: MCP: Client auth request failed`. The probe recorded no requests
+  (no `server-requests.jsonl`).
 
-- Reached `LogNetVersion: FortniteLinux 1.0.0, NetCL: 0, EngineNetVer: 14 ... (Checksum: 326778485)`,
-  `LogNet: Browse: /Game/Maps/FortniteEmptyDedicated?Name=Player`.
-- No `IpNetDriver listening on port 7777` and no socket on 7777 after 20 s. The stdout
-  log stopped growing (492 lines) with the process at 0% CPU.
+Run 02 gave the same result. The client accepted `-MeshParent=127.0.0.1 -MeshParentPort=7777`
+(in its `Filtered Command Line`), stayed on `Frontend` and the SignIn screen, and never logged
+`GetMeshConnectInfo`. That mesh path is not reached from the frontend.
 
-The same server listened within a second of its browse in attempt 2
-(`LogNet: GameNetDriver IpNetDriver_2147482579 IpNetDriver listening on port 7777`,
-at 21:41:56.827). So the stall is intermittent. Attempt 2 is the only passing
-readiness check on the socket, and it shows the listen happened. Host load (Ghidra
-`analyzeHeadless`, about 130% CPU) is one candidate. The map load after Browse is
-another. Neither has been confirmed.
+Server, both runs: no NMT_Hello, no `Remote network version`, no Challenge, Login, Welcome or Join.
+
+Exe strings that mention `-nomcp` (recorded before use): `Seasonal Event manager doesn't exist ...
+(this is never expected except in -nomcp)!`, `Hotfixing skipped due to -nomcp`, `GetMeshConnectInfo:
+Running with -nomcp requires -MeshParent`, `MeshParent=`, `MeshParentPort=`, `NoMCPAccessToken`
+(in the `?AuthTicket=...&GameAccountId=` login URL, which exists only after a login). None of them
+skips the manual sign-in.
+
+## Retracted: server stall (harness bug)
+
+The stall reported in the earlier version of this doc is not real. Evidence:
+
+- The orchestrator's 12 of 12 solo runs listened about 780 ms after Browse.
+- Runs 01 and 02 above listened 7 to 8 ms after their Browse on the same log.
+- The runner waited on `ss -ltn`, a TCP listener, for an IpNetDriver that is UDP. Every "did not
+  listen" result came from that check.
+- Stdout was not line-buffered, so the captured log lagged. The 0% CPU idle was the frame limiter.
+
+The runner is now fixed (`porting/run_original_direct.sh`): UDP readiness check, `stdbuf -oL -eL`
+for the server, a bounded cleanup that kills only its own server and probe, and a copy of the engine
+log (`server-UE.log`) at exit.
 
 ## Blockers and next steps (ranked)
 
-1. **Server stall between Browse and listen** (blocks every run). Reproduce it solo
-   with `-stdout` and `-ini`/`-log` as before. Compare the working run's timings.
-   Check whether the server's async loading waits on a package or on the host IO
-   (disk is 93% full, 20 GB free). Confirm whether it repeats when Ghidra is idle.
-   Owner: porting/native (only the server's map load; no client changes).
-2. **Client connect path.** The first-token approach is blocked by UE's whitelist
-   rewrite. A loose `GameDefaultMap` did not redirect. Next: test `-nomcp` (documented
-   in the exe) with a live server; if the frontend still gates the connect, look for
-   a Fortnite UI path that calls `Engine->Browse` with a typed address (e.g. the
-   `UFortUIStateWidget_JoinServer` strings in the exe) and record each string
-   before using it.
-3. **Version override.** Verify that `GetFortniteNetworkVersion` is reached on NMT_Hello
-   (`Local network version checksum: 683914758` in the server log). The current
-   log shows only the stock value 326778485 at startup.
-4. **Encryption.** Not tested. The client's `net.AllowEncryption` is unknown; the
-   server reports `net.AllowEncryption = 1` with no key configured. Test with a random
-   scratch key only after an unencrypted Hello is seen.
-5. **Class checksums and NetGUID errors.** Not reached. Nothing can be logged until a
-   connection exists.
+1. **Login gate (blocks every path found so far).** Without `-AUTH_*` flags the frontend
+   shows the manual sign-in (`Could not auto-login`, `Activating widget SignIn`). The join path is
+   driven by matchmaking and MCP (`UFortUIStateWidget_JoinServer` handlers, `ServerIP` session
+   attribute). `-nomcp` and `-MeshParent` do not skip it. `LogAppES: postponed 2` stayed unresolved
+   for the whole 90 s window, and no "not started correctly" popup was seen. Not bypassed. This needs
+   an owner decision: an approved login route, or a stop at the frontend.
+2. **Typed-address routes checked and ruled out:** first token (rewritten to `-address`), loose
+   `GameDefaultMap` (`FSoftObjectPath`, see attempt 2), `-ini:` overrides (compiled out of Shipping),
+   `-MeshParent` (not reached from the frontend). No "join by address" UI string was found in the exe.
+   The only `{host:port}` string is a credential-name template.
+3. **MCP stub.** The client's MCP calls fail with `connection_failure` and the probe records no
+   requests. This matters only after blocker 1 is solved. Likely the TLS trust or hosts path; not investigated.
+4. **Version override.** Not verified on the wire. The server log shows only the stock value
+   326778485. `Local network version checksum: 683914758` has not appeared because no NMT_Hello was received.
+5. **Encryption.** Not tested. Test with a random scratch key only after an unencrypted Hello is seen.
+6. **Class checksums and NetGUID errors.** Not reached.
 
 ## Result summary
 
-- NMT_Hello accepted: no. No Hello reached the server.
+- NMT_Hello accepted: no. No Hello reached the server (runs 01 and 02).
 - Remote network version seen by the server: none (no `Remote network version` line).
 - Challenge / Login / Welcome / Join: none observed.
 - Network checksum mismatch, NetGUID, class path errors: none observed.
-- Client crash: none observed. The client was stopped by its 90/120 s timeout or
-  stayed in frontend login.
-- EAC, BattlEye, AppES: not patched or bypassed. The client's `LogAppES: postponed 2`
-  appears in the frontend login, which is consistent with the earlier note that the
-  AppES gate follows CheckEntitledToPlay. Not investigated further.
+- Client crash: none observed. Both runs stopped at the 90 s timeout on the SignIn screen.
+- EAC, BattlEye, AppES: not patched or bypassed. `LogAppES: postponed 2` stayed unresolved.
 
 ## Files changed
 
-- `porting/run_original_direct.sh` (new): sibling runner, same netns and client flags
-  as `run_original_client.sh` minus AUTH flags, no curl-verify memory patch.
-- `porting/direct_connect_results.md` (new): this report.
-- `porting/original_client_net_protocol.md`: added the observed step 0/1 status
-  block only.
+- `porting/run_original_direct.sh` (new, then fixed): sibling runner, same netns and client flags
+  as `run_original_client.sh` minus AUTH flags, no curl-verify memory patch. Fixes: UDP readiness check
+  (`ss -lunH` with a `/proc/net/udp` fallback, no `rg` needed); server run under `stdbuf -oL -eL`;
+  bounded cleanup that kills only its own server (`pkill` on this stage's binary) and probe; copies the
+  engine log to `server-UE.log`.
+- `porting/direct_connect_results.md` (new, then corrected): this report.
+- `porting/original_client_net_protocol.md`: status block (Step 0/1) corrected.
 - Ignored, not tracked: `porting/generated/wine-prefix/.../Saved/Config/WindowsClient/Engine.ini`
-  (loose net block, see the runner), `porting/generated/direct-connect/` logs.
+  (loose net block, see the runner), `porting/generated/direct-connect/` logs and `runs/`.
 
 No native code was changed and no UE build was run in this stage. The staged server
 binary (built 21:09) was used as is.
@@ -161,5 +186,5 @@ binary (built 21:09) was used as is.
 ## Process hygiene
 
 - No leftover Wine, Xvfb or server processes from this stage. Ghidra was not touched.
-- Temporary files under the session tmp folder were removed. The `porting/generated/direct-connect-Engine.ini.bak`
-  copy was removed.
+- `/tmp/server-stall` (a subagent's stall experiments, kept outside the repo) was not touched.
+- Temporary exe string dumps under `/tmp` were removed.

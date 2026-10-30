@@ -59,3 +59,10 @@ Why: the Frontend widget graph, 2,171 unseen WidgetBlueprints and pakchunk
   runtime dump of our own Wine run (user: approved).
 - Audio on this host: use `SDL_AUDIODRIVER=dummy` (or `disk` for verification)
   until a real sink exists.
+- 2026-10-30: the original exe cannot be used as a handshake oracle through
+  the frontend. Without `-AUTH_*` flags it demands a manual sign-in; with them
+  it stops at the AppES entitlement gate, which is not bypassed
+  (`direct_connect_results.md`). Wire parity is therefore checked offline:
+  compute class net checksums and replicated layouts from the recovered
+  reflection tables and compare with the native classes, and use the native
+  client against the native server for live joins.
