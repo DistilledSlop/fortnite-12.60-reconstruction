@@ -65,6 +65,12 @@ the corresponding cooked mesh when it receives the replicated tile ID.
 shader archives. All generated meshes, materials, and the manifest are ignored
 by Git.
 
+`-FortniteProbeTerrainCollision` performs one vertical line trace through D4
+after Apollo's converted grid spawns. The editor commandlet
+`-run=FortniteTerrainCollision -Tile=D4` rebuilds an imported tile with
+triangle collision before a Linux recook. The source and cooked packages
+remain ignored.
+
 `-FortniteProbeMapMeshes` logs any static mesh actor with invalid component
 bounds after a map begins play. It helped identify a UE glTF importer stride
 bug while testing the recovered skybox map under Vulkan.

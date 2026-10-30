@@ -8,6 +8,7 @@
 #include "Misc/CoreDelegates.h"
 #include "Misc/Parse.h"
 #include "Modules/ModuleManager.h"
+#include "PhysicsEngine/BodySetup.h"
 #include "UObject/UObjectGlobals.h"
 
 class FFortniteGameModule : public FDefaultGameModuleImpl
@@ -66,6 +67,10 @@ private:
             const int32 LODs = Mesh->GetNumLODs();
             UE_LOG(LogTemp, Display, TEXT("Fortnite static mesh probe: %d LODs, LOD0 vertices %d"),
                 LODs, LODs > 0 ? Mesh->GetNumVertices(0) : 0);
+            if (const UBodySetup* Body = Mesh->BodySetup)
+                UE_LOG(LogTemp, Display, TEXT("Fortnite static mesh collision: trace=%d boxes=%d spheres=%d convex=%d"),
+                    static_cast<int32>(Body->CollisionTraceFlag), Body->AggGeom.BoxElems.Num(),
+                    Body->AggGeom.SphereElems.Num(), Body->AggGeom.ConvexElems.Num());
         }
     }
 };

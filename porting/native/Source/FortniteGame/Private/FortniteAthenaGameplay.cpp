@@ -7,6 +7,8 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Misc/FileHelper.h"
+#include "Misc/CommandLine.h"
+#include "Misc/Parse.h"
 #include "Misc/Paths.h"
 #include "Net/UnrealNetwork.h"
 #include "Serialization/JsonSerializer.h"
@@ -103,6 +105,16 @@ void AFortGameModeAthena::StartPlay()
         Spawned++;
     }
     UE_LOG(LogTemp, Display, TEXT("Apollo terrain grid: %d/%d meshes spawned"), Spawned, Entries.Num());
+    if (FParse::Param(FCommandLine::Get(), TEXT("FortniteProbeTerrainCollision")))
+    {
+        const FVector Start(16000.0f, -16000.0f, 10000.0f);
+        const FVector End(16000.0f, -16000.0f, -10000.0f);
+        FHitResult Hit;
+        const bool bHit = GetWorld()->LineTraceSingleByChannel(Hit, Start, End, ECC_Visibility);
+        UE_LOG(LogTemp, Display, TEXT("Apollo terrain collision probe: hit=%d actor=%s impact=%s"),
+            bHit ? 1 : 0, bHit && Hit.GetActor() ? *Hit.GetActor()->GetName() : TEXT("none"),
+            bHit ? *Hit.ImpactPoint.ToString() : TEXT("none"));
+    }
 }
 
 AApolloLandscapeTile::AApolloLandscapeTile()

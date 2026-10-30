@@ -213,3 +213,16 @@ errors for them. The reconstructed meshes have only approximate generated
 materials, one mesh LOD, and unverified landscape collision and texture
 layers. Gameplay actors, props, foliage, water, navigation, and Fortnite rules
 are still missing. This grid milestone does not make the island playable.
+
+## Terrain collision probe
+
+The imported meshes initially had `CTF_UseSimpleAsComplex` with no box,
+sphere, or convex collision shapes. A Linux asset probe confirmed that D4
+therefore had no usable ground collision. The editor commandlet
+`-run=FortniteTerrainCollision -Tile=D4` changed its body setup to
+`CTF_UseComplexAsSimple`, rebuilt one PhysX triangle mesh, and saved the
+ignored editor asset. After a Linux recook and restage, the staged runtime
+reported the new trace flag. A line trace through the center of D4, from
+`(16000, -16000, 10000)` to `(16000, -16000, -10000)`, hit the terrain actor
+at Z approximately `-1001`. This verifies one collision query, not player
+movement or collision for the remaining tiles.
