@@ -86,6 +86,13 @@ HTTP 403 (also over HTTPS). The separate v16 clang toolchain archive is
 available. A buildable source/dependency set is still needed for the Linux
 engine and game module.
 
+If you have Git access to `EpicGames/UnrealEngine`, run
+`bash porting/fetch_ue425_manifest.sh` to fetch the updated `4.25` branch
+dependency manifest into `/opt/fortnite/ue425-Commit.gitdeps.xml`. The script
+uses Git only, validates the XML, and does not change either engine checkout.
+The `4.26.0` source checkout at `/opt/fortnite/UnrealEngine4260` is already
+available for studying the v10 pak index code.
+
 ## Format references
 
 - UE 4.25 `FPakInfo`: `../../UnrealEngine/Engine/Source/Runtime/PakFile/Public/IPlatformFilePak.h`
