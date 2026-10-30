@@ -6,25 +6,38 @@ using CUE4Parse.UE4.Objects.Core.Misc;
 using CUE4Parse.UE4.Objects.UObject;
 using CUE4Parse.UE4.Readers;
 using CUE4Parse.UE4.Versions;
+using System.Text.Json;
 
 bool showAll = args.Contains("--all");
 bool showPseudo = args.Contains("--pseudo");
 bool showImports = args.Contains("--imports");
 bool registryMode = args.Contains("--registry");
+bool scanMaps = args.Contains("--scan-maps");
 bool allKeys = args.Contains("--all-keys");
 bool savePackage = args.Contains("--save-package");
 bool saveFolder = args.Contains("--save-folder");
-string[] positional = args.Where(arg => arg is not ("--all" or "--pseudo" or "--imports" or "--registry" or "--all-keys" or "--save-package" or "--save-folder")).ToArray();
-if (registryMode ? positional.Length > 1 : positional.Length is < 1 or > 2)
+bool saveClosure = args.Contains("--save-closure");
+string? maxArgument = args.SingleOrDefault(arg => arg.StartsWith("--max-packages=", StringComparison.Ordinal));
+int maxPackages = 250;
+if (maxArgument is not null && (!int.TryParse(maxArgument[15..], out maxPackages) || maxPackages < 1))
+{
+    Console.Error.WriteLine("--max-packages must be a positive integer");
+    return 2;
+}
+string[] positional = args.Where(arg => arg != maxArgument && arg is not ("--all" or "--pseudo" or "--imports" or "--registry" or "--scan-maps" or "--all-keys" or "--save-package" or "--save-folder" or "--save-closure")).ToArray();
+bool packageLess = registryMode || scanMaps;
+if ((registryMode && scanMaps) || (packageLess ? positional.Length > 1 : positional.Length is < 1 or > 2))
 {
     Console.Error.WriteLine("Usage: Cue4Inspect <asset-path-without-extension> [pak-directory] [--all] [--pseudo] [--imports] [--save-package] [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect <folder-prefix> [pak-directory] --save-folder [--all-keys]");
+    Console.Error.WriteLine("   or: Cue4Inspect <asset-path> [pak-directory] --save-closure [--max-packages=250] [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect --registry [pak-directory] [--all-keys]");
+    Console.Error.WriteLine("   or: Cue4Inspect --scan-maps [pak-directory] [--all-keys]");
     return 2;
 }
 
-string? assetPath = registryMode ? null : positional[0];
-string pakDirectory = positional.Length == (registryMode ? 1 : 2)
+string? assetPath = packageLess ? null : positional[0];
+string pakDirectory = positional.Length == (packageLess ? 1 : 2)
     ? positional[^1]
     : Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "../../../../../Fortnite/FortniteGame/Content/Paks"));
 
@@ -72,6 +85,75 @@ try
         return 0;
     }
 
+    if (scanMaps)
+    {
+        var maps = provider.Files.Values
+            .Where(file => file.Path.EndsWith(".umap", StringComparison.OrdinalIgnoreCase))
+            .OrderBy(file => file.Path)
+            .ToArray();
+        Console.Error.WriteLine($"Scanning {maps.Length} map package(s)");
+        int scanned = 0;
+        foreach (var map in maps)
+        {
+            try
+            {
+                if (provider.LoadPackage(map) is not Package package)
+                    throw new InvalidDataException("Not a legacy package");
+                var roots = package.ImportMap.Select(import => RootImportName(package, import)).ToArray();
+                Console.WriteLine(JsonSerializer.Serialize(new
+                {
+                    path = map.Path,
+                    imports = package.ImportMap.Length,
+                    exports = package.ExportMap.Length,
+                    scriptModules = roots.Where(root => root.StartsWith("/Script/", StringComparison.Ordinal)).Distinct().Order().ToArray(),
+                    assetImports = roots.Count(root => root.StartsWith("/Game/", StringComparison.Ordinal))
+                }));
+            }
+            catch (Exception error)
+            {
+                Console.WriteLine(JsonSerializer.Serialize(new { path = map.Path, error = error.GetType().Name + ": " + error.Message }));
+            }
+            if (++scanned % 100 == 0) Console.Error.WriteLine($"Scanned {scanned}/{maps.Length}");
+        }
+        return 0;
+    }
+
+    if (saveClosure)
+    {
+        var pending = new Queue<string>();
+        var visited = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        pending.Enqueue(assetPath!);
+        int failed = 0;
+        while (pending.Count > 0 && visited.Count < maxPackages)
+        {
+            var current = pending.Dequeue();
+            if (!visited.Add(current)) continue;
+            try
+            {
+                if (provider.LoadPackage(current) is not Package package)
+                    throw new InvalidDataException("Not a legacy package");
+                SaveRecoveredFiles(provider.SavePackage(current));
+                foreach (var root in package.ImportMap.Select(import => RootImportName(package, import)).Distinct())
+                {
+                    if (root.StartsWith("/Game/", StringComparison.Ordinal))
+                        pending.Enqueue("FortniteGame/Content" + root[5..]);
+                    else if (root.StartsWith("/", StringComparison.Ordinal) &&
+                             !root.StartsWith("/Script/", StringComparison.Ordinal) &&
+                             !root.StartsWith("/Engine/", StringComparison.Ordinal))
+                        Console.Error.WriteLine($"Unmapped package root: {root}");
+                }
+            }
+            catch (Exception error)
+            {
+                failed++;
+                Console.Error.WriteLine($"Could not recover {current}: {error.GetType().Name}: {error.Message}");
+            }
+            if (visited.Count % 25 == 0) Console.Error.WriteLine($"Recovered {visited.Count} package(s); pending {pending.Count}");
+        }
+        Console.Error.WriteLine($"Closure: {visited.Count} visited, {failed} failed, {pending.Count} pending");
+        return failed == 0 && pending.Count == 0 ? 0 : 1;
+    }
+
     if (saveFolder)
     {
         var prefix = assetPath!.TrimEnd('/') + "/";
@@ -99,16 +181,9 @@ try
         Console.WriteLine($"Imports: {legacyPackage.ImportMap.Length}");
         foreach (var import in legacyPackage.ImportMap)
         {
-            var root = import;
-            for (int depth = 0; depth < legacyPackage.ImportMap.Length; depth++)
-            {
-                if (root.OuterIndex is not { IsImport: true } outer) break;
-                int index = -outer.Index - 1;
-                if (index < 0 || index >= legacyPackage.ImportMap.Length) break;
-                root = legacyPackage.ImportMap[index];
-            }
-            if (root.ObjectName.Text.StartsWith("/Script/", StringComparison.Ordinal))
-                Console.WriteLine($"{root.ObjectName.Text} | {import.ClassName.Text} | {import.ObjectName.Text}");
+            var root = RootImportName(legacyPackage, import);
+            if (root.StartsWith("/Script/", StringComparison.Ordinal))
+                Console.WriteLine($"{root} | {import.ClassName.Text} | {import.ObjectName.Text}");
         }
     }
 
@@ -178,4 +253,17 @@ static void SaveRecoveredFiles(IReadOnlyDictionary<string, byte[]> files)
         File.WriteAllBytes(target, bytes);
         Console.WriteLine($"Saved {relative} ({bytes.Length} bytes)");
     }
+}
+
+static string RootImportName(Package package, FObjectImport import)
+{
+    var root = import;
+    for (int depth = 0; depth < package.ImportMap.Length; depth++)
+    {
+        if (root.OuterIndex is not { IsImport: true } outer) break;
+        int index = -outer.Index - 1;
+        if (index < 0 || index >= package.ImportMap.Length) break;
+        root = package.ImportMap[index];
+    }
+    return root.ObjectName.Text;
 }

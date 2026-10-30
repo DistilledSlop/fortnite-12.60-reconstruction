@@ -42,3 +42,10 @@ class or `LOAD_FAILED`. Recovered asset files must be copied into the matching
 `FortniteLinux/Content/` path in the ignored staged build before this test.
 For `Texture2D`, the probe also logs dimensions, mip count, and first-mip byte
 count. It does not validate visible rendering when run with `-nullrhi`.
+
+`FortniteMapClasses.h` contains the first three Fortnite class definitions
+needed to deserialize the supplied `FortniteEmptyDedicated` map. After staging
+its recovered `.umap` and `.uexp` under `FortniteLinux/Content/Maps/`, launch
+the staged executable with `/Game/Maps/FortniteEmptyDedicated` as its map
+argument. This map enters play, but the class definitions are only starting
+points for full gameplay reconstruction.

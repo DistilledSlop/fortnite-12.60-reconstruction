@@ -28,6 +28,10 @@ client and the separate Unreal Engine source checkout remain outside Git.
   because Fortnite and CommonUI native classes were absent. These are focused
   compatibility probes, not a playable game. A software Vulkan run also
   initialized a swapchain and loaded the texture without drawing it.
+- All 3,694 cooked map headers parsed in a CUE4Parse scan. A recovered
+  `FortniteEmptyDedicated` map enters play in the staged Linux runtime after
+  adding three initial Fortnite class definitions. A more complex obstacle
+  map still fails on missing native classes and content dependencies.
 - The embedded `FortniteGame.uproject` was extracted to ignored output. It
   declares six project modules and 123 enabled plugins. Sixty-three of those
   enabled plugins are absent from the public UE 4.25 engine tree, so the
@@ -81,6 +85,10 @@ test. All recovered files stay ignored by Git.
 Use `--imports` on a package to list its native `/Script/` imports, including
 classes and functions required by cooked Blueprints. Redirect large results
 to ignored generated output.
+Use `--scan-maps` to inventory import counts and script modules for every
+mounted `.umap` package. `--save-closure --max-packages=250` recovers one
+package plus reachable `/Game` imports, stopping at the package cap. It does
+not synthesize missing native classes or replace engine content.
 Add `--all-keys` when inspecting packages in the three GUID-keyed chunks;
 the tool prompts for those keys without saving them. It mounted all 31 paks
 and parsed a material package from `pakchunk1002` in a local test.
@@ -92,6 +100,7 @@ animation Blueprints, 2,175 widget Blueprints, and 3,694 worlds.
 See `server_surface.md` for the observed backend dependencies and
 `server/README.md` for the local HTTP probe.
 See `asset_compatibility.md` for the first runtime package-loading probe.
+See `map_compatibility.md` for the first recovered map launches.
 
 ## Work needed for the requested result
 
