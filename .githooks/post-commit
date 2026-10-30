@@ -1,0 +1,10 @@
+#!/bin/sh
+# Regenerate the port progress dashboard after each commit and append the
+# commit's history point. Detached and quiet: it never blocks git, never fails
+# the commit, and never stages or commits anything.
+root=$(git rev-parse --show-toplevel 2>/dev/null) || exit 0
+gen="$root/porting/generated"
+mkdir -p "$gen" 2>/dev/null || exit 0
+nohup sh -c 'cd "$1" && python3 -I porting/progress/progress.py --quiet' sh "$root" \
+  >>"$gen/progress-hook.log" 2>&1 </dev/null &
+exit 0

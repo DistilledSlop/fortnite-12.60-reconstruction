@@ -5,7 +5,7 @@ import subprocess
 import sys
 
 
-allowed_exact = {".gitignore", ".gitattributes", ".githooks/pre-commit"}
+allowed_exact = {".gitignore", ".gitattributes", ".githooks/pre-commit", ".githooks/post-commit"}
 allowed_exact.add("porting/native/FortniteLinux.uproject")
 forbidden_directories = (
     "porting/generated/", "porting/build/", "porting/.venv/",
