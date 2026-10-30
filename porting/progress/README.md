@@ -97,6 +97,20 @@ stay at or above 14.9 under simulated protan and deutan vision, and at or above 
 under normal vision. Every tile also prints its percentage, so colour is never the
 only cue. The page follows the OS light or dark setting.
 
+## Treemap labels
+
+Labels are never cut off. Group headers and tile names wrap at word boundaries; a
+tile too small for its name shows only its percentage, and every tile's full label,
+done/total, source and evidence are in the hover title.
+
+Wrap widths come from a per-character advance table in `progress.py` (`CHAR_W`):
+the maximum advance across DejaVu Sans Bold and Liberation Sans Bold (the two
+widest common sans families a viewer is likely to use, and wider than SF Pro,
+Segoe UI, Arial or Helvetica for every character in the set), measured at each
+font's native 2048 upem with a 5% margin for the synthesized 600 weight. The
+table bounds the bold and regular faces alike, so no emitted line can overflow
+its tile on those fonts; characters outside the set default to the widest entry.
+
 ## Git hygiene
 
 `out/` and `history.json` are git-ignored in the top-level `.gitignore`. The

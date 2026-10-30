@@ -513,24 +513,50 @@ def fmt_pct(pct):
     return f"{pct:.1f}%" if pct < 10 else f"{pct:.0f}%"
 
 
-def wrap_text(text, width_px, font_px, max_lines):
-    cpl = max(4, int((width_px - 8) / (font_px * 0.56)))
-    words = text.split()
+# Per-character advance width in em: the maximum across the widest common
+# sans families available to the viewers of this dashboard — DejaVu Sans Bold
+# and Liberation Sans Bold (Arial metrics) — measured at each font's native
+# 2048 upem, plus a 5% margin for the synthesized 600 weight and hinting.
+# Bold metrics bound the regular face too, so every emitted text is covered.
+# Every other common sans (SF Pro, Segoe UI, Arial, Helvetica) is narrower for
+# these characters, so text_width is a safe upper bound: no line emitted by
+# wrap_fit can overflow its tile. Characters outside the set default to the
+# widest entry.
+CHAR_W = {" ": 0.3656, "%": 1.0521, "(": 0.4799, ")": 0.4799, ",": 0.3989,
+          "-": 0.4358, ".": 0.3989, "/": 0.3835, "0": 0.7306, "1": 0.7306,
+          "2": 0.7306, "3": 0.7306, "4": 0.7306, "5": 0.7306, "6": 0.7306,
+          "7": 0.7306, "8": 0.7306, "9": 0.7306, ":": 0.4199, "|": 0.3835,
+          "·": 0.3989, "A": 0.8126, "B": 0.8003, "C": 0.7706, "D": 0.8716,
+          "F": 0.7173, "G": 0.8618, "H": 0.8788, "I": 0.3907, "K": 0.8136,
+          "L": 0.6691, "M": 1.0449, "N": 0.8788, "O": 0.8926, "P": 0.7696,
+          "R": 0.8085, "S": 0.7562, "T": 0.7162, "U": 0.8526, "V": 0.8126,
+          "W": 1.1582, "X": 0.8095, "Y": 0.7603, "Z": 0.7614,
+          "a": 0.7085, "b": 0.7516, "c": 0.6224, "d": 0.7516, "e": 0.7121,
+          "f": 0.4568, "g": 0.7516, "h": 0.7475, "i": 0.3599, "k": 0.6983,
+          "l": 0.3599, "m": 1.0941, "n": 0.7475, "o": 0.7214, "p": 0.7516,
+          "r": 0.5178, "s": 0.625, "t": 0.5019, "u": 0.7475, "v": 0.6844,
+          "w": 0.97, "x": 0.6773, "y": 0.6844, "z": 0.6111}
+CHAR_W_MAX = 1.16
+
+
+def text_width(text, font_px):
+    return sum(CHAR_W.get(ch, CHAR_W_MAX) for ch in text) * font_px
+
+
+def wrap_fit(text, max_w, font_px):
+    """Greedy word wrap to max_w. Returns None if a single word cannot fit at all."""
     lines, cur = [], ""
-    for word in words:
-        cand = (cur + " " + word).strip()
-        if len(cand) <= cpl:
-            cur = cand
-        else:
-            if cur:
-                lines.append(cur)
+    for word in text.split():
+        if text_width(word, font_px) > max_w:
+            return None
+        cand = f"{cur} {word}".strip()
+        if cur and text_width(cand, font_px) > max_w:
+            lines.append(cur)
             cur = word
+        else:
+            cur = cand
     if cur:
         lines.append(cur)
-    lines = [ln if len(ln) <= cpl else ln[:cpl - 1] + "…" for ln in lines]
-    if len(lines) > max_lines:
-        lines = lines[:max_lines]
-        lines[-1] = (lines[-1][:cpl - 1] + "…")
     return lines
 
 
@@ -544,20 +570,39 @@ def tooltip_text(node):
             f"{node.get('evidence', '')}")
 
 
+def group_header(node, w, depth):
+    """Group header: the full label wrapped at word boundaries.
+
+    The name is wrapped first; "· pct" joins the last line when it fits and
+    otherwise gets its own line. Falls back to the percentage alone when the
+    name cannot fit; the full label is always in the hover title."""
+    font = 13 if depth == 0 else 11
+    line_h = 16 if font == 13 else 14
+    lines = wrap_fit(node["name"], w - 10, font)
+    if lines is None:
+        lines = [fmt_pct(node["pct"])]
+    suffix = f"  ·  {fmt_pct(node['pct'])}"
+    if text_width(lines[-1] + suffix, font) <= w - 10:
+        lines[-1] += suffix
+    else:
+        lines.append(suffix.strip())
+    return lines, 4 + line_h * len(lines), font
+
+
 def render_treemap(groups, width, height, css_class="tm"):
     """Squarified treemap: categories > components > sub-components as nested tiles."""
     parts = []
     leaves_out = []   # (node, rect)
-    groups_out = []   # (node, rect, depth)
+    groups_out = []   # (node, rect, depth, header lines, head height, font)
 
     def place(nodes, x, y, w, h, depth):
         ordered = sorted(nodes, key=lambda n: -n["weight"])
         rects = squarify([n["weight"] for n in ordered], x, y, w, h)
         for node, (rx, ry, rw, rh) in zip(ordered, rects):
             if "children" in node:
-                head = 24 if depth == 0 else 17
+                lines, head, font = group_header(node, rw, depth)
                 pad = 3
-                groups_out.append((node, rx, ry, rw, rh, depth, head))
+                groups_out.append((node, rx, ry, rw, rh, depth, lines, head, font))
                 if rw > 2 * pad + 24 and rh > head + 2 * pad + 18:
                     place(node["children"], rx + pad, ry + head, rw - 2 * pad, rh - head - 2 * pad, depth + 1)
                 else:
@@ -568,18 +613,16 @@ def render_treemap(groups, width, height, css_class="tm"):
     place(groups, 0, 0, width, height, 0)
 
     parts.append(f'<rect class="{css_class}-bg" x="0" y="0" width="{width}" height="{height}"/>')
-    for node, x, y, w, h, depth, head in groups_out:
+    for node, x, y, w, h, depth, lines, head, font in groups_out:
         title = html.escape(tooltip_text(node))
         cls = "grp0" if depth == 0 else "grp1"
         parts.append(f'<g><title>{title}</title>')
         parts.append(f'<rect class="{css_class}-{cls}" x="{x:.1f}" y="{y:.1f}" width="{max(w, 0):.1f}" height="{max(h, 0):.1f}"/>')
-        if w > 90 and h > head + 6:
-            label = f"{node['name']}  ·  {fmt_pct(node['pct'])}"
-            maxc = int((w - 10) / 6.6)
-            if len(label) > maxc:
-                label = label[:max(4, maxc - 1)] + "…"
-            font = 13 if depth == 0 else 11
-            parts.append(f'<text class="{css_class}-head" x="{x + 6:.1f}" y="{y + head - 6:.1f}" font-size="{font}">{html.escape(label)}</text>')
+        if lines and w > 90 and h > head + 6:
+            line_h = 16 if font == 13 else 14
+            for i, ln in enumerate(lines):
+                baseline = y + 4 + i * line_h + (11 if font == 13 else 9)
+                parts.append(f'<text class="{css_class}-head" x="{x + 6:.1f}" y="{baseline:.1f}" font-size="{font}">{html.escape(ln)}</text>')
         parts.append('</g>')
 
     for node, x, y, w, h in leaves_out:
@@ -589,16 +632,20 @@ def render_treemap(groups, width, height, css_class="tm"):
         rx, ry, rw, rh = x + inset, y + inset, max(w - 2 * inset, 0), max(h - 2 * inset, 0)
         parts.append(f'<g><title>{html.escape(tooltip_text(node))}</title>')
         parts.append(f'<rect x="{rx:.1f}" y="{ry:.1f}" width="{rw:.1f}" height="{rh:.1f}" rx="3" fill="{fill}"/>')
-        if rw >= 60 and rh >= 34:
-            lines = wrap_text(node["name"], rw, 11, max(1, int((rh - 30) / 13)))
-            pct_s = fmt_pct(node["pct"])
-            ty = ry + 15
-            for ln in lines:
-                parts.append(f'<text x="{rx + 6:.1f}" y="{ty:.1f}" font-size="11" fill="{ink}">{html.escape(ln)}</text>')
-                ty += 13
-            if rh >= 34 + 13 * len(lines):
+        label_drawn = False
+        if rw >= 60 and rh >= 40:
+            lines = wrap_fit(node["name"], rw - 12, 11)
+            # Room for the wrapped lines plus the large percentage beneath them.
+            if lines and 15 + 13 * (len(lines) - 1) + 25 <= rh:
+                pct_s = fmt_pct(node["pct"])
+                ty = ry + 15
+                for ln in lines:
+                    parts.append(f'<text x="{rx + 6:.1f}" y="{ty:.1f}" font-size="11" fill="{ink}">{html.escape(ln)}</text>')
+                    ty += 13
                 parts.append(f'<text x="{rx + 6:.1f}" y="{ry + rh - 7:.1f}" font-size="15" font-weight="700" fill="{ink}">{pct_s}</text>')
-        elif rw >= 36 and rh >= 22:
+                label_drawn = True
+        if not label_drawn and rw >= 36 and rh >= 22:
+            # Too small for the name: keep the percentage; the full label is in the hover title.
             parts.append(f'<text x="{rx + 5:.1f}" y="{ry + rh / 2 + 5:.1f}" font-size="12" font-weight="700" fill="{ink}">{fmt_pct(node["pct"])}</text>')
         parts.append('</g>')
 
@@ -762,7 +809,7 @@ def index_html(res, head, subject, date, model, when_note):
 <ul class="ms">{milestones}</ul>
 
 <h2>Treemap</h2>
-<p class="meta">Tile area = estimated effort weight. Tile colour = percent complete (red to green, five bins). Each tile shows its percentage, so colour is never the only cue. Hover a tile for done/total, source and evidence.</p>
+<p class="meta">Tile area = estimated effort weight. Tile colour = percent complete (red to green, five bins). Labels are wrapped at word boundaries and never cut off; tiles too small for their name show only the percentage. Hover a tile for its full label, done/total, source and evidence.</p>
 {legend_html()}
 <div class="tm-wrap">{svg}</div>
 
