@@ -44,5 +44,12 @@ if ! rg -a -q 'Join succeeded:' "$server_log" || ! rg -a -q 'Welcomed by server'
     printf 'Network join did not complete. See %s and %s\n' "$server_log" "$client_log" >&2
     exit 1
 fi
+if [[ "$map" == *'?game=/Script/FortniteGame.FortGameModeAthena'* ]]; then
+    if ! rg -a -q 'FortPlayerPawn ready: .*authority=1' "$server_log" ||
+       ! rg -a -q 'FortPlayerPawn ready: .*authority=0' "$client_log"; then
+        printf 'Athena pawn did not spawn on both peers. See %s and %s\n' "$server_log" "$client_log" >&2
+        exit 1
+    fi
+fi
 
 printf 'Local UE join succeeded. Logs: %s and %s\n' "$server_log" "$client_log"

@@ -50,6 +50,13 @@ the staged executable with `/Game/Maps/FortniteEmptyDedicated` as its map
 argument. This map enters play, but the class definitions are only starting
 points for full gameplay reconstruction.
 
+`FortniteAthenaGameplay.h` defines initial native `FortGameModeAthena`,
+`FortPlayerPawn`, and `FortPlayerPawnAthena` classes. The game mode selects the
+Athena pawn, which uses standard UE character movement and replicates on a
+dedicated server. `Config/DefaultInput.ini` binds movement, view, and jump
+controls. These are newly authored placeholders for the original class names,
+not a reconstruction of Fortnite movement or gameplay rules.
+
 `-FortniteProbeMapMeshes` logs any static mesh actor with invalid component
 bounds after a map begins play. It helped identify a UE glTF importer stride
 bug while testing the recovered skybox map under Vulkan.

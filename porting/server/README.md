@@ -59,10 +59,25 @@ The probe also succeeded with the recovered
 `/Game/Athena/Apollo/Maps/Apollo_Terrain` persistent map after the four direct
 Blueprint classes were rebuilt and cooked for Linux. The server brought that
 map up and logged `Join succeeded`; the client was welcomed by the server and
-brought the same map up. The streamed island levels, Fortnite game mode, and
-authoritative gameplay are still absent.
+brought the same map up. The streamed island levels and full Fortnite gameplay
+are still absent.
 
-This uses UE's `GameModeBase` and the newly authored client module. The
+The new native `AFortGameModeAthena` can be selected for this map with an
+explicit UE map option:
+
+```sh
+bash porting/server/smoke_join.sh \
+  '/Game/Athena/Apollo/Maps/Apollo_Terrain?game=/Script/FortniteGame.FortGameModeAthena'
+```
+
+This probe checks that the server spawns `AFortPlayerPawnAthena` and the
+client receives its replicated pawn. The pawn currently has basic walking,
+mouse look, and jumping input; it does not implement Fortnite abilities,
+inventory, combat, cosmetics, or the original client protocol. Apollo has no
+working streamed terrain or player start yet, so this is not a playable
+island.
+
+The earlier join probes use UE's `GameModeBase` and the newly authored client module. The
 original Fortnite client protocol, account/profile services, game rules,
 replication classes, and gameplay state are still unimplemented. The probe
 does not establish compatibility with the supplied Windows executable.
