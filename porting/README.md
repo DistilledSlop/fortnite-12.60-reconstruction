@@ -15,8 +15,10 @@ client and the separate Unreal Engine source checkout remain outside Git.
 - Some paks contain a nonzero encryption-key GUID. A GUID identifies a key;
   it is not the key itself. No keys are stored in this repository.
 - The supplied primary key and three per-chunk keys successfully decrypted and
-  validated all 31 pak indexes. Together they list 967,504 files. Keys are
-  entered through hidden prompts and are not written to Git or generated files.
+  validated all 31 pak indexes. Together they list 967,504 entries and 963,427
+  unique paths, including 450,951 `.uasset` files and 3,694 `.umap` files.
+  Keys are entered through hidden prompts and are not written to Git or
+  generated files.
 - The index includes project metadata, plugins, configuration, maps, and
   cooked assets. The static client scan found 59 API path templates; this is a
   partial view of the server interface.
@@ -61,6 +63,7 @@ to `porting/generated/`; it is extracted game data. The pseudocode is partial
 and can contain unresolved expressions, so it is a reconstruction aid rather
 than buildable source. Package compatibility still needs to be tested asset by
 asset. The CUE4Parse checkout is a local dependency, not vendored.
+In one sampled UI Blueprint, 5 of 9 function scripts decoded.
 
 See `server_surface.md` for the observed backend dependencies.
 
