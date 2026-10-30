@@ -20,3 +20,7 @@
 **/obj/
 *.pyc
 *.log
+
+# Port progress dashboard: rendered pages and the per-commit history are regenerated locally.
+/porting/progress/out/
+/porting/progress/history.json

@@ -1,0 +1,523 @@
+{
+  "_about": "Hand-edited model for porting/progress/progress.py. Leaves with a \"measure\" are computed; leaves with kind \"manual\" use the pct you set, with rationale. Weights are manual effort estimates (relative points, roughly engineer-weeks) and set the treemap area. Edit a weight or pct, commit, and the post-commit hook regenerates the dashboard.",
+  "definition": "100% = the entire game can be launched into the menu, joined into a game and matchmade on the reconstructed server, and played with sound/audio and visuals 100% working. In other words: the original unmodified Fortnite 12.60 client under Linux/Wine reaches the lobby, matchmakes to our reconstructed UE dedicated server and plays a match with all visuals and audio.",
+  "milestones": [
+    {"id": "m1", "text": "Original unmodified client starts under Wine and reaches the main menu without EAC/BattlEye", "done": false, "evidence": "Bounded Wine probe exits with code 1 and shuts down LauncherPlatform/LauncherCheck (server_surface.md)."},
+    {"id": "m2", "text": "Original client joins a lobby on the reconstructed server", "done": false, "evidence": "Only a native-client to native-server UE join is verified; the original client handshake is unverified (original_client_net_protocol.md)."},
+    {"id": "m3", "text": "Original client matchmakes to the reconstructed UE dedicated server", "done": false, "evidence": "Matchmaking ticket and session routes are at most stub answers; no ticket websocket or session flow is verified."},
+    {"id": "m4", "text": "A full match is played with audio and visuals working", "done": false, "evidence": "No Fortnite gameplay runs; audio playback is untested; the Apollo island is incomplete (map_compatibility.md)."}
+  ],
+  "tree": [
+    {
+      "id": "platform",
+      "name": "Platform and Linux runtime",
+      "children": [
+        {
+          "id": "platform.linux_build",
+          "name": "Native UE 4.25 Linux build, cook and stage",
+          "weight": 20,
+          "measure": {
+            "kind": "checks",
+            "checks": [
+              {"label": "Linux game target tracked", "file": "porting/native/Source/FortniteLinux.Target.cs"},
+              {"label": "Linux server target tracked", "file": "porting/native/Source/FortniteLinuxServer.Target.cs"},
+              {"label": "Linux binaries built (local)", "local": "porting/native/Binaries/Linux"},
+              {"label": "Linux stage present (local)", "local": "porting/generated/linux-stage"}
+            ]
+          },
+          "rationale": "The build, cook and stage path runs end to end. Measured from committed targets and ignored local build outputs."
+        },
+        {
+          "id": "platform.wine_launch",
+          "name": "Original client starts under Wine",
+          "weight": 35,
+          "measure": {"kind": "manual", "pct": 2},
+          "rationale": "The Shipping exe was run under Wine with bounded probes and exited with code 1 (server_surface.md). No launch to the menu is established."
+        },
+        {
+          "id": "platform.eac_removal",
+          "name": "EAC and BattlEye bypass for the original client",
+          "weight": 25,
+          "measure": {"kind": "manual", "pct": 2},
+          "rationale": "Separate EAC and BattlEye launcher executables are present. No bypass exists for the original client. The native rebuild omits EAC by construction, which does not count for the original client."
+        },
+        {
+          "id": "platform.rendering",
+          "name": "Rendering backend on Linux (Vulkan)",
+          "weight": 25,
+          "measure": {"kind": "manual", "pct": 30},
+          "rationale": "Software Vulkan (Lavapipe) runs with swapchain and visual captures of terrain, sky and background. Only software rendering has been tested, and Fortnite shaders and materials are mostly absent."
+        }
+      ]
+    },
+    {
+      "id": "assets",
+      "name": "Asset pipeline",
+      "children": [
+        {
+          "id": "assets.pak_index",
+          "name": "Pak index decryption and parse (31 paks)",
+          "weight": 10,
+          "measure": {"kind": "fraction", "count_file": "porting/generated/inventory.json", "count_key": "paks", "total": 31},
+          "rationale": "All 31 pak indexes were decrypted and validated (README.md). The count comes from the local inventory."
+        },
+        {
+          "id": "assets.map_headers",
+          "name": "Map header parse (3,694 maps)",
+          "weight": 8,
+          "measure": {"kind": "jsonl_rows", "file": "porting/generated/map-native-imports.jsonl", "total": 3694},
+          "rationale": "Every cooked map header was parsed for native imports. Counted from the local census rows."
+        },
+        {
+          "id": "assets.package_coverage",
+          "name": "Package recovery and conversion coverage",
+          "weight": 20,
+          "measure": {"kind": "local_glob", "roots": ["porting/generated/extracted", "porting/native/Content"], "suffix": ".uasset", "total": 450951},
+          "rationale": "Share of the 450,951 indexed .uasset files that exist locally, either recovered or converted for Linux. Counted from local output folders."
+        },
+        {
+          "id": "assets.static_meshes",
+          "name": "Static meshes converted for Linux",
+          "weight": 30,
+          "measure": {"kind": "manual", "pct": 8},
+          "rationale": "76 meshes are converted (61 Apollo grid tiles, 11 background meshes, 4 skybox meshes). The total of static mesh packages referenced by the maps is not enumerated, so no denominator exists."
+        },
+        {
+          "id": "assets.materials",
+          "name": "Materials (rebuilt approximations)",
+          "weight": 25,
+          "measure": {"kind": "manual", "pct": 6},
+          "rationale": "Original material graphs are absent. Some cloud, backdrop and skybox materials are rebuilt from recovered parameters as approximations."
+        },
+        {
+          "id": "assets.textures",
+          "name": "Textures (diffuse, masks, baked atlases)",
+          "weight": 20,
+          "measure": {"kind": "manual", "pct": 25},
+          "rationale": "Landscape masks (311), four diffuse textures and 61 baked atlases exist. Textures for the rest of the game are not recovered."
+        },
+        {
+          "id": "assets.landscape",
+          "name": "Landscape weightmaps and streamed components",
+          "weight": 25,
+          "measure": {"kind": "manual", "pct": 15},
+          "rationale": "221 landscape components are decoded. Streaming landscape levels and the parent level still fail on missing classes."
+        },
+        {
+          "id": "assets.skeletal_anim",
+          "name": "Skeletal meshes, animation and character",
+          "weight": 35,
+          "measure": {"kind": "manual", "pct": 0},
+          "rationale": "No skeletal mesh or animation package has loaded in any probe. The Fortnite character is not reconstructed."
+        },
+        {
+          "id": "assets.blueprint_load",
+          "name": "Cooked Blueprint packages load",
+          "weight": 30,
+          "measure": {"kind": "manual", "pct": 4},
+          "rationale": "Four Apollo Blueprint packages were replaced by authored Blueprints that load. The original cooked gameplay Blueprints still crash on load. The registry lists 22,211 Blueprints."
+        },
+        {
+          "id": "assets.cinematics",
+          "name": "Cinematics and sequences",
+          "weight": 15,
+          "measure": {"kind": "manual", "pct": 0},
+          "rationale": "No level sequence or cinematic asset has been tested."
+        }
+      ]
+    },
+    {
+      "id": "maps",
+      "name": "Maps and world (Apollo island)",
+      "children": [
+        {
+          "id": "maps.enter_play",
+          "name": "Maps that enter play in the Linux runtime",
+          "weight": 30,
+          "measure": {"kind": "fraction", "done": 2, "total": 3694, "source": "documented"},
+          "rationale": "FortniteEmptyDedicated and Skybox_Outpost_HomeBase enter play. The partial Apollo_Terrain is not counted, since it lacks streamed levels."
+        },
+        {
+          "id": "maps.apollo_terrain",
+          "name": "Apollo terrain tiles (geometry and collision)",
+          "weight": 45,
+          "measure": {"kind": "fraction", "count_file": "porting/generated/converted/apollo-landscape-grid.json", "total": 61},
+          "ceiling": 35,
+          "rationale": "All 61 nonempty tiles are converted with collision and visual proxy atlases. The count is capped at 35 because original materials, landscape fidelity and streamed levels are unverified."
+        },
+        {
+          "id": "maps.background",
+          "name": "Apollo_Background meshes and placements",
+          "weight": 25,
+          "measure": {"kind": "fraction", "count_file": "porting/generated/converted/apollo-background-placements.json", "total": 32},
+          "ceiling": 30,
+          "rationale": "27 of 32 placements spawn as replicated native actors. The count is capped at 30 because the meshes are placeholders and visual parity is unverified. Placements are recorded in the converted list."
+        },
+        {
+          "id": "maps.sky",
+          "name": "Sky, clouds and backdrop",
+          "weight": 20,
+          "measure": {"kind": "manual", "pct": 20},
+          "rationale": "A sky atmosphere replaces the black background. A simplified cloud and three backdrop materials render. The aurora and the Fortnite sky system are absent."
+        },
+        {
+          "id": "maps.streamed_levels",
+          "name": "Apollo streamed levels (87)",
+          "weight": 40,
+          "measure": {"kind": "fraction", "done": 0, "total": 87, "source": "documented"},
+          "rationale": "None of the 87 streamed levels load (map_compatibility.md)."
+        },
+        {
+          "id": "maps.pois",
+          "name": "POIs and POI maps",
+          "weight": 30,
+          "measure": {"kind": "manual", "pct": 1},
+          "rationale": "The POI Blueprints fail while their cooked scripts load. The POI manager is an empty native class. No POI map enters play."
+        }
+      ]
+    },
+    {
+      "id": "gameplay",
+      "name": "Gameplay classes (/Script/FortniteGame)",
+      "children": [
+        {
+          "id": "gameplay.framework",
+          "name": "Athena framework (GameMode, State, Controllers, Pawn)",
+          "weight": 60,
+          "measure": {"kind": "census", "match": "GameMode|GameState|PlayerController|PlayerState|PlayerPawn|GameInstance|LocalPlayer|WorldSettings|LevelScript|MapInfo|PlayerStart|Character|Athena", "stub_credit": 0.2}
+        },
+        {
+          "id": "gameplay.weapons",
+          "name": "Weapons and firing",
+          "weight": 60,
+          "measure": {"kind": "manual", "pct": 0},
+          "rationale": "No weapon class is imported by any map header, so the census cannot measure this group. No weapon class is declared natively."
+        },
+        {
+          "id": "gameplay.building",
+          "name": "Building and edit mode",
+          "weight": 50,
+          "measure": {"kind": "census", "match": "Building|Foundation|Wall|Floor|Roof|Stair|Ramp|Cone|Pillar|Edit", "stub_credit": 0.2}
+        },
+        {
+          "id": "gameplay.inventory",
+          "name": "Inventory, items and loot",
+          "weight": 45,
+          "measure": {"kind": "census", "match": "Inventory|Item|Pickup|Quickbar|Slot|Loot|Container|Chest|Resource|Harvest", "stub_credit": 0.2}
+        },
+        {
+          "id": "gameplay.storm",
+          "name": "Storm and safe zone",
+          "weight": 15,
+          "measure": {"kind": "manual", "pct": 2},
+          "rationale": "FortSafeZoneStorm exists as an empty native stub, which is not counted as behaviour. Storm classes are not imported by map headers, so the census cannot measure the group."
+        },
+        {
+          "id": "gameplay.battle_bus",
+          "name": "Battle bus, skydiving and gliding",
+          "weight": 25,
+          "measure": {"kind": "manual", "pct": 0},
+          "rationale": "No battle bus, aircraft, glider or parachute class exists natively. The skydiving shadow proxy stub is visual only and is counted under visuals."
+        },
+        {
+          "id": "gameplay.abilities",
+          "name": "Abilities and effects",
+          "weight": 30,
+          "measure": {"kind": "census", "match": "Abilit|Effect|Attribute", "stub_credit": 0.2}
+        },
+        {
+          "id": "gameplay.ai_nav",
+          "name": "AI, spawns and navigation",
+          "weight": 30,
+          "measure": {"kind": "census", "match": "Nav|Enem|Spawn|Patrol|AI|HotSpot|Pathing|Meta", "stub_credit": 0.2}
+        },
+        {
+          "id": "gameplay.world_volumes",
+          "name": "World managers, POIs and volumes",
+          "weight": 30,
+          "measure": {"kind": "census", "match": "Water|Volume|Poi|POI|Manager|WorldTile|Landscape|Tile", "stub_credit": 0.2}
+        },
+        {
+          "id": "gameplay.other",
+          "name": "Other classes",
+          "weight": 30,
+          "measure": {"kind": "census", "match": "*remainder*", "stub_credit": 0.2}
+        },
+        {
+          "id": "gameplay.blueprint_logic",
+          "name": "Blueprint gameplay logic (behaviour, not load)",
+          "weight": 60,
+          "measure": {"kind": "manual", "pct": 1},
+          "rationale": "No original Blueprint behaviour has been reproduced. cue4inspect pseudocode is partial and unresolved."
+        }
+      ]
+    },
+    {
+      "id": "net",
+      "name": "Network protocol and replication",
+      "children": [
+        {
+          "id": "net.version_check",
+          "name": "NetCL and network version override (683914758)",
+          "weight": 10,
+          "measure": {
+            "kind": "checks",
+            "stub_credit": 0.5,
+            "checks": [
+              {"label": "Version override bound in native source", "pattern": "683914758|GetLocalNetworkVersionOverride|IsNetworkCompatibleOverride", "in": "porting/native/Source/**"},
+              {"label": "Version constant used by server", "pattern": "683914758", "in": "porting/server/**"}
+            ]
+          },
+          "rationale": "The Hello checksum is documented. Present in source is not the same as exercised against the client."
+        },
+        {
+          "id": "net.magic_header",
+          "name": "MagicHeader 1110 on client and server",
+          "weight": 8,
+          "measure": {
+            "kind": "checks",
+            "stub_credit": 0.5,
+            "checks": [
+              {"label": "Set in native config", "pattern": "MagicHeader\\s*=\\s*1110", "in": "porting/native/Config/**"},
+              {"label": "Set in server code", "pattern": "1110", "in": "porting/server/**"}
+            ]
+          },
+          "rationale": "Documented as required in original_client_net_protocol.md. Not exercised against the original client."
+        },
+        {
+          "id": "net.packet_handlers",
+          "name": "AES and Oodle packet handler configuration",
+          "weight": 12,
+          "measure": {
+            "kind": "checks",
+            "stub_credit": 0.5,
+            "checks": [
+              {"label": "AESHandlerComponent configured", "pattern": "AESHandlerComponent", "in": "porting/native/Config/**"},
+              {"label": "Oodle disabled", "pattern": "bEnableOodle\\s*=\\s*False", "in": "porting/native/Config/**"}
+            ]
+          },
+          "rationale": "Configuration strings are in place. The handshake has not been exercised with the original client."
+        },
+        {
+          "id": "net.encryption_token",
+          "name": "Encryption token delegate and key route",
+          "weight": 12,
+          "measure": {
+            "kind": "checks",
+            "stub_credit": 0.5,
+            "checks": [
+              {"label": "OnReceivedNetworkEncryptionToken bound", "pattern": "OnReceivedNetworkEncryptionToken", "in": "porting/native/Source/**"},
+              {"label": "Session key route answered by server", "pattern": "matchmaking/account/", "in": "porting/server/**"}
+            ]
+          },
+          "rationale": "Hooks are declared. Key validity is not tested against the client."
+        },
+        {
+          "id": "net.native_join",
+          "name": "Native client joins native dedicated server",
+          "weight": 20,
+          "measure": {"kind": "manual", "pct": 40},
+          "rationale": "A local UE join to the Apollo and empty maps is verified with a native client. The original client handshake is not verified, so this is a partial result."
+        },
+        {
+          "id": "net.original_join",
+          "name": "Original client joins the reconstructed server",
+          "weight": 40,
+          "measure": {"kind": "manual", "pct": 0},
+          "rationale": "Not reached. The Hello, Login, Welcome and Join sequence is unverified against the original client."
+        },
+        {
+          "id": "net.replication_layout",
+          "name": "Replicated class layout parity",
+          "weight": 50,
+          "measure": {"kind": "manual", "pct": 1},
+          "rationale": "Property order, RPC index and struct layouts must match the original. Only the native stubs exist, and their property sets are not recovered."
+        },
+        {
+          "id": "net.checksum_parity",
+          "name": "Class checksum parity",
+          "weight": 20,
+          "measure": {"kind": "manual", "pct": 0},
+          "rationale": "No ClassChecksum comparison has been run against the original client."
+        },
+        {
+          "id": "net.replication_graph",
+          "name": "Server replication graph",
+          "weight": 10,
+          "measure": {"kind": "manual", "pct": 0},
+          "rationale": "The original server replication graph is server-only and not started."
+        }
+      ]
+    },
+    {
+      "id": "backend",
+      "name": "Backend services (reconstructed server)",
+      "children": [
+        {
+          "id": "backend.version_lightswitch",
+          "name": "Version check and lightswitch",
+          "weight": 15,
+          "measure": {
+            "kind": "checks",
+            "stub_credit": 0.5,
+            "checks": [
+              {"label": "versioncheck route", "pattern": "versioncheck", "in": "porting/server/**"},
+              {"label": "lightswitch route", "pattern": "lightswitch", "in": "porting/server/**"}
+            ]
+          },
+          "rationale": "Committed server code only. Uncommitted stubs do not count. Answers are canned."
+        },
+        {
+          "id": "backend.oauth_account",
+          "name": "OAuth and account routes",
+          "weight": 25,
+          "measure": {"kind": "routes", "include": ["/api/oauth", "/api/public/account"], "stub_credit": 0.5},
+          "rationale": "Route coverage by prefix: the template's literal path must appear in committed server code. Canned responses are credited at 50%."
+        },
+        {
+          "id": "backend.matchmaking",
+          "name": "Matchmaking ticket and session routes",
+          "weight": 40,
+          "measure": {"kind": "routes", "include": ["matchmaking"], "stub_credit": 0.5},
+          "rationale": "Ticket, session and account key routes. No websocket and no session flow exist yet."
+        },
+        {
+          "id": "backend.game_profile",
+          "name": "Game v2 profile, world, chat and voice routes",
+          "weight": 30,
+          "measure": {"kind": "routes", "include": ["/api/game/v2/"], "exclude": ["matchmaking"], "stub_credit": 0.5},
+          "rationale": "Profile, world, enabled features, chat, voice and twitch routes. Only the stub answers exist."
+        },
+        {
+          "id": "backend.public_catalog",
+          "name": "Public catalog, payment and asset routes",
+          "weight": 25,
+          "measure": {"kind": "routes", "include": ["/api/public/"], "exclude": ["/api/public/account"], "stub_credit": 0.5},
+          "rationale": "Store, asset, lookup and payment routes. No real catalog behaviour is reproduced."
+        },
+        {
+          "id": "backend.party_xmpp",
+          "name": "Party and XMPP",
+          "weight": 30,
+          "measure": {
+            "kind": "checks",
+            "stub_credit": 0.5,
+            "checks": [
+              {"label": "Party or XMPP referenced in committed server code", "pattern": "[Xx]mpp|[Pp]arty", "in": "porting/server/**"}
+            ]
+          },
+          "rationale": "XMPP is a large extra backend (original_client_net_protocol.md section 3). Nothing is implemented."
+        },
+        {
+          "id": "backend.session_beacon",
+          "name": "Party and lobby beacons, session discovery",
+          "weight": 30,
+          "measure": {"kind": "manual", "pct": 0},
+          "rationale": "Beacon hosts and the session record are not implemented."
+        },
+        {
+          "id": "backend.stats_cloud",
+          "name": "Stats, events, cloud storage and datarouter",
+          "weight": 20,
+          "measure": {
+            "kind": "checks",
+            "stub_credit": 0.5,
+            "checks": [
+              {"label": "Cloud storage route referenced", "pattern": "cloudstorage", "in": "porting/server/**"},
+              {"label": "Datarouter route referenced", "pattern": "datarouter", "in": "porting/server/**"}
+            ]
+          },
+          "rationale": "Only canned empty responses exist for these routes."
+        }
+      ]
+    },
+    {
+      "id": "audio",
+      "name": "Audio",
+      "children": [
+        {
+          "id": "audio.sound_classes",
+          "name": "Sound classes and mixes load",
+          "weight": 15,
+          "measure": {"kind": "manual", "pct": 15},
+          "rationale": "The Master.Master SoundClass loads from recovered packages in the Linux runtime (asset_compatibility.md). Mixes beyond that have not been checked."
+        },
+        {
+          "id": "audio.playback",
+          "name": "Audio playback on the Linux runtime",
+          "weight": 25,
+          "measure": {"kind": "manual", "pct": 0},
+          "rationale": "Every probe ran with -nosound. No audio device output has been heard or measured."
+        },
+        {
+          "id": "audio.cues_music",
+          "name": "Sound cues, music and ambience",
+          "weight": 25,
+          "measure": {"kind": "manual", "pct": 2},
+          "rationale": "No cue or music asset has been played back."
+        },
+        {
+          "id": "audio.voice",
+          "name": "Voice chat",
+          "weight": 10,
+          "measure": {"kind": "manual", "pct": 0},
+          "rationale": "Voice routes are listed but not implemented."
+        }
+      ]
+    },
+    {
+      "id": "visuals",
+      "name": "Visuals parity",
+      "children": [
+        {
+          "id": "visuals.lighting",
+          "name": "Lighting and shadows",
+          "weight": 20,
+          "measure": {"kind": "manual", "pct": 10},
+          "rationale": "A sun light and a temporary replicated light exist. The shadow proxy Blueprint is not recovered."
+        },
+        {
+          "id": "visuals.postprocess",
+          "name": "Post-process and renderer settings parity",
+          "weight": 20,
+          "measure": {"kind": "manual", "pct": 3},
+          "rationale": "Fortnite post-process and renderer configuration is not reproduced."
+        },
+        {
+          "id": "visuals.vfx",
+          "name": "VFX, particles and Niagara",
+          "weight": 20,
+          "measure": {"kind": "manual", "pct": 0},
+          "rationale": "No Niagara or particle assets have loaded."
+        }
+      ]
+    },
+    {
+      "id": "ui",
+      "name": "Frontend and lobby UI",
+      "children": [
+        {
+          "id": "ui.commonui_umg",
+          "name": "UMG and CommonUI native modules",
+          "weight": 30,
+          "measure": {"kind": "manual", "pct": 2},
+          "rationale": "A 64x64 UI texture loads. CommonUI and FortniteUI are absent, and a UI Blueprint fails on a missing CommonButton function."
+        },
+        {
+          "id": "ui.frontend_lobby",
+          "name": "Frontend menus and lobby flow",
+          "weight": 60,
+          "measure": {"kind": "manual", "pct": 0},
+          "rationale": "No main menu, lobby or matchmaking UI is reproduced."
+        },
+        {
+          "id": "ui.hud",
+          "name": "In-match HUD",
+          "weight": 40,
+          "measure": {"kind": "manual", "pct": 0},
+          "rationale": "No HUD is reproduced."
+        }
+      ]
+    }
+  ]
+}
