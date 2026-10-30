@@ -11,10 +11,12 @@ bool showPseudo = args.Contains("--pseudo");
 bool registryMode = args.Contains("--registry");
 bool allKeys = args.Contains("--all-keys");
 bool savePackage = args.Contains("--save-package");
-string[] positional = args.Where(arg => arg is not ("--all" or "--pseudo" or "--registry" or "--all-keys" or "--save-package")).ToArray();
+bool saveFolder = args.Contains("--save-folder");
+string[] positional = args.Where(arg => arg is not ("--all" or "--pseudo" or "--registry" or "--all-keys" or "--save-package" or "--save-folder")).ToArray();
 if (registryMode ? positional.Length > 1 : positional.Length is < 1 or > 2)
 {
     Console.Error.WriteLine("Usage: Cue4Inspect <asset-path-without-extension> [pak-directory] [--all] [--pseudo] [--save-package] [--all-keys]");
+    Console.Error.WriteLine("   or: Cue4Inspect <folder-prefix> [pak-directory] --save-folder [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect --registry [pak-directory] [--all-keys]");
     return 2;
 }
@@ -68,22 +70,25 @@ try
         return 0;
     }
 
+    if (saveFolder)
+    {
+        var prefix = assetPath!.TrimEnd('/') + "/";
+        var packages = provider.Files.Values
+            .Where(file => file.Path.StartsWith(prefix, StringComparison.OrdinalIgnoreCase) &&
+                           file.Path.EndsWith(".uasset", StringComparison.OrdinalIgnoreCase))
+            .OrderBy(file => file.Path)
+            .ToArray();
+        Console.WriteLine($"Recovering {packages.Length} package(s) under {prefix}");
+        foreach (var package in packages)
+        {
+            SaveRecoveredFiles(provider.SavePackage(package));
+        }
+        return 0;
+    }
+
     if (savePackage)
     {
-        var destination = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "../../../../generated/extracted"));
-        var files = provider.SavePackage(assetPath!);
-        foreach (var (name, bytes) in files)
-        {
-            var relative = name.Replace('\\', '/');
-            if (Path.IsPathRooted(relative) || relative.Split('/').Any(part => part is ".." or "."))
-                throw new InvalidDataException("Package contains an unsafe path");
-            var target = Path.GetFullPath(Path.Combine(destination, relative));
-            if (!target.StartsWith(destination + Path.DirectorySeparatorChar, StringComparison.Ordinal))
-                throw new InvalidDataException("Package path escapes output directory");
-            Directory.CreateDirectory(Path.GetDirectoryName(target)!);
-            File.WriteAllBytes(target, bytes);
-            Console.WriteLine($"Saved {relative} ({bytes.Length} bytes)");
-        }
+        SaveRecoveredFiles(provider.SavePackage(assetPath!));
     }
 
     var exports = provider.LoadPackage(assetPath!).GetExports();
@@ -135,4 +140,21 @@ static string ReadHiddenKey(string prompt)
     if (result.Length != 64)
         throw new ArgumentException("Expected a 64-character AES-256 hex key");
     return result;
+}
+
+static void SaveRecoveredFiles(IReadOnlyDictionary<string, byte[]> files)
+{
+    var destination = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "../../../../generated/extracted"));
+    foreach (var (name, bytes) in files)
+    {
+        var relative = name.Replace('\\', '/');
+        if (Path.IsPathRooted(relative) || relative.Split('/').Any(part => part is ".." or "."))
+            throw new InvalidDataException("Package contains an unsafe path");
+        var target = Path.GetFullPath(Path.Combine(destination, relative));
+        if (!target.StartsWith(destination + Path.DirectorySeparatorChar, StringComparison.Ordinal))
+            throw new InvalidDataException("Package path escapes output directory");
+        Directory.CreateDirectory(Path.GetDirectoryName(target)!);
+        File.WriteAllBytes(target, bytes);
+        Console.WriteLine($"Saved {relative} ({bytes.Length} bytes)");
+    }
 }

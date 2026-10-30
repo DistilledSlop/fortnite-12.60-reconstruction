@@ -22,6 +22,9 @@ client and the separate Unreal Engine source checkout remain outside Git.
 - The index includes project metadata, plugins, configuration, maps, and
   cooked assets. The static client scan found 59 API path templates; this is a
   partial view of the server interface.
+- A staged Linux UE 4.25 runtime successfully loaded one recovered Windows
+  cooked `SoundClass` after its referenced packages were supplied. This tests
+  a small class of platform-neutral assets, not maps or gameplay content.
 - The embedded `FortniteGame.uproject` was extracted to ignored output. It
   declares six project modules and 123 enabled plugins. Sixty-three of those
   enabled plugins are absent from the public UE 4.25 engine tree, so the
@@ -67,7 +70,11 @@ In one sampled UI Blueprint, 5 of 9 function scripts decoded.
 Add `--save-package` to write the selected package and its payload files into
 ignored `porting/generated/extracted/`. This was verified on a UI Blueprint:
 both its `.uasset` and `.uexp` were recovered. The output remains cooked data;
-it is not an editor source asset or a Linux-ready package.
+it is not an editor source asset, and runtime compatibility must be tested per
+asset and dependency graph.
+Use `--save-folder` with a package folder prefix to recover a subtree with one
+key prompt. It recovered 292 packages from the sound-class folder in a local
+test. All recovered files stay ignored by Git.
 Add `--all-keys` when inspecting packages in the three GUID-keyed chunks;
 the tool prompts for those keys without saving them. It mounted all 31 paks
 and parsed a material package from `pakchunk1002` in a local test.
@@ -77,6 +84,7 @@ registry reports 191,666 asset records, including 22,211 Blueprints, 2,379
 animation Blueprints, 2,175 widget Blueprints, and 3,694 worlds.
 
 See `server_surface.md` for the observed backend dependencies.
+See `asset_compatibility.md` for the first runtime package-loading probe.
 
 ## Work needed for the requested result
 

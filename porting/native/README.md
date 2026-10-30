@@ -35,3 +35,8 @@ headless run with `-nullrhi -nosound -unattended -ExecCmds=Quit` loaded
 `/Engine/Maps/Entry` and exited with code 0. The staged output stays ignored
 by Git. This validates only the empty engine map; Fortnite gameplay, content,
 and server integration remain to be implemented.
+
+The optional `-FortniteProbeAsset=/Game/Path/Asset.Asset` switch asks the game
+module to load one asset after engine initialization and logs its resolved
+class or `LOAD_FAILED`. Recovered asset files must be copied into the matching
+`FortniteLinux/Content/` path in the ignored staged build before this test.
