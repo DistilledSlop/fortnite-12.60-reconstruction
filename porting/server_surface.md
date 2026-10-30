@@ -31,3 +31,8 @@ does not define response schemas or the game-session simulation.
 
 The new native client project should use local service endpoints and omit EAC
 integration. The supplied Windows client has not been modified.
+
+`server/probe_server.py` is the first local server-side tool. It records request
+metadata and can return observed response fixtures, so endpoint behavior can
+be developed against a running client. It currently provides no login,
+matchmaking, XMPP, or game-session implementation. See its README for usage.

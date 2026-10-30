@@ -89,7 +89,8 @@ asset registry and reports asset classes and dependency-node counts. The main
 registry reports 191,666 asset records, including 22,211 Blueprints, 2,379
 animation Blueprints, 2,175 widget Blueprints, and 3,694 worlds.
 
-See `server_surface.md` for the observed backend dependencies.
+See `server_surface.md` for the observed backend dependencies and
+`server/README.md` for the local HTTP probe.
 See `asset_compatibility.md` for the first runtime package-loading probe.
 
 ## Work needed for the requested result
