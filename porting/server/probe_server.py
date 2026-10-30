@@ -51,7 +51,7 @@ def load_fixtures(path):
     return routes
 
 
-def make_handler(routes, record_path):
+def make_handler(routes, record_path, stub=None):
     lock = threading.Lock()
 
     class Handler(BaseHTTPRequestHandler):
@@ -83,6 +83,11 @@ def make_handler(routes, record_path):
                 status, response = 200, {"status": "ready"}
             else:
                 status, response = 501, {"error": "no fixture for this request"}
+                form = {}
+                if "x-www-form-urlencoded" in self.headers.get("Content-Type", ""):
+                    form = dict(parse_qsl(body.decode("utf-8", "replace")))
+                if stub is not None:
+                    status, response = stub.respond(self.command, url.path, dict(parse_qsl(url.query)), form)
                 for method, pattern, fixture_status, fixture_body in routes:
                     match = pattern.fullmatch(url.path)
                     if method == self.command and match:
@@ -100,15 +105,29 @@ def make_handler(routes, record_path):
                 "body_sha256": hashlib.sha256(body).hexdigest() if body else None,
                 "status": status,
             }
+            query = dict(parse_qsl(url.query))
+            # Only non-secret selector values are recorded.
+            safe = {key: query[key] for key in ("profileId", "rvn", "bucketId") if key in query}
+            if safe:
+                entry["query_values"] = safe
+            if form:
+                # Names only, plus the non-secret grant type; never values such as passwords or codes.
+                entry["form_keys"] = sorted(form)
+                if "grant_type" in form:
+                    entry["grant_type"] = form["grant_type"]
             with lock:
                 with record_path.open("a", encoding="utf-8") as stream:
                     stream.write(json.dumps(entry, sort_keys=True) + "\n")
             self.send_json(status, response)
 
         def send_json(self, status, response):
-            data = json.dumps(response, separators=(",", ":")).encode("utf-8")
+            content_type = "application/json"
+            if type(response).__name__ == "RawText":
+                data, content_type = response.encode("utf-8"), "text/plain"
+            else:
+                data = b"" if response is None else json.dumps(response, separators=(",", ":")).encode("utf-8")
             self.send_response(status)
-            self.send_header("Content-Type", "application/json")
+            self.send_header("Content-Type", content_type)
             self.send_header("Content-Length", str(len(data)))
             self.end_headers()
             self.wfile.write(data)
@@ -125,10 +144,21 @@ def main():
     parser.add_argument("--port", type=int, default=8080)
     parser.add_argument("--fixtures", type=Path)
     parser.add_argument("--record", type=Path, default=Path(__file__).resolve().parents[1] / "generated/server-requests.jsonl")
+    parser.add_argument("--stub", action="store_true", help="answer known Epic endpoints with minimal responses")
+    parser.add_argument("--tls-cert", type=Path)
+    parser.add_argument("--tls-key", type=Path)
     args = parser.parse_args()
     args.record.parent.mkdir(parents=True, exist_ok=True)
     routes = load_fixtures(args.fixtures)
-    server = ThreadingHTTPServer((args.bind, args.port), make_handler(routes, args.record))
+    stub = None
+    if args.stub:
+        import fortnite_stub as stub
+    server = ThreadingHTTPServer((args.bind, args.port), make_handler(routes, args.record, stub))
+    if args.tls_cert:
+        import ssl
+        context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+        context.load_cert_chain(args.tls_cert, args.tls_key)
+        server.socket = context.wrap_socket(server.socket, server_side=True)
     print(f"Listening on {args.bind}:{server.server_port} with {len(routes)} fixture(s)", flush=True)
     try:
         server.serve_forever()

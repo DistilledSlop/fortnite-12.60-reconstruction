@@ -50,3 +50,44 @@ The new `FortniteLinuxServer` target now provides a native UE dedicated server
 for the reconstructed project. A local new-client/new-server probe completed
 UE login and join on `FortniteEmptyDedicated`; this does not supply Fortnite's
 service or gameplay protocols. See `server/README.md`.
+
+## Original client against the local mock backend
+
+`run_original_client.sh [seconds] [client args]` runs the unmodified Win64
+shipping exe under Wine (EAC and BattlEye off: `-nobe -noeac -fromfl=none`) in
+a private network namespace (`sudo -n unshare -n -m`). Inside it `generated/hosts`
+is bind-mounted over `/etc/hosts` so every Epic hostname resolves to loopback,
+and `server/probe_server.py --stub` serves TLS on 127.0.0.1:443 with
+`server/fortnite_stub.py` answering endpoints. Nothing leaves the namespace and
+the host's port 443 is untouched. Requests are logged (method, path, query keys,
+form keys, body hash; no values) to `generated/server-requests.jsonl`.
+
+TLS: libcurl failed with error 60 because the shipping build compiles out the
+`n.VerifyPeer` override (it is ignored in config, `[SystemSettings]`,
+`[ConsoleVariables]`, and with a loose `Content/Certificates/cacert.pem`).
+`server/patch_curl_verify.py` clears `FCurlHttpManager::CurlRequestOptions.bVerifyPeer`
+in the running process through `/proc/<pid>/mem` once the log shows the options were
+initialised. No file of the install is changed.
+
+Login: the client does not log in by itself. Passing
+`-AUTH_LOGIN=unused -AUTH_PASSWORD=<any> -AUTH_TYPE=exchangecode` starts auto-login,
+which posts `grant_type=exchange_code` to the mock OAuth endpoint.
+
+### Requests observed, in order
+
+1. `POST /datarouter/api/v1/public/data` (telemetry, repeated; 204)
+2. `POST /account/api/oauth/token` grant `client_credentials` (200, client token)
+3. `GET /fortnite/api/v2/versioncheck/Windows` (200 `{"type":"NO_UPDATE"}`)
+4. `GET /fortnite/api/cloudstorage/system` (200 `[]`)
+5. `POST /account/api/oauth/token` grant `exchange_code` (200, user token with `account_id`, `displayName`)
+6. `DELETE /account/api/oauth/sessions/kill` (204)
+7. `GET /account/api/public/account/{id}` and `.../externalAuths`
+8. `GET /account/api/public/account?accountId=` (200 array), `POST /api/v1/user/setting`
+9. `POST /fortnite/api/game/v2/tryPlayOnPlatform/account/{id}` (200 text `true`)
+10. `GET /lightswitch/api/service/bulk/status` (200 array, status UP)
+11. `GET /fortnite/api/game/v2/enabled_features`, `POST .../profileToken/verify/{id}` (204)
+12. `GET /fortnite/api/cloudstorage/user/{id}`, `GET /content-controls/{id}` (404 accepted)
+13. `POST /fortnite/api/game/v2/profile/{id}/client/QueryProfile?profileId=&rvn=` (twice; `fullProfileUpdate`)
+14. `GET /fortnite/api/storefront/v2/keychain?numKeysDownloaded=` (must be a JSON array of
+    `guid:base64key:path` strings; an empty array fails with UnableToParseJson)
+15. `DELETE /account/api/oauth/sessions/kill/{token}` on a failed login
