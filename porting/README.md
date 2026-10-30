@@ -45,6 +45,10 @@ client and the separate Unreal Engine source checkout remain outside Git.
   components resolve, while the shadow instanced mesh and 87 streamed levels
   remain unresolved. These replacement Blueprints do not recreate the
   original gameplay scripts.
+- The Linux dedicated server and client complete a local UE join on the
+  recovered Apollo persistent map. A landscape parent level and one tile were
+  probed separately; their missing classes and Windows cooked render data
+  prevent the streamed island from loading yet.
 - The embedded `FortniteGame.uproject` was extracted to ignored output. It
   declares six project modules and 123 enabled plugins. Sixty-three of those
   enabled plugins are absent from the public UE 4.25 engine tree, so the

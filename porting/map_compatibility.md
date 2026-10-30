@@ -150,3 +150,12 @@ exports). The staged copy was moved to ignored holding output; the extracted
 copy remains available for reconstruction. The base Apollo map still enters
 play after this probe. Directly staging every missing map would not yet give
 a playable island.
+
+`Apollo_Terrain_LS_A1` is a smaller landscape tile whose map header imports
+only engine and already reconstructed Fortnite classes. Staging it still
+failed: UE 4.25 lacks `/Script/Landscape.LandscapeLODStreamingProxy`, which is
+present in the adjacent UE 4.26 source, and loading a Windows cooked inline
+material shader map overran the Linux async archive. The three staged tile
+files were moved into ignored holding output. A fresh load of the base Apollo
+map succeeded again. The remaining landscape work requires a compatible
+landscape class and Linux material reconstruction, not just package copying.

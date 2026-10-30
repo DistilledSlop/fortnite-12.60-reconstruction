@@ -55,6 +55,13 @@ the recovered skybox map and logged `Join succeeded`; the client received its
 welcome and brought the skybox world up for play. The probe used `-nullrhi`
 for both processes and ran for a bounded ten seconds.
 
+The probe also succeeded with the recovered
+`/Game/Athena/Apollo/Maps/Apollo_Terrain` persistent map after the four direct
+Blueprint classes were rebuilt and cooked for Linux. The server brought that
+map up and logged `Join succeeded`; the client was welcomed by the server and
+brought the same map up. The streamed island levels, Fortnite game mode, and
+authoritative gameplay are still absent.
+
 This uses UE's `GameModeBase` and the newly authored client module. The
 original Fortnite client protocol, account/profile services, game rules,
 replication classes, and gameplay state are still unimplemented. The probe
