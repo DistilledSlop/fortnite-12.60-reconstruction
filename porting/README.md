@@ -40,6 +40,11 @@ client and the separate Unreal Engine source checkout remain outside Git.
   Blueprint packages. Three of those packages independently crash during
   cooked script field-path loading. A UE 4.26 field-path version backport did
   not resolve the crashes; many map and gameplay dependencies are still absent.
+- Newly authored and Linux cooked replacements at those four Blueprint paths
+  now let Apollo enter play with no missing class errors. Named storm
+  components resolve, while the shadow instanced mesh and 87 streamed levels
+  remain unresolved. These replacement Blueprints do not recreate the
+  original gameplay scripts.
 - The embedded `FortniteGame.uproject` was extracted to ignored output. It
   declares six project modules and 123 enabled plugins. Sixty-three of those
   enabled plugins are absent from the public UE 4.25 engine tree, so the
@@ -115,20 +120,29 @@ animation Blueprints, 2,175 widget Blueprints, and 3,694 worlds.
 Use `--function-report` on a cooked Blueprint to report its native superclass,
 function overrides, flags, and serialized parameter types. The report is a
 reconstruction aid; it does not include native C++ implementations.
+Use `--versions` on a package to report its UE4 file version, licensee version,
+and serialized Fortnite and release custom versions. A missing custom version
+is reported as `-1`; it must not be inferred from a newer engine's enum.
+Use `--sizes` with a newline list of package paths to estimate mounted pak
+payload before extraction. It reports a JSON line per package and its
+`.uasset`/`.umap` and payload files without extracting or staging assets.
 
 `bash porting/prepare_ue_fieldpath.sh` backports UE 4.26's Fortnite branch
 field-path owner version check into the adjacent UE 4.25 checkout and logs a
 cooked field path before UE's unresolved-path assertion. The script is
 idempotent. `bash porting/prepare_ue_linker.sh` optionally adds invalid export
 index details to a linker assertion. These patches help diagnose Blueprint
-compatibility; the three sampled Apollo gameplay Blueprints still crash on
-load. The repository stores only patches; the supplied UE source remains
-outside Git.
+compatibility; the three sampled **original cooked** Apollo gameplay
+Blueprints still crash on load. New Linux cooked replacement packages load.
+The repository stores only patches; the supplied UE source remains outside Git.
 
 `python3 porting/probe_apollo_blueprints.py` tests the four staged Apollo
 Blueprint dependencies separately and restores the stage after each run.
 Its per-case logs stay ignored. The staged executable and `.sym` file must
 match to get an accurate crash stack.
+`python3 porting/stage_native_blueprints.py` copies the four generated Linux
+cooked replacements into the ignored staged build after validating all
+package payloads. See `native/README.md` for the editor commandlet and cook.
 
 See `server_surface.md` for the observed backend dependencies and
 `server/README.md` for the local HTTP probe.

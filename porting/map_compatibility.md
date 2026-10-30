@@ -107,3 +107,46 @@ needs further cooked script and custom version inspection. The linker patch
 is a diagnostic that prints the invalid index and export count; it does not
 make an invalid index valid. Crash stacks were verified with the matching
 `.sym` file for the staged binary.
+
+The new package-version report shows that the shadow, storm, and POI Blueprint
+headers all declare UE4 file version 518, licensee version 0, and **zero
+serialized custom versions**. Their Fortnite branch and release versions
+therefore both report `-1`. The UE 4.26 branch-version check cannot select a
+new owner format from these headers. The invalid indexes are read during
+`UStruct::SerializeExpr`, after `FFieldPath` script data, so a bytecode or
+field-path layout mismatch remains possible.
+
+## Linux cooked Blueprint replacements
+
+The `FortniteApolloBlueprint` editor commandlet now creates four new editable
+Blueprint packages at the original paths, inheriting the native parent
+classes. The source packages are ignored under `porting/native/Content/`; the
+supplied cooked packages are retained separately and were not overwritten.
+UE 4.25 cooks the new packages for Linux when their directories are listed in
+`DefaultGame.ini`. The original packaging section was in `DefaultEngine.ini`,
+where this UE version did not read it; moving it made all four packages cook.
+
+After staging those four Linux packages, Apollo entered play with zero
+missing class errors and no Blueprint script assertion. The first replacement
+set still had 38 unresolved component imports and four component dependency
+errors. The commandlet now reconstructs the safe-zone Blueprint's named SCS
+components, using the class and component names observed in the cooked
+package. This reduced unresolved component imports to two and component
+dependency errors to one. Both remaining imports point into the shadow
+Blueprint; its original `InstancedStaticMeshComponent` instance buffer
+triggered a Linux array element-size assertion when the template was present.
+The native replacement leaves that component absent until its instance data
+can be decoded and rebuilt for Linux. The map still has 104 missing package
+lookups and 87 absent streaming levels, so entering play is only a loading
+milestone, not an island or gameplay port.
+
+The 104 unique missing package paths are present in the primary-key paks and
+sum to about 181 MiB of indexed payload, although their dependency closure is
+larger. A bounded probe recovered and staged
+`Apollo_Terrain_LS_Parent` (8.8 MiB). Its map load exposed 29 distinct missing
+classes, including water spline components, generators, and waterbody
+Blueprints, and then hit an invalid cooked export index (158789 with 1208
+exports). The staged copy was moved to ignored holding output; the extracted
+copy remains available for reconstruction. The base Apollo map still enters
+play after this probe. Directly staging every missing map would not yet give
+a playable island.

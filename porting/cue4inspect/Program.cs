@@ -33,6 +33,8 @@ bool exportGlb = args.Contains("--export-glb");
 bool exportPng = args.Contains("--export-png");
 bool materialReport = args.Contains("--material-report");
 bool functionReport = args.Contains("--function-report");
+bool versionReport = args.Contains("--versions");
+bool sizeList = args.Contains("--sizes");
 bool ue426 = args.Contains("--ue426");
 Globals.FatalObjectSerializationErrors = exportGlb || exportPng || materialReport || functionReport;
 string? maxArgument = args.SingleOrDefault(arg => arg.StartsWith("--max-packages=", StringComparison.Ordinal));
@@ -42,18 +44,20 @@ if (maxArgument is not null && (!int.TryParse(maxArgument[15..], out maxPackages
     Console.Error.WriteLine("--max-packages must be a positive integer");
     return 2;
 }
-string[] positional = args.Where(arg => arg != maxArgument && arg is not ("--all" or "--pseudo" or "--imports" or "--registry" or "--scan-maps" or "--scan-native" or "--all-keys" or "--save-package" or "--save-list" or "--save-folder" or "--save-closure" or "--export-glb" or "--export-png" or "--material-report" or "--function-report" or "--ue426")).ToArray();
+string[] positional = args.Where(arg => arg != maxArgument && arg is not ("--all" or "--pseudo" or "--imports" or "--registry" or "--scan-maps" or "--scan-native" or "--all-keys" or "--save-package" or "--save-list" or "--sizes" or "--save-folder" or "--save-closure" or "--export-glb" or "--export-png" or "--material-report" or "--function-report" or "--versions" or "--ue426")).ToArray();
 bool packageLess = registryMode || scanMaps || scanNative;
 if (new[] { registryMode, scanMaps, scanNative }.Count(mode => mode) > 1 || (packageLess ? positional.Length > 1 : positional.Length is < 1 or > 2))
 {
     Console.Error.WriteLine("Usage: Cue4Inspect <asset-path-without-extension> [pak-directory] [--all] [--pseudo] [--imports] [--save-package] [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect <folder-prefix> [pak-directory] --save-folder [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect <newline-list-file> [pak-directory] --save-list [--all-keys]");
+    Console.Error.WriteLine("   or: Cue4Inspect <newline-list-file> [pak-directory] --sizes [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect <asset-path> [pak-directory] --save-closure [--max-packages=250] [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect <static-mesh-path> [pak-directory] --export-glb [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect <texture-path> [pak-directory] --export-png [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect <material-path> [pak-directory] --material-report [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect <blueprint-path> [pak-directory] --function-report [--all-keys]");
+    Console.Error.WriteLine("   or: Cue4Inspect <package-path> [pak-directory] --versions [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect --registry [pak-directory] [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect --scan-maps [pak-directory] [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect --scan-native [pak-directory] [--all-keys]");
@@ -163,6 +167,30 @@ try
         return 0;
     }
 
+    if (sizeList)
+    {
+        var suffixes = new[] { ".umap", ".uasset", ".uexp", ".ubulk", ".uptnl" };
+        foreach (var package in File.ReadLines(Path.GetFullPath(assetPath!))
+            .Select(line => line.Trim())
+            .Where(line => line.Length > 0 && !line.StartsWith('#'))
+            .Distinct(StringComparer.OrdinalIgnoreCase))
+        {
+            var files = suffixes
+                .Select(suffix => provider.Files.TryGetValue(package + suffix, out var file)
+                    ? new { suffix, bytes = file.Size }
+                    : null)
+                .Where(file => file is not null)
+                .ToArray();
+            Console.WriteLine(JsonSerializer.Serialize(new
+            {
+                path = package,
+                bytes = files.Sum(file => file!.bytes),
+                files
+            }));
+        }
+        return 0;
+    }
+
     if (saveClosure)
     {
         var pending = new Queue<string>();
@@ -255,6 +283,24 @@ try
     }
 
     var packageData = provider.LoadPackage(assetPath!);
+    if (versionReport)
+    {
+        if (packageData is not Package legacy)
+            throw new InvalidDataException("Not a legacy package");
+        var summary = legacy.Summary;
+        Console.WriteLine(JsonSerializer.Serialize(new
+        {
+            path = assetPath,
+            ue4 = summary.FileVersionUE.FileVersionUE4,
+            licensee = (int) summary.FileVersionLicenseeUE,
+            fortniteMain = summary.CustomVersionContainer?.GetVersion(FFortniteMainBranchObjectVersion.GUID),
+            release = summary.CustomVersionContainer?.GetVersion(FReleaseObjectVersion.GUID),
+            customVersions = summary.CustomVersionContainer?.Versions.Length,
+            exports = summary.ExportCount,
+            imports = summary.ImportCount
+        }));
+        return 0;
+    }
     if (functionReport)
     {
         var functionExports = packageData.GetExports().ToArray();

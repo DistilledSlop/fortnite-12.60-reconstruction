@@ -53,3 +53,23 @@ points for full gameplay reconstruction.
 `-FortniteProbeMapMeshes` logs any static mesh actor with invalid component
 bounds after a map begins play. It helped identify a UE glTF importer stride
 bug while testing the recovered skybox map under Vulkan.
+
+## Apollo Blueprint replacements
+
+Run the editor commandlet once to create four editable Blueprints at the
+original Apollo package paths. It refuses to overwrite any existing source
+asset unless `-Update` is explicitly supplied:
+
+```sh
+/opt/fortnite/UnrealEngine/Engine/Binaries/Linux/UE4Editor-Cmd \
+  /opt/fortnite/FortniteClient-12.60-CL-13477524/porting/native/FortniteLinux.uproject \
+  -run=FortniteApolloBlueprint -unattended -nop4 -nullrhi -nosound
+```
+
+`Config/DefaultGame.ini` lists these directories for the Linux cook. Run the
+editor cook command above, then `python3 porting/stage_native_blueprints.py`.
+The generated `.uasset` and cooked files stay ignored. The commandlet gives
+the storm actor the component names required by the recovered map, but its
+material, mesh, and gameplay behavior still need reconstruction. The shadow
+actor's instanced mesh is intentionally absent because its saved Windows
+component buffer does not deserialize in the stock Linux runtime.

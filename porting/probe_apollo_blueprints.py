@@ -24,6 +24,8 @@ def disable_core_dumps() -> None:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--timeout", type=int, default=30)
+    parser.add_argument("--only", choices=("none", *BLUEPRINTS, "all"),
+                        help="run one package selection")
     args = parser.parse_args()
     if args.timeout < 1:
         parser.error("--timeout must be positive")
@@ -48,6 +50,8 @@ def main() -> int:
     output.mkdir(parents=True, exist_ok=True)
     for enabled in ((), *[(name,) for name in BLUEPRINTS], tuple(BLUEPRINTS)):
         label = "none" if not enabled else "-".join(enabled)
+        if args.only and args.only != label and not (args.only == "all" and len(enabled) == len(BLUEPRINTS)):
+            continue
         renamed: list[tuple[Path, Path]] = []
         try:
             for name, paths in originals.items():
