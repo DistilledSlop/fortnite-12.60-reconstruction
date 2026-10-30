@@ -60,6 +60,7 @@ client and the separate Unreal Engine source checkout remain outside Git.
   enabled a software Vulkan capture of pale terrain geometry from the pawn
   camera, including after a visible client joined the local server. Sky and
   landscape textures remain missing.
+
 - The embedded `FortniteGame.uproject` was extracted to ignored output. It
   declares six project modules and 123 enabled plugins. Sixty-three of those
   enabled plugins are absent from the public UE 4.25 engine tree, so the
@@ -71,6 +72,11 @@ client and the separate Unreal Engine source checkout remain outside Git.
   reference material; neither checkout nor the article belongs in this Git
   repository. The article's embedded-key pattern is an example, not a
   guaranteed layout for this client.
+
+Run `bash porting/run_apollo_linux.sh` to start the staged local dedicated
+server and visible Linux client together. It uses the converted terrain and
+current native pawn, and stops the server when the client exits. This is a
+prototype entry point for inspection, not the original Fortnite experience.
 
 Run `python3 porting/inspect_install.py > porting/generated/inventory.json` to
 regenerate the local inventory. The generated file is ignored by Git.
