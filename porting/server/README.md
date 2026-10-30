@@ -27,3 +27,28 @@ a path segment with `{name}` and substitute `${name}` in its response:
 
 Fixtures should be based on observed client requests and responses. This
 tool's HTTP route coverage does not replace the authoritative game server.
+
+## Native dedicated server milestone
+
+`FortniteLinuxServer.Target.cs` builds a Linux UE dedicated server from the
+new `FortniteGame` module:
+
+```sh
+/opt/fortnite/UnrealEngine/Engine/Build/BatchFiles/Linux/Build.sh \
+  FortniteLinuxServer Linux Development \
+  -project=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/native/FortniteLinux.uproject \
+  -NoHotReload
+```
+
+The built binary can be copied from `porting/native/Binaries/Linux/` into the
+ignored staged build's `FortniteLinux/Binaries/Linux/` directory. With the
+recovered `FortniteEmptyDedicated` map already staged, the server entered play
+and listened on UDP 7777. A local instance of the new Linux client completed
+UE challenge, login, and join, then loaded that map. Run
+`bash porting/server/smoke_join.sh` to repeat the bounded probe; it writes logs
+only under ignored `porting/generated/`.
+
+This uses UE's `GameModeBase` and the newly authored client module. The
+original Fortnite client protocol, account/profile services, game rules,
+replication classes, and gameplay state are still unimplemented. The probe
+does not establish compatibility with the supplied Windows executable.

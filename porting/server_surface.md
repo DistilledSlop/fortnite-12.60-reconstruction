@@ -36,3 +36,8 @@ integration. The supplied Windows client has not been modified.
 metadata and can return observed response fixtures, so endpoint behavior can
 be developed against a running client. It currently provides no login,
 matchmaking, XMPP, or game-session implementation. See its README for usage.
+
+The new `FortniteLinuxServer` target now provides a native UE dedicated server
+for the reconstructed project. A local new-client/new-server probe completed
+UE login and join on `FortniteEmptyDedicated`; this does not supply Fortnite's
+service or gameplay protocols. See `server/README.md`.

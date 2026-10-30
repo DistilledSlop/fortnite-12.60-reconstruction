@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+script_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
+porting_dir=$(cd -- "$script_dir/.." && pwd)
+stage_dir="$porting_dir/generated/linux-stage/LinuxNoEditor"
+game_dir="$stage_dir/FortniteLinux"
+server="$game_dir/Binaries/Linux/FortniteLinuxServer"
+client="$stage_dir/FortniteLinux.sh"
+server_log="$porting_dir/generated/dedicated-server-client-test.log"
+client_log="$porting_dir/generated/local-client-join-test.log"
+
+if [[ ! -x "$server" || ! -x "$client" ]]; then
+    printf 'Stage the Linux client and FortniteLinuxServer binaries first.\n' >&2
+    exit 2
+fi
+
+timeout 20s "$server" /Game/Maps/FortniteEmptyDedicated \
+    -nullrhi -nosound -unattended -port=7777 -log > "$server_log" 2>&1 &
+server_pid=$!
+trap 'kill "$server_pid" 2>/dev/null || true; wait "$server_pid" 2>/dev/null || true' EXIT
+
+for attempt in {1..50}; do
+    if rg -a -q 'IpNetDriver listening on port 7777' "$server_log"; then
+        break
+    fi
+    sleep 0.1
+done
+if ! rg -a -q 'IpNetDriver listening on port 7777' "$server_log"; then
+    printf 'Server did not listen on port 7777. See %s\n' "$server_log" >&2
+    exit 1
+fi
+
+set +e
+timeout 10s "$client" 127.0.0.1:7777 -nullrhi -nosound -unattended -log > "$client_log" 2>&1
+client_status=$?
+set -e
+if [[ $client_status -ne 0 && $client_status -ne 124 ]]; then
+    printf 'Client exited with status %s. See %s\n' "$client_status" "$client_log" >&2
+    exit 1
+fi
+if ! rg -a -q 'Join succeeded:' "$server_log" || ! rg -a -q 'Welcomed by server' "$client_log"; then
+    printf 'Network join did not complete. See %s and %s\n' "$server_log" "$client_log" >&2
+    exit 1
+fi
+
+printf 'Local UE join succeeded. Logs: %s and %s\n' "$server_log" "$client_log"
