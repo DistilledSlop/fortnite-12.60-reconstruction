@@ -80,6 +80,19 @@ def lightswitch():
     }]
 
 
+def calendar():
+    state = {"activeStorefronts": [], "eventNamedWeights": {}, "seasonNumber": 12,
+             "seasonTemplateId": "AthenaSeason:athenaseason12", "matchXpBonusPoints": 0,
+             "seasonBegin": "2020-06-02T00:00:00Z", "seasonEnd": FAR_FUTURE, "seasonDisplayedEnd": FAR_FUTURE,
+             "weeklyStoreEnd": FAR_FUTURE, "stwEventStoreEnd": FAR_FUTURE,
+             "stwWeeklyStoreEnd": FAR_FUTURE, "dailyStoreEnd": FAR_FUTURE}
+    return {"channels": {
+        "client-matchmaking": {"states": [], "cacheExpire": FAR_FUTURE},
+        "client-events": {"states": [{"validFrom": "2020-01-01T00:00:00.000Z", "activeEvents": [], "state": state}],
+                          "cacheExpire": FAR_FUTURE}},
+        "eventsTimeOffsetHrs": 0.0, "cacheIntervalMins": 10.0, "currentTime": "2026-01-01T00:00:00.000Z"}
+
+
 def profile(account_id, query, command):
     """Minimal fullProfileUpdate for any profileId; the client reads items and stats.attributes."""
     profile_id = query.get("profileId", "common_core")
@@ -109,6 +122,17 @@ def profile(account_id, query, command):
 
 
 ROUTES = [
+    ("GET", r"/fortnite/api/receipts/v1/account/[^/]+/receipts", lambda m, q, f: (200, [])),
+    ("GET", r"/socialban/api/public/v1/[^/]+", lambda m, q, f: (200, {"bans": [], "warnings": []})),
+    ("GET", r"/party/api/v1/Fortnite/user/[^/]+", lambda m, q, f: (200, {"current": [], "pending": [], "invites": [], "pings": []})),
+    ("GET", r"/party/api/v1/Fortnite/user/[^/]+/notifications/undelivered/count", lambda m, q, f: (200, {"pings": 0, "invites": 0})),
+    ("GET", r"/fortnite/api/calendar/v1/timeline", lambda m, q, f: (200, calendar())),
+    ("GET", r"/fortnite/api/storefront/v2/catalog", lambda m, q, f: (200, {
+        "refreshIntervalHrs": 1, "dailyPurchaseHrs": 24, "expiration": FAR_FUTURE, "storefronts": []})),
+    ("GET", r"/presence/api/v1/_/[^/]+/(last-online|subscriptions)", lambda m, q, f: (200, {})),
+    ("GET", r"/presence/api/v1/Fortnite/[^/]+/subscriptions/nudged", lambda m, q, f: (200, [])),
+    ("GET", r"/api/v1/Fortnite/get", lambda m, q, f: (200, [])),
+    ("PUT", r"/fortnite/api/cloudstorage/user/[^/]+/[^/]+", lambda m, q, f: (204, None)),
     ("GET", r"/friends/api/v1/[^/]+/summary", lambda m, q, f: (200, {
         "friends": [], "incoming": [], "outgoing": [], "suggested": [], "blocklist": [],
         "settings": {"acceptInvites": "public"},

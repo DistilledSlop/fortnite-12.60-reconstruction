@@ -91,3 +91,46 @@ which posts `grant_type=exchange_code` to the mock OAuth endpoint.
 14. `GET /fortnite/api/storefront/v2/keychain?numKeysDownloaded=` (must be a JSON array of
     `guid:base64key:path` strings; an empty array fails with UnableToParseJson)
 15. `DELETE /account/api/oauth/sessions/kill/{token}` on a failed login
+
+### Further requests observed once the frontend stub is fuller
+
+With friends/presence/party/calendar/catalog/content endpoints stubbed (see
+`server/fortnite_stub.py`), login proceeds through `CheckServiceAvailability`,
+`CheckEntitledToPlay`, `VerifyAgeGateRequirements`, `DownloadingClientSettings`,
+`QueryProfile`, `QueryKeychain`, `RedeemOfflinePurchases`, `CheckingRejoin`,
+`DoQosPingTests`, `StartVoiceChat`, `CreatingParty` (which needs XMPP; see
+below), and `Completed`. The client then reaches the Frontend map and starts
+its own CMS/friends/presence/catalog refresh pass (`content/api/pages/fortnite-game`,
+`fortnite/api/calendar/v1/timeline`, `fortnite/api/storefront/v2/catalog`,
+`friends/api/v1/*`, `presence/api/v1/*`, `fortnite/api/game/v2/privacy/account/*`).
+
+### XMPP / WebSocket TLS
+
+The client's websocket stack (libwebsockets via `FLwsWebSocket`) verifies TLS
+independently of libcurl and independently of `n.VerifyPeer`: it reads
+`[WebSockets.LibWebSockets] bDisableCertValidation` (manager-level extra-certs
+callback) and, more specifically, `[LwsWebSocket] bDisableCertValidation` (the
+per-connection `LWS_CALLBACK_OPENSSL_PERFORM_SERVER_CERT_VERIFICATION`
+handler in `Private/Lws/LwsWebSocket.cpp`). Setting both `true` in the loose
+`Saved/Config/WindowsClient/Engine.ini` did not stop the handshake failure in
+this build (`Lws(Error): SSL error: self signed certificate`), so XMPP login
+still fails locally; `CreatingParty` eventually times out and treats party
+creation as succeeded anyway (the login flow does not hard-block on it).
+
+### Current blocker: AppES / entitlement gate after `CheckEntitledToPlay`
+
+After `Checking entitlements... (CheckEntitledToPlay)` the client always logs
+`LogAppES: Display: closing code 1` and shortly after shows a fatal UI dialog
+("Fortnite was not started correctly and needs to be closed. We recommend
+trying to launch the game using the Epic Games Launcher or contact player
+support.") regardless of the mock backend's responses at that stage, of
+`-epicenv`, and of `-EpicPortal`/`-NOEPICPORTAL`. `LogAppES` and the dialog
+string are both literal strings in the shipping exe; the client binary
+contains `[UOnlineAccountCommon::LoginStep_CheckEntitledToPlay] IsDevelopment(),
+skipping mcp entitlement check`, implying there is a non-HTTP, binary-level
+entitlement/launcher-origin check (likely tied to the Epic Games Launcher
+provenance / "AppES" app-entitlement-service client component, possibly
+checking how the process was launched rather than calling out to a server) that a
+pure HTTP mock backend cannot satisfy. This was not resolved; doing so would
+require reverse-engineering and altering the shipping binary's own
+entitlement/anti-tamper logic, which is out of scope for this effort.
