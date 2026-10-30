@@ -159,3 +159,36 @@ material shader map overran the Linux async archive. The three staged tile
 files were moved into ignored holding output. A fresh load of the base Apollo
 map succeeded again. The remaining landscape work requires a compatible
 landscape class and Linux material reconstruction, not just package copying.
+
+## Apollo landscape mesh reconstruction
+
+`python3 porting/probe_apollo_streaming.py A1` temporarily stages the original
+A1 tile, runs the Apollo map, and restores the held files even if the runtime
+crashes. Its ignored log reproduces the two independent blockers: the tile
+imports `/Script/Landscape.LandscapeLODStreamingProxy`, absent from UE 4.25,
+and its inline Windows material shader map drives `FAsyncArchive` past the
+end of the `.uexp`. The crash stack reaches `FShaderMapBase::Serialize` through
+`UMaterialInstance::Serialize`. Copying the original cooked tile cannot fix
+those platform and class mismatches.
+
+`cue4inspect --landscape-report` reads the actor and component transforms from
+the original package. `--export-landscape` decodes the heightmap and writes a
+GLB under ignored `porting/generated/converted/`, without loading the Windows
+shader map in UE. A1 yielded one 127×127 quad component and a 16,384 vertex
+mesh. Its saved root transform is location `(113792, -130048, 100)` and scale
+`(128, 128, 100)`. D4 yielded four components and a GLB with varying vertex
+heights, so the conversion path is not limited to flat terrain.
+
+The A1 GLB was imported into the editor as
+`/Game/Athena/Apollo/Maps/Landscape/Converted/LandscapeStreamingProxy_A1`,
+then cooked for Linux. `python3 porting/stage_apollo_a1_mesh.py` copies that
+mesh, its generated material, and the current Linux shader archives into the
+ignored stage. A headless asset probe loaded the cooked mesh with 16,384
+vertices. The native `AApolloLandscapeTileA1` actor places it at the saved
+root transform when `AFortGameModeAthena` runs Apollo. A dedicated server join
+confirmed the mesh actor on both server and client; the actor is marked always
+relevant for this single tile probe.
+
+The A1 mesh has only the GLB's default material, one mesh LOD, and no verified
+landscape collision or texture layers. D4 is exported but has not yet been
+imported or staged. The other streamed tiles and game systems remain absent.

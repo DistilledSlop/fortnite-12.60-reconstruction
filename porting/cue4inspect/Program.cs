@@ -4,6 +4,9 @@ using CUE4Parse.FileProvider;
 using CUE4Parse.UE4.Assets;
 using CUE4Parse.UE4.AssetRegistry;
 using CUE4Parse.UE4.Assets.Exports.StaticMesh;
+using CUE4Parse.UE4.Assets.Exports.Actor;
+using CUE4Parse.UE4.Assets.Exports.Component.Landscape;
+using CUE4Parse.UE4.Assets.Exports.Component;
 using CUE4Parse.UE4.Assets.Exports.Material;
 using CUE4Parse.UE4.Assets.Exports.Texture;
 using CUE4Parse.UE4.Objects.Core.Misc;
@@ -30,13 +33,15 @@ bool saveList = args.Contains("--save-list");
 bool saveFolder = args.Contains("--save-folder");
 bool saveClosure = args.Contains("--save-closure");
 bool exportGlb = args.Contains("--export-glb");
+bool exportLandscape = args.Contains("--export-landscape");
+bool landscapeReport = args.Contains("--landscape-report");
 bool exportPng = args.Contains("--export-png");
 bool materialReport = args.Contains("--material-report");
 bool functionReport = args.Contains("--function-report");
 bool versionReport = args.Contains("--versions");
 bool sizeList = args.Contains("--sizes");
 bool ue426 = args.Contains("--ue426");
-Globals.FatalObjectSerializationErrors = exportGlb || exportPng || materialReport || functionReport;
+Globals.FatalObjectSerializationErrors = exportGlb || exportLandscape || exportPng || materialReport || functionReport || landscapeReport;
 string? maxArgument = args.SingleOrDefault(arg => arg.StartsWith("--max-packages=", StringComparison.Ordinal));
 int maxPackages = 250;
 if (maxArgument is not null && (!int.TryParse(maxArgument[15..], out maxPackages) || maxPackages < 1))
@@ -44,7 +49,7 @@ if (maxArgument is not null && (!int.TryParse(maxArgument[15..], out maxPackages
     Console.Error.WriteLine("--max-packages must be a positive integer");
     return 2;
 }
-string[] positional = args.Where(arg => arg != maxArgument && arg is not ("--all" or "--pseudo" or "--imports" or "--registry" or "--scan-maps" or "--scan-native" or "--all-keys" or "--save-package" or "--save-list" or "--sizes" or "--save-folder" or "--save-closure" or "--export-glb" or "--export-png" or "--material-report" or "--function-report" or "--versions" or "--ue426")).ToArray();
+string[] positional = args.Where(arg => arg != maxArgument && arg is not ("--all" or "--pseudo" or "--imports" or "--registry" or "--scan-maps" or "--scan-native" or "--all-keys" or "--save-package" or "--save-list" or "--sizes" or "--save-folder" or "--save-closure" or "--export-glb" or "--export-landscape" or "--export-png" or "--material-report" or "--function-report" or "--landscape-report" or "--versions" or "--ue426")).ToArray();
 bool packageLess = registryMode || scanMaps || scanNative;
 if (new[] { registryMode, scanMaps, scanNative }.Count(mode => mode) > 1 || (packageLess ? positional.Length > 1 : positional.Length is < 1 or > 2))
 {
@@ -54,8 +59,10 @@ if (new[] { registryMode, scanMaps, scanNative }.Count(mode => mode) > 1 || (pac
     Console.Error.WriteLine("   or: Cue4Inspect <newline-list-file> [pak-directory] --sizes [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect <asset-path> [pak-directory] --save-closure [--max-packages=250] [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect <static-mesh-path> [pak-directory] --export-glb [--all-keys]");
+    Console.Error.WriteLine("   or: Cue4Inspect <landscape-map-path> [pak-directory] --export-landscape [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect <texture-path> [pak-directory] --export-png [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect <material-path> [pak-directory] --material-report [--all-keys]");
+    Console.Error.WriteLine("   or: Cue4Inspect <landscape-map-path> [pak-directory] --landscape-report [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect <blueprint-path> [pak-directory] --function-report [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect <package-path> [pak-directory] --versions [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect --registry [pak-directory] [--all-keys]");
@@ -332,6 +339,67 @@ try
                     }).ToArray()
             }).ToArray()
         }, new JsonSerializerOptions { WriteIndented = true }));
+        return 0;
+    }
+    if (landscapeReport)
+    {
+        var actors = packageData.GetExports().OfType<ALandscapeProxy>().ToArray();
+        Console.WriteLine(JsonSerializer.Serialize(new
+        {
+            path = assetPath,
+            actors = actors.Select(actor => new
+            {
+                name = actor.Name,
+                type = actor.GetType().Name,
+                componentSizeQuads = actor.ComponentSizeQuads,
+                root = actor.GetOrDefault<FPackageIndex?>("RootComponent")?.Load<USceneComponent>() is { } root
+                    ? new
+                    {
+                        name = root.Name,
+                        location = new[] { root.RelativeLocation.X, root.RelativeLocation.Y, root.RelativeLocation.Z },
+                        scale = new[] { root.RelativeScale3D.X, root.RelativeScale3D.Y, root.RelativeScale3D.Z }
+                    }
+                    : null,
+                components = actor.LandscapeComponents.Select(index =>
+                {
+                    var component = index.Load<ULandscapeComponent>();
+                    return component is null ? null : new
+                    {
+                        name = component.Name,
+                        sectionBase = new[] { component.SectionBaseX, component.SectionBaseY },
+                        location = new[] { component.RelativeLocation.X, component.RelativeLocation.Y, component.RelativeLocation.Z },
+                        scale = new[] { component.RelativeScale3D.X, component.RelativeScale3D.Y, component.RelativeScale3D.Z },
+                        quads = component.ComponentSizeQuads
+                    };
+                }).ToArray()
+            }).ToArray()
+        }, new JsonSerializerOptions { WriteIndented = true }));
+        return 0;
+    }
+    if (exportLandscape)
+    {
+        var actors = packageData.GetExports().OfType<ALandscapeProxy>().ToArray();
+        if (actors.Length == 0)
+            throw new InvalidDataException("Package has no landscape actor export");
+        var destination = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "../../../../generated/converted"));
+        var relative = assetPath!.Replace('\\', '/').TrimStart('/');
+        if (relative.Split('/').Any(part => part is ".." or "."))
+            throw new InvalidDataException("Unsafe asset path");
+        var options = new ExportOptions(meshFormat: EMeshFormat.Gltf2, exportMaterials: false);
+        foreach (var actor in actors)
+        {
+            using var dto = new LandscapeMeshDto(actor);
+            var files = new GltfMeshFormat().BuildStaticMesh(actor.Name, assetPath, options, dto);
+            foreach (var file in files)
+            {
+                var target = Path.GetFullPath(Path.Combine(destination, relative + "/" + actor.Name + file.NameSuffix + "." + file.Extension));
+                if (!target.StartsWith(destination + Path.DirectorySeparatorChar, StringComparison.Ordinal))
+                    throw new InvalidDataException("Export path escapes output directory");
+                Directory.CreateDirectory(Path.GetDirectoryName(target)!);
+                File.WriteAllBytes(target, file.Data);
+                Console.WriteLine($"Exported {target} ({file.Data.Length} bytes)");
+            }
+        }
         return 0;
     }
     if (exportPng)

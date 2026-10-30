@@ -2,6 +2,7 @@
 
 #include "GameFramework/Character.h"
 #include "GameFramework/GameModeBase.h"
+#include "Engine/StaticMeshActor.h"
 #include "FortniteAthenaGameplay.generated.h"
 
 // Initial native player hierarchy. Movement is UE character movement until
@@ -36,4 +37,18 @@ class FORTNITEGAME_API AFortGameModeAthena : public AGameModeBase
 
 public:
     AFortGameModeAthena();
+    virtual void StartPlay() override;
+};
+
+// Linux cooked geometry reconstructed from Apollo's A1 landscape component.
+UCLASS()
+class FORTNITEGAME_API AApolloLandscapeTileA1 : public AStaticMeshActor
+{
+    GENERATED_BODY()
+
+public:
+    AApolloLandscapeTileA1();
+
+protected:
+    virtual void BeginPlay() override;
 };

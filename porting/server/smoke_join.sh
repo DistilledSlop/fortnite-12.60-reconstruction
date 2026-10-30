@@ -50,6 +50,12 @@ if [[ "$map" == *'?game=/Script/FortniteGame.FortGameModeAthena'* ]]; then
         printf 'Athena pawn did not spawn on both peers. See %s and %s\n' "$server_log" "$client_log" >&2
         exit 1
     fi
+    if [[ "$map" == /Game/Athena/Apollo/Maps/Apollo_Terrain* ]] &&
+       { ! rg -a -q 'Apollo A1 mesh ready: .*authority=1 mesh=yes' "$server_log" ||
+         ! rg -a -q 'Apollo A1 mesh ready: .*authority=0 mesh=yes' "$client_log"; }; then
+        printf 'Apollo A1 mesh did not load on both peers. See %s and %s\n' "$server_log" "$client_log" >&2
+        exit 1
+    fi
 fi
 
 printf 'Local UE join succeeded. Logs: %s and %s\n' "$server_log" "$client_log"
