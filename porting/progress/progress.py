@@ -209,9 +209,12 @@ def m_checks(spec, ctx):
         passed += bool(ok)
         lines.append(("ok " if ok else "missing ") + label)
     total = len(checks)
-    pct = 100.0 * passed / total if total else 0.0
-    return {"pct": pct, "done": passed, "total": total,
-            "evidence": "; ".join(lines)}
+    credit = spec.get("stub_credit", 1.0)
+    pct = 100.0 * passed / total * credit if total else 0.0
+    evidence = "; ".join(lines)
+    if credit != 1.0:
+        evidence += f" (credit {credit:g}: present in source, not exercised against the client)"
+    return {"pct": pct, "done": passed, "total": total, "evidence": evidence}
 
 
 def m_routes(spec, ctx):
