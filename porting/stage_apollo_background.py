@@ -28,10 +28,15 @@ def main() -> int:
             target = staged_game / "Content" / source.relative_to(cooked)
             target.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(source, target)
+    archives = sorted(cooked.glob("ShaderArchive-*-SF_VULKAN_SM5.ushaderbytecode"))
+    if len(archives) != 2:
+        raise FileNotFoundError("Expected global and game Vulkan shader archives")
+    for source in archives:
+        shutil.copy2(source, staged_game / "Content" / source.name)
     target = staged_game / "Config/ApolloBackground.json"
     target.parent.mkdir(parents=True, exist_ok=True)
     shutil.copy2(manifest, target)
-    print(f"Staged {len(mesh_names)} background mesh packages and {len(entries)} placements")
+    print(f"Staged {len(mesh_names)} background mesh packages, {len(entries)} placements, and shader archives")
     return 0
 
 

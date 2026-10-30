@@ -66,6 +66,19 @@ if [[ "$map" == *'?game=/Script/FortniteGame.FortGameModeAthena'* ]]; then
                 "$server_tiles" "$client_tiles" "$server_log" "$client_log" >&2
             exit 1
         fi
+        if [[ -f "$game_dir/Config/ApolloBackground.json" ]]; then
+            if ! rg -a -q 'Apollo background: 27/27 placed meshes spawned' "$server_log"; then
+                printf 'Apollo background placements did not spawn. See %s\n' "$server_log" >&2
+                exit 1
+            fi
+            server_background=$( { rg -a 'Apollo background mesh .* ready: authority=1 mesh=yes' "$server_log" || true; } | wc -l)
+            client_background=$( { rg -a 'Apollo background mesh .* ready: authority=0 mesh=yes' "$client_log" || true; } | wc -l)
+            if [[ $server_background -ne 27 || $client_background -ne 27 ]]; then
+                printf 'Apollo background mesh count differs: server=%s client=%s (expected 27). See %s and %s\n' \
+                    "$server_background" "$client_background" "$server_log" "$client_log" >&2
+                exit 1
+            fi
+        fi
         if ! rg -a -q 'Apollo pawn ground probe: grounded=1' "$server_log"; then
             printf 'Apollo network pawn did not settle on terrain. See %s\n' "$server_log" >&2
             exit 1
