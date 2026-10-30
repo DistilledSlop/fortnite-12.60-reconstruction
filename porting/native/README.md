@@ -67,9 +67,11 @@ by Git.
 
 `-FortniteProbeTerrainCollision` performs one vertical line trace through D4
 after Apollo's converted grid spawns. The editor commandlet
-`-run=FortniteTerrainCollision -Tile=D4` rebuilds an imported tile with
-triangle collision before a Linux recook. The source and cooked packages
-remain ignored.
+`-run=FortniteTerrainCollision -Tile=D4` rebuilds one imported tile with
+triangle collision before a Linux recook. Use `-All` in place of `-Tile=D4`
+to process all 61 imported grid meshes. `-FortniteProbePawnGround` logs whether
+the server pawn settles into Walking movement on D4 five seconds after it
+spawns. The source and cooked packages remain ignored.
 
 `-FortniteProbeMapMeshes` logs any static mesh actor with invalid component
 bounds after a map begins play. It helped identify a UE glTF importer stride

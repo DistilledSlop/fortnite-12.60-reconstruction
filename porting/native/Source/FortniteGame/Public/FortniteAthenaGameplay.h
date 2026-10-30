@@ -5,6 +5,8 @@
 #include "Engine/StaticMeshActor.h"
 #include "FortniteAthenaGameplay.generated.h"
 
+class UCameraComponent;
+
 // Initial native player hierarchy. Movement is UE character movement until
 // the recovered Fortnite abilities, inventory, and cosmetics are rebuilt.
 UCLASS()
@@ -20,6 +22,9 @@ protected:
     virtual void BeginPlay() override;
 
 private:
+    UPROPERTY(VisibleAnywhere)
+    UCameraComponent* PlayerCamera;
+
     void MoveForward(float Value);
     void MoveRight(float Value);
 };
@@ -38,6 +43,10 @@ class FORTNITEGAME_API AFortGameModeAthena : public AGameModeBase
 public:
     AFortGameModeAthena();
     virtual void StartPlay() override;
+    virtual void RestartPlayer(AController* NewPlayer) override;
+
+private:
+    void PositionPawnOnTerrain(AController* Player);
 };
 
 // Linux cooked geometry reconstructed from Apollo's landscape components.

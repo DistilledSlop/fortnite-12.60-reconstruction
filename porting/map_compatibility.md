@@ -210,9 +210,9 @@ exited 0. Its visible appearance was not inspected.
 
 The original streamed level packages are still absent, so Apollo logs lookup
 errors for them. The reconstructed meshes have only approximate generated
-materials, one mesh LOD, and unverified landscape collision and texture
-layers. Gameplay actors, props, foliage, water, navigation, and Fortnite rules
-are still missing. This grid milestone does not make the island playable.
+materials, one mesh LOD, and no reconstructed texture layers. Gameplay actors,
+props, foliage, water, navigation, and Fortnite rules are still missing. This
+grid milestone does not make the island playable.
 
 ## Terrain collision probe
 
@@ -224,5 +224,15 @@ therefore had no usable ground collision. The editor commandlet
 ignored editor asset. After a Linux recook and restage, the staged runtime
 reported the new trace flag. A line trace through the center of D4, from
 `(16000, -16000, 10000)` to `(16000, -16000, -10000)`, hit the terrain actor
-at Z approximately `-1001`. This verifies one collision query, not player
-movement or collision for the remaining tiles.
+at Z approximately `-1001`.
+
+The commandlet's `-All` mode built and saved one PhysX triangle collision mesh
+for each of the 61 imported tiles. The Linux recook and stage include these
+updated packages. The game mode now places joining pawns above the D4 ground
+hit, and the pawn has a first person camera. In a dedicated server and client
+join, all 61 tiles loaded on both peers and the server's five second probe
+reported `grounded=1`, `mode=Walking`, and a stationary pawn at
+`(16000, -16000, -907.845)`. That verifies the D4 spawn and standing path;
+movement across tile boundaries and collision on other tiles still need tests.
+An Xvfb screenshot of the current Apollo run was entirely black, so visible
+terrain appearance remains unverified.

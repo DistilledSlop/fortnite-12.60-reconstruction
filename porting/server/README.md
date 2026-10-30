@@ -72,8 +72,9 @@ bash porting/server/smoke_join.sh \
 
 This probe checks that the server spawns `AFortPlayerPawnAthena` and the
 client receives its replicated pawn. It also checks that all 61 reconstructed
-Apollo terrain meshes load on both peers. The pawn currently has basic walking,
-mouse look, and jumping input; it does not implement Fortnite abilities,
+Apollo terrain meshes load on both peers and that the server pawn settles on
+D4 terrain with Walking movement. The pawn currently has a first person camera,
+basic walking, mouse look, and jumping input; it does not implement Fortnite abilities,
 inventory, combat, cosmetics, or the original client protocol. Apollo still
 lacks its streamed gameplay levels, props, and player start, so this is not a
 playable island.

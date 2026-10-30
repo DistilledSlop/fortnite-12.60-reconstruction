@@ -10,13 +10,17 @@ client="$stage_dir/FortniteLinux.sh"
 server_log="$porting_dir/generated/dedicated-server-client-test.log"
 client_log="$porting_dir/generated/local-client-join-test.log"
 map=${1:-/Game/Maps/FortniteEmptyDedicated}
+server_extra=()
+if [[ "$map" == /Game/Athena/Apollo/Maps/Apollo_Terrain* ]]; then
+    server_extra=(-FortniteProbePawnGround)
+fi
 
 if [[ ! -x "$server" || ! -x "$client" ]]; then
     printf 'Stage the Linux client and FortniteLinuxServer binaries first.\n' >&2
     exit 2
 fi
 
-timeout 30s "$server" "$map" \
+timeout 30s "$server" "$map" "${server_extra[@]}" \
     -nullrhi -nosound -unattended -port=7777 -log > "$server_log" 2>&1 &
 server_pid=$!
 trap 'kill "$server_pid" 2>/dev/null || true; wait "$server_pid" 2>/dev/null || true' EXIT
@@ -60,6 +64,10 @@ if [[ "$map" == *'?game=/Script/FortniteGame.FortGameModeAthena'* ]]; then
         if [[ $server_tiles -ne 61 || $client_tiles -ne 61 ]]; then
             printf 'Apollo terrain mesh count differs: server=%s client=%s (expected 61). See %s and %s\n' \
                 "$server_tiles" "$client_tiles" "$server_log" "$client_log" >&2
+            exit 1
+        fi
+        if ! rg -a -q 'Apollo pawn ground probe: grounded=1' "$server_log"; then
+            printf 'Apollo network pawn did not settle on terrain. See %s\n' "$server_log" >&2
             exit 1
         fi
     fi

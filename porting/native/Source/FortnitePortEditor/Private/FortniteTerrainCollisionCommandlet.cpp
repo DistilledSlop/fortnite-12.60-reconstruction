@@ -15,16 +15,8 @@ UFortniteTerrainCollisionCommandlet::UFortniteTerrainCollisionCommandlet()
     LogToConsole = true;
 }
 
-int32 UFortniteTerrainCollisionCommandlet::Main(const FString& Params)
+static int32 BuildTileCollision(const FString& Tile)
 {
-    FString Tile;
-    if (!FParse::Value(*Params, TEXT("Tile="), Tile) || Tile.Len() != 2 ||
-        Tile[0] < TEXT('A') || Tile[0] > TEXT('H') ||
-        Tile[1] < TEXT('1') || Tile[1] > TEXT('8'))
-    {
-        UE_LOG(LogTemp, Error, TEXT("Use -Tile=A1 through -Tile=H8 for an imported landscape mesh"));
-        return 2;
-    }
     const FString Name = FString::Printf(TEXT("LandscapeStreamingProxy_%s"), *Tile);
     const FString PackagePath = FString::Printf(
         TEXT("/Game/Athena/Apollo/Maps/Landscape/Converted/%s"), *Name);
@@ -53,4 +45,41 @@ int32 UFortniteTerrainCollisionCommandlet::Main(const FString& Params)
     }
     UE_LOG(LogTemp, Display, TEXT("Saved terrain collision mesh: %s"), *Filename);
     return 0;
+}
+
+int32 UFortniteTerrainCollisionCommandlet::Main(const FString& Params)
+{
+    if (FParse::Param(*Params, TEXT("All")))
+    {
+        int32 Attempted = 0;
+        int32 Failed = 0;
+        for (TCHAR Row = TEXT('A'); Row <= TEXT('H'); ++Row)
+        {
+            for (int32 Column = 1; Column <= 8; ++Column)
+            {
+                const FString Tile = FString::Printf(TEXT("%c%d"), Row, Column);
+                const FString Name = FString::Printf(TEXT("LandscapeStreamingProxy_%s"), *Tile);
+                const FString Filename = FPackageName::LongPackageNameToFilename(
+                    FString::Printf(TEXT("/Game/Athena/Apollo/Maps/Landscape/Converted/%s"), *Name),
+                    FPackageName::GetAssetPackageExtension());
+                if (!IFileManager::Get().FileExists(*Filename))
+                    continue;
+                Attempted++;
+                if (BuildTileCollision(Tile) != 0)
+                    Failed++;
+            }
+        }
+        UE_LOG(LogTemp, Display, TEXT("Terrain collision batch: %d attempted, %d failed"), Attempted, Failed);
+        return Attempted == 61 && Failed == 0 ? 0 : 5;
+    }
+
+    FString Tile;
+    if (!FParse::Value(*Params, TEXT("Tile="), Tile) || Tile.Len() != 2 ||
+        Tile[0] < TEXT('A') || Tile[0] > TEXT('H') ||
+        Tile[1] < TEXT('1') || Tile[1] > TEXT('8'))
+    {
+        UE_LOG(LogTemp, Error, TEXT("Use -Tile=A1 through -Tile=H8, or -All for the grid"));
+        return 2;
+    }
+    return BuildTileCollision(Tile);
 }

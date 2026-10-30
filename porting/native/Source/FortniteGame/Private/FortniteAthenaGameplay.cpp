@@ -1,10 +1,14 @@
 #include "FortniteAthenaGameplay.h"
 
+#include "Camera/CameraComponent.h"
+#include "Components/CapsuleComponent.h"
 #include "Components/InputComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Dom/JsonObject.h"
 #include "Engine/World.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "GameFramework/Controller.h"
+#include "GameFramework/PlayerController.h"
 #include "Kismet/GameplayStatics.h"
 #include "Misc/FileHelper.h"
 #include "Misc/CommandLine.h"
@@ -12,12 +16,19 @@
 #include "Misc/Paths.h"
 #include "Net/UnrealNetwork.h"
 #include "Serialization/JsonSerializer.h"
+#include "TimerManager.h"
 
 AFortPlayerPawn::AFortPlayerPawn()
 {
     bReplicates = true;
     SetReplicateMovement(true);
     GetCharacterMovement()->MaxWalkSpeed = 600.0f;
+    bUseControllerRotationYaw = true;
+    GetCharacterMovement()->bOrientRotationToMovement = false;
+    PlayerCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("PlayerCamera"));
+    PlayerCamera->SetupAttachment(GetCapsuleComponent());
+    PlayerCamera->SetRelativeLocation(FVector(0.0f, 0.0f, 64.0f));
+    PlayerCamera->bUsePawnControlRotation = true;
 }
 
 void AFortPlayerPawn::BeginPlay()
@@ -115,6 +126,49 @@ void AFortGameModeAthena::StartPlay()
             bHit ? 1 : 0, bHit && Hit.GetActor() ? *Hit.GetActor()->GetName() : TEXT("none"),
             bHit ? *Hit.ImpactPoint.ToString() : TEXT("none"));
     }
+    for (FConstPlayerControllerIterator It = GetWorld()->GetPlayerControllerIterator(); It; ++It)
+        PositionPawnOnTerrain(It->Get());
+}
+
+void AFortGameModeAthena::RestartPlayer(AController* NewPlayer)
+{
+    Super::RestartPlayer(NewPlayer);
+    if (!NewPlayer || !NewPlayer->GetPawn() || !GetWorld() ||
+        !GetWorld()->GetMapName().EndsWith(TEXT("Apollo_Terrain")))
+        return;
+
+    PositionPawnOnTerrain(NewPlayer);
+
+    if (FParse::Param(FCommandLine::Get(), TEXT("FortniteProbePawnGround")))
+    {
+        TWeakObjectPtr<APawn> WeakPawn(NewPlayer->GetPawn());
+        FTimerHandle Handle;
+        GetWorldTimerManager().SetTimer(Handle, FTimerDelegate::CreateLambda([WeakPawn]()
+        {
+            if (ACharacter* Character = Cast<ACharacter>(WeakPawn.Get()))
+                UE_LOG(LogTemp, Display, TEXT("Apollo pawn ground probe: grounded=%d mode=%s location=%s velocity=%s"),
+                    Character->GetCharacterMovement()->IsMovingOnGround() ? 1 : 0,
+                    *Character->GetCharacterMovement()->GetMovementName(),
+                    *Character->GetActorLocation().ToString(),
+                    *Character->GetVelocity().ToString());
+        }), 5.0f, false);
+    }
+}
+
+void AFortGameModeAthena::PositionPawnOnTerrain(AController* Player)
+{
+    if (!Player || !Player->GetPawn() || !GetWorld())
+        return;
+    const FVector Start(16000.0f, -16000.0f, 10000.0f);
+    const FVector End(16000.0f, -16000.0f, -10000.0f);
+    FHitResult Hit;
+    if (GetWorld()->LineTraceSingleByChannel(Hit, Start, End, ECC_Visibility) &&
+        Hit.GetActor() && Hit.GetActor()->IsA<AApolloLandscapeTile>())
+    {
+        const FVector Spawn = Hit.ImpactPoint + FVector(0.0f, 0.0f, 150.0f);
+        Player->GetPawn()->SetActorLocation(Spawn, false, nullptr, ETeleportType::TeleportPhysics);
+        UE_LOG(LogTemp, Display, TEXT("Apollo pawn positioned above terrain at %s"), *Spawn.ToString());
+    }
 }
 
 AApolloLandscapeTile::AApolloLandscapeTile()
@@ -149,7 +203,10 @@ void AApolloLandscapeTile::LoadTileMesh()
         TEXT("/Game/Athena/Apollo/Maps/Landscape/Converted/%s.%s"), *Name, *Name);
     UStaticMesh* Mesh = Cast<UStaticMesh>(StaticLoadObject(UStaticMesh::StaticClass(), nullptr, *Path));
     if (Mesh)
+    {
         GetStaticMeshComponent()->SetStaticMesh(Mesh);
+        GetStaticMeshComponent()->SetMobility(EComponentMobility::Static);
+    }
     UE_LOG(LogTemp, Display, TEXT("Apollo terrain tile %s ready: authority=%d mesh=%s"),
         *TileId, HasAuthority() ? 1 : 0,
         GetStaticMeshComponent()->GetStaticMesh() ? TEXT("yes") : TEXT("no"));
