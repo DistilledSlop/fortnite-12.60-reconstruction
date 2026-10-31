@@ -75,8 +75,11 @@ Updated 2026-10-31 after the second session. Everything below is on `main` (HEAD
 ## Still to do
 
 - **AES key commands:** three closure extractions listed in `master_plan.md` ("AES key commands")
-  still need to run. They unlock the Frontend widget graph and the GUID-keyed paks. The AES keys
-  must not be committed.
+  still need to run. They unlock the Frontend widget graph and the GUID-keyed paks. Agents may use the AES keys
+  (user decision, 2026-10-31). Pass them to `Cue4Inspect` with `--key-file=<path>` (or `FORTNITE_AES_KEY_FILE`);
+  the file lives outside the repository (one `primary=<64 hex>` line plus one `<guid digits>=<64 hex>` line per
+  GUID-keyed chunk) and the keys must never be committed, printed or logged. Without a key file the tool still
+  falls back to its interactive hidden prompt.
 - **Ghidra project and dump** live under `/opt/fortnite/ghidra-projects/fortnite-slim` and
   `porting/generated/dump/` (git-ignored). Do not re-run the full auto-analysis: it dies of heap
   exhaustion (Address Table analyzer). The slim analysis (about 25 minutes, 48 GB heap, address-table and

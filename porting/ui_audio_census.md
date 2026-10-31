@@ -214,8 +214,8 @@ Headless options:
 ## Commands that need the AES key
 
 The loose pass cannot discover `/Game` dependencies, because `--imports` prints
-only `/Script` roots. These commands recover them and need one primary-key prompt
-each, plus three GUID prompts because of `--all-keys`:
+only `/Script` roots. These commands recover them and need the primary key, plus three GUID keys because of
+`--all-keys`. Agents may run them unattended by adding `--key-file=<path>` (see `HANDOFF.md`, "Still to do"):
 
 ```sh
 # 1. Frontend entry map closure (highest priority)

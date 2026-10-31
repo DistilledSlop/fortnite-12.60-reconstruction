@@ -38,13 +38,15 @@ credentials in Git, and the orchestrator reviews and commits.
   drive. `Fortnite/` is now a symlink to `/mnt/vibrato/Fortnite` (checksum-verified
   copy; all scripts keep their paths). Keep large artifacts out of the repo and
   clean only intermediates an agent created. UE source and build output stay on `/`.
-- Pak access needs the AES keys. They must not be committed.
+- Pak access needs the AES keys. Agents are authorized to use them (user, 2026-10-31). Pass them with
+  `--key-file=<path>` (or `FORTNITE_AES_KEY_FILE`); the file stays outside the repository and the keys are never
+  committed, printed or logged. See `HANDOFF.md`, "Still to do".
 - Source-level identity with Epic's unreleased code is not reachable by
   analysis alone. Parity is judged by behavior and wire format.
 
 ## AES key commands
 
-Each adds `--all-keys` for the GUID-keyed paks.
+Each adds `--all-keys` for the GUID-keyed paks and `--key-file=<path>` so an agent can run it unattended.
 
 1. `dotnet porting/cue4inspect/bin/Release/net10.0/Cue4Inspect.dll FortniteGame/Content/Maps/Frontend --save-closure --max-packages=400 --all-keys`
 2. Same for `FortniteGame/Content/Maps/FortniteTransition` (cap 200).

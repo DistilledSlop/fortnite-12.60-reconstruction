@@ -189,7 +189,9 @@ Use `--scan-native` to list class, struct, enum, and function imports for
 every map as JSON lines. It found 146 distinct `/Script/FortniteGame` imports
 across the 3,694 maps; the generated full census stays outside Git.
 Add `--all-keys` when inspecting packages in the three GUID-keyed chunks;
-the tool prompts for those keys without saving them. It mounted all 31 paks
+the tool reads those keys from `--key-file=<path>` (or `FORTNITE_AES_KEY_FILE`; one `primary=<64 hex>` line and one
+`<guid digits>=<64 hex>` line per chunk, kept outside the repository) or, without a key file, prompts for them. It
+never saves, prints or logs them. It mounted all 31 paks
 and parsed a material package from `pakchunk1002` in a local test.
 `dotnet run --project porting/cue4inspect -- --registry` parses the embedded
 asset registry and reports asset classes and dependency-node counts. The main

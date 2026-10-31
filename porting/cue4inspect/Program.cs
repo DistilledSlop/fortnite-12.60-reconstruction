@@ -49,6 +49,8 @@ bool sizeList = args.Contains("--sizes");
 bool ue426 = args.Contains("--ue426");
 bool loose = args.Contains("--loose");
 Globals.FatalObjectSerializationErrors = exportGlb || exportLandscape || exportLandscapeGrid || exportLandscapeWeightmapGrid || exportPng || exportLandscapeWeightmaps || materialReport || functionReport || landscapeReport || actorReport;
+string? keyFileArgument = args.SingleOrDefault(arg => arg.StartsWith("--key-file=", StringComparison.Ordinal));
+string? keyFilePath = keyFileArgument is not null ? keyFileArgument["--key-file=".Length..] : Environment.GetEnvironmentVariable("FORTNITE_AES_KEY_FILE");
 string? maxArgument = args.SingleOrDefault(arg => arg.StartsWith("--max-packages=", StringComparison.Ordinal));
 int maxPackages = 250;
 if (maxArgument is not null && (!int.TryParse(maxArgument[15..], out maxPackages) || maxPackages < 1))
@@ -56,7 +58,7 @@ if (maxArgument is not null && (!int.TryParse(maxArgument[15..], out maxPackages
     Console.Error.WriteLine("--max-packages must be a positive integer");
     return 2;
 }
-string[] positional = args.Where(arg => arg != maxArgument && arg is not ("--all" or "--pseudo" or "--imports" or "--registry" or "--scan-maps" or "--scan-native" or "--all-keys" or "--save-package" or "--save-list" or "--sizes" or "--save-folder" or "--save-closure" or "--export-glb" or "--export-landscape" or "--export-landscape-grid" or "--export-landscape-weightmap-grid" or "--export-png" or "--export-landscape-weightmaps" or "--material-report" or "--function-report" or "--landscape-report" or "--actor-report" or "--versions" or "--ue426" or "--loose")).ToArray();
+string[] positional = args.Where(arg => arg != maxArgument && arg != keyFileArgument && arg is not ("--all" or "--pseudo" or "--imports" or "--registry" or "--scan-maps" or "--scan-native" or "--all-keys" or "--save-package" or "--save-list" or "--sizes" or "--save-folder" or "--save-closure" or "--export-glb" or "--export-landscape" or "--export-landscape-grid" or "--export-landscape-weightmap-grid" or "--export-png" or "--export-landscape-weightmaps" or "--material-report" or "--function-report" or "--landscape-report" or "--actor-report" or "--versions" or "--ue426" or "--loose")).ToArray();
 bool packageLess = registryMode || scanMaps || scanNative || exportLandscapeGrid || exportLandscapeWeightmapGrid;
 if (new[] { registryMode, scanMaps, scanNative, exportLandscapeGrid, exportLandscapeWeightmapGrid }.Count(mode => mode) > 1 || (packageLess ? positional.Length > 1 : positional.Length is < 1 or > 2))
 {
@@ -119,14 +121,16 @@ try
     }
     else
     {
-        string key = ReadHiddenKey("Primary AES key: ");
+        var fileKeys = LoadKeyFile(keyFilePath);
+        string key = fileKeys.TryGetValue("primary", out var filePrimary) ? filePrimary : ReadHiddenKey("Primary AES key: ");
         int mounted = provider.SubmitKey(new FGuid(), new FAesKey("0x" + key));
         Console.WriteLine($"Mounted {mounted} pak(s) with the primary key.");
         if (allKeys)
         {
             foreach (var guid in provider.RequiredKeys.Where(guid => guid.IsValid()).OrderBy(guid => guid.ToString(EGuidFormats.Digits)))
             {
-                string extraKey = ReadHiddenKey($"AES key for GUID {guid.ToString(EGuidFormats.Digits)}: ");
+                string guidDigits = guid.ToString(EGuidFormats.Digits).ToLowerInvariant();
+                string extraKey = fileKeys.TryGetValue(guidDigits, out var fileExtra) ? fileExtra : ReadHiddenKey($"AES key for GUID {guid.ToString(EGuidFormats.Digits)}: ");
                 mounted += provider.SubmitKey(guid, new FAesKey("0x" + extraKey));
             }
             Console.WriteLine($"Mounted {mounted} pak(s) in total.");
@@ -865,6 +869,28 @@ static byte[] EncodeRgbaPng(CTexture texture)
     using var buffer = new MemoryStream();
     image.SaveAsPng(buffer);
     return buffer.ToArray();
+}
+
+// Reads "name=<64 hex>" lines (name is "primary" or a GUID in digits form). Blank lines and lines
+// starting with '#' are ignored. The file must live outside the repository; key values are never printed.
+static Dictionary<string, string> LoadKeyFile(string? path)
+{
+    var keys = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+    if (string.IsNullOrWhiteSpace(path)) return keys;
+    foreach (var raw in File.ReadAllLines(path))
+    {
+        var line = raw.Trim();
+        if (line.Length == 0 || line[0] == '#') continue;
+        int separator = line.IndexOf('=');
+        if (separator <= 0) throw new FormatException("Key file lines must look like name=<64 hex characters>");
+        string name = line[..separator].Trim().ToLowerInvariant().Replace("-", "");
+        string value = line[(separator + 1)..].Trim();
+        if (value.StartsWith("0x", StringComparison.OrdinalIgnoreCase)) value = value[2..];
+        if (value.Length != 64 || !value.All(Uri.IsHexDigit))
+            throw new FormatException($"Key '{name}' in the key file is not a 64-character AES-256 hex key");
+        keys[name] = value;
+    }
+    return keys;
 }
 
 static string ReadHiddenKey(string prompt)
