@@ -39,6 +39,9 @@ public:
 	UPROPERTY(Replicated)
 	AFortTeamPrivateInfo* PrivateInfo;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x370): not a UPROPERTY, not replicated.
+	int32 AccumulatedPlayerScore;
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

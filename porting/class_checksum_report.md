@@ -80,11 +80,11 @@ Each step adds the fix that completes the most remaining classes (all of a class
 | 1 | struct FProfileUpdateSingle | 15 | 16 | 15 |
 | 2 | RPC flags without a Server/Client/NetMulticast role | 13 | 13 | 28 |
 | 3 | struct FMeshNetworkStatus | 3 | 3 | 31 |
-| 4 | enum ECollisionEnabled::Type | 1 | 1 | 32 |
-| 5 | static_or_const_rpc | 1 | 1 | 33 |
-| 6 | struct FPickupInstigatorArray | 1 | 1 | 34 |
-| 7 | struct FAthenaRewardResult | 1 | 1 | 35 |
-| 8 | enum ESpectatorReservationResult::Type | 1 | 1 | 36 |
+| 4 | enum ESpectatorReservationResult::Type | 1 | 1 | 32 |
+| 5 | struct FAthenaRewardResult | 1 | 1 | 33 |
+| 6 | enum ECollisionEnabled::Type | 1 | 1 | 34 |
+| 7 | struct FPickupInstigatorArray | 1 | 1 | 35 |
+| 8 | static_or_const_rpc | 1 | 1 | 36 |
 | 9 | enum EPartyReservationResult::Type | 0 | 1 | 36 |
 | 10 | struct FPartyReservation | 1 | 1 | 37 |
 

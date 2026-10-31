@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "AFortPlayerStateZone.h"
 
+#include "Delegates/Delegate.h"
+#include "EAthenaScoringEvent.h"
 #include "EMatchAbandonState.h"
 #include "ETeamMemberState.h"
 #include "FChangeTeamInfo.h"
@@ -24,7 +26,9 @@
 #include "FSimpleMetricInformation.h"
 #include "GameFramework/OnlineReplStructs.h"
 
+class AFortGameStateAthena;
 class UAthenaGadgetItemDefinition;
+class UFortPlaylistAthena;
 class UFortQuestItemDefinition;
 class UTexture2D;
 
@@ -108,45 +112,78 @@ public:
 	UPROPERTY()
 	int32 HumanKillScore;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0xe88): not a UPROPERTY, not replicated.
+	int32 KillScorePoints;
+
 	// table index 50, flags 0x20080000000014
 	UPROPERTY()
 	int32 AIKillCount;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0xeb4): not a UPROPERTY, not replicated.
+	int32 AIKillCountPoints;
 
 	// table index 49, flags 0x40000100000034
 	UPROPERTY(ReplicatedUsing=OnRep_NumChestsOpened)
 	int32 NumChestsOpened;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0xebc): not a UPROPERTY, not replicated.
+	int32 NumChestsOpenedPoints;
+
 	// table index 48, flags 0x40000100000034
 	UPROPERTY(ReplicatedUsing=OnRep_NumAmmoCansOpened)
 	int32 NumAmmoCansOpened;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0xec4): not a UPROPERTY, not replicated.
+	int32 NumAmmoCansOpenedPoints;
 
 	// table index 47, flags 0x40000100000034
 	UPROPERTY(ReplicatedUsing=OnRep_NumSupplyDropsOpened)
 	int32 NumSupplyDropsOpened;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0xecc): not a UPROPERTY, not replicated.
+	int32 NumSupplyDropsOpenedPoints;
+
 	// table index 46, flags 0x40000100000034
 	UPROPERTY(ReplicatedUsing=OnRep_NumLlamasOpened)
 	int32 NumLlamasOpened;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0xed4): not a UPROPERTY, not replicated.
+	int32 NumLlamasOpenedPoints;
 
 	// table index 45, flags 0x40000100000034
 	UPROPERTY(ReplicatedUsing=OnRep_NumForagedItemsConsumed)
 	int32 NumForagedItemsConsumed;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0xedc): not a UPROPERTY, not replicated.
+	int32 NumForagedItemsConsumedPoints;
+
 	// table index 44, flags 0x40000100000034
 	UPROPERTY(ReplicatedUsing=OnRep_NumMinutesAlive)
 	int32 NumMinutesAlive;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0xee4): not a UPROPERTY, not replicated.
+	int32 NumMinutesAlivePoints;
 
 	// table index 43, flags 0x40000100000034
 	UPROPERTY(ReplicatedUsing=OnRep_NumBronzeCoinsCollected)
 	int32 NumBronzeCoinsCollected;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0xeec): not a UPROPERTY, not replicated.
+	int32 NumBronzeCoinsCollectedPoints;
+
 	// table index 42, flags 0x40000100000034
 	UPROPERTY(ReplicatedUsing=OnRep_NumSilverCoinsCollected)
 	int32 NumSilverCoinsCollected;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0xef4): not a UPROPERTY, not replicated.
+	int32 NumSilverCoinsCollectedPoints;
+
 	// table index 41, flags 0x40000100000034
 	UPROPERTY(ReplicatedUsing=OnRep_NumGoldCoinsCollected)
 	int32 NumGoldCoinsCollected;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0xefc): not a UPROPERTY, not replicated.
+	int32 NumGoldCoinsCollectedPoints;
 
 	// table index 40, flags 0x40000100000034
 	UPROPERTY(ReplicatedUsing=OnRep_TotalPlayerScore)
@@ -223,6 +260,18 @@ public:
 	// table index 20, flags 0x10000000000014
 	UPROPERTY()
 	bool bIsMuted;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x1120): not a UPROPERTY, not replicated.
+	TMulticastDelegate<void, AFortPlayerStateAthena*, int32> KillScoreNative;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x1150): not a UPROPERTY, not replicated.
+	TMulticastDelegate<void, AFortPlayerStateAthena*, int32> TeamKillScoreNative;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x1180): not a UPROPERTY, not replicated.
+	TMulticastDelegate<void, AFortPlayerStateAthena*, int32> TotalPlayerScoreNative;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x11b0): not a UPROPERTY, not replicated.
+	TMulticastDelegate<void, AFortPlayerStateAthena*, int32> AIKillCountNative;
 
 	// table index 19, flags 0x20080000000014
 	UPROPERTY()
@@ -434,5 +483,10 @@ public:
 	bool Server_TogglePreserveSquad_Validate();
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	int32 UpdateScoreForEvent(EAthenaScoringEvent Event, int32 Count, int32 PreviousPoints, const UFortPlaylistAthena* Playlist);
+	void UpdateTotalPlayerScore();
 };
 

@@ -91,6 +91,7 @@ class UCurveVector;
 class UFortGameStateComponent_ActiveEventManager;
 class UFortGameStateComponent_Telemetry;
 class UFortMutatorListComponent;
+class UFortPlaylistAthena;
 class UMaterialInstanceDynamic;
 class UMaterialInterface;
 class UMaterialParameterCollection;
@@ -1020,5 +1021,9 @@ public:
 	void StopAutoPerfCaptureTimer();
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	UFortPlaylistAthena* GetCurrentPlaylistAthena() const;
 };
 
