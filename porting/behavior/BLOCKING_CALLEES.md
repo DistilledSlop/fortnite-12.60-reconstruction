@@ -1,5 +1,7 @@
 # Blocking callees (work list for the next Ghidra identification pass)
 
+> Third pass: rank 1 `0x1406a9dc0` is identified as `TMulticastScriptDelegate<FWeakObjectPtr>::ProcessMulticastDelegate<UObject>` (high). Its callers are ported where the rest of the body is clear. See `porting/decompilation_notes.md`, "Third pass". The table below is the pass-one ranking and is kept as it was.
+
 Generated from the screen of `porting/generated/decomp/` (exec records) and `porting/generated/decomp_improved/` (RPC records). The screen covers the 750 `portable` and `needs names` records. Counts use the rule `skip reason = unnamed_call` (the record calls at least one `FUN_*` that is not identified).
 
 Identified helpers from `porting/ghidra/name_tables/helpers.json` (30 entries) are excluded from this list, so resolved callees are removed.

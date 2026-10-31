@@ -533,3 +533,81 @@ The game-logic candidates that matter most are in `CALLEE_PORT_QUEUE.md`.
   `porting/.venv/bin/python -I porting/ghidra/probe_callees.py --input <list.json> --out porting/generated/callee_probe/<dir> --mem 32G`,
   `porting/.venv/bin/python -I porting/ghidra/classify_callees.py --probe <dir> --out <dir>`,
   `porting/.venv/bin/python -I porting/ghidra/improve_decompile.py --mem 32G` (about 90 to 140 s).
+
+
+## Third pass: the top blocker, empty exec thunks, delegate parameter order [observed unless marked]
+
+Scope: the top of `behavior/BLOCKING_CALLEES.md` (`0x1406a9dc0`) and its callers, the folded exec and validate bodies,
+and the 223 unprobed callees that block two or more records. The 223 were probed with `ghidra/probe_callees.py` into a
+scratch directory (outside the repo; one Ghidra process; the project was rolled back and the same five bookkeeping
+files changed as before). The probe inputs are the callees with `blocked >= 2` that had no probe output yet.
+
+### Identities
+
+| Name (proposed) | Address | Identity | Confidence | Evidence |
+|---|---|---|---|---|
+| `TMulticastScriptDelegate_ProcessMulticastDelegate` (was `FUN_1406a9dc0`, rank 1) | `0x1406a9dc0` | `TMulticastScriptDelegate<FWeakObjectPtr>::ProcessMulticastDelegate<UObject>(void*) const`, UE 4.25 `Core/Public/UObject/ScriptDelegates.h` (around line 479) | high | Copies the invocation list into `TArray<TScriptDelegate, TInlineAllocator<4>>` (the 64-byte stack buffer is 4 x 16 bytes; the copy is `FUN_1406d94c0`). Per entry: bound = name not None and `Get()` non-null and `FindFunction` non-null, then `ProcessDelegate`: `Object->ProcessEvent(FindFunctionChecked(name), Parms)` through vtable `+0x210` (the slot index was not counted against the 4.25 header); else compactable (name None or `!Get(true)`), then `RemoveInternal`, which searches the live list and `RemoveAtSwap`s the match (copy last over it, then shrink, `FUN_140690e50`). The loop continues after a skipped entry, as in the source. **Correction:** the earlier note "stop at the first entry whose name is None or whose function is missing" is wrong: nothing stops the loop. |
+| `FUN_145803c70` | `0x145803c70` | Stack cookie check (`XOR reg,RSP` then `CALL`, MSVC pattern) | high | Compiler artifact in every function with a stack buffer. Ignored in the unresolved-call counts. |
+| `FUN_142c0c240` | `0x142c0c240` | Copy of an `FText` from a static text returned by `FUN_1407c2c80`, with a shared-reference increment and a zeroed flags word | medium | 53 bytes; `LOCK` increment on the reference count at +8. Not used by any port. |
+| `FUN_140f6b550` (folded) | `0x140f6b550` | Validate body shared by 6 slots: `return 1 < ArrayNum(first argument)` (an `FString` or `TArray`, ArrayNum at +8) | high for the body; medium for the mapping | Each exec thunk passes its first container argument first. The six mappings rest on vtable slot names, so they are held back. |
+| `FUN_1406801c0` (folded) | `0x1406801c0` | Empty body (`ret 0`) | high | Already known (`_shared/impl_empty.inc`). |
+| exec entry `0x14075b6b0` (folded, 17 exec records) | `0x14075b6b0` | `P_FINISH` then `JMP 0x1406801c0`, so the native body is the shared empty stub | high | Asm of the entry. 15 are ported as empty bodies (the other two belong to `AFortGameModeAthena`, which has no generated header here). |
+| `FUN_140685370` | `0x140685370` | TArray compaction: removes entries whose pointer is null or whose virtual `+0x20` returns true, then resizes | low-medium | Not ported. Needs the element type and the slot name. |
+
+### Parameter block order of multi-parameter delegates (finding for the generator)
+
+The asm of three delegate call sites shows the parameter block in the reverse of the order in the generated
+`DECLARE_DYNAMIC_MULTICAST_DELEGATE_*` macro:
+
+- `FOnMutatorGameplayEvent` (macro: EventParam3, EventParam2, EventParam1, EventId). The struct copy writes
+  EventId, EventParam1, EventParam2, EventParam3 at offsets 0, 4, 8, 12 (body `0x1419a6bb0`).
+- `FOnMutatorGenericIntegerUpdated` (macro: NewIntegerValue, GenericIntegerIndex). The block holds the index k at
+  offset 0 and `MutatorGenericInt_k` at offset 4 (bodies `0x1419a6c10`, `0x1419a6c40`, `0x1419a6c70`).
+- `FOnUsingFocalPointChanged` (macro: bUsingFocalPoint, FocalPointActor, FocalPointUser). The block holds `this` at 0,
+  `FocalPoint` at 8 and `true` at 0x10 (body `0x1419f1f70`).
+
+All three agree with "block order = reverse of macro order", and the reversed names are semantically sensible (the
+index is the constant, the value is the field). The snippets pass the values by name, which reproduces the bytes. They
+are MEDIUM for this reason. The generator owner should confirm the order with one more delegate before relying on it.
+
+### Snippets added (35; 202 ported in total)
+
+- Empty bodies (15): `AFortPawn` LogChugSplashEvent, MovingEmoteStopped; `AFortPlayerPawn` DebugDestroyVehicle,
+  ToggleBodyType, ToggleGender; `AFortPlayerPawnAthena` ForceReviveFromDBNO; `AFortGameStateAthena`
+  ConditionalStopAutoPerfCapture, StopAutoPerfCaptureTimer, OnRep_CurrentPlaylistId, OnRep_DamageForStormCapMarking;
+  `AFortPlayerStateAthena` OnRep_Downs; `AFortPlayerControllerAthena` ClearDroppableItems,
+  EnableCreativeContentManagerBasedOnPlaylist, PreLobbyIslandTeleport, RemoveDroppableItems.
+- Delegate broadcasts (14, through `0x1406a9dc0`): `AFortGameStateAthena` HandleGameModeMessageDefaultPosition,
+  OnRep_WinningScore, OnRep_StormCapState, OnRep_bPlaylistStoppedSafeZonePhases, OnRep_MutatorEventData (MEDIUM),
+  OnRep_MutatorGenericInt_0/1/2 (MEDIUM); `AFortPlayerStateAthena` OnRep_TeamScore, OnRep_TeamScorePlacement,
+  OnRep_TeamAverageDamageDealt; `AFortPlayerPawn` AttemptInstantInteractSearch; `AFortPlayerControllerAthena`
+  OnRep_FocalPoint, ServerLookedAtFocalPoint_Implementation (MEDIUM).
+- FVector and float (5): `AFortPlayerPawn` GetPreviousPosition, GetPreviousVelocity, SetPreviousPosition,
+  SetPreviousVelocity, EndGhostModeExit.
+- Validate (1, MEDIUM): `AFortPlayerPawn` ServerChooseGender_Validate (`return Gender < 4;`, unique body `0x14234a140`).
+
+### Not ported (uncertain or inconsistent)
+
+- Six creative-plot validates on the folded body `0x140f6b550`: the body is consistent with every call, but the
+  mapping to the names depends on vtable slot names.
+- `ServerChoosePart_Validate`, `ServerCycleAccessoryColorSwatch_Validate`, `ServerCycleColorSwatch_Validate`: their
+  shared folded bodies compare the second argument register, which is not the enum argument the exec passes
+  (`bNext` or `Chosen`). Inconsistent, so not ported.
+- `ClientBroadcastOn*_Implementation` (the `FText` family): calls `FUN_14079d060` (unidentified). The text is built
+  and then not passed to the delegate, which passes only the bool. Intent unclear; not ported.
+- `OnRep_StormShieldComponent` (reads a gap field at `+0xf0`), `ClientAlertLeaveIsland_Implementation` (virtual `+0x14d8`
+  unnamed), `OnlySpinWhenFalling` (byte `+0x63c`, a gap), the `UAnimMontage` accessors (`GetPawnLOD`,
+  `GetPawnSignificance`), `GetDBNOHoister`, `IsStaggered` (gap bytes).
+- `AFortGameModeAthena` functions (`GetServerBotManager`, `GetBattleLabTeleporterManager`, `IsMapInfoInitialized`,
+  `AddContentKeysToGameState`, `FireServerPerformanceEvent`): bodies are simple, but no generated header exists for the
+  class in `native/`.
+- The `ServerChoosePart`, `ServerCycleAccessoryColorSwatch` and `ServerCycleColorSwatch` validates: see the bullet above.
+
+### Next blockers
+
+1. `0x1419d3ff0` (17 records; accessor over vtable `+0x150`, then `IsA AFortGameStateAthena`). Needs the UObject or
+   AActor virtual order from the 4.25 headers to name `+0x150`.
+2. `0x140685370` (11 records alone). Needs the element type and the predicate slot `+0x20`.
+3. `FUN_142c0c240` (10 records alone) and `FUN_14079d060`: the `FText` family. Name `FUN_14079d060` first.
+4. `0x1406aaec0` (6 records alone): copy constructor of the GameplayCue struct; needs the struct name.
+5. Generator: the 130 `proposed` declarations (exec, validate, impl, onrep) and the delegate parameter order above.

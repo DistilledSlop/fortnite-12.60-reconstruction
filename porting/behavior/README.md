@@ -4,10 +4,19 @@ Hand-ported native function bodies, taken from the decompiled output of the ship
 (`porting/generated/decomp/` and `porting/generated/decomp_improved/`, both git-ignored). Each `.inc`
 is our own C++ re-expression of what the decompile does, not a copy of it.
 
-Status (see `MANIFEST.json`, 362 entries): **167 ported** (32 getters, 3 onrep, 54 impl, 6 exec, 72 validate;
-confidence 156 high, 11 medium), **195 skipped** with a reason (of which 17 are callees from the queue).
-Of the 167, 57 are declared in the generated headers; 110 need a declaration that the generator does not emit yet.
-`python3 porting/behavior/check_behavior.py` reports 0 failures.
+Status (see `MANIFEST.json`, 395 entries): **202 ported** (32 getters, 17 onrep, 55 impl, 25 exec, 73 validate;
+confidence 185 high, 17 medium), **193 skipped** with a reason (of which 17 are callees from the queue).
+Of the 202, 72 are declared in the generated headers; 130 need a declaration that the generator does not emit yet.
+`python3 porting/behavior/check_behavior.py` reports 2 failures, both on ported entries whose declarations are missing
+from the currently generated headers (`AFortPlayerPawn::ServerSendZiplineState_Implementation`,
+`AFortPlayerControllerAthena::ClientReceiveSquadQuickChatMessage_Implementation`). The headers came from another
+generator run; the snippets themselves pass.
+
+Third pass (35 new bodies, see `porting/decompilation_notes.md`, "Third pass"): 15 empty bodies (exec thunks that
+tail-jump to the shared `ret` at `0x1406801c0`), 14 bodies that broadcast a multicast delegate through the dispatcher
+`0x1406a9dc0` (identified as `ProcessMulticastDelegate`), 4 FVector accessors, a float reset, and one RPC
+validate. Held back as uncertain: six validates on the folded body `0x140f6b550` (identity rests on vtable slot names),
+and the RPC validates that share folded bodies with mismatched argument registers.
 
 ## Files
 
@@ -49,33 +58,39 @@ Of the 167, 57 are declared in the generated headers; 110 need a declaration tha
 - Each file starts with a `//` header comment: original address, decompile source, proxy score, what was
   inferred and `CONFIDENCE: HIGH|MEDIUM|LOW`. The checker requires the tag to match the manifest.
 
-## Splice instructions for gen_native_classes.py
+## Splice (implemented in gen_native_classes.py)
 
-Not implemented yet. The generator needs these steps (no step changes an emitted file except as listed):
+`gen_native_classes.py --promote` splices the ported entries (`status == "ported"`, 167 today). It is on by default.
+Turn it off with `--no-behavior` or `FN_BEHAVIOR_SPLICE=0`; the output then equals the stub output. Per entry:
 
-1. Read `porting/behavior/MANIFEST.json`. Use only entries with `status == "ported"`.
-2. Declarations. For each entry with `signature_status == "proposed"`, emit `<signature>;` in the public section
-   of `<class>.h`:
-   - getters, predicates and setters (`exec`): as UFUNCTION(BlueprintCallable) per the generator's policy. Today
-     `build_functions_promoted` in `gen_native_classes.py` (line 1122) drops every function that is neither an RPC
-     nor a RepNotify target, so these are never emitted;
-   - `validate` entries: a `bool <Name>_Validate(<params>)` with the RPC's UFUNCTION switched to `WithValidation`.
-     The generator emits no `_Validate` today. The parameter list is the matching `_Implementation`.
-   Enum returns need the enum header included (`EFortControlRecoveryBehavior.h`, `EFortPawnStasisMode.h`).
-3. Bodies. In `<class>.cpp`, find the definition whose signature equals `signature` (normalised whitespace,
-   trailing `;` removed). Replace the stub body (the `// Body not recovered` block) with the `.inc` contents.
-   Entries that point to `_shared/` use the same file for several functions.
-4. RPCs. Port the **native** bodies `Foo_Implementation` and `Foo_Validate`. Never put a snippet into the UHT exec
-   thunk (`execFoo`), which pops `FFrame` parameters and calls the native function. The thunk stays generated.
-5. After generation, re-run `python3 porting/behavior/check_behavior.py`. It must report `FAIL: 0`.
-   `PENDING_DECL` lines are expected until the generator emits the proposed declarations.
+- `getter`, `exec` (`signature_status: proposed`): the non-RPC reflection function is emitted as
+  `UFUNCTION(BlueprintCallable[, BlueprintPure])` (BlueprintPure when the reflection flag is set), with the manifest
+  signature (`const` included) and the snippet as body. Only these two kinds add functions that are not RPCs.
+- `validate` (`<Rpc>_Validate`): the Server RPC gets `WithValidation`, `bool <Rpc>_Validate(<same params>)` is declared
+  and the snippet is its body. The RPC must be a Server RPC; otherwise the entry is rejected.
+- `impl` (`<Rpc>_Implementation`) and `onrep` (RepNotify): the snippet replaces the stub body. Declarations already exist.
+
+The generator splices an entry only when its signature equals the reflection-derived one (whitespace ignored), the
+RPC or function is emitted, the body has balanced braces and no preprocessor line, and every class or type the body
+names is in this module or an engine module with a known include. Other entries are rejected: nothing is emitted for
+them and they are listed in `behavior_splice.json` (in the report directory) with the reason. Snippet includes go into
+the `.cpp` (types used by the body); types used by a signature go into the `.h` as before. After the text is rendered,
+every spliced function is checked for one declaration, the UFUNCTION line in front of it, one definition with the same
+signature, and a body equal to the snippet; a mismatch stops the run before anything is written.
+
+Snippet bodies keep their comment header as written. Some say "Declared in generated header: no", which is stale once
+the splice is on; the snippet owner can update those lines.
 
 ## Checker
 
 `check_behavior.py` (stdlib; `python3 porting/behavior/check_behavior.py [--verbose]`):
 
-- signature: `declared` entries must appear in the generated header; `proposed` entries must not already be
-  declared (reported as `PENDING_DECL`, not as a failure);
+- signature: `declared` entries must appear in the generated header; `proposed` entries count as declared once the
+  generator emits them (`declared_in_header`) and are reported as `PENDING_DECL` until then;
+- `--gen-root <dir>/FortniteGame/Generated [--splice-report behavior_splice.json]` checks a generated tree (it does
+  not write COUNTS.txt): the declaration and its UFUNCTION specifier (BlueprintCallable for getter/exec,
+  WithValidation for the RPC of a validate), the definition with the same signature and const, and that the body
+  equals the `.inc`. An entry the splice report rejects is counted as `not spliced`, not as a failure;
 - `.inc` exists; CONFIDENCE tag matches the manifest; original address present; no TODO/FIXME/TBD/XXX/
   placeholder/"not recovered"/"..." text (checked on the raw text, comments included);
 - best-effort token check: each bare identifier and each `this->X` in the body must be a parameter, a local,
