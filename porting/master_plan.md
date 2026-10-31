@@ -1,5 +1,7 @@
 # Master plan to the stated goal
 
+> **Current state and how to resume: see `HANDOFF.md`** (written when the session wound down).
+
 Goal: a UE project rebuildable from source that joins a full reconstructed
 server with vanilla parity. `progress/components.json` is the measure; a
 milestone is done only with logged evidence. Rules for every wave: at most
