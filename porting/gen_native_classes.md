@@ -211,6 +211,13 @@ Promote mode differs from the draft in these ways:
 - Each emitted RPC gets an `_Implementation` stub (UHT requires it), and each RepNotify gets an empty body. A ported
   snippet replaces the stub body, and a validate snippet adds `WithValidation` and `<Rpc>_Validate` (see the splice
   section of `porting/behavior/README.md`).
+- Net service functions (flags `FUNC_NetRequest` / `FUNC_NetResponse`, no Server/Client/NetMulticast role) are
+  emitted as `UFUNCTION(ServiceRequest(...))` / `UFUNCTION(ServiceResponse(...))` (`net_service_kind`). They have no
+  `_Implementation`: their body is the programmer's, and the stub is empty (with `return {};` when they return a value).
+  The endpoint is a placeholder (`NET_SERVICE_ENDPOINT`); the response ids are `NET_RESPONSE_IDS`, read from the dump
+  because the reflection tables do not carry `RPCId` / `RPCResponseId`. A response id needs `JSBridge` as the endpoint
+  (UHT, HeaderParser.cpp). Request ids are 0 in the dump.
+- A const RPC is emitted with `const` on the declaration and on its `_Implementation` (UHT sets `FUNC_Const` for it).
 - UCLASS has no `minimalapi` (UHT rejects it with the module API macro).
 
 Promote mode also emits the struct, enum and delegate types used by the emitted members and RPCs (transitively), one
@@ -220,3 +227,15 @@ type tables come from `--types-dir` (default: the reflection directory). `type_c
 the engine types included, and the promoted types that cannot be emitted with the reason.
 
 The draft mode (no `--promote`) is unchanged and still writes `TODO_*` tokens into `porting/generated/native_classes`.
+
+## Cross-module types and engine enums (class checksum pass)
+
+- A FortniteGame item may use a struct or enum of a runtime module in `CROSS_MODULE_TARGETS` (every runtime module
+  except FortniteUI, which depends on FortniteGame). `cross_module_allowed` decides it: the header is included, and the
+  module is added to the item's module dependencies, which the game Build.cs must list (promote checks it). The
+  reverse edge is never allowed, so the module graph stays acyclic (promote still refuses a cycle).
+- Namespaced engine enums (`namespace ECollisionEnabled { enum Type }`, named `ECollisionEnabled::Type`) are indexed by
+  `NAMESPACE_ENUM_RE`. `ENGINE_SCAN_DIRS` also scans `Plugins/Online/OnlineSubsystemUtils` (the party and spectator
+  beacon state types). The other Online plugins stay out: they would add `WebBrowser` and `LoginFlow` includes.
+- The game Build.cs lists `WebBrowser` (the JS-bridge types of UFortGameInstance); runtime module Build.cs files inherit
+  the game module's engine list, so they list it too.
