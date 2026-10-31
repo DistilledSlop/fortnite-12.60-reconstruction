@@ -325,3 +325,77 @@ Structs with known shapes: `Vector` (12 bytes, 4-byte alignment, X Y Z), `Quat` 
 - **Out, reference and return parameters** of delegates, and delegates with more than nine parameters, are not emitted (category `delegate_member_unresolved`, reason recorded).
 - **Class references are unchanged.** `resolve_class_refs.py` resolves 2,326 of 2,622 class refs, and the 296 unresolved targets are not class-block functions. Each target is a singleton builder that calls a helper with stack-built parameters, with no LEA to any class block in its body and none one call deeper. They are not identified. The 148 unnamed and 232 outside-set class refs therefore still block the classes that use them, and so do the structs and delegates that use them.
 - **RPCs** use the name join, not the construct-function join. The 23,510 UFunction parameter blocks with construct functions could resolve the 4,764 ambiguous name joins (`native_classes_status.md`); the generator has not been changed to use them.
+
+## 10. Native function tables
+
+Scope: exec addresses of the native UFUNCTIONs (`FNameNativePtrPair` tables), the entry points for decompiling gameplay code, and the vtable search. Read-only over the runtime dump (section 6) and the reflection outputs of sections 7 to 9. Script: `porting/extract_native_funcs.py` (stdlib, `--self-test`). Outputs (git-ignored, `porting/generated/reflection/`): `native_funcs.json`, `native_class_index.json`, `decompile_targets.json`. Nothing was built, and `porting/native/` and `Fortnite/` were not touched.
+
+### Method [observed + inferred]
+
+1. **Table layout.** `FNameNativePtrPair` is `{const char* NameUTF8; FNativeFuncPtr Pointer}` (`CoreNative.h`, 16 bytes). `FClassFunctionLinkInfo` is `{UFunction* (*CreateFuncPtr)(); const char* FuncNameUTF8}` (`Class.h`). Every native-table name pointer is pointer-equal to a name pointer in its class's function link list (35,535 of 35,535 checked in the first scan).
+2. **Table to class.** `StaticRegisterNatives<C>` calls `C::StaticClass()` (`GetPrivateStaticClass`), then `FNativeFunctionRegistrar::RegisterFunctions(Class, Array, N)` with `mov r8d, N; lea rdx, Array`. The table is therefore a RIP-relative LEA target from that function. Its class is the `GetPrivateStaticClass` it calls. `GetPrivateStaticClass` is found from the compiled-in-defer initializer, which also references the construct function `Z_Construct_UClass_C` (block link from section 7). Thunks (`jmp rel32`, often outside `.pdata`) are followed.
+3. **Flags and params.** A function's flags and parameters come from `function_blocks.json` by the `Z_Construct_UFunction_*` address, which is the `CreateFuncPtr` of the class's link list. This join is exact: 23,509 of 23,758 links join, with the name equal in every case.
+4. **Fallback (name-only).** A table can be found without a code reference. A run of `(name, code)` pairs whose names all belong to one class, and which contains every native-flag name of that class, is assigned to it when the class is unique. It is used only for classes that the LEA route does not cover. Its results are tagged `source: name_segment`.
+5. **Vtables.** `GetPrivateStaticClass` passes `InternalConstructor<C>` and `InternalVTableHelperCtorCaller<C>` as stack arguments 10 and 11 (`Class.h` `InternalConstructor`, `ObjectMacros.h` `GetPrivateStaticClassBody`). They were read from the stores through `r11`. The constructor they reach stores the vptr at offset 0 of `this` (`mov [reg], reg` with no displacement). The last such store is the candidate vtable. Slot counts run from the table start to the next class's table start.
+
+### Coverage [observed]
+
+| Measure | Value |
+|---|---|
+| Named classes (`class_name_map.json`) | 6,957 |
+| Classes with at least one function link | 2,849 |
+| Classes with a native table | 2,541 (2,532 by LEA, 9 by name fallback) |
+| Function links (`FClassFunctionLinkInfo`) | 23,758, joined to flags 23,509 |
+| Distinct function name strings in links | 20,881 |
+| `FUNC_Native` function links (`0x400`) | 20,581 |
+| Native function links with an address | 20,581 of 20,581: 20,573 code addresses, 8 writable-data stubs (`stub_addr`, not code) |
+| `FUNC_Native` `UFunction` blocks (`function_blocks.json`) | 20,582, one of them spurious (`0x1471cff20`: flags `0x52415453`, no construct function, no owner) |
+| Distinct native names with a code address in some class | 18,173 of 18,180 real names (7 have only a stub) |
+| Exec address from LEA route / name fallback | about 20,443 / 139 link-level (the fallback counts include the stubs) |
+| Tables rejected (names not in class; UMaterial single-letter names) | 10 |
+| Conflicts (same class and name, different code; LEA kept) | 15 (13 in `UFortMcpProfileAthena`, 2 in `UFortMcpProfileCampaign`) |
+
+The `UFunction` block count is 23,879 with 20,697 distinct name strings. The 22,730 in the brief is the number of distinct `NameUTF8` pointers from the parameter blocks (pointers, not strings).
+
+### Validation [observed]
+
+- **Address range.** All 20,573 code addresses (and the 20,574 exec addresses counted at class level) are inside an executable section (`.text`, both sections). 8 entries are stubs in writable `.data`, reported only as `stub_addr`.
+- **Decode.** 200 random exec addresses, objdump of each function body up to its first `ret` or `jmp`: 188 clean (94%), 13 `(bad)` lines in 2,727 instructions (0.5%). Six sampled functions have a `(bad)` line, and they were not investigated individually. 168 of the 200 are `.pdata` function starts. The remaining 32 are small leaf functions with no unwind entry; their extent is estimated from int3 padding. The earlier 48-byte window overcounted, because it runs into the next function's data.
+- **Engine headers** (UE 4.25 `Engine/Source/Runtime`, `UFUNCTION` declarations, approximate regex). The shipped engine is not the 4.25 tree (section 8), so differences are expected.
+
+| Class | Header UFUNCTIONs | In recovered class | With exec | Recovered functions (exec) |
+|---|---|---|---|---|
+| AActor | 135 | 124 | 102 | 127 (105) |
+| APawn | 29 | 29 | 27 | 29 (27) |
+| ACharacter | 46 | 46 | 40 | 46 (40) |
+| APlayerController | 135 | 135 | 135 | 135 (135) |
+| AGameModeBase | 28 | 28 | 23 | 28 (23) |
+| UActorComponent | 25 | 25 | 22 | 25 (22) |
+| USceneComponent | 59 | 59 | 59 | 61 (61) |
+| UKismetMathLibrary | 435 | 420 | 420 | 650 (650) |
+| UGameplayStatics | 118 | 118 | 118 | 118 (118) |
+| UKismetSystemLibrary | 230 | 226 | 226 | 243 (241) |
+
+`AActor::K2_GetActorLocation` resolves to `0x1446b0aa0` (flags `0x54820401`). UKismetMathLibrary has 650 native functions, not thousands. The header declares 435 UFUNCTIONs in that file.
+
+### Vtables [observed; not reliable]
+
+- A candidate vptr store was found for 6,751 of 6,957 named classes. Only 844 distinct addresses result, and 4,249 candidates (on the earlier rule) were shared with classes outside the candidate's ancestry. Example: `AFortWorldSettings` gets the table of unrelated animation-instance classes.
+- Published as `vtable_addr` only when the class hierarchy supports it: 365 unique tables and 43 inherited (a class that adds no virtuals reuses its parent's table). That is 408 classes. Everything else keeps `vtable_candidate` with `vtable_status: unverified`, and is not used.
+- Verified-looking Athena tables: `AFortGameStateAthena` `0x145a359b8` (unique, slots 787 is an upper bound) and `AFortPlayerControllerAthena` `0x1459ff650` (unique, 34). Neither is checked against anything beyond the hierarchy rule.
+- AActor's constructor store was read by hand: `lea rax,[0x1469fec60]; mov [rdi],rax` (the own vptr at offset 0). The published table is `inherited`.
+- **Limit.** The `ClassConstructor` and `VTableHelperCtorCaller` helpers are reached by thunks, and the constructor chain can share a tail-jumped base constructor. Without symbols or RTTI (only 611 `.?AV` names, none `AFort*`) no slot-to-function mapping is possible.
+- **Ghidra work needed later:** decompile the `InternalConstructor<C>` thunk, then the constructor it tail-jumps to, read the vptr store with the decompiler, and check the store against the slot list. The slot-to-name map needs the base class declaration order from the headers, which the shipped engine does not match exactly.
+
+### Decompile targets [observed]
+
+`porting/generated/reflection/decompile_targets.json` lists 908 functions for the eight Athena framework classes, ranked by tier, each with exec address, flags and net roles: tier 1 (`FUNC_Net`, RPC or replicated) 182; tier 2 (`FUNC_Native` and `BlueprintEvent`) 7; tier 3 (`BlueprintCallable`, exec) 436; tier 4 (other native, exec) 228; tier 5 (no exec address) 55. `AFortWorldSettings` has no UFUNCTION entries in the reflection data (`function_count` 0), so only its class record is written. Parent chains come from `class_parent_map.json`. Tier 5 entries have `exec_addr: null` and need a vtable or `ProcessEvent` path.
+
+### Limits
+
+- **No symbols.** Names come from the reflection tables and the table association. The association is verified by the class's function list, not by the code bodies.
+- **Name-only fallback.** About 139 function links use it, mostly in `UFortMcpProfile*`. In `UFortMcpProfileAthena` the LEA table (13 functions) and a 24-entry `.rdata` table give different code for the same names (15 conflicts over the two classes), and the LEA table was kept. Either could be wrong. The fallback entries are the lower-confidence set and are tagged `source: name_segment`.
+- **Unlinked tables.** The `UMcpProfile` family has no LEA-referenced table. Its registration code is outside the decoded `.text` (`porting/binary_analysis.md` section 6 caveat 1 and section 7 limit 3). Coverage there is only the `.rdata` table.
+- **Dump snapshot.** Code decrypted after 32.5 s (login, lobby, gameplay) may be absent. Each exec address should be checked with the decode step before use.
+- **Params** are the decoded `FFunctionParams` property tables from `function_blocks.json` (section 9 limits apply, including the `RepSkip` and metadata gaps).
+- **Rerun:** `python3 -I porting/extract_native_funcs.py` (about 35 s). Self-test: `python3 -I porting/extract_native_funcs.py --self-test`. Options: `--no-decode-check`, `--no-vtables`, `--no-name-fallback`, `--no-header-check`.
