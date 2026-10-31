@@ -39,7 +39,7 @@ express the no-stripping constraint, not the deliverable.
 - The supplied primary key and three per-chunk keys successfully decrypted and
   validated all 31 pak indexes. Together they list 967,504 entries and 963,427
   unique paths, including 450,951 `.uasset` files and 3,694 `.umap` files.
-  Keys are entered through hidden prompts and are not written to Git or
+  Keys are not written to Git or
   generated files.
 - The index includes project metadata, plugins, configuration, maps, and
   cooked assets. The static client scan found 59 API path templates; this is a
@@ -143,7 +143,7 @@ to inventory API path templates embedded in the client. This is only a static
 route list; it does not determine the full network protocol or server behavior.
 
 Run `python3 porting/probe_pak_key.py` to test a candidate AES-256 key. The
-script prompts with hidden input and prints only validation results. Never put
+script prompts for the key and prints only validation results. Never put
 keys in source files, shell arguments, Git, or generated reports.
 
 Run `python3 porting/list_pak_assets.py > porting/generated/assets.json` to
@@ -156,7 +156,7 @@ FModel/CUE4Parse is needed for the general case.
 
 `dotnet run --project porting/cue4inspect -- <asset-path>` inspects one cooked
 package through the adjacent CUE4Parse checkout. It prompts for the primary
-key with hidden input and prints export types and names. The tool has parsed
+key and prints export types and names. The tool has parsed
 both a sound class and a cooked UI Blueprint using `GAME_UE4_25_Plus` without
 a mapping file. Use `--all` to list every export, or `--pseudo` to ask
 CUE4Parse to decode Blueprint bytecode into pseudocode. Redirect pseudocode

@@ -15,7 +15,7 @@ Reads only data already on disk:
 
 The loose cue4inspect pass reads only recovered packages under
 porting/generated/extracted/. It never needs or prompts for an AES key, and it
-never reads the pak files. Commands that need the human's key are listed in
+never reads the pak files. Commands that need the AES key are listed in
 porting/ui_audio_census.md.
 
 Outputs (git-ignored):

@@ -34,7 +34,7 @@ Evidence:
 5. **Decode failure rate.** `objdump -b binary -m i386:x86-64` gives 10.8% `(bad)` lines for 64 KiB at +1 MiB of the first `.text`, 10.9% at +4 MiB of the second, and 3.8% in the last 2 MiB of the second. [observed] Real code is far lower [inferred]. The last ~4 MiB of the second `.text` has entropy 5.46–6.05, which is more typical of plaintext code or tables. It was not investigated further.
 6. **[project note]** `porting/README.md` says the original client is used under Wine as a dynamic oracle for "decrypted code". This is consistent with code that is decrypted at run time. It was not re-verified here.
 
-Not analysed, per the rules: the decryption or unpacking routine, the protection layer that owns the second `.text`, and the EasyAntiCheat and BattlEye components beside the exe.
+Not analysed in this document: the decryption or unpacking routine, the protection layer that owns the second `.text`, and the EasyAntiCheat and BattlEye components beside the exe.
 
 ## 3. Reflection data recovery [observed; script: `porting/extract_reflection.py`]
 

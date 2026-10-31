@@ -24,7 +24,7 @@ dotnet run --no-build -c Release --project porting/cue4inspect -- \
   FortniteGame/Content/Environments/Homebase/Meshes/SM_HB_Rock_Cliff --export-glb
 ```
 
-The key is entered through the hidden prompt. `--export-glb` writes only to
+`--export-glb` writes only to
 ignored `porting/generated/converted/`. It exported this 3-LOD rock mesh to a
 120,924-byte GLB and `S_Fortnite_Hexmaps_Tree_cine` to a 37,184-byte GLB.
 These are geometry conversion probes; material textures and shader behavior

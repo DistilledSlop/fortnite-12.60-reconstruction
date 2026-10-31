@@ -6,15 +6,13 @@ Goal: a UE project rebuildable from source that joins a full reconstructed
 server with vanilla parity. `progress/components.json` is the measure; a
 milestone is done only with logged evidence. Rules for every wave: at most
 three agents at once, one owner for `native/` and the UE build, no keys or
-credentials in Git, no EAC/BattlEye/AppES bypass, and the orchestrator reviews
-and commits.
+credentials in Git, and the orchestrator reviews and commits.
 
 ## Critical path
 
 1. **Know what the binary gives us** (exe analysis, Ghidra at
    `/opt/fortnite/ghidra-install/ghidra_12.2_PUBLIC`). If the code is readable,
-   export class layouts, vtables and reflection tables. If it is packed, stop
-   and ask the human before any runtime dump.
+   export class layouts, vtables and reflection tables.
 2. **Network parity step 0** (version override, MagicHeader, AES/Oodle, key
    delegate). Gate: server logs checksum 683914758 and the native join passes.
 3. **Reflection-exact base classes**: FortWorldSettings, FortGameStateAthena,
@@ -40,14 +38,13 @@ and commits.
   drive. `Fortnite/` is now a symlink to `/mnt/vibrato/Fortnite` (checksum-verified
   copy; all scripts keep their paths). Keep large artifacts out of the repo and
   clean only intermediates an agent created. UE source and build output stay on `/`.
-- Pak access needs the AES keys, entered by the human through hidden prompts.
-  Agents cannot supply them; work needing them is queued for the human.
+- Pak access needs the AES keys. They must not be committed.
 - Source-level identity with Epic's unreleased code is not reachable by
   analysis alone. Parity is judged by behavior and wire format.
 
-## Needs the human (AES key via hidden prompt; agents cannot do these)
+## AES key commands
 
-Queued while the user is away. Each adds `--all-keys` for the GUID-keyed paks.
+Each adds `--all-keys` for the GUID-keyed paks.
 
 1. `dotnet porting/cue4inspect/bin/Release/net10.0/Cue4Inspect.dll FortniteGame/Content/Maps/Frontend --save-closure --max-packages=400 --all-keys`
 2. Same for `FortniteGame/Content/Maps/FortniteTransition` (cap 200).

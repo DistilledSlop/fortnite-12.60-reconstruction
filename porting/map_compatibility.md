@@ -187,7 +187,7 @@ transform and replicated it to a joining client. This established the
 single tile conversion path before expanding to the grid.
 
 The inspector's `--export-landscape-grid` mode processes all 64 regular grid
-positions with one hidden key prompt and writes an ignored transform manifest.
+positions with one key prompt and writes an ignored transform manifest.
 It exported 61 nonempty landscape meshes, about 434 MiB of GLB data. A7 and
 A8 have no package in this build; B8 has a landscape actor with zero
 components. All 61 mesh exports completed without a CUE4Parse error. These
@@ -308,7 +308,7 @@ report (grass tone height, waterline height and blur) are my assumptions. The
 `BackDrop3_N` and `BackDrop4_N` normal textures are not extracted and unused.
 `M_BackDrop_2`, `M_BackDrop_6`, `M_BackDrop_7`, `M_SnowTops`, the `1B` and `4B`
 overrides and the aurora materials still use importer placeholders: their
-packages are not on disk and extracting them needs the hidden-key prompt, for
+packages are not on disk and extracting them needs the key prompt, for
 example `--material-report` on each path.
 
 At run time `AApolloBackgroundMesh` replicates the component's original
@@ -371,7 +371,7 @@ weightmap paints the entire component with Sand.
 `--export-landscape-weightmaps` writes each component's decoded PNG weightmap
 and a `layers.json` mapping channel numbers to original layer names. Its
 `--export-landscape-weightmap-grid` form reads the regular A1–H8 tiles with
-one hidden primary-key prompt. It exported 61 tiles, 221 components, and 311
+one primary-key prompt. It exported 61 tiles, 221 components, and 311
 weightmap textures with zero failures. A7 and A8 are absent, and B8 has no
 components. Across the grid, the masks name nine layers: Gravel, Mud, Sand,
 Asphalt, BiomeA, BiomeB, BiomeC, BiomeD, and DataLayer. D4's four components

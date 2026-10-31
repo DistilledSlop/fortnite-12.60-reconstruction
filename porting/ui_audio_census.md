@@ -211,7 +211,7 @@ Headless options:
    then the season lobbies, which have the largest asset graphs.
 8. **Voice and absent audio plugins.** Defer. No frontend map imports them.
 
-## Commands that need the human's AES key
+## Commands that need the AES key
 
 The loose pass cannot discover `/Game` dependencies, because `--imports` prints
 only `/Script` roots. These commands recover them and need one primary-key prompt

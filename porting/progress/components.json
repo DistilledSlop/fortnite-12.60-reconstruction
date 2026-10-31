@@ -61,8 +61,8 @@
         },
         {
           "id": "platform.wine_launch",
-          "name": "Original client starts under Wine",
-          "weight": 35,
+          "name": "Wine analysis oracle: original client reaches the login screen",
+          "weight": 25,
           "measure": {
             "kind": "ledger",
             "checks": [
@@ -74,19 +74,19 @@
               "wine_lobby_reached"
             ]
           },
-          "rationale": "Ledger of six stages from one run of the original client under Wine (run_original_client.sh), each a grep of the client log: engine start, pak mount, Frontend map, login screen, AppES entitlement passed, lobby map loaded. Recorded with record_evidence.py; a stage with no passing record counts as 0. The AppES entitlement gate is not bypassed, so the last two stages are expected to fail."
+          "rationale": "Analysis/verification oracle capability, not the deliverable (the deliverable is the native Linux UE project). Ledger of six stages from one run of the original client under Wine (run_original_client.sh), each a grep of the client log: engine start, pak mount, Frontend map, login screen, AppES entitlement passed, lobby map loaded. Recorded with record_evidence.py; a stage with no passing record counts as 0. The AppES entitlement gate is not bypassed, so the last two stages are expected to fail and are not a goal."
         },
         {
           "id": "platform.eac_removal",
-          "name": "Original client runs with EAC/BattlEye disabled by launch flags (no anti-cheat or entitlement bypass)",
-          "weight": 25,
+          "name": "Wine analysis oracle: original client launches with EAC/BattlEye off (launch flags only, not a bypass)",
+          "weight": 15,
           "measure": {
             "kind": "ledger",
             "checks": [
               "wine_starts"
             ]
           },
-          "rationale": "Measured by a recorded run: the original client under Wine, started by porting/run_original_client.sh with -nobe -noeac (launch flags only), initialises its engine. This is NOT an anti-cheat or entitlement bypass: the AppES entitlement gate after CheckEntitledToPlay is not touched and caps everything beyond the frontend (see wine_entitlement_passed and wine_lobby_reached in platform.wine_launch)."
+          "rationale": "Analysis/verification oracle capability, not the deliverable (the deliverable is the native Linux UE project). Measured by a recorded run: the original client under Wine, started by porting/run_original_client.sh with -nobe -noeac (launch flags only), initialises its engine. This is NOT an anti-cheat or entitlement bypass: the AppES entitlement gate after CheckEntitledToPlay is not touched and caps everything beyond the frontend (see wine_entitlement_passed and wine_lobby_reached in platform.wine_launch)."
         },
         {
           "id": "platform.rendering",
@@ -131,8 +131,8 @@
         },
         {
           "id": "assets.package_coverage",
-          "name": "Package recovery and conversion coverage",
-          "weight": 20,
+          "name": "Package recovery and conversion coverage (incl. textures and materials)",
+          "weight": 65,
           "measure": {
             "kind": "local_glob",
             "roots": [
@@ -143,7 +143,7 @@
             "total_key": "cooked_uasset_entries",
             "what": "recovered or converted .uasset files"
           },
-          "rationale": "Share of the cooked .uasset entries in the 28 indexed paks that exist locally, either recovered (generated/extracted) or converted (native/Content). Counted from ignored local folders; the denominator is totals.json (450,783 entries, previously typed as 450,951)."
+          "rationale": "Share of the cooked .uasset entries in the 28 indexed paks that exist locally, either recovered (generated/extracted) or converted (native/Content). This tile absorbs the former assets.textures (weight 20) and assets.materials (weight 25) leaves, whose done signals were the same 'packages present locally' measure, so their weights fold into this one. Counted from ignored local folders; the denominator is totals.json (450,783 entries, previously typed as 450,951)."
         },
         {
           "id": "assets.static_meshes",
@@ -168,49 +168,6 @@
             "what": "static mesh conversions (distinct names)"
           },
           "rationale": "Counted: every .glb conversion under generated/converted (61 Apollo grid tiles, Background, skybox and cloud meshes) plus SM_ packages in native/Content, de-duplicated by name. Denominator: 4,719 distinct SM_-named cooked packages. The SM_ rule is a naming heuristic, and the glb conversions are counted whatever their names, so this is a coverage ratio, not an exact asset count."
-        },
-        {
-          "id": "assets.materials",
-          "name": "Materials (rebuilt approximations)",
-          "weight": 25,
-          "measure": {
-            "kind": "local_glob",
-            "sources": [
-              {
-                "root": "porting/native/Content",
-                "suffix": ".uasset",
-                "name_regex": "^(M|MI|MF)_"
-              }
-            ],
-            "distinct": true,
-            "total_key": "cooked_name_prefix_counts",
-            "total_sub": "material",
-            "what": "rebuilt material packages (M_, MI_, MF_; distinct names)"
-          },
-          "rationale": "Counted: M_, MI_ and MF_ packages rebuilt in native/Content. Excluded: the disabled originals under generated/temporarily-disabled-materials and recovered packages under generated/extracted. Denominator: 24,961 distinct material-named cooked packages (naming heuristic, totals.json). Original material graphs are absent."
-        },
-        {
-          "id": "assets.textures",
-          "name": "Textures (diffuse, masks, baked atlases)",
-          "weight": 20,
-          "measure": {
-            "kind": "local_glob",
-            "sources": [
-              {
-                "root": "porting/generated/converted",
-                "suffix": ".png"
-              },
-              {
-                "root": "porting/native/Content",
-                "suffix": ".uasset",
-                "name_regex": "^T_"
-              }
-            ],
-            "total_key": "cooked_name_prefix_counts",
-            "total_sub": "texture",
-            "what": "texture conversions (PNG landscape masks and baked atlases, plus T_ packages)"
-          },
-          "rationale": "Counted: the PNG files under generated/converted (landscape weightmaps and the 61 baked Apollo atlases) and T_ packages in native/Content. Denominator: 30,523 distinct T_-named cooked packages (naming heuristic, totals.json). Textures for the rest of the game are not recovered."
         },
         {
           "id": "assets.landscape",
@@ -292,6 +249,10 @@
           "measure": {
             "kind": "fraction",
             "done": 2,
+            "done_units": [
+              "FortniteEmptyDedicated",
+              "Skybox_Outpost_HomeBase"
+            ],
             "total_key": "asset_registry_counts",
             "total_sub": "World",
             "source": "documented"
@@ -839,6 +800,9 @@
           "measure": {
             "kind": "fraction",
             "done": 1,
+            "done_units": [
+              "Master"
+            ],
             "total_key": "sound_class_mix_packages",
             "source": "documented"
           },

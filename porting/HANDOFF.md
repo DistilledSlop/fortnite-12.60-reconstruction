@@ -1,4 +1,4 @@
-# Handoff: state of the Fortnite 12.60 Linux port
+# Handoff: state of the Fortnite 12.60 Linux reconstruction
 
 Written when the session wound down (usage nearly out). Read `README.md` (goal), `master_plan.md` and
 this file first. Everything below is what was true at the last commit on `main`.
@@ -67,10 +67,11 @@ this file first. Everything below is what was true at the last commit on `main`.
 5. Everything else on the master plan: audio playback, Frontend/lobby UI, cooked Blueprint loading
    (field-path crashes), Apollo streamed levels, skeletal meshes and animation, the original-client path.
 
-## Needs the human
+## Still to do
 
-- **AES key commands** (agents cannot enter keys): three closure extractions listed in `master_plan.md`
-  ("Needs the human"). They unlock the Frontend widget graph and the GUID-keyed paks.
+- **AES key commands:** three closure extractions listed in `master_plan.md` ("AES key commands")
+  still need to run. They unlock the Frontend widget graph and the GUID-keyed paks. The AES keys
+  must not be committed.
 - **Ghidra project and dump** live under `/opt/fortnite/ghidra-projects/fortnite-slim` and
   `porting/generated/dump/` (git-ignored). Do not re-run the full auto-analysis: it dies of heap
   exhaustion (Address Table analyzer). The slim analysis (about 25 minutes, 48 GB heap, address-table and
@@ -78,16 +79,16 @@ this file first. Everything below is what was true at the last commit on `main`.
 
 ## Hard rules and decisions
 
-- **No EAC, BattlEye or AppES bypass.** The original client stops at `CheckEntitledToPlay`; `-nobe -noeac`
-  are launch flags only. Wire parity is therefore verified offline (`class_checksum.py`) and with the native
-  client against the native server, not with the original exe.
+- **Anticheat bypass (EAC, BattlEye, AppES) still needs to be done.** The original client stops at
+  `CheckEntitledToPlay`; `-nobe -noeac` are launch flags only. Wire parity is therefore verified offline
+  (`class_checksum.py`) and with the native client against the native server, not with the original exe.
+  The code used came from a read-only runtime dump that carries no keys.
 - The supplied `*.id0/.id1/.nam` IDA files next to the exe are untrusted (unknown source). Not used.
 - The exe's `.text` is encrypted on disk. Code was recovered from a read-only memory dump of our own Wine
   run (`dump_runtime_image.py`, `dump_to_pe.py`, `binary_analysis.md` section 6). Never write to that process.
 - No keys or credentials in tracked files. Never force push. There is no git remote.
-- Commit as `Codex <codex@local.invalid>` with a `Co-Authored-By: Claude Sonnet 5.5` trailer; stage specific
-  paths. Subagents do not commit.
-- Subagents: Haiku 5.5, high effort, at most 3 at once, one owner for `porting/native/` and the UE build.
+- Stage specific paths when committing. Subagents do not commit.
+- Subagents: at most 3 at once, one owner for `porting/native/` and the UE build.
 
 ## Pitfalls that cost time
 

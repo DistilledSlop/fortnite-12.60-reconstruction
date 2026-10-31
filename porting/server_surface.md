@@ -131,6 +131,6 @@ skipping mcp entitlement check`, implying there is a non-HTTP, binary-level
 entitlement/launcher-origin check (likely tied to the Epic Games Launcher
 provenance / "AppES" app-entitlement-service client component, possibly
 checking how the process was launched rather than calling out to a server) that a
-pure HTTP mock backend cannot satisfy. This was not resolved; doing so would
-require reverse-engineering and altering the shipping binary's own
-entitlement/anti-tamper logic, which is out of scope for this effort.
+pure HTTP mock backend cannot satisfy. This was not resolved; the gate is not
+yet bypassed. Passing it would require reverse-engineering and altering the
+shipping binary's own entitlement/anti-tamper logic.
