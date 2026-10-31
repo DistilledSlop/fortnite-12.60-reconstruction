@@ -3,6 +3,7 @@
 !/.gitignore
 !/.gitattributes
 !/.githooks/
+!/AGENTS.md
 !/porting/
 
 # Generated output, build products, and temporary files.

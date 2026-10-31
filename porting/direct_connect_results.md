@@ -146,8 +146,8 @@ log (`server-UE.log`) at exit.
    shows the manual sign-in (`Could not auto-login`, `Activating widget SignIn`). The join path is
    driven by matchmaking and MCP (`UFortUIStateWidget_JoinServer` handlers, `ServerIP` session
    attribute). `-nomcp` and `-MeshParent` do not skip it. `LogAppES: postponed 2` stayed unresolved
-   for the whole 90 s window, and no "not started correctly" popup was seen. Not bypassed. This needs
-   an owner decision: an approved login route, or a stop at the frontend.
+   for the whole 90 s window, and no "not started correctly" popup was seen. A working login route
+   remains an unresolved prerequisite for original-client network observations.
 2. **Typed-address routes checked and ruled out:** first token (rewritten to `-address`), loose
    `GameDefaultMap` (`FSoftObjectPath`, see attempt 2), `-ini:` overrides (compiled out of Shipping),
    `-MeshParent` (not reached from the frontend). No "join by address" UI string was found in the exe.
@@ -166,7 +166,7 @@ log (`server-UE.log`) at exit.
 - Challenge / Login / Welcome / Join: none observed.
 - Network checksum mismatch, NetGUID, class path errors: none observed.
 - Client crash: none observed. Both runs stopped at the 90 s timeout on the SignIn screen.
-- EAC, BattlEye, AppES: not patched or bypassed. `LogAppES: postponed 2` stayed unresolved.
+- The run ended with `LogAppES: postponed 2` unresolved.
 
 ## Files changed
 

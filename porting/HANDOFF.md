@@ -1,5 +1,27 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Current snapshot (2026-10-31 23:34 UTC)
+
+- HEAD is `4aba038`. Five stage-two files are modified: `gen_native_classes.py`,
+  `native_class_set.txt`, and the three `native/Source/FortniteLinux*.Target.cs` files.
+  Validation is in progress; these changes are not covered by the last green run.
+- The last full green regression is `generated/regress/20261031T230432Z-1684625/`
+  (`result.json`): clean `4aba038`, build and both native joins passed, 4,591 of
+  4,591 generated classes matched the offline checksum model, NetSerialize self-test
+  passed, and 70 backend tests and schema check passed. This is not runtime wire or
+  gameplay parity. The tracked dashboard ledger contains older checks.
+- The census has stopped. All branches are merged and there is no remote. The
+  dashboard is static generated output; refresh it after the relevant commits.
+- All four product milestones remain open. Prioritize a rebuilt-client frontend
+  and lobby, then end-to-end matchmaking, replicated multiplayer gameplay and a
+  complete audiovisual match; see `master_plan.md` for acceptance evidence.
+- The original Wine run reached login and stopped at the observed AppES access
+  gate with auth flags; this is an unresolved observation, not a product milestone.
+
+Everything below is historical context. This snapshot supersedes earlier status,
+counts, process claims and next-step instructions when they differ; verify before
+following any older command.
+
 Written when the session wound down (usage nearly out). Read `README.md` (goal), `master_plan.md` and
 this file first. Everything below is what was true at the last commit on `main`.
 
@@ -173,10 +195,9 @@ Updated 2026-10-31 at the end of the second session. Everything below is on `mai
 
 ## Hard rules and decisions
 
-- **Anticheat bypass (EAC, BattlEye, AppES) still needs to be done.** The original client stops at
-  `CheckEntitledToPlay`; `-nobe -noeac` are launch flags only. Wire parity is therefore verified offline
-  (`class_checksum.py`) and with the native client against the native server, not with the original exe.
-  The code used came from a read-only runtime dump that carries no keys.
+- **Observed original-client access gate.** The Wine run stopped at `CheckEntitledToPlay`.
+  Offline checks (`class_checksum.py`) and native client/server joins provide partial evidence;
+  they do not establish original-client wire parity. The runtime dump carries no keys.
 - The supplied `*.id0/.id1/.nam` IDA files next to the exe are untrusted (unknown source). Not used.
 - The exe's `.text` is encrypted on disk. Code was recovered from a read-only memory dump of our own Wine
   run (`dump_runtime_image.py`, `dump_to_pe.py`, `binary_analysis.md` section 6). Never write to that process.
@@ -215,7 +236,7 @@ Updated 2026-10-31 at the end of the second session. Everything below is on `mai
   ```
   The `wine_*` checks (`progress/README.md`, "Standard suite") need a run of
   `porting/run_original_direct.sh 240` first, then `--log` against the client log; `wine_entitlement_passed`
-  and `wine_lobby_reached` are expected to fail.
+  and `wine_lobby_reached` have no recorded passing result.
 
 ## Storage
 

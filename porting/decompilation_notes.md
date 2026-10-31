@@ -1505,8 +1505,8 @@ Not recovered. Why:
   (`FUN_14479fb90`, `FUN_14447f220`, the `AFortPlayerControllerAthena` static class check), then on a per-connection key state
   (`*(int*)(lVar4+0x30a8)`) and a global flag (`_DAT_1478c2940`). The log strings name Case 1 (server encrypts and sends), Case 2 (receives
   ciphertext), Case 3 (saves ciphertext), Case 4 (decrypts with a key) and the no-key and no-valid-data paths, each with its own framing.
-- The encrypted paths call `FUN_1409de870` (encrypt) and `FUN_141a221a0` (decrypt), neither identified. They handle replay key material,
-  which this pass does not touch (no keys, and anticheat and entitlement stay out of scope).
+- The encrypted paths call `FUN_1409de870` (encrypt) and `FUN_141a221a0` (decrypt), neither identified. Replay key handling remains
+  unresolved; this historical pass recovered only the framing described below.
 - Partial, not enough for a body: the plaintext framing of the no-key branches is a 32-bit count followed by the CipherText bytes
   (`Serialize(4)`, then `Serialize(count)`), and `World` (`UWorld*`, `+0x18`) is never serialized: the asm only reads it to choose a branch (MEDIUM).
 - Keep the fallback marked. The next step needs the crypto identity and an explicit decision on key handling.

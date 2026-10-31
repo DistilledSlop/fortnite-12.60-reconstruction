@@ -8,29 +8,33 @@ milestone is done only with logged evidence. Rules for every wave: at most
 three agents at once, one owner for `native/` and the UE build, no keys or
 credentials in Git, and the orchestrator reviews and commits.
 
-## Critical path
+## Critical path and acceptance gates
 
-1. **Know what the binary gives us** (exe analysis, Ghidra at
-   `/opt/fortnite/ghidra-install/ghidra_12.2_PUBLIC`). If the code is readable,
-   export class layouts, vtables and reflection tables.
-2. **Network parity step 0** (version override, MagicHeader, AES/Oodle, key
-   delegate). Gate: server logs checksum 683914758 and the native join passes.
-3. **Reflection-exact base classes**: FortWorldSettings, FortGameStateAthena,
-   FortPlayerStateAthena, FortPlayerControllerAthena, FortPlayerPawnAthena,
-   FortAthenaMapInfo. Gate: class checksums match in client and server logs.
-4. **Original client joins the server** (direct connect first, then lobby,
-   ticket websocket, session, beacons). Gate: Welcome and Join succeeded,
-   stays connected.
-5. **Cooked Blueprints load**: fix the field-path crashes or rebuild each
-   gameplay Blueprint natively. Gate: Apollo loads with its 87 streamed levels.
-6. **Gameplay systems** in weight order: Athena framework, weapons, building,
-   inventory, abilities, storm, bus and gliding, AI, world managers.
-7. **Content**: skeletal meshes and animation, materials, VFX, lighting,
-   cinematics.
-8. **Audio and frontend**: sound classes, playback backend, CommonUI/UMG
-   modules, lobby flow, HUD.
-9. **Parity verification**: play a full match against the 12.60 build as the
-   reference; record each difference.
+These gates describe the rebuilt native client and reconstructed server. Work on
+content, protocol and gameplay can proceed in parallel, but each milestone needs
+recorded end-to-end evidence. See the current snapshot in `HANDOFF.md` before
+using historical instructions below.
+
+1. **Build and frontend (M1).** Keep the client and server build and native join
+   reproducible; fix required generated modules and load or rebuild the frontend
+   widgets and assets. Record a rebuilt-client launch reaching an interactive main
+   menu. The existing Entry/test maps and Wine login screen do not meet this gate.
+2. **Lobby (M2).** Implement the frontend login and lobby flow and the backend
+   contracts it uses. Locate the client response parser and verify schema and case
+   against binary/reflection evidence; complete needed profile, party, presence and
+   session behavior. Record a rebuilt client joining and remaining in a lobby on
+   the reconstructed services. Current native direct join is a foundation only.
+3. **Matchmaking and replication (M3).** Connect ticket, websocket, session and
+   beacon flow to the dedicated server. Verify custom serializers, replication
+   conditions and layouts in live multi-client tests; offline checksum agreement
+   alone does not establish wire parity. Record matchmaking from the lobby through
+   server join and stable replicated state on multiple clients.
+4. **Playable match (M4).** Load or rebuild Apollo and required streamed levels
+   and Blueprints; attribute and port server-authoritative match flow, bus, storm,
+   combat, inventory, building, loot, eliminations, AI and match end. Integrate
+   skeletal meshes, animations, materials, effects, HUD and audio. Record a full
+   multi-client match through its end with sound and visuals working, and compare
+   behavior and presentation against the supplied 12.60 build.
 
 ## Standing constraints
 
@@ -64,7 +68,7 @@ Why: the Frontend widget graph, 2,171 unseen WidgetBlueprints and pakchunk
   until a real sink exists.
 - 2026-10-30: the original exe cannot be used as a handshake oracle through
   the frontend. Without `-AUTH_*` flags it demands a manual sign-in; with them
-  it stops at the AppES entitlement gate, which is not bypassed
+  it stopped at the AppES entitlement gate
   (`direct_connect_results.md`). Wire parity is therefore checked offline:
   compute class net checksums and replicated layouts from the recovered
   reflection tables and compare with the native classes, and use the native

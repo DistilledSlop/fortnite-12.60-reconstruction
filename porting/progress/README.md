@@ -108,7 +108,7 @@ the overall figure) and a `measure`. Measures, from most objective to least:
 Denominators (`total_key` and optional `total_sub`) are read from `porting/progress/totals.json`.
 If a key is missing the leaf shows 0 and says why. A leaf may have `"ceiling": N`, which caps its
 value where the measure overstates progress, with the reason in `rationale`. Groups take the
-weight-averaged value of their children. Set `"done": true` on a milestone when it is reached.
+weight-averaged value of their children. Set `"done": true` on a milestone only when its end-to-end acceptance evidence is recorded. Route literal matches can include tests and documentation, so they do not establish served-route coverage (see `../server/EVIDENCE.md`).
 
 Edit, commit, and the post-commit hook regenerates the dashboard. The totals and the ledger are
 measured from the commit, so commit `totals.json` and `evidence.json` in the same commit that
@@ -167,8 +167,8 @@ only when the orchestrator says so.
 | `wine_pak_mount` | as `wine_starts`, `--grep 'LogPakFile: Display: Mounting pak file'` | paks mount |
 | `wine_frontend_map` | as `wine_starts`, `--grep 'LogLoad: LoadMap: /Game/Maps/Frontend'` | the Frontend map loads |
 | `wine_login_ui` | as `wine_starts`, `--grep 'LoginScreen_C_'` | the login screen appears |
-| `wine_entitlement_passed` | as `wine_starts`, `--grep 'LogAppES: .*([Ee]ntitlement).*(passed|granted|success)'` | expected to fail: the AppES gate is not bypassed |
-| `wine_lobby_reached` | as `wine_starts`, `--grep 'LogLoad: LoadMap: .*Lobby'` | expected to fail: the entitlement gate stops the client first |
+| `wine_entitlement_passed` | as `wine_starts`, `--grep 'LogAppES: .*([Ee]ntitlement).*(passed|granted|success)'` | no passing record; the observed run stopped at the AppES access gate |
+| `wine_lobby_reached` | as `wine_starts`, `--grep 'LogLoad: LoadMap: .*Lobby'` | no passing record; the observed run stopped before this stage |
 | `checksum_tool_selftest` | `python3 -I porting/class_checksum.py --self-test` | exit 0 |
 
 The client log for the Wine checks is
@@ -179,6 +179,8 @@ There is no `generator_selftest`: `gen_native_classes.py` has no self-test, so i
 suite until one exists.
 
 ## Objectivity audit
+
+The following is a historical baseline, not a current dashboard snapshot.
 
 Changed by the objectivity pass (`components.json` is the source of truth; each leaf's `rationale`
 has the same facts). Baseline: HEAD 9e6c524, before the change. Values for "after" assume
@@ -235,7 +237,7 @@ after the next commit the denominators are 4,727 and 173 (see "Refreshing the to
 | `assets.package_coverage` | local, 24.2% | 108,956 / 450,951 | denominator is the cooked `.uasset` entry count of the full extraction (totals, `cooked_uasset_entries`); weight 50 | Local recovered or converted files are counted by folder, not by package. |
 | `assets.static_meshes` | local, 1.6% | 77 / 4719 at HEAD, 77 / 4727 after the commit | converted `.glb` stems plus `SM_` names in native/Content, distinct names; denominator is `SM_`-named cooked packages in the full tree (naming heuristic) | Naming heuristic; a conversion is not spawn-verified. |
 | `assets.skeletal_anim` | local, 0% | 0 / 1719 | `SK_` packages converted in native/Content; denominator `SK_`-named cooked packages in the full tree | Naming heuristic; animation (`A_`, 7 names) not counted. |
-| `platform.wine_launch` | git, 0% | ledger 0 of 6 | six Wine stage checks in `evidence.json` | Needs real runs and recording. Two stages are expected to fail. |
+| `platform.wine_launch` | git, 0% | ledger 0 of 6 | six Wine stage checks in `evidence.json` | Needs runs and recording; the last two stages have no passing record. |
 | `platform.eac_removal` | git, 0% | ledger 0 of 1 (`wine_starts`) | the ledger check listed in `components.json` | Needs the check run and recorded. |
 | `net.native_join` | git, 100% | ledger 3 of 3 | `smoke_default`, `smoke_athena`, `net_version_checksum` in the ledger | Recorded checks only; they run on the server. |
 | `net.original_join` | git, 0% | ledger 0 of 2 | `wine_entitlement_passed`, `wine_lobby_reached` in the ledger | See `components.json` rationale. |

@@ -4,21 +4,21 @@
   "milestones": [
     {
       "id": "m1",
-      "text": "The client (feature-equivalent to the unstripped 12.60 original) reaches the main menu without EAC/BattlEye",
+      "text": "The rebuilt client reaches the main menu with feature parity to the 12.60 original",
       "done": false,
-      "evidence": "Under Wine the original client reaches the frontend login screen (direct_connect_results.md) but needs a manual sign-in; with -AUTH flags it stops at the AppES entitlement gate, which is not bypassed. The native project reaches only the engine Entry and recovered test maps."
+      "evidence": "The native project reaches engine Entry and recovered test maps, not an interactive main menu. The original client under Wine reached the login screen; an AppES access gate was observed with auth flags (direct_connect_results.md)."
     },
     {
       "id": "m2",
       "text": "The client joins a lobby on the reconstructed server",
       "done": false,
-      "evidence": "A native client joins the native dedicated server (checksum 683914758, Athena pawn spawned, smoke_join.sh passes). The original client never reaches NMT_Hello (direct_connect_results.md). Generated classes are not yet wire-compatible (native_classes_status.md)."
+      "evidence": "Native client/server direct joins pass, including an Athena pawn and network checksum 683914758. The last full regression reports 4,591 of 4,591 generated classes matching the offline checksum model; this does not establish runtime wire parity or a rebuilt-client lobby (native_classes_status.md)."
     },
     {
       "id": "m3",
       "text": "The client matchmakes to the reconstructed UE dedicated server",
       "done": false,
-      "evidence": "Ticket, websocket, session record and key routes exist in the mock backend and pass a 23-check smoke test (server/README.md); the real client has not been run against them and message shapes are partly guessed."
+      "evidence": "Ticket, websocket, session and key routes exist; 70 backend tests passed in the last full regression. Response shapes remain partly inferred, the client parser is unidentified, and no rebuilt-client end-to-end matchmaking run is recorded (server/EVIDENCE.md)."
     },
     {
       "id": "m4",
@@ -74,11 +74,11 @@
               "wine_lobby_reached"
             ]
           },
-          "rationale": "Analysis/verification oracle capability, not the deliverable (the deliverable is the native Linux UE project). Ledger of six stages from one run of the original client under Wine (run_original_client.sh), each a grep of the client log: engine start, pak mount, Frontend map, login screen, AppES entitlement passed, lobby map loaded. Recorded with record_evidence.py; a stage with no passing record counts as 0. The AppES entitlement gate is not bypassed, so the last two stages are expected to fail and are not a goal."
+          "rationale": "The six ledger checks record Wine engine start, pak mount, Frontend map, login screen, AppES entitlement and lobby map. A stage without a passing record counts as 0. The observed Wine run stopped at the AppES access gate; later stages remain unverified."
         },
         {
           "id": "platform.eac_removal",
-          "name": "Wine analysis oracle: original client launches with EAC/BattlEye off (launch flags only, not a bypass)",
+          "name": "Wine analysis oracle: original client engine start",
           "weight": 15,
           "measure": {
             "kind": "ledger",
@@ -86,7 +86,7 @@
               "wine_starts"
             ]
           },
-          "rationale": "Analysis/verification oracle capability, not the deliverable (the deliverable is the native Linux UE project). Measured by a recorded run: the original client under Wine, started by porting/run_original_client.sh with -nobe -noeac (launch flags only), initialises its engine. This is NOT an anti-cheat or entitlement bypass: the AppES entitlement gate after CheckEntitledToPlay is not touched and caps everything beyond the frontend (see wine_entitlement_passed and wine_lobby_reached in platform.wine_launch)."
+          "rationale": "The ledger records whether the original client under Wine initializes its engine using the existing launch script. This does not establish access beyond the observed AppES gate or native client functionality."
         },
         {
           "id": "platform.rendering",
@@ -491,7 +491,7 @@
               }
             ]
           },
-          "rationale": "Done: tracked class headers under Source/FortniteGame/Generated (reflection-exact: original parents, property order, native bool handling and replication flags). Total: the named /Script/FortniteGame classes (totals.json). Other generated modules are listed in the evidence and not counted here. About 4% of properties are skipped, no function bodies exist and wire compatibility is not reached."
+          "rationale": "Done: tracked class headers under Source/FortniteGame/Generated over named FortniteGame classes (totals.json). Header counts measure declarations, not implemented behavior or runtime wire compatibility."
         },
         {
           "id": "gameplay.native_behavior",
@@ -625,7 +625,7 @@
               "wine_lobby_reached"
             ]
           },
-          "rationale": "Ledger: the original client passes the AppES entitlement gate and reaches the lobby under Wine. This project does not bypass the gate, so both checks are expected to stay failed. The Hello, Login, Welcome and Join sequence is unverified against the original client."
+          "rationale": "The ledger currently measures original-client entitlement and lobby log stages, not a server join. The observed Wine run stopped at the AppES access gate; Hello, Login, Welcome and Join have not been verified against the original client."
         },
         {
           "id": "net.replication_layout",
@@ -649,7 +649,7 @@
             "group": 2,
             "total_key": "uht_classes_named"
           },
-          "rationale": "Parity-yes count from the tracked class checksum report (its Totals table, column Parity yes: 1,317 of 1,405 generated classes), over the 6,957 named native classes (totals.json). porting/class_checksum.py computes the ClassChecksum and RPC set the original client computes from the recovered reflection tables and compares them with the emitted headers. This is an offline calculation, not a live comparison with the original client (which cannot be reached, see direct_connect_results.md)."
+          "rationale": "The tracked class checksum report measures an offline comparison of generated headers against recovered reflection tables over named native classes. The last full regression reported 4,591 of 4,591 generated classes matching; this is not a live wire compatibility test."
         },
         {
           "id": "net.replication_graph",
