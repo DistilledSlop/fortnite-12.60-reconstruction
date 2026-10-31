@@ -29,6 +29,7 @@ using SixLabors.ImageSharp.PixelFormats;
 bool showAll = args.Contains("--all");
 bool showPseudo = args.Contains("--pseudo");
 bool showImports = args.Contains("--imports");
+bool importsJson = args.Contains("--imports-json");
 bool registryMode = args.Contains("--registry");
 bool pakSources = args.Contains("--pak-sources");
 bool registryPaths = args.Contains("--registry-paths");
@@ -78,11 +79,12 @@ if (maxArgument is not null && (!int.TryParse(maxArgument[15..], out maxPackages
     Console.Error.WriteLine("--max-packages must be a positive integer");
     return 2;
 }
-string[] positional = args.Where(arg => arg != maxArgument && arg != keyFileArgument && arg != extractOutput && arg != extractWorkersArgument && arg != extractPlanArgument && arg != extractSummaryArgument && arg != extractSampleArgument && arg != extractSeedArgument && arg != duplicatesOutArgument && arg is not ("--all" or "--pseudo" or "--imports" or "--registry" or "--pak-sources" or "--registry-paths" or "--seed-list" or "--follow-soft" or "--scan-maps" or "--scan-native" or "--all-keys" or "--save-package" or "--save-list" or "--sizes" or "--save-folder" or "--save-closure" or "--export-glb" or "--export-landscape" or "--export-landscape-grid" or "--export-landscape-weightmap-grid" or "--export-png" or "--export-landscape-weightmaps" or "--material-report" or "--function-report" or "--landscape-report" or "--actor-report" or "--versions" or "--ue426" or "--loose" or "--extract-all" or "--dry-run" or "--verify" or "--audit-duplicates" or "--repair")).ToArray();
+string[] positional = args.Where(arg => arg != maxArgument && arg != keyFileArgument && arg != extractOutput && arg != extractWorkersArgument && arg != extractPlanArgument && arg != extractSummaryArgument && arg != extractSampleArgument && arg != extractSeedArgument && arg != duplicatesOutArgument && arg is not ("--all" or "--pseudo" or "--imports" or "--imports-json" or "--registry" or "--pak-sources" or "--registry-paths" or "--seed-list" or "--follow-soft" or "--scan-maps" or "--scan-native" or "--all-keys" or "--save-package" or "--save-list" or "--sizes" or "--save-folder" or "--save-closure" or "--export-glb" or "--export-landscape" or "--export-landscape-grid" or "--export-landscape-weightmap-grid" or "--export-png" or "--export-landscape-weightmaps" or "--material-report" or "--function-report" or "--landscape-report" or "--actor-report" or "--versions" or "--ue426" or "--loose" or "--extract-all" or "--dry-run" or "--verify" or "--audit-duplicates" or "--repair")).ToArray();
 bool packageLess = registryMode || pakSources || registryPaths || scanMaps || scanNative || exportLandscapeGrid || exportLandscapeWeightmapGrid || extractAll;
 if (new[] { registryMode, pakSources, registryPaths, scanMaps, scanNative, exportLandscapeGrid, exportLandscapeWeightmapGrid, extractAll }.Count(mode => mode) > 1 || (packageLess ? positional.Length > 1 : positional.Length is < 1 or > 2))
 {
     Console.Error.WriteLine("Usage: Cue4Inspect <asset-path-without-extension> [pak-directory] [--all] [--pseudo] [--imports] [--save-package] [--all-keys]");
+    Console.Error.WriteLine("   or: Cue4Inspect <package-path> [source-directory] --imports-json [--loose]");
     Console.Error.WriteLine("   or: Cue4Inspect <folder-prefix> [pak-directory] --save-folder [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect <newline-list-file> [pak-directory] --save-list [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect <newline-list-file> [pak-directory] --sizes [--all-keys]");
@@ -151,14 +153,14 @@ try
 
     if (loose)
     {
-        Console.WriteLine($"Indexed {provider.LooseFileCount} loose package(s).");
+        (importsJson ? Console.Error : Console.Out).WriteLine($"Indexed {provider.LooseFileCount} loose package(s).");
     }
     else
     {
         var fileKeys = LoadKeyFile(keyFilePath);
         string key = fileKeys.TryGetValue("primary", out var filePrimary) ? filePrimary : ReadHiddenKey("Primary AES key: ");
         int mounted = provider.SubmitKey(new FGuid(), new FAesKey("0x" + key));
-        Console.WriteLine($"Mounted {mounted} pak(s) with the primary key.");
+        (importsJson ? Console.Error : Console.Out).WriteLine($"Mounted {mounted} pak(s) with the primary key.");
         if (allKeys)
         {
             foreach (var guid in provider.RequiredKeys.Where(guid => guid.IsValid()).OrderBy(guid => guid.ToString(EGuidFormats.Digits)))
@@ -167,7 +169,7 @@ try
                 string extraKey = fileKeys.TryGetValue(guidDigits, out var fileExtra) ? fileExtra : ReadHiddenKey($"AES key for GUID {guid.ToString(EGuidFormats.Digits)}: ");
                 mounted += provider.SubmitKey(guid, new FAesKey("0x" + extraKey));
             }
-            Console.WriteLine($"Mounted {mounted} pak(s) in total.");
+            (importsJson ? Console.Error : Console.Out).WriteLine($"Mounted {mounted} pak(s) in total.");
         }
     }
 
@@ -522,6 +524,21 @@ try
     }
 
     var packageData = provider.LoadPackage(assetPath!);
+    if (importsJson)
+    {
+        if (packageData is not Package importPackage)
+            throw new InvalidDataException("Import chain requires a legacy package");
+        var imports = importPackage.ImportMap.Select((item, index) => new
+        {
+            index = -(index + 1),
+            name = item.ObjectName.Text,
+            kind = item.ClassName.Text,
+            outerIndex = item.OuterIndex?.Index ?? 0,
+            chain = ImportChain(importPackage, index)
+        }).ToArray();
+        Console.WriteLine(JsonSerializer.Serialize(new { package = assetPath, imports }));
+        return 0;
+    }
     if (versionReport)
     {
         if (packageData is not Package legacy)
@@ -1096,6 +1113,25 @@ static void SaveRecoveredFiles(IReadOnlyDictionary<string, byte[]> files)
         File.WriteAllBytes(target, bytes);
         Console.WriteLine($"Saved {relative} ({bytes.Length} bytes)");
     }
+}
+
+static object[] ImportChain(Package package, int index)
+{
+    var chain = new List<object>();
+    var seen = new HashSet<int>();
+    while (true)
+    {
+        if (index < 0 || index >= package.ImportMap.Length || !seen.Add(index))
+            throw new InvalidDataException("Invalid or cyclic import outer chain");
+        var item = package.ImportMap[index];
+        int outer = item.OuterIndex?.Index ?? 0;
+        chain.Add(new { index = -(index + 1), name = item.ObjectName.Text,
+                        kind = item.ClassName.Text, outerIndex = outer });
+        if (outer >= 0) break; // zero: no outer; positive: export outer, retained in outerIndex
+        index = -outer - 1;
+    }
+    chain.Reverse();
+    return chain.ToArray();
 }
 
 static string RootImportName(Package package, FObjectImport import)
