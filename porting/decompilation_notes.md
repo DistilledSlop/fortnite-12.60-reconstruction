@@ -1848,3 +1848,107 @@ Checks: none of the bodies has been compiled (the build owner compiles). `std::n
 - Scratchpad only: `.../scratchpad/nser/probe`, `.../nser/probe2` (Ghidra outputs), `.../nser/calls.py`, `.../nser/dest.py`, `.../nser/inc/<Struct>/NetSerialize.inc` (five drafts)
 - Not touched: `porting/native/`, `porting/behavior/`, `gen_native_classes.py`, `porting/ghidra/`, git index, worktrees. Ghidra project metadata
   (`/opt/fortnite/ghidra-projects/fortnite-slim.rep/...`) was rewritten by the two probes, as in the tenth pass.
+
+## Twelfth pass: callees of the blocked RPC and exec bodies [observed unless marked]
+
+Scope: the five bodies the tenth pass found blocked (queue rows 4 to 7 and `ClientNotifyTeamLost`), and the small-body
+scan of the handoff (queue rows "pick further small bodies"). Result: 18 callees probed and identified or characterised;
+**no body ported**. Each body has an exact blocker below. No manifest, snippet, generator, `porting/native/` or
+`porting/behavior/` change; the manifest stays at 437 entries (249 ported, 188 skipped).
+
+Method. One Ghidra run: `porting/ghidra/probe_callees.py` on the 18 addresses that had no probe output (41 s, rolled back;
+outputs under the scratchpad, not in the repo). No Ghidra or java process was running and no lock file existed. The
+probe rewrote the project metadata again (`fortnite-slim.rep/idata/~index.*`, `project.prp`, `versioned/~index.*`), as in
+the tenth and eleventh passes. The five bodies were read from `porting/generated/decomp_improved/` (existing records).
+Bytes were read from the runtime dump with objdump (file offset = VA - 0x140000000). Existing probe outputs were used for
+the callees probed earlier (`callee_probe/extra`, `blocking`, `tenth_rank2`), without re-probing.
+
+### Identities (new or corrected)
+
+| Address | Identity | Confidence | Evidence |
+|---|---|---|---|
+| `0x142414c60` | Owner-as-controller accessor: returns `this->Owner` (`+0xe0`) when `Owner->IsA(X)`, else null. `X` is the class of `0x142a3d9f0` (not `AFortPlayerControllerAthena` from `0x142a53450`) | HIGH (body) | Dump bytes: `mov rbx,[rcx+0xe0]`, `call 0x142a3d9f0`, the class-tree test on `+0x30`/`+0x38`, return `rbx` or 0. 79 callers. |
+| `0x142a3d9f0` | `AFortPlayerControllerAthena::GetPrivateStaticClass()`: the guarded static class getter, same class as `AFortPlayerControllerAthena_StaticClass` (`0x142a53450`, the UHT wrapper) | MEDIUM-HIGH | The guarded body loads the wide literal `FortPlayerControllerAthena` (`0x1464a5132`, read from the dump) as the class name. The name literal was read from the bytes, not from a probe `strings` list (not probed this pass). |
+| `0x14297b320` | `UFortLevelSaveComponent::GetPrivateStaticClass()` (package `/Script/FortniteGame`, class `FortLevelSaveComponent`, size `0x518`) | HIGH | Existing probe (`extra/`): literal arguments of the class registration. Used by `0x1423a0aa0` and `0x1419c3880` as a `FindComponentByClass` argument. |
+| `0x14199e3c0` | Predicate on `AFortGameStateAthena`: `FUN_141a4a6f0(*(this+0x1df8))`, or `*(this+0x1df0)` when `+0x1df8` is null. The tail call's result is the bool (the decompile shows no return type). Its only caller in the scan is the exec at `0x14291e1c0`, whose record is named `IsCreativeModePlaylist` (the scan also lists `CanChangeGameplayOptions` at the same address). | body HIGH; meaning LOW | Probe decompile (27 bytes); exec record `decomp_improved/AFortGameStateAthena/IsCreativeModePlaylist.c`. The members `+0x1df0`/`+0x1df8` are not named in any header. |
+| `0x141a4a6f0` | Predicate on an object (false when null): tests whether an int32 pair equal to a static `FName` (global at `0x148130770`, `+0x1748`/`+0x174c`, from `FUN_141ed1800`) is in the arrays at `+0xd0` (count `+0xd8`) or `+0xe0` (count `+0xe8`), and then returns bit 0 of byte `+0x9fc`. | LOW (meaning) | Probe decompile (`extra/`). `FUN_142cd8ed0` unnamed. |
+| `0x140694550` | Removes invocations bound to an argument object from a list of 16-byte entries (`FWeakObjectPtr` target, `FName` function): the entry is removed (swap with the last entry, then `TArray16_ShrinkIfSparse`) when its target equals the argument, or its name is None with `Number == 0`, or its target is null even when pending kill. Called on the game state list at `+0x20e0`. | MEDIUM (identity); body HIGH | Probe decompile (238 bytes, 80 callers). Same entry shape as the dynamic delegate lists of `0x1406a9dc0`. |
+| `0x1419c1a40` | Binds the controller to the volume manager's `OnClientEnterVolume` list: `AddUnique` of (controller, FName) on the list at `param_2+0x248`. The FName is the stringised `&AFortPlayerControllerAthena::OnClientEnterVolume`, parsed at run time with `wcsstr` (the part after `::`). | MEDIUM (identity) | Probe decompile (392 bytes, 9 callees). The list is a 16-byte entry list with an unnamed type. |
+| `0x141c7d420` | Volume lookup: `STAT_Find_Volume` profiling scope (a no-op for state, as `0x142cd3770`) around `FUN_141c7d270(this+0x288, Object)` unless the object is pending kill. | MEDIUM | Existing probe (`extra/`, not re-probed). `FUN_141c7d270` unnamed. |
+| `0x141c74820` | Volume manager of the argument: an object from `FUN_144640410(_DAT_148351eb8, arg, 1)` whose `+0x130` is the game state (`UWorld::GameState`), `IsA AFortGameStateAthena` (`0x14290f690` is `AFortGameStateAthena_StaticClass`, helpers.json), then `FUN_141999ba0(GameState)` and a pending-kill check. | LOW-MEDIUM | Existing probe (`extra/`). `FUN_144640410` and `FUN_141999ba0` unnamed. The first call in `OnClientVolumeManagerReplicated` has no recovered argument in the decompile. |
+| `0x1419c3880` | Volume-and-permission check (the guess of the first pass, now characterised): calls `0x141c74820`, `0x141c7d420`, GameState `0x14199e2c0` (unnamed), `0x14237f3d0`, `0x141eeab20` (unnamed) and `vfn 0x610` of the level save component (`0x14297b320`). Writes the volume through its out parameter. | MEDIUM (structure), LOW (name) | Existing probe (`blocking/`). |
+| `0x1419982c0` | Lookup in a sparse array on `AFortGameStateAthena` by a byte index: allocated when the index is below the bit count `+0x1528` and its bit is set in the inline (`+0x1510`) or heap (`+0x1520`) bit array; returns the 16-byte element at `+0x1500` (a `TArray` of 8-byte weak object pointers); otherwise a static empty element at `0x148113518`. | MEDIUM (structure), LOW (member names and key meaning) | Probe decompile (180 bytes, 32 callers). The caller iterates the element as weak pointers and tests the Owner (`+0xe0`) as an Athena controller. |
+| `0x1419e89a0` | Controller member that updates the skydive-leader state: broadcasts the dynamic list at `+0x2b80` with two bools (`0x1406a9dc0`, identified), compacts the list at `+0x2b90`/`+0x2b98` (`0x140685370`, identified) when it is marked, calls virtual `+0x590` on the object at `+0x280` of the object at `+0x6e0`, and copies 8 and 4 bytes of the result of virtual `+0x700` (called on the object at `+0x2b0`) into `+0x2bc4` and `+0x2bcc`. | LOW-MEDIUM | Probe decompile (388 bytes, 4 indirect calls). Members and virtual slots `0x2190`, `0x700`, `0x590` are unnamed. |
+| `0x1419922b0` | Iterates a context object `FUN_1419b90a0`, calls its virtual `+0x928` until it returns 2, returns the out int32. | LOW | Probe decompile (125 bytes). |
+| `0x14463f970` | Lazy getter: returns `this+0x230`, creating the object with `FUN_14463cf30` when it is null. | LOW (owner class unknown) | Probe decompile (39 bytes, 80 callers). |
+| `0x141e8db50` | Stats counters on an unnamed struct: `+0x560` and `+0x54c` increment, `+0x550 += p2`, `+0x554 += p3`, `+0x558 = min(old, p4)`. | MEDIUM (body), LOW (struct name) | Probe decompile (45 bytes, 1 caller). |
+| `0x141ed1800` | Thread-local accessor of a static struct at `0x148130770` (constructed by `FUN_141ebb310`, destructor `FUN_145865cb0`); fields `+0x1748`/`+0x174c` (an FName) and `+0x1c08` to `+0x1c4c` (paired int32). | LOW (struct name) | Probe decompile (123 bytes, 80 callers). |
+| `0x1419967f0` | Returns `FUN_14197ccd0(obj+0x6f8, 1)` for `obj = GameState +0x1df8`, or `+0x1df0` when that is null (0 when both are null). | LOW-MEDIUM | Probe decompile (44 bytes). `FUN_14197ccd0` unnamed. |
+| `0x142a53870` | Calls `ProcessEvent` on `FindFunctionChecked(_DAT_1481b0f88)` with an 18-byte parameter block (two 8-byte values, two bools): a dynamic delegate thunk of the team-lost notification. | MEDIUM (structure), LOW (name) | Probe decompile (80 bytes). |
+| `0x141b5d450` | Copies a stats struct of more than 0x130 bytes (strings and `TArray`s by `FUN_140683960`, a nested copy `FUN_141b5bd30`, and a delegate broadcast `0x1406a9dc0` with no arguments). | MEDIUM (body), LOW (struct name) | Probe decompile (379 bytes). |
+| `0x141b6bb40` | Recursive walk over a stats tree that compares int32 pairs with `FUN_141ed1800` fields and calls `FUN_1406c6690` and `FUN_141b6c250` (unnamed). | LOW | Probe decompile (632 bytes). |
+| `0x141a2c5b0` | Copy-appends a `TArray` of 16-byte elements (the element copies its own `TArray` payload with `FUN_140690ac0`). | MEDIUM (TArray append), element type unknown | Probe decompile (201 bytes). |
+
+Identities that stay open: `0x141f0a3c0` (946 bytes, 15 direct and 4 indirect calls; not probed further), `0x1446278d0` (1213
+bytes, 14 callees), `0x144640410`, `0x141999ba0`, `0x141c7d270`, `0x141c821a0`, `0x1419de410`, `0x1419fb7b0`, `0x141c7c5c0`,
+`0x14197ccd0`, `0x142cd8ed0`, `0x141eeab20`, `0x14199e2c0`, `0x1406c6690`, `0x141b6c250`.
+
+### Ported bodies: none
+
+The five bodies are blocked. Each has an exact reason; none reaches MEDIUM confidence with the present names.
+
+- `AFortPlayerControllerAthena::ServerClearSkydiveLeader_Implementation` (`0x1419f1170`): needs `0x1419982c0` (the sparse-array
+  structure is MEDIUM, but the game-state members `+0x1500`, `+0x1510`, `+0x1520` and `+0x1528` have no names or
+  `member_field` entries) and `0x1419e89a0` (unnamed members `+0x2b80` to `+0x2be0` and virtual slots `0x2190`, `0x700`, `0x590`).
+- `AFortPlayerControllerAthena::OnClientVolumeManagerReplicated` (exec, `0x142a59560`): the first call `FUN_141c74820` has no
+  recovered argument in the decompile, so the first lines cannot be written; `0x141c74820` needs `0x144640410` and
+  `0x141999ba0`; `0x1419c1a40` needs the volume manager's list `+0x248` (unnamed type); `0x140694550` needs the game-state
+  list `+0x20e0` (unnamed); `0x1419e0370` needs `0x141c821a0`, `0x1419de410`, `0x1419fb7b0` and the controller fields
+  `+0x2e7a`, `+0x36b4` and the globals `_DAT_1478c2820`, `_DAT_1478c2834`.
+- `AFortPlayerStateAthena::Server_SetCanEditCreativeIsland_Implementation` (`0x141a593d0`): needs `0x1419c3880` (its
+  callees `0x14199e2c0`, `0x141eeab20` are unnamed), `0x1423a0aa0` (`0x141c7c5c0` unnamed), `0x141f0a3c0` (946 bytes, not
+  probed further) and `0x14199e3c0` (meaning LOW). `0x142414c60` (HIGH), `0x14297b320` (HIGH) and `0x141a2c5b0` (MEDIUM) are
+  identified. The RPC body also reads the controller field `+0x1b10`, which has no name.
+- `AFortPlayerControllerAthena::ClientSendMatchStatsForPlayer_Implementation`: needs `0x141b5d450` and `0x141b6bb40` (stats
+  structs with no names), `0x141e8db50` (MEDIUM body, struct unnamed), `0x141ed1800` (LOW), `0x141ed2350` (existing probe)
+  and `0x14463f970` (LOW). No struct can be named from this evidence.
+- `AFortPlayerControllerAthena::ClientNotifyTeamLost_Implementation` (`0x1419c5860`): builds a 0x40-byte functor (vtables
+  `0x145e28ce0` and `0x145e28d38`), passes it to `0x1446278d0` (1213 bytes, unnamed), and calls `0x144621fb0` (the timer
+  lookup, still a verify item) and `0x140f95ae0` (accessor, LOW). The functor and `0x1446278d0` are not portable from the
+  present evidence.
+
+### Small-body scan (the handoff's "one unnamed accessor" rule)
+
+A scan of the 1,130 decompile records (`decomp_improved/`, the FUN names minus the identified helpers of earlier passes)
+found three records whose unnamed callees are all in the new set. Two are one function: `AFortGameStateAthena` exec at
+`0x14291e1c0` (`*Result = FUN_14199e3c0()`), blocked by `0x141a4a6f0` and the game-state members `+0x1df0`/`+0x1df8`. The third,
+`AFortPlayerPawn::HandleInStasis` (`0x142a7cc50`, 3861 bytes), has `0x142a3d9f0` as its only unnamed callee, but it also calls
+unnamed virtual slots (`0x710`, `0x728`, `0x590`, `0x5b8`, `0x420`, `0x50`), a switch table at `0x14232b450`, a `StasisMode`
+array and `thunk_FUN_140c31764`. It is not small and is not portable. No small body is unblocked by this pass.
+
+### Next probes (in order)
+
+1. `0x141f0a3c0` (the last large callee of `Server_SetCanEditCreativeIsland`), `0x144640410`, `0x141999ba0`, `0x141c7d270`.
+2. The game-state members `+0x1df0`/`+0x1df8` (a reflected name or a `member_field` after the reflection is checked), then `0x141a4a6f0`.
+3. The controller's `+0x2b80` to `+0x2be0` skydive fields and the virtual slots `0x2190`/`0x700`/`0x590`, then `0x1419e89a0`.
+4. `0x142a3d9f0`: read its `strings` list from the probe (the name literal was taken from the bytes only).
+
+### Checks
+
+- Scratch promote (not `promote_native_classes.sh`): `porting/native/Source` copied to the scratchpad, the
+  `Generated` directories removed in the copy, `resolve_class_refs.py --out` and `gen_native_classes.py --promote` with
+  `--source-root` and `--report-dir` in the scratchpad. `behavior_splice.json`: 249 spliced, 0 rejected.
+- `python3 -I porting/behavior/check_behavior.py --gen-root <scratch>/Source/FortniteGame/Generated --splice-report
+  <scratch>/report/behavior_splice.json`: ported 249, spliced and verified 249, not spliced 0, `FAIL: 0`.
+- The in-tree plain `check_behavior.py` was not re-run: it rewrites `behavior/COUNTS.txt`, and `porting/native/` is in use by
+  the struct_net build.
+
+### Files touched
+
+- `porting/decompilation_notes.md` (this section)
+- `porting/behavior/CALLEE_PORT_QUEUE.md` (twelfth-pass paragraph, ranking rows 4 to 8)
+- `porting/behavior/README.md` (twelfth-pass paragraph; counts unchanged)
+- Scratchpad only: `.../scratchpad/twelfth/probe` (probe outputs), `.../scratchpad/twelfth/promote` (scratch Source copy,
+  reflection output, report, `check_gen.log`), `.../scratchpad/twelfth/records.json`.
+- Not touched: `porting/native/`, `porting/behavior/MANIFEST.json`, `porting/behavior/*.inc`, `gen_native_classes.py`,
+  `porting/ghidra/`, `porting/generated/callee_probe/` (only read), git index. Ghidra project metadata was rewritten by the probe.
