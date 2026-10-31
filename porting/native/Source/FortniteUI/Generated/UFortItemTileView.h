@@ -8,8 +8,7 @@
 
 #include "EFortItemCardSize.h"
 #include "FOnInventoryUpdated.h"
-
-class UFortItem;
+#include "UFortItem.h"
 
 #include "UFortItemTileView.generated.h"
 

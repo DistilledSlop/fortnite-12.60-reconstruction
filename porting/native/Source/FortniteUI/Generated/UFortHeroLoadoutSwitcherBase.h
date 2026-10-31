@@ -6,8 +6,9 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
-class UCommonButton;
-class UCommonTextBlock;
+#include "UCommonButton.h"
+#include "UCommonTextBlock.h"
+
 class UFortHeroAbilitiesAndGadgetsBase;
 class UFortItemDetailsHostPanel;
 class UHorizontalBox;

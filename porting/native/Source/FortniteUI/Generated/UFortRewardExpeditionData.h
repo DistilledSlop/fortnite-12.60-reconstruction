@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortRewardNotificationData.h"
 
-class UFortExpeditionItem;
+#include "UFortExpeditionItem.h"
 
 #include "UFortRewardExpeditionData.generated.h"
 

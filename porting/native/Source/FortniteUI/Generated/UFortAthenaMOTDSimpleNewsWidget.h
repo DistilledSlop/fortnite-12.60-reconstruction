@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonActivatableWidget.h"
 
-class UCommonButton;
+#include "UCommonButton.h"
+
 class URichTextBlock;
 
 #include "UFortAthenaMOTDSimpleNewsWidget.generated.h"

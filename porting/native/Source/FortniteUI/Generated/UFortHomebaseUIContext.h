@@ -13,10 +13,10 @@
 #include "FOnSlottedPrimaryHeroChanged.h"
 #include "FOnSquadSlotChanged.h"
 #include "FOnSurvivorSquadsAutoSlotted.h"
+#include "UFortGadgetItemDefinition.h"
+#include "UFortWorldItem.h"
 
 class UDataTable;
-class UFortGadgetItemDefinition;
-class UFortWorldItem;
 
 #include "UFortHomebaseUIContext.generated.h"
 

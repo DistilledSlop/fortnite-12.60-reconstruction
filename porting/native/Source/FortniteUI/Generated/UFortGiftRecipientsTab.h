@@ -6,8 +6,9 @@
 #include "CoreMinimal.h"
 #include "UCommonActivatableWidget.h"
 
-class UCommonListView;
-class UCommonTextBlock;
+#include "UCommonListView.h"
+#include "UCommonTextBlock.h"
+
 class UFortStoreFrontOfferInfo;
 
 #include "UFortGiftRecipientsTab.generated.h"

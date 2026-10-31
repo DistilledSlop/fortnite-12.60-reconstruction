@@ -7,8 +7,8 @@
 #include "UFortStoreFrontOfferDetailsWidgetBase.h"
 
 #include "Engine/DataTable.h"
+#include "UCommonButton.h"
 
-class UCommonButton;
 class UEnableMultiFactorModal;
 class UFortGiftingScreen;
 class UOverlay;

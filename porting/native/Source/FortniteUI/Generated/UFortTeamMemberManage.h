@@ -6,12 +6,13 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanel.h"
 
-class UCommonButton;
-class UCommonTextBlock;
-class UCommonWidgetSwitcher;
+#include "UCommonButton.h"
+#include "UCommonTextBlock.h"
+#include "UCommonWidgetSwitcher.h"
+#include "UFortTeamMember.h"
+
 class UFortPlayerBanner;
 class UFortPlayerPowerRating;
-class UFortTeamMember;
 class UVerticalBox;
 
 #include "UFortTeamMemberManage.generated.h"

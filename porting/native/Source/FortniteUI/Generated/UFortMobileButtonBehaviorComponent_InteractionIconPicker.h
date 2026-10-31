@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortMobileButtonBehaviorComponent_TagIconPicker.h"
 
-class UFortControllerComponent_Interaction;
+#include "UFortControllerComponent_Interaction.h"
 
 #include "UFortMobileButtonBehaviorComponent_InteractionIconPicker.generated.h"
 

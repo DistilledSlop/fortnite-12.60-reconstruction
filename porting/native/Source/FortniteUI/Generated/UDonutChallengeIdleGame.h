@@ -12,8 +12,8 @@
 #include "Math/Color.h"
 #include "Math/Vector2D.h"
 #include "Styling/SlateBrush.h"
+#include "UCommonButton.h"
 
-class UCommonButton;
 class UCurveFloat;
 class UImage;
 class UWidgetAnimation;

@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonButton.h"
 
-class UCommonLazyImage;
+#include "UCommonLazyImage.h"
 
 #include "UAthenaChallengeImageGridEntry.generated.h"
 

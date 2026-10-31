@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortUIManager.h"
 
-class UFortLocalPlayer;
+#include "UFortLocalPlayer.h"
+
 class UFortRootViewportLayout_Athena;
 class ULetoHudOverlay;
 

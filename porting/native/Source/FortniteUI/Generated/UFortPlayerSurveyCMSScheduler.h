@@ -6,10 +6,11 @@
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
 
+#include "UFortPlayerSurveyManager.h"
+
 class UFortPlayerSurveyCMSSurvey;
 class UFortPlayerSurveyCMSSurveyDataSource;
 class UFortPlayerSurveyCMSTracker;
-class UFortPlayerSurveyManager;
 class UPlayer;
 
 #include "UFortPlayerSurveyCMSScheduler.generated.h"

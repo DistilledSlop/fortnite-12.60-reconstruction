@@ -7,11 +7,11 @@
 #include "UCommonActivatablePanel.h"
 
 #include "Engine/DataTable.h"
+#include "UCommonTextBlock.h"
 
 class UAthenaChallengePageRotator;
 class UAthenaChallengePageView;
 class UAthenaMapChallengeCategoryRotator;
-class UCommonTextBlock;
 class USizeBox;
 
 #include "UAthenaMapGamePanel.generated.h"

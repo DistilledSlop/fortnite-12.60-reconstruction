@@ -7,12 +7,12 @@
 #include "UAthenaHUDBase.h"
 
 #include "Engine/DataTable.h"
+#include "UCommonWidgetSwitcher.h"
 
 class UAthenaBroadcastMapPanelBase;
 class UAthenaReplayActionFeedScreenBase;
 class UAthenaSpectatorHUDControlsBase;
 class UAthenaSpectatorNameplateLayerBase;
-class UCommonWidgetSwitcher;
 class UFortBroadcastViewSettings;
 class UFortReplayGoToTimeDialogue;
 class UFortReplayHighlightsWindow;

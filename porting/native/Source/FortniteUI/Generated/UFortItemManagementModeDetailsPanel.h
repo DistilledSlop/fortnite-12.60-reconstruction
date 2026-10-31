@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
-class UCommonWidgetSwitcher;
+#include "UCommonWidgetSwitcher.h"
+
 class UFortItemDetailsActivatablePanel;
 class UFortItemManagementScreen;
 

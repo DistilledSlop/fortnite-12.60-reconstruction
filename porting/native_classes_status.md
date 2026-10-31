@@ -18,6 +18,14 @@ only, see Next steps).
 Stage notes for the gap closure in `native_class_coverage.md` (cause codes C1 to C5). Each green stage is promoted, built,
 restaged and verified before the next one starts. Not every stage is committed by its builder; the orchestrator commits.
 
+**2026-10-31: Stage 2 batch 1 retry passed**, superseding the reverted attempt below. SocialUMG and KairosSceneCapture
+add 26 classes, bringing offline parity to 4,617 of 4,617 (zero mismatches or unknowns). The generator now includes
+cross-module class headers and retains actual dependencies on FortniteGame in generated module Build.cs files; the previous
+unconditional exclusion caused KairosSceneCapture to fail to find `AFortPlayerPawn.h`. Existing cycle detection still applies.
+Full promotion, client/server build, restage, both joins, serialization self-test, checksum, behavior and backend checks passed:
+`porting/generated/regress/20261031T233838Z-1983199/result.json`. Both peers reported network checksum 683914758; generator
+self-test passed 129 checks and checksum self-test passed 31 checks. Continue with remaining C1 modules in small batches.
+
 Stage 2 (C1, 34 missing runtime modules), batch 1 attempt (SocialUMG, KairosSceneCapture, GameSubCatalog), FAILED and reverted
 2026-10-31; nothing from it is committed, the tree is at the stage 1 commit. Findings for the retry:
 

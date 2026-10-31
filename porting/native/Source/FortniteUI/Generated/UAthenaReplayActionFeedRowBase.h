@@ -6,9 +6,10 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "UCommonButton.h"
+#include "UCommonTextBlock.h"
+
 class UAthenaReplayActionFeedRowProxyInstance;
-class UCommonButton;
-class UCommonTextBlock;
 class UImage;
 class UTexture2D;
 

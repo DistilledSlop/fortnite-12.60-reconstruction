@@ -7,8 +7,8 @@
 #include "UFortUIStateWidget_NUI.h"
 
 #include "FBasicDynamicMulticastDelegate.h"
+#include "UFortGiftBoxItem.h"
 
-class UFortGiftBoxItem;
 class UFortItemReceivedScreen;
 class UFortPlayerSurveyDispatcher;
 

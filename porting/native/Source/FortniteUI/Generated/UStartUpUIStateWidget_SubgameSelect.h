@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortUIStateWidgetBase.h"
 
-class UCommonUserWidget;
+#include "UCommonUserWidget.h"
 
 #include "UStartUpUIStateWidget_SubgameSelect.generated.h"
 

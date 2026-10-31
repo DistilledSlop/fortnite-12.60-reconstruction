@@ -6,9 +6,10 @@
 #include "CoreMinimal.h"
 #include "UCommonRotator.h"
 
+#include "UCommonTextBlock.h"
+#include "UFortCreativeOption.h"
+
 class APlayerState;
-class UCommonTextBlock;
-class UFortCreativeOption;
 class UFortEditableFilteredCountedTextBox;
 class UFortUserPermissions;
 class UMaterial;

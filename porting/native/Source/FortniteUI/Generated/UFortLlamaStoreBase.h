@@ -7,10 +7,10 @@
 #include "UFortDirectAcquisitionWidgetBase.h"
 
 #include "FOfferGroup.h"
+#include "UCommonActivatablePanel.h"
+#include "UCommonButton.h"
+#include "UCommonButtonGroup.h"
 
-class UCommonActivatablePanel;
-class UCommonButton;
-class UCommonButtonGroup;
 class UDynamicEntryBox;
 class UFortLlamaStoreData;
 class UFortLlamaStoreDetailsBase;

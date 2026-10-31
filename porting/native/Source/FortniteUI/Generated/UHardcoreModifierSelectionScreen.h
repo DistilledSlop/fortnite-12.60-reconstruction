@@ -6,8 +6,9 @@
 #include "CoreMinimal.h"
 #include "UCommonActivatableWidget.h"
 
-class UCommonButton;
-class UCommonTextBlock;
+#include "UCommonButton.h"
+#include "UCommonTextBlock.h"
+
 class UHardcoreModifierListView;
 class UHardcoreModifierPreviewPane;
 

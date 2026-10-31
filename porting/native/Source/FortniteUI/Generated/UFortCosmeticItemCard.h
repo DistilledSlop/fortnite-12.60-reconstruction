@@ -7,9 +7,9 @@
 #include "UCommonUserWidget.h"
 
 #include "GameplayTagContainer.h"
+#include "UCommonLoadGuard.h"
+#include "UFortItem.h"
 
-class UCommonLoadGuard;
-class UFortItem;
 class UImage;
 class UMaterialInterface;
 class USizeBox;

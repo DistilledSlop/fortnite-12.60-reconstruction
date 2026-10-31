@@ -7,8 +7,8 @@
 #include "Blueprint/UserWidget.h"
 
 #include "Engine/DataTable.h"
+#include "UCommonWidgetSwitcher.h"
 
-class UCommonWidgetSwitcher;
 class UFortAthenaTutorialBaseInteraction;
 
 #include "UFortAthenaTutorialScreen.generated.h"

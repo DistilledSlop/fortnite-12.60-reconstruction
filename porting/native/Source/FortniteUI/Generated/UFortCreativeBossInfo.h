@@ -6,8 +6,9 @@
 #include "CoreMinimal.h"
 #include "UMinigameWidgetBase.h"
 
-class AFortPlayerStateAthena;
-class UCommonTextBlock;
+#include "AFortPlayerStateAthena.h"
+#include "UCommonTextBlock.h"
+
 class UImage;
 
 #include "UFortCreativeBossInfo.generated.h"

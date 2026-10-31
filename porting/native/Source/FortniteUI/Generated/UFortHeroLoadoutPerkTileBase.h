@@ -6,8 +6,9 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
-class UCommonTextBlock;
-class UFortAbilityKit;
+#include "UCommonTextBlock.h"
+#include "UFortAbilityKit.h"
+
 class UFortLazyImage;
 class UHorizontalBox;
 class URichTextBlock;

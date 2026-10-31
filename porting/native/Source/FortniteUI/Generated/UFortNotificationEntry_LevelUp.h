@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortNotificationEntry.h"
 
-class UCommonTextBlock;
+#include "UCommonTextBlock.h"
+
 class UFortLazyImage;
 
 #include "UFortNotificationEntry_LevelUp.generated.h"

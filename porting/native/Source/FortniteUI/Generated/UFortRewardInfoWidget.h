@@ -8,8 +8,8 @@
 
 #include "Layout/Margin.h"
 #include "Types/SlateEnums.h"
+#include "UCommonButtonGroup.h"
 
-class UCommonButtonGroup;
 class UFortRewardInfoButton;
 class UPanelWidget;
 

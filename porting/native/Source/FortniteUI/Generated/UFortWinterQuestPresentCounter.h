@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
-class UCommonRichTextBlock;
+#include "UCommonRichTextBlock.h"
+
 class UImage;
 
 #include "UFortWinterQuestPresentCounter.generated.h"

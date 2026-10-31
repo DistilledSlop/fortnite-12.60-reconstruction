@@ -6,10 +6,11 @@
 #include "CoreMinimal.h"
 #include "UCommonActivatablePanel.h"
 
-class UCommonLoadGuard;
-class UFortItem;
+#include "UCommonLoadGuard.h"
+#include "UFortItem.h"
+#include "UFortTooltipLoadingWrapper.h"
+
 class UFortItemManagementScreen;
-class UFortTooltipLoadingWrapper;
 
 #include "UFortItemDetailsActivatablePanel.generated.h"
 

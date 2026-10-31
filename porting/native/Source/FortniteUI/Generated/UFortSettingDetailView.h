@@ -7,9 +7,9 @@
 #include "Blueprint/UserWidget.h"
 
 #include "Blueprint/UserWidgetPool.h"
+#include "UCommonRichTextBlock.h"
+#include "UCommonTextBlock.h"
 
-class UCommonRichTextBlock;
-class UCommonTextBlock;
 class UFortSetting;
 class UFortSettingVisualData;
 class UVerticalBox;

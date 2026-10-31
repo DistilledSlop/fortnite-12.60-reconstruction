@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonActivatableWidget.h"
 
-class UCommonRichTextBlock;
+#include "UCommonRichTextBlock.h"
+
 class UDataTable;
 
 #include "UFortStoreSkinDetailsPopup.generated.h"

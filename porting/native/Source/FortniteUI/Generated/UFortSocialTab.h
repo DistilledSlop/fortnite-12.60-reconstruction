@@ -7,8 +7,8 @@
 #include "UCommonButton.h"
 
 #include "Styling/SlateColor.h"
+#include "UCommonTextBlock.h"
 
-class UCommonTextBlock;
 class UImage;
 class UTexture2D;
 

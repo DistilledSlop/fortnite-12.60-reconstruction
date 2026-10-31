@@ -8,8 +8,8 @@
 
 #include "FFilterEnabledDelegate.h"
 #include "FFilterSelectedDelegate.h"
+#include "UCommonTextBlock.h"
 
-class UCommonTextBlock;
 class UContentBrowserTag;
 
 #include "UContentBrowserFilterEntry.generated.h"

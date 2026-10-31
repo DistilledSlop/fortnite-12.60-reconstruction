@@ -7,8 +7,8 @@
 #include "UFortUIStateWidget_NUI.h"
 
 #include "Engine/DataTable.h"
+#include "UCommonWidgetStack.h"
 
-class UCommonWidgetStack;
 class UFortRejoinWindowBase;
 
 #include "UFortUIStateWidget_JoinServer.generated.h"

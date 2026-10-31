@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanel.h"
 
-class UFortPlaylistAthena;
+#include "UFortPlaylistAthena.h"
+
 class UWidgetSwitcher;
 
 #include "UFortTutorialLobbyPopup.generated.h"

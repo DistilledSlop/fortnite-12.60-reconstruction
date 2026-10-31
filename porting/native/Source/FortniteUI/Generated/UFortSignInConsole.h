@@ -6,8 +6,9 @@
 #include "CoreMinimal.h"
 #include "UCommonActivatablePanel.h"
 
-class UCommonButton;
-class UCommonTextBlock;
+#include "UCommonButton.h"
+#include "UCommonTextBlock.h"
+
 class UEditableText;
 class UWidgetSwitcher;
 

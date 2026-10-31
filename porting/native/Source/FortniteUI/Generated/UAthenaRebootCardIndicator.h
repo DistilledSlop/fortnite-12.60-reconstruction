@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UAthenaMarkedActorIndicator.h"
 
-class UCommonTextBlock;
+#include "UCommonTextBlock.h"
+
 class UImage;
 
 #include "UAthenaRebootCardIndicator.generated.h"

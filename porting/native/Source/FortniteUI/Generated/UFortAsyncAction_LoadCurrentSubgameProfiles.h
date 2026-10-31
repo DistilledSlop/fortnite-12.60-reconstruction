@@ -6,9 +6,8 @@
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintAsyncActionBase.h"
 
+#include "AFortPlayerController.h"
 #include "FFortLoadCurrentSubgameProfilesCompleteDelegate.h"
-
-class AFortPlayerController;
 
 #include "UFortAsyncAction_LoadCurrentSubgameProfiles.generated.h"
 

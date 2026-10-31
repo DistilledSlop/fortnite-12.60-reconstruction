@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonButton.h"
 
-class UCommonTextBlock;
+#include "UCommonTextBlock.h"
+
 class UFortUserDetails;
 
 #include "UFortGiftingUserItem.generated.h"

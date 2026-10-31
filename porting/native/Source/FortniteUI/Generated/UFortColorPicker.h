@@ -9,9 +9,9 @@
 #include "EColorPickerColorRepresentation.h"
 #include "EColorPickerType.h"
 #include "Math/Color.h"
+#include "UCommonButton.h"
+#include "UCommonButtonGroup.h"
 
-class UCommonButton;
-class UCommonButtonGroup;
 class UFortColorPickerComponent;
 class UFortColorPickerSwatchTile;
 class UMaterialInterface;

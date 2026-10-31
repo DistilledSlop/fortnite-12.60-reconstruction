@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortTeamMemberEntryBase.h"
 
-class UCommonButton;
+#include "UCommonButton.h"
+
 class UFortPartySuggestionButton;
 
 #include "UFortLobbyAddPlayer.generated.h"

@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonButton.h"
 
-class UCommonTextBlock;
+#include "UCommonTextBlock.h"
 
 #include "UChallengeScreenCategoryTab.generated.h"
 

@@ -8,8 +8,8 @@
 
 #include "EFortUIFeature.h"
 #include "GameplayTagContainer.h"
+#include "UCommonWidgetSwitcher.h"
 
-class UCommonWidgetSwitcher;
 class UFortMtxStoreRootBase;
 
 #include "UFortAthenaTabsScreenBase.generated.h"

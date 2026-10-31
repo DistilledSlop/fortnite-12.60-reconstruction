@@ -6,8 +6,9 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "UFortMarkerDetailsTable.h"
+
 class AActor;
-class UFortMarkerDetailsTable;
 class UImage;
 class UTexture2D;
 class UWidgetAnimation;

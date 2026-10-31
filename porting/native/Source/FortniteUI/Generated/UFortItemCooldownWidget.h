@@ -8,8 +8,8 @@
 
 #include "EFortItemCooldownType.h"
 #include "FOnCooldownBookend.h"
+#include "UCommonTextBlock.h"
 
-class UCommonTextBlock;
 class UImage;
 class UMaterialInstanceDynamic;
 

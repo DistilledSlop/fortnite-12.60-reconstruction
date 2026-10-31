@@ -6,8 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortHUDElementWidget.h"
 
-class UCommonTextBlock;
-class UCommonWidgetSwitcher;
+#include "UCommonTextBlock.h"
+#include "UCommonWidgetSwitcher.h"
 
 #include "UAthenaBroadcastPlayerEventScoreWidget.generated.h"
 

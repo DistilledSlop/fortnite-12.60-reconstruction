@@ -7,8 +7,7 @@
 #include "UObject/Object.h"
 
 #include "EFortCreativeServerPrivacySetting.h"
-
-class UFortSocialUser;
+#include "UFortSocialUser.h"
 
 #include "UFortCreativeServerInfo.generated.h"
 

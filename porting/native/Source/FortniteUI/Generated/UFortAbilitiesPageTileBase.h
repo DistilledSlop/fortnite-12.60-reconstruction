@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonButton.h"
 
-class UCommonWidgetSwitcher;
+#include "UCommonWidgetSwitcher.h"
+
 class UFortKeybindWidget;
 
 #include "UFortAbilitiesPageTileBase.generated.h"

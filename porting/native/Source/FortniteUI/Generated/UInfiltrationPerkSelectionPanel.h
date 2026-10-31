@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanelLTM.h"
 
-class AFortAthenaMutator_PerkSystemMutator;
+#include "AFortAthenaMutator_PerkSystemMutator.h"
+
 class UOverlay;
 class UPerkIntroScreenWidget;
 class UPerkSelectionEntryWidget;

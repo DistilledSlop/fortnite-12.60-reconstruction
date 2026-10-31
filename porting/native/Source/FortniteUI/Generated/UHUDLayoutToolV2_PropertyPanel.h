@@ -6,8 +6,9 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
-class UCommonActivatableWidgetSwitcher;
-class UCommonTextBlock;
+#include "UCommonActivatableWidgetSwitcher.h"
+#include "UCommonTextBlock.h"
+
 class UFortMobileHUDElementProxy;
 class UFortMobileHUDWidgetCustomPropertySettingRegistry;
 class UFortMobileHUDWidgetRegistry;

@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonActivatablePanel.h"
 
-class UCommonButton;
+#include "UCommonButton.h"
+
 class URichTextBlock;
 
 #include "UFortAccountNotFound.generated.h"

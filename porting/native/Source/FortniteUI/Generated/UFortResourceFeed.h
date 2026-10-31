@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortHUDElementWidget.h"
 
-class UFortItemDefinition;
+#include "UFortItemDefinition.h"
+
 class UFortSimpleWidgetAnimationsPanel;
 class UImage;
 class UTextBlock;

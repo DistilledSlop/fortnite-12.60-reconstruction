@@ -6,9 +6,10 @@
 #include "CoreMinimal.h"
 #include "UCommonActivatablePanel.h"
 
-class UCommonBorder;
-class UCommonBorderStyle;
-class UCommonButton;
+#include "UCommonBorder.h"
+#include "UCommonBorderStyle.h"
+#include "UCommonButton.h"
+
 class UEditableText;
 
 #include "UFortSignInWidget.generated.h"

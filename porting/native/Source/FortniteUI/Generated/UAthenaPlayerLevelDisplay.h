@@ -6,8 +6,9 @@
 #include "CoreMinimal.h"
 #include "UFortAccountWidgetBase.h"
 
+#include "UCommonTextBlock.h"
+
 class UAthenaSeasonItemRewardIcon;
-class UCommonTextBlock;
 
 #include "UAthenaPlayerLevelDisplay.generated.h"
 

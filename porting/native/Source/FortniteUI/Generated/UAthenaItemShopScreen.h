@@ -7,9 +7,9 @@
 #include "UFortActivatablePanel.h"
 
 #include "Engine/DataTable.h"
+#include "UCommonButtonGroup.h"
+#include "UCommonTextBlock.h"
 
-class UCommonButtonGroup;
-class UCommonTextBlock;
 class UDynamicEntryBox;
 class UFortAffilateModal;
 class UFortMtxStoreSelectionPopup;

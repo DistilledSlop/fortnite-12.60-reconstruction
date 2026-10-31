@@ -6,8 +6,9 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanel.h"
 
-class UCommonTextBlock;
-class UFortGameStateComponent_EventLevel;
+#include "UCommonTextBlock.h"
+#include "UFortGameStateComponent_EventLevel.h"
+
 class UFortWinterQuestButton;
 
 #include "UFortWinterQuestPresentScreen.generated.h"

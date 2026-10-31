@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UAthenaChallengeListEntryBase.h"
 
-class UCommonTextBlock;
+#include "UCommonTextBlock.h"
 
 #include "UAthenaChallengeListEntry_Header.generated.h"
 

@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortMainMenuButton.h"
 
-class UCommonTextBlock;
+#include "UCommonTextBlock.h"
 
 #include "UFortMainMenuLeaveButton.generated.h"
 

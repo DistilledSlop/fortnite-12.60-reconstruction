@@ -7,8 +7,8 @@
 #include "UCommonButton.h"
 
 #include "Math/Color.h"
+#include "UCommonRichTextBlock.h"
 
-class UCommonRichTextBlock;
 class UEditableText;
 
 #include "UFortEditNicknameButton.generated.h"

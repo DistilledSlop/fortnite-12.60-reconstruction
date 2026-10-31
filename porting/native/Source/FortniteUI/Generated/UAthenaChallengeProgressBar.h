@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 
-class UCommonRichTextBlock;
+#include "UCommonRichTextBlock.h"
+
 class UProgressBar;
 
 #include "UAthenaChallengeProgressBar.generated.h"

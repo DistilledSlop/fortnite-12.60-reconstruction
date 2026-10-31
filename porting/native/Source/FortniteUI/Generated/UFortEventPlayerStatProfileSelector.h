@@ -6,9 +6,10 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanel.h"
 
+#include "UCommonListView.h"
+#include "UCommonTextBlock.h"
+
 class UAthenaStatsScreenBase;
-class UCommonListView;
-class UCommonTextBlock;
 
 #include "UFortEventPlayerStatProfileSelector.generated.h"
 

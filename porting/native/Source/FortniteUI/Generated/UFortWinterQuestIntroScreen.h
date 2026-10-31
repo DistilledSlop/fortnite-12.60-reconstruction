@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanel.h"
 
-class UCommonTextBlock;
+#include "UCommonTextBlock.h"
+
 class UFortLazyImage;
 
 #include "UFortWinterQuestIntroScreen.generated.h"

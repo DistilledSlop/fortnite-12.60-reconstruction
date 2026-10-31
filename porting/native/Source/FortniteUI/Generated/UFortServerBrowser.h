@@ -7,8 +7,8 @@
 #include "UCommonActivatableWidget.h"
 
 #include "Engine/DataTable.h"
+#include "UCommonButton.h"
 
-class UCommonButton;
 class UFortServerBrowserActionData;
 class UFortServerBrowserListView;
 

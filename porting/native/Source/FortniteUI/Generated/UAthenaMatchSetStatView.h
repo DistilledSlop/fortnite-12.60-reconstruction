@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UAthenaMatchStatView.h"
 
-class UAthenaSeasonStats;
+#include "UAthenaSeasonStats.h"
 
 #include "UAthenaMatchSetStatView.generated.h"
 

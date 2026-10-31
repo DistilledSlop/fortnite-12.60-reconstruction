@@ -7,8 +7,8 @@
 #include "UCommonUserWidget.h"
 
 #include "FExpeditionTabInfo.h"
+#include "UCommonButton.h"
 
-class UCommonButton;
 class UFortExpeditionListViewWidget;
 class UFortTabListWidgetBase;
 

@@ -6,16 +6,17 @@
 #include "CoreMinimal.h"
 #include "UAthenaSpatialScreen.h"
 
-class UAthenaSeasonItemDefinition;
+#include "UAthenaSeasonItemDefinition.h"
+#include "UCommonButton.h"
+#include "UCommonHierarchicalScrollBox.h"
+#include "UCommonTextBlock.h"
+#include "UFortChallengeBundleItemDefinition.h"
+#include "UFortGameStateComponent_EventLevel.h"
+
 class UBattlePassPurchaseScreen;
-class UCommonButton;
-class UCommonHierarchicalScrollBox;
-class UCommonTextBlock;
 class UDonutChallengeEntry;
 class UDonutChallengeEntryHeader;
 class UDynamicEntryBox;
-class UFortChallengeBundleItemDefinition;
-class UFortGameStateComponent_EventLevel;
 class UUserWidget;
 
 #include "UDonutChallengeScreen.generated.h"

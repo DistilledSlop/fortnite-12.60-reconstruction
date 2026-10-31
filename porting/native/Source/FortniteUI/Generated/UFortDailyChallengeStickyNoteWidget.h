@@ -6,9 +6,10 @@
 #include "CoreMinimal.h"
 #include "UCommonActivatableWidget.h"
 
+#include "UCommonButton.h"
+#include "UCommonRichTextBlock.h"
+
 class UAthenaConfirmationWindow;
-class UCommonButton;
-class UCommonRichTextBlock;
 class USizeBox;
 
 #include "UFortDailyChallengeStickyNoteWidget.generated.h"

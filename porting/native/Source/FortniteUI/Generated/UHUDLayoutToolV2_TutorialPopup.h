@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonActivatableWidget.h"
 
-class UCommonVisibilitySwitcher;
+#include "UCommonVisibilitySwitcher.h"
+
 class UHUDLayoutToolV2_Button;
 
 #include "UHUDLayoutToolV2_TutorialPopup.generated.h"

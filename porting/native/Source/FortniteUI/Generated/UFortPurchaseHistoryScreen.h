@@ -7,12 +7,12 @@
 #include "UCommonActivatablePanel.h"
 
 #include "Engine/DataTable.h"
+#include "UCommonButton.h"
+#include "UCommonButtonGroup.h"
+#include "UCommonListView.h"
+#include "UCommonTextBlock.h"
+#include "UFortItemDefinition.h"
 
-class UCommonButton;
-class UCommonButtonGroup;
-class UCommonListView;
-class UCommonTextBlock;
-class UFortItemDefinition;
 class UFortPurchaseHistoryListView;
 class UFortRefundConfirmation;
 class UFortRichTextBlock;

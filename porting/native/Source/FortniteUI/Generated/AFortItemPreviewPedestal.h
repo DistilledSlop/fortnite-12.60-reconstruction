@@ -6,10 +6,11 @@
 #include "CoreMinimal.h"
 #include "AFortItemPlacementActor.h"
 
+#include "UCustomCharacterPart.h"
+#include "UFortHero.h"
+
 class APlayerController;
 class UChildActorComponent;
-class UCustomCharacterPart;
-class UFortHero;
 class USceneComponent;
 class USkeletalMeshComponent;
 class UStaticMeshComponent;

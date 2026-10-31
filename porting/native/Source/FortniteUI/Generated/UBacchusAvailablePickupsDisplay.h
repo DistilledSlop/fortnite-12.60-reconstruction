@@ -6,9 +6,10 @@
 #include "CoreMinimal.h"
 #include "UBacchusHUDElement.h"
 
-class AFortPickup;
-class UCommonButton;
-class UCommonButtonStyle;
+#include "AFortPickup.h"
+#include "UCommonButton.h"
+#include "UCommonButtonStyle.h"
+
 class UFortDynamicEntryBox;
 
 #include "UBacchusAvailablePickupsDisplay.generated.h"

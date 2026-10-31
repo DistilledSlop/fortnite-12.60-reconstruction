@@ -7,8 +7,8 @@
 #include "UCommonButton.h"
 
 #include "EFortItemCardSize.h"
+#include "UFortItem.h"
 
-class UFortItem;
 class UFortMultiSizeItemCard;
 
 #include "UFortItemTileButton.generated.h"

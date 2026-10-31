@@ -6,8 +6,9 @@
 #include "CoreMinimal.h"
 #include "UFortPlayerFeedbackModalSubscreenBase.h"
 
+#include "UCommonButton.h"
+
 class UComboBoxString;
-class UCommonButton;
 class UEditableText;
 
 #include "UFortPlayerFeedbackModalSubscreen_EpicQA.generated.h"

@@ -6,11 +6,12 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanel.h"
 
+#include "UCommonButton.h"
+#include "UCommonTextBlock.h"
+#include "UCommonWidgetSwitcher.h"
+
 class UBackgroundBlur;
 class UCircularThrobber;
-class UCommonButton;
-class UCommonTextBlock;
-class UCommonWidgetSwitcher;
 class UHorizontalBox;
 class UVerticalBox;
 

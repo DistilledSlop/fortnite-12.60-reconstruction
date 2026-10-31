@@ -6,8 +6,9 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanel.h"
 
-class UCommonButton;
-class UCommonButtonGroup;
+#include "UCommonButton.h"
+#include "UCommonButtonGroup.h"
+
 class UPanelWidget;
 
 #include "UFortPrivacyBase.generated.h"

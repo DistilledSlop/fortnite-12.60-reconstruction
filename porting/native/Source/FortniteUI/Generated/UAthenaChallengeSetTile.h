@@ -6,9 +6,10 @@
 #include "CoreMinimal.h"
 #include "UAthenaChallengeScreenTileBase.h"
 
+#include "UCommonRichTextBlock.h"
+#include "UCommonTextBlock.h"
+
 class UAthenaChallengeProgressBar;
-class UCommonRichTextBlock;
-class UCommonTextBlock;
 class UFortLazyImage;
 
 #include "UAthenaChallengeSetTile.generated.h"

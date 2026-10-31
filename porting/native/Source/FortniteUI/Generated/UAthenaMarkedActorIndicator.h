@@ -6,8 +6,9 @@
 #include "CoreMinimal.h"
 #include "UFortActorIndicatorWidget.h"
 
-class UCommonTextBlock;
-class UFortMarkerDetailsTable;
+#include "UCommonTextBlock.h"
+#include "UFortMarkerDetailsTable.h"
+
 class UPanelWidget;
 class UWidgetSwitcher;
 

@@ -7,8 +7,8 @@
 #include "UCommonUserWidget.h"
 
 #include "EFortItemCardSize.h"
+#include "UFortAccountItem.h"
 
-class UFortAccountItem;
 class UPanelWidget;
 
 #include "UFortCollectionBookRecycleSlotResultsWidget.generated.h"

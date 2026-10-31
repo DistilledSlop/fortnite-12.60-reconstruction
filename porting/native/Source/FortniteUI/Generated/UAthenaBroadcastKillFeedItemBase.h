@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortHUDElementWidget.h"
 
-class UCommonTextBlock;
+#include "UCommonTextBlock.h"
+
 class UImage;
 class UMaterialInterface;
 

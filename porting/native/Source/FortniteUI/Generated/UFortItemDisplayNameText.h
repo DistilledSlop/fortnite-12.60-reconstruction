@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonTextBlock.h"
 
-class UFortItem;
+#include "UFortItem.h"
 
 #include "UFortItemDisplayNameText.generated.h"
 

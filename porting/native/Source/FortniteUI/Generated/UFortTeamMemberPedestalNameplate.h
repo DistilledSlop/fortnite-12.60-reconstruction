@@ -6,8 +6,9 @@
 #include "CoreMinimal.h"
 #include "UFortBasicTeamMemberEntry.h"
 
-class UCommonTextBlock;
-class UCommonWidgetSwitcher;
+#include "UCommonTextBlock.h"
+#include "UCommonWidgetSwitcher.h"
+
 class UFortPlayerPowerRating;
 class UImage;
 class UMatchmakingInputIndicatorBase;

@@ -7,9 +7,8 @@
 #include "UCommonUserWidget.h"
 
 #include "FOnSizeEstimateChanged.h"
-
-class UCommonListView;
-class UFortQuestItem;
+#include "UCommonListView.h"
+#include "UFortQuestItem.h"
 
 #include "UFortQuestTrackerList.generated.h"
 

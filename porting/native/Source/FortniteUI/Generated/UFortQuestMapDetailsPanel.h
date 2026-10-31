@@ -7,15 +7,15 @@
 #include "UFortQuestMapDetailsPanelBase.h"
 
 #include "Engine/DataTable.h"
+#include "UCommonActivatablePanel.h"
+#include "UCommonBorder.h"
+#include "UCommonBorderStyle.h"
+#include "UCommonListView.h"
+#include "UCommonTextBlock.h"
+#include "UFortQuestItem.h"
+#include "UFortQuestObjectiveInfo.h"
 
-class UCommonActivatablePanel;
-class UCommonBorder;
-class UCommonBorderStyle;
-class UCommonListView;
-class UCommonTextBlock;
 class UFortJournalQuestDetails;
-class UFortQuestItem;
-class UFortQuestObjectiveInfo;
 class UFortRewardInfoWidget;
 class UImage;
 class UScrollBox;

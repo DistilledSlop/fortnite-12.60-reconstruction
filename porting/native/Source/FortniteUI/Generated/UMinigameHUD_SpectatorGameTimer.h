@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UMinigameWidgetBase.h"
 
-class UCommonTextBlock;
+#include "UCommonTextBlock.h"
 
 #include "UMinigameHUD_SpectatorGameTimer.generated.h"
 

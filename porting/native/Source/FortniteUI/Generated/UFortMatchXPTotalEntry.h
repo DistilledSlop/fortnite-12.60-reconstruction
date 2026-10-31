@@ -6,8 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortHUDElementWidget.h"
 
-class UCommonNumericTextBlock;
-class UCommonTextBlock;
+#include "UCommonNumericTextBlock.h"
+#include "UCommonTextBlock.h"
 
 #include "UFortMatchXPTotalEntry.generated.h"
 

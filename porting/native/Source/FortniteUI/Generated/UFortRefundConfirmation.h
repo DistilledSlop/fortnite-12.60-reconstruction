@@ -6,8 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonActivatablePanel.h"
 
-class UCommonButton;
-class UCommonTextBlock;
+#include "UCommonButton.h"
+#include "UCommonTextBlock.h"
 
 #include "UFortRefundConfirmation.generated.h"
 

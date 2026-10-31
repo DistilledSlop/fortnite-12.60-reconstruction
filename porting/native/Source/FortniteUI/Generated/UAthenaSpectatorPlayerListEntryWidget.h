@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonButton.h"
 
-class UAthenaSpectatorPlayerListRowData;
+#include "UAthenaSpectatorPlayerListRowData.h"
 
 #include "UAthenaSpectatorPlayerListEntryWidget.generated.h"
 

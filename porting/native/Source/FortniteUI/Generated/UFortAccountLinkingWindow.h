@@ -6,10 +6,11 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanel.h"
 
+#include "UCommonButton.h"
+#include "UCommonWidgetSwitcher.h"
+
 class UBackgroundBlur;
 class UCircularThrobber;
-class UCommonButton;
-class UCommonWidgetSwitcher;
 
 #include "UFortAccountLinkingWindow.generated.h"
 

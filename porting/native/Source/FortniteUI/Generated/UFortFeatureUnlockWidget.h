@@ -6,8 +6,9 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanel.h"
 
-class UCommonLazyImage;
-class UCommonWidgetSwitcher;
+#include "UCommonLazyImage.h"
+#include "UCommonWidgetSwitcher.h"
+
 class UFortVideoPlayerWidget;
 class UWidget;
 

@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
-class UCommonButtonGroup;
+#include "UCommonButtonGroup.h"
+
 class UFortCreativeServerInfo;
 class UFortCreativeServerOptionTile;
 class UScrollBox;

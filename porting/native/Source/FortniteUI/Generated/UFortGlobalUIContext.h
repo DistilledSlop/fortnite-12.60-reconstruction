@@ -20,9 +20,9 @@
 #include "FOnScoreReportChanged.h"
 #include "GameFramework/OnlineReplStructs.h"
 #include "Misc/DateTime.h"
+#include "UFortHelpItem.h"
 
 class UAthenaMatchReadyDesktopPopup;
-class UFortHelpItem;
 class UFortUIMessageManager;
 
 #include "UFortGlobalUIContext.generated.h"

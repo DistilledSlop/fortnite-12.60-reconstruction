@@ -6,10 +6,11 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanel.h"
 
-class AFortVolume;
-class UCommonButton;
-class UCommonTextBlock;
-class UCommonWidgetSwitcher;
+#include "AFortVolume.h"
+#include "UCommonButton.h"
+#include "UCommonTextBlock.h"
+#include "UCommonWidgetSwitcher.h"
+
 class UEditableTextBox;
 class UMultiLineEditableTextBox;
 class UWidget;

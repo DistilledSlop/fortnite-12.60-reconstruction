@@ -7,8 +7,7 @@
 #include "UCommonUserWidget.h"
 
 #include "FObjectiveFinishedDisplaying.h"
-
-class UFortQuestObjectiveInfo;
+#include "UFortQuestObjectiveInfo.h"
 
 #include "UFortQuestObjectiveEntry.generated.h"
 

@@ -7,8 +7,7 @@
 #include "UAthenaMapNavigableIcon.h"
 
 #include "Engine/DataTable.h"
-
-class UCommonActionWidget;
+#include "UCommonActionWidget.h"
 
 #include "UAthenaMapNavigableIconStackOfChallenges.generated.h"
 

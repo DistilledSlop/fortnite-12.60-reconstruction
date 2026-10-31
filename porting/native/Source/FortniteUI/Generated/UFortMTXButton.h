@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonButton.h"
 
-class UCommonNumericTextBlock;
+#include "UCommonNumericTextBlock.h"
 
 #include "UFortMTXButton.generated.h"
 

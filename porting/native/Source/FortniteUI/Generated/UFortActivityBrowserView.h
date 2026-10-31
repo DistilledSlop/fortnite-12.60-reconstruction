@@ -7,9 +7,9 @@
 #include "UFortActivityView.h"
 
 #include "Engine/DataTable.h"
+#include "UCommonButton.h"
+#include "UCommonTextBlock.h"
 
-class UCommonButton;
-class UCommonTextBlock;
 class UFortActivityBrowserListView;
 
 #include "UFortActivityBrowserView.generated.h"

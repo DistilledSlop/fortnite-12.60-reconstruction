@@ -9,11 +9,11 @@
 #include "Engine/DataTable.h"
 #include "FActivatableScreenClosedEvent.h"
 #include "Math/Vector.h"
+#include "UCommonButton.h"
+#include "UCommonWidgetSwitcher.h"
+#include "UFortPocketLevel.h"
+#include "UPocketLevelInstance.h"
 
-class UCommonButton;
-class UCommonWidgetSwitcher;
-class UFortPocketLevel;
-class UPocketLevelInstance;
 class UWidget;
 
 #include "UFortStandaloneFrontend.generated.h"

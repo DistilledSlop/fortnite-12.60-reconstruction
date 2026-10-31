@@ -6,10 +6,11 @@
 #include "CoreMinimal.h"
 #include "UFortNotificationEntry.h"
 
+#include "UCommonRichTextBlock.h"
+#include "UCommonTextBlock.h"
+#include "UFortQuestItem.h"
+
 class UBorder;
-class UCommonRichTextBlock;
-class UCommonTextBlock;
-class UFortQuestItem;
 
 #include "UFortNotificationEntry_Quest.generated.h"
 

@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
-class UCommonActivatablePanel;
+#include "UCommonActivatablePanel.h"
+
 class UFortConfirmationWindow;
 class UFortErrorWindow;
 class UFortPlayerBanned;

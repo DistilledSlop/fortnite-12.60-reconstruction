@@ -6,8 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonActivatablePanel.h"
 
-class UCommonListView;
-class UFortUINotification;
+#include "UCommonListView.h"
+#include "UFortUINotification.h"
 
 #include "UFortUIMessagesPageBase.generated.h"
 

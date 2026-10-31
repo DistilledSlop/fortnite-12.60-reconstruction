@@ -6,8 +6,9 @@
 #include "CoreMinimal.h"
 #include "UCommonButton.h"
 
-class UCommonNumericTextBlock;
-class UCommonTextBlock;
+#include "UCommonNumericTextBlock.h"
+#include "UCommonTextBlock.h"
+
 class UObject;
 
 #include "UFortCollectionBookPageListWidget.generated.h"

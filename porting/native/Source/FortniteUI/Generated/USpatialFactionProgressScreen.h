@@ -6,10 +6,11 @@
 #include "CoreMinimal.h"
 #include "UCommonActivatableWidget.h"
 
-class UCommonButton;
-class UCommonButtonGroup;
+#include "UCommonButton.h"
+#include "UCommonButtonGroup.h"
+#include "UFortPlayerPerksItemDefinition.h"
+
 class UDynamicEntryBox;
-class UFortPlayerPerksItemDefinition;
 class UFortSocialAvatarIcon;
 class UScrollBox;
 class UTextBlock;

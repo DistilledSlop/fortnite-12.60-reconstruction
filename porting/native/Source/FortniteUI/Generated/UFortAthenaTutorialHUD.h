@@ -6,11 +6,11 @@
 #include "CoreMinimal.h"
 #include "UCommonActivatableWidget.h"
 
+#include "AFortAthenaTutorialManager.h"
 #include "GameplayTagContainer.h"
+#include "UCommonButton.h"
 
 class AActor;
-class AFortAthenaTutorialManager;
-class UCommonButton;
 class UFortAthenaTutorialProgressBar;
 class UFortAthenaTutorialScreen;
 class UFortAthenaTutorialTargetCounter;

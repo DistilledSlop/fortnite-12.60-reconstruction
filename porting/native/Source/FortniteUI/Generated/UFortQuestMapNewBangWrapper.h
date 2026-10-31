@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortBangWrapper_NUI.h"
 
-class UCommonWidgetSwitcher;
+#include "UCommonWidgetSwitcher.h"
 
 #include "UFortQuestMapNewBangWrapper.generated.h"
 

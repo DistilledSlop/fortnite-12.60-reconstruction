@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
-class UFortExpeditionItem;
+#include "UFortExpeditionItem.h"
+
 class UFortItemViewContext_ExpeditionSquadSlotsView;
 class UFortSquadSlotsView;
 

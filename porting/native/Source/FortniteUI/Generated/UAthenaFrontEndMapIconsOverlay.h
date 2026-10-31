@@ -6,8 +6,9 @@
 #include "CoreMinimal.h"
 #include "UAthenaMapIconsOverlay.h"
 
+#include "UFortGameStateComponent_EventLevel.h"
+
 class UAthenaFrontEndMapPoiIcon;
-class UFortGameStateComponent_EventLevel;
 
 #include "UAthenaFrontEndMapIconsOverlay.generated.h"
 

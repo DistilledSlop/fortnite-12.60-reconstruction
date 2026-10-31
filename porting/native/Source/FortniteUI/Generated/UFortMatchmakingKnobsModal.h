@@ -6,16 +6,17 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanel.h"
 
-class AFortMinigameSettingsBuilding;
+#include "AFortMinigameSettingsBuilding.h"
+#include "UCommonButton.h"
+#include "UCommonListView.h"
+#include "UCommonTextBlock.h"
+#include "UFortPlaylistAthena.h"
+#include "UPlaylistUserOptions.h"
+
 class APlayerState;
-class UCommonButton;
-class UCommonListView;
-class UCommonTextBlock;
-class UFortPlaylistAthena;
 class UFortUserPermissions;
 class UImage;
 class UObject;
-class UPlaylistUserOptions;
 
 #include "UFortMatchmakingKnobsModal.generated.h"
 

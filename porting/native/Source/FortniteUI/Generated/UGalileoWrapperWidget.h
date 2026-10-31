@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
-class AFortGameplayMutator;
+#include "AFortGameplayMutator.h"
 
 #include "UGalileoWrapperWidget.generated.h"
 

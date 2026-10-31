@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
-class UCommonRichTextBlock;
+#include "UCommonRichTextBlock.h"
 
 #include "UBattlePassVBuckSummary.generated.h"
 

@@ -8,9 +8,9 @@
 
 #include "EFortItemManagementMode.h"
 #include "FOnItemViewRefreshed.h"
+#include "UFortItem.h"
 
 class UFortInventoryContext;
-class UFortItem;
 class UFortItemManagementCustomFilterModalWidget;
 class UFortItemManagementInventoryPanel;
 class UFortItemManagementModeDetailsPanel;

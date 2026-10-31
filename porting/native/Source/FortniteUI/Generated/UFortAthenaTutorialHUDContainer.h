@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UBacchusHUDElement.h"
 
-class AFortAthenaTutorialManager;
+#include "AFortAthenaTutorialManager.h"
+
 class UFortAthenaTutorialHUD;
 class UFortAthenaTutorialScreen;
 class UFortAthenaTutorialScreenData;

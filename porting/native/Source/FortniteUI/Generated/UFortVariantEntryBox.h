@@ -6,8 +6,8 @@
 #include "CoreMinimal.h"
 #include "Components/DynamicEntryBox.h"
 
-class UAthenaCosmeticAccountItem;
-class UAthenaCosmeticItemDefinition;
+#include "UAthenaCosmeticAccountItem.h"
+#include "UAthenaCosmeticItemDefinition.h"
 
 #include "UFortVariantEntryBox.generated.h"
 

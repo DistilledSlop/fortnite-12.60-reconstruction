@@ -7,9 +7,9 @@
 #include "UCommonUserWidget.h"
 
 #include "ESpectatorLeaderboardEntryType.h"
+#include "UCommonTextBlock.h"
+#include "UFortMinigameTeamIdentification.h"
 
-class UCommonTextBlock;
-class UFortMinigameTeamIdentification;
 class UImage;
 
 #include "UMinigameHUD_SpectatorLeaderboardEntry.generated.h"

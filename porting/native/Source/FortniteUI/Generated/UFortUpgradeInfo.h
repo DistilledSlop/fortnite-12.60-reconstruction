@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
 
-class UFortHomebaseNodeItemDefinition;
+#include "UFortHomebaseNodeItemDefinition.h"
 
 #include "UFortUpgradeInfo.generated.h"
 

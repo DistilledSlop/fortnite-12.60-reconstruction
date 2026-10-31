@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UGGWidgetBase.h"
 
-class UFortWeaponItemDefinition;
+#include "UFortWeaponItemDefinition.h"
 
 #include "UGGInventoryWidgetBase.generated.h"
 

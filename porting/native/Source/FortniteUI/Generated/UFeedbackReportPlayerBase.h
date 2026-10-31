@@ -6,16 +6,17 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanel.h"
 
-class UCommonButton;
-class UCommonButtonGroup;
-class UCommonListView;
-class UCommonTextBlock;
-class UCommonWidgetSwitcher;
+#include "UCommonButton.h"
+#include "UCommonButtonGroup.h"
+#include "UCommonListView.h"
+#include "UCommonTextBlock.h"
+#include "UCommonWidgetSwitcher.h"
+#include "UReportablePlayerInfo.h"
+
 class UEditableText;
 class UMultiLineEditableTextBox;
 class UPlayerReportReasonInfo;
 class UReportTreeView;
-class UReportablePlayerInfo;
 class UWidget;
 
 #include "UFeedbackReportPlayerBase.generated.h"

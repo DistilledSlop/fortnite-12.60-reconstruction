@@ -8,11 +8,11 @@
 
 #include "FSpatialCustomizationCategoryStateData.h"
 #include "Math/Color.h"
+#include "UAthenaCharacterItemDefinition.h"
+#include "UAthenaRewardEventGraph.h"
+#include "UFortChallengeBundleItemDefinition.h"
 
-class UAthenaCharacterItemDefinition;
 class UAthenaConfirmationWindow;
-class UAthenaRewardEventGraph;
-class UFortChallengeBundleItemDefinition;
 
 #include "UAthenaSpatialCustomizationRoomData.generated.h"
 

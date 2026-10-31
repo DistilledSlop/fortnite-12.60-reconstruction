@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonButton.h"
 
-class UCommonTextBlock;
+#include "UCommonTextBlock.h"
 
 #include "UFortTournamentLiveGameSessionEntry.generated.h"
 

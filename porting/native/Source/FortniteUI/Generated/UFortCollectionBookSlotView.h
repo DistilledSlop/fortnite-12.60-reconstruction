@@ -6,8 +6,9 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
-class UCommonButtonGroup;
-class UFortCollectionBookSection;
+#include "UCommonButtonGroup.h"
+#include "UFortCollectionBookSection.h"
+
 class UFortCollectionBookSlotButton;
 class UHorizontalBox;
 

@@ -6,9 +6,10 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanel.h"
 
+#include "UCommonButton.h"
+#include "UCommonButtonGroup.h"
+
 class UComboBoxString;
-class UCommonButton;
-class UCommonButtonGroup;
 class UEditableText;
 class UMultiLineEditableText;
 

@@ -6,8 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonActivatablePanel.h"
 
-class UCommonUserWidget;
-class UFortItem;
+#include "UCommonUserWidget.h"
+#include "UFortItem.h"
 
 #include "UFortResultsWidget.generated.h"
 

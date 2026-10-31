@@ -6,8 +6,9 @@
 #include "CoreMinimal.h"
 #include "UCommonActivatableWidget.h"
 
-class UCommonButton;
-class UCommonWidgetSwitcher;
+#include "UCommonButton.h"
+#include "UCommonWidgetSwitcher.h"
+
 class UContentBrowserFiltersPanel;
 class UDataTable;
 class UFortCreativeItemListPanelData;

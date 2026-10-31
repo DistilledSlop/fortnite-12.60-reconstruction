@@ -6,8 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonActivatablePanel.h"
 
-class UCommonButton;
-class UCommonRichTextBlock;
+#include "UCommonButton.h"
+#include "UCommonRichTextBlock.h"
 
 #include "UFortSocialBanModal.generated.h"
 

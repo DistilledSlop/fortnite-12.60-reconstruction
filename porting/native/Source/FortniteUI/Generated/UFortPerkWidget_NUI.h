@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
-class UFortTooltipContext;
+#include "UFortTooltipContext.h"
 
 #include "UFortPerkWidget_NUI.generated.h"
 

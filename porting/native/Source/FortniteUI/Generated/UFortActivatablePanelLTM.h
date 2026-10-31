@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanel.h"
 
-class AFortGameplayMutator;
+#include "AFortGameplayMutator.h"
 
 #include "UFortActivatablePanelLTM.generated.h"
 

@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
-class UFortQuestObjectiveInfo;
+#include "UFortQuestObjectiveInfo.h"
 
 #include "UFortJournalQuestProgressBar.generated.h"
 

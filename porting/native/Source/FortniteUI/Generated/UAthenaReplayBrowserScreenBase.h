@@ -7,11 +7,11 @@
 #include "UFortActivatablePanel.h"
 
 #include "Engine/DataTable.h"
+#include "UCommonButton.h"
+#include "UCommonListView.h"
 
 class UAthenaReplayBrowserRowProxyInstance;
 class UAthenaViewStreamingReplayModalBase;
-class UCommonButton;
-class UCommonListView;
 class UFortReplayBrowserRenameDialog;
 
 #include "UAthenaReplayBrowserScreenBase.generated.h"

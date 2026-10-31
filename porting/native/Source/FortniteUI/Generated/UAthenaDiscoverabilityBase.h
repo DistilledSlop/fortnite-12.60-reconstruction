@@ -7,8 +7,7 @@
 #include "UFortHUDElementWidget.h"
 
 #include "FFortPrioritizedWidgetData.h"
-
-class UFortControllerComponent_MapDiscoverability;
+#include "UFortControllerComponent_MapDiscoverability.h"
 
 #include "UAthenaDiscoverabilityBase.generated.h"
 

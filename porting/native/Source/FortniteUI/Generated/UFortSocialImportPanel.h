@@ -7,9 +7,9 @@
 #include "UFortActivatablePanel.h"
 
 #include "FSocialImportPanelClosedDelegate.h"
+#include "UCommonButton.h"
 
 class UBorder;
-class UCommonButton;
 class UWidgetSwitcher;
 
 #include "UFortSocialImportPanel.generated.h"

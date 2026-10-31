@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortItemPickerBase.h"
 
-class ABuildingTrapDefender;
+#include "ABuildingTrapDefender.h"
+
 class UFortItemDetailsHostPanel;
 
 #include "UFortTrapDefenderItemPicker.generated.h"

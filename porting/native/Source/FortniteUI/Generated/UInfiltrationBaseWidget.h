@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "ULTMWidgetBase.h"
 
-class AFortAthenaMutator_Infiltration;
+#include "AFortAthenaMutator_Infiltration.h"
 
 #include "UInfiltrationBaseWidget.generated.h"
 

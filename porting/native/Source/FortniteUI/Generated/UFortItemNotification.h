@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanel.h"
 
-class UCommonButton;
+#include "UCommonButton.h"
+
 class UFortItemInfoPresentationWidget;
 class UFortItemPresentationEntry;
 class UFortItemReceivedHeaderBase;

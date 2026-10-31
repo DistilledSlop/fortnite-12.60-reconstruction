@@ -7,8 +7,7 @@
 #include "UCommonActivatableWidget.h"
 
 #include "GameplayTagContainer.h"
-
-class UCommonButton;
+#include "UCommonButton.h"
 
 #include "UAthenaSpatialScreen.generated.h"
 

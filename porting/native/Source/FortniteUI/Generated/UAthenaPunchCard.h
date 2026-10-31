@@ -9,9 +9,9 @@
 #include "EPunchCardLocation.h"
 #include "EPunchType.h"
 #include "FFortPrioritizedWidgetData.h"
+#include "UFortAccoladeItemDefinition.h"
 
 class UAthenaChallengeCountdownDisplay;
-class UFortAccoladeItemDefinition;
 class UUniformGridPanel;
 class UUserWidget;
 

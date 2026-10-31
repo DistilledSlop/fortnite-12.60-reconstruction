@@ -6,9 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortHUDElementWidget.h"
 
+#include "AFortGameplayMutator.h"
 #include "FFortPrioritizedWidgetData.h"
-
-class AFortGameplayMutator;
 
 #include "ULTMWidgetBase.generated.h"
 

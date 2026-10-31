@@ -6,9 +6,10 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
-class UCommonButton;
-class UCommonRichTextBlock;
-class UCommonTextBlock;
+#include "UCommonButton.h"
+#include "UCommonRichTextBlock.h"
+#include "UCommonTextBlock.h"
+
 class UFortLazyImage;
 class UPanelWidget;
 

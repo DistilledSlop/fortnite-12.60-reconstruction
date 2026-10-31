@@ -8,9 +8,9 @@
 
 #include "Components/SlateWrapperTypes.h"
 #include "EEquippedWeaponDisplay.h"
+#include "UCommonTextBlock.h"
+#include "UCommonVisibilitySwitcher.h"
 
-class UCommonTextBlock;
-class UCommonVisibilitySwitcher;
 class UImage;
 class UPanelWidget;
 

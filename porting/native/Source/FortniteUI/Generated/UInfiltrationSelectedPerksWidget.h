@@ -6,10 +6,9 @@
 #include "CoreMinimal.h"
 #include "ULTMWidgetBase.h"
 
+#include "AFortAthenaMutator_Infiltration.h"
 #include "GameplayTagContainer.h"
-
-class AFortAthenaMutator_Infiltration;
-class UFortSpyTechItemDefinition;
+#include "UFortSpyTechItemDefinition.h"
 
 #include "UInfiltrationSelectedPerksWidget.generated.h"
 

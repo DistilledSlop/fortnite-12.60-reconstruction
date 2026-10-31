@@ -6,8 +6,9 @@
 #include "CoreMinimal.h"
 #include "UFortSettingsListEntry_Setting.h"
 
-class UAnalogSlider;
-class UCommonTextBlock;
+#include "UAnalogSlider.h"
+#include "UCommonTextBlock.h"
+
 class UFortSettingValueScalar;
 class UPanelWidget;
 

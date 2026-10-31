@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanel.h"
 
-class UFortSchematicItem;
+#include "UFortSchematicItem.h"
+
 class UImage;
 class UWidget;
 

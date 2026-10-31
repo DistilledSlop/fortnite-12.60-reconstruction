@@ -7,8 +7,7 @@
 #include "UFortBangWrapper_NUI.h"
 
 #include "Engine/DataTable.h"
-
-class UFortQuestItemDefinition;
+#include "UFortQuestItemDefinition.h"
 
 #include "UFortTutorialQuestVisibilityWrapper.generated.h"
 

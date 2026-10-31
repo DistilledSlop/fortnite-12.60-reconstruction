@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 
-class UMeshNetworkComponent;
+#include "UMeshNetworkComponent.h"
 
 #include "AFortMeshNetworkActor.generated.h"
 

@@ -6,8 +6,9 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanel.h"
 
-class UCommonActivatableWidgetSwitcher;
-class UCommonButton;
+#include "UCommonActivatableWidgetSwitcher.h"
+#include "UCommonButton.h"
+
 class UFortParentalControls_AskToEnableControls;
 class UFortParentalControls_AskToReEnable;
 class UFortParentalControls_DisableParentalControls;

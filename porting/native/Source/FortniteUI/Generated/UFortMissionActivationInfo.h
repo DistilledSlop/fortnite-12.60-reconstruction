@@ -6,8 +6,9 @@
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
 
-class AFortGameStateZone;
-class AFortPlayerController;
+#include "AFortGameStateZone.h"
+#include "AFortPlayerController.h"
+
 class UCurveFloat;
 
 #include "UFortMissionActivationInfo.generated.h"

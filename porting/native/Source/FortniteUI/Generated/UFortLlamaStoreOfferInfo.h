@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortStoreFrontOfferInfo.h"
 
-class UFortCardPackItemDefinition;
+#include "UFortCardPackItemDefinition.h"
 
 #include "UFortLlamaStoreOfferInfo.generated.h"
 

@@ -7,9 +7,9 @@
 #include "UFortActivatablePanel.h"
 
 #include "Engine/DataTable.h"
+#include "UCommonBorder.h"
+#include "UCommonButton.h"
 
-class UCommonBorder;
-class UCommonButton;
 class UFortStoreFrontOfferWidgetBase;
 
 #include "UFortStandaloneModalPopup.generated.h"

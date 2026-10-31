@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonActivatableWidget.h"
 
-class UCommonActivatableWidgetStack;
+#include "UCommonActivatableWidgetStack.h"
 
 #include "UFortUIStateWidgetBase.generated.h"
 

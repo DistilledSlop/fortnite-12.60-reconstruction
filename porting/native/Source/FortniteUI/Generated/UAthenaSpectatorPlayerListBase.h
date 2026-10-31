@@ -7,9 +7,9 @@
 #include "UCommonActivatableWidget.h"
 
 #include "Engine/DataTable.h"
+#include "UCommonListView.h"
 
 class UAthenaRemotePlayerViewData;
-class UCommonListView;
 
 #include "UAthenaSpectatorPlayerListBase.generated.h"
 

@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
-class UFortExpeditionItem;
+#include "UFortExpeditionItem.h"
 
 #include "UFortExpeditionSummaryWidget.generated.h"
 

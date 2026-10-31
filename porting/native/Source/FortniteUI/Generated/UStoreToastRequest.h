@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
 
-class UCatalogMessaging;
+#include "UCatalogMessaging.h"
 
 #include "UStoreToastRequest.generated.h"
 

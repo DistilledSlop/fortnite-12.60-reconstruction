@@ -6,8 +6,9 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "UCommonRichTextBlock.h"
+
 class UAthenaChallengeProgressBar;
-class UCommonRichTextBlock;
 class UImage;
 
 #include "UAthenaChallengeInfoPanelEntry.generated.h"

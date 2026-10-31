@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortHUDElementWidget.h"
 
-class UFortReplayContext;
+#include "UFortReplayContext.h"
 
 #include "UFortReplayBase.generated.h"
 

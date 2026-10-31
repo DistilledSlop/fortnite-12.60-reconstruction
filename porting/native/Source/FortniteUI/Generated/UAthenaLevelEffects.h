@@ -8,10 +8,9 @@
 
 #include "FLevelEffectsData.h"
 #include "Math/Vector2D.h"
-
-class UCommonBorder;
-class UCommonLazyImage;
-class UCommonTextBlock;
+#include "UCommonBorder.h"
+#include "UCommonLazyImage.h"
+#include "UCommonTextBlock.h"
 
 #include "UAthenaLevelEffects.generated.h"
 

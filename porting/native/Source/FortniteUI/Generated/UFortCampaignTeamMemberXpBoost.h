@@ -6,8 +6,9 @@
 #include "CoreMinimal.h"
 #include "UFortCampaignTeamMemberItemTracker.h"
 
-class UCommonButton;
-class UCommonTextBlock;
+#include "UCommonButton.h"
+#include "UCommonTextBlock.h"
+
 class UFortPlayerBanner;
 class UImage;
 

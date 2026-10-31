@@ -7,8 +7,7 @@
 #include "UObject/Object.h"
 
 #include "GameplayTagContainer.h"
-
-class UAthenaCosmeticItemDefinition;
+#include "UAthenaCosmeticItemDefinition.h"
 
 #include "UVariantObject.generated.h"
 

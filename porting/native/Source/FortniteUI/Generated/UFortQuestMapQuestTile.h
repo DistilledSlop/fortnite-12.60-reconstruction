@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
-class UCommonButton;
+#include "UCommonButton.h"
 
 #include "UFortQuestMapQuestTile.generated.h"
 

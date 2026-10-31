@@ -6,8 +6,9 @@
 #include "CoreMinimal.h"
 #include "UFortOptionsTab.h"
 
-class UCommonListView;
-class UCommonTextBlock;
+#include "UCommonListView.h"
+#include "UCommonTextBlock.h"
+
 class UFortOptionsMenuInputData;
 class UUserWidget;
 

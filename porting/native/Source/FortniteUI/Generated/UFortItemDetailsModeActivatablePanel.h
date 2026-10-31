@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortItemDetailsActivatablePanel.h"
 
-class UCommonWidgetSwitcher;
+#include "UCommonWidgetSwitcher.h"
 
 #include "UFortItemDetailsModeActivatablePanel.generated.h"
 

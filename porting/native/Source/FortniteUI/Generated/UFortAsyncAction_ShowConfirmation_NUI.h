@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintAsyncActionBase.h"
 
-class UFortLocalPlayer;
+#include "UFortLocalPlayer.h"
+
 class UObject;
 
 #include "UFortAsyncAction_ShowConfirmation_NUI.generated.h"

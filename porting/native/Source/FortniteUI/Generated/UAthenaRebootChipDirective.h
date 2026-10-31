@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortHUDElementWidget.h"
 
-class AFortPlayerStateAthena;
+#include "AFortPlayerStateAthena.h"
+
 class UAthenaPlayerViewModel;
 
 #include "UAthenaRebootChipDirective.generated.h"

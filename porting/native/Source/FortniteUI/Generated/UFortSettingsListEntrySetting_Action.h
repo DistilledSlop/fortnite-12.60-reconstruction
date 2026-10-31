@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortSettingsListEntry_Setting.h"
 
-class UCommonButton;
+#include "UCommonButton.h"
+
 class UFortSettingAction;
 
 #include "UFortSettingsListEntrySetting_Action.generated.h"

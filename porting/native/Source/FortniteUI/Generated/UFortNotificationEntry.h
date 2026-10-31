@@ -7,8 +7,7 @@
 #include "UCommonUserWidget.h"
 
 #include "FFinishedNotification.h"
-
-class UCommonTextBlock;
+#include "UCommonTextBlock.h"
 
 #include "UFortNotificationEntry.generated.h"
 

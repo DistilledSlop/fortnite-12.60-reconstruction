@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortDialogNotificationHandler.h"
 
-class UFortQuestItem;
+#include "UFortQuestItem.h"
 
 #include "UFortQuestNotificationHandler.generated.h"
 

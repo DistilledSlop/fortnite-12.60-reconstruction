@@ -7,12 +7,12 @@
 #include "UAthenaSpatialNavigationButton.h"
 
 #include "GameplayTagContainer.h"
+#include "UCommonNumericTextBlock.h"
+#include "UCommonRichTextBlock.h"
+#include "UCommonTextBlock.h"
+#include "UFortTokenType.h"
 
 class UAthenaSpatialCustomizationChoice;
-class UCommonNumericTextBlock;
-class UCommonRichTextBlock;
-class UCommonTextBlock;
-class UFortTokenType;
 
 #include "UAthenaSpatialCustomizationCategoryEntry.generated.h"
 

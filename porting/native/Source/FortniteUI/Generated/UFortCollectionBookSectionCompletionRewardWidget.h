@@ -6,9 +6,10 @@
 #include "CoreMinimal.h"
 #include "UFortCollectionBookGenericRewardWidget.h"
 
-class UCommonButton;
+#include "UCommonButton.h"
+#include "UFortCollectionBookSection.h"
+
 class UFortCollectionBookRewardModalWidget;
-class UFortCollectionBookSection;
 
 #include "UFortCollectionBookSectionCompletionRewardWidget.generated.h"
 

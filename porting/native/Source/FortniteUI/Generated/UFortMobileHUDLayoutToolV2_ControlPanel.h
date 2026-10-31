@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
-class UCommonActivatableWidgetSwitcher;
+#include "UCommonActivatableWidgetSwitcher.h"
+
 class UHUDLayoutToolV2_Button;
 class UHUDLayoutToolV2_ContextSelector;
 class UHUDLayoutToolV2_PropertyPanel;

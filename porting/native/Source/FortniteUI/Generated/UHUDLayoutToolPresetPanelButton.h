@@ -6,9 +6,10 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
-class UCommonBorder;
-class UCommonButton;
-class UCommonTextBlock;
+#include "UCommonBorder.h"
+#include "UCommonButton.h"
+#include "UCommonTextBlock.h"
+
 class UImage;
 
 #include "UHUDLayoutToolPresetPanelButton.generated.h"

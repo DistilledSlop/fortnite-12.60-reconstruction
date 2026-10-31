@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCreativePropertyEditWidgetBase.h"
 
-class UFortCreativeDeviceButtonComponent;
+#include "UFortCreativeDeviceButtonComponent.h"
 
 #include "UCreativePropertyEditWidgetDeviceButtonComponentBase.generated.h"
 

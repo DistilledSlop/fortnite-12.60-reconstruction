@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
-class UCommonTextBlock;
+#include "UCommonTextBlock.h"
 
 #include "UFortProfileStatsMainTile.generated.h"
 

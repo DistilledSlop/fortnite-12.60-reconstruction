@@ -6,8 +6,9 @@
 #include "CoreMinimal.h"
 #include "UCommonActivatablePanel.h"
 
+#include "UCommonTextBlock.h"
+
 class UBorder;
-class UCommonTextBlock;
 class UEditableText;
 
 #include "UFortBannerSelectorBase.generated.h"

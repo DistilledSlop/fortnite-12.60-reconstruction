@@ -6,9 +6,10 @@
 #include "CoreMinimal.h"
 #include "UCommonActivatableWidget.h"
 
+#include "UCommonActivatableWidgetSwitcher.h"
+#include "UCommonTextBlock.h"
+
 class UBacchusCloseButton;
-class UCommonActivatableWidgetSwitcher;
-class UCommonTextBlock;
 class UHUDLayoutToolV2_Button;
 class URichTextBlock;
 class UWidgetAnimation;

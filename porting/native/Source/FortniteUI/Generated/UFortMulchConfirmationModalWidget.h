@@ -6,8 +6,9 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanel.h"
 
-class UCommonLoadGuard;
-class UCommonTileView;
+#include "UCommonLoadGuard.h"
+#include "UCommonTileView.h"
+
 class UFortInventoryContext;
 class UFortItemManagementMulchDetailsPanel;
 class UHorizontalBox;

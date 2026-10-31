@@ -7,10 +7,10 @@
 #include "UAthenaChallengeSetDetails.h"
 
 #include "Engine/DataTable.h"
+#include "UCommonButton.h"
+#include "UCommonTextBlock.h"
 
 class UAthenaChallengeDetailRewardTrack;
-class UCommonButton;
-class UCommonTextBlock;
 class UOverlay;
 class UWidgetSwitcher;
 

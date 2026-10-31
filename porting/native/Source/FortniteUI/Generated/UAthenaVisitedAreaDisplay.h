@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UAthenaDiscoverabilityBase.h"
 
-class UCommonTextBlock;
+#include "UCommonTextBlock.h"
 
 #include "UAthenaVisitedAreaDisplay.generated.h"
 

@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonBoundActionButton.h"
 
-class UCommonButtonStyle;
+#include "UCommonButtonStyle.h"
 
 #include "UFortBoundActionButton.generated.h"
 

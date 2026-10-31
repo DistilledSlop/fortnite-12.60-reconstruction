@@ -9,9 +9,9 @@
 #include "ESubgameLoadFromCMS.h"
 #include "ESubgameTileType.h"
 #include "Math/Color.h"
+#include "UCommonTextBlock.h"
 
 class UBorder;
-class UCommonTextBlock;
 class UImage;
 class UMaterialInstance;
 class UTexture2D;

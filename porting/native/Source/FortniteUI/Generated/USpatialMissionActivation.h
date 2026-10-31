@@ -6,8 +6,9 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "UCommonButton.h"
+
 class UAthenaQuestProgression;
-class UCommonButton;
 class UWidgetSwitcher;
 
 #include "USpatialMissionActivation.generated.h"

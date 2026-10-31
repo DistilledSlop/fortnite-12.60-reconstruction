@@ -7,9 +7,9 @@
 #include "UAthenaEventScreenBase.h"
 
 #include "Engine/DataTable.h"
+#include "UCommonListView.h"
 
 class UAthenaRemoteSquadViewData;
-class UCommonListView;
 
 #include "UAthenaEventMatchScoreboardScreenBase.generated.h"
 

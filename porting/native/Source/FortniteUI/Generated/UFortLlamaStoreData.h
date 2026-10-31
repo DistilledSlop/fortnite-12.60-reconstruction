@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "Engine/DataAsset.h"
 
-class UCommonActivatablePanel;
+#include "UCommonActivatablePanel.h"
+
 class UFortOpenCardPackModal;
 class UFortProgressModal;
 class UFortStoreFrontOfferDetailsWidgetBase;

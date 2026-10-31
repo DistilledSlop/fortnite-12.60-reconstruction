@@ -6,8 +6,9 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "UCommonTextBlock.h"
+
 class UButton;
-class UCommonTextBlock;
 
 #include "UHardcoreModifierListEntry.generated.h"
 

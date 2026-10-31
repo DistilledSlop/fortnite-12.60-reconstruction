@@ -12,8 +12,7 @@
 #include "FStorePurchaseCompleted.h"
 #include "FStoreStateChangedDelegate.h"
 #include "Misc/DateTime.h"
-
-class UFortCardPackItem;
+#include "UFortCardPackItem.h"
 
 #include "UFortStoreContext.generated.h"
 

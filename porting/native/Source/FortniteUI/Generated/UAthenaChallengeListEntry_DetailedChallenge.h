@@ -7,11 +7,11 @@
 #include "UAthenaChallengeListEntry_Challenge.h"
 
 #include "Engine/DataTable.h"
+#include "UCommonButton.h"
+#include "UCommonRichTextBlock.h"
 
 class UAthenaChallengeRewardDisplay;
 class UButton;
-class UCommonButton;
-class UCommonRichTextBlock;
 class UWidgetAnimation;
 
 #include "UAthenaChallengeListEntry_DetailedChallenge.generated.h"

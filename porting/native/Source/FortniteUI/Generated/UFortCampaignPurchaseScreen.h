@@ -6,9 +6,10 @@
 #include "CoreMinimal.h"
 #include "UCommonActivatableWidget.h"
 
-class UCommonActivatableWidgetSwitcher;
-class UCommonButton;
-class UCommonTextBlock;
+#include "UCommonActivatableWidgetSwitcher.h"
+#include "UCommonButton.h"
+#include "UCommonTextBlock.h"
+
 class UFortMtxStoreRootBase;
 class UImage;
 class UTexture2D;

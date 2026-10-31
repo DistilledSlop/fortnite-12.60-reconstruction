@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortServerInfoTileBase.h"
 
-class UCommonTextBlock;
+#include "UCommonTextBlock.h"
+
 class URichTextBlock;
 
 #include "UFortCreativeServerInfoTile.generated.h"

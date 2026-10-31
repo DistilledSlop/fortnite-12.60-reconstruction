@@ -7,8 +7,8 @@
 #include "UFortHUDElementWidget.h"
 
 #include "FFortPrioritizedWidgetData.h"
+#include "UFortQuestObjectiveInfo.h"
 
-class UFortQuestObjectiveInfo;
 class UFortQuestUpdateEntry;
 class UVerticalBox;
 

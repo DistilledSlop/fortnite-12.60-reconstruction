@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortCampaignTeamMemberItemTracker.h"
 
-class UCommonTextBlock;
+#include "UCommonTextBlock.h"
+
 class UImage;
 
 #include "UFortCampaignTeamMemberDailyBonusXpBoost.generated.h"

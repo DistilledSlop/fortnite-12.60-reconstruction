@@ -6,8 +6,9 @@
 #include "CoreMinimal.h"
 #include "UFortVariantEditorWidgetBase.h"
 
-class UCommonTextBlock;
-class UCommonTileView;
+#include "UCommonTextBlock.h"
+#include "UCommonTileView.h"
+
 class UVariantObject;
 
 #include "UFortVariantTileSelector.generated.h"

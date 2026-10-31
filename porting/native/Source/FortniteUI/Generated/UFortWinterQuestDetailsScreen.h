@@ -6,12 +6,13 @@
 #include "CoreMinimal.h"
 #include "UFortItemPreviewScreen.h"
 
+#include "UCommonButton.h"
+#include "UCommonButtonGroup.h"
+#include "UCommonTextBlock.h"
+#include "UFortItem.h"
+
 class UAthenaRewardItemTypeRarityTag;
-class UCommonButton;
-class UCommonButtonGroup;
-class UCommonTextBlock;
 class UDynamicEntryBox;
-class UFortItem;
 class UFortWinterQuestDetailsEntry;
 
 #include "UFortWinterQuestDetailsScreen.generated.h"

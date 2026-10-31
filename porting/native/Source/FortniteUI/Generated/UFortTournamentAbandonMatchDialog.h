@@ -6,8 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanel.h"
 
-class UCommonButton;
-class UCommonDateTimeTextBlock;
+#include "UCommonButton.h"
+#include "UCommonDateTimeTextBlock.h"
 
 #include "UFortTournamentAbandonMatchDialog.generated.h"
 

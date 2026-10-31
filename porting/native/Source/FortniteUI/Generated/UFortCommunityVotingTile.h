@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortStoreFrontTileWidgetBase.h"
 
-class UCommonTextBlock;
+#include "UCommonTextBlock.h"
+
 class UDynamicEntryBox;
 class UFortCommunityVotingAvailableVotesWidget;
 class UFortCommunityVotingManager;

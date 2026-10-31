@@ -6,8 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanel.h"
 
-class UCommonWidgetCarousel;
-class UCommonWidgetCarouselNavBar;
+#include "UCommonWidgetCarousel.h"
+#include "UCommonWidgetCarouselNavBar.h"
 
 #include "UFortCMSInfoCarousel.generated.h"
 

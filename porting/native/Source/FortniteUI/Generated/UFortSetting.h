@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
 
-class UFortLocalPlayer;
+#include "UFortLocalPlayer.h"
 
 #include "UFortSetting.generated.h"
 

@@ -7,8 +7,7 @@
 #include "UCommonUserWidget.h"
 
 #include "FOnReadinessChanged.h"
-
-class UFortPartyMember;
+#include "UFortPartyMember.h"
 
 #include "UAthenaReadyUpTooltipTickWidget.generated.h"
 

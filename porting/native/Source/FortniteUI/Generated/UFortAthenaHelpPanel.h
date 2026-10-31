@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanel.h"
 
-class UCommonTreeView;
+#include "UCommonTreeView.h"
+
 class UScrollBox;
 
 #include "UFortAthenaHelpPanel.generated.h"

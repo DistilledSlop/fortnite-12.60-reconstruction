@@ -7,9 +7,9 @@
 #include "UFortActivatablePanel.h"
 
 #include "GameplayTagContainer.h"
+#include "UCommonButton.h"
+#include "UFortGameStateComponent_EventLevel.h"
 
-class UCommonButton;
-class UFortGameStateComponent_EventLevel;
 class UFortWinterQuestScreen;
 
 #include "UFortWinterQuestTitleScreen.generated.h"

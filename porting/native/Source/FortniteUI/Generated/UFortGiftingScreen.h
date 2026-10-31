@@ -7,11 +7,11 @@
 #include "UFortActivatablePanelWithItemPreview.h"
 
 #include "Engine/DataTable.h"
+#include "UCommonButton.h"
+#include "UCommonButtonGroup.h"
+#include "UCommonListView.h"
+#include "UCommonTextBlock.h"
 
-class UCommonButton;
-class UCommonButtonGroup;
-class UCommonListView;
-class UCommonTextBlock;
 class UFortGiftRecipientsTab;
 class UFortPersonalizeGiftTab;
 class UFortStoreFrontOfferInfo;

@@ -7,10 +7,10 @@
 #include "UFortActivatablePanelWithItemPreview.h"
 
 #include "FOnUnlockedPerksScreenClosedDynamic.h"
+#include "UCommonButton.h"
+#include "UFortItem.h"
 
-class UCommonButton;
 class UFactionUnlockedPerkData;
-class UFortItem;
 class UTileView;
 
 #include "USpatialFactionUnlockedPerksScreen.generated.h"

@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
-class UCommonTextBlock;
+#include "UCommonTextBlock.h"
+
 class UFortAthenaNewsTile;
 class UHorizontalBox;
 class UScrollBox;

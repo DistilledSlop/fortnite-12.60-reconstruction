@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
 
-class UFortUINotification;
+#include "UFortUINotification.h"
 
 #include "UFortUINotificationQueue.generated.h"
 

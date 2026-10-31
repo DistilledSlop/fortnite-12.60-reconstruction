@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonActivatablePanel.h"
 
-class UFortExpeditionItem;
+#include "UFortExpeditionItem.h"
 
 #include "UFortExpeditionPickVehicleWidget.generated.h"
 

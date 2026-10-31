@@ -10,8 +10,8 @@
 #include "FOnMediaOpened.h"
 #include "FOnMediaPlayerEndReached.h"
 #include "FOnSkipButtonClicked.h"
+#include "UCommonButton.h"
 
-class UCommonButton;
 class UFortVideoPlayerWidget;
 class UImage;
 class USoundMix;

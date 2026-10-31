@@ -7,8 +7,7 @@
 #include "UCommonRotator.h"
 
 #include "Engine/DataTable.h"
-
-class UCommonButton;
+#include "UCommonButton.h"
 
 #include "UAthenaChallengePageRotator.generated.h"
 

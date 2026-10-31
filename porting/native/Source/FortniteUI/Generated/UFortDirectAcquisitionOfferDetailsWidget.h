@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortStoreFrontOfferDetailsWidgetBase.h"
 
-class UCommonButton;
+#include "UCommonButton.h"
+
 class UFortCommunityVotingAvailableVotesWidget;
 class UFortCommunityVotingFeedback;
 class UFortCommunityVotingThanksPopup;

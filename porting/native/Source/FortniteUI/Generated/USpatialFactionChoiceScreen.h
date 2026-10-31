@@ -7,8 +7,7 @@
 #include "UCommonActivatableWidget.h"
 
 #include "FOnFactionChosenDynamic.h"
-
-class UCommonButton;
+#include "UCommonButton.h"
 
 #include "USpatialFactionChoiceScreen.generated.h"
 

@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 
-class UCommonTextBlock;
+#include "UCommonTextBlock.h"
+
 class UPanelWidget;
 class UWidgetSwitcher;
 

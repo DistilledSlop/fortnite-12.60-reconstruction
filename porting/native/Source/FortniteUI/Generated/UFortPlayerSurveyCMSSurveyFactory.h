@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
 
-class UFortPlayerSurveyQuestion;
+#include "UFortPlayerSurveyQuestion.h"
 
 #include "UFortPlayerSurveyCMSSurveyFactory.generated.h"
 

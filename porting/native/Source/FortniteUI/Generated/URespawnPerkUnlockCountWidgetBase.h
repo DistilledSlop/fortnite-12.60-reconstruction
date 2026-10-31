@@ -6,8 +6,8 @@
 #include "CoreMinimal.h"
 #include "ULTMWidgetBase.h"
 
-class AFortAthenaMutator_SpyRumble;
-class UCommonTextBlock;
+#include "AFortAthenaMutator_SpyRumble.h"
+#include "UCommonTextBlock.h"
 
 #include "URespawnPerkUnlockCountWidgetBase.generated.h"
 

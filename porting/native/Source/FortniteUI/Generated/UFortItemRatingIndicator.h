@@ -7,8 +7,7 @@
 #include "UCommonUserWidget.h"
 
 #include "EFortBuffState.h"
-
-class UFortItem;
+#include "UFortItem.h"
 
 #include "UFortItemRatingIndicator.generated.h"
 

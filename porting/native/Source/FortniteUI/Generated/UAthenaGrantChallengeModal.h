@@ -6,8 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortMessageReceivedScreen.h"
 
-class UCommonTextBlock;
-class UFortChallengeBundleItemDefinition;
+#include "UCommonTextBlock.h"
+#include "UFortChallengeBundleItemDefinition.h"
 
 #include "UAthenaGrantChallengeModal.generated.h"
 

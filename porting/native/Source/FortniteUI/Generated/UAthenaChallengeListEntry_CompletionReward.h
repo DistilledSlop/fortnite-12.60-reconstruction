@@ -6,9 +6,10 @@
 #include "CoreMinimal.h"
 #include "UAthenaChallengeListEntryBase.h"
 
+#include "UCommonRichTextBlock.h"
+
 class UAthenaChallengeProgressBar;
 class UAthenaChallengeRewardDisplay;
-class UCommonRichTextBlock;
 
 #include "UAthenaChallengeListEntry_CompletionReward.generated.h"
 

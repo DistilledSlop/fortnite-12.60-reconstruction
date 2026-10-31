@@ -6,8 +6,9 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanel.h"
 
-class UCommonListView;
-class UCommonTextBlock;
+#include "UCommonListView.h"
+#include "UCommonTextBlock.h"
+
 class UFortEventLeaderboardEntryData;
 class UFortEventTeamMatchHistoryEntryData;
 

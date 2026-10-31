@@ -6,9 +6,10 @@
 #include "CoreMinimal.h"
 #include "UCommonActivatableWidget.h"
 
-class UCommonButton;
-class UCommonButtonGroup;
-class UCommonTextBlock;
+#include "UCommonButton.h"
+#include "UCommonButtonGroup.h"
+#include "UCommonTextBlock.h"
+
 class UDynamicEntryBox;
 class UFortPlayerFeedbackModalSubscreenBase;
 class UFortPlayerFeedbackModalSubscreen_CategoryDisplay;

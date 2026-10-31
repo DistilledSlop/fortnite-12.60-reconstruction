@@ -6,7 +6,9 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
-class UFortPartyMember;
+#include "UFortPartyMember.h"
+#include "USocialNameTextBlock.h"
+
 class UFortSocialAvatarIcon;
 class UFortVoiceChatStatusIcon;
 
@@ -29,6 +31,10 @@ public:
 	// table index 3, flags 0x2008000008001c
 	UPROPERTY()
 	UFortSocialAvatarIcon* AvatarIconWidget;
+
+	// table index 2, flags 0x2008000008001c
+	UPROPERTY()
+	USocialNameTextBlock* Text_SocialName;
 
 	// table index 1, flags 0x2008000008001c
 	UPROPERTY()

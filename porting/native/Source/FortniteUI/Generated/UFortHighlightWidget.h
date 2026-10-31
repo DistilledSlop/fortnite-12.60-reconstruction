@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 
-class UCommonTextBlock;
+#include "UCommonTextBlock.h"
 
 #include "UFortHighlightWidget.generated.h"
 

@@ -6,8 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonButton.h"
 
-class UCommonLazyImage;
-class UFortGiftBoxItemDefinition;
+#include "UCommonLazyImage.h"
+#include "UFortGiftBoxItemDefinition.h"
 
 #include "UFortGiftBoxButton.generated.h"
 

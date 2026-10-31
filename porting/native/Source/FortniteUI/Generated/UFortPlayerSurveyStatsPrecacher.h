@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
 
-class AFortGameStateAthena;
+#include "AFortGameStateAthena.h"
+
 class UGameInstance;
 
 #include "UFortPlayerSurveyStatsPrecacher.generated.h"

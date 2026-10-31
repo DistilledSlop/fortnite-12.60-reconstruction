@@ -8,8 +8,8 @@
 
 #include "FOnSupportCreator.h"
 #include "FOnToggleDetails.h"
+#include "UCommonTextBlock.h"
 
-class UCommonTextBlock;
 class UInputComponent;
 
 #include "UFortCreativeMiniGameInfo.generated.h"

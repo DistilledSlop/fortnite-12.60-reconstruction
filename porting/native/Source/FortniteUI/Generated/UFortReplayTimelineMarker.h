@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonButton.h"
 
-class UCommonLazyImage;
+#include "UCommonLazyImage.h"
+
 class UObject;
 
 #include "UFortReplayTimelineMarker.generated.h"

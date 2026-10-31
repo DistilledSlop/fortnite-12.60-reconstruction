@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortRewardNotificationData.h"
 
-class UFortGiftBoxItem;
+#include "UFortGiftBoxItem.h"
 
 #include "UFortRewardGiftBoxData.generated.h"
 

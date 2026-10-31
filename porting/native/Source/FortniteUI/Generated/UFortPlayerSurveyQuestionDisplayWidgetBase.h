@@ -6,10 +6,11 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
-class UCommonWidgetSwitcher;
+#include "UCommonWidgetSwitcher.h"
+#include "UFortPlayerSurveyQuestionSelector.h"
+
 class UFortPlayerSurveyAnswerWidgetBase;
 class UFortPlayerSurveyAnswerWidgetDataTable;
-class UFortPlayerSurveyQuestionSelector;
 class USpacer;
 
 #include "UFortPlayerSurveyQuestionDisplayWidgetBase.generated.h"

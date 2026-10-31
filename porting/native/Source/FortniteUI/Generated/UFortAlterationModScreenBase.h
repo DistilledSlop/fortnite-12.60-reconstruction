@@ -7,8 +7,8 @@
 #include "UFortActivatablePanel.h"
 
 #include "Engine/DataTable.h"
+#include "UFortAlterableItem.h"
 
-class UFortAlterableItem;
 class UFortAlterationModOptinScreenBase;
 class UFortAlterationOption;
 class UFortAlterationOptionsBase;

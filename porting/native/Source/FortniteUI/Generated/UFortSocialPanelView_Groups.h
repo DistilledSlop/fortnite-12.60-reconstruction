@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 
+#include "USocialGroupTreeView.h"
+
 #include "UFortSocialPanelView_Groups.generated.h"
 
 UCLASS()
@@ -14,5 +16,9 @@ class FORTNITEUI_API UFortSocialPanelView_Groups : public UUserWidget
 	GENERATED_BODY()
 
 public:
+	// table index 0, flags 0x40000000080008
+	UPROPERTY()
+	USocialGroupTreeView* TreeView_Groups;
+
 };
 

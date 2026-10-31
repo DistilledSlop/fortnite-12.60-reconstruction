@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonButton.h"
 
-class UFortItem;
+#include "UFortItem.h"
 
 #include "UFortPlayerProfileBannerEditorTile.generated.h"
 

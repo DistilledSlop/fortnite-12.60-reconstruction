@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "ULTMWidgetBase.h"
 
-class AFortAthenaMutator_Cobalt;
+#include "AFortAthenaMutator_Cobalt.h"
 
 #include "UCobaltWidgetBase.generated.h"
 

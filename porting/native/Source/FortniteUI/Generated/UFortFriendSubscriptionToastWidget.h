@@ -7,10 +7,10 @@
 #include "UCommonUserWidget.h"
 
 #include "FOnToastFinished.h"
+#include "UCommonButton.h"
+#include "UCommonTextBlock.h"
+#include "UCommonWidgetSwitcher.h"
 
-class UCommonButton;
-class UCommonTextBlock;
-class UCommonWidgetSwitcher;
 class UFortKeybindWidget;
 class UInputComponent;
 class UWidgetAnimation;

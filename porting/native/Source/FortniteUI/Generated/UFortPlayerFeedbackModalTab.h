@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonButton.h"
 
-class UCommonTextBlock;
+#include "UCommonTextBlock.h"
+
 class UFortPlayerFeedbackModalSubscreenBase;
 
 #include "UFortPlayerFeedbackModalTab.generated.h"

@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortHUDElementWidget.h"
 
-class AFortWeapon;
+#include "AFortWeapon.h"
 
 #include "UFortStWEquippedItemReticle.generated.h"
 

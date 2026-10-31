@@ -6,8 +6,9 @@
 #include "CoreMinimal.h"
 #include "UCommonActivatableWidget.h"
 
-class UCommonBorder;
-class UCommonWidgetSwitcher;
+#include "UCommonBorder.h"
+#include "UCommonWidgetSwitcher.h"
+
 class UFortLeaderboardListViewWrapper;
 
 #include "UFortLeaderboardViewTab.generated.h"

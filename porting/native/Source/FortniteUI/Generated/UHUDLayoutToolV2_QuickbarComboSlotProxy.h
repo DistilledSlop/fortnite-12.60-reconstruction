@@ -7,9 +7,9 @@
 #include "UFortMobileHUDElementProxy.h"
 
 #include "GameplayTagContainer.h"
+#include "UCommonActivatableWidgetSwitcher.h"
+#include "UCommonTextBlock.h"
 
-class UCommonActivatableWidgetSwitcher;
-class UCommonTextBlock;
 class UImage;
 
 #include "UHUDLayoutToolV2_QuickbarComboSlotProxy.generated.h"

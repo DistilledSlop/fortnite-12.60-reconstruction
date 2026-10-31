@@ -8,25 +8,25 @@
 
 #include "FVideoConfig_Mono.h"
 #include "GameplayTagContainer.h"
+#include "UCommonActivatableWidget.h"
+#include "UCommonButton.h"
+#include "UCommonUserWidget.h"
+#include "UFortGiftBoxItem.h"
+#include "UFortPlaylistAthena.h"
 
 class UApolloIntroLoadingPanel;
 class UAthenaActivatableChatWidget;
 class UAthenaTopBar;
 class UBattlePassPurchaseScreen;
-class UCommonActivatableWidget;
-class UCommonButton;
-class UCommonUserWidget;
 class UEnableMultiFactorModal;
 class UFortActivatableMovieWidget_Monolithic;
 class UFortAthenaMOTDWidget;
 class UFortAthenaTabsScreenBase;
 class UFortDualBladeMenu;
-class UFortGiftBoxItem;
 class UFortItemPresentationScreen;
 class UFortLetoSellModal;
 class UFortPlayerBanned;
 class UFortPlayerSurveyDispatcher;
-class UFortPlaylistAthena;
 class UFortSocialImportPanel;
 class UGuidedTutorialLoadingScreen;
 class UHUDLayoutToolFireModePanel;

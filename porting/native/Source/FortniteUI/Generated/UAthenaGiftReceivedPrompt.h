@@ -6,9 +6,10 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanel.h"
 
-class UCommonButton;
-class UCommonLazyImage;
-class UFortGiftBoxItem;
+#include "UCommonButton.h"
+#include "UCommonLazyImage.h"
+#include "UFortGiftBoxItem.h"
+
 class UFortItemPresentationScreen;
 class UFortItemReceivedHeaderBase;
 class UMaterialInterface;

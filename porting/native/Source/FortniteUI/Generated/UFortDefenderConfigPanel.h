@@ -6,8 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonActivatablePanel.h"
 
-class ABuildingTrapDefender;
-class UFortItem;
+#include "ABuildingTrapDefender.h"
+#include "UFortItem.h"
 
 #include "UFortDefenderConfigPanel.generated.h"
 

@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanel.h"
 
-class UFortItemDefinition;
+#include "UFortItemDefinition.h"
 
 #include "UFortResearchMenuBase.generated.h"
 

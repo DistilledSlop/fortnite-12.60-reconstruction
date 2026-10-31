@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UAthenaLoadingScreenPreviewPanel.h"
 
-class UCommonButton;
+#include "UCommonButton.h"
+
 class UNativeWidgetHost;
 
 #include "UAthenaLoadingScreenPreviewPanelBase.generated.h"

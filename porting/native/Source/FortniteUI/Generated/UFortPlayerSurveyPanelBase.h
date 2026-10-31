@@ -7,8 +7,8 @@
 #include "UFortActivatablePanel.h"
 
 #include "FOnPanelDismissed.h"
+#include "UFortPlayerSurveyBase.h"
 
-class UFortPlayerSurveyBase;
 class UFortPlayerSurveyWidgetBase;
 
 #include "UFortPlayerSurveyPanelBase.generated.h"

@@ -7,10 +7,10 @@
 #include "UFortHUDElementWidget.h"
 
 #include "Styling/SlateColor.h"
+#include "UCommonTextBlock.h"
 
 class UAthenaLevelEffects;
 class UAthenaTeamMemberDBNOState;
-class UCommonTextBlock;
 class UContentWidget;
 class UFortSocialAvatarIcon;
 class UFortVoiceChatStatusIconProxyAnim;

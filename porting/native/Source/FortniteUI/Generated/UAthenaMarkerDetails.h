@@ -6,8 +6,9 @@
 #include "CoreMinimal.h"
 #include "UFortHUDElementWidget.h"
 
+#include "UFortMarkerDetailsTable.h"
+
 class UAthenaMarkerPointer;
-class UFortMarkerDetailsTable;
 
 #include "UAthenaMarkerDetails.generated.h"
 

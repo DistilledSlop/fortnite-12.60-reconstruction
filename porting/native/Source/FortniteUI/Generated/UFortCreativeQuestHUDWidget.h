@@ -6,8 +6,8 @@
 #include "CoreMinimal.h"
 #include "UMinigameWidgetBase.h"
 
-class UCommonTextBlock;
-class UCreativeQuestComponent;
+#include "UCommonTextBlock.h"
+#include "UCreativeQuestComponent.h"
 
 #include "UFortCreativeQuestHUDWidget.generated.h"
 

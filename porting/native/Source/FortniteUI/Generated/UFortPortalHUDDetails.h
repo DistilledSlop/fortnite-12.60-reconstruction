@@ -6,8 +6,9 @@
 #include "CoreMinimal.h"
 #include "UFortActorIndicatorWidget.h"
 
+#include "UCommonActivatableWidgetSwitcher.h"
+
 class UAthenaMarkerPointer;
-class UCommonActivatableWidgetSwitcher;
 
 #include "UFortPortalHUDDetails.generated.h"
 

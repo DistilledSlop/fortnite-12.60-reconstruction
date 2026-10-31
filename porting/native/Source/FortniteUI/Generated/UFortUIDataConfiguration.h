@@ -34,6 +34,11 @@
 #include "Math/Color.h"
 #include "Math/Vector2D.h"
 #include "Styling/SlateBrush.h"
+#include "UCommonTextStyle.h"
+#include "UFortFrontendItemViewSettingsManager.h"
+#include "UFortItemDefinition.h"
+#include "UFortMultiSizeBrushAsset.h"
+#include "UFortTooltipDisplayStatsLookupTable.h"
 
 class UAthenaBroadcastHUDBase;
 class UAthenaChallengeDisplayData;
@@ -42,16 +47,12 @@ class UAthenaItemShopConfiguration;
 class UAthenaMatchReadyDesktopPopup;
 class UAthenaTeamDisplayData;
 class UAthenaUIStateWidget_Frontend;
-class UCommonTextStyle;
 class UDataTable;
-class UFortFrontendItemViewSettingsManager;
 class UFortHeroLoadoutScreenBase;
-class UFortItemDefinition;
 class UFortItemInspectionScreen;
 class UFortItemManagementScreen;
 class UFortItemPresentationDisplayData;
 class UFortKeybindWidget;
-class UFortMultiSizeBrushAsset;
 class UFortPlayerSurveyDispatcher;
 class UFortSocialDisplayData;
 class UFortSocialPanel;
@@ -59,7 +60,6 @@ class UFortSquadManagementScreenBase;
 class UFortStoreDisplayData;
 class UFortTabListWidgetBase;
 class UFortTeamMemberManage;
-class UFortTooltipDisplayStatsLookupTable;
 class UFortUIDataProfileStats;
 class UFortUIStateWidget_Login;
 class UFortVideoDisplayData;

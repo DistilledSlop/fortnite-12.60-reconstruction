@@ -6,10 +6,11 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "UCommonRichTextBlock.h"
+
 class UAthenaBattlePassItemTracker;
 class UBattlePassPurchaseScreen;
 class UBattlePassScreenPurchaseButton;
-class UCommonRichTextBlock;
 
 #include "UAthenaBattlePassTracker.generated.h"
 

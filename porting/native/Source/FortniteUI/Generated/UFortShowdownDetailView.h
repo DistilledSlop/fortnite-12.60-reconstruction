@@ -9,8 +9,8 @@
 #include "FFortTournamentDisplayInfo.h"
 #include "FShowdownTournamentEntry.h"
 #include "Layout/Margin.h"
+#include "UCommonTextBlock.h"
 
-class UCommonTextBlock;
 class UTextBlock;
 
 #include "UFortShowdownDetailView.generated.h"

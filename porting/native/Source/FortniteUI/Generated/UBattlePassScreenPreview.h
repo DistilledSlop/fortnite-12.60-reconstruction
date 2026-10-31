@@ -7,12 +7,12 @@
 #include "UCommonUserWidget.h"
 
 #include "FPreviewUnlockData.h"
+#include "UCommonTextBlock.h"
 
 class UBattlePassPreviewDisplayData;
 class UBattlePassScreenPreviewRewardWidget;
 class UBattlePassScreenPurchaseButton;
 class UBattlePassVBuckSummary;
-class UCommonTextBlock;
 
 #include "UBattlePassScreenPreview.generated.h"
 

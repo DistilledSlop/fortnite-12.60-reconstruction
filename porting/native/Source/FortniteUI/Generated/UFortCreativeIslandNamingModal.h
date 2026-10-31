@@ -6,8 +6,9 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanel.h"
 
-class UCommonButton;
-class UFortCreativeRealEstatePlotItemDefinition;
+#include "UCommonButton.h"
+#include "UFortCreativeRealEstatePlotItemDefinition.h"
+
 class UFortEditableFilteredCountedTextBox;
 
 #include "UFortCreativeIslandNamingModal.generated.h"

@@ -6,9 +6,10 @@
 #include "CoreMinimal.h"
 #include "UCommonActivatablePanel.h"
 
-class UFortQuestItemDefinition;
-class UFortQuestMapData;
-class UFortQuestMapDataAsset;
+#include "UFortQuestItemDefinition.h"
+#include "UFortQuestMapData.h"
+#include "UFortQuestMapDataAsset.h"
+
 class UFortQuestMapDetailsPanelBase;
 class UFortQuestMapEventCallout;
 class UFortQuestMapViewer;

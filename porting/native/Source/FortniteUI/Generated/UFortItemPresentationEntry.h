@@ -6,9 +6,10 @@
 #include "CoreMinimal.h"
 #include "UCommonButton.h"
 
-class UCommonTextBlock;
+#include "UCommonTextBlock.h"
+#include "UFortItem.h"
+
 class UFortCosmeticItemCard;
-class UFortItem;
 class UTexture2D;
 
 #include "UFortItemPresentationEntry.generated.h"

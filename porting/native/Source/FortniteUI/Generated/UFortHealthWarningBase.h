@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonActivatablePanel.h"
 
-class UCommonTextBlock;
+#include "UCommonTextBlock.h"
+
 class UHorizontalBox;
 
 #include "UFortHealthWarningBase.generated.h"

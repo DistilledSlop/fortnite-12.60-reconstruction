@@ -7,8 +7,7 @@
 #include "UCommonListView.h"
 
 #include "FOnInventoryUpdated.h"
-
-class UFortItem;
+#include "UFortItem.h"
 
 #include "UFortItemListView.generated.h"
 

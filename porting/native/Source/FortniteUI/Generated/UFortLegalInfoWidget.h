@@ -6,8 +6,9 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanel.h"
 
-class UCommonButton;
-class UCommonWidgetSwitcher;
+#include "UCommonButton.h"
+#include "UCommonWidgetSwitcher.h"
+
 class UFortTabListWidgetBase;
 
 #include "UFortLegalInfoWidget.generated.h"

@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanel.h"
 
-class UCommonButton;
+#include "UCommonButton.h"
+
 class UFortCreativeServersView;
 
 #include "UFortCreativePlayOptions.generated.h"

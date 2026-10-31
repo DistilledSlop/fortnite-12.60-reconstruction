@@ -8,8 +8,7 @@
 
 #include "Engine/DataTable.h"
 #include "GameplayTagContainer.h"
-
-class UCommonButton;
+#include "UCommonButton.h"
 
 #include "UAthenaMapChallengeCategoryRotator.generated.h"
 

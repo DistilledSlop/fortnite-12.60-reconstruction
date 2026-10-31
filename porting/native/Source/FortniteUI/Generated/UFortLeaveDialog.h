@@ -7,10 +7,10 @@
 #include "UFortActivatablePanel.h"
 
 #include "FOnDialogResponse.h"
+#include "UCommonButton.h"
+#include "UCommonButtonGroup.h"
+#include "UCommonTextBlock.h"
 
-class UCommonButton;
-class UCommonButtonGroup;
-class UCommonTextBlock;
 class UVerticalBox;
 
 #include "UFortLeaveDialog.generated.h"

@@ -9,11 +9,10 @@
 #include "Engine/DataTable.h"
 #include "FCameraWidgetBinding.h"
 #include "GameplayTagContainer.h"
-
-class UCommonActivatableWidgetSwitcher;
-class UFortChallengeBundleItemDefinition;
-class UFortEventLevelNavigationDetails;
-class UFortGameStateComponent_EventLevel;
+#include "UCommonActivatableWidgetSwitcher.h"
+#include "UFortChallengeBundleItemDefinition.h"
+#include "UFortEventLevelNavigationDetails.h"
+#include "UFortGameStateComponent_EventLevel.h"
 
 #include "UAthenaSpatialFrontend.generated.h"
 

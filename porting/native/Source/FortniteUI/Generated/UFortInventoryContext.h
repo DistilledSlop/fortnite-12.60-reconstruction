@@ -14,8 +14,7 @@
 #include "FOnSchematicUnlocked.h"
 #include "FOnSchematicsLockedChanged.h"
 #include "FOnVaultItemLimitStateChanged.h"
-
-class UFortSchematicItemDefinition;
+#include "UFortSchematicItemDefinition.h"
 
 #include "UFortInventoryContext.generated.h"
 

@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortSettingsListEntry_Setting.h"
 
-class UCommonTextBlock;
+#include "UCommonTextBlock.h"
+
 class UFortSettingValueDiscrete;
 class UFortSettingsRotator;
 class UHUDLayoutToolV2_Button;

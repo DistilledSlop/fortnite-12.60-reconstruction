@@ -7,10 +7,10 @@
 #include "UFortPostGameScreen.h"
 
 #include "Engine/DataTable.h"
+#include "UCommonButton.h"
+#include "UCommonWidgetSwitcher.h"
 
 class UAthenaPreserveSquadButton;
-class UCommonButton;
-class UCommonWidgetSwitcher;
 class UFeedbackReportPlayerBase;
 class UFortMatchXPDetails;
 class UFortMatchXPRecap;

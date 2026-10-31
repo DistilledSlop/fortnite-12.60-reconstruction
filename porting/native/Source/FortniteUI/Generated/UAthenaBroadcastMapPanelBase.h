@@ -7,11 +7,11 @@
 #include "UFortActivatablePanel.h"
 
 #include "Engine/DataTable.h"
+#include "UCommonButton.h"
+#include "UCommonWidgetSwitcher.h"
 
 class UAthenaMapLayer;
 class UAthenaSpectatorMapPlayerListBase;
-class UCommonButton;
-class UCommonWidgetSwitcher;
 class UFortBroadcasterMapSettings;
 
 #include "UAthenaBroadcastMapPanelBase.generated.h"

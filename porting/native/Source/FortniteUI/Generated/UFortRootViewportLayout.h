@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
-class UCommonActivatableWidgetQueue;
+#include "UCommonActivatableWidgetQueue.h"
+
 class UFortConfirmationWindow;
 class UFortErrorWindow;
 class UFortLetoLayoutBorder;

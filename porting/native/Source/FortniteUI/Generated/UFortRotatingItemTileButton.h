@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortItemTileButton.h"
 
-class UFortItem;
+#include "UFortItem.h"
 
 #include "UFortRotatingItemTileButton.generated.h"
 

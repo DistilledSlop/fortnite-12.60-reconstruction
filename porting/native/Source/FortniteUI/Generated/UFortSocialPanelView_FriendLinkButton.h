@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonButton.h"
 
-class UCommonBorder;
+#include "UCommonBorder.h"
 
 #include "UFortSocialPanelView_FriendLinkButton.generated.h"
 

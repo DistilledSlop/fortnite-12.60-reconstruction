@@ -6,8 +6,8 @@
 #include "CoreMinimal.h"
 #include "ULTMWidgetBase.h"
 
-class AFortAIPawn;
-class AFortAthenaMutator_Mash;
+#include "AFortAIPawn.h"
+#include "AFortAthenaMutator_Mash.h"
 
 #include "UMashBossBattleWidget.generated.h"
 

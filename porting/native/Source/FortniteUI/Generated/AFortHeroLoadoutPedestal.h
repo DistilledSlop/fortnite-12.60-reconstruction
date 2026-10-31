@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "AFortItemPreviewPedestal.h"
 
-class UFortCampaignHeroLoadoutItem;
+#include "UFortCampaignHeroLoadoutItem.h"
 
 #include "AFortHeroLoadoutPedestal.generated.h"
 

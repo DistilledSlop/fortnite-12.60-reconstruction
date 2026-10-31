@@ -8,9 +8,9 @@
 
 #include "Engine/DataTable.h"
 #include "GameplayTagContainer.h"
+#include "UFortGameStateComponent_EventLevel.h"
 
 class UBattlePassScreen;
-class UFortGameStateComponent_EventLevel;
 
 #include "USpatialBattlePass.generated.h"
 

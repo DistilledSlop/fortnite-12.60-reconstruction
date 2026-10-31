@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortActivityDetailsPanel.h"
 
-class UCommonTextBlock;
+#include "UCommonTextBlock.h"
 
 #include "UFortActivityDetailsInfoPanel.generated.h"
 

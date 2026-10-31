@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCobaltWidgetBase.h"
 
-class UCommonTextBlock;
+#include "UCommonTextBlock.h"
 
 #include "UCobaltStatusWidgetBase.generated.h"
 

@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UAthenaTeamSquadEntry.h"
 
-class UCommonRichTextBlock;
+#include "UCommonRichTextBlock.h"
 
 #include "UFortTeamSquadDetailedEntry.generated.h"
 

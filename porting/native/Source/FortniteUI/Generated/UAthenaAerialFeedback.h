@@ -7,9 +7,9 @@
 #include "UFortHUDElementWidget.h"
 
 #include "GameplayTagContainer.h"
+#include "UCommonTextBlock.h"
+#include "UFortItemDefinition.h"
 
-class UCommonTextBlock;
-class UFortItemDefinition;
 class UFortKeybindWidget;
 
 #include "UAthenaAerialFeedback.generated.h"

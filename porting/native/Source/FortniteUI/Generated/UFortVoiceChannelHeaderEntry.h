@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "USocialUserListView.h"
+
 class UFortVoiceChannelHeaderButton;
 class UWidgetAnimation;
 
@@ -17,6 +19,10 @@ class FORTNITEUI_API UFortVoiceChannelHeaderEntry : public UCommonUserWidget
 	GENERATED_BODY()
 
 public:
+	// table index 3, flags 0x20080000080008
+	UPROPERTY()
+	USocialUserListView* ListView_Users;
+
 	// table index 2, flags 0x20080000080008
 	UPROPERTY()
 	UFortVoiceChannelHeaderButton* Button_ActivateThisChannel;

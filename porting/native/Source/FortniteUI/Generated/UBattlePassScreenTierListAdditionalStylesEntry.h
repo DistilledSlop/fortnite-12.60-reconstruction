@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonButton.h"
 
-class UFortItem;
+#include "UFortItem.h"
+
 class UFortLazyImage;
 
 #include "UBattlePassScreenTierListAdditionalStylesEntry.generated.h"

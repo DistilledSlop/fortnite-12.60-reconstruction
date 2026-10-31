@@ -7,9 +7,9 @@
 #include "UObject/Object.h"
 
 #include "FLoadItemsComplete.h"
+#include "UFortItemDefinition.h"
 
 class UDataTable;
-class UFortItemDefinition;
 
 #include "UFortCreativeItemListPanelData.generated.h"
 

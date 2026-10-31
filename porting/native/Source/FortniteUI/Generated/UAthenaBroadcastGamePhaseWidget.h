@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UAthenaGamePhaseWidgetBase.h"
 
-class AFortMinigame;
+#include "AFortMinigame.h"
 
 #include "UAthenaBroadcastGamePhaseWidget.generated.h"
 

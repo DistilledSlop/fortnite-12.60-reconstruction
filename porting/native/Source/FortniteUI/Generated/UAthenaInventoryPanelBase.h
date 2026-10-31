@@ -6,9 +6,10 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanel.h"
 
+#include "UCommonActivatableWidgetSwitcher.h"
+#include "UCommonButton.h"
+
 class UAthenaQuickbarEditorBase;
-class UCommonActivatableWidgetSwitcher;
-class UCommonButton;
 class UFortCreativeItemListMenu;
 class UFortCreativeItemListPanelData;
 class UFortCreativeSettingsFlow;

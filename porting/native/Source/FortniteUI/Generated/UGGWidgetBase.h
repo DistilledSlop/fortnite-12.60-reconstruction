@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "ULTMWidgetBase.h"
 
-class AFortAthenaMutator_GG;
+#include "AFortAthenaMutator_GG.h"
+
 class UWorld;
 
 #include "UGGWidgetBase.generated.h"

@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "Components/Widget.h"
 
-class UFortItem;
+#include "UFortItem.h"
 
 #include "UFortItemWidget_NUI.generated.h"
 

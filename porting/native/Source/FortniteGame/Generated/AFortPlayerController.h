@@ -68,6 +68,7 @@
 #include "Math/Rotator.h"
 #include "Math/Vector.h"
 #include "Misc/Guid.h"
+#include "UMcpProfileGroup.h"
 #include "UObject/CoreOnline.h"
 
 class AActor;
@@ -119,7 +120,6 @@ class UInputComponent;
 class UMaterialInstanceDynamic;
 class UMaterialInterface;
 class UMaterialParameterCollection;
-class UMcpProfileGroup;
 class UMediaPlayer;
 class UMediaSource;
 class UObject;

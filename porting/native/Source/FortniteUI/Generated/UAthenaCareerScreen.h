@@ -6,11 +6,12 @@
 #include "CoreMinimal.h"
 #include "UCommonActivatablePanel.h"
 
+#include "UCommonButton.h"
+#include "UCommonTextBlock.h"
+
 class UAthenaFeatTimelineListView;
 class UAthenaLeaderboardScreenBase;
 class UAthenaReplayBrowserScreenBase;
-class UCommonButton;
-class UCommonTextBlock;
 
 #include "UAthenaCareerScreen.generated.h"
 

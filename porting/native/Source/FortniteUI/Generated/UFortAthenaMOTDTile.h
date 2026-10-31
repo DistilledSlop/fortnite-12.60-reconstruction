@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonButton.h"
 
-class UCommonBorder;
+#include "UCommonBorder.h"
+
 class URichTextBlock;
 
 #include "UFortAthenaMOTDTile.generated.h"

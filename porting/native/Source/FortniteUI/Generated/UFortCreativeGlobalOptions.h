@@ -6,9 +6,10 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanel.h"
 
-class UCommonButton;
-class UCommonTextBlock;
-class UFortCreativeOptionsBundle;
+#include "UCommonButton.h"
+#include "UCommonTextBlock.h"
+#include "UFortCreativeOptionsBundle.h"
+
 class UFortCreativeOptionsCategory;
 class UImage;
 

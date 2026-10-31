@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortCompetitiveLeaderboardScreen.h"
 
-class UCommonButton;
+#include "UCommonButton.h"
 
 #include "UFortEventLeaderboardScreen.generated.h"
 

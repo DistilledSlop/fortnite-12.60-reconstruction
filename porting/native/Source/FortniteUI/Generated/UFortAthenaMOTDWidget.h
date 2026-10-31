@@ -9,10 +9,10 @@
 #include "Engine/DataTable.h"
 #include "FPrimaryContentSetup.h"
 #include "GameplayTagContainer.h"
+#include "UCommonButton.h"
+#include "UCommonButtonGroup.h"
 
 class UBattlePassPurchaseScreen;
-class UCommonButton;
-class UCommonButtonGroup;
 class UFortActivatableMovieWidget_Monolithic;
 class UFortAthenaMOTDTile;
 class UFortDirectAcquisitionOfferDetailsWidget;

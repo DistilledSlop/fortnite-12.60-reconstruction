@@ -6,8 +6,9 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 
-class UCommonButton;
-class UCommonButtonGroup;
+#include "UCommonButton.h"
+#include "UCommonButtonGroup.h"
+
 class UFortQuestMapScreen;
 class UPanelWidget;
 class USizeBox;

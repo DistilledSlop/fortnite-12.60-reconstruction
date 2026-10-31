@@ -7,9 +7,9 @@
 #include "UAthenaSpectatorPlayerListBase.h"
 
 #include "Engine/DataTable.h"
+#include "UCommonButton.h"
 
 class UAthenaMapLayer;
-class UCommonButton;
 
 #include "UAthenaSpectatorMapPlayerListBase.generated.h"
 

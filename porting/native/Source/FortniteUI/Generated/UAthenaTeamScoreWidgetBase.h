@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortHUDElementWidget.h"
 
-class AFortPlayerStateAthena;
+#include "AFortPlayerStateAthena.h"
 
 #include "UAthenaTeamScoreWidgetBase.generated.h"
 

@@ -6,15 +6,15 @@
 #include "CoreMinimal.h"
 #include "UAthenaSpatialScreen.h"
 
+#include "AFortPlayerMannequin.h"
 #include "EMissionState.h"
+#include "UCommonButton.h"
+#include "UFortGameStateComponent_EventLevel.h"
+#include "UFortQuestItem.h"
 
-class AFortPlayerMannequin;
 class UAthenaAboutModal;
 class UAthenaSpatialNavigationHenchmenData;
 class UBattlePassPurchaseScreen;
-class UCommonButton;
-class UFortGameStateComponent_EventLevel;
-class UFortQuestItem;
 class UOverlay;
 class USpatialMissionActivation;
 class UVerticalBox;

@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonActivatableWidget.h"
 
-class UFortPlaylistUIInfo;
+#include "UFortPlaylistUIInfo.h"
+
 class UFortPostGameScreen;
 class UFortPostGameScreenContainer;
 class UOverlay;

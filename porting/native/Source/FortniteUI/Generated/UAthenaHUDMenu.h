@@ -7,10 +7,10 @@
 #include "UCommonUserWidget.h"
 
 #include "GameplayTagContainer.h"
+#include "UCommonActivatableWidgetStack.h"
 
 class UAthenaGameOverDisplay;
 class UAthenaInventoryPanelBase;
-class UCommonActivatableWidgetStack;
 class UFortDualBladeMenu;
 class UFortPostGameScreenRoot;
 class UOverlay;

@@ -6,8 +6,9 @@
 #include "CoreMinimal.h"
 #include "AFortAthenaMutator.h"
 
+#include "UCommonActivatablePanel.h"
+
 class AActor;
-class UCommonActivatablePanel;
 class UMediaPlayer;
 class USoundBase;
 class USoundMix;

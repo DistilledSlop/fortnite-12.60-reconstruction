@@ -6,8 +6,9 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "UCommonTextBlock.h"
+
 class UBattlePassViewRewardData;
-class UCommonTextBlock;
 
 #include "UBattlePassViewRewardListEntry.generated.h"
 

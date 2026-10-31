@@ -6,8 +6,9 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
-class UCommonRichTextBlock;
-class UCommonTextBlock;
+#include "UCommonRichTextBlock.h"
+#include "UCommonTextBlock.h"
+
 class UProgressBar;
 
 #include "UAthenaQuestProgression.generated.h"

@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanelWithItemPreview.h"
 
-class UFortGiftBoxItem;
+#include "UFortGiftBoxItem.h"
+
 class UHorizontalBox;
 class UItemCardWidgetBase;
 class UScrollBox;

@@ -6,12 +6,13 @@
 #include "CoreMinimal.h"
 #include "UAthenaSpatialCustomizationSubscreenBase.h"
 
+#include "UCommonButton.h"
+#include "UCommonRichTextBlock.h"
+#include "UCommonTextBlock.h"
+
 class UAthenaQuestProgression;
 class UAthenaSpatialCustomizationCategoryEntry;
 class UAthenaSpatialCustomizationChoice;
-class UCommonButton;
-class UCommonRichTextBlock;
-class UCommonTextBlock;
 class UFortColorPicker;
 class UWidgetAnimation;
 

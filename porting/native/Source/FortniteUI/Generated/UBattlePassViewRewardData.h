@@ -6,8 +6,8 @@
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
 
-class UFortItem;
-class UFortItemDefinition;
+#include "UFortItem.h"
+#include "UFortItemDefinition.h"
 
 #include "UBattlePassViewRewardData.generated.h"
 

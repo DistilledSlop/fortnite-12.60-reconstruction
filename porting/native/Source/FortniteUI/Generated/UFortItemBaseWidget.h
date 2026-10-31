@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
-class UFortItemDefinition;
+#include "UFortItemDefinition.h"
 
 #include "UFortItemBaseWidget.generated.h"
 

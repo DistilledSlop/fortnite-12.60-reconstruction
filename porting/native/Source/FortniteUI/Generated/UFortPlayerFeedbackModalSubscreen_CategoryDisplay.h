@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortPlayerFeedbackModalSubscreenBase.h"
 
-class UCommonButtonGroup;
+#include "UCommonButtonGroup.h"
+
 class UDynamicEntryBox;
 
 #include "UFortPlayerFeedbackModalSubscreen_CategoryDisplay.generated.h"

@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonActivatableWidget.h"
 
-class UCommonButton;
+#include "UCommonButton.h"
 
 #include "UFortLetoSellModal.generated.h"
 

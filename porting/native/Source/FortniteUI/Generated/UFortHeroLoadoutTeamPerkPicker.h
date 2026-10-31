@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortItemPickerBase.h"
 
-class UFortCampaignHeroLoadoutItem;
+#include "UFortCampaignHeroLoadoutItem.h"
 
 #include "UFortHeroLoadoutTeamPerkPicker.generated.h"
 

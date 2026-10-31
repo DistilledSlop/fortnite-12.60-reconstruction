@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortUIManager.h"
 
-class UFortLocalPlayer;
+#include "UFortLocalPlayer.h"
 
 #include "UFortUIManager_Campaign.generated.h"
 

@@ -7,10 +7,10 @@
 #include "UFortItemPreviewScreen.h"
 
 #include "Engine/DataTable.h"
+#include "UCommonButton.h"
+#include "UFortCosmeticLockerItem.h"
 
-class UCommonButton;
 class UFortCosmeticLoadoutCard;
-class UFortCosmeticLockerItem;
 class UFortNameLoadoutPopup;
 class UFortProgressModal;
 class UObject;

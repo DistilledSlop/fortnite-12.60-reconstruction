@@ -6,9 +6,9 @@
 #include "CoreMinimal.h"
 #include "UFortVariantEditorWidgetBase.h"
 
-class UCommonButton;
-class UCommonTextBlock;
-class UFortCosmeticNumericalVariant;
+#include "UCommonButton.h"
+#include "UCommonTextBlock.h"
+#include "UFortCosmeticNumericalVariant.h"
 
 #include "UFortVariantNumericalPicker.generated.h"
 

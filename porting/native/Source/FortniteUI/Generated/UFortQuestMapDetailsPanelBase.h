@@ -6,9 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "AFortClientAnnouncement_Conversation.h"
 #include "Engine/EngineTypes.h"
-
-class AFortClientAnnouncement_Conversation;
 
 #include "UFortQuestMapDetailsPanelBase.generated.h"
 

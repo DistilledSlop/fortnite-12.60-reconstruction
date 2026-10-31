@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortActivatableVideoPanel.h"
 
-class UFortStreamMediaSource;
+#include "UFortStreamMediaSource.h"
+
 class UMediaPlayer;
 
 #include "UFortActivatableMovieWidget_Monolithic.generated.h"

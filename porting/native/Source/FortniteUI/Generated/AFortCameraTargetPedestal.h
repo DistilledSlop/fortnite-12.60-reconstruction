@@ -6,11 +6,11 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 
+#include "AFortItemPreviewActor.h"
 #include "GameplayTagContainer.h"
+#include "UFortItem.h"
 
-class AFortItemPreviewActor;
 class UChildActorComponent;
-class UFortItem;
 
 #include "AFortCameraTargetPedestal.generated.h"
 

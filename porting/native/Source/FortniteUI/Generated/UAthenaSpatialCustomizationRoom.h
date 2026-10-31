@@ -8,13 +8,13 @@
 
 #include "ESpatialCustomizationRoomState.h"
 #include "Engine/DataTable.h"
+#include "UFortGameStateComponent_EventLevel.h"
 
 class UAthenaSpatialCustomizationCategories;
 class UAthenaSpatialCustomizationRoomData;
 class UAthenaSpatialCustomizationSelection;
 class UAthenaSpatialCustomizationSubscreenBase;
 class UBattlePassPurchaseScreen;
-class UFortGameStateComponent_EventLevel;
 class UFortItemView;
 
 #include "UAthenaSpatialCustomizationRoom.generated.h"

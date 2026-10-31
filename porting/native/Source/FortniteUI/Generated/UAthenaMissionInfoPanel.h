@@ -6,12 +6,13 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "UCommonButton.h"
+#include "UCommonTextBlock.h"
+#include "UFortPartyMember.h"
+
 class UAthenaChallengeInfoPanelEntry;
 class UAthenaChallengeRewardDisplayEntry;
-class UCommonButton;
-class UCommonTextBlock;
 class UDynamicEntryBox;
-class UFortPartyMember;
 class UImage;
 class UWidgetSwitcher;
 

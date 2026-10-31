@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonTileView.h"
 
-class UFortItem;
+#include "UFortItem.h"
+
 class UFortOptionsTab;
 
 #include "UAthenaCreativeItemTileView.generated.h"

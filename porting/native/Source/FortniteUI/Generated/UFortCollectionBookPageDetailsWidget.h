@@ -6,9 +6,10 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
-class UCommonButton;
-class UCommonTextBlock;
-class UFortCollectionBookPage;
+#include "UCommonButton.h"
+#include "UCommonTextBlock.h"
+#include "UFortCollectionBookPage.h"
+
 class UFortCollectionBookPageCompletionRewardWidget;
 class UFortCollectionBookRewardModalWidget;
 class UFortMaterialProgressBar;

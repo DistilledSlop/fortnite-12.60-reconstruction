@@ -6,13 +6,14 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanel.h"
 
+#include "UCommonButton.h"
+#include "UCommonTextBlock.h"
+#include "UFortQuestItemDefinition.h"
+#include "UFortQuestMapData.h"
+
 class UAudioComponent;
-class UCommonButton;
-class UCommonTextBlock;
 class UFortBangWrapper_NUI;
 class UFortProgressArrowButton;
-class UFortQuestItemDefinition;
-class UFortQuestMapData;
 class UFortQuestMapEventSequence;
 class UFortQuestMapNewBangWrapper;
 class UHorizontalBox;

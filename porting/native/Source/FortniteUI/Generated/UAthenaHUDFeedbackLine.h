@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortHUDElementWidget.h"
 
-class UCommonRichTextBlock;
+#include "UCommonRichTextBlock.h"
+
 class UFortKeybindWidget;
 
 #include "UAthenaHUDFeedbackLine.generated.h"

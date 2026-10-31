@@ -6,15 +6,16 @@
 #include "CoreMinimal.h"
 #include "UFortQuestMapDetailsPanelBase.h"
 
-class UCommonBorder;
-class UCommonBorderStyle;
-class UCommonListView;
-class UCommonTextBlock;
-class UCommonWidgetSwitcher;
+#include "UCommonBorder.h"
+#include "UCommonBorderStyle.h"
+#include "UCommonListView.h"
+#include "UCommonTextBlock.h"
+#include "UCommonWidgetSwitcher.h"
+#include "UFortQuestItemDefinition.h"
+#include "UFortQuestObjectiveInfo.h"
+
 class UDataTable;
-class UFortQuestItemDefinition;
 class UFortQuestMapEventSideEntry;
-class UFortQuestObjectiveInfo;
 class UImage;
 class UScrollBox;
 class UVerticalBox;

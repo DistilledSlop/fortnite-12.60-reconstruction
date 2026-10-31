@@ -6,8 +6,9 @@
 #include "CoreMinimal.h"
 #include "UCobaltWidgetBase.h"
 
-class AFortPlayerState;
-class UCommonTextBlock;
+#include "AFortPlayerState.h"
+#include "UCommonTextBlock.h"
+
 class UFortLazyImage;
 
 #include "UCobaltPlayerPortraitWidget.generated.h"

@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonActivatableWidget.h"
 
-class UCommonTextBlock;
+#include "UCommonTextBlock.h"
+
 class UDynamicEntryBox;
 
 #include "UFortTournamentPayoutModal.generated.h"

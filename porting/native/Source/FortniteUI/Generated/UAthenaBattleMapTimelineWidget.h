@@ -7,8 +7,7 @@
 #include "UFortActivatablePanel.h"
 
 #include "Engine/DataTable.h"
-
-class UCommonButton;
+#include "UCommonButton.h"
 
 #include "UAthenaBattleMapTimelineWidget.generated.h"
 

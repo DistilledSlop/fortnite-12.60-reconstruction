@@ -15,6 +15,8 @@
 #include "FPlaylistOverrideData.h"
 #include "FWebEnvUrl.h"
 #include "Misc/Guid.h"
+#include "UGameFrameworkComponentManager.h"
+#include "UMcpProfileManager.h"
 #include "WebJSFunction.h"
 
 class AContentBeaconClient;
@@ -38,9 +40,7 @@ class UFortSocialManager;
 class UFortTooltipManager;
 class UFortTournamentManager;
 class UFortUpdateManager;
-class UGameFrameworkComponentManager;
 class UKairosHeartbeatManager;
-class UMcpProfileManager;
 class UPegasusDriver;
 class UReplayVideoManager;
 class UVideoExtractionBootstrapper;

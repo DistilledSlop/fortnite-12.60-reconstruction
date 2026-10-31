@@ -6,8 +6,8 @@
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
 
-class UFortLocalPlayer;
-class UFortMcpProfileCommonCore;
+#include "UFortLocalPlayer.h"
+#include "UFortMcpProfileCommonCore.h"
 
 #include "UFortPlayerSurveyCMSTracker.generated.h"
 

@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortEventLevelScreen.h"
 
-class UCommonButton;
+#include "UCommonButton.h"
+
 class UFortGiftingScreen;
 class UFortStoreFrontOfferDetailsWidgetBase;
 class UFortWinterQuestDayCounter;

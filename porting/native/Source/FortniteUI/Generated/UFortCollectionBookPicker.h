@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortItemPickerBase.h"
 
-class UFortAccountItem;
+#include "UFortAccountItem.h"
+
 class UFortMulchConfirmationModalWidget;
 
 #include "UFortCollectionBookPicker.generated.h"

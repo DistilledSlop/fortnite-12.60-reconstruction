@@ -6,9 +6,10 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
-class UCommonBorder;
-class UCommonLoadGuard;
-class UCommonTextBlock;
+#include "UCommonBorder.h"
+#include "UCommonLoadGuard.h"
+#include "UCommonTextBlock.h"
+
 class UFortCommunityVotingManager;
 class UImage;
 class UVerticalBox;

@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortParentalControls_SettingModifyingSubScreen.h"
 
-class UCommonTextBlock;
+#include "UCommonTextBlock.h"
 
 #include "UFortParentalControls_Renabling.generated.h"
 

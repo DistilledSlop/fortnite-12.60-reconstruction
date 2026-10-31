@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 
-class UFortStreamMediaSource;
+#include "UFortStreamMediaSource.h"
+
 class UFortVideoPlayerWidget;
 
 #include "ULiveStreamStandalonePlayer.generated.h"

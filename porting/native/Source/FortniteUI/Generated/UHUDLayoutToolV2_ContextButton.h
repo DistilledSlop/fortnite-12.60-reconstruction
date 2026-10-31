@@ -7,8 +7,8 @@
 #include "UCommonUserWidget.h"
 
 #include "Math/Color.h"
+#include "UCommonTextBlock.h"
 
-class UCommonTextBlock;
 class UHUDLayoutToolV2_Button;
 class UImage;
 

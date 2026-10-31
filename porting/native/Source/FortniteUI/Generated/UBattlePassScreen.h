@@ -7,23 +7,23 @@
 #include "UFortItemPreviewScreen.h"
 
 #include "Engine/DataTable.h"
+#include "UAthenaCosmeticItemDefinition.h"
+#include "UAthenaSeasonItemDefinition.h"
+#include "UCommonButton.h"
+#include "UCommonButtonGroup.h"
+#include "UCommonTextBlock.h"
+#include "UCommonWidgetSwitcher.h"
+#include "UFortAccountItemDefinition.h"
 
-class UAthenaCosmeticItemDefinition;
 class UAthenaRewardItemTypeRarityTag;
-class UAthenaSeasonItemDefinition;
 class UBattlePassItemChoiceDisplay;
 class UBattlePassLeaderboard;
 class UBattlePassPurchaseScreen;
 class UBattlePassRewardPagedTrack;
 class UBattlePassScreenListView;
 class UBattlePassScreenTierListAdditionalStylesEntry;
-class UCommonButton;
-class UCommonButtonGroup;
-class UCommonTextBlock;
-class UCommonWidgetSwitcher;
 class UDynamicEntryBox;
 class UEnableMultiFactorModal;
-class UFortAccountItemDefinition;
 class UFortDirectAcquisitionWidgetBase;
 class UFortEventDateTimeTextBlock;
 class UFortGiftingScreen;

@@ -7,9 +7,8 @@
 #include "UFortActivatablePanel.h"
 
 #include "FRequestOpenCardPackDelegate.h"
-
-class UCommonButton;
-class UCommonListView;
+#include "UCommonButton.h"
+#include "UCommonListView.h"
 
 #include "UFortOpenCardPackModal.generated.h"
 

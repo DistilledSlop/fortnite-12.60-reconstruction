@@ -8,11 +8,11 @@
 
 #include "EFortItemCardSize.h"
 #include "FFortItemManagementInventoryFilterTabLabelInfo.h"
+#include "UCommonButton.h"
+#include "UCommonButtonStyle.h"
+#include "UCommonLoadGuard.h"
+#include "UCommonTextBlock.h"
 
-class UCommonButton;
-class UCommonButtonStyle;
-class UCommonLoadGuard;
-class UCommonTextBlock;
 class UFortInventoryContext;
 class UFortItemManagementScreen;
 class UFortItemTileView;

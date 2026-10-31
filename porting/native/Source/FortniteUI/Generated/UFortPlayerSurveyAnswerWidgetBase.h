@@ -7,9 +7,8 @@
 #include "UCommonActivatableWidget.h"
 
 #include "Misc/DateTime.h"
-
-class UFortPlayerSurveyQuestion;
-class UFortPlayerSurveyQuestionSelector;
+#include "UFortPlayerSurveyQuestion.h"
+#include "UFortPlayerSurveyQuestionSelector.h"
 
 #include "UFortPlayerSurveyAnswerWidgetBase.generated.h"
 

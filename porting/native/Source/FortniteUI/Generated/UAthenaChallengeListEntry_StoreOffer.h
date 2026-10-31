@@ -6,8 +6,9 @@
 #include "CoreMinimal.h"
 #include "UAthenaChallengeListEntryBase.h"
 
+#include "UCommonRichTextBlock.h"
+
 class UButton;
-class UCommonRichTextBlock;
 class UFortLazyImage;
 class UFortStoreFrontOfferDetailsWidgetBase;
 class UFortStoreFrontOfferInfo;

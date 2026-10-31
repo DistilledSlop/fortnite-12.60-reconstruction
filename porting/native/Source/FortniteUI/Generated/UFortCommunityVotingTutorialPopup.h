@@ -7,9 +7,8 @@
 #include "UFortActivatablePanel.h"
 
 #include "Engine/DataTable.h"
-
-class UCommonButton;
-class UCommonWidgetSwitcher;
+#include "UCommonButton.h"
+#include "UCommonWidgetSwitcher.h"
 
 #include "UFortCommunityVotingTutorialPopup.generated.h"
 

@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortServerTileBase.h"
 
-class UCommonTextBlock;
+#include "UCommonTextBlock.h"
+
 class UDynamicEntryBox;
 class UVerticalBox;
 

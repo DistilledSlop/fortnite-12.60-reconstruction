@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UAthenaSpatialScreen.h"
 
-class AFortPlayerMannequin;
+#include "AFortPlayerMannequin.h"
+
 class UAnimationAsset;
 
 #include "UAthenaSpatialMannequinScreen.generated.h"

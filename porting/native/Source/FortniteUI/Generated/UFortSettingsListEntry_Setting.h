@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortSettingsListEntryBase.h"
 
-class UCommonTextBlock;
+#include "UCommonTextBlock.h"
 
 #include "UFortSettingsListEntry_Setting.generated.h"
 

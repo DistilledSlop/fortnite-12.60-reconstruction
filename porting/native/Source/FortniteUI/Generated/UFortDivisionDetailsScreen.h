@@ -6,8 +6,9 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanel.h"
 
-class UCommonTextBlock;
-class UCommonWidgetSwitcher;
+#include "UCommonTextBlock.h"
+#include "UCommonWidgetSwitcher.h"
+
 class UFortDivisionDetailsInfo;
 class UFortDivisionPayoutInfo;
 

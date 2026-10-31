@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortMobileButtonBehaviorComponent_TagVisibility.h"
 
-class UFortControllerComponent_Interaction;
+#include "UFortControllerComponent_Interaction.h"
 
 #include "UFortMobileButtonBehaviorComponent_InteractionTagVisibility.generated.h"
 

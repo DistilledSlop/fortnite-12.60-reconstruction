@@ -9,9 +9,9 @@
 #include "FHUDLayoutToolV2_ButtonStateColor.h"
 #include "Layout/Margin.h"
 #include "Styling/SlateBrush.h"
+#include "UCommonTextBlock.h"
 
 class UBorder;
-class UCommonTextBlock;
 class UImage;
 class USizeBox;
 

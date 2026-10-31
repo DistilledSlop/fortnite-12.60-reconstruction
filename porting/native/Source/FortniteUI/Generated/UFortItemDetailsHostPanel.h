@@ -8,11 +8,11 @@
 
 #include "EFortItemInspectionMode.h"
 #include "FOnItemChangedDelegate.h"
+#include "UCommonBorder.h"
+#include "UCommonLoadGuard.h"
+#include "UFortItem.h"
+#include "UFortTooltipLoadingWrapper.h"
 
-class UCommonBorder;
-class UCommonLoadGuard;
-class UFortItem;
-class UFortTooltipLoadingWrapper;
 class UNamedSlot;
 class UScrollBox;
 

@@ -6,9 +6,10 @@
 #include "CoreMinimal.h"
 #include "UFortPlayerFeedbackModalSubscreenBase.h"
 
-class UCommonButton;
-class UCommonRichTextBlock;
-class UCommonTextBlock;
+#include "UCommonButton.h"
+#include "UCommonRichTextBlock.h"
+#include "UCommonTextBlock.h"
+
 class UWidget;
 
 #include "UFortPlayerFeedbackModalSubscreen_SubmitScreen.generated.h"

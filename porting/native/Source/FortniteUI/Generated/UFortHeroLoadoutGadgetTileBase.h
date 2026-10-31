@@ -6,9 +6,10 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
-class UCommonLazyImage;
-class UCommonTextBlock;
-class UFortGadgetItemDefinition;
+#include "UCommonLazyImage.h"
+#include "UCommonTextBlock.h"
+#include "UFortGadgetItemDefinition.h"
+
 class URichTextBlock;
 
 #include "UFortHeroLoadoutGadgetTileBase.generated.h"

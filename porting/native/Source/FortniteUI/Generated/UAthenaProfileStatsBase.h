@@ -6,9 +6,10 @@
 #include "CoreMinimal.h"
 #include "UCommonActivatablePanel.h"
 
+#include "UAthenaSeasonStats.h"
+
 class UAthenaMatchStatView;
 class UAthenaProfileStatBox;
-class UAthenaSeasonStats;
 
 #include "UAthenaProfileStatsBase.generated.h"
 

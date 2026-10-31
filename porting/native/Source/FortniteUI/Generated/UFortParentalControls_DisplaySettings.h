@@ -6,8 +6,9 @@
 #include "CoreMinimal.h"
 #include "UFortParentalControls_SettingModifyingSubScreen.h"
 
-class UCommonButton;
-class UCommonTextBlock;
+#include "UCommonButton.h"
+#include "UCommonTextBlock.h"
+
 class UFortSettingRegistry;
 class UFortSettingsPanel;
 

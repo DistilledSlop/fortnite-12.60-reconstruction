@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonActivatablePanel.h"
 
-class UCommonTileView;
+#include "UCommonTileView.h"
+
 class UFortMulchConfirmationModalWidget;
 class UStoreCardObject;
 

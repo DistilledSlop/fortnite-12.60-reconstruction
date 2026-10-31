@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortLazyImage.h"
 
-class UFortSocialUser;
+#include "UFortSocialUser.h"
+
 class UMaterialInterface;
 class UTexture2D;
 

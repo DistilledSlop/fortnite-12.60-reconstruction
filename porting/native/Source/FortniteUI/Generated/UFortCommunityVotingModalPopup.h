@@ -7,10 +7,10 @@
 #include "UFortActivatablePanel.h"
 
 #include "Engine/DataTable.h"
+#include "UCommonBorder.h"
+#include "UCommonButton.h"
+#include "UCommonTextBlock.h"
 
-class UCommonBorder;
-class UCommonButton;
-class UCommonTextBlock;
 class UDynamicEntryBox;
 class UFortCommunityVotingScreen;
 class UFortCommunityVotingTileCandidate;

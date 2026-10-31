@@ -7,15 +7,15 @@
 #include "UFortActivatablePanel.h"
 
 #include "FLeaderboardFilter.h"
+#include "UCommonBorder.h"
+#include "UCommonButton.h"
+#include "UCommonRotator.h"
+#include "UCommonTextBlock.h"
+#include "UFortLeaderboardRowProxyInstance.h"
 
-class UCommonBorder;
-class UCommonButton;
-class UCommonRotator;
-class UCommonTextBlock;
 class UDataTable;
 class UFortFlagImage;
 class UFortFlagSelectionModal;
-class UFortLeaderboardRowProxyInstance;
 class UFortProfileStatsRow;
 class UFortTabListWidgetBase;
 class UWidget;

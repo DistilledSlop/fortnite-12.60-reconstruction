@@ -7,8 +7,7 @@
 #include "UFortAthenaTutorialBaseInteraction.h"
 
 #include "ETutorialButtonInteractionType.h"
-
-class UCommonButton;
+#include "UCommonButton.h"
 
 #include "UFortAthenaTutorialButton.generated.h"
 

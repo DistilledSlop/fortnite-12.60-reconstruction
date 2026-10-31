@@ -6,10 +6,11 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanel.h"
 
-class UCommonButton;
-class UCommonTextBlock;
-class UCommonWidgetSwitcher;
-class UFortLevelSaveComponent;
+#include "UCommonButton.h"
+#include "UCommonTextBlock.h"
+#include "UCommonWidgetSwitcher.h"
+#include "UFortLevelSaveComponent.h"
+
 class UHorizontalBox;
 class UVerticalBox;
 

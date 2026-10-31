@@ -7,9 +7,9 @@
 #include "UCommonButton.h"
 
 #include "Styling/SlateBrush.h"
+#include "UCommonButtonStyle.h"
+#include "UCommonTextBlock.h"
 
-class UCommonButtonStyle;
-class UCommonTextBlock;
 class UImage;
 
 #include "UFortMainMenuButton.generated.h"

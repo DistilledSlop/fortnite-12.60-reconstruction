@@ -7,9 +7,9 @@
 #include "AFortItemPlacementActor.h"
 
 #include "FCachedComponentMaterials.h"
+#include "UFortHero.h"
 
 class AAthenaSquadPedestalGroup;
-class UFortHero;
 class UFortTeamMemberEntryBase;
 class UStaticMeshComponent;
 class UWidgetComponent;

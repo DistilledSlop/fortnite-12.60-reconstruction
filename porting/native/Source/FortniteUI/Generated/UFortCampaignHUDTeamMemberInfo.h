@@ -7,9 +7,9 @@
 #include "UFortCampaignTeamMemberEntry.h"
 
 #include "Styling/SlateColor.h"
+#include "UCommonNumericTextBlock.h"
+#include "UCommonTextBlock.h"
 
-class UCommonNumericTextBlock;
-class UCommonTextBlock;
 class UFortPlayerPowerRating;
 class UFortVoiceChatStatusIcon;
 class UImage;

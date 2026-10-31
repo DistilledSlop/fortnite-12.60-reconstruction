@@ -7,8 +7,8 @@
 #include "UCommonUserWidget.h"
 
 #include "FFinishedDisplayingQuests.h"
+#include "UFortQuestItem.h"
 
-class UFortQuestItem;
 class UFortQuestObjectiveEntry;
 class UPanelWidget;
 

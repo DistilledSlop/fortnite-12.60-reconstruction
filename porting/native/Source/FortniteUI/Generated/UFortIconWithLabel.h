@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "Components/Widget.h"
 
-class UCommonTextStyle;
+#include "UCommonTextStyle.h"
 
 #include "UFortIconWithLabel.generated.h"
 

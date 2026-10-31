@@ -7,11 +7,11 @@
 #include "UCommonActivatableWidget.h"
 
 #include "Engine/DataTable.h"
+#include "UCommonButton.h"
+#include "UCommonButtonGroup.h"
+#include "UCommonRichTextBlock.h"
 
 class UAthenaTeamSquadsEntryBox;
-class UCommonButton;
-class UCommonButtonGroup;
-class UCommonRichTextBlock;
 class UOverlay;
 class UWidgetSwitcher;
 

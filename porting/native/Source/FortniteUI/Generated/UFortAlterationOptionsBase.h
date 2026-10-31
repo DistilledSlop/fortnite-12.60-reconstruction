@@ -6,8 +6,9 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
-class UCommonButtonGroup;
-class UFortAlterableItem;
+#include "UCommonButtonGroup.h"
+#include "UFortAlterableItem.h"
+
 class UFortAlterationOption;
 
 #include "UFortAlterationOptionsBase.generated.h"

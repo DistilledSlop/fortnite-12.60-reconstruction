@@ -6,9 +6,10 @@
 #include "CoreMinimal.h"
 #include "UCommonActivatableWidget.h"
 
-class UCommonTileView;
+#include "UCommonTileView.h"
+#include "UFortGiftBoxItemDefinition.h"
+
 class UFortGiftBoxButton;
-class UFortGiftBoxItemDefinition;
 
 #include "UFortPersonalizeGiftTab.generated.h"
 

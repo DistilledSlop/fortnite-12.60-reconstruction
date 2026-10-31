@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 
-class AFortPlayerPawn;
+#include "AFortPlayerPawn.h"
+
 class UWidgetComponent;
 
 #include "AFortItemPlacementActor.generated.h"

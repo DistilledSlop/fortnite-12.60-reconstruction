@@ -6,10 +6,11 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanelWithItemPreview.h"
 
+#include "UCommonButton.h"
+#include "UCommonTextBlock.h"
+#include "UFortItem.h"
+
 class UBattlePassViewRewardData;
-class UCommonButton;
-class UCommonTextBlock;
-class UFortItem;
 class UTileView;
 
 #include "UBattlePassViewAllRewardsScreen.generated.h"

@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
 
+#include "AFortPlayerPawn.h"
+#include "AFortPlayerStateAthena.h"
 #include "FBoolDelegate.h"
 #include "FIntDelegate.h"
 #include "FLinearColorDelegate.h"
@@ -16,9 +18,6 @@
 #include "FUInt8Delegate.h"
 #include "FWeaponDelegate.h"
 #include "GameFramework/OnlineReplStructs.h"
-
-class AFortPlayerPawn;
-class AFortPlayerStateAthena;
 
 #include "UAthenaRemotePlayerViewData.generated.h"
 

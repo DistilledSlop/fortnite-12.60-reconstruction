@@ -9,8 +9,8 @@
 #include "EFortMaterialProgressBarSectionOverflowBehavior.h"
 #include "FFortMaterialProgressBarSectionInfo.h"
 #include "Math/Color.h"
+#include "UCommonBorder.h"
 
-class UCommonBorder;
 class UFortMaterialProgressBarStyle;
 class UMaterialInstanceDynamic;
 

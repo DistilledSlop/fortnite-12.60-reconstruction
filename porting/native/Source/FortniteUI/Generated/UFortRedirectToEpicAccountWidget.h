@@ -7,9 +7,8 @@
 #include "UCommonActivatablePanel.h"
 
 #include "FPlatformSupportDesc.h"
-
-class UCommonButton;
-class UCommonTextBlock;
+#include "UCommonButton.h"
+#include "UCommonTextBlock.h"
 
 #include "UFortRedirectToEpicAccountWidget.generated.h"
 

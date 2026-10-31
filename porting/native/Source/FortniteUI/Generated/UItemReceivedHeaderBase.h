@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 
-class UFortGiftBoxItem;
+#include "UFortGiftBoxItem.h"
 
 #include "UItemReceivedHeaderBase.generated.h"
 

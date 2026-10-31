@@ -7,8 +7,8 @@
 #include "UCommonActivatableWidget.h"
 
 #include "FOnAboutModalClosedDynamic.h"
+#include "UCommonButton.h"
 
-class UCommonButton;
 class UFortLazyImage;
 class UObject;
 class UScrollBox;

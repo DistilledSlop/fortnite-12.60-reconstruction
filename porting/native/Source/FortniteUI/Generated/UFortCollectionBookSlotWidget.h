@@ -7,8 +7,8 @@
 #include "UCommonUserWidget.h"
 
 #include "EFortItemCardSize.h"
+#include "UFortItem.h"
 
-class UFortItem;
 class UFortMultiSizeItemCard;
 class UWidget;
 

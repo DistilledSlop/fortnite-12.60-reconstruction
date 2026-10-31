@@ -7,8 +7,7 @@
 #include "UFortActivatablePanel.h"
 
 #include "FOnFinalGiftingComplete.h"
-
-class UFortGiftBoxItem;
+#include "UFortGiftBoxItem.h"
 
 #include "UFortMessageReceivedScreen.generated.h"
 

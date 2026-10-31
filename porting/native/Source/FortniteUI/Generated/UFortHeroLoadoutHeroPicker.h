@@ -7,9 +7,9 @@
 #include "UFortItemPickerBase.h"
 
 #include "FFortTabButtonLabelInfo.h"
+#include "UCommonButton.h"
+#include "UFortCampaignHeroLoadoutItem.h"
 
-class UCommonButton;
-class UFortCampaignHeroLoadoutItem;
 class UFortTabListWidgetBase;
 
 #include "UFortHeroLoadoutHeroPicker.generated.h"

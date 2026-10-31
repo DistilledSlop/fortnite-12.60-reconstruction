@@ -7,9 +7,9 @@
 #include "UCommonButton.h"
 
 #include "GameplayTagContainer.h"
+#include "UFortItem.h"
 
 class UFortCosmeticItemCard;
-class UFortItem;
 class UImage;
 class UTexture2D;
 

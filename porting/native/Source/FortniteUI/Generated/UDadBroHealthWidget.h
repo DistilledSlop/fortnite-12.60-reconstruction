@@ -6,8 +6,8 @@
 #include "CoreMinimal.h"
 #include "ULTMWidgetBase.h"
 
-class AFortAIPawn;
-class AFortAthenaMutator_DadBro;
+#include "AFortAIPawn.h"
+#include "AFortAthenaMutator_DadBro.h"
 
 #include "UDadBroHealthWidget.generated.h"
 

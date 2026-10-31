@@ -6,8 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortItemPickerBase.h"
 
-class UFortCampaignHeroLoadoutItem;
-class UFortItem;
+#include "UFortCampaignHeroLoadoutItem.h"
+#include "UFortItem.h"
 
 #include "UFortHeroLoadoutGadgetPicker.generated.h"
 

@@ -6,8 +6,9 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "UFortUINotification.h"
+
 class UFortFriendSubscriptionToastWidget;
-class UFortUINotification;
 class UFortUINotificationQueue;
 class UFortVoiceChannelChangePopup;
 

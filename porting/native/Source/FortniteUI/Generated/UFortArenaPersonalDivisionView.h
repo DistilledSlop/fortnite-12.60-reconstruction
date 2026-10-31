@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortShowdownDivisionEventView.h"
 
-class UCommonTextBlock;
+#include "UCommonTextBlock.h"
+
 class UFortLazyImage;
 class UProgressBar;
 

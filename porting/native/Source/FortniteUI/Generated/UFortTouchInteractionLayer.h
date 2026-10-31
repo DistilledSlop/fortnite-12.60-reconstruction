@@ -6,13 +6,13 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "AFortPlayerController.h"
 #include "Blueprint/UserWidgetPool.h"
 #include "FButtonInteractionPair.h"
+#include "UFortControllerComponent_Interaction.h"
 
 class AActor;
-class AFortPlayerController;
 class UCanvasPanel;
-class UFortControllerComponent_Interaction;
 class UFortTouchInteractionButton;
 
 #include "UFortTouchInteractionLayer.generated.h"

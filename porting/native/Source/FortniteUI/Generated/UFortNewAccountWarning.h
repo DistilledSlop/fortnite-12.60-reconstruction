@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonActivatablePanel.h"
 
-class UCommonButton;
+#include "UCommonButton.h"
 
 #include "UFortNewAccountWarning.generated.h"
 

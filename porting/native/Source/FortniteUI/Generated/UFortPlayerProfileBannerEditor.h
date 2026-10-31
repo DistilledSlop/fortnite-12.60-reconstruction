@@ -7,8 +7,7 @@
 #include "UCommonUserWidget.h"
 
 #include "ESaveProfileForBanners.h"
-
-class UCommonButton;
+#include "UCommonButton.h"
 
 #include "UFortPlayerProfileBannerEditor.generated.h"
 

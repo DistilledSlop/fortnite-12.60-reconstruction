@@ -7,9 +7,9 @@
 #include "UCommonActivatableWidget.h"
 
 #include "Engine/DataTable.h"
+#include "UCommonTextBlock.h"
 
 class UCanvasPanel;
-class UCommonTextBlock;
 class UFortReplayTimelineMarker;
 class UOverlay;
 class UProgressBar;

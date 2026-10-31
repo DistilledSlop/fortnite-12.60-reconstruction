@@ -6,8 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
-class UCommonBorder;
-class UCommonTextBlock;
+#include "UCommonBorder.h"
+#include "UCommonTextBlock.h"
 
 #include "UFortAthenaNewsTile.generated.h"
 

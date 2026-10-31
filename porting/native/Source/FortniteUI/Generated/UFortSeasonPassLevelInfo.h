@@ -6,9 +6,9 @@
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
 
-class AFortPlayerController;
-class UAthenaSeasonItemDefinition;
-class UFortItem;
+#include "AFortPlayerController.h"
+#include "UAthenaSeasonItemDefinition.h"
+#include "UFortItem.h"
 
 #include "UFortSeasonPassLevelInfo.generated.h"
 

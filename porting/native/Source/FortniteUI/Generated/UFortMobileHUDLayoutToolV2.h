@@ -9,9 +9,9 @@
 #include "FFortMobileHUDLayoutProfile.h"
 #include "FHUDLayoutToolV2_PopupContent.h"
 #include "FHUDLayoutToolV2_ToastNotificationContent.h"
+#include "UCommonTextBlock.h"
 
 class UCanvasPanel;
-class UCommonTextBlock;
 class UFortMobileHUDElementProxy;
 class UFortMobileHUDLayer;
 class UFortMobileHUDLayoutToolV2_ControlPanel;

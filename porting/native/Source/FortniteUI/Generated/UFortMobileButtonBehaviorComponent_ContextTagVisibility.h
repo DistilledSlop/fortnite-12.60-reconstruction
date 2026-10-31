@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortMobileButtonBehaviorComponent_TagVisibility.h"
 
-class UFortControllerComponent_InputContextTracker;
+#include "UFortControllerComponent_InputContextTracker.h"
 
 #include "UFortMobileButtonBehaviorComponent_ContextTagVisibility.generated.h"
 

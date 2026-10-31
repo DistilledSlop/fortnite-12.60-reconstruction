@@ -7,11 +7,11 @@
 #include "UFortCompetitiveLeaderboardScreen.h"
 
 #include "Engine/DataTable.h"
+#include "UCommonActionWidget.h"
+#include "UCommonActivatableWidgetSwitcher.h"
+#include "UCommonButton.h"
+#include "UCommonButtonGroup.h"
 
-class UCommonActionWidget;
-class UCommonActivatableWidgetSwitcher;
-class UCommonButton;
-class UCommonButtonGroup;
 class UDynamicEntryBox;
 class UFortArenaPersonalViewTab;
 

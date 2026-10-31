@@ -11,10 +11,10 @@
 #include "FOnBookPageClicked.h"
 #include "FOnBookPageSelected.h"
 #include "FOnBookSectionClicked.h"
+#include "UCommonTileView.h"
+#include "UFortCollectionBookSection.h"
 
-class UCommonTileView;
 class UFortCollectionBookOverviewWidget;
-class UFortCollectionBookSection;
 
 #include "UFortCollectionBookPrimaryPanel.generated.h"
 

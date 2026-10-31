@@ -6,10 +6,10 @@
 #include "CoreMinimal.h"
 #include "UFortHUDElementWidget.h"
 
-class AFortGameStateAthena;
-class AFortMinigame;
-class AFortVolume;
-class AFortVolumeManager;
+#include "AFortGameStateAthena.h"
+#include "AFortMinigame.h"
+#include "AFortVolume.h"
+#include "AFortVolumeManager.h"
 
 #include "UMinigameWidgetBase.generated.h"
 

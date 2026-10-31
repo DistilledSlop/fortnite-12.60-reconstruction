@@ -6,8 +6,9 @@
 #include "CoreMinimal.h"
 #include "UCommonButton.h"
 
+#include "UCommonTextBlock.h"
+
 class UAthenaChallengeCountdownDisplay;
-class UCommonTextBlock;
 
 #include "UDonutChallengeEntryHeader.generated.h"
 

@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanel.h"
 
-class UCommonButton;
+#include "UCommonButton.h"
 
 #include "UFortFriendLinkPanel.generated.h"
 

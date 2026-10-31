@@ -7,9 +7,9 @@
 #include "UCommonButton.h"
 
 #include "FOnKnobEntryEditWidgetStateChanged.h"
+#include "UCommonTextBlock.h"
+#include "UCommonWidgetSwitcher.h"
 
-class UCommonTextBlock;
-class UCommonWidgetSwitcher;
 class UCreativePropertyEditWidgetBase;
 class UPanelWidget;
 class UUserWidget;

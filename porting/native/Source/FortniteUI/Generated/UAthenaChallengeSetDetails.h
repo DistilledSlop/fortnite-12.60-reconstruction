@@ -6,11 +6,12 @@
 #include "CoreMinimal.h"
 #include "UAthenaChallengeSetBaseDetails.h"
 
+#include "UCommonButton.h"
+#include "UCommonTextBlock.h"
+
 class UAthenaChallengeCountdownDisplay;
 class UAthenaChallengeDetailBase;
 class UAthenaChallengeProgressBar;
-class UCommonButton;
-class UCommonTextBlock;
 class UFortItemBaseWidget;
 class UFortSwipePanel;
 class USizeBox;

@@ -6,9 +6,9 @@
 #include "CoreMinimal.h"
 #include "UAthenaPlayerViewModel.h"
 
-class AFortPlayerControllerAthena;
-class AFortPlayerPawn;
-class UAthenaIndicatorPlayersCache;
+#include "AFortPlayerControllerAthena.h"
+#include "AFortPlayerPawn.h"
+#include "UAthenaIndicatorPlayersCache.h"
 
 #include "UAthenaLocalPlayerViewModel.generated.h"
 

@@ -6,9 +6,9 @@
 #include "CoreMinimal.h"
 #include "UBlueprintContextBase.h"
 
+#include "AFortPlayerControllerSpectating.h"
 #include "GameFramework/OnlineReplStructs.h"
 
-class AFortPlayerControllerSpectating;
 class UAthenaRemotePlayerViewData;
 class UAthenaRemoteSquadViewData;
 

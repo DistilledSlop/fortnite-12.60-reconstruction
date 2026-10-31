@@ -6,8 +6,8 @@
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
 
-class UFortChallengeBundleItemDefinition;
-class UFortQuestItem;
+#include "UFortChallengeBundleItemDefinition.h"
+#include "UFortQuestItem.h"
 
 #include "UImageGridObject.generated.h"
 

@@ -6,8 +6,9 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "UCommonTextBlock.h"
+
 class UAthenaRewardItemTypeRarityTag;
-class UCommonTextBlock;
 class UOverlay;
 
 #include "UFortItemInfoPresentationWidget.generated.h"

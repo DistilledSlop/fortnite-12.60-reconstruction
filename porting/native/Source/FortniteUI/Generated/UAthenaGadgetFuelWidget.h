@@ -6,8 +6,9 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
-class UAthenaGadgetItemDefinition;
-class UCommonNumericTextBlock;
+#include "UAthenaGadgetItemDefinition.h"
+#include "UCommonNumericTextBlock.h"
+
 class UImage;
 
 #include "UAthenaGadgetFuelWidget.generated.h"

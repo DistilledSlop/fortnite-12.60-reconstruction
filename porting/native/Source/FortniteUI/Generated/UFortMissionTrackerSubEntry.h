@@ -6,10 +6,9 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "AFortObjectiveBase.h"
 #include "FOnMissionSubEntryVisibilityChanged.h"
 #include "FOnSizeEstimateChanged.h"
-
-class AFortObjectiveBase;
 
 #include "UFortMissionTrackerSubEntry.generated.h"
 

@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
 
-class UCommonButton;
+#include "UCommonButton.h"
+
 class UFortDropdownMenu;
 class UMenuAnchor;
 

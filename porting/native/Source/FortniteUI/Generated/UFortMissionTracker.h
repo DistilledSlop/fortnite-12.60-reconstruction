@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortHUDElementWidget.h"
 
-class UCommonNumericTextBlock;
+#include "UCommonNumericTextBlock.h"
+
 class UFortMissionTrackerList;
 class UFortQuestTrackerList;
 class UWidget;

@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "ULTMWidgetBase.h"
 
-class AFortAthenaMutator_PerkSystemMutator;
+#include "AFortAthenaMutator_PerkSystemMutator.h"
 
 #include "UPerkAvailableAlertBaseWidget.generated.h"
 

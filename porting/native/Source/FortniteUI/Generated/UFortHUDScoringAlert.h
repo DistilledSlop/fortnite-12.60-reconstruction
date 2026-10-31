@@ -6,8 +6,9 @@
 #include "CoreMinimal.h"
 #include "UFortHUDElementWidget.h"
 
-class UCommonLazyImage;
-class UCommonTextBlock;
+#include "UCommonLazyImage.h"
+#include "UCommonTextBlock.h"
+
 class UDataTable;
 class UFortHUDPointCounter;
 class UFortTournamentAbandonMatchDialog;

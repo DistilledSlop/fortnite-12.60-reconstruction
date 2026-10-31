@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 
-class UCommonButton;
+#include "UCommonButton.h"
 
 #include "UCreativePropertyEditWidgetBase.generated.h"
 

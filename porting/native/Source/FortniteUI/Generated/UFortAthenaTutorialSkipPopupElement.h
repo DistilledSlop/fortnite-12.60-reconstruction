@@ -7,8 +7,8 @@
 #include "Blueprint/UserWidget.h"
 
 #include "Styling/SlateBrush.h"
+#include "UCommonTextBlock.h"
 
-class UCommonTextBlock;
 class UImage;
 
 #include "UFortAthenaTutorialSkipPopupElement.generated.h"

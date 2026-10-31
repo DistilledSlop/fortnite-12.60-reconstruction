@@ -6,9 +6,10 @@
 #include "CoreMinimal.h"
 #include "UCommonActivatableWidget.h"
 
+#include "UCommonButton.h"
+#include "UCommonTextBlock.h"
+
 class UBattlePassLeaderboardListView;
-class UCommonButton;
-class UCommonTextBlock;
 
 #include "UBattlePassLeaderboard.generated.h"
 

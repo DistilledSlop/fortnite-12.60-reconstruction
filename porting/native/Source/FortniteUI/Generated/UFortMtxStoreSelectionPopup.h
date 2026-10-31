@@ -6,8 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonActivatablePanel.h"
 
-class UCommonButton;
-class UCommonWidgetSwitcher;
+#include "UCommonButton.h"
+#include "UCommonWidgetSwitcher.h"
 
 #include "UFortMtxStoreSelectionPopup.generated.h"
 

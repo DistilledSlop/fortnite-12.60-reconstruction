@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanel.h"
 
-class UCommonListView;
+#include "UCommonListView.h"
 
 #include "UFortInfoWindow.generated.h"
 

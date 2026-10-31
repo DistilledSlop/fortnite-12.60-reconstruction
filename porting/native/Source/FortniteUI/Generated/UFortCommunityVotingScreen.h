@@ -7,9 +7,9 @@
 #include "UFortActivatablePanel.h"
 
 #include "Engine/DataTable.h"
+#include "UCommonButton.h"
+#include "UCommonWidgetSwitcher.h"
 
-class UCommonButton;
-class UCommonWidgetSwitcher;
 class UDynamicEntryBox;
 class UFortCommunityVotingAvailableVotesWidget;
 class UFortCommunityVotingCountdown;

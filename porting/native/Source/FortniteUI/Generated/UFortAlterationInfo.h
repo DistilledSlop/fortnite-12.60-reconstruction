@@ -6,8 +6,8 @@
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
 
-class UFortAlterationItemDefinition;
-class UFortItem;
+#include "UFortAlterationItemDefinition.h"
+#include "UFortItem.h"
 
 #include "UFortAlterationInfo.generated.h"
 

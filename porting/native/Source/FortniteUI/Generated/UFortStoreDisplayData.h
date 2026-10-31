@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "Engine/DataAsset.h"
 
-class UCommonActivatableWidget;
+#include "UCommonActivatableWidget.h"
 
 #include "UFortStoreDisplayData.generated.h"
 

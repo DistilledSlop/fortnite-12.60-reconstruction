@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortHUDElementWidget.h"
 
-class UCommonTextBlock;
+#include "UCommonTextBlock.h"
 
 #include "UAthenaRespawnTimer.generated.h"
 

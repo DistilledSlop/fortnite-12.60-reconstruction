@@ -7,8 +7,8 @@
 #include "Components/Overlay.h"
 
 #include "Blueprint/UserWidgetPool.h"
+#include "UAthenaChallengeIndicatorCache.h"
 
-class UAthenaChallengeIndicatorCache;
 class UAthenaMapNavigableIconSingleChallenge;
 class UAthenaMapNavigableIconStackOfChallenges;
 class UAthenaMapNavigableIconStackOfNoLocationChallenges;

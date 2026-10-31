@@ -7,8 +7,7 @@
 #include "UCommonUserWidget.h"
 
 #include "FOnAllExpeditionsCollected.h"
-
-class UCommonTileView;
+#include "UCommonTileView.h"
 
 #include "UFortExpeditionRewardsWidget.generated.h"
 

@@ -6,12 +6,11 @@
 #include "CoreMinimal.h"
 #include "UBlueprintContextBase.h"
 
+#include "AFortCreativeMoveTool.h"
 #include "FOnCreativeQuickMenuDisplayedChanged.h"
 #include "FOnGenericBooleanStateChangedEvent.h"
 #include "FOnGenericCountDownEvent.h"
 #include "FOnMoveToolEquippedChanged.h"
-
-class AFortCreativeMoveTool;
 
 #include "UCreativeHUDLContext.generated.h"
 

@@ -7,10 +7,9 @@
 #include "UCommonUserWidget.h"
 
 #include "EFortAlterationWidgetState.h"
-
-class UCommonButtonGroup;
-class UCommonTextBlock;
-class UFortItem;
+#include "UCommonButtonGroup.h"
+#include "UCommonTextBlock.h"
+#include "UFortItem.h"
 
 #include "UFortAlterationsWidget.generated.h"
 

@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
-class AFortClientAnnouncement;
+#include "AFortClientAnnouncement.h"
 
 #include "UFortAnnouncementWidget.generated.h"
 

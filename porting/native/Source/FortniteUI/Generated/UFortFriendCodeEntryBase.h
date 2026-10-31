@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortMobileShareButton.h"
 
-class UCommonTextBlock;
+#include "UCommonTextBlock.h"
 
 #include "UFortFriendCodeEntryBase.generated.h"
 

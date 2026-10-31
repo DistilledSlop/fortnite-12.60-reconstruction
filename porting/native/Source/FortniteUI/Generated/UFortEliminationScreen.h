@@ -6,8 +6,9 @@
 #include "CoreMinimal.h"
 #include "UFortPostGameScreen.h"
 
+#include "UCommonPopupButton.h"
+
 class UAthenaLastKillerInfoWidget;
-class UCommonPopupButton;
 class UFeedbackReportPlayerBase;
 class UFortPlayerFeedbackModal;
 

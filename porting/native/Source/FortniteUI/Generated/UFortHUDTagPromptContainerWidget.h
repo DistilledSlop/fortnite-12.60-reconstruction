@@ -9,8 +9,8 @@
 #include "FFortPrioritizedWidgetData.h"
 #include "FOnOpenOrClosed.h"
 #include "GameplayTagContainer.h"
+#include "UFortHUDTagPromptTagMapping.h"
 
-class UFortHUDTagPromptTagMapping;
 class UOverlay;
 
 #include "UFortHUDTagPromptContainerWidget.generated.h"

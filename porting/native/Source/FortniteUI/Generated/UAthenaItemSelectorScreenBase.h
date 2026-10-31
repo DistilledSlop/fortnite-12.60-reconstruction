@@ -7,12 +7,12 @@
 #include "UFortActivatablePanelWithItemPreview.h"
 
 #include "FFortTabButtonLabelInfo.h"
+#include "UAthenaCosmeticItemDefinition.h"
+#include "UCommonButton.h"
+#include "UFortItem.h"
 
-class UAthenaCosmeticItemDefinition;
 class UAthenaCosmeticUnlockingInfo;
 class UAthenaCustomizationPicker;
-class UCommonButton;
-class UFortItem;
 class UFortItemBaseWidget;
 class UFortVariantPicker;
 class UVerticalBox;

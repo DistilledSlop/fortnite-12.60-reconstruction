@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UAthenaLoadingScreenPreviewPanelBase.h"
 
-class UFortPlaylistAthena;
+#include "UFortPlaylistAthena.h"
 
 #include "UApolloIntroLoadingPanel.generated.h"
 

@@ -7,10 +7,10 @@
 #include "UFortActivatablePanel.h"
 
 #include "FFortConfirmationButtonInfo.h"
+#include "UCommonButton.h"
+#include "UCommonLoadGuard.h"
+#include "UCommonTextBlock.h"
 
-class UCommonButton;
-class UCommonLoadGuard;
-class UCommonTextBlock;
 class UDynamicEntryBox;
 class UImage;
 class UPanelWidget;

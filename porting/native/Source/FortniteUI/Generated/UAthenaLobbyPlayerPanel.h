@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortLobbyPlayerPanel.h"
 
-class UCommonButton;
+#include "UCommonButton.h"
+
 class UFortCosmeticLoadoutSelector;
 class UTextBlock;
 

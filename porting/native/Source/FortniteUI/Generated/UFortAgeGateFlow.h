@@ -6,11 +6,12 @@
 #include "CoreMinimal.h"
 #include "UCommonActivatablePanel.h"
 
+#include "UCommonButton.h"
+#include "UCommonRichTextBlock.h"
+#include "UCommonTextBlock.h"
+#include "UCommonWidgetSwitcher.h"
+
 class UComboBoxString;
-class UCommonButton;
-class UCommonRichTextBlock;
-class UCommonTextBlock;
-class UCommonWidgetSwitcher;
 class UEditableText;
 class UWidget;
 

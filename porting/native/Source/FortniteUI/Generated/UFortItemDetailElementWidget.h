@@ -7,8 +7,7 @@
 #include "UCommonUserWidget.h"
 
 #include "EFortItemInspectionMode.h"
-
-class UFortItem;
+#include "UFortItem.h"
 
 #include "UFortItemDetailElementWidget.generated.h"
 

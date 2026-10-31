@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UPerkIntroScreenWidget.h"
 
-class AFortGameplayMutator;
+#include "AFortGameplayMutator.h"
 
 #include "UInfiltrationRoundInfoWidget.generated.h"
 

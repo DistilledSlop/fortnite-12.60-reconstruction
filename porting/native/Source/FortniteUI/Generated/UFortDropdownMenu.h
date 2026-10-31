@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonPopupMenu.h"
 
-class UCommonButtonGroup;
+#include "UCommonButtonGroup.h"
 
 #include "UFortDropdownMenu.generated.h"
 

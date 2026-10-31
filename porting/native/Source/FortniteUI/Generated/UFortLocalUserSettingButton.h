@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonButton.h"
 
-class UCommonRichTextBlock;
+#include "UCommonRichTextBlock.h"
+
 class UImage;
 
 #include "UFortLocalUserSettingButton.generated.h"

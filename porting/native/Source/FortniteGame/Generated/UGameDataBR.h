@@ -8,6 +8,7 @@
 
 #include "FGameplayTagMessage.h"
 #include "FSettingsHUDVisibilityAndText.h"
+#include "UGameStateComponent.h"
 #include "UObject/NoExportTypes.h"
 
 class AFortAIDirector;
@@ -29,7 +30,6 @@ class UFortPlayerGliderAnimSet;
 class UFortRespawnDataTable;
 class UFortUIFeedbackBank;
 class UFortWeaponPickupSpawnAmmoData;
-class UGameStateComponent;
 class UPoiNamedWeights;
 class UReverbEffect;
 class USoundMix;

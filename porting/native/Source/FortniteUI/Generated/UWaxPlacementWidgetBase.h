@@ -6,9 +6,8 @@
 #include "CoreMinimal.h"
 #include "ULTMWidgetBase.h"
 
+#include "AFortAthenaMutator_Wax.h"
 #include "FWaxPlacementData.h"
-
-class AFortAthenaMutator_Wax;
 
 #include "UWaxPlacementWidgetBase.generated.h"
 

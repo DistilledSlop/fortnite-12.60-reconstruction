@@ -6,9 +6,10 @@
 #include "CoreMinimal.h"
 #include "UCommonActivatablePanel.h"
 
-class UCommonLoadGuard;
-class UCommonTileView;
-class UFortItemDefinition;
+#include "UCommonLoadGuard.h"
+#include "UCommonTileView.h"
+#include "UFortItemDefinition.h"
+
 class UFortTabListWidgetBase;
 class UFortUpgradeDetailsBase;
 

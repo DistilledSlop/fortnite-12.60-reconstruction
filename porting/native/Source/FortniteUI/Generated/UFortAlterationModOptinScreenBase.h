@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonActivatablePanel.h"
 
-class UFortItem;
+#include "UFortItem.h"
 
 #include "UFortAlterationModOptinScreenBase.generated.h"
 

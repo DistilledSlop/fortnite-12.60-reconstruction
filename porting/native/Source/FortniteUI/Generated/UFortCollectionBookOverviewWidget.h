@@ -8,10 +8,9 @@
 
 #include "FOnCollectionBookPageClicked.h"
 #include "FOnCollectionBookPageSelected.h"
-
-class UCommonTreeView;
-class UFortCollectionBookCategory;
-class UFortCollectionBookPage;
+#include "UCommonTreeView.h"
+#include "UFortCollectionBookCategory.h"
+#include "UFortCollectionBookPage.h"
 
 #include "UFortCollectionBookOverviewWidget.generated.h"
 

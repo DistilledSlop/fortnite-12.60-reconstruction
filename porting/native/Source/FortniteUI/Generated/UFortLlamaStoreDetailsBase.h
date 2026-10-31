@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
-class UCommonTileView;
+#include "UCommonTileView.h"
+
 class UFortStoreFrontOfferInfo;
 
 #include "UFortLlamaStoreDetailsBase.generated.h"

@@ -7,8 +7,7 @@
 #include "UObject/Object.h"
 
 #include "EFortLoadoutCardType.h"
-
-class UFortCosmeticLockerItem;
+#include "UFortCosmeticLockerItem.h"
 
 #include "UFortCosmeticLoadoutListData.generated.h"
 

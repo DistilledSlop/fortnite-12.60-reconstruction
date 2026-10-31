@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 
-class UFortStatItemDefinition;
+#include "UFortStatItemDefinition.h"
 
 #include "UFortResearchStatTileWidget.generated.h"
 

@@ -7,10 +7,10 @@
 #include "UBlueprintContextBase.h"
 
 #include "FFortPlayerSurveyContextRequestDelegate.h"
+#include "UFortPlayerSurveyManager.h"
 
 class UFortPlayerSurveyCMSScheduler;
 class UFortPlayerSurveyCMSTracker;
-class UFortPlayerSurveyManager;
 
 #include "UFortPlayerSurveyContext.generated.h"
 

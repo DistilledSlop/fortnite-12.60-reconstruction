@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortHUDElementWidget.h"
 
-class UFortControllerComponent_SkydiveFeedback;
+#include "UFortControllerComponent_SkydiveFeedback.h"
 
 #include "UAthenaSkydivingInformation.generated.h"
 

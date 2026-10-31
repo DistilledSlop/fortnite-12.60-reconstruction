@@ -6,11 +6,12 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 
-class UCommonButton;
-class UCommonTextBlock;
-class UFortPlayerSurveyBase;
+#include "UCommonButton.h"
+#include "UCommonTextBlock.h"
+#include "UFortPlayerSurveyBase.h"
+#include "UFortPlayerSurveyQuestionSelector.h"
+
 class UFortPlayerSurveyQuestionDisplayWidgetBase;
-class UFortPlayerSurveyQuestionSelector;
 class URichTextBlock;
 class UTextBlock;
 class UWidgetSwitcher;

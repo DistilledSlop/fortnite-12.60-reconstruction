@@ -6,9 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "ABuildingSMActor.h"
 #include "ESpectatorBuildCountType.h"
-
-class ABuildingSMActor;
 
 #include "UAthenaSpectatorBuildCountBase.generated.h"
 

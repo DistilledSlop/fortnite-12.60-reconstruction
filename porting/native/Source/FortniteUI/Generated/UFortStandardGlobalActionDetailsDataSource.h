@@ -6,8 +6,9 @@
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
 
-class AFortPlayerController;
-class UCommonInputSubsystem;
+#include "AFortPlayerController.h"
+#include "UCommonInputSubsystem.h"
+
 class UFortGlobalUIContext;
 
 #include "UFortStandardGlobalActionDetailsDataSource.generated.h"

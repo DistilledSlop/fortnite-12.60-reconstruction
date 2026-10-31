@@ -6,8 +6,9 @@
 #include "CoreMinimal.h"
 #include "UCommonButton.h"
 
-class UCommonRichTextBlock;
-class UCommonWidgetSwitcher;
+#include "UCommonRichTextBlock.h"
+#include "UCommonWidgetSwitcher.h"
+
 class UEditableText;
 
 #include "UFortFriendSearchButton.generated.h"

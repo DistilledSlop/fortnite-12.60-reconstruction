@@ -6,8 +6,9 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
-class UAnalogSlider;
-class UCommonTextBlock;
+#include "UAnalogSlider.h"
+#include "UCommonTextBlock.h"
+
 class UHUDLayoutToolPlacementWidget;
 
 #include "UHUDLayoutToolPropertyWidget.generated.h"

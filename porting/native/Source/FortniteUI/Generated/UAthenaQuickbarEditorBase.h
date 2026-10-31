@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
-class UCommonButtonGroup;
+#include "UCommonButtonGroup.h"
 
 #include "UAthenaQuickbarEditorBase.generated.h"
 

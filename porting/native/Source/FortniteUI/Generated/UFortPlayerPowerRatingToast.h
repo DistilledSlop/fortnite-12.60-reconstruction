@@ -7,8 +7,8 @@
 #include "UCommonUserWidget.h"
 
 #include "FOnToastFinished.h"
+#include "UCommonTextBlock.h"
 
-class UCommonTextBlock;
 class UFortPlayerBanner;
 
 #include "UFortPlayerPowerRatingToast.generated.h"

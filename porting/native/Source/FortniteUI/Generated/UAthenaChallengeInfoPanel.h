@@ -8,10 +8,10 @@
 
 #include "EChallengeInfoPage.h"
 #include "Engine/DataTable.h"
+#include "UCommonTextBlock.h"
+#include "UFortPartyMember.h"
 
-class UCommonTextBlock;
 class UDynamicEntryBox;
-class UFortPartyMember;
 
 #include "UAthenaChallengeInfoPanel.generated.h"
 

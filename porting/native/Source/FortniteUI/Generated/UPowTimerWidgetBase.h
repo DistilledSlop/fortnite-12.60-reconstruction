@@ -6,9 +6,8 @@
 #include "CoreMinimal.h"
 #include "ULTMWidgetBase.h"
 
+#include "AFortAthenaMutator_Pow.h"
 #include "AttributeSet.h"
-
-class AFortAthenaMutator_Pow;
 
 #include "UPowTimerWidgetBase.generated.h"
 

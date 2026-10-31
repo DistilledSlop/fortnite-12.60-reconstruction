@@ -6,8 +6,9 @@
 #include "CoreMinimal.h"
 #include "UAthenaChallengeSetTile.h"
 
+#include "UCommonRichTextBlock.h"
+
 class UAthenaChallengeCountdownDisplay;
-class UCommonRichTextBlock;
 class UImage;
 class UWidgetSwitcher;
 

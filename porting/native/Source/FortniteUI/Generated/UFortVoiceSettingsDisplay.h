@@ -6,9 +6,10 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
-class UCommonButton;
-class UCommonRichTextBlock;
-class UCommonWidgetSwitcher;
+#include "UCommonButton.h"
+#include "UCommonRichTextBlock.h"
+#include "UCommonWidgetSwitcher.h"
+
 class UHorizontalBox;
 class UWidget;
 

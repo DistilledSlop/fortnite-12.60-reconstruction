@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanel.h"
 
-class UCommonWidgetSwitcher;
+#include "UCommonWidgetSwitcher.h"
+
 class UFortCollectionBookPrimaryPanel;
 class UFortCollectionBookProgressWidget;
 class UFortCollectionBookSectionPanel;

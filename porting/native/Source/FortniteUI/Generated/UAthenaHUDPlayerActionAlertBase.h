@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortHUDElementWidget.h"
 
-class AFortPlayerPawnAthena;
+#include "AFortPlayerPawnAthena.h"
 
 #include "UAthenaHUDPlayerActionAlertBase.generated.h"
 

@@ -6,8 +6,9 @@
 #include "CoreMinimal.h"
 #include "UFortParentalControlsSubScreen.h"
 
-class UCommonButton;
-class UCommonTextBlock;
+#include "UCommonButton.h"
+#include "UCommonTextBlock.h"
+
 class UEditableText;
 
 #include "UFortParentalControls_PinSubScreen.generated.h"

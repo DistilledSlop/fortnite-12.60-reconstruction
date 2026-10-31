@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortBasicTeamMemberEntry.h"
 
-class UCommonTextBlock;
+#include "UCommonTextBlock.h"
+
 class UFortSocialAvatarIcon;
 
 #include "UAthenaSquadMemberDetailedEntry.generated.h"

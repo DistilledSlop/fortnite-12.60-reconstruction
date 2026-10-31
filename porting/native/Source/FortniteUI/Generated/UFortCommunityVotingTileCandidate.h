@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 
-class UCommonLoadGuard;
+#include "UCommonLoadGuard.h"
+
 class UImage;
 
 #include "UFortCommunityVotingTileCandidate.generated.h"

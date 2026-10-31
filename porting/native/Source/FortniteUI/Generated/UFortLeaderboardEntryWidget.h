@@ -6,8 +6,9 @@
 #include "CoreMinimal.h"
 #include "UCommonButton.h"
 
-class UCommonBorder;
-class UCommonTextBlock;
+#include "UCommonBorder.h"
+#include "UCommonTextBlock.h"
+
 class UImage;
 class UObject;
 class USocialUser;

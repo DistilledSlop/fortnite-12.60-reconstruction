@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortIconWithLabel.h"
 
-class UFortItem;
+#include "UFortItem.h"
 
 #include "UFortItemCategoryIndicator.generated.h"
 

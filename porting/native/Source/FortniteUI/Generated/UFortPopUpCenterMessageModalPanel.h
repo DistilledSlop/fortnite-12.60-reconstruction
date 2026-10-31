@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanel.h"
 
-class UCommonUserWidget;
+#include "UCommonUserWidget.h"
 
 #include "UFortPopUpCenterMessageModalPanel.generated.h"
 

@@ -7,8 +7,8 @@
 #include "UCommonUserWidget.h"
 
 #include "EFortItemInspectionMode.h"
+#include "UFortItemDefinition.h"
 
-class UFortItemDefinition;
 class UFortItemQuantityListEntryBase;
 class UObject;
 

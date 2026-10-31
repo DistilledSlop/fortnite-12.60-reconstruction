@@ -8,9 +8,9 @@
 
 #include "EFortCreativeItemType.h"
 #include "FOnFocusChangedDelegate.h"
+#include "UFortItemDefinition.h"
 
 class UAthenaQuickbarEditorBase;
-class UFortItemDefinition;
 class UWidgetSwitcher;
 
 #include "UFortCreativeMenuQuickbar.generated.h"

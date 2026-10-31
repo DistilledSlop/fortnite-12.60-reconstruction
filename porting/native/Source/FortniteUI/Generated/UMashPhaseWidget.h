@@ -6,8 +6,8 @@
 #include "CoreMinimal.h"
 #include "ULTMWidgetBase.h"
 
-class AFortAthenaMutator_Mash;
-class AFortPlayerControllerAthena;
+#include "AFortAthenaMutator_Mash.h"
+#include "AFortPlayerControllerAthena.h"
 
 #include "UMashPhaseWidget.generated.h"
 

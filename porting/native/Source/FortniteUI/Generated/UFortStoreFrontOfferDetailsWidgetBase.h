@@ -7,10 +7,10 @@
 #include "UFortActivatablePanelWithItemPreview.h"
 
 #include "Engine/DataTable.h"
+#include "UCommonButton.h"
+#include "UCommonTextBlock.h"
+#include "UFortItem.h"
 
-class UCommonButton;
-class UCommonTextBlock;
-class UFortItem;
 class UFortProgressModal;
 class UFortPurchaseOverlayModal;
 class UFortStoreFrontOfferInfo;

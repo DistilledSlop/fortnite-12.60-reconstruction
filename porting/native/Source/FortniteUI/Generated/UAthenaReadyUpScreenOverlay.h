@@ -6,11 +6,12 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "UCommonButton.h"
+#include "UCommonTextBlock.h"
+#include "UCommonWidgetSwitcher.h"
+
 class UAthenaIGMPartyMemberWidget;
 class UAthenaPreserveSquadButton;
-class UCommonButton;
-class UCommonTextBlock;
-class UCommonWidgetSwitcher;
 class UFortAthenaMatchmakingWidgetLegacy;
 class UOverlay;
 class UPanelWidget;

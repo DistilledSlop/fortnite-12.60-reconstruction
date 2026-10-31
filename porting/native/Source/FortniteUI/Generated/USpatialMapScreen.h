@@ -7,6 +7,9 @@
 #include "UAthenaSpatialScreen.h"
 
 #include "GameplayTagContainer.h"
+#include "UCommonBoundActionBar.h"
+#include "UCommonButton.h"
+#include "UFortQuestItemDefinition.h"
 
 class UAthenaChallengeCountdownDisplay;
 class UAthenaChallengePageRotator;
@@ -16,10 +19,7 @@ class UAthenaFrontEndMapIconsOverlay;
 class UAthenaMapChallengeCategoryRotator;
 class UAthenaMapChallengeListView;
 class UAthenaMapChallengeRewardPreview;
-class UCommonBoundActionBar;
-class UCommonButton;
 class UFortItemBaseWidget;
-class UFortQuestItemDefinition;
 class UImage;
 class USpatialMapPreviewScreen;
 class UVerticalBox;

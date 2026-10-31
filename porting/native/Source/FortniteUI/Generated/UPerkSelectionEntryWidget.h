@@ -7,8 +7,7 @@
 #include "UCommonUserWidget.h"
 
 #include "FOnPerkSelected.h"
-
-class UFortSpyTechItemDefinition;
+#include "UFortSpyTechItemDefinition.h"
 
 #include "UPerkSelectionEntryWidget.generated.h"
 

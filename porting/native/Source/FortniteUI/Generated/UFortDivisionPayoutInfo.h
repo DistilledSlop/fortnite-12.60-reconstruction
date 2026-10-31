@@ -6,8 +6,9 @@
 #include "CoreMinimal.h"
 #include "UFortShowdownDivisionEventView.h"
 
-class UCommonButton;
-class UCommonTextBlock;
+#include "UCommonButton.h"
+#include "UCommonTextBlock.h"
+
 class UDataTable;
 class UDynamicEntryBox;
 

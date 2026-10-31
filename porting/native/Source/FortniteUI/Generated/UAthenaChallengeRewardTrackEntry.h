@@ -6,8 +6,9 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "UFortItemDefinition.h"
+
 class UAthenaChallengeRewardDisplayEntry;
-class UFortItemDefinition;
 class UImage;
 
 #include "UAthenaChallengeRewardTrackEntry.generated.h"

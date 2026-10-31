@@ -6,8 +6,9 @@
 #include "CoreMinimal.h"
 #include "UMinigameWidgetBase.h"
 
+#include "UFortMinigameStatFilter.h"
+
 class UFortDynamicEntryBox;
-class UFortMinigameStatFilter;
 class UMinigameHUD_SpectatorLeaderboardEntry;
 
 #include "UMinigameHUD_SpectatorLeaderboard.generated.h"

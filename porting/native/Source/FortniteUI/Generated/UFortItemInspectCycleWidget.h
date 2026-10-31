@@ -8,8 +8,8 @@
 
 #include "Engine/DataTable.h"
 #include "FOnItemToRepresentChanged.h"
+#include "UFortItem.h"
 
-class UFortItem;
 class UFortItemTileView;
 
 #include "UFortItemInspectCycleWidget.generated.h"

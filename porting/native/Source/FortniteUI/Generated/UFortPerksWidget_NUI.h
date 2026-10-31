@@ -7,12 +7,12 @@
 #include "UCommonUserWidget.h"
 
 #include "EFortPerksWidgetState.h"
+#include "UCommonLoadGuard.h"
+#include "UFortHero.h"
+#include "UFortTooltipContext.h"
 
-class UCommonLoadGuard;
-class UFortHero;
 class UFortPerkTierWidget_NUI;
 class UFortPerkWidget_NUI;
-class UFortTooltipContext;
 
 #include "UFortPerksWidget_NUI.generated.h"
 

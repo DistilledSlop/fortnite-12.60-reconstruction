@@ -7,10 +7,10 @@
 #include "UFortActivatablePanel.h"
 
 #include "Engine/DataTable.h"
+#include "UCommonButton.h"
+#include "UCommonButtonGroup.h"
+#include "UCommonTextBlock.h"
 
-class UCommonButton;
-class UCommonButtonGroup;
-class UCommonTextBlock;
 class UFortPersistentLeaderboardScreen;
 class UFortShowdownTournamentTile;
 class UFortTournamentModal;

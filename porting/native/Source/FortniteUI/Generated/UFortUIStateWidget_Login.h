@@ -6,8 +6,9 @@
 #include "CoreMinimal.h"
 #include "UFortUIStateWidgetBase.h"
 
-class UCommonButton;
-class UCommonWidgetSwitcher;
+#include "UCommonButton.h"
+#include "UCommonWidgetSwitcher.h"
+
 class UFortLoginInteractions;
 class UFortLoginStatus;
 class UFortSafeZoneEditor;

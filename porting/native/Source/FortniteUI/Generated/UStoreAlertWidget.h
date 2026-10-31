@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
-class UCatalogMessaging;
+#include "UCatalogMessaging.h"
+
 class UStoreToastRequest;
 
 #include "UStoreAlertWidget.generated.h"

@@ -6,9 +6,10 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "UCommonButton.h"
+#include "UCommonTextBlock.h"
+
 class UCanvasPanel;
-class UCommonButton;
-class UCommonTextBlock;
 class UFortQuestMapNodeLayout;
 class UFortQuestMapScreen;
 class USizeBox;

@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortServerActionTile.h"
 
-class UCommonTextBlock;
+#include "UCommonTextBlock.h"
+
 class UImage;
 
 #include "UFortNamedServerActionTile.generated.h"

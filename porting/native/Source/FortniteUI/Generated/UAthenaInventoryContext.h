@@ -9,8 +9,7 @@
 #include "FOnAthenaInventoryItemSelected.h"
 #include "FOnAthenaInventorySwapComplete.h"
 #include "FOnAthenaInventorySwapStarted.h"
-
-class UFortItem;
+#include "UFortItem.h"
 
 #include "UAthenaInventoryContext.generated.h"
 

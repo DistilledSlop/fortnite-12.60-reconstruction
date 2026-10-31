@@ -7,13 +7,13 @@
 #include "UFortActivatablePanel.h"
 
 #include "FCachedIslandsGroup.h"
+#include "UCommonButton.h"
+#include "UCommonButtonGroup.h"
+#include "UCommonTextBlock.h"
+#include "UCommonTileView.h"
+#include "UFortCreativeRealEstatePlotItemDefinition.h"
 
-class UCommonButton;
-class UCommonButtonGroup;
-class UCommonTextBlock;
-class UCommonTileView;
 class UFortCreativeIslandLink;
-class UFortCreativeRealEstatePlotItemDefinition;
 
 #include "UFortCreativeIslandGeneration.generated.h"
 

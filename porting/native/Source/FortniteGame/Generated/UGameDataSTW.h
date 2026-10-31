@@ -19,6 +19,7 @@
 #include "FQuickBarData.h"
 #include "FSettingsHUDVisibilityAndText.h"
 #include "GameplayTagContainer.h"
+#include "UGameStateComponent.h"
 
 class AFortAIDirector;
 class AFortAIGoalManager;
@@ -61,7 +62,6 @@ class UFortUIFeedbackBank;
 class UFortUINotification;
 class UFortWeaponMeleeItemDefinition;
 class UFortWorldItemDefinition;
-class UGameStateComponent;
 class UGameplayEffect;
 class UMyTownData;
 class USoundBase;

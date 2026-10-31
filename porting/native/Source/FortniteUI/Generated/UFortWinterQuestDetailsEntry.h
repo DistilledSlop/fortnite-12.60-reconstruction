@@ -6,8 +6,9 @@
 #include "CoreMinimal.h"
 #include "UCommonButton.h"
 
+#include "UFortItem.h"
+
 class UFortCosmeticItemCard;
-class UFortItem;
 
 #include "UFortWinterQuestDetailsEntry.generated.h"
 

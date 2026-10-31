@@ -8,10 +8,10 @@
 
 #include "Layout/Margin.h"
 #include "Types/SlateEnums.h"
+#include "UCommonTextBlock.h"
+#include "UFortCollectionBookSection.h"
 
-class UCommonTextBlock;
 class UFortCollectionBookGenericRewardWidget;
-class UFortCollectionBookSection;
 class UFortCollectionBookSlotWidget;
 class UHorizontalBox;
 

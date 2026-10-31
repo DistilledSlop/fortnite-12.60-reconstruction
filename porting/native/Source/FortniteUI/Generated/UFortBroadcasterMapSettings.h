@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonActivatableWidget.h"
 
-class UCommonUserWidget;
+#include "UCommonUserWidget.h"
 
 #include "UFortBroadcasterMapSettings.generated.h"
 

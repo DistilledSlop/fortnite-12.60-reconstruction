@@ -7,9 +7,9 @@
 #include "Blueprint/UserWidget.h"
 
 #include "EFortSupportPerkWidgetState.h"
+#include "UCommonTextBlock.h"
+#include "UFortHero.h"
 
-class UCommonTextBlock;
-class UFortHero;
 class UFortMultiSizeImage;
 
 #include "UFortHeroSupportPerkWidget.generated.h"

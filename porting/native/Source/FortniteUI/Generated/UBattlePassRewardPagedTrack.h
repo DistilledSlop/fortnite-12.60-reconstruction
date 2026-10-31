@@ -7,11 +7,11 @@
 #include "UCommonUserWidget.h"
 
 #include "FBattlePassPageData.h"
+#include "UAthenaSeasonItemDefinition.h"
+#include "UCommonButton.h"
+#include "UCommonButtonGroup.h"
+#include "UCommonRichTextBlock.h"
 
-class UAthenaSeasonItemDefinition;
-class UCommonButton;
-class UCommonButtonGroup;
-class UCommonRichTextBlock;
 class UDynamicEntryBox;
 class UFortBattlePassReward;
 

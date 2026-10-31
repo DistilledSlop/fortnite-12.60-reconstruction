@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortHUDElementWidget.h"
 
-class AFortCharacterVehicle_Ostrich;
+#include "AFortCharacterVehicle_Ostrich.h"
 
 #include "UOstrichReticleDecorator.generated.h"
 

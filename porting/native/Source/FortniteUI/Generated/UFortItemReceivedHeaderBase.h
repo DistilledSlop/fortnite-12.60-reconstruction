@@ -6,8 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
-class UCommonLazyImage;
-class UCommonTextBlock;
+#include "UCommonLazyImage.h"
+#include "UCommonTextBlock.h"
 
 #include "UFortItemReceivedHeaderBase.generated.h"
 

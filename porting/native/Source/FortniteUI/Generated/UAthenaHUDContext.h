@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UBlueprintContextBase.h"
 
+#include "AFortPlayerPawnAthena.h"
 #include "FAthenaWinnerInfo.h"
 #include "FOnAthenaAutoFireChanged.h"
 #include "FOnAthenaHUDAllWinnersAnnounced.h"
@@ -32,7 +33,6 @@
 #include "FOnSpecialActorListChanged.h"
 #include "FShowMobilePicker.h"
 
-class AFortPlayerPawnAthena;
 class UAthenaPlayerViewModel;
 class UWidget;
 

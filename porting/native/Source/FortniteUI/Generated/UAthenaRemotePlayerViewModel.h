@@ -6,8 +6,8 @@
 #include "CoreMinimal.h"
 #include "UAthenaPlayerViewModel.h"
 
-class AFortPlayerControllerSpectating;
-class AFortPlayerStateAthena;
+#include "AFortPlayerControllerSpectating.h"
+#include "AFortPlayerStateAthena.h"
 
 #include "UAthenaRemotePlayerViewModel.generated.h"
 

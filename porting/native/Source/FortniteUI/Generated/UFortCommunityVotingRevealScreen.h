@@ -6,8 +6,9 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanel.h"
 
-class UCommonBorder;
-class UCommonButton;
+#include "UCommonBorder.h"
+#include "UCommonButton.h"
+
 class UDynamicEntryBox;
 class UFortCommunityVotingManager;
 class UFortCommunityVotingOptionReveal;

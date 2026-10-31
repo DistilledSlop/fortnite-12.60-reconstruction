@@ -8,5 +8,7 @@ public class FortniteLinuxServerTarget : TargetRules
         DefaultBuildSettings = BuildSettingsVersion.Latest;
         ExtraModuleNames.Add("FortniteGame");
         ExtraModuleNames.Add("FortniteUI");
+        ExtraModuleNames.Add("SocialUMG");
+        ExtraModuleNames.Add("KairosSceneCapture");
     }
 }

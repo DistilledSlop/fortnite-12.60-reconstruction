@@ -6,8 +6,8 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 
-class UCommonActionWidget;
-class UCommonTextBlock;
+#include "UCommonActionWidget.h"
+#include "UCommonTextBlock.h"
 
 #include "UFortPostGameMenuEntryOverlay.generated.h"
 

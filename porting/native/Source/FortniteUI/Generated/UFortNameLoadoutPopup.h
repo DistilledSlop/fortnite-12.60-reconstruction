@@ -6,8 +6,9 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanel.h"
 
-class UCommonButton;
-class UFortCosmeticLockerItem;
+#include "UCommonButton.h"
+#include "UFortCosmeticLockerItem.h"
+
 class UFortEditableFilteredCountedTextBox;
 
 #include "UFortNameLoadoutPopup.generated.h"

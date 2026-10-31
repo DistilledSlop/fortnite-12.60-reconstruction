@@ -7,8 +7,7 @@
 #include "UCommonNumericTextBlock.h"
 
 #include "EFortItemCountStyle.h"
-
-class UFortItemDefinition;
+#include "UFortItemDefinition.h"
 
 #include "UFortItemCountTextBlock.generated.h"
 

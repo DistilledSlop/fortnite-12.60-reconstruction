@@ -7,10 +7,10 @@
 #include "UCommonActivatableWidget.h"
 
 #include "GameplayTagContainer.h"
+#include "UAthenaSeasonItemDefinition.h"
+#include "UCommonButton.h"
 
-class UAthenaSeasonItemDefinition;
 class UBattlePassScreenPurchaseButton;
-class UCommonButton;
 class UEnableMultiFactorModal;
 class UFortGiftingScreen;
 class UFortStoreFrontOfferDetailsWidgetBase;

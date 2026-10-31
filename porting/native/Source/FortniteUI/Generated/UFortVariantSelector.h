@@ -6,8 +6,9 @@
 #include "CoreMinimal.h"
 #include "UFortVariantEditorWidgetBase.h"
 
-class UCommonButtonGroup;
-class UCommonTextBlock;
+#include "UCommonButtonGroup.h"
+#include "UCommonTextBlock.h"
+
 class UDynamicEntryBox;
 class UVariantObject;
 

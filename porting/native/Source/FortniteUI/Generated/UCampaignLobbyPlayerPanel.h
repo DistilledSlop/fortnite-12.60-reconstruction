@@ -6,8 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortLobbyPlayerPanel.h"
 
-class UCommonButton;
-class UCommonNumericTextBlock;
+#include "UCommonButton.h"
+#include "UCommonNumericTextBlock.h"
 
 #include "UCampaignLobbyPlayerPanel.generated.h"
 

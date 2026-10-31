@@ -11,8 +11,7 @@
 #include "FEmoteOptionData.h"
 #include "FMapNoteOptionData.h"
 #include "FRadialOptionData.h"
-
-class UAthenaQuickChatBank;
+#include "UAthenaQuickChatBank.h"
 
 #include "UFortPickerData.generated.h"
 

@@ -6,10 +6,10 @@
 #include "CoreMinimal.h"
 #include "Components/Widget.h"
 
-class UCommonNumericTextBlock;
-class UCommonTextBlock;
-class UCommonTextStyle;
-class UFortItem;
+#include "UCommonNumericTextBlock.h"
+#include "UCommonTextBlock.h"
+#include "UCommonTextStyle.h"
+#include "UFortItem.h"
 
 #include "UFortLevelIndicator.generated.h"
 

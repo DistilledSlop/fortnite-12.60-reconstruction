@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "Engine/DataAsset.h"
 
-class UCommonTextBlock;
+#include "UCommonTextBlock.h"
 
 #include "UFortOptionsMenuInputData.generated.h"
 

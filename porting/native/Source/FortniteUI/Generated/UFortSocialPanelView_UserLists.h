@@ -8,12 +8,12 @@
 
 #include "Engine/DataTable.h"
 #include "FFortUserListHeaderInfo.h"
+#include "UCommonButton.h"
+#include "UCommonButtonGroup.h"
+#include "UCommonRichTextBlock.h"
+#include "UCommonTextBlock.h"
+#include "UCommonWidgetSwitcher.h"
 
-class UCommonButton;
-class UCommonButtonGroup;
-class UCommonRichTextBlock;
-class UCommonTextBlock;
-class UCommonWidgetSwitcher;
 class UFortFriendSearchButton;
 class UFortJoinVoiceChannelButton;
 class UFortLocalUserEntry;

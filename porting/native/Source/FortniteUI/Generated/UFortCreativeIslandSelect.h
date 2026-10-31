@@ -6,8 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanel.h"
 
-class UCommonButtonGroup;
-class UCommonListView;
+#include "UCommonButtonGroup.h"
+#include "UCommonListView.h"
 
 #include "UFortCreativeIslandSelect.generated.h"
 

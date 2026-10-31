@@ -7,12 +7,12 @@
 #include "UFortActivityView.h"
 
 #include "Engine/DataTable.h"
+#include "UCommonActionWidget.h"
+#include "UCommonButton.h"
+#include "UCommonButtonGroup.h"
+#include "UCommonTextBlock.h"
+#include "UCommonWidgetSwitcher.h"
 
-class UCommonActionWidget;
-class UCommonButton;
-class UCommonButtonGroup;
-class UCommonTextBlock;
-class UCommonWidgetSwitcher;
 class UDynamicEntryBox;
 class UFortActivityDetailsInfoPanel;
 class UFortActivityDetailsKnobsPanel;

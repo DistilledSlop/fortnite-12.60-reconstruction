@@ -6,10 +6,11 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 
-class UCommonListView;
-class UCommonTextBlock;
+#include "UCommonListView.h"
+#include "UCommonTextBlock.h"
+#include "UFortCreativeOption.h"
+
 class UFortCreativeGlobalOptions;
-class UFortCreativeOption;
 
 #include "UFortCreativeOptionsCategory.generated.h"
 

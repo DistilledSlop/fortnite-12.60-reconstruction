@@ -7,14 +7,14 @@
 #include "UFortLobbyWidget.h"
 
 #include "Engine/DataTable.h"
+#include "UCatalogMessaging.h"
+#include "UCommonActivatableWidget.h"
+#include "UCommonBorder.h"
+#include "UCommonButton.h"
+#include "UCommonWidgetSwitcher.h"
 
 class UAthenaChallengeInfoPanel;
 class UAthenaMissionInfoPanel;
-class UCatalogMessaging;
-class UCommonActivatableWidget;
-class UCommonBorder;
-class UCommonButton;
-class UCommonWidgetSwitcher;
 class UEmergencyNoticeBase;
 class UFortAthenaMOTDTeaserWidget;
 class UFortAthenaMatchmakingWidgetLegacy;

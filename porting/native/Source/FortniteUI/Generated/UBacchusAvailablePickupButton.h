@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UBacchusButton.h"
 
-class UCommonRichTextBlock;
+#include "UCommonRichTextBlock.h"
+
 class UFortLazyImage;
 class UFortMultiSizeItemCard;
 

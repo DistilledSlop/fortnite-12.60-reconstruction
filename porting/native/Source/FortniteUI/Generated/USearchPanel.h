@@ -7,8 +7,8 @@
 #include "UCommonActivatablePanel.h"
 
 #include "FOnSearchTextChangedEvent.h"
+#include "UCommonButton.h"
 
-class UCommonButton;
 class UEditableTextBox;
 
 #include "USearchPanel.generated.h"

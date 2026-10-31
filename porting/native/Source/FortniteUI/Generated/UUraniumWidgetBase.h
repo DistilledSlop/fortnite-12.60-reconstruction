@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "ULTMWidgetBase.h"
 
-class AFortAthenaMutator_Uranium;
+#include "AFortAthenaMutator_Uranium.h"
 
 #include "UUraniumWidgetBase.generated.h"
 

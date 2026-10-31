@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortParentalControlsSubScreen.h"
 
-class UCommonButton;
+#include "UCommonButton.h"
 
 #include "UFortParentalControls_AskToEnableControls.generated.h"
 

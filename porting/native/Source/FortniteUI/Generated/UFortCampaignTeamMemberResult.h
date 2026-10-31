@@ -6,9 +6,10 @@
 #include "CoreMinimal.h"
 #include "UFortCampaignTeamMemberEntry.h"
 
-class UCommonButton;
-class UCommonTextBlock;
-class UCommonWidgetSwitcher;
+#include "UCommonButton.h"
+#include "UCommonTextBlock.h"
+#include "UCommonWidgetSwitcher.h"
+
 class UFortPlayerBanner;
 class UFortPlayerPowerRating;
 class UImage;

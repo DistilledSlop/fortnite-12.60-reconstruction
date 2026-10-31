@@ -8,15 +8,15 @@
 
 #include "Engine/DataTable.h"
 #include "FOnFinalGiftingComplete.h"
+#include "UCommonBorder.h"
+#include "UCommonButton.h"
+#include "UCommonButtonGroup.h"
+#include "UCommonListView.h"
+#include "UCommonRichTextBlock.h"
+#include "UFortItem.h"
 
 class UAthenaBattlePassTracker;
-class UCommonBorder;
-class UCommonButton;
-class UCommonButtonGroup;
-class UCommonListView;
-class UCommonRichTextBlock;
 class UDynamicEntryBox;
-class UFortItem;
 class UFortItemInfoPresentationWidget;
 class UFortItemPresentationEntry;
 class UFortItemReceivedHeaderBase;

@@ -6,9 +6,10 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
-class UCommonLazyImage;
-class UCommonLazyWidget;
-class UCommonVisibilitySwitcher;
+#include "UCommonLazyImage.h"
+#include "UCommonLazyWidget.h"
+#include "UCommonVisibilitySwitcher.h"
+
 class UImage;
 class UObject;
 class UPanelWidget;

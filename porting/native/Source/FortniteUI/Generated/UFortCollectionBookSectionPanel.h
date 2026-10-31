@@ -12,10 +12,10 @@
 #include "FOnItemInspectAction.h"
 #include "FOnPreviewXPChange.h"
 #include "FOnSectionCloseRequest.h"
+#include "UCommonTextBlock.h"
+#include "UFortCollectionBookSection.h"
 
-class UCommonTextBlock;
 class UFortCollectionBookPicker;
-class UFortCollectionBookSection;
 class UFortCollectionBookSectionCompletionRewardWidget;
 class UFortCollectionBookSlotView;
 class UTextBlock;

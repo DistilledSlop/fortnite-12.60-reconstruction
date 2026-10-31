@@ -6,6 +6,11 @@
 #include "CoreMinimal.h"
 #include "UBlueprintContextBase.h"
 
+#include "ABuildingActor.h"
+#include "ABuildingTrap.h"
+#include "AFortPlayerPawn.h"
+#include "AFortPlayerState.h"
+#include "AFortWeapon.h"
 #include "FHUDBasicDelegate.h"
 #include "FOnActiveGameplayModifiersChangedDelegate.h"
 #include "FOnActorFocusedForCreative.h"
@@ -52,11 +57,6 @@
 #include "FOnWaveBasedModifiersAppliedDelegate.h"
 #include "FOnWaveCombatStart.h"
 
-class ABuildingActor;
-class ABuildingTrap;
-class AFortPlayerPawn;
-class AFortPlayerState;
-class AFortWeapon;
 class UFortTouchControlRegion;
 
 #include "UFortHUDContext.generated.h"

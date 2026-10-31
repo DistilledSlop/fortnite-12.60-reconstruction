@@ -8,12 +8,12 @@
 
 #include "EFortItemCardSize.h"
 #include "Math/Vector2D.h"
+#include "UCommonTextBlock.h"
+#include "UCommonWidgetSwitcher.h"
+#include "UFortInputData.h"
+#include "UFortItem.h"
 
 class UAthenaQuickBarNativeCell;
-class UCommonTextBlock;
-class UCommonWidgetSwitcher;
-class UFortInputData;
-class UFortItem;
 class UFortItemCooldownWidget;
 class UFortKeybindWidget;
 class UFortMultiSizeItemCard;

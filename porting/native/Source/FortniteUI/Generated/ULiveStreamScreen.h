@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortActivatableVideoPanel.h"
 
-class UFortStreamMediaSource;
+#include "UFortStreamMediaSource.h"
 
 #include "ULiveStreamScreen.generated.h"
 

@@ -6,10 +6,11 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "UCommonTextBlock.h"
+#include "UCommonWidgetSwitcher.h"
+
 class UAthenaPlayerKillsBase;
 class UAthenaWinnersList;
-class UCommonTextBlock;
-class UCommonWidgetSwitcher;
 class UFortRichTextBlock;
 class UHorizontalBox;
 class UOverlay;

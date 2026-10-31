@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortBladeMenu.h"
 
-class UCommonButton;
+#include "UCommonButton.h"
+
 class UHorizontalBox;
 class UVerticalBox;
 

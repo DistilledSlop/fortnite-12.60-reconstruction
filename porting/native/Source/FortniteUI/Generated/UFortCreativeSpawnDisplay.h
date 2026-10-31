@@ -7,8 +7,7 @@
 #include "UFortActivatablePanel.h"
 
 #include "FRarityArray.h"
-
-class UFortItemDefinition;
+#include "UFortItemDefinition.h"
 
 #include "UFortCreativeSpawnDisplay.generated.h"
 

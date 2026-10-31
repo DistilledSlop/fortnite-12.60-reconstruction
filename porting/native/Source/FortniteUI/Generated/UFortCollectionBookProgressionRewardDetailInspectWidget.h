@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
-class UCommonNumericTextBlock;
+#include "UCommonNumericTextBlock.h"
+
 class UFortRewardInfoWidget;
 class UWidget;
 

@@ -8,11 +8,10 @@
 
 #include "FOnHUDQuestFinalObjectiveHidden.h"
 #include "FOnSizeEstimateChanged.h"
-
-class UCommonListView;
-class UCommonTextBlock;
-class UFortQuestItem;
-class UFortQuestObjectiveInfo;
+#include "UCommonListView.h"
+#include "UCommonTextBlock.h"
+#include "UFortQuestItem.h"
+#include "UFortQuestObjectiveInfo.h"
 
 #include "UFortQuestTrackerEntry.generated.h"
 

@@ -6,10 +6,9 @@
 #include "CoreMinimal.h"
 #include "UFortHUDElementWidget.h"
 
+#include "AFortPawn.h"
 #include "ECooldownTrackingType.h"
 #include "GameplayTagContainer.h"
-
-class AFortPawn;
 
 #include "URadialBacchusButtonBase.generated.h"
 

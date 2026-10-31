@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "ULTMWidgetBase.h"
 
-class AFortAthenaMutator_Wax;
+#include "AFortAthenaMutator_Wax.h"
 
 #include "UWaxTokenEventWidgetBase.generated.h"
 

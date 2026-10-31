@@ -6,8 +6,9 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
-class UAthenaCosmeticItemDefinition;
-class UCommonRichTextBlock;
+#include "UAthenaCosmeticItemDefinition.h"
+#include "UCommonRichTextBlock.h"
+
 class UProgressBar;
 
 #include "UAthenaCosmeticUnlockingInfo.generated.h"

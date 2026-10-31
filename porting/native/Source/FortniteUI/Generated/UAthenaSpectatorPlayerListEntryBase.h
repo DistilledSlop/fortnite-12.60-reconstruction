@@ -6,10 +6,11 @@
 #include "CoreMinimal.h"
 #include "UAthenaSpectatorPlayerWidgetBase.h"
 
+#include "UCommonBorder.h"
+#include "UCommonButton.h"
+#include "UCommonTextBlock.h"
+
 class UAthenaSpectatorHitPointBarBase;
-class UCommonBorder;
-class UCommonButton;
-class UCommonTextBlock;
 class UImage;
 
 #include "UAthenaSpectatorPlayerListEntryBase.generated.h"

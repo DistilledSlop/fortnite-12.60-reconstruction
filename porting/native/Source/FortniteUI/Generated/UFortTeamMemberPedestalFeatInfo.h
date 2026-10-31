@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortTeamMemberEntryBase.h"
 
-class UCommonTextBlock;
+#include "UCommonTextBlock.h"
+
 class UFortLazyImage;
 
 #include "UFortTeamMemberPedestalFeatInfo.generated.h"

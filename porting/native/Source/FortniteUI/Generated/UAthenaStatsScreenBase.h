@@ -6,9 +6,10 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanel.h"
 
-class UCommonButton;
-class UCommonTabListWidget;
-class UCommonTextBlock;
+#include "UCommonButton.h"
+#include "UCommonTabListWidget.h"
+#include "UCommonTextBlock.h"
+
 class UDataTable;
 class UFortFlagImage;
 class UFortFlagSelectionModal;

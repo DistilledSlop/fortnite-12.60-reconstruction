@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 
-class UCommonActionWidget;
+#include "UCommonActionWidget.h"
+
 class UFortKeybindWidget;
 class UOverlay;
 class URichTextBlock;

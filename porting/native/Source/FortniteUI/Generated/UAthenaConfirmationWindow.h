@@ -7,11 +7,11 @@
 #include "UCommonActivatableWidget.h"
 
 #include "Engine/DataTable.h"
+#include "UCommonBorder.h"
+#include "UCommonButton.h"
+#include "UCommonRichTextBlock.h"
+#include "UCommonTextBlock.h"
 
-class UCommonBorder;
-class UCommonButton;
-class UCommonRichTextBlock;
-class UCommonTextBlock;
 class UDynamicEntryBox;
 class UFortLazyImage;
 

@@ -8,11 +8,11 @@
 
 #include "Engine/DataTable.h"
 #include "FDetailClassEntry.h"
+#include "UCommonButtonGroup.h"
 
 class UAthenaChallengeScreenTileBase;
 class UAthenaChallengeScreenTile_Daily;
 class UAthenaChallengeSetBaseDetails;
-class UCommonButtonGroup;
 class UDynamicEntryBox;
 class UScrollBox;
 

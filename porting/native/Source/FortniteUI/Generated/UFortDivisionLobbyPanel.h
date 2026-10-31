@@ -7,8 +7,8 @@
 #include "UFortShowdownDivisionEventView.h"
 
 #include "Engine/DataTable.h"
+#include "UCommonButton.h"
 
-class UCommonButton;
 class UFortLazyImage;
 
 #include "UFortDivisionLobbyPanel.generated.h"

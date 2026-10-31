@@ -9,8 +9,7 @@
 #include "EFortExpeditionListSort.h"
 #include "FOnExpeditionListItemSelected.h"
 #include "FOnExpeditionListViewRefreshed.h"
-
-class UCommonListView;
+#include "UCommonListView.h"
 
 #include "UFortExpeditionListViewWidget.generated.h"
 

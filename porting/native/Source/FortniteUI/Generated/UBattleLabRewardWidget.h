@@ -8,8 +8,7 @@
 
 #include "FFortPrioritizedWidgetData.h"
 #include "GameplayTagContainer.h"
-
-class UFortQuestItem;
+#include "UFortQuestItem.h"
 
 #include "UBattleLabRewardWidget.generated.h"
 

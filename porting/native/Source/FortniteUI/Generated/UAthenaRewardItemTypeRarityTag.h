@@ -6,8 +6,9 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "UCommonTextBlock.h"
+
 class UBorder;
-class UCommonTextBlock;
 
 #include "UAthenaRewardItemTypeRarityTag.generated.h"
 

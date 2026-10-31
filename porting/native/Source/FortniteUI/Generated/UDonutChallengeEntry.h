@@ -6,8 +6,9 @@
 #include "CoreMinimal.h"
 #include "UCommonButton.h"
 
+#include "UCommonTextBlock.h"
+
 class UAthenaChallengeProgressBar;
-class UCommonTextBlock;
 class UFortLazyImage;
 class UImage;
 

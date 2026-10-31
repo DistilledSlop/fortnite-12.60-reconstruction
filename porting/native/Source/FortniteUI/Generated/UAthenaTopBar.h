@@ -7,11 +7,11 @@
 #include "UCommonActivatableWidget.h"
 
 #include "Engine/DataTable.h"
+#include "UCommonActionWidget.h"
+#include "UCommonButton.h"
+#include "UCommonButtonGroup.h"
+#include "UCommonTextBlock.h"
 
-class UCommonActionWidget;
-class UCommonButton;
-class UCommonButtonGroup;
-class UCommonTextBlock;
 class UDynamicEntryBox;
 
 #include "UAthenaTopBar.generated.h"

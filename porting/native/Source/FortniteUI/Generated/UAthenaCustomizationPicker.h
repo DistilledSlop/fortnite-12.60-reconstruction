@@ -9,11 +9,11 @@
 #include "FFortAthenaItemManagementInventoryFilterTabLabelInfo.h"
 #include "FOnCosmeticChangeSaveEvent.h"
 #include "FOnUpdateSaveButtonVisuals.h"
+#include "UAthenaCosmeticAccountItem.h"
+#include "UCommonButton.h"
+#include "UCommonButtonStyle.h"
+#include "UFortItem.h"
 
-class UAthenaCosmeticAccountItem;
-class UCommonButton;
-class UCommonButtonStyle;
-class UFortItem;
 class UFortTabListWidgetBase;
 
 #include "UAthenaCustomizationPicker.generated.h"

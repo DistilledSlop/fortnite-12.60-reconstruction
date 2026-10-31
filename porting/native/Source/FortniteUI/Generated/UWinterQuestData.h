@@ -8,10 +8,10 @@
 
 #include "FCameraToWinterQuestViewState.h"
 #include "GameplayTagContainer.h"
+#include "UCommonActivatableWidget.h"
+#include "UFortChallengeBundleScheduleDefinition.h"
 
-class UCommonActivatableWidget;
 class UEnableMultiFactorModal;
-class UFortChallengeBundleScheduleDefinition;
 class UFortGiftingScreen;
 class UFortStoreFrontOfferDetailsWidgetBase;
 class UFortWinterQuestDetailsScreen;

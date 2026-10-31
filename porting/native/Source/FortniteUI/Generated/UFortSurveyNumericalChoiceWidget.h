@@ -6,8 +6,9 @@
 #include "CoreMinimal.h"
 #include "UFortPlayerSurveyButtonGroupMultipleChoiceAnswerWidgetBase.h"
 
+#include "UCommonTextBlock.h"
+
 class UButton;
-class UCommonTextBlock;
 
 #include "UFortSurveyNumericalChoiceWidget.generated.h"
 

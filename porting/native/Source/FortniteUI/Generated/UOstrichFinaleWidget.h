@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 
-class AFortCharacterVehicle_Ostrich;
+#include "AFortCharacterVehicle_Ostrich.h"
 
 #include "UOstrichFinaleWidget.generated.h"
 

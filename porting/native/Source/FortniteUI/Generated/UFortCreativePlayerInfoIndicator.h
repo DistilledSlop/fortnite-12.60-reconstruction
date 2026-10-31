@@ -6,10 +6,10 @@
 #include "CoreMinimal.h"
 #include "UFortActorIndicatorWidget.h"
 
+#include "AFortPlayerStateAthena.h"
 #include "Math/Vector.h"
 #include "Math/Vector2D.h"
 
-class AFortPlayerStateAthena;
 class UImage;
 
 #include "UFortCreativePlayerInfoIndicator.generated.h"

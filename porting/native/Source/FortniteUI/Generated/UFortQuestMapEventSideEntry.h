@@ -8,13 +8,13 @@
 
 #include "Engine/EngineTypes.h"
 #include "Layout/Margin.h"
+#include "UCommonListView.h"
+#include "UCommonTextBlock.h"
+#include "UCommonWidgetSwitcher.h"
+#include "UFortQuestItem.h"
+#include "UFortQuestItemDefinition.h"
+#include "UFortQuestObjectiveInfo.h"
 
-class UCommonListView;
-class UCommonTextBlock;
-class UCommonWidgetSwitcher;
-class UFortQuestItem;
-class UFortQuestItemDefinition;
-class UFortQuestObjectiveInfo;
 class UImage;
 
 #include "UFortQuestMapEventSideEntry.generated.h"

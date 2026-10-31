@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonButton.h"
 
-class UFortPlayerPerksItemDefinition;
+#include "UFortPlayerPerksItemDefinition.h"
 
 #include "USpatialFactionPerkReward.generated.h"
 

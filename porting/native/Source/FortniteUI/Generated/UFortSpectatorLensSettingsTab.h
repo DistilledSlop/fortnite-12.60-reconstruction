@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortReplayViewSettingsTabBase.h"
 
-class UCommonUserWidget;
+#include "UCommonUserWidget.h"
 
 #include "UFortSpectatorLensSettingsTab.generated.h"
 

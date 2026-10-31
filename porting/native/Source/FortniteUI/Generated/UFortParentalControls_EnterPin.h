@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortParentalControls_PinSubScreen.h"
 
-class UCommonButton;
+#include "UCommonButton.h"
 
 #include "UFortParentalControls_EnterPin.generated.h"
 

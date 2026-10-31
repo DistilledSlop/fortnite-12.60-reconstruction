@@ -6,8 +6,9 @@
 #include "CoreMinimal.h"
 #include "UCommonActivatableWidget.h"
 
+#include "UCommonButton.h"
+
 class UAthenaChatModalWrapper;
-class UCommonButton;
 class UDataTable;
 
 #include "UAthenaActivatableChatWidget.generated.h"

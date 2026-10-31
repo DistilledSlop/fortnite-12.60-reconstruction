@@ -9,8 +9,7 @@
 #include "ECountdownDisplay.h"
 #include "FTimerDisplayData.h"
 #include "Misc/DateTime.h"
-
-class UCommonTextBlock;
+#include "UCommonTextBlock.h"
 
 #include "UAthenaChallengeCountdownDisplay.generated.h"
 

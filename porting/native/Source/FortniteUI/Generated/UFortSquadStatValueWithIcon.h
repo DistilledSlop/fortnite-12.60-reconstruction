@@ -7,8 +7,8 @@
 #include "UCommonUserWidget.h"
 
 #include "AttributeSet.h"
+#include "UCommonNumericTextBlock.h"
 
-class UCommonNumericTextBlock;
 class UImage;
 
 #include "UFortSquadStatValueWithIcon.generated.h"

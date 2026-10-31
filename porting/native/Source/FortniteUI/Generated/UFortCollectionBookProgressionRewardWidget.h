@@ -6,8 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortCollectionBookGenericRewardWidget.h"
 
-class UCommonNumericTextBlock;
-class UCommonTextBlock;
+#include "UCommonNumericTextBlock.h"
+#include "UCommonTextBlock.h"
 
 #include "UFortCollectionBookProgressionRewardWidget.generated.h"
 

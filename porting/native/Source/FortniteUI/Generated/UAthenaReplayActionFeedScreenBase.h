@@ -6,8 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanel.h"
 
-class UCommonButton;
-class UCommonListView;
+#include "UCommonButton.h"
+#include "UCommonListView.h"
 
 #include "UAthenaReplayActionFeedScreenBase.generated.h"
 

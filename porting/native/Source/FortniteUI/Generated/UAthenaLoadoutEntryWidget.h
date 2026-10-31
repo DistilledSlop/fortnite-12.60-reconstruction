@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
-class UFortAthenaInventoryLoadout;
+#include "UFortAthenaInventoryLoadout.h"
 
 #include "UAthenaLoadoutEntryWidget.generated.h"
 

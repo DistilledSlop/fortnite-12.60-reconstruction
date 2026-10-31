@@ -7,10 +7,10 @@
 #include "UFortActivatablePanel.h"
 
 #include "FHUDLayoutToolPreset.h"
+#include "UCommonButton.h"
+#include "UCommonTextBlock.h"
+#include "UCommonWidgetSwitcher.h"
 
-class UCommonButton;
-class UCommonTextBlock;
-class UCommonWidgetSwitcher;
 class UFortDynamicEntryBox;
 class UScrollBox;
 class UVerticalBox;

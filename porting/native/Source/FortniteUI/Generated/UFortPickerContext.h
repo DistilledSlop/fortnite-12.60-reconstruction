@@ -12,10 +12,10 @@
 #include "FOnPickerOptionChosenDelegate.h"
 #include "FOnPickerOptionSelectionMovedDelegate.h"
 #include "FTrackedTrapTimeAndCount.h"
+#include "UFortItemDefinition.h"
+#include "UFortSchematicItem.h"
 
-class UFortItemDefinition;
 class UFortPickerData;
-class UFortSchematicItem;
 class UObject;
 
 #include "UFortPickerContext.generated.h"

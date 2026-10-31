@@ -9,8 +9,8 @@
 #include "EFortItemCardSize.h"
 #include "Engine/EngineTypes.h"
 #include "FOnDisplayedItemChangedEvent.h"
+#include "UFortItem.h"
 
-class UFortItem;
 class UFortMultiSizeItemCard;
 class UWidget;
 

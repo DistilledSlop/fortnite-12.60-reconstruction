@@ -7,10 +7,10 @@
 #include "UFortActivatablePanel.h"
 
 #include "Layout/Margin.h"
+#include "UCommonButtonGroup.h"
+#include "UCommonNumericTextBlock.h"
+#include "UCommonTextBlock.h"
 
-class UCommonButtonGroup;
-class UCommonNumericTextBlock;
-class UCommonTextBlock;
 class UFortCollectionBookProgressionRewardDetailInspectWidget;
 class UVerticalBox;
 

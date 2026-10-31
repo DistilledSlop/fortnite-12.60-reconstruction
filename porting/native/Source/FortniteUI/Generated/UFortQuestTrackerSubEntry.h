@@ -8,8 +8,7 @@
 
 #include "FOnHUDQuestObjectiveCompleted.h"
 #include "FOnSizeEstimateChanged.h"
-
-class UFortQuestObjectiveInfo;
+#include "UFortQuestObjectiveInfo.h"
 
 #include "UFortQuestTrackerSubEntry.generated.h"
 

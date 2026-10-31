@@ -1320,6 +1320,7 @@ def self_test():
 RUNTIME_MODULE_PACKAGES = (
     "/Script/BlueprintContext", "/Script/MeshNetwork", "/Script/CommonUI", "/Script/AmbientAudio", "/Script/Account",
     "/Script/ModularGameplay", "/Script/McpProfileSys", "/Script/CommonInput", "/Script/FortniteUI",
+    "/Script/SocialUMG", "/Script/KairosSceneCapture",   # stage 2 (coverage cause C1); see native_classes_status.md
 )
 HAND_WRITTEN_MODULES = ("FortniteGame", "PlayspaceFramework")   # Build.cs and IMPLEMENT_* files are not generated
 PROMOTE_PACKAGES = ("/Script/FortniteGame", "/Script/PlayspaceFramework") + RUNTIME_MODULE_PACKAGES
@@ -2287,8 +2288,12 @@ def render_promoted_header(model, api, parent_include, source_label):
         lines.append("#include \"%s\"" % inc)
     if model.get("includes"):
         lines.append("")
-    lines.extend("class %s;" % ref for ref in model["forward_decls"])
-    if model["forward_decls"]:
+    # A forward-declared class whose header we include (forward_decl_includes) needs no bare decl: the
+    # included header carries the full definition (and the UHT-generated code relies on it).
+    declared = set("%s.h" % ref for ref in model["forward_decls"]) & set(model.get("forward_decl_includes") or [])
+    decls = [ref for ref in model["forward_decls"] if "%s.h" % ref not in declared]
+    lines.extend("class %s;" % ref for ref in decls)
+    if decls:
         lines.append("")
     lines.append("#include \"%s.generated.h\"" % name)
     lines.append("")
@@ -2752,6 +2757,16 @@ def promote(args):
                                      snippets_by_class.get(name, []), splice_ctx)
         model["includes"] = sorted(set(own_includes(gate, model["used"], package))
                                    | set(model["splice"].get("header_includes", set())))
+        # Forward-declared classes of another promoted module: their full definition must be visible to the
+        # UHT-generated code (the class's Z_Construct and API macro), which a bare forward declaration does not
+        # provide. Include the header (the module dependency is added below); the bare decl is dropped from the
+        # rendered header (see render_promoted_header).
+        fwd_includes = sorted("%s.h" % ref for ref in model["forward_decls"]
+                              if (package_of.get(ref) or "") in PROMOTE_PACKAGES
+                              and package_of.get(ref) != package)
+        if fwd_includes:
+            model["includes"] = sorted(set(model["includes"]) | set(fwd_includes))
+            model["forward_decl_includes"] = fwd_includes
         class_models.append(model)
         splice_done.extend(model["splice"]["accepted"])
         splice_rejects.extend(model["splice"]["rejected"])
@@ -2913,9 +2928,9 @@ def promote(args):
             continue
         # Engine modules the game module lists (they cover forward declarations of engine classes), plus this
         # module's own needs: engine modules of its headers and promoted modules of its parents.
-        # FortniteGame is excluded (it lists these modules), except for FortniteUI, whose headers come from FortniteGame.
-        excluded = {module} if module == "FortniteUI" else {module, "FortniteGame"}
-        own = sorted((set(engine_shared) | module_deps[module]) - excluded)
+        # Keep dependencies on FortniteGame when actually needed; the cycle check
+        # above already refuses a reverse dependency from FortniteGame.
+        own = sorted((set(engine_shared) | module_deps[module]) - {module})
         module_dir = os.path.join(args.source_root, module)
         os.makedirs(os.path.join(module_dir, "Private"), exist_ok=True)
         with open(os.path.join(module_dir, module + ".Build.cs"), "w", encoding="utf-8", newline="\n") as fh:

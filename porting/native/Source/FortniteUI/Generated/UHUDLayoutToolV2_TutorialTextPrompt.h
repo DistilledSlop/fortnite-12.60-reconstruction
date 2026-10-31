@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonActivatableWidget.h"
 
-class UCommonTextBlock;
+#include "UCommonTextBlock.h"
 
 #include "UHUDLayoutToolV2_TutorialTextPrompt.generated.h"
 

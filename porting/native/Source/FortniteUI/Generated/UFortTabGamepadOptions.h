@@ -6,9 +6,10 @@
 #include "CoreMinimal.h"
 #include "UFortOptionsTab.h"
 
-class UCommonButton;
-class UCommonListView;
-class UCommonTextBlock;
+#include "UCommonButton.h"
+#include "UCommonListView.h"
+#include "UCommonTextBlock.h"
+
 class UUserWidget;
 
 #include "UFortTabGamepadOptions.generated.h"

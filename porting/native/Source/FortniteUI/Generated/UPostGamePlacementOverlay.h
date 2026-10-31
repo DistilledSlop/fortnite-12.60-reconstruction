@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortHUDElementWidget.h"
 
-class AFortGameplayMutator;
+#include "AFortGameplayMutator.h"
 
 #include "UPostGamePlacementOverlay.generated.h"
 

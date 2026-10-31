@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortUserWidget.h"
 
-class UCommonBorder;
+#include "UCommonBorder.h"
 
 #include "UFortResultsBadgeLootWidget.generated.h"
 

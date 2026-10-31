@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortStoreFrontOfferDetailsWidgetBase.h"
 
-class UCommonTileView;
+#include "UCommonTileView.h"
 
 #include "UFortLlamaStoreInspectionScreen.generated.h"
 

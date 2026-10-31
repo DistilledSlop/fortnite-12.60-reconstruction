@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonActivatablePanel.h"
 
-class UFortExpeditionItem;
+#include "UFortExpeditionItem.h"
+
 class UFortItemViewContext_ExpeditionSquadSlotItemPicker;
 class UFortItemViewContext_ExpeditionSquadSlotsView;
 class UFortSquadSlotDetailsPanel;

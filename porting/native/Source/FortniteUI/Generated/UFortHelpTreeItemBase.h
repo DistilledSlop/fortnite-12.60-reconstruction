@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonButton.h"
 
-class UFortHelpItem;
+#include "UFortHelpItem.h"
 
 #include "UFortHelpTreeItemBase.generated.h"
 

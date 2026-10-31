@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "AFortScriptedAction.h"
 
-class AFortPlayerController;
+#include "AFortPlayerController.h"
 
 #include "ACheckTutorialAndLeavePartyActionBase.generated.h"
 

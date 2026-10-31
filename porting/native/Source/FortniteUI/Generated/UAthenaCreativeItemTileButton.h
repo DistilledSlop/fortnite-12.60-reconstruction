@@ -6,8 +6,9 @@
 #include "CoreMinimal.h"
 #include "UCommonButton.h"
 
+#include "UFortItemDefinition.h"
+
 class UAthenaCreativeItemTileView;
-class UFortItemDefinition;
 
 #include "UAthenaCreativeItemTileButton.generated.h"
 

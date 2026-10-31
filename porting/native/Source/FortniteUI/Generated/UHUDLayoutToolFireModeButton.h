@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
-class UCommonButton;
+#include "UCommonButton.h"
+
 class UFortMovieWidget;
 class UTexture2D;
 

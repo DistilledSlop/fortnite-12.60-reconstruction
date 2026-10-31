@@ -7,10 +7,10 @@
 #include "Engine/DataAsset.h"
 
 #include "Engine/DataTable.h"
+#include "UAthenaRewardEventGraph.h"
+#include "UFortStreamMediaSource.h"
 
-class UAthenaRewardEventGraph;
 class UFortActivatableVideoPanel;
-class UFortStreamMediaSource;
 class UMediaPlayer;
 
 #include "UFortEventLevelData.generated.h"

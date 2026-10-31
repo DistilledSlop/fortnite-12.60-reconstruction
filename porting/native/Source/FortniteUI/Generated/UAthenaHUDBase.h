@@ -6,9 +6,9 @@
 #include "CoreMinimal.h"
 #include "UFortUIStateWidgetBase.h"
 
+#include "AFortVolume.h"
 #include "FMutatorAddedWidgets.h"
 
-class AFortVolume;
 class UAthenaEquippedItemBase;
 class UAthenaHUDMenu;
 class UAthenaIndicatorLayerBase;

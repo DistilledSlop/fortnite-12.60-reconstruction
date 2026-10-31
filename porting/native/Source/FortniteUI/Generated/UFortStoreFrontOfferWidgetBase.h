@@ -6,8 +6,9 @@
 #include "CoreMinimal.h"
 #include "UFortStoreFrontTileWidgetBase.h"
 
-class UCommonLoadGuard;
-class UFortItemThumbnailRenderer;
+#include "UCommonLoadGuard.h"
+#include "UFortItemThumbnailRenderer.h"
+
 class UFortStoreFrontOfferInfo;
 
 #include "UFortStoreFrontOfferWidgetBase.generated.h"

@@ -7,8 +7,8 @@
 #include "UFortActivatablePanel.h"
 
 #include "Engine/DataTable.h"
+#include "UCommonWidgetSwitcher.h"
 
-class UCommonWidgetSwitcher;
 class UFortTabListWidgetBase;
 class USizeBox;
 

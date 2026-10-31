@@ -7,10 +7,10 @@
 #include "UFortActivatablePanelWithItemPreview.h"
 
 #include "Engine/DataTable.h"
+#include "UCommonButton.h"
 
 class UAthenaConfirmationWindow;
 class UAthenaItemSelectorScreenBase;
-class UCommonButton;
 class UFortActivatablePanel;
 class UFortCosmeticLoadoutCardButton;
 class UFortCosmeticLoadoutSelector;

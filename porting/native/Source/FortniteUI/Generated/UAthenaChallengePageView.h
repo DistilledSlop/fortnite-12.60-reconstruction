@@ -7,9 +7,9 @@
 #include "UCommonActivatableWidget.h"
 
 #include "EAthenaChallengePageState.h"
+#include "UCommonRichTextBlock.h"
 
 class UAthenaChallengePage;
-class UCommonRichTextBlock;
 
 #include "UAthenaChallengePageView.generated.h"
 

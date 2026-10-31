@@ -6,9 +6,9 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 
+#include "UCommonTextBlock.h"
 #include "Widgets/Text/ISlateEditableTextWidget.h"
 
-class UCommonTextBlock;
 class UEditableTextBox;
 
 #include "UFortEditableFilteredCountedTextBox.generated.h"

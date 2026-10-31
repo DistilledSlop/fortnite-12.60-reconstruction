@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonActivatableWidget.h"
 
-class UCommonButton;
+#include "UCommonButton.h"
+
 class UFortMtxStoreRootBase;
 
 #include "UAthenaStandaloneMtxStore.generated.h"

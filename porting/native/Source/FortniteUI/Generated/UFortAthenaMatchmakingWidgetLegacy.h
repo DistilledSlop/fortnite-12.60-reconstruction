@@ -6,12 +6,13 @@
 #include "CoreMinimal.h"
 #include "UFortMatchmakingWidgetBase.h"
 
-class UCommonButton;
-class UCommonTextBlock;
+#include "UCommonButton.h"
+#include "UCommonTextBlock.h"
+#include "UFortMissionGenerator.h"
+
 class UEnableMultiFactorModal;
 class UFortActivatablePanel;
 class UFortEulaWidget;
-class UFortMissionGenerator;
 class UFortServerBrowserBattleLab;
 class UFortServerBrowserCreative;
 class UFortShowdownDetailView;

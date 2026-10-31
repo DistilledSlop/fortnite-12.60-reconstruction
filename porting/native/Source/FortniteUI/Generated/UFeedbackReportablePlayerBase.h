@@ -6,9 +6,10 @@
 #include "CoreMinimal.h"
 #include "UCommonButton.h"
 
-class UCommonTextBlock;
+#include "UCommonTextBlock.h"
+#include "UReportablePlayerInfo.h"
+
 class UHorizontalBox;
-class UReportablePlayerInfo;
 
 #include "UFeedbackReportablePlayerBase.generated.h"
 

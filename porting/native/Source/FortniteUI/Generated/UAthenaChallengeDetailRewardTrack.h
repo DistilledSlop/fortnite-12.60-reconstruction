@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UAthenaChallengeDetailBase.h"
 
-class UCommonWidgetSwitcher;
+#include "UCommonWidgetSwitcher.h"
+
 class UDynamicEntryBox;
 
 #include "UAthenaChallengeDetailRewardTrack.generated.h"

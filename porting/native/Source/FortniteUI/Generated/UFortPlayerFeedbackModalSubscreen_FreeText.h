@@ -6,7 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortPlayerFeedbackModalSubscreenBase.h"
 
-class UCommonButton;
+#include "UCommonButton.h"
+
 class UMultiLineEditableTextBox;
 class UWidget;
 

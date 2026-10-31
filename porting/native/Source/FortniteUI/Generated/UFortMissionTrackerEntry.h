@@ -6,11 +6,11 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "AFortMission.h"
 #include "FOnMissionEntryVisibilityChanged.h"
 #include "FOnSizeEstimateChanged.h"
+#include "UCommonTextBlock.h"
 
-class AFortMission;
-class UCommonTextBlock;
 class UFortMissionTrackerSubEntry;
 class UImage;
 class UVerticalBox;

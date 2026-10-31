@@ -8,11 +8,11 @@
 
 #include "EFortItemInspectionMode.h"
 #include "GameplayTagContainer.h"
+#include "UFortItem.h"
 
 class UDataTable;
 class UFortAlterationModOptinScreenBase;
 class UFortAlterationModScreenBase;
-class UFortItem;
 class UFortItemInspectCycleWidget;
 
 #include "UFortItemInspectionScreen.generated.h"
