@@ -25,3 +25,6 @@
 /porting/progress/out/
 /porting/progress/history.json
 /porting/native/Plugins/Water/
+
+# Regenerated in about 5 s by porting/behavior/build_vtable_slots.py (2.8 MB)
+porting/behavior/vtable_slots.json

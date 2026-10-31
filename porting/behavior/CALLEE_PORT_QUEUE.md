@@ -19,6 +19,55 @@ blocker that is not a one-line accessor (game-state members `+0x1df0`/`+0x1df8`/
 the 946-byte `0x141f0a3c0`, the stats structs of `0x141b5d450` and `0x141b6bb40`, the functor of `ClientNotifyTeamLost`). The
 small-body scan found no body whose only blocker is one accessor (`IsCreativeModePlaylist` at `0x14291e1c0` is blocked by `0x141a4a6f0`).
 
+Thirteenth pass (vtable slot names and a reflection check; no body ported, manifest unchanged at 437 entries). Tools:
+`porting/behavior/build_vtable_slots.py` writes `vtable_slots.json` and `vtable_slots.md`, and `porting/behavior/vtable_lookup.py
+<class> <hexoffset>` prints a slot. The map has 20 engine tables (4,474 slots, UObject to UCharacterMovementComponent and
+APlayerCameraManager) and 6 game tables (engine part only, 1,628 slots). Checks against the dump's constructor vtables: inline
+stub bodies agree in 572 of 656 (87.2%), inherited slots equal their owner's entry in 2,393 of 2,486 (96.3%), game inherited
+slots in 1,186 of 1,427 (83.1%; the rest are game overrides). Validated slots: 4,318 (HIGH 3,441, MEDIUM 1,084, LOW 1,577).
+Anchors: `UObject` 66 (ProcessEvent) and 42 (GetWorld) are HIGH, and `AFortPlayerStateAthena` 238 (GetPlayerTeam) is HIGH
+(dump bytes `mov 0x640(%rcx),%rax; ret`, and PlayerTeam is reflected at 0x640). Not mapped: AFortPlayerPawnAthena (no constructor
+store found) and the game-declared virtuals above each game class's engine part (222 for PlayerState, 224 for GameState, 274 for
+the pawn, 356 for the controller).
+
+Blocker slots (the receiver is stated where reflection establishes it; a candidate is not a resolution):
+- `ServerClearSkydiveLeader` and `0x1419e89a0` (Athena controller). `0x2190` (slot 1074) is game-declared: blocked. `0x700`
+  (slot 224) has receiver `PlayerCameraManager` (reflected at the controller `+0x2b0`); the model name there is a void function,
+  but the dump body returns a 12-byte value through a hidden pointer, which fits the 8 plus 4 byte copy, so the model index is
+  wrong for that class: blocked. `0x590` (slot 178) has receiver `CharacterMovement` (pawn `+0x280`, reached from controller
+  `+0x6e0`, `MyFortPawn`); the model name there (`IsMoveInputIgnored`, UPawnMovementComponent) is contradicted by the dump,
+  and the AActor candidate `InternalTakeRadialDamage` does not apply to this receiver: blocked.
+- `AFortPlayerPawn::HandleInStasis` (receiver not established). `0x710` (slot 226, `DetachFromControllerPendingDestroy`) and
+  `0x728` (slot 229, `CreatePlayerInputComponent`) are APawn engine slots, validated by identity (MEDIUM). `0x590`, `0x5b8`,
+  `0x420` and `0x50` (slots 178, 183, 132, 10) are AActor or UObject slots (`InternalTakeRadialDamage`, `HasActiveCameraComponent`,
+  `OnRep_ReplicatedMovement`, and `PreSaveRoot`, whose stub returns false). Candidates only.
+- Callee `0x1419ae980`. `0x150` (slot 42) is `GetWorld` on UObject: resolved (HIGH). `0xaf0` (slot 350) is game-declared on the
+  game state and the pawn; on the controller it is `InitInputSystem` (MEDIUM). Blocked on the receiver.
+- Row 15 `0x1440c99f0` (receiver not established). `0x468`, `0x498` and `0x4c8` (slots 141, 147, 153) are a bool, an actor getter and
+  a void function in the model, so none fits a float-valued use. `0x860` (slot 268, `GetJumpMaxHoldTime`, float, ACharacter) is the
+  one candidate that fits. Blocked.
+
+Reflection check of the non-reflected member offsets (`fortnite_game_reflection.json`, class records):
+- `AFortGameStateAthena` `+0x1df0` and `+0x1df8` are reflected: `CurrentPlaylistInfo` (`FPlaylistPropertyArray`, struct at `+0x1cd0`,
+  size 488) has `BasePlaylist` at struct `+0x120` and `OverridePlaylist` at `+0x128`. They are the accessor of the ported
+  `GetCurrentPlaylistAthena` (`0x141991bf0`). This names the member reads of `0x14199e3c0` and `0x1419967f0`; their predicates
+  `0x141a4a6f0` and `0x14197ccd0` stay unnamed.
+- `AFortGameStateAthena` `+0x1500`, `+0x1510`, `+0x1520` and `+0x1528` are not reflected (the gap between `KillFeedEntry` at `+0x1440`
+  and `GameMemberInfoArray` at `+0x15d8`). Still blocked: `0x1419982c0` and its callers.
+- `AFortPlayerControllerAthena` `+0x2b80` is `OnSkydiveLeaderChanged` (InlineMulticastDelegate), `+0x2bbc` is
+  `SkydiveLeaderManualCameraTime` (float), `+0x2bc4` is `InterpolatedSkydiveFollowerViewRotation` (Rotator, 12 bytes, so `+0x2bcc`
+  is its Roll), and `+0x2be0` is `SkydiveLeader` (Object, `OnRep_SkydiveLeader`). All named. `+0x2b90` and `+0x2b98` are not
+  reflected and stay unnamed.
+- `AFortPlayerController` `+0x1b10` is `CreativeModeProfile` (Object): named (the read in `Server_SetCanEditCreativeIsland`).
+- Receivers from reflection: controller `+0x2b0` `PlayerCameraManager`, controller `+0x6e0` `MyFortPawn`, pawn `+0x280`
+  `CharacterMovement`.
+
+Bodies unblocked by this pass: none. `ServerClearSkydiveLeader_Implementation` and `0x1419e89a0` still need `0x2190`, the `0x700`
+and `0x590` names, and `+0x2b90`/`+0x2b98`. `Server_SetCanEditCreativeIsland_Implementation` now has `+0x1b10` and the playlist
+members, but `0x141f0a3c0` (946 bytes) and `0x1423a0aa0` remain. `HandleInStasis` needs the receiver of its calls. Next: fix the
+receivers of `HandleInStasis`, `0xaf0` and row 15 from the call sites; then name the game-declared slots (`0x2190` on the controller,
+`0xaf0` on the game state and pawn) from a game header or the RPC thunks.
+
 Eighth pass (see `porting/decompilation_notes.md`, "Eighth pass"; research only, no Ghidra run): rows 2, 3 and 5 are identified and their bodies are written as pseudocode (`UpdateScoreForEvent`, `UpdateTotalPlayerScore`, `GetCurrentPlaylistAthena`). `FUN_1407ac640` is `TMulticastDelegate<void(AFortPlayerStateAthena*, int32)>::Broadcast` and `0x140685370` is `FMulticastDelegateBase::CompactInvocationList` (both HIGH); the element is `FDelegateBase`. vfn `+0x770` is `GetPlayerTeam()` (`PlayerTeam` at `+0x640`). `FUN_14070fe00` is `FScalableFloat::GetValueAtLevel` (HIGH, engine). Rows 6, 7 and 9 are engine special members (`FGameplayCueParameters` dtor and copy constructor, `FGameplayTagContainer::operator=`). The ranking after this pass is at the end of the table, before "Not queued". The blocker is now the generator (helper splice kind and non-reflected members), not the callees.
 
 Ninth pass (see `porting/decompilation_notes.md`, "Ninth pass"): rows 2, 3, 4 and 5 are ported as manifest entries. Row 2 is
