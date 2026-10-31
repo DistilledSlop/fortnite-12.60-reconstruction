@@ -5,28 +5,38 @@ this file first. Everything below is what was true at the last commit on `main`.
 
 ## Where things stand
 
-- **Dashboard:** about 14.7% overall, 13.6% from computed measures, 0 of 4 milestones
-  (`porting/progress/`, served on port 8765 if `progress/serve.sh` is running). The goal is far from met:
-  no Fortnite gameplay runs, the original client cannot reach a handshake, and function bodies are
-  almost all stubs (167 of 20,574 native functions ported).
-- **Verified on `main`** (both smoke variants passed at the last green commit `8a38031`; later commits
-  changed only docs, tools and the progress model):
-  - 1,296 classes plus 109 interfaces generated from the exe's reflection tables across FortniteGame,
-    PlayspaceFramework, McpProfileSys, CommonUI, ModularGameplay, MeshNetwork, BlueprintContext, Account,
-    AmbientAudio; 1,107 structs, 462 enums, 581 delegates. Client, server and editor build.
-  - Offline class checksum parity with the original: 1,317 of 1,405 generated classes.
-  - Native client joins the native dedicated server with network checksum 683914758 and an Athena pawn.
-- **Unverified, on branch `wip/native-fortniteui-unverified`** (one commit, 7,290 files): the native agent's
-  next batch. Class set grown from 1,452 to 4,617 entries, new `FortniteUI` (about 1,680 classes) and
-  `CommonInput` modules, Target.cs/Build.cs edits, refreshed generated trees. Its last build was killed
-  mid-way and no smoke test was run on it. It may be fully green or may not compile.
-- **Caution:** the built and staged binaries on disk (`native/Binaries`, `generated/linux-stage`) come from
-  the WIP batch, not from `main`'s sources. Rebuild before trusting any smoke result on `main`.
+Updated 2026-10-31 after the second session. Everything below is on `main` (HEAD `14757d9` or later).
+
+- **Dashboard:** about 20% overall (the evidence ledger now holds the native join, the network checksum and the
+  checksum self-test). The goal is far from met: no Fortnite gameplay runs, and function bodies are still
+  mostly stubs (208 of 20,574 native functions ported).
+- **Verified (build green, both smoke variants pass at `14757d9`):**
+  - 4,463 classes promoted from the exe's reflection tables (FortniteGame, FortniteUI, CommonInput,
+    CommonUI, PlayspaceFramework, McpProfileSys, ModularGameplay, MeshNetwork, ... ), class set of 4,572.
+  - Offline class checksum parity with the original: 4,535 of 4,572 (37 remain: struct in another module 16,
+    RPC flags without a role 13, unresolved members 5, enums 3, others).
+  - Native client joins the native dedicated server with network checksum 683914758 and an Athena pawn
+    (authority 1 on the server, 0 on the client).
+  - Ported behaviour is spliced by the generator (`gen_native_classes.py`, `--no-behavior` or
+    `FN_BEHAVIOR_SPLICE=0` turns it off): 208 bodies.
+  - Function and delegate parameters are generated in binary offset order (`--param-order table` is the old
+    order); 91 more delegate members emitted; replication conditions (`replication_conditions.json`, 1,659
+    of 1,715 properties at high confidence) and `NetDeltaSerialize` traits for 43 fast-array structs.
+- **Not runtime-tested:** the fast-array delta path, the conditional replication, and the FText broadcast bodies
+  compile and the join works, but no smoke exercises them.
+- **Known wire gaps:** six used structs with a custom non-delta `NetSerialize` (`SharedRepMovement`,
+  `ReplicatedPhysicsPawnState`, `FortAISharedRepMovement`, `FortAIAttributeReplicationProxy`,
+  `AthenaPawnReplayData`, `CreateBuildingActorData`) use a marked default-serialization fallback; their bodies
+  are not recovered. Push-model flags are not emitted. 51 replication conditions are unknown (`COND_None` + TODO).
+- **Backend:** `server/` has a tested local service layer (OAuth, accounts, MCP profile, party, presence,
+  lightswitch, cloud storage; `python3 -I porting/server/test_services.py`). Each endpoint is labelled
+  observed, inferred or guess in `server_surface.md`; none has been driven by a real client capture yet.
 
 ## How to resume
 
-1. Rebuild and verify `main` first (about 5 minutes), then try the WIP branch:
+1. Check `git status` and `git log`; `main` should be clean. Rebuild only if you changed generator inputs:
    ```sh
+   bash porting/promote_native_classes.sh      # regenerates native/Source/*/Generated (splice on)
    cd /opt/fortnite/UnrealEngine
    ulimit -c 0
    Engine/Build/BatchFiles/Linux/Build.sh FortniteLinux FortniteLinuxServer Linux Development \
@@ -34,38 +44,33 @@ this file first. Everything below is what was true at the last commit on `main`.
    ```
    Restage by COPYING the two binaries into `porting/generated/linux-stage/LinuxNoEditor/FortniteLinux/Binaries/Linux`
    (no `BuildCookRun -archive`; it would clobber the stage). The staged client needs the CEF3 libraries
-   hard-linked (see `native/README.md`, "Staging the client").
+   hard-linked (see `native/README.md`, "Staging the client"). A full build takes about 4-5 minutes.
 2. Run BOTH smoke variants and require exit 0 (use `env -u LD_LIBRARY_PATH`, `stdbuf -oL -eL`, and a `rg`
    shim that execs `grep -E` on PATH; `rg` is not installed):
    ```sh
    bash porting/server/smoke_join.sh
    bash porting/server/smoke_join.sh '/Game/Maps/FortniteEmptyDedicated?game=/Script/FortniteGame.FortGameModeAthena'
    ```
-3. If the WIP branch fails to build, bisect by shrinking `porting/native_class_set.txt` (dependency-ordered,
-   batches marked by `# Round` lines) and add unfixable classes to `porting/native_class_blocklist.txt`
-   with a reason. Fix systematic failures in `porting/gen_native_classes.py`, never by hand-editing
-   generated files. Merge the branch only after both smokes pass.
-4. Record real evidence into the dashboard ledger on an idle machine (see "Dashboard" below).
+3. Run `python3 -I porting/class_checksum.py` and `python3 -I porting/behavior/check_behavior.py --gen-root
+   porting/native/Source/FortniteGame/Generated --splice-report porting/generated/reflection/behavior_splice.json`.
+   `check_behavior.py` does NOT compile-check: only a build catches a snippet error.
+4. Parallel work uses git worktrees for generator edits (`git worktree add /opt/fortnite/gen-worktree -b <branch> main`,
+   symlink `porting/generated` and `porting/native/Plugins` read-only) while one agent owns `porting/native/`.
 
 ## Next steps, in order
 
-1. Verify/merge the WIP batch (above). Then run `python3 porting/class_checksum.py` and read
-   `class_checksum_report.md` for the ranked fixes that flip the most classes to parity.
-2. **Splice ported behaviour.** `porting/behavior/` holds 167 ported function bodies (snippets, see its
-   README for the contract). The generator must (a) emit declarations for non-RPC functions and
-   `_Validate`/`WithValidation`, (b) replace stub bodies with the `.inc` content, (c) add includes. Then
-   build and smoke: the first behaviour-bearing build. `check_behavior.py` writes `behavior/COUNTS.txt`
-   which the dashboard reads.
-3. **More behaviour.** `behavior/BLOCKING_CALLEES.md` and `CALLEE_PORT_QUEUE.md` rank unidentified helpers
-   (top blocker `0x1406a9dc0`, a pending-event dispatch blocking 18 functions). Use
-   `ghidra/probe_callees.py`, `ghidra/improve_decompile.py`, `ghidra/decompile_targets.py` and
-   `decompilation_notes.md` (method, helper identities, examples).
-4. Remaining class blockers: 296 to 11 unresolved class refs (see `resolve_class_refs.py`), 9 structs with a
-   custom `NetSerialize`, no `COND_*` replication conditions, ungenerated classes in modules still missing.
-   Method that works for missing modules: generate them as their own minimal runtime module with the exact
-   original name (as for PlayspaceFramework).
+1. **Splice kind for non-reflected helpers.** The generator splices only getters, exec and RPC kinds. Queue rows
+   2, 3 and 5 (`behavior/CALLEE_PORT_QUEUE.md`) are non-reflected members of `AFortGameStateAthena`
+   and friends; the 17 OnRep callers of `0x1419d3ff0` stay blocked until the generator can emit a declaration
+   plus an `.inc` body for them. Also name the lock-counted 16-byte list family (`0x1407ac640`,
+   `0x140685370`) and vfn slot `0x770` of `AFortPlayerStateAthena`.
+2. **More behaviour.** Use `ghidra/probe_callees.py`, `ghidra/improve_decompile.py`,
+   `ghidra/decompile_targets.py` and `decompilation_notes.md`.
+3. **Recover the six fallback NetSerialize bodies** (see above) and the push-model flags.
+4. Remaining class blockers: 16 structs in other modules, 13 RPCs without a role, unresolved members.
 5. Everything else on the master plan: audio playback, Frontend/lobby UI, cooked Blueprint loading
-   (field-path crashes), Apollo streamed levels, skeletal meshes and animation, the original-client path.
+   (field-path crashes), Apollo streamed levels, skeletal meshes and animation, a runtime test for replication
+   conditions and fast arrays, driving the backend with a real client capture.
 
 ## Still to do
 
@@ -92,6 +97,10 @@ this file first. Everything below is what was true at the last commit on `main`.
 
 ## Pitfalls that cost time
 
+- The Bash tool default timeout is 120 s; pass `timeout: 600000` explicitly for UE builds or they move to the background.
+- `check_behavior.py` does not compile; a snippet written in the old reversed delegate parameter order passes it
+  but breaks the build. Read the generated header for the signature first.
+- A `git merge` of a generator branch can conflict on `decompilation_notes.md` (every pass appends a section); keep both.
 - IpNetDriver is **UDP**: check `ss -lun`, not `ss -ltn`. Redirected server stdout is block-buffered; use
   `stdbuf -oL -eL`.
 - Never wait with `pgrep -f '<pattern that appears in your own command>'` or `pkill -f` with such a
@@ -108,8 +117,9 @@ this file first. Everything below is what was true at the last commit on `main`.
   `progress/totals.json` (refresh with `python3 -I porting/progress/refresh_totals.py` after extraction
   changes). Measures: `checks`, `census`, `routes`, `tracked_count`, `tracked_regex`, `ledger`, `fraction`,
   `local_glob`; `README.md` has the objectivity audit and which leaves are still manual (each with a ceiling).
-- **The evidence ledger is empty.** Leaves that read it (native join, Wine stage gates, EAC flags) show 0
-  until recorded. Run on an idle machine and commit `progress/evidence.json`:
+- **The evidence ledger holds the native join, checksum and self-test records** (recorded at `97d4db3`; `progress.py` reads
+  the committed tree, so commit `progress/evidence.json` after re-recording). Re-record on an idle machine after
+  a change that affects them:
   ```sh
   python3 -I porting/progress/record_evidence.py smoke_default -- bash porting/server/smoke_join.sh
   python3 -I porting/progress/record_evidence.py smoke_athena -- bash porting/server/smoke_join.sh '/Game/Maps/FortniteEmptyDedicated?game=/Script/FortniteGame.FortGameModeAthena'
