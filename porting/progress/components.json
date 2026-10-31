@@ -1,5 +1,5 @@
 {
-  "_about": "Hand-edited model for porting/progress/progress.py. Leaves with a \"measure\" are computed; leaves with kind \"manual\" use the pct you set, with rationale. Weights are manual effort estimates (relative points, roughly engineer-weeks) and set the treemap area. Edit a weight or pct, commit, and the post-commit hook regenerates the dashboard.",
+  "_about": "Hand-edited model for porting/progress/progress.py. Leaves with a \"measure\" are computed; leaves with kind \"manual\" use the pct you set, with rationale. Weights are manual effort estimates (relative points, roughly engineer-weeks) and set the treemap area. Edit a weight or pct, commit, and the post-commit hook regenerates the dashboard. Basis ladder, most objective first: git (computed from tracked files, replayable per commit), local (computed from git-ignored outputs), documented (typed count), manual (typed percent). Denominators come from porting/progress/totals.json; checks from porting/progress/evidence.json. See README 'Objectivity audit'.",
   "definition": "100% = the entire game can be launched into the menu, joined into a game and matchmade on the reconstructed server, and played with sound/audio and visuals 100% working. In other words: the client \u2014 the exact same client as the 12.60 original, feature-complete and unstripped, rebuilt as a UE project \u2014 reaches the lobby, matchmakes to the reconstructed UE dedicated server (which carries every structure and feature the original dedicated server would have) and plays a match with all visuals and audio. The supplied 12.60 build is the completeness reference; the original binary under Wine is an analysis oracle, not the deliverable.",
   "milestones": [
     {
@@ -64,20 +64,39 @@
           "name": "Original client starts under Wine",
           "weight": 35,
           "measure": {
-            "kind": "manual",
-            "pct": 2
+            "kind": "ledger",
+            "checks": [
+              "wine_starts",
+              "wine_pak_mount",
+              "wine_frontend_map",
+              "wine_login_ui",
+              "wine_entitlement_passed",
+              "wine_lobby_reached"
+            ]
           },
-          "rationale": "The Shipping exe was run under Wine with bounded probes and exited with code 1 (server_surface.md). No launch to the menu is established."
+          "rationale": "Ledger of six stages from one run of the original client under Wine (run_original_client.sh), each a grep of the client log: engine start, pak mount, Frontend map, login screen, AppES entitlement passed, lobby map loaded. Recorded with record_evidence.py; a stage with no passing record counts as 0. The AppES entitlement gate is not bypassed, so the last two stages are expected to fail."
         },
         {
           "id": "platform.eac_removal",
-          "name": "EAC and BattlEye bypass for the original client",
+          "name": "Original client runs with EAC/BattlEye disabled by launch flags (no anti-cheat or entitlement bypass)",
           "weight": 25,
           "measure": {
-            "kind": "manual",
-            "pct": 2
+            "kind": "checks",
+            "stub_credit": 0.5,
+            "checks": [
+              {
+                "label": "run_original_client.sh passes -nobe (BattlEye off)",
+                "pattern": "-nobe",
+                "in": "porting/run_original_client.sh"
+              },
+              {
+                "label": "run_original_client.sh passes -noeac (EAC off)",
+                "pattern": "-noeac",
+                "in": "porting/run_original_client.sh"
+              }
+            ]
           },
-          "rationale": "Separate EAC and BattlEye launcher executables are present. No bypass exists for the original client. The native rebuild omits EAC by construction, which does not count for the original client."
+          "rationale": "Both launch flags are in the tracked runner, credited at 50%: present in the script, not yet seen working on the client. No anti-cheat or entitlement bypass exists. The AppES entitlement gate (LogAppES: postponed 2) is not bypassed and caps this leaf at its credit until platform.wine_launch shows the client starting under these flags."
         },
         {
           "id": "platform.rendering",
@@ -87,7 +106,8 @@
             "kind": "manual",
             "pct": 30
           },
-          "rationale": "Software Vulkan (Lavapipe) runs with swapchain and visual captures of terrain, sky and background. Only software rendering has been tested, and Fortnite shaders and materials are mostly absent."
+          "rationale": "Software Vulkan (Lavapipe) runs with swapchain and visual captures of terrain, sky and background, but only software rendering has been tested and Fortnite shaders and materials are mostly absent. No objective metric yet: no capture set is compared against the original client's frames.",
+          "ceiling": 30
         }
       ]
     },
@@ -114,9 +134,10 @@
           "measure": {
             "kind": "jsonl_rows",
             "file": "porting/generated/map-native-imports.jsonl",
-            "total": 3694
+            "total_key": "asset_registry_counts",
+            "total_sub": "World"
           },
-          "rationale": "Every cooked map header was parsed for native imports. Counted from the local census rows."
+          "rationale": "Every cooked map header was parsed for native imports. Counted from the local census rows; the denominator is the 3,694 World assets in the asset registry (totals.json)."
         },
         {
           "id": "assets.package_coverage",
@@ -129,39 +150,77 @@
               "porting/native/Content"
             ],
             "suffix": ".uasset",
-            "total": 450951
+            "total_key": "cooked_uasset_entries",
+            "what": "recovered or converted .uasset files"
           },
-          "rationale": "Share of the 450,951 indexed .uasset files that exist locally, either recovered or converted for Linux. Counted from local output folders."
+          "rationale": "Share of the cooked .uasset entries in the 28 indexed paks that exist locally, either recovered (generated/extracted) or converted (native/Content). Counted from ignored local folders; the denominator is totals.json (450,783 entries, previously typed as 450,951)."
         },
         {
           "id": "assets.static_meshes",
           "name": "Static meshes converted for Linux",
           "weight": 30,
           "measure": {
-            "kind": "manual",
-            "pct": 8
+            "kind": "local_glob",
+            "sources": [
+              {
+                "root": "porting/generated/converted",
+                "suffix": ".glb"
+              },
+              {
+                "root": "porting/native/Content",
+                "suffix": ".uasset",
+                "name_regex": "^SM_"
+              }
+            ],
+            "distinct": true,
+            "total_key": "cooked_name_prefix_counts",
+            "total_sub": "static_mesh",
+            "what": "static mesh conversions (distinct names)"
           },
-          "rationale": "76 meshes are converted (61 Apollo grid tiles, 11 background meshes, 4 skybox meshes). The total of static mesh packages referenced by the maps is not enumerated, so no denominator exists."
+          "rationale": "Counted: every .glb conversion under generated/converted (61 Apollo grid tiles, Background, skybox and cloud meshes) plus SM_ packages in native/Content, de-duplicated by name. Denominator: 4,719 distinct SM_-named cooked packages. The SM_ rule is a naming heuristic, and the glb conversions are counted whatever their names, so this is a coverage ratio, not an exact asset count."
         },
         {
           "id": "assets.materials",
           "name": "Materials (rebuilt approximations)",
           "weight": 25,
           "measure": {
-            "kind": "manual",
-            "pct": 6
+            "kind": "local_glob",
+            "sources": [
+              {
+                "root": "porting/native/Content",
+                "suffix": ".uasset",
+                "name_regex": "^(M|MI|MF)_"
+              }
+            ],
+            "distinct": true,
+            "total_key": "cooked_name_prefix_counts",
+            "total_sub": "material",
+            "what": "rebuilt material packages (M_, MI_, MF_; distinct names)"
           },
-          "rationale": "Original material graphs are absent. Some cloud, backdrop and skybox materials are rebuilt from recovered parameters as approximations."
+          "rationale": "Counted: M_, MI_ and MF_ packages rebuilt in native/Content. Excluded: the disabled originals under generated/temporarily-disabled-materials and recovered packages under generated/extracted. Denominator: 24,961 distinct material-named cooked packages (naming heuristic, totals.json). Original material graphs are absent."
         },
         {
           "id": "assets.textures",
           "name": "Textures (diffuse, masks, baked atlases)",
           "weight": 20,
           "measure": {
-            "kind": "manual",
-            "pct": 25
+            "kind": "local_glob",
+            "sources": [
+              {
+                "root": "porting/generated/converted",
+                "suffix": ".png"
+              },
+              {
+                "root": "porting/native/Content",
+                "suffix": ".uasset",
+                "name_regex": "^T_"
+              }
+            ],
+            "total_key": "cooked_name_prefix_counts",
+            "total_sub": "texture",
+            "what": "texture conversions (PNG landscape masks and baked atlases, plus T_ packages)"
           },
-          "rationale": "Landscape masks (311), four diffuse textures and 61 baked atlases exist. Textures for the rest of the game are not recovered."
+          "rationale": "Counted: the PNG files under generated/converted (landscape weightmaps and the 61 baked Apollo atlases) and T_ packages in native/Content. Denominator: 30,523 distinct T_-named cooked packages (naming heuristic, totals.json). Textures for the rest of the game are not recovered."
         },
         {
           "id": "assets.landscape",
@@ -171,17 +230,28 @@
             "kind": "manual",
             "pct": 15
           },
-          "rationale": "221 landscape components are decoded. Streaming landscape levels and the parent level still fail on missing classes."
+          "rationale": "221 landscape components are decoded. Streaming landscape levels and the parent level still fail on missing classes. No objective metric yet: cooked landscape component packages are not enumerated, and 'Landscape' names (69) are not comparable to the 221 decoded components.",
+          "ceiling": 15
         },
         {
           "id": "assets.skeletal_anim",
           "name": "Skeletal meshes, animation and character",
           "weight": 35,
           "measure": {
-            "kind": "manual",
-            "pct": 0
+            "kind": "local_glob",
+            "sources": [
+              {
+                "root": "porting/native/Content",
+                "suffix": ".uasset",
+                "name_regex": "^SK_"
+              }
+            ],
+            "distinct": true,
+            "total_key": "cooked_name_prefix_counts",
+            "total_sub": "skeletal_mesh",
+            "what": "skeletal mesh packages (SK_, distinct names)"
           },
-          "rationale": "No skeletal mesh or animation package has loaded in any probe. The Fortnite character is not reconstructed."
+          "rationale": "Counted: SK_ skeletal mesh packages converted in native/Content (none). Denominator: 1,719 distinct SK_-named cooked packages (naming heuristic, totals.json). No skeletal mesh or animation package has loaded in any probe. Animation sequences (A_, 7 names) are too few to matter and are not counted separately."
         },
         {
           "id": "assets.blueprint_load",
@@ -190,10 +260,11 @@
           "measure": {
             "kind": "fraction",
             "done": 4,
-            "total": 22211,
+            "total_key": "asset_registry_counts",
+            "total_sub": "Blueprint",
             "source": "documented"
           },
-          "rationale": "Four Apollo Blueprint packages were replaced by authored Blueprints that load. The asset registry (cue4inspect --registry, porting/README.md) reports 22,211 Blueprints in total. The original cooked gameplay Blueprints still crash on load."
+          "rationale": "Four Apollo Blueprint packages were replaced by authored Blueprints that load (typed count, documented). The denominator is the 22,211 Blueprint assets in the asset registry (totals.json). The original cooked gameplay Blueprints still crash on load."
         },
         {
           "id": "assets.cinematics",
@@ -203,7 +274,8 @@
             "kind": "manual",
             "pct": 0
           },
-          "rationale": "No level sequence or cinematic asset has been tested."
+          "rationale": "No level sequence or cinematic asset has been tested. No objective metric yet: the registry summary has no level-sequence count, and cooked 'Sequence' names are mostly curves.",
+          "ceiling": 0
         },
         {
           "id": "assets.reflection_recovery",
@@ -211,11 +283,11 @@
           "weight": 15,
           "measure": {
             "kind": "fraction",
-            "done": 6957,
-            "total": 6967,
-            "source": "documented"
+            "count_file": "porting/generated/reflection/class_name_map.json",
+            "count_key": "",
+            "total_key": "uht_class_blocks"
           },
-          "rationale": "binary_analysis.md sections 6-9: class names for 6,957 of 6,967 UHT blocks, parents verified at 99.76% against UE 4.25 headers, plus 4,512 structs, 2,056 enums and 1,515 delegate signatures. Measures recovery of the tables, not rebuilt behaviour. Ten blocks remain unnamed."
+          "rationale": "Class names recovered for 6,957 of the 6,967 UHT class blocks (class_name_map.json over the block total in totals.json). Measures recovery of the names, not rebuilt behaviour. Structs (4,512), enums (2,056) and delegates (1,515) are recovered too but not counted here. Parents are verified at 99.76% against UE 4.25 headers (binary_analysis.md). Ten blocks remain unnamed."
         }
       ]
     },
@@ -230,10 +302,11 @@
           "measure": {
             "kind": "fraction",
             "done": 2,
-            "total": 3694,
+            "total_key": "asset_registry_counts",
+            "total_sub": "World",
             "source": "documented"
           },
-          "rationale": "FortniteEmptyDedicated and Skybox_Outpost_HomeBase enter play. The partial Apollo_Terrain is not counted, since it lacks streamed levels."
+          "rationale": "FortniteEmptyDedicated and Skybox_Outpost_HomeBase enter play (typed count, documented). The denominator is the 3,694 World assets in the asset registry (totals.json). The partial Apollo_Terrain is not counted, since it lacks streamed levels."
         },
         {
           "id": "maps.apollo_terrain",
@@ -267,7 +340,8 @@
             "kind": "manual",
             "pct": 20
           },
-          "rationale": "A sky atmosphere replaces the black background. A simplified cloud and three backdrop materials render. The aurora and the Fortnite sky system are absent."
+          "rationale": "A sky atmosphere replaces the black background. A simplified cloud and three backdrop materials render. The aurora and the Fortnite sky system are absent. No objective metric yet: no sky or cloud render is captured and compared with the original.",
+          "ceiling": 20
         },
         {
           "id": "maps.streamed_levels",
@@ -276,10 +350,10 @@
           "measure": {
             "kind": "fraction",
             "done": 0,
-            "total": 87,
+            "total_key": "apollo_streaming_levels",
             "source": "documented"
           },
-          "rationale": "None of the 87 streamed levels load (map_compatibility.md)."
+          "rationale": "None of the 87 streamed levels load (typed count, documented). The denominator is the figure in the tracked map_compatibility.md report (totals.json)."
         },
         {
           "id": "maps.pois",
@@ -289,7 +363,8 @@
             "kind": "manual",
             "pct": 1
           },
-          "rationale": "The POI Blueprints fail while their cooked scripts load. The POI manager is an empty native class. No POI map enters play."
+          "rationale": "The POI Blueprints fail while their cooked scripts load. The POI manager is an empty native class. No objective metric yet: no POI map enters play, so there is nothing to count.",
+          "ceiling": 1
         }
       ]
     },
@@ -312,10 +387,15 @@
           "name": "Weapons and firing",
           "weight": 60,
           "measure": {
-            "kind": "manual",
-            "pct": 0
+            "kind": "tracked_count",
+            "globs": [
+              "porting/native/Source/FortniteGame/Generated/[AU]*.h"
+            ],
+            "name_regex": "Weapon",
+            "total_key": "uht_fortnitegame_name_matches",
+            "total_sub": "Weapon"
           },
-          "rationale": "No weapon class is imported by any map header, so the census cannot measure this group. No weapon class is declared natively."
+          "rationale": "Done: tracked reflection-exact class headers under Source/FortniteGame/Generated whose name matches Weapon. Total: named /Script/FortniteGame classes matching the same regex (totals.json). The census cannot measure this group because no weapon class is imported by a map header. No weapon behaviour is reproduced."
         },
         {
           "id": "gameplay.building",
@@ -342,20 +422,30 @@
           "name": "Storm and safe zone",
           "weight": 15,
           "measure": {
-            "kind": "manual",
-            "pct": 2
+            "kind": "tracked_count",
+            "globs": [
+              "porting/native/Source/FortniteGame/Generated/[AU]*.h"
+            ],
+            "name_regex": "Storm|SafeZone",
+            "total_key": "uht_fortnitegame_name_matches",
+            "total_sub": "Storm|SafeZone"
           },
-          "rationale": "FortSafeZoneStorm exists as an empty native stub, which is not counted as behaviour. Storm classes are not imported by map headers, so the census cannot measure the group."
+          "rationale": "Done: tracked reflection-exact class headers whose name matches Storm or SafeZone. Total: named /Script/FortniteGame classes matching the same regex (totals.json). FortSafeZoneStorm exists as an empty native stub, which is not counted as behaviour."
         },
         {
           "id": "gameplay.battle_bus",
           "name": "Battle bus, skydiving and gliding",
           "weight": 25,
           "measure": {
-            "kind": "manual",
-            "pct": 0
+            "kind": "tracked_count",
+            "globs": [
+              "porting/native/Source/FortniteGame/Generated/[AU]*.h"
+            ],
+            "name_regex": "BattleBus|Aircraft|Parachute|Glider",
+            "total_key": "uht_fortnitegame_name_matches",
+            "total_sub": "BattleBus|Aircraft|Parachute|Glider"
           },
-          "rationale": "No battle bus, aircraft, glider or parachute class exists natively. The skydiving shadow proxy stub is visual only and is counted under visuals."
+          "rationale": "Done: tracked reflection-exact class headers whose name matches BattleBus, Aircraft, Parachute or Glider. Total: named /Script/FortniteGame classes matching the same regex (totals.json). No battle bus or glider behaviour exists. The skydiving shadow proxy stub is visual only and is counted under visuals."
         },
         {
           "id": "gameplay.abilities",
@@ -405,19 +495,50 @@
             "kind": "manual",
             "pct": 1
           },
-          "rationale": "No original Blueprint behaviour has been reproduced. cue4inspect pseudocode is partial and unresolved."
+          "rationale": "No original Blueprint behaviour has been reproduced. cue4inspect pseudocode is partial and unresolved. No objective metric yet: no Blueprint behaviour is reproduced, and no metric counts it.",
+          "ceiling": 1
         },
         {
           "id": "gameplay.reflection_exact",
           "name": "Reflection-exact native classes (/Script/FortniteGame, generated)",
           "weight": 60,
           "measure": {
-            "kind": "fraction",
-            "done": 1200,
-            "total": 2842,
-            "source": "documented"
+            "kind": "tracked_count",
+            "globs": [
+              "porting/native/Source/FortniteGame/Generated/[AU]*.h"
+            ],
+            "total_key": "uht_classes_named_by_package",
+            "total_sub": "/Script/FortniteGame",
+            "also_report": [
+              {
+                "label": "classes in other generated modules",
+                "globs": [
+                  "porting/native/Source/Account/Generated/[AU]*.h",
+                  "porting/native/Source/AmbientAudio/Generated/[AU]*.h",
+                  "porting/native/Source/BlueprintContext/Generated/[AU]*.h",
+                  "porting/native/Source/CommonUI/Generated/[AU]*.h",
+                  "porting/native/Source/McpProfileSys/Generated/[AU]*.h",
+                  "porting/native/Source/MeshNetwork/Generated/[AU]*.h",
+                  "porting/native/Source/ModularGameplay/Generated/[AU]*.h",
+                  "porting/native/Source/PlayspaceFramework/Generated/[AU]*.h"
+                ]
+              }
+            ]
           },
-          "rationale": "native_classes_status.md: 1,200 of the 2,842 classes in /Script/FortniteGame are generated with original parents, property order, native-bool handling and replication flags (plus 105 classes in PlayspaceFramework, McpProfileSys, CommonUI, ModularGameplay and other modules generated the same way). About 4% of properties are skipped, no function bodies exist and wire compatibility is not reached. The class total is the named UHT blocks in class_parent_map.json."
+          "rationale": "Done: tracked class headers under Source/FortniteGame/Generated (reflection-exact: original parents, property order, native bool handling and replication flags). Total: the named /Script/FortniteGame classes (totals.json). Other generated modules are listed in the evidence and not counted here. About 4% of properties are skipped, no function bodies exist and wire compatibility is not reached."
+        },
+        {
+          "id": "gameplay.native_behavior",
+          "name": "Native function bodies ported (behaviour)",
+          "weight": 150,
+          "measure": {
+            "kind": "tracked_count",
+            "globs": [
+              "porting/behavior/**/*.inc"
+            ],
+            "total_key": "native_functions_with_exec"
+          },
+          "rationale": "Done: committed .inc function bodies under porting/behavior, one per ported function. Total: native functions with an execution address in the decompiled image (native_funcs.json, totals.json). Only committed bodies count. An honest small percentage is expected while the port is at the reflection stage."
         }
       ]
     },
@@ -518,20 +639,27 @@
           "name": "Native client joins native dedicated server",
           "weight": 20,
           "measure": {
-            "kind": "manual",
-            "pct": 40
+            "kind": "ledger",
+            "checks": [
+              "smoke_default",
+              "smoke_athena",
+              "net_version_checksum"
+            ]
           },
-          "rationale": "A local UE join to the Apollo and empty maps is verified with a native client. The original client handshake is not verified, so this is a partial result."
+          "rationale": "Ledger: a native client joins the native dedicated server on the default and Athena maps (porting/server/smoke_join.sh) and the server log shows the network version checksum 683914758. Recorded with record_evidence.py; the latest result per check counts. Says nothing about the original client (see net.original_join)."
         },
         {
           "id": "net.original_join",
           "name": "Original client joins the reconstructed server",
           "weight": 40,
           "measure": {
-            "kind": "manual",
-            "pct": 0
+            "kind": "ledger",
+            "checks": [
+              "wine_entitlement_passed",
+              "wine_lobby_reached"
+            ]
           },
-          "rationale": "Not reached. The Hello, Login, Welcome and Join sequence is unverified against the original client."
+          "rationale": "Ledger: the original client passes the AppES entitlement gate and reaches the lobby under Wine. This project does not bypass the gate, so both checks are expected to stay failed. The Hello, Login, Welcome and Join sequence is unverified against the original client."
         },
         {
           "id": "net.replication_layout",
@@ -541,19 +669,21 @@
             "kind": "manual",
             "pct": 1
           },
-          "rationale": "Property order, RPC index and struct layouts must match the original. Only the native stubs exist, and their property sets are not recovered."
+          "rationale": "Property order, RPC index and struct layouts must match the original. Only the native stubs exist, and their property sets are not recovered. No objective metric yet: layout parity needs the original's per-property offsets, and the checksum leaf covers only the hash.",
+          "ceiling": 1
         },
         {
           "id": "net.checksum_parity",
           "name": "Class checksum parity",
           "weight": 20,
           "measure": {
-            "kind": "fraction",
-            "done": 1317,
-            "total": 6957,
-            "source": "documented"
+            "kind": "tracked_regex",
+            "file": "porting/class_checksum_report.md",
+            "regex": "^\\|\\s*(\\d+)\\s*\\|\\s*(\\d+)\\s*\\|",
+            "group": 2,
+            "total_key": "uht_classes_named"
           },
-          "rationale": "porting/class_checksum.py computes the ClassChecksum and RPC set the original client computes from the recovered reflection tables and compares them with the emitted headers: 1,317 of the 1,405 generated classes match. The total is all 6,957 named native classes, so the figure is the share of the whole native class surface at parity. This is an offline calculation, not a live comparison with the original client (which cannot be reached, see direct_connect_results.md)."
+          "rationale": "Parity-yes count from the tracked class checksum report (its Totals table, column Parity yes: 1,317 of 1,405 generated classes), over the 6,957 named native classes (totals.json). porting/class_checksum.py computes the ClassChecksum and RPC set the original client computes from the recovered reflection tables and compares them with the emitted headers. This is an offline calculation, not a live comparison with the original client (which cannot be reached, see direct_connect_results.md)."
         },
         {
           "id": "net.replication_graph",
@@ -563,7 +693,8 @@
             "kind": "manual",
             "pct": 0
           },
-          "rationale": "The original server replication graph is server-only and not started."
+          "rationale": "The original server replication graph is server-only and not started. No objective metric yet: nothing about the server replication graph is reproduced or measured.",
+          "ceiling": 0
         }
       ]
     },
@@ -677,7 +808,8 @@
             "kind": "manual",
             "pct": 0
           },
-          "rationale": "Beacon hosts and the session record are not implemented."
+          "rationale": "Beacon hosts and the session record are not implemented. No objective metric yet: beacon hosts and session discovery routes are not in the static route scan.",
+          "ceiling": 0
         },
         {
           "id": "backend.stats_cloud",
@@ -714,10 +846,10 @@
           "measure": {
             "kind": "fraction",
             "done": 1,
-            "total": 306,
+            "total_key": "sound_class_mix_packages",
             "source": "documented"
           },
-          "rationale": "Only Master.Master is logged as loaded (asset_compatibility.md). The documented sound-class package set is 292 packages in FortSoundClassesAndModes plus 14 in Athena/Sounds/Events/SoundClasses, 306 in total. Mixes beyond that have not been checked."
+          "rationale": "Only Master.Master is logged as loaded (typed count, documented, asset_compatibility.md). The denominator is the 317 cooked sound class and mix package paths (totals.json, path heuristic). The documented 306 packages in FortSoundClassesAndModes and SoundClasses are a subset of that set; mixes beyond that have not been checked."
         },
         {
           "id": "audio.playback",
@@ -727,7 +859,8 @@
             "kind": "manual",
             "pct": 0
           },
-          "rationale": "Every probe ran with -nosound. No audio device output has been heard or measured."
+          "rationale": "Every probe ran with -nosound. No audio device output has been heard or measured. No objective metric yet: every probe ran with -nosound, so there is no audio output to count.",
+          "ceiling": 0
         },
         {
           "id": "audio.cues_music",
@@ -737,17 +870,21 @@
             "kind": "manual",
             "pct": 2
           },
-          "rationale": "No cue or music asset has been played back."
+          "rationale": "No cue or music asset has been played back. No objective metric yet: no cue or music asset has been played back, and no cue count is converted.",
+          "ceiling": 2
         },
         {
           "id": "audio.voice",
           "name": "Voice chat",
           "weight": 10,
           "measure": {
-            "kind": "manual",
-            "pct": 0
+            "kind": "routes",
+            "include": [
+              "/api/game/v2/voice"
+            ],
+            "stub_credit": 0.5
           },
-          "rationale": "Voice routes are listed but not implemented."
+          "rationale": "Voice routes from the static client scan (routes.json) whose literal path appears in committed server code, credited at 50%. None of the voice routes is implemented."
         }
       ]
     },
@@ -763,7 +900,8 @@
             "kind": "manual",
             "pct": 10
           },
-          "rationale": "A sun light and a temporary replicated light exist. The shadow proxy Blueprint is not recovered."
+          "rationale": "A sun light and a temporary replicated light exist. The shadow proxy Blueprint is not recovered. No objective metric yet: lighting parity needs captures compared against the original, and none exist.",
+          "ceiling": 10
         },
         {
           "id": "visuals.postprocess",
@@ -773,17 +911,33 @@
             "kind": "manual",
             "pct": 3
           },
-          "rationale": "Fortnite post-process and renderer configuration is not reproduced."
+          "rationale": "Fortnite post-process and renderer configuration is not reproduced. No objective metric yet: no post-process setting is captured or compared with the original.",
+          "ceiling": 3
         },
         {
           "id": "visuals.vfx",
           "name": "VFX, particles and Niagara",
           "weight": 20,
           "measure": {
-            "kind": "manual",
-            "pct": 0
+            "kind": "local_glob",
+            "sources": [
+              {
+                "root": "porting/native/Content",
+                "suffix": ".uasset",
+                "name_regex": "^NS_"
+              },
+              {
+                "root": "porting/generated/converted",
+                "suffix": ".uasset",
+                "name_regex": "^NS_"
+              }
+            ],
+            "distinct": true,
+            "total_key": "cooked_name_prefix_counts",
+            "total_sub": "niagara",
+            "what": "Niagara packages (NS_, distinct names)"
           },
-          "rationale": "No Niagara or particle assets have loaded."
+          "rationale": "Counted: NS_ Niagara packages converted in native/Content or generated/converted (none). Denominator: 171 distinct NS_-named cooked packages (naming heuristic, totals.json). Particle (Cascade) assets are not counted. No Niagara or particle asset has loaded."
         }
       ]
     },
@@ -796,10 +950,14 @@
           "name": "UMG and CommonUI native modules",
           "weight": 30,
           "measure": {
-            "kind": "manual",
-            "pct": 2
+            "kind": "tracked_count",
+            "globs": [
+              "porting/native/Source/CommonUI/Generated/[AU]*.h",
+              "porting/native/Source/UMG/Generated/[AU]*.h"
+            ],
+            "total_key": "uht_classes_named_commonui_umg"
           },
-          "rationale": "A 64x64 UI texture loads. CommonUI and FortniteUI are absent, and a UI Blueprint fails on a missing CommonButton function."
+          "rationale": "Done: tracked reflection-exact class headers for CommonUI and UMG (no UMG headers are generated). Total: named classes in /Script/CommonUI and /Script/UMG (totals.json). A 64x64 UI texture loads. No widget is loaded: a UI Blueprint fails on a missing CommonButton function, and no CommonUI behaviour runs."
         },
         {
           "id": "ui.frontend_lobby",
@@ -809,7 +967,8 @@
             "kind": "manual",
             "pct": 0
           },
-          "rationale": "No main menu, lobby or matchmaking UI is reproduced."
+          "rationale": "No main menu, lobby or matchmaking UI is reproduced. No objective metric yet: no menu or lobby widget is reproduced, and the widget Blueprints are not mapped to menus.",
+          "ceiling": 0
         },
         {
           "id": "ui.hud",
@@ -819,19 +978,22 @@
             "kind": "manual",
             "pct": 0
           },
-          "rationale": "No HUD is reproduced."
+          "rationale": "No HUD is reproduced. No objective metric yet: no HUD widget is reproduced or captured.",
+          "ceiling": 0
         },
         {
           "id": "ui.fortniteui_classes",
           "name": "/Script/FortniteUI native classes",
           "weight": 40,
           "measure": {
-            "kind": "fraction",
-            "done": 0,
-            "total": 1681,
-            "source": "documented"
+            "kind": "tracked_count",
+            "globs": [
+              "porting/native/Source/FortniteUI/Generated/[AU]*.h"
+            ],
+            "total_key": "uht_classes_named_by_package",
+            "total_sub": "/Script/FortniteUI"
           },
-          "rationale": "class_parent_map.json lists 1,681 named classes in /Script/FortniteUI. None is generated yet; ui_audio_census.md covers the widget side. CommonUI and other plugin modules are also absent from the engine tree."
+          "rationale": "Done: tracked reflection-exact class headers under Source/FortniteUI/Generated. Total: named /Script/FortniteUI classes (totals.json). No FortniteUI module is generated yet. ui_audio_census.md covers the widget side."
         }
       ]
     }

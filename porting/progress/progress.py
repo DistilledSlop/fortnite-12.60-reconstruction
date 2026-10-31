@@ -38,6 +38,10 @@ COMPONENTS = os.path.join(HERE, "components.json")
 OUT = os.path.join(HERE, "out")
 HISTORY = os.path.join(HERE, "history.json")
 LOCK = os.path.join(OUT, ".lock")
+# Tracked data the generator reads from each commit (see README: totals and evidence ledger).
+TOTALS_REL = "porting/progress/totals.json"      # written by refresh_totals.py
+EVIDENCE_REL = "porting/progress/evidence.json"  # written by record_evidence.py
+AGE_CACHE = {}
 
 # Five colour bins, red -> amber -> green. Validated for colour-vision separation
 # (adjacent CVD deltaE >= 14.9, normal-vision >= 15.4, OKLab x100); see README.
@@ -87,19 +91,49 @@ def snapshot(rev):
     return files
 
 
-class Ctx:
-    """Measurement context: committed snapshot plus ignored local outputs."""
+def parse_json_or_none(text):
+    try:
+        return json.loads(text)
+    except (TypeError, ValueError):
+        return None
 
-    def __init__(self, files, replay, census_order):
+
+def commits_between(older, newer):
+    """Commits in older..newer when older is an ancestor of newer, else None."""
+    anc = subprocess.run(["git", "-C", REPO, "merge-base", "--is-ancestor", older, newer],
+                         capture_output=True)
+    if anc.returncode != 0:
+        return None
+    return int(git("rev-list", "--count", f"{older}..{newer}").strip())
+
+
+def read_rev_file(rev, rel_path):
+    proc = subprocess.run(["git", "-C", REPO, "show", f"{rev}:{rel_path}"],
+                          capture_output=True, text=True)
+    return proc.stdout if proc.returncode == 0 else None
+
+
+class Ctx:
+    """Measurement context: committed snapshot plus ignored local outputs.
+
+    Tracked denominators (totals.json) and the evidence ledger are read from the
+    snapshot like any other tracked file. A commit with no totals.json uses HEAD's
+    copy (fallback_totals) and says so in the evidence text."""
+
+    def __init__(self, files, replay, census_order, rev=None, fallback_totals=None):
         self.files = files
         self.replay = replay          # True when measuring a historical commit
         self.census_order = census_order
+        self.rev = rev                # commit being measured (ledger ages)
+        self.fallback_totals = fallback_totals  # HEAD's totals.json entries, or None
         self.used_local = False       # set per leaf
+        self.totals_from_head = False # set per leaf
         self._cache = {}
         self._assign = None
 
     def reset_leaf(self):
         self.used_local = False
+        self.totals_from_head = False
 
     def tracked(self, pattern):
         pats = pattern if isinstance(pattern, list) else [pattern]
@@ -122,6 +156,44 @@ class Ctx:
         if ok:
             self.used_local = True
         return ok
+
+    # --- tracked denominators and the evidence ledger (committed data)
+    def totals_entries(self):
+        if "totals" not in self._cache:
+            if TOTALS_REL in self.files:
+                data = parse_json_or_none(self.files[TOTALS_REL])
+                self._cache["totals"] = (data if isinstance(data, dict) else {}, False)
+            else:
+                self._cache["totals"] = (self.fallback_totals or {}, True)
+        return self._cache["totals"]
+
+    def total_value(self, spec):
+        """Denominator of a leaf: a literal 'total', or totals.json[total_key][total_sub]."""
+        if "total_key" not in spec:
+            return int(spec.get("total", 0)), ""
+        entries, from_head = self.totals_entries()
+        key, sub = spec["total_key"], spec.get("total_sub")
+        where = key + (f"[{sub}]" if sub is not None else "")
+        ent = entries.get(key)
+        value = ent.get("value") if isinstance(ent, dict) else None
+        if sub is not None and value is not None:
+            value = value.get(sub) if isinstance(value, dict) else None
+        if value is None or not isinstance(value, (int, float)):
+            return 0, f"totals.json has no {where} (run porting/progress/refresh_totals.py)"
+        note = f"total {int(value)} from totals.json {where}"
+        if from_head:
+            self.totals_from_head = True
+            note += ", HEAD copy (no totals.json at this commit)"
+        return int(value), note
+
+    def age_of(self, commit):
+        """Commits since a ledger entry was recorded, or None when unknown."""
+        if not commit or not self.rev:
+            return None
+        key = (commit, self.rev)
+        if key not in AGE_CACHE:
+            AGE_CACHE[key] = commits_between(commit, self.rev)
+        return AGE_CACHE[key]
 
     # --- derived inputs (cached) ---
     def routes(self):
@@ -257,10 +329,10 @@ def m_census(spec, ctx):
 
 
 def m_fraction(spec, ctx):
-    total = spec["total"]
+    total, tnote = ctx.total_value(spec)
     if "done" in spec:
         done = spec["done"]
-        ev = f"{done} of {total} ({spec.get('source', 'documented')})"
+        ev = f"{done} of {total} ({spec.get('source', 'documented')}; {tnote})"
     else:
         text = ctx.local_text(spec["count_file"])
         if text is None:
@@ -271,14 +343,14 @@ def m_fraction(spec, ctx):
             for key in filter(None, spec.get("count_key", "").split(".")):
                 node = node[key]
             done = len(node) if isinstance(node, (list, dict)) else int(node)
-            ev = f"{done} of {total} (local output {os.path.basename(spec['count_file'])})"
+            ev = f"{done} of {total} (local output {os.path.basename(spec['count_file'])}; {tnote})"
     pct = 100.0 * done / total if total else 0.0
     return {"pct": pct, "done": done, "total": total, "evidence": ev}
 
 
 def m_jsonl_rows(spec, ctx):
     text = ctx.local_text(spec["file"])
-    total = spec["total"]
+    total, tnote = ctx.total_value(spec)
     if text is None:
         return {"pct": 0.0, "done": 0, "total": total, "evidence": f"local data missing: {spec['file']}"}
     done = 0
@@ -289,25 +361,133 @@ def m_jsonl_rows(spec, ctx):
                 done += 1
             except ValueError:
                 pass
-    pct = 100.0 * min(done, total) / total
+    pct = 100.0 * min(done, total) / total if total else 0.0
     return {"pct": pct, "done": min(done, total), "total": total,
-            "evidence": f"{done} map header rows parsed of {total} (local census output)"}
+            "evidence": f"{done} map header rows parsed of {total} (local census output; {tnote})"}
 
 
 def m_local_glob(spec, ctx):
-    total = spec["total"]
-    suffix = spec.get("suffix", ".uasset")
+    """Files under ignored local roots. Optional per-root filters:
+    sources: [{root, suffix, name_regex}] (name_regex is searched in the basename without
+    the suffix); distinct: count distinct basenames across all sources, not files."""
+    total, tnote = ctx.total_value(spec)
+    sources = spec.get("sources") or [{"root": r, "suffix": spec.get("suffix", ".uasset")}
+                                      for r in spec["roots"]]
+    distinct = bool(spec.get("distinct"))
     count = 0
-    for root in spec["roots"]:
-        base = ctx.local_path(root)
+    stems = set()
+    for src in sources:
+        base = ctx.local_path(src["root"])
         if not os.path.isdir(base):
             continue
         ctx.used_local = True
+        suffix = src.get("suffix", ".uasset")
+        rx = src.get("name_regex")
         for _, _, names in os.walk(base):
-            count += sum(1 for n in names if n.endswith(suffix))
-    pct = 100.0 * min(count, total) / total
+            for n in names:
+                if not n.endswith(suffix):
+                    continue
+                stem = n[:-len(suffix)]
+                if rx and not re.search(rx, stem):
+                    continue
+                if distinct:
+                    stems.add(stem)
+                else:
+                    count += 1
+    if distinct:
+        count = len(stems)
+    pct = 100.0 * min(count, total) / total if total else 0.0
+    what = spec.get("what", "files")
     return {"pct": pct, "done": count, "total": total,
-            "evidence": f"{count} local {suffix} files of {total} indexed (recovered or converted; ignored outputs)"}
+            "evidence": f"{count} local {what} of {total} ({tnote}); ignored outputs under porting/generated or native/Content"}
+
+
+def tracked_matches(ctx, globs, name_regex=None):
+    """Tracked files at this commit matching any glob; name_regex is searched in the file stem."""
+    out = []
+    for path, _ in ctx.tracked(globs):
+        stem = os.path.splitext(os.path.basename(path))[0]
+        if name_regex and not re.search(name_regex, stem):
+            continue
+        out.append(path)
+    return sorted(out)
+
+
+def m_tracked_count(spec, ctx):
+    """Done = tracked files matching the globs (and name_regex on the stem), total from totals.json
+    or a literal. also_report lists other tracked groups in the evidence text only."""
+    globs = spec.get("globs") or [spec["glob"]]
+    name_regex = spec.get("name_regex")
+    done = len(tracked_matches(ctx, globs, name_regex))
+    total, tnote = ctx.total_value(spec)
+    desc = "files" if not name_regex else f"files whose name matches /{name_regex}/"
+    ev = f"{done} of {total} tracked {desc} ({', '.join(globs)}); {tnote}"
+    extra = [f"{rep['label']} {len(tracked_matches(ctx, rep['globs'], rep.get('name_regex')))}"
+             for rep in spec.get("also_report", [])]
+    if extra:
+        ev += "; also tracked, not counted: " + ", ".join(extra)
+    if done > total:
+        ev += "; numerator above total, capped at 100%"
+    pct = 100.0 * min(done, total) / total if total else 0.0
+    return {"pct": pct, "done": done, "total": total, "evidence": ev}
+
+
+def m_tracked_regex(spec, ctx):
+    """Done = integer captured by a regex (group, default 1) from one tracked file at this commit."""
+    path = spec["file"]
+    total, tnote = ctx.total_value(spec)
+    text = ctx.files.get(path)
+    if text is None:
+        done, what = 0, f"{path} is not tracked at this commit"
+    else:
+        m = re.search(spec["regex"], text, re.M)
+        if not m:
+            done, what = 0, f"regex not found in {path}"
+        else:
+            done, what = int(m.group(spec.get("group", 1))), f"captured from {path}"
+    pct = 100.0 * min(done, total) / total if total else 0.0
+    return {"pct": pct, "done": done, "total": total, "evidence": f"{done} of {total} ({what}; {tnote})"}
+
+
+def read_ledger(ctx):
+    """Latest entry per check id from the tracked evidence ledger (dict or list form)."""
+    data = parse_json_or_none(ctx.files.get(EVIDENCE_REL)) or {}
+    checks = data.get("checks", {}) if isinstance(data, dict) else {}
+    latest = {}
+    if isinstance(checks, dict):
+        for cid, ent in checks.items():
+            if isinstance(ent, dict):
+                latest[cid] = ent
+    elif isinstance(checks, list):
+        for ent in checks:
+            if not isinstance(ent, dict) or not ent.get("id"):
+                continue
+            prev = latest.get(ent["id"])
+            if prev is None or str(ent.get("utc", "")) >= str(prev.get("utc", "")):
+                latest[ent["id"]] = ent
+    return latest
+
+
+def m_ledger(spec, ctx):
+    """Done = listed checks whose latest recorded entry passed. A missing entry is not a pass."""
+    ids = spec["checks"]
+    latest = read_ledger(ctx)
+    passed = 0
+    parts = []
+    for cid in ids:
+        ent = latest.get(cid)
+        if ent is None:
+            parts.append(f"{cid} missing")
+            continue
+        ok = ent.get("result") == "pass"
+        passed += ok
+        age = ctx.age_of(ent.get("commit"))
+        age_s = "age unknown" if age is None else f"{age} commit{'' if age == 1 else 's'} ago"
+        parts.append(f"{cid} {ent.get('result', '?')} (exit {ent.get('exit_code', '?')}, {age_s})")
+    total = len(ids)
+    pct = 100.0 * passed / total if total else 0.0
+    ev = f"{passed} of {total} checks pass in the evidence ledger: " + "; ".join(parts)
+    return {"pct": pct, "done": passed, "total": total, "evidence": ev}
 
 
 def m_manual(spec, ctx):
@@ -326,8 +506,15 @@ MEASURERS = {
     "fraction": m_fraction,
     "jsonl_rows": m_jsonl_rows,
     "local_glob": m_local_glob,
+    "tracked_count": m_tracked_count,
+    "tracked_regex": m_tracked_regex,
+    "ledger": m_ledger,
     "manual": m_manual,
 }
+
+# Kinds whose numerator is tracked data (replayable per commit). A git-kind leaf has
+# no local input unless it names one, so its basis is 'git' alone.
+GIT_KINDS = ("checks", "tracked_count", "tracked_regex", "ledger")
 
 BASIS_BY_KIND = {
     "checks": "git",
@@ -336,6 +523,9 @@ BASIS_BY_KIND = {
     "fraction": "local",
     "jsonl_rows": "local",
     "local_glob": "local",
+    "tracked_count": "git",
+    "tracked_regex": "git",
+    "ledger": "git",
     "manual": "manual",
 }
 
@@ -362,7 +552,7 @@ def measure_leaf(node, ctx):
         parts = ["documented"]
     else:
         parts = []
-        if kind in ("checks", "routes", "census"):
+        if kind in ("routes", "census") or kind in GIT_KINDS:
             parts.append("git")
         if ctx.used_local or kind in ("fraction", "jsonl_rows", "local_glob"):
             parts.append("local")
@@ -412,8 +602,14 @@ def census_order_from_spec(tree):
     return order
 
 
-def measure_tree(model, files, replay):
-    ctx = Ctx(files, replay, census_order_from_spec(model["tree"]))
+def basis_key(basis):
+    """Basis without the replay marker, e.g. 'git+local+carried' -> 'git+local'."""
+    return "+".join(p for p in basis.split("+") if p != "carried")
+
+
+def measure_tree(model, files, replay, rev=None, fallback_totals=None):
+    ctx = Ctx(files, replay, census_order_from_spec(model["tree"]), rev=rev,
+              fallback_totals=fallback_totals)
     groups = [evaluate(node, ctx) for node in model["tree"]]
     leaves = [leaf for g in groups for leaf in walk_leaves(g)]
     total_w = sum(leaf["weight"] for leaf in leaves)
@@ -421,11 +617,22 @@ def measure_tree(model, files, replay):
     manual_w = sum(leaf["weight"] for leaf in leaves if leaf["basis"] == "manual")
     manual_c = sum(leaf["weight"] * leaf["pct"] for leaf in leaves if leaf["basis"] == "manual")
     evidence_c = overall * total_w - manual_c if total_w else 0.0
+    # Objective: leaves measured from tracked files, ledgers or local outputs only.
+    objective_c = sum(leaf["weight"] * leaf["pct"] for leaf in leaves
+                      if "manual" not in leaf["basis"] and "documented" not in leaf["basis"])
+    by_basis = {}
+    for leaf in leaves:
+        key = basis_key(leaf["basis"])
+        by_basis[key] = by_basis.get(key, 0.0) + leaf["weight"]
     milestones = model.get("milestones", [])
     return {
         "overall_pct": round(overall, 3),
-        # The objective part of the overall: everything except manual estimates.
+        # Evidence-based (kept name): git, local and documented leaves. Manual estimates excluded.
         "measured_pct": round(evidence_c / total_w, 3) if total_w else 0.0,
+        # Objective: the git and local share only (no typed numbers at all).
+        "objective_pct": round(objective_c / total_w, 3) if total_w else 0.0,
+        "weight_by_basis": {k: round(100.0 * w / total_w, 3) for k, w in sorted(by_basis.items())}
+        if total_w else {},
         "estimated_pct": round(manual_c / total_w, 3) if total_w else 0.0,
         "manual_weight_pct": round(100.0 * manual_w / total_w, 3) if total_w else 0.0,
         "manual_full_pct": round((evidence_c + manual_w * 100.0) / total_w, 3) if total_w else 0.0,
@@ -1070,11 +1277,26 @@ def flatten_rows(groups, depth=0):
     return rows
 
 
-def legend_html():
+def legend_html(weight_by_basis=None):
     items = []
     for color, label in BINS:
         items.append(f'<li><span class="swatch" style="background:{color}"></span>{esc(label)}</li>')
-    return '<ul class="legend">' + "".join(items) + "</ul>"
+    out = '<ul class="legend">' + "".join(items) + "</ul>"
+    return out + basis_legend_html(weight_by_basis or {})
+
+
+BASIS_ORDER = ["git", "git+local", "local", "documented", "manual"]
+
+
+def basis_legend_html(weight_by_basis):
+    """Share of the total effort weight per basis, under the treemap legend."""
+    if not weight_by_basis:
+        return ""
+    keys = [k for k in BASIS_ORDER if k in weight_by_basis]
+    keys += sorted(k for k in weight_by_basis if k not in BASIS_ORDER)
+    cells = " &middot; ".join(f"<strong>{esc(k)}</strong> {weight_by_basis[k]:.1f}%" for k in keys)
+    return (f'<p class="meta basis-share">Weight share by basis (effort weight, not progress): {cells}. '
+            f'<em>git</em> and <em>local</em> are objective; <em>documented</em> is typed; <em>manual</em> is an estimate.</p>')
 
 
 PAGE_CSS = """
@@ -1178,19 +1400,20 @@ def index_html(res, head, subject, date, model, when_note):
 
 <div class="stats">
 <div class="stat"><div class="lbl">Overall (effort-weighted)</div><div class="big">{overall:.1f}%</div></div>
+<div class="stat"><div class="lbl">Objective (git + local basis)</div><div class="big">{res["objective_pct"]:.1f}%</div></div>
 <div class="stat"><div class="lbl">Evidence-based (measured + documented)</div><div class="big">{res["measured_pct"]:.1f}%</div></div>
 <div class="stat"><div class="lbl">Manual estimates &middot; {res["manual_weight_pct"]:.1f}% of weight</div><div class="big">{res["estimated_pct"]:.1f}%</div></div>
 <div class="stat"><div class="lbl">Components measured</div><div class="big">{len(res["leaves"])}</div></div>
 <div class="stat"><div class="lbl">Milestones reached</div><div class="big">{res["milestones_done"]} / {res["milestones_total"]}</div></div>
 </div>
-<p class="meta">The objective lower bound is {res["measured_pct"]:.1f}%: progress measured from committed sources, local outputs or documented counts. The remaining {res["estimated_pct"]:.1f}% of the overall is manual estimates; if all of that work were complete, the overall would be {res["manual_full_pct"]:.1f}%.</p>
+<p class="meta">The objective figure, {res["objective_pct"]:.1f}%, counts only leaves measured from committed files (<em>git</em>), ignored local outputs (<em>local</em>) or both. Adding documented counts gives the evidence-based {res["measured_pct"]:.1f}%. The remaining {res["estimated_pct"]:.1f}% of the overall is manual estimates; if all of that work were complete, the overall would be {res["manual_full_pct"]:.1f}%.</p>
 
 <h2>Milestones toward the Definition</h2>
 <ul class="ms">{milestones}</ul>
 
 <h2>Treemap</h2>
 <p class="meta">Tile area = estimated effort weight. Tile colour = percent complete (red to green, five bins). The percentage shows on every tile at all times; name labels reveal on zoom and are never cut off. Hover for the summary, click to read the evidence below. Breadcrumbs, <em>Fit all</em> or <em>Esc</em> go back; the sort toggle re-lays out the tiles by progress instead of area.</p>
-{legend_html()}
+{legend_html(res["weight_by_basis"])}
 <div class="tm-bar" id="tm-bar">
 <nav class="tm-crumbs" id="tm-crumbs" aria-label="Zoom level"></nav>
 <span class="spacer"></span>
@@ -1214,7 +1437,7 @@ def index_html(res, head, subject, date, model, when_note):
 </table></div>
 
 <h2>How this is measured</h2>
-<p class="meta">Weights and manual percentages are edited in <code>porting/progress/components.json</code>. The generator is <code>porting/progress/progress.py</code>, which reads committed files via <code>git archive</code> at HEAD and ignored local outputs. It records one history point per commit through <code>.githooks/post-commit</code>. Measures only count what is committed; uncommitted stubs and generated artifacts do not add progress unless they are local outputs named in a measure. The dashboard splits the overall into the evidence-based share (basis <em>git</em>, <em>local</em> or <em>documented</em>) and the manual-estimate share, so the size of the subjective part is always visible next to the figure it affects.</p>
+<p class="meta">Weights and manual percentages are edited in <code>porting/progress/components.json</code>. The generator is <code>porting/progress/progress.py</code>, which reads committed files via <code>git archive</code> at HEAD and ignored local outputs. It records one history point per commit through <code>.githooks/post-commit</code>. Measures only count what is committed; uncommitted stubs and generated artifacts do not add progress unless they are local outputs named in a measure. Denominators come from the tracked <code>porting/progress/totals.json</code> (regenerated by <code>refresh_totals.py</code> from local extraction data), and run checks from the tracked <code>porting/progress/evidence.json</code> (written by <code>record_evidence.py</code>). The dashboard splits the overall into the objective share (<em>git</em> and <em>local</em>), the evidence-based share (adds <em>documented</em>) and the manual-estimate share, so the size of the subjective part is always visible next to the figure it affects.</p>
 <footer>Generated offline by porting/progress/progress.py. No external scripts or fonts are loaded; the interactivity is a small inline script, and without JavaScript the same treemap renders as a static picture.</footer>
 <script>window.TM_DATA = {tm_json};</script>
 <script>{TM_PAGE_JS}</script>
@@ -1327,6 +1550,7 @@ def entry_from(res, sha, subject, date, seeded):
         "date": date,
         "overall_pct": res["overall_pct"],
         "measured_pct": res["measured_pct"],
+        "objective_pct": res["objective_pct"],
         "categories": {g["id"]: round(g["pct"], 3) for g in res["groups"]},
         "leaves": {leaf["id"]: leaf["pct"] for leaf in res["leaves"]},
         "carried": sorted(leaf["id"] for leaf in res["leaves"] if leaf.get("carried")),
@@ -1350,10 +1574,18 @@ def write_atomic(path, text):
     os.replace(tmp, path)
 
 
-def measure_commit(model, sha, subject, date, head_sha, seeded):
+def head_totals_entries(head_sha):
+    """HEAD's totals.json entries, used for commits that predate the file."""
+    data = parse_json_or_none(read_rev_file(head_sha, TOTALS_REL))
+    return data if isinstance(data, dict) else None
+
+
+def measure_commit(model, sha, subject, date, head_sha, seeded, fallback_totals=None):
     files = snapshot(sha)
     replay = sha != head_sha
-    res = measure_tree(model, files, replay)
+    if fallback_totals is None and replay:
+        fallback_totals = head_totals_entries(head_sha)
+    res = measure_tree(model, files, replay, rev=sha, fallback_totals=fallback_totals)
     return res, entry_from(res, sha, subject, date, seeded)
 
 
@@ -1372,6 +1604,7 @@ def main(argv=None):
             model = json.load(fh)
         head, subject, date = resolve_head()
         history = load_json(HISTORY, [])
+        head_fb = head_totals_entries(head)
 
         if args.seed:
             revs = git("rev-list", "--reverse", "HEAD").split()
@@ -1379,11 +1612,14 @@ def main(argv=None):
             for sha in revs:
                 s_subject = git("log", "-1", "--format=%s", sha).strip()
                 s_date = git("log", "-1", "--format=%cI", sha).strip()
-                _, entry = measure_commit(model, sha, s_subject, s_date, head, seeded=(sha != head))
+                _, entry = measure_commit(model, sha, s_subject, s_date, head, seeded=(sha != head),
+                                          fallback_totals=head_fb)
                 history.append(entry)
-            head_res, _ = measure_commit(model, head, subject, date, head, seeded=False)
+            head_res, _ = measure_commit(model, head, subject, date, head, seeded=False,
+                                         fallback_totals=head_fb)
         else:
-            head_res, head_entry = measure_commit(model, head, subject, date, head, seeded=False)
+            head_res, head_entry = measure_commit(model, head, subject, date, head, seeded=False,
+                                                  fallback_totals=head_fb)
             if not args.no_record:
                 history = [e for e in history if e.get("commit") != head]
                 history.append(head_entry)
@@ -1403,6 +1639,8 @@ def main(argv=None):
             "date": date,
             "overall_pct": head_res["overall_pct"],
             "measured_pct": head_res["measured_pct"],
+            "objective_pct": head_res["objective_pct"],
+            "weight_by_basis": head_res["weight_by_basis"],
             "estimated_pct": head_res["estimated_pct"],
             "manual_weight_pct": head_res["manual_weight_pct"],
             "manual_full_pct": head_res["manual_full_pct"],
