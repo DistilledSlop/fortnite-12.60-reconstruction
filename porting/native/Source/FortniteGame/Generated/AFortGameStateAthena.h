@@ -861,6 +861,18 @@ public:
 	UPROPERTY(Replicated, Transient)
 	TArray<FAthenaStreamIdOverride> ReticulatedSplineIds;
 
+	UFUNCTION(BlueprintCallable)
+	void ConditionalStopAutoPerfCapture();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	AFortSafeZoneIndicator* GetSafeZoneIndicator() const;
+
+	UFUNCTION(BlueprintCallable)
+	void HandleGameModeMessageDefaultPosition();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool HasValidFocalPointActor() const;
+
 	UFUNCTION()
 	void OnRep_Aircraft();
 
@@ -975,6 +987,9 @@ public:
 	UFUNCTION(Client, Reliable)
 	void RunPerfMemCheatScript_Client_Replicated(bool bStartStatFiles);
 	void RunPerfMemCheatScript_Client_Replicated_Implementation(bool bStartStatFiles);
+
+	UFUNCTION(BlueprintCallable)
+	void StopAutoPerfCaptureTimer();
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

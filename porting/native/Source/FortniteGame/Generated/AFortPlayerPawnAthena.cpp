@@ -2,6 +2,18 @@
 #include "AFortPlayerPawnAthena.h"
 #include "Net/UnrealNetwork.h"
 
+void AFortPlayerPawnAthena::ForceReviveFromDBNO()
+{
+	// Behaviour snippet: AFortPlayerPawnAthena::ForceReviveFromDBNO (body only; spliced into the generated member function).
+	// Original address: 0x14075b6b0
+	// Decompile source: porting/generated/decomp_improved/AFortPlayerPawnAthena/ForceReviveFromDBNO.c
+	// Proxy score: 91.8 (portability.json)
+	// Inferred: Decompile is P_FINISH only. The asm of the exec entry 0x14075b6b0 is P_FINISH then JMP 0x1406801c0, the shared ret stub. No other statement.
+	// Declared in generated header: no (generator must emit this declaration)
+	// CONFIDENCE: HIGH
+	// Empty body: the native function does nothing (see Inferred).
+}
+
 void AFortPlayerPawnAthena::NetMulticast_SuccessfulBuildingEdit_Implementation()
 {
 	// Body not recovered: reflection-derived stub.
@@ -42,14 +54,92 @@ void AFortPlayerPawnAthena::ServerCreativeToggleGhost_Implementation(bool bEnabl
 	// Body not recovered: reflection-derived stub.
 }
 
+bool AFortPlayerPawnAthena::ServerCreativeToggleGhost_Validate(bool bEnableOnly)
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// CONFIDENCE: HIGH
+	return true;
+}
+
 void AFortPlayerPawnAthena::ServerSetInteractingItem_Implementation(bool bClearInteraction, AActor* InteractingItem)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
+bool AFortPlayerPawnAthena::ServerSetInteractingItem_Validate(bool bClearInteraction, AActor* InteractingItem)
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// CONFIDENCE: HIGH
+	return true;
+}
+
 void AFortPlayerPawnAthena::ServerSuicide_Implementation(int32 MatchPlacement, bool bSuppressResurrectionChip)
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 51 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
+}
+
+bool AFortPlayerPawnAthena::ServerSuicide_Validate(int32 MatchPlacement, bool bSuppressResurrectionChip)
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// CONFIDENCE: HIGH
+	return true;
+}
+
+void AFortPlayerPawnAthena::SetBushEnabled(bool bEnableBush)
+{
+	// Behaviour snippet: AFortPlayerPawnAthena::SetBushEnabled (body only; spliced into the generated member function).
+	// Original address: 0x1411a8f70
+	// Decompile source: porting/generated/decomp/AFortPlayerPawnAthena/SetBushEnabled.c
+	// Proxy score: 86.2 (portability.json)
+	// Inferred: Direct call to 0x1406801c0, which is `ret 0` (disassembled). The native body therefore has no effect.
+	// Declared in generated header: no (generator must emit this declaration)
+	// CONFIDENCE: HIGH
+	// The decompile calls only the empty function Stub_Empty (0x1406801c0, ret 0) with the argument: no effect.
+}
+
+void AFortPlayerPawnAthena::SetShouldDropItemsOnDeath(bool bInShouldDropItemsOnDeath)
+{
+	// Behaviour snippet: AFortPlayerPawnAthena::SetShouldDropItemsOnDeath (body only; spliced into the generated member function).
+	// Original address: 0x142a83f40
+	// Decompile source: porting/generated/decomp/AFortPlayerPawnAthena/SetShouldDropItemsOnDeath.c
+	// Proxy score: 89.6 (portability.json)
+	// Inferred: Decompile stores (argument != 0) to the byte at +0x2972 (10610). bool_bits.py maps +0x2972 to bShouldDropItemsOnDeath; the header declares it as a native bool.
+	// Declared in generated header: no (generator must emit this declaration)
+	// CONFIDENCE: HIGH
+	bShouldDropItemsOnDeath = bInShouldDropItemsOnDeath;
+}
+
+void AFortPlayerPawnAthena::SetShouldSkipMovementFullSimulation(bool bInShouldSkipMovementFullSimulation)
+{
+	// Behaviour snippet: AFortPlayerPawnAthena::SetShouldSkipMovementFullSimulation (body only; spliced into the generated member function).
+	// Original address: 0x142a83fc0
+	// Decompile source: porting/generated/decomp/AFortPlayerPawnAthena/SetShouldSkipMovementFullSimulation.c
+	// Proxy score: 89.6 (portability.json)
+	// Inferred: Decompile stores (argument != 0) to the byte at +0x2973 (10611). bool_bits.py maps +0x2973 to bShouldSkipMovementFullSimulation; the header declares a native bool.
+	// Declared in generated header: no (generator must emit this declaration)
+	// CONFIDENCE: HIGH
+	bShouldSkipMovementFullSimulation = bInShouldSkipMovementFullSimulation;
 }
 
 void AFortPlayerPawnAthena::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

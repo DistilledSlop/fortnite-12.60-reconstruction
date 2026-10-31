@@ -2,6 +2,54 @@
 #include "AFortGameStateAthena.h"
 #include "Net/UnrealNetwork.h"
 
+void AFortGameStateAthena::ConditionalStopAutoPerfCapture()
+{
+	// Behaviour snippet: AFortGameStateAthena::ConditionalStopAutoPerfCapture (body only; spliced into the generated member function).
+	// Original address: 0x14075b6b0
+	// Decompile source: porting/generated/decomp_improved/AFortGameStateAthena/ConditionalStopAutoPerfCapture.c
+	// Proxy score: 91.8 (portability.json)
+	// Inferred: Decompile is P_FINISH only. The asm of the exec entry 0x14075b6b0 is P_FINISH then JMP 0x1406801c0, the shared ret stub. No other statement.
+	// Declared in generated header: no (generator must emit this declaration)
+	// CONFIDENCE: HIGH
+	// Empty body: the native function does nothing (see Inferred).
+}
+
+AFortSafeZoneIndicator* AFortGameStateAthena::GetSafeZoneIndicator() const
+{
+	// Behaviour snippet: AFortGameStateAthena::GetSafeZoneIndicator (body only; spliced into the generated member function).
+	// Original address: 0x14291f3d0
+	// Decompile source: porting/generated/decomp/AFortGameStateAthena/GetSafeZoneIndicator.c
+	// Proxy score: 87.5 (portability.json)
+	// Inferred: SafeZoneIndicator pointer at +0x1770 (reflection). Returned unchanged.
+	// Declared in generated header: no (generator must emit this declaration)
+	// CONFIDENCE: HIGH
+	return SafeZoneIndicator;
+}
+
+void AFortGameStateAthena::HandleGameModeMessageDefaultPosition()
+{
+	// Behaviour snippet: AFortGameStateAthena::HandleGameModeMessageDefaultPosition (body only; spliced into the generated member function).
+	// Original address: 0x14291f910
+	// Decompile source: porting/generated/decomp_improved/AFortGameStateAthena/HandleGameModeMessageDefaultPosition.c
+	// Proxy score: 86.5 (portability.json)
+	// Inferred: Decompile calls the multicast dispatcher 0x1406a9dc0 (TMulticastScriptDelegate::ProcessMulticastDelegate, see porting/decompilation_notes.md, third pass) on the delegate member with a parameter block holding the value(s) below. The parameter block is NULL, so the delegate has no parameters.
+	// Declared in generated header: no (generator must emit this declaration)
+	// CONFIDENCE: HIGH
+	SetDefaultPositionGameModeMessage.Broadcast();
+}
+
+bool AFortGameStateAthena::HasValidFocalPointActor() const
+{
+	// Behaviour snippet: AFortGameStateAthena::HasValidFocalPointActor (body only; spliced into the generated member function).
+	// Original address: 0x14291fdd0
+	// Decompile source: porting/generated/decomp/AFortGameStateAthena/HasValidFocalPointActor.c
+	// Proxy score: 92.5 (portability.json)
+	// Inferred: FocalPointActor = AActor* at +0x1320 (reflection). Decompile tests only for non-null.
+	// Declared in generated header: no (generator must emit this declaration)
+	// CONFIDENCE: HIGH
+	return FocalPointActor != nullptr;
+}
+
 void AFortGameStateAthena::OnRep_Aircraft()
 {
 	// Body not recovered: reflection-derived stub.
@@ -9,7 +57,14 @@ void AFortGameStateAthena::OnRep_Aircraft()
 
 void AFortGameStateAthena::OnRep_bPlaylistStoppedSafeZonePhases()
 {
-	// Body not recovered: reflection-derived stub.
+	// Behaviour snippet: AFortGameStateAthena::OnRep_bPlaylistStoppedSafeZonePhases (body only; spliced into the generated member function).
+	// Original address: 0x1429208c0
+	// Decompile source: porting/generated/decomp_improved/AFortGameStateAthena/OnRep_bPlaylistStoppedSafeZonePhases.c
+	// Proxy score: 71.5 (portability.json)
+	// Inferred: Decompile calls the multicast dispatcher 0x1406a9dc0 (TMulticastScriptDelegate::ProcessMulticastDelegate, see porting/decompilation_notes.md, third pass) on the delegate member with a parameter block holding the value(s) below. One bool parameter. The decompile reads byte +0x11f1 (named as TotalFinalCountdownTime[5] by Ghidra); bool_bits maps that byte to bPlaylistStoppedSafeZonePhases (mov8, mask 1).
+	// Declared in generated header: yes
+	// CONFIDENCE: HIGH
+	StormProgressStopped.Broadcast(bPlaylistStoppedSafeZonePhases);
 }
 
 void AFortGameStateAthena::OnRep_BroadcastSpectatorInfo()
@@ -29,12 +84,26 @@ void AFortGameStateAthena::OnRep_CurrentHighScore()
 
 void AFortGameStateAthena::OnRep_CurrentPlaylistId()
 {
-	// Body not recovered: reflection-derived stub.
+	// Behaviour snippet: AFortGameStateAthena::OnRep_CurrentPlaylistId (body only; spliced into the generated member function).
+	// Original address: 0x14075b6b0
+	// Decompile source: porting/generated/decomp_improved/AFortGameStateAthena/OnRep_CurrentPlaylistId.c
+	// Proxy score: 91.8 (portability.json)
+	// Inferred: Decompile is P_FINISH only. The asm of the exec entry 0x14075b6b0 is P_FINISH then JMP 0x1406801c0, the shared ret stub. No other statement.
+	// Declared in generated header: yes
+	// CONFIDENCE: HIGH
+	// Empty body: the native function does nothing (see Inferred).
 }
 
 void AFortGameStateAthena::OnRep_DamageForStormCapMarking()
 {
-	// Body not recovered: reflection-derived stub.
+	// Behaviour snippet: AFortGameStateAthena::OnRep_DamageForStormCapMarking (body only; spliced into the generated member function).
+	// Original address: 0x14075b6b0
+	// Decompile source: porting/generated/decomp_improved/AFortGameStateAthena/OnRep_DamageForStormCapMarking.c
+	// Proxy score: 91.8 (portability.json)
+	// Inferred: Decompile is P_FINISH only. The asm of the exec entry 0x14075b6b0 is P_FINISH then JMP 0x1406801c0, the shared ret stub. No other statement.
+	// Declared in generated header: yes
+	// CONFIDENCE: HIGH
+	// Empty body: the native function does nothing (see Inferred).
 }
 
 void AFortGameStateAthena::OnRep_EndGameKickPlayerTime()
@@ -69,22 +138,50 @@ void AFortGameStateAthena::OnRep_MapInfo()
 
 void AFortGameStateAthena::OnRep_MutatorEventData()
 {
-	// Body not recovered: reflection-derived stub.
+	// Behaviour snippet: AFortGameStateAthena::OnRep_MutatorEventData (body only; spliced into the generated member function).
+	// Original address: 0x142920550
+	// Decompile source: porting/generated/decomp_improved/AFortGameStateAthena/OnRep_MutatorEventData.c
+	// Proxy score: 56.8 (portability.json)
+	// Inferred: Decompile calls the multicast dispatcher 0x1406a9dc0 (TMulticastScriptDelegate::ProcessMulticastDelegate, see porting/decompilation_notes.md, third pass) on the delegate member with a parameter block holding the value(s) below. The 16-byte MutatorEventData struct is copied into the block in struct order (EventId, EventParam1, EventParam2, EventParam3). The asm (body 0x1419a6bb0) shows the same four dwords. Passing the fields by name matches the copy because the delegate parameter order in the generated macro is the reverse of the block order (see decompilation_notes.md, third pass).
+	// Declared in generated header: yes
+	// CONFIDENCE: MEDIUM
+	MutatorGameplayEvent.Broadcast(MutatorEventData.EventParam3, MutatorEventData.EventParam2, MutatorEventData.EventParam1, MutatorEventData.EventId);
 }
 
 void AFortGameStateAthena::OnRep_MutatorGenericInt_0()
 {
-	// Body not recovered: reflection-derived stub.
+	// Behaviour snippet: AFortGameStateAthena::OnRep_MutatorGenericInt_0 (body only; spliced into the generated member function).
+	// Original address: 0x142920570
+	// Decompile source: porting/generated/decomp_improved/AFortGameStateAthena/OnRep_MutatorGenericInt_0.c
+	// Proxy score: 73.6 (portability.json)
+	// Inferred: Decompile calls the multicast dispatcher 0x1406a9dc0 (TMulticastScriptDelegate::ProcessMulticastDelegate, see porting/decompilation_notes.md, third pass) on the delegate member with a parameter block holding the value(s) below. The block holds the constant 0 at offset 0 and MutatorGenericInt_0 at offset 4 (asm of the body 0x1419a6c10: MOV [RSP+0x30],0; MOV [RSP+0x34],field). Passed by name, the value goes to NewIntegerValue and the index 0 to GenericIntegerIndex, because the generated macro order is the reverse of the block order.
+	// Declared in generated header: yes
+	// CONFIDENCE: MEDIUM
+	MutatorGenericIntegerUpdated.Broadcast(MutatorGenericInt_0, 0);
 }
 
 void AFortGameStateAthena::OnRep_MutatorGenericInt_1()
 {
-	// Body not recovered: reflection-derived stub.
+	// Behaviour snippet: AFortGameStateAthena::OnRep_MutatorGenericInt_1 (body only; spliced into the generated member function).
+	// Original address: 0x142920590
+	// Decompile source: porting/generated/decomp_improved/AFortGameStateAthena/OnRep_MutatorGenericInt_1.c
+	// Proxy score: 73.6 (portability.json)
+	// Inferred: Decompile calls the multicast dispatcher 0x1406a9dc0 (TMulticastScriptDelegate::ProcessMulticastDelegate, see porting/decompilation_notes.md, third pass) on the delegate member with a parameter block holding the value(s) below. The block holds the constant 1 at offset 0 and MutatorGenericInt_1 at offset 4 (asm of the body 0x1419a6c40: MOV [RSP+0x30],1; MOV [RSP+0x34],field). Passed by name, the value goes to NewIntegerValue and the index 1 to GenericIntegerIndex, because the generated macro order is the reverse of the block order.
+	// Declared in generated header: yes
+	// CONFIDENCE: MEDIUM
+	MutatorGenericIntegerUpdated.Broadcast(MutatorGenericInt_1, 1);
 }
 
 void AFortGameStateAthena::OnRep_MutatorGenericInt_2()
 {
-	// Body not recovered: reflection-derived stub.
+	// Behaviour snippet: AFortGameStateAthena::OnRep_MutatorGenericInt_2 (body only; spliced into the generated member function).
+	// Original address: 0x1429205b0
+	// Decompile source: porting/generated/decomp_improved/AFortGameStateAthena/OnRep_MutatorGenericInt_2.c
+	// Proxy score: 65.2 (portability.json)
+	// Inferred: Decompile calls the multicast dispatcher 0x1406a9dc0 (TMulticastScriptDelegate::ProcessMulticastDelegate, see porting/decompilation_notes.md, third pass) on the delegate member with a parameter block holding the value(s) below. The block holds the constant 2 at offset 0 and MutatorGenericInt_2 at offset 4 (asm of the body 0x1419a6c70: MOV [RSP+0x30],2; MOV [RSP+0x34],field). Passed by name, the value goes to NewIntegerValue and the index 2 to GenericIntegerIndex, because the generated macro order is the reverse of the block order.
+	// Declared in generated header: yes
+	// CONFIDENCE: MEDIUM
+	MutatorGenericIntegerUpdated.Broadcast(MutatorGenericInt_2, 2);
 }
 
 void AFortGameStateAthena::OnRep_PlayerBotsLeft()
@@ -139,7 +236,14 @@ void AFortGameStateAthena::OnRep_SpectateAPartyMemberAvailable()
 
 void AFortGameStateAthena::OnRep_StormCapState()
 {
-	// Body not recovered: reflection-derived stub.
+	// Behaviour snippet: AFortGameStateAthena::OnRep_StormCapState (body only; spliced into the generated member function).
+	// Original address: 0x142920710
+	// Decompile source: porting/generated/decomp_improved/AFortGameStateAthena/OnRep_StormCapState.c
+	// Proxy score: 71.5 (portability.json)
+	// Inferred: Decompile calls the multicast dispatcher 0x1406a9dc0 (TMulticastScriptDelegate::ProcessMulticastDelegate, see porting/decompilation_notes.md, third pass) on the delegate member with a parameter block holding the value(s) below. One byte parameter: StormCapState (uint8 at +0x1351).
+	// Declared in generated header: yes
+	// CONFIDENCE: HIGH
+	StormCapStateChanged.Broadcast(StormCapState);
 }
 
 void AFortGameStateAthena::OnRep_SupplyDropWaveStartedSoundCue()
@@ -174,7 +278,14 @@ void AFortGameStateAthena::OnRep_WinningPlayerState()
 
 void AFortGameStateAthena::OnRep_WinningScore()
 {
-	// Body not recovered: reflection-derived stub.
+	// Behaviour snippet: AFortGameStateAthena::OnRep_WinningScore (body only; spliced into the generated member function).
+	// Original address: 0x142920860
+	// Decompile source: porting/generated/decomp_improved/AFortGameStateAthena/OnRep_WinningScore.c
+	// Proxy score: 86.9 (portability.json)
+	// Inferred: Decompile calls the multicast dispatcher 0x1406a9dc0 (TMulticastScriptDelegate::ProcessMulticastDelegate, see porting/decompilation_notes.md, third pass) on the delegate member with a parameter block holding the value(s) below. One int32 parameter: WinningScore (+0x142c).
+	// Declared in generated header: yes
+	// CONFIDENCE: HIGH
+	WinningScoreDetermined.Broadcast(WinningScore);
 }
 
 void AFortGameStateAthena::OnRep_WinningTeam()
@@ -190,6 +301,18 @@ void AFortGameStateAthena::OnRep_WinningTeamsCN()
 void AFortGameStateAthena::RunPerfMemCheatScript_Client_Replicated_Implementation(bool bStartStatFiles)
 {
 	// Body not recovered: reflection-derived stub.
+}
+
+void AFortGameStateAthena::StopAutoPerfCaptureTimer()
+{
+	// Behaviour snippet: AFortGameStateAthena::StopAutoPerfCaptureTimer (body only; spliced into the generated member function).
+	// Original address: 0x14075b6b0
+	// Decompile source: porting/generated/decomp_improved/AFortGameStateAthena/StopAutoPerfCaptureTimer.c
+	// Proxy score: 91.8 (portability.json)
+	// Inferred: Decompile is P_FINISH only. The asm of the exec entry 0x14075b6b0 is P_FINISH then JMP 0x1406801c0, the shared ret stub. No other statement.
+	// Declared in generated header: no (generator must emit this declaration)
+	// CONFIDENCE: HIGH
+	// Empty body: the native function does nothing (see Inferred).
 }
 
 void AFortGameStateAthena::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

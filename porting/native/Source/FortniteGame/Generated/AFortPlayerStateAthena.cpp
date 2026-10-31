@@ -49,7 +49,14 @@ void AFortPlayerStateAthena::OnRep_DidNotThankBusDriver()
 
 void AFortPlayerStateAthena::OnRep_Downs()
 {
-	// Body not recovered: reflection-derived stub.
+	// Behaviour snippet: AFortPlayerStateAthena::OnRep_Downs (body only; spliced into the generated member function).
+	// Original address: 0x14075b6b0
+	// Decompile source: porting/generated/decomp_improved/AFortPlayerStateAthena/OnRep_Downs.c
+	// Proxy score: 91.8 (portability.json)
+	// Inferred: Decompile is P_FINISH only. The asm of the exec entry 0x14075b6b0 is P_FINISH then JMP 0x1406801c0, the shared ret stub. No other statement.
+	// Declared in generated header: yes
+	// CONFIDENCE: HIGH
+	// Empty body: the native function does nothing (see Inferred).
 }
 
 void AFortPlayerStateAthena::OnRep_Kills()
@@ -164,7 +171,14 @@ void AFortPlayerStateAthena::OnRep_StormSurgeEffectCount()
 
 void AFortPlayerStateAthena::OnRep_TeamAverageDamageDealt()
 {
-	// Body not recovered: reflection-derived stub.
+	// Behaviour snippet: AFortPlayerStateAthena::OnRep_TeamAverageDamageDealt (body only; spliced into the generated member function).
+	// Original address: 0x142a8dda0
+	// Decompile source: porting/generated/decomp_improved/AFortPlayerStateAthena/OnRep_TeamAverageDamageDealt.c
+	// Proxy score: 86.9 (portability.json)
+	// Inferred: Decompile calls the multicast dispatcher 0x1406a9dc0 (TMulticastScriptDelegate::ProcessMulticastDelegate, see porting/decompilation_notes.md, third pass) on the delegate member with a parameter block holding the value(s) below. The decompile converts TeamAverageDamageDealt (uint16 in the header) to float for the single float parameter.
+	// Declared in generated header: yes
+	// CONFIDENCE: HIGH
+	TeamAverageDamageChanged.Broadcast(static_cast<float>(TeamAverageDamageDealt));
 }
 
 void AFortPlayerStateAthena::OnRep_TeamIndex(uint8 OldVal)
@@ -179,12 +193,26 @@ void AFortPlayerStateAthena::OnRep_TeamKillScore()
 
 void AFortPlayerStateAthena::OnRep_TeamScore()
 {
-	// Body not recovered: reflection-derived stub.
+	// Behaviour snippet: AFortPlayerStateAthena::OnRep_TeamScore (body only; spliced into the generated member function).
+	// Original address: 0x142a8de60
+	// Decompile source: porting/generated/decomp_improved/AFortPlayerStateAthena/OnRep_TeamScore.c
+	// Proxy score: 86.9 (portability.json)
+	// Inferred: Decompile calls the multicast dispatcher 0x1406a9dc0 (TMulticastScriptDelegate::ProcessMulticastDelegate, see porting/decompilation_notes.md, third pass) on the delegate member with a parameter block holding the value(s) below. One int32 parameter: TeamScore.
+	// Declared in generated header: yes
+	// CONFIDENCE: HIGH
+	TeamScoreChanged.Broadcast(TeamScore);
 }
 
 void AFortPlayerStateAthena::OnRep_TeamScorePlacement()
 {
-	// Body not recovered: reflection-derived stub.
+	// Behaviour snippet: AFortPlayerStateAthena::OnRep_TeamScorePlacement (body only; spliced into the generated member function).
+	// Original address: 0x142a8de80
+	// Decompile source: porting/generated/decomp_improved/AFortPlayerStateAthena/OnRep_TeamScorePlacement.c
+	// Proxy score: 86.9 (portability.json)
+	// Inferred: Decompile calls the multicast dispatcher 0x1406a9dc0 (TMulticastScriptDelegate::ProcessMulticastDelegate, see porting/decompilation_notes.md, third pass) on the delegate member with a parameter block holding the value(s) below. One int32 parameter: TeamScorePlacement.
+	// Declared in generated header: yes
+	// CONFIDENCE: HIGH
+	TeamPlacementChanged.Broadcast(TeamScorePlacement);
 }
 
 void AFortPlayerStateAthena::OnRep_ThankedBusDriver()
@@ -202,9 +230,33 @@ void AFortPlayerStateAthena::Server_SetCanEditCreativeIsland_Implementation(cons
 	// Body not recovered: reflection-derived stub.
 }
 
+bool AFortPlayerStateAthena::Server_SetCanEditCreativeIsland_Validate(const TArray<FString>& WhiteList, bool bCanEdit)
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// CONFIDENCE: HIGH
+	return true;
+}
+
 void AFortPlayerStateAthena::Server_TogglePreserveSquad_Implementation()
 {
 	// Body not recovered: reflection-derived stub.
+}
+
+bool AFortPlayerStateAthena::Server_TogglePreserveSquad_Validate()
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// CONFIDENCE: HIGH
+	return true;
 }
 
 void AFortPlayerStateAthena::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

@@ -424,6 +424,9 @@ public:
 	UPROPERTY()
 	FGameplayTagContainer DamageTagsExcludedFromCameraShake;
 
+	UFUNCTION(BlueprintCallable)
+	void ForceReviveFromDBNO();
+
 	UFUNCTION(NetMulticast, Unreliable)
 	void NetMulticast_SuccessfulBuildingEdit();
 	void NetMulticast_SuccessfulBuildingEdit_Implementation();
@@ -446,17 +449,29 @@ public:
 	UFUNCTION()
 	void OnRep_ReplayRepAnimMontageInfo();
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerCreativeToggleGhost(bool bEnableOnly);
 	void ServerCreativeToggleGhost_Implementation(bool bEnableOnly);
+	bool ServerCreativeToggleGhost_Validate(bool bEnableOnly);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerSetInteractingItem(bool bClearInteraction, AActor* InteractingItem);
 	void ServerSetInteractingItem_Implementation(bool bClearInteraction, AActor* InteractingItem);
+	bool ServerSetInteractingItem_Validate(bool bClearInteraction, AActor* InteractingItem);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerSuicide(int32 MatchPlacement, bool bSuppressResurrectionChip);
 	void ServerSuicide_Implementation(int32 MatchPlacement, bool bSuppressResurrectionChip);
+	bool ServerSuicide_Validate(int32 MatchPlacement, bool bSuppressResurrectionChip);
+
+	UFUNCTION(BlueprintCallable)
+	void SetBushEnabled(bool bEnableBush);
+
+	UFUNCTION(BlueprintCallable)
+	void SetShouldDropItemsOnDeath(bool bInShouldDropItemsOnDeath);
+
+	UFUNCTION(BlueprintCallable)
+	void SetShouldSkipMovementFullSimulation(bool bInShouldSkipMovementFullSimulation);
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

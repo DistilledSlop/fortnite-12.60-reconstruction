@@ -423,13 +423,15 @@ public:
 	UFUNCTION()
 	void OnRep_TotalPlayerScore();
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void Server_SetCanEditCreativeIsland(const TArray<FString>& WhiteList, bool bCanEdit);
 	void Server_SetCanEditCreativeIsland_Implementation(const TArray<FString>& WhiteList, bool bCanEdit);
+	bool Server_SetCanEditCreativeIsland_Validate(const TArray<FString>& WhiteList, bool bCanEdit);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void Server_TogglePreserveSquad();
 	void Server_TogglePreserveSquad_Implementation();
+	bool Server_TogglePreserveSquad_Validate();
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

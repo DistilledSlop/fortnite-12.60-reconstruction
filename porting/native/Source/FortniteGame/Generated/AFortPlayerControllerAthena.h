@@ -724,6 +724,12 @@ public:
 	UPROPERTY()
 	FOnPreviewScreenshotCameraActivated OnPreviewScreenshotCameraActivated;
 
+	UFUNCTION(BlueprintCallable)
+	void ClearDroppableItems();
+
+	UFUNCTION(BlueprintCallable)
+	void ClearInventorySpaces(int32 NumSpaces);
+
 	UFUNCTION(Client, Unreliable)
 	void Client_DisplayQuestUpdate_Assist(AFortPlayerState* AssistingPlayer, AFortPlayerState* QuestOwner, const FFortUpdatedObjectiveStat& ObjectiveUpdated);
 	void Client_DisplayQuestUpdate_Assist_Implementation(AFortPlayerState* AssistingPlayer, AFortPlayerState* QuestOwner, const FFortUpdatedObjectiveStat& ObjectiveUpdated);
@@ -892,6 +898,27 @@ public:
 	void DuplicateCreativePlot(const FString& Title, const FString& Locale, const FString& IslandId);
 	void DuplicateCreativePlot_Implementation(const FString& Title, const FString& Locale, const FString& IslandId);
 
+	UFUNCTION(BlueprintCallable)
+	void EnableCreativeContentManagerBasedOnPlaylist();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	AFortVolume* GetCreativePlotLinkedVolume() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UCreativeUserContentManager* GetCreativeUserContentManager() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UAthenaMarkerComponent* GetMarkerComponent() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsClientNotifiedOfLoss() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsClientNotifiedOfTeamWin() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsClientNotifiedOfWin() const;
+
 	UFUNCTION(Server, Reliable)
 	void MakeNewCreativePlot(const FString& Title, const FString& Locale, UFortCreativeRealEstatePlotItemDefinition* PlotType);
 	void MakeNewCreativePlot_Implementation(const FString& Title, const FString& Locale, UFortCreativeRealEstatePlotItemDefinition* PlotType);
@@ -900,9 +927,10 @@ public:
 	void MakeNewCreativePlotFromLinkCode(const FString& Title, const FString& Locale, const FString& LinkCode);
 	void MakeNewCreativePlotFromLinkCode_Implementation(const FString& Title, const FString& Locale, const FString& LinkCode);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void OnPostGameForced();
 	void OnPostGameForced_Implementation();
+	bool OnPostGameForced_Validate();
 
 	UFUNCTION()
 	void OnRep_CreativeIslands();
@@ -919,89 +947,112 @@ public:
 	UFUNCTION()
 	void OnRep_SkydiveLeader();
 
+	UFUNCTION(BlueprintCallable)
+	void PreLobbyIslandTeleport();
+
 	UFUNCTION(Server, Reliable)
 	void PublishCreativePlot(const FCreativePublishOptions& MyPublishOptions, AFortVolume* VolumeToPublish);
 	void PublishCreativePlot_Implementation(const FCreativePublishOptions& MyPublishOptions, AFortVolume* VolumeToPublish);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(BlueprintCallable)
+	void RemoveDroppableItems();
+
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ResetMyCurrentCreativePlot();
 	void ResetMyCurrentCreativePlot_Implementation();
+	bool ResetMyCurrentCreativePlot_Validate();
 
 	UFUNCTION(Server, Reliable)
 	void RestoreCreativePlot(const FString& IslandId);
 	void RestoreCreativePlot_Implementation(const FString& IslandId);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerAddSimulatedXp(const FGameplayTag& MetaData, const FText& Source, float XpAmmount);
 	void ServerAddSimulatedXp_Implementation(const FGameplayTag& MetaData, const FText& Source, float XpAmmount);
+	bool ServerAddSimulatedXp_Validate(const FGameplayTag& MetaData, const FText& Source, float XpAmmount);
 
 	UFUNCTION(Server, Reliable)
 	void ServerAddToCachedPurchased(int32 Count, UFortItemDefinition* ItemDefinition);
 	void ServerAddToCachedPurchased_Implementation(int32 Count, UFortItemDefinition* ItemDefinition);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerApplyOverrideWrapToItem(const TSoftObjectPtr<UAthenaItemWrapDefinition>& ItemWrap, const FGuid& GUID);
 	void ServerApplyOverrideWrapToItem_Implementation(const TSoftObjectPtr<UAthenaItemWrapDefinition>& ItemWrap, const FGuid& GUID);
+	bool ServerApplyOverrideWrapToItem_Validate(const TSoftObjectPtr<UAthenaItemWrapDefinition>& ItemWrap, const FGuid& GUID);
 
 	UFUNCTION(Server, Reliable)
 	void ServerApplyOverrideWrapToVehicle(const TSoftObjectPtr<UAthenaItemWrapDefinition>& ItemWrap);
 	void ServerApplyOverrideWrapToVehicle_Implementation(const TSoftObjectPtr<UAthenaItemWrapDefinition>& ItemWrap);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerBeginEndPreview(bool bInBegin);
 	void ServerBeginEndPreview_Implementation(bool bInBegin);
+	bool ServerBeginEndPreview_Validate(bool bInBegin);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerBroadcastDeviceButtonComponentClickedDelegate(UFortCreativeDeviceButtonComponent* DeviceButtonComponent);
 	void ServerBroadcastDeviceButtonComponentClickedDelegate_Implementation(UFortCreativeDeviceButtonComponent* DeviceButtonComponent);
+	bool ServerBroadcastDeviceButtonComponentClickedDelegate_Validate(UFortCreativeDeviceButtonComponent* DeviceButtonComponent);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerClaimPortal();
 	void ServerClaimPortal_Implementation();
+	bool ServerClaimPortal_Validate();
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerClearSkydiveLeader();
 	void ServerClearSkydiveLeader_Implementation();
+	bool ServerClearSkydiveLeader_Validate();
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerClientIsReadyToRespawn();
 	void ServerClientIsReadyToRespawn_Implementation();
+	bool ServerClientIsReadyToRespawn_Validate();
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerCreateProfileGoCollectionForSublevels(int32 Quad, int32 RotationSteps, int32 GridStepsY, int32 GridStepsX, const FString& SublevelSearchString);
 	void ServerCreateProfileGoCollectionForSublevels_Implementation(int32 Quad, int32 RotationSteps, int32 GridStepsY, int32 GridStepsX, const FString& SublevelSearchString);
+	bool ServerCreateProfileGoCollectionForSublevels_Validate(int32 Quad, int32 RotationSteps, int32 GridStepsY, int32 GridStepsX, const FString& SublevelSearchString);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerDBNOReviveInterrupted(AFortPlayerPawnAthena* DBNOPawn);
 	void ServerDBNOReviveInterrupted_Implementation(AFortPlayerPawnAthena* DBNOPawn);
+	bool ServerDBNOReviveInterrupted_Validate(AFortPlayerPawnAthena* DBNOPawn);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerDBNOReviveStarted(AFortPlayerPawnAthena* DBNOPawn);
 	void ServerDBNOReviveStarted_Implementation(AFortPlayerPawnAthena* DBNOPawn);
+	bool ServerDBNOReviveStarted_Validate(AFortPlayerPawnAthena* DBNOPawn);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerEnableAnonymousCharacterMode();
 	void ServerEnableAnonymousCharacterMode_Implementation();
+	bool ServerEnableAnonymousCharacterMode_Validate();
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerEnableAnonymousMode();
 	void ServerEnableAnonymousMode_Implementation();
+	bool ServerEnableAnonymousMode_Validate();
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerEndLoadingVolume(AFortVolume* VolumeToLoad);
 	void ServerEndLoadingVolume_Implementation(AFortVolume* VolumeToLoad);
+	bool ServerEndLoadingVolume_Validate(AFortVolume* VolumeToLoad);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerEndMinigame(bool bAbandon);
 	void ServerEndMinigame_Implementation(bool bAbandon);
+	bool ServerEndMinigame_Validate(bool bAbandon);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerEndUnloadingVolume(AFortVolume* VolumeToUnload);
 	void ServerEndUnloadingVolume_Implementation(AFortVolume* VolumeToUnload);
+	bool ServerEndUnloadingVolume_Validate(AFortVolume* VolumeToUnload);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerGenerateMockMatchReport();
 	void ServerGenerateMockMatchReport_Implementation();
+	bool ServerGenerateMockMatchReport_Validate();
 
 	UFUNCTION(Server, Reliable)
 	void ServerGiveCreativeItem(const FFortItemEntry& CreativeItem);
@@ -1015,9 +1066,10 @@ public:
 	void ServerLoadIslandCheckpoint(AFortAthenaCreativePortal* Portal);
 	void ServerLoadIslandCheckpoint_Implementation(AFortAthenaCreativePortal* Portal);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerLoadPlotForPortal(const FString& PlotItemId, AFortAthenaCreativePortal* Portal);
 	void ServerLoadPlotForPortal_Implementation(const FString& PlotItemId, AFortAthenaCreativePortal* Portal);
+	bool ServerLoadPlotForPortal_Validate(const FString& PlotItemId, AFortAthenaCreativePortal* Portal);
 
 	UFUNCTION(Server, Reliable)
 	void ServerLoadPlotForPortalFromMnemonic(const FString& Mnemonic, AFortAthenaCreativePortal* Portal);
@@ -1027,61 +1079,72 @@ public:
 	void ServerLookedAtFocalPoint();
 	void ServerLookedAtFocalPoint_Implementation();
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerNotifyClientReachedMaxWaitingTimeForDeviceReplication();
 	void ServerNotifyClientReachedMaxWaitingTimeForDeviceReplication_Implementation();
+	bool ServerNotifyClientReachedMaxWaitingTimeForDeviceReplication_Validate();
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerNotifyOstrichSelfDestruct();
 	void ServerNotifyOstrichSelfDestruct_Implementation();
+	bool ServerNotifyOstrichSelfDestruct_Validate();
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerNotifyOstrichShieldOvercharge();
 	void ServerNotifyOstrichShieldOvercharge_Implementation();
+	bool ServerNotifyOstrichShieldOvercharge_Validate();
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerReleasePortal();
 	void ServerReleasePortal_Implementation();
+	bool ServerReleasePortal_Validate();
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerReloadCreativePlot();
 	void ServerReloadCreativePlot_Implementation();
+	bool ServerReloadCreativePlot_Validate();
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerRequestNewSkydiveLeader();
 	void ServerRequestNewSkydiveLeader_Implementation();
+	bool ServerRequestNewSkydiveLeader_Validate();
 
 	UFUNCTION(Server, Reliable)
 	void ServerRequestObjectTrackingDetails(AFortVolume* Volume);
 	void ServerRequestObjectTrackingDetails_Implementation(AFortVolume* Volume);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerResetCameraPreviewToDefaultLocation();
 	void ServerResetCameraPreviewToDefaultLocation_Implementation();
+	bool ServerResetCameraPreviewToDefaultLocation_Validate();
 
 	UFUNCTION(Server, Reliable)
 	void ServerResetCurrentVolumeWithoutTeleport();
 	void ServerResetCurrentVolumeWithoutTeleport_Implementation();
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerRespondToAbandonMatch(bool bAbandon);
 	void ServerRespondToAbandonMatch_Implementation(bool bAbandon);
+	bool ServerRespondToAbandonMatch_Validate(bool bAbandon);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerRestartMinigame();
 	void ServerRestartMinigame_Implementation();
+	bool ServerRestartMinigame_Validate();
 
 	UFUNCTION(Server, Reliable)
 	void ServerSaveIslandCheckpoint(AFortAthenaCreativePortal* Portal);
 	void ServerSaveIslandCheckpoint_Implementation(AFortAthenaCreativePortal* Portal);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerSelectMutatorItem(int32 ItemIndex, AFortGameplayMutator* Mutator);
 	void ServerSelectMutatorItem_Implementation(int32 ItemIndex, AFortGameplayMutator* Mutator);
+	bool ServerSelectMutatorItem_Validate(int32 ItemIndex, AFortGameplayMutator* Mutator);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerSendSquadFriend(AFortPlayerStateAthena* FriendInSquad);
 	void ServerSendSquadFriend_Implementation(AFortPlayerStateAthena* FriendInSquad);
+	bool ServerSendSquadFriend_Validate(AFortPlayerStateAthena* FriendInSquad);
 
 	UFUNCTION(Server, Reliable)
 	void ServerSetMinigameClassSlot(uint8 InClassSlotIndex);
@@ -1091,13 +1154,15 @@ public:
 	void ServerSetOnCreativePortalLoadedDelegate(int32 PortalIndex);
 	void ServerSetOnCreativePortalLoadedDelegate_Implementation(int32 PortalIndex);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerSetPlayset(UFortPlaysetItemDefinition* NewPlayset);
 	void ServerSetPlayset_Implementation(UFortPlaysetItemDefinition* NewPlayset);
+	bool ServerSetPlayset_Validate(UFortPlaysetItemDefinition* NewPlayset);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerSetReceiveEmailSignups(bool bSignUp);
 	void ServerSetReceiveEmailSignups_Implementation(bool bSignUp);
+	bool ServerSetReceiveEmailSignups_Validate(bool bSignUp);
 
 	UFUNCTION(Server, Reliable)
 	void ServerSetStreamingTestStreamingLevels(bool streaming);
@@ -1107,13 +1172,15 @@ public:
 	void ServerSetTeam(uint8 InTeam);
 	void ServerSetTeam_Implementation(uint8 InTeam);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerSetUseSolaris(bool bShouldUse);
 	void ServerSetUseSolaris_Implementation(bool bShouldUse);
+	bool ServerSetUseSolaris_Validate(bool bShouldUse);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerSimulateLevelUp(int32 ClientSimulatedLevel);
 	void ServerSimulateLevelUp_Implementation(int32 ClientSimulatedLevel);
+	bool ServerSimulateLevelUp_Validate(int32 ClientSimulatedLevel);
 
 	UFUNCTION(Server, Reliable)
 	void ServerSpawnCreativeSupplyDrop(TSubclassOf<AActor> InSupplyDropClass, const FVector& Position);
@@ -1123,73 +1190,86 @@ public:
 	void ServerStartInteractWithIslandPortal(AFortAthenaCreativePortal* Portal);
 	void ServerStartInteractWithIslandPortal_Implementation(AFortAthenaCreativePortal* Portal);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerStartLoadingVolume(AFortVolume* VolumeToLoad);
 	void ServerStartLoadingVolume_Implementation(AFortVolume* VolumeToLoad);
+	bool ServerStartLoadingVolume_Validate(AFortVolume* VolumeToLoad);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerStartMinigame();
 	void ServerStartMinigame_Implementation();
+	bool ServerStartMinigame_Validate();
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerStartUnloadingVolume(AFortVolume* VolumeToUnload);
 	void ServerStartUnloadingVolume_Implementation(AFortVolume* VolumeToUnload);
+	bool ServerStartUnloadingVolume_Validate(AFortVolume* VolumeToUnload);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerStopSavingCreativePlot();
 	void ServerStopSavingCreativePlot_Implementation();
+	bool ServerStopSavingCreativePlot_Validate();
 
 	UFUNCTION(Server, Reliable)
 	void ServerStopWaitLTMLoading();
 	void ServerStopWaitLTMLoading_Implementation();
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerTeleportToPlaygroundIslandDock();
 	void ServerTeleportToPlaygroundIslandDock_Implementation();
+	bool ServerTeleportToPlaygroundIslandDock_Validate();
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerTeleportToPlaygroundLobbyIsland();
 	void ServerTeleportToPlaygroundLobbyIsland_Implementation();
+	bool ServerTeleportToPlaygroundLobbyIsland_Validate();
 
 	UFUNCTION(Server, Reliable)
 	void ServerTeleportViaCreativePortal(int32 PortalIndex);
 	void ServerTeleportViaCreativePortal_Implementation(int32 PortalIndex);
 
-	UFUNCTION(Server, Unreliable)
+	UFUNCTION(Server, Unreliable, WithValidation)
 	void ServerThankBusDriver();
 	void ServerThankBusDriver_Implementation();
+	bool ServerThankBusDriver_Validate();
 
-	UFUNCTION(Server, Unreliable)
+	UFUNCTION(Server, Unreliable, WithValidation)
 	void ServerThankBusDriverCheck();
 	void ServerThankBusDriverCheck_Implementation();
+	bool ServerThankBusDriverCheck_Validate();
 
 	UFUNCTION(Server, Reliable)
 	void ServerTickForDoneTeleporting(AFortAthenaCreativePortal* Portal);
 	void ServerTickForDoneTeleporting_Implementation(AFortAthenaCreativePortal* Portal);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerToggleAutoRestartMinigame();
 	void ServerToggleAutoRestartMinigame_Implementation();
+	bool ServerToggleAutoRestartMinigame_Validate();
 
 	UFUNCTION(Server, Reliable)
 	void ServerTryFindPlotItemForDefinition(UFortCreativeRealEstatePlotItemDefinition* PlotDefinition);
 	void ServerTryFindPlotItemForDefinition_Implementation(UFortCreativeRealEstatePlotItemDefinition* PlotDefinition);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerUpdateLevelStreamingHandshakeData(bool bClientLevelStreamingState);
 	void ServerUpdateLevelStreamingHandshakeData_Implementation(bool bClientLevelStreamingState);
+	bool ServerUpdateLevelStreamingHandshakeData_Validate(bool bClientLevelStreamingState);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerUpdateSolarisString(const FString& SolString);
 	void ServerUpdateSolarisString_Implementation(const FString& SolString);
+	bool ServerUpdateSolarisString_Validate(const FString& SolString);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerUpdateUserCameraPreview();
 	void ServerUpdateUserCameraPreview_Implementation();
+	bool ServerUpdateUserCameraPreview_Validate();
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void TellServer_ClientReceivedPlaysetDataForVolume(AFortVolume* Volume, const FFortPlaysetStreamingData& PlaysetData);
 	void TellServer_ClientReceivedPlaysetDataForVolume_Implementation(AFortVolume* Volume, const FFortPlaysetStreamingData& PlaysetData);
+	bool TellServer_ClientReceivedPlaysetDataForVolume_Validate(AFortVolume* Volume, const FFortPlaysetStreamingData& PlaysetData);
 
 	UFUNCTION(Server, Reliable)
 	void UpdateCreativeIslandDescriptionTags(const TArray<FString>& DescriptionTags, const FString& Locale, const FString& IslandId);
@@ -1203,9 +1283,10 @@ public:
 	void UpdateCreativePlotName(const FString& Title, const FString& Locale, const FString& IslandId);
 	void UpdateCreativePlotName_Implementation(const FString& Title, const FString& Locale, const FString& IslandId);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void UpdateUGCRestrictedForVolume(bool bRestricted, AFortVolume* Volume);
 	void UpdateUGCRestrictedForVolume_Implementation(bool bRestricted, AFortVolume* Volume);
+	bool UpdateUGCRestrictedForVolume_Validate(bool bRestricted, AFortVolume* Volume);
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

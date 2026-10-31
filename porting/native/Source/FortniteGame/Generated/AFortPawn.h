@@ -766,11 +766,32 @@ public:
 	void ClientInternalEquipWeapon(AFortWeapon* Weap);
 	void ClientInternalEquipWeapon_Implementation(AFortWeapon* Weap);
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	EFortControlRecoveryBehavior GetControlRecoveryBehavior() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetLocalSpin() const;
+
 	UFUNCTION()
 	void HandleIsDying();
 
 	UFUNCTION()
 	void HandleIsHiddenForDeath();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsAllowChainStun() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsDBNO() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsSpinning() const;
+
+	UFUNCTION(BlueprintCallable)
+	void LogChugSplashEvent();
+
+	UFUNCTION(BlueprintCallable)
+	void MovingEmoteStopped();
 
 	UFUNCTION(NetMulticast, Unreliable)
 	void NetMulticast_InvokeGameplayCueAdded(const FGameplayEffectContextHandle& EffectContext, const FPredictionKey& PredictionKey, const FGameplayTag& GameplayCueTag);
@@ -870,13 +891,18 @@ public:
 	void PlaySound(float PitchMultiplier, float VolumeMultiplier, USoundBase* Sound);
 	void PlaySound_Implementation(float PitchMultiplier, float VolumeMultiplier, USoundBase* Sound);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerInternalEquipWeapon(AFortWeapon* Weap);
 	void ServerInternalEquipWeapon_Implementation(AFortWeapon* Weap);
+	bool ServerInternalEquipWeapon_Validate(AFortWeapon* Weap);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerTeleportNearLocation(const FVector& ActorLocation);
 	void ServerTeleportNearLocation_Implementation(const FVector& ActorLocation);
+	bool ServerTeleportNearLocation_Validate(const FVector& ActorLocation);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool WasDBNOOnDeath() const;
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

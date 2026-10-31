@@ -2,6 +2,30 @@
 #include "AFortPlayerControllerAthena.h"
 #include "Net/UnrealNetwork.h"
 
+void AFortPlayerControllerAthena::ClearDroppableItems()
+{
+	// Behaviour snippet: AFortPlayerControllerAthena::ClearDroppableItems (body only; spliced into the generated member function).
+	// Original address: 0x14075b6b0
+	// Decompile source: porting/generated/decomp_improved/AFortPlayerControllerAthena/ClearDroppableItems.c
+	// Proxy score: 91.8 (portability.json)
+	// Inferred: Decompile is P_FINISH only. The asm of the exec entry 0x14075b6b0 is P_FINISH then JMP 0x1406801c0, the shared ret stub. No other statement.
+	// Declared in generated header: no (generator must emit this declaration)
+	// CONFIDENCE: HIGH
+	// Empty body: the native function does nothing (see Inferred).
+}
+
+void AFortPlayerControllerAthena::ClearInventorySpaces(int32 NumSpaces)
+{
+	// Behaviour snippet: AFortPlayerControllerAthena::ClearInventorySpaces (body only; spliced into the generated member function).
+	// Original address: 0x142766a90
+	// Decompile source: porting/generated/decomp/AFortPlayerControllerAthena/ClearInventorySpaces.c
+	// Proxy score: 86.2 (portability.json)
+	// Inferred: Direct call to 0x1406801c0, which is `ret 0` (disassembled). The native body therefore has no effect.
+	// Declared in generated header: no (generator must emit this declaration)
+	// CONFIDENCE: HIGH
+	// The decompile calls only the empty function Stub_Empty (0x1406801c0, ret 0) with the argument: no effect.
+}
+
 void AFortPlayerControllerAthena::Client_DisplayQuestUpdate_Assist_Implementation(AFortPlayerState* AssistingPlayer, AFortPlayerState* QuestOwner, const FFortUpdatedObjectiveStat& ObjectiveUpdated)
 {
 	// Body not recovered: reflection-derived stub.
@@ -14,7 +38,13 @@ void AFortPlayerControllerAthena::Client_DisplayQuestUpdate_Self_Implementation(
 
 void AFortPlayerControllerAthena::ClientAddProfileGoCollection_Implementation(const TArray<FProfileGoScenario>& NewScenarios, const FString& CollectionName)
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 51 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
 }
 
 void AFortPlayerControllerAthena::ClientAlertLeaveIsland_Implementation()
@@ -29,7 +59,14 @@ void AFortPlayerControllerAthena::ClientAlertPortalDoneTeleporting_Implementatio
 
 void AFortPlayerControllerAthena::ClientAutoEquipFirstItem_Implementation(bool bForceExecution, const FGuid& ItemGuid)
 {
-	// Body not recovered: reflection-derived stub.
+	// Behaviour snippet: AFortPlayerControllerAthena::ClientAutoEquipFirstItem_Implementation (body only; spliced into the generated member function).
+	// Original address: 0x1419c5390
+	// Decompile source: porting/generated/decomp_improved/AFortPlayerControllerAthena/ClientAutoEquipFirstItem_Implementation.c
+	// Proxy score: 97.8 (portability.json)
+	// Inferred: Result of GetDefault is unused. GetDefault returns the class default object and has no side effects in UE 4.25 (CDO lookup). Parameters bForceExecution and ItemGuid are not read.
+	// Declared in generated header: yes
+	// CONFIDENCE: MEDIUM
+	// The decompile calls only UFortRuntimeOptions::GetDefault() (helper 0x1426fdde0) and discards the result: no state change.
 }
 
 void AFortPlayerControllerAthena::ClientBotStartDogpile_Implementation(const FVector& DogpilePosition)
@@ -212,6 +249,90 @@ void AFortPlayerControllerAthena::DuplicateCreativePlot_Implementation(const FSt
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerControllerAthena::EnableCreativeContentManagerBasedOnPlaylist()
+{
+	// Behaviour snippet: AFortPlayerControllerAthena::EnableCreativeContentManagerBasedOnPlaylist (body only; spliced into the generated member function).
+	// Original address: 0x14075b6b0
+	// Decompile source: porting/generated/decomp_improved/AFortPlayerControllerAthena/EnableCreativeContentManagerBasedOnPlaylist.c
+	// Proxy score: 91.8 (portability.json)
+	// Inferred: Decompile is P_FINISH only. The asm of the exec entry 0x14075b6b0 is P_FINISH then JMP 0x1406801c0, the shared ret stub. No other statement.
+	// Declared in generated header: no (generator must emit this declaration)
+	// CONFIDENCE: HIGH
+	// Empty body: the native function does nothing (see Inferred).
+}
+
+AFortVolume* AFortPlayerControllerAthena::GetCreativePlotLinkedVolume() const
+{
+	// Behaviour snippet: AFortPlayerControllerAthena::GetCreativePlotLinkedVolume (body only; spliced into the generated member function).
+	// Original address: 0x142a58670
+	// Decompile source: porting/generated/decomp/AFortPlayerControllerAthena/GetCreativePlotLinkedVolume.c
+	// Proxy score: 87.5 (portability.json)
+	// Inferred: CreativePlotLinkedVolume pointer at +0x3508 (reflection). Returned unchanged.
+	// Declared in generated header: no (generator must emit this declaration)
+	// CONFIDENCE: HIGH
+	return CreativePlotLinkedVolume;
+}
+
+UCreativeUserContentManager* AFortPlayerControllerAthena::GetCreativeUserContentManager() const
+{
+	// Behaviour snippet: AFortPlayerControllerAthena::GetCreativeUserContentManager (body only; spliced into the generated member function).
+	// Original address: 0x142a58690
+	// Decompile source: porting/generated/decomp/AFortPlayerControllerAthena/GetCreativeUserContentManager.c
+	// Proxy score: 87.5 (portability.json)
+	// Inferred: CreativeUserContentManager pointer at +0x36d8 (reflection). Returned unchanged.
+	// Declared in generated header: no (generator must emit this declaration)
+	// CONFIDENCE: HIGH
+	return CreativeUserContentManager;
+}
+
+UAthenaMarkerComponent* AFortPlayerControllerAthena::GetMarkerComponent() const
+{
+	// Behaviour snippet: AFortPlayerControllerAthena::GetMarkerComponent (body only; spliced into the generated member function).
+	// Original address: 0x142a58710
+	// Decompile source: porting/generated/decomp/AFortPlayerControllerAthena/GetMarkerComponent.c
+	// Proxy score: 87.5 (portability.json)
+	// Inferred: MarkerComponent pointer at +0x3618 (reflection). Returned unchanged.
+	// Declared in generated header: no (generator must emit this declaration)
+	// CONFIDENCE: HIGH
+	return MarkerComponent;
+}
+
+bool AFortPlayerControllerAthena::IsClientNotifiedOfLoss() const
+{
+	// Behaviour snippet: AFortPlayerControllerAthena::IsClientNotifiedOfLoss (body only; spliced into the generated member function).
+	// Original address: 0x142a58e20
+	// Decompile source: porting/generated/decomp/AFortPlayerControllerAthena/IsClientNotifiedOfLoss.c
+	// Proxy score: 92.5 (portability.json)
+	// Inferred: Decompile returns the whole byte +0x2c35. bool_bits.py maps that byte to bClientNotifiedOfLoss alone (mov8 setter, which writes the whole byte), so the byte equals the flag.
+	// Declared in generated header: no (generator must emit this declaration)
+	// CONFIDENCE: MEDIUM
+	return bClientNotifiedOfLoss;
+}
+
+bool AFortPlayerControllerAthena::IsClientNotifiedOfTeamWin() const
+{
+	// Behaviour snippet: AFortPlayerControllerAthena::IsClientNotifiedOfTeamWin (body only; spliced into the generated member function).
+	// Original address: 0x142a58e40
+	// Decompile source: porting/generated/decomp/AFortPlayerControllerAthena/IsClientNotifiedOfTeamWin.c
+	// Proxy score: 92.5 (portability.json)
+	// Inferred: Decompile returns the whole byte +0x2c34, which bool_bits.py maps to bClientNotifiedOfTeamWin alone (mov8 setter).
+	// Declared in generated header: no (generator must emit this declaration)
+	// CONFIDENCE: MEDIUM
+	return bClientNotifiedOfTeamWin;
+}
+
+bool AFortPlayerControllerAthena::IsClientNotifiedOfWin() const
+{
+	// Behaviour snippet: AFortPlayerControllerAthena::IsClientNotifiedOfWin (body only; spliced into the generated member function).
+	// Original address: 0x142a58e60
+	// Decompile source: porting/generated/decomp/AFortPlayerControllerAthena/IsClientNotifiedOfWin.c
+	// Proxy score: 92.5 (portability.json)
+	// Inferred: Decompile returns the whole byte +0x2c33, which bool_bits.py maps to bClientNotifiedOfWin alone (mov8 setter).
+	// Declared in generated header: no (generator must emit this declaration)
+	// CONFIDENCE: MEDIUM
+	return bClientNotifiedOfWin;
+}
+
 void AFortPlayerControllerAthena::MakeNewCreativePlot_Implementation(const FString& Title, const FString& Locale, UFortCreativeRealEstatePlotItemDefinition* PlotType)
 {
 	// Body not recovered: reflection-derived stub.
@@ -224,7 +345,25 @@ void AFortPlayerControllerAthena::MakeNewCreativePlotFromLinkCode_Implementation
 
 void AFortPlayerControllerAthena::OnPostGameForced_Implementation()
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 51 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
+}
+
+bool AFortPlayerControllerAthena::OnPostGameForced_Validate()
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// CONFIDENCE: HIGH
+	return true;
 }
 
 void AFortPlayerControllerAthena::OnRep_CreativeIslands()
@@ -239,7 +378,14 @@ void AFortPlayerControllerAthena::OnRep_CreativePlotLinkedVolume()
 
 void AFortPlayerControllerAthena::OnRep_FocalPoint()
 {
-	// Body not recovered: reflection-derived stub.
+	// Behaviour snippet: AFortPlayerControllerAthena::OnRep_FocalPoint (body only; spliced into the generated member function).
+	// Original address: 0x142a59770
+	// Decompile source: porting/generated/decomp_improved/AFortPlayerControllerAthena/OnRep_FocalPoint.c
+	// Proxy score: 71.5 (portability.json)
+	// Inferred: Decompile calls the multicast dispatcher 0x1406a9dc0 (TMulticastScriptDelegate::ProcessMulticastDelegate, see porting/decompilation_notes.md, third pass) on the delegate member with a parameter block holding the value(s) below. One AActor* parameter: FocalPoint (+0x2b40).
+	// Declared in generated header: yes
+	// CONFIDENCE: HIGH
+	OnFocalPointActorChanged.Broadcast(FocalPoint);
 }
 
 void AFortPlayerControllerAthena::OnRep_PartyAssistedMemberData()
@@ -252,14 +398,56 @@ void AFortPlayerControllerAthena::OnRep_SkydiveLeader()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerControllerAthena::PreLobbyIslandTeleport()
+{
+	// Behaviour snippet: AFortPlayerControllerAthena::PreLobbyIslandTeleport (body only; spliced into the generated member function).
+	// Original address: 0x14075b6b0
+	// Decompile source: porting/generated/decomp_improved/AFortPlayerControllerAthena/PreLobbyIslandTeleport.c
+	// Proxy score: 91.8 (portability.json)
+	// Inferred: Decompile is P_FINISH only. The asm of the exec entry 0x14075b6b0 is P_FINISH then JMP 0x1406801c0, the shared ret stub. No other statement.
+	// Declared in generated header: no (generator must emit this declaration)
+	// CONFIDENCE: HIGH
+	// Empty body: the native function does nothing (see Inferred).
+}
+
 void AFortPlayerControllerAthena::PublishCreativePlot_Implementation(const FCreativePublishOptions& MyPublishOptions, AFortVolume* VolumeToPublish)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerControllerAthena::RemoveDroppableItems()
+{
+	// Behaviour snippet: AFortPlayerControllerAthena::RemoveDroppableItems (body only; spliced into the generated member function).
+	// Original address: 0x14075b6b0
+	// Decompile source: porting/generated/decomp_improved/AFortPlayerControllerAthena/RemoveDroppableItems.c
+	// Proxy score: 91.8 (portability.json)
+	// Inferred: Decompile is P_FINISH only. The asm of the exec entry 0x14075b6b0 is P_FINISH then JMP 0x1406801c0, the shared ret stub. No other statement.
+	// Declared in generated header: no (generator must emit this declaration)
+	// CONFIDENCE: HIGH
+	// Empty body: the native function does nothing (see Inferred).
+}
+
 void AFortPlayerControllerAthena::ResetMyCurrentCreativePlot_Implementation()
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 51 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
+}
+
+bool AFortPlayerControllerAthena::ResetMyCurrentCreativePlot_Validate()
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// CONFIDENCE: HIGH
+	return true;
 }
 
 void AFortPlayerControllerAthena::RestoreCreativePlot_Implementation(const FString& IslandId)
@@ -272,6 +460,18 @@ void AFortPlayerControllerAthena::ServerAddSimulatedXp_Implementation(const FGam
 	// Body not recovered: reflection-derived stub.
 }
 
+bool AFortPlayerControllerAthena::ServerAddSimulatedXp_Validate(const FGameplayTag& MetaData, const FText& Source, float XpAmmount)
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// CONFIDENCE: HIGH
+	return true;
+}
+
 void AFortPlayerControllerAthena::ServerAddToCachedPurchased_Implementation(int32 Count, UFortItemDefinition* ItemDefinition)
 {
 	// Body not recovered: reflection-derived stub.
@@ -282,6 +482,18 @@ void AFortPlayerControllerAthena::ServerApplyOverrideWrapToItem_Implementation(c
 	// Body not recovered: reflection-derived stub.
 }
 
+bool AFortPlayerControllerAthena::ServerApplyOverrideWrapToItem_Validate(const TSoftObjectPtr<UAthenaItemWrapDefinition>& ItemWrap, const FGuid& GUID)
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// CONFIDENCE: HIGH
+	return true;
+}
+
 void AFortPlayerControllerAthena::ServerApplyOverrideWrapToVehicle_Implementation(const TSoftObjectPtr<UAthenaItemWrapDefinition>& ItemWrap)
 {
 	// Body not recovered: reflection-derived stub.
@@ -289,7 +501,25 @@ void AFortPlayerControllerAthena::ServerApplyOverrideWrapToVehicle_Implementatio
 
 void AFortPlayerControllerAthena::ServerBeginEndPreview_Implementation(bool bInBegin)
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 51 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
+}
+
+bool AFortPlayerControllerAthena::ServerBeginEndPreview_Validate(bool bInBegin)
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// CONFIDENCE: HIGH
+	return true;
 }
 
 void AFortPlayerControllerAthena::ServerBroadcastDeviceButtonComponentClickedDelegate_Implementation(UFortCreativeDeviceButtonComponent* DeviceButtonComponent)
@@ -297,9 +527,39 @@ void AFortPlayerControllerAthena::ServerBroadcastDeviceButtonComponentClickedDel
 	// Body not recovered: reflection-derived stub.
 }
 
+bool AFortPlayerControllerAthena::ServerBroadcastDeviceButtonComponentClickedDelegate_Validate(UFortCreativeDeviceButtonComponent* DeviceButtonComponent)
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// CONFIDENCE: HIGH
+	return true;
+}
+
 void AFortPlayerControllerAthena::ServerClaimPortal_Implementation()
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 51 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
+}
+
+bool AFortPlayerControllerAthena::ServerClaimPortal_Validate()
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// CONFIDENCE: HIGH
+	return true;
 }
 
 void AFortPlayerControllerAthena::ServerClearSkydiveLeader_Implementation()
@@ -307,14 +567,56 @@ void AFortPlayerControllerAthena::ServerClearSkydiveLeader_Implementation()
 	// Body not recovered: reflection-derived stub.
 }
 
+bool AFortPlayerControllerAthena::ServerClearSkydiveLeader_Validate()
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// CONFIDENCE: HIGH
+	return true;
+}
+
 void AFortPlayerControllerAthena::ServerClientIsReadyToRespawn_Implementation()
 {
 	// Body not recovered: reflection-derived stub.
 }
 
+bool AFortPlayerControllerAthena::ServerClientIsReadyToRespawn_Validate()
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// CONFIDENCE: HIGH
+	return true;
+}
+
 void AFortPlayerControllerAthena::ServerCreateProfileGoCollectionForSublevels_Implementation(int32 Quad, int32 RotationSteps, int32 GridStepsY, int32 GridStepsX, const FString& SublevelSearchString)
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 51 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
+}
+
+bool AFortPlayerControllerAthena::ServerCreateProfileGoCollectionForSublevels_Validate(int32 Quad, int32 RotationSteps, int32 GridStepsY, int32 GridStepsX, const FString& SublevelSearchString)
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// CONFIDENCE: HIGH
+	return true;
 }
 
 void AFortPlayerControllerAthena::ServerDBNOReviveInterrupted_Implementation(AFortPlayerPawnAthena* DBNOPawn)
@@ -322,19 +624,79 @@ void AFortPlayerControllerAthena::ServerDBNOReviveInterrupted_Implementation(AFo
 	// Body not recovered: reflection-derived stub.
 }
 
+bool AFortPlayerControllerAthena::ServerDBNOReviveInterrupted_Validate(AFortPlayerPawnAthena* DBNOPawn)
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// CONFIDENCE: HIGH
+	return true;
+}
+
 void AFortPlayerControllerAthena::ServerDBNOReviveStarted_Implementation(AFortPlayerPawnAthena* DBNOPawn)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
+bool AFortPlayerControllerAthena::ServerDBNOReviveStarted_Validate(AFortPlayerPawnAthena* DBNOPawn)
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// CONFIDENCE: HIGH
+	return true;
+}
+
 void AFortPlayerControllerAthena::ServerEnableAnonymousCharacterMode_Implementation()
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 51 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
+}
+
+bool AFortPlayerControllerAthena::ServerEnableAnonymousCharacterMode_Validate()
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// CONFIDENCE: HIGH
+	return true;
 }
 
 void AFortPlayerControllerAthena::ServerEnableAnonymousMode_Implementation()
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 51 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
+}
+
+bool AFortPlayerControllerAthena::ServerEnableAnonymousMode_Validate()
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// CONFIDENCE: HIGH
+	return true;
 }
 
 void AFortPlayerControllerAthena::ServerEndLoadingVolume_Implementation(AFortVolume* VolumeToLoad)
@@ -342,9 +704,33 @@ void AFortPlayerControllerAthena::ServerEndLoadingVolume_Implementation(AFortVol
 	// Body not recovered: reflection-derived stub.
 }
 
+bool AFortPlayerControllerAthena::ServerEndLoadingVolume_Validate(AFortVolume* VolumeToLoad)
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// CONFIDENCE: HIGH
+	return true;
+}
+
 void AFortPlayerControllerAthena::ServerEndMinigame_Implementation(bool bAbandon)
 {
 	// Body not recovered: reflection-derived stub.
+}
+
+bool AFortPlayerControllerAthena::ServerEndMinigame_Validate(bool bAbandon)
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// CONFIDENCE: HIGH
+	return true;
 }
 
 void AFortPlayerControllerAthena::ServerEndUnloadingVolume_Implementation(AFortVolume* VolumeToUnload)
@@ -352,29 +738,95 @@ void AFortPlayerControllerAthena::ServerEndUnloadingVolume_Implementation(AFortV
 	// Body not recovered: reflection-derived stub.
 }
 
+bool AFortPlayerControllerAthena::ServerEndUnloadingVolume_Validate(AFortVolume* VolumeToUnload)
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// CONFIDENCE: HIGH
+	return true;
+}
+
 void AFortPlayerControllerAthena::ServerGenerateMockMatchReport_Implementation()
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 51 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
+}
+
+bool AFortPlayerControllerAthena::ServerGenerateMockMatchReport_Validate()
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// CONFIDENCE: HIGH
+	return true;
 }
 
 void AFortPlayerControllerAthena::ServerGiveCreativeItem_Implementation(const FFortItemEntry& CreativeItem)
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 51 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
 }
 
 void AFortPlayerControllerAthena::ServerInsertExtraStreamingTestSkydiveStates_Implementation()
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 51 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
 }
 
 void AFortPlayerControllerAthena::ServerLoadIslandCheckpoint_Implementation(AFortAthenaCreativePortal* Portal)
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 51 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
 }
 
 void AFortPlayerControllerAthena::ServerLoadPlotForPortal_Implementation(const FString& PlotItemId, AFortAthenaCreativePortal* Portal)
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 51 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
+}
+
+bool AFortPlayerControllerAthena::ServerLoadPlotForPortal_Validate(const FString& PlotItemId, AFortAthenaCreativePortal* Portal)
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// CONFIDENCE: HIGH
+	return true;
 }
 
 void AFortPlayerControllerAthena::ServerLoadPlotForPortalFromMnemonic_Implementation(const FString& Mnemonic, AFortAthenaCreativePortal* Portal)
@@ -384,7 +836,17 @@ void AFortPlayerControllerAthena::ServerLoadPlotForPortalFromMnemonic_Implementa
 
 void AFortPlayerControllerAthena::ServerLookedAtFocalPoint_Implementation()
 {
-	// Body not recovered: reflection-derived stub.
+	// Behaviour snippet: AFortPlayerControllerAthena::ServerLookedAtFocalPoint_Implementation (body only; spliced into the generated member function).
+	// Original address: 0x1419f1f70
+	// Decompile source: porting/generated/decomp_improved/AFortPlayerControllerAthena/ServerLookedAtFocalPoint_Implementation.c
+	// Proxy score: 70.1 (portability.json)
+	// Inferred: Decompile tests FocalPoint (+0x2b40) and broadcasts OnUsingFocalPointChanged (+0x2b60). The asm (body 0x1419f1f70) builds the block as {this @0, FocalPoint @8, true @0x10}; by name that is (bUsingFocalPoint=true, FocalPointActor=FocalPoint, FocalPointUser=this), using the same reversed-order rule as above.
+	// Declared in generated header: yes
+	// CONFIDENCE: MEDIUM
+	if (FocalPoint != nullptr)
+	{
+		OnUsingFocalPointChanged.Broadcast(true, FocalPoint, this);
+	}
 }
 
 void AFortPlayerControllerAthena::ServerNotifyClientReachedMaxWaitingTimeForDeviceReplication_Implementation()
@@ -392,9 +854,33 @@ void AFortPlayerControllerAthena::ServerNotifyClientReachedMaxWaitingTimeForDevi
 	// Body not recovered: reflection-derived stub.
 }
 
+bool AFortPlayerControllerAthena::ServerNotifyClientReachedMaxWaitingTimeForDeviceReplication_Validate()
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// CONFIDENCE: HIGH
+	return true;
+}
+
 void AFortPlayerControllerAthena::ServerNotifyOstrichSelfDestruct_Implementation()
 {
 	// Body not recovered: reflection-derived stub.
+}
+
+bool AFortPlayerControllerAthena::ServerNotifyOstrichSelfDestruct_Validate()
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// CONFIDENCE: HIGH
+	return true;
 }
 
 void AFortPlayerControllerAthena::ServerNotifyOstrichShieldOvercharge_Implementation()
@@ -402,14 +888,62 @@ void AFortPlayerControllerAthena::ServerNotifyOstrichShieldOvercharge_Implementa
 	// Body not recovered: reflection-derived stub.
 }
 
+bool AFortPlayerControllerAthena::ServerNotifyOstrichShieldOvercharge_Validate()
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// CONFIDENCE: HIGH
+	return true;
+}
+
 void AFortPlayerControllerAthena::ServerReleasePortal_Implementation()
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 51 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
+}
+
+bool AFortPlayerControllerAthena::ServerReleasePortal_Validate()
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// CONFIDENCE: HIGH
+	return true;
 }
 
 void AFortPlayerControllerAthena::ServerReloadCreativePlot_Implementation()
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 51 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
+}
+
+bool AFortPlayerControllerAthena::ServerReloadCreativePlot_Validate()
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// CONFIDENCE: HIGH
+	return true;
 }
 
 void AFortPlayerControllerAthena::ServerRequestNewSkydiveLeader_Implementation()
@@ -417,24 +951,84 @@ void AFortPlayerControllerAthena::ServerRequestNewSkydiveLeader_Implementation()
 	// Body not recovered: reflection-derived stub.
 }
 
+bool AFortPlayerControllerAthena::ServerRequestNewSkydiveLeader_Validate()
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// CONFIDENCE: HIGH
+	return true;
+}
+
 void AFortPlayerControllerAthena::ServerRequestObjectTrackingDetails_Implementation(AFortVolume* Volume)
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 51 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
 }
 
 void AFortPlayerControllerAthena::ServerResetCameraPreviewToDefaultLocation_Implementation()
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 51 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
+}
+
+bool AFortPlayerControllerAthena::ServerResetCameraPreviewToDefaultLocation_Validate()
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// CONFIDENCE: HIGH
+	return true;
 }
 
 void AFortPlayerControllerAthena::ServerResetCurrentVolumeWithoutTeleport_Implementation()
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 51 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
 }
 
 void AFortPlayerControllerAthena::ServerRespondToAbandonMatch_Implementation(bool bAbandon)
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 51 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
+}
+
+bool AFortPlayerControllerAthena::ServerRespondToAbandonMatch_Validate(bool bAbandon)
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// CONFIDENCE: HIGH
+	return true;
 }
 
 void AFortPlayerControllerAthena::ServerRestartMinigame_Implementation()
@@ -442,19 +1036,73 @@ void AFortPlayerControllerAthena::ServerRestartMinigame_Implementation()
 	// Body not recovered: reflection-derived stub.
 }
 
+bool AFortPlayerControllerAthena::ServerRestartMinigame_Validate()
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// CONFIDENCE: HIGH
+	return true;
+}
+
 void AFortPlayerControllerAthena::ServerSaveIslandCheckpoint_Implementation(AFortAthenaCreativePortal* Portal)
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 51 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
 }
 
 void AFortPlayerControllerAthena::ServerSelectMutatorItem_Implementation(int32 ItemIndex, AFortGameplayMutator* Mutator)
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 51 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
+}
+
+bool AFortPlayerControllerAthena::ServerSelectMutatorItem_Validate(int32 ItemIndex, AFortGameplayMutator* Mutator)
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// CONFIDENCE: HIGH
+	return true;
 }
 
 void AFortPlayerControllerAthena::ServerSendSquadFriend_Implementation(AFortPlayerStateAthena* FriendInSquad)
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 51 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
+}
+
+bool AFortPlayerControllerAthena::ServerSendSquadFriend_Validate(AFortPlayerStateAthena* FriendInSquad)
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// CONFIDENCE: HIGH
+	return true;
 }
 
 void AFortPlayerControllerAthena::ServerSetMinigameClassSlot_Implementation(uint8 InClassSlotIndex)
@@ -464,7 +1112,13 @@ void AFortPlayerControllerAthena::ServerSetMinigameClassSlot_Implementation(uint
 
 void AFortPlayerControllerAthena::ServerSetOnCreativePortalLoadedDelegate_Implementation(int32 PortalIndex)
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 51 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
 }
 
 void AFortPlayerControllerAthena::ServerSetPlayset_Implementation(UFortPlaysetItemDefinition* NewPlayset)
@@ -472,14 +1126,50 @@ void AFortPlayerControllerAthena::ServerSetPlayset_Implementation(UFortPlaysetIt
 	// Body not recovered: reflection-derived stub.
 }
 
+bool AFortPlayerControllerAthena::ServerSetPlayset_Validate(UFortPlaysetItemDefinition* NewPlayset)
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// CONFIDENCE: HIGH
+	return true;
+}
+
 void AFortPlayerControllerAthena::ServerSetReceiveEmailSignups_Implementation(bool bSignUp)
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 51 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
+}
+
+bool AFortPlayerControllerAthena::ServerSetReceiveEmailSignups_Validate(bool bSignUp)
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// CONFIDENCE: HIGH
+	return true;
 }
 
 void AFortPlayerControllerAthena::ServerSetStreamingTestStreamingLevels_Implementation(bool streaming)
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 51 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
 }
 
 void AFortPlayerControllerAthena::ServerSetTeam_Implementation(uint8 InTeam)
@@ -492,9 +1182,33 @@ void AFortPlayerControllerAthena::ServerSetUseSolaris_Implementation(bool bShoul
 	// Body not recovered: reflection-derived stub.
 }
 
+bool AFortPlayerControllerAthena::ServerSetUseSolaris_Validate(bool bShouldUse)
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// CONFIDENCE: HIGH
+	return true;
+}
+
 void AFortPlayerControllerAthena::ServerSimulateLevelUp_Implementation(int32 ClientSimulatedLevel)
 {
 	// Body not recovered: reflection-derived stub.
+}
+
+bool AFortPlayerControllerAthena::ServerSimulateLevelUp_Validate(int32 ClientSimulatedLevel)
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// CONFIDENCE: HIGH
+	return true;
 }
 
 void AFortPlayerControllerAthena::ServerSpawnCreativeSupplyDrop_Implementation(TSubclassOf<AActor> InSupplyDropClass, const FVector& Position)
@@ -504,12 +1218,37 @@ void AFortPlayerControllerAthena::ServerSpawnCreativeSupplyDrop_Implementation(T
 
 void AFortPlayerControllerAthena::ServerStartInteractWithIslandPortal_Implementation(AFortAthenaCreativePortal* Portal)
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 51 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
 }
 
 void AFortPlayerControllerAthena::ServerStartLoadingVolume_Implementation(AFortVolume* VolumeToLoad)
 {
-	// Body not recovered: reflection-derived stub.
+	// Behaviour snippet: AFortPlayerControllerAthena::ServerStartLoadingVolume_Implementation (body only; spliced into the generated member function).
+	// Original address: 0x1419f3360
+	// Decompile source: porting/generated/decomp_improved/AFortPlayerControllerAthena/ServerStartLoadingVolume_Implementation.c
+	// Proxy score: 89.8 (portability.json)
+	// Inferred: Decompile appends to VolumesLoading (TArray<AFortVolume*> at +0x35f8, reflection offset 13816): ArrayNum+1, grow if ArrayMax is exceeded, store at the old ArrayNum index. That is TArray::Add.
+	// Declared in generated header: yes
+	// CONFIDENCE: HIGH
+	VolumesLoading.Add(VolumeToLoad);
+}
+
+bool AFortPlayerControllerAthena::ServerStartLoadingVolume_Validate(AFortVolume* VolumeToLoad)
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// CONFIDENCE: HIGH
+	return true;
 }
 
 void AFortPlayerControllerAthena::ServerStartMinigame_Implementation()
@@ -517,14 +1256,63 @@ void AFortPlayerControllerAthena::ServerStartMinigame_Implementation()
 	// Body not recovered: reflection-derived stub.
 }
 
+bool AFortPlayerControllerAthena::ServerStartMinigame_Validate()
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// CONFIDENCE: HIGH
+	return true;
+}
+
 void AFortPlayerControllerAthena::ServerStartUnloadingVolume_Implementation(AFortVolume* VolumeToUnload)
 {
-	// Body not recovered: reflection-derived stub.
+	// Behaviour snippet: AFortPlayerControllerAthena::ServerStartUnloadingVolume_Implementation (body only; spliced into the generated member function).
+	// Original address: 0x1419f34c0
+	// Decompile source: porting/generated/decomp_improved/AFortPlayerControllerAthena/ServerStartUnloadingVolume_Implementation.c
+	// Proxy score: 89.8 (portability.json)
+	// Inferred: Same TArray append pattern on VolumesUnloading (TArray<AFortVolume*> at reflection offset 13832).
+	// Declared in generated header: yes
+	// CONFIDENCE: HIGH
+	VolumesUnloading.Add(VolumeToUnload);
+}
+
+bool AFortPlayerControllerAthena::ServerStartUnloadingVolume_Validate(AFortVolume* VolumeToUnload)
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// CONFIDENCE: HIGH
+	return true;
 }
 
 void AFortPlayerControllerAthena::ServerStopSavingCreativePlot_Implementation()
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 51 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
+}
+
+bool AFortPlayerControllerAthena::ServerStopSavingCreativePlot_Validate()
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// CONFIDENCE: HIGH
+	return true;
 }
 
 void AFortPlayerControllerAthena::ServerStopWaitLTMLoading_Implementation()
@@ -534,17 +1322,59 @@ void AFortPlayerControllerAthena::ServerStopWaitLTMLoading_Implementation()
 
 void AFortPlayerControllerAthena::ServerTeleportToPlaygroundIslandDock_Implementation()
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 51 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
+}
+
+bool AFortPlayerControllerAthena::ServerTeleportToPlaygroundIslandDock_Validate()
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// CONFIDENCE: HIGH
+	return true;
 }
 
 void AFortPlayerControllerAthena::ServerTeleportToPlaygroundLobbyIsland_Implementation()
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 51 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
+}
+
+bool AFortPlayerControllerAthena::ServerTeleportToPlaygroundLobbyIsland_Validate()
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// CONFIDENCE: HIGH
+	return true;
 }
 
 void AFortPlayerControllerAthena::ServerTeleportViaCreativePortal_Implementation(int32 PortalIndex)
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 51 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
 }
 
 void AFortPlayerControllerAthena::ServerThankBusDriver_Implementation()
@@ -552,24 +1382,78 @@ void AFortPlayerControllerAthena::ServerThankBusDriver_Implementation()
 	// Body not recovered: reflection-derived stub.
 }
 
+bool AFortPlayerControllerAthena::ServerThankBusDriver_Validate()
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// CONFIDENCE: HIGH
+	return true;
+}
+
 void AFortPlayerControllerAthena::ServerThankBusDriverCheck_Implementation()
 {
 	// Body not recovered: reflection-derived stub.
 }
 
+bool AFortPlayerControllerAthena::ServerThankBusDriverCheck_Validate()
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// CONFIDENCE: HIGH
+	return true;
+}
+
 void AFortPlayerControllerAthena::ServerTickForDoneTeleporting_Implementation(AFortAthenaCreativePortal* Portal)
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 51 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
 }
 
 void AFortPlayerControllerAthena::ServerToggleAutoRestartMinigame_Implementation()
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 51 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
+}
+
+bool AFortPlayerControllerAthena::ServerToggleAutoRestartMinigame_Validate()
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// CONFIDENCE: HIGH
+	return true;
 }
 
 void AFortPlayerControllerAthena::ServerTryFindPlotItemForDefinition_Implementation(UFortCreativeRealEstatePlotItemDefinition* PlotDefinition)
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 51 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
 }
 
 void AFortPlayerControllerAthena::ServerUpdateLevelStreamingHandshakeData_Implementation(bool bClientLevelStreamingState)
@@ -577,19 +1461,73 @@ void AFortPlayerControllerAthena::ServerUpdateLevelStreamingHandshakeData_Implem
 	// Body not recovered: reflection-derived stub.
 }
 
+bool AFortPlayerControllerAthena::ServerUpdateLevelStreamingHandshakeData_Validate(bool bClientLevelStreamingState)
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// CONFIDENCE: HIGH
+	return true;
+}
+
 void AFortPlayerControllerAthena::ServerUpdateSolarisString_Implementation(const FString& SolString)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
+bool AFortPlayerControllerAthena::ServerUpdateSolarisString_Validate(const FString& SolString)
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// CONFIDENCE: HIGH
+	return true;
+}
+
 void AFortPlayerControllerAthena::ServerUpdateUserCameraPreview_Implementation()
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 51 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
+}
+
+bool AFortPlayerControllerAthena::ServerUpdateUserCameraPreview_Validate()
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// CONFIDENCE: HIGH
+	return true;
 }
 
 void AFortPlayerControllerAthena::TellServer_ClientReceivedPlaysetDataForVolume_Implementation(AFortVolume* Volume, const FFortPlaysetStreamingData& PlaysetData)
 {
 	// Body not recovered: reflection-derived stub.
+}
+
+bool AFortPlayerControllerAthena::TellServer_ClientReceivedPlaysetDataForVolume_Validate(AFortVolume* Volume, const FFortPlaysetStreamingData& PlaysetData)
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// CONFIDENCE: HIGH
+	return true;
 }
 
 void AFortPlayerControllerAthena::UpdateCreativeIslandDescriptionTags_Implementation(const TArray<FString>& DescriptionTags, const FString& Locale, const FString& IslandId)
@@ -610,6 +1548,18 @@ void AFortPlayerControllerAthena::UpdateCreativePlotName_Implementation(const FS
 void AFortPlayerControllerAthena::UpdateUGCRestrictedForVolume_Implementation(bool bRestricted, AFortVolume* Volume)
 {
 	// Body not recovered: reflection-derived stub.
+}
+
+bool AFortPlayerControllerAthena::UpdateUGCRestrictedForVolume_Validate(bool bRestricted, AFortVolume* Volume)
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// CONFIDENCE: HIGH
+	return true;
 }
 
 void AFortPlayerControllerAthena::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
