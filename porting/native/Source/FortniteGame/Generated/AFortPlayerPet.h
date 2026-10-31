@@ -10,6 +10,7 @@ class UAthenaPetItemDefinition;
 class UAudioComponent;
 class UFortTaggedSoundBank;
 class UMaterialInterface;
+class USkeletalMeshComponentBudgeted;
 class USphereComponent;
 
 #include "AFortPlayerPet.generated.h"
@@ -31,6 +32,10 @@ public:
 	// table index 5, flags 0x20080000000014
 	UPROPERTY()
 	uint8 bIsFrontEndPreview : 1;
+
+	// table index 4, flags 0x400000000a001d
+	UPROPERTY()
+	USkeletalMeshComponentBudgeted* PetMesh;
 
 	// table index 3, flags 0x400000000a001d
 	UPROPERTY()

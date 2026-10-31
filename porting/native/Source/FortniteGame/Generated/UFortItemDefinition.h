@@ -19,6 +19,7 @@
 #include "Math/Vector.h"
 #include "UObject/NoExportTypes.h"
 
+class UFortItemSeriesDefinition;
 class UFortTooltip;
 class UFortTooltipDisplayStatsList;
 class USkeletalMesh;
@@ -168,6 +169,10 @@ public:
 	// table index 5, flags 0x20080000010001
 	UPROPERTY()
 	FSoftObjectPath DisplayAssetPath;
+
+	// table index 4, flags 0x20080000000015
+	UPROPERTY()
+	UFortItemSeriesDefinition* Series;
 
 	// table index 3, flags 0x40000000010001
 	UPROPERTY()

@@ -5,16 +5,6 @@ AFortLevelScriptActor	hand-written in porting/native/Source (not generated)
 AFortSkydivingShadowProxy	hand-written in porting/native/Source (not generated)
 AFortStaticMeshActor	hand-written in porting/native/Source (not generated)
 UFortAbilitySystemInterface	UINTERFACE extending UAbilitySystemInterface
-UFortAnimNotifyState_TimedNiagaraEffectVariant	ancestor in /Script/NiagaraAnimNotifies: plugin Niagara is not enabled in the project
-UFortAnimNotifyState_TimedNiagaraEffectWithBackup	ancestor in /Script/NiagaraAnimNotifies: plugin Niagara is not enabled in the project
-UFortAnimNotify_PlayNiagaraEffectWithBackup	ancestor in /Script/NiagaraAnimNotifies: plugin Niagara is not enabled in the project
-UFortAnimSharingStateInstance	ancestor in /Script/AnimationSharing: plugin AnimationSharing is not enabled in the project
-UFortAnimationSharingStateProcessor	ancestor in /Script/AnimationSharing: plugin AnimationSharing is not enabled in the project
-UFortAthenaHoverCarMovementComponent	ancestor in /Script/PhysXVehicles: plugin PhysXVehicles is not enabled in the project
-UFortAthenaSimpleCarMovementComponent	ancestor in /Script/PhysXVehicles: plugin PhysXVehicles is not enabled in the project
 UFortKismetLibrary	hand-written in porting/native/Source (not generated)
 UFortMetaNavArea_Obstacles	hand-written in porting/native/Source (not generated)
-UFortPooledSkelMeshComponent	ancestor in /Script/AnimationBudgetAllocator: plugin AnimationBudgetAllocator is not enabled in the project
-UFortSignificanceManager	ancestor in /Script/SignificanceManager: plugin SignificanceManager is not enabled in the project
 UFortTeamActorInterface	UINTERFACE extending UGenericTeamAgentInterface
-UFortVehicleSkelMeshComponent	ancestor in /Script/AnimationBudgetAllocator: plugin AnimationBudgetAllocator is not enabled in the project

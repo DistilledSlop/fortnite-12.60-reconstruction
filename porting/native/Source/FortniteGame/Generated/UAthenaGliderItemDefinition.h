@@ -14,6 +14,7 @@ class AFortPlayerParachute;
 class UAnimInstance;
 class UFortCameraMode;
 class UFortPlayerGliderAnimSet;
+class UMarshalledVFX_AuthoredDataConfig;
 class UParticleSystem;
 class USkeletalMesh;
 class USoundBase;
@@ -37,6 +38,10 @@ public:
 	// table index 13, flags 0x40000000010001
 	UPROPERTY()
 	bool bActivateTrailsOnRotationalMovement;
+
+	// table index 12, flags 0x40000002080009
+	UPROPERTY()
+	UMarshalledVFX_AuthoredDataConfig* AuthoredData;
 
 	// table index 11, flags 0x40000020000000
 	UPROPERTY()

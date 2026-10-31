@@ -7,6 +7,7 @@
 #include "UAthenaCosmeticItemDefinition.h"
 
 class AFortPlayerPet;
+class UFortPetStimuliBank;
 class UFortTaggedSoundBank;
 
 #include "UAthenaPetItemDefinition.generated.h"
@@ -17,6 +18,10 @@ class FORTNITEGAME_API UAthenaPetItemDefinition : public UAthenaCosmeticItemDefi
 	GENERATED_BODY()
 
 public:
+	// table index 2, flags 0x10000000000001
+	UPROPERTY()
+	TArray<UFortPetStimuliBank*> StimuliBanks;
+
 	// table index 1, flags 0x44000000000001
 	UPROPERTY()
 	TSoftClassPtr<AFortPlayerPet> PetPrefabClass;

@@ -7,6 +7,7 @@
 #include "AFortAthenaMutator_SpawningPolicyEQS.h"
 
 #include "AttributeSet.h"
+#include "FMMRSpawningBotsRuntimeInfo.h"
 #include "UObject/NoExportTypes.h"
 
 class UCompositeCurveTable;
@@ -54,6 +55,10 @@ public:
 	// table index 7, flags 0x40000000002000
 	UPROPERTY(Transient)
 	TArray<UFortAthenaMutator_PlayerBotSpawningPolicyData*> BotSpawningDataItems;
+
+	// table index 6, flags 0x40000000002000
+	UPROPERTY(Transient)
+	FMMRSpawningBotsRuntimeInfo CachedMMRSpawningInfo;
 
 	// table index 5, flags 0x40000000010001
 	UPROPERTY()

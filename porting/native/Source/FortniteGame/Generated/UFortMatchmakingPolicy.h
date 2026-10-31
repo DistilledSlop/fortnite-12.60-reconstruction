@@ -8,6 +8,8 @@
 
 #include "FMatchmakingParams.h"
 
+class UFortSearchPass;
+
 #include "UFortMatchmakingPolicy.generated.h"
 
 UCLASS(config=Game)
@@ -27,6 +29,10 @@ public:
 	// table index 2, flags 0x20080000002000
 	UPROPERTY(Transient)
 	FMatchmakingParams CurrentParams;
+
+	// table index 1, flags 0x20080000002000
+	UPROPERTY(Transient)
+	UFortSearchPass* MMPass;
 
 	// table index 0, flags 0x20080000002000
 	UPROPERTY(Transient)

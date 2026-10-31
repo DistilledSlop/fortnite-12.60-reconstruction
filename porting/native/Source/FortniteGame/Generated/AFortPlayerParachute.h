@@ -14,6 +14,7 @@ class UAthenaGliderItemDefinition;
 class UAudioComponent;
 class UFortPlayerGliderAnimSet;
 class UParticleSystemComponent;
+class USkeletalMeshComponentBudgeted;
 class USoundBase;
 
 #include "AFortPlayerParachute.generated.h"
@@ -99,6 +100,10 @@ public:
 	// table index 4, flags 0x10000000000014
 	UPROPERTY()
 	uint8 bIsEtherealBackgroundPreview : 1;
+
+	// table index 3, flags 0x400000000a001d
+	UPROPERTY()
+	USkeletalMeshComponentBudgeted* ParachuteMesh;
 
 	// table index 2, flags 0x400000000a001d
 	UPROPERTY()

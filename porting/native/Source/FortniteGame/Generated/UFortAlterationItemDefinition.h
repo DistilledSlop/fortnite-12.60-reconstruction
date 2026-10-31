@@ -7,7 +7,9 @@
 #include "UFortAccountItemDefinition.h"
 
 #include "EFortAlteration.h"
+#include "FFortConditionalCosmeticModification.h"
 #include "FFortConditionalIncludeTags.h"
+#include "FFortCosmeticModification.h"
 #include "FFortItemQuantityPair.h"
 
 class UFortAbilitySet;
@@ -23,6 +25,14 @@ public:
 	// table index 8, flags 0x40000000000001
 	UPROPERTY()
 	TEnumAsByte<EFortAlteration::Type> AlterationType;
+
+	// table index 7, flags 0x40000000000001
+	UPROPERTY()
+	FFortCosmeticModification DefaultCosmetic;
+
+	// table index 5, flags 0x40000000000001
+	UPROPERTY()
+	TArray<FFortConditionalCosmeticModification> ConditionalCosmetics;
 
 	// table index 3, flags 0x40000000000001
 	UPROPERTY()

@@ -10,6 +10,7 @@
 #include "FAthenaGameMessageData.h"
 #include "FBarrierHeadData.h"
 #include "FBarrierMountedTurretData.h"
+#include "FBarrierTeamState.h"
 #include "FFortRespawnLogicData.h"
 
 class AAthenaBarrierFlag;
@@ -46,6 +47,14 @@ public:
 	// table index 28, flags 0x20080000000020
 	UPROPERTY(Replicated)
 	AAthenaBigBaseWall* BigBaseWall;
+
+	// table index 27, flags 0x20080000000020
+	UPROPERTY(Replicated)
+	FBarrierTeamState Team_0_State;
+
+	// table index 26, flags 0x20080000000020
+	UPROPERTY(Replicated)
+	FBarrierTeamState Team_1_State;
 
 	// table index 25, flags 0x20080000010001
 	UPROPERTY()

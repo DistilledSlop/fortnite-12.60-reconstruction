@@ -10,6 +10,7 @@
 #include "FFortMultiSizeBrush.h"
 #include "FFortPlayerSpawnPadPlacementData.h"
 #include "FFortPossibleMission.h"
+#include "FZoneLoadingScreenConfig.h"
 #include "GameplayTagContainer.h"
 #include "Styling/SlateBrush.h"
 
@@ -39,6 +40,10 @@ public:
 	// table index 15, flags 0x20080000000015
 	UPROPERTY()
 	FFortMultiSizeBrush MissionIcons;
+
+	// table index 14, flags 0x20080000010001
+	UPROPERTY()
+	FZoneLoadingScreenConfig LoadingScreenConfig;
 
 	// table index 13, flags 0x20080000010015
 	UPROPERTY()

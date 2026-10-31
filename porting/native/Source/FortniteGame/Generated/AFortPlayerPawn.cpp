@@ -10,7 +10,7 @@ void AFortPlayerPawn::AttemptInstantInteractSearch()
 	// Decompile source: porting/generated/decomp_improved/AFortPlayerPawn/AttemptInstantInteractSearch.c
 	// Proxy score: 86.5 (portability.json)
 	// Inferred: Decompile calls the multicast dispatcher 0x1406a9dc0 (TMulticastScriptDelegate::ProcessMulticastDelegate, see porting/decompilation_notes.md, third pass) on the delegate member with a parameter block holding the value(s) below. The parameter block is NULL.
-	// Declared in generated header: no (generator must emit this declaration)
+	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	OnAttemptedInstantInteractSearch.Broadcast();
 }
@@ -28,7 +28,7 @@ void AFortPlayerPawn::ClientNotifyAbilityFailed_Implementation(const FGameplayTa
 void AFortPlayerPawn::ClientResetAbilitySystemComponent_Implementation()
 {
 	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
-	// Original address: 0x1406801c0 (shared by 51 ported vtable slots; one body serves all of them)
+	// Original address: 0x1406801c0 (shared by 49 ported vtable slots; one body serves all of them)
 	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
 	// Proxy score: see the manifest entry of each function
 	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
@@ -43,7 +43,7 @@ void AFortPlayerPawn::DebugDestroyVehicle()
 	// Decompile source: porting/generated/decomp_improved/AFortPlayerPawn/DebugDestroyVehicle.c
 	// Proxy score: 91.8 (portability.json)
 	// Inferred: Decompile is P_FINISH only. The asm of the exec entry 0x14075b6b0 is P_FINISH then JMP 0x1406801c0, the shared ret stub. No other statement.
-	// Declared in generated header: no (generator must emit this declaration)
+	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	// Empty body: the native function does nothing (see Inferred).
 }
@@ -55,7 +55,7 @@ void AFortPlayerPawn::EndGhostModeExit()
 	// Decompile source: porting/generated/decomp_improved/AFortPlayerPawn/EndGhostModeExit.c
 	// Proxy score: 92.9 (portability.json)
 	// Inferred: Decompile writes 0.0 to GhostModeExitStartTime and four zero bytes to GhostModeExitDuration (float, 4 bytes), which is 0.0f.
-	// Declared in generated header: no (generator must emit this declaration)
+	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	GhostModeExitStartTime = 0.0f;
 	GhostModeExitDuration = 0.0f;
@@ -68,7 +68,7 @@ UFXSystemComponent* AFortPlayerPawn::GetActivePlayerHandSplashInWaterComponent()
 	// Decompile source: porting/generated/decomp/AFortPlayerPawn/GetActivePlayerHandSplashInWaterComponent.c
 	// Proxy score: 87.5 (portability.json)
 	// Inferred: NiagaraPlayerHandSplashInWater pointer at +0x2818 (reflection). Returned unchanged.
-	// Declared in generated header: no (generator must emit this declaration)
+	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	return NiagaraPlayerHandSplashInWater;
 }
@@ -80,7 +80,7 @@ UFXSystemComponent* AFortPlayerPawn::GetActivePlayerJumpSplashInWaterComponent()
 	// Decompile source: porting/generated/decomp/AFortPlayerPawn/GetActivePlayerJumpSplashInWaterComponent.c
 	// Proxy score: 87.5 (portability.json)
 	// Inferred: NiagaraPlayerJumpSplashInWater pointer at +0x2830 (reflection). Returned unchanged.
-	// Declared in generated header: no (generator must emit this declaration)
+	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	return NiagaraPlayerJumpSplashInWater;
 }
@@ -92,7 +92,7 @@ UFXSystemComponent* AFortPlayerPawn::GetActivePlayerWaterBoostComponent() const
 	// Decompile source: porting/generated/decomp/AFortPlayerPawn/GetActivePlayerWaterBoostComponent.c
 	// Proxy score: 87.5 (portability.json)
 	// Inferred: NiagaraPlayerWaterBoost pointer at +0x2838 (reflection). Returned unchanged.
-	// Declared in generated header: no (generator must emit this declaration)
+	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	return NiagaraPlayerWaterBoost;
 }
@@ -104,7 +104,7 @@ AFortSkyTube* AFortPlayerPawn::GetCurrentSkyTube() const
 	// Decompile source: porting/generated/decomp/AFortPlayerPawn/GetCurrentSkyTube.c
 	// Proxy score: 86.6 (portability.json)
 	// Inferred: CurrentSkyTube pointer at +0x22d8 (reflection). Returned unchanged.
-	// Declared in generated header: no (generator must emit this declaration)
+	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	return CurrentSkyTube;
 }
@@ -116,7 +116,7 @@ AFortWaterBodyActor* AFortPlayerPawn::GetCurrentWaterBody() const
 	// Decompile source: porting/generated/decomp/AFortPlayerPawn/GetCurrentWaterBody.c
 	// Proxy score: 86.6 (portability.json)
 	// Inferred: CurrentWaterBody pointer at +0x22e8 (reflection). Returned unchanged.
-	// Declared in generated header: no (generator must emit this declaration)
+	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	return CurrentWaterBody;
 }
@@ -128,7 +128,7 @@ AFortPlayerPawn* AFortPlayerPawn::GetDBNOHoistee() const
 	// Decompile source: porting/generated/decomp/AFortPlayerPawn/GetDBNOHoistee.c
 	// Proxy score: 86.6 (portability.json)
 	// Inferred: DBNOHoistee pointer at +0x1f58 (reflection). Returned unchanged.
-	// Declared in generated header: no (generator must emit this declaration)
+	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	return DBNOHoistee;
 }
@@ -140,7 +140,7 @@ bool AFortPlayerPawn::GetIsSlopeSliding() const
 	// Decompile source: porting/generated/decomp/AFortPlayerPawn/GetIsSlopeSliding.c
 	// Proxy score: 92.2 (portability.json)
 	// Inferred: Decompile reads byte +0x10e8 bit 0x4. bool_bits.py maps (0x10e8, 0x4) to bIsSlopeSliding (or8 setter).
-	// Declared in generated header: no (generator must emit this declaration)
+	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	return bIsSlopeSliding;
 }
@@ -152,7 +152,7 @@ ABuildingGameplayActorPlayerPropAttachment* AFortPlayerPawn::GetPossessedProp() 
 	// Decompile source: porting/generated/decomp/AFortPlayerPawn/GetPossessedProp.c
 	// Proxy score: 86.6 (portability.json)
 	// Inferred: PossessedProp pointer at +0x15e8 (reflection). Returned unchanged.
-	// Declared in generated header: no (generator must emit this declaration)
+	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	return PossessedProp;
 }
@@ -164,7 +164,7 @@ EFortPawnStasisMode AFortPlayerPawn::GetStasisMode() const
 	// Decompile source: porting/generated/decomp/AFortPlayerPawn/GetStasisMode.c
 	// Proxy score: 92.2 (portability.json)
 	// Inferred: StasisMode = 1-byte enum (EFortPawnStasisMode) at +0x1065 (reflection). Returned unchanged.
-	// Declared in generated header: no (generator must emit this declaration)
+	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	return StasisMode;
 }
@@ -181,7 +181,7 @@ bool AFortPlayerPawn::HasControlledRCPawn() const
 	// Decompile source: porting/generated/decomp/AFortPlayerPawn/HasControlledRCPawn.c
 	// Proxy score: 76.2 (portability.json)
 	// Inferred: Decompile calls FWeakObjectPtr_IsValid (0x142ee7880, default bEvenIfPendingKill = false) on the weak pointer at +0x26a0; reflection name ControlledRCPawn (TWeakObjectPtr in AFortPlayerPawn.h).
-	// Declared in generated header: no (generator must emit this declaration)
+	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	return ControlledRCPawn.IsValid();
 }
@@ -193,7 +193,7 @@ bool AFortPlayerPawn::IsInFrontEndHologram() const
 	// Decompile source: porting/generated/decomp/AFortPlayerPawn/IsInFrontEndHologram.c
 	// Proxy score: 92.2 (portability.json)
 	// Inferred: Decompile reads byte +0x10ea bit 0x40. bool_bits.py maps (0x10ea, 0x40) to bIsInFrontEndHologram (or8 setter).
-	// Declared in generated header: no (generator must emit this declaration)
+	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	return bIsInFrontEndHologram;
 }
@@ -205,7 +205,7 @@ bool AFortPlayerPawn::IsInSkyTube() const
 	// Decompile source: porting/generated/decomp/AFortPlayerPawn/IsInSkyTube.c
 	// Proxy score: 92.2 (portability.json)
 	// Inferred: CurrentSkyTube = AFortSkyTube* at +0x22d8 (reflection, AFortPlayerPawn.h). Decompile tests only for non-null.
-	// Declared in generated header: no (generator must emit this declaration)
+	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	return CurrentSkyTube != nullptr;
 }
@@ -217,7 +217,7 @@ bool AFortPlayerPawn::IsInSlipperyMovement() const
 	// Decompile source: porting/generated/decomp/AFortPlayerPawn/IsInSlipperyMovement.c
 	// Proxy score: 92.2 (portability.json)
 	// Inferred: Decompile reads byte +0x10e7 bit 0x80 (>> 7). bool_bits.py maps (0x10e7, 0x80) to bIsInSlipperyMovement (or8 setter).
-	// Declared in generated header: no (generator must emit this declaration)
+	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	return bIsInSlipperyMovement;
 }
@@ -229,7 +229,7 @@ bool AFortPlayerPawn::IsInVortex() const
 	// Decompile source: porting/generated/decomp/AFortPlayerPawn/IsInVortex.c
 	// Proxy score: 92.2 (portability.json)
 	// Inferred: Decompile reads byte +0x10e7 bit 0x20. bool_bits.py maps (0x10e7, 0x20) to bIsInVortex (or8 setter).
-	// Declared in generated header: no (generator must emit this declaration)
+	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	return bIsInVortex;
 }
@@ -241,7 +241,7 @@ bool AFortPlayerPawn::IsParachuteForcedOpen() const
 	// Decompile source: porting/generated/decomp/AFortPlayerPawn/IsParachuteForcedOpen.c
 	// Proxy score: 92.2 (portability.json)
 	// Inferred: Decompile reads byte +0x10e7 bit 0x2. bool_bits.py maps (0x10e7, 0x2) to bIsParachuteForcedOpen (or8 setter).
-	// Declared in generated header: no (generator must emit this declaration)
+	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	return bIsParachuteForcedOpen;
 }
@@ -253,7 +253,7 @@ bool AFortPlayerPawn::IsSkydiving() const
 	// Decompile source: porting/generated/decomp/AFortPlayerPawn/IsSkydiving.c
 	// Proxy score: 92.2 (portability.json)
 	// Inferred: Decompile reads byte +0x10e7 bit 0x1. bool_bits.py maps (0x10e7, 0x1) to bLocalIsSkydiving (or8). The function name says skydiving; the mapped flag is the bit that is read.
-	// Declared in generated header: no (generator must emit this declaration)
+	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 	// CONFIDENCE: MEDIUM
 	return bLocalIsSkydiving;
 }
@@ -265,7 +265,7 @@ bool AFortPlayerPawn::IsSkydivingFromBus() const
 	// Decompile source: porting/generated/decomp/AFortPlayerPawn/IsSkydivingFromBus.c
 	// Proxy score: 92.2 (portability.json)
 	// Inferred: Decompile tests (byte +0x10e7 & 0x5) == 0x5: bits 0x4 (bIsSkydivingFromBus) and 0x1 (bLocalIsSkydiving) both set (or8 setters).
-	// Declared in generated header: no (generator must emit this declaration)
+	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 	// CONFIDENCE: MEDIUM
 	return bIsSkydivingFromBus && bLocalIsSkydiving;
 }
@@ -277,7 +277,7 @@ bool AFortPlayerPawn::IsWaterSprintBoosting() const
 	// Decompile source: porting/generated/decomp/AFortPlayerPawn/IsWaterSprintBoosting.c
 	// Proxy score: 92.2 (portability.json)
 	// Inferred: Decompile reads byte +0x1061 bit 0x40. bool_bits.py maps (0x1061, 0x40) to bIsWaterSprintBoost (or8 setter).
-	// Declared in generated header: no (generator must emit this declaration)
+	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	return bIsWaterSprintBoost;
 }
@@ -538,7 +538,7 @@ bool AFortPlayerPawn::ServerChooseGender_Validate(EFortCustomGender::Type Gender
 	// Decompile source: porting/generated/decomp_improved/AFortPlayerPawn/ServerChooseGender_Validate.c
 	// Proxy score: 73.2 (portability.json)
 	// Inferred: Decompile returns the unsigned argument < 4 (the one argument after this; the exec passes Gender only). Unique body at 0x14234a140. The name comes from the RPC vtable slot naming, so MEDIUM.
-	// Declared in generated header: no (generator must emit this declaration)
+	// Declared in generated header: no (the generator emits `bool <Name>_Validate(params)` with the WithValidation specifier when the behaviour splice is on)
 	// CONFIDENCE: MEDIUM
 	return Gender < 4;
 }
@@ -551,7 +551,7 @@ void AFortPlayerPawn::ServerChoosePart_Implementation(UCustomCharacterPart* Chos
 void AFortPlayerPawn::ServerCycleAccessoryColorSwatch_Implementation(bool bNext, EFortCustomPartType::Type Part)
 {
 	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
-	// Original address: 0x1406801c0 (shared by 51 ported vtable slots; one body serves all of them)
+	// Original address: 0x1406801c0 (shared by 49 ported vtable slots; one body serves all of them)
 	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
 	// Proxy score: see the manifest entry of each function
 	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
@@ -562,7 +562,7 @@ void AFortPlayerPawn::ServerCycleAccessoryColorSwatch_Implementation(bool bNext,
 void AFortPlayerPawn::ServerCycleColorSwatch_Implementation(bool bNext, EColorSwatchType SwatchType)
 {
 	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
-	// Original address: 0x1406801c0 (shared by 51 ported vtable slots; one body serves all of them)
+	// Original address: 0x1406801c0 (shared by 49 ported vtable slots; one body serves all of them)
 	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
 	// Proxy score: see the manifest entry of each function
 	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
@@ -573,7 +573,7 @@ void AFortPlayerPawn::ServerCycleColorSwatch_Implementation(bool bNext, EColorSw
 void AFortPlayerPawn::ServerCyclePart_Implementation(bool bNextPart, EFortCustomPartType::Type Part)
 {
 	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
-	// Original address: 0x1406801c0 (shared by 51 ported vtable slots; one body serves all of them)
+	// Original address: 0x1406801c0 (shared by 49 ported vtable slots; one body serves all of them)
 	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
 	// Proxy score: see the manifest entry of each function
 	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
@@ -588,7 +588,7 @@ bool AFortPlayerPawn::ServerCyclePart_Validate(bool bNextPart, EFortCustomPartTy
 	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
 	// Proxy score: see the manifest entry of each function
 	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
-	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// Declared in generated header: no (the generator emits `bool <Name>_Validate(params)` with the WithValidation specifier when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	return true;
 }
@@ -610,7 +610,7 @@ bool AFortPlayerPawn::ServerEquipLastWeaponOrGadget_Validate(bool bForce)
 	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
 	// Proxy score: see the manifest entry of each function
 	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
-	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// Declared in generated header: no (the generator emits `bool <Name>_Validate(params)` with the WithValidation specifier when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	return true;
 }
@@ -618,7 +618,7 @@ bool AFortPlayerPawn::ServerEquipLastWeaponOrGadget_Validate(bool bForce)
 void AFortPlayerPawn::ServerHandlePickup_Implementation(bool bPlayPickupSound, const FVector& InStartDirection, float InFlyTime, AFortPickup* Pickup)
 {
 	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
-	// Original address: 0x1406801c0 (shared by 51 ported vtable slots; one body serves all of them)
+	// Original address: 0x1406801c0 (shared by 49 ported vtable slots; one body serves all of them)
 	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
 	// Proxy score: see the manifest entry of each function
 	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
@@ -633,7 +633,7 @@ bool AFortPlayerPawn::ServerHandlePickup_Validate(bool bPlayPickupSound, const F
 	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
 	// Proxy score: see the manifest entry of each function
 	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
-	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// Declared in generated header: no (the generator emits `bool <Name>_Validate(params)` with the WithValidation specifier when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	return true;
 }
@@ -641,7 +641,7 @@ bool AFortPlayerPawn::ServerHandlePickup_Validate(bool bPlayPickupSound, const F
 void AFortPlayerPawn::ServerHandlePickupWithRequestedSwap_Implementation(bool bPlayPickupSound, const FVector& InStartDirection, float InFlyTime, const FGuid& Swap, AFortPickup* Pickup)
 {
 	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
-	// Original address: 0x1406801c0 (shared by 51 ported vtable slots; one body serves all of them)
+	// Original address: 0x1406801c0 (shared by 49 ported vtable slots; one body serves all of them)
 	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
 	// Proxy score: see the manifest entry of each function
 	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
@@ -656,7 +656,7 @@ bool AFortPlayerPawn::ServerHandlePickupWithRequestedSwap_Validate(bool bPlayPic
 	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
 	// Proxy score: see the manifest entry of each function
 	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
-	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// Declared in generated header: no (the generator emits `bool <Name>_Validate(params)` with the WithValidation specifier when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	return true;
 }
@@ -664,7 +664,7 @@ bool AFortPlayerPawn::ServerHandlePickupWithRequestedSwap_Validate(bool bPlayPic
 void AFortPlayerPawn::ServerHandlePickupWithSwap_Implementation(bool bPlayPickupSound, const FVector& InStartDirection, float InFlyTime, const FGuid& Swap, AFortPickup* Pickup)
 {
 	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
-	// Original address: 0x1406801c0 (shared by 51 ported vtable slots; one body serves all of them)
+	// Original address: 0x1406801c0 (shared by 49 ported vtable slots; one body serves all of them)
 	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
 	// Proxy score: see the manifest entry of each function
 	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
@@ -679,7 +679,7 @@ bool AFortPlayerPawn::ServerHandlePickupWithSwap_Validate(bool bPlayPickupSound,
 	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
 	// Proxy score: see the manifest entry of each function
 	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
-	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// Declared in generated header: no (the generator emits `bool <Name>_Validate(params)` with the WithValidation specifier when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	return true;
 }
@@ -706,7 +706,7 @@ bool AFortPlayerPawn::ServerPlayUnableToPerformActionMontage_Validate()
 	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
 	// Proxy score: see the manifest entry of each function
 	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
-	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// Declared in generated header: no (the generator emits `bool <Name>_Validate(params)` with the WithValidation specifier when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	return true;
 }
@@ -714,7 +714,7 @@ bool AFortPlayerPawn::ServerPlayUnableToPerformActionMontage_Validate()
 void AFortPlayerPawn::ServerResetAbilitySystemComponent_Implementation()
 {
 	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
-	// Original address: 0x1406801c0 (shared by 51 ported vtable slots; one body serves all of them)
+	// Original address: 0x1406801c0 (shared by 49 ported vtable slots; one body serves all of them)
 	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
 	// Proxy score: see the manifest entry of each function
 	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
@@ -734,7 +734,7 @@ bool AFortPlayerPawn::ServerRespawnFromDBNO_Validate()
 	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
 	// Proxy score: see the manifest entry of each function
 	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
-	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// Declared in generated header: no (the generator emits `bool <Name>_Validate(params)` with the WithValidation specifier when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	return true;
 }
@@ -742,7 +742,7 @@ bool AFortPlayerPawn::ServerRespawnFromDBNO_Validate()
 void AFortPlayerPawn::ServerReviveFromDBNO_Implementation(AController* EventInstigator)
 {
 	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
-	// Original address: 0x1406801c0 (shared by 51 ported vtable slots; one body serves all of them)
+	// Original address: 0x1406801c0 (shared by 49 ported vtable slots; one body serves all of them)
 	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
 	// Proxy score: see the manifest entry of each function
 	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
@@ -757,7 +757,7 @@ bool AFortPlayerPawn::ServerReviveFromDBNO_Validate(AController* EventInstigator
 	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
 	// Proxy score: see the manifest entry of each function
 	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
-	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// Declared in generated header: no (the generator emits `bool <Name>_Validate(params)` with the WithValidation specifier when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	return true;
 }
@@ -774,7 +774,7 @@ bool AFortPlayerPawn::ServerRootMotionInterruptNotifyStopMontage_Validate(UAnimM
 	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
 	// Proxy score: see the manifest entry of each function
 	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
-	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// Declared in generated header: no (the generator emits `bool <Name>_Validate(params)` with the WithValidation specifier when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	return true;
 }
@@ -782,7 +782,7 @@ bool AFortPlayerPawn::ServerRootMotionInterruptNotifyStopMontage_Validate(UAnimM
 void AFortPlayerPawn::ServerSendAimbotDetectionStatus_Implementation(const TArray<uint8>& Payload)
 {
 	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
-	// Original address: 0x1406801c0 (shared by 51 ported vtable slots; one body serves all of them)
+	// Original address: 0x1406801c0 (shared by 49 ported vtable slots; one body serves all of them)
 	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
 	// Proxy score: see the manifest entry of each function
 	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
@@ -790,10 +790,15 @@ void AFortPlayerPawn::ServerSendAimbotDetectionStatus_Implementation(const TArra
 	// CONFIDENCE: HIGH
 }
 
+void AFortPlayerPawn::ServerSendZiplineState_Implementation(const FZiplinePawnState& InZiplineState)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPlayerPawn::ServerSetAimbotDetection_Implementation(bool bEnableDetection)
 {
 	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
-	// Original address: 0x1406801c0 (shared by 51 ported vtable slots; one body serves all of them)
+	// Original address: 0x1406801c0 (shared by 49 ported vtable slots; one body serves all of them)
 	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
 	// Proxy score: see the manifest entry of each function
 	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
@@ -808,7 +813,7 @@ bool AFortPlayerPawn::ServerSetAimbotDetection_Validate(bool bEnableDetection)
 	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
 	// Proxy score: see the manifest entry of each function
 	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
-	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// Declared in generated header: no (the generator emits `bool <Name>_Validate(params)` with the WithValidation specifier when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	return true;
 }
@@ -825,7 +830,7 @@ bool AFortPlayerPawn::ServerSetAttachment_Validate(const FRepFortMeshAttachment&
 	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
 	// Proxy score: see the manifest entry of each function
 	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
-	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// Declared in generated header: no (the generator emits `bool <Name>_Validate(params)` with the WithValidation specifier when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	return true;
 }
@@ -838,7 +843,7 @@ void AFortPlayerPawn::ServerThrowCarriedPlayer_Implementation()
 void AFortPlayerPawn::ServerToggleBodyType_Implementation()
 {
 	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
-	// Original address: 0x1406801c0 (shared by 51 ported vtable slots; one body serves all of them)
+	// Original address: 0x1406801c0 (shared by 49 ported vtable slots; one body serves all of them)
 	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
 	// Proxy score: see the manifest entry of each function
 	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
@@ -853,7 +858,7 @@ bool AFortPlayerPawn::ServerToggleBodyType_Validate()
 	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
 	// Proxy score: see the manifest entry of each function
 	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
-	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// Declared in generated header: no (the generator emits `bool <Name>_Validate(params)` with the WithValidation specifier when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	return true;
 }
@@ -861,7 +866,7 @@ bool AFortPlayerPawn::ServerToggleBodyType_Validate()
 void AFortPlayerPawn::ServerToggleGender_Implementation()
 {
 	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
-	// Original address: 0x1406801c0 (shared by 51 ported vtable slots; one body serves all of them)
+	// Original address: 0x1406801c0 (shared by 49 ported vtable slots; one body serves all of them)
 	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
 	// Proxy score: see the manifest entry of each function
 	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
@@ -876,7 +881,7 @@ bool AFortPlayerPawn::ServerToggleGender_Validate()
 	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
 	// Proxy score: see the manifest entry of each function
 	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
-	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// Declared in generated header: no (the generator emits `bool <Name>_Validate(params)` with the WithValidation specifier when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	return true;
 }
@@ -893,7 +898,7 @@ bool AFortPlayerPawn::ServerUnmarkRespawned_Validate()
 	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
 	// Proxy score: see the manifest entry of each function
 	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
-	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// Declared in generated header: no (the generator emits `bool <Name>_Validate(params)` with the WithValidation specifier when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	return true;
 }
@@ -910,7 +915,7 @@ bool AFortPlayerPawn::ServerUpdateVehicleInputStateReliable_Validate(const FFort
 	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
 	// Proxy score: see the manifest entry of each function
 	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
-	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// Declared in generated header: no (the generator emits `bool <Name>_Validate(params)` with the WithValidation specifier when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	return true;
 }
@@ -927,7 +932,7 @@ bool AFortPlayerPawn::ServerUpdateVehicleInputStateUnreliable_Validate(float Tim
 	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
 	// Proxy score: see the manifest entry of each function
 	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
-	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// Declared in generated header: no (the generator emits `bool <Name>_Validate(params)` with the WithValidation specifier when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	return true;
 }
@@ -939,7 +944,7 @@ void AFortPlayerPawn::SetIsInFrontEndHologram(bool bInFrontEndHologram)
 	// Decompile source: porting/generated/decomp/AFortPlayerPawn/SetIsInFrontEndHologram.c
 	// Proxy score: 89.8 (portability.json)
 	// Inferred: Decompile clears bit 0x40 and sets it from the argument in byte +0x10ea. bool_bits.py maps (0x10ea, 0x40) to bIsInFrontEndHologram (or8 setter).
-	// Declared in generated header: no (generator must emit this declaration)
+	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	bIsInFrontEndHologram = bInFrontEndHologram;
 }
@@ -951,7 +956,7 @@ void AFortPlayerPawn::SetPreviousPosition(FVector OldPosition)
 	// Decompile source: porting/generated/decomp_improved/AFortPlayerPawn/SetPreviousPosition.c
 	// Proxy score: 71.2 (portability.json)
 	// Inferred: Decompile stores the 12-byte FVector parameter (8 bytes plus 4 bytes) into PreviousPosition.
-	// Declared in generated header: no (generator must emit this declaration)
+	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	PreviousPosition = OldPosition;
 }
@@ -963,7 +968,7 @@ void AFortPlayerPawn::SetPreviousVelocity(FVector OldVelocity)
 	// Decompile source: porting/generated/decomp_improved/AFortPlayerPawn/SetPreviousVelocity.c
 	// Proxy score: 71.2 (portability.json)
 	// Inferred: Decompile stores the 12-byte FVector parameter into PreviousVelocity.
-	// Declared in generated header: no (generator must emit this declaration)
+	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	PreviousVelocity = OldVelocity;
 }
@@ -975,7 +980,7 @@ void AFortPlayerPawn::ToggleBodyType()
 	// Decompile source: porting/generated/decomp_improved/AFortPlayerPawn/ToggleBodyType.c
 	// Proxy score: 91.8 (portability.json)
 	// Inferred: Decompile is P_FINISH only. The asm of the exec entry 0x14075b6b0 is P_FINISH then JMP 0x1406801c0, the shared ret stub. No other statement.
-	// Declared in generated header: no (generator must emit this declaration)
+	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	// Empty body: the native function does nothing (see Inferred).
 }
@@ -987,7 +992,7 @@ void AFortPlayerPawn::ToggleGender()
 	// Decompile source: porting/generated/decomp_improved/AFortPlayerPawn/ToggleGender.c
 	// Proxy score: 91.8 (portability.json)
 	// Inferred: Decompile is P_FINISH only. The asm of the exec entry 0x14075b6b0 is P_FINISH then JMP 0x1406801c0, the shared ret stub. No other statement.
-	// Declared in generated header: no (generator must emit this declaration)
+	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	// Empty body: the native function does nothing (see Inferred).
 }
@@ -1023,6 +1028,7 @@ void AFortPlayerPawn::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutL
 	DOREPLIFETIME(AFortPlayerPawn, PossessedProp);
 	DOREPLIFETIME(AFortPlayerPawn, VehicleStateRep);
 	DOREPLIFETIME(AFortPlayerPawn, bCanPredictJumpApex);
+	DOREPLIFETIME(AFortPlayerPawn, ZiplineState);
 	DOREPLIFETIME(AFortPlayerPawn, bIsInsideSafeZone);
 	DOREPLIFETIME(AFortPlayerPawn, bIsInAnyStorm);
 	DOREPLIFETIME(AFortPlayerPawn, VehicleInputStateUnreliable);

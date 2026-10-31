@@ -6,7 +6,10 @@
 #include "CoreMinimal.h"
 #include "AFortMission.h"
 
+#include "FFortReactiveQuestDialogue.h"
+
 class ABuildingActor;
+class ABuildingDeco;
 
 #include "AFortMission_HarvestingBase.generated.h"
 
@@ -19,6 +22,10 @@ public:
 	// table index 10, flags 0x14000000000005
 	UPROPERTY()
 	TArray<TSubclassOf<ABuildingActor>> BuildingActorClassesValidForHarvestDrop;
+
+	// table index 8, flags 0x14000000000005
+	UPROPERTY()
+	TArray<TSubclassOf<ABuildingDeco>> DecoActorClassesValidForHarvestDrop;
 
 	// table index 7, flags 0x10000000000005
 	UPROPERTY()
@@ -43,6 +50,10 @@ public:
 	// table index 2, flags 0x10000000000005
 	UPROPERTY()
 	bool bEnableConversations;
+
+	// table index 0, flags 0x10000000000005
+	UPROPERTY()
+	TArray<FFortReactiveQuestDialogue> Conversations;
 
 };
 

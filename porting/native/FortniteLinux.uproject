@@ -50,24 +50,93 @@
       "LoadingPhase": "Default"
     },
     {
+      "Name": "CommonInput",
+      "Type": "Runtime",
+      "LoadingPhase": "Default"
+    },
+    {
+      "Name": "FortniteUI",
+      "Type": "Runtime",
+      "LoadingPhase": "Default"
+    },
+    {
       "Name": "FortnitePortEditor",
       "Type": "Editor",
       "LoadingPhase": "Default"
     }
   ],
   "Plugins": [
-    { "Name": "GLTFImporter", "Enabled": true },
-    { "Name": "AESHandlerComponent", "Enabled": true },
-    { "Name": "Oodle", "Enabled": true },
-    { "Name": "SteamVR", "Enabled": false },
-    { "Name": "UdpMessaging", "Enabled": false },
-    { "Name": "Landmass", "Enabled": true },
-    { "Name": "GeometryProcessing", "Enabled": true },
-    { "Name": "Water", "Enabled": true },
-    { "Name": "GameplayAbilities", "Enabled": true },
-    { "Name": "OnlineSubsystemUtils", "Enabled": true },
-    { "Name": "OnlineFramework", "Enabled": true },
-    { "Name": "ReplicationGraph", "Enabled": true },
-    { "Name": "Gauntlet", "Enabled": true }
+    {
+      "Name": "GLTFImporter",
+      "Enabled": true
+    },
+    {
+      "Name": "AESHandlerComponent",
+      "Enabled": true
+    },
+    {
+      "Name": "Oodle",
+      "Enabled": true
+    },
+    {
+      "Name": "SteamVR",
+      "Enabled": false
+    },
+    {
+      "Name": "UdpMessaging",
+      "Enabled": false
+    },
+    {
+      "Name": "Landmass",
+      "Enabled": true
+    },
+    {
+      "Name": "GeometryProcessing",
+      "Enabled": true
+    },
+    {
+      "Name": "Water",
+      "Enabled": true
+    },
+    {
+      "Name": "GameplayAbilities",
+      "Enabled": true
+    },
+    {
+      "Name": "OnlineSubsystemUtils",
+      "Enabled": true
+    },
+    {
+      "Name": "OnlineFramework",
+      "Enabled": true
+    },
+    {
+      "Name": "ReplicationGraph",
+      "Enabled": true
+    },
+    {
+      "Name": "Gauntlet",
+      "Enabled": true
+    },
+    {
+      "Name": "Niagara",
+      "Enabled": true
+    },
+    {
+      "Name": "AnimationSharing",
+      "Enabled": true
+    },
+    {
+      "Name": "PhysXVehicles",
+      "Enabled": true
+    },
+    {
+      "Name": "AnimationBudgetAllocator",
+      "Enabled": true
+    },
+    {
+      "Name": "SignificanceManager",
+      "Enabled": true
+    }
   ]
 }

@@ -18,6 +18,7 @@ class UFortCameraMode;
 class UFortMeatballVehicleConfigs;
 class UFortVehicleAudioVoice;
 class UMaterialInstanceDynamic;
+class UNiagaraComponent;
 class UParticleSystemComponent;
 class UValetRaisinComponent;
 
@@ -76,6 +77,10 @@ public:
 	// table index 27, flags 0x10000000082008
 	UPROPERTY(Transient)
 	UParticleSystemComponent* CacheDirtCascade;
+
+	// table index 26, flags 0x10000000082008
+	UPROPERTY(Transient)
+	UNiagaraComponent* CacheSnowInteractionComponent;
 
 	// table index 25, flags 0x10000000082008
 	UPROPERTY(Transient)

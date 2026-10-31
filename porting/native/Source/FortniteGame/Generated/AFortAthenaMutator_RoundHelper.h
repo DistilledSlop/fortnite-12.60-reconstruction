@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "AFortAthenaMutator.h"
 
+#include "FPOIRoundInfo.h"
+
 class AFortPlayerStart;
 
 #include "AFortAthenaMutator_RoundHelper.generated.h"
@@ -27,6 +29,14 @@ public:
 	// table index 6, flags 0x20080000020001
 	UPROPERTY()
 	uint8 StartingTeamNum;
+
+	// table index 4, flags 0x20080000000001
+	UPROPERTY()
+	TArray<FPOIRoundInfo> RoundInfos;
+
+	// table index 2, flags 0x20080000000000
+	UPROPERTY()
+	TArray<FPOIRoundInfo> GeneratedRoundInfo;
 
 	// table index 0, flags 0x20080000000000
 	UPROPERTY()

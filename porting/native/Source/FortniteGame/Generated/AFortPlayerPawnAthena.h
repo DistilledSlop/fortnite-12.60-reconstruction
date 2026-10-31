@@ -468,6 +468,9 @@ public:
 	void SetBushEnabled(bool bEnableBush);
 
 	UFUNCTION(BlueprintCallable)
+	void SetDamageCameraShakeClass(TSubclassOf<UCameraShake> NewValue);
+
+	UFUNCTION(BlueprintCallable)
 	void SetShouldDropItemsOnDeath(bool bInShouldDropItemsOnDeath);
 
 	UFUNCTION(BlueprintCallable)

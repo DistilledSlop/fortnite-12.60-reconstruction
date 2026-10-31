@@ -10,11 +10,14 @@
 #include "Engine/DataTable.h"
 #include "FFortDeferredNewActorData.h"
 #include "FFortLevelStreamingInfo.h"
+#include "FFortMissionEntry.h"
+#include "FFortMissionManagerRecord.h"
 #include "FFortPlacementLocationTagHandler.h"
 #include "FFortPlayerEarnedItemCaches.h"
 #include "FFortStartingMissionInfo.h"
 #include "FFortTileLootData.h"
 #include "FFortWindIntensityAndDirection.h"
+#include "FWorldTileSubArray.h"
 #include "GameplayTagContainer.h"
 #include "Math/Vector.h"
 
@@ -130,6 +133,10 @@ public:
 	UPROPERTY(Config)
 	int32 FixedSeed;
 
+	// table index 29, flags 0x40000000000000
+	UPROPERTY()
+	TArray<FWorldTileSubArray> Y;
+
 	// table index 28, flags 0x40000000000001
 	UPROPERTY()
 	FVector FriendlyPlayerSpawnExtent;
@@ -197,6 +204,14 @@ public:
 	// table index 12, flags 0x40000000002000
 	UPROPERTY(Transient)
 	bool bCreatedMissionRecord;
+
+	// table index 11, flags 0x40000000002000
+	UPROPERTY(Transient)
+	FFortMissionManagerRecord MissionManagerRecord;
+
+	// table index 9, flags 0x40000000002000
+	UPROPERTY(Transient)
+	TArray<FFortMissionEntry> ReactiveMissionsToAdd;
 
 	// table index 7, flags 0x40000000000000
 	UPROPERTY()

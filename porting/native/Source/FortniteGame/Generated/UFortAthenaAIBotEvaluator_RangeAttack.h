@@ -9,6 +9,7 @@
 class AActor;
 class UFortAthenaAIBotAimingDigestedSkillSet;
 class UFortAthenaAIBotPerceptionDigestedSkillSet;
+class UFortAthenaAIBotRangeAttackDigestedSkillSet;
 
 #include "UFortAthenaAIBotEvaluator_RangeAttack.generated.h"
 
@@ -41,6 +42,10 @@ public:
 	// table index 4, flags 0x40040000000001
 	UPROPERTY()
 	FName HasLoSOnThreatName;
+
+	// table index 3, flags 0x40000000002000
+	UPROPERTY(Transient)
+	UFortAthenaAIBotRangeAttackDigestedSkillSet* CacheRangeAttackDigestedSkillSet;
 
 	// table index 2, flags 0x40000000002000
 	UPROPERTY(Transient)

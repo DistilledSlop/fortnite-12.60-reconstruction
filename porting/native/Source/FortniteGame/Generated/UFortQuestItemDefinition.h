@@ -12,11 +12,13 @@
 #include "FFortItemQuantityPair.h"
 #include "FFortMcpQuestObjectiveInfo.h"
 #include "FFortMcpQuestRewardInfo.h"
+#include "FFortMissionConfigDataParams.h"
 #include "FFortQuestMissionCreationContext.h"
 #include "GameplayTagContainer.h"
 
 class UDataTable;
 class UFortAbilitySet;
+class UFortConversation;
 
 #include "UFortQuestItemDefinition.generated.h"
 
@@ -162,6 +164,18 @@ public:
 	UPROPERTY()
 	FDataTableRowHandle Category;
 
+	// table index 11, flags 0x24080000000015
+	UPROPERTY()
+	TSoftObjectPtr<UFortConversation> IntroConversation;
+
+	// table index 10, flags 0x24080000000015
+	UPROPERTY()
+	TSoftObjectPtr<UFortConversation> SelectRewardsConversation;
+
+	// table index 9, flags 0x24080000000015
+	UPROPERTY()
+	TSoftObjectPtr<UFortConversation> ClaimConversation;
+
 	// table index 8, flags 0x20080000000001
 	UPROPERTY()
 	FText RewardHeaderText;
@@ -177,6 +191,10 @@ public:
 	// table index 4, flags 0x20080000000001
 	UPROPERTY()
 	TArray<FFortQuestMissionCreationContext> MissionCreationContexts;
+
+	// table index 3, flags 0x20080000010001
+	UPROPERTY()
+	FFortMissionConfigDataParams MissionConfigMetadata;
 
 	// table index 2, flags 0x20080000010001
 	UPROPERTY()

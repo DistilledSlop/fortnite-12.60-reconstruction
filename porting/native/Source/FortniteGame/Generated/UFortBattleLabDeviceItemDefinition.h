@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortWorldItemDefinition.h"
 
+class ABattleLabDeviceGameplayActor;
+
 #include "UFortBattleLabDeviceItemDefinition.generated.h"
 
 UCLASS()
@@ -14,5 +16,9 @@ class FORTNITEGAME_API UFortBattleLabDeviceItemDefinition : public UFortWorldIte
 	GENERATED_BODY()
 
 public:
+	// table index 0, flags 0x24080000000001
+	UPROPERTY()
+	TSoftClassPtr<ABattleLabDeviceGameplayActor> BattleLabDeviceActorClass;
+
 };
 

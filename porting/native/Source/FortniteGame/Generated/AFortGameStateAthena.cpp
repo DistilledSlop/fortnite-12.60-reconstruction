@@ -9,7 +9,7 @@ void AFortGameStateAthena::ConditionalStopAutoPerfCapture()
 	// Decompile source: porting/generated/decomp_improved/AFortGameStateAthena/ConditionalStopAutoPerfCapture.c
 	// Proxy score: 91.8 (portability.json)
 	// Inferred: Decompile is P_FINISH only. The asm of the exec entry 0x14075b6b0 is P_FINISH then JMP 0x1406801c0, the shared ret stub. No other statement.
-	// Declared in generated header: no (generator must emit this declaration)
+	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	// Empty body: the native function does nothing (see Inferred).
 }
@@ -21,7 +21,7 @@ AFortSafeZoneIndicator* AFortGameStateAthena::GetSafeZoneIndicator() const
 	// Decompile source: porting/generated/decomp/AFortGameStateAthena/GetSafeZoneIndicator.c
 	// Proxy score: 87.5 (portability.json)
 	// Inferred: SafeZoneIndicator pointer at +0x1770 (reflection). Returned unchanged.
-	// Declared in generated header: no (generator must emit this declaration)
+	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	return SafeZoneIndicator;
 }
@@ -33,7 +33,7 @@ void AFortGameStateAthena::HandleGameModeMessageDefaultPosition()
 	// Decompile source: porting/generated/decomp_improved/AFortGameStateAthena/HandleGameModeMessageDefaultPosition.c
 	// Proxy score: 86.5 (portability.json)
 	// Inferred: Decompile calls the multicast dispatcher 0x1406a9dc0 (TMulticastScriptDelegate::ProcessMulticastDelegate, see porting/decompilation_notes.md, third pass) on the delegate member with a parameter block holding the value(s) below. The parameter block is NULL, so the delegate has no parameters.
-	// Declared in generated header: no (generator must emit this declaration)
+	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	SetDefaultPositionGameModeMessage.Broadcast();
 }
@@ -45,7 +45,7 @@ bool AFortGameStateAthena::HasValidFocalPointActor() const
 	// Decompile source: porting/generated/decomp/AFortGameStateAthena/HasValidFocalPointActor.c
 	// Proxy score: 92.5 (portability.json)
 	// Inferred: FocalPointActor = AActor* at +0x1320 (reflection). Decompile tests only for non-null.
-	// Declared in generated header: no (generator must emit this declaration)
+	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	return FocalPointActor != nullptr;
 }
@@ -310,7 +310,7 @@ void AFortGameStateAthena::StopAutoPerfCaptureTimer()
 	// Decompile source: porting/generated/decomp_improved/AFortGameStateAthena/StopAutoPerfCaptureTimer.c
 	// Proxy score: 91.8 (portability.json)
 	// Inferred: Decompile is P_FINISH only. The asm of the exec entry 0x14075b6b0 is P_FINISH then JMP 0x1406801c0, the shared ret stub. No other statement.
-	// Declared in generated header: no (generator must emit this declaration)
+	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	// Empty body: the native function does nothing (see Inferred).
 }

@@ -7,6 +7,10 @@
 #include "UObject/Object.h"
 
 #include "EFortBudgetCategory.h"
+#include "FVersionedMetricWrapper.h"
+
+class UCategoryMetric;
+class UObjectMetric;
 
 #include "UMetricConfiguration.generated.h"
 
@@ -16,9 +20,29 @@ class FORTNITEGAME_API UMetricConfiguration : public UObject
 	GENERATED_BODY()
 
 public:
+	// table index 10, flags 0x24080000004000
+	UPROPERTY(Config)
+	TArray<TSoftClassPtr<UCategoryMetric>> CategoryClasses;
+
+	// table index 8, flags 0x20080000004000
+	UPROPERTY(Config)
+	TArray<FVersionedMetricWrapper> MetricClasses;
+
+	// table index 6, flags 0x20080000000000
+	UPROPERTY()
+	TArray<UObjectMetric*> Metrics;
+
+	// table index 5, flags 0x0
+	UPROPERTY()
+	UCategoryMetric* CategoryToMetric;
+
 	// table index 3, flags 0x0
 	UPROPERTY()
 	EFortBudgetCategory CategoryToMetric_Key;
+
+	// table index 0, flags 0x20080000000000
+	UPROPERTY()
+	TArray<UCategoryMetric*> CategoryMetrics;
 
 };
 

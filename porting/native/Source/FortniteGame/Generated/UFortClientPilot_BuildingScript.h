@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
 
+class UFortClientPilot_ExplicitBuildingStep;
+
 #include "UFortClientPilot_BuildingScript.generated.h"
 
 UCLASS()
@@ -14,5 +16,9 @@ class FORTNITEGAME_API UFortClientPilot_BuildingScript : public UObject
 	GENERATED_BODY()
 
 public:
+	// table index 0, flags 0x10000000000000
+	UPROPERTY()
+	TArray<UFortClientPilot_ExplicitBuildingStep*> BuildingSteps;
+
 };
 

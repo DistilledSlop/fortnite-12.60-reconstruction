@@ -7,6 +7,7 @@
 #include "UAthenaDanceItemDefinition.h"
 
 class AActor;
+class AFortToyPreviewActor;
 class UFortGameplayAbility;
 
 #include "UAthenaToyItemDefinition.generated.h"
@@ -24,6 +25,10 @@ public:
 	// table index 1, flags 0x24080000000001
 	UPROPERTY()
 	TSoftClassPtr<AActor> ToyActorClass;
+
+	// table index 0, flags 0x24080000000001
+	UPROPERTY()
+	TSoftClassPtr<AFortToyPreviewActor> FrontEndPreviewActor;
 
 };
 

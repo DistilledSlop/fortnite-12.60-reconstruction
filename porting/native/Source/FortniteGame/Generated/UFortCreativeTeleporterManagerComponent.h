@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 
+#include "FTeleporterGroup.h"
+
 #include "UFortCreativeTeleporterManagerComponent.generated.h"
 
 UCLASS(config=Creative)
@@ -14,5 +16,13 @@ class FORTNITEGAME_API UFortCreativeTeleporterManagerComponent : public UActorCo
 	GENERATED_BODY()
 
 public:
+	// table index 3, flags 0x40000000000000
+	UPROPERTY()
+	TArray<FTeleporterGroup> TeleporterGroupList;
+
+	// table index 0, flags 0x40000000000000
+	UPROPERTY()
+	TMap<FName, FTeleporterGroup> TeleporterListedByTeleportToWhenReceived;
+
 };
 

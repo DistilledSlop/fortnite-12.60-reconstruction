@@ -9,7 +9,7 @@ void AFortPlayerPawnAthena::ForceReviveFromDBNO()
 	// Decompile source: porting/generated/decomp_improved/AFortPlayerPawnAthena/ForceReviveFromDBNO.c
 	// Proxy score: 91.8 (portability.json)
 	// Inferred: Decompile is P_FINISH only. The asm of the exec entry 0x14075b6b0 is P_FINISH then JMP 0x1406801c0, the shared ret stub. No other statement.
-	// Declared in generated header: no (generator must emit this declaration)
+	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	// Empty body: the native function does nothing (see Inferred).
 }
@@ -61,7 +61,7 @@ bool AFortPlayerPawnAthena::ServerCreativeToggleGhost_Validate(bool bEnableOnly)
 	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
 	// Proxy score: see the manifest entry of each function
 	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
-	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// Declared in generated header: no (the generator emits `bool <Name>_Validate(params)` with the WithValidation specifier when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	return true;
 }
@@ -78,7 +78,7 @@ bool AFortPlayerPawnAthena::ServerSetInteractingItem_Validate(bool bClearInterac
 	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
 	// Proxy score: see the manifest entry of each function
 	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
-	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// Declared in generated header: no (the generator emits `bool <Name>_Validate(params)` with the WithValidation specifier when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	return true;
 }
@@ -86,7 +86,7 @@ bool AFortPlayerPawnAthena::ServerSetInteractingItem_Validate(bool bClearInterac
 void AFortPlayerPawnAthena::ServerSuicide_Implementation(int32 MatchPlacement, bool bSuppressResurrectionChip)
 {
 	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
-	// Original address: 0x1406801c0 (shared by 51 ported vtable slots; one body serves all of them)
+	// Original address: 0x1406801c0 (shared by 49 ported vtable slots; one body serves all of them)
 	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
 	// Proxy score: see the manifest entry of each function
 	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
@@ -101,7 +101,7 @@ bool AFortPlayerPawnAthena::ServerSuicide_Validate(int32 MatchPlacement, bool bS
 	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
 	// Proxy score: see the manifest entry of each function
 	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
-	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// Declared in generated header: no (the generator emits `bool <Name>_Validate(params)` with the WithValidation specifier when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	return true;
 }
@@ -113,9 +113,21 @@ void AFortPlayerPawnAthena::SetBushEnabled(bool bEnableBush)
 	// Decompile source: porting/generated/decomp/AFortPlayerPawnAthena/SetBushEnabled.c
 	// Proxy score: 86.2 (portability.json)
 	// Inferred: Direct call to 0x1406801c0, which is `ret 0` (disassembled). The native body therefore has no effect.
-	// Declared in generated header: no (generator must emit this declaration)
+	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	// The decompile calls only the empty function Stub_Empty (0x1406801c0, ret 0) with the argument: no effect.
+}
+
+void AFortPlayerPawnAthena::SetDamageCameraShakeClass(TSubclassOf<UCameraShake> NewValue)
+{
+	// Behaviour snippet: AFortPlayerPawnAthena::SetDamageCameraShakeClass (body only; spliced into the generated member function).
+	// Original address: 0x142a83d20
+	// Decompile source: porting/generated/decomp/AFortPlayerPawnAthena/SetDamageCameraShakeClass.c
+	// Proxy score: 86.2 (portability.json)
+	// Inferred: Decompile stores the 8-byte argument unchanged to +0x3070 (DamageCameraShakeClass, TSubclassOf<UCameraShake> in the header). The parameter has the reflection type TSubclassOf<UCameraShake> (one UClass pointer), so the store is a plain assignment. No class check is made in the decompile.
+	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
+	// CONFIDENCE: MEDIUM
+	DamageCameraShakeClass = NewValue;
 }
 
 void AFortPlayerPawnAthena::SetShouldDropItemsOnDeath(bool bInShouldDropItemsOnDeath)
@@ -125,7 +137,7 @@ void AFortPlayerPawnAthena::SetShouldDropItemsOnDeath(bool bInShouldDropItemsOnD
 	// Decompile source: porting/generated/decomp/AFortPlayerPawnAthena/SetShouldDropItemsOnDeath.c
 	// Proxy score: 89.6 (portability.json)
 	// Inferred: Decompile stores (argument != 0) to the byte at +0x2972 (10610). bool_bits.py maps +0x2972 to bShouldDropItemsOnDeath; the header declares it as a native bool.
-	// Declared in generated header: no (generator must emit this declaration)
+	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	bShouldDropItemsOnDeath = bInShouldDropItemsOnDeath;
 }
@@ -137,7 +149,7 @@ void AFortPlayerPawnAthena::SetShouldSkipMovementFullSimulation(bool bInShouldSk
 	// Decompile source: porting/generated/decomp/AFortPlayerPawnAthena/SetShouldSkipMovementFullSimulation.c
 	// Proxy score: 89.6 (portability.json)
 	// Inferred: Decompile stores (argument != 0) to the byte at +0x2973 (10611). bool_bits.py maps +0x2973 to bShouldSkipMovementFullSimulation; the header declares a native bool.
-	// Declared in generated header: no (generator must emit this declaration)
+	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	bShouldSkipMovementFullSimulation = bInShouldSkipMovementFullSimulation;
 }

@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortMcpProfile.h"
 
+class UAthenaSeasonStats;
+
 #include "UFortMcpProfileAthenaStats.generated.h"
 
 UCLASS(config=Engine)
@@ -14,5 +16,13 @@ class FORTNITEGAME_API UFortMcpProfileAthenaStats : public UFortMcpProfile
 	GENERATED_BODY()
 
 public:
+	// table index 2, flags 0x40000000000000
+	UPROPERTY()
+	UAthenaSeasonStats* LifeTimeStats;
+
+	// table index 0, flags 0x40000000000000
+	UPROPERTY()
+	TArray<UAthenaSeasonStats*> LifeTimeAndSeasonStatsList;
+
 };
 

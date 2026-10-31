@@ -8,6 +8,7 @@
 
 #include "FFortEarlyAcessLoadingScreen.h"
 #include "FFortPSALoadingScreen.h"
+#include "FFortSubGameLoadingScreen.h"
 #include "Styling/SlateBrush.h"
 
 #include "UFortLoadingConfig.generated.h"
@@ -18,6 +19,14 @@ class FORTNITEGAME_API UFortLoadingConfig : public UDataAsset
 	GENERATED_BODY()
 
 public:
+	// table index 6, flags 0x10000000000001
+	UPROPERTY()
+	FFortSubGameLoadingScreen LoadingScreenFallback;
+
+	// table index 5, flags 0x10000000010001
+	UPROPERTY()
+	FFortSubGameLoadingScreen LoadingScreens[2];
+
 	// table index 4, flags 0x10000000010001
 	UPROPERTY()
 	FFortEarlyAcessLoadingScreen LoadingScreenEA;

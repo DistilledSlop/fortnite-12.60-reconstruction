@@ -10,6 +10,7 @@
 #include "FVectorParticleParameter.h"
 #include "Math/Vector.h"
 
+class UNiagaraSystem;
 class UParticleSystem;
 
 #include "UAthenaSkyDiveContrailItemDefinition.generated.h"
@@ -27,6 +28,10 @@ public:
 	// table index 8, flags 0x14000000010015
 	UPROPERTY()
 	TSoftObjectPtr<UParticleSystem> FrontEndContrailEffect;
+
+	// table index 7, flags 0x14000000010015
+	UPROPERTY()
+	TSoftObjectPtr<UNiagaraSystem> NiagaraContrailEffect;
 
 	// table index 6, flags 0x10000000010001
 	UPROPERTY()

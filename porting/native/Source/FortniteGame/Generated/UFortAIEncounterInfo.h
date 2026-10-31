@@ -23,11 +23,14 @@
 #include "FFortAIEncounterTimedModifierTags.h"
 #include "FFortAIEncounterWaveProgressEstimation.h"
 #include "FFortAILootDropModifierRow.h"
+#include "FFortAISpawnGroupUpgradeData.h"
 #include "FFortAISpawnerData.h"
 #include "FFortEncounterPawnNumberCaps.h"
 #include "FFortEncounterSettings.h"
 #include "FFortEncounterSettingsFixedPace.h"
 #include "FFortGoalActorEncounterDataManagerPair.h"
+#include "FFortIntensityCurveSequenceInstanceInfo.h"
+#include "FFortSpawnPointsPercentageCurveSequenceInstanceInfo.h"
 #include "FOnBuildingRiftBlockedShouldDie.h"
 #include "FOnEncounterAllBurstEnemiesSpawned.h"
 #include "FOnEncounterAllEnemiesKilled.h"
@@ -71,6 +74,14 @@ public:
 	// table index 164, flags 0x20080000000015
 	UPROPERTY()
 	UFortAISpawnGroupProgressionInfo* SpawnGroupProgressionInfo;
+
+	// table index 163, flags 0x20080000000000
+	UPROPERTY()
+	FFortSpawnPointsPercentageCurveSequenceInstanceInfo SpawnPointsPercentageCurveSequence;
+
+	// table index 162, flags 0x20080000000000
+	UPROPERTY()
+	FFortIntensityCurveSequenceInstanceInfo IntensityCurveSequence;
 
 	// table index 161, flags 0x20080000000000
 	UPROPERTY()
@@ -175,6 +186,10 @@ public:
 	// table index 134, flags 0x10000000000000
 	UPROPERTY()
 	FFortAIEncounterSpawnPointsProfile EncounterSpawnPointsProfile;
+
+	// table index 132, flags 0x10000000000000
+	UPROPERTY()
+	TArray<FFortAISpawnGroupUpgradeData> AvailableUpgrades;
 
 	// table index 130, flags 0x10000000000000
 	UPROPERTY()

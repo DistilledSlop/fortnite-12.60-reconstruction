@@ -8,6 +8,8 @@
 
 #include "FFortFrontendCompositeLevel.h"
 
+class UFortFrontendPendingAsyncLevel;
+
 #include "UFortGameStateComponent_FrontEndFlow.generated.h"
 
 UCLASS(config=Engine)
@@ -19,6 +21,10 @@ public:
 	// table index 2, flags 0x40000000002000
 	UPROPERTY(Transient)
 	TArray<FFortFrontendCompositeLevel> CurrentCompositeLevels;
+
+	// table index 0, flags 0x40000000002000
+	UPROPERTY(Transient)
+	TArray<UFortFrontendPendingAsyncLevel*> AsyncStreamingLevels;
 
 };
 

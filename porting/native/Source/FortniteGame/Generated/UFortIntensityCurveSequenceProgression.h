@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "Engine/DataAsset.h"
 
+#include "FFortInstensityCurveSequenceProgression.h"
+
 #include "UFortIntensityCurveSequenceProgression.generated.h"
 
 UCLASS()
@@ -14,5 +16,9 @@ class FORTNITEGAME_API UFortIntensityCurveSequenceProgression : public UDataAsse
 	GENERATED_BODY()
 
 public:
+	// table index 0, flags 0x20080000000015
+	UPROPERTY()
+	TArray<FFortInstensityCurveSequenceProgression> IntensityCurveSequences;
+
 };
 

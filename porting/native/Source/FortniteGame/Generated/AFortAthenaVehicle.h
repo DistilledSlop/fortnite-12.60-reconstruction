@@ -52,6 +52,8 @@ class UFortVehiclePontoonsComponent;
 class UFortVehicleSeatComponent;
 class UFortVehicleTrickSet;
 class UGameplayEffect;
+class UNiagaraComponent;
+class UNiagaraSystem;
 class UPrimitiveComponent;
 class USlateBrushAsset;
 class USoundAttenuation;
@@ -183,6 +185,14 @@ public:
 	// table index 122, flags 0x10000000000005
 	UPROPERTY()
 	float WaterEffectsVehicleMaxSpeedKmh;
+
+	// table index 121, flags 0x10000000000005
+	UPROPERTY()
+	UNiagaraSystem* WaterEffectsAsset;
+
+	// table index 120, flags 0x1000000008001d
+	UPROPERTY()
+	UNiagaraComponent* WaterEffectsComponent;
 
 	// table index 119, flags 0x10000000010015
 	UPROPERTY()

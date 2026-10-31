@@ -17,12 +17,18 @@ void AFortMissionManager::OnRep_Missions()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortMissionManager::OnRep_MissionUIActors()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortMissionManager::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(AFortMissionManager, MissionClosestToPar);
 	DOREPLIFETIME(AFortMissionManager, CurrentUIFocusedMission);
+	DOREPLIFETIME(AFortMissionManager, MissionUIActors);
 	DOREPLIFETIME(AFortMissionManager, AllMissionEnemyClasses);
 	DOREPLIFETIME(AFortMissionManager, Missions);
 	DOREPLIFETIME(AFortMissionManager, BluGloManager);

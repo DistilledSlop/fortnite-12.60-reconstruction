@@ -8,6 +8,8 @@
 
 #include "EPatrollingMode.h"
 
+class AFortAthenaPatrolPoint;
+
 #include "AFortAthenaPatrolPath.generated.h"
 
 UCLASS(config=Engine)
@@ -31,6 +33,10 @@ public:
 	// table index 2, flags 0x40000000000001
 	UPROPERTY()
 	float LeashHeight;
+
+	// table index 0, flags 0x40000000000001
+	UPROPERTY()
+	TArray<AFortAthenaPatrolPoint*> PatrolPoints;
 
 };
 

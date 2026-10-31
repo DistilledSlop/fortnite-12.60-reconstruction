@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "Engine/DataAsset.h"
 
+#include "FWorldAmbientPropertiesMatchingGameContext.h"
+
 #include "UFortTimeOfDayData.generated.h"
 
 UCLASS()
@@ -14,5 +16,9 @@ class FORTNITEGAME_API UFortTimeOfDayData : public UPrimaryDataAsset
 	GENERATED_BODY()
 
 public:
+	// table index 0, flags 0x40000000000001
+	UPROPERTY()
+	TArray<FWorldAmbientPropertiesMatchingGameContext> WorldAmbientPropertiesList;
+
 };
 

@@ -16,6 +16,7 @@ class UAnimMontage;
 class UAthenaBackpackItemDefinition;
 class UAthenaCharacterItemDefinition;
 class UFortFeedbackBank;
+class UFortHeroGameplayDefinition;
 class UFortHeroSpecialization;
 class UFortMontageLookupTable;
 class UFrontendAnimInstance;
@@ -67,6 +68,10 @@ public:
 	// table index 11, flags 0x24080000000001
 	UPROPERTY()
 	TSoftClassPtr<AFortPlayerPawn> OverridePawnClass;
+
+	// table index 10, flags 0x20080000000001
+	UPROPERTY()
+	UFortHeroGameplayDefinition* HeroGameplayDefinition;
 
 	// table index 9, flags 0x20080000000001
 	UPROPERTY()

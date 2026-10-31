@@ -16,6 +16,7 @@ class AFortMinigame;
 class UFortPlaysetPropItemDefinition;
 class UFortWorldItemDefinition;
 class ULevelSaveRecord;
+class ULevelSaveRecordCollection;
 class UWorld;
 
 #include "UFortPlaysetItemDefinition.generated.h"
@@ -93,6 +94,10 @@ public:
 	// table index 8, flags 0x40000000000000
 	UPROPERTY()
 	ULevelSaveRecord* LevelSaveRecord;
+
+	// table index 7, flags 0x40000000000000
+	UPROPERTY()
+	ULevelSaveRecordCollection* PlaysetPropLevelSaveRecordCollection;
 
 	// table index 6, flags 0x40000000002000
 	UPROPERTY(Transient)

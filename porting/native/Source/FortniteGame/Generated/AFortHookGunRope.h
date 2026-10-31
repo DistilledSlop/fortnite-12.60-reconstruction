@@ -10,6 +10,7 @@
 #include "FOnEndReel.h"
 #include "Math/Vector.h"
 
+class USkeletalMeshComponentBudgeted;
 class UStaticMeshComponent;
 
 #include "AFortHookGunRope.generated.h"
@@ -35,6 +36,10 @@ public:
 	// table index 7, flags 0x20080000000014
 	UPROPERTY()
 	FVector EndLocation;
+
+	// table index 6, flags 0x2008000008001c
+	UPROPERTY()
+	USkeletalMeshComponentBudgeted* WeaponMesh;
 
 	// table index 5, flags 0x20080000010001
 	UPROPERTY()

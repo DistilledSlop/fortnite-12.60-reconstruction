@@ -7,12 +7,14 @@
 #include "UAthenaCosmeticItemDefinition.h"
 
 #include "EFortCustomGender.h"
+#include "EFortCustomPartType.h"
 #include "FAthenaCharacterTaggedPartsList.h"
 #include "GameplayTagContainer.h"
 
 class UAthenaBackpackItemDefinition;
 class UFortFeedbackBank;
 class UFortHeroType;
+class UMarshalledVFX_AuthoredDataConfig;
 
 #include "UAthenaCharacterItemDefinition.generated.h"
 
@@ -22,6 +24,10 @@ class FORTNITEGAME_API UAthenaCharacterItemDefinition : public UAthenaCosmeticIt
 	GENERATED_BODY()
 
 public:
+	// table index 7, flags 0x10008002000009
+	UPROPERTY()
+	TMap<TEnumAsByte<EFortCustomPartType::Type>, UMarshalledVFX_AuthoredDataConfig*> AuthoredVFXData_ByPart;
+
 	// table index 6, flags 0x10000000000015
 	UPROPERTY()
 	UFortHeroType* HeroDefinition;

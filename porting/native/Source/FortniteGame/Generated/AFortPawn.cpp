@@ -15,7 +15,7 @@ EFortControlRecoveryBehavior AFortPawn::GetControlRecoveryBehavior() const
 	// Decompile source: porting/generated/decomp/AFortPawn/GetControlRecoveryBehavior.c
 	// Proxy score: 92.2 (portability.json)
 	// Inferred: ControlRecoveryBehavior at +0x53c (reflection; 1-byte enum). Returned unchanged.
-	// Declared in generated header: no (generator must emit this declaration)
+	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	return ControlRecoveryBehavior;
 }
@@ -27,7 +27,7 @@ float AFortPawn::GetLocalSpin() const
 	// Decompile source: porting/generated/decomp/AFortPawn/GetLocalSpin.c
 	// Proxy score: 92.2 (portability.json)
 	// Inferred: Reads LocalSpin at +0x638 (reflection offset 1592) as float; decompile writes it to the float result.
-	// Declared in generated header: no (generator must emit this declaration)
+	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	return LocalSpin;
 }
@@ -49,7 +49,7 @@ bool AFortPawn::IsAllowChainStun() const
 	// Decompile source: porting/generated/decomp/AFortPawn/IsAllowChainStun.c
 	// Proxy score: 92.2 (portability.json)
 	// Inferred: Decompile compares the ControlRecoveryBehavior byte (+0x53c) with 1. Enum value 1 is LimitedControl in EFortControlRecoveryBehavior.h. Enum width of 1 byte assumed.
-	// Declared in generated header: no (generator must emit this declaration)
+	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 	// CONFIDENCE: MEDIUM
 	return ControlRecoveryBehavior != EFortControlRecoveryBehavior::LimitedControl;
 }
@@ -61,7 +61,7 @@ bool AFortPawn::IsDBNO() const
 	// Decompile source: porting/generated/decomp/AFortPawn/IsDBNO.c
 	// Proxy score: 92.2 (portability.json)
 	// Inferred: Decompile reads byte +0x53a (1338) bit 0x2 (>> 1 & 1). bool_bits.py maps that exact (offset, mask) to bIsDBNO (or8 setter). Header: uint8 bIsDBNO : 1.
-	// Declared in generated header: no (generator must emit this declaration)
+	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	return bIsDBNO;
 }
@@ -73,7 +73,7 @@ bool AFortPawn::IsSpinning() const
 	// Decompile source: porting/generated/decomp/AFortPawn/IsSpinning.c
 	// Proxy score: 92.9 (portability.json)
 	// Inferred: LocalSpin = float at +0x638 (reflection offset 1592, header AFortPawn.h). Decompile stores 0 when LocalSpin == 0.0 and 1 otherwise.
-	// Declared in generated header: no (generator must emit this declaration)
+	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	return LocalSpin != 0.0f;
 }
@@ -85,7 +85,7 @@ void AFortPawn::LogChugSplashEvent()
 	// Decompile source: porting/generated/decomp_improved/AFortPawn/LogChugSplashEvent.c
 	// Proxy score: 91.8 (portability.json)
 	// Inferred: Decompile is P_FINISH only. The asm of the exec entry 0x14075b6b0 is P_FINISH then JMP 0x1406801c0, the shared ret stub. No other statement.
-	// Declared in generated header: no (generator must emit this declaration)
+	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	// Empty body: the native function does nothing (see Inferred).
 }
@@ -97,7 +97,7 @@ void AFortPawn::MovingEmoteStopped()
 	// Decompile source: porting/generated/decomp_improved/AFortPawn/MovingEmoteStopped.c
 	// Proxy score: 91.8 (portability.json)
 	// Inferred: Decompile is P_FINISH only. The asm of the exec entry 0x14075b6b0 is P_FINISH then JMP 0x1406801c0, the shared ret stub. No other statement.
-	// Declared in generated header: no (generator must emit this declaration)
+	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	// Empty body: the native function does nothing (see Inferred).
 }
@@ -259,7 +259,7 @@ bool AFortPawn::ServerInternalEquipWeapon_Validate(AFortWeapon* Weap)
 	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
 	// Proxy score: see the manifest entry of each function
 	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
-	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// Declared in generated header: no (the generator emits `bool <Name>_Validate(params)` with the WithValidation specifier when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	return true;
 }
@@ -267,7 +267,7 @@ bool AFortPawn::ServerInternalEquipWeapon_Validate(AFortWeapon* Weap)
 void AFortPawn::ServerTeleportNearLocation_Implementation(const FVector& ActorLocation)
 {
 	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
-	// Original address: 0x1406801c0 (shared by 51 ported vtable slots; one body serves all of them)
+	// Original address: 0x1406801c0 (shared by 49 ported vtable slots; one body serves all of them)
 	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
 	// Proxy score: see the manifest entry of each function
 	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
@@ -282,7 +282,7 @@ bool AFortPawn::ServerTeleportNearLocation_Validate(const FVector& ActorLocation
 	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
 	// Proxy score: see the manifest entry of each function
 	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
-	// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+	// Declared in generated header: no (the generator emits `bool <Name>_Validate(params)` with the WithValidation specifier when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	return true;
 }
@@ -294,7 +294,7 @@ bool AFortPawn::WasDBNOOnDeath() const
 	// Decompile source: porting/generated/decomp/AFortPawn/WasDBNOOnDeath.c
 	// Proxy score: 92.2 (portability.json)
 	// Inferred: Decompile reads byte +0x53a bit 0x4 (>> 2 & 1). bool_bits.py maps (0x53a, 0x4) to bWasDBNOOnDeath (or8 setter).
-	// Declared in generated header: no (generator must emit this declaration)
+	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	return bWasDBNOOnDeath;
 }

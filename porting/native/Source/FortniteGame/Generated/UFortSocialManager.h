@@ -6,6 +6,9 @@
 #include "CoreMinimal.h"
 #include "SocialManager.h"
 
+class UFortLocalTeam;
+class UFortSocialUser;
+
 #include "UFortSocialManager.generated.h"
 
 UCLASS()
@@ -21,6 +24,14 @@ public:
 	// table index 2, flags 0x40000000000000
 	UPROPERTY()
 	bool bLeftLastPartyFromGameDisconnect;
+
+	// table index 1, flags 0x40000000000000
+	UPROPERTY()
+	UFortLocalTeam* LocalTeam;
+
+	// table index 0, flags 0x40000000002000
+	UPROPERTY(Transient)
+	UFortSocialUser* CurrentJoinAndSpectateTarget;
 
 };
 

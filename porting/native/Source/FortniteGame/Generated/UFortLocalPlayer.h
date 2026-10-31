@@ -8,6 +8,7 @@
 
 #include "FFortPlayerScoreReport.h"
 #include "FFortRewardReport.h"
+#include "FPlayerReportingInfoContainer.h"
 #include "GameFramework/OnlineReplStructs.h"
 
 class UFortClientSettingsRecord;
@@ -50,6 +51,10 @@ public:
 	// table index 2, flags 0x40000000000000
 	UPROPERTY()
 	FUniqueNetIdRepl PlatformUID;
+
+	// table index 1, flags 0x40000000000000
+	UPROPERTY()
+	FPlayerReportingInfoContainer PlayerReportingInfoContainer;
 
 	// table index 0, flags 0x40000000002000
 	UPROPERTY(Transient)

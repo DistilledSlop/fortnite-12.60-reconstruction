@@ -6,6 +6,8 @@ void AFortAthenaMutator_Barrier::GetLifetimeReplicatedProps(TArray<FLifetimeProp
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
+	DOREPLIFETIME(AFortAthenaMutator_Barrier, Team_1_State);
+	DOREPLIFETIME(AFortAthenaMutator_Barrier, Team_0_State);
 	DOREPLIFETIME(AFortAthenaMutator_Barrier, BigBaseWall);
 	DOREPLIFETIME(AFortAthenaMutator_Barrier, bGameEndsWhenObjectiveIsDestroyed);
 }

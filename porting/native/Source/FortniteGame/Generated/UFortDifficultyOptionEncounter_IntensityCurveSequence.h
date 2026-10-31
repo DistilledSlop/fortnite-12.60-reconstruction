@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortDifficultyOptionEncounter.h"
 
+class UFortIntensityCurveSequence;
+
 #include "UFortDifficultyOptionEncounter_IntensityCurveSequence.generated.h"
 
 UCLASS()
@@ -14,5 +16,9 @@ class FORTNITEGAME_API UFortDifficultyOptionEncounter_IntensityCurveSequence : p
 	GENERATED_BODY()
 
 public:
+	// table index 0, flags 0x20080000010001
+	UPROPERTY()
+	UFortIntensityCurveSequence* CurveSequence;
+
 };
 

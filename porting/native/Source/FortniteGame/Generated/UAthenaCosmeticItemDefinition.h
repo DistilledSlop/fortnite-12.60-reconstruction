@@ -17,6 +17,7 @@ class AFortItemPreviewActor;
 class UAnimMontage;
 class UAthenaCharacterItemDefinition;
 class UFXSystemAsset;
+class UFortCosmeticVariant;
 class UFortMontageItemDefinitionBase;
 
 #include "UAthenaCosmeticItemDefinition.generated.h"
@@ -74,6 +75,10 @@ public:
 	// table index 17, flags 0x20080000000001
 	UPROPERTY()
 	TArray<UFortMontageItemDefinitionBase*> BuiltInEmotes;
+
+	// table index 15, flags 0x20088000000009
+	UPROPERTY()
+	TArray<UFortCosmeticVariant*> ItemVariants;
 
 	// table index 14, flags 0x20080000000001
 	UPROPERTY()

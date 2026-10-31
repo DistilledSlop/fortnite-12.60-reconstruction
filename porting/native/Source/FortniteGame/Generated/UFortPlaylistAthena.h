@@ -29,6 +29,7 @@
 class AActor;
 class AFortInGameMapManager;
 class AFortTimeOfDayManager;
+class UAnimationSharingSetup;
 class UAthenaAISettings;
 class UCurveTable;
 class UDataTable;
@@ -641,6 +642,10 @@ public:
 	// table index 9, flags 0x10000000010005
 	UPROPERTY()
 	bool bUsesAnimationSharing;
+
+	// table index 8, flags 0x14000000010005
+	UPROPERTY()
+	TSoftObjectPtr<UAnimationSharingSetup> AnimationSharingSetup;
 
 	// table index 7, flags 0x10000000010015
 	UPROPERTY()
