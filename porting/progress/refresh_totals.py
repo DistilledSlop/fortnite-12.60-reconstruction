@@ -16,6 +16,9 @@ and is used wherever it has the class.
 Usage:
   python3 -I porting/progress/refresh_totals.py           write porting/progress/totals.json
   python3 -I porting/progress/refresh_totals.py --print   print the result without writing
+  python3 -I porting/progress/refresh_totals.py --count-tree
+      walk the full raw extraction ONCE and write porting/generated/cooked-name-counts-full.json
+      (ignored). Only this mode walks files; the normal refresh reads that small count file.
 """
 
 import argparse
@@ -29,6 +32,9 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.abspath(os.path.join(HERE, "..", ".."))
 GEN = os.path.join(REPO, "porting", "generated")
 OUT = os.path.join(HERE, "totals.json")
+FULL_TREE = "/mnt/vibrato/fortnite-extracted-full"
+FULL_SUMMARY = os.path.join(GEN, "extract-full-summary.json")
+COUNTS_FULL = os.path.join(GEN, "cooked-name-counts-full.json")
 
 # Named-class regexes for the gameplay leaves. The same strings are the `name_regex`
 # values in components.json, so a leaf and its denominator always use one pattern.
@@ -73,6 +79,37 @@ def load_json(path):
 
 def entry(value, path, method):
     return {"value": value, "source": rel(path), "method": method, "generated_utc": utc_of(path)}
+
+
+def count_tree(root=FULL_TREE):
+    """Walk the full raw extraction once and write the small count file. Distinct names, not files."""
+    summary = load_json(FULL_SUMMARY)
+    if os.path.realpath(root) != os.path.realpath(summary["outputRoot"]):
+        raise Missing(f"--count-tree root {root} is not the summary outputRoot {summary['outputRoot']}")
+    uasset_paths = []
+    for dirpath, _dirs, files in os.walk(root):
+        for name in files:
+            if name.endswith(".uasset"):
+                full = os.path.join(dirpath, name)
+                uasset_paths.append(os.path.relpath(full, root).replace(os.sep, "/"))
+    uasset_paths.sort()
+    stems = {os.path.basename(f)[:-len(".uasset")] for f in uasset_paths}
+    prefix = {k: sum(1 for st in stems if re.search(pat, st)) for k, pat in PREFIX_RULES.items()}
+    sound = sum(1 for f in uasset_paths if re.search(SOUND_CLASS_PATH, f))
+    data = {
+        "root": summary["outputRoot"],
+        "method": "os.walk over the full raw extraction; .uasset paths relative to root; "
+                  "distinct_basenames = distinct basenames without .uasset; prefix = distinct basenames "
+                  "matching PREFIX_RULES (re.search); sound_class_mix_paths = paths matching SOUND_CLASS_PATH",
+        "uasset_paths": len(uasset_paths),
+        "distinct_basenames": len(stems),
+        "prefix": prefix,
+        "sound_class_mix_paths": sound,
+    }
+    with open(COUNTS_FULL + ".tmp", "w", encoding="utf-8") as fh:
+        fh.write(json.dumps(data, indent=1, sort_keys=True) + "\n")
+    os.replace(COUNTS_FULL + ".tmp", COUNTS_FULL)
+    return data
 
 
 def build():
@@ -153,14 +190,8 @@ def build():
         "per-class counts printed by the asset registry dump: 'ClassName: N' lines, keyed by class name "
         "(Blueprint, WidgetBlueprint, World = maps, SoundWave, AnimBlueprint, ...)")
 
-    # ---- cooked packages (assets.json: pak index listings)
-    assets_path = os.path.join(GEN, "assets.json")
-    assets = load_json(assets_path)
-    uasset_paths = [f for p in assets["paks"] for f in p["files"] if f.endswith(".uasset")]
-    stems = {os.path.basename(f)[:-len(".uasset")] for f in uasset_paths}
-    # Full raw extraction (all 31 paks, verified): distinct .uasset paths, read from the verified summary.
-    # assets.json lists only the older 28-pak closure, so it is no longer the source of this denominator.
-    full_path = os.path.join(GEN, "extract-full-summary.json")
+    # ---- cooked packages (full raw extraction, all 31 paks, verified)
+    full_path = FULL_SUMMARY
     full = load_json(full_path)
     if not (isinstance(full.get("verification"), dict) and full["verification"].get("ok") is True):
         raise Missing("extract-full-summary.json has no passing verification (verification.ok is not true)")
@@ -174,25 +205,34 @@ def build():
         full["uniquePaths"], full_path,
         "distinct pak paths over all 31 paks (extract-full-summary.json uniquePaths, duplicates across paks "
         "counted once); the denominator of the raw extraction leaf assets.pak_extraction")
+
+    # Name-prefix and sound-path counts come from one walk of the full tree (--count-tree), stored in a
+    # small ignored file. The walk is not repeated here, so the normal refresh reads only that file.
+    counts_path = COUNTS_FULL
+    counts = load_json(counts_path)
+    if counts.get("uasset_paths") != full_uasset:
+        raise Missing(f"{rel(counts_path)} does not match extract-full-summary.json (.uasset files "
+                      f"{counts.get('uasset_paths')} vs {full_uasset}); rerun refresh_totals.py --count-tree")
+    if counts.get("root") != full.get("outputRoot"):
+        raise Missing(f"{rel(counts_path)} was counted from {counts.get('root')}, not the summary outputRoot")
     totals["cooked_uasset_distinct_names"] = entry(
-        len(stems), assets_path, "distinct .uasset basenames across the indexed paks")
+        counts["distinct_basenames"], counts_path,
+        "distinct .uasset basenames over all 31 paks (full tree walk, --count-tree)")
     totals["pak_files_total"] = entry(
-        int(assets["indexed_paks"]) + len(assets.get("skipped", [])), assets_path,
-        "indexed paks plus skipped paks (index hash mismatch) listed in assets.json")
-    prefix = {}
-    for key, pattern in PREFIX_RULES.items():
-        prefix[key] = sum(1 for s in stems if re.search(pattern, s))
+        full["pakCount"], full_path,
+        "pak files in the full extraction (extract-full-summary.json pakCount; 31)")
+    prefix = {key: counts["prefix"][key] for key in PREFIX_RULES}
     rules_text = "; ".join(f"{k} = basename matches {v}" for k, v in PREFIX_RULES.items())
-    sound_paths = {f for f in uasset_paths if re.search(SOUND_CLASS_PATH, f)}
     totals["sound_class_mix_packages"] = entry(
-        len(sound_paths), assets_path,
+        counts["sound_class_mix_paths"], counts_path,
         "NAMING-CONVENTION HEURISTIC: distinct cooked .uasset paths whose full path (folder or name) "
         f"matches /{SOUND_CLASS_PATH}/. Sound class and mix packages are mostly in SoundClasses or "
-        "SoundMixes folders, so a basename rule would miss them.")
+        "SoundMixes folders, so a basename rule would miss them. Full tree walk (--count-tree).")
     totals["cooked_name_prefix_counts"] = entry(
-        prefix, assets_path,
+        prefix, counts_path,
         "NAMING-CONVENTION HEURISTIC, not asset class. Distinct .uasset basenames matching re.search "
-        f"per class: {rules_text}. Case-sensitive. Animation and material counts include only these prefixes.")
+        f"per class over all 31 paks (full tree walk, --count-tree): {rules_text}. Case-sensitive. "
+        "Animation and material counts include only these prefixes.")
 
     # ---- UI modules named for the CommonUI/UMG leaf (both packages, one denominator)
     ui_named = sum(v for k, v in by_pkg.items() if k in ("/Script/CommonUI", "/Script/UMG"))
@@ -217,7 +257,18 @@ def build():
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--print", action="store_true", help="print the totals instead of writing totals.json")
+    ap.add_argument("--count-tree", action="store_true",
+                    help="walk the full extraction once and write porting/generated/cooked-name-counts-full.json")
     args = ap.parse_args(argv)
+    if args.count_tree:
+        try:
+            data = count_tree()
+        except Missing as exc:
+            print(f"refresh_totals: {exc}", file=sys.stderr)
+            return 2
+        print(f"refresh_totals: wrote {rel(COUNTS_FULL)}: {json.dumps(data['prefix'], sort_keys=True)}, "
+              f"distinct_basenames={data['distinct_basenames']}, sound_class_mix_paths={data['sound_class_mix_paths']}")
+        return 0
     try:
         totals = build()
     except Missing as exc:

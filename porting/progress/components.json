@@ -179,7 +179,7 @@
             "total_sub": "static_mesh",
             "what": "static mesh conversions (distinct names)"
           },
-          "rationale": "Counted: every .glb conversion under generated/converted (61 Apollo grid tiles, Background, skybox and cloud meshes) plus SM_ packages in native/Content, de-duplicated by name. Denominator: 4,719 distinct SM_-named cooked packages. The SM_ rule is a naming heuristic, and the glb conversions are counted whatever their names, so this is a coverage ratio, not an exact asset count."
+          "rationale": "Counted: every .glb conversion under generated/converted (61 Apollo grid tiles, Background, skybox and cloud meshes) plus SM_ packages in native/Content, de-duplicated by name. Denominator: 4,727 distinct SM_-named cooked packages (full 31-pak tree, refresh_totals.py --count-tree). The SM_ rule is a naming heuristic, and the glb conversions are counted whatever their names, so this is a coverage ratio, not an exact asset count."
         },
         {
           "id": "assets.landscape",
@@ -189,7 +189,7 @@
             "kind": "manual",
             "pct": 15
           },
-          "rationale": "221 landscape components are decoded. Streaming landscape levels and the parent level still fail on missing classes. No objective metric yet: cooked landscape component packages are not enumerated, and 'Landscape' names (69) are not comparable to the 221 decoded components.",
+          "rationale": "221 landscape components are decoded, but only in the A1-H8 grid export (61 tiles; A7 and A8 absent, B8 has no components). Streaming landscape levels and the parent level still fail on missing classes. Not measured: the full 31-pak tree has 67 Apollo_Terrain_LS tile packages (.umap), and components are stored inside those tiles, not as one package each, so there is no cooked component count to use as a denominator; 64 .uasset basenames contain 'landscape' but none is a component package. Kept manual at 15 with the same ceiling.",
           "ceiling": 15
         },
         {
@@ -923,7 +923,7 @@
             "total_sub": "niagara",
             "what": "Niagara packages (NS_, distinct names)"
           },
-          "rationale": "Counted: NS_ Niagara packages converted in native/Content or generated/converted (none). Denominator: 171 distinct NS_-named cooked packages (naming heuristic, totals.json). Particle (Cascade) assets are not counted. No Niagara or particle asset has loaded."
+          "rationale": "Counted: NS_ Niagara packages converted in native/Content or generated/converted (none). Denominator: 173 distinct NS_-named cooked packages (naming heuristic, totals.json, full 31-pak tree). Particle (Cascade) assets are not counted. No Niagara or particle asset has loaded."
         }
       ]
     },

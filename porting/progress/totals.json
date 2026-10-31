@@ -39,23 +39,23 @@
   }
  },
  "cooked_name_prefix_counts": {
-  "generated_utc": "2026-10-30T04:23:22Z",
-  "method": "NAMING-CONVENTION HEURISTIC, not asset class. Distinct .uasset basenames matching re.search per class: static_mesh = basename matches ^SM_; skeletal_mesh = basename matches ^SK_; material = basename matches ^(M|MI|MF)_; texture = basename matches ^T_; animation = basename matches ^A_; niagara = basename matches ^NS_. Case-sensitive. Animation and material counts include only these prefixes.",
-  "source": "porting/generated/assets.json",
+  "generated_utc": "2026-10-31T21:53:57Z",
+  "method": "NAMING-CONVENTION HEURISTIC, not asset class. Distinct .uasset basenames matching re.search per class over all 31 paks (full tree walk, --count-tree): static_mesh = basename matches ^SM_; skeletal_mesh = basename matches ^SK_; material = basename matches ^(M|MI|MF)_; texture = basename matches ^T_; animation = basename matches ^A_; niagara = basename matches ^NS_. Case-sensitive. Animation and material counts include only these prefixes.",
+  "source": "porting/generated/cooked-name-counts-full.json",
   "value": {
    "animation": 7,
-   "material": 24961,
-   "niagara": 171,
+   "material": 24995,
+   "niagara": 173,
    "skeletal_mesh": 1719,
-   "static_mesh": 4719,
-   "texture": 30523
+   "static_mesh": 4727,
+   "texture": 30554
   }
  },
  "cooked_uasset_distinct_names": {
-  "generated_utc": "2026-10-30T04:23:22Z",
-  "method": "distinct .uasset basenames across the indexed paks",
-  "source": "porting/generated/assets.json",
-  "value": 340262
+  "generated_utc": "2026-10-31T21:53:57Z",
+  "method": "distinct .uasset basenames over all 31 paks (full tree walk, --count-tree)",
+  "source": "porting/generated/cooked-name-counts-full.json",
+  "value": 340451
  },
  "cooked_uasset_entries": {
   "generated_utc": "2026-10-31T20:48:55Z",
@@ -76,9 +76,9 @@
   "value": 20574
  },
  "pak_files_total": {
-  "generated_utc": "2026-10-30T04:23:22Z",
-  "method": "indexed paks plus skipped paks (index hash mismatch) listed in assets.json",
-  "source": "porting/generated/assets.json",
+  "generated_utc": "2026-10-31T20:48:55Z",
+  "method": "pak files in the full extraction (extract-full-summary.json pakCount; 31)",
+  "source": "porting/generated/extract-full-summary.json",
   "value": 31
  },
  "pak_full_distinct_paths": {
@@ -88,9 +88,9 @@
   "value": 963427
  },
  "sound_class_mix_packages": {
-  "generated_utc": "2026-10-30T04:23:22Z",
-  "method": "NAMING-CONVENTION HEURISTIC: distinct cooked .uasset paths whose full path (folder or name) matches /SoundClass|SoundMix/. Sound class and mix packages are mostly in SoundClasses or SoundMixes folders, so a basename rule would miss them.",
-  "source": "porting/generated/assets.json",
+  "generated_utc": "2026-10-31T21:53:57Z",
+  "method": "NAMING-CONVENTION HEURISTIC: distinct cooked .uasset paths whose full path (folder or name) matches /SoundClass|SoundMix/. Sound class and mix packages are mostly in SoundClasses or SoundMixes folders, so a basename rule would miss them. Full tree walk (--count-tree).",
+  "source": "porting/generated/cooked-name-counts-full.json",
   "value": 317
  },
  "uht_class_blocks": {

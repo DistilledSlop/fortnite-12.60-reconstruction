@@ -120,9 +120,20 @@ uses them.
 python3 -I porting/progress/refresh_totals.py      # rewrite porting/progress/totals.json
 ```
 
-Run it after the extraction outputs change (reflection tables, asset registry, pak index,
-`porting/map_compatibility.md`). It reads only local files, takes about three seconds, and fails
-(leaving the file unchanged) if a source is missing. Each entry records its `source` file, its
+Run it after the extraction outputs change (reflection tables, asset registry, the verified full
+extraction summary, `porting/map_compatibility.md`). The name-prefix counts (`SM_`, `SK_`, `NS_`,
+`A_`, material and texture prefixes), the distinct basename count and the sound-path count come from
+a walk of the full raw extraction at `/mnt/vibrato/fortnite-extracted-full`, not from the old 28-pak
+index. That walk is run once, by hand, and writes `porting/generated/cooked-name-counts-full.json`
+(ignored):
+
+```sh
+python3 -I porting/progress/refresh_totals.py --count-tree   # walks ~963k files once (about 7 s)
+```
+
+The post-commit hook never walks files; a normal refresh reads only that count file and the summary,
+and it fails if the count file's `.uasset` total differs from the summary. It reads only local files,
+takes about three seconds, and fails (leaving the file unchanged) if a source is missing. Each entry records its `source` file, its
 `method`, and a `generated_utc` taken from the source file's modification time, so unchanged data
 gives identical bytes. Commit the result.
 
@@ -205,53 +216,60 @@ recorded), `assets.textures` -0.28, `assets.static_meshes` -0.11, `assets.materi
 
 ### Converted leaves
 
-| Leaf | Old basis, pct | New basis, pct | How it is computed now | Remaining subjectivity |
-|------|----------------|----------------|------------------------|------------------------|
-| `gameplay.reflection_exact` | documented, 42.2% (1200/2842) | git, 46.0% (1307/2842) | tracked `Source/FortniteGame/Generated/[AU]*.h` over named `/Script/FortniteGame` classes (totals) | A header is not behaviour. Other generated modules are listed, not counted. |
-| `net.checksum_parity` | documented, 18.9% | git, 18.9% (1317/6957) | regex on the Parity-yes column of the tracked checksum report, over named native classes (totals) | Offline model of the checksum; no live comparison with the original client. |
-| `ui.fortniteui_classes` | documented, 0% | git, 0% (0/1681) | tracked `FortniteUI/Generated` headers over named `/Script/FortniteUI` classes | None beyond the denominator. |
-| `assets.reflection_recovery` | documented, 99.9% | local, 99.9% (6957/6967) | named blocks in `class_name_map.json` over block total (totals) | Name accuracy is not re-verified here. |
-| `assets.blueprint_load` | documented, 4 of 22211 | documented, 4 of 22211 | denominator from the registry's Blueprint count (totals) | Numerator (4) still typed. |
-| `maps.enter_play` | documented, 2 of 3694 | documented, 2 of 3694 | denominator from the registry's World count (totals) | Numerator (2) still typed. |
-| `maps.streamed_levels` | documented, 0 of 87 | documented, 0 of 87 | denominator from the regex on `map_compatibility.md` (totals) | Numerator (0) still typed. |
-| `audio.sound_classes` | documented, 1 of 306 | documented, 1 of 317 | denominator: sound class or mix package paths (path heuristic, totals) | Numerator typed; 317 vs the documented 306 is a heuristic. |
-| `assets.map_headers` | local, 100% | local, 100% | denominator from the registry's World count | None. |
-| `assets.package_coverage` | local, 0.16% | local, 0.16% (712/450783) | denominator is the cooked `.uasset` entry count (totals), was 450,951 typed; weight 20, now 65 after absorbing the former `assets.textures` (20) and `assets.materials` (25) leaves, whose done signal was the same "packages present locally" measure | Local recovered or converted files are counted by folder, not by package. |
-| `assets.static_meshes` | manual, 8% | local, 1.6% (77 glb + SM_ in native/Content, distinct names / 4719) | counts converted meshes; denominator is SM_-named cooked packages (naming heuristic) | Naming heuristic; a conversion is not spawn-verified. |
-| `assets.skeletal_anim` | manual, 0% | local, 0% (0 / 1719) | SK_ packages converted in native/Content | Naming heuristic; animation (A_, 7 names) not counted. |
-| `platform.wine_launch` | manual, 2% | git, 0% (ledger 0 of 6) | six Wine stage checks in `evidence.json` | Needs a real run and recording. Two stages are expected to fail. |
-| `platform.eac_removal` (renamed) | manual, 2% | git, 50% (2 of 2 checks, stub credit 0.5) | `-nobe` and `-noeac` present in `run_original_client.sh`, credited at 50% | The credit is a judgement. The flags are not seen working; AppES is not bypassed. |
-| `net.native_join` | manual, 40% | git, 0% (ledger 0 of 3) | `smoke_default`, `smoke_athena`, `net_version_checksum` in the ledger | Needs the suite run and recorded. |
-| `net.original_join` | manual, 0% | git, 0% (ledger 0 of 2) | `wine_entitlement_passed`, `wine_lobby_reached` in the ledger | Expected to stay 0: the entitlement gate is not bypassed. |
-| `gameplay.weapons` | manual, 0% | git, 57% (27 of 47) | tracked reflection headers whose name matches `Weapon` over named FortniteGame classes matching the same regex | Counts headers, not firing. It measures the same work as `reflection_exact` and reads higher than the behaviour warrants. |
-| `gameplay.storm` | manual, 2% | git, 41% (11 of 27) | tracked headers matching `Storm\|SafeZone` | Same caveat as weapons. |
-| `gameplay.battle_bus` | manual, 0% | git, 50% (8 of 16) | tracked headers matching `BattleBus\|Aircraft\|Parachute\|Glider` | Same caveat as weapons. |
-| `gameplay.native_behavior` (new, weight 150) | none | git, 0.2% (36 of 20574) | committed `porting/behavior/**/*.inc` bodies over native functions with an exec address | None. Small by design. |
-| `ui.commonui_umg` | manual, 2% | git, 34.5% (58 of 168) | tracked CommonUI and UMG headers over named classes in those packages | Same caveat as weapons: headers, and no UMG headers exist. |
-| `audio.voice` | manual, 0% | git, 0% (0 of 2 routes, stub credit 0.5) | voice routes from the static client scan, present in committed server code | Route presence only. |
-| `visuals.vfx` | manual, 0% | local, 0% (0 / 171) | NS_ Niagara packages converted (none) over NS_ cooked names | Particle (Cascade) assets not counted. |
+Current basis of each leaf that was converted or re-measured in the objectivity pass, as in
+`components.json` and `out/progress.json` at HEAD. Percentages are the leaf's `pct`, which is
+capped by any `ceiling`. Figures for `assets.static_meshes` and `visuals.vfx` are at HEAD;
+after the next commit the denominators are 4,727 and 173 (see "Refreshing the totals").
+
+| Leaf | Basis, pct | Done / total or check count | How it is computed now | Remaining subjectivity |
+|------|------------|-----------------------------|------------------------|------------------------|
+| `gameplay.reflection_exact` | git, 99.5% | 2828 / 2842 | tracked `Source/FortniteGame/Generated/[AU]*.h` over named `/Script/FortniteGame` classes (totals) | A header is not behaviour. Other generated modules are listed, not counted. |
+| `net.checksum_parity` | git, 65.7% | 4572 / 6957 | regex on the Parity column of the tracked checksum report, over named native classes (totals) | Offline model of the checksum; no live comparison with the original client. |
+| `ui.fortniteui_classes` | git, 97.6% | 1641 / 1681 | tracked `FortniteUI/Generated` headers over named `/Script/FortniteUI` classes | None beyond the denominator. |
+| `assets.reflection_recovery` | local, 99.9% | 6957 / 6967 | named blocks in `class_name_map.json` over block total (totals) | Name accuracy is not re-verified here. |
+| `assets.blueprint_load` | documented, 0.02% | 4 / 22211 | denominator from the registry's Blueprint count (totals) | Numerator (4) still typed. |
+| `maps.enter_play` | documented, 0.05% | 2 / 3694 | denominator from the registry's World count (totals) | Numerator (2) still typed. |
+| `maps.streamed_levels` | documented, 0% | 0 / 87 | denominator from the regex on `map_compatibility.md` (totals) | Numerator (0) still typed. |
+| `audio.sound_classes` | documented, 0.3% | 1 / 317 | denominator: sound class or mix package paths (path heuristic, totals) | Numerator typed; the path rule is a heuristic. |
+| `assets.map_headers` | local, 100% | 3694 / 3694 | denominator from the registry's World count | None. |
+| `assets.package_coverage` | local, 24.2% | 108,956 / 450,951 | denominator is the cooked `.uasset` entry count of the full extraction (totals, `cooked_uasset_entries`); weight 50 | Local recovered or converted files are counted by folder, not by package. |
+| `assets.static_meshes` | local, 1.6% | 77 / 4719 at HEAD, 77 / 4727 after the commit | converted `.glb` stems plus `SM_` names in native/Content, distinct names; denominator is `SM_`-named cooked packages in the full tree (naming heuristic) | Naming heuristic; a conversion is not spawn-verified. |
+| `assets.skeletal_anim` | local, 0% | 0 / 1719 | `SK_` packages converted in native/Content; denominator `SK_`-named cooked packages in the full tree | Naming heuristic; animation (`A_`, 7 names) not counted. |
+| `platform.wine_launch` | git, 0% | ledger 0 of 6 | six Wine stage checks in `evidence.json` | Needs real runs and recording. Two stages are expected to fail. |
+| `platform.eac_removal` | git, 0% | ledger 0 of 1 (`wine_starts`) | the ledger check listed in `components.json` | Needs the check run and recorded. |
+| `net.native_join` | git, 100% | ledger 3 of 3 | `smoke_default`, `smoke_athena`, `net_version_checksum` in the ledger | Recorded checks only; they run on the server. |
+| `net.original_join` | git, 0% | ledger 0 of 2 | `wine_entitlement_passed`, `wine_lobby_reached` in the ledger | See `components.json` rationale. |
+| `audio.voice` | git, 50% | 2 of 2 routes, stub credit 0.5 | voice routes from the static client scan, present in committed server code | Route presence only. |
+| `visuals.vfx` | local, 0% | 0 / 171 at HEAD, 0 / 173 after the commit | `NS_` Niagara packages converted (none) over `NS_` cooked names in the full tree | Particle (Cascade) assets not counted. |
+| `gameplay.weapons` | git, 20% | 47 of 47 headers, ceiling 20 | tracked reflection headers whose name matches `Weapon` over named FortniteGame classes matching the same regex | Counts headers, not firing. Capped at 20. |
+| `gameplay.storm` | git, 20% | 27 of 27 headers, ceiling 20 | tracked headers matching `Storm\|SafeZone` | Same caveat as weapons. Capped at 20. |
+| `gameplay.battle_bus` | git, 20% | 16 of 16 headers, ceiling 20 | tracked headers matching `BattleBus\|Aircraft\|Parachute\|Glider` | Same caveat as weapons. Capped at 20. |
+| `gameplay.native_behavior` | git, 1.2% | 249 / 20574 | committed `porting/behavior/**` bodies over native functions with an exec address | None. Small by design. |
+| `ui.commonui_umg` | git, 20% | 58 of 168 headers, ceiling 20 | tracked CommonUI and UMG headers over named classes in those packages | Headers, not behaviour. Capped at 20. |
 
 ### Still manual
 
 Each keeps its typed percentage as a ceiling, so it cannot exceed the estimate without a metric.
+These are the 14 `manual` leaves in `out/progress.json`.
 
 | Leaf | Pct (ceiling) | Why no objective metric exists yet |
 |------|---------------|-----------------------------------|
 | `platform.rendering` | 30 | Needs captures of the client compared with the original; none are compared. |
-| `assets.landscape` | 15 | Cooked landscape component packages are not enumerated; 'Landscape' names (69) are not comparable to the 221 decoded components. |
+| `assets.landscape` | 15 | 221 components are decoded only in the A1-H8 grid export; the cooked tree stores components inside 67 tile packages, not one package each, so no component denominator exists. See its rationale. |
 | `assets.cinematics` | 0 | The registry has no level-sequence count; cooked 'Sequence' names are mostly curves. |
 | `maps.sky` | 20 | No sky or cloud render is captured and compared. |
 | `maps.pois` | 1 | No POI map enters play, so there is nothing to count. |
 | `gameplay.blueprint_logic` | 1 | No Blueprint behaviour is reproduced, and no metric counts it. |
 | `net.replication_layout` | 1 | Layout parity needs per-property offsets; the checksum leaf covers only the hash. |
 | `net.replication_graph` | 0 | Nothing about the server replication graph is reproduced or measured. |
-| `backend.session_beacon` | 0 | No beacon or session-discovery route is in the static route scan. |
 | `audio.playback` | 0 | Every probe ran with `-nosound`; no audio output exists to count. |
 | `audio.cues_music` | 2 | No cue or music asset has been played; no cue count is converted. |
 | `visuals.lighting` | 10 | Needs captures compared with the original. |
 | `visuals.postprocess` | 3 | No post-process setting is captured or compared. |
 | `ui.frontend_lobby` | 0 | No menu or lobby widget is reproduced; widget Blueprints are not mapped to menus. |
 | `ui.hud` | 0 | No HUD widget is reproduced or captured. |
+
+`backend.session_beacon` is not manual: it is `git` at 10% (3 of 3 routes, see `components.json`).
 
 Also still typed but not manual: the denominators of `maps.apollo_terrain` (61) and
 `maps.background` (32) are literals, and their numerators are counts of the same local lists,
