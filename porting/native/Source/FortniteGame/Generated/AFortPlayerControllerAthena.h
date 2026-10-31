@@ -7,6 +7,7 @@
 #include "AFortPlayerControllerZone.h"
 
 #include "AttributeSet.h"
+#include "Delegates/Delegate.h"
 #include "EDeathCause.h"
 #include "EEndOfMatchReason.h"
 #include "Engine/NetSerialization.h"
@@ -569,6 +570,9 @@ public:
 	// table index 56, flags 0x20080000006000
 	UPROPERTY(Transient, Config)
 	bool bUseTrapPicker;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x3210): not a UPROPERTY, not replicated.
+	TMulticastDelegate<void> TeamKillScoreChangedNative;
 
 	// table index 55, flags 0x20080000004000
 	UPROPERTY(Config)

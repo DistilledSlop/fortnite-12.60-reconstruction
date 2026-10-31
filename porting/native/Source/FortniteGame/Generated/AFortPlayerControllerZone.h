@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "AFortPlayerControllerGameplay.h"
 
+#include "Delegates/Delegate.h"
 #include "EFortVoteType.h"
 #include "ELeecherStatus.h"
 #include "FFortAbilitySetHandle.h"
@@ -97,6 +98,12 @@ public:
 	// table index 15, flags 0x20080010080000
 	UPROPERTY()
 	FOnPossessedPawnDied OnPossessedPawnDied;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x28f0): not a UPROPERTY, not replicated.
+	TMulticastDelegate<void> ZoneKillScoreChangedNative;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x2908): not a UPROPERTY, not replicated.
+	TMulticastDelegate<void> ZoneAIKillCountChangedNative;
 
 	// table index 12, flags 0x20080000000000
 	UPROPERTY()

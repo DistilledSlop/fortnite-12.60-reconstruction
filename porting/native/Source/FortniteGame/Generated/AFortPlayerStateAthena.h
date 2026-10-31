@@ -488,5 +488,7 @@ public:
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	int32 UpdateScoreForEvent(EAthenaScoringEvent Event, int32 Count, int32 PreviousPoints, const UFortPlaylistAthena* Playlist);
 	void UpdateTotalPlayerScore();
+protected:
+	void OnRep_AIKills();
 };
 
