@@ -34,8 +34,10 @@ and commits.
 
 ## Standing constraints
 
-- Disk is near full. Keep large artifacts out of the repo and clean only
-  intermediates an agent created.
+- Storage: `/` has ~100 GB free after the original client moved to the new 1 TB
+  drive. `Fortnite/` is now a symlink to `/mnt/vibrato/Fortnite` (checksum-verified
+  copy; all scripts keep their paths). Keep large artifacts out of the repo and
+  clean only intermediates an agent created. UE source and build output stay on `/`.
 - Pak access needs the AES keys, entered by the human through hidden prompts.
   Agents cannot supply them; work needing them is queued for the human.
 - Source-level identity with Epic's unreleased code is not reachable by
@@ -66,3 +68,8 @@ Why: the Frontend widget graph, 2,171 unseen WidgetBlueprints and pakchunk
   compute class net checksums and replicated layouts from the recovered
   reflection tables and compare with the native classes, and use the native
   client against the native server for live joins.
+- 2026-10-31: moved the 86 GB original client to `/mnt/vibrato/Fortnite` (copy verified
+  by rsync checksum, then inspect_install.py, extract_reflection.py and a Wine launch
+  were run through the symlink). Both drives benchmark alike (~440-510 MB/s write,
+  ~580-790 MB/s read), so speed was not a factor. UE source and build state stay on `/`
+  because build tools record absolute paths.
