@@ -148,19 +148,24 @@ def run_checks(base, port, ctx):
     except (EOFError, OSError) as error:
         check("websocket delivered messages until Play", False, str(error))
 
-    states = [m.get("state") for m in messages if m.get("name") == "StatusUpdate"]
-    check("StatusUpdate states arrive in order",
-          states == list(matchmaking.STATES), str(states))
-    status_fields_ok = all(set(m) == STATUS_FIELDS | {"name"} for m in messages if m.get("name") == "StatusUpdate")
-    check("StatusUpdate messages carry all documented fields", status_fields_ok)
-    match_ids = {m.get("matchId") for m in messages if m.get("name") == "StatusUpdate"}
+    envelope_ok = all(set(m) == {"name", "payload"} and isinstance(m["payload"], dict) for m in messages)
+    check("messages use name and object payload", envelope_ok)
+    statuses = [m["payload"] for m in messages if m.get("name") == "StatusUpdate" and
+                isinstance(m.get("payload"), dict)]
+    states = [m.get("state") for m in statuses]
+    check("StatusUpdate states arrive in order", states == list(matchmaking.STATES), str(states))
+    status_fields_ok = all(set(m) == STATUS_FIELDS for m in statuses)
+    check("StatusUpdate payloads carry the local fields", status_fields_ok)
+    match_ids = {m.get("matchId") for m in statuses}
     check("StatusUpdate messages reference one ticket and one match",
-          match_ids and len(match_ids) == 1 and all(m.get("ticketId") == ticket_id for m in messages
-                                                    if m.get("name") == "StatusUpdate"))
+          match_ids and len(match_ids) == 1 and all(m.get("ticketId") == ticket_id for m in statuses))
     play = messages[-1] if messages else {}
-    check("Play message follows SessionAssignment and carries sessionId and joinDelaySec",
-          play.get("name") == "Play" and "sessionId" in play and "joinDelaySec" in play, str(play)[:120])
-    session_id = play.get("sessionId", "")
+    play_payload = play.get("payload", {})
+    check("Play payload carries matchId, sessionId and joinDelaySec",
+          play.get("name") == "Play" and isinstance(play_payload, dict) and
+          set(play_payload) == {"matchId", "sessionId", "joinDelaySec"} and
+          play_payload.get("matchId") in match_ids)
+    session_id = play_payload.get("sessionId", "")
 
     ws_send(sock, 0x9, b"ping-check")
     opcode, payload = ws_recv(stream)

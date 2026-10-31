@@ -909,9 +909,17 @@ class MatchmakingTests(ServiceTestCase):
             if messages[-1]["name"] == "Play":
                 break
         sock.close()
-        states = [m["state"] for m in messages if m["name"] == "StatusUpdate"]
-        self.assertEqual(states, list(matchmaking.STATES))
-        session_id = messages[-1]["sessionId"]
+        for message in messages:
+            self.assertEqual(set(message), {"name", "payload"})
+            self.assertIsInstance(message["payload"], dict)
+        statuses = [m["payload"] for m in messages if m["name"] == "StatusUpdate"]
+        self.assertEqual([m["state"] for m in statuses], list(matchmaking.STATES))
+        play = messages[-1]["payload"]
+        self.assertEqual(set(play), {"matchId", "sessionId", "joinDelaySec"})
+        self.assertTrue(play["matchId"] and play["sessionId"])
+        self.assertIsInstance(play["joinDelaySec"], int)
+        self.assertTrue(all(m["matchId"] == play["matchId"] for m in statuses))
+        session_id = play["sessionId"]
         status, record, _ = jcall(self.base, "GET", f"/fortnite/api/matchmaking/session/{session_id}")
         self.assertEqual((status, record["buildUniqueId"], record["ownerId"]), (200, "683914758", account))
         self.assertEqual(record["ownerName"], "LocalPlayer")

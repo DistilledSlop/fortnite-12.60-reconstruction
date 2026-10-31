@@ -46,8 +46,7 @@ STATES = ("Connecting", "Waiting", "Queued", "ReadyCheck", "SessionAssignment")
 # [observed] Message names, sent as the type of each frame.
 STATUS_UPDATE_MESSAGE = "StatusUpdate"
 PLAY_MESSAGE = "Play"
-# [guess] Envelope: the message name is a top-level field called "name" and the rest of the
-# fields are flat next to it. Change MESSAGE_NAME_FIELD if the client expects another shape.
+# The client reads a top-level name and nested payload object (see EVIDENCE.md).
 MESSAGE_NAME_FIELD = "name"
 # [guess] Ticket type string returned by the ticket endpoint.
 TICKET_TYPE = "mms-player"
@@ -59,7 +58,7 @@ _TICKET_WS_RE = re.compile(re.escape(MATCHMAKING_WS_PATH) + r"/([0-9a-f]{32})")
 
 
 def _message(name, **fields):
-    return {MESSAGE_NAME_FIELD: name, **fields}
+    return {MESSAGE_NAME_FIELD: name, "payload": fields}
 
 
 class MatchmakingService:
@@ -153,6 +152,7 @@ class MatchmakingService:
                 time.sleep(self.state_step_sec)
         conn.send_json(_message(
             PLAY_MESSAGE,
+            matchId=entry["matchId"],  # [observed] field name
             sessionId=entry["sessionId"],  # [observed] field name
             joinDelaySec=JOIN_DELAY_SEC,  # [observed] field name; value [guess]
         ))

@@ -223,3 +223,20 @@ reader passes `accountId`, `sessionId` and `key` to string-field handling at off
 server-side encryption and a client round trip remain unverified. The ignored decompiles,
 disassembly and caller metadata are under `generated/sessionkey-probe/`,
 `sessionkey-callback/`, `sessionkey-parser/` and `sessionkey-fields/`.
+
+## Matchmaking websocket message trace
+
+The client handler containing `0x14106b115` loads top-level `name` and `payload`, reads
+`payload` as an object, and dispatches `StatusUpdate` to `0x14106a6a0` and `Play` to
+`0x1410697d0` (dispatch references in `generated/ws-initial-probe/0x14106b115.asm`).
+The status handler reads `state` from that object. The Play payload field reader
+`0x14106dbf0` names `matchId`, `sessionId` and `joinDelaySec`. The backend sends the
+nested envelope and those three Play fields. The matchmaking tests exercise the server's
+websocket frames, not the original client.
+
+Status payload readers include `0x14106def0` (`totalPlayers`, `connectedPlayers`),
+`0x14106dc80` (`ticketId`, `queuedPlayers`, `estimatedWaitSec`, `status`) and
+`0x14106dd20` (`matchId`, `status`, `durationSec`, `ready`, `responded`, `totalPlayers`,
+`readyPlayers`, `unreadyPlayers`). Their exact state associations and required values are
+not yet established; the backend's current state sequence and values remain local choices.
+Decompile artifacts are in ignored `generated/ws-initial-probe/` and `generated/ws-parsers/`.
