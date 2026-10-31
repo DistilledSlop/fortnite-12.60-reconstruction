@@ -914,6 +914,11 @@ class MatchmakingTests(ServiceTestCase):
             self.assertIsInstance(message["payload"], dict)
         statuses = [m["payload"] for m in messages if m["name"] == "StatusUpdate"]
         self.assertEqual([m["state"] for m in statuses], list(matchmaking.STATES))
+        ready = next(m for m in statuses if m["state"] == "ReadyCheck")
+        self.assertEqual(ready["status"], "ACTIVE")
+        self.assertTrue(all(type(ready[k]) is int for k in
+                            ("durationSec", "totalPlayers", "readyPlayers", "unreadyPlayers")))
+        self.assertTrue(all(type(ready[k]) is bool for k in ("ready", "responded")))
         play = messages[-1]["payload"]
         self.assertEqual(set(play), {"matchId", "sessionId", "joinDelaySec"})
         self.assertTrue(play["matchId"] and play["sessionId"])

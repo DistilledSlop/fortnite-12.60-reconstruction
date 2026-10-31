@@ -154,8 +154,14 @@ def run_checks(base, port, ctx):
                 isinstance(m.get("payload"), dict)]
     states = [m.get("state") for m in statuses]
     check("StatusUpdate states arrive in order", states == list(matchmaking.STATES), str(states))
-    status_fields_ok = all(set(m) == STATUS_FIELDS for m in statuses)
+    ready_fields = {"status", "durationSec", "ready", "responded", "readyPlayers", "unreadyPlayers"}
+    status_fields_ok = all(set(m) == STATUS_FIELDS | (ready_fields if m["state"] == "ReadyCheck" else set())
+                           for m in statuses)
     check("StatusUpdate payloads carry the local fields", status_fields_ok)
+    ready = next((m for m in statuses if m.get("state") == "ReadyCheck"), {})
+    check("ReadyCheck carries an accepted status and typed fields", ready.get("status") == "ACTIVE" and
+          all(type(ready.get(k)) is int for k in ("durationSec", "totalPlayers", "readyPlayers", "unreadyPlayers")) and
+          all(type(ready.get(k)) is bool for k in ("ready", "responded")))
     match_ids = {m.get("matchId") for m in statuses}
     check("StatusUpdate messages reference one ticket and one match",
           match_ids and len(match_ids) == 1 and all(m.get("ticketId") == ticket_id for m in statuses))

@@ -234,9 +234,20 @@ The status handler reads `state` from that object. The Play payload field reader
 nested envelope and those three Play fields. The matchmaking tests exercise the server's
 websocket frames, not the original client.
 
-Status payload readers include `0x14106def0` (`totalPlayers`, `connectedPlayers`),
-`0x14106dc80` (`ticketId`, `queuedPlayers`, `estimatedWaitSec`, `status`) and
-`0x14106dd20` (`matchId`, `status`, `durationSec`, `ready`, `responded`, `totalPlayers`,
-`readyPlayers`, `unreadyPlayers`). Their exact state associations and required values are
-not yet established; the backend's current state sequence and values remain local choices.
-Decompile artifacts are in ignored `generated/ws-initial-probe/` and `generated/ws-parsers/`.
+The state dispatcher `0x14106a6a0` routes `Connecting` directly without a payload
+reader, and routes the other states through these handler/vtable/reader pairs:
+
+| State | Handler | Vtable | Reader | Payload fields read |
+| --- | --- | --- | --- | --- |
+| Waiting | `0x14106a9c0` | `0x145bd40c8` | `0x14106def0` | `totalPlayers`, `connectedPlayers` (integers) |
+| Queued | `0x141069ac0` | `0x145bd4150` | `0x14106dc80` | `ticketId` (string), `queuedPlayers`, `estimatedWaitSec` (integers), `status` (type unresolved) |
+| ReadyCheck | `0x141069f50` | `0x145bd41d8` | `0x14106dd20` | `matchId`, `status` (strings), `durationSec`, `totalPlayers`, `readyPlayers`, `unreadyPlayers` (integers), `ready`, `responded` (booleans) |
+| SessionAssignment | `0x14106a470` | `0x145bd42a8` | `0x14106de90` | `matchId` (string) |
+
+Each vtable's slot `+0x38` points to its listed reader, invoked through `0x14069c3d0`.
+ReadyCheck explicitly branches on `ACTIVE`, `PASSED`, `FAILED` and `TIMED_OUT` and reports
+other status strings as invalid. The backend supplies `ACTIVE` and all the named ReadyCheck
+fields with locally selected values. It does not supply Queued `status`: its type and value
+are unresolved. Field-reader calls alone do not prove that absent fields are rejected, and
+no driven client has verified this sequence. Decompiles are in ignored
+`generated/ws-initial-probe/`, `generated/ws-parsers/` and `generated/ws-state-handlers/`.

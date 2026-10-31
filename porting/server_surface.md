@@ -143,7 +143,7 @@ class from `porting/server/EVIDENCE.md` (generated table, `endpoint_evidence.jso
 `wine_log` (an earlier Wine run), `reflection` (a reflected struct), `binary` (route format in the exe
 and code that loads it), `asset` (cooked config), `binary_string_only` (in the exe, no code reference)
 and `convention` (public naming, not seen locally). `server/README.md` has the route table. The tests are
-`python3 -I server/test_services.py` (70 pass, including the schema checks).
+`python3 -I server/test_services.py` (71 pass, including the schema checks).
 
 ### Evidence-based (observed in the 12.60 binary, the cooked config, reflection, or the earlier login capture)
 
@@ -154,9 +154,9 @@ and `convention` (public naming, not seen locally). `server/README.md` has the r
   for each template.
 - MCP: `POST /fortnite/api/game/v2/profile/{id}/{client|dedicated_server|public}/{command}`. The
   template is in `DefaultEngine.ini` (class `asset`). The response is checked against
-  `FProfileUpdateSingle` (class `reflection`, the tracked headers). The command names are in the
-  binary. The envelope names are in the binary in PascalCase only (`ProfileRevision`, `MultiUpdate`,
-  `LockExpiration`, ...); the camelCase wire form follows the engine's `StandardizeCase` rule.
+  `ProfileUpdate`, inheriting `ProfileUpdateSingle` (class `reflection`). The command names are in
+  the binary. CamelCase follows the engine's `StandardizeCase` rule; the shipped comparison helper
+  has not been independently verified.
 - Party v1: the route formats in the binary (`/api/v1/{namespace}/parties...`, members, invites,
   pings, user, notifications count). Class `binary`; the `{namespace}` is `Fortnite` from config. Verbs
   are not confirmed. The party error codes are in the binary.
@@ -177,8 +177,9 @@ and `convention` (public naming, not seen locally). `server/README.md` has the r
   `hash256`, `length`, `contentType`. The user list is `wine_log`.
 - Datarouter `POST /datarouter/api/v1/public/data` (`wine_log` 204; the literal has `?SessionID=` and no code
   reference, so `binary_string_only`).
-- Matchmaking: the ticket, session and key paths (`binary`, one loading function each), and the websocket
-  states (`convention` and the earlier implementation).
+- Matchmaking: the ticket, session and key paths (`binary`), websocket `name`/`payload` envelope,
+  status states, Play fields and session-key fields (`binary` reader traces in `server/EVIDENCE.md`).
+  The server's timing and values have not been verified with a client.
 
 ### Inferred or convention (path or name in the binary, shape or verb not confirmed)
 

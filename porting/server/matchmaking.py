@@ -138,16 +138,17 @@ class MatchmakingService:
             return
         for state in STATES:
             queued = 1 if state in ("Queued", "ReadyCheck", "SessionAssignment") else 0
-            conn.send_json(_message(
-                STATUS_UPDATE_MESSAGE,
-                state=state,  # [observed] state names
-                totalPlayers=1,  # [observed] field name; value [guess]
-                connectedPlayers=1,  # [observed] field name; value [guess]
-                queuedPlayers=queued,  # [observed] field name; value [guess]
-                estimatedWaitSec=0,  # [observed] field name; value [guess]
-                ticketId=ticket_id,  # [observed] field name
-                matchId=entry["matchId"],  # [observed] field name
-            ))
+            fields = {
+                "state": state,  # [observed] state names
+                "totalPlayers": 1, "connectedPlayers": 1,  # [guess] values
+                "queuedPlayers": queued, "estimatedWaitSec": 0,  # [guess] values
+                "ticketId": ticket_id, "matchId": entry["matchId"],
+            }
+            if state == "ReadyCheck":
+                # [observed] reader fields and accepted status; local values are guesses.
+                fields.update(status="ACTIVE", durationSec=0, ready=True, responded=True,
+                              readyPlayers=1, unreadyPlayers=0)
+            conn.send_json(_message(STATUS_UPDATE_MESSAGE, **fields))
             if self.state_step_sec:
                 time.sleep(self.state_step_sec)
         conn.send_json(_message(

@@ -235,9 +235,11 @@ are observed in the binary. The `multiUpdate` entry shape is inferred.
 
 ### Matchmaking and websocket
 
-Unchanged from the earlier implementation. The session id and ticket id come from the
-deterministic id source. The signing secret and session keys come from `secrets`.
-The `StatusUpdate` states and the `Play` message follow the same order as before.
+The session id and ticket id come from the deterministic id source. The signing secret and
+session keys come from `secrets`. Websocket messages use the binary-observed `name` and
+object `payload` envelope; Play includes match id, session id and join delay. The session-key
+answer contains account id, session id and a Base64 key. See `EVIDENCE.md` for the client
+reader traces and the unverified state values and end-to-end flow.
 The state step is 0.5 s by default, and `Backend(state_step_sec=0)` removes it for tests.
 
 ## Provenance
@@ -253,9 +255,9 @@ The state step is 0.5 s by default, and `Backend(state_step_sec=0)` removes it f
 - **Guessed, unverified:**
   - The HTTP methods of the party and presence routes, the request body shapes, the
     response shapes beyond the observed field names, and the nesting of party objects.
-  - The matchmaking message envelope, the `key` response field, and the ticket payload
-    (see the `[guess]` comments in `matchmaking.py`).
-  - The profile command body keys, and the notification and multiUpdate shapes.
+  - The matchmaking ticket payload, status values and sequencing, session record values,
+    and server key lifecycle (see the `[guess]` comments in `matchmaking.py`).
+  - The profile command body keys and notification contents; the multiUpdate element type is reflected.
   - The lightswitch status values UP, DOWN, MAINTENANCE. The binary has none of them exactly.
   - Client id `3446cd72694c4a4485d81b77adbb2141` and device id (32 zeros). Carried from the earlier stub.
   - The keychain entry, which is 32 zero bytes as a placeholder and not a key.
