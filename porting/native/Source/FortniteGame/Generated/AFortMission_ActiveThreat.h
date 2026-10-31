@@ -20,7 +20,7 @@ class FORTNITEGAME_API AFortMission_ActiveThreat : public AFortMission
 public:
 	// table index 9, flags 0x40000000010001
 	UPROPERTY()
-	uint8 bStartBasedOnAthenaGamePhases : 1;
+	bool bStartBasedOnAthenaGamePhases;
 
 	// table index 7, flags 0x40000000010001
 	UPROPERTY()

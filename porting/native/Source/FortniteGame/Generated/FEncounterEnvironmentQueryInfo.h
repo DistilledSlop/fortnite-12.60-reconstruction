@@ -25,7 +25,7 @@ struct FEncounterEnvironmentQueryInfo
 
 	// table index 0, offset None, flags 0x10000000000005
 	UPROPERTY()
-	uint8 bIsDirectional : 1;
+	bool bIsDirectional;
 
 };
 

@@ -15,6 +15,7 @@
 #include "FOnPlayerDied.h"
 #include "FOnShowNotificationsEnabledChanged.h"
 #include "FPlayerStateAthenaDelegate.h"
+#include "FQuickBarData.h"
 #include "FRemoteViewRotSnapshotManager.h"
 #include "FSavedPlayerSpectatorCameraData.h"
 #include "FSavedSpectatorCameras.h"
@@ -37,6 +38,7 @@ class AVolume;
 class UAthenaMarkerComponent;
 class UAthenaPlayerMatchReport;
 class UFortMiniMapTeamIndicators;
+class UFortReplayContext;
 class UInputComponent;
 class UMaterialInterface;
 
@@ -67,6 +69,10 @@ public:
 	// table index 46, flags 0x10000000000004
 	UPROPERTY()
 	float ZoomThresholdForPlayerNames;
+
+	// table index 45, flags 0x10000000000001
+	UPROPERTY()
+	FQuickBarData QuickBarDefinitions[3];
 
 	// table index 44, flags 0x10000010080000
 	UPROPERTY()
@@ -195,6 +201,10 @@ public:
 	// table index 5, flags 0x20080000002000
 	UPROPERTY(Transient)
 	AFortRelevancyZoneIndicator* RelevancyZoneIndicator;
+
+	// table index 4, flags 0x20080000002014
+	UPROPERTY(Transient)
+	UFortReplayContext* ReplayContext;
 
 	// table index 3, flags 0x20080000080008
 	UPROPERTY()

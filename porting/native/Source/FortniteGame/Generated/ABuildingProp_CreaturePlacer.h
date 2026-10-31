@@ -38,15 +38,15 @@ public:
 
 	// table index 11, flags 0x10000000000004
 	UPROPERTY()
-	uint8 bHideVFX : 1;
+	bool bHideVFX;
 
 	// table index 10, flags 0x10000000000004
 	UPROPERTY()
-	uint8 bEnabledOnGameState : 1;
+	bool bEnabledOnGameState;
 
 	// table index 9, flags 0x10000000000004
 	UPROPERTY()
-	uint8 bDestroyPreviousOnSpawn : 1;
+	bool bDestroyPreviousOnSpawn;
 
 	// table index 7, flags 0x10000000000004
 	UPROPERTY()
@@ -58,7 +58,7 @@ public:
 
 	// table index 5, flags 0x10000000000014
 	UPROPERTY()
-	uint8 bCreatureVisualsDoneLoading : 1;
+	bool bCreatureVisualsDoneLoading;
 
 	// table index 4, flags 0x2008000008000d
 	UPROPERTY()
@@ -74,7 +74,7 @@ public:
 
 	// table index 1, flags 0x40000000004000
 	UPROPERTY(Config)
-	uint8 bEnableCreativeCreatureSpawners : 1;
+	bool bEnableCreativeCreatureSpawners;
 
 	// table index 0, flags 0x4004000008001d
 	UPROPERTY()

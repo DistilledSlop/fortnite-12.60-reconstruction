@@ -6,8 +6,11 @@
 #include "CoreMinimal.h"
 #include "UFortAbilitySet.h"
 
+#include "FAbilityKitItem.h"
 #include "Styling/SlateBrush.h"
 
+class UFortGadgetItemDefinition;
+class UFortSchematicItemDefinition;
 class UFortTooltip;
 class UFortTooltipDisplayStatsList;
 
@@ -38,6 +41,22 @@ public:
 	// table index 11, flags 0x10000000000015
 	UPROPERTY()
 	FSlateBrush PrimaryTraitIconBrushOverride;
+
+	// table index 9, flags 0x14000000010001
+	UPROPERTY()
+	TArray<TSoftObjectPtr<UFortGadgetItemDefinition>> Gadgets;
+
+	// table index 7, flags 0x10000000010015
+	UPROPERTY()
+	TArray<FAbilityKitItem> Items;
+
+	// table index 5, flags 0x10000000010015
+	UPROPERTY()
+	TArray<UFortSchematicItemDefinition*> AddedSchematics;
+
+	// table index 3, flags 0x10000000010015
+	UPROPERTY()
+	TArray<UFortSchematicItemDefinition*> RemovedSchematics;
 
 	// table index 2, flags 0x14000000010015
 	UPROPERTY()

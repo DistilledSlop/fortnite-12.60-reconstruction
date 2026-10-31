@@ -28,7 +28,7 @@ public:
 
 	// table index 1, flags 0x10000000000004
 	UPROPERTY()
-	uint8 bExpanded : 1;
+	bool bExpanded;
 
 	// table index 0, flags 0x40000000000000
 	UPROPERTY()

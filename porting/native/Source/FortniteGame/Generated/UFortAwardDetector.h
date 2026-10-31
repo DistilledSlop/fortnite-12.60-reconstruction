@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
 
+class UFortAwardItemDefinition;
+
 #include "UFortAwardDetector.generated.h"
 
 UCLASS(abstract)
@@ -14,5 +16,9 @@ class FORTNITEGAME_API UFortAwardDetector : public UObject
 	GENERATED_BODY()
 
 public:
+	// table index 0, flags 0x10000000002000
+	UPROPERTY(Transient)
+	UFortAwardItemDefinition* AwardDefinition;
+
 };
 

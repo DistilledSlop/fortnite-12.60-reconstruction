@@ -53,7 +53,7 @@ public:
 
 	// table index 2, flags 0x20080000000005
 	UPROPERTY()
-	uint8 bPickupOnTouch : 1;
+	bool bPickupOnTouch;
 
 	// table index 1, flags 0x20080000020035
 	UPROPERTY(Replicated)

@@ -55,11 +55,11 @@ struct FFortAnimInput_TurnCorrection
 
 	// table index 1, offset None, flags 0x10000000000001
 	UPROPERTY()
-	uint8 bEnableDebug : 1;
+	bool bEnableDebug;
 
 	// table index 0, offset None, flags 0x10000000002000
 	UPROPERTY()
-	uint8 bIsTurnFinished : 1;
+	bool bIsTurnFinished;
 
 };
 

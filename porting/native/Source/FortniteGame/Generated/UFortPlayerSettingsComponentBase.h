@@ -13,6 +13,7 @@
 #include "EFortMinigamePlayerSpawnLocationSetting.h"
 #include "EIndicatorDisplayMode.h"
 #include "EPlayerIndicatorDisplayMode.h"
+#include "FItemAndCount.h"
 #include "FPropertyOverrideData.h"
 
 #include "UFortPlayerSettingsComponentBase.generated.h"
@@ -67,6 +68,10 @@ public:
 	UPROPERTY()
 	EAthenaLootDropOverride DropAllResourcesOverride;
 
+	// table index 52, flags 0x10000000010001
+	UPROPERTY()
+	TArray<FItemAndCount> InventoryItems;
+
 	// table index 51, flags 0x10000000010001
 	UPROPERTY()
 	FString CharacterOverride;
@@ -109,7 +114,7 @@ public:
 
 	// table index 41, flags 0x10000000010001
 	UPROPERTY()
-	uint8 bRequiresNonZeroDamage : 1;
+	bool bRequiresNonZeroDamage;
 
 	// table index 40, flags 0x10000000010001
 	UPROPERTY()
@@ -157,11 +162,11 @@ public:
 
 	// table index 28, flags 0x40000000010021
 	UPROPERTY(Replicated)
-	uint8 bAimAssistAllowed : 1;
+	bool bAimAssistAllowed;
 
 	// table index 27, flags 0x40000000010021
 	UPROPERTY(Replicated)
-	uint8 bIsPlayerTriggeredRespawnAllowed : 1;
+	bool bIsPlayerTriggeredRespawnAllowed;
 
 	// table index 26, flags 0x40000000010021
 	UPROPERTY(Replicated)
@@ -169,23 +174,23 @@ public:
 
 	// table index 25, flags 0x40000000010021
 	UPROPERTY(Replicated)
-	uint8 bInstantReload : 1;
+	bool bInstantReload;
 
 	// table index 24, flags 0x40000000010021
 	UPROPERTY(Replicated)
-	uint8 bInfiniteAmmo : 1;
+	bool bInfiniteAmmo;
 
 	// table index 23, flags 0x40000000010021
 	UPROPERTY(Replicated)
-	uint8 bInfiniteResources : 1;
+	bool bInfiniteResources;
 
 	// table index 22, flags 0x40000000010021
 	UPROPERTY(Replicated)
-	uint8 bAllowItemDrop : 1;
+	bool bAllowItemDrop;
 
 	// table index 21, flags 0x40000000010021
 	UPROPERTY(Replicated)
-	uint8 bAllowItemPickUp : 1;
+	bool bAllowItemPickUp;
 
 	// table index 20, flags 0x40000000010021
 	UPROPERTY(Replicated)
@@ -193,35 +198,35 @@ public:
 
 	// table index 19, flags 0x40000100010021
 	UPROPERTY(ReplicatedUsing=OnRep_bWoodResourceWidgetVisible)
-	uint8 bWoodResourceWidgetVisible : 1;
+	bool bWoodResourceWidgetVisible;
 
 	// table index 18, flags 0x40000100010021
 	UPROPERTY(ReplicatedUsing=OnRep_bStoneResourceWidgetVisible)
-	uint8 bStoneResourceWidgetVisible : 1;
+	bool bStoneResourceWidgetVisible;
 
 	// table index 17, flags 0x40000100010021
 	UPROPERTY(ReplicatedUsing=OnRep_bMetalResourceWidgetVisible)
-	uint8 bMetalResourceWidgetVisible : 1;
+	bool bMetalResourceWidgetVisible;
 
 	// table index 16, flags 0x40000100010021
 	UPROPERTY(ReplicatedUsing=OnRep_bGoldCurrencyResourceWidgetVisible)
-	uint8 bGoldCurrencyResourceWidgetVisible : 1;
+	bool bGoldCurrencyResourceWidgetVisible;
 
 	// table index 15, flags 0x40000000010021
 	UPROPERTY(Replicated)
-	uint8 bApplyJumpPenalty : 1;
+	bool bApplyJumpPenalty;
 
 	// table index 14, flags 0x40000000010021
 	UPROPERTY(Replicated)
-	uint8 bGliderRedeploy : 1;
+	bool bGliderRedeploy;
 
 	// table index 13, flags 0x40000000010021
 	UPROPERTY(Replicated)
-	uint8 bFlyEnabled : 1;
+	bool bFlyEnabled;
 
 	// table index 12, flags 0x40000000010021
 	UPROPERTY(Replicated)
-	uint8 bAllowFlightSprint : 1;
+	bool bAllowFlightSprint;
 
 	// table index 11, flags 0x40000000010021
 	UPROPERTY(Replicated)
@@ -229,7 +234,7 @@ public:
 
 	// table index 10, flags 0x40000000010021
 	UPROPERTY(Replicated)
-	uint8 bAllowFriendlyFire : 1;
+	bool bAllowFriendlyFire;
 
 	// table index 9, flags 0x40000000010021
 	UPROPERTY(Replicated)

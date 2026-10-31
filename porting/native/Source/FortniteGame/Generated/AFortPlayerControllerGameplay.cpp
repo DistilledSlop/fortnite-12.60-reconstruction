@@ -27,6 +27,11 @@ void AFortPlayerControllerGameplay::OnRep_FlyingModifierIndex()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerControllerGameplay::OnRep_GhostModeRepData()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPlayerControllerGameplay::OnRep_IsCreativeModeEnabled()
 {
 	// Body not recovered: reflection-derived stub.
@@ -126,6 +131,7 @@ void AFortPlayerControllerGameplay::GetLifetimeReplicatedProps(TArray<FLifetimeP
 	DOREPLIFETIME(AFortPlayerControllerGameplay, bDisplayNPCNumbers);
 	DOREPLIFETIME(AFortPlayerControllerGameplay, ServerMaxNumNPCs);
 	DOREPLIFETIME(AFortPlayerControllerGameplay, ServerNumNPCs);
+	DOREPLIFETIME(AFortPlayerControllerGameplay, GhostModeRepData);
 	DOREPLIFETIME(AFortPlayerControllerGameplay, CreativeQuickbarComponent);
 	DOREPLIFETIME(AFortPlayerControllerGameplay, PoiTagContainerTableID);
 }

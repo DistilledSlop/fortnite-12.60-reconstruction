@@ -50,27 +50,27 @@ public:
 
 	// table index 6, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bHasSeenInventoryTutorial : 1;
+	bool bHasSeenInventoryTutorial;
 
 	// table index 5, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bHasSeenReturnToCreativeHubTutorial : 1;
+	bool bHasSeenReturnToCreativeHubTutorial;
 
 	// table index 4, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bHasSeenMyIslandTutorial : 1;
+	bool bHasSeenMyIslandTutorial;
 
 	// table index 3, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bHasSeenWelcomeTutorial : 1;
+	bool bHasSeenWelcomeTutorial;
 
 	// table index 2, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bHasSeenPermissionsTutorial : 1;
+	bool bHasSeenPermissionsTutorial;
 
 	// table index 1, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bCanShowMyIslandMessage : 1;
+	bool bCanShowMyIslandMessage;
 
 	// table index 0, flags 0x10000000002000
 	UPROPERTY(Transient)

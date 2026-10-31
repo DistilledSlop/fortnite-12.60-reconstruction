@@ -7,6 +7,11 @@ void AFortVolume::OnRep_bShowPublishWatermark()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortVolume::OnRep_CurrentPlayset()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortVolume::OnRep_ObjectTrackingComponent()
 {
 	// Body not recovered: reflection-derived stub.
@@ -33,6 +38,7 @@ void AFortVolume::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifet
 
 	DOREPLIFETIME(AFortVolume, bUserGeneratedContentRestricted);
 	DOREPLIFETIME(AFortVolume, VolumeState);
+	DOREPLIFETIME(AFortVolume, CurrentPlayset);
 	DOREPLIFETIME(AFortVolume, bShowPublishWatermark);
 	DOREPLIFETIME(AFortVolume, bNeverAllowSaving);
 	DOREPLIFETIME(AFortVolume, ObjectTrackingComponent);

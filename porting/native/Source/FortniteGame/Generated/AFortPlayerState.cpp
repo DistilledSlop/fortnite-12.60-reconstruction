@@ -2,6 +2,11 @@
 #include "AFortPlayerState.h"
 #include "Net/UnrealNetwork.h"
 
+void AFortPlayerState::ClientNotifyAwardGranted_Implementation(UFortAwardItemDefinition* AwardDefinition)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPlayerState::OnRep_AccessoryColorSwatches()
 {
 	// Body not recovered: reflection-derived stub.
@@ -27,6 +32,11 @@ void AFortPlayerState::OnRep_CharacterColorSwatches()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerState::OnRep_CharacterData()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPlayerState::OnRep_CharacterGender()
 {
 	// Body not recovered: reflection-derived stub.
@@ -38,6 +48,11 @@ void AFortPlayerState::OnRep_CurrentCharXP()
 }
 
 void AFortPlayerState::OnRep_HeroID()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerState::OnRep_HeroType()
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -127,6 +142,7 @@ void AFortPlayerState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Out
 	DOREPLIFETIME(AFortPlayerState, PlayerTeam);
 	DOREPLIFETIME(AFortPlayerState, CharacterPartColorSwatches);
 	DOREPLIFETIME(AFortPlayerState, CharacterColorSwatches);
+	DOREPLIFETIME(AFortPlayerState, CharacterData);
 	DOREPLIFETIME(AFortPlayerState, CharacterBodyType);
 	DOREPLIFETIME(AFortPlayerState, CharacterGender);
 	DOREPLIFETIME(AFortPlayerState, bIsSimulatingDamage);
@@ -137,6 +153,7 @@ void AFortPlayerState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Out
 	DOREPLIFETIME(AFortPlayerState, InitialExperienceLevel);
 	DOREPLIFETIME(AFortPlayerState, MyBackpackPickup);
 	DOREPLIFETIME(AFortPlayerState, CurrentCharXP);
+	DOREPLIFETIME(AFortPlayerState, HeroType);
 	DOREPLIFETIME(AFortPlayerState, HeroId);
 	DOREPLIFETIME(AFortPlayerState, PartyOwnerUniqueId);
 	DOREPLIFETIME(AFortPlayerState, WorldPlayerId);

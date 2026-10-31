@@ -22,11 +22,11 @@ public:
 
 	// table index 2, flags 0x10000000000020
 	UPROPERTY(Replicated)
-	uint8 bCareAboutEdgeOfStorm : 1;
+	bool bCareAboutEdgeOfStorm;
 
 	// table index 1, flags 0x20080000010015
 	UPROPERTY()
-	uint8 bDisabled : 1;
+	bool bDisabled;
 
 	// table index 0, flags 0x20080000010001
 	UPROPERTY()

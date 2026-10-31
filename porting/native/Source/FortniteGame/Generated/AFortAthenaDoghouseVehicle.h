@@ -118,7 +118,7 @@ public:
 
 	// table index 10, flags 0x10000000004015
 	UPROPERTY(Config)
-	uint8 bFreelookAutoRecenter : 1;
+	bool bFreelookAutoRecenter;
 
 	// table index 9, flags 0x10000000004015
 	UPROPERTY(Config)

@@ -28,7 +28,7 @@ struct FGameplayFeedbackEventInfo
 
 	// table index 6, offset None, flags 0x10000000010001
 	UPROPERTY()
-	uint8 bTeamBasedEvent : 1;
+	bool bTeamBasedEvent;
 
 	// table index 4, offset 32, flags 0x10000000010001
 	UPROPERTY()

@@ -63,11 +63,11 @@ public:
 
 	// table index 1, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bAllowSpawnWhenDead : 1;
+	bool bAllowSpawnWhenDead;
 
 	// table index 0, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bAllowSpawnWhenDBNO : 1;
+	bool bAllowSpawnWhenDBNO;
 
 };
 

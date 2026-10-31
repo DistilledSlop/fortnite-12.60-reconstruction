@@ -29,7 +29,7 @@ public:
 
 	// table index 9, flags 0x10000000000005
 	UPROPERTY()
-	uint8 bShouldIgnoreDilation : 1;
+	bool bShouldIgnoreDilation;
 
 	// table index 8, flags 0x10000000000005
 	UPROPERTY()
@@ -37,7 +37,7 @@ public:
 
 	// table index 7, flags 0x10000000000005
 	UPROPERTY()
-	uint8 bShouldAttachOneShots : 1;
+	bool bShouldAttachOneShots;
 
 	// table index 5, flags 0x10008000000014
 	UPROPERTY()

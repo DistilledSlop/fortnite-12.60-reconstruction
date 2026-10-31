@@ -61,7 +61,7 @@ struct FFortWindResponder
 
 	// table index 0, offset None, flags 0x10000000002000
 	UPROPERTY()
-	uint8 bHasSetupAnimatingMaterials : 1;
+	bool bHasSetupAnimatingMaterials;
 
 };
 

@@ -42,11 +42,11 @@ public:
 
 	// table index 46, flags 0x10000000010001
 	UPROPERTY()
-	uint8 bSendMissionEvents : 1;
+	bool bSendMissionEvents;
 
 	// table index 45, flags 0x10000000010001
 	UPROPERTY()
-	uint8 bDelayDeath : 1;
+	bool bDelayDeath;
 
 	// table index 43, flags 0x10000000010001
 	UPROPERTY()
@@ -86,11 +86,11 @@ public:
 
 	// table index 33, flags 0x20080000000015
 	UPROPERTY()
-	uint8 bOverrideQueryMinDistance : 1;
+	bool bOverrideQueryMinDistance;
 
 	// table index 32, flags 0x20080000010015
 	UPROPERTY()
-	uint8 bRegisterAsASpecialActor : 1;
+	bool bRegisterAsASpecialActor;
 
 	// table index 31, flags 0x20080000010015
 	UPROPERTY()
@@ -114,11 +114,11 @@ public:
 
 	// table index 26, flags 0x20080000000015
 	UPROPERTY()
-	uint8 bShouldDrawCompassIcon : 1;
+	bool bShouldDrawCompassIcon;
 
 	// table index 25, flags 0x20080000010001
 	UPROPERTY()
-	uint8 bSpawnUsingRiftRotation : 1;
+	bool bSpawnUsingRiftRotation;
 
 	// table index 24, flags 0x20080000002000
 	UPROPERTY(Transient)
@@ -134,27 +134,27 @@ public:
 
 	// table index 19, flags 0x20080100000020
 	UPROPERTY(ReplicatedUsing=OnRep_RiftIsVisible)
-	uint8 bRiftIsVisible : 1;
+	bool bRiftIsVisible;
 
 	// table index 18, flags 0x20080100000020
 	UPROPERTY(ReplicatedUsing=OnRep_RiftIsActive)
-	uint8 bRiftIsActive : 1;
+	bool bRiftIsActive;
 
 	// table index 17, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bIsReadyToSpawnAI : 1;
+	bool bIsReadyToSpawnAI;
 
 	// table index 16, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bHasBeenInitialized : 1;
+	bool bHasBeenInitialized;
 
 	// table index 15, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bHasBadRiftSlots : 1;
+	bool bHasBadRiftSlots;
 
 	// table index 14, flags 0x20080000010001
 	UPROPERTY()
-	uint8 bRecalculateSpawnPointsPeriodically : 1;
+	bool bRecalculateSpawnPointsPeriodically;
 
 	// table index 13, flags 0x20080000010001
 	UPROPERTY()
@@ -166,7 +166,7 @@ public:
 
 	// table index 11, flags 0x20080000010001
 	UPROPERTY()
-	uint8 bCreateOverlapSphere : 1;
+	bool bCreateOverlapSphere;
 
 	// table index 10, flags 0x20080000010001
 	UPROPERTY()

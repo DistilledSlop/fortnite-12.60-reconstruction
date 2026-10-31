@@ -14,7 +14,7 @@ struct FAsyncTaskResult
 
 	// table index 2, offset None, flags 0x20080000000014
 	UPROPERTY()
-	uint8 bSucceeded : 1;
+	bool bSucceeded;
 
 	// table index 1, offset 8, flags 0x20080000000014
 	UPROPERTY()

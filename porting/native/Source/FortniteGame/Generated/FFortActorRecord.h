@@ -35,7 +35,7 @@ struct FFortActorRecord
 
 	// table index 2, offset None, flags 0x10000000020015
 	UPROPERTY()
-	uint8 bSpawnedActor : 1;
+	bool bSpawnedActor;
 
 	// table index 0, offset 88, flags 0x10000000000000
 	UPROPERTY()

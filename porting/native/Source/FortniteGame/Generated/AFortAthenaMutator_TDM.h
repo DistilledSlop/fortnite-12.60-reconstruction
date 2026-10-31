@@ -24,11 +24,11 @@ public:
 
 	// table index 3, flags 0x20080000010001
 	UPROPERTY()
-	uint8 bIsTwoTeamTDM : 1;
+	bool bIsTwoTeamTDM;
 
 	// table index 2, flags 0x20080000010001
 	UPROPERTY()
-	uint8 bShouldGrantInventoryToNewPlayers : 1;
+	bool bShouldGrantInventoryToNewPlayers;
 
 	// table index 1, flags 0x20080000010001
 	UPROPERTY()

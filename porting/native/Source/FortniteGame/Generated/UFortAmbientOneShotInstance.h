@@ -37,7 +37,7 @@ public:
 
 	// table index 0, flags 0x10000000000014
 	UPROPERTY()
-	uint8 bActive : 1;
+	bool bActive;
 
 };
 

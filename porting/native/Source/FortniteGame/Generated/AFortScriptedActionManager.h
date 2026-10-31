@@ -37,7 +37,7 @@ public:
 
 	// table index 0, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bIsProcessingClientEvent : 1;
+	bool bIsProcessingClientEvent;
 
 };
 

@@ -19,27 +19,27 @@ class FORTNITEGAME_API AUnicornDriver : public AInfo
 public:
 	// table index 31, flags 0x40000000004000
 	UPROPERTY(Config)
-	uint8 bEnable_MainHighlightReel : 1;
+	bool bEnable_MainHighlightReel;
 
 	// table index 30, flags 0x40000000004000
 	UPROPERTY(Config)
-	uint8 bEnable_ShorterExtendedHighlightReel : 1;
+	bool bEnable_ShorterExtendedHighlightReel;
 
 	// table index 29, flags 0x40000000004000
 	UPROPERTY(Config)
-	uint8 bEnable_ShortHighlightReel : 1;
+	bool bEnable_ShortHighlightReel;
 
 	// table index 28, flags 0x40000000004000
 	UPROPERTY(Config)
-	uint8 bEnable_ShortExtendedHighlightReel : 1;
+	bool bEnable_ShortExtendedHighlightReel;
 
 	// table index 27, flags 0x40000000004000
 	UPROPERTY(Config)
-	uint8 bEnable_MediumHighlightReel : 1;
+	bool bEnable_MediumHighlightReel;
 
 	// table index 26, flags 0x40000000004000
 	UPROPERTY(Config)
-	uint8 bEnable_MediumExtendedighlightReel : 1;
+	bool bEnable_MediumExtendedighlightReel;
 
 	// table index 25, flags 0x40000000004000
 	UPROPERTY(Config)
@@ -143,7 +143,7 @@ public:
 
 	// table index 0, flags 0x40000000004000
 	UPROPERTY(Config)
-	uint8 bShouldUploadHighlightsPayload : 1;
+	bool bShouldUploadHighlightsPayload;
 
 };
 

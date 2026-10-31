@@ -25,7 +25,7 @@ struct FActorAndTransformPair
 
 	// table index 0, offset None, flags 0x40000000000000
 	UPROPERTY()
-	uint8 bHasValidTransform : 1;
+	bool bHasValidTransform;
 
 };
 

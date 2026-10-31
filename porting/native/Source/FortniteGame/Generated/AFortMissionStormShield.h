@@ -71,11 +71,11 @@ public:
 
 	// table index 20, flags 0x20080000000020
 	UPROPERTY(Replicated)
-	uint8 UseGrowthRateDirectly : 1;
+	bool UseGrowthRateDirectly;
 
 	// table index 19, flags 0x20080000010021
 	UPROPERTY(Replicated)
-	uint8 bAntiStormShield : 1;
+	bool bAntiStormShield;
 
 	// table index 18, flags 0x20080000000005
 	UPROPERTY()
@@ -135,7 +135,7 @@ public:
 
 	// table index 2, flags 0x20080000010015
 	UPROPERTY()
-	uint8 bRegisterWithGameState : 1;
+	bool bRegisterWithGameState;
 
 	// table index 1, flags 0x20080000000005
 	UPROPERTY()

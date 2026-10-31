@@ -94,19 +94,19 @@ public:
 
 	// table index 3, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bChestDynamicsDisableRB : 1;
+	bool bChestDynamicsDisableRB;
 
 	// table index 2, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bIsCrouchMoving : 1;
+	bool bIsCrouchMoving;
 
 	// table index 1, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bIsAboveLODThreshold : 1;
+	bool bIsAboveLODThreshold;
 
 	// table index 0, flags 0x10000000010001
 	UPROPERTY()
-	uint8 bShouldResetDynamics : 1;
+	bool bShouldResetDynamics;
 
 };
 

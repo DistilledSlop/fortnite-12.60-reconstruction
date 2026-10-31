@@ -93,31 +93,31 @@ public:
 
 	// table index 6, flags 0x10000000000014
 	UPROPERTY()
-	uint8 bShowCountDown : 1;
+	bool bShowCountDown;
 
 	// table index 5, flags 0x10000000000014
 	UPROPERTY()
-	uint8 bShowFirstInteraction : 1;
+	bool bShowFirstInteraction;
 
 	// table index 4, flags 0x10000000000014
 	UPROPERTY()
-	uint8 bShowSecondInteraction : 1;
+	bool bShowSecondInteraction;
 
 	// table index 3, flags 0x10000000000014
 	UPROPERTY()
-	uint8 bIsSecondInteractionActive : 1;
+	bool bIsSecondInteractionActive;
 
 	// table index 2, flags 0x10000000000014
 	UPROPERTY()
-	uint8 bDisplayTextOnly : 1;
+	bool bDisplayTextOnly;
 
 	// table index 1, flags 0x10000000000014
 	UPROPERTY()
-	uint8 bSuppressInteractionWidget : 1;
+	bool bSuppressInteractionWidget;
 
 	// table index 0, flags 0x10000000000014
 	UPROPERTY()
-	uint8 bSuppressSimpleInteractionWidgetForTouch : 1;
+	bool bSuppressSimpleInteractionWidgetForTouch;
 
 };
 

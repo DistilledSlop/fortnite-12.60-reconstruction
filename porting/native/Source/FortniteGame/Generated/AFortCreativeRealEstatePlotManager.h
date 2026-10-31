@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Info.h"
 
+#include "FActiveRealEstatePlotInfo.h"
+
 #include "AFortCreativeRealEstatePlotManager.generated.h"
 
 UCLASS(config=Engine)
@@ -14,5 +16,10 @@ class FORTNITEGAME_API AFortCreativeRealEstatePlotManager : public AInfo
 	GENERATED_BODY()
 
 public:
+	// table index 0, flags 0x40000000002020
+	UPROPERTY(Replicated, Transient)
+	TArray<FActiveRealEstatePlotInfo> ActiveCreativeRealEstatePlots;
+
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

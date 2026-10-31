@@ -25,7 +25,7 @@ class FORTNITEGAME_API AFortRemoteControlledPawnAthena : public AFortPlayerPawnA
 public:
 	// table index 17, flags 0x20080000000020
 	UPROPERTY(Replicated)
-	uint8 bCurrentlyDelayingLaunch : 1;
+	bool bCurrentlyDelayingLaunch;
 
 	// table index 16, flags 0x20080000000020
 	UPROPERTY(Replicated)
@@ -61,7 +61,7 @@ public:
 
 	// table index 7, flags 0x20080100002020
 	UPROPERTY(ReplicatedUsing=OnRep_TriggeredForDestroy, Transient)
-	uint8 bTriggeredForDestroy : 1;
+	bool bTriggeredForDestroy;
 
 	// table index 6, flags 0x20080000010001
 	UPROPERTY()
@@ -85,11 +85,11 @@ public:
 
 	// table index 1, flags 0x40000000002000
 	UPROPERTY(Transient)
-	uint8 bIsKeyboardTurnPressed : 1;
+	bool bIsKeyboardTurnPressed;
 
 	// table index 0, flags 0x40000000002000
 	UPROPERTY(Transient)
-	uint8 bIsKeyboardLookPressed : 1;
+	bool bIsKeyboardLookPressed;
 
 	UFUNCTION()
 	void OnRep_ControllingPlayerPawn();

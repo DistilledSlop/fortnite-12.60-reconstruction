@@ -21,7 +21,7 @@ struct FSavedSpectatorCameraState
 
 	// table index 25, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bDataIsValid : 1;
+	bool bDataIsValid;
 
 	// table index 23, offset 1, flags 0x10000000000000
 	UPROPERTY()
@@ -53,7 +53,7 @@ struct FSavedSpectatorCameraState
 
 	// table index 16, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bAutoFocus : 1;
+	bool bAutoFocus;
 
 	// table index 15, offset 188, flags 0x10000000000000
 	UPROPERTY()
@@ -61,7 +61,7 @@ struct FSavedSpectatorCameraState
 
 	// table index 14, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bAutoExposure : 1;
+	bool bAutoExposure;
 
 	// table index 13, offset 196, flags 0x10000000000000
 	UPROPERTY()
@@ -93,23 +93,23 @@ struct FSavedSpectatorCameraState
 
 	// table index 5, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bNamePlatesEnabled : 1;
+	bool bNamePlatesEnabled;
 
 	// table index 4, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bPlayerOutlinesEnabled : 1;
+	bool bPlayerOutlinesEnabled;
 
 	// table index 3, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bThirdPersonCamCollide : 1;
+	bool bThirdPersonCamCollide;
 
 	// table index 2, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bFollowDroneDoTest : 1;
+	bool bFollowDroneDoTest;
 
 	// table index 1, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bBattleMapIsOnTimelineMode : 1;
+	bool bBattleMapIsOnTimelineMode;
 
 	// table index 0, offset 296, flags 0x10000000000000
 	UPROPERTY()

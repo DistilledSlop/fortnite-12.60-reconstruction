@@ -131,15 +131,15 @@ public:
 
 	// table index 14, flags 0x10000000010001
 	UPROPERTY()
-	uint8 bCanDoTricks : 1;
+	bool bCanDoTricks;
 
 	// table index 13, flags 0x10000000010001
 	UPROPERTY()
-	uint8 bShouldDriverHaveReticle : 1;
+	bool bShouldDriverHaveReticle;
 
 	// table index 12, flags 0x10000000004005
 	UPROPERTY(Config)
-	uint8 bSupportsWraps : 1;
+	bool bSupportsWraps;
 
 	// table index 11, flags 0x10000000004005
 	UPROPERTY(Config)
@@ -147,7 +147,7 @@ public:
 
 	// table index 10, flags 0x10000000004005
 	UPROPERTY(Config)
-	uint8 bInheritScale : 1;
+	bool bInheritScale;
 
 	// table index 9, flags 0x10000000004005
 	UPROPERTY(Config)
@@ -159,11 +159,11 @@ public:
 
 	// table index 7, flags 0x10000000004005
 	UPROPERTY(Config)
-	uint8 bBlockBuilding : 1;
+	bool bBlockBuilding;
 
 	// table index 6, flags 0x10000000004005
 	UPROPERTY(Config)
-	uint8 bPreferDriverSeatWhenEmpty : 1;
+	bool bPreferDriverSeatWhenEmpty;
 
 	// table index 5, flags 0x10000000004005
 	UPROPERTY(Config)
@@ -175,7 +175,7 @@ public:
 
 	// table index 3, flags 0x10000000004005
 	UPROPERTY(Config)
-	uint8 bCanBeOnFire : 1;
+	bool bCanBeOnFire;
 
 	// table index 1, flags 0x10000000004005
 	UPROPERTY(Config)

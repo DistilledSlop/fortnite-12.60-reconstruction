@@ -7,6 +7,7 @@
 #include "Engine/DataAsset.h"
 
 #include "EFortZoneType.h"
+#include "FDeployableBaseSupportSettings.h"
 #include "GameplayTagContainer.h"
 
 class ABuildingSMActor;
@@ -14,6 +15,7 @@ class AFortGameMode;
 class AFortLobbyBeaconHost;
 class AFortMusicManager;
 class AFortTheaterMapTile;
+class UFortCloudSaveItemDefinition;
 class UFortMusicManagerBank;
 class UTexture2D;
 class UWorld;
@@ -62,6 +64,10 @@ public:
 	UPROPERTY()
 	TSoftClassPtr<AFortLobbyBeaconHost> LobbyBeaconHostClass;
 
+	// table index 20, flags 0x14000000010015
+	UPROPERTY()
+	TSoftObjectPtr<UFortCloudSaveItemDefinition> CloudSaveItemDefinition;
+
 	// table index 19, flags 0x10000000010015
 	UPROPERTY()
 	int32 ZoneIndex;
@@ -94,6 +100,10 @@ public:
 	UPROPERTY()
 	float CriticalMissionEligibilityGracePeriodLength;
 
+	// table index 11, flags 0x10000000010001
+	UPROPERTY()
+	FDeployableBaseSupportSettings DeployableBaseSettings;
+
 	// table index 10, flags 0x10000000010015
 	UPROPERTY()
 	uint8 IgnoreGeneratedRewards : 1;
@@ -112,7 +122,7 @@ public:
 
 	// table index 6, flags 0x10000000010015
 	UPROPERTY()
-	uint8 bOverrideConningText : 1;
+	bool bOverrideConningText;
 
 	// table index 5, flags 0x10000000010015
 	UPROPERTY()

@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "ACustomCharacterPartModifier.h"
 
+#include "FSlurpLegendSwapToVariantData.h"
+
 class AFortPlayerStateZone;
 class UAnimInstance;
 class UMaterialInstanceDynamic;
@@ -33,7 +35,11 @@ public:
 
 	// table index 5, flags 0x10000000000001
 	UPROPERTY()
-	uint8 bUseShieldOverride : 1;
+	bool bUseShieldOverride;
+
+	// table index 3, flags 0x10000000000001
+	UPROPERTY()
+	TArray<FSlurpLegendSwapToVariantData> VariantData;
 
 	// table index 2, flags 0x20080000000000
 	UPROPERTY()

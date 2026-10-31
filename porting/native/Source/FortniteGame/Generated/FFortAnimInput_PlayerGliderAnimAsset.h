@@ -233,11 +233,11 @@ struct FFortAnimInput_PlayerGliderAnimAsset
 
 	// table index 1, offset None, flags 0x10000000000015
 	UPROPERTY()
-	uint8 bAllowPlayerDeployRootMod : 1;
+	bool bAllowPlayerDeployRootMod;
 
 	// table index 0, offset None, flags 0x10000000000015
 	UPROPERTY()
-	uint8 bUseSurfStyle : 1;
+	bool bUseSurfStyle;
 
 };
 

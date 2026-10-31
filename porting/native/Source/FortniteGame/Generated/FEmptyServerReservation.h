@@ -32,7 +32,7 @@ struct FEmptyServerReservation
 
 	// table index 3, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bMakePrivate : 1;
+	bool bMakePrivate;
 
 	// table index 1, offset 81, flags 0x10000000000000
 	UPROPERTY()
@@ -40,7 +40,7 @@ struct FEmptyServerReservation
 
 	// table index 0, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bUsesMatchmakingV2 : 1;
+	bool bUsesMatchmakingV2;
 
 };
 

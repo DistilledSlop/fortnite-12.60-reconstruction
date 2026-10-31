@@ -55,15 +55,15 @@ struct FFortGlobalMission
 
 	// table index 2, offset None, flags 0x10000000010001
 	UPROPERTY()
-	uint8 bIsPrototype : 1;
+	bool bIsPrototype;
 
 	// table index 1, offset None, flags 0x10000000010001
 	UPROPERTY()
-	uint8 bAllowInTestMaps : 1;
+	bool bAllowInTestMaps;
 
 	// table index 0, offset None, flags 0x10000000010001
 	UPROPERTY()
-	uint8 bEnabled : 1;
+	bool bEnabled;
 
 };
 

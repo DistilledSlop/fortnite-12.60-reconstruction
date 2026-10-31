@@ -81,11 +81,11 @@ public:
 
 	// table index 44, flags 0x10000000002004
 	UPROPERTY(Transient)
-	uint8 bBoostCameraActive : 1;
+	bool bBoostCameraActive;
 
 	// table index 43, flags 0x10000000002004
 	UPROPERTY(Transient)
-	uint8 bLocalPlayerADS : 1;
+	bool bLocalPlayerADS;
 
 	// table index 42, flags 0x10000000002004
 	UPROPERTY(Transient)
@@ -141,11 +141,11 @@ public:
 
 	// table index 29, flags 0x10000000002000
 	UPROPERTY(Transient)
-	uint8 bOutOfRangeAudioParamsSet : 1;
+	bool bOutOfRangeAudioParamsSet;
 
 	// table index 28, flags 0x10000000002000
 	UPROPERTY(Transient)
-	uint8 bBudgetBasedAudioParamsCleared : 1;
+	bool bBudgetBasedAudioParamsCleared;
 
 	// table index 27, flags 0x10000000002004
 	UPROPERTY(Transient)
@@ -165,15 +165,15 @@ public:
 
 	// table index 23, flags 0x10000000002000
 	UPROPERTY(Transient)
-	uint8 bHaveTriggeredBoostFX : 1;
+	bool bHaveTriggeredBoostFX;
 
 	// table index 22, flags 0x10000000002000
 	UPROPERTY(Transient)
-	uint8 bIsUsingSputteringFlamesTemplate : 1;
+	bool bIsUsingSputteringFlamesTemplate;
 
 	// table index 21, flags 0x10000000002004
 	UPROPERTY(Transient)
-	uint8 bAreWheelsIced : 1;
+	bool bAreWheelsIced;
 
 	// table index 20, flags 0x10000000002000
 	UPROPERTY(Transient)
@@ -233,11 +233,11 @@ public:
 
 	// table index 6, flags 0x20080000002004
 	UPROPERTY(Transient)
-	uint8 bPlayingBoostFX : 1;
+	bool bPlayingBoostFX;
 
 	// table index 5, flags 0x20080000002004
 	UPROPERTY(Transient)
-	uint8 bPlayingBoostFXForward : 1;
+	bool bPlayingBoostFXForward;
 
 	// table index 4, flags 0x20080000002014
 	UPROPERTY(Transient)

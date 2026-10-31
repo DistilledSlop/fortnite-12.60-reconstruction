@@ -23,6 +23,14 @@ class AFortSkyDiveContrailPreviewActor;
 class AFortSprayPreviewActor;
 class AFortWeaponCharmPreviewActor;
 class UAnimMontage;
+class UAthenaBackpackItemDefinition;
+class UAthenaBattleBusItemDefinition;
+class UAthenaCharacterItemDefinition;
+class UAthenaDanceItemDefinition;
+class UAthenaGliderItemDefinition;
+class UAthenaMusicPackItemDefinition;
+class UAthenaPickaxeItemDefinition;
+class UAthenaSkyDiveContrailItemDefinition;
 class UCurveFloat;
 class UCustomCharacterPart;
 class UDataTable;
@@ -31,6 +39,8 @@ class UFortCosmeticItemFilterTable;
 class UFortCosmeticItemMarkupTable;
 class UFortGameplayAbility;
 class UFortHomebaseBannerColorMap;
+class UFortHomebaseBannerIconItemDefinition;
+class UFortItemDefinition;
 class UTexture2D;
 
 #include "UGameDataCosmetics.generated.h"
@@ -76,6 +86,46 @@ public:
 	// table index 63, flags 0x44000000010001
 	UPROPERTY()
 	TSoftObjectPtr<UFortHomebaseBannerColorMap> BannerColorMap;
+
+	// table index 62, flags 0x44000000010001
+	UPROPERTY()
+	TSoftObjectPtr<UFortHomebaseBannerIconItemDefinition> BannerIconItemDefinition;
+
+	// table index 61, flags 0x14000000000001
+	UPROPERTY()
+	TSoftObjectPtr<UAthenaPickaxeItemDefinition> FallbackPickaxe;
+
+	// table index 60, flags 0x14000000000001
+	UPROPERTY()
+	TSoftObjectPtr<UAthenaDanceItemDefinition> FallbackDance;
+
+	// table index 58, flags 0x14000000010001
+	UPROPERTY()
+	TArray<TSoftObjectPtr<UFortItemDefinition>> ShuffleTileItemDefinitions;
+
+	// table index 57, flags 0x10000000010001
+	UPROPERTY()
+	UAthenaBackpackItemDefinition* STWHeroBackpackItemDefinition;
+
+	// table index 56, flags 0x10000000010001
+	UPROPERTY()
+	UAthenaBackpackItemDefinition* STWHeroNoDefaultBackpackItemDefinition;
+
+	// table index 55, flags 0x10000000010001
+	UPROPERTY()
+	UAthenaBattleBusItemDefinition* DefaultBattleBusSkin;
+
+	// table index 54, flags 0x10000000010001
+	UPROPERTY()
+	UAthenaGliderItemDefinition* DefaultGliderSkin;
+
+	// table index 53, flags 0x10000000010001
+	UPROPERTY()
+	UAthenaSkyDiveContrailItemDefinition* DefaultContrailEffect;
+
+	// table index 52, flags 0x10000000010001
+	UPROPERTY()
+	UAthenaMusicPackItemDefinition* DefaultMusicPack;
 
 	// table index 50, flags 0x10000000000001
 	UPROPERTY()
@@ -232,6 +282,14 @@ public:
 	// table index 8, flags 0x14000000000001
 	UPROPERTY()
 	TSoftObjectPtr<UTexture2D> DeniedCosmeticThumbnail;
+
+	// table index 7, flags 0x10000000000001
+	UPROPERTY()
+	UFortItemDefinition* PlaceholderItemToShowForDeniedCosmetics;
+
+	// table index 5, flags 0x10000000000001
+	UPROPERTY()
+	TArray<UAthenaCharacterItemDefinition*> RandomCharacters;
 
 	// table index 4, flags 0x10000000000001
 	UPROPERTY()

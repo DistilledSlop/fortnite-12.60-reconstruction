@@ -32,7 +32,7 @@ public:
 
 	// table index 2, flags 0x10040000010015
 	UPROPERTY()
-	uint8 bAllowOtherActionsWhenActive : 1;
+	bool bAllowOtherActionsWhenActive;
 
 	// table index 1, flags 0x20080000002000
 	UPROPERTY(Transient)
@@ -40,7 +40,7 @@ public:
 
 	// table index 0, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bIsActive : 1;
+	bool bIsActive;
 
 };
 

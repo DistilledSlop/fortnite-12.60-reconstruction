@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "Engine/DataAsset.h"
 
+#include "FFortMissionAlertRequirementsInfo.h"
+#include "FFortRequirementsInfo.h"
 #include "FFortTheaterMapMissionData.h"
 #include "GameplayTagContainer.h"
 
@@ -30,6 +32,14 @@ public:
 	// table index 5, flags 0x10000000010001
 	UPROPERTY()
 	FGameplayTagContainer RegionTags;
+
+	// table index 4, flags 0x10000000010001
+	UPROPERTY()
+	FFortRequirementsInfo Requirements;
+
+	// table index 2, flags 0x10000000010001
+	UPROPERTY()
+	TArray<FFortMissionAlertRequirementsInfo> MissionAlertRequirements;
 
 	// table index 1, flags 0x10000000010001
 	UPROPERTY()

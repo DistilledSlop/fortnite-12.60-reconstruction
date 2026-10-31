@@ -59,7 +59,7 @@ public:
 
 	// table index 47, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bCurrExitCraftDeparted : 1;
+	bool bCurrExitCraftDeparted;
 
 	// table index 45, flags 0x20080000002000
 	UPROPERTY(Transient)

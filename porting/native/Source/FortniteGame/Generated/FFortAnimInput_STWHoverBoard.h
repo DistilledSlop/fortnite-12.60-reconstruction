@@ -74,7 +74,7 @@ struct FFortAnimInput_STWHoverBoard
 
 	// table index 0, offset None, flags 0x10000000022015
 	UPROPERTY()
-	uint8 bIsUsingHoverboard : 1;
+	bool bIsUsingHoverboard;
 
 };
 

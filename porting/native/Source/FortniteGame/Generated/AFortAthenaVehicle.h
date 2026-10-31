@@ -22,6 +22,7 @@
 #include "FSMVehicleGear.h"
 #include "FSeatTransitionMontage.h"
 #include "FSpringGroundTriangle.h"
+#include "FVehicleCosmeticInfo.h"
 #include "FVehicleHealthChanged.h"
 #include "FVehicleReachedChargeThreshold.h"
 #include "FVehicleSpringInfo.h"
@@ -34,6 +35,7 @@ class AActor;
 class ABuildingActor;
 class AFortWaterBodyActor;
 class UAnimInstance;
+class UAthenaItemWrapDefinition;
 class UBuildingEditModeMetadata;
 class UFortAbilitySet;
 class UFortAbilitySystemComponent;
@@ -66,6 +68,14 @@ class FORTNITEGAME_API AFortAthenaVehicle : public AFortPhysicsPawn
 	GENERATED_BODY()
 
 public:
+	// table index 150, flags 0x14000100000020
+	UPROPERTY(ReplicatedUsing=OnRep_OverrideWrap)
+	TSoftObjectPtr<UAthenaItemWrapDefinition> SoftOverrideItemWrap;
+
+	// table index 149, flags 0x10000000002000
+	UPROPERTY(Transient)
+	UAthenaItemWrapDefinition* OverrideItemWrap;
+
 	// table index 148, flags 0x20080000082008
 	UPROPERTY(Transient)
 	USplineComponent* BoundsXYSplineComponent;
@@ -574,6 +584,10 @@ public:
 	UPROPERTY(Transient)
 	UFortHealthBarIndicator* HealthBarIndicator;
 
+	// table index 0, flags 0x40008000000000
+	UPROPERTY()
+	FVehicleCosmeticInfo VehicleCosmeticInfo;
+
 	UFUNCTION(NetMulticast, Reliable)
 	void BroadcastResetWaterIdleTimeEmpty();
 	void BroadcastResetWaterIdleTimeEmpty_Implementation();
@@ -599,6 +613,9 @@ public:
 
 	UFUNCTION()
 	void OnRep_OnFire();
+
+	UFUNCTION()
+	void OnRep_OverrideWrap();
 
 	UFUNCTION()
 	void OnRep_PendingDeath();

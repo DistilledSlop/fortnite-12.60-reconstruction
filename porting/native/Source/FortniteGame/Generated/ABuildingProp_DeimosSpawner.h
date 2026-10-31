@@ -68,23 +68,23 @@ public:
 
 	// table index 12, flags 0x10000000000004
 	UPROPERTY()
-	uint8 bNoSpawnLimitEnabled : 1;
+	bool bNoSpawnLimitEnabled;
 
 	// table index 11, flags 0x10000000000004
 	UPROPERTY()
-	uint8 bDamageBuildingsOnSpawn : 1;
+	bool bDamageBuildingsOnSpawn;
 
 	// table index 10, flags 0x10000000000004
 	UPROPERTY()
-	uint8 bInvulnerable : 1;
+	bool bInvulnerable;
 
 	// table index 9, flags 0x10000000000004
 	UPROPERTY()
-	uint8 bVisible : 1;
+	bool bVisible;
 
 	// table index 8, flags 0x10000000000004
 	UPROPERTY()
-	uint8 bHideVFX : 1;
+	bool bHideVFX;
 
 	// table index 7, flags 0x10000000000004
 	UPROPERTY()
@@ -92,11 +92,11 @@ public:
 
 	// table index 6, flags 0x10000000000004
 	UPROPERTY()
-	uint8 bSortSlotsByBestScore : 1;
+	bool bSortSlotsByBestScore;
 
 	// table index 5, flags 0x10000000000004
 	UPROPERTY()
-	uint8 bEnabledOnMinigameStart : 1;
+	bool bEnabledOnMinigameStart;
 
 	// table index 4, flags 0x2008000008000d
 	UPROPERTY()
@@ -116,7 +116,7 @@ public:
 
 	// table index 0, flags 0x40000000004000
 	UPROPERTY(Config)
-	uint8 bEnableCreativeCreatureSpawners : 1;
+	bool bEnableCreativeCreatureSpawners;
 
 };
 

@@ -11,8 +11,12 @@
 #include "FOnCreativeQuickbarEquippedChanged.h"
 #include "FOnItemAddedToCreativeQuickbar.h"
 #include "FOnItemAddedToMoveTool.h"
+#include "Misc/Guid.h"
 
 class AActor;
+class UFortCreativeUserPrefabItemDefinition;
+class UFortItemDefinition;
+class UFortPlaysetWorldItemDefinition;
 class UInputComponent;
 class ULevelSaveRecord;
 
@@ -46,11 +50,19 @@ public:
 
 	// table index 7, flags 0x20080000000014
 	UPROPERTY()
-	uint8 bIsCreativeQuickbarActive : 1;
+	bool bIsCreativeQuickbarActive;
 
 	// table index 6, flags 0x20080000000014
 	UPROPERTY()
-	uint8 bIsCreativeQuickbarEquipped : 1;
+	bool bIsCreativeQuickbarEquipped;
+
+	// table index 4, flags 0x20080000010001
+	UPROPERTY()
+	TArray<UFortCreativeUserPrefabItemDefinition*> QuickbarSlotItemDefinitions;
+
+	// table index 3, flags 0x20080000010001
+	UPROPERTY()
+	UFortPlaysetWorldItemDefinition* QuickbarSlotPlaysetItemDefinition;
 
 	// table index 2, flags 0x20080000000000
 	UPROPERTY()
@@ -63,6 +75,14 @@ public:
 	// table index 0, flags 0x40000000080008
 	UPROPERTY()
 	UInputComponent* CreativeQuickbarActiveInputComponent;
+
+	UFUNCTION(Client, Reliable)
+	void ClientAddToQuickBarComplete(bool bUseVolumeToSpawn, bool UseDelayedAddToQuickbar, UFortItemDefinition* Playset, const FGuid& ItemGuid, int32 SlotPutIn);
+	void ClientAddToQuickBarComplete_Implementation(bool bUseVolumeToSpawn, bool UseDelayedAddToQuickbar, UFortItemDefinition* Playset, const FGuid& ItemGuid, int32 SlotPutIn);
+
+	UFUNCTION(Server, Reliable)
+	void ServerAddItemToQuickBar(bool bUseVolumeToSpawn, const FGuid& PreviousItemGuid, int32 DesiredSlotIndexconst, UFortItemDefinition* ItemDefinition);
+	void ServerAddItemToQuickBar_Implementation(bool bUseVolumeToSpawn, const FGuid& PreviousItemGuid, int32 DesiredSlotIndexconst, UFortItemDefinition* ItemDefinition);
 
 	UFUNCTION(Server, Reliable)
 	void ServerAddToQuickBar(int32 DesiredSlotIndex, const TArray<AActor*>& Actors);

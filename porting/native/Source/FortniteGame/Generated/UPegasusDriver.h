@@ -30,7 +30,7 @@ public:
 
 	// table index 2, flags 0x40000000004000
 	UPROPERTY(Config)
-	uint8 bShouldDevBuildsShowFPS : 1;
+	bool bShouldDevBuildsShowFPS;
 
 	// table index 1, flags 0x40000000004000
 	UPROPERTY(Config)

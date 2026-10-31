@@ -32,11 +32,11 @@ public:
 
 	// table index 44, flags 0x20080000000005
 	UPROPERTY()
-	uint8 bClampCameraPitch : 1;
+	bool bClampCameraPitch;
 
 	// table index 43, flags 0x20080000000005
 	UPROPERTY()
-	uint8 bClampCameraYaw : 1;
+	bool bClampCameraYaw;
 
 	// table index 42, flags 0x20080000000005
 	UPROPERTY()
@@ -88,11 +88,11 @@ public:
 
 	// table index 30, flags 0x20080000000005
 	UPROPERTY()
-	uint8 bScaleViewOffsetByViewTargetScale : 1;
+	bool bScaleViewOffsetByViewTargetScale;
 
 	// table index 29, flags 0x20080000000005
 	UPROPERTY()
-	uint8 bSupportsShoulderSwap : 1;
+	bool bSupportsShoulderSwap;
 
 	// table index 28, flags 0x20080000002000
 	UPROPERTY(Transient)
@@ -112,11 +112,11 @@ public:
 
 	// table index 24, flags 0x10000000000005
 	UPROPERTY()
-	uint8 bPreventPenetration : 1;
+	bool bPreventPenetration;
 
 	// table index 23, flags 0x10000000000005
 	UPROPERTY()
-	uint8 bDoPredictiveAvoidance : 1;
+	bool bDoPredictiveAvoidance;
 
 	// table index 22, flags 0x10000000000005
 	UPROPERTY()
@@ -192,7 +192,7 @@ public:
 
 	// table index 3, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bLastViewTargetValidGroupEmoteLookTarget : 1;
+	bool bLastViewTargetValidGroupEmoteLookTarget;
 
 	// table index 2, flags 0x20080000002000
 	UPROPERTY(Transient)

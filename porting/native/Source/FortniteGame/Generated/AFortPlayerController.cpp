@@ -12,6 +12,21 @@ void AFortPlayerController::Cheat_ClearForcedCosmeticVariantChannels_Implementat
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerController::Cheat_ForceAthenaCosmeticItemInSlot_Implementation(int32 Index, const EAthenaCustomizationCategory& Slot, UAthenaCosmeticItemDefinition* CosmeticItem)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerController::Cheat_ForceCosmeticVariantChannels_Implementation(const TArray<FMcpVariantChannelInfo>& CosmeticVariantChannels)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerController::Cheat_ForcePlayEmoteItem_Implementation(UFortMontageItemDefinitionBase* EmoteAsset)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPlayerController::Cheat_StopObjectiveServer_Implementation(const EFortObjectiveStatus& Status, AFortObjectiveBase* Objective)
 {
 	// Body not recovered: reflection-derived stub.
@@ -98,6 +113,11 @@ void AFortPlayerController::ClientForceUpdateQuickbar_Implementation(const EFort
 }
 
 void AFortPlayerController::ClientForceWorldInventoryUpdate_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerController::ClientGivePlayerLocalAccountItem_Implementation(int32 Count, UFortAccountItemDefinition* ItemDefinition)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -292,6 +312,11 @@ void AFortPlayerController::OnRep_IntensityGraphInfo()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerController::OnRep_LatestRewardReport()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPlayerController::OnRep_MeshParentIds()
 {
 	// Body not recovered: reflection-derived stub.
@@ -303,6 +328,11 @@ void AFortPlayerController::OnRep_PIDContributionsGraphInfo()
 }
 
 void AFortPlayerController::OnRep_PIDValuesGraphInfo()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerController::OnRep_UpdatedObjectiveStats()
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -388,6 +418,11 @@ void AFortPlayerController::ServerDeveloper_GetConsoleVariable_Implementation(co
 }
 
 void AFortPlayerController::ServerDisassembleInventoryItems_Implementation(const TArray<int32>& ItemCounts, const TArray<FGuid>& ItemGuids)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerController::ServerDropAllItems_Implementation(UFortItemDefinition* IgnoreItemDef)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -478,6 +513,11 @@ void AFortPlayerController::ServerOnMaterialSelection_Implementation(EFortResour
 }
 
 void AFortPlayerController::ServerPingMinimap_Implementation(uint8 RequiredTeam, const FLinearColor& PingColor, const FVector& WorldLocation)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerController::ServerPlayEmoteItem_Implementation(float EmoteRandomNumber, UFortMontageItemDefinitionBase* EmoteAsset)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -711,6 +751,8 @@ void AFortPlayerController::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>
 	DOREPLIFETIME(AFortPlayerController, bInfiniteAmmo);
 	DOREPLIFETIME(AFortPlayerController, TutorialCompletedState);
 	DOREPLIFETIME(AFortPlayerController, bHasUnsavedPrimaryMissionProgress);
+	DOREPLIFETIME(AFortPlayerController, UpdatedObjectiveStats);
+	DOREPLIFETIME(AFortPlayerController, LatestRewardReport);
 	DOREPLIFETIME(AFortPlayerController, ViewTargetInventory);
 	DOREPLIFETIME(AFortPlayerController, OutpostInventory);
 	DOREPLIFETIME(AFortPlayerController, WorldInventory);

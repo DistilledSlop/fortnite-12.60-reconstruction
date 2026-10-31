@@ -38,7 +38,7 @@ struct FFortGameplayAbilityMontageInfo
 
 	// table index 2, offset None, flags 0x10000000000005
 	UPROPERTY()
-	uint8 bPlayRandomSection : 1;
+	bool bPlayRandomSection;
 
 	// table index 0, offset 32, flags 0x10000000000005
 	UPROPERTY()

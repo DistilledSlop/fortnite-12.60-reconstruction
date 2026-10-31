@@ -28,23 +28,23 @@ class FORTNITEGAME_API UFrontendAnimInstance : public UAnimInstance
 public:
 	// table index 31, flags 0x10000000002005
 	UPROPERTY(Transient)
-	uint8 bIsSkydiving : 1;
+	bool bIsSkydiving;
 
 	// table index 30, flags 0x10000000000001
 	UPROPERTY()
-	uint8 bEnableHandIK : 1;
+	bool bEnableHandIK;
 
 	// table index 29, flags 0x10000000022015
 	UPROPERTY(Transient)
-	uint8 bIsPlayingEmote : 1;
+	bool bIsPlayingEmote;
 
 	// table index 28, flags 0x10000000002004
 	UPROPERTY(Transient)
-	uint8 bIsBodyTypeManuallySet : 1;
+	bool bIsBodyTypeManuallySet;
 
 	// table index 27, flags 0x10000000002004
 	UPROPERTY(Transient)
-	uint8 bIsCharacterCustomizationLoaded : 1;
+	bool bIsCharacterCustomizationLoaded;
 
 	// table index 26, flags 0x10008000000015
 	UPROPERTY()

@@ -16,7 +16,7 @@ class FORTNITEGAME_API UUnicornAthenaPawnSampler : public UActorComponent
 public:
 	// table index 0, flags 0x40000000004000
 	UPROPERTY(Config)
-	uint8 bShouldListenOutToDBNOEvent : 1;
+	bool bShouldListenOutToDBNOEvent;
 
 };
 

@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
 
+#include "FFortWorldMarkerData.h"
+
 class AFortPlayerMarkerBase;
 class UAthenaMarkerComponent;
 class UUserWidget;
@@ -21,6 +23,10 @@ public:
 	// table index 3, flags 0x40000000080008
 	UPROPERTY()
 	UAthenaMarkerComponent* MarkerComponent;
+
+	// table index 2, flags 0x40000000000000
+	UPROPERTY()
+	FFortWorldMarkerData MarkerDataCache;
 
 	// table index 1, flags 0x40000000000000
 	UPROPERTY()

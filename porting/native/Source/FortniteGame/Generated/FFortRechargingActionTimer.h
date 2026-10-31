@@ -46,15 +46,15 @@ struct FFortRechargingActionTimer
 
 	// table index 2, offset None, flags 0x20080000000004
 	UPROPERTY()
-	uint8 bIsActive : 1;
+	bool bIsActive;
 
 	// table index 1, offset None, flags 0x20080000000004
 	UPROPERTY()
-	uint8 bIsCharging : 1;
+	bool bIsCharging;
 
 	// table index 0, offset None, flags 0x20080000000004
 	UPROPERTY()
-	uint8 bIsPassive : 1;
+	bool bIsPassive;
 
 };
 

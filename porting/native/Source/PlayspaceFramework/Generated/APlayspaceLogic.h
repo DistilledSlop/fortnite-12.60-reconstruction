@@ -22,11 +22,11 @@ public:
 
 	// table index 2, flags 0x20080000010001
 	UPROPERTY()
-	uint8 bAutoStartMatchOnServerStart : 1;
+	bool bAutoStartMatchOnServerStart;
 
 	// table index 1, flags 0x40000100002020
 	UPROPERTY(ReplicatedUsing=OnRep_bMatchHasEnded, Transient)
-	uint8 bMatchHasEnded : 1;
+	bool bMatchHasEnded;
 
 	// table index 0, flags 0x40000100002020
 	UPROPERTY(ReplicatedUsing=OnRep_MatchStartTime, Transient)

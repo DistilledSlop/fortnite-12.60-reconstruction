@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortItem.h"
 
+class UFortPersistableItemDefinition;
+
 #include "UFortPersistableItem.generated.h"
 
 UCLASS()
@@ -14,6 +16,10 @@ class FORTNITEGAME_API UFortPersistableItem : public UFortItem
 	GENERATED_BODY()
 
 public:
+	// table index 4, flags 0x20080000000000
+	UPROPERTY()
+	UFortPersistableItemDefinition* ItemDefinition;
+
 	// table index 3, flags 0x20080000000014
 	UPROPERTY()
 	FString InstanceId;
@@ -28,7 +34,7 @@ public:
 
 	// table index 0, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bIsLocalOnlyItem : 1;
+	bool bIsLocalOnlyItem;
 
 };
 

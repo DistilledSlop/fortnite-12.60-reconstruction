@@ -15,7 +15,7 @@ struct FEndZoneScoreAndAwards
 
 	// table index 9, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bResultsPendingSave : 1;
+	bool bResultsPendingSave;
 
 	// table index 8, offset 4, flags 0x10000000000000
 	UPROPERTY()
@@ -23,11 +23,11 @@ struct FEndZoneScoreAndAwards
 
 	// table index 7, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bCriticalMatchBonus : 1;
+	bool bCriticalMatchBonus;
 
 	// table index 6, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bDidLeech : 1;
+	bool bDidLeech;
 
 	// table index 4, offset 16, flags 0x10000000000000
 	UPROPERTY()

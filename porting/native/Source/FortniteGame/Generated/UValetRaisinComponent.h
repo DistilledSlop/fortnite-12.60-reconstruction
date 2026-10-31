@@ -8,6 +8,7 @@
 
 class AFortPlayerController;
 class UAudioComponent;
+class UFortItemDefinition;
 class USoundAttenuation;
 class USoundEffectSourcePresetChain;
 
@@ -29,11 +30,23 @@ public:
 
 	// table index 2, flags 0x20080000000001
 	UPROPERTY()
-	uint8 bShouldManageOwnAudio : 1;
+	bool bShouldManageOwnAudio;
 
 	// table index 1, flags 0x40000000080008
 	UPROPERTY()
 	UAudioComponent* DynamicAudioComponent;
 
+	// table index 0, flags 0x40000100000020
+	UPROPERTY(ReplicatedUsing=OnRep_Source)
+	UFortItemDefinition* ReplicatedSource;
+
+	UFUNCTION()
+	void OnRep_Source();
+
+	UFUNCTION(Server, Reliable)
+	void ServerSelectOption(UFortItemDefinition* MusicSource, AFortPlayerController* PlayerChoosing);
+	void ServerSelectOption_Implementation(UFortItemDefinition* MusicSource, AFortPlayerController* PlayerChoosing);
+
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

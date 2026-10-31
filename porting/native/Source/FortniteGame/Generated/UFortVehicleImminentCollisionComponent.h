@@ -19,19 +19,19 @@ class FORTNITEGAME_API UFortVehicleImminentCollisionComponent : public UActorCom
 public:
 	// table index 15, flags 0x10000000000001
 	UPROPERTY()
-	uint8 bAllowHitPawns : 1;
+	bool bAllowHitPawns;
 
 	// table index 14, flags 0x10000000000001
 	UPROPERTY()
-	uint8 bAllowHitBuildingPieces : 1;
+	bool bAllowHitBuildingPieces;
 
 	// table index 13, flags 0x10000000000001
 	UPROPERTY()
-	uint8 bDoMultiSweep : 1;
+	bool bDoMultiSweep;
 
 	// table index 12, flags 0x10000000000001
 	UPROPERTY()
-	uint8 bOnlyAffectBuildingsIfKillingDamage : 1;
+	bool bOnlyAffectBuildingsIfKillingDamage;
 
 	// table index 11, flags 0x10000000000001
 	UPROPERTY()
@@ -55,7 +55,7 @@ public:
 
 	// table index 6, flags 0x10000000000001
 	UPROPERTY()
-	uint8 bUpdateTimeoutIgnoreBuildingActors : 1;
+	bool bUpdateTimeoutIgnoreBuildingActors;
 
 	// table index 5, flags 0x10000000000001
 	UPROPERTY()
@@ -67,11 +67,11 @@ public:
 
 	// table index 2, flags 0x10000000000001
 	UPROPERTY()
-	uint8 bAlignLookAheadDirectionWithVehicleYAxis : 1;
+	bool bAlignLookAheadDirectionWithVehicleYAxis;
 
 	// table index 1, flags 0x10000000000001
 	UPROPERTY()
-	uint8 bAlignLookAheadDirectionWithVehicleZAxis : 1;
+	bool bAlignLookAheadDirectionWithVehicleZAxis;
 
 	// table index 0, flags 0x10000000002000
 	UPROPERTY(Transient)

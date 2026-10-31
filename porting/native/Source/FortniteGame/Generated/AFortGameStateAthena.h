@@ -17,6 +17,7 @@
 #include "Engine/NetSerialization.h"
 #include "FAircraftFlightInfo.h"
 #include "FAthenaStreamIdOverride.h"
+#include "FCosmeticUsageReport.h"
 #include "FDynamicLandData.h"
 #include "FFortWinnerPlayerData.h"
 #include "FGameplayMutatorEventData.h"
@@ -52,6 +53,8 @@
 #include "FOnWinnerInfoDisplayReadyCN.h"
 #include "FOnWinningScoreAnnounced.h"
 #include "FOnWinningTeamAnnounced.h"
+#include "FPickupOnDestroy.h"
+#include "FPickupOnSpawnReady.h"
 #include "FRepositionGameModeMessage.h"
 #include "FSetDefaultGameModeMessage.h"
 #include "FShowGameModeMessage.h"
@@ -77,8 +80,11 @@ class AFortSpecialActorReplicationInfo;
 class AFortVolumeManager;
 class APlayerState;
 class AUnicornDriver;
+class UAthenaBattleBusItemDefinition;
 class UCurveFloat;
 class UCurveVector;
+class UFortGameStateComponent_ActiveEventManager;
+class UFortGameStateComponent_Telemetry;
 class UFortMutatorListComponent;
 class UMaterialInstanceDynamic;
 class UMaterialInterface;
@@ -101,11 +107,11 @@ public:
 
 	// table index 219, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bPlaylistDataIsLoaded : 1;
+	bool bPlaylistDataIsLoaded;
 
 	// table index 218, flags 0x10000000002000
 	UPROPERTY(Transient)
-	uint8 bPlaylistDataIsActivelyLoading : 1;
+	bool bPlaylistDataIsActivelyLoading;
 
 	// table index 217, flags 0x10000010080000
 	UPROPERTY()
@@ -146,6 +152,14 @@ public:
 	// table index 208, flags 0x10000010080000
 	UPROPERTY()
 	FOnCurrentHighScoreUpdated CurrentHighScoreUpdated;
+
+	// table index 207, flags 0x10000010080000
+	UPROPERTY()
+	FPickupOnSpawnReady OnPickupSpawnedAndReady;
+
+	// table index 206, flags 0x10000010080000
+	UPROPERTY()
+	FPickupOnDestroy OnPickupDestroy;
 
 	// table index 205, flags 0x10000010080000
 	UPROPERTY()
@@ -221,19 +235,19 @@ public:
 
 	// table index 187, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bForceTeamScorePlacementOnDeath : 1;
+	bool bForceTeamScorePlacementOnDeath;
 
 	// table index 186, flags 0x10000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_bPlaylistStoppedSafeZonePhases)
-	uint8 bPlaylistStoppedSafeZonePhases : 1;
+	bool bPlaylistStoppedSafeZonePhases;
 
 	// table index 185, flags 0x10000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_SkyTubesShuttingDown)
-	uint8 bSkyTubesShuttingDown : 1;
+	bool bSkyTubesShuttingDown;
 
 	// table index 184, flags 0x10000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_SkyTubesDisabled)
-	uint8 bSkyTubesDisabled : 1;
+	bool bSkyTubesDisabled;
 
 	// table index 183, flags 0x10000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_ServerChangelistNumber)
@@ -293,19 +307,19 @@ public:
 
 	// table index 167, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bSkipWinnerAnnounced : 1;
+	bool bSkipWinnerAnnounced;
 
 	// table index 166, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bStopBuildingHealingOnDamage : 1;
+	bool bStopBuildingHealingOnDamage;
 
 	// table index 165, flags 0x10000000000034
 	UPROPERTY(Replicated)
-	uint8 bIsInCountdown : 1;
+	bool bIsInCountdown;
 
 	// table index 164, flags 0x10000000000034
 	UPROPERTY(Replicated)
-	uint8 bIsInFinalCountdown : 1;
+	bool bIsInFinalCountdown;
 
 	// table index 163, flags 0x10000000000034
 	UPROPERTY(Replicated)
@@ -365,7 +379,7 @@ public:
 
 	// table index 147, flags 0x20080000000020
 	UPROPERTY(Replicated)
-	uint8 bCheatRespawnEnabled : 1;
+	bool bCheatRespawnEnabled;
 
 	// table index 145, flags 0x20080100002020
 	UPROPERTY(ReplicatedUsing=OnRep_StormCapState, Transient)
@@ -399,9 +413,13 @@ public:
 	UPROPERTY(Replicated)
 	TArray<UObject*> ServerToClientPreloadList;
 
+	// table index 133, flags 0x10000000000034
+	UPROPERTY(Replicated)
+	UAthenaBattleBusItemDefinition* DefaultBattleBus;
+
 	// table index 132, flags 0x10000000000034
 	UPROPERTY(Replicated)
-	uint8 bAllowUserPickedCosmeticBattleBus : 1;
+	bool bAllowUserPickedCosmeticBattleBus;
 
 	// table index 130, flags 0x10000000000034
 	UPROPERTY(Replicated)
@@ -425,7 +443,7 @@ public:
 
 	// table index 125, flags 0x10000000000020
 	UPROPERTY(Replicated)
-	uint8 bIsLargeTeamGame : 1;
+	bool bIsLargeTeamGame;
 
 	// table index 124, flags 0x10000100000034
 	UPROPERTY(ReplicatedUsing=OnRep_WinningPlayerState)
@@ -477,7 +495,7 @@ public:
 
 	// table index 107, flags 0x10000000000020
 	UPROPERTY(Replicated)
-	uint8 bStormReachedFinalPosition : 1;
+	bool bStormReachedFinalPosition;
 
 	// table index 105, flags 0x10000000000020
 	UPROPERTY(Replicated)
@@ -485,7 +503,7 @@ public:
 
 	// table index 104, flags 0x20080100000020
 	UPROPERTY(ReplicatedUsing=OnRep_SpectateAPartyMemberAvailable)
-	uint8 SpectateAPartyMemberAvailable : 1;
+	bool SpectateAPartyMemberAvailable;
 
 	// table index 101, flags 0x20080000000020
 	UPROPERTY(Replicated)
@@ -601,11 +619,11 @@ public:
 
 	// table index 70, flags 0x20080000000020
 	UPROPERTY(Replicated)
-	uint8 bIsCustomMatch : 1;
+	bool bIsCustomMatch;
 
 	// table index 68, flags 0x20080000000020
 	UPROPERTY(Replicated)
-	uint8 bGameModeWillSkipAircraft : 1;
+	bool bGameModeWillSkipAircraft;
 
 	// table index 67, flags 0x20080100000034
 	UPROPERTY(ReplicatedUsing=OnRep_SafeZonePhase)
@@ -670,6 +688,14 @@ public:
 	// table index 48, flags 0x2008000008001d
 	UPROPERTY()
 	UFortMutatorListComponent* MutatorListComponent;
+
+	// table index 47, flags 0x2008000008001d
+	UPROPERTY()
+	UFortGameStateComponent_Telemetry* FortGameStateComponent_Telemetry;
+
+	// table index 46, flags 0x200800000a0009
+	UPROPERTY()
+	UFortGameStateComponent_ActiveEventManager* ActiveEventManager;
 
 	// table index 45, flags 0x10000000000034
 	UPROPERTY(Replicated)
@@ -819,9 +845,13 @@ public:
 	UPROPERTY(Transient)
 	float SmoothedWorldTimeSecondsDrift;
 
+	// table index 5, flags 0x20080100000020
+	UPROPERTY(ReplicatedUsing=OnRep_CosmeticUsage)
+	FCosmeticUsageReport CosmeticUsageReport;
+
 	// table index 4, flags 0x40000000002020
 	UPROPERTY(Replicated, Transient)
-	uint8 bEnvironmentDamageBlocked : 1;
+	bool bEnvironmentDamageBlocked;
 
 	// table index 2, flags 0x10000100002020
 	UPROPERTY(ReplicatedUsing=OnRep_ReticulatedSplineDefinitions, Transient)
@@ -839,6 +869,9 @@ public:
 
 	UFUNCTION()
 	void OnRep_BroadcastSpectatorInfo();
+
+	UFUNCTION()
+	void OnRep_CosmeticUsage();
 
 	UFUNCTION()
 	void OnRep_CurrentHighScore();

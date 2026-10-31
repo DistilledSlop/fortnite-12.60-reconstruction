@@ -37,11 +37,11 @@ struct FFortWindImpulseCylinderRadial
 
 	// table index 2, offset None, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bIsChanging : 1;
+	bool bIsChanging;
 
 	// table index 1, offset None, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bIsChangePending : 1;
+	bool bIsChangePending;
 
 	// table index 0, offset 56, flags 0x40000000002000
 	UPROPERTY()

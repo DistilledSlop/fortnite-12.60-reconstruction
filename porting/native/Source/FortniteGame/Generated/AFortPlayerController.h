@@ -7,6 +7,7 @@
 #include "APlayspacePlayerController.h"
 
 #include "AttributeSet.h"
+#include "EAthenaCustomizationCategory.h"
 #include "EFortBuildPreviewMarkerOptionalAdjustment.h"
 #include "EFortCostInfoTypes.h"
 #include "EFortGameplayState.h"
@@ -29,11 +30,15 @@
 #include "FAttributeModifierInfo.h"
 #include "FBuildingWeakSpotData.h"
 #include "FChoiceData.h"
+#include "FFortAthenaLoadout.h"
 #include "FFortDamageNumberInfo.h"
 #include "FFortItemEntryStateValue.h"
 #include "FFortPersistentGameplayStatContainer.h"
+#include "FFortRewardReport.h"
+#include "FFortUpdatedObjectiveStat.h"
 #include "FLastBuildableState.h"
 #include "FLockOnInfo.h"
+#include "FMcpVariantChannelInfo.h"
 #include "FOnAutoRunEnabled.h"
 #include "FOnBuildPreviewMarkerVisibilityChanged.h"
 #include "FOnChosenSignature.h"
@@ -44,6 +49,7 @@
 #include "FOnOpenVoteDialog.h"
 #include "FOnPlayerEnteredBuildMode.h"
 #include "FOnPlayerPawnPossessed.h"
+#include "FOnQuestObjectiveStateChanged.h"
 #include "FOnReadyCheckCompleteBP.h"
 #include "FOnRegainedFocus.h"
 #include "FOnSetFirstPersonCamera.h"
@@ -51,6 +57,7 @@
 #include "FOnShowTemperatureChange.h"
 #include "FOnToggleFullscreenMap.h"
 #include "FOnWeakSpotReset.h"
+#include "FRecentlyRemovedQuickbarInfo.h"
 #include "GameFramework/OnlineReplStructs.h"
 #include "GameplayTagContainer.h"
 #include "Math/Color.h"
@@ -78,16 +85,29 @@ class AFortPawn;
 class AFortPlayerPawn;
 class AFortQuickBars;
 class AFortSprayDecalInstance;
+class UAthenaCosmeticItemDefinition;
 class UAudioComponent;
 class UFortAbilitySystemComponent;
+class UFortAccountItemDefinition;
 class UFortCinematicCamera;
 class UFortClientBotManager;
 class UFortClientPilot_Base;
+class UFortControllerComponent_Interaction;
+class UFortControllerComponent_InventoryNetworkManagement;
+class UFortControllerComponent_Telemetry;
 class UFortCustomizationAssetLoader;
 class UFortGameplayAbility;
 class UFortGameplayMessageComponentBase;
 class UFortIndicatorManager;
+class UFortItemDefinition;
+class UFortMcpProfileAthena;
+class UFortMcpProfileCampaign;
+class UFortMcpProfileCommonCore;
+class UFortMcpProfileCommonPublic;
+class UFortMcpProfileCreative;
+class UFortMcpProfileMetadata;
 class UFortMinigameItemContainerComponent;
+class UFortMontageItemDefinitionBase;
 class UFortRegisteredPlayerInfo;
 class UFortStatEventManager;
 class UHeartbeatManager;
@@ -95,6 +115,7 @@ class UInputComponent;
 class UMaterialInstanceDynamic;
 class UMaterialInterface;
 class UMaterialParameterCollection;
+class UMcpProfileGroup;
 class UMediaPlayer;
 class UMediaSource;
 class UObject;
@@ -118,11 +139,11 @@ public:
 
 	// table index 288, flags 0x20080000004000
 	UPROPERTY(Config)
-	uint8 bAllowPcbBenefits : 1;
+	bool bAllowPcbBenefits;
 
 	// table index 287, flags 0x40000000002000
 	UPROPERTY(Transient)
-	uint8 bInPossession : 1;
+	bool bInPossession;
 
 	// table index 286, flags 0x20080000080008
 	UPROPERTY()
@@ -170,7 +191,7 @@ public:
 
 	// table index 275, flags 0x10000000002000
 	UPROPERTY(Transient)
-	uint8 bCanSpectateBot : 1;
+	bool bCanSpectateBot;
 
 	// table index 274, flags 0x10000010080000
 	UPROPERTY()
@@ -206,11 +227,11 @@ public:
 
 	// table index 265, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bHasClientFinishedLoading : 1;
+	bool bHasClientFinishedLoading;
 
 	// table index 264, flags 0x20080100000020
 	UPROPERTY(ReplicatedUsing=OnRep_bHasServerFinishedLoading)
-	uint8 bHasServerFinishedLoading : 1;
+	bool bHasServerFinishedLoading;
 
 	// table index 263, flags 0x20080000002000
 	UPROPERTY(Transient)
@@ -226,7 +247,7 @@ public:
 
 	// table index 260, flags 0x10000000002000
 	UPROPERTY(Transient)
-	uint8 bLoadingScreenDropped : 1;
+	bool bLoadingScreenDropped;
 
 	// table index 259, flags 0x20080000000000
 	UPROPERTY()
@@ -258,7 +279,7 @@ public:
 
 	// table index 251, flags 0x10000000004014
 	UPROPERTY(Config)
-	uint8 bRevertPlayerListenerChange : 1;
+	bool bRevertPlayerListenerChange;
 
 	// table index 250, flags 0x10000000082008
 	UPROPERTY(Transient)
@@ -266,35 +287,39 @@ public:
 
 	// table index 249, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bHoldingPrimaryFireFromTouch : 1;
+	bool bHoldingPrimaryFireFromTouch;
 
 	// table index 248, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bSupportNextPieceAssist : 1;
+	bool bSupportNextPieceAssist;
 
 	// table index 247, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bAutoBuildForTrapPlacement : 1;
+	bool bAutoBuildForTrapPlacement;
 
 	// table index 246, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bAutoBuildForFloorTrapPlacement : 1;
+	bool bAutoBuildForFloorTrapPlacement;
 
 	// table index 245, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bAutoBuildForWallTrapPlacement : 1;
+	bool bAutoBuildForWallTrapPlacement;
 
 	// table index 244, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bAutoBuildForCeilingTrapPlacement : 1;
+	bool bAutoBuildForCeilingTrapPlacement;
 
 	// table index 243, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bNoControllerLighting : 1;
+	bool bNoControllerLighting;
 
 	// table index 242, flags 0x10000000004000
 	UPROPERTY(Config)
 	float ReturnToMainMenuTimeoutDelay;
+
+	// table index 241, flags 0x10000010080000
+	UPROPERTY()
+	FOnQuestObjectiveStateChanged OnQuestObjectiveStateChanged;
 
 	// table index 240, flags 0x10000000002000
 	UPROPERTY(Transient)
@@ -318,15 +343,15 @@ public:
 
 	// table index 235, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bGiveLastDamagerElimCreditOnDrop : 1;
+	bool bGiveLastDamagerElimCreditOnDrop;
 
 	// table index 234, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bGiveLastDamagerElimCreditOnSelfDamage : 1;
+	bool bGiveLastDamagerElimCreditOnSelfDamage;
 
 	// table index 233, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bGiveLastDamagerElimCreditOnStormDamage : 1;
+	bool bGiveLastDamagerElimCreditOnStormDamage;
 
 	// table index 232, flags 0x20080010080000
 	UPROPERTY()
@@ -358,51 +383,51 @@ public:
 
 	// table index 225, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bWantsToSprint : 1;
+	bool bWantsToSprint;
 
 	// table index 224, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bHoldingSprint : 1;
+	bool bHoldingSprint;
 
 	// table index 223, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bSprintToggleable : 1;
+	bool bSprintToggleable;
 
 	// table index 222, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bSprintByDefault : 1;
+	bool bSprintByDefault;
 
 	// table index 221, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bSprintCancelsReload : 1;
+	bool bSprintCancelsReload;
 
 	// table index 220, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bSprintWasCancelledByReload : 1;
+	bool bSprintWasCancelledByReload;
 
 	// table index 219, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bAutoRunOn : 1;
+	bool bAutoRunOn;
 
 	// table index 218, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bUseHoldToSwapPickup : 1;
+	bool bUseHoldToSwapPickup;
 
 	// table index 217, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bTargetingToggleable : 1;
+	bool bTargetingToggleable;
 
 	// table index 216, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bMovementDisabledDueToCancellableAction : 1;
+	bool bMovementDisabledDueToCancellableAction;
 
 	// table index 215, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bIsPlayerActivelyMoving : 1;
+	bool bIsPlayerActivelyMoving;
 
 	// table index 214, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bPlaceHeldObjectPressed : 1;
+	bool bPlaceHeldObjectPressed;
 
 	// table index 213, flags 0x20080000002000
 	UPROPERTY(Transient)
@@ -410,11 +435,11 @@ public:
 
 	// table index 212, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bAllowHoldForAmmoCrafting : 1;
+	bool bAllowHoldForAmmoCrafting;
 
 	// table index 211, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bIsClientTimingOut : 1;
+	bool bIsClientTimingOut;
 
 	// table index 210, flags 0x20080000010001
 	UPROPERTY()
@@ -430,11 +455,11 @@ public:
 
 	// table index 207, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bAutoRunWasHoldingForward : 1;
+	bool bAutoRunWasHoldingForward;
 
 	// table index 206, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bAtNameBaseScreen : 1;
+	bool bAtNameBaseScreen;
 
 	// table index 205, flags 0x20080010080000
 	UPROPERTY()
@@ -446,15 +471,15 @@ public:
 
 	// table index 203, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bOnPressExecuteJetpack : 1;
+	bool bOnPressExecuteJetpack;
 
 	// table index 202, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bShowHitMarkersForFriendlyFire : 1;
+	bool bShowHitMarkersForFriendlyFire;
 
 	// table index 201, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bServerSideHitMarkers : 1;
+	bool bServerSideHitMarkers;
 
 	// table index 200, flags 0x10000010080000
 	UPROPERTY()
@@ -470,19 +495,19 @@ public:
 
 	// table index 197, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bGamepadAbilityPending : 1;
+	bool bGamepadAbilityPending;
 
 	// table index 196, flags 0x40000000000000
 	UPROPERTY()
-	uint8 bForceAllowCursorMode : 1;
+	bool bForceAllowCursorMode;
 
 	// table index 195, flags 0x40000000000000
 	UPROPERTY()
-	uint8 bForceAllowCameraMode : 1;
+	bool bForceAllowCameraMode;
 
 	// table index 194, flags 0x40000000000000
 	UPROPERTY()
-	uint8 bSuppressEventNotifications : 1;
+	bool bSuppressEventNotifications;
 
 	// table index 193, flags 0x20080000002000
 	UPROPERTY(Transient)
@@ -530,11 +555,11 @@ public:
 
 	// table index 179, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bUsePredictedBuildingActors : 1;
+	bool bUsePredictedBuildingActors;
 
 	// table index 178, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bRegisterPredictedBuildingActorsWithGrid : 1;
+	bool bRegisterPredictedBuildingActorsWithGrid;
 
 	// table index 177, flags 0x10000000004000
 	UPROPERTY(Config)
@@ -558,19 +583,19 @@ public:
 
 	// table index 171, flags 0x20080000004000
 	UPROPERTY(Config)
-	uint8 bAllowBuildingPreviewAutoRotation : 1;
+	bool bAllowBuildingPreviewAutoRotation;
 
 	// table index 170, flags 0x20080000004000
 	UPROPERTY(Config)
-	uint8 bRequireTraceToExistingBuildingToSetContext : 1;
+	bool bRequireTraceToExistingBuildingToSetContext;
 
 	// table index 169, flags 0x20080000004000
 	UPROPERTY(Config)
-	uint8 bAllowTraceToExistingBuildingToSetContextToRedirectToBlockingBuilding : 1;
+	bool bAllowTraceToExistingBuildingToSetContextToRedirectToBlockingBuilding;
 
 	// table index 168, flags 0x20080000004000
 	UPROPERTY(Config)
-	uint8 bRequireTraceToExistingBuildingToSetContextExcludeCurrentContext : 1;
+	bool bRequireTraceToExistingBuildingToSetContextExcludeCurrentContext;
 
 	// table index 167, flags 0x20080000002000
 	UPROPERTY(Transient)
@@ -698,15 +723,19 @@ public:
 
 	// table index 130, flags 0x20080000004000
 	UPROPERTY(Config)
-	uint8 bBuildingPlacementTraceSkipInitialPenetrationOfBuildingSMActor : 1;
+	bool bBuildingPlacementTraceSkipInitialPenetrationOfBuildingSMActor;
 
 	// table index 129, flags 0x20080000004000
 	UPROPERTY(Config)
-	uint8 bBuildingPlacementTraceSkipInitialPenetrationOfStaticMesh : 1;
+	bool bBuildingPlacementTraceSkipInitialPenetrationOfStaticMesh;
 
 	// table index 128, flags 0x20080000000000
 	UPROPERTY()
 	AFortQuickBars* ClientQuickBars;
+
+	// table index 126, flags 0x20080000002000
+	UPROPERTY(Transient)
+	TArray<FRecentlyRemovedQuickbarInfo> RecentlyRemovedQuickbarInfo;
 
 	// table index 123, flags 0x40000000002000
 	UPROPERTY(Transient)
@@ -714,7 +743,7 @@ public:
 
 	// table index 122, flags 0x10000000002004
 	UPROPERTY(Transient)
-	uint8 bShouldForceDeleteDroppedItems : 1;
+	bool bShouldForceDeleteDroppedItems;
 
 	// table index 121, flags 0x10000000000020
 	UPROPERTY(Replicated)
@@ -734,23 +763,23 @@ public:
 
 	// table index 117, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bHasInitializedWorldInventory : 1;
+	bool bHasInitializedWorldInventory;
 
 	// table index 116, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bHasInitializedHeroInventory : 1;
+	bool bHasInitializedHeroInventory;
 
 	// table index 115, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bAccountInventoryWasUpdated : 1;
+	bool bAccountInventoryWasUpdated;
 
 	// table index 114, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bForceWorldInventoryUpdate : 1;
+	bool bForceWorldInventoryUpdate;
 
 	// table index 113, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bIsSavingGadgetLoadout : 1;
+	bool bIsSavingGadgetLoadout;
 
 	// table index 112, flags 0x20080000002000
 	UPROPERTY(Transient)
@@ -764,21 +793,33 @@ public:
 	UPROPERTY()
 	TSubclassOf<UFortClientBotManager> ClientBotManagerClass;
 
+	// table index 109, flags 0x40000000010015
+	UPROPERTY()
+	FFortAthenaLoadout CosmeticLoadoutPC;
+
 	// table index 108, flags 0x10000000002000
 	UPROPERTY(Transient)
 	UFortCustomizationAssetLoader* LocalPawnCustomizationAssetLoader;
 
 	// table index 107, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bDropWeaponsDuringAllMissionStates : 1;
+	bool bDropWeaponsDuringAllMissionStates;
+
+	// table index 106, flags 0x20080100000020
+	UPROPERTY(ReplicatedUsing=OnRep_LatestRewardReport)
+	FFortRewardReport LatestRewardReport;
 
 	// table index 105, flags 0x20080000000000
 	UPROPERTY()
 	UFortRegisteredPlayerInfo* MyPlayerInfo;
 
+	// table index 103, flags 0x20080100000020
+	UPROPERTY(ReplicatedUsing=OnRep_UpdatedObjectiveStats)
+	TArray<FFortUpdatedObjectiveStat> UpdatedObjectiveStats;
+
 	// table index 102, flags 0x20080100000020
 	UPROPERTY(ReplicatedUsing=OnRep_UpdatedUnsavedPrimaryMissionProgress)
-	uint8 bHasUnsavedPrimaryMissionProgress : 1;
+	bool bHasUnsavedPrimaryMissionProgress;
 
 	// table index 101, flags 0x10000000000000
 	UPROPERTY()
@@ -796,9 +837,45 @@ public:
 	UPROPERTY()
 	FFortPersistentGameplayStatContainer CachedPersistentGameplayStats;
 
+	// table index 97, flags 0x20080000002000
+	UPROPERTY(Transient)
+	UFortMontageItemDefinitionBase* LastEmotePlayed;
+
+	// table index 94, flags 0x20080000002000
+	UPROPERTY(Transient)
+	TMap<UFortMontageItemDefinitionBase*, int32> EmoteUsageCounts;
+
 	// table index 92, flags 0x20080000002000
 	UPROPERTY(Transient)
 	TArray<FVector> AnalyticsBuildingWallTooLowLocations;
+
+	// table index 91, flags 0x10000000002000
+	UPROPERTY(Transient)
+	UMcpProfileGroup* McpProfileGroup;
+
+	// table index 90, flags 0x10000000002000
+	UPROPERTY(Transient)
+	UFortMcpProfileCommonPublic* CommonPublicMcpProfile;
+
+	// table index 89, flags 0x10000000002000
+	UPROPERTY(Transient)
+	UFortMcpProfileCommonCore* CommonCoreMcpProfile;
+
+	// table index 88, flags 0x10000000002000
+	UPROPERTY(Transient)
+	UFortMcpProfileCampaign* MainMcpProfile;
+
+	// table index 87, flags 0x10000000002000
+	UPROPERTY(Transient)
+	UFortMcpProfileAthena* AthenaProfile;
+
+	// table index 86, flags 0x10000000002000
+	UPROPERTY(Transient)
+	UFortMcpProfileMetadata* MetadataProfile;
+
+	// table index 85, flags 0x10000000002000
+	UPROPERTY(Transient)
+	UFortMcpProfileCreative* CreativeModeProfile;
 
 	// table index 83, flags 0x40000000002020
 	UPROPERTY(Replicated, Transient)
@@ -806,7 +883,7 @@ public:
 
 	// table index 82, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bShouldReceiveCriticalMatchBonus : 1;
+	bool bShouldReceiveCriticalMatchBonus;
 
 	// table index 81, flags 0x10000010080000
 	UPROPERTY()
@@ -890,23 +967,23 @@ public:
 
 	// table index 61, flags 0x10000000000014
 	UPROPERTY()
-	uint8 bHideHudEnglishText : 1;
+	bool bHideHudEnglishText;
 
 	// table index 60, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bAutoChangeMaterial : 1;
+	bool bAutoChangeMaterial;
 
 	// table index 59, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bServerAutoChangeMaterial : 1;
+	bool bServerAutoChangeMaterial;
 
 	// table index 58, flags 0x10000000002000
 	UPROPERTY(Transient)
-	uint8 bPeripheralLightingEnabled : 1;
+	bool bPeripheralLightingEnabled;
 
 	// table index 57, flags 0x10000000002000
 	UPROPERTY(Transient)
-	uint8 bRudderControlEnabled : 1;
+	bool bRudderControlEnabled;
 
 	// table index 56, flags 0x10000000002000
 	UPROPERTY(Transient)
@@ -938,11 +1015,11 @@ public:
 
 	// table index 45, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bSyncPeripheralLightingWithEmoteMusic : 1;
+	bool bSyncPeripheralLightingWithEmoteMusic;
 
 	// table index 44, flags 0x20080000004000
 	UPROPERTY(Config)
-	uint8 bPushEmoteAudioDataToCosmeticMaterials : 1;
+	bool bPushEmoteAudioDataToCosmeticMaterials;
 
 	// table index 43, flags 0x20080000002000
 	UPROPERTY(Transient)
@@ -962,15 +1039,15 @@ public:
 
 	// table index 39, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bZeroingCameraRoll : 1;
+	bool bZeroingCameraRoll;
 
 	// table index 38, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bTryPickupSwap : 1;
+	bool bTryPickupSwap;
 
 	// table index 37, flags 0x20080000004000
 	UPROPERTY(Config)
-	uint8 bClientSideEditPrediction : 1;
+	bool bClientSideEditPrediction;
 
 	// table index 36, flags 0x20080000004000
 	UPROPERTY(Config)
@@ -990,19 +1067,19 @@ public:
 
 	// table index 32, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bSupportQuickEdit : 1;
+	bool bSupportQuickEdit;
 
 	// table index 31, flags 0x10000000002000
 	UPROPERTY(Transient)
-	uint8 bQuickEditEnabled : 1;
+	bool bQuickEditEnabled;
 
 	// table index 30, flags 0x10000000000014
 	UPROPERTY()
-	uint8 bUsesWidgetForFPSDisplay : 1;
+	bool bUsesWidgetForFPSDisplay;
 
 	// table index 29, flags 0x10000000000014
 	UPROPERTY()
-	uint8 bShowFPS : 1;
+	bool bShowFPS;
 
 	// table index 28, flags 0x10000010080000
 	UPROPERTY()
@@ -1010,7 +1087,7 @@ public:
 
 	// table index 27, flags 0x10000000000014
 	UPROPERTY()
-	uint8 bShowTemperature : 1;
+	bool bShowTemperature;
 
 	// table index 26, flags 0x10000010080000
 	UPROPERTY()
@@ -1022,7 +1099,7 @@ public:
 
 	// table index 24, flags 0x10000000002000
 	UPROPERTY(Transient)
-	uint8 bLockPrimaryInputMethodToMouse : 1;
+	bool bLockPrimaryInputMethodToMouse;
 
 	// table index 23, flags 0x40000000000000
 	UPROPERTY()
@@ -1030,7 +1107,7 @@ public:
 
 	// table index 22, flags 0x40000000000020
 	UPROPERTY(Replicated)
-	uint8 bFinalXPUpdateFailed : 1;
+	bool bFinalXPUpdateFailed;
 
 	// table index 21, flags 0x40000000082008
 	UPROPERTY(Transient)
@@ -1046,7 +1123,7 @@ public:
 
 	// table index 17, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bReleaseBuildingContextOnPlace : 1;
+	bool bReleaseBuildingContextOnPlace;
 
 	// table index 16, flags 0x10000000004000
 	UPROPERTY(Config)
@@ -1058,7 +1135,7 @@ public:
 
 	// table index 14, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bCreativeTurboDelete : 1;
+	bool bCreativeTurboDelete;
 
 	// table index 13, flags 0x10000000004000
 	UPROPERTY(Config)
@@ -1070,7 +1147,7 @@ public:
 
 	// table index 11, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bTurboBuild : 1;
+	bool bTurboBuild;
 
 	// table index 10, flags 0x20080000004000
 	UPROPERTY(Config)
@@ -1083,6 +1160,22 @@ public:
 	// table index 8, flags 0x20080000004000
 	UPROPERTY(Config)
 	float TurboBuildInterval;
+
+	// table index 7, flags 0x20080000082008
+	UPROPERTY(Transient)
+	UFortControllerComponent_Telemetry* FortControllerComponent_Telemetry;
+
+	// table index 6, flags 0x20080000082008
+	UPROPERTY(Transient)
+	UFortControllerComponent_InventoryNetworkManagement* InventoryNetworkManagementComponent;
+
+	// table index 5, flags 0x20080000082008
+	UPROPERTY(Transient)
+	UFortControllerComponent_Interaction* InteractionComponent;
+
+	// table index 4, flags 0x20080000002000
+	UPROPERTY(Transient)
+	UFortItemDefinition* PendingExecuteInventoryItemDefinition;
 
 	// table index 3, flags 0x24080000010001
 	UPROPERTY()
@@ -1103,6 +1196,18 @@ public:
 	UFUNCTION(Server, Reliable)
 	void Cheat_ClearForcedCosmeticVariantChannels();
 	void Cheat_ClearForcedCosmeticVariantChannels_Implementation();
+
+	UFUNCTION(Server, Reliable)
+	void Cheat_ForceAthenaCosmeticItemInSlot(int32 Index, const EAthenaCustomizationCategory& Slot, UAthenaCosmeticItemDefinition* CosmeticItem);
+	void Cheat_ForceAthenaCosmeticItemInSlot_Implementation(int32 Index, const EAthenaCustomizationCategory& Slot, UAthenaCosmeticItemDefinition* CosmeticItem);
+
+	UFUNCTION(Server, Reliable)
+	void Cheat_ForceCosmeticVariantChannels(const TArray<FMcpVariantChannelInfo>& CosmeticVariantChannels);
+	void Cheat_ForceCosmeticVariantChannels_Implementation(const TArray<FMcpVariantChannelInfo>& CosmeticVariantChannels);
+
+	UFUNCTION(Server, Unreliable)
+	void Cheat_ForcePlayEmoteItem(UFortMontageItemDefinitionBase* EmoteAsset);
+	void Cheat_ForcePlayEmoteItem_Implementation(UFortMontageItemDefinitionBase* EmoteAsset);
 
 	UFUNCTION(Server, Reliable)
 	void Cheat_StopObjectiveServer(const EFortObjectiveStatus& Status, AFortObjectiveBase* Objective);
@@ -1175,6 +1280,10 @@ public:
 	UFUNCTION(Client, Reliable)
 	void ClientForceWorldInventoryUpdate();
 	void ClientForceWorldInventoryUpdate_Implementation();
+
+	UFUNCTION(Client, Reliable)
+	void ClientGivePlayerLocalAccountItem(int32 Count, UFortAccountItemDefinition* ItemDefinition);
+	void ClientGivePlayerLocalAccountItem_Implementation(int32 Count, UFortAccountItemDefinition* ItemDefinition);
 
 	UFUNCTION(Client, Reliable)
 	void ClientJoinConsoleSession(const FString& ConsoleSession);
@@ -1322,6 +1431,9 @@ public:
 	void OnRep_IntensityGraphInfo();
 
 	UFUNCTION()
+	void OnRep_LatestRewardReport();
+
+	UFUNCTION()
 	void OnRep_MeshParentIds();
 
 	UFUNCTION()
@@ -1329,6 +1441,9 @@ public:
 
 	UFUNCTION()
 	void OnRep_PIDValuesGraphInfo();
+
+	UFUNCTION()
+	void OnRep_UpdatedObjectiveStats();
 
 	UFUNCTION()
 	void OnRep_UpdatedUnsavedPrimaryMissionProgress();
@@ -1396,6 +1511,10 @@ public:
 	UFUNCTION(Server, Reliable)
 	void ServerDisassembleInventoryItems(const TArray<int32>& ItemCounts, const TArray<FGuid>& ItemGuids);
 	void ServerDisassembleInventoryItems_Implementation(const TArray<int32>& ItemCounts, const TArray<FGuid>& ItemGuids);
+
+	UFUNCTION(Server, Reliable)
+	void ServerDropAllItems(UFortItemDefinition* IgnoreItemDef);
+	void ServerDropAllItems_Implementation(UFortItemDefinition* IgnoreItemDef);
 
 	UFUNCTION(Server, Reliable)
 	void ServerDropCarriedObject();
@@ -1468,6 +1587,10 @@ public:
 	UFUNCTION(Server, Reliable)
 	void ServerPingMinimap(uint8 RequiredTeam, const FLinearColor& PingColor, const FVector& WorldLocation);
 	void ServerPingMinimap_Implementation(uint8 RequiredTeam, const FLinearColor& PingColor, const FVector& WorldLocation);
+
+	UFUNCTION(Server, Unreliable)
+	void ServerPlayEmoteItem(float EmoteRandomNumber, UFortMontageItemDefinitionBase* EmoteAsset);
+	void ServerPlayEmoteItem_Implementation(float EmoteRandomNumber, UFortMontageItemDefinitionBase* EmoteAsset);
 
 	UFUNCTION(Server, Reliable)
 	void ServerReadyToStartMatch();

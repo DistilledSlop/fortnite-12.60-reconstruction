@@ -23,15 +23,15 @@ struct FFortGameplayAttributeData : public FGameplayAttributeData
 
 	// table index 4, offset None, flags 0x20080000000014
 	UPROPERTY()
-	uint8 bIsCurrentClamped : 1;
+	bool bIsCurrentClamped;
 
 	// table index 3, offset None, flags 0x20080000000014
 	UPROPERTY()
-	uint8 bIsBaseClamped : 1;
+	bool bIsBaseClamped;
 
 	// table index 2, offset None, flags 0x20080000000014
 	UPROPERTY()
-	uint8 bShouldClampBase : 1;
+	bool bShouldClampBase;
 
 	// table index 1, offset 28, flags 0x20080000000014
 	UPROPERTY()

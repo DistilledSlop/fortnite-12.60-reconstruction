@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 
+class UAthenaPetItemDefinition;
 class UAudioComponent;
 class UFortTaggedSoundBank;
 class UMaterialInterface;
@@ -19,6 +20,10 @@ class FORTNITEGAME_API AFortPlayerPet : public AActor
 	GENERATED_BODY()
 
 public:
+	// table index 7, flags 0x20080000000014
+	UPROPERTY()
+	UAthenaPetItemDefinition* PetItemDef;
+
 	// table index 6, flags 0x2008000008001c
 	UPROPERTY()
 	UAudioComponent* PetAudioComponent;

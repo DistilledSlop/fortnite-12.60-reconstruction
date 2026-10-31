@@ -8,6 +8,7 @@
 
 #include "EFortResourceType.h"
 #include "FBuildingWeakSpotData.h"
+#include "FFortWorldMarkerData.h"
 #include "FMarkerID.h"
 #include "Math/Vector2D.h"
 
@@ -23,11 +24,11 @@ class FORTNITEGAME_API AFortBroadcastRemoteClientInfo : public AActor
 public:
 	// table index 14, flags 0x40000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_bActive)
-	uint8 bActive : 1;
+	bool bActive;
 
 	// table index 13, flags 0x40000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_RemoteIsInteracting)
-	uint8 bRemoteIsInteracting : 1;
+	bool bRemoteIsInteracting;
 
 	// table index 12, flags 0x40000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_RemoteEditActor)
@@ -47,15 +48,15 @@ public:
 
 	// table index 7, flags 0x40000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_RemoteIsFullScreenMapActive)
-	uint8 bRemoteIsFullScreenMapActive : 1;
+	bool bRemoteIsFullScreenMapActive;
 
 	// table index 6, flags 0x40000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_RemoteIsInventoryActive)
-	uint8 bRemoteIsInventoryActive : 1;
+	bool bRemoteIsInventoryActive;
 
 	// table index 5, flags 0x40000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_RemoteCanDBNORevive)
-	uint8 bRemoteCanDBNORevive : 1;
+	bool bRemoteCanDBNORevive;
 
 	// table index 3, flags 0x40000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_RemoteWeakspotData)
@@ -72,6 +73,10 @@ public:
 	// table index 0, flags 0x40000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_RemoteEventScore)
 	int32 RemoteEventScore;
+
+	UFUNCTION(NetMulticast, Reliable)
+	void ClientRemotePlayerAddMapMarker(const FFortWorldMarkerData& InMarkerData);
+	void ClientRemotePlayerAddMapMarker_Implementation(const FFortWorldMarkerData& InMarkerData);
 
 	UFUNCTION(NetMulticast, Reliable)
 	void ClientRemotePlayerDamagedResourceBuilding(bool bJustHitWeakspot, bool bDestroyed, int32 PotentialResourceCount, EFortResourceType::Type PotentialResourceType, ABuildingSMActor* BuildingSMActor);

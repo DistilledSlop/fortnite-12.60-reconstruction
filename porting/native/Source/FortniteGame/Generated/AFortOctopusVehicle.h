@@ -62,11 +62,11 @@ public:
 
 	// table index 29, flags 0x10000000004015
 	UPROPERTY(Config)
-	uint8 bAutoRetractGrapple : 1;
+	bool bAutoRetractGrapple;
 
 	// table index 28, flags 0x10000000004015
 	UPROPERTY(Config)
-	uint8 bCanHoldGrapple : 1;
+	bool bCanHoldGrapple;
 
 	// table index 27, flags 0x10000000004015
 	UPROPERTY(Config)

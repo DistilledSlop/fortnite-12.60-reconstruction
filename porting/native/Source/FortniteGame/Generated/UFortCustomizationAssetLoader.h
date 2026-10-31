@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
 
+#include "FFortCustomizationAssetsToLoad.h"
+
 #include "UFortCustomizationAssetLoader.generated.h"
 
 UCLASS()
@@ -14,6 +16,14 @@ class FORTNITEGAME_API UFortCustomizationAssetLoader : public UObject
 	GENERATED_BODY()
 
 public:
+	// table index 3, flags 0x40000000002000
+	UPROPERTY(Transient)
+	FFortCustomizationAssetsToLoad CurrentAssetsToLoad;
+
+	// table index 2, flags 0x40000000002000
+	UPROPERTY(Transient)
+	FFortCustomizationAssetsToLoad PendingAssetsToLoad;
+
 	// table index 0, flags 0x40000000002000
 	UPROPERTY(Transient)
 	TArray<UObject*> AllLoadedAssets;

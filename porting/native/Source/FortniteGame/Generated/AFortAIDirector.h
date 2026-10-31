@@ -23,6 +23,7 @@
 #include "FFortPendingStoppedEncounterData.h"
 #include "FFortPlayerPerformanceEstimateSettings.h"
 #include "FIntensityData.h"
+#include "FPendingSpawnInfo.h"
 #include "FUtilityData.h"
 #include "FUtilityTypeFloatPair.h"
 #include "GameplayTagContainer.h"
@@ -86,7 +87,7 @@ public:
 
 	// table index 104, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bForceByPassNavMeshForAISpawning : 1;
+	bool bForceByPassNavMeshForAISpawning;
 
 	// table index 102, flags 0x10000000002000
 	UPROPERTY(Transient)
@@ -194,11 +195,11 @@ public:
 
 	// table index 61, flags 0x20080000004005
 	UPROPERTY(Config)
-	uint8 bAsyncProcessUpdateAliveAIs : 1;
+	bool bAsyncProcessUpdateAliveAIs;
 
 	// table index 60, flags 0x20080000004005
 	UPROPERTY(Config)
-	uint8 bAllowProcessPlayerTargeting : 1;
+	bool bAllowProcessPlayerTargeting;
 
 	// table index 59, flags 0x20080000004005
 	UPROPERTY(Config)
@@ -275,6 +276,10 @@ public:
 	// table index 41, flags 0x10000000000000
 	UPROPERTY()
 	int32 NumPendingCapRelevantAI;
+
+	// table index 39, flags 0x10000000000000
+	UPROPERTY()
+	TArray<FPendingSpawnInfo> PendingSpawns;
 
 	// table index 38, flags 0x40000000014001
 	UPROPERTY(Config)

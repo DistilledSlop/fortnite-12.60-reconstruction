@@ -33,7 +33,7 @@ struct FAshtonStoneState
 
 	// table index 1, offset None, flags 0x10000080002000
 	UPROPERTY()
-	uint8 bHasEverSpawned : 1;
+	bool bHasEverSpawned;
 
 	// table index 0, offset 20, flags 0x10000080002000
 	UPROPERTY()

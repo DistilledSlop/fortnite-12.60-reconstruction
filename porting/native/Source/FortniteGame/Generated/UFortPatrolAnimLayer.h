@@ -46,39 +46,39 @@ public:
 
 	// table index 8, flags 0x10000000022015
 	UPROPERTY(Transient)
-	uint8 bRecentlyFired : 1;
+	bool bRecentlyFired;
 
 	// table index 7, flags 0x10000000022015
 	UPROPERTY(Transient)
-	uint8 bIsLandPatrolling : 1;
+	bool bIsLandPatrolling;
 
 	// table index 6, flags 0x10000000022015
 	UPROPERTY(Transient)
-	uint8 bIdle_Walk_Transition : 1;
+	bool bIdle_Walk_Transition;
 
 	// table index 5, flags 0x10000000022015
 	UPROPERTY(Transient)
-	uint8 bIsPatrolLocomotionCurrentTimeAboveThreshold : 1;
+	bool bIsPatrolLocomotionCurrentTimeAboveThreshold;
 
 	// table index 4, flags 0x10000000022015
 	UPROPERTY(Transient)
-	uint8 bIsDBNO : 1;
+	bool bIsDBNO;
 
 	// table index 3, flags 0x10000000022015
 	UPROPERTY(Transient)
-	uint8 bIsMoving2D : 1;
+	bool bIsMoving2D;
 
 	// table index 2, flags 0x10000000022015
 	UPROPERTY(Transient)
-	uint8 bIsAIPatrolling : 1;
+	bool bIsAIPatrolling;
 
 	// table index 1, flags 0x10000000022015
 	UPROPERTY(Transient)
-	uint8 bIsStressed : 1;
+	bool bIsStressed;
 
 	// table index 0, flags 0x10000000022015
 	UPROPERTY(Transient)
-	uint8 bEnableFullbodyOverride : 1;
+	bool bEnableFullbodyOverride;
 
 };
 

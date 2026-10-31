@@ -28,11 +28,11 @@ struct FMountedWeaponInfo
 
 	// table index 6, offset None, flags 0x10000000010015
 	UPROPERTY()
-	uint8 bDamageStartFromWeaponTowardFocus : 1;
+	bool bDamageStartFromWeaponTowardFocus;
 
 	// table index 5, offset None, flags 0x10000000010015
 	UPROPERTY()
-	uint8 bTargetSourceFromVehicleMuzzle : 1;
+	bool bTargetSourceFromVehicleMuzzle;
 
 	// table index 4, offset 28, flags 0x10000000010015
 	UPROPERTY()
@@ -48,7 +48,7 @@ struct FMountedWeaponInfo
 
 	// table index 1, offset None, flags 0x10000000002000
 	UPROPERTY()
-	uint8 bNeedsVehicleAttachment : 1;
+	bool bNeedsVehicleAttachment;
 
 	// table index 0, offset 44, flags 0x10000000002000
 	UPROPERTY()

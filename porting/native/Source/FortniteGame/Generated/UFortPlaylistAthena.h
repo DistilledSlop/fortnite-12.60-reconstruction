@@ -18,6 +18,7 @@
 #include "ESafeZoneStartUp.h"
 #include "EWeaponSelectionPreservationType.h"
 #include "Engine/DataTable.h"
+#include "FItemAndCount.h"
 #include "FPlaylistUIExtension.h"
 #include "FRatingExpansion.h"
 #include "FSupplyDropModifierData.h"
@@ -32,6 +33,7 @@ class UAthenaAISettings;
 class UCurveTable;
 class UDataTable;
 class UFortAthenaExitCraftInfo;
+class UFortItemDefinition;
 class UFortMissionGenerator;
 class UFortPlaylistUIInfo;
 class UFortSpawnActorInfo;
@@ -50,15 +52,15 @@ class FORTNITEGAME_API UFortPlaylistAthena : public UFortPlaylist
 public:
 	// table index 177, flags 0x10010000010015
 	UPROPERTY()
-	uint8 bRewardsTrackPlacement : 1;
+	bool bRewardsTrackPlacement;
 
 	// table index 176, flags 0x10010000010015
 	UPROPERTY()
-	uint8 bRewardsAllowXPProgression : 1;
+	bool bRewardsAllowXPProgression;
 
 	// table index 175, flags 0x10010000010015
 	UPROPERTY()
-	uint8 bRewardForRevivingTeammates : 1;
+	bool bRewardForRevivingTeammates;
 
 	// table index 173, flags 0x10010000010015
 	UPROPERTY()
@@ -88,25 +90,29 @@ public:
 	UPROPERTY()
 	TSoftObjectPtr<UDataTable> QuestEventXPTableOverride;
 
+	// table index 164, flags 0x14000000000001
+	UPROPERTY()
+	TArray<TSoftObjectPtr<UFortItemDefinition>> FirstWinRewards;
+
 	// table index 162, flags 0x10000000000001
 	UPROPERTY()
 	TArray<FString> CalendarEventsForEndOfMatchUpdate;
 
 	// table index 161, flags 0x10000000010015
 	UPROPERTY()
-	uint8 bAllowSinglePartyMatches : 1;
+	bool bAllowSinglePartyMatches;
 
 	// table index 160, flags 0x10000000010015
 	UPROPERTY()
-	uint8 bRequeueAfterFailedSessionAssignment : 1;
+	bool bRequeueAfterFailedSessionAssignment;
 
 	// table index 159, flags 0x10010000010015
 	UPROPERTY()
-	uint8 bIsTournament : 1;
+	bool bIsTournament;
 
 	// table index 158, flags 0x10000000010015
 	UPROPERTY()
-	uint8 bUseMultidivisionQueues : 1;
+	bool bUseMultidivisionQueues;
 
 	// table index 157, flags 0x10000000014015
 	UPROPERTY(Config)
@@ -134,11 +140,11 @@ public:
 
 	// table index 150, flags 0x10010000010015
 	UPROPERTY()
-	uint8 bUseInputRules : 1;
+	bool bUseInputRules;
 
 	// table index 149, flags 0x10000000010015
 	UPROPERTY()
-	uint8 bAllowBackfill : 1;
+	bool bAllowBackfill;
 
 	// table index 148, flags 0x10000000010015
 	UPROPERTY()
@@ -154,11 +160,11 @@ public:
 
 	// table index 145, flags 0x10000000010015
 	UPROPERTY()
-	uint8 bUsePlayerRating : 1;
+	bool bUsePlayerRating;
 
 	// table index 144, flags 0x10000000010015
 	UPROPERTY()
-	uint8 bEnableDynamicBotBackfill : 1;
+	bool bEnableDynamicBotBackfill;
 
 	// table index 143, flags 0x10010000010015
 	UPROPERTY()
@@ -166,31 +172,31 @@ public:
 
 	// table index 142, flags 0x10000000014015
 	UPROPERTY(Config)
-	uint8 bRequireCrossplayEnabled : 1;
+	bool bRequireCrossplayEnabled;
 
 	// table index 141, flags 0x10000000010015
 	UPROPERTY()
-	uint8 bLimitedPoolMatchmakingEnabled : 1;
+	bool bLimitedPoolMatchmakingEnabled;
 
 	// table index 140, flags 0x10000000014001
 	UPROPERTY(Config)
-	uint8 bAllowedInLeto : 1;
+	bool bAllowedInLeto;
 
 	// table index 139, flags 0x10000000010001
 	UPROPERTY()
-	uint8 bAllowInGameMatchMaking : 1;
+	bool bAllowInGameMatchMaking;
 
 	// table index 138, flags 0x10000000010001
 	UPROPERTY()
-	uint8 bAllowReturnToMatchmakingOriginOnMatchEnd : 1;
+	bool bAllowReturnToMatchmakingOriginOnMatchEnd;
 
 	// table index 137, flags 0x10000000010001
 	UPROPERTY()
-	uint8 bAllowBotsInHumanTeams : 1;
+	bool bAllowBotsInHumanTeams;
 
 	// table index 136, flags 0x10000000010001
 	UPROPERTY()
-	uint8 bForceNewPlayerStateOnReconnect : 1;
+	bool bForceNewPlayerStateOnReconnect;
 
 	// table index 134, flags 0x10000000010015
 	UPROPERTY()
@@ -226,23 +232,23 @@ public:
 
 	// table index 125, flags 0x10010000010015
 	UPROPERTY()
-	uint8 bIsLargeTeamGame : 1;
+	bool bIsLargeTeamGame;
 
 	// table index 124, flags 0x10000000010015
 	UPROPERTY()
-	uint8 bShouldSpreadTeams : 1;
+	bool bShouldSpreadTeams;
 
 	// table index 123, flags 0x10000000010015
 	UPROPERTY()
-	uint8 bIgnoreDefaultQuests : 1;
+	bool bIgnoreDefaultQuests;
 
 	// table index 122, flags 0x10000000010005
 	UPROPERTY()
-	uint8 bDisallowMultipleWeaponsOfType : 1;
+	bool bDisallowMultipleWeaponsOfType;
 
 	// table index 121, flags 0x10000000010005
 	UPROPERTY()
-	uint8 bAllowEditingEnemyWalls : 1;
+	bool bAllowEditingEnemyWalls;
 
 	// table index 120, flags 0x10000000010005
 	UPROPERTY()
@@ -264,13 +270,17 @@ public:
 	UPROPERTY()
 	FGameplayTagContainer AlwaysAllowedNativeActions;
 
+	// table index 112, flags 0x10000000010005
+	UPROPERTY()
+	TArray<FItemAndCount> InventoryItemsToGrant;
+
 	// table index 111, flags 0x10000000010005
 	UPROPERTY()
-	uint8 bIgnoreGameModeStartingInventory : 1;
+	bool bIgnoreGameModeStartingInventory;
 
 	// table index 110, flags 0x10000000010005
 	UPROPERTY()
-	uint8 bRequirePickaxeInStartingInventory : 1;
+	bool bRequirePickaxeInStartingInventory;
 
 	// table index 109, flags 0x10000000010005
 	UPROPERTY()
@@ -278,15 +288,15 @@ public:
 
 	// table index 108, flags 0x10000000010005
 	UPROPERTY()
-	uint8 bTeamFilterDestructedBuildingsInGrid : 1;
+	bool bTeamFilterDestructedBuildingsInGrid;
 
 	// table index 107, flags 0x10000000010005
 	UPROPERTY()
-	uint8 bOwnerFilterDestructedBuildingsInGrid : 1;
+	bool bOwnerFilterDestructedBuildingsInGrid;
 
 	// table index 106, flags 0x10000000010005
 	UPROPERTY()
-	uint8 bEnableBuildingCreatedEvent : 1;
+	bool bEnableBuildingCreatedEvent;
 
 	// table index 105, flags 0x10000000010005
 	UPROPERTY()
@@ -294,7 +304,7 @@ public:
 
 	// table index 104, flags 0x10000000010005
 	UPROPERTY()
-	uint8 bVehiclesDestroyAllBuildingSMActorsOnContact : 1;
+	bool bVehiclesDestroyAllBuildingSMActorsOnContact;
 
 	// table index 103, flags 0x14000000010005
 	UPROPERTY()
@@ -302,7 +312,7 @@ public:
 
 	// table index 102, flags 0x10000000010015
 	UPROPERTY()
-	uint8 bAutoAcquireSpawnChip : 1;
+	bool bAutoAcquireSpawnChip;
 
 	// table index 101, flags 0x10000000010015
 	UPROPERTY()
@@ -310,11 +320,11 @@ public:
 
 	// table index 100, flags 0x10000000014001
 	UPROPERTY(Config)
-	uint8 bAllowHardcoreModifiers : 1;
+	bool bAllowHardcoreModifiers;
 
 	// table index 99, flags 0x10000000010015
 	UPROPERTY()
-	uint8 bForceCameraFadeOnRespawn : 1;
+	bool bForceCameraFadeOnRespawn;
 
 	// table index 98, flags 0x10000000010015
 	UPROPERTY()
@@ -338,7 +348,7 @@ public:
 
 	// table index 92, flags 0x10000000010015
 	UPROPERTY()
-	uint8 bRespawnInAir : 1;
+	bool bRespawnInAir;
 
 	// table index 91, flags 0x10000000010015
 	UPROPERTY()
@@ -346,11 +356,11 @@ public:
 
 	// table index 90, flags 0x10000000010015
 	UPROPERTY()
-	uint8 bSkipWarmup : 1;
+	bool bSkipWarmup;
 
 	// table index 89, flags 0x10000000010015
 	UPROPERTY()
-	uint8 bSkipAircraft : 1;
+	bool bSkipAircraft;
 
 	// table index 88, flags 0x10000000010015
 	UPROPERTY()
@@ -362,15 +372,15 @@ public:
 
 	// table index 85, flags 0x10000000010015
 	UPROPERTY()
-	uint8 bUseCustomAircraftPathSelection : 1;
+	bool bUseCustomAircraftPathSelection;
 
 	// table index 84, flags 0x10000000010015
 	UPROPERTY()
-	uint8 bUseSameDirectionForOpposingAircraft : 1;
+	bool bUseSameDirectionForOpposingAircraft;
 
 	// table index 83, flags 0x10000000010015
 	UPROPERTY()
-	uint8 bAircraftDropOnlyWithinSafeZone : 1;
+	bool bAircraftDropOnlyWithinSafeZone;
 
 	// table index 82, flags 0x10000000010015
 	UPROPERTY()
@@ -402,7 +412,7 @@ public:
 
 	// table index 75, flags 0x10000000010015
 	UPROPERTY()
-	uint8 bDisableAudioShapes : 1;
+	bool bDisableAudioShapes;
 
 	// table index 74, flags 0x10000000010015
 	UPROPERTY()
@@ -414,7 +424,7 @@ public:
 
 	// table index 72, flags 0x10000000010015
 	UPROPERTY()
-	uint8 bForceLTMLoadingScreenBackground : 1;
+	bool bForceLTMLoadingScreenBackground;
 
 	// table index 71, flags 0x14000000010015
 	UPROPERTY()
@@ -438,19 +448,19 @@ public:
 
 	// table index 65, flags 0x10010000010015
 	UPROPERTY()
-	uint8 bLimitedTimeMode : 1;
+	bool bLimitedTimeMode;
 
 	// table index 64, flags 0x10010000000015
 	UPROPERTY()
-	uint8 bDisplayScoreInHUD : 1;
+	bool bDisplayScoreInHUD;
 
 	// table index 63, flags 0x10000000000015
 	UPROPERTY()
-	uint8 bDisplayRespawnWidget : 1;
+	bool bDisplayRespawnWidget;
 
 	// table index 62, flags 0x10000000000015
 	UPROPERTY()
-	uint8 bDisableMatchStatsDisplay : 1;
+	bool bDisableMatchStatsDisplay;
 
 	// table index 61, flags 0x10000000000015
 	UPROPERTY()
@@ -458,27 +468,27 @@ public:
 
 	// table index 60, flags 0x10000000010015
 	UPROPERTY()
-	uint8 bEnforceFullSquadInUI : 1;
+	bool bEnforceFullSquadInUI;
 
 	// table index 59, flags 0x10000000010015
 	UPROPERTY()
-	uint8 bShowEliminationIndicatorForSquadmates : 1;
+	bool bShowEliminationIndicatorForSquadmates;
 
 	// table index 58, flags 0x10000000010015
 	UPROPERTY()
-	uint8 bShowEliminationIndicatorForTeammates : 1;
+	bool bShowEliminationIndicatorForTeammates;
 
 	// table index 57, flags 0x10000000010015
 	UPROPERTY()
-	uint8 bShowEliminationIndicatorForEnemies : 1;
+	bool bShowEliminationIndicatorForEnemies;
 
 	// table index 56, flags 0x10000000010001
 	UPROPERTY()
-	uint8 bLeaderboardDisplaysIndividuals : 1;
+	bool bLeaderboardDisplaysIndividuals;
 
 	// table index 55, flags 0x10000000010001
 	UPROPERTY()
-	uint8 bUsePointLeaderAsTeamLeaderInLeaderboard : 1;
+	bool bUsePointLeaderAsTeamLeaderInLeaderboard;
 
 	// table index 53, flags 0x10000000010001
 	UPROPERTY()
@@ -518,7 +528,7 @@ public:
 
 	// table index 43, flags 0x10000000010015
 	UPROPERTY()
-	uint8 bDrawCreativeDynamicIslands : 1;
+	bool bDrawCreativeDynamicIslands;
 
 	// table index 42, flags 0x14000000010015
 	UPROPERTY()
@@ -530,7 +540,7 @@ public:
 
 	// table index 39, flags 0x10000000010005
 	UPROPERTY()
-	uint8 bWarmUpInStorm : 1;
+	bool bWarmUpInStorm;
 
 	// table index 38, flags 0x10000000010005
 	UPROPERTY()
@@ -538,11 +548,11 @@ public:
 
 	// table index 37, flags 0x10000000010005
 	UPROPERTY()
-	uint8 bDisplayFinalStormPosition : 1;
+	bool bDisplayFinalStormPosition;
 
 	// table index 36, flags 0x10000000010015
 	UPROPERTY()
-	uint8 bDrawLineToStormCircleIfOutside : 1;
+	bool bDrawLineToStormCircleIfOutside;
 
 	// table index 35, flags 0x10000000010015
 	UPROPERTY()
@@ -566,7 +576,7 @@ public:
 
 	// table index 30, flags 0x10000000010005
 	UPROPERTY()
-	uint8 bUseDefaultSupplyDrops : 1;
+	bool bUseDefaultSupplyDrops;
 
 	// table index 28, flags 0x10000000010005
 	UPROPERTY()
@@ -590,7 +600,7 @@ public:
 
 	// table index 20, flags 0x10000000010015
 	UPROPERTY()
-	uint8 bPlaylistUsesCustomCharacterParts : 1;
+	bool bPlaylistUsesCustomCharacterParts;
 
 	// table index 18, flags 0x14000000010005
 	UPROPERTY()
@@ -630,15 +640,15 @@ public:
 
 	// table index 9, flags 0x10000000010005
 	UPROPERTY()
-	uint8 bUsesAnimationSharing : 1;
+	bool bUsesAnimationSharing;
 
 	// table index 7, flags 0x10000000010015
 	UPROPERTY()
-	uint8 bAllowBroadcasting : 1;
+	bool bAllowBroadcasting;
 
 	// table index 6, flags 0x10000000010015
 	UPROPERTY()
-	uint8 bAllowSpectateAPartyMember : 1;
+	bool bAllowSpectateAPartyMember;
 
 	// table index 5, flags 0x20090000010005
 	UPROPERTY()
@@ -646,15 +656,15 @@ public:
 
 	// table index 4, flags 0x20090000010005
 	UPROPERTY()
-	uint8 bAccumulateToProfileStats : 1;
+	bool bAccumulateToProfileStats;
 
 	// table index 3, flags 0x20090000010005
 	UPROPERTY()
-	uint8 bSaveToRecentGameList : 1;
+	bool bSaveToRecentGameList;
 
 	// table index 2, flags 0x20090000010005
 	UPROPERTY()
-	uint8 bEnableStatsV2Stats : 1;
+	bool bEnableStatsV2Stats;
 
 	// table index 1, flags 0x20080000000015
 	UPROPERTY()

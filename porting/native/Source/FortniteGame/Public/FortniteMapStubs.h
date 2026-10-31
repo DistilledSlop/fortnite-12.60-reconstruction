@@ -354,14 +354,6 @@ class FORTNITEGAME_API UFortWaypointVolumeComponent : public UActorComponent
 // STUB: layout unknown, replace with generated class
 // Parent guessed: UObject. Naming convention; unverified.
 UCLASS()
-class FORTNITEGAME_API UFortWorldItemDefinition : public UObject
-{
-    GENERATED_BODY()
-};
-
-// STUB: layout unknown, replace with generated class
-// Parent guessed: UObject. Naming convention; unverified.
-UCLASS()
 class FORTNITEGAME_API UFrontEndSettings : public UObject
 {
     GENERATED_BODY()

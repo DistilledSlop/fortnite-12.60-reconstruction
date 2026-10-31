@@ -7,6 +7,8 @@
 #include "GameFramework/GameState.h"
 
 class APlayspace;
+class UPlayspaceGameStateComponent_PlayerSpawningManager;
+class UPlayspaceManagerComponent;
 
 #include "APlayspaceGameState.generated.h"
 
@@ -22,11 +24,19 @@ public:
 
 	// table index 3, flags 0x20080000014001
 	UPROPERTY(Config)
-	uint8 bUsePlayspaceSystem : 1;
+	bool bUsePlayspaceSystem;
 
 	// table index 2, flags 0x20080000014001
 	UPROPERTY(Config)
-	uint8 bUsePlayerSpawningComponent : 1;
+	bool bUsePlayerSpawningComponent;
+
+	// table index 1, flags 0x40000000082008
+	UPROPERTY(Transient)
+	UPlayspaceManagerComponent* PlayspaceManagerComponentCached;
+
+	// table index 0, flags 0x40000000082008
+	UPROPERTY(Transient)
+	UPlayspaceGameStateComponent_PlayerSpawningManager* PlayerSpawningManagerCached;
 
 };
 

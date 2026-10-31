@@ -17,6 +17,7 @@
 #include "GameFramework/OnlineReplStructs.h"
 
 class ADeployableBasePlot;
+class UFortDeployableBaseCloudSaveItemDefinition;
 class UFortDeployableBaseSkillTreeUnlocks;
 
 #include "AFortDeployableBaseManager.generated.h"
@@ -49,7 +50,7 @@ public:
 
 	// table index 23, flags 0x20080000020015
 	UPROPERTY()
-	uint8 bDeployableBasesReadOnly : 1;
+	bool bDeployableBasesReadOnly;
 
 	// table index 21, flags 0x20080000002020
 	UPROPERTY(Replicated, Transient)
@@ -70,6 +71,10 @@ public:
 	// table index 16, flags 0x20080010080000
 	UPROPERTY()
 	FOnLocalDeployablePlotInventoryChanged OnLocalDeployablePlotInventoryChangedEvent;
+
+	// table index 14, flags 0x40000000002000
+	UPROPERTY(Transient)
+	UFortDeployableBaseCloudSaveItemDefinition* DeployableBaseItemDefinition;
 
 	// table index 13, flags 0x44000000002000
 	UPROPERTY(Transient)

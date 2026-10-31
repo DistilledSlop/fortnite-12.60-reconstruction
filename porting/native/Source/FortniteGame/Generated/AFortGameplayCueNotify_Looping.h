@@ -53,23 +53,23 @@ public:
 
 	// table index 10, flags 0x10000000000015
 	UPROPERTY()
-	uint8 bStayAttached : 1;
+	bool bStayAttached;
 
 	// table index 9, flags 0x10000000000015
 	UPROPERTY()
-	uint8 bSnapToAttachPointAndPreserveWorldRotation : 1;
+	bool bSnapToAttachPointAndPreserveWorldRotation;
 
 	// table index 8, flags 0x10000000000015
 	UPROPERTY()
-	uint8 bUseHitResult : 1;
+	bool bUseHitResult;
 
 	// table index 7, flags 0x10000000000015
 	UPROPERTY()
-	uint8 bUseWeapon : 1;
+	bool bUseWeapon;
 
 	// table index 6, flags 0x10000000000015
 	UPROPERTY()
-	uint8 bIgnoreRotation : 1;
+	bool bIgnoreRotation;
 
 	// table index 5, flags 0x10000000000015
 	UPROPERTY()
@@ -81,7 +81,7 @@ public:
 
 	// table index 2, flags 0x40000000000000
 	UPROPERTY()
-	uint8 bIsValid : 1;
+	bool bIsValid;
 
 	// table index 1, flags 0x400000000a001d
 	UPROPERTY()

@@ -8,9 +8,11 @@
 
 #include "EFortPickupSourceTypeFlag.h"
 #include "EFortPickupSpawnSource.h"
+#include "FFortItemEntry.h"
 #include "FFortPickupLocationData.h"
 #include "FPickupOnCombined.h"
 #include "FPickupOnDespawn.h"
+#include "FPickupOnPickup.h"
 #include "Misc/Guid.h"
 
 class AFortPawn;
@@ -35,27 +37,35 @@ class FORTNITEGAME_API AFortPickup : public AActor
 public:
 	// table index 50, flags 0x10000000010015
 	UPROPERTY()
-	uint8 bUsePickupWidget : 1;
+	bool bUsePickupWidget;
 
 	// table index 49, flags 0x10000000010015
 	UPROPERTY()
-	uint8 bSuppressInteractionWidget : 1;
+	bool bSuppressInteractionWidget;
 
 	// table index 48, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bWeaponsCanBeAutoPickups : 1;
+	bool bWeaponsCanBeAutoPickups;
 
 	// table index 47, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bAutoUpgradeWeapons : 1;
+	bool bAutoUpgradeWeapons;
 
 	// table index 46, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bDoServerHandlePickupTrace : 1;
+	bool bDoServerHandlePickupTrace;
 
 	// table index 45, flags 0x10000000004000
 	UPROPERTY(Config)
 	float SimulatingTooLongLength;
+
+	// table index 44, flags 0x10000010080000
+	UPROPERTY()
+	FPickupOnPickup OnPickup;
+
+	// table index 43, flags 0x10000010080000
+	UPROPERTY()
+	FPickupOnPickup OnPickupAttempted;
 
 	// table index 42, flags 0x10000010080000
 	UPROPERTY()
@@ -71,7 +81,15 @@ public:
 
 	// table index 39, flags 0x10000000002034
 	UPROPERTY(Replicated, Transient)
-	uint8 bRandomRotation : 1;
+	bool bRandomRotation;
+
+	// table index 38, flags 0x20080100002020
+	UPROPERTY(ReplicatedUsing=OnRep_PrimaryPickupItemEntry, Transient)
+	FFortItemEntry PrimaryPickupItemEntry;
+
+	// table index 36, flags 0x20080000002020
+	UPROPERTY(Replicated, Transient)
+	TArray<FFortItemEntry> MultiItemPickupEntries;
 
 	// table index 35, flags 0x20080100002020
 	UPROPERTY(ReplicatedUsing=OnRep_PickupLocationData, Transient)
@@ -119,31 +137,31 @@ public:
 
 	// table index 22, flags 0x20080100002020
 	UPROPERTY(ReplicatedUsing=OnRep_bPickedUp, Transient)
-	uint8 bPickedUp : 1;
+	bool bPickedUp;
 
 	// table index 21, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bSplitOnPickup : 1;
+	bool bSplitOnPickup;
 
 	// table index 20, flags 0x20080100002020
 	UPROPERTY(ReplicatedUsing=OnRep_TossedFromContainer, Transient)
-	uint8 bTossedFromContainer : 1;
+	bool bTossedFromContainer;
 
 	// table index 19, flags 0x20080100002020
 	UPROPERTY(ReplicatedUsing=OnRep_ForceHideMinimapIndicator, Transient)
-	uint8 bForceHideMinimapIndicator : 1;
+	bool bForceHideMinimapIndicator;
 
 	// table index 18, flags 0x20080000002020
 	UPROPERTY(Replicated, Transient)
-	uint8 bCombinePickupsWhenTossCompletes : 1;
+	bool bCombinePickupsWhenTossCompletes;
 
 	// table index 17, flags 0x20080100002020
 	UPROPERTY(ReplicatedUsing=OnRep_ServerStoppedSimulation, Transient)
-	uint8 bServerStoppedSimulation : 1;
+	bool bServerStoppedSimulation;
 
 	// table index 16, flags 0x20080000010015
 	UPROPERTY()
-	uint8 bClientUseInterpolationOnly : 1;
+	bool bClientUseInterpolationOnly;
 
 	// table index 15, flags 0x20080100002020
 	UPROPERTY(ReplicatedUsing=OnRep_ServerImpactSoundFlash, Transient)
@@ -167,7 +185,7 @@ public:
 
 	// table index 10, flags 0x20080000010001
 	UPROPERTY()
-	uint8 bForceDefaultFlyTime : 1;
+	bool bForceDefaultFlyTime;
 
 	// table index 9, flags 0x20080000082008
 	UPROPERTY(Transient)
@@ -220,6 +238,9 @@ public:
 
 	UFUNCTION()
 	void OnRep_PickupOwnerData();
+
+	UFUNCTION()
+	void OnRep_PrimaryPickupItemEntry();
 
 	UFUNCTION()
 	void OnRep_ServerImpactSoundFlash();

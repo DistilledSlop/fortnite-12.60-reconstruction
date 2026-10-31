@@ -20,7 +20,7 @@ class FORTNITEGAME_API AFortLobbyBeaconState : public ALobbyBeaconState
 public:
 	// table index 6, flags 0x10000000002000
 	UPROPERTY(Transient)
-	uint8 bIsLobbyTimerPaused : 1;
+	bool bIsLobbyTimerPaused;
 
 	// table index 5, flags 0x20080000000020
 	UPROPERTY(Replicated)
@@ -40,7 +40,7 @@ public:
 
 	// table index 0, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bWorldRecordLoaded : 1;
+	bool bWorldRecordLoaded;
 
 	UFUNCTION()
 	void OnRep_MissionGeneratorClassPath();

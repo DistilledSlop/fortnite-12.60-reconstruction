@@ -30,7 +30,7 @@ public:
 
 	// table index 0, flags 0x20080100000020
 	UPROPERTY(ReplicatedUsing=OnRep_bCapturePointEnabled)
-	uint8 bCapturePointEnabled : 1;
+	bool bCapturePointEnabled;
 
 	UFUNCTION(NetMulticast, Reliable)
 	void MulticastIntelCaptured();

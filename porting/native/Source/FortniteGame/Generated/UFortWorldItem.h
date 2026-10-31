@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortItem.h"
 
+#include "FFortItemEntry.h"
+
 class AFortInventory;
 
 #include "UFortWorldItem.generated.h"
@@ -18,19 +20,23 @@ class FORTNITEGAME_API UFortWorldItem : public UFortItem
 public:
 	// table index 5, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bIsTemporaryItem : 1;
+	bool bIsTemporaryItem;
 
 	// table index 4, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bNeedsPersistentUpdate : 1;
+	bool bNeedsPersistentUpdate;
 
 	// table index 3, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bPendingPersistentDelete : 1;
+	bool bPendingPersistentDelete;
 
 	// table index 2, flags 0x20080000000000
 	UPROPERTY()
 	AFortInventory* OwnerInventory;
+
+	// table index 1, flags 0x20080000000000
+	UPROPERTY()
+	FFortItemEntry ItemEntry;
 
 	// table index 0, flags 0x40000000000000
 	UPROPERTY()

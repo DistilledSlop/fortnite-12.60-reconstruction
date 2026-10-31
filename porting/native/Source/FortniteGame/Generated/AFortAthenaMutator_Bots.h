@@ -29,7 +29,7 @@ public:
 
 	// table index 15, flags 0x40000000010001
 	UPROPERTY()
-	uint8 bBotHostileToHumanPlayersOnly : 1;
+	bool bBotHostileToHumanPlayersOnly;
 
 	// table index 14, flags 0x40000000002000
 	UPROPERTY(Transient)
@@ -57,7 +57,7 @@ public:
 
 	// table index 5, flags 0x40000000010001
 	UPROPERTY()
-	uint8 bSpawnInAir : 1;
+	bool bSpawnInAir;
 
 	// table index 4, flags 0x40000000010001
 	UPROPERTY()

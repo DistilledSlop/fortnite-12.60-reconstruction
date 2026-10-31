@@ -28,7 +28,7 @@ struct FFortPossibleMission
 
 	// table index 0, offset None, flags 0x10000000010001
 	UPROPERTY()
-	uint8 bIsPrototype : 1;
+	bool bIsPrototype;
 
 };
 

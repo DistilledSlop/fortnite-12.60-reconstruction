@@ -30,19 +30,19 @@ public:
 
 	// table index 3, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bEnabled : 1;
+	bool bEnabled;
 
 	// table index 2, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bEnableCsvProfile : 1;
+	bool bEnableCsvProfile;
 
 	// table index 1, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bUploadAllCsvs : 1;
+	bool bUploadAllCsvs;
 
 	// table index 0, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bAllowForcedPerformanceReport : 1;
+	bool bAllowForcedPerformanceReport;
 
 };
 

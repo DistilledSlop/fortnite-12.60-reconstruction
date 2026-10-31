@@ -15,19 +15,19 @@ struct FFireModeData
 
 	// table index 5, offset None, flags 0x40000000000014
 	UPROPERTY()
-	uint8 bAutoFireIsEnabled : 1;
+	bool bAutoFireIsEnabled;
 
 	// table index 4, offset None, flags 0x40000000000014
 	UPROPERTY()
-	uint8 b3DTouchEnabled : 1;
+	bool b3DTouchEnabled;
 
 	// table index 3, offset None, flags 0x40000000000014
 	UPROPERTY()
-	uint8 bTapToShootEnabled : 1;
+	bool bTapToShootEnabled;
 
 	// table index 2, offset None, flags 0x40000000000014
 	UPROPERTY()
-	uint8 bAlwaysShowDedicatedButton : 1;
+	bool bAlwaysShowDedicatedButton;
 
 	// table index 0, offset 4, flags 0x40000000000014
 	UPROPERTY()

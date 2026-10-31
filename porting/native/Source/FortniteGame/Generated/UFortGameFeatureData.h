@@ -7,6 +7,7 @@
 #include "Engine/DataAsset.h"
 
 #include "Engine/AssetManagerTypes.h"
+#include "FFortGameFeatureComponentEntry.h"
 #include "FFortGameFeatureLootTableData.h"
 #include "GameplayTagContainer.h"
 
@@ -46,6 +47,10 @@ public:
 	// table index 4, flags 0x10000000000001
 	UPROPERTY()
 	TMap<FGameplayTag, FFortGameFeatureLootTableData> PlaylistOverrideLootTableData;
+
+	// table index 2, flags 0x20080000000001
+	UPROPERTY()
+	TArray<FFortGameFeatureComponentEntry> ComponentList;
 
 	// table index 1, flags 0x20080000000001
 	UPROPERTY()

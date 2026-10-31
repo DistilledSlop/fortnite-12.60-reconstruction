@@ -36,7 +36,7 @@ public:
 
 	// table index 6, flags 0x40000000000000
 	UPROPERTY()
-	uint8 reward_graph_purchased : 1;
+	bool reward_graph_purchased;
 
 	// table index 4, flags 0x40000000000000
 	UPROPERTY()

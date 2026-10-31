@@ -38,15 +38,15 @@ public:
 
 	// table index 4, flags 0x10000000010005
 	UPROPERTY()
-	uint8 bIsCinematicVictory : 1;
+	bool bIsCinematicVictory;
 
 	// table index 3, flags 0x10000000010005
 	UPROPERTY()
-	uint8 bShouldPushEmoteInput : 1;
+	bool bShouldPushEmoteInput;
 
 	// table index 2, flags 0x10000000010005
 	UPROPERTY()
-	uint8 bShouldPlayOnLoss : 1;
+	bool bShouldPlayOnLoss;
 
 	// table index 1, flags 0x10000000010005
 	UPROPERTY()

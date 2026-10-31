@@ -60,19 +60,19 @@ public:
 
 	// table index 9, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bBuildingPickerOnlyChoosesCategories : 1;
+	bool bBuildingPickerOnlyChoosesCategories;
 
 	// table index 8, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bWeaponPickerShowOnlySlottedItems : 1;
+	bool bWeaponPickerShowOnlySlottedItems;
 
 	// table index 7, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bTrapPickerUsesRadial : 1;
+	bool bTrapPickerUsesRadial;
 
 	// table index 6, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bRadialClosesOnRelease : 1;
+	bool bRadialClosesOnRelease;
 
 	// table index 5, flags 0x10000000004000
 	UPROPERTY(Config)
@@ -80,23 +80,23 @@ public:
 
 	// table index 4, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bWeaponSlotsAreSharedWhenUsingGamepad : 1;
+	bool bWeaponSlotsAreSharedWhenUsingGamepad;
 
 	// table index 3, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bEditModeUsableFromCombatMode : 1;
+	bool bEditModeUsableFromCombatMode;
 
 	// table index 2, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bOnlyShowNextPrevBuildingSlotKeybinds : 1;
+	bool bOnlyShowNextPrevBuildingSlotKeybinds;
 
 	// table index 1, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bEnabledForCampaign : 1;
+	bool bEnabledForCampaign;
 
 	// table index 0, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bEnabledForAthena : 1;
+	bool bEnabledForAthena;
 
 };
 

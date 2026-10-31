@@ -21,11 +21,11 @@ struct FCharmSlotMetadata
 
 	// table index 5, offset None, flags 0x10000000000001
 	UPROPERTY()
-	uint8 WeaponCharm : 1;
+	bool WeaponCharm;
 
 	// table index 4, offset None, flags 0x10000000000001
 	UPROPERTY()
-	uint8 BackPresentedCharm : 1;
+	bool BackPresentedCharm;
 
 	// table index 3, offset 4, flags 0x10000000000001
 	UPROPERTY()

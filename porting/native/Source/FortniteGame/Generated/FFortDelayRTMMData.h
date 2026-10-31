@@ -14,7 +14,7 @@ struct FFortDelayRTMMData
 
 	// table index 2, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bDelayRTTM : 1;
+	bool bDelayRTTM;
 
 	// table index 1, offset 4, flags 0x10000000000000
 	UPROPERTY()

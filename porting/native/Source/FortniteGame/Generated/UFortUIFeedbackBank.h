@@ -23,7 +23,7 @@ public:
 
 	// table index 3, flags 0x40000000000001
 	UPROPERTY()
-	uint8 bIsAthenaData : 1;
+	bool bIsAthenaData;
 
 	// table index 0, flags 0x40000000000001
 	UPROPERTY()

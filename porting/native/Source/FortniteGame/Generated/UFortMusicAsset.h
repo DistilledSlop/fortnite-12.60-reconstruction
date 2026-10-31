@@ -31,7 +31,7 @@ public:
 
 	// table index 0, flags 0x10000000010001
 	UPROPERTY()
-	uint8 bIsStinger : 1;
+	bool bIsStinger;
 
 };
 

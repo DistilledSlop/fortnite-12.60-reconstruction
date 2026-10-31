@@ -2,6 +2,11 @@
 #include "AFortPlayerParachute.h"
 #include "Net/UnrealNetwork.h"
 
+void AFortPlayerParachute::OnRep_ParachuteItemDef()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPlayerParachute::OnRep_PlayerPawn()
 {
 	// Body not recovered: reflection-derived stub.
@@ -11,6 +16,7 @@ void AFortPlayerParachute::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>&
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
+	DOREPLIFETIME(AFortPlayerParachute, ParachuteItemDef);
 	DOREPLIFETIME(AFortPlayerParachute, PlayerPawn);
 }
 

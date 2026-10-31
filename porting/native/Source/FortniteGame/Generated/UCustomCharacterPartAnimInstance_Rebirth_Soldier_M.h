@@ -56,7 +56,7 @@ public:
 
 	// table index 0, flags 0x10000000000005
 	UPROPERTY()
-	uint8 bIsWearingBackbling : 1;
+	bool bIsWearingBackbling;
 
 };
 

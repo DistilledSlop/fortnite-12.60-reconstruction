@@ -18,7 +18,7 @@ class FORTNITEGAME_API UFortMatchmakingPolicy : public UObject
 public:
 	// table index 4, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bMatchmakingInProgress : 1;
+	bool bMatchmakingInProgress;
 
 	// table index 3, flags 0x20080000002000
 	UPROPERTY(Transient)

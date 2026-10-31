@@ -43,15 +43,15 @@ public:
 
 	// table index 18, flags 0x40000000000020
 	UPROPERTY(Replicated)
-	uint8 bRunNewVersion : 1;
+	bool bRunNewVersion;
 
 	// table index 17, flags 0x40000000000020
 	UPROPERTY(Replicated)
-	uint8 bHeatmapEnabled : 1;
+	bool bHeatmapEnabled;
 
 	// table index 16, flags 0x40000000002000
 	UPROPERTY(Transient)
-	uint8 bHeatmapIsDirty : 1;
+	bool bHeatmapIsDirty;
 
 	// table index 15, flags 0x40000000000020
 	UPROPERTY(Replicated)
@@ -59,7 +59,7 @@ public:
 
 	// table index 14, flags 0x40000000000020
 	UPROPERTY(Replicated)
-	uint8 bUseHeatmapHighPrecision : 1;
+	bool bUseHeatmapHighPrecision;
 
 	// table index 12, flags 0x40000100000020
 	UPROPERTY(ReplicatedUsing=On_RepObjectTrackingHeatmap)

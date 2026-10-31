@@ -61,7 +61,7 @@ public:
 
 	// table index 0, flags 0x40000000002000
 	UPROPERTY(Transient)
-	uint8 bIsAimingDownSights : 1;
+	bool bIsAimingDownSights;
 
 	UFUNCTION(Server, Reliable)
 	void ServerAddMapMarker(const FFortClientMarkerRequest& MarkerRequest);

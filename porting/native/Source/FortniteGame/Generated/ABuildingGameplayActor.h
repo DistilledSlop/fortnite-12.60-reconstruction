@@ -45,7 +45,7 @@ public:
 
 	// table index 13, flags 0x10000000010015
 	UPROPERTY()
-	uint8 bAllowRidingOnActor : 1;
+	bool bAllowRidingOnActor;
 
 	// table index 12, flags 0x10000010080000
 	UPROPERTY()
@@ -69,11 +69,11 @@ public:
 
 	// table index 7, flags 0x20080000010015
 	UPROPERTY()
-	uint8 bIgnoreInstigatorCollision : 1;
+	bool bIgnoreInstigatorCollision;
 
 	// table index 6, flags 0x20080000000005
 	UPROPERTY()
-	uint8 bAddOwnerVelocity : 1;
+	bool bAddOwnerVelocity;
 
 	// table index 5, flags 0x20080000010015
 	UPROPERTY()

@@ -22,7 +22,7 @@ class FORTNITEGAME_API AFortMission_RiftSpawners : public AFortMission
 public:
 	// table index 24, flags 0x40000000010001
 	UPROPERTY()
-	uint8 bStartBasedOnAthenaGamePhases : 1;
+	bool bStartBasedOnAthenaGamePhases;
 
 	// table index 22, flags 0x40000000010001
 	UPROPERTY()
@@ -34,11 +34,11 @@ public:
 
 	// table index 20, flags 0x40000000010001
 	UPROPERTY()
-	uint8 bUseAthenaSafeZonePhases : 1;
+	bool bUseAthenaSafeZonePhases;
 
 	// table index 19, flags 0x40000000010001
 	UPROPERTY()
-	uint8 bSynchronizeEncounterStartTimes : 1;
+	bool bSynchronizeEncounterStartTimes;
 
 	// table index 18, flags 0x40000000010001
 	UPROPERTY()
@@ -54,7 +54,7 @@ public:
 
 	// table index 15, flags 0x40000000010001
 	UPROPERTY()
-	uint8 bAllowRiftIntensification : 1;
+	bool bAllowRiftIntensification;
 
 	// table index 14, flags 0x40000000010001
 	UPROPERTY()
@@ -98,7 +98,7 @@ public:
 
 	// table index 2, flags 0x40000000002000
 	UPROPERTY(Transient)
-	uint8 bRiftSpawningInProgress : 1;
+	bool bRiftSpawningInProgress;
 
 	// table index 1, flags 0x40000000002000
 	UPROPERTY(Transient)
@@ -106,7 +106,7 @@ public:
 
 	// table index 0, flags 0x40000000002000
 	UPROPERTY(Transient)
-	uint8 bCalendarAllowsSpawning : 1;
+	bool bCalendarAllowsSpawning;
 
 };
 

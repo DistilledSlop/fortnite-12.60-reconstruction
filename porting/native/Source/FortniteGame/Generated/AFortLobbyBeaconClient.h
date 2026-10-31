@@ -10,6 +10,8 @@
 #include "FPlayerBannerInfo.h"
 #include "GameFramework/OnlineReplStructs.h"
 
+class UFortHeroType;
+
 #include "AFortLobbyBeaconClient.generated.h"
 
 UCLASS(config=Engine, abstract, transient)
@@ -49,6 +51,10 @@ public:
 	UFUNCTION(Server, Reliable)
 	void ServerSetHeroId(const FString& InHeroId, const FUniqueNetIdRepl& InUniqueId);
 	void ServerSetHeroId_Implementation(const FString& InHeroId, const FUniqueNetIdRepl& InUniqueId);
+
+	UFUNCTION(Server, Reliable)
+	void ServerSetHeroType(UFortHeroType* InHeroType, const FUniqueNetIdRepl& InUniqueId);
+	void ServerSetHeroType_Implementation(UFortHeroType* InHeroType, const FUniqueNetIdRepl& InUniqueId);
 
 	UFUNCTION(Server, Reliable)
 	void ServerSetMatchmakingLevel(int32 MatchmakingLevel, const FUniqueNetIdRepl& InUniqueId);

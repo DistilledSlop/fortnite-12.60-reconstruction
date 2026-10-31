@@ -30,39 +30,39 @@ public:
 
 	// table index 29, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bForwardSpeedIsNearlyZero : 1;
+	bool bForwardSpeedIsNearlyZero;
 
 	// table index 28, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bForwardSpeedIsGreaterThanOne : 1;
+	bool bForwardSpeedIsGreaterThanOne;
 
 	// table index 27, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bReverseSpeedIsGreaterThanOne : 1;
+	bool bReverseSpeedIsGreaterThanOne;
 
 	// table index 26, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bSpeedIsGreaterThanFiveAndPlayerHitSpace : 1;
+	bool bSpeedIsGreaterThanFiveAndPlayerHitSpace;
 
 	// table index 25, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bIsBraking : 1;
+	bool bIsBraking;
 
 	// table index 24, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bIsBoosting : 1;
+	bool bIsBoosting;
 
 	// table index 23, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bIsBoostReady : 1;
+	bool bIsBoostReady;
 
 	// table index 22, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bPlayerHitSpaceBar : 1;
+	bool bPlayerHitSpaceBar;
 
 	// table index 21, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bOnGround : 1;
+	bool bOnGround;
 
 	// table index 20, flags 0x10000000002014
 	UPROPERTY(Transient)
@@ -114,11 +114,11 @@ public:
 
 	// table index 7, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bFerretShouldPlayStartTransition : 1;
+	bool bFerretShouldPlayStartTransition;
 
 	// table index 6, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bFerretShouldPlayStopTransition : 1;
+	bool bFerretShouldPlayStopTransition;
 
 	// table index 4, flags 0x10000000002014
 	UPROPERTY(Transient)
@@ -130,7 +130,7 @@ public:
 
 	// table index 1, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bFerretShouldPlayPivotTransition : 1;
+	bool bFerretShouldPlayPivotTransition;
 
 	// table index 0, flags 0x10000000002014
 	UPROPERTY(Transient)

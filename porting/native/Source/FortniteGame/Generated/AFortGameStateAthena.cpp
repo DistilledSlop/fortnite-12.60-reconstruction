@@ -17,6 +17,11 @@ void AFortGameStateAthena::OnRep_BroadcastSpectatorInfo()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortGameStateAthena::OnRep_CosmeticUsage()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortGameStateAthena::OnRep_CurrentHighScore()
 {
 	// Body not recovered: reflection-derived stub.
@@ -194,6 +199,7 @@ void AFortGameStateAthena::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>&
 	DOREPLIFETIME(AFortGameStateAthena, ReticulatedSplineIds);
 	DOREPLIFETIME(AFortGameStateAthena, ReticulatedSplineDefinitions);
 	DOREPLIFETIME(AFortGameStateAthena, bEnvironmentDamageBlocked);
+	DOREPLIFETIME(AFortGameStateAthena, CosmeticUsageReport);
 	DOREPLIFETIME(AFortGameStateAthena, GoldenPoiLocationTags);
 	DOREPLIFETIME(AFortGameStateAthena, LocalizationService);
 	DOREPLIFETIME(AFortGameStateAthena, VolumeManager);
@@ -244,6 +250,7 @@ void AFortGameStateAthena::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>&
 	DOREPLIFETIME(AFortGameStateAthena, FlightPathMidLine);
 	DOREPLIFETIME(AFortGameStateAthena, TeamFlightPaths);
 	DOREPLIFETIME(AFortGameStateAthena, bAllowUserPickedCosmeticBattleBus);
+	DOREPLIFETIME(AFortGameStateAthena, DefaultBattleBus);
 	DOREPLIFETIME(AFortGameStateAthena, ServerToClientPreloadList);
 	DOREPLIFETIME(AFortGameStateAthena, WinningTeamsCN);
 	DOREPLIFETIME(AFortGameStateAthena, TeamsLeft);

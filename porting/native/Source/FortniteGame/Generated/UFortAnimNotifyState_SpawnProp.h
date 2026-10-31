@@ -13,6 +13,7 @@
 class AActor;
 class UAnimInstance;
 class UAnimationAsset;
+class UAthenaCosmeticItemDefinition;
 class UMeshComponent;
 class USkeletalMesh;
 class UStaticMesh;
@@ -59,19 +60,19 @@ public:
 
 	// table index 14, flags 0x10000000000011
 	UPROPERTY()
-	uint8 bInheritScale : 1;
+	bool bInheritScale;
 
 	// table index 13, flags 0x10000000000011
 	UPROPERTY()
-	uint8 bAbsoluteScale : 1;
+	bool bAbsoluteScale;
 
 	// table index 12, flags 0x10000000000011
 	UPROPERTY()
-	uint8 bPropAnimLooping : 1;
+	bool bPropAnimLooping;
 
 	// table index 11, flags 0x10000000000011
 	UPROPERTY()
-	uint8 bPrestreamTextures : 1;
+	bool bPrestreamTextures;
 
 	// table index 10, flags 0x10000000000011
 	UPROPERTY()
@@ -89,13 +90,17 @@ public:
 	UPROPERTY()
 	int32 PropId;
 
+	// table index 5, flags 0x14000000000011
+	UPROPERTY()
+	TSoftObjectPtr<UAthenaCosmeticItemDefinition> VariantsCosmeticItemDef;
+
 	// table index 4, flags 0x10000000000011
 	UPROPERTY()
-	uint8 bApplyVariantsToSpawnedItems : 1;
+	bool bApplyVariantsToSpawnedItems;
 
 	// table index 3, flags 0x10000000000011
 	UPROPERTY()
-	uint8 bTrackComponentPropInGC : 1;
+	bool bTrackComponentPropInGC;
 
 	// table index 0, flags 0x40008000000018
 	UPROPERTY()

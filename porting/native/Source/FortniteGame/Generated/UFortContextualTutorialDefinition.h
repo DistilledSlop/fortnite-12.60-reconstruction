@@ -74,23 +74,23 @@ public:
 
 	// table index 13, flags 0x40000000004001
 	UPROPERTY(Config)
-	uint8 bCanBeShownInCombat : 1;
+	bool bCanBeShownInCombat;
 
 	// table index 12, flags 0x40000000004001
 	UPROPERTY(Config)
-	uint8 bIsCompletionSilent : 1;
+	bool bIsCompletionSilent;
 
 	// table index 11, flags 0x40000000004001
 	UPROPERTY(Config)
-	uint8 bAlwaysSendSuccess : 1;
+	bool bAlwaysSendSuccess;
 
 	// table index 10, flags 0x40000000004001
 	UPROPERTY(Config)
-	uint8 bCanSetMessagingSystemOnCooldown : 1;
+	bool bCanSetMessagingSystemOnCooldown;
 
 	// table index 9, flags 0x40000000004001
 	UPROPERTY(Config)
-	uint8 bCanBeShownWhileDBNO : 1;
+	bool bCanBeShownWhileDBNO;
 
 	// table index 7, flags 0x40000000004001
 	UPROPERTY(Config)
@@ -106,15 +106,15 @@ public:
 
 	// table index 2, flags 0x40000000004001
 	UPROPERTY(Config)
-	uint8 bRequireSquad : 1;
+	bool bRequireSquad;
 
 	// table index 1, flags 0x40000000004001
 	UPROPERTY(Config)
-	uint8 bRequireSolo : 1;
+	bool bRequireSolo;
 
 	// table index 0, flags 0x40000000004001
 	UPROPERTY(Config)
-	uint8 bIsEnabled : 1;
+	bool bIsEnabled;
 
 };
 

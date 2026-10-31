@@ -36,11 +36,11 @@ public:
 
 	// table index 12, flags 0x11000000000015
 	UPROPERTY()
-	uint8 bRetrigger : 1;
+	bool bRetrigger;
 
 	// table index 11, flags 0x11000000000015
 	UPROPERTY()
-	uint8 bDestroyOnAllClientsStopped : 1;
+	bool bDestroyOnAllClientsStopped;
 
 	// table index 9, flags 0x10000000000015
 	UPROPERTY()
@@ -52,7 +52,7 @@ public:
 
 	// table index 7, flags 0x11000000000035
 	UPROPERTY(Replicated)
-	uint8 bInterrupt : 1;
+	bool bInterrupt;
 
 	// table index 5, flags 0x10000000000014
 	UPROPERTY()

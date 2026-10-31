@@ -45,7 +45,7 @@ public:
 
 	// table index 76, flags 0x20080000004000
 	UPROPERTY(Config)
-	uint8 bAllowAutomaticWeaponCatchup : 1;
+	bool bAllowAutomaticWeaponCatchup;
 
 	// table index 75, flags 0x20080000002000
 	UPROPERTY(Transient)
@@ -209,7 +209,7 @@ public:
 
 	// table index 32, flags 0x20080000000005
 	UPROPERTY()
-	uint8 ScopePostProcessEnabled : 1;
+	bool ScopePostProcessEnabled;
 
 	// table index 31, flags 0x20080000000005
 	UPROPERTY()
@@ -281,7 +281,7 @@ public:
 
 	// table index 11, flags 0x20080000000001
 	UPROPERTY()
-	uint8 bEnableRecoilDelay : 1;
+	bool bEnableRecoilDelay;
 
 	// table index 10, flags 0x10000010080000
 	UPROPERTY()
@@ -301,7 +301,7 @@ public:
 
 	// table index 5, flags 0x20080000000001
 	UPROPERTY()
-	uint8 bCooldownWhileOverheated : 1;
+	bool bCooldownWhileOverheated;
 
 	// table index 4, flags 0x20080000000000
 	UPROPERTY()
@@ -317,7 +317,7 @@ public:
 
 	// table index 1, flags 0x20080000000001
 	UPROPERTY()
-	uint8 bCacheAimPointOnFire : 1;
+	bool bCacheAimPointOnFire;
 
 	// table index 0, flags 0x20080000000001
 	UPROPERTY()

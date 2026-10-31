@@ -9,11 +9,13 @@
 #include "EItemWrapMaterialType.h"
 #include "EWrapPreviewGridLockerMode.h"
 #include "Engine/EngineTypes.h"
+#include "FMcpVariantChannelInfo.h"
 #include "Math/Rotator.h"
 #include "Math/Vector.h"
 #include "Math/Vector2D.h"
 
 class AActor;
+class UAthenaItemWrapDefinition;
 class USkeletalMesh;
 class UTexture2D;
 
@@ -25,6 +27,10 @@ class FORTNITEGAME_API AWrapPreviewGridActor : public AInfo
 	GENERATED_BODY()
 
 public:
+	// table index 35, flags 0x40000000000001
+	UPROPERTY()
+	UAthenaItemWrapDefinition* WrapToApply;
+
 	// table index 33, flags 0x40000000000001
 	UPROPERTY()
 	EItemWrapMaterialType MaterialTypeForRawMeshes;
@@ -55,31 +61,31 @@ public:
 
 	// table index 26, flags 0x20080000000001
 	UPROPERTY()
-	uint8 bScanForWeapons : 1;
+	bool bScanForWeapons;
 
 	// table index 25, flags 0x20080000000001
 	UPROPERTY()
-	uint8 bShowRangedWeapons : 1;
+	bool bShowRangedWeapons;
 
 	// table index 24, flags 0x20080000000001
 	UPROPERTY()
-	uint8 bShowMeleeWeapons : 1;
+	bool bShowMeleeWeapons;
 
 	// table index 23, flags 0x20080000000001
 	UPROPERTY()
-	uint8 bExcludePrototypeRangedWeapons : 1;
+	bool bExcludePrototypeRangedWeapons;
 
 	// table index 22, flags 0x20080000000001
 	UPROPERTY()
-	uint8 bFilterOutRarityDupesForRangedWeapons : 1;
+	bool bFilterOutRarityDupesForRangedWeapons;
 
 	// table index 21, flags 0x20080000000001
 	UPROPERTY()
-	uint8 bFilterOutTierDupesForWeapons : 1;
+	bool bFilterOutTierDupesForWeapons;
 
 	// table index 20, flags 0x20080000000001
 	UPROPERTY()
-	uint8 bFilterOutCraftingMaterialDupesForWeapons : 1;
+	bool bFilterOutCraftingMaterialDupesForWeapons;
 
 	// table index 18, flags 0x20080000000001
 	UPROPERTY()
@@ -87,15 +93,15 @@ public:
 
 	// table index 17, flags 0x20080000000001
 	UPROPERTY()
-	uint8 bShowOnlyItemsThatDontHaveWrapLockerSlot : 1;
+	bool bShowOnlyItemsThatDontHaveWrapLockerSlot;
 
 	// table index 16, flags 0x20080000000001
 	UPROPERTY()
-	uint8 bShowWrapMatchIcon : 1;
+	bool bShowWrapMatchIcon;
 
 	// table index 15, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bHasSectionLimit : 1;
+	bool bHasSectionLimit;
 
 	// table index 14, flags 0x20080000000001
 	UPROPERTY()
@@ -131,7 +137,11 @@ public:
 
 	// table index 2, flags 0x20080000000001
 	UPROPERTY()
-	uint8 bStatusIconScreenSizeScaled : 1;
+	bool bStatusIconScreenSizeScaled;
+
+	// table index 0, flags 0x20080000000001
+	UPROPERTY()
+	TArray<FMcpVariantChannelInfo> VariantData;
 
 };
 

@@ -10,6 +10,7 @@
 
 class AFortPlayerController;
 class UFortAmbientOneShotInstance;
+class UFortPOIAmbientAudioBank;
 
 #include "UFortAmbientAudioController.generated.h"
 
@@ -19,6 +20,10 @@ class FORTNITEGAME_API UFortAmbientAudioController : public UActorComponent
 	GENERATED_BODY()
 
 public:
+	// table index 13, flags 0x10000000010001
+	UPROPERTY()
+	UFortPOIAmbientAudioBank* DefaultAudioBank;
+
 	// table index 12, flags 0x10000000010001
 	UPROPERTY()
 	FGameplayTag RequiredTagSubstr;
@@ -35,9 +40,17 @@ public:
 	UPROPERTY()
 	TArray<UFortAmbientOneShotInstance*> CurrentOneShots;
 
+	// table index 5, flags 0x40000000002000
+	UPROPERTY(Transient)
+	TMap<FName, UFortPOIAmbientAudioBank*> BankMap;
+
 	// table index 1, flags 0x40000000002000
 	UPROPERTY(Transient)
 	FName OverrideName;
+
+	// table index 0, flags 0x40000000002000
+	UPROPERTY(Transient)
+	UFortPOIAmbientAudioBank* GlobalOverride;
 
 };
 

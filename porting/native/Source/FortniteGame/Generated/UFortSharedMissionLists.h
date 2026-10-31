@@ -9,6 +9,8 @@
 #include "FFortGlobalMission.h"
 #include "FFortMissionDistributionCategory.h"
 #include "FFortNonPrimaryMission.h"
+#include "FFortQuestDrivenMission.h"
+#include "FQuestDrivenMissionSubList.h"
 #include "GameplayTagContainer.h"
 
 class AFortPlayerController;
@@ -58,6 +60,14 @@ public:
 	// table index 8, flags 0x20080000000015
 	UPROPERTY()
 	TArray<FFortGlobalMission> SharedMissionList;
+
+	// table index 6, flags 0x20080000000001
+	UPROPERTY()
+	TArray<FQuestDrivenMissionSubList> QuestDrivenMissionLists;
+
+	// table index 4, flags 0x40000000002000
+	UPROPERTY(Transient)
+	TArray<FFortQuestDrivenMission> AvailableQuestDrivenMissionList;
 
 	// table index 2, flags 0x40000000002000
 	UPROPERTY(Transient)

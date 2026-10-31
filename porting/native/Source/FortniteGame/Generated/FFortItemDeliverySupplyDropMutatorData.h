@@ -17,7 +17,7 @@ struct FFortItemDeliverySupplyDropMutatorData
 
 	// table index 2, offset None, flags 0x10000000010001
 	UPROPERTY()
-	uint8 bShouldApplyMutator : 1;
+	bool bShouldApplyMutator;
 
 	// table index 1, offset 8, flags 0x10000000010001
 	UPROPERTY()

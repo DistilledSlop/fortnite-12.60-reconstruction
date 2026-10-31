@@ -20,7 +20,7 @@ class FORTNITEGAME_API AFortSkyTube : public AActor
 public:
 	// table index 31, flags 0x20080000000001
 	UPROPERTY()
-	uint8 bExemptFromShutdown : 1;
+	bool bExemptFromShutdown;
 
 	// table index 30, flags 0x1000000008000d
 	UPROPERTY()
@@ -140,11 +140,11 @@ public:
 
 	// table index 1, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bEnabled : 1;
+	bool bEnabled;
 
 	// table index 0, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bShuttingDown : 1;
+	bool bShuttingDown;
 
 };
 

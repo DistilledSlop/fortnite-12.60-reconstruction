@@ -26,31 +26,31 @@ public:
 
 	// table index 10, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bForwardSpeedIsNearlyZero : 1;
+	bool bForwardSpeedIsNearlyZero;
 
 	// table index 9, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bForwardSpeedIsGreaterThanOne : 1;
+	bool bForwardSpeedIsGreaterThanOne;
 
 	// table index 8, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bReverseSpeedIsGreaterThanOne : 1;
+	bool bReverseSpeedIsGreaterThanOne;
 
 	// table index 7, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bSpeedIsGreaterThanFiveAndPlayerHitSpace : 1;
+	bool bSpeedIsGreaterThanFiveAndPlayerHitSpace;
 
 	// table index 6, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bIsBraking : 1;
+	bool bIsBraking;
 
 	// table index 5, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bIsBoosting : 1;
+	bool bIsBoosting;
 
 	// table index 4, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bPlayerHitSpaceBar : 1;
+	bool bPlayerHitSpaceBar;
 
 	// table index 3, flags 0x10000000002014
 	UPROPERTY(Transient)

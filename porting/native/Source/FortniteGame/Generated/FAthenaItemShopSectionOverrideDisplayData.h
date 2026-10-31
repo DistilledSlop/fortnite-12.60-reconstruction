@@ -19,11 +19,11 @@ struct FAthenaItemShopSectionOverrideDisplayData
 
 	// table index 1, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bHideTitle : 1;
+	bool bHideTitle;
 
 	// table index 0, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bNoSectionTab : 1;
+	bool bNoSectionTab;
 
 };
 

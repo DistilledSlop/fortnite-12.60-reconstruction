@@ -90,7 +90,7 @@ public:
 
 	// table index 6, flags 0x20080000000020
 	UPROPERTY(Replicated)
-	uint8 bIsPushable : 1;
+	bool bIsPushable;
 
 	// table index 5, flags 0x20080000010005
 	UPROPERTY()
@@ -114,7 +114,7 @@ public:
 
 	// table index 0, flags 0x20080100000020
 	UPROPERTY(ReplicatedUsing=OnRep_bIsNearCheckpoint)
-	uint8 bIsNearCheckpoint : 1;
+	bool bIsNearCheckpoint;
 
 	UFUNCTION()
 	void OnRep_bIsNearCheckpoint();

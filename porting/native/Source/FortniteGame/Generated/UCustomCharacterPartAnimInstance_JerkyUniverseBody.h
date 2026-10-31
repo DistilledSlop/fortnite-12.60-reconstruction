@@ -55,7 +55,7 @@ public:
 
 	// table index 2, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bDisableRigidBodies : 1;
+	bool bDisableRigidBodies;
 
 	// table index 1, flags 0x10000000002014
 	UPROPERTY(Transient)

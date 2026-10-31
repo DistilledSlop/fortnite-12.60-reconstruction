@@ -35,6 +35,7 @@
 #include "FPawnDamagedSignature.h"
 #include "FPawnDeathEffectsSignature.h"
 #include "FPawnHealthChanged.h"
+#include "FPawnStartedEmoteSignature.h"
 #include "FPawnTeleportedSignature.h"
 #include "FPawnUpdatedDecisionWindowStackSignature.h"
 #include "FRecordedGunshot.h"
@@ -61,6 +62,7 @@ class UFortFeedbackBank;
 class UFortFootstepAudioBank;
 class UFortHealthBarIndicator;
 class UFortHealthSet;
+class UFortItemDefinition;
 class UFortMovementSet;
 class UFortStormShieldComponent;
 class UFortSwimmingAudioBank;
@@ -314,7 +316,7 @@ public:
 
 	// table index 136, flags 0x10000000002024
 	UPROPERTY(Replicated, Transient)
-	uint8 bIsStunned : 1;
+	bool bIsStunned;
 
 	// table index 135, flags 0x10000000002014
 	UPROPERTY(Transient)
@@ -326,7 +328,7 @@ public:
 
 	// table index 133, flags 0x20080000000015
 	UPROPERTY()
-	uint8 bSupportsDamageNumbersAtHitLocation : 1;
+	bool bSupportsDamageNumbersAtHitLocation;
 
 	// table index 132, flags 0x10000100002034
 	UPROPERTY(ReplicatedUsing=OnRep_PushMomentum, Transient)
@@ -476,9 +478,17 @@ public:
 	UPROPERTY(Transient)
 	float LastEmoteEndTime;
 
+	// table index 89, flags 0x10000000002000
+	UPROPERTY(Transient)
+	UFortItemDefinition* LastEmoteItemDef;
+
+	// table index 88, flags 0x10000100002020
+	UPROPERTY(ReplicatedUsing=OnRep_LastReplicatedEmoteExecuted, Transient)
+	UFortItemDefinition* LastReplicatedEmoteExecuted;
+
 	// table index 87, flags 0x10000000002000
 	UPROPERTY(Transient)
-	uint8 bFireBlockedByEmoteCooldown : 1;
+	bool bFireBlockedByEmoteCooldown;
 
 	// table index 86, flags 0x10000000004000
 	UPROPERTY(Config)
@@ -491,6 +501,10 @@ public:
 	// table index 84, flags 0x10000010080000
 	UPROPERTY()
 	FPawnTeleportedSignature OnPawnTeleported;
+
+	// table index 82, flags 0x10000010080000
+	UPROPERTY()
+	FPawnStartedEmoteSignature OnPawnStartedEmote;
 
 	// table index 80, flags 0x10000010080000
 	UPROPERTY()
@@ -598,7 +612,7 @@ public:
 
 	// table index 49, flags 0x10000000002000
 	UPROPERTY(Transient)
-	uint8 bIsDisconnectedPawn : 1;
+	bool bIsDisconnectedPawn;
 
 	// table index 48, flags 0x20080000000000
 	UPROPERTY()
@@ -821,6 +835,9 @@ public:
 
 	UFUNCTION()
 	void OnRep_LandingFlashCount();
+
+	UFUNCTION()
+	void OnRep_LastReplicatedEmoteExecuted();
 
 	UFUNCTION()
 	void OnRep_MovingEmote();

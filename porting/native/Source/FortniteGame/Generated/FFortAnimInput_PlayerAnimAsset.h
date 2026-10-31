@@ -20,15 +20,15 @@ struct FFortAnimInput_PlayerAnimAsset
 
 	// table index 76, offset None, flags 0x10000000000015
 	UPROPERTY()
-	uint8 bPlayUpperBodySlotOnFullBodyInAir : 1;
+	bool bPlayUpperBodySlotOnFullBodyInAir;
 
 	// table index 75, offset None, flags 0x10000000000015
 	UPROPERTY()
-	uint8 bDisableFullBodyAimOffsetDuringMelee : 1;
+	bool bDisableFullBodyAimOffsetDuringMelee;
 
 	// table index 74, offset None, flags 0x10000000000015
 	UPROPERTY()
-	uint8 bShouldApplyAimOffsetFullBody : 1;
+	bool bShouldApplyAimOffsetFullBody;
 
 	// table index 73, offset 4, flags 0x10000000002014
 	UPROPERTY()
@@ -40,7 +40,7 @@ struct FFortAnimInput_PlayerAnimAsset
 
 	// table index 71, offset None, flags 0x10000000000015
 	UPROPERTY()
-	uint8 bOverrideDisableArmsHeadAdditive : 1;
+	bool bOverrideDisableArmsHeadAdditive;
 
 	// table index 70, offset 16, flags 0x10000000000015
 	UPROPERTY()
@@ -304,7 +304,7 @@ struct FFortAnimInput_PlayerAnimAsset
 
 	// table index 5, offset None, flags 0x10000000000015
 	UPROPERTY()
-	uint8 bOverridePitchAndYawOffsets : 1;
+	bool bOverridePitchAndYawOffsets;
 
 	// table index 4, offset 540, flags 0x10000000000015
 	UPROPERTY()
@@ -316,7 +316,7 @@ struct FFortAnimInput_PlayerAnimAsset
 
 	// table index 1, offset None, flags 0x10000000000015
 	UPROPERTY()
-	uint8 bOverrideHandIKRetargetingWeight : 1;
+	bool bOverrideHandIKRetargetingWeight;
 
 	// table index 0, offset 580, flags 0x10000000000015
 	UPROPERTY()

@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "Engine/DataAsset.h"
 
+#include "FFortDailyRewardScheduleDefinition.h"
+
 #include "UFortDailyRewardScheduleDefinitions.generated.h"
 
 UCLASS()
@@ -14,5 +16,9 @@ class FORTNITEGAME_API UFortDailyRewardScheduleDefinitions : public UDataAsset
 	GENERATED_BODY()
 
 public:
+	// table index 0, flags 0x10000000000001
+	UPROPERTY()
+	TArray<FFortDailyRewardScheduleDefinition> Schedules;
+
 };
 

@@ -40,7 +40,7 @@ public:
 
 	// table index 3, flags 0x20080000000015
 	UPROPERTY()
-	uint8 bUseCompassIcon : 1;
+	bool bUseCompassIcon;
 
 	// table index 2, flags 0x20080000000015
 	UPROPERTY()

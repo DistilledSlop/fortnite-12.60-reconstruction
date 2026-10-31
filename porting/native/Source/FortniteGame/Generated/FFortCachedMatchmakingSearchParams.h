@@ -24,7 +24,7 @@ struct FFortCachedMatchmakingSearchParams
 
 	// table index 0, offset None, flags 0x40000000000000
 	UPROPERTY()
-	uint8 bValid : 1;
+	bool bValid;
 
 };
 

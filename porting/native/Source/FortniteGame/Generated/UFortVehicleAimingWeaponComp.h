@@ -20,11 +20,11 @@ class FORTNITEGAME_API UFortVehicleAimingWeaponComp : public UFortVehicleSeatWea
 public:
 	// table index 41, flags 0x10000000000001
 	UPROPERTY()
-	uint8 bShouldResetCameraHorizontallyToBarrelWhenEntered : 1;
+	bool bShouldResetCameraHorizontallyToBarrelWhenEntered;
 
 	// table index 40, flags 0x10000000000001
 	UPROPERTY()
-	uint8 bShouldResetCameraVerticallyToBarrelWhenEntered : 1;
+	bool bShouldResetCameraVerticallyToBarrelWhenEntered;
 
 	// table index 39, flags 0x10000000002000
 	UPROPERTY(Transient)
@@ -32,7 +32,7 @@ public:
 
 	// table index 38, flags 0x10000000000015
 	UPROPERTY()
-	uint8 bAllowCameraLocalVerticalRotationOnly : 1;
+	bool bAllowCameraLocalVerticalRotationOnly;
 
 	// table index 37, flags 0x10000000000001
 	UPROPERTY()
@@ -44,15 +44,15 @@ public:
 
 	// table index 35, flags 0x10000000000001
 	UPROPERTY()
-	uint8 bSetDesiredPitchWhenUnmanned : 1;
+	bool bSetDesiredPitchWhenUnmanned;
 
 	// table index 34, flags 0x10000000000001
 	UPROPERTY()
-	uint8 bSetDesiredYawWhenUnmanned : 1;
+	bool bSetDesiredYawWhenUnmanned;
 
 	// table index 33, flags 0x10000000000001
 	UPROPERTY()
-	uint8 bUseGlobalOnlyAiming : 1;
+	bool bUseGlobalOnlyAiming;
 
 	// table index 32, flags 0x10000000004001
 	UPROPERTY(Config)
@@ -76,7 +76,7 @@ public:
 
 	// table index 27, flags 0x10000000000005
 	UPROPERTY()
-	uint8 bCorrectAimFromCameraToMuzzle : 1;
+	bool bCorrectAimFromCameraToMuzzle;
 
 	// table index 26, flags 0x10000000002000
 	UPROPERTY(Transient)
@@ -88,7 +88,7 @@ public:
 
 	// table index 24, flags 0x10000000004001
 	UPROPERTY(Config)
-	uint8 bInterpolateAimToDesired : 1;
+	bool bInterpolateAimToDesired;
 
 	// table index 23, flags 0x10000000002014
 	UPROPERTY(Transient)
@@ -148,11 +148,11 @@ public:
 
 	// table index 8, flags 0x10000000002000
 	UPROPERTY(Transient)
-	uint8 bPlayerEnteredThisFrame : 1;
+	bool bPlayerEnteredThisFrame;
 
 	// table index 7, flags 0x10000000000015
 	UPROPERTY()
-	uint8 bApplyOwnerRotationToAimWhenUnmanned : 1;
+	bool bApplyOwnerRotationToAimWhenUnmanned;
 
 	// table index 6, flags 0x10000000004001
 	UPROPERTY(Config)

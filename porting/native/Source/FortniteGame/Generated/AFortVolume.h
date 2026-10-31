@@ -20,6 +20,7 @@ class AFortAthenaCreativePortal;
 class AFortCreativeTimerObjective;
 class AFortMissionStormShield;
 class UAsyncTaskQueue;
+class UFortPlaysetItemDefinition;
 class UFortVolumeObjectTrackingComponent;
 class UPawnOverlapComponent;
 class UStaticMeshComponent;
@@ -56,6 +57,10 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_ObjectTrackingComponent, Transient)
 	UFortVolumeObjectTrackingComponent* ObjectTrackingComponent;
 
+	// table index 33, flags 0x10000000000015
+	UPROPERTY()
+	UFortPlaysetItemDefinition* OverridePlayset;
+
 	// table index 32, flags 0x10000000000035
 	UPROPERTY(Replicated)
 	uint8 bNeverAllowSaving : 1;
@@ -75,6 +80,10 @@ public:
 	// table index 27, flags 0x20080000010015
 	UPROPERTY()
 	FScalableFloat IsHotfixablyEnabled;
+
+	// table index 26, flags 0x40000100002020
+	UPROPERTY(ReplicatedUsing=OnRep_CurrentPlayset, Transient)
+	UFortPlaysetItemDefinition* CurrentPlayset;
 
 	// table index 25, flags 0x40000000002000
 	UPROPERTY(Transient)
@@ -142,10 +151,13 @@ public:
 
 	// table index 0, flags 0x40000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_UserGeneratedContentRestrictions)
-	uint8 bUserGeneratedContentRestricted : 1;
+	bool bUserGeneratedContentRestricted;
 
 	UFUNCTION()
 	void OnRep_bShowPublishWatermark();
+
+	UFUNCTION()
+	void OnRep_CurrentPlayset();
 
 	UFUNCTION()
 	void OnRep_ObjectTrackingComponent();

@@ -19,7 +19,7 @@ struct FFortSupplyDropMutatorData
 
 	// table index 2, offset None, flags 0x10000000010001
 	UPROPERTY()
-	uint8 bShouldCenterGroundCheckAtFoundLocation : 1;
+	bool bShouldCenterGroundCheckAtFoundLocation;
 
 	// table index 0, offset 16, flags 0x10000000010001
 	UPROPERTY()

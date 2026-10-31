@@ -44,15 +44,15 @@ public:
 
 	// table index 44, flags 0x10000000010001
 	UPROPERTY()
-	uint8 bYawLimitWhileTracking : 1;
+	bool bYawLimitWhileTracking;
 
 	// table index 43, flags 0x11000000000015
 	UPROPERTY()
-	uint8 bDoesNotRotate : 1;
+	bool bDoesNotRotate;
 
 	// table index 42, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bLocateDamagerIfHitWhileIdle : 1;
+	bool bLocateDamagerIfHitWhileIdle;
 
 	// table index 40, flags 0x10000100000034
 	UPROPERTY(ReplicatedUsing=OnRep_CurrentSentryState)
@@ -68,7 +68,7 @@ public:
 
 	// table index 37, flags 0x10000000000004
 	UPROPERTY()
-	uint8 bIdleRotationStopped : 1;
+	bool bIdleRotationStopped;
 
 	// table index 36, flags 0x10000000000015
 	UPROPERTY()
@@ -100,11 +100,11 @@ public:
 
 	// table index 29, flags 0x10000000000015
 	UPROPERTY()
-	uint8 bGoDormantAfterPassiveIdle : 1;
+	bool bGoDormantAfterPassiveIdle;
 
 	// table index 28, flags 0x10000000002004
 	UPROPERTY(Transient)
-	uint8 bSetRayScaleOnTrackTick : 1;
+	bool bSetRayScaleOnTrackTick;
 
 	// table index 27, flags 0x10000000000015
 	UPROPERTY()
@@ -132,15 +132,15 @@ public:
 
 	// table index 21, flags 0x10000000000001
 	UPROPERTY()
-	uint8 bBaseFollowsTargetRotation : 1;
+	bool bBaseFollowsTargetRotation;
 
 	// table index 20, flags 0x10000000002000
 	UPROPERTY(Transient)
-	uint8 bWasIdleStopped : 1;
+	bool bWasIdleStopped;
 
 	// table index 19, flags 0x10000000002000
 	UPROPERTY(Transient)
-	uint8 bIdleRotatingRight : 1;
+	bool bIdleRotatingRight;
 
 	// table index 18, flags 0x10000000002000
 	UPROPERTY(Transient)

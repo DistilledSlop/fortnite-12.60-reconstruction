@@ -37,6 +37,21 @@ void AFortWeapon::OnRep_PrimaryAbilitySpecHandle()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortWeapon::OnRep_ReplicatedAppliedAlterations()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortWeapon::OnRep_ReplicatedCosmeticOverrideWeaponData()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortWeapon::OnRep_ReplicatedWeaponData()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortWeapon::ServerReleaseWeaponAbility_Implementation(const FGameplayAbilitySpecHandle& SpecHandle)
 {
 	// Body not recovered: reflection-derived stub.
@@ -56,6 +71,7 @@ void AFortWeapon::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifet
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
+	DOREPLIFETIME(AFortWeapon, AppliedAlterations);
 	DOREPLIFETIME(AFortWeapon, ImpactAbilitySpecHandle);
 	DOREPLIFETIME(AFortWeapon, ReloadAbilitySpecHandle);
 	DOREPLIFETIME(AFortWeapon, SecondaryAbilitySpecHandle);
@@ -67,6 +83,8 @@ void AFortWeapon::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifet
 	DOREPLIFETIME(AFortWeapon, ItemEntryGuid);
 	DOREPLIFETIME(AFortWeapon, LastFireTimeVerified);
 	DOREPLIFETIME(AFortWeapon, EquippedWeaponDestroyWrapperRepCounter);
+	DOREPLIFETIME(AFortWeapon, CosmeticOverrideWeaponData);
+	DOREPLIFETIME(AFortWeapon, WeaponData);
 	DOREPLIFETIME(AFortWeapon, bIsChargingWeapon);
 	DOREPLIFETIME(AFortWeapon, bIsReloadingWeapon);
 	DOREPLIFETIME(AFortWeapon, bIsEquippingWeapon);

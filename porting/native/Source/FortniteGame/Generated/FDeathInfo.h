@@ -27,7 +27,7 @@ struct FDeathInfo
 
 	// table index 7, offset None, flags 0x10000000000014
 	UPROPERTY()
-	uint8 bDBNO : 1;
+	bool bDBNO;
 
 	// table index 5, offset 17, flags 0x10000000000014
 	UPROPERTY()
@@ -47,7 +47,7 @@ struct FDeathInfo
 
 	// table index 1, offset None, flags 0x10000000000014
 	UPROPERTY()
-	uint8 bInitialized : 1;
+	bool bInitialized;
 
 	// table index 0, offset 40, flags 0x10000000000014
 	UPROPERTY()

@@ -22,7 +22,7 @@ class FORTNITEGAME_API UFortAthenaNpcPatrollingComponent : public UActorComponen
 public:
 	// table index 4, flags 0x40000000010001
 	UPROPERTY()
-	uint8 bCanPropagatePatrollingProgression : 1;
+	bool bCanPropagatePatrollingProgression;
 
 	// table index 3, flags 0x40000000002000
 	UPROPERTY(Transient)

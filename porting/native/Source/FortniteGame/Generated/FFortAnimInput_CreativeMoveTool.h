@@ -14,7 +14,7 @@ struct FFortAnimInput_CreativeMoveTool
 
 	// table index 0, offset None, flags 0x10000000022015
 	UPROPERTY()
-	uint8 bIsFlying : 1;
+	bool bIsFlying;
 
 };
 

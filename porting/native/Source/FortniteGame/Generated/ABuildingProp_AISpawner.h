@@ -45,7 +45,7 @@ public:
 
 	// table index 1, flags 0x20080000000004
 	UPROPERTY()
-	uint8 bUseDistanceToAI : 1;
+	bool bUseDistanceToAI;
 
 	// table index 0, flags 0x20080000000004
 	UPROPERTY()

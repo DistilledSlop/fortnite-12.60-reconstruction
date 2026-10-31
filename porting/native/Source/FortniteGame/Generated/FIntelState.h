@@ -15,7 +15,7 @@ struct FIntelState
 
 	// table index 8, offset None, flags 0x10000000000014
 	UPROPERTY()
-	uint8 bInRange : 1;
+	bool bInRange;
 
 	// table index 7, offset 4, flags 0x10000000000014
 	UPROPERTY()

@@ -39,7 +39,7 @@ public:
 
 	// table index 42, flags 0x40000000000000
 	UPROPERTY()
-	uint8 bCompressed : 1;
+	bool bCompressed;
 
 	// table index 41, flags 0x40000000000000
 	UPROPERTY()
@@ -111,7 +111,7 @@ public:
 
 	// table index 0, flags 0x40000000000000
 	UPROPERTY()
-	uint8 bRequiresGridPlacement : 1;
+	bool bRequiresGridPlacement;
 
 };
 

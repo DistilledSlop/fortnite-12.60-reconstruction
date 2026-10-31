@@ -18,11 +18,11 @@ class FORTNITEGAME_API AFortAthenaMutator : public AFortGameplayMutator
 public:
 	// table index 3, flags 0x10000000000001
 	UPROPERTY()
-	uint8 bMutatesGameMode : 1;
+	bool bMutatesGameMode;
 
 	// table index 2, flags 0x10000000000001
 	UPROPERTY()
-	uint8 bMutatesGameState : 1;
+	bool bMutatesGameState;
 
 	// table index 0, flags 0x20080000002000
 	UPROPERTY(Transient)

@@ -34,7 +34,7 @@ struct FMinigameTeam
 
 	// table index 2, offset None, flags 0x10000000020815
 	UPROPERTY()
-	uint8 bHasBucketAvailable : 1;
+	bool bHasBucketAvailable;
 
 	// table index 1, offset 37, flags 0x10000000020815
 	UPROPERTY()

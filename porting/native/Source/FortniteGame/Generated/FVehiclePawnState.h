@@ -33,7 +33,7 @@ struct FVehiclePawnState
 
 	// table index 2, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bOverrideVehicleExit : 1;
+	bool bOverrideVehicleExit;
 
 	// table index 1, offset 16, flags 0x10000000000000
 	UPROPERTY()

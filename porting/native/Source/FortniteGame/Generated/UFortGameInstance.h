@@ -35,7 +35,9 @@ class UFortSocialManager;
 class UFortTooltipManager;
 class UFortTournamentManager;
 class UFortUpdateManager;
+class UGameFrameworkComponentManager;
 class UKairosHeartbeatManager;
+class UMcpProfileManager;
 class UPegasusDriver;
 class UReplayVideoManager;
 class UVideoExtractionBootstrapper;
@@ -74,11 +76,11 @@ public:
 
 	// table index 55, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bBattleRoyaleMatchmakingEnabled : 1;
+	bool bBattleRoyaleMatchmakingEnabled;
 
 	// table index 54, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bCreativeModeProfileEnabled : 1;
+	bool bCreativeModeProfileEnabled;
 
 	// table index 52, flags 0x10000000004000
 	UPROPERTY(Config)
@@ -98,7 +100,7 @@ public:
 
 	// table index 46, flags 0x10000000002000
 	UPROPERTY(Transient)
-	uint8 bOverridingCurrentEmoteMusicFFT : 1;
+	bool bOverridingCurrentEmoteMusicFFT;
 
 	// table index 45, flags 0x10000000002014
 	UPROPERTY(Transient)
@@ -115,6 +117,10 @@ public:
 	// table index 42, flags 0x40000000000000
 	UPROPERTY()
 	UKairosHeartbeatManager* KairosHeartbeatManager;
+
+	// table index 41, flags 0x40000000000000
+	UPROPERTY()
+	UMcpProfileManager* ProfileManager;
 
 	// table index 40, flags 0x40000000000000
 	UPROPERTY()
@@ -235,6 +241,10 @@ public:
 	// table index 5, flags 0x40000000002000
 	UPROPERTY(Transient)
 	UFortMaterialCacheManager* MaterialCacheManager;
+
+	// table index 4, flags 0x40000000002000
+	UPROPERTY(Transient)
+	UGameFrameworkComponentManager* GameFrameworkComponentManager;
 
 	// table index 3, flags 0x40000000002000
 	UPROPERTY(Transient)

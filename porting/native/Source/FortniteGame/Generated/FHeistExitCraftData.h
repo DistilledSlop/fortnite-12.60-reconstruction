@@ -39,11 +39,11 @@ struct FHeistExitCraftData
 
 	// table index 1, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bIsUsed : 1;
+	bool bIsUsed;
 
 	// table index 0, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bHasDeparted : 1;
+	bool bHasDeparted;
 
 };
 

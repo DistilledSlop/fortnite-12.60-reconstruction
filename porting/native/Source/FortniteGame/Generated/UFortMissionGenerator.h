@@ -50,7 +50,7 @@ public:
 
 	// table index 11, flags 0x20080000000001
 	UPROPERTY()
-	uint8 bUseNewMissionGeneration : 1;
+	bool bUseNewMissionGeneration;
 
 	// table index 10, flags 0x20080000000001
 	UPROPERTY()
@@ -78,7 +78,7 @@ public:
 
 	// table index 1, flags 0x20080000000001
 	UPROPERTY()
-	uint8 bUseOverridePlayerSpawnPadPlacementData : 1;
+	bool bUseOverridePlayerSpawnPadPlacementData;
 
 	// table index 0, flags 0x20080000000001
 	UPROPERTY()

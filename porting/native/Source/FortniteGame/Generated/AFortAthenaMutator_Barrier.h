@@ -33,7 +33,7 @@ public:
 
 	// table index 31, flags 0x20080000000020
 	UPROPERTY(Replicated)
-	uint8 bGameEndsWhenObjectiveIsDestroyed : 1;
+	bool bGameEndsWhenObjectiveIsDestroyed;
 
 	// table index 30, flags 0x20080000000001
 	UPROPERTY()

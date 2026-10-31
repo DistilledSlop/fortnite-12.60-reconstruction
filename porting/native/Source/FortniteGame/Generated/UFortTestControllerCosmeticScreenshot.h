@@ -7,6 +7,7 @@
 #include "UFortTestControllerBase.h"
 
 class AActor;
+class UAthenaCosmeticItemDefinition;
 
 #include "UFortTestControllerCosmeticScreenshot.generated.h"
 
@@ -16,6 +17,10 @@ class FORTNITEGAME_API UFortTestControllerCosmeticScreenshot : public UFortTestC
 	GENERATED_BODY()
 
 public:
+	// table index 4, flags 0x40000000000000
+	UPROPERTY()
+	TSet<UAthenaCosmeticItemDefinition*> LoadedCosmetics;
+
 	// table index 2, flags 0x40000000000000
 	UPROPERTY()
 	TArray<AActor*> SpawnedActors;

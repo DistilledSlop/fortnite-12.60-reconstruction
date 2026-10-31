@@ -10,6 +10,7 @@
 #include "EFortQuestObjectiveStatEvent.h"
 
 class AFortPlayerState;
+class UFortItemDefinition;
 class UTexture2D;
 
 #include "UFortQuestObjectiveInfo.generated.h"
@@ -31,6 +32,10 @@ public:
 	// table index 13, flags 0x10000000000014
 	UPROPERTY()
 	EFortQuestObjectiveItemEvent ItemEvent;
+
+	// table index 12, flags 0x14000000000014
+	UPROPERTY()
+	TSoftObjectPtr<UFortItemDefinition> ItemReference;
 
 	// table index 11, flags 0x10000000000014
 	UPROPERTY()
@@ -70,15 +75,15 @@ public:
 
 	// table index 2, flags 0x10000000000014
 	UPROPERTY()
-	uint8 bIsHelper : 1;
+	bool bIsHelper;
 
 	// table index 1, flags 0x40000000000000
 	UPROPERTY()
-	uint8 bVisible : 1;
+	bool bVisible;
 
 	// table index 0, flags 0x40000000000000
 	UPROPERTY()
-	uint8 bActive : 1;
+	bool bActive;
 
 };
 

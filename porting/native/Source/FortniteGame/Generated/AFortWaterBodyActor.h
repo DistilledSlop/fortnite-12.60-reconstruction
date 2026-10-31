@@ -26,7 +26,7 @@ public:
 
 	// table index 0, flags 0x20080000000001
 	UPROPERTY()
-	uint8 bIsSwamp : 1;
+	bool bIsSwamp;
 
 };
 

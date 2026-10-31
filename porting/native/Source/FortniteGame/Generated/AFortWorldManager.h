@@ -11,6 +11,7 @@
 #include "FFortDeferredNewActorData.h"
 #include "FFortLevelStreamingInfo.h"
 #include "FFortPlacementLocationTagHandler.h"
+#include "FFortPlayerEarnedItemCaches.h"
 #include "FFortStartingMissionInfo.h"
 #include "FFortTileLootData.h"
 #include "FFortWindIntensityAndDirection.h"
@@ -123,7 +124,7 @@ public:
 
 	// table index 32, flags 0x40000000004001
 	UPROPERTY(Config)
-	uint8 bUseFixedSeed : 1;
+	bool bUseFixedSeed;
 
 	// table index 31, flags 0x40000000004001
 	UPROPERTY(Config)
@@ -175,27 +176,27 @@ public:
 
 	// table index 17, flags 0x40000000002000
 	UPROPERTY(Transient)
-	uint8 bHasCreatedMissions : 1;
+	bool bHasCreatedMissions;
 
 	// table index 16, flags 0x40000000002000
 	UPROPERTY(Transient)
-	uint8 bHasCreatedPrimaryAdditionalFoundations : 1;
+	bool bHasCreatedPrimaryAdditionalFoundations;
 
 	// table index 15, flags 0x40000000002000
 	UPROPERTY(Transient)
-	uint8 bHasSpawnedActorsForMissions : 1;
+	bool bHasSpawnedActorsForMissions;
 
 	// table index 14, flags 0x40000000002000
 	UPROPERTY(Transient)
-	uint8 bZoneCompleted : 1;
+	bool bZoneCompleted;
 
 	// table index 13, flags 0x40000000002000
 	UPROPERTY(Transient)
-	uint8 bZoneFinished : 1;
+	bool bZoneFinished;
 
 	// table index 12, flags 0x40000000002000
 	UPROPERTY(Transient)
-	uint8 bCreatedMissionRecord : 1;
+	bool bCreatedMissionRecord;
 
 	// table index 7, flags 0x40000000000000
 	UPROPERTY()
@@ -215,7 +216,11 @@ public:
 
 	// table index 2, flags 0x40000000004000
 	UPROPERTY(Config)
-	uint8 bClearOutpostMapStats : 1;
+	bool bClearOutpostMapStats;
+
+	// table index 0, flags 0x40000000002000
+	UPROPERTY(Transient)
+	TArray<FFortPlayerEarnedItemCaches> UnsavedPlayerEarnedItemCaches;
 
 	UFUNCTION()
 	void OnRep_InitialGlobalWind();

@@ -28,15 +28,15 @@ public:
 
 	// table index 33, flags 0x20080100002020
 	UPROPERTY(ReplicatedUsing=OnRep_RocketsCooldown, Transient)
-	uint8 bRocketsOnCooldown : 1;
+	bool bRocketsOnCooldown;
 
 	// table index 32, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bLocalChargingRockets : 1;
+	bool bLocalChargingRockets;
 
 	// table index 31, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bRocketFireButtonDown : 1;
+	bool bRocketFireButtonDown;
 
 	// table index 30, flags 0x20080000002000
 	UPROPERTY(Transient)
@@ -48,11 +48,11 @@ public:
 
 	// table index 28, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bFiringRockets : 1;
+	bool bFiringRockets;
 
 	// table index 27, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bUseShotgunSecondBarrel : 1;
+	bool bUseShotgunSecondBarrel;
 
 	// table index 26, flags 0x20080000002000
 	UPROPERTY(Transient)

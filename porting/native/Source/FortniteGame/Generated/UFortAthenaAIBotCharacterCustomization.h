@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
 
+#include "FFortAthenaLoadout.h"
+
 #include "UFortAthenaAIBotCharacterCustomization.generated.h"
 
 UCLASS()
@@ -14,5 +16,9 @@ class FORTNITEGAME_API UFortAthenaAIBotCharacterCustomization : public UObject
 	GENERATED_BODY()
 
 public:
+	// table index 0, flags 0x20080000010001
+	UPROPERTY()
+	FFortAthenaLoadout CustomizationLoadout;
+
 };
 

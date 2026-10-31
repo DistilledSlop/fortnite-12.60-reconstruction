@@ -20,6 +20,13 @@ class UFortCustomizationAssetLoader;
 class UFortExpeditionManager;
 class UFortHero;
 class UFortLinkedAccountManager;
+class UFortMcpProfileAthena;
+class UFortMcpProfileCampaign;
+class UFortMcpProfileCommonCore;
+class UFortMcpProfileCommonPublic;
+class UFortMcpProfileCreative;
+class UFortMcpProfileMetadata;
+class UFortMcpProfileWorld;
 class UFortMinigameManager;
 class UFortQuestManager;
 
@@ -61,15 +68,15 @@ public:
 
 	// table index 31, flags 0x40000000000000
 	UPROPERTY()
-	uint8 bIsInitialPlayer : 1;
+	bool bIsInitialPlayer;
 
 	// table index 30, flags 0x40000000000000
 	UPROPERTY()
-	uint8 bShouldLockProfile : 1;
+	bool bShouldLockProfile;
 
 	// table index 29, flags 0x40000000000000
 	UPROPERTY()
-	uint8 bFailedToLockProfile : 1;
+	bool bFailedToLockProfile;
 
 	// table index 28, flags 0x40000000000000
 	UPROPERTY()
@@ -86,6 +93,38 @@ public:
 	// table index 24, flags 0x40000000000000
 	UPROPERTY()
 	FTimerHandle PollForDedicatedServerReadyToShutdownTimerHandle;
+
+	// table index 23, flags 0x40000000000000
+	UPROPERTY()
+	UFortMcpProfileCommonPublic* CommonPublicProfile;
+
+	// table index 22, flags 0x40000000000000
+	UPROPERTY()
+	UFortMcpProfileCommonCore* CommonCoreProfile;
+
+	// table index 21, flags 0x40000000000000
+	UPROPERTY()
+	UFortMcpProfileCampaign* AccountProfile;
+
+	// table index 20, flags 0x40000000000000
+	UPROPERTY()
+	UFortMcpProfileWorld* WorldProfile;
+
+	// table index 19, flags 0x40000000000000
+	UPROPERTY()
+	UFortMcpProfileWorld* OutpostProfile;
+
+	// table index 18, flags 0x40000000000000
+	UPROPERTY()
+	UFortMcpProfileMetadata* MetadataProfile;
+
+	// table index 17, flags 0x40000000000000
+	UPROPERTY()
+	UFortMcpProfileCreative* CreativeModeProfile;
+
+	// table index 16, flags 0x40000000000000
+	UPROPERTY()
+	UFortMcpProfileAthena* AthenaProfile;
 
 	// table index 15, flags 0x40000000000000
 	UPROPERTY()
@@ -125,7 +164,7 @@ public:
 
 	// table index 2, flags 0x40000000002000
 	UPROPERTY(Transient)
-	uint8 bAthenaMenuHeroDirty : 1;
+	bool bAthenaMenuHeroDirty;
 
 	// table index 1, flags 0x40000000002000
 	UPROPERTY(Transient)

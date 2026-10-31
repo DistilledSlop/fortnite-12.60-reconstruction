@@ -44,11 +44,11 @@ public:
 
 	// table index 190, flags 0x10000000002015
 	UPROPERTY(Transient)
-	uint8 bDoingSpecialEmote : 1;
+	bool bDoingSpecialEmote;
 
 	// table index 189, flags 0x10000000002015
 	UPROPERTY(Transient)
-	uint8 bIsCosmeticPreview : 1;
+	bool bIsCosmeticPreview;
 
 	// table index 188, flags 0x10000000002015
 	UPROPERTY(Transient)
@@ -740,7 +740,7 @@ public:
 
 	// table index 14, flags 0x20080000000005
 	UPROPERTY()
-	uint8 bEnableStarts : 1;
+	bool bEnableStarts;
 
 	// table index 13, flags 0x20080000000005
 	UPROPERTY()

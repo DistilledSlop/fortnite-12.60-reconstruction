@@ -82,7 +82,7 @@ public:
 
 	// table index 53, flags 0x40000000010015
 	UPROPERTY()
-	uint8 bBotHostileToHumanPlayersOnly : 1;
+	bool bBotHostileToHumanPlayersOnly;
 
 	// table index 52, flags 0x40000000010015
 	UPROPERTY()
@@ -178,11 +178,11 @@ public:
 
 	// table index 23, flags 0x40000000002000
 	UPROPERTY(Transient)
-	uint8 bIsCachedPlayerBotFactionsDirty : 1;
+	bool bIsCachedPlayerBotFactionsDirty;
 
 	// table index 22, flags 0x40000000002000
 	UPROPERTY(Transient)
-	uint8 bIsCachedNoneParticipantsBotFactionsDirty : 1;
+	bool bIsCachedNoneParticipantsBotFactionsDirty;
 
 	// table index 20, flags 0x40000000002000
 	UPROPERTY(Transient)

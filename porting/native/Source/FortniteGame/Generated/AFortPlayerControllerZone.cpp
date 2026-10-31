@@ -12,6 +12,11 @@ void AFortPlayerControllerZone::ClientClearDeathNotification_Implementation()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerControllerZone::ClientOnPawnDied_Implementation(const FFortPlayerDeathReport& DeathReport)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPlayerControllerZone::ClientOnPawnRevived_Implementation(AController* EventInstigator)
 {
 	// Body not recovered: reflection-derived stub.

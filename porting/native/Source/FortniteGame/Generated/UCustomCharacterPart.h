@@ -51,15 +51,15 @@ public:
 
 	// table index 23, flags 0x40040000000001
 	UPROPERTY()
-	uint8 bGameplayRelevantCosmeticPart : 1;
+	bool bGameplayRelevantCosmeticPart;
 
 	// table index 22, flags 0x40000000000001
 	UPROPERTY()
-	uint8 bAttachToSocket : 1;
+	bool bAttachToSocket;
 
 	// table index 21, flags 0x40000000000001
 	UPROPERTY()
-	uint8 bIgnorePart : 1;
+	bool bIgnorePart;
 
 	// table index 20, flags 0x24080000000001
 	UPROPERTY()
@@ -95,15 +95,15 @@ public:
 
 	// table index 11, flags 0x20090000000001
 	UPROPERTY()
-	uint8 bSinglePieceMesh : 1;
+	bool bSinglePieceMesh;
 
 	// table index 10, flags 0x20080000000001
 	UPROPERTY()
-	uint8 bSupportsColorSwatches : 1;
+	bool bSupportsColorSwatches;
 
 	// table index 9, flags 0x20080000000001
 	UPROPERTY()
-	uint8 bAllowStaticRenderPath : 1;
+	bool bAllowStaticRenderPath;
 
 	// table index 7, flags 0x40000000000001
 	UPROPERTY()

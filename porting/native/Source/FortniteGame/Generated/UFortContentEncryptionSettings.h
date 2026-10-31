@@ -18,7 +18,7 @@ class FORTNITEGAME_API UFortContentEncryptionSettings : public UDeveloperSetting
 public:
 	// table index 8, flags 0x10000000004001
 	UPROPERTY(Config)
-	uint8 bAutoEncryptUnreleasedStoreItems : 1;
+	bool bAutoEncryptUnreleasedStoreItems;
 
 	// table index 6, flags 0x10000000004001
 	UPROPERTY(Config)

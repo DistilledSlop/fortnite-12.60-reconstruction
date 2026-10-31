@@ -10,6 +10,7 @@
 #include "EAthenaInventorySpawnOverride.h"
 #include "EAthenaLootDropOverride.h"
 #include "EFortItemType.h"
+#include "FItemLoadoutContainer.h"
 #include "FItemLoadoutTeamMap.h"
 
 #include "AFortAthenaMutator_InventoryOverride.generated.h"
@@ -22,7 +23,7 @@ class FORTNITEGAME_API AFortAthenaMutator_InventoryOverride : public AFortAthena
 public:
 	// table index 27, flags 0x20080000010005
 	UPROPERTY()
-	uint8 bWantsAutoTDMActivation : 1;
+	bool bWantsAutoTDMActivation;
 
 	// table index 26, flags 0x20080000010015
 	UPROPERTY()
@@ -67,6 +68,10 @@ public:
 	// table index 8, flags 0x20080000010005
 	UPROPERTY()
 	EAthenaInventorySpawnOverride InventoryUpdateOverride;
+
+	// table index 6, flags 0x20080000010005
+	UPROPERTY()
+	TArray<FItemLoadoutContainer> InventoryLoadouts;
 
 	// table index 5, flags 0x20080000010005
 	UPROPERTY()

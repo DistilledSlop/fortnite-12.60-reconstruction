@@ -57,6 +57,11 @@ void AFortPlayerPawn::OnRep_ControlledRCPawn()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerPawn::OnRep_CosmeticLoadout()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPlayerPawn::OnRep_DBNOHoistee()
 {
 	// Body not recovered: reflection-derived stub.
@@ -73,6 +78,11 @@ void AFortPlayerPawn::OnRep_FacialTypeOverride()
 }
 
 void AFortPlayerPawn::OnRep_FootstepBankOverride()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerPawn::OnRep_GliderOverride()
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -350,6 +360,7 @@ void AFortPlayerPawn::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutL
 	DOREPLIFETIME(AFortPlayerPawn, StoredControlRotation);
 	DOREPLIFETIME(AFortPlayerPawn, ControlledRCPawn);
 	DOREPLIFETIME(AFortPlayerPawn, RemoteViewData32);
+	DOREPLIFETIME(AFortPlayerPawn, GliderOverrideStack);
 	DOREPLIFETIME(AFortPlayerPawn, PetState);
 	DOREPLIFETIME(AFortPlayerPawn, ReplicatedWaterBody);
 	DOREPLIFETIME(AFortPlayerPawn, ReplicatedSkyTube);
@@ -368,6 +379,7 @@ void AFortPlayerPawn::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutL
 	DOREPLIFETIME(AFortPlayerPawn, FootstepBankOverride);
 	DOREPLIFETIME(AFortPlayerPawn, AnimBPOverride);
 	DOREPLIFETIME(AFortPlayerPawn, RepCharPartAnimMontageInfo);
+	DOREPLIFETIME(AFortPlayerPawn, CosmeticLoadout);
 	DOREPLIFETIME(AFortPlayerPawn, PossessedProp);
 	DOREPLIFETIME(AFortPlayerPawn, VehicleStateRep);
 	DOREPLIFETIME(AFortPlayerPawn, bCanPredictJumpApex);

@@ -28,6 +28,7 @@ class AFortAthenaMutator_SynchronizedTeleport;
 class AFortPlayerStateAthena;
 class UAudioComponent;
 class UCurveFloat;
+class UDeathEffectsPawnComponent;
 class UFortAthenaCustomTimeDilationManager;
 class UMaterialParameterCollection;
 class USoundBase;
@@ -166,7 +167,7 @@ public:
 
 	// table index 53, flags 0x20080000010001
 	UPROPERTY()
-	uint8 bRespawnEnabled : 1;
+	bool bRespawnEnabled;
 
 	// table index 52, flags 0x20080000010001
 	UPROPERTY()
@@ -240,6 +241,10 @@ public:
 	UPROPERTY()
 	float RoundEndStingerFadeDuration;
 
+	// table index 33, flags 0x24080000010001
+	UPROPERTY()
+	TSubclassOf<UDeathEffectsPawnComponent> DeathEffectsComponentClass;
+
 	// table index 32, flags 0x20080000010001
 	UPROPERTY()
 	FText RoundResultsText_Win;
@@ -250,7 +255,7 @@ public:
 
 	// table index 30, flags 0x20080000010001
 	UPROPERTY()
-	uint8 bShouldSkipWinLossScreen : 1;
+	bool bShouldSkipWinLossScreen;
 
 	// table index 29, flags 0x20080000010001
 	UPROPERTY()
@@ -294,11 +299,11 @@ public:
 
 	// table index 19, flags 0x40000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_TeleportComplete)
-	uint8 bTeleportComplete : 1;
+	bool bTeleportComplete;
 
 	// table index 18, flags 0x40000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_RoundStartWidgetSequenceRunning)
-	uint8 bRoundStartWidgetSequenceRunning : 1;
+	bool bRoundStartWidgetSequenceRunning;
 
 	// table index 17, flags 0x40000000000000
 	UPROPERTY()
@@ -314,7 +319,7 @@ public:
 
 	// table index 13, flags 0x40000000000020
 	UPROPERTY(Replicated)
-	uint8 bIsCobaltFinished : 1;
+	bool bIsCobaltFinished;
 
 	// table index 12, flags 0x40000000000020
 	UPROPERTY(Replicated)
@@ -338,7 +343,7 @@ public:
 
 	// table index 3, flags 0x40000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_bClientPlaylistTimerStarted)
-	uint8 bClientPlaylistTimerStarted : 1;
+	bool bClientPlaylistTimerStarted;
 
 	// table index 2, flags 0x40000000080008
 	UPROPERTY()
@@ -350,7 +355,7 @@ public:
 
 	// table index 0, flags 0x40000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_bIsFinishedDisplayingRoundEndUI)
-	uint8 bIsFinishedDisplayingRoundEndUI : 1;
+	bool bIsFinishedDisplayingRoundEndUI;
 
 	UFUNCTION()
 	void OnRep_ActiveRound();

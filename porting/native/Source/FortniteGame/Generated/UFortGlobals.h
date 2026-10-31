@@ -73,31 +73,31 @@ public:
 
 	// table index 139, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bEnablePlayerTriggeredRespawn : 1;
+	bool bEnablePlayerTriggeredRespawn;
 
 	// table index 138, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bEnableNewCustomizationPanel : 1;
+	bool bEnableNewCustomizationPanel;
 
 	// table index 137, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bEnableInfluenceMap : 1;
+	bool bEnableInfluenceMap;
 
 	// table index 136, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bEnableAIDespawning : 1;
+	bool bEnableAIDespawning;
 
 	// table index 135, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bEnableDBNO : 1;
+	bool bEnableDBNO;
 
 	// table index 134, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bEnableIronCity : 1;
+	bool bEnableIronCity;
 
 	// table index 133, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bEnableForceBuildingActorRecordUpdates : 1;
+	bool bEnableForceBuildingActorRecordUpdates;
 
 	// table index 131, flags 0x10000000004000
 	UPROPERTY(Config)
@@ -105,7 +105,7 @@ public:
 
 	// table index 130, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bEnableIronCityCoast : 1;
+	bool bEnableIronCityCoast;
 
 	// table index 128, flags 0x10000000004000
 	UPROPERTY(Config)
@@ -117,83 +117,83 @@ public:
 
 	// table index 125, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bEnableMaydayStrangeLands : 1;
+	bool bEnableMaydayStrangeLands;
 
 	// table index 124, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bForceMaydayStrangeLands : 1;
+	bool bForceMaydayStrangeLands;
 
 	// table index 123, flags 0x20080000004000
 	UPROPERTY(Config)
-	uint8 bEnableHestia : 1;
+	bool bEnableHestia;
 
 	// table index 122, flags 0x20080000004000
 	UPROPERTY(Config)
-	uint8 bEnableIronCityAutoAmplifierPlacement : 1;
+	bool bEnableIronCityAutoAmplifierPlacement;
 
 	// table index 121, flags 0x20080000004000
 	UPROPERTY(Config)
-	uint8 bEnableWargameDebug : 1;
+	bool bEnableWargameDebug;
 
 	// table index 120, flags 0x20080000004000
 	UPROPERTY(Config)
-	uint8 bEnableEnduranceDebug : 1;
+	bool bEnableEnduranceDebug;
 
 	// table index 119, flags 0x20080000004000
 	UPROPERTY(Config)
-	uint8 bEnableTrapScoringCrafting : 1;
+	bool bEnableTrapScoringCrafting;
 
 	// table index 118, flags 0x20080000004000
 	UPROPERTY(Config)
-	uint8 bEnableTrapScoringPlacement : 1;
+	bool bEnableTrapScoringPlacement;
 
 	// table index 117, flags 0x20080000004000
 	UPROPERTY(Config)
-	uint8 bEnableTrapScoringActivation : 1;
+	bool bEnableTrapScoringActivation;
 
 	// table index 116, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bEnableInWorldScoreNumbers : 1;
+	bool bEnableInWorldScoreNumbers;
 
 	// table index 115, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bMustUseToggleJetpackExecute : 1;
+	bool bMustUseToggleJetpackExecute;
 
 	// table index 114, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bEnableNewRewardFlow : 1;
+	bool bEnableNewRewardFlow;
 
 	// table index 113, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bEnableWIFE : 1;
+	bool bEnableWIFE;
 
 	// table index 112, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bEnableFrontendCrafting : 1;
+	bool bEnableFrontendCrafting;
 
 	// table index 111, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bEnableFrontendStorage : 1;
+	bool bEnableFrontendStorage;
 
 	// table index 110, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bEnableLazyASC : 1;
+	bool bEnableLazyASC;
 
 	// table index 109, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bEnableFriendCodes : 1;
+	bool bEnableFriendCodes;
 
 	// table index 108, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bEnableCreativeMode : 1;
+	bool bEnableCreativeMode;
 
 	// table index 107, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bEnableCreativeModeLimitedAccess : 1;
+	bool bEnableCreativeModeLimitedAccess;
 
 	// table index 106, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bEnableCreativeModeLimitedAccessForFounders : 1;
+	bool bEnableCreativeModeLimitedAccessForFounders;
 
 	// table index 105, flags 0x10000000004000
 	UPROPERTY(Config)
@@ -205,7 +205,7 @@ public:
 
 	// table index 103, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bEnableCreativeModeTutorials : 1;
+	bool bEnableCreativeModeTutorials;
 
 	// table index 102, flags 0x10000000004000
 	UPROPERTY(Config)
@@ -225,11 +225,11 @@ public:
 
 	// table index 97, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bSubmitReturnToMenuErrorLogs : 1;
+	bool bSubmitReturnToMenuErrorLogs;
 
 	// table index 96, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bSubmitSecondaryReturnToMenuErrorLogs : 1;
+	bool bSubmitSecondaryReturnToMenuErrorLogs;
 
 	// table index 95, flags 0x10000000004000
 	UPROPERTY(Config)
@@ -253,35 +253,35 @@ public:
 
 	// table index 89, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bShowMissionResultsMovies : 1;
+	bool bShowMissionResultsMovies;
 
 	// table index 88, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bDisablePlayerTeleportDuringMissionResults : 1;
+	bool bDisablePlayerTeleportDuringMissionResults;
 
 	// table index 87, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bDisableParticleEffectsDuringMissionResults : 1;
+	bool bDisableParticleEffectsDuringMissionResults;
 
 	// table index 86, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bFlushGPUWhenPlayerIsTeleportedAtEndOfZone : 1;
+	bool bFlushGPUWhenPlayerIsTeleportedAtEndOfZone;
 
 	// table index 85, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bStreamOutTextureDataWhenPlayerIsTeleportedAtEndOfZone : 1;
+	bool bStreamOutTextureDataWhenPlayerIsTeleportedAtEndOfZone;
 
 	// table index 84, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bTwitchEnabled : 1;
+	bool bTwitchEnabled;
 
 	// table index 83, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bAllowContainersInCreativeItemLists : 1;
+	bool bAllowContainersInCreativeItemLists;
 
 	// table index 82, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bAccountLinkingEnabled : 1;
+	bool bAccountLinkingEnabled;
 
 	// table index 80, flags 0x10000000004000
 	UPROPERTY(Config)
@@ -293,39 +293,39 @@ public:
 
 	// table index 78, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bEnableAccountLinkingUIURLButton : 1;
+	bool bEnableAccountLinkingUIURLButton;
 
 	// table index 77, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bAllowStreamerSafetyCharacterReplication : 1;
+	bool bAllowStreamerSafetyCharacterReplication;
 
 	// table index 76, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bAnonymousCharacterModeSafetyCharacterReplication : 1;
+	bool bAnonymousCharacterModeSafetyCharacterReplication;
 
 	// table index 75, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bTournamentSafetyCharacterReplication : 1;
+	bool bTournamentSafetyCharacterReplication;
 
 	// table index 74, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bAllowSafetyCharacterReplicationToUseVariantItems : 1;
+	bool bAllowSafetyCharacterReplicationToUseVariantItems;
 
 	// table index 73, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bAllowItemWrapMaterialSyncLoads : 1;
+	bool bAllowItemWrapMaterialSyncLoads;
 
 	// table index 72, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bEnableQuestContentCheckOnSave : 1;
+	bool bEnableQuestContentCheckOnSave;
 
 	// table index 71, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bTwitchHeartbeatEnabled : 1;
+	bool bTwitchHeartbeatEnabled;
 
 	// table index 70, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bTwitchAllowDisplayViewernames : 1;
+	bool bTwitchAllowDisplayViewernames;
 
 	// table index 69, flags 0x10000000004000
 	UPROPERTY(Config)
@@ -345,15 +345,15 @@ public:
 
 	// table index 65, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bAllowLogout : 1;
+	bool bAllowLogout;
 
 	// table index 64, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bAllowQuit : 1;
+	bool bAllowQuit;
 
 	// table index 63, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bHasWorldMap : 1;
+	bool bHasWorldMap;
 
 	// table index 62, flags 0x10000000004000
 	UPROPERTY(Config)
@@ -369,19 +369,19 @@ public:
 
 	// table index 59, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bUploadAthenaStatsV2 : 1;
+	bool bUploadAthenaStatsV2;
 
 	// table index 58, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bAthenaStatsFrontendEnabled : 1;
+	bool bAthenaStatsFrontendEnabled;
 
 	// table index 57, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bAthenaLeaderboardFrontEndEnabled : 1;
+	bool bAthenaLeaderboardFrontEndEnabled;
 
 	// table index 56, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bAthenaSquadQuickChatEnabled : 1;
+	bool bAthenaSquadQuickChatEnabled;
 
 	// table index 55, flags 0x10000000004000
 	UPROPERTY(Config)
@@ -389,7 +389,7 @@ public:
 
 	// table index 54, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bGlobalLeaderboardsFrontEndEnabled : 1;
+	bool bGlobalLeaderboardsFrontEndEnabled;
 
 	// table index 53, flags 0x10000000004000
 	UPROPERTY(Config)
@@ -397,51 +397,51 @@ public:
 
 	// table index 52, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bFirstShotAccuracyDisabled : 1;
+	bool bFirstShotAccuracyDisabled;
 
 	// table index 51, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bAllowProjectileRethrow : 1;
+	bool bAllowProjectileRethrow;
 
 	// table index 50, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bPapayaSpeakersEnabled : 1;
+	bool bPapayaSpeakersEnabled;
 
 	// table index 49, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bDoAthenaClientStartupWeaponPreloading : 1;
+	bool bDoAthenaClientStartupWeaponPreloading;
 
 	// table index 48, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bDoCosmeticAssetStreaming : 1;
+	bool bDoCosmeticAssetStreaming;
 
 	// table index 47, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bAthenaSpatialUIDeferMarkingItemsSeen : 1;
+	bool bAthenaSpatialUIDeferMarkingItemsSeen;
 
 	// table index 46, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bAthenaUsesSimCollision : 1;
+	bool bAthenaUsesSimCollision;
 
 	// table index 45, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bAthenaSimVehicles : 1;
+	bool bAthenaSimVehicles;
 
 	// table index 44, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bAthenaSubstepping : 1;
+	bool bAthenaSubstepping;
 
 	// table index 43, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bCampaignSubstepping : 1;
+	bool bCampaignSubstepping;
 
 	// table index 42, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bCampaignUsesSimCollision : 1;
+	bool bCampaignUsesSimCollision;
 
 	// table index 41, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bCampaignSimVehicles : 1;
+	bool bCampaignSimVehicles;
 
 	// table index 40, flags 0x10000000004000
 	UPROPERTY(Config)
@@ -465,35 +465,35 @@ public:
 
 	// table index 34, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bAllowXboxStwToken : 1;
+	bool bAllowXboxStwToken;
 
 	// table index 33, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bUsePlatformProfanityFilterForChat : 1;
+	bool bUsePlatformProfanityFilterForChat;
 
 	// table index 32, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bShouldSendSettingsSnapshotOnLogin : 1;
+	bool bShouldSendSettingsSnapshotOnLogin;
 
 	// table index 31, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bShouldForceAllowBroadcasting : 1;
+	bool bShouldForceAllowBroadcasting;
 
 	// table index 30, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bUseLegacyMediaSource : 1;
+	bool bUseLegacyMediaSource;
 
 	// table index 29, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bUseLegacyMediaSourceForCreative : 1;
+	bool bUseLegacyMediaSourceForCreative;
 
 	// table index 28, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bDisableMediaStreamingOnWindows7 : 1;
+	bool bDisableMediaStreamingOnWindows7;
 
 	// table index 27, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bAllowElectraForCellStreaming : 1;
+	bool bAllowElectraForCellStreaming;
 
 	// table index 26, flags 0x10000000004000
 	UPROPERTY(Config)
@@ -513,19 +513,19 @@ public:
 
 	// table index 22, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bElectraLiveUseConservativePresentationOffset : 1;
+	bool bElectraLiveUseConservativePresentationOffset;
 
 	// table index 21, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bAllowElectraForReplayCinematic : 1;
+	bool bAllowElectraForReplayCinematic;
 
 	// table index 20, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bDisableElectraForReplayCinematicOnWin7 : 1;
+	bool bDisableElectraForReplayCinematicOnWin7;
 
 	// table index 19, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bDisableElectraForReplayCinematicOnWin7AndWin8 : 1;
+	bool bDisableElectraForReplayCinematicOnWin7AndWin8;
 
 	// table index 18, flags 0x10000000004000
 	UPROPERTY(Config)
@@ -545,11 +545,11 @@ public:
 
 	// table index 14, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bAllowElectraForWatchBattlePassMovie : 1;
+	bool bAllowElectraForWatchBattlePassMovie;
 
 	// table index 13, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bShowExtendedBattlePassMovie : 1;
+	bool bShowExtendedBattlePassMovie;
 
 	// table index 12, flags 0x10000000004000
 	UPROPERTY(Config)
@@ -561,7 +561,7 @@ public:
 
 	// table index 10, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bAllowForceDefaultAudioTrack : 1;
+	bool bAllowForceDefaultAudioTrack;
 
 	// table index 9, flags 0x10000000004000
 	UPROPERTY(Config)
@@ -581,7 +581,7 @@ public:
 
 	// table index 4, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bRegionCN : 1;
+	bool bRegionCN;
 
 	// table index 3, flags 0x10000000002000
 	UPROPERTY(Transient)

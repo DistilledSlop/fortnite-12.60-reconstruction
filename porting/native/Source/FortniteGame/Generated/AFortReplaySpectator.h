@@ -48,7 +48,7 @@ public:
 
 	// table index 8, flags 0x40000000004000
 	UPROPERTY(Config)
-	uint8 bShouldUpdateReplayContextAboutSequencer : 1;
+	bool bShouldUpdateReplayContextAboutSequencer;
 
 	// table index 7, flags 0x40000000004000
 	UPROPERTY(Config)

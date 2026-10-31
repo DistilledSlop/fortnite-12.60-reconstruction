@@ -66,7 +66,7 @@ public:
 
 	// table index 1, flags 0x40000000002020
 	UPROPERTY(Replicated, Transient)
-	uint8 bHasValidLinkData : 1;
+	bool bHasValidLinkData;
 
 	// table index 0, flags 0x40000000002020
 	UPROPERTY(Replicated, Transient)

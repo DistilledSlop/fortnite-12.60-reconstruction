@@ -39,7 +39,7 @@ struct FCreativeIslandData
 
 	// table index 0, offset None, flags 0x10000000000014
 	UPROPERTY()
-	uint8 bIsDeleted : 1;
+	bool bIsDeleted;
 
 };
 

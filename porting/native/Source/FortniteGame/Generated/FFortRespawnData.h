@@ -16,15 +16,15 @@ struct FFortRespawnData
 
 	// table index 5, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bRespawnDataAvailable : 1;
+	bool bRespawnDataAvailable;
 
 	// table index 4, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bClientIsReady : 1;
+	bool bClientIsReady;
 
 	// table index 3, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bServerIsReady : 1;
+	bool bServerIsReady;
 
 	// table index 2, offset 4, flags 0x10000000000000
 	UPROPERTY()

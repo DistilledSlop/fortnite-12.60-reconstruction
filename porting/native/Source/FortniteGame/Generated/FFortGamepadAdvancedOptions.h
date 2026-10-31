@@ -55,7 +55,7 @@ struct FFortGamepadAdvancedOptions
 
 	// table index 5, offset None, flags 0x10000000000001
 	UPROPERTY()
-	uint8 bInstantBoostWhenBuilding : 1;
+	bool bInstantBoostWhenBuilding;
 
 	// table index 4, offset 44, flags 0x10000000000001
 	UPROPERTY()
@@ -71,7 +71,7 @@ struct FFortGamepadAdvancedOptions
 
 	// table index 0, offset None, flags 0x10000000000001
 	UPROPERTY()
-	uint8 bUseLegacyControls : 1;
+	bool bUseLegacyControls;
 
 };
 

@@ -21,7 +21,7 @@ class FORTNITEGAME_API AFortCheckPointSplineActor : public AActor
 public:
 	// table index 11, flags 0x20080000010001
 	UPROPERTY()
-	uint8 bSmoothSplineMesh : 1;
+	bool bSmoothSplineMesh;
 
 	// table index 10, flags 0x20080000010001
 	UPROPERTY()
@@ -29,7 +29,7 @@ public:
 
 	// table index 9, flags 0x20080000000001
 	UPROPERTY()
-	uint8 bShowSplineMeshAtStartup : 1;
+	bool bShowSplineMeshAtStartup;
 
 	// table index 7, flags 0x20088000002008
 	UPROPERTY(Transient)
@@ -37,7 +37,7 @@ public:
 
 	// table index 6, flags 0x20080000010001
 	UPROPERTY()
-	uint8 bDrawSplineMapUI : 1;
+	bool bDrawSplineMapUI;
 
 	// table index 3, flags 0x20080000010001
 	UPROPERTY()
@@ -53,7 +53,7 @@ public:
 
 	// table index 0, flags 0x20080000010001
 	UPROPERTY()
-	uint8 bSplineMapUIAntialias : 1;
+	bool bSplineMapUIAntialias;
 
 };
 

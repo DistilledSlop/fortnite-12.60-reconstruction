@@ -28,7 +28,7 @@ public:
 
 	// table index 6, flags 0x10000000004015
 	UPROPERTY(Config)
-	uint8 bMagnetizeWhenNotInSkytube : 1;
+	bool bMagnetizeWhenNotInSkytube;
 
 	// table index 5, flags 0x10000010080000
 	UPROPERTY()
@@ -52,7 +52,7 @@ public:
 
 	// table index 0, flags 0x20080100002020
 	UPROPERTY(ReplicatedUsing=OnRep_Magnetized, Transient)
-	uint8 bMagnetized : 1;
+	bool bMagnetized;
 
 	UFUNCTION()
 	void OnRep_Magnetized(bool bPreviousMagnetized);

@@ -68,6 +68,8 @@ void AFortAIPawn::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifet
 
 	DOREPLIFETIME(AFortAIPawn, CurrentFortAILODLevel);
 	DOREPLIFETIME(AFortAIPawn, CurrentAimTarget);
+	DOREPLIFETIME(AFortAIPawn, AdditionalModifierDefinitions);
+	DOREPLIFETIME(AFortAIPawn, SpawnModifierDefinitions);
 	DOREPLIFETIME(AFortAIPawn, MinimapViewableDistance);
 	DOREPLIFETIME(AFortAIPawn, AppearanceOverrideEntryIndex);
 	DOREPLIFETIME(AFortAIPawn, Inventory);

@@ -94,7 +94,7 @@ public:
 
 	// table index 85, flags 0x10000000002000
 	UPROPERTY(Transient)
-	uint8 bWasCrouchedBeforeDBNO : 1;
+	bool bWasCrouchedBeforeDBNO;
 
 	// table index 84, flags 0x10000000002020
 	UPROPERTY(Replicated, Transient)
@@ -110,7 +110,7 @@ public:
 
 	// table index 80, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bPlaytestWithNoMouse : 1;
+	bool bPlaytestWithNoMouse;
 
 	// table index 79, flags 0x10000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_CapsuleRadiusAthena)
@@ -126,35 +126,35 @@ public:
 
 	// table index 76, flags 0x40000000010001
 	UPROPERTY()
-	uint8 bShouldPawnInstantDie : 1;
+	bool bShouldPawnInstantDie;
 
 	// table index 75, flags 0x40000000010001
 	UPROPERTY()
-	uint8 bShouldPawnDBNODisplayOnKillFeed : 1;
+	bool bShouldPawnDBNODisplayOnKillFeed;
 
 	// table index 74, flags 0x40000000010001
 	UPROPERTY()
-	uint8 bShouldPawnDeathDisplayOnKillFeed : 1;
+	bool bShouldPawnDeathDisplayOnKillFeed;
 
 	// table index 73, flags 0x40000000010001
 	UPROPERTY()
-	uint8 bShouldPawnLeaveEliminationIndicator : 1;
+	bool bShouldPawnLeaveEliminationIndicator;
 
 	// table index 72, flags 0x40000000010001
 	UPROPERTY()
-	uint8 bShouldPawnAwardPoints : 1;
+	bool bShouldPawnAwardPoints;
 
 	// table index 71, flags 0x40000000010001
 	UPROPERTY()
-	uint8 bShouldTriggerDeathAnalytics : 1;
+	bool bShouldTriggerDeathAnalytics;
 
 	// table index 70, flags 0x40000000010001
 	UPROPERTY()
-	uint8 bShouldDropItemsOnDeath : 1;
+	bool bShouldDropItemsOnDeath;
 
 	// table index 69, flags 0x40000000010001
 	UPROPERTY()
-	uint8 bShouldSkipMovementFullSimulation : 1;
+	bool bShouldSkipMovementFullSimulation;
 
 	// table index 68, flags 0x40000000010001
 	UPROPERTY()
@@ -186,7 +186,7 @@ public:
 
 	// table index 61, flags 0x10000000000005
 	UPROPERTY()
-	uint8 bADSWhileNotOnGround : 1;
+	bool bADSWhileNotOnGround;
 
 	// table index 60, flags 0x10000000000005
 	UPROPERTY()
@@ -206,7 +206,7 @@ public:
 
 	// table index 56, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bDelaySimProxyCollisionInAircraftPhase : 1;
+	bool bDelaySimProxyCollisionInAircraftPhase;
 
 	// table index 55, flags 0x10000000004000
 	UPROPERTY(Config)
@@ -258,7 +258,7 @@ public:
 
 	// table index 43, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bIsPlayerPawnReady : 1;
+	bool bIsPlayerPawnReady;
 
 	// table index 42, flags 0x20080000002000
 	UPROPERTY(Transient)
@@ -354,7 +354,7 @@ public:
 
 	// table index 17, flags 0x20080000000004
 	UPROPERTY()
-	uint8 bFXPlayDustOnMovement : 1;
+	bool bFXPlayDustOnMovement;
 
 	// table index 16, flags 0x20080000010001
 	UPROPERTY()
@@ -394,7 +394,7 @@ public:
 
 	// table index 7, flags 0x10000100002034
 	UPROPERTY(ReplicatedUsing=OnRep_bIsCreativeGhostModeActivated, Transient)
-	uint8 bIsCreativeGhostModeActivated : 1;
+	bool bIsCreativeGhostModeActivated;
 
 	// table index 6, flags 0x20080000002000
 	UPROPERTY(Transient)

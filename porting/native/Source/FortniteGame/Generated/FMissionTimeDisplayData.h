@@ -19,7 +19,7 @@ struct FMissionTimeDisplayData
 
 	// table index 3, offset None, flags 0x10000000010015
 	UPROPERTY()
-	uint8 bHideTimer : 1;
+	bool bHideTimer;
 
 	// table index 2, offset 8, flags 0x10000000010015
 	UPROPERTY()

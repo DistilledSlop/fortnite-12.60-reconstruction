@@ -40,7 +40,7 @@ public:
 
 	// table index 20, flags 0x10000001020801
 	UPROPERTY(SaveGame)
-	uint8 bShowPublishWatermark : 1;
+	bool bShowPublishWatermark;
 
 	// table index 19, flags 0x10000010080000
 	UPROPERTY()
@@ -60,11 +60,11 @@ public:
 
 	// table index 15, flags 0x10000000020801
 	UPROPERTY()
-	uint8 bAllowOutOfBounds : 1;
+	bool bAllowOutOfBounds;
 
 	// table index 14, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bDeferDeletePlayerBuiltBuildingActorsForRollback : 1;
+	bool bDeferDeletePlayerBuiltBuildingActorsForRollback;
 
 	// table index 13, flags 0x20080000002014
 	UPROPERTY(Transient)
@@ -84,7 +84,7 @@ public:
 
 	// table index 8, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bPrefersRespectingPartiesFromMMS : 1;
+	bool bPrefersRespectingPartiesFromMMS;
 
 	// table index 7, flags 0x20080000002000
 	UPROPERTY(Transient)

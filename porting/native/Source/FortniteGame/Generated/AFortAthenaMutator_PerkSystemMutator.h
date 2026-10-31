@@ -11,6 +11,7 @@
 #include "FPerkMutatorData.h"
 
 class AFortPlayerControllerAthena;
+class UFortSpyTechItemDefinition;
 
 #include "AFortAthenaMutator_PerkSystemMutator.generated.h"
 
@@ -42,7 +43,11 @@ public:
 
 	// table index 6, flags 0x20080000000001
 	UPROPERTY()
-	uint8 bDelayedPerkSelection : 1;
+	bool bDelayedPerkSelection;
+
+	// table index 4, flags 0x20080000000001
+	UPROPERTY()
+	TArray<UFortSpyTechItemDefinition*> DefaultPerks;
 
 	// table index 1, flags 0x20080000000000
 	UPROPERTY()

@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "AFortGameModePvE.h"
 
+#include "FFortItemEntry.h"
 #include "FFortOutpostCoreInfo.h"
 
 #include "AFortGameModeOutpost.generated.h"
@@ -16,13 +17,17 @@ class FORTNITEGAME_API AFortGameModeOutpost : public AFortGameModePvE
 	GENERATED_BODY()
 
 public:
+	// table index 7, flags 0x20080000000000
+	UPROPERTY()
+	TArray<FFortItemEntry> OwnerItemRefundCache;
+
 	// table index 6, flags 0x20080000000000
 	UPROPERTY()
 	FFortOutpostCoreInfo CurrentCoreInfo;
 
 	// table index 5, flags 0x20080000010015
 	UPROPERTY()
-	uint8 bSavePlayerBuiltStructuresAtAllTimes : 1;
+	bool bSavePlayerBuiltStructuresAtAllTimes;
 
 	// table index 4, flags 0x20080000010015
 	UPROPERTY()
@@ -34,15 +39,15 @@ public:
 
 	// table index 2, flags 0x20080000004000
 	UPROPERTY(Config)
-	uint8 bEnableLargeScaleDisassemblyForcedSaves : 1;
+	bool bEnableLargeScaleDisassemblyForcedSaves;
 
 	// table index 1, flags 0x20080000004000
 	UPROPERTY(Config)
-	uint8 bEnableUnsupportedStructureDisassembly : 1;
+	bool bEnableUnsupportedStructureDisassembly;
 
 	// table index 0, flags 0x20080000004000
 	UPROPERTY(Config)
-	uint8 bCheckNavMeshAvailability : 1;
+	bool bCheckNavMeshAvailability;
 
 };
 

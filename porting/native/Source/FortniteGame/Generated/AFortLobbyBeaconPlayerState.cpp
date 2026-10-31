@@ -32,6 +32,11 @@ void AFortLobbyBeaconPlayerState::OnRep_HeroId()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortLobbyBeaconPlayerState::OnRep_HeroType()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortLobbyBeaconPlayerState::OnRep_HomeBaseVersion()
 {
 	// Body not recovered: reflection-derived stub.
@@ -51,6 +56,7 @@ void AFortLobbyBeaconPlayerState::GetLifetimeReplicatedProps(TArray<FLifetimePro
 	DOREPLIFETIME(AFortLobbyBeaconPlayerState, HomeBaseVersion);
 	DOREPLIFETIME(AFortLobbyBeaconPlayerState, LobbyTimeRemaining);
 	DOREPLIFETIME(AFortLobbyBeaconPlayerState, BannerInfo);
+	DOREPLIFETIME(AFortLobbyBeaconPlayerState, HeroType);
 	DOREPLIFETIME(AFortLobbyBeaconPlayerState, HeroId);
 	DOREPLIFETIME(AFortLobbyBeaconPlayerState, MatchmakingLevel);
 	DOREPLIFETIME(AFortLobbyBeaconPlayerState, CurrentCharXP);

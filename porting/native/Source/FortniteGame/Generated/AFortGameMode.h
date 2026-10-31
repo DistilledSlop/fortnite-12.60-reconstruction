@@ -8,6 +8,7 @@
 
 #include "EFortGameplayState.h"
 #include "FCumulativeFrameTimeWithoutSleepLimits.h"
+#include "FQuickBarData.h"
 #include "GameplayTagContainer.h"
 
 class AFortGameSession;
@@ -16,6 +17,7 @@ class AFortMissionManager;
 class AFortPlayerControllerGameplay;
 class AFortTeamInfo;
 class APawn;
+class UFortAwardItemDefinition;
 class UFortGameDeathPenalty;
 class UFortSharedMissionLists;
 class UMatchHeartbeatManager;
@@ -74,7 +76,7 @@ public:
 
 	// table index 52, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bKickIdlers : 1;
+	bool bKickIdlers;
 
 	// table index 51, flags 0x10000000004000
 	UPROPERTY(Config)
@@ -86,11 +88,11 @@ public:
 
 	// table index 49, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bEnableNotifications : 1;
+	bool bEnableNotifications;
 
 	// table index 48, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bEnableReplicationGraph : 1;
+	bool bEnableReplicationGraph;
 
 	// table index 47, flags 0x44000000002000
 	UPROPERTY(Transient)
@@ -130,11 +132,11 @@ public:
 
 	// table index 38, flags 0x10000000010015
 	UPROPERTY()
-	uint8 bContainersForceTossLoot : 1;
+	bool bContainersForceTossLoot;
 
 	// table index 37, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bOverrideRotationOnRestartPlayer : 1;
+	bool bOverrideRotationOnRestartPlayer;
 
 	// table index 36, flags 0x20080000000000
 	UPROPERTY()
@@ -142,7 +144,7 @@ public:
 
 	// table index 35, flags 0x20080000010005
 	UPROPERTY()
-	uint8 bDBNOEnabled : 1;
+	bool bDBNOEnabled;
 
 	// table index 34, flags 0x20080000002000
 	UPROPERTY(Transient)
@@ -170,11 +172,15 @@ public:
 
 	// table index 28, flags 0x20080000004000
 	UPROPERTY(Config)
-	uint8 bCheckWeaponTracesForPlayerBuiltWalls : 1;
+	bool bCheckWeaponTracesForPlayerBuiltWalls;
 
 	// table index 27, flags 0x20080000000000
 	UPROPERTY()
 	UMatchHeartbeatManager* MatchHeartbeatManager;
+
+	// table index 25, flags 0x20080000000000
+	UPROPERTY()
+	TArray<UFortAwardItemDefinition*> ActiveAwards;
 
 	// table index 24, flags 0x20080000002000
 	UPROPERTY(Transient)
@@ -226,11 +232,15 @@ public:
 
 	// table index 4, flags 0x40000000004000
 	UPROPERTY(Config)
-	uint8 bAlwaysFlushMMREndZoneEvents : 1;
+	bool bAlwaysFlushMMREndZoneEvents;
 
 	// table index 3, flags 0x10000000000001
 	UPROPERTY()
-	uint8 bOverrideQuickBars : 1;
+	bool bOverrideQuickBars;
+
+	// table index 2, flags 0x10000000000001
+	UPROPERTY()
+	FQuickBarData QuickBarDefinitions[3];
 
 	// table index 0, flags 0x20080000000000
 	UPROPERTY()

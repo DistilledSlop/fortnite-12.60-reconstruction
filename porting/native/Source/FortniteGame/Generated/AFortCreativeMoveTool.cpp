@@ -87,6 +87,11 @@ void AFortCreativeMoveTool::RemoteClientsUpdateSelectedActors_Implementation(UOb
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortCreativeMoveTool::ServerAddItemToMoveTool_Implementation(bool bUseVolume, UFortItemDefinition* PlaysetToSpawn, AFortPlayerControllerAthena* FortPC)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortCreativeMoveTool::ServerClearMovementMode_Implementation(bool bExited)
 {
 	// Body not recovered: reflection-derived stub.
@@ -188,6 +193,11 @@ void AFortCreativeMoveTool::ServerUpdateScalePressed_Implementation(bool bNewIsS
 }
 
 void AFortCreativeMoveTool::ServerUpdateTractorBeam_Implementation(bool bNewIsPullPressed, bool bNewIsPushPressed, float NewTargetTractorBeamOffset)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortCreativeMoveTool::SpawnPlaysetVolumeOnServer_Implementation(const FRotator& SpawnRotation, const FVector& SpawnLocation, UFortPlaysetItemDefinition* Playset)
 {
 	// Body not recovered: reflection-derived stub.
 }

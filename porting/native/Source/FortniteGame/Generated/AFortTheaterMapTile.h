@@ -25,15 +25,15 @@ class FORTNITEGAME_API AFortTheaterMapTile : public AFortClientOnlyActor
 public:
 	// table index 28, flags 0x10000000000014
 	UPROPERTY()
-	uint8 bFocused : 1;
+	bool bFocused;
 
 	// table index 27, flags 0x10000000000014
 	UPROPERTY()
-	uint8 bHostSelected : 1;
+	bool bHostSelected;
 
 	// table index 26, flags 0x10000000000014
 	UPROPERTY()
-	uint8 bGoToPromptEnabled : 1;
+	bool bGoToPromptEnabled;
 
 	// table index 25, flags 0x10000000000000
 	UPROPERTY()
@@ -41,7 +41,7 @@ public:
 
 	// table index 24, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bHasFinishedLoading : 1;
+	bool bHasFinishedLoading;
 
 	// table index 22, flags 0x20080000000014
 	UPROPERTY()
@@ -93,11 +93,11 @@ public:
 
 	// table index 10, flags 0x20080000010005
 	UPROPERTY()
-	uint8 bEnableBrightnessCode : 1;
+	bool bEnableBrightnessCode;
 
 	// table index 9, flags 0x20080000000014
 	UPROPERTY()
-	uint8 bDisallowQuickplay : 1;
+	bool bDisallowQuickplay;
 
 	// table index 8, flags 0x20080000010005
 	UPROPERTY()

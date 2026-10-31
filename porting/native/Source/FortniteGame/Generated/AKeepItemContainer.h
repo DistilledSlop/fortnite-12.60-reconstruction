@@ -35,11 +35,11 @@ public:
 
 	// table index 10, flags 0x20080000000015
 	UPROPERTY()
-	uint8 bUseDefaultLootLogic : 1;
+	bool bUseDefaultLootLogic;
 
 	// table index 9, flags 0x20080000000015
 	UPROPERTY()
-	uint8 bResetThisWhenKeepResets : 1;
+	bool bResetThisWhenKeepResets;
 
 	// table index 8, flags 0x20080000000015
 	UPROPERTY()
@@ -51,7 +51,7 @@ public:
 
 	// table index 6, flags 0x20080000000015
 	UPROPERTY()
-	uint8 bShowChoiceUI : 1;
+	bool bShowChoiceUI;
 
 	// table index 3, flags 0x20080000000015
 	UPROPERTY()

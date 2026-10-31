@@ -8,6 +8,7 @@
 
 #include "EFortWeaponCoreAnimation.h"
 #include "EFortWeaponReduceMeshWorkSetting.h"
+#include "FCosmeticVariantCache.h"
 #include "FFortAbilitySetHandle.h"
 #include "FFortEffectDistanceQuality.h"
 #include "FFortGameplayAbilityBehaviorDistanceData.h"
@@ -33,12 +34,15 @@ class APawn;
 class UAnimInstance;
 class UAnimMontage;
 class UAnimSequence;
+class UAthenaItemWrapDefinition;
 class UAudioComponent;
 class UCameraShake;
 class UForceFeedbackEffect;
+class UFortAlterationItemDefinition;
 class UFortCameraMode;
 class UFortGameplayAbility;
 class UFortWeaponAnimSet;
+class UFortWeaponItemDefinition;
 class UMaterialInterface;
 class UParticleSystem;
 class USoundBase;
@@ -67,15 +71,15 @@ public:
 
 	// table index 175, flags 0x10000000002020
 	UPROPERTY(Replicated, Transient)
-	uint8 bIsEquippingWeapon : 1;
+	bool bIsEquippingWeapon;
 
 	// table index 174, flags 0x10000000002020
 	UPROPERTY(Replicated, Transient)
-	uint8 bIsReloadingWeapon : 1;
+	bool bIsReloadingWeapon;
 
 	// table index 173, flags 0x10000000002020
 	UPROPERTY(Replicated, Transient)
-	uint8 bIsChargingWeapon : 1;
+	bool bIsChargingWeapon;
 
 	// table index 172, flags 0x10000010080000
 	UPROPERTY()
@@ -107,11 +111,19 @@ public:
 
 	// table index 165, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bUseAttributeCaching : 1;
+	bool bUseAttributeCaching;
+
+	// table index 164, flags 0x10000100002020
+	UPROPERTY(ReplicatedUsing=OnRep_ReplicatedWeaponData, Transient)
+	UFortWeaponItemDefinition* WeaponData;
+
+	// table index 163, flags 0x10000100002020
+	UPROPERTY(ReplicatedUsing=OnRep_ReplicatedCosmeticOverrideWeaponData, Transient)
+	UFortWeaponItemDefinition* CosmeticOverrideWeaponData;
 
 	// table index 162, flags 0x10000000000001
 	UPROPERTY()
-	uint8 bImpactFXAttachedToHitActor : 1;
+	bool bImpactFXAttachedToHitActor;
 
 	// table index 160, flags 0x10000000002000
 	UPROPERTY(Transient)
@@ -123,7 +135,7 @@ public:
 
 	// table index 158, flags 0x10000000010001
 	UPROPERTY()
-	uint8 bRemoveAbilitiesWhenRemovedFromInventory : 1;
+	bool bRemoveAbilitiesWhenRemovedFromInventory;
 
 	// table index 157, flags 0x20080100000020
 	UPROPERTY(ReplicatedUsing=OnRep_EquippedWeaponDestroyWrapper)
@@ -137,13 +149,17 @@ public:
 	UPROPERTY()
 	float MinimumTimeForPersistentFX;
 
+	// table index 154, flags 0x24080000002000
+	UPROPERTY(Transient)
+	TSoftObjectPtr<UAthenaItemWrapDefinition> OverrideItemWrapSoftPtr;
+
 	// table index 152, flags 0x10000000000001
 	UPROPERTY()
 	EFortWeaponReduceMeshWorkSetting WeaponReduceMeshWorkSetting;
 
 	// table index 151, flags 0x20080000000001
 	UPROPERTY()
-	uint8 bShouldDrawNativeReticle : 1;
+	bool bShouldDrawNativeReticle;
 
 	// table index 150, flags 0x20080000000001
 	UPROPERTY()
@@ -219,7 +235,7 @@ public:
 
 	// table index 132, flags 0x20080000000001
 	UPROPERTY()
-	uint8 bSupportsAutofireAtReticleTarget : 1;
+	bool bSupportsAutofireAtReticleTarget;
 
 	// table index 131, flags 0x24080000000001
 	UPROPERTY()
@@ -343,11 +359,11 @@ public:
 
 	// table index 90, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bUsingSecondaryFireAudio : 1;
+	bool bUsingSecondaryFireAudio;
 
 	// table index 89, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bHasCachedAdditionalMeshes : 1;
+	bool bHasCachedAdditionalMeshes;
 
 	// table index 88, flags 0x20080000002000
 	UPROPERTY(Transient)
@@ -375,11 +391,11 @@ public:
 
 	// table index 82, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bIsPlayingFireFX : 1;
+	bool bIsPlayingFireFX;
 
 	// table index 81, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bFireFXTriggered : 1;
+	bool bFireFXTriggered;
 
 	// table index 80, flags 0x20080000002000
 	UPROPERTY(Transient)
@@ -391,11 +407,11 @@ public:
 
 	// table index 78, flags 0x20080000000001
 	UPROPERTY()
-	uint8 bAllowTargeting : 1;
+	bool bAllowTargeting;
 
 	// table index 77, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bIsTargeting : 1;
+	bool bIsTargeting;
 
 	// table index 76, flags 0x20080000000000
 	UPROPERTY()
@@ -415,11 +431,11 @@ public:
 
 	// table index 72, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bTraceThroughPawns : 1;
+	bool bTraceThroughPawns;
 
 	// table index 71, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bTraceThroughWorld : 1;
+	bool bTraceThroughWorld;
 
 	// table index 70, flags 0x20080000010001
 	UPROPERTY()
@@ -431,7 +447,7 @@ public:
 
 	// table index 68, flags 0x20080000010001
 	UPROPERTY()
-	uint8 bUseProjectileTrace : 1;
+	bool bUseProjectileTrace;
 
 	// table index 67, flags 0x20080000010001
 	UPROPERTY()
@@ -541,6 +557,18 @@ public:
 	UPROPERTY(Transient)
 	TArray<FFortAbilitySetHandle> EquippedAbilitySetHandles;
 
+	// table index 36, flags 0x20080100002020
+	UPROPERTY(ReplicatedUsing=OnRep_ReplicatedAppliedAlterations, Transient)
+	TArray<UFortAlterationItemDefinition*> AppliedAlterations;
+
+	// table index 35, flags 0x20080000002000
+	UPROPERTY(Transient)
+	FCosmeticVariantCache PreviousWeaponVariants;
+
+	// table index 34, flags 0x20080000002000
+	UPROPERTY(Transient)
+	UAthenaItemWrapDefinition* AppliedItemWrap;
+
 	// table index 33, flags 0x20080000002000
 	UPROPERTY(Transient)
 	AFortFXManager* CachedFXManager;
@@ -647,11 +675,11 @@ public:
 
 	// table index 4, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bIgnoreTryToFireSlotCooldownRestriction : 1;
+	bool bIgnoreTryToFireSlotCooldownRestriction;
 
 	// table index 3, flags 0x20080000010001
 	UPROPERTY()
-	uint8 bFireConsumableAnalyticEvent : 1;
+	bool bFireConsumableAnalyticEvent;
 
 	// table index 2, flags 0x10000010080000
 	UPROPERTY()
@@ -683,6 +711,15 @@ public:
 
 	UFUNCTION()
 	void OnRep_PrimaryAbilitySpecHandle();
+
+	UFUNCTION()
+	void OnRep_ReplicatedAppliedAlterations();
+
+	UFUNCTION()
+	void OnRep_ReplicatedCosmeticOverrideWeaponData();
+
+	UFUNCTION()
+	void OnRep_ReplicatedWeaponData();
 
 	UFUNCTION(Server, Reliable)
 	void ServerReleaseWeaponAbility(const FGameplayAbilitySpecHandle& SpecHandle);

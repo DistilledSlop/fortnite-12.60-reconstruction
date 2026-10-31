@@ -96,11 +96,11 @@ public:
 
 	// table index 11, flags 0x10000000000005
 	UPROPERTY()
-	uint8 bIsCuckooOut : 1;
+	bool bIsCuckooOut;
 
 	// table index 10, flags 0x10000000000005
 	UPROPERTY()
-	uint8 bCuckooOutOnKillRequested : 1;
+	bool bCuckooOutOnKillRequested;
 
 	// table index 9, flags 0x10000000000005
 	UPROPERTY()

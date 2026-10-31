@@ -24,7 +24,7 @@ class FORTNITEGAME_API AGameplayCueNotify_Jetpack_Hovering : public AFortGamepla
 public:
 	// table index 14, flags 0x20080000000001
 	UPROPERTY()
-	uint8 bUsesFuel : 1;
+	bool bUsesFuel;
 
 	// table index 13, flags 0x20080000000001
 	UPROPERTY()
@@ -64,7 +64,7 @@ public:
 
 	// table index 4, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bPlayedFuelWarning : 1;
+	bool bPlayedFuelWarning;
 
 	// table index 3, flags 0x20080000000000
 	UPROPERTY()

@@ -53,7 +53,7 @@ public:
 
 	// table index 0, flags 0x40000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_RespawningCurrentlyAllowed)
-	uint8 bRespawningCurrentlyAllowed : 1;
+	bool bRespawningCurrentlyAllowed;
 
 	UFUNCTION()
 	void OnRep_RespawningCurrentlyAllowed();

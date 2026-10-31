@@ -136,7 +136,7 @@ public:
 
 	// table index 0, flags 0x10000000000004
 	UPROPERTY()
-	uint8 bShouldDealDamage : 1;
+	bool bShouldDealDamage;
 
 };
 

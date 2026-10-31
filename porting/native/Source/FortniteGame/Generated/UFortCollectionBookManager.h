@@ -14,6 +14,7 @@
 #include "FOnPagesChanged.h"
 
 class UFortCollectionBookPage;
+class UFortMcpProfileCollectionBook;
 
 #include "UFortCollectionBookManager.generated.h"
 
@@ -54,6 +55,10 @@ public:
 	// table index 8, flags 0x40000000002000
 	UPROPERTY(Transient)
 	TArray<FFortPendingSlottedItemOperation> PendingUpdatedItems;
+
+	// table index 5, flags 0x40000000002000
+	UPROPERTY(Transient)
+	TMap<FName, UFortMcpProfileCollectionBook*> ProfileTable;
 
 	// table index 2, flags 0x40000000002000
 	UPROPERTY(Transient)

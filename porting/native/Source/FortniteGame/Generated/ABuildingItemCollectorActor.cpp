@@ -2,6 +2,11 @@
 #include "ABuildingItemCollectorActor.h"
 #include "Net/UnrealNetwork.h"
 
+void ABuildingItemCollectorActor::OnRep_ActiveInputItem()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void ABuildingItemCollectorActor::OnRep_ControllingPlayer()
 {
 	// Body not recovered: reflection-derived stub.
@@ -17,12 +22,19 @@ void ABuildingItemCollectorActor::OnRep_TrackedInteractionData()
 	// Body not recovered: reflection-derived stub.
 }
 
+void ABuildingItemCollectorActor::ServerSpawnItem_Implementation(const FFortItemEntry& OutputItem)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void ABuildingItemCollectorActor::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(ABuildingItemCollectorActor, TrackedInteractionData);
 	DOREPLIFETIME(ABuildingItemCollectorActor, StartingGoalLevel);
+	DOREPLIFETIME(ABuildingItemCollectorActor, ActiveInputItem);
+	DOREPLIFETIME(ABuildingItemCollectorActor, ItemCollections);
 	DOREPLIFETIME(ABuildingItemCollectorActor, OverrideOutputItems);
 	DOREPLIFETIME(ABuildingItemCollectorActor, bUseInstanceLootValueOverrides);
 	DOREPLIFETIME(ABuildingItemCollectorActor, ControllingPlayer);

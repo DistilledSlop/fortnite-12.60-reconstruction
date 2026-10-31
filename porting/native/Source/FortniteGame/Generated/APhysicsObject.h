@@ -58,11 +58,11 @@ public:
 
 	// table index 35, flags 0x10000000010001
 	UPROPERTY()
-	uint8 bShowDamageNumbers : 1;
+	bool bShowDamageNumbers;
 
 	// table index 34, flags 0x10000000010001
 	UPROPERTY()
-	uint8 bPlayDamageAudio : 1;
+	bool bPlayDamageAudio;
 
 	// table index 33, flags 0x10000000010001
 	UPROPERTY()
@@ -106,7 +106,7 @@ public:
 
 	// table index 23, flags 0x10000000002000
 	UPROPERTY(Transient)
-	uint8 bPlayedDying : 1;
+	bool bPlayedDying;
 
 	// table index 22, flags 0x10000000002014
 	UPROPERTY(Transient)
@@ -146,7 +146,7 @@ public:
 
 	// table index 13, flags 0x40000100002020
 	UPROPERTY(ReplicatedUsing=OnRep_PendingDeath, Transient)
-	uint8 bPendingDeath : 1;
+	bool bPendingDeath;
 
 	// table index 12, flags 0x20080000010015
 	UPROPERTY()

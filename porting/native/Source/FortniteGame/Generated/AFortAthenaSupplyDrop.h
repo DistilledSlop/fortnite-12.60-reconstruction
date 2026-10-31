@@ -48,7 +48,7 @@ public:
 
 	// table index 8, flags 0x20080000010001
 	UPROPERTY()
-	uint8 bReplicateLongUseNotifies : 1;
+	bool bReplicateLongUseNotifies;
 
 	// table index 7, flags 0x20080000002000
 	UPROPERTY(Transient)
@@ -80,7 +80,7 @@ public:
 
 	// table index 0, flags 0x40000000004000
 	UPROPERTY(Config)
-	uint8 bVisualizePlayerInteractionChanges : 1;
+	bool bVisualizePlayerInteractionChanges;
 
 	UFUNCTION()
 	void OnRep_NumPlayersInteracting();

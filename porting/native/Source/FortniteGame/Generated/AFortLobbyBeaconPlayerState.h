@@ -11,6 +11,8 @@
 #include "FPlayerBannerInfo.h"
 #include "GameFramework/OnlineReplStructs.h"
 
+class UFortHeroType;
+
 #include "AFortLobbyBeaconPlayerState.generated.h"
 
 UCLASS(config=Game, abstract, transient)
@@ -42,6 +44,10 @@ public:
 	// table index 9, flags 0x10000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_HeroId)
 	FString HeroId;
+
+	// table index 8, flags 0x10000100000020
+	UPROPERTY(ReplicatedUsing=OnRep_HeroType)
+	UFortHeroType* HeroType;
 
 	// table index 7, flags 0x10000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_BannerInfo)
@@ -84,6 +90,9 @@ public:
 
 	UFUNCTION()
 	void OnRep_HeroId();
+
+	UFUNCTION()
+	void OnRep_HeroType();
 
 	UFUNCTION()
 	void OnRep_HomeBaseVersion();

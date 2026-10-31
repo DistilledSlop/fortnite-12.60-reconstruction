@@ -34,7 +34,7 @@ public:
 
 	// table index 5, flags 0x20080000004005
 	UPROPERTY(Config)
-	uint8 bFloorRadiusToGridConversion : 1;
+	bool bFloorRadiusToGridConversion;
 
 	// table index 4, flags 0x20080000004005
 	UPROPERTY(Config)

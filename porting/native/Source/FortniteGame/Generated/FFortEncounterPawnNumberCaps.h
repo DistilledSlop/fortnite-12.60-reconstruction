@@ -15,7 +15,7 @@ struct FFortEncounterPawnNumberCaps
 
 	// table index 2, offset None, flags 0x10000000010001
 	UPROPERTY()
-	uint8 bApplyPawnNumberCaps : 1;
+	bool bApplyPawnNumberCaps;
 
 	// table index 0, offset 8, flags 0x10000000010001
 	UPROPERTY()

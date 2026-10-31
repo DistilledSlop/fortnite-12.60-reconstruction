@@ -74,7 +74,7 @@ public:
 
 	// table index 25, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bApplyGamepadDownsightsLookScale : 1;
+	bool bApplyGamepadDownsightsLookScale;
 
 	// table index 24, flags 0x20080000000000
 	UPROPERTY()
@@ -102,11 +102,11 @@ public:
 
 	// table index 18, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bInvertedPitchForMotion : 1;
+	bool bInvertedPitchForMotion;
 
 	// table index 17, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bInvertedYawMobile : 1;
+	bool bInvertedYawMobile;
 
 	// table index 16, flags 0x20080000000000
 	UPROPERTY()
@@ -154,7 +154,7 @@ public:
 
 	// table index 0, flags 0x40000000004000
 	UPROPERTY(Config)
-	uint8 bReduceAimAssistWhileScoped : 1;
+	bool bReduceAimAssistWhileScoped;
 
 };
 

@@ -79,7 +79,7 @@ public:
 
 	// table index 38, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bWasUsingVelocityBasedTurnCurve : 1;
+	bool bWasUsingVelocityBasedTurnCurve;
 
 	// table index 37, flags 0x10000000000000
 	UPROPERTY()

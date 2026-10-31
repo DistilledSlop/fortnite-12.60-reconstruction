@@ -38,7 +38,7 @@ class FORTNITEGAME_API AFortCharacterVehicle_Ostrich : public AFortCharacterVehi
 public:
 	// table index 120, flags 0x20080000000015
 	UPROPERTY()
-	uint8 bExplodeOnDetonate : 1;
+	bool bExplodeOnDetonate;
 
 	// table index 119, flags 0x20080000002000
 	UPROPERTY(Transient)
@@ -202,19 +202,19 @@ public:
 
 	// table index 75, flags 0x20080100002020
 	UPROPERTY(ReplicatedUsing=OnRep_ChargeJump, Transient)
-	uint8 bChargingJump : 1;
+	bool bChargingJump;
 
 	// table index 74, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bDriverLocalChargingJump : 1;
+	bool bDriverLocalChargingJump;
 
 	// table index 73, flags 0x20080000002020
 	UPROPERTY(Replicated, Transient)
-	uint8 bChargingRockets : 1;
+	bool bChargingRockets;
 
 	// table index 72, flags 0x20080000002020
 	UPROPERTY(Replicated, Transient)
-	uint8 bAutomaticallyFiringShotgun : 1;
+	bool bAutomaticallyFiringShotgun;
 
 	// table index 70, flags 0x20080100002034
 	UPROPERTY(ReplicatedUsing=OnRep_Detonating, Transient)
@@ -222,35 +222,35 @@ public:
 
 	// table index 69, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bLocalSimulatedChargingJump : 1;
+	bool bLocalSimulatedChargingJump;
 
 	// table index 68, flags 0x20080100002020
 	UPROPERTY(ReplicatedUsing=OnRep_IsDashing, Transient)
-	uint8 bDashing : 1;
+	bool bDashing;
 
 	// table index 67, flags 0x20080100002020
 	UPROPERTY(ReplicatedUsing=OnRep_Kick, Transient)
-	uint8 bKickRep : 1;
+	bool bKickRep;
 
 	// table index 66, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bLoadingRockets : 1;
+	bool bLoadingRockets;
 
 	// table index 65, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bKickActive : 1;
+	bool bKickActive;
 
 	// table index 64, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bLocalJumpButtonDown : 1;
+	bool bLocalJumpButtonDown;
 
 	// table index 63, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bAllowEnter : 1;
+	bool bAllowEnter;
 
 	// table index 62, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bAcceleratingFromIdle : 1;
+	bool bAcceleratingFromIdle;
 
 	// table index 61, flags 0x20080000002000
 	UPROPERTY(Transient)
@@ -350,11 +350,11 @@ public:
 
 	// table index 37, flags 0x20080000000005
 	UPROPERTY()
-	uint8 bEnableTargetingLaser : 1;
+	bool bEnableTargetingLaser;
 
 	// table index 36, flags 0x20080000000005
 	UPROPERTY()
-	uint8 bEnableSimulatedProxyFixup : 1;
+	bool bEnableSimulatedProxyFixup;
 
 	// table index 35, flags 0x20080000000015
 	UPROPERTY()
@@ -426,43 +426,43 @@ public:
 
 	// table index 18, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bDriverPrimaryCooldownReady : 1;
+	bool bDriverPrimaryCooldownReady;
 
 	// table index 17, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bDriverSecondaryCooldownReady : 1;
+	bool bDriverSecondaryCooldownReady;
 
 	// table index 16, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bBufferedDriverExit : 1;
+	bool bBufferedDriverExit;
 
 	// table index 15, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bHoldingSelfDestruct : 1;
+	bool bHoldingSelfDestruct;
 
 	// table index 14, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bLocalDriverRequestedExit : 1;
+	bool bLocalDriverRequestedExit;
 
 	// table index 13, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bLocalPrimaryFireButtonDown : 1;
+	bool bLocalPrimaryFireButtonDown;
 
 	// table index 12, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bLocalSecondaryFireButtonDown : 1;
+	bool bLocalSecondaryFireButtonDown;
 
 	// table index 11, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bEmoteAudioForceStopped : 1;
+	bool bEmoteAudioForceStopped;
 
 	// table index 10, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bAimedAtEnemy : 1;
+	bool bAimedAtEnemy;
 
 	// table index 9, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bAimedAtSky : 1;
+	bool bAimedAtSky;
 
 	// table index 8, flags 0x20080000082008
 	UPROPERTY(Transient)

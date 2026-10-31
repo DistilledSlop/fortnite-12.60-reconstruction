@@ -26,7 +26,7 @@ public:
 
 	// table index 2, flags 0x40000000000020
 	UPROPERTY(Replicated)
-	uint8 bExecuting : 1;
+	bool bExecuting;
 
 	// table index 1, flags 0x40000000000020
 	UPROPERTY(Replicated)

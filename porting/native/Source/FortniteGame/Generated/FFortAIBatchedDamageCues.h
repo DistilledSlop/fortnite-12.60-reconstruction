@@ -17,31 +17,31 @@ struct FFortAIBatchedDamageCues
 
 	// table index 8, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bImpact : 1;
+	bool bImpact;
 
 	// table index 7, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bImpactWeapon : 1;
+	bool bImpactWeapon;
 
 	// table index 6, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bDamage : 1;
+	bool bDamage;
 
 	// table index 5, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bDamageShields : 1;
+	bool bDamageShields;
 
 	// table index 4, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bDamageWeapon : 1;
+	bool bDamageWeapon;
 
 	// table index 3, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bFatal : 1;
+	bool bFatal;
 
 	// table index 2, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bWeaponActivated : 1;
+	bool bWeaponActivated;
 
 	// table index 1, offset 8, flags 0x10000000000000
 	UPROPERTY()

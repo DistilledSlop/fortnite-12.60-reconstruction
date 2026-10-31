@@ -42,7 +42,7 @@ public:
 
 	// table index 16, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bAllowScanAroundWhileSwimming : 1;
+	bool bAllowScanAroundWhileSwimming;
 
 	// table index 15, flags 0x20080000002000
 	UPROPERTY(Transient)

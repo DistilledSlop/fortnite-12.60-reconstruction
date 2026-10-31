@@ -11,6 +11,7 @@
 #include "FPropertyOverrideData.h"
 #include "FRestoreDefaultsDelegate.h"
 
+class UFortItemDefinition;
 class UPlaylistUserOptionBase;
 class UPlaylistUserOptions;
 
@@ -42,6 +43,10 @@ public:
 	UPROPERTY()
 	FCurveTableRowHandle InteractionSpeed;
 
+	// table index 7, flags 0x14000000000005
+	UPROPERTY()
+	TSoftObjectPtr<UFortItemDefinition> OptionsItemDefinition;
+
 	// table index 6, flags 0x10000000000015
 	UPROPERTY()
 	UPlaylistUserOptions* PlayerOptions;
@@ -68,7 +73,7 @@ public:
 
 	// table index 0, flags 0x10000000000001
 	UPROPERTY()
-	uint8 bRedirectInteractToParent : 1;
+	bool bRedirectInteractToParent;
 
 	UFUNCTION()
 	void OnRep_PlayerOptionData();

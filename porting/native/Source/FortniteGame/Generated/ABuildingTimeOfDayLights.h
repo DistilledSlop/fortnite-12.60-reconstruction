@@ -20,7 +20,7 @@ class FORTNITEGAME_API ABuildingTimeOfDayLights : public ABuildingAutoNav
 public:
 	// table index 6, flags 0x20080000000015
 	UPROPERTY()
-	uint8 bUseTimeOfDayControlledLights : 1;
+	bool bUseTimeOfDayControlledLights;
 
 	// table index 4, flags 0x2008800000001d
 	UPROPERTY()

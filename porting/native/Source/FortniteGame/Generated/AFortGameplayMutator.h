@@ -22,7 +22,7 @@ public:
 
 	// table index 2, flags 0x20080000010001
 	UPROPERTY()
-	uint8 bNetworkDormantWhenDeactivated : 1;
+	bool bNetworkDormantWhenDeactivated;
 
 	// table index 1, flags 0x20080000010015
 	UPROPERTY()

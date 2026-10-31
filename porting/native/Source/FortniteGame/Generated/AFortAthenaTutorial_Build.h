@@ -12,6 +12,7 @@ class AActor;
 class ABlockingVolume;
 class ABuildingGameplayActor;
 class ATriggerBox;
+class UFortItemDefinition;
 
 #include "AFortAthenaTutorial_Build.generated.h"
 
@@ -48,6 +49,14 @@ public:
 	// table index 6, flags 0x10000000000015
 	UPROPERTY()
 	ABlockingVolume* Building_BlockingVolume;
+
+	// table index 5, flags 0x10000000000015
+	UPROPERTY()
+	UFortItemDefinition* StairsBuildingItemDef;
+
+	// table index 4, flags 0x10000000000015
+	UPROPERTY()
+	UFortItemDefinition* WoodItemDef;
 
 	// table index 3, flags 0x10000000000015
 	UPROPERTY()

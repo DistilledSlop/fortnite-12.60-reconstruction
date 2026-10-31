@@ -29,31 +29,31 @@ public:
 
 	// table index 47, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bHasAttemptedAbandon : 1;
+	bool bHasAttemptedAbandon;
 
 	// table index 46, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bIsMatchmaking : 1;
+	bool bIsMatchmaking;
 
 	// table index 45, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bShouldPickRandomMap : 1;
+	bool bShouldPickRandomMap;
 
 	// table index 44, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bShouldRecordFPSCharts : 1;
+	bool bShouldRecordFPSCharts;
 
 	// table index 43, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bShouldRecordMemoryReports : 1;
+	bool bShouldRecordMemoryReports;
 
 	// table index 42, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bFPSRecordingStarted : 1;
+	bool bFPSRecordingStarted;
 
 	// table index 41, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bWatchingForCallStack : 1;
+	bool bWatchingForCallStack;
 
 	// table index 40, flags 0x10000000000000
 	UPROPERTY()
@@ -101,11 +101,11 @@ public:
 
 	// table index 28, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bWaitingForSkillTreePurchase : 1;
+	bool bWaitingForSkillTreePurchase;
 
 	// table index 27, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bWaitingForWorkerSlot : 1;
+	bool bWaitingForWorkerSlot;
 
 	// table index 26, flags 0x10000000000000
 	UPROPERTY()

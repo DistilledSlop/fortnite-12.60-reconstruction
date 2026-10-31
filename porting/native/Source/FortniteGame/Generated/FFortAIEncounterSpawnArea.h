@@ -35,11 +35,11 @@ struct FFortAIEncounterSpawnArea
 
 	// table index 3, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bIsActive : 1;
+	bool bIsActive;
 
 	// table index 2, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bUsingFallbackQuery : 1;
+	bool bUsingFallbackQuery;
 
 	// table index 0, offset 66, flags 0x10000000000000
 	UPROPERTY()

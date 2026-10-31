@@ -18,27 +18,27 @@ class FORTNITEGAME_API AFortGameModePvE : public AFortGameModeZone
 public:
 	// table index 12, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bIdleKickEnabledByConfig : 1;
+	bool bIdleKickEnabledByConfig;
 
 	// table index 11, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bIdleKickEnabledByBlueprint : 1;
+	bool bIdleKickEnabledByBlueprint;
 
 	// table index 10, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bOnlyIdleKickPublicMatches : 1;
+	bool bOnlyIdleKickPublicMatches;
 
 	// table index 9, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bResetDefaultIdleTimeWhenNoLongerSolo : 1;
+	bool bResetDefaultIdleTimeWhenNoLongerSolo;
 
 	// table index 8, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bAnyMovementNotIdleWhilePrivate : 1;
+	bool bAnyMovementNotIdleWhilePrivate;
 
 	// table index 7, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bRestrictMaxIdleTime : 1;
+	bool bRestrictMaxIdleTime;
 
 	// table index 6, flags 0x10000000004000
 	UPROPERTY(Config)
@@ -46,19 +46,19 @@ public:
 
 	// table index 5, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bSendIdleAnalytics : 1;
+	bool bSendIdleAnalytics;
 
 	// table index 4, flags 0x10000000010001
 	UPROPERTY()
-	uint8 bWaitForAircraft : 1;
+	bool bWaitForAircraft;
 
 	// table index 3, flags 0x10000000010001
 	UPROPERTY()
-	uint8 bBuildingContainersStartAlreadySearched : 1;
+	bool bBuildingContainersStartAlreadySearched;
 
 	// table index 2, flags 0x10000000010001
 	UPROPERTY()
-	uint8 bSpawnLootForBuildingContainersThatStartAlreadySearched : 1;
+	bool bSpawnLootForBuildingContainersThatStartAlreadySearched;
 
 	// table index 0, flags 0x14000000010001
 	UPROPERTY()

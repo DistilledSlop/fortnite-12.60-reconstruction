@@ -25,7 +25,7 @@ public:
 
 	// table index 6, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bUpdatingViewTarget : 1;
+	bool bUpdatingViewTarget;
 
 	// table index 4, flags 0x20080000002000
 	UPROPERTY(Transient)

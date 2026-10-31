@@ -228,15 +228,15 @@ public:
 
 	// table index 34, flags 0x10000000004001
 	UPROPERTY(Config)
-	uint8 bUseCameraAssistWhenADS : 1;
+	bool bUseCameraAssistWhenADS;
 
 	// table index 33, flags 0x10000000004001
 	UPROPERTY(Config)
-	uint8 bJumpForceWorldVertical : 1;
+	bool bJumpForceWorldVertical;
 
 	// table index 32, flags 0x10000000004001
 	UPROPERTY(Config)
-	uint8 bAutoSprintGamepadToggle : 1;
+	bool bAutoSprintGamepadToggle;
 
 	// table index 31, flags 0x10000000004001
 	UPROPERTY(Config)
@@ -248,39 +248,39 @@ public:
 
 	// table index 29, flags 0x10000000004001
 	UPROPERTY(Config)
-	uint8 bJumpInstantlyFullCharge : 1;
+	bool bJumpInstantlyFullCharge;
 
 	// table index 28, flags 0x10000000004001
 	UPROPERTY(Config)
-	uint8 bHolsterWeaponDuringBoostOnServer : 1;
+	bool bHolsterWeaponDuringBoostOnServer;
 
 	// table index 27, flags 0x10000000004001
 	UPROPERTY(Config)
-	uint8 bHolsterWeaponDuringBoostOnClient : 1;
+	bool bHolsterWeaponDuringBoostOnClient;
 
 	// table index 26, flags 0x10000000004001
 	UPROPERTY(Config)
-	uint8 bPlayHolsterAnimsOnClient : 1;
+	bool bPlayHolsterAnimsOnClient;
 
 	// table index 25, flags 0x10000000004001
 	UPROPERTY(Config)
-	uint8 bSwapDriveTagsDuringBoost : 1;
+	bool bSwapDriveTagsDuringBoost;
 
 	// table index 24, flags 0x10000000004001
 	UPROPERTY(Config)
-	uint8 bDisableReticleDuringBoost : 1;
+	bool bDisableReticleDuringBoost;
 
 	// table index 23, flags 0x10000000004001
 	UPROPERTY(Config)
-	uint8 bUseViewRotationDuringSprint : 1;
+	bool bUseViewRotationDuringSprint;
 
 	// table index 22, flags 0x10000000004001
 	UPROPERTY(Config)
-	uint8 bAlwaysConstrainViewDuringCombat : 1;
+	bool bAlwaysConstrainViewDuringCombat;
 
 	// table index 21, flags 0x10000000004001
 	UPROPERTY(Config)
-	uint8 bAlwaysConstrainViewDuringCombatADS : 1;
+	bool bAlwaysConstrainViewDuringCombatADS;
 
 	// table index 20, flags 0x10000000004001
 	UPROPERTY(Config)
@@ -312,7 +312,7 @@ public:
 
 	// table index 13, flags 0x10000000004001
 	UPROPERTY(Config)
-	uint8 bUseLookAheadTraceInAir : 1;
+	bool bUseLookAheadTraceInAir;
 
 	// table index 12, flags 0x10000000004001
 	UPROPERTY(Config)

@@ -56,7 +56,7 @@ public:
 
 	// table index 57, flags 0x10000100002034
 	UPROPERTY(ReplicatedUsing=OnRep_bPermanentShutdown, Transient)
-	uint8 bPermanentShutdown : 1;
+	bool bPermanentShutdown;
 
 	// table index 56, flags 0x10000000002000
 	UPROPERTY(Transient)
@@ -164,7 +164,7 @@ public:
 
 	// table index 27, flags 0x20080000000005
 	UPROPERTY()
-	uint8 bSupportsPerPlayerCapturing : 1;
+	bool bSupportsPerPlayerCapturing;
 
 	// table index 26, flags 0x20080000000005
 	UPROPERTY()

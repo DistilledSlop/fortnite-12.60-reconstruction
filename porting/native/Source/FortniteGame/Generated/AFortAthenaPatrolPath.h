@@ -22,7 +22,7 @@ public:
 
 	// table index 4, flags 0x40000000000001
 	UPROPERTY()
-	uint8 bLeashEnabled : 1;
+	bool bLeashEnabled;
 
 	// table index 3, flags 0x40000000000001
 	UPROPERTY()

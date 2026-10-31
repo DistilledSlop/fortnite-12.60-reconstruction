@@ -17,6 +17,7 @@
 #include "Misc/DateTime.h"
 
 class UFortCreativeRealEstatePlotItem;
+class UFortCreativeRealEstatePlotItemDefinition;
 
 #include "UFortLevelSaveComponent.generated.h"
 
@@ -42,9 +43,13 @@ public:
 	UPROPERTY(Transient)
 	FOnDateChanged OnClientCheckpointDateChanged;
 
+	// table index 24, flags 0x20080000000001
+	UPROPERTY()
+	UFortCreativeRealEstatePlotItemDefinition* RestrictedPlotDefinition;
+
 	// table index 23, flags 0x20080000000001
 	UPROPERTY()
-	uint8 bAutoLoadFromRestrictedPlotDefinition : 1;
+	bool bAutoLoadFromRestrictedPlotDefinition;
 
 	// table index 22, flags 0x20080000000001
 	UPROPERTY()
@@ -52,19 +57,19 @@ public:
 
 	// table index 21, flags 0x20080000000001
 	UPROPERTY()
-	uint8 bLoadRandomLinkCode : 1;
+	bool bLoadRandomLinkCode;
 
 	// table index 20, flags 0x20080000000001
 	UPROPERTY()
-	uint8 bLoadMatchAssignedCode : 1;
+	bool bLoadMatchAssignedCode;
 
 	// table index 19, flags 0x20080000000001
 	UPROPERTY()
-	uint8 bCuratedHub : 1;
+	bool bCuratedHub;
 
 	// table index 18, flags 0x20080000000001
 	UPROPERTY()
-	uint8 bLoadPlaysetFromPlot : 1;
+	bool bLoadPlaysetFromPlot;
 
 	// table index 17, flags 0x20080000002020
 	UPROPERTY(Replicated, Transient)
@@ -76,11 +81,11 @@ public:
 
 	// table index 15, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bPermissionsSaveInProgress : 1;
+	bool bPermissionsSaveInProgress;
 
 	// table index 14, flags 0x20080000002020
 	UPROPERTY(Replicated, Transient)
-	uint8 bCurated : 1;
+	bool bCurated;
 
 	// table index 13, flags 0x20080100002020
 	UPROPERTY(ReplicatedUsing=OnRep_PlotPermissionsChanged, Transient)
@@ -96,11 +101,11 @@ public:
 
 	// table index 10, flags 0x20080100002020
 	UPROPERTY(ReplicatedUsing=OnRep_Loaded, Transient)
-	uint8 bIsLoaded : 1;
+	bool bIsLoaded;
 
 	// table index 9, flags 0x20080100002020
 	UPROPERTY(ReplicatedUsing=OnRep_IsAutoSaving, Transient)
-	uint8 bIsAutoSaving : 1;
+	bool bIsAutoSaving;
 
 	// table index 7, flags 0x20080100002020
 	UPROPERTY(ReplicatedUsing=OnRep_BackupSaveState, Transient)

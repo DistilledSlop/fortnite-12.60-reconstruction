@@ -12,7 +12,10 @@
 #include "EFortItemCollectorTrackingType.h"
 #include "Engine/DataTable.h"
 #include "FCollectorTrackedData.h"
+#include "FCollectorUnitInfo.h"
+#include "FFortItemEntry.h"
 #include "FFortItemQuantityPair.h"
+#include "FItemCollectorHandleManualOutput.h"
 #include "FItemCollectorPickupSpawned.h"
 #include "FItemCollectorVehicleSpawned.h"
 #include "GameplayTagContainer.h"
@@ -20,6 +23,7 @@
 #include "Math/Vector.h"
 
 class AFortPlayerController;
+class UFortWorldItemDefinition;
 class UTexture;
 
 #include "ABuildingItemCollectorActor.generated.h"
@@ -76,11 +80,11 @@ public:
 
 	// table index 30, flags 0x20080000000015
 	UPROPERTY()
-	uint8 bCallOnLocalInteract : 1;
+	bool bCallOnLocalInteract;
 
 	// table index 29, flags 0x20080001000035
 	UPROPERTY(Replicated, SaveGame)
-	uint8 bUseInstanceLootValueOverrides : 1;
+	bool bUseInstanceLootValueOverrides;
 
 	// table index 27, flags 0x20080001000035
 	UPROPERTY(Replicated, SaveGame)
@@ -97,6 +101,22 @@ public:
 	// table index 24, flags 0x20080000002014
 	UPROPERTY(Transient)
 	int32 NumInteractions;
+
+	// table index 22, flags 0x20080001010035
+	UPROPERTY(Replicated, SaveGame)
+	TArray<FCollectorUnitInfo> ItemCollections;
+
+	// table index 21, flags 0x20080010080000
+	UPROPERTY()
+	FItemCollectorHandleManualOutput ManualOutputOverride;
+
+	// table index 20, flags 0x20080100000034
+	UPROPERTY(ReplicatedUsing=OnRep_ActiveInputItem)
+	UFortWorldItemDefinition* ActiveInputItem;
+
+	// table index 19, flags 0x20080000000000
+	UPROPERTY()
+	UFortWorldItemDefinition* ClientPausedActiveInputItem;
 
 	// table index 18, flags 0x20080000010015
 	UPROPERTY()
@@ -140,11 +160,11 @@ public:
 
 	// table index 8, flags 0x20080000010005
 	UPROPERTY()
-	uint8 bTossOnGround : 1;
+	bool bTossOnGround;
 
 	// table index 7, flags 0x20080000010005
 	UPROPERTY()
-	uint8 bSpawnAmmoOnlyWhenCarryingWeapon : 1;
+	bool bSpawnAmmoOnlyWhenCarryingWeapon;
 
 	// table index 6, flags 0x20080000000020
 	UPROPERTY(Replicated)
@@ -171,6 +191,9 @@ public:
 	TArray<FCollectorTrackedData> TrackedInteractionData;
 
 	UFUNCTION()
+	void OnRep_ActiveInputItem();
+
+	UFUNCTION()
 	void OnRep_ControllingPlayer();
 
 	UFUNCTION()
@@ -178,6 +201,10 @@ public:
 
 	UFUNCTION()
 	void OnRep_TrackedInteractionData();
+
+	UFUNCTION(Server, Reliable)
+	void ServerSpawnItem(const FFortItemEntry& OutputItem);
+	void ServerSpawnItem_Implementation(const FFortItemEntry& OutputItem);
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

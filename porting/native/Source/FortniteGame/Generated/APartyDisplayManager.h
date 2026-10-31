@@ -7,6 +7,7 @@
 #include "GameFramework/Actor.h"
 
 #include "FClickedPartyPlayerDelegate.h"
+#include "FFortAthenaLoadout.h"
 #include "FHeroSlotInfo.h"
 #include "FOnPrefabForCurrentlyDisplayedItemChanged.h"
 #include "FOnPrefabForCurrentlyDisplayedItemReady.h"
@@ -59,11 +60,15 @@ public:
 
 	// table index 4, flags 0x10000000000004
 	UPROPERTY()
-	uint8 IsPlayingCelebrateFX : 1;
+	bool IsPlayingCelebrateFX;
 
 	// table index 1, flags 0x20080000002000
 	UPROPERTY(Transient)
 	TMap<int32, FHeroSlotInfo> HeroPlayerPawns;
+
+	// table index 0, flags 0x20080000000000
+	UPROPERTY()
+	FFortAthenaLoadout CurrentlyDisplayedCosmeticLoadout;
 
 };
 

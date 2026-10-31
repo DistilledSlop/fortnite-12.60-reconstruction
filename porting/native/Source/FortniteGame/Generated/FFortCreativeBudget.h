@@ -27,7 +27,7 @@ struct FFortCreativeBudget
 
 	// table index 2, offset None, flags 0x10000000014001
 	UPROPERTY()
-	uint8 bCritical : 1;
+	bool bCritical;
 
 	// table index 1, offset 12, flags 0x10000000014001
 	UPROPERTY()

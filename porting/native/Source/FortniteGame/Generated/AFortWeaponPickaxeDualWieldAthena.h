@@ -37,7 +37,7 @@ public:
 
 	// table index 12, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bUseAnimTrailsOffhandPSC : 1;
+	bool bUseAnimTrailsOffhandPSC;
 
 	// table index 11, flags 0x10000000000000
 	UPROPERTY()

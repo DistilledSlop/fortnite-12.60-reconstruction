@@ -18,7 +18,7 @@ struct FPlaylistOverrideData
 
 	// table index 2, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bEnabled : 1;
+	bool bEnabled;
 
 	// table index 0, offset 16, flags 0x10000000000000
 	UPROPERTY()

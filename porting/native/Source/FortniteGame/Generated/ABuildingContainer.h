@@ -17,6 +17,7 @@
 
 class UAudioComponent;
 class UCurveFloat;
+class UFortWorldItemDefinition;
 class UMaterialInterface;
 class USoundCue;
 class UStaticMesh;
@@ -88,6 +89,10 @@ public:
 	// table index 36, flags 0x10000000000005
 	UPROPERTY()
 	float SearchBounceRadiusOverride;
+
+	// table index 35, flags 0x10000000000005
+	UPROPERTY()
+	UFortWorldItemDefinition* LootTestingData;
 
 	// table index 34, flags 0x10000000010015
 	UPROPERTY()

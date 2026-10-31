@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "ABuildingSMActor.h"
 
+#include "FFortSprayDecalRepPayload.h"
+
 class UMaterialInstanceDynamic;
 
 #include "AFortSprayDecalInstance.generated.h"
@@ -16,6 +18,10 @@ class FORTNITEGAME_API AFortSprayDecalInstance : public ABuildingSMActor
 	GENERATED_BODY()
 
 public:
+	// table index 5, flags 0x20080101000034
+	UPROPERTY(ReplicatedUsing=OnRep_SprayInfo, SaveGame)
+	FFortSprayDecalRepPayload SprayInfo;
+
 	// table index 4, flags 0x20080000000015
 	UPROPERTY()
 	uint8 bDestroyOnNearbyDestruction : 1;
@@ -32,5 +38,9 @@ public:
 	UPROPERTY()
 	TArray<UMaterialInstanceDynamic*> SprayMIDsThatCanBounce;
 
+	UFUNCTION()
+	void OnRep_SprayInfo();
+
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

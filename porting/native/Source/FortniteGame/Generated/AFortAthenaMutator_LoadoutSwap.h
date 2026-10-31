@@ -8,6 +8,10 @@
 
 #include "AttributeSet.h"
 #include "EAthenaGamePhase.h"
+#include "FPlayerLoadout.h"
+#include "FPlayerLoudoutEntry.h"
+
+class UFortWorldItemDefinition;
 
 #include "AFortAthenaMutator_LoadoutSwap.generated.h"
 
@@ -21,9 +25,13 @@ public:
 	UPROPERTY()
 	EAthenaGamePhase GamePhaseToStart;
 
+	// table index 12, flags 0x20080000000001
+	UPROPERTY()
+	TArray<FPlayerLoadout> Loadouts;
+
 	// table index 11, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bRandomizeLoadOuts : 1;
+	bool bRandomizeLoadOuts;
 
 	// table index 10, flags 0x20080000000001
 	UPROPERTY()
@@ -37,9 +45,21 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_ServerWorldTimeOfNextSwap)
 	float ServerWorldTimeOfNextSwap;
 
+	// table index 6, flags 0x20080000000020
+	UPROPERTY(Replicated)
+	TArray<FPlayerLoudoutEntry> NextItemsToGrant;
+
 	// table index 4, flags 0x20080000000000
 	UPROPERTY()
 	TArray<int32> RemainingLoadouts;
+
+	// table index 2, flags 0x20080000000000
+	UPROPERTY()
+	TArray<UFortWorldItemDefinition*> ItemstoAlwaysRemove;
+
+	// table index 0, flags 0x20080000000020
+	UPROPERTY(Replicated)
+	TArray<UFortWorldItemDefinition*> ItemsWithInfiniteAmmo;
 
 	UFUNCTION()
 	void OnRep_ServerWorldTimeOfNextSwap();

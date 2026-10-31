@@ -7,6 +7,7 @@
 #include "UFortWorker.h"
 
 #include "FFortSavedModeLoadout.h"
+#include "FMcpVariantChannelInfo.h"
 #include "FMcpVariantReader.h"
 
 class UCustomCharacterPart;
@@ -31,7 +32,7 @@ public:
 
 	// table index 14, flags 0x10000000000000
 	UPROPERTY()
-	uint8 refundable : 1;
+	bool refundable;
 
 	// table index 12, flags 0x10000000000000
 	UPROPERTY()
@@ -52,6 +53,14 @@ public:
 	// table index 4, flags 0x10000000000000
 	UPROPERTY()
 	TArray<UCustomCharacterPart*> CharacterParts;
+
+	// table index 2, flags 0x20080000002000
+	UPROPERTY(Transient)
+	TArray<FMcpVariantChannelInfo> OutfitVariantChannels;
+
+	// table index 0, flags 0x20080000002000
+	UPROPERTY(Transient)
+	TArray<FMcpVariantChannelInfo> BackblingVariantChannels;
 
 };
 

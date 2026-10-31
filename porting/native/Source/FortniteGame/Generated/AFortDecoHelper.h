@@ -16,6 +16,7 @@
 class ABuildingActor;
 class AFortDecoPreview;
 class AFortDecoTool;
+class UFortDecoItemDefinition;
 
 #include "AFortDecoHelper.generated.h"
 
@@ -49,6 +50,10 @@ public:
 	UPROPERTY()
 	TEnumAsByte<EPlacementType::Type> CurrentPlacementType;
 
+	// table index 13, flags 0x20080000000014
+	UPROPERTY()
+	UFortDecoItemDefinition* DecoItemDefinition;
+
 	// table index 12, flags 0x20080000000000
 	UPROPERTY()
 	FVector LocationData[2];
@@ -71,7 +76,7 @@ public:
 
 	// table index 7, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bInFallbackPosition : 1;
+	bool bInFallbackPosition;
 
 	// table index 6, flags 0x20080000000000
 	UPROPERTY()

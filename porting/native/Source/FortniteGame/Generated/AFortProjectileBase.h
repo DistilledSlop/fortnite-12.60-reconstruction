@@ -71,11 +71,11 @@ public:
 
 	// table index 35, flags 0x10000000000005
 	UPROPERTY()
-	uint8 bAddOwnerVelocity : 1;
+	bool bAddOwnerVelocity;
 
 	// table index 34, flags 0x10000000010015
 	UPROPERTY()
-	uint8 bSpawnPointCanBeUsedByOtherPlayers : 1;
+	bool bSpawnPointCanBeUsedByOtherPlayers;
 
 	// table index 33, flags 0x10000000010015
 	UPROPERTY()
@@ -83,11 +83,11 @@ public:
 
 	// table index 32, flags 0x10000000010015
 	UPROPERTY()
-	uint8 bRegisterInPerceptionSystem : 1;
+	bool bRegisterInPerceptionSystem;
 
 	// table index 31, flags 0x10000000010005
 	UPROPERTY()
-	uint8 bCanBePickedUpWhenStopped : 1;
+	bool bCanBePickedUpWhenStopped;
 
 	// table index 30, flags 0x200800000a001d
 	UPROPERTY()
@@ -103,11 +103,11 @@ public:
 
 	// table index 27, flags 0x11000000020015
 	UPROPERTY()
-	uint8 bDummyProjectile : 1;
+	bool bDummyProjectile;
 
 	// table index 26, flags 0x10000000000005
 	UPROPERTY()
-	uint8 bStopSimulatingOnHit : 1;
+	bool bStopSimulatingOnHit;
 
 	// table index 24, flags 0x10000000010005
 	UPROPERTY()
@@ -115,39 +115,39 @@ public:
 
 	// table index 23, flags 0x10000000000015
 	UPROPERTY()
-	uint8 bDisableCollisionOnStop : 1;
+	bool bDisableCollisionOnStop;
 
 	// table index 22, flags 0x10000000002000
 	UPROPERTY(Transient)
-	uint8 bStoppedSimulatingDueToHit : 1;
+	bool bStoppedSimulatingDueToHit;
 
 	// table index 21, flags 0x10000000000005
 	UPROPERTY()
-	uint8 bReplicateStopSimulationLocation : 1;
+	bool bReplicateStopSimulationLocation;
 
 	// table index 20, flags 0x10000000000005
 	UPROPERTY()
-	uint8 bReplicateStopSimulationLocationOptimized : 1;
+	bool bReplicateStopSimulationLocationOptimized;
 
 	// table index 19, flags 0x10000000000005
 	UPROPERTY()
-	uint8 bClientInterpMovement : 1;
+	bool bClientInterpMovement;
 
 	// table index 18, flags 0x10000000000005
 	UPROPERTY()
-	uint8 bClientInterpRotation : 1;
+	bool bClientInterpRotation;
 
 	// table index 17, flags 0x10000000000005
 	UPROPERTY()
-	uint8 bUseClientsidePrediction : 1;
+	bool bUseClientsidePrediction;
 
 	// table index 16, flags 0x10000000002000
 	UPROPERTY(Transient)
-	uint8 bIsPredictedProjectile : 1;
+	bool bIsPredictedProjectile;
 
 	// table index 15, flags 0x10000000000005
 	UPROPERTY()
-	uint8 bAutoSelectAttachedForInterp : 1;
+	bool bAutoSelectAttachedForInterp;
 
 	// table index 14, flags 0x10008100000020
 	UPROPERTY(ReplicatedUsing=OnRep_SimulationStoppingHit)
@@ -155,7 +155,7 @@ public:
 
 	// table index 13, flags 0x10000000002000
 	UPROPERTY(Transient)
-	uint8 bFiredWhileTargeting : 1;
+	bool bFiredWhileTargeting;
 
 	// table index 12, flags 0x40000100002020
 	UPROPERTY(ReplicatedUsing=OnRep_ResumeSimulationCount, Transient)
@@ -199,7 +199,7 @@ public:
 
 	// table index 2, flags 0x20080000010001
 	UPROPERTY()
-	uint8 bResetOverlapRestrictionsOnBounce : 1;
+	bool bResetOverlapRestrictionsOnBounce;
 
 	// table index 1, flags 0x20080000000005
 	UPROPERTY()

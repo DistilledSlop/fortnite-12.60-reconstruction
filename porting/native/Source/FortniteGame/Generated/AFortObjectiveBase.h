@@ -16,7 +16,9 @@
 #include "FOnObjectiveStatusChanged.h"
 #include "GameplayTagContainer.h"
 
+class UFortBadgeItemDefinition;
 class UFortMissionTimerComponent;
+class UFortWorldItemDefinition;
 
 #include "AFortObjectiveBase.generated.h"
 
@@ -26,13 +28,21 @@ class FORTNITEGAME_API AFortObjectiveBase : public AFortMissionState
 	GENERATED_BODY()
 
 public:
+	// table index 21, flags 0x10000001000000
+	UPROPERTY(SaveGame)
+	UFortBadgeItemDefinition* ObjectiveRewardBadge;
+
+	// table index 19, flags 0x10000000000001
+	UPROPERTY()
+	TArray<UFortWorldItemDefinition*> ItemsToGiveOnObjectiveStart;
+
 	// table index 18, flags 0x10000000000001
 	UPROPERTY()
-	uint8 bStartPlayingOnMissionStart : 1;
+	bool bStartPlayingOnMissionStart;
 
 	// table index 17, flags 0x10000000000005
 	UPROPERTY()
-	uint8 bAcceptsMissionEventsWhenFinished : 1;
+	bool bAcceptsMissionEventsWhenFinished;
 
 	// table index 16, flags 0x10000001000034
 	UPROPERTY(Replicated, SaveGame)
@@ -48,7 +58,7 @@ public:
 
 	// table index 13, flags 0x20080101000034
 	UPROPERTY(ReplicatedUsing=OnRep_bIsObjectiveVisible, SaveGame)
-	uint8 bIsObjectiveVisible : 1;
+	bool bIsObjectiveVisible;
 
 	// table index 11, flags 0x20080101000034
 	UPROPERTY(ReplicatedUsing=OnRep_ObjectiveVisibilityOverride, SaveGame)
@@ -56,7 +66,7 @@ public:
 
 	// table index 10, flags 0x20080001000035
 	UPROPERTY(Replicated, SaveGame)
-	uint8 bIsProgressBarHidden : 1;
+	bool bIsProgressBarHidden;
 
 	// table index 8, flags 0x20080001000034
 	UPROPERTY(Replicated, SaveGame)
@@ -64,7 +74,7 @@ public:
 
 	// table index 7, flags 0x20080000010015
 	UPROPERTY()
-	uint8 bRelevantToSpecificTeam : 1;
+	bool bRelevantToSpecificTeam;
 
 	// table index 6, flags 0x20080000010015
 	UPROPERTY()

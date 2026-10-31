@@ -26,7 +26,7 @@ struct FFortHomeBaseInfo
 
 	// table index 0, offset None, flags 0x10000000000014
 	UPROPERTY()
-	uint8 ValidData : 1;
+	bool ValidData;
 
 };
 

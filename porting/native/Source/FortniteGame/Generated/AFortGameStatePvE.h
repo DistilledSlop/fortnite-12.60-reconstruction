@@ -21,7 +21,7 @@ class FORTNITEGAME_API AFortGameStatePvE : public AFortGameStateZone
 public:
 	// table index 12, flags 0x10000000010021
 	UPROPERTY(Replicated)
-	uint8 bAllowMulching : 1;
+	bool bAllowMulching;
 
 	// table index 10, flags 0x20080000000020
 	UPROPERTY(Replicated)
@@ -33,7 +33,7 @@ public:
 
 	// table index 8, flags 0x20080000000020
 	UPROPERTY(Replicated)
-	uint8 bUseMoonbeamHUD : 1;
+	bool bUseMoonbeamHUD;
 
 	// table index 7, flags 0x20080000004000
 	UPROPERTY(Config)
@@ -49,11 +49,11 @@ public:
 
 	// table index 4, flags 0x20080000004000
 	UPROPERTY(Config)
-	uint8 bDebugPickupManagement : 1;
+	bool bDebugPickupManagement;
 
 	// table index 3, flags 0x20080000004000
 	UPROPERTY(Config)
-	uint8 bEnablePickupManagement : 1;
+	bool bEnablePickupManagement;
 
 	// table index 1, flags 0x20080000004000
 	UPROPERTY(Config)
@@ -61,7 +61,7 @@ public:
 
 	// table index 0, flags 0x20080000010015
 	UPROPERTY()
-	uint8 bWeaponSwappingEnabled : 1;
+	bool bWeaponSwappingEnabled;
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

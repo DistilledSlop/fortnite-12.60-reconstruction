@@ -24,11 +24,11 @@ struct FEditModeState
 
 	// table index 1, offset None, flags 0x10000000002000
 	UPROPERTY()
-	uint8 bMirrored : 1;
+	bool bMirrored;
 
 	// table index 0, offset None, flags 0x10000000002000
 	UPROPERTY()
-	uint8 bCurrentlyValid : 1;
+	bool bCurrentlyValid;
 
 };
 

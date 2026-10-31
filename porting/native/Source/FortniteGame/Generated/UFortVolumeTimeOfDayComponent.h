@@ -22,7 +22,7 @@ class FORTNITEGAME_API UFortVolumeTimeOfDayComponent : public UActorComponent
 public:
 	// table index 16, flags 0x20080000000001
 	UPROPERTY()
-	uint8 bUseEditorOverrideData : 1;
+	bool bUseEditorOverrideData;
 
 	// table index 15, flags 0x20080000000005
 	UPROPERTY()
@@ -34,7 +34,7 @@ public:
 
 	// table index 13, flags 0x20080000000005
 	UPROPERTY()
-	uint8 bOverrideLightIntensity : 1;
+	bool bOverrideLightIntensity;
 
 	// table index 12, flags 0x20080000000005
 	UPROPERTY()
@@ -42,7 +42,7 @@ public:
 
 	// table index 11, flags 0x20080000000005
 	UPROPERTY()
-	uint8 bOverrideLightColor : 1;
+	bool bOverrideLightColor;
 
 	// table index 10, flags 0x20080000000005
 	UPROPERTY()
@@ -50,7 +50,7 @@ public:
 
 	// table index 9, flags 0x20080000000005
 	UPROPERTY()
-	uint8 bOverrideFogDensity : 1;
+	bool bOverrideFogDensity;
 
 	// table index 8, flags 0x20080000000005
 	UPROPERTY()
@@ -58,7 +58,7 @@ public:
 
 	// table index 7, flags 0x20080000000005
 	UPROPERTY()
-	uint8 bOverrideFogColor : 1;
+	bool bOverrideFogColor;
 
 	// table index 6, flags 0x20080000000005
 	UPROPERTY()
@@ -66,7 +66,7 @@ public:
 
 	// table index 5, flags 0x20080000000005
 	UPROPERTY()
-	uint8 bOverridePostProcess : 1;
+	bool bOverridePostProcess;
 
 	// table index 4, flags 0x20080000000005
 	UPROPERTY()
@@ -86,7 +86,7 @@ public:
 
 	// table index 0, flags 0x40000000002000
 	UPROPERTY(Transient)
-	uint8 bIsOverridingTimeOfDay : 1;
+	bool bIsOverridingTimeOfDay;
 
 	UFUNCTION()
 	void OnRep_TimeOfDayConfig();

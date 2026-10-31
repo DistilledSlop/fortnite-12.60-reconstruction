@@ -19,7 +19,7 @@ struct FChoiceData
 
 	// table index 3, offset None, flags 0x10000000000005
 	UPROPERTY()
-	uint8 bShowCloseButton : 1;
+	bool bShowCloseButton;
 
 	// table index 2, offset 8, flags 0x10000000000005
 	UPROPERTY()

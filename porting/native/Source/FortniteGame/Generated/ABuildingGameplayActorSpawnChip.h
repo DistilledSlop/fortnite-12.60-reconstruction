@@ -66,7 +66,7 @@ public:
 
 	// table index 1, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bAutoAcquireSpawnChip : 1;
+	bool bAutoAcquireSpawnChip;
 
 	// table index 0, flags 0x20080000002020
 	UPROPERTY(Replicated, Transient)

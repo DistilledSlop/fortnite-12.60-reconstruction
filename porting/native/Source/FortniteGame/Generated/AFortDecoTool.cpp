@@ -12,6 +12,11 @@ void AFortDecoTool::OnRep_CarriedActor(AActor* OldCarriedActor)
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortDecoTool::OnRep_ItemDefinition()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortDecoTool::ServerCreateBuildingAndSpawnDeco_Implementation(EBuildingAttachmentType InBuildingAttachmentType, const FRotator& Rotation, const FVector_NetQuantize10& Location, const FRotator& BuildingRotation, const FVector_NetQuantize10& BuildingLocation)
 {
 	// Body not recovered: reflection-derived stub.
@@ -27,5 +32,6 @@ void AFortDecoTool::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLif
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(AFortDecoTool, CarriedActor);
+	DOREPLIFETIME(AFortDecoTool, ItemDefinition);
 }
 

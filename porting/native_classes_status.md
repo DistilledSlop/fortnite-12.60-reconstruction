@@ -1,12 +1,11 @@
 # Native class promotion: status
 
-Scope: 993 classes generated from the reflection tables into `porting/native/Source/FortniteGame/Generated/` (987 in
-`/Script/FortniteGame`) and `porting/native/Source/PlayspaceFramework/Generated/` (6 in `/Script/PlayspaceFramework`), plus
-106 `UINTERFACE` declarations (a `U<Name>` class and its `I<Name>` native interface, no functions recovered). The
-generated set also includes 895 structs, 409 enums and 467 delegates. The list is `porting/native_class_set.txt`
-(1,099 entries: 168 from the earlier passes, then batches 1 to 4 of round 3). Everything compiles: `FortniteLinux`,
-`FortniteLinuxServer` and `FortniteLinuxEditor` exit 0 on the final sources. The join smoke test passes on the client and
-server binaries (see "Build and smoke").
+Scope: 1,296 classes and 109 `UINTERFACE` declarations (1,405 entries in `porting/native_class_set.txt`), generated into
+`porting/native/Source/<Module>/Generated/`: `/Script/FortniteGame` 1,200 classes (was 987), `/Script/PlayspaceFramework` 13 (was 6),
+and seven runtime modules for packages outside the engine tree (`CommonUI` 56, `McpProfileSys` 4, `MeshNetwork` 9,
+`ModularGameplay` 6, `BlueprintContext` 2, `Account` 3, `AmbientAudio` 3). The generated type set is 1,107 structs, 462 enums
+and 581 delegates. The list is `porting/native_class_set.txt`. All three targets build (`FortniteLinux`, `FortniteLinuxServer`,
+`FortniteLinuxEditor`), and the join smoke test passes on the client and server binaries (see "Build and smoke" and "Runtime modules").
 
 **Wire compatibility: not yet.** 621 of 16,355 properties and 91 of 1,477 replicated properties are skipped, and 73 of
 564 RPCs are not emitted. Both peers in our build agree with each other. Against the original client the
@@ -63,6 +62,42 @@ from any usable module (Engine, CoreUObject, GameplayAbilities, UMG, AIModule, N
 ReplicationGraph, Gauntlet, OnlineSubsystemUtils, Water, MediaAssets, Landscape, and others). The UHT rule that a parent
 must be a `UCLASS` of a parsed module is met by the Build.cs dependency, so each one is listed there.
 
+## Runtime modules
+
+Each package that is not in the engine tree is generated as its own runtime module, named after the package
+(`/Script/<Name>` -> module `<Name>`). The class path is part of the wire format, so the name must not change.
+`gen_native_classes.py` `RUNTIME_MODULE_PACKAGES` lists them; `--promote` writes `Source/<Module>/<Module>.Build.cs`,
+`Private/<Module>.cpp` (`IMPLEMENT_MODULE`) and `Generated/`. The modules are registered in `FortniteLinux.uproject`, and
+`FortniteGame.Build.cs` (and the hand-written `PlayspaceFramework.Build.cs`) lists them. The generator checks the
+dependencies of the hand-written modules against their Build.cs and refuses a module cycle.
+
+| Module | Classes (generated) | Ancestor that was blocked |
+|---|---|---|
+| McpProfileSys | 4 classes + 1 interface (`UMcpItemAware`) | 142 FortniteGame item definition classes |
+| ModularGameplay | 6 | 56 FortniteGame and 7 PlayspaceFramework classes (`UPlayspace*Component`) |
+| CommonUI | 56 classes + 2 interfaces | 4 FortniteGame classes |
+| MeshNetwork | 9 | 4 FortniteGame classes |
+| BlueprintContext | 2 | 12 FortniteGame classes |
+| Account | 3 | 1 FortniteGame class |
+| AmbientAudio | 3 | 1 FortniteGame class |
+
+Rules that came out of the build (each one cost a build):
+
+- A promoted struct or delegate whose name the engine declares through a macro is not emitted (`struct_name_clash`,
+  `delegate_name_clash`). The party interface's `PARTY_DECLARE_DELEGATETYPE(X)` defines a global `F<X>Delegate`, so the
+  generated `FOnPartyJoinedDelegate` clashed with it. The list comes from `engine_macro_names()`.
+- A `TSet` of a generated struct is not emitted (no `GetTypeHash`), as for `TMap` keys. An unhashable `TSet` raised an ensure
+  at server start.
+- A native bool (`kind_raw & 0x20`, `EPropertyGenFlags::NativeBool`) is a `bool` member; only the other bools are
+  `uint8 X : 1` bitfields. `SetBitFunc` is non-null for both kinds, so it does not tell them apart.
+- A module that uses `FSlateApplication` lists `Slate` (CommonUI's editor link failed without it; the monolithic client and
+  server link did not show it).
+- A hand-written stub of a class that is now generated is removed (`UFortWorldItemDefinition` in `FortniteMapStubs.h`).
+  `gen_stubs.py` `GENERATED_NATIVE` is not updated for the new names, so do not rerun it without that change.
+
+Parity after these changes (`porting/class_checksum.py`, read only): 1,317 of 1,405 classes (was 1,097 of 1,258). The
+bool fix and the McpProfileSys batch are in the same build, so their share is not separated.
+
 ## Naming
 
 UHT keeps the `A`/`U` prefix in the C++ name, but UObject names drop it. So `AFortPawn` is `/Script/FortniteGame.FortPawn`.
@@ -75,25 +110,19 @@ The per-class table of the 168-class pass was removed: it no longer matches the 
 counts for all 993 classes are in `porting/generated/reflection/native_classes_index.json` (git-ignored), and skipped
 records in `skipped_properties.json`.
 
-## Blocked and not generated (blocklist, 238 entries)
+## Blocked and not generated (blocklist, 18 entries)
 
-`porting/native_class_blocklist.txt` (`ClassName<TAB>reason`). Counts by reason:
+`porting/native_class_blocklist.txt` (`ClassName<TAB>reason`). It was 238 entries before the runtime modules. Counts by reason:
 
 | Reason | Classes |
 |---|---|
-| Ancestor in `/Script/McpProfileSys` (module not in the engine tree) | 142 |
-| Ancestor in `/Script/ModularGameplay` (module not in the engine tree) | 56 |
-| Ancestor in `/Script/BlueprintContext` (module not in the engine tree) | 12 |
-| Ancestor in `/Script/MeshNetwork` (module not in the engine tree) | 4 |
-| Ancestor in `/Script/CommonUI` (module not in the engine tree) | 4 |
-| Ancestor in `/Script/Account` or `/Script/AmbientAudio` (module not in the engine tree) | 2 |
-| Ancestor in a plugin the project does not enable: NiagaraAnimNotifies (Niagara) 3, AnimationSharing 2, PhysXVehicles 2, AnimationBudgetAllocator 2, SignificanceManager 1 | 10 |
-| UINTERFACE extending another interface (not generated; the generator supports only interfaces whose parent is `UInterface`) | 2 |
 | Hand-written in `porting/native/Source` (`AFortGameModeAthena`, `AFortLevelScriptActor`, `AFortStaticMeshActor`, `AFortSkydivingShadowProxy`, `UFortKismetLibrary`, `UFortMetaNavArea_Obstacles`) | 6 |
+| Ancestor in a plugin the project does not enable: NiagaraAnimNotifies (Niagara) 3, AnimationSharing 2, PhysXVehicles 2, AnimationBudgetAllocator 2, SignificanceManager 1 | 10 |
+| UINTERFACE extending another interface (`UAbilitySystemInterface`, `UGenericTeamAgentInterface`; the generator emits only interfaces whose parent is `UInterface`) | 2 |
 
-The 142 McpProfileSys and 56 ModularGameplay classes are not generated: their modules are not in any engine tree, and the
-generator does not invent a parent. Interfaces that belong to other packages (Engine, GameplayAbilities and others) are not generated: their package is
-not `/Script/FortniteGame`, so they cannot be declared here.
+The 220 entries that were blocked on McpProfileSys, ModularGameplay, BlueprintContext, MeshNetwork, CommonUI, Account and
+AmbientAudio are generated now (see "Runtime modules"). Interfaces that belong to other packages (Engine, GameplayAbilities and
+others) are not generated: their package is not `/Script/FortniteGame`, so they cannot be declared here.
 
 ## Skipped items
 
@@ -165,6 +194,27 @@ property or RPC that uses one of them, directly or inside another struct, is ski
   staged package must include it.
 - Not run: the Apollo branch (`Apollo_Terrain`, probes, terrain and background grid counts).
 
+Runtime modules round (this section, builds 1 to 6 of 16 used in the round):
+
+- Build 1 failed (C++): a generated `FOnPartyJoinedDelegate` clashed with the engine party typedef. Fixed (see "Runtime modules").
+- Build 2 green (client and server, 244 s): runtime modules for six packages with their 78 FortniteGame classes. Smoke passed on
+  the join checks.
+- Build 3 failed (UHT): a stale hand-written stub of `UFortWorldItemDefinition`. Removed.
+- Build 4 green (client and server, 242 s): McpProfileSys and the native bool and TSet changes. Smoke join checks passed.
+- Build 5 failed (link, editor only): CommonUI used `FSlateApplication` without a `Slate` dependency. Fixed.
+- Build 6 green (client, server and editor, 290 s). Staged client and server: `ldd` reports no missing libraries.
+- Smoke, build 7 (client, server and editor; `FortniteGame.cpp` now logs `FortPlayerPawn ready: class=<name> authority=<0|1>`
+  for every spawned `AFortPlayerPawn` through `UWorld::AddOnActorSpawnedHandler`, because the hand-written pawn that printed
+  this line was replaced by the generated class in commit 3d6f69b). Both variants exit 0 with `ss -lun` showing
+  `UNCONN 0.0.0.0:7777`, checksum `683914758`, `Join succeeded`, `Welcomed by server`, and the pawn line on both peers
+  (server `authority=1`, client `authority=0`, class `FortPlayerPawnAthena`):
+  - default: `bash porting/server/smoke_join.sh`
+  - Athena: `bash porting/server/smoke_join.sh '/Game/Maps/FortniteEmptyDedicated?game=/Script/FortniteGame.FortGameModeAthena'`
+    (also prints `Athena pawn spawned: ... authority=1`, from the game mode's RestartPlayer)
+  `ldd` on the staged client and server reports no missing libraries.
+- `stdbuf -oL -eL` is required: without it the server's stdout is block buffered and the listen line is not in the log when
+  the script checks for it (the first smoke attempt reported "Server did not listen" although the server was listening).
+
 ## Next steps
 
 1. **Interfaces.** Recover the implemented interfaces of each class (the reflection records only `interface_count`; the
@@ -173,8 +223,8 @@ property or RPC that uses one of them, directly or inside another struct, is ski
 2. **Remaining plugins.** Niagara (71 classes via `NiagaraAnimNotifies` and others), AnimationSharing, PhysXVehicles,
    AnimationBudgetAllocator and SignificanceManager are not enabled. Decide whether to enable them (each adds a module
    compile) or keep them blocklisted.
-3. **McpProfileSys (142) and ModularGameplay (56).** No source in any engine tree. Needs a source for the plugin, or a
-   documented permanent skip. BlueprintContext (12), MeshNetwork (4) and CommonUI (4) are the same case.
+3. **Remaining plugins and packages.** CommonInput (4 classes), Qos (4) and Lobby (4) are missing from the native set, and the
+   plugin modules in the table (Niagara and the others) are not enabled. The 10 classes they block stay blocklisted.
 4. **Class references (`class_outside_native_set`, 311 properties).** Re-run `resolve_class_refs.py` and widen the set to
    the classes that the remaining skip tokens name (those that are usable and not yet in the set).
 5. **Structs (190 not emittable).** Most fail on a blocked class or on an out/return delegate parameter. Support out and

@@ -22,11 +22,11 @@ struct FTowhookParams
 
 	// table index 14, offset None, flags 0x10000000000005
 	UPROPERTY()
-	uint8 bUseSpring : 1;
+	bool bUseSpring;
 
 	// table index 13, offset None, flags 0x10000000000005
 	UPROPERTY()
-	uint8 bUseRope : 1;
+	bool bUseRope;
 
 	// table index 12, offset 12, flags 0x10000000000005
 	UPROPERTY()
@@ -70,15 +70,15 @@ struct FTowhookParams
 
 	// table index 2, offset None, flags 0x10000000000005
 	UPROPERTY()
-	uint8 bApplySpringToSelf : 1;
+	bool bApplySpringToSelf;
 
 	// table index 1, offset None, flags 0x10000000000005
 	UPROPERTY()
-	uint8 bApplySpringToOther : 1;
+	bool bApplySpringToOther;
 
 	// table index 0, offset None, flags 0x10000000000005
 	UPROPERTY()
-	uint8 bTakeUpSlack : 1;
+	bool bTakeUpSlack;
 
 };
 

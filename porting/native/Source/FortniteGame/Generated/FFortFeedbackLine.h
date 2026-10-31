@@ -45,15 +45,15 @@ struct FFortFeedbackLine
 
 	// table index 2, offset None, flags 0x10000000002000
 	UPROPERTY()
-	uint8 bInterruptCurrentLine : 1;
+	bool bInterruptCurrentLine;
 
 	// table index 1, offset None, flags 0x10000000002000
 	UPROPERTY()
-	uint8 bCanBeInterrupted : 1;
+	bool bCanBeInterrupted;
 
 	// table index 0, offset None, flags 0x10000000002000
 	UPROPERTY()
-	uint8 bCanQue : 1;
+	bool bCanQue;
 
 };
 

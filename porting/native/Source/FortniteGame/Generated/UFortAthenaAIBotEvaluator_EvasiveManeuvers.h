@@ -34,19 +34,19 @@ public:
 
 	// table index 4, flags 0x40040000000001
 	UPROPERTY()
-	uint8 bDoCrouching : 1;
+	bool bDoCrouching;
 
 	// table index 3, flags 0x40040000000001
 	UPROPERTY()
-	uint8 bDoDodging : 1;
+	bool bDoDodging;
 
 	// table index 2, flags 0x40040000000001
 	UPROPERTY()
-	uint8 bDoJumping : 1;
+	bool bDoJumping;
 
 	// table index 1, flags 0x40040000000001
 	UPROPERTY()
-	uint8 bDoJumpingDistanceCheck : 1;
+	bool bDoJumpingDistanceCheck;
 
 	// table index 0, flags 0x40000000002000
 	UPROPERTY(Transient)

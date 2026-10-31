@@ -61,7 +61,7 @@ public:
 
 	// table index 6, flags 0x10000000010015
 	UPROPERTY()
-	uint8 bDisplayOnMapAndCompass : 1;
+	bool bDisplayOnMapAndCompass;
 
 	// table index 5, flags 0x10000000010015
 	UPROPERTY()

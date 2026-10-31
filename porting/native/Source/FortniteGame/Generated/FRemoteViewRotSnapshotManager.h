@@ -22,7 +22,7 @@ struct FRemoteViewRotSnapshotManager
 
 	// table index 3, offset None, flags 0x10000000004000
 	UPROPERTY()
-	uint8 bUseVariableTimeDelay : 1;
+	bool bUseVariableTimeDelay;
 
 	// table index 2, offset 12, flags 0x10000000004000
 	UPROPERTY()

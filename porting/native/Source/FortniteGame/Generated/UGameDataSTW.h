@@ -15,6 +15,8 @@
 #include "FIronCityDifficultyInfo.h"
 #include "FIronCityMatchmakingBuckets.h"
 #include "FIronCityRowToRating.h"
+#include "FItemDefinitionAndCount.h"
+#include "FQuickBarData.h"
 #include "FSettingsHUDVisibilityAndText.h"
 #include "GameplayTagContainer.h"
 
@@ -30,6 +32,8 @@ class AFortPlayerPawn;
 class AFortTheaterMapViewer;
 class AFortThreatVisualsManager;
 class AFortWindManager;
+class UAthenaMusicPackItemDefinition;
+class UCombatManagerComponentSTW;
 class UCurveTable;
 class UDataTable;
 class UFortAIEncounterInfo;
@@ -38,18 +42,26 @@ class UFortAnalyticsItemExclusions;
 class UFortCollectionBookData;
 class UFortDailyRewardScheduleDefinitions;
 class UFortHeroData;
+class UFortHeroType;
 class UFortHomebaseManager;
+class UFortItemDefinition;
 class UFortItemGlobalData;
 class UFortItemWrapMappingData;
 class UFortMusicManagerBank;
+class UFortNeverPersistItemDefinition;
 class UFortOutpostData;
+class UFortQuestItemDefinition;
 class UFortScoreStylingData;
 class UFortSharedMissionLists;
 class UFortStatEventManager;
 class UFortSurvivorData;
 class UFortTimeOfDayData;
+class UFortTokenType;
 class UFortUIFeedbackBank;
 class UFortUINotification;
+class UFortWeaponMeleeItemDefinition;
+class UFortWorldItemDefinition;
+class UGameStateComponent;
 class UGameplayEffect;
 class UMyTownData;
 class USoundBase;
@@ -67,6 +79,10 @@ public:
 	// table index 154, flags 0x10000000000001
 	UPROPERTY()
 	FText DefaultHeroName;
+
+	// table index 153, flags 0x10000000000001
+	UPROPERTY()
+	FQuickBarData QuickBarDefinitions[3];
 
 	// table index 152, flags 0x10000000000001
 	UPROPERTY()
@@ -172,6 +188,14 @@ public:
 	UPROPERTY()
 	TArray<FSettingsHUDVisibilityAndText> HUDVisibilityGameplayTags;
 
+	// table index 124, flags 0x10000000000001
+	UPROPERTY()
+	TArray<FItemDefinitionAndCount> DefaultInventoryList;
+
+	// table index 122, flags 0x10000000000001
+	UPROPERTY()
+	TArray<FItemDefinitionAndCount> FastLoadDefaultInventoryList;
+
 	// table index 120, flags 0x10000000010041
 	UPROPERTY()
 	TArray<FFortReplicatedStatMapping> StatMappings;
@@ -204,9 +228,17 @@ public:
 	UPROPERTY()
 	TSoftClassPtr<UFortAIEncounterInfo> TestEncounter;
 
+	// table index 112, flags 0x44000000000001
+	UPROPERTY()
+	TSoftClassPtr<UCombatManagerComponentSTW> CombatManager;
+
 	// table index 111, flags 0x44000000000001
 	UPROPERTY()
 	TSoftClassPtr<AFortInGameMapManager> UIMapManagerSTW;
+
+	// table index 110, flags 0x44000000000001
+	UPROPERTY()
+	TSoftObjectPtr<UAthenaMusicPackItemDefinition> DefaultStWLobbyMusic;
 
 	// table index 109, flags 0x44000000000001
 	UPROPERTY()
@@ -215,6 +247,18 @@ public:
 	// table index 108, flags 0x44000000000001
 	UPROPERTY()
 	TSoftClassPtr<AFortAIPawn> DefaultDamageReceiverClass;
+
+	// table index 107, flags 0x44000000000001
+	UPROPERTY()
+	TSoftObjectPtr<UFortTokenType> AccountInventoryBonusToken;
+
+	// table index 106, flags 0x44000000000001
+	UPROPERTY()
+	TSoftObjectPtr<UFortTokenType> WorldInventoryBonusToken;
+
+	// table index 105, flags 0x44000000000001
+	UPROPERTY()
+	TSoftObjectPtr<UFortTokenType> FounderChatUnlockToken;
 
 	// table index 104, flags 0x44000000000001
 	UPROPERTY()
@@ -231,6 +275,10 @@ public:
 	// table index 101, flags 0x44000000000001
 	UPROPERTY()
 	TSoftObjectPtr<USoundMix> StWSoundMix;
+
+	// table index 99, flags 0x44000000000001
+	UPROPERTY()
+	TArray<TSoftObjectPtr<UFortWeaponMeleeItemDefinition>> HarvestingTools;
 
 	// table index 98, flags 0x40000000000001
 	UPROPERTY()
@@ -255,6 +303,30 @@ public:
 	// table index 91, flags 0x40000000000001
 	UPROPERTY()
 	float FORTAttributeToPowerMultiplier;
+
+	// table index 90, flags 0x44000000000001
+	UPROPERTY()
+	TSoftObjectPtr<UFortNeverPersistItemDefinition> BluGloItemDefinition;
+
+	// table index 89, flags 0x44000000000001
+	UPROPERTY()
+	TSoftObjectPtr<UFortItemDefinition> CriticalMissionRewardItemDefinition;
+
+	// table index 88, flags 0x44000000000001
+	UPROPERTY()
+	TSoftObjectPtr<UFortItemDefinition> ScoreBonusMultiplerItemDefinition;
+
+	// table index 87, flags 0x44000000000001
+	UPROPERTY()
+	TSoftObjectPtr<UFortItemDefinition> GenericCampaignEventCurrency;
+
+	// table index 86, flags 0x44000000010001
+	UPROPERTY()
+	TSoftObjectPtr<UFortWorldItemDefinition> BackpackItemDefinition;
+
+	// table index 85, flags 0x44000000010001
+	UPROPERTY()
+	TSoftObjectPtr<UFortWorldItemDefinition> MissionRewardPackItemDefinition;
 
 	// table index 84, flags 0x40000000010001
 	UPROPERTY()
@@ -416,9 +488,41 @@ public:
 	UPROPERTY(Transient)
 	TArray<float> CachedWeaponAlterationRarityMappingInfo;
 
+	// table index 38, flags 0x44000000000001
+	UPROPERTY()
+	TSoftObjectPtr<UFortQuestItemDefinition> OnboardingQuestItemDefinition;
+
+	// table index 37, flags 0x44000000000001
+	UPROPERTY()
+	TSoftObjectPtr<UFortQuestItemDefinition> ManualSurvivorSlottingQuestItemDefinition;
+
+	// table index 36, flags 0x44000000000001
+	UPROPERTY()
+	TSoftObjectPtr<UFortQuestItemDefinition> ArmoryTransformGatingQuestItemDefinition;
+
+	// table index 35, flags 0x44000000000001
+	UPROPERTY()
+	TSoftObjectPtr<UFortQuestItemDefinition> ArmoryCollectionBookGatingQuestItemDefinition;
+
+	// table index 34, flags 0x44000000000001
+	UPROPERTY()
+	TSoftObjectPtr<UFortQuestItemDefinition> ArmoryResourcesGatingQuestItemDefinition;
+
 	// table index 33, flags 0x44000000000001
 	UPROPERTY()
 	TSoftObjectPtr<UDataTable> QuestAchievementData;
+
+	// table index 32, flags 0x44000000010001
+	UPROPERTY()
+	TSoftObjectPtr<UFortItemDefinition> SkillPointItemDef;
+
+	// table index 31, flags 0x44000000010001
+	UPROPERTY()
+	TSoftObjectPtr<UFortItemDefinition> ResearchPointItemDef;
+
+	// table index 29, flags 0x44000000000001
+	UPROPERTY()
+	TArray<TSoftObjectPtr<UFortWorldItemDefinition>> CheatInventoryItems;
 
 	// table index 28, flags 0x44000000000001
 	UPROPERTY()
@@ -468,6 +572,10 @@ public:
 	UPROPERTY()
 	TSoftClassPtr<UFortStatEventManager> StatEventManagerClass;
 
+	// table index 16, flags 0x44000000000001
+	UPROPERTY()
+	TSoftObjectPtr<UFortHeroType> DefaultHero;
+
 	// table index 15, flags 0x44000000000001
 	UPROPERTY()
 	TSoftClassPtr<AFortThreatVisualsManager> ThreatVisualsManager;
@@ -511,6 +619,10 @@ public:
 	// table index 5, flags 0x44000000000001
 	UPROPERTY()
 	TSoftObjectPtr<UFortTimeOfDayData> FortTimeOfDayData;
+
+	// table index 3, flags 0x44000000000001
+	UPROPERTY()
+	TArray<TSoftClassPtr<UGameStateComponent>> FrontendGameStateComponents;
 
 	// table index 2, flags 0x44000000000001
 	UPROPERTY()

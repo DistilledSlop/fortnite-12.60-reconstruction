@@ -8,6 +8,7 @@
 
 #include "ESubGame.h"
 #include "FHotfixVolumePlacement.h"
+#include "FItemAndCount.h"
 #include "FNotifyPlayerLogin.h"
 #include "FOnHandleMatchHasStarted.h"
 #include "FOnHandleZonePeriodicReport.h"
@@ -56,7 +57,7 @@ public:
 
 	// table index 40, flags 0x20080000004000
 	UPROPERTY(Config)
-	uint8 bDisableVoiceChat : 1;
+	bool bDisableVoiceChat;
 
 	// table index 39, flags 0x20080000004000
 	UPROPERTY(Config)
@@ -84,11 +85,11 @@ public:
 
 	// table index 33, flags 0x20080000010001
 	UPROPERTY()
-	uint8 bUseAllSocketsInSpawnPad : 1;
+	bool bUseAllSocketsInSpawnPad;
 
 	// table index 32, flags 0x20080000010005
 	UPROPERTY()
-	uint8 bAllowSpectateAfterDeath : 1;
+	bool bAllowSpectateAfterDeath;
 
 	// table index 31, flags 0x20080000010005
 	UPROPERTY()
@@ -108,7 +109,7 @@ public:
 
 	// table index 26, flags 0x20080000004000
 	UPROPERTY(Config)
-	uint8 bCriticalMissionEligible : 1;
+	bool bCriticalMissionEligible;
 
 	// table index 23, flags 0x10000000010015
 	UPROPERTY()
@@ -117,6 +118,10 @@ public:
 	// table index 22, flags 0x20080000000000
 	UPROPERTY()
 	UFortPetManager* PetManager;
+
+	// table index 20, flags 0x20080000000001
+	UPROPERTY()
+	TArray<FItemAndCount> StartingItems;
 
 	// table index 19, flags 0x20080000010001
 	UPROPERTY()
@@ -144,7 +149,7 @@ public:
 
 	// table index 13, flags 0x20080000004000
 	UPROPERTY(Config)
-	uint8 bTrustXboxPlatformId : 1;
+	bool bTrustXboxPlatformId;
 
 	// table index 11, flags 0x20080000010001
 	UPROPERTY()
@@ -156,15 +161,15 @@ public:
 
 	// table index 9, flags 0x20080000000004
 	UPROPERTY()
-	uint8 bTryToSpawnWithinStormShield : 1;
+	bool bTryToSpawnWithinStormShield;
 
 	// table index 8, flags 0x20080000010015
 	UPROPERTY()
-	uint8 bSupportOneHitBuildingActorRecycling : 1;
+	bool bSupportOneHitBuildingActorRecycling;
 
 	// table index 7, flags 0x20080000010015
 	UPROPERTY()
-	uint8 bOneHitResourcesGoToOwner : 1;
+	bool bOneHitResourcesGoToOwner;
 
 	// table index 6, flags 0x10000000000005
 	UPROPERTY()
@@ -180,7 +185,7 @@ public:
 
 	// table index 2, flags 0x20080000010015
 	UPROPERTY()
-	uint8 bEnableLongRangeAutoPickup : 1;
+	bool bEnableLongRangeAutoPickup;
 
 	// table index 1, flags 0x20080000010015
 	UPROPERTY()

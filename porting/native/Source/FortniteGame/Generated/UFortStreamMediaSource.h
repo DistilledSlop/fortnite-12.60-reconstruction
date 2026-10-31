@@ -34,7 +34,7 @@ public:
 
 	// table index 12, flags 0x10000000000014
 	UPROPERTY()
-	uint8 bIsLive : 1;
+	bool bIsLive;
 
 	// table index 11, flags 0x10000000000001
 	UPROPERTY()
@@ -50,11 +50,11 @@ public:
 
 	// table index 8, flags 0x10000000000014
 	UPROPERTY()
-	uint8 bShareLock : 1;
+	bool bShareLock;
 
 	// table index 7, flags 0x10000000000014
 	UPROPERTY()
-	uint8 bAudioOnly : 1;
+	bool bAudioOnly;
 
 	// table index 6, flags 0x10000010080000
 	UPROPERTY()

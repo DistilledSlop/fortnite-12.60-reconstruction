@@ -37,11 +37,11 @@ public:
 
 	// table index 31, flags 0x10000000002004
 	UPROPERTY(Transient)
-	uint8 bBoostCameraActive : 1;
+	bool bBoostCameraActive;
 
 	// table index 30, flags 0x10000000002004
 	UPROPERTY(Transient)
-	uint8 bLocalPlayerADS : 1;
+	bool bLocalPlayerADS;
 
 	// table index 29, flags 0x10000000002004
 	UPROPERTY(Transient)

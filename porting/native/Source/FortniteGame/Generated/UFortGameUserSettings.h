@@ -41,11 +41,11 @@ public:
 
 	// table index 141, flags 0x40000000004000
 	UPROPERTY(Config)
-	uint8 UnlockConsoleFPS : 1;
+	bool UnlockConsoleFPS;
 
 	// table index 140, flags 0x40000000002000
 	UPROPERTY(Transient)
-	uint8 LastAppliedUnlockConsoleFPS : 1;
+	bool LastAppliedUnlockConsoleFPS;
 
 	// table index 139, flags 0x40000000002000
 	UPROPERTY(Transient)
@@ -81,7 +81,7 @@ public:
 
 	// table index 131, flags 0x40000000004000
 	UPROPERTY(Config)
-	uint8 bIsSafeZoneSet : 1;
+	bool bIsSafeZoneSet;
 
 	// table index 130, flags 0x40000000004000
 	UPROPERTY(Config)
@@ -89,7 +89,7 @@ public:
 
 	// table index 129, flags 0x40000000004000
 	UPROPERTY(Config)
-	uint8 bShowCareerTabBang : 1;
+	bool bShowCareerTabBang;
 
 	// table index 128, flags 0x10000000004000
 	UPROPERTY(Config)
@@ -109,19 +109,19 @@ public:
 
 	// table index 124, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bMotionBlur : 1;
+	bool bMotionBlur;
 
 	// table index 123, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bShowGrass : 1;
+	bool bShowGrass;
 
 	// table index 122, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bShowFPS : 1;
+	bool bShowFPS;
 
 	// table index 121, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bUseGPUCrashDebugging : 1;
+	bool bUseGPUCrashDebugging;
 
 	// table index 120, flags 0x10000000004000
 	UPROPERTY(Config)
@@ -149,7 +149,7 @@ public:
 
 	// table index 110, flags 0x40000000004000
 	UPROPERTY(Config)
-	uint8 bHasSeenDonutShopSequence : 1;
+	bool bHasSeenDonutShopSequence;
 
 	// table index 109, flags 0x40000000004000
 	UPROPERTY(Config)
@@ -181,7 +181,7 @@ public:
 
 	// table index 97, flags 0x40000000004000
 	UPROPERTY(Config)
-	uint8 LastSelectedFillOption : 1;
+	bool LastSelectedFillOption;
 
 	// table index 94, flags 0x40000000004000
 	UPROPERTY(Config)
@@ -193,11 +193,11 @@ public:
 
 	// table index 90, flags 0x40000000004000
 	UPROPERTY(Config)
-	uint8 bHasSeenCreativePhoneTutorial : 1;
+	bool bHasSeenCreativePhoneTutorial;
 
 	// table index 89, flags 0x40000000004000
 	UPROPERTY(Config)
-	uint8 bHasSeenCreativeHeatmapTutorial : 1;
+	bool bHasSeenCreativeHeatmapTutorial;
 
 	// table index 88, flags 0x40000000004000
 	UPROPERTY(Config)
@@ -233,7 +233,7 @@ public:
 
 	// table index 80, flags 0x40000000004000
 	UPROPERTY(Config)
-	uint8 bEulaAccepted : 1;
+	bool bEulaAccepted;
 
 	// table index 79, flags 0x40000000004000
 	UPROPERTY(Config)
@@ -261,7 +261,7 @@ public:
 
 	// table index 73, flags 0x40000000004000
 	UPROPERTY(Config)
-	uint8 bHasSeenTapToShoot : 1;
+	bool bHasSeenTapToShoot;
 
 	// table index 72, flags 0x40000000004000
 	UPROPERTY(Config)
@@ -277,11 +277,11 @@ public:
 
 	// table index 69, flags 0x10000000002000
 	UPROPERTY(Transient)
-	uint8 bDesiredHeadphoneMode : 1;
+	bool bDesiredHeadphoneMode;
 
 	// table index 68, flags 0x40000000004000
 	UPROPERTY(Config)
-	uint8 bUseHeadphoneMode : 1;
+	bool bUseHeadphoneMode;
 
 	// table index 67, flags 0x10000000004000
 	UPROPERTY(Config)
@@ -289,7 +289,7 @@ public:
 
 	// table index 66, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bDisableMouseAcceleration : 1;
+	bool bDisableMouseAcceleration;
 
 	// table index 64, flags 0x10000000004000
 	UPROPERTY(Config)
@@ -333,11 +333,11 @@ public:
 
 	// table index 53, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bHasSeenErebusSocialImport : 1;
+	bool bHasSeenErebusSocialImport;
 
 	// table index 52, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bHasSeenFriendImportToast : 1;
+	bool bHasSeenFriendImportToast;
 
 	// table index 51, flags 0x10000000004000
 	UPROPERTY(Config)
@@ -345,11 +345,11 @@ public:
 
 	// table index 50, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bAutoImportFriendEnabled : 1;
+	bool bAutoImportFriendEnabled;
 
 	// table index 49, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bSeenLetoSellModal : 1;
+	bool bSeenLetoSellModal;
 
 	// table index 48, flags 0x10000000004000
 	UPROPERTY(Config)
@@ -369,11 +369,11 @@ public:
 
 	// table index 44, flags 0x10000000002000
 	UPROPERTY(Transient)
-	uint8 bSocialImportDisplayed : 1;
+	bool bSocialImportDisplayed;
 
 	// table index 43, flags 0x10000000002000
 	UPROPERTY(Transient)
-	uint8 bAccountItemWarningShownThisLaunch : 1;
+	bool bAccountItemWarningShownThisLaunch;
 
 	// table index 42, flags 0x10000000004000
 	UPROPERTY(Config)
@@ -381,7 +381,7 @@ public:
 
 	// table index 41, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bMultiFactorAuthModalOpOut : 1;
+	bool bMultiFactorAuthModalOpOut;
 
 	// table index 40, flags 0x10000000004000
 	UPROPERTY(Config)
@@ -413,15 +413,15 @@ public:
 
 	// table index 30, flags 0x40000000004000
 	UPROPERTY(Config)
-	uint8 bNeverShowMobileLink : 1;
+	bool bNeverShowMobileLink;
 
 	// table index 29, flags 0x40000000002000
 	UPROPERTY(Transient)
-	uint8 bHasShownMobileLink : 1;
+	bool bHasShownMobileLink;
 
 	// table index 28, flags 0x10000000002000
 	UPROPERTY(Transient)
-	uint8 bDesiredAllowLowPowerMode : 1;
+	bool bDesiredAllowLowPowerMode;
 
 	// table index 27, flags 0x10000010080000
 	UPROPERTY()
@@ -429,63 +429,63 @@ public:
 
 	// table index 26, flags 0x10000000002000
 	UPROPERTY(Transient)
-	uint8 bDesiredAllowMultithreadedRendering : 1;
+	bool bDesiredAllowMultithreadedRendering;
 
 	// table index 25, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bHasMigratedDownloadSettings : 1;
+	bool bHasMigratedDownloadSettings;
 
 	// table index 24, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bSendAppsFlyerEventOnInstallation : 1;
+	bool bSendAppsFlyerEventOnInstallation;
 
 	// table index 23, flags 0x40000000004000
 	UPROPERTY(Config)
-	uint8 bAllowCellularDownload : 1;
+	bool bAllowCellularDownload;
 
 	// table index 22, flags 0x40000000002000
 	UPROPERTY(Transient)
-	uint8 bAllowCellularDownloadOverride : 1;
+	bool bAllowCellularDownloadOverride;
 
 	// table index 21, flags 0x40000000004000
 	UPROPERTY(Config)
-	uint8 bAllowFullGameDownload : 1;
+	bool bAllowFullGameDownload;
 
 	// table index 20, flags 0x40000000002000
 	UPROPERTY(Transient)
-	uint8 bAllowFullGameDownloadOverride : 1;
+	bool bAllowFullGameDownloadOverride;
 
 	// table index 19, flags 0x40000000004000
 	UPROPERTY(Config)
-	uint8 bAllowElectraPlayerDownload : 1;
+	bool bAllowElectraPlayerDownload;
 
 	// table index 18, flags 0x40000000002000
 	UPROPERTY(Transient)
-	uint8 bAllowElectraPlayerDownloadOverride : 1;
+	bool bAllowElectraPlayerDownloadOverride;
 
 	// table index 17, flags 0x10000000002000
 	UPROPERTY(Transient)
-	uint8 bResumeUserCanceledOrPausedDownload : 1;
+	bool bResumeUserCanceledOrPausedDownload;
 
 	// table index 16, flags 0x10000000002000
 	UPROPERTY(Transient)
-	uint8 bForceNoPatchingForDownloads : 1;
+	bool bForceNoPatchingForDownloads;
 
 	// table index 15, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bAutoLaunchFullGame : 1;
+	bool bAutoLaunchFullGame;
 
 	// table index 14, flags 0x40000000004000
 	UPROPERTY(Config)
-	uint8 bAllowLowPowerMode : 1;
+	bool bAllowLowPowerMode;
 
 	// table index 13, flags 0x40000000004000
 	UPROPERTY(Config)
-	uint8 bAllowVideoPlayback : 1;
+	bool bAllowVideoPlayback;
 
 	// table index 12, flags 0x40000000004000
 	UPROPERTY(Config)
-	uint8 bAllowMultithreadedRendering : 1;
+	bool bAllowMultithreadedRendering;
 
 	// table index 10, flags 0x40000000004000
 	UPROPERTY(Config)
@@ -497,15 +497,15 @@ public:
 
 	// table index 8, flags 0x40000000004000
 	UPROPERTY(Config)
-	uint8 bHasSeenSamsungPressureSensorWarning : 1;
+	bool bHasSeenSamsungPressureSensorWarning;
 
 	// table index 7, flags 0x40000000004000
 	UPROPERTY(Config)
-	uint8 bNeverDisplaySamsungPressureSensorWarning : 1;
+	bool bNeverDisplaySamsungPressureSensorWarning;
 
 	// table index 6, flags 0x40000000004000
 	UPROPERTY(Config)
-	uint8 bHasRecentlySeenBadMatchPopup : 1;
+	bool bHasRecentlySeenBadMatchPopup;
 
 	// table index 5, flags 0x40000000004000
 	UPROPERTY(Config)
@@ -513,7 +513,7 @@ public:
 
 	// table index 4, flags 0x40000000004000
 	UPROPERTY(Config)
-	uint8 bShowTemperature : 1;
+	bool bShowTemperature;
 
 	// table index 3, flags 0x40000000004000
 	UPROPERTY(Config)

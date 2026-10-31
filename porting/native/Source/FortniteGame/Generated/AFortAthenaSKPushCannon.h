@@ -48,11 +48,11 @@ public:
 
 	// table index 2, flags 0x10000000002020
 	UPROPERTY(Replicated, Transient)
-	uint8 bPlayerTorquingRepped : 1;
+	bool bPlayerTorquingRepped;
 
 	// table index 1, flags 0x10000000002000
 	UPROPERTY(Transient)
-	uint8 bPlayerTorquing : 1;
+	bool bPlayerTorquing;
 
 	// table index 0, flags 0x10000000002000
 	UPROPERTY(Transient)

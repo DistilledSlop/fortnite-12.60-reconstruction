@@ -51,7 +51,7 @@ public:
 
 	// table index 0, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bNeedsFullActorSave : 1;
+	bool bNeedsFullActorSave;
 
 };
 

@@ -7,10 +7,16 @@ void AFortCharacterVehicle::OnRep_OverrideAbilitySystemComponent()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortCharacterVehicle::OnRep_OverrideWrap()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortCharacterVehicle::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(AFortCharacterVehicle, OverrideAbilitySystemComponent);
+	DOREPLIFETIME(AFortCharacterVehicle, SoftOverrideItemWrap);
 }
 

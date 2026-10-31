@@ -25,11 +25,11 @@ struct FFortGameplayCueCameraLensEffectInfo
 
 	// table index 1, offset None, flags 0x10000000000015
 	UPROPERTY()
-	uint8 bAlwaysPlayOnTarget : 1;
+	bool bAlwaysPlayOnTarget;
 
 	// table index 0, offset None, flags 0x10000000000015
 	UPROPERTY()
-	uint8 bCancelOnRemove : 1;
+	bool bCancelOnRemove;
 
 };
 

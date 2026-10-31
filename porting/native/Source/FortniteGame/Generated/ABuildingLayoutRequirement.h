@@ -36,19 +36,19 @@ public:
 
 	// table index 10, flags 0x20080001000001
 	UPROPERTY(SaveGame)
-	uint8 bIgnoreResourceTypeRequirements : 1;
+	bool bIgnoreResourceTypeRequirements;
 
 	// table index 9, flags 0x20080001000001
 	UPROPERTY(SaveGame)
-	uint8 bMakeSatisfyingActorIndestructibleWhileRequirementExists : 1;
+	bool bMakeSatisfyingActorIndestructibleWhileRequirementExists;
 
 	// table index 8, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bNeedToInitializeRequirementStatus : 1;
+	bool bNeedToInitializeRequirementStatus;
 
 	// table index 7, flags 0x20080100002020
 	UPROPERTY(ReplicatedUsing=OnRep_RequirementStatus, Transient)
-	uint8 bRequirementSatisfied : 1;
+	bool bRequirementSatisfied;
 
 	// table index 5, flags 0x20080100002020
 	UPROPERTY(ReplicatedUsing=OnRep_RequirementStatus, Transient)
@@ -60,11 +60,11 @@ public:
 
 	// table index 3, flags 0x20080001000001
 	UPROPERTY(SaveGame)
-	uint8 bAllowAnyPattern : 1;
+	bool bAllowAnyPattern;
 
 	// table index 2, flags 0x20080001000001
 	UPROPERTY(SaveGame)
-	uint8 bAllowOccupantPatternEditing : 1;
+	bool bAllowOccupantPatternEditing;
 
 	// table index 1, flags 0x24080001010001
 	UPROPERTY(SaveGame)

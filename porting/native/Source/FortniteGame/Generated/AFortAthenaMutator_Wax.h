@@ -22,6 +22,7 @@
 class AFortAthena_WaxToken;
 class AFortGameModePickup_Wax;
 class AFortPlayerStateAthena;
+class UFortWorldItemDefinition;
 
 #include "AFortAthenaMutator_Wax.generated.h"
 
@@ -70,6 +71,10 @@ public:
 	// table index 82, flags 0x24080000010001
 	UPROPERTY()
 	TSubclassOf<AFortGameModePickup_Wax> TokenPickupClass;
+
+	// table index 81, flags 0x20080000010001
+	UPROPERTY()
+	UFortWorldItemDefinition* PickupItemDef;
 
 	// table index 80, flags 0x20080000010001
 	UPROPERTY()

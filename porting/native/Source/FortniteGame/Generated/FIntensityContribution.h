@@ -29,7 +29,7 @@ struct FIntensityContribution
 
 	// table index 4, offset None, flags 0x10000000000015
 	UPROPERTY()
-	uint8 bModifyContributionByCompletionPercentage : 1;
+	bool bModifyContributionByCompletionPercentage;
 
 	// table index 3, offset 16, flags 0x10000000000015
 	UPROPERTY()
@@ -45,7 +45,7 @@ struct FIntensityContribution
 
 	// table index 0, offset None, flags 0x10000000000015
 	UPROPERTY()
-	uint8 bModifyByNumberOfCriticalEncounterGoals : 1;
+	bool bModifyByNumberOfCriticalEncounterGoals;
 
 };
 

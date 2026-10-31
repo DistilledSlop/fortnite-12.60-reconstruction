@@ -24,7 +24,7 @@ struct FFortAnimInput_Facial
 
 	// table index 0, offset None, flags 0x10000000000015
 	UPROPERTY()
-	uint8 bCurvesOnly : 1;
+	bool bCurvesOnly;
 
 };
 

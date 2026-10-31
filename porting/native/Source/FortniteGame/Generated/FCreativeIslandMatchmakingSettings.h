@@ -39,7 +39,7 @@ struct FCreativeIslandMatchmakingSettings
 
 	// table index 3, offset None, flags 0x10000000000014
 	UPROPERTY()
-	uint8 bAllowJoinInProgress : 1;
+	bool bAllowJoinInProgress;
 
 	// table index 2, offset 0, flags 0x0
 	UPROPERTY()

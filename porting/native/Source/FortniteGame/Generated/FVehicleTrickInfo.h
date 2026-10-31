@@ -19,11 +19,11 @@ struct FVehicleTrickInfo
 
 	// table index 24, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bInAirTrick : 1;
+	bool bInAirTrick;
 
 	// table index 23, offset None, flags 0x10000000000004
 	UPROPERTY()
-	uint8 bCreditTrick : 1;
+	bool bCreditTrick;
 
 	// table index 22, offset 8, flags 0x10000000000004
 	UPROPERTY()
@@ -31,11 +31,11 @@ struct FVehicleTrickInfo
 
 	// table index 21, offset None, flags 0x10000000000004
 	UPROPERTY()
-	uint8 bTrickDeactivated : 1;
+	bool bTrickDeactivated;
 
 	// table index 20, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bStuckLanding : 1;
+	bool bStuckLanding;
 
 	// table index 19, offset 16, flags 0x10000000000000
 	UPROPERTY()
@@ -47,7 +47,7 @@ struct FVehicleTrickInfo
 
 	// table index 17, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bDoingRotationTrick : 1;
+	bool bDoingRotationTrick;
 
 	// table index 16, offset 196, flags 0x10000000000000
 	UPROPERTY()

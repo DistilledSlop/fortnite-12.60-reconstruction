@@ -41,6 +41,11 @@ void AFortLobbyBeaconClient::ServerSetHeroId_Implementation(const FString& InHer
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortLobbyBeaconClient::ServerSetHeroType_Implementation(UFortHeroType* InHeroType, const FUniqueNetIdRepl& InUniqueId)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortLobbyBeaconClient::ServerSetMatchmakingLevel_Implementation(int32 MatchmakingLevel, const FUniqueNetIdRepl& InUniqueId)
 {
 	// Body not recovered: reflection-derived stub.

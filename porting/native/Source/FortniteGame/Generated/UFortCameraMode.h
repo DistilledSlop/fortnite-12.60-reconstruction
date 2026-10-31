@@ -32,7 +32,7 @@ public:
 
 	// table index 5, flags 0x10000000000005
 	UPROPERTY()
-	uint8 bOverrideTransitionOutTime : 1;
+	bool bOverrideTransitionOutTime;
 
 	// table index 4, flags 0x10000000000005
 	UPROPERTY()

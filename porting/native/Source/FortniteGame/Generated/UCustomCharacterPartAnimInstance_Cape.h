@@ -37,7 +37,7 @@ public:
 
 	// table index 8, flags 0x10000000002005
 	UPROPERTY(Transient)
-	uint8 bBlendInBackwardPose : 1;
+	bool bBlendInBackwardPose;
 
 	// table index 7, flags 0x10000000000005
 	UPROPERTY()

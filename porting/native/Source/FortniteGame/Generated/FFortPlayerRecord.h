@@ -28,7 +28,7 @@ struct FFortPlayerRecord
 
 	// table index 2, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bPlayerIsNew : 1;
+	bool bPlayerIsNew;
 
 	// table index 1, offset 52, flags 0x10000000000000
 	UPROPERTY()

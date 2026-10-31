@@ -21,7 +21,7 @@ class FORTNITEGAME_API AFortAthenaMutator_PlayerDamage : public AFortAthenaMutat
 public:
 	// table index 8, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bIsUsingHitResult : 1;
+	bool bIsUsingHitResult;
 
 	// table index 7, flags 0x20080000010005
 	UPROPERTY()

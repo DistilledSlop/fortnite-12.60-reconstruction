@@ -28,7 +28,7 @@ struct FMyFortCategoryData
 
 	// table index 2, offset None, flags 0x10000000000015
 	UPROPERTY()
-	uint8 bIsCore : 1;
+	bool bIsCore;
 
 	// table index 0, offset 72, flags 0x10000000000015
 	UPROPERTY()

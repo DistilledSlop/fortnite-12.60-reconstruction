@@ -41,19 +41,19 @@ struct FFortAttributeInfo
 
 	// table index 3, offset None, flags 0x10000000000015
 	UPROPERTY()
-	uint8 bShowInSummaries : 1;
+	bool bShowInSummaries;
 
 	// table index 2, offset None, flags 0x10000000000015
 	UPROPERTY()
-	uint8 bShowInDifferences : 1;
+	bool bShowInDifferences;
 
 	// table index 1, offset None, flags 0x10000000000015
 	UPROPERTY()
-	uint8 bShowAsBuffInFE : 1;
+	bool bShowAsBuffInFE;
 
 	// table index 0, offset None, flags 0x10000000000015
 	UPROPERTY()
-	uint8 bNegativeValuesShouldBeDisplayedPositively : 1;
+	bool bNegativeValuesShouldBeDisplayedPositively;
 
 };
 

@@ -49,7 +49,7 @@ public:
 
 	// table index 26, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bRespawnWarningGiven : 1;
+	bool bRespawnWarningGiven;
 
 	// table index 25, flags 0x20080000002000
 	UPROPERTY(Transient)

@@ -18,7 +18,7 @@ class FORTNITEGAME_API UPlaylistUserOptions : public UDataAsset
 public:
 	// table index 2, flags 0x10000000010015
 	UPROPERTY()
-	uint8 bSupportNoOverride : 1;
+	bool bSupportNoOverride;
 
 	// table index 0, flags 0x10000000010015
 	UPROPERTY()

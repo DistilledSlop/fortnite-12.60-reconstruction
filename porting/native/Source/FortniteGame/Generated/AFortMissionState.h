@@ -22,11 +22,11 @@ public:
 
 	// table index 2, flags 0x40000000002000
 	UPROPERTY(Transient)
-	uint8 bAlreadySetTimerOnce : 1;
+	bool bAlreadySetTimerOnce;
 
 	// table index 1, flags 0x40000000002000
 	UPROPERTY(Transient)
-	uint8 bAlreadyCalledOnAllPlayersLoadedIn : 1;
+	bool bAlreadyCalledOnAllPlayersLoadedIn;
 
 	// table index 0, flags 0x40000000002000
 	UPROPERTY(Transient)

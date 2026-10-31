@@ -24,11 +24,11 @@ public:
 
 	// table index 8, flags 0x20080000010001
 	UPROPERTY()
-	uint8 bSupportsRespawnConfig : 1;
+	bool bSupportsRespawnConfig;
 
 	// table index 7, flags 0x20080000000020
 	UPROPERTY(Replicated)
-	uint8 bRespawnsAllowed : 1;
+	bool bRespawnsAllowed;
 
 	// table index 6, flags 0x20080000010001
 	UPROPERTY()

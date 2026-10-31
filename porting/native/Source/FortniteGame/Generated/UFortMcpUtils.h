@@ -52,7 +52,7 @@ public:
 
 	// table index 10, flags 0x40000000004000
 	UPROPERTY(Config)
-	uint8 bShouldSendTimeTracking : 1;
+	bool bShouldSendTimeTracking;
 
 	// table index 9, flags 0x40000000004000
 	UPROPERTY(Config)

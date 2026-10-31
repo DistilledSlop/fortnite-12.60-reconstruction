@@ -38,7 +38,7 @@ public:
 
 	// table index 7, flags 0x10000000000015
 	UPROPERTY()
-	uint8 bHasMatchStats : 1;
+	bool bHasMatchStats;
 
 	// table index 6, flags 0x10000000000015
 	UPROPERTY()
@@ -46,7 +46,7 @@ public:
 
 	// table index 5, flags 0x10000000000015
 	UPROPERTY()
-	uint8 bHasTeamStats : 1;
+	bool bHasTeamStats;
 
 	// table index 4, flags 0x10000000000015
 	UPROPERTY()
@@ -54,7 +54,7 @@ public:
 
 	// table index 3, flags 0x10000000000015
 	UPROPERTY()
-	uint8 bHasRewards : 1;
+	bool bHasRewards;
 
 	// table index 1, flags 0x10000000000015
 	UPROPERTY()

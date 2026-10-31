@@ -32,7 +32,7 @@ public:
 
 	// table index 4, flags 0x10000000000005
 	UPROPERTY()
-	uint8 bUseAsIslandStart : 1;
+	bool bUseAsIslandStart;
 
 	// table index 3, flags 0x10000000000005
 	UPROPERTY()
@@ -44,7 +44,7 @@ public:
 
 	// table index 1, flags 0x10000000010005
 	UPROPERTY()
-	uint8 bIsEnabled : 1;
+	bool bIsEnabled;
 
 	// table index 0, flags 0x2008000008201c
 	UPROPERTY(Transient)

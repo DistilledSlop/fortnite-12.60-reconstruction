@@ -15,11 +15,11 @@ struct FPartyFailureLogSubmit
 
 	// table index 4, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bSubmitLogs : 1;
+	bool bSubmitLogs;
 
 	// table index 3, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bSubmitSecondaryLogs : 1;
+	bool bSubmitSecondaryLogs;
 
 	// table index 2, offset 4, flags 0x10000000000000
 	UPROPERTY()

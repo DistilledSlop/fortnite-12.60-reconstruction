@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "ABuildingProp.h"
 
+class UFortWorldItemDefinition;
+
 #include "AFortCreativeRoundSettings.generated.h"
 
 UCLASS(config=Game)
@@ -32,7 +34,7 @@ public:
 
 	// table index 8, flags 0x10000000000015
 	UPROPERTY()
-	uint8 bIsRelevantThisRound : 1;
+	bool bIsRelevantThisRound;
 
 	// table index 7, flags 0x10000000000005
 	UPROPERTY()
@@ -40,7 +42,7 @@ public:
 
 	// table index 6, flags 0x10000000002004
 	UPROPERTY(Transient)
-	uint8 bActiveDuringMinigame : 1;
+	bool bActiveDuringMinigame;
 
 	// table index 5, flags 0x10000000000005
 	UPROPERTY()
@@ -49,6 +51,10 @@ public:
 	// table index 4, flags 0x10000000000005
 	UPROPERTY()
 	int32 LastTeamStandingWins;
+
+	// table index 1, flags 0x10000000010015
+	UPROPERTY()
+	TMap<UFortWorldItemDefinition*, int32> RestockAmmoAmounts;
 
 	// table index 0, flags 0x10000000000005
 	UPROPERTY()

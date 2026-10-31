@@ -30,11 +30,11 @@ public:
 
 	// table index 5, flags 0x40000000004001
 	UPROPERTY(Config)
-	uint8 bInventoryRequirement : 1;
+	bool bInventoryRequirement;
 
 	// table index 4, flags 0x40000000004001
 	UPROPERTY(Config)
-	uint8 bInventoryCanInteract : 1;
+	bool bInventoryCanInteract;
 
 	// table index 3, flags 0x40000000004001
 	UPROPERTY(Config)

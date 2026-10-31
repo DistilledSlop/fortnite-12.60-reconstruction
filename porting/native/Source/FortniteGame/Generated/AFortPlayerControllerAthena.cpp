@@ -2,6 +2,16 @@
 #include "AFortPlayerControllerAthena.h"
 #include "Net/UnrealNetwork.h"
 
+void AFortPlayerControllerAthena::Client_DisplayQuestUpdate_Assist_Implementation(AFortPlayerState* AssistingPlayer, AFortPlayerState* QuestOwner, const FFortUpdatedObjectiveStat& ObjectiveUpdated)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerControllerAthena::Client_DisplayQuestUpdate_Self_Implementation(const FFortUpdatedObjectiveStat& ObjectiveUpdated)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPlayerControllerAthena::ClientAddProfileGoCollection_Implementation(const TArray<FProfileGoScenario>& NewScenarios, const FString& CollectionName)
 {
 	// Body not recovered: reflection-derived stub.
@@ -67,6 +77,11 @@ void AFortPlayerControllerAthena::ClientBroadcastPlotItemID_Implementation(const
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerControllerAthena::ClientCycleQuickBarToCreativeItem_Implementation(UFortWorldItemDefinition* CreativeItemDef, const FGuid& CreativeItemGuid)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPlayerControllerAthena::ClientEnterCameraMode_Implementation()
 {
 	// Body not recovered: reflection-derived stub.
@@ -88,6 +103,16 @@ void AFortPlayerControllerAthena::ClientNotifyLost_Implementation(const EEndOfMa
 }
 
 void AFortPlayerControllerAthena::ClientNotifyTeamLost_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerControllerAthena::ClientNotifyTeamWon_Implementation(const EDeathCause& DeathCause, UFortWeaponItemDefinition* FinishingWeapon, APawn* FinisherPawn)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerControllerAthena::ClientNotifyWon_Implementation(const EDeathCause& DeathCause, UFortWeaponItemDefinition* FinishingWeapon, APawn* FinisherPawn)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -147,6 +172,11 @@ void AFortPlayerControllerAthena::ClientSendTeamStatsForPlayer_Implementation(co
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerControllerAthena::ClientSetDeathReport_Implementation(const FFortPlayerDeathReport& InDeathReport)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPlayerControllerAthena::ClientSetStreamingTestStreamingLevels_Implementation(bool streaming)
 {
 	// Body not recovered: reflection-derived stub.
@@ -182,6 +212,11 @@ void AFortPlayerControllerAthena::DuplicateCreativePlot_Implementation(const FSt
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerControllerAthena::MakeNewCreativePlot_Implementation(const FString& Title, const FString& Locale, UFortCreativeRealEstatePlotItemDefinition* PlotType)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPlayerControllerAthena::MakeNewCreativePlotFromLinkCode_Implementation(const FString& Title, const FString& Locale, const FString& LinkCode)
 {
 	// Body not recovered: reflection-derived stub.
@@ -207,6 +242,11 @@ void AFortPlayerControllerAthena::OnRep_FocalPoint()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerControllerAthena::OnRep_PartyAssistedMemberData()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPlayerControllerAthena::OnRep_SkydiveLeader()
 {
 	// Body not recovered: reflection-derived stub.
@@ -228,6 +268,21 @@ void AFortPlayerControllerAthena::RestoreCreativePlot_Implementation(const FStri
 }
 
 void AFortPlayerControllerAthena::ServerAddSimulatedXp_Implementation(const FGameplayTag& MetaData, const FText& Source, float XpAmmount)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerControllerAthena::ServerAddToCachedPurchased_Implementation(int32 Count, UFortItemDefinition* ItemDefinition)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerControllerAthena::ServerApplyOverrideWrapToItem_Implementation(const TSoftObjectPtr<UAthenaItemWrapDefinition>& ItemWrap, const FGuid& GUID)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerControllerAthena::ServerApplyOverrideWrapToVehicle_Implementation(const TSoftObjectPtr<UAthenaItemWrapDefinition>& ItemWrap)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -298,6 +353,11 @@ void AFortPlayerControllerAthena::ServerEndUnloadingVolume_Implementation(AFortV
 }
 
 void AFortPlayerControllerAthena::ServerGenerateMockMatchReport_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerControllerAthena::ServerGiveCreativeItem_Implementation(const FFortItemEntry& CreativeItem)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -407,6 +467,11 @@ void AFortPlayerControllerAthena::ServerSetOnCreativePortalLoadedDelegate_Implem
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerControllerAthena::ServerSetPlayset_Implementation(UFortPlaysetItemDefinition* NewPlayset)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPlayerControllerAthena::ServerSetReceiveEmailSignups_Implementation(bool bSignUp)
 {
 	// Body not recovered: reflection-derived stub.
@@ -502,6 +567,11 @@ void AFortPlayerControllerAthena::ServerToggleAutoRestartMinigame_Implementation
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerControllerAthena::ServerTryFindPlotItemForDefinition_Implementation(UFortCreativeRealEstatePlotItemDefinition* PlotDefinition)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPlayerControllerAthena::ServerUpdateLevelStreamingHandshakeData_Implementation(bool bClientLevelStreamingState)
 {
 	// Body not recovered: reflection-derived stub.
@@ -548,9 +618,12 @@ void AFortPlayerControllerAthena::GetLifetimeReplicatedProps(TArray<FLifetimePro
 
 	DOREPLIFETIME(AFortPlayerControllerAthena, CreativeObjectTrackingComponent);
 	DOREPLIFETIME(AFortPlayerControllerAthena, CreativeUserContentManager);
+	DOREPLIFETIME(AFortPlayerControllerAthena, CurrentPlayset);
+	DOREPLIFETIME(AFortPlayerControllerAthena, CachedPurchasedItems);
 	DOREPLIFETIME(AFortPlayerControllerAthena, OwnedPortal);
 	DOREPLIFETIME(AFortPlayerControllerAthena, CreativePlotLinkedVolume);
 	DOREPLIFETIME(AFortPlayerControllerAthena, BroadcastRemoteClientInfo);
+	DOREPLIFETIME(AFortPlayerControllerAthena, PartyAssistedMemberData);
 	DOREPLIFETIME(AFortPlayerControllerAthena, bIsAllowedToPublish);
 	DOREPLIFETIME(AFortPlayerControllerAthena, LastUsedSavePlot);
 	DOREPLIFETIME(AFortPlayerControllerAthena, CreativeIslands);

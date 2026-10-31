@@ -27,31 +27,31 @@ struct FAthenaBatchedDamageGameplayCues_Shared
 
 	// table index 12, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bWeaponActivate : 1;
+	bool bWeaponActivate;
 
 	// table index 11, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bIsFatal : 1;
+	bool bIsFatal;
 
 	// table index 10, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bIsCritical : 1;
+	bool bIsCritical;
 
 	// table index 9, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bIsShield : 1;
+	bool bIsShield;
 
 	// table index 8, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bIsShieldDestroyed : 1;
+	bool bIsShieldDestroyed;
 
 	// table index 7, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bIsShieldApplied : 1;
+	bool bIsShieldApplied;
 
 	// table index 6, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bIsBallistic : 1;
+	bool bIsBallistic;
 
 	// table index 5, offset 36, flags 0x10000080000000
 	UPROPERTY()
@@ -67,15 +67,15 @@ struct FAthenaBatchedDamageGameplayCues_Shared
 
 	// table index 2, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 NonPlayerbIsFatal : 1;
+	bool NonPlayerbIsFatal;
 
 	// table index 1, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 NonPlayerbIsCritical : 1;
+	bool NonPlayerbIsCritical;
 
 	// table index 0, offset None, flags 0x10000080000000
 	UPROPERTY()
-	uint8 bIsValid : 1;
+	bool bIsValid;
 
 };
 

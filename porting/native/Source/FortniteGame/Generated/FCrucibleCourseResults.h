@@ -47,7 +47,7 @@ struct FCrucibleCourseResults
 
 	// table index 0, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bInputMethodWasKBMAtAnyPoint : 1;
+	bool bInputMethodWasKBMAtAnyPoint;
 
 };
 

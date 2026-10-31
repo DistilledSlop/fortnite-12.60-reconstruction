@@ -39,19 +39,19 @@ struct FFortTeamMemberInfo
 
 	// table index 20, offset None, flags 0x10000000000014
 	UPROPERTY()
-	uint8 bPartyLeader : 1;
+	bool bPartyLeader;
 
 	// table index 19, offset None, flags 0x10000000000014
 	UPROPERTY()
-	uint8 bIsInZone : 1;
+	bool bIsInZone;
 
 	// table index 18, offset None, flags 0x10000000000014
 	UPROPERTY()
-	uint8 bHasBoostXp : 1;
+	bool bHasBoostXp;
 
 	// table index 17, offset None, flags 0x10000000000014
 	UPROPERTY()
-	uint8 bHasRestXp : 1;
+	bool bHasRestXp;
 
 	// table index 16, offset 168, flags 0x10000000000014
 	UPROPERTY()
@@ -63,7 +63,7 @@ struct FFortTeamMemberInfo
 
 	// table index 14, offset None, flags 0x10000000000014
 	UPROPERTY()
-	uint8 bBattlePassPurchased : 1;
+	bool bBattlePassPurchased;
 
 	// table index 13, offset 204, flags 0x10000000000014
 	UPROPERTY()

@@ -25,31 +25,31 @@ struct FFortEncounterSettings
 
 	// table index 32, offset None, flags 0x10000000000005
 	UPROPERTY()
-	uint8 bRiftsDestroyPlayerBuiltBuildings : 1;
+	bool bRiftsDestroyPlayerBuiltBuildings;
 
 	// table index 31, offset None, flags 0x10000000000005
 	UPROPERTY()
-	uint8 bValidateIfPlayerIsAtSpawnLocation : 1;
+	bool bValidateIfPlayerIsAtSpawnLocation;
 
 	// table index 30, offset None, flags 0x10040000000005
 	UPROPERTY()
-	uint8 bMustFindSpawnPoints : 1;
+	bool bMustFindSpawnPoints;
 
 	// table index 29, offset None, flags 0x10040000000005
 	UPROPERTY()
-	uint8 bStopIfCantFindSpawnPoint : 1;
+	bool bStopIfCantFindSpawnPoint;
 
 	// table index 28, offset None, flags 0x10000000000005
 	UPROPERTY()
-	uint8 bIgnoreCollisionWhenSpawningAI : 1;
+	bool bIgnoreCollisionWhenSpawningAI;
 
 	// table index 27, offset None, flags 0x10040000000005
 	UPROPERTY()
-	uint8 bTrackCombatParticipation : 1;
+	bool bTrackCombatParticipation;
 
 	// table index 26, offset None, flags 0x10040000000005
 	UPROPERTY()
-	uint8 bDisplayThreatVisuals : 1;
+	bool bDisplayThreatVisuals;
 
 	// table index 25, offset 24, flags 0x10040000000005
 	UPROPERTY()
@@ -101,7 +101,7 @@ struct FFortEncounterSettings
 
 	// table index 13, offset None, flags 0x10000000000005
 	UPROPERTY()
-	uint8 bSpawnFirstRiftNoDelay : 1;
+	bool bSpawnFirstRiftNoDelay;
 
 	// table index 12, offset 96, flags 0x10000000000005
 	UPROPERTY()

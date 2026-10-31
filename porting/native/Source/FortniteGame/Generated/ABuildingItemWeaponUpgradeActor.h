@@ -12,6 +12,8 @@
 
 class ABuildingSMActor;
 class UDataTable;
+class UFortWeaponItemDefinition;
+class UFortWorldItemDefinition;
 class UWeaponUpgradeRequiredResources;
 
 #include "ABuildingItemWeaponUpgradeActor.generated.h"
@@ -24,11 +26,23 @@ class FORTNITEGAME_API ABuildingItemWeaponUpgradeActor : public ABuildingItemCol
 public:
 	// table index 27, flags 0x10000100002024
 	UPROPERTY(ReplicatedUsing=OnRep_AllowSecondInteraction, Transient)
-	uint8 bAllowSecondInteraction : 1;
+	bool bAllowSecondInteraction;
 
 	// table index 26, flags 0x20080000010015
 	UPROPERTY()
 	UDataTable* UpgradeTable;
+
+	// table index 25, flags 0x20080000010015
+	UPROPERTY()
+	UFortWorldItemDefinition* WoodItem;
+
+	// table index 24, flags 0x20080000010015
+	UPROPERTY()
+	UFortWorldItemDefinition* MetalItem;
+
+	// table index 23, flags 0x20080000010015
+	UPROPERTY()
+	UFortWorldItemDefinition* BrickItem;
 
 	// table index 22, flags 0x20080000010015
 	UPROPERTY()
@@ -77,6 +91,10 @@ public:
 	// table index 9, flags 0x20080000002014
 	UPROPERTY(Transient)
 	UWeaponUpgradeRequiredResources* RequiredHorizontalResources;
+
+	// table index 8, flags 0x20080000002014
+	UPROPERTY(Transient)
+	UFortWeaponItemDefinition* CurrentWeaponDefinition;
 
 	// table index 6, flags 0x20080000002014
 	UPROPERTY(Transient)

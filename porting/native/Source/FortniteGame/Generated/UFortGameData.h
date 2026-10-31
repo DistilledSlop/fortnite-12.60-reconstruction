@@ -11,6 +11,7 @@
 #include "FFortHighlightColorsContainer.h"
 #include "FFortQuestPackInfo.h"
 #include "FPartnerPcbInfo.h"
+#include "FSubGameInfo.h"
 #include "GameplayTagContainer.h"
 #include "Math/Color.h"
 #include "Math/Vector.h"
@@ -26,6 +27,7 @@ class UCurveVector;
 class UDataTable;
 class UFortAbilitySet;
 class UFortAbilityTagRelationshipMapping;
+class UFortAmmoItemDefinition;
 class UFortAnalyticsData;
 class UFortAppActivationSoundMixManager;
 class UFortAttributeCategory;
@@ -33,6 +35,7 @@ class UFortAttributeLookupTable;
 class UFortBuildingAudioBank;
 class UFortDeathCauseData;
 class UFortDeathCauseFromTagMapping;
+class UFortEditToolItemDefinition;
 class UFortGamepadSettings;
 class UFortGamepadSettingsV2;
 class UFortGameplayTagData;
@@ -44,6 +47,7 @@ class UFortMissionCSVEventMap;
 class UFortMissionGenerationData;
 class UFortQuestIndicatorData;
 class UFortRarityData;
+class UFortResourceItemDefinition;
 class UFortSurfaceTypeToSurfaceTypeTagMapping;
 class UFortTagUIDataLookupTable;
 class UFortTeamIdentification;
@@ -232,6 +236,10 @@ public:
 	UPROPERTY()
 	TSoftObjectPtr<UTexture2D> MobileInteractionIcons[4];
 
+	// table index 108, flags 0x40000000000001
+	UPROPERTY()
+	FSubGameInfo SubGameInfo[2];
+
 	// table index 107, flags 0x40000000010001
 	UPROPERTY()
 	FGameplayTagContainer PlacementActorUsedTags;
@@ -331,6 +339,46 @@ public:
 	// table index 83, flags 0x40000000000000
 	UPROPERTY()
 	FText BuildingTypeNames[12];
+
+	// table index 82, flags 0x44000000000001
+	UPROPERTY()
+	TSoftObjectPtr<UFortResourceItemDefinition> StoneItemDefinition;
+
+	// table index 81, flags 0x44000000000001
+	UPROPERTY()
+	TSoftObjectPtr<UFortResourceItemDefinition> WoodItemDefinition;
+
+	// table index 80, flags 0x44000000000001
+	UPROPERTY()
+	TSoftObjectPtr<UFortResourceItemDefinition> MetalItemDefinition;
+
+	// table index 79, flags 0x44000000000001
+	UPROPERTY()
+	TSoftObjectPtr<UFortResourceItemDefinition> GoldCurrencyItemDefinition;
+
+	// table index 78, flags 0x44000000000001
+	UPROPERTY()
+	TSoftObjectPtr<UFortAmmoItemDefinition> PistolAmmoItemDefinition;
+
+	// table index 77, flags 0x44000000000001
+	UPROPERTY()
+	TSoftObjectPtr<UFortResourceItemDefinition> PermaniteItemDefinition;
+
+	// table index 76, flags 0x44000000000001
+	UPROPERTY()
+	TSoftObjectPtr<UFortAmmoItemDefinition> ShotgunAmmoItemDefinition;
+
+	// table index 75, flags 0x44000000000001
+	UPROPERTY()
+	TSoftObjectPtr<UFortAmmoItemDefinition> RifleAmmoItemDefinition;
+
+	// table index 74, flags 0x44000000000001
+	UPROPERTY()
+	TSoftObjectPtr<UFortAmmoItemDefinition> AssaultAmmoItemDefinition;
+
+	// table index 73, flags 0x44000000000001
+	UPROPERTY()
+	TSoftObjectPtr<UFortAmmoItemDefinition> EnergyAmmoItemDefinition;
 
 	// table index 72, flags 0x44000000000001
 	UPROPERTY()
@@ -447,6 +495,10 @@ public:
 	// table index 39, flags 0x44000000000001
 	UPROPERTY()
 	TSoftClassPtr<AFortPickupEffect> PickupEffectBlueprintClass;
+
+	// table index 37, flags 0x44000000000001
+	UPROPERTY()
+	TSoftObjectPtr<UFortEditToolItemDefinition> EditToolItem;
 
 	// table index 36, flags 0x44000000000001
 	UPROPERTY()

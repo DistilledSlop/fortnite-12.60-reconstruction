@@ -7,8 +7,10 @@
 #include "AFortPlayerControllerZone.h"
 
 #include "Engine/EngineTypes.h"
+#include "FQuickBar.h"
 
 class AFortClientAnnouncement_Basic;
+class UFortGadgetItemDefinition;
 
 #include "AFortPlayerControllerPvE.generated.h"
 
@@ -20,7 +22,23 @@ class FORTNITEGAME_API AFortPlayerControllerPvE : public AFortPlayerControllerZo
 public:
 	// table index 9, flags 0x10000000010001
 	UPROPERTY()
-	uint8 bForceAutoSlotWeaponsAtStart : 1;
+	bool bForceAutoSlotWeaponsAtStart;
+
+	// table index 8, flags 0x40000000002000
+	UPROPERTY(Transient)
+	FQuickBar CachedPrimaryQuickBarRecord;
+
+	// table index 7, flags 0x40000000002000
+	UPROPERTY(Transient)
+	FQuickBar CachedSecondaryQuickBarRecord;
+
+	// table index 5, flags 0x40000000002000
+	UPROPERTY(Transient)
+	TArray<UFortGadgetItemDefinition*> HeroLoadoutGadgets;
+
+	// table index 3, flags 0x40000000002000
+	UPROPERTY(Transient)
+	TArray<UFortGadgetItemDefinition*> HeroAbilityGadgets;
 
 	// table index 2, flags 0x40000000002000
 	UPROPERTY(Transient)
@@ -42,9 +60,17 @@ public:
 	void ClientShowIdleWarning(float TimeUntilKick);
 	void ClientShowIdleWarning_Implementation(float TimeUntilKick);
 
+	UFUNCTION(Client, Reliable)
+	void ClientUpdateQuickBarRecordsCache(const FQuickBar& SecondaryQuickBarRecord, const FQuickBar& PrimaryQuickBarRecord);
+	void ClientUpdateQuickBarRecordsCache_Implementation(const FQuickBar& SecondaryQuickBarRecord, const FQuickBar& PrimaryQuickBarRecord);
+
 	UFUNCTION(Server, Reliable)
 	void ServerTriggerSetupTeleportCameraEvent();
 	void ServerTriggerSetupTeleportCameraEvent_Implementation();
+
+	UFUNCTION(Server, Reliable)
+	void ServerUpdateQuickBarRecordsCache(const FQuickBar& SecondaryQuickBarRecord, const FQuickBar& PrimaryQuickBarRecord);
+	void ServerUpdateQuickBarRecordsCache_Implementation(const FQuickBar& SecondaryQuickBarRecord, const FQuickBar& PrimaryQuickBarRecord);
 
 };
 

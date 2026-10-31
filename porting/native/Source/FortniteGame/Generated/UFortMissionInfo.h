@@ -11,10 +11,13 @@
 #include "FFortEncounterSequenceSettings.h"
 #include "FFortMissionPlacementItems.h"
 #include "FFortMissionPopupWidgetData.h"
+#include "FFortMissionTaggedRewards.h"
 #include "FFortMultiSizeBrush.h"
+#include "FFortObjectiveBlock.h"
 #include "GameplayTagContainer.h"
 
 class AFortMission;
+class UFortBadgeItemDefinition;
 class UFortDifficultyOptionSetMission;
 class UFortMissionWeightedRewards;
 class UMediaSource;
@@ -51,6 +54,10 @@ public:
 	UPROPERTY()
 	float ZoneEndDelayOverrideForFailure;
 
+	// table index 44, flags 0x10000000010001
+	UPROPERTY()
+	UFortBadgeItemDefinition* MissionRewardBadge;
+
 	// table index 43, flags 0x10000000010001
 	UPROPERTY()
 	FName MissionRewardItemsLootTierGroup;
@@ -63,13 +70,17 @@ public:
 	UPROPERTY()
 	int32 ParTime;
 
+	// table index 40, flags 0x10000000010001
+	UPROPERTY()
+	UFortBadgeItemDefinition* UnderParBadge;
+
 	// table index 39, flags 0x10000000010001
 	UPROPERTY()
 	int32 MaxMissionPoints;
 
 	// table index 38, flags 0x10000000010001
 	UPROPERTY()
-	uint8 bVictoryTileRequired : 1;
+	bool bVictoryTileRequired;
 
 	// table index 37, flags 0x10000000010015
 	UPROPERTY()
@@ -85,15 +96,19 @@ public:
 
 	// table index 34, flags 0x10000000010001
 	UPROPERTY()
-	uint8 bSkipEndOfMissionVideo : 1;
+	bool bSkipEndOfMissionVideo;
 
 	// table index 33, flags 0x10000000010001
 	UPROPERTY()
 	int32 DaysToLive;
 
+	// table index 31, flags 0x10000000010015
+	UPROPERTY()
+	TArray<FFortObjectiveBlock> ObjectiveBlocks;
+
 	// table index 30, flags 0x10000000010001
 	UPROPERTY()
-	uint8 bShowMinimapIconsOnlyIfFocused : 1;
+	bool bShowMinimapIconsOnlyIfFocused;
 
 	// table index 29, flags 0x10000000010015
 	UPROPERTY()
@@ -117,11 +132,11 @@ public:
 
 	// table index 23, flags 0x10000000010001
 	UPROPERTY()
-	uint8 bStartPlayingOnLoad : 1;
+	bool bStartPlayingOnLoad;
 
 	// table index 22, flags 0x10000000010015
 	UPROPERTY()
-	uint8 bRequiresActivation : 1;
+	bool bRequiresActivation;
 
 	// table index 21, flags 0x10000000010015
 	UPROPERTY()
@@ -129,7 +144,7 @@ public:
 
 	// table index 20, flags 0x10000000010015
 	UPROPERTY()
-	uint8 bAllowDifficultyIncrease : 1;
+	bool bAllowDifficultyIncrease;
 
 	// table index 19, flags 0x10000000010001
 	UPROPERTY()
@@ -153,11 +168,11 @@ public:
 
 	// table index 14, flags 0x10000000010015
 	UPROPERTY()
-	uint8 bIsGroupContent : 1;
+	bool bIsGroupContent;
 
 	// table index 13, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bUseRRV : 1;
+	bool bUseRRV;
 
 	// table index 12, flags 0x20080000010015
 	UPROPERTY()
@@ -165,7 +180,7 @@ public:
 
 	// table index 11, flags 0x20080000010015
 	UPROPERTY()
-	uint8 bShouldDisplayMissionName : 1;
+	bool bShouldDisplayMissionName;
 
 	// table index 9, flags 0x20088000010001
 	UPROPERTY()
@@ -182,6 +197,10 @@ public:
 	// table index 5, flags 0x20080000000015
 	UPROPERTY()
 	FGameplayTagContainer MissionDifficultyOptionTags;
+
+	// table index 3, flags 0x20080000010001
+	UPROPERTY()
+	TArray<FFortMissionTaggedRewards> TaggedRewards;
 
 };
 

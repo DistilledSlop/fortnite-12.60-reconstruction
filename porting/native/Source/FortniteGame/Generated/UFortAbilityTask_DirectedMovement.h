@@ -50,11 +50,11 @@ public:
 
 	// table index 2, flags 0x20080000000020
 	UPROPERTY(Replicated)
-	uint8 bModifyZ : 1;
+	bool bModifyZ;
 
 	// table index 1, flags 0x20080000000020
 	UPROPERTY(Replicated)
-	uint8 bCancelOnFalling : 1;
+	bool bCancelOnFalling;
 
 	// table index 0, flags 0x20080000080008
 	UPROPERTY()

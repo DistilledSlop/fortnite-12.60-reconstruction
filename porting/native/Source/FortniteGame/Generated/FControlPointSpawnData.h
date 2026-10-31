@@ -60,7 +60,7 @@ struct FControlPointSpawnData : public FFortPieSliceSpawnData
 
 	// table index 0, offset None, flags 0x10000000010015
 	UPROPERTY()
-	uint8 bAlwaysInPlay : 1;
+	bool bAlwaysInPlay;
 
 };
 

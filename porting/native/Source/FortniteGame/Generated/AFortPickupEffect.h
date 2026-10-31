@@ -9,6 +9,8 @@
 #include "Math/Color.h"
 #include "Math/Vector.h"
 
+class UFortAlterationItemDefinition;
+class UFortWorldItemDefinition;
 class USkeletalMesh;
 class USoundBase;
 class UStaticMesh;
@@ -29,13 +31,21 @@ public:
 	UPROPERTY()
 	USkeletalMesh* SkeletalMesh;
 
+	// table index 9, flags 0x10000000002014
+	UPROPERTY(Transient)
+	TArray<UFortAlterationItemDefinition*> ActiveAlterations;
+
+	// table index 8, flags 0x10000000002014
+	UPROPERTY(Transient)
+	UFortWorldItemDefinition* ItemDefinition;
+
 	// table index 7, flags 0x10000000000015
 	UPROPERTY()
-	uint8 bDoNotShowSpawnParticles : 1;
+	bool bDoNotShowSpawnParticles;
 
 	// table index 6, flags 0x10000000000015
 	UPROPERTY()
-	uint8 bDoNotTickSkeletalMeshComponents : 1;
+	bool bDoNotTickSkeletalMeshComponents;
 
 	// table index 5, flags 0x10000000000005
 	UPROPERTY()
@@ -55,7 +65,7 @@ public:
 
 	// table index 1, flags 0x10000000000014
 	UPROPERTY()
-	uint8 bRandomRotation : 1;
+	bool bRandomRotation;
 
 	// table index 0, flags 0x14000000000015
 	UPROPERTY()

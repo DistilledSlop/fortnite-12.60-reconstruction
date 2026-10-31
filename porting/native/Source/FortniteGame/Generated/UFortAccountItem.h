@@ -40,11 +40,11 @@ public:
 
 	// table index 1, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bIsPendingBeingMarkedAsSeen : 1;
+	bool bIsPendingBeingMarkedAsSeen;
 
 	// table index 0, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bNeedsResolveMarkedAsSeen : 1;
+	bool bNeedsResolveMarkedAsSeen;
 
 };
 

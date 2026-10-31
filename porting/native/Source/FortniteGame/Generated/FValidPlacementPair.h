@@ -20,7 +20,7 @@ struct FValidPlacementPair
 
 	// table index 0, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bIsPlacementValid : 1;
+	bool bIsPlacementValid;
 
 };
 

@@ -25,11 +25,11 @@ struct FFortPendingStoppedEncounterData
 
 	// table index 1, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bForceDestroyAI : 1;
+	bool bForceDestroyAI;
 
 	// table index 0, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bEncounterCompletedSuccessfully : 1;
+	bool bEncounterCompletedSuccessfully;
 
 };
 

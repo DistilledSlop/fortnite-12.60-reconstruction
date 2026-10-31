@@ -8,6 +8,8 @@
 
 #include "FSavedSpectatorCameras.h"
 
+class UFortReplayContext;
+
 #include "UFortReplaySequenceComponent.generated.h"
 
 UCLASS(config=Engine)
@@ -23,6 +25,10 @@ public:
 	// table index 1, flags 0x20080000000000
 	UPROPERTY()
 	int32 CurrentShotIdx;
+
+	// table index 0, flags 0x20080000002014
+	UPROPERTY(Transient)
+	UFortReplayContext* ReplayContext;
 
 };
 

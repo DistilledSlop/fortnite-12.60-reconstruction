@@ -37,15 +37,15 @@ struct FFortFeedbackEventData
 
 	// table index 6, offset None, flags 0x10000000000001
 	UPROPERTY()
-	uint8 bInterruptCurrentLine : 1;
+	bool bInterruptCurrentLine;
 
 	// table index 5, offset None, flags 0x10000000000001
 	UPROPERTY()
-	uint8 bCanBeInterrupted : 1;
+	bool bCanBeInterrupted;
 
 	// table index 4, offset None, flags 0x10000000000001
 	UPROPERTY()
-	uint8 bCanQue : 1;
+	bool bCanQue;
 
 	// table index 3, offset 43, flags 0x10000000000001
 	UPROPERTY()

@@ -17,6 +17,7 @@
 #include "FFortMinigameStatCollection.h"
 #include "FFortMinigameStatQuery.h"
 #include "FFortMinigameTimes.h"
+#include "FMinigameClassSlot.h"
 #include "FMinigameEndCondition.h"
 #include "FMinigamePlayerBucket.h"
 #include "FMinigameTeam.h"
@@ -50,6 +51,7 @@ class UFortCreativeTeleporterManagerComponent;
 class UFortMinigameLogicComponent;
 class UFortMinigamePlayerStartComponent;
 class UFortMinigameStatFilter;
+class UFortWorldItemDefinition;
 
 #include "AFortMinigame.generated.h"
 
@@ -177,7 +179,7 @@ public:
 
 	// table index 107, flags 0x10000000010015
 	UPROPERTY()
-	uint8 bRemovePawnOnDeath : 1;
+	bool bRemovePawnOnDeath;
 
 	// table index 106, flags 0x10000000000000
 	UPROPERTY()
@@ -189,7 +191,7 @@ public:
 
 	// table index 104, flags 0x10000000000005
 	UPROPERTY()
-	uint8 bKeepItemsBetweenRounds : 1;
+	bool bKeepItemsBetweenRounds;
 
 	// table index 103, flags 0x10000000000005
 	UPROPERTY()
@@ -197,7 +199,11 @@ public:
 
 	// table index 102, flags 0x10000000000005
 	UPROPERTY()
-	uint8 bReloadAndRestockWeaponsEachRound : 1;
+	bool bReloadAndRestockWeaponsEachRound;
+
+	// table index 99, flags 0x10000000000005
+	UPROPERTY()
+	TMap<UFortWorldItemDefinition*, int32> RestockAmmoAmounts;
 
 	// table index 98, flags 0x10000000000005
 	UPROPERTY()
@@ -205,15 +211,15 @@ public:
 
 	// table index 97, flags 0x10000000000005
 	UPROPERTY()
-	uint8 bLastTeamStandingWins : 1;
+	bool bLastTeamStandingWins;
 
 	// table index 96, flags 0x10000000000005
 	UPROPERTY()
-	uint8 bAllowStandardEndGameConditions : 1;
+	bool bAllowStandardEndGameConditions;
 
 	// table index 95, flags 0x10000000000005
 	UPROPERTY()
-	uint8 bEndGameOnMatchPointWin : 1;
+	bool bEndGameOnMatchPointWin;
 
 	// table index 94, flags 0x20080010080000
 	UPROPERTY()
@@ -265,11 +271,15 @@ public:
 
 	// table index 80, flags 0x20080000010025
 	UPROPERTY(Replicated)
-	uint8 bTimerCountsDown : 1;
+	bool bTimerCountsDown;
 
 	// table index 78, flags 0x20080100022035
 	UPROPERTY(ReplicatedUsing=OnRep_TeamArray, Transient)
 	TArray<FMinigameTeam> TeamArray;
+
+	// table index 76, flags 0x20080100022021
+	UPROPERTY(ReplicatedUsing=OnRep_ClassSlotArray, Transient)
+	TArray<FMinigameClassSlot> ClassSlotArray;
 
 	// table index 74, flags 0x20080000000005
 	UPROPERTY()
@@ -345,7 +355,7 @@ public:
 
 	// table index 51, flags 0x20080000000025
 	UPROPERTY(Replicated)
-	uint8 bStopwatchMode : 1;
+	bool bStopwatchMode;
 
 	// table index 50, flags 0x20080000002000
 	UPROPERTY(Transient)
@@ -377,15 +387,15 @@ public:
 
 	// table index 41, flags 0x20080000000025
 	UPROPERTY(Replicated)
-	uint8 bSortScoreboardEntries : 1;
+	bool bSortScoreboardEntries;
 
 	// table index 40, flags 0x20080000000025
 	UPROPERTY(Replicated)
-	uint8 bTeamMinigame : 1;
+	bool bTeamMinigame;
 
 	// table index 39, flags 0x20080000002034
 	UPROPERTY(Replicated, Transient)
-	uint8 bTeamsAreStable : 1;
+	bool bTeamsAreStable;
 
 	// table index 38, flags 0x20080000000005
 	UPROPERTY()
@@ -397,7 +407,7 @@ public:
 
 	// table index 36, flags 0x20080000000025
 	UPROPERTY(Replicated)
-	uint8 bAllowJoinInProgress : 1;
+	bool bAllowJoinInProgress;
 
 	// table index 34, flags 0x20080000000005
 	UPROPERTY()
@@ -417,7 +427,7 @@ public:
 
 	// table index 30, flags 0x20080000020025
 	UPROPERTY(Replicated)
-	uint8 bStableTeamCosmetics : 1;
+	bool bStableTeamCosmetics;
 
 	// table index 28, flags 0x20080000000025
 	UPROPERTY(Replicated)
@@ -429,11 +439,11 @@ public:
 
 	// table index 25, flags 0x20080000020005
 	UPROPERTY()
-	uint8 bAllTeamsMustMatchEndConditions : 1;
+	bool bAllTeamsMustMatchEndConditions;
 
 	// table index 24, flags 0x20080000020025
 	UPROPERTY(Replicated)
-	uint8 bOnlyAllowRespawningIfPlayerStartPadsFound : 1;
+	bool bOnlyAllowRespawningIfPlayerStartPadsFound;
 
 	// table index 22, flags 0x20080000020025
 	UPROPERTY(Replicated)
@@ -453,7 +463,7 @@ public:
 
 	// table index 18, flags 0x20080000020025
 	UPROPERTY(Replicated)
-	uint8 bShowCumulativeScoreboard : 1;
+	bool bShowCumulativeScoreboard;
 
 	// table index 17, flags 0x20080000010005
 	UPROPERTY()
@@ -481,7 +491,7 @@ public:
 
 	// table index 7, flags 0x20080000000025
 	UPROPERTY(Replicated)
-	uint8 bAllowFriendlyFire : 1;
+	bool bAllowFriendlyFire;
 
 	// table index 6, flags 0x40000000000020
 	UPROPERTY(Replicated)
@@ -489,7 +499,7 @@ public:
 
 	// table index 5, flags 0x40000000000020
 	UPROPERTY(Replicated)
-	uint8 bVolumeNavigationHasBuilt : 1;
+	bool bVolumeNavigationHasBuilt;
 
 	// table index 3, flags 0x40000000002020
 	UPROPERTY(Replicated, Transient)
@@ -505,6 +515,9 @@ public:
 
 	UFUNCTION()
 	void DoRep_UIExtensionTags();
+
+	UFUNCTION()
+	void OnRep_ClassSlotArray();
 
 	UFUNCTION()
 	void OnRep_CurrentRound();

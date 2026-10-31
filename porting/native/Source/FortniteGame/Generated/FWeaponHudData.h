@@ -26,7 +26,7 @@ struct FWeaponHudData
 
 	// table index 0, offset None, flags 0x10000000000015
 	UPROPERTY()
-	uint8 bVisible : 1;
+	bool bVisible;
 
 };
 

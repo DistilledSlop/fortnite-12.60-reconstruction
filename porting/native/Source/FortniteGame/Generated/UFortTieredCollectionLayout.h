@@ -9,6 +9,7 @@
 #include "Engine/CurveTable.h"
 #include "FCollectionLootSetData.h"
 #include "FDifficultyCollectionProgressionData.h"
+#include "FRewardBadgesCollectionProgressionData.h"
 #include "FTieredNamedCollectionProgressionData.h"
 #include "Misc/Guid.h"
 
@@ -47,6 +48,10 @@ public:
 	// table index 6, flags 0x20080000010001
 	UPROPERTY()
 	FTieredNamedCollectionProgressionData ModifierProgressions;
+
+	// table index 5, flags 0x20080000010001
+	UPROPERTY()
+	FRewardBadgesCollectionProgressionData RewardBadgesProgression;
 
 	// table index 4, flags 0x20080000010001
 	UPROPERTY()

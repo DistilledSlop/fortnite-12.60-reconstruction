@@ -8,6 +8,7 @@
 
 #include "Styling/SlateColor.h"
 
+class UFortQuestItemDefinition;
 class UMaterialInterface;
 class USoundBase;
 
@@ -47,9 +48,13 @@ public:
 	UPROPERTY()
 	FString EventCalloutQuestFlag;
 
+	// table index 1, flags 0x10000000000015
+	UPROPERTY()
+	UFortQuestItemDefinition* RequiredCompletedQuest;
+
 	// table index 0, flags 0x10000000000015
 	UPROPERTY()
-	uint8 bOnlyDisplayIfRequiredCompletedQuest : 1;
+	bool bOnlyDisplayIfRequiredCompletedQuest;
 
 };
 

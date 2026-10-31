@@ -34,7 +34,7 @@ public:
 
 	// table index 16, flags 0x20080000000000
 	UPROPERTY()
-	uint8 sent_new_notification : 1;
+	bool sent_new_notification;
 
 	// table index 15, flags 0x20080000000000
 	UPROPERTY()
@@ -46,19 +46,19 @@ public:
 
 	// table index 12, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bSentCompleteNotification : 1;
+	bool bSentCompleteNotification;
 
 	// table index 11, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bAllObjectivesComplete : 1;
+	bool bAllObjectivesComplete;
 
 	// table index 10, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bIsTransientManuallyGrantedQuest : 1;
+	bool bIsTransientManuallyGrantedQuest;
 
 	// table index 9, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bHasRegisteredWithQuestManager : 1;
+	bool bHasRegisteredWithQuestManager;
 
 	// table index 8, flags 0x20080000002000
 	UPROPERTY(Transient)

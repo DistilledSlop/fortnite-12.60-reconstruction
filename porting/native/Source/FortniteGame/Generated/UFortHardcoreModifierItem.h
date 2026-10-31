@@ -16,7 +16,7 @@ class FORTNITEGAME_API UFortHardcoreModifierItem : public UFortAccountItem
 public:
 	// table index 0, flags 0x40000000000000
 	UPROPERTY()
-	uint8 is_enabled : 1;
+	bool is_enabled;
 
 };
 

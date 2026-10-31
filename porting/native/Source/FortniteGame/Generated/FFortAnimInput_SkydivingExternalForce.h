@@ -15,7 +15,7 @@ struct FFortAnimInput_SkydivingExternalForce
 
 	// table index 16, offset None, flags 0x10000000000015
 	UPROPERTY()
-	uint8 bUseSkydivingVectorForce : 1;
+	bool bUseSkydivingVectorForce;
 
 	// table index 15, offset 4, flags 0x10000000002014
 	UPROPERTY()
@@ -51,11 +51,11 @@ struct FFortAnimInput_SkydivingExternalForce
 
 	// table index 7, offset None, flags 0x10000000000015
 	UPROPERTY()
-	uint8 bUseNoisyClothGravity : 1;
+	bool bUseNoisyClothGravity;
 
 	// table index 6, offset None, flags 0x10000000000015
 	UPROPERTY()
-	uint8 bApplyNoiseInActorSpace : 1;
+	bool bApplyNoiseInActorSpace;
 
 	// table index 5, offset 104, flags 0x10000000000015
 	UPROPERTY()

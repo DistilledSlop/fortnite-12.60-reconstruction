@@ -9,9 +9,11 @@
 #include "AttributeSet.h"
 #include "FFortCachedWeaponOverheatData.h"
 #include "FVehicleWeapon_RetainedData.h"
+#include "FWeaponSeatDefinition.h"
 
 class AActor;
 class AFortWeaponRanged;
+class UFortWeaponRangedItemDefinition;
 
 #include "UFortVehicleSeatWeaponComponent.generated.h"
 
@@ -25,6 +27,10 @@ public:
 	UPROPERTY()
 	TArray<FName> MuzzleSocketNames;
 
+	// table index 17, flags 0x10000000000001
+	UPROPERTY()
+	TArray<FWeaponSeatDefinition> WeaponSeatDefinitions;
+
 	// table index 16, flags 0x10000000000001
 	UPROPERTY()
 	int32 ActiveSeatIdx;
@@ -32,6 +38,10 @@ public:
 	// table index 15, flags 0x10000000002014
 	UPROPERTY(Transient)
 	AFortWeaponRanged* CachedWeapon;
+
+	// table index 14, flags 0x10000000002014
+	UPROPERTY(Transient)
+	UFortWeaponRangedItemDefinition* CachedWeaponDef;
 
 	// table index 13, flags 0x10000000002014
 	UPROPERTY(Transient)
@@ -47,15 +57,15 @@ public:
 
 	// table index 10, flags 0x10000000002034
 	UPROPERTY(Replicated, Transient)
-	uint8 bWeaponEquipped : 1;
+	bool bWeaponEquipped;
 
 	// table index 9, flags 0x10000000000015
 	UPROPERTY()
-	uint8 bUseVehicleOrientationForShootingCone : 1;
+	bool bUseVehicleOrientationForShootingCone;
 
 	// table index 8, flags 0x10000000000001
 	UPROPERTY()
-	uint8 bControlledByMultipleSeats : 1;
+	bool bControlledByMultipleSeats;
 
 	// table index 7, flags 0x10000000002034
 	UPROPERTY(Replicated, Transient)
@@ -63,7 +73,7 @@ public:
 
 	// table index 6, flags 0x10000000002000
 	UPROPERTY(Transient)
-	uint8 bReadyToSleep : 1;
+	bool bReadyToSleep;
 
 	// table index 5, flags 0x10000000000015
 	UPROPERTY()
@@ -75,7 +85,7 @@ public:
 
 	// table index 3, flags 0x20080000002020
 	UPROPERTY(Replicated, Transient)
-	uint8 bWeaponOverheatDataHasBeenCached : 1;
+	bool bWeaponOverheatDataHasBeenCached;
 
 	// table index 2, flags 0x20080000000020
 	UPROPERTY(Replicated)
@@ -87,7 +97,7 @@ public:
 
 	// table index 0, flags 0x20080000000001
 	UPROPERTY()
-	uint8 bSaveAndRestoreWeaponData : 1;
+	bool bSaveAndRestoreWeaponData;
 
 	UFUNCTION()
 	void OnRep_OverheatValueRepped();

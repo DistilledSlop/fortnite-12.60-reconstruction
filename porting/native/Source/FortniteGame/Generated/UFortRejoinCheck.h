@@ -18,11 +18,11 @@ class FORTNITEGAME_API UFortRejoinCheck : public URejoinCheck
 public:
 	// table index 3, flags 0x40000000000000
 	UPROPERTY()
-	uint8 bAbandonAfterCheck : 1;
+	bool bAbandonAfterCheck;
 
 	// table index 2, flags 0x40000000000000
 	UPROPERTY()
-	uint8 bAttemptingAbandon : 1;
+	bool bAttemptingAbandon;
 
 	// table index 0, flags 0x40000000000000
 	UPROPERTY()

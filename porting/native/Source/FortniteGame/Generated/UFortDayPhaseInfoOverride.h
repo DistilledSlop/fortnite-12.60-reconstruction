@@ -23,7 +23,7 @@ public:
 
 	// table index 5, flags 0x10000000010001
 	UPROPERTY()
-	uint8 bUseAltitudeAdjustmentsOverride : 1;
+	bool bUseAltitudeAdjustmentsOverride;
 
 	// table index 3, flags 0x10000000010001
 	UPROPERTY()
@@ -31,7 +31,7 @@ public:
 
 	// table index 2, flags 0x10000000010001
 	UPROPERTY()
-	uint8 bUseAltitudeAdjustmentsForSecondFogOverride : 1;
+	bool bUseAltitudeAdjustmentsForSecondFogOverride;
 
 	// table index 0, flags 0x10000000010001
 	UPROPERTY()

@@ -9,6 +9,7 @@
 #include "AttributeSet.h"
 #include "EGoosePickupState.h"
 #include "FGooseDisplayData.h"
+#include "FGooseWeaponTierData.h"
 
 class UGameplayEffect;
 
@@ -26,7 +27,7 @@ public:
 
 	// table index 23, flags 0x20080100000020
 	UPROPERTY(ReplicatedUsing=OnRep_bIsDespawning)
-	uint8 bIsDespawning : 1;
+	bool bIsDespawning;
 
 	// table index 22, flags 0x20080000000001
 	UPROPERTY()
@@ -63,6 +64,10 @@ public:
 	// table index 6, flags 0x24080000000001
 	UPROPERTY()
 	TMap<FName, TSubclassOf<UGameplayEffect>> Loot_to_Driver_GE_Map;
+
+	// table index 4, flags 0x20080000000001
+	UPROPERTY()
+	TArray<FGooseWeaponTierData> WeaponTierData;
 
 	// table index 3, flags 0x20080000000001
 	UPROPERTY()

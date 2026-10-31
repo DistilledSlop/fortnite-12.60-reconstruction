@@ -15,18 +15,21 @@ class AFortAIGoalManager;
 class AFortFeedbackManager;
 class AFortPawn;
 class UAthenaMapPreloadData;
+class UAthenaSeasonItemDefinition;
 class UCurveLinearColor;
 class UDataTable;
 class UFortAbilitySet;
 class UFortAnalyticsItemExclusions;
 class UFortFactionMapping;
 class UFortGameplayFeedbackEventData;
+class UFortHeroType;
 class UFortItemWrapMappingData;
 class UFortItemsForEventMapping;
 class UFortPlayerGliderAnimSet;
 class UFortRespawnDataTable;
 class UFortUIFeedbackBank;
 class UFortWeaponPickupSpawnAmmoData;
+class UGameStateComponent;
 class UPoiNamedWeights;
 class UReverbEffect;
 class USoundMix;
@@ -80,6 +83,10 @@ public:
 	UPROPERTY()
 	TSoftObjectPtr<UFortUIFeedbackBank> UIFeedbackBankBR;
 
+	// table index 33, flags 0x44000000000001
+	UPROPERTY()
+	TSoftObjectPtr<UFortHeroType> DefaultHeroBR;
+
 	// table index 32, flags 0x44000000000001
 	UPROPERTY()
 	TSoftObjectPtr<UFortAbilitySet> PlayerAbilitySetBR;
@@ -132,6 +139,10 @@ public:
 	UPROPERTY()
 	TSoftObjectPtr<UFortWeaponPickupSpawnAmmoData> FortWeaponPickupSpawnAmmoData;
 
+	// table index 16, flags 0x44000000000001
+	UPROPERTY()
+	TArray<TSoftClassPtr<UGameStateComponent>> FrontendGameStateComponents;
+
 	// table index 15, flags 0x44000000000001
 	UPROPERTY()
 	TSoftObjectPtr<UFortFactionMapping> FortFactionMapping;
@@ -147,6 +158,10 @@ public:
 	// table index 12, flags 0x44000000000001
 	UPROPERTY()
 	TSoftObjectPtr<UFortPlayerGliderAnimSet> UmbrellaGliderAnimSet;
+
+	// table index 11, flags 0x10000000000001
+	UPROPERTY()
+	UAthenaSeasonItemDefinition* FallbackSeason;
 
 	// table index 9, flags 0x10000000000001
 	UPROPERTY()

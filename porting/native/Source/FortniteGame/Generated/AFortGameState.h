@@ -99,7 +99,7 @@ public:
 
 	// table index 45, flags 0x20080000002020
 	UPROPERTY(Replicated, Transient)
-	uint8 bPlayerRespawningBlocked_Temporarily : 1;
+	bool bPlayerRespawningBlocked_Temporarily;
 
 	// table index 43, flags 0x10000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_AdditionalPlaylistLevelsStreamed)
@@ -195,7 +195,7 @@ public:
 
 	// table index 15, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bSkipTeamReplication : 1;
+	bool bSkipTeamReplication;
 
 	// table index 13, flags 0x20080000000020
 	UPROPERTY(Replicated)
@@ -203,7 +203,7 @@ public:
 
 	// table index 12, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bAllowPendingTeamChangeRequests : 1;
+	bool bAllowPendingTeamChangeRequests;
 
 	// table index 11, flags 0x40000010080000
 	UPROPERTY()

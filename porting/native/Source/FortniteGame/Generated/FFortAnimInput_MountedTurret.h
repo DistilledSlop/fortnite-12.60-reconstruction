@@ -14,7 +14,7 @@ struct FFortAnimInput_MountedTurret
 
 	// table index 3, offset None, flags 0x10000000022015
 	UPROPERTY()
-	uint8 bIsUsingMountedTurret : 1;
+	bool bIsUsingMountedTurret;
 
 	// table index 2, offset 4, flags 0x10000000002015
 	UPROPERTY()

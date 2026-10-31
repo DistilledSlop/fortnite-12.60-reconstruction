@@ -14,7 +14,9 @@
 
 class UAthenaTrapAIPerceptionStimuliSourceComponent;
 class UFortAbilitySet;
+class UFortAlterationItemDefinition;
 class UFortDamageSet;
+class UFortTrapItemDefinition;
 class UMaterialInstance;
 class UPrimitiveComponent;
 class USceneComponent;
@@ -58,13 +60,17 @@ public:
 	UPROPERTY()
 	FVector PreviewOverrideScale;
 
+	// table index 32, flags 0x10000001000835
+	UPROPERTY(Replicated, SaveGame)
+	UFortTrapItemDefinition* TrapData;
+
 	// table index 31, flags 0x10000000000005
 	UPROPERTY()
 	FText AttachmentHintText;
 
 	// table index 30, flags 0x10000000000005
 	UPROPERTY()
-	uint8 bShouldAffectAllPawnsInMinigames : 1;
+	bool bShouldAffectAllPawnsInMinigames;
 
 	// table index 29, flags 0x10000000000005
 	UPROPERTY()
@@ -76,7 +82,7 @@ public:
 
 	// table index 27, flags 0x10000000010001
 	UPROPERTY()
-	uint8 bTriggerAbilityOnEndoverlap : 1;
+	bool bTriggerAbilityOnEndoverlap;
 
 	// table index 26, flags 0x10000000010001
 	UPROPERTY()
@@ -85,6 +91,10 @@ public:
 	// table index 25, flags 0x10000000082008
 	UPROPERTY(Transient)
 	UFortDamageSet* DamageAttributeSet;
+
+	// table index 23, flags 0x20080101000020
+	UPROPERTY(ReplicatedUsing=OnRep_ReplicatedAppliedAlterations, SaveGame)
+	TArray<UFortAlterationItemDefinition*> AppliedAlterations;
 
 	// table index 21, flags 0x20088000002000
 	UPROPERTY(Transient)
@@ -96,7 +106,7 @@ public:
 
 	// table index 19, flags 0x20080000000005
 	UPROPERTY()
-	uint8 bTargetWithAttachedTo : 1;
+	bool bTargetWithAttachedTo;
 
 	// table index 18, flags 0x20080000002000
 	UPROPERTY(Transient)
@@ -124,11 +134,11 @@ public:
 
 	// table index 10, flags 0x20080000010001
 	UPROPERTY()
-	uint8 bIgnoreBuildingObstructions : 1;
+	bool bIgnoreBuildingObstructions;
 
 	// table index 9, flags 0x20080000010001
 	UPROPERTY()
-	uint8 bOwnAllFacesOfAttachedToActor : 1;
+	bool bOwnAllFacesOfAttachedToActor;
 
 	// table index 8, flags 0x20080000010015
 	UPROPERTY()
@@ -160,6 +170,9 @@ public:
 
 	UFUNCTION()
 	void OnRep_AttachedTo();
+
+	UFUNCTION()
+	void OnRep_ReplicatedAppliedAlterations();
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

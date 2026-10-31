@@ -23,11 +23,11 @@ public:
 
 	// table index 5, flags 0x40000000000001
 	UPROPERTY()
-	uint8 bGoalLocationsAlwaysKnown : 1;
+	bool bGoalLocationsAlwaysKnown;
 
 	// table index 4, flags 0x40000000000001
 	UPROPERTY()
-	uint8 bIsEnemyAssignment : 1;
+	bool bIsEnemyAssignment;
 
 	// table index 3, flags 0x40000000000001
 	UPROPERTY()

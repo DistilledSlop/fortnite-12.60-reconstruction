@@ -42,6 +42,11 @@ void AFortAthenaVehicle::OnRep_OnFire()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortAthenaVehicle::OnRep_OverrideWrap()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortAthenaVehicle::OnRep_PendingDeath()
 {
 	// Body not recovered: reflection-derived stub.
@@ -97,5 +102,6 @@ void AFortAthenaVehicle::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& O
 	DOREPLIFETIME(AFortAthenaVehicle, bOnFire);
 	DOREPLIFETIME(AFortAthenaVehicle, bHasDriver);
 	DOREPLIFETIME(AFortAthenaVehicle, bPendingDeath);
+	DOREPLIFETIME(AFortAthenaVehicle, SoftOverrideItemWrap);
 }
 

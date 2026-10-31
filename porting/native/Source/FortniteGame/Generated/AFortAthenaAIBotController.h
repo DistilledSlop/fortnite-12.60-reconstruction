@@ -12,6 +12,8 @@
 #include "FAlertLevelInfo.h"
 #include "FBotDelayedStimulus.h"
 #include "FBuildingWeakSpotData.h"
+#include "FFortAthenaLoadout.h"
+#include "FFortBotInventoryInfo.h"
 #include "FFortBotTargetHandler.h"
 #include "FFortBotThreatActorInfo.h"
 #include "FOnAgentDBNOStatusChangedEvent.h"
@@ -45,6 +47,7 @@ class UFortAthenaAIEvaluator;
 class UFortAthenaMutator_SpawningPolicyData;
 class UFortAthenaNpcPatrollingComponent;
 class UFortBotNameSettings;
+class UFortControllerComponent_Telemetry;
 class UFortInteractContextInfo;
 class UFortServerBotManagerAthena;
 class UFortWorldItem;
@@ -69,6 +72,10 @@ public:
 	// table index 73, flags 0x40000000000015
 	UPROPERTY()
 	UBehaviorTree* BehaviorTree;
+
+	// table index 72, flags 0x40000000002000
+	UPROPERTY(Transient)
+	FFortBotInventoryInfo SlotItems[6];
 
 	// table index 71, flags 0x40000000002000
 	UPROPERTY(Transient)
@@ -154,6 +161,10 @@ public:
 	UPROPERTY()
 	UFortAthenaAIBotInventoryItems* StartupInventory;
 
+	// table index 43, flags 0x40000000010015
+	UPROPERTY()
+	FFortAthenaLoadout CosmeticLoadoutBC;
+
 	// table index 42, flags 0x4200000009001d
 	UPROPERTY()
 	UFortBotNameSettings* NameSettingsBC;
@@ -232,7 +243,7 @@ public:
 
 	// table index 22, flags 0x40000000002000
 	UPROPERTY(Transient)
-	uint8 bCachedIsUsingArcedProjectileWeapon : 1;
+	bool bCachedIsUsingArcedProjectileWeapon;
 
 	// table index 21, flags 0x40000000002000
 	UPROPERTY(Transient)
@@ -282,9 +293,13 @@ public:
 	UPROPERTY(Transient)
 	UFortAthenaMutator_SpawningPolicyData* PolicyDataSpawner;
 
+	// table index 8, flags 0x40000000082008
+	UPROPERTY(Transient)
+	UFortControllerComponent_Telemetry* FortControllerComponent_Telemetry;
+
 	// table index 7, flags 0x40000000002000
 	UPROPERTY(Transient)
-	uint8 bForceUsingBuildingTool : 1;
+	bool bForceUsingBuildingTool;
 
 	// table index 6, flags 0x40000000002000
 	UPROPERTY(Transient)

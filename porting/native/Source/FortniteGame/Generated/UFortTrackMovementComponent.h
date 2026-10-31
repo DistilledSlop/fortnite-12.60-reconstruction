@@ -48,7 +48,7 @@ public:
 
 	// table index 5, flags 0x10000000000005
 	UPROPERTY()
-	uint8 bReverseYawWhenReversedOnSpline : 1;
+	bool bReverseYawWhenReversedOnSpline;
 
 	// table index 4, flags 0x10000010080000
 	UPROPERTY()

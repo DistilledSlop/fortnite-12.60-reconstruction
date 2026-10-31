@@ -42,7 +42,7 @@ struct FFortQuestPackInfo
 
 	// table index 0, offset None, flags 0x10000000004001
 	UPROPERTY()
-	uint8 IsStreamingQuestPack : 1;
+	bool IsStreamingQuestPack;
 
 };
 

@@ -15,7 +15,7 @@ struct FCrucibleSegmentData
 
 	// table index 5, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bRegistered : 1;
+	bool bRegistered;
 
 	// table index 4, offset 4, flags 0x10000000000014
 	UPROPERTY()

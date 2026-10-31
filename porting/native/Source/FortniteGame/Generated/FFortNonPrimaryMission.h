@@ -34,7 +34,7 @@ struct FFortNonPrimaryMission
 
 	// table index 4, offset None, flags 0x40000000002000
 	UPROPERTY()
-	uint8 bSatisfiesCurrentRequirement : 1;
+	bool bSatisfiesCurrentRequirement;
 
 	// table index 2, offset 152, flags 0x40000000002000
 	UPROPERTY()

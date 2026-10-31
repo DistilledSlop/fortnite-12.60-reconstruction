@@ -50,7 +50,7 @@ public:
 
 	// table index 2, flags 0x20080000010021
 	UPROPERTY(Replicated)
-	uint8 bDisplayInTimeFormat : 1;
+	bool bDisplayInTimeFormat;
 
 	// table index 1, flags 0x20080100000034
 	UPROPERTY(ReplicatedUsing=OnRep_TimerVisibilityOverride)

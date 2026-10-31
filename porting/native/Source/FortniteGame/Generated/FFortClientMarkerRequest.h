@@ -42,11 +42,11 @@ struct FFortClientMarkerRequest
 
 	// table index 1, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bIncludeSquad : 1;
+	bool bIncludeSquad;
 
 	// table index 0, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bUseHoveredMarkerDetail : 1;
+	bool bUseHoveredMarkerDetail;
 
 };
 

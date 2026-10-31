@@ -7,6 +7,7 @@
 #include "ABuildingActor.h"
 
 #include "EnvironmentQuery/EnvQueryTypes.h"
+#include "FFortItemEntry.h"
 
 class UEnvQuery;
 class USceneComponent;
@@ -41,7 +42,11 @@ public:
 
 	// table index 2, flags 0x20080000000001
 	UPROPERTY()
-	uint8 bAlignSpawnedActorsToSurface : 1;
+	bool bAlignSpawnedActorsToSurface;
+
+	// table index 0, flags 0x20080000002000
+	UPROPERTY(Transient)
+	TArray<FFortItemEntry> ConsumablesToSpawn;
 
 };
 

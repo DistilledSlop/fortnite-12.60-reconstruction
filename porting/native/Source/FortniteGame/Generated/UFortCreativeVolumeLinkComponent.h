@@ -29,7 +29,7 @@ public:
 
 	// table index 1, flags 0x40000000000001
 	UPROPERTY()
-	uint8 bShouldFindVolumeAtStart : 1;
+	bool bShouldFindVolumeAtStart;
 
 	// table index 0, flags 0x40000001020801
 	UPROPERTY(SaveGame)

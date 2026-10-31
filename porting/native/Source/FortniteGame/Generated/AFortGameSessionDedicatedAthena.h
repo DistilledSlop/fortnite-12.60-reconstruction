@@ -16,7 +16,7 @@ class FORTNITEGAME_API AFortGameSessionDedicatedAthena : public AFortGameSession
 public:
 	// table index 15, flags 0x40000000004000
 	UPROPERTY(Config)
-	uint8 bDownloadEventsAfterHotfixCheck : 1;
+	bool bDownloadEventsAfterHotfixCheck;
 
 	// table index 14, flags 0x40000000004000
 	UPROPERTY(Config)
@@ -44,11 +44,11 @@ public:
 
 	// table index 8, flags 0x40000000004000
 	UPROPERTY(Config)
-	uint8 bEnableMMSBackfill : 1;
+	bool bEnableMMSBackfill;
 
 	// table index 7, flags 0x40000000004000
 	UPROPERTY(Config)
-	uint8 bDisableBackfillDuringGracefulShutdown : 1;
+	bool bDisableBackfillDuringGracefulShutdown;
 
 	// table index 5, flags 0x40000000004000
 	UPROPERTY(Config)
@@ -60,7 +60,7 @@ public:
 
 	// table index 3, flags 0x40000000004000
 	UPROPERTY(Config)
-	uint8 bEnableWaitingForMatchAssignmentTimeout : 1;
+	bool bEnableWaitingForMatchAssignmentTimeout;
 
 	// table index 2, flags 0x40000000004000
 	UPROPERTY(Config)

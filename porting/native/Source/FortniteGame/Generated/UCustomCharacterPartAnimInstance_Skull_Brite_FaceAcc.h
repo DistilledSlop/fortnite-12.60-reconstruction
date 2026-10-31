@@ -40,11 +40,11 @@ public:
 
 	// table index 6, flags 0x10000000002004
 	UPROPERTY(Transient)
-	uint8 bIsStandingStill : 1;
+	bool bIsStandingStill;
 
 	// table index 5, flags 0x10000000002004
 	UPROPERTY(Transient)
-	uint8 bIsMovingBackward : 1;
+	bool bIsMovingBackward;
 
 	// table index 4, flags 0x10000000002004
 	UPROPERTY(Transient)

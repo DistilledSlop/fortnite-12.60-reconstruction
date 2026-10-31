@@ -36,7 +36,7 @@ public:
 
 	// table index 7, flags 0x20080000010015
 	UPROPERTY()
-	uint8 bSpawnerCalculateRandomRotation : 1;
+	bool bSpawnerCalculateRandomRotation;
 
 	// table index 6, flags 0x20080000010001
 	UPROPERTY()

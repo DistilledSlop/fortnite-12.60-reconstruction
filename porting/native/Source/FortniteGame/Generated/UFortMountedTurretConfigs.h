@@ -58,7 +58,7 @@ public:
 
 	// table index 5, flags 0x10000000004001
 	UPROPERTY(Config)
-	uint8 bConstrainVerticalRotationOnly : 1;
+	bool bConstrainVerticalRotationOnly;
 
 	// table index 4, flags 0x10000000004001
 	UPROPERTY(Config)

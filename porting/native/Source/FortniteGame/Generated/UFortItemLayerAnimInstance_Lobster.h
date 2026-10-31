@@ -65,31 +65,31 @@ public:
 
 	// table index 6, flags 0x10000000022015
 	UPROPERTY(Transient)
-	uint8 bIsMeleeGuarding : 1;
+	bool bIsMeleeGuarding;
 
 	// table index 5, flags 0x10000000022015
 	UPROPERTY(Transient)
-	uint8 bIsMeleeDeflecting : 1;
+	bool bIsMeleeDeflecting;
 
 	// table index 4, flags 0x10000000022015
 	UPROPERTY(Transient)
-	uint8 bIsMeleeDodging : 1;
+	bool bIsMeleeDodging;
 
 	// table index 3, flags 0x10000000022015
 	UPROPERTY(Transient)
-	uint8 bIsMeleeDodgingNorth : 1;
+	bool bIsMeleeDodgingNorth;
 
 	// table index 2, flags 0x10000000022015
 	UPROPERTY(Transient)
-	uint8 bIsMeleeDodgingSouth : 1;
+	bool bIsMeleeDodgingSouth;
 
 	// table index 1, flags 0x10000000022015
 	UPROPERTY(Transient)
-	uint8 bIsMeleeDodgingWest : 1;
+	bool bIsMeleeDodgingWest;
 
 	// table index 0, flags 0x10000000022015
 	UPROPERTY(Transient)
-	uint8 bIsMeleeDodgingEast : 1;
+	bool bIsMeleeDodgingEast;
 
 };
 

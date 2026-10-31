@@ -26,7 +26,7 @@ public:
 
 	// table index 6, flags 0x10000000000005
 	UPROPERTY()
-	uint8 bScaleUniformly : 1;
+	bool bScaleUniformly;
 
 	// table index 5, flags 0x10000010080000
 	UPROPERTY()
@@ -38,7 +38,7 @@ public:
 
 	// table index 2, flags 0x20080100000020
 	UPROPERTY(ReplicatedUsing=OnRep_SafeZoneInStormStateChanged)
-	uint8 bSafeZoneInStormStateChanged : 1;
+	bool bSafeZoneInStormStateChanged;
 
 	// table index 1, flags 0x20080100000034
 	UPROPERTY(ReplicatedUsing=OnRep_ZoneRadius)

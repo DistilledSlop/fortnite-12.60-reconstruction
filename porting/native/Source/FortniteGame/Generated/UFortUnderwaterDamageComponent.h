@@ -34,7 +34,7 @@ public:
 
 	// table index 5, flags 0x40000000002000
 	UPROPERTY(Transient)
-	uint8 bIsUnderWater : 1;
+	bool bIsUnderWater;
 
 	// table index 4, flags 0x40000000002000
 	UPROPERTY(Transient)
@@ -46,7 +46,7 @@ public:
 
 	// table index 2, flags 0x40000000002000
 	UPROPERTY(Transient)
-	uint8 bResetFromDBNO : 1;
+	bool bResetFromDBNO;
 
 	// table index 1, flags 0x40000000002000
 	UPROPERTY(Transient)

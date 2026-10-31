@@ -27,7 +27,7 @@ public:
 
 	// table index 3, flags 0x20080100000020
 	UPROPERTY(ReplicatedUsing=OnRep_ResetBool)
-	uint8 bResetBool : 1;
+	bool bResetBool;
 
 	// table index 1, flags 0x20080100000020
 	UPROPERTY(ReplicatedUsing=OnRep_BarrierState)

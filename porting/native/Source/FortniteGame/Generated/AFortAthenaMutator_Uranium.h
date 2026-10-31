@@ -276,7 +276,7 @@ public:
 
 	// table index 53, flags 0x20080000000020
 	UPROPERTY(Replicated)
-	uint8 bRoundTimerStarted : 1;
+	bool bRoundTimerStarted;
 
 	// table index 52, flags 0x20080000010005
 	UPROPERTY()
@@ -300,7 +300,7 @@ public:
 
 	// table index 47, flags 0x20080000010015
 	UPROPERTY()
-	uint8 bPushCartIsPushableAtStart : 1;
+	bool bPushCartIsPushableAtStart;
 
 	// table index 46, flags 0x20080000000034
 	UPROPERTY(Replicated)
@@ -368,7 +368,7 @@ public:
 
 	// table index 29, flags 0x20080000010001
 	UPROPERTY()
-	uint8 bShowFullSplineOnMapUI : 1;
+	bool bShowFullSplineOnMapUI;
 
 	// table index 28, flags 0x24080000010001
 	UPROPERTY()
@@ -388,7 +388,7 @@ public:
 
 	// table index 24, flags 0x20080000002020
 	UPROPERTY(Replicated, Transient)
-	uint8 bIsSafeToTurnOnCameraAfterRespawn : 1;
+	bool bIsSafeToTurnOnCameraAfterRespawn;
 
 	// table index 23, flags 0x1
 	UPROPERTY()
@@ -428,7 +428,7 @@ public:
 
 	// table index 10, flags 0x20080000010015
 	UPROPERTY()
-	uint8 bForcePerkPickerOnCheckpoint : 1;
+	bool bForcePerkPickerOnCheckpoint;
 
 	// table index 9, flags 0x20080000000000
 	UPROPERTY()
@@ -468,7 +468,7 @@ public:
 
 	// table index 0, flags 0x40000000002000
 	UPROPERTY(Transient)
-	uint8 bCheatDrawRespawnLocations : 1;
+	bool bCheatDrawRespawnLocations;
 
 	UFUNCTION(NetMulticast, Reliable)
 	void MulticastSetWinningTeams(const TArray<uint8>& InWinningTeams);

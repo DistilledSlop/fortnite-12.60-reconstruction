@@ -12,6 +12,8 @@
 #include "Math/Vector.h"
 #include "Math/Vector2D.h"
 
+class UFortMontageItemDefinitionBase;
+
 #include "UFortPetAnimInstance.generated.h"
 
 UCLASS(abstract, transient)
@@ -74,7 +76,7 @@ public:
 
 	// table index 57, flags 0x20080000002015
 	UPROPERTY(Transient)
-	uint8 bIsFlyingPet : 1;
+	bool bIsFlyingPet;
 
 	// table index 56, flags 0x20080000002015
 	UPROPERTY(Transient)
@@ -299,6 +301,10 @@ public:
 	// table index 1, flags 0x20080000002015
 	UPROPERTY(Transient)
 	uint8 bResponse_ShouldBeHappy : 1;
+
+	// table index 0, flags 0x40000000000000
+	UPROPERTY()
+	UFortMontageItemDefinitionBase* LastObservedFrontEndEmote;
 
 };
 

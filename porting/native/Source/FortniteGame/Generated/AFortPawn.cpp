@@ -107,6 +107,11 @@ void AFortPawn::OnRep_LandingFlashCount()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPawn::OnRep_LastReplicatedEmoteExecuted()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPawn::OnRep_MovingEmote()
 {
 	// Body not recovered: reflection-derived stub.
@@ -176,6 +181,7 @@ void AFortPawn::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetim
 	DOREPLIFETIME(AFortPawn, DisplayName);
 	DOREPLIFETIME(AFortPawn, VocalChords);
 	DOREPLIFETIME(AFortPawn, EmoteWalkSpeed);
+	DOREPLIFETIME(AFortPawn, LastReplicatedEmoteExecuted);
 	DOREPLIFETIME(AFortPawn, LandingFlashCountPacked);
 	DOREPLIFETIME(AFortPawn, JumpFlashCountPacked);
 	DOREPLIFETIME(AFortPawn, DamageZoneActiveBitMask);

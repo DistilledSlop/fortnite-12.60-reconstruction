@@ -34,7 +34,7 @@ public:
 
 	// table index 5, flags 0x10000000000001
 	UPROPERTY()
-	uint8 bIsExclusionSpline : 1;
+	bool bIsExclusionSpline;
 
 	// table index 4, flags 0x10000000000001
 	UPROPERTY()

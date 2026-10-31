@@ -18,7 +18,7 @@ struct FCalendarRequirement
 
 	// table index 1, offset None, flags 0x10000000000001
 	UPROPERTY()
-	uint8 bActive : 1;
+	bool bActive;
 
 	// table index 0, offset 12, flags 0x10000000000001
 	UPROPERTY()

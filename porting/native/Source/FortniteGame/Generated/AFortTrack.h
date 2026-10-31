@@ -43,7 +43,7 @@ public:
 
 	// table index 16, flags 0x10000000010001
 	UPROPERTY()
-	uint8 bUseFloorMesh : 1;
+	bool bUseFloorMesh;
 
 	// table index 15, flags 0x10000000010001
 	UPROPERTY()

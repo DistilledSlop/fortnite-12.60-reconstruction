@@ -13,6 +13,8 @@
 #include "GameplayTagContainer.h"
 
 class AFortPlayerController;
+class UFortEventLevelNavigationWidget;
+class UFortGameStateComponent_EventLevel;
 class UStaticMeshComponent;
 class UUserWidget;
 class UWidgetComponent;
@@ -45,6 +47,10 @@ public:
 	UPROPERTY()
 	UWidgetComponent* WidgetComponent_CursorTargetPosition;
 
+	// table index 25, flags 0x24080000000001
+	UPROPERTY()
+	TSubclassOf<UFortEventLevelNavigationWidget> IndicatorWidgetClass;
+
 	// table index 24, flags 0x24080000000001
 	UPROPERTY()
 	TSubclassOf<UUserWidget> CursorTargetWidgetClass;
@@ -75,7 +81,7 @@ public:
 
 	// table index 11, flags 0x20080000000801
 	UPROPERTY()
-	uint8 bAutoClick : 1;
+	bool bAutoClick;
 
 	// table index 9, flags 0x20080000000801
 	UPROPERTY()
@@ -87,7 +93,7 @@ public:
 
 	// table index 7, flags 0x20080000000801
 	UPROPERTY()
-	uint8 bAlwaysHighliteOnMobile : 1;
+	bool bAlwaysHighliteOnMobile;
 
 	// table index 6, flags 0x20080000000001
 	UPROPERTY()
@@ -95,7 +101,7 @@ public:
 
 	// table index 5, flags 0x20080000000001
 	UPROPERTY()
-	uint8 bOverrideMobileMeshSize : 1;
+	bool bOverrideMobileMeshSize;
 
 	// table index 4, flags 0x20080000000001
 	UPROPERTY()
@@ -108,6 +114,10 @@ public:
 	// table index 2, flags 0x24080000002000
 	UPROPERTY(Transient)
 	TWeakObjectPtr<AFortPlayerController> LevelController;
+
+	// table index 1, flags 0x24080000082008
+	UPROPERTY(Transient)
+	TWeakObjectPtr<UFortGameStateComponent_EventLevel> GSC_StreamingLevelOwner;
 
 	// table index 0, flags 0x20080010080000
 	UPROPERTY()

@@ -54,7 +54,7 @@ public:
 
 	// table index 1, flags 0x20080000000004
 	UPROPERTY()
-	uint8 bProjectileGone : 1;
+	bool bProjectileGone;
 
 	// table index 0, flags 0x20080100000020
 	UPROPERTY(ReplicatedUsing=OnRep_HookGunRopeRepData)

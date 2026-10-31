@@ -19,7 +19,9 @@
 
 class UDataTable;
 class UFortAccoladeItem;
+class UFortFeatItemDefinition;
 class UFortHardcoreModifierItem;
+class UFortMcpProfileSubgame;
 class UFortQuestCategory;
 class UFortQuestItem;
 
@@ -95,6 +97,10 @@ public:
 	UPROPERTY()
 	TArray<FFortQuestObjectiveCompletion> PendingChanges;
 
+	// table index 24, flags 0x24080000002000
+	UPROPERTY(Transient)
+	TWeakObjectPtr<UFortMcpProfileSubgame> BoundProfile;
+
 	// table index 22, flags 0x20088000002000
 	UPROPERTY(Transient)
 	TArray<FFortAbilitySetHandle> EquippedQuestAbilities;
@@ -113,39 +119,39 @@ public:
 
 	// table index 17, flags 0x40000000004000
 	UPROPERTY(Config)
-	uint8 bDoQuestStateLogging : 1;
+	bool bDoQuestStateLogging;
 
 	// table index 16, flags 0x40000000004000
 	UPROPERTY(Config)
-	uint8 bBlockBRXPWhenDead : 1;
+	bool bBlockBRXPWhenDead;
 
 	// table index 15, flags 0x40000000004000
 	UPROPERTY(Config)
-	uint8 bFlatCurrentQuestsSearch : 1;
+	bool bFlatCurrentQuestsSearch;
 
 	// table index 14, flags 0x40000000004000
 	UPROPERTY(Config)
-	uint8 bBlockQuestCompletion : 1;
+	bool bBlockQuestCompletion;
 
 	// table index 13, flags 0x40000000004000
 	UPROPERTY(Config)
-	uint8 bBlockAthenaQuestCompletion : 1;
+	bool bBlockAthenaQuestCompletion;
 
 	// table index 12, flags 0x40000000004000
 	UPROPERTY(Config)
-	uint8 bBlockStWQuestCompletion : 1;
+	bool bBlockStWQuestCompletion;
 
 	// table index 11, flags 0x40000000004000
 	UPROPERTY(Config)
-	uint8 bBlockXPEventsInAnyAAState : 1;
+	bool bBlockXPEventsInAnyAAState;
 
 	// table index 10, flags 0x40000000004000
 	UPROPERTY(Config)
-	uint8 bBlockAthenaQuestCompletionInCompetitive : 1;
+	bool bBlockAthenaQuestCompletionInCompetitive;
 
 	// table index 9, flags 0x40000000004000
 	UPROPERTY(Config)
-	uint8 bBlockAthenaFeatsCompletionInCompetitive : 1;
+	bool bBlockAthenaFeatsCompletionInCompetitive;
 
 	// table index 7, flags 0x40000000004000
 	UPROPERTY(Config)
@@ -157,11 +163,15 @@ public:
 
 	// table index 4, flags 0x40000000004000
 	UPROPERTY(Config)
-	uint8 bAllowAthenaMCPNotifyOnComplete : 1;
+	bool bAllowAthenaMCPNotifyOnComplete;
 
 	// table index 2, flags 0x40000000000000
 	UPROPERTY()
 	EQuestMapScreenMode QuestMapMode;
+
+	// table index 0, flags 0x40000000002000
+	UPROPERTY(Transient)
+	TSet<UFortFeatItemDefinition*> FeatsCompletedThisSession;
 
 };
 

@@ -12,6 +12,8 @@
 #include "FOnTeamMemberSimpleDelegate.h"
 #include "FOnTeamMemberStateChangedDelegate.h"
 
+class UFortPartyContext;
+
 #include "UFortUITeamInfo.generated.h"
 
 UCLASS()
@@ -39,6 +41,10 @@ public:
 	// table index 6, flags 0x10000010080000
 	UPROPERTY()
 	FOnTeamMemberSimpleDelegate OnTeamMemberPromoted;
+
+	// table index 4, flags 0x40000000002000
+	UPROPERTY(Transient)
+	UFortPartyContext* TeamContext;
 
 	// table index 3, flags 0x40000000002000
 	UPROPERTY(Transient)

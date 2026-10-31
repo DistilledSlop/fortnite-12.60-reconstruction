@@ -9,6 +9,7 @@
 #include "EFortVoteType.h"
 #include "ELeecherStatus.h"
 #include "FFortAbilitySetHandle.h"
+#include "FFortPlayerDeathReport.h"
 #include "FFortPlayerScoreReport.h"
 #include "FFortVoteConfig.h"
 #include "FOnPlayerStartedRespawn.h"
@@ -51,7 +52,7 @@ public:
 
 	// table index 30, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bDontChangeReticleColorForEnemy : 1;
+	bool bDontChangeReticleColorForEnemy;
 
 	// table index 29, flags 0x10000000002000
 	UPROPERTY(Transient)
@@ -77,13 +78,17 @@ public:
 	UPROPERTY()
 	UInputComponent* RemoteControlledPawnInputComponent;
 
+	// table index 20, flags 0x20080000002014
+	UPROPERTY(Transient)
+	FFortPlayerDeathReport PlayerDeathReport;
+
 	// table index 19, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bClientNotifiedOfPawnDied : 1;
+	bool bClientNotifiedOfPawnDied;
 
 	// table index 18, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bEnterCameraModeOnDeath : 1;
+	bool bEnterCameraModeOnDeath;
 
 	// table index 16, flags 0x20080000002020
 	UPROPERTY(Replicated, Transient)
@@ -115,11 +120,11 @@ public:
 
 	// table index 6, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bJetpackExecuteToggle : 1;
+	bool bJetpackExecuteToggle;
 
 	// table index 5, flags 0x20080000004000
 	UPROPERTY(Config)
-	uint8 bAllowMovementCancellableActionsWithIceFeet : 1;
+	bool bAllowMovementCancellableActionsWithIceFeet;
 
 	// table index 4, flags 0x20080000004000
 	UPROPERTY(Config)
@@ -148,6 +153,10 @@ public:
 	UFUNCTION(Client, Reliable)
 	void ClientClearDeathNotification();
 	void ClientClearDeathNotification_Implementation();
+
+	UFUNCTION(Client, Reliable)
+	void ClientOnPawnDied(const FFortPlayerDeathReport& DeathReport);
+	void ClientOnPawnDied_Implementation(const FFortPlayerDeathReport& DeathReport);
 
 	UFUNCTION(Client, Reliable)
 	void ClientOnPawnRevived(AController* EventInstigator);

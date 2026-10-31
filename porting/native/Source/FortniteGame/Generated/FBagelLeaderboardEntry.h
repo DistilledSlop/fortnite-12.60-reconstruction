@@ -31,11 +31,11 @@ struct FBagelLeaderboardEntry
 
 	// table index 1, offset None, flags 0x10000000000014
 	UPROPERTY()
-	uint8 bIsSpecialEntry : 1;
+	bool bIsSpecialEntry;
 
 	// table index 0, offset None, flags 0x10000000000014
 	UPROPERTY()
-	uint8 bIsLocalPlayer : 1;
+	bool bIsLocalPlayer;
 
 };
 

@@ -11,6 +11,7 @@
 #include "Styling/SlateBrush.h"
 
 class ABattleBusCosmeticInstanceBase;
+class UAthenaBattleBusItemDefinition;
 class UFortMiniMapIndicator;
 
 #include "AFortAthenaAircraft.generated.h"
@@ -59,7 +60,7 @@ public:
 
 	// table index 13, flags 0x20080000000020
 	UPROPERTY(Replicated)
-	uint8 bIsOutOfPhaseAircraft : 1;
+	bool bIsOutOfPhaseAircraft;
 
 	// table index 12, flags 0x20080100000020
 	UPROPERTY(ReplicatedUsing=OnRep_ReplicatedFlightTimestamp)
@@ -89,9 +90,17 @@ public:
 	UPROPERTY()
 	FSlateBrush MiniMapTeamIndicatorIconBrush;
 
+	// table index 5, flags 0x20080000010001
+	UPROPERTY()
+	UAthenaBattleBusItemDefinition* DefaultBusSkin;
+
 	// table index 4, flags 0x20080000000014
 	UPROPERTY()
 	ABattleBusCosmeticInstanceBase* SpawnedCosmeticActor;
+
+	// table index 3, flags 0x20080000002000
+	UPROPERTY(Transient)
+	UAthenaBattleBusItemDefinition* AsyncLoadingSkin;
 
 	// table index 2, flags 0x20080000000020
 	UPROPERTY(Replicated)

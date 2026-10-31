@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 
+class UAthenaBattleBusItemDefinition;
+
 #include "ABattleBusCosmeticInstanceBase.generated.h"
 
 UCLASS(config=Engine)
@@ -14,5 +16,9 @@ class FORTNITEGAME_API ABattleBusCosmeticInstanceBase : public AActor
 	GENERATED_BODY()
 
 public:
+	// table index 0, flags 0x10000000000014
+	UPROPERTY()
+	UAthenaBattleBusItemDefinition* ActiveSkin;
+
 };
 

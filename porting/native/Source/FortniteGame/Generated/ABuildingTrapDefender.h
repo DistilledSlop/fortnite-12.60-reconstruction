@@ -10,6 +10,7 @@
 #include "FDefenderPawnOrItemSet.h"
 
 class AFortAIPawn;
+class UFortDefenderItemDefinition;
 
 #include "ABuildingTrapDefender.generated.h"
 
@@ -27,6 +28,10 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_DefenderPawn)
 	AFortAIPawn* DefenderPawn;
 
+	// table index 2, flags 0x20080100000024
+	UPROPERTY(ReplicatedUsing=OnRep_DefenderItemDefinition)
+	UFortDefenderItemDefinition* DefenderItemDefinition;
+
 	// table index 1, flags 0x20080000000024
 	UPROPERTY(Replicated)
 	int32 DefenderItemLevel;
@@ -34,6 +39,9 @@ public:
 	// table index 0, flags 0x20180010080000
 	UPROPERTY()
 	FDefenderPawnOrItemSet DefenderPawnOrItemSet;
+
+	UFUNCTION()
+	void OnRep_DefenderItemDefinition();
 
 	UFUNCTION()
 	void OnRep_DefenderPawn();

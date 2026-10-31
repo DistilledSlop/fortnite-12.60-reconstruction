@@ -17,6 +17,8 @@ class AFortTimeOfDayManager;
 class UCurveTable;
 class UDataTable;
 class UFortConditionalAssetGroup;
+class UFortGameplayModifierItemDefinition;
+class UFortItemDefinition;
 class UFortSharedAssetGroup;
 class UPlaylistUserOptions;
 class USoundBase;
@@ -56,7 +58,7 @@ public:
 
 	// table index 61, flags 0x10000000010015
 	UPROPERTY()
-	uint8 bUnderfillMatchmaking : 1;
+	bool bUnderfillMatchmaking;
 
 	// table index 60, flags 0x10000000010015
 	UPROPERTY()
@@ -64,7 +66,7 @@ public:
 
 	// table index 59, flags 0x10000000010015
 	UPROPERTY()
-	uint8 bOverrideMaxPlayers : 1;
+	bool bOverrideMaxPlayers;
 
 	// table index 58, flags 0x10000000010015
 	UPROPERTY()
@@ -92,19 +94,19 @@ public:
 
 	// table index 52, flags 0x10000000010015
 	UPROPERTY()
-	uint8 EnforceSquadFill : 1;
+	bool EnforceSquadFill;
 
 	// table index 51, flags 0x10000000010015
 	UPROPERTY()
-	uint8 bAllowSquadFillOption : 1;
+	bool bAllowSquadFillOption;
 
 	// table index 50, flags 0x10000000010015
 	UPROPERTY()
-	uint8 bShouldFillWhenNoSquadFillOption : 1;
+	bool bShouldFillWhenNoSquadFillOption;
 
 	// table index 49, flags 0x10000000014015
 	UPROPERTY(Config)
-	uint8 bAllowJoinInProgress : 1;
+	bool bAllowJoinInProgress;
 
 	// table index 48, flags 0x10000000010015
 	UPROPERTY()
@@ -152,7 +154,7 @@ public:
 
 	// table index 33, flags 0x10000000010015
 	UPROPERTY()
-	uint8 bUseFriendlyFireAimAssist : 1;
+	bool bUseFriendlyFireAimAssist;
 
 	// table index 32, flags 0x10000000010005
 	UPROPERTY()
@@ -178,13 +180,21 @@ public:
 	UPROPERTY()
 	TArray<EAthenaGamePhaseStep> SkippedGamePhaseNotification;
 
+	// table index 22, flags 0x14000000010001
+	UPROPERTY()
+	TArray<TSoftObjectPtr<UFortGameplayModifierItemDefinition>> ModifierList;
+
 	// table index 21, flags 0x14000000010001
 	UPROPERTY()
 	TSoftClassPtr<AFortTimeOfDayManager> TimeOfDayManager;
 
 	// table index 20, flags 0x10000000010015
 	UPROPERTY()
-	uint8 bIgnoreWeatherEvents : 1;
+	bool bIgnoreWeatherEvents;
+
+	// table index 18, flags 0x10000000010005
+	UPROPERTY()
+	TArray<UFortItemDefinition*> ItemsToFullyLoad;
 
 	// table index 17, flags 0x10000000010005
 	UPROPERTY()
@@ -196,7 +206,7 @@ public:
 
 	// table index 15, flags 0x10000000010015
 	UPROPERTY()
-	uint8 bIsDefaultPlaylist : 1;
+	bool bIsDefaultPlaylist;
 
 	// table index 14, flags 0x10000000010015
 	UPROPERTY()
@@ -256,7 +266,7 @@ public:
 
 	// table index 0, flags 0x10000000010001
 	UPROPERTY()
-	uint8 bUseLocalizationService : 1;
+	bool bUseLocalizationService;
 
 };
 

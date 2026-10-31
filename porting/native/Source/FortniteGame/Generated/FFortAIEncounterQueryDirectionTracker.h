@@ -15,7 +15,7 @@ struct FFortAIEncounterQueryDirectionTracker
 
 	// table index 8, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bHasTriedPreviousDirections : 1;
+	bool bHasTriedPreviousDirections;
 
 	// table index 6, offset 8, flags 0x10000000000000
 	UPROPERTY()

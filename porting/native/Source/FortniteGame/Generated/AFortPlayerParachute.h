@@ -10,6 +10,7 @@
 #include "Math/Rotator.h"
 
 class AFortPlayerPawn;
+class UAthenaGliderItemDefinition;
 class UAudioComponent;
 class UFortPlayerGliderAnimSet;
 class UParticleSystemComponent;
@@ -51,6 +52,10 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_PlayerPawn)
 	AFortPlayerPawn* PlayerPawn;
 
+	// table index 15, flags 0x20080100000034
+	UPROPERTY(ReplicatedUsing=OnRep_ParachuteItemDef)
+	UAthenaGliderItemDefinition* ParachuteItemDef;
+
 	// table index 14, flags 0x20080000000015
 	UPROPERTY()
 	float ParachuteHiddenAnimFinishTime;
@@ -69,11 +74,11 @@ public:
 
 	// table index 10, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bParachuteVisible : 1;
+	bool bParachuteVisible;
 
 	// table index 9, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bActivateTrailOnRationalMovement : 1;
+	bool bActivateTrailOnRationalMovement;
 
 	// table index 8, flags 0x20088000002000
 	UPROPERTY(Transient)
@@ -89,7 +94,7 @@ public:
 
 	// table index 5, flags 0x10000000022815
 	UPROPERTY(Transient)
-	uint8 IsCosmeticPreview : 1;
+	bool IsCosmeticPreview;
 
 	// table index 4, flags 0x10000000000014
 	UPROPERTY()
@@ -106,6 +111,9 @@ public:
 	// table index 0, flags 0x10000000000015
 	UPROPERTY()
 	uint8 bUsesDayPhaseChange : 1;
+
+	UFUNCTION()
+	void OnRep_ParachuteItemDef();
 
 	UFUNCTION()
 	void OnRep_PlayerPawn();

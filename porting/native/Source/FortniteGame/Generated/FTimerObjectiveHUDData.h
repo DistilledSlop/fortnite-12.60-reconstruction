@@ -18,7 +18,7 @@ struct FTimerObjectiveHUDData
 
 	// table index 0, offset None, flags 0x10000000000005
 	UPROPERTY()
-	uint8 bIsPaused : 1;
+	bool bIsPaused;
 
 };
 

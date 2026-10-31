@@ -28,7 +28,7 @@ public:
 
 	// table index 12, flags 0x10000000010001
 	UPROPERTY()
-	uint8 bFadeWhenOwnerDestroyed : 1;
+	bool bFadeWhenOwnerDestroyed;
 
 	// table index 11, flags 0x10000000010001
 	UPROPERTY()

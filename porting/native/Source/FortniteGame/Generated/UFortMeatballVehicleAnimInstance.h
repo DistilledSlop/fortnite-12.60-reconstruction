@@ -69,47 +69,47 @@ public:
 
 	// table index 10, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bIsMovingForward : 1;
+	bool bIsMovingForward;
 
 	// table index 9, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bIsDrivingFast : 1;
+	bool bIsDrivingFast;
 
 	// table index 8, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bIsBraking : 1;
+	bool bIsBraking;
 
 	// table index 7, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bIsBoosting : 1;
+	bool bIsBoosting;
 
 	// table index 6, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bIsBoostReady : 1;
+	bool bIsBoostReady;
 
 	// table index 5, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bIsBoostStarting : 1;
+	bool bIsBoostStarting;
 
 	// table index 4, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bIsBoostEnding : 1;
+	bool bIsBoostEnding;
 
 	// table index 3, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bIsRocketReady : 1;
+	bool bIsRocketReady;
 
 	// table index 2, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bIsRocketOnCoolDown : 1;
+	bool bIsRocketOnCoolDown;
 
 	// table index 1, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bIsSteeringLeft : 1;
+	bool bIsSteeringLeft;
 
 	// table index 0, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bIsSteeringRight : 1;
+	bool bIsSteeringRight;
 
 };
 

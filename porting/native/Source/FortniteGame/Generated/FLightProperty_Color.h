@@ -15,7 +15,7 @@ struct FLightProperty_Color
 
 	// table index 2, offset None, flags 0x10000000000001
 	UPROPERTY()
-	uint8 bEnabled : 1;
+	bool bEnabled;
 
 	// table index 1, offset 4, flags 0x10000000000001
 	UPROPERTY()
@@ -23,7 +23,7 @@ struct FLightProperty_Color
 
 	// table index 0, offset None, flags 0x10000000000001
 	UPROPERTY()
-	uint8 bUsingSRGB : 1;
+	bool bUsingSRGB;
 
 };
 

@@ -8,6 +8,7 @@
 
 class AFortWeapon;
 class UAnimMontage;
+class UAthenaPickaxeItemDefinition;
 
 #include "AFortPickaxePreviewActor.generated.h"
 
@@ -20,6 +21,10 @@ public:
 	// table index 2, flags 0x20080000000001
 	UPROPERTY()
 	UAnimMontage* MontageToPlayForSwinging;
+
+	// table index 1, flags 0x20080000000014
+	UPROPERTY()
+	UAthenaPickaxeItemDefinition* CosmeticPickaxeItemDefinition;
 
 	// table index 0, flags 0x20080000000014
 	UPROPERTY()

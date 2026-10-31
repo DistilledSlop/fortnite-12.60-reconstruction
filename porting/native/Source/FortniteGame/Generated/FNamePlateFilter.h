@@ -15,7 +15,7 @@ struct FNamePlateFilter
 
 	// table index 2, offset None, flags 0x40000000000000
 	UPROPERTY()
-	uint8 bIsSet : 1;
+	bool bIsSet;
 
 	// table index 0, offset 8, flags 0x40000000000000
 	UPROPERTY()

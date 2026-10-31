@@ -54,7 +54,7 @@ struct FProjectileHomingData
 
 	// table index 0, offset None, flags 0x10000000000004
 	UPROPERTY()
-	uint8 ResetTurnSpeedTimer : 1;
+	bool ResetTurnSpeedTimer;
 
 };
 

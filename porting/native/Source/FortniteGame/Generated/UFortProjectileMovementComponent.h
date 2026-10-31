@@ -33,11 +33,11 @@ public:
 
 	// table index 16, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bHasHomedTowardTarget : 1;
+	bool bHasHomedTowardTarget;
 
 	// table index 15, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bSetInitialLocAndDir : 1;
+	bool bSetInitialLocAndDir;
 
 	// table index 14, flags 0x20080100002020
 	UPROPERTY(ReplicatedUsing=OnRep_ReplicatedAutoRegisterUpdatedComponent, Transient)

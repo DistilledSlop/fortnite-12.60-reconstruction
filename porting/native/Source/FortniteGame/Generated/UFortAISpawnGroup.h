@@ -30,15 +30,15 @@ public:
 
 	// table index 12, flags 0x20080000010015
 	UPROPERTY()
-	uint8 bIsPrototype : 1;
+	bool bIsPrototype;
 
 	// table index 11, flags 0x20080000000015
 	UPROPERTY()
-	uint8 bIsValidForEnemySpawners : 1;
+	bool bIsValidForEnemySpawners;
 
 	// table index 10, flags 0x20080000000015
 	UPROPERTY()
-	uint8 bIsLargeSpawnGroup : 1;
+	bool bIsLargeSpawnGroup;
 
 	// table index 9, flags 0x20080000000015
 	UPROPERTY()
@@ -46,7 +46,7 @@ public:
 
 	// table index 8, flags 0x20080000000015
 	UPROPERTY()
-	uint8 bUseWeightSystem : 1;
+	bool bUseWeightSystem;
 
 	// table index 7, flags 0x20080000010015
 	UPROPERTY()

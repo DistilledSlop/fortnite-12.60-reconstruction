@@ -16,7 +16,7 @@ class FORTNITEGAME_API UFortClientPilot_FrontendCampaign : public UFortClientPil
 public:
 	// table index 8, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bShouldPickRandomMap : 1;
+	bool bShouldPickRandomMap;
 
 	// table index 7, flags 0x10000000000000
 	UPROPERTY()

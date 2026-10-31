@@ -23,7 +23,7 @@ public:
 
 	// table index 7, flags 0x10000000002000
 	UPROPERTY(Transient)
-	uint8 bHasAnyMountedWeaponSeats : 1;
+	bool bHasAnyMountedWeaponSeats;
 
 	// table index 5, flags 0x40008100000021
 	UPROPERTY(ReplicatedUsing=OnRep_PlayerSlots)
@@ -39,7 +39,7 @@ public:
 
 	// table index 0, flags 0x40000000000001
 	UPROPERTY()
-	uint8 bAlwaysAllowEntry : 1;
+	bool bAlwaysAllowEntry;
 
 	UFUNCTION()
 	void OnRep_PlayerSlots();

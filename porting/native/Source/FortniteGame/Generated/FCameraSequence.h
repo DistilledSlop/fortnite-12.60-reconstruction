@@ -20,11 +20,11 @@ struct FCameraSequence
 
 	// table index 1, offset None, flags 0x10000000000001
 	UPROPERTY()
-	uint8 PlayFromStart : 1;
+	bool PlayFromStart;
 
 	// table index 0, offset None, flags 0x10000000000001
 	UPROPERTY()
-	uint8 UseCinematiceMode : 1;
+	bool UseCinematiceMode;
 
 };
 

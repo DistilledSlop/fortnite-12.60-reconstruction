@@ -18,7 +18,7 @@ class FORTNITEGAME_API UCustomCharacterPartAnimInstance_DJBackpack : public UCus
 public:
 	// table index 10, flags 0x10000000002000
 	UPROPERTY(Transient)
-	uint8 bIsKillCelebrationActive : 1;
+	bool bIsKillCelebrationActive;
 
 	// table index 9, flags 0x10000000002000
 	UPROPERTY(Transient)

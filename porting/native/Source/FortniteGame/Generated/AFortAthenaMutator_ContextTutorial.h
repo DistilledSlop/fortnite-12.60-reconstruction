@@ -20,7 +20,7 @@ class FORTNITEGAME_API AFortAthenaMutator_ContextTutorial : public AFortAthenaMu
 public:
 	// table index 14, flags 0x40000000014001
 	UPROPERTY(Config)
-	uint8 bEnableTutorials : 1;
+	bool bEnableTutorials;
 
 	// table index 13, flags 0x40000000014001
 	UPROPERTY(Config)
@@ -60,11 +60,11 @@ public:
 
 	// table index 3, flags 0x40000000014001
 	UPROPERTY(Config)
-	uint8 bEnableWorldMarker : 1;
+	bool bEnableWorldMarker;
 
 	// table index 2, flags 0x40000000014001
 	UPROPERTY(Config)
-	uint8 bEnableHighlight : 1;
+	bool bEnableHighlight;
 
 	// table index 0, flags 0x40000000002000
 	UPROPERTY(Transient)

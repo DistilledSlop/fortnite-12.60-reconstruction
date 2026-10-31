@@ -40,11 +40,11 @@ struct FFortBounceData
 
 	// table index 1, offset None, flags 0x10000000020015
 	UPROPERTY()
-	uint8 bLocalInstigator : 1;
+	bool bLocalInstigator;
 
 	// table index 0, offset None, flags 0x10000000002000
 	UPROPERTY()
-	uint8 bIsPlaying : 1;
+	bool bIsPlaying;
 
 };
 

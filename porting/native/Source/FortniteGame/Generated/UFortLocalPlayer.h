@@ -7,10 +7,12 @@
 #include "Engine/LocalPlayer.h"
 
 #include "FFortPlayerScoreReport.h"
+#include "FFortRewardReport.h"
 #include "GameFramework/OnlineReplStructs.h"
 
 class UFortClientSettingsRecord;
 class UFortContentControlsManager;
+class UFortOnlineAccount;
 class UFortPoiTracker;
 
 #include "UFortLocalPlayer.generated.h"
@@ -21,6 +23,14 @@ class FORTNITEGAME_API UFortLocalPlayer : public ULocalPlayer
 	GENERATED_BODY()
 
 public:
+	// table index 9, flags 0x10000000002000
+	UPROPERTY(Transient)
+	UFortOnlineAccount* FortOnlineAccount;
+
+	// table index 8, flags 0x10000000000000
+	UPROPERTY()
+	FFortRewardReport CachedRewardReport;
+
 	// table index 6, flags 0x10000000000000
 	UPROPERTY()
 	TArray<FFortPlayerScoreReport> CachedScoreReports;
@@ -35,7 +45,7 @@ public:
 
 	// table index 3, flags 0x40000000000000
 	UPROPERTY()
-	uint8 bControllerAttached : 1;
+	bool bControllerAttached;
 
 	// table index 2, flags 0x40000000000000
 	UPROPERTY()

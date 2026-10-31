@@ -8,10 +8,13 @@
 
 #include "EFortTheaterMapTileType.h"
 #include "FFortEditorTheaterMapRegionColor.h"
+#include "FFortLinkedQuest.h"
+#include "FFortRequirementsInfo.h"
 #include "FFortTheaterDifficultyWeight.h"
 #include "FFortTheaterMapMissionAlertData.h"
 #include "FFortTheaterMapMissionData.h"
 #include "FFortTheaterMissionWeight.h"
+#include "FFortTheaterTileEditorData.h"
 #include "GameplayTagContainer.h"
 
 class UFortRegionInfo;
@@ -43,7 +46,7 @@ public:
 
 	// table index 20, flags 0x20080000010001
 	UPROPERTY()
-	uint8 bForceIncludeInCookIfReferenced : 1;
+	bool bForceIncludeInCookIfReferenced;
 
 	// table index 19, flags 0x24080000012001
 	UPROPERTY(Transient)
@@ -61,6 +64,14 @@ public:
 	UPROPERTY(Transient)
 	FGameplayTagContainer SelectedTileTags;
 
+	// table index 14, flags 0x20080000012001
+	UPROPERTY(Transient)
+	FFortRequirementsInfo SelectedTileRequirements;
+
+	// table index 12, flags 0x20080000012001
+	UPROPERTY(Transient)
+	TArray<FFortLinkedQuest> SelectedLinkedQuests;
+
 	// table index 10, flags 0x20080000012001
 	UPROPERTY(Transient)
 	TArray<FFortTheaterMissionWeight> SelectedMissionWeightOverrides;
@@ -71,15 +82,19 @@ public:
 
 	// table index 7, flags 0x20080000012001
 	UPROPERTY(Transient)
-	uint8 bCanSelectedTileHaveMissionAlert : 1;
+	bool bCanSelectedTileHaveMissionAlert;
 
 	// table index 6, flags 0x20080000012001
 	UPROPERTY(Transient)
-	uint8 bShouldSelectedTileDisallowQuickplay : 1;
+	bool bShouldSelectedTileDisallowQuickplay;
 
 	// table index 4, flags 0x20080000020001
 	UPROPERTY()
 	TArray<FFortEditorTheaterMapRegionColor> RegionColors;
+
+	// table index 2, flags 0x20080000000000
+	UPROPERTY()
+	TArray<FFortTheaterTileEditorData> EditorTiles;
 
 	// table index 1, flags 0x20080000000000
 	UPROPERTY()

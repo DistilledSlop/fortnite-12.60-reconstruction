@@ -21,6 +21,7 @@
 #include "Engine/SpringInterpolator.h"
 #include "FAbilitySystemInitializedDelegate.h"
 #include "FCharacterPartChanged.h"
+#include "FFortAthenaLoadout.h"
 #include "FFortAthenaVehicleInputStateReliable.h"
 #include "FFortAthenaVehicleInputStateUnreliable.h"
 #include "FFortCharacterPartsRepMontageInfo.h"
@@ -43,6 +44,7 @@
 #include "FOnPossessedProp.h"
 #include "FOnSafeZoneOccupancyChanged.h"
 #include "FOnStartedInteractSearch.h"
+#include "FPreviouslyAppliedVariantData.h"
 #include "FRepFortMeshAttachment.h"
 #include "FReplicatedMontagePair.h"
 #include "FSlipperySlopeParams.h"
@@ -72,6 +74,8 @@ class AFortSkyTube;
 class AFortWaterBodyActor;
 class UAnimInstance;
 class UAnimMontage;
+class UAthenaCharmItemDefinition;
+class UAthenaGliderItemDefinition;
 class UAudioComponent;
 class UBoxComponent;
 class UBuildingEditModeMetadata;
@@ -85,10 +89,12 @@ class UFortAnimNotifyState_RootMotionInterrupt;
 class UFortCustomizationAssetLoader;
 class UFortFootstepAudioBank;
 class UFortHero;
+class UFortHeroType;
 class UFortPawnScriptedBehavior;
 class UFortUnderwaterDamageComponent;
 class UFortVisibilityComponent;
 class UFortWeaponAnimSet;
+class UFortWorldItemDefinition;
 class UGameplayAbility;
 class UGameplayEffect;
 class UInputComponent;
@@ -213,11 +219,11 @@ public:
 
 	// table index 295, flags 0x10000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_IsInWaterVolume)
-	uint8 bIsInWaterVolume : 1;
+	bool bIsInWaterVolume;
 
 	// table index 294, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bNotifyBlueprintWhenLandscapeTeleporting : 1;
+	bool bNotifyBlueprintWhenLandscapeTeleporting;
 
 	// table index 293, flags 0x20080000002020
 	UPROPERTY(Replicated, Transient)
@@ -233,11 +239,11 @@ public:
 
 	// table index 290, flags 0x20080100000034
 	UPROPERTY(ReplicatedUsing=OnRep_IsSkydiving)
-	uint8 bIsSkydiving : 1;
+	bool bIsSkydiving;
 
 	// table index 289, flags 0x20080100000020
 	UPROPERTY(ReplicatedUsing=OnRep_IsParachuteOpen)
-	uint8 bIsParachuteOpen : 1;
+	bool bIsParachuteOpen;
 
 	// table index 288, flags 0x20080000002000
 	UPROPERTY(Transient)
@@ -545,7 +551,7 @@ public:
 
 	// table index 209, flags 0x10000000002020
 	UPROPERTY(Replicated, Transient)
-	uint8 bCanPredictJumpApex : 1;
+	bool bCanPredictJumpApex;
 
 	// table index 207, flags 0x20080000002000
 	UPROPERTY(Transient)
@@ -573,7 +579,7 @@ public:
 
 	// table index 201, flags 0x10000000002000
 	UPROPERTY(Transient)
-	uint8 bPlayingPassengerToDriverAnimation : 1;
+	bool bPlayingPassengerToDriverAnimation;
 
 	// table index 200, flags 0x10000000002000
 	UPROPERTY(Transient)
@@ -671,6 +677,10 @@ public:
 	UPROPERTY(Transient)
 	UFortHero* Hero;
 
+	// table index 176, flags 0x44000000002000
+	UPROPERTY(Transient)
+	TWeakObjectPtr<UFortHeroType> OvrHeroType;
+
 	// table index 175, flags 0x40000000082008
 	UPROPERTY(Transient)
 	UCustomPlayerComponent* HACK_CustomPRIComponent;
@@ -687,6 +697,10 @@ public:
 	UPROPERTY(Transient)
 	UCustomColorSwatch* CharacterPartColorSwatches[6];
 
+	// table index 171, flags 0x40000000002000
+	UPROPERTY(Transient)
+	UAthenaCharmItemDefinition* CharacterCharms[4];
+
 	// table index 169, flags 0x40000000002000
 	UPROPERTY(Transient)
 	TArray<UCustomCharacterPart*> RequiredVariantParts;
@@ -698,6 +712,10 @@ public:
 	// table index 165, flags 0x20080000002000
 	UPROPERTY(Transient)
 	int8 CharacterPartSMHiddenRefCount[6];
+
+	// table index 164, flags 0x20080100000034
+	UPROPERTY(ReplicatedUsing=OnRep_CosmeticLoadout)
+	FFortAthenaLoadout CosmeticLoadout;
 
 	// table index 163, flags 0x40000000002000
 	UPROPERTY(Transient)
@@ -829,23 +847,23 @@ public:
 
 	// table index 128, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bAllowDBNOCarry : 1;
+	bool bAllowDBNOCarry;
 
 	// table index 127, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bAllowDBNOCarryEnemies : 1;
+	bool bAllowDBNOCarryEnemies;
 
 	// table index 126, flags 0x10000000002000
 	UPROPERTY(Transient)
-	uint8 bIsBeingDBNOCarried : 1;
+	bool bIsBeingDBNOCarried;
 
 	// table index 125, flags 0x10000000002000
 	UPROPERTY(Transient)
-	uint8 bIsDBNOCarrying : 1;
+	bool bIsDBNOCarrying;
 
 	// table index 124, flags 0x10000000002000
 	UPROPERTY(Transient)
-	uint8 bRequestedThrowCarriedPlayer : 1;
+	bool bRequestedThrowCarriedPlayer;
 
 	// table index 123, flags 0x10000000000020
 	UPROPERTY(Replicated)
@@ -901,11 +919,19 @@ public:
 
 	// table index 110, flags 0x20080100000020
 	UPROPERTY(ReplicatedUsing=OnRep_NetMovementPrioritized)
-	uint8 bNetMovementPrioritized : 1;
+	bool bNetMovementPrioritized;
 
 	// table index 109, flags 0x20080000000020
 	UPROPERTY(Replicated)
 	FReplicatedMontagePair LandingMontagePair;
+
+	// table index 108, flags 0x40000000002000
+	UPROPERTY(Transient)
+	FPreviouslyAppliedVariantData PriorVariantData;
+
+	// table index 106, flags 0x40000000002000
+	UPROPERTY(Transient)
+	TArray<UFortWorldItemDefinition*> TempWeaponsStack;
 
 	// table index 104, flags 0x40000000002000
 	UPROPERTY(Transient)
@@ -981,11 +1007,11 @@ public:
 
 	// table index 83, flags 0x20080100000020
 	UPROPERTY(ReplicatedUsing=OnRep_ParachuteLockedOpen)
-	uint8 bParachuteLockedOpen : 1;
+	bool bParachuteLockedOpen;
 
 	// table index 82, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bLocalParachuteLockedOpen : 1;
+	bool bLocalParachuteLockedOpen;
 
 	// table index 81, flags 0x20080100000020
 	UPROPERTY(ReplicatedUsing=OnRep_AttachmentMesh)
@@ -1023,6 +1049,10 @@ public:
 	UPROPERTY()
 	FSlipperySlopeParams SlipperySlopeParams;
 
+	// table index 71, flags 0x10000000000000
+	UPROPERTY()
+	UAthenaGliderItemDefinition* GliderClass;
+
 	// table index 70, flags 0x20080000000020
 	UPROPERTY(Replicated)
 	AFortPlayerPetRepState* PetState;
@@ -1035,9 +1065,13 @@ public:
 	UPROPERTY()
 	AFortPlayerParachute* ParachuteAttachment;
 
+	// table index 66, flags 0x20080100000020
+	UPROPERTY(ReplicatedUsing=OnRep_GliderOverride)
+	TArray<UAthenaGliderItemDefinition*> GliderOverrideStack;
+
 	// table index 65, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bResetGliderOverrideOnLanding : 1;
+	bool bResetGliderOverrideOnLanding;
 
 	// table index 64, flags 0x20080000000015
 	UPROPERTY()
@@ -1177,11 +1211,11 @@ public:
 
 	// table index 30, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bDisallowInterrogation : 1;
+	bool bDisallowInterrogation;
 
 	// table index 29, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bDisallowInterrogationOnNPC : 1;
+	bool bDisallowInterrogationOnNPC;
 
 	// table index 28, flags 0x24080100002020
 	UPROPERTY(ReplicatedUsing=OnRep_ControlledRCPawn, Transient)
@@ -1309,6 +1343,9 @@ public:
 	void OnRep_ControlledRCPawn();
 
 	UFUNCTION()
+	void OnRep_CosmeticLoadout();
+
+	UFUNCTION()
 	void OnRep_DBNOHoistee();
 
 	UFUNCTION()
@@ -1319,6 +1356,9 @@ public:
 
 	UFUNCTION()
 	void OnRep_FootstepBankOverride();
+
+	UFUNCTION()
+	void OnRep_GliderOverride();
 
 	UFUNCTION()
 	void OnRep_GroupEmoteLookTarget();

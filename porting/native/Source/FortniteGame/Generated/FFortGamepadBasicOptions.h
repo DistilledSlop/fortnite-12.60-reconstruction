@@ -31,7 +31,7 @@ struct FFortGamepadBasicOptions
 
 	// table index 0, offset None, flags 0x10000000000001
 	UPROPERTY()
-	uint8 bUseAdvancedOptions : 1;
+	bool bUseAdvancedOptions;
 
 };
 

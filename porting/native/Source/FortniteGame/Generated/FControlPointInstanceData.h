@@ -74,7 +74,7 @@ struct FControlPointInstanceData
 
 	// table index 4, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bPointFinished : 1;
+	bool bPointFinished;
 
 	// table index 3, offset 68, flags 0x10000000000000
 	UPROPERTY()
@@ -82,11 +82,11 @@ struct FControlPointInstanceData
 
 	// table index 2, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bIgnoreForOrderMessaging : 1;
+	bool bIgnoreForOrderMessaging;
 
 	// table index 1, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bAlwaysInPlay : 1;
+	bool bAlwaysInPlay;
 
 	// table index 0, offset 76, flags 0x10000000000000
 	UPROPERTY()

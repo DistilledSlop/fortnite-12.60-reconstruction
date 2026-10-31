@@ -21,7 +21,7 @@ struct FCachedSupplyDrop
 
 	// table index 1, offset None, flags 0x10000000002000
 	UPROPERTY()
-	uint8 bInOctree : 1;
+	bool bInOctree;
 
 	// table index 0, offset 12, flags 0x10000000002000
 	UPROPERTY()

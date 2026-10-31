@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "Engine/DataAsset.h"
 
+class UFortWorldItemDefinition;
 class UWorld;
 
 #include "UFortSharedAssetList.generated.h"
@@ -16,6 +17,10 @@ class FORTNITEGAME_API UFortSharedAssetList : public UDataAsset
 	GENERATED_BODY()
 
 public:
+	// table index 2, flags 0x10000000010005
+	UPROPERTY()
+	TArray<UFortWorldItemDefinition*> SharedItemsToFullyLoad;
+
 	// table index 0, flags 0x14000000010005
 	UPROPERTY()
 	TArray<TSoftObjectPtr<UWorld>> SharedAdditionalLevels;

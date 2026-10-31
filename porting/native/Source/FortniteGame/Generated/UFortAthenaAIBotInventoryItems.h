@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
 
+class UFortItemDefinition;
+
 #include "UFortAthenaAIBotInventoryItems.generated.h"
 
 UCLASS()
@@ -14,5 +16,9 @@ class FORTNITEGAME_API UFortAthenaAIBotInventoryItems : public UObject
 	GENERATED_BODY()
 
 public:
+	// table index 0, flags 0x20080000010001
+	UPROPERTY()
+	TArray<UFortItemDefinition*> Items;
+
 };
 

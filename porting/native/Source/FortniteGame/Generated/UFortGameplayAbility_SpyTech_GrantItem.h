@@ -32,11 +32,11 @@ public:
 
 	// table index 7, flags 0x10000000010015
 	UPROPERTY()
-	uint8 bSkipUpgradeCheck : 1;
+	bool bSkipUpgradeCheck;
 
 	// table index 6, flags 0x10000000010015
 	UPROPERTY()
-	uint8 bRechargeStackOnGrant : 1;
+	bool bRechargeStackOnGrant;
 
 	// table index 5, flags 0x20080000000000
 	UPROPERTY()

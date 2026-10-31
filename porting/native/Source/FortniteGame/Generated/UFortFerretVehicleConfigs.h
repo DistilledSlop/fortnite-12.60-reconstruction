@@ -190,11 +190,11 @@ public:
 
 	// table index 1, flags 0x10000000004005
 	UPROPERTY(Config)
-	uint8 bUseBiplaneComponentsForProjectileOrigins : 1;
+	bool bUseBiplaneComponentsForProjectileOrigins;
 
 	// table index 0, flags 0x10000000004005
 	UPROPERTY(Config)
-	uint8 bUseLTMBiplaneForReplayWeaponFX : 1;
+	bool bUseLTMBiplaneForReplayWeaponFX;
 
 };
 

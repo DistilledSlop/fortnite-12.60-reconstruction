@@ -63,19 +63,19 @@ public:
 
 	// table index 41, flags 0x10000000000034
 	UPROPERTY(Replicated)
-	uint8 bSafezoneEventDriven : 1;
+	bool bSafezoneEventDriven;
 
 	// table index 40, flags 0x10000000000034
 	UPROPERTY(Replicated)
-	uint8 bPaused : 1;
+	bool bPaused;
 
 	// table index 39, flags 0x10000000000034
 	UPROPERTY(Replicated)
-	uint8 bPausedForPreview : 1;
+	bool bPausedForPreview;
 
 	// table index 38, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bPausedForPreview_Previous : 1;
+	bool bPausedForPreview_Previous;
 
 	// table index 37, flags 0x10000000010001
 	UPROPERTY()
@@ -155,7 +155,7 @@ public:
 
 	// table index 18, flags 0x20080000002014
 	UPROPERTY(Transient)
-	uint8 bIsViewTargetPawnOutside : 1;
+	bool bIsViewTargetPawnOutside;
 
 	// table index 17, flags 0x20080000010001
 	UPROPERTY()
@@ -175,15 +175,15 @@ public:
 
 	// table index 13, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bMegaStormGameplayCueStarted : 1;
+	bool bMegaStormGameplayCueStarted;
 
 	// table index 12, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bMegaStormStopPending : 1;
+	bool bMegaStormStopPending;
 
 	// table index 11, flags 0x20080000000015
 	UPROPERTY()
-	uint8 bCleanupFXWithAlphaFactor : 1;
+	bool bCleanupFXWithAlphaFactor;
 
 	// table index 10, flags 0x20080000002000
 	UPROPERTY(Transient)
@@ -207,7 +207,7 @@ public:
 
 	// table index 5, flags 0x20080000002004
 	UPROPERTY(Transient)
-	uint8 bMegastormAudioActive : 1;
+	bool bMegastormAudioActive;
 
 	// table index 4, flags 0x20080000002004
 	UPROPERTY(Transient)

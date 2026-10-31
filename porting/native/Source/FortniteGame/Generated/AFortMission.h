@@ -22,6 +22,7 @@ class AFortClientAnnouncement_Basic;
 class AFortObjectiveBase;
 class UAudioComponent;
 class UFortBotMissionLogic;
+class UFortItemDefinition;
 class UFortMissionGenerator;
 class UFortMissionInfo;
 class UFortMissionTimerComponent;
@@ -45,6 +46,10 @@ public:
 	// table index 53, flags 0x20080000002000
 	UPROPERTY(Transient)
 	UFortBotMissionLogic* BotLogic;
+
+	// table index 51, flags 0x24080000010001
+	UPROPERTY()
+	TArray<TSoftObjectPtr<UFortItemDefinition>> MissionPreloadAssets;
 
 	// table index 50, flags 0x24080000010001
 	UPROPERTY()
@@ -84,15 +89,15 @@ public:
 
 	// table index 39, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bLoadedFromRecord : 1;
+	bool bLoadedFromRecord;
 
 	// table index 38, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bFiredParTimeEvent : 1;
+	bool bFiredParTimeEvent;
 
 	// table index 37, flags 0x20080000004000
 	UPROPERTY(Config)
-	uint8 bAreNonpublicMatchesLeecherExempt : 1;
+	bool bAreNonpublicMatchesLeecherExempt;
 
 	// table index 36, flags 0x20080000004000
 	UPROPERTY(Config)
@@ -136,7 +141,7 @@ public:
 
 	// table index 26, flags 0x20080001000020
 	UPROPERTY(Replicated, SaveGame)
-	uint8 bSilentDestroyNextFrame : 1;
+	bool bSilentDestroyNextFrame;
 
 	// table index 24, flags 0x20080100002020
 	UPROPERTY(ReplicatedUsing=OnRep_ActiveObjectives, Transient)
@@ -160,7 +165,7 @@ public:
 
 	// table index 16, flags 0x20080101000020
 	UPROPERTY(ReplicatedUsing=OnRep_bIsMissionVisible, SaveGame)
-	uint8 bIsMissionVisible : 1;
+	bool bIsMissionVisible;
 
 	// table index 14, flags 0x20080001000020
 	UPROPERTY(Replicated, SaveGame)
@@ -172,7 +177,7 @@ public:
 
 	// table index 12, flags 0x20080001000000
 	UPROPERTY(SaveGame)
-	uint8 bIsMissionVisibleOverride : 1;
+	bool bIsMissionVisibleOverride;
 
 	// table index 11, flags 0x20080001000020
 	UPROPERTY(Replicated, SaveGame)
@@ -192,15 +197,15 @@ public:
 
 	// table index 7, flags 0x20080000010015
 	UPROPERTY()
-	uint8 bObjectiveTimerExpireShouldFailObjectives : 1;
+	bool bObjectiveTimerExpireShouldFailObjectives;
 
 	// table index 6, flags 0x20080000010015
 	UPROPERTY()
-	uint8 bMissionTimerExpireShouldFailMission : 1;
+	bool bMissionTimerExpireShouldFailMission;
 
 	// table index 5, flags 0x20080000010001
 	UPROPERTY()
-	uint8 bNeedsEnemyKilledEventForAllPawns : 1;
+	bool bNeedsEnemyKilledEventForAllPawns;
 
 	// table index 4, flags 0x20080001000020
 	UPROPERTY(Replicated, SaveGame)

@@ -59,7 +59,7 @@ public:
 
 	// table index 1, flags 0x10000000010015
 	UPROPERTY()
-	uint8 bTickEnabled : 1;
+	bool bTickEnabled;
 
 	// table index 0, flags 0x10000000010015
 	UPROPERTY()

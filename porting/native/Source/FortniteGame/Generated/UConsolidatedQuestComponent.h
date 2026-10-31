@@ -72,7 +72,7 @@ public:
 
 	// table index 1, flags 0x20080000000001
 	UPROPERTY()
-	uint8 bIsInteractable : 1;
+	bool bIsInteractable;
 
 	// table index 0, flags 0x40000000000000
 	UPROPERTY()

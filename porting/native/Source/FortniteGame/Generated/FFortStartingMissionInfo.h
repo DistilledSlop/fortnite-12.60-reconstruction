@@ -20,7 +20,7 @@ struct FFortStartingMissionInfo
 
 	// table index 0, offset None, flags 0x10000000000015
 	UPROPERTY()
-	uint8 bDisableSharedMissionLoading : 1;
+	bool bDisableSharedMissionLoading;
 
 };
 

@@ -26,11 +26,11 @@ struct FFortPlayerSpawnPadPlacementData
 
 	// table index 2, offset None, flags 0x200c0000010001
 	UPROPERTY()
-	uint8 bSnapToGrid : 1;
+	bool bSnapToGrid;
 
 	// table index 1, offset None, flags 0x200c0000010001
 	UPROPERTY()
-	uint8 bAdjustPlacementForFloors : 1;
+	bool bAdjustPlacementForFloors;
 
 	// table index 0, offset 56, flags 0x20080000010001
 	UPROPERTY()

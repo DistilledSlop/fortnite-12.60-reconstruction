@@ -15,7 +15,7 @@ struct FNavWidgetSettings
 
 	// table index 5, offset None, flags 0x10000000000001
 	UPROPERTY()
-	uint8 bDrawNavWidget : 1;
+	bool bDrawNavWidget;
 
 	// table index 4, offset 4, flags 0x10000000000015
 	UPROPERTY()

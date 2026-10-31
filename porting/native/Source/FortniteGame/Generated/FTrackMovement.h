@@ -24,7 +24,7 @@ struct FTrackMovement
 
 	// table index 0, offset None, flags 0x10000000002000
 	UPROPERTY()
-	uint8 bReverseDirectionAlongSpline : 1;
+	bool bReverseDirectionAlongSpline;
 
 };
 

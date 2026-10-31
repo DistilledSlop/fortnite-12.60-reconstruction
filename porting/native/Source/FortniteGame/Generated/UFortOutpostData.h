@@ -6,6 +6,11 @@
 #include "CoreMinimal.h"
 #include "Engine/DataAsset.h"
 
+#include "FHarvestingOptimizerBuildingData.h"
+#include "FOutpostBuildingData.h"
+#include "FOutpostUpgradeAndPrestigeBuildingData.h"
+#include "FStorageVaultBuildingData.h"
+
 #include "UFortOutpostData.generated.h"
 
 UCLASS()
@@ -17,6 +22,22 @@ public:
 	// table index 4, flags 0x10000000000015
 	UPROPERTY()
 	int32 StructureLimitNotificationThreshold;
+
+	// table index 3, flags 0x10000000000015
+	UPROPERTY()
+	FOutpostBuildingData StormShieldData;
+
+	// table index 2, flags 0x10000000000015
+	UPROPERTY()
+	FHarvestingOptimizerBuildingData HarvestingOptimizerData;
+
+	// table index 1, flags 0x10000000000015
+	UPROPERTY()
+	FStorageVaultBuildingData StorageVaultData;
+
+	// table index 0, flags 0x10000000000015
+	UPROPERTY()
+	FOutpostUpgradeAndPrestigeBuildingData OutpostUpgradeAndPrestigeData;
 
 };
 

@@ -97,7 +97,7 @@ public:
 
 	// table index 0, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bHasDriver : 1;
+	bool bHasDriver;
 
 };
 

@@ -57,11 +57,11 @@ public:
 
 	// table index 3, flags 0x10000000010001
 	UPROPERTY()
-	uint8 bIsRelevantForMinigameInitialization : 1;
+	bool bIsRelevantForMinigameInitialization;
 
 	// table index 2, flags 0x10000000010001
 	UPROPERTY()
-	uint8 bAlwaysTryHandleDelayedStateChange : 1;
+	bool bAlwaysTryHandleDelayedStateChange;
 
 	// table index 1, flags 0x20080100022835
 	UPROPERTY(ReplicatedUsing=HandleMinigameSet, Transient)

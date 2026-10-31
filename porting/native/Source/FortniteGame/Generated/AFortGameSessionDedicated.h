@@ -19,11 +19,11 @@ class FORTNITEGAME_API AFortGameSessionDedicated : public AFortGameSession
 public:
 	// table index 10, flags 0x20080000004000
 	UPROPERTY(Config)
-	uint8 bEnforceCrossplayRestrictions : 1;
+	bool bEnforceCrossplayRestrictions;
 
 	// table index 9, flags 0x20080000004000
 	UPROPERTY(Config)
-	uint8 bAllowPS4InMixedConsole : 1;
+	bool bAllowPS4InMixedConsole;
 
 	// table index 8, flags 0x20080000004000
 	UPROPERTY(Config)

@@ -30,7 +30,7 @@ public:
 
 	// table index 7, flags 0x40000000004001
 	UPROPERTY(Config)
-	uint8 bUseHealthRequirements : 1;
+	bool bUseHealthRequirements;
 
 	// table index 6, flags 0x40000000004001
 	UPROPERTY(Config)
@@ -38,7 +38,7 @@ public:
 
 	// table index 5, flags 0x40000000004001
 	UPROPERTY(Config)
-	uint8 bUseShieldRequirements : 1;
+	bool bUseShieldRequirements;
 
 	// table index 4, flags 0x40000000004001
 	UPROPERTY(Config)
@@ -46,11 +46,11 @@ public:
 
 	// table index 3, flags 0x40000000004001
 	UPROPERTY(Config)
-	uint8 bUseCommitedCallback : 1;
+	bool bUseCommitedCallback;
 
 	// table index 2, flags 0x40000000004001
 	UPROPERTY(Config)
-	uint8 bUseActivatedCallback : 1;
+	bool bUseActivatedCallback;
 
 	// table index 1, flags 0x40000000004001
 	UPROPERTY(Config)

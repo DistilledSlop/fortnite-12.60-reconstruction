@@ -20,7 +20,7 @@ public:
 
 	// table index 2, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bOnlyEngageMeleeAgainstThreatThatHasNoRangeWeapon : 1;
+	bool bOnlyEngageMeleeAgainstThreatThatHasNoRangeWeapon;
 
 	// table index 1, flags 0x20080000002000
 	UPROPERTY(Transient)
@@ -28,7 +28,7 @@ public:
 
 	// table index 0, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bEnableWTFBehavior : 1;
+	bool bEnableWTFBehavior;
 
 };
 

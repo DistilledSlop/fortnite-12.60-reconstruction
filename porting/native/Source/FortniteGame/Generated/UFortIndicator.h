@@ -26,7 +26,7 @@ public:
 
 	// table index 1, flags 0x10000000002000
 	UPROPERTY(Transient)
-	uint8 bMoveWithPawnState : 1;
+	bool bMoveWithPawnState;
 
 	// table index 0, flags 0x10000000002000
 	UPROPERTY(Transient)

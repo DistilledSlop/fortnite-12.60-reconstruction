@@ -2,7 +2,22 @@
 #include "AFortPlayerStateZone.h"
 #include "Net/UnrealNetwork.h"
 
+void AFortPlayerStateZone::MulticastTriggerOnGadgetTrackedAttributeDestroyedFX_Implementation(UFortGadgetItemDefinition* GadgetItemDefinition)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerStateZone::OnRep_AccumulatedItems()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPlayerStateZone::OnRep_NumRejoins()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerStateZone::OnRep_QuickbarEquippedItems()
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -21,10 +36,12 @@ void AFortPlayerStateZone::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>&
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
+	DOREPLIFETIME(AFortPlayerStateZone, QuickbarEquippedItems);
 	DOREPLIFETIME(AFortPlayerStateZone, bHasEverSkydivedFromBusAndLanded);
 	DOREPLIFETIME(AFortPlayerStateZone, bHasEverSkydivedFromBus);
 	DOREPLIFETIME(AFortPlayerStateZone, bInAircraft);
 	DOREPLIFETIME(AFortPlayerStateZone, SimulatedAttributes);
+	DOREPLIFETIME(AFortPlayerStateZone, AccumulatedItems);
 	DOREPLIFETIME(AFortPlayerStateZone, MaxSignalInStorm);
 	DOREPLIFETIME(AFortPlayerStateZone, CurrentSignalInStorm);
 	DOREPLIFETIME(AFortPlayerStateZone, MaxShield);

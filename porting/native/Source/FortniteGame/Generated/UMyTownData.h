@@ -9,6 +9,9 @@
 #include "FMyTownWorkerPersonalityData.h"
 #include "FMyTownWorkerSetBonusData.h"
 
+class UFortCurrencyItemDefinition;
+class UFortPersistentResourceItemDefinition;
+class UFortTokenType;
 class UGameplayEffect;
 
 #include "UMyTownData.generated.h"
@@ -26,6 +29,34 @@ public:
 	// table index 8, flags 0x10000000000015
 	UPROPERTY()
 	TArray<FMyTownWorkerSetBonusData> WorkerSetBonuses;
+
+	// table index 7, flags 0x10000000000015
+	UPROPERTY()
+	UFortPersistentResourceItemDefinition* PersonnelXpItemDefinition;
+
+	// table index 6, flags 0x10000000000015
+	UPROPERTY()
+	UFortPersistentResourceItemDefinition* HeroXpItemDefinition;
+
+	// table index 5, flags 0x10000000000015
+	UPROPERTY()
+	UFortPersistentResourceItemDefinition* VoucherItemDefinition;
+
+	// table index 4, flags 0x10000000000015
+	UPROPERTY()
+	UFortPersistentResourceItemDefinition* SchematicXpItemDefinition;
+
+	// table index 3, flags 0x10000000000015
+	UPROPERTY()
+	UFortCurrencyItemDefinition* CurrencyItemDefinition;
+
+	// table index 2, flags 0x10000000000015
+	UPROPERTY()
+	UFortTokenType* SkillPointItemDefinition;
+
+	// table index 1, flags 0x10000000000015
+	UPROPERTY()
+	UFortTokenType* ResearchPointItemDefinition;
 
 	// table index 0, flags 0x14000000000015
 	UPROPERTY()

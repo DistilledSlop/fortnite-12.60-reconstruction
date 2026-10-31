@@ -30,7 +30,7 @@ public:
 
 	// table index 13, flags 0x40000000004000
 	UPROPERTY(Config)
-	uint8 bCustomKeyEnabled : 1;
+	bool bCustomKeyEnabled;
 
 	// table index 12, flags 0x40000000004000
 	UPROPERTY(Config)
@@ -38,7 +38,7 @@ public:
 
 	// table index 11, flags 0x40000000004000
 	UPROPERTY(Config)
-	uint8 bEnablePrivateMatchUpdateCheck : 1;
+	bool bEnablePrivateMatchUpdateCheck;
 
 	// table index 10, flags 0x40000000004000
 	UPROPERTY(Config)
@@ -58,7 +58,7 @@ public:
 
 	// table index 5, flags 0x40000000004000
 	UPROPERTY(Config)
-	uint8 bSubmitSecondaryLogs : 1;
+	bool bSubmitSecondaryLogs;
 
 	// table index 4, flags 0x40000000004000
 	UPROPERTY(Config)

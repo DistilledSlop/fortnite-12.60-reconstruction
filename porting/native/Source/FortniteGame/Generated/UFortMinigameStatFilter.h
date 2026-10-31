@@ -10,6 +10,7 @@
 #include "EFortQuestObjectiveStatEvent.h"
 #include "GameplayTagContainer.h"
 
+class UFortItemDefinition;
 class UTexture2D;
 
 #include "UFortMinigameStatFilter.generated.h"
@@ -28,6 +29,10 @@ public:
 	UPROPERTY()
 	EFortQuestObjectiveItemEvent ItemEvent;
 
+	// table index 7, flags 0x14000000000015
+	UPROPERTY()
+	TSoftObjectPtr<UFortItemDefinition> ItemDefinition;
+
 	// table index 6, flags 0x10000000000015
 	UPROPERTY()
 	FGameplayTagQuery TargetTagsQuery;
@@ -42,7 +47,7 @@ public:
 
 	// table index 3, flags 0x10000000000015
 	UPROPERTY()
-	uint8 bAccumulates : 1;
+	bool bAccumulates;
 
 	// table index 2, flags 0x10000000000015
 	UPROPERTY()

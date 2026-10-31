@@ -8,6 +8,7 @@
 
 #include "FAircraftFlightInfo.h"
 #include "FFortDelayRTMMData.h"
+#include "FFortSpecialEventEmoteData.h"
 #include "FFortSpecialEventGEData.h"
 #include "FFortSpecialEventOverrideParts.h"
 #include "FGenericSpecialEvent.h"
@@ -46,7 +47,7 @@ public:
 
 	// table index 23, flags 0x20080100002020
 	UPROPERTY(ReplicatedUsing=OnRep_bPlayersAreInvincible, Transient)
-	uint8 bPlayersAreInvincible : 1;
+	bool bPlayersAreInvincible;
 
 	// table index 22, flags 0x20080000000001
 	UPROPERTY()
@@ -70,7 +71,7 @@ public:
 
 	// table index 16, flags 0x20080100002020
 	UPROPERTY(ReplicatedUsing=OnRep_bDisableHUD, Transient)
-	uint8 bDisableHUD : 1;
+	bool bDisableHUD;
 
 	// table index 15, flags 0x20080100002020
 	UPROPERTY(ReplicatedUsing=OnRep_GameResumed, Transient)
@@ -82,7 +83,7 @@ public:
 
 	// table index 13, flags 0x20080000000020
 	UPROPERTY(Replicated)
-	uint8 bParachutesDisabled : 1;
+	bool bParachutesDisabled;
 
 	// table index 12, flags 0x20080100002020
 	UPROPERTY(ReplicatedUsing=OnRep_AllPlayerTeleportedCount, Transient)
@@ -99,6 +100,10 @@ public:
 	// table index 9, flags 0x20080000002000
 	UPROPERTY(Transient)
 	float WeightForContainerLootRoll;
+
+	// table index 7, flags 0x20080000000001
+	UPROPERTY()
+	TArray<FFortSpecialEventEmoteData> SpecialEventEmoteData;
 
 	// table index 6, flags 0x20080000080008
 	UPROPERTY()

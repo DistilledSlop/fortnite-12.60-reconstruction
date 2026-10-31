@@ -30,7 +30,7 @@ struct FCreativePublishOptions
 
 	// table index 1, offset None, flags 0x10000000000004
 	UPROPERTY()
-	uint8 bActivateLink : 1;
+	bool bActivateLink;
 
 	// table index 0, offset 72, flags 0x10000000000000
 	UPROPERTY()

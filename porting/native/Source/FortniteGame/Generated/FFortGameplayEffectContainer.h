@@ -42,11 +42,11 @@ struct FFortGameplayEffectContainer
 
 	// table index 2, offset None, flags 0x10000000000005
 	UPROPERTY()
-	uint8 bUseCalculationInTooltips : 1;
+	bool bUseCalculationInTooltips;
 
 	// table index 1, offset None, flags 0x10000000000005
 	UPROPERTY()
-	uint8 bOverrideChargeMagnitude : 1;
+	bool bOverrideChargeMagnitude;
 
 	// table index 0, offset 180, flags 0x10000000000005
 	UPROPERTY()

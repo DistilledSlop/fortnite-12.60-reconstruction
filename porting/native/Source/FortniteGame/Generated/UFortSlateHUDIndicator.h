@@ -16,11 +16,11 @@ class FORTNITEGAME_API UFortSlateHUDIndicator : public UFortIndicator
 public:
 	// table index 1, flags 0x10000000002000
 	UPROPERTY(Transient)
-	uint8 bClampToScreen : 1;
+	bool bClampToScreen;
 
 	// table index 0, flags 0x10000000002000
 	UPROPERTY(Transient)
-	uint8 bShowClampToScreenArrow : 1;
+	bool bShowClampToScreenArrow;
 
 };
 

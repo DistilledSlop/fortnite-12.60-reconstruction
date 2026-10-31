@@ -19,7 +19,7 @@ struct FFortMissionPopupWidgetData
 
 	// table index 4, offset None, flags 0x10000000010015
 	UPROPERTY()
-	uint8 bShowDescription : 1;
+	bool bShowDescription;
 
 	// table index 3, offset 32, flags 0x10000000010015
 	UPROPERTY()

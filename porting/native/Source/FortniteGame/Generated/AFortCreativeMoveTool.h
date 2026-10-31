@@ -46,7 +46,9 @@
 class AActor;
 class AFortPlayerControllerAthena;
 class UDeleteObjects;
+class UFortItemDefinition;
 class UFortObjectMoverInputComponent;
+class UFortPlaysetItemDefinition;
 class ULevelRecordSpawner;
 class UMeshComponent;
 class UObjectInteractionBehavior;
@@ -94,7 +96,7 @@ public:
 
 	// table index 85, flags 0x20080000000020
 	UPROPERTY(Replicated)
-	uint8 bIsPreviewingMove : 1;
+	bool bIsPreviewingMove;
 
 	// table index 83, flags 0x20088000000029
 	UPROPERTY(Replicated)
@@ -206,15 +208,15 @@ public:
 
 	// table index 52, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bIsScaleUpPressed : 1;
+	bool bIsScaleUpPressed;
 
 	// table index 51, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bIsMultiselectEnabled : 1;
+	bool bIsMultiselectEnabled;
 
 	// table index 50, flags 0x20080000000001
 	UPROPERTY()
-	uint8 bIsQuickbarSupported : 1;
+	bool bIsQuickbarSupported;
 
 	// table index 48, flags 0x20080100000020
 	UPROPERTY(ReplicatedUsing=OnRep_SelectionProperty)
@@ -222,31 +224,31 @@ public:
 
 	// table index 47, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bIsScaleDownPressed : 1;
+	bool bIsScaleDownPressed;
 
 	// table index 46, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bIsPushPressed : 1;
+	bool bIsPushPressed;
 
 	// table index 45, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bIsPullPressed : 1;
+	bool bIsPullPressed;
 
 	// table index 44, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bIsAutoTractorBeamRunning : 1;
+	bool bIsAutoTractorBeamRunning;
 
 	// table index 43, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bIsRotateClockwisePressed : 1;
+	bool bIsRotateClockwisePressed;
 
 	// table index 42, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bIsRotateCounterclockwisePressed : 1;
+	bool bIsRotateCounterclockwisePressed;
 
 	// table index 41, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bIsScalingInsteadOfRotating : 1;
+	bool bIsScalingInsteadOfRotating;
 
 	// table index 40, flags 0x20080000000000
 	UPROPERTY()
@@ -302,11 +304,11 @@ public:
 
 	// table index 19, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bShouldDestroyPropsWhenPlacing : 1;
+	bool bShouldDestroyPropsWhenPlacing;
 
 	// table index 18, flags 0x20080100000020
 	UPROPERTY(ReplicatedUsing=OnRep_AllowGravityOnPlace)
-	uint8 bAllowGravityOnPlace : 1;
+	bool bAllowGravityOnPlace;
 
 	// table index 17, flags 0x20080000000001
 	UPROPERTY()
@@ -314,7 +316,7 @@ public:
 
 	// table index 16, flags 0x20080000000001
 	UPROPERTY()
-	uint8 bShouldUsePrecisionGridSnapping : 1;
+	bool bShouldUsePrecisionGridSnapping;
 
 	// table index 15, flags 0x20080000000001
 	UPROPERTY()
@@ -330,7 +332,7 @@ public:
 
 	// table index 11, flags 0x20080000010001
 	UPROPERTY()
-	uint8 bDoesRequireCreatePermission : 1;
+	bool bDoesRequireCreatePermission;
 
 	// table index 9, flags 0x20080000010001
 	UPROPERTY()
@@ -338,7 +340,7 @@ public:
 
 	// table index 8, flags 0x20080000000020
 	UPROPERTY(Replicated)
-	uint8 bClientNeedsToProcessNewlyPlacedActors : 1;
+	bool bClientNeedsToProcessNewlyPlacedActors;
 
 	// table index 7, flags 0x20080000000001
 	UPROPERTY()
@@ -358,7 +360,7 @@ public:
 
 	// table index 3, flags 0x40000000000021
 	UPROPERTY(Replicated)
-	uint8 bAlwaysMoveFreely : 1;
+	bool bAlwaysMoveFreely;
 
 	// table index 2, flags 0x20080000000001
 	UPROPERTY()
@@ -434,6 +436,10 @@ public:
 	UFUNCTION(NetMulticast, Reliable)
 	void RemoteClientsUpdateSelectedActors(UObjectInteractionBehavior* CurrentObjectInteractionBehvaior, const TArray<FCreativeSelectedActorInfo>& NewSelectedActors);
 	void RemoteClientsUpdateSelectedActors_Implementation(UObjectInteractionBehavior* CurrentObjectInteractionBehvaior, const TArray<FCreativeSelectedActorInfo>& NewSelectedActors);
+
+	UFUNCTION(Server, Reliable)
+	void ServerAddItemToMoveTool(bool bUseVolume, UFortItemDefinition* PlaysetToSpawn, AFortPlayerControllerAthena* FortPC);
+	void ServerAddItemToMoveTool_Implementation(bool bUseVolume, UFortItemDefinition* PlaysetToSpawn, AFortPlayerControllerAthena* FortPC);
 
 	UFUNCTION(Server, Reliable)
 	void ServerClearMovementMode(bool bExited);
@@ -518,6 +524,10 @@ public:
 	UFUNCTION(Server, Reliable)
 	void ServerUpdateTractorBeam(bool bNewIsPullPressed, bool bNewIsPushPressed, float NewTargetTractorBeamOffset);
 	void ServerUpdateTractorBeam_Implementation(bool bNewIsPullPressed, bool bNewIsPushPressed, float NewTargetTractorBeamOffset);
+
+	UFUNCTION(Server, Reliable)
+	void SpawnPlaysetVolumeOnServer(const FRotator& SpawnRotation, const FVector& SpawnLocation, UFortPlaysetItemDefinition* Playset);
+	void SpawnPlaysetVolumeOnServer_Implementation(const FRotator& SpawnRotation, const FVector& SpawnLocation, UFortPlaysetItemDefinition* Playset);
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

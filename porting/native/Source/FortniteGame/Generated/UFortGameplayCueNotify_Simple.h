@@ -38,23 +38,23 @@ public:
 
 	// table index 6, flags 0x10000000000015
 	UPROPERTY()
-	uint8 bStayAttached : 1;
+	bool bStayAttached;
 
 	// table index 5, flags 0x10000000000015
 	UPROPERTY()
-	uint8 bUseHitResult : 1;
+	bool bUseHitResult;
 
 	// table index 4, flags 0x10000000000015
 	UPROPERTY()
-	uint8 bUseWeapon : 1;
+	bool bUseWeapon;
 
 	// table index 3, flags 0x10000000000015
 	UPROPERTY()
-	uint8 bIgnoreRotation : 1;
+	bool bIgnoreRotation;
 
 	// table index 2, flags 0x10000000000015
 	UPROPERTY()
-	uint8 bUseUnsmoothedNetworkPosition : 1;
+	bool bUseUnsmoothedNetworkPosition;
 
 	// table index 0, flags 0x10000000000015
 	UPROPERTY()

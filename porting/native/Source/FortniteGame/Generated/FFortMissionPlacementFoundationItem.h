@@ -38,7 +38,7 @@ struct FFortMissionPlacementFoundationItem
 
 	// table index 0, offset None, flags 0x20080000010001
 	UPROPERTY()
-	uint8 bAdjustFoundationPlacementForFloors : 1;
+	bool bAdjustFoundationPlacementForFloors;
 
 };
 

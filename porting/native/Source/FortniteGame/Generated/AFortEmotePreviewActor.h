@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 
+class UFortMontageItemDefinitionBase;
+
 #include "AFortEmotePreviewActor.generated.h"
 
 UCLASS(config=Engine, abstract)
@@ -14,5 +16,9 @@ class FORTNITEGAME_API AFortEmotePreviewActor : public AActor
 	GENERATED_BODY()
 
 public:
+	// table index 0, flags 0x20080000002000
+	UPROPERTY(Transient)
+	UFortMontageItemDefinitionBase* PreviewingEmote;
+
 };
 

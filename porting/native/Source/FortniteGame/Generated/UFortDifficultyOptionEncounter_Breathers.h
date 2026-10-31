@@ -18,7 +18,7 @@ class FORTNITEGAME_API UFortDifficultyOptionEncounter_Breathers : public UFortDi
 public:
 	// table index 3, flags 0x20080000000001
 	UPROPERTY()
-	uint8 bUseBreathers : 1;
+	bool bUseBreathers;
 
 	// table index 2, flags 0x20080000000001
 	UPROPERTY()

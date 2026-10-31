@@ -14,7 +14,7 @@ struct FMissionTimerData
 
 	// table index 5, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bTimerIsPaused : 1;
+	bool bTimerIsPaused;
 
 	// table index 4, offset 4, flags 0x10000000000000
 	UPROPERTY()

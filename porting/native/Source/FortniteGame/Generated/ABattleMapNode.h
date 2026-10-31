@@ -27,15 +27,15 @@ public:
 
 	// table index 9, flags 0x20080000010001
 	UPROPERTY()
-	uint8 bEnableAutomaticResize : 1;
+	bool bEnableAutomaticResize;
 
 	// table index 8, flags 0x20080000010001
 	UPROPERTY()
-	uint8 bSupportSelection : 1;
+	bool bSupportSelection;
 
 	// table index 7, flags 0x20080000010001
 	UPROPERTY()
-	uint8 bSupportScrubbing : 1;
+	bool bSupportScrubbing;
 
 	// table index 5, flags 0x20080000010001
 	UPROPERTY()

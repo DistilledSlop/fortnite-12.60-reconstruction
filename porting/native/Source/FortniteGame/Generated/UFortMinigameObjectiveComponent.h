@@ -47,7 +47,7 @@ public:
 
 	// table index 3, flags 0x20080000002014
 	UPROPERTY(Transient)
-	uint8 bIsInteractionAllowed : 1;
+	bool bIsInteractionAllowed;
 
 	// table index 1, flags 0x20080000002014
 	UPROPERTY(Transient)
@@ -55,7 +55,7 @@ public:
 
 	// table index 0, flags 0x20080000010001
 	UPROPERTY()
-	uint8 bPurgeTrackingHistoryOnRemoval : 1;
+	bool bPurgeTrackingHistoryOnRemoval;
 
 };
 

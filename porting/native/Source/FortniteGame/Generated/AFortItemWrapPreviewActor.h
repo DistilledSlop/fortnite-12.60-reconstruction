@@ -9,6 +9,7 @@
 #include "FItemWrapPreviewEntry.h"
 
 class ACustomItemWrapModifier;
+class UAthenaItemWrapDefinition;
 
 #include "AFortItemWrapPreviewActor.generated.h"
 
@@ -21,6 +22,10 @@ public:
 	// table index 2, flags 0x40000000002000
 	UPROPERTY(Transient)
 	FItemWrapPreviewEntry CurrentEntryInfo;
+
+	// table index 1, flags 0x20080000000014
+	UPROPERTY()
+	UAthenaItemWrapDefinition* MyWrap;
 
 	// table index 0, flags 0x20080000000014
 	UPROPERTY()

@@ -16,11 +16,11 @@ class FORTNITEGAME_API UFortAthenaAIBotUnstuckDigestedSkillSet : public UFortAth
 public:
 	// table index 11, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bCanTeleportWhenStuck : 1;
+	bool bCanTeleportWhenStuck;
 
 	// table index 10, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bCanTeleportWhenStuckWithPlayerAround : 1;
+	bool bCanTeleportWhenStuckWithPlayerAround;
 
 	// table index 9, flags 0x20080000002000
 	UPROPERTY(Transient)

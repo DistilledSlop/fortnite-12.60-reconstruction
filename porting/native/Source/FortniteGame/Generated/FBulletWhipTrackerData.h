@@ -17,7 +17,7 @@ struct FBulletWhipTrackerData
 
 	// table index 11, offset None, flags 0x10000000010015
 	UPROPERTY()
-	uint8 bAttachSoundToOwner : 1;
+	bool bAttachSoundToOwner;
 
 	// table index 10, offset 4, flags 0x10000000010015
 	UPROPERTY()
@@ -61,7 +61,7 @@ struct FBulletWhipTrackerData
 
 	// table index 0, offset None, flags 0x10000000002000
 	UPROPERTY()
-	uint8 bActive : 1;
+	bool bActive;
 
 };
 

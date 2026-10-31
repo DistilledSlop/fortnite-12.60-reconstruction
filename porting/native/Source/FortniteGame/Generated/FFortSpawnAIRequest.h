@@ -44,7 +44,7 @@ struct FFortSpawnAIRequest
 
 	// table index 0, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bIgnoreCollisionWhenSpawning : 1;
+	bool bIgnoreCollisionWhenSpawning;
 
 };
 

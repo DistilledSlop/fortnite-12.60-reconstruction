@@ -18,11 +18,11 @@ struct FFortAISpawnGroupUpgradeUIData
 
 	// table index 5, offset None, flags 0x10000000010001
 	UPROPERTY()
-	uint8 bAlwaysDisplayHealthBar : 1;
+	bool bAlwaysDisplayHealthBar;
 
 	// table index 4, offset None, flags 0x10000000010001
 	UPROPERTY()
-	uint8 bOverrideHealthBarColor : 1;
+	bool bOverrideHealthBarColor;
 
 	// table index 3, offset 8, flags 0x14000000010001
 	UPROPERTY()

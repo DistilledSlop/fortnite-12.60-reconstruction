@@ -24,7 +24,7 @@ class FORTNITEGAME_API UFortAthenaMutator_PlayerBotSpawningPolicyData : public U
 public:
 	// table index 14, flags 0x40000000012001
 	UPROPERTY(Transient)
-	uint8 bUseCustomizationInEditor : 1;
+	bool bUseCustomizationInEditor;
 
 	// table index 13, flags 0x44000000010001
 	UPROPERTY()

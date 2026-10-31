@@ -1,4 +1,5 @@
 #include "Engine/NetworkDelegates.h"
+#include "AFortPlayerPawn.h"
 #include "Engine/StaticMesh.h"
 #include "Engine/StaticMeshActor.h"
 #include "Engine/Texture2D.h"
@@ -222,8 +223,18 @@ private:
         }
     }
 
+    // Pawn readiness for the join smoke test (porting/server/smoke_join.sh). Every spawned pawn is logged on both peers:
+    // the server with authority=1, the replicated copy on a client with authority=0.
+    static void OnActorSpawnedForPawnLog(AActor* Actor)
+    {
+        if (Actor && Actor->IsA<AFortPlayerPawn>())
+            UE_LOG(LogTemp, Display, TEXT("FortPlayerPawn ready: class=%s authority=%d"),
+                *Actor->GetClass()->GetName(), Actor->HasAuthority() ? 1 : 0);
+    }
+
     static void OnWorldInitialized(UWorld* World, const UWorld::InitializationValues)
     {
+        World->AddOnActorSpawnedHandler(FOnActorSpawned::FDelegate::CreateStatic(&FFortniteGameModule::OnActorSpawnedForPawnLog));
         if (!FParse::Param(FCommandLine::Get(), TEXT("FortniteProbeMapMeshes")))
             return;
         World->OnWorldBeginPlay.AddLambda([World]()

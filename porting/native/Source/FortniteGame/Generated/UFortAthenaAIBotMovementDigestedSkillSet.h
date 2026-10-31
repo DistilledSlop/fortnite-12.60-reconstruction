@@ -76,7 +76,7 @@ public:
 
 	// table index 17, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bAllowSwimWobble : 1;
+	bool bAllowSwimWobble;
 
 	// table index 16, flags 0x20080000002000
 	UPROPERTY(Transient)
@@ -116,7 +116,7 @@ public:
 
 	// table index 7, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bSteerMovementWhenLaunched : 1;
+	bool bSteerMovementWhenLaunched;
 
 	// table index 6, flags 0x20080000002000
 	UPROPERTY(Transient)
@@ -132,7 +132,7 @@ public:
 
 	// table index 3, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bLimitBlockingObstacleAngle : 1;
+	bool bLimitBlockingObstacleAngle;
 
 	// table index 2, flags 0x20080000002000
 	UPROPERTY(Transient)

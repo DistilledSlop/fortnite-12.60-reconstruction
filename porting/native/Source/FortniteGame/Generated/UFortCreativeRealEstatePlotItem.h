@@ -47,7 +47,7 @@ public:
 
 	// table index 6, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bIsPromoted : 1;
+	bool bIsPromoted;
 
 	// table index 5, flags 0x10000000000000
 	UPROPERTY()

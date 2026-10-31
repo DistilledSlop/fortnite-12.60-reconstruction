@@ -43,11 +43,11 @@ public:
 
 	// table index 39, flags 0x20080000000001
 	UPROPERTY()
-	uint8 bSwingingDoor : 1;
+	bool bSwingingDoor;
 
 	// table index 38, flags 0x20080000000001
 	UPROPERTY()
-	uint8 bSlidingDoor : 1;
+	bool bSlidingDoor;
 
 	// table index 37, flags 0x20080000000001
 	UPROPERTY()
@@ -55,7 +55,7 @@ public:
 
 	// table index 36, flags 0x20080000000001
 	UPROPERTY()
-	uint8 bAutomaticSlidingDoor : 1;
+	bool bAutomaticSlidingDoor;
 
 	// table index 35, flags 0x20080000000001
 	UPROPERTY()
@@ -79,7 +79,7 @@ public:
 
 	// table index 30, flags 0x20080000000001
 	UPROPERTY()
-	uint8 bDoubleDoor : 1;
+	bool bDoubleDoor;
 
 	// table index 29, flags 0x20080000010001
 	UPROPERTY()

@@ -13,6 +13,7 @@
 
 class AFortPlayerController;
 class AQuestVisual;
+class UFortQuestItemDefinition;
 
 #include "UQuestInteractableComponent.generated.h"
 
@@ -54,6 +55,10 @@ public:
 	UPROPERTY()
 	FGameplayTagContainer BlockedPlaylistTags;
 
+	// table index 7, flags 0x10000000000005
+	UPROPERTY()
+	UFortQuestItemDefinition* QuestItemDefinition;
+
 	// table index 6, flags 0x10000000000005
 	UPROPERTY()
 	FName ObjectiveBackendName;
@@ -64,7 +69,7 @@ public:
 
 	// table index 4, flags 0x40000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_Ready)
-	uint8 bReady : 1;
+	bool bReady;
 
 	// table index 2, flags 0x40000000000000
 	UPROPERTY()
@@ -76,7 +81,7 @@ public:
 
 	// table index 0, flags 0x40000000000001
 	UPROPERTY()
-	uint8 bDestroyActorWhenUnavailable : 1;
+	bool bDestroyActorWhenUnavailable;
 
 	UFUNCTION()
 	void OnRep_Ready();

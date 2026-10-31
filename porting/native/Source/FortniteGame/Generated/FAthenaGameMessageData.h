@@ -34,7 +34,7 @@ struct FAthenaGameMessageData
 
 	// table index 3, offset None, flags 0x10000000010005
 	UPROPERTY()
-	uint8 bIsTeamBased : 1;
+	bool bIsTeamBased;
 
 	// table index 2, offset 48, flags 0x10000000010005
 	UPROPERTY()

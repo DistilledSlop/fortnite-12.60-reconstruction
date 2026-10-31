@@ -14,6 +14,7 @@
 class AActor;
 class ABuildingSMActor;
 class AFortDecoHelper;
+class UFortItemDefinition;
 class UParticleSystem;
 
 #include "AFortDecoTool.generated.h"
@@ -26,7 +27,11 @@ class FORTNITEGAME_API AFortDecoTool : public AFortWeapon
 public:
 	// table index 7, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bButtonDown : 1;
+	bool bButtonDown;
+
+	// table index 6, flags 0x20080100002020
+	UPROPERTY(ReplicatedUsing=OnRep_ItemDefinition, Transient)
+	UFortItemDefinition* ItemDefinition;
 
 	// table index 5, flags 0x20080000002000
 	UPROPERTY(Transient)
@@ -38,7 +43,7 @@ public:
 
 	// table index 3, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bPlaceCarriedActor : 1;
+	bool bPlaceCarriedActor;
 
 	// table index 2, flags 0x24080000000000
 	UPROPERTY()
@@ -46,11 +51,11 @@ public:
 
 	// table index 1, flags 0x20080000010001
 	UPROPERTY()
-	uint8 bPreventExecutionOnOwningPlayerFalling : 1;
+	bool bPreventExecutionOnOwningPlayerFalling;
 
 	// table index 0, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bIsEquipped : 1;
+	bool bIsEquipped;
 
 	UFUNCTION(Client, Reliable)
 	void ClientDestroyDecoPreview();
@@ -58,6 +63,9 @@ public:
 
 	UFUNCTION()
 	void OnRep_CarriedActor(AActor* OldCarriedActor);
+
+	UFUNCTION()
+	void OnRep_ItemDefinition();
 
 	UFUNCTION(Server, Reliable)
 	void ServerCreateBuildingAndSpawnDeco(EBuildingAttachmentType InBuildingAttachmentType, const FRotator& Rotation, const FVector_NetQuantize10& Location, const FRotator& BuildingRotation, const FVector_NetQuantize10& BuildingLocation);

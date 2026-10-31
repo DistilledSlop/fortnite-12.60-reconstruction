@@ -23,7 +23,7 @@ struct FFortAIEncounterSpawnGroupCapsCategory
 
 	// table index 11, offset None, flags 0x10000000010001
 	UPROPERTY()
-	uint8 bApplyGroupPopulationCurveToCategoryMax : 1;
+	bool bApplyGroupPopulationCurveToCategoryMax;
 
 	// table index 10, offset 80, flags 0x10000000010001
 	UPROPERTY()

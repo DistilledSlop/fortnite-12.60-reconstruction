@@ -51,11 +51,11 @@ public:
 
 	// table index 3, flags 0x10000000000014
 	UPROPERTY()
-	uint8 IsRecordingPlayer : 1;
+	bool IsRecordingPlayer;
 
 	// table index 2, flags 0x10000000000014
 	UPROPERTY()
-	uint8 IsSpectatorTarget : 1;
+	bool IsSpectatorTarget;
 
 	// table index 1, flags 0x40000000002000
 	UPROPERTY(Transient)

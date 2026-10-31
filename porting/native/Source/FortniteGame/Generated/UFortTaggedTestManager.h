@@ -21,19 +21,19 @@ class FORTNITEGAME_API UFortTaggedTestManager : public UObject
 public:
 	// table index 14, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bIsFinished : 1;
+	bool bIsFinished;
 
 	// table index 13, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bInitialized : 1;
+	bool bInitialized;
 
 	// table index 12, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bTerminateEarly : 1;
+	bool bTerminateEarly;
 
 	// table index 11, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bPendingReset : 1;
+	bool bPendingReset;
 
 	// table index 9, flags 0x10000000000000
 	UPROPERTY()

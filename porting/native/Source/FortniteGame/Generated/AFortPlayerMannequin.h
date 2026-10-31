@@ -7,12 +7,16 @@
 #include "Animation/SkeletalMeshActor.h"
 
 #include "Engine/EngineTypes.h"
+#include "FMcpVariantChannelInfo.h"
 #include "FMorphValuePair.h"
 
+class UAthenaBackpackItemDefinition;
+class UAthenaCharacterItemDefinition;
 class UCustomCharacterPart;
 class UCustomColorComponent;
 class UCustomColorSwatch;
 class UFortCustomizationAssetLoader;
+class UFortHeroType;
 class USkeletalMesh;
 
 #include "AFortPlayerMannequin.generated.h"
@@ -23,6 +27,18 @@ class FORTNITEGAME_API AFortPlayerMannequin : public ASkeletalMeshActor
 	GENERATED_BODY()
 
 public:
+	// table index 22, flags 0x20080000002000
+	UPROPERTY(Transient)
+	UFortHeroType* CurrentFortHeroType;
+
+	// table index 21, flags 0x20080000000001
+	UPROPERTY()
+	UAthenaCharacterItemDefinition* AthenaCharacter;
+
+	// table index 20, flags 0x10000000000005
+	UPROPERTY()
+	UAthenaBackpackItemDefinition* AthenaBackBling;
+
 	// table index 19, flags 0x20080000000000
 	UPROPERTY()
 	UCustomCharacterPart* CharacterParts[7];
@@ -37,15 +53,19 @@ public:
 
 	// table index 16, flags 0x20080000000001
 	UPROPERTY()
-	uint8 bIsMannequinVisible : 1;
+	bool bIsMannequinVisible;
 
 	// table index 15, flags 0x20080000000001
 	UPROPERTY()
-	uint8 bMannequinCastsHiddenShadow : 1;
+	bool bMannequinCastsHiddenShadow;
 
 	// table index 14, flags 0x20080000000001
 	UPROPERTY()
 	UCustomCharacterPart* CharacterPartList[6];
+
+	// table index 12, flags 0x20080000000001
+	UPROPERTY()
+	TArray<FMcpVariantChannelInfo> OverrideVariants;
 
 	// table index 11, flags 0x20080000000000
 	UPROPERTY()
@@ -77,15 +97,15 @@ public:
 
 	// table index 3, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bInitialized : 1;
+	bool bInitialized;
 
 	// table index 2, flags 0x20080000000001
 	UPROPERTY()
-	uint8 bLimitTick : 1;
+	bool bLimitTick;
 
 	// table index 1, flags 0x20080000000001
 	UPROPERTY()
-	uint8 bAutoRegisterWithBudgetAllocator : 1;
+	bool bAutoRegisterWithBudgetAllocator;
 
 	// table index 0, flags 0x40000000002000
 	UPROPERTY(Transient)

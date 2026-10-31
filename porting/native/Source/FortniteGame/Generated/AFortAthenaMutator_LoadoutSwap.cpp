@@ -11,6 +11,8 @@ void AFortAthenaMutator_LoadoutSwap::GetLifetimeReplicatedProps(TArray<FLifetime
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
+	DOREPLIFETIME(AFortAthenaMutator_LoadoutSwap, ItemsWithInfiniteAmmo);
+	DOREPLIFETIME(AFortAthenaMutator_LoadoutSwap, NextItemsToGrant);
 	DOREPLIFETIME(AFortAthenaMutator_LoadoutSwap, ServerWorldTimeOfNextSwap);
 }
 

@@ -18,27 +18,27 @@ struct FPlayerMarkerConfig
 
 	// table index 25, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bShowMarkerDetailsWidget : 1;
+	bool bShowMarkerDetailsWidget;
 
 	// table index 24, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bCreateMarkerActors : 1;
+	bool bCreateMarkerActors;
 
 	// table index 23, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bCreateMarkerWidgets : 1;
+	bool bCreateMarkerWidgets;
 
 	// table index 22, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bClampEnemyMarkers : 1;
+	bool bClampEnemyMarkers;
 
 	// table index 21, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bClampItemMarkers : 1;
+	bool bClampItemMarkers;
 
 	// table index 20, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bShowLocationMarkersOnCompass : 1;
+	bool bShowLocationMarkersOnCompass;
 
 	// table index 19, offset 12, flags 0x10000000000000
 	UPROPERTY()
@@ -70,15 +70,15 @@ struct FPlayerMarkerConfig
 
 	// table index 12, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 EnableDoubleClickAction : 1;
+	bool EnableDoubleClickAction;
 
 	// table index 11, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 EnableItemMarking : 1;
+	bool EnableItemMarking;
 
 	// table index 10, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 EnableInteractionMarking : 1;
+	bool EnableInteractionMarking;
 
 	// table index 9, offset 44, flags 0x10000000000000
 	UPROPERTY()

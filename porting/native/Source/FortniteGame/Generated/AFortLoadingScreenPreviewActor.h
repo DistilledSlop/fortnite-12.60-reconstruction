@@ -6,6 +6,9 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 
+class UAthenaLoadingScreenItemDefinition;
+class UAthenaLoadingScreenPreviewPanel;
+
 #include "AFortLoadingScreenPreviewActor.generated.h"
 
 UCLASS(config=Engine, abstract)
@@ -14,5 +17,13 @@ class FORTNITEGAME_API AFortLoadingScreenPreviewActor : public AActor
 	GENERATED_BODY()
 
 public:
+	// table index 1, flags 0x44000000010001
+	UPROPERTY()
+	TSubclassOf<UAthenaLoadingScreenPreviewPanel> FullScreenPreviewWidget;
+
+	// table index 0, flags 0x40000000000000
+	UPROPERTY()
+	UAthenaLoadingScreenItemDefinition* DisplayedLoadingScreen;
+
 };
 

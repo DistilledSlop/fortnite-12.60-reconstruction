@@ -68,15 +68,15 @@ public:
 
 	// table index 22, flags 0x40000000000835
 	UPROPERTY(Replicated)
-	uint8 bReturnToCreativeHub : 1;
+	bool bReturnToCreativeHub;
 
 	// table index 21, flags 0x40000100002024
 	UPROPERTY(ReplicatedUsing=OnRep_ErrorState, Transient)
-	uint8 bInErrorState : 1;
+	bool bInErrorState;
 
 	// table index 20, flags 0x40000000002024
 	UPROPERTY(Replicated, Transient)
-	uint8 bUserInitiatedLoad : 1;
+	bool bUserInitiatedLoad;
 
 	// table index 19, flags 0x40000100002020
 	UPROPERTY(ReplicatedUsing=OnRep_IslandInfo, Transient)
@@ -116,7 +116,7 @@ public:
 
 	// table index 9, flags 0x40000100002020
 	UPROPERTY(ReplicatedUsing=OnRep_PublishedPortal, Transient)
-	uint8 bIsPublishedPortal : 1;
+	bool bIsPublishedPortal;
 
 	// table index 8, flags 0x40000000000024
 	UPROPERTY(Replicated)
@@ -132,11 +132,11 @@ public:
 
 	// table index 5, flags 0x20080000004014
 	UPROPERTY(Config)
-	uint8 bDisallowPortalInteract : 1;
+	bool bDisallowPortalInteract;
 
 	// table index 4, flags 0x40000100002034
 	UPROPERTY(ReplicatedUsing=OnRep_PortalOpen, Transient)
-	uint8 bPortalOpen : 1;
+	bool bPortalOpen;
 
 	// table index 3, flags 0x40000000002000
 	UPROPERTY(Transient)

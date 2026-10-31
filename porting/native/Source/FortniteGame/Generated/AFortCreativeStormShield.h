@@ -26,7 +26,7 @@ public:
 
 	// table index 21, flags 0x20080000002014
 	UPROPERTY(Transient)
-	uint8 bIsViewTargetPawnOutside : 1;
+	bool bIsViewTargetPawnOutside;
 
 	// table index 19, flags 0x20080100002034
 	UPROPERTY(ReplicatedUsing=OnRep_GamePhaseStep, Transient)

@@ -17,11 +17,11 @@ struct FSafeZoneRoute
 
 	// table index 7, offset None, flags 0x10000000000015
 	UPROPERTY()
-	uint8 bIsEnabled : 1;
+	bool bIsEnabled;
 
 	// table index 6, offset None, flags 0x10000000000015
 	UPROPERTY()
-	uint8 bUsePOIStartLocation : 1;
+	bool bUsePOIStartLocation;
 
 	// table index 5, offset 8, flags 0x10000000000015
 	UPROPERTY()

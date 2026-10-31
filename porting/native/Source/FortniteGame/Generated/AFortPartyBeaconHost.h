@@ -22,7 +22,7 @@ public:
 
 	// table index 2, flags 0x10000000004000
 	UPROPERTY(Config)
-	uint8 bUseSquadMappingOverride : 1;
+	bool bUseSquadMappingOverride;
 
 	// table index 0, flags 0x10000000004000
 	UPROPERTY(Config)

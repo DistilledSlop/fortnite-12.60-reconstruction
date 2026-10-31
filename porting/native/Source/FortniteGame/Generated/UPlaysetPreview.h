@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UObjectInteractionBehavior.h"
 
+#include "FPlaysetInfo.h"
+
 class AStaticMeshActor;
 class UMaterial;
 class UStaticMesh;
@@ -30,5 +32,13 @@ public:
 	UPROPERTY()
 	UMaterial* PlaysetMaterial;
 
+	// table index 0, flags 0x10000100000020
+	UPROPERTY(ReplicatedUsing=OnRep_PlaysetToPlace)
+	FPlaysetInfo PlaysetToPlace;
+
+	UFUNCTION()
+	void OnRep_PlaysetToPlace();
+
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

@@ -134,19 +134,19 @@ struct FAthenaCarPlayerSlot
 
 	// table index 8, offset None, flags 0x10000000000001
 	UPROPERTY()
-	uint8 bConstrainPawnToSeatTransform : 1;
+	bool bConstrainPawnToSeatTransform;
 
 	// table index 7, offset None, flags 0x10000000000001
 	UPROPERTY()
-	uint8 bConstrainPawnToSeatDuringTransitionMontage : 1;
+	bool bConstrainPawnToSeatDuringTransitionMontage;
 
 	// table index 6, offset None, flags 0x10000000000001
 	UPROPERTY()
-	uint8 bOffsetPlayerRelativeAttachLocation : 1;
+	bool bOffsetPlayerRelativeAttachLocation;
 
 	// table index 5, offset None, flags 0x10000000000001
 	UPROPERTY()
-	uint8 bUseExitTimer : 1;
+	bool bUseExitTimer;
 
 	// table index 4, offset 200, flags 0x10000000082008
 	UPROPERTY()

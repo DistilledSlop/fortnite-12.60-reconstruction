@@ -8,11 +8,14 @@
 
 #include "EVisibilityResponse.h"
 #include "FCalendarRequirement.h"
+#include "FItemRequirement.h"
 #include "FProfileStatRequirement.h"
+#include "FQuestRequirement.h"
 #include "GameplayTagContainer.h"
 
 class AActor;
 class AFortPlayerController;
+class UFortGameStateComponent_EventLevel;
 
 #include "UFortNavigationVisibilityComponent.generated.h"
 
@@ -28,7 +31,7 @@ public:
 
 	// table index 20, flags 0x40000000002000
 	UPROPERTY(Transient)
-	uint8 bPassedRules : 1;
+	bool bPassedRules;
 
 	// table index 19, flags 0x40000000002000
 	UPROPERTY(Transient)
@@ -36,15 +39,19 @@ public:
 
 	// table index 18, flags 0x40000000000004
 	UPROPERTY()
-	uint8 bEnableCollision : 1;
+	bool bEnableCollision;
 
 	// table index 17, flags 0x40000000000004
 	UPROPERTY()
-	uint8 bCustomSkipCollision : 1;
+	bool bCustomSkipCollision;
 
 	// table index 16, flags 0x44000000002000
 	UPROPERTY(Transient)
 	TWeakObjectPtr<AFortPlayerController> RoomOwner;
+
+	// table index 15, flags 0x44000000082008
+	UPROPERTY(Transient)
+	TWeakObjectPtr<UFortGameStateComponent_EventLevel> GSC_StreamingLevelOwner;
 
 	// table index 14, flags 0x40000000000001
 	UPROPERTY()
@@ -53,6 +60,14 @@ public:
 	// table index 13, flags 0x40000000000001
 	UPROPERTY()
 	FGameplayTagContainer ExcludedActiveCameraTags;
+
+	// table index 11, flags 0x40000000000001
+	UPROPERTY()
+	TArray<FQuestRequirement> Quests;
+
+	// table index 9, flags 0x40000000000001
+	UPROPERTY()
+	TArray<FItemRequirement> Items;
 
 	// table index 7, flags 0x40000000000001
 	UPROPERTY()
@@ -68,11 +83,11 @@ public:
 
 	// table index 3, flags 0x40000000000001
 	UPROPERTY()
-	uint8 bShouldLogFails : 1;
+	bool bShouldLogFails;
 
 	// table index 2, flags 0x40000000002000
 	UPROPERTY(Transient)
-	uint8 debugVisibilityLastKnownState : 1;
+	bool debugVisibilityLastKnownState;
 
 	// table index 0, flags 0x40000000000001
 	UPROPERTY()

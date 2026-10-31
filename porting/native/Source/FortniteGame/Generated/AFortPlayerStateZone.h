@@ -7,6 +7,7 @@
 #include "AFortPlayerState.h"
 
 #include "EFortKickReason.h"
+#include "FAccumulatedItemEntry.h"
 #include "FOnAccumulatedItemsChanged.h"
 #include "FOnBeginSpectating.h"
 #include "FOnCurrentPawnChanged.h"
@@ -17,6 +18,8 @@
 #include "FSimulatedAttributeEntry.h"
 
 class AFortCarriedObject;
+class UFortGadgetItemDefinition;
+class UFortItemDefinition;
 
 #include "AFortPlayerStateZone.generated.h"
 
@@ -72,7 +75,7 @@ public:
 
 	// table index 17, flags 0x40000000000020
 	UPROPERTY(Replicated)
-	uint8 bInvincibleDueToUI : 1;
+	bool bInvincibleDueToUI;
 
 	// table index 16, flags 0x40000000000020
 	UPROPERTY(Replicated)
@@ -98,6 +101,10 @@ public:
 	UPROPERTY(Replicated)
 	float MaxSignalInStorm;
 
+	// table index 9, flags 0x40000100000020
+	UPROPERTY(ReplicatedUsing=OnRep_AccumulatedItems)
+	TArray<FAccumulatedItemEntry> AccumulatedItems;
+
 	// table index 8, flags 0x10000010080000
 	UPROPERTY()
 	FOnAccumulatedItemsChanged OnAccumulatedItemsChanged;
@@ -105,6 +112,10 @@ public:
 	// table index 6, flags 0x40000000000020
 	UPROPERTY(Replicated)
 	TArray<FSimulatedAttributeEntry> SimulatedAttributes;
+
+	// table index 5, flags 0x20080000002000
+	UPROPERTY(Transient)
+	UFortGadgetItemDefinition* PendingDestroyedGadgetItemDefinition;
 
 	// table index 4, flags 0x40000000002020
 	UPROPERTY(Replicated, Transient)
@@ -118,8 +129,22 @@ public:
 	UPROPERTY(Replicated, Transient)
 	uint8 bHasEverSkydivedFromBusAndLanded : 1;
 
+	// table index 0, flags 0x40000100002020
+	UPROPERTY(ReplicatedUsing=OnRep_QuickbarEquippedItems, Transient)
+	TArray<UFortItemDefinition*> QuickbarEquippedItems;
+
+	UFUNCTION(NetMulticast, Reliable)
+	void MulticastTriggerOnGadgetTrackedAttributeDestroyedFX(UFortGadgetItemDefinition* GadgetItemDefinition);
+	void MulticastTriggerOnGadgetTrackedAttributeDestroyedFX_Implementation(UFortGadgetItemDefinition* GadgetItemDefinition);
+
+	UFUNCTION()
+	void OnRep_AccumulatedItems();
+
 	UFUNCTION()
 	void OnRep_NumRejoins();
+
+	UFUNCTION()
+	void OnRep_QuickbarEquippedItems();
 
 	UFUNCTION()
 	void OnRep_SpectatingTarget();

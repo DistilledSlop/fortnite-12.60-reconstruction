@@ -14,7 +14,7 @@ struct FPawnDamageZones
 
 	// table index 2, offset None, flags 0x10000000002000
 	UPROPERTY()
-	uint8 bActive : 1;
+	bool bActive;
 
 	// table index 0, offset 8, flags 0x10000000000001
 	UPROPERTY()

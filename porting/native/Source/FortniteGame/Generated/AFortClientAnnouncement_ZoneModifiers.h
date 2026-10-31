@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "AFortClientAnnouncement.h"
 
+#include "FFortClientAnnouncementData_ZoneModifiers.h"
+
 #include "AFortClientAnnouncement_ZoneModifiers.generated.h"
 
 UCLASS(config=Engine)
@@ -17,6 +19,10 @@ public:
 	// table index 1, flags 0x11000000000025
 	UPROPERTY(Replicated)
 	float DisplayTime;
+
+	// table index 0, flags 0x11000000000025
+	UPROPERTY(Replicated)
+	FFortClientAnnouncementData_ZoneModifiers ModifiersData;
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

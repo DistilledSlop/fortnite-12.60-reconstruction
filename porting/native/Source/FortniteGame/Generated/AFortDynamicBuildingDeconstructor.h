@@ -24,19 +24,19 @@ public:
 
 	// table index 8, flags 0x10000000000015
 	UPROPERTY()
-	uint8 bDebugDrawBounds : 1;
+	bool bDebugDrawBounds;
 
 	// table index 7, flags 0x10000000000015
 	UPROPERTY()
-	uint8 bSelectiveDestruction : 1;
+	bool bSelectiveDestruction;
 
 	// table index 6, flags 0x10000000000015
 	UPROPERTY()
-	uint8 bIgnoreMissionActors : 1;
+	bool bIgnoreMissionActors;
 
 	// table index 5, flags 0x10000000000015
 	UPROPERTY()
-	uint8 bShrinkAndDestroyEffect : 1;
+	bool bShrinkAndDestroyEffect;
 
 	// table index 4, flags 0x10000000000015
 	UPROPERTY()

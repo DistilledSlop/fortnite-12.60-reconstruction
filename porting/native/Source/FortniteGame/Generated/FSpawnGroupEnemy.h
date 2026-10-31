@@ -20,7 +20,7 @@ struct FSpawnGroupEnemy
 
 	// table index 1, offset None, flags 0x10000000010015
 	UPROPERTY()
-	uint8 bOverrideVariantSpawnPointValue : 1;
+	bool bOverrideVariantSpawnPointValue;
 
 	// table index 0, offset 12, flags 0x10000000010015
 	UPROPERTY()

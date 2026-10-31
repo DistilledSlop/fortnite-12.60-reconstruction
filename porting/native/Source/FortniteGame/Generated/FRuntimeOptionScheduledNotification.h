@@ -20,7 +20,7 @@ struct FRuntimeOptionScheduledNotification
 
 	// table index 2, offset None, flags 0x10000000004000
 	UPROPERTY()
-	uint8 LocalTime : 1;
+	bool LocalTime;
 
 	// table index 1, offset 16, flags 0x10000000004000
 	UPROPERTY()

@@ -11,6 +11,9 @@
 
 class AContentBeaconHostObject;
 class AFortLobbyBeaconHost;
+class AFortMeshBeaconClient;
+class AFortMeshBeaconHost;
+class AFortMeshBeaconHostObject;
 class AFortPartyBeaconHost;
 class AFortSpectatorBeaconHost;
 class AOnlineBeaconHostObject;
@@ -69,7 +72,7 @@ public:
 
 	// table index 12, flags 0x40000000004000
 	UPROPERTY(Config)
-	uint8 bShouldServerForcePartnerId : 1;
+	bool bShouldServerForcePartnerId;
 
 	// table index 11, flags 0x40000000004000
 	UPROPERTY(Config)
@@ -77,7 +80,7 @@ public:
 
 	// table index 10, flags 0x40000000004000
 	UPROPERTY(Config)
-	uint8 bEnableMeshNetwork : 1;
+	bool bEnableMeshNetwork;
 
 	// table index 8, flags 0x40000000004000
 	UPROPERTY(Config)
@@ -86,6 +89,18 @@ public:
 	// table index 6, flags 0x40000000004000
 	UPROPERTY(Config)
 	TArray<FString> DisabledMeshRegions;
+
+	// table index 5, flags 0x40000000002000
+	UPROPERTY(Transient)
+	AFortMeshBeaconHost* MeshBeaconHost;
+
+	// table index 4, flags 0x40000000002000
+	UPROPERTY(Transient)
+	AFortMeshBeaconHostObject* MeshBeaconHostObject;
+
+	// table index 3, flags 0x40000000002000
+	UPROPERTY(Transient)
+	AFortMeshBeaconClient* MeshBeaconClient;
 
 	// table index 2, flags 0x40000000004000
 	UPROPERTY(Config)

@@ -43,7 +43,7 @@ public:
 
 	// table index 14, flags 0x20080000002014
 	UPROPERTY(Transient)
-	uint8 bGameTimeExpired : 1;
+	bool bGameTimeExpired;
 
 	// table index 13, flags 0x20080000010001
 	UPROPERTY()
@@ -75,7 +75,7 @@ public:
 
 	// table index 0, flags 0x40000000002020
 	UPROPERTY(Replicated, Transient)
-	uint8 bCheatHeartbeatEnabled : 1;
+	bool bCheatHeartbeatEnabled;
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

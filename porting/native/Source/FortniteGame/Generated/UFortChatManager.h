@@ -16,19 +16,19 @@ class FORTNITEGAME_API UFortChatManager : public USocialChatManager
 public:
 	// table index 11, flags 0x40000000004000
 	UPROPERTY(Config)
-	uint8 bShouldJoinGlobalChat : 1;
+	bool bShouldJoinGlobalChat;
 
 	// table index 10, flags 0x40000000004000
 	UPROPERTY(Config)
-	uint8 bShouldRequestGeneralChatRooms : 1;
+	bool bShouldRequestGeneralChatRooms;
 
 	// table index 9, flags 0x40000000004000
 	UPROPERTY(Config)
-	uint8 bShouldJoinFounderChat : 1;
+	bool bShouldJoinFounderChat;
 
 	// table index 8, flags 0x40000000004000
 	UPROPERTY(Config)
-	uint8 bIsAthenaGlobalChatEnabled : 1;
+	bool bIsAthenaGlobalChatEnabled;
 
 	// table index 7, flags 0x40000000004000
 	UPROPERTY(Config)

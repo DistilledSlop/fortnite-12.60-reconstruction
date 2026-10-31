@@ -47,7 +47,7 @@ public:
 
 	// table index 3, flags 0x10000000010015
 	UPROPERTY()
-	uint8 bCanHaveNoOverride : 1;
+	bool bCanHaveNoOverride;
 
 	// table index 2, flags 0x10000000010015
 	UPROPERTY()

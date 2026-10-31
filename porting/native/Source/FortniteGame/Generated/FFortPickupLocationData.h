@@ -56,7 +56,7 @@ struct FFortPickupLocationData
 
 	// table index 1, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bPlayPickupSound : 1;
+	bool bPlayPickupSound;
 
 	// table index 0, offset 80, flags 0x40000080000000
 	UPROPERTY()

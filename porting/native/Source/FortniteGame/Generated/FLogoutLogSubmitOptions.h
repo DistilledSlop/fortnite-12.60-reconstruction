@@ -14,15 +14,15 @@ struct FLogoutLogSubmitOptions
 
 	// table index 6, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bSubmitLogs : 1;
+	bool bSubmitLogs;
 
 	// table index 5, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bSubmitSecondaryLogs : 1;
+	bool bSubmitSecondaryLogs;
 
 	// table index 4, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bSubmitLogsDuringLogin : 1;
+	bool bSubmitLogsDuringLogin;
 
 	// table index 3, offset 4, flags 0x10000000000000
 	UPROPERTY()

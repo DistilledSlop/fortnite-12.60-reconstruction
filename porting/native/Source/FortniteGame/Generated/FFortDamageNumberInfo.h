@@ -32,7 +32,7 @@ struct FFortDamageNumberInfo
 
 	// table index 17, offset None, flags 0x10000000000015
 	UPROPERTY()
-	uint8 bIsCriticalDamage : 1;
+	bool bIsCriticalDamage;
 
 	// table index 16, offset 28, flags 0x10000000000015
 	UPROPERTY()
@@ -56,7 +56,7 @@ struct FFortDamageNumberInfo
 
 	// table index 8, offset None, flags 0x10000000000015
 	UPROPERTY()
-	uint8 bAttachScoreNumberToPlayer : 1;
+	bool bAttachScoreNumberToPlayer;
 
 	// table index 7, offset 48, flags 0x1000000008001d
 	UPROPERTY()

@@ -142,7 +142,7 @@ public:
 
 	// table index 3, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bStealthMeterEnable : 1;
+	bool bStealthMeterEnable;
 
 	// table index 2, flags 0x20080000002000
 	UPROPERTY(Transient)

@@ -29,7 +29,7 @@ struct FFortSurfaceTypeToSurfaceTypeTag
 
 	// table index 0, offset None, flags 0x10000000000001
 	UPROPERTY()
-	uint8 bAllowsSurfaceRetriggerOfEvents : 1;
+	bool bAllowsSurfaceRetriggerOfEvents;
 
 };
 

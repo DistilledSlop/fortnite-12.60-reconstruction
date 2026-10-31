@@ -35,11 +35,11 @@ public:
 
 	// table index 2, flags 0x10000000000015
 	UPROPERTY()
-	uint8 bSetOwnerID : 1;
+	bool bSetOwnerID;
 
 	// table index 1, flags 0x10000000000015
 	UPROPERTY()
-	uint8 bUsePlayerBuildAnimations : 1;
+	bool bUsePlayerBuildAnimations;
 
 	// table index 0, flags 0x40000001000000
 	UPROPERTY(SaveGame)

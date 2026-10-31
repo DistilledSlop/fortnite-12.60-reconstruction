@@ -7,7 +7,9 @@
 #include "UObject/Object.h"
 
 #include "FFortAIAssignmentIdentifier.h"
+#include "FFortAIGoal.h"
 
+class UAIGoalComponent;
 class UFortAIAssignmentSettings;
 class UFortAIGoalProvider;
 
@@ -30,6 +32,14 @@ public:
 	// table index 4, flags 0x20080000000000
 	UPROPERTY()
 	UFortAIGoalProvider* GoalProvider;
+
+	// table index 2, flags 0x20088000002008
+	UPROPERTY(Transient)
+	TArray<UAIGoalComponent*> GoalComponentsOnAssignment;
+
+	// table index 0, flags 0x40008000000000
+	UPROPERTY()
+	TArray<FFortAIGoal> Goals;
 
 };
 

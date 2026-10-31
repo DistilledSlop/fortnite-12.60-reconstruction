@@ -36,7 +36,7 @@ public:
 
 	// table index 0, flags 0x40000000002000
 	UPROPERTY(Transient)
-	uint8 bIsConsumed : 1;
+	bool bIsConsumed;
 
 };
 

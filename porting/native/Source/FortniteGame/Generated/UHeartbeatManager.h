@@ -18,7 +18,7 @@ class FORTNITEGAME_API UHeartbeatManager : public UObject
 public:
 	// table index 4, flags 0x40000000004000
 	UPROPERTY(Config)
-	uint8 bShouldTrackLocation : 1;
+	bool bShouldTrackLocation;
 
 	// table index 3, flags 0x40000000004000
 	UPROPERTY(Config)
@@ -26,11 +26,11 @@ public:
 
 	// table index 2, flags 0x40000000004000
 	UPROPERTY(Config)
-	uint8 bShouldSendPerMinuteResourceAndDamageEvents : 1;
+	bool bShouldSendPerMinuteResourceAndDamageEvents;
 
 	// table index 1, flags 0x40000000004000
 	UPROPERTY(Config)
-	uint8 bShouldSendPerMinuteVehicleEvents : 1;
+	bool bShouldSendPerMinuteVehicleEvents;
 
 	// table index 0, flags 0x40000000000000
 	UPROPERTY()

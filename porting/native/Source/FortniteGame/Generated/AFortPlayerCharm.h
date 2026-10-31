@@ -7,6 +7,7 @@
 #include "GameFramework/Actor.h"
 
 class ACustomCosmeticCharmModifier;
+class UAthenaCharmItemDefinition;
 class USceneComponent;
 
 #include "AFortPlayerCharm.generated.h"
@@ -17,9 +18,13 @@ class FORTNITEGAME_API AFortPlayerCharm : public AActor
 	GENERATED_BODY()
 
 public:
+	// table index 5, flags 0x20080000000014
+	UPROPERTY()
+	UAthenaCharmItemDefinition* CharmItemDef;
+
 	// table index 3, flags 0x40000000000000
 	UPROPERTY()
-	uint8 bIsFrontEndPreview : 1;
+	bool bIsFrontEndPreview;
 
 	// table index 2, flags 0x40000000082008
 	UPROPERTY(Transient)

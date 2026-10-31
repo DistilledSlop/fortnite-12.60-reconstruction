@@ -52,7 +52,7 @@ public:
 
 	// table index 271, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bAutoHideBuildingMaterials : 1;
+	bool bAutoHideBuildingMaterials;
 
 	// table index 269, flags 0x20080000000000
 	UPROPERTY()
@@ -160,7 +160,7 @@ public:
 
 	// table index 243, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bMotionControlsEnabled : 1;
+	bool bMotionControlsEnabled;
 
 	// table index 241, flags 0x20080000000000
 	UPROPERTY()
@@ -232,55 +232,55 @@ public:
 
 	// table index 219, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bInvertedLook : 1;
+	bool bInvertedLook;
 
 	// table index 218, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bInvertedLookMobile : 1;
+	bool bInvertedLookMobile;
 
 	// table index 217, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bInvertedPitchForMotion : 1;
+	bool bInvertedPitchForMotion;
 
 	// table index 216, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bInvertedPitchForAircraftPrimary : 1;
+	bool bInvertedPitchForAircraftPrimary;
 
 	// table index 215, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bInvertedPitchForAircraftSecondary : 1;
+	bool bInvertedPitchForAircraftSecondary;
 
 	// table index 214, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bInvertedYaw : 1;
+	bool bInvertedYaw;
 
 	// table index 213, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bInvertedYawMobile : 1;
+	bool bInvertedYawMobile;
 
 	// table index 212, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bInvertedYawForMotion : 1;
+	bool bInvertedYawForMotion;
 
 	// table index 211, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bToggleSprint : 1;
+	bool bToggleSprint;
 
 	// table index 210, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bSprintByDefault : 1;
+	bool bSprintByDefault;
 
 	// table index 209, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bSprintByDefaultMobile : 1;
+	bool bSprintByDefaultMobile;
 
 	// table index 208, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bSprintCancelsReload : 1;
+	bool bSprintCancelsReload;
 
 	// table index 207, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bTapInteractEnabled : 1;
+	bool bTapInteractEnabled;
 
 	// table index 205, flags 0x20080000000000
 	UPROPERTY()
@@ -288,131 +288,131 @@ public:
 
 	// table index 204, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bTargetingToggleable : 1;
+	bool bTargetingToggleable;
 
 	// table index 203, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bTargetingToggleableMobile : 1;
+	bool bTargetingToggleableMobile;
 
 	// table index 202, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bAutoEquipBetterItems : 1;
+	bool bAutoEquipBetterItems;
 
 	// table index 201, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bAimAssistEnabled : 1;
+	bool bAimAssistEnabled;
 
 	// table index 200, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bTouchAimAssistEnabled : 1;
+	bool bTouchAimAssistEnabled;
 
 	// table index 199, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bTouchEditEnabled : 1;
+	bool bTouchEditEnabled;
 
 	// table index 198, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bEditConfirmOnReleaseEnabled : 1;
+	bool bEditConfirmOnReleaseEnabled;
 
 	// table index 197, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bQuickEditEnabled : 1;
+	bool bQuickEditEnabled;
 
 	// table index 196, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bForceFeedbackEnabled : 1;
+	bool bForceFeedbackEnabled;
 
 	// table index 195, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bDeviceFeedbackBlockedWithAttachedController : 1;
+	bool bDeviceFeedbackBlockedWithAttachedController;
 
 	// table index 194, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bContextTutorialEnabled : 1;
+	bool bContextTutorialEnabled;
 
 	// table index 193, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bBuildingPossessionShown : 1;
+	bool bBuildingPossessionShown;
 
 	// table index 192, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bLocalNotificationsEnabled : 1;
+	bool bLocalNotificationsEnabled;
 
 	// table index 191, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bUseFirstPersonCamera : 1;
+	bool bUseFirstPersonCamera;
 
 	// table index 190, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bUseGamepadEditModeAimAssist : 1;
+	bool bUseGamepadEditModeAimAssist;
 
 	// table index 189, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bUseHoldToSwapPickup : 1;
+	bool bUseHoldToSwapPickup;
 
 	// table index 188, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bUseGamepadAutoRun : 1;
+	bool bUseGamepadAutoRun;
 
 	// table index 187, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bFocusOnFirstBuildingPieceWhenQuickbarSwapped : 1;
+	bool bFocusOnFirstBuildingPieceWhenQuickbarSwapped;
 
 	// table index 186, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bNewFocusOnFirstBuildingPieceWhenQuickbarSwapped : 1;
+	bool bNewFocusOnFirstBuildingPieceWhenQuickbarSwapped;
 
 	// table index 185, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bFocusOnFirstBuildingPieceWhenQuickbarSwappedAthena : 1;
+	bool bFocusOnFirstBuildingPieceWhenQuickbarSwappedAthena;
 
 	// table index 184, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bNewFocusOnFirstBuildingPieceWhenQuickbarSwappedAthena : 1;
+	bool bNewFocusOnFirstBuildingPieceWhenQuickbarSwappedAthena;
 
 	// table index 183, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bTurboBuild : 1;
+	bool bTurboBuild;
 
 	// table index 182, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bTurboBuildMobile : 1;
+	bool bTurboBuildMobile;
 
 	// table index 181, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bCreativeTurboDelete : 1;
+	bool bCreativeTurboDelete;
 
 	// table index 180, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bAutoChangeMaterial : 1;
+	bool bAutoChangeMaterial;
 
 	// table index 179, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bAutoChangeMaterialMobile : 1;
+	bool bAutoChangeMaterialMobile;
 
 	// table index 178, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bAutoOpenDoors : 1;
+	bool bAutoOpenDoors;
 
 	// table index 177, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bAutoOpenDoorsNonMobile : 1;
+	bool bAutoOpenDoorsNonMobile;
 
 	// table index 176, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bAutoPickupWeapons : 1;
+	bool bAutoPickupWeapons;
 
 	// table index 175, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bAutoPickupWeaponsConsolePC : 1;
+	bool bAutoPickupWeaponsConsolePC;
 
 	// table index 174, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bAutoSortConsumablesToRight : 1;
+	bool bAutoSortConsumablesToRight;
 
 	// table index 173, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bEnableTryBuildOnFocus : 1;
+	bool bEnableTryBuildOnFocus;
 
 	// table index 172, flags 0x20080000000000
 	UPROPERTY()
@@ -420,11 +420,11 @@ public:
 
 	// table index 171, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bUnlockConsoleFPS : 1;
+	bool bUnlockConsoleFPS;
 
 	// table index 170, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bConsoleFPS60 : 1;
+	bool bConsoleFPS60;
 
 	// table index 167, flags 0x20080000000000
 	UPROPERTY()
@@ -436,15 +436,15 @@ public:
 
 	// table index 161, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bLastLeaderInvitesOnly : 1;
+	bool bLastLeaderInvitesOnly;
 
 	// table index 160, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bLastLeaderFriendsOnly : 1;
+	bool bLastLeaderFriendsOnly;
 
 	// table index 159, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bAudioVolumesInitialized : 1;
+	bool bAudioVolumesInitialized;
 
 	// table index 158, flags 0x20080000000000
 	UPROPERTY()
@@ -468,43 +468,43 @@ public:
 
 	// table index 153, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bEnableSubtitles : 1;
+	bool bEnableSubtitles;
 
 	// table index 144, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bEnableVoiceChat : 1;
+	bool bEnableVoiceChat;
 
 	// table index 143, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bEnableVoiceChat3D : 1;
+	bool bEnableVoiceChat3D;
 
 	// table index 142, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bEnableVoiceChatPTT : 1;
+	bool bEnableVoiceChatPTT;
 
 	// table index 141, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bCanVoiceChatWithUnknowns : 1;
+	bool bCanVoiceChatWithUnknowns;
 
 	// table index 140, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bEnablePeripheralLighting : 1;
+	bool bEnablePeripheralLighting;
 
 	// table index 139, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bShowViewerCount : 1;
+	bool bShowViewerCount;
 
 	// table index 138, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bAnonymousMode : 1;
+	bool bAnonymousMode;
 
 	// table index 137, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bAnonymousCharacterMode : 1;
+	bool bAnonymousCharacterMode;
 
 	// table index 136, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bHideOtherPlayerNames : 1;
+	bool bHideOtherPlayerNames;
 
 	// table index 135, flags 0x20080000000000
 	UPROPERTY()
@@ -512,35 +512,35 @@ public:
 
 	// table index 134, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bReplayRecordingEnabled : 1;
+	bool bReplayRecordingEnabled;
 
 	// table index 133, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bLargeTeamReplayRecordingEnabled : 1;
+	bool bLargeTeamReplayRecordingEnabled;
 
 	// table index 132, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bCreativeModeReplayRecordingEnabled : 1;
+	bool bCreativeModeReplayRecordingEnabled;
 
 	// table index 131, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bShadowPlayHighlightsEnabled : 1;
+	bool bShadowPlayHighlightsEnabled;
 
 	// table index 130, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bPlaceDangerMarkerWhenTargeting : 1;
+	bool bPlaceDangerMarkerWhenTargeting;
 
 	// table index 129, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bShowHeroHeadAccessories : 1;
+	bool bShowHeroHeadAccessories;
 
 	// table index 128, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bShowHeroBackpack : 1;
+	bool bShowHeroBackpack;
 
 	// table index 127, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bShowGlobalChatEnabled : 1;
+	bool bShowGlobalChatEnabled;
 
 	// table index 126, flags 0x20080000000000
 	UPROPERTY()
@@ -548,27 +548,27 @@ public:
 
 	// table index 125, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bInitialUseTapToShoot : 1;
+	bool bInitialUseTapToShoot;
 
 	// table index 124, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bInitialAutoOpenDoors : 1;
+	bool bInitialAutoOpenDoors;
 
 	// table index 123, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bInitialAutoPickupWeapons : 1;
+	bool bInitialAutoPickupWeapons;
 
 	// table index 122, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bInitialAutoPickupWeaponsConsolePC : 1;
+	bool bInitialAutoPickupWeaponsConsolePC;
 
 	// table index 121, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bInitialAutoSortConsumablesToRight : 1;
+	bool bInitialAutoSortConsumablesToRight;
 
 	// table index 120, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bInitialEnableTryBuildOnFocus : 1;
+	bool bInitialEnableTryBuildOnFocus;
 
 	// table index 119, flags 0x20080000000000
 	UPROPERTY()
@@ -576,11 +576,11 @@ public:
 
 	// table index 118, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bStWQuickbarUpdated : 1;
+	bool bStWQuickbarUpdated;
 
 	// table index 117, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bShouldShowBothQuickbars : 1;
+	bool bShouldShowBothQuickbars;
 
 	// table index 115, flags 0x20080000000000
 	UPROPERTY()
@@ -596,7 +596,7 @@ public:
 
 	// table index 111, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bVisualizeAudioSources : 1;
+	bool bVisualizeAudioSources;
 
 	// table index 109, flags 0x20080000002000
 	UPROPERTY(Transient)
@@ -608,23 +608,23 @@ public:
 
 	// table index 107, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bIgnoreGamepadInput : 1;
+	bool bIgnoreGamepadInput;
 
 	// table index 106, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bInitialIgnoreGamepadInput : 1;
+	bool bInitialIgnoreGamepadInput;
 
 	// table index 105, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bLockPrimaryInputMethodToMouse : 1;
+	bool bLockPrimaryInputMethodToMouse;
 
 	// table index 104, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bLockPrimaryInputMethodToMouseInitial : 1;
+	bool bLockPrimaryInputMethodToMouseInitial;
 
 	// table index 103, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bEnableRudderControl : 1;
+	bool bEnableRudderControl;
 
 	// table index 102, flags 0x20080000000000
 	UPROPERTY()
@@ -660,7 +660,7 @@ public:
 
 	// table index 91, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bAllowAudioInBackground : 1;
+	bool bAllowAudioInBackground;
 
 	// table index 89, flags 0x20080000000000
 	UPROPERTY()
@@ -668,15 +668,15 @@ public:
 
 	// table index 88, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bUsePowerSavingMode : 1;
+	bool bUsePowerSavingMode;
 
 	// table index 87, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bHidePerkRecombobulatorHelp : 1;
+	bool bHidePerkRecombobulatorHelp;
 
 	// table index 86, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bHideStwItemRefundHelp : 1;
+	bool bHideStwItemRefundHelp;
 
 	// table index 84, flags 0x20080000000000
 	UPROPERTY()
@@ -688,15 +688,15 @@ public:
 
 	// table index 82, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bHasDisabledAutoSlottingOfSurvivorSquadsAfterQuest : 1;
+	bool bHasDisabledAutoSlottingOfSurvivorSquadsAfterQuest;
 
 	// table index 81, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bHasEnabledAutoSlottingOfSurvivorSquadsDuringOnboarding : 1;
+	bool bHasEnabledAutoSlottingOfSurvivorSquadsDuringOnboarding;
 
 	// table index 80, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bWantsAutoSlottingOfSurvivorSquads : 1;
+	bool bWantsAutoSlottingOfSurvivorSquads;
 
 	// table index 78, flags 0x20080000000000
 	UPROPERTY()
@@ -716,11 +716,11 @@ public:
 
 	// table index 73, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bAutoJoinGameServerChannel : 1;
+	bool bAutoJoinGameServerChannel;
 
 	// table index 72, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bShowVoiceIndicatorsNotifications : 1;
+	bool bShowVoiceIndicatorsNotifications;
 
 	// table index 70, flags 0x20080000000000
 	UPROPERTY()
@@ -732,31 +732,31 @@ public:
 
 	// table index 66, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bHasCompletedGuidedTutorial : 1;
+	bool bHasCompletedGuidedTutorial;
 
 	// table index 65, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bHasCompletedHUDLayoutToolV2Tutorial : 1;
+	bool bHasCompletedHUDLayoutToolV2Tutorial;
 
 	// table index 64, flags 0x20080000000000
 	UPROPERTY()
-	uint8 FortClientSettingRecord : 1;
+	bool FortClientSettingRecord;
 
 	// table index 63, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bShowTemperature : 1;
+	bool bShowTemperature;
 
 	// table index 62, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bNotifyUsersWhenPlaying : 1;
+	bool bNotifyUsersWhenPlaying;
 
 	// table index 61, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bAllowFriendSubscriptionNudges : 1;
+	bool bAllowFriendSubscriptionNudges;
 
 	// table index 60, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bPlayerSurveysAllowed : 1;
+	bool bPlayerSurveysAllowed;
 
 	// table index 59, flags 0x20080000000000
 	UPROPERTY()
@@ -764,7 +764,7 @@ public:
 
 	// table index 58, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bUseSmallInventoryTiles : 1;
+	bool bUseSmallInventoryTiles;
 
 	// table index 55, flags 0x20080000000000
 	UPROPERTY()
@@ -772,7 +772,7 @@ public:
 
 	// table index 54, flags 0x20080000000000
 	UPROPERTY()
-	uint8 HasSeenCommunityVotingTutorial : 1;
+	bool HasSeenCommunityVotingTutorial;
 
 	// table index 53, flags 0x20080000000000
 	UPROPERTY()
@@ -796,7 +796,7 @@ public:
 
 	// table index 45, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bAutoExposureEnabled : 1;
+	bool bAutoExposureEnabled;
 
 	// table index 44, flags 0x20080000000000
 	UPROPERTY()
@@ -812,7 +812,7 @@ public:
 
 	// table index 41, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bAutoFocusEnabled : 1;
+	bool bAutoFocusEnabled;
 
 	// table index 40, flags 0x20080000000000
 	UPROPERTY()
@@ -820,11 +820,11 @@ public:
 
 	// table index 39, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bPlayerOutlinesEnabled : 1;
+	bool bPlayerOutlinesEnabled;
 
 	// table index 38, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bStormEffectsEnabled : 1;
+	bool bStormEffectsEnabled;
 
 	// table index 37, flags 0x20080000000000
 	UPROPERTY()
@@ -832,15 +832,15 @@ public:
 
 	// table index 36, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bRelevancyZoneVisible : 1;
+	bool bRelevancyZoneVisible;
 
 	// table index 35, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bHighQualityFxEnabled : 1;
+	bool bHighQualityFxEnabled;
 
 	// table index 34, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bDamageFxEnabled : 1;
+	bool bDamageFxEnabled;
 
 	// table index 32, flags 0x20080000000000
 	UPROPERTY()
@@ -852,39 +852,39 @@ public:
 
 	// table index 30, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bThirdPersonCameraCollision : 1;
+	bool bThirdPersonCameraCollision;
 
 	// table index 29, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bShareLensSettings : 1;
+	bool bShareLensSettings;
 
 	// table index 28, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bDroneIgnoreJump : 1;
+	bool bDroneIgnoreJump;
 
 	// table index 27, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bBattleMapShowTimeIndicator : 1;
+	bool bBattleMapShowTimeIndicator;
 
 	// table index 26, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bBattleMapShowNearbyChests : 1;
+	bool bBattleMapShowNearbyChests;
 
 	// table index 25, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bBattleMapShowAllSquadMembers : 1;
+	bool bBattleMapShowAllSquadMembers;
 
 	// table index 24, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bBattleMapAutomaticCameraPlacement : 1;
+	bool bBattleMapAutomaticCameraPlacement;
 
 	// table index 23, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bNameplatesEnabled : 1;
+	bool bNameplatesEnabled;
 
 	// table index 22, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bShowTeamColor : 1;
+	bool bShowTeamColor;
 
 	// table index 21, flags 0x20080000000000
 	UPROPERTY()
@@ -900,7 +900,7 @@ public:
 
 	// table index 18, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bScalingOptionsEnabled : 1;
+	bool bScalingOptionsEnabled;
 
 	// table index 17, flags 0x20080000000000
 	UPROPERTY()
@@ -928,7 +928,7 @@ public:
 
 	// table index 11, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bArrowColorEnabled : 1;
+	bool bArrowColorEnabled;
 
 	// table index 9, flags 0x20080000000000
 	UPROPERTY()
@@ -936,7 +936,7 @@ public:
 
 	// table index 8, flags 0x40000000002000
 	UPROPERTY(Transient)
-	uint8 bDirty : 1;
+	bool bDirty;
 
 	// table index 7, flags 0x40000000002000
 	UPROPERTY(Transient)

@@ -30,15 +30,15 @@ public:
 
 	// table index 10, flags 0x40000000000000
 	UPROPERTY()
-	uint8 bRequiresLocalUpdate : 1;
+	bool bRequiresLocalUpdate;
 
 	// table index 9, flags 0x40000000000000
 	UPROPERTY()
-	uint8 bRequiresSaving : 1;
+	bool bRequiresSaving;
 
 	// table index 8, flags 0x40000000000000
 	UPROPERTY()
-	uint8 bIsShuttingDown : 1;
+	bool bIsShuttingDown;
 
 	// table index 6, flags 0x40000000000000
 	UPROPERTY()

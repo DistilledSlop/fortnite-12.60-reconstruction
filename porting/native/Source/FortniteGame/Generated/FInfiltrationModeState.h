@@ -40,7 +40,7 @@ struct FInfiltrationModeState
 
 	// table index 1, offset None, flags 0x20080000000014
 	UPROPERTY()
-	uint8 bGameOver : 1;
+	bool bGameOver;
 
 	// table index 0, offset 40, flags 0x20080000000014
 	UPROPERTY()

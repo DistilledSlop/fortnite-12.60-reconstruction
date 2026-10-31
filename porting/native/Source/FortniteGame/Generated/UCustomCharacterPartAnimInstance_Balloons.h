@@ -38,7 +38,7 @@ public:
 
 	// table index 16, flags 0x20080000002014
 	UPROPERTY(Transient)
-	uint8 bIsMovingBackward : 1;
+	bool bIsMovingBackward;
 
 	// table index 15, flags 0x20080000002014
 	UPROPERTY(Transient)

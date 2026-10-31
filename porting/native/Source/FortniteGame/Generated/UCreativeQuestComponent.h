@@ -46,7 +46,7 @@ public:
 
 	// table index 14, flags 0x40000000000025
 	UPROPERTY(Replicated)
-	uint8 bSelfEliminationsCount : 1;
+	bool bSelfEliminationsCount;
 
 	// table index 13, flags 0x40000000000005
 	UPROPERTY()
@@ -62,7 +62,7 @@ public:
 
 	// table index 10, flags 0x40000100000025
 	UPROPERTY(ReplicatedUsing=OnRep_QuestUpdate)
-	uint8 bShowQuestOnHUD : 1;
+	bool bShowQuestOnHUD;
 
 	// table index 8, flags 0x40000000000025
 	UPROPERTY(Replicated)
@@ -70,7 +70,7 @@ public:
 
 	// table index 7, flags 0x40000000000025
 	UPROPERTY(Replicated)
-	uint8 bShowCompleteEffects : 1;
+	bool bShowCompleteEffects;
 
 	// table index 5, flags 0x40000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_QuestActive)

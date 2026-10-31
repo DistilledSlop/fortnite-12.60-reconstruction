@@ -10,6 +10,7 @@
 #include "GameplayTagContainer.h"
 
 class APlayspaceLogic;
+class UPlayspaceManagerComponent;
 
 #include "APlayspace.generated.h"
 
@@ -46,6 +47,10 @@ public:
 	// table index 1, flags 0x20080000002000
 	UPROPERTY(Transient)
 	TArray<FUniqueNetIdRepl> PendingUsers;
+
+	// table index 0, flags 0x20080000082008
+	UPROPERTY(Transient)
+	UPlayspaceManagerComponent* PlayspaceManagerCached;
 
 	UFUNCTION()
 	void OnRep_PlayspaceLogic();

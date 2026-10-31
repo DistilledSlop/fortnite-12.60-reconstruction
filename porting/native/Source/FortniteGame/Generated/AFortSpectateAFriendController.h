@@ -25,7 +25,7 @@ public:
 
 	// table index 8, flags 0x40000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_HasValidTarget)
-	uint8 HasValidTarget : 1;
+	bool HasValidTarget;
 
 	// table index 7, flags 0x40000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_TeamToFollow)
@@ -33,7 +33,7 @@ public:
 
 	// table index 6, flags 0x40000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_FollowAnyTeam)
-	uint8 FollowAnyTeam : 1;
+	bool FollowAnyTeam;
 
 	// table index 5, flags 0x40000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_TeamJoinedOnPlacement)
@@ -49,7 +49,7 @@ public:
 
 	// table index 2, flags 0x40000000004000
 	UPROPERTY(Config)
-	uint8 FollowAnyTeamAfterFirst : 1;
+	bool FollowAnyTeamAfterFirst;
 
 	// table index 1, flags 0x40000000004000
 	UPROPERTY(Config)

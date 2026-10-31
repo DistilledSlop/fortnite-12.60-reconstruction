@@ -11,6 +11,8 @@
 #include "FHeroPerkDefaultRequirements.h"
 #include "FHeroSubclassAttributeData.h"
 
+class UFortHeroType;
+
 #include "UFortHeroData.generated.h"
 
 UCLASS()
@@ -23,13 +25,17 @@ public:
 	UPROPERTY()
 	FText DefaultHeroName;
 
+	// table index 10, flags 0x44000000000001
+	UPROPERTY()
+	TSoftObjectPtr<UFortHeroType> DefaultHero;
+
 	// table index 9, flags 0x40000000000001
 	UPROPERTY()
 	FHeroPerkDefaultRequirements CommanderPerkDefaultRequirements;
 
 	// table index 8, flags 0x40000000000001
 	UPROPERTY()
-	uint8 bTeamPerkDependsOnSupportTierUnlocks : 1;
+	bool bTeamPerkDependsOnSupportTierUnlocks;
 
 	// table index 6, flags 0x40000000010001
 	UPROPERTY()

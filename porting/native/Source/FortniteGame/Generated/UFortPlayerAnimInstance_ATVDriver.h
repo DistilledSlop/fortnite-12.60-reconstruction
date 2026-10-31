@@ -33,15 +33,15 @@ public:
 
 	// table index 42, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bInAir : 1;
+	bool bInAir;
 
 	// table index 41, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bIsInRollAngleThreshold : 1;
+	bool bIsInRollAngleThreshold;
 
 	// table index 40, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bIsDriveStarting : 1;
+	bool bIsDriveStarting;
 
 	// table index 39, flags 0x10000000000005
 	UPROPERTY()
@@ -77,39 +77,39 @@ public:
 
 	// table index 31, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bIsSteeringRotating : 1;
+	bool bIsSteeringRotating;
 
 	// table index 30, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bIsStopped : 1;
+	bool bIsStopped;
 
 	// table index 29, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bIsSlowingDown : 1;
+	bool bIsSlowingDown;
 
 	// table index 28, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bIsDrivingFast : 1;
+	bool bIsDrivingFast;
 
 	// table index 27, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bIsTurningRightHard : 1;
+	bool bIsTurningRightHard;
 
 	// table index 26, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bIsTurningLeftHard : 1;
+	bool bIsTurningLeftHard;
 
 	// table index 25, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bIsBraking : 1;
+	bool bIsBraking;
 
 	// table index 24, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bIsBoosting : 1;
+	bool bIsBoosting;
 
 	// table index 23, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bIsJumpTrick : 1;
+	bool bIsJumpTrick;
 
 	// table index 22, flags 0x10000000002014
 	UPROPERTY(Transient)
@@ -117,15 +117,15 @@ public:
 
 	// table index 21, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bIsJumpFlipping : 1;
+	bool bIsJumpFlipping;
 
 	// table index 20, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bShouldEnableAO : 1;
+	bool bShouldEnableAO;
 
 	// table index 19, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bIsBodyDragging : 1;
+	bool bIsBodyDragging;
 
 	// table index 18, flags 0x10000000000005
 	UPROPERTY()
@@ -177,19 +177,19 @@ public:
 
 	// table index 6, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bIsJumpingAndNotRolling : 1;
+	bool bIsJumpingAndNotRolling;
 
 	// table index 5, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bIsOnGroundAndNotRolling : 1;
+	bool bIsOnGroundAndNotRolling;
 
 	// table index 4, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bIsOnGroundAndBoosting : 1;
+	bool bIsOnGroundAndBoosting;
 
 	// table index 3, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bPlayPivotOnGroundAndNotBoosting : 1;
+	bool bPlayPivotOnGroundAndNotBoosting;
 
 	// table index 2, flags 0x10000000000005
 	UPROPERTY()

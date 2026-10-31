@@ -44,6 +44,7 @@
 #include "FOnEncounterRiftSpawned.h"
 #include "FOnEncounterSpawnDirectionsChosen.h"
 #include "FOnEncounterSpawnedFinalEnemy.h"
+#include "FSpawnGroupInstanceInfo.h"
 #include "FUtilityTypeFloatPair.h"
 #include "GameplayTagContainer.h"
 
@@ -81,7 +82,7 @@ public:
 
 	// table index 159, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bUseBreathers : 1;
+	bool bUseBreathers;
 
 	// table index 158, flags 0x20080000000015
 	UPROPERTY()
@@ -125,7 +126,7 @@ public:
 
 	// table index 147, flags 0x20080000000005
 	UPROPERTY()
-	uint8 bChangeDirectionsOnRest : 1;
+	bool bChangeDirectionsOnRest;
 
 	// table index 146, flags 0x20080000000000
 	UPROPERTY()
@@ -189,7 +190,7 @@ public:
 
 	// table index 125, flags 0x10000000002000
 	UPROPERTY(Transient)
-	uint8 bRequiresReinitializationFromProfile : 1;
+	bool bRequiresReinitializationFromProfile;
 
 	// table index 124, flags 0x10000000000015
 	UPROPERTY()
@@ -221,15 +222,15 @@ public:
 
 	// table index 117, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bSpawnLimitReached : 1;
+	bool bSpawnLimitReached;
 
 	// table index 116, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bHasSpawnedAllBurstSpawnAI : 1;
+	bool bHasSpawnedAllBurstSpawnAI;
 
 	// table index 115, flags 0x10000000000015
 	UPROPERTY()
-	uint8 bOverrideAliveCounts : 1;
+	bool bOverrideAliveCounts;
 
 	// table index 114, flags 0x10000000000015
 	UPROPERTY()
@@ -313,7 +314,7 @@ public:
 
 	// table index 94, flags 0x10000000010015
 	UPROPERTY()
-	uint8 bDisplayThreatVisuals : 1;
+	bool bDisplayThreatVisuals;
 
 	// table index 93, flags 0x10000000000001
 	UPROPERTY()
@@ -377,11 +378,11 @@ public:
 
 	// table index 74, flags 0x10000000000015
 	UPROPERTY()
-	uint8 bAdjustUtilitiesDuringRest : 1;
+	bool bAdjustUtilitiesDuringRest;
 
 	// table index 73, flags 0x10000000000015
 	UPROPERTY()
-	uint8 bDespawnAIsDuringRest : 1;
+	bool bDespawnAIsDuringRest;
 
 	// table index 72, flags 0x10000000000000
 	UPROPERTY()
@@ -418,6 +419,10 @@ public:
 	// table index 63, flags 0x10000000000000
 	UPROPERTY()
 	int32 FailSafeMinSpawnPoints;
+
+	// table index 61, flags 0x10000000000000
+	UPROPERTY()
+	TArray<FSpawnGroupInstanceInfo> ActiveSpawnGroups;
 
 	// table index 60, flags 0x10000000000015
 	UPROPERTY()
@@ -473,7 +478,7 @@ public:
 
 	// table index 46, flags 0x10000000000015
 	UPROPERTY()
-	uint8 bOnlyActiveAtNight : 1;
+	bool bOnlyActiveAtNight;
 
 	// table index 45, flags 0x10000000000015
 	UPROPERTY()
@@ -517,15 +522,15 @@ public:
 
 	// table index 35, flags 0x10000000000015
 	UPROPERTY()
-	uint8 bNukeWavesAtDaybreak : 1;
+	bool bNukeWavesAtDaybreak;
 
 	// table index 34, flags 0x10000000000015
 	UPROPERTY()
-	uint8 bNukeWavesAtEncounterEnd : 1;
+	bool bNukeWavesAtEncounterEnd;
 
 	// table index 33, flags 0x10000000000005
 	UPROPERTY()
-	uint8 bNukeWavesAtEncounterDeactivation : 1;
+	bool bNukeWavesAtEncounterDeactivation;
 
 	// table index 32, flags 0x10000000000005
 	UPROPERTY()
@@ -609,15 +614,15 @@ public:
 
 	// table index 9, flags 0x40000000010001
 	UPROPERTY()
-	uint8 bSendFullAnalyticsReport : 1;
+	bool bSendFullAnalyticsReport;
 
 	// table index 8, flags 0x20080000010001
 	UPROPERTY()
-	uint8 bUseAILifespans : 1;
+	bool bUseAILifespans;
 
 	// table index 7, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bTrackCombatParticipation : 1;
+	bool bTrackCombatParticipation;
 
 	// table index 6, flags 0x20080000002014
 	UPROPERTY(Transient)

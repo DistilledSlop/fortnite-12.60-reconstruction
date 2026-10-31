@@ -61,7 +61,7 @@ public:
 
 	// table index 0, flags 0x10000000002000
 	UPROPERTY(Transient)
-	uint8 bDisplaySecondaryMissionHeaders : 1;
+	bool bDisplaySecondaryMissionHeaders;
 
 	UFUNCTION()
 	void OnRep_AllMissionEnemyClasses();

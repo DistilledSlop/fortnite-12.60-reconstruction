@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 
+class UAthenaCharacterPartItemDefinition;
+
 #include "AFortBodyPartOverridePreviewActor.generated.h"
 
 UCLASS(config=Engine, abstract)
@@ -14,5 +16,9 @@ class FORTNITEGAME_API AFortBodyPartOverridePreviewActor : public AActor
 	GENERATED_BODY()
 
 public:
+	// table index 1, flags 0x20080000000000
+	UPROPERTY()
+	UAthenaCharacterPartItemDefinition* MyCosmeticItem;
+
 };
 

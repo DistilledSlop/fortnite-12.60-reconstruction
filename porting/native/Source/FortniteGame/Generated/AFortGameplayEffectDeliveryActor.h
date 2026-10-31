@@ -29,15 +29,15 @@ public:
 
 	// table index 26, flags 0x10000000000005
 	UPROPERTY()
-	uint8 bKillOnExplode : 1;
+	bool bKillOnExplode;
 
 	// table index 25, flags 0x10000000000005
 	UPROPERTY()
-	uint8 bSetHiddenOnKill : 1;
+	bool bSetHiddenOnKill;
 
 	// table index 24, flags 0x10000000000005
 	UPROPERTY()
-	uint8 bKillOnMaxTargetsTouched : 1;
+	bool bKillOnMaxTargetsTouched;
 
 	// table index 23, flags 0x10000000000014
 	UPROPERTY()

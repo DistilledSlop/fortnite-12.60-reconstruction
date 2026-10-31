@@ -34,15 +34,15 @@ struct FCreativeSelectedActorInfo
 
 	// table index 3, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bWasCollisionEnabled : 1;
+	bool bWasCollisionEnabled;
 
 	// table index 2, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bWasDormant : 1;
+	bool bWasDormant;
 
 	// table index 1, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bSpawnedFromSaveRecord : 1;
+	bool bSpawnedFromSaveRecord;
 
 	// table index 0, offset 84, flags 0x10000000000000
 	UPROPERTY()

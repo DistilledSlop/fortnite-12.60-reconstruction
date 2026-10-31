@@ -24,7 +24,7 @@ public:
 
 	// table index 35, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bIsSprinting : 1;
+	bool bIsSprinting;
 
 	// table index 33, flags 0x10000000002014
 	UPROPERTY(Transient)
@@ -44,103 +44,103 @@ public:
 
 	// table index 29, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bPlayJumpTrickVertical : 1;
+	bool bPlayJumpTrickVertical;
 
 	// table index 28, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bPlayJumpTrick : 1;
+	bool bPlayJumpTrick;
 
 	// table index 27, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bIsMoving : 1;
+	bool bIsMoving;
 
 	// table index 26, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bInAir : 1;
+	bool bInAir;
 
 	// table index 25, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bIsVehicleJumping : 1;
+	bool bIsVehicleJumping;
 
 	// table index 24, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bIsBoosting : 1;
+	bool bIsBoosting;
 
 	// table index 23, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bIsOnSlope : 1;
+	bool bIsOnSlope;
 
 	// table index 22, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bPlayMovingFast : 1;
+	bool bPlayMovingFast;
 
 	// table index 21, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bPlayDriveSouth : 1;
+	bool bPlayDriveSouth;
 
 	// table index 20, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bPlayAdditiveLeans : 1;
+	bool bPlayAdditiveLeans;
 
 	// table index 19, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bIdleToMovementStartTransition : 1;
+	bool bIdleToMovementStartTransition;
 
 	// table index 18, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bMovementLoopToMovementStopTransition : 1;
+	bool bMovementLoopToMovementStopTransition;
 
 	// table index 17, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bLocomotionPoseToJumpTransition : 1;
+	bool bLocomotionPoseToJumpTransition;
 
 	// table index 16, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bJumpToLocomotionPoseTransition : 1;
+	bool bJumpToLocomotionPoseTransition;
 
 	// table index 15, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bIdleToMovementLoopTransition : 1;
+	bool bIdleToMovementLoopTransition;
 
 	// table index 14, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bMovementLoopToPivotTransition : 1;
+	bool bMovementLoopToPivotTransition;
 
 	// table index 13, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bMovementLoopToIdleTransition : 1;
+	bool bMovementLoopToIdleTransition;
 
 	// table index 12, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bDefaultToJumpCombatStartTransition : 1;
+	bool bDefaultToJumpCombatStartTransition;
 
 	// table index 11, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bJumpApexToJumpFallTransition : 1;
+	bool bJumpApexToJumpFallTransition;
 
 	// table index 10, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bDefaultToJumpStartTransition : 1;
+	bool bDefaultToJumpStartTransition;
 
 	// table index 9, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bCombatModeToSprintModeTransition : 1;
+	bool bCombatModeToSprintModeTransition;
 
 	// table index 8, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bSprintModeToCombatModeTransition : 1;
+	bool bSprintModeToCombatModeTransition;
 
 	// table index 7, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bIsPlayingEmoteOnHoverboard : 1;
+	bool bIsPlayingEmoteOnHoverboard;
 
 	// table index 6, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bShouldApplyAdditive : 1;
+	bool bShouldApplyAdditive;
 
 	// table index 5, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bIsBothLegFK : 1;
+	bool bIsBothLegFK;
 
 	// table index 4, flags 0x10000000000005
 	UPROPERTY()

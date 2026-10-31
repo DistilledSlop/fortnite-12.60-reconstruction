@@ -26,7 +26,7 @@ struct FFortVehicleAudioOneshotGate
 
 	// table index 4, offset None, flags 0x10000000010001
 	UPROPERTY()
-	uint8 FadeWhenOutsideGate : 1;
+	bool FadeWhenOutsideGate;
 
 	// table index 3, offset 8, flags 0x10000000010001
 	UPROPERTY()

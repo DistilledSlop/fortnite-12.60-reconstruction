@@ -35,7 +35,7 @@ public:
 
 	// table index 0, flags 0x20080100002020
 	UPROPERTY(ReplicatedUsing=OnRep_HostReadyForJoining, Transient)
-	uint8 bHostReadyForJoining : 1;
+	bool bHostReadyForJoining;
 
 	UFUNCTION()
 	void OnRep_ClientAdditionalContentBundles();

@@ -7,9 +7,11 @@
 #include "Animation/SkeletalMeshActor.h"
 
 #include "EItemWrapMaterialType.h"
+#include "FMcpVariantChannelInfo.h"
 #include "FOnWrapApplied.h"
 
 class ACustomItemWrapModifier;
+class UAthenaItemWrapDefinition;
 
 #include "AFortWrapSkeletalMeshActor.generated.h"
 
@@ -19,9 +21,17 @@ class FORTNITEGAME_API AFortWrapSkeletalMeshActor : public ASkeletalMeshActor
 	GENERATED_BODY()
 
 public:
+	// table index 8, flags 0x40000000000001
+	UPROPERTY()
+	UAthenaItemWrapDefinition* WrapToApply;
+
 	// table index 6, flags 0x40000000000001
 	UPROPERTY()
 	EItemWrapMaterialType WrapMaterialType;
+
+	// table index 4, flags 0x40000000000001
+	UPROPERTY()
+	TArray<FMcpVariantChannelInfo> VariantData;
 
 	// table index 3, flags 0x40000000000001
 	UPROPERTY()
@@ -29,7 +39,7 @@ public:
 
 	// table index 2, flags 0x40000000000000
 	UPROPERTY()
-	uint8 bHasSectionLimit : 1;
+	bool bHasSectionLimit;
 
 	// table index 1, flags 0x40000000000001
 	UPROPERTY()

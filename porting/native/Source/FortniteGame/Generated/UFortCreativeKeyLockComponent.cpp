@@ -7,6 +7,11 @@ void UFortCreativeKeyLockComponent::OnRep_CurrentState()
 	// Body not recovered: reflection-derived stub.
 }
 
+void UFortCreativeKeyLockComponent::OnRep_KeyItemDefinition()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void UFortCreativeKeyLockComponent::OnRep_RemainingKeysToUnlock()
 {
 	// Body not recovered: reflection-derived stub.
@@ -16,6 +21,7 @@ void UFortCreativeKeyLockComponent::GetLifetimeReplicatedProps(TArray<FLifetimeP
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
+	DOREPLIFETIME(UFortCreativeKeyLockComponent, UnlockKeyDefinitionSoftPointer);
 	DOREPLIFETIME(UFortCreativeKeyLockComponent, bRequireAllKeysAtOnce);
 	DOREPLIFETIME(UFortCreativeKeyLockComponent, RemainingKeysToUnlockAmount);
 	DOREPLIFETIME(UFortCreativeKeyLockComponent, RequiredKeysToUnlockAmount);

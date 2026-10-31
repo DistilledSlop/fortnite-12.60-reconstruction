@@ -27,7 +27,7 @@ struct FEncounterEnvironmentQueryInstance
 
 	// table index 6, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bIsWaitingForQueryResults : 1;
+	bool bIsWaitingForQueryResults;
 
 	// table index 5, offset 45, flags 0x10000000000000
 	UPROPERTY()

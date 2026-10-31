@@ -28,7 +28,7 @@ public:
 
 	// table index 5, flags 0x11000000000014
 	UPROPERTY()
-	uint8 bHasAction : 1;
+	bool bHasAction;
 
 	// table index 3, flags 0x11000000000014
 	UPROPERTY()

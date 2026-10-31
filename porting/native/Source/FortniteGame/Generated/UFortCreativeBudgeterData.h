@@ -10,6 +10,7 @@
 #include "FFortCreativeBudgetClassInstanceLimit.h"
 #include "FFortCreativeBudgetComponentSimulationCost.h"
 #include "FFortCreativeBudgetOverride.h"
+#include "FFortCreativeBudgetPlotBudgetOverride.h"
 
 #include "UFortCreativeBudgeterData.generated.h"
 
@@ -38,6 +39,10 @@ public:
 	// table index 4, flags 0x10000000004000
 	UPROPERTY(Config)
 	TArray<FFortCreativeBudget> Budgets;
+
+	// table index 2, flags 0x10000000004000
+	UPROPERTY(Config)
+	TArray<FFortCreativeBudgetPlotBudgetOverride> PlotBudgetOverrides;
 
 	// table index 0, flags 0x10000000004000
 	UPROPERTY(Config)

@@ -66,11 +66,11 @@ public:
 
 	// table index 8, flags 0x40000000002000
 	UPROPERTY(Transient)
-	uint8 bIsReinitializingGrid : 1;
+	bool bIsReinitializingGrid;
 
 	// table index 7, flags 0x40000000002000
 	UPROPERTY(Transient)
-	uint8 bHasInitalized : 1;
+	bool bHasInitalized;
 
 	// table index 6, flags 0x40000000000000
 	UPROPERTY()

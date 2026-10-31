@@ -27,7 +27,7 @@ public:
 
 	// table index 5, flags 0x40000000002000
 	UPROPERTY(Transient)
-	uint8 bHasInfiniteResources : 1;
+	bool bHasInfiniteResources;
 
 	// table index 4, flags 0x40000000002000
 	UPROPERTY(Transient)

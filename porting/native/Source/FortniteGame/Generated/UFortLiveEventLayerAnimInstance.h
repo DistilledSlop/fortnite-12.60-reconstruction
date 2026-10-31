@@ -138,83 +138,83 @@ public:
 
 	// table index 19, flags 0x10000000002004
 	UPROPERTY(Transient)
-	uint8 bIsWorldTilting : 1;
+	bool bIsWorldTilting;
 
 	// table index 18, flags 0x10000000002004
 	UPROPERTY(Transient)
-	uint8 bIsWorldFlipping : 1;
+	bool bIsWorldFlipping;
 
 	// table index 17, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bUseIdleNoiseTucked : 1;
+	bool bUseIdleNoiseTucked;
 
 	// table index 16, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bHasWorldFullyFlipped : 1;
+	bool bHasWorldFullyFlipped;
 
 	// table index 15, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bEnterWorldFlipGliding : 1;
+	bool bEnterWorldFlipGliding;
 
 	// table index 14, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bWorldFlipBeginDive : 1;
+	bool bWorldFlipBeginDive;
 
 	// table index 13, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bWorldFlipReturnToGlide : 1;
+	bool bWorldFlipReturnToGlide;
 
 	// table index 12, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bIsFloating : 1;
+	bool bIsFloating;
 
 	// table index 11, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bIsOnGround : 1;
+	bool bIsOnGround;
 
 	// table index 10, flags 0x10000000002004
 	UPROPERTY(Transient)
-	uint8 bUWIdleFullyBlended : 1;
+	bool bUWIdleFullyBlended;
 
 	// table index 9, flags 0x10000000002004
 	UPROPERTY(Transient)
-	uint8 bIsChangingDirection : 1;
+	bool bIsChangingDirection;
 
 	// table index 8, flags 0x10000000002004
 	UPROPERTY(Transient)
-	uint8 bIsStopping : 1;
+	bool bIsStopping;
 
 	// table index 7, flags 0x10000000002000
 	UPROPERTY(Transient)
-	uint8 bWantsToUpdateStop : 1;
+	bool bWantsToUpdateStop;
 
 	// table index 6, flags 0x10000000002004
 	UPROPERTY(Transient)
-	uint8 bWantsToUpdateStopDirection : 1;
+	bool bWantsToUpdateStopDirection;
 
 	// table index 5, flags 0x10000000002004
 	UPROPERTY(Transient)
-	uint8 bHoldBSDirection : 1;
+	bool bHoldBSDirection;
 
 	// table index 4, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bTransition_UWIdle_To_UWSwimStart : 1;
+	bool bTransition_UWIdle_To_UWSwimStart;
 
 	// table index 3, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bTransition_UWSprintStop_To_UWSwimStart : 1;
+	bool bTransition_UWSprintStop_To_UWSwimStart;
 
 	// table index 2, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bTransition_UWSwimStart_To_SprintStop : 1;
+	bool bTransition_UWSwimStart_To_SprintStop;
 
 	// table index 1, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bTransition_UWSwimStart_To_Idle : 1;
+	bool bTransition_UWSwimStart_To_Idle;
 
 	// table index 0, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bTransition_UWSprintLoop_To_SprintStop : 1;
+	bool bTransition_UWSprintLoop_To_SprintStop;
 
 };
 

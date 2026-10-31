@@ -28,7 +28,7 @@ public:
 
 	// table index 16, flags 0x40000000002000
 	UPROPERTY(Transient)
-	uint8 bSpectating : 1;
+	bool bSpectating;
 
 	// table index 15, flags 0x40000000002000
 	UPROPERTY(Transient)

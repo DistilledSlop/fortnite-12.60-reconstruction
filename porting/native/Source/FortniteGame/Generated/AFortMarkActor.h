@@ -33,7 +33,7 @@ public:
 
 	// table index 3, flags 0x10000000000020
 	UPROPERTY(Replicated)
-	uint8 bFinishedEditing : 1;
+	bool bFinishedEditing;
 
 	// table index 2, flags 0x10000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_AttachedToActor)

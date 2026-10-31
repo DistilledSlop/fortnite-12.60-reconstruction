@@ -21,15 +21,15 @@ class FORTNITEGAME_API AFortPhysicsBall : public ABuildingGameplayActor
 public:
 	// table index 24, flags 0x10000000000015
 	UPROPERTY()
-	uint8 bDetachRootChildrenOnServer : 1;
+	bool bDetachRootChildrenOnServer;
 
 	// table index 23, flags 0x10000000000015
 	UPROPERTY()
-	uint8 bUpdateRotationOnlyIfRendered : 1;
+	bool bUpdateRotationOnlyIfRendered;
 
 	// table index 22, flags 0x10000000022805
 	UPROPERTY(Transient)
-	uint8 bRollingAudioFaded : 1;
+	bool bRollingAudioFaded;
 
 	// table index 21, flags 0x10000000000015
 	UPROPERTY()
@@ -57,11 +57,11 @@ public:
 
 	// table index 15, flags 0x20080000000005
 	UPROPERTY()
-	uint8 bEnableBackspinOnKick : 1;
+	bool bEnableBackspinOnKick;
 
 	// table index 14, flags 0x20080000020025
 	UPROPERTY(Replicated)
-	uint8 bApplyingBackspin : 1;
+	bool bApplyingBackspin;
 
 	// table index 13, flags 0x20080000000005
 	UPROPERTY()
@@ -69,15 +69,15 @@ public:
 
 	// table index 12, flags 0x20080000000005
 	UPROPERTY()
-	uint8 bEnableLiftAndDrag : 1;
+	bool bEnableLiftAndDrag;
 
 	// table index 11, flags 0x20080000000005
 	UPROPERTY()
-	uint8 bStopLiftWhenFalling : 1;
+	bool bStopLiftWhenFalling;
 
 	// table index 10, flags 0x20080000020025
 	UPROPERTY(Replicated)
-	uint8 bApplyingLift : 1;
+	bool bApplyingLift;
 
 	// table index 9, flags 0x20080000000005
 	UPROPERTY()

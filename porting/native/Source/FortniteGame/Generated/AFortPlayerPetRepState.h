@@ -8,6 +8,8 @@
 
 #include "FPetStimuliRepData.h"
 
+class UAthenaPetItemDefinition;
+
 #include "AFortPlayerPetRepState.generated.h"
 
 UCLASS(config=Engine)
@@ -20,12 +22,19 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_LookAtTarget)
 	AActor* LookAtTarget;
 
+	// table index 1, flags 0x20080100000034
+	UPROPERTY(ReplicatedUsing=OnRep_PetItemDef)
+	UAthenaPetItemDefinition* PetItemDef;
+
 	// table index 0, flags 0x20080100000034
 	UPROPERTY(ReplicatedUsing=OnRep_StimuliTag)
 	FPetStimuliRepData StimuliTag;
 
 	UFUNCTION()
 	void OnRep_LookAtTarget();
+
+	UFUNCTION()
+	void OnRep_PetItemDef();
 
 	UFUNCTION()
 	void OnRep_StimuliTag();

@@ -54,7 +54,7 @@ public:
 
 	// table index 0, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bPlayingPhotoTraversalEmote : 1;
+	bool bPlayingPhotoTraversalEmote;
 
 };
 

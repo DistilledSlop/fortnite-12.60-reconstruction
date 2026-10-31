@@ -24,6 +24,7 @@ class AFortDecoPreview;
 class AFortPlayerPawn;
 class AFortWeapon;
 class UFortProjectileMovementComponent;
+class UFortWeaponItemDefinition;
 class UFortWorldItem;
 class UMaterialInterface;
 class UMeshComponent;
@@ -37,6 +38,10 @@ class FORTNITEGAME_API UFortHeldObjectComponent : public UActorComponent
 	GENERATED_BODY()
 
 public:
+	// table index 32, flags 0x24080000010001
+	UPROPERTY()
+	TSoftObjectPtr<UFortWeaponItemDefinition> EquippedWeaponItemDefinition;
+
 	// table index 31, flags 0x20080000010001
 	UPROPERTY()
 	FHeldObjectThrownData HeldObjectThrownData;

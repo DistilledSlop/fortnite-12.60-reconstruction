@@ -15,7 +15,7 @@ struct FFortResurrectionData
 
 	// table index 3, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bResurrectionChipAvailable : 1;
+	bool bResurrectionChipAvailable;
 
 	// table index 2, offset 4, flags 0x10000000000000
 	UPROPERTY()

@@ -20,19 +20,19 @@ class FORTNITEGAME_API UFortPushCannonAnimInstance : public UFortAnimInstance
 public:
 	// table index 11, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bHasDriver : 1;
+	bool bHasDriver;
 
 	// table index 10, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bHasPassenger : 1;
+	bool bHasPassenger;
 
 	// table index 9, flags 0x10000000002015
 	UPROPERTY(Transient)
-	uint8 bIsCoolDownEnded : 1;
+	bool bIsCoolDownEnded;
 
 	// table index 8, flags 0x10000000002015
 	UPROPERTY(Transient)
-	uint8 bIsCannonFired : 1;
+	bool bIsCannonFired;
 
 	// table index 7, flags 0x10000000002014
 	UPROPERTY(Transient)

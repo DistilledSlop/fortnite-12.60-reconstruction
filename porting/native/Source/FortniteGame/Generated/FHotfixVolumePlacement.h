@@ -23,7 +23,7 @@ struct FHotfixVolumePlacement
 
 	// table index 0, offset None, flags 0x10000000004000
 	UPROPERTY()
-	uint8 bNeededOnClient : 1;
+	bool bNeededOnClient;
 
 };
 

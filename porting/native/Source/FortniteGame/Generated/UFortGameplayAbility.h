@@ -11,6 +11,7 @@
 #include "EFortGameplayAbilityActivation.h"
 #include "Engine/DataTable.h"
 #include "FAbilityTrackedActorSettings.h"
+#include "FFortAbilityCost.h"
 #include "FFortGameplayAbilityBehaviorDistanceData.h"
 #include "FFortGameplayAbilityMontageInfo.h"
 #include "FFortGameplayEffectContainer.h"
@@ -21,6 +22,7 @@ class AFortProjectileBase;
 class UFortCameraMode;
 class UFortTooltip;
 class UFortTooltipDisplayStatsList;
+class UFortWeaponItemDefinition;
 class UTexture2D;
 
 #include "UFortGameplayAbility.generated.h"
@@ -58,6 +60,10 @@ public:
 	// table index 54, flags 0x10000000000001
 	UPROPERTY()
 	FDataTableRowHandle DamageStatHandle;
+
+	// table index 52, flags 0x10000000010015
+	UPROPERTY()
+	TArray<FFortAbilityCost> AbilityCosts;
 
 	// table index 51, flags 0x10000000010001
 	UPROPERTY()
@@ -153,7 +159,7 @@ public:
 
 	// table index 26, flags 0x10000000000005
 	UPROPERTY()
-	uint8 bLeadPawnTargets : 1;
+	bool bLeadPawnTargets;
 
 	// table index 25, flags 0x10000000000005
 	UPROPERTY()
@@ -165,11 +171,11 @@ public:
 
 	// table index 23, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bClampMaxYawAngleToFire : 1;
+	bool bClampMaxYawAngleToFire;
 
 	// table index 22, flags 0x10000000000015
 	UPROPERTY()
-	uint8 bUseTargetActorLocation : 1;
+	bool bUseTargetActorLocation;
 
 	// table index 21, flags 0x10000000000015
 	UPROPERTY()
@@ -209,7 +215,7 @@ public:
 
 	// table index 12, flags 0x40000000000001
 	UPROPERTY()
-	uint8 bIsMobileToggle : 1;
+	bool bIsMobileToggle;
 
 	// table index 10, flags 0x10000000010001
 	UPROPERTY()
@@ -218,6 +224,10 @@ public:
 	// table index 9, flags 0x10000000000005
 	UPROPERTY()
 	FFortGameplayAbilityMontageInfo MontageInfo;
+
+	// table index 8, flags 0x10000000000005
+	UPROPERTY()
+	UFortWeaponItemDefinition* AbilityWeapon;
 
 	// table index 7, flags 0x10000000000015
 	UPROPERTY()

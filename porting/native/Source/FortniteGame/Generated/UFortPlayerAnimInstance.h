@@ -251,11 +251,11 @@ public:
 
 	// table index 321, flags 0x10000000000001
 	UPROPERTY()
-	uint8 bEnableHandIK : 1;
+	bool bEnableHandIK;
 
 	// table index 320, flags 0x10000000002004
 	UPROPERTY(Transient)
-	uint8 bIsBodyTypeManuallySet : 1;
+	bool bIsBodyTypeManuallySet;
 
 	// table index 319, flags 0x10000000002014
 	UPROPERTY(Transient)
@@ -279,7 +279,7 @@ public:
 
 	// table index 314, flags 0x10000000002015
 	UPROPERTY(Transient)
-	uint8 bIsSlopeSliding : 1;
+	bool bIsSlopeSliding;
 
 	// table index 313, flags 0x10000000002015
 	UPROPERTY(Transient)

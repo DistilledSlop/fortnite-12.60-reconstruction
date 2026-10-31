@@ -8,6 +8,8 @@
 
 #include "EFortCustomCharmType.h"
 
+class UAthenaCharmItemDefinition;
+
 #include "AFortCharmPreviewActor.generated.h"
 
 UCLASS(config=Engine, abstract)
@@ -16,6 +18,10 @@ class FORTNITEGAME_API AFortCharmPreviewActor : public AActor
 	GENERATED_BODY()
 
 public:
+	// table index 2, flags 0x20080000000000
+	UPROPERTY()
+	UAthenaCharmItemDefinition* MyCosmeticItem;
+
 	// table index 1, flags 0x20080000000000
 	UPROPERTY()
 	TEnumAsByte<EFortCustomCharmType::Type> CharmSlot;

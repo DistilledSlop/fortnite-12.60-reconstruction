@@ -7,6 +7,7 @@
 #include "AFortAthenaMutator.h"
 
 #include "AttributeSet.h"
+#include "FAshtonStoneData.h"
 #include "FAshtonStoneSpawnData.h"
 #include "FAshtonStoneState.h"
 #include "FAthenaGameMessageData.h"
@@ -20,6 +21,8 @@
 
 class AFortPlayerController;
 class AFortPlayerControllerAthena;
+class UFortGadgetItemDefinition;
+class UFortWorldItemDefinition;
 
 #include "AFortAthenaMutator_Ashton.generated.h"
 
@@ -40,6 +43,10 @@ public:
 	// table index 53, flags 0x20080000010001
 	UPROPERTY()
 	FScalableFloat GameOverDelay;
+
+	// table index 52, flags 0x20080000010001
+	UPROPERTY()
+	FAshtonStoneData StoneDataList[6];
 
 	// table index 51, flags 0x20080000010001
 	UPROPERTY()
@@ -96,6 +103,14 @@ public:
 	// table index 36, flags 0x20080000002000
 	UPROPERTY(Transient)
 	AFortPlayerController* AutoEquipController;
+
+	// table index 35, flags 0x20080000010001
+	UPROPERTY()
+	UFortGadgetItemDefinition* VillainLeaderItemDef;
+
+	// table index 33, flags 0x20080000010001
+	UPROPERTY()
+	TArray<UFortWorldItemDefinition*> VillainItemDefs;
 
 	// table index 32, flags 0x20080000002000
 	UPROPERTY(Transient)

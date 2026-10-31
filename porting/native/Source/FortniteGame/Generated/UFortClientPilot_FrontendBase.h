@@ -16,11 +16,11 @@ class FORTNITEGAME_API UFortClientPilot_FrontendBase : public UFortClientPilot_B
 public:
 	// table index 11, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bWaitingForSkillTreePurchase : 1;
+	bool bWaitingForSkillTreePurchase;
 
 	// table index 10, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bWaitingForWorkerSlot : 1;
+	bool bWaitingForWorkerSlot;
 
 	// table index 9, flags 0x10000000000000
 	UPROPERTY()
@@ -52,7 +52,7 @@ public:
 
 	// table index 2, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bHasAttemptedAbandon : 1;
+	bool bHasAttemptedAbandon;
 
 	// table index 1, flags 0x10000000000000
 	UPROPERTY()

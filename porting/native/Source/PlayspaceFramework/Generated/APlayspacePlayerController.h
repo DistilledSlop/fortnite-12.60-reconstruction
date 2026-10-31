@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
 
+class UPlayspaceControllerComponent_PlayerSpawning;
+
 #include "APlayspacePlayerController.generated.h"
 
 UCLASS(config=Game)
@@ -16,7 +18,11 @@ class PLAYSPACEFRAMEWORK_API APlayspacePlayerController : public APlayerControll
 public:
 	// table index 1, flags 0x20080000014001
 	UPROPERTY(Config)
-	uint8 bUsePlayerSpawningComponent : 1;
+	bool bUsePlayerSpawningComponent;
+
+	// table index 0, flags 0x24080000010001
+	UPROPERTY()
+	TSubclassOf<UPlayspaceControllerComponent_PlayerSpawning> ControllerSpawningComponent;
 
 };
 

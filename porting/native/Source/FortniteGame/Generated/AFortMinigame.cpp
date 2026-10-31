@@ -7,6 +7,11 @@ void AFortMinigame::DoRep_UIExtensionTags()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortMinigame::OnRep_ClassSlotArray()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortMinigame::OnRep_CurrentRound()
 {
 	// Body not recovered: reflection-derived stub.
@@ -75,6 +80,7 @@ void AFortMinigame::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLif
 	DOREPLIFETIME(AFortMinigame, RoundStats);
 	DOREPLIFETIME(AFortMinigame, ScoreboardStats);
 	DOREPLIFETIME(AFortMinigame, TrackedStats);
+	DOREPLIFETIME(AFortMinigame, ClassSlotArray);
 	DOREPLIFETIME(AFortMinigame, TeamArray);
 	DOREPLIFETIME(AFortMinigame, bTimerCountsDown);
 	DOREPLIFETIME(AFortMinigame, RoundScoreDisplayTime);

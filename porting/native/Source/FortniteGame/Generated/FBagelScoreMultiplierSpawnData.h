@@ -61,7 +61,7 @@ struct FBagelScoreMultiplierSpawnData : public FFortPieSliceSpawnData
 
 	// table index 0, offset None, flags 0x10000000000015
 	UPROPERTY()
-	uint8 bShouldDrawCompassIcon : 1;
+	bool bShouldDrawCompassIcon;
 
 };
 

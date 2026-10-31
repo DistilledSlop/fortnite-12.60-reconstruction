@@ -41,7 +41,7 @@ public:
 
 	// table index 15, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bUseAnimTrailsPSC : 1;
+	bool bUseAnimTrailsPSC;
 
 	// table index 14, flags 0x10000000000000
 	UPROPERTY()
@@ -73,7 +73,7 @@ public:
 
 	// table index 7, flags 0x10000000000014
 	UPROPERTY()
-	uint8 bWatchKills : 1;
+	bool bWatchKills;
 
 	// table index 6, flags 0x10000000000004
 	UPROPERTY()
@@ -81,7 +81,7 @@ public:
 
 	// table index 5, flags 0x10000000000014
 	UPROPERTY()
-	uint8 bCandyCaneKillReaction : 1;
+	bool bCandyCaneKillReaction;
 
 	// table index 4, flags 0x10000000010001
 	UPROPERTY()

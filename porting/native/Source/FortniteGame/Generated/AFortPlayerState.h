@@ -11,6 +11,7 @@
 #include "EFortPlayerRole.h"
 #include "EReadyCheckState.h"
 #include "ETrustedPlatformType.h"
+#include "FCustomCharacterData.h"
 #include "FFortExperienceDelta.h"
 #include "FPlayerBannerInfo.h"
 #include "FReplicatedStatValues.h"
@@ -23,10 +24,13 @@ class AFortPickup;
 class AFortPlayerPawn;
 class AFortTeamInfo;
 class AFortTeamPrivateInfo;
+class UAthenaCharmItemDefinition;
 class UCustomCharacterPart;
 class UCustomColorSwatch;
 class UCustomPlayerComponent;
 class UFortAbilitySystemComponent;
+class UFortAwardItemDefinition;
+class UFortHeroType;
 
 #include "AFortPlayerState.generated.h"
 
@@ -92,6 +96,10 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_HeroID)
 	FString HeroId;
 
+	// table index 45, flags 0x40000100000020
+	UPROPERTY(ReplicatedUsing=OnRep_HeroType)
+	UFortHeroType* HeroType;
+
 	// table index 44, flags 0x40000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_CurrentCharXP)
 	int32 CurrentCharXP;
@@ -122,7 +130,11 @@ public:
 
 	// table index 36, flags 0x40000000002020
 	UPROPERTY(Replicated, Transient)
-	uint8 bIsSimulatingDamage : 1;
+	bool bIsSimulatingDamage;
+
+	// table index 34, flags 0x10000000002000
+	UPROPERTY(Transient)
+	TArray<UFortAwardItemDefinition*> Awards;
 
 	// table index 33, flags 0x40000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_CharacterGender)
@@ -131,6 +143,10 @@ public:
 	// table index 32, flags 0x40000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_CharacterBodyType)
 	TEnumAsByte<EFortCustomBodyType::Type> CharacterBodyType;
+
+	// table index 31, flags 0x40000100000020
+	UPROPERTY(ReplicatedUsing=OnRep_CharacterData)
+	FCustomCharacterData CharacterData;
 
 	// table index 30, flags 0x40000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_CharacterColorSwatches)
@@ -147,6 +163,10 @@ public:
 	// table index 27, flags 0x20080000002000
 	UPROPERTY(Transient)
 	UCustomCharacterPart* LocalCharacterParts[6];
+
+	// table index 26, flags 0x20080000002000
+	UPROPERTY(Transient)
+	UAthenaCharmItemDefinition* LocalCharacterCharms[4];
 
 	// table index 24, flags 0x20080000002000
 	UPROPERTY(Transient)
@@ -178,7 +198,7 @@ public:
 
 	// table index 17, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bSkipReplicatedStats : 1;
+	bool bSkipReplicatedStats;
 
 	// table index 16, flags 0x40000100002020
 	UPROPERTY(ReplicatedUsing=OnRep_ScoreStatChanged, Transient)
@@ -190,7 +210,7 @@ public:
 
 	// table index 14, flags 0x40000000002020
 	UPROPERTY(Replicated, Transient)
-	uint8 bAreZoneStatsFinalized : 1;
+	bool bAreZoneStatsFinalized;
 
 	// table index 12, flags 0x40000000000020
 	UPROPERTY(Replicated)
@@ -218,11 +238,11 @@ public:
 
 	// table index 4, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bInvitedToConsoleSession : 1;
+	bool bInvitedToConsoleSession;
 
 	// table index 3, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bInitializedPlayerCustomizationOptionsFromClientSettings : 1;
+	bool bInitializedPlayerCustomizationOptionsFromClientSettings;
 
 	// table index 2, flags 0x40000000002000
 	UPROPERTY(Transient)
@@ -234,7 +254,11 @@ public:
 
 	// table index 0, flags 0x40000100002020
 	UPROPERTY(ReplicatedUsing=OnRep_InGhostMode, Transient)
-	uint8 bInGhostMode : 1;
+	bool bInGhostMode;
+
+	UFUNCTION(Client, Reliable)
+	void ClientNotifyAwardGranted(UFortAwardItemDefinition* AwardDefinition);
+	void ClientNotifyAwardGranted_Implementation(UFortAwardItemDefinition* AwardDefinition);
 
 	UFUNCTION()
 	void OnRep_AccessoryColorSwatches();
@@ -252,6 +276,9 @@ public:
 	void OnRep_CharacterColorSwatches();
 
 	UFUNCTION()
+	void OnRep_CharacterData();
+
+	UFUNCTION()
 	void OnRep_CharacterGender();
 
 	UFUNCTION()
@@ -259,6 +286,9 @@ public:
 
 	UFUNCTION()
 	void OnRep_HeroID();
+
+	UFUNCTION()
+	void OnRep_HeroType();
 
 	UFUNCTION()
 	void OnRep_HomeActor(AActor* OldHomeActor);

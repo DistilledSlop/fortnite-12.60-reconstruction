@@ -15,23 +15,23 @@ struct FPlaylistAccess
 
 	// table index 9, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bForcePlaylistOff : 1;
+	bool bForcePlaylistOff;
 
 	// table index 8, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bEnabled : 1;
+	bool bEnabled;
 
 	// table index 7, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bVisibleWhenDisabled : 1;
+	bool bVisibleWhenDisabled;
 
 	// table index 6, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bInvisibleWhenEnabled : 1;
+	bool bInvisibleWhenEnabled;
 
 	// table index 5, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bIsDefaultPlaylist : 1;
+	bool bIsDefaultPlaylist;
 
 	// table index 3, offset 5, flags 0x10000000000000
 	UPROPERTY()
@@ -39,7 +39,7 @@ struct FPlaylistAccess
 
 	// table index 2, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bDisplayAsLimitedTime : 1;
+	bool bDisplayAsLimitedTime;
 
 	// table index 1, offset 8, flags 0x10000000000000
 	UPROPERTY()

@@ -7,9 +7,12 @@
 #include "UFortMinigameItemContainerComponent.h"
 
 #include "ECreativeKeyLockState.h"
+#include "FKeyDefinitionUpdated.h"
 #include "FKeyLockStateChanged.h"
 #include "FLockEvent.h"
 #include "FRemainingKeysChanged.h"
+
+class UFortItemDefinition;
 
 #include "UFortCreativeKeyLockComponent.generated.h"
 
@@ -22,6 +25,10 @@ public:
 	// table index 11, flags 0x10000000010005
 	UPROPERTY()
 	ECreativeKeyLockState InitialState;
+
+	// table index 10, flags 0x10000010080000
+	UPROPERTY()
+	FKeyDefinitionUpdated OnKeyDefinitionUpdated;
 
 	// table index 9, flags 0x10000010080000
 	UPROPERTY()
@@ -53,10 +60,17 @@ public:
 
 	// table index 1, flags 0x20080000000034
 	UPROPERTY(Replicated)
-	uint8 bRequireAllKeysAtOnce : 1;
+	bool bRequireAllKeysAtOnce;
+
+	// table index 0, flags 0x24080101000020
+	UPROPERTY(ReplicatedUsing=OnRep_KeyItemDefinition, SaveGame)
+	TSoftObjectPtr<UFortItemDefinition> UnlockKeyDefinitionSoftPointer;
 
 	UFUNCTION()
 	void OnRep_CurrentState();
+
+	UFUNCTION()
+	void OnRep_KeyItemDefinition();
 
 	UFUNCTION()
 	void OnRep_RemainingKeysToUnlock();

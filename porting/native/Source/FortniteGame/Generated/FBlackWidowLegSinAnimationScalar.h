@@ -15,7 +15,7 @@ struct FBlackWidowLegSinAnimationScalar
 
 	// table index 6, offset None, flags 0x10000000000015
 	UPROPERTY()
-	uint8 bUseConstantValue : 1;
+	bool bUseConstantValue;
 
 	// table index 5, offset 4, flags 0x10000000000015
 	UPROPERTY()

@@ -9,7 +9,7 @@ public class PlayspaceFramework : ModuleRules
     public PlayspaceFramework(ReadOnlyTargetRules Target) : base(Target)
     {
         PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
-        PublicDependencyModuleNames.AddRange(new[] { "Core", "CoreUObject", "Engine", "GameplayTags" });
+        PublicDependencyModuleNames.AddRange(new[] { "Core", "CoreUObject", "Engine", "GameplayTags", "ModularGameplay" });
         PublicIncludePaths.Add(Path.Combine(ModuleDirectory, "Generated"));
     }
 }

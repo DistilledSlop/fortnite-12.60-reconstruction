@@ -6,6 +6,7 @@ void AFortClientAnnouncement_ZoneModifiers::GetLifetimeReplicatedProps(TArray<FL
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
+	DOREPLIFETIME(AFortClientAnnouncement_ZoneModifiers, ModifiersData);
 	DOREPLIFETIME(AFortClientAnnouncement_ZoneModifiers, DisplayTime);
 }
 

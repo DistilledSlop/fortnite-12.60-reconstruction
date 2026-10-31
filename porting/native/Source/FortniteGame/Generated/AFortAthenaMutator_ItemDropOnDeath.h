@@ -8,6 +8,7 @@
 
 #include "AttributeSet.h"
 #include "ERespawnRequirements.h"
+#include "FItemsToDropOnDeath.h"
 
 #include "AFortAthenaMutator_ItemDropOnDeath.generated.h"
 
@@ -41,9 +42,13 @@ public:
 	UPROPERTY()
 	FScalableFloat MaxResourceTypeDrops;
 
+	// table index 1, flags 0x20080000010001
+	UPROPERTY()
+	TArray<FItemsToDropOnDeath> ItemsToDrop;
+
 	// table index 0, flags 0x20080000010001
 	UPROPERTY()
-	uint8 bShouldNonParticipantAIAlsoDropItems : 1;
+	bool bShouldNonParticipantAIAlsoDropItems;
 
 };
 

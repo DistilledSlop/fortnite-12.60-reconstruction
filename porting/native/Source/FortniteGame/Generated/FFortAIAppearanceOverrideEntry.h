@@ -21,7 +21,7 @@ struct FFortAIAppearanceOverrideEntry
 
 	// table index 2, offset None, flags 0x10000000000015
 	UPROPERTY()
-	uint8 bIsFemale : 1;
+	bool bIsFemale;
 
 	// table index 1, offset 16, flags 0x44000000000001
 	UPROPERTY()

@@ -209,7 +209,7 @@ public:
 
 	// table index 37, flags 0x20080200000005
 	UPROPERTY(Interp)
-	uint8 FogUseVolumetricFog : 1;
+	bool FogUseVolumetricFog;
 
 	// table index 36, flags 0x20080200000005
 	UPROPERTY(Interp)
@@ -257,7 +257,7 @@ public:
 
 	// table index 25, flags 0x20080000000005
 	UPROPERTY()
-	uint8 bResetMaterialWhenUpdatingParams : 1;
+	bool bResetMaterialWhenUpdatingParams;
 
 	// table index 24, flags 0x20080200000005
 	UPROPERTY(Interp)

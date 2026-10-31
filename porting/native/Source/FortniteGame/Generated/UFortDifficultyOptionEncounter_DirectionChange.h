@@ -16,7 +16,7 @@ class FORTNITEGAME_API UFortDifficultyOptionEncounter_DirectionChange : public U
 public:
 	// table index 0, flags 0x20080000010001
 	UPROPERTY()
-	uint8 bChangeDirectionsOnRest : 1;
+	bool bChangeDirectionsOnRest;
 
 };
 

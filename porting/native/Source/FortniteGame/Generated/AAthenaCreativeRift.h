@@ -34,7 +34,7 @@ public:
 
 	// table index 2, flags 0x40000000002000
 	UPROPERTY(Transient)
-	uint8 bHasLoadedSettings : 1;
+	bool bHasLoadedSettings;
 
 	// table index 0, flags 0x40000000000000
 	UPROPERTY()

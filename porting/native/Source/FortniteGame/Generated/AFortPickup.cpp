@@ -22,6 +22,11 @@ void AFortPickup::OnRep_PickupOwnerData()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPickup::OnRep_PrimaryPickupItemEntry()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPickup::OnRep_ServerImpactSoundFlash()
 {
 	// Body not recovered: reflection-derived stub.
@@ -52,6 +57,8 @@ void AFortPickup::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifet
 	DOREPLIFETIME(AFortPickup, bPickedUp);
 	DOREPLIFETIME(AFortPickup, OptionalOwnerID);
 	DOREPLIFETIME(AFortPickup, PickupLocationData);
+	DOREPLIFETIME(AFortPickup, MultiItemPickupEntries);
+	DOREPLIFETIME(AFortPickup, PrimaryPickupItemEntry);
 	DOREPLIFETIME(AFortPickup, bRandomRotation);
 }
 

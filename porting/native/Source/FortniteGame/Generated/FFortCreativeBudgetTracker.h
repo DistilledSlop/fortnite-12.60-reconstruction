@@ -30,7 +30,7 @@ struct FFortCreativeBudgetTracker
 
 	// table index 3, offset None, flags 0x40000000000000
 	UPROPERTY()
-	uint8 bUseUniformGridTest : 1;
+	bool bUseUniformGridTest;
 
 	// table index 0, offset 648, flags 0x40000000002000
 	UPROPERTY()

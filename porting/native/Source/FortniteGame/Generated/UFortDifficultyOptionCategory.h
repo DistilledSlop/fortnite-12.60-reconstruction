@@ -16,15 +16,15 @@ class FORTNITEGAME_API UFortDifficultyOptionCategory : public UDataAsset
 public:
 	// table index 2, flags 0x20080000010001
 	UPROPERTY()
-	uint8 bIsRequired : 1;
+	bool bIsRequired;
 
 	// table index 1, flags 0x20080000010001
 	UPROPERTY()
-	uint8 bIsStatic : 1;
+	bool bIsStatic;
 
 	// table index 0, flags 0x20080000010001
 	UPROPERTY()
-	uint8 bHasValueRange : 1;
+	bool bHasValueRange;
 
 };
 

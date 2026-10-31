@@ -20,7 +20,7 @@ class FORTNITEGAME_API UFortAnimInstance : public UFortBaseAnimInstance
 public:
 	// table index 42, flags 0x10000000000001
 	UPROPERTY()
-	uint8 bUpdateAllPawnProperties : 1;
+	bool bUpdateAllPawnProperties;
 
 	// table index 41, flags 0x10000000002015
 	UPROPERTY(Transient)
@@ -64,19 +64,19 @@ public:
 
 	// table index 31, flags 0x10000000002015
 	UPROPERTY(Transient)
-	uint8 bIsJumping : 1;
+	bool bIsJumping;
 
 	// table index 30, flags 0x10000000002015
 	UPROPERTY(Transient)
-	uint8 bIsFalling : 1;
+	bool bIsFalling;
 
 	// table index 29, flags 0x10000000000005
 	UPROPERTY()
-	uint8 bShouldPredictLanding : 1;
+	bool bShouldPredictLanding;
 
 	// table index 28, flags 0x10000000002015
 	UPROPERTY(Transient)
-	uint8 bLandingPredicted : 1;
+	bool bLandingPredicted;
 
 	// table index 27, flags 0x10000000002015
 	UPROPERTY(Transient)
@@ -92,15 +92,15 @@ public:
 
 	// table index 24, flags 0x10000000000005
 	UPROPERTY()
-	uint8 bDebugLandPrediction : 1;
+	bool bDebugLandPrediction;
 
 	// table index 23, flags 0x10000000000005
 	UPROPERTY()
-	uint8 bRecordJumpPositions : 1;
+	bool bRecordJumpPositions;
 
 	// table index 22, flags 0x10000000002000
 	UPROPERTY(Transient)
-	uint8 bIsRecordingJump : 1;
+	bool bIsRecordingJump;
 
 	// table index 21, flags 0x10000000002000
 	UPROPERTY(Transient)
@@ -136,27 +136,27 @@ public:
 
 	// table index 13, flags 0x10000000002015
 	UPROPERTY(Transient)
-	uint8 bRecentlyFired : 1;
+	bool bRecentlyFired;
 
 	// table index 12, flags 0x10000000002015
 	UPROPERTY(Transient)
-	uint8 bIsRelaxedLevel1 : 1;
+	bool bIsRelaxedLevel1;
 
 	// table index 11, flags 0x10000000002015
 	UPROPERTY(Transient)
-	uint8 bIsRelaxedLevel2 : 1;
+	bool bIsRelaxedLevel2;
 
 	// table index 10, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bIsWeaponLoweredNearWall : 1;
+	bool bIsWeaponLoweredNearWall;
 
 	// table index 9, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bExitedRelaxedThisUpdate : 1;
+	bool bExitedRelaxedThisUpdate;
 
 	// table index 8, flags 0x10000000000001
 	UPROPERTY()
-	uint8 bLowerWeaponNearWallDuringTargeting : 1;
+	bool bLowerWeaponNearWallDuringTargeting;
 
 	// table index 7, flags 0x10000000002000
 	UPROPERTY(Transient)

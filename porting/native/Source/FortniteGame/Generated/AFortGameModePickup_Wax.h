@@ -19,7 +19,7 @@ class FORTNITEGAME_API AFortGameModePickup_Wax : public AFortGameModePickup
 public:
 	// table index 11, flags 0x10000000000020
 	UPROPERTY(Replicated)
-	uint8 bIsFirstGeneration : 1;
+	bool bIsFirstGeneration;
 
 	// table index 10, flags 0x10000000000020
 	UPROPERTY(Replicated)

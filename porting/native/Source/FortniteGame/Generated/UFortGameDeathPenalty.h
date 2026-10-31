@@ -96,7 +96,7 @@ public:
 
 	// table index 6, flags 0x20080000000015
 	UPROPERTY()
-	uint8 bUseRegenHealthOnRespawn : 1;
+	bool bUseRegenHealthOnRespawn;
 
 	// table index 5, flags 0x20080000000015
 	UPROPERTY()

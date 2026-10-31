@@ -43,23 +43,23 @@ public:
 
 	// table index 4, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bIsSlopeSliding : 1;
+	bool bIsSlopeSliding;
 
 	// table index 3, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bIsOnGround : 1;
+	bool bIsOnGround;
 
 	// table index 2, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bLandingPredicted : 1;
+	bool bLandingPredicted;
 
 	// table index 1, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bIsFalling : 1;
+	bool bIsFalling;
 
 	// table index 0, flags 0x10000000002014
 	UPROPERTY(Transient)
-	uint8 bIsJumping : 1;
+	bool bIsJumping;
 
 };
 

@@ -11,7 +11,17 @@ void AFortPlayerControllerPvE::ClientShowIdleWarning_Implementation(float TimeUn
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerControllerPvE::ClientUpdateQuickBarRecordsCache_Implementation(const FQuickBar& SecondaryQuickBarRecord, const FQuickBar& PrimaryQuickBarRecord)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPlayerControllerPvE::ServerTriggerSetupTeleportCameraEvent_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerControllerPvE::ServerUpdateQuickBarRecordsCache_Implementation(const FQuickBar& SecondaryQuickBarRecord, const FQuickBar& PrimaryQuickBarRecord)
 {
 	// Body not recovered: reflection-derived stub.
 }

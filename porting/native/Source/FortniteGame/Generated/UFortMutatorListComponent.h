@@ -22,7 +22,7 @@ class FORTNITEGAME_API UFortMutatorListComponent : public UActorComponent
 public:
 	// table index 10, flags 0x20080000010001
 	UPROPERTY()
-	uint8 bShouldMakeMutatorsDormant : 1;
+	bool bShouldMakeMutatorsDormant;
 
 	// table index 9, flags 0x0
 	UPROPERTY()

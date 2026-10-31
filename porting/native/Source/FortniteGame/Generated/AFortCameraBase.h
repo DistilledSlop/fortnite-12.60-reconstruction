@@ -42,11 +42,11 @@ public:
 
 	// table index 2, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bExhibitActorChanged : 1;
+	bool bExhibitActorChanged;
 
 	// table index 1, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 CheckForDragBegin : 1;
+	bool CheckForDragBegin;
 
 	// table index 0, flags 0x20080000002000
 	UPROPERTY(Transient)

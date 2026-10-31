@@ -59,7 +59,7 @@ public:
 
 	// table index 0, flags 0x20080100000020
 	UPROPERTY(ReplicatedUsing=OnRep_IsMoving)
-	uint8 bIsMoving : 1;
+	bool bIsMoving;
 
 	UFUNCTION()
 	void OnRep_FloorZ();

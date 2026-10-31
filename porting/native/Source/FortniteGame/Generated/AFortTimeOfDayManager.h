@@ -160,7 +160,7 @@ public:
 
 	// table index 52, flags 0x20080000000015
 	UPROPERTY()
-	uint8 bUseSkyAtmosphereRotationAndDivergence : 1;
+	bool bUseSkyAtmosphereRotationAndDivergence;
 
 	// table index 51, flags 0x20080000000015
 	UPROPERTY()
@@ -180,7 +180,7 @@ public:
 
 	// table index 47, flags 0x20080000010015
 	UPROPERTY()
-	uint8 bStartInvisible : 1;
+	bool bStartInvisible;
 
 	// table index 46, flags 0x200800000a001d
 	UPROPERTY()
@@ -308,7 +308,7 @@ public:
 
 	// table index 13, flags 0x20080000010001
 	UPROPERTY()
-	uint8 bUseStormValues : 1;
+	bool bUseStormValues;
 
 	// table index 12, flags 0x20080000010001
 	UPROPERTY()

@@ -75,7 +75,7 @@ struct FFortBaseWeaponStats : public FTableRowBase
 
 	// table index 51, offset None, flags 0x20080000000015
 	UPROPERTY()
-	uint8 bForceControl : 1;
+	bool bForceControl;
 
 	// table index 50, offset 76, flags 0x20080000000015
 	UPROPERTY()
@@ -215,11 +215,11 @@ struct FFortBaseWeaponStats : public FTableRowBase
 
 	// table index 15, offset None, flags 0x20080000000015
 	UPROPERTY()
-	uint8 bAllowReloadInterrupt : 1;
+	bool bAllowReloadInterrupt;
 
 	// table index 14, offset None, flags 0x20080000000015
 	UPROPERTY()
-	uint8 bReloadInterruptIsImmediate : 1;
+	bool bReloadInterruptIsImmediate;
 
 	// table index 13, offset 264, flags 0x20080000000015
 	UPROPERTY()

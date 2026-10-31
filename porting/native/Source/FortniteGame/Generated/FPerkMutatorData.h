@@ -75,7 +75,7 @@ struct FPerkMutatorData
 
 	// table index 0, offset None, flags 0x20080000000001
 	UPROPERTY()
-	uint8 bShouldShowBackgroundImage : 1;
+	bool bShouldShowBackgroundImage;
 
 };
 

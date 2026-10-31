@@ -43,7 +43,7 @@ struct FRandomDayphaseFX
 
 	// table index 1, offset None, flags 0x10000000002000
 	UPROPERTY()
-	uint8 bRandomSelectionAlreadyHappened : 1;
+	bool bRandomSelectionAlreadyHappened;
 
 	// table index 0, offset 56, flags 0x10000000082008
 	UPROPERTY()

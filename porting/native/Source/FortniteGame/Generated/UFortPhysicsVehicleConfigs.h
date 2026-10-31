@@ -118,11 +118,11 @@ public:
 
 	// table index 179, flags 0x10000000014001
 	UPROPERTY(Config)
-	uint8 bSteerWithFrontWheels : 1;
+	bool bSteerWithFrontWheels;
 
 	// table index 178, flags 0x10000000014001
 	UPROPERTY(Config)
-	uint8 bInvertSteeringWhenReversing : 1;
+	bool bInvertSteeringWhenReversing;
 
 	// table index 177, flags 0x10000000014001
 	UPROPERTY(Config)
@@ -602,19 +602,19 @@ public:
 
 	// table index 58, flags 0x10000000010001
 	UPROPERTY()
-	uint8 bVehicleCameraSteering : 1;
+	bool bVehicleCameraSteering;
 
 	// table index 57, flags 0x10000000010001
 	UPROPERTY()
-	uint8 bVehicleScreenSpaceSteering : 1;
+	bool bVehicleScreenSpaceSteering;
 
 	// table index 56, flags 0x10000000010001
 	UPROPERTY()
-	uint8 bVehicleCameraLeftAnalogSteering : 1;
+	bool bVehicleCameraLeftAnalogSteering;
 
 	// table index 55, flags 0x10000000010001
 	UPROPERTY()
-	uint8 bUseKinematicReplicationWhenNotRendered : 1;
+	bool bUseKinematicReplicationWhenNotRendered;
 
 	// table index 54, flags 0x10000000004005
 	UPROPERTY(Config)
@@ -658,7 +658,7 @@ public:
 
 	// table index 44, flags 0x10000000004005
 	UPROPERTY(Config)
-	uint8 bCanDestroyProps : 1;
+	bool bCanDestroyProps;
 
 	// table index 43, flags 0x10000000004005
 	UPROPERTY(Config)
@@ -674,7 +674,7 @@ public:
 
 	// table index 40, flags 0x10000000004005
 	UPROPERTY(Config)
-	uint8 bShouldUseLocalIgnoreListForDestroyedBuildings : 1;
+	bool bShouldUseLocalIgnoreListForDestroyedBuildings;
 
 	// table index 39, flags 0x10000000004005
 	UPROPERTY(Config)
@@ -686,7 +686,7 @@ public:
 
 	// table index 37, flags 0x10000000004005
 	UPROPERTY(Config)
-	uint8 bShouldServerRunReducedSprings : 1;
+	bool bShouldServerRunReducedSprings;
 
 	// table index 36, flags 0x10000000004005
 	UPROPERTY(Config)
@@ -694,11 +694,11 @@ public:
 
 	// table index 35, flags 0x10000000004005
 	UPROPERTY(Config)
-	uint8 bDontApplyDragInAir : 1;
+	bool bDontApplyDragInAir;
 
 	// table index 34, flags 0x10000000004005
 	UPROPERTY(Config)
-	uint8 bDriverCanDamageVehicle : 1;
+	bool bDriverCanDamageVehicle;
 
 	// table index 33, flags 0x10000000004005
 	UPROPERTY(Config)
@@ -706,7 +706,7 @@ public:
 
 	// table index 32, flags 0x10000000004005
 	UPROPERTY(Config)
-	uint8 bUseFuel : 1;
+	bool bUseFuel;
 
 	// table index 31, flags 0x10000000004005
 	UPROPERTY(Config)
@@ -754,11 +754,11 @@ public:
 
 	// table index 20, flags 0x10000000004005
 	UPROPERTY(Config)
-	uint8 bModifyShocksInWater : 1;
+	bool bModifyShocksInWater;
 
 	// table index 19, flags 0x10000000004005
 	UPROPERTY(Config)
-	uint8 bApplyPushForceAtSocket : 1;
+	bool bApplyPushForceAtSocket;
 
 	// table index 18, flags 0x10000000004005
 	UPROPERTY(Config)
@@ -826,7 +826,7 @@ public:
 
 	// table index 2, flags 0x10000000014001
 	UPROPERTY(Config)
-	uint8 bOverrideErrorCorrection : 1;
+	bool bOverrideErrorCorrection;
 
 	// table index 1, flags 0x10000000014001
 	UPROPERTY(Config)

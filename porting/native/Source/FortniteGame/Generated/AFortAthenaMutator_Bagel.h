@@ -63,7 +63,7 @@ public:
 
 	// table index 66, flags 0x20080000010001
 	UPROPERTY()
-	uint8 bOverrideReplicationSettingsDebug : 1;
+	bool bOverrideReplicationSettingsDebug;
 
 	// table index 65, flags 0x20080000010001
 	UPROPERTY()
@@ -183,7 +183,7 @@ public:
 
 	// table index 34, flags 0x20080000010015
 	UPROPERTY()
-	uint8 bUseLootTierOverrides : 1;
+	bool bUseLootTierOverrides;
 
 	// table index 32, flags 0x20080000010015
 	UPROPERTY()
@@ -243,11 +243,11 @@ public:
 
 	// table index 17, flags 0x20080000002014
 	UPROPERTY(Transient)
-	uint8 bIsGameOver : 1;
+	bool bIsGameOver;
 
 	// table index 16, flags 0x20080000002034
 	UPROPERTY(Replicated, Transient)
-	uint8 bIsRespawningAllowed : 1;
+	bool bIsRespawningAllowed;
 
 	// table index 15, flags 0x20080000002014
 	UPROPERTY(Transient)

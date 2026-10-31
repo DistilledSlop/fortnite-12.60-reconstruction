@@ -42,6 +42,7 @@ DEFAULT_OUT = os.path.join(REPO, "porting", "generated", "native_classes")
 
 # EPropertyFlags (UObjectMacros/ObjectMacros.h, UE 4.25)
 CPF_NET = 0x20
+GEN_NATIVE_BOOL = 0x20   # EPropertyGenFlags::NativeBool (kind_raw of a Bool property)
 CPF_CONST_PARM = 0x2
 CPF_OUT_PARM = 0x100
 CPF_RETURN_PARM = 0x400
@@ -206,6 +207,9 @@ class Resolver:
             return "TArray<%s>" % inner
         if kind == "Set":
             elem = children.get("elem")
+            if elem and elem.get("kind") == "Struct" and self.generated_struct(elem):
+                # TSet hashes its elements with GetTypeHash, which a generated struct does not have (no body is recovered).
+                return self.todo_named("SetElem", entry.get("name"))
             inner = self.ctype(elem, {}) if elem else self.todo_named("SetElem", entry.get("name"))
             return "TSet<%s>" % inner
         if kind == "Map":
@@ -301,7 +305,9 @@ def build_members(props, resolver, promote=False, struct_mode=False):
         new_tokens = resolver.tokens[mark:]
         wire = resolver.wire_used
         used = resolver.used
-        bitfield = entry.get("kind") == "Bool" and bool(entry.get("bitfield"))
+        # A native bool (EPropertyGenFlags::NativeBool, 0x20 in kind_raw) is a `bool` member. Only the other bools are
+        # bitfields. SetBitFunc is set for both kinds, so it does not tell them apart.
+        bitfield = entry.get("kind") == "Bool" and not (hx(entry.get("kind_raw")) & GEN_NATIVE_BOOL)
         dim = int(entry.get("array_dim") or 1)
         name = entry.get("name") or "UnnamedProperty%d" % index
         if promote:
@@ -983,7 +989,15 @@ def self_test():
 # a property whose type needs a struct, enum, delegate, interface or a class outside the set is skipped
 # and recorded. Functions are emitted only when they are RPCs (wire-relevant) or RepNotify targets.
 
-PROMOTE_PACKAGES = ("/Script/FortniteGame", "/Script/PlayspaceFramework")
+# Packages that are not in the UE 4.25 engine tree (or whose plugin is not enabled). Each one is generated as a runtime
+# module named after the package, so the class path /Script/<Name>.<Class> is the original one. The module's Build.cs
+# and IMPLEMENT_MODULE file are written by --promote (porting/native_classes_status.md, "Runtime modules").
+RUNTIME_MODULE_PACKAGES = (
+    "/Script/BlueprintContext", "/Script/MeshNetwork", "/Script/CommonUI", "/Script/AmbientAudio", "/Script/Account",
+    "/Script/ModularGameplay", "/Script/McpProfileSys",
+)
+HAND_WRITTEN_MODULES = ("FortniteGame", "PlayspaceFramework")   # Build.cs and IMPLEMENT_* files are not generated
+PROMOTE_PACKAGES = ("/Script/FortniteGame", "/Script/PlayspaceFramework") + RUNTIME_MODULE_PACKAGES
 ENGINE_PACKAGES = ("/Script/Engine", "/Script/CoreUObject")
 FUNC_NET_ANY = FUNC_NET | FUNC_NET_SERVER | FUNC_NET_CLIENT | FUNC_NET_MULTICAST
 ENGINE_CLASS_DECL_RE = re.compile(
@@ -1003,6 +1017,8 @@ GATE_CATEGORIES = (
     ("TODO_DelegateNotEmittable_", "delegate_member_unresolved"),
     ("TODO_DelegateParams_", "delegate_params_unsupported"),
     ("TODO_DelegateSparse_", "delegate_sparse_macro"),
+    ("TODO_StructNameClash_", "struct_name_clash"),
+    ("TODO_DelegateNameClash_", "delegate_name_clash"),
 )
 
 
@@ -1221,7 +1237,7 @@ def render_promoted_header(model, api, parent_include, source_label):
     return "\n".join(lines) + "\n"
 
 
-def render_interface_header(name, source_label):
+def render_interface_header(name, source_label, api):
     """UINTERFACE U<Name> (parent UInterface) and its native interface I<Name>, in one header as UHT expects."""
     iname = "I" + name[1:]
     lines = [
@@ -1235,12 +1251,12 @@ def render_interface_header(name, source_label):
         "#include \"%s.generated.h\"" % name,
         "",
         "UINTERFACE()",
-        "class FORTNITEGAME_API %s : public UInterface" % name,
+        "class %s %s : public UInterface" % (api, name),
         "{",
         "\tGENERATED_BODY()",
         "};",
         "",
-        "class FORTNITEGAME_API %s" % iname,
+        "class %s %s" % (api, iname),
         "{",
         "\tGENERATED_IINTERFACE_BODY()",
         "};",
@@ -1311,6 +1327,94 @@ def count_by(records, key):
         value = str(record.get(key))
         out[value] = out.get(value, 0) + 1
     return dict(sorted(out.items(), key=lambda kv: (-kv[1], kv[0])))
+
+
+def engine_macro_names(engine_root):
+    """Global typedef names the engine's party interface creates through PARTY_DECLARE_DELEGATETYPE(X): F<X>Delegate.
+    The token pasting hides them from the name search, and a generated type of the same name clashes with them."""
+    path = os.path.join(engine_root, "Plugins", "Online", "OnlineSubsystem", "Source", "Public", "Interfaces",
+                        "OnlinePartyInterface.h")
+    if not os.path.isfile(path):
+        return set()
+    with open(path, "r", encoding="utf-8", errors="replace") as fh:
+        found = re.findall(r"PARTY_DECLARE_DELEGATETYPE\((\w+)\)", fh.read())
+    return {"F%sDelegate" % name for name in found if name != "Type"}
+
+
+def own_includes(gate, used, package):
+    """Headers the items of one package include: engine headers and the package's own promoted types. A promoted
+    type of another package is never included (TypeGate skips it), which keeps the module graph acyclic."""
+    out = set()
+    for fn in used:
+        info = gate.info(fn)
+        if info is not None and info.package in PROMOTE_PACKAGES and info.package != package:
+            continue
+        inc = gate.include_of(fn)
+        if inc:
+            out.add(inc)
+    return sorted(out)
+
+
+def find_module_cycle(module_deps, promoted_modules):
+    """A cycle among the modules that the generator writes (engine modules are not part of the graph), or None."""
+    graph = {m: sorted(d for d in deps if d in promoted_modules) for m, deps in module_deps.items()}
+    state = {}
+    stack = []
+
+    def visit(node):
+        state[node] = 1
+        stack.append(node)
+        for nxt in graph.get(node, []):
+            if state.get(nxt) == 1:
+                return stack[stack.index(nxt):] + [nxt]
+            if state.get(nxt) is None:
+                found = visit(nxt)
+                if found:
+                    return found
+        state[node] = 2
+        stack.pop()
+        return None
+
+    for node in sorted(graph):
+        if state.get(node) is None:
+            found = visit(node)
+            if found:
+                return found
+    return None
+
+
+def render_module_build_cs(module, deps, source_label):
+    base = ["Core", "CoreUObject", "Engine", "Slate"]   # Slate: FSlateApplication is used by widgets (CommonUI)
+    names = ", ".join('"%s"' % d for d in base + [d for d in deps if d not in base])
+    return "\n".join([
+        "using System.IO;",
+        "using UnrealBuildTool;",
+        "",
+        "// Runtime module generated by porting/gen_native_classes.py --promote from %s." % source_label,
+        "// It is named after its original package (/Script/%s): the class path is part of the wire format, and the" % module,
+        "// package is not in the UE 4.25 engine tree, so the module stands in for it. Do not edit by hand: run",
+        "// porting/promote_native_classes.sh. See porting/native_classes_status.md, \"Runtime modules\".",
+        "public class %s : ModuleRules" % module,
+        "{",
+        "    public %s(ReadOnlyTargetRules Target) : base(Target)" % module,
+        "    {",
+        "        PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;",
+        "        PublicDependencyModuleNames.AddRange(new[] { %s });" % names,
+        "        PublicIncludePaths.Add(Path.Combine(ModuleDirectory, \"Generated\"));",
+        "    }",
+        "}",
+        "",
+    ])
+
+
+def render_module_cpp(module, source_label):
+    return "\n".join([
+        "// Generated by porting/gen_native_classes.py --promote from %s. Do not edit by hand." % source_label,
+        "#include \"Modules/ModuleManager.h\"",
+        "",
+        "IMPLEMENT_MODULE(FDefaultModuleImpl, %s);" % module,
+        "",
+    ])
 
 
 def promote(args):
@@ -1411,6 +1515,7 @@ def promote(args):
                 iface_map[fn] = "I" + name[1:]
     resolver = Resolver(type_map, known_fns=known, iface_map=iface_map)
     gate = TypeGate(tables, EngineTypeIndex(args.engine_root, registry), resolver)
+    gate.name_clashes = engine_macro_names(args.engine_root)
     resolver.gate = gate
     header_index = ModuleHeaderIndex(registry)
     source_label = os.path.relpath(args.reflection, REPO)
@@ -1420,35 +1525,44 @@ def promote(args):
     all_skipped = []
     class_models = []
     class_outputs = []
-    required = {}   # module -> names of the emitted items that include it
+    module_deps = {}   # module -> modules its emitted items need (engine modules and promoted modules)
+    package_of = {n: parents[name_to_block[n]].get("package") for n in listed if n in name_to_block}
+
+    def add_deps(module, mods):
+        module_deps.setdefault(module, set()).update(m for m in mods if m and m != module)
+
     for name in class_list:
         block = name_to_block[name]
+        package = parents[block].get("package")
+        module = package.rsplit("/", 1)[-1]
+        module_deps.setdefault(module, set())
         if is_interface(block):
             # UINTERFACE: no properties or functions are recovered for it; it only has to exist for TScriptInterface.
-            module = parents[block]["package"].rsplit("/", 1)[-1]
-            class_outputs.append((name, module, render_interface_header(name, source_label),
+            class_outputs.append((name, module, render_interface_header(name, source_label, "%s_API" % module.upper()),
                                   render_interface_cpp(name, source_label)))
             continue
         owner_fns = set(evidence_fns.get(block, []))
-        gate.current_package = parents[block].get("package")
+        gate.current_package = package
         model = build_class_promoted(blocks_by_va[block], name, resolver, parents[block], owner_fns)
-        model["includes"] = sorted({gate.include_of(f) for f in model["used"]} - {None})
+        model["includes"] = own_includes(gate, model["used"], package)
         class_models.append(model)
         parent = model["parent"]
         if parent in listed:
             parent_include = "%s.h" % parent
+            parent_pkg = package_of.get(parent)
         else:
             parent_pkg = (parents.get(str(parents[block].get("parent_va") or "").lower()) or {}).get("package")
             parent_module = parent_pkg.rsplit("/", 1)[-1] if parent_pkg else None
             parent_include = header_index.find(parent_module, parent)
             if parent_include is None:
                 raise SystemExit("%s: no header for parent %s in a usable module (%s)" % (name, parent, parent_pkg))
-            required.setdefault(parent_module, set()).add(name)
-        for inc in model["includes"]:
-            module = gate.engine.module_of_inc.get(inc)
-            if module:
-                required.setdefault(module, set()).add(name)
-        module = model["package"].rsplit("/", 1)[-1]
+            add_deps(module, [parent_module])
+        if parent_pkg and parent_pkg != package:
+            add_deps(module, [parent_pkg.rsplit("/", 1)[-1]])
+        add_deps(module, [gate.engine.module_of_inc.get(inc) for inc in model["includes"]])
+        # Forward-declared classes of another generated package need that module (a cycle is refused below).
+        add_deps(module, [(package_of.get(ref) or "").rsplit("/", 1)[-1] for ref in model["forward_decls"]
+                          if (package_of.get(ref) or "") in PROMOTE_PACKAGES and package_of.get(ref) != package])
         api = "%s_API" % module.upper()
         header = render_promoted_header(model, api, parent_include, source_label)
         cpp = render_promoted_cpp(model, source_label)
@@ -1490,22 +1604,39 @@ def promote(args):
         if info is not None and info.package not in PROMOTE_PACKAGES:
             inc = gate.include_of(fn)
             engine_used.append({"type": info.cpp_name, "kind": info.kind, "package": info.package, "include": inc})
-            module = gate.engine.module_of_inc.get(inc)
-            if module:
-                required.setdefault(module, set()).add(info.cpp_name)
+    for fn, model in models.items():
+        info = gate.info(fn)
+        module_deps.setdefault(info.module, set())
+        add_deps(info.module, [gate.engine.module_of_inc.get(inc) for inc in model["includes"]])
 
-    # Module check: every module that an emitted include comes from must be a dependency of the game module.
+    # Module check: the game module lists every module its items need. The runtime modules depend on engine
+    # modules only, and on each other only through parents and forward declarations; a cycle is refused.
     deps = build_cs_modules(FORTNITE_BUILD_CS)
-    needed = sorted(m for m in required if m and m != "FortniteGame")
+    needed = sorted(m for m in module_deps.get("FortniteGame", ()) if m != "FortniteGame")
     missing_deps = [m for m in needed if m not in deps]
+    promoted_modules = {p.rsplit("/", 1)[-1] for p in PROMOTE_PACKAGES}
+    cycle = find_module_cycle(module_deps, promoted_modules)
+    if cycle:
+        raise SystemExit("module dependency cycle: %s" % " -> ".join(cycle))
+    # Hand-written modules that hold generated classes (FortniteGame, PlayspaceFramework) list their needs in Build.cs.
+    hand_missing = {}
+    for module in HAND_WRITTEN_MODULES:
+        if module not in module_deps:
+            continue
+        build_cs = FORTNITE_BUILD_CS if module == "FortniteGame" else os.path.join(args.source_root, module, module + ".Build.cs")
+        listed_deps = build_cs_modules(build_cs)
+        absent = sorted(m for m in module_deps[module] if m != module and m not in listed_deps)
+        if absent:
+            hand_missing[module] = absent
     os.makedirs(args.report_dir, exist_ok=True)
     with open(os.path.join(args.report_dir, "required_modules.json"), "w", encoding="utf-8", newline="\n") as fh:
         json.dump({"listed_in_build_cs": sorted(m for m in needed if m in deps),
                    "missing_from_build_cs": missing_deps,
-                   "users": {m: sorted(required[m]) for m in needed}}, fh, indent=1)
+                   "hand_written_missing": hand_missing,
+                   "modules": {m: sorted(v) for m, v in sorted(module_deps.items())}}, fh, indent=1)
         fh.write("\n")
-    if missing_deps:
-        raise SystemExit("FortniteGame.Build.cs must add these modules: %s" % ", ".join(missing_deps))
+    if missing_deps or hand_missing:
+        raise SystemExit("Build.cs must add these modules: %s" % json.dumps({"FortniteGame": missing_deps, **hand_missing}))
 
     # Pass 2: write the class files.
     for name, module, header, cpp in class_outputs:
@@ -1515,6 +1646,20 @@ def promote(args):
             fh.write(header)
         with open(os.path.join(out_dir, name + ".cpp"), "w", encoding="utf-8", newline="\n") as fh:
             fh.write(cpp)
+
+    engine_shared = sorted(m for m in deps if m in registry.modules and m not in promoted_modules)
+    for module in sorted(module_deps):
+        if module in HAND_WRITTEN_MODULES:
+            continue
+        # Engine modules the game module lists (they cover forward declarations of engine classes), plus this
+        # module's own needs: engine modules of its headers and promoted modules of its parents.
+        own = sorted((set(engine_shared) | module_deps[module]) - {module, "FortniteGame"})
+        module_dir = os.path.join(args.source_root, module)
+        os.makedirs(os.path.join(module_dir, "Private"), exist_ok=True)
+        with open(os.path.join(module_dir, module + ".Build.cs"), "w", encoding="utf-8", newline="\n") as fh:
+            fh.write(render_module_build_cs(module, own, source_label))
+        with open(os.path.join(module_dir, "Private", module + ".cpp"), "w", encoding="utf-8", newline="\n") as fh:
+            fh.write(render_module_cpp(module, source_label))
 
     type_files = []
     for fn, model in sorted(models.items(), key=lambda kv: (kv[1]["kind"], kv[1]["cpp_name"])):
@@ -1835,6 +1980,7 @@ class TypeGate:
         self.models = {}            # fn -> model dict, or None when the type cannot be emitted
         self.reasons = {}           # fn -> reason string when the type cannot be emitted
         self._wire = {}
+        self.name_clashes = set()   # promoted type names the engine declares through macros (see engine_macro_names)
 
     def info(self, fn):
         return self.tables.by_fn.get(fn.lower()) if fn else None
@@ -1856,6 +2002,10 @@ class TypeGate:
             # The sparse macro names the owning class and the property, which the reflection does not give.
             return resolver.todo("DelegateSparse", fn)
         resolver.used.setdefault(info.fn, set()).add(entry_kind or "")
+        if info.package in PROMOTE_PACKAGES and info.cpp_name in self.name_clashes:
+            # The engine declares this global name through a macro (token pasting), so the name cannot be included
+            # next to the engine header that declares it. Not emitted.
+            return resolver.todo(label + "NameClash", fn)
         if info.package in PROMOTE_PACKAGES:
             if info.package != self.current_package:
                 return resolver.todo(label + "OtherModule", fn)
@@ -2120,7 +2270,7 @@ def emit_types(gate, seeds, source_label):
         if info.package not in PROMOTE_PACKAGES or info.fn in models:
             continue
         model = gate.model(info)
-        model["includes"] = sorted({gate.include_of(f) for f in model["used"]} - {None})
+        model["includes"] = own_includes(gate, model["used"], info.package)
         if info.kind == "struct" and model["parent"] is not None:
             parent_fn = info.rec.get("super_fn")
             model["parent_include"] = gate.include_of(parent_fn) if parent_fn else None

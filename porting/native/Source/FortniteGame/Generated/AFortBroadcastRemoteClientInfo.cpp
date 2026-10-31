@@ -2,6 +2,11 @@
 #include "AFortBroadcastRemoteClientInfo.h"
 #include "Net/UnrealNetwork.h"
 
+void AFortBroadcastRemoteClientInfo::ClientRemotePlayerAddMapMarker_Implementation(const FFortWorldMarkerData& InMarkerData)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortBroadcastRemoteClientInfo::ClientRemotePlayerDamagedResourceBuilding_Implementation(bool bJustHitWeakspot, bool bDestroyed, int32 PotentialResourceCount, EFortResourceType::Type PotentialResourceType, ABuildingSMActor* BuildingSMActor)
 {
 	// Body not recovered: reflection-derived stub.

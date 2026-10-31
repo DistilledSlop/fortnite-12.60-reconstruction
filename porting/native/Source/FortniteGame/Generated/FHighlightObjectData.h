@@ -59,11 +59,11 @@ struct FHighlightObjectData
 
 	// table index 1, offset None, flags 0x10000000002000
 	UPROPERTY()
-	uint8 bIgnoreDistanceCheck : 1;
+	bool bIgnoreDistanceCheck;
 
 	// table index 0, offset None, flags 0x10000000002000
 	UPROPERTY()
-	uint8 bOnlyHighlightOwningActor : 1;
+	bool bOnlyHighlightOwningActor;
 
 };
 

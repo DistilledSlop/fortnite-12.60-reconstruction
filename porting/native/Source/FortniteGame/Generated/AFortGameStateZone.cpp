@@ -7,6 +7,11 @@ void AFortGameStateZone::NotifyEndFailedGameplayVoteLockout_Implementation(const
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortGameStateZone::OnRep_AllSpawnGroupUpgradeModifierDefs()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortGameStateZone::OnRep_bGlobalCeaseFire()
 {
 	// Body not recovered: reflection-derived stub.
@@ -102,6 +107,11 @@ void AFortGameStateZone::OnRepServerUnstableFramerate()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortGameStateZone::OnWaveBasedModifiersAppliedMulticast_Implementation(const TArray<UFortGameplayModifierItemDefinition*>& ModifiersApplied)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortGameStateZone::OnWaveStart_Implementation(int32 WaveNum, const FText& WaveText, int32 Level, const FText& LevelText)
 {
 	// Body not recovered: reflection-derived stub.
@@ -154,6 +164,7 @@ void AFortGameStateZone::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& O
 	DOREPLIFETIME(AFortGameStateZone, PlayerSharedMaxTrapAttributes);
 	DOREPLIFETIME(AFortGameStateZone, PlayerBuildingSkillLevel);
 	DOREPLIFETIME(AFortGameStateZone, CompletionResult);
+	DOREPLIFETIME(AFortGameStateZone, AllSpawnGroupUpgradeModifierDefs);
 	DOREPLIFETIME(AFortGameStateZone, ReplicatedMontageMap);
 	DOREPLIFETIME(AFortGameStateZone, MaxEncounterSP);
 	DOREPLIFETIME(AFortGameStateZone, MaxEncounterAI);

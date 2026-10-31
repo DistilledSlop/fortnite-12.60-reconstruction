@@ -30,7 +30,7 @@ public:
 
 	// table index 0, flags 0x20080000000825
 	UPROPERTY(Replicated)
-	uint8 bIsEndPoint : 1;
+	bool bIsEndPoint;
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

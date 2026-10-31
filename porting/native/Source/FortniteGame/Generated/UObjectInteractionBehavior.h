@@ -74,11 +74,11 @@ public:
 
 	// table index 2, flags 0x20080000010001
 	UPROPERTY()
-	uint8 bShouldAddToParent : 1;
+	bool bShouldAddToParent;
 
 	// table index 1, flags 0x20080000010001
 	UPROPERTY()
-	uint8 bShouldUseActorToSelection : 1;
+	bool bShouldUseActorToSelection;
 
 	// table index 0, flags 0x20080000010001
 	UPROPERTY()

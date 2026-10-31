@@ -21,11 +21,11 @@ class FORTNITEGAME_API AFortGameStateOutpost : public AFortGameStatePvE
 public:
 	// table index 11, flags 0x20080000000020
 	UPROPERTY(Replicated)
-	uint8 bOutpostDefenseActive : 1;
+	bool bOutpostDefenseActive;
 
 	// table index 10, flags 0x20080000000020
 	UPROPERTY(Replicated)
-	uint8 bWargameActive : 1;
+	bool bWargameActive;
 
 	// table index 8, flags 0x20080000000020
 	UPROPERTY(Replicated)
@@ -33,7 +33,7 @@ public:
 
 	// table index 7, flags 0x20080000000020
 	UPROPERTY(Replicated)
-	uint8 bOutpostStatusAllowsMissionStart : 1;
+	bool bOutpostStatusAllowsMissionStart;
 
 	// table index 5, flags 0x20080000002000
 	UPROPERTY(Transient)

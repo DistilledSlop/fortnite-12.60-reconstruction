@@ -10,6 +10,7 @@
 #include "FCharmPreviewEntry.h"
 
 class AFortPlayerCharm;
+class UAthenaCharmItemDefinition;
 class USkeletalMeshComponent;
 
 #include "AFortWeaponCharmPreviewActor.generated.h"
@@ -23,6 +24,10 @@ public:
 	// table index 4, flags 0x40000000002000
 	UPROPERTY(Transient)
 	FCharmPreviewEntry CurrentEntryInfo;
+
+	// table index 3, flags 0x20080000000014
+	UPROPERTY()
+	UAthenaCharmItemDefinition* MyCharm;
 
 	// table index 2, flags 0x20080000002000
 	UPROPERTY(Transient)

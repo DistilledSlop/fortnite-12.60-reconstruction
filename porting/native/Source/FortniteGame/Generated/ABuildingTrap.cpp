@@ -7,6 +7,11 @@ void ABuildingTrap::OnRep_AttachedTo()
 	// Body not recovered: reflection-derived stub.
 }
 
+void ABuildingTrap::OnRep_ReplicatedAppliedAlterations()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void ABuildingTrap::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
@@ -14,5 +19,7 @@ void ABuildingTrap::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLif
 	DOREPLIFETIME(ABuildingTrap, OriginalTrapLevel);
 	DOREPLIFETIME(ABuildingTrap, TrapLevel);
 	DOREPLIFETIME(ABuildingTrap, AttachedTo);
+	DOREPLIFETIME(ABuildingTrap, AppliedAlterations);
+	DOREPLIFETIME(ABuildingTrap, TrapData);
 }
 

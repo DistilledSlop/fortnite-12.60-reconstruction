@@ -14,7 +14,7 @@ struct FLevelStreamRequestHandshakeState
 
 	// table index 0, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bLevelStreamingCompleted : 1;
+	bool bLevelStreamingCompleted;
 
 };
 

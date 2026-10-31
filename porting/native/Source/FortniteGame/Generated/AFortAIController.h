@@ -10,6 +10,7 @@
 
 class AActor;
 class AFortAIPawn;
+class UAIGoalComponent;
 class UFortPathFollowingComponent;
 
 #include "AFortAIController.generated.h"
@@ -59,6 +60,10 @@ public:
 	// table index 1, flags 0x10000000002014
 	UPROPERTY(Transient)
 	AFortAIPawn* MyFortPawn;
+
+	// table index 0, flags 0x2008000008001c
+	UPROPERTY()
+	UAIGoalComponent* AIGoalComponent;
 
 };
 

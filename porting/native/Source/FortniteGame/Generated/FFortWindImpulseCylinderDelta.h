@@ -21,11 +21,11 @@ struct FFortWindImpulseCylinderDelta
 
 	// table index 15, offset None, flags 0x40000000002000
 	UPROPERTY()
-	uint8 bInitialized : 1;
+	bool bInitialized;
 
 	// table index 14, offset None, flags 0x40000000002000
 	UPROPERTY()
-	uint8 bRippleOutward : 1;
+	bool bRippleOutward;
 
 	// table index 13, offset 16, flags 0x40000000002000
 	UPROPERTY()

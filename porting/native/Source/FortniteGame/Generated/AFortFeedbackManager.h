@@ -25,7 +25,7 @@ public:
 
 	// table index 6, flags 0x10000000010001
 	UPROPERTY()
-	uint8 bUsesStWFeedbackEvents : 1;
+	bool bUsesStWFeedbackEvents;
 
 	// table index 4, flags 0x10000000000001
 	UPROPERTY()

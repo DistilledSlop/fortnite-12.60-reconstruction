@@ -30,7 +30,7 @@ struct FProfileGoCommand
 
 	// table index 0, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 CopyOutputToGameLog : 1;
+	bool CopyOutputToGameLog;
 
 };
 

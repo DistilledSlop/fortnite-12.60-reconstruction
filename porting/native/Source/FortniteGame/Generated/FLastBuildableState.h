@@ -20,7 +20,7 @@ struct FLastBuildableState
 
 	// table index 1, offset None, flags 0x10000000002000
 	UPROPERTY()
-	uint8 LastBuildableMirrored : 1;
+	bool LastBuildableMirrored;
 
 	// table index 0, offset 12, flags 0x10000000002000
 	UPROPERTY()

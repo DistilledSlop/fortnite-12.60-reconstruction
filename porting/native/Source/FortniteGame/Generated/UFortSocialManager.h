@@ -16,11 +16,11 @@ class FORTNITEGAME_API UFortSocialManager : public USocialManager
 public:
 	// table index 3, flags 0x40000000000000
 	UPROPERTY()
-	uint8 bTutorialCompleted : 1;
+	bool bTutorialCompleted;
 
 	// table index 2, flags 0x40000000000000
 	UPROPERTY()
-	uint8 bLeftLastPartyFromGameDisconnect : 1;
+	bool bLeftLastPartyFromGameDisconnect;
 
 };
 

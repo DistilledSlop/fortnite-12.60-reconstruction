@@ -39,7 +39,7 @@ public:
 
 	// table index 24, flags 0x10000000010015
 	UPROPERTY()
-	uint8 bIgnoreBlueprintOverrides : 1;
+	bool bIgnoreBlueprintOverrides;
 
 	// table index 23, flags 0x10000000010015
 	UPROPERTY()
@@ -63,7 +63,7 @@ public:
 
 	// table index 18, flags 0x10000000000015
 	UPROPERTY()
-	uint8 bShouldDrawCompassIcon : 1;
+	bool bShouldDrawCompassIcon;
 
 	// table index 16, flags 0x10000000010015
 	UPROPERTY()
@@ -87,7 +87,7 @@ public:
 
 	// table index 9, flags 0x10000000010015
 	UPROPERTY()
-	uint8 bShouldMaintainItemCount : 1;
+	bool bShouldMaintainItemCount;
 
 	// table index 8, flags 0x10000000010015
 	UPROPERTY()

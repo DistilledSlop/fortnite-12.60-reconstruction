@@ -70,7 +70,7 @@ public:
 
 	// table index 0, flags 0x10000000002005
 	UPROPERTY(Transient)
-	uint8 bIsPlayingBlackMondayEmote : 1;
+	bool bIsPlayingBlackMondayEmote;
 
 };
 

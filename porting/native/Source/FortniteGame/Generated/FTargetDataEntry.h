@@ -30,7 +30,7 @@ struct FTargetDataEntry
 
 	// table index 3, offset None, flags 0x10000000000001
 	UPROPERTY()
-	uint8 bFindInStormCircle : 1;
+	bool bFindInStormCircle;
 
 	// table index 1, offset 64, flags 0x10000000000001
 	UPROPERTY()

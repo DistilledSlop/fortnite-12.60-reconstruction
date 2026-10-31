@@ -42,7 +42,7 @@ public:
 
 	// table index 2, flags 0x10000000000005
 	UPROPERTY()
-	uint8 bEnableConversations : 1;
+	bool bEnableConversations;
 
 };
 

@@ -123,23 +123,23 @@ public:
 
 	// table index 14, flags 0x10000000002004
 	UPROPERTY(Transient)
-	uint8 bHasSnow : 1;
+	bool bHasSnow;
 
 	// table index 13, flags 0x10000000002000
 	UPROPERTY(Transient)
-	uint8 bBoostReadyFxOn : 1;
+	bool bBoostReadyFxOn;
 
 	// table index 12, flags 0x10000000002000
 	UPROPERTY(Transient)
-	uint8 bLargeRumble : 1;
+	bool bLargeRumble;
 
 	// table index 11, flags 0x10000000002000
 	UPROPERTY(Transient)
-	uint8 bTurnRumbleActive : 1;
+	bool bTurnRumbleActive;
 
 	// table index 10, flags 0x10000000002000
 	UPROPERTY(Transient)
-	uint8 bWaterDropsOnScreen : 1;
+	bool bWaterDropsOnScreen;
 
 	// table index 9, flags 0x10000000000015
 	UPROPERTY()
@@ -179,7 +179,7 @@ public:
 
 	// table index 0, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bBoostFailed : 1;
+	bool bBoostFailed;
 
 };
 

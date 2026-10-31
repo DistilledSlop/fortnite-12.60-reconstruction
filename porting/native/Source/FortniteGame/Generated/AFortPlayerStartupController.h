@@ -21,7 +21,7 @@ class FORTNITEGAME_API AFortPlayerStartupController : public AActor
 public:
 	// table index 11, flags 0x10000000000005
 	UPROPERTY()
-	uint8 UseIndividualHoldingAreas : 1;
+	bool UseIndividualHoldingAreas;
 
 	// table index 10, flags 0x10000000004014
 	UPROPERTY(Config)
@@ -45,7 +45,7 @@ public:
 
 	// table index 5, flags 0x10000000004014
 	UPROPERTY(Config)
-	uint8 DestroyImmediately : 1;
+	bool DestroyImmediately;
 
 	// table index 4, flags 0x10000010080000
 	UPROPERTY()

@@ -8,6 +8,7 @@
 
 #include "GameplayTagContainer.h"
 
+class UFortPOIAmbientAudioBank;
 class UFortPoiCollisionComponent;
 
 #include "AFortPoiVolume.generated.h"
@@ -20,7 +21,7 @@ class FORTNITEGAME_API AFortPoiVolume : public AVolume
 public:
 	// table index 6, flags 0x10000000020001
 	UPROPERTY()
-	uint8 bIsLargeGameVolume : 1;
+	bool bIsLargeGameVolume;
 
 	// table index 5, flags 0x10000000020001
 	UPROPERTY()
@@ -37,6 +38,10 @@ public:
 	// table index 2, flags 0x20080000000001
 	UPROPERTY()
 	FGameplayTagContainer LocationTags;
+
+	// table index 1, flags 0x20080000000001
+	UPROPERTY()
+	UFortPOIAmbientAudioBank* AudioBank;
 
 	// table index 0, flags 0x20080000080008
 	UPROPERTY()

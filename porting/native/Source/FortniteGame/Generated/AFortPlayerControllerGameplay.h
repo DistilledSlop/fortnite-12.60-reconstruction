@@ -8,6 +8,7 @@
 
 #include "Engine/EngineTypes.h"
 #include "FCreativeOptionVariableBase.h"
+#include "FGhostModeRepData.h"
 #include "FOnBalloonMovementChanged.h"
 #include "FOnCreativeFlyChanged.h"
 #include "FOnCreativeFlyingSpeedChanged.h"
@@ -35,6 +36,7 @@ class UCameraModifier;
 class UCreativeQuickbarComponent;
 class UFortAmbientAudioController;
 class UFortCreativeOptionsBundle;
+class UFortWorldItemDefinition;
 class UInputComponent;
 class UObject;
 
@@ -130,6 +132,10 @@ public:
 	UPROPERTY()
 	FOnBalloonMovementChanged OnBalloonMovementChanged;
 
+	// table index 39, flags 0x24080000010015
+	UPROPERTY()
+	TSoftObjectPtr<UFortWorldItemDefinition> CreativeMoveToolItemDefinition;
+
 	// table index 38, flags 0x24080000010001
 	UPROPERTY()
 	TSoftClassPtr<UCreativeQuickbarComponent> CreativeQuickbarClass;
@@ -145,6 +151,10 @@ public:
 	// table index 35, flags 0x20080000000001
 	UPROPERTY()
 	FVehicleTrickInfo VehicleTrickInfo;
+
+	// table index 34, flags 0x20080100002020
+	UPROPERTY(ReplicatedUsing=OnRep_GhostModeRepData, Transient)
+	FGhostModeRepData GhostModeRepData;
 
 	// table index 33, flags 0x20080010080000
 	UPROPERTY()
@@ -176,11 +186,11 @@ public:
 
 	// table index 26, flags 0x20080000002020
 	UPROPERTY(Replicated, Transient)
-	uint8 bDisplayNPCNumbers : 1;
+	bool bDisplayNPCNumbers;
 
 	// table index 25, flags 0x40000000002000
 	UPROPERTY(Transient)
-	uint8 bHasSetInitialPoiTags : 1;
+	bool bHasSetInitialPoiTags;
 
 	// table index 24, flags 0x40000000080008
 	UPROPERTY()
@@ -220,7 +230,7 @@ public:
 
 	// table index 14, flags 0x40000100002020
 	UPROPERTY(ReplicatedUsing=OnRep_IsFlightSprinting, Transient)
-	uint8 bIsFlightSprinting : 1;
+	bool bIsFlightSprinting;
 
 	// table index 13, flags 0x40000100002020
 	UPROPERTY(ReplicatedUsing=OnRep_IsCreativeModeEnabled, Transient)
@@ -291,6 +301,9 @@ public:
 
 	UFUNCTION()
 	void OnRep_FlyingModifierIndex();
+
+	UFUNCTION()
+	void OnRep_GhostModeRepData();
 
 	UFUNCTION()
 	void OnRep_IsCreativeModeEnabled();

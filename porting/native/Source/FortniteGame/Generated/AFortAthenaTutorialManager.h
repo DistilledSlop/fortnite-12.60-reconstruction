@@ -23,7 +23,7 @@ class FORTNITEGAME_API AFortAthenaTutorialManager : public AActor
 public:
 	// table index 17, flags 0x10000000000015
 	UPROPERTY()
-	uint8 bPlayTutorials : 1;
+	bool bPlayTutorials;
 
 	// table index 15, flags 0x10000000000015
 	UPROPERTY()
@@ -55,7 +55,7 @@ public:
 
 	// table index 7, flags 0x40000000000015
 	UPROPERTY()
-	uint8 ForceEnableDefensiveBuildingFlow : 1;
+	bool ForceEnableDefensiveBuildingFlow;
 
 	// table index 6, flags 0x40000000000020
 	UPROPERTY(Replicated)

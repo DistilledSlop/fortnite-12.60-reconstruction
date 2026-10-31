@@ -28,7 +28,7 @@ struct FFortTooltipDisplayStatInfo
 
 	// table index 0, offset None, flags 0x10000000010001
 	UPROPERTY()
-	uint8 bLowerIsBetter : 1;
+	bool bLowerIsBetter;
 
 };
 

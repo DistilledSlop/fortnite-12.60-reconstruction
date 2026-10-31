@@ -2,6 +2,11 @@
 #include "ABuildingTrapDefender.h"
 #include "Net/UnrealNetwork.h"
 
+void ABuildingTrapDefender::OnRep_DefenderItemDefinition()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void ABuildingTrapDefender::OnRep_DefenderPawn()
 {
 	// Body not recovered: reflection-derived stub.
@@ -12,6 +17,7 @@ void ABuildingTrapDefender::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(ABuildingTrapDefender, DefenderItemLevel);
+	DOREPLIFETIME(ABuildingTrapDefender, DefenderItemDefinition);
 	DOREPLIFETIME(ABuildingTrapDefender, DefenderPawn);
 }
 

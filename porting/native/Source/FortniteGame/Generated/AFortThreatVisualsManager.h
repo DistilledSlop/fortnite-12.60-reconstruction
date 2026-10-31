@@ -36,11 +36,11 @@ public:
 
 	// table index 18, flags 0x40000000010001
 	UPROPERTY()
-	uint8 bUseLocalPlayersOnlyForCloudMinimumHeight : 1;
+	bool bUseLocalPlayersOnlyForCloudMinimumHeight;
 
 	// table index 17, flags 0x40000100002020
 	UPROPERTY(ReplicatedUsing=OnRep_HideClouds, Transient)
-	uint8 bHideClouds : 1;
+	bool bHideClouds;
 
 	// table index 16, flags 0x40000000010001
 	UPROPERTY()

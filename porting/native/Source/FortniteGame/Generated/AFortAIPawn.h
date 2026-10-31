@@ -46,6 +46,7 @@ class AFortInventory;
 class AFortPickup;
 class AFortPlayerStateZone;
 class AFortWaterBodyActor;
+class UAIGoalComponent;
 class UBehaviorTree;
 class UFortAIAttributesSet;
 class UFortAIEncounterInfo;
@@ -53,6 +54,7 @@ class UFortAbilitySet;
 class UFortAbilitySystemComponent;
 class UFortAccountItem;
 class UFortCharacterAttrSet;
+class UFortGameplayModifierItemDefinition;
 class UFortNavObstacleComponent;
 class UFortSimpleMiniMapIndicator;
 class UFortWeaponAttrSet;
@@ -268,6 +270,10 @@ public:
 	// table index 143, flags 0x10000000000014
 	UPROPERTY()
 	AActor* SpawnSourceActor;
+
+	// table index 142, flags 0x14000000010001
+	UPROPERTY()
+	TSubclassOf<UAIGoalComponent> AIGoalComponentClass;
 
 	// table index 141, flags 0x10000000010001
 	UPROPERTY()
@@ -701,6 +707,14 @@ public:
 	UPROPERTY(Transient)
 	TArray<UFortAbilitySet*> SpawnInheritedCharacterAbilitySets;
 
+	// table index 20, flags 0x20080000002020
+	UPROPERTY(Replicated, Transient)
+	TArray<UFortGameplayModifierItemDefinition*> SpawnModifierDefinitions;
+
+	// table index 18, flags 0x20080000002020
+	UPROPERTY(Replicated, Transient)
+	TArray<UFortGameplayModifierItemDefinition*> AdditionalModifierDefinitions;
+
 	// table index 17, flags 0x2008000008001c
 	UPROPERTY()
 	UFortAbilitySystemComponent* AIPawnAbilitySystemComponent;
@@ -751,7 +765,7 @@ public:
 
 	// table index 4, flags 0x20080000010001
 	UPROPERTY()
-	uint8 bCanBeMarked : 1;
+	bool bCanBeMarked;
 
 	// table index 3, flags 0x20080000002000
 	UPROPERTY(Transient)

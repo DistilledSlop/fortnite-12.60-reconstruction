@@ -49,7 +49,7 @@ struct FFortAbilityTargetSelection
 
 	// table index 11, offset None, flags 0x10000000000005
 	UPROPERTY()
-	uint8 bAlignShapeEdgeToSourceLocation : 1;
+	bool bAlignShapeEdgeToSourceLocation;
 
 	// table index 10, offset 80, flags 0x10000000000005
 	UPROPERTY()
@@ -69,19 +69,19 @@ struct FFortAbilityTargetSelection
 
 	// table index 6, offset None, flags 0x10000000000005
 	UPROPERTY()
-	uint8 bExcludeObstructedByWorld : 1;
+	bool bExcludeObstructedByWorld;
 
 	// table index 5, offset None, flags 0x10000000000005
 	UPROPERTY()
-	uint8 bShouldAttachedActorsObstructTarget : 1;
+	bool bShouldAttachedActorsObstructTarget;
 
 	// table index 4, offset None, flags 0x10000000000005
 	UPROPERTY()
-	uint8 bCreateHitResultWhenNoTargetsFound : 1;
+	bool bCreateHitResultWhenNoTargetsFound;
 
 	// table index 3, offset None, flags 0x10000000000005
 	UPROPERTY()
-	uint8 bUseProjectileRotationForDamageZones : 1;
+	bool bUseProjectileRotationForDamageZones;
 
 	// table index 1, offset 236, flags 0x10000000000005
 	UPROPERTY()

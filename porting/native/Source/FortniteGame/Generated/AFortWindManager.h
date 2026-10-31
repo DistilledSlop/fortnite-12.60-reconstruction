@@ -25,11 +25,11 @@ class FORTNITEGAME_API AFortWindManager : public AActor
 public:
 	// table index 37, flags 0x40000000002000
 	UPROPERTY(Transient)
-	uint8 bAllowWindImpulses : 1;
+	bool bAllowWindImpulses;
 
 	// table index 36, flags 0x40000000002000
 	UPROPERTY(Transient)
-	uint8 bAllowResponderAudio : 1;
+	bool bAllowResponderAudio;
 
 	// table index 35, flags 0x40000000010001
 	UPROPERTY()

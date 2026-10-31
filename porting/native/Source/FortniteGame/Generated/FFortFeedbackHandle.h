@@ -25,11 +25,11 @@ struct FFortFeedbackHandle
 
 	// table index 2, offset None, flags 0x10000000000005
 	UPROPERTY()
-	uint8 bReadOnly : 1;
+	bool bReadOnly;
 
 	// table index 1, offset None, flags 0x10000000000005
 	UPROPERTY()
-	uint8 bBankDefined : 1;
+	bool bBankDefined;
 
 	// table index 0, offset 18, flags 0x10000000000005
 	UPROPERTY()

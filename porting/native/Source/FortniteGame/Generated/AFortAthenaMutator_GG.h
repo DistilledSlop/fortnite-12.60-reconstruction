@@ -8,6 +8,11 @@
 
 #include "AttributeSet.h"
 #include "FAthenaGameMessageData.h"
+#include "FGunGameGunEntries.h"
+#include "FGunGameGunEntry.h"
+#include "FGunGamePlayerData.h"
+#include "FLocalPlayerWeaponProgressed.h"
+#include "FOtherPlayerWeaponProgressed.h"
 
 class AActor;
 class AFortPlayerStateAthena;
@@ -32,6 +37,10 @@ public:
 	UPROPERTY()
 	FScalableFloat ElimsWithFinalTierToWin;
 
+	// table index 12, flags 0x20080000010001
+	UPROPERTY()
+	TArray<FGunGameGunEntry> WeaponEntries;
+
 	// table index 11, flags 0x20080000020001
 	UPROPERTY()
 	int32 ScoreToWin;
@@ -43,6 +52,22 @@ public:
 	// table index 8, flags 0x20080000000000
 	UPROPERTY()
 	AActor* CachedContext;
+
+	// table index 5, flags 0x20080000002000
+	UPROPERTY(Transient)
+	TMap<int32, FGunGameGunEntries> AwardEntriesAtElimMap;
+
+	// table index 2, flags 0x20080000000000
+	UPROPERTY()
+	TMap<AFortPlayerStateAthena*, FGunGamePlayerData> PlayerData;
+
+	// table index 1, flags 0x100000100b0001
+	UPROPERTY()
+	FLocalPlayerWeaponProgressed OnLocalPlayerAwardedWeapon;
+
+	// table index 0, flags 0x100000100b0001
+	UPROPERTY()
+	FOtherPlayerWeaponProgressed OnOtherPlayerAwardedWeapon;
 
 };
 

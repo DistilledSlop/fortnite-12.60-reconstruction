@@ -14,6 +14,7 @@
 
 class AActor;
 class AFortEventLevelNavigationActor;
+class UFortGameStateComponent_EventLevel;
 
 #include "AFortEventLevelCamera.generated.h"
 
@@ -54,6 +55,10 @@ public:
 	// table index 3, flags 0x24080000002000
 	UPROPERTY(Transient)
 	TArray<TWeakObjectPtr<AFortEventLevelNavigationActor>> NavigationActorsToTurnOn;
+
+	// table index 2, flags 0x24080000082008
+	UPROPERTY(Transient)
+	TWeakObjectPtr<UFortGameStateComponent_EventLevel> WeakDynamicLevelComp;
 
 	// table index 1, flags 0x20080000002000
 	UPROPERTY(Transient)

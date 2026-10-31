@@ -18,7 +18,7 @@ struct FNotificationUISettings
 
 	// table index 0, offset None, flags 0x10000000000014
 	UPROPERTY()
-	uint8 bShouldOverrideVisibilitySettings : 1;
+	bool bShouldOverrideVisibilitySettings;
 
 };
 

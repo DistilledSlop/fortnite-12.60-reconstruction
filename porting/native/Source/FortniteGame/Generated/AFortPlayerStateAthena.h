@@ -24,6 +24,8 @@
 #include "FSimpleMetricInformation.h"
 #include "GameFramework/OnlineReplStructs.h"
 
+class UAthenaGadgetItemDefinition;
+class UFortQuestItemDefinition;
 class UTexture2D;
 
 #include "AFortPlayerStateAthena.generated.h"
@@ -60,11 +62,15 @@ public:
 
 	// table index 66, flags 0x10000000000014
 	UPROPERTY()
-	uint8 bHasWonAGame : 1;
+	bool bHasWonAGame;
 
 	// table index 65, flags 0x40000100000034
 	UPROPERTY(ReplicatedUsing=OnRep_TeamKillScore)
 	int32 TeamKillScore;
+
+	// table index 62, flags 0x10000000002000
+	UPROPERTY(Transient)
+	TMap<UAthenaGadgetItemDefinition*, int32> KillsWhileAthenaGadgetEquippedMap;
 
 	// table index 59, flags 0x10000000002000
 	UPROPERTY(Transient)
@@ -212,15 +218,19 @@ public:
 
 	// table index 21, flags 0x10000000000014
 	UPROPERTY()
-	uint8 bIsTalking : 1;
+	bool bIsTalking;
 
 	// table index 20, flags 0x10000000000014
 	UPROPERTY()
-	uint8 bIsMuted : 1;
+	bool bIsMuted;
 
 	// table index 19, flags 0x20080000000014
 	UPROPERTY()
 	FString PartyAssistQuestId;
+
+	// table index 18, flags 0x20080000000014
+	UPROPERTY()
+	UFortQuestItemDefinition* PartyAssistQuestTemplate;
 
 	// table index 17, flags 0x40000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_MetricInformation)
@@ -240,7 +250,7 @@ public:
 
 	// table index 13, flags 0x40000000002020
 	UPROPERTY(Replicated, Transient)
-	uint8 bIsDisconnected : 1;
+	bool bIsDisconnected;
 
 	// table index 12, flags 0x40000000000000
 	UPROPERTY()
@@ -256,7 +266,7 @@ public:
 
 	// table index 9, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bResurrectionChipDisabled : 1;
+	bool bResurrectionChipDisabled;
 
 	// table index 8, flags 0x40000100002020
 	UPROPERTY(ReplicatedUsing=OnRep_ResurrectionChipReplicated, Transient)
@@ -264,7 +274,7 @@ public:
 
 	// table index 7, flags 0x40000100002020
 	UPROPERTY(ReplicatedUsing=OnRep_ResurrectingNow, Transient)
-	uint8 bResurrectingNow : 1;
+	bool bResurrectingNow;
 
 	// table index 6, flags 0x40000100002020
 	UPROPERTY(ReplicatedUsing=OnRep_RebootCounter, Transient)
@@ -272,7 +282,7 @@ public:
 
 	// table index 5, flags 0x40000000002020
 	UPROPERTY(Replicated, Transient)
-	uint8 bHoldsRebootVanLock : 1;
+	bool bHoldsRebootVanLock;
 
 	// table index 3, flags 0x40000100002034
 	UPROPERTY(ReplicatedUsing=OnRep_MatchAbandonState, Transient)
@@ -288,7 +298,7 @@ public:
 
 	// table index 0, flags 0x40000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_PreserveSquad)
-	uint8 bPreserveSquad : 1;
+	bool bPreserveSquad;
 
 	UFUNCTION(NetMulticast, Unreliable)
 	void Client_OnNewLevel(int32 NewLevel);

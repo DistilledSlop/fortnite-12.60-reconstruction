@@ -21,7 +21,7 @@ struct FSavedSpectatorCameraShot
 
 	// table index 6, offset None, flags 0x10000000000000
 	UPROPERTY()
-	uint8 bIsShotStart : 1;
+	bool bIsShotStart;
 
 	// table index 5, offset 388, flags 0x10000000000000
 	UPROPERTY()

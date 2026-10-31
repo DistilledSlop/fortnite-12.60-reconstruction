@@ -89,11 +89,11 @@ public:
 
 	// table index 10, flags 0x10000000002004
 	UPROPERTY(Transient)
-	uint8 bBoostCameraActive : 1;
+	bool bBoostCameraActive;
 
 	// table index 9, flags 0x10000000002004
 	UPROPERTY(Transient)
-	uint8 bLocalPlayerADS : 1;
+	bool bLocalPlayerADS;
 
 	// table index 8, flags 0x10000000002004
 	UPROPERTY(Transient)

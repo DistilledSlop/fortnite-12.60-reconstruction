@@ -35,6 +35,7 @@ class AFortThreatVisualsManager;
 class UBuildingStructuralSupportSystem;
 class UFortAbilitySystemComponent;
 class UFortCharacterCosmeticManager;
+class UFortGameplayModifierItemDefinition;
 class UFortMissionGenerator;
 class UFortSkinWeightOverrideManager;
 class UFortZoneTheme;
@@ -88,6 +89,10 @@ public:
 	UPROPERTY(Replicated, Transient)
 	FReplicatedMontageMap ReplicatedMontageMap;
 
+	// table index 76, flags 0x10000100002020
+	UPROPERTY(ReplicatedUsing=OnRep_AllSpawnGroupUpgradeModifierDefs, Transient)
+	TArray<UFortGameplayModifierItemDefinition*> AllSpawnGroupUpgradeModifierDefs;
+
 	// table index 74, flags 0x10000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_CompletionResult)
 	EFortCompletionResult CompletionResult;
@@ -110,11 +115,11 @@ public:
 
 	// table index 67, flags 0x20080000002020
 	UPROPERTY(Replicated, Transient)
-	uint8 bInvitesRestricted : 1;
+	bool bInvitesRestricted;
 
 	// table index 66, flags 0x20080000002020
 	UPROPERTY(Replicated, Transient)
-	uint8 bDBNODeathEnabled : 1;
+	bool bDBNODeathEnabled;
 
 	// table index 65, flags 0x20080100000020
 	UPROPERTY(ReplicatedUsing=OnRep_ServerGameplayTagIndexHash)
@@ -122,7 +127,7 @@ public:
 
 	// table index 64, flags 0x20080000004000
 	UPROPERTY(Config)
-	uint8 bDisconnectOnServerGameplayTagIndexHashMismatch : 1;
+	bool bDisconnectOnServerGameplayTagIndexHashMismatch;
 
 	// table index 63, flags 0x40000010080000
 	UPROPERTY()
@@ -138,7 +143,7 @@ public:
 
 	// table index 60, flags 0x20080100000020
 	UPROPERTY(ReplicatedUsing=OnRep_bGlobalCeaseFire)
-	uint8 bGlobalCeaseFire : 1;
+	bool bGlobalCeaseFire;
 
 	// table index 59, flags 0x20080000002020
 	UPROPERTY(Replicated, Transient)
@@ -150,7 +155,7 @@ public:
 
 	// table index 55, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bSupportRuntimeShutdownOfGameplayModifiers : 1;
+	bool bSupportRuntimeShutdownOfGameplayModifiers;
 
 	// table index 54, flags 0x20080000002000
 	UPROPERTY(Transient)
@@ -194,7 +199,7 @@ public:
 
 	// table index 41, flags 0x10000000000005
 	UPROPERTY()
-	uint8 bDrawRunVariationDebug : 1;
+	bool bDrawRunVariationDebug;
 
 	// table index 39, flags 0x40000000002000
 	UPROPERTY(Transient)
@@ -210,7 +215,7 @@ public:
 
 	// table index 36, flags 0x40000000002020
 	UPROPERTY(Replicated, Transient)
-	uint8 bIsGroupContent : 1;
+	bool bIsGroupContent;
 
 	// table index 35, flags 0x40000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_DifficultyIncreaseRewardTier)
@@ -286,19 +291,19 @@ public:
 
 	// table index 14, flags 0x20080000002020
 	UPROPERTY(Replicated, Transient)
-	uint8 bAllowBuildingAtLayoutRequirements : 1;
+	bool bAllowBuildingAtLayoutRequirements;
 
 	// table index 13, flags 0x20080000002020
 	UPROPERTY(Replicated, Transient)
-	uint8 bAllowBuildingWithoutLayoutRequirements : 1;
+	bool bAllowBuildingWithoutLayoutRequirements;
 
 	// table index 12, flags 0x20080000002020
 	UPROPERTY(Replicated, Transient)
-	uint8 bAllowLayoutRequirementsFeature : 1;
+	bool bAllowLayoutRequirementsFeature;
 
 	// table index 11, flags 0x20080000006000
 	UPROPERTY(Transient, Config)
-	uint8 bAllowBuildingThroughBlockingObjects : 1;
+	bool bAllowBuildingThroughBlockingObjects;
 
 	// table index 10, flags 0x20080000002000
 	UPROPERTY(Transient)
@@ -334,11 +339,14 @@ public:
 
 	// table index 0, flags 0x20080000010015
 	UPROPERTY()
-	uint8 bUseMaxBackpackSize : 1;
+	bool bUseMaxBackpackSize;
 
 	UFUNCTION(NetMulticast, Reliable)
 	void NotifyEndFailedGameplayVoteLockout(const EFortVoteType& VoteType);
 	void NotifyEndFailedGameplayVoteLockout_Implementation(const EFortVoteType& VoteType);
+
+	UFUNCTION()
+	void OnRep_AllSpawnGroupUpgradeModifierDefs();
 
 	UFUNCTION()
 	void OnRep_bGlobalCeaseFire();
@@ -396,6 +404,10 @@ public:
 
 	UFUNCTION()
 	void OnRepServerUnstableFramerate();
+
+	UFUNCTION(NetMulticast, Reliable)
+	void OnWaveBasedModifiersAppliedMulticast(const TArray<UFortGameplayModifierItemDefinition*>& ModifiersApplied);
+	void OnWaveBasedModifiersAppliedMulticast_Implementation(const TArray<UFortGameplayModifierItemDefinition*>& ModifiersApplied);
 
 	UFUNCTION(NetMulticast, Reliable)
 	void OnWaveStart(int32 WaveNum, const FText& WaveText, int32 Level, const FText& LevelText);

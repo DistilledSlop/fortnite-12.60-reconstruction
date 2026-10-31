@@ -27,7 +27,7 @@ struct FFortProjectileCues
 
 	// table index 3, offset None, flags 0x10000000000005
 	UPROPERTY()
-	uint8 bOrientHitGCsToProjectileVelocity : 1;
+	bool bOrientHitGCsToProjectileVelocity;
 
 	// table index 2, offset 28, flags 0x10000000000005
 	UPROPERTY()

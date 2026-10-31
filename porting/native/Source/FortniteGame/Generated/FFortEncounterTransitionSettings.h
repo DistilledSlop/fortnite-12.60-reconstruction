@@ -14,7 +14,7 @@ struct FFortEncounterTransitionSettings
 
 	// table index 0, offset None, flags 0x10000000010001
 	UPROPERTY()
-	uint8 bShouldMaintainEncounterState : 1;
+	bool bShouldMaintainEncounterState;
 
 };
 

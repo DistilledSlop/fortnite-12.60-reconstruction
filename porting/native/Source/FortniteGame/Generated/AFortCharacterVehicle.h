@@ -9,6 +9,7 @@
 #include "AttributeSet.h"
 #include "FFortAttributeInitializationKey.h"
 #include "FOnMountedWeaponFired.h"
+#include "FVehicleCosmeticInfo.h"
 #include "FVehicleHealthChanged.h"
 #include "GameplayTagContainer.h"
 #include "Math/Color.h"
@@ -17,9 +18,11 @@
 
 class AFortPlayerController;
 class UAnimInstance;
+class UAthenaItemWrapDefinition;
 class UFortAbilitySet;
 class UFortAbilitySystemComponent;
 class UFortCameraMode;
+class UFortMontageItemDefinitionBase;
 class UFortOstrichAnimInstance;
 class UFortOstrichSet;
 class UFortSkeletalAudioComponent;
@@ -37,23 +40,39 @@ class FORTNITEGAME_API AFortCharacterVehicle : public AFortPlayerPawnAthena
 public:
 	// table index 53, flags 0x10000000014001
 	UPROPERTY(Config)
-	uint8 bDestroyBuildingSMActorOnForceExit : 1;
+	bool bDestroyBuildingSMActorOnForceExit;
 
 	// table index 52, flags 0x10000000002004
 	UPROPERTY(Transient)
-	uint8 bDestroyOnLastExit : 1;
+	bool bDestroyOnLastExit;
 
 	// table index 51, flags 0x10000000004000
 	UPROPERTY(Config)
 	uint8 VTDMode;
 
+	// table index 50, flags 0x14000100000020
+	UPROPERTY(ReplicatedUsing=OnRep_OverrideWrap)
+	TSoftObjectPtr<UAthenaItemWrapDefinition> SoftOverrideItemWrap;
+
+	// table index 49, flags 0x10000000002000
+	UPROPERTY(Transient)
+	UAthenaItemWrapDefinition* OverrideItemWrap;
+
+	// table index 48, flags 0x10008000000000
+	UPROPERTY()
+	FVehicleCosmeticInfo VehicleCosmeticInfo;
+
 	// table index 47, flags 0x20080000000000
 	UPROPERTY()
-	uint8 bAllowInteractBetweenFortVolumes : 1;
+	bool bAllowInteractBetweenFortVolumes;
 
 	// table index 46, flags 0x2008000009001d
 	UPROPERTY()
 	USkeletalMeshComponent* EmoteMesh;
+
+	// table index 44, flags 0x20080000000015
+	UPROPERTY()
+	TArray<UFortMontageItemDefinitionBase*> SpecialVehicleEmotes;
 
 	// table index 43, flags 0x20080000000015
 	UPROPERTY()
@@ -189,7 +208,7 @@ public:
 
 	// table index 10, flags 0x20080000002000
 	UPROPERTY(Transient)
-	uint8 bDidChargeJump : 1;
+	bool bDidChargeJump;
 
 	// table index 9, flags 0x24080000002000
 	UPROPERTY(Transient)
@@ -233,6 +252,9 @@ public:
 
 	UFUNCTION()
 	void OnRep_OverrideAbilitySystemComponent();
+
+	UFUNCTION()
+	void OnRep_OverrideWrap();
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
