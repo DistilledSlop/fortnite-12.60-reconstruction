@@ -295,6 +295,216 @@
  },
  {
   "class": "AFortPawn",
+  "function": "IsDBNO",
+  "kind": "getter",
+  "signature": "bool IsDBNO() const",
+  "signature_status": "proposed",
+  "inc_path": "porting/behavior/AFortPawn/IsDBNO.inc",
+  "confidence": "high",
+  "address": "0x142a1cc80",
+  "status": "ported",
+  "proxy_score": 92.2,
+  "decompile_source": "porting/generated/decomp/AFortPawn/IsDBNO.c",
+  "notes": "Decompile reads byte +0x53a (1338) bit 0x2 (>> 1 & 1). bool_bits.py maps that exact (offset, mask) to bIsDBNO (or8 setter). Header: uint8 bIsDBNO : 1."
+ },
+ {
+  "class": "AFortPawn",
+  "function": "WasDBNOOnDeath",
+  "kind": "getter",
+  "signature": "bool WasDBNOOnDeath() const",
+  "signature_status": "proposed",
+  "inc_path": "porting/behavior/AFortPawn/WasDBNOOnDeath.inc",
+  "confidence": "high",
+  "address": "0x142a21050",
+  "status": "ported",
+  "proxy_score": 92.2,
+  "decompile_source": "porting/generated/decomp/AFortPawn/WasDBNOOnDeath.c",
+  "notes": "Decompile reads byte +0x53a bit 0x4 (>> 2 & 1). bool_bits.py maps (0x53a, 0x4) to bWasDBNOOnDeath (or8 setter)."
+ },
+ {
+  "class": "AFortPlayerPawn",
+  "function": "GetIsSlopeSliding",
+  "kind": "getter",
+  "signature": "bool GetIsSlopeSliding() const",
+  "signature_status": "proposed",
+  "inc_path": "porting/behavior/AFortPlayerPawn/GetIsSlopeSliding.inc",
+  "confidence": "high",
+  "address": "0x142a7c380",
+  "status": "ported",
+  "proxy_score": 92.2,
+  "decompile_source": "porting/generated/decomp/AFortPlayerPawn/GetIsSlopeSliding.c",
+  "notes": "Decompile reads byte +0x10e8 bit 0x4. bool_bits.py maps (0x10e8, 0x4) to bIsSlopeSliding (or8 setter)."
+ },
+ {
+  "class": "AFortPlayerPawn",
+  "function": "IsInFrontEndHologram",
+  "kind": "getter",
+  "signature": "bool IsInFrontEndHologram() const",
+  "signature_status": "proposed",
+  "inc_path": "porting/behavior/AFortPlayerPawn/IsInFrontEndHologram.inc",
+  "confidence": "high",
+  "address": "0x142a7d1d0",
+  "status": "ported",
+  "proxy_score": 92.2,
+  "decompile_source": "porting/generated/decomp/AFortPlayerPawn/IsInFrontEndHologram.c",
+  "notes": "Decompile reads byte +0x10ea bit 0x40. bool_bits.py maps (0x10ea, 0x40) to bIsInFrontEndHologram (or8 setter)."
+ },
+ {
+  "class": "AFortPlayerPawn",
+  "function": "IsInSlipperyMovement",
+  "kind": "getter",
+  "signature": "bool IsInSlipperyMovement() const",
+  "signature_status": "proposed",
+  "inc_path": "porting/behavior/AFortPlayerPawn/IsInSlipperyMovement.inc",
+  "confidence": "high",
+  "address": "0x142a7d260",
+  "status": "ported",
+  "proxy_score": 92.2,
+  "decompile_source": "porting/generated/decomp/AFortPlayerPawn/IsInSlipperyMovement.c",
+  "notes": "Decompile reads byte +0x10e7 bit 0x80 (>> 7). bool_bits.py maps (0x10e7, 0x80) to bIsInSlipperyMovement (or8 setter)."
+ },
+ {
+  "class": "AFortPlayerPawn",
+  "function": "IsInVortex",
+  "kind": "getter",
+  "signature": "bool IsInVortex() const",
+  "signature_status": "proposed",
+  "inc_path": "porting/behavior/AFortPlayerPawn/IsInVortex.inc",
+  "confidence": "high",
+  "address": "0x142a7d2c0",
+  "status": "ported",
+  "proxy_score": 92.2,
+  "decompile_source": "porting/generated/decomp/AFortPlayerPawn/IsInVortex.c",
+  "notes": "Decompile reads byte +0x10e7 bit 0x20. bool_bits.py maps (0x10e7, 0x20) to bIsInVortex (or8 setter)."
+ },
+ {
+  "class": "AFortPlayerPawn",
+  "function": "IsParachuteForcedOpen",
+  "kind": "getter",
+  "signature": "bool IsParachuteForcedOpen() const",
+  "signature_status": "proposed",
+  "inc_path": "porting/behavior/AFortPlayerPawn/IsParachuteForcedOpen.inc",
+  "confidence": "high",
+  "address": "0x142a7d380",
+  "status": "ported",
+  "proxy_score": 92.2,
+  "decompile_source": "porting/generated/decomp/AFortPlayerPawn/IsParachuteForcedOpen.c",
+  "notes": "Decompile reads byte +0x10e7 bit 0x2. bool_bits.py maps (0x10e7, 0x2) to bIsParachuteForcedOpen (or8 setter)."
+ },
+ {
+  "class": "AFortPlayerPawn",
+  "function": "IsWaterSprintBoosting",
+  "kind": "getter",
+  "signature": "bool IsWaterSprintBoosting() const",
+  "signature_status": "proposed",
+  "inc_path": "porting/behavior/AFortPlayerPawn/IsWaterSprintBoosting.inc",
+  "confidence": "high",
+  "address": "0x142a7d5a0",
+  "status": "ported",
+  "proxy_score": 92.2,
+  "decompile_source": "porting/generated/decomp/AFortPlayerPawn/IsWaterSprintBoosting.c",
+  "notes": "Decompile reads byte +0x1061 bit 0x40. bool_bits.py maps (0x1061, 0x40) to bIsWaterSprintBoost (or8 setter)."
+ },
+ {
+  "class": "AFortPlayerPawn",
+  "function": "IsSkydiving",
+  "kind": "getter",
+  "signature": "bool IsSkydiving() const",
+  "signature_status": "proposed",
+  "inc_path": "porting/behavior/AFortPlayerPawn/IsSkydiving.inc",
+  "confidence": "medium",
+  "address": "0x142a7d450",
+  "status": "ported",
+  "proxy_score": 92.2,
+  "decompile_source": "porting/generated/decomp/AFortPlayerPawn/IsSkydiving.c",
+  "notes": "Decompile reads byte +0x10e7 bit 0x1. bool_bits.py maps (0x10e7, 0x1) to bLocalIsSkydiving (or8). The function name says skydiving; the mapped flag is the bit that is read."
+ },
+ {
+  "class": "AFortPlayerPawn",
+  "function": "IsSkydivingFromBus",
+  "kind": "getter",
+  "signature": "bool IsSkydivingFromBus() const",
+  "signature_status": "proposed",
+  "inc_path": "porting/behavior/AFortPlayerPawn/IsSkydivingFromBus.inc",
+  "confidence": "medium",
+  "address": "0x142a7d480",
+  "status": "ported",
+  "proxy_score": 92.2,
+  "decompile_source": "porting/generated/decomp/AFortPlayerPawn/IsSkydivingFromBus.c",
+  "notes": "Decompile tests (byte +0x10e7 & 0x5) == 0x5: bits 0x4 (bIsSkydivingFromBus) and 0x1 (bLocalIsSkydiving) both set (or8 setters)."
+ },
+ {
+  "class": "AFortPlayerControllerAthena",
+  "function": "IsClientNotifiedOfLoss",
+  "kind": "getter",
+  "signature": "bool IsClientNotifiedOfLoss() const",
+  "signature_status": "proposed",
+  "inc_path": "porting/behavior/AFortPlayerControllerAthena/IsClientNotifiedOfLoss.inc",
+  "confidence": "medium",
+  "address": "0x142a58e20",
+  "status": "ported",
+  "proxy_score": 92.5,
+  "decompile_source": "porting/generated/decomp/AFortPlayerControllerAthena/IsClientNotifiedOfLoss.c",
+  "notes": "Decompile returns the whole byte +0x2c35. bool_bits.py maps that byte to bClientNotifiedOfLoss alone (mov8 setter, which writes the whole byte), so the byte equals the flag."
+ },
+ {
+  "class": "AFortPlayerControllerAthena",
+  "function": "IsClientNotifiedOfTeamWin",
+  "kind": "getter",
+  "signature": "bool IsClientNotifiedOfTeamWin() const",
+  "signature_status": "proposed",
+  "inc_path": "porting/behavior/AFortPlayerControllerAthena/IsClientNotifiedOfTeamWin.inc",
+  "confidence": "medium",
+  "address": "0x142a58e40",
+  "status": "ported",
+  "proxy_score": 92.5,
+  "decompile_source": "porting/generated/decomp/AFortPlayerControllerAthena/IsClientNotifiedOfTeamWin.c",
+  "notes": "Decompile returns the whole byte +0x2c34, which bool_bits.py maps to bClientNotifiedOfTeamWin alone (mov8 setter)."
+ },
+ {
+  "class": "AFortPlayerControllerAthena",
+  "function": "IsClientNotifiedOfWin",
+  "kind": "getter",
+  "signature": "bool IsClientNotifiedOfWin() const",
+  "signature_status": "proposed",
+  "inc_path": "porting/behavior/AFortPlayerControllerAthena/IsClientNotifiedOfWin.inc",
+  "confidence": "medium",
+  "address": "0x142a58e60",
+  "status": "ported",
+  "proxy_score": 92.5,
+  "decompile_source": "porting/generated/decomp/AFortPlayerControllerAthena/IsClientNotifiedOfWin.c",
+  "notes": "Decompile returns the whole byte +0x2c33, which bool_bits.py maps to bClientNotifiedOfWin alone (mov8 setter)."
+ },
+ {
+  "class": "AFortPlayerPawn",
+  "function": "OnRep_ReplicatedIsInSlipperyMovement",
+  "kind": "onrep",
+  "signature": "void OnRep_ReplicatedIsInSlipperyMovement()",
+  "signature_status": "declared",
+  "inc_path": "porting/behavior/AFortPlayerPawn/OnRep_ReplicatedIsInSlipperyMovement.inc",
+  "confidence": "medium",
+  "address": "0x142a7e140",
+  "status": "ported",
+  "proxy_score": 92.9,
+  "decompile_source": "porting/generated/decomp/AFortPlayerPawn/OnRep_ReplicatedIsInSlipperyMovement.c",
+  "notes": "Decompile: if (byte +0x10e8 bit 0x1) != (byte +0x10e7 bit 0x80), the 0x80 bit of +0x10e7 is set to the 0x1 bit of +0x10e8 (the shift-by-7 store). Bits: bReplicatedIsInSlipperyMovement (0x10e8, 0x1), bIsInSlipperyMovement (0x10e7, 0x80)."
+ },
+ {
+  "class": "AFortPlayerPawn",
+  "function": "OnRep_ParachuteLockedOpen",
+  "kind": "onrep",
+  "signature": "void OnRep_ParachuteLockedOpen()",
+  "signature_status": "declared",
+  "inc_path": "porting/behavior/AFortPlayerPawn/OnRep_ParachuteLockedOpen.inc",
+  "confidence": "medium",
+  "address": "0x142a7e080",
+  "status": "ported",
+  "proxy_score": 92.5,
+  "decompile_source": "porting/generated/decomp/AFortPlayerPawn/OnRep_ParachuteLockedOpen.c",
+  "notes": "Decompile copies whole byte +0x2284 to +0x2285. bool_bits.py maps +0x2284 to bParachuteLockedOpen and +0x2285 to bLocalParachuteLockedOpen (both mov8, mask 1); the copy is taken as the flag copy."
+ },
+ {
+  "class": "AFortPawn",
   "function": "IsStaggered",
   "kind": "getter",
   "signature": null,
@@ -305,7 +515,7 @@
   "status": "skipped",
   "proxy_score": 92.9,
   "decompile_source": "porting/generated/decomp_improved/AFortPawn/IsStaggered.c",
-  "notes": "bitfield_or_unmapped_offset: byte at +0x520 (read as byte) is not a reflection property; bitfields carry no offset, so the bit position cannot be mapped to a name"
+  "notes": "whole_or_multibit_byte_read: byte +0x520 holds bool bits (bool_bits.json) but this body reads the whole byte, several bits, or a pointer chain"
  },
  {
   "class": "AFortPlayerPawn",
@@ -319,63 +529,7 @@
   "status": "skipped",
   "proxy_score": 92.9,
   "decompile_source": "porting/generated/decomp_improved/AFortPlayerPawn/HasRespawnedInAir.c",
-  "notes": "bitfield_or_unmapped_offset: byte at +0x10e9 (read as char) is not a reflection property; bitfields carry no offset, so the bit position cannot be mapped to a name"
- },
- {
-  "class": "AFortPlayerPawn",
-  "function": "OnRep_ReplicatedIsInSlipperyMovement",
-  "kind": "onrep",
-  "signature": "void OnRep_ReplicatedIsInSlipperyMovement()",
-  "signature_status": "declared",
-  "inc_path": null,
-  "confidence": null,
-  "address": "0x142a7e140",
-  "status": "skipped",
-  "proxy_score": 92.9,
-  "decompile_source": "porting/generated/decomp_improved/AFortPlayerPawn/OnRep_ReplicatedIsInSlipperyMovement.c",
-  "notes": "bitfield_or_unmapped_offset: byte at +0x10e8 (read as byte) is not a reflection property; bitfields carry no offset, so the bit position cannot be mapped to a name"
- },
- {
-  "class": "AFortPlayerControllerAthena",
-  "function": "IsClientNotifiedOfLoss",
-  "kind": "getter",
-  "signature": null,
-  "signature_status": "not_declared",
-  "inc_path": null,
-  "confidence": null,
-  "address": "0x142a58e20",
-  "status": "skipped",
-  "proxy_score": 92.5,
-  "decompile_source": "porting/generated/decomp_improved/AFortPlayerControllerAthena/IsClientNotifiedOfLoss.c",
-  "notes": "bitfield_or_unmapped_offset: byte at +0x2c35 (read as undefined1) is not a reflection property; bitfields carry no offset, so the bit position cannot be mapped to a name"
- },
- {
-  "class": "AFortPlayerControllerAthena",
-  "function": "IsClientNotifiedOfTeamWin",
-  "kind": "getter",
-  "signature": null,
-  "signature_status": "not_declared",
-  "inc_path": null,
-  "confidence": null,
-  "address": "0x142a58e40",
-  "status": "skipped",
-  "proxy_score": 92.5,
-  "decompile_source": "porting/generated/decomp_improved/AFortPlayerControllerAthena/IsClientNotifiedOfTeamWin.c",
-  "notes": "bitfield_or_unmapped_offset: byte at +0x2c34 (read as undefined1) is not a reflection property; bitfields carry no offset, so the bit position cannot be mapped to a name"
- },
- {
-  "class": "AFortPlayerControllerAthena",
-  "function": "IsClientNotifiedOfWin",
-  "kind": "getter",
-  "signature": null,
-  "signature_status": "not_declared",
-  "inc_path": null,
-  "confidence": null,
-  "address": "0x142a58e60",
-  "status": "skipped",
-  "proxy_score": 92.5,
-  "decompile_source": "porting/generated/decomp_improved/AFortPlayerControllerAthena/IsClientNotifiedOfWin.c",
-  "notes": "bitfield_or_unmapped_offset: byte at +0x2c33 (read as undefined1) is not a reflection property; bitfields carry no offset, so the bit position cannot be mapped to a name"
+  "notes": "whole_or_multibit_byte_read: byte +0x10e9 holds bool bits (bool_bits.json) but this body reads the whole byte, several bits, or a pointer chain"
  },
  {
   "class": "AFortPlayerControllerAthena",
@@ -389,7 +543,7 @@
   "status": "skipped",
   "proxy_score": 92.5,
   "decompile_source": "porting/generated/decomp_improved/AFortPlayerControllerAthena/IsLoadingScreenActive.c",
-  "notes": "bitfield_or_unmapped_offset: byte at +0x3715 (read as undefined1) is not a reflection property; bitfields carry no offset, so the bit position cannot be mapped to a name"
+  "notes": "unmapped_offset: byte +0x3715 is neither a reflection property nor a bool bit (gap or pointer chain)"
  },
  {
   "class": "AFortPlayerPawn",
@@ -403,35 +557,7 @@
   "status": "skipped",
   "proxy_score": 92.5,
   "decompile_source": "porting/generated/decomp_improved/AFortPlayerPawn/IsInCharacterCustomization.c",
-  "notes": "bitfield_or_unmapped_offset: byte at +0x2004 (read as uint) is not a reflection property; bitfields carry no offset, so the bit position cannot be mapped to a name"
- },
- {
-  "class": "AFortPlayerPawn",
-  "function": "OnRep_ParachuteLockedOpen",
-  "kind": "onrep",
-  "signature": "void OnRep_ParachuteLockedOpen()",
-  "signature_status": "declared",
-  "inc_path": null,
-  "confidence": null,
-  "address": "0x142a7e080",
-  "status": "skipped",
-  "proxy_score": 92.5,
-  "decompile_source": "porting/generated/decomp_improved/AFortPlayerPawn/OnRep_ParachuteLockedOpen.c",
-  "notes": "bitfield_or_unmapped_offset: byte at +0x2285 (read as undefined1) is not a reflection property; bitfields carry no offset, so the bit position cannot be mapped to a name"
- },
- {
-  "class": "AFortPawn",
-  "function": "IsDBNO",
-  "kind": "getter",
-  "signature": null,
-  "signature_status": "not_declared",
-  "inc_path": null,
-  "confidence": null,
-  "address": "0x142a1cc80",
-  "status": "skipped",
-  "proxy_score": 92.2,
-  "decompile_source": "porting/generated/decomp_improved/AFortPawn/IsDBNO.c",
-  "notes": "bitfield_or_unmapped_offset: byte at +0x53a (read as byte) is not a reflection property; bitfields carry no offset, so the bit position cannot be mapped to a name"
+  "notes": "whole_or_multibit_byte_read: byte +0x2004 holds bool bits (bool_bits.json) but this body reads the whole byte, several bits, or a pointer chain"
  },
  {
   "class": "AFortPawn",
@@ -445,77 +571,7 @@
   "status": "skipped",
   "proxy_score": 92.2,
   "decompile_source": "porting/generated/decomp_improved/AFortPawn/OnlySpinWhenFalling.c",
-  "notes": "bitfield_or_unmapped_offset: byte at +0x63c (read as undefined1) is not a reflection property; bitfields carry no offset, so the bit position cannot be mapped to a name"
- },
- {
-  "class": "AFortPlayerPawn",
-  "function": "GetIsSlopeSliding",
-  "kind": "getter",
-  "signature": null,
-  "signature_status": "not_declared",
-  "inc_path": null,
-  "confidence": null,
-  "address": "0x142a7c380",
-  "status": "skipped",
-  "proxy_score": 92.2,
-  "decompile_source": "porting/generated/decomp_improved/AFortPlayerPawn/GetIsSlopeSliding.c",
-  "notes": "bitfield_or_unmapped_offset: byte at +0x10e8 (read as byte) is not a reflection property; bitfields carry no offset, so the bit position cannot be mapped to a name"
- },
- {
-  "class": "AFortPlayerPawn",
-  "function": "IsInFrontEndHologram",
-  "kind": "getter",
-  "signature": null,
-  "signature_status": "not_declared",
-  "inc_path": null,
-  "confidence": null,
-  "address": "0x142a7d1d0",
-  "status": "skipped",
-  "proxy_score": 92.2,
-  "decompile_source": "porting/generated/decomp_improved/AFortPlayerPawn/IsInFrontEndHologram.c",
-  "notes": "bitfield_or_unmapped_offset: byte at +0x10ea (read as byte) is not a reflection property; bitfields carry no offset, so the bit position cannot be mapped to a name"
- },
- {
-  "class": "AFortPlayerPawn",
-  "function": "IsInSlipperyMovement",
-  "kind": "getter",
-  "signature": null,
-  "signature_status": "not_declared",
-  "inc_path": null,
-  "confidence": null,
-  "address": "0x142a7d260",
-  "status": "skipped",
-  "proxy_score": 92.2,
-  "decompile_source": "porting/generated/decomp_improved/AFortPlayerPawn/IsInSlipperyMovement.c",
-  "notes": "bitfield_or_unmapped_offset: byte at +0x10e7 (read as byte) is not a reflection property; bitfields carry no offset, so the bit position cannot be mapped to a name"
- },
- {
-  "class": "AFortPlayerPawn",
-  "function": "IsInVortex",
-  "kind": "getter",
-  "signature": null,
-  "signature_status": "not_declared",
-  "inc_path": null,
-  "confidence": null,
-  "address": "0x142a7d2c0",
-  "status": "skipped",
-  "proxy_score": 92.2,
-  "decompile_source": "porting/generated/decomp_improved/AFortPlayerPawn/IsInVortex.c",
-  "notes": "bitfield_or_unmapped_offset: byte at +0x10e7 (read as byte) is not a reflection property; bitfields carry no offset, so the bit position cannot be mapped to a name"
- },
- {
-  "class": "AFortPlayerPawn",
-  "function": "IsParachuteForcedOpen",
-  "kind": "getter",
-  "signature": null,
-  "signature_status": "not_declared",
-  "inc_path": null,
-  "confidence": null,
-  "address": "0x142a7d380",
-  "status": "skipped",
-  "proxy_score": 92.2,
-  "decompile_source": "porting/generated/decomp_improved/AFortPlayerPawn/IsParachuteForcedOpen.c",
-  "notes": "bitfield_or_unmapped_offset: byte at +0x10e7 (read as byte) is not a reflection property; bitfields carry no offset, so the bit position cannot be mapped to a name"
+  "notes": "unmapped_offset: byte +0x63c is neither a reflection property nor a bool bit (gap or pointer chain)"
  },
  {
   "class": "AFortPlayerPawn",
@@ -529,7 +585,7 @@
   "status": "skipped",
   "proxy_score": 92.2,
   "decompile_source": "porting/generated/decomp_improved/AFortPlayerPawn/IsParachuteLockedOpen.c",
-  "notes": "bitfield_or_unmapped_offset: byte at +0x2285 (read as undefined1) is not a reflection property; bitfields carry no offset, so the bit position cannot be mapped to a name"
+  "notes": "whole_or_multibit_byte_read: byte +0x2285 holds bool bits (bool_bits.json) but this body reads the whole byte, several bits, or a pointer chain"
  },
  {
   "class": "AFortPlayerPawn",
@@ -543,7 +599,7 @@
   "status": "skipped",
   "proxy_score": 92.2,
   "decompile_source": "porting/generated/decomp_improved/AFortPlayerPawn/IsParachuteOpen.c",
-  "notes": "bitfield_or_unmapped_offset: byte at +0x10e6 (read as undefined1) is not a reflection property; bitfields carry no offset, so the bit position cannot be mapped to a name"
+  "notes": "whole_or_multibit_byte_read: byte +0x10e6 holds bool bits (bool_bits.json) but this body reads the whole byte, several bits, or a pointer chain"
  },
  {
   "class": "AFortPlayerControllerAthena",
@@ -826,48 +882,6 @@
   "notes": "rpc_exec_thunk: exec thunk of a Server/Client/NetMulticast RPC; the native bodies are ServerAddToCachedPurchased_Implementation/ServerAddToCachedPurchased_Validate (separate records), not this thunk"
  },
  {
-  "class": "AFortPlayerPawn",
-  "function": "IsSkydiving",
-  "kind": "getter",
-  "signature": null,
-  "signature_status": "not_declared",
-  "inc_path": null,
-  "confidence": null,
-  "address": "0x142a7d450",
-  "status": "skipped",
-  "proxy_score": 92.2,
-  "decompile_source": "porting/generated/decomp_improved/AFortPlayerPawn/IsSkydiving.c",
-  "notes": "bitfield_or_unmapped_offset: byte at +0x10e7 (read as byte) is not a reflection property; bitfields carry no offset, so the bit position cannot be mapped to a name"
- },
- {
-  "class": "AFortPlayerPawn",
-  "function": "IsSkydivingFromBus",
-  "kind": "getter",
-  "signature": null,
-  "signature_status": "not_declared",
-  "inc_path": null,
-  "confidence": null,
-  "address": "0x142a7d480",
-  "status": "skipped",
-  "proxy_score": 92.2,
-  "decompile_source": "porting/generated/decomp_improved/AFortPlayerPawn/IsSkydivingFromBus.c",
-  "notes": "bitfield_or_unmapped_offset: byte at +0x10e7 (read as byte) is not a reflection property; bitfields carry no offset, so the bit position cannot be mapped to a name"
- },
- {
-  "class": "AFortPlayerPawn",
-  "function": "IsWaterSprintBoosting",
-  "kind": "getter",
-  "signature": null,
-  "signature_status": "not_declared",
-  "inc_path": null,
-  "confidence": null,
-  "address": "0x142a7d5a0",
-  "status": "skipped",
-  "proxy_score": 92.2,
-  "decompile_source": "porting/generated/decomp_improved/AFortPlayerPawn/IsWaterSprintBoosting.c",
-  "notes": "bitfield_or_unmapped_offset: byte at +0x1061 (read as byte) is not a reflection property; bitfields carry no offset, so the bit position cannot be mapped to a name"
- },
- {
   "class": "AFortGameStateAthena",
   "function": "OnRep_CurrentPlaylistId",
   "kind": "onrep",
@@ -949,7 +963,7 @@
   "status": "skipped",
   "proxy_score": 92.8,
   "decompile_source": "porting/generated/decomp_improved/AFortPawn/StopSpinning.c",
-  "notes": "bitfield_or_unmapped_offset: byte at +0xf0 (read as char) is not a reflection property; bitfields carry no offset, so the bit position cannot be mapped to a name"
+  "notes": "unmapped_offset: byte +0xf0 is neither a reflection property nor a bool bit (gap or pointer chain)"
  },
  {
   "class": "AFortPlayerPawn",
@@ -1019,7 +1033,7 @@
   "status": "skipped",
   "proxy_score": 92.5,
   "decompile_source": "porting/generated/decomp_improved/AFortPlayerPawn/DriverToPassengerAnimationStopped.c",
-  "notes": "bitfield_or_unmapped_offset: byte at +0x1062 (read as byte) is not a reflection property; bitfields carry no offset, so the bit position cannot be mapped to a name"
+  "notes": "whole_or_multibit_byte_read: byte +0x1062 holds bool bits (bool_bits.json) but this body reads the whole byte, several bits, or a pointer chain"
  },
  {
   "class": "AFortPlayerPawn",
@@ -1033,7 +1047,7 @@
   "status": "skipped",
   "proxy_score": 92.5,
   "decompile_source": "porting/generated/decomp_improved/AFortPlayerPawn/PassengerToDriverAnimationStopped.c",
-  "notes": "bitfield_or_unmapped_offset: byte at +0x1538 (read as undefined1) is not a reflection property; bitfields carry no offset, so the bit position cannot be mapped to a name"
+  "notes": "whole_or_multibit_byte_read: byte +0x1538 holds bool bits (bool_bits.json) but this body reads the whole byte, several bits, or a pointer chain"
  },
  {
   "class": "AFortPlayerControllerAthena",
