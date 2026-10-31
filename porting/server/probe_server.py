@@ -4,15 +4,21 @@
 import argparse
 import hashlib
 import json
+import os
 import re
+import sys
 import threading
 from datetime import datetime, timezone
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from string import Template
-from urllib.parse import parse_qsl, urlsplit
+from urllib.parse import parse_qs, parse_qsl, urlsplit
 
-import local_ws
+# Run with `python3 -I`, which leaves the script directory off sys.path. Add it explicitly.
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
+import api_common  # noqa: E402
+import local_ws  # noqa: E402
 
 
 def compile_route(path):
@@ -94,7 +100,10 @@ def make_handler(routes, record_path, stub=None):
                 if "x-www-form-urlencoded" in self.headers.get("Content-Type", ""):
                     form = dict(parse_qsl(body.decode("utf-8", "replace")))
                 if stub is not None:
-                    status, response = stub.respond(self.command, url.path, dict(parse_qsl(url.query)), form)
+                    status, response = stub.respond(
+                        self.command, url.path, query=dict(parse_qsl(url.query)), form=form, body=body,
+                        headers={key.lower(): value for key, value in self.headers.items()},
+                        query_all=parse_qs(url.query))
                 for method, pattern, fixture_status, fixture_body in routes:
                     match = pattern.fullmatch(url.path)
                     if method == self.command and match:
@@ -147,7 +156,9 @@ def make_handler(routes, record_path, stub=None):
 
         def send_json(self, status, response):
             content_type = "application/json"
-            if type(response).__name__ == "RawText":
+            if isinstance(response, api_common.Raw):
+                data, content_type = response.data, response.content_type
+            elif isinstance(response, api_common.RawText):
                 data, content_type = response.encode("utf-8"), "text/plain"
             else:
                 data = b"" if response is None else json.dumps(response, separators=(",", ":")).encode("utf-8")
@@ -172,12 +183,16 @@ def main():
     parser.add_argument("--stub", action="store_true", help="answer known Epic endpoints with minimal responses")
     parser.add_argument("--tls-cert", type=Path)
     parser.add_argument("--tls-key", type=Path)
+    parser.add_argument("--cloudstorage-dir", type=Path,
+                        help="with --stub: directory whose files are listed as cloud storage system files")
     args = parser.parse_args()
     args.record.parent.mkdir(parents=True, exist_ok=True)
     routes = load_fixtures(args.fixtures)
     stub = None
     if args.stub:
         import fortnite_stub as stub
+        if args.cloudstorage_dir:
+            stub.configure(cloudstorage_dir=args.cloudstorage_dir)
     server = ThreadingHTTPServer((args.bind, args.port), make_handler(routes, args.record, stub))
     if args.tls_cert:
         import ssl

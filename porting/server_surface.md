@@ -32,10 +32,10 @@ does not define response schemas or the game-session simulation.
 The new native client project should use local service endpoints and omit EAC
 integration. The supplied Windows client has not been modified.
 
-`server/probe_server.py` is the first local server-side tool. It records request
-metadata and can return observed response fixtures, so endpoint behavior can
-be developed against a running client. It currently provides no login,
-matchmaking, XMPP, or game-session implementation. See its README for usage.
+`server/probe_server.py` is the local HTTP server. It records request metadata and
+can return observed response fixtures. With `--stub` it serves the local service layer
+described in "Local service layer" below. It provides no XMPP or game-session
+implementation. See `server/README.md` for usage.
 
 The install has a main `FortniteClient-Win64-Shipping.exe` and separate EAC and
 BattlEye launcher executables. A bounded Wine probe of the main executable
@@ -134,3 +134,69 @@ checking how the process was launched rather than calling out to a server) that 
 pure HTTP mock backend cannot satisfy. This was not resolved; the gate is not
 yet bypassed. Passing it would require reverse-engineering and altering the
 shipping binary's own entitlement/anti-tamper logic.
+
+## Local service layer (implemented in `porting/server/`)
+
+The stand-in covers the account, OAuth, MCP profile, party, presence, lightswitch,
+cloud storage and matchmaking routes that the client calls or whose paths are in the
+binary. Every route and command carries an evidence label. `server/README.md` has the
+full table, generated from the code by `python3 -I server/backend.py --routes` and
+`--commands`. The tests are `python3 -I server/test_services.py` (61 pass).
+
+### Evidence-based (observed in the 12.60 binary, the cooked config, or the earlier login capture)
+
+- OAuth: `POST /account/api/oauth/token` (client_credentials and exchange_code), session kill (both forms).
+- Accounts: `GET /account/api/public/account/{id}`, the `accountId=` list, `externalAuths`,
+  `tryPlayOnPlatform`, `profileToken/verify`, `/api/v1/user/setting`.
+- MCP: `POST /fortnite/api/game/v2/profile/{id}/{client|dedicated_server|public}/{command}`.
+  The command names listed in `server/README.md` are in the binary. The envelope and
+  change-type names are too (`profileChanges`, `profileChangesBaseRevision`,
+  `profileRevision`, `profileCommandRevision`, `multiUpdate`, `fullProfileUpdate`,
+  `itemAdded`, `itemAttrChanged`, `statModified`). So are the attributes `locker_slots_data`,
+  `loadouts`, `last_applied_loadout`, `item_seen`, `current_mtx_platform` and others.
+  The default athena item templates exist in the cooked pak index.
+- Party v2: `ServiceName="party"` in `DefaultEngine.ini`, the `/api/v1/{namespace}/parties`
+  and member, invite, meta, promote and ping templates, and the field names
+  (`revision`, `members`, `invites`, `pings`, `joinability`, `join_info`, `role`,
+  `CAPTAIN`, `connections`, `sendPing`, `maxSize`). The party error codes are in the binary.
+- Presence: the `/presence/api/v1/_/{id}/last-online` and `subscriptions` templates.
+- Lightswitch: `bulk/status`, with the field names `serviceInstanceId`, `status`,
+  `allowedActions`, `banned`. Version check `NO_UPDATE`. `enabled_features`. `datarouter`.
+- Cloud storage: system and user paths, the `uniqueFilename`, `filename`, `hash256`,
+  `length`, `contentType` fields, and the file error codes.
+- Matchmaking: the ticket, session and key paths, and the websocket states (unchanged).
+
+### Inferred (path observed or reasoned, shape not verified against a capture)
+
+- HTTP methods and bodies for the party and presence routes, and the nesting of party objects.
+- Invite and ping shapes, `expires_at` semantics (informational only), the build-id key
+  `urn:epic:cfg:build-id_s`, and the CLOSED joinability value.
+- Profile command body keys (for example `newPlatform`, `itemIds`, `lockerItem`,
+  `slotIndex`), the multiUpdate entry shape, and the revision rules (described in `server/README.md`).
+- `GET /account/api/oauth/exchange` and `verify`, and the `expiresInSeconds` and `creatingClientId` names.
+- The single-service lightswitch route, and the status values UP, DOWN and MAINTENANCE.
+- Cloud storage hash (sha1), `storageType`, `uploaded` and the user file list shape.
+- The default athena locker layout and the attribute value types.
+- Token lifetimes (8 h access, 32 h refresh), which are the earlier stub's values.
+
+### Guess (no evidence beyond the earlier stub or the task)
+
+- `EquipBattleRoyaleCustomization` and `SetBattleRoyaleBanner`. These names are not in the
+  12.60 binary strings, so the client may never send them.
+- `PATCH .../parties/{id}/meta`, the calendar, storefront and content page bodies, and
+  every route in `frontend_stubs.py`.
+- Client id `3446cd72694c4a4485d81b77adbb2141`, which the earlier stub used and the binary does not show.
+- The keychain placeholder (32 zero bytes, not a key).
+
+### Remaining gaps
+
+- No capture of a driven client has checked any of these routes. The client still stops
+  at the frontend login gate (`direct_connect_results.md`). Next step: a capture that
+  records headers and bodies once the gate is passed through an approved route.
+- XMPP, the notification stream and party chat. `notifications` is always empty.
+- Party and lobby beacons (`BeaconPort`) and the game-session protocol.
+- Join requests (the applicant flow), invite and ping expiry, and voice conferences.
+- Catalog purchase, gifting, campaign and hero loadouts, homebase, receipts, and offers.
+- Device and external auth, and the numeric error codes beyond the earlier 1004.
+- Cloud storage quotas, and a real system file set (none is served by default).
+
