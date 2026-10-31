@@ -704,3 +704,103 @@ The generator now spells parameters in declaration order (`--param-order offset`
 were in table order were corrected in `behavior/MANIFEST.json`, and `AFortPlayerPawn::GetPreviousPosition` and
 `GetPreviousVelocity` are non-const (no `FUNC_Const` in the reflection). `IslandCreationCompleted` (`UFortClientPilot_GameplayCreative`)
 and `OnInGameLoadScreenChanged` (`AFortMinigame`) are ordinary UFunctions, not delegates: their parameter blocks follow the same rule.
+
+## Sixth pass: custom net serializers and replication conditions [observed unless marked]
+
+Scope: the `struct_custom_netserialize` gaps of `class_checksum.py` (50 replicated properties and 8 RPC parameters in
+the Fort package, which made 109 classes non-parity through their ancestors) and the missing `COND_*` of
+`GetLifetimeReplicatedProps`. Done read-only on the slim project (`fortnite-slim`, opened without analysis; functions the
+database does not have were created in memory and the transaction rolled back, nothing saved; one Ghidra process at a
+time). Tool: `porting/ghidra/net_lifetime_serializers.py` (`inputs`, `probe`, `build`). Outputs are scratch-only.
+
+### Which structs have a custom serializer
+
+The ops vtable of each struct (`struct_blocks.json`, `struct_ops.vtable_va`) is a `TCppStructOps<T>`. The slots follow the
+`ICppStructOps` declaration order in UE 4.25 `UObject/Class.h`: 12 `HasNetSerializer`, 13 `HasNetSharedSerialization`,
+14 `NetSerialize`, 15 `HasNetDeltaSerializer`, 16 `NetDeltaSerialize`. The trait slots agree with `binary_analysis.md`
+section 9. 92 structs have one of the three traits: 53 in FortniteGame, 1 in PlayspaceFramework, 1 in Lobby, 2 in
+MantisRuntime (not promoted), and 35 engine-package structs (16 Engine, 17 GameplayAbilities, 2 GameplayTags; not generated,
+their serializers are engine code). `STRUCT_NetSerializeNative` is not in `StructFlags` (set at load time), so the trait is
+the identification.
+
+### Family 1: FFastArraySerializer structs (HasNetDeltaSerializer, 45 Fort/Playspace/Lobby/Mantis)
+
+- Identity, high: the slot 16 target of each struct decompiles to a function of 1,220 to 1,300 lines that contains the
+  `FastArrayDeltaSerialize for %s. %s. Reading / Writing / GatherGuidReferences / MovedGuidToUnmapped ...` log strings and
+  the item type name (for example `FortSpectatorZoneItem` in `FFortSpectatorZoneArray`; the `probe` step of
+  `porting/ghidra/net_lifetime_serializers.py` writes `serializers/FFortSpectatorZoneArray_slot16.c`). That is `FFastArraySerializer::FastArrayDeltaSerialize<Item, Self>`
+  inlined by the compiler (declared in `Engine/NetSerialization.h`).
+- All 45 (43 FortniteGame, 1 PlayspaceFramework, 1 Lobby) have the same shape: the parent is `FFastArraySerializer`, and one
+  TArray member has `FFastArraySerializerItem`-derived structs (checked from the reflection's `super_fn` and array inner records). The generator emits `NetDeltaSerialize`
+  as `FFastArraySerializer::FastArrayDeltaSerialize<Item, Self>(Items, DeltaParms, *this)` and
+  `TStructOpsTypeTraits<F...>` with `WithNetDeltaSerializer = true`. 43 are emitted; `FLobbyPlayerStateInfoArray` (Lobby is not
+  a promoted package) and `FPickupInstigatorArray` (not emittable for another reason) are not.
+- Bit layout: the engine template (item ReplicationID and ReplicationKey per element, the array's own key). Not recovered by
+  hand; it is the engine's, so the confidence is in the identity, not in a re-derived layout. Medium-high.
+- Engine FastArray structs (GameplayAbilities `ActiveGameplayEffectsContainer`, `ActiveGameplayCueContainer`, ...) are engine
+  code and are not emitted by the generator. Unchanged.
+
+### Family 2: other custom NetSerialize structs (HasNetSerializer / HasNetSharedSerialization, Fort)
+
+Identity of the slot 14 target (decompiled by the `probe` step, `serializers/<Struct>_slot14.c`): the function body was read, not re-derived. None is
+emitted with a native body. Each is emitted as a declared fallback: no trait, and a `TODO` comment in the header. The
+replicated uses serialize with the default property serialization, which is not the original wire format.
+
+| Struct | Slot 14 target | Lines | What the decompile shows | Confidence |
+|---|---|---|---|---|
+| `FAthenaPawnReplayData` | `0x142a82160` | 354 | long field-by-field body (not read through) | low |
+| `FCreateBuildingActorData` | `0x142a3dc40` | 100 | not read through | low |
+| `FFortAIAttributeReplicationProxy` | `0x1427a19e0` | 11 | two calls through FArchive slot `0x168`, at `param+0` and `param+4` (two 4-byte fields) | medium (field type not known) |
+| `FFortAISharedRepMovement` | `0x1427a19f0` | 104 | not read through | low |
+| `FortGameplayAbilityTargetData_SingleTargetHit` | `0x142788290` | 33 | two uint32 at `+0x98` and `+0x9c` through the bit reader (`0x29 & 0x20` checks) | medium |
+| `FortGameplayEffectContext` | `0x14077d350` | 12 | tail jump through vtable slot `0xc0` (not resolved) | low |
+| `FortRootMotionSource_FallingBoost` | `0x1409dc190` | 12 | tail jump through a vtable slot the decompiler cannot resolve | low |
+| `ReplicatedPhysicsPawnState` | `0x142a25f80` | 80 | not read through | low |
+| `SharedRepMovement` | `0x142a82170` | 267 | bit-packed movement state, not read through | low |
+
+Emitted fallbacks: `FAthenaPawnReplayData`, `FCreateBuildingActorData`, `FFortAIAttributeReplicationProxy`, `FFortAISharedRepMovement`,
+`FReplicatedPhysicsPawnState`, `FSharedRepMovement`, `FAthenaBatchedDamageGameplayCues_Shared` (shared serialization only). The
+other three are not used by any emitted member. The ones in this family are the work item for a later pass: the native bodies
+are the next step, after the field types of `SharedRepMovement` and `ReplicatedPhysicsPawnState` are checked.
+
+Three shared bodies appear in the slots and were not treated as structs: `0x1406801e0` (a two-instruction stub that the
+slots of the structs without a custom serializer point to; not decoded further here), `0x1406801c0` and `0x1406801d0`
+(see `porting/behavior/README.md`).
+
+### Replication conditions (GetLifetimeReplicatedProps)
+
+Method (`porting/ghidra/net_lifetime_serializers.py`): for each class with owned replicated properties, the VA of each
+property name's UTF-16 literal is found in the dump. The registration function is the caller of `RegisterReplicatedLifetimeProperty`
+that references the most of the class's literals (the two overloads of this exe are `0x144678530` for a descriptor and
+`0x144678610` for an `FProperty*`, identified by the call shape of `UFortHomebaseSet` and `AFortPlayerControllerAthena`).
+Each registration's `FDoRepLifetimeParams` is read from the stores to its block. Inferred from the decompile and checked on
+AActor (below): Condition at the block address, RepNotifyCondition at block-4, bIsPushBased at block-8 (the decompiler's stack
+names run opposite to the addresses). A block written once and passed to several registrations keeps its last value. A
+2-argument registration is the default `DOREPLIFETIME`. The layout is the 4.25 struct (`UnrealNetwork.h`), and the
+`COND_*` values are the 4.25 `CoreNetTypes.h` values.
+
+Validation, against the UE 4.25 source: `ACharacter` (8 properties) 8 of 8; `APawn` (3) 3 of 3 including `RemoteViewPitch`
+`COND_SkipOwner`; `AActor` (10) 10 of 10 including `AttachmentReplication` (`COND_Custom`, `REPNOTIFY_Always`, push) and
+`ReplicatedMovement` (`COND_SimulatedOrPhysics`, `REPNOTIFY_Always`, push), and the `SharedParams` push flags. Push flags are
+recorded but not emitted: a push-model registration needs the native bodies that mark the property dirty, which are not
+recovered yet.
+
+Coverage: the 1,715 owned replicated properties of the 325 classes that have any. Per property: 1,659 high, 5 medium
+(registered in two branches, the first is used: `AFortPlayerState`, `ABuildingActor`, `ABuildingSMActor`), 51 unknown. The
+conditions are: COND_None 1,468, COND_OwnerOnly 99, COND_InitialOnly 48, COND_SkipOwner 40, COND_SimulatedOnly 22,
+COND_Custom 27, COND_ReplayOnly 9, and one each of COND_InitialOrOwner and COND_SkipReplay; 109 use REPNOTIFY_Always. Unknown
+means the property is not in the chosen function (for example `AFortGameStateAthena` 7 properties, `AFortMinigame` 3) or the
+class has no registration function found (`UFortControlResistanceSet`, 9 properties). Those are emitted as `COND_None` with a
+TODO. The data file also holds 45 engine and validation classes (AActor, ACharacter, APawn, ...) that the generator does not use. `REPNOTIFY_Always` on properties without a
+RepNotify in the reflection (68 of the 109, on 20 classes: 19 attribute-set-like `*Set` classes, which use the GAS
+`GAMEPLAYATTRIBUTE_REPNOTIFY` pattern, and `AFortRemoteControlledPawnAthena`, not checked further). The reflection does not
+record `ReplicatedUsing` for these, so they are kept as decoded.
+
+Data: `porting/replication_conditions.json` (generated, tracked). The generator emits `DOREPLIFETIME_CONDITION` /
+`DOREPLIFETIME_CONDITION_NOTIFY` in `--promote`; the lines of a low-confidence property carry the confidence in a comment.
+
+### Checksum effect
+
+`class_checksum.py` parity (native set, 4,572 classes): 4,445 to 4,535 (non-parity 127 to 37). Remaining causes:
+`struct_other_module` 16 (`FProfileUpdateSingle`, `FMeshNetworkStatus`, `FAthenaRewardResult`, ...), RPC flags without a role 13,
+`struct_member_unresolved` 5, enums 3, `static_or_const_rpc` 1. No class that was parity-yes became non-parity.
