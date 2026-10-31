@@ -10,6 +10,8 @@
 #include "FHotfixableBlacklistLiteralLocations.h"
 #include "GameplayTagContainer.h"
 
+class UBlacklistEntryBase;
+
 #include "AFortAthenaMutator_SafezoneBlacklist.generated.h"
 
 UCLASS(config=Game)
@@ -22,6 +24,10 @@ public:
 	UPROPERTY()
 	FScalableFloat MasterDisableSwitch;
 
+	// table index 6, flags 0x40008000010009
+	UPROPERTY()
+	TArray<UBlacklistEntryBase*> BlacklistEntries;
+
 	// table index 4, flags 0x40000000006000
 	UPROPERTY(Transient, Config)
 	TArray<FGameplayTag> HotfixBlacklistPoiTags;
@@ -29,6 +35,10 @@ public:
 	// table index 2, flags 0x40000000006000
 	UPROPERTY(Transient, Config)
 	TArray<FHotfixableBlacklistLiteralLocations> HotfixBlacklistLocations;
+
+	// table index 0, flags 0x40008000002008
+	UPROPERTY(Transient)
+	TArray<UBlacklistEntryBase*> HotfixedEntries;
 
 };
 

@@ -6,7 +6,10 @@
 #include "CoreMinimal.h"
 #include "AISystem.h"
 
+class UFortBotMissionManager;
+class UFortInfluenceMap;
 class UFortQueryTwoPointSolver;
+class UFortRiftBlockerComponent;
 
 #include "UFortAISystem.generated.h"
 
@@ -19,6 +22,18 @@ public:
 	// table index 4, flags 0x10000000002000
 	UPROPERTY(Transient)
 	TArray<UFortQueryTwoPointSolver*> TwoPointSolvers;
+
+	// table index 3, flags 0x20080000002000
+	UPROPERTY(Transient)
+	UFortInfluenceMap* InfluenceMap;
+
+	// table index 2, flags 0x20080000002000
+	UPROPERTY(Transient)
+	UFortBotMissionManager* BotManager;
+
+	// table index 0, flags 0x20088000002008
+	UPROPERTY(Transient)
+	TArray<UFortRiftBlockerComponent*> ActiveRiftBlockers;
 
 };
 

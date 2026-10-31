@@ -21,6 +21,7 @@
 #include "FDamageDoneSourceInfo.h"
 #include "FDamageDoneTargetInfo.h"
 #include "FDamagerInfo.h"
+#include "FFortActiveMontageDecisionWindow.h"
 #include "FFortConversationSentence.h"
 #include "FFortPawnEquippedWeaponSignature.h"
 #include "FFortPawnUnEquippedWeaponSignature.h"
@@ -649,6 +650,10 @@ public:
 	// table index 40, flags 0x20080000080008
 	UPROPERTY()
 	UFortAbilitySystemComponent* AbilitySystemComponent;
+
+	// table index 38, flags 0x20080000000000
+	UPROPERTY()
+	TArray<FFortActiveMontageDecisionWindow> DecisionWindowStack;
 
 	// table index 37, flags 0x20080000010015
 	UPROPERTY()

@@ -8,6 +8,7 @@
 
 #include "EFortQuestState.h"
 #include "FCompletionCountEntry.h"
+#include "FFortMissionInstancedConfigData.h"
 #include "Misc/DateTime.h"
 
 class UFortQuestObjectiveInfo;
@@ -75,6 +76,10 @@ public:
 	// table index 5, flags 0x20080000000000
 	UPROPERTY()
 	FString quest_pool;
+
+	// table index 4, flags 0x20080000002000
+	UPROPERTY(Transient)
+	FFortMissionInstancedConfigData InstancedConfigData;
 
 	// table index 3, flags 0x20080000002000
 	UPROPERTY(Transient)

@@ -9,8 +9,10 @@
 #include "EFortMissionAudibility.h"
 #include "EFortMissionStatus.h"
 #include "EMissionGenerationCategory.h"
+#include "FFortGeneratedDifficultyOptions.h"
 #include "FFortMissionEventName.h"
 #include "FFortMissionFocusDisplayData.h"
+#include "FFortMissionInstancedConfigData.h"
 #include "FFortMissionPlacementActorPreferredTagInfo.h"
 #include "FOnMissionInfoSet.h"
 #include "FOnObjectivesUpdated.h"
@@ -211,9 +213,17 @@ public:
 	UPROPERTY(Replicated, SaveGame)
 	int32 ChosenRewardIdx;
 
+	// table index 2, flags 0x20080000000000
+	UPROPERTY()
+	FFortGeneratedDifficultyOptions GeneratedMissionOptions;
+
 	// table index 1, flags 0x1000000008001c
 	UPROPERTY()
 	UAudioComponent* MissionCompletionStinger;
+
+	// table index 0, flags 0x40000000002000
+	UPROPERTY(Transient)
+	FFortMissionInstancedConfigData ConfigData;
 
 	UFUNCTION()
 	void OnRep_ActiveObjectives();

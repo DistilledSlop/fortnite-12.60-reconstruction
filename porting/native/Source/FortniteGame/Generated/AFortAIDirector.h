@@ -19,6 +19,7 @@
 #include "FFortAIEncounterSpawnGroupCapsProfile.h"
 #include "FFortAIEncounterSpawnPointsProfile.h"
 #include "FFortAILootDropModifiers.h"
+#include "FFortAISpawnGroupUpgradeData.h"
 #include "FFortEncounterPawnNumberCaps.h"
 #include "FFortPendingStoppedEncounterData.h"
 #include "FFortPlayerPerformanceEstimateSettings.h"
@@ -128,6 +129,10 @@ public:
 	// table index 89, flags 0x20080000010001
 	UPROPERTY()
 	TArray<FFortAIEncounterPawnDifficultyLevelModifier> EncounterPawnDifficultyLevelModifiers;
+
+	// table index 87, flags 0x20080000010001
+	UPROPERTY()
+	TArray<FFortAISpawnGroupUpgradeData> SpawnGroupUpgrades;
 
 	// table index 86, flags 0x20080000010001
 	UPROPERTY()

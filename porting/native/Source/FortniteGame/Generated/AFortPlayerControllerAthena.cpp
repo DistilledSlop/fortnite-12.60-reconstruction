@@ -132,6 +132,11 @@ void AFortPlayerControllerAthena::ClientReceiveKillNotification_Implementation(A
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerControllerAthena::ClientReceiveSquadQuickChatMessage_Implementation(AFortPlayerController* SenderPC, const FAthenaQuickChatActiveEntry& ChatEntry)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPlayerControllerAthena::ClientReportTournamentPlacementPointsScored_Implementation(int32 PointsEarned, int32 Placement)
 {
 	// Body not recovered: reflection-derived stub.
@@ -398,6 +403,11 @@ void AFortPlayerControllerAthena::ServerNotifyOstrichSelfDestruct_Implementation
 }
 
 void AFortPlayerControllerAthena::ServerNotifyOstrichShieldOvercharge_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerControllerAthena::ServerPlaySquadQuickChatMessage_Implementation(const FUniqueNetIdRepl& SenderID, const FAthenaQuickChatActiveEntry& ChatEntry)
 {
 	// Body not recovered: reflection-derived stub.
 }

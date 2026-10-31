@@ -22,6 +22,7 @@ class AFortTracerBase;
 class UAnimMontage;
 class UAnimationAsset;
 class UMaterialInterface;
+class UNiagaraSystem;
 class UParticleSystem;
 class UParticleSystemComponent;
 class USkeletalMesh;
@@ -147,6 +148,10 @@ public:
 	UPROPERTY()
 	UParticleSystem* BeamParticleSystem;
 
+	// table index 49, flags 0x24080000010001
+	UPROPERTY()
+	TSoftObjectPtr<UNiagaraSystem> BeamNiagaraSystemAsset;
+
 	// table index 48, flags 0x20080000010001
 	UPROPERTY()
 	FName BeamSourceSocketName;
@@ -222,6 +227,10 @@ public:
 	// table index 27, flags 0x20080000000015
 	UPROPERTY()
 	TArray<FFortBulletPatternEntry> BulletPattern;
+
+	// table index 26, flags 0x40000000002000
+	UPROPERTY(Transient)
+	UNiagaraSystem* BeamNiagaraSystemInstance;
 
 	// table index 25, flags 0x40000000004000
 	UPROPERTY(Config)

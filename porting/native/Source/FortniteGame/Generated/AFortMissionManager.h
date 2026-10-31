@@ -7,6 +7,8 @@
 #include "GameFramework/Actor.h"
 
 #include "FFortMissionEventName.h"
+#include "FFortMissionEventReceiverByGameplayTagQuery.h"
+#include "FFortMissionUIActorHandle.h"
 #include "FOnMissionsUpdated.h"
 #include "FOnShowSecondaryMissionHeadersChanged.h"
 
@@ -43,6 +45,18 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_AllMissionEnemyClasses)
 	TArray<TSubclassOf<AFortAIPawn>> AllMissionEnemyClasses;
 
+	// table index 10, flags 0x20080000002000
+	UPROPERTY(Transient)
+	TArray<FFortMissionEventReceiverByGameplayTagQuery> ContainerSearchedMissionReceivers;
+
+	// table index 8, flags 0x20080000002000
+	UPROPERTY(Transient)
+	TArray<FFortMissionEventReceiverByGameplayTagQuery> HarvestedMissionReceivers;
+
+	// table index 6, flags 0x20080100000020
+	UPROPERTY(ReplicatedUsing=OnRep_MissionUIActors)
+	TArray<FFortMissionUIActorHandle> MissionUIActors;
+
 	// table index 5, flags 0x20080100000020
 	UPROPERTY(ReplicatedUsing=OnRep_CurrentUIFocusedMission)
 	AFortMission* CurrentUIFocusedMission;
@@ -71,6 +85,9 @@ public:
 
 	UFUNCTION()
 	void OnRep_Missions();
+
+	UFUNCTION()
+	void OnRep_MissionUIActors();
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

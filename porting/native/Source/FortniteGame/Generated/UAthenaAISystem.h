@@ -7,6 +7,11 @@
 #include "UFortAISystem.h"
 
 class AActor;
+class AAthenaAIController;
+class UAthenaAIDropper;
+class UAthenaAIPerceptionManager;
+class UAthenaBehaviorTreeComponent;
+class UAthenaPathFollowingComponent;
 class UFortServerBotManagerAthena;
 
 #include "UAthenaAISystem.generated.h"
@@ -17,6 +22,26 @@ class FORTNITEGAME_API UAthenaAISystem : public UFortAISystem
 	GENERATED_BODY()
 
 public:
+	// table index 10, flags 0x20080000002000
+	UPROPERTY(Transient)
+	UAthenaAIPerceptionManager* PerceptionManager;
+
+	// table index 9, flags 0x20080000002000
+	UPROPERTY(Transient)
+	UAthenaAIDropper* AIDropper;
+
+	// table index 7, flags 0x20080000002000
+	UPROPERTY(Transient)
+	TArray<AAthenaAIController*> AIControllers;
+
+	// table index 5, flags 0x20088000002008
+	UPROPERTY(Transient)
+	TArray<UAthenaBehaviorTreeComponent*> BTComponents;
+
+	// table index 3, flags 0x20088000002008
+	UPROPERTY(Transient)
+	TArray<UAthenaPathFollowingComponent*> PathFollowingComponents;
+
 	// table index 2, flags 0x20080000002000
 	UPROPERTY(Transient)
 	UFortServerBotManagerAthena* PlayerBotManager;

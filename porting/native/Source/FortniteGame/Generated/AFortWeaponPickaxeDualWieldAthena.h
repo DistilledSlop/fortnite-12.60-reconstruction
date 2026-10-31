@@ -7,8 +7,10 @@
 #include "AFortWeaponPickaxeAthena.h"
 
 class UFXSystemComponent;
+class UNiagaraSystem;
 class UParticleSystem;
 class UParticleSystemComponent;
+class USkeletalMeshComponentBudgeted;
 class USoundBase;
 
 #include "AFortWeaponPickaxeDualWieldAthena.generated.h"
@@ -19,6 +21,10 @@ class FORTNITEGAME_API AFortWeaponPickaxeDualWieldAthena : public AFortWeaponPic
 	GENERATED_BODY()
 
 public:
+	// table index 18, flags 0x100000000a001d
+	UPROPERTY()
+	USkeletalMeshComponentBudgeted* WeaponMeshOffhand;
+
 	// table index 17, flags 0x10000000080008
 	UPROPERTY()
 	UParticleSystemComponent* SwingOffhandPSC;
@@ -34,6 +40,10 @@ public:
 	// table index 14, flags 0x10000000010001
 	UPROPERTY()
 	UParticleSystem* AnimTrailsOffhandPSCTemplate;
+
+	// table index 13, flags 0x10000000010001
+	UPROPERTY()
+	UNiagaraSystem* AnimTrailsOffhandNiagaraAsset;
 
 	// table index 12, flags 0x10000000000000
 	UPROPERTY()
@@ -63,6 +73,10 @@ public:
 	UPROPERTY()
 	USoundBase* OffhandGenericImpactSound;
 
+	// table index 4, flags 0x20080000002000
+	UPROPERTY(Transient)
+	TArray<UNiagaraSystem*> OffhandImpactNiagaraPhysicalSurfaceEffectInstances;
+
 	// table index 3, flags 0x20080000000000
 	UPROPERTY()
 	USoundBase* OffhandImpactPhysicalSurfaceSounds[26];
@@ -70,6 +84,10 @@ public:
 	// table index 2, flags 0x20080000000000
 	UPROPERTY()
 	UParticleSystem* OffhandImpactPhysicalSurfaceEffects[26];
+
+	// table index 0, flags 0x24080000000000
+	UPROPERTY()
+	TArray<TSoftObjectPtr<UNiagaraSystem>> OffhandImpactNiagaraPhysicalSurfaceEffectAssets;
 
 };
 

@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UAthenaCosmeticItemDefinition.h"
 
+class AFortMapMarkerTopperActor;
+
 #include "UAthenaMapMarkerItemDefinition.generated.h"
 
 UCLASS()
@@ -14,5 +16,9 @@ class FORTNITEGAME_API UAthenaMapMarkerItemDefinition : public UAthenaCosmeticIt
 	GENERATED_BODY()
 
 public:
+	// table index 0, flags 0x14000000000015
+	UPROPERTY()
+	TSoftClassPtr<AFortMapMarkerTopperActor> TopperActorClass;
+
 };
 

@@ -8,6 +8,8 @@
 
 #include "FFortSubgameClientSettings.h"
 
+class UFortCosmeticLockerItem;
+
 #include "UFortMcpProfileSubgame.generated.h"
 
 UCLASS(config=Engine)
@@ -16,6 +18,14 @@ class FORTNITEGAME_API UFortMcpProfileSubgame : public UFortMcpProfile
 	GENERATED_BODY()
 
 public:
+	// table index 2, flags 0x20080000002000
+	UPROPERTY(Transient)
+	TArray<UFortCosmeticLockerItem*> LoadoutLockerItems;
+
+	// table index 1, flags 0x20080000002000
+	UPROPERTY(Transient)
+	UFortCosmeticLockerItem* LastAppliedLoadout;
+
 	// table index 0, flags 0x40000000000000
 	UPROPERTY()
 	FFortSubgameClientSettings CachedClientSettings;

@@ -11,6 +11,7 @@
 class UAnimMontage;
 class UFXSystemComponent;
 class UMaterialInstanceDynamic;
+class UNiagaraSystem;
 class UParticleSystem;
 class UParticleSystemComponent;
 class USoundBase;
@@ -38,6 +39,10 @@ public:
 	// table index 17, flags 0x10000000010001
 	UPROPERTY()
 	UParticleSystem* AnimTrailsPSCTemplate;
+
+	// table index 16, flags 0x10000000010001
+	UPROPERTY()
+	UNiagaraSystem* AnimTrailsNiagaraAsset;
 
 	// table index 15, flags 0x10000000000000
 	UPROPERTY()

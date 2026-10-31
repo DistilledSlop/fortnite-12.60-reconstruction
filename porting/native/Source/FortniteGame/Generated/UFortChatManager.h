@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "Chat/SocialChatManager.h"
 
+class UFortChatRoomJoinHelper;
+
 #include "UFortChatManager.generated.h"
 
 UCLASS(config=Game)
@@ -14,6 +16,14 @@ class FORTNITEGAME_API UFortChatManager : public USocialChatManager
 	GENERATED_BODY()
 
 public:
+	// table index 13, flags 0x40000000000000
+	UPROPERTY()
+	UFortChatRoomJoinHelper* GlobalChatJoinHelper;
+
+	// table index 12, flags 0x40000000000000
+	UPROPERTY()
+	UFortChatRoomJoinHelper* FoundersChatJoinHelper;
+
 	// table index 11, flags 0x40000000004000
 	UPROPERTY(Config)
 	bool bShouldJoinGlobalChat;

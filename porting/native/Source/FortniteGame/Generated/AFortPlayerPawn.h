@@ -50,6 +50,7 @@
 #include "FSlipperySlopeParams.h"
 #include "FVehiclePawnState.h"
 #include "FVortexParams.h"
+#include "FZiplinePawnState.h"
 #include "FZiplineStateChanged.h"
 #include "GameplayTagContainer.h"
 #include "Math/Color.h"
@@ -99,9 +100,11 @@ class UGameplayAbility;
 class UGameplayEffect;
 class UInputComponent;
 class UMaterialInstanceDynamic;
+class UNiagaraSystem;
 class UParticleSystem;
 class UParticleSystemComponent;
 class UPostProcessComponent;
+class USkeletalMeshComponentBudgeted;
 class USoundBase;
 class UTexture;
 
@@ -509,6 +512,10 @@ public:
 	UPROPERTY(Transient)
 	float WaterSprintBoostAllowedTimer;
 
+	// table index 220, flags 0x20080000002020
+	UPROPERTY(Replicated, Transient)
+	FZiplinePawnState ZiplineState;
+
 	// table index 219, flags 0x20080000010001
 	UPROPERTY()
 	FCurveTableRowHandle ZiplineJumpDampening;
@@ -704,6 +711,10 @@ public:
 	// table index 169, flags 0x40000000002000
 	UPROPERTY(Transient)
 	TArray<UCustomCharacterPart*> RequiredVariantParts;
+
+	// table index 168, flags 0x20080000082008
+	UPROPERTY(Transient)
+	USkeletalMeshComponentBudgeted* CharacterPartSkeletalMeshComponents[6];
 
 	// table index 166, flags 0x20080000002000
 	UPROPERTY(Transient)
@@ -1017,6 +1028,10 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_AttachmentMesh)
 	FRepFortMeshAttachment AttachmentMesh;
 
+	// table index 80, flags 0x200800000a001d
+	UPROPERTY()
+	USkeletalMeshComponentBudgeted* AttachmentMeshComponent;
+
 	// table index 79, flags 0x10000000000000
 	UPROPERTY()
 	UFortPawnScriptedBehavior* BotScriptedBehavior;
@@ -1244,6 +1259,30 @@ public:
 	// table index 21, flags 0x1000000009001d
 	UPROPERTY()
 	UParticleSystemComponent* PSC_PlayerInWaterSurfaceSwimming;
+
+	// table index 20, flags 0x10000000010015
+	UPROPERTY()
+	UNiagaraSystem* NiagaraPlayerInWaterBasicAsset;
+
+	// table index 19, flags 0x10000000010015
+	UPROPERTY()
+	UNiagaraSystem* NiagaraPlayerInWaterSwimmingAsset;
+
+	// table index 18, flags 0x10000000010015
+	UPROPERTY()
+	UNiagaraSystem* NiagaraPlayerWaterHandSplashAsset;
+
+	// table index 17, flags 0x10000000010015
+	UPROPERTY()
+	UNiagaraSystem* NiagaraPlayerWaterFootSplashAsset;
+
+	// table index 16, flags 0x10000000010015
+	UPROPERTY()
+	UNiagaraSystem* NiagaraPlayerWaterLargePlayerSplashAsset;
+
+	// table index 15, flags 0x10000000010015
+	UPROPERTY()
+	UNiagaraSystem* NiagaraPlayerWaterBoostAsset;
 
 	// table index 14, flags 0x10000000010015
 	UPROPERTY()
@@ -1512,6 +1551,10 @@ public:
 	UFUNCTION(Server, Unreliable)
 	void ServerSendAimbotDetectionStatus(const TArray<uint8>& Payload);
 	void ServerSendAimbotDetectionStatus_Implementation(const TArray<uint8>& Payload);
+
+	UFUNCTION(Server, Reliable)
+	void ServerSendZiplineState(const FZiplinePawnState& InZiplineState);
+	void ServerSendZiplineState_Implementation(const FZiplinePawnState& InZiplineState);
 
 	UFUNCTION(Server, Reliable)
 	void ServerSetAimbotDetection(bool bEnableDetection);

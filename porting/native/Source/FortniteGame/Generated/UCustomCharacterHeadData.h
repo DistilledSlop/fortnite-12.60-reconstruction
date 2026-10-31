@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCustomCharacterBodyPartData.h"
 
+class UCustomHairColorSwatch;
+class UCustomSkinColorSwatch;
 class UFortMontageLookupTable;
 
 #include "UCustomCharacterHeadData.generated.h"
@@ -23,6 +25,14 @@ public:
 	// table index 10, flags 0x24080000000001
 	UPROPERTY()
 	TSoftObjectPtr<UFortMontageLookupTable> RootSkeletonOverrideMontageLookupTable;
+
+	// table index 9, flags 0x24080000000001
+	UPROPERTY()
+	TSoftObjectPtr<UCustomSkinColorSwatch> SkinColorSwatch;
+
+	// table index 8, flags 0x24080000000001
+	UPROPERTY()
+	TSoftObjectPtr<UCustomHairColorSwatch> HairColorSwatch;
 
 	// table index 6, flags 0x20080000000001
 	UPROPERTY()

@@ -11,6 +11,7 @@
 #include "FFortLinkedQuest.h"
 #include "FFortRequirementsInfo.h"
 #include "FFortTheaterDifficultyWeight.h"
+#include "FFortTheaterMapData.h"
 #include "FFortTheaterMapMissionAlertData.h"
 #include "FFortTheaterMapMissionData.h"
 #include "FFortTheaterMissionWeight.h"
@@ -35,6 +36,10 @@ public:
 	// table index 24, flags 0x20080000000000
 	UPROPERTY()
 	int32 SaveVersion;
+
+	// table index 23, flags 0x20080000010001
+	UPROPERTY()
+	FFortTheaterMapData TheaterData;
 
 	// table index 22, flags 0x20080000010001
 	UPROPERTY()

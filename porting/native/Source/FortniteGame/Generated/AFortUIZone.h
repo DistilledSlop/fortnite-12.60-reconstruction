@@ -10,6 +10,7 @@
 #include "Engine/EngineTypes.h"
 #include "Math/Color.h"
 
+class UFortSpottedActorIndicator;
 class UReporterGraph;
 class USlateBrushAsset;
 class UTexture2D;
@@ -57,6 +58,10 @@ public:
 	// table index 2, flags 0x24080000002000
 	UPROPERTY(Transient)
 	TSoftObjectPtr<USlateBrushAsset> ActorCanvasArrowBrush;
+
+	// table index 0, flags 0x20080000002000
+	UPROPERTY(Transient)
+	TArray<UFortSpottedActorIndicator*> SpottedActorIndicators;
 
 };
 

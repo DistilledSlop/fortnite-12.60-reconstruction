@@ -312,6 +312,11 @@ void AFortPlayerPawn::ServerSendAimbotDetectionStatus_Implementation(const TArra
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerPawn::ServerSendZiplineState_Implementation(const FZiplinePawnState& InZiplineState)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPlayerPawn::ServerSetAimbotDetection_Implementation(bool bEnableDetection)
 {
 	// Body not recovered: reflection-derived stub.
@@ -383,6 +388,7 @@ void AFortPlayerPawn::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutL
 	DOREPLIFETIME(AFortPlayerPawn, PossessedProp);
 	DOREPLIFETIME(AFortPlayerPawn, VehicleStateRep);
 	DOREPLIFETIME(AFortPlayerPawn, bCanPredictJumpApex);
+	DOREPLIFETIME(AFortPlayerPawn, ZiplineState);
 	DOREPLIFETIME(AFortPlayerPawn, bIsInsideSafeZone);
 	DOREPLIFETIME(AFortPlayerPawn, bIsInAnyStorm);
 	DOREPLIFETIME(AFortPlayerPawn, VehicleInputStateUnreliable);

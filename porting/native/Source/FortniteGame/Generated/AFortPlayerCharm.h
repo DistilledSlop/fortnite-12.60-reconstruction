@@ -9,6 +9,7 @@
 class ACustomCosmeticCharmModifier;
 class UAthenaCharmItemDefinition;
 class USceneComponent;
+class USkeletalMeshComponentBudgeted;
 
 #include "AFortPlayerCharm.generated.h"
 
@@ -21,6 +22,10 @@ public:
 	// table index 5, flags 0x20080000000014
 	UPROPERTY()
 	UAthenaCharmItemDefinition* CharmItemDef;
+
+	// table index 4, flags 0x400000000a001d
+	UPROPERTY()
+	USkeletalMeshComponentBudgeted* CharmMesh;
 
 	// table index 3, flags 0x40000000000000
 	UPROPERTY()

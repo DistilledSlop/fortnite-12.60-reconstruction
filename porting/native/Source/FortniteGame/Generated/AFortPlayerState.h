@@ -13,6 +13,7 @@
 #include "ETrustedPlatformType.h"
 #include "FCustomCharacterData.h"
 #include "FFortExperienceDelta.h"
+#include "FFortPlayerAttributeSets.h"
 #include "FPlayerBannerInfo.h"
 #include "FReplicatedStatValues.h"
 #include "GameFramework/OnlineReplStructs.h"
@@ -219,6 +220,10 @@ public:
 	// table index 11, flags 0x40000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_HomeActor)
 	AActor* HomeActor;
+
+	// table index 10, flags 0x10008000020015
+	UPROPERTY()
+	FFortPlayerAttributeSets AttributeSets;
 
 	// table index 9, flags 0x100000000a001d
 	UPROPERTY()

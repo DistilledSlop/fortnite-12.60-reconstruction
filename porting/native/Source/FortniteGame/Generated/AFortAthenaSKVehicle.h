@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "AFortAthenaVehicle.h"
 
+class USkeletalMeshComponentBudgeted;
+
 #include "AFortAthenaSKVehicle.generated.h"
 
 UCLASS(config=Game)
@@ -14,6 +16,10 @@ class FORTNITEGAME_API AFortAthenaSKVehicle : public AFortAthenaVehicle
 	GENERATED_BODY()
 
 public:
+	// table index 31, flags 0x100000000a001d
+	UPROPERTY()
+	USkeletalMeshComponentBudgeted* SkeletalMesh;
+
 	// table index 30, flags 0x10000000022015
 	UPROPERTY(Transient)
 	float WheelOffsetFR;

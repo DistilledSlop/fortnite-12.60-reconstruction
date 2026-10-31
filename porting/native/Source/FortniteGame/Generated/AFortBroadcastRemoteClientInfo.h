@@ -7,6 +7,7 @@
 #include "GameFramework/Actor.h"
 
 #include "EFortResourceType.h"
+#include "FAthenaQuickChatActiveEntry.h"
 #include "FBuildingWeakSpotData.h"
 #include "FFortWorldMarkerData.h"
 #include "FMarkerID.h"
@@ -58,6 +59,10 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_RemoteCanDBNORevive)
 	bool bRemoteCanDBNORevive;
 
+	// table index 4, flags 0x40000100000020
+	UPROPERTY(ReplicatedUsing=OnRep_RemoteChatEntry)
+	FAthenaQuickChatActiveEntry RemoteChatEntry;
+
 	// table index 3, flags 0x40000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_RemoteWeakspotData)
 	FBuildingWeakSpotData RemoteWeakspotData;
@@ -101,6 +106,9 @@ public:
 
 	UFUNCTION()
 	void OnRep_RemoteCanDBNORevive();
+
+	UFUNCTION()
+	void OnRep_RemoteChatEntry();
 
 	UFUNCTION()
 	void OnRep_RemoteEditActor();

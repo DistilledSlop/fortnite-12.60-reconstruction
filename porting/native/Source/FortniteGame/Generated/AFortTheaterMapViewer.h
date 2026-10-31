@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 
+#include "FFortTheaterMapData.h"
 #include "Math/Box.h"
 
 class AFortTheaterMapTile;
@@ -49,6 +50,10 @@ public:
 	// table index 5, flags 0x20080000002000
 	UPROPERTY(Transient)
 	AFortTheaterMapTile* CurrentFocusedTile;
+
+	// table index 3, flags 0x20080000000000
+	UPROPERTY()
+	TArray<FFortTheaterMapData> TheaterList;
 
 	// table index 2, flags 0x20080000000000
 	UPROPERTY()

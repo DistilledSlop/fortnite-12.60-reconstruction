@@ -13,6 +13,7 @@
 #include "FAsyncTaskResult.h"
 #include "FAthenaMatchStats.h"
 #include "FAthenaMatchTeamStats.h"
+#include "FAthenaQuickChatActiveEntry.h"
 #include "FBuildingEditAnalyticEvent.h"
 #include "FCreativeIslandData.h"
 #include "FCreativeIslandInfo.h"
@@ -50,6 +51,7 @@
 #include "FPlayerStateEncryptionKey.h"
 #include "FProfileGoScenario.h"
 #include "FQuickBarData.h"
+#include "GameFramework/OnlineReplStructs.h"
 #include "GameplayTagContainer.h"
 #include "Math/Color.h"
 #include "Math/Rotator.h"
@@ -828,6 +830,10 @@ public:
 	void ClientReceiveKillNotification(AFortPlayerStateZone* Killed, AFortPlayerStateZone* Killer);
 	void ClientReceiveKillNotification_Implementation(AFortPlayerStateZone* Killed, AFortPlayerStateZone* Killer);
 
+	UFUNCTION(Client, Unreliable)
+	void ClientReceiveSquadQuickChatMessage(AFortPlayerController* SenderPC, const FAthenaQuickChatActiveEntry& ChatEntry);
+	void ClientReceiveSquadQuickChatMessage_Implementation(AFortPlayerController* SenderPC, const FAthenaQuickChatActiveEntry& ChatEntry);
+
 	UFUNCTION(Client, Reliable)
 	void ClientReportTournamentPlacementPointsScored(int32 PointsEarned, int32 Placement);
 	void ClientReportTournamentPlacementPointsScored_Implementation(int32 PointsEarned, int32 Placement);
@@ -1038,6 +1044,10 @@ public:
 	UFUNCTION(Server, Reliable)
 	void ServerNotifyOstrichShieldOvercharge();
 	void ServerNotifyOstrichShieldOvercharge_Implementation();
+
+	UFUNCTION(Server, Unreliable)
+	void ServerPlaySquadQuickChatMessage(const FUniqueNetIdRepl& SenderID, const FAthenaQuickChatActiveEntry& ChatEntry);
+	void ServerPlaySquadQuickChatMessage_Implementation(const FUniqueNetIdRepl& SenderID, const FAthenaQuickChatActiveEntry& ChatEntry);
 
 	UFUNCTION(Server, Reliable)
 	void ServerReleasePortal();

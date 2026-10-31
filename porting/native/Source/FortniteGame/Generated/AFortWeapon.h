@@ -12,6 +12,7 @@
 #include "FFortAbilitySetHandle.h"
 #include "FFortEffectDistanceQuality.h"
 #include "FFortGameplayAbilityBehaviorDistanceData.h"
+#include "FMaterialInterfaceArray.h"
 #include "FOnLocalAmmoChanged.h"
 #include "FOnLocalReloadCancelled.h"
 #include "FOnLocalReloadStarted.h"
@@ -41,10 +42,13 @@ class UForceFeedbackEffect;
 class UFortAlterationItemDefinition;
 class UFortCameraMode;
 class UFortGameplayAbility;
+class UFortSignificanceManager;
 class UFortWeaponAnimSet;
 class UFortWeaponItemDefinition;
 class UMaterialInterface;
+class UNiagaraSystem;
 class UParticleSystem;
+class USkeletalMeshComponentBudgeted;
 class USoundBase;
 class UTexture2D;
 class UWeaponHitNotifyAudioBank;
@@ -309,6 +313,10 @@ public:
 	UPROPERTY()
 	UParticleSystem* ImpactPhysicalSurfaceEffects[26];
 
+	// table index 112, flags 0x24080000000001
+	UPROPERTY()
+	TArray<TSoftObjectPtr<UNiagaraSystem>> ImpactNiagaraPhysicalSurfaceEffectAssets;
+
 	// table index 111, flags 0x24080000000001
 	UPROPERTY()
 	TSubclassOf<UCameraShake> ImpactCameraShake;
@@ -329,6 +337,10 @@ public:
 	UPROPERTY()
 	UForceFeedbackEffect* SecondaryImpactForceFeedbackEffect;
 
+	// table index 105, flags 0x40000000002000
+	UPROPERTY(Transient)
+	TArray<UNiagaraSystem*> ImpactNiagaraPhysicalSurfaceEffectInstances;
+
 	// table index 104, flags 0x40000000082008
 	UPROPERTY(Transient)
 	UAudioComponent* FireAudioChannels[4];
@@ -345,9 +357,21 @@ public:
 	UPROPERTY(Transient)
 	int32 CurrentGunFireIndex;
 
+	// table index 100, flags 0x200800000a001d
+	UPROPERTY()
+	USkeletalMeshComponentBudgeted* WeaponMesh;
+
+	// table index 98, flags 0x20088000000008
+	UPROPERTY()
+	TArray<USkeletalMeshComponentBudgeted*> AllWeaponMeshes;
+
 	// table index 96, flags 0x20080000002000
 	UPROPERTY(Transient)
 	TArray<UMaterialInterface*> DefaultWeaponMaterials;
+
+	// table index 93, flags 0x20088000002000
+	UPROPERTY(Transient)
+	TMap<USkeletalMeshComponentBudgeted*, FMaterialInterfaceArray> OriginalMaterialMap;
 
 	// table index 92, flags 0x20080000002000
 	UPROPERTY(Transient)
@@ -572,6 +596,10 @@ public:
 	// table index 33, flags 0x20080000002000
 	UPROPERTY(Transient)
 	AFortFXManager* CachedFXManager;
+
+	// table index 32, flags 0x20080000002000
+	UPROPERTY(Transient)
+	UFortSignificanceManager* CachedSignificanceManager;
 
 	// table index 31, flags 0x20080000000001
 	UPROPERTY()

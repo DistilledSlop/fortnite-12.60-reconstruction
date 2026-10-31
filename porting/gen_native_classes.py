@@ -994,7 +994,7 @@ def self_test():
 # and IMPLEMENT_MODULE file are written by --promote (porting/native_classes_status.md, "Runtime modules").
 RUNTIME_MODULE_PACKAGES = (
     "/Script/BlueprintContext", "/Script/MeshNetwork", "/Script/CommonUI", "/Script/AmbientAudio", "/Script/Account",
-    "/Script/ModularGameplay", "/Script/McpProfileSys",
+    "/Script/ModularGameplay", "/Script/McpProfileSys", "/Script/CommonInput", "/Script/FortniteUI",
 )
 HAND_WRITTEN_MODULES = ("FortniteGame", "PlayspaceFramework")   # Build.cs and IMPLEMENT_* files are not generated
 PROMOTE_PACKAGES = ("/Script/FortniteGame", "/Script/PlayspaceFramework") + RUNTIME_MODULE_PACKAGES
@@ -1609,6 +1609,10 @@ def promote(args):
         module_deps.setdefault(info.module, set())
         add_deps(info.module, [gate.engine.module_of_inc.get(inc) for inc in model["includes"]])
 
+    # FortniteUI classes include headers of FortniteGame's promoted classes; the include map covers engine modules only.
+    if "FortniteUI" in module_deps:
+        add_deps("FortniteUI", ["FortniteGame"])
+
     # Module check: the game module lists every module its items need. The runtime modules depend on engine
     # modules only, and on each other only through parents and forward declarations; a cycle is refused.
     deps = build_cs_modules(FORTNITE_BUILD_CS)
@@ -1653,7 +1657,9 @@ def promote(args):
             continue
         # Engine modules the game module lists (they cover forward declarations of engine classes), plus this
         # module's own needs: engine modules of its headers and promoted modules of its parents.
-        own = sorted((set(engine_shared) | module_deps[module]) - {module, "FortniteGame"})
+        # FortniteGame is excluded (it lists these modules), except for FortniteUI, whose headers come from FortniteGame.
+        excluded = {module} if module == "FortniteUI" else {module, "FortniteGame"}
+        own = sorted((set(engine_shared) | module_deps[module]) - excluded)
         module_dir = os.path.join(args.source_root, module)
         os.makedirs(os.path.join(module_dir, "Private"), exist_ok=True)
         with open(os.path.join(module_dir, module + ".Build.cs"), "w", encoding="utf-8", newline="\n") as fh:

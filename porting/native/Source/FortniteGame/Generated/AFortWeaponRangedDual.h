@@ -9,6 +9,7 @@
 #include "FOnHandFired.h"
 
 class UAnimMontage;
+class USkeletalMeshComponentBudgeted;
 
 #include "AFortWeaponRangedDual.generated.h"
 
@@ -18,6 +19,10 @@ class FORTNITEGAME_API AFortWeaponRangedDual : public AFortWeaponRanged
 	GENERATED_BODY()
 
 public:
+	// table index 8, flags 0x100000000a0009
+	UPROPERTY()
+	USkeletalMeshComponentBudgeted* LeftHandWeaponMesh;
+
 	// table index 7, flags 0x10000000000001
 	UPROPERTY()
 	UAnimMontage* LeftHandFireAnimation;

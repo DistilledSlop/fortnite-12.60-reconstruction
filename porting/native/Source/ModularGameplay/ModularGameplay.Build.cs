@@ -10,7 +10,7 @@ public class ModularGameplay : ModuleRules
     public ModularGameplay(ReadOnlyTargetRules Target) : base(Target)
     {
         PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
-        PublicDependencyModuleNames.AddRange(new[] { "Core", "CoreUObject", "Engine", "Slate", "AIModule", "AnimGraphRuntime", "AssetRegistry", "CinematicCamera", "ClientPilot", "ClothingSystemRuntimeInterface", "GameplayAbilities", "GameplayTags", "GameplayTasks", "Gauntlet", "HeadMountedDisplay", "Hotfix", "InputCore", "Json", "JsonUtilities", "LevelSequence", "LiveLinkInterface", "Lobby", "MediaAssets", "NavigationSystem", "OnlineSubsystem", "OnlineSubsystemUtils", "Overlay", "Party", "Rejoin", "ReplicationGraph", "SlateCore", "UMG", "Water" });
+        PublicDependencyModuleNames.AddRange(new[] { "Core", "CoreUObject", "Engine", "Slate", "AIModule", "AnimGraphRuntime", "AnimationBudgetAllocator", "AnimationSharing", "AssetRegistry", "CinematicCamera", "ClientPilot", "ClothingSystemRuntimeInterface", "Foliage", "GameplayAbilities", "GameplayTags", "GameplayTasks", "Gauntlet", "HeadMountedDisplay", "Hotfix", "InputCore", "Json", "JsonUtilities", "LevelSequence", "LiveLinkInterface", "Lobby", "MediaAssets", "NavigationSystem", "Niagara", "NiagaraAnimNotifies", "OnlineSubsystem", "OnlineSubsystemUtils", "Overlay", "Party", "PhysXVehicles", "RHI", "Rejoin", "RenderCore", "ReplicationGraph", "SignificanceManager", "SlateCore", "UMG", "Water" });
         PublicIncludePaths.Add(Path.Combine(ModuleDirectory, "Generated"));
     }
 }

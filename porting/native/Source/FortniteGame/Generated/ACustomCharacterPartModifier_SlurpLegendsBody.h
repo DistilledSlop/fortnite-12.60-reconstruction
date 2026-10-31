@@ -11,6 +11,7 @@
 class AFortPlayerStateZone;
 class UAnimInstance;
 class UMaterialInstanceDynamic;
+class UNiagaraComponent;
 class UParticleSystemComponent;
 
 #include "ACustomCharacterPartModifier_SlurpLegendsBody.generated.h"
@@ -24,6 +25,10 @@ public:
 	// table index 9, flags 0x10000000080008
 	UPROPERTY()
 	UParticleSystemComponent* TransformBurst;
+
+	// table index 8, flags 0x10000000080008
+	UPROPERTY()
+	UNiagaraComponent* LoopingDrip;
 
 	// table index 7, flags 0x10000000000001
 	UPROPERTY()

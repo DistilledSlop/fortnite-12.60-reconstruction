@@ -7,5 +7,6 @@ public class FortniteLinuxTarget : TargetRules
         Type = TargetType.Game;
         DefaultBuildSettings = BuildSettingsVersion.Latest;
         ExtraModuleNames.Add("FortniteGame");
+        ExtraModuleNames.Add("FortniteUI");
     }
 }

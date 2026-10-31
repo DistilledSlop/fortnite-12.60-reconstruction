@@ -42,6 +42,11 @@ void AFortBroadcastRemoteClientInfo::OnRep_RemoteCanDBNORevive()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortBroadcastRemoteClientInfo::OnRep_RemoteChatEntry()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortBroadcastRemoteClientInfo::OnRep_RemoteEditActor()
 {
 	// Body not recovered: reflection-derived stub.
@@ -140,6 +145,7 @@ void AFortBroadcastRemoteClientInfo::GetLifetimeReplicatedProps(TArray<FLifetime
 	DOREPLIFETIME(AFortBroadcastRemoteClientInfo, RemotePoiTagID);
 	DOREPLIFETIME(AFortBroadcastRemoteClientInfo, RemoteRespawnTime);
 	DOREPLIFETIME(AFortBroadcastRemoteClientInfo, RemoteWeakspotData);
+	DOREPLIFETIME(AFortBroadcastRemoteClientInfo, RemoteChatEntry);
 	DOREPLIFETIME(AFortBroadcastRemoteClientInfo, bRemoteCanDBNORevive);
 	DOREPLIFETIME(AFortBroadcastRemoteClientInfo, bRemoteIsInventoryActive);
 	DOREPLIFETIME(AFortBroadcastRemoteClientInfo, bRemoteIsFullScreenMapActive);

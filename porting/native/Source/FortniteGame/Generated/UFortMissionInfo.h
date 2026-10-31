@@ -9,11 +9,13 @@
 #include "EFortMissionType.h"
 #include "FFortEncounterProfile.h"
 #include "FFortEncounterSequenceSettings.h"
+#include "FFortMissionConfigDataParams.h"
 #include "FFortMissionPlacementItems.h"
 #include "FFortMissionPopupWidgetData.h"
 #include "FFortMissionTaggedRewards.h"
 #include "FFortMultiSizeBrush.h"
 #include "FFortObjectiveBlock.h"
+#include "FMissionPerDifficultyProperties.h"
 #include "GameplayTagContainer.h"
 
 class AFortMission;
@@ -201,6 +203,14 @@ public:
 	// table index 3, flags 0x20080000010001
 	UPROPERTY()
 	TArray<FFortMissionTaggedRewards> TaggedRewards;
+
+	// table index 1, flags 0x20080000010001
+	UPROPERTY()
+	TArray<FMissionPerDifficultyProperties> PerDifficultyProperties;
+
+	// table index 0, flags 0x20080000010001
+	UPROPERTY()
+	FFortMissionConfigDataParams ConfigParams;
 
 };
 

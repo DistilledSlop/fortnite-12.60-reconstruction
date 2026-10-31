@@ -8,6 +8,7 @@
 
 #include "EFortZoneType.h"
 #include "FDeployableBaseSupportSettings.h"
+#include "FZoneThemeDifficultyProperties.h"
 #include "GameplayTagContainer.h"
 
 class ABuildingSMActor;
@@ -139,6 +140,10 @@ public:
 	// table index 2, flags 0x14000000010015
 	UPROPERTY()
 	TSoftObjectPtr<UTexture2D> BackgroundImage;
+
+	// table index 0, flags 0x20080000010001
+	UPROPERTY()
+	TArray<FZoneThemeDifficultyProperties> DifficultyProperties;
 
 };
 

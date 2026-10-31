@@ -13,7 +13,9 @@
 
 class UAnimInstance;
 class UAnimationAsset;
+class UMarshalledVFX_AuthoredDataConfig;
 class UMaterialInterface;
+class UNiagaraSystem;
 class UParticleSystem;
 class USoundBase;
 
@@ -37,6 +39,10 @@ public:
 	UPROPERTY()
 	TSoftObjectPtr<UParticleSystem> AnimTrails;
 
+	// table index 32, flags 0x14000000000001
+	UPROPERTY()
+	TSoftObjectPtr<UNiagaraSystem> AnimTrailsNiagara;
+
 	// table index 29, flags 0x14000000000001
 	UPROPERTY()
 	TMap<TEnumAsByte<EPhysicalSurface>, TSoftObjectPtr<USoundBase>> ImpactPhysicalSurfaceSoundsMap;
@@ -44,6 +50,10 @@ public:
 	// table index 26, flags 0x14000000000001
 	UPROPERTY()
 	TMap<TEnumAsByte<EPhysicalSurface>, TSoftObjectPtr<UParticleSystem>> ImpactPhysicalSurfaceEffectsMap;
+
+	// table index 24, flags 0x14000000000001
+	UPROPERTY()
+	TArray<TSoftObjectPtr<UNiagaraSystem>> ImpactNiagaraPhysicalSurfaceEffects;
 
 	// table index 22, flags 0x14000000000001
 	UPROPERTY()
@@ -72,6 +82,10 @@ public:
 	// table index 11, flags 0x10000000000001
 	UPROPERTY()
 	TArray<FAttachedParticleComponentDef> ParticleComponentsDefs;
+
+	// table index 10, flags 0x10000002080009
+	UPROPERTY()
+	UMarshalledVFX_AuthoredDataConfig* ManagedVFX_Defaults;
 
 	// table index 9, flags 0x10000000000001
 	UPROPERTY()

@@ -9,6 +9,8 @@
 #include "EFortWeaponSoundState.h"
 #include "Engine/EngineTypes.h"
 
+class UMarshalledVFX_AuthoredDataConfig;
+class UNiagaraSystem;
 class UParticleSystem;
 class USkeletalMesh;
 class USoundBase;
@@ -37,6 +39,10 @@ public:
 	UPROPERTY()
 	TSoftObjectPtr<UParticleSystem> AnimTrailsOffhand;
 
+	// table index 21, flags 0x14000000000001
+	UPROPERTY()
+	TSoftObjectPtr<UNiagaraSystem> AnimTrailsNiagaraOffhand;
+
 	// table index 20, flags 0x14000000000001
 	UPROPERTY()
 	TSoftObjectPtr<USoundBase> OffhandGenericImpactSound;
@@ -49,9 +55,17 @@ public:
 	UPROPERTY()
 	TMap<TEnumAsByte<EPhysicalSurface>, TSoftObjectPtr<UParticleSystem>> OffhandImpactPhysicalSurfaceEffects;
 
+	// table index 11, flags 0x14000000000001
+	UPROPERTY()
+	TMap<TEnumAsByte<EPhysicalSurface>, TSoftObjectPtr<UNiagaraSystem>> OffhandImpactNiagaraPhysicalSurfaceEffectAssets;
+
 	// table index 8, flags 0x14000000000001
 	UPROPERTY()
 	TMap<TEnumAsByte<EFortWeaponSoundState::Type>, TSoftObjectPtr<USoundBase>> OffhandPrimaryFireSoundMap;
+
+	// table index 7, flags 0x10000002080009
+	UPROPERTY()
+	UMarshalledVFX_AuthoredDataConfig* ManagedVFX_OffhandDefaults;
 
 	// table index 6, flags 0x10000000000001
 	UPROPERTY()
