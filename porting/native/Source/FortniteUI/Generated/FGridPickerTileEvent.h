@@ -7,5 +7,5 @@
 #include "FGridPickerTileEvent.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FGridPickerTileEvent, UFortGridPickerTile*, Tile, UObject*, Data);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FGridPickerTileEvent, UObject*, Data, UFortGridPickerTile*, Tile);
 

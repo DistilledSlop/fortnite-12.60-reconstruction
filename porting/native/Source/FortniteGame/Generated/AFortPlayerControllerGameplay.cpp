@@ -57,7 +57,7 @@ void AFortPlayerControllerGameplay::OnRep_UIMetricsDisplayIndex()
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerControllerGameplay::ServerAwardVehicleTrickPoints_Implementation(int32 InAirTimeX1000, int32 InPoints)
+void AFortPlayerControllerGameplay::ServerAwardVehicleTrickPoints_Implementation(int32 InPoints, int32 InAirTimeX1000)
 {
 	// Body not recovered: reflection-derived stub.
 }

@@ -11,7 +11,7 @@ void AFortPlayerControllerDeployableBase::ClientOnHordeTierInitialized_Implement
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerControllerDeployableBase::ClientOnHordeWaveComplete_Implementation(const TArray<FItemAndCount>& Rewards, int32 Wave)
+void AFortPlayerControllerDeployableBase::ClientOnHordeWaveComplete_Implementation(int32 Wave, const TArray<FItemAndCount>& Rewards)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -26,12 +26,12 @@ void AFortPlayerControllerDeployableBase::ServerMoveAllItemsToDeployableBase_Imp
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerControllerDeployableBase::ServerMoveItemFromDeployableBase_Implementation(ADeployableBasePlot* ExpectedPlot, int32 Count, const FGuid& ItemOnPlot)
+void AFortPlayerControllerDeployableBase::ServerMoveItemFromDeployableBase_Implementation(const FGuid& ItemOnPlot, int32 Count, ADeployableBasePlot* ExpectedPlot)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerControllerDeployableBase::ServerMoveItemToDeployableBase_Implementation(ADeployableBasePlot* ExpectedPlot, int32 Count, const FGuid& ItemOnPlayer)
+void AFortPlayerControllerDeployableBase::ServerMoveItemToDeployableBase_Implementation(const FGuid& ItemOnPlayer, int32 Count, ADeployableBasePlot* ExpectedPlot)
 {
 	// Body not recovered: reflection-derived stub.
 }

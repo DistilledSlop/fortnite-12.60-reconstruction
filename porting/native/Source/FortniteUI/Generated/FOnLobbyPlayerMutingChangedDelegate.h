@@ -8,5 +8,5 @@
 #include "FOnLobbyPlayerMutingChangedDelegate.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnLobbyPlayerMutingChangedDelegate, bool, bMuted, FUniqueNetIdRepl, UniqueId);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnLobbyPlayerMutingChangedDelegate, FUniqueNetIdRepl, UniqueId, bool, bMuted);
 

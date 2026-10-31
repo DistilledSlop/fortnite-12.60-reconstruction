@@ -1352,8 +1352,8 @@ public:
 	void ClientAcknowledgeVehicleInputState_Implementation(float Timestamp);
 
 	UFUNCTION(Client, Unreliable)
-	void ClientNotifyAbilityFailed(const FGameplayTagContainer& FailedReason, UGameplayAbility* FailedAbility);
-	void ClientNotifyAbilityFailed_Implementation(const FGameplayTagContainer& FailedReason, UGameplayAbility* FailedAbility);
+	void ClientNotifyAbilityFailed(UGameplayAbility* FailedAbility, const FGameplayTagContainer& FailedReason);
+	void ClientNotifyAbilityFailed_Implementation(UGameplayAbility* FailedAbility, const FGameplayTagContainer& FailedReason);
 
 	UFUNCTION(Client, Reliable)
 	void ClientResetAbilitySystemComponent();
@@ -1388,6 +1388,12 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	ABuildingGameplayActorPlayerPropAttachment* GetPossessedProp() const;
+
+	UFUNCTION(BlueprintCallable)
+	FVector GetPreviousPosition();
+
+	UFUNCTION(BlueprintCallable)
+	FVector GetPreviousVelocity();
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	EFortPawnStasisMode GetStasisMode() const;
@@ -1549,21 +1555,21 @@ public:
 	bool ServerChooseGender_Validate(EFortCustomGender::Type Gender);
 
 	UFUNCTION(Server, Reliable)
-	void ServerChoosePart(UCustomCharacterPart* ChosenCharacterPart, EFortCustomPartType::Type Part);
-	void ServerChoosePart_Implementation(UCustomCharacterPart* ChosenCharacterPart, EFortCustomPartType::Type Part);
+	void ServerChoosePart(EFortCustomPartType::Type Part, UCustomCharacterPart* ChosenCharacterPart);
+	void ServerChoosePart_Implementation(EFortCustomPartType::Type Part, UCustomCharacterPart* ChosenCharacterPart);
 
 	UFUNCTION(Server, Reliable)
-	void ServerCycleAccessoryColorSwatch(bool bNext, EFortCustomPartType::Type Part);
-	void ServerCycleAccessoryColorSwatch_Implementation(bool bNext, EFortCustomPartType::Type Part);
+	void ServerCycleAccessoryColorSwatch(EFortCustomPartType::Type Part, bool bNext);
+	void ServerCycleAccessoryColorSwatch_Implementation(EFortCustomPartType::Type Part, bool bNext);
 
 	UFUNCTION(Server, Reliable)
-	void ServerCycleColorSwatch(bool bNext, EColorSwatchType SwatchType);
-	void ServerCycleColorSwatch_Implementation(bool bNext, EColorSwatchType SwatchType);
+	void ServerCycleColorSwatch(EColorSwatchType SwatchType, bool bNext);
+	void ServerCycleColorSwatch_Implementation(EColorSwatchType SwatchType, bool bNext);
 
 	UFUNCTION(Server, Reliable, WithValidation)
-	void ServerCyclePart(bool bNextPart, EFortCustomPartType::Type Part);
-	void ServerCyclePart_Implementation(bool bNextPart, EFortCustomPartType::Type Part);
-	bool ServerCyclePart_Validate(bool bNextPart, EFortCustomPartType::Type Part);
+	void ServerCyclePart(EFortCustomPartType::Type Part, bool bNextPart);
+	void ServerCyclePart_Implementation(EFortCustomPartType::Type Part, bool bNextPart);
+	bool ServerCyclePart_Validate(EFortCustomPartType::Type Part, bool bNextPart);
 
 	UFUNCTION(Server, Reliable)
 	void ServerDropCarriedPlayer();
@@ -1575,19 +1581,19 @@ public:
 	bool ServerEquipLastWeaponOrGadget_Validate(bool bForce);
 
 	UFUNCTION(Server, Reliable, WithValidation)
-	void ServerHandlePickup(bool bPlayPickupSound, const FVector& InStartDirection, float InFlyTime, AFortPickup* Pickup);
-	void ServerHandlePickup_Implementation(bool bPlayPickupSound, const FVector& InStartDirection, float InFlyTime, AFortPickup* Pickup);
-	bool ServerHandlePickup_Validate(bool bPlayPickupSound, const FVector& InStartDirection, float InFlyTime, AFortPickup* Pickup);
+	void ServerHandlePickup(AFortPickup* Pickup, float InFlyTime, const FVector& InStartDirection, bool bPlayPickupSound);
+	void ServerHandlePickup_Implementation(AFortPickup* Pickup, float InFlyTime, const FVector& InStartDirection, bool bPlayPickupSound);
+	bool ServerHandlePickup_Validate(AFortPickup* Pickup, float InFlyTime, const FVector& InStartDirection, bool bPlayPickupSound);
 
 	UFUNCTION(Server, Reliable, WithValidation)
-	void ServerHandlePickupWithRequestedSwap(bool bPlayPickupSound, const FVector& InStartDirection, float InFlyTime, const FGuid& Swap, AFortPickup* Pickup);
-	void ServerHandlePickupWithRequestedSwap_Implementation(bool bPlayPickupSound, const FVector& InStartDirection, float InFlyTime, const FGuid& Swap, AFortPickup* Pickup);
-	bool ServerHandlePickupWithRequestedSwap_Validate(bool bPlayPickupSound, const FVector& InStartDirection, float InFlyTime, const FGuid& Swap, AFortPickup* Pickup);
+	void ServerHandlePickupWithRequestedSwap(AFortPickup* Pickup, const FGuid& Swap, float InFlyTime, const FVector& InStartDirection, bool bPlayPickupSound);
+	void ServerHandlePickupWithRequestedSwap_Implementation(AFortPickup* Pickup, const FGuid& Swap, float InFlyTime, const FVector& InStartDirection, bool bPlayPickupSound);
+	bool ServerHandlePickupWithRequestedSwap_Validate(AFortPickup* Pickup, const FGuid& Swap, float InFlyTime, const FVector& InStartDirection, bool bPlayPickupSound);
 
 	UFUNCTION(Server, Reliable, WithValidation)
-	void ServerHandlePickupWithSwap(bool bPlayPickupSound, const FVector& InStartDirection, float InFlyTime, const FGuid& Swap, AFortPickup* Pickup);
-	void ServerHandlePickupWithSwap_Implementation(bool bPlayPickupSound, const FVector& InStartDirection, float InFlyTime, const FGuid& Swap, AFortPickup* Pickup);
-	bool ServerHandlePickupWithSwap_Validate(bool bPlayPickupSound, const FVector& InStartDirection, float InFlyTime, const FGuid& Swap, AFortPickup* Pickup);
+	void ServerHandlePickupWithSwap(AFortPickup* Pickup, const FGuid& Swap, float InFlyTime, const FVector& InStartDirection, bool bPlayPickupSound);
+	void ServerHandlePickupWithSwap_Implementation(AFortPickup* Pickup, const FGuid& Swap, float InFlyTime, const FVector& InStartDirection, bool bPlayPickupSound);
+	bool ServerHandlePickupWithSwap_Validate(AFortPickup* Pickup, const FGuid& Swap, float InFlyTime, const FVector& InStartDirection, bool bPlayPickupSound);
 
 	UFUNCTION(Server, Reliable)
 	void ServerHoistDBNOPlayer(AFortPlayerPawn* InDBNOHoistee);
@@ -1664,9 +1670,9 @@ public:
 	bool ServerUpdateVehicleInputStateReliable_Validate(const FFortAthenaVehicleInputStateReliable& ReliableInput);
 
 	UFUNCTION(Server, Unreliable, WithValidation)
-	void ServerUpdateVehicleInputStateUnreliable(float Timestamp, const FFortAthenaVehicleInputStateUnreliable& ReliableInput);
-	void ServerUpdateVehicleInputStateUnreliable_Implementation(float Timestamp, const FFortAthenaVehicleInputStateUnreliable& ReliableInput);
-	bool ServerUpdateVehicleInputStateUnreliable_Validate(float Timestamp, const FFortAthenaVehicleInputStateUnreliable& ReliableInput);
+	void ServerUpdateVehicleInputStateUnreliable(const FFortAthenaVehicleInputStateUnreliable& ReliableInput, float Timestamp);
+	void ServerUpdateVehicleInputStateUnreliable_Implementation(const FFortAthenaVehicleInputStateUnreliable& ReliableInput, float Timestamp);
+	bool ServerUpdateVehicleInputStateUnreliable_Validate(const FFortAthenaVehicleInputStateUnreliable& ReliableInput, float Timestamp);
 
 	UFUNCTION(BlueprintCallable)
 	void SetIsInFrontEndHologram(bool bInFrontEndHologram);

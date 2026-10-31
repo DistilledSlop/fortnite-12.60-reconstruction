@@ -7,6 +7,7 @@
 #include "AFortAthenaMutator.h"
 
 #include "AttributeSet.h"
+#include "FOnButterflyPawnBroadcast.h"
 
 #include "AFortAthenaMutator_ButterflyEvent.generated.h"
 
@@ -16,6 +17,10 @@ class FORTNITEGAME_API AFortAthenaMutator_ButterflyEvent : public AFortAthenaMut
 	GENERATED_BODY()
 
 public:
+	// table index 5, flags 0x10000010080000
+	UPROPERTY()
+	FOnButterflyPawnBroadcast OnPawnBroadcast;
+
 	// table index 4, flags 0x20080000010015
 	UPROPERTY()
 	float PawnGatherFrequency;

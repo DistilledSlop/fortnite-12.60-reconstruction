@@ -10,6 +10,7 @@
 #include "FHomebaseItemUpgradePointsChanged.h"
 #include "FHomebaseMaximumItemLevelChanged.h"
 #include "FItemSlottingPreviewInfoChanged.h"
+#include "FPlayerInfoChanged.h"
 #include "FSquadSlotMarkedAsSeen.h"
 #include "FWorkerPreviewStateChanged.h"
 
@@ -40,6 +41,10 @@ public:
 	// table index 2, flags 0x10000010080000
 	UPROPERTY()
 	FSquadSlotMarkedAsSeen SquadSlotMarkedAsSeen;
+
+	// table index 1, flags 0x10000010080000
+	UPROPERTY()
+	FPlayerInfoChanged OnPlayerInfoChangedDelegate;
 
 	// table index 0, flags 0x10000010080000
 	UPROPERTY()

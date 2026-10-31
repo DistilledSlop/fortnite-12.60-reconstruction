@@ -7,5 +7,5 @@
 #include "FOnLocalAmmoChanged.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnLocalAmmoChanged, int32, LocalRemaining, int32, LocalCount);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnLocalAmmoChanged, int32, LocalCount, int32, LocalRemaining);
 

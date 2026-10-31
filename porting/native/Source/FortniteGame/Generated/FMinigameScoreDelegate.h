@@ -8,5 +8,5 @@
 #include "FMinigameScoreDelegate.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FMinigameScoreDelegate, FMinigameScoreEntry, ScoreEntry, UFortPlaysetItemDefinition*, Playset);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FMinigameScoreDelegate, UFortPlaysetItemDefinition*, Playset, FMinigameScoreEntry, ScoreEntry);
 

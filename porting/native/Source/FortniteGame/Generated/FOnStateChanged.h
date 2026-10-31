@@ -8,5 +8,5 @@
 #include "FOnStateChanged.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnStateChanged, EFortMinigameState, MinigameState, AFortMinigame*, Minigame);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnStateChanged, AFortMinigame*, Minigame, EFortMinigameState, MinigameState);
 

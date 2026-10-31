@@ -7,5 +7,5 @@
 #include "FOnDisplayDynamicQuestUpdate.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnDisplayDynamicQuestUpdate, bool, bDisplayAnnouncementUpdate, bool, bDisplayStatusUpdate, UFortQuestObjectiveInfo*, QuestObjective);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnDisplayDynamicQuestUpdate, UFortQuestObjectiveInfo*, QuestObjective, bool, bDisplayStatusUpdate, bool, bDisplayAnnouncementUpdate);
 

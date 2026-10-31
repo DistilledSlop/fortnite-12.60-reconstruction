@@ -7,5 +7,5 @@
 #include "FOnShowPublishWatermarkChanged.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnShowPublishWatermarkChanged, bool, bShowPublishWatermark, AFortVolume*, Volume);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnShowPublishWatermarkChanged, AFortVolume*, Volume, bool, bShowPublishWatermark);
 

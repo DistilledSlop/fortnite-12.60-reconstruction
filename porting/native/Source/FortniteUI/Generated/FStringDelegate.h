@@ -7,5 +7,5 @@
 #include "FStringDelegate.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FStringDelegate, FString, StringParam, UAthenaRemotePlayerViewData*, PlayerData);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FStringDelegate, UAthenaRemotePlayerViewData*, PlayerData, FString, StringParam);
 

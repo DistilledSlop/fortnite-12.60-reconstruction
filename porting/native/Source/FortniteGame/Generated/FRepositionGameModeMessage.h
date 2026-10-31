@@ -9,5 +9,5 @@
 #include "FRepositionGameModeMessage.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FRepositionGameModeMessage, TEnumAsByte<EVerticalAlignment>, VerticalAlignment, TEnumAsByte<EHorizontalAlignment>, HorizontalAlignment, FVector2D, Position);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FRepositionGameModeMessage, FVector2D, Position, TEnumAsByte<EHorizontalAlignment>, HorizontalAlignment, TEnumAsByte<EVerticalAlignment>, VerticalAlignment);
 

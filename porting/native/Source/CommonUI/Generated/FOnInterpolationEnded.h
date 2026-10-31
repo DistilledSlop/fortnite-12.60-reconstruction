@@ -7,5 +7,5 @@
 #include "FOnInterpolationEnded.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnInterpolationEnded, bool, HadCompleted, UCommonNumericTextBlock*, NumericTextBlock);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnInterpolationEnded, UCommonNumericTextBlock*, NumericTextBlock, bool, HadCompleted);
 

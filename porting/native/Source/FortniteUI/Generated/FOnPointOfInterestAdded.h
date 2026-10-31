@@ -8,5 +8,5 @@
 #include "FOnPointOfInterestAdded.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_FiveParams(FOnPointOfInterestAdded, FLinearColor, ImageColor, bool, bSpecifyColor, UTexture2D*, DisplayImage, FText, DisplayText, AActor*, PointOfInterest);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_FiveParams(FOnPointOfInterestAdded, AActor*, PointOfInterest, FText, DisplayText, UTexture2D*, DisplayImage, bool, bSpecifyColor, FLinearColor, ImageColor);
 

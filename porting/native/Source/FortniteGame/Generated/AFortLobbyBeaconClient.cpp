@@ -11,42 +11,42 @@ void AFortLobbyBeaconClient::ServerIncrementHomeBaseVersion_Implementation(const
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortLobbyBeaconClient::ServerSetBannerInfo_Implementation(const FPlayerBannerInfo& InBannerInfo, const FUniqueNetIdRepl& InUniqueId)
+void AFortLobbyBeaconClient::ServerSetBannerInfo_Implementation(const FUniqueNetIdRepl& InUniqueId, const FPlayerBannerInfo& InBannerInfo)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortLobbyBeaconClient::ServerSetCharacterGender_Implementation(EFortCustomGender::Type GenderType, const FUniqueNetIdRepl& InUniqueId)
+void AFortLobbyBeaconClient::ServerSetCharacterGender_Implementation(const FUniqueNetIdRepl& InUniqueId, EFortCustomGender::Type GenderType)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortLobbyBeaconClient::ServerSetConsoleUniqueNetId_Implementation(const FUniqueNetIdRepl& NewConsoleNetId, const FUniqueNetIdRepl& InUniqueId)
+void AFortLobbyBeaconClient::ServerSetConsoleUniqueNetId_Implementation(const FUniqueNetIdRepl& InUniqueId, const FUniqueNetIdRepl& NewConsoleNetId)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortLobbyBeaconClient::ServerSetCurrentCharacterXp_Implementation(int32 CurrentCharacterXp, const FUniqueNetIdRepl& InUniqueId)
+void AFortLobbyBeaconClient::ServerSetCurrentCharacterXp_Implementation(const FUniqueNetIdRepl& InUniqueId, int32 CurrentCharacterXp)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortLobbyBeaconClient::ServerSetGadget_Implementation(const FString& GadgetPersistentName, int32 Index, const FUniqueNetIdRepl& InUniqueId)
+void AFortLobbyBeaconClient::ServerSetGadget_Implementation(const FUniqueNetIdRepl& InUniqueId, int32 Index, const FString& GadgetPersistentName)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortLobbyBeaconClient::ServerSetHeroId_Implementation(const FString& InHeroId, const FUniqueNetIdRepl& InUniqueId)
+void AFortLobbyBeaconClient::ServerSetHeroId_Implementation(const FUniqueNetIdRepl& InUniqueId, const FString& InHeroId)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortLobbyBeaconClient::ServerSetHeroType_Implementation(UFortHeroType* InHeroType, const FUniqueNetIdRepl& InUniqueId)
+void AFortLobbyBeaconClient::ServerSetHeroType_Implementation(const FUniqueNetIdRepl& InUniqueId, UFortHeroType* InHeroType)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortLobbyBeaconClient::ServerSetMatchmakingLevel_Implementation(int32 MatchmakingLevel, const FUniqueNetIdRepl& InUniqueId)
+void AFortLobbyBeaconClient::ServerSetMatchmakingLevel_Implementation(const FUniqueNetIdRepl& InUniqueId, int32 MatchmakingLevel)
 {
 	// Body not recovered: reflection-derived stub.
 }

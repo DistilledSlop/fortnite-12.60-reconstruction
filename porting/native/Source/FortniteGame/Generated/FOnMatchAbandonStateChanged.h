@@ -8,5 +8,5 @@
 #include "FOnMatchAbandonStateChanged.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnMatchAbandonStateChanged, EMatchAbandonState, NewState, EMatchAbandonState, OldState);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnMatchAbandonStateChanged, EMatchAbandonState, OldState, EMatchAbandonState, NewState);
 

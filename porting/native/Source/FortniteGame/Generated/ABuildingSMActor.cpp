@@ -12,52 +12,52 @@ void ABuildingSMActor::MulticastPlayFullHealthEffects_Implementation()
 	// Body not recovered: reflection-derived stub.
 }
 
-void ABuildingSMActor::NetMulticast_InvokeGameplayCueAdded_Implementation(const FGameplayEffectContextHandle& EffectContext, const FPredictionKey& PredictionKey, const FGameplayTag& GameplayCueTag)
+void ABuildingSMActor::NetMulticast_InvokeGameplayCueAdded_Implementation(const FGameplayTag& GameplayCueTag, const FPredictionKey& PredictionKey, const FGameplayEffectContextHandle& EffectContext)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void ABuildingSMActor::NetMulticast_InvokeGameplayCueAdded_WithParams_Implementation(const FGameplayCueParameters& Parameters, const FPredictionKey& PredictionKey, const FGameplayTag& GameplayCueTag)
+void ABuildingSMActor::NetMulticast_InvokeGameplayCueAdded_WithParams_Implementation(const FGameplayTag& GameplayCueTag, const FPredictionKey& PredictionKey, const FGameplayCueParameters& Parameters)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void ABuildingSMActor::NetMulticast_InvokeGameplayCueAddedAndWhileActive_FromSpec_Implementation(const FPredictionKey& PredictionKey, const FGameplayEffectSpecForRPC& Spec)
+void ABuildingSMActor::NetMulticast_InvokeGameplayCueAddedAndWhileActive_FromSpec_Implementation(const FGameplayEffectSpecForRPC& Spec, const FPredictionKey& PredictionKey)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void ABuildingSMActor::NetMulticast_InvokeGameplayCueAddedAndWhileActive_WithParams_Implementation(const FGameplayCueParameters& GameplayCueParameters, const FPredictionKey& PredictionKey, const FGameplayTag& GameplayCueTag)
+void ABuildingSMActor::NetMulticast_InvokeGameplayCueAddedAndWhileActive_WithParams_Implementation(const FGameplayTag& GameplayCueTag, const FPredictionKey& PredictionKey, const FGameplayCueParameters& GameplayCueParameters)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void ABuildingSMActor::NetMulticast_InvokeGameplayCueExecuted_Implementation(const FGameplayEffectContextHandle& EffectContext, const FPredictionKey& PredictionKey, const FGameplayTag& GameplayCueTag)
+void ABuildingSMActor::NetMulticast_InvokeGameplayCueExecuted_Implementation(const FGameplayTag& GameplayCueTag, const FPredictionKey& PredictionKey, const FGameplayEffectContextHandle& EffectContext)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void ABuildingSMActor::NetMulticast_InvokeGameplayCueExecuted_FromSpec_Implementation(const FPredictionKey& PredictionKey, const FGameplayEffectSpecForRPC& Spec)
+void ABuildingSMActor::NetMulticast_InvokeGameplayCueExecuted_FromSpec_Implementation(const FGameplayEffectSpecForRPC& Spec, const FPredictionKey& PredictionKey)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void ABuildingSMActor::NetMulticast_InvokeGameplayCueExecuted_WithParams_Implementation(const FGameplayCueParameters& GameplayCueParameters, const FPredictionKey& PredictionKey, const FGameplayTag& GameplayCueTag)
+void ABuildingSMActor::NetMulticast_InvokeGameplayCueExecuted_WithParams_Implementation(const FGameplayTag& GameplayCueTag, const FPredictionKey& PredictionKey, const FGameplayCueParameters& GameplayCueParameters)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void ABuildingSMActor::NetMulticast_InvokeGameplayCuesAddedAndWhileActive_WithParams_Implementation(const FGameplayCueParameters& GameplayCueParameters, const FPredictionKey& PredictionKey, const FGameplayTagContainer& GameplayCueTags)
+void ABuildingSMActor::NetMulticast_InvokeGameplayCuesAddedAndWhileActive_WithParams_Implementation(const FGameplayTagContainer& GameplayCueTags, const FPredictionKey& PredictionKey, const FGameplayCueParameters& GameplayCueParameters)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void ABuildingSMActor::NetMulticast_InvokeGameplayCuesExecuted_Implementation(const FGameplayEffectContextHandle& EffectContext, const FPredictionKey& PredictionKey, const FGameplayTagContainer& GameplayCueTags)
+void ABuildingSMActor::NetMulticast_InvokeGameplayCuesExecuted_Implementation(const FGameplayTagContainer& GameplayCueTags, const FPredictionKey& PredictionKey, const FGameplayEffectContextHandle& EffectContext)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void ABuildingSMActor::NetMulticast_InvokeGameplayCuesExecuted_WithParams_Implementation(const FGameplayCueParameters& GameplayCueParameters, const FPredictionKey& PredictionKey, const FGameplayTagContainer& GameplayCueTags)
+void ABuildingSMActor::NetMulticast_InvokeGameplayCuesExecuted_WithParams_Implementation(const FGameplayTagContainer& GameplayCueTags, const FPredictionKey& PredictionKey, const FGameplayCueParameters& GameplayCueParameters)
 {
 	// Body not recovered: reflection-derived stub.
 }

@@ -13,6 +13,7 @@
 #include "FOnPlayerBecameIrrelevant.h"
 #include "FOnPlayerBecameRelevant.h"
 #include "FOnPlayerDied.h"
+#include "FOnShowNotification.h"
 #include "FOnShowNotificationsEnabledChanged.h"
 #include "FPlayerStateAthenaDelegate.h"
 #include "FQuickBarData.h"
@@ -109,6 +110,10 @@ public:
 	// table index 36, flags 0x10000010080000
 	UPROPERTY()
 	FSpectatorDelegate OnZoomChanged;
+
+	// table index 35, flags 0x10000010080000
+	UPROPERTY()
+	FOnShowNotification OnShowNotification;
 
 	// table index 34, flags 0x10000010080000
 	UPROPERTY()

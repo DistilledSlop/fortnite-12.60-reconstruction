@@ -7,5 +7,5 @@
 #include "FOnCreativeFlyingSpeedChanged.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnCreativeFlyingSpeedChanged, bool, bPlayFX, int32, FlyingSpeedLevel);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnCreativeFlyingSpeedChanged, int32, FlyingSpeedLevel, bool, bPlayFX);
 

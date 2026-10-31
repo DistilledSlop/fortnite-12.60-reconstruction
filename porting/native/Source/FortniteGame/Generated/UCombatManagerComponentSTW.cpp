@@ -7,7 +7,7 @@ void UCombatManagerComponentSTW::OnRep_CombatEventHeat()
 	// Body not recovered: reflection-derived stub.
 }
 
-void UCombatManagerComponentSTW::ServerTriggerCombatEvent_Implementation(float HeatMultiplier, EFortCombatEvents::Type TriggeredEvent)
+void UCombatManagerComponentSTW::ServerTriggerCombatEvent_Implementation(EFortCombatEvents::Type TriggeredEvent, float HeatMultiplier)
 {
 	// Body not recovered: reflection-derived stub.
 }

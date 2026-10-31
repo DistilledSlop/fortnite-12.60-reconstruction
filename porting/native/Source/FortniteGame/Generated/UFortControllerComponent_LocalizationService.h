@@ -21,8 +21,8 @@ public:
 	void ClientLoadLocalizationDocument_Implementation(const FReplicatedLocalizedDocument& Document);
 
 	UFUNCTION(Server, Reliable)
-	void ServerRequestLocalizationDocument(const FString& InLocale, const FString& InDocumentID);
-	void ServerRequestLocalizationDocument_Implementation(const FString& InLocale, const FString& InDocumentID);
+	void ServerRequestLocalizationDocument(const FString& InDocumentID, const FString& InLocale);
+	void ServerRequestLocalizationDocument_Implementation(const FString& InDocumentID, const FString& InLocale);
 
 };
 

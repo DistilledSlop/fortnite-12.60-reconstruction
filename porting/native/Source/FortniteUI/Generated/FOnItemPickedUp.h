@@ -7,5 +7,5 @@
 #include "FOnItemPickedUp.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnItemPickedUp, int32, Count, UFortWorldItem*, NewItem);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnItemPickedUp, UFortWorldItem*, NewItem, int32, Count);
 

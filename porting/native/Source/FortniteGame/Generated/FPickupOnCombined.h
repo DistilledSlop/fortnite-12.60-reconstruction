@@ -7,5 +7,5 @@
 #include "FPickupOnCombined.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FPickupOnCombined, AFortPickup*, TargetPickup, AFortPickup*, ThisPickup);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FPickupOnCombined, AFortPickup*, ThisPickup, AFortPickup*, TargetPickup);
 

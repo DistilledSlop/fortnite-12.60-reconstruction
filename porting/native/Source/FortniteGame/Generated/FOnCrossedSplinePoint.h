@@ -7,5 +7,5 @@
 #include "FOnCrossedSplinePoint.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnCrossedSplinePoint, bool, bWasMovingForward, int32, SplinePointIndex);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnCrossedSplinePoint, int32, SplinePointIndex, bool, bWasMovingForward);
 

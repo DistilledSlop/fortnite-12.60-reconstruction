@@ -22,8 +22,8 @@ public:
 	FReplicatedAthenaVehicleState ReplicatedAthenaState;
 
 	UFUNCTION(Server, Reliable)
-	void ServerUpdateAthenaState(const FVector& InForwardVectorTarget, float InSteeringInput, float InThrottleInput);
-	void ServerUpdateAthenaState_Implementation(const FVector& InForwardVectorTarget, float InSteeringInput, float InThrottleInput);
+	void ServerUpdateAthenaState(float InThrottleInput, float InSteeringInput, const FVector& InForwardVectorTarget);
+	void ServerUpdateAthenaState_Implementation(float InThrottleInput, float InSteeringInput, const FVector& InForwardVectorTarget);
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

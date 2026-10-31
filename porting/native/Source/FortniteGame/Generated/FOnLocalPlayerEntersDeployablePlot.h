@@ -7,5 +7,5 @@
 #include "FOnLocalPlayerEntersDeployablePlot.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnLocalPlayerEntersDeployablePlot, ADeployableBasePlot*, Plot, AFortPlayerPawn*, PlayerPawn);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnLocalPlayerEntersDeployablePlot, AFortPlayerPawn*, PlayerPawn, ADeployableBasePlot*, Plot);
 

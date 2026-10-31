@@ -455,14 +455,14 @@ public:
 	bool ServerCreativeToggleGhost_Validate(bool bEnableOnly);
 
 	UFUNCTION(Server, Reliable, WithValidation)
-	void ServerSetInteractingItem(bool bClearInteraction, AActor* InteractingItem);
-	void ServerSetInteractingItem_Implementation(bool bClearInteraction, AActor* InteractingItem);
-	bool ServerSetInteractingItem_Validate(bool bClearInteraction, AActor* InteractingItem);
+	void ServerSetInteractingItem(AActor* InteractingItem, bool bClearInteraction);
+	void ServerSetInteractingItem_Implementation(AActor* InteractingItem, bool bClearInteraction);
+	bool ServerSetInteractingItem_Validate(AActor* InteractingItem, bool bClearInteraction);
 
 	UFUNCTION(Server, Reliable, WithValidation)
-	void ServerSuicide(int32 MatchPlacement, bool bSuppressResurrectionChip);
-	void ServerSuicide_Implementation(int32 MatchPlacement, bool bSuppressResurrectionChip);
-	bool ServerSuicide_Validate(int32 MatchPlacement, bool bSuppressResurrectionChip);
+	void ServerSuicide(bool bSuppressResurrectionChip, int32 MatchPlacement);
+	void ServerSuicide_Implementation(bool bSuppressResurrectionChip, int32 MatchPlacement);
+	bool ServerSuicide_Validate(bool bSuppressResurrectionChip, int32 MatchPlacement);
 
 	UFUNCTION(BlueprintCallable)
 	void SetBushEnabled(bool bEnableBush);

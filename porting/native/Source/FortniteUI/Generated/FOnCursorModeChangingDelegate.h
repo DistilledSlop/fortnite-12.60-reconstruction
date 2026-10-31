@@ -7,5 +7,5 @@
 #include "FOnCursorModeChangingDelegate.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnCursorModeChangingDelegate, FName, ActionName, bool, bCursorModeEnabled);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnCursorModeChangingDelegate, bool, bCursorModeEnabled, FName, ActionName);
 

@@ -8,5 +8,5 @@
 #include "FSpecialNavActorInteraction.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FSpecialNavActorInteraction, AFortEventLevelNavigationActor*, InActor, FGameplayTag, CameraTag, FGameplayTag, InteractionTag);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FSpecialNavActorInteraction, FGameplayTag, InteractionTag, FGameplayTag, CameraTag, AFortEventLevelNavigationActor*, InActor);
 

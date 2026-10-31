@@ -30,6 +30,7 @@
 #include "FOnCountdownStopped.h"
 #include "FOnCountdownTick.h"
 #include "FOnCurrentHighScoreUpdated.h"
+#include "FOnCurrentPlaylistLoaded.h"
 #include "FOnFinalCountdownFinished.h"
 #include "FOnFinalCountdownStarted.h"
 #include "FOnFinalCountdownTick.h"
@@ -104,6 +105,10 @@ public:
 	// table index 221, flags 0x20080000004000
 	UPROPERTY(Config)
 	TArray<FString> BattleRoyalePlayspacePlugins;
+
+	// table index 220, flags 0x10000010080000
+	UPROPERTY()
+	FOnCurrentPlaylistLoaded OnCurrentPlaylistLoaded;
 
 	// table index 219, flags 0x10000000002014
 	UPROPERTY(Transient)

@@ -7,5 +7,5 @@
 #include "FOnAddedSelectedActor.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnAddedSelectedActor, int32, NumSelectedActor, AActor*, SelectedActor);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnAddedSelectedActor, AActor*, SelectedActor, int32, NumSelectedActor);
 

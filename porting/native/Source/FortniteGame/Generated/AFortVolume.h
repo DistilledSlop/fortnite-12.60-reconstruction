@@ -9,9 +9,11 @@
 #include "AttributeSet.h"
 #include "EVolumeShape.h"
 #include "EVolumeState.h"
+#include "FAsyncTaskCallbackDelegate.h"
 #include "FOnActorEnterExitVolume.h"
 #include "FOnRestrictionEnabledChanged.h"
 #include "FOnShowPublishWatermarkChanged.h"
+#include "FOnVolumePerformanceMetricsUpdated.h"
 #include "FVolumeActorStats.h"
 
 class AActor;
@@ -77,6 +79,10 @@ public:
 	UPROPERTY()
 	uint8 bForceBoundsToBlock : 1;
 
+	// table index 28, flags 0x10000010082000
+	UPROPERTY(Transient)
+	FAsyncTaskCallbackDelegate OnFinishVolumeClear;
+
 	// table index 27, flags 0x20080000010015
 	UPROPERTY()
 	FScalableFloat IsHotfixablyEnabled;
@@ -104,6 +110,10 @@ public:
 	// table index 18, flags 0x40000000002000
 	UPROPERTY(Transient)
 	UAsyncTaskQueue* TaskQueue;
+
+	// table index 17, flags 0x20080000082000
+	UPROPERTY(Transient)
+	FOnVolumePerformanceMetricsUpdated OnVolumePerformanceMetricsUpdatedEvent;
 
 	// table index 16, flags 0x40000000002000
 	UPROPERTY(Transient)

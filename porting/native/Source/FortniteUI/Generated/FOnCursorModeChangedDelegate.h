@@ -7,5 +7,5 @@
 #include "FOnCursorModeChangedDelegate.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnCursorModeChangedDelegate, UUserWidget*, CursorModeContentWidget, FName, ActionName, bool, bCursorModeEnabled);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnCursorModeChangedDelegate, bool, bCursorModeEnabled, FName, ActionName, UUserWidget*, CursorModeContentWidget);
 

@@ -7,5 +7,5 @@
 #include "FOnPlayerChangedTeam.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_FourParams(FOnPlayerChangedTeam, bool, bTeamChangedWithoutRespawn, uint8, OldTeamId, uint8, TeamId, AFortPlayerState*, PlayerState);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_FourParams(FOnPlayerChangedTeam, AFortPlayerState*, PlayerState, uint8, TeamId, uint8, OldTeamId, bool, bTeamChangedWithoutRespawn);
 

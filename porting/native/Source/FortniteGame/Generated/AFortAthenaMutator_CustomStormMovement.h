@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "AFortAthenaMutator.h"
 
+#include "FOnSafeZoneRouteChanged.h"
 #include "FSafeZoneRoute.h"
 
 #include "AFortAthenaMutator_CustomStormMovement.generated.h"
@@ -16,6 +17,10 @@ class FORTNITEGAME_API AFortAthenaMutator_CustomStormMovement : public AFortAthe
 	GENERATED_BODY()
 
 public:
+	// table index 3, flags 0x10000010080000
+	UPROPERTY()
+	FOnSafeZoneRouteChanged OnSafeZoneRouteChanged;
+
 	// table index 1, flags 0x20080000010001
 	UPROPERTY()
 	TArray<FSafeZoneRoute> SafeZoneRoutes;

@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintAsyncActionBase.h"
 
+#include "FPlaylistReadyAsyncDelegate.h"
+
 #include "UFortAsyncAction_CurrentPlaylistReady.generated.h"
 
 UCLASS()
@@ -14,5 +16,9 @@ class FORTNITEGAME_API UFortAsyncAction_CurrentPlaylistReady : public UBlueprint
 	GENERATED_BODY()
 
 public:
+	// table index 0, flags 0x10000010080000
+	UPROPERTY()
+	FPlaylistReadyAsyncDelegate OnReady;
+
 };
 

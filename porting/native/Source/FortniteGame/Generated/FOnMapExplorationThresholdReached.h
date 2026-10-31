@@ -7,5 +7,5 @@
 #include "FOnMapExplorationThresholdReached.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnMapExplorationThresholdReached, uint8, Team, int32, ThresholdIndex);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnMapExplorationThresholdReached, int32, ThresholdIndex, uint8, Team);
 

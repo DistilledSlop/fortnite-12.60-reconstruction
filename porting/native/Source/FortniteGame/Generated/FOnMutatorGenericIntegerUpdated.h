@@ -7,5 +7,5 @@
 #include "FOnMutatorGenericIntegerUpdated.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnMutatorGenericIntegerUpdated, int32, NewIntegerValue, int32, GenericIntegerIndex);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnMutatorGenericIntegerUpdated, int32, GenericIntegerIndex, int32, NewIntegerValue);
 

@@ -2,7 +2,7 @@
 #include "UFortMovementComp_GroundSpline.h"
 #include "Net/UnrealNetwork.h"
 
-void UFortMovementComp_GroundSpline::MulticastTeleportToDistanceOnSpline_Implementation(float Distance, USplineComponent* NewTravelSpline)
+void UFortMovementComp_GroundSpline::MulticastTeleportToDistanceOnSpline_Implementation(USplineComponent* NewTravelSpline, float Distance)
 {
 	// Body not recovered: reflection-derived stub.
 }

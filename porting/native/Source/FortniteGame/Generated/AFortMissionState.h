@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 
+#include "FOnMissionUIEvent.h"
 #include "FOnUpdateUI.h"
 
 #include "AFortMissionState.generated.h"
@@ -19,6 +20,10 @@ public:
 	// table index 4, flags 0x10000010080000
 	UPROPERTY()
 	FOnUpdateUI OnUpdateUI;
+
+	// table index 3, flags 0x10000010080000
+	UPROPERTY()
+	FOnMissionUIEvent OnMissionUIEvent;
 
 	// table index 2, flags 0x40000000002000
 	UPROPERTY(Transient)

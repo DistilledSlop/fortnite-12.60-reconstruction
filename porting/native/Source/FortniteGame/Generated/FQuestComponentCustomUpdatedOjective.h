@@ -7,5 +7,5 @@
 #include "FQuestComponentCustomUpdatedOjective.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FQuestComponentCustomUpdatedOjective, int32, RequiredCount, int32, AchievedCount, AFortPlayerController*, PlayerController);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FQuestComponentCustomUpdatedOjective, AFortPlayerController*, PlayerController, int32, AchievedCount, int32, RequiredCount);
 

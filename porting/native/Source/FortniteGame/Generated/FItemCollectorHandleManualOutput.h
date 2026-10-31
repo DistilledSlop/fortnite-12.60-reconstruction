@@ -7,5 +7,5 @@
 #include "FItemCollectorHandleManualOutput.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FItemCollectorHandleManualOutput, UFortWorldItemDefinition*, InputItem, AFortPlayerController*, InteractingController);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FItemCollectorHandleManualOutput, AFortPlayerController*, InteractingController, UFortWorldItemDefinition*, InputItem);
 

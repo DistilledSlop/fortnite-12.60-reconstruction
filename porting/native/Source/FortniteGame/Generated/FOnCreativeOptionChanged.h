@@ -7,5 +7,5 @@
 #include "FOnCreativeOptionChanged.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnCreativeOptionChanged, uint8, IndexValue, UFortCreativeOption*, ChangedOption);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnCreativeOptionChanged, UFortCreativeOption*, ChangedOption, uint8, IndexValue);
 

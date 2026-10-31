@@ -6,7 +6,7 @@ void UFortControllerComponent_Portal::ClientInitiateMatchmakingToPortalOrigin_Im
 	// Body not recovered: reflection-derived stub.
 }
 
-void UFortControllerComponent_Portal::ServerSetPortalLinkCode_Implementation(const FString& LinkCode, UFortPortalComponent* PortalComponent)
+void UFortControllerComponent_Portal::ServerSetPortalLinkCode_Implementation(UFortPortalComponent* PortalComponent, const FString& LinkCode)
 {
 	// Body not recovered: reflection-derived stub.
 }

@@ -7,7 +7,7 @@ void AFortPhysicsPawn::ClientAckGoodMove_Implementation(uint32 MoveId)
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPhysicsPawn::ClientBroadcastHitDetection_Implementation(const FVector& DoublePoints, const FVector& HalfPoints, float Relevancy, float Radius, APawn* ImpulseInstigator)
+void AFortPhysicsPawn::ClientBroadcastHitDetection_Implementation(APawn* ImpulseInstigator, float Radius, float Relevancy, const FVector& HalfPoints, const FVector& DoublePoints)
 {
 	// Body not recovered: reflection-derived stub.
 }

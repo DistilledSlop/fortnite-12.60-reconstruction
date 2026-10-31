@@ -7,7 +7,7 @@ void UValetRaisinComponent::OnRep_Source()
 	// Body not recovered: reflection-derived stub.
 }
 
-void UValetRaisinComponent::ServerSelectOption_Implementation(UFortItemDefinition* MusicSource, AFortPlayerController* PlayerChoosing)
+void UValetRaisinComponent::ServerSelectOption_Implementation(AFortPlayerController* PlayerChoosing, UFortItemDefinition* MusicSource)
 {
 	// Body not recovered: reflection-derived stub.
 }

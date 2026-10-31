@@ -7,5 +7,5 @@
 #include "FOnInterpolationUpdated.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnInterpolationUpdated, float, NewValue, float, LastValue, UCommonNumericTextBlock*, NumericTextBlock);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnInterpolationUpdated, UCommonNumericTextBlock*, NumericTextBlock, float, LastValue, float, NewValue);
 

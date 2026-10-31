@@ -84,8 +84,8 @@ public:
 	void ClientRemotePlayerAddMapMarker_Implementation(const FFortWorldMarkerData& InMarkerData);
 
 	UFUNCTION(NetMulticast, Reliable)
-	void ClientRemotePlayerDamagedResourceBuilding(bool bJustHitWeakspot, bool bDestroyed, int32 PotentialResourceCount, EFortResourceType::Type PotentialResourceType, ABuildingSMActor* BuildingSMActor);
-	void ClientRemotePlayerDamagedResourceBuilding_Implementation(bool bJustHitWeakspot, bool bDestroyed, int32 PotentialResourceCount, EFortResourceType::Type PotentialResourceType, ABuildingSMActor* BuildingSMActor);
+	void ClientRemotePlayerDamagedResourceBuilding(ABuildingSMActor* BuildingSMActor, EFortResourceType::Type PotentialResourceType, int32 PotentialResourceCount, bool bDestroyed, bool bJustHitWeakspot);
+	void ClientRemotePlayerDamagedResourceBuilding_Implementation(ABuildingSMActor* BuildingSMActor, EFortResourceType::Type PotentialResourceType, int32 PotentialResourceCount, bool bDestroyed, bool bJustHitWeakspot);
 
 	UFUNCTION(NetMulticast, Reliable)
 	void ClientRemotePlayerHitMarkers(const TArray<FVector2D>& RelativeScreenPositions);

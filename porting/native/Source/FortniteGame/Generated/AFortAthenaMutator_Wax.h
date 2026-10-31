@@ -14,6 +14,7 @@
 #include "FWaxNoStormZone.h"
 #include "FWaxPartOverrideData.h"
 #include "FWaxRespawnLogicData.h"
+#include "FWaxTokenFlashSignature.h"
 #include "FWaxVisibilityModifiers.h"
 #include "GameplayTagContainer.h"
 #include "Math/Vector2D.h"
@@ -55,6 +56,10 @@ public:
 	// table index 87, flags 0x10000010080000
 	UPROPERTY()
 	FWaxEventSignature_NoParams PodiumChanged;
+
+	// table index 86, flags 0x10000010080000
+	UPROPERTY()
+	FWaxTokenFlashSignature OnPendingFlashes;
 
 	// table index 85, flags 0x10000010080000
 	UPROPERTY()

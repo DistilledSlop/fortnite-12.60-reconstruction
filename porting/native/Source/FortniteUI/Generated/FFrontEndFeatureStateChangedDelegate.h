@@ -10,5 +10,5 @@
 #include "FFrontEndFeatureStateChangedDelegate.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FFrontEndFeatureStateChangedDelegate, EFortFrontEndFeatureStateReason, Reason, EFortFrontEndFeatureState, NewState, EFortFrontEndFeature, ChangedFeature);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FFrontEndFeatureStateChangedDelegate, EFortFrontEndFeature, ChangedFeature, EFortFrontEndFeatureState, NewState, EFortFrontEndFeatureStateReason, Reason);
 

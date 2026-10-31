@@ -617,44 +617,44 @@ public:
 	void MulticastPlayFullHealthEffects_Implementation();
 
 	UFUNCTION(NetMulticast, Unreliable)
-	void NetMulticast_InvokeGameplayCueAdded(const FGameplayEffectContextHandle& EffectContext, const FPredictionKey& PredictionKey, const FGameplayTag& GameplayCueTag);
-	void NetMulticast_InvokeGameplayCueAdded_Implementation(const FGameplayEffectContextHandle& EffectContext, const FPredictionKey& PredictionKey, const FGameplayTag& GameplayCueTag);
+	void NetMulticast_InvokeGameplayCueAdded(const FGameplayTag& GameplayCueTag, const FPredictionKey& PredictionKey, const FGameplayEffectContextHandle& EffectContext);
+	void NetMulticast_InvokeGameplayCueAdded_Implementation(const FGameplayTag& GameplayCueTag, const FPredictionKey& PredictionKey, const FGameplayEffectContextHandle& EffectContext);
 
 	UFUNCTION(NetMulticast, Unreliable)
-	void NetMulticast_InvokeGameplayCueAdded_WithParams(const FGameplayCueParameters& Parameters, const FPredictionKey& PredictionKey, const FGameplayTag& GameplayCueTag);
-	void NetMulticast_InvokeGameplayCueAdded_WithParams_Implementation(const FGameplayCueParameters& Parameters, const FPredictionKey& PredictionKey, const FGameplayTag& GameplayCueTag);
+	void NetMulticast_InvokeGameplayCueAdded_WithParams(const FGameplayTag& GameplayCueTag, const FPredictionKey& PredictionKey, const FGameplayCueParameters& Parameters);
+	void NetMulticast_InvokeGameplayCueAdded_WithParams_Implementation(const FGameplayTag& GameplayCueTag, const FPredictionKey& PredictionKey, const FGameplayCueParameters& Parameters);
 
 	UFUNCTION(NetMulticast, Unreliable)
-	void NetMulticast_InvokeGameplayCueAddedAndWhileActive_FromSpec(const FPredictionKey& PredictionKey, const FGameplayEffectSpecForRPC& Spec);
-	void NetMulticast_InvokeGameplayCueAddedAndWhileActive_FromSpec_Implementation(const FPredictionKey& PredictionKey, const FGameplayEffectSpecForRPC& Spec);
+	void NetMulticast_InvokeGameplayCueAddedAndWhileActive_FromSpec(const FGameplayEffectSpecForRPC& Spec, const FPredictionKey& PredictionKey);
+	void NetMulticast_InvokeGameplayCueAddedAndWhileActive_FromSpec_Implementation(const FGameplayEffectSpecForRPC& Spec, const FPredictionKey& PredictionKey);
 
 	UFUNCTION(NetMulticast, Unreliable)
-	void NetMulticast_InvokeGameplayCueAddedAndWhileActive_WithParams(const FGameplayCueParameters& GameplayCueParameters, const FPredictionKey& PredictionKey, const FGameplayTag& GameplayCueTag);
-	void NetMulticast_InvokeGameplayCueAddedAndWhileActive_WithParams_Implementation(const FGameplayCueParameters& GameplayCueParameters, const FPredictionKey& PredictionKey, const FGameplayTag& GameplayCueTag);
+	void NetMulticast_InvokeGameplayCueAddedAndWhileActive_WithParams(const FGameplayTag& GameplayCueTag, const FPredictionKey& PredictionKey, const FGameplayCueParameters& GameplayCueParameters);
+	void NetMulticast_InvokeGameplayCueAddedAndWhileActive_WithParams_Implementation(const FGameplayTag& GameplayCueTag, const FPredictionKey& PredictionKey, const FGameplayCueParameters& GameplayCueParameters);
 
 	UFUNCTION(NetMulticast, Unreliable)
-	void NetMulticast_InvokeGameplayCueExecuted(const FGameplayEffectContextHandle& EffectContext, const FPredictionKey& PredictionKey, const FGameplayTag& GameplayCueTag);
-	void NetMulticast_InvokeGameplayCueExecuted_Implementation(const FGameplayEffectContextHandle& EffectContext, const FPredictionKey& PredictionKey, const FGameplayTag& GameplayCueTag);
+	void NetMulticast_InvokeGameplayCueExecuted(const FGameplayTag& GameplayCueTag, const FPredictionKey& PredictionKey, const FGameplayEffectContextHandle& EffectContext);
+	void NetMulticast_InvokeGameplayCueExecuted_Implementation(const FGameplayTag& GameplayCueTag, const FPredictionKey& PredictionKey, const FGameplayEffectContextHandle& EffectContext);
 
 	UFUNCTION(NetMulticast, Unreliable)
-	void NetMulticast_InvokeGameplayCueExecuted_FromSpec(const FPredictionKey& PredictionKey, const FGameplayEffectSpecForRPC& Spec);
-	void NetMulticast_InvokeGameplayCueExecuted_FromSpec_Implementation(const FPredictionKey& PredictionKey, const FGameplayEffectSpecForRPC& Spec);
+	void NetMulticast_InvokeGameplayCueExecuted_FromSpec(const FGameplayEffectSpecForRPC& Spec, const FPredictionKey& PredictionKey);
+	void NetMulticast_InvokeGameplayCueExecuted_FromSpec_Implementation(const FGameplayEffectSpecForRPC& Spec, const FPredictionKey& PredictionKey);
 
 	UFUNCTION(NetMulticast, Unreliable)
-	void NetMulticast_InvokeGameplayCueExecuted_WithParams(const FGameplayCueParameters& GameplayCueParameters, const FPredictionKey& PredictionKey, const FGameplayTag& GameplayCueTag);
-	void NetMulticast_InvokeGameplayCueExecuted_WithParams_Implementation(const FGameplayCueParameters& GameplayCueParameters, const FPredictionKey& PredictionKey, const FGameplayTag& GameplayCueTag);
+	void NetMulticast_InvokeGameplayCueExecuted_WithParams(const FGameplayTag& GameplayCueTag, const FPredictionKey& PredictionKey, const FGameplayCueParameters& GameplayCueParameters);
+	void NetMulticast_InvokeGameplayCueExecuted_WithParams_Implementation(const FGameplayTag& GameplayCueTag, const FPredictionKey& PredictionKey, const FGameplayCueParameters& GameplayCueParameters);
 
 	UFUNCTION(NetMulticast, Unreliable)
-	void NetMulticast_InvokeGameplayCuesAddedAndWhileActive_WithParams(const FGameplayCueParameters& GameplayCueParameters, const FPredictionKey& PredictionKey, const FGameplayTagContainer& GameplayCueTags);
-	void NetMulticast_InvokeGameplayCuesAddedAndWhileActive_WithParams_Implementation(const FGameplayCueParameters& GameplayCueParameters, const FPredictionKey& PredictionKey, const FGameplayTagContainer& GameplayCueTags);
+	void NetMulticast_InvokeGameplayCuesAddedAndWhileActive_WithParams(const FGameplayTagContainer& GameplayCueTags, const FPredictionKey& PredictionKey, const FGameplayCueParameters& GameplayCueParameters);
+	void NetMulticast_InvokeGameplayCuesAddedAndWhileActive_WithParams_Implementation(const FGameplayTagContainer& GameplayCueTags, const FPredictionKey& PredictionKey, const FGameplayCueParameters& GameplayCueParameters);
 
 	UFUNCTION(NetMulticast, Unreliable)
-	void NetMulticast_InvokeGameplayCuesExecuted(const FGameplayEffectContextHandle& EffectContext, const FPredictionKey& PredictionKey, const FGameplayTagContainer& GameplayCueTags);
-	void NetMulticast_InvokeGameplayCuesExecuted_Implementation(const FGameplayEffectContextHandle& EffectContext, const FPredictionKey& PredictionKey, const FGameplayTagContainer& GameplayCueTags);
+	void NetMulticast_InvokeGameplayCuesExecuted(const FGameplayTagContainer& GameplayCueTags, const FPredictionKey& PredictionKey, const FGameplayEffectContextHandle& EffectContext);
+	void NetMulticast_InvokeGameplayCuesExecuted_Implementation(const FGameplayTagContainer& GameplayCueTags, const FPredictionKey& PredictionKey, const FGameplayEffectContextHandle& EffectContext);
 
 	UFUNCTION(NetMulticast, Unreliable)
-	void NetMulticast_InvokeGameplayCuesExecuted_WithParams(const FGameplayCueParameters& GameplayCueParameters, const FPredictionKey& PredictionKey, const FGameplayTagContainer& GameplayCueTags);
-	void NetMulticast_InvokeGameplayCuesExecuted_WithParams_Implementation(const FGameplayCueParameters& GameplayCueParameters, const FPredictionKey& PredictionKey, const FGameplayTagContainer& GameplayCueTags);
+	void NetMulticast_InvokeGameplayCuesExecuted_WithParams(const FGameplayTagContainer& GameplayCueTags, const FPredictionKey& PredictionKey, const FGameplayCueParameters& GameplayCueParameters);
+	void NetMulticast_InvokeGameplayCuesExecuted_WithParams_Implementation(const FGameplayTagContainer& GameplayCueTags, const FPredictionKey& PredictionKey, const FGameplayCueParameters& GameplayCueParameters);
 
 	UFUNCTION()
 	void OnRep_BuildingAnimation();

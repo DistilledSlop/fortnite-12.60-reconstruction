@@ -8,5 +8,5 @@
 #include "FOnUpdateLobbyPlayerPadTop.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnUpdateLobbyPlayerPadTop, bool, bIsReady, FUniqueNetIdRepl, PlayerNetId);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnUpdateLobbyPlayerPadTop, FUniqueNetIdRepl, PlayerNetId, bool, bIsReady);
 

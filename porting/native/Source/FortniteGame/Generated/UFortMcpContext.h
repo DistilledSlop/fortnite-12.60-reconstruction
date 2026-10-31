@@ -9,10 +9,17 @@
 #include "FCurrentlyViewedAccountInfoChangedDelegate.h"
 #include "FDailyRewardScheduleTokenDelegate.h"
 #include "FFortConversionBeginDelegate.h"
+#include "FFortConversionCompleteDelegate.h"
 #include "FFortDifficultyIncreaseRewardsClaimFailed.h"
 #include "FFortItemCacheRewardsClaimFailed.h"
+#include "FFortItemCacheRewardsClaimed.h"
 #include "FFortMissionRewardsOpenFailed.h"
+#include "FFortMissionRewardsOpened.h"
+#include "FFortResourceCollectorClaimed.h"
+#include "FFortTransmogCompleteDelegate.h"
+#include "FFortTransmogFailedDelegate.h"
 #include "FFortUpgradeRarityBeginDelegate.h"
+#include "FFortUpgradeRarityCompleteDelegate.h"
 #include "FFounderChangeDelegate.h"
 #include "FFriendCode.h"
 #include "FFriendCodeLocString.h"
@@ -23,9 +30,13 @@
 #include "FOnEpicPurchasingWidgetDisplay.h"
 #include "FOnGiftBoxRemoved.h"
 #include "FOnLiveStreamingQuestWindowEnds.h"
+#include "FOnLiveStreamingQuestWindowSelectedViewers.h"
 #include "FOnLiveStreamingQuestWindowStarts.h"
 #include "FOnLoginFlowWidgetDismissed.h"
 #include "FOnLoginFlowWidgetDisplay.h"
+#include "FOnPurchaseOfferCompleteMulti.h"
+#include "FOnQueryUnredeemedFriendCodesComplete.h"
+#include "FOnRealMoneyPurchaseCompleteMulti.h"
 #include "FXpBoostChangeDelegate.h"
 
 #include "UFortMcpContext.generated.h"
@@ -68,29 +79,69 @@ public:
 	UPROPERTY()
 	FMcpPrivacySettings PrivacySettings;
 
+	// table index 40, flags 0x10000010080000
+	UPROPERTY()
+	FFortMissionRewardsOpened OnMissionRewardsOpened;
+
 	// table index 39, flags 0x10000010080000
 	UPROPERTY()
 	FFortMissionRewardsOpenFailed OnMissionRewardsOpenFailed;
+
+	// table index 38, flags 0x10000010080000
+	UPROPERTY()
+	FFortMissionRewardsOpened OnMissionAlertRewardsOpened;
+
+	// table index 37, flags 0x10000010080000
+	UPROPERTY()
+	FFortMissionRewardsOpened OnDifficultyIncreaseRewardsClaimed;
 
 	// table index 36, flags 0x10000010080000
 	UPROPERTY()
 	FFortDifficultyIncreaseRewardsClaimFailed OnDifficultyIncreaseRewardsClaimFailed;
 
+	// table index 35, flags 0x10000010080000
+	UPROPERTY()
+	FFortItemCacheRewardsClaimed OnItemCacheRewardsClaimed;
+
 	// table index 34, flags 0x10000010080000
 	UPROPERTY()
 	FFortItemCacheRewardsClaimFailed OnItemCacheRewardsClaimFailed;
+
+	// table index 33, flags 0x10000010080000
+	UPROPERTY()
+	FFortResourceCollectorClaimed OnResourceCollectorClaimed;
 
 	// table index 32, flags 0x10000010080000
 	UPROPERTY()
 	FFortConversionBeginDelegate OnConversionBegin;
 
+	// table index 31, flags 0x10000010080000
+	UPROPERTY()
+	FFortConversionCompleteDelegate OnConversionComplete;
+
 	// table index 30, flags 0x10000010080000
 	UPROPERTY()
 	FFortUpgradeRarityBeginDelegate OnRarityUpgradeBegin;
 
+	// table index 29, flags 0x10000010080000
+	UPROPERTY()
+	FFortUpgradeRarityCompleteDelegate OnRarityUpgradeComplete;
+
+	// table index 28, flags 0x10000010080000
+	UPROPERTY()
+	FFortTransmogCompleteDelegate OnTransmogComplete;
+
+	// table index 27, flags 0x10000010080000
+	UPROPERTY()
+	FFortTransmogFailedDelegate OnTransmogFailed;
+
 	// table index 26, flags 0x10000010080000
 	UPROPERTY()
 	FFortConversionBeginDelegate OnRefundBegin;
+
+	// table index 25, flags 0x10000010080000
+	UPROPERTY()
+	FFortConversionCompleteDelegate OnRefundComplete;
 
 	// table index 24, flags 0x10000010080000
 	UPROPERTY()
@@ -100,9 +151,25 @@ public:
 	UPROPERTY()
 	FOnLiveStreamingQuestWindowEnds OnLiveStreamingQuestWindowEnds;
 
+	// table index 22, flags 0x10000010080000
+	UPROPERTY()
+	FOnLiveStreamingQuestWindowSelectedViewers OnLiveStreamingQuestWindowSelectedViewers;
+
+	// table index 21, flags 0x10000010080000
+	UPROPERTY()
+	FOnPurchaseOfferCompleteMulti OnOfferPurchaseComplete;
+
+	// table index 20, flags 0x10100010080000
+	UPROPERTY()
+	FOnRealMoneyPurchaseCompleteMulti OnRealMoneyPurchaseComplete;
+
 	// table index 18, flags 0x20080000002014
 	UPROPERTY(Transient)
 	TArray<FFriendCode> CachedFriendCodes;
+
+	// table index 16, flags 0x20088000002000
+	UPROPERTY(Transient)
+	TArray<FOnQueryUnredeemedFriendCodesComplete> PendingFriendCodeOnCompleteDelegates;
 
 	// table index 15, flags 0x20080000004000
 	UPROPERTY(Config)

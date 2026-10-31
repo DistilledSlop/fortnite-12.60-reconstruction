@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "Abilities/Tasks/AbilityTask.h"
 
+#include "FWaitTargetSelectionDelegate.h"
 #include "GameplayTagContainer.h"
 
 #include "UFortAbilityTask_WaitTargetSelection.generated.h"
@@ -16,6 +17,14 @@ class FORTNITEGAME_API UFortAbilityTask_WaitTargetSelection : public UAbilityTas
 	GENERATED_BODY()
 
 public:
+	// table index 4, flags 0x10000010080000
+	UPROPERTY()
+	FWaitTargetSelectionDelegate Targeted;
+
+	// table index 3, flags 0x10000010080000
+	UPROPERTY()
+	FWaitTargetSelectionDelegate Cancelled;
+
 	// table index 1, flags 0x20080000000000
 	UPROPERTY()
 	bool bForceTargetingOnServer;

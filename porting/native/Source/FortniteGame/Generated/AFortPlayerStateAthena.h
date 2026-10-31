@@ -309,8 +309,8 @@ public:
 	void ClientAddKillFeedErrorMessage_Implementation(const TArray<FFortCreativeMessageDispatcherErrorMessage>& ErrorMessages);
 
 	UFUNCTION(Client, Reliable)
-	void ClientNotifyMatchEntered(const FString& EventWindowId, const FString& EventId);
-	void ClientNotifyMatchEntered_Implementation(const FString& EventWindowId, const FString& EventId);
+	void ClientNotifyMatchEntered(const FString& EventId, const FString& EventWindowId);
+	void ClientNotifyMatchEntered_Implementation(const FString& EventId, const FString& EventWindowId);
 
 	UFUNCTION(Client, Reliable)
 	void ClientReportDBNO(AFortPlayerStateAthena* Player);
@@ -424,9 +424,9 @@ public:
 	void OnRep_TotalPlayerScore();
 
 	UFUNCTION(Server, Reliable, WithValidation)
-	void Server_SetCanEditCreativeIsland(const TArray<FString>& WhiteList, bool bCanEdit);
-	void Server_SetCanEditCreativeIsland_Implementation(const TArray<FString>& WhiteList, bool bCanEdit);
-	bool Server_SetCanEditCreativeIsland_Validate(const TArray<FString>& WhiteList, bool bCanEdit);
+	void Server_SetCanEditCreativeIsland(bool bCanEdit, const TArray<FString>& WhiteList);
+	void Server_SetCanEditCreativeIsland_Implementation(bool bCanEdit, const TArray<FString>& WhiteList);
+	bool Server_SetCanEditCreativeIsland_Validate(bool bCanEdit, const TArray<FString>& WhiteList);
 
 	UFUNCTION(Server, Reliable, WithValidation)
 	void Server_TogglePreserveSquad();

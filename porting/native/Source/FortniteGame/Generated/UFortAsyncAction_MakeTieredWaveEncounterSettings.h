@@ -7,6 +7,7 @@
 #include "Kismet/BlueprintAsyncActionBase.h"
 
 #include "FFortEncounterSettings.h"
+#include "FFortEncounterSettingsDelegate.h"
 #include "FTieredWaveSetData.h"
 
 #include "UFortAsyncAction_MakeTieredWaveEncounterSettings.generated.h"
@@ -17,6 +18,10 @@ class FORTNITEGAME_API UFortAsyncAction_MakeTieredWaveEncounterSettings : public
 	GENERATED_BODY()
 
 public:
+	// table index 2, flags 0x10000010080000
+	UPROPERTY()
+	FFortEncounterSettingsDelegate OnComplete;
+
 	// table index 1, flags 0x40000000002000
 	UPROPERTY(Transient)
 	FTieredWaveSetData WaveData;

@@ -2,7 +2,7 @@
 #include "UFortAthenaHoverCarMovementComponent.h"
 #include "Net/UnrealNetwork.h"
 
-void UFortAthenaHoverCarMovementComponent::ServerUpdateAthenaState_Implementation(const FVector& InForwardVectorTarget, float InSteeringInput, float InThrottleInput)
+void UFortAthenaHoverCarMovementComponent::ServerUpdateAthenaState_Implementation(float InThrottleInput, float InSteeringInput, const FVector& InForwardVectorTarget)
 {
 	// Body not recovered: reflection-derived stub.
 }

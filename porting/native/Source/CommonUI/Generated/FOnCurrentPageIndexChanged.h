@@ -7,5 +7,5 @@
 #include "FOnCurrentPageIndexChanged.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnCurrentPageIndexChanged, int32, CurrentPageIndex, UCommonWidgetCarousel*, CarouselWidget);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnCurrentPageIndexChanged, UCommonWidgetCarousel*, CarouselWidget, int32, CurrentPageIndex);
 

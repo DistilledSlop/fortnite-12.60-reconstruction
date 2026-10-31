@@ -20,7 +20,7 @@ void AFortPlayerPawn::ClientAcknowledgeVehicleInputState_Implementation(float Ti
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerPawn::ClientNotifyAbilityFailed_Implementation(const FGameplayTagContainer& FailedReason, UGameplayAbility* FailedAbility)
+void AFortPlayerPawn::ClientNotifyAbilityFailed_Implementation(UGameplayAbility* FailedAbility, const FGameplayTagContainer& FailedReason)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -155,6 +155,30 @@ ABuildingGameplayActorPlayerPropAttachment* AFortPlayerPawn::GetPossessedProp() 
 	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	return PossessedProp;
+}
+
+FVector AFortPlayerPawn::GetPreviousPosition()
+{
+	// Behaviour snippet: AFortPlayerPawn::GetPreviousPosition (body only; spliced into the generated member function).
+	// Original address: 0x142a7c640
+	// Decompile source: porting/generated/decomp_improved/AFortPlayerPawn/GetPreviousPosition.c
+	// Proxy score: 71.8 (portability.json)
+	// Inferred: Decompile copies the 12-byte FVector PreviousPosition to the result (8 bytes plus 4 bytes).
+	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
+	// CONFIDENCE: HIGH
+	return PreviousPosition;
+}
+
+FVector AFortPlayerPawn::GetPreviousVelocity()
+{
+	// Behaviour snippet: AFortPlayerPawn::GetPreviousVelocity (body only; spliced into the generated member function).
+	// Original address: 0x142a7c670
+	// Decompile source: porting/generated/decomp_improved/AFortPlayerPawn/GetPreviousVelocity.c
+	// Proxy score: 71.8 (portability.json)
+	// Inferred: Decompile copies the 12-byte FVector PreviousVelocity to the result.
+	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
+	// CONFIDENCE: HIGH
+	return PreviousVelocity;
 }
 
 EFortPawnStasisMode AFortPlayerPawn::GetStasisMode() const
@@ -543,12 +567,12 @@ bool AFortPlayerPawn::ServerChooseGender_Validate(EFortCustomGender::Type Gender
 	return Gender < 4;
 }
 
-void AFortPlayerPawn::ServerChoosePart_Implementation(UCustomCharacterPart* ChosenCharacterPart, EFortCustomPartType::Type Part)
+void AFortPlayerPawn::ServerChoosePart_Implementation(EFortCustomPartType::Type Part, UCustomCharacterPart* ChosenCharacterPart)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerPawn::ServerCycleAccessoryColorSwatch_Implementation(bool bNext, EFortCustomPartType::Type Part)
+void AFortPlayerPawn::ServerCycleAccessoryColorSwatch_Implementation(EFortCustomPartType::Type Part, bool bNext)
 {
 	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
 	// Original address: 0x1406801c0 (shared by 49 ported vtable slots; one body serves all of them)
@@ -559,7 +583,7 @@ void AFortPlayerPawn::ServerCycleAccessoryColorSwatch_Implementation(bool bNext,
 	// CONFIDENCE: HIGH
 }
 
-void AFortPlayerPawn::ServerCycleColorSwatch_Implementation(bool bNext, EColorSwatchType SwatchType)
+void AFortPlayerPawn::ServerCycleColorSwatch_Implementation(EColorSwatchType SwatchType, bool bNext)
 {
 	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
 	// Original address: 0x1406801c0 (shared by 49 ported vtable slots; one body serves all of them)
@@ -570,7 +594,7 @@ void AFortPlayerPawn::ServerCycleColorSwatch_Implementation(bool bNext, EColorSw
 	// CONFIDENCE: HIGH
 }
 
-void AFortPlayerPawn::ServerCyclePart_Implementation(bool bNextPart, EFortCustomPartType::Type Part)
+void AFortPlayerPawn::ServerCyclePart_Implementation(EFortCustomPartType::Type Part, bool bNextPart)
 {
 	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
 	// Original address: 0x1406801c0 (shared by 49 ported vtable slots; one body serves all of them)
@@ -581,7 +605,7 @@ void AFortPlayerPawn::ServerCyclePart_Implementation(bool bNextPart, EFortCustom
 	// CONFIDENCE: HIGH
 }
 
-bool AFortPlayerPawn::ServerCyclePart_Validate(bool bNextPart, EFortCustomPartType::Type Part)
+bool AFortPlayerPawn::ServerCyclePart_Validate(EFortCustomPartType::Type Part, bool bNextPart)
 {
 	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
 	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
@@ -615,7 +639,7 @@ bool AFortPlayerPawn::ServerEquipLastWeaponOrGadget_Validate(bool bForce)
 	return true;
 }
 
-void AFortPlayerPawn::ServerHandlePickup_Implementation(bool bPlayPickupSound, const FVector& InStartDirection, float InFlyTime, AFortPickup* Pickup)
+void AFortPlayerPawn::ServerHandlePickup_Implementation(AFortPickup* Pickup, float InFlyTime, const FVector& InStartDirection, bool bPlayPickupSound)
 {
 	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
 	// Original address: 0x1406801c0 (shared by 49 ported vtable slots; one body serves all of them)
@@ -626,7 +650,7 @@ void AFortPlayerPawn::ServerHandlePickup_Implementation(bool bPlayPickupSound, c
 	// CONFIDENCE: HIGH
 }
 
-bool AFortPlayerPawn::ServerHandlePickup_Validate(bool bPlayPickupSound, const FVector& InStartDirection, float InFlyTime, AFortPickup* Pickup)
+bool AFortPlayerPawn::ServerHandlePickup_Validate(AFortPickup* Pickup, float InFlyTime, const FVector& InStartDirection, bool bPlayPickupSound)
 {
 	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
 	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
@@ -638,7 +662,7 @@ bool AFortPlayerPawn::ServerHandlePickup_Validate(bool bPlayPickupSound, const F
 	return true;
 }
 
-void AFortPlayerPawn::ServerHandlePickupWithRequestedSwap_Implementation(bool bPlayPickupSound, const FVector& InStartDirection, float InFlyTime, const FGuid& Swap, AFortPickup* Pickup)
+void AFortPlayerPawn::ServerHandlePickupWithRequestedSwap_Implementation(AFortPickup* Pickup, const FGuid& Swap, float InFlyTime, const FVector& InStartDirection, bool bPlayPickupSound)
 {
 	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
 	// Original address: 0x1406801c0 (shared by 49 ported vtable slots; one body serves all of them)
@@ -649,7 +673,7 @@ void AFortPlayerPawn::ServerHandlePickupWithRequestedSwap_Implementation(bool bP
 	// CONFIDENCE: HIGH
 }
 
-bool AFortPlayerPawn::ServerHandlePickupWithRequestedSwap_Validate(bool bPlayPickupSound, const FVector& InStartDirection, float InFlyTime, const FGuid& Swap, AFortPickup* Pickup)
+bool AFortPlayerPawn::ServerHandlePickupWithRequestedSwap_Validate(AFortPickup* Pickup, const FGuid& Swap, float InFlyTime, const FVector& InStartDirection, bool bPlayPickupSound)
 {
 	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
 	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
@@ -661,7 +685,7 @@ bool AFortPlayerPawn::ServerHandlePickupWithRequestedSwap_Validate(bool bPlayPic
 	return true;
 }
 
-void AFortPlayerPawn::ServerHandlePickupWithSwap_Implementation(bool bPlayPickupSound, const FVector& InStartDirection, float InFlyTime, const FGuid& Swap, AFortPickup* Pickup)
+void AFortPlayerPawn::ServerHandlePickupWithSwap_Implementation(AFortPickup* Pickup, const FGuid& Swap, float InFlyTime, const FVector& InStartDirection, bool bPlayPickupSound)
 {
 	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
 	// Original address: 0x1406801c0 (shared by 49 ported vtable slots; one body serves all of them)
@@ -672,7 +696,7 @@ void AFortPlayerPawn::ServerHandlePickupWithSwap_Implementation(bool bPlayPickup
 	// CONFIDENCE: HIGH
 }
 
-bool AFortPlayerPawn::ServerHandlePickupWithSwap_Validate(bool bPlayPickupSound, const FVector& InStartDirection, float InFlyTime, const FGuid& Swap, AFortPickup* Pickup)
+bool AFortPlayerPawn::ServerHandlePickupWithSwap_Validate(AFortPickup* Pickup, const FGuid& Swap, float InFlyTime, const FVector& InStartDirection, bool bPlayPickupSound)
 {
 	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
 	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
@@ -920,12 +944,12 @@ bool AFortPlayerPawn::ServerUpdateVehicleInputStateReliable_Validate(const FFort
 	return true;
 }
 
-void AFortPlayerPawn::ServerUpdateVehicleInputStateUnreliable_Implementation(float Timestamp, const FFortAthenaVehicleInputStateUnreliable& ReliableInput)
+void AFortPlayerPawn::ServerUpdateVehicleInputStateUnreliable_Implementation(const FFortAthenaVehicleInputStateUnreliable& ReliableInput, float Timestamp)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-bool AFortPlayerPawn::ServerUpdateVehicleInputStateUnreliable_Validate(float Timestamp, const FFortAthenaVehicleInputStateUnreliable& ReliableInput)
+bool AFortPlayerPawn::ServerUpdateVehicleInputStateUnreliable_Validate(const FFortAthenaVehicleInputStateUnreliable& ReliableInput, float Timestamp)
 {
 	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
 	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)

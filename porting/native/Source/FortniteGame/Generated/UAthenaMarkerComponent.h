@@ -68,8 +68,8 @@ public:
 	void ServerAddMapMarker_Implementation(const FFortClientMarkerRequest& MarkerRequest);
 
 	UFUNCTION(Server, Reliable)
-	void ServerRemoveMapMarker(const ECancelMarkerReason& CancelReason, int32 UnderlyingType, const FMarkerID& MarkerID);
-	void ServerRemoveMapMarker_Implementation(const ECancelMarkerReason& CancelReason, int32 UnderlyingType, const FMarkerID& MarkerID);
+	void ServerRemoveMapMarker(const FMarkerID& MarkerID, const ECancelMarkerReason& CancelReason);
+	void ServerRemoveMapMarker_Implementation(const FMarkerID& MarkerID, const ECancelMarkerReason& CancelReason);
 
 };
 

@@ -7,5 +7,5 @@
 #include "FOnDamagedResourceBuilding.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_FourParams(FOnDamagedResourceBuilding, bool, bJustHitWeakspot, bool, bDestroyed, UFortItem*, PotentialWorldItem, ABuildingSMActor*, BuildingSMActor);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_FourParams(FOnDamagedResourceBuilding, ABuildingSMActor*, BuildingSMActor, UFortItem*, PotentialWorldItem, bool, bDestroyed, bool, bJustHitWeakspot);
 

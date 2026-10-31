@@ -18,10 +18,6 @@ class FORTNITEUI_API UFortPlayerProfileBannerEditor : public UCommonUserWidget
 	GENERATED_BODY()
 
 public:
-	// table index 12, flags 0x0
-	UPROPERTY()
-	int32 UnderlyingType;
-
 	// table index 11, flags 0x10000000000001
 	UPROPERTY()
 	ESaveProfileForBanners ProfileToSave;

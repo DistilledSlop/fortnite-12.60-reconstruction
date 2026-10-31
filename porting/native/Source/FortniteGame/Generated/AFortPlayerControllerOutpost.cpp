@@ -2,7 +2,7 @@
 #include "AFortPlayerControllerOutpost.h"
 #include "Net/UnrealNetwork.h"
 
-void AFortPlayerControllerOutpost::ClientOnBuildingLevelChanged_Implementation(int32 InLevelBeforeUpgrade, UFortOutpostItemDefinition* UpgradedBuilding)
+void AFortPlayerControllerOutpost::ClientOnBuildingLevelChanged_Implementation(UFortOutpostItemDefinition* UpgradedBuilding, int32 InLevelBeforeUpgrade)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -22,7 +22,7 @@ void AFortPlayerControllerOutpost::ServerCleanUpOnExit_Implementation()
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerControllerOutpost::ServerDepositPOSTResource_Implementation(int32 Count, const FGuid& ItemGuid)
+void AFortPlayerControllerOutpost::ServerDepositPOSTResource_Implementation(const FGuid& ItemGuid, int32 Count)
 {
 	// Body not recovered: reflection-derived stub.
 }

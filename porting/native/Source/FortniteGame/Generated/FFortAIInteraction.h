@@ -7,5 +7,5 @@
 #include "FFortAIInteraction.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FFortAIInteraction, AFortPlayerController*, InteractingPlayerController, AFortAIPawn*, AI);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FFortAIInteraction, AFortAIPawn*, AI, AFortPlayerController*, InteractingPlayerController);
 

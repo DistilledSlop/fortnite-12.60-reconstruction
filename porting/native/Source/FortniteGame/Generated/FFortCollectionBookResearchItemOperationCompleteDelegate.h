@@ -7,5 +7,5 @@
 #include "FFortCollectionBookResearchItemOperationCompleteDelegate.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FFortCollectionBookResearchItemOperationCompleteDelegate, FString, TemplateId, UFortAccountItem*, NewItem);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FFortCollectionBookResearchItemOperationCompleteDelegate, UFortAccountItem*, NewItem, FString, TemplateId);
 

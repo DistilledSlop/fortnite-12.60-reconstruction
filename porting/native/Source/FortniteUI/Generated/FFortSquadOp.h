@@ -7,5 +7,5 @@
 #include "FFortSquadOp.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FFortSquadOp, int32, SquadSlotIndex, FName, SquadId);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FFortSquadOp, FName, SquadId, int32, SquadSlotIndex);
 

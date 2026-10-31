@@ -22,8 +22,8 @@ public:
 	void OnRep_HasPermissionToEditOutpost();
 
 	UFUNCTION(Server, Reliable)
-	void ServerSetHasPermissionToEditOutpost(bool bHasPermission, AFortPlayerStateOutpost* InPlayer);
-	void ServerSetHasPermissionToEditOutpost_Implementation(bool bHasPermission, AFortPlayerStateOutpost* InPlayer);
+	void ServerSetHasPermissionToEditOutpost(AFortPlayerStateOutpost* InPlayer, bool bHasPermission);
+	void ServerSetHasPermissionToEditOutpost_Implementation(AFortPlayerStateOutpost* InPlayer, bool bHasPermission);
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

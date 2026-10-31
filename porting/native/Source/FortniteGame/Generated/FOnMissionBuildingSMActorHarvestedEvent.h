@@ -7,5 +7,5 @@
 #include "FOnMissionBuildingSMActorHarvestedEvent.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_DELEGATE_TwoParams(FOnMissionBuildingSMActorHarvestedEvent, AFortPlayerPawn*, HarvesterPawn, ABuildingSMActor*, HarvestedBuilding);
+DECLARE_DYNAMIC_DELEGATE_TwoParams(FOnMissionBuildingSMActorHarvestedEvent, ABuildingSMActor*, HarvestedBuilding, AFortPlayerPawn*, HarvesterPawn);
 

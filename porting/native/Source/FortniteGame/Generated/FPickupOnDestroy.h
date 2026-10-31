@@ -7,5 +7,5 @@
 #include "FPickupOnDestroy.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FPickupOnDestroy, UFortItemDefinition*, ItemDefinition, AFortGameModePickup*, SelfActor);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FPickupOnDestroy, AFortGameModePickup*, SelfActor, UFortItemDefinition*, ItemDefinition);
 

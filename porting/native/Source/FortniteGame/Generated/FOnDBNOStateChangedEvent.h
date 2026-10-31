@@ -7,5 +7,5 @@
 #include "FOnDBNOStateChangedEvent.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnDBNOStateChangedEvent, bool, bInIsDBNO, AFortPawn*, FortPawn);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnDBNOStateChangedEvent, AFortPawn*, FortPawn, bool, bInIsDBNO);
 

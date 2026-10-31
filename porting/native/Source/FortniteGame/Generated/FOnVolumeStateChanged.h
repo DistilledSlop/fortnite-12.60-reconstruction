@@ -8,5 +8,5 @@
 #include "FOnVolumeStateChanged.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnVolumeStateChanged, AFortVolume*, Volume, EVolumeState, NewState);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnVolumeStateChanged, EVolumeState, NewState, AFortVolume*, Volume);
 

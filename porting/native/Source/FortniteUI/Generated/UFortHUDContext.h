@@ -7,6 +7,7 @@
 #include "UBlueprintContextBase.h"
 
 #include "FHUDBasicDelegate.h"
+#include "FOnActiveGameplayModifiersChangedDelegate.h"
 #include "FOnActorFocusedForCreative.h"
 #include "FOnBigHitPointStatChanged.h"
 #include "FOnBuildModeChanged.h"
@@ -22,6 +23,8 @@
 #include "FOnFocusedBuildingAttachedTrapChanged.h"
 #include "FOnFocusedMissionChanged.h"
 #include "FOnGameViewportActivationChangedDelegate.h"
+#include "FOnHUDElementVisibilityChanged.h"
+#include "FOnHUDStateRefreshed.h"
 #include "FOnHighlightsCountChanged.h"
 #include "FOnHitPointStatChanged.h"
 #include "FOnHitPointsModified.h"
@@ -43,8 +46,11 @@
 #include "FOnShouldTriggerCooldownUpdate.h"
 #include "FOnToggleScoreboardDelegate.h"
 #include "FOnToggledBattleMapLive.h"
+#include "FOnUnableToPerformActionDelegate.h"
 #include "FOnVehicleFocused.h"
 #include "FOnVehicleStateChanged.h"
+#include "FOnWaveBasedModifiersAppliedDelegate.h"
+#include "FOnWaveCombatStart.h"
 
 class ABuildingActor;
 class ABuildingTrap;
@@ -149,6 +155,10 @@ public:
 	UPROPERTY()
 	FHUDBasicDelegate OnDamageReceived;
 
+	// table index 59, flags 0x10000010080000
+	UPROPERTY()
+	FOnUnableToPerformActionDelegate OnUnableToPerformAction;
+
 	// table index 58, flags 0x10000010080000
 	UPROPERTY()
 	FOnHitPointStatChanged OnLocalPlayerMaxHealthChanged;
@@ -201,6 +211,18 @@ public:
 	UPROPERTY()
 	FOnToggleScoreboardDelegate OnToggleScoreboard;
 
+	// table index 43, flags 0x10000010080000
+	UPROPERTY()
+	FOnWaveCombatStart OnWaveCombatStart;
+
+	// table index 42, flags 0x10000010080000
+	UPROPERTY()
+	FOnWaveBasedModifiersAppliedDelegate OnWaveBasedModifiersApplied;
+
+	// table index 41, flags 0x10000010080000
+	UPROPERTY()
+	FOnActiveGameplayModifiersChangedDelegate OnActiveGameplayModifiersChanged;
+
 	// table index 37, flags 0x10000010080000
 	UPROPERTY()
 	FHUDBasicDelegate OnBuildingMaterialCycled;
@@ -208,6 +230,10 @@ public:
 	// table index 36, flags 0x10000010080000
 	UPROPERTY()
 	FOnHighlightsCountChanged OnHighlightsCountChanged;
+
+	// table index 35, flags 0x10000010080000
+	UPROPERTY()
+	FOnHUDStateRefreshed OnHUDStateRefreshed;
 
 	// table index 34, flags 0x10000010080000
 	UPROPERTY()
@@ -272,6 +298,10 @@ public:
 	// table index 16, flags 0x10000010080000
 	UPROPERTY()
 	FOnPointOfInterestRemoved OnPointOfInterestRemoved;
+
+	// table index 15, flags 0x10000010080000
+	UPROPERTY()
+	FOnHUDElementVisibilityChanged OnHUDElementVisibilityChanged;
 
 	// table index 14, flags 0x10000010080000
 	UPROPERTY()

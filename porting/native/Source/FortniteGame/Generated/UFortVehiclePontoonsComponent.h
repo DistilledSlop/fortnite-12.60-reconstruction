@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 
+#include "FOnPontoonEnteredWater.h"
+#include "FOnPontoonExitedWater.h"
 #include "FVehicleEffectsPontoonParamSet.h"
 #include "FVehicleSphericalPontoon.h"
 
@@ -26,6 +28,14 @@ public:
 	// table index 5, flags 0x10000000010015
 	UPROPERTY()
 	TArray<FVehicleSphericalPontoon> Pontoons;
+
+	// table index 4, flags 0x10000010080000
+	UPROPERTY()
+	FOnPontoonEnteredWater OnEnteredWaterDelegate;
+
+	// table index 3, flags 0x10000010080000
+	UPROPERTY()
+	FOnPontoonExitedWater OnExitedWaterDelegate;
 
 	// table index 2, flags 0x40000000002000
 	UPROPERTY(Transient)

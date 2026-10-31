@@ -12,7 +12,7 @@ void AFortWeaponRanged_Ostrich::ServerSetCharging_Implementation(bool bNewChargi
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortWeaponRanged_Ostrich::ServerSetFiringRockets_Implementation(int32 NumToFire, bool bNewFiring)
+void AFortWeaponRanged_Ostrich::ServerSetFiringRockets_Implementation(bool bNewFiring, int32 NumToFire)
 {
 	// Body not recovered: reflection-derived stub.
 }

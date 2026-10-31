@@ -44,8 +44,8 @@ public:
 	void OnRep_Source();
 
 	UFUNCTION(Server, Reliable)
-	void ServerSelectOption(UFortItemDefinition* MusicSource, AFortPlayerController* PlayerChoosing);
-	void ServerSelectOption_Implementation(UFortItemDefinition* MusicSource, AFortPlayerController* PlayerChoosing);
+	void ServerSelectOption(AFortPlayerController* PlayerChoosing, UFortItemDefinition* MusicSource);
+	void ServerSelectOption_Implementation(AFortPlayerController* PlayerChoosing, UFortItemDefinition* MusicSource);
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

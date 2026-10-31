@@ -13,10 +13,6 @@ struct FFortAnalyticsEventBlacklistEntry
 {
 	GENERATED_BODY()
 
-	// table index 4, offset 0, flags 0x0
-	UPROPERTY()
-	int32 UnderlyingType;
-
 	// table index 3, offset 0, flags 0x10000000000000
 	UPROPERTY()
 	EFortAnalyticsEventBlacklistPlaylistKey Type;

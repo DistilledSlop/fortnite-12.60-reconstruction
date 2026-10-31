@@ -7,5 +7,5 @@
 #include "FOnClientVolumeRestrictionStateChanged.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnClientVolumeRestrictionStateChanged, bool, bRestrictionEnabled, AFortVolume*, Volume);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnClientVolumeRestrictionStateChanged, AFortVolume*, Volume, bool, bRestrictionEnabled);
 

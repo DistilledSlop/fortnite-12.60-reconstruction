@@ -7,5 +7,5 @@
 #include "FUraniumOnTeamsRolesChanged.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FUraniumOnTeamsRolesChanged, uint8, DefenderTeam, uint8, PusherTeam);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FUraniumOnTeamsRolesChanged, uint8, PusherTeam, uint8, DefenderTeam);
 

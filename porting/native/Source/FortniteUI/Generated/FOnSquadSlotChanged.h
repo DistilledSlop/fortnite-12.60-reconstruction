@@ -7,5 +7,5 @@
 #include "FOnSquadSlotChanged.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnSquadSlotChanged, int32, SlotIndex, FName, SquadName);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnSquadSlotChanged, FName, SquadName, int32, SlotIndex);
 

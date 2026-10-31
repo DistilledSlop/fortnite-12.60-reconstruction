@@ -2,7 +2,7 @@
 #include "AFortTimeOfDayManager.h"
 #include "Net/UnrealNetwork.h"
 
-void AFortTimeOfDayManager::AddLightAndFogPhaseSettingOverrideMulticast_Implementation(float BlendInLength, TSubclassOf<UFortDayPhaseInfoOverride> DayPhaseInfoOverride, EFortDayPhase::Type DayPhase)
+void AFortTimeOfDayManager::AddLightAndFogPhaseSettingOverrideMulticast_Implementation(EFortDayPhase::Type DayPhase, TSubclassOf<UFortDayPhaseInfoOverride> DayPhaseInfoOverride, float BlendInLength)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -27,7 +27,7 @@ void AFortTimeOfDayManager::OnRep_TimeOfDayInit()
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortTimeOfDayManager::RemoveLightAndFogPhaseSettingOverrideMulticast_Implementation(float BlendOutLength, EFortDayPhase::Type DayPhase)
+void AFortTimeOfDayManager::RemoveLightAndFogPhaseSettingOverrideMulticast_Implementation(EFortDayPhase::Type DayPhase, float BlendOutLength)
 {
 	// Body not recovered: reflection-derived stub.
 }

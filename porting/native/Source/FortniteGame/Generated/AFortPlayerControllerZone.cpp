@@ -47,7 +47,7 @@ void AFortPlayerControllerZone::ClientUpdatePlaylistFlags_Implementation(const T
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerControllerZone::ClientVoiceChatSendJoinToken_Implementation(const FString& Token, const FString& Error, bool bSuccess)
+void AFortPlayerControllerZone::ClientVoiceChatSendJoinToken_Implementation(bool bSuccess, const FString& Error, const FString& Token)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -67,7 +67,7 @@ void AFortPlayerControllerZone::ServerAttemptExitVehicle_Implementation()
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerControllerZone::ServerBeginGameplayVote_Implementation(const FFortVoteConfig& VoteConfig, const EFortVoteType& VoteType)
+void AFortPlayerControllerZone::ServerBeginGameplayVote_Implementation(const EFortVoteType& VoteType, const FFortVoteConfig& VoteConfig)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -97,12 +97,12 @@ void AFortPlayerControllerZone::ServerRequestSeatChange_Implementation(int32 Tar
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerControllerZone::ServerSendLoadoutConfig_Implementation(const TArray<uint8>& Loadout, int32 LoadoutSeed)
+void AFortPlayerControllerZone::ServerSendLoadoutConfig_Implementation(int32 LoadoutSeed, const TArray<uint8>& Loadout)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerControllerZone::ServerSendPartyJoinInfoToPlayer_Implementation(const FString& JoinInfoStr, const FUniqueNetIdRepl& RecipientId)
+void AFortPlayerControllerZone::ServerSendPartyJoinInfoToPlayer_Implementation(const FUniqueNetIdRepl& RecipientId, const FString& JoinInfoStr)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -117,17 +117,17 @@ void AFortPlayerControllerZone::ServerSetVehicleHealth_Implementation(float NewH
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerControllerZone::ServerSpectatePlayer_Implementation(bool bAllowStateChange, APawn* NewPlayerToSpectate)
+void AFortPlayerControllerZone::ServerSpectatePlayer_Implementation(APawn* NewPlayerToSpectate, bool bAllowStateChange)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerControllerZone::ServerSpectatePlayerState_Implementation(bool bAllowStateChange, AFortPlayerStateZone* PlayerToSpectate)
+void AFortPlayerControllerZone::ServerSpectatePlayerState_Implementation(AFortPlayerStateZone* PlayerToSpectate, bool bAllowStateChange)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerControllerZone::ServerSubmitGameplayVote_Implementation(int32 VoteDecision, const EFortVoteType& VoteType)
+void AFortPlayerControllerZone::ServerSubmitGameplayVote_Implementation(const EFortVoteType& VoteType, int32 VoteDecision)
 {
 	// Body not recovered: reflection-derived stub.
 }

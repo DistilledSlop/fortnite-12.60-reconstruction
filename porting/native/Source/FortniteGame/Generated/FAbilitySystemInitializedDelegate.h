@@ -7,5 +7,5 @@
 #include "FAbilitySystemInitializedDelegate.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FAbilitySystemInitializedDelegate, AFortPlayerPawn*, AffectedPawn, UFortAbilitySystemComponent*, AbilitySystemComponent);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FAbilitySystemInitializedDelegate, UFortAbilitySystemComponent*, AbilitySystemComponent, AFortPlayerPawn*, AffectedPawn);
 

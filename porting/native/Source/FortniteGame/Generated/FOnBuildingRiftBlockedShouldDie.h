@@ -7,5 +7,5 @@
 #include "FOnBuildingRiftBlockedShouldDie.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_FourParams(FOnBuildingRiftBlockedShouldDie, AActor*, DamageCauser, AController*, EventInvestigator, ABuildingRift*, Rift, UFortAIEncounterInfo*, Encounter);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_FourParams(FOnBuildingRiftBlockedShouldDie, UFortAIEncounterInfo*, Encounter, ABuildingRift*, Rift, AController*, EventInvestigator, AActor*, DamageCauser);
 

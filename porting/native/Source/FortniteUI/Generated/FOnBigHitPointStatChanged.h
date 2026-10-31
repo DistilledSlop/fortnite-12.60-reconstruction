@@ -7,5 +7,5 @@
 #include "FOnBigHitPointStatChanged.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnBigHitPointStatChanged, float, HealthPercent, FText, HitPointText);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnBigHitPointStatChanged, FText, HitPointText, float, HealthPercent);
 

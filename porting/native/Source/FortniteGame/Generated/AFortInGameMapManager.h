@@ -133,10 +133,6 @@ public:
 	UPROPERTY()
 	FOnMapExplorationThresholdReached OnMapExplorationThresholdReached;
 
-	// table index 9, flags 0x0
-	UPROPERTY()
-	int32 UnderlyingType;
-
 	// table index 8, flags 0x20080000002000
 	UPROPERTY(Transient)
 	EMapCaptureMethod MapCaptureMethod;

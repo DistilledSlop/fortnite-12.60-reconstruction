@@ -2,7 +2,7 @@
 #include "AFortThreatVisualsManager.h"
 #include "Net/UnrealNetwork.h"
 
-void AFortThreatVisualsManager::BeginThreatVisualsPrecursor_Implementation(const FVector& ThreatLocation, AActor* SourceActor)
+void AFortThreatVisualsManager::BeginThreatVisualsPrecursor_Implementation(AActor* SourceActor, const FVector& ThreatLocation)
 {
 	// Body not recovered: reflection-derived stub.
 }

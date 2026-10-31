@@ -7,5 +7,5 @@
 #include "FOnEpicPurchasingWidgetDisplay.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_DELEGATE_TwoParams(FOnEpicPurchasingWidgetDisplay, FString, OfferId, UWidget*, WebWidget);
+DECLARE_DYNAMIC_DELEGATE_TwoParams(FOnEpicPurchasingWidgetDisplay, UWidget*, WebWidget, FString, OfferId);
 

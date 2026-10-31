@@ -7,5 +7,5 @@
 #include "FOnActiveWidgetChanged.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnActiveWidgetChanged, int32, ActiveWidgetIndex, UWidget*, ActiveWidget);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnActiveWidgetChanged, UWidget*, ActiveWidget, int32, ActiveWidgetIndex);
 

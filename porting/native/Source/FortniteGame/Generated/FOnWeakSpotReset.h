@@ -7,5 +7,5 @@
 #include "FOnWeakSpotReset.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnWeakSpotReset, ABuildingSMActor*, ParentBuilding, AFortPlayerController*, Controller);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnWeakSpotReset, AFortPlayerController*, Controller, ABuildingSMActor*, ParentBuilding);
 

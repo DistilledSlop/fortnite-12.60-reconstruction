@@ -7,5 +7,5 @@
 #include "FOnEncounterPawnDied.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnEncounterPawnDied, AFortAIPawn*, DeadPawn, UFortAIEncounterInfo*, Encounter);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnEncounterPawnDied, UFortAIEncounterInfo*, Encounter, AFortAIPawn*, DeadPawn);
 

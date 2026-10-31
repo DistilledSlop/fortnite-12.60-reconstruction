@@ -7,5 +7,5 @@
 #include "FOnMountedWeaponFired.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnMountedWeaponFired, int32, ShotsRemaining, int32, SeatIndex, UFortVehicleSeatWeaponComponent*, SeatWeaponComponent);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnMountedWeaponFired, UFortVehicleSeatWeaponComponent*, SeatWeaponComponent, int32, SeatIndex, int32, ShotsRemaining);
 

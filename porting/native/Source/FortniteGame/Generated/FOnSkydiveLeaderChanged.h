@@ -7,5 +7,5 @@
 #include "FOnSkydiveLeaderChanged.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnSkydiveLeaderChanged, AFortPlayerState*, LeaderPlayerState, bool, bLocal, bool, bEnabled);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnSkydiveLeaderChanged, bool, bEnabled, bool, bLocal, AFortPlayerState*, LeaderPlayerState);
 

@@ -383,20 +383,20 @@ public:
 	void ClientDeactiveWeaponAndState_Implementation();
 
 	UFUNCTION(Client, Reliable)
-	void ClientStartInteracting(const FBox& NewSelectionSpaceActorBounds, const FTransform& NewSelectionToWorld, const TArray<FCreativeSelectedActorInfo>& NewSelectedActors, UObjectInteractionBehavior* NewActiveMovementMode);
-	void ClientStartInteracting_Implementation(const FBox& NewSelectionSpaceActorBounds, const FTransform& NewSelectionToWorld, const TArray<FCreativeSelectedActorInfo>& NewSelectedActors, UObjectInteractionBehavior* NewActiveMovementMode);
+	void ClientStartInteracting(UObjectInteractionBehavior* NewActiveMovementMode, const TArray<FCreativeSelectedActorInfo>& NewSelectedActors, const FTransform& NewSelectionToWorld, const FBox& NewSelectionSpaceActorBounds);
+	void ClientStartInteracting_Implementation(UObjectInteractionBehavior* NewActiveMovementMode, const TArray<FCreativeSelectedActorInfo>& NewSelectedActors, const FTransform& NewSelectionToWorld, const FBox& NewSelectionSpaceActorBounds);
 
 	UFUNCTION(Client, Reliable)
 	void ClientStopInteracting();
 	void ClientStopInteracting_Implementation();
 
 	UFUNCTION(NetMulticast, Reliable)
-	void MulticastForceMoveActor(const FTransform& NewTransform, AActor* ActorToMove);
-	void MulticastForceMoveActor_Implementation(const FTransform& NewTransform, AActor* ActorToMove);
+	void MulticastForceMoveActor(AActor* ActorToMove, const FTransform& NewTransform);
+	void MulticastForceMoveActor_Implementation(AActor* ActorToMove, const FTransform& NewTransform);
 
 	UFUNCTION(NetMulticast, Reliable)
-	void MulticastForceMoveActorExceptOwningClient(const FTransform& NewTransform, AActor* ActorToMove);
-	void MulticastForceMoveActorExceptOwningClient_Implementation(const FTransform& NewTransform, AActor* ActorToMove);
+	void MulticastForceMoveActorExceptOwningClient(AActor* ActorToMove, const FTransform& NewTransform);
+	void MulticastForceMoveActorExceptOwningClient_Implementation(AActor* ActorToMove, const FTransform& NewTransform);
 
 	UFUNCTION(NetMulticast, Reliable)
 	void MulticastHideCutActors();
@@ -407,8 +407,8 @@ public:
 	void MulticastRestoreCutActors_Implementation();
 
 	UFUNCTION(NetMulticast, Reliable)
-	void MulticastSetCollisionForActor(bool bEnableCollision, AActor* Actor);
-	void MulticastSetCollisionForActor_Implementation(bool bEnableCollision, AActor* Actor);
+	void MulticastSetCollisionForActor(AActor* Actor, bool bEnableCollision);
+	void MulticastSetCollisionForActor_Implementation(AActor* Actor, bool bEnableCollision);
 
 	UFUNCTION(NetMulticast, Reliable)
 	void MulticastUpdateSelectionSetExceptServer(const FTransform& NewTransformToWorld);
@@ -434,12 +434,12 @@ public:
 	void OnRep_SelectionProperty();
 
 	UFUNCTION(NetMulticast, Reliable)
-	void RemoteClientsUpdateSelectedActors(UObjectInteractionBehavior* CurrentObjectInteractionBehvaior, const TArray<FCreativeSelectedActorInfo>& NewSelectedActors);
-	void RemoteClientsUpdateSelectedActors_Implementation(UObjectInteractionBehavior* CurrentObjectInteractionBehvaior, const TArray<FCreativeSelectedActorInfo>& NewSelectedActors);
+	void RemoteClientsUpdateSelectedActors(const TArray<FCreativeSelectedActorInfo>& NewSelectedActors, UObjectInteractionBehavior* CurrentObjectInteractionBehvaior);
+	void RemoteClientsUpdateSelectedActors_Implementation(const TArray<FCreativeSelectedActorInfo>& NewSelectedActors, UObjectInteractionBehavior* CurrentObjectInteractionBehvaior);
 
 	UFUNCTION(Server, Reliable)
-	void ServerAddItemToMoveTool(bool bUseVolume, UFortItemDefinition* PlaysetToSpawn, AFortPlayerControllerAthena* FortPC);
-	void ServerAddItemToMoveTool_Implementation(bool bUseVolume, UFortItemDefinition* PlaysetToSpawn, AFortPlayerControllerAthena* FortPC);
+	void ServerAddItemToMoveTool(AFortPlayerControllerAthena* FortPC, UFortItemDefinition* PlaysetToSpawn, bool bUseVolume);
+	void ServerAddItemToMoveTool_Implementation(AFortPlayerControllerAthena* FortPC, UFortItemDefinition* PlaysetToSpawn, bool bUseVolume);
 
 	UFUNCTION(Server, Reliable)
 	void ServerClearMovementMode(bool bExited);
@@ -454,16 +454,16 @@ public:
 	void ServerDestroyActor_Implementation(AActor* ActorToDestroy);
 
 	UFUNCTION(Server, Reliable)
-	void ServerDuplicateStartInteracting(const FTransform& DragStart, const TArray<AActor*>& Actors);
-	void ServerDuplicateStartInteracting_Implementation(const FTransform& DragStart, const TArray<AActor*>& Actors);
+	void ServerDuplicateStartInteracting(const TArray<AActor*>& Actors, const FTransform& DragStart);
+	void ServerDuplicateStartInteracting_Implementation(const TArray<AActor*>& Actors, const FTransform& DragStart);
 
 	UFUNCTION(Server, Reliable)
 	void ServerHandshakeFromClientForReceivingCutActors();
 	void ServerHandshakeFromClientForReceivingCutActors_Implementation();
 
 	UFUNCTION(Server, Reliable)
-	void ServerMoveSelectionSet(bool bShouldUpdateOwningClient, const FTransform& NewSelectionToWorld);
-	void ServerMoveSelectionSet_Implementation(bool bShouldUpdateOwningClient, const FTransform& NewSelectionToWorld);
+	void ServerMoveSelectionSet(const FTransform& NewSelectionToWorld, bool bShouldUpdateOwningClient);
+	void ServerMoveSelectionSet_Implementation(const FTransform& NewSelectionToWorld, bool bShouldUpdateOwningClient);
 
 	UFUNCTION(Server, Reliable)
 	void ServerOnNewlyPlacedActorProcessedByClient(const FOriginalAndSpawnedPair& NewlyPlacedActorPair);
@@ -486,28 +486,28 @@ public:
 	void ServerSetAlwaysMoveFreely_Implementation(bool bNewValue);
 
 	UFUNCTION(Server, Reliable)
-	void ServerSpawnActorWithTransform(bool bForPreviewing, bool bIgnoreStructuralIssues, bool bAllowGravity, bool bAllowOverlap, const FTransform& TargetTransform, AActor* ActorToSpawn);
-	void ServerSpawnActorWithTransform_Implementation(bool bForPreviewing, bool bIgnoreStructuralIssues, bool bAllowGravity, bool bAllowOverlap, const FTransform& TargetTransform, AActor* ActorToSpawn);
+	void ServerSpawnActorWithTransform(AActor* ActorToSpawn, const FTransform& TargetTransform, bool bAllowOverlap, bool bAllowGravity, bool bIgnoreStructuralIssues, bool bForPreviewing);
+	void ServerSpawnActorWithTransform_Implementation(AActor* ActorToSpawn, const FTransform& TargetTransform, bool bAllowOverlap, bool bAllowGravity, bool bIgnoreStructuralIssues, bool bForPreviewing);
 
 	UFUNCTION(Server, Reliable)
-	void ServerSpawnSelectedActorsWithTransform(bool bForPreviewing, bool bIgnoreStructuralIssues, bool bAllowGravity, bool bAllowOverlap);
-	void ServerSpawnSelectedActorsWithTransform_Implementation(bool bForPreviewing, bool bIgnoreStructuralIssues, bool bAllowGravity, bool bAllowOverlap);
+	void ServerSpawnSelectedActorsWithTransform(bool bAllowOverlap, bool bAllowGravity, bool bIgnoreStructuralIssues, bool bForPreviewing);
+	void ServerSpawnSelectedActorsWithTransform_Implementation(bool bAllowOverlap, bool bAllowGravity, bool bIgnoreStructuralIssues, bool bForPreviewing);
 
 	UFUNCTION(Server, Reliable)
-	void ServerStartInteracting(const FTransform& DragStart, const TArray<AActor*>& Actors);
-	void ServerStartInteracting_Implementation(const FTransform& DragStart, const TArray<AActor*>& Actors);
+	void ServerStartInteracting(const TArray<AActor*>& Actors, const FTransform& DragStart);
+	void ServerStartInteracting_Implementation(const TArray<AActor*>& Actors, const FTransform& DragStart);
 
 	UFUNCTION(Server, Reliable)
 	void ServerUpdateMirrored(bool bMirrored);
 	void ServerUpdateMirrored_Implementation(bool bMirrored);
 
 	UFUNCTION(Server, Reliable)
-	void ServerUpdatePrecisionMode(uint8 PrecisionModeIndex, bool bPrecisionMode);
-	void ServerUpdatePrecisionMode_Implementation(uint8 PrecisionModeIndex, bool bPrecisionMode);
+	void ServerUpdatePrecisionMode(bool bPrecisionMode, uint8 PrecisionModeIndex);
+	void ServerUpdatePrecisionMode_Implementation(bool bPrecisionMode, uint8 PrecisionModeIndex);
 
 	UFUNCTION(Server, Reliable)
-	void ServerUpdateRotation(bool bNewIsRotateCounterclockwisePressed, bool bNewIsRotateClockwisePressed, const FQuat& ClientRotation);
-	void ServerUpdateRotation_Implementation(bool bNewIsRotateCounterclockwisePressed, bool bNewIsRotateClockwisePressed, const FQuat& ClientRotation);
+	void ServerUpdateRotation(const FQuat& ClientRotation, bool bNewIsRotateClockwisePressed, bool bNewIsRotateCounterclockwisePressed);
+	void ServerUpdateRotation_Implementation(const FQuat& ClientRotation, bool bNewIsRotateClockwisePressed, bool bNewIsRotateCounterclockwisePressed);
 
 	UFUNCTION(Server, Reliable)
 	void ServerUpdateRotationAxis(uint8 AxisIndex);
@@ -518,16 +518,16 @@ public:
 	void ServerUpdateScaleAxis_Implementation(const EScaleAxis& SelectedAxis);
 
 	UFUNCTION(Server, Reliable)
-	void ServerUpdateScalePressed(bool bNewIsScaleDownPressed, bool bNewIsScaleUpPressed);
-	void ServerUpdateScalePressed_Implementation(bool bNewIsScaleDownPressed, bool bNewIsScaleUpPressed);
+	void ServerUpdateScalePressed(bool bNewIsScaleUpPressed, bool bNewIsScaleDownPressed);
+	void ServerUpdateScalePressed_Implementation(bool bNewIsScaleUpPressed, bool bNewIsScaleDownPressed);
 
 	UFUNCTION(Server, Reliable)
-	void ServerUpdateTractorBeam(bool bNewIsPullPressed, bool bNewIsPushPressed, float NewTargetTractorBeamOffset);
-	void ServerUpdateTractorBeam_Implementation(bool bNewIsPullPressed, bool bNewIsPushPressed, float NewTargetTractorBeamOffset);
+	void ServerUpdateTractorBeam(float NewTargetTractorBeamOffset, bool bNewIsPushPressed, bool bNewIsPullPressed);
+	void ServerUpdateTractorBeam_Implementation(float NewTargetTractorBeamOffset, bool bNewIsPushPressed, bool bNewIsPullPressed);
 
 	UFUNCTION(Server, Reliable)
-	void SpawnPlaysetVolumeOnServer(const FRotator& SpawnRotation, const FVector& SpawnLocation, UFortPlaysetItemDefinition* Playset);
-	void SpawnPlaysetVolumeOnServer_Implementation(const FRotator& SpawnRotation, const FVector& SpawnLocation, UFortPlaysetItemDefinition* Playset);
+	void SpawnPlaysetVolumeOnServer(UFortPlaysetItemDefinition* Playset, const FVector& SpawnLocation, const FRotator& SpawnRotation);
+	void SpawnPlaysetVolumeOnServer_Implementation(UFortPlaysetItemDefinition* Playset, const FVector& SpawnLocation, const FRotator& SpawnRotation);
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

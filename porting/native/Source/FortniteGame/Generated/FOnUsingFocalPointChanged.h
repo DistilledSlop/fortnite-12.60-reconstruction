@@ -7,5 +7,5 @@
 #include "FOnUsingFocalPointChanged.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnUsingFocalPointChanged, bool, bUsingFocalPoint, AActor*, FocalPointActor, AFortPlayerControllerAthena*, FocalPointUser);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnUsingFocalPointChanged, AFortPlayerControllerAthena*, FocalPointUser, AActor*, FocalPointActor, bool, bUsingFocalPoint);
 

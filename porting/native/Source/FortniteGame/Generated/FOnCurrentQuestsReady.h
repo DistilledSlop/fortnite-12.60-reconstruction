@@ -7,5 +7,5 @@
 #include "FOnCurrentQuestsReady.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnCurrentQuestsReady, bool, bFoundAllQuestsOnProfile, UFortQuestManager*, OwningQuestManager);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnCurrentQuestsReady, UFortQuestManager*, OwningQuestManager, bool, bFoundAllQuestsOnProfile);
 

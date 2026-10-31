@@ -10,6 +10,7 @@
 #include "EPortalLinkCodeLockStatus.h"
 #include "FCreativeLoadedLinkData.h"
 #include "FOnCreativeLinkDataError.h"
+#include "FOnCreativeLinkDataLoaded.h"
 #include "FOnCreativeLinkThumbnailUpdated.h"
 #include "FOnPortalLinkCodeLockStatusChanged.h"
 #include "Misc/DateTime.h"
@@ -24,6 +25,10 @@ class FORTNITEGAME_API UFortPortalComponent : public UActorComponent
 	GENERATED_BODY()
 
 public:
+	// table index 14, flags 0x10000010080000
+	UPROPERTY()
+	FOnCreativeLinkDataLoaded OnLinkDataLoaded;
+
 	// table index 13, flags 0x10000010080000
 	UPROPERTY()
 	FOnCreativeLinkDataError OnLinkDataError;

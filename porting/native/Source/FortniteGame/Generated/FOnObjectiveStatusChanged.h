@@ -8,5 +8,5 @@
 #include "FOnObjectiveStatusChanged.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnObjectiveStatusChanged, EFortObjectiveStatus, NewStatus, AFortObjectiveBase*, Objective);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnObjectiveStatusChanged, AFortObjectiveBase*, Objective, EFortObjectiveStatus, NewStatus);
 

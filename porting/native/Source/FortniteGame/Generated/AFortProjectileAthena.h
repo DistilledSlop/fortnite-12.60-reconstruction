@@ -63,8 +63,8 @@ public:
 	void OnRep_PawnHitResult();
 
 	UFUNCTION(Server, Reliable)
-	void ServerNotifyEndOverlap(UPrimitiveComponent* OtherComp, AActor* OtherActor);
-	void ServerNotifyEndOverlap_Implementation(UPrimitiveComponent* OtherComp, AActor* OtherActor);
+	void ServerNotifyEndOverlap(AActor* OtherActor, UPrimitiveComponent* OtherComp);
+	void ServerNotifyEndOverlap_Implementation(AActor* OtherActor, UPrimitiveComponent* OtherComp);
 
 	UFUNCTION(Server, Reliable)
 	void ServerNotifyPawnHit(const FHitResult& Hit);

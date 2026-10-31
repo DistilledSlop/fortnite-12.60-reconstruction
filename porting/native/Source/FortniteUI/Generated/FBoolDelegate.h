@@ -7,5 +7,5 @@
 #include "FBoolDelegate.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FBoolDelegate, bool, BoolParam, UAthenaRemotePlayerViewData*, PlayerData);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FBoolDelegate, UAthenaRemotePlayerViewData*, PlayerData, bool, BoolParam);
 

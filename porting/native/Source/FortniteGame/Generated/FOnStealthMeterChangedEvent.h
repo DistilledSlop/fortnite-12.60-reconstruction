@@ -7,5 +7,5 @@
 #include "FOnStealthMeterChangedEvent.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnStealthMeterChangedEvent, float, StealthMeterTargetTime, float, StealthMeterTarget, AFortAthenaAIBotController*, BotController);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnStealthMeterChangedEvent, AFortAthenaAIBotController*, BotController, float, StealthMeterTarget, float, StealthMeterTargetTime);
 

@@ -7,5 +7,5 @@
 #include "FOnActorEnterExitVolume.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_FourParams(FOnActorEnterExitVolume, AFortVolume*, Volume, APawn*, InstigatorPawn, UActorComponent*, ActorComponent, AActor*, Actor);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_FourParams(FOnActorEnterExitVolume, AActor*, Actor, UActorComponent*, ActorComponent, APawn*, InstigatorPawn, AFortVolume*, Volume);
 

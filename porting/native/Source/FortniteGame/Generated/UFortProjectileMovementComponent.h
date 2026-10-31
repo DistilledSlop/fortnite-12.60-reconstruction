@@ -9,6 +9,7 @@
 #include "EFortHomingStyle.h"
 #include "FFortReplicatedVelocityData.h"
 #include "FFortStopSimulatingRepData.h"
+#include "FOnProjectileVelocityReplicated.h"
 #include "FProjectileHomingData.h"
 #include "Math/Vector.h"
 
@@ -94,6 +95,10 @@ public:
 	// table index 1, flags 0x20080000082008
 	UPROPERTY(Transient)
 	UFortWaterInteractionComponent* WaterInteractionComponent;
+
+	// table index 0, flags 0x10000010080000
+	UPROPERTY()
+	FOnProjectileVelocityReplicated OnProjectileVelocityReplicated;
 
 	UFUNCTION()
 	void OnRep_FortStopSimulatingRepData();

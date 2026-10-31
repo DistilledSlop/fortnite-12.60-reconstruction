@@ -7,5 +7,5 @@
 #include "FOnMenuOpenChangedEvent.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnMenuOpenChangedEvent, bool, bIsMenuOpen, UFortHeroLoadoutSlotButton*, SlotButton);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnMenuOpenChangedEvent, UFortHeroLoadoutSlotButton*, SlotButton, bool, bIsMenuOpen);
 

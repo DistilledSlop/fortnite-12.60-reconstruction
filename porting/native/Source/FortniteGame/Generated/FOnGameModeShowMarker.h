@@ -7,5 +7,5 @@
 #include "FOnGameModeShowMarker.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnGameModeShowMarker, int32, InstanceID, int32, PlayerID);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnGameModeShowMarker, int32, PlayerID, int32, InstanceID);
 

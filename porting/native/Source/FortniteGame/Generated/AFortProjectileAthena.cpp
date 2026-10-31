@@ -12,7 +12,7 @@ void AFortProjectileAthena::OnRep_PawnHitResult()
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortProjectileAthena::ServerNotifyEndOverlap_Implementation(UPrimitiveComponent* OtherComp, AActor* OtherActor)
+void AFortProjectileAthena::ServerNotifyEndOverlap_Implementation(AActor* OtherActor, UPrimitiveComponent* OtherComp)
 {
 	// Body not recovered: reflection-derived stub.
 }

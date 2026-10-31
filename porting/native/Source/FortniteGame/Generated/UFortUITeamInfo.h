@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
 
+#include "FOnTeamHitPointFractionsChanged.h"
 #include "FOnTeamMemberAddedDelegate.h"
 #include "FOnTeamMemberFinishedSynchronizingDelegate.h"
 #include "FOnTeamMemberRemovedDelegate.h"
@@ -41,6 +42,10 @@ public:
 	// table index 6, flags 0x10000010080000
 	UPROPERTY()
 	FOnTeamMemberSimpleDelegate OnTeamMemberPromoted;
+
+	// table index 5, flags 0x10000010080000
+	UPROPERTY()
+	FOnTeamHitPointFractionsChanged OnTeamHitPointFractionsChanged;
 
 	// table index 4, flags 0x40000000002000
 	UPROPERTY(Transient)

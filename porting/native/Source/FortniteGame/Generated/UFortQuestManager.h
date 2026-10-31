@@ -11,8 +11,12 @@
 #include "FFortQuestObjectiveCompletion.h"
 #include "FOnDailyQuestRerolled.h"
 #include "FOnDisplayDynamicQuestUpdate.h"
+#include "FOnObjectiveStatXPGranted.h"
 #include "FOnPinnedQuestsUpdated.h"
+#include "FOnQuestRewardClaimed.h"
 #include "FOnQuestSeen.h"
+#include "FOnQuestsCompleted.h"
+#include "FOnQuestsGranted.h"
 #include "FOnQuestsUpdated.h"
 #include "FOnXpDeltasUpdated.h"
 #include "GameplayTagContainer.h"
@@ -37,6 +41,18 @@ public:
 	UPROPERTY()
 	FOnQuestsUpdated OnQuestsUpdated;
 
+	// table index 52, flags 0x10000010080000
+	UPROPERTY()
+	FOnQuestsCompleted OnQuestsCompleted;
+
+	// table index 51, flags 0x10000010080000
+	UPROPERTY()
+	FOnQuestsGranted OnQuestsGranted;
+
+	// table index 50, flags 0x10000010080000
+	UPROPERTY()
+	FOnQuestRewardClaimed OnQuestRewardClaimed;
+
 	// table index 49, flags 0x10000010080000
 	UPROPERTY()
 	FOnQuestSeen OnQuestSeen;
@@ -56,6 +72,10 @@ public:
 	// table index 45, flags 0x10000010080000
 	UPROPERTY()
 	FOnDisplayDynamicQuestUpdate OnDisplayDynamicQuestUpdate;
+
+	// table index 44, flags 0x10000010080000
+	UPROPERTY()
+	FOnObjectiveStatXPGranted OnObjectiveStatXPGranted;
 
 	// table index 43, flags 0x10000010080000
 	UPROPERTY()

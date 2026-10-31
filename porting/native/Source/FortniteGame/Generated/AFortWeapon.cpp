@@ -7,7 +7,7 @@ void AFortWeapon::ClientGivenTo_Implementation(APawn* P)
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortWeapon::ClientReportShotFlags_Implementation(int32 ShotIndex, uint32 ShotFlags)
+void AFortWeapon::ClientReportShotFlags_Implementation(uint32 ShotFlags, int32 ShotIndex)
 {
 	// Body not recovered: reflection-derived stub.
 }

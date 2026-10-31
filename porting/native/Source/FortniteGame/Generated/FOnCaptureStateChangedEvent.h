@@ -8,5 +8,5 @@
 #include "FOnCaptureStateChangedEvent.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnCaptureStateChangedEvent, ECaptureState, PreviousCaptureState, ECaptureState, NewCaptureState);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnCaptureStateChangedEvent, ECaptureState, NewCaptureState, ECaptureState, PreviousCaptureState);
 

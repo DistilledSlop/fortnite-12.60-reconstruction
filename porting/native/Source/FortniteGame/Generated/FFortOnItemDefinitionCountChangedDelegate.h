@@ -7,5 +7,5 @@
 #include "FFortOnItemDefinitionCountChangedDelegate.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FFortOnItemDefinitionCountChangedDelegate, int32, Delta, UFortItemDefinition*, Definition);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FFortOnItemDefinitionCountChangedDelegate, UFortItemDefinition*, Definition, int32, Delta);
 

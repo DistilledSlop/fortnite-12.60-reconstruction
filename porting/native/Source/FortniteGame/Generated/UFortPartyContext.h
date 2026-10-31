@@ -6,13 +6,17 @@
 #include "CoreMinimal.h"
 #include "UFortBlueprintContext.h"
 
+#include "FAthenaPartyMemberReadyTypeChanged.h"
 #include "FOnClientPartyStateChanged.h"
 #include "FOnCrossplayPreferenceChanged.h"
 #include "FOnLFGChanged.h"
+#include "FOnNumAliveChanged.h"
 #include "FOnPartyInvitesCountUpdatedDelegate.h"
 #include "FOnPartyJoinRequested.h"
 #include "FOnPartyLeftDelegate.h"
 #include "FOnPartyPrivacyChangedDelegate.h"
+#include "FOnPlayerStateChangedDelegate.h"
+#include "FOnTimeSpentInMatchChanged.h"
 #include "GameFramework/OnlineReplStructs.h"
 
 class AFortPlayerState;
@@ -34,6 +38,22 @@ public:
 	UPROPERTY()
 	FOnCrossplayPreferenceChanged OnCrossplayPreferenceChanged;
 
+	// table index 18, flags 0x10000010080000
+	UPROPERTY()
+	FOnPlayerStateChangedDelegate OnPlayerStateChanged;
+
+	// table index 17, flags 0x10000010080000
+	UPROPERTY()
+	FOnNumAliveChanged OnAthenaNumAliveChanged;
+
+	// table index 16, flags 0x10000010080000
+	UPROPERTY()
+	FOnTimeSpentInMatchChanged OnAthenaTimeSpentInMatch;
+
+	// table index 15, flags 0x10000010080000
+	UPROPERTY()
+	FAthenaPartyMemberReadyTypeChanged OnAthenaReadyTypeChanged;
+
 	// table index 14, flags 0x10000010080000
 	UPROPERTY()
 	FOnPartyJoinRequested OnPartyJoinRequested;
@@ -49,6 +69,10 @@ public:
 	// table index 11, flags 0x10000010080000
 	UPROPERTY()
 	FOnPartyPrivacyChangedDelegate OnPartyPrivacyChanged;
+
+	// table index 10, flags 0x10000010080000
+	UPROPERTY()
+	FOnPlayerStateChangedDelegate OnLocalPlayerStateChanged;
 
 	// table index 9, flags 0x10000010080000
 	UPROPERTY()

@@ -34,8 +34,8 @@ public:
 	bool bShowCaptureEvents;
 
 	UFUNCTION(NetMulticast, Unreliable)
-	void NetMulticast_NotifyFeedbackEvent(const FFortItemQuantityPair& ItemEntry, const FGameplayFeedbackEventParams& EventParams);
-	void NetMulticast_NotifyFeedbackEvent_Implementation(const FFortItemQuantityPair& ItemEntry, const FGameplayFeedbackEventParams& EventParams);
+	void NetMulticast_NotifyFeedbackEvent(const FGameplayFeedbackEventParams& EventParams, const FFortItemQuantityPair& ItemEntry);
+	void NetMulticast_NotifyFeedbackEvent_Implementation(const FGameplayFeedbackEventParams& EventParams, const FFortItemQuantityPair& ItemEntry);
 
 };
 

@@ -9,5 +9,5 @@
 #include "FOnMinigameEndGame.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnMinigameEndGame, EFortMinigameState, NextState, EFortMinigameEnd, EndMethod, AFortPlayerController*, InstigatorPC);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnMinigameEndGame, AFortPlayerController*, InstigatorPC, EFortMinigameEnd, EndMethod, EFortMinigameState, NextState);
 

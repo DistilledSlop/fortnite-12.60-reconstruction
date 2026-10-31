@@ -7,5 +7,5 @@
 #include "FOnDifferentHeroLoadoutViewed.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnDifferentHeroLoadoutViewed, UFortCampaignHeroLoadoutItem*, NewLoadout, UFortCampaignHeroLoadoutItem*, PreviousLoadout);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnDifferentHeroLoadoutViewed, UFortCampaignHeroLoadoutItem*, PreviousLoadout, UFortCampaignHeroLoadoutItem*, NewLoadout);
 

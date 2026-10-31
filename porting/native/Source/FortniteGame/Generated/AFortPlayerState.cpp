@@ -112,7 +112,7 @@ void AFortPlayerState::OnRep_ShowHeroHeadAccessories()
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerState::ServerChangeActiveVariantForCosmeticItem_Implementation(AFortPlayerPawn* PreviewPawn, const FGameplayTag& DesiredActiveVariant, const FGameplayTag& VariantChannelToChange, const FName& ItemTemplateToChange)
+void AFortPlayerState::ServerChangeActiveVariantForCosmeticItem_Implementation(const FName& ItemTemplateToChange, const FGameplayTag& VariantChannelToChange, const FGameplayTag& DesiredActiveVariant, AFortPlayerPawn* PreviewPawn)
 {
 	// Body not recovered: reflection-derived stub.
 }

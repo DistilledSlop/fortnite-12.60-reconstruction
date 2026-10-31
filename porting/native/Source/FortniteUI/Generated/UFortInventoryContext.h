@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UBlueprintContextBase.h"
 
+#include "FItemListChangedDelegate.h"
 #include "FItemsChanged.h"
 #include "FOnCraftItemStarted.h"
 #include "FOnItemPickedUp.h"
@@ -31,6 +32,14 @@ public:
 	// table index 20, flags 0x10000010080000
 	UPROPERTY()
 	FItemsChanged OnMcpOutpostItemsChanged;
+
+	// table index 19, flags 0x10000010080000
+	UPROPERTY()
+	FItemListChangedDelegate OnWorldItemListChanged;
+
+	// table index 18, flags 0x10000010080000
+	UPROPERTY()
+	FItemListChangedDelegate OnOutpostItemListChanged;
 
 	// table index 17, flags 0x10000010080000
 	UPROPERTY()

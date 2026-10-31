@@ -7,7 +7,7 @@ void AFortPlayerStateOutpost::OnRep_HasPermissionToEditOutpost()
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerStateOutpost::ServerSetHasPermissionToEditOutpost_Implementation(bool bHasPermission, AFortPlayerStateOutpost* InPlayer)
+void AFortPlayerStateOutpost::ServerSetHasPermissionToEditOutpost_Implementation(AFortPlayerStateOutpost* InPlayer, bool bHasPermission)
 {
 	// Body not recovered: reflection-derived stub.
 }

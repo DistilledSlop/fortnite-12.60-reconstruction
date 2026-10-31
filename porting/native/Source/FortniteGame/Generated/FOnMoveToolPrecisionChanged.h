@@ -7,5 +7,5 @@
 #include "FOnMoveToolPrecisionChanged.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnMoveToolPrecisionChanged, uint8, GridSnapIndex, bool, bPrecisionOn);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnMoveToolPrecisionChanged, bool, bPrecisionOn, uint8, GridSnapIndex);
 

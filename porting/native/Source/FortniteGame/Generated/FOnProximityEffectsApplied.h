@@ -8,5 +8,5 @@
 #include "FOnProximityEffectsApplied.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnProximityEffectsApplied, FGameplayTag, BucketTag, AActor*, TargetActor);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnProximityEffectsApplied, AActor*, TargetActor, FGameplayTag, BucketTag);
 

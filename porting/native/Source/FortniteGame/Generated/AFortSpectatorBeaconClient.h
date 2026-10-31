@@ -37,12 +37,12 @@ public:
 	void ClientAllowedToProceedFromReservationTimeout_Implementation();
 
 	UFUNCTION(Server, Reliable)
-	void ServerAbandonExistingReservation(const FUniqueNetIdRepl& RequestingPlayer, const FString& InSessionId);
-	void ServerAbandonExistingReservation_Implementation(const FUniqueNetIdRepl& RequestingPlayer, const FString& InSessionId);
+	void ServerAbandonExistingReservation(const FString& InSessionId, const FUniqueNetIdRepl& RequestingPlayer);
+	void ServerAbandonExistingReservation_Implementation(const FString& InSessionId, const FUniqueNetIdRepl& RequestingPlayer);
 
 	UFUNCTION(Server, Reliable)
-	void ServerReconnectExistingReservation(const FUniqueNetIdRepl& RequestingPlayer, const FString& InSessionId);
-	void ServerReconnectExistingReservation_Implementation(const FUniqueNetIdRepl& RequestingPlayer, const FString& InSessionId);
+	void ServerReconnectExistingReservation(const FString& InSessionId, const FUniqueNetIdRepl& RequestingPlayer);
+	void ServerReconnectExistingReservation_Implementation(const FString& InSessionId, const FUniqueNetIdRepl& RequestingPlayer);
 
 };
 

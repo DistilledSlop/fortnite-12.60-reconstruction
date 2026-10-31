@@ -7,5 +7,5 @@
 #include "FOnHUDLayoutModeChange.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_FourParams(FOnHUDLayoutModeChange, bool, bShowCreative, bool, bShowEdit, bool, bShowBuild, bool, bShowCombat);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_FourParams(FOnHUDLayoutModeChange, bool, bShowCombat, bool, bShowBuild, bool, bShowEdit, bool, bShowCreative);
 

@@ -66,12 +66,12 @@ bool AFortPlayerPawnAthena::ServerCreativeToggleGhost_Validate(bool bEnableOnly)
 	return true;
 }
 
-void AFortPlayerPawnAthena::ServerSetInteractingItem_Implementation(bool bClearInteraction, AActor* InteractingItem)
+void AFortPlayerPawnAthena::ServerSetInteractingItem_Implementation(AActor* InteractingItem, bool bClearInteraction)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-bool AFortPlayerPawnAthena::ServerSetInteractingItem_Validate(bool bClearInteraction, AActor* InteractingItem)
+bool AFortPlayerPawnAthena::ServerSetInteractingItem_Validate(AActor* InteractingItem, bool bClearInteraction)
 {
 	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
 	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
@@ -83,7 +83,7 @@ bool AFortPlayerPawnAthena::ServerSetInteractingItem_Validate(bool bClearInterac
 	return true;
 }
 
-void AFortPlayerPawnAthena::ServerSuicide_Implementation(int32 MatchPlacement, bool bSuppressResurrectionChip)
+void AFortPlayerPawnAthena::ServerSuicide_Implementation(bool bSuppressResurrectionChip, int32 MatchPlacement)
 {
 	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
 	// Original address: 0x1406801c0 (shared by 49 ported vtable slots; one body serves all of them)
@@ -94,7 +94,7 @@ void AFortPlayerPawnAthena::ServerSuicide_Implementation(int32 MatchPlacement, b
 	// CONFIDENCE: HIGH
 }
 
-bool AFortPlayerPawnAthena::ServerSuicide_Validate(int32 MatchPlacement, bool bSuppressResurrectionChip)
+bool AFortPlayerPawnAthena::ServerSuicide_Validate(bool bSuppressResurrectionChip, int32 MatchPlacement)
 {
 	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
 	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)

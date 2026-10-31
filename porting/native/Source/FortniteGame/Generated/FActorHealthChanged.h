@@ -7,5 +7,5 @@
 #include "FActorHealthChanged.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FActorHealthChanged, float, NewHealth, AActor*, Actor);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FActorHealthChanged, AActor*, Actor, float, NewHealth);
 

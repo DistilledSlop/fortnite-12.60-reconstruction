@@ -7,6 +7,8 @@
 #include "Components/ActorComponent.h"
 
 #include "EMutatorListInitState.h"
+#include "FOnMutatorListSettingsChanged.h"
+#include "FOnMutatorListSettingsInitialized.h"
 #include "FPropertyOverrideData.h"
 
 class AFortGameplayMutator;
@@ -24,10 +26,6 @@ public:
 	UPROPERTY()
 	bool bShouldMakeMutatorsDormant;
 
-	// table index 9, flags 0x0
-	UPROPERTY()
-	int32 UnderlyingType;
-
 	// table index 8, flags 0x10000000000001
 	UPROPERTY()
 	EMutatorListInitState InitState;
@@ -43,6 +41,14 @@ public:
 	// table index 3, flags 0x10000000022801
 	UPROPERTY(Transient)
 	TArray<AFortGameplayMutator*> Mutators;
+
+	// table index 2, flags 0x10000000080000
+	UPROPERTY()
+	FOnMutatorListSettingsInitialized OnSettingsInitialized;
+
+	// table index 1, flags 0x10000000080000
+	UPROPERTY()
+	FOnMutatorListSettingsChanged OnSettingsChanged;
 
 	// table index 0, flags 0x10000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_PropertyOverrideArray)

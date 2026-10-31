@@ -7,5 +7,5 @@
 #include "FServerHighlightsAvailableDelegate.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FServerHighlightsAvailableDelegate, bool, bAreHghlightsAvailable, AFortReplaySpectator*, Sender);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FServerHighlightsAvailableDelegate, AFortReplaySpectator*, Sender, bool, bAreHghlightsAvailable);
 

@@ -27,6 +27,7 @@
 #include "FOnMinigameEndGame.h"
 #include "FOnMinigameHideHUD.h"
 #include "FOnMinigamePlayerSpawned.h"
+#include "FOnMinigameStatChanged.h"
 #include "FOnPlayModeChanged.h"
 #include "FOnPlayerChanged.h"
 #include "FOnPlayerChangedTeam.h"
@@ -76,6 +77,10 @@ public:
 	// table index 138, flags 0x10000010080000
 	UPROPERTY()
 	FSimpleMinigameDelegate StatChangedDelegate;
+
+	// table index 137, flags 0x10000010080000
+	UPROPERTY()
+	FOnMinigameStatChanged FullStatChangedDelegate;
 
 	// table index 136, flags 0x10000010080000
 	UPROPERTY()

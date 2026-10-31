@@ -11,7 +11,7 @@ void AFortLiveBroadcastController::ServerBeginBusPhase_Implementation()
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortLiveBroadcastController::ServerOnSpectatorCameraTypeChanged_Implementation(bool bValidPos, const FVector& SpectatorLocation, const ESpectatorCameraType& NewCameraMode)
+void AFortLiveBroadcastController::ServerOnSpectatorCameraTypeChanged_Implementation(const ESpectatorCameraType& NewCameraMode, const FVector& SpectatorLocation, bool bValidPos)
 {
 	// Body not recovered: reflection-derived stub.
 }

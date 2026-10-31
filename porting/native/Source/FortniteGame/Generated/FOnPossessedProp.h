@@ -7,5 +7,5 @@
 #include "FOnPossessedProp.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnPossessedProp, ABuildingGameplayActorPlayerPropAttachment*, PossessedProp, AFortPlayerPawn*, FortPlayerPawn);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnPossessedProp, AFortPlayerPawn*, FortPlayerPawn, ABuildingGameplayActorPlayerPropAttachment*, PossessedProp);
 

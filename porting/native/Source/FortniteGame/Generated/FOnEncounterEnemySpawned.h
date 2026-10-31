@@ -7,5 +7,5 @@
 #include "FOnEncounterEnemySpawned.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnEncounterEnemySpawned, AFortAIPawn*, SpawnedEnemy, UFortAIEncounterInfo*, Encounter);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnEncounterEnemySpawned, UFortAIEncounterInfo*, Encounter, AFortAIPawn*, SpawnedEnemy);
 

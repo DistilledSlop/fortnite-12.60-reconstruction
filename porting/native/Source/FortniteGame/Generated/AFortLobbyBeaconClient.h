@@ -29,36 +29,36 @@ public:
 	void ServerIncrementHomeBaseVersion_Implementation(const FUniqueNetIdRepl& InUniqueId);
 
 	UFUNCTION(Server, Reliable)
-	void ServerSetBannerInfo(const FPlayerBannerInfo& InBannerInfo, const FUniqueNetIdRepl& InUniqueId);
-	void ServerSetBannerInfo_Implementation(const FPlayerBannerInfo& InBannerInfo, const FUniqueNetIdRepl& InUniqueId);
+	void ServerSetBannerInfo(const FUniqueNetIdRepl& InUniqueId, const FPlayerBannerInfo& InBannerInfo);
+	void ServerSetBannerInfo_Implementation(const FUniqueNetIdRepl& InUniqueId, const FPlayerBannerInfo& InBannerInfo);
 
 	UFUNCTION(Server, Reliable)
-	void ServerSetCharacterGender(EFortCustomGender::Type GenderType, const FUniqueNetIdRepl& InUniqueId);
-	void ServerSetCharacterGender_Implementation(EFortCustomGender::Type GenderType, const FUniqueNetIdRepl& InUniqueId);
+	void ServerSetCharacterGender(const FUniqueNetIdRepl& InUniqueId, EFortCustomGender::Type GenderType);
+	void ServerSetCharacterGender_Implementation(const FUniqueNetIdRepl& InUniqueId, EFortCustomGender::Type GenderType);
 
 	UFUNCTION(Server, Reliable)
-	void ServerSetConsoleUniqueNetId(const FUniqueNetIdRepl& NewConsoleNetId, const FUniqueNetIdRepl& InUniqueId);
-	void ServerSetConsoleUniqueNetId_Implementation(const FUniqueNetIdRepl& NewConsoleNetId, const FUniqueNetIdRepl& InUniqueId);
+	void ServerSetConsoleUniqueNetId(const FUniqueNetIdRepl& InUniqueId, const FUniqueNetIdRepl& NewConsoleNetId);
+	void ServerSetConsoleUniqueNetId_Implementation(const FUniqueNetIdRepl& InUniqueId, const FUniqueNetIdRepl& NewConsoleNetId);
 
 	UFUNCTION(Server, Reliable)
-	void ServerSetCurrentCharacterXp(int32 CurrentCharacterXp, const FUniqueNetIdRepl& InUniqueId);
-	void ServerSetCurrentCharacterXp_Implementation(int32 CurrentCharacterXp, const FUniqueNetIdRepl& InUniqueId);
+	void ServerSetCurrentCharacterXp(const FUniqueNetIdRepl& InUniqueId, int32 CurrentCharacterXp);
+	void ServerSetCurrentCharacterXp_Implementation(const FUniqueNetIdRepl& InUniqueId, int32 CurrentCharacterXp);
 
 	UFUNCTION(Server, Reliable)
-	void ServerSetGadget(const FString& GadgetPersistentName, int32 Index, const FUniqueNetIdRepl& InUniqueId);
-	void ServerSetGadget_Implementation(const FString& GadgetPersistentName, int32 Index, const FUniqueNetIdRepl& InUniqueId);
+	void ServerSetGadget(const FUniqueNetIdRepl& InUniqueId, int32 Index, const FString& GadgetPersistentName);
+	void ServerSetGadget_Implementation(const FUniqueNetIdRepl& InUniqueId, int32 Index, const FString& GadgetPersistentName);
 
 	UFUNCTION(Server, Reliable)
-	void ServerSetHeroId(const FString& InHeroId, const FUniqueNetIdRepl& InUniqueId);
-	void ServerSetHeroId_Implementation(const FString& InHeroId, const FUniqueNetIdRepl& InUniqueId);
+	void ServerSetHeroId(const FUniqueNetIdRepl& InUniqueId, const FString& InHeroId);
+	void ServerSetHeroId_Implementation(const FUniqueNetIdRepl& InUniqueId, const FString& InHeroId);
 
 	UFUNCTION(Server, Reliable)
-	void ServerSetHeroType(UFortHeroType* InHeroType, const FUniqueNetIdRepl& InUniqueId);
-	void ServerSetHeroType_Implementation(UFortHeroType* InHeroType, const FUniqueNetIdRepl& InUniqueId);
+	void ServerSetHeroType(const FUniqueNetIdRepl& InUniqueId, UFortHeroType* InHeroType);
+	void ServerSetHeroType_Implementation(const FUniqueNetIdRepl& InUniqueId, UFortHeroType* InHeroType);
 
 	UFUNCTION(Server, Reliable)
-	void ServerSetMatchmakingLevel(int32 MatchmakingLevel, const FUniqueNetIdRepl& InUniqueId);
-	void ServerSetMatchmakingLevel_Implementation(int32 MatchmakingLevel, const FUniqueNetIdRepl& InUniqueId);
+	void ServerSetMatchmakingLevel(const FUniqueNetIdRepl& InUniqueId, int32 MatchmakingLevel);
+	void ServerSetMatchmakingLevel_Implementation(const FUniqueNetIdRepl& InUniqueId, int32 MatchmakingLevel);
 
 	UFUNCTION(Server, Reliable)
 	void ServerTeamChatRoomReady(const FString& ChatRoomId);

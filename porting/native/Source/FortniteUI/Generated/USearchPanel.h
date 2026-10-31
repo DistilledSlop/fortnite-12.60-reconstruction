@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonActivatablePanel.h"
 
+#include "FOnSearchTextChangedEvent.h"
+
 class UCommonButton;
 class UEditableTextBox;
 
@@ -17,6 +19,10 @@ class FORTNITEUI_API USearchPanel : public UCommonActivatablePanel
 	GENERATED_BODY()
 
 public:
+	// table index 2, flags 0x10000010080000
+	UPROPERTY()
+	FOnSearchTextChangedEvent OnSearchTextChanged;
+
 	// table index 1, flags 0x1000000008001c
 	UPROPERTY()
 	UEditableTextBox* EditableText_Search;

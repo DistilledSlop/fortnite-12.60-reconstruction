@@ -6,7 +6,7 @@ void UFortControllerComponent_LocalizationService::ClientLoadLocalizationDocumen
 	// Body not recovered: reflection-derived stub.
 }
 
-void UFortControllerComponent_LocalizationService::ServerRequestLocalizationDocument_Implementation(const FString& InLocale, const FString& InDocumentID)
+void UFortControllerComponent_LocalizationService::ServerRequestLocalizationDocument_Implementation(const FString& InDocumentID, const FString& InLocale)
 {
 	// Body not recovered: reflection-derived stub.
 }

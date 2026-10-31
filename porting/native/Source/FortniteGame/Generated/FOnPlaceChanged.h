@@ -7,5 +7,5 @@
 #include "FOnPlaceChanged.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnPlaceChanged, int32, NewPlace, AFortPlayerStateAthena*, Sender);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnPlaceChanged, AFortPlayerStateAthena*, Sender, int32, NewPlace);
 

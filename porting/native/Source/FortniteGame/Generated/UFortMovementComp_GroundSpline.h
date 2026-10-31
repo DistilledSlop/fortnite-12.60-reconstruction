@@ -142,8 +142,8 @@ public:
 	UAbilitySystemComponent* AbilitySystemComponent;
 
 	UFUNCTION(NetMulticast, Reliable)
-	void MulticastTeleportToDistanceOnSpline(float Distance, USplineComponent* NewTravelSpline);
-	void MulticastTeleportToDistanceOnSpline_Implementation(float Distance, USplineComponent* NewTravelSpline);
+	void MulticastTeleportToDistanceOnSpline(USplineComponent* NewTravelSpline, float Distance);
+	void MulticastTeleportToDistanceOnSpline_Implementation(USplineComponent* NewTravelSpline, float Distance);
 
 	UFUNCTION()
 	void OnRep_SplineMovement();

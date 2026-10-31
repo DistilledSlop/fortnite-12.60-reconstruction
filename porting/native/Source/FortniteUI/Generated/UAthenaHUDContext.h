@@ -8,6 +8,7 @@
 
 #include "FAthenaWinnerInfo.h"
 #include "FOnAthenaAutoFireChanged.h"
+#include "FOnAthenaHUDAllWinnersAnnounced.h"
 #include "FOnAthenaSettingsApplied.h"
 #include "FOnCanPTTChange.h"
 #include "FOnFireStopped.h"
@@ -102,6 +103,10 @@ public:
 	// table index 17, flags 0x10000010080000
 	UPROPERTY()
 	FOnResurrectingNow OnResurrectingNowDelegate;
+
+	// table index 16, flags 0x10000010080000
+	UPROPERTY()
+	FOnAthenaHUDAllWinnersAnnounced OnAllWinnersAnnouncedDelegate;
 
 	// table index 15, flags 0x10000010080000
 	UPROPERTY()

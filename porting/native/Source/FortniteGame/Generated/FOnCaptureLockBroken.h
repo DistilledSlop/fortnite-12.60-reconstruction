@@ -7,5 +7,5 @@
 #include "FOnCaptureLockBroken.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnCaptureLockBroken, uint8, BreakTeam, uint8, LockTeam, AAthenaCapturePoint*, CapturePoint);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnCaptureLockBroken, AAthenaCapturePoint*, CapturePoint, uint8, LockTeam, uint8, BreakTeam);
 

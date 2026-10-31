@@ -124,8 +124,8 @@ public:
 	FGameplayTagContainer AnalyticsTags;
 
 	UFUNCTION(NetMulticast, Unreliable)
-	void BroadcastExplosion(const TArray<FHitResult>& HitResults, const TArray<AActor*>& HitActors);
-	void BroadcastExplosion_Implementation(const TArray<FHitResult>& HitResults, const TArray<AActor*>& HitActors);
+	void BroadcastExplosion(const TArray<AActor*>& HitActors, const TArray<FHitResult>& HitResults);
+	void BroadcastExplosion_Implementation(const TArray<AActor*>& HitActors, const TArray<FHitResult>& HitResults);
 
 	UFUNCTION()
 	void OnRep_HasExplodedReplay();

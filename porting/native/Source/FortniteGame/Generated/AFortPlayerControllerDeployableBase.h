@@ -37,8 +37,8 @@ public:
 	void ClientOnHordeTierInitialized_Implementation(const TArray<FItemAndCount>& Items);
 
 	UFUNCTION(Client, Reliable)
-	void ClientOnHordeWaveComplete(const TArray<FItemAndCount>& Rewards, int32 Wave);
-	void ClientOnHordeWaveComplete_Implementation(const TArray<FItemAndCount>& Rewards, int32 Wave);
+	void ClientOnHordeWaveComplete(int32 Wave, const TArray<FItemAndCount>& Rewards);
+	void ClientOnHordeWaveComplete_Implementation(int32 Wave, const TArray<FItemAndCount>& Rewards);
 
 	UFUNCTION(Server, Reliable)
 	void ServerMoveAllItemsFromDeployableBase(ADeployableBasePlot* ExpectedPlot);
@@ -49,12 +49,12 @@ public:
 	void ServerMoveAllItemsToDeployableBase_Implementation(ADeployableBasePlot* ExpectedPlot);
 
 	UFUNCTION(Server, Reliable)
-	void ServerMoveItemFromDeployableBase(ADeployableBasePlot* ExpectedPlot, int32 Count, const FGuid& ItemOnPlot);
-	void ServerMoveItemFromDeployableBase_Implementation(ADeployableBasePlot* ExpectedPlot, int32 Count, const FGuid& ItemOnPlot);
+	void ServerMoveItemFromDeployableBase(const FGuid& ItemOnPlot, int32 Count, ADeployableBasePlot* ExpectedPlot);
+	void ServerMoveItemFromDeployableBase_Implementation(const FGuid& ItemOnPlot, int32 Count, ADeployableBasePlot* ExpectedPlot);
 
 	UFUNCTION(Server, Reliable)
-	void ServerMoveItemToDeployableBase(ADeployableBasePlot* ExpectedPlot, int32 Count, const FGuid& ItemOnPlayer);
-	void ServerMoveItemToDeployableBase_Implementation(ADeployableBasePlot* ExpectedPlot, int32 Count, const FGuid& ItemOnPlayer);
+	void ServerMoveItemToDeployableBase(const FGuid& ItemOnPlayer, int32 Count, ADeployableBasePlot* ExpectedPlot);
+	void ServerMoveItemToDeployableBase_Implementation(const FGuid& ItemOnPlayer, int32 Count, ADeployableBasePlot* ExpectedPlot);
 
 };
 

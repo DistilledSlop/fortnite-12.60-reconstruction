@@ -8,5 +8,5 @@
 #include "FPawnDeathEffectsSignature.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_FiveParams(FPawnDeathEffectsSignature, AActor*, DamageCauser, FVector, HitLocation, AFortPawn*, InstigatedBy, float, Damage, AActor*, DeadActor);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_FiveParams(FPawnDeathEffectsSignature, AActor*, DeadActor, float, Damage, AFortPawn*, InstigatedBy, FVector, HitLocation, AActor*, DamageCauser);
 

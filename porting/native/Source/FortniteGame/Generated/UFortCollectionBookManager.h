@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
 
+#include "FFortCollectionBookClaimRewardCompleteDelegate.h"
 #include "FFortCollectionBookInventoryUpdatedDelegate.h"
 #include "FFortCollectionBookResearchItemOperationCompleteDelegate.h"
 #include "FFortCollectionBookSlottedItemOperationCompleteDelegate.h"
@@ -39,6 +40,10 @@ public:
 	// table index 15, flags 0x10000010080000
 	UPROPERTY()
 	FFortCollectionBookInventoryUpdatedDelegate OnInventoryUpdated;
+
+	// table index 14, flags 0x10000010080000
+	UPROPERTY()
+	FFortCollectionBookClaimRewardCompleteDelegate OnRewardClaimed;
 
 	// table index 13, flags 0x10000010080000
 	UPROPERTY()

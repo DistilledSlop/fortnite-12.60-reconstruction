@@ -8,5 +8,5 @@
 #include "FDelegate.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FDelegate, FGuid, RequestId, UFortItem*, Item);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FDelegate, UFortItem*, Item, FGuid, RequestId);
 

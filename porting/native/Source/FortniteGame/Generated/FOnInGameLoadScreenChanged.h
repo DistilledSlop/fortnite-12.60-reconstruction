@@ -7,5 +7,5 @@
 #include "FOnInGameLoadScreenChanged.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnInGameLoadScreenChanged, FText, HUDReasonText, bool, bEnableLoadScreen, AFortPlayerControllerAthena*, PlayerController);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnInGameLoadScreenChanged, AFortPlayerControllerAthena*, PlayerController, bool, bEnableLoadScreen, FText, HUDReasonText);
 

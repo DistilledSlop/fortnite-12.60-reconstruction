@@ -7,5 +7,5 @@
 #include "FOnPrefabForCurrentlyDisplayedItemChanged.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnPrefabForCurrentlyDisplayedItemChanged, UFortItem*, NewItem, AActor*, NewPrefab);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnPrefabForCurrentlyDisplayedItemChanged, AActor*, NewPrefab, UFortItem*, NewItem);
 

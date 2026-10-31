@@ -7,6 +7,7 @@
 #include "ULevelSaveComponent.h"
 
 #include "EBackupSaveState.h"
+#include "FAsyncTaskCallbackDelegate.h"
 #include "FCreativeLoadedLinkData.h"
 #include "FFortCreativePlotPermissionData.h"
 #include "FOnBackupRestoreStateChanged.h"
@@ -27,6 +28,38 @@ class FORTNITEGAME_API UFortLevelSaveComponent : public ULevelSaveComponent
 	GENERATED_BODY()
 
 public:
+	// table index 37, flags 0x10000010082000
+	UPROPERTY(Transient)
+	FAsyncTaskCallbackDelegate OnStartPlotLoadForUser;
+
+	// table index 36, flags 0x10000010082000
+	UPROPERTY(Transient)
+	FAsyncTaskCallbackDelegate OnFinishedReadingMnemonicLink;
+
+	// table index 35, flags 0x10000010082000
+	UPROPERTY(Transient)
+	FAsyncTaskCallbackDelegate OnFinishedPlaysetLoad;
+
+	// table index 34, flags 0x10000010082000
+	UPROPERTY(Transient)
+	FAsyncTaskCallbackDelegate OnFinishedEnumeratingFiles;
+
+	// table index 33, flags 0x10000010082000
+	UPROPERTY(Transient)
+	FAsyncTaskCallbackDelegate OnFinishedLoadingCloudFiles;
+
+	// table index 32, flags 0x10000010082000
+	UPROPERTY(Transient)
+	FAsyncTaskCallbackDelegate OnFinishedWritingCloudFiles;
+
+	// table index 31, flags 0x10000010082000
+	UPROPERTY(Transient)
+	FAsyncTaskCallbackDelegate OnFinishedEnumeratingTitleFiles;
+
+	// table index 30, flags 0x10000010082000
+	UPROPERTY(Transient)
+	FAsyncTaskCallbackDelegate OnFinishedReadingCloudFiles;
+
 	// table index 29, flags 0x10000010082000
 	UPROPERTY(Transient)
 	FOnSavingStateChanged OnClientSaveStateChanged;
@@ -42,6 +75,10 @@ public:
 	// table index 26, flags 0x10000010082000
 	UPROPERTY(Transient)
 	FOnDateChanged OnClientCheckpointDateChanged;
+
+	// table index 25, flags 0x10000010082000
+	UPROPERTY(Transient)
+	FAsyncTaskCallbackDelegate OnPlotUnloaded;
 
 	// table index 24, flags 0x20080000000001
 	UPROPERTY()

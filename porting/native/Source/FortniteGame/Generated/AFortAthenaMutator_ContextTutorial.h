@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "AFortAthenaMutator.h"
 
+#include "FContextTutorialShowHighlight.h"
+
 class UFortContextualTutorialController;
 class UFortContextualTutorialDefinition;
 class USoundCue;
@@ -18,6 +20,10 @@ class FORTNITEGAME_API AFortAthenaMutator_ContextTutorial : public AFortAthenaMu
 	GENERATED_BODY()
 
 public:
+	// table index 15, flags 0x10000010080000
+	UPROPERTY()
+	FContextTutorialShowHighlight OnShowButtonHighlight;
+
 	// table index 14, flags 0x40000000014001
 	UPROPERTY(Config)
 	bool bEnableTutorials;

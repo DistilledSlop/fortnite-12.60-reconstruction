@@ -7,5 +7,5 @@
 #include "FFortCollectionBookUnslottedItemOperationCompleteDelegate.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FFortCollectionBookUnslottedItemOperationCompleteDelegate, FName, SlotId, UFortAccountItem*, OldItem, UFortAccountItem*, UnslottedItem);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FFortCollectionBookUnslottedItemOperationCompleteDelegate, UFortAccountItem*, UnslottedItem, UFortAccountItem*, OldItem, FName, SlotId);
 

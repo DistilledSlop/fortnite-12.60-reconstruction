@@ -410,12 +410,12 @@ public:
 	void OnWaveBasedModifiersAppliedMulticast_Implementation(const TArray<UFortGameplayModifierItemDefinition*>& ModifiersApplied);
 
 	UFUNCTION(NetMulticast, Reliable)
-	void OnWaveStart(int32 WaveNum, const FText& WaveText, int32 Level, const FText& LevelText);
-	void OnWaveStart_Implementation(int32 WaveNum, const FText& WaveText, int32 Level, const FText& LevelText);
+	void OnWaveStart(const FText& LevelText, int32 Level, const FText& WaveText, int32 WaveNum);
+	void OnWaveStart_Implementation(const FText& LevelText, int32 Level, const FText& WaveText, int32 WaveNum);
 
 	UFUNCTION(Server, Reliable)
-	void ServerFireAIDirectorEvent(float EventMultiplier, UObject* EventTarget, UObject* EventSource, const EFortAIDirectorEvent& Event);
-	void ServerFireAIDirectorEvent_Implementation(float EventMultiplier, UObject* EventTarget, UObject* EventSource, const EFortAIDirectorEvent& Event);
+	void ServerFireAIDirectorEvent(const EFortAIDirectorEvent& Event, UObject* EventSource, UObject* EventTarget, float EventMultiplier);
+	void ServerFireAIDirectorEvent_Implementation(const EFortAIDirectorEvent& Event, UObject* EventSource, UObject* EventTarget, float EventMultiplier);
 
 	UFUNCTION(Server, Reliable)
 	void ServerFireAIDirectorEventBatch(const TArray<FFortAIDirectorEvent>& Payload);

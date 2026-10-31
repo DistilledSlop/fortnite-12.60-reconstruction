@@ -7,5 +7,5 @@
 #include "FFortSelectedStateChanged.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FFortSelectedStateChanged, bool, Selected, UFortBaseButton*, Button);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FFortSelectedStateChanged, UFortBaseButton*, Button, bool, Selected);
 

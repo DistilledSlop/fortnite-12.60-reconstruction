@@ -8,5 +8,5 @@
 #include "FOnContextTutorialGameModeMessageRequest.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnContextTutorialGameModeMessageRequest, UFortContextualTutorialController*, OwnedController, FAthenaGameMessageData, MsgData);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnContextTutorialGameModeMessageRequest, FAthenaGameMessageData, MsgData, UFortContextualTutorialController*, OwnedController);
 

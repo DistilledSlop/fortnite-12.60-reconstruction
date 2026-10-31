@@ -7,5 +7,5 @@
 #include "FWeaponDelegate.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FWeaponDelegate, AFortWeapon*, WeaponParam, UAthenaRemotePlayerViewData*, PlayerData);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FWeaponDelegate, UAthenaRemotePlayerViewData*, PlayerData, AFortWeapon*, WeaponParam);
 

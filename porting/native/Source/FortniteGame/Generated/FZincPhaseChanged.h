@@ -8,5 +8,5 @@
 #include "FZincPhaseChanged.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FZincPhaseChanged, EZincPhase, Phase, AFortAthenaMutator_Zinc*, Mutator);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FZincPhaseChanged, AFortAthenaMutator_Zinc*, Mutator, EZincPhase, Phase);
 

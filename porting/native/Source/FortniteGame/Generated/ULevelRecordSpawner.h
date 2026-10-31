@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
 
+#include "FAsyncTaskCallbackDelegate.h"
+
 class AActor;
 class AFortVolume;
 class UAsyncTaskQueue;
@@ -18,6 +20,10 @@ class FORTNITEGAME_API ULevelRecordSpawner : public UObject
 	GENERATED_BODY()
 
 public:
+	// table index 9, flags 0x10000010082000
+	UPROPERTY(Transient)
+	FAsyncTaskCallbackDelegate OnFinishedSpawning;
+
 	// table index 8, flags 0x40000000002000
 	UPROPERTY(Transient)
 	AFortVolume* VolumeCurrentlySpawningWithin;
@@ -25,6 +31,18 @@ public:
 	// table index 7, flags 0x40000000002000
 	UPROPERTY(Transient)
 	UAsyncTaskQueue* TaskQueue;
+
+	// table index 6, flags 0x40000000082000
+	UPROPERTY(Transient)
+	FAsyncTaskCallbackDelegate OnFinishedAsyncLoadingActors;
+
+	// table index 5, flags 0x40000000082000
+	UPROPERTY(Transient)
+	FAsyncTaskCallbackDelegate OnFinishedSpawningFromRecords;
+
+	// table index 4, flags 0x40000000082000
+	UPROPERTY(Transient)
+	FAsyncTaskCallbackDelegate OnFinishedPostUpdate;
 
 	// table index 2, flags 0x44000000002000
 	UPROPERTY(Transient)

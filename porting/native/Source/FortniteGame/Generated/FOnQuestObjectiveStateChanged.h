@@ -7,5 +7,5 @@
 #include "FOnQuestObjectiveStateChanged.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_SixParams(FOnQuestObjectiveStateChanged, bool, QuestCompleted, bool, ObjectiveCompleted, int32, CompletionCount, FName, BackendName, UFortQuestItemDefinition*, QuestDef, AFortPlayerController*, Controller);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_SixParams(FOnQuestObjectiveStateChanged, AFortPlayerController*, Controller, UFortQuestItemDefinition*, QuestDef, FName, BackendName, int32, CompletionCount, bool, ObjectiveCompleted, bool, QuestCompleted);
 

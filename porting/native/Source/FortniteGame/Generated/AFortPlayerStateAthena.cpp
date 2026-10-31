@@ -12,7 +12,7 @@ void AFortPlayerStateAthena::ClientAddKillFeedErrorMessage_Implementation(const 
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerStateAthena::ClientNotifyMatchEntered_Implementation(const FString& EventWindowId, const FString& EventId)
+void AFortPlayerStateAthena::ClientNotifyMatchEntered_Implementation(const FString& EventId, const FString& EventWindowId)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -225,12 +225,12 @@ void AFortPlayerStateAthena::OnRep_TotalPlayerScore()
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerStateAthena::Server_SetCanEditCreativeIsland_Implementation(const TArray<FString>& WhiteList, bool bCanEdit)
+void AFortPlayerStateAthena::Server_SetCanEditCreativeIsland_Implementation(bool bCanEdit, const TArray<FString>& WhiteList)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-bool AFortPlayerStateAthena::Server_SetCanEditCreativeIsland_Validate(const TArray<FString>& WhiteList, bool bCanEdit)
+bool AFortPlayerStateAthena::Server_SetCanEditCreativeIsland_Validate(bool bCanEdit, const TArray<FString>& WhiteList)
 {
 	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
 	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)

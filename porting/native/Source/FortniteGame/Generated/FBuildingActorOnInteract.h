@@ -7,5 +7,5 @@
 #include "FBuildingActorOnInteract.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FBuildingActorOnInteract, AFortPawn*, InteractingPawn, ABuildingActor*, SelfActor);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FBuildingActorOnInteract, ABuildingActor*, SelfActor, AFortPawn*, InteractingPawn);
 

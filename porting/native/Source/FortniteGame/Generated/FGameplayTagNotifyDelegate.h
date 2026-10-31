@@ -8,5 +8,5 @@
 #include "FGameplayTagNotifyDelegate.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FGameplayTagNotifyDelegate, FGameplayTag, NotifyTag, UAnimSequenceBase*, Animation);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FGameplayTagNotifyDelegate, UAnimSequenceBase*, Animation, FGameplayTag, NotifyTag);
 

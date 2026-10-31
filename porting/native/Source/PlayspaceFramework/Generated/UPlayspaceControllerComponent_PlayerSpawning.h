@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UControllerComponent.h"
 
+#include "FOnPlayerQueuedToSpawn.h"
 #include "FReplicatedSpawnInfo.h"
 
 class ACameraActor;
@@ -18,6 +19,10 @@ class PLAYSPACEFRAMEWORK_API UPlayspaceControllerComponent_PlayerSpawning : publ
 	GENERATED_BODY()
 
 public:
+	// table index 3, flags 0x20080010080000
+	UPROPERTY()
+	FOnPlayerQueuedToSpawn OnPlayerQueuedToSpawn;
+
 	// table index 2, flags 0x20080000002000
 	UPROPERTY(Transient)
 	ACameraActor* SpawnCameraActor;

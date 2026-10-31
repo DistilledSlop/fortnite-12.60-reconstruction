@@ -40,10 +40,6 @@ public:
 	UPROPERTY()
 	FName PlaylistName;
 
-	// table index 65, flags 0x0
-	UPROPERTY()
-	int32 UnderlyingType;
-
 	// table index 64, flags 0x10000000010001
 	UPROPERTY()
 	EFortGameType GameType;

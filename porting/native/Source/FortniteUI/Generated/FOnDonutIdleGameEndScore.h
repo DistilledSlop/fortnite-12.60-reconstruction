@@ -7,5 +7,5 @@
 #include "FOnDonutIdleGameEndScore.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnDonutIdleGameEndScore, int32, NumChimichangas, int32, NumAgroMonsters, int32, NewEndScore);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnDonutIdleGameEndScore, int32, NewEndScore, int32, NumAgroMonsters, int32, NumChimichangas);
 

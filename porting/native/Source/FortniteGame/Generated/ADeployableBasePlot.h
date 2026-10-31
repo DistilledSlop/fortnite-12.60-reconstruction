@@ -163,8 +163,8 @@ public:
 	FBox BuildableAreasStructuralSupportBoxesArray[3];
 
 	UFUNCTION(NetMulticast, Reliable)
-	void HandleBuildingStateTransition(const EDeployableBaseBuildingState& InCurrentState, const EDeployableBaseBuildingState& InPreviousState);
-	void HandleBuildingStateTransition_Implementation(const EDeployableBaseBuildingState& InCurrentState, const EDeployableBaseBuildingState& InPreviousState);
+	void HandleBuildingStateTransition(const EDeployableBaseBuildingState& InPreviousState, const EDeployableBaseBuildingState& InCurrentState);
+	void HandleBuildingStateTransition_Implementation(const EDeployableBaseBuildingState& InPreviousState, const EDeployableBaseBuildingState& InCurrentState);
 
 	UFUNCTION()
 	void OnRep_BuildableSpaceExpansionVector();

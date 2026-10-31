@@ -8,5 +8,5 @@
 #include "FOnTwoPointSolverFinished.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnTwoPointSolverFinished, FVector, PointB, FVector, PointA);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnTwoPointSolverFinished, FVector, PointA, FVector, PointB);
 

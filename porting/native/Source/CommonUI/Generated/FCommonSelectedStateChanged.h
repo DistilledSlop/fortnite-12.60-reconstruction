@@ -7,5 +7,5 @@
 #include "FCommonSelectedStateChanged.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FCommonSelectedStateChanged, bool, Selected, UCommonButton*, Button);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FCommonSelectedStateChanged, UCommonButton*, Button, bool, Selected);
 

@@ -7,5 +7,5 @@
 #include "FFortNodePageNavigateRequest.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FFortNodePageNavigateRequest, FName, NodeId, FName, PageId);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FFortNodePageNavigateRequest, FName, PageId, FName, NodeId);
 

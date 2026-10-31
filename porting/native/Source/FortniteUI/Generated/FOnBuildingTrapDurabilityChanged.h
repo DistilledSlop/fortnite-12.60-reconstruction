@@ -7,5 +7,5 @@
 #include "FOnBuildingTrapDurabilityChanged.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnBuildingTrapDurabilityChanged, float, MaxDurability, float, CurrentDurability);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnBuildingTrapDurabilityChanged, float, CurrentDurability, float, MaxDurability);
 

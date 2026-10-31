@@ -7,6 +7,7 @@
 #include "Abilities/Tasks/AbilityTask.h"
 
 #include "FFortGameplayAbilityMontageInfo.h"
+#include "FWaitTargetSelectionDelegate.h"
 
 #include "UFortAbilityTask_PlayMontageWaitTarget.generated.h"
 
@@ -16,6 +17,18 @@ class FORTNITEGAME_API UFortAbilityTask_PlayMontageWaitTarget : public UAbilityT
 	GENERATED_BODY()
 
 public:
+	// table index 3, flags 0x10000010080000
+	UPROPERTY()
+	FWaitTargetSelectionDelegate Triggered;
+
+	// table index 2, flags 0x10000010080000
+	UPROPERTY()
+	FWaitTargetSelectionDelegate Cancelled;
+
+	// table index 1, flags 0x10000010080000
+	UPROPERTY()
+	FWaitTargetSelectionDelegate Completed;
+
 	// table index 0, flags 0x20080000000000
 	UPROPERTY()
 	FFortGameplayAbilityMontageInfo MontageInfo;

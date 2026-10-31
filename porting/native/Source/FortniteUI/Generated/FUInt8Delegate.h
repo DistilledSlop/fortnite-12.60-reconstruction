@@ -7,5 +7,5 @@
 #include "FUInt8Delegate.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FUInt8Delegate, uint8, IntParam, UAthenaRemotePlayerViewData*, PlayerData);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FUInt8Delegate, UAthenaRemotePlayerViewData*, PlayerData, uint8, IntParam);
 

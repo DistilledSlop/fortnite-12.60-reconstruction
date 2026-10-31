@@ -181,8 +181,8 @@ public:
 	TArray<TSubclassOf<AActor>> ActorsObjectDiesWhenHitting;
 
 	UFUNCTION(Client, Reliable)
-	void DebugDrawImpactBucket(const FColor& Color, const FVector& ImpactVector, const FVector& Location);
-	void DebugDrawImpactBucket_Implementation(const FColor& Color, const FVector& ImpactVector, const FVector& Location);
+	void DebugDrawImpactBucket(const FVector& Location, const FVector& ImpactVector, const FColor& Color);
+	void DebugDrawImpactBucket_Implementation(const FVector& Location, const FVector& ImpactVector, const FColor& Color);
 
 	UFUNCTION(NetMulticast, Reliable)
 	void DrawServerAndClientBallPosition(const FVector& ServerPosition);
@@ -207,12 +207,12 @@ public:
 	void OnRep_SurfaceTypePhysicsObjectOn(EPhysicalSurface PreviousSurfaceOn);
 
 	UFUNCTION(NetMulticast, Reliable)
-	void ServerBroadcastHit(const FVector& ImpulseValue, const FVector& ImpactPoint, APawn* ImpulseInstigator);
-	void ServerBroadcastHit_Implementation(const FVector& ImpulseValue, const FVector& ImpactPoint, APawn* ImpulseInstigator);
+	void ServerBroadcastHit(APawn* ImpulseInstigator, const FVector& ImpactPoint, const FVector& ImpulseValue);
+	void ServerBroadcastHit_Implementation(APawn* ImpulseInstigator, const FVector& ImpactPoint, const FVector& ImpulseValue);
 
 	UFUNCTION(NetMulticast, Reliable)
-	void UpdateClientWithPhysicsObjectTestInput(const FVector& AngularVelocity, const FVector& LinearVelocity);
-	void UpdateClientWithPhysicsObjectTestInput_Implementation(const FVector& AngularVelocity, const FVector& LinearVelocity);
+	void UpdateClientWithPhysicsObjectTestInput(const FVector& LinearVelocity, const FVector& AngularVelocity);
+	void UpdateClientWithPhysicsObjectTestInput_Implementation(const FVector& LinearVelocity, const FVector& AngularVelocity);
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

@@ -7,5 +7,5 @@
 #include "FOnAgentDBNOStatusChangedEvent.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnAgentDBNOStatusChangedEvent, bool, bIsDBNO, AFortAthenaAIBotController*, BotController);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnAgentDBNOStatusChangedEvent, AFortAthenaAIBotController*, BotController, bool, bIsDBNO);
 

@@ -7,5 +7,5 @@
 #include "FFortPlayerSurveyItemChangedInternalDelegate.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FFortPlayerSurveyItemChangedInternalDelegate, int32, Index, UObject*, Source);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FFortPlayerSurveyItemChangedInternalDelegate, UObject*, Source, int32, Index);
 

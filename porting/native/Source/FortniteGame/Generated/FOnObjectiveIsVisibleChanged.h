@@ -7,5 +7,5 @@
 #include "FOnObjectiveIsVisibleChanged.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnObjectiveIsVisibleChanged, bool, bNewVisibility, AFortObjectiveBase*, Objective);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnObjectiveIsVisibleChanged, AFortObjectiveBase*, Objective, bool, bNewVisibility);
 

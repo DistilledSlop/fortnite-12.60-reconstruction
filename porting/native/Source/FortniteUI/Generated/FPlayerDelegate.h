@@ -7,5 +7,5 @@
 #include "FPlayerDelegate.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FPlayerDelegate, UAthenaRemotePlayerViewData*, PlayerData, UAthenaRemoteSquadViewData*, SquadData);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FPlayerDelegate, UAthenaRemoteSquadViewData*, SquadData, UAthenaRemotePlayerViewData*, PlayerData);
 

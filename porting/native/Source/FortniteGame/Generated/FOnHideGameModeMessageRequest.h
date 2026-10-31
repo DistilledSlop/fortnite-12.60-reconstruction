@@ -8,5 +8,5 @@
 #include "FOnHideGameModeMessageRequest.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnHideGameModeMessageRequest, bool, bClearQueue, bool, bInstantHide, EAthenaGameMsgType, MsgType);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnHideGameModeMessageRequest, EAthenaGameMsgType, MsgType, bool, bInstantHide, bool, bClearQueue);
 

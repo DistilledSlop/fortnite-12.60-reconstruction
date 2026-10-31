@@ -7,5 +7,5 @@
 #include "FOnVehicleStateChanged.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnVehicleStateChanged, AActor*, OldVehicle, AActor*, NewVehicle, AFortPlayerPawn*, PlayerPawn);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnVehicleStateChanged, AFortPlayerPawn*, PlayerPawn, AActor*, NewVehicle, AActor*, OldVehicle);
 

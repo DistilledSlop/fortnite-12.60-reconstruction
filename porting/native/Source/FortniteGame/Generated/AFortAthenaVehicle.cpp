@@ -7,7 +7,7 @@ void AFortAthenaVehicle::BroadcastResetWaterIdleTimeEmpty_Implementation()
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortAthenaVehicle::DebugDrawImpactBucket_Implementation(const FColor& Color, const FVector& ImpactVector, const FVector& Location)
+void AFortAthenaVehicle::DebugDrawImpactBucket_Implementation(const FVector& Location, const FVector& ImpactVector, const FColor& Color)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -82,7 +82,7 @@ void AFortAthenaVehicle::ServerUsingRiftPortal_Implementation(AActor* RiftPortal
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortAthenaVehicle::UpdateClientWithVehicleTestInput_Implementation(const FVector& AngularVelocity, const FVector& LinearVelocity)
+void AFortAthenaVehicle::UpdateClientWithVehicleTestInput_Implementation(const FVector& LinearVelocity, const FVector& AngularVelocity)
 {
 	// Body not recovered: reflection-derived stub.
 }

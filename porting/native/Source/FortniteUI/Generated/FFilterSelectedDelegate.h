@@ -7,5 +7,5 @@
 #include "FFilterSelectedDelegate.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FFilterSelectedDelegate, UContentBrowserFilterEntry*, Entry, bool, bIsSelected);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FFilterSelectedDelegate, bool, bIsSelected, UContentBrowserFilterEntry*, Entry);
 

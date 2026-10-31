@@ -2,7 +2,7 @@
 #include "APhysicsObject.h"
 #include "Net/UnrealNetwork.h"
 
-void APhysicsObject::DebugDrawImpactBucket_Implementation(const FColor& Color, const FVector& ImpactVector, const FVector& Location)
+void APhysicsObject::DebugDrawImpactBucket_Implementation(const FVector& Location, const FVector& ImpactVector, const FColor& Color)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -42,12 +42,12 @@ void APhysicsObject::OnRep_SurfaceTypePhysicsObjectOn(EPhysicalSurface PreviousS
 	// Body not recovered: reflection-derived stub.
 }
 
-void APhysicsObject::ServerBroadcastHit_Implementation(const FVector& ImpulseValue, const FVector& ImpactPoint, APawn* ImpulseInstigator)
+void APhysicsObject::ServerBroadcastHit_Implementation(APawn* ImpulseInstigator, const FVector& ImpactPoint, const FVector& ImpulseValue)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void APhysicsObject::UpdateClientWithPhysicsObjectTestInput_Implementation(const FVector& AngularVelocity, const FVector& LinearVelocity)
+void APhysicsObject::UpdateClientWithPhysicsObjectTestInput_Implementation(const FVector& LinearVelocity, const FVector& AngularVelocity)
 {
 	// Body not recovered: reflection-derived stub.
 }

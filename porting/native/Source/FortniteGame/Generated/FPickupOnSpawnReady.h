@@ -7,5 +7,5 @@
 #include "FPickupOnSpawnReady.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FPickupOnSpawnReady, UFortItemDefinition*, ItemDefinition, AFortGameModePickup*, SelfActor);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FPickupOnSpawnReady, AFortGameModePickup*, SelfActor, UFortItemDefinition*, ItemDefinition);
 

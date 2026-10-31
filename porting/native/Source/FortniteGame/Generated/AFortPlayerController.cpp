@@ -12,7 +12,7 @@ void AFortPlayerController::Cheat_ClearForcedCosmeticVariantChannels_Implementat
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerController::Cheat_ForceAthenaCosmeticItemInSlot_Implementation(int32 Index, const EAthenaCustomizationCategory& Slot, UAthenaCosmeticItemDefinition* CosmeticItem)
+void AFortPlayerController::Cheat_ForceAthenaCosmeticItemInSlot_Implementation(UAthenaCosmeticItemDefinition* CosmeticItem, const EAthenaCustomizationCategory& Slot, int32 Index)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -27,17 +27,17 @@ void AFortPlayerController::Cheat_ForcePlayEmoteItem_Implementation(UFortMontage
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerController::Cheat_StopObjectiveServer_Implementation(const EFortObjectiveStatus& Status, AFortObjectiveBase* Objective)
+void AFortPlayerController::Cheat_StopObjectiveServer_Implementation(AFortObjectiveBase* Objective, const EFortObjectiveStatus& Status)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerController::ClientActivateSlot_Implementation(bool bForceExecution, bool bUpdatePreviousFocusedSlot, float ActivateDelay, int32 Slot, const EFortQuickBars& InQuickBar)
+void AFortPlayerController::ClientActivateSlot_Implementation(const EFortQuickBars& InQuickBar, int32 Slot, float ActivateDelay, bool bUpdatePreviousFocusedSlot, bool bForceExecution)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerController::ClientAddScoreNumber_Implementation(bool bDisplayScoreOnPlayer, const FVector_NetQuantize& ScoreLocation, const EStatCategory& ScoreCategory, int32 Score)
+void AFortPlayerController::ClientAddScoreNumber_Implementation(int32 Score, const EStatCategory& ScoreCategory, const FVector_NetQuantize& ScoreLocation, bool bDisplayScoreOnPlayer)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -47,7 +47,7 @@ void AFortPlayerController::ClientBotEnqueueCommand_Implementation(const FString
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerController::ClientBotSetModuleToUse_Implementation(bool bResetNow, const FString& NewModule, const FString& PilotCategory)
+void AFortPlayerController::ClientBotSetModuleToUse_Implementation(const FString& PilotCategory, const FString& NewModule, bool bResetNow)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -57,7 +57,7 @@ void AFortPlayerController::ClientCancelCrafting_Implementation()
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerController::ClientConfirmTargetData_Implementation(const TArray<uint8>& HitReplaces, bool bSuccess, uint16 UniqueId)
+void AFortPlayerController::ClientConfirmTargetData_Implementation(uint16 UniqueId, bool bSuccess, const TArray<uint8>& HitReplaces)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -67,7 +67,7 @@ void AFortPlayerController::ClientCreateOrJoinChatRoom_Implementation(const FStr
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerController::ClientDeveloper_GetConsoleVariable_Implementation(const FString& Value, const FString& ConsoleVariable)
+void AFortPlayerController::ClientDeveloper_GetConsoleVariable_Implementation(const FString& ConsoleVariable, const FString& Value)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -77,12 +77,12 @@ void AFortPlayerController::ClientEndGameKick_Implementation()
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerController::ClientEquipItem_Implementation(bool bForceExecution, const FGuid& ItemGuid)
+void AFortPlayerController::ClientEquipItem_Implementation(const FGuid& ItemGuid, bool bForceExecution)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerController::ClientExecuteInventoryItem_Implementation(bool bActivateSlotAfterSettingFocused, bool bForceExecute, float Delay, const FGuid& ItemGuid)
+void AFortPlayerController::ClientExecuteInventoryItem_Implementation(const FGuid& ItemGuid, float Delay, bool bForceExecute, bool bActivateSlotAfterSettingFocused)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -117,7 +117,7 @@ void AFortPlayerController::ClientForceWorldInventoryUpdate_Implementation()
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerController::ClientGivePlayerLocalAccountItem_Implementation(int32 Count, UFortAccountItemDefinition* ItemDefinition)
+void AFortPlayerController::ClientGivePlayerLocalAccountItem_Implementation(UFortAccountItemDefinition* ItemDefinition, int32 Count)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -142,12 +142,12 @@ void AFortPlayerController::ClientOpenChoiceUI_Implementation(const FChoiceData&
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerController::ClientPingMinimap_Implementation(const FLinearColor& PingColor, const FVector& WorldLocation)
+void AFortPlayerController::ClientPingMinimap_Implementation(const FVector& WorldLocation, const FLinearColor& PingColor)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerController::ClientPrecacheMediaSource_Implementation(UMediaSource* InMediaSource, UMediaPlayer* InMediaPlayer)
+void AFortPlayerController::ClientPrecacheMediaSource_Implementation(UMediaPlayer* InMediaPlayer, UMediaSource* InMediaSource)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -157,12 +157,12 @@ void AFortPlayerController::ClientReadyCheckComplete_Implementation(bool bPassed
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerController::ClientReceivedAttributeSources_Implementation(const TArray<FAttributeModifierInfo>& Sources, UFortAbilitySystemComponent* AbilitySystemComponent, const FGameplayAttribute& Attribute)
+void AFortPlayerController::ClientReceivedAttributeSources_Implementation(const FGameplayAttribute& Attribute, UFortAbilitySystemComponent* AbilitySystemComponent, const TArray<FAttributeModifierInfo>& Sources)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerController::ClientReceivePresetTeamChat_Implementation(const FUniqueNetIdRepl& SenderID, const FText& ChatText)
+void AFortPlayerController::ClientReceivePresetTeamChat_Implementation(const FText& ChatText, const FUniqueNetIdRepl& SenderID)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -177,32 +177,32 @@ void AFortPlayerController::ClientRegisterWithParty_Implementation()
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerController::ClientReportDamagedResourceBuilding_Implementation(bool bJustHitWeakspot, bool bDestroyed, int32 PotentialResourceCount, EFortResourceType::Type PotentialResourceType, ABuildingSMActor* BuildingSMActor)
+void AFortPlayerController::ClientReportDamagedResourceBuilding_Implementation(ABuildingSMActor* BuildingSMActor, EFortResourceType::Type PotentialResourceType, int32 PotentialResourceCount, bool bDestroyed, bool bJustHitWeakspot)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerController::ClientReportGotResourceFromVehicle_Implementation(int32 ResourceCount, AActor* Vehicle)
+void AFortPlayerController::ClientReportGotResourceFromVehicle_Implementation(AActor* Vehicle, int32 ResourceCount)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerController::ClientRequestReadyCheck_Implementation(const FText& NoText, const FText& YesText, const FText& QueryText)
+void AFortPlayerController::ClientRequestReadyCheck_Implementation(const FText& QueryText, const FText& YesText, const FText& NoText)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerController::ClientSendConfirmationMessage_Implementation(bool bClientQuitAfterMessage, const FText& ConfirmationMessage)
+void AFortPlayerController::ClientSendConfirmationMessage_Implementation(const FText& ConfirmationMessage, bool bClientQuitAfterMessage)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerController::ClientSendMessage_Implementation(USoundBase* StartSound, const FText& Message)
+void AFortPlayerController::ClientSendMessage_Implementation(const FText& Message, USoundBase* StartSound)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerController::ClientSetActionMappingEnabled_Implementation(bool bEnabled, const FName& ActionName)
+void AFortPlayerController::ClientSetActionMappingEnabled_Implementation(const FName& ActionName, bool bEnabled)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -212,7 +212,7 @@ void AFortPlayerController::ClientSetInviteFlags_Implementation(const FJoinabili
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerController::ClientSetSpectatorCamera_Implementation(const FRotator& CameraRotation, const FVector& CameraLocation)
+void AFortPlayerController::ClientSetSpectatorCamera_Implementation(const FVector& CameraLocation, const FRotator& CameraRotation)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -232,7 +232,7 @@ void AFortPlayerController::ClientStopUIFeedbackEvent_Implementation(const FName
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerController::ClientSwapQuickBarFocus_Implementation(bool bForceExecution, int32 SlotOverride, const EFortQuickBars& InQuickBar)
+void AFortPlayerController::ClientSwapQuickBarFocus_Implementation(const EFortQuickBars& InQuickBar, int32 SlotOverride, bool bForceExecution)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -247,7 +247,7 @@ void AFortPlayerController::ClientUpdatePlayerList_Implementation()
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerController::ClientUpdateRichPresence_Implementation(bool bImportant, const ERichPresenceStateChange& RichPresenceChange)
+void AFortPlayerController::ClientUpdateRichPresence_Implementation(const ERichPresenceStateChange& RichPresenceChange, bool bImportant)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -257,17 +257,17 @@ void AFortPlayerController::ClientUpdateServerOnPlayerChangedBuildMode_Implement
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerController::FortClientPlaySound_Implementation(float PitchMultiplier, float VolumeMultiplier, USoundBase* Sound)
+void AFortPlayerController::FortClientPlaySound_Implementation(USoundBase* Sound, float VolumeMultiplier, float PitchMultiplier)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerController::FortClientPlaySoundAtLocation_Implementation(float PitchMultiplier, float VolumeMultiplier, const FVector& Location, USoundBase* Sound)
+void AFortPlayerController::FortClientPlaySoundAtLocation_Implementation(USoundBase* Sound, const FVector& Location, float VolumeMultiplier, float PitchMultiplier)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerController::ForwardActiveVariantChangeRequest_Implementation(AFortPlayerPawn* PreviewPawn, const FGameplayTag& DesiredActiveVariant, const FGameplayTag& VariantChannelToChange, const FName& ItemTemplateToChange)
+void AFortPlayerController::ForwardActiveVariantChangeRequest_Implementation(const FName& ItemTemplateToChange, const FGameplayTag& VariantChannelToChange, const FGameplayTag& DesiredActiveVariant, AFortPlayerPawn* PreviewPawn)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -347,7 +347,7 @@ void AFortPlayerController::ServerAcknowledgeDelayedQuickBarAction_Implementatio
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerController::ServerAddPawnMovementInput_Implementation(bool bForce, float ScaleValue, const FVector& WorldDirection, AFortPawn* InChar)
+void AFortPlayerController::ServerAddPawnMovementInput_Implementation(AFortPawn* InChar, const FVector& WorldDirection, float ScaleValue, bool bForce)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -357,7 +357,7 @@ void AFortPlayerController::ServerAnnouncementStoppedOnClient_Implementation(con
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerController::ServerAttemptInventoryDrop_Implementation(bool bTrash, int32 Count, const FGuid& ItemGuid)
+void AFortPlayerController::ServerAttemptInventoryDrop_Implementation(const FGuid& ItemGuid, int32 Count, bool bTrash)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -397,17 +397,17 @@ void AFortPlayerController::ServerClientPawnLoaded_Implementation(bool bIsPawnLo
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerController::ServerCombineInventoryItems_Implementation(const FGuid& SourceItemGuid, const FGuid& TargetItemGuid)
+void AFortPlayerController::ServerCombineInventoryItems_Implementation(const FGuid& TargetItemGuid, const FGuid& SourceItemGuid)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerController::ServerCraftSchematic_Implementation(bool bIsQuickCrafted, const EFortItemTier& RequestedTier, int32 CraftAmount, int32 PostCraftSlot, const FString& ItemId)
+void AFortPlayerController::ServerCraftSchematic_Implementation(const FString& ItemId, int32 PostCraftSlot, int32 CraftAmount, const EFortItemTier& RequestedTier, bool bIsQuickCrafted)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerController::ServerDeployDefender_Implementation(int32 AmmoQuantity, const FGuid& WeaponToGiveGuid, const FName& DefenderSquadId, const FString& SelectedItemInstanceId, ABuildingTrapDefender* DefenderTrap)
+void AFortPlayerController::ServerDeployDefender_Implementation(ABuildingTrapDefender* DefenderTrap, const FString& SelectedItemInstanceId, const FName& DefenderSquadId, const FGuid& WeaponToGiveGuid, int32 AmmoQuantity)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -417,7 +417,7 @@ void AFortPlayerController::ServerDeveloper_GetConsoleVariable_Implementation(co
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerController::ServerDisassembleInventoryItems_Implementation(const TArray<int32>& ItemCounts, const TArray<FGuid>& ItemGuids)
+void AFortPlayerController::ServerDisassembleInventoryItems_Implementation(const TArray<FGuid>& ItemGuids, const TArray<int32>& ItemCounts)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -432,7 +432,7 @@ void AFortPlayerController::ServerDropCarriedObject_Implementation()
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerController::ServerEditBuildingActor_Implementation(bool bMirrored, uint8 RotationIterations, TSubclassOf<ABuildingSMActor> NewBuildingClass, ABuildingSMActor* BuildingActorToEdit)
+void AFortPlayerController::ServerEditBuildingActor_Implementation(ABuildingSMActor* BuildingActorToEdit, TSubclassOf<ABuildingSMActor> NewBuildingClass, uint8 RotationIterations, bool bMirrored)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -452,12 +452,12 @@ void AFortPlayerController::ServerExecuteInventoryItem_Implementation(const FGui
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerController::ServerExecutePresetTeamChat_Implementation(const FUniqueNetIdRepl& SenderID, const FText& ChatText)
+void AFortPlayerController::ServerExecutePresetTeamChat_Implementation(const FText& ChatText, const FUniqueNetIdRepl& SenderID)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerController::ServerGiftInventoryItemToOtherPlayer_Implementation(int32 Quantity, const FUniqueNetIdRepl& PlayerId, const FGuid& ItemGuid)
+void AFortPlayerController::ServerGiftInventoryItemToOtherPlayer_Implementation(const FGuid& ItemGuid, const FUniqueNetIdRepl& PlayerId, int32 Quantity)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -472,17 +472,17 @@ void AFortPlayerController::ServerHandleMissionEvent_ToggledCursorMode_Implement
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerController::ServerHandleMissionEvent_ToggledEditMode_Implementation(bool bOpened, ABuildingSMActor* EditableActor)
+void AFortPlayerController::ServerHandleMissionEvent_ToggledEditMode_Implementation(ABuildingSMActor* EditableActor, bool bOpened)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerController::ServerItemWillBeDestroyed_Implementation(int32 Count, const FGuid& DestroyedItemGuid)
+void AFortPlayerController::ServerItemWillBeDestroyed_Implementation(const FGuid& DestroyedItemGuid, int32 Count)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerController::ServerKickPlayer_Implementation(const FText& Reason, const FUniqueNetIdRepl& PlayerToKick)
+void AFortPlayerController::ServerKickPlayer_Implementation(const FUniqueNetIdRepl& PlayerToKick, const FText& Reason)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -497,7 +497,7 @@ void AFortPlayerController::ServerLoadingScreenDropped_Implementation()
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerController::ServerModifyStat_Implementation(bool bForceStatSave, const EStatMod& ModType, int32 Amount, const FName& StatName)
+void AFortPlayerController::ServerModifyStat_Implementation(const FName& StatName, int32 Amount, const EStatMod& ModType, bool bForceStatSave)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -507,17 +507,17 @@ void AFortPlayerController::ServerNotifyMeshNetPlayer_Implementation(const FName
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerController::ServerOnMaterialSelection_Implementation(EFortResourceLevel::Type NewResourceLevel, EFortResourceType::Type NewResourceType)
+void AFortPlayerController::ServerOnMaterialSelection_Implementation(EFortResourceType::Type NewResourceType, EFortResourceLevel::Type NewResourceLevel)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerController::ServerPingMinimap_Implementation(uint8 RequiredTeam, const FLinearColor& PingColor, const FVector& WorldLocation)
+void AFortPlayerController::ServerPingMinimap_Implementation(const FVector& WorldLocation, const FLinearColor& PingColor, uint8 RequiredTeam)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerController::ServerPlayEmoteItem_Implementation(float EmoteRandomNumber, UFortMontageItemDefinitionBase* EmoteAsset)
+void AFortPlayerController::ServerPlayEmoteItem_Implementation(UFortMontageItemDefinitionBase* EmoteAsset, float EmoteRandomNumber)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -537,12 +537,12 @@ void AFortPlayerController::ServerRemoveDefender_Implementation(ABuildingTrapDef
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerController::ServerRemoveInventoryItem_Implementation(bool bForcePersistWhenEmpty, bool bForceRemoval, bool bForceRemoveFromQuickBars, int32 Count, const FGuid& ItemGuid)
+void AFortPlayerController::ServerRemoveInventoryItem_Implementation(const FGuid& ItemGuid, int32 Count, bool bForceRemoveFromQuickBars, bool bForceRemoval, bool bForcePersistWhenEmpty)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerController::ServerRemoveInventoryStateValue_Implementation(EFortItemEntryState::Type StateValueType, const FGuid& ItemGuid)
+void AFortPlayerController::ServerRemoveInventoryStateValue_Implementation(const FGuid& ItemGuid, EFortItemEntryState::Type StateValueType)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -557,7 +557,7 @@ void AFortPlayerController::ServerReplyToReadyCheck_Implementation(bool bReady)
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerController::ServerReportClientFPS_Implementation(uint8 ClientMaxFrameScore, uint8 ClientAvgFrameScore, float ClientAvgFPS)
+void AFortPlayerController::ServerReportClientFPS_Implementation(float ClientAvgFPS, uint8 ClientAvgFrameScore, uint8 ClientMaxFrameScore)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -567,7 +567,7 @@ void AFortPlayerController::ServerRequestAIDebug_Implementation()
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerController::ServerRequestAttributeSources_Implementation(UFortAbilitySystemComponent* AbilitySystemComponent, const FGameplayAttribute& Attribute)
+void AFortPlayerController::ServerRequestAttributeSources_Implementation(const FGameplayAttribute& Attribute, UFortAbilitySystemComponent* AbilitySystemComponent)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -582,7 +582,7 @@ void AFortPlayerController::ServerReturnToMainMenu_Implementation()
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerController::ServerSendClientProgressUpdate_Implementation(const TArray<uint64>& ClientProgressUpdate, int32 ClientProgressState)
+void AFortPlayerController::ServerSendClientProgressUpdate_Implementation(int32 ClientProgressState, const TArray<uint64>& ClientProgressUpdate)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -607,12 +607,12 @@ void AFortPlayerController::ServerSetHero_Implementation(const FString& NewHeroI
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerController::ServerSetInventoryStateValue_Implementation(const FFortItemEntryStateValue& StateValue, const FGuid& ItemGuid)
+void AFortPlayerController::ServerSetInventoryStateValue_Implementation(const FGuid& ItemGuid, const FFortItemEntryStateValue& StateValue)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerController::ServerSetMarkText_Implementation(const FString& MarkText, AFortMarkActor* MarkActor)
+void AFortPlayerController::ServerSetMarkText_Implementation(AFortMarkActor* MarkActor, const FString& MarkText)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -622,7 +622,7 @@ void AFortPlayerController::ServerSetPartyOwner_Implementation(const FUniqueNetI
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerController::ServerSetReadyToContinue_Implementation(bool bTryStartTimer, EFortGameplayState::Type RequestedState, bool bReady)
+void AFortPlayerController::ServerSetReadyToContinue_Implementation(bool bReady, EFortGameplayState::Type RequestedState, bool bTryStartTimer)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -637,7 +637,7 @@ void AFortPlayerController::ServerSetShouldUsePilotComponent_Implementation(bool
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerController::ServerSpawnMark_Implementation(const FText& PreapprovedText, const FVector& AttachOffset, AActor* ActorToAttachTo)
+void AFortPlayerController::ServerSpawnMark_Implementation(AActor* ActorToAttachTo, const FVector& AttachOffset, const FText& PreapprovedText)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -687,32 +687,32 @@ void AFortPlayerController::ServerTriggerGenericObjectiveEvent_Implementation(AF
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerController::ServerUIChoiceCompleted_Implementation(int32 MenuIdentifier, int32 ChosenItem)
+void AFortPlayerController::ServerUIChoiceCompleted_Implementation(int32 ChosenItem, int32 MenuIdentifier)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerController::ServerUpdateActorOptions_Implementation(const TArray<FString>& OptionsValues, const TArray<FString>& OptionsKeys, AActor* OptionsTarget)
+void AFortPlayerController::ServerUpdateActorOptions_Implementation(AActor* OptionsTarget, const TArray<FString>& OptionsKeys, const TArray<FString>& OptionsValues)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerController::ServerUpdateGameDescriptionData_Implementation(const TArray<FText>& GameDescriptionText, const FText& GameName, AActor* DataTarget)
+void AFortPlayerController::ServerUpdateGameDescriptionData_Implementation(AActor* DataTarget, const FText& GameName, const TArray<FText>& GameDescriptionText)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerController::ServerUpdateGameplayOptions_Implementation(const TArray<FString>& UserOptionsValues, const TArray<FString>& UserOptionsKeys)
+void AFortPlayerController::ServerUpdateGameplayOptions_Implementation(const TArray<FString>& UserOptionsKeys, const TArray<FString>& UserOptionsValues)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerController::ServerUpdateItemListOptions_Implementation(const TArray<FString>& OptionsValues, const TArray<FString>& OptionsKeys, int32 ItemIndex, UFortMinigameItemContainerComponent* ItemContainerComponent)
+void AFortPlayerController::ServerUpdateItemListOptions_Implementation(UFortMinigameItemContainerComponent* ItemContainerComponent, int32 ItemIndex, const TArray<FString>& OptionsKeys, const TArray<FString>& OptionsValues)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerController::ServerUpdateMessageComponents_Implementation(const TArray<FGameplayTagContainer>& NewChannelIds, const TArray<UFortGameplayMessageComponentBase*>& ModifiedComponents)
+void AFortPlayerController::ServerUpdateMessageComponents_Implementation(const TArray<UFortGameplayMessageComponentBase*>& ModifiedComponents, const TArray<FGameplayTagContainer>& NewChannelIds)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -722,7 +722,7 @@ void AFortPlayerController::ServerUpdatePlayerData_Implementation(const TArray<u
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerController::ServerUpgradeBuildingActor_Implementation(int32 NewUpgradeLevel, ABuildingActor* BuildingActorToUpgrade)
+void AFortPlayerController::ServerUpgradeBuildingActor_Implementation(ABuildingActor* BuildingActorToUpgrade, int32 NewUpgradeLevel)
 {
 	// Body not recovered: reflection-derived stub.
 }

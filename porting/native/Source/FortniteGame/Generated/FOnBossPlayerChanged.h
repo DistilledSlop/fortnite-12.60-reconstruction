@@ -7,5 +7,5 @@
 #include "FOnBossPlayerChanged.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnBossPlayerChanged, UCreativePlayerHealthInfoComponent*, HealthInfoComponent, AFortPlayerStateAthena*, PlayerState);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnBossPlayerChanged, AFortPlayerStateAthena*, PlayerState, UCreativePlayerHealthInfoComponent*, HealthInfoComponent);
 

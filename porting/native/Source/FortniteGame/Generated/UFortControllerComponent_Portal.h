@@ -25,8 +25,8 @@ public:
 	void ClientInitiateMatchmakingToPortalOrigin_Implementation();
 
 	UFUNCTION(Server, Reliable)
-	void ServerSetPortalLinkCode(const FString& LinkCode, UFortPortalComponent* PortalComponent);
-	void ServerSetPortalLinkCode_Implementation(const FString& LinkCode, UFortPortalComponent* PortalComponent);
+	void ServerSetPortalLinkCode(UFortPortalComponent* PortalComponent, const FString& LinkCode);
+	void ServerSetPortalLinkCode_Implementation(UFortPortalComponent* PortalComponent, const FString& LinkCode);
 
 };
 

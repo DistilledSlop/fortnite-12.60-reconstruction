@@ -7,5 +7,5 @@
 #include "FIntDelegate.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FIntDelegate, int32, IntParam, UAthenaRemotePlayerViewData*, PlayerData);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FIntDelegate, UAthenaRemotePlayerViewData*, PlayerData, int32, IntParam);
 

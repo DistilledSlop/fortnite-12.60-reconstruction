@@ -7,5 +7,5 @@
 #include "FOnItemInspectAction.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnItemInspectAction, bool, IsPlaceholderItem, bool, EnableItemActions, UFortItem*, SelectedItem);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnItemInspectAction, UFortItem*, SelectedItem, bool, EnableItemActions, bool, IsPlaceholderItem);
 

@@ -70,8 +70,8 @@ public:
 	void OnRep_CombatEventHeat();
 
 	UFUNCTION(Server, Reliable)
-	void ServerTriggerCombatEvent(float HeatMultiplier, EFortCombatEvents::Type TriggeredEvent);
-	void ServerTriggerCombatEvent_Implementation(float HeatMultiplier, EFortCombatEvents::Type TriggeredEvent);
+	void ServerTriggerCombatEvent(EFortCombatEvents::Type TriggeredEvent, float HeatMultiplier);
+	void ServerTriggerCombatEvent_Implementation(EFortCombatEvents::Type TriggeredEvent, float HeatMultiplier);
 
 	UFUNCTION(Server, Reliable)
 	void ServerTriggerCombatEventBatch(const TArray<FFortCombatManagerEvent>& Payload);

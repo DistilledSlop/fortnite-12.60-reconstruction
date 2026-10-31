@@ -722,8 +722,8 @@ public:
 	void ClientGivenTo_Implementation(APawn* P);
 
 	UFUNCTION(Client, Reliable)
-	void ClientReportShotFlags(int32 ShotIndex, uint32 ShotFlags);
-	void ClientReportShotFlags_Implementation(int32 ShotIndex, uint32 ShotFlags);
+	void ClientReportShotFlags(uint32 ShotFlags, int32 ShotIndex);
+	void ClientReportShotFlags_Implementation(uint32 ShotFlags, int32 ShotIndex);
 
 	UFUNCTION()
 	void OnRep_AmmoCount(int32 OldAmmoCount);

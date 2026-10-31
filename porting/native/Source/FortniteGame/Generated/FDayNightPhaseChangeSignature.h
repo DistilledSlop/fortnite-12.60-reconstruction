@@ -8,5 +8,5 @@
 #include "FDayNightPhaseChangeSignature.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FDayNightPhaseChangeSignature, bool, bAtCreation, TEnumAsByte<EFortDayPhase::Type>, PreviousDayPhase, TEnumAsByte<EFortDayPhase::Type>, CurrentDayPhase);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FDayNightPhaseChangeSignature, TEnumAsByte<EFortDayPhase::Type>, CurrentDayPhase, TEnumAsByte<EFortDayPhase::Type>, PreviousDayPhase, bool, bAtCreation);
 

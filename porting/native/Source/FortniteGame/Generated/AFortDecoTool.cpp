@@ -17,12 +17,12 @@ void AFortDecoTool::OnRep_ItemDefinition()
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortDecoTool::ServerCreateBuildingAndSpawnDeco_Implementation(EBuildingAttachmentType InBuildingAttachmentType, const FRotator& Rotation, const FVector_NetQuantize10& Location, const FRotator& BuildingRotation, const FVector_NetQuantize10& BuildingLocation)
+void AFortDecoTool::ServerCreateBuildingAndSpawnDeco_Implementation(const FVector_NetQuantize10& BuildingLocation, const FRotator& BuildingRotation, const FVector_NetQuantize10& Location, const FRotator& Rotation, EBuildingAttachmentType InBuildingAttachmentType)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortDecoTool::ServerSpawnDeco_Implementation(EBuildingAttachmentType InBuildingAttachmentType, ABuildingSMActor* AttachedActor, const FRotator& Rotation, const FVector& Location)
+void AFortDecoTool::ServerSpawnDeco_Implementation(const FVector& Location, const FRotator& Rotation, ABuildingSMActor* AttachedActor, EBuildingAttachmentType InBuildingAttachmentType)
 {
 	// Body not recovered: reflection-derived stub.
 }

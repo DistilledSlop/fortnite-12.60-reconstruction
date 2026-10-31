@@ -7,5 +7,5 @@
 #include "FOnPlayerClassEvent.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnPlayerClassEvent, uint8, ClassSlotIndex, AFortPlayerState*, PlayerState);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnPlayerClassEvent, AFortPlayerState*, PlayerState, uint8, ClassSlotIndex);
 

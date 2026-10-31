@@ -61,16 +61,16 @@ public:
 	void ClientShowIdleWarning_Implementation(float TimeUntilKick);
 
 	UFUNCTION(Client, Reliable)
-	void ClientUpdateQuickBarRecordsCache(const FQuickBar& SecondaryQuickBarRecord, const FQuickBar& PrimaryQuickBarRecord);
-	void ClientUpdateQuickBarRecordsCache_Implementation(const FQuickBar& SecondaryQuickBarRecord, const FQuickBar& PrimaryQuickBarRecord);
+	void ClientUpdateQuickBarRecordsCache(const FQuickBar& PrimaryQuickBarRecord, const FQuickBar& SecondaryQuickBarRecord);
+	void ClientUpdateQuickBarRecordsCache_Implementation(const FQuickBar& PrimaryQuickBarRecord, const FQuickBar& SecondaryQuickBarRecord);
 
 	UFUNCTION(Server, Reliable)
 	void ServerTriggerSetupTeleportCameraEvent();
 	void ServerTriggerSetupTeleportCameraEvent_Implementation();
 
 	UFUNCTION(Server, Reliable)
-	void ServerUpdateQuickBarRecordsCache(const FQuickBar& SecondaryQuickBarRecord, const FQuickBar& PrimaryQuickBarRecord);
-	void ServerUpdateQuickBarRecordsCache_Implementation(const FQuickBar& SecondaryQuickBarRecord, const FQuickBar& PrimaryQuickBarRecord);
+	void ServerUpdateQuickBarRecordsCache(const FQuickBar& PrimaryQuickBarRecord, const FQuickBar& SecondaryQuickBarRecord);
+	void ServerUpdateQuickBarRecordsCache_Implementation(const FQuickBar& PrimaryQuickBarRecord, const FQuickBar& SecondaryQuickBarRecord);
 
 };
 

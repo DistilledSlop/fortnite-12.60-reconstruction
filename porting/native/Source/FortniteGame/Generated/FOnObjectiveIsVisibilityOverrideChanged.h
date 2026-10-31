@@ -8,5 +8,5 @@
 #include "FOnObjectiveIsVisibilityOverrideChanged.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnObjectiveIsVisibilityOverrideChanged, EFortMissionVisibilityOverride, NewVisibilityOverride, AFortObjectiveBase*, Objective);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnObjectiveIsVisibilityOverrideChanged, AFortObjectiveBase*, Objective, EFortMissionVisibilityOverride, NewVisibilityOverride);
 

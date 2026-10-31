@@ -7,5 +7,5 @@
 #include "FOnClientExitVolume.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnClientExitVolume, AFortVolume*, Volume, APlayerState*, Client);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnClientExitVolume, APlayerState*, Client, AFortVolume*, Volume);
 

@@ -17,8 +17,8 @@ class FORTNITEGAME_API UFortCreativeObjectTrackingComponent : public UActorCompo
 
 public:
 	UFUNCTION(Server, Reliable)
-	void ServerSetPreviewLocation(const FVector& Location, bool bPreviewActive);
-	void ServerSetPreviewLocation_Implementation(const FVector& Location, bool bPreviewActive);
+	void ServerSetPreviewLocation(bool bPreviewActive, const FVector& Location);
+	void ServerSetPreviewLocation_Implementation(bool bPreviewActive, const FVector& Location);
 
 };
 

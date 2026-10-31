@@ -7,5 +7,5 @@
 #include "FFortDBNO.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FFortDBNO, AController*, DownedInstigator, AFortAIPawn*, DownedAI);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FFortDBNO, AFortAIPawn*, DownedAI, AController*, DownedInstigator);
 

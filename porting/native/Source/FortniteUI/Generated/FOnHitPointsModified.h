@@ -8,5 +8,5 @@
 #include "FOnHitPointsModified.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnHitPointsModified, EFortHitPointModificationReason, ModificationReason, float, HitPointValue);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnHitPointsModified, float, HitPointValue, EFortHitPointModificationReason, ModificationReason);
 

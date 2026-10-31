@@ -7,5 +7,5 @@
 #include "FOnMissionContainerSearchedEvent.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_DELEGATE_TwoParams(FOnMissionContainerSearchedEvent, AFortPawn*, SearcherPawn, ABuildingContainer*, SearchedContainer);
+DECLARE_DYNAMIC_DELEGATE_TwoParams(FOnMissionContainerSearchedEvent, ABuildingContainer*, SearchedContainer, AFortPawn*, SearcherPawn);
 

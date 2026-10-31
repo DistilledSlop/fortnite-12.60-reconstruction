@@ -8,5 +8,5 @@
 #include "FOnClientEventFlagChanged.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_FourParams(FOnClientEventFlagChanged, float, TimeSpanRatio, FTimespan, TimeSinceBegin, FTimespan, TimeUntilEnd, FString, EventName);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_FourParams(FOnClientEventFlagChanged, FString, EventName, FTimespan, TimeUntilEnd, FTimespan, TimeSinceBegin, float, TimeSpanRatio);
 

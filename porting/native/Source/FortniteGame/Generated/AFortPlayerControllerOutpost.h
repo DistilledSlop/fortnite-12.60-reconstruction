@@ -41,8 +41,8 @@ public:
 	bool bIsOutpostOwnerInPIE;
 
 	UFUNCTION(Client, Reliable)
-	void ClientOnBuildingLevelChanged(int32 InLevelBeforeUpgrade, UFortOutpostItemDefinition* UpgradedBuilding);
-	void ClientOnBuildingLevelChanged_Implementation(int32 InLevelBeforeUpgrade, UFortOutpostItemDefinition* UpgradedBuilding);
+	void ClientOnBuildingLevelChanged(UFortOutpostItemDefinition* UpgradedBuilding, int32 InLevelBeforeUpgrade);
+	void ClientOnBuildingLevelChanged_Implementation(UFortOutpostItemDefinition* UpgradedBuilding, int32 InLevelBeforeUpgrade);
 
 	UFUNCTION(Client, Reliable)
 	void ClientOnOutpostRefundOccurred();
@@ -56,8 +56,8 @@ public:
 	void ServerCleanUpOnExit_Implementation();
 
 	UFUNCTION(Server, Reliable)
-	void ServerDepositPOSTResource(int32 Count, const FGuid& ItemGuid);
-	void ServerDepositPOSTResource_Implementation(int32 Count, const FGuid& ItemGuid);
+	void ServerDepositPOSTResource(const FGuid& ItemGuid, int32 Count);
+	void ServerDepositPOSTResource_Implementation(const FGuid& ItemGuid, int32 Count);
 
 	UFUNCTION(Server, Reliable)
 	void ServerLeaveOutpostAsParty();

@@ -7,5 +7,5 @@
 #include "FOnChosenSignature.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnChosenSignature, int32, MenuIdentifier, int32, ChosenIndex);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnChosenSignature, int32, ChosenIndex, int32, MenuIdentifier);
 

@@ -7,5 +7,5 @@
 #include "FOnFollowedPlayerChanged.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnFollowedPlayerChanged, AFortPlayerState*, NewFollowedPlayer, AFortPlayerControllerSpectating*, SpectatorPC);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnFollowedPlayerChanged, AFortPlayerControllerSpectating*, SpectatorPC, AFortPlayerState*, NewFollowedPlayer);
 

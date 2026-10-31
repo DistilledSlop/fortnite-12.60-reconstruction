@@ -15,6 +15,7 @@
 #include "FFortRechargingActionTimer.h"
 #include "FIgnoredPawn.h"
 #include "FMarkedActorDisplayInfo.h"
+#include "FOnHandleOutOfHealth.h"
 #include "FOnMountedWeaponFired.h"
 #include "FOnSurfaceTypeVehicleIsOnChanged.h"
 #include "FOnVehicleSquadChanged.h"
@@ -27,6 +28,7 @@
 #include "FVehicleReachedChargeThreshold.h"
 #include "FVehicleSpringInfo.h"
 #include "FVehicleTargetOrientation.h"
+#include "FVehicleToggleableCollisionShapeChanged.h"
 #include "GameplayTagContainer.h"
 #include "Math/Color.h"
 #include "Math/Vector.h"
@@ -446,9 +448,17 @@ public:
 	UPROPERTY()
 	UWeaponHitNotifyAudioBank* DefaultHitNotifyAudioBank;
 
+	// table index 46, flags 0x10000010080000
+	UPROPERTY()
+	FOnHandleOutOfHealth OnHandleOutOfHealthDelegate;
+
 	// table index 45, flags 0x10000010080000
 	UPROPERTY()
 	FVehicleHealthChanged OnHealthChanged;
+
+	// table index 44, flags 0x10000010080000
+	UPROPERTY()
+	FVehicleToggleableCollisionShapeChanged OnToggleableCollisionShapeChanged;
 
 	// table index 43, flags 0x10000000010001
 	UPROPERTY()
@@ -603,8 +613,8 @@ public:
 	void BroadcastResetWaterIdleTimeEmpty_Implementation();
 
 	UFUNCTION(Client, Reliable)
-	void DebugDrawImpactBucket(const FColor& Color, const FVector& ImpactVector, const FVector& Location);
-	void DebugDrawImpactBucket_Implementation(const FColor& Color, const FVector& ImpactVector, const FVector& Location);
+	void DebugDrawImpactBucket(const FVector& Location, const FVector& ImpactVector, const FColor& Color);
+	void DebugDrawImpactBucket_Implementation(const FVector& Location, const FVector& ImpactVector, const FColor& Color);
 
 	UFUNCTION()
 	void OnRep_AbilitySystemComponent();
@@ -653,8 +663,8 @@ public:
 	void ServerUsingRiftPortal_Implementation(AActor* RiftPortal);
 
 	UFUNCTION(NetMulticast, Reliable)
-	void UpdateClientWithVehicleTestInput(const FVector& AngularVelocity, const FVector& LinearVelocity);
-	void UpdateClientWithVehicleTestInput_Implementation(const FVector& AngularVelocity, const FVector& LinearVelocity);
+	void UpdateClientWithVehicleTestInput(const FVector& LinearVelocity, const FVector& AngularVelocity);
+	void UpdateClientWithVehicleTestInput_Implementation(const FVector& LinearVelocity, const FVector& AngularVelocity);
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

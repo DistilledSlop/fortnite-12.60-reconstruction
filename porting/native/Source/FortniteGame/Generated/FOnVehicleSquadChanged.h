@@ -7,5 +7,5 @@
 #include "FOnVehicleSquadChanged.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnVehicleSquadChanged, uint8, NewID, uint8, OldID);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnVehicleSquadChanged, uint8, OldID, uint8, NewID);
 

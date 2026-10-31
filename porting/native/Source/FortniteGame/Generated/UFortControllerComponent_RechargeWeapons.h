@@ -26,8 +26,8 @@ public:
 	TMap<FGuid, float> PendingGuidToServerStartTimeMap;
 
 	UFUNCTION(Client, Reliable)
-	void ClientItemStartedRecharging(float InServerStartTime, const FGuid& ItemGuid);
-	void ClientItemStartedRecharging_Implementation(float InServerStartTime, const FGuid& ItemGuid);
+	void ClientItemStartedRecharging(const FGuid& ItemGuid, float InServerStartTime);
+	void ClientItemStartedRecharging_Implementation(const FGuid& ItemGuid, float InServerStartTime);
 
 };
 

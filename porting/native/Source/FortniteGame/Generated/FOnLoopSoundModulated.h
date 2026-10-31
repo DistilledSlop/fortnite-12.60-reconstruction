@@ -7,5 +7,5 @@
 #include "FOnLoopSoundModulated.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnLoopSoundModulated, float, Intensity, UAudioComponent*, Sound);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnLoopSoundModulated, UAudioComponent*, Sound, float, Intensity);
 

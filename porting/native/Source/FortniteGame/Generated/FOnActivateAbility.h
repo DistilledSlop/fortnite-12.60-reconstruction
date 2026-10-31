@@ -8,5 +8,5 @@
 #include "FOnActivateAbility.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnActivateAbility, FGameplayTagContainer, AbilityTags, UFortGameplayAbility*, GameplayAbility);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnActivateAbility, UFortGameplayAbility*, GameplayAbility, FGameplayTagContainer, AbilityTags);
 

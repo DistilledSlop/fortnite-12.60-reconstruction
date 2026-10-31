@@ -8,5 +8,5 @@
 #include "FOnBGASentryStateChanged.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnBGASentryStateChanged, EBuildingGameplayActorSentry_State, State, ABuildingGameplayActorSentry*, Sentry);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnBGASentryStateChanged, ABuildingGameplayActorSentry*, Sentry, EBuildingGameplayActorSentry_State, State);
 

@@ -1198,8 +1198,8 @@ public:
 	void Cheat_ClearForcedCosmeticVariantChannels_Implementation();
 
 	UFUNCTION(Server, Reliable)
-	void Cheat_ForceAthenaCosmeticItemInSlot(int32 Index, const EAthenaCustomizationCategory& Slot, UAthenaCosmeticItemDefinition* CosmeticItem);
-	void Cheat_ForceAthenaCosmeticItemInSlot_Implementation(int32 Index, const EAthenaCustomizationCategory& Slot, UAthenaCosmeticItemDefinition* CosmeticItem);
+	void Cheat_ForceAthenaCosmeticItemInSlot(UAthenaCosmeticItemDefinition* CosmeticItem, const EAthenaCustomizationCategory& Slot, int32 Index);
+	void Cheat_ForceAthenaCosmeticItemInSlot_Implementation(UAthenaCosmeticItemDefinition* CosmeticItem, const EAthenaCustomizationCategory& Slot, int32 Index);
 
 	UFUNCTION(Server, Reliable)
 	void Cheat_ForceCosmeticVariantChannels(const TArray<FMcpVariantChannelInfo>& CosmeticVariantChannels);
@@ -1210,52 +1210,52 @@ public:
 	void Cheat_ForcePlayEmoteItem_Implementation(UFortMontageItemDefinitionBase* EmoteAsset);
 
 	UFUNCTION(Server, Reliable)
-	void Cheat_StopObjectiveServer(const EFortObjectiveStatus& Status, AFortObjectiveBase* Objective);
-	void Cheat_StopObjectiveServer_Implementation(const EFortObjectiveStatus& Status, AFortObjectiveBase* Objective);
+	void Cheat_StopObjectiveServer(AFortObjectiveBase* Objective, const EFortObjectiveStatus& Status);
+	void Cheat_StopObjectiveServer_Implementation(AFortObjectiveBase* Objective, const EFortObjectiveStatus& Status);
 
 	UFUNCTION(Client, Reliable)
-	void ClientActivateSlot(bool bForceExecution, bool bUpdatePreviousFocusedSlot, float ActivateDelay, int32 Slot, const EFortQuickBars& InQuickBar);
-	void ClientActivateSlot_Implementation(bool bForceExecution, bool bUpdatePreviousFocusedSlot, float ActivateDelay, int32 Slot, const EFortQuickBars& InQuickBar);
+	void ClientActivateSlot(const EFortQuickBars& InQuickBar, int32 Slot, float ActivateDelay, bool bUpdatePreviousFocusedSlot, bool bForceExecution);
+	void ClientActivateSlot_Implementation(const EFortQuickBars& InQuickBar, int32 Slot, float ActivateDelay, bool bUpdatePreviousFocusedSlot, bool bForceExecution);
 
 	UFUNCTION(Client, Unreliable)
-	void ClientAddScoreNumber(bool bDisplayScoreOnPlayer, const FVector_NetQuantize& ScoreLocation, const EStatCategory& ScoreCategory, int32 Score);
-	void ClientAddScoreNumber_Implementation(bool bDisplayScoreOnPlayer, const FVector_NetQuantize& ScoreLocation, const EStatCategory& ScoreCategory, int32 Score);
+	void ClientAddScoreNumber(int32 Score, const EStatCategory& ScoreCategory, const FVector_NetQuantize& ScoreLocation, bool bDisplayScoreOnPlayer);
+	void ClientAddScoreNumber_Implementation(int32 Score, const EStatCategory& ScoreCategory, const FVector_NetQuantize& ScoreLocation, bool bDisplayScoreOnPlayer);
 
 	UFUNCTION(Client, Reliable)
 	void ClientBotEnqueueCommand(const FString& CommandToEnqueue);
 	void ClientBotEnqueueCommand_Implementation(const FString& CommandToEnqueue);
 
 	UFUNCTION(Client, Reliable)
-	void ClientBotSetModuleToUse(bool bResetNow, const FString& NewModule, const FString& PilotCategory);
-	void ClientBotSetModuleToUse_Implementation(bool bResetNow, const FString& NewModule, const FString& PilotCategory);
+	void ClientBotSetModuleToUse(const FString& PilotCategory, const FString& NewModule, bool bResetNow);
+	void ClientBotSetModuleToUse_Implementation(const FString& PilotCategory, const FString& NewModule, bool bResetNow);
 
 	UFUNCTION(Client, Reliable)
 	void ClientCancelCrafting();
 	void ClientCancelCrafting_Implementation();
 
 	UFUNCTION(Client, Reliable)
-	void ClientConfirmTargetData(const TArray<uint8>& HitReplaces, bool bSuccess, uint16 UniqueId);
-	void ClientConfirmTargetData_Implementation(const TArray<uint8>& HitReplaces, bool bSuccess, uint16 UniqueId);
+	void ClientConfirmTargetData(uint16 UniqueId, bool bSuccess, const TArray<uint8>& HitReplaces);
+	void ClientConfirmTargetData_Implementation(uint16 UniqueId, bool bSuccess, const TArray<uint8>& HitReplaces);
 
 	UFUNCTION(Client, Reliable)
 	void ClientCreateOrJoinChatRoom(const FString& ChatRoomId);
 	void ClientCreateOrJoinChatRoom_Implementation(const FString& ChatRoomId);
 
 	UFUNCTION(Client, Reliable)
-	void ClientDeveloper_GetConsoleVariable(const FString& Value, const FString& ConsoleVariable);
-	void ClientDeveloper_GetConsoleVariable_Implementation(const FString& Value, const FString& ConsoleVariable);
+	void ClientDeveloper_GetConsoleVariable(const FString& ConsoleVariable, const FString& Value);
+	void ClientDeveloper_GetConsoleVariable_Implementation(const FString& ConsoleVariable, const FString& Value);
 
 	UFUNCTION(Client, Reliable)
 	void ClientEndGameKick();
 	void ClientEndGameKick_Implementation();
 
 	UFUNCTION(Client, Reliable)
-	void ClientEquipItem(bool bForceExecution, const FGuid& ItemGuid);
-	void ClientEquipItem_Implementation(bool bForceExecution, const FGuid& ItemGuid);
+	void ClientEquipItem(const FGuid& ItemGuid, bool bForceExecution);
+	void ClientEquipItem_Implementation(const FGuid& ItemGuid, bool bForceExecution);
 
 	UFUNCTION(Client, Reliable)
-	void ClientExecuteInventoryItem(bool bActivateSlotAfterSettingFocused, bool bForceExecute, float Delay, const FGuid& ItemGuid);
-	void ClientExecuteInventoryItem_Implementation(bool bActivateSlotAfterSettingFocused, bool bForceExecute, float Delay, const FGuid& ItemGuid);
+	void ClientExecuteInventoryItem(const FGuid& ItemGuid, float Delay, bool bForceExecute, bool bActivateSlotAfterSettingFocused);
+	void ClientExecuteInventoryItem_Implementation(const FGuid& ItemGuid, float Delay, bool bForceExecute, bool bActivateSlotAfterSettingFocused);
 
 	UFUNCTION(Client, Reliable)
 	void ClientFailedToBeginEditingBuildingActor(ABuildingSMActor* BuildingActorToStopEditing);
@@ -1282,8 +1282,8 @@ public:
 	void ClientForceWorldInventoryUpdate_Implementation();
 
 	UFUNCTION(Client, Reliable)
-	void ClientGivePlayerLocalAccountItem(int32 Count, UFortAccountItemDefinition* ItemDefinition);
-	void ClientGivePlayerLocalAccountItem_Implementation(int32 Count, UFortAccountItemDefinition* ItemDefinition);
+	void ClientGivePlayerLocalAccountItem(UFortAccountItemDefinition* ItemDefinition, int32 Count);
+	void ClientGivePlayerLocalAccountItem_Implementation(UFortAccountItemDefinition* ItemDefinition, int32 Count);
 
 	UFUNCTION(Client, Reliable)
 	void ClientJoinConsoleSession(const FString& ConsoleSession);
@@ -1302,24 +1302,24 @@ public:
 	void ClientOpenChoiceUI_Implementation(const FChoiceData& ChoiceItems);
 
 	UFUNCTION(Client, Reliable)
-	void ClientPingMinimap(const FLinearColor& PingColor, const FVector& WorldLocation);
-	void ClientPingMinimap_Implementation(const FLinearColor& PingColor, const FVector& WorldLocation);
+	void ClientPingMinimap(const FVector& WorldLocation, const FLinearColor& PingColor);
+	void ClientPingMinimap_Implementation(const FVector& WorldLocation, const FLinearColor& PingColor);
 
 	UFUNCTION(Client, Reliable)
-	void ClientPrecacheMediaSource(UMediaSource* InMediaSource, UMediaPlayer* InMediaPlayer);
-	void ClientPrecacheMediaSource_Implementation(UMediaSource* InMediaSource, UMediaPlayer* InMediaPlayer);
+	void ClientPrecacheMediaSource(UMediaPlayer* InMediaPlayer, UMediaSource* InMediaSource);
+	void ClientPrecacheMediaSource_Implementation(UMediaPlayer* InMediaPlayer, UMediaSource* InMediaSource);
 
 	UFUNCTION(Client, Reliable)
 	void ClientReadyCheckComplete(bool bPassed);
 	void ClientReadyCheckComplete_Implementation(bool bPassed);
 
 	UFUNCTION(Client, Reliable)
-	void ClientReceivedAttributeSources(const TArray<FAttributeModifierInfo>& Sources, UFortAbilitySystemComponent* AbilitySystemComponent, const FGameplayAttribute& Attribute);
-	void ClientReceivedAttributeSources_Implementation(const TArray<FAttributeModifierInfo>& Sources, UFortAbilitySystemComponent* AbilitySystemComponent, const FGameplayAttribute& Attribute);
+	void ClientReceivedAttributeSources(const FGameplayAttribute& Attribute, UFortAbilitySystemComponent* AbilitySystemComponent, const TArray<FAttributeModifierInfo>& Sources);
+	void ClientReceivedAttributeSources_Implementation(const FGameplayAttribute& Attribute, UFortAbilitySystemComponent* AbilitySystemComponent, const TArray<FAttributeModifierInfo>& Sources);
 
 	UFUNCTION(Client, Reliable)
-	void ClientReceivePresetTeamChat(const FUniqueNetIdRepl& SenderID, const FText& ChatText);
-	void ClientReceivePresetTeamChat_Implementation(const FUniqueNetIdRepl& SenderID, const FText& ChatText);
+	void ClientReceivePresetTeamChat(const FText& ChatText, const FUniqueNetIdRepl& SenderID);
+	void ClientReceivePresetTeamChat_Implementation(const FText& ChatText, const FUniqueNetIdRepl& SenderID);
 
 	UFUNCTION(Client, Reliable)
 	void ClientRefreshPlayerList();
@@ -1330,36 +1330,36 @@ public:
 	void ClientRegisterWithParty_Implementation();
 
 	UFUNCTION(Client, Unreliable)
-	void ClientReportDamagedResourceBuilding(bool bJustHitWeakspot, bool bDestroyed, int32 PotentialResourceCount, EFortResourceType::Type PotentialResourceType, ABuildingSMActor* BuildingSMActor);
-	void ClientReportDamagedResourceBuilding_Implementation(bool bJustHitWeakspot, bool bDestroyed, int32 PotentialResourceCount, EFortResourceType::Type PotentialResourceType, ABuildingSMActor* BuildingSMActor);
+	void ClientReportDamagedResourceBuilding(ABuildingSMActor* BuildingSMActor, EFortResourceType::Type PotentialResourceType, int32 PotentialResourceCount, bool bDestroyed, bool bJustHitWeakspot);
+	void ClientReportDamagedResourceBuilding_Implementation(ABuildingSMActor* BuildingSMActor, EFortResourceType::Type PotentialResourceType, int32 PotentialResourceCount, bool bDestroyed, bool bJustHitWeakspot);
 
 	UFUNCTION(Client, Unreliable)
-	void ClientReportGotResourceFromVehicle(int32 ResourceCount, AActor* Vehicle);
-	void ClientReportGotResourceFromVehicle_Implementation(int32 ResourceCount, AActor* Vehicle);
+	void ClientReportGotResourceFromVehicle(AActor* Vehicle, int32 ResourceCount);
+	void ClientReportGotResourceFromVehicle_Implementation(AActor* Vehicle, int32 ResourceCount);
 
 	UFUNCTION(Client, Reliable)
-	void ClientRequestReadyCheck(const FText& NoText, const FText& YesText, const FText& QueryText);
-	void ClientRequestReadyCheck_Implementation(const FText& NoText, const FText& YesText, const FText& QueryText);
+	void ClientRequestReadyCheck(const FText& QueryText, const FText& YesText, const FText& NoText);
+	void ClientRequestReadyCheck_Implementation(const FText& QueryText, const FText& YesText, const FText& NoText);
 
 	UFUNCTION(Client, Reliable)
-	void ClientSendConfirmationMessage(bool bClientQuitAfterMessage, const FText& ConfirmationMessage);
-	void ClientSendConfirmationMessage_Implementation(bool bClientQuitAfterMessage, const FText& ConfirmationMessage);
+	void ClientSendConfirmationMessage(const FText& ConfirmationMessage, bool bClientQuitAfterMessage);
+	void ClientSendConfirmationMessage_Implementation(const FText& ConfirmationMessage, bool bClientQuitAfterMessage);
 
 	UFUNCTION(Client, Reliable)
-	void ClientSendMessage(USoundBase* StartSound, const FText& Message);
-	void ClientSendMessage_Implementation(USoundBase* StartSound, const FText& Message);
+	void ClientSendMessage(const FText& Message, USoundBase* StartSound);
+	void ClientSendMessage_Implementation(const FText& Message, USoundBase* StartSound);
 
 	UFUNCTION(Client, Reliable)
-	void ClientSetActionMappingEnabled(bool bEnabled, const FName& ActionName);
-	void ClientSetActionMappingEnabled_Implementation(bool bEnabled, const FName& ActionName);
+	void ClientSetActionMappingEnabled(const FName& ActionName, bool bEnabled);
+	void ClientSetActionMappingEnabled_Implementation(const FName& ActionName, bool bEnabled);
 
 	UFUNCTION(Client, Reliable)
 	void ClientSetInviteFlags(const FJoinabilitySettings& Settings);
 	void ClientSetInviteFlags_Implementation(const FJoinabilitySettings& Settings);
 
 	UFUNCTION(Client, Reliable)
-	void ClientSetSpectatorCamera(const FRotator& CameraRotation, const FVector& CameraLocation);
-	void ClientSetSpectatorCamera_Implementation(const FRotator& CameraRotation, const FVector& CameraLocation);
+	void ClientSetSpectatorCamera(const FVector& CameraLocation, const FRotator& CameraRotation);
+	void ClientSetSpectatorCamera_Implementation(const FVector& CameraLocation, const FRotator& CameraRotation);
 
 	UFUNCTION(Client, Reliable)
 	void ClientSpawnWeakSpotOnBuildingActor(const FBuildingWeakSpotData& ReplicatedWeakSpotData);
@@ -1374,8 +1374,8 @@ public:
 	void ClientStopUIFeedbackEvent_Implementation(const FName& EventName);
 
 	UFUNCTION(Client, Reliable)
-	void ClientSwapQuickBarFocus(bool bForceExecution, int32 SlotOverride, const EFortQuickBars& InQuickBar);
-	void ClientSwapQuickBarFocus_Implementation(bool bForceExecution, int32 SlotOverride, const EFortQuickBars& InQuickBar);
+	void ClientSwapQuickBarFocus(const EFortQuickBars& InQuickBar, int32 SlotOverride, bool bForceExecution);
+	void ClientSwapQuickBarFocus_Implementation(const EFortQuickBars& InQuickBar, int32 SlotOverride, bool bForceExecution);
 
 	UFUNCTION(Client, Reliable)
 	void ClientTriggerUIFeedbackEvent(const FName& EventName);
@@ -1386,24 +1386,24 @@ public:
 	void ClientUpdatePlayerList_Implementation();
 
 	UFUNCTION(Client, Reliable)
-	void ClientUpdateRichPresence(bool bImportant, const ERichPresenceStateChange& RichPresenceChange);
-	void ClientUpdateRichPresence_Implementation(bool bImportant, const ERichPresenceStateChange& RichPresenceChange);
+	void ClientUpdateRichPresence(const ERichPresenceStateChange& RichPresenceChange, bool bImportant);
+	void ClientUpdateRichPresence_Implementation(const ERichPresenceStateChange& RichPresenceChange, bool bImportant);
 
 	UFUNCTION(Client, Reliable)
 	void ClientUpdateServerOnPlayerChangedBuildMode();
 	void ClientUpdateServerOnPlayerChangedBuildMode_Implementation();
 
 	UFUNCTION(Client, Unreliable)
-	void FortClientPlaySound(float PitchMultiplier, float VolumeMultiplier, USoundBase* Sound);
-	void FortClientPlaySound_Implementation(float PitchMultiplier, float VolumeMultiplier, USoundBase* Sound);
+	void FortClientPlaySound(USoundBase* Sound, float VolumeMultiplier, float PitchMultiplier);
+	void FortClientPlaySound_Implementation(USoundBase* Sound, float VolumeMultiplier, float PitchMultiplier);
 
 	UFUNCTION(Client, Unreliable)
-	void FortClientPlaySoundAtLocation(float PitchMultiplier, float VolumeMultiplier, const FVector& Location, USoundBase* Sound);
-	void FortClientPlaySoundAtLocation_Implementation(float PitchMultiplier, float VolumeMultiplier, const FVector& Location, USoundBase* Sound);
+	void FortClientPlaySoundAtLocation(USoundBase* Sound, const FVector& Location, float VolumeMultiplier, float PitchMultiplier);
+	void FortClientPlaySoundAtLocation_Implementation(USoundBase* Sound, const FVector& Location, float VolumeMultiplier, float PitchMultiplier);
 
 	UFUNCTION(Server, Reliable)
-	void ForwardActiveVariantChangeRequest(AFortPlayerPawn* PreviewPawn, const FGameplayTag& DesiredActiveVariant, const FGameplayTag& VariantChannelToChange, const FName& ItemTemplateToChange);
-	void ForwardActiveVariantChangeRequest_Implementation(AFortPlayerPawn* PreviewPawn, const FGameplayTag& DesiredActiveVariant, const FGameplayTag& VariantChannelToChange, const FName& ItemTemplateToChange);
+	void ForwardActiveVariantChangeRequest(const FName& ItemTemplateToChange, const FGameplayTag& VariantChannelToChange, const FGameplayTag& DesiredActiveVariant, AFortPlayerPawn* PreviewPawn);
+	void ForwardActiveVariantChangeRequest_Implementation(const FName& ItemTemplateToChange, const FGameplayTag& VariantChannelToChange, const FGameplayTag& DesiredActiveVariant, AFortPlayerPawn* PreviewPawn);
 
 	UFUNCTION()
 	void HandleOutpostInventoryLocalUpdate();
@@ -1453,16 +1453,16 @@ public:
 	void ServerAcknowledgeDelayedQuickBarAction_Implementation(const TArray<uint32>& ProcessedActionIds);
 
 	UFUNCTION(Server, Reliable)
-	void ServerAddPawnMovementInput(bool bForce, float ScaleValue, const FVector& WorldDirection, AFortPawn* InChar);
-	void ServerAddPawnMovementInput_Implementation(bool bForce, float ScaleValue, const FVector& WorldDirection, AFortPawn* InChar);
+	void ServerAddPawnMovementInput(AFortPawn* InChar, const FVector& WorldDirection, float ScaleValue, bool bForce);
+	void ServerAddPawnMovementInput_Implementation(AFortPawn* InChar, const FVector& WorldDirection, float ScaleValue, bool bForce);
 
 	UFUNCTION(Server, Reliable)
 	void ServerAnnouncementStoppedOnClient(const FGuid& AnnouncementID);
 	void ServerAnnouncementStoppedOnClient_Implementation(const FGuid& AnnouncementID);
 
 	UFUNCTION(Server, Reliable)
-	void ServerAttemptInventoryDrop(bool bTrash, int32 Count, const FGuid& ItemGuid);
-	void ServerAttemptInventoryDrop_Implementation(bool bTrash, int32 Count, const FGuid& ItemGuid);
+	void ServerAttemptInventoryDrop(const FGuid& ItemGuid, int32 Count, bool bTrash);
+	void ServerAttemptInventoryDrop_Implementation(const FGuid& ItemGuid, int32 Count, bool bTrash);
 
 	UFUNCTION(Server, Reliable)
 	void ServerBeginEditingBuildingActor(ABuildingSMActor* BuildingActorToEdit);
@@ -1493,24 +1493,24 @@ public:
 	void ServerClientPawnLoaded_Implementation(bool bIsPawnLoaded);
 
 	UFUNCTION(Server, Reliable)
-	void ServerCombineInventoryItems(const FGuid& SourceItemGuid, const FGuid& TargetItemGuid);
-	void ServerCombineInventoryItems_Implementation(const FGuid& SourceItemGuid, const FGuid& TargetItemGuid);
+	void ServerCombineInventoryItems(const FGuid& TargetItemGuid, const FGuid& SourceItemGuid);
+	void ServerCombineInventoryItems_Implementation(const FGuid& TargetItemGuid, const FGuid& SourceItemGuid);
 
 	UFUNCTION(Server, Reliable)
-	void ServerCraftSchematic(bool bIsQuickCrafted, const EFortItemTier& RequestedTier, int32 CraftAmount, int32 PostCraftSlot, const FString& ItemId);
-	void ServerCraftSchematic_Implementation(bool bIsQuickCrafted, const EFortItemTier& RequestedTier, int32 CraftAmount, int32 PostCraftSlot, const FString& ItemId);
+	void ServerCraftSchematic(const FString& ItemId, int32 PostCraftSlot, int32 CraftAmount, const EFortItemTier& RequestedTier, bool bIsQuickCrafted);
+	void ServerCraftSchematic_Implementation(const FString& ItemId, int32 PostCraftSlot, int32 CraftAmount, const EFortItemTier& RequestedTier, bool bIsQuickCrafted);
 
 	UFUNCTION(Server, Reliable)
-	void ServerDeployDefender(int32 AmmoQuantity, const FGuid& WeaponToGiveGuid, const FName& DefenderSquadId, const FString& SelectedItemInstanceId, ABuildingTrapDefender* DefenderTrap);
-	void ServerDeployDefender_Implementation(int32 AmmoQuantity, const FGuid& WeaponToGiveGuid, const FName& DefenderSquadId, const FString& SelectedItemInstanceId, ABuildingTrapDefender* DefenderTrap);
+	void ServerDeployDefender(ABuildingTrapDefender* DefenderTrap, const FString& SelectedItemInstanceId, const FName& DefenderSquadId, const FGuid& WeaponToGiveGuid, int32 AmmoQuantity);
+	void ServerDeployDefender_Implementation(ABuildingTrapDefender* DefenderTrap, const FString& SelectedItemInstanceId, const FName& DefenderSquadId, const FGuid& WeaponToGiveGuid, int32 AmmoQuantity);
 
 	UFUNCTION(Server, Reliable)
 	void ServerDeveloper_GetConsoleVariable(const FString& ConsoleVariable);
 	void ServerDeveloper_GetConsoleVariable_Implementation(const FString& ConsoleVariable);
 
 	UFUNCTION(Server, Reliable)
-	void ServerDisassembleInventoryItems(const TArray<int32>& ItemCounts, const TArray<FGuid>& ItemGuids);
-	void ServerDisassembleInventoryItems_Implementation(const TArray<int32>& ItemCounts, const TArray<FGuid>& ItemGuids);
+	void ServerDisassembleInventoryItems(const TArray<FGuid>& ItemGuids, const TArray<int32>& ItemCounts);
+	void ServerDisassembleInventoryItems_Implementation(const TArray<FGuid>& ItemGuids, const TArray<int32>& ItemCounts);
 
 	UFUNCTION(Server, Reliable)
 	void ServerDropAllItems(UFortItemDefinition* IgnoreItemDef);
@@ -1521,8 +1521,8 @@ public:
 	void ServerDropCarriedObject_Implementation();
 
 	UFUNCTION(Server, Reliable)
-	void ServerEditBuildingActor(bool bMirrored, uint8 RotationIterations, TSubclassOf<ABuildingSMActor> NewBuildingClass, ABuildingSMActor* BuildingActorToEdit);
-	void ServerEditBuildingActor_Implementation(bool bMirrored, uint8 RotationIterations, TSubclassOf<ABuildingSMActor> NewBuildingClass, ABuildingSMActor* BuildingActorToEdit);
+	void ServerEditBuildingActor(ABuildingSMActor* BuildingActorToEdit, TSubclassOf<ABuildingSMActor> NewBuildingClass, uint8 RotationIterations, bool bMirrored);
+	void ServerEditBuildingActor_Implementation(ABuildingSMActor* BuildingActorToEdit, TSubclassOf<ABuildingSMActor> NewBuildingClass, uint8 RotationIterations, bool bMirrored);
 
 	UFUNCTION(Server, Unreliable)
 	void ServerEmote(const FName& AssetName);
@@ -1537,12 +1537,12 @@ public:
 	void ServerExecuteInventoryItem_Implementation(const FGuid& ItemGuid);
 
 	UFUNCTION(Server, Reliable)
-	void ServerExecutePresetTeamChat(const FUniqueNetIdRepl& SenderID, const FText& ChatText);
-	void ServerExecutePresetTeamChat_Implementation(const FUniqueNetIdRepl& SenderID, const FText& ChatText);
+	void ServerExecutePresetTeamChat(const FText& ChatText, const FUniqueNetIdRepl& SenderID);
+	void ServerExecutePresetTeamChat_Implementation(const FText& ChatText, const FUniqueNetIdRepl& SenderID);
 
 	UFUNCTION(Server, Reliable)
-	void ServerGiftInventoryItemToOtherPlayer(int32 Quantity, const FUniqueNetIdRepl& PlayerId, const FGuid& ItemGuid);
-	void ServerGiftInventoryItemToOtherPlayer_Implementation(int32 Quantity, const FUniqueNetIdRepl& PlayerId, const FGuid& ItemGuid);
+	void ServerGiftInventoryItemToOtherPlayer(const FGuid& ItemGuid, const FUniqueNetIdRepl& PlayerId, int32 Quantity);
+	void ServerGiftInventoryItemToOtherPlayer_Implementation(const FGuid& ItemGuid, const FUniqueNetIdRepl& PlayerId, int32 Quantity);
 
 	UFUNCTION(Server, Reliable)
 	void ServerHandleMissionEvent_StartLeavingZone();
@@ -1553,16 +1553,16 @@ public:
 	void ServerHandleMissionEvent_ToggledCursorMode_Implementation(bool bOpened);
 
 	UFUNCTION(Server, Reliable)
-	void ServerHandleMissionEvent_ToggledEditMode(bool bOpened, ABuildingSMActor* EditableActor);
-	void ServerHandleMissionEvent_ToggledEditMode_Implementation(bool bOpened, ABuildingSMActor* EditableActor);
+	void ServerHandleMissionEvent_ToggledEditMode(ABuildingSMActor* EditableActor, bool bOpened);
+	void ServerHandleMissionEvent_ToggledEditMode_Implementation(ABuildingSMActor* EditableActor, bool bOpened);
 
 	UFUNCTION(Server, Reliable)
-	void ServerItemWillBeDestroyed(int32 Count, const FGuid& DestroyedItemGuid);
-	void ServerItemWillBeDestroyed_Implementation(int32 Count, const FGuid& DestroyedItemGuid);
+	void ServerItemWillBeDestroyed(const FGuid& DestroyedItemGuid, int32 Count);
+	void ServerItemWillBeDestroyed_Implementation(const FGuid& DestroyedItemGuid, int32 Count);
 
 	UFUNCTION(Server, Reliable)
-	void ServerKickPlayer(const FText& Reason, const FUniqueNetIdRepl& PlayerToKick);
-	void ServerKickPlayer_Implementation(const FText& Reason, const FUniqueNetIdRepl& PlayerToKick);
+	void ServerKickPlayer(const FUniqueNetIdRepl& PlayerToKick, const FText& Reason);
+	void ServerKickPlayer_Implementation(const FUniqueNetIdRepl& PlayerToKick, const FText& Reason);
 
 	UFUNCTION(Server, Reliable)
 	void ServerKillAllAIPawnsAroundPlayer();
@@ -1573,24 +1573,24 @@ public:
 	void ServerLoadingScreenDropped_Implementation();
 
 	UFUNCTION(Server, Reliable)
-	void ServerModifyStat(bool bForceStatSave, const EStatMod& ModType, int32 Amount, const FName& StatName);
-	void ServerModifyStat_Implementation(bool bForceStatSave, const EStatMod& ModType, int32 Amount, const FName& StatName);
+	void ServerModifyStat(const FName& StatName, int32 Amount, const EStatMod& ModType, bool bForceStatSave);
+	void ServerModifyStat_Implementation(const FName& StatName, int32 Amount, const EStatMod& ModType, bool bForceStatSave);
 
 	UFUNCTION(Server, Reliable)
 	void ServerNotifyMeshNetPlayer(const FName& Tag);
 	void ServerNotifyMeshNetPlayer_Implementation(const FName& Tag);
 
 	UFUNCTION(Server, Reliable)
-	void ServerOnMaterialSelection(EFortResourceLevel::Type NewResourceLevel, EFortResourceType::Type NewResourceType);
-	void ServerOnMaterialSelection_Implementation(EFortResourceLevel::Type NewResourceLevel, EFortResourceType::Type NewResourceType);
+	void ServerOnMaterialSelection(EFortResourceType::Type NewResourceType, EFortResourceLevel::Type NewResourceLevel);
+	void ServerOnMaterialSelection_Implementation(EFortResourceType::Type NewResourceType, EFortResourceLevel::Type NewResourceLevel);
 
 	UFUNCTION(Server, Reliable)
-	void ServerPingMinimap(uint8 RequiredTeam, const FLinearColor& PingColor, const FVector& WorldLocation);
-	void ServerPingMinimap_Implementation(uint8 RequiredTeam, const FLinearColor& PingColor, const FVector& WorldLocation);
+	void ServerPingMinimap(const FVector& WorldLocation, const FLinearColor& PingColor, uint8 RequiredTeam);
+	void ServerPingMinimap_Implementation(const FVector& WorldLocation, const FLinearColor& PingColor, uint8 RequiredTeam);
 
 	UFUNCTION(Server, Unreliable)
-	void ServerPlayEmoteItem(float EmoteRandomNumber, UFortMontageItemDefinitionBase* EmoteAsset);
-	void ServerPlayEmoteItem_Implementation(float EmoteRandomNumber, UFortMontageItemDefinitionBase* EmoteAsset);
+	void ServerPlayEmoteItem(UFortMontageItemDefinitionBase* EmoteAsset, float EmoteRandomNumber);
+	void ServerPlayEmoteItem_Implementation(UFortMontageItemDefinitionBase* EmoteAsset, float EmoteRandomNumber);
 
 	UFUNCTION(Server, Reliable)
 	void ServerReadyToStartMatch();
@@ -1605,12 +1605,12 @@ public:
 	void ServerRemoveDefender_Implementation(ABuildingTrapDefender* DefenderTrap);
 
 	UFUNCTION(Server, Reliable)
-	void ServerRemoveInventoryItem(bool bForcePersistWhenEmpty, bool bForceRemoval, bool bForceRemoveFromQuickBars, int32 Count, const FGuid& ItemGuid);
-	void ServerRemoveInventoryItem_Implementation(bool bForcePersistWhenEmpty, bool bForceRemoval, bool bForceRemoveFromQuickBars, int32 Count, const FGuid& ItemGuid);
+	void ServerRemoveInventoryItem(const FGuid& ItemGuid, int32 Count, bool bForceRemoveFromQuickBars, bool bForceRemoval, bool bForcePersistWhenEmpty);
+	void ServerRemoveInventoryItem_Implementation(const FGuid& ItemGuid, int32 Count, bool bForceRemoveFromQuickBars, bool bForceRemoval, bool bForcePersistWhenEmpty);
 
 	UFUNCTION(Server, Reliable)
-	void ServerRemoveInventoryStateValue(EFortItemEntryState::Type StateValueType, const FGuid& ItemGuid);
-	void ServerRemoveInventoryStateValue_Implementation(EFortItemEntryState::Type StateValueType, const FGuid& ItemGuid);
+	void ServerRemoveInventoryStateValue(const FGuid& ItemGuid, EFortItemEntryState::Type StateValueType);
+	void ServerRemoveInventoryStateValue_Implementation(const FGuid& ItemGuid, EFortItemEntryState::Type StateValueType);
 
 	UFUNCTION(Server, Reliable)
 	void ServerRepairBuildingActor(ABuildingSMActor* BuildingActorToRepair);
@@ -1621,16 +1621,16 @@ public:
 	void ServerReplyToReadyCheck_Implementation(bool bReady);
 
 	UFUNCTION(Server, Unreliable)
-	void ServerReportClientFPS(uint8 ClientMaxFrameScore, uint8 ClientAvgFrameScore, float ClientAvgFPS);
-	void ServerReportClientFPS_Implementation(uint8 ClientMaxFrameScore, uint8 ClientAvgFrameScore, float ClientAvgFPS);
+	void ServerReportClientFPS(float ClientAvgFPS, uint8 ClientAvgFrameScore, uint8 ClientMaxFrameScore);
+	void ServerReportClientFPS_Implementation(float ClientAvgFPS, uint8 ClientAvgFrameScore, uint8 ClientMaxFrameScore);
 
 	UFUNCTION(Server, Reliable)
 	void ServerRequestAIDebug();
 	void ServerRequestAIDebug_Implementation();
 
 	UFUNCTION(Server, Reliable)
-	void ServerRequestAttributeSources(UFortAbilitySystemComponent* AbilitySystemComponent, const FGameplayAttribute& Attribute);
-	void ServerRequestAttributeSources_Implementation(UFortAbilitySystemComponent* AbilitySystemComponent, const FGameplayAttribute& Attribute);
+	void ServerRequestAttributeSources(const FGameplayAttribute& Attribute, UFortAbilitySystemComponent* AbilitySystemComponent);
+	void ServerRequestAttributeSources_Implementation(const FGameplayAttribute& Attribute, UFortAbilitySystemComponent* AbilitySystemComponent);
 
 	UFUNCTION(Server, Reliable)
 	void ServerRequestGameplayAction(EFortRequestedGameplayAction::Type RequestedAction);
@@ -1641,8 +1641,8 @@ public:
 	void ServerReturnToMainMenu_Implementation();
 
 	UFUNCTION(Server, Reliable)
-	void ServerSendClientProgressUpdate(const TArray<uint64>& ClientProgressUpdate, int32 ClientProgressState);
-	void ServerSendClientProgressUpdate_Implementation(const TArray<uint64>& ClientProgressUpdate, int32 ClientProgressState);
+	void ServerSendClientProgressUpdate(int32 ClientProgressState, const TArray<uint64>& ClientProgressUpdate);
+	void ServerSendClientProgressUpdate_Implementation(int32 ClientProgressState, const TArray<uint64>& ClientProgressUpdate);
 
 	UFUNCTION(Server, Reliable)
 	void ServerSetAntiAddictionPlayTimeMultiplier(float NewPlayTimeRewardRate);
@@ -1661,20 +1661,20 @@ public:
 	void ServerSetHero_Implementation(const FString& NewHeroID);
 
 	UFUNCTION(Server, Reliable)
-	void ServerSetInventoryStateValue(const FFortItemEntryStateValue& StateValue, const FGuid& ItemGuid);
-	void ServerSetInventoryStateValue_Implementation(const FFortItemEntryStateValue& StateValue, const FGuid& ItemGuid);
+	void ServerSetInventoryStateValue(const FGuid& ItemGuid, const FFortItemEntryStateValue& StateValue);
+	void ServerSetInventoryStateValue_Implementation(const FGuid& ItemGuid, const FFortItemEntryStateValue& StateValue);
 
 	UFUNCTION(Server, Reliable)
-	void ServerSetMarkText(const FString& MarkText, AFortMarkActor* MarkActor);
-	void ServerSetMarkText_Implementation(const FString& MarkText, AFortMarkActor* MarkActor);
+	void ServerSetMarkText(AFortMarkActor* MarkActor, const FString& MarkText);
+	void ServerSetMarkText_Implementation(AFortMarkActor* MarkActor, const FString& MarkText);
 
 	UFUNCTION(Server, Reliable)
 	void ServerSetPartyOwner(const FUniqueNetIdRepl& PartyOwnerUniqueId);
 	void ServerSetPartyOwner_Implementation(const FUniqueNetIdRepl& PartyOwnerUniqueId);
 
 	UFUNCTION(Server, Reliable)
-	void ServerSetReadyToContinue(bool bTryStartTimer, EFortGameplayState::Type RequestedState, bool bReady);
-	void ServerSetReadyToContinue_Implementation(bool bTryStartTimer, EFortGameplayState::Type RequestedState, bool bReady);
+	void ServerSetReadyToContinue(bool bReady, EFortGameplayState::Type RequestedState, bool bTryStartTimer);
+	void ServerSetReadyToContinue_Implementation(bool bReady, EFortGameplayState::Type RequestedState, bool bTryStartTimer);
 
 	UFUNCTION(Server, Reliable)
 	void ServerSetShouldUseBotManager(bool InValue);
@@ -1685,8 +1685,8 @@ public:
 	void ServerSetShouldUsePilotComponent_Implementation(bool InValue);
 
 	UFUNCTION(Server, Reliable)
-	void ServerSpawnMark(const FText& PreapprovedText, const FVector& AttachOffset, AActor* ActorToAttachTo);
-	void ServerSpawnMark_Implementation(const FText& PreapprovedText, const FVector& AttachOffset, AActor* ActorToAttachTo);
+	void ServerSpawnMark(AActor* ActorToAttachTo, const FVector& AttachOffset, const FText& PreapprovedText);
+	void ServerSpawnMark_Implementation(AActor* ActorToAttachTo, const FVector& AttachOffset, const FText& PreapprovedText);
 
 	UFUNCTION(Server, Reliable)
 	void ServerSpotActor(AActor* NewlySpottedActor);
@@ -1725,36 +1725,36 @@ public:
 	void ServerTriggerGenericObjectiveEvent_Implementation(AFortObjectiveBase* Objective);
 
 	UFUNCTION(Server, Reliable)
-	void ServerUIChoiceCompleted(int32 MenuIdentifier, int32 ChosenItem);
-	void ServerUIChoiceCompleted_Implementation(int32 MenuIdentifier, int32 ChosenItem);
+	void ServerUIChoiceCompleted(int32 ChosenItem, int32 MenuIdentifier);
+	void ServerUIChoiceCompleted_Implementation(int32 ChosenItem, int32 MenuIdentifier);
 
 	UFUNCTION(Server, Reliable)
-	void ServerUpdateActorOptions(const TArray<FString>& OptionsValues, const TArray<FString>& OptionsKeys, AActor* OptionsTarget);
-	void ServerUpdateActorOptions_Implementation(const TArray<FString>& OptionsValues, const TArray<FString>& OptionsKeys, AActor* OptionsTarget);
+	void ServerUpdateActorOptions(AActor* OptionsTarget, const TArray<FString>& OptionsKeys, const TArray<FString>& OptionsValues);
+	void ServerUpdateActorOptions_Implementation(AActor* OptionsTarget, const TArray<FString>& OptionsKeys, const TArray<FString>& OptionsValues);
 
 	UFUNCTION(Server, Reliable)
-	void ServerUpdateGameDescriptionData(const TArray<FText>& GameDescriptionText, const FText& GameName, AActor* DataTarget);
-	void ServerUpdateGameDescriptionData_Implementation(const TArray<FText>& GameDescriptionText, const FText& GameName, AActor* DataTarget);
+	void ServerUpdateGameDescriptionData(AActor* DataTarget, const FText& GameName, const TArray<FText>& GameDescriptionText);
+	void ServerUpdateGameDescriptionData_Implementation(AActor* DataTarget, const FText& GameName, const TArray<FText>& GameDescriptionText);
 
 	UFUNCTION(Server, Reliable)
-	void ServerUpdateGameplayOptions(const TArray<FString>& UserOptionsValues, const TArray<FString>& UserOptionsKeys);
-	void ServerUpdateGameplayOptions_Implementation(const TArray<FString>& UserOptionsValues, const TArray<FString>& UserOptionsKeys);
+	void ServerUpdateGameplayOptions(const TArray<FString>& UserOptionsKeys, const TArray<FString>& UserOptionsValues);
+	void ServerUpdateGameplayOptions_Implementation(const TArray<FString>& UserOptionsKeys, const TArray<FString>& UserOptionsValues);
 
 	UFUNCTION(Server, Reliable)
-	void ServerUpdateItemListOptions(const TArray<FString>& OptionsValues, const TArray<FString>& OptionsKeys, int32 ItemIndex, UFortMinigameItemContainerComponent* ItemContainerComponent);
-	void ServerUpdateItemListOptions_Implementation(const TArray<FString>& OptionsValues, const TArray<FString>& OptionsKeys, int32 ItemIndex, UFortMinigameItemContainerComponent* ItemContainerComponent);
+	void ServerUpdateItemListOptions(UFortMinigameItemContainerComponent* ItemContainerComponent, int32 ItemIndex, const TArray<FString>& OptionsKeys, const TArray<FString>& OptionsValues);
+	void ServerUpdateItemListOptions_Implementation(UFortMinigameItemContainerComponent* ItemContainerComponent, int32 ItemIndex, const TArray<FString>& OptionsKeys, const TArray<FString>& OptionsValues);
 
 	UFUNCTION(Server, Reliable)
-	void ServerUpdateMessageComponents(const TArray<FGameplayTagContainer>& NewChannelIds, const TArray<UFortGameplayMessageComponentBase*>& ModifiedComponents);
-	void ServerUpdateMessageComponents_Implementation(const TArray<FGameplayTagContainer>& NewChannelIds, const TArray<UFortGameplayMessageComponentBase*>& ModifiedComponents);
+	void ServerUpdateMessageComponents(const TArray<UFortGameplayMessageComponentBase*>& ModifiedComponents, const TArray<FGameplayTagContainer>& NewChannelIds);
+	void ServerUpdateMessageComponents_Implementation(const TArray<UFortGameplayMessageComponentBase*>& ModifiedComponents, const TArray<FGameplayTagContainer>& NewChannelIds);
 
 	UFUNCTION(Server, Reliable)
 	void ServerUpdatePlayerData(const TArray<uint8>& PlayerData);
 	void ServerUpdatePlayerData_Implementation(const TArray<uint8>& PlayerData);
 
 	UFUNCTION(Server, Reliable)
-	void ServerUpgradeBuildingActor(int32 NewUpgradeLevel, ABuildingActor* BuildingActorToUpgrade);
-	void ServerUpgradeBuildingActor_Implementation(int32 NewUpgradeLevel, ABuildingActor* BuildingActorToUpgrade);
+	void ServerUpgradeBuildingActor(ABuildingActor* BuildingActorToUpgrade, int32 NewUpgradeLevel);
+	void ServerUpgradeBuildingActor_Implementation(ABuildingActor* BuildingActorToUpgrade, int32 NewUpgradeLevel);
 
 	UFUNCTION(Server, Reliable)
 	void TogglePersonalVehicle(bool bOn);

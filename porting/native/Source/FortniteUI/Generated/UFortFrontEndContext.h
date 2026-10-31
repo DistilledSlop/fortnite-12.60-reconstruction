@@ -27,6 +27,7 @@
 #include "FTheaterTileFocusedDelegate.h"
 #include "FUnlockableVariantPreviewInfo.h"
 #include "FVaultItemViewed.h"
+#include "FVaultItemsViewed.h"
 #include "FViewingPhoenixTheaterChangedDelegate.h"
 
 class UFortServerBrowserHelper;
@@ -110,6 +111,10 @@ public:
 	// table index 10, flags 0x10000010080000
 	UPROPERTY()
 	FVaultItemViewed OnVaultItemViewed;
+
+	// table index 9, flags 0x10000010080000
+	UPROPERTY()
+	FVaultItemsViewed OnVaultItemsViewed;
 
 	// table index 8, flags 0x10000010080000
 	UPROPERTY()

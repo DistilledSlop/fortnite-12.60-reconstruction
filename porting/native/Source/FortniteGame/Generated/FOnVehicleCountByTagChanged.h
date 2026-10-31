@@ -8,5 +8,5 @@
 #include "FOnVehicleCountByTagChanged.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnVehicleCountByTagChanged, int32, NewVehicleCount, FGameplayTag, VehicleTag);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnVehicleCountByTagChanged, FGameplayTag, VehicleTag, int32, NewVehicleCount);
 

@@ -7,5 +7,5 @@
 #include "FQuestComponentCustomVisualsPassed.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FQuestComponentCustomVisualsPassed, bool, FullyInitalized, AFortPlayerController*, PlayerController);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FQuestComponentCustomVisualsPassed, AFortPlayerController*, PlayerController, bool, FullyInitalized);
 

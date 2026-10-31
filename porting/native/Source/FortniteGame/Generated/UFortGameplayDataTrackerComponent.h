@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UGameFrameworkComponent.h"
 
+#include "FFortGameplayDataTrackerAccumulation.h"
 #include "FFortGameplayDataTrackerEventConfiguration.h"
 #include "FFortGameplayDataTrackerEventValue.h"
 
@@ -25,6 +26,10 @@ public:
 	UPROPERTY()
 	TArray<FFortGameplayDataTrackerEventConfiguration> EventsToTrack;
 
+	// table index 10, flags 0x40008000000001
+	UPROPERTY()
+	TArray<FFortGameplayDataTrackerAccumulation> AccumulationsToTrack;
+
 	// table index 8, flags 0x40000100002020
 	UPROPERTY(ReplicatedUsing=OnRep_EventValues, Transient)
 	TArray<FFortGameplayDataTrackerEventValue> ReplicatedEventValues;
@@ -32,6 +37,14 @@ public:
 	// table index 6, flags 0x40000000002000
 	UPROPERTY(Transient)
 	TArray<FFortGameplayDataTrackerEventValue> EventValues;
+
+	// table index 4, flags 0x40008000002000
+	UPROPERTY(Transient)
+	TArray<FFortGameplayDataTrackerAccumulation> DataAccumulations;
+
+	// table index 2, flags 0x40008000002000
+	UPROPERTY(Transient)
+	TArray<FFortGameplayDataTrackerAccumulation> PendingDataAccumulationRegistrations;
 
 	// table index 1, flags 0x40000000000000
 	UPROPERTY()

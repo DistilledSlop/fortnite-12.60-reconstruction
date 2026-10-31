@@ -7,5 +7,5 @@
 #include "FOnVisibilityChanged.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnVisibilityChanged, bool, bVisible, uint8, TeamObserving, AActor*, Actor);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnVisibilityChanged, AActor*, Actor, uint8, TeamObserving, bool, bVisible);
 

@@ -7,5 +7,5 @@
 #include "FWaxEventSignature.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FWaxEventSignature, int32, WaxAmount, AFortPlayerStateAthena*, WaxSubject);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FWaxEventSignature, AFortPlayerStateAthena*, WaxSubject, int32, WaxAmount);
 

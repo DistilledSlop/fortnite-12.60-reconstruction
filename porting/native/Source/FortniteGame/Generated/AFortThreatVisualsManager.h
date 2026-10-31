@@ -99,8 +99,8 @@ public:
 	TArray<FVector> GoalActorLocations;
 
 	UFUNCTION(NetMulticast, Reliable)
-	void BeginThreatVisualsPrecursor(const FVector& ThreatLocation, AActor* SourceActor);
-	void BeginThreatVisualsPrecursor_Implementation(const FVector& ThreatLocation, AActor* SourceActor);
+	void BeginThreatVisualsPrecursor(AActor* SourceActor, const FVector& ThreatLocation);
+	void BeginThreatVisualsPrecursor_Implementation(AActor* SourceActor, const FVector& ThreatLocation);
 
 	UFUNCTION()
 	void OnRep_GoalActorLocations();

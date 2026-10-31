@@ -7,5 +7,5 @@
 #include "FOnClientEnterVolume.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnClientEnterVolume, AFortVolume*, Volume, APlayerState*, Client);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnClientEnterVolume, APlayerState*, Client, AFortVolume*, Volume);
 

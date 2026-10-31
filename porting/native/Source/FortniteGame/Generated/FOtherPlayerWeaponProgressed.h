@@ -7,5 +7,5 @@
 #include "FOtherPlayerWeaponProgressed.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOtherPlayerWeaponProgressed, UFortWeaponItemDefinition*, NextWeapon, AFortPlayerStateAthena*, OtherPlayer);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOtherPlayerWeaponProgressed, AFortPlayerStateAthena*, OtherPlayer, UFortWeaponItemDefinition*, NextWeapon);
 

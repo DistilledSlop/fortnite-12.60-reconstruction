@@ -6,7 +6,7 @@ void UAthenaMarkerComponent::ServerAddMapMarker_Implementation(const FFortClient
 	// Body not recovered: reflection-derived stub.
 }
 
-void UAthenaMarkerComponent::ServerRemoveMapMarker_Implementation(const ECancelMarkerReason& CancelReason, int32 UnderlyingType, const FMarkerID& MarkerID)
+void UAthenaMarkerComponent::ServerRemoveMapMarker_Implementation(const FMarkerID& MarkerID, const ECancelMarkerReason& CancelReason)
 {
 	// Body not recovered: reflection-derived stub.
 }

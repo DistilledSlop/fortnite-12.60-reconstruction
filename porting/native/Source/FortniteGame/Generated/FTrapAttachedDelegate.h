@@ -7,5 +7,5 @@
 #include "FTrapAttachedDelegate.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FTrapAttachedDelegate, bool, bDetached, ABuildingTrap*, Trap);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FTrapAttachedDelegate, ABuildingTrap*, Trap, bool, bDetached);
 

@@ -7,5 +7,5 @@
 #include "FOnShowPublishWatermarkChangedDelegate.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnShowPublishWatermarkChangedDelegate, bool, bNewShowPublishWatermark, AFortMinigameSettingsBuilding*, MinigameSettingsBuilding);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnShowPublishWatermarkChangedDelegate, AFortMinigameSettingsBuilding*, MinigameSettingsBuilding, bool, bNewShowPublishWatermark);
 

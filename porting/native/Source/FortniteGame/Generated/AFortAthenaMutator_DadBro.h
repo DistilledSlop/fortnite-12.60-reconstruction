@@ -59,10 +59,6 @@ public:
 	UPROPERTY()
 	float PickupTimeRangeToDespawnAtOnce;
 
-	// table index 20, flags 0x0
-	UPROPERTY()
-	int32 UnderlyingType;
-
 	// table index 19, flags 0x40000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_DadBroCodeState)
 	EDadBroState DadBroCodeState;

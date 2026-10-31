@@ -250,20 +250,20 @@ public:
 	void Client_RefreshEventCalendar_Implementation();
 
 	UFUNCTION(NetMulticast, Unreliable)
-	void DbgBoxSendToAllInternal_DoNotCall(float Thickness, uint8 DepthPriority, float LifeTime, bool bPersistentLines, const FColor& Color, const FRotator& Rotation, const FVector& Extent, const FVector& Center);
-	void DbgBoxSendToAllInternal_DoNotCall_Implementation(float Thickness, uint8 DepthPriority, float LifeTime, bool bPersistentLines, const FColor& Color, const FRotator& Rotation, const FVector& Extent, const FVector& Center);
+	void DbgBoxSendToAllInternal_DoNotCall(const FVector& Center, const FVector& Extent, const FRotator& Rotation, const FColor& Color, bool bPersistentLines, float LifeTime, uint8 DepthPriority, float Thickness);
+	void DbgBoxSendToAllInternal_DoNotCall_Implementation(const FVector& Center, const FVector& Extent, const FRotator& Rotation, const FColor& Color, bool bPersistentLines, float LifeTime, uint8 DepthPriority, float Thickness);
 
 	UFUNCTION(NetMulticast, Unreliable)
-	void DbgCapsuleSendToAllInternal_DoNotCall(float Thickness, uint8 DepthPriority, float LifeTime, bool bPersistentLines, const FColor& Color, const FQuat& Rotation, float Radius, float HalfHeight, const FVector& Center);
-	void DbgCapsuleSendToAllInternal_DoNotCall_Implementation(float Thickness, uint8 DepthPriority, float LifeTime, bool bPersistentLines, const FColor& Color, const FQuat& Rotation, float Radius, float HalfHeight, const FVector& Center);
+	void DbgCapsuleSendToAllInternal_DoNotCall(const FVector& Center, float HalfHeight, float Radius, const FQuat& Rotation, const FColor& Color, bool bPersistentLines, float LifeTime, uint8 DepthPriority, float Thickness);
+	void DbgCapsuleSendToAllInternal_DoNotCall_Implementation(const FVector& Center, float HalfHeight, float Radius, const FQuat& Rotation, const FColor& Color, bool bPersistentLines, float LifeTime, uint8 DepthPriority, float Thickness);
 
 	UFUNCTION(NetMulticast, Unreliable)
-	void DbgLineSendToAllInternal_DoNotCall(float Thickness, uint8 DepthPriority, float LifeTime, bool bPersistentLines, const FColor& Color, const FVector& LineEnd, const FVector& LineStart);
-	void DbgLineSendToAllInternal_DoNotCall_Implementation(float Thickness, uint8 DepthPriority, float LifeTime, bool bPersistentLines, const FColor& Color, const FVector& LineEnd, const FVector& LineStart);
+	void DbgLineSendToAllInternal_DoNotCall(const FVector& LineStart, const FVector& LineEnd, const FColor& Color, bool bPersistentLines, float LifeTime, uint8 DepthPriority, float Thickness);
+	void DbgLineSendToAllInternal_DoNotCall_Implementation(const FVector& LineStart, const FVector& LineEnd, const FColor& Color, bool bPersistentLines, float LifeTime, uint8 DepthPriority, float Thickness);
 
 	UFUNCTION(NetMulticast, Unreliable)
-	void DbgSphereSendToAllInternal_DoNotCall(float Thickness, uint8 DepthPriority, float LifeTime, bool bPersistentLines, const FColor& Color, int32 Segments, float Radius, const FVector& Center);
-	void DbgSphereSendToAllInternal_DoNotCall_Implementation(float Thickness, uint8 DepthPriority, float LifeTime, bool bPersistentLines, const FColor& Color, int32 Segments, float Radius, const FVector& Center);
+	void DbgSphereSendToAllInternal_DoNotCall(const FVector& Center, float Radius, int32 Segments, const FColor& Color, bool bPersistentLines, float LifeTime, uint8 DepthPriority, float Thickness);
+	void DbgSphereSendToAllInternal_DoNotCall_Implementation(const FVector& Center, float Radius, int32 Segments, const FColor& Color, bool bPersistentLines, float LifeTime, uint8 DepthPriority, float Thickness);
 
 	UFUNCTION()
 	void OnRep_AdditionalPlaylistLevelsStreamed();

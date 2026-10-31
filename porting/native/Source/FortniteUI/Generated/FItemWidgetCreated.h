@@ -7,5 +7,5 @@
 #include "FItemWidgetCreated.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FItemWidgetCreated, UFortItem*, Item, UWidget*, Widget);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FItemWidgetCreated, UWidget*, Widget, UFortItem*, Item);
 

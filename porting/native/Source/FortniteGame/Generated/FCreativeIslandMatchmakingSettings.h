@@ -41,10 +41,6 @@ struct FCreativeIslandMatchmakingSettings
 	UPROPERTY()
 	bool bAllowJoinInProgress;
 
-	// table index 2, offset 0, flags 0x0
-	UPROPERTY()
-	int32 UnderlyingType;
-
 	// table index 1, offset 40, flags 0x10000000000014
 	UPROPERTY()
 	EJoinInProgress JoinInProgressType;

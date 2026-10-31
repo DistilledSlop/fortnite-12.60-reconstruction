@@ -112,12 +112,12 @@ void AFortGameStateZone::OnWaveBasedModifiersAppliedMulticast_Implementation(con
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortGameStateZone::OnWaveStart_Implementation(int32 WaveNum, const FText& WaveText, int32 Level, const FText& LevelText)
+void AFortGameStateZone::OnWaveStart_Implementation(const FText& LevelText, int32 Level, const FText& WaveText, int32 WaveNum)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortGameStateZone::ServerFireAIDirectorEvent_Implementation(float EventMultiplier, UObject* EventTarget, UObject* EventSource, const EFortAIDirectorEvent& Event)
+void AFortGameStateZone::ServerFireAIDirectorEvent_Implementation(const EFortAIDirectorEvent& Event, UObject* EventSource, UObject* EventTarget, float EventMultiplier)
 {
 	// Body not recovered: reflection-derived stub.
 }

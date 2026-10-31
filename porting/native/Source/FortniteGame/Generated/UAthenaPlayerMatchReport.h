@@ -11,6 +11,7 @@
 #include "FAthenaMatchTeamStats.h"
 #include "FAthenaTravelRecord.h"
 #include "FDataAvailableEvent.h"
+#include "FOnTravelLogUpdated.h"
 
 #include "UAthenaPlayerMatchReport.generated.h"
 
@@ -59,6 +60,10 @@ public:
 	// table index 1, flags 0x10000000000015
 	UPROPERTY()
 	FAthenaTravelRecord TravelRecord;
+
+	// table index 0, flags 0x10000010080000
+	UPROPERTY()
+	FOnTravelLogUpdated TravelLogUpdated;
 
 };
 

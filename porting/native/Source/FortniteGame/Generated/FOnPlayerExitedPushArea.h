@@ -7,5 +7,5 @@
 #include "FOnPlayerExitedPushArea.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnPlayerExitedPushArea, bool, bPlayerIsAPusher, AFortPlayerPawn*, PlayerState);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnPlayerExitedPushArea, AFortPlayerPawn*, PlayerState, bool, bPlayerIsAPusher);
 

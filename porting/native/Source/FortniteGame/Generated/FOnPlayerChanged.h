@@ -8,5 +8,5 @@
 #include "FOnPlayerChanged.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnPlayerChanged, bool, bIsLocalPlayer, FUniqueNetIdRepl, UniqueNetId);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnPlayerChanged, FUniqueNetIdRepl, UniqueNetId, bool, bIsLocalPlayer);
 

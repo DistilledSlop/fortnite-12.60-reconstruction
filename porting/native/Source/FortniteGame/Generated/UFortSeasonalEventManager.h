@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
 
+#include "FOnActiveEventFlagsChanged.h"
+
 #include "UFortSeasonalEventManager.generated.h"
 
 UCLASS()
@@ -14,5 +16,9 @@ class FORTNITEGAME_API UFortSeasonalEventManager : public UObject
 	GENERATED_BODY()
 
 public:
+	// table index 0, flags 0x10000010080000
+	UPROPERTY()
+	FOnActiveEventFlagsChanged OnActiveEventFlagsChanged;
+
 };
 

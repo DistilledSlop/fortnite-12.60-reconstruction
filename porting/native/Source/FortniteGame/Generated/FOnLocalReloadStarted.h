@@ -8,5 +8,5 @@
 #include "FOnLocalReloadStarted.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnLocalReloadStarted, EFortWeaponReloadType, ReloadType, float, ReloadTime);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnLocalReloadStarted, float, ReloadTime, EFortWeaponReloadType, ReloadType);
 

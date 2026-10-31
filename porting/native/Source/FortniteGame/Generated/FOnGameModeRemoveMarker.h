@@ -7,5 +7,5 @@
 #include "FOnGameModeRemoveMarker.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnGameModeRemoveMarker, int32, InstanceID, int32, PlayerID);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnGameModeRemoveMarker, int32, PlayerID, int32, InstanceID);
 

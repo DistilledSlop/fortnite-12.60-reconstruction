@@ -7,5 +7,5 @@
 #include "FOnAudioUpdateInAudibleRange.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnAudioUpdateInAudibleRange, float, SplineInputKey, UAudioComponent*, AudioComponent);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnAudioUpdateInAudibleRange, UAudioComponent*, AudioComponent, float, SplineInputKey);
 

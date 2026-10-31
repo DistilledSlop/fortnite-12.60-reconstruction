@@ -23,8 +23,8 @@ public:
 	AFortPlayerState* FollowedPlayerState;
 
 	UFUNCTION(Server, Reliable)
-	void ServerSetFollowedPlayer(bool bValidPos, const FVector& SpectatorLocation, AFortPlayerState* NewPlayerToFollow);
-	void ServerSetFollowedPlayer_Implementation(bool bValidPos, const FVector& SpectatorLocation, AFortPlayerState* NewPlayerToFollow);
+	void ServerSetFollowedPlayer(AFortPlayerState* NewPlayerToFollow, const FVector& SpectatorLocation, bool bValidPos);
+	void ServerSetFollowedPlayer_Implementation(AFortPlayerState* NewPlayerToFollow, const FVector& SpectatorLocation, bool bValidPos);
 
 };
 

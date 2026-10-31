@@ -7,5 +7,5 @@
 #include "FOnTabButtonCreated.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnTabButtonCreated, UCommonButton*, TabButton, FName, TabId);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnTabButtonCreated, FName, TabId, UCommonButton*, TabButton);
 

@@ -118,8 +118,8 @@ public:
 	TMap<FGameplayTag, int32> InteractionTagHistory;
 
 	UFUNCTION(Server, Reliable)
-	void ServerAttemptInteract(int32 RequestId, EInteractionBeingAttempted InteractionBeingAttempted, UObject* OptionalObjectData, TInteractionType InteractType, UPrimitiveComponent* InteractComponent, AActor* ReceivingActor);
-	void ServerAttemptInteract_Implementation(int32 RequestId, EInteractionBeingAttempted InteractionBeingAttempted, UObject* OptionalObjectData, TInteractionType InteractType, UPrimitiveComponent* InteractComponent, AActor* ReceivingActor);
+	void ServerAttemptInteract(AActor* ReceivingActor, UPrimitiveComponent* InteractComponent, TInteractionType InteractType, UObject* OptionalObjectData, EInteractionBeingAttempted InteractionBeingAttempted, int32 RequestId);
+	void ServerAttemptInteract_Implementation(AActor* ReceivingActor, UPrimitiveComponent* InteractComponent, TInteractionType InteractType, UObject* OptionalObjectData, EInteractionBeingAttempted InteractionBeingAttempted, int32 RequestId);
 
 	UFUNCTION(Server, Reliable)
 	void ServerNotifyEndLongUse(AActor* ReceivingActor);

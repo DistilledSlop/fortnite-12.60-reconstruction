@@ -7,6 +7,7 @@
 #include "Abilities/Tasks/AbilityTask.h"
 
 #include "FFortGameplayEffectContainerSpec.h"
+#include "FSpawnProjectileEventData.h"
 #include "Math/Rotator.h"
 #include "Math/Vector.h"
 
@@ -21,6 +22,30 @@ class FORTNITEGAME_API UFortAbilityTask_SpawnProjectileAndWait : public UAbility
 	GENERATED_BODY()
 
 public:
+	// table index 17, flags 0x10000010080000
+	UPROPERTY()
+	FSpawnProjectileEventData Created;
+
+	// table index 16, flags 0x10000010080000
+	UPROPERTY()
+	FSpawnProjectileEventData Touched;
+
+	// table index 15, flags 0x10000010080000
+	UPROPERTY()
+	FSpawnProjectileEventData Bounced;
+
+	// table index 14, flags 0x10000010080000
+	UPROPERTY()
+	FSpawnProjectileEventData Stopped;
+
+	// table index 13, flags 0x10000010080000
+	UPROPERTY()
+	FSpawnProjectileEventData Exploded;
+
+	// table index 12, flags 0x10000010080000
+	UPROPERTY()
+	FSpawnProjectileEventData Destroyed;
+
 	// table index 11, flags 0x14000000000000
 	UPROPERTY()
 	TWeakObjectPtr<AFortProjectileBase> SpawnedProj;

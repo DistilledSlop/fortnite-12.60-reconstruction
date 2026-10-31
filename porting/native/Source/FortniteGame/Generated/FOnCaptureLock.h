@@ -7,5 +7,5 @@
 #include "FOnCaptureLock.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnCaptureLock, bool, bIsNewLock, uint8, LockTeam, AAthenaCapturePoint*, CapturePoint);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnCaptureLock, AAthenaCapturePoint*, CapturePoint, uint8, LockTeam, bool, bIsNewLock);
 

@@ -7,7 +7,7 @@ void AFortBroadcastRemoteClientInfo::ClientRemotePlayerAddMapMarker_Implementati
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortBroadcastRemoteClientInfo::ClientRemotePlayerDamagedResourceBuilding_Implementation(bool bJustHitWeakspot, bool bDestroyed, int32 PotentialResourceCount, EFortResourceType::Type PotentialResourceType, ABuildingSMActor* BuildingSMActor)
+void AFortBroadcastRemoteClientInfo::ClientRemotePlayerDamagedResourceBuilding_Implementation(ABuildingSMActor* BuildingSMActor, EFortResourceType::Type PotentialResourceType, int32 PotentialResourceCount, bool bDestroyed, bool bJustHitWeakspot)
 {
 	// Body not recovered: reflection-derived stub.
 }

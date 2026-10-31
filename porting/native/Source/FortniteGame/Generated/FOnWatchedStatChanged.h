@@ -7,5 +7,5 @@
 #include "FOnWatchedStatChanged.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnWatchedStatChanged, int32, StatValue, FName, StatName);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnWatchedStatChanged, FName, StatName, int32, StatValue);
 

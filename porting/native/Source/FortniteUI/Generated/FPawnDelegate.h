@@ -7,5 +7,5 @@
 #include "FPawnDelegate.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FPawnDelegate, AFortPlayerPawn*, PawnParam, UAthenaRemotePlayerViewData*, PlayerData);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FPawnDelegate, UAthenaRemotePlayerViewData*, PlayerData, AFortPlayerPawn*, PawnParam);
 

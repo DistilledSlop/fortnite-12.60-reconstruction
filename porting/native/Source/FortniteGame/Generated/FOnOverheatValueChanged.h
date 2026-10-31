@@ -8,5 +8,5 @@
 #include "FOnOverheatValueChanged.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_FourParams(FOnOverheatValueChanged, bool, bIsInCooldown, EFortWeaponOverheatState, State, float, MaxValue, float, CurrentValue);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_FourParams(FOnOverheatValueChanged, float, CurrentValue, float, MaxValue, EFortWeaponOverheatState, State, bool, bIsInCooldown);
 

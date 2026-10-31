@@ -7,5 +7,5 @@
 #include "FOnExecuteNamedActionBP.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnExecuteNamedActionBP, FName, Action, UFortSetting*, Setting);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnExecuteNamedActionBP, UFortSetting*, Setting, FName, Action);
 

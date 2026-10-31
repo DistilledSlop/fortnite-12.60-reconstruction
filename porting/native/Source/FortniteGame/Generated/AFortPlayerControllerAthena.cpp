@@ -26,7 +26,7 @@ void AFortPlayerControllerAthena::ClearInventorySpaces(int32 NumSpaces)
 	// The decompile calls only the empty function Stub_Empty (0x1406801c0, ret 0) with the argument: no effect.
 }
 
-void AFortPlayerControllerAthena::Client_DisplayQuestUpdate_Assist_Implementation(AFortPlayerState* AssistingPlayer, AFortPlayerState* QuestOwner, const FFortUpdatedObjectiveStat& ObjectiveUpdated)
+void AFortPlayerControllerAthena::Client_DisplayQuestUpdate_Assist_Implementation(const FFortUpdatedObjectiveStat& ObjectiveUpdated, AFortPlayerState* QuestOwner, AFortPlayerState* AssistingPlayer)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -36,7 +36,7 @@ void AFortPlayerControllerAthena::Client_DisplayQuestUpdate_Self_Implementation(
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerControllerAthena::ClientAddProfileGoCollection_Implementation(const TArray<FProfileGoScenario>& NewScenarios, const FString& CollectionName)
+void AFortPlayerControllerAthena::ClientAddProfileGoCollection_Implementation(const FString& CollectionName, const TArray<FProfileGoScenario>& NewScenarios)
 {
 	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
 	// Original address: 0x1406801c0 (shared by 49 ported vtable slots; one body serves all of them)
@@ -57,7 +57,7 @@ void AFortPlayerControllerAthena::ClientAlertPortalDoneTeleporting_Implementatio
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerControllerAthena::ClientAutoEquipFirstItem_Implementation(bool bForceExecution, const FGuid& ItemGuid)
+void AFortPlayerControllerAthena::ClientAutoEquipFirstItem_Implementation(const FGuid& ItemGuid, bool bForceExecution)
 {
 	// Behaviour snippet: AFortPlayerControllerAthena::ClientAutoEquipFirstItem_Implementation (body only; spliced into the generated member function).
 	// Original address: 0x1419c5390
@@ -79,32 +79,32 @@ void AFortPlayerControllerAthena::ClientBotStopDogpile_Implementation()
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerControllerAthena::ClientBroadcastOnDestroyCreativePlotFinished_Implementation(const FText& Reason, bool bSuccess)
+void AFortPlayerControllerAthena::ClientBroadcastOnDestroyCreativePlotFinished_Implementation(bool bSuccess, const FText& Reason)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerControllerAthena::ClientBroadcastOnDuplicateCreativePlotFinished_Implementation(const FText& Reason, bool bSuccess)
+void AFortPlayerControllerAthena::ClientBroadcastOnDuplicateCreativePlotFinished_Implementation(bool bSuccess, const FText& Reason)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerControllerAthena::ClientBroadcastOnMakeNewCreativePlotFinished_Implementation(const FText& Reason, bool bSuccess)
+void AFortPlayerControllerAthena::ClientBroadcastOnMakeNewCreativePlotFinished_Implementation(bool bSuccess, const FText& Reason)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerControllerAthena::ClientBroadcastOnRestoreCreativePlotFinished_Implementation(const FText& Reason, bool bSuccess)
+void AFortPlayerControllerAthena::ClientBroadcastOnRestoreCreativePlotFinished_Implementation(bool bSuccess, const FText& Reason)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerControllerAthena::ClientBroadcastOnUpdateCreativeDescriptionTags_Implementation(const FText& Reason, bool bSuccess)
+void AFortPlayerControllerAthena::ClientBroadcastOnUpdateCreativeDescriptionTags_Implementation(bool bSuccess, const FText& Reason)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerControllerAthena::ClientBroadcastOnUpdateCreativePlotName_Implementation(const FText& Reason, bool bSuccess)
+void AFortPlayerControllerAthena::ClientBroadcastOnUpdateCreativePlotName_Implementation(bool bSuccess, const FText& Reason)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -114,7 +114,7 @@ void AFortPlayerControllerAthena::ClientBroadcastPlotItemID_Implementation(const
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerControllerAthena::ClientCycleQuickBarToCreativeItem_Implementation(UFortWorldItemDefinition* CreativeItemDef, const FGuid& CreativeItemGuid)
+void AFortPlayerControllerAthena::ClientCycleQuickBarToCreativeItem_Implementation(const FGuid& CreativeItemGuid, UFortWorldItemDefinition* CreativeItemDef)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -134,7 +134,7 @@ void AFortPlayerControllerAthena::ClientNotifyAbortRespawn_Implementation()
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerControllerAthena::ClientNotifyLost_Implementation(const EEndOfMatchReason& LostReason, APawn* WinningPawn)
+void AFortPlayerControllerAthena::ClientNotifyLost_Implementation(APawn* WinningPawn, const EEndOfMatchReason& LostReason)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -144,37 +144,37 @@ void AFortPlayerControllerAthena::ClientNotifyTeamLost_Implementation()
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerControllerAthena::ClientNotifyTeamWon_Implementation(const EDeathCause& DeathCause, UFortWeaponItemDefinition* FinishingWeapon, APawn* FinisherPawn)
+void AFortPlayerControllerAthena::ClientNotifyTeamWon_Implementation(APawn* FinisherPawn, UFortWeaponItemDefinition* FinishingWeapon, const EDeathCause& DeathCause)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerControllerAthena::ClientNotifyWon_Implementation(const EDeathCause& DeathCause, UFortWeaponItemDefinition* FinishingWeapon, APawn* FinisherPawn)
+void AFortPlayerControllerAthena::ClientNotifyWon_Implementation(APawn* FinisherPawn, UFortWeaponItemDefinition* FinishingWeapon, const EDeathCause& DeathCause)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerControllerAthena::ClientPreviewScreenshotModeActivated_Implementation(bool bForceQuit, bool bSuccess)
+void AFortPlayerControllerAthena::ClientPreviewScreenshotModeActivated_Implementation(bool bSuccess, bool bForceQuit)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerControllerAthena::ClientPublishCreativePlotComplete_Implementation(const FString& LinkJson, const FString& ResultErrorCode)
+void AFortPlayerControllerAthena::ClientPublishCreativePlotComplete_Implementation(const FString& ResultErrorCode, const FString& LinkJson)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerControllerAthena::ClientReceiveKillNotification_Implementation(AFortPlayerStateZone* Killed, AFortPlayerStateZone* Killer)
+void AFortPlayerControllerAthena::ClientReceiveKillNotification_Implementation(AFortPlayerStateZone* Killer, AFortPlayerStateZone* Killed)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerControllerAthena::ClientReceiveSquadQuickChatMessage_Implementation(AFortPlayerController* SenderPC, const FAthenaQuickChatActiveEntry& ChatEntry)
+void AFortPlayerControllerAthena::ClientReceiveSquadQuickChatMessage_Implementation(const FAthenaQuickChatActiveEntry& ChatEntry, AFortPlayerController* SenderPC)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerControllerAthena::ClientReportTournamentPlacementPointsScored_Implementation(int32 PointsEarned, int32 Placement)
+void AFortPlayerControllerAthena::ClientReportTournamentPlacementPointsScored_Implementation(int32 Placement, int32 PointsEarned)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -229,7 +229,7 @@ void AFortPlayerControllerAthena::ClientSignalPortalLoadCompleteViaDelegate_Impl
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerControllerAthena::ClientStartRespawnPreparation_Implementation(const FText& HUDReasonText, const FName& InRespawnCameraBehavior, float RespawnCameraDist, const FRotator& RespawnRot, const FVector& RespawnLoc)
+void AFortPlayerControllerAthena::ClientStartRespawnPreparation_Implementation(const FVector& RespawnLoc, const FRotator& RespawnRot, float RespawnCameraDist, const FName& InRespawnCameraBehavior, const FText& HUDReasonText)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -249,7 +249,7 @@ void AFortPlayerControllerAthena::DestroyCreativePlot_Implementation(const FStri
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerControllerAthena::DuplicateCreativePlot_Implementation(const FString& Title, const FString& Locale, const FString& IslandId)
+void AFortPlayerControllerAthena::DuplicateCreativePlot_Implementation(const FString& IslandId, const FString& Locale, const FString& Title)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -338,12 +338,12 @@ bool AFortPlayerControllerAthena::IsClientNotifiedOfWin() const
 	return bClientNotifiedOfWin;
 }
 
-void AFortPlayerControllerAthena::MakeNewCreativePlot_Implementation(const FString& Title, const FString& Locale, UFortCreativeRealEstatePlotItemDefinition* PlotType)
+void AFortPlayerControllerAthena::MakeNewCreativePlot_Implementation(UFortCreativeRealEstatePlotItemDefinition* PlotType, const FString& Locale, const FString& Title)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerControllerAthena::MakeNewCreativePlotFromLinkCode_Implementation(const FString& Title, const FString& Locale, const FString& LinkCode)
+void AFortPlayerControllerAthena::MakeNewCreativePlotFromLinkCode_Implementation(const FString& LinkCode, const FString& Locale, const FString& Title)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -415,7 +415,7 @@ void AFortPlayerControllerAthena::PreLobbyIslandTeleport()
 	// Empty body: the native function does nothing (see Inferred).
 }
 
-void AFortPlayerControllerAthena::PublishCreativePlot_Implementation(const FCreativePublishOptions& MyPublishOptions, AFortVolume* VolumeToPublish)
+void AFortPlayerControllerAthena::PublishCreativePlot_Implementation(AFortVolume* VolumeToPublish, const FCreativePublishOptions& MyPublishOptions)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -460,12 +460,12 @@ void AFortPlayerControllerAthena::RestoreCreativePlot_Implementation(const FStri
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerControllerAthena::ServerAddSimulatedXp_Implementation(const FGameplayTag& MetaData, const FText& Source, float XpAmmount)
+void AFortPlayerControllerAthena::ServerAddSimulatedXp_Implementation(float XpAmmount, const FText& Source, const FGameplayTag& MetaData)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-bool AFortPlayerControllerAthena::ServerAddSimulatedXp_Validate(const FGameplayTag& MetaData, const FText& Source, float XpAmmount)
+bool AFortPlayerControllerAthena::ServerAddSimulatedXp_Validate(float XpAmmount, const FText& Source, const FGameplayTag& MetaData)
 {
 	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
 	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
@@ -477,17 +477,17 @@ bool AFortPlayerControllerAthena::ServerAddSimulatedXp_Validate(const FGameplayT
 	return true;
 }
 
-void AFortPlayerControllerAthena::ServerAddToCachedPurchased_Implementation(int32 Count, UFortItemDefinition* ItemDefinition)
+void AFortPlayerControllerAthena::ServerAddToCachedPurchased_Implementation(UFortItemDefinition* ItemDefinition, int32 Count)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerControllerAthena::ServerApplyOverrideWrapToItem_Implementation(const TSoftObjectPtr<UAthenaItemWrapDefinition>& ItemWrap, const FGuid& GUID)
+void AFortPlayerControllerAthena::ServerApplyOverrideWrapToItem_Implementation(const FGuid& GUID, const TSoftObjectPtr<UAthenaItemWrapDefinition>& ItemWrap)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-bool AFortPlayerControllerAthena::ServerApplyOverrideWrapToItem_Validate(const TSoftObjectPtr<UAthenaItemWrapDefinition>& ItemWrap, const FGuid& GUID)
+bool AFortPlayerControllerAthena::ServerApplyOverrideWrapToItem_Validate(const FGuid& GUID, const TSoftObjectPtr<UAthenaItemWrapDefinition>& ItemWrap)
 {
 	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
 	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
@@ -601,7 +601,7 @@ bool AFortPlayerControllerAthena::ServerClientIsReadyToRespawn_Validate()
 	return true;
 }
 
-void AFortPlayerControllerAthena::ServerCreateProfileGoCollectionForSublevels_Implementation(int32 Quad, int32 RotationSteps, int32 GridStepsY, int32 GridStepsX, const FString& SublevelSearchString)
+void AFortPlayerControllerAthena::ServerCreateProfileGoCollectionForSublevels_Implementation(const FString& SublevelSearchString, int32 GridStepsX, int32 GridStepsY, int32 RotationSteps, int32 Quad)
 {
 	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
 	// Original address: 0x1406801c0 (shared by 49 ported vtable slots; one body serves all of them)
@@ -612,7 +612,7 @@ void AFortPlayerControllerAthena::ServerCreateProfileGoCollectionForSublevels_Im
 	// CONFIDENCE: HIGH
 }
 
-bool AFortPlayerControllerAthena::ServerCreateProfileGoCollectionForSublevels_Validate(int32 Quad, int32 RotationSteps, int32 GridStepsY, int32 GridStepsX, const FString& SublevelSearchString)
+bool AFortPlayerControllerAthena::ServerCreateProfileGoCollectionForSublevels_Validate(const FString& SublevelSearchString, int32 GridStepsX, int32 GridStepsY, int32 RotationSteps, int32 Quad)
 {
 	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
 	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
@@ -811,7 +811,7 @@ void AFortPlayerControllerAthena::ServerLoadIslandCheckpoint_Implementation(AFor
 	// CONFIDENCE: HIGH
 }
 
-void AFortPlayerControllerAthena::ServerLoadPlotForPortal_Implementation(const FString& PlotItemId, AFortAthenaCreativePortal* Portal)
+void AFortPlayerControllerAthena::ServerLoadPlotForPortal_Implementation(AFortAthenaCreativePortal* Portal, const FString& PlotItemId)
 {
 	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
 	// Original address: 0x1406801c0 (shared by 49 ported vtable slots; one body serves all of them)
@@ -822,7 +822,7 @@ void AFortPlayerControllerAthena::ServerLoadPlotForPortal_Implementation(const F
 	// CONFIDENCE: HIGH
 }
 
-bool AFortPlayerControllerAthena::ServerLoadPlotForPortal_Validate(const FString& PlotItemId, AFortAthenaCreativePortal* Portal)
+bool AFortPlayerControllerAthena::ServerLoadPlotForPortal_Validate(AFortAthenaCreativePortal* Portal, const FString& PlotItemId)
 {
 	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
 	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
@@ -834,7 +834,7 @@ bool AFortPlayerControllerAthena::ServerLoadPlotForPortal_Validate(const FString
 	return true;
 }
 
-void AFortPlayerControllerAthena::ServerLoadPlotForPortalFromMnemonic_Implementation(const FString& Mnemonic, AFortAthenaCreativePortal* Portal)
+void AFortPlayerControllerAthena::ServerLoadPlotForPortalFromMnemonic_Implementation(AFortAthenaCreativePortal* Portal, const FString& Mnemonic)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -845,12 +845,12 @@ void AFortPlayerControllerAthena::ServerLookedAtFocalPoint_Implementation()
 	// Original address: 0x1419f1f70
 	// Decompile source: porting/generated/decomp_improved/AFortPlayerControllerAthena/ServerLookedAtFocalPoint_Implementation.c
 	// Proxy score: 70.1 (portability.json)
-	// Inferred: Decompile tests FocalPoint (+0x2b40) and broadcasts OnUsingFocalPointChanged (+0x2b60). The asm (body 0x1419f1f70) builds the block as {this @0, FocalPoint @8, true @0x10}; by name that is (bUsingFocalPoint=true, FocalPointActor=FocalPoint, FocalPointUser=this), using the same reversed-order rule as above.
+	// Inferred: Decompile tests FocalPoint (+0x2b40) and broadcasts OnUsingFocalPointChanged (+0x2b60). The asm (body 0x1419f1f70) builds the block as {this @0, FocalPoint @8, true @0x10}; by name that is (FocalPointUser=this, FocalPointActor=FocalPoint, bUsingFocalPoint=true), which is the generated delegate's declaration order (parameters follow the recorded offsets).
 	// Declared in generated header: yes
 	// CONFIDENCE: MEDIUM
 	if (FocalPoint != nullptr)
 	{
-		OnUsingFocalPointChanged.Broadcast(true, FocalPoint, this);
+		OnUsingFocalPointChanged.Broadcast(this, FocalPoint, true);
 	}
 }
 
@@ -905,7 +905,7 @@ bool AFortPlayerControllerAthena::ServerNotifyOstrichShieldOvercharge_Validate()
 	return true;
 }
 
-void AFortPlayerControllerAthena::ServerPlaySquadQuickChatMessage_Implementation(const FUniqueNetIdRepl& SenderID, const FAthenaQuickChatActiveEntry& ChatEntry)
+void AFortPlayerControllerAthena::ServerPlaySquadQuickChatMessage_Implementation(const FAthenaQuickChatActiveEntry& ChatEntry, const FUniqueNetIdRepl& SenderID)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -1069,7 +1069,7 @@ void AFortPlayerControllerAthena::ServerSaveIslandCheckpoint_Implementation(AFor
 	// CONFIDENCE: HIGH
 }
 
-void AFortPlayerControllerAthena::ServerSelectMutatorItem_Implementation(int32 ItemIndex, AFortGameplayMutator* Mutator)
+void AFortPlayerControllerAthena::ServerSelectMutatorItem_Implementation(AFortGameplayMutator* Mutator, int32 ItemIndex)
 {
 	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
 	// Original address: 0x1406801c0 (shared by 49 ported vtable slots; one body serves all of them)
@@ -1080,7 +1080,7 @@ void AFortPlayerControllerAthena::ServerSelectMutatorItem_Implementation(int32 I
 	// CONFIDENCE: HIGH
 }
 
-bool AFortPlayerControllerAthena::ServerSelectMutatorItem_Validate(int32 ItemIndex, AFortGameplayMutator* Mutator)
+bool AFortPlayerControllerAthena::ServerSelectMutatorItem_Validate(AFortGameplayMutator* Mutator, int32 ItemIndex)
 {
 	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
 	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
@@ -1221,7 +1221,7 @@ bool AFortPlayerControllerAthena::ServerSimulateLevelUp_Validate(int32 ClientSim
 	return true;
 }
 
-void AFortPlayerControllerAthena::ServerSpawnCreativeSupplyDrop_Implementation(TSubclassOf<AActor> InSupplyDropClass, const FVector& Position)
+void AFortPlayerControllerAthena::ServerSpawnCreativeSupplyDrop_Implementation(const FVector& Position, TSubclassOf<AActor> InSupplyDropClass)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -1523,12 +1523,12 @@ bool AFortPlayerControllerAthena::ServerUpdateUserCameraPreview_Validate()
 	return true;
 }
 
-void AFortPlayerControllerAthena::TellServer_ClientReceivedPlaysetDataForVolume_Implementation(AFortVolume* Volume, const FFortPlaysetStreamingData& PlaysetData)
+void AFortPlayerControllerAthena::TellServer_ClientReceivedPlaysetDataForVolume_Implementation(const FFortPlaysetStreamingData& PlaysetData, AFortVolume* Volume)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-bool AFortPlayerControllerAthena::TellServer_ClientReceivedPlaysetDataForVolume_Validate(AFortVolume* Volume, const FFortPlaysetStreamingData& PlaysetData)
+bool AFortPlayerControllerAthena::TellServer_ClientReceivedPlaysetDataForVolume_Validate(const FFortPlaysetStreamingData& PlaysetData, AFortVolume* Volume)
 {
 	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
 	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
@@ -1540,27 +1540,27 @@ bool AFortPlayerControllerAthena::TellServer_ClientReceivedPlaysetDataForVolume_
 	return true;
 }
 
-void AFortPlayerControllerAthena::UpdateCreativeIslandDescriptionTags_Implementation(const TArray<FString>& DescriptionTags, const FString& Locale, const FString& IslandId)
+void AFortPlayerControllerAthena::UpdateCreativeIslandDescriptionTags_Implementation(const FString& IslandId, const FString& Locale, const TArray<FString>& DescriptionTags)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerControllerAthena::UpdateCreativePlotData_Implementation(const FCreativeIslandInfo& MyInfo, AFortVolume* VolumeToPublish)
+void AFortPlayerControllerAthena::UpdateCreativePlotData_Implementation(AFortVolume* VolumeToPublish, const FCreativeIslandInfo& MyInfo)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerControllerAthena::UpdateCreativePlotName_Implementation(const FString& Title, const FString& Locale, const FString& IslandId)
+void AFortPlayerControllerAthena::UpdateCreativePlotName_Implementation(const FString& IslandId, const FString& Locale, const FString& Title)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPlayerControllerAthena::UpdateUGCRestrictedForVolume_Implementation(bool bRestricted, AFortVolume* Volume)
+void AFortPlayerControllerAthena::UpdateUGCRestrictedForVolume_Implementation(AFortVolume* Volume, bool bRestricted)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-bool AFortPlayerControllerAthena::UpdateUGCRestrictedForVolume_Validate(bool bRestricted, AFortVolume* Volume)
+bool AFortPlayerControllerAthena::UpdateUGCRestrictedForVolume_Validate(AFortVolume* Volume, bool bRestricted)
 {
 	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
 	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)

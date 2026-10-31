@@ -7,5 +7,5 @@
 #include "FOnLayeredAudioComponentOneshot.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnLayeredAudioComponentOneshot, int32, OneshotIndex, FName, ParameterName, UAudioComponent*, AudioComponent);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnLayeredAudioComponentOneshot, UAudioComponent*, AudioComponent, FName, ParameterName, int32, OneshotIndex);
 

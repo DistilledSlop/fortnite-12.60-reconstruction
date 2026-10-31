@@ -77,16 +77,16 @@ public:
 	UInputComponent* CreativeQuickbarActiveInputComponent;
 
 	UFUNCTION(Client, Reliable)
-	void ClientAddToQuickBarComplete(bool bUseVolumeToSpawn, bool UseDelayedAddToQuickbar, UFortItemDefinition* Playset, const FGuid& ItemGuid, int32 SlotPutIn);
-	void ClientAddToQuickBarComplete_Implementation(bool bUseVolumeToSpawn, bool UseDelayedAddToQuickbar, UFortItemDefinition* Playset, const FGuid& ItemGuid, int32 SlotPutIn);
+	void ClientAddToQuickBarComplete(int32 SlotPutIn, const FGuid& ItemGuid, UFortItemDefinition* Playset, bool UseDelayedAddToQuickbar, bool bUseVolumeToSpawn);
+	void ClientAddToQuickBarComplete_Implementation(int32 SlotPutIn, const FGuid& ItemGuid, UFortItemDefinition* Playset, bool UseDelayedAddToQuickbar, bool bUseVolumeToSpawn);
 
 	UFUNCTION(Server, Reliable)
-	void ServerAddItemToQuickBar(bool bUseVolumeToSpawn, const FGuid& PreviousItemGuid, int32 DesiredSlotIndexconst, UFortItemDefinition* ItemDefinition);
-	void ServerAddItemToQuickBar_Implementation(bool bUseVolumeToSpawn, const FGuid& PreviousItemGuid, int32 DesiredSlotIndexconst, UFortItemDefinition* ItemDefinition);
+	void ServerAddItemToQuickBar(UFortItemDefinition* ItemDefinition, int32 DesiredSlotIndexconst, const FGuid& PreviousItemGuid, bool bUseVolumeToSpawn);
+	void ServerAddItemToQuickBar_Implementation(UFortItemDefinition* ItemDefinition, int32 DesiredSlotIndexconst, const FGuid& PreviousItemGuid, bool bUseVolumeToSpawn);
 
 	UFUNCTION(Server, Reliable)
-	void ServerAddToQuickBar(int32 DesiredSlotIndex, const TArray<AActor*>& Actors);
-	void ServerAddToQuickBar_Implementation(int32 DesiredSlotIndex, const TArray<AActor*>& Actors);
+	void ServerAddToQuickBar(const TArray<AActor*>& Actors, int32 DesiredSlotIndex);
+	void ServerAddToQuickBar_Implementation(const TArray<AActor*>& Actors, int32 DesiredSlotIndex);
 
 };
 

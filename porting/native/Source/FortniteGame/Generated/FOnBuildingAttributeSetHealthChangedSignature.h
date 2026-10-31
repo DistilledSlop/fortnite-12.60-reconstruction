@@ -7,5 +7,5 @@
 #include "FOnBuildingAttributeSetHealthChangedSignature.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnBuildingAttributeSetHealthChangedSignature, float, Health, ABuildingProp_DestructionObject*, DestructionObject);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnBuildingAttributeSetHealthChangedSignature, ABuildingProp_DestructionObject*, DestructionObject, float, Health);
 

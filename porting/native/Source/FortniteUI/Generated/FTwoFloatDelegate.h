@@ -7,5 +7,5 @@
 #include "FTwoFloatDelegate.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FTwoFloatDelegate, float, FloatParamMax, float, FloatParam, UAthenaRemotePlayerViewData*, PlayerData);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FTwoFloatDelegate, UAthenaRemotePlayerViewData*, PlayerData, float, FloatParam, float, FloatParamMax);
 

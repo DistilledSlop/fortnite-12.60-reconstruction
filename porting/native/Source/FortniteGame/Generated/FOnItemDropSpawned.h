@@ -8,5 +8,5 @@
 #include "FOnItemDropSpawned.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnItemDropSpawned, FGameplayTagContainer, ItemTags, UFortItemDefinition*, ItemDef, AFortPickup*, Pickup);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnItemDropSpawned, AFortPickup*, Pickup, UFortItemDefinition*, ItemDef, FGameplayTagContainer, ItemTags);
 

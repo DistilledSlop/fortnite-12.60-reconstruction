@@ -7,5 +7,5 @@
 #include "FOnEncounterRiftSpawned.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnEncounterRiftSpawned, ABuildingRift*, Rift, UFortAIEncounterInfo*, Encounter);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnEncounterRiftSpawned, UFortAIEncounterInfo*, Encounter, ABuildingRift*, Rift);
 

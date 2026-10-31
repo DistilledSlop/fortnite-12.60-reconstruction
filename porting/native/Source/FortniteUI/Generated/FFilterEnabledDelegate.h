@@ -7,5 +7,5 @@
 #include "FFilterEnabledDelegate.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FFilterEnabledDelegate, UObject*, ListItemObject, bool, bIsEnabled);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FFilterEnabledDelegate, bool, bIsEnabled, UObject*, ListItemObject);
 

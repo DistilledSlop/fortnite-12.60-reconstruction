@@ -8,5 +8,5 @@
 #include "FOnCameraTypeChanged.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnCameraTypeChanged, ESpectatorCameraType, NewCameraType, AFortPlayerControllerSpectating*, SpectatorPC);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnCameraTypeChanged, AFortPlayerControllerSpectating*, SpectatorPC, ESpectatorCameraType, NewCameraType);
 

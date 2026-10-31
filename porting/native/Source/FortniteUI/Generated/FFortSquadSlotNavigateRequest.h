@@ -7,5 +7,5 @@
 #include "FFortSquadSlotNavigateRequest.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FFortSquadSlotNavigateRequest, int32, SquadSlotIndex, FName, SquadId);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FFortSquadSlotNavigateRequest, FName, SquadId, int32, SquadSlotIndex);
 

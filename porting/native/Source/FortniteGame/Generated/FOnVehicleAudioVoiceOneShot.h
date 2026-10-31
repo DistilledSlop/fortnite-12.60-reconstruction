@@ -7,5 +7,5 @@
 #include "FOnVehicleAudioVoiceOneShot.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnVehicleAudioVoiceOneShot, int32, Index, UAudioComponent*, AudioComponent);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnVehicleAudioVoiceOneShot, UAudioComponent*, AudioComponent, int32, Index);
 

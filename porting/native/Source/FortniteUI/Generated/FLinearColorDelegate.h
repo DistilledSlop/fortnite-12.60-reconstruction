@@ -8,5 +8,5 @@
 #include "FLinearColorDelegate.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FLinearColorDelegate, FLinearColor, ColorParam, UAthenaRemotePlayerViewData*, PlayerData);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FLinearColorDelegate, UAthenaRemotePlayerViewData*, PlayerData, FLinearColor, ColorParam);
 

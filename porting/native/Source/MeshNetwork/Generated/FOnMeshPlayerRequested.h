@@ -7,5 +7,5 @@
 #include "FOnMeshPlayerRequested.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnMeshPlayerRequested, FName, Tag, APlayerController*, Player);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnMeshPlayerRequested, APlayerController*, Player, FName, Tag);
 

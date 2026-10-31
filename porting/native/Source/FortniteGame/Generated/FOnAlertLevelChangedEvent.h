@@ -8,5 +8,5 @@
 #include "FOnAlertLevelChangedEvent.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnAlertLevelChangedEvent, EAlertLevel, NewAlertLevel, EAlertLevel, OldAlertLevel, AFortAthenaAIBotController*, BotController);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnAlertLevelChangedEvent, AFortAthenaAIBotController*, BotController, EAlertLevel, OldAlertLevel, EAlertLevel, NewAlertLevel);
 

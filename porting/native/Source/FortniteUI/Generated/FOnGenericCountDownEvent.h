@@ -7,5 +7,5 @@
 #include "FOnGenericCountDownEvent.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnGenericCountDownEvent, float, TimeRemaining, FText, CountDownEventDisplayText);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnGenericCountDownEvent, FText, CountDownEventDisplayText, float, TimeRemaining);
 

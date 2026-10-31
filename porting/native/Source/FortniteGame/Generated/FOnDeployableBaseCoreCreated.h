@@ -7,5 +7,5 @@
 #include "FOnDeployableBaseCoreCreated.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnDeployableBaseCoreCreated, ADeployableBaseCore*, Core, ADeployableBasePlot*, Plot);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnDeployableBaseCoreCreated, ADeployableBasePlot*, Plot, ADeployableBaseCore*, Core);
 

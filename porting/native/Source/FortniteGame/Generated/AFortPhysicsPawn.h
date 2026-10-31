@@ -30,8 +30,8 @@ public:
 	void ClientAckGoodMove_Implementation(uint32 MoveId);
 
 	UFUNCTION(NetMulticast, Reliable)
-	void ClientBroadcastHitDetection(const FVector& DoublePoints, const FVector& HalfPoints, float Relevancy, float Radius, APawn* ImpulseInstigator);
-	void ClientBroadcastHitDetection_Implementation(const FVector& DoublePoints, const FVector& HalfPoints, float Relevancy, float Radius, APawn* ImpulseInstigator);
+	void ClientBroadcastHitDetection(APawn* ImpulseInstigator, float Radius, float Relevancy, const FVector& HalfPoints, const FVector& DoublePoints);
+	void ClientBroadcastHitDetection_Implementation(APawn* ImpulseInstigator, float Radius, float Relevancy, const FVector& HalfPoints, const FVector& DoublePoints);
 
 	UFUNCTION()
 	void OnRep_GravityMultiplier();

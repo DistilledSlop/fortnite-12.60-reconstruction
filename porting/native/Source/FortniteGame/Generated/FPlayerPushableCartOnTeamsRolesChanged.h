@@ -7,5 +7,5 @@
 #include "FPlayerPushableCartOnTeamsRolesChanged.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FPlayerPushableCartOnTeamsRolesChanged, uint8, DefenderTeam, uint8, PusherTeam);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FPlayerPushableCartOnTeamsRolesChanged, uint8, PusherTeam, uint8, DefenderTeam);
 

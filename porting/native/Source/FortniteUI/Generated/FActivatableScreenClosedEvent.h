@@ -7,5 +7,5 @@
 #include "FActivatableScreenClosedEvent.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FActivatableScreenClosedEvent, APlayerController*, Controller, UCommonActivatableWidget*, Widget);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FActivatableScreenClosedEvent, UCommonActivatableWidget*, Widget, APlayerController*, Controller);
 

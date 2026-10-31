@@ -7,5 +7,5 @@
 #include "FReplayTimelineRangeChanged.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FReplayTimelineRangeChanged, float, EndTime, float, StartTime);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FReplayTimelineRangeChanged, float, StartTime, float, EndTime);
 

@@ -7,5 +7,5 @@
 #include "FOnMediumSoundTriggered.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnMediumSoundTriggered, float, Intensity, UAudioComponent*, Sound);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnMediumSoundTriggered, UAudioComponent*, Sound, float, Intensity);
 

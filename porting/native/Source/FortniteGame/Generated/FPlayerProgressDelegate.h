@@ -7,5 +7,5 @@
 #include "FPlayerProgressDelegate.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FPlayerProgressDelegate, UFortMinigameProgressComponent*, Progress, APlayerState*, PlayerState);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FPlayerProgressDelegate, APlayerState*, PlayerState, UFortMinigameProgressComponent*, Progress);
 

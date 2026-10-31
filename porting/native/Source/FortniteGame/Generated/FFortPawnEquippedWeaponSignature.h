@@ -7,5 +7,5 @@
 #include "FFortPawnEquippedWeaponSignature.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FFortPawnEquippedWeaponSignature, AFortWeapon*, PrevWeapon, AFortWeapon*, NewWeapon);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FFortPawnEquippedWeaponSignature, AFortWeapon*, NewWeapon, AFortWeapon*, PrevWeapon);
 

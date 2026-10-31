@@ -321,8 +321,8 @@ public:
 	void OnRep_UIMetricsDisplayIndex();
 
 	UFUNCTION(Server, Reliable)
-	void ServerAwardVehicleTrickPoints(int32 InAirTimeX1000, int32 InPoints);
-	void ServerAwardVehicleTrickPoints_Implementation(int32 InAirTimeX1000, int32 InPoints);
+	void ServerAwardVehicleTrickPoints(int32 InPoints, int32 InAirTimeX1000);
+	void ServerAwardVehicleTrickPoints_Implementation(int32 InPoints, int32 InAirTimeX1000);
 
 	UFUNCTION(Server, Reliable)
 	void ServerCreativeSetFlightSpeedIndex(int32 Index);

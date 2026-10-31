@@ -14,6 +14,7 @@
 #include "FGenericSpecialEvent.h"
 #include "FOnAllPlayersSanitized.h"
 #include "FOnPawnLoaded.h"
+#include "FOnSanitizedPawnsBroadcast.h"
 #include "FOnTeleportAllPlayersFinished.h"
 #include "GameFramework/OnlineReplStructs.h"
 #include "Math/Vector.h"
@@ -32,6 +33,10 @@ public:
 	// table index 28, flags 0x10000010080000
 	UPROPERTY()
 	FOnTeleportAllPlayersFinished TeleportAllPlayersFinished;
+
+	// table index 27, flags 0x10000010080000
+	UPROPERTY()
+	FOnSanitizedPawnsBroadcast OnSantizedPawnsBroadcast;
 
 	// table index 26, flags 0x10000010080000
 	UPROPERTY()

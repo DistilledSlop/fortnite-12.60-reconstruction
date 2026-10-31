@@ -13,7 +13,9 @@
 #include "FCobaltHideVsDisplay.h"
 #include "FCobaltPreRoundDisplayVisibility.h"
 #include "FCobaltRoundAdvanced.h"
+#include "FCobaltRoundComplete.h"
 #include "FCobaltRoundCompleteUIFinished.h"
+#include "FCobaltShowVsDisplay.h"
 #include "FCobaltTeleportComplete.h"
 #include "FCobaltWidgetRoundData.h"
 #include "FFortRespawnLogicData.h"
@@ -45,6 +47,10 @@ public:
 	UPROPERTY()
 	FCobaltTeleportComplete OnTeleportComplete;
 
+	// table index 88, flags 0x100000100b0001
+	UPROPERTY()
+	FCobaltRoundComplete OnRoundComplete;
+
 	// table index 87, flags 0x100000100b0001
 	UPROPERTY()
 	FCobaltRoundCompleteUIFinished OnRoundCompleteUIFinished;
@@ -52,6 +58,10 @@ public:
 	// table index 86, flags 0x100000100b0001
 	UPROPERTY()
 	FCobaltRoundAdvanced OnRoundAdvanced;
+
+	// table index 85, flags 0x100000100b0001
+	UPROPERTY()
+	FCobaltShowVsDisplay OnShowVsDisplay;
 
 	// table index 84, flags 0x100000100b0001
 	UPROPERTY()

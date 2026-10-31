@@ -2,7 +2,7 @@
 #include "ADeployableBasePlot.h"
 #include "Net/UnrealNetwork.h"
 
-void ADeployableBasePlot::HandleBuildingStateTransition_Implementation(const EDeployableBaseBuildingState& InCurrentState, const EDeployableBaseBuildingState& InPreviousState)
+void ADeployableBasePlot::HandleBuildingStateTransition_Implementation(const EDeployableBaseBuildingState& InPreviousState, const EDeployableBaseBuildingState& InCurrentState)
 {
 	// Body not recovered: reflection-derived stub.
 }

@@ -166,8 +166,8 @@ public:
 	void ServerSetCharging_Implementation(bool bNewCharging);
 
 	UFUNCTION(Server, Reliable)
-	void ServerSetFiringRockets(int32 NumToFire, bool bNewFiring);
-	void ServerSetFiringRockets_Implementation(int32 NumToFire, bool bNewFiring);
+	void ServerSetFiringRockets(bool bNewFiring, int32 NumToFire);
+	void ServerSetFiringRockets_Implementation(bool bNewFiring, int32 NumToFire);
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

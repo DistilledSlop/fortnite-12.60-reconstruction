@@ -12,7 +12,7 @@ void AFortCreativeMoveTool::ClientDeactiveWeaponAndState_Implementation()
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortCreativeMoveTool::ClientStartInteracting_Implementation(const FBox& NewSelectionSpaceActorBounds, const FTransform& NewSelectionToWorld, const TArray<FCreativeSelectedActorInfo>& NewSelectedActors, UObjectInteractionBehavior* NewActiveMovementMode)
+void AFortCreativeMoveTool::ClientStartInteracting_Implementation(UObjectInteractionBehavior* NewActiveMovementMode, const TArray<FCreativeSelectedActorInfo>& NewSelectedActors, const FTransform& NewSelectionToWorld, const FBox& NewSelectionSpaceActorBounds)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -22,12 +22,12 @@ void AFortCreativeMoveTool::ClientStopInteracting_Implementation()
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortCreativeMoveTool::MulticastForceMoveActor_Implementation(const FTransform& NewTransform, AActor* ActorToMove)
+void AFortCreativeMoveTool::MulticastForceMoveActor_Implementation(AActor* ActorToMove, const FTransform& NewTransform)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortCreativeMoveTool::MulticastForceMoveActorExceptOwningClient_Implementation(const FTransform& NewTransform, AActor* ActorToMove)
+void AFortCreativeMoveTool::MulticastForceMoveActorExceptOwningClient_Implementation(AActor* ActorToMove, const FTransform& NewTransform)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -42,7 +42,7 @@ void AFortCreativeMoveTool::MulticastRestoreCutActors_Implementation()
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortCreativeMoveTool::MulticastSetCollisionForActor_Implementation(bool bEnableCollision, AActor* Actor)
+void AFortCreativeMoveTool::MulticastSetCollisionForActor_Implementation(AActor* Actor, bool bEnableCollision)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -82,12 +82,12 @@ void AFortCreativeMoveTool::OnRep_SelectionProperty()
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortCreativeMoveTool::RemoteClientsUpdateSelectedActors_Implementation(UObjectInteractionBehavior* CurrentObjectInteractionBehvaior, const TArray<FCreativeSelectedActorInfo>& NewSelectedActors)
+void AFortCreativeMoveTool::RemoteClientsUpdateSelectedActors_Implementation(const TArray<FCreativeSelectedActorInfo>& NewSelectedActors, UObjectInteractionBehavior* CurrentObjectInteractionBehvaior)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortCreativeMoveTool::ServerAddItemToMoveTool_Implementation(bool bUseVolume, UFortItemDefinition* PlaysetToSpawn, AFortPlayerControllerAthena* FortPC)
+void AFortCreativeMoveTool::ServerAddItemToMoveTool_Implementation(AFortPlayerControllerAthena* FortPC, UFortItemDefinition* PlaysetToSpawn, bool bUseVolume)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -107,7 +107,7 @@ void AFortCreativeMoveTool::ServerDestroyActor_Implementation(AActor* ActorToDes
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortCreativeMoveTool::ServerDuplicateStartInteracting_Implementation(const FTransform& DragStart, const TArray<AActor*>& Actors)
+void AFortCreativeMoveTool::ServerDuplicateStartInteracting_Implementation(const TArray<AActor*>& Actors, const FTransform& DragStart)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -117,7 +117,7 @@ void AFortCreativeMoveTool::ServerHandshakeFromClientForReceivingCutActors_Imple
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortCreativeMoveTool::ServerMoveSelectionSet_Implementation(bool bShouldUpdateOwningClient, const FTransform& NewSelectionToWorld)
+void AFortCreativeMoveTool::ServerMoveSelectionSet_Implementation(const FTransform& NewSelectionToWorld, bool bShouldUpdateOwningClient)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -147,17 +147,17 @@ void AFortCreativeMoveTool::ServerSetAlwaysMoveFreely_Implementation(bool bNewVa
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortCreativeMoveTool::ServerSpawnActorWithTransform_Implementation(bool bForPreviewing, bool bIgnoreStructuralIssues, bool bAllowGravity, bool bAllowOverlap, const FTransform& TargetTransform, AActor* ActorToSpawn)
+void AFortCreativeMoveTool::ServerSpawnActorWithTransform_Implementation(AActor* ActorToSpawn, const FTransform& TargetTransform, bool bAllowOverlap, bool bAllowGravity, bool bIgnoreStructuralIssues, bool bForPreviewing)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortCreativeMoveTool::ServerSpawnSelectedActorsWithTransform_Implementation(bool bForPreviewing, bool bIgnoreStructuralIssues, bool bAllowGravity, bool bAllowOverlap)
+void AFortCreativeMoveTool::ServerSpawnSelectedActorsWithTransform_Implementation(bool bAllowOverlap, bool bAllowGravity, bool bIgnoreStructuralIssues, bool bForPreviewing)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortCreativeMoveTool::ServerStartInteracting_Implementation(const FTransform& DragStart, const TArray<AActor*>& Actors)
+void AFortCreativeMoveTool::ServerStartInteracting_Implementation(const TArray<AActor*>& Actors, const FTransform& DragStart)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -167,12 +167,12 @@ void AFortCreativeMoveTool::ServerUpdateMirrored_Implementation(bool bMirrored)
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortCreativeMoveTool::ServerUpdatePrecisionMode_Implementation(uint8 PrecisionModeIndex, bool bPrecisionMode)
+void AFortCreativeMoveTool::ServerUpdatePrecisionMode_Implementation(bool bPrecisionMode, uint8 PrecisionModeIndex)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortCreativeMoveTool::ServerUpdateRotation_Implementation(bool bNewIsRotateCounterclockwisePressed, bool bNewIsRotateClockwisePressed, const FQuat& ClientRotation)
+void AFortCreativeMoveTool::ServerUpdateRotation_Implementation(const FQuat& ClientRotation, bool bNewIsRotateClockwisePressed, bool bNewIsRotateCounterclockwisePressed)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -187,17 +187,17 @@ void AFortCreativeMoveTool::ServerUpdateScaleAxis_Implementation(const EScaleAxi
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortCreativeMoveTool::ServerUpdateScalePressed_Implementation(bool bNewIsScaleDownPressed, bool bNewIsScaleUpPressed)
+void AFortCreativeMoveTool::ServerUpdateScalePressed_Implementation(bool bNewIsScaleUpPressed, bool bNewIsScaleDownPressed)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortCreativeMoveTool::ServerUpdateTractorBeam_Implementation(bool bNewIsPullPressed, bool bNewIsPushPressed, float NewTargetTractorBeamOffset)
+void AFortCreativeMoveTool::ServerUpdateTractorBeam_Implementation(float NewTargetTractorBeamOffset, bool bNewIsPushPressed, bool bNewIsPullPressed)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortCreativeMoveTool::SpawnPlaysetVolumeOnServer_Implementation(const FRotator& SpawnRotation, const FVector& SpawnLocation, UFortPlaysetItemDefinition* Playset)
+void AFortCreativeMoveTool::SpawnPlaysetVolumeOnServer_Implementation(UFortPlaysetItemDefinition* Playset, const FVector& SpawnLocation, const FRotator& SpawnRotation)
 {
 	// Body not recovered: reflection-derived stub.
 }

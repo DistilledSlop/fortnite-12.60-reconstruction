@@ -8,5 +8,5 @@
 #include "FPawnDamagedSignature.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_EightParams(FPawnDamagedSignature, FVector, Momentum, FName, BoneName, UPrimitiveComponent*, FHitComponent, FVector, HitLocation, AActor*, DamageCauser, AController*, InstigatedBy, float, Damage, AActor*, DamagedActor);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_EightParams(FPawnDamagedSignature, AActor*, DamagedActor, float, Damage, AController*, InstigatedBy, AActor*, DamageCauser, FVector, HitLocation, UPrimitiveComponent*, FHitComponent, FName, BoneName, FVector, Momentum);
 

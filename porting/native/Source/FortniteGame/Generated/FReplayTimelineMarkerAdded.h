@@ -8,5 +8,5 @@
 #include "FReplayTimelineMarkerAdded.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FReplayTimelineMarkerAdded, int32, MarkerIdx, float, TimeRatio, EFortReplayEventType, EventType);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FReplayTimelineMarkerAdded, EFortReplayEventType, EventType, float, TimeRatio, int32, MarkerIdx);
 

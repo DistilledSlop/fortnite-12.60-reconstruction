@@ -2,7 +2,7 @@
 #include "AFortGameplayEffectDeliveryActor.h"
 #include "Net/UnrealNetwork.h"
 
-void AFortGameplayEffectDeliveryActor::BroadcastExplosion_Implementation(const TArray<FHitResult>& HitResults, const TArray<AActor*>& HitActors)
+void AFortGameplayEffectDeliveryActor::BroadcastExplosion_Implementation(const TArray<AActor*>& HitActors, const TArray<FHitResult>& HitResults)
 {
 	// Body not recovered: reflection-derived stub.
 }

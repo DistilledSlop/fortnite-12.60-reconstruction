@@ -7,5 +7,5 @@
 #include "FOnMissionTimerTimeAddedOrRemoved.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnMissionTimerTimeAddedOrRemoved, float, TimeAdded, UFortMissionTimerComponent*, TimerComponent);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnMissionTimerTimeAddedOrRemoved, UFortMissionTimerComponent*, TimerComponent, float, TimeAdded);
 

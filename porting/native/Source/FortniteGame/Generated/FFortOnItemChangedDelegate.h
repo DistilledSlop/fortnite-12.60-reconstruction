@@ -7,5 +7,5 @@
 #include "FFortOnItemChangedDelegate.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FFortOnItemChangedDelegate, bool, bIngredientsChanged, bool, bAmmoChanged, bool, bItemChanged);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FFortOnItemChangedDelegate, bool, bItemChanged, bool, bAmmoChanged, bool, bIngredientsChanged);
 

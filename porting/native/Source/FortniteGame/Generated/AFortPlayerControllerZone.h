@@ -183,8 +183,8 @@ public:
 	void ClientUpdatePlaylistFlags_Implementation(const TArray<uint8>& Buffer);
 
 	UFUNCTION(Client, Reliable)
-	void ClientVoiceChatSendJoinToken(const FString& Token, const FString& Error, bool bSuccess);
-	void ClientVoiceChatSendJoinToken_Implementation(const FString& Token, const FString& Error, bool bSuccess);
+	void ClientVoiceChatSendJoinToken(bool bSuccess, const FString& Error, const FString& Token);
+	void ClientVoiceChatSendJoinToken_Implementation(bool bSuccess, const FString& Error, const FString& Token);
 
 	UFUNCTION()
 	void OnRep_VoiceChatChannel();
@@ -198,8 +198,8 @@ public:
 	void ServerAttemptExitVehicle_Implementation();
 
 	UFUNCTION(Server, Reliable)
-	void ServerBeginGameplayVote(const FFortVoteConfig& VoteConfig, const EFortVoteType& VoteType);
-	void ServerBeginGameplayVote_Implementation(const FFortVoteConfig& VoteConfig, const EFortVoteType& VoteType);
+	void ServerBeginGameplayVote(const EFortVoteType& VoteType, const FFortVoteConfig& VoteConfig);
+	void ServerBeginGameplayVote_Implementation(const EFortVoteType& VoteType, const FFortVoteConfig& VoteConfig);
 
 	UFUNCTION(Server, Reliable)
 	void ServerDestroyFromRemoteControlledPawn();
@@ -222,12 +222,12 @@ public:
 	void ServerRequestSeatChange_Implementation(int32 TargetSeatIndex);
 
 	UFUNCTION(Server, Reliable)
-	void ServerSendLoadoutConfig(const TArray<uint8>& Loadout, int32 LoadoutSeed);
-	void ServerSendLoadoutConfig_Implementation(const TArray<uint8>& Loadout, int32 LoadoutSeed);
+	void ServerSendLoadoutConfig(int32 LoadoutSeed, const TArray<uint8>& Loadout);
+	void ServerSendLoadoutConfig_Implementation(int32 LoadoutSeed, const TArray<uint8>& Loadout);
 
 	UFUNCTION(Server, Reliable)
-	void ServerSendPartyJoinInfoToPlayer(const FString& JoinInfoStr, const FUniqueNetIdRepl& RecipientId);
-	void ServerSendPartyJoinInfoToPlayer_Implementation(const FString& JoinInfoStr, const FUniqueNetIdRepl& RecipientId);
+	void ServerSendPartyJoinInfoToPlayer(const FUniqueNetIdRepl& RecipientId, const FString& JoinInfoStr);
+	void ServerSendPartyJoinInfoToPlayer_Implementation(const FUniqueNetIdRepl& RecipientId, const FString& JoinInfoStr);
 
 	UFUNCTION(Server, Reliable)
 	void ServerSetShouldDisablePlayerTeleportingDuringMissionResults();
@@ -238,16 +238,16 @@ public:
 	void ServerSetVehicleHealth_Implementation(float NewHealth);
 
 	UFUNCTION(Server, Reliable)
-	void ServerSpectatePlayer(bool bAllowStateChange, APawn* NewPlayerToSpectate);
-	void ServerSpectatePlayer_Implementation(bool bAllowStateChange, APawn* NewPlayerToSpectate);
+	void ServerSpectatePlayer(APawn* NewPlayerToSpectate, bool bAllowStateChange);
+	void ServerSpectatePlayer_Implementation(APawn* NewPlayerToSpectate, bool bAllowStateChange);
 
 	UFUNCTION(Server, Reliable)
-	void ServerSpectatePlayerState(bool bAllowStateChange, AFortPlayerStateZone* PlayerToSpectate);
-	void ServerSpectatePlayerState_Implementation(bool bAllowStateChange, AFortPlayerStateZone* PlayerToSpectate);
+	void ServerSpectatePlayerState(AFortPlayerStateZone* PlayerToSpectate, bool bAllowStateChange);
+	void ServerSpectatePlayerState_Implementation(AFortPlayerStateZone* PlayerToSpectate, bool bAllowStateChange);
 
 	UFUNCTION(Server, Reliable)
-	void ServerSubmitGameplayVote(int32 VoteDecision, const EFortVoteType& VoteType);
-	void ServerSubmitGameplayVote_Implementation(int32 VoteDecision, const EFortVoteType& VoteType);
+	void ServerSubmitGameplayVote(const EFortVoteType& VoteType, int32 VoteDecision);
+	void ServerSubmitGameplayVote_Implementation(const EFortVoteType& VoteType, int32 VoteDecision);
 
 	UFUNCTION(Server, Reliable)
 	void ServerVoiceChatRequestJoinToken(const FString& ChannelName);

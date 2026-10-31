@@ -50,8 +50,8 @@ public:
 	void ServerBeginBusPhase_Implementation();
 
 	UFUNCTION(Server, Reliable)
-	void ServerOnSpectatorCameraTypeChanged(bool bValidPos, const FVector& SpectatorLocation, const ESpectatorCameraType& NewCameraMode);
-	void ServerOnSpectatorCameraTypeChanged_Implementation(bool bValidPos, const FVector& SpectatorLocation, const ESpectatorCameraType& NewCameraMode);
+	void ServerOnSpectatorCameraTypeChanged(const ESpectatorCameraType& NewCameraMode, const FVector& SpectatorLocation, bool bValidPos);
+	void ServerOnSpectatorCameraTypeChanged_Implementation(const ESpectatorCameraType& NewCameraMode, const FVector& SpectatorLocation, bool bValidPos);
 
 };
 

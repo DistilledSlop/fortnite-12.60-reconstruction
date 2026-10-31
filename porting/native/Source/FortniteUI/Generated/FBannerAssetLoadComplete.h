@@ -7,5 +7,5 @@
 #include "FBannerAssetLoadComplete.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FBannerAssetLoadComplete, FName, BannerColorName, UMaterialInstanceDynamic*, MIDRef, UObject*, LoadedAsset);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FBannerAssetLoadComplete, UObject*, LoadedAsset, UMaterialInstanceDynamic*, MIDRef, FName, BannerColorName);
 

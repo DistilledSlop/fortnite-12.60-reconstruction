@@ -7,5 +7,5 @@
 #include "FOnAgentDiedEvent.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnAgentDiedEvent, AFortPawn*, AgentPawn, AFortAthenaAIBotController*, BotController);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnAgentDiedEvent, AFortAthenaAIBotController*, BotController, AFortPawn*, AgentPawn);
 

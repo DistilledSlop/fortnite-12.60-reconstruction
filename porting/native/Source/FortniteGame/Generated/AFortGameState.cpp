@@ -12,22 +12,22 @@ void AFortGameState::Client_RefreshEventCalendar_Implementation()
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortGameState::DbgBoxSendToAllInternal_DoNotCall_Implementation(float Thickness, uint8 DepthPriority, float LifeTime, bool bPersistentLines, const FColor& Color, const FRotator& Rotation, const FVector& Extent, const FVector& Center)
+void AFortGameState::DbgBoxSendToAllInternal_DoNotCall_Implementation(const FVector& Center, const FVector& Extent, const FRotator& Rotation, const FColor& Color, bool bPersistentLines, float LifeTime, uint8 DepthPriority, float Thickness)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortGameState::DbgCapsuleSendToAllInternal_DoNotCall_Implementation(float Thickness, uint8 DepthPriority, float LifeTime, bool bPersistentLines, const FColor& Color, const FQuat& Rotation, float Radius, float HalfHeight, const FVector& Center)
+void AFortGameState::DbgCapsuleSendToAllInternal_DoNotCall_Implementation(const FVector& Center, float HalfHeight, float Radius, const FQuat& Rotation, const FColor& Color, bool bPersistentLines, float LifeTime, uint8 DepthPriority, float Thickness)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortGameState::DbgLineSendToAllInternal_DoNotCall_Implementation(float Thickness, uint8 DepthPriority, float LifeTime, bool bPersistentLines, const FColor& Color, const FVector& LineEnd, const FVector& LineStart)
+void AFortGameState::DbgLineSendToAllInternal_DoNotCall_Implementation(const FVector& LineStart, const FVector& LineEnd, const FColor& Color, bool bPersistentLines, float LifeTime, uint8 DepthPriority, float Thickness)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortGameState::DbgSphereSendToAllInternal_DoNotCall_Implementation(float Thickness, uint8 DepthPriority, float LifeTime, bool bPersistentLines, const FColor& Color, int32 Segments, float Radius, const FVector& Center)
+void AFortGameState::DbgSphereSendToAllInternal_DoNotCall_Implementation(const FVector& Center, float Radius, int32 Segments, const FColor& Color, bool bPersistentLines, float LifeTime, uint8 DepthPriority, float Thickness)
 {
 	// Body not recovered: reflection-derived stub.
 }

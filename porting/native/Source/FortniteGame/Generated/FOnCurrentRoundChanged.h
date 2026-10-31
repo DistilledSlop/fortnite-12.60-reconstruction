@@ -7,5 +7,5 @@
 #include "FOnCurrentRoundChanged.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnCurrentRoundChanged, int32, CurrentRound, AFortMinigame*, Minigame);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnCurrentRoundChanged, AFortMinigame*, Minigame, int32, CurrentRound);
 

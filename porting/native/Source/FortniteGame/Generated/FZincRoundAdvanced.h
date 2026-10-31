@@ -7,5 +7,5 @@
 #include "FZincRoundAdvanced.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FZincRoundAdvanced, int32, Round, AFortAthenaMutator_Zinc*, Mutator);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FZincRoundAdvanced, AFortAthenaMutator_Zinc*, Mutator, int32, Round);
 

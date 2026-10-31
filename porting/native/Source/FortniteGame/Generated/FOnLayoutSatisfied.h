@@ -7,5 +7,5 @@
 #include "FOnLayoutSatisfied.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnLayoutSatisfied, ABuildingSMActor*, SatisfyingBuildingSMActor, ABuildingLayoutRequirement*, LayoutRequirement);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnLayoutSatisfied, ABuildingLayoutRequirement*, LayoutRequirement, ABuildingSMActor*, SatisfyingBuildingSMActor);
 

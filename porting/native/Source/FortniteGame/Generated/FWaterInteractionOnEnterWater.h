@@ -7,5 +7,5 @@
 #include "FWaterInteractionOnEnterWater.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FWaterInteractionOnEnterWater, bool, bIsFirstBody, UFortWaterInteractionComponent*, WaterInteractionComponent, AFortWaterBodyActor*, WaterBody);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FWaterInteractionOnEnterWater, AFortWaterBodyActor*, WaterBody, UFortWaterInteractionComponent*, WaterInteractionComponent, bool, bIsFirstBody);
 

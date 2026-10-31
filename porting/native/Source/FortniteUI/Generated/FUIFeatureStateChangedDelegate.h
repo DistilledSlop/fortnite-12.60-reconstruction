@@ -10,5 +10,5 @@
 #include "FUIFeatureStateChangedDelegate.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FUIFeatureStateChangedDelegate, EFortUIFeatureStateReason, StateReason, EFortUIFeatureState, NewState, EFortUIFeature, ChangedFeature);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FUIFeatureStateChangedDelegate, EFortUIFeature, ChangedFeature, EFortUIFeatureState, NewState, EFortUIFeatureStateReason, StateReason);
 

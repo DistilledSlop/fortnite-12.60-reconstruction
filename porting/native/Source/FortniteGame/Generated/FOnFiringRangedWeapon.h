@@ -8,5 +8,5 @@
 #include "FOnFiringRangedWeapon.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnFiringRangedWeapon, FGameplayTagContainer, AbilityTags, UFortGameplayAbility*, GameplayAbility);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnFiringRangedWeapon, UFortGameplayAbility*, GameplayAbility, FGameplayTagContainer, AbilityTags);
 

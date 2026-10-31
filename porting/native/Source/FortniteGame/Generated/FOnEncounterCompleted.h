@@ -7,5 +7,5 @@
 #include "FOnEncounterCompleted.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnEncounterCompleted, bool, bSuccessfullyCompleted, UFortAIEncounterInfo*, Encounter);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnEncounterCompleted, UFortAIEncounterInfo*, Encounter, bool, bSuccessfullyCompleted);
 

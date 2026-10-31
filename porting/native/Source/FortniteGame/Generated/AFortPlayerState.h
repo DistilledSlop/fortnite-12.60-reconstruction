@@ -329,8 +329,8 @@ public:
 	void OnRep_ShowHeroHeadAccessories();
 
 	UFUNCTION(Server, Reliable)
-	void ServerChangeActiveVariantForCosmeticItem(AFortPlayerPawn* PreviewPawn, const FGameplayTag& DesiredActiveVariant, const FGameplayTag& VariantChannelToChange, const FName& ItemTemplateToChange);
-	void ServerChangeActiveVariantForCosmeticItem_Implementation(AFortPlayerPawn* PreviewPawn, const FGameplayTag& DesiredActiveVariant, const FGameplayTag& VariantChannelToChange, const FName& ItemTemplateToChange);
+	void ServerChangeActiveVariantForCosmeticItem(const FName& ItemTemplateToChange, const FGameplayTag& VariantChannelToChange, const FGameplayTag& DesiredActiveVariant, AFortPlayerPawn* PreviewPawn);
+	void ServerChangeActiveVariantForCosmeticItem_Implementation(const FName& ItemTemplateToChange, const FGameplayTag& VariantChannelToChange, const FGameplayTag& DesiredActiveVariant, AFortPlayerPawn* PreviewPawn);
 
 	UFUNCTION(Server, Reliable)
 	void ServerSetShowHeroBackpack(bool bShow);

@@ -20,12 +20,12 @@ class FORTNITEGAME_API UFortControllerComponent_InventoryNetworkManagement : pub
 
 public:
 	UFUNCTION(Server, Reliable)
-	void ServerSwapItem(int32 Count, const FGuid& ItemGuid, UObject* TargetOwner, UObject* SourceOwner);
-	void ServerSwapItem_Implementation(int32 Count, const FGuid& ItemGuid, UObject* TargetOwner, UObject* SourceOwner);
+	void ServerSwapItem(UObject* SourceOwner, UObject* TargetOwner, const FGuid& ItemGuid, int32 Count);
+	void ServerSwapItem_Implementation(UObject* SourceOwner, UObject* TargetOwner, const FGuid& ItemGuid, int32 Count);
 
 	UFUNCTION(Server, Reliable)
-	void ServerSwapItems(const TArray<FItemGuidAndCount>& ItemGuids, UObject* TargetOwner, UObject* SourceOwner);
-	void ServerSwapItems_Implementation(const TArray<FItemGuidAndCount>& ItemGuids, UObject* TargetOwner, UObject* SourceOwner);
+	void ServerSwapItems(UObject* SourceOwner, UObject* TargetOwner, const TArray<FItemGuidAndCount>& ItemGuids);
+	void ServerSwapItems_Implementation(UObject* SourceOwner, UObject* TargetOwner, const TArray<FItemGuidAndCount>& ItemGuids);
 
 };
 

@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "Engine/DeveloperSettings.h"
 
+#include "FFortContentEncryptionCollection.h"
 #include "UObject/NoExportTypes.h"
 
 #include "UFortContentEncryptionSettings.generated.h"
@@ -23,6 +24,10 @@ public:
 	// table index 6, flags 0x10000000004001
 	UPROPERTY(Config)
 	TArray<FPrimaryAssetType> AutoEncryptPrimaryAssetTypes;
+
+	// table index 4, flags 0x10000000004001
+	UPROPERTY(Config)
+	TArray<FFortContentEncryptionCollection> Collections;
 
 	// table index 2, flags 0x10000000004001
 	UPROPERTY(Config)

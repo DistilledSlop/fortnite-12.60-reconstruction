@@ -8,5 +8,5 @@
 #include "FOnMatchmakingStateChangeDelegate.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnMatchmakingStateChangeDelegate, TEnumAsByte<EMatchmakingState::Type>, NewState, TEnumAsByte<EMatchmakingState::Type>, OldState);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnMatchmakingStateChangeDelegate, TEnumAsByte<EMatchmakingState::Type>, OldState, TEnumAsByte<EMatchmakingState::Type>, NewState);
 

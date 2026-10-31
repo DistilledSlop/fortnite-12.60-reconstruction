@@ -35,12 +35,15 @@
 #include "FOnInGameMatchmakingCanceled.h"
 #include "FOnInGameMatchmakingComplete.h"
 #include "FOnInGameMatchmakingError.h"
+#include "FOnInGameMatchmakingQueuedStatusUpdated.h"
 #include "FOnInGameMatchmakingReadyCheckComplete.h"
 #include "FOnInGameMatchmakingStarted.h"
+#include "FOnInGameMatchmakingStateChanged.h"
 #include "FOnIslandEntriesChanged.h"
 #include "FOnItemDropSpawned.h"
 #include "FOnItemDroppedDueToOverflow.h"
 #include "FOnLocalPlayerChangedTeams.h"
+#include "FOnMCPIslandRequestFinished.h"
 #include "FOnPlayerPawnEvent.h"
 #include "FOnPreviewScreenshotCameraActivated.h"
 #include "FOnSkydiveLeaderChanged.h"
@@ -350,9 +353,33 @@ public:
 	UPROPERTY()
 	FOnPlayerPawnEvent OnClientLeaveIsland;
 
+	// table index 111, flags 0x10000010080000
+	UPROPERTY()
+	FOnMCPIslandRequestFinished OnMakeNewCreativePlotFinished;
+
+	// table index 110, flags 0x10000010080000
+	UPROPERTY()
+	FOnMCPIslandRequestFinished OnDestroyCreativePlotFinished;
+
+	// table index 109, flags 0x10000010080000
+	UPROPERTY()
+	FOnMCPIslandRequestFinished OnRestoreCreativePlotFinished;
+
+	// table index 108, flags 0x10000010080000
+	UPROPERTY()
+	FOnMCPIslandRequestFinished OnDuplicateCreativePlotFinished;
+
 	// table index 107, flags 0x10000010080000
 	UPROPERTY()
 	FOnIslandEntriesChanged OnIslandEntriesChanged;
+
+	// table index 106, flags 0x10000010080000
+	UPROPERTY()
+	FOnMCPIslandRequestFinished OnUpdateCreativePlotName;
+
+	// table index 105, flags 0x10000010080000
+	UPROPERTY()
+	FOnMCPIslandRequestFinished OnUpdateCreativeDescriptionTags;
 
 	// table index 104, flags 0x10000000000034
 	UPROPERTY(Replicated)
@@ -393,6 +420,14 @@ public:
 	// table index 95, flags 0x10000010080000
 	UPROPERTY()
 	FOnInGameMatchmakingComplete InGameMatchmakingComplete;
+
+	// table index 94, flags 0x10000010080000
+	UPROPERTY()
+	FOnInGameMatchmakingStateChanged InGameMatchmakingStateChanged;
+
+	// table index 93, flags 0x10000010080000
+	UPROPERTY()
+	FOnInGameMatchmakingQueuedStatusUpdated InGameMatchmakingQueuedStatusUpdated;
 
 	// table index 92, flags 0x10000010080000
 	UPROPERTY()
@@ -733,16 +768,16 @@ public:
 	void ClearInventorySpaces(int32 NumSpaces);
 
 	UFUNCTION(Client, Unreliable)
-	void Client_DisplayQuestUpdate_Assist(AFortPlayerState* AssistingPlayer, AFortPlayerState* QuestOwner, const FFortUpdatedObjectiveStat& ObjectiveUpdated);
-	void Client_DisplayQuestUpdate_Assist_Implementation(AFortPlayerState* AssistingPlayer, AFortPlayerState* QuestOwner, const FFortUpdatedObjectiveStat& ObjectiveUpdated);
+	void Client_DisplayQuestUpdate_Assist(const FFortUpdatedObjectiveStat& ObjectiveUpdated, AFortPlayerState* QuestOwner, AFortPlayerState* AssistingPlayer);
+	void Client_DisplayQuestUpdate_Assist_Implementation(const FFortUpdatedObjectiveStat& ObjectiveUpdated, AFortPlayerState* QuestOwner, AFortPlayerState* AssistingPlayer);
 
 	UFUNCTION(Client, Unreliable)
 	void Client_DisplayQuestUpdate_Self(const FFortUpdatedObjectiveStat& ObjectiveUpdated);
 	void Client_DisplayQuestUpdate_Self_Implementation(const FFortUpdatedObjectiveStat& ObjectiveUpdated);
 
 	UFUNCTION(Client, Reliable)
-	void ClientAddProfileGoCollection(const TArray<FProfileGoScenario>& NewScenarios, const FString& CollectionName);
-	void ClientAddProfileGoCollection_Implementation(const TArray<FProfileGoScenario>& NewScenarios, const FString& CollectionName);
+	void ClientAddProfileGoCollection(const FString& CollectionName, const TArray<FProfileGoScenario>& NewScenarios);
+	void ClientAddProfileGoCollection_Implementation(const FString& CollectionName, const TArray<FProfileGoScenario>& NewScenarios);
 
 	UFUNCTION(Client, Reliable)
 	void ClientAlertLeaveIsland();
@@ -753,8 +788,8 @@ public:
 	void ClientAlertPortalDoneTeleporting_Implementation();
 
 	UFUNCTION(Client, Reliable)
-	void ClientAutoEquipFirstItem(bool bForceExecution, const FGuid& ItemGuid);
-	void ClientAutoEquipFirstItem_Implementation(bool bForceExecution, const FGuid& ItemGuid);
+	void ClientAutoEquipFirstItem(const FGuid& ItemGuid, bool bForceExecution);
+	void ClientAutoEquipFirstItem_Implementation(const FGuid& ItemGuid, bool bForceExecution);
 
 	UFUNCTION(Client, Reliable)
 	void ClientBotStartDogpile(const FVector& DogpilePosition);
@@ -765,36 +800,36 @@ public:
 	void ClientBotStopDogpile_Implementation();
 
 	UFUNCTION(Client, Reliable)
-	void ClientBroadcastOnDestroyCreativePlotFinished(const FText& Reason, bool bSuccess);
-	void ClientBroadcastOnDestroyCreativePlotFinished_Implementation(const FText& Reason, bool bSuccess);
+	void ClientBroadcastOnDestroyCreativePlotFinished(bool bSuccess, const FText& Reason);
+	void ClientBroadcastOnDestroyCreativePlotFinished_Implementation(bool bSuccess, const FText& Reason);
 
 	UFUNCTION(Client, Reliable)
-	void ClientBroadcastOnDuplicateCreativePlotFinished(const FText& Reason, bool bSuccess);
-	void ClientBroadcastOnDuplicateCreativePlotFinished_Implementation(const FText& Reason, bool bSuccess);
+	void ClientBroadcastOnDuplicateCreativePlotFinished(bool bSuccess, const FText& Reason);
+	void ClientBroadcastOnDuplicateCreativePlotFinished_Implementation(bool bSuccess, const FText& Reason);
 
 	UFUNCTION(Client, Reliable)
-	void ClientBroadcastOnMakeNewCreativePlotFinished(const FText& Reason, bool bSuccess);
-	void ClientBroadcastOnMakeNewCreativePlotFinished_Implementation(const FText& Reason, bool bSuccess);
+	void ClientBroadcastOnMakeNewCreativePlotFinished(bool bSuccess, const FText& Reason);
+	void ClientBroadcastOnMakeNewCreativePlotFinished_Implementation(bool bSuccess, const FText& Reason);
 
 	UFUNCTION(Client, Reliable)
-	void ClientBroadcastOnRestoreCreativePlotFinished(const FText& Reason, bool bSuccess);
-	void ClientBroadcastOnRestoreCreativePlotFinished_Implementation(const FText& Reason, bool bSuccess);
+	void ClientBroadcastOnRestoreCreativePlotFinished(bool bSuccess, const FText& Reason);
+	void ClientBroadcastOnRestoreCreativePlotFinished_Implementation(bool bSuccess, const FText& Reason);
 
 	UFUNCTION(Client, Reliable)
-	void ClientBroadcastOnUpdateCreativeDescriptionTags(const FText& Reason, bool bSuccess);
-	void ClientBroadcastOnUpdateCreativeDescriptionTags_Implementation(const FText& Reason, bool bSuccess);
+	void ClientBroadcastOnUpdateCreativeDescriptionTags(bool bSuccess, const FText& Reason);
+	void ClientBroadcastOnUpdateCreativeDescriptionTags_Implementation(bool bSuccess, const FText& Reason);
 
 	UFUNCTION(Client, Reliable)
-	void ClientBroadcastOnUpdateCreativePlotName(const FText& Reason, bool bSuccess);
-	void ClientBroadcastOnUpdateCreativePlotName_Implementation(const FText& Reason, bool bSuccess);
+	void ClientBroadcastOnUpdateCreativePlotName(bool bSuccess, const FText& Reason);
+	void ClientBroadcastOnUpdateCreativePlotName_Implementation(bool bSuccess, const FText& Reason);
 
 	UFUNCTION(Client, Reliable)
 	void ClientBroadcastPlotItemID(const FString& PlotID);
 	void ClientBroadcastPlotItemID_Implementation(const FString& PlotID);
 
 	UFUNCTION(Client, Reliable)
-	void ClientCycleQuickBarToCreativeItem(UFortWorldItemDefinition* CreativeItemDef, const FGuid& CreativeItemGuid);
-	void ClientCycleQuickBarToCreativeItem_Implementation(UFortWorldItemDefinition* CreativeItemDef, const FGuid& CreativeItemGuid);
+	void ClientCycleQuickBarToCreativeItem(const FGuid& CreativeItemGuid, UFortWorldItemDefinition* CreativeItemDef);
+	void ClientCycleQuickBarToCreativeItem_Implementation(const FGuid& CreativeItemGuid, UFortWorldItemDefinition* CreativeItemDef);
 
 	UFUNCTION(Client, Reliable)
 	void ClientEnterCameraMode();
@@ -809,40 +844,40 @@ public:
 	void ClientNotifyAbortRespawn_Implementation();
 
 	UFUNCTION(Client, Reliable)
-	void ClientNotifyLost(const EEndOfMatchReason& LostReason, APawn* WinningPawn);
-	void ClientNotifyLost_Implementation(const EEndOfMatchReason& LostReason, APawn* WinningPawn);
+	void ClientNotifyLost(APawn* WinningPawn, const EEndOfMatchReason& LostReason);
+	void ClientNotifyLost_Implementation(APawn* WinningPawn, const EEndOfMatchReason& LostReason);
 
 	UFUNCTION(Client, Reliable)
 	void ClientNotifyTeamLost();
 	void ClientNotifyTeamLost_Implementation();
 
 	UFUNCTION(Client, Reliable)
-	void ClientNotifyTeamWon(const EDeathCause& DeathCause, UFortWeaponItemDefinition* FinishingWeapon, APawn* FinisherPawn);
-	void ClientNotifyTeamWon_Implementation(const EDeathCause& DeathCause, UFortWeaponItemDefinition* FinishingWeapon, APawn* FinisherPawn);
+	void ClientNotifyTeamWon(APawn* FinisherPawn, UFortWeaponItemDefinition* FinishingWeapon, const EDeathCause& DeathCause);
+	void ClientNotifyTeamWon_Implementation(APawn* FinisherPawn, UFortWeaponItemDefinition* FinishingWeapon, const EDeathCause& DeathCause);
 
 	UFUNCTION(Client, Reliable)
-	void ClientNotifyWon(const EDeathCause& DeathCause, UFortWeaponItemDefinition* FinishingWeapon, APawn* FinisherPawn);
-	void ClientNotifyWon_Implementation(const EDeathCause& DeathCause, UFortWeaponItemDefinition* FinishingWeapon, APawn* FinisherPawn);
+	void ClientNotifyWon(APawn* FinisherPawn, UFortWeaponItemDefinition* FinishingWeapon, const EDeathCause& DeathCause);
+	void ClientNotifyWon_Implementation(APawn* FinisherPawn, UFortWeaponItemDefinition* FinishingWeapon, const EDeathCause& DeathCause);
 
 	UFUNCTION(Client, Reliable)
-	void ClientPreviewScreenshotModeActivated(bool bForceQuit, bool bSuccess);
-	void ClientPreviewScreenshotModeActivated_Implementation(bool bForceQuit, bool bSuccess);
+	void ClientPreviewScreenshotModeActivated(bool bSuccess, bool bForceQuit);
+	void ClientPreviewScreenshotModeActivated_Implementation(bool bSuccess, bool bForceQuit);
 
 	UFUNCTION(Client, Reliable)
-	void ClientPublishCreativePlotComplete(const FString& LinkJson, const FString& ResultErrorCode);
-	void ClientPublishCreativePlotComplete_Implementation(const FString& LinkJson, const FString& ResultErrorCode);
+	void ClientPublishCreativePlotComplete(const FString& ResultErrorCode, const FString& LinkJson);
+	void ClientPublishCreativePlotComplete_Implementation(const FString& ResultErrorCode, const FString& LinkJson);
 
 	UFUNCTION(Client, Unreliable)
-	void ClientReceiveKillNotification(AFortPlayerStateZone* Killed, AFortPlayerStateZone* Killer);
-	void ClientReceiveKillNotification_Implementation(AFortPlayerStateZone* Killed, AFortPlayerStateZone* Killer);
+	void ClientReceiveKillNotification(AFortPlayerStateZone* Killer, AFortPlayerStateZone* Killed);
+	void ClientReceiveKillNotification_Implementation(AFortPlayerStateZone* Killer, AFortPlayerStateZone* Killed);
 
 	UFUNCTION(Client, Unreliable)
-	void ClientReceiveSquadQuickChatMessage(AFortPlayerController* SenderPC, const FAthenaQuickChatActiveEntry& ChatEntry);
-	void ClientReceiveSquadQuickChatMessage_Implementation(AFortPlayerController* SenderPC, const FAthenaQuickChatActiveEntry& ChatEntry);
+	void ClientReceiveSquadQuickChatMessage(const FAthenaQuickChatActiveEntry& ChatEntry, AFortPlayerController* SenderPC);
+	void ClientReceiveSquadQuickChatMessage_Implementation(const FAthenaQuickChatActiveEntry& ChatEntry, AFortPlayerController* SenderPC);
 
 	UFUNCTION(Client, Reliable)
-	void ClientReportTournamentPlacementPointsScored(int32 PointsEarned, int32 Placement);
-	void ClientReportTournamentPlacementPointsScored_Implementation(int32 PointsEarned, int32 Placement);
+	void ClientReportTournamentPlacementPointsScored(int32 Placement, int32 PointsEarned);
+	void ClientReportTournamentPlacementPointsScored_Implementation(int32 Placement, int32 PointsEarned);
 
 	UFUNCTION(Client, Reliable)
 	void ClientRequestLevelStreamingHandshake();
@@ -885,8 +920,8 @@ public:
 	void ClientSignalPortalLoadCompleteViaDelegate_Implementation(const FAsyncTaskResult& Result);
 
 	UFUNCTION(Client, Reliable)
-	void ClientStartRespawnPreparation(const FText& HUDReasonText, const FName& InRespawnCameraBehavior, float RespawnCameraDist, const FRotator& RespawnRot, const FVector& RespawnLoc);
-	void ClientStartRespawnPreparation_Implementation(const FText& HUDReasonText, const FName& InRespawnCameraBehavior, float RespawnCameraDist, const FRotator& RespawnRot, const FVector& RespawnLoc);
+	void ClientStartRespawnPreparation(const FVector& RespawnLoc, const FRotator& RespawnRot, float RespawnCameraDist, const FName& InRespawnCameraBehavior, const FText& HUDReasonText);
+	void ClientStartRespawnPreparation_Implementation(const FVector& RespawnLoc, const FRotator& RespawnRot, float RespawnCameraDist, const FName& InRespawnCameraBehavior, const FText& HUDReasonText);
 
 	UFUNCTION(Client, Reliable)
 	void ClientStartWaitLTMLoading();
@@ -901,8 +936,8 @@ public:
 	void DestroyCreativePlot_Implementation(const FString& IslandId);
 
 	UFUNCTION(Server, Reliable)
-	void DuplicateCreativePlot(const FString& Title, const FString& Locale, const FString& IslandId);
-	void DuplicateCreativePlot_Implementation(const FString& Title, const FString& Locale, const FString& IslandId);
+	void DuplicateCreativePlot(const FString& IslandId, const FString& Locale, const FString& Title);
+	void DuplicateCreativePlot_Implementation(const FString& IslandId, const FString& Locale, const FString& Title);
 
 	UFUNCTION(BlueprintCallable)
 	void EnableCreativeContentManagerBasedOnPlaylist();
@@ -926,12 +961,12 @@ public:
 	bool IsClientNotifiedOfWin() const;
 
 	UFUNCTION(Server, Reliable)
-	void MakeNewCreativePlot(const FString& Title, const FString& Locale, UFortCreativeRealEstatePlotItemDefinition* PlotType);
-	void MakeNewCreativePlot_Implementation(const FString& Title, const FString& Locale, UFortCreativeRealEstatePlotItemDefinition* PlotType);
+	void MakeNewCreativePlot(UFortCreativeRealEstatePlotItemDefinition* PlotType, const FString& Locale, const FString& Title);
+	void MakeNewCreativePlot_Implementation(UFortCreativeRealEstatePlotItemDefinition* PlotType, const FString& Locale, const FString& Title);
 
 	UFUNCTION(Server, Reliable)
-	void MakeNewCreativePlotFromLinkCode(const FString& Title, const FString& Locale, const FString& LinkCode);
-	void MakeNewCreativePlotFromLinkCode_Implementation(const FString& Title, const FString& Locale, const FString& LinkCode);
+	void MakeNewCreativePlotFromLinkCode(const FString& LinkCode, const FString& Locale, const FString& Title);
+	void MakeNewCreativePlotFromLinkCode_Implementation(const FString& LinkCode, const FString& Locale, const FString& Title);
 
 	UFUNCTION(Server, Reliable, WithValidation)
 	void OnPostGameForced();
@@ -957,8 +992,8 @@ public:
 	void PreLobbyIslandTeleport();
 
 	UFUNCTION(Server, Reliable)
-	void PublishCreativePlot(const FCreativePublishOptions& MyPublishOptions, AFortVolume* VolumeToPublish);
-	void PublishCreativePlot_Implementation(const FCreativePublishOptions& MyPublishOptions, AFortVolume* VolumeToPublish);
+	void PublishCreativePlot(AFortVolume* VolumeToPublish, const FCreativePublishOptions& MyPublishOptions);
+	void PublishCreativePlot_Implementation(AFortVolume* VolumeToPublish, const FCreativePublishOptions& MyPublishOptions);
 
 	UFUNCTION(BlueprintCallable)
 	void RemoveDroppableItems();
@@ -973,18 +1008,18 @@ public:
 	void RestoreCreativePlot_Implementation(const FString& IslandId);
 
 	UFUNCTION(Server, Reliable, WithValidation)
-	void ServerAddSimulatedXp(const FGameplayTag& MetaData, const FText& Source, float XpAmmount);
-	void ServerAddSimulatedXp_Implementation(const FGameplayTag& MetaData, const FText& Source, float XpAmmount);
-	bool ServerAddSimulatedXp_Validate(const FGameplayTag& MetaData, const FText& Source, float XpAmmount);
+	void ServerAddSimulatedXp(float XpAmmount, const FText& Source, const FGameplayTag& MetaData);
+	void ServerAddSimulatedXp_Implementation(float XpAmmount, const FText& Source, const FGameplayTag& MetaData);
+	bool ServerAddSimulatedXp_Validate(float XpAmmount, const FText& Source, const FGameplayTag& MetaData);
 
 	UFUNCTION(Server, Reliable)
-	void ServerAddToCachedPurchased(int32 Count, UFortItemDefinition* ItemDefinition);
-	void ServerAddToCachedPurchased_Implementation(int32 Count, UFortItemDefinition* ItemDefinition);
+	void ServerAddToCachedPurchased(UFortItemDefinition* ItemDefinition, int32 Count);
+	void ServerAddToCachedPurchased_Implementation(UFortItemDefinition* ItemDefinition, int32 Count);
 
 	UFUNCTION(Server, Reliable, WithValidation)
-	void ServerApplyOverrideWrapToItem(const TSoftObjectPtr<UAthenaItemWrapDefinition>& ItemWrap, const FGuid& GUID);
-	void ServerApplyOverrideWrapToItem_Implementation(const TSoftObjectPtr<UAthenaItemWrapDefinition>& ItemWrap, const FGuid& GUID);
-	bool ServerApplyOverrideWrapToItem_Validate(const TSoftObjectPtr<UAthenaItemWrapDefinition>& ItemWrap, const FGuid& GUID);
+	void ServerApplyOverrideWrapToItem(const FGuid& GUID, const TSoftObjectPtr<UAthenaItemWrapDefinition>& ItemWrap);
+	void ServerApplyOverrideWrapToItem_Implementation(const FGuid& GUID, const TSoftObjectPtr<UAthenaItemWrapDefinition>& ItemWrap);
+	bool ServerApplyOverrideWrapToItem_Validate(const FGuid& GUID, const TSoftObjectPtr<UAthenaItemWrapDefinition>& ItemWrap);
 
 	UFUNCTION(Server, Reliable)
 	void ServerApplyOverrideWrapToVehicle(const TSoftObjectPtr<UAthenaItemWrapDefinition>& ItemWrap);
@@ -1016,9 +1051,9 @@ public:
 	bool ServerClientIsReadyToRespawn_Validate();
 
 	UFUNCTION(Server, Reliable, WithValidation)
-	void ServerCreateProfileGoCollectionForSublevels(int32 Quad, int32 RotationSteps, int32 GridStepsY, int32 GridStepsX, const FString& SublevelSearchString);
-	void ServerCreateProfileGoCollectionForSublevels_Implementation(int32 Quad, int32 RotationSteps, int32 GridStepsY, int32 GridStepsX, const FString& SublevelSearchString);
-	bool ServerCreateProfileGoCollectionForSublevels_Validate(int32 Quad, int32 RotationSteps, int32 GridStepsY, int32 GridStepsX, const FString& SublevelSearchString);
+	void ServerCreateProfileGoCollectionForSublevels(const FString& SublevelSearchString, int32 GridStepsX, int32 GridStepsY, int32 RotationSteps, int32 Quad);
+	void ServerCreateProfileGoCollectionForSublevels_Implementation(const FString& SublevelSearchString, int32 GridStepsX, int32 GridStepsY, int32 RotationSteps, int32 Quad);
+	bool ServerCreateProfileGoCollectionForSublevels_Validate(const FString& SublevelSearchString, int32 GridStepsX, int32 GridStepsY, int32 RotationSteps, int32 Quad);
 
 	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerDBNOReviveInterrupted(AFortPlayerPawnAthena* DBNOPawn);
@@ -1073,13 +1108,13 @@ public:
 	void ServerLoadIslandCheckpoint_Implementation(AFortAthenaCreativePortal* Portal);
 
 	UFUNCTION(Server, Reliable, WithValidation)
-	void ServerLoadPlotForPortal(const FString& PlotItemId, AFortAthenaCreativePortal* Portal);
-	void ServerLoadPlotForPortal_Implementation(const FString& PlotItemId, AFortAthenaCreativePortal* Portal);
-	bool ServerLoadPlotForPortal_Validate(const FString& PlotItemId, AFortAthenaCreativePortal* Portal);
+	void ServerLoadPlotForPortal(AFortAthenaCreativePortal* Portal, const FString& PlotItemId);
+	void ServerLoadPlotForPortal_Implementation(AFortAthenaCreativePortal* Portal, const FString& PlotItemId);
+	bool ServerLoadPlotForPortal_Validate(AFortAthenaCreativePortal* Portal, const FString& PlotItemId);
 
 	UFUNCTION(Server, Reliable)
-	void ServerLoadPlotForPortalFromMnemonic(const FString& Mnemonic, AFortAthenaCreativePortal* Portal);
-	void ServerLoadPlotForPortalFromMnemonic_Implementation(const FString& Mnemonic, AFortAthenaCreativePortal* Portal);
+	void ServerLoadPlotForPortalFromMnemonic(AFortAthenaCreativePortal* Portal, const FString& Mnemonic);
+	void ServerLoadPlotForPortalFromMnemonic_Implementation(AFortAthenaCreativePortal* Portal, const FString& Mnemonic);
 
 	UFUNCTION(Server, Reliable)
 	void ServerLookedAtFocalPoint();
@@ -1101,8 +1136,8 @@ public:
 	bool ServerNotifyOstrichShieldOvercharge_Validate();
 
 	UFUNCTION(Server, Unreliable)
-	void ServerPlaySquadQuickChatMessage(const FUniqueNetIdRepl& SenderID, const FAthenaQuickChatActiveEntry& ChatEntry);
-	void ServerPlaySquadQuickChatMessage_Implementation(const FUniqueNetIdRepl& SenderID, const FAthenaQuickChatActiveEntry& ChatEntry);
+	void ServerPlaySquadQuickChatMessage(const FAthenaQuickChatActiveEntry& ChatEntry, const FUniqueNetIdRepl& SenderID);
+	void ServerPlaySquadQuickChatMessage_Implementation(const FAthenaQuickChatActiveEntry& ChatEntry, const FUniqueNetIdRepl& SenderID);
 
 	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerReleasePortal();
@@ -1147,9 +1182,9 @@ public:
 	void ServerSaveIslandCheckpoint_Implementation(AFortAthenaCreativePortal* Portal);
 
 	UFUNCTION(Server, Reliable, WithValidation)
-	void ServerSelectMutatorItem(int32 ItemIndex, AFortGameplayMutator* Mutator);
-	void ServerSelectMutatorItem_Implementation(int32 ItemIndex, AFortGameplayMutator* Mutator);
-	bool ServerSelectMutatorItem_Validate(int32 ItemIndex, AFortGameplayMutator* Mutator);
+	void ServerSelectMutatorItem(AFortGameplayMutator* Mutator, int32 ItemIndex);
+	void ServerSelectMutatorItem_Implementation(AFortGameplayMutator* Mutator, int32 ItemIndex);
+	bool ServerSelectMutatorItem_Validate(AFortGameplayMutator* Mutator, int32 ItemIndex);
 
 	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerSendSquadFriend(AFortPlayerStateAthena* FriendInSquad);
@@ -1193,8 +1228,8 @@ public:
 	bool ServerSimulateLevelUp_Validate(int32 ClientSimulatedLevel);
 
 	UFUNCTION(Server, Reliable)
-	void ServerSpawnCreativeSupplyDrop(TSubclassOf<AActor> InSupplyDropClass, const FVector& Position);
-	void ServerSpawnCreativeSupplyDrop_Implementation(TSubclassOf<AActor> InSupplyDropClass, const FVector& Position);
+	void ServerSpawnCreativeSupplyDrop(const FVector& Position, TSubclassOf<AActor> InSupplyDropClass);
+	void ServerSpawnCreativeSupplyDrop_Implementation(const FVector& Position, TSubclassOf<AActor> InSupplyDropClass);
 
 	UFUNCTION(Server, Reliable)
 	void ServerStartInteractWithIslandPortal(AFortAthenaCreativePortal* Portal);
@@ -1277,26 +1312,26 @@ public:
 	bool ServerUpdateUserCameraPreview_Validate();
 
 	UFUNCTION(Server, Reliable, WithValidation)
-	void TellServer_ClientReceivedPlaysetDataForVolume(AFortVolume* Volume, const FFortPlaysetStreamingData& PlaysetData);
-	void TellServer_ClientReceivedPlaysetDataForVolume_Implementation(AFortVolume* Volume, const FFortPlaysetStreamingData& PlaysetData);
-	bool TellServer_ClientReceivedPlaysetDataForVolume_Validate(AFortVolume* Volume, const FFortPlaysetStreamingData& PlaysetData);
+	void TellServer_ClientReceivedPlaysetDataForVolume(const FFortPlaysetStreamingData& PlaysetData, AFortVolume* Volume);
+	void TellServer_ClientReceivedPlaysetDataForVolume_Implementation(const FFortPlaysetStreamingData& PlaysetData, AFortVolume* Volume);
+	bool TellServer_ClientReceivedPlaysetDataForVolume_Validate(const FFortPlaysetStreamingData& PlaysetData, AFortVolume* Volume);
 
 	UFUNCTION(Server, Reliable)
-	void UpdateCreativeIslandDescriptionTags(const TArray<FString>& DescriptionTags, const FString& Locale, const FString& IslandId);
-	void UpdateCreativeIslandDescriptionTags_Implementation(const TArray<FString>& DescriptionTags, const FString& Locale, const FString& IslandId);
+	void UpdateCreativeIslandDescriptionTags(const FString& IslandId, const FString& Locale, const TArray<FString>& DescriptionTags);
+	void UpdateCreativeIslandDescriptionTags_Implementation(const FString& IslandId, const FString& Locale, const TArray<FString>& DescriptionTags);
 
 	UFUNCTION(Server, Reliable)
-	void UpdateCreativePlotData(const FCreativeIslandInfo& MyInfo, AFortVolume* VolumeToPublish);
-	void UpdateCreativePlotData_Implementation(const FCreativeIslandInfo& MyInfo, AFortVolume* VolumeToPublish);
+	void UpdateCreativePlotData(AFortVolume* VolumeToPublish, const FCreativeIslandInfo& MyInfo);
+	void UpdateCreativePlotData_Implementation(AFortVolume* VolumeToPublish, const FCreativeIslandInfo& MyInfo);
 
 	UFUNCTION(Server, Reliable)
-	void UpdateCreativePlotName(const FString& Title, const FString& Locale, const FString& IslandId);
-	void UpdateCreativePlotName_Implementation(const FString& Title, const FString& Locale, const FString& IslandId);
+	void UpdateCreativePlotName(const FString& IslandId, const FString& Locale, const FString& Title);
+	void UpdateCreativePlotName_Implementation(const FString& IslandId, const FString& Locale, const FString& Title);
 
 	UFUNCTION(Server, Reliable, WithValidation)
-	void UpdateUGCRestrictedForVolume(bool bRestricted, AFortVolume* Volume);
-	void UpdateUGCRestrictedForVolume_Implementation(bool bRestricted, AFortVolume* Volume);
-	bool UpdateUGCRestrictedForVolume_Validate(bool bRestricted, AFortVolume* Volume);
+	void UpdateUGCRestrictedForVolume(AFortVolume* Volume, bool bRestricted);
+	void UpdateUGCRestrictedForVolume_Implementation(AFortVolume* Volume, bool bRestricted);
+	bool UpdateUGCRestrictedForVolume_Validate(AFortVolume* Volume, bool bRestricted);
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

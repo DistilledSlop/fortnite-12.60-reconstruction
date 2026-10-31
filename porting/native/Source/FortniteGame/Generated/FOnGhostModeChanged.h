@@ -7,5 +7,5 @@
 #include "FOnGhostModeChanged.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnGhostModeChanged, bool, bEnteredGhostMode, AFortPlayerControllerGameplay*, PlayerController);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnGhostModeChanged, AFortPlayerControllerGameplay*, PlayerController, bool, bEnteredGhostMode);
 

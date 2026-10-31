@@ -9,6 +9,7 @@
 #include "Engine/AssetManagerSettings.h"
 #include "FActorInstanceRecord.h"
 #include "FActorTemplateRecord.h"
+#include "FAsyncTaskCallbackDelegate.h"
 #include "FDeleteActorRecord.h"
 #include "FLevelStreamedDeleteActorRecord.h"
 #include "FObjectCostVersion.h"
@@ -81,6 +82,18 @@ public:
 	UPROPERTY()
 	TMap<FName, FLevelStreamedDeleteActorRecord> LevelStreamedActorsToDelete;
 
+	// table index 23, flags 0x10000010082000
+	UPROPERTY(Transient)
+	FAsyncTaskCallbackDelegate OnFinishedWrite;
+
+	// table index 22, flags 0x10000010082000
+	UPROPERTY(Transient)
+	FAsyncTaskCallbackDelegate OnFinishedRead;
+
+	// table index 21, flags 0x10000010082000
+	UPROPERTY(Transient)
+	FAsyncTaskCallbackDelegate OnFinishedRecordCollapse;
+
 	// table index 19, flags 0x40000000000000
 	UPROPERTY()
 	TArray<FActorInstanceRecord> InstanceRecords_LEGACY;
@@ -88,6 +101,14 @@ public:
 	// table index 17, flags 0x40000000000000
 	UPROPERTY()
 	TArray<FDeleteActorRecord> DeleteActorRecords_LEGACY;
+
+	// table index 16, flags 0x10000010082000
+	UPROPERTY(Transient)
+	FAsyncTaskCallbackDelegate FinishSpawningDelegate;
+
+	// table index 15, flags 0x40000000082000
+	UPROPERTY(Transient)
+	FAsyncTaskCallbackDelegate OnRemoveAllDeletedLevelStreamedActorsComplete;
 
 	// table index 14, flags 0x40000000002000
 	UPROPERTY(Transient)
@@ -97,9 +118,33 @@ public:
 	UPROPERTY(Transient)
 	TArray<ULevelRecordSpawner*> ActiveSpawners;
 
+	// table index 11, flags 0x40000000082000
+	UPROPERTY(Transient)
+	FAsyncTaskCallbackDelegate OnFinishedRemoveInvalidDeleteRecords;
+
+	// table index 10, flags 0x40000000082000
+	UPROPERTY(Transient)
+	FAsyncTaskCallbackDelegate OnFinishedRemoveInvalidInstanceRecords;
+
+	// table index 9, flags 0x40000000082000
+	UPROPERTY(Transient)
+	FAsyncTaskCallbackDelegate OnFinishedRemoveDuplicateInstanceRecords;
+
 	// table index 8, flags 0x40000000002000
 	UPROPERTY(Transient)
 	FRecordBucketMap RecordBucketMap;
+
+	// table index 7, flags 0x40000000082000
+	UPROPERTY(Transient)
+	FAsyncTaskCallbackDelegate OnFinishedSeparateModifiedActors;
+
+	// table index 6, flags 0x40000000082000
+	UPROPERTY(Transient)
+	FAsyncTaskCallbackDelegate OnFinishedDeletePendingActors;
+
+	// table index 5, flags 0x40000000082000
+	UPROPERTY(Transient)
+	FAsyncTaskCallbackDelegate OnFinishedWriteToBuffer;
 
 	// table index 3, flags 0x40000000002000
 	UPROPERTY(Transient)

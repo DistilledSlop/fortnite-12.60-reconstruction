@@ -11,12 +11,12 @@ void AFortPartyBeaconClient::ClientAllowedToProceedFromReservationTimeout_Implem
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPartyBeaconClient::ServerAbandonExistingReservation_Implementation(const FUniqueNetIdRepl& RequestingPlayer, const FString& InSessionId)
+void AFortPartyBeaconClient::ServerAbandonExistingReservation_Implementation(const FString& InSessionId, const FUniqueNetIdRepl& RequestingPlayer)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortPartyBeaconClient::ServerReconnectExistingReservation_Implementation(const FUniqueNetIdRepl& RequestingPlayer, const FString& InSessionId)
+void AFortPartyBeaconClient::ServerReconnectExistingReservation_Implementation(const FString& InSessionId, const FUniqueNetIdRepl& RequestingPlayer)
 {
 	// Body not recovered: reflection-derived stub.
 }

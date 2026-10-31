@@ -81,28 +81,28 @@ Each step adds the fix that completes the most remaining classes (all of a class
 | 1 | custom NetSerialize (struct not identified) | 21 | 32 | 21 |
 | 2 | RPC flags without a Server/Client/NetMulticast role | 13 | 13 | 34 |
 | 3 | custom NetSerialize struct FActiveGameplayModifierArray | 7 | 10 | 41 |
-| 4 | custom NetSerialize struct FFortSpectatorZoneArray | 7 | 7 | 48 |
-| 5 | custom NetSerialize struct FFortBadgeCountArray | 7 | 7 | 55 |
+| 4 | custom NetSerialize struct FFortBadgeCountArray | 7 | 7 | 48 |
+| 5 | custom NetSerialize struct FFortSpectatorZoneArray | 7 | 7 | 55 |
 | 6 | custom NetSerialize struct FFortItemList | 2 | 2 | 57 |
-| 7 | custom NetSerialize struct FPlayspaceUserList | 2 | 2 | 59 |
-| 8 | custom NetSerialize struct FTeamSpottedActorInfoArray | 2 | 2 | 61 |
-| 9 | custom NetSerialize struct FPrivateTeamDataArray | 1 | 2 | 62 |
-| 10 | custom NetSerialize struct FTagTeamInfoArray | 1 | 2 | 63 |
-| 11 | custom NetSerialize struct FBagelPlayerDataArray | 1 | 1 | 64 |
-| 12 | custom NetSerialize struct FPropertyOverrideDataRepl | 1 | 1 | 65 |
-| 13 | custom NetSerialize struct FPowPlayerDataArray | 1 | 1 | 66 |
-| 14 | custom NetSerialize struct FSpecialActorRepDataArray | 1 | 1 | 67 |
-| 15 | custom NetSerialize struct FLatentRepTeamDataArray | 1 | 1 | 68 |
-| 16 | custom NetSerialize struct FTrackedObjectiveArray | 1 | 1 | 69 |
-| 17 | custom NetSerialize struct FArsenicPlayerDataArray | 1 | 1 | 70 |
-| 18 | custom NetSerialize struct FWaxPlayerDataArray | 1 | 1 | 71 |
-| 19 | custom NetSerialize struct FIgnoredPlayerPawnArray | 1 | 1 | 72 |
-| 20 | custom NetSerialize struct FCobaltCombatStormShieldArray | 1 | 1 | 73 |
-| 21 | custom NetSerialize struct FPlaneSquadInfoArray | 1 | 1 | 74 |
-| 22 | custom NetSerialize struct FLimitedLifeDataArray | 1 | 1 | 75 |
-| 23 | custom NetSerialize struct FMeshNetworkEventStateDataArray | 1 | 1 | 76 |
-| 24 | custom NetSerialize struct FFortVolumeActiveUsers | 1 | 1 | 77 |
-| 25 | custom NetSerialize struct FXPEventArray | 1 | 1 | 78 |
+| 7 | custom NetSerialize struct FTeamSpottedActorInfoArray | 2 | 2 | 59 |
+| 8 | custom NetSerialize struct FPlayspaceUserList | 2 | 2 | 61 |
+| 9 | custom NetSerialize struct FTagTeamInfoArray | 1 | 2 | 62 |
+| 10 | custom NetSerialize struct FPrivateTeamDataArray | 1 | 2 | 63 |
+| 11 | custom NetSerialize struct FPoiDiscoverabilityDataArray | 1 | 1 | 64 |
+| 12 | custom NetSerialize struct FTrackedObjectiveArray | 1 | 1 | 65 |
+| 13 | struct FPickupInstigatorArray | 1 | 1 | 66 |
+| 14 | enum ECollisionEnabled::Type | 1 | 1 | 67 |
+| 15 | custom NetSerialize struct FFortVolumeActiveUsers | 1 | 1 | 68 |
+| 16 | custom NetSerialize struct FMashPlayerDataArray | 1 | 1 | 69 |
+| 17 | custom NetSerialize struct FLimitedLifeDataArray | 1 | 1 | 70 |
+| 18 | custom NetSerialize struct FBagelPlayerDataArray | 1 | 1 | 71 |
+| 19 | custom NetSerialize struct FPowPlayerDataArray | 1 | 1 | 72 |
+| 20 | custom NetSerialize struct FEarnedBadgeEntryArray | 1 | 1 | 73 |
+| 21 | custom NetSerialize struct FMinigameScoreArray | 1 | 1 | 74 |
+| 22 | custom NetSerialize struct FVisibiltyInfoArray | 1 | 1 | 75 |
+| 23 | custom NetSerialize struct FLatentRepTeamDataArray | 1 | 1 | 76 |
+| 24 | custom NetSerialize struct FPropertyOverrideDataRepl | 1 | 1 | 77 |
+| 25 | custom NetSerialize struct FIgnoredPlayerPawnArray | 1 | 1 | 78 |
 
 ### Generated ancestors that fail the most descendants
 

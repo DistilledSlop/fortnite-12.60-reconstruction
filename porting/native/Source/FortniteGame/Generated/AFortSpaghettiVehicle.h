@@ -14,6 +14,7 @@
 #include "FSphericalDriveParams.h"
 #include "FTowhookActionDelegate.h"
 #include "FTowhookParams.h"
+#include "FTowhookYankDelegate.h"
 
 class UCameraShake;
 class UFortSpaghettiVehicleConfigs;
@@ -123,6 +124,10 @@ public:
 	// table index 14, flags 0x10000010080000
 	UPROPERTY()
 	FTowhookActionDelegate OnTowhookHolstered;
+
+	// table index 13, flags 0x10000010080000
+	UPROPERTY()
+	FTowhookYankDelegate OnTowhookYanked;
 
 	// table index 12, flags 0x10000010080000
 	UPROPERTY()

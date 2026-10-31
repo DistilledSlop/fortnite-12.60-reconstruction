@@ -7,5 +7,5 @@
 #include "FOnBuildingQuickEditOptionChanged.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnBuildingQuickEditOptionChanged, uint8, PreviewRotations, bool, bPreviewMirrored, FName, QuickEditClassName);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnBuildingQuickEditOptionChanged, FName, QuickEditClassName, bool, bPreviewMirrored, uint8, PreviewRotations);
 

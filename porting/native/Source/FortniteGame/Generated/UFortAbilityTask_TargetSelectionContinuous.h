@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "Abilities/Tasks/AbilityTask.h"
 
+#include "FTargetSelectionContinuousDelegate.h"
+
 #include "UFortAbilityTask_TargetSelectionContinuous.generated.h"
 
 UCLASS(config=Game)
@@ -14,5 +16,13 @@ class FORTNITEGAME_API UFortAbilityTask_TargetSelectionContinuous : public UAbil
 	GENERATED_BODY()
 
 public:
+	// table index 1, flags 0x10000010080000
+	UPROPERTY()
+	FTargetSelectionContinuousDelegate Targeted;
+
+	// table index 0, flags 0x10000010080000
+	UPROPERTY()
+	FTargetSelectionContinuousDelegate Cancelled;
+
 };
 

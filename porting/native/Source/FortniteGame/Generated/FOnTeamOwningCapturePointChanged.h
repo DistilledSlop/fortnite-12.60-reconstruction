@@ -7,5 +7,5 @@
 #include "FOnTeamOwningCapturePointChanged.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnTeamOwningCapturePointChanged, uint8, NewTeam, uint8, OldTeam);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnTeamOwningCapturePointChanged, uint8, OldTeam, uint8, NewTeam);
 

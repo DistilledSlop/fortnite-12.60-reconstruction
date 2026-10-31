@@ -7,5 +7,5 @@
 #include "FSimpleButtonGroupDelegate.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FSimpleButtonGroupDelegate, int32, ButtonIndex, UCommonButton*, AssociatedButton);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FSimpleButtonGroupDelegate, UCommonButton*, AssociatedButton, int32, ButtonIndex);
 

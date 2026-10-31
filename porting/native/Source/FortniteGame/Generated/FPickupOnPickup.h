@@ -8,5 +8,5 @@
 #include "FPickupOnPickup.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_FourParams(FPickupOnPickup, FVector, PickupLocation, UFortWorldItemDefinition*, WorldItemDefinition, AFortPawn*, InteractingPawn, AFortPickup*, SelfActor);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_FourParams(FPickupOnPickup, AFortPickup*, SelfActor, AFortPawn*, InteractingPawn, UFortWorldItemDefinition*, WorldItemDefinition, FVector, PickupLocation);
 

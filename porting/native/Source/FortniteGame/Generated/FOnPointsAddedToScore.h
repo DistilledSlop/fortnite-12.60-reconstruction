@@ -8,5 +8,5 @@
 #include "FOnPointsAddedToScore.generated.h"
 
 UDELEGATE()
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnPointsAddedToScore, EAthenaScoringEvent, ScoreType, int32, NewPoints);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnPointsAddedToScore, int32, NewPoints, EAthenaScoringEvent, ScoreType);
 

@@ -363,8 +363,8 @@ public:
 	UFortTimeOfDayWeatherComponent* WeatherComponent;
 
 	UFUNCTION(NetMulticast, Reliable)
-	void AddLightAndFogPhaseSettingOverrideMulticast(float BlendInLength, TSubclassOf<UFortDayPhaseInfoOverride> DayPhaseInfoOverride, EFortDayPhase::Type DayPhase);
-	void AddLightAndFogPhaseSettingOverrideMulticast_Implementation(float BlendInLength, TSubclassOf<UFortDayPhaseInfoOverride> DayPhaseInfoOverride, EFortDayPhase::Type DayPhase);
+	void AddLightAndFogPhaseSettingOverrideMulticast(EFortDayPhase::Type DayPhase, TSubclassOf<UFortDayPhaseInfoOverride> DayPhaseInfoOverride, float BlendInLength);
+	void AddLightAndFogPhaseSettingOverrideMulticast_Implementation(EFortDayPhase::Type DayPhase, TSubclassOf<UFortDayPhaseInfoOverride> DayPhaseInfoOverride, float BlendInLength);
 
 	UFUNCTION()
 	void OnRep_DirectOverrides();
@@ -379,8 +379,8 @@ public:
 	void OnRep_TimeOfDayInit();
 
 	UFUNCTION(NetMulticast, Reliable)
-	void RemoveLightAndFogPhaseSettingOverrideMulticast(float BlendOutLength, EFortDayPhase::Type DayPhase);
-	void RemoveLightAndFogPhaseSettingOverrideMulticast_Implementation(float BlendOutLength, EFortDayPhase::Type DayPhase);
+	void RemoveLightAndFogPhaseSettingOverrideMulticast(EFortDayPhase::Type DayPhase, float BlendOutLength);
+	void RemoveLightAndFogPhaseSettingOverrideMulticast_Implementation(EFortDayPhase::Type DayPhase, float BlendOutLength);
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
