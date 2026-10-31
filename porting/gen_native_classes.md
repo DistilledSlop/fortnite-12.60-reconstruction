@@ -35,7 +35,7 @@ python3 -I porting/gen_native_classes.py --promote --source-root <scratch>/src -
   --evidence porting/generated/reflection/class_name_map.evidence.json \
   --parent-map porting/generated/reflection/class_parent_map.json \
   --class-ref-map <class_ref_map.json> --class-list porting/native_class_set.txt \
-  --engine-classes /opt/fortnite/UnrealEngine/Engine/Source/Runtime/Engine/Classes
+  --engine-classes /opt/fortnite/UnrealEngine/Engine/Source/Runtime/Engine/Classes [--param-order offset|table]
 ```
 
 Behaviour snippets: `--behavior-dir` (default `porting/behavior`, its `MANIFEST.json`). The `inc_path` values are
@@ -76,7 +76,7 @@ meant to fail until these are fixed.
   Every declaration carries its raw property flags as a comment.
 - UFUNCTION with `Server`, `Client`, `NetMulticast`, `Reliable`, `Exec`.
   `static` and `const` follow the function flags. Signatures come from the
-  `FFunctionParams` parameter table, when every candidate agrees.
+  `FFunctionParams` parameter table, when every candidate agrees, in declaration order (see "Parameter order").
 - `GetLifetimeReplicatedProps` with `DOREPLIFETIME` in table order, calling
   `Super::` when the parent resolves.
 
@@ -91,6 +91,36 @@ The generator therefore emits declarations in declaration order, which is the
 table reversed, so that UHT reproduces the original table. `--order table`
 gives the literal table order and matches only 2 of 75 declarations. `DOREPLIFETIME`
 lines are always in table order, as specified.
+
+## Parameter order
+
+The parameter table lists the parameters of a function or delegate in reverse declaration order. UHT emits its
+`PropPointers` from the last parameter back, and each parameter's recorded `offset` is `STRUCT_OFFSET` of the compiled
+`Parms` struct, which lays members out in declaration order. So the offsets ascend in declaration order and the table
+reads descending. Checked on the reflection: the recorded offsets of the parameters are strictly descending in table order for every
+function and delegate (4,492 functions and 331 delegates with two or more offsets; the only exceptions are the enum
+underlying-type and map key/value records, which are not parameters), and the binary agrees: the thunk of
+`AFortPlayerPawn::ServerHandlePickup` (`porting/generated/decomp/AFortPlayerPawn/ServerHandlePickup.c`) reads the wire
+parameters at offsets 0, 8, 12 and then the bool, and calls `_Validate` with them in that order.
+
+`--param-order offset` (the default, also `FN_PARAM_ORDER=offset`) spells parameters in declaration order, so the
+generated signatures, the `DECLARE_*_DELEGATE*` macros and the `Parms` layout follow the recorded offsets. A list whose
+recorded offsets are not in reverse table order is kept in table order and reported as a warning (zero in the current
+tables). `--param-order table` (`FN_PARAM_ORDER=table`) reproduces the earlier spelling. Behaviour snippets whose manifest
+signature is spelled in table order are then rejected by the splice ("manifest signature ... differs"), so the manifest
+must be spelled to match the selected order.
+
+Delegates also changed in this order. UHT marks every reference parameter with `CPF_ReferenceParm` and `CPF_OutParm`,
+so a const reference (`const T&`) carries `Parm|Out|Const|Ref`. Such a parameter is now emitted as `const T&` (or
+`T* const&` for a pointer). Before, it was rejected as "return, out or reference parameter", which dropped 100
+`TODO_DelegateNotEmittable` members on the committed class set of `3bb86bd` (91 are emitted now; the other 9 need parameter
+types that are still unavailable; on the merged set of `main` 115 of 167 are emitted now, 52 remain).
+A return parameter and a non-const out or reference parameter are still rejected.
+
+An enum's underlying-type record (named `UnderlyingType`, directly after the Enum entry) is paired with the enum for
+both `Byte` and `Int` underlying types. The extractor marks only the `Byte` one. Before, an `Int` one became a bogus
+`int32 UnderlyingType` member or parameter (for example in `ServerRemoveMapMarker`), and its struct could not be emitted.
+This fix applies in every parameter order.
 
 ## Validation: AActor
 
@@ -127,11 +157,13 @@ about 0.6 s, with no exceptions.
   still writes no struct definitions and keeps unresolved structs as `TODO_*`. The body of a custom
   `NetSerialize` is not recovered: promote mode skips a replicated use of such a struct.
 - **Delegates.** Signatures are recovered (`delegate_blocks.json`). Draft mode keeps delegate types as
-  `TODO_*`; promote mode emits the `DECLARE_*DELEGATE*` macro for each delegate used.
+  `TODO_*`; promote mode emits the `DECLARE_*DELEGATE*` macro for each delegate used, parameters in declaration order
+  (see "Parameter order"). A delegate that still cannot be emitted is listed in `skipped_properties.json` as
+  `delegate_member_unresolved`, with the unavailable type in its `tokens`.
 - **Map and Set** element types decode when their inner records are present.
   FieldPath properties are `TODO`.
 - **Function signatures.** Parameters use `T&` for out and reference params
-  and `const T&` for const params. When the name-pointer join is ambiguous,
+  and `const T&` for const params, in declaration order. When the name-pointer join is ambiguous,
   the signature is `TODO` and the flags are missing.
 - **Metadata.** Shipping builds have no metadata. Blueprint and editor
   specifiers, `BlueprintType`/`Blueprintable`, categories and `meta=` are not
