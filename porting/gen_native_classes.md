@@ -24,9 +24,22 @@ python3 -I porting/gen_native_classes.py \
 python3 -I porting/gen_native_classes.py --reflection <json> --name-map <names.json> \
   --type-map <types.json> --compare-header <Actor.h> --compare-class AActor
 
-# 4. Self-test (33 checks, no files written).
+# 4. Self-test (no files written).
 python3 -I porting/gen_native_classes.py --self-test
+
+# 5. Promote into a scratch tree (what promote_native_classes.sh does, but into <scratch>).
+#    Behaviour snippets from porting/behavior are spliced by default; --no-behavior or FN_BEHAVIOR_SPLICE=0 turns
+#    them off. Reports (skipped_properties.json, behavior_splice.json, ...) go to --report-dir.
+python3 -I porting/gen_native_classes.py --promote --source-root <scratch>/src --report-dir <scratch>/reports \
+  --reflection porting/generated/reflection/fortnite_game_reflection.json --name-map <names.json> \
+  --evidence porting/generated/reflection/class_name_map.evidence.json \
+  --parent-map porting/generated/reflection/class_parent_map.json \
+  --class-ref-map <class_ref_map.json> --class-list porting/native_class_set.txt \
+  --engine-classes /opt/fortnite/UnrealEngine/Engine/Source/Runtime/Engine/Classes
 ```
+
+Behaviour snippets: `--behavior-dir` (default `porting/behavior`, its `MANIFEST.json`). The `inc_path` values are
+relative to the repository root. See `porting/behavior/README.md` for what is spliced and what is rejected.
 
 `--order declaration` is the default (see below). `--order table` emits the
 literal table order.
@@ -125,8 +138,8 @@ about 0.6 s, with no exceptions.
   recoverable, so they are not emitted.
 - **Bitfield bit order.** Only the width (1) is known. Bit positions do not
   affect replication, since `DOREPLIFETIME` uses the property name.
-- **Not emitted:** function bodies, virtual qualifiers, includes, forward
-  declarations and `GENERATED_BODY` beyond the minimum.
+- **Not emitted:** function bodies (except the spliced behaviour snippets), virtual qualifiers, includes beyond
+  those the emitted types need, forward declarations beyond the emitted types, and `GENERATED_BODY` beyond the minimum.
 
 ## Promotion to native/Source (first pass, done)
 
@@ -142,9 +155,12 @@ Promote mode differs from the draft in these ways:
   outside the native set). Nothing is emitted with a `TODO_*` token; the script refuses to write one.
 - Class references are resolved through `resolve_class_refs.py`: the reference points at a `jmp` thunk to the class's
   NoRegister function, and the thunk is followed in the runtime dump.
-- Functions: only net UFUNCTIONs (RPCs) and RepNotify targets are emitted. An ambiguous name join is resolved to the
-  candidate whose `outer_fn` is the class's own construct function (the extractor keeps the candidates).
-- Each emitted RPC gets an `_Implementation` stub (UHT requires it), and each RepNotify gets an empty body.
+- Functions: only net UFUNCTIONs (RPCs), RepNotify targets and the non-RPC functions named by a ported behaviour snippet
+  are emitted. An ambiguous name join is resolved to the candidate whose `outer_fn` is the class's own construct
+  function (the extractor keeps the candidates).
+- Each emitted RPC gets an `_Implementation` stub (UHT requires it), and each RepNotify gets an empty body. A ported
+  snippet replaces the stub body, and a validate snippet adds `WithValidation` and `<Rpc>_Validate` (see the splice
+  section of `porting/behavior/README.md`).
 - UCLASS has no `minimalapi` (UHT rejects it with the module API macro).
 
 Promote mode also emits the struct, enum and delegate types used by the emitted members and RPCs (transitively), one

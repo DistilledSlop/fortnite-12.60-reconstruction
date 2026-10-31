@@ -4,13 +4,19 @@
 For every manifest entry with status "ported" it checks:
   1. the class header exists under porting/native/Source/FortniteGame/Generated/;
   2. the signature: "declared" entries must appear verbatim in the generated header (followed by ';');
-     "proposed" entries must NOT already be declared (the generator has to add them, reported as PENDING_DECL);
+     "proposed" entries are declared (counted in declared_in_header) once the generator emits them, and are
+     reported as PENDING_DECL until then;
   3. the .inc file exists, its CONFIDENCE tag matches the manifest, and it has no TODO/FIXME/placeholder text;
   4. best effort token check: every bare identifier and every `this->X` in the .inc is a parameter, a local,
      a type, a function, or a member declared in the class or a generated ancestor header.
 Skipped entries are checked for a non-empty reason.
 
 Usage:  python3 porting/behavior/check_behavior.py [--verbose]
+        python3 porting/behavior/check_behavior.py --gen-root <dir>/FortniteGame/Generated [--splice-report <behavior_splice.json>]
+The --gen-root mode checks a generated tree instead of native/ (it does not write COUNTS.txt). For each ported entry
+it checks the declaration (and UFUNCTION specifier: BlueprintCallable for getter/exec, WithValidation for the RPC of a
+validate), the definition with the same signature, and that the body equals the .inc. An entry whose body is not
+spliced is a FAIL unless --splice-report lists it as rejected.
 Exit status is 1 if any FAIL is reported. PENDING_DECL is not a failure.
 """
 import json
@@ -37,6 +43,7 @@ PLACEHOLDER_RE = re.compile(r"\b(TODO|FIXME|TBD|XXX|PLACEHOLDER|placeholder|not 
 
 _header_cache = {}
 _members_cache = {}
+DECLARED = set()   # "Class::Function" of ported entries whose signature is found in the generated header
 
 
 def read_header(cls):
@@ -123,7 +130,8 @@ def local_names(code):
     return names
 
 
-def check_entry(e, problems, infos):
+def check_entry(e, problems, infos, waived=frozenset()):
+    """waived: tags the splice report rejected (--gen-root): a declaration that is not emitted is then expected."""
     cls, fn = e["class"], e["function"]
     tag = "%s::%s" % (cls, fn)
     hdr = read_header(cls)
@@ -135,15 +143,14 @@ def check_entry(e, problems, infos):
         problems.append(("FAIL", tag, "missing signature"))
         return
     declared_text = normalize(hdr)
-    if e.get("signature_status") == "declared":
-        if normalize(sig) + ";" not in declared_text and normalize(sig) not in declared_text:
-            problems.append(("FAIL", tag, "signature not found in generated header: %s" % sig))
-            return
+    if normalize(sig) + ";" in declared_text:
+        DECLARED.add(tag)
+    elif tag in waived:
+        infos.append(("NOT_SPLICED", tag, "rejected by the splice report, declaration not emitted"))
+    elif e.get("signature_status") == "declared":
+        problems.append(("FAIL", tag, "signature not found in generated header: %s" % sig))
+        return
     else:
-        fname = re.search(r"(\w+)\s*\(", sig).group(1)
-        if re.search(r"\b" + re.escape(fname) + r"\s*\(", strip_comments(hdr)):
-            problems.append(("FAIL", tag, "signature marked proposed but %s is already declared in the header" % fname))
-            return
         infos.append(("PENDING_DECL", tag, "generator must declare: %s;" % sig))
     inc_rel = e.get("inc_path")
     if not inc_rel:
@@ -216,15 +223,91 @@ def check_skipped(e, problems):
         problems.append(("FAIL", "%s::%s" % (e["class"], e["function"]), "skipped entry must not have an inc_path"))
 
 
+def squash(text):
+    return re.sub(r"\s+", "", text or "").rstrip(";")
+
+
+def snippet_body_lines(inc_rel):
+    """The .inc body as the generator emits it inside a function: one tab of indent per non-empty line."""
+    raw = open(os.path.join(ROOT, inc_rel), encoding="utf-8").read().strip("\n")
+    return [("\t" + line.rstrip()) if line.strip() else "" for line in raw.split("\n")]
+
+
+def check_generated(e, rejected, problems, counts):
+    """--gen-root: declaration, UFUNCTION specifier, definition and body of one ported entry in a generated tree."""
+    cls, fn = e["class"], e["function"]
+    tag = "%s::%s" % (cls, fn)
+    if tag in rejected:
+        counts["not_spliced"] += 1
+        return
+    hdr, cpp = read_header(cls), read_cpp(cls)
+    if hdr is None or cpp is None:
+        problems.append(("FAIL", tag, "generated %s.h or %s.cpp not found" % (cls, cls)))
+        return
+    m = re.match(r"^(?P<ret>.+?)\s+(?P<fn>\w+)\((?P<args>.*)\)\s*(?P<const>const)?\s*;?$", normalize(e.get("signature")))
+    if not m:
+        problems.append(("FAIL", tag, "cannot parse signature %r" % e.get("signature")))
+        return
+    ret, sfn, args, const = m["ret"], m["fn"], m["args"], " const" if m["const"] else ""
+    hl = [squash(line) for line in hdr.splitlines()]
+    decl_key = squash("%s %s(%s)%s;" % (ret, sfn, args, const))
+    if hl.count(decl_key) != 1:
+        problems.append(("FAIL", tag, "declaration %r found %d times in header" % (decl_key, hl.count(decl_key))))
+        return
+    decl_index = hl.index(decl_key)
+    ufunc = hl[decl_index - 1] if decl_index else ""
+    if e["kind"] in ("getter", "exec") and "UFUNCTION(BlueprintCallable" not in ufunc:
+        problems.append(("FAIL", tag, "UFUNCTION before the declaration lacks BlueprintCallable: %r" % ufunc))
+    if e["kind"] == "validate":
+        rpc = sfn[:-len("_Validate")]
+        rpc_key = squash("void %s(%s);" % (rpc, args))
+        if hl.count(rpc_key) != 1:
+            problems.append(("FAIL", tag, "RPC %s declaration missing or repeated" % rpc))
+        elif "WithValidation" not in hl[hl.index(rpc_key) - 1]:
+            problems.append(("FAIL", tag, "RPC %s is not WithValidation" % rpc))
+    cl = [line.rstrip() for line in cpp.splitlines()]
+    def_key = squash("%s %s::%s(%s)%s" % (ret, cls, sfn, args, const))
+    starts = [i for i, line in enumerate(cl) if squash(line) == def_key]
+    if len(starts) != 1 or starts[0] + 1 >= len(cl) or cl[starts[0] + 1] != "{":
+        problems.append(("FAIL", tag, "definition %r found %d times in cpp (or not followed by '{')" % (def_key, len(starts))))
+        return
+    i = starts[0]
+    end = next((j for j in range(i + 2, len(cl)) if cl[j] == "}"), None)
+    body = cl[i + 2:end] if end is not None else None
+    if body == snippet_body_lines(e["inc_path"]):
+        counts["spliced"] += 1
+    elif tag in rejected:
+        counts["not_spliced"] += 1
+    else:
+        problems.append(("FAIL", tag, "body is not the snippet (stub or other text) and the entry is not a rejection"))
+
+
+def read_cpp(cls):
+    path = os.path.join(GEN, cls + ".cpp")
+    return open(path, encoding="utf-8", errors="replace").read() if os.path.exists(path) else None
+
+
 def main():
-    verbose = "--verbose" in sys.argv
+    global GEN
+    argv = sys.argv[1:]
+    verbose = "--verbose" in argv
+    gen_root = argv[argv.index("--gen-root") + 1] if "--gen-root" in argv else None
+    splice_report = argv[argv.index("--splice-report") + 1] if "--splice-report" in argv else None
+    if gen_root:
+        GEN = os.path.abspath(gen_root)
+        _header_cache.clear()
     manifest = json.load(open(MANIFEST, encoding="utf-8"))
+    rejected = set()
+    if splice_report:
+        rejected = {r["entry"] for r in json.load(open(splice_report, encoding="utf-8")).get("rejections", [])}
     problems, infos = [], []
-    counts = {"ported": 0, "skipped": 0}
+    counts = {"ported": 0, "skipped": 0, "spliced": 0, "not_spliced": 0}
     for e in manifest:
         if e.get("status") == "ported":
             counts["ported"] += 1
-            check_entry(e, problems, infos)
+            check_entry(e, problems, infos, waived=rejected if gen_root else frozenset())
+            if gen_root and not any(p[1] == "%s::%s" % (e["class"], e["function"]) for p in problems):
+                check_generated(e, rejected, problems, counts)
         elif e.get("status") == "skipped":
             counts["skipped"] += 1
             check_skipped(e, problems)
@@ -232,7 +315,15 @@ def main():
             problems.append(("FAIL", "%s::%s" % (e.get("class"), e.get("function")), "unknown status %r" % e.get("status")))
     fails = [p for p in problems if p[0] == "FAIL"]
     pending = [i for i in infos]
-    decl_ok = sum(1 for e in manifest if e.get("status") == "ported" and e.get("signature_status") == "declared")
+    decl_ok = len(DECLARED)
+    if gen_root:
+        print("generated tree: %s" % GEN)
+        print("ported %d: spliced and verified %d, not spliced (listed as rejected) %d"
+              % (counts["ported"], counts["spliced"], counts["not_spliced"]))
+        print("FAIL: %d" % len(fails))
+        for f in fails:
+            print("  FAIL %s: %s" % (f[1], f[2]))
+        sys.exit(1 if fails else 0)
     print("manifest entries: %d (ported %d, skipped %d)" % (len(manifest), counts["ported"], counts["skipped"]))
     print("signatures declared in generated header: %d of %d ported" % (decl_ok, counts["ported"]))
     print("PENDING_DECL (generator must add a declaration): %d" % len(pending))

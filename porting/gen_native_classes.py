@@ -1109,8 +1109,9 @@ def function_view(fn, owner_fns):
     return flags, fn["params"], None
 
 
-def build_functions_promoted(functions, resolver, notify_names, owner_fns):
-    """RPCs and RepNotify targets only. A function whose flags cannot be classified is recorded, since it might be an RPC."""
+def build_functions_promoted(functions, resolver, notify_names, owner_fns, splice_names=frozenset()):
+    """RPCs and RepNotify targets only, plus the non-RPC functions named in splice_names (behaviour snippets, see
+    attach_snippets). A function whose flags cannot be classified is recorded, since it might be an RPC."""
     emitted = []
     for fn in functions:
         name = fn.get("name") or "UnnamedFunction"
@@ -1119,7 +1120,14 @@ def build_functions_promoted(functions, resolver, notify_names, owner_fns):
             resolver.skipped.append(skip_function(fn, "flags_ambiguous", "RPC status unknown: " + problem))
             continue
         is_rpc = bool(flags & FUNC_NET_ANY)
-        if not is_rpc and name not in notify_names:
+        is_splice = name in splice_names and not is_rpc
+        if not is_rpc and name not in notify_names and not is_splice:
+            continue
+        if name in splice_names and is_rpc:
+            resolver.skipped.append(skip_function(fn, "snippet_on_rpc", "a getter/exec snippet names an RPC"))
+            continue
+        if is_splice and flags & FUNC_STATIC:
+            resolver.skipped.append(skip_function(fn, "snippet_static", "static function with a snippet is not emitted"))
             continue
         if is_rpc and not flags & (FUNC_NET_SERVER | FUNC_NET_CLIENT | FUNC_NET_MULTICAST):
             resolver.skipped.append(skip_function(fn, "net_flag_without_role",
@@ -1147,24 +1155,34 @@ def build_functions_promoted(functions, resolver, notify_names, owner_fns):
             resolver.skipped.append(skip_function(fn, "struct_custom_netserialize",
                                                   "RPC parameter struct with a custom NetSerialize (body not recovered)"))
             continue
-        if ret != "void":
+        if ret != "void" and not is_splice:
             resolver.skipped.append(skip_function(fn, "non_void_return", "return type %s is not emitted" % ret))
             continue
         if is_rpc:
             args = [rpc_arg(arg, enum_args) for arg in args]
-        emitted.append({"name": name, "rpc": is_rpc,
-                        "specifiers": function_specifiers(flags) if is_rpc else [], "args": args, "used": used})
+        rec = {"name": name, "rpc": is_rpc, "ret": ret, "const": is_splice and bool(flags & FUNC_CONST),
+               "notify": name in notify_names, "splice": is_splice,
+               "specifiers": function_specifiers(flags) if is_rpc else [], "args": args, "used": used}
+        if is_splice:
+            # A snippet makes a non-RPC function a BlueprintCallable member; BlueprintPure follows the reflection flag.
+            rec["specifiers"] = ["BlueprintCallable"] + (["BlueprintPure"] if flags & FUNC_BLUEPRINT_PURE else [])
+        emitted.append(rec)
     return emitted
 
 
-def build_class_promoted(block, name, resolver, parent_entry, owner_fns):
+def build_class_promoted(block, name, resolver, parent_entry, owner_fns, snippets=(), splice_ctx=None):
     resolver.todos = []
     resolver.class_refs = set()
     resolver.skipped = []
     members, _notes = build_members(block.get("properties") or [], resolver, promote=True)
     notify_names = {m["rep_notify"] for m in members if m["rep_notify"]}
-    functions = build_functions_promoted(block.get("functions") or [], resolver, notify_names, owner_fns)
-    emitted_onrep = {f["name"] for f in functions if not f["rpc"]}
+    splice_names = {e["function"] for e in snippets if e["kind"] in ("getter", "exec") and e.get("body") is not None}
+    functions = build_functions_promoted(block.get("functions") or [], resolver, notify_names, owner_fns, splice_names)
+    splice = (attach_snippets(name, functions, snippets, splice_ctx, parent_entry.get("package"), resolver.skipped)
+              if snippets else None)
+    if splice is not None:
+        functions = [f for f in functions if not (f["splice"] and not f.get("accepted"))]
+    emitted_onrep = {f["name"] for f in functions if not f["rpc"] and f.get("notify")}
     for m in members:
         if m["rep_notify"] and m["rep_notify"] not in emitted_onrep:
             resolver.skipped.append(skip_record("rep_notify", None, m["name"], "rep_notify_dropped",
@@ -1181,6 +1199,8 @@ def build_class_promoted(block, name, resolver, parent_entry, owner_fns):
         "members_table_order": members,
         "members_decl_order": list(reversed(members)),
         "functions": functions,
+        "splice": splice or {"accepted": [], "rejected": []},
+        "cpp_includes": sorted(splice["includes"]) if splice else [],
         "forward_decls": sorted(ref for ref in resolver.class_refs if ref not in (name, parent)),
         "used": merge_used([m["used"] for m in members] + [f["used"] for f in functions]),
         "skipped": list(resolver.skipped),
@@ -1189,6 +1209,252 @@ def build_class_promoted(block, name, resolver, parent_entry, owner_fns):
                                  if function_view(f, owner_fns)[0] is not None
                                  and function_view(f, owner_fns)[0] & FUNC_NET_ANY),
     }
+
+
+# ---------------------------------------------------------------- behaviour snippets (porting/behavior)
+# The ported function bodies of porting/behavior/MANIFEST.json (contract: porting/behavior/README.md). Per entry:
+#   getter, exec   non-RPC function: declared as UFUNCTION(BlueprintCallable[, BlueprintPure]) and given the body;
+#   validate       <Rpc>_Validate: the Server RPC gets WithValidation, <Rpc>_Validate is declared and given the body;
+#   impl           <Rpc>_Implementation: the body replaces the stub;
+#   onrep          RepNotify function: the body replaces the stub.
+# An entry is spliced only when its signature equals the reflection-derived one (squash) and its body needs only
+# includes the generator can give. Otherwise it is rejected: nothing is emitted for it and it is listed in
+# behavior_splice.json. FN_BEHAVIOR_SPLICE=0 (or --no-behavior) turns the splice off and reproduces the stub output.
+
+BEHAVIOR_DEFAULT = os.path.join(REPO, "porting", "behavior")
+FUNC_BLUEPRINT_PURE = 0x10000000
+BEHAVIOR_BAD_RE = re.compile(r"\b(TODO|FIXME|TBD|XXX|PLACEHOLDER|placeholder)\b|not recovered|stub body", re.I)
+STUB_BODY = "// Body not recovered: reflection-derived stub."
+
+
+def behavior_enabled(args):
+    if getattr(args, "no_behavior", False):
+        return False
+    return os.environ.get("FN_BEHAVIOR_SPLICE", "1").strip().lower() not in ("0", "off", "false", "no")
+
+
+def squash(text):
+    """Signature key: all whitespace removed. Names, types, const and parameter lists must still agree."""
+    return re.sub(r"\s+", "", text or "").rstrip(";")
+
+
+def read_snippet(entry):
+    """(body, None) for a usable .inc, or (None, reason). The body is the text between the braces (comments kept).
+    inc_path in MANIFEST.json is relative to the repository root."""
+    rel = entry.get("inc_path") or ""
+    path = os.path.join(REPO, rel) if rel else ""
+    if not rel or not os.path.isfile(path):
+        return None, "snippet file missing: %s" % (rel or "(no inc_path)")
+    with open(path, "r", encoding="utf-8") as fh:
+        text = fh.read()
+    if "\r" in text:
+        return None, "CRLF line endings in snippet"
+    if any(line.lstrip().startswith("#") for line in text.splitlines()):
+        return None, "preprocessor line in snippet (the generator adds includes)"
+    if BEHAVIOR_BAD_RE.search(text):
+        return None, "placeholder text in snippet"
+    code = strip_comments(text)
+    if code.count("{") != code.count("}"):
+        return None, "unbalanced braces in snippet"
+    if not re.search(r"CONFIDENCE:\s*(high|medium|low)\b", text, re.I):
+        return None, "snippet has no CONFIDENCE tag"
+    return text.strip("\n"), None
+
+
+def load_behavior(behavior_dir):
+    """Ported entries of MANIFEST.json, each with its body (or the reason its body is unusable)."""
+    path = os.path.join(behavior_dir, "MANIFEST.json")
+    if not os.path.isfile(path):
+        raise SystemExit("behaviour manifest not found: %s" % path)
+    out = []
+    for entry in load_json(path):
+        if entry.get("status") != "ported":
+            continue
+        entry = dict(entry)
+        entry["body"], entry["reject"] = read_snippet(entry)
+        out.append(entry)
+    return out
+
+
+def body_lines(body):
+    """Function body lines as emitted: one tab of indent, or the stub line when no snippet is spliced."""
+    if body is None:
+        return ["\t" + STUB_BODY]
+    return [("\t" + line.rstrip()) if line.strip() else "" for line in body.split("\n")]
+
+
+def body_refs(body, name, package, ctx):
+    """(includes, problems) for the names a snippet body uses. A class or type of another module cannot be included
+    from this module, so a body that uses one is rejected."""
+    includes, problems = set(), []
+    for tok in sorted(set(re.findall(r"[A-Za-z_]\w*", strip_comments(body)))):
+        if tok == name:
+            continue
+        if tok in ctx["class_pkg"]:
+            if ctx["class_pkg"][tok] != package:
+                problems.append("body uses %s, a class of another module" % tok)
+            else:
+                includes.add("%s.h" % tok)
+        elif tok in ctx["struct_index"]:
+            info = ctx["struct_index"][tok]
+            if info.package in PROMOTE_PACKAGES:
+                if info.package != package:
+                    problems.append("body uses %s, a type of another module" % tok)
+                else:
+                    includes.add(info.header_name)
+            else:
+                inc = ctx["gate"].include_of(info.fn)
+                if inc is None:
+                    problems.append("body uses engine type %s with no include" % tok)
+                else:
+                    includes.add(inc)
+        elif tok in ctx["other_promoted"]:
+            problems.append("body uses %s, which is not in the native class set" % tok)
+    return includes, problems
+
+
+def not_emitted_reason(skipped, fname):
+    """Why a function of the reflection table is not emitted (its skip record), for a rejection message."""
+    for rec in skipped:
+        if rec.get("item") == "function" and rec.get("name") == fname:
+            return "%s (%s)" % (rec.get("category"), rec.get("reason"))
+    return "not in the reflection table"
+
+
+def attach_snippets(name, functions, entries, ctx, package, skipped=()):
+    """Attach one class's snippets to its emitted functions, in place. Sets body/validate/accepted keys and returns
+    {"accepted": [tag], "rejected": [{entry, kind, reason}], "includes": set}. Rejected getter/exec records are removed
+    by the caller. skipped is the class's skip list (why an RPC was not emitted)."""
+    by_name = {f["name"]: f for f in functions}
+    out = {"accepted": [], "rejected": [], "includes": set()}
+    for e in entries:
+        tag = "%s::%s" % (name, e["function"])
+        kind, fname = e.get("kind"), e.get("function") or ""
+
+        def reject(reason):
+            out["rejected"].append({"entry": tag, "kind": kind, "reason": reason})
+
+        if e.get("body") is None:
+            reject(e.get("reject") or "no body")
+            continue
+        if kind in ("getter", "exec"):
+            target = by_name.get(fname)
+            if target is None or not target.get("splice"):
+                reject("function not emitted: " + not_emitted_reason(skipped, fname))
+                continue
+            want = "%s %s(%s)%s" % (target["ret"], fname, ", ".join(target["args"]), " const" if target["const"] else "")
+        elif kind == "impl" and fname.endswith("_Implementation"):
+            base = fname[:-len("_Implementation")]
+            target = by_name.get(base)
+            if target is None or not target["rpc"]:
+                reject("RPC %s not emitted: %s" % (base, not_emitted_reason(skipped, base)))
+                continue
+            want = "void %s_Implementation(%s)" % (base, ", ".join(target["args"]))
+        elif kind == "validate" and fname.endswith("_Validate"):
+            base = fname[:-len("_Validate")]
+            target = by_name.get(base)
+            if target is None or not target["rpc"]:
+                reject("RPC %s not emitted: %s" % (base, not_emitted_reason(skipped, base)))
+                continue
+            if "Server" not in target["specifiers"]:
+                reject("WithValidation needs a Server RPC; %s is not one" % base)
+                continue
+            want = "bool %s_Validate(%s)" % (base, ", ".join(target["args"]))
+        elif kind == "onrep":
+            target = by_name.get(fname)
+            if target is None or target["rpc"] or not target["notify"]:
+                reject("RepNotify function %s is not emitted" % fname)
+                continue
+            want = "void %s()" % fname
+        else:
+            reject("unknown kind %r or name %r" % (kind, fname))
+            continue
+        if squash(e.get("signature")) != squash(want):
+            reject("manifest signature %r differs from the reflection-derived %r" % (e.get("signature"), want))
+            continue
+        if kind == "validate":
+            if target.get("validate"):
+                reject("second validate snippet for %s" % base)
+                continue
+        elif target.get("body") is not None:
+            reject("second snippet for %s" % fname)
+            continue
+        includes, problems = body_refs(e["body"], name, package, ctx)
+        if problems:
+            reject("; ".join(problems))
+            continue
+        if kind == "validate":
+            target["validate"] = True
+            target["validate_body"] = e["body"]
+            target["specifiers"] = target["specifiers"] + ["WithValidation"]
+        else:
+            target["body"] = e["body"]
+        if kind in ("getter", "exec"):
+            target["accepted"] = True
+        out["includes"] |= includes
+        out["accepted"].append(tag)
+    return out
+
+
+def verify_spliced(model, header, cpp):
+    """Declaration/definition check of every spliced function in the rendered text. Raises SystemExit on a mismatch."""
+    name = model["name"]
+    hlines = header.splitlines()
+    hsq = [squash(line) for line in hlines]
+    clines = [line.rstrip() for line in cpp.splitlines()]
+    problems = []
+
+    def count(lines_sq, key):
+        return sum(1 for line in lines_sq if line == key)
+
+    def check_def(def_text, expected, tag):
+        key = squash(def_text)
+        starts = [i for i, line in enumerate(clines) if squash(line) == key]
+        if len(starts) != 1:
+            problems.append("%s: definition found %d times in cpp" % (tag, len(starts)))
+            return
+        i = starts[0]
+        if i + 1 >= len(clines) or clines[i + 1] != "{":
+            problems.append("%s: definition not followed by '{'" % tag)
+            return
+        end = next((j for j in range(i + 2, len(clines)) if clines[j] == "}"), None)
+        if end is None:
+            problems.append("%s: no closing brace" % tag)
+            return
+        if clines[i + 2:end] != expected:
+            problems.append("%s: cpp body differs from the snippet" % tag)
+
+    for f in model["functions"]:
+        if f.get("body") is None and not f.get("validate"):
+            continue
+        ret, args = f.get("ret", "void"), ", ".join(f["args"])
+        const = " const" if f.get("const") else ""
+        tag = "%s::%s" % (name, f["name"])
+        ufunc = squash("UFUNCTION(%s)" % ", ".join(f["specifiers"]))
+        decl = squash("%s %s(%s)%s;" % (ret, f["name"], args, const))
+        if count(hsq, decl) != 1:
+            problems.append("%s: declaration found %d times in header" % (tag, count(hsq, decl)))
+        else:
+            idx = hsq.index(decl)
+            if idx == 0 or hsq[idx - 1] != ufunc:
+                problems.append("%s: UFUNCTION specifiers differ from %s" % (tag, ufunc))
+        if f["rpc"]:
+            impl = "%s_Implementation" % f["name"]
+            if count(hsq, squash("void %s(%s);" % (impl, args))) != 1:
+                problems.append("%s: _Implementation declaration missing or repeated" % tag)
+            check_def("void %s::%s(%s)" % (name, impl, args), body_lines(f.get("body")), tag)
+        else:
+            check_def("%s %s::%s(%s)%s" % (ret, name, f["name"], args, const), body_lines(f.get("body")), tag)
+        if f.get("validate"):
+            if "WithValidation" not in f["specifiers"]:
+                problems.append("%s: validate without WithValidation" % tag)
+            vdecl = squash("bool %s_Validate(%s);" % (f["name"], args))
+            if count(hsq, vdecl) != 1:
+                problems.append("%s: _Validate declaration missing or repeated" % tag)
+            check_def("bool %s::%s_Validate(%s)" % (name, f["name"], args),
+                      body_lines(f.get("validate_body")), tag + "_Validate")
+    if problems:
+        raise SystemExit("behaviour splice verification failed for %s:\n  %s" % (name, "\n  ".join(problems)))
 
 
 def render_promoted_header(model, api, parent_include, source_label):
@@ -1226,9 +1492,12 @@ def render_promoted_header(model, api, parent_include, source_label):
         lines.append("")
     for f in model["functions"]:
         lines.append("\tUFUNCTION(%s)" % ", ".join(f["specifiers"]))
-        lines.append("\tvoid %s(%s);" % (f["name"], ", ".join(f["args"])))
+        lines.append("\t%s %s(%s)%s;" % (f.get("ret", "void"), f["name"], ", ".join(f["args"]),
+                                       " const" if f.get("const") else ""))
         if f["rpc"]:
             lines.append("\tvoid %s_Implementation(%s);" % (f["name"], ", ".join(f["args"])))
+        if f.get("validate"):
+            lines.append("\tbool %s_Validate(%s);" % (f["name"], ", ".join(f["args"])))
         lines.append("")
     if rep:
         lines.append("\tvirtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;")
@@ -1280,16 +1549,25 @@ def render_promoted_cpp(model, source_label):
         "// Generated by porting/gen_native_classes.py --promote from %s. Do not edit by hand." % source_label,
         "#include \"%s.h\"" % name,
     ]
+    for inc in model.get("cpp_includes", []):
+        lines.append("#include \"%s\"" % inc)
     if rep:
         lines.append("#include \"Net/UnrealNetwork.h\"")
     lines.append("")
     for f in model["functions"]:
         impl = "%s_Implementation" % f["name"] if f["rpc"] else f["name"]
-        lines.append("void %s::%s(%s)" % (name, impl, ", ".join(f["args"])))
+        args = ", ".join(f["args"])
+        lines.append("%s %s::%s(%s)%s" % (f.get("ret", "void"), name, impl, args, " const" if f.get("const") else ""))
         lines.append("{")
-        lines.append("\t// Body not recovered: reflection-derived stub.")
+        lines.extend(body_lines(f.get("body")))
         lines.append("}")
         lines.append("")
+        if f.get("validate"):
+            lines.append("bool %s::%s_Validate(%s)" % (name, f["name"], args))
+            lines.append("{")
+            lines.extend(body_lines(f.get("validate_body")))
+            lines.append("}")
+            lines.append("")
     if rep:
         lines.append("void %s::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const" % name)
         lines.append("{")
@@ -1527,6 +1805,21 @@ def promote(args):
     class_outputs = []
     module_deps = {}   # module -> modules its emitted items need (engine modules and promoted modules)
     package_of = {n: parents[name_to_block[n]].get("package") for n in listed if n in name_to_block}
+    # Behaviour snippets (see attach_snippets). Disabled with FN_BEHAVIOR_SPLICE=0 or --no-behavior.
+    splice_on = behavior_enabled(args)
+    snippets_by_class = {}
+    if splice_on:
+        for entry in load_behavior(args.behavior_dir):
+            snippets_by_class.setdefault(entry["class"], []).append(entry)
+    struct_index = {}
+    for info in tables.by_fn.values():
+        struct_index.setdefault(info.cpp_name.split("::")[0], info)
+    splice_ctx = {
+        "class_pkg": package_of, "struct_index": struct_index, "gate": gate,
+        "other_promoted": {n for b, n in names.items()
+                           if n not in listed and (parents.get(b) or {}).get("package") in PROMOTE_PACKAGES},
+    }
+    splice_done, splice_rejects = [], []
 
     def add_deps(module, mods):
         module_deps.setdefault(module, set()).update(m for m in mods if m and m != module)
@@ -1543,9 +1836,12 @@ def promote(args):
             continue
         owner_fns = set(evidence_fns.get(block, []))
         gate.current_package = package
-        model = build_class_promoted(blocks_by_va[block], name, resolver, parents[block], owner_fns)
+        model = build_class_promoted(blocks_by_va[block], name, resolver, parents[block], owner_fns,
+                                     snippets_by_class.get(name, []), splice_ctx)
         model["includes"] = own_includes(gate, model["used"], package)
         class_models.append(model)
+        splice_done.extend(model["splice"]["accepted"])
+        splice_rejects.extend(model["splice"]["rejected"])
         parent = model["parent"]
         if parent in listed:
             parent_include = "%s.h" % parent
@@ -1559,7 +1855,7 @@ def promote(args):
             add_deps(module, [parent_module])
         if parent_pkg and parent_pkg != package:
             add_deps(module, [parent_pkg.rsplit("/", 1)[-1]])
-        add_deps(module, [gate.engine.module_of_inc.get(inc) for inc in model["includes"]])
+        add_deps(module, [gate.engine.module_of_inc.get(inc) for inc in model["includes"] + model["cpp_includes"]])
         # Forward-declared classes of another generated package need that module (a cycle is refused below).
         add_deps(module, [(package_of.get(ref) or "").rsplit("/", 1)[-1] for ref in model["forward_decls"]
                           if (package_of.get(ref) or "") in PROMOTE_PACKAGES and package_of.get(ref) != package])
@@ -1587,7 +1883,7 @@ def promote(args):
             "functions_in_table": model["functions_in_table"],
             "rpc_in_reflection": model["rpc_in_reflection"],
             "rpc_emitted": sum(1 for f in model["functions"] if f["rpc"]),
-            "rep_notify_functions_emitted": sum(1 for f in model["functions"] if not f["rpc"]),
+            "rep_notify_functions_emitted": sum(1 for f in model["functions"] if not f["rpc"] and f.get("notify")),
             "functions_skipped": sum(1 for r in model["skipped"] if r["item"] == "function"),
             "forward_declarations": len(model["forward_decls"]),
         })
@@ -1623,7 +1919,8 @@ def promote(args):
     for module in HAND_WRITTEN_MODULES:
         if module not in module_deps:
             continue
-        build_cs = FORTNITE_BUILD_CS if module == "FortniteGame" else os.path.join(args.source_root, module, module + ".Build.cs")
+        # Hand-written Build.cs files are never generated, so they are read from the native tree, not --source-root.
+        build_cs = FORTNITE_BUILD_CS if module == "FortniteGame" else os.path.join(PROJECT_NATIVE_DIR, "Source", module, module + ".Build.cs")
         listed_deps = build_cs_modules(build_cs)
         absent = sorted(m for m in module_deps[module] if m != module and m not in listed_deps)
         if absent:
@@ -1638,6 +1935,19 @@ def promote(args):
     if missing_deps or hand_missing:
         raise SystemExit("Build.cs must add these modules: %s" % json.dumps({"FortniteGame": missing_deps, **hand_missing}))
 
+    # Behaviour snippets of classes that are not generated are not spliced. Each spliced class is verified as text
+    # (declaration and definition of every spliced function) before anything is written.
+    generated_names = {m["name"] for m in class_models}
+    for cls, entries in sorted(snippets_by_class.items()):
+        if cls not in generated_names:
+            for e in entries:
+                splice_rejects.append({"entry": "%s::%s" % (cls, e["function"]), "kind": e["kind"],
+                                       "reason": "class is not generated (not in the native class set, or an interface)"})
+    outputs = {n: (h, c) for n, _module, h, c in class_outputs}
+    for model in class_models:
+        if model["splice"]["accepted"]:
+            verify_spliced(model, *outputs[model["name"]])
+
     # Pass 2: write the class files.
     for name, module, header, cpp in class_outputs:
         out_dir = os.path.join(args.source_root, module, "Generated")
@@ -1646,6 +1956,14 @@ def promote(args):
             fh.write(header)
         with open(os.path.join(out_dir, name + ".cpp"), "w", encoding="utf-8", newline="\n") as fh:
             fh.write(cpp)
+    os.makedirs(args.report_dir, exist_ok=True)
+    with open(os.path.join(args.report_dir, "behavior_splice.json"), "w", encoding="utf-8", newline="\n") as fh:
+        json.dump({"enabled": splice_on, "manifest": os.path.join(args.behavior_dir, "MANIFEST.json"),
+                   "spliced": len(splice_done), "rejected": len(splice_rejects),
+                   "accepted": splice_done, "rejections": splice_rejects}, fh, indent=1)
+        fh.write("\n")
+    print("behaviour snippets: %s, %d spliced, %d rejected" % ("on" if splice_on else "off (disabled)",
+                                                              len(splice_done), len(splice_rejects)), file=sys.stderr)
 
     engine_shared = sorted(m for m in deps if m in registry.modules and m not in promoted_modules)
     for module in sorted(module_deps):
@@ -2324,6 +2642,10 @@ def main(argv=None):
                     help="--promote: 'Name<TAB>reason' lines for classes that must not be generated")
     ap.add_argument("--engine-root", default=ENGINE_ROOT_DEFAULT,
                     help="--promote: UnrealEngine/Engine directory searched for struct, enum and delegate headers")
+    ap.add_argument("--behavior-dir", default=BEHAVIOR_DEFAULT,
+                    help="--promote: porting/behavior directory (MANIFEST.json and the .inc snippets)")
+    ap.add_argument("--no-behavior", action="store_true",
+                    help="--promote: do not splice the behaviour snippets (same as FN_BEHAVIOR_SPLICE=0)")
     args = ap.parse_args(argv)
 
     if args.self_test:
