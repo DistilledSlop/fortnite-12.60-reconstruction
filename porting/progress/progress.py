@@ -645,6 +645,332 @@ def measure_tree(model, files, replay, rev=None, fallback_totals=None):
     }
 
 
+# ---------------------------------------------------------------- unit grids
+# Leaves whose units can be enumerated from local data render one square per
+# unit (bright green = done; not done = the tile's own ink colour at low
+# opacity, so it reads on both page themes), grouped by asset type, package or
+# class. A tile with more than UNIT_GRID_MAX units, and the ~450k-unit
+# package_coverage tile, is an aggregate: a progress bar along its bottom.
+# Units come from ignored local outputs (current state, the same semantics the
+# local measures use). Done sets come from the same sources the leaf's measure
+# counts, intersected with the unit list, so a grid never shows more done
+# units than its tile's numerator attributes.
+
+UNIT_DONE_COLOR = "#4fd35f"
+UNIT_TODO_OPACITY = "0.28"
+UNIT_GRID_MAX = 6000
+UNIT_PITCH_MAX = 9    # largest square pitch in SVG units (the treemap viewBox is 1000 x 640)
+UNIT_PITCH_MIN = 3   # smallest pitch: at 2 the squares would touch and read as one solid block
+UNIT_GAP = 1         # gap between squares at every pitch
+UNIT_BAR_IDS = {"assets.package_coverage"}
+UNIT_GRID_PAD = 3     # inset of the grid from the tile's sides and bottom
+UNIT_BAR_H = 4        # progress bar height, drawn along the tile's bottom edge
+UNIT_BAR_RESERVE = 9  # label must end this far above the tile bottom when a bar is drawn
+
+_UNIT_DATA = {}
+
+
+def _unit_data(key, loader):
+    if key not in _UNIT_DATA:
+        _UNIT_DATA[key] = loader()
+    return _UNIT_DATA[key]
+
+
+def _local_read(rel):
+    path = os.path.join(REPO, rel)
+    if not os.path.isfile(path):
+        raise OSError(rel)
+    with open(path, encoding="utf-8", errors="replace") as fh:
+        return fh.read()
+
+
+def _content_segment(path):
+    """First path segment after '/Content/' — the grouping key for asset and map units."""
+    i = path.find("/Content/")
+    if i < 0:
+        return "(root)"
+    seg = path[i + len("/Content/"):].split("/", 1)[0]
+    return seg or "(root)"
+
+
+def _load_assets():
+    """From generated/assets.json (the 28 indexed paks' file lists): distinct .uasset
+    stems with their /Content/ segment, the sound class/mix paths, and pak names."""
+    data = json.loads(_local_read("porting/generated/assets.json"))
+    uasset = [f for pak in data.get("paks", []) for f in pak.get("files", [])
+              if f.endswith(".uasset")]
+    stems = {}
+    for f in uasset:
+        stem = os.path.basename(f)[:-7]
+        if stem not in stems:
+            stems[stem] = _content_segment(f)
+    sound = sorted({f for f in uasset if re.search(r"SoundClass|SoundMix", f)})
+    indexed = [p.get("pak") for p in data.get("paks", []) if p.get("pak")]
+    skipped = [s.get("pak") for s in data.get("skipped", []) if s.get("pak")]
+    return {"stems": stems, "sound": sound, "indexed": indexed, "skipped": skipped}
+
+
+def _load_dir_stems(rel):
+    base = os.path.join(REPO, rel)
+    stems = set()
+    if os.path.isdir(base):
+        for root, _, names in os.walk(base):
+            for n in names:
+                if n.endswith((".uasset", ".glb")):
+                    stems.add(n.rsplit(".", 1)[0])
+    return stems
+
+
+def _load_local_stems():
+    """Converted (generated/converted) and native (native/Content) package stems —
+    the done signals of the asset-type leaves."""
+    return {"local": _load_dir_stems("porting/generated/converted")
+            | _load_dir_stems("porting/native/Content"),
+            "native": _load_dir_stems("porting/native/Content")}
+
+
+def _load_inventory_paks():
+    data = json.loads(_local_read("porting/generated/inventory.json"))
+    return {p.get("name") for p in data.get("paks", []) if p.get("name")}
+
+
+def _load_map_paths():
+    """Map unit lists: every map path in map-scan.jsonl, and the subset that has a
+    parsed native-imports row (the map_headers done signal)."""
+    def rows(rel):
+        out = []
+        for line in _local_read(rel).splitlines():
+            if not line.startswith("{"):
+                continue
+            try:
+                p = json.loads(line).get("path")
+            except ValueError:
+                p = None
+            if p:
+                out.append(p)
+        return out
+    return rows("porting/generated/map-scan.jsonl"), set(rows("porting/generated/map-native-imports.jsonl"))
+
+
+def _load_classes():
+    """Named classes per package, all block addresses and the named ones —
+    from reflection/class_name_map.json over reflection/class_parent_map.json."""
+    cnm = json.loads(_local_read("porting/generated/reflection/class_name_map.json"))
+    cpm = json.loads(_local_read("porting/generated/reflection/class_parent_map.json"))
+    by_pkg = {}
+    blocks = []
+    named = set()
+    for va, meta in cpm.items():
+        blocks.append(va)
+        name = cnm.get(va)
+        if isinstance(name, str) and name:
+            named.add(va)
+            by_pkg.setdefault((meta or {}).get("package") or "(none)", []).append(name)
+    blocks.sort(key=lambda va: int(va, 16))
+    return {"blocks": blocks, "named": named, "by_pkg": by_pkg}
+
+
+def _load_funcs():
+    """class::function units with an exec address (the native_behavior denominator)."""
+    nf = json.loads(_local_read("porting/generated/reflection/native_funcs.json"))
+    units = []
+    for cls in sorted(nf):
+        for fn, meta in nf[cls].items():
+            if meta.get("exec_addr"):
+                units.append((cls, fn))
+    return units
+
+
+def _load_manifest_ported():
+    data = json.loads(_local_read("porting/behavior/MANIFEST.json"))
+    return {(e.get("class"), e.get("function")) for e in data if e.get("status") == "ported"}
+
+
+def _load_background():
+    """The 32 Apollo_Background mesh components, with the 27 matched by (owner, mesh)
+    against the converted placements list (the maps.background done signal)."""
+    actors = json.loads(_local_read("porting/generated/apollo-background-actors.json"))
+    comps = actors.get("staticMeshComponents", [])
+    pl = json.loads(_local_read("porting/generated/converted/apollo-background-placements.json"))
+    pm = {(p.get("owner"), p.get("mesh")) for p in pl}
+    units, done = [], set()
+    for c in comps:
+        label = f"{c.get('owner', '?')} :: {c.get('name', '?')}"
+        units.append(label)
+        if (c.get("owner"), c.get("mesh")) in pm:
+            done.add(label)
+    return units, done
+
+
+def _load_landscape():
+    tiles = json.loads(_local_read("porting/generated/converted/apollo-landscape-grid.json"))
+    return sorted(t.get("tile", f"tile{i}") for i, t in enumerate(tiles))
+
+
+def _grid_done_units(spec, ctx, units):
+    """Done units named in the spec's done_units (matched on the unit's stem)."""
+    names = spec["measure"].get("done_units", [])
+    return {u for u, _ in units if os.path.basename(u).rsplit(".", 1)[0] in names}
+
+
+def _grid_pak_index(spec, ctx):
+    a = _unit_data("assets", _load_assets)
+    units = [(n, "indexed") for n in a["indexed"]] + [(n, "skipped") for n in a["skipped"]]
+    inv = _unit_data("inventory", _load_inventory_paks)
+    return units, {n for n, _ in units if n in inv}
+
+
+def _grid_map_headers(spec, ctx):
+    scan, imp = _unit_data("maps", _load_map_paths)
+    units = [(p, _content_segment(p)) for p in scan]
+    return units, {p for p, _ in units if p in imp}
+
+
+def _grid_prefix(spec, ctx, regex, stems_key):
+    """Asset-type units: the cooked stems matching the leaf's prefix rule (the same
+    naming heuristic the denominator counts), done where the stem is local."""
+    a = _unit_data("assets", _load_assets)
+    units = [(s, g) for s, g in a["stems"].items() if re.search(regex, s)]
+    done = _unit_data("local_stems", _load_local_stems)[stems_key]
+    return units, {s for s, _ in units if s in done}
+
+
+def _grid_sound_classes(spec, ctx):
+    a = _unit_data("assets", _load_assets)
+    units = [(p, _content_segment(p)) for p in a["sound"]]
+    return units, _grid_done_units(spec, ctx, units)
+
+
+def _grid_enter_play(spec, ctx):
+    scan, _imp = _unit_data("maps", _load_map_paths)
+    units = [(p, _content_segment(p)) for p in scan]
+    return units, _grid_done_units(spec, ctx, units)
+
+
+def _grid_landscape(spec, ctx):
+    tiles = _unit_data("landscape", _load_landscape)
+    return [(t, "tiles") for t in tiles], set(tiles)
+
+
+def _grid_background(spec, ctx):
+    units, done = _unit_data("background", _load_background)
+    return [(u, "actors") for u in units], done
+
+
+def _grid_reflection_recovery(spec, ctx):
+    c = _unit_data("classes", _load_classes)
+    units = [(va, "blocks") for va in c["blocks"]]
+    return units, {va for va in c["blocks"] if va in c["named"]}
+
+
+def _grid_native_behavior(spec, ctx):
+    units = _unit_data("funcs", _load_funcs)
+    done = _unit_data("manifest", _load_manifest_ported)
+    return [(f"{c}::{fn}", c) for c, fn in units], {f"{c}::{fn}" for c, fn in done}
+
+
+def _grid_census(spec, ctx):
+    members = sorted(n for n, owner in ctx.census_assignment().items() if owner == spec["id"])
+    declared = ctx.declared_natives()
+    return [(n, "classes") for n in members], {n for n in members if is_declared(n, declared)}
+
+
+CLASS_GRID_PACKAGES = {
+    "gameplay.reflection_exact": ["/Script/FortniteGame"],
+    "gameplay.weapons": ["/Script/FortniteGame"],
+    "gameplay.storm": ["/Script/FortniteGame"],
+    "gameplay.battle_bus": ["/Script/FortniteGame"],
+    "ui.commonui_umg": ["/Script/CommonUI", "/Script/UMG"],
+    "ui.fortniteui_classes": ["/Script/FortniteUI"],
+}
+CLASS_GRID_GLOBS = {
+    "gameplay.reflection_exact": ["porting/native/Source/FortniteGame/Generated/[AU]*.h"],
+    "gameplay.weapons": ["porting/native/Source/FortniteGame/Generated/[AU]*.h"],
+    "gameplay.storm": ["porting/native/Source/FortniteGame/Generated/[AU]*.h"],
+    "gameplay.battle_bus": ["porting/native/Source/FortniteGame/Generated/[AU]*.h"],
+    "ui.commonui_umg": ["porting/native/Source/CommonUI/Generated/[AU]*.h",
+                        "porting/native/Source/UMG/Generated/[AU]*.h"],
+    "ui.fortniteui_classes": ["porting/native/Source/FortniteUI/Generated/[AU]*.h"],
+}
+
+
+def _grid_class_headers(spec, ctx):
+    """Class units: the named classes of the leaf's package(s) (and name_regex), done
+    where a tracked generated header carries the class name (the same signal the
+    leaf's tracked_count measure counts)."""
+    c = _unit_data("classes", _load_classes)
+    names = set()
+    for pkg in CLASS_GRID_PACKAGES[spec["id"]]:
+        names.update(c["by_pkg"].get(pkg, []))
+    rx = spec["measure"].get("name_regex")
+    if rx:
+        names = {n for n in names if re.search(rx, n)}
+    units = [(n, "classes") for n in sorted(names)]
+    done = {os.path.splitext(os.path.basename(p))[0]
+            for p in tracked_matches(ctx, CLASS_GRID_GLOBS[spec["id"]], rx)}
+    return units, {u for u, _ in units if u in done}
+
+
+UNIT_PROVIDERS = {
+    "assets.pak_index": _grid_pak_index,
+    "assets.map_headers": _grid_map_headers,
+    "assets.static_meshes": lambda spec, ctx: _grid_prefix(spec, ctx, r"^SM_", "local"),
+    "assets.skeletal_anim": lambda spec, ctx: _grid_prefix(spec, ctx, r"^SK_", "native"),
+    "visuals.vfx": lambda spec, ctx: _grid_prefix(spec, ctx, r"^NS_", "local"),
+    "assets.reflection_recovery": _grid_reflection_recovery,
+    "maps.enter_play": _grid_enter_play,
+    "maps.apollo_terrain": _grid_landscape,
+    "maps.background": _grid_background,
+    "gameplay.native_behavior": _grid_native_behavior,
+    "gameplay.framework": _grid_census,
+    "gameplay.building": _grid_census,
+    "gameplay.inventory": _grid_census,
+    "gameplay.abilities": _grid_census,
+    "gameplay.ai_nav": _grid_census,
+    "gameplay.world_volumes": _grid_census,
+    "gameplay.other": _grid_census,
+    "gameplay.reflection_exact": _grid_class_headers,
+    "gameplay.weapons": _grid_class_headers,
+    "gameplay.storm": _grid_class_headers,
+    "gameplay.battle_bus": _grid_class_headers,
+    "ui.commonui_umg": _grid_class_headers,
+    "ui.fortniteui_classes": _grid_class_headers,
+    "audio.sound_classes": _grid_sound_classes,
+}
+
+
+def build_unit_grids(model, files, leaves):
+    """Per-unit cell lists (group, label, done) for the decomposable leaves, keyed by
+    leaf id. Missing local data leaves a plain tile. Units are sorted by group, done
+    first within each group (so a group's colour is one clean run, not scattered
+    specks), so groups are contiguous in the grid.
+
+    leaves maps leaf id to the measured leaf (done, total). A grid is kept only when
+    its done and total equal the leaf's own numerator and denominator; otherwise the
+    leaf gets an empty list, which renders the progress bar driven by the leaf pct.
+    So a grid never contradicts its tile's percentage."""
+    ctx = Ctx(files, False, census_order_from_spec(model["tree"]))
+    grids = {}
+    for spec in walk_spec(model["tree"]):
+        provider = UNIT_PROVIDERS.get(spec["id"])
+        if provider is None:
+            continue
+        try:
+            units, done = provider(spec, ctx)
+        except (OSError, ValueError):
+            continue
+        if not units:
+            continue
+        cells = [(g, u, u in done)
+                 for u, g in sorted(units, key=lambda t: (t[1], t[0] not in done, t[0]))]
+        lf = leaves.get(spec["id"], {})
+        if (lf.get("done"), lf.get("total")) != (sum(1 for c in cells if c[2]), len(cells)):
+            grids[spec["id"]] = []
+            continue
+        grids[spec["id"]] = cells
+    return grids
+
+
 # ---------------------------------------------------------------- layout
 
 def squarify(weights, x, y, w, h):
@@ -777,69 +1103,251 @@ def tooltip_text(node):
             f"{node.get('evidence', '')}")
 
 
-def fit_tile_label(name, pct_s, rw, rh):
-    """Font sizes for a leaf tile's name and percentage so both fit.
+GRP_INSET = 1      # half the 2px gutter between siblings; groups and leaves are inset alike
+GRP_PAD = 3        # inner pad between a group's frame and its children (top: below the header strip)
+GRP_RADIUS = 3
+LEAF_PAD = 5       # text inset from a leaf's left edge
+LEAF_NAME_SIZES = (11, 10)
+LEAF_PCT_SIZES = (12, 11)
+LEAF_MAX_LINES = 4
+LEAF_MAX_LINES_SMALL = 7  # 10px names may wrap further so a tall narrow tile keeps its name
 
-    Returns (lines, name_size, pct_size); lines is None for a
-    percentage-only tile, and (None, None, None) when even the percentage
-    does not fit (the label is then tooltip-only). The uniform bases are an
-    11px name and a 12px percentage; a cramped tile first loses percentage
-    size, then name size (which also reduces the number of wrapped lines),
-    and finally the name entirely. Fit model: the first baseline sits
-    4px+size down, lines advance size+2 px, and text occupies 0.756em
-    above and 0.2358em below its baseline (the widest common sans metrics,
-    the same model the geometry checker validates against)."""
-    def width_ok(text, fs):
-        return text_width(text, fs) <= rw - 8
 
-    def name_pct_height(n, ns, ps):
-        base = 4 + ns + n * (ns + 2)  # baseline of the pct line
-        return base + 0.2358 * ps <= rh + 0.5
+def group_header_height(n_lines, font):
+    """Header strip height: 20px for one line at 12px (19px at 11px), +2 per extra line."""
+    return 4 + n_lines * (font + 2) + 2
 
-    for ns in (11, 10, 9, 8, 7):
-        lines = wrap_fit(name, rw - 12, ns)
-        if lines is None:
+
+def group_header(node, w, depth):
+    """Group header as one line where possible.
+
+    Returns (lines, strip height, font), where lines is a list of (name, suffix)
+    pairs drawn as name plus a lighter "· pct" suffix. Order of fallbacks: the
+    full name on one line; the name without a trailing parenthetical (for
+    example " (/Script/FortniteGame)") on one line; the shortened name wrapped to
+    at most 2 lines; the percentage alone; nothing when even that cannot fit.
+    The full name always stays in the hover title and detail panel."""
+    font = 12 if depth == 0 else 11
+    avail = w - 12
+    pct_s = fmt_pct(node["pct"])
+    suffix = f" · {pct_s}"
+    full = node["name"]
+    short = re.sub(r"\s*\([^()]*\)\s*$", "", full) or full
+    if text_width(full + suffix, font) <= avail:
+        lines = [(full, suffix)]
+    elif text_width(short + suffix, font) <= avail:
+        lines = [(short, suffix)]
+    else:
+        # Wrap the name and "·pct" as words, so the percentage moves with the last word.
+        wrapped = wrap_fit(f"{short} ·{pct_s}", avail, font)
+        if wrapped and len(wrapped) <= 2:
+            lines = []
+            for ln in wrapped:
+                idx = ln.rfind("·")
+                if idx < 0:
+                    lines.append((ln, ""))
+                else:
+                    name_part = ln[:idx].rstrip()
+                    lead = " " if name_part else ""
+                    lines.append((name_part, f"{lead}· {ln[idx + 1:].lstrip()}"))
+        elif text_width(f"· {pct_s}", font) <= avail:
+            lines = [("", f"· {pct_s}")]
+        else:
+            lines = []
+    return lines, group_header_height(max(len(lines), 1), font), font
+
+
+def unit_grid_layout(group_sizes, rw, rh):
+    """Square pitch for a unit grid: the largest integer pitch s, 2 <= s <= UNIT_PITCH_MAX,
+    at which every unit fits in rw x rh. Units fill rows left to right, groups are contiguous,
+    and a gap row is inserted between two groups only when the second group starts
+    at a row boundary (the same rule render_unit_grid emits). A square is s - gap
+    wide, with gap 1 when s >= 4 and 0 otherwise, so cols*s - gap <= rw and
+    rows*s - gap <= rh. Returns (s, cols, rows) or None when no pitch >= 2 fits or
+    the tile holds more than UNIT_GRID_MAX units."""
+    n = sum(group_sizes)
+    if n == 0 or n > UNIT_GRID_MAX:
+        return None
+
+    def rows_for(c):
+        rows = 0
+        row = 0
+        for i, s in enumerate(group_sizes):
+            if i > 0 and row == 0:
+                rows += 1
+            left = s
+            while left > 0:
+                take = min(c - row, left)
+                row += take
+                left -= take
+                if row == c:
+                    rows += 1
+                    row = 0
+        if row > 0:
+            rows += 1
+        return rows
+
+    for s in range(min(UNIT_PITCH_MAX, int(min(rw, rh))), UNIT_PITCH_MIN - 1, -1):
+        gap = UNIT_GAP
+        cols = min(int((rw + gap) // s), n)
+        if cols < 1:
             continue
-        for ps in (12, 11, 10, 9, 8, 7, 6):
-            if 0.756 * ps + 0.2358 * ns > ns + 2:  # pct would overlap the name
+        rows = rows_for(cols)
+        if cols * s - gap <= rw and rows * s - gap <= rh:
+            return s, cols, rows
+    return None
+
+
+def group_sizes(cells):
+    """Run lengths of consecutive units sharing a group (cells are group-contiguous)."""
+    sizes = []
+    for g, _label, _done in cells:
+        if not sizes or sizes[-1][0] != g:
+            sizes.append([g, 0])
+        sizes[-1][1] += 1
+    return [n for _g, n in sizes]
+
+
+def render_unit_grid(cells, layout, x0, y0, ink):
+    """One square per unit at pitch s from unit_grid_layout, positioned relative to
+    (x0, y0). Done squares share one bright-green path and not-done squares one
+    translucent ink path, so the SVG holds two elements per tile, not one per unit.
+    A gap row separates groups."""
+    s, cols, _rows = layout
+    gap = UNIT_GAP
+    side = s - gap
+    half = gap / 2
+    rows_out = []
+    row = []
+    prev_g = None
+    for g, _label, done in cells:
+        if g != prev_g:
+            if not row and rows_out:
+                rows_out.append(None)  # gap row between groups
+            prev_g = g
+        row.append(done)
+        if len(row) == cols:
+            rows_out.append(row)
+            row = []
+    if row:
+        rows_out.append(row)
+    done_d = []
+    todo_d = []
+    for ri, r in enumerate(rows_out):
+        if r is None:
+            continue
+        for ci, done in enumerate(r):
+            d = f"M{ci * s + half:g} {ri * s + half:g}h{side}v{side}h-{side}z"
+            (done_d if done else todo_d).append(d)
+    tr = f' transform="translate({x0:.2f} {y0:.2f})"'
+    out = []
+    if done_d:
+        out.append(f'<path{tr} fill="{UNIT_DONE_COLOR}" d="{"".join(done_d)}"/>')
+    if todo_d:
+        out.append(f'<path{tr} fill="{ink}" fill-opacity="{UNIT_TODO_OPACITY}" d="{"".join(todo_d)}"/>')
+    return "\n".join(out)
+
+
+def label_strip(lab):
+    """Height of a top-aligned label block (with a 3px gap below it), 0 when none."""
+    lines, ns, ps = lab
+    if ps is None:
+        return 0.0
+    if lines:
+        return 4 + ns + len(lines) * (ns + 2) + 0.2358 * ps + 3
+    return 4 + ps + 0.2358 * ps + 3
+
+
+def unit_label(name, pct_s, rw, rh):
+    """Label for a unit tile, top-aligned so it can sit above a grid: the same rules as
+    a leaf label (leaf_label), so names are at least 10px. A tile that cannot hold the
+    name at 10px gets its percentage alone and the rest goes to the grid or bar."""
+    return leaf_label(name, pct_s, rw, rh)
+
+
+def unit_tile_svg(node, cells, rx, ry, rw, rh, ink):
+    """Squares (or a progress bar) plus label for a unit tile, as SVG fragments in
+    paint order: the squares first, then the text, so text is never under a square.
+    The label sits in a strip at the top; the grid takes the area beneath it. A tile
+    whose grid cannot fit (or that has no grid, like package_coverage) gets its label
+    above a thin progress bar along its bottom edge, sized by done/total."""
+    name, pct_s = node["name"], fmt_pct(node["pct"])
+    shapes = []
+    lab = None
+    if cells and len(cells) <= UNIT_GRID_MAX:
+        lab = unit_label(name, pct_s, rw, rh)
+        strip = label_strip(lab)
+        gx, gy = rx + UNIT_GRID_PAD, ry + strip
+        gw, gh = rw - 2 * UNIT_GRID_PAD, rh - strip - UNIT_GRID_PAD
+        layout = unit_grid_layout(group_sizes(cells), gw, gh) if gw >= 2 and gh >= 2 else None
+        if layout:
+            shapes.append(render_unit_grid(cells, layout, gx, gy, ink))
+    if not shapes and rw >= 12 and rh >= UNIT_BAR_RESERVE + UNIT_BAR_H:
+        total = node.get("total")
+        done = node.get("done")
+        frac = (done / total) if (done is not None and total) else node["pct"] / 100.0
+        frac = min(max(frac, 0.0), 1.0)
+        by = ry + rh - 2 - UNIT_BAR_H
+        bx, bw = rx + UNIT_GRID_PAD, rw - 2 * UNIT_GRID_PAD
+        shapes.append(f'<rect x="{bx:.2f}" y="{by:.2f}" width="{bw:.2f}" height="{UNIT_BAR_H}" fill="{ink}" fill-opacity="{UNIT_TODO_OPACITY}"/>')
+        if frac > 0:
+            shapes.append(f'<rect x="{bx:.2f}" y="{by:.2f}" width="{bw * frac:.2f}" height="{UNIT_BAR_H}" fill="{UNIT_DONE_COLOR}"/>')
+        lab = unit_label(name, pct_s, rw, rh - UNIT_BAR_RESERVE)
+    elif lab is None:
+        lab = unit_label(name, pct_s, rw, rh)
+    lines, ns, ps = lab
+    text = []
+    if ps is not None:
+        if lines:
+            for i, ln in enumerate(lines):
+                text.append(f'<text class="leaf-label" x="{rx + 6:.1f}" y="{ry + 4 + ns + i * (ns + 2):.1f}" font-size="{ns}" fill="{ink}">{html.escape(ln)}</text>')
+            py = ry + 4 + ns + len(lines) * (ns + 2)
+        else:
+            py = ry + 4 + ps
+        text.append(f'<text class="leaf-pct" x="{rx + 6:.1f}" y="{py:.1f}" font-size="{ps}" font-weight="700" fill="{ink}">{fmt_pct(node["pct"])}</text>')
+    return shapes + text
+
+
+def leaf_label(name, pct_s, rw, rh):
+    """Label for a plain leaf tile: (lines, name size, pct size).
+
+    The name is 11px, or 10px when 11px needs more than LEAF_MAX_LINES lines (10px may use up to
+    LEAF_MAX_LINES_SMALL).
+    The percentage is 12px, or 11px when 12px is too wide. Lines advance size+2
+    and the first baseline sits 4px+size down. lines is None for a percentage-only
+    label; (None, None, None) when even the percentage does not fit, and the name
+    then appears only in the tooltip. Names are never truncated."""
+    avail = rw - 2 * LEAF_PAD
+    bottom = rh - 2
+    for ns in LEAF_NAME_SIZES:
+        lines = wrap_fit(name, avail, ns)
+        limit = LEAF_MAX_LINES if ns > min(LEAF_NAME_SIZES) else LEAF_MAX_LINES_SMALL
+        if not lines or len(lines) > limit:
+            continue
+        for ps in LEAF_PCT_SIZES:
+            if text_width(pct_s, ps) > avail:
                 continue
-            if width_ok(pct_s, ps) and name_pct_height(len(lines), ns, ps):
+            pct_base = 4 + ns + len(lines) * (ns + 2)
+            if pct_base + 0.2358 * ps <= bottom:
                 return lines, ns, ps
-    for ps in (12, 11, 10, 9, 8, 7, 6):
-        if width_ok(pct_s, ps) and 0.496 * ps <= rh / 2 + 0.5:
+    for ps in LEAF_PCT_SIZES:
+        if text_width(pct_s, ps) <= avail and 4 + ps + 0.2358 * ps <= bottom:
             return None, None, ps
     return None, None, None
 
 
-def group_header(node, w, depth):
-    """Group header: the full label wrapped at word boundaries.
-
-    The name is wrapped first; "· pct" joins the last line when it fits and
-    otherwise gets its own line. Falls back to the percentage alone when the
-    name cannot fit; the full label is always in the hover title."""
-    font = 13 if depth == 0 else 11
-    line_h = 16 if font == 13 else 14
-    lines = wrap_fit(node["name"], w - 10, font)
-    if lines is None:
-        lines = [fmt_pct(node["pct"])]
-    suffix = f"  ·  {fmt_pct(node['pct'])}"
-    if text_width(lines[-1] + suffix, font) <= w - 10:
-        lines[-1] += suffix
-    else:
-        lines.append(suffix.strip())
-    return lines, 4 + line_h * len(lines), font
-
-
-def render_treemap(groups, width, height, css_class="tm", interactive=False, sort_mode="weight"):
+def render_treemap(groups, width, height, css_class="tm", interactive=False, sort_mode="weight", grids=None):
     """Squarified treemap: categories > components > sub-components as nested tiles.
 
     interactive=True renders for the dashboard page: tiles carry data-id and
     classes, no native <title> (the page shows a custom tooltip), and every
-    tile that can hold text gets its label — CSS hides text at the root level
-    and reveals it when a tile is zoomed into. interactive=False is the static
-    fallback and the standalone progress.svg: a label only when the tile fits
-    one, otherwise just the percentage. sort_mode orders siblings at every
-    level: weight (area, default) or progress (largest percent first)."""
+    tile that can hold text gets its label, visible at all times.
+    interactive=False is the static fallback and the standalone progress.svg:
+    the same labels as the page, with a native hover title instead of the page tooltip.
+    sort_mode orders siblings at every level: weight (area, default) or
+    progress (largest percent first). grids maps leaf ids to per-unit cell
+    lists; such a tile shows one square per unit below a label strip, or a
+    progress bar when its units do not fit (see unit_tile_svg)."""
     parts = []
     leaves_out = []   # (node, rect)
     groups_out = []   # (node, rect, depth, header lines, head height, font)
@@ -853,16 +1361,19 @@ def render_treemap(groups, width, height, css_class="tm", interactive=False, sor
         ordered = sorted(nodes, key=key)
         rects = squarify([n["weight"] for n in ordered], x, y, w, h)
         for node, (rx, ry, rw, rh) in zip(ordered, rects):
+            # Every tile, group or leaf, is inset by the same amount so sibling gutters are 2px.
+            x0, y0 = rx + GRP_INSET, ry + GRP_INSET
+            bw, bh = max(rw - 2 * GRP_INSET, 0), max(rh - 2 * GRP_INSET, 0)
             if "children" in node:
-                lines, head, font = group_header(node, rw, depth)
-                pad = 3
-                groups_out.append((node, rx, ry, rw, rh, depth, lines, head, font))
-                if rw > 2 * pad + 24 and rh > head + 2 * pad + 18:
-                    place(node["children"], rx + pad, ry + head, rw - 2 * pad, rh - head - 2 * pad, depth + 1)
+                lines, head, font = group_header(node, bw, depth)
+                groups_out.append((node, x0, y0, bw, bh, depth, lines, head, font))
+                cw, ch = bw - 2 * GRP_PAD, bh - head - 2 * GRP_PAD
+                if cw > 24 and ch > 18:
+                    place(node["children"], x0 + GRP_PAD, y0 + head + GRP_PAD, cw, ch, depth + 1)
                 else:
-                    leaves_out.append((node, rx, ry, rw, rh))
+                    leaves_out.append((node, x0, y0, bw, bh))
             else:
-                leaves_out.append((node, rx, ry, rw, rh))
+                leaves_out.append((node, x0, y0, bw, bh))
 
     place(groups, 0, 0, width, height, 0)
 
@@ -873,53 +1384,43 @@ def render_treemap(groups, width, height, css_class="tm", interactive=False, sor
             parts.append(f'<g class="tile grp" data-id="{esc(node["id"])}">')
         else:
             parts.append(f'<g><title>{html.escape(tooltip_text(node))}</title>')
-        parts.append(f'<rect class="{css_class}-{cls}" x="{x:.1f}" y="{y:.1f}" width="{max(w, 0):.1f}" height="{max(h, 0):.1f}"/>')
-        if lines and w > 90 and h > head + 6:
-            line_h = 16 if font == 13 else 14
-            for i, ln in enumerate(lines):
-                baseline = y + 4 + i * line_h + (11 if font == 13 else 9)
-                parts.append(f'<text class="grp-head {css_class}-head" x="{x + 6:.1f}" y="{baseline:.1f}" font-size="{font}">{html.escape(ln)}</text>')
+        # Header strip: a tint with rounded top corners, drawn under the frame.
+        r = GRP_RADIUS
+        parts.append(f'<path class="{css_class}-hdr{depth if depth < 2 else 1}" d="M{x:.1f} {y + head:.1f}V{y + r:.1f}'
+                     f'Q{x:.1f} {y:.1f} {x + r:.1f} {y:.1f}H{x + w - r:.1f}Q{x + w:.1f} {y:.1f} {x + w:.1f} {y + r:.1f}'
+                     f'V{y + head:.1f}Z"/>')
+        parts.append(f'<rect class="{css_class}-{cls} tile-body" x="{x:.1f}" y="{y:.1f}" width="{max(w, 0):.1f}" '
+                     f'height="{max(h, 0):.1f}" rx="{GRP_RADIUS}"/>')
+        if lines and w > 24:
+            weight = 700 if depth == 0 else 600
+            for i, (name, sfx) in enumerate(lines):
+                baseline = y + 4 + font + i * (font + 2)
+                tail = f'<tspan class="grp-pct">{html.escape(sfx)}</tspan>' if sfx else ""
+                parts.append(f'<text class="grp-head {css_class}-head" x="{x + 6:.1f}" y="{baseline:.1f}" '
+                             f'font-size="{font}" font-weight="{weight}">{html.escape(name)}{tail}</text>')
         parts.append('</g>')
 
-    for node, x, y, w, h in leaves_out:
+    for node, rx, ry, rw, rh in leaves_out:
         fill = pct_color(node["pct"])
         ink = text_on(fill)
-        inset = 1.0
-        rx, ry, rw, rh = x + inset, y + inset, max(w - 2 * inset, 0), max(h - 2 * inset, 0)
         if interactive:
             parts.append(f'<g class="tile leaf" data-id="{esc(node["id"])}">')
         else:
             parts.append(f'<g><title>{html.escape(tooltip_text(node))}</title>')
-        parts.append(f'<rect x="{rx:.1f}" y="{ry:.1f}" width="{rw:.1f}" height="{rh:.1f}" rx="3" fill="{fill}"/>')
-        if interactive:
-            # Every tile shows its percentage. The uniform bases are an 11px
-            # name and a 12px percentage; a cramped tile first loses
-            # percentage size, then name size, then the name itself (the
-            # full label stays in the tooltip and detail panel).
-            lines, ns, ps = fit_tile_label(node["name"], fmt_pct(node["pct"]), rw, rh)
-            if lines is None:
-                if ps is not None:
-                    parts.append(f'<text class="leaf-pct" x="{rx + 5:.1f}" y="{ry + rh / 2 + 0.26 * ps:.1f}" font-size="{ps}" font-weight="700" fill="{ink}">{fmt_pct(node["pct"])}</text>')
-            else:
-                for i, ln in enumerate(lines):
-                    parts.append(f'<text class="leaf-label" x="{rx + 6:.1f}" y="{ry + 4 + ns + i * (ns + 2):.1f}" font-size="{ns}" fill="{ink}">{html.escape(ln)}</text>')
-                parts.append(f'<text class="leaf-pct" x="{rx + 6:.1f}" y="{ry + 4 + ns + len(lines) * (ns + 2):.1f}" font-size="{ps}" font-weight="700" fill="{ink}">{fmt_pct(node["pct"])}</text>')
+        parts.append(f'<rect class="tile-body" x="{rx:.1f}" y="{ry:.1f}" width="{rw:.1f}" height="{rh:.1f}" rx="{GRP_RADIUS}" fill="{fill}"/>')
+        cells = (grids or {}).get(node["id"])
+        if cells is not None or node["id"] in UNIT_BAR_IDS:
+            parts.extend(unit_tile_svg(node, cells, rx, ry, rw, rh, ink))
         else:
-            label_drawn = False
-            if rw >= 60 and rh >= 40:
-                lines = wrap_fit(node["name"], rw - 12, 11)
-                # Room for the wrapped lines plus the large percentage beneath them.
-                if lines and 15 + 13 * (len(lines) - 1) + 25 <= rh:
-                    pct_s = fmt_pct(node["pct"])
-                    ty = ry + 15
-                    for ln in lines:
-                        parts.append(f'<text x="{rx + 6:.1f}" y="{ty:.1f}" font-size="11" fill="{ink}">{html.escape(ln)}</text>')
-                        ty += 13
-                    parts.append(f'<text x="{rx + 6:.1f}" y="{ry + rh - 7:.1f}" font-size="15" font-weight="700" fill="{ink}">{pct_s}</text>')
-                    label_drawn = True
-            if not label_drawn and rw >= 36 and rh >= 22:
-                # Too small for the name: keep the percentage; the full label is in the hover title.
-                parts.append(f'<text x="{rx + 5:.1f}" y="{ry + rh / 2 + 5:.1f}" font-size="12" font-weight="700" fill="{ink}">{fmt_pct(node["pct"])}</text>')
+            lines, ns, ps = leaf_label(node["name"], fmt_pct(node["pct"]), rw, rh)
+            if ps is not None:
+                if lines:
+                    for i, ln in enumerate(lines):
+                        parts.append(f'<text class="leaf-label" x="{rx + LEAF_PAD:.1f}" y="{ry + 4 + ns + i * (ns + 2):.1f}" font-size="{ns}" fill="{ink}">{html.escape(ln)}</text>')
+                    py = ry + 4 + ns + len(lines) * (ns + 2)
+                else:
+                    py = ry + 4 + ps
+                parts.append(f'<text class="leaf-pct" x="{rx + LEAF_PAD:.1f}" y="{py:.1f}" font-size="{ps}" font-weight="700" fill="{ink}">{fmt_pct(node["pct"])}</text>')
         parts.append('</g>')
 
     return "\n".join(parts)
@@ -927,65 +1428,44 @@ def render_treemap(groups, width, height, css_class="tm", interactive=False, sor
 
 TREEMAP_CSS = """
 .tm-bg{fill:#fcfcfb}
-.tm-grp0{fill:none;stroke:#8a8a86;stroke-width:1.5}
-.tm-grp1{fill:none;stroke:#6f6f6a;stroke-width:1}
-.tm-head{font-family:system-ui,-apple-system,Segoe UI,sans-serif;font-weight:600;fill:#1d1d1b}
+.tm-grp0{fill:none;stroke:#bdbcb6;stroke-width:1}
+.tm-grp1{fill:none;stroke:#d8d7d1;stroke-width:1}
+.tm-hdr0{fill:rgba(0,0,0,.075)}
+.tm-hdr1{fill:rgba(0,0,0,.04)}
+.tm-head{font-family:system-ui,-apple-system,Segoe UI,sans-serif;fill:#1d1d1b}
+.grp-pct{font-weight:400;opacity:.78}
 @media (prefers-color-scheme: dark){
   .tm-bg{fill:#1a1a19}
-  .tm-grp0{stroke:#7d7d78}
-  .tm-grp1{stroke:#5f5f5a}
+  .tm-grp0{stroke:#4d4d48}
+  .tm-grp1{stroke:#3a3a36}
+  .tm-hdr0{fill:rgba(255,255,255,.09)}
+  .tm-hdr1{fill:rgba(255,255,255,.05)}
   .tm-head{fill:#f0efec}
 }
 """.strip()
 
 
-def svg_block(groups, width, height, extra_head=""):
-    body = render_treemap(groups, width, height)
-    return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {width} {height}" '
-            f'width="100%" role="img" aria-label="Treemap of port progress: area is effort weight, colour is percent complete" '
-            f'font-family="system-ui,-apple-system,Segoe UI,sans-serif">'
-            f'<style>{TREEMAP_CSS}</style>{extra_head}{body}</svg>')
-
-
-def add_parents(groups):
-    for g in groups:
-        for node in walk_spec_nodes(g):
-            node["parent"] = None if node is g else g["id"]
-    return groups
-
-
-def walk_spec_nodes(node):
-    yield node
-    for child in node.get("children", []):
-        yield from walk_spec_nodes(child)
-
-
-def interactive_treemap(groups, width, height):
-    """Treemap for the dashboard page: one static camera group holding two
-    precomputed layers (sorted by weight and by progress); the page's inline
-    script swaps layers, zooms the camera and toggles label visibility.
+def interactive_treemap(groups, width, height, grids=None):
+    """Treemap for the dashboard page: two precomputed layers (sorted by weight
+    and by progress); the page's inline script swaps the visible layer.
     No layout math in JS."""
-    layer_w = render_treemap(groups, width, height, interactive=True)
-    layer_p = render_treemap(groups, width, height, interactive=True, sort_mode="progress")
+    layer_w = render_treemap(groups, width, height, interactive=True, grids=grids)
+    layer_p = render_treemap(groups, width, height, interactive=True, sort_mode="progress", grids=grids)
     return (f'<svg id="treemap" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {width} {height}" '
-            f'width="100%" role="img" aria-label="Treemap of port progress: click a tile to zoom in" '
+            f'width="100%" role="img" aria-label="Treemap of port progress: click a tile to read its details" '
             f'font-family="system-ui,-apple-system,Segoe UI,sans-serif">'
             f'<style>{TREEMAP_CSS}{TM_SVG_CSS}</style>'
-            f'<g class="tm-cam" id="tm-cam">'
             f'<g class="layer layer-weight">{layer_w}</g>'
             f'<g class="layer layer-progress">{layer_p}</g>'
-            f'</g></svg>')
+            f'</svg>')
 
 
 TM_SVG_CSS = """
-#treemap .tile{cursor:pointer;transition:opacity .25s}
+#treemap .tile{cursor:pointer}
 #treemap .tile rect{vector-effect:non-scaling-stroke}
-#treemap .leaf-label,#treemap .leaf-pct,#treemap .grp-head{transition:opacity .3s}
-#treemap.at-root .leaf-label{opacity:0;pointer-events:none}
-#treemap.zoomed .tile{opacity:.22}
-#treemap.zoomed .tile.keep{opacity:1}
-#treemap.zoomed .tile.active,#treemap.zoomed .tile.active .tile{opacity:1}
-#treemap .tm-cam{transition:transform .5s cubic-bezier(.4,0,.2,1)}
+#treemap .tile.grp>.tile-body{pointer-events:all}
+#treemap .tile:hover>.tile-body{stroke:var(--ink,#161614);stroke-width:2}
+#treemap .tile.sel>.tile-body{stroke:var(--accent,#2a78d6);stroke-width:2}
 #treemap.sort-progress .layer-weight{display:none}
 #treemap:not(.sort-progress) .layer-progress{display:none}
 """.strip()
@@ -994,14 +1474,8 @@ TM_SVG_CSS = """
 TM_PAGE_CSS = """
 .tm-bar{display:none;align-items:center;gap:10px;flex-wrap:wrap;margin:12px 0 8px}
 html.tmjs .tm-bar{display:flex}
-.tm-crumbs{display:flex;align-items:center;gap:2px;flex-wrap:wrap;font-size:.9rem}
-.tm-crumbs button{background:none;border:0;padding:3px 8px;font:inherit;font-size:.9rem;color:var(--ink);cursor:pointer;border-radius:5px}
-.tm-crumbs button:hover{background:var(--card)}
-.tm-crumbs button.on{color:var(--accent);font-weight:700}
-.tm-crumbs .sep{color:var(--ink2);padding:0 2px}
-.tm-bar .spacer{flex:1}
-.tm-bar .btn,.sort button{border:1px solid var(--line);background:var(--card);border-radius:5px;padding:3px 10px;font:inherit;font-size:.85rem;cursor:pointer;color:var(--ink)}
-.sort{display:flex;align-items:center;gap:5px;font-size:.85rem;color:var(--ink2)}
+.tm-bar .sort{margin-left:auto;display:flex;align-items:center;gap:5px;font-size:.85rem;color:var(--ink2)}
+.sort button{border:1px solid var(--line);background:var(--card);border-radius:5px;padding:3px 10px;font:inherit;font-size:.85rem;cursor:pointer;color:var(--ink)}
 .sort button.on{background:var(--accent);border-color:var(--accent);color:#fff}
 .tm-wrap{position:relative}
 .tm-tip{position:absolute;z-index:6;max-width:340px;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:9px 11px;pointer-events:none;box-shadow:0 6px 18px rgba(0,0,0,.16);font-size:.85rem}
@@ -1024,16 +1498,12 @@ TM_PAGE_JS = """
 (function () {
   "use strict";
   var svg = document.getElementById("treemap");
-  var cam = document.getElementById("tm-cam");
   var tip = document.getElementById("tm-tip");
   var detail = document.getElementById("tm-detail");
-  var crumbs = document.getElementById("tm-crumbs");
   var wrap = document.getElementById("tm-wrap");
-  if (!svg || !cam || !window.TM_DATA) return;
+  if (!svg || !window.TM_DATA) return;
   document.documentElement.classList.add("tmjs");
 
-  var vb = (svg.getAttribute("viewBox") || "").split(/\\s+/);
-  var W = +vb[2], H = +vb[3];
   var byId = {};
   (function idx(nodes) {
     nodes.forEach(function (n) { byId[n.id] = n; if (n.children) idx(n.children); });
@@ -1043,72 +1513,6 @@ TM_PAGE_JS = """
   function fmtPct(p) { return p < 10 ? p.toFixed(1) + "%" : Math.round(p) + "%"; }
 
   var sortMode = "weight";
-  function layerSel() { return sortMode === "weight" ? ".layer-weight" : ".layer-progress"; }
-  function tileEl(id) { return svg.querySelector(layerSel() + ' .tile[data-id="' + id + '"]'); }
-  function tiles() { return Array.prototype.slice.call(svg.querySelectorAll(layerSel() + " .tile")); }
-  function rectOf(t) {
-    var r = t.querySelector("rect");
-    return { x: +r.getAttribute("x"), y: +r.getAttribute("y"), w: +r.getAttribute("width"), h: +r.getAttribute("height") };
-  }
-  function pathOf(id) {
-    var out = [], n = byId[id];
-    while (n) { out.push(n); n = n.parent ? byId[n.parent] : null; }
-    return out.reverse();
-  }
-
-  var stack = [];
-  function clearMarks() {
-    tiles().forEach(function (t) { t.classList.remove("active", "keep"); t.style.opacity = ""; });
-  }
-  function applyCam(t) { cam.style.transform = t; }
-  function fit() {
-    stack = [];
-    svg.classList.remove("zoomed");
-    svg.classList.add("at-root");
-    clearMarks();
-    renderCrumbs();
-    applyCam("translate(0px,0px) scale(1)");
-  }
-  function zoomTo(id) {
-    var el = tileEl(id);
-    if (!el) return;
-    var r = rectOf(el);
-    var m = 0.08;
-    var s = Math.min(W * (1 - 2 * m) / r.w, H * (1 - 2 * m) / r.h);
-    if (!(s > 1.02)) { fit(); return; }
-    var tx = W / 2 - s * (r.x + r.w / 2);
-    var ty = H / 2 - s * (r.y + r.h / 2);
-    stack = pathOf(id);
-    svg.classList.add("zoomed");
-    svg.classList.remove("at-root");
-    clearMarks();
-    el.classList.add("active");
-    pathOf(id).slice(0, -1).forEach(function (n) {
-      var a = tileEl(n.id);
-      if (a) a.classList.add("keep");
-    });
-    renderCrumbs();
-    applyCam("translate(" + tx + "px," + ty + "px) scale(" + s + ")");
-  }
-  function renderCrumbs() {
-    crumbs.innerHTML = "";
-    var all = document.createElement("button");
-    all.textContent = "All";
-    all.className = stack.length ? "" : "on";
-    all.onclick = fit;
-    crumbs.appendChild(all);
-    stack.forEach(function (n, i) {
-      var sep = document.createElement("span");
-      sep.className = "sep";
-      sep.textContent = "›";
-      crumbs.appendChild(sep);
-      var b = document.createElement("button");
-      b.textContent = n.name;
-      b.className = i === stack.length - 1 ? "on" : "";
-      b.onclick = function () { zoomTo(n.id); };
-      crumbs.appendChild(b);
-    });
-  }
 
   var hot = null;
   svg.addEventListener("pointerover", function (e) {
@@ -1217,7 +1621,7 @@ TM_PAGE_JS = """
         btn.appendChild(name);
         btn.appendChild(pct);
         btn.appendChild(ww);
-        btn.onclick = function () { zoomTo(c.id); showDetail(c); };
+        btn.onclick = function () { showDetail(c); };
         kids.appendChild(btn);
       });
       detail.appendChild(kids);
@@ -1229,9 +1633,15 @@ TM_PAGE_JS = """
     var t = e.target.closest ? e.target.closest(".tile") : null;
     if (!t) return;
     var id = t.getAttribute("data-id");
-    zoomTo(id);
+    markSelected(id);
     showDetail(byId[id]);
   });
+  // Mark the clicked tile in both layers so the outline survives a sort toggle.
+  function markSelected(id) {
+    Array.prototype.forEach.call(svg.querySelectorAll(".tile"), function (el) {
+      el.classList.toggle("sel", el.getAttribute("data-id") === id);
+    });
+  }
 
   Array.prototype.forEach.call(document.querySelectorAll(".sort button"), function (b) {
     b.onclick = function () {
@@ -1242,20 +1652,8 @@ TM_PAGE_JS = """
       });
       hot = null;
       tip.hidden = true;
-      fit();
     };
   });
-
-  window.addEventListener("keydown", function (e) {
-    if (e.key !== "Escape") return;
-    if (stack.length > 1) zoomTo(stack[stack.length - 2].id);
-    else fit();
-  });
-
-  var fitBtn = document.getElementById("tm-fit");
-  if (fitBtn) fitBtn.onclick = fit;
-
-  fit();
 })();
 """
 
@@ -1354,7 +1752,7 @@ footer{color:var(--ink2);font-size:.85rem;margin:2rem 0 1rem}
 """.strip()
 
 
-def index_html(res, head, subject, date, model, when_note):
+def index_html(res, head, subject, date, model, when_note, grids=None):
     overall = res["overall_pct"]
     rows = []
     for depth, node in flatten_rows(res["groups"]):
@@ -1378,8 +1776,8 @@ def index_html(res, head, subject, date, model, when_note):
         for m in res["milestones"])
     cats = "".join(f'<div class="stat"><div class="lbl">{esc(g["name"])}</div><div class="big" style="font-size:1.3rem">{fmt_pct(g["pct"])}</div></div>'
                    for g in res["groups"])
-    svg = interactive_treemap(res["groups"], TREEMAP_W, TREEMAP_H)
-    tm_json = json.dumps(add_parents(res["groups"])).replace("</", "<\\/")
+    svg = interactive_treemap(res["groups"], TREEMAP_W, TREEMAP_H, grids)
+    tm_json = json.dumps(res["groups"]).replace("</", "<\\/")
     return f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -1412,12 +1810,9 @@ def index_html(res, head, subject, date, model, when_note):
 <ul class="ms">{milestones}</ul>
 
 <h2>Treemap</h2>
-<p class="meta">Tile area = estimated effort weight. Tile colour = percent complete (red to green, five bins). The percentage shows on every tile at all times; name labels reveal on zoom and are never cut off. Hover for the summary, click to read the evidence below. Breadcrumbs, <em>Fit all</em> or <em>Esc</em> go back; the sort toggle re-lays out the tiles by progress instead of area.</p>
+<p class="meta">Tile area = estimated effort weight. Tile colour = percent complete (red to green, five bins). Names and percentages are never cut off; a tile too small for its name shows its percentage alone. Decomposable components additionally show one square per unit under the name, at most 9 px each, packed from the top-left: green when done and a translucent dark or light square when not, grouped by asset type, package or class with a gap row between groups. A tile too small for its squares, too large to draw, or whose units do not reconcile with its own done/total shows a thin progress bar along its bottom edge instead. The tile's done/total is in the hover summary. Hover a tile for the summary, click to read the evidence below. The sort toggle re-lays out the tiles by progress instead of area.</p>
 {legend_html(res["weight_by_basis"])}
 <div class="tm-bar" id="tm-bar">
-<nav class="tm-crumbs" id="tm-crumbs" aria-label="Zoom level"></nav>
-<span class="spacer"></span>
-<button class="btn" id="tm-fit" type="button">Fit all</button>
 <div class="sort"><span>Sort tiles by</span>
 <button data-sort="weight" class="on" type="button">area (weight)</button>
 <button data-sort="progress" type="button">progress</button>
@@ -1445,13 +1840,14 @@ def index_html(res, head, subject, date, model, when_note):
 """
 
 
-def standalone_svg(res, head, subject, date):
+def standalone_svg(res, head, subject, date, grids=None):
     width, height = STANDALONE_W, STANDALONE_H
     header = (f'<text x="12" y="28" font-size="20" font-weight="700" class="tm-head">'
               f'Fortnite 12.60 port progress: overall {res["overall_pct"]:.1f}% (effort-weighted)</text>'
               f'<text x="12" y="48" font-size="12" class="tm-head" font-weight="400">'
               f'Commit {esc(head[:7])} | {esc(subject[:90])} | {esc(date)} | milestones {res["milestones_done"]}/{res["milestones_total"]}</text>')
-    body = render_treemap(res["groups"], width, height - 60)
+    # Leave 28px at the bottom for the definition footer line.
+    body = render_treemap(res["groups"], width, height - 60 - 28, grids=grids)
     return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {width} {height}" width="{width}" height="{height}" '
             f'role="img" aria-label="Port progress treemap" font-family="system-ui,-apple-system,Segoe UI,sans-serif">'
             f'<style>{TREEMAP_CSS}</style>'
@@ -1586,7 +1982,7 @@ def measure_commit(model, sha, subject, date, head_sha, seeded, fallback_totals=
     if fallback_totals is None and replay:
         fallback_totals = head_totals_entries(head_sha)
     res = measure_tree(model, files, replay, rev=sha, fallback_totals=fallback_totals)
-    return res, entry_from(res, sha, subject, date, seeded)
+    return res, entry_from(res, sha, subject, date, seeded), files
 
 
 def main(argv=None):
@@ -1612,14 +2008,14 @@ def main(argv=None):
             for sha in revs:
                 s_subject = git("log", "-1", "--format=%s", sha).strip()
                 s_date = git("log", "-1", "--format=%cI", sha).strip()
-                _, entry = measure_commit(model, sha, s_subject, s_date, head, seeded=(sha != head),
-                                          fallback_totals=head_fb)
+                _, entry, _ = measure_commit(model, sha, s_subject, s_date, head, seeded=(sha != head),
+                                             fallback_totals=head_fb)
                 history.append(entry)
-            head_res, _ = measure_commit(model, head, subject, date, head, seeded=False,
-                                         fallback_totals=head_fb)
+            head_res, _, files = measure_commit(model, head, subject, date, head, seeded=False,
+                                                fallback_totals=head_fb)
         else:
-            head_res, head_entry = measure_commit(model, head, subject, date, head, seeded=False,
-                                                  fallback_totals=head_fb)
+            head_res, head_entry, files = measure_commit(model, head, subject, date, head, seeded=False,
+                                                         fallback_totals=head_fb)
             if not args.no_record:
                 history = [e for e in history if e.get("commit") != head]
                 history.append(head_entry)
@@ -1630,8 +2026,9 @@ def main(argv=None):
         # Render from the HEAD measurement. Overall, categories and milestones are the same
         # whether read from history or measured fresh.
         when_note = "Generated by porting/progress/progress.py."
-        write_atomic(os.path.join(OUT, "index.html"), index_html(head_res, head, subject, date, model, when_note))
-        write_atomic(os.path.join(OUT, "progress.svg"), standalone_svg(head_res, head, subject, date))
+        grids = build_unit_grids(model, files, {l["id"]: l for l in head_res["leaves"]})
+        write_atomic(os.path.join(OUT, "index.html"), index_html(head_res, head, subject, date, model, when_note, grids))
+        write_atomic(os.path.join(OUT, "progress.svg"), standalone_svg(head_res, head, subject, date, grids))
         progress_doc = {
             "definition": model["definition"],
             "head": head,

@@ -1,6 +1,6 @@
 # Port progress dashboard
 
-A generated dashboard for the Fortnite 12.60 Linux port: a squarified treemap of
+A generated dashboard for the Fortnite 12.60 Linux reconstruction: a squarified treemap of
 the whole effort (area = estimated effort weight, colour = percent complete), a
 per-component table, `progress.json`, and a history page with one point per commit.
 
@@ -204,10 +204,8 @@ recorded), `assets.textures` -0.28, `assets.static_meshes` -0.11, `assets.materi
 | `maps.streamed_levels` | documented, 0 of 87 | documented, 0 of 87 | denominator from the regex on `map_compatibility.md` (totals) | Numerator (0) still typed. |
 | `audio.sound_classes` | documented, 1 of 306 | documented, 1 of 317 | denominator: sound class or mix package paths (path heuristic, totals) | Numerator typed; 317 vs the documented 306 is a heuristic. |
 | `assets.map_headers` | local, 100% | local, 100% | denominator from the registry's World count | None. |
-| `assets.package_coverage` | local, 0.16% | local, 0.16% (712/450783) | denominator is the cooked `.uasset` entry count (totals), was 450,951 typed | Local recovered or converted files are counted by folder, not by package. |
+| `assets.package_coverage` | local, 0.16% | local, 0.16% (712/450783) | denominator is the cooked `.uasset` entry count (totals), was 450,951 typed; weight 20, now 65 after absorbing the former `assets.textures` (20) and `assets.materials` (25) leaves, whose done signal was the same "packages present locally" measure | Local recovered or converted files are counted by folder, not by package. |
 | `assets.static_meshes` | manual, 8% | local, 1.6% (77 glb + SM_ in native/Content, distinct names / 4719) | counts converted meshes; denominator is SM_-named cooked packages (naming heuristic) | Naming heuristic; a conversion is not spawn-verified. |
-| `assets.materials` | manual, 6% | local, 0.3% (83 / 24961) | M_, MI_, MF_ packages rebuilt in native/Content; denominator naming heuristic | Naming heuristic; disabled originals and recovered packages are excluded. |
-| `assets.textures` | manual, 25% | local, 1.3% (386 / 30523) | PNG conversions under `generated/converted` plus T_ packages in native/Content | Naming heuristic; the PNG count is masks and atlases only. |
 | `assets.skeletal_anim` | manual, 0% | local, 0% (0 / 1719) | SK_ packages converted in native/Content | Naming heuristic; animation (A_, 7 names) not counted. |
 | `platform.wine_launch` | manual, 2% | git, 0% (ledger 0 of 6) | six Wine stage checks in `evidence.json` | Needs a real run and recording. Two stages are expected to fail. |
 | `platform.eac_removal` (renamed) | manual, 2% | git, 50% (2 of 2 checks, stub credit 0.5) | `-nobe` and `-noeac` present in `run_original_client.sh`, credited at 50% | The credit is a judgement. The flags are not seen working; AppES is not bypassed. |
@@ -279,21 +277,15 @@ only cue. The page follows the OS light or dark setting.
 the same layout. All of it is one inline script plus CSS — no external assets,
 and with JavaScript disabled the page falls back to the static treemap.
 
-- **Zoom.** Click any tile (category or component) and a camera zooms into it.
-  The percentage shows on every tile at all zoom levels; name labels are hidden
-  at the root level and revealed when zoomed in, where the tiles are large
-  enough to hold them, so the root view stays readable. Breadcrumbs, the *Fit
-  all* button or `Esc` go back. Hovering shows a tooltip with the name,
+- **No zoom.** The treemap is always shown at full size: there is no camera,
+  drill-down or breadcrumbs. Hovering a tile shows a tooltip with the name,
   percent, done/total, weight, basis and evidence; clicking fills a detail
-  panel below the treemap (with the component's children as further drill-down
-  links for categories).
+  panel below the treemap (with the component's children as links for
+  categories).
 - **Sort.** The *Sort tiles by* toggle re-lays out the whole treemap by percent
   complete instead of by area. Both layouts are precomputed by the generator
-  (two layers inside one camera group); the script only swaps which layer is
+  (two sibling layers inside the SVG); the script only swaps which layer is
   visible, so no layout math runs in the browser.
-- **Geometry.** Zoom is a CSS transform on the camera group (`vector-effect:
-  non-scaling-stroke` keeps borders crisp); the tile rectangles themselves are
-  never modified by the script.
 
 ## Treemap labels
 
@@ -301,15 +293,29 @@ Labels are never cut off. Group headers and tile names wrap at word boundaries; 
 tile too small for its name shows only its percentage, and every tile's full label,
 done/total, source and evidence are in the hover title.
 
-On the dashboard page every tile shows its percentage, and sizes stay uniform
-unless a tile genuinely cannot hold them: the bases are an 11px name and a 12px
-percentage (`fit_tile_label` in `progress.py`). A cramped tile first shrinks the
-percentage, then the name (which also reduces the number of wrapped lines), and
-only then drops the name altogether, leaving the percentage alone. The fit model
-is the same font metrics the geometry checker validates against: the first
-baseline sits 4px+size down, lines advance size+2 px, and text occupies 0.756em
-above and 0.2358em below its baseline. The static `progress.svg` keeps the
-conservative one-size behaviour: a label only when the tile fits one.
+Leaf tiles (`leaf_label` in `progress.py`) use an 11px name, falling back to 10px
+when 11px would need more than four lines, and a 12px percentage (11px when 12px
+is too wide). Text is never below 10px. A tile that cannot hold the name at 10px
+in at most four lines shows its percentage alone; a tile too small even for that
+shows nothing. Names are never truncated, and the full name is in the hover title
+and the detail panel. The same labels appear in the static `progress.svg`.
+
+Group headers sit in a strip of about 20px (12px bold for top-level groups, 11px
+for sub-groups, with a lighter "· pct" suffix). The name is shown in full on one
+line when it fits; otherwise a trailing parenthetical such as " (Apollo island)"
+is dropped for the display; otherwise the name wraps to at most two lines; else
+only the percentage. The full name is always in the hover title.
+
+Every tile, group or leaf, is inset by 1px, so sibling tiles have a 2px gutter.
+A group's children sit 3px inside its frame. The page and `progress.svg` follow
+the light or dark OS setting. Hovering a tile outlines it in 2px, and the clicked
+tile keeps a 2px accent outline across both sort layers.
+
+Unit-square tiles use the same label rules (`unit_label` calls `leaf_label`), so
+they also never show text below 10px. Their squares sit below the label strip, and
+at least 1px separates neighbouring squares. The smallest square pitch is 3px (a
+2px side), so a dense grid that would read as one solid block falls back to the
+progress bar instead.
 
 Wrap widths come from a per-character advance table in `progress.py` (`CHAR_W`):
 the maximum advance across DejaVu Sans Bold and Liberation Sans Bold (the two
@@ -318,6 +324,42 @@ Segoe UI, Arial or Helvetica for every character in the set), measured at each
 font's native 2048 upem with a 5% margin for the synthesized 600 weight. The
 table bounds the bold and regular faces alike, so no emitted line can overflow
 its tile on those fonts; characters outside the set default to the widest entry.
+
+## Unit squares
+
+Decomposable leaves additionally render one square per unit, drawn under the
+tile's label. Each unit is its own square of identical size, with no merging into
+stripes or stretching: done is `#4fd35f`, and not-done is the tile's own ink colour
+(the near-black or white that `text_on` picks for the tile fill) at 28% opacity, so
+it reads on light and dark pages and never floods a tile in red. Units are grouped by
+asset type, package or class; groups are contiguous, with a gap row between groups
+that starts at a row boundary. Done units come first within each group.
+
+`unit_grid_layout` picks the largest integer pitch `s` (at least 2, at most 9 SVG
+units, `UNIT_PITCH_MAX`) at which every unit fits in the grid region: the tile minus a label strip at the top (sized from
+the fitted name and percentage, `label_strip`) and a 3px inset on the other sides.
+A square is `s` wide, minus a 1px gap when `s >= 4`. The grid is left and top
+aligned, filling rows left to right, so a tile with few units shows a small block in its
+top-left corner and the rest stays the base colour. Squares carry no labels; the
+done/total is in the hover summary and the detail panel.
+
+A grid is kept only when it reconciles with its leaf: the grid's done and total must
+equal the leaf's own measured done and total (`build_unit_grids`). A grid that does not
+reconcile is dropped and the leaf shows the progress bar, which is driven by the leaf's
+pct, so a grid never contradicts its tile's percentage. Currently `assets.static_meshes`
+(71 of its 77 done items are converted `.glb` stems outside the SM_ unit list),
+`gameplay.native_behavior` (126 ported functions have no exec address, so they are
+outside the 20,574 units) and `gameplay.reflection_exact` (one tracked header,
+`UFortMatchmakingKnobsDataSource`, is not in the named-class denominator) are dropped.
+Adding those items as units would change the leaf total, which the measure fixes.
+
+A tile is drawn as a progress bar instead of squares when its grid is dropped by the
+reconciliation check, when its units cannot fit at pitch 2 or more, or when it has more
+than `UNIT_GRID_MAX` (6000) units. The bar is
+4px high, lies along the bottom edge, and its width is done/total; the label stays
+above it. `assets.package_coverage` (about 450k cooked packages) is always an
+aggregate tile with a bar (`UNIT_BAR_IDS`). The done set of a grid never exceeds the
+tile's numerator: it is the leaf's own done signal intersected with the unit list.
 
 ## Git hygiene
 
