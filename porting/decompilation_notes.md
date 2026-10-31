@@ -1488,7 +1488,7 @@ the raw floats. This is the main finding for this struct. Confidence HIGH for th
 
 | Order | Offset | Field | Wire | Note | Confidence |
 |---|---|---|---|---|---|
-| 1 | `+0x00` | `BuildingClassHandle` (uint32) | `SerializeInt(v, 0x1ff)`, 9 bits | | HIGH |
+| 1 | `+0x00` | `BuildingClassHandle` (uint32) | `SerializeInt(v, 0x1ff)`, 9 bits (8 bits for handle 255: the bounded encoding stops early when 255+256 == 0x1ff; confirmed by the round-trip self-test) | | HIGH |
 | 2 | `+0x1c` | `bMirrored` | 32 bits (UBOOL) | | HIGH |
 | 3 | `+0x04..+0x0f` | `BuildLoc` | 3 raw floats | member type `FVector_NetQuantize10` not used | HIGH |
 | 4 | `+0x34` | `BuildingClassData.UpgradeLevel` | 8 bits | `FBuildingClassData` at `+0x28`, `UpgradeLevel` at its `+0x0c` | HIGH |

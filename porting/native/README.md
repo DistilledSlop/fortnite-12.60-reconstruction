@@ -191,3 +191,18 @@ cp -al /opt/fortnite/UnrealEngine/Engine/Binaries/ThirdParty/CEF3/Linux \
 ```
 
 `ldd FortniteLinux` must then report no missing libraries. The server does not need it.
+
+## NetSerialize self-test
+
+`Source/FortniteGame/Private/NetSerializeSelfTest.cpp` round-trips the five recovered `struct_net` bodies
+(`FSharedRepMovement`, `FFortAISharedRepMovement`, `FReplicatedPhysicsPawnState`, `FFortAIAttributeReplicationProxy`,
+`FCreateBuildingActorData`) through `FBitWriter` and `FBitReader`, and checks the bit counts the layout fixes: 432 for the
+physics state, 177 for the building data (176 for handle 255, see the file). It needs no server, level or RHI:
+
+```sh
+env -u LD_LIBRARY_PATH stdbuf -oL -eL porting/generated/linux-stage/LinuxNoEditor/FortniteLinux.sh \
+  -NetSerializeSelfTest -nullrhi -nosound -unattended -log
+```
+
+It logs one `NetSerializeSelfTest: <Struct> <case> PASS` or `FAIL` line per case, then `NetSerializeSelfTest: ALL PASS`
+(exit 0) or `FAILED n` (exit 1). The flag is ignored by any other run.

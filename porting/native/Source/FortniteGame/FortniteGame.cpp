@@ -20,6 +20,10 @@
 
 DEFINE_LOG_CATEGORY_STATIC(LogFortniteNet, Log, All);
 
+// Private/NetSerializeSelfTest.cpp: round-trip checks of the recovered struct_net bodies. Runs only with -NetSerializeSelfTest
+// and exits the process (0 when every case passes, 1 otherwise).
+void RunNetSerializeSelfTest();
+
 // Network version checksum the original 12.60 client sends in NMT_Hello
 // (client log: "Checksum: 683914758").
 static constexpr uint32 FortniteNetworkChecksum = 683914758;
@@ -161,6 +165,10 @@ public:
         FCoreDelegates::OnPostEngineInit.AddStatic(&FFortniteGameModule::OnEngineInitForNetwork);
         FCoreDelegates::OnPostEngineInit.AddStatic(&FFortniteGameModule::ProbeAsset);
         FWorldDelegates::OnPostWorldInitialization.AddStatic(&FFortniteGameModule::OnWorldInitialized);
+        if (FParse::Param(FCommandLine::Get(), TEXT("NetSerializeSelfTest")))
+        {
+            RunNetSerializeSelfTest();
+        }
     }
 
 private:
