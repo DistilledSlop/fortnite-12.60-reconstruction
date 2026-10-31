@@ -269,3 +269,59 @@ python3 -I porting/resolve_class_parents.py --self-test
 python3 -I porting/gen_native_classes.py --parent-map porting/generated/reflection/class_parent_map.json ...
 ```
 
+
+## 9. Structs, enums and delegates
+
+Scope: the struct, enum and delegate-signature tables that the class tables reference, for `porting/gen_native_classes.py --promote`. Read-only over the runtime dump (section 6), Ghidra reference sites (`porting/ghidra/export_type_xrefs.py`, read-only, no analysis run), and the UE 4.25.0 headers. Scripts: `porting/extract_types.py` (scan, join, self-test), `porting/validate_types.py` (header comparison), `porting/gen_native_classes.py` (`TypeGate`, emitters, self-test). Outputs are git-ignored under `porting/generated/reflection/`: `type_block_candidates.json`, `type_block_xrefs.json`, `struct_blocks.json`, `enum_blocks.json`, `delegate_blocks.json`, `function_blocks.json`, `construct_fn_to_block.json`, `type_closure.json`, `type_validation.json`.
+
+### Method [observed + inferred]
+
+1. **Layouts** (`UObjectGlobals.h`, `UECodeGen_Private`, WITH_METADATA off). `FStructParams` is 72 bytes: OuterFunc, SuperFunc, StructOpsFunc, NameUTF8, SizeOf, AlignOf, PropertyArray, NumProperties (i32 @56), ObjectFlags (@60), StructFlags (@64). `FEnumParams` is 56 bytes: OuterFunc, DisplayNameFunc, NameUTF8, CppTypeUTF8, EnumeratorParams, NumEnumerators (i32 @40), ObjectFlags (@44), DynamicType (int32 @48, an enum class with no underlying type), CppForm (u8 @52). `FEnumeratorParam` is 16 bytes (name, i64 value). `FFunctionParams` is 72 bytes, as in section 3. The delegate property kinds keep their signature function at offset 40 (`FDelegatePropertyParams`, `FMulticastDelegatePropertyParams`), so `extract_reflection.py` now records it as `type_refs.signature`.
+2. **Candidates** (`extract_types.py scan`). Every 8-byte-aligned position in the data sections is tested against the layout: name and string pointers, code or null for the function pointers, a small SizeOf and a power-of-two AlignOf, and a PropertyArray whose every entry is a data pointer to a record with a readable name. The three kinds are disjoint on these tests except for 21 function records that match a struct or enum at the same address; those are dropped.
+3. **Construct functions** (`extract_types.py join`). The construct function of a block (`Z_Construct_UScriptStruct_*`, `Z_Construct_UEnum_*`, `Z_Construct_UDelegateFunction_*`, `Z_Construct_UFunction_*`) references its block with a RIP-relative LEA. Ghidra lists every reference site of each candidate block (31,962 blocks, about 10 s). The owning function of a site is the `.pdata` entry that contains it. The result is `construct_fn_to_block.json`.
+4. **Property tables** are decoded with the class decoder (`decode_props`). Struct, enum and delegate references in class tables resolve through the construct map.
+5. **Packages.** A struct or enum takes its package from the FPackageParams that its OuterFunc names (`resolve_class_parents.Probe`). A delegate declared in a class takes the class's package, because its OuterFunc is the class's construct function.
+6. **Struct ops** (`StructOpsFunc`). For a struct with custom ops, the function does `new TCppStructOps<T>`: it stores a vtable pointer, the size and the alignment. The trait values are read from the vtable slots (the `ICppStructOps` declaration order in `Class.h`, destructor first), and each slot is classified by its code: a constant `true` or `false` return, or unclassified. This is the only place the custom-serializer traits are visible, because `STRUCT_NetSerializeNative` and the other computed bits are set at load time and are absent from StructFlags (`FVector_NetQuantize` has StructFlags `Native|Atomic` only).
+
+### Results [observed]
+
+| Kind | Recovered | With construct function | Notes |
+|---|---|---|---|
+| Struct | 4,512 (Fort 2,059, Engine 655, other plugins the rest) | 4,512 | 4,438 with struct ops; 2 structs have an unreadable vtable (`SoundCueCrossfadeInfo`, `SoundCueTemplateQualitySettings`) |
+| Enum | 2,056 (EnumClass 1,457, Namespaced 346, Regular 253) | 2,056 | enumerators of EnumClass enums are stored as `EnumName::Value` |
+| Delegate signature | 1,515 (1,400 with the MulticastDelegate flag) | 1,514 | one has no construct function (`OnChallengeSetEstablished`, which has no `__DelegateSignature` suffix) |
+| UFunction parameter block | 23,879 | 23,510 | used for the RPC join, not yet used by the generator (see limits) |
+
+- **Construct map**: 31,592 functions mapped to one block each, 0 ambiguous.
+- **Class-table references** (2,622 distinct class refs are unchanged, see below) for struct, enum and delegate: 7,647 struct, 1,446 enum and 1,811 delegate references, all resolved, 0 unresolved.
+- **Struct ops checks**: SizeOf equals the size written into the TCppStructOps object in 4,438 of 4,438 structs, and AlignOf equals it in 4,438 of 4,438. The size and alignment fields are independent of the trait vtable, so this is a cross-check of both.
+- **Custom serializers** (from the ops vtable, 4,438 structs with ops): `HasNetSerializer` 41, `HasNetDeltaSerializer` 50, `HasNetSharedSerialization` 13. Checked against the engine: `FVector_NetQuantize`, `FRepMovement`, `FGameplayTagContainer`, `FUniqueNetIdRepl` and `FGameplayTag` report `HasNetSerializer`; `Vector`, `Quat`, `Transform` and `FVector` (no ops) and `RepAttachment` do not. Nine Fort-package structs have a custom NetSerialize (`AthenaPawnReplayData`, `CreateBuildingActorData`, `FortAIAttributeReplicationProxy`, `FortAISharedRepMovement`, `FortGameplayAbilityTargetData_SingleTargetHit`, `FortGameplayEffectContext`, `FortRootMotionSource_FallingBoost`, `ReplicatedPhysicsPawnState`, `SharedRepMovement`).
+
+### Validation against the UE 4.25.0 headers [observed]
+
+`porting/validate_types.py` compares each recovered type with a header declaration of the same name, using only names declared once in the engine tree, and drops members under `#if` blocks. The shipped engine is not the 4.25.0 tree (section 8), so a mismatch can be engine skew as well as a decode error.
+
+| Kind | Compared | Exact | Accuracy |
+|---|---|---|---|
+| Struct (UPROPERTY member names, declaration order) | 1,409 | 1,307 | 92.8% (101 differ, 1 order only) |
+| Enum (enumerator names and values) | 562 | 546 | 97.2% (16 names differ) |
+| Delegate (parameter count of the DECLARE macro) | 270 | 269 | 99.6% (1 differs) |
+
+Structs with known shapes: `Vector` (12 bytes, 4-byte alignment, X Y Z), `Quat` (16, 16, X Y Z W), `Transform` (48, 16, three 16-byte vector registers), `FVector_NetQuantize` (12, inherits `FVector`, custom NetSerialize). Enums: `ENetRole` (ROLE_None to ROLE_MAX, values 0 to 4) and `EMovementMode` match. Shipped-engine skew is visible in names such as `ECameraFocusMethod` (`None` here, `DoNotOverride` in the 4.25 header).
+
+### Delegates and enumerators
+
+- A delegate type name is the signature name without `__DelegateSignature`, prefixed with F (`ActorEndPlaySignature__DelegateSignature` gives `FActorEndPlaySignature`). `delegate_name` is the owning property's name (`OnEndPlay`), so it is not the type name.
+- Macro choice: a signature without FUNC_MulticastDelegate is `DECLARE_DYNAMIC_DELEGATE`. With the flag, a property of kind `InlineMulticastDelegate` gives `DECLARE_DYNAMIC_MULTICAST_DELEGATE`, and `SparseMulticastDelegate` gives `..._SPARSE_...`. Arity 0 to 9 maps to `OneParam` through `NineParams`.
+- A namespaced enum (`EFortBuildingState::Type`) is emitted as `namespace EFortBuildingState { enum Type ... }` in its own header.
+
+### Limits
+
+- **C++ names and spellings are reconstructed, not read.** The enum underlying type is `uint8` (the UHT rule, not recorded in the exe). A struct's own C++ name is `F` plus the UObject name, which UHT uses, and the delegate type name comes from the signature name. Namespaced enums use the UHT pattern and have not been compiled.
+- **Bitfield bools have no offset** in the table, so a struct that has one cannot be ordered by offset exactly; the declaration order is the reverse of the table.
+- **Not recovered:** metadata, `UMETA` specifiers, `Replicated` specifiers inside structs (not emitted), `RepSkip` flags on struct fields (the checksum skips them), and the bodies of custom NetSerialize functions. A replicated use of a struct with a custom NetSerialize is therefore skipped, not emitted.
+- **Engine types** (not in the promoted packages) are referenced by name and included from the engine tree (`EngineTypeIndex`). The engine version is assumed to match the 4.25 code for the NetSerialize of engine structs, which is not verified.
+- **Unavailable types:** three plugin modules that are not in the engine tree (`McpProfileSys`, `MeshNetwork`, `CommonInput`) are skipped with categories `*_not_available`.
+- **Out, reference and return parameters** of delegates, and delegates with more than nine parameters, are not emitted (category `delegate_member_unresolved`, reason recorded).
+- **Class references are unchanged.** `resolve_class_refs.py` resolves 2,326 of 2,622 class refs, and the 296 unresolved targets are not class-block functions. Each target is a singleton builder that calls a helper with stack-built parameters, with no LEA to any class block in its body and none one call deeper. They are not identified. The 148 unnamed and 232 outside-set class refs therefore still block the classes that use them, and so do the structs and delegates that use them.
+- **RPCs** use the name join, not the construct-function join. The 23,510 UFunction parameter blocks with construct functions could resolve the 4,764 ambiguous name joins (`native_classes_status.md`); the generator has not been changed to use them.

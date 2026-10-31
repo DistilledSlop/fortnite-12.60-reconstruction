@@ -105,6 +105,23 @@ class Resolver:
         self.tokens = []        # every TODO token issued, in order (promote mode slices this per item)
         self.class_refs = set()  # class names referenced by emitted pointer/class types (forward declarations)
         self.skipped = []        # promote mode: skip records for the current class
+        self.gate = None         # promote mode: TypeGate (struct/enum/delegate usability), None in draft mode
+        self.wire_used = False   # a wire-custom struct was used since the last reset (see TypeGate)
+        self.used = {}           # struct/enum/delegate fn -> set of entry kinds, since the last reset
+
+    def fork(self):
+        """A resolver with the same type map and gate and empty per-item state (used by TypeGate checks)."""
+        child = Resolver.__new__(Resolver)
+        child.types = self.types
+        child.known = self.known
+        child.todos = []
+        child.tokens = []
+        child.class_refs = set()
+        child.skipped = []
+        child.gate = self.gate
+        child.wire_used = False
+        child.used = {}
+        return child
 
     def name(self, fn):
         return self.types.get(fn.lower()) if fn else None
@@ -120,6 +137,16 @@ class Resolver:
         self.todos.append("%s type not decoded (%s)" % (what, name))
         self.tokens.append(token)
         return token
+
+    def type_ref(self, kind, fn, what, entry_kind=None):
+        """C++ name of a struct, enum or delegate type. Promote mode asks the TypeGate; a type that cannot be
+        emitted or included returns a TODO token whose prefix is the skip category (see category_of)."""
+        name = self.name(fn)
+        if name is None:
+            return self.todo(what, fn)
+        if self.gate is None:
+            return name
+        return self.gate.check(self, kind, fn, name, entry_kind)
 
     def class_name(self, fn, what):
         name = self.name(fn)
@@ -138,12 +165,12 @@ class Resolver:
             return SCALAR_TYPES[kind]
         if kind == "Byte":
             if "enum" in refs:
-                return "TEnumAsByte<%s>" % (self.name(refs["enum"]) or self.todo("Enum", refs["enum"]))
+                return "TEnumAsByte<%s>" % self.type_ref("enum", refs["enum"], "Enum", kind)
             return "uint8"
         if kind == "Enum":
-            return self.name(refs.get("enum")) or self.todo("Enum", refs.get("enum"))
+            return self.type_ref("enum", refs.get("enum"), "Enum", kind)
         if kind == "Struct":
-            return self.name(refs.get("struct")) or self.todo("Struct", refs.get("struct"))
+            return self.type_ref("struct", refs.get("struct"), "Struct", kind)
         if kind in ("Object", "WeakObject", "LazyObject", "SoftObject"):
             target = self.class_name(refs.get("class"), "Class")
             wrap = {"Object": "%s*", "WeakObject": "TWeakObjectPtr<%s>",
@@ -172,7 +199,10 @@ class Resolver:
             v = self.ctype(value, {}) if value else self.todo_named("MapValue", entry.get("name"))
             return "TMap<%s, %s>" % (k, v)
         if kind in DELEGATE_KINDS:
-            # The delegate's own type name (DECLARE_*_DELEGATE) is not reachable from the table.
+            # The delegate type is named by its signature function (FFunctionParams with FUNC_Delegate).
+            sig = refs.get("signature")
+            if sig:
+                return self.type_ref("delegate", sig, "Delegate", kind)
             return self.todo_named("Delegate", entry.get("name"))
         return self.todo_named("Kind%s" % kind, entry.get("name"))
 
@@ -239,14 +269,20 @@ def property_specifiers(entry):
     return specs
 
 
-def build_members(props, resolver, promote=False):
+def build_members(props, resolver, promote=False, struct_mode=False):
+    """struct_mode: members of a USTRUCT. A wire-custom member type does not skip a struct member, because a
+    struct's NetSerialize is the one that changes the wire, and the struct itself is then skipped where it is used."""
     members = []
     seen = set()
     pairs, notes = split_properties(props)
     for index, (entry, children) in enumerate(pairs):
         mark = len(resolver.tokens)
+        resolver.wire_used = False
+        resolver.used = {}
         ctype = resolver.ctype(entry, children)
         new_tokens = resolver.tokens[mark:]
+        wire = resolver.wire_used
+        used = resolver.used
         bitfield = entry.get("kind") == "Bool" and bool(entry.get("bitfield"))
         dim = int(entry.get("array_dim") or 1)
         name = entry.get("name") or "UnnamedProperty%d" % index
@@ -255,6 +291,13 @@ def build_members(props, resolver, promote=False):
             if new_tokens:
                 resolver.skipped.append(skip_record("property", entry, name, category_of(new_tokens),
                                                     "unresolved type: " + ", ".join(sorted(set(new_tokens))), new_tokens))
+                continue
+            if wire and not struct_mode and hx(entry.get("property_flags")) & CPF_NET:
+                # A replicated property whose struct serializes with a custom NetSerialize (body not recovered):
+                # the default serializer would write different bits, so the property is not emitted.
+                resolver.skipped.append(skip_record("property", entry, name, "struct_custom_netserialize",
+                                                    "replicated struct with a custom NetSerialize (body not recovered)",
+                                                    []))
                 continue
             if name in seen:
                 resolver.skipped.append(skip_record("property", entry, name, "duplicate_name",
@@ -281,6 +324,8 @@ def build_members(props, resolver, promote=False):
             "replicated": bool(flags & CPF_NET),
             "rep_notify": entry.get("rep_notify"),
             "specifiers": property_specifiers(entry),
+            "used": used,
+            "offset": entry.get("offset"),
         })
     return members, notes
 
@@ -739,6 +784,75 @@ SELF_TEST_TYPES = {"0x2000": "UObject", "0x2100": "AActor", "0x2200": "ENetRole"
                    "0x2400": "FVector", "0x2500": "UClass", "0x2600": "UClass"}
 
 
+def types_self_test(check):
+    """Checks for the struct, enum and delegate machinery (synthetic records; no files are read)."""
+    # Include spelling from a header path.
+    check("include path after Public", include_path("/e/Source/Runtime/Core/Public/Math/Vector.h") == "Math/Vector.h")
+    check("include path after Classes", include_path("/e/Source/Runtime/Engine/Classes/Engine/X.h") == "Engine/X.h")
+    check("include path needs a module directory", include_path("/e/Source/Other/X.h") is None)
+    # Struct rendering: declaration order, parent, USTRUCT, UPROPERTY on every member.
+    member = lambda decl, table, off: {"decl": decl, "table_index": table, "offset": off, "property_flags": "0x0"}
+    struct_model = {"cpp_name": "FSelfTest", "parent": "FParentStruct", "parent_include": "Engine/Parent.h",
+                    "includes": ["Math/Vector.h", "Engine/Parent.h"], "forward_decls": ["AActor"],
+                    "members": [member("int32 A;", 1, 0), member("FVector B;", 0, 8)]}
+    text = render_struct_header(struct_model, "self-test")
+    check("struct: USTRUCT and parent", "USTRUCT()\nstruct FSelfTest : public FParentStruct" in text)
+    check("struct: declaration order kept", text.index("int32 A;") < text.index("FVector B;"))
+    check("struct: UPROPERTY per member", text.count("UPROPERTY()") == 2)
+    check("struct: includes and generated header", '#include "Math/Vector.h"' in text and "FSelfTest.generated.h" in text)
+    check("struct: forward declaration of a class reference", "class AActor;" in text)
+    # Enum rendering: enum class, namespaced (Namespace::Type) and regular.
+    enum_class = render_enum_header({"cpp_name": "ELabel", "form": "EnumClass", "values": [("A", 0), ("B", 3)]}, "t")
+    check("enum class with uint8", "enum class ELabel : uint8" in enum_class and "B = 3," in enum_class)
+    namespaced = render_enum_header({"cpp_name": "ENs::Type", "form": "Namespaced", "values": [("X", 1)]}, "t")
+    check("namespaced enum", "namespace ENs" in namespaced and "enum Type" in namespaced and "X = 1," in namespaced)
+    check("namespaced enum includes its namespace header", '#include "ENs.generated.h"' in namespaced)
+    regular = render_enum_header({"cpp_name": "ERegular", "form": "Regular", "values": [("R", 0)]}, "t")
+    check("regular enum", "enum ERegular\n{" in regular)
+    # Delegate rendering: macro by arity and kind.
+    params = [("int32", "A"), ("FString", "B")]
+    text = render_delegate_header({"cpp_name": "FOnSelfTest", "params": params, "includes": []}, "multicast", "t")
+    check("delegate macro: two params",
+          "DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnSelfTest, int32, A, FString, B);" in text)
+    text = render_delegate_header({"cpp_name": "FSingle", "params": [], "includes": []}, "single", "t")
+    check("delegate macro: no params", "DECLARE_DYNAMIC_DELEGATE(FSingle);" in text)
+    text = render_delegate_header({"cpp_name": "FSparse", "params": [("int32", "A")], "includes": []}, "sparse", "t")
+    check("delegate macro: sparse one param", "DECLARE_DYNAMIC_MULTICAST_SPARSE_DELEGATE_OneParam(FSparse, int32, A);" in text)
+    check("delegate kind: single unless multicast flag",
+          delegate_macro_kind({"multicast": False}, {"InlineMulticastDelegate"}) == "single")
+    check("delegate kind: sparse when a sparse property uses it",
+          delegate_macro_kind({"multicast": True}, {"SparseMulticastDelegate"}) == "sparse")
+    check("delegate kind: multicast by default", delegate_macro_kind({"multicast": True}, {"InlineMulticastDelegate"}) == "multicast")
+    # Gate categories for the new skip tokens.
+    check("category: struct unavailable", category_of(["TODO_StructUnavailable_1234"]) == "struct_not_available")
+    check("category: struct not emittable", category_of(["TODO_StructNotEmittable_1234"]) == "struct_member_unresolved")
+    check("category: delegate params", category_of(["TODO_DelegateParams_1234"]) == "delegate_params_unsupported")
+    check("category: enum other module", category_of(["TODO_EnumOtherModule_1"]) == "enum_other_module")
+    check("category: plain struct unchanged", category_of(["TODO_Struct_1234"]) == "struct")
+    # Wire-custom propagation: a Fort struct with a custom serializer taints the structs that contain it; an engine
+    # struct with a custom serializer does not (its NetSerialize is engine code).
+    def fake_info(kind, fn, name, package, traits=None, props=()):
+        rec = {"name": name, "properties": list(props), "struct_ops": {"traits": traits or {}}}
+        return TypeInfo(kind, fn, rec, "F" + name, package, "F%s.h" % name)
+    tables = TypeTables.__new__(TypeTables)
+    custom = fake_info("struct", "0x1", "Custom", "/Script/FortniteGame", {"HasNetSerializer": True})
+    outer = fake_info("struct", "0x2", "Outer", "/Script/FortniteGame", {},
+                      [{"type_refs": {"struct": "0x1"}, "kind": "Struct", "name": "C"}])
+    engine = fake_info("struct", "0x3", "EngineCustom", "/Script/Engine", {"HasNetSerializer": True})
+    plain = fake_info("struct", "0x4", "Plain", "/Script/FortniteGame", {})
+    tables.by_fn = {i.fn: i for i in (custom, outer, engine, plain)}
+    gate = TypeGate(tables, EngineTypeIndex(os.devnull), None)
+    check("wire: custom serializer", gate.wire_custom(custom) is True)
+    check("wire: containing struct inherits", gate.wire_custom(outer) is True)
+    check("wire: engine custom serializer not counted", gate.wire_custom(engine) is False)
+    check("wire: plain struct", gate.wire_custom(plain) is False)
+    # Resolver: without a gate a known type name is used as is; an unknown one is a TODO token.
+    res = Resolver({"0x9": "ENetRole"})
+    check("type_ref without gate", res.type_ref("enum", "0x9", "Enum") == "ENetRole")
+    check("type_ref unknown is a token", res.type_ref("struct", "0x77", "Struct").startswith("TODO_Struct_"))
+    check("engine type index on a missing root is empty", EngineTypeIndex("/nonexistent/engine").lookup("struct", "FVector") is None)
+
+
 def self_test():
     failures = []
     count = [0]
@@ -829,6 +943,7 @@ def self_test():
     check("no replication mismatch on common names", result["replication_mismatches"] == 0)
     check("no net-role mismatch on common UFUNCTION", result["net_role_mismatches"] == 0)
     check("reversed declaration order detected as mismatch", result["order_match"] is False)
+    types_self_test(check)
     if failures:
         print("SELF-TEST FAILED:", *failures, sep="\n  ")
         return 1
@@ -848,9 +963,27 @@ ENGINE_CLASS_DECL_RE = re.compile(
     r"^\s*class\s+(?:[A-Z][A-Z0-9_]*_API\s+)?([AU][A-Za-z0-9_]*)\s*(?:final\s*)?:\s*public\b", re.M)
 
 
+# Gate tokens written by Resolver.type_ref / TypeGate.check: TODO_<Kind><Reason>_<fn>.
+GATE_CATEGORIES = (
+    ("TODO_StructOtherModule_", "struct_other_module"),
+    ("TODO_StructUnavailable_", "struct_not_available"),
+    ("TODO_StructNotEmittable_", "struct_member_unresolved"),
+    ("TODO_EnumOtherModule_", "enum_other_module"),
+    ("TODO_EnumUnavailable_", "enum_not_available"),
+    ("TODO_EnumNotEmittable_", "enum_member_unresolved"),
+    ("TODO_DelegateOtherModule_", "delegate_other_module"),
+    ("TODO_DelegateUnavailable_", "delegate_not_available"),
+    ("TODO_DelegateNotEmittable_", "delegate_member_unresolved"),
+    ("TODO_DelegateParams_", "delegate_params_unsupported"),
+)
+
+
 def category_of(tokens):
     """Report category for the first TODO token (sorted), so skips group by what blocked them."""
     for token in sorted(tokens):
+        for prefix, category in GATE_CATEGORIES:
+            if token.startswith(prefix):
+                return category
         if token.startswith("TODO_ClassOutsideNativeSet_"):
             return "class_outside_native_set"
         if token.startswith(("TODO_Class_", "TODO_MetaClass_", "TODO_SoftClass_")):
@@ -951,12 +1084,19 @@ def build_functions_promoted(functions, resolver, notify_names, owner_fns):
             resolver.skipped.append(skip_function(fn, "params_not_decoded", problem))
             continue
         mark = len(resolver.tokens)
+        resolver.wire_used = False
+        resolver.used = {}
         ret, args = decode_params(params, resolver)
+        used = resolver.used
         new_tokens = resolver.tokens[mark:]
         if new_tokens:
             resolver.skipped.append(skip_function(fn, category_of(new_tokens),
                                                   "unresolved parameter type: " + ", ".join(sorted(set(new_tokens))),
                                                   new_tokens))
+            continue
+        if is_rpc and resolver.wire_used:
+            resolver.skipped.append(skip_function(fn, "struct_custom_netserialize",
+                                                  "RPC parameter struct with a custom NetSerialize (body not recovered)"))
             continue
         if ret != "void":
             resolver.skipped.append(skip_function(fn, "non_void_return", "return type %s is not emitted" % ret))
@@ -964,7 +1104,7 @@ def build_functions_promoted(functions, resolver, notify_names, owner_fns):
         if is_rpc:
             args = [rpc_arg(arg) for arg in args]
         emitted.append({"name": name, "rpc": is_rpc,
-                        "specifiers": function_specifiers(flags) if is_rpc else [], "args": args})
+                        "specifiers": function_specifiers(flags) if is_rpc else [], "args": args, "used": used})
     return emitted
 
 
@@ -993,6 +1133,7 @@ def build_class_promoted(block, name, resolver, parent_entry, owner_fns):
         "members_decl_order": list(reversed(members)),
         "functions": functions,
         "forward_decls": sorted(ref for ref in resolver.class_refs if ref not in (name, parent)),
+        "used": merge_used([m["used"] for m in members] + [f["used"] for f in functions]),
         "skipped": list(resolver.skipped),
         "functions_in_table": len(block.get("functions") or []),
         "rpc_in_reflection": sum(1 for f in (block.get("functions") or [])
@@ -1014,6 +1155,10 @@ def render_promoted_header(model, api, parent_include, source_label):
         "#include \"%s\"" % parent_include,
         "",
     ]
+    for inc in model.get("includes", []):
+        lines.append("#include \"%s\"" % inc)
+    if model.get("includes"):
+        lines.append("")
     lines.extend("class %s;" % ref for ref in model["forward_decls"])
     if model["forward_decls"]:
         lines.append("")
@@ -1167,16 +1312,26 @@ def promote(args):
         known.add(ref.lower())
         if name in listed or (parents.get(block.lower()) or {}).get("package") in ENGINE_PACKAGES:
             type_map[ref.lower()] = name
+    # Struct, enum and delegate types (porting/extract_types.py): names for the type map, and the gate.
+    tables = TypeTables(args.types_dir or os.path.dirname(args.reflection))
+    for fn, info in tables.by_fn.items():
+        type_map.setdefault(fn, info.cpp_name)
     resolver = Resolver(type_map, known_fns=known)
+    gate = TypeGate(tables, EngineTypeIndex(args.engine_root), resolver)
+    resolver.gate = gate
     engine_index = build_engine_header_index(args.engine_classes)
     source_label = os.path.relpath(args.reflection, REPO)
 
     index = []
     all_skipped = []
+    class_models = []
     for name in class_list:
         block = name_to_block[name]
         owner_fns = set(evidence_fns.get(block, []))
+        gate.current_package = parents[block].get("package")
         model = build_class_promoted(blocks_by_va[block], name, resolver, parents[block], owner_fns)
+        model["includes"] = sorted({gate.include_of(f) for f in model["used"]} - {None})
+        class_models.append(model)
         parent = model["parent"]
         if parent in listed:
             parent_include = "%s.h" % parent
@@ -1220,12 +1375,54 @@ def promote(args):
             "forward_declarations": len(model["forward_decls"]),
         })
 
+    # Closure: every promoted struct, enum and delegate used by an emitted member or RPC, transitively.
+    seeds = {}
+    for model in class_models:
+        for fn, kinds in model["used"].items():
+            seeds.setdefault(fn, set()).update(kinds)
+    models, texts, all_used = emit_types(gate, seeds, source_label)
+    type_files = []
+    for fn, model in sorted(models.items(), key=lambda kv: (kv[1]["kind"], kv[1]["cpp_name"])):
+        info = gate.info(fn)
+        text = texts[info.header_name]
+        if "TODO" in text:
+            raise SystemExit("%s: unresolved TODO token reached the output" % info.cpp_name)
+        out_dir = os.path.join(args.source_root, info.module, "Generated")
+        os.makedirs(out_dir, exist_ok=True)
+        with open(os.path.join(out_dir, info.header_name), "w", encoding="utf-8", newline="\n") as fh:
+            fh.write(text)
+        type_files.append({"type": info.cpp_name, "kind": info.kind, "package": info.package,
+                           "header": info.header_name, "members_or_values": len(model.get("members") or model.get("values")
+                           or model.get("params") or []),
+                           "wire_custom": bool(info.kind == "struct" and gate.wire_custom(info)),
+                           "struct_flags": model.get("flags"), "struct_ops": model.get("struct_ops")})
+    engine_used = []
+    for fn, kinds in sorted(all_used.items()):
+        info = gate.info(fn)
+        if info is not None and info.package not in PROMOTE_PACKAGES:
+            engine_used.append({"type": info.cpp_name, "kind": info.kind, "package": info.package,
+                                "include": gate.include_of(fn)})
+    not_emittable = []
+    for fn, reason in sorted(gate.reasons.items()):
+        info = gate.info(fn)
+        if info is not None and info.package in PROMOTE_PACKAGES:
+            not_emittable.append({"type": info.cpp_name, "kind": info.kind, "package": info.package, "reason": reason})
+    type_summary = {
+        "structs_emitted": sum(1 for t in type_files if t["kind"] == "struct"),
+        "enums_emitted": sum(1 for t in type_files if t["kind"] == "enum"),
+        "delegates_emitted": sum(1 for t in type_files if t["kind"] == "delegate"),
+        "wire_custom_structs_emitted": sum(1 for t in type_files if t["wire_custom"]),
+        "engine_types_included": len(engine_used),
+        "promoted_types_not_emittable": len(not_emittable),
+    }
+
     props = [r for r in all_skipped if r["item"] == "property"]
     funcs = [r for r in all_skipped if r["item"] == "function"]
     notify = [r for r in all_skipped if r["item"] == "rep_notify"]
     for record in props:
         record["property"] = record.pop("name")
     summary = {
+        "types": type_summary,
         "classes": len(class_list),
         "properties_total": sum(r["properties_total"] for r in index),
         "properties_emitted": sum(r["properties_emitted"] for r in index),
@@ -1249,9 +1446,429 @@ def promote(args):
     with open(os.path.join(args.report_dir, "native_classes_index.json"), "w", encoding="utf-8", newline="\n") as fh:
         json.dump({"summary": summary, "classes": index}, fh, indent=1)
         fh.write("\n")
+    with open(os.path.join(args.report_dir, "type_closure.json"), "w", encoding="utf-8", newline="\n") as fh:
+        json.dump({"summary": type_summary, "emitted": type_files, "engine_types": engine_used,
+                   "not_emittable": not_emittable}, fh, indent=1)
+        fh.write("\n")
     print(json.dumps(summary, indent=1))
     print("promoted %d classes into %s" % (len(index), args.source_root), file=sys.stderr)
     return 0
+
+
+# ---------------------------------------------------------------- struct, enum and delegate types (promote)
+# The closure of types used by the promoted classes. Inputs: porting/extract_types.py output (struct_blocks.json,
+# enum_blocks.json, delegate_blocks.json, construct_fn_to_block.json). Engine types (not in PROMOTE_PACKAGES) are
+# referenced by name and included from the engine tree (EngineTypeIndex). Promoted types are emitted into the
+# module's Generated directory, one header per type.
+
+WIRE_CUSTOM_TRAITS = ("HasNetSerializer", "HasNetDeltaSerializer", "HasNetSharedSerialization")
+DELEGATE_MACRO = {"single": "DECLARE_DYNAMIC_DELEGATE", "multicast": "DECLARE_DYNAMIC_MULTICAST_DELEGATE",
+                  "sparse": "DECLARE_DYNAMIC_MULTICAST_SPARSE_DELEGATE"}
+PARAM_ORDINALS = ("", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine")
+TYPE_DECL_RE = {
+    "struct": re.compile(r"^\s*struct\s+(?:[A-Z][A-Z0-9_]*_API\s+)?(F[A-Za-z0-9_]+)\b[^;]*$", re.M),
+    "enum": re.compile(r"^\s*enum\s+(?:class\s+|struct\s+)?(E[A-Za-z0-9_]+)\b[^;]*$", re.M),
+    "delegate": re.compile(r"\bDECLARE_(?:DYNAMIC_)?(?:MULTICAST_)?(?:SPARSE_)?DELEGATE\w*\(\s*(F[A-Za-z0-9_]+)"),
+}
+ENGINE_ROOT_DEFAULT = os.environ.get("FN_ENGINE_ROOT", "/opt/fortnite/UnrealEngine/Engine")
+ENGINE_SCAN_DIRS = ("Source/Runtime", "Plugins/Runtime", "Plugins/Developer", "Source/Developer")
+KIND_LABEL = {"struct": "Struct", "enum": "Enum", "delegate": "Delegate"}
+
+
+def include_path(path):
+    """Include spelling for a header: the part after its module's Public or Classes directory."""
+    best = None
+    for marker in ("/Public/", "/Classes/"):
+        at = path.rfind(marker)
+        if at >= 0 and (best is None or at > best[0]):
+            best = (at, marker)
+    if best is None:
+        return None
+    return path[best[0] + len(best[1]):].replace(os.sep, "/")
+
+
+class EngineTypeIndex:
+    """First declaration of each struct (F...), enum (E...) and delegate type in the engine tree, Runtime first."""
+
+    def __init__(self, root):
+        self.index = {"struct": {}, "enum": {}, "delegate": {}}
+        self.files = 0
+        if not os.path.isdir(root):
+            return
+        for sub in ENGINE_SCAN_DIRS:
+            base = os.path.join(root, sub)
+            if not os.path.isdir(base):
+                continue
+            for dirpath, dirnames, filenames in os.walk(base):
+                dirnames[:] = sorted(d for d in dirnames if d not in ("Intermediate", "Binaries", "Content"))
+                for filename in sorted(filenames):
+                    if not filename.endswith(".h"):
+                        continue
+                    path = os.path.join(dirpath, filename)
+                    inc = include_path(path)
+                    if inc is None:
+                        continue
+                    with open(path, "r", encoding="utf-8", errors="replace") as fh:
+                        text = fh.read()
+                    self.files += 1
+                    for kind, rx in TYPE_DECL_RE.items():
+                        for match in rx.finditer(text):
+                            self.index[kind].setdefault(match.group(1), inc)
+
+    def lookup(self, kind, cpp_name):
+        return self.index[kind].get(cpp_name)
+
+
+class TypeInfo:
+    def __init__(self, kind, fn, rec, cpp_name, package, header_name):
+        self.kind = kind
+        self.fn = fn
+        self.rec = rec
+        self.cpp_name = cpp_name
+        self.package = package
+        self.header_name = header_name
+        self.module = package.rsplit("/", 1)[-1] if package else None
+
+
+class TypeTables:
+    """Struct, enum and delegate records keyed by their construct function (lower-case 0x address)."""
+
+    def __init__(self, types_dir):
+        cmap = load_json(os.path.join(types_dir, "construct_fn_to_block.json"))["map"]
+        recs = {
+            "struct": {r["block_va"].lower(): r for r in load_json(os.path.join(types_dir, "struct_blocks.json"))["structs"]},
+            "enum": {r["block_va"].lower(): r for r in load_json(os.path.join(types_dir, "enum_blocks.json"))["enums"]},
+            "delegate": {r["block_va"].lower(): r for r in load_json(os.path.join(types_dir, "delegate_blocks.json"))["delegates"]},
+        }
+        self.by_fn = {}
+        for fn, hit in cmap.items():
+            kind, block = hit["kind"], hit["block_va"].lower()
+            fn = fn.lower()
+            rec = recs.get(kind, {}).get(block)
+            if rec is None:
+                continue
+            if kind == "struct":
+                cpp, package = "F" + rec["name"], rec.get("package")
+            elif kind == "enum":
+                # A namespaced enum is named Namespace::Type in C++; its header is named for the namespace.
+                cpp, package = rec["name"], rec.get("package")
+                header = cpp.split("::")[0] + ".h"
+            else:
+                cpp, package = rec["type_name"], rec.get("package")
+            if kind != "enum":
+                header = cpp + ".h"
+            self.by_fn[fn] = TypeInfo(kind, fn, rec, cpp, package, header)
+
+
+class TypeGate:
+    """Decides whether a struct, enum or delegate type reference can be emitted, and builds its model.
+
+    check() is called by Resolver.type_ref. A promoted type is usable when it is in the current module and its
+    model builds (every member type resolves). An engine type is usable when its header is in the engine tree.
+    Models are memoized, so a type is built once however many items use it."""
+
+    def __init__(self, tables, engine_index, base):
+        self.tables = tables
+        self.engine = engine_index
+        self.base = base            # the promote-mode Resolver (type map, known functions); forked for checks
+        self.current_package = None
+        self.models = {}            # fn -> model dict, or None when the type cannot be emitted
+        self.reasons = {}           # fn -> reason string when the type cannot be emitted
+        self._wire = {}
+
+    def info(self, fn):
+        return self.tables.by_fn.get(fn.lower()) if fn else None
+
+    def include_of(self, fn):
+        info = self.info(fn)
+        if info is None:
+            return None
+        if info.package in PROMOTE_PACKAGES:
+            return info.header_name
+        return self.engine.lookup(info.kind, info.cpp_name)
+
+    def check(self, resolver, kind, fn, name, entry_kind):
+        info = self.info(fn)
+        label = KIND_LABEL[kind]
+        if info is None:
+            return resolver.todo(label + "Unknown", fn)
+        resolver.used.setdefault(info.fn, set()).add(entry_kind or "")
+        if info.package in PROMOTE_PACKAGES:
+            if info.package != self.current_package:
+                return resolver.todo(label + "OtherModule", fn)
+            if self.reason(info) is not None:
+                return resolver.todo(label + "NotEmittable", fn)
+            if kind == "struct" and self.wire_custom(info):
+                resolver.wire_used = True
+            return info.cpp_name
+        if self.include_of(info.fn) is None:
+            return resolver.todo(label + "Unavailable", fn)
+        return info.cpp_name
+
+    def reason(self, info):
+        """None when the type can be emitted, else why not."""
+        if info.fn in self.models:
+            return self.reasons.get(info.fn)
+        if info.kind == "struct":
+            model, reason = self.build_struct(info)
+        elif info.kind == "enum":
+            model, reason = self.build_enum(info)
+        else:
+            model, reason = self.build_delegate(info)
+        self.models[info.fn] = model
+        if reason is not None:
+            self.reasons[info.fn] = reason
+        return reason
+
+    def model(self, info):
+        """The emitted model (only after reason() returned None)."""
+        self.reason(info)
+        return self.models[info.fn]
+
+    def _child(self, info):
+        child = self.base.fork()
+        child.gate = self
+        return child
+
+    def build_struct(self, info):
+        saved = self.current_package
+        self.current_package = info.package
+        try:
+            child = self._child(info)
+            reason = None
+            if any("error" in p for p in info.rec["properties"]):
+                reason = "unreadable property record"
+            parent = None
+            if reason is None and info.rec.get("super_fn"):
+                parent = child.ctype({"kind": "Struct", "type_refs": {"struct": info.rec["super_fn"]}}, {})
+                if child.tokens:
+                    reason = "parent struct unresolved (%s)" % ", ".join(sorted(set(child.tokens)))
+            members = []
+            if reason is None:
+                members, _notes = build_members(info.rec["properties"], child, promote=True, struct_mode=True)
+                if child.skipped:
+                    first = child.skipped[0]
+                    reason = "member %s: %s" % (first.get("name"), first.get("reason"))
+            if reason is not None:
+                return None, reason
+            # Declaration order: the table lists members in reverse declaration order (see build_class).
+            decl = list(reversed(members))
+            # The parent is a use too: its header is included and, when promoted, emitted (see emit_types).
+            parent_used = {info.rec["super_fn"].lower(): {""}} if info.rec.get("super_fn") else {}
+            model = {"fn": info.fn, "cpp_name": info.cpp_name, "kind": "struct", "package": info.package,
+                     "parent": parent, "members": decl,
+                     "used": merge_used([m["used"] for m in members] + [parent_used]),
+                     "forward_decls": sorted(child.class_refs - {info.cpp_name, parent}),
+                     "flags": info.rec.get("struct_flag_names", []), "size": info.rec.get("size"),
+                     "align": info.rec.get("align"), "struct_ops": info.rec.get("struct_ops")}
+            return model, None
+        finally:
+            self.current_package = saved
+
+    def build_enum(self, info):
+        rec = info.rec
+        values, seen = [], set()
+        for item in rec["enumerators"]:
+            ident = (item.get("name") or "").split("::")[-1]
+            if not re.match(r"^[A-Za-z_][A-Za-z0-9_]*$", ident) or ident in seen:
+                return None, "enumerator name %r" % item.get("name")
+            seen.add(ident)
+            values.append((ident, int(item["value"])))
+        if not values:
+            return None, "no enumerators"
+        model = {"fn": info.fn, "cpp_name": info.cpp_name, "kind": "enum", "package": info.package,
+                 "form": rec.get("cpp_form"), "values": values, "used": {}}
+        return model, None
+
+    def build_delegate(self, info):
+        saved = self.current_package
+        self.current_package = info.package
+        try:
+            child = self._child(info)
+            reason, args = None, []
+            pairs, _notes = split_properties(info.rec.get("params") or [])
+            for entry, children in pairs:
+                if "error" in entry:
+                    reason = "unreadable parameter record"
+                    break
+                pf = hx(entry.get("property_flags"))
+                if pf & (CPF_RETURN_PARM | CPF_OUT_PARM | CPF_REFERENCE_PARM):
+                    reason = "return, out or reference parameter"
+                    break
+                args.append((child.ctype(entry, children), entry.get("name") or "Param%d" % len(args)))
+            if reason is None and len(args) > 9:
+                reason = "more than nine parameters"
+            if reason is None and child.tokens:
+                reason = "parameter type unresolved (%s)" % ", ".join(sorted(set(child.tokens)))
+            if reason is not None:
+                return None, reason
+            model = {"fn": info.fn, "cpp_name": info.cpp_name, "kind": "delegate", "package": info.package,
+                     "params": args, "used": merge_used([child.used]),
+                     "multicast": bool(info.rec.get("multicast"))}
+            return model, None
+        finally:
+            self.current_package = saved
+
+    def wire_custom(self, info):
+        """A struct whose serialization is custom (NetSerialize, NetDeltaSerialize or shared serialization), or that
+        contains one. Engine structs are not counted: their NetSerialize is engine code, not recovered here."""
+        if info.fn in self._wire:
+            return self._wire[info.fn]
+        self._wire[info.fn] = False
+        value = False
+        if info.package in PROMOTE_PACKAGES and info.kind == "struct":
+            traits = (info.rec.get("struct_ops") or {}).get("traits") or {}
+            value = any(traits.get(t) is True for t in WIRE_CUSTOM_TRAITS)
+            if not value:
+                for p in info.rec["properties"]:
+                    fn = (p.get("type_refs") or {}).get("struct")
+                    sub = self.info(fn)
+                    if sub is not None and sub.package in PROMOTE_PACKAGES and self.wire_custom(sub):
+                        value = True
+                        break
+        self._wire[info.fn] = value
+        return value
+
+
+def merge_used(dicts):
+    out = {}
+    for d in dicts:
+        for fn, kinds in (d or {}).items():
+            out.setdefault(fn, set()).update(kinds)
+    return out
+
+
+def delegate_macro_kind(model, kinds):
+    """single (DECLARE_DYNAMIC_DELEGATE), multicast or sparse, from the flags and the property kinds that use it."""
+    if not model["multicast"]:
+        return "single"
+    return "sparse" if "SparseMulticastDelegate" in kinds else "multicast"
+
+
+def render_struct_header(model, source_label):
+    name = model["cpp_name"]
+    lines = [
+        "// Generated by porting/gen_native_classes.py --promote from %s." % source_label,
+        "// Do not edit by hand: run porting/promote_native_classes.sh. Members are in declaration order (offsets",
+        "// ascending). A struct with a custom NetSerialize is emitted here only when it is not replicated.",
+        "#pragma once",
+        "",
+        "#include \"CoreMinimal.h\"",
+    ]
+    if model.get("parent_include"):
+        lines.append("#include \"%s\"" % model["parent_include"])
+    for inc in model.get("includes", []):
+        if inc != model.get("parent_include"):
+            lines.append("#include \"%s\"" % inc)
+    lines.append("")
+    lines.extend("class %s;" % ref for ref in model["forward_decls"])
+    if model["forward_decls"]:
+        lines.append("")
+    lines.append("#include \"%s.generated.h\"" % name)
+    lines.append("")
+    lines.append("USTRUCT()")
+    lines.append("struct %s%s" % (name, " : public %s" % model["parent"] if model["parent"] else ""))
+    lines.append("{")
+    lines.append("\tGENERATED_BODY()")
+    lines.append("")
+    for m in model["members"]:
+        lines.append("\t// table index %s, offset %s, flags %s" % (m["table_index"], m["offset"], m["property_flags"]))
+        lines.append("\tUPROPERTY()")
+        lines.append("\t%s" % m["decl"])
+        lines.append("")
+    lines.append("};")
+    lines.append("")
+    return "\n".join(lines) + "\n"
+
+
+def render_enum_header(model, source_label):
+    """EnumClass: UENUM() enum class E : uint8. Namespaced: UENUM() namespace N { enum Type }. Regular: UENUM() enum E."""
+    name = model["cpp_name"]
+    namespace, _sep, type_name = name.partition("::")
+    lines = [
+        "// Generated by porting/gen_native_classes.py --promote from %s." % source_label,
+        "// Do not edit by hand: run porting/promote_native_classes.sh. Values come from the exe. Enumerator names",
+        "// have the EnumName:: prefix removed. The underlying type of a UENUM is uint8 (UHT rule, not in the exe).",
+        "#pragma once",
+        "",
+        "#include \"CoreMinimal.h\"",
+        "#include \"%s.generated.h\"" % namespace,
+        "",
+        "UENUM()",
+    ]
+    if model["form"] == "Namespaced" and type_name:
+        lines += ["namespace %s" % namespace, "{", "\tenum %s" % type_name, "\t{"]
+        indent = "\t\t"
+        closing = ["\t};", "}"]
+    else:
+        lines.append("enum class %s : uint8" % name if model["form"] == "EnumClass" else "enum %s" % name)
+        lines.append("{")
+        indent = "\t"
+        closing = ["};"]
+    for ident, value in model["values"]:
+        lines.append("%s%s = %d," % (indent, ident, value))
+    lines.extend(closing)
+    lines.append("")
+    return "\n".join(lines) + "\n"
+
+
+def render_delegate_header(model, macro_kind, source_label):
+    name = model["cpp_name"]
+    args = model["params"]
+    n = len(args)
+    if n == 0:
+        macro = "%s(%s);" % (DELEGATE_MACRO[macro_kind], name)
+    else:
+        macro = "%s_%sParam%s(%s);" % (DELEGATE_MACRO[macro_kind], PARAM_ORDINALS[n], "" if n == 1 else "s",
+                                      ", ".join([name] + ["%s, %s" % (t, a) for t, a in args]))
+    lines = [
+        "// Generated by porting/gen_native_classes.py --promote from %s." % source_label,
+        "// Do not edit by hand: run porting/promote_native_classes.sh. The type name is the signature name without",
+        "// its __DelegateSignature suffix, with the F prefix (the name the property table does not give).",
+        "#pragma once",
+        "",
+        "#include \"CoreMinimal.h\"",
+    ]
+    for inc in model.get("includes", []):
+        lines.append("#include \"%s\"" % inc)
+    lines.append("")
+    lines.append(macro)
+    lines.append("")
+    return "\n".join(lines) + "\n"
+
+
+def emit_types(gate, seeds, source_label):
+    """Models and header texts for every promoted type reachable from seeds (fn -> used kinds). Engine types are
+    not emitted. Returns (models by fn, texts by header name, all used kinds by fn)."""
+    models = {}
+    all_used = {}
+    queue = list(seeds.items())
+    while queue:
+        fn, kinds = queue.pop()
+        info = gate.info(fn)
+        if info is None:
+            continue
+        all_used.setdefault(info.fn, set()).update(kinds)
+        if info.package not in PROMOTE_PACKAGES or info.fn in models:
+            continue
+        model = gate.model(info)
+        model["includes"] = sorted({gate.include_of(f) for f in model["used"]} - {None})
+        if info.kind == "struct" and model["parent"] is not None:
+            parent_fn = info.rec.get("super_fn")
+            model["parent_include"] = gate.include_of(parent_fn) if parent_fn else None
+        models[info.fn] = model
+        queue.extend(model["used"].items())
+    texts = {}
+    for fn, model in models.items():
+        info = gate.info(fn)
+        if info.kind == "struct":
+            texts[info.header_name] = render_struct_header(model, source_label)
+        elif info.kind == "enum":
+            texts[info.header_name] = render_enum_header(model, source_label)
+        else:
+            macro_kind = delegate_macro_kind(model, all_used.get(info.fn, set()))
+            texts[info.header_name] = render_delegate_header(model, macro_kind, source_label)
+    return models, texts, all_used
 
 
 def load_json(path):
@@ -1282,6 +1899,11 @@ def main(argv=None):
     ap.add_argument("--source-root", default=None, help="--promote: native/Source directory")
     ap.add_argument("--report-dir", default=None, help="--promote: where the skip and index reports are written")
     ap.add_argument("--class-ref-map", default=None, help="--promote: class_ref_map.json from resolve_class_refs.py")
+    ap.add_argument("--types-dir", default=None,
+                    help="--promote: directory with struct_blocks.json, enum_blocks.json, delegate_blocks.json and "
+                         "construct_fn_to_block.json (default: the reflection file's directory)")
+    ap.add_argument("--engine-root", default=ENGINE_ROOT_DEFAULT,
+                    help="--promote: UnrealEngine/Engine directory searched for struct, enum and delegate headers")
     args = ap.parse_args(argv)
 
     if args.self_test:

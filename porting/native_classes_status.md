@@ -110,27 +110,47 @@ Three things make the skip counts look worse than they are, and we fixed or expl
 
 ## What blocks wire compatibility
 
-1. **Struct layouts and names.** 281 properties and 70 RPCs use structs. Struct names are not recovered (the name
-   map covers classes only), and struct layouts (including custom `NetSerialize`) are not recovered. Replicated struct
-   skips are concentrated in `AFortGameStateAthena` (15), `AFortPlayerPawn` (13), `AFortGameStateZone` (9) and
-   `AFortPlayerState` (7). Next step: extract `FStructParams` the same way as classes (names from the
-   `Z_Construct_UScriptStruct_*` functions, layout from the field table).
-2. **Enums.** 42 properties and 19 functions use enums (`TEnumAsByte`). Next step: `FEnumParams`, same approach.
-3. **Delegates.** 178 multicast delegate properties have no recovered signatures. They do not replicate, so they
-   matter for the class layout (offsets) but not for the wire. They are still skipped.
-4. **Classes outside the set.** 232 property and 37 RPC references point at named Fort classes that are not in this
-   closure. Those that block replicated properties are `AFortInventory` (3), `AFortTeamInfo` (2),
-   `UCustomColorSwatch` (2), and one each of `AFortLocalizationService`, `AFortVolumeManager`, `AFortAthenaAircraft`,
-   `AFortBroadcastSpectatorInfo`, `AFortSafeZoneIndicator`, `UAthenaBattleBusItemDefinition`,
-   `AFortPropertyOverrideReplShared`, `AFortSpecialActorReplicationInfo`, `UFortCreativeObjectTrackingComponent`,
-   `UCreativeUserContentManager`, `UFortPlaysetItemDefinition`, `AFortAthenaCreativePortal`. Engine classes resolve
-   (for example `UInputComponent` and `UAnimMontage`) and are emitted.
-5. **Lists are partial.** A skipped replicated property changes that class's `ClassChecksum` and the handles after it.
-   A skipped RPC changes the RPC indices of that class.
-6. **Replication conditions.** `DOREPLIFETIME` is used without conditions. The reflection table does not record
+Measured in a preview run of the same generator (`--promote` with `--source-root porting/generated/native_preview/Source`,
+git-ignored; `native/` was not regenerated, so the tables above still describe `native/`). Struct, enum and delegate
+types come from `porting/extract_types.py` (`binary_analysis.md` section 9). Counts are from
+`porting/generated/reflection/native_classes_index.json` and `type_closure.json`.
+
+Preview totals, before and after the types were added: properties emitted 837 of 1,721 becomes 1,220 of 1,721
+(replicated 274 of 445 becomes 349); RPCs emitted 198 of 376 becomes 271 of 376. Of the 884 skipped properties, 383
+are emittable now: 219 struct, 122 delegate and 42 enum. Of the 178 skipped RPCs, 73 are emittable now: 54 struct and 19 enum.
+
+1. **Struct layouts and names (recovered).** 4,512 struct tables with names, parents, sizes and property tables. The
+   struct-typed property skips go from 281 to 62: 59 have a member type that is unresolved (classes outside the set,
+   see item 4), and 3 are replicated structs with a custom NetSerialize whose body is not recovered (`SpawnMachineRepData`,
+   `GameMemberInfoArray`, `DelayedQuickBarActions`). RPCs with struct parameters go from 70 to 16: 14 unresolved member
+   types, 1 custom NetSerialize (`FastSharedReplication`), 1 plugin struct not in the engine tree (`ProcessMcpProfileUpdate`).
+2. **Enums (recovered).** 2,056 enum tables with names and values. Enum-typed property skips go from 42 to 0, and enum RPC
+   skips from 19 to 0. The underlying type is assumed `uint8` (the UHT rule).
+3. **Delegates (recovered as signatures).** 1,515 signature tables. Delegate-property skips go from 178 to 56, which
+   come from 47 delegate types: 39 with a parameter type that is unresolved (41 class references, 7 classes outside the
+   set, 2 structs, 1 enum), and 8 with out, reference or return parameters, which are not emitted. Delegates do not
+   replicate, so they change the class layout only, not the wire.
+4. **Classes outside the set and unnamed classes (not changed).** 232 property and 37 RPC references name classes that are not in
+   this closure. 148 property and 52 RPC references are class refs that `resolve_class_refs.py` does not resolve (296 distinct
+   targets). Those targets are not class-block functions: they are singleton builders that call a helper and reference no
+   class block. These are now the largest block, and they also block the structs and delegates that use them.
+5. **Custom NetSerialize in the closure.** Nine Fort-package structs have a custom `NetSerialize` (`AthenaPawnReplayData`,
+   `CreateBuildingActorData`, `FortAIAttributeReplicationProxy`, `FortAISharedRepMovement`,
+   `FortGameplayAbilityTargetData_SingleTargetHit`, `FortGameplayEffectContext`, `FortRootMotionSource_FallingBoost`,
+   `ReplicatedPhysicsPawnState`, `SharedRepMovement`). A replicated property or RPC that uses one of them, directly or
+   inside another struct, is skipped (category `struct_custom_netserialize`). Engine structs with a custom serializer
+   (for example `FRepMovement`, `FHitResult`, `FGameplayTagContainer`) are emitted by name; their code is the engine's, which
+   is assumed to match 4.25.
+6. **Lists are partial.** A skipped replicated property changes that class's `ClassChecksum` and the handles after it. 96
+   replicated properties are still skipped (was 171). A skipped RPC changes the RPC indices of that class; 105 RPCs are still skipped.
+7. **Replication conditions.** `DOREPLIFETIME` is used without conditions. The reflection table does not record
    `COND_*` lifetime conditions, so a conditional property is sent unconditionally.
-7. **Bodies.** No function bodies and no constructor logic are recovered. Each emitted RPC `_Implementation` and each
+8. **Bodies.** No function bodies and no constructor logic are recovered. Each emitted RPC `_Implementation` and each
    RepNotify is an empty stub. Constructors and default values are whatever the engine base class sets.
+
+Validation of the recovered types against the 4.25 headers (`porting/validate_types.py`): structs 92.8% exact member
+lists, enums 97.2% exact enumerators and values, delegates 99.6% exact parameter counts. The mismatches are mostly
+engine skew between the shipped client and the 4.25 tree.
 
 ## Hand-written classes changed
 

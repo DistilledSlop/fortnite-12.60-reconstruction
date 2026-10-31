@@ -220,6 +220,10 @@ TYPE_REF_FIELDS = {
     "Struct": [("struct", 40)],
     "Enum": [("enum", 40)],
     "Byte": [("enum", 40)],
+    # FDelegatePropertyParams and FMulticastDelegatePropertyParams: SignatureFunctionFunc at 40.
+    "Delegate": [("signature", 40)],
+    "InlineMulticastDelegate": [("signature", 40)],
+    "SparseMulticastDelegate": [("signature", 40)],
 }
 
 

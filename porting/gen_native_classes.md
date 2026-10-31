@@ -110,12 +110,11 @@ about 0.6 s, with no exceptions.
   and will usually emit a TODO parent. Five CoreUObject intrinsic parents
   (UClass, UEnum, UScriptStruct, UPackageMap, UInterface) have no block and stay
   unresolved in the map; their names come from child headers.
-- **Struct layouts.** The struct's own `NetSerialize` and any custom bit format
-  are not recovered. Structs are declared by name, but the generator does not
-  write their definitions, and rep order inside a struct cannot be checked from
-  the table alone.
-- **Delegates.** Delegate signature types (`DECLARE_*_DELEGATE`) are not
-  decoded. Unnamed or unresolved types are `TODO_*`.
+- **Struct layouts.** Recovered by `porting/extract_types.py` (`binary_analysis.md` section 9). Draft mode
+  still writes no struct definitions and keeps unresolved structs as `TODO_*`. The body of a custom
+  `NetSerialize` is not recovered: promote mode skips a replicated use of such a struct.
+- **Delegates.** Signatures are recovered (`delegate_blocks.json`). Draft mode keeps delegate types as
+  `TODO_*`; promote mode emits the `DECLARE_*DELEGATE*` macro for each delegate used.
 - **Map and Set** element types decode when their inner records are present.
   FieldPath properties are `TODO`.
 - **Function signatures.** Parameters use `T&` for out and reference params
@@ -147,5 +146,11 @@ Promote mode differs from the draft in these ways:
   candidate whose `outer_fn` is the class's own construct function (the extractor keeps the candidates).
 - Each emitted RPC gets an `_Implementation` stub (UHT requires it), and each RepNotify gets an empty body.
 - UCLASS has no `minimalapi` (UHT rejects it with the module API macro).
+
+Promote mode also emits the struct, enum and delegate types used by the emitted members and RPCs (transitively), one
+header per type under the module's `Generated` directory (`F<Name>.h` for a struct, the enum or namespace name for an
+enum, `F<DelegateType>.h` for a delegate). Engine types are not emitted; they are included from the engine tree. The
+type tables come from `--types-dir` (default: the reflection directory). `type_closure.json` lists the emitted types,
+the engine types included, and the promoted types that cannot be emitted with the reason.
 
 The draft mode (no `--promote`) is unchanged and still writes `TODO_*` tokens into `porting/generated/native_classes`.
