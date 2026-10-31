@@ -152,7 +152,8 @@ property or RPC that uses one of them, directly or inside another struct, is ski
 4. **Interfaces.** A `UINTERFACE` is generated with no functions. Implemented interfaces are not recovered: the reflection
    records only the count (`interface_count`), so no generated class inherits an `I<Name>` class, and the interface
    UFUNCTIONs are not declared.
-5. **Replication conditions.** `DOREPLIFETIME` is used without conditions. `COND_*` is not recovered.
+5. **Replication conditions.** Recovered for 1,890 of 1,961 properties (`porting/replication_conditions.json`, see
+   `decompilation_notes.md`, "Sixth pass"). The 66 unknown ones are `COND_None` with a TODO.
 6. **Bodies.** No function bodies or constructor logic are recovered. Each emitted RPC `_Implementation` and each RepNotify
    is an empty stub.
 
@@ -231,8 +232,8 @@ Runtime modules round (this section, builds 1 to 6 of 16 used in the round):
    return delegate parameters (`DECLARE_DYNAMIC_*` with `OutParam` variants) and re-check.
 6. **Sparse delegates.** One delegate uses the sparse macro, which needs the owning class and property name. Record
    those in the reflection, then emit the sparse macro.
-7. **Replication conditions and custom NetSerialize.** Recover `COND_*` for `DOREPLIFETIME_CONDITION`, and the 9 custom
-   NetSerialize struct bodies.
+7. **Custom NetSerialize.** The FastArraySerializer structs (45) have their native `NetDeltaSerialize`. The 9 other Fort
+   structs with a custom NetSerialize are declared fallbacks (TODO); their bodies are the next step.
 8. **Checksum parity.** `porting/class_checksum.py` covers only the first 168 entries (`GENERATED_COUNT`; it stops at the
    `# Round 3` line). Lift that limit to report parity for all generated classes.
 9. **Bodies.** Recover function bodies for the RPC and RepNotify stubs, starting with the Athena join path.

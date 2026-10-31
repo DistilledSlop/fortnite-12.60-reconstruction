@@ -39,6 +39,10 @@ import sys
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DEFAULT_REFLECTION = os.path.join(REPO, "porting", "generated", "reflection", "fortnite_game_reflection.json")
 DEFAULT_OUT = os.path.join(REPO, "porting", "generated", "native_classes")
+# Replication conditions per class and property, recovered from the GetLifetimeReplicatedProps registrations (see
+# porting/decompilation_notes.md, "Sixth pass"). Read by --promote only; loaded into REPLICATION_CONDITIONS.
+CONDITIONS_DEFAULT = os.path.join(REPO, "porting", "replication_conditions.json")
+REPLICATION_CONDITIONS = {}
 
 # Parameter order of functions and delegate signatures. The reflection table lists parameters in reverse declaration
 # order (UHT emits its PropPointers from the last parameter back) and the recorded offsets ascend in declaration order
@@ -337,13 +341,9 @@ def build_members(props, resolver, promote=False, struct_mode=False):
                 resolver.skipped.append(skip_record("property", entry, name, category_of(new_tokens),
                                                     "unresolved type: " + ", ".join(sorted(set(new_tokens))), new_tokens))
                 continue
-            if wire and not struct_mode and hx(entry.get("property_flags")) & CPF_NET:
-                # A replicated property whose struct serializes with a custom NetSerialize (body not recovered):
-                # the default serializer would write different bits, so the property is not emitted.
-                resolver.skipped.append(skip_record("property", entry, name, "struct_custom_netserialize",
-                                                    "replicated struct with a custom NetSerialize (body not recovered)",
-                                                    []))
-                continue
+            # A replicated property of a struct with a custom NetSerialize is emitted (wire_custom is recorded on the
+            # member): an FFastArraySerializer struct gets its native NetDeltaSerialize, any other one a declared
+            # fallback (see render_struct_header and porting/decompilation_notes.md, "Sixth pass").
             if name in seen:
                 resolver.skipped.append(skip_record("property", entry, name, "duplicate_name",
                                                     "duplicate property name in the table", []))
@@ -367,6 +367,7 @@ def build_members(props, resolver, promote=False, struct_mode=False):
             "table_index": entry.get("index", index),
             "property_flags": entry.get("property_flags"),
             "replicated": bool(flags & CPF_NET),
+            "wire_custom": bool(wire),
             "rep_notify": entry.get("rep_notify"),
             "specifiers": property_specifiers(entry),
             "used": used,
@@ -908,6 +909,52 @@ def types_self_test(check):
     check("wire: containing struct inherits", gate.wire_custom(outer) is True)
     check("wire: engine custom serializer not counted", gate.wire_custom(engine) is False)
     check("wire: plain struct", gate.wire_custom(plain) is False)
+    # Net serializers: an FFastArraySerializer over its FFastArraySerializerItem array is emitted natively; any other
+    # custom serializer is a declared fallback; no custom trait means no net serializer.
+    fa_parent = fake_info("struct", "0x10", "FastArraySerializer", "/Script/Engine")
+    fa_item_parent = fake_info("struct", "0x12", "FastArraySerializerItem", "/Script/Engine")
+    fa_item = fake_info("struct", "0x11", "Item", "/Script/FortniteGame", {})
+    fa_item.rec["super_fn"] = "0x12"
+    fa_holder = fake_info("struct", "0x13", "Holder", "/Script/FortniteGame", {"HasNetDeltaSerializer": True},
+                          [{"name": "Items", "kind": "Array", "array_dim": 1},
+                           {"name": "Items", "kind": "Struct", "array_inner_of": "Items", "type_refs": {"struct": "0x11"}}])
+    fa_holder.rec["super_fn"] = "0x10"
+    fa_holder.rec["struct_ops"]["vtable_va"] = "0x1459e0000"
+    for extra in (fa_parent, fa_item_parent, fa_item, fa_holder):
+        tables.by_fn[extra.fn] = extra
+    holder_net = gate.net_serializer(fa_holder, [{"name": "Items"}])
+    check("net: FastArraySerializer is a delta serializer", holder_net and holder_net["kind"] == "delta"
+          and holder_net["member"] == "Items" and holder_net["item"] == "FItem")
+    check("net: custom serializer without the array pattern is a fallback",
+          gate.net_serializer(custom, [])["kind"] == "fallback")
+    check("net: no custom trait, no net serializer", gate.net_serializer(plain, []) is None)
+    text = render_struct_header({"cpp_name": "FHolder", "parent": "FFastArraySerializer", "parent_include": None,
+                                 "includes": [], "forward_decls": [], "members": [], "net": holder_net}, "self-test")
+    check("net: delta header declares NetDeltaSerialize and the trait",
+          "FFastArraySerializer::FastArrayDeltaSerialize<FItem, FHolder>(Items, DeltaParms, *this);" in text
+          and "struct TStructOpsTypeTraits<FHolder>" in text and "WithNetDeltaSerializer = true" in text
+          and "Engine/NetSerialization.h" in text)
+    text = render_struct_header({"cpp_name": "FCustom", "parent": None, "parent_include": None, "includes": [],
+                                 "forward_decls": [], "members": [],
+                                 "net": {"kind": "fallback", "traits": ["HasNetSerializer"], "vtable": "0x1",
+                                         "reason": "native HasNetSerializer not recovered"}}, "self-test")
+    check("net: fallback header is marked TODO and declares no trait",
+          "TODO: the native net serializer of FCustom is not recovered" in text
+          and "TStructOpsTypeTraits" not in text)
+    # Replication conditions: a recovered condition is emitted as its macro, an unknown one as COND_None with a TODO.
+    REPLICATION_CONDITIONS.clear()
+    REPLICATION_CONDITIONS.update({"AFakeClass": {"properties": {
+        "Owned": {"condition": "COND_OwnerOnly", "confidence": "high"},
+        "Notify": {"condition": "COND_None", "rep_notify_condition": "REPNOTIFY_Always", "confidence": "medium"},
+        "Unknown": {"condition": "COND_None", "confidence": "unknown"}}}})
+    check("cond: owner only", replication_line("AFakeClass", "Owned")
+          == "\tDOREPLIFETIME_CONDITION(AFakeClass, Owned, COND_OwnerOnly);")
+    check("cond: notify", replication_line("AFakeClass", "Notify").startswith(
+        "\tDOREPLIFETIME_CONDITION_NOTIFY(AFakeClass, Notify, COND_None, REPNOTIFY_Always);"))
+    check("cond: unknown is COND_None with TODO", "TODO: replication condition not recovered" in
+          replication_line("AFakeClass", "Unknown"))
+    REPLICATION_CONDITIONS.clear()
+    check("cond: no data is plain DOREPLIFETIME", replication_line("AFakeClass", "Owned") == "\tDOREPLIFETIME(AFakeClass, Owned);")
     # Resolver: without a gate a known type name is used as is; an unknown one is a TODO token.
     res = Resolver({"0x9": "ENetRole"})
     check("type_ref without gate", res.type_ref("enum", "0x9", "Enum") == "ENetRole")
@@ -1220,10 +1267,7 @@ def build_functions_promoted(functions, resolver, notify_names, owner_fns, splic
                                                   "unresolved parameter type: " + ", ".join(sorted(set(new_tokens))),
                                                   new_tokens))
             continue
-        if is_rpc and resolver.wire_used:
-            resolver.skipped.append(skip_function(fn, "struct_custom_netserialize",
-                                                  "RPC parameter struct with a custom NetSerialize (body not recovered)"))
-            continue
+        # An RPC parameter struct with a custom NetSerialize is emitted (see build_members for the fallback).
         if ret != "void" and not is_splice:
             resolver.skipped.append(skip_function(fn, "non_void_return", "return type %s is not emitted" % ret))
             continue
@@ -1611,6 +1655,38 @@ def render_interface_cpp(name, source_label):
     ])
 
 
+def replication_line(class_name, prop_name):
+    """The DOREPLIFETIME line of one replicated property. With REPLICATION_CONDITIONS loaded (--promote), the
+    recovered condition is used. A property whose registration was not recovered gets COND_None and a TODO."""
+    if not REPLICATION_CONDITIONS:
+        return "\tDOREPLIFETIME(%s, %s);" % (class_name, prop_name)
+    cls = REPLICATION_CONDITIONS.get(class_name) or {}
+    rec = (cls.get("properties") or {}).get(prop_name) or {}
+    cond = rec.get("condition", "COND_None")
+    notify = rec.get("rep_notify_condition")
+    conf = rec.get("confidence", "unknown")
+    if conf == "unknown" or not rec:
+        return "\tDOREPLIFETIME(%s, %s);  // TODO: replication condition not recovered (COND_None assumed)" % (
+            class_name, prop_name)
+    note = "" if conf == "high" else "  // replication condition confidence: %s" % conf
+    if notify:
+        return "\tDOREPLIFETIME_CONDITION_NOTIFY(%s, %s, %s, %s);%s" % (class_name, prop_name, cond, notify, note)
+    if cond != "COND_None":
+        return "\tDOREPLIFETIME_CONDITION(%s, %s, %s);%s" % (class_name, prop_name, cond, note)
+    return "\tDOREPLIFETIME(%s, %s);%s" % (class_name, prop_name, note)
+
+
+def load_replication_conditions(path):
+    """Fill REPLICATION_CONDITIONS from the data file. A missing file leaves it empty (plain DOREPLIFETIME)."""
+    REPLICATION_CONDITIONS.clear()
+    if not path or not os.path.exists(path):
+        return 0
+    with open(path, encoding="utf-8") as fh:
+        data = json.load(fh)
+    REPLICATION_CONDITIONS.update(data.get("classes") or {})
+    return len(REPLICATION_CONDITIONS)
+
+
 def render_promoted_cpp(model, source_label):
     name = model["name"]
     rep = [m for m in model["members_table_order"] if m["replicated"]]
@@ -1643,7 +1719,7 @@ def render_promoted_cpp(model, source_label):
         lines.append("\tSuper::GetLifetimeReplicatedProps(OutLifetimeProps);")
         lines.append("")
         for m in rep:
-            lines.append("\tDOREPLIFETIME(%s, %s);" % (name, m["name"]))
+            lines.append(replication_line(name, m["name"]))
         lines.append("}")
         lines.append("")
     return "\n".join(lines) + "\n"
@@ -1765,6 +1841,9 @@ def render_module_cpp(module, source_label):
 
 
 def promote(args):
+    loaded = load_replication_conditions(args.replication_conditions)
+    print("replication conditions: %d classes from %s" % (loaded, args.replication_conditions or "(none)"),
+          file=sys.stderr)
     missing = [flag for flag, value in (("--class-list", args.class_list), ("--evidence", args.evidence),
                                         ("--engine-classes", args.engine_classes), ("--source-root", args.source_root),
                                         ("--report-dir", args.report_dir), ("--name-map", args.name_map),
@@ -2470,10 +2549,45 @@ class TypeGate:
                      "used": merge_used([m["used"] for m in members] + [parent_used]),
                      "forward_decls": sorted(child.class_refs - {info.cpp_name, parent}),
                      "flags": info.rec.get("struct_flag_names", []), "size": info.rec.get("size"),
-                     "align": info.rec.get("align"), "struct_ops": info.rec.get("struct_ops")}
+                     "align": info.rec.get("align"), "struct_ops": info.rec.get("struct_ops"),
+                     "net": self.net_serializer(info, members)}
             return model, None
         finally:
             self.current_package = saved
+
+    def net_serializer(self, info, members):
+        """How a struct's native net serializer is emitted, or None when it has none (see WIRE_CUSTOM_TRAITS).
+
+        {"kind": "delta", ...}: an FFastArraySerializer whose TArray of FFastArraySerializerItem structs is one of its
+        members. Its NetDeltaSerialize is FFastArraySerializer::FastArrayDeltaSerialize over that array (identity:
+        the decompiled NetDeltaSerialize of 45 Fort structs, which contains the FastArrayDeltaSerialize log strings,
+        porting/decompilation_notes.md "Sixth pass"). Emitted with WithNetDeltaSerializer.
+        {"kind": "fallback", ...}: any other struct with a custom NetSerialize or NetDeltaSerialize. The native body is
+        not recovered, so the struct keeps the default serialization and the header says so (TODO)."""
+        ops = info.rec.get("struct_ops") or {}
+        traits = ops.get("traits") or {}
+        custom = sorted(t for t in WIRE_CUSTOM_TRAITS if traits.get(t) is True)
+        if not custom:
+            return None
+        vtable = ops.get("vtable_va")
+        if traits.get("HasNetDeltaSerializer") is True and info.package in PROMOTE_PACKAGES:
+            parent = self.info(info.rec.get("super_fn"))
+            member_names = {m["name"] for m in members}
+            if parent is not None and parent.cpp_name == "FFastArraySerializer":
+                for prop in info.rec.get("properties") or []:
+                    if prop.get("kind") != "Array" or int(prop.get("array_dim") or 1) != 1:
+                        continue
+                    inner = next((q for q in info.rec.get("properties") or []
+                                  if q.get("array_inner_of") == prop.get("name") and q.get("kind") == "Struct"), None)
+                    if inner is None or prop.get("name") not in member_names:
+                        continue
+                    item = self.info((inner.get("type_refs") or {}).get("struct"))
+                    item_parent = self.info(item.rec.get("super_fn")) if item is not None and item.kind == "struct" else None
+                    if item_parent is not None and item_parent.cpp_name == "FFastArraySerializerItem":
+                        return {"kind": "delta", "member": prop["name"], "item": item.cpp_name,
+                                "parent": "FFastArraySerializer", "traits": custom, "vtable": vtable}
+        return {"kind": "fallback", "traits": custom, "vtable": vtable,
+                "reason": "native net serializer not recovered"}
 
     def build_enum(self, info):
         rec = info.rec
@@ -2582,19 +2696,29 @@ def delegate_macro_kind(model, kinds):
     return "sparse" if "SparseMulticastDelegate" in kinds else "multicast"
 
 
+NET_SERIALIZATION_HEADER = "Engine/NetSerialization.h"   # FFastArraySerializer, FNetDeltaSerializeInfo, struct ops traits
+
+
 def render_struct_header(model, source_label):
     name = model["cpp_name"]
+    net = model.get("net") or {}
+    delta = net.get("kind") == "delta"
     lines = [
         "// Generated by porting/gen_native_classes.py --promote from %s." % source_label,
         "// Do not edit by hand: run porting/promote_native_classes.sh. Members are in declaration order (offsets",
-        "// ascending). A struct with a custom NetSerialize is emitted here only when it is not replicated.",
+        "// ascending). " + ("A struct with a custom NetSerialize is emitted here only when it is not replicated."
+                            if not net else
+                            "The custom net serializer of this struct is declared below."),
         "#pragma once",
         "",
         "#include \"CoreMinimal.h\"",
     ]
     if model.get("parent_include"):
         lines.append("#include \"%s\"" % model["parent_include"])
-    for inc in model.get("includes", []):
+    includes = list(model.get("includes", []))
+    if delta and NET_SERIALIZATION_HEADER not in includes + [model.get("parent_include")]:
+        includes.append(NET_SERIALIZATION_HEADER)
+    for inc in includes:
         if inc != model.get("parent_include"):
             lines.append("#include \"%s\"" % inc)
     lines.append("")
@@ -2603,6 +2727,12 @@ def render_struct_header(model, source_label):
         lines.append("")
     lines.append("#include \"%s.generated.h\"" % name)
     lines.append("")
+    if net.get("kind") == "fallback":
+        # TODO: the native NetSerialize is not recovered (ops vtable %s). Replicated uses serialize with the default
+        # property serialization, which differs from the original wire format.
+        lines.append("// TODO: the native net serializer of %s is not recovered (ops vtable %s; %s). The default"
+                     % (name, net.get("vtable"), ", ".join(net.get("traits", []))))
+        lines.append("// serialization is used until it is ported.")
     lines.append("USTRUCT()")
     lines.append("struct %s%s" % (name, " : public %s" % model["parent"] if model["parent"] else ""))
     lines.append("{")
@@ -2613,8 +2743,27 @@ def render_struct_header(model, source_label):
         lines.append("\tUPROPERTY()")
         lines.append("\t%s" % m["decl"])
         lines.append("")
+    if delta:
+        item = net["item"]
+        lines.append("\t// Native NetDeltaSerialize, the FFastArraySerializer pattern (ops vtable %s, traits %s): the"
+                     % (net.get("vtable"), ", ".join(net.get("traits", []))))
+        lines.append("\t// decompiled function calls FFastArraySerializer::FastArrayDeltaSerialize over %s."
+                     % net["member"])
+        lines.append("\tbool NetDeltaSerialize(FNetDeltaSerializeInfo& DeltaParms)")
+        lines.append("\t{")
+        lines.append("\t\treturn FFastArraySerializer::FastArrayDeltaSerialize<%s, %s>(%s, DeltaParms, *this);"
+                     % (item, name, net["member"]))
+        lines.append("\t}")
+        lines.append("")
     lines.append("};")
     lines.append("")
+    if delta:
+        lines.append("template<>")
+        lines.append("struct TStructOpsTypeTraits<%s> : public TStructOpsTypeTraitsBase2<%s>" % (name, name))
+        lines.append("{")
+        lines.append("\tenum { WithNetDeltaSerializer = true };")
+        lines.append("};")
+        lines.append("")
     return "\n".join(lines) + "\n"
 
 
@@ -2748,6 +2897,9 @@ def main(argv=None):
                     help="--promote: 'Name<TAB>reason' lines for classes that must not be generated")
     ap.add_argument("--engine-root", default=ENGINE_ROOT_DEFAULT,
                     help="--promote: UnrealEngine/Engine directory searched for struct, enum and delegate headers")
+    ap.add_argument("--replication-conditions", default=CONDITIONS_DEFAULT,
+                    help="--promote: JSON of recovered replication conditions (porting/replication_conditions.json); "
+                         "a missing file gives plain DOREPLIFETIME")
     ap.add_argument("--behavior-dir", default=BEHAVIOR_DEFAULT,
                     help="--promote: porting/behavior directory (MANIFEST.json and the .inc snippets)")
     ap.add_argument("--no-behavior", action="store_true",

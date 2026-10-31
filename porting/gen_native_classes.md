@@ -154,8 +154,8 @@ about 0.6 s, with no exceptions.
   (UClass, UEnum, UScriptStruct, UPackageMap, UInterface) have no block and stay
   unresolved in the map; their names come from child headers.
 - **Struct layouts.** Recovered by `porting/extract_types.py` (`binary_analysis.md` section 9). Draft mode
-  still writes no struct definitions and keeps unresolved structs as `TODO_*`. The body of a custom
-  `NetSerialize` is not recovered: promote mode skips a replicated use of such a struct.
+  still writes no struct definitions and keeps unresolved structs as `TODO_*`. The native net serializers of
+  structs are described in "Net serializers" below.
 - **Delegates.** Signatures are recovered (`delegate_blocks.json`). Draft mode keeps delegate types as
   `TODO_*`; promote mode emits the `DECLARE_*DELEGATE*` macro for each delegate used, parameters in declaration order
   (see "Parameter order"). A delegate that still cannot be emitted is listed in `skipped_properties.json` as
@@ -172,6 +172,24 @@ about 0.6 s, with no exceptions.
   affect replication, since `DOREPLIFETIME` uses the property name.
 - **Not emitted:** function bodies (except the spliced behaviour snippets), virtual qualifiers, includes beyond
   those the emitted types need, forward declarations beyond the emitted types, and `GENERATED_BODY` beyond the minimum.
+
+## Replication conditions and net serializers (promote)
+
+- `GetLifetimeReplicatedProps`: `--promote` reads `porting/replication_conditions.json` (`--replication-conditions`; a
+  missing file gives plain `DOREPLIFETIME`). A recovered condition is `DOREPLIFETIME_CONDITION(C, P, COND_X)`, or
+  `DOREPLIFETIME_CONDITION_NOTIFY(C, P, COND_X, REPNOTIFY_Always)` when the registration has the always-notify flag.
+  A property whose registration was not recovered is `DOREPLIFETIME(C, P);` with a `TODO` comment (COND_None assumed).
+  Medium and low confidence properties carry a comment with their confidence. `bIsPushBased` is recorded in the data
+  but not emitted (its native bodies are not recovered). Method and validation: `porting/decompilation_notes.md`,
+  "Sixth pass".
+- Net serializers of structs (`render_struct_header`, `net_serializer`):
+  - An `FFastArraySerializer` whose TArray member holds `FFastArraySerializerItem` structs gets the native
+    `NetDeltaSerialize` (`FFastArraySerializer::FastArrayDeltaSerialize<Item, Self>` over that member) and
+    `TStructOpsTypeTraits<F...>` with `WithNetDeltaSerializer = true`. Include: `Engine/NetSerialization.h`.
+  - Any other struct with a custom `NetSerialize` (or shared serialization) is declared as a fallback: no trait, and
+    a `TODO` comment. Replicated uses serialize with the default property serialization.
+  - Replicated properties and RPC parameters of such structs are emitted (they were skipped before). That is what makes
+    the replicated class layouts match the original (`class_checksum.py`).
 
 ## Promotion to native/Source (first pass, done)
 
