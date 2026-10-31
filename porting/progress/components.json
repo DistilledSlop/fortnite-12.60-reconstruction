@@ -413,11 +413,11 @@
           "weight": 60,
           "measure": {
             "kind": "fraction",
-            "done": 164,
+            "done": 1200,
             "total": 2842,
             "source": "documented"
           },
-          "rationale": "native_classes_status.md: 164 of the 2,842 classes in /Script/FortniteGame are generated with original parents, property order and replication flags (plus 4 PlayspaceFramework). Property and RPC layouts are incomplete (767 of 3,424 properties skipped), no function bodies exist, and wire compatibility is not reached. The class total is the named UHT blocks in class_parent_map.json."
+          "rationale": "native_classes_status.md: 1,200 of the 2,842 classes in /Script/FortniteGame are generated with original parents, property order, native-bool handling and replication flags (plus 105 classes in PlayspaceFramework, McpProfileSys, CommonUI, ModularGameplay and other modules generated the same way). About 4% of properties are skipped, no function bodies exist and wire compatibility is not reached. The class total is the named UHT blocks in class_parent_map.json."
         }
       ]
     },
@@ -548,10 +548,12 @@
           "name": "Class checksum parity",
           "weight": 20,
           "measure": {
-            "kind": "manual",
-            "pct": 0
+            "kind": "fraction",
+            "done": 1317,
+            "total": 6957,
+            "source": "documented"
           },
-          "rationale": "No ClassChecksum comparison has been run against the original client."
+          "rationale": "porting/class_checksum.py computes the ClassChecksum and RPC set the original client computes from the recovered reflection tables and compares them with the emitted headers: 1,317 of the 1,405 generated classes match. The total is all 6,957 named native classes, so the figure is the share of the whole native class surface at parity. This is an offline calculation, not a live comparison with the original client (which cannot be reached, see direct_connect_results.md)."
         },
         {
           "id": "net.replication_graph",
