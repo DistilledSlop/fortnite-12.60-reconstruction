@@ -328,6 +328,9 @@ def build_rows(backend, scan, keyfuncs, bins, config):
             row["schema"] = {"response": "FProfileUpdate (inherits FProfileUpdateSingle)",
                              "source": "reflection", "members": mcp_schema()["FProfileUpdate"]}
             classes.append("reflection")
+        if name == "matchmaking.session_key":
+            row["schema"] = {"response": "accountId, sessionId, key (base64)", "source": "binary",
+                             "reader": "0x142230050", "callback": "0x142227630"}
         if name == "chat.reserve_general_rooms":
             row["schema"] = {"response": "GeneralChatReturn", "source": "reflection"}
             classes.append("reflection")

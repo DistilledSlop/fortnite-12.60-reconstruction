@@ -51,8 +51,7 @@ PLAY_MESSAGE = "Play"
 MESSAGE_NAME_FIELD = "name"
 # [guess] Ticket type string returned by the ticket endpoint.
 TICKET_TYPE = "mms-player"
-# [guess] JSON field name that carries the base64 session key in the key response.
-# This is UNVERIFIED. The binary has no "encryptionKey" string. Change it here only.
+# The client response reader names accountId, sessionId and key; see EVIDENCE.md.
 SESSION_KEY_FIELD = "key"
 SESSION_KEY_BYTES = 32
 
@@ -190,7 +189,8 @@ class MatchmakingService:
             if key is None:
                 key = secrets.token_bytes(SESSION_KEY_BYTES)
                 self._session_keys[session_id] = key
-        return 200, {SESSION_KEY_FIELD: base64.b64encode(key).decode("ascii")}
+        return 200, {"accountId": account_id, "sessionId": session_id,
+                     SESSION_KEY_FIELD: base64.b64encode(key).decode("ascii")}
 
     def register(self, router):
         router.add("GET", r"(?:/fortnite)?/api/game/v2/matchmakingservice/ticket/player/([^/]+)",

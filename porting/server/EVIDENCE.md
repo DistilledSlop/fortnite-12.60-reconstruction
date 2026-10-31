@@ -98,10 +98,9 @@ The check is `schema_check.py` with the tests in `test_services.py` (`SchemaTest
   `profileRevision`. The earlier assertion that the stock reader requires exact case was wrong.
   The shipped MCP path uses a reflected-struct converter, but its comparison helper has not been
   independently verified; maintain the existing camelCase wire keys pending that evidence.
-- **Session key field.** The backend's `key` (`matchmaking.py`, `SESSION_KEY_FIELD`) is a guess. A search for
-  it found no literal of four or more characters, and the scan's 3-character search found it only as a
-  generic identifier in 8 functions. The exe does have the literal `EncryptionKey` (UTF-16), but it sits in a
-  run of stat names. Not changed.
+- **Session key response.** Static analysis supports the names and the three nonempty
+  string checks described below. The exact server key lifecycle and a live client join
+  have not been verified; the backend's random per-session key is a local implementation.
 - **Route inventory.** `porting/generated/routes.json` (the dashboard's route list, from
   `inspect_client_routes.py`) matches only `/api/(game/v2|public|oauth)/`. It misses the ~150 other route
   format strings above, so route-based dashboard leaves understate the surface. Not changed here, because
@@ -180,7 +179,7 @@ instructions that load it. Served rows only; the unserved route strings are in `
 | `chat.reserve_general_rooms` | POST | `/api/game/v2/chat/`accountId/reserveGeneralChatRooms/`subgame/`platform` | 0x14635c190 | 1 | GeneralChatReturn | reflection, binary | yes |
 | `matchmaking.ticket` | GET | `/api/game/v2/matchmakingservice/ticket/player/`id` | 0x1460d3c20 | 1 | - | binary | yes |
 | `matchmaking.session` | GET | `/api/matchmaking/session` | 0x145b1ac08 | 1 | - | binary | yes |
-| `matchmaking.session_key` | GET | `/api/game/v2/matchmaking/account/`accountId/session/`sessionId` | 0x1460dfbe0 | 1 | - | binary | yes |
+| `matchmaking.session_key` | GET | `/api/game/v2/matchmaking/account/`accountId/session/`sessionId` | 0x1460dfbe0 | 1 | accountId, sessionId, key (base64) | binary | yes |
 <!-- END GENERATED TABLE (build_evidence.py) -->
 
 ## MCP response conversion trace
@@ -210,3 +209,17 @@ The standalone `profileId` literal at `0x145bff818` is referenced at RVA `0x10f0
 response-parser evidence. Ghidra slim decompiles, disassembly and caller metadata are in the
 ignored `generated/mcp-parser-probe/`, `mcp-caller-probe/`, `mcp-caller2-probe/`,
 `mcp-parser3-probe/` and `mcp-parser4-probe/` directories. Probe transactions were rolled back.
+
+## Matchmaking session-key response trace
+
+The route literal at `0x1460dfbe0` is loaded by `0x14222ab40`, which constructs the
+account/session URL, supplies `GET`, and binds `0x142227630`. The callback's diagnostic
+strings name `OnQueryEncryptionKeyForUniqueIdComplete`; it accepts a JSON object, invokes
+the response object's parser, rejects three empty strings, then Base64-decodes the third.
+The response object's vtable at `0x1460ddf98` has `0x142230050` at offset `+0x38`; that
+reader passes `accountId`, `sessionId` and `key` to string-field handling at offsets `+0x08`,
+`+0x40` and `+0x50`, respectively. These are binary observations, not a live capture.
+`matchmaking.py` returns the requested identifiers and a Base64-encoded per-session key;
+server-side encryption and a client round trip remain unverified. The ignored decompiles,
+disassembly and caller metadata are under `generated/sessionkey-probe/`,
+`sessionkey-callback/`, `sessionkey-parser/` and `sessionkey-fields/`.

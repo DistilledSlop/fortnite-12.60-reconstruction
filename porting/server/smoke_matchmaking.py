@@ -189,7 +189,9 @@ def run_checks(base, port, ctx):
     status, raw = http(base, ctx, "GET", "/fortnite" + key_path)
     body = json.loads(raw) if status == 200 else {}
     key_value = body.get(matchmaking.SESSION_KEY_FIELD, "")
-    check("session key returns 200 with the documented field", status == 200 and bool(key_value),
+    check("session key returns the client fields", status == 200 and
+          set(body) == {"accountId", "sessionId", "key"} and body.get("accountId") == ACCOUNT and
+          body.get("sessionId") == session_id and bool(key_value),
           f"status {status}")
     try:
         decoded = base64.b64decode(key_value, validate=True)

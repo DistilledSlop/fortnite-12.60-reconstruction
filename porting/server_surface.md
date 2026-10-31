@@ -199,7 +199,7 @@ and `convention` (public naming, not seen locally). `server/README.md` has the r
   strings, so the client may never send them.
 - `PATCH .../parties/{id}/meta`: the `/parties/{partyId}/meta` literal is not in the binary (the member
   meta route is).
-- The keychain placeholder (32 zero bytes, not a key) and the session key field `key` (see EVIDENCE.md).
+- The keychain placeholder (32 zero bytes, not a key) and the session-key response values and server key lifecycle (field names are supported by the binary; see server/EVIDENCE.md).
 - The content page `/content/api/pages/fortnite-game`: no string in the exe. Seen only in the refresh pass
   of the earlier Wine run (`wine_log`, verb not recorded). Its body is a guess.
 - Client id `3446cd72694c4a4485d81b77adbb2141`, which the earlier stub used and the binary does not show.

@@ -918,7 +918,14 @@ class MatchmakingTests(ServiceTestCase):
         status, key, _ = jcall(self.base, "GET",
                                f"/fortnite/api/game/v2/matchmaking/account/{account}/session/{session_id}")
         self.assertEqual(status, 200)
-        self.assertEqual(len(base64.b64decode(key[matchmaking.SESSION_KEY_FIELD])), 32)
+        self.assertEqual(set(key), {"accountId", "sessionId", "key"})
+        self.assertEqual((key["accountId"], key["sessionId"]), (account, session_id))
+        self.assertTrue(all(isinstance(key[name], str) and key[name] for name in key))
+        self.assertEqual(len(base64.b64decode(key["key"], validate=True)), 32)
+        status, repeated, _ = jcall(self.base, "GET",
+                                    f"/api/game/v2/matchmaking/account/{account}/session/{session_id}")
+        self.assertEqual(status, 200)
+        self.assertEqual(repeated, key)
         self.assertError(jcall(self.base, "GET", f"/fortnite/api/matchmaking/session/{'1' * 32}"),
                          404, Err.NOT_FOUND)
 

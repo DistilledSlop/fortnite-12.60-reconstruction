@@ -1612,7 +1612,12 @@
    "verb_literals": [],
    "json_keys_in_builder": [],
    "config_template": null,
-   "schema": null,
+   "schema": {
+    "response": "accountId, sessionId, key (base64)",
+    "source": "binary",
+    "reader": "0x142230050",
+    "callback": "0x142227630"
+   },
    "notes": "Route format is in the binary. The key field name is not confirmed.",
    "evidence_classes": [
     "binary"
