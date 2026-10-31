@@ -391,6 +391,23 @@ The `UFunction` block count is 23,879 with 20,697 distinct name strings. The 22,
 
 `porting/generated/reflection/decompile_targets.json` lists 908 functions for the eight Athena framework classes, ranked by tier, each with exec address, flags and net roles: tier 1 (`FUNC_Net`, RPC or replicated) 182; tier 2 (`FUNC_Native` and `BlueprintEvent`) 7; tier 3 (`BlueprintCallable`, exec) 436; tier 4 (other native, exec) 228; tier 5 (no exec address) 55. `AFortWorldSettings` has no UFUNCTION entries in the reflection data (`function_count` 0), so only its class record is written. Parent chains come from `class_parent_map.json`. Tier 5 entries have `exec_addr: null` and need a vtable or `ProcessEvent` path.
 
+### Decompile run [observed; script: `porting/ghidra/decompile_targets.py`]
+
+PyGhidra opens `fortnite-slim` read-only (no save). Each target is decompiled with `DecompInterface` (30 s limit), writing `porting/generated/decomp/<Class>/<Function>.c` and `decomp/index.json`. Tiers 1 to 4 gave 853 ok, 0 timeout, 0 failed. The 55 tier-5 entries have no exec address and are recorded as skipped. The run took about 32 s. 266 functions had no `.pdata` function and were created in memory (rolled back). Opening the project rewrote five bookkeeping files (`~index` and `project.prp`); the program database was unchanged. Quality review, noise list and what is still missing are in `porting/decompilation_notes.md`.
+
+### Vtables from the constructors [observed; replaces the candidate for these two classes]
+
+`GetPrivateStaticClassBody` takes `InternalConstructor<C>` as argument 10 (the `GetPrivateStaticClass` addresses in `native_class_index.json`, `gpsc_targets`). That thunk is `if (*this) Ctor(*this, this)`. The constructor's only primary store of the vptr is `*param_1 = &DAT_...`, and it comes after the base-class constructor call. The decompiler reads it directly. The `InternalVTableHelperCtorCaller` argument is a shared stub that returns 0.
+
+| Class | GetPrivateStaticClass | InternalConstructor | Constructor | Primary vtable | `vtable_candidate` (unverified) |
+|---|---|---|---|---|---|
+| `AFortPlayerStateAthena` | `0x142a8ae70` | `0x142a8af30` | `0x141a2e060` | `0x145e35fa8` | `0x1459e9d30` (does not match) |
+| `AFortPlayerPawnAthena` | `0x142a82010` | `0x142a81d70` | `0x141a08ef0` | `0x145e2cfd0` | `0x14605c260` (does not match) |
+
+- The first 30 slots (read from the PE image) contain 20 distinct targets. None is a UFUNCTION exec address, so no `Z_Construct`/UFunction names apply. 13 of the 30 slots point to three shared stubs (`0x1406801c0`, `0x1406801d0`, `0x1406801e0`).
+- RPC slots come from the thunk call sites. A validated RPC calls `slot` (the `_Validate` returns a bool) and then `slot + 1` (the implementation). A single-call RPC calls the implementation only. Examples: `AFortPlayerStateAthena` 267 to 277 (`ClientNotifyMatchEntered` 269, `ClientReportKill` 272, `ClientAddKillFeedErrorMessage` 276); `AFortPlayerPawnAthena` 636 to 644 (`ServerCreativeToggleGhost` 636/637, `ServerSuicide` 640/641). These are inferred, not verified against the names in the table.
+- The vtable rule in `extract_native_funcs.py` picks the wrong store for these two classes. The index is not changed here. Use the table above until that rule is fixed.
+
 ### Limits
 
 - **No symbols.** Names come from the reflection tables and the table association. The association is verified by the class's function list, not by the code bodies.
