@@ -18,6 +18,26 @@ only, see Next steps).
 Stage notes for the gap closure in `native_class_coverage.md` (cause codes C1 to C5). Each green stage is promoted, built,
 restaged and verified before the next one starts. Not every stage is committed by its builder; the orchestrator commits.
 
+Stage 2 (C1, 34 missing runtime modules), batch 1 attempt (SocialUMG, KairosSceneCapture, GameSubCatalog), FAILED and reverted
+2026-10-31; nothing from it is committed, the tree is at the stage 1 commit. Findings for the retry:
+
+- Promote worked (exit 0): SocialUMG 19 classes, 2 structs, 2 delegates; KairosSceneCapture 7 classes, 11 structs, 5 enums.
+  GameSubCatalog produced no module because no emitted class uses its types (it only has structs and enums), so it needs no
+  uproject or Build.cs entry unless a promoted class starts using it.
+- The UE build failed (exit 6, 359 s) in UHT-generated code: `AKairosHeroBase.gen.cpp: unknown type name 'FORTNITEGAME_API'` and
+  `use of undeclared identifier 'Z_Construct_UClass_AFortPlayerPawn_NoRegister'`. `AKairosHeroBase.h` forward-declares
+  `AFortPlayerPawn` (FortniteGame) for a property; the generator makes KairosSceneCapture depend on FortniteGame, but the
+  generated `.gen.cpp` needs the FortniteGame class header and API macro and gets neither. Fix in the generator: include the
+  header of every forward-declared class from another module (in the `.cpp` the generator writes, or in the header), or drop the
+  property. Do not special-case a checksum.
+- KairosSceneCapture cannot be listed in FortniteGame.Build.cs (it would be a module cycle, because it depends on FortniteGame);
+  add it to the three `*.Target.cs` `ExtraModuleNames` instead. (SocialUMG's 19 FortniteUI classes were added with it; FortniteUI
+  ancestors on SocialUMG are why the batch pulled in 19 more classes.)
+- `UFortHomeCMSScreenBase` waits for EpicCMSUIFramework (a later batch).
+- `NVIDIAGfeSDK` (17 non-class types) is skipped: it is a third-party SDK binding, not game code.
+- Helper scripts of the stage (batch selection and a verify script that restages, runs both smokes, the self-test,
+  class_checksum and check_behavior) were scratch files and are not saved; recreate from the pipeline in the local-model package.
+
 Stage 1 (C2, 19 FortniteUI interfaces), green 2026-10-31 22:02:
 
 - `native_class_set.txt`: 4,572 to 4,591 entries. The 19 interfaces (`UINTERFACE`, parent `UInterface`) are generated as
