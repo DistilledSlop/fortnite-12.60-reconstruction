@@ -257,6 +257,9 @@ def decode_props(img, prop_arr_va, nprop):
             # FBoolPropertyParams::SetBitFunc is non-null only for bitfield members (uint8 X : 1).
             set_bit = struct.unpack_from("<Q", img.m, o + 48)[0]
             entry["bitfield"] = bool(set_bit)
+            # The setter sets the bit in the object. Its byte offset (the Offset UE computes at load time
+            # from SetBitFunc) is not in the param struct: class_checksum.py reads it from the setter code.
+            entry["set_bit_fn"] = "0x%x" % set_bit if set_bit else None
             entry["offset"] = None
         else:
             entry["offset"] = struct.unpack_from("<i", img.m, o + 36)[0]
