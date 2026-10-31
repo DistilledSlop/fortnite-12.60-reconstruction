@@ -297,7 +297,7 @@ def run_tool_pass(skip: bool) -> list[dict]:
         return []
     packages = recovered_packages()
     log(f"loose cue4inspect pass over {len(packages)} recovered packages (imports only; no key)")
-    with concurrent.futures.ThreadPoolExecutor(max_workers=8) as pool:
+    with concurrent.futures.ThreadPoolExecutor(max_workers=min(48, os.cpu_count() or 8)) as pool:
         rows = list(pool.map(run_tool_one, packages))
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     with PKG_IMPORTS.open("w", encoding="utf-8") as handle:
