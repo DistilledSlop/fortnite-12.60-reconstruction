@@ -704,3 +704,73 @@ The generator now spells parameters in declaration order (`--param-order offset`
 were in table order were corrected in `behavior/MANIFEST.json`, and `AFortPlayerPawn::GetPreviousPosition` and
 `GetPreviousVelocity` are non-const (no `FUNC_Const` in the reflection). `IslandCreationCompleted` (`UFortClientPilot_GameplayCreative`)
 and `OnInGameLoadScreenChanged` (`AFortMinigame`) are ordinary UFunctions, not delegates: their parameter blocks follow the same rule.
+
+## Sixth pass: creative and zipline bodies, queue rows 2, 3 and 5 [observed unless marked]
+
+Scope: the nine bodies the fifth pass re-enabled (task a), queue rows 5, 2 and 3 with their callees, `0x140685370` and `0x1406aaec0`.
+No Ghidra run: the probe outputs under `porting/generated/callee_probe/` and the improved decompile were enough. The generator
+(`gen_native_classes.py`) was read only, and its `--promote` run went into a scratch copy of `native/Source` (see the end).
+
+### Bodies (task a): 9 ported (208 in total)
+
+- Six `AFortPlayerControllerAthena::ClientBroadcastOn*Finished_Implementation` (MakeNew, Destroy, Duplicate, Restore,
+  UpdateCreativeDescriptionTags, UpdateCreativePlotName). Each body builds `{ bool bSuccess @0; FText Reason @8 }`
+  (`FUN_142c0c240` FText constructor, `FUN_14079d060` FText assignment), then `FUN_1406a9dc0` (the multicast dispatcher) on
+  the member at `+0x2dd0`, `+0x2de0`, `+0x2df0`, `+0x2e00`, `+0x2e30` or `+0x2e40`. The member offsets match the reflection
+  table (11728, 11744, 11760, 11776, 11824, 11840) and the eight `InlineMulticastDelegate` members are emitted now. The
+  snippet is `Member.Broadcast(bSuccess, Reason);`. Parameters follow the generated declaration order, `(bool bSuccess, const FText& Reason)`:
+  the manifest had the older reversed order, which the splice rejects, so the six signatures were corrected.
+- `AFortPlayerPawn::ServerSendZiplineState_Implementation` (`0x1406801c0`, empty) and `ServerSendZiplineState_Validate`
+  (`0x1406801d0`, returns true). The exec thunk `ServerSendZiplineState` (`0x142a7f7a0`) calls the validate through vtable `+4000`
+  (slot 500) and then the implementation. The RPC is `UFUNCTION(Server, Reliable)` in the generated header, so the splice
+  adds `WithValidation` to it. HIGH for the bodies; MEDIUM for the slot naming, as for every folded validate.
+- `AFortPlayerControllerAthena::ClientReceiveSquadQuickChatMessage_Implementation` (`0x1406801c0`, empty). Signature
+  corrected to `(const FAthenaQuickChatActiveEntry& ChatEntry, AFortPlayerController* SenderPC)`.
+
+RPC declarations: no generator change is needed. The header already declares the three RPCs (`ServerSendZiplineState`,
+`ServerSendZiplineState_Implementation`, `ClientReceiveSquadQuickChatMessage_Implementation`), and the splice adds
+`_Validate` with `WithValidation` for the zipline validate.
+
+### Queue rows (task b)
+
+| Row | Address | Identity | Confidence | Evidence |
+|---|---|---|---|---|
+| 5 | `0x141991bf0` | `return CurrentPlaylistInfo.OverridePlaylist ? OverridePlaylist : BasePlaylist` on `AFortGameStateAthena` (accessor) | HIGH (body, offsets) | The struct with construct function `0x142a9daf0` is `PlaylistPropertyArray` (size 488, `BasePlaylist` at +0x120, `OverridePlaylist` at +0x128, both UFortPlaylist-class objects). `CurrentPlaylistInfo` is at `+0x1cd0` of `AFortGameStateAthena` (block `0x1463ea150`), so the pair is `+0x1df0` and `+0x1df8`. Not a UFunction, so the splice cannot emit it. |
+| 2 | `0x141a3c2b0` | Scoring loop over the playlist's array at `+0x4e8` (count `+0x4f0`) of 0x68-byte rules; for each rule with `Type == param_2` and `Divisor > 0`: points = `(int)(param_3 / Divisor)` capped at the rule's cap (`+0x44`) if the cap is positive, times the float value of the rule's scalable float (`FUN_14070fe00`); if the new total differs from `param_4`, broadcast `PointsAddedToScore` (`this+0xf08`) with `{ (int)value @0, Type @4 }`. | MEDIUM-HIGH | The broadcast parameter order matches `FOnPointsAddedToScore(int32 NewPoints, EAthenaScoringEvent ScoreType)` in the generated header. `FUN_14070fe00` has the probe string `FScalableFloat::GetValueAtLevel` (MEDIUM; not found by grep in `Runtime/Engine`). |
+| 3 | `0x141a3c390` | Stat threshold and award on `AFortPlayerStateAthena`: sums nine int32 values at `+0xebc` .. `+0xefc` (stride 8) and the int at `+0xe88`, compares with the last total at `+0xf00`; if the byte at `+0xf0` is 3, the difference is positive and vfn `+0x770` returns an object whose class is `FortTeamInfoAthena` (`FUN_142af1340`, the static-class getter, HIGH), it adds the difference to that object's `+0x370`. It stores the new total at `+0xf00`, and when the byte is not 3 it calls the listener dispatch `FUN_1407ac640`. | LOW-MEDIUM | Unnamed: vfn slot `0x770` (slot 238 of `AFortPlayerStateAthena`, not in the name tables), `FUN_1407ac640` (the dispatcher below). The reflection gives the stat properties (`AIKillCount` `+0xeb0`, `NumChestsOpened` `+0xeb8`, ... `NumGoldCoinsCollected` `+0xef8`) as int32 at the offsets 4 bytes below these reads. The OnRep callers show the same 4-byte shift in the decompile, so the offset relation is unresolved: check it against the asm before porting row 3. |
+| - | `FUN_1407ac640` | Dispatch over a lock-counted list: lock counter `+0x14`, count `+0x8`, data `+0x0`, elements 16 bytes `{ Ptr @0, int32 Flag @8 }`; calls vfn `+0x50` on each element with two arguments; compacts through `0x140685370` when an element fails. | LOW-MEDIUM | Same container as `0x140685370`. The element type is not known. |
+| - | `0x140685370` | Compaction of that list (remove where `Flag == 0`, `Ptr == null`, or the vfn `+0x50` predicate is false), then resize. | LOW-MEDIUM | The three data references the third pass named (`0x148463250`, `0x14734ef38`, `0x14734ef6c`) are 32-bit RVA tables (the values are functions in `0x1406853xx` to `0x14073xxxx`). They are not a type descriptor and do not name the element. |
+| 7 | `0x1406aaec0` | Unchanged: copy constructor of an 0xB8-byte struct (the `DAT_1459aede0` constant at +0x08 still has no 4.25 member). | LOW-MEDIUM | Not named. |
+
+Earlier identities stand: `0x1419d3ff0` (row 4, accessor, HIGH), `FUN_142c0c240` (FText constructor), `FUN_14079d060` (FText
+assignment). New: `FUN_142af1340` = `FortTeamInfoAthena::StaticClass` (HIGH; the registration arguments name the class and its size
+0x398 in `/Script/FortniteGame`).
+
+### Port status (task c): nothing new ported, and why
+
+- Rows 2 and 3 are non-reflected member helpers. The generator splices only `getter` and `exec` (`porting/gen_native_classes.py`,
+  the `splice_names` set and the kind dispatch near lines 1248 and 1409 to 1461), plus the RPC kinds. A `callee` entry has no splice
+  path, so a snippet cannot call a helper it does not own. Row 5 is in the same position.
+- Every caller of `0x1419d3ff0` (the `OnRep_Num*`, `OnRep_Kills`, `OnRep_AIKills`, `OnRep_DeathInfo` and `OnClientVolumeManagerReplicated`
+  family) also calls row 3 (and row 2), so the 17 callers stay blocked. Inlining the rows into each caller would copy about 60 lines
+  into 13 snippets, so it was not done.
+- Rows 2 and 3 also need the listener element type (`0x1407ac640` and `0x140685370`), which the decompile does not give.
+
+### Splice check (no change to `native/`)
+
+`gen_native_classes.py --promote` was run with `--source-root` and `--report-dir` pointed at a scratch copy of `native/Source`
+(the scratchpad, outside the repo; the reflection inputs were read only). The checker against that output reports 208 ported,
+208 spliced and verified, 0 rejected, FAIL 0. The live `native/` tree still shows the nine new entries as FAIL until the build owner
+re-runs `porting/promote_native_classes.sh`. Snippets are not compile-checked: the six broadcast bodies and the zipline bodies
+use only generated members and the engine names allowed by the contract, so the build owner should watch `AFortPlayerControllerAthena`
+(`ClientBroadcastOn*`) and `AFortPlayerPawn` (`ServerSendZiplineState_Validate`) after the next build.
+
+### Next blockers
+
+1. Generator: a splice kind for non-reflected member helpers (declaration plus `.inc` body), so rows 2, 3 and 5 can be called.
+   Without it the 17 callers of `0x1419d3ff0` cannot be ported.
+2. The lock-counted 16-byte list family (`0x1407ac640`, `0x140685370`): name the owner container and the element type. It blocks row 3 and the
+   OnRep callers by itself.
+3. vfn slot `0x770` of `AFortPlayerStateAthena` (slot 238): name it, and check the `FortTeamInfoAthena` `+0x370` field from the reflection table.
+4. `FScalableFloat::GetValueAtLevel` (`FUN_14070fe00`): confirm the 4.25 signature in the engine source (not in `Runtime/Engine/Public`).
+5. The playlist scoring rule struct (0x68 bytes, array at `+0x4e8`, count at `+0x4f0`) and the playlist byte at `+0x467`: name both from the reflection table.

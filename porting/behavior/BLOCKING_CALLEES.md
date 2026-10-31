@@ -2,6 +2,8 @@
 
 > Fourth pass: rank 4 `0x1419d3ff0` is identified (accessor over `GetWorld()` and `UWorld::GameState`, see `porting/decompilation_notes.md`, "Fourth pass"). Its callers still wait for ranks 2, 3 and 5.
 
+> Sixth pass: rank 2 `0x141a3c2b0`, rank 3 `0x141a3c390` and rank 5 `0x141991bf0` are identified in part (see `porting/decompilation_notes.md`, "Sixth pass"). Row 5 is the `CurrentPlaylistInfo` accessor (HIGH). Row 2 is the playlist scoring loop (MEDIUM-HIGH). Row 3 depends on the lock-counted list family `0x1407ac640` / `0x140685370` and on vfn slot `0x770`. No new bodies: non-reflected helpers cannot be spliced yet.
+
 > Third pass: rank 1 `0x1406a9dc0` is identified as `TMulticastScriptDelegate<FWeakObjectPtr>::ProcessMulticastDelegate<UObject>` (high). Its callers are ported where the rest of the body is clear. See `porting/decompilation_notes.md`, "Third pass". The table below is the pass-one ranking and is kept as it was.
 
 Generated from the screen of `porting/generated/decomp/` (exec records) and `porting/generated/decomp_improved/` (RPC records). The screen covers the 750 `portable` and `needs names` records. Counts use the rule `skip reason = unnamed_call` (the record calls at least one `FUN_*` that is not identified).

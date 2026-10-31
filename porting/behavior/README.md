@@ -4,13 +4,15 @@ Hand-ported native function bodies, taken from the decompiled output of the ship
 (`porting/generated/decomp/` and `porting/generated/decomp_improved/`, both git-ignored). Each `.inc`
 is our own C++ re-expression of what the decompile does, not a copy of it.
 
-Status (see `MANIFEST.json`, 395 entries): **199 ported** (32 getters, 17 onrep, 53 impl, 25 exec, 72 validate; confidence 182 high, 17 medium), **196 skipped** with a reason (of which 17 are callees from the queue). Of the 199, 70 are declared in the generated headers; 129 need a declaration that the generator does not emit yet. `python3 porting/behavior/check_behavior.py` reports 0 failures and 3 pending declarations (`AFortPlayerPawnAthena::SetDamageCameraShakeClass`, `AFortPlayerPawn::GetPreviousPosition`, `AFortPlayerPawn::GetPreviousVelocity`). Three RPC entries that an earlier generator run declared (`ServerSendZiplineState_Implementation`, `ServerSendZiplineState_Validate`, `ClientReceiveSquadQuickChatMessage_Implementation`) are now skipped as not declared: their parameter structs (`FZiplinePawnState`, `FAthenaQuickChatActiveEntry`) are not generated.
+Status (see `MANIFEST.json`, 395 entries): **208 ported** (32 getters, 17 onrep, 61 impl, 25 exec, 73 validate; confidence 191 high, 17 medium), **187 skipped** with a reason (of which 17 are callees from the queue). Signatures: 78 `declared` (in the generated header now) and 130 `proposed` (the generator emits them when the splice is on). `python3 porting/behavior/check_behavior.py` reports 0 failures and 1 pending declaration: `AFortPlayerPawn::ServerSendZiplineState_Validate` (the generator declares it with WithValidation). The three RPC entries that were skipped as not declared (the zipline implementation and validate, and the quick-chat implementation) are ported again.
 
 Third pass (35 new bodies, see `porting/decompilation_notes.md`, "Third pass"): 15 empty bodies (exec thunks that
 tail-jump to the shared `ret` at `0x1406801c0`), 14 bodies that broadcast a multicast delegate through the dispatcher
 `0x1406a9dc0` (identified as `ProcessMulticastDelegate`), 4 FVector accessors, a float reset, and one RPC
 validate. Held back as uncertain: six validates on the folded body `0x140f6b550` (identity rests on vtable slot names),
 and the RPC validates that share folded bodies with mismatched argument registers.
+
+Sixth pass (see `porting/decompilation_notes.md`, "Sixth pass"): nine bodies. Six `ClientBroadcastOn*Finished_Implementation` (the eight missing `InlineMulticastDelegate` members are emitted now; their signatures are in declaration order), the zipline implementation and validate, and `ClientReceiveSquadQuickChatMessage_Implementation`. Each was spliced and verified in a scratch promote run (208 spliced, 0 rejected).
 
 ## Files
 

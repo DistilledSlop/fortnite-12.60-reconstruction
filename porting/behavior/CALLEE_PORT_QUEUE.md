@@ -7,6 +7,8 @@ engine helper or a one-line accessor. The decision says what to do with it. Addr
 Third pass: rank 1 identified and its callers ported where the rest of the body is clear. The other rows are unchanged.
 Fourth pass (see `porting/decompilation_notes.md`, "Fourth pass"): rank 4 `0x1419d3ff0` identified (accessor: `GetWorld()` at vtable `+0x150`, then `UWorld::GameState` at `+0x130`, kept if `IsA AFortGameStateAthena`). Row 7 `0x1406aaec0` stays unnamed (low-medium). `FUN_142c0c240` = `FText::FText()` and `FUN_14079d060` = `FText::operator=`, both high; they block only the `ClientBroadcastOn*` bodies, which the generator cannot yet reference (eight missing `InlineMulticastDelegate` members).
 
+Sixth pass (see `porting/decompilation_notes.md`, "Sixth pass"): row 5 `0x141991bf0` identified (accessor: `CurrentPlaylistInfo.OverridePlaylist`, else `BasePlaylist`, on `AFortGameStateAthena`; HIGH). Row 2 and row 3 are identified in part. `FUN_142af1340` is `FortTeamInfoAthena::StaticClass` (HIGH). `FUN_1407ac640` and `0x140685370` are one lock-counted list family (the element type is unknown). None of rows 2, 3 or 5 can be spliced: the generator has no splice kind for non-reflected helpers, so the 17 callers of `0x1419d3ff0` stay blocked. The table below is unchanged.
+
 Decisions: **port-fn** = port the callee itself as a C++ function (game logic); **accessor** = a small body that
 becomes C++ once one field or virtual slot is named; **struct** = a C++ special member (copy, move, destructor) of a
 game struct, written once the struct type is known; **verify** = probably an engine function, check against UE 4.25
