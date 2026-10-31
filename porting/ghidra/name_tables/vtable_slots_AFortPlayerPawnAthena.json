@@ -1,0 +1,477 @@
+{
+ "class": "AFortPlayerPawnAthena",
+ "table_va": "0x145e2cfd0",
+ "entries_read_upper_bound": 816,
+ "source": "tier-1 RPC thunks: indirect CALL qword ptr [reg+disp] (validate at slot, implementation at slot+1; unvalidated: implementation at slot)",
+ "slots": {
+  "271": {
+   "name": "NetMulticast_InvokeGameplayCuesAddedAndWhileActive_WithParams_Implementation",
+   "from": [
+    "AFortPawn.NetMulticast_InvokeGameplayCuesAddedAndWhileActive_WithParams"
+   ]
+  },
+  "272": {
+   "name": "NetMulticast_InvokeGameplayCueAddedAndWhileActive_WithParams_Implementation",
+   "from": [
+    "AFortPawn.NetMulticast_InvokeGameplayCueAddedAndWhileActive_WithParams"
+   ]
+  },
+  "273": {
+   "name": "NetMulticast_InvokeGameplayCueAddedAndWhileActive_FromSpec_Implementation",
+   "from": [
+    "AFortPawn.NetMulticast_InvokeGameplayCueAddedAndWhileActive_FromSpec"
+   ]
+  },
+  "274": {
+   "name": "NetMulticast_InvokeGameplayCueAdded_WithParams_Implementation",
+   "from": [
+    "AFortPawn.NetMulticast_InvokeGameplayCueAdded_WithParams"
+   ]
+  },
+  "275": {
+   "name": "NetMulticast_InvokeGameplayCueAdded_Implementation",
+   "from": [
+    "AFortPawn.NetMulticast_InvokeGameplayCueAdded"
+   ]
+  },
+  "276": {
+   "name": "NetMulticast_InvokeGameplayCuesExecuted_WithParams_Implementation",
+   "from": [
+    "AFortPawn.NetMulticast_InvokeGameplayCuesExecuted_WithParams"
+   ]
+  },
+  "277": {
+   "name": "NetMulticast_InvokeGameplayCueExecuted_WithParams_Implementation",
+   "from": [
+    "AFortPawn.NetMulticast_InvokeGameplayCueExecuted_WithParams"
+   ]
+  },
+  "278": {
+   "name": "NetMulticast_InvokeGameplayCuesExecuted_Implementation",
+   "from": [
+    "AFortPawn.NetMulticast_InvokeGameplayCuesExecuted"
+   ]
+  },
+  "279": {
+   "name": "NetMulticast_InvokeGameplayCueExecuted_Implementation",
+   "from": [
+    "AFortPawn.NetMulticast_InvokeGameplayCueExecuted"
+   ]
+  },
+  "280": {
+   "name": "NetMulticast_InvokeGameplayCueExecuted_FromSpec_Implementation",
+   "from": [
+    "AFortPawn.NetMulticast_InvokeGameplayCueExecuted_FromSpec"
+   ]
+  },
+  "281": {
+   "name": "NetMulticast_Athena_BatchedDamageCues_Implementation",
+   "from": [
+    "AFortPawn.NetMulticast_Athena_BatchedDamageCues"
+   ]
+  },
+  "282": {
+   "name": "ServerTeleportNearLocation_Validate",
+   "from": [
+    "AFortPawn.ServerTeleportNearLocation"
+   ]
+  },
+  "283": {
+   "name": "ServerTeleportNearLocation_Implementation",
+   "from": [
+    "AFortPawn.ServerTeleportNearLocation"
+   ]
+  },
+  "284": {
+   "name": "ClientInternalEquipWeapon_Implementation",
+   "from": [
+    "AFortPawn.ClientInternalEquipWeapon"
+   ]
+  },
+  "285": {
+   "name": "ServerInternalEquipWeapon_Validate",
+   "from": [
+    "AFortPawn.ServerInternalEquipWeapon"
+   ]
+  },
+  "286": {
+   "name": "ServerInternalEquipWeapon_Implementation",
+   "from": [
+    "AFortPawn.ServerInternalEquipWeapon"
+   ]
+  },
+  "287": {
+   "name": "PlaySound_Implementation",
+   "from": [
+    "AFortPawn.PlaySound"
+   ]
+  },
+  "453": {
+   "name": "ServerSetAttachment_Validate",
+   "from": [
+    "AFortPlayerPawn.ServerSetAttachment"
+   ]
+  },
+  "454": {
+   "name": "ServerSetAttachment_Implementation",
+   "from": [
+    "AFortPlayerPawn.ServerSetAttachment"
+   ]
+  },
+  "455": {
+   "name": "ServerUnmarkRespawned_Validate",
+   "from": [
+    "AFortPlayerPawn.ServerUnmarkRespawned"
+   ]
+  },
+  "456": {
+   "name": "ServerUnmarkRespawned_Implementation",
+   "from": [
+    "AFortPlayerPawn.ServerUnmarkRespawned"
+   ]
+  },
+  "459": {
+   "name": "ServerRootMotionInterruptNotifyStopMontage_Validate",
+   "from": [
+    "AFortPlayerPawn.ServerRootMotionInterruptNotifyStopMontage"
+   ]
+  },
+  "460": {
+   "name": "ServerRootMotionInterruptNotifyStopMontage_Implementation",
+   "from": [
+    "AFortPlayerPawn.ServerRootMotionInterruptNotifyStopMontage"
+   ]
+  },
+  "461": {
+   "name": "ServerResetAbilitySystemComponent_Implementation",
+   "from": [
+    "AFortPlayerPawn.ServerResetAbilitySystemComponent"
+   ]
+  },
+  "462": {
+   "name": "ClientResetAbilitySystemComponent_Implementation",
+   "from": [
+    "AFortPlayerPawn.ClientResetAbilitySystemComponent"
+   ]
+  },
+  "463": {
+   "name": "ServerRespawnFromDBNO_Validate",
+   "from": [
+    "AFortPlayerPawn.ServerRespawnFromDBNO"
+   ]
+  },
+  "464": {
+   "name": "ServerRespawnFromDBNO_Implementation",
+   "from": [
+    "AFortPlayerPawn.ServerRespawnFromDBNO"
+   ]
+  },
+  "465": {
+   "name": "ServerReviveFromDBNO_Validate",
+   "from": [
+    "AFortPlayerPawn.ServerReviveFromDBNO"
+   ]
+  },
+  "466": {
+   "name": "ServerReviveFromDBNO_Implementation",
+   "from": [
+    "AFortPlayerPawn.ServerReviveFromDBNO"
+   ]
+  },
+  "467": {
+   "name": "ServerDropCarriedPlayer_Implementation",
+   "from": [
+    "AFortPlayerPawn.ServerDropCarriedPlayer"
+   ]
+  },
+  "468": {
+   "name": "ServerThrowCarriedPlayer_Implementation",
+   "from": [
+    "AFortPlayerPawn.ServerThrowCarriedPlayer"
+   ]
+  },
+  "469": {
+   "name": "ServerInterrogateDBNOPlayer_Implementation",
+   "from": [
+    "AFortPlayerPawn.ServerInterrogateDBNOPlayer"
+   ]
+  },
+  "470": {
+   "name": "ServerHoistDBNOPlayer_Implementation",
+   "from": [
+    "AFortPlayerPawn.ServerHoistDBNOPlayer"
+   ]
+  },
+  "471": {
+   "name": "ServerChoosePart_Validate",
+   "from": [
+    "AFortPlayerPawn.ServerChoosePart"
+   ]
+  },
+  "472": {
+   "name": "ServerChoosePart_Implementation",
+   "from": [
+    "AFortPlayerPawn.ServerChoosePart"
+   ]
+  },
+  "473": {
+   "name": "ServerChooseGender_Validate",
+   "from": [
+    "AFortPlayerPawn.ServerChooseGender"
+   ]
+  },
+  "474": {
+   "name": "ServerChooseGender_Implementation",
+   "from": [
+    "AFortPlayerPawn.ServerChooseGender"
+   ]
+  },
+  "475": {
+   "name": "ServerToggleBodyType_Validate",
+   "from": [
+    "AFortPlayerPawn.ServerToggleBodyType"
+   ]
+  },
+  "476": {
+   "name": "ServerToggleBodyType_Implementation",
+   "from": [
+    "AFortPlayerPawn.ServerToggleBodyType"
+   ]
+  },
+  "477": {
+   "name": "ServerToggleGender_Validate",
+   "from": [
+    "AFortPlayerPawn.ServerToggleGender"
+   ]
+  },
+  "478": {
+   "name": "ServerToggleGender_Implementation",
+   "from": [
+    "AFortPlayerPawn.ServerToggleGender"
+   ]
+  },
+  "479": {
+   "name": "ServerCycleAccessoryColorSwatch_Validate",
+   "from": [
+    "AFortPlayerPawn.ServerCycleAccessoryColorSwatch"
+   ]
+  },
+  "480": {
+   "name": "ServerCycleAccessoryColorSwatch_Implementation",
+   "from": [
+    "AFortPlayerPawn.ServerCycleAccessoryColorSwatch"
+   ]
+  },
+  "481": {
+   "name": "ServerCycleColorSwatch_Validate",
+   "from": [
+    "AFortPlayerPawn.ServerCycleColorSwatch"
+   ]
+  },
+  "482": {
+   "name": "ServerCycleColorSwatch_Implementation",
+   "from": [
+    "AFortPlayerPawn.ServerCycleColorSwatch"
+   ]
+  },
+  "483": {
+   "name": "ServerCyclePart_Validate",
+   "from": [
+    "AFortPlayerPawn.ServerCyclePart"
+   ]
+  },
+  "484": {
+   "name": "ServerCyclePart_Implementation",
+   "from": [
+    "AFortPlayerPawn.ServerCyclePart"
+   ]
+  },
+  "485": {
+   "name": "ServerHandlePickupWithSwap_Validate",
+   "from": [
+    "AFortPlayerPawn.ServerHandlePickupWithSwap"
+   ]
+  },
+  "486": {
+   "name": "ServerHandlePickupWithSwap_Implementation",
+   "from": [
+    "AFortPlayerPawn.ServerHandlePickupWithSwap"
+   ]
+  },
+  "487": {
+   "name": "ServerHandlePickupWithRequestedSwap_Validate",
+   "from": [
+    "AFortPlayerPawn.ServerHandlePickupWithRequestedSwap"
+   ]
+  },
+  "488": {
+   "name": "ServerHandlePickupWithRequestedSwap_Implementation",
+   "from": [
+    "AFortPlayerPawn.ServerHandlePickupWithRequestedSwap"
+   ]
+  },
+  "489": {
+   "name": "ServerHandlePickup_Validate",
+   "from": [
+    "AFortPlayerPawn.ServerHandlePickup"
+   ]
+  },
+  "490": {
+   "name": "ServerHandlePickup_Implementation",
+   "from": [
+    "AFortPlayerPawn.ServerHandlePickup"
+   ]
+  },
+  "491": {
+   "name": "ServerSendAimbotDetectionStatus_Validate",
+   "from": [
+    "AFortPlayerPawn.ServerSendAimbotDetectionStatus"
+   ]
+  },
+  "492": {
+   "name": "ServerSendAimbotDetectionStatus_Implementation",
+   "from": [
+    "AFortPlayerPawn.ServerSendAimbotDetectionStatus"
+   ]
+  },
+  "493": {
+   "name": "ServerSetAimbotDetection_Validate",
+   "from": [
+    "AFortPlayerPawn.ServerSetAimbotDetection"
+   ]
+  },
+  "494": {
+   "name": "ServerSetAimbotDetection_Implementation",
+   "from": [
+    "AFortPlayerPawn.ServerSetAimbotDetection"
+   ]
+  },
+  "495": {
+   "name": "ServerEquipLastWeaponOrGadget_Validate",
+   "from": [
+    "AFortPlayerPawn.ServerEquipLastWeaponOrGadget"
+   ]
+  },
+  "496": {
+   "name": "ServerEquipLastWeaponOrGadget_Implementation",
+   "from": [
+    "AFortPlayerPawn.ServerEquipLastWeaponOrGadget"
+   ]
+  },
+  "497": {
+   "name": "ServerPlayUnableToPerformActionMontage_Validate",
+   "from": [
+    "AFortPlayerPawn.ServerPlayUnableToPerformActionMontage"
+   ]
+  },
+  "498": {
+   "name": "ServerPlayUnableToPerformActionMontage_Implementation",
+   "from": [
+    "AFortPlayerPawn.ServerPlayUnableToPerformActionMontage"
+   ]
+  },
+  "499": {
+   "name": "ClientNotifyAbilityFailed_Implementation",
+   "from": [
+    "AFortPlayerPawn.ClientNotifyAbilityFailed"
+   ]
+  },
+  "500": {
+   "name": "ServerSendZiplineState_Validate",
+   "from": [
+    "AFortPlayerPawn.ServerSendZiplineState"
+   ]
+  },
+  "501": {
+   "name": "ServerSendZiplineState_Implementation",
+   "from": [
+    "AFortPlayerPawn.ServerSendZiplineState"
+   ]
+  },
+  "502": {
+   "name": "MulticastUpdateVehicleInputStateReliable_Implementation",
+   "from": [
+    "AFortPlayerPawn.MulticastUpdateVehicleInputStateReliable"
+   ]
+  },
+  "503": {
+   "name": "ServerUpdateVehicleInputStateReliable_Validate",
+   "from": [
+    "AFortPlayerPawn.ServerUpdateVehicleInputStateReliable"
+   ]
+  },
+  "504": {
+   "name": "ServerUpdateVehicleInputStateReliable_Implementation",
+   "from": [
+    "AFortPlayerPawn.ServerUpdateVehicleInputStateReliable"
+   ]
+  },
+  "505": {
+   "name": "ServerUpdateVehicleInputStateUnreliable_Validate",
+   "from": [
+    "AFortPlayerPawn.ServerUpdateVehicleInputStateUnreliable"
+   ]
+  },
+  "506": {
+   "name": "ServerUpdateVehicleInputStateUnreliable_Implementation",
+   "from": [
+    "AFortPlayerPawn.ServerUpdateVehicleInputStateUnreliable"
+   ]
+  },
+  "507": {
+   "name": "ClientAcknowledgeVehicleInputState_Implementation",
+   "from": [
+    "AFortPlayerPawn.ClientAcknowledgeVehicleInputState"
+   ]
+  },
+  "636": {
+   "name": "ServerCreativeToggleGhost_Validate",
+   "from": [
+    "AFortPlayerPawnAthena.ServerCreativeToggleGhost"
+   ]
+  },
+  "637": {
+   "name": "ServerCreativeToggleGhost_Implementation",
+   "from": [
+    "AFortPlayerPawnAthena.ServerCreativeToggleGhost"
+   ]
+  },
+  "639": {
+   "name": "NetMulticast_SuccessfulBuildingEdit_Implementation",
+   "from": [
+    "AFortPlayerPawnAthena.NetMulticast_SuccessfulBuildingEdit"
+   ]
+  },
+  "640": {
+   "name": "ServerSuicide_Validate",
+   "from": [
+    "AFortPlayerPawnAthena.ServerSuicide"
+   ]
+  },
+  "641": {
+   "name": "ServerSuicide_Implementation",
+   "from": [
+    "AFortPlayerPawnAthena.ServerSuicide"
+   ]
+  },
+  "642": {
+   "name": "FastSharedReplication_Implementation",
+   "from": [
+    "AFortPlayerPawnAthena.FastSharedReplication"
+   ]
+  },
+  "643": {
+   "name": "ServerSetInteractingItem_Validate",
+   "from": [
+    "AFortPlayerPawnAthena.ServerSetInteractingItem"
+   ]
+  },
+  "644": {
+   "name": "ServerSetInteractingItem_Implementation",
+   "from": [
+    "AFortPlayerPawnAthena.ServerSetInteractingItem"
+   ]
+  }
+ },
+ "conflicts": []
+}

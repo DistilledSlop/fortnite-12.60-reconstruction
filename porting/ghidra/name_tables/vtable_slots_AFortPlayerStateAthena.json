@@ -1,0 +1,69 @@
+{
+ "class": "AFortPlayerStateAthena",
+ "table_va": "0x145e35fa8",
+ "entries_read_upper_bound": 452,
+ "source": "tier-1 RPC thunks: indirect CALL qword ptr [reg+disp] (validate at slot, implementation at slot+1; unvalidated: implementation at slot)",
+ "slots": {
+  "267": {
+   "name": "Server_TogglePreserveSquad_Validate",
+   "from": [
+    "AFortPlayerStateAthena.Server_TogglePreserveSquad"
+   ]
+  },
+  "268": {
+   "name": "Server_TogglePreserveSquad_Implementation",
+   "from": [
+    "AFortPlayerStateAthena.Server_TogglePreserveSquad"
+   ]
+  },
+  "269": {
+   "name": "ClientNotifyMatchEntered_Implementation",
+   "from": [
+    "AFortPlayerStateAthena.ClientNotifyMatchEntered"
+   ]
+  },
+  "270": {
+   "name": "ClientReportDBNO_Implementation",
+   "from": [
+    "AFortPlayerStateAthena.ClientReportDBNO"
+   ]
+  },
+  "271": {
+   "name": "ClientReportTeamKill_Implementation",
+   "from": [
+    "AFortPlayerStateAthena.ClientReportTeamKill"
+   ]
+  },
+  "272": {
+   "name": "ClientReportKill_Implementation",
+   "from": [
+    "AFortPlayerStateAthena.ClientReportKill"
+   ]
+  },
+  "273": {
+   "name": "Client_OnNewLevel_Implementation",
+   "from": [
+    "AFortPlayerStateAthena.Client_OnNewLevel"
+   ]
+  },
+  "274": {
+   "name": "Server_SetCanEditCreativeIsland_Validate",
+   "from": [
+    "AFortPlayerStateAthena.Server_SetCanEditCreativeIsland"
+   ]
+  },
+  "275": {
+   "name": "Server_SetCanEditCreativeIsland_Implementation",
+   "from": [
+    "AFortPlayerStateAthena.Server_SetCanEditCreativeIsland"
+   ]
+  },
+  "276": {
+   "name": "ClientAddKillFeedErrorMessage_Implementation",
+   "from": [
+    "AFortPlayerStateAthena.ClientAddKillFeedErrorMessage"
+   ]
+  }
+ },
+ "conflicts": []
+}

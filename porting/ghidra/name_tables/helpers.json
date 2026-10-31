@@ -1,0 +1,149 @@
+{
+  "_meta": {
+    "note": "Helper identities for the Athena decompile (porting/ghidra/improve_decompile.py). Addresses are the slim project's program /FortniteClient-Win64-Shipping.runtime.exe. Evidence is in porting/decompilation_notes.md ('Helper identities').",
+    "type_strings": "int32 uint32 int64 uint64 int16 uint16 float uint8 bool FName FString TArray FText FScriptDelegate UObject void; ptr:T pointer; struct:Name:size placeholder struct; ptr:FFrame and ptr:UFunction names resolve to the FFrame struct or void*"
+  },
+  "functions": [
+    {
+      "name": "FFrame_Step",
+      "address": "0x142ed9cf0",
+      "returns": "void",
+      "params": [
+        [
+          "Stack",
+          "ptr:FFrame"
+        ],
+        [
+          "Context",
+          "ptr:UObject"
+        ],
+        [
+          "Result",
+          "ptr:void"
+        ]
+      ],
+      "source": "FFrame::Step(UObject* Context, RESULT_DECL) (CoreUObject/Private/UObject/ScriptCore.cpp:335)"
+    },
+    {
+      "name": "FFrame_StepExplicitProperty",
+      "address": "0x142ed9d20",
+      "returns": "void",
+      "params": [
+        [
+          "Stack",
+          "ptr:FFrame"
+        ],
+        [
+          "Result",
+          "ptr:void"
+        ],
+        [
+          "Property",
+          "ptr:void"
+        ]
+      ],
+      "source": "FFrame::StepExplicitProperty(void* const Result, FProperty* Property) (ScriptCore.cpp:341)"
+    },
+    {
+      "name": "FMemory_Free",
+      "address": "0x142bee710",
+      "returns": "void",
+      "params": [
+        [
+          "Ptr",
+          "ptr:void"
+        ]
+      ],
+      "source": "FMemory::Free(void*): if (Ptr) GMalloc->Free(Ptr)"
+    },
+    {
+      "name": "RPC_ValidateFailed",
+      "address": "0x142d6e0f0",
+      "returns": "void",
+      "params": [
+        [
+          "Reason",
+          "ptr:uint16"
+        ]
+      ],
+      "source": "RPC_ValidateFailed(const TCHAR* Reason) sets GLastRPCFailedReason (CoreUObject/Private/UObject/CoreNet.cpp:521)"
+    },
+    {
+      "name": "FMallocThreadSafeProxy_Malloc",
+      "address": "0x142bfb090",
+      "returns": "ptr:void",
+      "params": [
+        [
+          "this",
+          "ptr:void"
+        ],
+        [
+          "Count",
+          "uint64"
+        ],
+        [
+          "Alignment",
+          "uint32"
+        ]
+      ],
+      "source": "GMalloc is FMallocThreadSafeProxy (vtable 0x1465c5df0, slot +0x10). Body: lock, UsedMalloc->Malloc(Count, Alignment) (MemoryBase.h Malloc)"
+    },
+    {
+      "name": "FMallocThreadSafeProxy_Realloc",
+      "address": "0x142bfd190",
+      "returns": "ptr:void",
+      "params": [
+        [
+          "this",
+          "ptr:void"
+        ],
+        [
+          "Original",
+          "ptr:void"
+        ],
+        [
+          "Count",
+          "uint64"
+        ],
+        [
+          "Alignment",
+          "uint32"
+        ]
+      ],
+      "source": "proxy vtable slot +0x20. Body: lock, UsedMalloc->Realloc(Original, Count, Alignment) (MemoryBase.h Realloc)"
+    },
+    {
+      "name": "FMallocThreadSafeProxy_Free",
+      "address": "0x142bee6c0",
+      "returns": "void",
+      "params": [
+        [
+          "this",
+          "ptr:void"
+        ],
+        [
+          "Original",
+          "ptr:void"
+        ]
+      ],
+      "source": "proxy vtable slot +0x30. Body: if (Original) { lock; UsedMalloc->Free(Original); unlock } (MemoryBase.h Free)"
+    }
+  ],
+  "data_labels": [
+    {
+      "name": "GMalloc",
+      "address": "0x14823d250",
+      "source": "FMallocThreadSafeProxy pointer (MemoryBase.h:24); set in FUN_142bee820"
+    },
+    {
+      "name": "GNatives",
+      "address": "0x148262b60",
+      "source": "opcode dispatch table read by FFrame::Step"
+    },
+    {
+      "name": "GLastRPCFailedReason",
+      "address": "0x148260c58",
+      "source": "written by RPC_ValidateFailed (CoreNet.cpp:523)"
+    }
+  ]
+}

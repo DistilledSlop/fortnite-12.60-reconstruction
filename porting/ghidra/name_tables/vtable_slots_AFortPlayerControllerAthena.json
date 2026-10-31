@@ -1,0 +1,1143 @@
+{
+ "class": "AFortPlayerControllerAthena",
+ "table_va": "0x145e1aac0",
+ "entries_read_upper_bound": 1200,
+ "source": "tier-1 RPC thunks: indirect CALL qword ptr [reg+disp] (validate at slot, implementation at slot+1; unvalidated: implementation at slot)",
+ "slots": {
+  "1106": {
+   "name": "ClientPreviewScreenshotModeActivated_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ClientPreviewScreenshotModeActivated"
+   ]
+  },
+  "1107": {
+   "name": "ServerResetCameraPreviewToDefaultLocation_Validate",
+   "from": [
+    "AFortPlayerControllerAthena.ServerResetCameraPreviewToDefaultLocation"
+   ]
+  },
+  "1108": {
+   "name": "ServerResetCameraPreviewToDefaultLocation_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ServerResetCameraPreviewToDefaultLocation"
+   ]
+  },
+  "1109": {
+   "name": "ServerBeginEndPreview_Validate",
+   "from": [
+    "AFortPlayerControllerAthena.ServerBeginEndPreview"
+   ]
+  },
+  "1110": {
+   "name": "ServerBeginEndPreview_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ServerBeginEndPreview"
+   ]
+  },
+  "1111": {
+   "name": "ServerUpdateUserCameraPreview_Validate",
+   "from": [
+    "AFortPlayerControllerAthena.ServerUpdateUserCameraPreview"
+   ]
+  },
+  "1112": {
+   "name": "ServerUpdateUserCameraPreview_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ServerUpdateUserCameraPreview"
+   ]
+  },
+  "1113": {
+   "name": "ServerRespondToAbandonMatch_Validate",
+   "from": [
+    "AFortPlayerControllerAthena.ServerRespondToAbandonMatch"
+   ]
+  },
+  "1114": {
+   "name": "ServerRespondToAbandonMatch_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ServerRespondToAbandonMatch"
+   ]
+  },
+  "1115": {
+   "name": "SendClientPhysicsBallStateToServer_Validate",
+   "from": [
+    "AFortPlayerControllerAthena.SendClientPhysicsBallStateToServer"
+   ]
+  },
+  "1116": {
+   "name": "SendClientPhysicsBallStateToServer_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.SendClientPhysicsBallStateToServer"
+   ]
+  },
+  "1117": {
+   "name": "SendPhysicsBallHitToServer_Validate",
+   "from": [
+    "AFortPlayerControllerAthena.SendPhysicsBallHitToServer"
+   ]
+  },
+  "1118": {
+   "name": "SendPhysicsBallHitToServer_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.SendPhysicsBallHitToServer"
+   ]
+  },
+  "1119": {
+   "name": "ServerNotifyClientReachedMaxWaitingTimeForDeviceReplication_Validate",
+   "from": [
+    "AFortPlayerControllerAthena.ServerNotifyClientReachedMaxWaitingTimeForDeviceReplication"
+   ]
+  },
+  "1120": {
+   "name": "ServerNotifyClientReachedMaxWaitingTimeForDeviceReplication_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ServerNotifyClientReachedMaxWaitingTimeForDeviceReplication"
+   ]
+  },
+  "1121": {
+   "name": "ServerAddSimulatedXp_Validate",
+   "from": [
+    "AFortPlayerControllerAthena.ServerAddSimulatedXp"
+   ]
+  },
+  "1122": {
+   "name": "ServerAddSimulatedXp_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ServerAddSimulatedXp"
+   ]
+  },
+  "1123": {
+   "name": "ServerSimulateLevelUp_Validate",
+   "from": [
+    "AFortPlayerControllerAthena.ServerSimulateLevelUp"
+   ]
+  },
+  "1124": {
+   "name": "ServerSimulateLevelUp_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ServerSimulateLevelUp"
+   ]
+  },
+  "1125": {
+   "name": "ServerRequestObjectTrackingDetails_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ServerRequestObjectTrackingDetails"
+   ]
+  },
+  "1126": {
+   "name": "TellServer_ClientReceivedPlaysetDataForVolume_Validate",
+   "from": [
+    "AFortPlayerControllerAthena.TellServer_ClientReceivedPlaysetDataForVolume"
+   ]
+  },
+  "1127": {
+   "name": "TellServer_ClientReceivedPlaysetDataForVolume_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.TellServer_ClientReceivedPlaysetDataForVolume"
+   ]
+  },
+  "1128": {
+   "name": "ServerEndUnloadingVolume_Validate",
+   "from": [
+    "AFortPlayerControllerAthena.ServerEndUnloadingVolume"
+   ]
+  },
+  "1129": {
+   "name": "ServerEndUnloadingVolume_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ServerEndUnloadingVolume"
+   ]
+  },
+  "1130": {
+   "name": "ServerStartUnloadingVolume_Validate",
+   "from": [
+    "AFortPlayerControllerAthena.ServerStartUnloadingVolume"
+   ]
+  },
+  "1131": {
+   "name": "ServerStartUnloadingVolume_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ServerStartUnloadingVolume"
+   ]
+  },
+  "1132": {
+   "name": "ServerEndLoadingVolume_Validate",
+   "from": [
+    "AFortPlayerControllerAthena.ServerEndLoadingVolume"
+   ]
+  },
+  "1133": {
+   "name": "ServerEndLoadingVolume_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ServerEndLoadingVolume"
+   ]
+  },
+  "1134": {
+   "name": "ServerStartLoadingVolume_Validate",
+   "from": [
+    "AFortPlayerControllerAthena.ServerStartLoadingVolume"
+   ]
+  },
+  "1135": {
+   "name": "ServerStartLoadingVolume_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ServerStartLoadingVolume"
+   ]
+  },
+  "1136": {
+   "name": "ServerCreateProfileGoCollectionForSublevels_Validate",
+   "from": [
+    "AFortPlayerControllerAthena.ServerCreateProfileGoCollectionForSublevels"
+   ]
+  },
+  "1137": {
+   "name": "ServerCreateProfileGoCollectionForSublevels_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ServerCreateProfileGoCollectionForSublevels"
+   ]
+  },
+  "1138": {
+   "name": "ClientAddProfileGoCollection_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ClientAddProfileGoCollection"
+   ]
+  },
+  "1139": {
+   "name": "ServerLoadIslandCheckpoint_Validate",
+   "from": [
+    "AFortPlayerControllerAthena.ServerLoadIslandCheckpoint"
+   ]
+  },
+  "1140": {
+   "name": "ServerLoadIslandCheckpoint_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ServerLoadIslandCheckpoint"
+   ]
+  },
+  "1141": {
+   "name": "ServerSaveIslandCheckpoint_Validate",
+   "from": [
+    "AFortPlayerControllerAthena.ServerSaveIslandCheckpoint"
+   ]
+  },
+  "1142": {
+   "name": "ServerSaveIslandCheckpoint_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ServerSaveIslandCheckpoint"
+   ]
+  },
+  "1143": {
+   "name": "ServerLoadPlotForPortalFromMnemonic_Validate",
+   "from": [
+    "AFortPlayerControllerAthena.ServerLoadPlotForPortalFromMnemonic"
+   ]
+  },
+  "1144": {
+   "name": "ServerLoadPlotForPortalFromMnemonic_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ServerLoadPlotForPortalFromMnemonic"
+   ]
+  },
+  "1145": {
+   "name": "ServerLoadPlotForPortal_Validate",
+   "from": [
+    "AFortPlayerControllerAthena.ServerLoadPlotForPortal"
+   ]
+  },
+  "1146": {
+   "name": "ServerLoadPlotForPortal_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ServerLoadPlotForPortal"
+   ]
+  },
+  "1147": {
+   "name": "ServerSetPlayset_Validate",
+   "from": [
+    "AFortPlayerControllerAthena.ServerSetPlayset"
+   ]
+  },
+  "1148": {
+   "name": "ServerSetPlayset_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ServerSetPlayset"
+   ]
+  },
+  "1149": {
+   "name": "ServerNotifyOstrichSelfDestruct_Validate",
+   "from": [
+    "AFortPlayerControllerAthena.ServerNotifyOstrichSelfDestruct"
+   ]
+  },
+  "1150": {
+   "name": "ServerNotifyOstrichSelfDestruct_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ServerNotifyOstrichSelfDestruct"
+   ]
+  },
+  "1151": {
+   "name": "ServerNotifyOstrichShieldOvercharge_Validate",
+   "from": [
+    "AFortPlayerControllerAthena.ServerNotifyOstrichShieldOvercharge"
+   ]
+  },
+  "1152": {
+   "name": "ServerNotifyOstrichShieldOvercharge_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ServerNotifyOstrichShieldOvercharge"
+   ]
+  },
+  "1153": {
+   "name": "ClientCycleQuickBarToCreativeItem_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ClientCycleQuickBarToCreativeItem"
+   ]
+  },
+  "1154": {
+   "name": "ServerEndMinigame_Validate",
+   "from": [
+    "AFortPlayerControllerAthena.ServerEndMinigame"
+   ]
+  },
+  "1155": {
+   "name": "ServerEndMinigame_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ServerEndMinigame"
+   ]
+  },
+  "1156": {
+   "name": "ServerToggleAutoRestartMinigame_Validate",
+   "from": [
+    "AFortPlayerControllerAthena.ServerToggleAutoRestartMinigame"
+   ]
+  },
+  "1157": {
+   "name": "ServerToggleAutoRestartMinigame_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ServerToggleAutoRestartMinigame"
+   ]
+  },
+  "1158": {
+   "name": "ServerRestartMinigame_Validate",
+   "from": [
+    "AFortPlayerControllerAthena.ServerRestartMinigame"
+   ]
+  },
+  "1159": {
+   "name": "ServerRestartMinigame_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ServerRestartMinigame"
+   ]
+  },
+  "1160": {
+   "name": "ServerStartMinigame_Validate",
+   "from": [
+    "AFortPlayerControllerAthena.ServerStartMinigame"
+   ]
+  },
+  "1161": {
+   "name": "ServerStartMinigame_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ServerStartMinigame"
+   ]
+  },
+  "1162": {
+   "name": "ServerSpawnCreativeSupplyDrop_Validate",
+   "from": [
+    "AFortPlayerControllerAthena.ServerSpawnCreativeSupplyDrop"
+   ]
+  },
+  "1163": {
+   "name": "ServerSpawnCreativeSupplyDrop_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ServerSpawnCreativeSupplyDrop"
+   ]
+  },
+  "1164": {
+   "name": "ServerAddToCachedPurchased_Validate",
+   "from": [
+    "AFortPlayerControllerAthena.ServerAddToCachedPurchased"
+   ]
+  },
+  "1165": {
+   "name": "ServerAddToCachedPurchased_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ServerAddToCachedPurchased"
+   ]
+  },
+  "1166": {
+   "name": "ServerSetMinigameClassSlot_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ServerSetMinigameClassSlot"
+   ]
+  },
+  "1167": {
+   "name": "ServerSetTeam_Validate",
+   "from": [
+    "AFortPlayerControllerAthena.ServerSetTeam"
+   ]
+  },
+  "1168": {
+   "name": "ServerSetTeam_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ServerSetTeam"
+   ]
+  },
+  "1169": {
+   "name": "ServerSelectMutatorItem_Validate",
+   "from": [
+    "AFortPlayerControllerAthena.ServerSelectMutatorItem"
+   ]
+  },
+  "1170": {
+   "name": "ServerSelectMutatorItem_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ServerSelectMutatorItem"
+   ]
+  },
+  "1171": {
+   "name": "ServerGiveCreativeItem_Validate",
+   "from": [
+    "AFortPlayerControllerAthena.ServerGiveCreativeItem"
+   ]
+  },
+  "1172": {
+   "name": "ServerGiveCreativeItem_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ServerGiveCreativeItem"
+   ]
+  },
+  "1173": {
+   "name": "ServerReleasePortal_Validate",
+   "from": [
+    "AFortPlayerControllerAthena.ServerReleasePortal"
+   ]
+  },
+  "1174": {
+   "name": "ServerReleasePortal_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ServerReleasePortal"
+   ]
+  },
+  "1175": {
+   "name": "ServerClaimPortal_Validate",
+   "from": [
+    "AFortPlayerControllerAthena.ServerClaimPortal"
+   ]
+  },
+  "1176": {
+   "name": "ServerClaimPortal_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ServerClaimPortal"
+   ]
+  },
+  "1177": {
+   "name": "ClientAutoEquipFirstItem_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ClientAutoEquipFirstItem"
+   ]
+  },
+  "1178": {
+   "name": "ServerEnableAnonymousCharacterMode_Validate",
+   "from": [
+    "AFortPlayerControllerAthena.ServerEnableAnonymousCharacterMode"
+   ]
+  },
+  "1179": {
+   "name": "ServerEnableAnonymousCharacterMode_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ServerEnableAnonymousCharacterMode"
+   ]
+  },
+  "1180": {
+   "name": "ServerEnableAnonymousMode_Validate",
+   "from": [
+    "AFortPlayerControllerAthena.ServerEnableAnonymousMode"
+   ]
+  },
+  "1181": {
+   "name": "ServerEnableAnonymousMode_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ServerEnableAnonymousMode"
+   ]
+  },
+  "1182": {
+   "name": "ServerSendSquadFriend_Validate",
+   "from": [
+    "AFortPlayerControllerAthena.ServerSendSquadFriend"
+   ]
+  },
+  "1183": {
+   "name": "ServerSendSquadFriend_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ServerSendSquadFriend"
+   ]
+  },
+  "1184": {
+   "name": "ClientSendTeamStatsForPlayer_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ClientSendTeamStatsForPlayer"
+   ]
+  },
+  "1185": {
+   "name": "ClientSendMatchStatsForPlayer_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ClientSendMatchStatsForPlayer"
+   ]
+  },
+  "1186": {
+   "name": "ClientSendEndBattleRoyaleMatchForPlayer_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ClientSendEndBattleRoyaleMatchForPlayer"
+   ]
+  },
+  "1187": {
+   "name": "ClientSendEndMatchReportHeartbeat_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ClientSendEndMatchReportHeartbeat"
+   ]
+  },
+  "1188": {
+   "name": "Client_DisplayQuestUpdate_Self_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.Client_DisplayQuestUpdate_Self"
+   ]
+  },
+  "1189": {
+   "name": "Client_DisplayQuestUpdate_Assist_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.Client_DisplayQuestUpdate_Assist"
+   ]
+  },
+  "1190": {
+   "name": "ClientEnterCameraMode_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ClientEnterCameraMode"
+   ]
+  },
+  "1191": {
+   "name": "ClientSendStateEncryptionKey_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ClientSendStateEncryptionKey"
+   ]
+  },
+  "1192": {
+   "name": "ClientSendDebugPoiVolumeData_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ClientSendDebugPoiVolumeData"
+   ]
+  },
+  "1193": {
+   "name": "ClientSendDebugPoiLocationTags_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ClientSendDebugPoiLocationTags"
+   ]
+  },
+  "1194": {
+   "name": "ServerGenerateMockMatchReport_Validate",
+   "from": [
+    "AFortPlayerControllerAthena.ServerGenerateMockMatchReport"
+   ]
+  },
+  "1195": {
+   "name": "ServerGenerateMockMatchReport_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ServerGenerateMockMatchReport"
+   ]
+  },
+  "1196": {
+   "name": "ServerDBNOReviveInterrupted_Validate",
+   "from": [
+    "AFortPlayerControllerAthena.ServerDBNOReviveInterrupted"
+   ]
+  },
+  "1197": {
+   "name": "ServerDBNOReviveInterrupted_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ServerDBNOReviveInterrupted"
+   ]
+  },
+  "1198": {
+   "name": "ServerDBNOReviveStarted_Validate",
+   "from": [
+    "AFortPlayerControllerAthena.ServerDBNOReviveStarted"
+   ]
+  },
+  "1199": {
+   "name": "ServerDBNOReviveStarted_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ServerDBNOReviveStarted"
+   ]
+  },
+  "1200": {
+   "name": "ClientSetStreamingTestStreamingLevels_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ClientSetStreamingTestStreamingLevels"
+   ]
+  },
+  "1201": {
+   "name": "ServerApplyOverrideWrapToVehicle_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ServerApplyOverrideWrapToVehicle"
+   ]
+  },
+  "1202": {
+   "name": "ServerApplyOverrideWrapToItem_Validate",
+   "from": [
+    "AFortPlayerControllerAthena.ServerApplyOverrideWrapToItem"
+   ]
+  },
+  "1203": {
+   "name": "ServerApplyOverrideWrapToItem_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ServerApplyOverrideWrapToItem"
+   ]
+  },
+  "1204": {
+   "name": "ServerInsertExtraStreamingTestSkydiveStates_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ServerInsertExtraStreamingTestSkydiveStates"
+   ]
+  },
+  "1205": {
+   "name": "ServerSetStreamingTestStreamingLevels_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ServerSetStreamingTestStreamingLevels"
+   ]
+  },
+  "1206": {
+   "name": "ClientAlertPortalDoneTeleporting_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ClientAlertPortalDoneTeleporting"
+   ]
+  },
+  "1207": {
+   "name": "ServerStartInteractWithIslandPortal_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ServerStartInteractWithIslandPortal"
+   ]
+  },
+  "1208": {
+   "name": "ServerTickForDoneTeleporting_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ServerTickForDoneTeleporting"
+   ]
+  },
+  "1209": {
+   "name": "ServerTryFindPlotItemForDefinition_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ServerTryFindPlotItemForDefinition"
+   ]
+  },
+  "1210": {
+   "name": "ClientBroadcastPlotItemID_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ClientBroadcastPlotItemID"
+   ]
+  },
+  "1211": {
+   "name": "ClientSignalPortalLoadCompleteViaDelegate_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ClientSignalPortalLoadCompleteViaDelegate"
+   ]
+  },
+  "1212": {
+   "name": "ServerTeleportViaCreativePortal_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ServerTeleportViaCreativePortal"
+   ]
+  },
+  "1213": {
+   "name": "ServerSetOnCreativePortalLoadedDelegate_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ServerSetOnCreativePortalLoadedDelegate"
+   ]
+  },
+  "1214": {
+   "name": "ClientBotStopDogpile_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ClientBotStopDogpile"
+   ]
+  },
+  "1215": {
+   "name": "ClientBotStartDogpile_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ClientBotStartDogpile"
+   ]
+  },
+  "1216": {
+   "name": "ClientSetDeathReport_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ClientSetDeathReport"
+   ]
+  },
+  "1217": {
+   "name": "ServerSetReceiveEmailSignups_Validate",
+   "from": [
+    "AFortPlayerControllerAthena.ServerSetReceiveEmailSignups"
+   ]
+  },
+  "1218": {
+   "name": "ServerSetReceiveEmailSignups_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ServerSetReceiveEmailSignups"
+   ]
+  },
+  "1219": {
+   "name": "ServerUpdateSolarisString_Validate",
+   "from": [
+    "AFortPlayerControllerAthena.ServerUpdateSolarisString"
+   ]
+  },
+  "1220": {
+   "name": "ServerUpdateSolarisString_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ServerUpdateSolarisString"
+   ]
+  },
+  "1221": {
+   "name": "ServerSetUseSolaris_Validate",
+   "from": [
+    "AFortPlayerControllerAthena.ServerSetUseSolaris"
+   ]
+  },
+  "1222": {
+   "name": "ServerSetUseSolaris_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ServerSetUseSolaris"
+   ]
+  },
+  "1223": {
+   "name": "ServerReloadCreativePlot_Validate",
+   "from": [
+    "AFortPlayerControllerAthena.ServerReloadCreativePlot"
+   ]
+  },
+  "1224": {
+   "name": "ServerReloadCreativePlot_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ServerReloadCreativePlot"
+   ]
+  },
+  "1225": {
+   "name": "ServerStopSavingCreativePlot_Validate",
+   "from": [
+    "AFortPlayerControllerAthena.ServerStopSavingCreativePlot"
+   ]
+  },
+  "1226": {
+   "name": "ServerStopSavingCreativePlot_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ServerStopSavingCreativePlot"
+   ]
+  },
+  "1227": {
+   "name": "ClientPublishCreativePlotComplete_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ClientPublishCreativePlotComplete"
+   ]
+  },
+  "1228": {
+   "name": "ClientBroadcastOnUpdateCreativeDescriptionTags_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ClientBroadcastOnUpdateCreativeDescriptionTags"
+   ]
+  },
+  "1229": {
+   "name": "ClientBroadcastOnUpdateCreativePlotName_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ClientBroadcastOnUpdateCreativePlotName"
+   ]
+  },
+  "1230": {
+   "name": "UpdateCreativeIslandDescriptionTags_Validate",
+   "from": [
+    "AFortPlayerControllerAthena.UpdateCreativeIslandDescriptionTags"
+   ]
+  },
+  "1231": {
+   "name": "UpdateCreativeIslandDescriptionTags_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.UpdateCreativeIslandDescriptionTags"
+   ]
+  },
+  "1232": {
+   "name": "UpdateCreativePlotName_Validate",
+   "from": [
+    "AFortPlayerControllerAthena.UpdateCreativePlotName"
+   ]
+  },
+  "1233": {
+   "name": "UpdateCreativePlotName_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.UpdateCreativePlotName"
+   ]
+  },
+  "1234": {
+   "name": "UpdateCreativePlotData_Validate",
+   "from": [
+    "AFortPlayerControllerAthena.UpdateCreativePlotData"
+   ]
+  },
+  "1235": {
+   "name": "UpdateCreativePlotData_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.UpdateCreativePlotData"
+   ]
+  },
+  "1236": {
+   "name": "ClientBroadcastOnDuplicateCreativePlotFinished_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ClientBroadcastOnDuplicateCreativePlotFinished"
+   ]
+  },
+  "1237": {
+   "name": "DuplicateCreativePlot_Validate",
+   "from": [
+    "AFortPlayerControllerAthena.DuplicateCreativePlot"
+   ]
+  },
+  "1238": {
+   "name": "DuplicateCreativePlot_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.DuplicateCreativePlot"
+   ]
+  },
+  "1239": {
+   "name": "ClientBroadcastOnRestoreCreativePlotFinished_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ClientBroadcastOnRestoreCreativePlotFinished"
+   ]
+  },
+  "1240": {
+   "name": "RestoreCreativePlot_Validate",
+   "from": [
+    "AFortPlayerControllerAthena.RestoreCreativePlot"
+   ]
+  },
+  "1241": {
+   "name": "RestoreCreativePlot_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.RestoreCreativePlot"
+   ]
+  },
+  "1242": {
+   "name": "ServerResetCurrentVolumeWithoutTeleport_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ServerResetCurrentVolumeWithoutTeleport"
+   ]
+  },
+  "1243": {
+   "name": "ClientBroadcastOnDestroyCreativePlotFinished_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ClientBroadcastOnDestroyCreativePlotFinished"
+   ]
+  },
+  "1244": {
+   "name": "DestroyCreativePlot_Validate",
+   "from": [
+    "AFortPlayerControllerAthena.DestroyCreativePlot"
+   ]
+  },
+  "1245": {
+   "name": "DestroyCreativePlot_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.DestroyCreativePlot"
+   ]
+  },
+  "1246": {
+   "name": "ClientBroadcastOnMakeNewCreativePlotFinished_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ClientBroadcastOnMakeNewCreativePlotFinished"
+   ]
+  },
+  "1247": {
+   "name": "MakeNewCreativePlotFromLinkCode_Validate",
+   "from": [
+    "AFortPlayerControllerAthena.MakeNewCreativePlotFromLinkCode"
+   ]
+  },
+  "1248": {
+   "name": "MakeNewCreativePlotFromLinkCode_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.MakeNewCreativePlotFromLinkCode"
+   ]
+  },
+  "1249": {
+   "name": "MakeNewCreativePlot_Validate",
+   "from": [
+    "AFortPlayerControllerAthena.MakeNewCreativePlot"
+   ]
+  },
+  "1250": {
+   "name": "MakeNewCreativePlot_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.MakeNewCreativePlot"
+   ]
+  },
+  "1251": {
+   "name": "PublishCreativePlot_Validate",
+   "from": [
+    "AFortPlayerControllerAthena.PublishCreativePlot"
+   ]
+  },
+  "1252": {
+   "name": "PublishCreativePlot_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.PublishCreativePlot"
+   ]
+  },
+  "1253": {
+   "name": "ResetMyCurrentCreativePlot_Validate",
+   "from": [
+    "AFortPlayerControllerAthena.ResetMyCurrentCreativePlot"
+   ]
+  },
+  "1254": {
+   "name": "ResetMyCurrentCreativePlot_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ResetMyCurrentCreativePlot"
+   ]
+  },
+  "1255": {
+   "name": "ClientAlertLeaveIsland_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ClientAlertLeaveIsland"
+   ]
+  },
+  "1256": {
+   "name": "ServerTeleportToPlaygroundIslandDock_Validate",
+   "from": [
+    "AFortPlayerControllerAthena.ServerTeleportToPlaygroundIslandDock"
+   ]
+  },
+  "1257": {
+   "name": "ServerTeleportToPlaygroundIslandDock_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ServerTeleportToPlaygroundIslandDock"
+   ]
+  },
+  "1258": {
+   "name": "ServerTeleportToPlaygroundLobbyIsland_Validate",
+   "from": [
+    "AFortPlayerControllerAthena.ServerTeleportToPlaygroundLobbyIsland"
+   ]
+  },
+  "1259": {
+   "name": "ServerTeleportToPlaygroundLobbyIsland_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ServerTeleportToPlaygroundLobbyIsland"
+   ]
+  },
+  "1260": {
+   "name": "ClientNotifyAbortRespawn_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ClientNotifyAbortRespawn"
+   ]
+  },
+  "1261": {
+   "name": "ServerUpdateLevelStreamingHandshakeData_Validate",
+   "from": [
+    "AFortPlayerControllerAthena.ServerUpdateLevelStreamingHandshakeData"
+   ]
+  },
+  "1262": {
+   "name": "ServerUpdateLevelStreamingHandshakeData_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ServerUpdateLevelStreamingHandshakeData"
+   ]
+  },
+  "1263": {
+   "name": "ClientRequestLevelStreamingHandshake_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ClientRequestLevelStreamingHandshake"
+   ]
+  },
+  "1264": {
+   "name": "ClientStartWaitLTMLoading_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ClientStartWaitLTMLoading"
+   ]
+  },
+  "1265": {
+   "name": "ClientStopWaitLTMLoading_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ClientStopWaitLTMLoading"
+   ]
+  },
+  "1266": {
+   "name": "ServerStopWaitLTMLoading_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ServerStopWaitLTMLoading"
+   ]
+  },
+  "1267": {
+   "name": "ClientHideScreenWhileRespawning_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ClientHideScreenWhileRespawning"
+   ]
+  },
+  "1268": {
+   "name": "ServerClientIsReadyToRespawn_Validate",
+   "from": [
+    "AFortPlayerControllerAthena.ServerClientIsReadyToRespawn"
+   ]
+  },
+  "1269": {
+   "name": "ServerClientIsReadyToRespawn_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ServerClientIsReadyToRespawn"
+   ]
+  },
+  "1270": {
+   "name": "ClientStartRespawnPreparation_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ClientStartRespawnPreparation"
+   ]
+  },
+  "1271": {
+   "name": "ServerThankBusDriverCheck_Validate",
+   "from": [
+    "AFortPlayerControllerAthena.ServerThankBusDriverCheck"
+   ]
+  },
+  "1272": {
+   "name": "ServerThankBusDriverCheck_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ServerThankBusDriverCheck"
+   ]
+  },
+  "1273": {
+   "name": "ServerThankBusDriver_Validate",
+   "from": [
+    "AFortPlayerControllerAthena.ServerThankBusDriver"
+   ]
+  },
+  "1274": {
+   "name": "ServerThankBusDriver_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ServerThankBusDriver"
+   ]
+  },
+  "1275": {
+   "name": "ClientReceiveSquadQuickChatMessage_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ClientReceiveSquadQuickChatMessage"
+   ]
+  },
+  "1276": {
+   "name": "ServerPlaySquadQuickChatMessage_Validate",
+   "from": [
+    "AFortPlayerControllerAthena.ServerPlaySquadQuickChatMessage"
+   ]
+  },
+  "1277": {
+   "name": "ServerPlaySquadQuickChatMessage_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ServerPlaySquadQuickChatMessage"
+   ]
+  },
+  "1278": {
+   "name": "ClientReceiveKillNotification_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ClientReceiveKillNotification"
+   ]
+  },
+  "1279": {
+   "name": "ServerBroadcastDeviceButtonComponentClickedDelegate_Validate",
+   "from": [
+    "AFortPlayerControllerAthena.ServerBroadcastDeviceButtonComponentClickedDelegate"
+   ]
+  },
+  "1280": {
+   "name": "ServerBroadcastDeviceButtonComponentClickedDelegate_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ServerBroadcastDeviceButtonComponentClickedDelegate"
+   ]
+  },
+  "1281": {
+   "name": "OnPostGameForced_Validate",
+   "from": [
+    "AFortPlayerControllerAthena.OnPostGameForced"
+   ]
+  },
+  "1282": {
+   "name": "OnPostGameForced_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.OnPostGameForced"
+   ]
+  },
+  "1283": {
+   "name": "ServerRequestNewSkydiveLeader_Validate",
+   "from": [
+    "AFortPlayerControllerAthena.ServerRequestNewSkydiveLeader"
+   ]
+  },
+  "1284": {
+   "name": "ServerRequestNewSkydiveLeader_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ServerRequestNewSkydiveLeader"
+   ]
+  },
+  "1285": {
+   "name": "ServerClearSkydiveLeader_Validate",
+   "from": [
+    "AFortPlayerControllerAthena.ServerClearSkydiveLeader"
+   ]
+  },
+  "1286": {
+   "name": "ServerClearSkydiveLeader_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ServerClearSkydiveLeader"
+   ]
+  },
+  "1287": {
+   "name": "ServerLookedAtFocalPoint_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ServerLookedAtFocalPoint"
+   ]
+  },
+  "1288": {
+   "name": "ClientReportTournamentPlacementPointsScored_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ClientReportTournamentPlacementPointsScored"
+   ]
+  },
+  "1289": {
+   "name": "ClientNotifyTeamLost_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ClientNotifyTeamLost"
+   ]
+  },
+  "1290": {
+   "name": "ClientNotifyLost_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ClientNotifyLost"
+   ]
+  },
+  "1291": {
+   "name": "ClientNotifyTeamWon_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ClientNotifyTeamWon"
+   ]
+  },
+  "1292": {
+   "name": "ClientNotifyWon_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.ClientNotifyWon"
+   ]
+  },
+  "1293": {
+   "name": "UpdateUGCRestrictedForVolume_Validate",
+   "from": [
+    "AFortPlayerControllerAthena.UpdateUGCRestrictedForVolume"
+   ]
+  },
+  "1294": {
+   "name": "UpdateUGCRestrictedForVolume_Implementation",
+   "from": [
+    "AFortPlayerControllerAthena.UpdateUGCRestrictedForVolume"
+   ]
+  }
+ },
+ "conflicts": []
+}
