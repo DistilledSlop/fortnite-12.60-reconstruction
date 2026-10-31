@@ -943,6 +943,24 @@ def types_self_test(check):
     check("net: fallback header is marked TODO and declares no trait",
           "TODO: the native net serializer of FCustom is not recovered" in text
           and "TStructOpsTypeTraits" not in text)
+    # struct_net (native): the body is declared inline one level deeper, UPackageMap is forward declared, and the traits
+    # follow the binary (WithNetSharedSerialization only when the binary has HasNetSharedSerialization).
+    native = {"kind": "native", "body": "bOutSuccess = true;\nreturn true;", "inc_path": "porting/behavior/FNative/x.inc",
+              "traits": ["HasNetSerializer", "HasNetSharedSerialization"], "vtable": "0x1", "includes": [], "uses": []}
+    native_model = {"cpp_name": "FNative", "parent": None, "parent_include": None, "includes": [], "forward_decls": [],
+                    "members": [], "net": native}
+    text = render_struct_header(native_model, "self-test")
+    check("net: native header declares NetSerialize inline with the shared trait",
+          "\t%s\n\t{\n\t\tbOutSuccess = true;\n\t\treturn true;\n\t}" % NATIVE_NET_SIGNATURE in text
+          and "class UPackageMap;" in text
+          and "struct TStructOpsTypeTraits<FNative> : public TStructOpsTypeTraitsBase2<FNative>" in text
+          and "enum { WithNetSerializer = true, WithNetSharedSerialization = true };" in text
+          and "TODO" not in text)
+    verify_struct_net(native_model, text)   # raises SystemExit on a mismatch: the self-test fails with it
+    native["traits"] = ["HasNetSerializer"]
+    text = render_struct_header(native_model, "self-test")
+    check("net: native header without the shared trait declares WithNetSerializer only",
+          "enum { WithNetSerializer = true };" in text and "WithNetSharedSerialization" not in text)
     # Replication conditions: a recovered condition is emitted as its macro, an unknown one as COND_None with a TODO.
     REPLICATION_CONDITIONS.clear()
     REPLICATION_CONDITIONS.update({"AFakeClass": {"properties": {
@@ -2694,9 +2712,13 @@ def promote(args):
     # Behaviour snippets (see attach_snippets). Disabled with FN_BEHAVIOR_SPLICE=0 or --no-behavior.
     splice_on = behavior_enabled(args)
     snippets_by_class = {}
+    struct_entries = []   # kind struct_net: spliced into a struct header, not into a class (TypeGate.native_net_serializer)
     if splice_on:
         for entry in load_behavior(args.behavior_dir):
-            snippets_by_class.setdefault(entry["class"], []).append(entry)
+            if entry.get("kind") == STRUCT_NET_KIND:
+                struct_entries.append(entry)
+            else:
+                snippets_by_class.setdefault(entry["class"], []).append(entry)
     struct_index = {}
     for info in tables.by_fn.values():
         struct_index.setdefault(info.cpp_name.split("::")[0], info)
@@ -2706,6 +2728,10 @@ def promote(args):
                            if n not in listed and (parents.get(b) or {}).get("package") in PROMOTE_PACKAGES},
     }
     splice_done, splice_rejects = [], []
+    # struct_net entries reach the gate before pass 1 builds any struct. A second entry for one struct is refused (below).
+    gate.struct_ctx = splice_ctx
+    for entry in struct_entries:
+        gate.struct_net.setdefault(entry["class"], entry)
 
     def add_deps(module, mods):
         module_deps.setdefault(module, set()).update(m for m in mods if m and m != module)
@@ -2782,6 +2808,29 @@ def promote(args):
         for fn, kinds in model["used"].items():
             seeds.setdefault(fn, set()).update(kinds)
     models, texts, all_used = emit_types(gate, seeds, source_label)
+    # struct_net (behaviour kind): each native NetSerialize is checked as text in its header, and every entry is reported
+    # as spliced or rejected with its reason. Nothing is written before this check.
+    native_structs = {}
+    for fn, model in models.items():
+        info = gate.info(fn)
+        native_structs[info.cpp_name] = model
+        if (model.get("net") or {}).get("kind") == "native":
+            verify_struct_net(model, texts[info.header_name])
+    for entry in struct_entries:
+        cls = entry["class"]
+        tag = "%s::NetSerialize" % cls
+        if gate.struct_net.get(cls) is not entry:
+            splice_rejects.append({"entry": tag, "kind": STRUCT_NET_KIND,
+                                   "reason": "second struct_net entry for this struct"})
+        elif (native_structs.get(cls) or {}).get("net", {}).get("kind") == "native":
+            splice_done.append(tag)
+        else:
+            if cls not in native_structs:
+                reason = "struct is not emitted (not reached from the native class set)"
+            else:
+                reason = gate.struct_net_reasons.get(cls) or \
+                    "the struct has no native NetSerialize in the binary (ops traits)"
+            splice_rejects.append({"entry": tag, "kind": STRUCT_NET_KIND, "reason": reason})
     engine_used = []
     for fn, kinds in sorted(all_used.items()):
         info = gate.info(fn)
@@ -2953,6 +3002,13 @@ def promote(args):
 # module's Generated directory, one header per type.
 
 WIRE_CUSTOM_TRAITS = ("HasNetSerializer", "HasNetDeltaSerializer", "HasNetSharedSerialization")
+# Behaviour kind "struct_net" (porting/behavior/README.md, "Native NetSerialize"): the recovered NetSerialize of a struct,
+# declared and defined inline in the struct header (as the delta NetDeltaSerialize is). Only this signature is accepted,
+# and only for a struct whose binary traits are a plain NetSerialize (HasNetSerializer, HasNetSharedSerialization optional).
+STRUCT_NET_KIND = "struct_net"
+NATIVE_NET_SIGNATURE = "bool NetSerialize(FArchive& Ar, class UPackageMap* Map, bool& bOutSuccess)"
+NATIVE_NET_HAS_SHARED = "HasNetSharedSerialization"
+NATIVE_NET_SERIALIZATION_HEADER = "Serialization/Archive.h"   # FArchive is complete in the inline body
 DELEGATE_MACRO = {"single": "DECLARE_DYNAMIC_DELEGATE", "multicast": "DECLARE_DYNAMIC_MULTICAST_DELEGATE",
                   "sparse": "DECLARE_DYNAMIC_MULTICAST_SPARSE_DELEGATE"}
 PARAM_ORDINALS = ("", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine")
@@ -3207,6 +3263,11 @@ class TypeGate:
         self.reasons = {}           # fn -> reason string when the type cannot be emitted
         self._wire = {}
         self.name_clashes = set()   # promoted type names the engine declares through macros (see engine_macro_names)
+        # Behaviour kind struct_net (see native_net_serializer). Set by promote when the splice is on.
+        self.struct_net = {}          # struct C++ name -> manifest entry
+        self.struct_net_reasons = {}  # struct C++ name -> why its entry is not spliced
+        self.struct_ctx = None        # the snippet context of body_refs (names, modules, the gate)
+        self._building = set()        # fn of the types whose model is being built (see reason)
 
     def info(self, fn):
         return self.tables.by_fn.get(fn.lower()) if fn else None
@@ -3248,12 +3309,20 @@ class TypeGate:
         """None when the type can be emitted, else why not."""
         if info.fn in self.models:
             return self.reasons.get(info.fn)
-        if info.kind == "struct":
-            model, reason = self.build_struct(info)
-        elif info.kind == "enum":
-            model, reason = self.build_enum(info)
-        else:
-            model, reason = self.build_delegate(info)
+        if info.fn in self._building:
+            # A cycle through the type names of a native NetSerialize body (native_net_serializer). A by-value member
+            # cycle is impossible in C++, so the type in progress is taken as emittable; its own check decides.
+            return None
+        self._building.add(info.fn)
+        try:
+            if info.kind == "struct":
+                model, reason = self.build_struct(info)
+            elif info.kind == "enum":
+                model, reason = self.build_enum(info)
+            else:
+                model, reason = self.build_delegate(info)
+        finally:
+            self._building.discard(info.fn)
         self.models[info.fn] = model
         if reason is not None:
             self.reasons[info.fn] = reason
@@ -3312,6 +3381,8 @@ class TypeGate:
         members. Its NetDeltaSerialize is FFastArraySerializer::FastArrayDeltaSerialize over that array (identity:
         the decompiled NetDeltaSerialize of 45 Fort structs, which contains the FastArrayDeltaSerialize log strings,
         porting/decompilation_notes.md "Sixth pass"). Emitted with WithNetDeltaSerializer.
+        {"kind": "native", ...}: a struct with a recovered NetSerialize body (struct_net manifest entry, see
+        native_net_serializer). The body is declared inline in the header with the binary's traits.
         {"kind": "fallback", ...}: any other struct with a custom NetSerialize or NetDeltaSerialize. The native body is
         not recovered, so the struct keeps the default serialization and the header says so (TODO)."""
         ops = info.rec.get("struct_ops") or {}
@@ -3336,8 +3407,56 @@ class TypeGate:
                     if item_parent is not None and item_parent.cpp_name == "FFastArraySerializerItem":
                         return {"kind": "delta", "member": prop["name"], "item": item.cpp_name,
                                 "parent": "FFastArraySerializer", "traits": custom, "vtable": vtable}
+        native = self.native_net_serializer(info, custom, vtable)
+        if native is not None:
+            return native
         return {"kind": "fallback", "traits": custom, "vtable": vtable,
                 "reason": "native net serializer not recovered"}
+
+    def native_net_serializer(self, info, custom, vtable):
+        """{"kind": "native", ...} when the struct's struct_net manifest entry (recovered NetSerialize body) can be
+        spliced, else None with the reason in struct_net_reasons. The binary must have a plain NetSerialize:
+        HasNetSerializer, with HasNetSharedSerialization optional (the trait is read from the binary, not from the
+        manifest). The signature must be NATIVE_NET_SIGNATURE, and the body may name only types that the generator can
+        include (body_refs) and emit (body_types)."""
+        entry = self.struct_net.get(info.cpp_name)
+        if entry is None or self.struct_ctx is None:
+            return None
+        reason, includes = None, set()
+        if info.package not in PROMOTE_PACKAGES:
+            reason = "struct is not in a promoted package"
+        elif entry.get("body") is None:
+            reason = entry.get("reject") or "no body"
+        elif "HasNetSerializer" not in custom or not set(custom) <= {"HasNetSerializer", NATIVE_NET_HAS_SHARED}:
+            reason = "binary traits (%s) are not a plain NetSerialize" % ", ".join(custom)
+        elif squash(entry.get("signature")) != squash(NATIVE_NET_SIGNATURE):
+            reason = "manifest signature %r differs from %r" % (entry.get("signature"), NATIVE_NET_SIGNATURE)
+        else:
+            includes, problems = body_refs(entry["body"], info.cpp_name, info.package, self.struct_ctx)
+            uses = self.body_types(entry["body"], info)
+            for used in uses:
+                if self.reason(used) is not None:
+                    problems.append("body uses %s, which cannot be emitted (%s)"
+                                    % (used.cpp_name, self.reasons.get(used.fn)))
+            if problems:
+                reason = "; ".join(problems)
+        if reason is not None:
+            self.struct_net_reasons[info.cpp_name] = reason
+            return None
+        # "uses": the promoted types the body names. emit_types adds them to the closure, so their headers exist.
+        return {"kind": "native", "body": entry["body"], "inc_path": entry.get("inc_path"), "traits": custom,
+                "vtable": vtable, "includes": sorted(includes), "uses": [u.fn for u in uses]}
+
+    def body_types(self, body, info):
+        """The promoted types (of any promoted package that is in the struct_index) that a native body names, other
+        than the struct itself. Each is emitted with the struct when it can be."""
+        index = self.struct_ctx["struct_index"]
+        out = []
+        for tok in sorted(set(re.findall(r"[A-Za-z_]\w*", strip_comments(body)))):
+            used = index.get(tok)
+            if used is not None and used.package in PROMOTE_PACKAGES and used.fn != info.fn:
+                out.append(used)
+        return out
 
     def build_enum(self, info):
         rec = info.rec
@@ -3449,6 +3568,40 @@ def delegate_macro_kind(model, kinds):
 NET_SERIALIZATION_HEADER = "Engine/NetSerialization.h"   # FFastArraySerializer, FNetDeltaSerializeInfo, struct ops traits
 
 
+def native_net_body_lines(body):
+    """A struct_net body as emitted inside the struct: two tabs (the declaration is at one tab)."""
+    return [("\t\t" + line.rstrip()) if line.strip() else "" for line in body.split("\n")]
+
+
+def verify_struct_net(model, header):
+    """Text check of a native NetSerialize in its rendered struct header: the declaration once, inside the struct (before
+    its closing '};'), the body equal to the snippet, and the trait block once. Raises SystemExit on a mismatch, before
+    anything is written."""
+    name = model["cpp_name"]
+    net = model["net"]
+    lines = header.split("\n")
+    problems = []
+    decl = "\t%s" % NATIVE_NET_SIGNATURE
+    where = [i for i, line in enumerate(lines) if line == decl]
+    if len(where) != 1:
+        problems.append("NetSerialize declared %d times" % len(where))
+    else:
+        i = where[0]
+        expected = ["\t{"] + native_net_body_lines(net["body"]) + ["\t}"]
+        if lines[i + 1:i + 1 + len(expected)] != expected:
+            problems.append("body differs from the snippet")
+        close = lines.index("};") if "};" in lines else None
+        if close is None or not i < close:
+            problems.append("declared outside the struct")
+    trait = "struct TStructOpsTypeTraits<%s> : public TStructOpsTypeTraitsBase2<%s>" % (name, name)
+    if sum(1 for line in lines if line == trait) != 1:
+        problems.append("trait block missing or repeated")
+    if "class UPackageMap;" not in lines:
+        problems.append("UPackageMap is not forward declared")
+    if problems:
+        raise SystemExit("%s: native NetSerialize is not spliced as written: %s" % (name, "; ".join(problems)))
+
+
 def render_struct_header(model, source_label):
     name = model["cpp_name"]
     net = model.get("net") or {}
@@ -3465,15 +3618,21 @@ def render_struct_header(model, source_label):
     ]
     if model.get("parent_include"):
         lines.append("#include \"%s\"" % model["parent_include"])
+    native = net.get("kind") == "native"
     includes = list(model.get("includes", []))
     if delta and NET_SERIALIZATION_HEADER not in includes + [model.get("parent_include")]:
         includes.append(NET_SERIALIZATION_HEADER)
+    if native and NATIVE_NET_SERIALIZATION_HEADER not in includes:
+        includes.append(NATIVE_NET_SERIALIZATION_HEADER)   # the inline NetSerialize body uses FArchive members
     for inc in includes:
         if inc != model.get("parent_include"):
             lines.append("#include \"%s\"" % inc)
     lines.append("")
-    lines.extend("class %s;" % ref for ref in model["forward_decls"])
-    if model["forward_decls"]:
+    forward = list(model["forward_decls"])
+    if native and "UPackageMap" not in forward:
+        forward.append("UPackageMap")   # the NetSerialize signature takes class UPackageMap*
+    lines.extend("class %s;" % ref for ref in forward)
+    if forward:
         lines.append("")
     lines.append("#include \"%s.generated.h\"" % name)
     lines.append("")
@@ -3505,6 +3664,16 @@ def render_struct_header(model, source_label):
                      % (item, name, net["member"]))
         lines.append("\t}")
         lines.append("")
+    if native:
+        # Native NetSerialize (behaviour kind struct_net): declared and defined inline, the body one level deeper than the
+        # declaration. verify_struct_net checks the text.
+        lines.append("\t// Native NetSerialize (behaviour kind %s, body %s; ops traits %s)."
+                     % (STRUCT_NET_KIND, net.get("inc_path"), ", ".join(net.get("traits", []))))
+        lines.append("\t%s" % NATIVE_NET_SIGNATURE)
+        lines.append("\t{")
+        lines.extend(native_net_body_lines(net["body"]))
+        lines.append("\t}")
+        lines.append("")
     lines.append("};")
     lines.append("")
     if delta:
@@ -3512,6 +3681,16 @@ def render_struct_header(model, source_label):
         lines.append("struct TStructOpsTypeTraits<%s> : public TStructOpsTypeTraitsBase2<%s>" % (name, name))
         lines.append("{")
         lines.append("\tenum { WithNetDeltaSerializer = true };")
+        lines.append("};")
+        lines.append("")
+    if native:
+        flags = ["WithNetSerializer = true"]
+        if NATIVE_NET_HAS_SHARED in net.get("traits", []):
+            flags.append("WithNetSharedSerialization = true")
+        lines.append("template<>")
+        lines.append("struct TStructOpsTypeTraits<%s> : public TStructOpsTypeTraitsBase2<%s>" % (name, name))
+        lines.append("{")
+        lines.append("\tenum { %s };" % ", ".join(flags))
         lines.append("};")
         lines.append("")
     return "\n".join(lines) + "\n"
@@ -3594,11 +3773,16 @@ def emit_types(gate, seeds, source_label):
             continue
         model = gate.model(info)
         model["includes"] = own_includes(gate, model["used"], info.package)
+        if (model.get("net") or {}).get("kind") == "native":
+            # Types the native NetSerialize body names (TypeGate.native_net_serializer) are included too.
+            model["includes"] = sorted(set(model["includes"]) | set(model["net"]["includes"]))
         if info.kind == "struct" and model["parent"] is not None:
             parent_fn = info.rec.get("super_fn")
             model["parent_include"] = gate.include_of(parent_fn) if parent_fn else None
         models[info.fn] = model
         queue.extend(model["used"].items())
+        if (model.get("net") or {}).get("kind") == "native":
+            queue.extend((fn, {""}) for fn in model["net"]["uses"])   # types the native body names
     texts = {}
     for fn, model in models.items():
         info = gate.info(fn)
