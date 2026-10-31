@@ -81,22 +81,12 @@
           "name": "Original client runs with EAC/BattlEye disabled by launch flags (no anti-cheat or entitlement bypass)",
           "weight": 25,
           "measure": {
-            "kind": "checks",
-            "stub_credit": 0.5,
+            "kind": "ledger",
             "checks": [
-              {
-                "label": "run_original_client.sh passes -nobe (BattlEye off)",
-                "pattern": "-nobe",
-                "in": "porting/run_original_client.sh"
-              },
-              {
-                "label": "run_original_client.sh passes -noeac (EAC off)",
-                "pattern": "-noeac",
-                "in": "porting/run_original_client.sh"
-              }
+              "wine_starts"
             ]
           },
-          "rationale": "Both launch flags are in the tracked runner, credited at 50%: present in the script, not yet seen working on the client. No anti-cheat or entitlement bypass exists. The AppES entitlement gate (LogAppES: postponed 2) is not bypassed and caps this leaf at its credit until platform.wine_launch shows the client starting under these flags."
+          "rationale": "Measured by a recorded run: the original client under Wine, started by porting/run_original_client.sh with -nobe -noeac (launch flags only), initialises its engine. This is NOT an anti-cheat or entitlement bypass: the AppES entitlement gate after CheckEntitledToPlay is not touched and caps everything beyond the frontend (see wine_entitlement_passed and wine_lobby_reached in platform.wine_launch)."
         },
         {
           "id": "platform.rendering",
@@ -395,7 +385,8 @@
             "total_key": "uht_fortnitegame_name_matches",
             "total_sub": "Weapon"
           },
-          "rationale": "Done: tracked reflection-exact class headers under Source/FortniteGame/Generated whose name matches Weapon. Total: named /Script/FortniteGame classes matching the same regex (totals.json). The census cannot measure this group because no weapon class is imported by a map header. No weapon behaviour is reproduced."
+          "rationale": "Done: tracked reflection-exact class headers under Source/FortniteGame/Generated whose name matches Weapon. Total: named /Script/FortniteGame classes matching the same regex (totals.json). The census cannot measure this group because no weapon class is imported by a map header. No weapon behaviour is reproduced. Capped at 20%, the same credit the model gives any declared-but-behaviourless class, because generated class headers carry no behaviour and are already counted under gameplay.reflection_exact; the cap lifts as ported function bodies (gameplay.native_behavior) cover these classes.",
+          "ceiling": 20
         },
         {
           "id": "gameplay.building",
@@ -430,7 +421,8 @@
             "total_key": "uht_fortnitegame_name_matches",
             "total_sub": "Storm|SafeZone"
           },
-          "rationale": "Done: tracked reflection-exact class headers whose name matches Storm or SafeZone. Total: named /Script/FortniteGame classes matching the same regex (totals.json). FortSafeZoneStorm exists as an empty native stub, which is not counted as behaviour."
+          "rationale": "Done: tracked reflection-exact class headers whose name matches Storm or SafeZone. Total: named /Script/FortniteGame classes matching the same regex (totals.json). FortSafeZoneStorm exists as an empty native stub, which is not counted as behaviour. Capped at 20%, the same credit the model gives any declared-but-behaviourless class, because generated class headers carry no behaviour and are already counted under gameplay.reflection_exact; the cap lifts as ported function bodies (gameplay.native_behavior) cover these classes.",
+          "ceiling": 20
         },
         {
           "id": "gameplay.battle_bus",
@@ -445,7 +437,8 @@
             "total_key": "uht_fortnitegame_name_matches",
             "total_sub": "BattleBus|Aircraft|Parachute|Glider"
           },
-          "rationale": "Done: tracked reflection-exact class headers whose name matches BattleBus, Aircraft, Parachute or Glider. Total: named /Script/FortniteGame classes matching the same regex (totals.json). No battle bus or glider behaviour exists. The skydiving shadow proxy stub is visual only and is counted under visuals."
+          "rationale": "Done: tracked reflection-exact class headers whose name matches BattleBus, Aircraft, Parachute or Glider. Total: named /Script/FortniteGame classes matching the same regex (totals.json). No battle bus or glider behaviour exists. The skydiving shadow proxy stub is visual only and is counted under visuals. Capped at 20%, the same credit the model gives any declared-but-behaviourless class, because generated class headers carry no behaviour and are already counted under gameplay.reflection_exact; the cap lifts as ported function bodies (gameplay.native_behavior) cover these classes.",
+          "ceiling": 20
         },
         {
           "id": "gameplay.abilities",
@@ -957,7 +950,8 @@
             ],
             "total_key": "uht_classes_named_commonui_umg"
           },
-          "rationale": "Done: tracked reflection-exact class headers for CommonUI and UMG (no UMG headers are generated). Total: named classes in /Script/CommonUI and /Script/UMG (totals.json). A 64x64 UI texture loads. No widget is loaded: a UI Blueprint fails on a missing CommonButton function, and no CommonUI behaviour runs."
+          "rationale": "Done: tracked reflection-exact class headers for CommonUI and UMG (no UMG headers are generated). Total: named classes in /Script/CommonUI and /Script/UMG (totals.json). A 64x64 UI texture loads. No widget is loaded: a UI Blueprint fails on a missing CommonButton function, and no CommonUI behaviour runs. Capped at 20%, the same credit the model gives any declared-but-behaviourless class, because generated class headers carry no behaviour and are already counted under gameplay.reflection_exact; the cap lifts as ported function bodies (gameplay.native_behavior) cover these classes.",
+          "ceiling": 20
         },
         {
           "id": "ui.frontend_lobby",
