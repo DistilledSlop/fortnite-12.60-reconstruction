@@ -3,6 +3,46 @@
 Written when the session wound down (usage nearly out). Read `README.md` (goal), `master_plan.md` and
 this file first. Everything below is what was true at the last commit on `main`.
 
+## Third session update (2026-10-31, later; supersedes the numbers below where they differ)
+
+Everything here is committed on `main`; the sections below are still correct for workflow and pitfalls.
+
+- **Class parity is 4,572 of 4,572 offline** (`ec52422`; the generator emits net-service RPCs, const RPCs, namespaced enums and
+  cross-module types). Build green, both smokes pass, network checksum 683914758 on both peers. `class_checksum.py` is the check.
+- **Behaviour: 249 bodies spliced** (10th pass `589e1c1`; the 11th pass added the `struct_net` kind: five recovered
+  `NetSerialize` bodies, `b6c483a`). A 39-case round-trip self-test passes (`351dffe`, run the binary with
+  `-NetSerializeSelfTest`). `FAthenaPawnReplayData` still uses the marked fallback (its wire depends on runtime state and
+  key-dependent calls). UE 4.25 rule: in `struct_net` snippets write `Ar << MyBool;`, there is no `SerializeBool` in non-editor builds.
+  The 12th pass (`1fa3ef4`) ported nothing: every remaining target is blocked on unnamed members or helpers.
+- **Vtable slot map** (`f2cecde`): `porting/behavior/build_vtable_slots.py` (5 s, writes the git-ignored `vtable_slots.json`) and
+  `vtable_lookup.py <class> <hexoffset>`; 90% of slots validated against the dump. Game-declared virtuals have no names.
+- **Full asset extraction is done**: all 31 paks, 963,427 distinct files, 88.3 GB, in `/mnt/vibrato/fortnite-extracted-full`
+  (verified, duplicates audited; `porting/extraction_status.md`, `Cue4Inspect --extract-all`). The older closure tree is
+  `porting/generated/extracted` (symlink to `/mnt/vibrato/fortnite-extracted`). No audio middleware files exist; audio is cooked
+  SoundWave bulk (`.ubulk`). Raw extraction is its own dashboard leaf; conversion into usable UE content is barely started
+  (77 of 4,719 static meshes, no skeletal meshes or animation).
+- **Backend evidence** (`e8942b4`): `porting/server/EVIDENCE.md` and `endpoint_evidence.json` classify each served route
+  (binary, wine_log, reflection, asset, convention). No real client capture can ever be obtained (Epic's servers are shut down), so
+  the backend must follow what the client binary, the reflected structs and the paks require. 70 tests pass.
+  **Open: the client's JSON response parser is not located.** Stock UE 4.25 writes camelCase keys but reads exact PascalCase names,
+  so the shipped client uses its own parser; the exe has camelCase key text. Find it from the key-string load sites that
+  `evidence_scan.py` lists, then confirm required keys and case sensitivity. 151 client routes in the exe are not served yet;
+  `public_catalog` is 2 of 18 and the remaining responses have no struct evidence yet.
+- **Server-side behaviour risk** (a design concern, not yet measured): the vanilla client sees only replicated results of server
+  logic (storm, bus, damage, eliminations, match end, AI, loot). Much of that logic is in the client exe (server code is compiled
+  in: `AFortGameModeAthena`, `Server*_Implementation`, authority branches) and the rest is data in the paks, but logic that exists
+  only in Epic's dedicated-server binary would have no source, and timing and RNG cannot be checked without a reference server.
+  An inventory (every replicated property and `Client*`/multicast RPC mapped to its server-side writer in the exe) is being built:
+  see `porting/server_authority_inventory.md` once it lands.
+- **Census** (`census_ui_audio.py`) is a gap-finder, not a prerequisite. Its 48-worker run over 108,701 packages keeps results in
+  memory and writes only at the end (no checkpoint, no progress line); it can be paused with SIGSTOP/SIGCONT but a kill loses
+  everything. `porting/native_class_coverage.md` (exe class list versus promoted set) replaces it for class selection.
+- **Dashboard**: overall about 21.8%; leaf `assets.pak_extraction` added. Re-render with `python3 -I porting/progress/progress.py`
+  after a commit (the post-commit hook renders asynchronously).
+- **Process notes**: the Bash tool moves a foreground command to the background at about 180 s even with a 600000 ms timeout, so
+  run UE builds in the background tee'd to a log in `porting/generated/` and wait with one `until ! kill -0 <pid>` loop. Stage
+  specific paths when committing; the working tree usually holds other agents' in-flight edits.
+
 ## Where things stand
 
 Updated 2026-10-31 at the end of the second session. Everything below is on `main` (HEAD `b9077d8` or later);
