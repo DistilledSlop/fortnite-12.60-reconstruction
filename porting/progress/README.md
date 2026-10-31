@@ -1,7 +1,7 @@
 # Port progress dashboard
 
 A generated dashboard for the Fortnite 12.60 Linux reconstruction: a squarified treemap of
-the whole effort (area = estimated effort weight, colour = percent complete), a
+the whole effort (area = estimated effort weight, fill level = percent complete), a
 per-component table, `progress.json`, and a history page with one point per commit.
 
 **Definition of 100%:** the entire game can be launched into the menu, joined into
@@ -265,11 +265,26 @@ so the ceilings (35, 30) are their only limit.
 
 ## Colour
 
-Five bins from red to green: `#a8102a`, `#e0573a`, `#f2b705`, `#3b9a3f`, `#006b3c`.
-They were checked for colour-vision separation with OKLab deltaE: adjacent pairs
-stay at or above 14.9 under simulated protan and deutan vision, and at or above 15.4
-under normal vision. Every tile also prints its percentage, so colour is never the
-only cue. The page follows the OS light or dark setting.
+A leaf's colour is not a hue. Each leaf is a neutral tile, and its blue fill rises from the
+bottom edge to its percent complete: the fill is pct/100 of the tile height, clipped to the
+tile's rounded corners, with a 2px edge line along its top when the fill is partial. 0% is
+empty and 100% fills the tile. Unit-square tiles show squares instead (see Unit squares).
+The percentage is printed on every tile, so colour is never the only cue. The treemap key
+is an empty-to-full scale under the chart.
+
+The palette is CSS custom properties (`--tm-*`), defined once in `TREEMAP_PALETTE_CSS` in
+`progress.py` and used by the page and by `progress.svg`:
+
+- light: surface `#fcfcfb` (also the gutter), neutral tile `#ecebe8`, fill `#b7d3f6`,
+  fill edge and unit-done `#2a78d6`, unit-todo `#d6d5d0`, ink `#0b0b0b`, secondary ink and
+  group labels `#52514e`;
+- dark: surface `#1a1a19`, neutral tile `#2b2b29`, fill `#184f95`, fill edge and unit-done
+  `#3987e5`, unit-todo `#3d3d3a`, ink `#f0efec`, secondary ink and group labels `#c3c2b7`.
+
+The page and `progress.svg` follow the OS light or dark setting, and `data-theme="dark"`
+selects the dark palette on the page. Ink is the same colour on the neutral surface and on
+the fill, which is why the fill is a light tint in light mode and a dark blue in dark mode:
+the text reads on both.
 
 ## Interactive view
 
@@ -300,22 +315,23 @@ in at most four lines shows its percentage alone; a tile too small even for that
 shows nothing. Names are never truncated, and the full name is in the hover title
 and the detail panel. The same labels appear in the static `progress.svg`.
 
-Group headers sit in a strip of about 20px (12px bold for top-level groups, 11px
-for sub-groups, with a lighter "· pct" suffix). The name is shown in full on one
+Group labels are plain 12px text on the surface above their children, with no header
+strip: weight 600, with a lighter "· pct" suffix. The name is shown in full on one
 line when it fits; otherwise a trailing parenthetical such as " (Apollo island)"
 is dropped for the display; otherwise the name wraps to at most two lines; else
 only the percentage. The full name is always in the hover title.
 
 Every tile, group or leaf, is inset by 1px, so sibling tiles have a 2px gutter.
 A group's children sit 3px inside its frame. The page and `progress.svg` follow
-the light or dark OS setting. Hovering a tile outlines it in 2px, and the clicked
-tile keeps a 2px accent outline across both sort layers.
+the light or dark OS setting. Tiles have 4px corners and no stroke; top-level groups have a
+faint 1px hairline in the neutral tile colour, and sub-groups none. Hovering a tile outlines
+it in 2px ink, and the clicked tile keeps a 2px blue outline across both sort layers.
 
 Unit-square tiles use the same label rules (`unit_label` calls `leaf_label`), so
 they also never show text below 10px. Their squares sit below the label strip, and
 at least 1px separates neighbouring squares. The smallest square pitch is 3px (a
 2px side), so a dense grid that would read as one solid block falls back to the
-progress bar instead.
+fill level instead.
 
 Wrap widths come from a per-character advance table in `progress.py` (`CHAR_W`):
 the maximum advance across DejaVu Sans Bold and Liberation Sans Bold (the two
@@ -329,9 +345,8 @@ its tile on those fonts; characters outside the set default to the widest entry.
 
 Decomposable leaves additionally render one square per unit, drawn under the
 tile's label. Each unit is its own square of identical size, with no merging into
-stripes or stretching: done is `#4fd35f`, and not-done is the tile's own ink colour
-(the near-black or white that `text_on` picks for the tile fill) at 28% opacity, so
-it reads on light and dark pages and never floods a tile in red. Units are grouped by
+stripes or stretching: done is the `unit-done` blue and not-done the `unit-todo` neutral. Both are palette
+variables (see Colour), so they swap with the page theme. Units are grouped by
 asset type, package or class; groups are contiguous, with a gap row between groups
 that starts at a row boundary. Done units come first within each group.
 
@@ -340,12 +355,12 @@ units, `UNIT_PITCH_MAX`) at which every unit fits in the grid region: the tile m
 the fitted name and percentage, `label_strip`) and a 3px inset on the other sides.
 A square is `s` wide, minus a 1px gap when `s >= 4`. The grid is left and top
 aligned, filling rows left to right, so a tile with few units shows a small block in its
-top-left corner and the rest stays the base colour. Squares carry no labels; the
+top-left corner and the rest stays the neutral tile surface. Squares carry no labels; the
 done/total is in the hover summary and the detail panel.
 
 A grid is kept only when it reconciles with its leaf: the grid's done and total must
 equal the leaf's own measured done and total (`build_unit_grids`). A grid that does not
-reconcile is dropped and the leaf shows the progress bar, which is driven by the leaf's
+reconcile is dropped and the leaf shows its fill level, which is driven by the leaf's
 pct, so a grid never contradicts its tile's percentage. Currently `assets.static_meshes`
 (71 of its 77 done items are converted `.glb` stems outside the SM_ unit list),
 `gameplay.native_behavior` (126 ported functions have no exec address, so they are
@@ -353,12 +368,10 @@ outside the 20,574 units) and `gameplay.reflection_exact` (one tracked header,
 `UFortMatchmakingKnobsDataSource`, is not in the named-class denominator) are dropped.
 Adding those items as units would change the leaf total, which the measure fixes.
 
-A tile is drawn as a progress bar instead of squares when its grid is dropped by the
+A tile uses its fill level instead of squares when its grid is dropped by the
 reconciliation check, when its units cannot fit at pitch 2 or more, or when it has more
-than `UNIT_GRID_MAX` (6000) units. The bar is
-4px high, lies along the bottom edge, and its width is done/total; the label stays
-above it. `assets.package_coverage` (about 450k cooked packages) is always an
-aggregate tile with a bar (`UNIT_BAR_IDS`). The done set of a grid never exceeds the
+than `UNIT_GRID_MAX` (6000) units. `assets.package_coverage` (about 450k cooked packages)
+has no grid and is a plain fill-level tile. The done set of a grid never exceeds the
 tile's numerator: it is the leaf's own done signal intersected with the unit list.
 
 ## Git hygiene
