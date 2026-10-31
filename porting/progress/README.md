@@ -93,6 +93,18 @@ the overall figure) and a `measure`. Measures, from most objective to least:
   takes `sources` (`root`, `suffix`, `name_regex`) and `distinct` (count distinct names).
 - `manual`: `pct`, your estimate (basis `manual`).
 
+### Raw pak extraction and package coverage
+
+- `assets.pak_extraction` (basis `local`) is a `fraction` whose `count_file` is
+  `porting/generated/extract-full-summary.json` and `count_key` is `verification.treeFiles`
+  (the files the verify pass found in `/mnt/vibrato/fortnite-extracted-full`). The total is
+  `pak_full_distinct_paths` in `totals.json` (963,427, the summary's `uniquePaths`). The count is
+  read from that small summary, so the hook walks no files. Regenerate the summary with the
+  extraction's verify mode, then run `refresh_totals.py`.
+- `assets.package_coverage` (basis `local`) is about the converted/usable closure. Its total
+  `cooked_uasset_entries` is now the distinct `.uasset` count of the full extraction (450,951),
+  read from the same summary (`byExtension['.uasset'].files`), not the older 28-pak index.
+
 Denominators (`total_key` and optional `total_sub`) are read from `porting/progress/totals.json`.
 If a key is missing the leaf shows 0 and says why. A leaf may have `"ceiling": N`, which caps its
 value where the measure overstates progress, with the reason in `rationale`. Groups take the

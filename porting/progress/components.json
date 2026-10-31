@@ -1,6 +1,6 @@
 {
   "_about": "Hand-edited model for porting/progress/progress.py. Leaves with a \"measure\" are computed; leaves with kind \"manual\" use the pct you set, with rationale. Weights are manual effort estimates (relative points, roughly engineer-weeks) and set the treemap area. Edit a weight or pct, commit, and the post-commit hook regenerates the dashboard. Basis ladder, most objective first: git (computed from tracked files, replayable per commit), local (computed from git-ignored outputs), documented (typed count), manual (typed percent). Denominators come from porting/progress/totals.json; checks from porting/progress/evidence.json. See README 'Objectivity audit'.",
-  "definition": "100% = the entire game can be launched into the menu, joined into a game and matchmade on the reconstructed server, and played with sound/audio and visuals 100% working. In other words: the client \u2014 the exact same client as the 12.60 original, feature-complete and unstripped, rebuilt as a UE project \u2014 reaches the lobby, matchmakes to the reconstructed UE dedicated server (which carries every structure and feature the original dedicated server would have) and plays a match with all visuals and audio. The supplied 12.60 build is the completeness reference; the original binary under Wine is an analysis oracle, not the deliverable.",
+  "definition": "100% = the entire game can be launched into the menu, joined into a game and matchmade on the reconstructed server, and played with sound/audio and visuals 100% working. In other words: the client — the exact same client as the 12.60 original, feature-complete and unstripped, rebuilt as a UE project — reaches the lobby, matchmakes to the reconstructed UE dedicated server (which carries every structure and feature the original dedicated server would have) and plays a match with all visuals and audio. The supplied 12.60 build is the completeness reference; the original binary under Wine is an analysis oracle, not the deliverable.",
   "milestones": [
     {
       "id": "m1",
@@ -132,7 +132,7 @@
         {
           "id": "assets.package_coverage",
           "name": "Package recovery and conversion coverage (incl. textures and materials)",
-          "weight": 65,
+          "weight": 50,
           "measure": {
             "kind": "local_glob",
             "roots": [
@@ -143,7 +143,19 @@
             "total_key": "cooked_uasset_entries",
             "what": "recovered or converted .uasset files"
           },
-          "rationale": "Share of the cooked .uasset entries in the 28 indexed paks that exist locally, either recovered (generated/extracted) or converted (native/Content). This tile absorbs the former assets.textures (weight 20) and assets.materials (weight 25) leaves, whose done signals were the same 'packages present locally' measure, so their weights fold into this one. Counted from ignored local folders; the denominator is totals.json (450,783 entries, previously typed as 450,951)."
+          "rationale": "Share of the distinct cooked .uasset entries in the verified full extraction of all 31 paks (450,951; totals.json cooked_uasset_entries) that exist locally, either recovered (generated/extracted) or converted (native/Content). This leaf is about the converted/usable closure, not raw extraction: raw extraction of every pak is tracked by assets.pak_extraction. This tile absorbs the former assets.textures (weight 20) and assets.materials (weight 25) leaves, whose done signals were the same 'packages present locally' measure. Counted from ignored local folders."
+        },
+        {
+          "id": "assets.pak_extraction",
+          "name": "Raw pak extraction (all 31 paks)",
+          "weight": 15,
+          "measure": {
+            "kind": "fraction",
+            "count_file": "porting/generated/extract-full-summary.json",
+            "count_key": "verification.treeFiles",
+            "total_key": "pak_full_distinct_paths"
+          },
+          "rationale": "Files present in the verified full raw extraction of all 31 paks (/mnt/vibrato/fortnite-extracted-full), counted from the verified summary's verification.treeFiles, against the 963,427 distinct pak paths (totals.json pak_full_distinct_paths, from the same summary's uniquePaths). The summary is written by the extraction's verify mode (extraction_status.md), so the post-commit hook never walks the million files. Counts raw extraction only, not conversion."
         },
         {
           "id": "assets.static_meshes",

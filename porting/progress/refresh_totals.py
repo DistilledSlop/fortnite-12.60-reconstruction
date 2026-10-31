@@ -158,10 +158,22 @@ def build():
     assets = load_json(assets_path)
     uasset_paths = [f for p in assets["paks"] for f in p["files"] if f.endswith(".uasset")]
     stems = {os.path.basename(f)[:-len(".uasset")] for f in uasset_paths}
+    # Full raw extraction (all 31 paks, verified): distinct .uasset paths, read from the verified summary.
+    # assets.json lists only the older 28-pak closure, so it is no longer the source of this denominator.
+    full_path = os.path.join(GEN, "extract-full-summary.json")
+    full = load_json(full_path)
+    if not (isinstance(full.get("verification"), dict) and full["verification"].get("ok") is True):
+        raise Missing("extract-full-summary.json has no passing verification (verification.ok is not true)")
+    full_uasset = full["byExtension"][".uasset"]["files"]
     totals["cooked_uasset_entries"] = entry(
-        len(uasset_paths), assets_path,
-        "'.uasset' entries listed by the pak indexes (assets.json, all indexed paks; the same package "
-        "can appear in more than one pak)")
+        full_uasset, full_path,
+        "distinct '.uasset' paths in the verified full raw extraction of all 31 paks "
+        "(extract-full-summary.json byExtension['.uasset'].files; one path per package, duplicates across "
+        "paks counted once)")
+    totals["pak_full_distinct_paths"] = entry(
+        full["uniquePaths"], full_path,
+        "distinct pak paths over all 31 paks (extract-full-summary.json uniquePaths, duplicates across paks "
+        "counted once); the denominator of the raw extraction leaf assets.pak_extraction")
     totals["cooked_uasset_distinct_names"] = entry(
         len(stems), assets_path, "distinct .uasset basenames across the indexed paks")
     totals["pak_files_total"] = entry(

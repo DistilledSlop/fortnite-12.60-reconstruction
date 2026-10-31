@@ -1,6 +1,6 @@
 {
  "apollo_streaming_levels": {
-  "generated_utc": "2026-10-30T22:38:11Z",
+  "generated_utc": "2026-10-31T04:48:38Z",
   "method": "regex '(\\d+) absent streaming levels' in the tracked map_compatibility.md report",
   "source": "porting/map_compatibility.md",
   "value": 87
@@ -58,10 +58,10 @@
   "value": 340262
  },
  "cooked_uasset_entries": {
-  "generated_utc": "2026-10-30T04:23:22Z",
-  "method": "'.uasset' entries listed by the pak indexes (assets.json, all indexed paks; the same package can appear in more than one pak)",
-  "source": "porting/generated/assets.json",
-  "value": 450783
+  "generated_utc": "2026-10-31T20:48:55Z",
+  "method": "distinct '.uasset' paths in the verified full raw extraction of all 31 paks (extract-full-summary.json byExtension['.uasset'].files; one path per package, duplicates across paks counted once)",
+  "source": "porting/generated/extract-full-summary.json",
+  "value": 450951
  },
  "native_functions_total": {
   "generated_utc": "2026-10-31T02:25:56Z",
@@ -80,6 +80,12 @@
   "method": "indexed paks plus skipped paks (index hash mismatch) listed in assets.json",
   "source": "porting/generated/assets.json",
   "value": 31
+ },
+ "pak_full_distinct_paths": {
+  "generated_utc": "2026-10-31T20:48:55Z",
+  "method": "distinct pak paths over all 31 paks (extract-full-summary.json uniquePaths, duplicates across paks counted once); the denominator of the raw extraction leaf assets.pak_extraction",
+  "source": "porting/generated/extract-full-summary.json",
+  "value": 963427
  },
  "sound_class_mix_packages": {
   "generated_utc": "2026-10-30T04:23:22Z",
