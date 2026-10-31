@@ -5,32 +5,47 @@ this file first. Everything below is what was true at the last commit on `main`.
 
 ## Where things stand
 
-Updated 2026-10-31 after the second session. Everything below is on `main` (HEAD `14757d9` or later).
+Updated 2026-10-31 at the end of the second session. Everything below is on `main` (HEAD `b9077d8` or later);
+`main` is clean, no agent or build is running, and `/opt/fortnite/gen-worktree` is a leftover worktree on
+`gen/helpers` (already merged; `git worktree remove /opt/fortnite/gen-worktree` when you no longer need it).
 
-- **Dashboard:** about 20% overall (the evidence ledger now holds the native join, the network checksum and the
-  checksum self-test). The goal is far from met: no Fortnite gameplay runs, and function bodies are still
-  mostly stubs (208 of 20,574 native functions ported).
-- **Verified (build green, both smoke variants pass at `14757d9`):**
-  - 4,463 classes promoted from the exe's reflection tables (FortniteGame, FortniteUI, CommonInput,
-    CommonUI, PlayspaceFramework, McpProfileSys, ModularGameplay, MeshNetwork, ... ), class set of 4,572.
+- **Dashboard:** about 20% overall (20.35% at `8c61c28`, 0 of 4 milestones; served on port 8765 when
+  `progress/serve.sh` runs). The goal is far from met: no Fortnite gameplay runs, and function bodies are still
+  mostly stubs (237 of 20,574 native functions ported). The evidence ledger holds the native join, checksum and
+  self-test records recorded at `97d4db3`; re-record after big changes (see "Dashboard").
+- **Verified at `eb27249` (build green in 246 s, both smoke variants pass, checksum parity unchanged):**
+  - 4,463 classes promoted from the exe's reflection tables, class set of 4,572 (FortniteGame, FortniteUI,
+    CommonInput, CommonUI, PlayspaceFramework, McpProfileSys, ModularGameplay, MeshNetwork, ...).
   - Offline class checksum parity with the original: 4,535 of 4,572 (37 remain: struct in another module 16,
-    RPC flags without a role 13, unresolved members 5, enums 3, others).
+    RPC flags without a role 13, unresolved members 5, enums 3).
   - Native client joins the native dedicated server with network checksum 683914758 and an Athena pawn
     (authority 1 on the server, 0 on the client).
-  - Ported behaviour is spliced by the generator (`gen_native_classes.py`, `--no-behavior` or
-    `FN_BEHAVIOR_SPLICE=0` turns it off): 208 bodies.
+  - Behaviour is spliced by the generator (`gen_native_classes.py`; `--no-behavior` or `FN_BEHAVIOR_SPLICE=0`
+    turns it off): 237 entries of kinds getter, exec, onrep, impl, validate, helper, static_helper and
+    member_field (16 non-reflected fields). Contract in `behavior/README.md`.
   - Function and delegate parameters are generated in binary offset order (`--param-order table` is the old
-    order); 91 more delegate members emitted; replication conditions (`replication_conditions.json`, 1,659
-    of 1,715 properties at high confidence) and `NetDeltaSerialize` traits for 43 fast-array structs.
-- **Not runtime-tested:** the fast-array delta path, the conditional replication, and the FText broadcast bodies
-  compile and the join works, but no smoke exercises them.
+    order); 91 more delegate members emitted; replication conditions (`replication_conditions.json`, 1,659 of
+    1,715 properties at high confidence) and `NetDeltaSerialize` traits for 43 fast-array structs.
+- **Not runtime-tested:** the fast-array delta path, the conditional replication and the FText broadcast bodies
+  compile and the join works, but no smoke exercises them. Nothing asserts that the C++ layout of the new
+  non-reflected fields equals the binary offsets.
 - **Known wire gaps:** six used structs with a custom non-delta `NetSerialize` (`SharedRepMovement`,
   `ReplicatedPhysicsPawnState`, `FortAISharedRepMovement`, `FortAIAttributeReplicationProxy`,
   `AthenaPawnReplayData`, `CreateBuildingActorData`) use a marked default-serialization fallback; their bodies
   are not recovered. Push-model flags are not emitted. 51 replication conditions are unknown (`COND_None` + TODO).
 - **Backend:** `server/` has a tested local service layer (OAuth, accounts, MCP profile, party, presence,
-  lightswitch, cloud storage; `python3 -I porting/server/test_services.py`). Each endpoint is labelled
-  observed, inferred or guess in `server_surface.md`; none has been driven by a real client capture yet.
+  lightswitch, cloud storage; `python3 -I porting/server/test_services.py`, 61 tests). Each endpoint is labelled
+  observed, inferred or guess in `server_surface.md`; no real client capture has driven them yet.
+- **Extraction (AES keys in use):** the keys live in `/home/vibrato/.config/fortnite-port/aes_keys` (outside the
+  repo, mode 600; built from `/opt/fortnite/12.60.md`; verified 31 of 31 paks mount). Agents may use them with
+  `--key-file=<path>` and must never print, log or commit them. All extractions live in ONE tree,
+  `porting/generated/extracted` (git-ignored). State when stopped: about 77,000 files, 8.8 GB, on `/`. The four
+  Frontend/lobby entry closures are complete (0 pending); 4,680 packages recovered by the census; all 2,175
+  registry WidgetBlueprints are extracted (`generated/widget-blueprints.txt`). The seeded soft-reference closure
+  (`--save-closure --seed-list generated/widget-blueprints.txt --follow-soft`) was killed at about 77k files with
+  a large frontier; re-running is safe (files are rewritten) and the queued-set edit in `Program.cs` makes the
+  pending count unique. Census numbers in `ui_audio_census.md` are from before the soft closure (4,680 packages);
+  `census_ui_audio.py` already has `widget_presence()` for the next run.
 
 ## How to resume
 
@@ -42,45 +57,49 @@ Updated 2026-10-31 after the second session. Everything below is on `main` (HEAD
    Engine/Build/BatchFiles/Linux/Build.sh FortniteLinux FortniteLinuxServer Linux Development \
      -project=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/native/FortniteLinux.uproject -NoHotReload
    ```
-   Restage by COPYING the two binaries into `porting/generated/linux-stage/LinuxNoEditor/FortniteLinux/Binaries/Linux`
-   (no `BuildCookRun -archive`; it would clobber the stage). The staged client needs the CEF3 libraries
-   hard-linked (see `native/README.md`, "Staging the client"). A full build takes about 4-5 minutes.
+   Pass an explicit Bash tool timeout of 600000 ms (the default is 120 s and the build would move to the
+   background). Restage by COPYING the two binaries into
+   `porting/generated/linux-stage/LinuxNoEditor/FortniteLinux/Binaries/Linux` (no `BuildCookRun -archive`; it
+   would clobber the stage). The staged client needs the CEF3 libraries hard-linked (`native/README.md`,
+   "Staging the client"). A full build takes about 4-5 minutes.
 2. Run BOTH smoke variants and require exit 0 (use `env -u LD_LIBRARY_PATH`, `stdbuf -oL -eL`, and a `rg`
-   shim that execs `grep -E` on PATH; `rg` is not installed):
+   shim that execs `grep -E` on PATH; `rg` is not installed; a shim lives in the old session scratchpad):
    ```sh
    bash porting/server/smoke_join.sh
    bash porting/server/smoke_join.sh '/Game/Maps/FortniteEmptyDedicated?game=/Script/FortniteGame.FortGameModeAthena'
    ```
 3. Run `python3 -I porting/class_checksum.py` and `python3 -I porting/behavior/check_behavior.py --gen-root
    porting/native/Source/FortniteGame/Generated --splice-report porting/generated/reflection/behavior_splice.json`.
-   `check_behavior.py` does NOT compile-check: only a build catches a snippet error.
-4. Parallel work uses git worktrees for generator edits (`git worktree add /opt/fortnite/gen-worktree -b <branch> main`,
-   symlink `porting/generated` and `porting/native/Plugins` read-only) while one agent owns `porting/native/`.
+   `check_behavior.py` does NOT compile-check: only a build catches a snippet error (the ninth pass found three
+   UE 4.25 access problems that way: `UWorld::GameState` and `AActor::Role` are private, and the delegate
+   spelling is `TMulticastDelegate<void, Args...>`).
+4. Parallel work: generator edits run in a git worktree (`git worktree add /opt/fortnite/gen-worktree -b <branch> main`,
+   symlink `porting/generated` and `porting/native/Plugins` read-only) while one agent owns `porting/native/` and
+   the UE build. Merging a generator branch can conflict on `decompilation_notes.md` (every pass appends a
+   section); keep both.
 
 ## Next steps, in order
 
-1. **Splice kind for non-reflected helpers.** The generator splices only getters, exec and RPC kinds. Queue rows
-   2, 3 and 5 (`behavior/CALLEE_PORT_QUEUE.md`) are non-reflected members of `AFortGameStateAthena`
-   and friends; the 17 OnRep callers of `0x1419d3ff0` stay blocked until the generator can emit a declaration
-   plus an `.inc` body for them. Also name the lock-counted 16-byte list family (`0x1407ac640`,
-   `0x140685370`) and vfn slot `0x770` of `AFortPlayerStateAthena`.
-2. **More behaviour.** Use `ghidra/probe_callees.py`, `ghidra/improve_decompile.py`,
-   `ghidra/decompile_targets.py` and `decompilation_notes.md`.
-3. **Recover the six fallback NetSerialize bodies** (see above) and the push-model flags.
+1. **Finish extraction.** Move `porting/generated/extracted` to `/mnt/vibrato/fortnite-extracted` (871 GB free;
+   `/` has about 70 GB and needs a 12-20 GB floor for builds): stop all Cue4Inspect processes, `rsync -a`, verify
+   file count, bytes and a sample with `cmp`, rename the old dir, symlink the same path, test one small
+   `--save-closure` through the symlink, then delete the old dir. Then run the seeded soft closure to frontier 0
+   in the background with a log, re-run `python3 -I porting/census_ui_audio.py`, update `ui_audio_census.md`
+   and use its ranked list of missing `/Script` classes (`FortSocialNameTextBlock`, `FortKismetLibrary` is
+   hand-written, plugin classes for Paper2D, Niagara, GameplayAbilities) to extend `native_class_set.txt`.
+2. **More behaviour.** Unported but unblocked-by-naming: `OnRep_Kills`, `OnRep_AIKills`, `OnRep_DeathInfo`
+   (global Broadcast `0x140684de0` unidentified), `OnRep_TotalPlayerScore`, `OnRep_TeamKillScore`, and the
+   PlayerController/PlayerState callers (each needs its own `static_helper` for `GetFortGameStateAthena`).
+   Queue and identities: `behavior/CALLEE_PORT_QUEUE.md`, `decompilation_notes.md` (Eighth and Ninth pass).
+3. **Recover the six fallback NetSerialize bodies** and the push-model flags; add a runtime test of replication
+   conditions and fast arrays.
 4. Remaining class blockers: 16 structs in other modules, 13 RPCs without a role, unresolved members.
-5. Everything else on the master plan: audio playback, Frontend/lobby UI, cooked Blueprint loading
-   (field-path crashes), Apollo streamed levels, skeletal meshes and animation, a runtime test for replication
-   conditions and fast arrays, driving the backend with a real client capture.
+5. Everything else on the master plan: Frontend/lobby UI from the extracted widget graph, audio playback,
+   cooked Blueprint loading (field-path crashes), Apollo streamed levels, skeletal meshes and animation, and
+   driving the backend with a real client capture.
 
 ## Still to do
 
-- **AES key commands:** three closure extractions listed in `master_plan.md` ("AES key commands")
-  still need to run. They unlock the Frontend widget graph and the GUID-keyed paks. Agents may use the AES keys
-  (user decision, 2026-10-31). Pass them to `Cue4Inspect` with `--key-file=<path>` (or `FORTNITE_AES_KEY_FILE`);
-  the file lives outside the repository (one `primary=<64 hex>` line plus one `<guid digits>=<64 hex>` line per
-  GUID-keyed chunk; the current file is `/home/vibrato/.config/fortnite-port/aes_keys`, verified to mount 31 of 31 paks)
-  and the keys must never be committed, printed or logged. Without a key file the tool still
-  falls back to its interactive hidden prompt.
 - **Ghidra project and dump** live under `/opt/fortnite/ghidra-projects/fortnite-slim` and
   `porting/generated/dump/` (git-ignored). Do not re-run the full auto-analysis: it dies of heap
   exhaustion (Address Table analyzer). The slim analysis (about 25 minutes, 48 GB heap, address-table and
