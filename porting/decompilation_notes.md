@@ -688,3 +688,19 @@ No new snippets this pass. Ported total: 199 (202 before the three demotions). E
 3. `0x140685370`: the element type of the 16-byte `{ptr, flag}` array. Look at its data references (`0x148463250`, `0x14734ef38`, `0x14734ef6c`) for the owning type.
 4. `0x1406aaec0`: confirm the layout of `FGameplayCueParameters` in this build (the constant at +0x08).
 5. Generator: the 129 `proposed` declarations, as before.
+
+## Fifth pass: parameter order confirmed on the thunks (generator) [observed]
+
+The generator owner's check of the parameter-order finding (fourth pass) is done, and it covers functions as well as delegates.
+The reflection lists parameters in reverse declaration order, and the recorded offsets ascend in declaration order (all 331
+delegates and 4,492 functions with two or more offsets). The binary agrees on the wire side:
+
+- `AFortPlayerPawn::ServerCyclePart` (`generated/decomp/AFortPlayerPawn/ServerCyclePart.c`): the thunk reads the `Part` byte
+  (offset 0) before the bool, and calls `ServerCyclePart_Validate` with `(Part, bNextPart)`. Declaration order is `(Part, bNextPart)`.
+- `AFortPlayerPawn::ServerHandlePickup` (`ServerHandlePickup.c`): reads `Pickup` (offset 0), `InFlyTime` (8), `InStartDirection`
+  (12), then the bool, and calls `_Validate(Pickup, InFlyTime, InStartDirection, bPlayPickupSound)`.
+
+The generator now spells parameters in declaration order (`--param-order offset`, the default). The 27 manifest signatures that
+were in table order were corrected in `behavior/MANIFEST.json`, and `AFortPlayerPawn::GetPreviousPosition` and
+`GetPreviousVelocity` are non-const (no `FUNC_Const` in the reflection). `IslandCreationCompleted` (`UFortClientPilot_GameplayCreative`)
+and `OnInGameLoadScreenChanged` (`AFortMinigame`) are ordinary UFunctions, not delegates: their parameter blocks follow the same rule.

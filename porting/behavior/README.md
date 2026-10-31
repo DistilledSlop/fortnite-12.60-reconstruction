@@ -60,6 +60,14 @@ Turn it off with `--no-behavior` or `FN_BEHAVIOR_SPLICE=0`; the output then equa
 - `getter`, `exec` (`signature_status: proposed`): the non-RPC reflection function is emitted as
   `UFUNCTION(BlueprintCallable[, BlueprintPure])` (BlueprintPure when the reflection flag is set), with the manifest
   signature (`const` included) and the snippet as body. Only these two kinds add functions that are not RPCs.
+Parameter order (generator change, see `porting/gen_native_classes.md`, "Parameter order"): a signature lists its
+parameters in declaration order, the order of the recorded offsets. The table lists them in reverse, so a manifest
+signature written in table order is rejected. In this pass the 27 `impl` and `validate` signatures with two or more
+parameters were corrected to declaration order, and `AFortPlayerPawn::GetPreviousPosition` and `GetPreviousVelocity`
+lost `const` (the reflection flags have no `FUNC_Const`, and the snippet bodies do not depend on it). Each correction
+is the reflection-derived signature the generator prints in `behavior_splice.json` for that entry. With them all 199
+ported entries splice and verify (`--gen-root ... --splice-report`: 199 spliced, 0 rejected, FAIL 0).
+
 - `validate` (`<Rpc>_Validate`): the Server RPC gets `WithValidation`, `bool <Rpc>_Validate(<same params>)` is declared
   and the snippet is its body. The RPC must be a Server RPC; otherwise the entry is rejected.
 - `impl` (`<Rpc>_Implementation`) and `onrep` (RepNotify): the snippet replaces the stub body. Declarations already exist.

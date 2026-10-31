@@ -40,6 +40,16 @@ REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DEFAULT_REFLECTION = os.path.join(REPO, "porting", "generated", "reflection", "fortnite_game_reflection.json")
 DEFAULT_OUT = os.path.join(REPO, "porting", "generated", "native_classes")
 
+# Parameter order of functions and delegate signatures. The reflection table lists parameters in reverse declaration
+# order (UHT emits its PropPointers from the last parameter back) and the recorded offsets ascend in declaration order
+# (STRUCT_OFFSET of the Parms struct). "offset" (default) spells the parameters in declaration order, so the parameter
+# block lays out at the recorded offsets. "table" is the legacy order (the table as listed) and reproduces the output
+# of earlier runs. FN_PARAM_ORDER or --param-order selects it.
+PARAM_ORDER_CHOICES = ("offset", "table")
+PARAM_ORDER = os.environ.get("FN_PARAM_ORDER", "offset")
+# Functions whose recorded offsets are not in reverse table order are kept in table order and listed here.
+PARAM_ORDER_BREAKS = []
+
 # EPropertyFlags (UObjectMacros/ObjectMacros.h, UE 4.25)
 CPF_NET = 0x20
 GEN_NATIVE_BOOL = 0x20   # EPropertyGenFlags::NativeBool (kind_raw of a Bool property)
@@ -229,6 +239,17 @@ class Resolver:
         return self.todo_named("Kind%s" % kind, entry.get("name"))
 
 
+def enum_underlying_record(rec, enum_name):
+    """True when rec is the underlying-type record of the enum property enum_name. The extractor marks a Byte one
+    (enum_underlying_of); an Int one (an enum with a 32-bit underlying type) is the same shape: named UnderlyingType,
+    directly after the Enum entry, with no flags. It is not a member, so it must not be emitted as one or as a
+    parameter (before this check, ServerRemoveMapMarker and a few members carried a bogus int32 UnderlyingType)."""
+    if rec.get("enum_underlying_of") == enum_name:
+        return True
+    return (rec.get("name") == "UnderlyingType" and rec.get("kind") in ("Int", "Byte")
+            and hx(rec.get("property_flags")) == 0 and not rec.get("replicated"))
+
+
 def split_properties(props):
     """Pair each top-level table entry with its inner records (array element, map key/value, set element).
 
@@ -263,7 +284,7 @@ def split_properties(props):
                 children["key"] = nxt
                 children["value"] = after
                 step = 3
-        elif kind == "Enum" and nxt and nxt.get("enum_underlying_of") == p.get("name"):
+        elif kind == "Enum" and nxt and enum_underlying_record(nxt, p.get("name")):
             step = 2
         if kind in ("Array", "Set", "Map") and step == 1:
             notes.append("%s %s has no inner records; emitted with TODO element type" % (kind, p.get("name")))
@@ -359,6 +380,7 @@ def decode_params(params, resolver, enum_args=None):
     the plain enum (UHT's out-of-line signature), not TEnumAsByte<E>; its decl is appended to enum_args."""
     ret = "void"
     args = []
+    offsets = []
     pairs, _ = split_properties(params)
     for entry, children in pairs:
         pf = hx(entry.get("property_flags"))
@@ -384,6 +406,13 @@ def decode_params(params, resolver, enum_args=None):
         if by_value_enum and enum_args is not None:
             enum_args.append(decl)
         args.append(decl)
+        if entry.get("offset") is not None:
+            offsets.append(int(entry["offset"]))
+    if PARAM_ORDER == "offset" and args:
+        if any(b >= a for a, b in zip(offsets, offsets[1:])):
+            PARAM_ORDER_BREAKS.append({"params": args, "offsets": offsets})
+        else:
+            args.reverse()
     return ret, args
 
 
@@ -884,6 +913,46 @@ def types_self_test(check):
     check("type_ref without gate", res.type_ref("enum", "0x9", "Enum") == "ENetRole")
     check("type_ref unknown is a token", res.type_ref("struct", "0x77", "Struct").startswith("TODO_Struct_"))
     check("engine type index on a missing root is empty", EngineTypeIndex("/nonexistent/engine").lookup("struct", "FVector") is None)
+    # Parameter order: the table lists parameters in reverse declaration order (ascending offsets in declaration
+    # order). The "offset" order spells them in declaration order; "table" keeps the listed order.
+    global PARAM_ORDER
+    saved_order = PARAM_ORDER
+    try:
+        listed = [{"name": "Second", "kind": "Int", "property_flags": "0x10000000000080", "offset": 4},
+                  {"name": "First", "kind": "Int", "property_flags": "0x10000000000080", "offset": 0}]
+        PARAM_ORDER = "offset"
+        check("params: declaration order from the table's reverse order",
+              decode_params(listed, Resolver({}))[1] == ["int32 First", "int32 Second"])
+        PARAM_ORDER = "table"
+        check("params: table order kept when selected",
+              decode_params(listed, Resolver({}))[1] == ["int32 Second", "int32 First"])
+        # The Enum's UnderlyingType record (Int kind here) is paired with the enum, not emitted as a member.
+        enum_rows = [{"name": "E", "kind": "Enum", "property_flags": "0x10000000000080", "offset": 8,
+                      "type_refs": {"enum": "0x1"}},
+                     {"name": "UnderlyingType", "kind": "Int", "property_flags": "0x0", "offset": 0},
+                     {"name": "M", "kind": "Int", "property_flags": "0x10000000000080", "offset": 0}]
+        check("enum underlying Int record is not a member",
+              [e["name"] for e, _c in split_properties(enum_rows)[0]] == ["E", "M"])
+        # A delegate with a const reference parameter: const T& is emitted, the out flag alone is rejected.
+        PARAM_ORDER = "offset"
+        const_ref = [{"name": "Reason", "kind": "Text", "property_flags": "0x10000008000182", "offset": 8},
+                     {"name": "bSuccess", "kind": "Bool", "property_flags": "0x10000000000080", "offset": None,
+                      "bitfield": True}]
+        dinfo = fake_info("delegate", "0x7", "FOnSelfTestRef", "/Script/FortniteGame")
+        dinfo.rec.update({"params": const_ref, "multicast": True})
+        tables.by_fn[dinfo.fn] = dinfo
+        gate = TypeGate(tables, EngineTypeIndex(os.devnull), Resolver({}))
+        model, reason = gate.build_delegate(dinfo)
+        check("delegate: const reference accepted", reason is None and model is not None)
+        check("delegate: const reference spelled const T&, parameters in declaration order",
+              model is not None and model["params"] == [("bool", "bSuccess"), ("const FText&", "Reason")])
+        out_only = [{"name": "Out", "kind": "Int", "property_flags": "0x100", "offset": 0}]
+        dinfo2 = fake_info("delegate", "0x8", "FOnSelfTestOut", "/Script/FortniteGame")
+        dinfo2.rec.update({"params": out_only, "multicast": True})
+        tables.by_fn[dinfo2.fn] = dinfo2
+        check("delegate: non-const out parameter rejected", gate.build_delegate(dinfo2)[1] is not None)
+    finally:
+        PARAM_ORDER = saved_order
 
 
 def self_test():
@@ -2043,7 +2112,11 @@ def promote(args):
                    "not_emittable": not_emittable}, fh, indent=1)
         fh.write("\n")
     print(json.dumps(summary, indent=1))
-    print("promoted %d classes into %s" % (len(index), args.source_root), file=sys.stderr)
+    print("promoted %d classes into %s (param order: %s)" % (len(index), args.source_root, PARAM_ORDER),
+          file=sys.stderr)
+    if PARAM_ORDER_BREAKS:
+        print("warning: %d parameter list(s) with offsets not in reverse table order kept in table order"
+              % len(PARAM_ORDER_BREAKS), file=sys.stderr)
     return 0
 
 
@@ -2418,21 +2491,48 @@ class TypeGate:
             child = self._child(info)
             reason, args = None, []
             pairs, _notes = split_properties(info.rec.get("params") or [])
+            offsets = []
             for entry, children in pairs:
                 if "error" in entry:
                     reason = "unreadable parameter record"
                     break
                 pf = hx(entry.get("property_flags"))
-                if pf & (CPF_RETURN_PARM | CPF_OUT_PARM | CPF_REFERENCE_PARM):
-                    reason = "return, out or reference parameter"
+                if PARAM_ORDER == "table":
+                    if pf & (CPF_RETURN_PARM | CPF_OUT_PARM | CPF_REFERENCE_PARM):
+                        reason = "return, out or reference parameter"
+                        break
+                    args.append((child.ctype(entry, children), entry.get("name") or "Param%d" % len(args)))
+                    continue
+                # UHT sets CPF_OutParm and CPF_ReferenceParm on every reference parameter, so a const reference
+                # (`const T&`) carries all three flags. It is emitted as `const T&`, the same spelling the source has.
+                # A return parameter, or an out or non-const reference parameter, is not a delegate signature.
+                const_ref = bool(pf & CPF_REFERENCE_PARM and pf & CPF_OUT_PARM and pf & CPF_CONST_PARM)
+                if pf & CPF_RETURN_PARM or (pf & (CPF_OUT_PARM | CPF_REFERENCE_PARM) and not const_ref):
+                    reason = "return, out or non-const reference parameter"
                     break
-                args.append((child.ctype(entry, children), entry.get("name") or "Param%d" % len(args)))
+                ctype = child.ctype(entry, children)
+                if const_ref:
+                    ctype = ctype + " const&" if ctype.endswith("*") else "const " + ctype + "&"
+                if "," in ctype:
+                    # A comma would split the macro argument.
+                    reason = "parameter type with a comma (%s)" % ctype
+                    break
+                if entry.get("offset") is not None:
+                    offsets.append(int(entry["offset"]))
+                args.append((ctype, entry.get("name") or "Param%d" % len(args)))
             if reason is None and len(args) > 9:
                 reason = "more than nine parameters"
             if reason is None and child.tokens:
                 reason = "parameter type unresolved (%s)" % ", ".join(sorted(set(child.tokens)))
+            if reason is None and PARAM_ORDER == "offset" and any(b >= a for a, b in zip(offsets, offsets[1:])):
+                reason = "parameter offsets not in reverse table order"
             if reason is not None:
                 return None, reason
+            if PARAM_ORDER == "offset":
+                # The table lists the parameters in reverse declaration order (UHT emits PropPointers from the last
+                # declared parameter back, and the parameter block offsets ascend in declaration order). The macro
+                # takes them in declaration order, so the Parms block lays out at the recorded offsets.
+                args.reverse()
             model = {"fn": info.fn, "cpp_name": info.cpp_name, "kind": "delegate", "package": info.package,
                      "params": args, "used": merge_used([child.used]),
                      "multicast": bool(info.rec.get("multicast"))}
@@ -2646,7 +2746,15 @@ def main(argv=None):
                     help="--promote: porting/behavior directory (MANIFEST.json and the .inc snippets)")
     ap.add_argument("--no-behavior", action="store_true",
                     help="--promote: do not splice the behaviour snippets (same as FN_BEHAVIOR_SPLICE=0)")
+    ap.add_argument("--param-order", choices=PARAM_ORDER_CHOICES, default=None,
+                    help="parameter order of functions and delegates: offset (declaration order, the recorded "
+                         "offsets; default) or table (the legacy order as listed; FN_PARAM_ORDER=table)")
     args = ap.parse_args(argv)
+    global PARAM_ORDER
+    if args.param_order:
+        PARAM_ORDER = args.param_order
+    if PARAM_ORDER not in PARAM_ORDER_CHOICES:
+        raise SystemExit("FN_PARAM_ORDER must be one of %s, not %r" % (", ".join(PARAM_ORDER_CHOICES), PARAM_ORDER))
 
     if args.self_test:
         return self_test()
