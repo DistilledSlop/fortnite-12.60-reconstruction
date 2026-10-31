@@ -357,6 +357,7 @@ try
     {
         var pending = new Queue<string>();
         var visited = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        var queued = new HashSet<string>(StringComparer.OrdinalIgnoreCase); // unique packages ever queued: pending is a frontier count, not queue entries
         var pluginRoots = BuildPluginContentRoots(provider.Files.Keys);
         if (seedList)
         {
@@ -365,11 +366,11 @@ try
                 .Select(line => line.Trim())
                 .Where(line => line.Length > 0 && !line.StartsWith('#'))
                 .Distinct(StringComparer.OrdinalIgnoreCase))
-                pending.Enqueue(seed);
+                if (queued.Add(seed)) pending.Enqueue(seed);
         }
         else
         {
-            pending.Enqueue(assetPath!);
+            if (queued.Add(assetPath!)) pending.Enqueue(assetPath!);
         }
         int failed = 0;
         int softFollowed = 0;
@@ -386,7 +387,7 @@ try
                 foreach (var root in package.ImportMap.Select(import => RootImportName(package, import)).Distinct())
                 {
                     var target = ResolvePackageRoot(root, pluginRoots, path => provider.Files.ContainsKey(path + ".uasset"));
-                    if (target is not null)
+                    if (target is not null && queued.Add(target))
                         pending.Enqueue(target);
                     else if (root.StartsWith("/", StringComparison.Ordinal) &&
                              !root.StartsWith("/Script/", StringComparison.Ordinal))
@@ -397,7 +398,7 @@ try
                     foreach (var soft in SoftPackageRoots(files))
                     {
                         var target = ResolvePackageRoot(soft, pluginRoots, path => provider.Files.ContainsKey(path + ".uasset"));
-                        if (target is not null && provider.Files.ContainsKey(target + ".uasset") && !visited.Contains(target))
+                        if (target is not null && provider.Files.ContainsKey(target + ".uasset") && !visited.Contains(target) && queued.Add(target))
                         {
                             pending.Enqueue(target);
                             softFollowed++;
