@@ -188,6 +188,11 @@ about 0.6 s, with no exceptions.
     `TStructOpsTypeTraits<F...>` with `WithNetDeltaSerializer = true`. Include: `Engine/NetSerialization.h`.
   - Any other struct with a custom `NetSerialize` (or shared serialization) is declared as a fallback: no trait, and
     a `TODO` comment. Replicated uses serialize with the default property serialization.
+  - A recovered body (behaviour kind `struct_net`, see `porting/behavior/README.md`, "Native NetSerialize") is declared
+    inline as `bool NetSerialize(FArchive& Ar, class UPackageMap* Map, bool& bOutSuccess)`, with `WithNetSerializer`
+    (and `WithNetSharedSerialization` when the binary has it) in its trait block. The text is checked by
+    `verify_struct_net` before anything is written. A struct_net entry that cannot be spliced is listed in
+    `behavior_splice.json` and the struct keeps the fallback.
   - Replicated properties and RPC parameters of such structs are emitted (they were skipped before). That is what makes
     the replicated class layouts match the original (`class_checksum.py`).
 

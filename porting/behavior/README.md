@@ -4,7 +4,12 @@ Hand-ported native function bodies, taken from the decompiled output of the ship
 (`porting/generated/decomp/` and `porting/generated/decomp_improved/`, both git-ignored). Each `.inc`
 is our own C++ re-expression of what the decompile does, not a copy of it.
 
-Status (see `MANIFEST.json`, 432 entries): **244 ported** (32 getters, 29 onrep, 61 impl, 25 exec, 73 validate, 4 helper, 1 static_helper, 19 member_field; confidence 205 high, 39 medium), **188 skipped** with a reason (of which 17 are callees from the queue). `python3 porting/behavior/check_behavior.py` reports 0 failures; `COUNTS.txt` has 239 signatures declared in the generated header and 4 pending declarations (the generator emits those when the splice is on: `OnRep_AIKills` and three controller delegates of the tenth pass). The RPC entries that were skipped as not declared (the zipline implementation and validate, and the quick-chat implementation) are ported again.
+Status (see `MANIFEST.json`, 437 entries): **249 ported** (32 getters, 29 onrep, 61 impl, 25 exec, 73 validate, 4 helper, 1 static_helper, 19 member_field, 5 struct_net; confidence 209 high, 40 medium), **188 skipped** with a reason (of which 17 are callees from the queue). `python3 porting/behavior/check_behavior.py` reports 0 failures; `COUNTS.txt` has 243 signatures declared in the generated header and 5 pending declarations (the generator emits those when the splice is on: the five `struct_net` NetSerialize declarations of the eleventh pass, until the native tree is regenerated). The RPC entries that were skipped as not declared (the zipline implementation and validate, and the quick-chat implementation) are ported again.
+
+Eleventh pass, the native NetSerialize bodies (see `porting/decompilation_notes.md`, "Eleventh pass"): five structs get their
+recovered `NetSerialize` through the new kind `struct_net` (below): `FSharedRepMovement`, `FFortAISharedRepMovement`,
+`FReplicatedPhysicsPawnState`, `FFortAIAttributeReplicationProxy` and `FCreateBuildingActorData` (the last one MEDIUM on the
+saving yaw wrap). `FAthenaPawnReplayData` stays on its fallback (its wire depends on runtime state and key handling).
 
 Tenth pass (see `porting/decompilation_notes.md`, "Tenth pass"): the four rank-2 callees of `CALLEE_PORT_QUEUE.md` are identified (one small probe run) and the stat-kill bodies that use them are ported: `OnRep_Kills` (onrep), `OnRep_TotalPlayerScore` (onrep, one tail call), `OnRep_TeamKillScore` (onrep, its callee `0x1419e4f10` identified from two instructions) and `OnRep_AIKills` (helper, protected: it is not a RepNotify, so the generator declares it). Three new `member_field` entries are the no-argument delegates of the controllers (`AFortPlayerControllerZone` at `+0x28f0` and `+0x2908`, `AFortPlayerControllerAthena` at `+0x3210`), with placeholder names. `OnRep_DeathInfo` stays skipped (75 unnamed callees). The rank-3 scope call `0x142cd3770` is a no-op. `GetOwner` was added to `ENGINE_NAMES` (checker only).
 
@@ -26,8 +31,9 @@ Sixth pass (see `porting/decompilation_notes.md`, "Sixth pass"): nine bodies. Si
   - `status`: `ported` (has an `inc_path`) or `skipped` (`inc_path` is null, `notes` holds the reason).
   - `kind`: `getter`, `onrep` (RepNotify body), `impl` (RPC `_Implementation`), `validate` (RPC `_Validate`),
     `exec` (other BlueprintCallable body), `callee` (an unidentified helper queued in CALLEE_PORT_QUEUE.md),
-    `helper` (a non-reflected member function), `static_helper` (a static free function in the class .cpp) and
-    `member_field` (a non-reflected data member); see "Helpers" and "Member fields" below.
+    `helper` (a non-reflected member function), `static_helper` (a static free function in the class .cpp),
+    `member_field` (a non-reflected data member) and `struct_net` (the NetSerialize of a struct); see "Helpers",
+    "Member fields" and "Native NetSerialize (struct_net)" below.
   - `signature_status`: `declared` (copied verbatim from the generated header), `proposed` (not in the header;
     the generator must emit it), or `not_declared` (skipped entries).
 - `<ClassName>/<FunctionName>.inc`: one snippet per ported function with its own header comment.
@@ -59,6 +65,8 @@ Sixth pass (see `porting/decompilation_notes.md`, "Sixth pass"): nine bodies. Si
   `FWeakObjectPtr`, `TWeakObjectPtr`, `FName`, `FString`, `FText`, `FVector`, `TArray`, `static_cast`, `Cast`, and (ninth
   pass) `UWorld`, `AGameStateBase`, `GetLocalRole` (the public accessor of the private `AActor::Role`) and `ROLE_Authority`.
   Tenth pass: `GetOwner` (the public accessor of `AActor::Owner`, which is not declared in any generated header).
+  Eleventh pass: `FMath` (`FMath::Abs` in the struct_net body of `FCreateBuildingActorData`). The C library call
+  `::nearbyintf` is `::`-qualified, so the checker does not see it.
   The name is accepted by the checker only; the header is still needed. An entry that is not a helper or a field has no
   `includes`, so a body of an `impl`, `onrep`, `exec` or `getter` entry cannot bring one in.
 - Each file starts with a `//` header comment: original address, decompile source, proxy score, what was
@@ -182,6 +190,43 @@ UFUNCTION, and the field is not replicated. The generator's `verify_spliced` che
 UPROPERTY or UFUNCTION, under its access label) and the offset order. `check_behavior.py` checks the same in `--gen-root`
 mode, and in plain mode reports the field declared or pending. Helper bodies may name a field of their class as a bare
 name, as for reflected members; the plain token check accepts the names of the manifest's member fields.
+
+## Native NetSerialize (kind struct_net)
+
+A struct with a custom `NetSerialize` has no UFUNCTION and no `.cpp`, so its body cannot use the other kinds. The kind
+`struct_net` splices the recovered body into the struct header. Its fields:
+
+- `class`: the struct's C++ name (`FSharedRepMovement`); `function`: `NetSerialize`; `status`: `ported` with an `inc_path`
+  (`porting/behavior/<Struct>/NetSerialize.inc`), `address` (the body) and the thunk and vtable in `notes`.
+- `signature`: exactly `bool NetSerialize(FArchive& Ar, class UPackageMap* Map, bool& bOutSuccess)`. No `access`.
+  `signature_status`: `proposed` (the generator emits the declaration).
+- The body is the usual `.inc` contract (statements only, `CONFIDENCE` tag matching the manifest, no preprocessor line).
+  `Ar`, `Map` and `bOutSuccess` are the parameters. Members of the struct are bare names; the struct's parent struct is
+  visible (checker chain).
+
+Where it goes (`gen_native_classes.py`, `TypeGate.native_net_serializer`, `render_struct_header`, `verify_struct_net`):
+
+- The traits come from the binary, not from the manifest: the struct must have `HasNetSerializer`, and
+  `HasNetSharedSerialization` is optional. A struct with `HasNetDeltaSerializer` is not a candidate. The header then has
+  `TStructOpsTypeTraits<S>` with `WithNetSerializer = true` and, when the binary has it, `WithNetSharedSerialization = true`.
+- The declaration is inline in the struct, at one tab; the body is at two tabs. `class UPackageMap;` is forward declared
+  and `Serialization/Archive.h` is included (FArchive must be complete for the inline body).
+- Types the body names (for example `EFortSharedAnimationState`) are emitted with the struct, and their headers are
+  included; a body that names a type of another module, or a type that cannot be emitted, is rejected.
+- A struct that is not emitted, a second entry for one struct, a different signature or a body that does not
+  pass the checks is rejected (listed in `behavior_splice.json`). The struct then keeps the default serialization and
+  its TODO comment (the fallback).
+- `verify_struct_net` checks the rendered header as text (declaration once inside the struct, body equal to the snippet,
+  one trait block, the forward declaration) before anything is written. `check_behavior.py --gen-root` checks the same
+  on a generated tree.
+- Not a `struct_net` entry: `FAthenaPawnReplayData` (its wire depends on runtime state and key handling; no entry).
+
+The five bodies were checked against the generated headers (member names and types), against the UE 4.25 archive
+API (`Core/Public/Serialization/Archive.h`: `Serialize`, `SerializeBits`, `SerializeInt`, `SerializeIntPacked`, virtual
+`SerializeBool(bool&)`) and against the engine's `FRepMovement::NetSerialize` (`Engine/Classes/Engine/EngineTypes.h`).
+Rounding in `FCreateBuildingActorData` is `::nearbyintf` (round to nearest, ties to even), not `FMath::RoundHalfToEven`,
+which snaps values near a half. None of the bodies is compiled by the checker: the build owner compiles them (Linux
+toolchain: `-Wall -Werror`, no `-Wextra`).
 
 ## Checker
 

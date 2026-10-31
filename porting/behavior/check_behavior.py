@@ -15,6 +15,9 @@ Kinds helper and static_helper (contract: porting/behavior/README.md, "helper"):
 member declared in the class header outside any UFUNCTION, under its access label; a static_helper is a static free
 function defined in the anonymous namespace at the top of the class .cpp, with no header declaration and no use of
 this or of class members.
+Kind struct_net (contract: porting/behavior/README.md, "struct_net"): the entry's class is a generated struct, and its
+NetSerialize is declared and defined inline in the struct header (declaration at one tab, body at two tabs), with the
+trait block TStructOpsTypeTraits<struct>. The signature is fixed (NATIVE_NET_SIGNATURE, as in gen_native_classes.py).
 Usage:  python3 porting/behavior/check_behavior.py [--verbose]
         python3 porting/behavior/check_behavior.py --gen-root <dir>/FortniteGame/Generated [--splice-report <behavior_splice.json>]
 The --gen-root mode checks a generated tree instead of native/ (it does not write COUNTS.txt). For each ported entry
@@ -45,9 +48,13 @@ CPP_KEYWORDS = {
 # GetLocalRole() is the public AActor accessor of Role (TEnumAsByte<ENetRole>, private in UE 4.25; Actor.h:484) and
 # ROLE_Authority its enumerator (Engine/Classes/Engine/EngineTypes.h). GetOwner() is the public AActor accessor of Owner
 # (Actor.h:2119, returns Owner: Actor.h:3554), used by the tenth pass OnRep bodies (the Owner pointer at +0xe0).
+# FMath (UnrealMathUtility.h, FMath::Abs) is used by the struct_net body of FCreateBuildingActorData.
 ENGINE_NAMES = {"UClass", "UObject", "AActor", "FWeakObjectPtr", "TWeakObjectPtr", "FName", "FString", "FText",
                 "FVector", "TArray", "static_cast", "Cast", "UWorld", "AGameStateBase", "GetLocalRole", "ROLE_Authority",
-                "GetOwner"}
+                "GetOwner", "FMath"}
+# The NetSerialize signature of kind struct_net (gen_native_classes.py NATIVE_NET_SIGNATURE, the same text).
+NATIVE_NET_SIGNATURE = "bool NetSerialize(FArchive& Ar, class UPackageMap* Map, bool& bOutSuccess)"
+STRUCT_NET_KIND = "struct_net"
 PLACEHOLDER_RE = re.compile(r"\b(TODO|FIXME|TBD|XXX|PLACEHOLDER|placeholder|not recovered|stub body)\b|\.\.\.", re.I)
 
 _header_cache = {}
@@ -57,7 +64,7 @@ HELPER_KINDS = ("helper", "static_helper")
 FIELD_KIND = "member_field"
 FIELD_ACCESS = ("public", "protected", "private")
 FIELD_SIG_RE = re.compile(r"^(?P<type>.*?[\s*&>])\s*(?P<name>[A-Za-z_]\w*)$")
-KNOWN_KINDS = {"getter", "exec", "impl", "validate", "onrep", "callee", FIELD_KIND} | set(HELPER_KINDS)
+KNOWN_KINDS = {"getter", "exec", "impl", "validate", "onrep", "callee", FIELD_KIND, STRUCT_NET_KIND} | set(HELPER_KINDS)
 HELPER_NAMES = {}  # class -> names of its ported helper and static_helper entries (callable from any body)
 
 
@@ -72,7 +79,8 @@ def parent_of(cls):
     txt = read_header(cls)
     if not txt:
         return None
-    m = re.search(r"^class\s+(?:\w+_API\s+)?" + re.escape(cls) + r"\s*:\s*public\s+(\w+)", txt, re.M)
+    # A struct has a parent too (its members are visible to a struct_net body): struct FOo : public FBar.
+    m = re.search(r"^(?:class|struct)\s+(?:\w+_API\s+)?" + re.escape(cls) + r"\s*:\s*public\s+(\w+)", txt, re.M)
     return m.group(1) if m else None
 
 
@@ -249,6 +257,17 @@ def check_kind(e, problems):
         problems.append(("FAIL", tag, "unknown kind %r" % (kind,)))
         return
     sig = e.get("signature") or ""
+    if kind == STRUCT_NET_KIND:
+        # The struct is the class; the function, signature and linkage are fixed (gen_native_classes.py, struct_net).
+        if e.get("function") != "NetSerialize":
+            problems.append(("FAIL", tag, "struct_net entry must be function NetSerialize, not %r" % e.get("function")))
+        if re.sub(r"\s+", " ", sig).strip() != NATIVE_NET_SIGNATURE:
+            problems.append(("FAIL", tag, "struct_net signature must be %r" % NATIVE_NET_SIGNATURE))
+        if e.get("access") is not None:
+            problems.append(("FAIL", tag, "struct_net takes no access (the function is inline in the struct)"))
+        if e.get("status") == "ported" and not e.get("inc_path"):
+            problems.append(("FAIL", tag, "ported struct_net entry has no inc_path"))
+        return
     if kind == FIELD_KIND:
         parse = FIELD_SIG_RE.match(re.sub(r"\s+", " ", sig).strip())
         if not parse or re.match(r"(static|mutable|volatile|virtual|inline|extern|typedef|using|UPROPERTY)\b",
@@ -335,12 +354,51 @@ def snippet_body_lines(inc_rel):
     return [("\t" + line.rstrip()) if line.strip() else "" for line in raw.split("\n")]
 
 
+def check_struct_net(e, tag, hdr, problems, counts):
+    """--gen-root, kind struct_net: the NetSerialize is declared once inside the struct header, at one tab, its body
+    (two tabs, the .inc lines) follows the brace pair, and the trait block TStructOpsTypeTraits<struct> is present once."""
+    cls = e["class"]
+    lines = hdr.split("\n")
+    decl = "\t" + NATIVE_NET_SIGNATURE
+    where = [i for i, line in enumerate(lines) if line == decl]
+    if len(where) != 1:
+        problems.append(("FAIL", tag, "NetSerialize declared %d times in the struct header" % len(where)))
+        return
+    i = where[0]
+    if i + 1 >= len(lines) or lines[i + 1] != "\t{":
+        problems.append(("FAIL", tag, "NetSerialize is not followed by a brace at one tab"))
+        return
+    close = next((j for j in range(i + 2, len(lines)) if lines[j] == "\t}"), None)
+    if close is None:
+        problems.append(("FAIL", tag, "NetSerialize has no closing brace at one tab"))
+        return
+    raw = open(os.path.join(ROOT, e["inc_path"]), encoding="utf-8").read().strip("\n")
+    expected = [("\t\t" + line.rstrip()) if line.strip() else "" for line in raw.split("\n")]
+    if lines[i + 2:close] != expected:
+        problems.append(("FAIL", tag, "NetSerialize body is not the snippet"))
+        return
+    traits = [line for line in lines if line == "struct TStructOpsTypeTraits<%s> : public TStructOpsTypeTraitsBase2<%s>"
+              % (cls, cls)]
+    if len(traits) != 1:
+        problems.append(("FAIL", tag, "trait block TStructOpsTypeTraits<%s> missing or repeated" % cls))
+        return
+    counts["spliced"] += 1
+
+
 def check_generated(e, rejected, problems, counts):
     """--gen-root: declaration, UFUNCTION specifier, definition and body of one ported entry in a generated tree."""
     cls, fn = e["class"], e["function"]
     tag = "%s::%s" % (cls, fn)
     if tag in rejected:
         counts["not_spliced"] += 1
+        return
+    if e["kind"] == STRUCT_NET_KIND:
+        # A struct has no .cpp: a struct_net body is inline in the struct header, and is compared there.
+        hdr = read_header(cls)
+        if hdr is None:
+            problems.append(("FAIL", tag, "generated %s.h not found" % cls))
+            return
+        check_struct_net(e, tag, hdr, problems, counts)
         return
     hdr, cpp = read_header(cls), read_cpp(cls)
     if hdr is None or cpp is None:
