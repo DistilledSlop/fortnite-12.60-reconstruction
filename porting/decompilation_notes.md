@@ -1256,3 +1256,121 @@ the Eighth pass; `Broadcast(this, value)` in the decompile): `KillScoreNative` (
 
 Scratch only (not in the repository): the promote output and reports, the syntax logs, and the patched UHT headers under the scratchpad.
 Not touched: `porting/native/`, `gen_native_classes.py` and its `.md`, the git index, `/opt/fortnite/gen-worktree`, `porting/ghidra/`.
+
+## Tenth pass: rank-2 callees, the kill and team-kill bodies, rank 3 [observed unless marked]
+
+Scope: queue rows 2 and 3 (`OnRep_Kills`, `OnRep_AIKills` and their callees), rank 3 (`0x142cd3770`), and the other OnRep bodies
+the hand-off names (`OnRep_TotalPlayerScore`, `OnRep_TeamKillScore`, `OnRep_DeathInfo`, the PlayerController callers).
+
+Method. One Ghidra run: `porting/ghidra/probe_callees.py` on the four rank-2 addresses (12.9 s; outputs in
+`porting/generated/callee_probe/tenth_rank2/`, git-ignored). The lock file `fortnite-slim.lock` was stale (written 17:15, no Ghidra
+process running), so the project opened. The probe reports that it changed files under `fortnite-slim.rep` (`idata/~index.*`,
+`project.prp`, `versioned/~index.*`) although the transaction was rolled back; check that before the next probe. No full analysis.
+Every other check was read-only: the runtime dump bytes (`objdump -D -b binary -m i386:x86-64 --adjust-vma=0x140000000`, file
+offset = VA - 0x140000000; the bytes match Ghidra's listing at the four callees), the reflection JSON and the generated headers.
+
+### Identities
+
+| Address | Identity | Confidence | Evidence |
+|---|---|---|---|
+| `0x140684de0` | `TMulticastDelegate<void>::Broadcast()` (no arguments; the delegate's list is the argument) | HIGH (structure) | Probe asm: lock `inc [rcx+0x14]`, reverse loop over 16-byte entries, `call [rax+0x50]` (`ExecuteIfSafe()`, no arguments), unlock, `FMulticastDelegateBase::CompactInvocationList` (`0x140685370`) when a call failed. The Eighth pass said the list pointer is loaded from `0x148351eb8`: the asm has no such reference (corrected). |
+| `0x142a6ee20` | `AFortPlayerControllerZone::StaticClass()` | HIGH | `GetPrivateStaticClassBody` with `/Script/FortniteGame`, `FortPlayerControllerZone`, size `0x2ae0`. |
+| `0x1423def80` | zone controller member `+0x28f0`: `TMulticastDelegate<void>` (`ZoneKillScoreChangedNative`, name LOW) | HIGH (accessor `this + 0x28f0`), MEDIUM (type) | Probe body is `return param_1 + 0x28f0`. Its call in OnRep_Kills is followed by `0x140684de0`. No reflected property at `+0x28f0` in any class. |
+| `0x1423def70` | zone controller member `+0x2908`: `TMulticastDelegate<void>` (`ZoneAIKillCountChangedNative`, name LOW) | HIGH (accessor), MEDIUM (type) | Probe body is `return param_1 + 0x2908`. It is `0x18` bytes after the kill delegate (one list type). The reflected property at `+0x2908` belongs to `AFortPlayerPawnAthena` (`ReviveFromDBNOTime`). |
+| `0x1419e4f10` (not in the queue; callee of `OnRep_TeamKillScore`) | Athena controller member `+0x3210`: `TMulticastDelegate<void>` (`TeamKillScoreChangedNative`, name LOW) | HIGH (accessor: `lea rax,[rcx+0x3210]; ret`, read from the dump), MEDIUM (type) | Its result goes to `0x140684de0`. The only reflected property at `+0x3210` belongs to `AFortCharacterVehicle` (`DashMovementLockDuration`), not to this class. |
+| `0x142cd3770` (rank 3) | profiling stat-scope end | HIGH that it writes no game state | Decompile: reads the thread id and cycle counters, may append the stat name, and logs "Leaving stat scope on hitch" (`0x142c54b70`) when a threshold is exceeded. Callers gate it with the byte at `0x1482472e4` (profiling). Only profiler state is written. |
+
+### Ported (manifest 432 entries: 244 ported, 188 skipped)
+
+| Entry | Kind | Confidence | Basis |
+|---|---|---|---|
+| `AFortPlayerStateAthena::OnRep_Kills` | onrep | MEDIUM | Asm of the body at `0x141a51910`: GetFortGameStateAthena, GetCurrentPlaylistAthena, UpdateScoreForEvent, UpdateTotalPlayerScore, zone delegate, then `KillScoreNative` (tail call). |
+| `AFortPlayerStateAthena::OnRep_AIKills` | helper, protected | MEDIUM | Asm of `0x141a56ed0`. Not a RepNotify (`AIKillCount` is not `ReplicatedUsing`, flags `0x80401` = Final, Native, Protected), so the generated header has no UFUNCTION and the generator writes the declaration (the helper kind). Nothing in the module calls it yet. |
+| `AFortPlayerStateAthena::OnRep_TotalPlayerScore` | onrep | HIGH | Asm of `0x141a53d60` is one tail call: `TotalPlayerScoreNative` (`+0x1180`) with `(this, TotalPlayerScore)`. |
+| `AFortPlayerStateAthena::OnRep_TeamKillScore` | onrep | MEDIUM | Asm of `0x141a531d0`: the controller's delegate (`0x1419e4f10`), then `TeamKillScoreNative` (`+0x1150`) with `(this, TeamKillScore)`. |
+| `AFortPlayerControllerZone::ZoneKillScoreChangedNative` | member_field, `+0x28f0` | MEDIUM (type), LOW (name) | `TMulticastDelegate<void>`, public. |
+| `AFortPlayerControllerZone::ZoneAIKillCountChangedNative` | member_field, `+0x2908` | MEDIUM (type), LOW (name) | `TMulticastDelegate<void>`, public. |
+| `AFortPlayerControllerAthena::TeamKillScoreChangedNative` | member_field, `+0x3210` | MEDIUM (type), LOW (name) | `TMulticastDelegate<void>`, public. |
+
+Skipped: `AFortPlayerStateAthena::OnRep_DeathInfo` (see below).
+
+### Findings
+
+- Exec records and bodies. The `Address` of each `decomp_improved` OnRep file is the exec record. Its first instructions add
+  one to a counter at `[rdx+0x20]` (`x = x + (x != 0)`; the decompile shows this as `P_FINISH`) and then tail-jump to the native
+  body: `0x141a51910` (Kills), `0x141a56ed0` (AIKills), `0x141a53d60` (TotalPlayerScore), `0x141a531d0` (TeamKillScore). The
+  decompile merged the two parts. The bodies are the jump targets. `P_FINISH` is not ported, as in the ninth pass.
+- The `this` argument. In OnRep_Kills (and OnRep_AIKills) `rcx` still holds `this` at the call to `0x1419d3ff0`, so
+  `GetFortGameStateAthena(this)` is the right reading. The ninth-pass open question is answered for these bodies (the stat bodies
+  pass `this` as well).
+- The `PreviousPoints` quirk of OnRep_Kills. The asm loads `KillScore` (`+0xe74`) into both the Count and the PreviousPoints
+  argument (`r8d` and `r9d`), so `UpdateScoreForEvent(Elimination, KillScore, KillScore, Playlist)` and its broadcast test compares
+  with the kill count, not the cache. It is ported as the shipping code does it. The other stat bodies and OnRep_AIKills pass the
+  cache.
+- The result goes to `KillScorePoints` (`+0xe88`), which is what the decompile's `HumanKillScore + 0xc` means (`HumanKillScore` is
+  the reflected int32 at `+0xe7c`).
+- Owner. `Owner` (`AActor`, reflected, `OnRep_Owner`) is at `+0xe0` (reflection offset 224). The bodies read it through the public
+  accessor `GetOwner()` (checker `ENGINE_NAMES` gained `GetOwner`; checker-only).
+
+### Blocked and why
+
+- `OnRep_DeathInfo` (`0x142a8d9b0`): 75 distinct unnamed callees after the identities above (`FUN_140683490` 32 calls, `FUN_141ed1800` 20,
+  `FUN_140680160` and `FUN_1406800e0` 16 each). Not probed: the one Ghidra run was limited to the four rank-2 callees.
+- PlayerController and PlayerState callers of `GetFortGameStateAthena` (the eighth-pass caller table). Each still has unnamed callees, so
+  none needs only a `static_helper` and none was ported. No new `static_helper` entry was added. (The only copy is in
+  `AFortPlayerStateAthena.cpp`.) The unnamed callees: `ClientNotifyTeamLost_Implementation` (`FUN_1419922b0`, `FUN_1419967f0`,
+  `FUN_142a53870`, `FUN_142bad740`, `FUN_142ee3b30`, `FUN_144621fb0`, `FUN_1446278d0`), `ClientSendMatchStatsForPlayer_Implementation`
+  (`FUN_141b5d450`, `FUN_141b6bb40`, `FUN_141e8db50`, `FUN_141ed1800`, `FUN_141ed2350`, `FUN_14463f970`),
+  `OnClientVolumeManagerReplicated` (`FUN_140694550`, `FUN_1419c1a40`, `FUN_1419e0370`, `FUN_141c74820`, `FUN_141c7d420`),
+  `ServerClearSkydiveLeader_Implementation` (`FUN_1419982c0`, `FUN_1419e89a0`), and `Server_SetCanEditCreativeIsland_Implementation` (seven).
+- The controller delegates' names (`ZoneKillScoreChangedNative`, `ZoneAIKillCountChangedNative`, `TeamKillScoreChangedNative`) are ours.
+  The binary gives the offsets and the no-argument type. Name them from the code that binds them, or leave them.
+
+### Rank 3 decision: `0x142cd3770` is a no-op
+
+It is the end of a profiling stat scope. It reads the thread id and cycle counters and logs a hitch warning; it writes no UObject state.
+Porting it would need the stats framework. Leaving it out does not change game state. The ninth pass already applies this to
+`OnRep_NumChestsOpened` and `OnRep_NumMinutesAlive` (the bodies skip the call). Nothing else changes.
+
+### Corrections to earlier passes
+
+- Eighth pass: `0x140684de0` does not read a global list (`0x148351eb8` is not in its asm). Its list is the argument.
+- Eighth pass: `0x140684de0` was called "global Broadcast". It is the no-argument `TMulticastDelegate<void>::Broadcast()`.
+- The ninth-pass `GetFortGameStateAthena(this)` argument question is answered for OnRep_Kills and OnRep_AIKills (see Findings).
+
+### Checks
+
+- `python3 -I porting/behavior/check_behavior.py --verbose`: 432 entries, ported 244, skipped 188, 239 signatures declared, 4 pending
+  declarations (`OnRep_AIKills` and the three controller delegates), FAIL 0. `COUNTS.txt` was rewritten by the checker.
+- Scratch promote (not `promote_native_classes.sh`, which deletes `porting/native/Source/*/Generated`): I copied `porting/native/Source`
+  to the scratchpad and ran the same `resolve_class_refs.py` and `gen_native_classes.py --promote` steps with `--source-root`,
+  `--report-dir` and `--out` in the scratchpad. `behavior_splice.json`: spliced 244, rejected 0. The scratch header declares
+  `protected: void OnRep_AIKills();` and the three delegates at their offsets. `check_behavior.py --gen-root <scratch>/FortniteGame/Generated
+  --splice-report <scratch>/behavior_splice.json`: 244 spliced and verified, FAIL 0.
+- The exact native-tree check (`check_behavior.py --gen-root porting/native/Source/FortniteGame/Generated --splice-report
+  porting/generated/reflection/behavior_splice.json`) was refused by the permission check of the tool host, so it was not retried.
+  The native tree predates these entries, so it cannot verify them until the tree is promoted.
+- Not compiled. The entries use `Cast<T>` and `GetOwner()` (engine), `TMulticastDelegate<void>` (`Delegates/Delegate.h`) and the zone
+  and Athena controller headers, which the generator includes in the .cpp (the scratch `AFortPlayerStateAthena.cpp` includes both).
+  The build owner must compile them.
+
+### Next blockers (ordered)
+
+1. Build owner: promote into `native/`, build, run both smoke variants (now covers the seven new entries).
+2. Probe the 75 callees of `OnRep_DeathInfo`, then port it.
+3. Probe the PlayerController and PlayerState callers in the list above (each needs its own callees named; then the static helper).
+4. Optional: name the three controller delegates from the code that binds them (the port does not need the names).
+
+### Files touched
+
+- `porting/behavior/MANIFEST.json` (eight entries: four bodies, three member fields, one skipped `OnRep_DeathInfo`)
+- `porting/behavior/AFortPlayerStateAthena/OnRep_Kills.inc`, `OnRep_AIKills.inc`, `OnRep_TotalPlayerScore.inc`, `OnRep_TeamKillScore.inc` (new)
+- `porting/behavior/check_behavior.py` (`ENGINE_NAMES`: `GetOwner`)
+- `porting/behavior/README.md` (status, tenth-pass paragraph, `ENGINE_NAMES` note)
+- `porting/behavior/CALLEE_PORT_QUEUE.md` (tenth-pass paragraph, ranking rows 2, 3, 8, 9 and a new row 10)
+- `porting/behavior/COUNTS.txt` (rewritten by `check_behavior.py`)
+- `porting/decompilation_notes.md` (this section)
+- Git-ignored evidence: `porting/generated/callee_probe/tenth_rank2/`
+
+Not touched: `porting/native/`, `gen_native_classes.py`, the git index, `/opt/fortnite/gen-worktree`, `porting/ghidra/`,
+`porting/generated/reflection/behavior_splice.json`, `BLOCKING_CALLEES.md`.

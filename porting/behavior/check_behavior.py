@@ -43,9 +43,11 @@ CPP_KEYWORDS = {
 # Engine types, casts and members that snippets may use without a generated header (UE 4.25 names). UWorld and
 # AGameStateBase are used by the static helper GetFortGameStateAthena, which lists their headers in its includes.
 # GetLocalRole() is the public AActor accessor of Role (TEnumAsByte<ENetRole>, private in UE 4.25; Actor.h:484) and
-# ROLE_Authority its enumerator (Engine/Classes/Engine/EngineTypes.h).
+# ROLE_Authority its enumerator (Engine/Classes/Engine/EngineTypes.h). GetOwner() is the public AActor accessor of Owner
+# (Actor.h:2119, returns Owner: Actor.h:3554), used by the tenth pass OnRep bodies (the Owner pointer at +0xe0).
 ENGINE_NAMES = {"UClass", "UObject", "AActor", "FWeakObjectPtr", "TWeakObjectPtr", "FName", "FString", "FText",
-                "FVector", "TArray", "static_cast", "Cast", "UWorld", "AGameStateBase", "GetLocalRole", "ROLE_Authority"}
+                "FVector", "TArray", "static_cast", "Cast", "UWorld", "AGameStateBase", "GetLocalRole", "ROLE_Authority",
+                "GetOwner"}
 PLACEHOLDER_RE = re.compile(r"\b(TODO|FIXME|TBD|XXX|PLACEHOLDER|placeholder|not recovered|stub body)\b|\.\.\.", re.I)
 
 _header_cache = {}

@@ -9,6 +9,8 @@ Fourth pass (see `porting/decompilation_notes.md`, "Fourth pass"): rank 4 `0x141
 
 Sixth pass (see `porting/decompilation_notes.md`, "Sixth pass"): row 5 `0x141991bf0` identified (accessor: `CurrentPlaylistInfo.OverridePlaylist`, else `BasePlaylist`, on `AFortGameStateAthena`; HIGH). Row 2 and row 3 are identified in part. `FUN_142af1340` is `FortTeamInfoAthena::StaticClass` (HIGH). `FUN_1407ac640` and `0x140685370` are one lock-counted list family (the element type is unknown). None of rows 2, 3 or 5 can be spliced: the generator has no splice kind for non-reflected helpers, so the 17 callers of `0x1419d3ff0` stay blocked. The table below is unchanged.
 
+Tenth pass (see `porting/decompilation_notes.md`, "Tenth pass"; one small probe run, `0x140684de0`, `0x142a6ee20`, `0x1423def80`, `0x1423def70`): the four rank-2 callees are identified. `0x140684de0` is `TMulticastDelegate<void>::Broadcast()` (no arguments; its list is its argument), `0x142a6ee20` is `AFortPlayerControllerZone::StaticClass`, and `0x1423def80` and `0x1423def70` return `this + 0x28f0` and `this + 0x2908` of the zone controller (no-argument delegates, placeholder names). `OnRep_Kills`, `OnRep_AIKills`, `OnRep_TotalPlayerScore` and `OnRep_TeamKillScore` are ported. Rank 3 `0x142cd3770` is a no-op (profiling only). The callee `0x1419e4f10` (in `OnRep_TeamKillScore`) is `lea rax,[rcx+0x3210]`, identified from the dump bytes. `OnRep_DeathInfo` and the PlayerController callers stay blocked (see the ranking table).
+
 Eighth pass (see `porting/decompilation_notes.md`, "Eighth pass"; research only, no Ghidra run): rows 2, 3 and 5 are identified and their bodies are written as pseudocode (`UpdateScoreForEvent`, `UpdateTotalPlayerScore`, `GetCurrentPlaylistAthena`). `FUN_1407ac640` is `TMulticastDelegate<void(AFortPlayerStateAthena*, int32)>::Broadcast` and `0x140685370` is `FMulticastDelegateBase::CompactInvocationList` (both HIGH); the element is `FDelegateBase`. vfn `+0x770` is `GetPlayerTeam()` (`PlayerTeam` at `+0x640`). `FUN_14070fe00` is `FScalableFloat::GetValueAtLevel` (HIGH, engine). Rows 6, 7 and 9 are engine special members (`FGameplayCueParameters` dtor and copy constructor, `FGameplayTagContainer::operator=`). The ranking after this pass is at the end of the table, before "Not queued". The blocker is now the generator (helper splice kind and non-reflected members), not the callees.
 
 Ninth pass (see `porting/decompilation_notes.md`, "Ninth pass"): rows 2, 3, 4 and 5 are ported as manifest entries. Row 2 is
@@ -44,7 +46,7 @@ source before naming.
 | 16 | `0x144621fb0` | 2 | verify | Handle lookup: index in the low 24 bits of a 64-bit handle, element stride `0x90`, sparse index read from `+0x28` when set, otherwise the inline array at `+0x18`. Probably `FTimerManager::FindTimer`. Verify in `Engine/Private/TimerManager.cpp` before naming. | none |
 | 17 | `0x141952190` | 1 (878 bytes) | port-fn | AFortGameModeAthena aircraft drop-zone handling. Strings: `FailedToLoad`, `NetworkErrors`, `Failed to load before game started.`. Nine indirect calls. Port as a whole function after the callees below. | `FUN_141991bf0` (row 5), `FUN_14468fb70`, `FUN_141990ec0`, `FUN_141695900`, `FUN_140fc7960`, `FUN_141971aa0`, `FUN_141971930` |
 
-## Ranking after the eighth pass
+## Ranking after the eighth pass (rows 2, 3, 8, 9 and 10 updated in the tenth pass)
 
 Ordered by bodies unblocked. Bodies are the OnRep and RPC functions that call `0x1419d3ff0`, the rows above, or the
 unnamed callees listed here (caller table in `decompilation_notes.md`, eighth pass).
@@ -52,14 +54,15 @@ unnamed callees listed here (caller table in `decompilation_notes.md`, eighth pa
 | Order | Item | Bodies it unblocks | Status | Next action |
 |---:|---|---|---|---|
 | 1 | Generator: helper splice kind, plus non-reflected members (int32 caches at `+0xe88`, `+0xeb4`, `+0xebc` to `+0xefc`; four `TMulticastDelegate<void, AFortPlayerStateAthena*, int32>` at `+0x1120`, `+0x1150`, `+0x1180`, `+0x11b0`; `AFortTeamInfo +0x370`) | 9 OnRep_Num* stat bodies, plus the three helper bodies (rows 2, 3, 5) | done (ninth pass): entries and bodies in the manifest, 237 spliced in scratch, 0 rejected | Build owner: promote into `native/`, build, run both smoke variants. |
-| 2 | `0x140684de0` (global `Broadcast`, argument list unknown), `0x142a6ee20`, `0x1423def80`, `0x1423def70` | `OnRep_Kills`, `OnRep_AIKills` | unidentified | Probe these four in one Ghidra run (small bodies). |
-| 3 | `0x142cd3770` (stat scope end, gated by `0x1482472e4`) | `OnRep_NumChestsOpened`, `OnRep_NumMinutesAlive` | LOW; port as a no-op | Decide, no probe needed. |
+| 2 | `0x140684de0` (`TMulticastDelegate<void>::Broadcast()`), `0x142a6ee20` (`AFortPlayerControllerZone::StaticClass`), `0x1423def80` and `0x1423def70` (zone accessors `this + 0x28f0` and `this + 0x2908`) | `OnRep_Kills`, `OnRep_AIKills` | done (tenth pass): identified, bodies ported (`OnRep_Kills` onrep, `OnRep_AIKills` helper); the zone delegates are `member_field` entries with placeholder names | Build owner: promote and build with the rest of the tenth pass. |
+| 3 | `0x142cd3770` (stat scope end, gated by `0x1482472e4`) | `OnRep_NumChestsOpened`, `OnRep_NumMinutesAlive` | decided (tenth pass): no-op | Done. The bodies skip the call (profiling only; no game state written). |
 | 4 | `FUN_141c74820`, `FUN_141c7d420`, `FUN_140694550`, `FUN_1419c1a40`, `FUN_1419e0370` | `OnClientVolumeManagerReplicated` | unidentified | Probe. |
 | 5 | `FUN_14199e3c0`, `FUN_141a2c5b0`, `FUN_141f0a3c0`, `FUN_1423a0aa0`, `FUN_142414c60`, `FUN_14297b320` (and row 14 `0x1419c3880`) | `Server_SetCanEditCreativeIsland_Implementation` | unidentified | Probe. |
 | 6 | `FUN_141b5d450`, `FUN_141b6bb40`, `FUN_141e8db50`, `FUN_141ed1800`, `FUN_141ed2350`, `FUN_14463f970` | `ClientSendMatchStatsForPlayer_Implementation` | unidentified | Probe. |
 | 7 | `FUN_1419982c0`, `FUN_1419e89a0` | `ServerClearSkydiveLeader_Implementation` | unidentified | Probe (`FUN_142a8ae70` is now named). |
-| 8 | `FUN_1419922b0`, `FUN_1419967f0`, `FUN_142bad740`, `FUN_142ee3b30`, `FUN_1446278d0`, plus `0x140684de0`, row 11 and row 16 | `ClientNotifyTeamLost_Implementation` | unidentified | Probe. |
-| 9 | About 80 callees (`FUN_1406800e0`, `FUN_141a2d0b0`, `FUN_142a6ee20`, ...) | `OnRep_DeathInfo` | low priority | Last. |
+| 8 | `FUN_1419922b0`, `FUN_1419967f0`, `FUN_142bad740`, `FUN_142ee3b30`, `FUN_1446278d0`, plus row 11 and row 16 (`0x140684de0` is identified, tenth pass) | `ClientNotifyTeamLost_Implementation` | unidentified | Probe. |
+| 9 | 75 distinct unnamed callees (tenth pass count; `FUN_140683490` is called 32 times, `FUN_141ed1800` 20 times, `FUN_140680160` and `FUN_1406800e0` 16 times each) | `OnRep_DeathInfo` | low priority; the tenth pass did not probe it (one Ghidra run was limited to the four rank-2 callees) | Last. |
+| 10 | `FUN_1419e4f10` (identified, tenth pass: `lea rax,[rcx+0x3210]`, a no-argument delegate of the Athena controller) | `OnRep_TeamKillScore` | done: ported (onrep); the member is `TeamKillScoreChangedNative` (name LOW) | none. |
 
 Not examined in the eighth pass: rows 8 and 10 (`0x142c64fe0`, `0x143e8a780`) and rows 11 to 17.
 

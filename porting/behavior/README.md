@@ -4,7 +4,9 @@ Hand-ported native function bodies, taken from the decompiled output of the ship
 (`porting/generated/decomp/` and `porting/generated/decomp_improved/`, both git-ignored). Each `.inc`
 is our own C++ re-expression of what the decompile does, not a copy of it.
 
-Status (see `MANIFEST.json`, 424 entries): **237 ported** (32 getters, 26 onrep, 61 impl, 25 exec, 73 validate, 3 helper, 1 static_helper, 16 member_field; confidence 204 high, 33 medium), **187 skipped** with a reason (of which 17 are callees from the queue). `python3 porting/behavior/check_behavior.py` reports 0 failures; `COUNTS.txt` has 217 signatures declared in the generated header and 19 pending declarations (the generator emits those when the splice is on: 16 member fields, 2 helpers and `GetCurrentPlaylistAthena`). The RPC entries that were skipped as not declared (the zipline implementation and validate, and the quick-chat implementation) are ported again.
+Status (see `MANIFEST.json`, 432 entries): **244 ported** (32 getters, 29 onrep, 61 impl, 25 exec, 73 validate, 4 helper, 1 static_helper, 19 member_field; confidence 205 high, 39 medium), **188 skipped** with a reason (of which 17 are callees from the queue). `python3 porting/behavior/check_behavior.py` reports 0 failures; `COUNTS.txt` has 239 signatures declared in the generated header and 4 pending declarations (the generator emits those when the splice is on: `OnRep_AIKills` and three controller delegates of the tenth pass). The RPC entries that were skipped as not declared (the zipline implementation and validate, and the quick-chat implementation) are ported again.
+
+Tenth pass (see `porting/decompilation_notes.md`, "Tenth pass"): the four rank-2 callees of `CALLEE_PORT_QUEUE.md` are identified (one small probe run) and the stat-kill bodies that use them are ported: `OnRep_Kills` (onrep), `OnRep_TotalPlayerScore` (onrep, one tail call), `OnRep_TeamKillScore` (onrep, its callee `0x1419e4f10` identified from two instructions) and `OnRep_AIKills` (helper, protected: it is not a RepNotify, so the generator declares it). Three new `member_field` entries are the no-argument delegates of the controllers (`AFortPlayerControllerZone` at `+0x28f0` and `+0x2908`, `AFortPlayerControllerAthena` at `+0x3210`), with placeholder names. `OnRep_DeathInfo` stays skipped (75 unnamed callees). The rank-3 scope call `0x142cd3770` is a no-op. `GetOwner` was added to `ENGINE_NAMES` (checker only).
 
 Third pass (35 new bodies, see `porting/decompilation_notes.md`, "Third pass"): 15 empty bodies (exec thunks that
 tail-jump to the shared `ret` at `0x1406801c0`), 14 bodies that broadcast a multicast delegate through the dispatcher
@@ -56,6 +58,7 @@ Sixth pass (see `porting/decompilation_notes.md`, "Sixth pass"): nine bodies. Si
 - Engine names allowed without a generated header (checker `ENGINE_NAMES`): `UClass`, `UObject`, `AActor`,
   `FWeakObjectPtr`, `TWeakObjectPtr`, `FName`, `FString`, `FText`, `FVector`, `TArray`, `static_cast`, `Cast`, and (ninth
   pass) `UWorld`, `AGameStateBase`, `GetLocalRole` (the public accessor of the private `AActor::Role`) and `ROLE_Authority`.
+  Tenth pass: `GetOwner` (the public accessor of `AActor::Owner`, which is not declared in any generated header).
   The name is accepted by the checker only; the header is still needed. An entry that is not a helper or a field has no
   `includes`, so a body of an `impl`, `onrep`, `exec` or `getter` entry cannot bring one in.
 - Each file starts with a `//` header comment: original address, decompile source, proxy score, what was

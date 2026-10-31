@@ -5986,5 +5986,133 @@
     "proxy_score": null,
     "decompile_source": "porting/generated/decomp_improved/AFortPlayerStateAthena/OnRep_NumSupplyDropsOpened.c",
     "notes": "Ninth pass: the stat body (the Eighth pass caller table). Calls GetFortGameStateAthena, GetCurrentPlaylistAthena, UpdateScoreForEvent and UpdateTotalPlayerScore. P_FINISH is not ported (script epilogue)."
+  },
+  {
+    "class": "AFortPlayerStateAthena",
+    "function": "OnRep_Kills",
+    "kind": "onrep",
+    "signature": "void OnRep_Kills()",
+    "signature_status": "declared",
+    "inc_path": "porting/behavior/AFortPlayerStateAthena/OnRep_Kills.inc",
+    "confidence": "medium",
+    "address": "0x142a8da10",
+    "status": "ported",
+    "proxy_score": null,
+    "decompile_source": "porting/generated/decomp_improved/AFortPlayerStateAthena/OnRep_Kills.c",
+    "notes": "Tenth pass: the Kills RepNotify, asm checked in the runtime dump (body 0x141a51910). Calls GetFortGameStateAthena (static helper of this class), GetCurrentPlaylistAthena, UpdateScoreForEvent (KillScore is passed as both Count and PreviousPoints: the shipping quirk, kept), UpdateTotalPlayerScore, the zone controller's no-argument delegate ZoneKillScoreChangedNative (+0x28f0 of AFortPlayerControllerZone; name LOW) and KillScoreNative. The global Broadcast 0x140684de0 is TMulticastDelegate<void>::Broadcast (its list is the argument; no global list is read). P_FINISH is not ported."
+  },
+  {
+    "class": "AFortPlayerStateAthena",
+    "function": "OnRep_AIKills",
+    "kind": "helper",
+    "access": "protected",
+    "signature": "void OnRep_AIKills()",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/AFortPlayerStateAthena/OnRep_AIKills.inc",
+    "confidence": "medium",
+    "address": "0x142a8d970",
+    "status": "ported",
+    "proxy_score": null,
+    "decompile_source": "porting/generated/decomp_improved/AFortPlayerStateAthena/OnRep_AIKills.c",
+    "notes": "Tenth pass: not a RepNotify (AIKillCount is not ReplicatedUsing) and not declared in the generated header, so the generator writes its declaration (kind helper, protected, flags 0x80401 include FUNC_Protected). Asm checked (body 0x141a56ed0). Zone controller no-argument delegate ZoneAIKillCountChangedNative (+0x2908; name LOW), AIKillCountNative (+0x11b0), AIKillCountPoints (+0xeb4; the cache is the PreviousPoints argument), UpdateTotalPlayerScore (tail call). Nothing in the module calls it yet (its callers are not ported)."
+  },
+  {
+    "class": "AFortPlayerStateAthena",
+    "function": "OnRep_TotalPlayerScore",
+    "kind": "onrep",
+    "signature": "void OnRep_TotalPlayerScore()",
+    "signature_status": "declared",
+    "inc_path": "porting/behavior/AFortPlayerStateAthena/OnRep_TotalPlayerScore.inc",
+    "confidence": "high",
+    "address": "0x142a8dec0",
+    "status": "ported",
+    "proxy_score": null,
+    "decompile_source": "porting/generated/decomp_improved/AFortPlayerStateAthena/OnRep_TotalPlayerScore.c",
+    "notes": "Tenth pass: a single tail call in the asm (body 0x141a53d60): TotalPlayerScoreNative (+0x1180) is broadcast with (this, TotalPlayerScore) through 0x1407ac640. The decompile showed the same broadcast inlined. P_FINISH not ported."
+  },
+  {
+    "class": "AFortPlayerStateAthena",
+    "function": "OnRep_TeamKillScore",
+    "kind": "onrep",
+    "signature": "void OnRep_TeamKillScore()",
+    "signature_status": "declared",
+    "inc_path": "porting/behavior/AFortPlayerStateAthena/OnRep_TeamKillScore.inc",
+    "confidence": "medium",
+    "address": "0x142a8de40",
+    "status": "ported",
+    "proxy_score": null,
+    "decompile_source": "porting/generated/decomp_improved/AFortPlayerStateAthena/OnRep_TeamKillScore.c",
+    "notes": "Tenth pass: asm checked (body 0x141a531d0). The owner IsA AFortPlayerControllerAthena: its no-argument delegate at +0x3210 (member_field TeamKillScoreChangedNative of AFortPlayerControllerAthena; accessor 0x1419e4f10 = lea rax,[rcx+0x3210]; name LOW) is broadcast, then TeamKillScoreNative (+0x1150) with (this, TeamKillScore at +0xdbc). Was blocked by the callee 0x1419e4f10 (Tenth pass, identified from its two instructions)."
+  },
+  {
+    "class": "AFortPlayerStateAthena",
+    "function": "OnRep_DeathInfo",
+    "kind": "onrep",
+    "signature": "void OnRep_DeathInfo()",
+    "signature_status": "declared",
+    "inc_path": null,
+    "confidence": null,
+    "address": "0x142a8d9b0",
+    "status": "skipped",
+    "proxy_score": null,
+    "decompile_source": "porting/generated/decomp_improved/AFortPlayerStateAthena/OnRep_DeathInfo.c",
+    "notes": "unnamed_call: 75 distinct unidentified FUN_* callees after the tenth pass's identities (the most used: FUN_140683490 with 32 calls, FUN_141ed1800 with 20, FUN_140680160 and FUN_1406800e0 with 16 each). Not probed in the tenth pass (the one Ghidra run was limited to the four rank-2 callees). Low priority in CALLEE_PORT_QUEUE.md (rank 9)."
+  },
+  {
+    "class": "AFortPlayerControllerZone",
+    "function": "ZoneKillScoreChangedNative",
+    "kind": "member_field",
+    "signature": "TMulticastDelegate<void> ZoneKillScoreChangedNative",
+    "signature_status": "proposed",
+    "access": "public",
+    "offset": "0x28f0",
+    "includes": [
+      "Delegates/Delegate.h"
+    ],
+    "inc_path": null,
+    "confidence": "medium",
+    "address": null,
+    "status": "ported",
+    "proxy_score": null,
+    "decompile_source": "porting/generated/decomp_improved/AFortPlayerStateAthena/OnRep_Kills.c",
+    "notes": "Tenth pass: the no-argument native multicast delegate of the zone controller at +0x28f0 (accessor 0x1423def80 returns this + 0x28f0; broadcast with the global Broadcast 0x140684de0, which reads a 16-byte entry list and a lock count at +0x14). Type is TMulticastDelegate<void> (DECLARE_MULTICAST_DELEGATE with no parameters). No reflected property at 0x28f0 in any class. Used by OnRep_Kills. Name is LOW (our name, not from the binary)."
+  },
+  {
+    "class": "AFortPlayerControllerZone",
+    "function": "ZoneAIKillCountChangedNative",
+    "kind": "member_field",
+    "signature": "TMulticastDelegate<void> ZoneAIKillCountChangedNative",
+    "signature_status": "proposed",
+    "access": "public",
+    "offset": "0x2908",
+    "includes": [
+      "Delegates/Delegate.h"
+    ],
+    "inc_path": null,
+    "confidence": "medium",
+    "address": null,
+    "status": "ported",
+    "proxy_score": null,
+    "decompile_source": "porting/generated/decomp_improved/AFortPlayerStateAthena/OnRep_AIKills.c",
+    "notes": "Tenth pass: the no-argument native multicast delegate of the zone controller at +0x2908, 0x18 bytes after ZoneKillScoreChangedNative (accessor 0x1423def70 returns this + 0x2908). The reflected property at offset 0x2908 belongs to AFortPlayerPawnAthena (ReviveFromDBNOTime), not to this class. Used by OnRep_AIKills. Name is LOW (our name, not from the binary)."
+  },
+  {
+    "class": "AFortPlayerControllerAthena",
+    "function": "TeamKillScoreChangedNative",
+    "kind": "member_field",
+    "signature": "TMulticastDelegate<void> TeamKillScoreChangedNative",
+    "signature_status": "proposed",
+    "access": "public",
+    "offset": "0x3210",
+    "includes": [
+      "Delegates/Delegate.h"
+    ],
+    "inc_path": null,
+    "confidence": "medium",
+    "address": null,
+    "status": "ported",
+    "proxy_score": null,
+    "decompile_source": "porting/generated/decomp_improved/AFortPlayerStateAthena/OnRep_TeamKillScore.c",
+    "notes": "Tenth pass: the no-argument native multicast delegate of the PlayerController at +0x3210 (accessor 0x1419e4f10 = lea rax,[rcx+0x3210]; ret; broadcast with the global Broadcast 0x140684de0). No reflected property of this class is at 0x3210 (the only one with that offset is AFortCharacterVehicle's DashMovementLockDuration). Used by OnRep_TeamKillScore. Name is LOW (our name, not from the binary)."
   }
 ]
