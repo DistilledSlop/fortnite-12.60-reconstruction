@@ -1374,3 +1374,477 @@ Porting it would need the stats framework. Leaving it out does not change game s
 
 Not touched: `porting/native/`, `gen_native_classes.py`, the git index, `/opt/fortnite/gen-worktree`, `porting/ghidra/`,
 `porting/generated/reflection/behavior_splice.json`, `BLOCKING_CALLEES.md`.
+
+## Eleventh pass: the six fallback NetSerialize bodies [observed unless marked]
+
+Scope: the six structs of the handoff's "Known wire gaps" (`SharedRepMovement`, `ReplicatedPhysicsPawnState`, `FortAISharedRepMovement`,
+`FortAIAttributeReplicationProxy`, `AthenaPawnReplayData`, `CreateBuildingActorData`). Result: five bodies recovered (drafts below, not yet
+spliced), one blocked (`AthenaPawnReplayData`, fallback kept). No generator, `porting/native/`, manifest or `porting/behavior/` change in this
+pass. The mechanism is decided below. Repo HEAD when this was written: `d29db8d` (the census commit on top of `9f771cc`).
+
+### Method
+
+- The slot-14 NetSerialize of each struct is a two-instruction thunk: `MOV RCX,qword ptr [RSP+0x28]` then `JMP <body>` (objdump and the probe
+  listing agree). The seventh-pass files `serializers/<Struct>_slot14.c` are Ghidra decompiles of the thunk, which show the target body. The
+  real bodies are the jump targets, probed here: the decompile and asm are of the body, the argument order is the Windows x64 one (the body
+  takes the archive in RDX, the bool* in R9 and the struct pointer as the fifth argument, which the thunk moves into RCX).
+- Two `probe_callees.py` runs on the slim project (13.4 s and 14.2 s, no analysis, nothing saved): the six slot-14 addresses, the six bodies, and
+  the unnamed callees. Lock file absent and no Ghidra or Java process before the first run. The probe reported project metadata written
+  again (`fortnite-slim.rep/idata/~index.*`, `project.prp`, `versioned/~index.*`), the same as the tenth pass; the project still opened. `.gpr`
+  is 0 bytes (pre-existing). Outputs: `/tmp/claude-1000/-opt-fortnite/cb6b2fd6-af2b-4311-9c18-8992e33f0be4/scratchpad/nser/probe` and `.../nser/probe2`.
+- The asm call sequences were extracted from the probe listings with a script (`.../nser/calls.py`, `.../nser/dest.py`): for every archive call
+  the vtable slot, the size argument and the destination operand. Literal constants were read from the dump bytes (file offset = VA -
+  `0x140000000`). Engine semantics were checked against UE 4.25 source under `/opt/fortnite/UnrealEngine`.
+- Vtable slots: `FArchive` declares `Serialize`, `SerializeBits`, `SerializeInt`, `SerializeIntPacked` in that order
+  (`Core/Public/Serialization/Archive.h` 1397, 1399, 1409, 1415), so slots `0x150`, `0x158`, `0x160`, `0x168` are those four. Every call in the
+  six bodies matches the argument shape of its slot (for example `SerializeInt(ptr, 0x1ff)` at `0x160`).
+
+### Identities
+
+| Struct | ops vtable | slot 14 thunk | body (jump target) | bytes / insns | binary traits | Result |
+|---|---|---|---|---|---|---|
+| `FSharedRepMovement` | `0x1464cf188` | `0x142a82170` | `0x141a1b9d0` | 1893 / 532 | HasNetSerializer, HasNetSharedSerialization | recovered, HIGH |
+| `FFortAISharedRepMovement` | `0x1462b4fc0` | `0x1427a19f0` | `0x1422df100` | 720 / 204 | HasNetSerializer, HasNetSharedSerialization | recovered, HIGH |
+| `FReplicatedPhysicsPawnState` | `0x146492160` | `0x142a25f80` | `0x1423350b0` | 541 / 146 | HasNetSerializer, HasNetSharedSerialization | recovered, HIGH (raw floats) |
+| `FFortAIAttributeReplicationProxy` | `0x1462b5220` | `0x1427a19e0` | `0x1422df0c0` | 60 / 18 | HasNetSerializer | recovered, HIGH |
+| `FAthenaPawnReplayData` | `0x1464cf2b8` | `0x142a82160` | `0x141a1afd0` | 2557 / 603 | HasNetSerializer | blocked (see below) |
+| `FCreateBuildingActorData` | `0x1464a87e8` | `0x142a3dc40` | `0x1423953d0` | 604 / 159 | HasNetSerializer | recovered, HIGH layout, MEDIUM on the saving yaw wrap |
+
+`HasNetSharedSerialization` is ICppStructOps slot 13, a constant trait function (`Class.h` 1026), not a second body. UE 4.25 documents the
+trait as "a NetSerialize that does not require the package map" (`Class.h` 684). None of the three traited bodies touches an object
+reference, which is consistent with the trait; the blocked struct has no shared trait.
+
+### Helpers identified (asm)
+
+| Address | Identity | Evidence |
+|---|---|---|
+| `0x141a22ec0` | `FRepMovement::SerializeQuantizedVector` | Switch on the level: 0 and other values `SerializePackedVector<1,24>` (`0x141a080f0`), 1 `<10,27>` (`0x141a083c0`, `*10.0`), 2 `<100,30>` (`0x141a086b0`, `*100.0`); non-finite on save writes a zero vector. Matches `FRepMovement` in `Engine/Classes/Engine/EngineTypes.h` (about line 3115). |
+| `0x142c5e060` / `0x142c5e260` | `FRotator::SerializeCompressed` / `SerializeCompressedShort` | Per component: `SerializeBits(1)` (nonzero flag), then 1 byte (`0x060`) or 2 bytes (`0x260`). Matches `UnrealMath.cpp` 79. |
+| `0x14072de10` | archive `Serialize(ptr, 4)` (raw 4-byte value) | Buffer fast path, else vtable `0x150` with length 4. |
+| `0x1406dfb40` | archive `FVector` raw (3 floats) | Calls `0x14072de10` at +0, +4, +8 of the vector. |
+| `0x142ccc610`, `0x142ccee40`, `0x142ccc920` | temporary wrapper around the archive (allocate, pointer, free) | No wire effect. |
+| `0x142ccd220` | in-place byte reversal of `n` bytes | Runs only when the archive state bit `0x20` at `+0x29` is set, which is `ArForceByteSwapping` (bit 13 of the state bitfield, `Archive.h` 641). Clear on the network path. |
+| `0x1423642d0` | sync-key writer | `MULSS 13.0`, `ADDSS` itself, `ADDSS 0.5`, `CVTSS2SI` (nearest-even), `SAR 1`, `+0x800000`, clamp to 24 bits, `SerializeInt(v, 0x1000000)`. |
+| `0x142bc0d80` | remainder helper for the yaw | `(yaw, 360.0f)`: `Yaw - trunc(Yaw/360)*360` with the guard, clamped to `[-360, 360]`. |
+| `0x1409de870`, `0x141a221a0` | encrypt / decrypt used by the replay body | Not identified; see the blocked section. |
+
+Constants checked in the dump: `180.0`, `360.0`, `90.0`, `-90.0`, `13.0`, `0.5`, `0.07692307978868484` (the `1/13` float). Field
+offsets come from the generated headers (`porting/native/Source/FortniteGame/Generated/`) and agree with the asm destinations.
+
+### Recovered bodies
+
+Fields are listed in wire order. Confidence: HIGH means the asm call and destination were seen and the width is fixed by the slot argument;
+MEDIUM means the value of a name or a rule was inferred and is labelled.
+
+#### FSharedRepMovement (`0x141a1b9d0`) [HIGH]
+
+| Order | Offset | Field (header) | Wire | Quantization / note | Confidence |
+|---|---|---|---|---|---|
+| 1 | `+0x30` bits 0-1 | `RepMovement` flags (bSimulatedPhysicSleep bit 0, bRepPhysics bit 1) | 2 bits | `SerializeBits(2)` | HIGH |
+| 2 | `+0x18` | `RepMovement.Location` | packed vector | `SerializePackedVector` by `+0x31`: 0 `<1,24>`, 1 `<10,27>`, 2 `<100,30>` | HIGH |
+| 3 | `+0x24` | `RepMovement.Rotation` | rotator | by `+0x33`: 0 byte components, 1 short components, other none. Each component is a 1-bit flag then 8 or 16 bits | HIGH |
+| 4 | `+0x00` | `RepMovement.LinearVelocity` | packed vector | by `+0x32` | HIGH |
+| 5 | `+0x0c` | `RepMovement.AngularVelocity` | packed vector | by `+0x32`, only when flag bit 1 is set | HIGH |
+| 6 | `+0x47` | `RepMovementMode` | 8 bits | `Serialize(1)` | HIGH |
+| 7 | `+0x48` | `JumpFlashCountPacked` | 8 bits | | HIGH |
+| 8 | `+0x49` | `LandingFlashCountPacked` | 8 bits | | HIGH |
+| 9 | `+0x4a` | `CurrentMovementStyle` (`EFortMovementStyle`) | 8 bits | | HIGH |
+| 10-19 | `+0x4b`..`+0x54` | ten bools | 32 bits each | `SerializeBool` (UBOOL). Order is the ascending offset; the names follow the header declaration order, which is the layout order (not read from a setter) | HIGH (width), MEDIUM (name to byte) |
+| 20 | `+0x34` | `RepTimeStamp` | 1 bit, then 32 bits when nonzero | otherwise `+0.0` | HIGH |
+| 21 | `+0x40` | `RemoteViewData32` | 32 bits | always present | HIGH |
+| 22 | `+0x44` | `AccelerationPack` (uint16) | 1 bit, then 16 bits when nonzero | | HIGH |
+| 23 | `+0x46` | `AccelerationZPack` (int8) | 1 bit, then 8 bits when nonzero | | HIGH |
+| 24 | `+0x38`, `+0x3c` | `TurretYaw`, `TurretPitch` | 1 bit (either nonzero), then two 32-bit floats | yaw first; both `+0.0` when clear | HIGH |
+
+The FRepMovement block is the engine's `FRepMovement::NetSerialize` (flag bits, Location, rotator, linear velocity, angular velocity when
+`bRepPhysics`), so the draft calls it. Its `bOutSuccess` accumulation is the decompile's `*param_4 &= ...`.
+
+#### FFortAISharedRepMovement (`0x1422df100`) [HIGH]
+
+| Order | Offset | Field (header) | Wire | Note | Confidence |
+|---|---|---|---|---|---|
+| 1 | `+0x30`, `+0x18`, `+0x24`, `+0x00`, `+0x0c` | `RepMovement` | as above | same FRepMovement block | HIGH |
+| 2 | `+0x38` | `RepMovementMode` (uint8) | 8 bits | | HIGH |
+| 3 | `+0x39` | `RepCurrentFortAILODLevel` (`EFortAILODLevel : uint8`) | 8 bits | | HIGH |
+| 4 | `+0x34` | `RepTimeStamp` | 1 bit, then 32 bits when nonzero | | HIGH |
+| 5 | `+0x3c` | `RepSharedAnimInfo.AnimState` | 1 bit (`MontageIndex != -1`), then 8 bits, then 32 bits, then 8 bits | wire order is `+0x3c`, `+0x40`, `+0x3d` (checked by destination) | HIGH |
+| 6 | `+0x40` | `RepSharedAnimInfo.MontageIndex` (int32) | 32 bits | | HIGH |
+| 7 | `+0x3d` | `RepSharedAnimInfo.MontageSectionToPlay` | 8 bits | | HIGH |
+| 8 | load only | default when the bit is clear | | `AnimState = 11` (`Anim_MAX`), `MontageSectionToPlay = 0`, `MontageIndex = -1` (asm stores `0xffffffff0000000b` over `+0x3c..+0x43`) | HIGH |
+
+#### FReplicatedPhysicsPawnState (`0x1423350b0`) [HIGH]
+
+Raw layout, no flags and no quantization: `Translation` 3 floats (`+0x00`), `Rotation` as `FQuat` 4 floats (`+0x10`, `+0x14`,
+`+0x18`, `+0x1c`), `LinearVelocity` 3 floats (`+0x20`), `AngularVelocity` 3 floats (`+0x2c`), `SyncKey` uint16 (`+0x38`). Total 54 bytes.
+The member types in the generated header (`FVector_NetQuantize100`, `FVector_NetQuantize10`) are not used by the wire: the body writes
+the raw floats. This is the main finding for this struct. Confidence HIGH for the bytes.
+
+#### FFortAIAttributeReplicationProxy (`0x1422df0c0`) [HIGH]
+
+`SerializeIntPacked(Health)` (`+0x00`, uint32) then `SerializeIntPacked(MaxHealth)` (`+0x04`, uint32). The body never writes
+`bOutSuccess` (the asm does not use R9) and returns true. Slot `0x168` is `SerializeIntPacked` (MEDIUM on the name, HIGH on the call).
+
+#### FCreateBuildingActorData (`0x1423953d0`) [HIGH layout, MEDIUM yaw wrap]
+
+| Order | Offset | Field | Wire | Note | Confidence |
+|---|---|---|---|---|---|
+| 1 | `+0x00` | `BuildingClassHandle` (uint32) | `SerializeInt(v, 0x1ff)`, 9 bits | | HIGH |
+| 2 | `+0x1c` | `bMirrored` | 32 bits (UBOOL) | | HIGH |
+| 3 | `+0x04..+0x0f` | `BuildLoc` | 3 raw floats | member type `FVector_NetQuantize10` not used | HIGH |
+| 4 | `+0x34` | `BuildingClassData.UpgradeLevel` | 8 bits | `FBuildingClassData` at `+0x28`, `UpgradeLevel` at its `+0x0c` | HIGH |
+| 5 | `+0x20` | `SyncKey` (float) | `SerializeInt(v, 0x1000000)`, 24 bits | `v = ((round_even(26x + 0.5)) >> 1) + 0x800000`, clamped; load `(v - 0x800000) * 0.07692308` | HIGH (encoding), MEDIUM (rounding mode of the rounding instruction, default nearest-even) |
+| 6 | `+0x14` (`BuildRot.Yaw`) | yaw code | 8 bits (values 0..3) | save: bins (90,180]=0, (0,90]=1, (-90,0]=2, [-180,-90]=3 after the wrap; load: 0=180, 1=90, 2=0, else -90 | HIGH (table), MEDIUM (wrap helper re-expressed) |
+
+`BuildRot.Pitch` (`+0x10`) and `BuildRot.Roll` (`+0x18`) are never written. The order inside the body is 1, 2, 3, 4, then 5 and 6 (sync
+first, then the yaw code), on both paths.
+
+#### FAthenaPawnReplayData (`0x141a1afd0`) [BLOCKED]
+
+Not recovered. Why:
+- The wire depends on runtime state, not only on the archive direction: the body branches on `IsSaving` / `IsLoading` and on the owner chain
+  (`FUN_14479fb90`, `FUN_14447f220`, the `AFortPlayerControllerAthena` static class check), then on a per-connection key state
+  (`*(int*)(lVar4+0x30a8)`) and a global flag (`_DAT_1478c2940`). The log strings name Case 1 (server encrypts and sends), Case 2 (receives
+  ciphertext), Case 3 (saves ciphertext), Case 4 (decrypts with a key) and the no-key and no-valid-data paths, each with its own framing.
+- The encrypted paths call `FUN_1409de870` (encrypt) and `FUN_141a221a0` (decrypt), neither identified. They handle replay key material,
+  which this pass does not touch (no keys, and anticheat and entitlement stay out of scope).
+- Partial, not enough for a body: the plaintext framing of the no-key branches is a 32-bit count followed by the CipherText bytes
+  (`Serialize(4)`, then `Serialize(count)`), and `World` (`UWorld*`, `+0x18`) is never serialized: the asm only reads it to choose a branch (MEDIUM).
+- Keep the fallback marked. The next step needs the crypto identity and an explicit decision on key handling.
+
+### Draft bodies (verbatim copies of the scratchpad `.inc` files)
+
+Each body is the text between the braces of `bool NetSerialize(FArchive& Ar, class UPackageMap* Map, bool& bOutSuccess)`. Not compiled.
+
+#### FSharedRepMovement (`0x141a1b9d0`)
+
+```cpp
+// NetSerialize of FSharedRepMovement. Draft body for the struct_net kind (not spliced yet).
+// Original 0x141a1b9d0, reached from the ops thunk 0x142a82170 (MOV RCX,[RSP+0x28]; JMP). Source: Ghidra slot-14 decompile and objdump of the dump.
+// Verified from the asm: the archive call sequence and each destination, the quantizer arguments, and the rotator choice.
+// CONFIDENCE: HIGH
+bOutSuccess = true;
+
+// FRepMovement block: engine FRepMovement::NetSerialize (2 flag bits, Location +0x18 by +0x31, rotator +0x24 by +0x33,
+// LinearVelocity +0x00 by +0x32, AngularVelocity +0x0c by +0x32 only when bRepPhysics).
+RepMovement.NetSerialize(Ar, Map, bOutSuccess);
+
+Ar.Serialize(&RepMovementMode, 1);            // +0x47 uint8, 8 bits
+Ar.Serialize(&JumpFlashCountPacked, 1);       // +0x48 uint8, 8 bits
+Ar.Serialize(&LandingFlashCountPacked, 1);    // +0x49 uint8, 8 bits
+Ar.Serialize(&CurrentMovementStyle, 1);       // +0x4a enum byte, 8 bits
+
+// Ten bools in ascending offset order, each as a 32-bit UBOOL (FArchive::SerializeBool).
+Ar.SerializeBool(bProxyIsJumpForceApplied);   // +0x4b
+Ar.SerializeBool(bIsCrouched);                // +0x4c
+Ar.SerializeBool(bIsSkydiving);               // +0x4d
+Ar.SerializeBool(bIsParachuteOpen);           // +0x4e
+Ar.SerializeBool(bIsSlopeSliding);            // +0x4f
+Ar.SerializeBool(bIsProxySimulationTimedOut); // +0x50
+Ar.SerializeBool(bIsTargeting);               // +0x51
+Ar.SerializeBool(bIsWaterJump);               // +0x52
+Ar.SerializeBool(bIsWaterSprintBoost);        // +0x53
+Ar.SerializeBool(bIsWaterSprintBoostPending); // +0x54
+
+{
+	// RepTimeStamp (+0x34): 1 bit (nonzero), then the float when it is set; otherwise it becomes +0.0.
+	uint8 bHas = RepTimeStamp != 0.0f ? 1 : 0;
+	Ar.SerializeBits(&bHas, 1);
+	if (bHas)
+	{
+		Ar.Serialize(&RepTimeStamp, 4);
+	}
+	else
+	{
+		RepTimeStamp = 0.0f;
+	}
+}
+
+Ar.Serialize(&RemoteViewData32, 4);          // +0x40 uint32, always present, 32 bits
+
+{
+	// AccelerationPack (+0x44): 1 bit, then uint16 when set.
+	uint8 bHas = AccelerationPack != 0 ? 1 : 0;
+	Ar.SerializeBits(&bHas, 1);
+	if (bHas)
+	{
+		Ar.Serialize(&AccelerationPack, 2);
+	}
+	else
+	{
+		AccelerationPack = 0;
+	}
+}
+
+{
+	// AccelerationZPack (+0x46, int8): 1 bit, then 8 bits when set.
+	uint8 bHas = AccelerationZPack != 0 ? 1 : 0;
+	Ar.SerializeBits(&bHas, 1);
+	if (bHas)
+	{
+		Ar.Serialize(&AccelerationZPack, 1);
+	}
+	else
+	{
+		AccelerationZPack = 0;
+	}
+}
+
+{
+	// TurretYaw (+0x38) and TurretPitch (+0x3c): 1 bit (either nonzero), then both floats when set.
+	uint8 bHas = (TurretYaw == 0.0f && TurretPitch == 0.0f) ? 0 : 1;
+	Ar.SerializeBits(&bHas, 1);
+	if (bHas)
+	{
+		Ar.Serialize(&TurretYaw, 4);
+		Ar.Serialize(&TurretPitch, 4);
+	}
+	else
+	{
+		TurretYaw = 0.0f;
+		TurretPitch = 0.0f;
+	}
+}
+
+return true;
+```
+
+#### FFortAISharedRepMovement (`0x1422df100`)
+
+```cpp
+// NetSerialize of FFortAISharedRepMovement. Draft body for the struct_net kind (not spliced yet).
+// Original 0x1422df100, reached from the ops thunk 0x1427a19f0 (MOV RCX,[RSP+0x28]; JMP).
+// Verified from the asm: archive call sequence and destinations (+0x3c, +0x40, +0x3d order), default store on load.
+// CONFIDENCE: HIGH
+bOutSuccess = true;
+
+// FRepMovement block: same pattern as FSharedRepMovement (2 flag bits, Location, rotator, linear and angular velocity).
+RepMovement.NetSerialize(Ar, Map, bOutSuccess);
+
+Ar.Serialize(&RepMovementMode, 1);            // +0x38 uint8
+Ar.Serialize(&RepCurrentFortAILODLevel, 1);   // +0x39 EFortAILODLevel (uint8)
+
+{
+	// RepTimeStamp (+0x34): 1 bit (nonzero), then the float when set; otherwise +0.0.
+	uint8 bHas = RepTimeStamp != 0.0f ? 1 : 0;
+	Ar.SerializeBits(&bHas, 1);
+	if (bHas)
+	{
+		Ar.Serialize(&RepTimeStamp, 4);
+	}
+	else
+	{
+		RepTimeStamp = 0.0f;
+	}
+}
+
+{
+	// RepSharedAnimInfo (8 bytes at +0x3c): 1 bit (MontageIndex != -1). When set the wire order is
+	// AnimState (+0x3c, 8 bits), MontageIndex (+0x40, 32 bits), MontageSectionToPlay (+0x3d, 8 bits).
+	// When the bit is clear and the archive is loading, the body stores AnimState = Anim_MAX (0x0b),
+	// MontageSectionToPlay = 0 and MontageIndex = -1 (the asm stores 0xffffffff0000000b over +0x3c..+0x43).
+	uint8 bHas = RepSharedAnimInfo.MontageIndex != -1 ? 1 : 0;
+	Ar.SerializeBits(&bHas, 1);
+	if (bHas)
+	{
+		Ar.Serialize(&RepSharedAnimInfo.AnimState, 1);
+		Ar.Serialize(&RepSharedAnimInfo.MontageIndex, 4);
+		Ar.Serialize(&RepSharedAnimInfo.MontageSectionToPlay, 1);
+	}
+	else if (Ar.IsLoading())
+	{
+		RepSharedAnimInfo.AnimState = EFortSharedAnimationState::Anim_MAX;
+		RepSharedAnimInfo.MontageSectionToPlay = 0;
+		RepSharedAnimInfo.MontageIndex = -1;
+	}
+}
+
+return true;
+```
+
+#### FReplicatedPhysicsPawnState (`0x1423350b0`)
+
+```cpp
+// NetSerialize of FReplicatedPhysicsPawnState. Draft body for the struct_net kind (not spliced yet).
+// Original 0x1423350b0, reached from the ops thunk 0x142a25f80. Raw layout: no flags, no quantization.
+// Verified from the asm: destinations +0x00..+0x0b (helper, 3 floats), +0x10..+0x1c (4 dwords), +0x20 and +0x2c
+// (helper, 3 floats each) and +0x38 (2 bytes). The member types (FVector_NetQuantize100/10) are not used for the wire.
+// CONFIDENCE: HIGH
+Ar.Serialize(&Translation.X, 4);
+Ar.Serialize(&Translation.Y, 4);
+Ar.Serialize(&Translation.Z, 4);
+Ar.Serialize(&Rotation.X, 4);
+Ar.Serialize(&Rotation.Y, 4);
+Ar.Serialize(&Rotation.Z, 4);
+Ar.Serialize(&Rotation.W, 4);
+Ar.Serialize(&LinearVelocity.X, 4);
+Ar.Serialize(&LinearVelocity.Y, 4);
+Ar.Serialize(&LinearVelocity.Z, 4);
+Ar.Serialize(&AngularVelocity.X, 4);
+Ar.Serialize(&AngularVelocity.Y, 4);
+Ar.Serialize(&AngularVelocity.Z, 4);
+Ar.Serialize(&SyncKey, 2);
+bOutSuccess = true;
+return true;
+```
+
+#### FFortAIAttributeReplicationProxy (`0x1422df0c0`)
+
+```cpp
+// NetSerialize of FFortAIAttributeReplicationProxy. Draft body for the struct_net kind (not spliced yet).
+// Original 0x1422df0c0, reached from the ops thunk 0x1427a19e0. Two SerializeIntPacked calls (FArchive slot +0x168).
+// The body never writes bOutSuccess (the R9 argument is not used by the asm); it returns true.
+// CONFIDENCE: HIGH (call order and width); MEDIUM on the slot name (vtable slot 0x168 is SerializeIntPacked by FArchive order).
+Ar.SerializeIntPacked(Health);
+Ar.SerializeIntPacked(MaxHealth);
+return true;
+```
+
+#### FCreateBuildingActorData (`0x1423953d0`)
+
+```cpp
+// NetSerialize of FCreateBuildingActorData. Draft body for the struct_net kind (not spliced yet).
+// Original 0x1423953d0, reached from the ops thunk 0x142a3dc40. Layout from the asm: SerializeInt(handle, 511),
+// bool as UBOOL, BuildLoc as raw floats, BuildingClassData.UpgradeLevel (+0x34), then saving or loading SyncKey
+// (SerializeInt over 2^24 with the 13x quantizer) and a 2-bit yaw code in one byte. BuildRot Pitch and Roll are never serialized.
+// CONFIDENCE: HIGH for the layout and constants (180, 90, -90, 360, 13, 2^23); MEDIUM for the wrap of the saving yaw
+// (helper 0x142bc0d80 re-expressed here as clamp(Yaw - trunc(Yaw/360)*360, -360, 360)).
+Ar.SerializeInt(BuildingClassHandle, 0x1ff);
+Ar.SerializeBool(bMirrored);
+Ar.Serialize(&BuildLoc.X, 4);
+Ar.Serialize(&BuildLoc.Y, 4);
+Ar.Serialize(&BuildLoc.Z, 4);
+Ar.Serialize(&BuildingClassData.UpgradeLevel, 1);
+
+if (Ar.IsSaving())
+{
+	// SyncKey (0x1423642d0): ((round_half_even(2 * (13 * x) + 0.5)) >> 1) + 0x800000, clamped to [0, 0xffffff].
+	const float Scaled = SyncKey * 13.0f;
+	const float Doubled = Scaled + Scaled + 0.5f;
+	int32 Biased = (static_cast<int32>(std::nearbyint(Doubled)) >> 1) + 0x800000;
+	if (static_cast<uint32>(Biased) > 0xffffff)
+	{
+		Biased = (Biased > 0) ? 0xffffff : 0;
+	}
+	uint32 SyncCode = static_cast<uint32>(Biased);
+	Ar.SerializeInt(SyncCode, 0x1000000);
+
+	// Yaw code (0x142bc0d80 with 360.0f, then the bins of 0x1423953d0): 0 = (90, 180], 1 = (0, 90], 2 = (-90, 0], 3 = [-180, -90].
+	float Quotient = BuildRot.Yaw / 360.0f;
+	if (FMath::Abs(Quotient) < 8388608.0f)
+	{
+		Quotient = static_cast<float>(static_cast<int32>(Quotient));
+	}
+	float Mid = Quotient * 360.0f;
+	if (FMath::Abs(BuildRot.Yaw) < FMath::Abs(Mid))
+	{
+		Mid = BuildRot.Yaw;
+	}
+	float Wrapped = BuildRot.Yaw - Mid;
+	if (Wrapped < -360.0f)
+	{
+		Wrapped = -360.0f;
+	}
+	else if (Wrapped > 360.0f)
+	{
+		Wrapped = 360.0f;
+	}
+	if (Wrapped < 0.0f)
+	{
+		Wrapped = Wrapped + 360.0f;
+	}
+	if (Wrapped > 180.0f)
+	{
+		Wrapped -= 360.0f;
+	}
+	uint8 YawCode = 0;
+	if (Wrapped <= 90.0f)
+	{
+		if (Wrapped <= 0.0f)
+		{
+			YawCode = (Wrapped <= -90.0f) ? 3 : 2;
+		}
+		else
+		{
+			YawCode = 1;
+		}
+	}
+	Ar.Serialize(&YawCode, 1);
+}
+else
+{
+	uint32 SyncCode = 0;
+	Ar.SerializeInt(SyncCode, 0x1000000);
+	SyncKey = static_cast<float>(static_cast<int32>(SyncCode) - 0x800000) * 0.07692308f;
+
+	uint8 YawCode = 0;
+	Ar.Serialize(&YawCode, 1);
+	BuildRot.Yaw = (YawCode == 0) ? 180.0f : ((YawCode == 1) ? 90.0f : ((YawCode == 2) ? 0.0f : -90.0f));
+}
+
+bOutSuccess = true;
+return true;
+```
+
+### Mechanism decision
+
+The existing kinds cannot express these bodies. `getter`, `exec`, `onrep`, `impl` and `validate` are UFUNCTIONs of a UClass, `helper` and
+`static_helper` are members of a class or static functions of a class .cpp, and `member_field` has no body. The generator emits a USTRUCT
+through `render_struct_header` (`gen_native_classes.py` 3334), which writes only the declaration plus, for the delta case,
+`TStructOpsTypeTraits`. No path adds a member function to a struct.
+
+Decision: add a struct-function kind `struct_net`:
+- `class` = the struct's C++ name (`FSharedRepMovement`), `function` = `NetSerialize`, `kind` = `struct_net`, `status` = `ported`,
+  `signature` = `bool NetSerialize(FArchive& Ar, class UPackageMap* Map, bool& bOutSuccess)`, `signature_status` = `proposed`,
+  `inc_path` = `FSharedRepMovement/NetSerialize.inc`, `confidence` as above, `address` = the body (`0x141a1b9d0`) and the thunk in `notes`,
+  `traits` = list of the native traits to keep (`WithNetSharedSerialization` only for `FSharedRepMovement`, `FFortAISharedRepMovement`,
+  `FReplicatedPhysicsPawnState`), `includes` = `EFortSharedAnimationState.h` for `FFortAISharedRepMovement`.
+- The five drafts: `.../nser/inc/<Struct>/NetSerialize.inc` (scratchpad, not in the repo; copy them to `porting/behavior/<Struct>/NetSerialize.inc`
+  with the manifest entries when the kind lands). `FAthenaPawnReplayData` gets a `skipped` entry with the reason above.
+
+Exact generator change (not made here; the build owner or a worktree does it):
+1. `gen_native_classes.py`, `net_serializer` (about line 3190): before the fallback return, look up the `struct_net` manifest entry for
+   `info.cpp_name` (only when the behaviour splice is on). Return `{"kind": "native", "body": <text of the .inc>, "traits": [...], "vtable": vtable}`.
+2. `render_struct_header` (about line 3334): for `kind == "native"`, drop the TODO comment, add `class UPackageMap;` to the forward declarations,
+   write `bool NetSerialize(FArchive& Ar, class UPackageMap* Map, bool& bOutSuccess)` with the body indented one tab before `};`, and after
+   the struct emit `template<> struct TStructOpsTypeTraits<X> : public TStructOpsTypeTraitsBase2<X> { enum { WithNetSerializer = true, WithNetSharedSerialization = <traits> }; };`
+   (same form as the delta block). Add the `includes` headers.
+3. `verify_spliced`: check the declaration once inside the struct, its body equal to the `.inc`, and the trait block.
+4. `check_behavior.py`: accept `struct_net` (class is a generated struct, signature match, the token check must know the struct's member
+   names as well as the FRepMovement and enum names of the body). `behavior/README.md`: document the kind.
+5. `class_checksum.py`: confirm that a struct with a spliced native NetSerialize leaves the `struct_custom_netserialize` gap (not checked here).
+
+Checks: none of the bodies has been compiled (the build owner compiles). `std::nearbyint`, `FMath::Abs`, `FRepMovement::NetSerialize`,
+`FArchive::SerializeBool`, `SerializeIntPacked`, `SerializeInt`, `SerializeBits` and `Serialize` are the names the bodies use; all exist in UE 4.25.
+
+### Corrections to earlier passes
+
+- Seventh pass: the `*_slot14.c` decompiles are of the thunk targets (the body is at the jump target), not of the thunk itself.
+- Seventh pass: `FFortAIAttributeReplicationProxy` "field type not known" is resolved: two uint32 fields, `SerializeIntPacked`.
+- Seventh pass: `FFortAISharedRepMovement`, `SharedRepMovement`, `ReplicatedPhysicsPawnState` and `FCreateBuildingActorData` were "low";
+  they are now recovered (see the tables). `FAthenaPawnReplayData` stays blocked.
+- Generated headers: the member types `FVector_NetQuantize100/10` of `ReplicatedPhysicsPawnState` and `FCreateBuildingActorData` do not
+  describe the wire. The native bodies write raw floats.
+- Generated headers: the fallback comment says "The custom net serializer of this struct is declared below", which is false for the fallback.
+
+### Checks run
+
+- Call sequences and destinations of the five bodies (script, all archive calls listed with vtable slot, size and destination).
+- Helper arguments in the asm before each call (for example the quantization level bytes `+0x31`, `+0x32`, `+0x33`).
+- Constants from the dump (see above) and the UE sources listed above.
+- objdump of the `SharedRepMovement` thunk and the first body instructions, which match the Ghidra listing.
+- Not run: any UE build, `promote_native_classes.sh`, `check_behavior.py` on the new kind (the kind does not exist).
+
+### Next blockers (ordered)
+
+1. Implement the `struct_net` kind in the generator and checker (in a worktree, `gen/netserialize`, per the hand-off rules), then splice the five
+   drafts and compile them (build owner).
+2. Identify `FUN_1409de870` and `FUN_141a221a0` and the mode selection of `AthenaPawnReplayData` (needs an explicit key-handling decision;
+   out of scope for this pass).
+3. Optional: confirm the ten bool names to byte offsets with a runtime setter in the dump (the bools are not in `bool_bits.json`, which is per class).
+
+### Files touched
+
+- `porting/decompilation_notes.md` (this section)
+- Scratchpad only: `.../scratchpad/nser/probe`, `.../nser/probe2` (Ghidra outputs), `.../nser/calls.py`, `.../nser/dest.py`, `.../nser/inc/<Struct>/NetSerialize.inc` (five drafts)
+- Not touched: `porting/native/`, `porting/behavior/`, `gen_native_classes.py`, `porting/ghidra/`, git index, worktrees. Ghidra project metadata
+  (`/opt/fortnite/ghidra-projects/fortnite-slim.rep/...`) was rewritten by the two probes, as in the tenth pass.
