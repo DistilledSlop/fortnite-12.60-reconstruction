@@ -6,8 +6,65 @@
 #include "CoreMinimal.h"
 #include "AFortPlayerControllerZone.h"
 
+#include "AttributeSet.h"
+#include "Engine/NetSerialization.h"
+#include "FAsyncTaskResult.h"
+#include "FAthenaMatchStats.h"
+#include "FAthenaMatchTeamStats.h"
+#include "FBuildingEditAnalyticEvent.h"
+#include "FCreativeIslandData.h"
+#include "FCreativeIslandInfo.h"
+#include "FCreativePlotSessionData.h"
+#include "FCreativePublishOptions.h"
+#include "FFortPlaysetStreamingData.h"
+#include "FLevelStreamRequestHandshakeState.h"
+#include "FOnAircraftStateChange.h"
+#include "FOnBuildingQuickEditOptionChanged.h"
+#include "FOnCreativePermissionsChanged.h"
+#include "FOnCreativePlotLinkedVolumeChanged.h"
+#include "FOnInGameContentDownloadStarted.h"
+#include "FOnInGameMatchmakingCanceled.h"
+#include "FOnInGameMatchmakingComplete.h"
+#include "FOnInGameMatchmakingError.h"
+#include "FOnInGameMatchmakingReadyCheckComplete.h"
+#include "FOnInGameMatchmakingStarted.h"
+#include "FOnIslandEntriesChanged.h"
+#include "FOnLocalPlayerChangedTeams.h"
+#include "FOnPreviewScreenshotCameraActivated.h"
+#include "FOnSkydiveLeaderChanged.h"
+#include "FOnSpectatorStreaming.h"
+#include "FOnTalkingPlayersChanged.h"
+#include "FPlayerStateEncryptionKey.h"
+#include "FProfileGoScenario.h"
+#include "GameplayTagContainer.h"
+#include "Math/Color.h"
+#include "Math/Rotator.h"
+#include "Math/Vector.h"
+#include "Misc/Guid.h"
+
+class AFortAthenaCreativePortal;
+class AFortBroadcastRemoteClientInfo;
+class AFortPlayerMarkerBase;
+class AFortPlayerStartWarmup;
 class AFortPlayerState;
 class AFortPlayerStateAthena;
+class AFortVolume;
+class APhysicsObject;
+class UAthenaMarkerComponent;
+class UAthenaPlayerMatchReport;
+class UAthenaResurrectionComponent;
+class UBuildingEditModeMetadata_Floor;
+class UBuildingEditModeMetadata_Roof;
+class UBuildingEditModeMetadata_Stair;
+class UBuildingEditModeMetadata_Wall;
+class UCreativeUserContentManager;
+class UFortControllerComponent_LocalizationService;
+class UFortCreativeDeviceButtonComponent;
+class UFortCreativeObjectTrackingComponent;
+class UFortGamepadSettings;
+class UFortHero;
+class UFortMiniMapChallengeIndicators;
+class UFortMiniMapTeamIndicators;
 class UInputComponent;
 
 #include "AFortPlayerControllerAthena.generated.h"
@@ -22,6 +79,14 @@ public:
 	UPROPERTY(Config)
 	float FireAbilityToWeaponSwitchTime;
 
+	// table index 170, flags 0x10000010080000
+	UPROPERTY()
+	FOnAircraftStateChange OnAircraftStateChange;
+
+	// table index 167, flags 0x20080010080000
+	UPROPERTY()
+	FOnCreativePermissionsChanged OnCreativePermissionsChanged;
+
 	// table index 165, flags 0x10000000004014
 	UPROPERTY(Config)
 	float WinScreenDelayTime;
@@ -34,6 +99,10 @@ public:
 	UPROPERTY(Config)
 	uint8 bAllowPlayersCreditOnLeave : 1;
 
+	// table index 161, flags 0x10000000002020
+	UPROPERTY(Replicated, Transient)
+	FVector_NetQuantize FocalPointOffset;
+
 	// table index 160, flags 0x10000000002020
 	UPROPERTY(Replicated, Transient)
 	float FocalPointFOV;
@@ -42,9 +111,17 @@ public:
 	UPROPERTY(Transient)
 	float FocalPointDuration;
 
+	// table index 156, flags 0x10000010080000
+	UPROPERTY()
+	FOnSkydiveLeaderChanged OnSkydiveLeaderChanged;
+
 	// table index 155, flags 0x10000000002000
 	UPROPERTY(Transient)
 	float SkydiveLeaderManualCameraTime;
+
+	// table index 154, flags 0x10000000002000
+	UPROPERTY(Transient)
+	FRotator InterpolatedSkydiveFollowerViewRotation;
 
 	// table index 153, flags 0x10000100002034
 	UPROPERTY(ReplicatedUsing=OnRep_SkydiveLeader, Transient)
@@ -81,6 +158,10 @@ public:
 	// table index 142, flags 0x10000000002014
 	UPROPERTY(Transient)
 	TArray<FString> PlayersTalking;
+
+	// table index 141, flags 0x10000010080000
+	UPROPERTY()
+	FOnTalkingPlayersChanged TalkingPlayersChanged;
 
 	// table index 140, flags 0x10000000002000
 	UPROPERTY(Transient)
@@ -130,6 +211,22 @@ public:
 	UPROPERTY()
 	float RespawnCamera_HoldPositionTime;
 
+	// table index 128, flags 0x10000000010001
+	UPROPERTY()
+	FVector RespawnCamera_InitialLocOffset_InAir;
+
+	// table index 127, flags 0x10000000010001
+	UPROPERTY()
+	FVector RespawnCamera_InitialLocOffset_OnGround;
+
+	// table index 126, flags 0x10000000010001
+	UPROPERTY()
+	FRotator RespawnCamera_InitialRotOffset_InAir;
+
+	// table index 125, flags 0x10000000010001
+	UPROPERTY()
+	FRotator RespawnCamera_InitialRotOffset_OnGround;
+
 	// table index 124, flags 0x10000000000020
 	UPROPERTY(Replicated)
 	uint8 bNextRespawnInAir : 1;
@@ -158,6 +255,26 @@ public:
 	UPROPERTY(Config)
 	float RespawnLevelStreamDistance;
 
+	// table index 117, flags 0x10000010080000
+	UPROPERTY()
+	FOnSpectatorStreaming SpectatorStreamingChanged;
+
+	// table index 115, flags 0x10000010080004
+	UPROPERTY()
+	FOnLocalPlayerChangedTeams OnLocalPlayerChangedTeams;
+
+	// table index 114, flags 0x40000000002000
+	UPROPERTY(Transient)
+	FLevelStreamRequestHandshakeState LevelStreamRequestHandshakeState;
+
+	// table index 113, flags 0x10000010080000
+	UPROPERTY()
+	FOnCreativePlotLinkedVolumeChanged OnCreativePlotLinkedVolumeChanged;
+
+	// table index 107, flags 0x10000010080000
+	UPROPERTY()
+	FOnIslandEntriesChanged OnIslandEntriesChanged;
+
 	// table index 104, flags 0x10000000000034
 	UPROPERTY(Replicated)
 	uint8 bCanUseSolaris : 1;
@@ -173,6 +290,38 @@ public:
 	// table index 100, flags 0x20080000000020
 	UPROPERTY(Replicated)
 	int32 MaxPlotCount;
+
+	// table index 99, flags 0x10000010080000
+	UPROPERTY()
+	FOnInGameMatchmakingStarted InGameMatchmakingReadyCheckStarted;
+
+	// table index 98, flags 0x10000010080000
+	UPROPERTY()
+	FOnInGameMatchmakingReadyCheckComplete InGameMatchmakingReadyCheckComplete;
+
+	// table index 97, flags 0x10000010080000
+	UPROPERTY()
+	FOnInGameMatchmakingReadyCheckComplete InGameMatchmakingReadyCheckCanceled;
+
+	// table index 96, flags 0x10000010080000
+	UPROPERTY()
+	FOnInGameMatchmakingStarted InGameMatchmakingStarted;
+
+	// table index 95, flags 0x10000010080000
+	UPROPERTY()
+	FOnInGameMatchmakingComplete InGameMatchmakingComplete;
+
+	// table index 92, flags 0x10000010080000
+	UPROPERTY()
+	FOnInGameMatchmakingError InGameMatchmakingError;
+
+	// table index 91, flags 0x10000010080000
+	UPROPERTY()
+	FOnInGameMatchmakingCanceled OnInGameMatchmakingCanceled;
+
+	// table index 90, flags 0x10000010080000
+	UPROPERTY()
+	FOnInGameContentDownloadStarted OnInGameContentDownloadStarted;
 
 	// table index 89, flags 0x10000000004014
 	UPROPERTY(Config)
@@ -190,6 +339,10 @@ public:
 	UPROPERTY(Replicated)
 	uint8 bMarkedAlive : 1;
 
+	// table index 82, flags 0x10000100000034
+	UPROPERTY(ReplicatedUsing=OnRep_CreativeIslands)
+	TArray<FCreativeIslandData> CreativeIslands;
+
 	// table index 81, flags 0x10000000000034
 	UPROPERTY(Replicated)
 	FString LastUsedSavePlot;
@@ -198,6 +351,14 @@ public:
 	UPROPERTY(Replicated)
 	uint8 bIsAllowedToPublish : 1;
 
+	// table index 79, flags 0x14000000010001
+	UPROPERTY()
+	TSoftObjectPtr<UFortGamepadSettings> GamepadSettingsAssetPtr;
+
+	// table index 78, flags 0x10000000000000
+	UPROPERTY()
+	FVector MapCursor;
+
 	// table index 77, flags 0x10000000010001
 	UPROPERTY()
 	float MapCursorSpeed;
@@ -205,6 +366,10 @@ public:
 	// table index 76, flags 0x10000000010001
 	UPROPERTY()
 	float MapCursorSpeedGamepad;
+
+	// table index 75, flags 0x10000000000004
+	UPROPERTY()
+	FLinearColor TeamMemberIndicatorColor;
 
 	// table index 74, flags 0x20080000002000
 	UPROPERTY(Transient)
@@ -222,6 +387,14 @@ public:
 	UPROPERTY(Config)
 	uint8 bEnableBroadcastRemoteClientInfo : 1;
 
+	// table index 67, flags 0x20080000000020
+	UPROPERTY(Replicated)
+	AFortBroadcastRemoteClientInfo* BroadcastRemoteClientInfo;
+
+	// table index 66, flags 0x20080000000000
+	UPROPERTY()
+	UFortHero* StrongMyHero;
+
 	// table index 65, flags 0x20080000004000
 	UPROPERTY(Config)
 	float EndMatchHeartbeatTimerDelay;
@@ -229,6 +402,10 @@ public:
 	// table index 64, flags 0x20080000000000
 	UPROPERTY()
 	double EndMatchHeartbeatTimestamp;
+
+	// table index 63, flags 0x20080000000000
+	UPROPERTY()
+	AFortPlayerStartWarmup* WarmupPlayerStart;
 
 	// table index 62, flags 0x20080000080008
 	UPROPERTY()
@@ -262,9 +439,49 @@ public:
 	UPROPERTY(Config)
 	float DoubleTapEditTime;
 
+	// table index 54, flags 0x20080000002000
+	UPROPERTY(Transient)
+	UAthenaPlayerMatchReport* MatchReport;
+
+	// table index 52, flags 0x20080000010015
+	UPROPERTY()
+	TArray<UBuildingEditModeMetadata_Wall*> QuickEditWallPatterns;
+
+	// table index 50, flags 0x20080000010015
+	UPROPERTY()
+	TArray<UBuildingEditModeMetadata_Floor*> QuickEditFloorPatterns;
+
+	// table index 48, flags 0x20080000010015
+	UPROPERTY()
+	TArray<UBuildingEditModeMetadata_Roof*> QuickEditRoofPatterns;
+
+	// table index 46, flags 0x20080000010015
+	UPROPERTY()
+	TArray<UBuildingEditModeMetadata_Stair*> QuickEditStairsPatterns;
+
+	// table index 45, flags 0x20080010080000
+	UPROPERTY()
+	FOnBuildingQuickEditOptionChanged OnBuildingQuickEditOptionChanged;
+
+	// table index 44, flags 0x24080000010001
+	UPROPERTY()
+	TSubclassOf<UFortMiniMapTeamIndicators> MinimapIndicatorClass;
+
+	// table index 43, flags 0x24080000010001
+	UPROPERTY()
+	TSubclassOf<UFortMiniMapChallengeIndicators> MinimapChallengeIndicatorClass;
+
+	// table index 42, flags 0x20080000002000
+	UPROPERTY(Transient)
+	UFortMiniMapChallengeIndicators* MinimapChallengeIndicators;
+
 	// table index 41, flags 0x20080000004000
 	UPROPERTY(Config)
 	uint8 bEnableInGameChallengeLocationIndicators : 1;
+
+	// table index 40, flags 0x24080000010015
+	UPROPERTY()
+	TSubclassOf<AFortPlayerMarkerBase> SquadMarkerActorClass;
 
 	// table index 39, flags 0x10000000002000
 	UPROPERTY(Transient)
@@ -286,9 +503,25 @@ public:
 	UPROPERTY(Transient)
 	float BuildingActionDoneLastAtTime;
 
+	// table index 33, flags 0x20080000002000
+	UPROPERTY(Transient)
+	TArray<FBuildingEditAnalyticEvent> BuildingAnalyticsArray;
+
 	// table index 32, flags 0x20080000002000
 	UPROPERTY(Transient)
 	float TimeStartedTrackingBuildingAnalytics;
+
+	// table index 31, flags 0x40000100000020
+	UPROPERTY(ReplicatedUsing=OnRep_CreativePlotLinkedVolume)
+	AFortVolume* CreativePlotLinkedVolume;
+
+	// table index 30, flags 0x40000000002000
+	UPROPERTY(Transient)
+	FCreativePlotSessionData CreativePlotSessionData;
+
+	// table index 29, flags 0x40000000000020
+	UPROPERTY(Replicated)
+	AFortAthenaCreativePortal* OwnedPortal;
 
 	// table index 25, flags 0x20080000004000
 	UPROPERTY(Config)
@@ -310,6 +543,30 @@ public:
 	UPROPERTY()
 	FText ClientTravelToCreativeHubText;
 
+	// table index 19, flags 0x20080000002000
+	UPROPERTY(Transient)
+	TArray<AFortVolume*> VolumesLoading;
+
+	// table index 17, flags 0x20080000002000
+	UPROPERTY(Transient)
+	TArray<AFortVolume*> VolumesUnloading;
+
+	// table index 16, flags 0x20080000080008
+	UPROPERTY()
+	UAthenaMarkerComponent* MarkerComponent;
+
+	// table index 15, flags 0x200800000a0009
+	UPROPERTY()
+	UAthenaResurrectionComponent* ResurrectionComponent;
+
+	// table index 8, flags 0x200800000b0009
+	UPROPERTY()
+	UFortControllerComponent_LocalizationService* LocalizationServiceComponent;
+
+	// table index 5, flags 0x40000000010001
+	UPROPERTY()
+	FScalableFloat SightWeatherCapRadius;
+
 	// table index 4, flags 0x40000000000000
 	UPROPERTY()
 	double TimeSinceLastCreativeSpawn;
@@ -318,6 +575,22 @@ public:
 	UPROPERTY()
 	uint8 bIgnoreSignifanceBasedCustomDepthRendering : 1;
 
+	// table index 2, flags 0x20080000080028
+	UPROPERTY(Replicated)
+	UCreativeUserContentManager* CreativeUserContentManager;
+
+	// table index 1, flags 0x20080000080028
+	UPROPERTY(Replicated)
+	UFortCreativeObjectTrackingComponent* CreativeObjectTrackingComponent;
+
+	// table index 0, flags 0x10000010080000
+	UPROPERTY()
+	FOnPreviewScreenshotCameraActivated OnPreviewScreenshotCameraActivated;
+
+	UFUNCTION(Client, Reliable)
+	void ClientAddProfileGoCollection(const TArray<FProfileGoScenario>& NewScenarios, const FString& CollectionName);
+	void ClientAddProfileGoCollection_Implementation(const TArray<FProfileGoScenario>& NewScenarios, const FString& CollectionName);
+
 	UFUNCTION(Client, Reliable)
 	void ClientAlertLeaveIsland();
 	void ClientAlertLeaveIsland_Implementation();
@@ -325,6 +598,14 @@ public:
 	UFUNCTION(Client, Reliable)
 	void ClientAlertPortalDoneTeleporting();
 	void ClientAlertPortalDoneTeleporting_Implementation();
+
+	UFUNCTION(Client, Reliable)
+	void ClientAutoEquipFirstItem(bool bForceExecution, const FGuid& ItemGuid);
+	void ClientAutoEquipFirstItem_Implementation(bool bForceExecution, const FGuid& ItemGuid);
+
+	UFUNCTION(Client, Reliable)
+	void ClientBotStartDogpile(const FVector& DogpilePosition);
+	void ClientBotStartDogpile_Implementation(const FVector& DogpilePosition);
 
 	UFUNCTION(Client, Reliable)
 	void ClientBotStopDogpile();
@@ -391,6 +672,10 @@ public:
 	void ClientRequestLevelStreamingHandshake_Implementation();
 
 	UFUNCTION(Client, Reliable)
+	void ClientSendDebugPoiLocationTags(const FGameplayTagContainer& InPoiTags);
+	void ClientSendDebugPoiLocationTags_Implementation(const FGameplayTagContainer& InPoiTags);
+
+	UFUNCTION(Client, Reliable)
 	void ClientSendDebugPoiVolumeData(const FString& PoiVolumes);
 	void ClientSendDebugPoiVolumeData_Implementation(const FString& PoiVolumes);
 
@@ -399,8 +684,28 @@ public:
 	void ClientSendEndMatchReportHeartbeat_Implementation();
 
 	UFUNCTION(Client, Reliable)
+	void ClientSendMatchStatsForPlayer(const FAthenaMatchStats& Stats);
+	void ClientSendMatchStatsForPlayer_Implementation(const FAthenaMatchStats& Stats);
+
+	UFUNCTION(Client, Reliable)
+	void ClientSendStateEncryptionKey(const FPlayerStateEncryptionKey& Key);
+	void ClientSendStateEncryptionKey_Implementation(const FPlayerStateEncryptionKey& Key);
+
+	UFUNCTION(Client, Reliable)
+	void ClientSendTeamStatsForPlayer(const FAthenaMatchTeamStats& TeamStats);
+	void ClientSendTeamStatsForPlayer_Implementation(const FAthenaMatchTeamStats& TeamStats);
+
+	UFUNCTION(Client, Reliable)
 	void ClientSetStreamingTestStreamingLevels(bool streaming);
 	void ClientSetStreamingTestStreamingLevels_Implementation(bool streaming);
+
+	UFUNCTION(Client, Reliable)
+	void ClientSignalPortalLoadCompleteViaDelegate(const FAsyncTaskResult& Result);
+	void ClientSignalPortalLoadCompleteViaDelegate_Implementation(const FAsyncTaskResult& Result);
+
+	UFUNCTION(Client, Reliable)
+	void ClientStartRespawnPreparation(const FText& HUDReasonText, const FName& InRespawnCameraBehavior, float RespawnCameraDist, const FRotator& RespawnRot, const FVector& RespawnLoc);
+	void ClientStartRespawnPreparation_Implementation(const FText& HUDReasonText, const FName& InRespawnCameraBehavior, float RespawnCameraDist, const FRotator& RespawnRot, const FVector& RespawnLoc);
 
 	UFUNCTION(Client, Reliable)
 	void ClientStartWaitLTMLoading();
@@ -427,7 +732,17 @@ public:
 	void OnPostGameForced_Implementation();
 
 	UFUNCTION()
+	void OnRep_CreativeIslands();
+
+	UFUNCTION()
+	void OnRep_CreativePlotLinkedVolume();
+
+	UFUNCTION()
 	void OnRep_SkydiveLeader();
+
+	UFUNCTION(Server, Reliable)
+	void PublishCreativePlot(const FCreativePublishOptions& MyPublishOptions, AFortVolume* VolumeToPublish);
+	void PublishCreativePlot_Implementation(const FCreativePublishOptions& MyPublishOptions, AFortVolume* VolumeToPublish);
 
 	UFUNCTION(Server, Reliable)
 	void ResetMyCurrentCreativePlot();
@@ -438,8 +753,16 @@ public:
 	void RestoreCreativePlot_Implementation(const FString& IslandId);
 
 	UFUNCTION(Server, Reliable)
+	void ServerAddSimulatedXp(const FGameplayTag& MetaData, const FText& Source, float XpAmmount);
+	void ServerAddSimulatedXp_Implementation(const FGameplayTag& MetaData, const FText& Source, float XpAmmount);
+
+	UFUNCTION(Server, Reliable)
 	void ServerBeginEndPreview(bool bInBegin);
 	void ServerBeginEndPreview_Implementation(bool bInBegin);
+
+	UFUNCTION(Server, Reliable)
+	void ServerBroadcastDeviceButtonComponentClickedDelegate(UFortCreativeDeviceButtonComponent* DeviceButtonComponent);
+	void ServerBroadcastDeviceButtonComponentClickedDelegate_Implementation(UFortCreativeDeviceButtonComponent* DeviceButtonComponent);
 
 	UFUNCTION(Server, Reliable)
 	void ServerClaimPortal();
@@ -466,8 +789,16 @@ public:
 	void ServerEnableAnonymousMode_Implementation();
 
 	UFUNCTION(Server, Reliable)
+	void ServerEndLoadingVolume(AFortVolume* VolumeToLoad);
+	void ServerEndLoadingVolume_Implementation(AFortVolume* VolumeToLoad);
+
+	UFUNCTION(Server, Reliable)
 	void ServerEndMinigame(bool bAbandon);
 	void ServerEndMinigame_Implementation(bool bAbandon);
+
+	UFUNCTION(Server, Reliable)
+	void ServerEndUnloadingVolume(AFortVolume* VolumeToUnload);
+	void ServerEndUnloadingVolume_Implementation(AFortVolume* VolumeToUnload);
 
 	UFUNCTION(Server, Reliable)
 	void ServerGenerateMockMatchReport();
@@ -476,6 +807,18 @@ public:
 	UFUNCTION(Server, Reliable)
 	void ServerInsertExtraStreamingTestSkydiveStates();
 	void ServerInsertExtraStreamingTestSkydiveStates_Implementation();
+
+	UFUNCTION(Server, Reliable)
+	void ServerLoadIslandCheckpoint(AFortAthenaCreativePortal* Portal);
+	void ServerLoadIslandCheckpoint_Implementation(AFortAthenaCreativePortal* Portal);
+
+	UFUNCTION(Server, Reliable)
+	void ServerLoadPlotForPortal(const FString& PlotItemId, AFortAthenaCreativePortal* Portal);
+	void ServerLoadPlotForPortal_Implementation(const FString& PlotItemId, AFortAthenaCreativePortal* Portal);
+
+	UFUNCTION(Server, Reliable)
+	void ServerLoadPlotForPortalFromMnemonic(const FString& Mnemonic, AFortAthenaCreativePortal* Portal);
+	void ServerLoadPlotForPortalFromMnemonic_Implementation(const FString& Mnemonic, AFortAthenaCreativePortal* Portal);
 
 	UFUNCTION(Server, Reliable)
 	void ServerLookedAtFocalPoint();
@@ -506,6 +849,10 @@ public:
 	void ServerRequestNewSkydiveLeader_Implementation();
 
 	UFUNCTION(Server, Reliable)
+	void ServerRequestObjectTrackingDetails(AFortVolume* Volume);
+	void ServerRequestObjectTrackingDetails_Implementation(AFortVolume* Volume);
+
+	UFUNCTION(Server, Reliable)
 	void ServerResetCameraPreviewToDefaultLocation();
 	void ServerResetCameraPreviewToDefaultLocation_Implementation();
 
@@ -520,6 +867,10 @@ public:
 	UFUNCTION(Server, Reliable)
 	void ServerRestartMinigame();
 	void ServerRestartMinigame_Implementation();
+
+	UFUNCTION(Server, Reliable)
+	void ServerSaveIslandCheckpoint(AFortAthenaCreativePortal* Portal);
+	void ServerSaveIslandCheckpoint_Implementation(AFortAthenaCreativePortal* Portal);
 
 	UFUNCTION(Server, Reliable)
 	void ServerSendSquadFriend(AFortPlayerStateAthena* FriendInSquad);
@@ -554,8 +905,20 @@ public:
 	void ServerSimulateLevelUp_Implementation(int32 ClientSimulatedLevel);
 
 	UFUNCTION(Server, Reliable)
+	void ServerStartInteractWithIslandPortal(AFortAthenaCreativePortal* Portal);
+	void ServerStartInteractWithIslandPortal_Implementation(AFortAthenaCreativePortal* Portal);
+
+	UFUNCTION(Server, Reliable)
+	void ServerStartLoadingVolume(AFortVolume* VolumeToLoad);
+	void ServerStartLoadingVolume_Implementation(AFortVolume* VolumeToLoad);
+
+	UFUNCTION(Server, Reliable)
 	void ServerStartMinigame();
 	void ServerStartMinigame_Implementation();
+
+	UFUNCTION(Server, Reliable)
+	void ServerStartUnloadingVolume(AFortVolume* VolumeToUnload);
+	void ServerStartUnloadingVolume_Implementation(AFortVolume* VolumeToUnload);
 
 	UFUNCTION(Server, Reliable)
 	void ServerStopSavingCreativePlot();
@@ -586,6 +949,10 @@ public:
 	void ServerThankBusDriverCheck_Implementation();
 
 	UFUNCTION(Server, Reliable)
+	void ServerTickForDoneTeleporting(AFortAthenaCreativePortal* Portal);
+	void ServerTickForDoneTeleporting_Implementation(AFortAthenaCreativePortal* Portal);
+
+	UFUNCTION(Server, Reliable)
 	void ServerToggleAutoRestartMinigame();
 	void ServerToggleAutoRestartMinigame_Implementation();
 
@@ -602,12 +969,24 @@ public:
 	void ServerUpdateUserCameraPreview_Implementation();
 
 	UFUNCTION(Server, Reliable)
+	void TellServer_ClientReceivedPlaysetDataForVolume(AFortVolume* Volume, const FFortPlaysetStreamingData& PlaysetData);
+	void TellServer_ClientReceivedPlaysetDataForVolume_Implementation(AFortVolume* Volume, const FFortPlaysetStreamingData& PlaysetData);
+
+	UFUNCTION(Server, Reliable)
 	void UpdateCreativeIslandDescriptionTags(const TArray<FString>& DescriptionTags, const FString& Locale, const FString& IslandId);
 	void UpdateCreativeIslandDescriptionTags_Implementation(const TArray<FString>& DescriptionTags, const FString& Locale, const FString& IslandId);
 
 	UFUNCTION(Server, Reliable)
+	void UpdateCreativePlotData(const FCreativeIslandInfo& MyInfo, AFortVolume* VolumeToPublish);
+	void UpdateCreativePlotData_Implementation(const FCreativeIslandInfo& MyInfo, AFortVolume* VolumeToPublish);
+
+	UFUNCTION(Server, Reliable)
 	void UpdateCreativePlotName(const FString& Title, const FString& Locale, const FString& IslandId);
 	void UpdateCreativePlotName_Implementation(const FString& Title, const FString& Locale, const FString& IslandId);
+
+	UFUNCTION(Server, Reliable)
+	void UpdateUGCRestrictedForVolume(bool bRestricted, AFortVolume* Volume);
+	void UpdateUGCRestrictedForVolume_Implementation(bool bRestricted, AFortVolume* Volume);
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

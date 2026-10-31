@@ -6,6 +6,18 @@
 #include "CoreMinimal.h"
 #include "GameFramework/WorldSettings.h"
 
+#include "Math/IntPoint.h"
+#include "Math/Rotator.h"
+#include "Math/Vector.h"
+#include "Math/Vector2D.h"
+#include "Styling/SlateBrush.h"
+
+class AFortMusicManager;
+class AFortTimeOfDayManager;
+class AFortVehicleManager;
+class UFortLevelOverlayManager;
+class UFortMusicManagerBank;
+
 #include "AFortWorldSettings.generated.h"
 
 UCLASS(config=game)
@@ -17,6 +29,10 @@ public:
 	// table index 49, flags 0x10000000000000
 	UPROPERTY()
 	TArray<int32> WorldCells;
+
+	// table index 48, flags 0x10000000000000
+	UPROPERTY()
+	FVector WorldCellsOrigin;
 
 	// table index 47, flags 0x10000000000000
 	UPROPERTY()
@@ -86,9 +102,21 @@ public:
 	UPROPERTY()
 	float MaxCullDistance;
 
+	// table index 30, flags 0x10000000000001
+	UPROPERTY()
+	FVector2D PvPMapWorldCenter;
+
 	// table index 29, flags 0x10000000000001
 	UPROPERTY()
 	float MapZOffset;
+
+	// table index 28, flags 0x10000000000001
+	UPROPERTY()
+	FRotator MapRotation;
+
+	// table index 26, flags 0x10000000000001
+	UPROPERTY()
+	FSlateBrush AthenaMapImage;
 
 	// table index 25, flags 0x10000000000001
 	UPROPERTY()
@@ -102,9 +130,73 @@ public:
 	UPROPERTY()
 	float MiniMapZoom;
 
+	// table index 22, flags 0x10000000000001
+	UPROPERTY()
+	FSlateBrush AircraftPathBrush;
+
+	// table index 21, flags 0x10000000000001
+	UPROPERTY()
+	FSlateBrush AircraftMidlinePathBrush;
+
+	// table index 20, flags 0x10000000000001
+	UPROPERTY()
+	FSlateBrush AircraftPathTeamIndicatorBrush;
+
+	// table index 19, flags 0x10000000000001
+	UPROPERTY()
+	FSlateBrush SafeZoneFinalPosBrush;
+
+	// table index 17, flags 0x10000000000001
+	UPROPERTY()
+	TArray<FIntPoint> NavGraphSkyCells;
+
 	// table index 13, flags 0x20080000000001
 	UPROPERTY()
 	uint8 bSpawnTimeOfDayManager : 1;
+
+	// table index 12, flags 0x24080000000001
+	UPROPERTY()
+	TSoftClassPtr<AFortTimeOfDayManager> WorldTimeOfDayManager;
+
+	// table index 11, flags 0x24080000000001
+	UPROPERTY()
+	TSoftClassPtr<AFortMusicManager> WorldMusicManager;
+
+	// table index 10, flags 0x20080000000001
+	UPROPERTY()
+	UFortMusicManagerBank* WorldMusicManagerBank;
+
+	// table index 9, flags 0x24080000004000
+	UPROPERTY(Config)
+	TSoftClassPtr<AFortTimeOfDayManager> DefaultWorldTimeOfDayManager;
+
+	// table index 8, flags 0x24080000000000
+	UPROPERTY()
+	TSoftClassPtr<AFortTimeOfDayManager> ZoneThemeTimeOfDayManager;
+
+	// table index 7, flags 0x24080000000000
+	UPROPERTY()
+	TSoftClassPtr<AFortTimeOfDayManager> MissionTimeOfDayManager;
+
+	// table index 6, flags 0x24080000000000
+	UPROPERTY()
+	TSoftClassPtr<AFortMusicManager> ZoneThemeMusicManager;
+
+	// table index 5, flags 0x20080000000000
+	UPROPERTY()
+	UFortMusicManagerBank* ZoneThemeMusicManagerBank;
+
+	// table index 2, flags 0x40000000202000
+	UPROPERTY(Transient)
+	AFortTimeOfDayManager* TimeOfDayManager;
+
+	// table index 1, flags 0x40000000002000
+	UPROPERTY(Transient)
+	AFortVehicleManager* VehicleManager;
+
+	// table index 0, flags 0x40400000202000
+	UPROPERTY(Transient)
+	UFortLevelOverlayManager* LevelOverlayManager;
 
 };
 

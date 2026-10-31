@@ -2,12 +2,27 @@
 #include "AFortPlayerControllerAthena.h"
 #include "Net/UnrealNetwork.h"
 
+void AFortPlayerControllerAthena::ClientAddProfileGoCollection_Implementation(const TArray<FProfileGoScenario>& NewScenarios, const FString& CollectionName)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPlayerControllerAthena::ClientAlertLeaveIsland_Implementation()
 {
 	// Body not recovered: reflection-derived stub.
 }
 
 void AFortPlayerControllerAthena::ClientAlertPortalDoneTeleporting_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerControllerAthena::ClientAutoEquipFirstItem_Implementation(bool bForceExecution, const FGuid& ItemGuid)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerControllerAthena::ClientBotStartDogpile_Implementation(const FVector& DogpilePosition)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -92,6 +107,11 @@ void AFortPlayerControllerAthena::ClientRequestLevelStreamingHandshake_Implement
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerControllerAthena::ClientSendDebugPoiLocationTags_Implementation(const FGameplayTagContainer& InPoiTags)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPlayerControllerAthena::ClientSendDebugPoiVolumeData_Implementation(const FString& PoiVolumes)
 {
 	// Body not recovered: reflection-derived stub.
@@ -102,7 +122,32 @@ void AFortPlayerControllerAthena::ClientSendEndMatchReportHeartbeat_Implementati
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerControllerAthena::ClientSendMatchStatsForPlayer_Implementation(const FAthenaMatchStats& Stats)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerControllerAthena::ClientSendStateEncryptionKey_Implementation(const FPlayerStateEncryptionKey& Key)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerControllerAthena::ClientSendTeamStatsForPlayer_Implementation(const FAthenaMatchTeamStats& TeamStats)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPlayerControllerAthena::ClientSetStreamingTestStreamingLevels_Implementation(bool streaming)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerControllerAthena::ClientSignalPortalLoadCompleteViaDelegate_Implementation(const FAsyncTaskResult& Result)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerControllerAthena::ClientStartRespawnPreparation_Implementation(const FText& HUDReasonText, const FName& InRespawnCameraBehavior, float RespawnCameraDist, const FRotator& RespawnRot, const FVector& RespawnLoc)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -137,7 +182,22 @@ void AFortPlayerControllerAthena::OnPostGameForced_Implementation()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerControllerAthena::OnRep_CreativeIslands()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerControllerAthena::OnRep_CreativePlotLinkedVolume()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPlayerControllerAthena::OnRep_SkydiveLeader()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerControllerAthena::PublishCreativePlot_Implementation(const FCreativePublishOptions& MyPublishOptions, AFortVolume* VolumeToPublish)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -152,7 +212,17 @@ void AFortPlayerControllerAthena::RestoreCreativePlot_Implementation(const FStri
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerControllerAthena::ServerAddSimulatedXp_Implementation(const FGameplayTag& MetaData, const FText& Source, float XpAmmount)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPlayerControllerAthena::ServerBeginEndPreview_Implementation(bool bInBegin)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerControllerAthena::ServerBroadcastDeviceButtonComponentClickedDelegate_Implementation(UFortCreativeDeviceButtonComponent* DeviceButtonComponent)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -187,7 +257,17 @@ void AFortPlayerControllerAthena::ServerEnableAnonymousMode_Implementation()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerControllerAthena::ServerEndLoadingVolume_Implementation(AFortVolume* VolumeToLoad)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPlayerControllerAthena::ServerEndMinigame_Implementation(bool bAbandon)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerControllerAthena::ServerEndUnloadingVolume_Implementation(AFortVolume* VolumeToUnload)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -198,6 +278,21 @@ void AFortPlayerControllerAthena::ServerGenerateMockMatchReport_Implementation()
 }
 
 void AFortPlayerControllerAthena::ServerInsertExtraStreamingTestSkydiveStates_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerControllerAthena::ServerLoadIslandCheckpoint_Implementation(AFortAthenaCreativePortal* Portal)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerControllerAthena::ServerLoadPlotForPortal_Implementation(const FString& PlotItemId, AFortAthenaCreativePortal* Portal)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerControllerAthena::ServerLoadPlotForPortalFromMnemonic_Implementation(const FString& Mnemonic, AFortAthenaCreativePortal* Portal)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -237,6 +332,11 @@ void AFortPlayerControllerAthena::ServerRequestNewSkydiveLeader_Implementation()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerControllerAthena::ServerRequestObjectTrackingDetails_Implementation(AFortVolume* Volume)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPlayerControllerAthena::ServerResetCameraPreviewToDefaultLocation_Implementation()
 {
 	// Body not recovered: reflection-derived stub.
@@ -253,6 +353,11 @@ void AFortPlayerControllerAthena::ServerRespondToAbandonMatch_Implementation(boo
 }
 
 void AFortPlayerControllerAthena::ServerRestartMinigame_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerControllerAthena::ServerSaveIslandCheckpoint_Implementation(AFortAthenaCreativePortal* Portal)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -297,7 +402,22 @@ void AFortPlayerControllerAthena::ServerSimulateLevelUp_Implementation(int32 Cli
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerControllerAthena::ServerStartInteractWithIslandPortal_Implementation(AFortAthenaCreativePortal* Portal)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerControllerAthena::ServerStartLoadingVolume_Implementation(AFortVolume* VolumeToLoad)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPlayerControllerAthena::ServerStartMinigame_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerControllerAthena::ServerStartUnloadingVolume_Implementation(AFortVolume* VolumeToUnload)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -337,6 +457,11 @@ void AFortPlayerControllerAthena::ServerThankBusDriverCheck_Implementation()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerControllerAthena::ServerTickForDoneTeleporting_Implementation(AFortAthenaCreativePortal* Portal)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPlayerControllerAthena::ServerToggleAutoRestartMinigame_Implementation()
 {
 	// Body not recovered: reflection-derived stub.
@@ -357,7 +482,17 @@ void AFortPlayerControllerAthena::ServerUpdateUserCameraPreview_Implementation()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerControllerAthena::TellServer_ClientReceivedPlaysetDataForVolume_Implementation(AFortVolume* Volume, const FFortPlaysetStreamingData& PlaysetData)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPlayerControllerAthena::UpdateCreativeIslandDescriptionTags_Implementation(const TArray<FString>& DescriptionTags, const FString& Locale, const FString& IslandId)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerControllerAthena::UpdateCreativePlotData_Implementation(const FCreativeIslandInfo& MyInfo, AFortVolume* VolumeToPublish)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -367,17 +502,29 @@ void AFortPlayerControllerAthena::UpdateCreativePlotName_Implementation(const FS
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerControllerAthena::UpdateUGCRestrictedForVolume_Implementation(bool bRestricted, AFortVolume* Volume)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPlayerControllerAthena::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
+	DOREPLIFETIME(AFortPlayerControllerAthena, CreativeObjectTrackingComponent);
+	DOREPLIFETIME(AFortPlayerControllerAthena, CreativeUserContentManager);
+	DOREPLIFETIME(AFortPlayerControllerAthena, OwnedPortal);
+	DOREPLIFETIME(AFortPlayerControllerAthena, CreativePlotLinkedVolume);
+	DOREPLIFETIME(AFortPlayerControllerAthena, BroadcastRemoteClientInfo);
 	DOREPLIFETIME(AFortPlayerControllerAthena, bIsAllowedToPublish);
 	DOREPLIFETIME(AFortPlayerControllerAthena, LastUsedSavePlot);
+	DOREPLIFETIME(AFortPlayerControllerAthena, CreativeIslands);
 	DOREPLIFETIME(AFortPlayerControllerAthena, bMarkedAlive);
 	DOREPLIFETIME(AFortPlayerControllerAthena, MaxPlotCount);
 	DOREPLIFETIME(AFortPlayerControllerAthena, bCanUseSolaris);
 	DOREPLIFETIME(AFortPlayerControllerAthena, bNextRespawnInAir);
 	DOREPLIFETIME(AFortPlayerControllerAthena, SkydiveLeader);
 	DOREPLIFETIME(AFortPlayerControllerAthena, FocalPointFOV);
+	DOREPLIFETIME(AFortPlayerControllerAthena, FocalPointOffset);
 }
 

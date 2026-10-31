@@ -12,12 +12,42 @@ void AFortPlayerPawn::ClientResetAbilitySystemComponent_Implementation()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerPawn::HandleInStasis()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerPawn::MulticastUpdateVehicleInputStateReliable_Implementation(const FFortAthenaVehicleInputStateReliable& ReliableInput)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPlayerPawn::OnRep_AccelerationPack()
 {
 	// Body not recovered: reflection-derived stub.
 }
 
 void AFortPlayerPawn::OnRep_AccelerationZPack()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerPawn::OnRep_CharPartAnimMontageInfo()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerPawn::OnRep_ControlledRCPawn()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerPawn::OnRep_FacialTypeOverride()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerPawn::OnRep_FootstepBankOverride()
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -82,7 +112,17 @@ void AFortPlayerPawn::OnRep_ParachuteLockedOpen()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerPawn::OnRep_PossessedProp()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPlayerPawn::OnRep_RepAnimMontageStartSection()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerPawn::OnRep_ReplicatedAnimMontage()
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -102,12 +142,57 @@ void AFortPlayerPawn::OnRep_ReplicatedIsInVortex()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerPawn::OnRep_ReplicatedSkyTube()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPlayerPawn::OnRep_StartedInteractSearch()
 {
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerPawn::OnRep_StoredControlRotation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerPawn::OnRep_VehicleInputStateReliableForReplay()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerPawn::OnRep_VehicleInputStateUnreliable()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPlayerPawn::OnRep_WaitingForEmoteInteraction()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerPawn::ServerChooseGender_Implementation(EFortCustomGender::Type Gender)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerPawn::ServerChoosePart_Implementation(UCustomCharacterPart* ChosenCharacterPart, EFortCustomPartType::Type Part)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerPawn::ServerCycleAccessoryColorSwatch_Implementation(bool bNext, EFortCustomPartType::Type Part)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerPawn::ServerCycleColorSwatch_Implementation(bool bNext, EColorSwatchType SwatchType)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerPawn::ServerCyclePart_Implementation(bool bNextPart, EFortCustomPartType::Type Part)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -172,20 +257,42 @@ void AFortPlayerPawn::ServerUnmarkRespawned_Implementation()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerPawn::ServerUpdateVehicleInputStateReliable_Implementation(const FFortAthenaVehicleInputStateReliable& ReliableInput)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerPawn::ServerUpdateVehicleInputStateUnreliable_Implementation(float Timestamp, const FFortAthenaVehicleInputStateUnreliable& ReliableInput)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPlayerPawn::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
+	DOREPLIFETIME(AFortPlayerPawn, FacialTypeOverride);
+	DOREPLIFETIME(AFortPlayerPawn, StoredControlRotation);
+	DOREPLIFETIME(AFortPlayerPawn, ControlledRCPawn);
 	DOREPLIFETIME(AFortPlayerPawn, RemoteViewData32);
+	DOREPLIFETIME(AFortPlayerPawn, PetState);
+	DOREPLIFETIME(AFortPlayerPawn, ReplicatedSkyTube);
+	DOREPLIFETIME(AFortPlayerPawn, VortexParams);
 	DOREPLIFETIME(AFortPlayerPawn, bParachuteLockedOpen);
+	DOREPLIFETIME(AFortPlayerPawn, LandingMontagePair);
 	DOREPLIFETIME(AFortPlayerPawn, bNetMovementPrioritized);
 	DOREPLIFETIME(AFortPlayerPawn, RepAnimMontageStartSection);
+	DOREPLIFETIME(AFortPlayerPawn, RepAnimMontageInfo);
 	DOREPLIFETIME(AFortPlayerPawn, AccelerationPack);
 	DOREPLIFETIME(AFortPlayerPawn, PlayerStatus);
 	DOREPLIFETIME(AFortPlayerPawn, PackedReplicatedSlopeAngles);
+	DOREPLIFETIME(AFortPlayerPawn, FootstepBankOverride);
+	DOREPLIFETIME(AFortPlayerPawn, RepCharPartAnimMontageInfo);
+	DOREPLIFETIME(AFortPlayerPawn, PossessedProp);
 	DOREPLIFETIME(AFortPlayerPawn, bCanPredictJumpApex);
 	DOREPLIFETIME(AFortPlayerPawn, bIsInsideSafeZone);
 	DOREPLIFETIME(AFortPlayerPawn, bIsInAnyStorm);
+	DOREPLIFETIME(AFortPlayerPawn, VehicleInputStateUnreliable);
 	DOREPLIFETIME(AFortPlayerPawn, bDoubleFileEmoteSecondLine);
 	DOREPLIFETIME(AFortPlayerPawn, bShouldJitterAnimationSyncWithEmoteLeader);
 	DOREPLIFETIME(AFortPlayerPawn, bShouldSyncAnimationWithEmoteLeader);
@@ -210,10 +317,13 @@ void AFortPlayerPawn::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutL
 	DOREPLIFETIME(AFortPlayerPawn, CachedTeamControllingRC);
 	DOREPLIFETIME(AFortPlayerPawn, bIsInWaterVolume);
 	DOREPLIFETIME(AFortPlayerPawn, AccelerationZPack);
+	DOREPLIFETIME(AFortPlayerPawn, BuildingState);
+	DOREPLIFETIME(AFortPlayerPawn, StasisMode);
 	DOREPLIFETIME(AFortPlayerPawn, bIsTargeting);
 	DOREPLIFETIME(AFortPlayerPawn, bIsWaterSprintBoostPending);
 	DOREPLIFETIME(AFortPlayerPawn, bIsWaterSprintBoost);
 	DOREPLIFETIME(AFortPlayerPawn, bIsWaterJump);
 	DOREPLIFETIME(AFortPlayerPawn, bIsNearSafeZoneEdge);
+	DOREPLIFETIME(AFortPlayerPawn, VehicleInputStateReliable);
 }
 

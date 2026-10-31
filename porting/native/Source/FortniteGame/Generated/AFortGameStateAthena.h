@@ -6,10 +6,74 @@
 #include "CoreMinimal.h"
 #include "AFortGameStateZone.h"
 
+#include "AttributeSet.h"
+#include "EAirCraftBehavior.h"
+#include "EAthenaGamePhase.h"
+#include "EAthenaGamePhaseStep.h"
+#include "EAthenaStormCapState.h"
+#include "EEventTournamentRound.h"
+#include "EFriendlyFireType.h"
+#include "ESafeZoneStartUp.h"
+#include "Engine/NetSerialization.h"
+#include "FAircraftFlightInfo.h"
+#include "FAthenaStreamIdOverride.h"
+#include "FDynamicLandData.h"
+#include "FFortWinnerPlayerData.h"
+#include "FGameplayMutatorEventData.h"
+#include "FHideGameModeMessage.h"
+#include "FOnAllWinnersAnnounced.h"
+#include "FOnClientVolumeManagerReplicated.h"
+#include "FOnCountdownFinished.h"
+#include "FOnCountdownStarted.h"
+#include "FOnCountdownStopped.h"
+#include "FOnCountdownTick.h"
+#include "FOnCurrentHighScoreUpdated.h"
+#include "FOnFinalCountdownFinished.h"
+#include "FOnFinalCountdownStarted.h"
+#include "FOnFinalCountdownTick.h"
+#include "FOnGameModeRemoveMarker.h"
+#include "FOnGameModeShowMarker.h"
+#include "FOnGamePhaseChanged.h"
+#include "FOnHideGameModeMessageRequest.h"
+#include "FOnKillFeedUpdated.h"
+#include "FOnMutatorGameplayEvent.h"
+#include "FOnMutatorGenericIntegerUpdated.h"
+#include "FOnPlayerJoinedLeftCreativeIsland.h"
+#include "FOnPlayersLeftChanged.h"
+#include "FOnSafeZoneIndicatorChanged.h"
+#include "FOnStormCapStateChanged.h"
+#include "FOnStormProgressStopped.h"
+#include "FOnTeamsLeftChanged.h"
+#include "FOnWinConditionMetCN.h"
+#include "FOnWinnerAnnounced.h"
+#include "FOnWinnerInfoDisplayReadyCN.h"
+#include "FOnWinningScoreAnnounced.h"
+#include "FOnWinningTeamAnnounced.h"
+#include "FRepositionGameModeMessage.h"
+#include "FSetDefaultGameModeMessage.h"
+#include "FShowGameModeMessage.h"
+#include "FStormCapDamageThresholdInfo.h"
+#include "FUpdateNamedPoiColorDelegate.h"
+#include "GameplayTagContainer.h"
+#include "Math/Vector2D.h"
+#include "Misc/DateTime.h"
+#include "Styling/SlateBrush.h"
+
+class ABuildingActor;
+class AFortAthenaAircraft;
 class AFortAthenaMapInfo;
+class AFortAthenaMutator_AI;
+class AFortBroadcastSpectatorInfo;
+class AFortLocalizationService;
 class AFortPlayerState;
+class AFortPropertyOverrideReplShared;
+class AFortSafeZoneIndicator;
+class AFortSpecialActorReplicationInfo;
+class AFortVolumeManager;
+class AUnicornDriver;
 class UCurveFloat;
 class UCurveVector;
+class UFortMutatorListComponent;
 class UMaterialInstanceDynamic;
 class UMaterialParameterCollection;
 class USoundCue;
@@ -34,6 +98,94 @@ public:
 	// table index 218, flags 0x10000000002000
 	UPROPERTY(Transient)
 	uint8 bPlaylistDataIsActivelyLoading : 1;
+
+	// table index 217, flags 0x10000010080000
+	UPROPERTY()
+	FOnAllWinnersAnnounced AllWinnersAnnounced;
+
+	// table index 216, flags 0x10000010080000
+	UPROPERTY()
+	FOnWinnerInfoDisplayReadyCN WinnerInfoDisplayReadyCN;
+
+	// table index 215, flags 0x10000010080000
+	UPROPERTY()
+	FOnCountdownTick CountdownTick;
+
+	// table index 214, flags 0x10000010080000
+	UPROPERTY()
+	FOnCountdownStarted CountdownStarted;
+
+	// table index 213, flags 0x10000010080000
+	UPROPERTY()
+	FOnCountdownFinished CountdownFinished;
+
+	// table index 212, flags 0x10000010080000
+	UPROPERTY()
+	FOnCountdownStopped CountdownStopped;
+
+	// table index 211, flags 0x10000010080000
+	UPROPERTY()
+	FOnFinalCountdownTick FinalCountdownTick;
+
+	// table index 210, flags 0x10000010080000
+	UPROPERTY()
+	FOnFinalCountdownStarted FinalCountdownStarted;
+
+	// table index 209, flags 0x10000010080000
+	UPROPERTY()
+	FOnFinalCountdownFinished FinalCountdownFinished;
+
+	// table index 208, flags 0x10000010080000
+	UPROPERTY()
+	FOnCurrentHighScoreUpdated CurrentHighScoreUpdated;
+
+	// table index 203, flags 0x10000010080000
+	UPROPERTY()
+	FOnHideGameModeMessageRequest HideGameModeMessageRequest;
+
+	// table index 201, flags 0x10000010080000
+	UPROPERTY()
+	FShowGameModeMessage ShowGameModeMessage;
+
+	// table index 200, flags 0x10000010080000
+	UPROPERTY()
+	FHideGameModeMessage HideGameModeMessage;
+
+	// table index 199, flags 0x10000010080000
+	UPROPERTY()
+	FOnGameModeShowMarker ShowMarkerGameMode;
+
+	// table index 198, flags 0x10000010080000
+	UPROPERTY()
+	FOnGameModeRemoveMarker HideMarkerGameMode;
+
+	// table index 197, flags 0x10000010080000
+	UPROPERTY()
+	FRepositionGameModeMessage RepositionGameModeMessage;
+
+	// table index 196, flags 0x10000010080000
+	UPROPERTY()
+	FSetDefaultGameModeMessage SetDefaultPositionGameModeMessage;
+
+	// table index 195, flags 0x10000010080000
+	UPROPERTY()
+	FOnPlayerJoinedLeftCreativeIsland OnPlayerLeftCreativeIsland;
+
+	// table index 194, flags 0x10000010080000
+	UPROPERTY()
+	FOnPlayerJoinedLeftCreativeIsland OnPlayerJoinedCreativeIsland;
+
+	// table index 193, flags 0x10000010080000
+	UPROPERTY()
+	FOnMutatorGenericIntegerUpdated MutatorGenericIntegerUpdated;
+
+	// table index 192, flags 0x10000010080000
+	UPROPERTY()
+	FOnMutatorGameplayEvent MutatorGameplayEvent;
+
+	// table index 191, flags 0x10000010080000
+	UPROPERTY()
+	FOnSafeZoneIndicatorChanged OnSafeZoneIndicatorChanged;
 
 	// table index 190, flags 0x20080100000020
 	UPROPERTY(ReplicatedUsing=OnRep_PlaylistEndTime)
@@ -66,6 +218,58 @@ public:
 	// table index 183, flags 0x10000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_ServerChangelistNumber)
 	int32 ServerChangelistNumber;
+
+	// table index 182, flags 0x10000000002020
+	UPROPERTY(Replicated, Transient)
+	AFortSpecialActorReplicationInfo* SpecialActorData;
+
+	// table index 181, flags 0x10000000002020
+	UPROPERTY(Replicated, Transient)
+	AFortPropertyOverrideReplShared* ReplOverrideData;
+
+	// table index 179, flags 0x14000000010015
+	UPROPERTY()
+	TArray<TSubclassOf<ABuildingActor>> BuildingActorClasses;
+
+	// table index 178, flags 0x10000010080000
+	UPROPERTY()
+	FOnWinnerAnnounced WinnerAnnounced;
+
+	// table index 177, flags 0x10000010080000
+	UPROPERTY()
+	FOnWinningTeamAnnounced WinningTeamAnnounced;
+
+	// table index 176, flags 0x10000010080000
+	UPROPERTY()
+	FOnGamePhaseChanged GamePhaseChanged;
+
+	// table index 175, flags 0x10000010080000
+	UPROPERTY()
+	FOnWinningScoreAnnounced WinningScoreDetermined;
+
+	// table index 173, flags 0x10000010080000
+	UPROPERTY()
+	FOnStormCapStateChanged StormCapStateChanged;
+
+	// table index 172, flags 0x10000010080000
+	UPROPERTY()
+	FOnStormProgressStopped StormProgressStopped;
+
+	// table index 171, flags 0x10000010080000
+	UPROPERTY()
+	FOnPlayersLeftChanged OnPlayersLeftChanged;
+
+	// table index 170, flags 0x10000010080000
+	UPROPERTY()
+	FOnTeamsLeftChanged OnTeamsLeftChanged;
+
+	// table index 169, flags 0x10000010080000
+	UPROPERTY()
+	FOnWinConditionMetCN OnWinConditionMetCN;
+
+	// table index 168, flags 0x10000010080000
+	UPROPERTY()
+	FUpdateNamedPoiColorDelegate UpdateNamedPoiColorDelegate;
 
 	// table index 167, flags 0x10000000004000
 	UPROPERTY(Config)
@@ -119,6 +323,10 @@ public:
 	UPROPERTY(Transient)
 	float RemainingFocalPointActorDuration;
 
+	// table index 149, flags 0x10000000002020
+	UPROPERTY(Replicated, Transient)
+	FVector_NetQuantize FocalPointOffset;
+
 	// table index 148, flags 0x10000000002020
 	UPROPERTY(Replicated, Transient)
 	float FocalPointFOV;
@@ -127,13 +335,25 @@ public:
 	UPROPERTY(Replicated)
 	uint8 bCheatRespawnEnabled : 1;
 
+	// table index 145, flags 0x20080100002020
+	UPROPERTY(ReplicatedUsing=OnRep_StormCapState, Transient)
+	EAthenaStormCapState StormCapState;
+
 	// table index 144, flags 0x20080000002000
 	UPROPERTY(Transient)
 	int32 CurrentPlayerCap;
 
+	// table index 143, flags 0x20080100002020
+	UPROPERTY(ReplicatedUsing=OnRep_DamageForStormCapMarking, Transient)
+	FStormCapDamageThresholdInfo DamageForStormCapMarking;
+
 	// table index 141, flags 0x10000000000034
 	UPROPERTY(Replicated)
 	TArray<int32> TeamXPlayersLeft;
+
+	// table index 139, flags 0x10000100000034
+	UPROPERTY(ReplicatedUsing=OnRep_WinningPlayerList)
+	TArray<FFortWinnerPlayerData> WinningPlayerList;
 
 	// table index 138, flags 0x10000100000034
 	UPROPERTY(ReplicatedUsing=OnRep_TeamsLeft)
@@ -146,6 +366,26 @@ public:
 	// table index 132, flags 0x10000000000034
 	UPROPERTY(Replicated)
 	uint8 bAllowUserPickedCosmeticBattleBus : 1;
+
+	// table index 130, flags 0x10000000000034
+	UPROPERTY(Replicated)
+	TArray<FAircraftFlightInfo> TeamFlightPaths;
+
+	// table index 129, flags 0x10000000000034
+	UPROPERTY(Replicated)
+	FAircraftFlightInfo FlightPathMidLine;
+
+	// table index 128, flags 0x10000000002014
+	UPROPERTY(Transient)
+	FVector2D DropZoneCenter;
+
+	// table index 127, flags 0x10000000002014
+	UPROPERTY(Transient)
+	FVector2D FlightPathSelectionCenter;
+
+	// table index 126, flags 0x10000100000034
+	UPROPERTY(ReplicatedUsing=OnRep_UtcTimeStartedMatch)
+	FDateTime UtcTimeStartedMatch;
 
 	// table index 125, flags 0x10000000000020
 	UPROPERTY(Replicated)
@@ -175,6 +415,10 @@ public:
 	UPROPERTY()
 	TArray<FText> KillFeedEntry;
 
+	// table index 116, flags 0x10000010080000
+	UPROPERTY()
+	FOnKillFeedUpdated KillFeedUpdated;
+
 	// table index 114, flags 0x10000000002000
 	UPROPERTY(Transient)
 	TArray<AFortPlayerState*> SpectatorArray;
@@ -187,9 +431,17 @@ public:
 	UPROPERTY(Transient)
 	TArray<AFortPlayerState*> MeshPlayerStateArray;
 
+	// table index 108, flags 0x10000000000020
+	UPROPERTY(Replicated)
+	EAirCraftBehavior AirCraftBehavior;
+
 	// table index 107, flags 0x10000000000020
 	UPROPERTY(Replicated)
 	uint8 bStormReachedFinalPosition : 1;
+
+	// table index 105, flags 0x10000000000020
+	UPROPERTY(Replicated)
+	EFriendlyFireType FriendlyFireType;
 
 	// table index 104, flags 0x20080100000020
 	UPROPERTY(ReplicatedUsing=OnRep_SpectateAPartyMemberAvailable)
@@ -202,6 +454,10 @@ public:
 	// table index 100, flags 0x20080100000034
 	UPROPERTY(ReplicatedUsing=OnRep_CurrentPlaylistId)
 	int32 CurrentPlaylistId;
+
+	// table index 99, flags 0x20080100000020
+	UPROPERTY(ReplicatedUsing=OnRep_SafeZoneIndicator)
+	AFortSafeZoneIndicator* SafeZoneIndicator;
 
 	// table index 97, flags 0x20080000002000
 	UPROPERTY(Transient)
@@ -223,6 +479,46 @@ public:
 	UPROPERTY(Transient)
 	UMaterialInstanceDynamic* FullmapNextCircleMID;
 
+	// table index 92, flags 0x20080000002000
+	UPROPERTY(Transient)
+	FSlateBrush MinimapSafeZoneBrush;
+
+	// table index 91, flags 0x20080000002000
+	UPROPERTY(Transient)
+	FSlateBrush MinimapCircleBrush;
+
+	// table index 90, flags 0x20080000002000
+	UPROPERTY(Transient)
+	FSlateBrush MinimapNextCircleBrush;
+
+	// table index 89, flags 0x20080000002000
+	UPROPERTY(Transient)
+	FSlateBrush FullMapCircleBrush;
+
+	// table index 88, flags 0x20080000002000
+	UPROPERTY(Transient)
+	FSlateBrush FullMapNextCircleBrush;
+
+	// table index 87, flags 0x20080000002000
+	UPROPERTY(Transient)
+	FSlateBrush MinimapSafeZoneFinalPosBrush;
+
+	// table index 86, flags 0x20080000002000
+	UPROPERTY(Transient)
+	FSlateBrush AircraftPathBrush;
+
+	// table index 85, flags 0x20080000002000
+	UPROPERTY(Transient)
+	FSlateBrush AircraftMidlinePathBrush;
+
+	// table index 84, flags 0x20080000002000
+	UPROPERTY(Transient)
+	FSlateBrush AircraftPathTeamIndicatorBrush;
+
+	// table index 79, flags 0x20080000002000
+	UPROPERTY(Transient)
+	TArray<FDynamicLandData> DynamicLands;
+
 	// table index 78, flags 0x20080100000034
 	UPROPERTY(ReplicatedUsing=OnRep_MapInfo)
 	AFortAthenaMapInfo* MapInfo;
@@ -231,9 +527,21 @@ public:
 	UPROPERTY()
 	UMaterialParameterCollection* MinimapMPC;
 
+	// table index 76, flags 0x20080100002020
+	UPROPERTY(ReplicatedUsing=OnRep_BroadcastSpectatorInfo, Transient)
+	AFortBroadcastSpectatorInfo* BroadcastSpectatorInfo;
+
+	// table index 74, flags 0x20080100000034
+	UPROPERTY(ReplicatedUsing=OnRep_GamePhase)
+	EAthenaGamePhase GamePhase;
+
 	// table index 73, flags 0x20080000000020
 	UPROPERTY(Replicated)
 	FString ReasonWereInSetupPhase;
+
+	// table index 71, flags 0x20080100000020
+	UPROPERTY(ReplicatedUsing=OnRep_EventTournamentRound)
+	EEventTournamentRound EventTournamentRound;
 
 	// table index 70, flags 0x20080000000020
 	UPROPERTY(Replicated)
@@ -246,6 +554,10 @@ public:
 	// table index 67, flags 0x20080100000034
 	UPROPERTY(ReplicatedUsing=OnRep_SafeZonePhase)
 	uint8 SafeZonePhase;
+
+	// table index 65, flags 0x20080000000014
+	UPROPERTY()
+	EAthenaGamePhaseStep GamePhaseStep;
 
 	// table index 64, flags 0x20080000000014
 	UPROPERTY()
@@ -263,13 +575,25 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_PlayerBotsLeft)
 	int32 PlayerBotsLeft;
 
+	// table index 59, flags 0x20080100000020
+	UPROPERTY(ReplicatedUsing=OnRep_Aircraft)
+	TArray<AFortAthenaAircraft*> Aircrafts;
+
 	// table index 58, flags 0x20080000000020
 	UPROPERTY(Replicated)
 	uint8 bAircraftIsLocked : 1;
 
+	// table index 56, flags 0x20080000000014
+	UPROPERTY()
+	ESafeZoneStartUp CachedSafeZoneStartUp;
+
 	// table index 55, flags 0x20080000000020
 	UPROPERTY(Replicated)
 	int32 LobbyAction;
+
+	// table index 54, flags 0x10000100000020
+	UPROPERTY(ReplicatedUsing=OnRep_MutatorEventData)
+	FGameplayMutatorEventData MutatorEventData;
 
 	// table index 52, flags 0x10000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_MutatorGenericInt_0)
@@ -282,6 +606,14 @@ public:
 	// table index 50, flags 0x10000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_MutatorGenericInt_2)
 	int32 MutatorGenericInt_2;
+
+	// table index 49, flags 0x20080000002000
+	UPROPERTY(Transient)
+	AFortAthenaMutator_AI* GameplayMutator_AI;
+
+	// table index 48, flags 0x2008000008001d
+	UPROPERTY()
+	UFortMutatorListComponent* MutatorListComponent;
 
 	// table index 45, flags 0x10000000000034
 	UPROPERTY(Replicated)
@@ -331,6 +663,58 @@ public:
 	UPROPERTY(Replicated)
 	float StormCNDamageVulnerabilityLevel3;
 
+	// table index 32, flags 0x10000000080000
+	UPROPERTY()
+	FOnClientVolumeManagerReplicated OnClientVolumeManagerReplicated;
+
+	// table index 31, flags 0x14000000010015
+	UPROPERTY()
+	TSubclassOf<AFortVolumeManager> VolumeManagerToUse;
+
+	// table index 30, flags 0x20080100002020
+	UPROPERTY(ReplicatedUsing=OnRep_VolumeManager, Transient)
+	AFortVolumeManager* VolumeManager;
+
+	// table index 29, flags 0x20080000002020
+	UPROPERTY(Replicated, Transient)
+	AFortLocalizationService* LocalizationService;
+
+	// table index 28, flags 0x20080000010001
+	UPROPERTY()
+	FScalableFloat ResurrectionEnabledRow;
+
+	// table index 27, flags 0x20080000010001
+	UPROPERTY()
+	FSlateBrush SpawnMachineIconBrush;
+
+	// table index 26, flags 0x20080000010001
+	UPROPERTY()
+	FSlateBrush SpawnCardIconBrush;
+
+	// table index 24, flags 0x20080000010001
+	UPROPERTY()
+	FSlateBrush EliminationSquadmateIconBrush;
+
+	// table index 23, flags 0x20080000010001
+	UPROPERTY()
+	FSlateBrush EliminationSquadmateClampedIconBrush;
+
+	// table index 22, flags 0x20080000010001
+	UPROPERTY()
+	FSlateBrush EliminationTeammateIconBrush;
+
+	// table index 21, flags 0x20080000010001
+	UPROPERTY()
+	FSlateBrush EliminationTeammateClampedIconBrush;
+
+	// table index 20, flags 0x20080000010001
+	UPROPERTY()
+	FSlateBrush EliminationEnemyIconBrush;
+
+	// table index 19, flags 0x20080000010001
+	UPROPERTY()
+	FSlateBrush EliminationEnemyClampedIconBrush;
+
 	// table index 18, flags 0x24080000010001
 	UPROPERTY()
 	TSoftObjectPtr<UCurveFloat> EliminationFadeInCurve;
@@ -355,9 +739,21 @@ public:
 	UPROPERTY()
 	float EliminationMarkerHUDZOffset;
 
+	// table index 12, flags 0x40000100000020
+	UPROPERTY(ReplicatedUsing=OnRep_GoldenPoiLocationTags)
+	FGameplayTagContainer GoldenPoiLocationTags;
+
+	// table index 11, flags 0x40000000000000
+	UPROPERTY()
+	AUnicornDriver* UnicornDriver;
+
 	// table index 9, flags 0x20080000002000
 	UPROPERTY(Transient)
 	TArray<FString> ActiveEventNamesAtPlaylistLoad;
+
+	// table index 8, flags 0x20080000010001
+	UPROPERTY()
+	FScalableFloat NewItemDuringWarmupWeightAddMod;
 
 	// table index 7, flags 0x20080000002000
 	UPROPERTY(Transient)
@@ -375,8 +771,18 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_ReticulatedSplineDefinitions, Transient)
 	TArray<FString> ReticulatedSplineDefinitions;
 
+	// table index 0, flags 0x10000000002020
+	UPROPERTY(Replicated, Transient)
+	TArray<FAthenaStreamIdOverride> ReticulatedSplineIds;
+
+	UFUNCTION()
+	void OnRep_Aircraft();
+
 	UFUNCTION()
 	void OnRep_bPlaylistStoppedSafeZonePhases();
+
+	UFUNCTION()
+	void OnRep_BroadcastSpectatorInfo();
 
 	UFUNCTION()
 	void OnRep_CurrentHighScore();
@@ -385,10 +791,25 @@ public:
 	void OnRep_CurrentPlaylistId();
 
 	UFUNCTION()
+	void OnRep_DamageForStormCapMarking();
+
+	UFUNCTION()
 	void OnRep_EndGameKickPlayerTime();
 
 	UFUNCTION()
+	void OnRep_EventTournamentRound();
+
+	UFUNCTION()
+	void OnRep_GamePhase(EAthenaGamePhase OldGamePhase);
+
+	UFUNCTION()
+	void OnRep_GoldenPoiLocationTags();
+
+	UFUNCTION()
 	void OnRep_MapInfo();
+
+	UFUNCTION()
+	void OnRep_MutatorEventData();
 
 	UFUNCTION()
 	void OnRep_MutatorGenericInt_0();
@@ -412,6 +833,9 @@ public:
 	void OnRep_ReticulatedSplineDefinitions();
 
 	UFUNCTION()
+	void OnRep_SafeZoneIndicator();
+
+	UFUNCTION()
 	void OnRep_SafeZonePhase();
 
 	UFUNCTION()
@@ -427,10 +851,22 @@ public:
 	void OnRep_SpectateAPartyMemberAvailable();
 
 	UFUNCTION()
+	void OnRep_StormCapState();
+
+	UFUNCTION()
 	void OnRep_SupplyDropWaveStartedSoundCue();
 
 	UFUNCTION()
 	void OnRep_TeamsLeft();
+
+	UFUNCTION()
+	void OnRep_UtcTimeStartedMatch(FDateTime& OldUtcTimeStartedMatch);
+
+	UFUNCTION()
+	void OnRep_VolumeManager();
+
+	UFUNCTION()
+	void OnRep_WinningPlayerList();
 
 	UFUNCTION()
 	void OnRep_WinningScore();

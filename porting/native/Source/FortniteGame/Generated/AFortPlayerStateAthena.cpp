@@ -7,6 +7,11 @@ void AFortPlayerStateAthena::Client_OnNewLevel_Implementation(int32 NewLevel)
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerStateAthena::ClientAddKillFeedErrorMessage_Implementation(const TArray<FFortCreativeMessageDispatcherErrorMessage>& ErrorMessages)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPlayerStateAthena::ClientNotifyMatchEntered_Implementation(const FString& EventWindowId, const FString& EventId)
 {
 	// Body not recovered: reflection-derived stub.
@@ -38,6 +43,16 @@ void AFortPlayerStateAthena::OnRep_Downs()
 }
 
 void AFortPlayerStateAthena::OnRep_Kills()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerStateAthena::OnRep_MatchAbandonState(EMatchAbandonState PrevMatchAbandonState)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerStateAthena::OnRep_MetricInformation()
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -102,12 +117,27 @@ void AFortPlayerStateAthena::OnRep_RebootCounter()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerStateAthena::OnRep_ReplicatedTeamMemberState()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPlayerStateAthena::OnRep_ResurrectingNow(bool bPreviousResurrectingNow)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerStateAthena::OnRep_ResurrectionChipReplicated()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPlayerStateAthena::OnRep_SeasonLevelUIDisplay()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerStateAthena::OnRep_SimpleMetricInformation()
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -172,11 +202,16 @@ void AFortPlayerStateAthena::GetLifetimeReplicatedProps(TArray<FLifetimeProperty
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(AFortPlayerStateAthena, bPreserveSquad);
+	DOREPLIFETIME(AFortPlayerStateAthena, BotUniqueId);
 	DOREPLIFETIME(AFortPlayerStateAthena, bIsAnAthenaGameParticipant);
+	DOREPLIFETIME(AFortPlayerStateAthena, MatchAbandonState);
 	DOREPLIFETIME(AFortPlayerStateAthena, bHoldsRebootVanLock);
 	DOREPLIFETIME(AFortPlayerStateAthena, RebootCounter);
 	DOREPLIFETIME(AFortPlayerStateAthena, bResurrectingNow);
+	DOREPLIFETIME(AFortPlayerStateAthena, ResurrectionChipAvailable);
 	DOREPLIFETIME(AFortPlayerStateAthena, bIsDisconnected);
+	DOREPLIFETIME(AFortPlayerStateAthena, SimpleMetricInformation);
+	DOREPLIFETIME(AFortPlayerStateAthena, MetricInformation);
 	DOREPLIFETIME(AFortPlayerStateAthena, PlayerNameCustomOverride);
 	DOREPLIFETIME(AFortPlayerStateAthena, bUsingAnonymousCharacterMode);
 	DOREPLIFETIME(AFortPlayerStateAthena, bUsingAnonymousMode);
@@ -203,6 +238,7 @@ void AFortPlayerStateAthena::GetLifetimeReplicatedProps(TArray<FLifetimeProperty
 	DOREPLIFETIME(AFortPlayerStateAthena, TeamScorePlacement);
 	DOREPLIFETIME(AFortPlayerStateAthena, TeamIndex);
 	DOREPLIFETIME(AFortPlayerStateAthena, TeamKillScore);
+	DOREPLIFETIME(AFortPlayerStateAthena, ReplicatedTeamMemberState);
 	DOREPLIFETIME(AFortPlayerStateAthena, PersonalLobbyAction);
 }
 

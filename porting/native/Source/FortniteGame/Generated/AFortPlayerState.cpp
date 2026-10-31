@@ -2,7 +2,32 @@
 #include "AFortPlayerState.h"
 #include "Net/UnrealNetwork.h"
 
+void AFortPlayerState::OnRep_AccessoryColorSwatches()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerState::OnRep_BannerInfo()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPlayerState::OnRep_bHasStartedPlaying()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerState::OnRep_CharacterBodyType()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerState::OnRep_CharacterColorSwatches()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerState::OnRep_CharacterGender()
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -22,7 +47,27 @@ void AFortPlayerState::OnRep_InGhostMode()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerState::OnRep_PartyOwner()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPlayerState::OnRep_Platform()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerState::OnRep_PlatformUniqueNetId()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerState::OnRep_PlayerTeam()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerState::OnRep_PlayerTeamPrivate()
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -62,14 +107,28 @@ void AFortPlayerState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Out
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(AFortPlayerState, bInGhostMode);
+	DOREPLIFETIME(AFortPlayerState, PlatformUniqueNetId);
+	DOREPLIFETIME(AFortPlayerState, ReadyCheckState);
 	DOREPLIFETIME(AFortPlayerState, bAreZoneStatsFinalized);
+	DOREPLIFETIME(AFortPlayerState, ReplicatedStats_Zone);
+	DOREPLIFETIME(AFortPlayerState, ReplicatedStats_Campaign);
+	DOREPLIFETIME(AFortPlayerState, PlayerTeamPrivate);
+	DOREPLIFETIME(AFortPlayerState, PlayerTeam);
+	DOREPLIFETIME(AFortPlayerState, CharacterPartColorSwatches);
+	DOREPLIFETIME(AFortPlayerState, CharacterColorSwatches);
+	DOREPLIFETIME(AFortPlayerState, CharacterBodyType);
+	DOREPLIFETIME(AFortPlayerState, CharacterGender);
 	DOREPLIFETIME(AFortPlayerState, bIsSimulatingDamage);
+	DOREPLIFETIME(AFortPlayerState, Banner);
 	DOREPLIFETIME(AFortPlayerState, Platform);
+	DOREPLIFETIME(AFortPlayerState, ExperienceDeltas);
 	DOREPLIFETIME(AFortPlayerState, InitialExperienceAmount);
 	DOREPLIFETIME(AFortPlayerState, InitialExperienceLevel);
 	DOREPLIFETIME(AFortPlayerState, CurrentCharXP);
 	DOREPLIFETIME(AFortPlayerState, HeroId);
+	DOREPLIFETIME(AFortPlayerState, PartyOwnerUniqueId);
 	DOREPLIFETIME(AFortPlayerState, WorldPlayerId);
+	DOREPLIFETIME(AFortPlayerState, PlayerRole);
 	DOREPLIFETIME(AFortPlayerState, bRepFlag1);
 	DOREPLIFETIME(AFortPlayerState, bShowHeroHeadAccessories);
 	DOREPLIFETIME(AFortPlayerState, bShowHeroBackpack);

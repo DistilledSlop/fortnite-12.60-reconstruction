@@ -2,7 +2,42 @@
 #include "AFortGameState.h"
 #include "Net/UnrealNetwork.h"
 
+void AFortGameState::Client_InitiateEndOfDayRecap_Implementation(const FEndOfDayRecap& EndOfDayRecap)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortGameState::Client_RefreshEventCalendar_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortGameState::DbgBoxSendToAllInternal_DoNotCall_Implementation(float Thickness, uint8 DepthPriority, float LifeTime, bool bPersistentLines, const FColor& Color, const FRotator& Rotation, const FVector& Extent, const FVector& Center)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortGameState::DbgCapsuleSendToAllInternal_DoNotCall_Implementation(float Thickness, uint8 DepthPriority, float LifeTime, bool bPersistentLines, const FColor& Color, const FQuat& Rotation, float Radius, float HalfHeight, const FVector& Center)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortGameState::DbgLineSendToAllInternal_DoNotCall_Implementation(float Thickness, uint8 DepthPriority, float LifeTime, bool bPersistentLines, const FColor& Color, const FVector& LineEnd, const FVector& LineStart)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortGameState::DbgSphereSendToAllInternal_DoNotCall_Implementation(float Thickness, uint8 DepthPriority, float LifeTime, bool bPersistentLines, const FColor& Color, int32 Segments, float Radius, const FVector& Center)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortGameState::OnRep_AdditionalPlaylistLevelsStreamed()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortGameState::OnRep_AnnouncementManager()
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -12,7 +47,32 @@ void AFortGameState::OnRep_CurrentWUID()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortGameState::OnRep_FeedbackManager()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortGameState::OnRep_GameplayState()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortGameState::OnRep_GameSessionID()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortGameState::OnRep_MissionManager()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortGameState::OnRep_MusicManagerBank()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortGameState::OnRep_MusicManagerSubclass()
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -23,6 +83,11 @@ void AFortGameState::OnRep_PoiManager()
 }
 
 void AFortGameState::OnRep_RecorderPlayerState()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortGameState::OnRep_Teams()
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -41,9 +106,20 @@ void AFortGameState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLi
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
+	DOREPLIFETIME(AFortGameState, AmmoBoxInfos);
+	DOREPLIFETIME(AFortGameState, TreasureChestInfos);
+	DOREPLIFETIME(AFortGameState, Teams);
+	DOREPLIFETIME(AFortGameState, VisibilityManager);
 	DOREPLIFETIME(AFortGameState, RecorderPlayerState);
 	DOREPLIFETIME(AFortGameState, GameSessionId);
+	DOREPLIFETIME(AFortGameState, MusicManagerBank);
+	DOREPLIFETIME(AFortGameState, MusicManagerSubclass);
+	DOREPLIFETIME(AFortGameState, GameplayState);
+	DOREPLIFETIME(AFortGameState, AnnouncementManager);
+	DOREPLIFETIME(AFortGameState, MissionManager);
+	DOREPLIFETIME(AFortGameState, FeedbackManager);
 	DOREPLIFETIME(AFortGameState, WorldDaysElapsed);
+	DOREPLIFETIME(AFortGameState, AdditionalPlaylistLevelsStreamed);
 	DOREPLIFETIME(AFortGameState, bPlayerRespawningBlocked_Temporarily);
 	DOREPLIFETIME(AFortGameState, bDBNOEnabledForGameMode);
 	DOREPLIFETIME(AFortGameState, PoiManager);

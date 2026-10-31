@@ -6,6 +6,22 @@
 #include "CoreMinimal.h"
 #include "AFortPlayerStateZone.h"
 
+#include "EMatchAbandonState.h"
+#include "ETeamMemberState.h"
+#include "FDetailedMetricInformation.h"
+#include "FFortCreativeMessageDispatcherErrorMessage.h"
+#include "FFortRespawnData.h"
+#include "FFortResurrectionData.h"
+#include "FOnMatchAbandonStateChanged.h"
+#include "FOnPlaceChanged.h"
+#include "FOnPointsAddedToScore.h"
+#include "FOnTeamAverageDamageChanged.h"
+#include "FOnTeamIndexChangedDelegate.h"
+#include "FOnTeamPlacementChanged.h"
+#include "FOnTeamScoreChanged.h"
+#include "FSimpleMetricInformation.h"
+#include "GameFramework/OnlineReplStructs.h"
+
 #include "AFortPlayerStateAthena.generated.h"
 
 UCLASS(config=Engine)
@@ -18,9 +34,25 @@ public:
 	UPROPERTY(Replicated)
 	int32 PersonalLobbyAction;
 
+	// table index 73, flags 0x20080000000000
+	UPROPERTY()
+	FFortRespawnData RespawnData;
+
+	// table index 71, flags 0x40000100000020
+	UPROPERTY(ReplicatedUsing=OnRep_ReplicatedTeamMemberState)
+	ETeamMemberState ReplicatedTeamMemberState;
+
+	// table index 69, flags 0x20080000000000
+	UPROPERTY()
+	ETeamMemberState TeamMemberState;
+
 	// table index 68, flags 0x20080000000000
 	UPROPERTY()
 	float TeamMemberStateRepTime;
+
+	// table index 67, flags 0x10000010080000
+	UPROPERTY()
+	FOnTeamIndexChangedDelegate OnTeamIndexChangedDelegate;
 
 	// table index 66, flags 0x10000000000014
 	UPROPERTY()
@@ -110,6 +142,30 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_TotalPlayerScore)
 	int32 TotalPlayerScore;
 
+	// table index 39, flags 0x10000010080000
+	UPROPERTY()
+	FOnPointsAddedToScore PointsAddedToScore;
+
+	// table index 38, flags 0x10000010080000
+	UPROPERTY()
+	FOnTeamScoreChanged TeamScoreChanged;
+
+	// table index 37, flags 0x10000010080000
+	UPROPERTY()
+	FOnTeamPlacementChanged TeamPlacementChanged;
+
+	// table index 36, flags 0x10000010080000
+	UPROPERTY()
+	FOnPlaceChanged PlaceChanged;
+
+	// table index 35, flags 0x10000010080000
+	UPROPERTY()
+	FOnTeamAverageDamageChanged TeamAverageDamageChanged;
+
+	// table index 34, flags 0x10000010080000
+	UPROPERTY()
+	FOnMatchAbandonStateChanged MatchAbandonStateChanged;
+
 	// table index 32, flags 0x10000000002000
 	UPROPERTY(Transient)
 	TArray<AFortPlayerStateAthena*> FriendsInSquad;
@@ -162,6 +218,14 @@ public:
 	UPROPERTY()
 	FString PartyAssistQuestId;
 
+	// table index 17, flags 0x40000100000020
+	UPROPERTY(ReplicatedUsing=OnRep_MetricInformation)
+	FDetailedMetricInformation MetricInformation;
+
+	// table index 16, flags 0x40000100000020
+	UPROPERTY(ReplicatedUsing=OnRep_SimpleMetricInformation)
+	FSimpleMetricInformation SimpleMetricInformation;
+
 	// table index 15, flags 0x40000000002000
 	UPROPERTY(Transient)
 	int32 SecondsAlive;
@@ -178,6 +242,10 @@ public:
 	UPROPERTY(Transient)
 	uint8 bResurrectionChipDisabled : 1;
 
+	// table index 8, flags 0x40000100002020
+	UPROPERTY(ReplicatedUsing=OnRep_ResurrectionChipReplicated, Transient)
+	FFortResurrectionData ResurrectionChipAvailable;
+
 	// table index 7, flags 0x40000100002020
 	UPROPERTY(ReplicatedUsing=OnRep_ResurrectingNow, Transient)
 	uint8 bResurrectingNow : 1;
@@ -190,9 +258,17 @@ public:
 	UPROPERTY(Replicated, Transient)
 	uint8 bHoldsRebootVanLock : 1;
 
+	// table index 3, flags 0x40000100002034
+	UPROPERTY(ReplicatedUsing=OnRep_MatchAbandonState, Transient)
+	EMatchAbandonState MatchAbandonState;
+
 	// table index 2, flags 0x40000000002020
 	UPROPERTY(Replicated, Transient)
 	uint8 bIsAnAthenaGameParticipant : 1;
+
+	// table index 1, flags 0x40000000000020
+	UPROPERTY(Replicated)
+	FUniqueNetIdRepl BotUniqueId;
 
 	// table index 0, flags 0x40000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_PreserveSquad)
@@ -201,6 +277,10 @@ public:
 	UFUNCTION(NetMulticast, Unreliable)
 	void Client_OnNewLevel(int32 NewLevel);
 	void Client_OnNewLevel_Implementation(int32 NewLevel);
+
+	UFUNCTION(Client, Unreliable)
+	void ClientAddKillFeedErrorMessage(const TArray<FFortCreativeMessageDispatcherErrorMessage>& ErrorMessages);
+	void ClientAddKillFeedErrorMessage_Implementation(const TArray<FFortCreativeMessageDispatcherErrorMessage>& ErrorMessages);
 
 	UFUNCTION(Client, Reliable)
 	void ClientNotifyMatchEntered(const FString& EventWindowId, const FString& EventId);
@@ -226,6 +306,12 @@ public:
 
 	UFUNCTION()
 	void OnRep_Kills();
+
+	UFUNCTION()
+	void OnRep_MatchAbandonState(EMatchAbandonState PrevMatchAbandonState);
+
+	UFUNCTION()
+	void OnRep_MetricInformation();
 
 	UFUNCTION()
 	void OnRep_NumAmmoCansOpened();
@@ -264,10 +350,19 @@ public:
 	void OnRep_RebootCounter();
 
 	UFUNCTION()
+	void OnRep_ReplicatedTeamMemberState();
+
+	UFUNCTION()
 	void OnRep_ResurrectingNow(bool bPreviousResurrectingNow);
 
 	UFUNCTION()
+	void OnRep_ResurrectionChipReplicated();
+
+	UFUNCTION()
 	void OnRep_SeasonLevelUIDisplay();
+
+	UFUNCTION()
+	void OnRep_SimpleMetricInformation();
 
 	UFUNCTION()
 	void OnRep_SquadId();

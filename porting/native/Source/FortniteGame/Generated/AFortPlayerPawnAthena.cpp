@@ -7,6 +7,11 @@ void AFortPlayerPawnAthena::NetMulticast_SuccessfulBuildingEdit_Implementation()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerPawnAthena::OnRep_AttributeProxy()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPlayerPawnAthena::OnRep_bIsCreativeGhostModeActivated()
 {
 	// Body not recovered: reflection-derived stub.
@@ -27,6 +32,11 @@ void AFortPlayerPawnAthena::OnRep_MeshHeightAdjustAthena()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerPawnAthena::OnRep_ReplayRepAnimMontageInfo()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPlayerPawnAthena::ServerCreativeToggleGhost_Implementation(bool bEnableOnly)
 {
 	// Body not recovered: reflection-derived stub.
@@ -42,9 +52,14 @@ void AFortPlayerPawnAthena::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(AFortPlayerPawnAthena, bIsCreativeGhostModeActivated);
+	DOREPLIFETIME(AFortPlayerPawnAthena, FastReplicationMinimalReplicationTags);
+	DOREPLIFETIME(AFortPlayerPawnAthena, SimulatedProxyGameplayCues);
+	DOREPLIFETIME(AFortPlayerPawnAthena, ReplayRepAnimMontageInfo);
+	DOREPLIFETIME(AFortPlayerPawnAthena, AttributeReplicationProxy);
 	DOREPLIFETIME(AFortPlayerPawnAthena, MeshHeightAdjustAthena);
 	DOREPLIFETIME(AFortPlayerPawnAthena, CapsuleHalfHeightAthena);
 	DOREPLIFETIME(AFortPlayerPawnAthena, CapsuleRadiusAthena);
+	DOREPLIFETIME(AFortPlayerPawnAthena, ItemSpecialActorCategoryTag);
 	DOREPLIFETIME(AFortPlayerPawnAthena, ItemSpecialActorID);
 	DOREPLIFETIME(AFortPlayerPawnAthena, ServerWorldTimeRevivalTime);
 	DOREPLIFETIME(AFortPlayerPawnAthena, DBNORevivalStacking);

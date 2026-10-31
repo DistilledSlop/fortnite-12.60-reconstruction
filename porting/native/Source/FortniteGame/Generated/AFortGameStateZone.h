@@ -6,6 +6,34 @@
 #include "CoreMinimal.h"
 #include "AFortGameState_InGame.h"
 
+#include "EFortCompletionResult.h"
+#include "EFortVoteType.h"
+#include "EServerStability.h"
+#include "Engine/DataTable.h"
+#include "FFortItemQuantityPair.h"
+#include "FFortZoneDifficultyIncreaseRewardData.h"
+#include "FFortZoneMissionAlertData.h"
+#include "FOnCompletionResult.h"
+#include "FOnNumSurvivorsRescuedChanged.h"
+#include "FOnScoreTotalsChanged.h"
+#include "FReplicatedMontageMap.h"
+#include "FVoteData.h"
+#include "GameplayTagContainer.h"
+#include "UObject/NoExportTypes.h"
+
+class ABuildingActor;
+class AFortCreativePortalManager;
+class AFortCreativeRealEstatePlotManager;
+class AFortGlobalEnvironmentAbilityActor;
+class AFortInGameMapManager;
+class AFortThreatParticleActor;
+class AFortThreatVisualsManager;
+class UBuildingStructuralSupportSystem;
+class UFortCharacterCosmeticManager;
+class UFortMissionGenerator;
+class UFortSkinWeightOverrideManager;
+class UFortZoneTheme;
+
 #include "AFortGameStateZone.generated.h"
 
 UCLASS(config=Game)
@@ -50,6 +78,14 @@ public:
 	UPROPERTY(Replicated, Transient)
 	int32 MaxEncounterSP;
 
+	// table index 78, flags 0x10000000002020
+	UPROPERTY(Replicated, Transient)
+	FReplicatedMontageMap ReplicatedMontageMap;
+
+	// table index 74, flags 0x10000100000020
+	UPROPERTY(ReplicatedUsing=OnRep_CompletionResult)
+	EFortCompletionResult CompletionResult;
+
 	// table index 73, flags 0x20080100002020
 	UPROPERTY(ReplicatedUsing=OnRep_PlayerBuildingSkillLevel, Transient)
 	float PlayerBuildingSkillLevel;
@@ -57,6 +93,10 @@ public:
 	// table index 71, flags 0x20080100002020
 	UPROPERTY(ReplicatedUsing=OnRep_PlayerSharedTrapAttributes, Transient)
 	TArray<float> PlayerSharedMaxTrapAttributes;
+
+	// table index 68, flags 0x20080100002020
+	UPROPERTY(ReplicatedUsing=OnRep_ExplicitGloballyBlockedAbilityTags, Transient)
+	FGameplayTagContainer ExplicitGloballyBlockedAbilityTags;
 
 	// table index 67, flags 0x20080000002020
 	UPROPERTY(Replicated, Transient)
@@ -74,6 +114,10 @@ public:
 	UPROPERTY(Config)
 	uint8 bDisconnectOnServerGameplayTagIndexHashMismatch : 1;
 
+	// table index 63, flags 0x40000010080000
+	UPROPERTY()
+	FOnCompletionResult OnCompletionResultEvent;
+
 	// table index 62, flags 0x20080100000020
 	UPROPERTY(ReplicatedUsing=OnRep_PlayerStructuresChanged)
 	int32 TotalPlayerStructures;
@@ -86,9 +130,53 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_bGlobalCeaseFire)
 	uint8 bGlobalCeaseFire : 1;
 
+	// table index 59, flags 0x20080000002020
+	UPROPERTY(Replicated, Transient)
+	AFortGlobalEnvironmentAbilityActor* GlobalEnvironmentAbilityActor;
+
 	// table index 55, flags 0x20080000002000
 	UPROPERTY(Transient)
 	uint8 bSupportRuntimeShutdownOfGameplayModifiers : 1;
+
+	// table index 54, flags 0x20080000002000
+	UPROPERTY(Transient)
+	UBuildingStructuralSupportSystem* StructuralSupportSystem;
+
+	// table index 53, flags 0x20080100002020
+	UPROPERTY(ReplicatedUsing=OnRep_ZoneDifficultyInfoRow, Transient)
+	FDataTableRowHandle ZoneDifficultyInfoRow;
+
+	// table index 52, flags 0x20080000002020
+	UPROPERTY(Replicated, Transient)
+	UFortZoneTheme* ZoneTheme;
+
+	// table index 51, flags 0x24080100002020
+	UPROPERTY(ReplicatedUsing=OnRep_MissionGenerator, Transient)
+	TSoftClassPtr<UFortMissionGenerator> MissionGeneratorClass;
+
+	// table index 49, flags 0x20080100002020
+	UPROPERTY(ReplicatedUsing=OnRep_MissionRewards, Transient)
+	TArray<FFortItemQuantityPair> MissionRewards;
+
+	// table index 47, flags 0x20080100002020
+	UPROPERTY(ReplicatedUsing=OnRep_DifficultyIncreaseRewards, Transient)
+	TArray<FFortZoneDifficultyIncreaseRewardData> DifficultyIncreaseRewards;
+
+	// table index 46, flags 0x20080100002020
+	UPROPERTY(ReplicatedUsing=OnRep_MissionAlertData, Transient)
+	FFortZoneMissionAlertData MissionAlertData;
+
+	// table index 44, flags 0x20080100000020
+	UPROPERTY(ReplicatedUsing=OnRep_ClientPreloadMissionClasses)
+	TArray<FSoftObjectPath> ClientPreloadMissionClasses;
+
+	// table index 43, flags 0x40000000002020
+	UPROPERTY(Replicated, Transient)
+	AFortThreatVisualsManager* ThreatVisualsManager;
+
+	// table index 42, flags 0x40000000002020
+	UPROPERTY(Replicated, Transient)
+	AFortThreatParticleActor* ThreatParticleActor;
 
 	// table index 41, flags 0x10000000000005
 	UPROPERTY()
@@ -117,6 +205,30 @@ public:
 	// table index 33, flags 0x20080000000000
 	UPROPERTY()
 	uint8 bAllowedToOverrideBackendRewards : 1;
+
+	// table index 31, flags 0x14000000002000
+	UPROPERTY(Transient)
+	TArray<TSubclassOf<ABuildingActor>> AllPlayerBuildableClasses;
+
+	// table index 28, flags 0x10000000002000
+	UPROPERTY(Transient)
+	TMap<TSubclassOf<ABuildingActor>, int32> AllPlayerBuildableClassesIndexLookup;
+
+	// table index 26, flags 0x20080000002020
+	UPROPERTY(Replicated, Transient)
+	AFortInGameMapManager* UIMapManager;
+
+	// table index 25, flags 0x20080000002000
+	UPROPERTY(Transient)
+	UFortCharacterCosmeticManager* CharacterCosmeticManager;
+
+	// table index 24, flags 0x20080000002000
+	UPROPERTY(Transient)
+	UFortSkinWeightOverrideManager* SkinWeightManager;
+
+	// table index 23, flags 0x10000010080000
+	UPROPERTY()
+	FOnScoreTotalsChanged OnScoreTotalsChanged;
 
 	// table index 22, flags 0x20080000010001
 	UPROPERTY()
@@ -178,18 +290,66 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_NumSurvivorsRescued, Transient)
 	int32 NumSurvivorsRescued;
 
+	// table index 7, flags 0x20080010080000
+	UPROPERTY()
+	FOnNumSurvivorsRescuedChanged OnNumSurvivorsRescuedChangedDelegate;
+
+	// table index 5, flags 0x10000100002020
+	UPROPERTY(ReplicatedUsing=OnRepServerUnstableFramerate, Transient)
+	EServerStability ServerStability;
+
+	// table index 3, flags 0x40000100000020
+	UPROPERTY(ReplicatedUsing=OnRep_GameplayVotes)
+	TArray<FVoteData> GameplayVotesArray;
+
+	// table index 2, flags 0x20080000002000
+	UPROPERTY(Transient)
+	AFortCreativePortalManager* CreativePortalManager;
+
+	// table index 1, flags 0x20080000002020
+	UPROPERTY(Replicated, Transient)
+	AFortCreativeRealEstatePlotManager* CreativeRealEstatePlotManager;
+
 	// table index 0, flags 0x20080000010015
 	UPROPERTY()
 	uint8 bUseMaxBackpackSize : 1;
+
+	UFUNCTION(NetMulticast, Reliable)
+	void NotifyEndFailedGameplayVoteLockout(const EFortVoteType& VoteType);
+	void NotifyEndFailedGameplayVoteLockout_Implementation(const EFortVoteType& VoteType);
 
 	UFUNCTION()
 	void OnRep_bGlobalCeaseFire();
 
 	UFUNCTION()
+	void OnRep_ClientPreloadMissionClasses();
+
+	UFUNCTION()
+	void OnRep_CompletionResult();
+
+	UFUNCTION()
+	void OnRep_DifficultyIncreaseRewards();
+
+	UFUNCTION()
 	void OnRep_DifficultyIncreaseRewardTier();
 
 	UFUNCTION()
+	void OnRep_ExplicitGloballyBlockedAbilityTags();
+
+	UFUNCTION()
 	void OnRep_GameDifficulty();
+
+	UFUNCTION()
+	void OnRep_GameplayVotes();
+
+	UFUNCTION()
+	void OnRep_MissionAlertData();
+
+	UFUNCTION()
+	void OnRep_MissionGenerator();
+
+	UFUNCTION()
+	void OnRep_MissionRewards();
 
 	UFUNCTION()
 	void OnRep_NumSurvivorsRescued();
@@ -208,6 +368,12 @@ public:
 
 	UFUNCTION()
 	void OnRep_TheaterUniqueId();
+
+	UFUNCTION()
+	void OnRep_ZoneDifficultyInfoRow();
+
+	UFUNCTION()
+	void OnRepServerUnstableFramerate();
 
 	UFUNCTION(NetMulticast, Reliable)
 	void OnWaveStart(int32 WaveNum, const FText& WaveText, int32 Level, const FText& LevelText);

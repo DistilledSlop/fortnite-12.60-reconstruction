@@ -6,6 +6,18 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 
+#include "AttributeSet.h"
+#include "FAircraftFlightInfo.h"
+#include "FFortSafeZoneDefinition.h"
+#include "Math/Box2D.h"
+#include "Math/BoxSphereBounds.h"
+
+class ABuildingItemCollectorActor;
+class ABuildingItemWeaponUpgradeActor;
+class AFortAthenaAircraft;
+class AFortSafeZoneStorm;
+class UFortSupplyDropInfo;
+
 #include "AFortAthenaMapInfo.generated.h"
 
 UCLASS(config=Engine)
@@ -14,5 +26,121 @@ class FORTNITEGAME_API AFortAthenaMapInfo : public AActor
 	GENERATED_BODY()
 
 public:
+	// table index 40, flags 0x10000000000015
+	UPROPERTY()
+	FScalableFloat GoldenPoiPercents;
+
+	// table index 39, flags 0x10000000000015
+	UPROPERTY()
+	FScalableFloat GoldenPoiPercentOfSelectedAtBusPathEnd;
+
+	// table index 38, flags 0x10000000000015
+	UPROPERTY()
+	FScalableFloat GoldenPoiDistanceAroundBusPathEnd;
+
+	// table index 37, flags 0x10000000000015
+	UPROPERTY()
+	FScalableFloat GoldenPoiDistanceMustBeAwayFromBusPath;
+
+	// table index 30, flags 0x14000000000015
+	UPROPERTY()
+	TSubclassOf<ABuildingItemCollectorActor> VendingMachineClass;
+
+	// table index 29, flags 0x10000000000015
+	UPROPERTY()
+	FScalableFloat VendingMachineRarityCount;
+
+	// table index 28, flags 0x14000000000015
+	UPROPERTY()
+	TSubclassOf<ABuildingItemWeaponUpgradeActor> WeaponUpgradeMachineClass;
+
+	// table index 27, flags 0x10000000000015
+	UPROPERTY()
+	FScalableFloat WeaponUpgradeMachineSpawnChance;
+
+	// table index 25, flags 0x10000000000015
+	UPROPERTY()
+	FScalableFloat LlamaQuantityMin;
+
+	// table index 24, flags 0x10000000000015
+	UPROPERTY()
+	FScalableFloat LlamaQuantityMax;
+
+	// table index 22, flags 0x10000000000015
+	UPROPERTY()
+	TArray<UFortSupplyDropInfo*> SupplyDropInfoList;
+
+	// table index 21, flags 0x10000000000015
+	UPROPERTY()
+	FScalableFloat SupplyDropMinPlacementHeight;
+
+	// table index 20, flags 0x10000000000015
+	UPROPERTY()
+	FScalableFloat SupplyDropMaxPlacementHeight;
+
+	// table index 19, flags 0x14000000000015
+	UPROPERTY()
+	TSubclassOf<AFortAthenaAircraft> AircraftClass;
+
+	// table index 18, flags 0x10000000000015
+	UPROPERTY()
+	FBox2D AircraftSpawnZone;
+
+	// table index 17, flags 0x10000000000015
+	UPROPERTY()
+	FBox2D AircraftDropZone;
+
+	// table index 15, flags 0x10000000000015
+	UPROPERTY()
+	FScalableFloat SkydivingScanForImpactWorldZ;
+
+	// table index 14, flags 0x10000000000015
+	UPROPERTY()
+	FScalableFloat SkydivingForceDeployParachuteWorldZ;
+
+	// table index 12, flags 0x10000000000000
+	UPROPERTY()
+	TArray<FAircraftFlightInfo> FlightInfos;
+
+	// table index 11, flags 0x10000000000000
+	UPROPERTY()
+	FBoxSphereBounds CachedPlayableBoundsForClients;
+
+	// table index 10, flags 0x20080000000015
+	UPROPERTY()
+	FScalableFloat AircraftDeviationAngle;
+
+	// table index 9, flags 0x20080000000015
+	UPROPERTY()
+	FScalableFloat AircraftDistanceFromMidLine;
+
+	// table index 8, flags 0x20080000000015
+	UPROPERTY()
+	FScalableFloat AircraftHeight;
+
+	// table index 7, flags 0x20080000000015
+	UPROPERTY()
+	FScalableFloat AircraftSpeed;
+
+	// table index 6, flags 0x20080000000015
+	UPROPERTY()
+	FScalableFloat AircraftDesiredDoorOpenTime;
+
+	// table index 5, flags 0x20080000000001
+	UPROPERTY()
+	FScalableFloat SafeZoneStartDelay;
+
+	// table index 4, flags 0x20080000000001
+	UPROPERTY()
+	FScalableFloat SafeZoneStartingRadius;
+
+	// table index 1, flags 0x20080000000015
+	UPROPERTY()
+	FFortSafeZoneDefinition SafeZoneDefinition;
+
+	// table index 0, flags 0x20080000000015
+	UPROPERTY()
+	AFortSafeZoneStorm* SafeZoneStorm;
+
 };
 

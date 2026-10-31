@@ -6,6 +6,23 @@
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerState.h"
 
+#include "EFortCustomBodyType.h"
+#include "EFortCustomGender.h"
+#include "EFortPlayerRole.h"
+#include "EReadyCheckState.h"
+#include "ETrustedPlatformType.h"
+#include "FFortExperienceDelta.h"
+#include "FPlayerBannerInfo.h"
+#include "FReplicatedStatValues.h"
+#include "GameFramework/OnlineReplStructs.h"
+#include "Math/Vector.h"
+
+class AFortTeamInfo;
+class AFortTeamPrivateInfo;
+class UCustomCharacterPart;
+class UCustomColorSwatch;
+class UCustomPlayerComponent;
+
 #include "AFortPlayerState.generated.h"
 
 UCLASS(config=Engine)
@@ -54,9 +71,17 @@ public:
 	UPROPERTY(Replicated)
 	uint8 bRepFlag1 : 1;
 
+	// table index 49, flags 0x40000000002020
+	UPROPERTY(Replicated, Transient)
+	EFortPlayerRole PlayerRole;
+
 	// table index 48, flags 0x40000000000020
 	UPROPERTY(Replicated)
 	int16 WorldPlayerId;
+
+	// table index 47, flags 0x40000100000020
+	UPROPERTY(ReplicatedUsing=OnRep_PartyOwner)
+	FUniqueNetIdRepl PartyOwnerUniqueId;
 
 	// table index 46, flags 0x40000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_HeroID)
@@ -74,25 +99,105 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_ScoreStatChanged, Transient)
 	int32 InitialExperienceAmount;
 
+	// table index 39, flags 0x40000100002020
+	UPROPERTY(ReplicatedUsing=OnRep_ScoreStatChanged, Transient)
+	TArray<FFortExperienceDelta> ExperienceDeltas;
+
 	// table index 38, flags 0x40000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_Platform)
 	FString Platform;
+
+	// table index 37, flags 0x40000100000035
+	UPROPERTY(ReplicatedUsing=OnRep_BannerInfo)
+	FPlayerBannerInfo Banner;
 
 	// table index 36, flags 0x40000000002020
 	UPROPERTY(Replicated, Transient)
 	uint8 bIsSimulatingDamage : 1;
 
+	// table index 33, flags 0x40000100000020
+	UPROPERTY(ReplicatedUsing=OnRep_CharacterGender)
+	TEnumAsByte<EFortCustomGender::Type> CharacterGender;
+
+	// table index 32, flags 0x40000100000020
+	UPROPERTY(ReplicatedUsing=OnRep_CharacterBodyType)
+	TEnumAsByte<EFortCustomBodyType::Type> CharacterBodyType;
+
+	// table index 30, flags 0x40000100000020
+	UPROPERTY(ReplicatedUsing=OnRep_CharacterColorSwatches)
+	UCustomColorSwatch* CharacterColorSwatches[2];
+
+	// table index 29, flags 0x20080000002000
+	UPROPERTY(Transient)
+	TEnumAsByte<EFortCustomGender::Type> LocalCharacterGender;
+
+	// table index 28, flags 0x20080000002000
+	UPROPERTY(Transient)
+	TEnumAsByte<EFortCustomBodyType::Type> LocalCharacterBodyType;
+
+	// table index 27, flags 0x20080000002000
+	UPROPERTY(Transient)
+	UCustomCharacterPart* LocalCharacterParts[6];
+
+	// table index 24, flags 0x20080000002000
+	UPROPERTY(Transient)
+	TArray<UCustomCharacterPart*> LocalVariantPartsToLoad;
+
+	// table index 23, flags 0x20080000002000
+	UPROPERTY(Transient)
+	UCustomColorSwatch* LocalCharacterColorSwatches[2];
+
+	// table index 22, flags 0x40000000080008
+	UPROPERTY()
+	UCustomPlayerComponent* CustomPRIComponent;
+
+	// table index 21, flags 0x40000100000021
+	UPROPERTY(ReplicatedUsing=OnRep_AccessoryColorSwatches)
+	UCustomColorSwatch* CharacterPartColorSwatches[6];
+
+	// table index 20, flags 0x20080000002000
+	UPROPERTY(Transient)
+	UCustomColorSwatch* LocalCharacterPartColorSwatches[6];
+
+	// table index 19, flags 0x40000100000020
+	UPROPERTY(ReplicatedUsing=OnRep_PlayerTeam)
+	AFortTeamInfo* PlayerTeam;
+
+	// table index 18, flags 0x40000100000020
+	UPROPERTY(ReplicatedUsing=OnRep_PlayerTeamPrivate)
+	AFortTeamPrivateInfo* PlayerTeamPrivate;
+
 	// table index 17, flags 0x20080000000000
 	UPROPERTY()
 	uint8 bSkipReplicatedStats : 1;
+
+	// table index 16, flags 0x40000100002020
+	UPROPERTY(ReplicatedUsing=OnRep_ScoreStatChanged, Transient)
+	FReplicatedStatValues ReplicatedStats_Campaign[35];
+
+	// table index 15, flags 0x40000100002020
+	UPROPERTY(ReplicatedUsing=OnRep_ScoreStatChanged, Transient)
+	FReplicatedStatValues ReplicatedStats_Zone[35];
 
 	// table index 14, flags 0x40000000002020
 	UPROPERTY(Replicated, Transient)
 	uint8 bAreZoneStatsFinalized : 1;
 
+	// table index 12, flags 0x40000000000020
+	UPROPERTY(Replicated)
+	EReadyCheckState ReadyCheckState;
+
 	// table index 8, flags 0x20080000000000
 	UPROPERTY()
 	FName PlayerOSSName;
+
+	// table index 6, flags 0x20080000000000
+	UPROPERTY()
+	ETrustedPlatformType TrustedPlatformType;
+
+	// table index 5, flags 0x40000100000020
+	UPROPERTY(ReplicatedUsing=OnRep_PlatformUniqueNetId)
+	FUniqueNetIdRepl PlatformUniqueNetId;
 
 	// table index 4, flags 0x20080000002000
 	UPROPERTY(Transient)
@@ -101,6 +206,10 @@ public:
 	// table index 3, flags 0x20080000002000
 	UPROPERTY(Transient)
 	uint8 bInitializedPlayerCustomizationOptionsFromClientSettings : 1;
+
+	// table index 2, flags 0x40000000002000
+	UPROPERTY(Transient)
+	FVector PawnDeathLocation;
 
 	// table index 1, flags 0x40000000002000
 	UPROPERTY(Transient)
@@ -111,7 +220,22 @@ public:
 	uint8 bInGhostMode : 1;
 
 	UFUNCTION()
+	void OnRep_AccessoryColorSwatches();
+
+	UFUNCTION()
+	void OnRep_BannerInfo();
+
+	UFUNCTION()
 	void OnRep_bHasStartedPlaying();
+
+	UFUNCTION()
+	void OnRep_CharacterBodyType();
+
+	UFUNCTION()
+	void OnRep_CharacterColorSwatches();
+
+	UFUNCTION()
+	void OnRep_CharacterGender();
 
 	UFUNCTION()
 	void OnRep_CurrentCharXP();
@@ -123,7 +247,19 @@ public:
 	void OnRep_InGhostMode();
 
 	UFUNCTION()
+	void OnRep_PartyOwner();
+
+	UFUNCTION()
 	void OnRep_Platform();
+
+	UFUNCTION()
+	void OnRep_PlatformUniqueNetId();
+
+	UFUNCTION()
+	void OnRep_PlayerTeam();
+
+	UFUNCTION()
+	void OnRep_PlayerTeamPrivate();
 
 	UFUNCTION()
 	void OnRep_ScoreStatChanged();

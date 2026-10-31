@@ -2,10 +2,16 @@
 #include "AFortWorldManager.h"
 #include "Net/UnrealNetwork.h"
 
+void AFortWorldManager::OnRep_InitialGlobalWind()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortWorldManager::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(AFortWorldManager, FinalNumChosenBuildingFoundations);
+	DOREPLIFETIME(AFortWorldManager, InitialGlobalWind);
 }
 

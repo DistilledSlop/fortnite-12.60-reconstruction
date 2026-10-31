@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/GameState.h"
 
+class APlayspace;
+
 #include "APlayspaceGameState.generated.h"
 
 UCLASS(config=Game)
@@ -14,6 +16,10 @@ class PLAYSPACEFRAMEWORK_API APlayspaceGameState : public AGameState
 	GENERATED_BODY()
 
 public:
+	// table index 4, flags 0x24080000010001
+	UPROPERTY()
+	TSubclassOf<APlayspace> RootPlayspaceClass;
+
 	// table index 3, flags 0x20080000014001
 	UPROPERTY(Config)
 	uint8 bUsePlayspaceSystem : 1;

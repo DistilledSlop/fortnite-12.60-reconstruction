@@ -63,14 +63,6 @@ class FORTNITEGAME_API UAthenaTrapAIPerceptionStimuliSourceComponent : public UA
 };
 
 // STUB: layout unknown, replace with generated class
-// Parent guessed: AActor. Naming convention; unverified.
-UCLASS()
-class FORTNITEGAME_API ABuildingActor : public AActor
-{
-    GENERATED_BODY()
-};
-
-// STUB: layout unknown, replace with generated class
 // Parent guessed: UObject. Naming convention; unverified.
 UCLASS()
 class FORTNITEGAME_API UBuildingEditModeSupport_Floor : public UObject
@@ -127,25 +119,9 @@ class FORTNITEGAME_API ABuildingFoundation5x5 : public ABuildingFoundation
 };
 
 // STUB: layout unknown, replace with generated class
-// Parent guessed: AActor. Naming convention; unverified.
-UCLASS()
-class FORTNITEGAME_API ABuildingGameplayActor : public AActor
-{
-    GENERATED_BODY()
-};
-
-// STUB: layout unknown, replace with generated class
 // Parent guessed: UObject. Naming convention; unverified.
 UCLASS()
 class FORTNITEGAME_API UBuildingLayoutRequirement : public UObject
-{
-    GENERATED_BODY()
-};
-
-// STUB: layout unknown, replace with generated class
-// Parent guessed: AStaticMeshActor. Static mesh actor, name inference only; unverified.
-UCLASS()
-class FORTNITEGAME_API ABuildingSMActor : public AStaticMeshActor
 {
     GENERATED_BODY()
 };
@@ -338,14 +314,6 @@ class FORTNITEGAME_API UFortCreativeVolumeLinkComponent : public UActorComponent
 // Parent guessed: AActor. Naming convention; unverified.
 UCLASS()
 class FORTNITEGAME_API AFortEnemySpawn : public AActor
-{
-    GENERATED_BODY()
-};
-
-// STUB: layout unknown, replace with generated class
-// Parent guessed: UObject. Naming convention; unverified.
-UCLASS()
-class FORTNITEGAME_API UFortFeedbackManager : public UObject
 {
     GENERATED_BODY()
 };
@@ -627,14 +595,6 @@ class FORTNITEGAME_API AFortPlayerStartCreative : public APlayerStart
 };
 
 // STUB: layout unknown, replace with generated class
-// Parent guessed: APlayerStart. Naming convention; unverified.
-UCLASS()
-class FORTNITEGAME_API AFortPlayerStartWarmup : public APlayerStart
-{
-    GENERATED_BODY()
-};
-
-// STUB: layout unknown, replace with generated class
 // Parent guessed: UObject. Naming convention; unverified.
 UCLASS()
 class FORTNITEGAME_API UFortPlaylist : public UObject
@@ -646,14 +606,6 @@ class FORTNITEGAME_API UFortPlaylist : public UObject
 // Parent guessed: UActorComponent. Naming convention; unverified.
 UCLASS()
 class FORTNITEGAME_API UFortPoiCollisionComponent : public UActorComponent
-{
-    GENERATED_BODY()
-};
-
-// STUB: layout unknown, replace with generated class
-// Parent guessed: AVolume. Naming convention; unverified.
-UCLASS()
-class FORTNITEGAME_API AFortPoiVolume : public AVolume
 {
     GENERATED_BODY()
 };
@@ -722,14 +674,6 @@ class FORTNITEGAME_API AFortSpectateClickableMapIcon : public AActor
 // Parent guessed: UAudioComponent. Naming convention; unverified.
 UCLASS()
 class FORTNITEGAME_API UFortSplineWaterAudioComponent : public UAudioComponent
-{
-    GENERATED_BODY()
-};
-
-// STUB: layout unknown, replace with generated class
-// Parent guessed: AActor. Naming convention; unverified.
-UCLASS()
-class FORTNITEGAME_API AFortTimeOfDayManager : public AActor
 {
     GENERATED_BODY()
 };

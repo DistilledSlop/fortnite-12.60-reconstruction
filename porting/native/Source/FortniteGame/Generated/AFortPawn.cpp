@@ -12,6 +12,56 @@ void AFortPawn::HandleIsHiddenForDeath()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPawn::NetMulticast_InvokeGameplayCueAdded_Implementation(const FGameplayEffectContextHandle& EffectContext, const FPredictionKey& PredictionKey, const FGameplayTag& GameplayCueTag)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPawn::NetMulticast_InvokeGameplayCueAdded_WithParams_Implementation(const FGameplayCueParameters& Parameters, const FPredictionKey& PredictionKey, const FGameplayTag& GameplayCueTag)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPawn::NetMulticast_InvokeGameplayCueAddedAndWhileActive_FromSpec_Implementation(const FPredictionKey& PredictionKey, const FGameplayEffectSpecForRPC& Spec)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPawn::NetMulticast_InvokeGameplayCueAddedAndWhileActive_WithParams_Implementation(const FGameplayCueParameters& GameplayCueParameters, const FPredictionKey& PredictionKey, const FGameplayTag& GameplayCueTag)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPawn::NetMulticast_InvokeGameplayCueExecuted_Implementation(const FGameplayEffectContextHandle& EffectContext, const FPredictionKey& PredictionKey, const FGameplayTag& GameplayCueTag)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPawn::NetMulticast_InvokeGameplayCueExecuted_FromSpec_Implementation(const FPredictionKey& PredictionKey, const FGameplayEffectSpecForRPC& Spec)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPawn::NetMulticast_InvokeGameplayCueExecuted_WithParams_Implementation(const FGameplayCueParameters& GameplayCueParameters, const FPredictionKey& PredictionKey, const FGameplayTag& GameplayCueTag)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPawn::NetMulticast_InvokeGameplayCuesAddedAndWhileActive_WithParams_Implementation(const FGameplayCueParameters& GameplayCueParameters, const FPredictionKey& PredictionKey, const FGameplayTagContainer& GameplayCueTags)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPawn::NetMulticast_InvokeGameplayCuesExecuted_Implementation(const FGameplayEffectContextHandle& EffectContext, const FPredictionKey& PredictionKey, const FGameplayTagContainer& GameplayCueTags)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPawn::NetMulticast_InvokeGameplayCuesExecuted_WithParams_Implementation(const FGameplayCueParameters& GameplayCueParameters, const FPredictionKey& PredictionKey, const FGameplayTagContainer& GameplayCueTags)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPawn::OnRep_bWeaponHolstered()
 {
 	// Body not recovered: reflection-derived stub.
@@ -62,6 +112,16 @@ void AFortPawn::OnRep_PawnUniqueID()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPawn::OnRep_PushMomentum()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPawn::OnRep_StormShieldComponent()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPawn::OnRep_TeleportCounter()
 {
 	// Body not recovered: reflection-derived stub.
@@ -72,20 +132,29 @@ void AFortPawn::OnRep_WeaponActivated()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPawn::ServerTeleportNearLocation_Implementation(const FVector& ActorLocation)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPawn::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
+	DOREPLIFETIME(AFortPawn, CurrentCalloutTag);
 	DOREPLIFETIME(AFortPawn, DisplayName);
 	DOREPLIFETIME(AFortPawn, EmoteWalkSpeed);
 	DOREPLIFETIME(AFortPawn, LandingFlashCountPacked);
 	DOREPLIFETIME(AFortPawn, JumpFlashCountPacked);
 	DOREPLIFETIME(AFortPawn, DamageZoneActiveBitMask);
 	DOREPLIFETIME(AFortPawn, LocalSpin);
+	DOREPLIFETIME(AFortPawn, PushMomentum);
 	DOREPLIFETIME(AFortPawn, bIsStunned);
 	DOREPLIFETIME(AFortPawn, SpawnImmunityTime);
 	DOREPLIFETIME(AFortPawn, PawnUniqueID);
+	DOREPLIFETIME(AFortPawn, StormShieldComponent);
 	DOREPLIFETIME(AFortPawn, TeleportCounter);
+	DOREPLIFETIME(AFortPawn, CurrentMovementStyle);
 	DOREPLIFETIME(AFortPawn, bWasDBNOOnDeath);
 	DOREPLIFETIME(AFortPawn, bIsDBNO);
 	DOREPLIFETIME(AFortPawn, bWeaponHolstered);

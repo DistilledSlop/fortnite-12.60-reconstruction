@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "APlayspaceGameState.h"
 
+class AFortTimeOfDayManager;
+
 #include "AFortGameStateBase.generated.h"
 
 UCLASS(config=Game)
@@ -14,5 +16,13 @@ class FORTNITEGAME_API AFortGameStateBase : public APlayspaceGameState
 	GENERATED_BODY()
 
 public:
+	// table index 1, flags 0x20080100002020
+	UPROPERTY(ReplicatedUsing=OnRep_TimeOfDayManager, Transient)
+	AFortTimeOfDayManager* FortTimeOfDayManager;
+
+	UFUNCTION()
+	void OnRep_TimeOfDayManager();
+
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

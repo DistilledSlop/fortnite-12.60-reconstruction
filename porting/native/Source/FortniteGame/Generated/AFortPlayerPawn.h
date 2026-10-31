@@ -6,8 +6,63 @@
 #include "CoreMinimal.h"
 #include "AFortPawn.h"
 
+#include "Abilities/GameplayAbilityTypes.h"
+#include "AttributeSet.h"
+#include "Components/TimelineComponent.h"
+#include "EColorSwatchType.h"
+#include "EFortBuildingState.h"
+#include "EFortCustomBodyType.h"
+#include "EFortCustomGender.h"
+#include "EFortCustomPartType.h"
+#include "EFortFacialAnimTypes.h"
+#include "EFortPawnStasisMode.h"
+#include "Engine/CurveTable.h"
+#include "Engine/SpringInterpolator.h"
+#include "FCharacterPartChanged.h"
+#include "FFortAthenaVehicleInputStateReliable.h"
+#include "FFortAthenaVehicleInputStateUnreliable.h"
+#include "FFortCharacterPartsRepMontageInfo.h"
+#include "FOnBallooningGravityCeilingChanged.h"
+#include "FOnBeginSkydivingEvent.h"
+#include "FOnEndSkydivingEvent.h"
+#include "FOnEndedInteractSearch.h"
+#include "FOnEnteredAircraft.h"
+#include "FOnFootstepEvent.h"
+#include "FOnInstantInteractSearch.h"
+#include "FOnSafeZoneOccupancyChanged.h"
+#include "FOnStartedInteractSearch.h"
+#include "FReplicatedMontagePair.h"
+#include "FSlipperySlopeParams.h"
+#include "FVortexParams.h"
+#include "FZiplineStateChanged.h"
+#include "GameplayTagContainer.h"
+#include "Math/Color.h"
+#include "Math/Rotator.h"
+#include "Math/Vector.h"
+#include "Styling/SlateBrush.h"
+
+class ABuildingGameplayActorPlayerPropAttachment;
+class ACustomCharacterPartModifier;
+class AFortPlayerCharm;
+class AFortPlayerParachute;
+class AFortPlayerPet;
+class AFortPlayerPetRepState;
+class AFortRemoteControlledPawnAthena;
+class AFortSkyTube;
 class UAnimMontage;
+class UBuildingEditModeMetadata;
 class UCurveFloat;
+class UCustomCharacterPart;
+class UCustomColorComponent;
+class UCustomColorSwatch;
+class UCustomPlayerComponent;
+class UFortAnimNotifyState_RootMotionInterrupt;
+class UFortCustomizationAssetLoader;
+class UFortFootstepAudioBank;
+class UFortHero;
+class UFortPawnScriptedBehavior;
+class UFortUnderwaterDamageComponent;
+class UFortWeaponAnimSet;
 class UInputComponent;
 class UMaterialInstanceDynamic;
 class UParticleSystem;
@@ -22,6 +77,10 @@ class FORTNITEGAME_API AFortPlayerPawn : public AFortPawn
 	GENERATED_BODY()
 
 public:
+	// table index 322, flags 0x10000100000020
+	UPROPERTY(ReplicatedUsing=OnRep_VehicleInputStateReliableForReplay)
+	FFortAthenaVehicleInputStateReliable VehicleInputStateReliable;
+
 	// table index 321, flags 0x10000000000034
 	UPROPERTY(Replicated)
 	uint8 bIsNearSafeZoneEdge : 1;
@@ -78,6 +137,14 @@ public:
 	UPROPERTY(Config)
 	uint8 bBuildHotfix : 1;
 
+	// table index 306, flags 0x10000100002020
+	UPROPERTY(ReplicatedUsing=HandleInStasis, Transient)
+	EFortPawnStasisMode StasisMode;
+
+	// table index 305, flags 0x10000000000034
+	UPROPERTY(Replicated)
+	TEnumAsByte<EFortBuildingState::Type> BuildingState;
+
 	// table index 304, flags 0x10000100002020
 	UPROPERTY(ReplicatedUsing=OnRep_AccelerationZPack, Transient)
 	int8 AccelerationZPack;
@@ -105,6 +172,10 @@ public:
 	// table index 298, flags 0x10000000002000
 	UPROPERTY(Transient)
 	float LastStepTime;
+
+	// table index 297, flags 0x10000010080000
+	UPROPERTY()
+	FOnFootstepEvent OnFootstepEvent;
 
 	// table index 295, flags 0x10000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_IsInWaterVolume)
@@ -294,13 +365,33 @@ public:
 	UPROPERTY(Transient, Config)
 	uint8 bCharacterPartsCastIndirectShadows : 1;
 
+	// table index 244, flags 0x40000000002000
+	UPROPERTY(Transient)
+	TEnumAsByte<EFortCustomGender::Type> CharacterGender;
+
+	// table index 243, flags 0x40000000002000
+	UPROPERTY(Transient)
+	TEnumAsByte<EFortCustomBodyType::Type> CharacterBodyType;
+
 	// table index 242, flags 0x20080000002000
 	UPROPERTY(Transient)
 	float JumpLastActivatedTime;
 
+	// table index 241, flags 0x20080000002000
+	UPROPERTY(Transient)
+	FVector PreviousPosition;
+
+	// table index 240, flags 0x20080000002000
+	UPROPERTY(Transient)
+	FVector PreviousVelocity;
+
 	// table index 239, flags 0x10000000000005
 	UPROPERTY()
 	float CrouchMeshOffset;
+
+	// table index 238, flags 0x10000100000020
+	UPROPERTY(ReplicatedUsing=OnRep_VehicleInputStateUnreliable)
+	FFortAthenaVehicleInputStateUnreliable VehicleInputStateUnreliable;
 
 	// table index 237, flags 0x20080100000034
 	UPROPERTY(ReplicatedUsing=OnRep_IsInAnyStorm)
@@ -310,13 +401,25 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_IsInsideSafeZone)
 	uint8 bIsInsideSafeZone : 1;
 
+	// table index 232, flags 0x20080000000015
+	UPROPERTY()
+	FScalableFloat SetByCallerReviveHealth;
+
 	// table index 231, flags 0x20080000010001
 	UPROPERTY()
 	FName DBNOInteractionCollisionProfile;
 
+	// table index 230, flags 0x20080000010001
+	UPROPERTY()
+	FVector DBNOInteractionBoxExtent;
+
 	// table index 229, flags 0x20080000010001
 	UPROPERTY()
 	float DBNODeferTime;
+
+	// table index 227, flags 0x20080000010001
+	UPROPERTY()
+	FGameplayTag EventReviveTag;
 
 	// table index 226, flags 0x20080000000004
 	UPROPERTY()
@@ -326,6 +429,10 @@ public:
 	UPROPERTY()
 	float SetByCallerReviveSignalInStorm;
 
+	// table index 223, flags 0x20080000002000
+	UPROPERTY(Transient)
+	UBuildingEditModeMetadata* LastBuildingMetadata;
+
 	// table index 222, flags 0x10000000002000
 	UPROPERTY(Transient)
 	float SprintCancelTime;
@@ -334,9 +441,41 @@ public:
 	UPROPERTY(Transient)
 	float WaterSprintBoostAllowedTimer;
 
+	// table index 219, flags 0x20080000010001
+	UPROPERTY()
+	FCurveTableRowHandle ZiplineJumpDampening;
+
+	// table index 218, flags 0x20080000010001
+	UPROPERTY()
+	FCurveTableRowHandle ZiplineJumpStrength;
+
+	// table index 217, flags 0x20080000010001
+	UPROPERTY()
+	FScalableFloat ZiplineJumpActivateDelay;
+
+	// table index 216, flags 0x20080000010001
+	UPROPERTY()
+	FScalableFloat ZiplineRentryProtectionDelay;
+
 	// table index 215, flags 0x20080000010001
 	UPROPERTY()
 	float ZiplineSocketZOffset;
+
+	// table index 214, flags 0x20080010080000
+	UPROPERTY()
+	FZiplineStateChanged ZiplineStateChanged;
+
+	// table index 213, flags 0x20080000010001
+	UPROPERTY()
+	FScalableFloat EnableSwimSprintDiveCooldown;
+
+	// table index 212, flags 0x20080000010001
+	UPROPERTY()
+	FScalableFloat SwimSprintDiveCooldown;
+
+	// table index 211, flags 0x20080000010001
+	UPROPERTY()
+	FScalableFloat SwimDiveBoostTimeThreshold;
 
 	// table index 210, flags 0x20080000002000
 	UPROPERTY(Transient)
@@ -370,9 +509,21 @@ public:
 	UPROPERTY(Transient)
 	float VehicleSpeedAtTimeOfJump;
 
+	// table index 194, flags 0x20080100002020
+	UPROPERTY(ReplicatedUsing=OnRep_PossessedProp, Transient)
+	ABuildingGameplayActorPlayerPropAttachment* PossessedProp;
+
 	// table index 193, flags 0x10000000002000
 	UPROPERTY(Transient)
 	int64 SlopeCameraOffsetFrameCounter;
+
+	// table index 192, flags 0x10000000002000
+	UPROPERTY(Transient)
+	FVectorRK4SpringInterpolator SlopeCameraOffsetInterpolator;
+
+	// table index 191, flags 0x10000000010001
+	UPROPERTY()
+	FVector LargeBodyTypeTargetingOffset;
 
 	// table index 190, flags 0x10000000082008
 	UPROPERTY(Transient)
@@ -386,17 +537,97 @@ public:
 	UPROPERTY()
 	UAnimMontage* BluePrintEditAnimation;
 
+	// table index 187, flags 0x20080010080000
+	UPROPERTY()
+	FOnStartedInteractSearch OnStartedInteractSearch;
+
+	// table index 186, flags 0x20080010080000
+	UPROPERTY()
+	FOnEndedInteractSearch OnEndedInteractSearch;
+
+	// table index 185, flags 0x20080010080000
+	UPROPERTY()
+	FOnInstantInteractSearch OnAttemptedInstantInteractSearch;
+
 	// table index 184, flags 0x20080000010001
 	UPROPERTY()
 	FName EmoteInteractionCollisionProfile;
+
+	// table index 183, flags 0x20080000010001
+	UPROPERTY()
+	FVector EmoteInteractionBoxExtent;
+
+	// table index 181, flags 0x10000010080000
+	UPROPERTY()
+	FCharacterPartChanged OnPartChanged;
 
 	// table index 180, flags 0x20080000002000
 	UPROPERTY(Transient)
 	UMaterialInstanceDynamic* BlueprintPaperMID;
 
+	// table index 179, flags 0x20088000002000
+	UPROPERTY(Transient)
+	FTimeline BlueprintPaperPulseTimeline;
+
+	// table index 178, flags 0x20080000080008
+	UPROPERTY()
+	UCustomColorComponent* AccessoryColorSwatchHandler[6];
+
+	// table index 177, flags 0x40000000002000
+	UPROPERTY(Transient)
+	UFortHero* Hero;
+
+	// table index 175, flags 0x40000000082008
+	UPROPERTY(Transient)
+	UCustomPlayerComponent* HACK_CustomPRIComponent;
+
+	// table index 174, flags 0x40000000002000
+	UPROPERTY(Transient)
+	UCustomCharacterPart* CharacterParts[6];
+
+	// table index 173, flags 0x40000000002000
+	UPROPERTY(Transient)
+	UCustomColorSwatch* CharacterColorSwatches[2];
+
+	// table index 172, flags 0x40000000002000
+	UPROPERTY(Transient)
+	UCustomColorSwatch* CharacterPartColorSwatches[6];
+
+	// table index 169, flags 0x40000000002000
+	UPROPERTY(Transient)
+	TArray<UCustomCharacterPart*> RequiredVariantParts;
+
+	// table index 166, flags 0x20080000002000
+	UPROPERTY(Transient)
+	TArray<AFortPlayerCharm*> CharacterCharmActors;
+
 	// table index 165, flags 0x20080000002000
 	UPROPERTY(Transient)
 	int8 CharacterPartSMHiddenRefCount[6];
+
+	// table index 163, flags 0x40000000002000
+	UPROPERTY(Transient)
+	UCustomCharacterPart* PreviousCharacterParts[6];
+
+	// table index 162, flags 0x40000000002000
+	UPROPERTY(Transient)
+	ACustomCharacterPartModifier* CharacterPartModifiers[6];
+
+	// table index 161, flags 0x40000100002020
+	UPROPERTY(ReplicatedUsing=OnRep_CharPartAnimMontageInfo, Transient)
+	FFortCharacterPartsRepMontageInfo RepCharPartAnimMontageInfo;
+
+	// table index 155, flags 0x20080100002020
+	UPROPERTY(ReplicatedUsing=OnRep_FootstepBankOverride, Transient)
+	UFortFootstepAudioBank* FootstepBankOverride;
+
+	// table index 154, flags 0x20080000002000
+	UPROPERTY(Transient)
+	UFortFootstepAudioBank* OriginalFootstepBank;
+
+	// table index 149, flags 0x20080000000001
+	UPROPERTY()
+	FScalableFloat AutoPickupDropRepickupDelay;
 
 	// table index 148, flags 0x20080000000005
 	UPROPERTY()
@@ -406,6 +637,34 @@ public:
 	UPROPERTY()
 	float PickupSpeedMultiplier;
 
+	// table index 146, flags 0x20080000010001
+	UPROPERTY()
+	FSlateBrush MiniMapIconBrush;
+
+	// table index 145, flags 0x20080000010001
+	UPROPERTY()
+	FSlateBrush AboveBelowMiniMapIconBrush;
+
+	// table index 144, flags 0x20080000010001
+	UPROPERTY()
+	FSlateBrush FarOffMiniMapIconBrush;
+
+	// table index 143, flags 0x20080000010001
+	UPROPERTY()
+	FSlateBrush DBNOMiniMapIconBrush;
+
+	// table index 142, flags 0x20080000010001
+	UPROPERTY()
+	FLinearColor MinimapIconColorSelf;
+
+	// table index 141, flags 0x20080000010001
+	UPROPERTY()
+	FLinearColor MinimapIconColorTeammate;
+
+	// table index 140, flags 0x20080000010001
+	UPROPERTY()
+	FLinearColor MinimapIconColorEnemy;
+
 	// table index 139, flags 0x20080000010001
 	UPROPERTY()
 	float MaxIndicatorVisibilityDistForEnemies;
@@ -413,6 +672,10 @@ public:
 	// table index 138, flags 0x20080000010001
 	UPROPERTY()
 	float MaxIndicatorVisibilityDistForAllies;
+
+	// table index 135, flags 0x10000000000001
+	UPROPERTY()
+	UFortWeaponAnimSet* DBNOHoisterAnimSet;
 
 	// table index 133, flags 0x10000000010001
 	UPROPERTY()
@@ -458,6 +721,10 @@ public:
 	UPROPERTY(Replicated)
 	uint16 PackedReplicatedSlopeAngles;
 
+	// table index 119, flags 0x40000000002000
+	UPROPERTY(Transient)
+	UFortCustomizationAssetLoader* CustomizationAssetLoader;
+
 	// table index 118, flags 0x20080000000005
 	UPROPERTY()
 	UParticleSystem* SpawnParticles;
@@ -478,6 +745,10 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_AccelerationPack, Transient)
 	uint16 AccelerationPack;
 
+	// table index 112, flags 0x20080100000020
+	UPROPERTY(ReplicatedUsing=OnRep_ReplicatedAnimMontage)
+	FGameplayAbilityRepAnimMontage RepAnimMontageInfo;
+
 	// table index 111, flags 0x10000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_RepAnimMontageStartSection)
 	int32 RepAnimMontageStartSection;
@@ -485,6 +756,14 @@ public:
 	// table index 110, flags 0x20080100000020
 	UPROPERTY(ReplicatedUsing=OnRep_NetMovementPrioritized)
 	uint8 bNetMovementPrioritized : 1;
+
+	// table index 109, flags 0x20080000000020
+	UPROPERTY(Replicated)
+	FReplicatedMontagePair LandingMontagePair;
+
+	// table index 104, flags 0x40000000002000
+	UPROPERTY(Transient)
+	TArray<UFortAnimNotifyState_RootMotionInterrupt*> RootMotionInterruptNotifyStack;
 
 	// table index 102, flags 0x40000000002000
 	UPROPERTY(Transient)
@@ -498,6 +777,26 @@ public:
 	UPROPERTY()
 	uint8 bUseControllerRotationYawToRestore : 1;
 
+	// table index 98, flags 0x10000010080000
+	UPROPERTY()
+	FOnBeginSkydivingEvent OnBeginSkydivingEvent;
+
+	// table index 97, flags 0x10000010080000
+	UPROPERTY()
+	FOnEndSkydivingEvent OnEndSkydivingEvent;
+
+	// table index 96, flags 0x10000010080000
+	UPROPERTY()
+	FOnBallooningGravityCeilingChanged OnBallooningGravityCeilingChanged;
+
+	// table index 95, flags 0x10000010080000
+	UPROPERTY()
+	FOnEnteredAircraft OnEnteredAircraft;
+
+	// table index 91, flags 0x10000010080000
+	UPROPERTY()
+	FOnSafeZoneOccupancyChanged OnSafeZoneOccupancyChangedEvent;
+
 	// table index 83, flags 0x20080100000020
 	UPROPERTY(ReplicatedUsing=OnRep_ParachuteLockedOpen)
 	uint8 bParachuteLockedOpen : 1;
@@ -506,9 +805,61 @@ public:
 	UPROPERTY(Transient)
 	uint8 bLocalParachuteLockedOpen : 1;
 
+	// table index 79, flags 0x10000000000000
+	UPROPERTY()
+	UFortPawnScriptedBehavior* BotScriptedBehavior;
+
+	// table index 78, flags 0x10000000000020
+	UPROPERTY(Replicated)
+	FVortexParams VortexParams;
+
+	// table index 77, flags 0x10000100002020
+	UPROPERTY(ReplicatedUsing=OnRep_ReplicatedSkyTube, Transient)
+	AFortSkyTube* ReplicatedSkyTube;
+
+	// table index 76, flags 0x10000000002000
+	UPROPERTY(Transient)
+	AFortSkyTube* CurrentSkyTube;
+
+	// table index 73, flags 0x10000000082008
+	UPROPERTY(Transient)
+	UFortUnderwaterDamageComponent* UnderwaterDamageComponent;
+
+	// table index 72, flags 0x10000000000015
+	UPROPERTY()
+	FSlipperySlopeParams SlipperySlopeParams;
+
+	// table index 70, flags 0x20080000000020
+	UPROPERTY(Replicated)
+	AFortPlayerPetRepState* PetState;
+
+	// table index 69, flags 0x20080000000004
+	UPROPERTY()
+	AFortPlayerPet* CosmeticPetInstance;
+
+	// table index 68, flags 0x20080000000014
+	UPROPERTY()
+	AFortPlayerParachute* ParachuteAttachment;
+
 	// table index 65, flags 0x20080000002000
 	UPROPERTY(Transient)
 	uint8 bResetGliderOverrideOnLanding : 1;
+
+	// table index 64, flags 0x20080000000015
+	UPROPERTY()
+	FScalableFloat ParachuteDeployTraceForGroundDistance;
+
+	// table index 63, flags 0x20080000000015
+	UPROPERTY()
+	FScalableFloat LaunchPadParachuteDeployTraceForGroundDistance;
+
+	// table index 62, flags 0x20080000000015
+	UPROPERTY()
+	FScalableFloat LaunchPadParachuteDeployTraceForDownwardSpeed;
+
+	// table index 61, flags 0x20080000000015
+	UPROPERTY()
+	FScalableFloat ParachuteDeployVelocityBlend;
 
 	// table index 60, flags 0x20080000000015
 	UPROPERTY()
@@ -517,6 +868,22 @@ public:
 	// table index 59, flags 0x20080000000015
 	UPROPERTY()
 	float ParachuteCooldownToClose;
+
+	// table index 58, flags 0x20080000000015
+	UPROPERTY()
+	FScalableFloat GliderRedeployAllowedRow;
+
+	// table index 57, flags 0x20080000000015
+	UPROPERTY()
+	FScalableFloat GliderRedeployLateralVelocityMultiplierRow;
+
+	// table index 56, flags 0x20080000000015
+	UPROPERTY()
+	FScalableFloat GliderRedeployHeighLimitRow;
+
+	// table index 55, flags 0x20080000000015
+	UPROPERTY()
+	FScalableFloat BalloonFallDamageThresholdVelocityZ;
 
 	// table index 50, flags 0x20080000010001
 	UPROPERTY()
@@ -570,6 +937,18 @@ public:
 	UPROPERTY(Config)
 	uint8 bDisallowInterrogationOnNPC : 1;
 
+	// table index 28, flags 0x24080100002020
+	UPROPERTY(ReplicatedUsing=OnRep_ControlledRCPawn, Transient)
+	TWeakObjectPtr<AFortRemoteControlledPawnAthena> ControlledRCPawn;
+
+	// table index 27, flags 0x20080100002020
+	UPROPERTY(ReplicatedUsing=OnRep_StoredControlRotation, Transient)
+	FRotator StoredControlRotation;
+
+	// table index 25, flags 0x20080100000020
+	UPROPERTY(ReplicatedUsing=OnRep_FacialTypeOverride)
+	EFortFacialAnimTypes FacialTypeOverride;
+
 	// table index 24, flags 0x20080000002000
 	UPROPERTY(Transient)
 	float GhostModeExitStartTime;
@@ -602,6 +981,14 @@ public:
 	UPROPERTY()
 	uint8 bEnableWaterInteractionEffects : 1;
 
+	// table index 1, flags 0x20080000010001
+	UPROPERTY()
+	FScalableFloat ConsecutiveWeakSpotResourceBonus;
+
+	// table index 0, flags 0x20080000010001
+	UPROPERTY()
+	FScalableFloat LastHitWeakSpotResourceBonus;
+
 	UFUNCTION(Client, Unreliable)
 	void ClientAcknowledgeVehicleInputState(float Timestamp);
 	void ClientAcknowledgeVehicleInputState_Implementation(float Timestamp);
@@ -611,10 +998,29 @@ public:
 	void ClientResetAbilitySystemComponent_Implementation();
 
 	UFUNCTION()
+	void HandleInStasis();
+
+	UFUNCTION(NetMulticast, Reliable)
+	void MulticastUpdateVehicleInputStateReliable(const FFortAthenaVehicleInputStateReliable& ReliableInput);
+	void MulticastUpdateVehicleInputStateReliable_Implementation(const FFortAthenaVehicleInputStateReliable& ReliableInput);
+
+	UFUNCTION()
 	void OnRep_AccelerationPack();
 
 	UFUNCTION()
 	void OnRep_AccelerationZPack();
+
+	UFUNCTION()
+	void OnRep_CharPartAnimMontageInfo();
+
+	UFUNCTION()
+	void OnRep_ControlledRCPawn();
+
+	UFUNCTION()
+	void OnRep_FacialTypeOverride();
+
+	UFUNCTION()
+	void OnRep_FootstepBankOverride();
 
 	UFUNCTION()
 	void OnRep_IsEmoteLeader();
@@ -653,7 +1059,13 @@ public:
 	void OnRep_ParachuteLockedOpen();
 
 	UFUNCTION()
+	void OnRep_PossessedProp();
+
+	UFUNCTION()
 	void OnRep_RepAnimMontageStartSection();
+
+	UFUNCTION()
+	void OnRep_ReplicatedAnimMontage();
 
 	UFUNCTION()
 	void OnRep_ReplicatedInGliderRedeploy();
@@ -665,10 +1077,42 @@ public:
 	void OnRep_ReplicatedIsInVortex();
 
 	UFUNCTION()
+	void OnRep_ReplicatedSkyTube();
+
+	UFUNCTION()
 	void OnRep_StartedInteractSearch();
 
 	UFUNCTION()
+	void OnRep_StoredControlRotation();
+
+	UFUNCTION()
+	void OnRep_VehicleInputStateReliableForReplay();
+
+	UFUNCTION()
+	void OnRep_VehicleInputStateUnreliable();
+
+	UFUNCTION()
 	void OnRep_WaitingForEmoteInteraction();
+
+	UFUNCTION(Server, Reliable)
+	void ServerChooseGender(EFortCustomGender::Type Gender);
+	void ServerChooseGender_Implementation(EFortCustomGender::Type Gender);
+
+	UFUNCTION(Server, Reliable)
+	void ServerChoosePart(UCustomCharacterPart* ChosenCharacterPart, EFortCustomPartType::Type Part);
+	void ServerChoosePart_Implementation(UCustomCharacterPart* ChosenCharacterPart, EFortCustomPartType::Type Part);
+
+	UFUNCTION(Server, Reliable)
+	void ServerCycleAccessoryColorSwatch(bool bNext, EFortCustomPartType::Type Part);
+	void ServerCycleAccessoryColorSwatch_Implementation(bool bNext, EFortCustomPartType::Type Part);
+
+	UFUNCTION(Server, Reliable)
+	void ServerCycleColorSwatch(bool bNext, EColorSwatchType SwatchType);
+	void ServerCycleColorSwatch_Implementation(bool bNext, EColorSwatchType SwatchType);
+
+	UFUNCTION(Server, Reliable)
+	void ServerCyclePart(bool bNextPart, EFortCustomPartType::Type Part);
+	void ServerCyclePart_Implementation(bool bNextPart, EFortCustomPartType::Type Part);
 
 	UFUNCTION(Server, Reliable)
 	void ServerDropCarriedPlayer();
@@ -717,6 +1161,14 @@ public:
 	UFUNCTION(Server, Reliable)
 	void ServerUnmarkRespawned();
 	void ServerUnmarkRespawned_Implementation();
+
+	UFUNCTION(Server, Reliable)
+	void ServerUpdateVehicleInputStateReliable(const FFortAthenaVehicleInputStateReliable& ReliableInput);
+	void ServerUpdateVehicleInputStateReliable_Implementation(const FFortAthenaVehicleInputStateReliable& ReliableInput);
+
+	UFUNCTION(Server, Unreliable)
+	void ServerUpdateVehicleInputStateUnreliable(float Timestamp, const FFortAthenaVehicleInputStateUnreliable& ReliableInput);
+	void ServerUpdateVehicleInputStateUnreliable_Implementation(float Timestamp, const FFortAthenaVehicleInputStateUnreliable& ReliableInput);
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

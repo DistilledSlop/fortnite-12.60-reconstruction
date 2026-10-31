@@ -6,6 +6,22 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Info.h"
 
+#include "EFortWorldManagerState.h"
+#include "Engine/DataTable.h"
+#include "FFortDeferredNewActorData.h"
+#include "FFortLevelStreamingInfo.h"
+#include "FFortTileLootData.h"
+#include "FFortWindIntensityAndDirection.h"
+#include "GameplayTagContainer.h"
+#include "Math/Vector.h"
+
+class UFortUserCloudHelperComponent;
+class UFortWorldRecord;
+class UFortZoneRecord;
+class UFortZoneTheme;
+class UWorldTheme;
+class UWorldTileManager;
+
 #include "AFortWorldManager.generated.h"
 
 UCLASS(config=Game)
@@ -14,6 +30,10 @@ class FORTNITEGAME_API AFortWorldManager : public AInfo
 	GENERATED_BODY()
 
 public:
+	// table index 55, flags 0x40000000000000
+	UPROPERTY()
+	TArray<FFortLevelStreamingInfo> StreamedLevels;
+
 	// table index 52, flags 0x40000000000001
 	UPROPERTY()
 	uint8 bSavingEnabled : 1;
@@ -38,6 +58,26 @@ public:
 	UPROPERTY()
 	int32 NumNonAutoconstructedTiles;
 
+	// table index 46, flags 0x40000000000001
+	UPROPERTY()
+	FDataTableRowHandle GameDifficultyRowPIEOverride;
+
+	// table index 45, flags 0x44000000000001
+	UPROPERTY()
+	TSubclassOf<UFortZoneTheme> ZoneThemeForPIE;
+
+	// table index 44, flags 0x40000100002020
+	UPROPERTY(ReplicatedUsing=OnRep_InitialGlobalWind, Transient)
+	FFortWindIntensityAndDirection InitialGlobalWind;
+
+	// table index 43, flags 0x40000000002000
+	UPROPERTY(Transient)
+	TEnumAsByte<EFortWorldManagerState> WorldManagerState;
+
+	// table index 42, flags 0x420000000a0009
+	UPROPERTY()
+	UWorldTileManager* TileManager;
+
 	// table index 41, flags 0x40000000000001
 	UPROPERTY()
 	int32 X_Size;
@@ -58,9 +98,17 @@ public:
 	UPROPERTY()
 	int32 TileEdgeSize;
 
+	// table index 36, flags 0x40000000000001
+	UPROPERTY()
+	UWorldTheme* Theme;
+
 	// table index 35, flags 0x40000000000001
 	UPROPERTY()
 	FName DefaultLootQuotaCategory;
+
+	// table index 34, flags 0x40000000000000
+	UPROPERTY()
+	FFortTileLootData LootData;
 
 	// table index 33, flags 0x40000000000001
 	UPROPERTY()
@@ -74,6 +122,14 @@ public:
 	UPROPERTY(Config)
 	int32 FixedSeed;
 
+	// table index 28, flags 0x40000000000001
+	UPROPERTY()
+	FVector FriendlyPlayerSpawnExtent;
+
+	// table index 27, flags 0x40000000000001
+	UPROPERTY()
+	FVector PadPlayerSpawnExtent;
+
 	// table index 26, flags 0x40000000000001
 	UPROPERTY()
 	float DangerPlayerSpawnExclusionRadius;
@@ -81,6 +137,26 @@ public:
 	// table index 25, flags 0x40000000000001
 	UPROPERTY()
 	float ObjectivePlayerSpawnExclusionRadius;
+
+	// table index 24, flags 0x40000000000001
+	UPROPERTY()
+	FGameplayTagContainer OverrideInitialPlayerSpawnTags;
+
+	// table index 23, flags 0x40000000000001
+	UPROPERTY()
+	FGameplayTagContainer OverrideBackupPlayerSpawnTags;
+
+	// table index 21, flags 0x40000000000000
+	UPROPERTY()
+	UFortWorldRecord* CurrentWorldRecord;
+
+	// table index 20, flags 0x40000000000000
+	UPROPERTY()
+	UFortZoneRecord* CurrentZoneRecord;
+
+	// table index 19, flags 0x40000000082008
+	UPROPERTY(Transient)
+	UFortUserCloudHelperComponent* CloudHelper;
 
 	// table index 18, flags 0x40000000002000
 	UPROPERTY(Transient)
@@ -110,6 +186,10 @@ public:
 	UPROPERTY(Transient)
 	uint8 bCreatedMissionRecord : 1;
 
+	// table index 7, flags 0x40000000000000
+	UPROPERTY()
+	TArray<FFortDeferredNewActorData> DeferredActors;
+
 	// table index 6, flags 0x10000000002020
 	UPROPERTY(Replicated, Transient)
 	int32 FinalNumChosenBuildingFoundations;
@@ -121,6 +201,9 @@ public:
 	// table index 2, flags 0x40000000004000
 	UPROPERTY(Config)
 	uint8 bClearOutpostMapStats : 1;
+
+	UFUNCTION()
+	void OnRep_InitialGlobalWind();
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

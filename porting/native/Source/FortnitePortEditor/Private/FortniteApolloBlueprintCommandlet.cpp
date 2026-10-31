@@ -6,6 +6,7 @@
 #include "Engine/SimpleConstructionScript.h"
 #include "AFortPoiManager.h"
 #include "AFortAthenaMapInfo.h"
+#include "AFortSafeZoneStorm.h"
 #include "FortniteMapClasses.h"
 #include "HAL/FileManager.h"
 #include "Kismet2/KismetEditorUtilities.h"

@@ -330,14 +330,20 @@ def build_members(props, resolver, promote=False, struct_mode=False):
     return members, notes
 
 
-def decode_params(params, resolver):
-    """Return (return_type, [arg decls]) for a decoded parameter table."""
+def decode_params(params, resolver, enum_args=None):
+    """Return (return_type, [arg decls]) for a decoded parameter table. A by-value enum parameter is spelled as
+    the plain enum (UHT's out-of-line signature), not TEnumAsByte<E>; its decl is appended to enum_args."""
     ret = "void"
     args = []
     pairs, _ = split_properties(params)
     for entry, children in pairs:
         pf = hx(entry.get("property_flags"))
-        ctype = resolver.ctype(entry, children)
+        refs = entry.get("type_refs") or {}
+        by_value_enum = entry.get("kind") == "Byte" and "enum" in refs and not pf & (CPF_OUT_PARM | CPF_REFERENCE_PARM)
+        if by_value_enum:
+            ctype = resolver.type_ref("enum", refs["enum"], "Enum", "Byte")
+        else:
+            ctype = resolver.ctype(entry, children)
         if pf & CPF_RETURN_PARM:
             ret = ctype
             continue
@@ -350,7 +356,10 @@ def decode_params(params, resolver):
                 ctype = ctype + " const&" if ctype.endswith("*") else "const " + ctype + "&"
             else:
                 ctype = ctype + "&"
-        args.append("%s %s" % (ctype, entry.get("name") or "Param%d" % len(args)))
+        decl = "%s %s" % (ctype, entry.get("name") or "Param%d" % len(args))
+        if by_value_enum and enum_args is not None:
+            enum_args.append(decl)
+        args.append(decl)
     return ret, args
 
 
@@ -1035,10 +1044,10 @@ SCALAR_ARG_PREFIXES = ("bool", "int8", "int16", "int32", "int64", "uint8", "uint
                        "float", "double", "TEnumAsByte<")
 
 
-def rpc_arg(decl):
-    """UHT: a replicated function's non-scalar parameter must be passed by const reference."""
+def rpc_arg(decl, enum_args=()):
+    """UHT: a replicated function's non-scalar parameter must be passed by const reference. Enums are scalars."""
     ctype, name = decl.rsplit(" ", 1)
-    if ctype.endswith(("&", "*")) or ctype.startswith(SCALAR_ARG_PREFIXES):
+    if decl in enum_args or ctype.endswith(("&", "*")) or ctype.startswith(SCALAR_ARG_PREFIXES):
         return decl
     return "const %s& %s" % (ctype, name)
 
@@ -1086,7 +1095,8 @@ def build_functions_promoted(functions, resolver, notify_names, owner_fns):
         mark = len(resolver.tokens)
         resolver.wire_used = False
         resolver.used = {}
-        ret, args = decode_params(params, resolver)
+        enum_args = []
+        ret, args = decode_params(params, resolver, enum_args)
         used = resolver.used
         new_tokens = resolver.tokens[mark:]
         if new_tokens:
@@ -1102,7 +1112,7 @@ def build_functions_promoted(functions, resolver, notify_names, owner_fns):
             resolver.skipped.append(skip_function(fn, "non_void_return", "return type %s is not emitted" % ret))
             continue
         if is_rpc:
-            args = [rpc_arg(arg) for arg in args]
+            args = [rpc_arg(arg, enum_args) for arg in args]
         emitted.append({"name": name, "rpc": is_rpc,
                         "specifiers": function_specifiers(flags) if is_rpc else [], "args": args, "used": used})
     return emitted
@@ -1319,7 +1329,14 @@ def promote(args):
     resolver = Resolver(type_map, known_fns=known)
     gate = TypeGate(tables, EngineTypeIndex(args.engine_root), resolver)
     resolver.gate = gate
-    engine_index = build_engine_header_index(args.engine_classes)
+    # Engine parents are declared under Runtime/Engine/Classes and Runtime/Engine/Public (UWorldSubsystem), and
+    # UObject and the CoreUObject classes under Runtime/CoreUObject/Public. Each root is an include root.
+    runtime_dir = os.path.dirname(os.path.dirname(os.path.abspath(args.engine_classes)))
+    engine_index = {}
+    for root in (args.engine_classes, os.path.join(runtime_dir, "Engine", "Public"),
+                 os.path.join(runtime_dir, "CoreUObject", "Public")):
+        for name, rel in build_engine_header_index(root).items():
+            engine_index.setdefault(name, rel)
     source_label = os.path.relpath(args.reflection, REPO)
 
     index = []
@@ -1831,7 +1848,12 @@ def render_delegate_header(model, macro_kind, source_label):
     ]
     for inc in model.get("includes", []):
         lines.append("#include \"%s\"" % inc)
+    # UnrealBuildTool passes a header to UHT only when it has reflection markup at the start of a line
+    # (SourceFileMetadataCache: ^\s*U(CLASS|STRUCT|ENUM|INTERFACE|DELEGATE)\b). A delegate header therefore
+    # needs UDELEGATE() and its own generated header, as the struct and enum renderers have.
+    lines.append("#include \"%s.generated.h\"" % name)
     lines.append("")
+    lines.append("UDELEGATE()")
     lines.append(macro)
     lines.append("")
     return "\n".join(lines) + "\n"

@@ -2,6 +2,11 @@
 #include "AFortPoiManager.h"
 #include "Net/UnrealNetwork.h"
 
+void AFortPoiManager::OnRep_FortPoiGridInfo()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPoiManager::OnRep_PoiGridForDebugDisplay()
 {
 	// Body not recovered: reflection-derived stub.
@@ -18,5 +23,7 @@ void AFortPoiManager::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutL
 
 	DOREPLIFETIME(AFortPoiManager, PoiGridForDebugDisplay);
 	DOREPLIFETIME(AFortPoiManager, PoiTagContainerTableSize);
+	DOREPLIFETIME(AFortPoiManager, PoiTagContainerTable);
+	DOREPLIFETIME(AFortPoiManager, FortPoiGridInfo);
 }
 

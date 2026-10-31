@@ -17,6 +17,11 @@ void AFortPlayerControllerZone::ClientOnPawnSpawned_Implementation()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerControllerZone::ClientOnZoneEndScoreReports_Implementation(const TArray<FFortPlayerScoreReport>& ScoreReports)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPlayerControllerZone::ClientPresentGameplayVote_Implementation(uint32 Payload)
 {
 	// Body not recovered: reflection-derived stub.
@@ -52,12 +57,22 @@ void AFortPlayerControllerZone::ServerAttemptExitVehicle_Implementation()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerControllerZone::ServerBeginGameplayVote_Implementation(const FFortVoteConfig& VoteConfig, const EFortVoteType& VoteType)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPlayerControllerZone::ServerDestroyFromRemoteControlledPawn_Implementation()
 {
 	// Body not recovered: reflection-derived stub.
 }
 
 void AFortPlayerControllerZone::ServerDetachFromRemoteControlledPawn_Implementation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerControllerZone::ServerEndGameplayVote_Implementation(const EFortVoteType& VoteType)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -77,12 +92,22 @@ void AFortPlayerControllerZone::ServerSendLoadoutConfig_Implementation(const TAr
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerControllerZone::ServerSendPartyJoinInfoToPlayer_Implementation(const FString& JoinInfoStr, const FUniqueNetIdRepl& RecipientId)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPlayerControllerZone::ServerSetShouldDisablePlayerTeleportingDuringMissionResults_Implementation()
 {
 	// Body not recovered: reflection-derived stub.
 }
 
 void AFortPlayerControllerZone::ServerSetVehicleHealth_Implementation(float NewHealth)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerControllerZone::ServerSubmitGameplayVote_Implementation(int32 VoteDecision, const EFortVoteType& VoteType)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -97,5 +122,6 @@ void AFortPlayerControllerZone::GetLifetimeReplicatedProps(TArray<FLifetimePrope
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(AFortPlayerControllerZone, VoiceChatChannel);
+	DOREPLIFETIME(AFortPlayerControllerZone, PlayerLeecherStatus);
 }
 

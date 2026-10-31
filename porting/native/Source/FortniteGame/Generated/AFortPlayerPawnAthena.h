@@ -6,10 +6,24 @@
 #include "CoreMinimal.h"
 #include "AFortPlayerPawn.h"
 
+#include "Abilities/GameplayAbilityTypes.h"
+#include "FFortEffectDistanceQuality.h"
+#include "FFortPlayerAthenaAttributeReplicationProxy.h"
+#include "GameplayCueInterface.h"
+#include "GameplayEffectTypes.h"
+#include "GameplayTagContainer.h"
+#include "Math/Color.h"
+#include "Math/Rotator.h"
+#include "Math/Vector.h"
+
+class AFortEmitterCameraLensEffectDirectional;
 class UAnimMontage;
 class UCameraShake;
 class UForceFeedbackEffect;
+class UFortMobileInteractionComponent;
+class UFortSkinWeightOverrideManager;
 class UParticleSystemComponent;
+class UUnicornAthenaPawnSampler;
 
 #include "AFortPlayerPawnAthena.generated.h"
 
@@ -26,6 +40,14 @@ public:
 	// table index 94, flags 0x10000000000014
 	UPROPERTY()
 	float CurrentPawnSpeedXY;
+
+	// table index 93, flags 0x10000000000014
+	UPROPERTY()
+	FRotator CurrentPawnVelXYRot;
+
+	// table index 92, flags 0x10000000000014
+	UPROPERTY()
+	FVector PreviousVelocityXY;
 
 	// table index 90, flags 0x10000000000005
 	UPROPERTY()
@@ -54,6 +76,10 @@ public:
 	// table index 84, flags 0x10000000002020
 	UPROPERTY(Replicated, Transient)
 	FName ItemSpecialActorID;
+
+	// table index 83, flags 0x10000000002020
+	UPROPERTY(Replicated, Transient)
+	FGameplayTag ItemSpecialActorCategoryTag;
 
 	// table index 82, flags 0x10000000002000
 	UPROPERTY(Transient)
@@ -115,6 +141,22 @@ public:
 	UPROPERTY()
 	uint8 bEnableGroundInteractionEffects : 1;
 
+	// table index 66, flags 0x10000100000020
+	UPROPERTY(ReplicatedUsing=OnRep_AttributeProxy)
+	FFortPlayerAthenaAttributeReplicationProxy AttributeReplicationProxy;
+
+	// table index 65, flags 0x10000100000020
+	UPROPERTY(ReplicatedUsing=OnRep_ReplayRepAnimMontageInfo)
+	FGameplayAbilityRepAnimMontage ReplayRepAnimMontageInfo;
+
+	// table index 64, flags 0x10008000000020
+	UPROPERTY(Replicated)
+	FMinimalGameplayCueReplicationProxy SimulatedProxyGameplayCues;
+
+	// table index 63, flags 0x10008000000020
+	UPROPERTY(Replicated)
+	FMinimalReplicationTagCountMap FastReplicationMinimalReplicationTags;
+
 	// table index 61, flags 0x10000000000005
 	UPROPERTY()
 	uint8 bADSWhileNotOnGround : 1;
@@ -143,17 +185,53 @@ public:
 	UPROPERTY()
 	float SkydiveAudioRightDotInterpSpeed;
 
+	// table index 50, flags 0x10000000010001
+	UPROPERTY()
+	FFortEffectDistanceQuality DamageFXSignificance;
+
+	// table index 49, flags 0x24080000010001
+	UPROPERTY()
+	TSubclassOf<AFortEmitterCameraLensEffectDirectional> ScreenEffectHealthDamage;
+
+	// table index 48, flags 0x24080000010001
+	UPROPERTY()
+	TSubclassOf<AFortEmitterCameraLensEffectDirectional> ScreenEffectShieldDamage;
+
 	// table index 47, flags 0x20080000010001
 	UPROPERTY()
 	UAnimMontage* AdditiveHitReactsMontage;
+
+	// table index 46, flags 0x20080000010001
+	UPROPERTY()
+	FGameplayTagContainer DamageTagsToNotDisplayDirectionDamage;
+
+	// table index 45, flags 0x20080000010001
+	UPROPERTY()
+	FGameplayTagContainer DamageTagsToNotAddCameraShake;
+
+	// table index 44, flags 0x20080000010001
+	UPROPERTY()
+	FGameplayTagContainer WeaponTagsToNotPlayCircleAndStreakFX;
 
 	// table index 43, flags 0x20080000000000
 	UPROPERTY()
 	uint8 bIsPlayerPawnReady : 1;
 
+	// table index 42, flags 0x20080000002000
+	UPROPERTY(Transient)
+	FVector LastFiredLocation;
+
+	// table index 41, flags 0x20080000002000
+	UPROPERTY(Transient)
+	FVector LastFiredDirection;
+
 	// table index 40, flags 0x20080000002000
 	UPROPERTY(Transient)
 	float LastFiredTime;
+
+	// table index 37, flags 0x10000000002000
+	UPROPERTY(Transient)
+	FGameplayTagContainer FallDamageTags;
 
 	// table index 35, flags 0x10000000002000
 	UPROPERTY(Transient)
@@ -186,6 +264,14 @@ public:
 	// table index 26, flags 0x1000000009001d
 	UPROPERTY()
 	UParticleSystemComponent* PSC_HitDamage;
+
+	// table index 23, flags 0x20088000000008
+	UPROPERTY()
+	TArray<UFortMobileInteractionComponent*> MobileInteractionComponents;
+
+	// table index 22, flags 0x20080000010001
+	UPROPERTY()
+	FLinearColor MinimapIconColorFiftyFiftyPlayer;
 
 	// table index 21, flags 0x20080000010001
 	UPROPERTY()
@@ -235,6 +321,18 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_bIsCreativeGhostModeActivated, Transient)
 	uint8 bIsCreativeGhostModeActivated : 1;
 
+	// table index 6, flags 0x20080000002000
+	UPROPERTY(Transient)
+	UFortSkinWeightOverrideManager* SkinWeightManager;
+
+	// table index 5, flags 0x10000000000000
+	UPROPERTY()
+	FGameplayTagContainer InvulnerabilityTags;
+
+	// table index 4, flags 0x40000000080008
+	UPROPERTY()
+	UUnicornAthenaPawnSampler* UnicornPawnSampler;
+
 	// table index 2, flags 0x20080000010001
 	UPROPERTY()
 	UForceFeedbackEffect* DamageForceFeedback;
@@ -243,9 +341,16 @@ public:
 	UPROPERTY()
 	TSubclassOf<UCameraShake> DamageCameraShakeClass;
 
+	// table index 0, flags 0x20080000010001
+	UPROPERTY()
+	FGameplayTagContainer DamageTagsExcludedFromCameraShake;
+
 	UFUNCTION(NetMulticast, Unreliable)
 	void NetMulticast_SuccessfulBuildingEdit();
 	void NetMulticast_SuccessfulBuildingEdit_Implementation();
+
+	UFUNCTION()
+	void OnRep_AttributeProxy();
 
 	UFUNCTION()
 	void OnRep_bIsCreativeGhostModeActivated();
@@ -258,6 +363,9 @@ public:
 
 	UFUNCTION()
 	void OnRep_MeshHeightAdjustAthena();
+
+	UFUNCTION()
+	void OnRep_ReplayRepAnimMontageInfo();
 
 	UFUNCTION(Server, Reliable)
 	void ServerCreativeToggleGhost(bool bEnableOnly);

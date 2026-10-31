@@ -6,8 +6,33 @@
 #include "CoreMinimal.h"
 #include "AFortGameStateBase.h"
 
+#include "EFortGameplayState.h"
+#include "FAdditionalLevelStreamed.h"
+#include "FBuildingContainerDebugInfo.h"
+#include "FEndOfDayRecap.h"
+#include "FOnPoiManagerReplicated.h"
+#include "FOnTimeHitInfo.h"
+#include "Math/Color.h"
+#include "Math/Rotator.h"
+#include "Math/Vector.h"
+#include "UObject/NoExportTypes.h"
+
+class AFortClientAnnouncementManager;
+class AFortFXManager;
+class AFortFeedbackManager;
+class AFortGlobalAbilityTargetingActor;
+class AFortMissionManager;
+class AFortMusicManager;
 class AFortPlayerState;
 class AFortPoiManager;
+class AFortScriptedActionManager;
+class AFortTeamInfo;
+class AFortVisibilityManager;
+class AFortWindManager;
+class UCreativeQuestManager;
+class UFortAmbientAudioController;
+class UFortMovementComp_Character;
+class UFortMusicManagerBank;
 
 #include "AFortGameState.generated.h"
 
@@ -69,17 +94,81 @@ public:
 	UPROPERTY(Replicated, Transient)
 	uint8 bPlayerRespawningBlocked_Temporarily : 1;
 
+	// table index 43, flags 0x10000100000020
+	UPROPERTY(ReplicatedUsing=OnRep_AdditionalPlaylistLevelsStreamed)
+	TArray<FAdditionalLevelStreamed> AdditionalPlaylistLevelsStreamed;
+
 	// table index 42, flags 0x20080100000020
 	UPROPERTY(ReplicatedUsing=OnRep_WorldDaysElapsed)
 	int32 WorldDaysElapsed;
+
+	// table index 41, flags 0x20080100002020
+	UPROPERTY(ReplicatedUsing=OnRep_FeedbackManager, Transient)
+	AFortFeedbackManager* FeedbackManager;
+
+	// table index 40, flags 0x20080100000020
+	UPROPERTY(ReplicatedUsing=OnRep_MissionManager)
+	AFortMissionManager* MissionManager;
+
+	// table index 39, flags 0x20080100000020
+	UPROPERTY(ReplicatedUsing=OnRep_AnnouncementManager)
+	AFortClientAnnouncementManager* AnnouncementManager;
+
+	// table index 38, flags 0x20080000000000
+	UPROPERTY()
+	AFortScriptedActionManager* ScriptedActionManager;
+
+	// table index 35, flags 0x20080100002020
+	UPROPERTY(ReplicatedUsing=OnRep_GameplayState, Transient)
+	TEnumAsByte<EFortGameplayState::Type> GameplayState;
+
+	// table index 34, flags 0x24080100002020
+	UPROPERTY(ReplicatedUsing=OnRep_MusicManagerSubclass, Transient)
+	TSubclassOf<AFortMusicManager> MusicManagerSubclass;
+
+	// table index 33, flags 0x20080100002020
+	UPROPERTY(ReplicatedUsing=OnRep_MusicManagerBank, Transient)
+	UFortMusicManagerBank* MusicManagerBank;
+
+	// table index 32, flags 0x24080000010015
+	UPROPERTY()
+	TSubclassOf<UFortAmbientAudioController> FortAmbientAudioControllerClass;
 
 	// table index 31, flags 0x20080100000020
 	UPROPERTY(ReplicatedUsing=OnRep_GameSessionID)
 	FString GameSessionId;
 
+	// table index 29, flags 0x20088000002008
+	UPROPERTY(Transient)
+	TArray<UFortMovementComp_Character*> ManagedCharMovementComponents;
+
 	// table index 25, flags 0x20080100002020
 	UPROPERTY(ReplicatedUsing=OnRep_RecorderPlayerState, Transient)
 	AFortPlayerState* RecorderPlayerState;
+
+	// table index 23, flags 0x40008000002008
+	UPROPERTY(Transient)
+	TArray<UFortMovementComp_Character*> ManagedCharMovementComponentsCopy;
+
+	// table index 21, flags 0x40008000002000
+	UPROPERTY(Transient)
+	TArray<FOnTimeHitInfo> TimeOfDayCallbacks;
+
+	// table index 20, flags 0x20080000000020
+	UPROPERTY(Replicated)
+	AFortVisibilityManager* VisibilityManager;
+
+	// table index 19, flags 0x40000000002000
+	UPROPERTY(Transient)
+	AFortFXManager* FXManager;
+
+	// table index 18, flags 0x20080000002000
+	UPROPERTY(Transient)
+	AFortWindManager* WindManager;
+
+	// table index 16, flags 0x20080100000020
+	UPROPERTY(ReplicatedUsing=OnRep_Teams)
+	TArray<AFortTeamInfo*> Teams;
 
 	// table index 15, flags 0x20080000000000
 	UPROPERTY()
@@ -89,6 +178,22 @@ public:
 	UPROPERTY()
 	uint8 bAllowPendingTeamChangeRequests : 1;
 
+	// table index 11, flags 0x40000010080000
+	UPROPERTY()
+	FOnPoiManagerReplicated OnPoiManagerReplicatedEvent;
+
+	// table index 10, flags 0x40000000000000
+	UPROPERTY()
+	AFortGlobalAbilityTargetingActor* GlobalAbilityTargetingActor;
+
+	// table index 5, flags 0x40000000000020
+	UPROPERTY(Replicated)
+	TArray<FBuildingContainerDebugInfo> TreasureChestInfos;
+
+	// table index 3, flags 0x40000000000020
+	UPROPERTY(Replicated)
+	TArray<FBuildingContainerDebugInfo> AmmoBoxInfos;
+
 	// table index 2, flags 0x40000000004000
 	UPROPERTY(Config)
 	float UnplayableHitchThresholdInMs;
@@ -97,21 +202,69 @@ public:
 	UPROPERTY(Config)
 	int32 MaxUnplayableHitchesToTolerate;
 
+	// table index 0, flags 0x10000000000000
+	UPROPERTY()
+	UCreativeQuestManager* CreativeQuestManager;
+
+	UFUNCTION(NetMulticast, Reliable)
+	void Client_InitiateEndOfDayRecap(const FEndOfDayRecap& EndOfDayRecap);
+	void Client_InitiateEndOfDayRecap_Implementation(const FEndOfDayRecap& EndOfDayRecap);
+
 	UFUNCTION(NetMulticast, Reliable)
 	void Client_RefreshEventCalendar();
 	void Client_RefreshEventCalendar_Implementation();
+
+	UFUNCTION(NetMulticast, Unreliable)
+	void DbgBoxSendToAllInternal_DoNotCall(float Thickness, uint8 DepthPriority, float LifeTime, bool bPersistentLines, const FColor& Color, const FRotator& Rotation, const FVector& Extent, const FVector& Center);
+	void DbgBoxSendToAllInternal_DoNotCall_Implementation(float Thickness, uint8 DepthPriority, float LifeTime, bool bPersistentLines, const FColor& Color, const FRotator& Rotation, const FVector& Extent, const FVector& Center);
+
+	UFUNCTION(NetMulticast, Unreliable)
+	void DbgCapsuleSendToAllInternal_DoNotCall(float Thickness, uint8 DepthPriority, float LifeTime, bool bPersistentLines, const FColor& Color, const FQuat& Rotation, float Radius, float HalfHeight, const FVector& Center);
+	void DbgCapsuleSendToAllInternal_DoNotCall_Implementation(float Thickness, uint8 DepthPriority, float LifeTime, bool bPersistentLines, const FColor& Color, const FQuat& Rotation, float Radius, float HalfHeight, const FVector& Center);
+
+	UFUNCTION(NetMulticast, Unreliable)
+	void DbgLineSendToAllInternal_DoNotCall(float Thickness, uint8 DepthPriority, float LifeTime, bool bPersistentLines, const FColor& Color, const FVector& LineEnd, const FVector& LineStart);
+	void DbgLineSendToAllInternal_DoNotCall_Implementation(float Thickness, uint8 DepthPriority, float LifeTime, bool bPersistentLines, const FColor& Color, const FVector& LineEnd, const FVector& LineStart);
+
+	UFUNCTION(NetMulticast, Unreliable)
+	void DbgSphereSendToAllInternal_DoNotCall(float Thickness, uint8 DepthPriority, float LifeTime, bool bPersistentLines, const FColor& Color, int32 Segments, float Radius, const FVector& Center);
+	void DbgSphereSendToAllInternal_DoNotCall_Implementation(float Thickness, uint8 DepthPriority, float LifeTime, bool bPersistentLines, const FColor& Color, int32 Segments, float Radius, const FVector& Center);
+
+	UFUNCTION()
+	void OnRep_AdditionalPlaylistLevelsStreamed();
+
+	UFUNCTION()
+	void OnRep_AnnouncementManager();
 
 	UFUNCTION()
 	void OnRep_CurrentWUID();
 
 	UFUNCTION()
+	void OnRep_FeedbackManager();
+
+	UFUNCTION()
+	void OnRep_GameplayState();
+
+	UFUNCTION()
 	void OnRep_GameSessionID();
+
+	UFUNCTION()
+	void OnRep_MissionManager();
+
+	UFUNCTION()
+	void OnRep_MusicManagerBank();
+
+	UFUNCTION()
+	void OnRep_MusicManagerSubclass();
 
 	UFUNCTION()
 	void OnRep_PoiManager();
 
 	UFUNCTION()
 	void OnRep_RecorderPlayerState();
+
+	UFUNCTION()
+	void OnRep_Teams();
 
 	UFUNCTION()
 	void OnRep_WorldDaysElapsed();

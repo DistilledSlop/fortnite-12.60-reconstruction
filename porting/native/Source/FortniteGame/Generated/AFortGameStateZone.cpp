@@ -2,7 +2,27 @@
 #include "AFortGameStateZone.h"
 #include "Net/UnrealNetwork.h"
 
+void AFortGameStateZone::NotifyEndFailedGameplayVoteLockout_Implementation(const EFortVoteType& VoteType)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortGameStateZone::OnRep_bGlobalCeaseFire()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortGameStateZone::OnRep_ClientPreloadMissionClasses()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortGameStateZone::OnRep_CompletionResult()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortGameStateZone::OnRep_DifficultyIncreaseRewards()
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -12,7 +32,32 @@ void AFortGameStateZone::OnRep_DifficultyIncreaseRewardTier()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortGameStateZone::OnRep_ExplicitGloballyBlockedAbilityTags()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortGameStateZone::OnRep_GameDifficulty()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortGameStateZone::OnRep_GameplayVotes()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortGameStateZone::OnRep_MissionAlertData()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortGameStateZone::OnRep_MissionGenerator()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortGameStateZone::OnRep_MissionRewards()
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -47,6 +92,16 @@ void AFortGameStateZone::OnRep_TheaterUniqueId()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortGameStateZone::OnRep_ZoneDifficultyInfoRow()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortGameStateZone::OnRepServerUnstableFramerate()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortGameStateZone::OnWaveStart_Implementation(int32 WaveNum, const FText& WaveText, int32 Level, const FText& LevelText)
 {
 	// Body not recovered: reflection-derived stub.
@@ -56,23 +111,40 @@ void AFortGameStateZone::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& O
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
+	DOREPLIFETIME(AFortGameStateZone, CreativeRealEstatePlotManager);
+	DOREPLIFETIME(AFortGameStateZone, GameplayVotesArray);
+	DOREPLIFETIME(AFortGameStateZone, ServerStability);
 	DOREPLIFETIME(AFortGameStateZone, NumSurvivorsRescued);
 	DOREPLIFETIME(AFortGameStateZone, bAllowLayoutRequirementsFeature);
 	DOREPLIFETIME(AFortGameStateZone, bAllowBuildingWithoutLayoutRequirements);
 	DOREPLIFETIME(AFortGameStateZone, bAllowBuildingAtLayoutRequirements);
 	DOREPLIFETIME(AFortGameStateZone, MissionLogDebugString);
 	DOREPLIFETIME(AFortGameStateZone, TheaterUniqueId);
+	DOREPLIFETIME(AFortGameStateZone, UIMapManager);
 	DOREPLIFETIME(AFortGameStateZone, DifficultyIncreaseRewardTier);
 	DOREPLIFETIME(AFortGameStateZone, bIsGroupContent);
 	DOREPLIFETIME(AFortGameStateZone, GameDifficulty);
+	DOREPLIFETIME(AFortGameStateZone, ThreatParticleActor);
+	DOREPLIFETIME(AFortGameStateZone, ThreatVisualsManager);
+	DOREPLIFETIME(AFortGameStateZone, ClientPreloadMissionClasses);
+	DOREPLIFETIME(AFortGameStateZone, MissionAlertData);
+	DOREPLIFETIME(AFortGameStateZone, DifficultyIncreaseRewards);
+	DOREPLIFETIME(AFortGameStateZone, MissionRewards);
+	DOREPLIFETIME(AFortGameStateZone, MissionGeneratorClass);
+	DOREPLIFETIME(AFortGameStateZone, ZoneTheme);
+	DOREPLIFETIME(AFortGameStateZone, ZoneDifficultyInfoRow);
+	DOREPLIFETIME(AFortGameStateZone, GlobalEnvironmentAbilityActor);
 	DOREPLIFETIME(AFortGameStateZone, bGlobalCeaseFire);
 	DOREPLIFETIME(AFortGameStateZone, MaxPlayerStructures);
 	DOREPLIFETIME(AFortGameStateZone, TotalPlayerStructures);
 	DOREPLIFETIME(AFortGameStateZone, ServerGameplayTagIndexHash);
 	DOREPLIFETIME(AFortGameStateZone, bDBNODeathEnabled);
 	DOREPLIFETIME(AFortGameStateZone, bInvitesRestricted);
+	DOREPLIFETIME(AFortGameStateZone, ExplicitGloballyBlockedAbilityTags);
 	DOREPLIFETIME(AFortGameStateZone, PlayerSharedMaxTrapAttributes);
 	DOREPLIFETIME(AFortGameStateZone, PlayerBuildingSkillLevel);
+	DOREPLIFETIME(AFortGameStateZone, CompletionResult);
+	DOREPLIFETIME(AFortGameStateZone, ReplicatedMontageMap);
 	DOREPLIFETIME(AFortGameStateZone, MaxEncounterSP);
 	DOREPLIFETIME(AFortGameStateZone, MaxEncounterAI);
 	DOREPLIFETIME(AFortGameStateZone, MaxTotalAI);

@@ -6,6 +6,12 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 
+#include "FFortPoiGridInfo.h"
+#include "FFortPoiVolumeGridCell.h"
+#include "GameplayTagContainer.h"
+
+class AFortPoiVolume;
+
 #include "AFortPoiManager.generated.h"
 
 UCLASS(config=Game)
@@ -14,6 +20,30 @@ class FORTNITEGAME_API AFortPoiManager : public AActor
 	GENERATED_BODY()
 
 public:
+	// table index 26, flags 0x10000100000020
+	UPROPERTY(ReplicatedUsing=OnRep_FortPoiGridInfo)
+	FFortPoiGridInfo FortPoiGridInfo;
+
+	// table index 24, flags 0x40000000000000
+	UPROPERTY()
+	TArray<AFortPoiVolume*> SmallTickUpdatedPoi;
+
+	// table index 22, flags 0x40000000000000
+	UPROPERTY()
+	TArray<AFortPoiVolume*> LargePoiVolumes;
+
+	// table index 20, flags 0x40000000000000
+	UPROPERTY()
+	TArray<AFortPoiVolume*> PendingLargePoiVolumes;
+
+	// table index 18, flags 0x40000000000000
+	UPROPERTY()
+	TArray<AFortPoiVolume*> NamedOnMapPoiVolumes;
+
+	// table index 16, flags 0x40000000000000
+	UPROPERTY()
+	TArray<AFortPoiVolume*> AllPoiVolumes;
+
 	// table index 15, flags 0x40000000000000
 	UPROPERTY()
 	int32 TestPlayerIndex;
@@ -25,6 +55,10 @@ public:
 	// table index 12, flags 0x40000000004000
 	UPROPERTY(Config)
 	int32 MaxNumTestsPerFrame;
+
+	// table index 10, flags 0x40000100000020
+	UPROPERTY(ReplicatedUsing=OnRep_PoiTagContainerTable)
+	TArray<FGameplayTagContainer> PoiTagContainerTable;
 
 	// table index 9, flags 0x40000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_PoiTagContainerTable)
@@ -49,6 +83,13 @@ public:
 	// table index 2, flags 0x40000000000000
 	UPROPERTY()
 	TArray<int16> FortPoiGridCellsTagContainerTableIds;
+
+	// table index 0, flags 0x40000000000000
+	UPROPERTY()
+	TArray<FFortPoiVolumeGridCell> FortPoiGridCellsLargeVolume;
+
+	UFUNCTION()
+	void OnRep_FortPoiGridInfo();
 
 	UFUNCTION()
 	void OnRep_PoiGridForDebugDisplay();

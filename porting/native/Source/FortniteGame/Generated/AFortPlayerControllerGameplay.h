@@ -6,6 +6,32 @@
 #include "CoreMinimal.h"
 #include "AFortPlayerController.h"
 
+#include "Engine/EngineTypes.h"
+#include "FCreativeOptionVariableBase.h"
+#include "FOnBalloonMovementChanged.h"
+#include "FOnCreativeFlyChanged.h"
+#include "FOnCreativeFlyingSpeedChanged.h"
+#include "FOnCreativeGhostChanged.h"
+#include "FOnCreativeHeatmapToggled.h"
+#include "FOnCreativeModeEnabledChanged.h"
+#include "FOnCreativePreviewScreenshotAccepted.h"
+#include "FOnCreativePreviewScreenshotActiveChanged.h"
+#include "FOnCreativePreviewScreenshotReset.h"
+#include "FOnCreativeQuickbarComponentLoaded.h"
+#include "FOnCreativeQuickbarEnabledChanged.h"
+#include "FOnCreativeQuickmenuEnabledChanged.h"
+#include "FOnCreativeSwapPhoneAndHarvestHoldChanged.h"
+#include "FOnCreativeUIMetricsDisplayChanged.h"
+#include "FOnDBNOCarryPlayerChanged.h"
+#include "FOnShowCreativeGlobalOptions.h"
+#include "FOnWorldInventoryChanged.h"
+#include "FVehicleFuelAdded.h"
+#include "FVehicleFuelEnable.h"
+#include "FVehicleTrickInfo.h"
+
+class UCreativeQuickbarComponent;
+class UFortAmbientAudioController;
+class UFortCreativeOptionsBundle;
 class UInputComponent;
 
 #include "AFortPlayerControllerGameplay.generated.h"
@@ -16,9 +42,109 @@ class FORTNITEGAME_API AFortPlayerControllerGameplay : public AFortPlayerControl
 	GENERATED_BODY()
 
 public:
+	// table index 60, flags 0x10000000082008
+	UPROPERTY(Transient)
+	UFortAmbientAudioController* FortAmbientAudioController;
+
 	// table index 59, flags 0x10000100002020
 	UPROPERTY(ReplicatedUsing=OnRep_PoiTagContainerTableID, Transient)
 	int16 PoiTagContainerTableID;
+
+	// table index 58, flags 0x10000010080000
+	UPROPERTY()
+	FVehicleFuelEnable OnVehicleFuelEnable;
+
+	// table index 56, flags 0x10000010080000
+	UPROPERTY()
+	FVehicleFuelAdded OnAddFuel;
+
+	// table index 55, flags 0x10000000002000
+	UPROPERTY(Transient)
+	FTimerHandle VerifyAllowedToFlyTimerHandle;
+
+	// table index 54, flags 0x10000010080000
+	UPROPERTY()
+	FOnCreativeGhostChanged OnCreativeGhostEnabledDelegate;
+
+	// table index 53, flags 0x10000010080000
+	UPROPERTY()
+	FOnCreativeHeatmapToggled OnCreativeHeatmapToggledDelegate;
+
+	// table index 52, flags 0x10000010080000
+	UPROPERTY()
+	FOnCreativeSwapPhoneAndHarvestHoldChanged OnCreativeSwapPhoneAndHarvestHoldChangedDelegate;
+
+	// table index 51, flags 0x10000010080000
+	UPROPERTY()
+	FOnCreativeFlyingSpeedChanged OnCreativeFlyingSpeedChanged;
+
+	// table index 50, flags 0x10000010080000
+	UPROPERTY()
+	FOnCreativeUIMetricsDisplayChanged OnCreativeUIMetricsDisplayChanged;
+
+	// table index 49, flags 0x10000010080000
+	UPROPERTY()
+	FOnShowCreativeGlobalOptions OnShowCreativeGlobalOptions;
+
+	// table index 48, flags 0x10000010080000
+	UPROPERTY()
+	FOnCreativeQuickbarEnabledChanged OnCreativeQuickbarEnabledChangedDelegate;
+
+	// table index 47, flags 0x10000010080000
+	UPROPERTY()
+	FOnCreativeQuickbarComponentLoaded OnCreativeQuickbarComponentLoaded;
+
+	// table index 46, flags 0x10000010080000
+	UPROPERTY()
+	FOnCreativeQuickmenuEnabledChanged OnCreativeQuickmenuEnabledChangedDelegate;
+
+	// table index 45, flags 0x10000010080000
+	UPROPERTY()
+	FOnCreativeModeEnabledChanged OnCreativeModeEnabledChangedDelegate;
+
+	// table index 44, flags 0x10000010080000
+	UPROPERTY()
+	FOnCreativePreviewScreenshotActiveChanged OnCreativePreviewScreenshotActiveChanged;
+
+	// table index 43, flags 0x10000010080000
+	UPROPERTY()
+	FOnCreativePreviewScreenshotReset OnCreativePreviewScreenshotReset;
+
+	// table index 42, flags 0x10000010080000
+	UPROPERTY()
+	FOnCreativePreviewScreenshotAccepted OnCreativePreviewScreenshotAccepted;
+
+	// table index 41, flags 0x10000010080000
+	UPROPERTY()
+	FOnCreativePreviewScreenshotReset OnCreativePreviewScreenshotCancelled;
+
+	// table index 40, flags 0x10000010080000
+	UPROPERTY()
+	FOnBalloonMovementChanged OnBalloonMovementChanged;
+
+	// table index 38, flags 0x24080000010001
+	UPROPERTY()
+	TSoftClassPtr<UCreativeQuickbarComponent> CreativeQuickbarClass;
+
+	// table index 36, flags 0x2008010008203c
+	UPROPERTY(ReplicatedUsing=OnRep_CreativeQuickbarComponent, Transient)
+	UCreativeQuickbarComponent* CreativeQuickbarComponent;
+
+	// table index 35, flags 0x20080000000001
+	UPROPERTY()
+	FVehicleTrickInfo VehicleTrickInfo;
+
+	// table index 32, flags 0x20080010080000
+	UPROPERTY()
+	FOnDBNOCarryPlayerChanged OnDBNOCarryPlayerChanged;
+
+	// table index 31, flags 0x20080010080000
+	UPROPERTY()
+	FOnWorldInventoryChanged OnWorldInventoryChangedDelegate;
+
+	// table index 30, flags 0x20080010080000
+	UPROPERTY()
+	FOnCreativeFlyChanged OnCreativeFlyChangedDelegate;
 
 	// table index 29, flags 0x20080000002020
 	UPROPERTY(Replicated, Transient)
@@ -27,6 +153,10 @@ public:
 	// table index 28, flags 0x20080000002020
 	UPROPERTY(Replicated, Transient)
 	uint16 ServerMaxNumNPCs;
+
+	// table index 27, flags 0x20080000002000
+	UPROPERTY(Transient)
+	FTimerHandle AmbientControllerInitializeTimer;
 
 	// table index 26, flags 0x20080000002020
 	UPROPERTY(Replicated, Transient)
@@ -100,6 +230,30 @@ public:
 	UPROPERTY(Replicated, Transient)
 	uint8 bIsCreativeIslandExporterEnabled : 1;
 
+	// table index 5, flags 0x24080000010005
+	UPROPERTY()
+	TSoftObjectPtr<UFortCreativeOptionsBundle> CreativeOptions;
+
+	// table index 4, flags 0x40000000000000
+	UPROPERTY()
+	UFortCreativeOptionsBundle* CreativeOptionsInternal;
+
+	// table index 3, flags 0x20080000000001
+	UPROPERTY()
+	FCreativeOptionVariableBase WantsToGhostMode;
+
+	// table index 2, flags 0x20080000000001
+	UPROPERTY()
+	FCreativeOptionVariableBase WantedFlightSpeed;
+
+	// table index 1, flags 0x20080000000001
+	UPROPERTY()
+	FCreativeOptionVariableBase WantsToSwapPhoneAndHarvestHold;
+
+	// table index 0, flags 0x20080000000001
+	UPROPERTY()
+	FCreativeOptionVariableBase WantedUIMetricsDisplay;
+
 	UFUNCTION(Client, Reliable)
 	void ClientCreativePhoneCreated();
 	void ClientCreativePhoneCreated_Implementation();
@@ -111,6 +265,9 @@ public:
 	UFUNCTION(Client, Reliable)
 	void ClientCreativeStopFly();
 	void ClientCreativeStopFly_Implementation();
+
+	UFUNCTION()
+	void OnRep_CreativeQuickbarComponent();
 
 	UFUNCTION()
 	void OnRep_FlyingModifierIndex();

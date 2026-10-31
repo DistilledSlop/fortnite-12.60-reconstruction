@@ -6,6 +6,17 @@
 #include "CoreMinimal.h"
 #include "AFortPlayerControllerGameplay.h"
 
+#include "EFortVoteType.h"
+#include "ELeecherStatus.h"
+#include "FFortPlayerScoreReport.h"
+#include "FFortVoteConfig.h"
+#include "FOnPossessedPawnDied.h"
+#include "FOnSkyDivingStateChange.h"
+#include "FOnVehicleSeatTransitionTargetIndexChange.h"
+#include "GameFramework/OnlineReplStructs.h"
+#include "Math/Vector.h"
+#include "Misc/Guid.h"
+
 class UInputComponent;
 
 #include "AFortPlayerControllerZone.generated.h"
@@ -16,6 +27,18 @@ class FORTNITEGAME_API AFortPlayerControllerZone : public AFortPlayerControllerG
 	GENERATED_BODY()
 
 public:
+	// table index 34, flags 0x10000010080000
+	UPROPERTY()
+	FOnSkyDivingStateChange OnBeginSkydiving;
+
+	// table index 33, flags 0x10000010080000
+	UPROPERTY()
+	FOnSkyDivingStateChange OnEndSkydiving;
+
+	// table index 32, flags 0x10000010080000
+	UPROPERTY()
+	FOnVehicleSeatTransitionTargetIndexChange OnVehicleSeatTransitionTargetIndexChange;
+
 	// table index 30, flags 0x10000000000000
 	UPROPERTY()
 	uint8 bDontChangeReticleColorForEnemy : 1;
@@ -23,6 +46,10 @@ public:
 	// table index 29, flags 0x10000000002000
 	UPROPERTY(Transient)
 	float LastVehicleSeatSwitchTime;
+
+	// table index 26, flags 0x20080000002000
+	UPROPERTY(Transient)
+	TSet<FGuid> GadgetTrackedAttributeItemInstanceIds;
 
 	// table index 22, flags 0x20080000080008
 	UPROPERTY()
@@ -39,6 +66,18 @@ public:
 	// table index 18, flags 0x20080000002000
 	UPROPERTY(Transient)
 	uint8 bEnterCameraModeOnDeath : 1;
+
+	// table index 16, flags 0x20080000002020
+	UPROPERTY(Replicated, Transient)
+	ELeecherStatus PlayerLeecherStatus;
+
+	// table index 15, flags 0x20080010080000
+	UPROPERTY()
+	FOnPossessedPawnDied OnPossessedPawnDied;
+
+	// table index 12, flags 0x20080000000000
+	UPROPERTY()
+	TArray<FUniqueNetIdRepl> RejoinablePartyMembers;
 
 	// table index 11, flags 0x20080000002000
 	UPROPERTY(Transient)
@@ -72,6 +111,14 @@ public:
 	UPROPERTY()
 	float MovementCancellableActionLeashLength;
 
+	// table index 1, flags 0x20080000000000
+	UPROPERTY()
+	FVector MovementCancellableActionLeashLocation;
+
+	// table index 0, flags 0x20080000000000
+	UPROPERTY()
+	FVector MovementCancellableActionStartingLeashLocation;
+
 	UFUNCTION(Client, Reliable)
 	void ClientAckLoadoutConfig(int32 LoadoutSeed);
 	void ClientAckLoadoutConfig_Implementation(int32 LoadoutSeed);
@@ -83,6 +130,10 @@ public:
 	UFUNCTION(Client, Reliable)
 	void ClientOnPawnSpawned();
 	void ClientOnPawnSpawned_Implementation();
+
+	UFUNCTION(Client, Reliable)
+	void ClientOnZoneEndScoreReports(const TArray<FFortPlayerScoreReport>& ScoreReports);
+	void ClientOnZoneEndScoreReports_Implementation(const TArray<FFortPlayerScoreReport>& ScoreReports);
 
 	UFUNCTION(Client, Reliable)
 	void ClientPresentGameplayVote(uint32 Payload);
@@ -112,12 +163,20 @@ public:
 	void ServerAttemptExitVehicle_Implementation();
 
 	UFUNCTION(Server, Reliable)
+	void ServerBeginGameplayVote(const FFortVoteConfig& VoteConfig, const EFortVoteType& VoteType);
+	void ServerBeginGameplayVote_Implementation(const FFortVoteConfig& VoteConfig, const EFortVoteType& VoteType);
+
+	UFUNCTION(Server, Reliable)
 	void ServerDestroyFromRemoteControlledPawn();
 	void ServerDestroyFromRemoteControlledPawn_Implementation();
 
 	UFUNCTION(Server, Reliable)
 	void ServerDetachFromRemoteControlledPawn();
 	void ServerDetachFromRemoteControlledPawn_Implementation();
+
+	UFUNCTION(Server, Reliable)
+	void ServerEndGameplayVote(const EFortVoteType& VoteType);
+	void ServerEndGameplayVote_Implementation(const EFortVoteType& VoteType);
 
 	UFUNCTION(Server, Reliable)
 	void ServerRequestLoadoutRefresh();
@@ -132,12 +191,20 @@ public:
 	void ServerSendLoadoutConfig_Implementation(const TArray<uint8>& Loadout, int32 LoadoutSeed);
 
 	UFUNCTION(Server, Reliable)
+	void ServerSendPartyJoinInfoToPlayer(const FString& JoinInfoStr, const FUniqueNetIdRepl& RecipientId);
+	void ServerSendPartyJoinInfoToPlayer_Implementation(const FString& JoinInfoStr, const FUniqueNetIdRepl& RecipientId);
+
+	UFUNCTION(Server, Reliable)
 	void ServerSetShouldDisablePlayerTeleportingDuringMissionResults();
 	void ServerSetShouldDisablePlayerTeleportingDuringMissionResults_Implementation();
 
 	UFUNCTION(Server, Reliable)
 	void ServerSetVehicleHealth(float NewHealth);
 	void ServerSetVehicleHealth_Implementation(float NewHealth);
+
+	UFUNCTION(Server, Reliable)
+	void ServerSubmitGameplayVote(int32 VoteDecision, const EFortVoteType& VoteType);
+	void ServerSubmitGameplayVote_Implementation(int32 VoteDecision, const EFortVoteType& VoteType);
 
 	UFUNCTION(Server, Reliable)
 	void ServerVoiceChatRequestJoinToken(const FString& ChannelName);

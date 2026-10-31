@@ -6,6 +6,16 @@
 #include "CoreMinimal.h"
 #include "AFortPlayerState.h"
 
+#include "EFortKickReason.h"
+#include "FOnAccumulatedItemsChanged.h"
+#include "FOnCurrentPawnChanged.h"
+#include "FOnSpectatorCountChanged.h"
+#include "FOnSpectatorsChanged.h"
+#include "FReplicatedStatValues.h"
+#include "FSimulatedAttributeEntry.h"
+
+class AFortCarriedObject;
+
 #include "AFortPlayerStateZone.generated.h"
 
 UCLASS(config=Engine)
@@ -14,6 +24,30 @@ class FORTNITEGAME_API AFortPlayerStateZone : public AFortPlayerState
 	GENERATED_BODY()
 
 public:
+	// table index 30, flags 0x10000010080000
+	UPROPERTY()
+	FOnCurrentPawnChanged OnCurrentPawnChanged;
+
+	// table index 27, flags 0x10000010080000
+	UPROPERTY()
+	FOnSpectatorsChanged OnSpectatorsRemovedEvent;
+
+	// table index 26, flags 0x10000010080000
+	UPROPERTY()
+	FOnSpectatorCountChanged OnSpectatorCountChangedEvent;
+
+	// table index 22, flags 0x40000000000020
+	UPROPERTY(Replicated)
+	EFortKickReason KickedFromSessionReason;
+
+	// table index 21, flags 0x20080000002000
+	UPROPERTY(Transient)
+	FReplicatedStatValues RS_Zone_Old[35];
+
+	// table index 20, flags 0x40000000020035
+	UPROPERTY(Replicated)
+	AFortCarriedObject* CarriedObject;
+
 	// table index 19, flags 0x40000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_NumRejoins)
 	int32 NumRejoins;
@@ -49,6 +83,14 @@ public:
 	// table index 11, flags 0x40000000000020
 	UPROPERTY(Replicated)
 	float MaxSignalInStorm;
+
+	// table index 8, flags 0x10000010080000
+	UPROPERTY()
+	FOnAccumulatedItemsChanged OnAccumulatedItemsChanged;
+
+	// table index 6, flags 0x40000000000020
+	UPROPERTY(Replicated)
+	TArray<FSimulatedAttributeEntry> SimulatedAttributes;
 
 	// table index 4, flags 0x40000000002020
 	UPROPERTY(Replicated, Transient)

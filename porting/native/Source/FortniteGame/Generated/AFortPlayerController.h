@@ -6,10 +6,79 @@
 #include "CoreMinimal.h"
 #include "APlayspacePlayerController.h"
 
+#include "EFortBuildPreviewMarkerOptionalAdjustment.h"
+#include "EFortCostInfoTypes.h"
+#include "EFortGameplayState.h"
+#include "EFortItemEntryState.h"
+#include "EFortItemTier.h"
+#include "EFortJumpStaminaCost.h"
+#include "EFortObjectiveStatus.h"
+#include "EFortPCTutorialCompletedState.h"
+#include "EFortPawnStasisMode.h"
+#include "EFortQuickBars.h"
+#include "EFortRequestedGameplayAction.h"
+#include "EFortResourceLevel.h"
+#include "EFortResourceType.h"
+#include "ERichPresenceStateChange.h"
+#include "EStatCategory.h"
+#include "EStatMod.h"
+#include "Engine/EngineTypes.h"
+#include "Engine/NetSerialization.h"
+#include "FAIDirectorDebugInfo.h"
+#include "FChoiceData.h"
+#include "FFortItemEntryStateValue.h"
+#include "FFortPersistentGameplayStatContainer.h"
+#include "FLastBuildableState.h"
+#include "FOnAutoRunEnabled.h"
+#include "FOnBuildPreviewMarkerVisibilityChanged.h"
+#include "FOnChosenSignature.h"
+#include "FOnEnterVehicleDriver.h"
+#include "FOnEnterVehiclePassenger.h"
+#include "FOnExitVehicle.h"
+#include "FOnMcpProfilesInitialized.h"
+#include "FOnOpenVoteDialog.h"
+#include "FOnPlayerEnteredBuildMode.h"
+#include "FOnReadyCheckCompleteBP.h"
+#include "FOnRegainedFocus.h"
+#include "FOnSetFirstPersonCamera.h"
+#include "FOnShowFPSChange.h"
+#include "FOnShowTemperatureChange.h"
+#include "FOnToggleFullscreenMap.h"
+#include "GameFramework/OnlineReplStructs.h"
+#include "GameplayTagContainer.h"
+#include "Math/Color.h"
+#include "Math/Rotator.h"
+#include "Math/Vector.h"
+#include "Misc/Guid.h"
+#include "UObject/CoreOnline.h"
+
+class ABattleMapPawnLive;
+class ABuildingActor;
+class ABuildingTrapDefender;
+class ABuildingWeakSpot;
+class AFortAIDirectorDataManager;
+class AFortDamageNumbersActor;
+class AFortDecoHelper;
+class AFortInventory;
+class AFortMarkActor;
+class AFortMusicManager;
+class AFortObjectiveBase;
+class AFortQuickBars;
+class AFortSprayDecalInstance;
+class UFortCinematicCamera;
+class UFortClientBotManager;
+class UFortCustomizationAssetLoader;
+class UFortGameplayMessageComponentBase;
+class UFortIndicatorManager;
+class UFortRegisteredPlayerInfo;
+class UFortStatEventManager;
+class UHeartbeatManager;
 class UInputComponent;
 class UMaterialInstanceDynamic;
 class UMaterialParameterCollection;
+class UQuickHealItemPicker;
 class USoundMix;
+class UStatManager;
 
 #include "AFortPlayerController.generated.h"
 
@@ -59,6 +128,10 @@ public:
 	UPROPERTY()
 	uint8 bClientPawnIsLoaded : 1;
 
+	// table index 277, flags 0x10000000002000
+	UPROPERTY(Transient)
+	FVector SpawnLoc;
+
 	// table index 276, flags 0x10000000000000
 	UPROPERTY()
 	int32 NumPreviousSpawns;
@@ -67,6 +140,10 @@ public:
 	UPROPERTY(Transient)
 	uint8 bCanSpectateBot : 1;
 
+	// table index 274, flags 0x10000010080000
+	UPROPERTY()
+	FOnReadyCheckCompleteBP OnBlueprintReadyCheckCompleted;
+
 	// table index 273, flags 0x20080000010001
 	UPROPERTY()
 	USoundMix* SimpleLoadingScreenSoundMix;
@@ -74,6 +151,10 @@ public:
 	// table index 272, flags 0x20080000002000
 	UPROPERTY(Transient)
 	FString RegisteredPartnerId;
+
+	// table index 271, flags 0x20080000002000
+	UPROPERTY(Transient)
+	FGameplayTag RegisteredPartnerTag;
 
 	// table index 265, flags 0x20080000000000
 	UPROPERTY()
@@ -98,6 +179,18 @@ public:
 	// table index 260, flags 0x10000000002000
 	UPROPERTY(Transient)
 	uint8 bLoadingScreenDropped : 1;
+
+	// table index 259, flags 0x20080000000000
+	UPROPERTY()
+	FVector PendingSpectatorLocation;
+
+	// table index 256, flags 0x20080000002000
+	UPROPERTY(Transient)
+	FTimerHandle AutofireTimerHandle;
+
+	// table index 255, flags 0x24080000002000
+	UPROPERTY(Transient)
+	TWeakObjectPtr<ABuildingWeakSpot> WeakspotUnderReticle;
 
 	// table index 252, flags 0x20080000000000
 	UPROPERTY()
@@ -166,6 +259,22 @@ public:
 	// table index 233, flags 0x10000000004000
 	UPROPERTY(Config)
 	uint8 bGiveLastDamagerElimCreditOnStormDamage : 1;
+
+	// table index 232, flags 0x20080010080000
+	UPROPERTY()
+	FOnMcpProfilesInitialized OnMcpProfilesInitializedEvent;
+
+	// table index 231, flags 0x20080010080000
+	UPROPERTY()
+	FOnEnterVehicleDriver OnEnterVehicleDriver;
+
+	// table index 230, flags 0x20080010080000
+	UPROPERTY()
+	FOnEnterVehiclePassenger OnEnterVehiclePassenger;
+
+	// table index 229, flags 0x20080010080000
+	UPROPERTY()
+	FOnExitVehicle OnExitVehicle;
 
 	// table index 228, flags 0x20080100002020
 	UPROPERTY(ReplicatedUsing=OnRep_HoldingObject, Transient)
@@ -259,6 +368,14 @@ public:
 	UPROPERTY(Transient)
 	uint8 bAtNameBaseScreen : 1;
 
+	// table index 205, flags 0x20080010080000
+	UPROPERTY()
+	FOnSetFirstPersonCamera OnSetFirstPersonCamera;
+
+	// table index 204, flags 0x24080000002000
+	UPROPERTY(Transient)
+	TSubclassOf<UFortCinematicCamera> CinematicCameraClassOverride;
+
 	// table index 203, flags 0x20080000002000
 	UPROPERTY(Transient)
 	uint8 bOnPressExecuteJetpack : 1;
@@ -270,6 +387,18 @@ public:
 	// table index 201, flags 0x10000000004000
 	UPROPERTY(Config)
 	uint8 bServerSideHitMarkers : 1;
+
+	// table index 200, flags 0x10000010080000
+	UPROPERTY()
+	FOnChosenSignature OnUiChoiceCompleted;
+
+	// table index 199, flags 0x10000010080000
+	UPROPERTY()
+	FOnRegainedFocus OnRegainedFocus;
+
+	// table index 198, flags 0x10000010080000
+	UPROPERTY()
+	FOnOpenVoteDialog OnOpenVoteDialog;
 
 	// table index 197, flags 0x20080000002000
 	UPROPERTY(Transient)
@@ -290,6 +419,34 @@ public:
 	// table index 193, flags 0x20080000002000
 	UPROPERTY(Transient)
 	float LastSpotTime;
+
+	// table index 191, flags 0x24080000002000
+	UPROPERTY(Transient)
+	TArray<TWeakObjectPtr<AFortMarkActor>> CurrentMarks;
+
+	// table index 186, flags 0x10000100000020
+	UPROPERTY(ReplicatedUsing=OnRep_IntensityGraphInfo)
+	FAIDirectorDebugInfo IntensityGraphInfo;
+
+	// table index 185, flags 0x10000100000020
+	UPROPERTY(ReplicatedUsing=OnRep_PIDValuesGraphInfo)
+	FAIDirectorDebugInfo PIDValuesGraphInfo;
+
+	// table index 184, flags 0x10000100000020
+	UPROPERTY(ReplicatedUsing=OnRep_PIDContributionsGraphInfo)
+	FAIDirectorDebugInfo PIDContributionsGraphInfo;
+
+	// table index 183, flags 0x20080000000000
+	UPROPERTY()
+	AFortAIDirectorDataManager* AIDirectorDataManager;
+
+	// table index 182, flags 0x20080000000000
+	UPROPERTY()
+	AFortMusicManager* MusicManager;
+
+	// table index 181, flags 0x10000010080000
+	UPROPERTY()
+	FOnBuildPreviewMarkerVisibilityChanged OnBuildPreviewMarkerVisibilityChanged;
 
 	// table index 179, flags 0x10000000004000
 	UPROPERTY(Config)
@@ -323,6 +480,22 @@ public:
 	UPROPERTY(Config)
 	uint8 bRequireTraceToExistingBuildingToSetContextExcludeCurrentContext : 1;
 
+	// table index 167, flags 0x20080000002000
+	UPROPERTY(Transient)
+	ABuildingActor* TargetedBuilding;
+
+	// table index 162, flags 0x20080000002000
+	UPROPERTY(Transient)
+	TArray<ABuildingActor*> HighlightedPrimaryBuildings;
+
+	// table index 160, flags 0x20080000002000
+	UPROPERTY(Transient)
+	TArray<ABuildingActor*> HighlightedInteractionBuildings;
+
+	// table index 159, flags 0x24080000002000
+	UPROPERTY(Transient)
+	TWeakObjectPtr<ABuildingActor> HighlightedPrimaryBuilding;
+
 	// table index 156, flags 0x20080000002000
 	UPROPERTY(Transient)
 	TArray<UMaterialInstanceDynamic*> BuildPreviewMarkerMIDs;
@@ -335,6 +508,10 @@ public:
 	UPROPERTY(Transient)
 	uint8 bBuildPreviewMirrored : 1;
 
+	// table index 152, flags 0x20080000002000
+	UPROPERTY(Transient)
+	EFortBuildPreviewMarkerOptionalAdjustment BuildPreviewMarkerOptionalAdjustment;
+
 	// table index 151, flags 0x10000000002034
 	UPROPERTY(Replicated, Transient)
 	uint8 bBuildFree : 1;
@@ -342,6 +519,26 @@ public:
 	// table index 150, flags 0x20080000002020
 	UPROPERTY(Replicated, Transient)
 	uint8 bCraftFree : 1;
+
+	// table index 149, flags 0x20080000002000
+	UPROPERTY(Transient)
+	TEnumAsByte<EFortCostInfoTypes::Type> CurrentCostInfoType;
+
+	// table index 146, flags 0x20080000002000
+	UPROPERTY(Transient)
+	TEnumAsByte<EFortResourceLevel::Type> CurrentResourceLevel;
+
+	// table index 145, flags 0x20080000002000
+	UPROPERTY(Transient)
+	TEnumAsByte<EFortResourceType::Type> CurrentResourceType;
+
+	// table index 144, flags 0x20080000002000
+	UPROPERTY(Transient)
+	FLastBuildableState LastBuildableStateData[12];
+
+	// table index 141, flags 0x20080000002000
+	UPROPERTY(Transient)
+	AFortDamageNumbersActor* DamageNumbersActor;
 
 	// table index 140, flags 0x20080000080008
 	UPROPERTY()
@@ -351,9 +548,29 @@ public:
 	UPROPERTY(Transient)
 	float EditModeDistance;
 
+	// table index 137, flags 0x20080000002000
+	UPROPERTY(Transient)
+	FVector LastBuildPreviewGridSnapLoc;
+
+	// table index 136, flags 0x20080000002000
+	UPROPERTY(Transient)
+	FRotator LastBuildPreviewGridSnapRot;
+
+	// table index 135, flags 0x20080000002000
+	UPROPERTY(Transient)
+	FVector LastBuildPreviewGridSnapCentroid;
+
 	// table index 134, flags 0x20080000080008
 	UPROPERTY()
 	UInputComponent* PickerInputComponent;
+
+	// table index 133, flags 0x20080000002000
+	UPROPERTY(Transient)
+	AFortDecoHelper* TrapPickerDecoHelper;
+
+	// table index 131, flags 0x20088000000000
+	UPROPERTY()
+	TArray<FHitResult> TouchEditResults;
 
 	// table index 130, flags 0x20080000004000
 	UPROPERTY(Config)
@@ -362,6 +579,10 @@ public:
 	// table index 129, flags 0x20080000004000
 	UPROPERTY(Config)
 	uint8 bBuildingPlacementTraceSkipInitialPenetrationOfStaticMesh : 1;
+
+	// table index 128, flags 0x20080000000000
+	UPROPERTY()
+	AFortQuickBars* ClientQuickBars;
 
 	// table index 123, flags 0x40000000002000
 	UPROPERTY(Transient)
@@ -374,6 +595,18 @@ public:
 	// table index 121, flags 0x10000000000020
 	UPROPERTY(Replicated)
 	uint8 bAutoEquipBetterItems : 1;
+
+	// table index 120, flags 0x20080100000020
+	UPROPERTY(ReplicatedUsing=HandleWorldInventoryLocalUpdate)
+	AFortInventory* WorldInventory;
+
+	// table index 119, flags 0x20080100000020
+	UPROPERTY(ReplicatedUsing=HandleOutpostInventoryLocalUpdate)
+	AFortInventory* OutpostInventory;
+
+	// table index 118, flags 0x20080100000020
+	UPROPERTY(ReplicatedUsing=HandleViewTargetInventoryLocalUpdate)
+	AFortInventory* ViewTargetInventory;
 
 	// table index 117, flags 0x20080000000000
 	UPROPERTY()
@@ -395,17 +628,69 @@ public:
 	UPROPERTY()
 	uint8 bIsSavingGadgetLoadout : 1;
 
+	// table index 111, flags 0x20080000002000
+	UPROPERTY(Transient)
+	UFortClientBotManager* BotManager;
+
+	// table index 110, flags 0x24080000010001
+	UPROPERTY()
+	TSubclassOf<UFortClientBotManager> ClientBotManagerClass;
+
+	// table index 108, flags 0x10000000002000
+	UPROPERTY(Transient)
+	UFortCustomizationAssetLoader* LocalPawnCustomizationAssetLoader;
+
 	// table index 107, flags 0x10000000000000
 	UPROPERTY()
 	uint8 bDropWeaponsDuringAllMissionStates : 1;
+
+	// table index 105, flags 0x20080000000000
+	UPROPERTY()
+	UFortRegisteredPlayerInfo* MyPlayerInfo;
 
 	// table index 102, flags 0x20080100000020
 	UPROPERTY(ReplicatedUsing=OnRep_UpdatedUnsavedPrimaryMissionProgress)
 	uint8 bHasUnsavedPrimaryMissionProgress : 1;
 
+	// table index 101, flags 0x10000000000000
+	UPROPERTY()
+	UStatManager* StatManager;
+
+	// table index 100, flags 0x10000000000000
+	UPROPERTY()
+	UHeartbeatManager* HeartbeatManager;
+
+	// table index 99, flags 0x10000000000000
+	UPROPERTY()
+	UFortStatEventManager* StatEventManager;
+
+	// table index 98, flags 0x20080000000000
+	UPROPERTY()
+	FFortPersistentGameplayStatContainer CachedPersistentGameplayStats;
+
+	// table index 92, flags 0x20080000002000
+	UPROPERTY(Transient)
+	TArray<FVector> AnalyticsBuildingWallTooLowLocations;
+
+	// table index 83, flags 0x40000000002020
+	UPROPERTY(Replicated, Transient)
+	EFortPCTutorialCompletedState TutorialCompletedState;
+
 	// table index 82, flags 0x10000000000000
 	UPROPERTY()
 	uint8 bShouldReceiveCriticalMatchBonus : 1;
+
+	// table index 81, flags 0x10000010080000
+	UPROPERTY()
+	FOnPlayerEnteredBuildMode OnPlayerChangedBuildMode;
+
+	// table index 80, flags 0x10000010080000
+	UPROPERTY()
+	FOnAutoRunEnabled OnAutoRunEnabled;
+
+	// table index 79, flags 0x10000000002000
+	UPROPERTY(Transient)
+	FVector LocationUnderReticle;
 
 	// table index 78, flags 0x10000000002000
 	UPROPERTY(Transient)
@@ -467,6 +752,10 @@ public:
 	UPROPERTY(Replicated, Config)
 	uint32 AimHelpMode;
 
+	// table index 63, flags 0x10000000006020
+	UPROPERTY(Replicated, Transient, Config)
+	TEnumAsByte<EFortJumpStaminaCost::Type> JumpStaminaCost;
+
 	// table index 62, flags 0x10000000006020
 	UPROPERTY(Replicated, Transient, Config)
 	FName CameraPrototypeName;
@@ -506,6 +795,10 @@ public:
 	// table index 53, flags 0x20080000000000
 	UPROPERTY()
 	float SprayOffCooldownTime;
+
+	// table index 51, flags 0x20080000002000
+	UPROPERTY(Transient)
+	TArray<AFortSprayDecalInstance*> ActiveSprayInstances;
 
 	// table index 45, flags 0x10000000004000
 	UPROPERTY(Config)
@@ -571,17 +864,37 @@ public:
 	UPROPERTY()
 	uint8 bShowFPS : 1;
 
+	// table index 28, flags 0x10000010080000
+	UPROPERTY()
+	FOnShowFPSChange OnShowFPSChange;
+
 	// table index 27, flags 0x10000000000014
 	UPROPERTY()
 	uint8 bShowTemperature : 1;
+
+	// table index 26, flags 0x10000010080000
+	UPROPERTY()
+	FOnShowTemperatureChange OnShowTemperatureChange;
 
 	// table index 24, flags 0x10000000002000
 	UPROPERTY(Transient)
 	uint8 bLockPrimaryInputMethodToMouse : 1;
 
+	// table index 23, flags 0x40000000000000
+	UPROPERTY()
+	UFortIndicatorManager* IndicatorManager;
+
 	// table index 22, flags 0x40000000000020
 	UPROPERTY(Replicated)
 	uint8 bFinalXPUpdateFailed : 1;
+
+	// table index 19, flags 0x10000000002000
+	UPROPERTY(Transient)
+	EFortPawnStasisMode PreviousStasisMode;
+
+	// table index 18, flags 0x14000000010001
+	UPROPERTY()
+	TSubclassOf<ABattleMapPawnLive> BattleMapSpectatorClass;
 
 	// table index 17, flags 0x10000000004000
 	UPROPERTY(Config)
@@ -623,9 +936,17 @@ public:
 	UPROPERTY(Config)
 	float TurboBuildInterval;
 
+	// table index 3, flags 0x24080000010001
+	UPROPERTY()
+	TSubclassOf<UQuickHealItemPicker> QuickHealItemPickerClass;
+
 	// table index 1, flags 0x10000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_MeshParentIds)
 	TArray<FString> MeshParentIds;
+
+	// table index 0, flags 0x10000010080000
+	UPROPERTY()
+	FOnToggleFullscreenMap OnToggleFullscreenMap;
 
 	UFUNCTION(Server, Reliable)
 	void Cheat_ClearForcedCosmeticItems();
@@ -634,6 +955,18 @@ public:
 	UFUNCTION(Server, Reliable)
 	void Cheat_ClearForcedCosmeticVariantChannels();
 	void Cheat_ClearForcedCosmeticVariantChannels_Implementation();
+
+	UFUNCTION(Server, Reliable)
+	void Cheat_StopObjectiveServer(const EFortObjectiveStatus& Status, AFortObjectiveBase* Objective);
+	void Cheat_StopObjectiveServer_Implementation(const EFortObjectiveStatus& Status, AFortObjectiveBase* Objective);
+
+	UFUNCTION(Client, Reliable)
+	void ClientActivateSlot(bool bForceExecution, bool bUpdatePreviousFocusedSlot, float ActivateDelay, int32 Slot, const EFortQuickBars& InQuickBar);
+	void ClientActivateSlot_Implementation(bool bForceExecution, bool bUpdatePreviousFocusedSlot, float ActivateDelay, int32 Slot, const EFortQuickBars& InQuickBar);
+
+	UFUNCTION(Client, Unreliable)
+	void ClientAddScoreNumber(bool bDisplayScoreOnPlayer, const FVector_NetQuantize& ScoreLocation, const EStatCategory& ScoreCategory, int32 Score);
+	void ClientAddScoreNumber_Implementation(bool bDisplayScoreOnPlayer, const FVector_NetQuantize& ScoreLocation, const EStatCategory& ScoreCategory, int32 Score);
 
 	UFUNCTION(Client, Reliable)
 	void ClientBotEnqueueCommand(const FString& CommandToEnqueue);
@@ -664,6 +997,14 @@ public:
 	void ClientEndGameKick_Implementation();
 
 	UFUNCTION(Client, Reliable)
+	void ClientEquipItem(bool bForceExecution, const FGuid& ItemGuid);
+	void ClientEquipItem_Implementation(bool bForceExecution, const FGuid& ItemGuid);
+
+	UFUNCTION(Client, Reliable)
+	void ClientExecuteInventoryItem(bool bActivateSlotAfterSettingFocused, bool bForceExecute, float Delay, const FGuid& ItemGuid);
+	void ClientExecuteInventoryItem_Implementation(bool bActivateSlotAfterSettingFocused, bool bForceExecute, float Delay, const FGuid& ItemGuid);
+
+	UFUNCTION(Client, Reliable)
 	void ClientFinishedInteractionInZone();
 	void ClientFinishedInteractionInZone_Implementation();
 
@@ -674,6 +1015,10 @@ public:
 	UFUNCTION(Client, Reliable)
 	void ClientForceProfileQuery();
 	void ClientForceProfileQuery_Implementation();
+
+	UFUNCTION(Client, Reliable)
+	void ClientForceUpdateQuickbar(const EFortQuickBars& QuickbarToRefresh);
+	void ClientForceUpdateQuickbar_Implementation(const EFortQuickBars& QuickbarToRefresh);
 
 	UFUNCTION(Client, Reliable)
 	void ClientForceWorldInventoryUpdate();
@@ -692,8 +1037,20 @@ public:
 	void ClientOnGenericPlayerInitialization_Implementation();
 
 	UFUNCTION(Client, Reliable)
+	void ClientOpenChoiceUI(const FChoiceData& ChoiceItems);
+	void ClientOpenChoiceUI_Implementation(const FChoiceData& ChoiceItems);
+
+	UFUNCTION(Client, Reliable)
+	void ClientPingMinimap(const FLinearColor& PingColor, const FVector& WorldLocation);
+	void ClientPingMinimap_Implementation(const FLinearColor& PingColor, const FVector& WorldLocation);
+
+	UFUNCTION(Client, Reliable)
 	void ClientReadyCheckComplete(bool bPassed);
 	void ClientReadyCheckComplete_Implementation(bool bPassed);
+
+	UFUNCTION(Client, Reliable)
+	void ClientReceivePresetTeamChat(const FUniqueNetIdRepl& SenderID, const FText& ChatText);
+	void ClientReceivePresetTeamChat_Implementation(const FUniqueNetIdRepl& SenderID, const FText& ChatText);
 
 	UFUNCTION(Client, Reliable)
 	void ClientRefreshPlayerList();
@@ -716,12 +1073,24 @@ public:
 	void ClientSetActionMappingEnabled_Implementation(bool bEnabled, const FName& ActionName);
 
 	UFUNCTION(Client, Reliable)
+	void ClientSetInviteFlags(const FJoinabilitySettings& Settings);
+	void ClientSetInviteFlags_Implementation(const FJoinabilitySettings& Settings);
+
+	UFUNCTION(Client, Reliable)
+	void ClientSetSpectatorCamera(const FRotator& CameraRotation, const FVector& CameraLocation);
+	void ClientSetSpectatorCamera_Implementation(const FRotator& CameraRotation, const FVector& CameraLocation);
+
+	UFUNCTION(Client, Reliable)
 	void ClientStopAutoRun();
 	void ClientStopAutoRun_Implementation();
 
 	UFUNCTION(Client, Reliable)
 	void ClientStopUIFeedbackEvent(const FName& EventName);
 	void ClientStopUIFeedbackEvent_Implementation(const FName& EventName);
+
+	UFUNCTION(Client, Reliable)
+	void ClientSwapQuickBarFocus(bool bForceExecution, int32 SlotOverride, const EFortQuickBars& InQuickBar);
+	void ClientSwapQuickBarFocus_Implementation(bool bForceExecution, int32 SlotOverride, const EFortQuickBars& InQuickBar);
 
 	UFUNCTION(Client, Reliable)
 	void ClientTriggerUIFeedbackEvent(const FName& EventName);
@@ -732,8 +1101,21 @@ public:
 	void ClientUpdatePlayerList_Implementation();
 
 	UFUNCTION(Client, Reliable)
+	void ClientUpdateRichPresence(bool bImportant, const ERichPresenceStateChange& RichPresenceChange);
+	void ClientUpdateRichPresence_Implementation(bool bImportant, const ERichPresenceStateChange& RichPresenceChange);
+
+	UFUNCTION(Client, Reliable)
 	void ClientUpdateServerOnPlayerChangedBuildMode();
 	void ClientUpdateServerOnPlayerChangedBuildMode_Implementation();
+
+	UFUNCTION()
+	void HandleOutpostInventoryLocalUpdate();
+
+	UFUNCTION()
+	void HandleViewTargetInventoryLocalUpdate();
+
+	UFUNCTION()
+	void HandleWorldInventoryLocalUpdate();
 
 	UFUNCTION()
 	void OnRep_bHasServerFinishedLoading();
@@ -745,7 +1127,16 @@ public:
 	void OnRep_HoldingObject();
 
 	UFUNCTION()
+	void OnRep_IntensityGraphInfo();
+
+	UFUNCTION()
 	void OnRep_MeshParentIds();
+
+	UFUNCTION()
+	void OnRep_PIDContributionsGraphInfo();
+
+	UFUNCTION()
+	void OnRep_PIDValuesGraphInfo();
 
 	UFUNCTION()
 	void OnRep_UpdatedUnsavedPrimaryMissionProgress();
@@ -753,6 +1144,14 @@ public:
 	UFUNCTION(Server, Reliable)
 	void ServerAcknowledgeDelayedQuickBarAction(const TArray<uint32>& ProcessedActionIds);
 	void ServerAcknowledgeDelayedQuickBarAction_Implementation(const TArray<uint32>& ProcessedActionIds);
+
+	UFUNCTION(Server, Reliable)
+	void ServerAnnouncementStoppedOnClient(const FGuid& AnnouncementID);
+	void ServerAnnouncementStoppedOnClient_Implementation(const FGuid& AnnouncementID);
+
+	UFUNCTION(Server, Reliable)
+	void ServerAttemptInventoryDrop(bool bTrash, int32 Count, const FGuid& ItemGuid);
+	void ServerAttemptInventoryDrop_Implementation(bool bTrash, int32 Count, const FGuid& ItemGuid);
 
 	UFUNCTION(Server, Reliable)
 	void ServerBroadcastPlayerChangedBuildMode(bool bIsInBuildMode);
@@ -775,8 +1174,24 @@ public:
 	void ServerClientPawnLoaded_Implementation(bool bIsPawnLoaded);
 
 	UFUNCTION(Server, Reliable)
+	void ServerCombineInventoryItems(const FGuid& SourceItemGuid, const FGuid& TargetItemGuid);
+	void ServerCombineInventoryItems_Implementation(const FGuid& SourceItemGuid, const FGuid& TargetItemGuid);
+
+	UFUNCTION(Server, Reliable)
+	void ServerCraftSchematic(bool bIsQuickCrafted, const EFortItemTier& RequestedTier, int32 CraftAmount, int32 PostCraftSlot, const FString& ItemId);
+	void ServerCraftSchematic_Implementation(bool bIsQuickCrafted, const EFortItemTier& RequestedTier, int32 CraftAmount, int32 PostCraftSlot, const FString& ItemId);
+
+	UFUNCTION(Server, Reliable)
+	void ServerDeployDefender(int32 AmmoQuantity, const FGuid& WeaponToGiveGuid, const FName& DefenderSquadId, const FString& SelectedItemInstanceId, ABuildingTrapDefender* DefenderTrap);
+	void ServerDeployDefender_Implementation(int32 AmmoQuantity, const FGuid& WeaponToGiveGuid, const FName& DefenderSquadId, const FString& SelectedItemInstanceId, ABuildingTrapDefender* DefenderTrap);
+
+	UFUNCTION(Server, Reliable)
 	void ServerDeveloper_GetConsoleVariable(const FString& ConsoleVariable);
 	void ServerDeveloper_GetConsoleVariable_Implementation(const FString& ConsoleVariable);
+
+	UFUNCTION(Server, Reliable)
+	void ServerDisassembleInventoryItems(const TArray<int32>& ItemCounts, const TArray<FGuid>& ItemGuids);
+	void ServerDisassembleInventoryItems_Implementation(const TArray<int32>& ItemCounts, const TArray<FGuid>& ItemGuids);
 
 	UFUNCTION(Server, Reliable)
 	void ServerDropCarriedObject();
@@ -787,12 +1202,32 @@ public:
 	void ServerEmote_Implementation(const FName& AssetName);
 
 	UFUNCTION(Server, Reliable)
+	void ServerExecuteInventoryItem(const FGuid& ItemGuid);
+	void ServerExecuteInventoryItem_Implementation(const FGuid& ItemGuid);
+
+	UFUNCTION(Server, Reliable)
+	void ServerExecutePresetTeamChat(const FUniqueNetIdRepl& SenderID, const FText& ChatText);
+	void ServerExecutePresetTeamChat_Implementation(const FUniqueNetIdRepl& SenderID, const FText& ChatText);
+
+	UFUNCTION(Server, Reliable)
+	void ServerGiftInventoryItemToOtherPlayer(int32 Quantity, const FUniqueNetIdRepl& PlayerId, const FGuid& ItemGuid);
+	void ServerGiftInventoryItemToOtherPlayer_Implementation(int32 Quantity, const FUniqueNetIdRepl& PlayerId, const FGuid& ItemGuid);
+
+	UFUNCTION(Server, Reliable)
 	void ServerHandleMissionEvent_StartLeavingZone();
 	void ServerHandleMissionEvent_StartLeavingZone_Implementation();
 
 	UFUNCTION(Server, Reliable)
 	void ServerHandleMissionEvent_ToggledCursorMode(bool bOpened);
 	void ServerHandleMissionEvent_ToggledCursorMode_Implementation(bool bOpened);
+
+	UFUNCTION(Server, Reliable)
+	void ServerItemWillBeDestroyed(int32 Count, const FGuid& DestroyedItemGuid);
+	void ServerItemWillBeDestroyed_Implementation(int32 Count, const FGuid& DestroyedItemGuid);
+
+	UFUNCTION(Server, Reliable)
+	void ServerKickPlayer(const FText& Reason, const FUniqueNetIdRepl& PlayerToKick);
+	void ServerKickPlayer_Implementation(const FText& Reason, const FUniqueNetIdRepl& PlayerToKick);
 
 	UFUNCTION(Server, Reliable)
 	void ServerKillAllAIPawnsAroundPlayer();
@@ -803,12 +1238,40 @@ public:
 	void ServerLoadingScreenDropped_Implementation();
 
 	UFUNCTION(Server, Reliable)
+	void ServerModifyStat(bool bForceStatSave, const EStatMod& ModType, int32 Amount, const FName& StatName);
+	void ServerModifyStat_Implementation(bool bForceStatSave, const EStatMod& ModType, int32 Amount, const FName& StatName);
+
+	UFUNCTION(Server, Reliable)
 	void ServerNotifyMeshNetPlayer(const FName& Tag);
 	void ServerNotifyMeshNetPlayer_Implementation(const FName& Tag);
 
 	UFUNCTION(Server, Reliable)
+	void ServerOnMaterialSelection(EFortResourceLevel::Type NewResourceLevel, EFortResourceType::Type NewResourceType);
+	void ServerOnMaterialSelection_Implementation(EFortResourceLevel::Type NewResourceLevel, EFortResourceType::Type NewResourceType);
+
+	UFUNCTION(Server, Reliable)
+	void ServerPingMinimap(uint8 RequiredTeam, const FLinearColor& PingColor, const FVector& WorldLocation);
+	void ServerPingMinimap_Implementation(uint8 RequiredTeam, const FLinearColor& PingColor, const FVector& WorldLocation);
+
+	UFUNCTION(Server, Reliable)
 	void ServerReadyToStartMatch();
 	void ServerReadyToStartMatch_Implementation();
+
+	UFUNCTION(Server, Reliable)
+	void ServerReleaseInventoryItemKey(const FGuid& ItemGuid);
+	void ServerReleaseInventoryItemKey_Implementation(const FGuid& ItemGuid);
+
+	UFUNCTION(Server, Reliable)
+	void ServerRemoveDefender(ABuildingTrapDefender* DefenderTrap);
+	void ServerRemoveDefender_Implementation(ABuildingTrapDefender* DefenderTrap);
+
+	UFUNCTION(Server, Reliable)
+	void ServerRemoveInventoryItem(bool bForcePersistWhenEmpty, bool bForceRemoval, bool bForceRemoveFromQuickBars, int32 Count, const FGuid& ItemGuid);
+	void ServerRemoveInventoryItem_Implementation(bool bForcePersistWhenEmpty, bool bForceRemoval, bool bForceRemoveFromQuickBars, int32 Count, const FGuid& ItemGuid);
+
+	UFUNCTION(Server, Reliable)
+	void ServerRemoveInventoryStateValue(EFortItemEntryState::Type StateValueType, const FGuid& ItemGuid);
+	void ServerRemoveInventoryStateValue_Implementation(EFortItemEntryState::Type StateValueType, const FGuid& ItemGuid);
 
 	UFUNCTION(Server, Reliable)
 	void ServerReplyToReadyCheck(bool bReady);
@@ -821,6 +1284,10 @@ public:
 	UFUNCTION(Server, Reliable)
 	void ServerRequestAIDebug();
 	void ServerRequestAIDebug_Implementation();
+
+	UFUNCTION(Server, Reliable)
+	void ServerRequestGameplayAction(EFortRequestedGameplayAction::Type RequestedAction);
+	void ServerRequestGameplayAction_Implementation(EFortRequestedGameplayAction::Type RequestedAction);
 
 	UFUNCTION(Server, Reliable)
 	void ServerReturnToMainMenu();
@@ -845,6 +1312,22 @@ public:
 	UFUNCTION(Server, Reliable)
 	void ServerSetHero(const FString& NewHeroID);
 	void ServerSetHero_Implementation(const FString& NewHeroID);
+
+	UFUNCTION(Server, Reliable)
+	void ServerSetInventoryStateValue(const FFortItemEntryStateValue& StateValue, const FGuid& ItemGuid);
+	void ServerSetInventoryStateValue_Implementation(const FFortItemEntryStateValue& StateValue, const FGuid& ItemGuid);
+
+	UFUNCTION(Server, Reliable)
+	void ServerSetMarkText(const FString& MarkText, AFortMarkActor* MarkActor);
+	void ServerSetMarkText_Implementation(const FString& MarkText, AFortMarkActor* MarkActor);
+
+	UFUNCTION(Server, Reliable)
+	void ServerSetPartyOwner(const FUniqueNetIdRepl& PartyOwnerUniqueId);
+	void ServerSetPartyOwner_Implementation(const FUniqueNetIdRepl& PartyOwnerUniqueId);
+
+	UFUNCTION(Server, Reliable)
+	void ServerSetReadyToContinue(bool bTryStartTimer, EFortGameplayState::Type RequestedState, bool bReady);
+	void ServerSetReadyToContinue_Implementation(bool bTryStartTimer, EFortGameplayState::Type RequestedState, bool bReady);
 
 	UFUNCTION(Server, Reliable)
 	void ServerSetShouldUseBotManager(bool InValue);
@@ -874,9 +1357,17 @@ public:
 	void ServerTeamChatRoomReady(const FString& ChatRoomId);
 	void ServerTeamChatRoomReady_Implementation(const FString& ChatRoomId);
 
+	UFUNCTION(Server, Reliable)
+	void ServerTeleportToReticle(const FVector& TeleportLocation);
+	void ServerTeleportToReticle_Implementation(const FVector& TeleportLocation);
+
 	UFUNCTION(Server, Unreliable)
 	void ServerTouchActiveTime();
 	void ServerTouchActiveTime_Implementation();
+
+	UFUNCTION(Server, Reliable)
+	void ServerTriggerGenericObjectiveEvent(AFortObjectiveBase* Objective);
+	void ServerTriggerGenericObjectiveEvent_Implementation(AFortObjectiveBase* Objective);
 
 	UFUNCTION(Server, Reliable)
 	void ServerUIChoiceCompleted(int32 MenuIdentifier, int32 ChosenItem);
@@ -887,8 +1378,16 @@ public:
 	void ServerUpdateGameplayOptions_Implementation(const TArray<FString>& UserOptionsValues, const TArray<FString>& UserOptionsKeys);
 
 	UFUNCTION(Server, Reliable)
+	void ServerUpdateMessageComponents(const TArray<FGameplayTagContainer>& NewChannelIds, const TArray<UFortGameplayMessageComponentBase*>& ModifiedComponents);
+	void ServerUpdateMessageComponents_Implementation(const TArray<FGameplayTagContainer>& NewChannelIds, const TArray<UFortGameplayMessageComponentBase*>& ModifiedComponents);
+
+	UFUNCTION(Server, Reliable)
 	void ServerUpdatePlayerData(const TArray<uint8>& PlayerData);
 	void ServerUpdatePlayerData_Implementation(const TArray<uint8>& PlayerData);
+
+	UFUNCTION(Server, Reliable)
+	void ServerUpgradeBuildingActor(int32 NewUpgradeLevel, ABuildingActor* BuildingActorToUpgrade);
+	void ServerUpgradeBuildingActor_Implementation(int32 NewUpgradeLevel, ABuildingActor* BuildingActorToUpgrade);
 
 	UFUNCTION(Server, Reliable)
 	void TogglePersonalVehicle(bool bOn);

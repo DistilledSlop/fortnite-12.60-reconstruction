@@ -2,7 +2,17 @@
 #include "AFortGameStateAthena.h"
 #include "Net/UnrealNetwork.h"
 
+void AFortGameStateAthena::OnRep_Aircraft()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortGameStateAthena::OnRep_bPlaylistStoppedSafeZonePhases()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortGameStateAthena::OnRep_BroadcastSpectatorInfo()
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -17,12 +27,37 @@ void AFortGameStateAthena::OnRep_CurrentPlaylistId()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortGameStateAthena::OnRep_DamageForStormCapMarking()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortGameStateAthena::OnRep_EndGameKickPlayerTime()
 {
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortGameStateAthena::OnRep_EventTournamentRound()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortGameStateAthena::OnRep_GamePhase(EAthenaGamePhase OldGamePhase)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortGameStateAthena::OnRep_GoldenPoiLocationTags()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortGameStateAthena::OnRep_MapInfo()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortGameStateAthena::OnRep_MutatorEventData()
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -62,6 +97,11 @@ void AFortGameStateAthena::OnRep_ReticulatedSplineDefinitions()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortGameStateAthena::OnRep_SafeZoneIndicator()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortGameStateAthena::OnRep_SafeZonePhase()
 {
 	// Body not recovered: reflection-derived stub.
@@ -87,12 +127,32 @@ void AFortGameStateAthena::OnRep_SpectateAPartyMemberAvailable()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortGameStateAthena::OnRep_StormCapState()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortGameStateAthena::OnRep_SupplyDropWaveStartedSoundCue()
 {
 	// Body not recovered: reflection-derived stub.
 }
 
 void AFortGameStateAthena::OnRep_TeamsLeft()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortGameStateAthena::OnRep_UtcTimeStartedMatch(FDateTime& OldUtcTimeStartedMatch)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortGameStateAthena::OnRep_VolumeManager()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortGameStateAthena::OnRep_WinningPlayerList()
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -121,8 +181,12 @@ void AFortGameStateAthena::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>&
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
+	DOREPLIFETIME(AFortGameStateAthena, ReticulatedSplineIds);
 	DOREPLIFETIME(AFortGameStateAthena, ReticulatedSplineDefinitions);
 	DOREPLIFETIME(AFortGameStateAthena, bEnvironmentDamageBlocked);
+	DOREPLIFETIME(AFortGameStateAthena, GoldenPoiLocationTags);
+	DOREPLIFETIME(AFortGameStateAthena, LocalizationService);
+	DOREPLIFETIME(AFortGameStateAthena, VolumeManager);
 	DOREPLIFETIME(AFortGameStateAthena, StormCNDamageVulnerabilityLevel3);
 	DOREPLIFETIME(AFortGameStateAthena, StormCNDamageVulnerabilityLevel2);
 	DOREPLIFETIME(AFortGameStateAthena, StormCNDamageVulnerabilityLevel1);
@@ -138,31 +202,46 @@ void AFortGameStateAthena::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>&
 	DOREPLIFETIME(AFortGameStateAthena, MutatorGenericInt_2);
 	DOREPLIFETIME(AFortGameStateAthena, MutatorGenericInt_1);
 	DOREPLIFETIME(AFortGameStateAthena, MutatorGenericInt_0);
+	DOREPLIFETIME(AFortGameStateAthena, MutatorEventData);
 	DOREPLIFETIME(AFortGameStateAthena, LobbyAction);
 	DOREPLIFETIME(AFortGameStateAthena, bAircraftIsLocked);
+	DOREPLIFETIME(AFortGameStateAthena, Aircrafts);
 	DOREPLIFETIME(AFortGameStateAthena, PlayerBotsLeft);
 	DOREPLIFETIME(AFortGameStateAthena, TotalPlayersBots);
 	DOREPLIFETIME(AFortGameStateAthena, SafeZonePhase);
 	DOREPLIFETIME(AFortGameStateAthena, bGameModeWillSkipAircraft);
 	DOREPLIFETIME(AFortGameStateAthena, bIsCustomMatch);
+	DOREPLIFETIME(AFortGameStateAthena, EventTournamentRound);
 	DOREPLIFETIME(AFortGameStateAthena, ReasonWereInSetupPhase);
+	DOREPLIFETIME(AFortGameStateAthena, GamePhase);
+	DOREPLIFETIME(AFortGameStateAthena, BroadcastSpectatorInfo);
 	DOREPLIFETIME(AFortGameStateAthena, MapInfo);
+	DOREPLIFETIME(AFortGameStateAthena, SafeZoneIndicator);
 	DOREPLIFETIME(AFortGameStateAthena, CurrentPlaylistId);
 	DOREPLIFETIME(AFortGameStateAthena, ActiveTeamNums);
 	DOREPLIFETIME(AFortGameStateAthena, SpectateAPartyMemberAvailable);
+	DOREPLIFETIME(AFortGameStateAthena, FriendlyFireType);
 	DOREPLIFETIME(AFortGameStateAthena, bStormReachedFinalPosition);
+	DOREPLIFETIME(AFortGameStateAthena, AirCraftBehavior);
 	DOREPLIFETIME(AFortGameStateAthena, SupplyDropWaveStartedSoundCue);
 	DOREPLIFETIME(AFortGameStateAthena, CurrentHighScoreTeam);
 	DOREPLIFETIME(AFortGameStateAthena, CurrentHighScore);
 	DOREPLIFETIME(AFortGameStateAthena, WinningScore);
 	DOREPLIFETIME(AFortGameStateAthena, WinningTeam);
 	DOREPLIFETIME(AFortGameStateAthena, bIsLargeTeamGame);
+	DOREPLIFETIME(AFortGameStateAthena, UtcTimeStartedMatch);
+	DOREPLIFETIME(AFortGameStateAthena, FlightPathMidLine);
+	DOREPLIFETIME(AFortGameStateAthena, TeamFlightPaths);
 	DOREPLIFETIME(AFortGameStateAthena, bAllowUserPickedCosmeticBattleBus);
 	DOREPLIFETIME(AFortGameStateAthena, WinningTeamsCN);
 	DOREPLIFETIME(AFortGameStateAthena, TeamsLeft);
+	DOREPLIFETIME(AFortGameStateAthena, WinningPlayerList);
 	DOREPLIFETIME(AFortGameStateAthena, TeamXPlayersLeft);
+	DOREPLIFETIME(AFortGameStateAthena, DamageForStormCapMarking);
+	DOREPLIFETIME(AFortGameStateAthena, StormCapState);
 	DOREPLIFETIME(AFortGameStateAthena, bCheatRespawnEnabled);
 	DOREPLIFETIME(AFortGameStateAthena, FocalPointFOV);
+	DOREPLIFETIME(AFortGameStateAthena, FocalPointOffset);
 	DOREPLIFETIME(AFortGameStateAthena, PlayersLeft);
 	DOREPLIFETIME(AFortGameStateAthena, TotalPlayers);
 	DOREPLIFETIME(AFortGameStateAthena, EndGameKickPlayerTime);
@@ -173,6 +252,8 @@ void AFortGameStateAthena::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>&
 	DOREPLIFETIME(AFortGameStateAthena, WarmupCountdownStartTime);
 	DOREPLIFETIME(AFortGameStateAthena, bIsInFinalCountdown);
 	DOREPLIFETIME(AFortGameStateAthena, bIsInCountdown);
+	DOREPLIFETIME(AFortGameStateAthena, ReplOverrideData);
+	DOREPLIFETIME(AFortGameStateAthena, SpecialActorData);
 	DOREPLIFETIME(AFortGameStateAthena, ServerChangelistNumber);
 	DOREPLIFETIME(AFortGameStateAthena, bSkyTubesDisabled);
 	DOREPLIFETIME(AFortGameStateAthena, bSkyTubesShuttingDown);

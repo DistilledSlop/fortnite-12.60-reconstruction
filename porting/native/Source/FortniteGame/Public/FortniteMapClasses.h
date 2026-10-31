@@ -42,12 +42,6 @@ class FORTNITEGAME_API UFortNavSystem : public UNavigationSystemV1
 };
 
 UCLASS()
-class FORTNITEGAME_API UWorldTileManager : public UActorComponent
-{
-    GENERATED_BODY()
-};
-
-UCLASS()
 class FORTNITEGAME_API AFortSkydivingShadowProxy : public AActor
 {
     GENERATED_BODY()
@@ -65,12 +59,6 @@ public:
     UFUNCTION(BlueprintNativeEvent)
     void HideShadowProxy();
     virtual void HideShadowProxy_Implementation();
-};
-
-UCLASS()
-class FORTNITEGAME_API AFortSafeZoneStorm : public AActor
-{
-    GENERATED_BODY()
 };
 
 UCLASS()

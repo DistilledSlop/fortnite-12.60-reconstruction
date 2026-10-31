@@ -1,9 +1,12 @@
-# Native class set for the first promotion (porting/promote_native_classes.sh).
-# Closure of the eight targets: every ancestor that is not an engine 4.25 class.
-# gen_native_classes.py --promote checks the closure: each parent is listed here or is in
-# /Script/Engine or /Script/CoreUObject. Package is taken from class_parent_map.json.
+# Native class set (porting/promote_native_classes.sh).
+# Round 1: closure of the eight promotion targets and their non-engine ancestors (21 classes).
+# Round 2: every /Script/FortniteGame and /Script/PlayspaceFramework class that a class_outside_native_set skip
+# names, plus its non-engine ancestors, in dependency order (parents before children). Blocked by missing modules
+# (McpProfileSys, ModularGameplay, GameplayTasks, Water, Niagara, MediaAssets, Lobby, ClientPilot,
+# AnimationBudgetAllocator): see porting/native_classes_status.md. gen_native_classes.py --promote checks the closure:
+# each parent is listed here or is in /Script/Engine or /Script/CoreUObject. Package comes from class_parent_map.json.
 
-# Targets
+# Targets and round 1 ancestors
 AFortGameStateAthena
 AFortPlayerStateAthena
 AFortPlayerControllerAthena
@@ -12,8 +15,6 @@ AFortWorldSettings
 AFortAthenaMapInfo
 AFortPoiManager
 AFortWorldManager
-
-# Fort ancestors (/Script/FortniteGame)
 AFortPlayerStateZone
 AFortPlayerState
 AFortGameStateZone
@@ -25,7 +26,154 @@ AFortPlayerControllerGameplay
 AFortPlayerController
 AFortPlayerPawn
 AFortPawn
-
-# Playspace ancestors (/Script/PlayspaceFramework, a separate module)
 APlayspaceGameState
 APlayspacePlayerController
+
+# Round 2: referenced classes and their non-engine ancestors (dependency order)
+AFortReplaySpectatorPawnBase
+ABattleMapPawnLive
+ABuildingActor
+ABuildingGameplayActor
+ABuildingGameplayActorPlayerPropAttachment
+ABuildingItemCollectorActor
+ABuildingItemWeaponUpgradeActor
+ABuildingSMActor
+ABuildingTrap
+ABuildingTrapFloor
+ABuildingTrapDefender
+AFortClientOnlyActor
+ABuildingWeakSpot
+ACustomCosmeticModifierBase
+ACustomCharacterPartModifier
+AFortAIDirectorDataManager
+AFortAircraft
+AFortAthenaAircraft
+AFortAthenaCreativePortal
+AFortGameplayMutator
+AFortAthenaMutator_AI
+AFortBroadcastRemoteClientInfo
+AFortBroadcastSpectatorInfo
+AFortCarriedObject
+AFortClientAnnouncementManager
+AFortCreativePortalManager
+AFortCreativeRealEstatePlotManager
+AFortDamageNumbersActor
+AFortDecoHelper
+AFortEmitterCameraLensEffectDirectional
+AFortFXManager
+AFortFeedbackManager
+AFortGlobalAbilityTargetingActor
+AFortGlobalEnvironmentAbilityActor
+AFortInGameMapManager
+AFortInventory
+AFortLocalizationService
+AFortMarkActor
+AFortMissionManager
+AFortMissionState
+AFortMusicManager
+AFortObjectiveBase
+AFortPhysicsPawn
+AFortPlayerCharm
+AFortPlayerMarkerBase
+AFortPlayerParachute
+AFortPlayerPet
+AFortPlayerPetRepState
+AFortPlayerStartWarmup
+AFortPoiVolume
+AFortPropertyOverrideReplShared
+AFortQuickBars
+AFortRemoteControlledPawnAthena
+AFortSafeZoneIndicator
+AFortSafeZoneStorm
+AFortScriptedActionManager
+AFortSkyTube
+AFortSpecialActorReplicationInfo
+AFortSprayDecalInstance
+AFortTeamInfo
+AFortTeamPrivateInfo
+AFortThreatParticleActor
+AFortThreatVisualsManager
+AFortTimeOfDayManager
+AFortVehicleManager
+AFortVisibilityManager
+AGameplayVolume
+AFortVolume
+AFortVolumeManager
+AFortWindManager
+APhysicsObject
+AUnicornDriver
+UAthenaMarkerComponent
+UAthenaPlayerMatchReport
+UAthenaResurrectionComponent
+UBaseStatManager
+UBuildingEditModeMetadata
+UBuildingEditModeMetadata_BinaryToggle
+UBuildingEditModeMetadata_Floor
+UBuildingEditModeMetadata_Roof
+UBuildingEditModeMetadata_Stair
+UBuildingEditModeMetadata_Wall
+UBuildingStructuralSupportSystem
+UCreativeQuestManager
+UCreativeQuickbarComponent
+UCreativeUserContentManager
+UCustomCharacterPart
+UCustomColorComponent
+UCustomColorSwatch
+UCustomPlayerComponent
+UFortItem
+UFortPersistableItem
+UFortAccountItem
+UFortAmbientAudioController
+UFortAnimNotifyState_RootMotionInterrupt
+UFortCameraMode
+UFortCharacter
+UFortCharacterCosmeticManager
+UFortCinematicCamera
+UFortClientBotManager
+UFortControllerComponent_LocalizationService
+UFortCreativeDeviceButtonComponent
+UFortCreativeObjectTrackingComponent
+UFortCreativeOptionsBundle
+UFortCustomizationAssetLoader
+UFortFeedbackBank
+UFortFootstepAudioBank
+UFortGamepadSettings
+UFortGameplayMessageComponentBase
+UFortGenericRecord
+UFortIndicator
+UFortSlateHUDIndicator
+UFortHealthBarIndicator
+UFortWorker
+UFortHero
+UFortIndicatorManager
+UFortLevelOverlayManager
+UFortMiniMapIndicator
+UFortMiniMapChallengeIndicators
+UFortMiniMapTeamIndicators
+UFortMissionGenerator
+UFortMobileInteractionComponent
+UFortMovementComp_Character
+UFortMusicManagerBank
+UFortMutatorListComponent
+UFortPawnScriptedBehavior
+UFortRegisteredPlayerInfo
+UFortSkinWeightOverrideManager
+UFortStatEventManager
+UFortStormShieldComponent
+UFortSupplyDropInfo
+UFortSwimmingAudioBank
+UFortUnderwaterDamageComponent
+UFortUserCloudHelperComponent
+UFortWeaponAnimSet
+UFortWorldRecord
+UFortZoneRecord
+UFortZoneTheme
+UHeartbeatManager
+UPegasusGameEventCollector
+UQuickHealItemPicker
+UStatManager
+UUnicornAthenaPawnSampler
+UWeaponHitNotifyAudioBank
+UWorldTheme
+UWorldTileManager
+APlayspace

@@ -6,10 +6,49 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 
+#include "EFortControlRecoveryBehavior.h"
+#include "EFortFootstepSurfaceType.h"
+#include "EFortMovementStyle.h"
+#include "EFortPawnPushSize.h"
+#include "EFortSoundIndicatorTypes.h"
+#include "Engine/DataTable.h"
+#include "Engine/EngineTypes.h"
+#include "Engine/NetSerialization.h"
+#include "FAthenaBatchedDamageGameplayCues_Shared.h"
+#include "FCalloutEntry.h"
+#include "FDamageDoneInfo.h"
+#include "FDamageDoneSourceInfo.h"
+#include "FDamageDoneTargetInfo.h"
+#include "FFortPawnUnEquippedWeaponSignature.h"
+#include "FFortPickupEntryData.h"
+#include "FOnHolsteredEvent.h"
+#include "FOnPlayerStartDBNO.h"
+#include "FOnStormShieldComponentCreated.h"
+#include "FOnUnholsteredEvent.h"
+#include "FPawnDamageZones.h"
+#include "FPawnHealthChanged.h"
+#include "FPawnUpdatedDecisionWindowStackSignature.h"
+#include "GameplayCueInterface.h"
+#include "GameplayEffect.h"
+#include "GameplayEffectTypes.h"
+#include "GameplayPrediction.h"
+#include "GameplayTagContainer.h"
+#include "Math/Color.h"
+#include "Math/Vector.h"
+#include "Styling/SlateBrush.h"
+
+class AFortEmitterCameraLensEffectDirectional;
+class UFortFeedbackBank;
+class UFortFootstepAudioBank;
+class UFortHealthBarIndicator;
+class UFortStormShieldComponent;
+class UFortSwimmingAudioBank;
 class UParticleSystemComponent;
+class UPegasusGameEventCollector;
 class USkeletalMeshSocket;
 class USoundAttenuation;
 class USoundEffectSourcePresetChain;
+class UWeaponHitNotifyAudioBank;
 
 #include "AFortPawn.generated.h"
 
@@ -107,6 +146,18 @@ public:
 	UPROPERTY()
 	uint8 bSkipAnalogJump : 1;
 
+	// table index 177, flags 0x10000000010001
+	UPROPERTY()
+	TEnumAsByte<ETraceTypeQuery> FootstepTraceTypeQuery;
+
+	// table index 176, flags 0x10000000000014
+	UPROPERTY()
+	TEnumAsByte<EFortFootstepSurfaceType::Type> FootstepSurfaceType;
+
+	// table index 173, flags 0x20080000010001
+	UPROPERTY()
+	EUpdateRateShiftBucket UroShiftBucket;
+
 	// table index 172, flags 0x20080000010005
 	UPROPERTY()
 	uint8 bUpdateMeshComponentUpdateFlagOnServer : 1;
@@ -147,9 +198,21 @@ public:
 	UPROPERTY()
 	uint8 bCachedIsInAthena : 1;
 
+	// table index 162, flags 0x20080000000035
+	UPROPERTY(Replicated)
+	TEnumAsByte<EFortMovementStyle::Type> CurrentMovementStyle;
+
+	// table index 160, flags 0x20080000000014
+	UPROPERTY()
+	EFortControlRecoveryBehavior ControlRecoveryBehavior;
+
 	// table index 159, flags 0x20080100002020
 	UPROPERTY(ReplicatedUsing=OnRep_TeleportCounter, Transient)
 	uint8 TeleportCounter;
+
+	// table index 158, flags 0x20080000000005
+	UPROPERTY()
+	FDataTableRowHandle PawnStatHandle;
 
 	// table index 157, flags 0x20080000000005
 	UPROPERTY()
@@ -158,6 +221,18 @@ public:
 	// table index 156, flags 0x20080000000005
 	UPROPERTY()
 	float SlidingBrakingDeceleration;
+
+	// table index 155, flags 0x200801000a003d
+	UPROPERTY(ReplicatedUsing=OnRep_StormShieldComponent)
+	UFortStormShieldComponent* StormShieldComponent;
+
+	// table index 154, flags 0x20080010080000
+	UPROPERTY()
+	FOnStormShieldComponentCreated OnStormShieldComponentCreated;
+
+	// table index 152, flags 0x20080000000015
+	UPROPERTY()
+	EFortPawnPushSize PushSize;
 
 	// table index 151, flags 0x10000100002025
 	UPROPERTY(ReplicatedUsing=OnRep_PawnUniqueID, Transient)
@@ -175,9 +250,17 @@ public:
 	UPROPERTY()
 	FName LeftHandWeaponHandSocketName;
 
+	// table index 142, flags 0x10000000002000
+	UPROPERTY(Transient)
+	FGameplayTagContainer DeathTags;
+
 	// table index 141, flags 0x10000000002034
 	UPROPERTY(Replicated, Transient)
 	float SpawnImmunityTime;
+
+	// table index 137, flags 0x20080000000000
+	UPROPERTY()
+	TArray<FFortPickupEntryData> PickupDirectionData;
 
 	// table index 136, flags 0x10000000002024
 	UPROPERTY(Replicated, Transient)
@@ -195,17 +278,33 @@ public:
 	UPROPERTY()
 	uint8 bSupportsDamageNumbersAtHitLocation : 1;
 
+	// table index 132, flags 0x10000100002034
+	UPROPERTY(ReplicatedUsing=OnRep_PushMomentum, Transient)
+	FVector_NetQuantize PushMomentum;
+
 	// table index 131, flags 0x20080000002020
 	UPROPERTY(Replicated, Transient)
 	float LocalSpin;
+
+	// table index 130, flags 0x10000000010005
+	UPROPERTY()
+	FGameplayCueTag DeathCueTag;
 
 	// table index 129, flags 0x10000000002014
 	UPROPERTY(Transient)
 	USkeletalMeshSocket* DeathHitSocket;
 
+	// table index 128, flags 0x20080010080000
+	UPROPERTY()
+	FOnPlayerStartDBNO OnPlayerStartDBNO;
+
 	// table index 126, flags 0x10000000000005
 	UPROPERTY()
 	float TeamBeaconMaxDist;
+
+	// table index 125, flags 0x10000000000005
+	UPROPERTY()
+	FColor TeamBeaconTextColor;
 
 	// table index 124, flags 0x10000000002000
 	UPROPERTY(Transient)
@@ -219,9 +318,21 @@ public:
 	UPROPERTY()
 	float MaxFootstepDistance;
 
+	// table index 113, flags 0x10000000010001
+	UPROPERTY()
+	UWeaponHitNotifyAudioBank* DefaultHitNotifyAudioBank;
+
+	// table index 112, flags 0x10000000010001
+	UPROPERTY()
+	UFortSwimmingAudioBank* DefaultSwimmingAudioBank;
+
 	// table index 111, flags 0x10000000000001
 	UPROPERTY()
 	float LineTestForDamageZoneBoneDetectionRadius;
+
+	// table index 110, flags 0x10000000000001
+	UPROPERTY()
+	FPawnDamageZones DamageZones[4];
 
 	// table index 109, flags 0x10000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_DamageZoneActiveBitMask)
@@ -279,6 +390,22 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_EmoteWalkSpeed)
 	float EmoteWalkSpeed;
 
+	// table index 76, flags 0x10000000010005
+	UPROPERTY()
+	UFortFootstepAudioBank* FootstepBank;
+
+	// table index 74, flags 0x10000010080000
+	UPROPERTY()
+	FFortPawnUnEquippedWeaponSignature OnWeaponUnEquippedDelegate;
+
+	// table index 67, flags 0x10000010080000
+	UPROPERTY()
+	FOnHolsteredEvent OnHolsteredEvent;
+
+	// table index 66, flags 0x10000010080000
+	UPROPERTY()
+	FOnUnholsteredEvent OnUnholsteredEvent;
+
 	// table index 65, flags 0x20080000002000
 	UPROPERTY(Transient)
 	int32 WeaponHolsterCounter;
@@ -295,17 +422,61 @@ public:
 	UPROPERTY()
 	FName SpottedEvent;
 
+	// table index 60, flags 0x10000000000005
+	UPROPERTY()
+	UFortFeedbackBank* DefaultFeedback;
+
+	// table index 58, flags 0x10000000000000
+	UPROPERTY()
+	TArray<AFortEmitterCameraLensEffectDirectional*> ActiveSoundIndicators;
+
+	// table index 57, flags 0x14000000000005
+	UPROPERTY()
+	TSubclassOf<AFortEmitterCameraLensEffectDirectional> DefaultSoundTrackingVisual;
+
+	// table index 56, flags 0x10000000010015
+	UPROPERTY()
+	FGameplayTagContainer SoundTrackingVisibilityTags;
+
 	// table index 55, flags 0x0
 	UPROPERTY()
 	float PriorityModifiers;
+
+	// table index 53, flags 0x0
+	UPROPERTY()
+	EFortSoundIndicatorTypes PriorityModifiers_Key;
 
 	// table index 49, flags 0x10000000002000
 	UPROPERTY(Transient)
 	uint8 bIsDisconnectedPawn : 1;
 
+	// table index 48, flags 0x20080000000000
+	UPROPERTY()
+	FActiveGameplayEffectHandle MaxHealthApplicationHandle;
+
+	// table index 41, flags 0x10000010080000
+	UPROPERTY()
+	FPawnUpdatedDecisionWindowStackSignature OnAbilityDecisionWindowStackUpdated;
+
+	// table index 37, flags 0x20080000010015
+	UPROPERTY()
+	FGameplayTagContainer GameplayTags;
+
 	// table index 36, flags 0x20080000010035
 	UPROPERTY(Replicated)
 	FText DisplayName;
+
+	// table index 32, flags 0x10000000002000
+	UPROPERTY(Transient)
+	TArray<FDamageDoneInfo> DamageDone;
+
+	// table index 30, flags 0x10000000002000
+	UPROPERTY(Transient)
+	TArray<FDamageDoneSourceInfo> TotalDamageDoneTrackers;
+
+	// table index 28, flags 0x10000000002000
+	UPROPERTY(Transient)
+	TArray<FDamageDoneTargetInfo> TargetDamageDoneTrackers;
 
 	// table index 27, flags 0x10000000002000
 	UPROPERTY(Transient)
@@ -315,6 +486,18 @@ public:
 	UPROPERTY(Transient)
 	float TotalPlayerDamageDealt;
 
+	// table index 25, flags 0x10000000002000
+	UPROPERTY(Transient)
+	UFortHealthBarIndicator* HealthBarIndicator;
+
+	// table index 24, flags 0x20080000000020
+	UPROPERTY(Replicated)
+	FGameplayTag CurrentCalloutTag;
+
+	// table index 22, flags 0x20080000010001
+	UPROPERTY()
+	TArray<FCalloutEntry> CalloutEntries;
+
 	// table index 21, flags 0x20080000000001
 	UPROPERTY()
 	float HealthBarWidth;
@@ -322,6 +505,14 @@ public:
 	// table index 20, flags 0x20080000000005
 	UPROPERTY()
 	float HealthBarHeightMultiplier;
+
+	// table index 19, flags 0x20080000010001
+	UPROPERTY()
+	FSlateBrush SpottedBrush;
+
+	// table index 18, flags 0x20080000010001
+	UPROPERTY()
+	FVector SpottedIconOffset;
 
 	// table index 17, flags 0x20080000010001
 	UPROPERTY()
@@ -339,11 +530,75 @@ public:
 	UPROPERTY()
 	TMap<int32, int32> LODToFrameSkipMap;
 
+	// table index 9, flags 0x10000010080000
+	UPROPERTY()
+	FPawnHealthChanged OnPawnHealthChanged;
+
+	// table index 8, flags 0x10000000000000
+	UPROPERTY()
+	FAthenaBatchedDamageGameplayCues_Shared AccumulatedBatchData_Shared;
+
+	// table index 6, flags 0x10008000000000
+	UPROPERTY()
+	FGameplayCueParameters BatchedGameplayCueParameters;
+
+	// table index 5, flags 0x10000000010001
+	UPROPERTY()
+	FGameplayTagContainer ReplayItemActions;
+
+	// table index 4, flags 0x40000000010001
+	UPROPERTY()
+	FGameplayTagContainer HidingVisibilityTags;
+
+	// table index 3, flags 0x40000000080008
+	UPROPERTY()
+	UPegasusGameEventCollector* PegasusTimelineCollector;
+
 	UFUNCTION()
 	void HandleIsDying();
 
 	UFUNCTION()
 	void HandleIsHiddenForDeath();
+
+	UFUNCTION(NetMulticast, Unreliable)
+	void NetMulticast_InvokeGameplayCueAdded(const FGameplayEffectContextHandle& EffectContext, const FPredictionKey& PredictionKey, const FGameplayTag& GameplayCueTag);
+	void NetMulticast_InvokeGameplayCueAdded_Implementation(const FGameplayEffectContextHandle& EffectContext, const FPredictionKey& PredictionKey, const FGameplayTag& GameplayCueTag);
+
+	UFUNCTION(NetMulticast, Unreliable)
+	void NetMulticast_InvokeGameplayCueAdded_WithParams(const FGameplayCueParameters& Parameters, const FPredictionKey& PredictionKey, const FGameplayTag& GameplayCueTag);
+	void NetMulticast_InvokeGameplayCueAdded_WithParams_Implementation(const FGameplayCueParameters& Parameters, const FPredictionKey& PredictionKey, const FGameplayTag& GameplayCueTag);
+
+	UFUNCTION(NetMulticast, Unreliable)
+	void NetMulticast_InvokeGameplayCueAddedAndWhileActive_FromSpec(const FPredictionKey& PredictionKey, const FGameplayEffectSpecForRPC& Spec);
+	void NetMulticast_InvokeGameplayCueAddedAndWhileActive_FromSpec_Implementation(const FPredictionKey& PredictionKey, const FGameplayEffectSpecForRPC& Spec);
+
+	UFUNCTION(NetMulticast, Unreliable)
+	void NetMulticast_InvokeGameplayCueAddedAndWhileActive_WithParams(const FGameplayCueParameters& GameplayCueParameters, const FPredictionKey& PredictionKey, const FGameplayTag& GameplayCueTag);
+	void NetMulticast_InvokeGameplayCueAddedAndWhileActive_WithParams_Implementation(const FGameplayCueParameters& GameplayCueParameters, const FPredictionKey& PredictionKey, const FGameplayTag& GameplayCueTag);
+
+	UFUNCTION(NetMulticast, Unreliable)
+	void NetMulticast_InvokeGameplayCueExecuted(const FGameplayEffectContextHandle& EffectContext, const FPredictionKey& PredictionKey, const FGameplayTag& GameplayCueTag);
+	void NetMulticast_InvokeGameplayCueExecuted_Implementation(const FGameplayEffectContextHandle& EffectContext, const FPredictionKey& PredictionKey, const FGameplayTag& GameplayCueTag);
+
+	UFUNCTION(NetMulticast, Unreliable)
+	void NetMulticast_InvokeGameplayCueExecuted_FromSpec(const FPredictionKey& PredictionKey, const FGameplayEffectSpecForRPC& Spec);
+	void NetMulticast_InvokeGameplayCueExecuted_FromSpec_Implementation(const FPredictionKey& PredictionKey, const FGameplayEffectSpecForRPC& Spec);
+
+	UFUNCTION(NetMulticast, Unreliable)
+	void NetMulticast_InvokeGameplayCueExecuted_WithParams(const FGameplayCueParameters& GameplayCueParameters, const FPredictionKey& PredictionKey, const FGameplayTag& GameplayCueTag);
+	void NetMulticast_InvokeGameplayCueExecuted_WithParams_Implementation(const FGameplayCueParameters& GameplayCueParameters, const FPredictionKey& PredictionKey, const FGameplayTag& GameplayCueTag);
+
+	UFUNCTION(NetMulticast, Unreliable)
+	void NetMulticast_InvokeGameplayCuesAddedAndWhileActive_WithParams(const FGameplayCueParameters& GameplayCueParameters, const FPredictionKey& PredictionKey, const FGameplayTagContainer& GameplayCueTags);
+	void NetMulticast_InvokeGameplayCuesAddedAndWhileActive_WithParams_Implementation(const FGameplayCueParameters& GameplayCueParameters, const FPredictionKey& PredictionKey, const FGameplayTagContainer& GameplayCueTags);
+
+	UFUNCTION(NetMulticast, Unreliable)
+	void NetMulticast_InvokeGameplayCuesExecuted(const FGameplayEffectContextHandle& EffectContext, const FPredictionKey& PredictionKey, const FGameplayTagContainer& GameplayCueTags);
+	void NetMulticast_InvokeGameplayCuesExecuted_Implementation(const FGameplayEffectContextHandle& EffectContext, const FPredictionKey& PredictionKey, const FGameplayTagContainer& GameplayCueTags);
+
+	UFUNCTION(NetMulticast, Unreliable)
+	void NetMulticast_InvokeGameplayCuesExecuted_WithParams(const FGameplayCueParameters& GameplayCueParameters, const FPredictionKey& PredictionKey, const FGameplayTagContainer& GameplayCueTags);
+	void NetMulticast_InvokeGameplayCuesExecuted_WithParams_Implementation(const FGameplayCueParameters& GameplayCueParameters, const FPredictionKey& PredictionKey, const FGameplayTagContainer& GameplayCueTags);
 
 	UFUNCTION()
 	void OnRep_bWeaponHolstered();
@@ -376,10 +631,20 @@ public:
 	void OnRep_PawnUniqueID();
 
 	UFUNCTION()
+	void OnRep_PushMomentum();
+
+	UFUNCTION()
+	void OnRep_StormShieldComponent();
+
+	UFUNCTION()
 	void OnRep_TeleportCounter();
 
 	UFUNCTION()
 	void OnRep_WeaponActivated();
+
+	UFUNCTION(Server, Reliable)
+	void ServerTeleportNearLocation(const FVector& ActorLocation);
+	void ServerTeleportNearLocation_Implementation(const FVector& ActorLocation);
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

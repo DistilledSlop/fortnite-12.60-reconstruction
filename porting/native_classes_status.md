@@ -1,13 +1,28 @@
-# Native class promotion: status (first pass)
+# Native class promotion: status
 
-Scope: the eight promotion targets and every ancestor that is not an engine 4.25 class (21 classes), generated from
-the reflection tables into `native/Source` and compiled into `FortniteLinux`, `FortniteLinuxServer` and
-`FortniteLinuxEditor`. The join smoke test (`porting/server/smoke_join.sh`, direct mode) passes.
+Scope: 168 classes generated from the reflection tables into `porting/native/Source/FortniteGame/Generated/` (164) and
+`porting/native/Source/PlayspaceFramework/Generated/` (4), compiled into `FortniteLinux`, `FortniteLinuxServer` and
+`FortniteLinuxEditor`. The closure is `porting/native_class_set.txt` (21 round 1 classes, then 146 round 2 classes in
+dependency order, plus `AGameplayVolume`). The join smoke test (`porting/server/smoke_join.sh`, direct mode) passes on the
+final binaries.
 
-**Wire compatibility: not yet.** 171 of 445 replicated properties in the closure are skipped, and 178 RPCs are not
-emitted. Both peers in our build agree with each other, but against the original client the `ClassChecksum` differs
-for each class with skipped replicated properties, and skipped RPCs shift that class's RPC indices. See "What blocks
-wire compatibility".
+**Wire compatibility: not yet.** 767 of 3,424 properties and 121 of 658 replicated properties are skipped, and 97 of 428
+RPCs are not emitted. Both peers in our build agree with each other. Against the original client the `ClassChecksum`
+differs for each class with a skipped replicated property, and skipped RPCs shift that class's RPC indices. See
+"What blocks wire compatibility".
+
+## Results by round
+
+| Measure | Round 1 (21 classes) | Final (168 classes) |
+|---|---|---|
+| Properties emitted / total | 1,220 / 1,721 (884 skipped before this pass) | 2,657 / 3,424 (767 skipped) |
+| Replicated emitted / total | 349 / 445 (171 skipped before) | 537 / 658 (121 skipped) |
+| RPCs emitted / reflection | 271 / 376 (178 skipped before) | 331 / 428 (97 skipped) |
+| Structs / enums / delegates emitted | 71 / 56 / 118 | 158 / 110 / 157 |
+
+Round 1 skipped counts are the "before" values from the earlier pass (884 properties, 171 replicated, 178 RPCs) and the
+round 1 closure after the type fixes (501 properties, 96 replicated, 105 RPCs). The final denominators are larger
+because the closure is larger.
 
 ## Regenerate
 
@@ -15,199 +30,303 @@ wire compatibility".
 porting/promote_native_classes.sh
 ```
 
-Inputs are git-ignored under `porting/generated/reflection/`. Outputs are tracked under
-`native/Source/FortniteGame/Generated/` and `native/Source/PlayspaceFramework/Generated/`, which are deterministic
-(two runs give identical checksums). The closure is `porting/native_class_set.txt`. `--promote` in
-`porting/gen_native_classes.py` checks it: each parent is listed or is in `/Script/Engine` or `/Script/CoreUObject`.
+Inputs are git-ignored under `porting/generated/reflection/`. Outputs are tracked under `native/Source/*/Generated/`.
+The closure is `porting/native_class_set.txt`. `--promote` in `porting/gen_native_classes.py` checks it: each parent is
+listed or is in `/Script/Engine` or `/Script/CoreUObject`. Engine parent headers are found under
+`Runtime/Engine/Classes`, `Runtime/Engine/Public` and `Runtime/CoreUObject/Public`.
 
 ## Module path decision
 
 The class path is part of the wire format, so the module name matters. The package of each class comes from
 `class_parent_map.json` (the `FPackageParams` record that each block points to). It is not guessed.
 
-- 19 classes are in `/Script/FortniteGame`, the module this project already owns.
-- `APlayspaceGameState` and `APlayspacePlayerController` are in `/Script/PlayspaceFramework`. This is a separate
-  package in the shipped client, and it is not in the engine tree.
-- Decision: a minimal runtime module `native/Source/PlayspaceFramework` (`PlayspaceFramework.Build.cs`, one IMPLEMENT_MODULE
-  file) carries those two classes, so their paths are exactly `/Script/PlayspaceFramework.PlayspaceGameState` and
-  `/Script/PlayspaceFramework.PlayspacePlayerController`. It is listed in `FortniteLinux.uproject` and is a dependency
-  of `FortniteGame`.
+- 164 classes are in `/Script/FortniteGame`, the module this project owns.
+- 4 classes are in `/Script/PlayspaceFramework` (`APlayspaceGameState`, `APlayspacePlayerController`, `APlayspace`,
+  `AGameplayVolume`). That package is a separate module, `native/Source/PlayspaceFramework`, and depends on `GameplayTags`
+  for the gameplay tag types.
 
-## Naming (verified in the logs)
+## Naming
 
-UHT keeps the `A`/`U` prefix in the C++ name, but UObject names drop it. So `AFortPawn` is
-`/Script/FortniteGame.FortPawn`. Our server logs `class=FortPlayerPawnAthena` and the client logs
-`Welcomed by server (... Game: /Script/FortniteGame.FortGameModeAthena)`. The probe in `FortniteGame.cpp` loads the 21
-classes by these paths on both peers (`Native class ...: loaded, super ...`). All 21 load, and each super chain matches
-the reflection chain.
+UHT keeps the `A`/`U` prefix in the C++ name, but UObject names drop it. So `AFortPawn` is `/Script/FortniteGame.FortPawn`.
+Clash checks between hand-written code and generated code must compare the stripped name.
 
 ## Classes
 
-Columns: emitted / reflection. RPCs are net UFUNCTIONs (Server, Client, NetMulticast). "RepNotify UFUNCTIONs" are
-OnRep functions that are emitted because a replicated property names them. Other UFUNCTIONs are not emitted: the RPC
-indices come from the class's net fields, and `ClassChecksum` covers replicated properties only
-(`CoreNet.cpp` 160-240), so they are not wire-relevant.
+Columns: emitted / total. RPCs are net UFUNCTIONs (Server, Client, NetMulticast). Properties and replicated columns count
+the class's own table. Other UFUNCTIONs are not emitted: the RPC indices come from the net fields, and `ClassChecksum`
+covers replicated properties only (`CoreNet.cpp` 160-240).
 
-| Class | Module (package) | Parent | Properties emitted / reflection | Replicated emitted / reflection | RPCs emitted / reflection | RepNotify UFUNCTIONs | Functions skipped |
-|---|---|---|---|---|---|---|---|
-| AFortGameStateAthena | /Script/FortniteGame | AFortGameStateZone | 88 / 197 | 59 / 91 | 1 / 1 | 22 | 0 |
-| AFortPlayerStateAthena | /Script/FortniteGame | AFortPlayerStateZone | 46 / 66 | 33 / 41 | 7 / 8 | 26 | 1 |
-| AFortPlayerControllerAthena | /Script/FortniteGame | AFortPlayerControllerZone | 75 / 161 | 8 / 19 | 72 / 122 | 1 | 50 |
-| AFortPlayerPawnAthena | /Script/FortniteGame | AFortPlayerPawn | 56 / 97 | 7 / 14 | 3 / 5 | 4 | 2 |
-| AFortWorldSettings | /Script/FortniteGame | AWorldSettings | 23 / 49 | 0 / 0 | 0 / 0 | 0 | 0 |
-| AFortAthenaMapInfo | /Script/FortniteGame | AActor | 0 / 35 | 0 / 0 | 0 / 0 | 0 | 0 |
-| AFortPoiManager | /Script/FortniteGame | AActor | 9 / 17 | 2 / 4 | 0 / 0 | 2 | 0 |
-| AFortWorldManager | /Script/FortniteGame | AInfo | 27 / 50 | 1 / 3 | 0 / 0 | 0 | 0 |
-| AFortPlayerStateZone | /Script/FortniteGame | AFortPlayerState | 12 / 27 | 11 / 18 | 1 / 2 | 1 | 1 |
-| AFortPlayerState | /Script/FortniteGame | APlayerState | 24 / 55 | 19 / 37 | 2 / 4 | 9 | 2 |
-| AFortGameStateZone | /Script/FortniteGame | AFortGameState_InGame | 42 / 74 | 25 / 44 | 1 / 5 | 9 | 4 |
-| AFortGameState_InGame | /Script/FortniteGame | AFortGameState | 0 / 0 | 0 / 0 | 0 / 0 | 0 | 0 |
-| AFortGameState | /Script/FortniteGame | AFortGameStateBase | 20 / 48 | 13 / 27 | 2 / 7 | 5 | 5 |
-| AFortGameStateBase | /Script/FortniteGame | APlayspaceGameState | 0 / 2 | 0 / 2 | 0 / 0 | 0 | 0 |
-| AFortPlayerControllerZone | /Script/FortniteGame | AFortPlayerControllerGameplay | 14 / 29 | 1 / 3 | 17 / 26 | 1 | 9 |
-| AFortPlayerControllerGameplay | /Script/FortniteGame | AFortPlayerController | 21 / 59 | 11 / 13 | 15 / 15 | 6 | 0 |
-| AFortPlayerController | /Script/FortniteGame | APlayspacePlayerController | 152 / 266 | 20 / 31 | 63 / 135 | 5 | 72 |
-| AFortPlayerPawn | /Script/FortniteGame | AFortPawn | 145 / 309 | 39 / 65 | 14 / 31 | 20 | 17 |
-| AFortPawn | /Script/FortniteGame | ACharacter | 80 / 173 | 25 / 33 | 0 / 15 | 14 | 15 |
-| APlayspaceGameState | /Script/PlayspaceFramework | AGameState | 2 / 5 | 0 / 0 | 0 / 0 | 0 | 0 |
-| APlayspacePlayerController | /Script/PlayspaceFramework | APlayerController | 1 / 2 | 0 / 0 | 0 / 0 | 0 | 0 |
+| Class | Package | Parent | Properties emitted / total | Replicated emitted / total | RPCs emitted / reflection |
+|---|---|---|---|---|---|
+| AFortGameStateAthena | /Script/FortniteGame | AFortGameStateZone | 172 / 197 | 80 / 91 | 1 / 1 |
+| AFortPlayerStateAthena | /Script/FortniteGame | AFortPlayerStateZone | 61 / 66 | 39 / 41 | 8 / 8 |
+| AFortPlayerControllerAthena | /Script/FortniteGame | AFortPlayerControllerZone | 128 / 161 | 15 / 19 | 98 / 122 |
+| AFortPlayerPawnAthena | /Script/FortniteGame | AFortPlayerPawn | 78 / 97 | 12 / 14 | 3 / 5 |
+| AFortWorldSettings | /Script/FortniteGame | AWorldSettings | 43 / 49 | 0 / 0 | 0 / 0 |
+| AFortAthenaMapInfo | /Script/FortniteGame | AActor | 29 / 35 | 0 / 0 | 0 / 0 |
+| AFortPoiManager | /Script/FortniteGame | AActor | 17 / 17 | 4 / 4 | 0 / 0 |
+| AFortWorldManager | /Script/FortniteGame | AInfo | 43 / 50 | 2 / 3 | 0 / 0 |
+| AFortPlayerStateZone | /Script/FortniteGame | AFortPlayerState | 20 / 27 | 14 / 18 | 1 / 2 |
+| AFortPlayerState | /Script/FortniteGame | APlayerState | 47 / 55 | 33 / 37 | 2 / 4 |
+| AFortGameStateZone | /Script/FortniteGame | AFortGameState_InGame | 68 / 74 | 42 / 44 | 2 / 5 |
+| AFortGameState_InGame | /Script/FortniteGame | AFortGameState | 0 / 0 | 0 / 0 | 0 / 0 |
+| AFortGameState | /Script/FortniteGame | AFortGameStateBase | 41 / 48 | 24 / 27 | 7 / 7 |
+| AFortGameStateBase | /Script/FortniteGame | APlayspaceGameState | 1 / 2 | 1 / 2 | 0 / 0 |
+| AFortPlayerControllerZone | /Script/FortniteGame | AFortPlayerControllerGameplay | 23 / 29 | 2 / 3 | 22 / 26 |
+| AFortPlayerControllerGameplay | /Script/FortniteGame | AFortPlayerController | 53 / 59 | 12 / 13 | 15 / 15 |
+| AFortPlayerController | /Script/FortniteGame | APlayspacePlayerController | 215 / 266 | 28 / 31 | 103 / 135 |
+| AFortPlayerPawn | /Script/FortniteGame | AFortPawn | 228 / 309 | 54 / 65 | 22 / 31 |
+| AFortPawn | /Script/FortniteGame | ACharacter | 124 / 173 | 29 / 33 | 11 / 15 |
+| APlayspaceGameState | /Script/PlayspaceFramework | AGameState | 3 / 5 | 0 / 0 | 0 / 0 |
+| APlayspacePlayerController | /Script/PlayspaceFramework | APlayerController | 1 / 2 | 0 / 0 | 0 / 0 |
+| AFortReplaySpectatorPawnBase | /Script/FortniteGame | ASpectatorPawn | 1 / 2 | 0 / 0 | 0 / 0 |
+| ABattleMapPawnLive | /Script/FortniteGame | AFortReplaySpectatorPawnBase | 0 / 8 | 0 / 0 | 0 / 0 |
+| ABuildingActor | /Script/FortniteGame | AActor | 126 / 146 | 17 / 22 | 0 / 0 |
+| ABuildingGameplayActor | /Script/FortniteGame | ABuildingActor | 10 / 18 | 0 / 0 | 0 / 0 |
+| ABuildingGameplayActorPlayerPropAttachment | /Script/FortniteGame | ABuildingGameplayActor | 0 / 0 | 0 / 0 | 0 / 0 |
+| ABuildingItemCollectorActor | /Script/FortniteGame | ABuildingGameplayActor | 32 / 39 | 6 / 9 | 0 / 1 |
+| ABuildingItemWeaponUpgradeActor | /Script/FortniteGame | ABuildingItemCollectorActor | 17 / 25 | 1 / 1 | 0 / 0 |
+| ABuildingSMActor | /Script/FortniteGame | ABuildingActor | 106 / 136 | 21 / 25 | 12 / 12 |
+| ABuildingTrap | /Script/FortniteGame | ABuildingSMActor | 21 / 34 | 2 / 5 | 0 / 0 |
+| ABuildingTrapFloor | /Script/FortniteGame | ABuildingTrap | 0 / 0 | 0 / 0 | 0 / 0 |
+| ABuildingTrapDefender | /Script/FortniteGame | ABuildingTrapFloor | 3 / 5 | 1 / 3 | 0 / 0 |
+| AFortClientOnlyActor | /Script/FortniteGame | AActor | 0 / 0 | 0 / 0 | 0 / 0 |
+| ABuildingWeakSpot | /Script/FortniteGame | AFortClientOnlyActor | 9 / 10 | 0 / 0 | 0 / 0 |
+| ACustomCosmeticModifierBase | /Script/FortniteGame | AActor | 16 / 17 | 0 / 0 | 0 / 0 |
+| ACustomCharacterPartModifier | /Script/FortniteGame | ACustomCosmeticModifierBase | 2 / 3 | 0 / 0 | 0 / 0 |
+| AFortAIDirectorDataManager | /Script/FortniteGame | AActor | 3 / 4 | 0 / 0 | 0 / 0 |
+| AFortAircraft | /Script/FortniteGame | AActor | 3 / 4 | 1 / 1 | 0 / 0 |
+| AFortAthenaAircraft | /Script/FortniteGame | AFortAircraft | 18 / 23 | 8 / 8 | 0 / 0 |
+| AFortAthenaCreativePortal | /Script/FortniteGame | ABuildingGameplayActor | 29 / 32 | 11 / 11 | 0 / 0 |
+| AFortGameplayMutator | /Script/FortniteGame | AInfo | 4 / 4 | 1 / 1 | 0 / 0 |
+| AFortAthenaMutator_AI | /Script/FortniteGame | AFortGameplayMutator | 0 / 1 | 0 / 0 | 0 / 0 |
+| AFortBroadcastRemoteClientInfo | /Script/FortniteGame | AActor | 10 / 14 | 10 / 14 | 10 / 13 |
+| AFortBroadcastSpectatorInfo | /Script/FortniteGame | AInfo | 4 / 4 | 4 / 4 | 0 / 0 |
+| AFortCarriedObject | /Script/FortniteGame | AActor | 7 / 10 | 1 / 3 | 0 / 0 |
+| AFortClientAnnouncementManager | /Script/FortniteGame | AActor | 1 / 4 | 1 / 2 | 0 / 0 |
+| AFortCreativePortalManager | /Script/FortniteGame | AInfo | 1 / 2 | 0 / 0 | 0 / 0 |
+| AFortCreativeRealEstatePlotManager | /Script/FortniteGame | AInfo | 0 / 1 | 0 / 1 | 0 / 0 |
+| AFortDamageNumbersActor | /Script/FortniteGame | AFortClientOnlyActor | 29 / 33 | 0 / 0 | 0 / 0 |
+| AFortDecoHelper | /Script/FortniteGame | AActor | 16 / 20 | 0 / 0 | 0 / 0 |
+| AFortEmitterCameraLensEffectDirectional | /Script/FortniteGame | AEmitterCameraLensEffectBase | 4 / 5 | 0 / 0 | 0 / 0 |
+| AFortFXManager | /Script/FortniteGame | AFortClientOnlyActor | 2 / 5 | 0 / 0 | 0 / 0 |
+| AFortFeedbackManager | /Script/FortniteGame | AActor | 3 / 6 | 0 / 2 | 0 / 0 |
+| AFortGlobalAbilityTargetingActor | /Script/FortniteGame | AInfo | 0 / 0 | 0 / 0 | 0 / 0 |
+| AFortGlobalEnvironmentAbilityActor | /Script/FortniteGame | AInfo | 0 / 2 | 0 / 0 | 0 / 0 |
+| AFortInGameMapManager | /Script/FortniteGame | AActor | 33 / 36 | 2 / 2 | 1 / 1 |
+| AFortInventory | /Script/FortniteGame | AActor | 7 / 10 | 1 / 3 | 0 / 0 |
+| AFortLocalizationService | /Script/FortniteGame | AInfo | 3 / 3 | 0 / 0 | 0 / 0 |
+| AFortMarkActor | /Script/FortniteGame | AActor | 5 / 7 | 4 / 6 | 0 / 0 |
+| AFortMissionManager | /Script/FortniteGame | AActor | 4 / 14 | 0 / 7 | 0 / 0 |
+| AFortMissionState | /Script/FortniteGame | AActor | 3 / 5 | 0 / 0 | 0 / 0 |
+| AFortMusicManager | /Script/FortniteGame | AActor | 2 / 5 | 0 / 0 | 0 / 0 |
+| AFortObjectiveBase | /Script/FortniteGame | AFortMissionState | 15 / 18 | 6 / 6 | 0 / 0 |
+| AFortPhysicsPawn | /Script/FortniteGame | APawn | 2 / 2 | 2 / 2 | 2 / 4 |
+| AFortPlayerCharm | /Script/FortniteGame | AActor | 2 / 6 | 0 / 0 | 0 / 0 |
+| AFortPlayerMarkerBase | /Script/FortniteGame | AActor | 2 / 5 | 0 / 0 | 0 / 0 |
+| AFortPlayerParachute | /Script/FortniteGame | AActor | 12 / 23 | 0 / 2 | 0 / 0 |
+| AFortPlayerPet | /Script/FortniteGame | AActor | 1 / 7 | 0 / 0 | 0 / 0 |
+| AFortPlayerPetRepState | /Script/FortniteGame | AActor | 1 / 3 | 1 / 3 | 0 / 0 |
+| AFortPlayerStartWarmup | /Script/FortniteGame | APlayerStart | 0 / 0 | 0 / 0 | 0 / 0 |
+| AFortPoiVolume | /Script/FortniteGame | AVolume | 5 / 7 | 0 / 0 | 0 / 0 |
+| AFortPropertyOverrideReplShared | /Script/FortniteGame | AInfo | 0 / 1 | 0 / 1 | 0 / 0 |
+| AFortQuickBars | /Script/FortniteGame | AFortClientOnlyActor | 0 / 7 | 0 / 0 | 0 / 0 |
+| AFortRemoteControlledPawnAthena | /Script/FortniteGame | AFortPlayerPawnAthena | 9 / 17 | 5 / 7 | 0 / 0 |
+| AFortSafeZoneIndicator | /Script/FortniteGame | AActor | 46 / 51 | 17 / 17 | 0 / 0 |
+| AFortSafeZoneStorm | /Script/FortniteGame | AActor | 1 / 1 | 0 / 0 | 0 / 0 |
+| AFortScriptedActionManager | /Script/FortniteGame | AActor | 2 / 5 | 0 / 0 | 0 / 0 |
+| AFortSkyTube | /Script/FortniteGame | AActor | 31 / 32 | 0 / 0 | 0 / 0 |
+| AFortSpecialActorReplicationInfo | /Script/FortniteGame | AInfo | 1 / 2 | 0 / 1 | 0 / 0 |
+| AFortSprayDecalInstance | /Script/FortniteGame | ABuildingSMActor | 4 / 5 | 0 / 1 | 0 / 0 |
+| AFortTeamInfo | /Script/FortniteGame | AInfo | 3 / 5 | 3 / 4 | 0 / 0 |
+| AFortTeamPrivateInfo | /Script/FortniteGame | AInfo | 2 / 4 | 1 / 3 | 0 / 0 |
+| AFortThreatParticleActor | /Script/FortniteGame | AActor | 0 / 0 | 0 / 0 | 0 / 0 |
+| AFortThreatVisualsManager | /Script/FortniteGame | AActor | 19 / 22 | 2 / 4 | 0 / 1 |
+| AFortTimeOfDayManager | /Script/FortniteGame | AInfo | 66 / 80 | 5 / 6 | 1 / 2 |
+| AFortVehicleManager | /Script/FortniteGame | AActor | 2 / 3 | 0 / 0 | 0 / 0 |
+| AFortVisibilityManager | /Script/FortniteGame | AActor | 0 / 1 | 0 / 1 | 0 / 0 |
+| AGameplayVolume | /Script/PlayspaceFramework | AActor | 4 / 4 | 0 / 0 | 0 / 0 |
+| AFortVolume | /Script/FortniteGame | AGameplayVolume | 14 / 34 | 4 / 7 | 1 / 1 |
+| AFortVolumeManager | /Script/FortniteGame | AInfo | 6 / 18 | 1 / 2 | 0 / 0 |
+| AFortWindManager | /Script/FortniteGame | AActor | 20 / 25 | 0 / 0 | 0 / 0 |
+| APhysicsObject | /Script/FortniteGame | AFortPhysicsPawn | 26 / 37 | 4 / 8 | 3 / 5 |
+| AUnicornDriver | /Script/FortniteGame | AInfo | 30 / 32 | 0 / 0 | 0 / 0 |
+| UAthenaMarkerComponent | /Script/FortniteGame | UActorComponent | 7 / 11 | 0 / 1 | 1 / 2 |
+| UAthenaPlayerMatchReport | /Script/FortniteGame | UObject | 10 / 12 | 0 / 0 | 0 / 0 |
+| UAthenaResurrectionComponent | /Script/FortniteGame | UActorComponent | 4 / 6 | 1 / 2 | 2 / 4 |
+| UBaseStatManager | /Script/FortniteGame | UObject | 1 / 3 | 0 / 0 | 0 / 0 |
+| UBuildingEditModeMetadata | /Script/FortniteGame | UDataAsset | 4 / 6 | 0 / 0 | 0 / 0 |
+| UBuildingEditModeMetadata_BinaryToggle | /Script/FortniteGame | UBuildingEditModeMetadata | 1 / 1 | 0 / 0 | 0 / 0 |
+| UBuildingEditModeMetadata_Floor | /Script/FortniteGame | UBuildingEditModeMetadata_BinaryToggle | 0 / 0 | 0 / 0 | 0 / 0 |
+| UBuildingEditModeMetadata_Roof | /Script/FortniteGame | UBuildingEditModeMetadata_BinaryToggle | 0 / 1 | 0 / 0 | 0 / 0 |
+| UBuildingEditModeMetadata_Stair | /Script/FortniteGame | UBuildingEditModeMetadata | 1 / 1 | 0 / 0 | 0 / 0 |
+| UBuildingEditModeMetadata_Wall | /Script/FortniteGame | UBuildingEditModeMetadata_BinaryToggle | 0 / 0 | 0 / 0 | 0 / 0 |
+| UBuildingStructuralSupportSystem | /Script/FortniteGame | UObject | 0 / 3 | 0 / 0 | 0 / 0 |
+| UCreativeQuestManager | /Script/FortniteGame | UObject | 0 / 0 | 0 / 0 | 0 / 0 |
+| UCreativeQuickbarComponent | /Script/FortniteGame | UActorComponent | 9 / 12 | 0 / 0 | 0 / 3 |
+| UCreativeUserContentManager | /Script/FortniteGame | UActorComponent | 1 / 3 | 0 / 0 | 0 / 0 |
+| UCustomCharacterPart | /Script/FortniteGame | UPrimaryDataAsset | 18 / 24 | 0 / 0 | 0 / 0 |
+| UCustomColorComponent | /Script/FortniteGame | UObject | 0 / 0 | 0 / 0 | 0 / 0 |
+| UCustomColorSwatch | /Script/FortniteGame | UPrimaryDataAsset | 2 / 2 | 0 / 0 | 0 / 0 |
+| UCustomPlayerComponent | /Script/FortniteGame | UObject | 0 / 0 | 0 / 0 | 0 / 0 |
+| UFortItem | /Script/FortniteGame | UObject | 4 / 4 | 0 / 0 | 0 / 0 |
+| UFortPersistableItem | /Script/FortniteGame | UFortItem | 4 / 5 | 0 / 0 | 0 / 0 |
+| UFortAccountItem | /Script/FortniteGame | UFortPersistableItem | 8 / 8 | 0 / 0 | 0 / 0 |
+| UFortAmbientAudioController | /Script/FortniteGame | UActorComponent | 3 / 9 | 0 / 0 | 0 / 0 |
+| UFortAnimNotifyState_RootMotionInterrupt | /Script/FortniteGame | UAnimNotifyState | 2 / 2 | 0 / 0 | 0 / 0 |
+| UFortCameraMode | /Script/FortniteGame | UObject | 8 / 9 | 0 / 0 | 0 / 0 |
+| UFortCharacter | /Script/FortniteGame | UFortAccountItem | 2 / 2 | 0 / 0 | 0 / 0 |
+| UFortCharacterCosmeticManager | /Script/FortniteGame | UWorldSubsystem | 0 / 0 | 0 / 0 | 0 / 0 |
+| UFortCinematicCamera | /Script/FortniteGame | UFortCameraMode | 0 / 1 | 0 / 0 | 0 / 0 |
+| UFortClientBotManager | /Script/FortniteGame | UObject | 41 / 45 | 0 / 0 | 0 / 0 |
+| UFortControllerComponent_LocalizationService | /Script/FortniteGame | UActorComponent | 0 / 0 | 0 / 0 | 2 / 2 |
+| UFortCreativeDeviceButtonComponent | /Script/FortniteGame | UActorComponent | 6 / 7 | 0 / 0 | 0 / 0 |
+| UFortCreativeObjectTrackingComponent | /Script/FortniteGame | UActorComponent | 0 / 0 | 0 / 0 | 1 / 1 |
+| UFortCreativeOptionsBundle | /Script/FortniteGame | UDataAsset | 0 / 1 | 0 / 0 | 0 / 0 |
+| UFortCustomizationAssetLoader | /Script/FortniteGame | UObject | 0 / 3 | 0 / 0 | 0 / 0 |
+| UFortFeedbackBank | /Script/FortniteGame | UPrimaryDataAsset | 0 / 2 | 0 / 0 | 0 / 0 |
+| UFortFootstepAudioBank | /Script/FortniteGame | UDataAsset | 9 / 11 | 0 / 0 | 0 / 0 |
+| UFortGamepadSettings | /Script/FortniteGame | UDataAsset | 33 / 34 | 0 / 0 | 0 / 0 |
+| UFortGameplayMessageComponentBase | /Script/FortniteGame | UActorComponent | 6 / 7 | 1 / 1 | 0 / 0 |
+| UFortGenericRecord | /Script/FortniteGame | UObject | 0 / 0 | 0 / 0 | 0 / 0 |
+| UFortIndicator | /Script/FortniteGame | UObject | 4 / 4 | 0 / 0 | 0 / 0 |
+| UFortSlateHUDIndicator | /Script/FortniteGame | UFortIndicator | 2 / 2 | 0 / 0 | 0 / 0 |
+| UFortHealthBarIndicator | /Script/FortniteGame | UFortSlateHUDIndicator | 0 / 0 | 0 / 0 | 0 / 0 |
+| UFortWorker | /Script/FortniteGame | UFortCharacter | 8 / 9 | 0 / 0 | 0 / 0 |
+| UFortHero | /Script/FortniteGame | UFortWorker | 6 / 10 | 0 / 0 | 0 / 0 |
+| UFortIndicatorManager | /Script/FortniteGame | UObject | 1 / 2 | 0 / 0 | 0 / 0 |
+| UFortLevelOverlayManager | /Script/FortniteGame | UObject | 0 / 0 | 0 / 0 | 0 / 0 |
+| UFortMiniMapIndicator | /Script/FortniteGame | UFortIndicator | 0 / 0 | 0 / 0 | 0 / 0 |
+| UFortMiniMapChallengeIndicators | /Script/FortniteGame | UFortMiniMapIndicator | 0 / 2 | 0 / 0 | 0 / 0 |
+| UFortMiniMapTeamIndicators | /Script/FortniteGame | UFortMiniMapIndicator | 14 / 17 | 0 / 0 | 0 / 0 |
+| UFortMissionGenerator | /Script/FortniteGame | UPrimaryDataAsset | 8 / 16 | 0 / 0 | 0 / 0 |
+| UFortMobileInteractionComponent | /Script/FortniteGame | UStaticMeshComponent | 1 / 1 | 0 / 0 | 0 / 0 |
+| UFortMovementComp_Character | /Script/FortniteGame | UCharacterMovementComponent | 51 / 52 | 0 / 0 | 0 / 0 |
+| UFortMusicManagerBank | /Script/FortniteGame | UDataAsset | 0 / 2 | 0 / 0 | 0 / 0 |
+| UFortMutatorListComponent | /Script/FortniteGame | UActorComponent | 3 / 9 | 0 / 1 | 0 / 0 |
+| UFortPawnScriptedBehavior | /Script/FortniteGame | UObject | 5 / 5 | 0 / 0 | 0 / 0 |
+| UFortRegisteredPlayerInfo | /Script/FortniteGame | UObject | 20 / 36 | 0 / 0 | 0 / 0 |
+| UFortSkinWeightOverrideManager | /Script/FortniteGame | UObject | 0 / 0 | 0 / 0 | 0 / 0 |
+| UFortStatEventManager | /Script/FortniteGame | UObject | 0 / 3 | 0 / 0 | 0 / 0 |
+| UFortStormShieldComponent | /Script/FortniteGame | USceneComponent | 4 / 4 | 1 / 1 | 0 / 0 |
+| UFortSupplyDropInfo | /Script/FortniteGame | UDataAsset | 24 / 25 | 0 / 0 | 0 / 0 |
+| UFortSwimmingAudioBank | /Script/FortniteGame | UDataAsset | 3 / 5 | 0 / 0 | 0 / 0 |
+| UFortUnderwaterDamageComponent | /Script/FortniteGame | UActorComponent | 7 / 9 | 0 / 0 | 0 / 0 |
+| UFortUserCloudHelperComponent | /Script/FortniteGame | UActorComponent | 1 / 1 | 0 / 0 | 0 / 0 |
+| UFortWeaponAnimSet | /Script/FortniteGame | UDataAsset | 1 / 3 | 0 / 0 | 0 / 0 |
+| UFortWorldRecord | /Script/FortniteGame | UFortGenericRecord | 4 / 5 | 0 / 0 | 0 / 0 |
+| UFortZoneRecord | /Script/FortniteGame | UFortGenericRecord | 9 / 9 | 0 / 0 | 0 / 0 |
+| UFortZoneTheme | /Script/FortniteGame | UPrimaryDataAsset | 20 / 29 | 0 / 0 | 0 / 0 |
+| UHeartbeatManager | /Script/FortniteGame | UObject | 4 / 5 | 0 / 0 | 0 / 0 |
+| UPegasusGameEventCollector | /Script/FortniteGame | UActorComponent | 8 / 8 | 0 / 0 | 0 / 0 |
+| UQuickHealItemPicker | /Script/FortniteGame | UObject | 3 / 3 | 0 / 0 | 0 / 0 |
+| UStatManager | /Script/FortniteGame | UBaseStatManager | 0 / 0 | 0 / 0 | 0 / 0 |
+| UUnicornAthenaPawnSampler | /Script/FortniteGame | UActorComponent | 1 / 1 | 0 / 0 | 0 / 0 |
+| UWeaponHitNotifyAudioBank | /Script/FortniteGame | UDataAsset | 0 / 11 | 0 / 0 | 0 / 0 |
+| UWorldTheme | /Script/FortniteGame | UDataAsset | 1 / 16 | 0 / 0 | 0 / 0 |
+| UWorldTileManager | /Script/FortniteGame | UObject | 0 / 1 | 0 / 0 | 0 / 0 |
+| APlayspace | /Script/PlayspaceFramework | AInfo | 5 / 9 | 0 / 2 | 0 / 0 |
 
-Totals: 1,721 properties, 837 emitted (884 skipped). 445 replicated, 274 emitted, 171 skipped.
-376 RPCs in the reflection, 198 emitted, 178 skipped. The RepNotify UFUNCTIONs emitted total 125. Counts from `porting/generated/reflection/native_classes_index.json`.
+## Blocked classes (47 targets not generated)
 
-## Skipped items (by type)
+These are referenced by a skipped property or RPC, but their module or an ancestor is not available:
+
+- `McpProfileSys` (not in the engine tree; `UMcpItemDefinitionBase`, `UMcpProfile`, `UMcpProfileGroup`): 17 targets, including
+  the item-definition chain (`UFortHeroType`, `UAthenaGliderItemDefinition`, `UAthenaBattleBusItemDefinition`,
+  `UFortPlaysetItemDefinition`, `UFortAwardItemDefinition`, and others) and the `UFortMcpProfile*` classes.
+- `ModularGameplay` (`UControllerComponent`, `UGameFrameworkComponent`, `UGameStateComponent`): 13 controller and game
+  state components (`UFortControllerComponent_*`, `UFortGameStateComponent_*`, `UFortPlayerControllerAthenaXPComponent`).
+- `GameplayAbilities` and `GameplayTasks` (engine plugin, enabled in the project, not promoted): `UFortAbilitySystemComponent`,
+  `UFortAdvancedMovementSet`, `UFortControlResistanceSet`, `UFortDamageSet`, `UFortMovementSet` (`UAttributeSet` parent),
+  `UGameplayAbility` and `UGameplayEffect` (references only). The generator does not yet accept these packages as parents.
+- `Water` (`AWaterBody`): `AFortWaterBodyActor`. The plugin is enabled but the generator does not accept its package.
+- `ClientPilot`, `Lobby`, `MediaAssets`, `Niagara`, `AnimationBudgetAllocator`: not in the project's module set
+  (`UFortClientPilot_Base`, `AFortLobbyBeaconState`, `UMediaSource`, `UMediaPlayer`, `UNiagaraSystem`,
+  `USkeletalMeshComponentBudgeted`).
+- `PlayspaceFramework` components with a `ModularGameplay` parent: `UPlayspaceControllerComponent_PlayerSpawning`,
+  `UPlayspaceGameStateComponent_PlayerSpawningManager`, `UPlayspaceManagerComponent`.
+
+## Skipped items
 
 Skipped properties are recorded per class and per property in `porting/generated/reflection/skipped_properties.json`
 (fields: `class`, `property`, `kind`, `category`, `replicated`, `reason`, `tokens`).
 
-| Category | Properties (all) | of which replicated | RPCs |
-|---|---|---|---|
-| struct (no struct names or layouts recovered) | 281 | 81 | 70 |
-| class outside the native set (named, but not in this module) | 232 | 48 | 37 |
-| delegate (`DECLARE_*_DELEGATE` type not recovered) | 178 | 0 | 0 |
-| class unnamed or unmatched (no name, or the reference thunk did not match) | 148 | 20 | 52 |
-| enum (enum names not recovered) | 42 | 22 | 19 |
-| interface (`TScriptInterface` names not recovered) | 2 | 0 | 0 |
-| container element (`TSet` element) | 1 | 0 | 0 |
-| **Total** | **884** | **171** | **178** |
+Final skipped properties by category (767 total, 121 replicated): `class_unnamed` 332, `class_outside_native_set` 209,
+`struct_member_unresolved` 133, `delegate_member_unresolved` 78, `struct_custom_netserialize` 9, `container_element` 3,
+`interface` 2, `enum_not_available` 1. Skipped RPCs (97 total): `class_unnamed` 62, `struct_member_unresolved` 16,
+`class_outside_native_set` 14, `struct_custom_netserialize` 4, `struct_not_available` 1.
 
-By property kind: Object 257, Struct 226, InlineMulticastDelegate 178, Array 104, Class 40, Enum 26, Byte 16, Map 11,
-WeakObject 10, SoftClass 8, SoftObject 5, Interface 2, Set 1.
-
-Other items recorded in the same file: functions with unknown RPC status (0), RepNotify downgrades (0),
-non-void RPCs (0), static or const RPCs (0).
-
-Three things make the skip counts look worse than they are, and we fixed or explained them:
-
-- `params` absent meant "zero parameters" for a function with a unique name join, not "unknown". The extractor now
-  writes `params: []` for those (4,369 functions).
-- Name joins were ambiguous when functions shared a name literal (4,764 functions). The extractor now keeps every
-  candidate (`candidates`). Each candidate carries its owner's construct function (`outer_fn`), and the generator
-  picks the one whose `outer_fn` is the class's own `Z_Construct_UClass_*` (exactly one for every such function).
-- Class references point at a `jmp` thunk to the class's NoRegister function, not at a block. `resolve_class_refs.py`
-  follows up to four jmp hops in the runtime dump and matches the NoRegister or Z_Construct function to a block. That
-  resolves 2,326 of 2,622 distinct class references. The other 296 stay unresolved.
+Custom NetSerialize structs (Fort package): `AthenaPawnReplayData`, `CreateBuildingActorData`,
+`FortAIAttributeReplicationProxy`, `FortAISharedRepMovement`, `FortGameplayAbilityTargetData_SingleTargetHit`,
+`FortGameplayEffectContext`, `FortRootMotionSource_FallingBoost`, `ReplicatedPhysicsPawnState`, `SharedRepMovement`. A replicated
+property or RPC that uses one of them, directly or inside another struct, is skipped (category
+`struct_custom_netserialize`). Their bodies are not recovered.
 
 ## What blocks wire compatibility
 
-Measured in a preview run of the same generator (`--promote` with `--source-root porting/generated/native_preview/Source`,
-git-ignored; `native/` was not regenerated, so the tables above still describe `native/`). Struct, enum and delegate
-types come from `porting/extract_types.py` (`binary_analysis.md` section 9). Counts are from
-`porting/generated/reflection/native_classes_index.json` and `type_closure.json`.
+1. **Class references that are unnamed (`class_unnamed`, 332 properties, 62 RPCs).** `resolve_class_refs.py` resolves
+   2,326 of 2,622 distinct class references. The 296 unresolved targets are singleton builders with no class-block
+   reference. They are the largest block.
+2. **Classes outside the set (`class_outside_native_set`, 209 properties, 14 RPCs).** Mostly the blocked classes above.
+   Each new class also adds references, so this number moved while the set grew.
+3. **Struct member types (`struct_member_unresolved`, 133 properties, 16 RPCs).** Mostly structs that use the unnamed or
+   blocked classes, and the 9 custom NetSerialize structs.
+4. **Delegate parameters (`delegate_member_unresolved`, 78 properties).** Delegates do not replicate, so they change the class
+   layout only.
+5. **Replication conditions.** `DOREPLIFETIME` is used without conditions. `COND_*` is not recovered.
+6. **Bodies.** No function bodies or constructor logic are recovered. Each emitted RPC `_Implementation` and each RepNotify
+   is an empty stub.
 
-Preview totals, before and after the types were added: properties emitted 837 of 1,721 becomes 1,220 of 1,721
-(replicated 274 of 445 becomes 349); RPCs emitted 198 of 376 becomes 271 of 376. Of the 884 skipped properties, 383
-are emittable now: 219 struct, 122 delegate and 42 enum. Of the 178 skipped RPCs, 73 are emittable now: 54 struct and 19 enum.
+## Hand-written code changed
 
-1. **Struct layouts and names (recovered).** 4,512 struct tables with names, parents, sizes and property tables. The
-   struct-typed property skips go from 281 to 62: 59 have a member type that is unresolved (classes outside the set,
-   see item 4), and 3 are replicated structs with a custom NetSerialize whose body is not recovered (`SpawnMachineRepData`,
-   `GameMemberInfoArray`, `DelayedQuickBarActions`). RPCs with struct parameters go from 70 to 16: 14 unresolved member
-   types, 1 custom NetSerialize (`FastSharedReplication`), 1 plugin struct not in the engine tree (`ProcessMcpProfileUpdate`).
-2. **Enums (recovered).** 2,056 enum tables with names and values. Enum-typed property skips go from 42 to 0, and enum RPC
-   skips from 19 to 0. The underlying type is assumed `uint8` (the UHT rule).
-3. **Delegates (recovered as signatures).** 1,515 signature tables. Delegate-property skips go from 178 to 56, which
-   come from 47 delegate types: 39 with a parameter type that is unresolved (41 class references, 7 classes outside the
-   set, 2 structs, 1 enum), and 8 with out, reference or return parameters, which are not emitted. Delegates do not
-   replicate, so they change the class layout only, not the wire.
-4. **Classes outside the set and unnamed classes (not changed).** 232 property and 37 RPC references name classes that are not in
-   this closure. 148 property and 52 RPC references are class refs that `resolve_class_refs.py` does not resolve (296 distinct
-   targets). Those targets are not class-block functions: they are singleton builders that call a helper and reference no
-   class block. These are now the largest block, and they also block the structs and delegates that use them.
-5. **Custom NetSerialize in the closure.** Nine Fort-package structs have a custom `NetSerialize` (`AthenaPawnReplayData`,
-   `CreateBuildingActorData`, `FortAIAttributeReplicationProxy`, `FortAISharedRepMovement`,
-   `FortGameplayAbilityTargetData_SingleTargetHit`, `FortGameplayEffectContext`, `FortRootMotionSource_FallingBoost`,
-   `ReplicatedPhysicsPawnState`, `SharedRepMovement`). A replicated property or RPC that uses one of them, directly or
-   inside another struct, is skipped (category `struct_custom_netserialize`). Engine structs with a custom serializer
-   (for example `FRepMovement`, `FHitResult`, `FGameplayTagContainer`) are emitted by name; their code is the engine's, which
-   is assumed to match 4.25.
-6. **Lists are partial.** A skipped replicated property changes that class's `ClassChecksum` and the handles after it. 96
-   replicated properties are still skipped (was 171). A skipped RPC changes the RPC indices of that class; 105 RPCs are still skipped.
-7. **Replication conditions.** `DOREPLIFETIME` is used without conditions. The reflection table does not record
-   `COND_*` lifetime conditions, so a conditional property is sent unconditionally.
-8. **Bodies.** No function bodies and no constructor logic are recovered. Each emitted RPC `_Implementation` and each
-   RepNotify is an empty stub. Constructors and default values are whatever the engine base class sets.
-
-Validation of the recovered types against the 4.25 headers (`porting/validate_types.py`): structs 92.8% exact member
-lists, enums 97.2% exact enumerators and values, delegates 99.6% exact parameter counts. The mismatches are mostly
-engine skew between the shipped client and the 4.25 tree.
-
-## Hand-written classes changed
-
-- `AFortWorldSettings`, `AFortAthenaMapInfo`, `AFortPoiManager`, `AFortWorldManager` (were in `FortniteMapClasses.h`),
-  `AFortPlayerPawn`, `AFortPlayerPawnAthena` (were in `FortniteAthenaGameplay.h`), and the stubs `AFortGameStateAthena`,
-  `AFortPlayerController`, `AFortPawn` (were in `FortniteMapStubs.h`) are removed. They are generated now.
-- `AFortPlayerPawn` lost its hand-written camera, input bindings (MoveForward, MoveRight, Turn, LookUp, Jump), the
-  `FortPlayerPawn ready` log line, and the `-FortniteProbeLook` visual probe. The generated pawn has no input or camera.
-  The Apollo pawn probes (`-FortniteProbePawnGround`, `Apollo_Terrain`) were not run in this pass.
-- `AFortGameModeAthena` keeps its Apollo stand-in behaviour and still derives from `AGameModeBase`. Its real parent
-  chain is `AFortGamePvPBase -> AFortGameModeZone -> AFortGameMode_InGame -> AFortGameMode -> AFortGameModeBase ->
-  APlayspaceGameMode -> AGameMode -> AGameModeBase`. None of those are in the closure (the brief scopes this pass to the
-  target chains), so it is not promoted. Its `RestartPlayer` logs `Athena pawn spawned: class=... authority=...` (the
-  smoke evidence for the Athena pawn).
-- `FortniteMapClasses.h/.cpp` keep the classes outside the set. `FortniteMapStubs.h` loses the three stubs
-  above. `gen_stubs.py` excludes them (`GENERATED_NATIVE`), so a regeneration does not bring them back.
-- `FortnitePortEditor` commandlet includes the generated `AFortPoiManager.h` and `AFortAthenaMapInfo.h`.
+- Stubs removed from `FortniteMapStubs.h` because they are now generated: `ABuildingActor`, `ABuildingGameplayActor`,
+  `ABuildingSMActor`, `AFortPlayerStartWarmup`, `AFortPoiVolume`, `AFortTimeOfDayManager`, `UFortFeedbackManager` (and earlier
+  `AFortGameStateAthena`, `AFortPlayerController`, `AFortPawn`).
+- `AFortSafeZoneStorm` and `UWorldTileManager` removed from `FortniteMapClasses.h`. `FortniteApolloBlueprintCommandlet.cpp`
+  includes the generated `AFortSafeZoneStorm.h`.
+- `gen_stubs.py` `GENERATED_NATIVE` lists every generated class name without its prefix letter, so a regeneration
+  does not stub them again.
+- `FortniteGame.Build.cs` depends on `GameplayAbilities`, `GameplayTags`, `SlateCore`, `UMG` and `JsonUtilities`.
+  `PlayspaceFramework.Build.cs` depends on `GameplayTags`. `FortniteLinux.uproject` enables `GameplayAbilities`.
+- `AFortPlayerPawn` lost its hand-written camera, input bindings and visual probe. The generated pawn has no input or camera.
+- `AFortGameModeAthena` keeps its Apollo stand-in behaviour and still derives from `AGameModeBase`.
 
 ## Build and smoke
 
-- Build: `FortniteLinux`, `FortniteLinuxServer`, `FortniteLinuxEditor`, all Development, all exit 0 in the final state.
-  Nine build iterations in total: 1-2 failed in UHT (`minimalapi` with `MODULE_API`; `Replicated FString`
-  parameters and `Reliable`/`Unreliable` specifiers), 3 failed in C++ (signature spelling), 8 failed on the commandlet
-  include. Each one was a generator or include bug, fixed in the generator or the source.
-- Staging: the two binaries were copied into `porting/generated/linux-stage/LinuxNoEditor/FortniteLinux/Binaries/Linux/`
-  (previous copies kept under `/tmp`). No cook and no `BuildCookRun`.
-- Smoke: `porting/server/smoke_join.sh` (direct mode). The first run exited 1: the server's stdout is buffered, and the
-  `Join succeeded:` line was not yet in the file when the script checked it. The second run used the `stdbuf -oL`
-  equivalent (`LD_PRELOAD=libstdbuf.so _STDBUF_O=L`, environment only, the script is untouched) and exited 0.
-  `ss -lun` shows `UNCONN 0.0.0.0:7777` within 2 s. The server logs `Local network version checksum: 683914758`.
-  `Join succeeded: vibrato-43A0C0CF8424` and `Athena pawn spawned: class=FortPlayerPawnAthena authority=1` are on the
-  server. The client logs `Welcomed by server (Level: /Game/Maps/FortniteEmptyDedicated, Game:
-  /Script/FortniteGame.FortGameModeAthena)`, and all 21 classes load on the client too.
-- `rg` is not installed. The smoke run used a `grep -a` shim at `/tmp/fn-native-shim/rg` (outside the repo).
-- Not run: the Apollo branch (`Apollo_Terrain`, probes, terrain and background grid counts). It depends on the removed pawn
-  code and was out of scope.
+- Builds: `FortniteLinux`, `FortniteLinuxServer` and `FortniteLinuxEditor` all exit 0 on the final sources. 14 build
+  iterations were used: 1-3 failed in UHT (engine plugin not enabled, delegate headers without `UDELEGATE()`), 4 failed in C++
+  (enum RPC parameter spelling), 5-8 in round 2 (stub clash, and UHT/C++ module dependencies), 9-10 succeeded
+  (round 2 client and server), 11 failed in the editor (commandlet include, PlayspaceFramework GameplayTags link), 12 editor
+  success, 13-14 rebuilt the client and server (no relink needed).
+- Staging: the two binaries are copied into `porting/generated/linux-stage/LinuxNoEditor/FortniteLinux/Binaries/Linux/`.
+  No cook and no `BuildCookRun`.
+- Smoke: `porting/server/smoke_join.sh` in direct mode, with `rg` shimmed by `grep -a` on `PATH` and `stdbuf -oL`. Exit 0.
+  `ss -lun` shows `UNCONN 0.0.0.0:7777`. The server logs `Local network version checksum: 683914758 (0x28C3B606)`,
+  `Join succeeded: vibrato-43A0C0CF8424` and `Athena pawn spawned: class=FortPlayerPawnAthena authority=1`. The client logs
+  `Welcomed by server (Level: /Game/Maps/FortniteEmptyDedicated, Game: /Script/FortniteGame.FortGameModeAthena)`.
+- Not run: the Apollo branch (`Apollo_Terrain`, probes, terrain and background grid counts).
 
 ## Next steps
 
-1. Extract `FStructParams` and `FEnumParams` from the exe, the same way as classes. This clears 281 struct and 42 enum
-   properties and 89 RPCs in this closure.
-2. Promote the outside-set classes that block replicated properties (list under item 4 above). That is the cheapest
-   way to clear the class-outside skips.
-3. Promote the GameMode chain (`AFortGameModeAthena` and its parents) and replace the stand-in `AGameModeBase` parent.
-4. Recover replication conditions (`COND_*`) from the lifetime data, and add `DOREPLIFETIME_CONDITION` where needed.
-5. Check each class against the original `ClassChecksum` (`original_client_net_protocol.md` section 2) once struct
-   layouts are in.
-6. Recover function bodies for the RPC and RepNotify stubs, starting with the Athena join path.
+1. Add engine plugin packages that are enabled in the project (`GameplayAbilities`, `GameplayTasks`, `Water`,
+   `ModularGameplay`, `MediaAssets`, `Niagara` if enabled) to the generator's accepted packages, with their parent includes and
+   module dependencies. This unblocks the `UFortAbilitySystemComponent` RPCs and the controller components.
+2. Identify the 296 unresolved singleton builders behind `class_unnamed` (332 properties, 62 RPCs). This is the largest
+   remaining block for wire compatibility.
+3. Decide the McpProfileSys item-definition chain: it is not in the engine tree, so it needs a source for that plugin or a
+   documented permanent skip. The generator must not invent a parent.
+4. Recover the bodies of the 9 custom NetSerialize structs, or keep their replicated uses skipped.
+5. Recover replication conditions (`COND_*`) and add `DOREPLIFETIME_CONDITION` where needed.
+6. Check each class against the original `ClassChecksum` (`original_client_net_protocol.md` section 2).
+7. Recover function bodies for the RPC and RepNotify stubs, starting with the Athena join path.
 
 ## Files
 
-Tracked and changed: `porting/gen_native_classes.py`, `porting/extract_reflection.py`, `porting/gen_stubs.py`,
-`porting/native_class_set.txt`, `porting/promote_native_classes.sh`, `porting/resolve_class_refs.py`,
-`porting/native_classes_status.md` (this file), `porting/native/FortniteLinux.uproject`,
-`porting/native/Source/FortniteGame/` (Generated/, FortniteGame.cpp, FortniteGame.Build.cs, FortniteAthenaGameplay.h/.cpp,
-FortniteMapClasses.h/.cpp, FortniteMapStubs.h), `porting/native/Source/PlayspaceFramework/` (new),
+Tracked and changed: `porting/gen_native_classes.py`, `porting/gen_stubs.py`, `porting/native_class_set.txt`,
+`porting/promote_native_classes.sh`, `porting/native_classes_status.md` (this file), `porting/native/FortniteLinux.uproject`,
+`porting/native/Source/FortniteGame/` (`Generated/`, `FortniteGame.Build.cs`, `Public/FortniteMapStubs.h`,
+`Public/FortniteMapClasses.h`), `porting/native/Source/PlayspaceFramework/` (`Generated/`, `PlayspaceFramework.Build.cs`),
 `porting/native/Source/FortnitePortEditor/Private/FortniteApolloBlueprintCommandlet.cpp`.
 
-Git-ignored outputs: `porting/generated/reflection/fortnite_game_reflection.json` (regenerated, same blocks, new
-fields), `class_ref_map.json`, `skipped_properties.json`, `native_classes_index.json`.
+Git-ignored outputs: `porting/generated/reflection/fortnite_game_reflection.json`, `class_ref_map.json`,
+`skipped_properties.json`, `native_classes_index.json`, `type_closure.json`.

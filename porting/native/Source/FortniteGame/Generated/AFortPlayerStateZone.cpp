@@ -19,6 +19,7 @@ void AFortPlayerStateZone::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>&
 	DOREPLIFETIME(AFortPlayerStateZone, bHasEverSkydivedFromBusAndLanded);
 	DOREPLIFETIME(AFortPlayerStateZone, bHasEverSkydivedFromBus);
 	DOREPLIFETIME(AFortPlayerStateZone, bInAircraft);
+	DOREPLIFETIME(AFortPlayerStateZone, SimulatedAttributes);
 	DOREPLIFETIME(AFortPlayerStateZone, MaxSignalInStorm);
 	DOREPLIFETIME(AFortPlayerStateZone, CurrentSignalInStorm);
 	DOREPLIFETIME(AFortPlayerStateZone, MaxShield);
@@ -27,5 +28,7 @@ void AFortPlayerStateZone::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>&
 	DOREPLIFETIME(AFortPlayerStateZone, CurrentHealth);
 	DOREPLIFETIME(AFortPlayerStateZone, bInvincibleDueToUI);
 	DOREPLIFETIME(AFortPlayerStateZone, NumRejoins);
+	DOREPLIFETIME(AFortPlayerStateZone, CarriedObject);
+	DOREPLIFETIME(AFortPlayerStateZone, KickedFromSessionReason);
 }
 
