@@ -6,6 +6,9 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 
+class ACustomCosmeticCharmModifier;
+class USceneComponent;
+
 #include "AFortPlayerCharm.generated.h"
 
 UCLASS(config=Engine, abstract)
@@ -18,9 +21,17 @@ public:
 	UPROPERTY()
 	uint8 bIsFrontEndPreview : 1;
 
+	// table index 2, flags 0x40000000082008
+	UPROPERTY(Transient)
+	USceneComponent* CharmAttachedTo;
+
 	// table index 1, flags 0x40000000002000
 	UPROPERTY(Transient)
 	FName CharmAttachedToSocket;
+
+	// table index 0, flags 0x40000000002000
+	UPROPERTY(Transient)
+	ACustomCosmeticCharmModifier* CharmModifier;
 
 };
 

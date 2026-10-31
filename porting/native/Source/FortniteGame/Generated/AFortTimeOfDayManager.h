@@ -9,7 +9,9 @@
 #include "EFortDayPhase.h"
 #include "FCameraAltitudeAdjustments.h"
 #include "FDayNightPhaseChangeSignature.h"
+#include "FDayPhaseInfo.h"
 #include "FExponentialHeightFogValues.h"
+#include "FTimeOfDayDirectOverrides.h"
 #include "Math/Color.h"
 #include "Math/Rotator.h"
 #include "Math/Vector.h"
@@ -17,14 +19,20 @@
 
 class UDirectionalLightComponent;
 class UExponentialHeightFogComponent;
+class UFortDayPhaseChangeParams;
+class UFortDayPhaseInfoOverride;
+class UFortTimeOfDayWeatherComponent;
 class UMaterialInstance;
 class UMaterialInstanceDynamic;
+class UMaterialInterface;
 class UMaterialParameterCollection;
 class UMaterialParameterCollectionInstance;
 class UParticleSystemComponent;
 class UPostProcessComponent;
 class USkyLightComponent;
 class UStaticMesh;
+class UStaticMeshComponent;
+class UTexture2D;
 
 #include "AFortTimeOfDayManager.generated.h"
 
@@ -77,6 +85,10 @@ public:
 	// table index 73, flags 0x20080000002014
 	UPROPERTY(Transient)
 	float TimeOfDayAccumulator;
+
+	// table index 72, flags 0x20080000000005
+	UPROPERTY()
+	UMaterialInterface* BasePostProcessMaterial;
 
 	// table index 71, flags 0x20080000000015
 	UPROPERTY()
@@ -178,6 +190,18 @@ public:
 	UPROPERTY()
 	UExponentialHeightFogComponent* ActiveHeightFogComponent;
 
+	// table index 44, flags 0x40000000000000
+	UPROPERTY()
+	UFortDayPhaseChangeParams* DayPhaseChangeEventParams;
+
+	// table index 43, flags 0x20088000000001
+	UPROPERTY()
+	FDayPhaseInfo LightAndFogPhaseSettings[4];
+
+	// table index 42, flags 0x20080000002000
+	UPROPERTY(Transient)
+	UFortDayPhaseInfoOverride* LightAndFogPhaseSettingOverrides[4];
+
 	// table index 41, flags 0x20080000002000
 	UPROPERTY(Transient)
 	uint8 bBlendingInLightAndFogOverrides : 1;
@@ -197,6 +221,10 @@ public:
 	// table index 37, flags 0x20080000002000
 	UPROPERTY(Transient)
 	float CurrentLightAndFogBlendValue;
+
+	// table index 36, flags 0x20080100010035
+	UPROPERTY(ReplicatedUsing=OnRep_DirectOverrides)
+	FTimeOfDayDirectOverrides DirectOverrides;
 
 	// table index 35, flags 0x2008000009001d
 	UPROPERTY()
@@ -250,6 +278,14 @@ public:
 	UPROPERTY()
 	UStaticMesh* MoonMesh;
 
+	// table index 21, flags 0x20080000010001
+	UPROPERTY()
+	TArray<UMaterialInterface*> SunMaterialOverrides;
+
+	// table index 19, flags 0x20080000010001
+	UPROPERTY()
+	TArray<UMaterialInterface*> MoonMaterialOverrides;
+
 	// table index 18, flags 0x20080000010001
 	UPROPERTY()
 	float SunScale;
@@ -257,6 +293,18 @@ public:
 	// table index 17, flags 0x20080000010001
 	UPROPERTY()
 	float MoonScale;
+
+	// table index 16, flags 0x20080000202000
+	UPROPERTY(Transient)
+	UMaterialInterface* SkyDomeMaterial;
+
+	// table index 15, flags 0x20080000202000
+	UPROPERTY(Transient)
+	UMaterialInterface* StarMapMaterial;
+
+	// table index 14, flags 0x20080000010001
+	UPROPERTY()
+	UTexture2D* CloudMaskTexture;
 
 	// table index 13, flags 0x20080000010001
 	UPROPERTY()
@@ -286,6 +334,18 @@ public:
 	UPROPERTY()
 	UParticleSystemComponent* RainParticleSystemComp;
 
+	// table index 6, flags 0x400000000a001d
+	UPROPERTY()
+	UStaticMeshComponent* SunOrMoonMeshComp;
+
+	// table index 5, flags 0x400000000a001d
+	UPROPERTY()
+	UStaticMeshComponent* SkyDomeMeshComp;
+
+	// table index 4, flags 0x400000000a001d
+	UPROPERTY()
+	UStaticMeshComponent* StarMapMeshComp;
+
 	// table index 3, flags 0x40000000002000
 	UPROPERTY(Transient)
 	UMaterialInstanceDynamic* ActiveSkyBoxMat;
@@ -297,6 +357,17 @@ public:
 	// table index 1, flags 0x40000000002000
 	UPROPERTY(Transient)
 	float StormStrength;
+
+	// table index 0, flags 0x2008000008201c
+	UPROPERTY(Transient)
+	UFortTimeOfDayWeatherComponent* WeatherComponent;
+
+	UFUNCTION(NetMulticast, Reliable)
+	void AddLightAndFogPhaseSettingOverrideMulticast(float BlendInLength, TSubclassOf<UFortDayPhaseInfoOverride> DayPhaseInfoOverride, EFortDayPhase::Type DayPhase);
+	void AddLightAndFogPhaseSettingOverrideMulticast_Implementation(float BlendInLength, TSubclassOf<UFortDayPhaseInfoOverride> DayPhaseInfoOverride, EFortDayPhase::Type DayPhase);
+
+	UFUNCTION()
+	void OnRep_DirectOverrides();
 
 	UFUNCTION()
 	void OnRep_HeightFogEnabled();

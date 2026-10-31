@@ -18,14 +18,19 @@
 #include "EStructuralSupportCheck.h"
 #include "Engine/CurveTable.h"
 #include "Engine/NetSerialization.h"
+#include "FAnimatingMaterialPair.h"
 #include "FBuildingActorMinimalReplicationProxy.h"
 #include "FBuildingNavObstacle.h"
+#include "FBuildingReplacementDestruction.h"
 #include "FChosenQuotaInfo.h"
 #include "FEditorOnlyBuildingInstanceMaterialParameters.h"
 #include "FFortBounceData.h"
+#include "FOnConstructionComplete.h"
 #include "FProxyGameplayCueDamagePhysical.h"
 #include "FRandomDayphaseFX.h"
 #include "FRepairFinishedDelegate.h"
+#include "FRepairStartedDelegate.h"
+#include "FTierMeshSets.h"
 #include "FTrapAttachedDelegate.h"
 #include "GameplayEffect.h"
 #include "GameplayEffectTypes.h"
@@ -34,11 +39,22 @@
 #include "Math/Vector.h"
 #include "Math/Vector2D.h"
 
+class ABuildingFoundation;
+class AFortConstructorBASE;
+class AFortPawn;
+class AFortPlayerStateZone;
+class UAudioComponent;
 class UBuildingEditModeMetadata;
+class UBuildingEditModeSupport;
+class UBuildingTextureData;
 class UCurveLinearColor;
+class UMaterialInstanceConstant;
 class UMaterialInstanceDynamic;
+class UMaterialInterface;
 class UParticleSystem;
+class USoundBase;
 class UStaticMesh;
+class UStaticMeshComponent;
 
 #include "ABuildingSMActor.generated.h"
 
@@ -48,9 +64,17 @@ class FORTNITEGAME_API ABuildingSMActor : public ABuildingActor
 	GENERATED_BODY()
 
 public:
+	// table index 151, flags 0x40000101000021
+	UPROPERTY(ReplicatedUsing=OnRep_MetaData, SaveGame)
+	UBuildingTextureData* TextureData[4];
+
 	// table index 150, flags 0x40000100010025
 	UPROPERTY(ReplicatedUsing=OnRep_MetaData)
 	UStaticMesh* StaticMesh;
+
+	// table index 148, flags 0x10000000010005
+	UPROPERTY()
+	TArray<FTierMeshSets> AlternateMeshes;
 
 	// table index 147, flags 0x40000101000020
 	UPROPERTY(ReplicatedUsing=OnRep_MetaData, SaveGame)
@@ -276,6 +300,10 @@ public:
 	UPROPERTY()
 	float InfluenceMapWeight;
 
+	// table index 89, flags 0x10000000082008
+	UPROPERTY(Transient)
+	UStaticMeshComponent* BASEEffectMeshComponent;
+
 	// table index 87, flags 0x10040000010001
 	UPROPERTY()
 	TArray<FBuildingNavObstacle> NavObstacles;
@@ -291,6 +319,18 @@ public:
 	// table index 84, flags 0x20080000000801
 	UPROPERTY()
 	FEditorOnlyBuildingInstanceMaterialParameters EditorOnlyInstanceMaterialParameters;
+
+	// table index 83, flags 0x4004000008001d
+	UPROPERTY()
+	UStaticMeshComponent* StaticMeshComponent;
+
+	// table index 82, flags 0x40000000000000
+	UPROPERTY()
+	UMaterialInterface* BaseMaterial;
+
+	// table index 81, flags 0x10000010080000
+	UPROPERTY()
+	FOnConstructionComplete OnConstructionComplete;
 
 	// table index 80, flags 0x40000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_ReplicationProxy)
@@ -324,6 +364,14 @@ public:
 	UPROPERTY()
 	TSoftObjectPtr<UCurveLinearColor> WindPannerSpeedCurve;
 
+	// table index 71, flags 0x24080000010001
+	UPROPERTY()
+	TArray<TSoftObjectPtr<UMaterialInterface>> IntenseWindMaterials;
+
+	// table index 70, flags 0x24080000010001
+	UPROPERTY()
+	TSoftObjectPtr<USoundBase> WindAudio;
+
 	// table index 69, flags 0x20080000010005
 	UPROPERTY()
 	UParticleSystem* BreakEffect;
@@ -339,6 +387,10 @@ public:
 	// table index 66, flags 0x20080000010015
 	UPROPERTY()
 	FName DeathParticleSocketName;
+
+	// table index 65, flags 0x20080000010005
+	UPROPERTY()
+	USoundBase* DeathSound;
 
 	// table index 64, flags 0x20080000010005
 	UPROPERTY()
@@ -360,6 +412,18 @@ public:
 	UPROPERTY()
 	TArray<FRandomDayphaseFX> RandomDayphaseFXList;
 
+	// table index 58, flags 0x20080000082008
+	UPROPERTY(Transient)
+	UAudioComponent* ConstructionAudioComponent;
+
+	// table index 57, flags 0x20080000002000
+	UPROPERTY(Transient)
+	AFortPawn* CachedDestructionInstigator;
+
+	// table index 56, flags 0x20080000082008
+	UPROPERTY(Transient)
+	UStaticMeshComponent* DamageOverlayComponent;
+
 	// table index 55, flags 0x20080000002000
 	UPROPERTY(Transient)
 	float DamageAmountStart;
@@ -371,6 +435,14 @@ public:
 	// table index 53, flags 0x20080000002000
 	UPROPERTY(Transient)
 	FVector LastDamageHitImpulseDir;
+
+	// table index 51, flags 0x20088000002008
+	UPROPERTY(Transient)
+	TArray<UStaticMeshComponent*> CachedAnimatingStaticMeshes;
+
+	// table index 50, flags 0x10000010080000
+	UPROPERTY()
+	FRepairStartedDelegate OnRepairBuildingStarted;
 
 	// table index 49, flags 0x10000010080000
 	UPROPERTY()
@@ -388,9 +460,25 @@ public:
 	UPROPERTY(Transient)
 	int32 LogicalBuildingIdx;
 
+	// table index 44, flags 0x20080000010005
+	UPROPERTY()
+	TArray<FAnimatingMaterialPair> AnimatingMaterialMappings;
+
+	// table index 42, flags 0x20080000010005
+	UPROPERTY()
+	TArray<FAnimatingMaterialPair> DamagedButNotAnimatingMaterialMappings;
+
 	// table index 41, flags 0x20080000010005
 	UPROPERTY()
 	float AnimatingSubObjects;
+
+	// table index 40, flags 0x24080000000000
+	UPROPERTY()
+	TSubclassOf<UBuildingEditModeSupport> EditModeSupportClass;
+
+	// table index 39, flags 0x20080000002000
+	UPROPERTY(Transient)
+	UBuildingEditModeSupport* EditModeSupport;
 
 	// table index 38, flags 0x20080000002000
 	UPROPERTY(Transient)
@@ -428,9 +516,21 @@ public:
 	UPROPERTY(Transient)
 	float CurBuildingAnimStartTime;
 
+	// table index 26, flags 0x20080000010001
+	UPROPERTY()
+	TArray<UMaterialInstanceConstant*> BlueprintMICs;
+
 	// table index 24, flags 0x20080000002000
 	UPROPERTY(Transient)
 	TArray<UMaterialInstanceDynamic*> BlueprintMIDs;
+
+	// table index 23, flags 0x20080000082008
+	UPROPERTY(Transient)
+	UStaticMeshComponent* BlueprintMeshComp;
+
+	// table index 22, flags 0x40000100002020
+	UPROPERTY(ReplicatedUsing=OnRep_EditingPlayer, Transient)
+	AFortPlayerStateZone* EditingPlayer;
 
 	// table index 21, flags 0x20080000000015
 	UPROPERTY()
@@ -460,13 +560,49 @@ public:
 	UPROPERTY()
 	float PlayerGridSnapSize;
 
+	// table index 13, flags 0x20080000000815
+	UPROPERTY()
+	ABuildingSMActor* ParentActorToAttachTo;
+
+	// table index 11, flags 0x40000000002000
+	UPROPERTY(Transient)
+	TArray<ABuildingSMActor*> AttachedBuildingActors;
+
+	// table index 9, flags 0x40000000002000
+	UPROPERTY(Transient)
+	TArray<ABuildingSMActor*> BuildingActorsAttachedTo;
+
 	// table index 8, flags 0x10000010080000
 	UPROPERTY()
 	FTrapAttachedDelegate OnTrapPlacementChanged;
 
+	// table index 7, flags 0x10000010080000
+	UPROPERTY()
+	FBuildingReplacementDestruction OnReplacementDestruction;
+
+	// table index 6, flags 0x20080000002000
+	UPROPERTY(Transient)
+	ABuildingSMActor* AttachmentPlacementBlockingActors[2];
+
+	// table index 5, flags 0x44000000002000
+	UPROPERTY(Transient)
+	TWeakObjectPtr<ABuildingFoundation> Foundation;
+
 	// table index 4, flags 0x40000000002000
 	UPROPERTY(Transient)
 	uint16 ActorIndexInFoundation;
+
+	// table index 3, flags 0x41000000000024
+	UPROPERTY(Replicated)
+	ABuildingSMActor* DamagerOwner;
+
+	// table index 2, flags 0x40000100000020
+	UPROPERTY(ReplicatedUsing=OnRep_RelevantBASE)
+	AFortConstructorBASE* RelevantBASE;
+
+	// table index 1, flags 0x40000000000000
+	UPROPERTY()
+	AFortConstructorBASE* LastRelevantBASE;
 
 	// table index 0, flags 0x40000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_ProxyGameplayCueDamagePhysical)
@@ -530,6 +666,9 @@ public:
 	void OnRep_bUnderRepair();
 
 	UFUNCTION()
+	void OnRep_EditingPlayer();
+
+	UFUNCTION()
 	void OnRep_HiddenDueToTrapPlacement();
 
 	UFUNCTION()
@@ -543,6 +682,9 @@ public:
 
 	UFUNCTION()
 	void OnRep_ProxyGameplayCueDamagePhysical();
+
+	UFUNCTION()
+	void OnRep_RelevantBASE();
 
 	UFUNCTION()
 	void OnRep_ReplicatedDrawScale3D();

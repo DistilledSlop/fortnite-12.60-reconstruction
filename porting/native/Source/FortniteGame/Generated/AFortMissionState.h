@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 
+#include "FOnUpdateUI.h"
+
 #include "AFortMissionState.generated.h"
 
 UCLASS(config=Engine, abstract)
@@ -14,6 +16,10 @@ class FORTNITEGAME_API AFortMissionState : public AActor
 	GENERATED_BODY()
 
 public:
+	// table index 4, flags 0x10000010080000
+	UPROPERTY()
+	FOnUpdateUI OnUpdateUI;
+
 	// table index 2, flags 0x40000000002000
 	UPROPERTY(Transient)
 	uint8 bAlreadySetTimerOnce : 1;

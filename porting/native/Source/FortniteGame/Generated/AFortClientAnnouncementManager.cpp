@@ -7,10 +7,16 @@ void AFortClientAnnouncementManager::OnRep_CancelledAnnouncements()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortClientAnnouncementManager::OnRep_ClientAnnouncements(TArray<AFortClientAnnouncement*>& PreviousClientAnnouncements)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortClientAnnouncementManager::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(AFortClientAnnouncementManager, CancelledAnnouncements);
+	DOREPLIFETIME(AFortClientAnnouncementManager, ClientAnnouncements);
 }
 

@@ -16,9 +16,16 @@ class FORTNITEGAME_API AFortPlayerPetRepState : public AActor
 	GENERATED_BODY()
 
 public:
+	// table index 2, flags 0x20080100000034
+	UPROPERTY(ReplicatedUsing=OnRep_LookAtTarget)
+	AActor* LookAtTarget;
+
 	// table index 0, flags 0x20080100000034
 	UPROPERTY(ReplicatedUsing=OnRep_StimuliTag)
 	FPetStimuliRepData StimuliTag;
+
+	UFUNCTION()
+	void OnRep_LookAtTarget();
 
 	UFUNCTION()
 	void OnRep_StimuliTag();

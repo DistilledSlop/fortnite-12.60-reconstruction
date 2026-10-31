@@ -77,6 +77,11 @@ void ABuildingSMActor::OnRep_bUnderRepair()
 	// Body not recovered: reflection-derived stub.
 }
 
+void ABuildingSMActor::OnRep_EditingPlayer()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void ABuildingSMActor::OnRep_HiddenDueToTrapPlacement()
 {
 	// Body not recovered: reflection-derived stub.
@@ -102,6 +107,11 @@ void ABuildingSMActor::OnRep_ProxyGameplayCueDamagePhysical()
 	// Body not recovered: reflection-derived stub.
 }
 
+void ABuildingSMActor::OnRep_RelevantBASE()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void ABuildingSMActor::OnRep_ReplicatedDrawScale3D()
 {
 	// Body not recovered: reflection-derived stub.
@@ -122,7 +132,10 @@ void ABuildingSMActor::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Out
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(ABuildingSMActor, ProxyGameplayCueDamagePhysical);
+	DOREPLIFETIME(ABuildingSMActor, RelevantBASE);
+	DOREPLIFETIME(ABuildingSMActor, DamagerOwner);
 	DOREPLIFETIME(ABuildingSMActor, BuildingAttachmentSlot);
+	DOREPLIFETIME(ABuildingSMActor, EditingPlayer);
 	DOREPLIFETIME(ABuildingSMActor, BuildingReplacementType);
 	DOREPLIFETIME(ABuildingSMActor, MinimalReplicationProxy);
 	DOREPLIFETIME(ABuildingSMActor, ReplicatedDrawScale3D);
@@ -142,5 +155,6 @@ void ABuildingSMActor::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Out
 	DOREPLIFETIME(ABuildingSMActor, ResourceType);
 	DOREPLIFETIME(ABuildingSMActor, AltMeshIdx);
 	DOREPLIFETIME(ABuildingSMActor, StaticMesh);
+	DOREPLIFETIME(ABuildingSMActor, TextureData);
 }
 

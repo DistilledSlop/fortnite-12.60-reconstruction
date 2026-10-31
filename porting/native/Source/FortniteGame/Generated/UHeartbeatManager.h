@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
 
+class UFortAnalyticsClientEngagementsManager;
+
 #include "UHeartbeatManager.generated.h"
 
 UCLASS(config=Game)
@@ -29,6 +31,10 @@ public:
 	// table index 1, flags 0x40000000004000
 	UPROPERTY(Config)
 	uint8 bShouldSendPerMinuteVehicleEvents : 1;
+
+	// table index 0, flags 0x40000000000000
+	UPROPERTY()
+	UFortAnalyticsClientEngagementsManager* AnalyticsClientEngagementsManager;
 
 };
 

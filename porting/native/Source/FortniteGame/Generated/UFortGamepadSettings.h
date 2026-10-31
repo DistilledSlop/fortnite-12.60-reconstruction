@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "Engine/DataAsset.h"
 
+#include "FFortAbilityTargetSelection.h"
 #include "Math/Vector2D.h"
 
 class UCurveFloat;
@@ -149,6 +150,10 @@ public:
 	// table index 1, flags 0x20080000000001
 	UPROPERTY()
 	float EditModeSlowMaxStrength;
+
+	// table index 0, flags 0x20080000000001
+	UPROPERTY()
+	FFortAbilityTargetSelection AimAssistTargetSelection;
 
 };
 

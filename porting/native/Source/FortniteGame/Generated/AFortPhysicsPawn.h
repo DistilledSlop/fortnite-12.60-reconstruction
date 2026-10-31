@@ -7,6 +7,7 @@
 #include "GameFramework/Pawn.h"
 
 #include "FVehicleSafeTeleportInfo.h"
+#include "Math/Vector.h"
 
 #include "AFortPhysicsPawn.generated.h"
 
@@ -27,6 +28,10 @@ public:
 	UFUNCTION(Client, Unreliable)
 	void ClientAckGoodMove(uint32 MoveId);
 	void ClientAckGoodMove_Implementation(uint32 MoveId);
+
+	UFUNCTION(NetMulticast, Reliable)
+	void ClientBroadcastHitDetection(const FVector& DoublePoints, const FVector& HalfPoints, float Relevancy, float Radius, APawn* ImpulseInstigator);
+	void ClientBroadcastHitDetection_Implementation(const FVector& DoublePoints, const FVector& HalfPoints, float Relevancy, float Radius, APawn* ImpulseInstigator);
 
 	UFUNCTION()
 	void OnRep_GravityMultiplier();

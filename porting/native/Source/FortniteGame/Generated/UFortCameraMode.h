@@ -8,6 +8,8 @@
 
 #include "Camera/PlayerCameraManager.h"
 
+class AFortPlayerCameraBase;
+
 #include "UFortCameraMode.generated.h"
 
 UCLASS(abstract)
@@ -16,6 +18,10 @@ class FORTNITEGAME_API UFortCameraMode : public UObject
 	GENERATED_BODY()
 
 public:
+	// table index 8, flags 0x10000000002000
+	UPROPERTY(Transient)
+	AFortPlayerCameraBase* PlayerCamera;
+
 	// table index 7, flags 0x10000000000005
 	UPROPERTY()
 	float TransitionTime;

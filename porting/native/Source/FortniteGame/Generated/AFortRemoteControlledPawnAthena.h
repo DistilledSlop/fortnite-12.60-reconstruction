@@ -7,7 +7,13 @@
 #include "AFortPlayerPawnAthena.h"
 
 #include "FFortAttributeInitializationKey.h"
+#include "FFortGameplayEffectContainerSpec.h"
 #include "GameplayEffectTypes.h"
+
+class UFortAbilitySystemComponent;
+class UFortCameraMode;
+class UFortRemoteControlPawnSet;
+class UGameplayEffect;
 
 #include "AFortRemoteControlledPawnAthena.generated.h"
 
@@ -29,9 +35,29 @@ public:
 	UPROPERTY(Replicated)
 	uint8 RCTeam;
 
+	// table index 14, flags 0x24080100000034
+	UPROPERTY(ReplicatedUsing=OnRep_ControllingPlayerPawn)
+	TWeakObjectPtr<AFortPlayerPawnAthena> ControllingPlayerPawn;
+
+	// table index 13, flags 0x24080000002000
+	UPROPERTY(Transient)
+	TWeakObjectPtr<AFortPlayerPawnAthena> SpectateReturnPlayerPawn;
+
+	// table index 12, flags 0x20080100082028
+	UPROPERTY(ReplicatedUsing=OnRep_OverrideAbilitySystemComponent, Transient)
+	UFortAbilitySystemComponent* OverrideAbilitySystemComponent;
+
 	// table index 11, flags 0x20080100002020
 	UPROPERTY(ReplicatedUsing=OnRep_TriggeredHealthThreshold, Transient)
 	float TriggeredHealthThreshold;
+
+	// table index 9, flags 0x20080000000014
+	UPROPERTY()
+	TArray<FFortGameplayEffectContainerSpec> EffectContainerSpecToApplyOnKills;
+
+	// table index 8, flags 0x20080000080008
+	UPROPERTY()
+	UFortRemoteControlPawnSet* RemoteControlPawnSet;
 
 	// table index 7, flags 0x20080100002020
 	UPROPERTY(ReplicatedUsing=OnRep_TriggeredForDestroy, Transient)
@@ -40,6 +66,18 @@ public:
 	// table index 6, flags 0x20080000010001
 	UPROPERTY()
 	FFortAttributeInitializationKey AttributeInitKey;
+
+	// table index 5, flags 0x24080000010001
+	UPROPERTY()
+	TSubclassOf<UFortCameraMode> RemoteControlledPawnDefaultCameraClass;
+
+	// table index 4, flags 0x24080000010001
+	UPROPERTY()
+	TSubclassOf<UFortCameraMode> RemoteControlledPawnTriggeredCameraClass;
+
+	// table index 3, flags 0x24080000010001
+	UPROPERTY()
+	TSubclassOf<UGameplayEffect> ControllingPlayerEffect;
 
 	// table index 2, flags 0x20080000002000
 	UPROPERTY(Transient)
@@ -52,6 +90,12 @@ public:
 	// table index 0, flags 0x40000000002000
 	UPROPERTY(Transient)
 	uint8 bIsKeyboardLookPressed : 1;
+
+	UFUNCTION()
+	void OnRep_ControllingPlayerPawn();
+
+	UFUNCTION()
+	void OnRep_OverrideAbilitySystemComponent();
 
 	UFUNCTION()
 	void OnRep_TriggeredForDestroy();

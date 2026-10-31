@@ -8,6 +8,9 @@
 
 #include "FConnectivityCube.h"
 
+class UAIHotSpotConfig;
+class UBuildingActorHotSpotConfig;
+
 #include "UBuildingEditModeMetadata.generated.h"
 
 UCLASS(abstract)
@@ -27,6 +30,14 @@ public:
 	// table index 3, flags 0x10000000000015
 	UPROPERTY()
 	uint8 bHasCustomAttackLocation : 1;
+
+	// table index 2, flags 0x10000000000015
+	UPROPERTY()
+	UBuildingActorHotSpotConfig* DefaultHotspotConfig;
+
+	// table index 1, flags 0x10000000000015
+	UPROPERTY()
+	UAIHotSpotConfig* ShootingHotSpotConfig;
 
 	// table index 0, flags 0x20080000000000
 	UPROPERTY()

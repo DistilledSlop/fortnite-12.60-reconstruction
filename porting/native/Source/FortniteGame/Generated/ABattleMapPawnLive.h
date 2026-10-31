@@ -6,6 +6,10 @@
 #include "CoreMinimal.h"
 #include "AFortReplaySpectatorPawnBase.h"
 
+class ABattleMapNode;
+class ABattleMapTimeIndicator;
+class USoundBase;
+
 #include "ABattleMapPawnLive.generated.h"
 
 UCLASS(config=Game)
@@ -14,5 +18,37 @@ class FORTNITEGAME_API ABattleMapPawnLive : public AFortReplaySpectatorPawnBase
 	GENERATED_BODY()
 
 public:
+	// table index 7, flags 0x24080000010001
+	UPROPERTY()
+	TSubclassOf<ABattleMapNode> GroundMoveNodeClass;
+
+	// table index 6, flags 0x24080000010001
+	UPROPERTY()
+	TSubclassOf<ABattleMapNode> AirMoveNodeClass;
+
+	// table index 5, flags 0x24080000010001
+	UPROPERTY()
+	TSubclassOf<ABattleMapNode> GotKillNodeClass;
+
+	// table index 4, flags 0x24080000010001
+	UPROPERTY()
+	TSubclassOf<ABattleMapNode> ZoneNodeClass;
+
+	// table index 3, flags 0x24080000010001
+	UPROPERTY()
+	TSubclassOf<ABattleMapNode> TeamFlightNodeClass;
+
+	// table index 2, flags 0x24080000010001
+	UPROPERTY()
+	TSubclassOf<ABattleMapTimeIndicator> TimeIndicatorClass;
+
+	// table index 1, flags 0x20080000010001
+	UPROPERTY()
+	USoundBase* SelectedNodeSound;
+
+	// table index 0, flags 0x20080000010001
+	UPROPERTY()
+	USoundBase* HoveredNodeSound;
+
 };
 

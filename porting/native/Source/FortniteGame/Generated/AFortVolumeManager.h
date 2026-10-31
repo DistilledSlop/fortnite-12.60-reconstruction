@@ -6,11 +6,19 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Info.h"
 
+#include "FOnClientEnterVolume.h"
+#include "FOnClientExitVolume.h"
 #include "FOnClientVolumeRestrictionStateChanged.h"
 #include "FOnVolumeStateChanged.h"
 #include "FVolumePlayerStateInfo.h"
 
 class AFortVolume;
+class UAsyncOverlapQueue;
+class UAsyncTraceQueue;
+class UCreativeAssetCostDirectory;
+class UDataTable;
+class UFortCreativeGeneralThrottleManager;
+class UObject;
 
 #include "AFortVolumeManager.generated.h"
 
@@ -20,6 +28,14 @@ class FORTNITEGAME_API AFortVolumeManager : public AInfo
 	GENERATED_BODY()
 
 public:
+	// table index 22, flags 0x10000010080000
+	UPROPERTY()
+	FOnClientEnterVolume OnClientEnterVolume;
+
+	// table index 21, flags 0x10000010080000
+	UPROPERTY()
+	FOnClientExitVolume OnClientExitVolume;
+
 	// table index 20, flags 0x10000010080000
 	UPROPERTY()
 	FOnVolumeStateChanged OnVolumeStateChanged;
@@ -28,6 +44,30 @@ public:
 	UPROPERTY(Transient)
 	TArray<AFortVolume*> VolumeObjects;
 
+	// table index 16, flags 0x24080000010015
+	UPROPERTY()
+	TSoftObjectPtr<UCreativeAssetCostDirectory> AssetCostDirectory;
+
+	// table index 15, flags 0x20080000010015
+	UPROPERTY()
+	UDataTable* BlackListClassesTable;
+
+	// table index 14, flags 0x20080000010015
+	UPROPERTY()
+	UDataTable* BlackListObjectsTable;
+
+	// table index 12, flags 0x24080000002000
+	UPROPERTY(Transient)
+	TSet<TSoftClassPtr<UObject>> BlackListClasses;
+
+	// table index 10, flags 0x24080000002000
+	UPROPERTY(Transient)
+	TSet<TSoftObjectPtr<UObject>> BlackListObjects;
+
+	// table index 8, flags 0x44000000004000
+	UPROPERTY(Config)
+	TArray<TSoftClassPtr<UObject>> HotfixedBlacklistClasses;
+
 	// table index 7, flags 0x40000000000020
 	UPROPERTY(Replicated)
 	uint8 bInSpawningStartup : 1;
@@ -35,6 +75,18 @@ public:
 	// table index 5, flags 0x40000000002000
 	UPROPERTY(Transient)
 	TArray<FVolumePlayerStateInfo> PendingPlayers;
+
+	// table index 4, flags 0x10000000000014
+	UPROPERTY()
+	UAsyncOverlapQueue* OverlapQueue;
+
+	// table index 3, flags 0x10000000000014
+	UPROPERTY()
+	UAsyncTraceQueue* TraceQueue;
+
+	// table index 2, flags 0x10000000000014
+	UPROPERTY()
+	UFortCreativeGeneralThrottleManager* FortCreativeGeneralThrottleManager;
 
 	// table index 1, flags 0x10000010080000
 	UPROPERTY()

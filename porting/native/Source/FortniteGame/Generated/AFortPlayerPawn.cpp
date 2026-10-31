@@ -7,6 +7,11 @@ void AFortPlayerPawn::ClientAcknowledgeVehicleInputState_Implementation(float Ti
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerPawn::ClientNotifyAbilityFailed_Implementation(const FGameplayTagContainer& FailedReason, UGameplayAbility* FailedAbility)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPlayerPawn::ClientResetAbilitySystemComponent_Implementation()
 {
 	// Body not recovered: reflection-derived stub.
@@ -32,6 +37,16 @@ void AFortPlayerPawn::OnRep_AccelerationZPack()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerPawn::OnRep_AnimBPOverride()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerPawn::OnRep_AttachmentMesh()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPlayerPawn::OnRep_CharPartAnimMontageInfo()
 {
 	// Body not recovered: reflection-derived stub.
@@ -42,12 +57,32 @@ void AFortPlayerPawn::OnRep_ControlledRCPawn()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerPawn::OnRep_DBNOHoistee()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerPawn::OnRep_DBNOHoisterData(FFortDBNOCarryHoisterData& PreviousDBNOHoisterData)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPlayerPawn::OnRep_FacialTypeOverride()
 {
 	// Body not recovered: reflection-derived stub.
 }
 
 void AFortPlayerPawn::OnRep_FootstepBankOverride()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerPawn::OnRep_GroupEmoteLookTarget()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerPawn::OnRep_InVehicle()
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -147,6 +182,11 @@ void AFortPlayerPawn::OnRep_ReplicatedSkyTube()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerPawn::OnRep_ReplicatedWaterBody()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPlayerPawn::OnRep_StartedInteractSearch()
 {
 	// Body not recovered: reflection-derived stub.
@@ -207,6 +247,31 @@ void AFortPlayerPawn::ServerEquipLastWeaponOrGadget_Implementation(bool bForce)
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerPawn::ServerHandlePickup_Implementation(bool bPlayPickupSound, const FVector& InStartDirection, float InFlyTime, AFortPickup* Pickup)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerPawn::ServerHandlePickupWithRequestedSwap_Implementation(bool bPlayPickupSound, const FVector& InStartDirection, float InFlyTime, const FGuid& Swap, AFortPickup* Pickup)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerPawn::ServerHandlePickupWithSwap_Implementation(bool bPlayPickupSound, const FVector& InStartDirection, float InFlyTime, const FGuid& Swap, AFortPickup* Pickup)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerPawn::ServerHoistDBNOPlayer_Implementation(AFortPlayerPawn* InDBNOHoistee)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerPawn::ServerInterrogateDBNOPlayer_Implementation(AFortPlayerPawn* InDBNOHoistee)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPlayerPawn::ServerPlayUnableToPerformActionMontage_Implementation()
 {
 	// Body not recovered: reflection-derived stub.
@@ -222,6 +287,11 @@ void AFortPlayerPawn::ServerRespawnFromDBNO_Implementation()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerPawn::ServerReviveFromDBNO_Implementation(AController* EventInstigator)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPlayerPawn::ServerRootMotionInterruptNotifyStopMontage_Implementation(UAnimMontage* MontageToStop)
 {
 	// Body not recovered: reflection-derived stub.
@@ -233,6 +303,11 @@ void AFortPlayerPawn::ServerSendAimbotDetectionStatus_Implementation(const TArra
 }
 
 void AFortPlayerPawn::ServerSetAimbotDetection_Implementation(bool bEnableDetection)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerPawn::ServerSetAttachment_Implementation(const FRepFortMeshAttachment& Attachment)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -276,8 +351,10 @@ void AFortPlayerPawn::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutL
 	DOREPLIFETIME(AFortPlayerPawn, ControlledRCPawn);
 	DOREPLIFETIME(AFortPlayerPawn, RemoteViewData32);
 	DOREPLIFETIME(AFortPlayerPawn, PetState);
+	DOREPLIFETIME(AFortPlayerPawn, ReplicatedWaterBody);
 	DOREPLIFETIME(AFortPlayerPawn, ReplicatedSkyTube);
 	DOREPLIFETIME(AFortPlayerPawn, VortexParams);
+	DOREPLIFETIME(AFortPlayerPawn, AttachmentMesh);
 	DOREPLIFETIME(AFortPlayerPawn, bParachuteLockedOpen);
 	DOREPLIFETIME(AFortPlayerPawn, LandingMontagePair);
 	DOREPLIFETIME(AFortPlayerPawn, bNetMovementPrioritized);
@@ -286,13 +363,18 @@ void AFortPlayerPawn::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutL
 	DOREPLIFETIME(AFortPlayerPawn, AccelerationPack);
 	DOREPLIFETIME(AFortPlayerPawn, PlayerStatus);
 	DOREPLIFETIME(AFortPlayerPawn, PackedReplicatedSlopeAngles);
+	DOREPLIFETIME(AFortPlayerPawn, DBNOHoistee);
+	DOREPLIFETIME(AFortPlayerPawn, DBNOHoisterData);
 	DOREPLIFETIME(AFortPlayerPawn, FootstepBankOverride);
+	DOREPLIFETIME(AFortPlayerPawn, AnimBPOverride);
 	DOREPLIFETIME(AFortPlayerPawn, RepCharPartAnimMontageInfo);
 	DOREPLIFETIME(AFortPlayerPawn, PossessedProp);
+	DOREPLIFETIME(AFortPlayerPawn, VehicleStateRep);
 	DOREPLIFETIME(AFortPlayerPawn, bCanPredictJumpApex);
 	DOREPLIFETIME(AFortPlayerPawn, bIsInsideSafeZone);
 	DOREPLIFETIME(AFortPlayerPawn, bIsInAnyStorm);
 	DOREPLIFETIME(AFortPlayerPawn, VehicleInputStateUnreliable);
+	DOREPLIFETIME(AFortPlayerPawn, GroupEmoteLookTarget);
 	DOREPLIFETIME(AFortPlayerPawn, bDoubleFileEmoteSecondLine);
 	DOREPLIFETIME(AFortPlayerPawn, bShouldJitterAnimationSyncWithEmoteLeader);
 	DOREPLIFETIME(AFortPlayerPawn, bShouldSyncAnimationWithEmoteLeader);

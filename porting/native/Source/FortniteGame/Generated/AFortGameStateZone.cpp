@@ -107,6 +107,16 @@ void AFortGameStateZone::OnWaveStart_Implementation(int32 WaveNum, const FText& 
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortGameStateZone::ServerFireAIDirectorEvent_Implementation(float EventMultiplier, UObject* EventTarget, UObject* EventSource, const EFortAIDirectorEvent& Event)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortGameStateZone::ServerFireAIDirectorEventBatch_Implementation(const TArray<FFortAIDirectorEvent>& Payload)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortGameStateZone::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

@@ -8,6 +8,8 @@
 
 #include "EVehicleEnteredCosmeticReaction.h"
 
+class AFortPlayerPawn;
+
 #include "ACustomCosmeticModifierBase.generated.h"
 
 UCLASS(config=Engine, abstract)
@@ -19,6 +21,10 @@ public:
 	// table index 16, flags 0x20080000000001
 	UPROPERTY()
 	EVehicleEnteredCosmeticReaction EnteredVehicleSeatsToCareAbout;
+
+	// table index 15, flags 0x24080000002000
+	UPROPERTY(Transient)
+	TWeakObjectPtr<AFortPlayerPawn> FortPlayerPawnPtr;
 
 	// table index 14, flags 0x20080000000015
 	UPROPERTY()

@@ -6,6 +6,9 @@
 #include "CoreMinimal.h"
 #include "Engine/DataAsset.h"
 
+class UFortMusicCombatBank;
+class UFortMusicTimeOfDayBank;
+
 #include "UFortMusicManagerBank.generated.h"
 
 UCLASS()
@@ -14,5 +17,13 @@ class FORTNITEGAME_API UFortMusicManagerBank : public UDataAsset
 	GENERATED_BODY()
 
 public:
+	// table index 1, flags 0x10000000010015
+	UPROPERTY()
+	UFortMusicTimeOfDayBank* TimeOfDayBank;
+
+	// table index 0, flags 0x10000000010015
+	UPROPERTY()
+	UFortMusicCombatBank* CombatBank;
+
 };
 

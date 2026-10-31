@@ -32,6 +32,16 @@ void AFortPlayerStateAthena::ClientReportTeamKill_Implementation(int32 TeamKills
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerStateAthena::OnRep_ChangeTeamInfo()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerStateAthena::OnRep_DeathInfo()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPlayerStateAthena::OnRep_DidNotThankBusDriver()
 {
 	// Body not recovered: reflection-derived stub.
@@ -209,6 +219,8 @@ void AFortPlayerStateAthena::GetLifetimeReplicatedProps(TArray<FLifetimeProperty
 	DOREPLIFETIME(AFortPlayerStateAthena, RebootCounter);
 	DOREPLIFETIME(AFortPlayerStateAthena, bResurrectingNow);
 	DOREPLIFETIME(AFortPlayerStateAthena, ResurrectionChipAvailable);
+	DOREPLIFETIME(AFortPlayerStateAthena, ChangeTeamInfo);
+	DOREPLIFETIME(AFortPlayerStateAthena, DeathInfo);
 	DOREPLIFETIME(AFortPlayerStateAthena, bIsDisconnected);
 	DOREPLIFETIME(AFortPlayerStateAthena, SimpleMetricInformation);
 	DOREPLIFETIME(AFortPlayerStateAthena, MetricInformation);

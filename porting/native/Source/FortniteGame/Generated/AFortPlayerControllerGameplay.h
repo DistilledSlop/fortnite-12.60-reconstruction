@@ -23,16 +23,20 @@
 #include "FOnCreativeSwapPhoneAndHarvestHoldChanged.h"
 #include "FOnCreativeUIMetricsDisplayChanged.h"
 #include "FOnDBNOCarryPlayerChanged.h"
+#include "FOnGhostModeChanged.h"
 #include "FOnShowCreativeGlobalOptions.h"
 #include "FOnWorldInventoryChanged.h"
 #include "FVehicleFuelAdded.h"
 #include "FVehicleFuelEnable.h"
+#include "FVehicleFuelSetVehicle.h"
 #include "FVehicleTrickInfo.h"
 
+class UCameraModifier;
 class UCreativeQuickbarComponent;
 class UFortAmbientAudioController;
 class UFortCreativeOptionsBundle;
 class UInputComponent;
+class UObject;
 
 #include "AFortPlayerControllerGameplay.generated.h"
 
@@ -53,6 +57,10 @@ public:
 	// table index 58, flags 0x10000010080000
 	UPROPERTY()
 	FVehicleFuelEnable OnVehicleFuelEnable;
+
+	// table index 57, flags 0x10000010080000
+	UPROPERTY()
+	FVehicleFuelSetVehicle OnSetVehicle;
 
 	// table index 56, flags 0x10000010080000
 	UPROPERTY()
@@ -126,6 +134,10 @@ public:
 	UPROPERTY()
 	TSoftClassPtr<UCreativeQuickbarComponent> CreativeQuickbarClass;
 
+	// table index 37, flags 0x20080000010015
+	UPROPERTY()
+	TSubclassOf<UObject> CreativeCameraPreviewScreenshotClass;
+
 	// table index 36, flags 0x2008010008203c
 	UPROPERTY(ReplicatedUsing=OnRep_CreativeQuickbarComponent, Transient)
 	UCreativeQuickbarComponent* CreativeQuickbarComponent;
@@ -133,6 +145,10 @@ public:
 	// table index 35, flags 0x20080000000001
 	UPROPERTY()
 	FVehicleTrickInfo VehicleTrickInfo;
+
+	// table index 33, flags 0x20080010080000
+	UPROPERTY()
+	FOnGhostModeChanged OnGhostModeChanged;
 
 	// table index 32, flags 0x20080010080000
 	UPROPERTY()
@@ -229,6 +245,10 @@ public:
 	// table index 8, flags 0x40000000002020
 	UPROPERTY(Replicated, Transient)
 	uint8 bIsCreativeIslandExporterEnabled : 1;
+
+	// table index 6, flags 0x44000000010001
+	UPROPERTY()
+	TArray<TSubclassOf<UCameraModifier>> DefaultCameraModifierClasses;
 
 	// table index 5, flags 0x24080000010005
 	UPROPERTY()

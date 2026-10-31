@@ -7,6 +7,11 @@ void ABuildingActor::HandleDestroyed()
 	// Body not recovered: reflection-derived stub.
 }
 
+void ABuildingActor::OnRep_AbilitySystemComponent()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void ABuildingActor::OnRep_bCollisionBlockedByPawns()
 {
 	// Body not recovered: reflection-derived stub.
@@ -17,12 +22,22 @@ void ABuildingActor::OnRep_bForceReplayRollback()
 	// Body not recovered: reflection-derived stub.
 }
 
+void ABuildingActor::OnRep_BuildingAttributeSet()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void ABuildingActor::OnRep_CurrentBuildingLevel()
 {
 	// Body not recovered: reflection-derived stub.
 }
 
 void ABuildingActor::OnRep_CustomState()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void ABuildingActor::OnRep_InitialOverlappingVehicles()
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -43,6 +58,8 @@ void ABuildingActor::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLi
 
 	DOREPLIFETIME(ABuildingActor, BaselineScale);
 	DOREPLIFETIME(ABuildingActor, CustomState);
+	DOREPLIFETIME(ABuildingActor, OriginatingPlacementActor);
+	DOREPLIFETIME(ABuildingActor, AssociatedMissionParam);
 	DOREPLIFETIME(ABuildingActor, TeamIndex);
 	DOREPLIFETIME(ABuildingActor, bCollisionBlockedByPawns);
 	DOREPLIFETIME(ABuildingActor, bForceReplayRollback);
@@ -56,7 +73,10 @@ void ABuildingActor::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLi
 	DOREPLIFETIME(ABuildingActor, bIsInvulnerable);
 	DOREPLIFETIME(ABuildingActor, ForceMetadataRelevant);
 	DOREPLIFETIME(ABuildingActor, HealthBarIndicatorDifficultyRating);
+	DOREPLIFETIME(ABuildingActor, ReplicatedAbilitySystemComponent);
 	DOREPLIFETIME(ABuildingActor, OwnerPersistentID);
+	DOREPLIFETIME(ABuildingActor, ReplicatedBuildingAttributeSet);
 	DOREPLIFETIME(ABuildingActor, CurrentBuildingLevel);
+	DOREPLIFETIME(ABuildingActor, InitialOverlappingVehicles);
 }
 

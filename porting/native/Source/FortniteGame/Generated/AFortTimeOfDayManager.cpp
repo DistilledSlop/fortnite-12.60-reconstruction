@@ -2,6 +2,16 @@
 #include "AFortTimeOfDayManager.h"
 #include "Net/UnrealNetwork.h"
 
+void AFortTimeOfDayManager::AddLightAndFogPhaseSettingOverrideMulticast_Implementation(float BlendInLength, TSubclassOf<UFortDayPhaseInfoOverride> DayPhaseInfoOverride, EFortDayPhase::Type DayPhase)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortTimeOfDayManager::OnRep_DirectOverrides()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortTimeOfDayManager::OnRep_HeightFogEnabled()
 {
 	// Body not recovered: reflection-derived stub.
@@ -26,6 +36,7 @@ void AFortTimeOfDayManager::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
+	DOREPLIFETIME(AFortTimeOfDayManager, DirectOverrides);
 	DOREPLIFETIME(AFortTimeOfDayManager, bHeightFogEnabled);
 	DOREPLIFETIME(AFortTimeOfDayManager, bTimeStarted);
 	DOREPLIFETIME(AFortTimeOfDayManager, TimeOfDaySpeed);

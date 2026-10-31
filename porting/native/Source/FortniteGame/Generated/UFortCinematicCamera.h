@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortCameraMode.h"
 
+class AFortPlayerControllerSpectating;
+
 #include "UFortCinematicCamera.generated.h"
 
 UCLASS()
@@ -14,5 +16,9 @@ class FORTNITEGAME_API UFortCinematicCamera : public UFortCameraMode
 	GENERATED_BODY()
 
 public:
+	// table index 0, flags 0x40000000000000
+	UPROPERTY()
+	AFortPlayerControllerSpectating* SpectatorPC;
+
 };
 

@@ -9,11 +9,16 @@
 #include "EFortCustomBodyType.h"
 #include "EFortCustomGender.h"
 #include "EFortCustomPartType.h"
+#include "FCustomPartMaterialOverrideData.h"
 #include "FCustomPartScalarParameter.h"
+#include "FCustomPartTextureParameter.h"
 #include "FCustomPartVectorParameter.h"
 #include "GameplayTagContainer.h"
 
+class AActor;
 class UAnimMontage;
+class UCustomCharacterPartData;
+class UFortMontageLookupTable;
 class USkeletalMesh;
 
 #include "UCustomCharacterPart.generated.h"
@@ -56,6 +61,22 @@ public:
 	UPROPERTY()
 	uint8 bIgnorePart : 1;
 
+	// table index 20, flags 0x24080000000001
+	UPROPERTY()
+	TSoftClassPtr<AActor> PartModifierBlueprint;
+
+	// table index 19, flags 0x220800000a0009
+	UPROPERTY()
+	UCustomCharacterPartData* AdditionalData;
+
+	// table index 18, flags 0x24080000000001
+	UPROPERTY()
+	TSoftObjectPtr<UFortMontageLookupTable> DefaultMontageLookupTable;
+
+	// table index 17, flags 0x24080000000001
+	UPROPERTY()
+	TSoftObjectPtr<UFortMontageLookupTable> OverrideMontageLookupTable;
+
 	// table index 16, flags 0x24080000000001
 	UPROPERTY()
 	TSoftObjectPtr<UAnimMontage> FrontendAnimMontageIdleOverride;
@@ -83,6 +104,14 @@ public:
 	// table index 9, flags 0x20080000000001
 	UPROPERTY()
 	uint8 bAllowStaticRenderPath : 1;
+
+	// table index 7, flags 0x40000000000001
+	UPROPERTY()
+	TArray<FCustomPartMaterialOverrideData> MaterialOverrides;
+
+	// table index 5, flags 0x40000000000001
+	UPROPERTY()
+	TArray<FCustomPartTextureParameter> TextureParameters;
 
 	// table index 3, flags 0x40000000000001
 	UPROPERTY()

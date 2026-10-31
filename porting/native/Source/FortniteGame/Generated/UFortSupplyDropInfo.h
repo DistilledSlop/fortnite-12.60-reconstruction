@@ -15,6 +15,8 @@
 #include "Math/Vector2D.h"
 #include "Styling/SlateBrush.h"
 
+class AFortAthenaSupplyDrop;
+
 #include "UFortSupplyDropInfo.generated.h"
 
 UCLASS()
@@ -26,6 +28,10 @@ public:
 	// table index 28, flags 0x10000000010015
 	UPROPERTY()
 	FName SupplyDropID;
+
+	// table index 27, flags 0x14000000010015
+	UPROPERTY()
+	TSubclassOf<AFortAthenaSupplyDrop> SupplyDropClass;
 
 	// table index 25, flags 0x10000000010015
 	UPROPERTY()

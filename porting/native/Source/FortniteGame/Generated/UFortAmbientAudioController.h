@@ -8,6 +8,9 @@
 
 #include "GameplayTagContainer.h"
 
+class AFortPlayerController;
+class UFortAmbientOneShotInstance;
+
 #include "UFortAmbientAudioController.generated.h"
 
 UCLASS(config=Engine)
@@ -20,9 +23,17 @@ public:
 	UPROPERTY()
 	FGameplayTag RequiredTagSubstr;
 
+	// table index 11, flags 0x10000000000014
+	UPROPERTY()
+	AFortPlayerController* PlayerController;
+
 	// table index 10, flags 0x10000000004000
 	UPROPERTY(Config)
 	float PauseFadeTime;
+
+	// table index 8, flags 0x40000000000000
+	UPROPERTY()
+	TArray<UFortAmbientOneShotInstance*> CurrentOneShots;
 
 	// table index 1, flags 0x40000000002000
 	UPROPERTY(Transient)

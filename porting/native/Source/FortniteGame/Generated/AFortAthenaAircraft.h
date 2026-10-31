@@ -10,6 +10,9 @@
 #include "Math/Color.h"
 #include "Styling/SlateBrush.h"
 
+class ABattleBusCosmeticInstanceBase;
+class UFortMiniMapIndicator;
+
 #include "AFortAthenaAircraft.generated.h"
 
 UCLASS(config=Engine)
@@ -86,9 +89,21 @@ public:
 	UPROPERTY()
 	FSlateBrush MiniMapTeamIndicatorIconBrush;
 
+	// table index 4, flags 0x20080000000014
+	UPROPERTY()
+	ABattleBusCosmeticInstanceBase* SpawnedCosmeticActor;
+
 	// table index 2, flags 0x20080000000020
 	UPROPERTY(Replicated)
 	int32 AircraftIndex;
+
+	// table index 1, flags 0x20080000002000
+	UPROPERTY(Transient)
+	UFortMiniMapIndicator* Indicator;
+
+	// table index 0, flags 0x20080000002000
+	UPROPERTY(Transient)
+	UFortMiniMapIndicator* TeamIndicator;
 
 	UFUNCTION()
 	void OnRep_ReplicatedFlightTimestamp();

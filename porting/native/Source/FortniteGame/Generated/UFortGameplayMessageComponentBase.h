@@ -9,6 +9,8 @@
 #include "FOnChannelIdsReplicated.h"
 #include "GameplayTagContainer.h"
 
+class UUserWidget;
+
 #include "UFortGameplayMessageComponentBase.generated.h"
 
 UCLASS(config=Engine)
@@ -40,6 +42,10 @@ public:
 	// table index 1, flags 0x20080000010001
 	UPROPERTY()
 	int32 WeightOffset;
+
+	// table index 0, flags 0x24080000010001
+	UPROPERTY()
+	TSubclassOf<UUserWidget> EditWidget;
 
 	UFUNCTION()
 	void OnRep_ChannelIds();

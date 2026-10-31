@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "Engine/DataAsset.h"
 
+class UFortCreativeOption;
+
 #include "UFortCreativeOptionsBundle.generated.h"
 
 UCLASS()
@@ -14,5 +16,9 @@ class FORTNITEGAME_API UFortCreativeOptionsBundle : public UDataAsset
 	GENERATED_BODY()
 
 public:
+	// table index 0, flags 0x10000000010015
+	UPROPERTY()
+	TArray<UFortCreativeOption*> CreativeOptions;
+
 };
 

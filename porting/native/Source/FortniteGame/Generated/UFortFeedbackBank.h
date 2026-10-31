@@ -6,6 +6,9 @@
 #include "CoreMinimal.h"
 #include "Engine/DataAsset.h"
 
+#include "FFortFeedbackAction.h"
+#include "FFortFeedbackActionBankDefined.h"
+
 #include "UFortFeedbackBank.generated.h"
 
 UCLASS()
@@ -14,5 +17,13 @@ class FORTNITEGAME_API UFortFeedbackBank : public UPrimaryDataAsset
 	GENERATED_BODY()
 
 public:
+	// table index 2, flags 0x10000000000001
+	UPROPERTY()
+	TArray<FFortFeedbackActionBankDefined> BankDefinedFeedbackEvents;
+
+	// table index 0, flags 0x20080000000041
+	UPROPERTY()
+	TArray<FFortFeedbackAction> FeedbackEvents;
+
 };
 

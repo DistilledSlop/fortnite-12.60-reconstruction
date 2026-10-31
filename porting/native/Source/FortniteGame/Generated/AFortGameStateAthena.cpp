@@ -42,6 +42,11 @@ void AFortGameStateAthena::OnRep_EventTournamentRound()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortGameStateAthena::OnRep_FocalPointActor()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortGameStateAthena::OnRep_GamePhase(EAthenaGamePhase OldGamePhase)
 {
 	// Body not recovered: reflection-derived stub.
@@ -157,6 +162,11 @@ void AFortGameStateAthena::OnRep_WinningPlayerList()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortGameStateAthena::OnRep_WinningPlayerState()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortGameStateAthena::OnRep_WinningScore()
 {
 	// Body not recovered: reflection-derived stub.
@@ -228,11 +238,13 @@ void AFortGameStateAthena::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>&
 	DOREPLIFETIME(AFortGameStateAthena, CurrentHighScore);
 	DOREPLIFETIME(AFortGameStateAthena, WinningScore);
 	DOREPLIFETIME(AFortGameStateAthena, WinningTeam);
+	DOREPLIFETIME(AFortGameStateAthena, WinningPlayerState);
 	DOREPLIFETIME(AFortGameStateAthena, bIsLargeTeamGame);
 	DOREPLIFETIME(AFortGameStateAthena, UtcTimeStartedMatch);
 	DOREPLIFETIME(AFortGameStateAthena, FlightPathMidLine);
 	DOREPLIFETIME(AFortGameStateAthena, TeamFlightPaths);
 	DOREPLIFETIME(AFortGameStateAthena, bAllowUserPickedCosmeticBattleBus);
+	DOREPLIFETIME(AFortGameStateAthena, ServerToClientPreloadList);
 	DOREPLIFETIME(AFortGameStateAthena, WinningTeamsCN);
 	DOREPLIFETIME(AFortGameStateAthena, TeamsLeft);
 	DOREPLIFETIME(AFortGameStateAthena, WinningPlayerList);
@@ -242,6 +254,8 @@ void AFortGameStateAthena::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>&
 	DOREPLIFETIME(AFortGameStateAthena, bCheatRespawnEnabled);
 	DOREPLIFETIME(AFortGameStateAthena, FocalPointFOV);
 	DOREPLIFETIME(AFortGameStateAthena, FocalPointOffset);
+	DOREPLIFETIME(AFortGameStateAthena, FocalPointActor);
+	DOREPLIFETIME(AFortGameStateAthena, ClientVehicleClassesToLoad);
 	DOREPLIFETIME(AFortGameStateAthena, PlayersLeft);
 	DOREPLIFETIME(AFortGameStateAthena, TotalPlayers);
 	DOREPLIFETIME(AFortGameStateAthena, EndGameKickPlayerTime);

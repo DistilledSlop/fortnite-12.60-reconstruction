@@ -6,9 +6,12 @@
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 
+#include "FCloneMachineRepData.h"
 #include "FMarkerID.h"
 #include "GameFramework/OnlineReplStructs.h"
 
+class ABuildingGameplayActorSpawnMachine;
+class AFortPlayerStart;
 class USoundCue;
 
 #include "UAthenaResurrectionComponent.generated.h"
@@ -23,6 +26,10 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_PlayerIdsForResurrection, Transient)
 	TArray<FUniqueNetIdRepl> PlayerIdsForResurrection;
 
+	// table index 4, flags 0x24080000002000
+	UPROPERTY(Transient)
+	TWeakObjectPtr<AFortPlayerStart> ResurrectionLocation;
+
 	// table index 3, flags 0x40000000002000
 	UPROPERTY(Transient)
 	FMarkerID ResurrectionMachineMarkerID;
@@ -30,6 +37,10 @@ public:
 	// table index 2, flags 0x40000000002000
 	UPROPERTY(Transient)
 	int32 ClosestSpawnMachineIndex;
+
+	// table index 1, flags 0x20080000000020
+	UPROPERTY(Replicated)
+	FCloneMachineRepData CloneMachineRepData;
 
 	// table index 0, flags 0x20080000002000
 	UPROPERTY(Transient)
@@ -45,6 +56,14 @@ public:
 
 	UFUNCTION()
 	void OnRep_PlayerIdsForResurrection();
+
+	UFUNCTION(Server, Reliable)
+	void ServerOnBeginResurrectionInteraction(ABuildingGameplayActorSpawnMachine* SpawnMachine);
+	void ServerOnBeginResurrectionInteraction_Implementation(ABuildingGameplayActorSpawnMachine* SpawnMachine);
+
+	UFUNCTION(Server, Reliable)
+	void ServerOnInterruptResurrectionInteraction(ABuildingGameplayActorSpawnMachine* SpawnMachine);
+	void ServerOnInterruptResurrectionInteraction_Implementation(ABuildingGameplayActorSpawnMachine* SpawnMachine);
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

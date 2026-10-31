@@ -9,10 +9,13 @@
 #include "EBuildingAttachmentType.h"
 #include "EFortDecoPlacementQueryResults.h"
 #include "EPlacementType.h"
+#include "FDecoPlacementState.h"
 #include "Math/Rotator.h"
 #include "Math/Vector.h"
 
 class ABuildingActor;
+class AFortDecoPreview;
+class AFortDecoTool;
 
 #include "AFortDecoHelper.generated.h"
 
@@ -22,9 +25,17 @@ class FORTNITEGAME_API AFortDecoHelper : public AActor
 	GENERATED_BODY()
 
 public:
+	// table index 19, flags 0x20080000000004
+	UPROPERTY()
+	AFortDecoPreview* DecoPreview;
+
 	// table index 18, flags 0x24080000000000
 	UPROPERTY()
 	TSubclassOf<ABuildingActor> PlacementActorClass;
+
+	// table index 17, flags 0x14000000000004
+	UPROPERTY()
+	TWeakObjectPtr<AFortDecoTool> DecoTool;
 
 	// table index 16, flags 0x10000000000014
 	UPROPERTY()
@@ -53,6 +64,10 @@ public:
 	// table index 9, flags 0x20080000000000
 	UPROPERTY()
 	float ScaleData[2];
+
+	// table index 8, flags 0x20080000000000
+	UPROPERTY()
+	FDecoPlacementState PlacementInfo;
 
 	// table index 7, flags 0x20080000000000
 	UPROPERTY()

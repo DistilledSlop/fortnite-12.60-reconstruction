@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "Engine/DataAsset.h"
 
+class USoundBase;
+
 #include "UWeaponHitNotifyAudioBank.generated.h"
 
 UCLASS()
@@ -14,5 +16,49 @@ class FORTNITEGAME_API UWeaponHitNotifyAudioBank : public UDataAsset
 	GENERATED_BODY()
 
 public:
+	// table index 10, flags 0x10000000010001
+	UPROPERTY()
+	USoundBase* SoundBody;
+
+	// table index 9, flags 0x10000000010001
+	UPROPERTY()
+	USoundBase* SoundCrit;
+
+	// table index 8, flags 0x10000000010001
+	UPROPERTY()
+	USoundBase* SoundShield;
+
+	// table index 7, flags 0x10000000010001
+	UPROPERTY()
+	USoundBase* SoundDeath;
+
+	// table index 6, flags 0x10000000010001
+	UPROPERTY()
+	USoundBase* SoundDeathCrit;
+
+	// table index 5, flags 0x10000000010001
+	UPROPERTY()
+	USoundBase* SoundBodyReceive;
+
+	// table index 4, flags 0x10000000010001
+	UPROPERTY()
+	USoundBase* SoundCritReceive;
+
+	// table index 3, flags 0x10000000010001
+	UPROPERTY()
+	USoundBase* SoundDeathReceive;
+
+	// table index 2, flags 0x10000000010001
+	UPROPERTY()
+	USoundBase* SoundDeathCritReceive;
+
+	// table index 1, flags 0x10000000010001
+	UPROPERTY()
+	USoundBase* SoundFallReceive;
+
+	// table index 0, flags 0x10000000010001
+	UPROPERTY()
+	USoundBase* SoundFallDeathReceive;
+
 };
 

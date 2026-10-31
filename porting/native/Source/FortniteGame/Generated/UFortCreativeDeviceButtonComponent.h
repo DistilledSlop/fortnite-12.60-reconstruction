@@ -9,6 +9,8 @@
 #include "FOnDeviceButtonClickedDelegate.h"
 #include "FOnDeviceButtonLabelChangedDelegate.h"
 
+class UUserWidget;
+
 #include "UFortCreativeDeviceButtonComponent.generated.h"
 
 UCLASS(config=Creative)
@@ -40,6 +42,10 @@ public:
 	// table index 1, flags 0x40000000010001
 	UPROPERTY()
 	int32 WeightOffset;
+
+	// table index 0, flags 0x44000000010001
+	UPROPERTY()
+	TSubclassOf<UUserWidget> EditWidget;
 
 };
 

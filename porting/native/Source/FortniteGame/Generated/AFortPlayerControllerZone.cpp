@@ -12,6 +12,11 @@ void AFortPlayerControllerZone::ClientClearDeathNotification_Implementation()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerControllerZone::ClientOnPawnRevived_Implementation(AController* EventInstigator)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPlayerControllerZone::ClientOnPawnSpawned_Implementation()
 {
 	// Body not recovered: reflection-derived stub.
@@ -107,6 +112,16 @@ void AFortPlayerControllerZone::ServerSetVehicleHealth_Implementation(float NewH
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerControllerZone::ServerSpectatePlayer_Implementation(bool bAllowStateChange, APawn* NewPlayerToSpectate)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerControllerZone::ServerSpectatePlayerState_Implementation(bool bAllowStateChange, AFortPlayerStateZone* PlayerToSpectate)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPlayerControllerZone::ServerSubmitGameplayVote_Implementation(int32 VoteDecision, const EFortVoteType& VoteType)
 {
 	// Body not recovered: reflection-derived stub.
@@ -121,6 +136,7 @@ void AFortPlayerControllerZone::GetLifetimeReplicatedProps(TArray<FLifetimePrope
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
+	DOREPLIFETIME(AFortPlayerControllerZone, DesyncNotifyList);
 	DOREPLIFETIME(AFortPlayerControllerZone, VoiceChatChannel);
 	DOREPLIFETIME(AFortPlayerControllerZone, PlayerLeecherStatus);
 }

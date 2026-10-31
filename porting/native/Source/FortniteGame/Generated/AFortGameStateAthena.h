@@ -23,6 +23,7 @@
 #include "FHideGameModeMessage.h"
 #include "FOnAllWinnersAnnounced.h"
 #include "FOnClientVolumeManagerReplicated.h"
+#include "FOnContextTutorialGameModeMessageRequest.h"
 #include "FOnCountdownFinished.h"
 #include "FOnCountdownStarted.h"
 #include "FOnCountdownStopped.h"
@@ -31,6 +32,8 @@
 #include "FOnFinalCountdownFinished.h"
 #include "FOnFinalCountdownStarted.h"
 #include "FOnFinalCountdownTick.h"
+#include "FOnGameModeMessageRequest.h"
+#include "FOnGameModeMessageSuccess.h"
 #include "FOnGameModeRemoveMarker.h"
 #include "FOnGameModeShowMarker.h"
 #include "FOnGamePhaseChanged.h"
@@ -59,6 +62,7 @@
 #include "Misc/DateTime.h"
 #include "Styling/SlateBrush.h"
 
+class AActor;
 class ABuildingActor;
 class AFortAthenaAircraft;
 class AFortAthenaMapInfo;
@@ -66,16 +70,20 @@ class AFortAthenaMutator_AI;
 class AFortBroadcastSpectatorInfo;
 class AFortLocalizationService;
 class AFortPlayerState;
+class AFortProjectileBase;
 class AFortPropertyOverrideReplShared;
 class AFortSafeZoneIndicator;
 class AFortSpecialActorReplicationInfo;
 class AFortVolumeManager;
+class APlayerState;
 class AUnicornDriver;
 class UCurveFloat;
 class UCurveVector;
 class UFortMutatorListComponent;
 class UMaterialInstanceDynamic;
+class UMaterialInterface;
 class UMaterialParameterCollection;
+class UObject;
 class USoundCue;
 class USoundMix;
 
@@ -139,9 +147,21 @@ public:
 	UPROPERTY()
 	FOnCurrentHighScoreUpdated CurrentHighScoreUpdated;
 
+	// table index 205, flags 0x10000010080000
+	UPROPERTY()
+	FOnGameModeMessageRequest GameModeMessageRequest;
+
+	// table index 204, flags 0x10000010080000
+	UPROPERTY()
+	FOnContextTutorialGameModeMessageRequest ContextTutorialGameModeMessageRequest;
+
 	// table index 203, flags 0x10000010080000
 	UPROPERTY()
 	FOnHideGameModeMessageRequest HideGameModeMessageRequest;
+
+	// table index 202, flags 0x10000010080000
+	UPROPERTY()
+	FOnGameModeMessageSuccess GameModeMessageSuccess;
 
 	// table index 201, flags 0x10000010080000
 	UPROPERTY()
@@ -319,9 +339,21 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_PlayersLeft)
 	int32 PlayersLeft;
 
+	// table index 154, flags 0x10000000000020
+	UPROPERTY(Replicated)
+	TArray<TSubclassOf<UObject>> ClientVehicleClassesToLoad;
+
+	// table index 152, flags 0x10000000002000
+	UPROPERTY(Transient)
+	TArray<AFortProjectileBase*> PredictedProjectiles;
+
 	// table index 151, flags 0x10000000002000
 	UPROPERTY(Transient)
 	float RemainingFocalPointActorDuration;
+
+	// table index 150, flags 0x10000100002020
+	UPROPERTY(ReplicatedUsing=OnRep_FocalPointActor, Transient)
+	AActor* FocalPointActor;
 
 	// table index 149, flags 0x10000000002020
 	UPROPERTY(Replicated, Transient)
@@ -363,6 +395,10 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_WinningTeamsCN)
 	TArray<uint8> WinningTeamsCN;
 
+	// table index 134, flags 0x10000000000034
+	UPROPERTY(Replicated)
+	TArray<UObject*> ServerToClientPreloadList;
+
 	// table index 132, flags 0x10000000000034
 	UPROPERTY(Replicated)
 	uint8 bAllowUserPickedCosmeticBattleBus : 1;
@@ -390,6 +426,10 @@ public:
 	// table index 125, flags 0x10000000000020
 	UPROPERTY(Replicated)
 	uint8 bIsLargeTeamGame : 1;
+
+	// table index 124, flags 0x10000100000034
+	UPROPERTY(ReplicatedUsing=OnRep_WinningPlayerState)
+	APlayerState* WinningPlayerState;
 
 	// table index 123, flags 0x10000100000034
 	UPROPERTY(ReplicatedUsing=OnRep_WinningTeam)
@@ -459,6 +499,10 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_SafeZoneIndicator)
 	AFortSafeZoneIndicator* SafeZoneIndicator;
 
+	// table index 98, flags 0x20080000002000
+	UPROPERTY(Transient)
+	UMaterialInterface* MinimapMaterial;
+
 	// table index 97, flags 0x20080000002000
 	UPROPERTY(Transient)
 	UMaterialInstanceDynamic* MinimapBackgroundMID;
@@ -514,6 +558,18 @@ public:
 	// table index 84, flags 0x20080000002000
 	UPROPERTY(Transient)
 	FSlateBrush AircraftPathTeamIndicatorBrush;
+
+	// table index 83, flags 0x20080000010001
+	UPROPERTY()
+	UMaterialInterface* MiniMapBackgroundDrawingMaterial;
+
+	// table index 82, flags 0x20080000010001
+	UPROPERTY()
+	UMaterialInterface* MiniMapCircleDrawingMaterial;
+
+	// table index 81, flags 0x20080000010001
+	UPROPERTY()
+	UMaterialInterface* MiniMapNextCircleDrawingMaterial;
 
 	// table index 79, flags 0x20080000002000
 	UPROPERTY(Transient)
@@ -800,6 +856,9 @@ public:
 	void OnRep_EventTournamentRound();
 
 	UFUNCTION()
+	void OnRep_FocalPointActor();
+
+	UFUNCTION()
 	void OnRep_GamePhase(EAthenaGamePhase OldGamePhase);
 
 	UFUNCTION()
@@ -867,6 +926,9 @@ public:
 
 	UFUNCTION()
 	void OnRep_WinningPlayerList();
+
+	UFUNCTION()
+	void OnRep_WinningPlayerState();
 
 	UFUNCTION()
 	void OnRep_WinningScore();

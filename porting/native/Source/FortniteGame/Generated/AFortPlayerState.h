@@ -15,13 +15,18 @@
 #include "FPlayerBannerInfo.h"
 #include "FReplicatedStatValues.h"
 #include "GameFramework/OnlineReplStructs.h"
+#include "GameplayTagContainer.h"
 #include "Math/Vector.h"
 
+class AActor;
+class AFortPickup;
+class AFortPlayerPawn;
 class AFortTeamInfo;
 class AFortTeamPrivateInfo;
 class UCustomCharacterPart;
 class UCustomColorSwatch;
 class UCustomPlayerComponent;
+class UFortAbilitySystemComponent;
 
 #include "AFortPlayerState.generated.h"
 
@@ -90,6 +95,10 @@ public:
 	// table index 44, flags 0x40000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_CurrentCharXP)
 	int32 CurrentCharXP;
+
+	// table index 43, flags 0x44000000000020
+	UPROPERTY(Replicated)
+	TWeakObjectPtr<AFortPickup> MyBackpackPickup;
 
 	// table index 42, flags 0x40000100002020
 	UPROPERTY(ReplicatedUsing=OnRep_ScoreStatChanged, Transient)
@@ -187,6 +196,14 @@ public:
 	UPROPERTY(Replicated)
 	EReadyCheckState ReadyCheckState;
 
+	// table index 11, flags 0x40000100000020
+	UPROPERTY(ReplicatedUsing=OnRep_HomeActor)
+	AActor* HomeActor;
+
+	// table index 9, flags 0x100000000a001d
+	UPROPERTY()
+	UFortAbilitySystemComponent* AbilitySystemComponent;
+
 	// table index 8, flags 0x20080000000000
 	UPROPERTY()
 	FName PlayerOSSName;
@@ -244,6 +261,9 @@ public:
 	void OnRep_HeroID();
 
 	UFUNCTION()
+	void OnRep_HomeActor(AActor* OldHomeActor);
+
+	UFUNCTION()
 	void OnRep_InGhostMode();
 
 	UFUNCTION()
@@ -272,6 +292,10 @@ public:
 
 	UFUNCTION()
 	void OnRep_ShowHeroHeadAccessories();
+
+	UFUNCTION(Server, Reliable)
+	void ServerChangeActiveVariantForCosmeticItem(AFortPlayerPawn* PreviewPawn, const FGameplayTag& DesiredActiveVariant, const FGameplayTag& VariantChannelToChange, const FName& ItemTemplateToChange);
+	void ServerChangeActiveVariantForCosmeticItem_Implementation(AFortPlayerPawn* PreviewPawn, const FGameplayTag& DesiredActiveVariant, const FGameplayTag& VariantChannelToChange, const FName& ItemTemplateToChange);
 
 	UFUNCTION(Server, Reliable)
 	void ServerSetShowHeroBackpack(bool bShow);

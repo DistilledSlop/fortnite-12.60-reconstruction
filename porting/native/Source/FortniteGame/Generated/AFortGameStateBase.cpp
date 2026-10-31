@@ -2,6 +2,11 @@
 #include "AFortGameStateBase.h"
 #include "Net/UnrealNetwork.h"
 
+void AFortGameStateBase::OnRep_StormShield()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortGameStateBase::OnRep_TimeOfDayManager()
 {
 	// Body not recovered: reflection-derived stub.
@@ -11,6 +16,7 @@ void AFortGameStateBase::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& O
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
+	DOREPLIFETIME(AFortGameStateBase, StormShield);
 	DOREPLIFETIME(AFortGameStateBase, FortTimeOfDayManager);
 }
 

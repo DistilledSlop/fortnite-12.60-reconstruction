@@ -2,6 +2,11 @@
 #include "AFortBroadcastRemoteClientInfo.h"
 #include "Net/UnrealNetwork.h"
 
+void AFortBroadcastRemoteClientInfo::ClientRemotePlayerDamagedResourceBuilding_Implementation(bool bJustHitWeakspot, bool bDestroyed, int32 PotentialResourceCount, EFortResourceType::Type PotentialResourceType, ABuildingSMActor* BuildingSMActor)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortBroadcastRemoteClientInfo::ClientRemotePlayerHitMarkers_Implementation(const TArray<FVector2D>& RelativeScreenPositions)
 {
 	// Body not recovered: reflection-derived stub.
@@ -17,12 +22,22 @@ void AFortBroadcastRemoteClientInfo::OnRep_bActive()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortBroadcastRemoteClientInfo::OnRep_RemoteBuildableClass()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortBroadcastRemoteClientInfo::OnRep_RemoteBuildingMaterial()
 {
 	// Body not recovered: reflection-derived stub.
 }
 
 void AFortBroadcastRemoteClientInfo::OnRep_RemoteCanDBNORevive()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortBroadcastRemoteClientInfo::OnRep_RemoteEditActor()
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -58,6 +73,16 @@ void AFortBroadcastRemoteClientInfo::OnRep_RemotePoiTagID()
 }
 
 void AFortBroadcastRemoteClientInfo::OnRep_RemoteRespawnTime()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortBroadcastRemoteClientInfo::OnRep_RemoteWeakspotData()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortBroadcastRemoteClientInfo::ServerSetPlayerBuildableClass_Implementation(TSubclassOf<ABuildingSMActor> BuildableClass)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -109,11 +134,14 @@ void AFortBroadcastRemoteClientInfo::GetLifetimeReplicatedProps(TArray<FLifetime
 	DOREPLIFETIME(AFortBroadcastRemoteClientInfo, RemoteEventScore);
 	DOREPLIFETIME(AFortBroadcastRemoteClientInfo, RemotePoiTagID);
 	DOREPLIFETIME(AFortBroadcastRemoteClientInfo, RemoteRespawnTime);
+	DOREPLIFETIME(AFortBroadcastRemoteClientInfo, RemoteWeakspotData);
 	DOREPLIFETIME(AFortBroadcastRemoteClientInfo, bRemoteCanDBNORevive);
 	DOREPLIFETIME(AFortBroadcastRemoteClientInfo, bRemoteIsInventoryActive);
 	DOREPLIFETIME(AFortBroadcastRemoteClientInfo, bRemoteIsFullScreenMapActive);
 	DOREPLIFETIME(AFortBroadcastRemoteClientInfo, RemoteBuildingMaterial);
+	DOREPLIFETIME(AFortBroadcastRemoteClientInfo, RemoteBuildableClass);
 	DOREPLIFETIME(AFortBroadcastRemoteClientInfo, RemoteEditTileData);
+	DOREPLIFETIME(AFortBroadcastRemoteClientInfo, RemoteEditActor);
 	DOREPLIFETIME(AFortBroadcastRemoteClientInfo, bRemoteIsInteracting);
 	DOREPLIFETIME(AFortBroadcastRemoteClientInfo, bActive);
 }

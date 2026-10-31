@@ -9,6 +9,8 @@
 #include "Math/Vector.h"
 #include "Styling/SlateBrush.h"
 
+class AFortPlayerStateZone;
+
 #include "AFortMarkActor.generated.h"
 
 UCLASS(config=Engine)
@@ -17,6 +19,10 @@ class FORTNITEGAME_API AFortMarkActor : public AActor
 	GENERATED_BODY()
 
 public:
+	// table index 6, flags 0x14000000000020
+	UPROPERTY(Replicated)
+	TWeakObjectPtr<AFortPlayerStateZone> OwningPlayer;
+
 	// table index 5, flags 0x10000000000020
 	UPROPERTY(Replicated)
 	FString MarkString;
@@ -29,6 +35,10 @@ public:
 	UPROPERTY(Replicated)
 	uint8 bFinishedEditing : 1;
 
+	// table index 2, flags 0x10000100000020
+	UPROPERTY(ReplicatedUsing=OnRep_AttachedToActor)
+	AActor* AttachedToActor;
+
 	// table index 1, flags 0x10000000000020
 	UPROPERTY(Replicated)
 	FVector AttachmentOffset;
@@ -36,6 +46,9 @@ public:
 	// table index 0, flags 0x10000000000000
 	UPROPERTY()
 	FSlateBrush MiniMapIconBrush;
+
+	UFUNCTION()
+	void OnRep_AttachedToActor();
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

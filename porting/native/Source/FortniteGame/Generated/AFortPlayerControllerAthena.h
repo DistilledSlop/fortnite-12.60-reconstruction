@@ -7,6 +7,7 @@
 #include "AFortPlayerControllerZone.h"
 
 #include "AttributeSet.h"
+#include "EEndOfMatchReason.h"
 #include "Engine/NetSerialization.h"
 #include "FAsyncTaskResult.h"
 #include "FAthenaMatchStats.h"
@@ -22,18 +23,23 @@
 #include "FOnBuildingQuickEditOptionChanged.h"
 #include "FOnCreativePermissionsChanged.h"
 #include "FOnCreativePlotLinkedVolumeChanged.h"
+#include "FOnFocalPointActorChanged.h"
 #include "FOnInGameContentDownloadStarted.h"
+#include "FOnInGameLoadScreenChanged.h"
 #include "FOnInGameMatchmakingCanceled.h"
 #include "FOnInGameMatchmakingComplete.h"
 #include "FOnInGameMatchmakingError.h"
 #include "FOnInGameMatchmakingReadyCheckComplete.h"
 #include "FOnInGameMatchmakingStarted.h"
 #include "FOnIslandEntriesChanged.h"
+#include "FOnItemDroppedDueToOverflow.h"
 #include "FOnLocalPlayerChangedTeams.h"
+#include "FOnPlayerPawnEvent.h"
 #include "FOnPreviewScreenshotCameraActivated.h"
 #include "FOnSkydiveLeaderChanged.h"
 #include "FOnSpectatorStreaming.h"
 #include "FOnTalkingPlayersChanged.h"
+#include "FOnUsingFocalPointChanged.h"
 #include "FPlayerStateEncryptionKey.h"
 #include "FProfileGoScenario.h"
 #include "GameplayTagContainer.h"
@@ -42,13 +48,21 @@
 #include "Math/Vector.h"
 #include "Misc/Guid.h"
 
+class AActor;
+class ACameraActor;
 class AFortAthenaCreativePortal;
 class AFortBroadcastRemoteClientInfo;
+class AFortGameplayMutator;
+class AFortPlayerController;
 class AFortPlayerMarkerBase;
+class AFortPlayerPawn;
+class AFortPlayerPawnAthena;
 class AFortPlayerStartWarmup;
 class AFortPlayerState;
 class AFortPlayerStateAthena;
+class AFortPlayerStateZone;
 class AFortVolume;
+class APawn;
 class APhysicsObject;
 class UAthenaMarkerComponent;
 class UAthenaPlayerMatchReport;
@@ -66,6 +80,7 @@ class UFortHero;
 class UFortMiniMapChallengeIndicators;
 class UFortMiniMapTeamIndicators;
 class UInputComponent;
+class USoundBase;
 
 #include "AFortPlayerControllerAthena.generated.h"
 
@@ -83,6 +98,10 @@ public:
 	UPROPERTY()
 	FOnAircraftStateChange OnAircraftStateChange;
 
+	// table index 168, flags 0x20080010080000
+	UPROPERTY()
+	FOnItemDroppedDueToOverflow OnItemDroppedDueToOverflow;
+
 	// table index 167, flags 0x20080010080000
 	UPROPERTY()
 	FOnCreativePermissionsChanged OnCreativePermissionsChanged;
@@ -99,6 +118,10 @@ public:
 	UPROPERTY(Config)
 	uint8 bAllowPlayersCreditOnLeave : 1;
 
+	// table index 162, flags 0x10000100002020
+	UPROPERTY(ReplicatedUsing=OnRep_FocalPoint, Transient)
+	AActor* FocalPoint;
+
 	// table index 161, flags 0x10000000002020
 	UPROPERTY(Replicated, Transient)
 	FVector_NetQuantize FocalPointOffset;
@@ -110,6 +133,14 @@ public:
 	// table index 159, flags 0x10000000002000
 	UPROPERTY(Transient)
 	float FocalPointDuration;
+
+	// table index 158, flags 0x10000010080000
+	UPROPERTY()
+	FOnUsingFocalPointChanged OnUsingFocalPointChanged;
+
+	// table index 157, flags 0x10000010080000
+	UPROPERTY()
+	FOnFocalPointActorChanged OnFocalPointActorChanged;
 
 	// table index 156, flags 0x10000010080000
 	UPROPERTY()
@@ -130,6 +161,14 @@ public:
 	// table index 152, flags 0x10000000004000
 	UPROPERTY(Config)
 	uint8 bLeaveDisconnectedPawnsInGame : 1;
+
+	// table index 151, flags 0x10000000002000
+	UPROPERTY(Transient)
+	AFortPlayerPawn* DisconnectedPawn;
+
+	// table index 150, flags 0x20080000000000
+	UPROPERTY()
+	AFortPlayerPawn* PreviousPawn;
 
 	// table index 149, flags 0x20080000004000
 	UPROPERTY(Config)
@@ -259,6 +298,10 @@ public:
 	UPROPERTY()
 	FOnSpectatorStreaming SpectatorStreamingChanged;
 
+	// table index 116, flags 0x10000010080000
+	UPROPERTY()
+	FOnInGameLoadScreenChanged InGameLoadScreenChanged;
+
 	// table index 115, flags 0x10000010080004
 	UPROPERTY()
 	FOnLocalPlayerChangedTeams OnLocalPlayerChangedTeams;
@@ -271,6 +314,10 @@ public:
 	UPROPERTY()
 	FOnCreativePlotLinkedVolumeChanged OnCreativePlotLinkedVolumeChanged;
 
+	// table index 112, flags 0x10000010080000
+	UPROPERTY()
+	FOnPlayerPawnEvent OnClientLeaveIsland;
+
 	// table index 107, flags 0x10000010080000
 	UPROPERTY()
 	FOnIslandEntriesChanged OnIslandEntriesChanged;
@@ -278,6 +325,10 @@ public:
 	// table index 104, flags 0x10000000000034
 	UPROPERTY(Replicated)
 	uint8 bCanUseSolaris : 1;
+
+	// table index 103, flags 0x10000000000000
+	UPROPERTY()
+	ACameraActor* RespawnCameraActor;
 
 	// table index 102, flags 0x10000000002014
 	UPROPERTY(Transient)
@@ -326,6 +377,14 @@ public:
 	// table index 89, flags 0x10000000004014
 	UPROPERTY(Config)
 	uint8 bNoInGameMatchmaking : 1;
+
+	// table index 88, flags 0x10000000010001
+	UPROPERTY()
+	USoundBase* AudioOnExitAircraft;
+
+	// table index 87, flags 0x10000000010001
+	UPROPERTY()
+	USoundBase* AudioOnExitAircraftHornDoppler;
 
 	// table index 86, flags 0x10000000000000
 	UPROPERTY()
@@ -652,6 +711,10 @@ public:
 	void ClientNotifyAbortRespawn_Implementation();
 
 	UFUNCTION(Client, Reliable)
+	void ClientNotifyLost(const EEndOfMatchReason& LostReason, APawn* WinningPawn);
+	void ClientNotifyLost_Implementation(const EEndOfMatchReason& LostReason, APawn* WinningPawn);
+
+	UFUNCTION(Client, Reliable)
 	void ClientNotifyTeamLost();
 	void ClientNotifyTeamLost_Implementation();
 
@@ -662,6 +725,10 @@ public:
 	UFUNCTION(Client, Reliable)
 	void ClientPublishCreativePlotComplete(const FString& LinkJson, const FString& ResultErrorCode);
 	void ClientPublishCreativePlotComplete_Implementation(const FString& LinkJson, const FString& ResultErrorCode);
+
+	UFUNCTION(Client, Unreliable)
+	void ClientReceiveKillNotification(AFortPlayerStateZone* Killed, AFortPlayerStateZone* Killer);
+	void ClientReceiveKillNotification_Implementation(AFortPlayerStateZone* Killed, AFortPlayerStateZone* Killer);
 
 	UFUNCTION(Client, Reliable)
 	void ClientReportTournamentPlacementPointsScored(int32 PointsEarned, int32 Placement);
@@ -738,6 +805,9 @@ public:
 	void OnRep_CreativePlotLinkedVolume();
 
 	UFUNCTION()
+	void OnRep_FocalPoint();
+
+	UFUNCTION()
 	void OnRep_SkydiveLeader();
 
 	UFUNCTION(Server, Reliable)
@@ -779,6 +849,14 @@ public:
 	UFUNCTION(Server, Reliable)
 	void ServerCreateProfileGoCollectionForSublevels(int32 Quad, int32 RotationSteps, int32 GridStepsY, int32 GridStepsX, const FString& SublevelSearchString);
 	void ServerCreateProfileGoCollectionForSublevels_Implementation(int32 Quad, int32 RotationSteps, int32 GridStepsY, int32 GridStepsX, const FString& SublevelSearchString);
+
+	UFUNCTION(Server, Reliable)
+	void ServerDBNOReviveInterrupted(AFortPlayerPawnAthena* DBNOPawn);
+	void ServerDBNOReviveInterrupted_Implementation(AFortPlayerPawnAthena* DBNOPawn);
+
+	UFUNCTION(Server, Reliable)
+	void ServerDBNOReviveStarted(AFortPlayerPawnAthena* DBNOPawn);
+	void ServerDBNOReviveStarted_Implementation(AFortPlayerPawnAthena* DBNOPawn);
 
 	UFUNCTION(Server, Reliable)
 	void ServerEnableAnonymousCharacterMode();
@@ -873,6 +951,10 @@ public:
 	void ServerSaveIslandCheckpoint_Implementation(AFortAthenaCreativePortal* Portal);
 
 	UFUNCTION(Server, Reliable)
+	void ServerSelectMutatorItem(int32 ItemIndex, AFortGameplayMutator* Mutator);
+	void ServerSelectMutatorItem_Implementation(int32 ItemIndex, AFortGameplayMutator* Mutator);
+
+	UFUNCTION(Server, Reliable)
 	void ServerSendSquadFriend(AFortPlayerStateAthena* FriendInSquad);
 	void ServerSendSquadFriend_Implementation(AFortPlayerStateAthena* FriendInSquad);
 
@@ -903,6 +985,10 @@ public:
 	UFUNCTION(Server, Reliable)
 	void ServerSimulateLevelUp(int32 ClientSimulatedLevel);
 	void ServerSimulateLevelUp_Implementation(int32 ClientSimulatedLevel);
+
+	UFUNCTION(Server, Reliable)
+	void ServerSpawnCreativeSupplyDrop(TSubclassOf<AActor> InSupplyDropClass, const FVector& Position);
+	void ServerSpawnCreativeSupplyDrop_Implementation(TSubclassOf<AActor> InSupplyDropClass, const FVector& Position);
 
 	UFUNCTION(Server, Reliable)
 	void ServerStartInteractWithIslandPortal(AFortAthenaCreativePortal* Portal);

@@ -8,14 +8,20 @@
 
 #include "AttributeSet.h"
 #include "FAircraftFlightInfo.h"
+#include "FBuildingGameplayActorSpawnDetails.h"
+#include "FFortAmmoBoxSpawnInfo.h"
 #include "FFortSafeZoneDefinition.h"
+#include "FFortSafeZoneVolumeDefinition.h"
+#include "FFortTreasureChestSpawnInfo.h"
 #include "Math/Box2D.h"
 #include "Math/BoxSphereBounds.h"
 
 class ABuildingItemCollectorActor;
 class ABuildingItemWeaponUpgradeActor;
 class AFortAthenaAircraft;
+class AFortAthenaSupplyDrop;
 class AFortSafeZoneStorm;
+class AVolume;
 class UFortSupplyDropInfo;
 
 #include "AFortAthenaMapInfo.generated.h"
@@ -42,6 +48,18 @@ public:
 	UPROPERTY()
 	FScalableFloat GoldenPoiDistanceMustBeAwayFromBusPath;
 
+	// table index 35, flags 0x10000000000015
+	UPROPERTY()
+	TArray<FFortTreasureChestSpawnInfo> TreasureChestSpawnInfos;
+
+	// table index 33, flags 0x10000000000015
+	UPROPERTY()
+	TArray<FFortAmmoBoxSpawnInfo> AmmoBoxSpawnInfos;
+
+	// table index 31, flags 0x10000000000015
+	UPROPERTY()
+	TArray<FBuildingGameplayActorSpawnDetails> BuildingGameplayActorSpawnDetails;
+
 	// table index 30, flags 0x14000000000015
 	UPROPERTY()
 	TSubclassOf<ABuildingItemCollectorActor> VendingMachineClass;
@@ -57,6 +75,10 @@ public:
 	// table index 27, flags 0x10000000000015
 	UPROPERTY()
 	FScalableFloat WeaponUpgradeMachineSpawnChance;
+
+	// table index 26, flags 0x14000000000015
+	UPROPERTY()
+	TSubclassOf<AFortAthenaSupplyDrop> LlamaClass;
 
 	// table index 25, flags 0x10000000000015
 	UPROPERTY()
@@ -89,6 +111,10 @@ public:
 	// table index 17, flags 0x10000000000015
 	UPROPERTY()
 	FBox2D AircraftDropZone;
+
+	// table index 16, flags 0x10000000000015
+	UPROPERTY()
+	AVolume* AircraftDropVolume;
 
 	// table index 15, flags 0x10000000000015
 	UPROPERTY()
@@ -133,6 +159,10 @@ public:
 	// table index 4, flags 0x20080000000001
 	UPROPERTY()
 	FScalableFloat SafeZoneStartingRadius;
+
+	// table index 2, flags 0x20080000000015
+	UPROPERTY()
+	TArray<FFortSafeZoneVolumeDefinition> SafeZoneVolumeDefinitions;
 
 	// table index 1, flags 0x20080000000015
 	UPROPERTY()

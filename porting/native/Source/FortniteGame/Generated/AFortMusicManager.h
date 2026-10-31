@@ -6,7 +6,9 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 
+class AFortPlayerController;
 class UFortMusicManagerBank;
+class UFortMusicVoice;
 
 #include "AFortMusicManager.generated.h"
 
@@ -16,6 +18,18 @@ class FORTNITEGAME_API AFortMusicManager : public AActor
 	GENERATED_BODY()
 
 public:
+	// table index 5, flags 0x10000000000014
+	UPROPERTY()
+	AFortPlayerController* ControllerOwner;
+
+	// table index 4, flags 0x42000000082008
+	UPROPERTY(Transient)
+	UFortMusicVoice* Voices[2];
+
+	// table index 2, flags 0x40000000002000
+	UPROPERTY(Transient)
+	TArray<UFortMusicVoice*> VoicesToCleanUp;
+
 	// table index 1, flags 0x20080000002000
 	UPROPERTY(Transient)
 	uint8 bWorldReadyCalled : 1;

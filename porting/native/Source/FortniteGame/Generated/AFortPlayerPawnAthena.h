@@ -9,6 +9,9 @@
 #include "Abilities/GameplayAbilityTypes.h"
 #include "FFortEffectDistanceQuality.h"
 #include "FFortPlayerAthenaAttributeReplicationProxy.h"
+#include "FMarkedActorDisplayInfo.h"
+#include "FOnFortPlayerDied.h"
+#include "FOnInteractionFailedCallback.h"
 #include "GameplayCueInterface.h"
 #include "GameplayEffectTypes.h"
 #include "GameplayTagContainer.h"
@@ -16,13 +19,21 @@
 #include "Math/Rotator.h"
 #include "Math/Vector.h"
 
+class AActor;
+class ABuildingSMActor;
+class AController;
 class AFortEmitterCameraLensEffectDirectional;
+class APawn;
 class UAnimMontage;
+class UAudioComponent;
 class UCameraShake;
+class UDataTable;
 class UForceFeedbackEffect;
 class UFortMobileInteractionComponent;
 class UFortSkinWeightOverrideManager;
 class UParticleSystemComponent;
+class USoundBase;
+class UTexture2D;
 class UUnicornAthenaPawnSampler;
 
 #include "AFortPlayerPawnAthena.generated.h"
@@ -33,6 +44,14 @@ class FORTNITEGAME_API AFortPlayerPawnAthena : public AFortPlayerPawn
 	GENERATED_BODY()
 
 public:
+	// table index 97, flags 0x10000010080000
+	UPROPERTY()
+	FOnInteractionFailedCallback OnInteractionFailedCallback;
+
+	// table index 96, flags 0x10000000002024
+	UPROPERTY(Replicated, Transient)
+	AActor* ItemInteractionActor;
+
 	// table index 95, flags 0x10000000000014
 	UPROPERTY()
 	float CurrentPawnSpeed;
@@ -48,6 +67,10 @@ public:
 	// table index 92, flags 0x10000000000014
 	UPROPERTY()
 	FVector PreviousVelocityXY;
+
+	// table index 91, flags 0x10000000010001
+	UPROPERTY()
+	USoundBase* OnReviveSound;
 
 	// table index 90, flags 0x10000000000005
 	UPROPERTY()
@@ -157,9 +180,29 @@ public:
 	UPROPERTY(Replicated)
 	FMinimalReplicationTagCountMap FastReplicationMinimalReplicationTags;
 
+	// table index 62, flags 0x10000000000014
+	UPROPERTY()
+	UTexture2D* CurrentQuickChatIcon;
+
 	// table index 61, flags 0x10000000000005
 	UPROPERTY()
 	uint8 bADSWhileNotOnGround : 1;
+
+	// table index 60, flags 0x10000000000005
+	UPROPERTY()
+	USoundBase* DefaultCrouchedFootstepSound;
+
+	// table index 59, flags 0x10000000000005
+	UPROPERTY()
+	USoundBase* DefaultCrouchSprintFootstepSound;
+
+	// table index 58, flags 0x10000010080000
+	UPROPERTY()
+	FOnFortPlayerDied OnFortPlayerDied;
+
+	// table index 57, flags 0x10000000000000
+	UPROPERTY()
+	APawn* KillerForSpectatorRotation;
 
 	// table index 56, flags 0x10000000004000
 	UPROPERTY(Config)
@@ -229,9 +272,21 @@ public:
 	UPROPERTY(Transient)
 	float LastFiredTime;
 
+	// table index 39, flags 0x10000000010015
+	UPROPERTY()
+	UDataTable* PrototypeShootingModel;
+
+	// table index 38, flags 0x10000000002000
+	UPROPERTY(Transient)
+	AController* FallInstigator;
+
 	// table index 37, flags 0x10000000002000
 	UPROPERTY(Transient)
 	FGameplayTagContainer FallDamageTags;
+
+	// table index 36, flags 0x10000000002000
+	UPROPERTY(Transient)
+	ABuildingSMActor* LastFloorBeforeFalling;
 
 	// table index 35, flags 0x10000000002000
 	UPROPERTY(Transient)
@@ -249,6 +304,10 @@ public:
 	UPROPERTY()
 	float MeleeCombatSlowDuration;
 
+	// table index 30, flags 0x1000000009001d
+	UPROPERTY()
+	UAudioComponent* InAirAudioComp;
+
 	// table index 29, flags 0x1000000009001d
 	UPROPERTY()
 	UParticleSystemComponent* PSC_PlayerWalkLand;
@@ -265,6 +324,10 @@ public:
 	UPROPERTY()
 	UParticleSystemComponent* PSC_HitDamage;
 
+	// table index 25, flags 0x10000000082008
+	UPROPERTY(Transient)
+	UAudioComponent* SlidingAudioComp;
+
 	// table index 23, flags 0x20088000000008
 	UPROPERTY()
 	TArray<UFortMobileInteractionComponent*> MobileInteractionComponents;
@@ -276,6 +339,10 @@ public:
 	// table index 21, flags 0x20080000010001
 	UPROPERTY()
 	float MaxIndicatorVisibilityDistForReplays;
+
+	// table index 20, flags 0x2008000008001c
+	UPROPERTY()
+	UAudioComponent* ConsumableUseAudio;
 
 	// table index 19, flags 0x20080000000014
 	UPROPERTY()
@@ -300,6 +367,14 @@ public:
 	// table index 14, flags 0x20080000010001
 	UPROPERTY()
 	float RunParticleActivateSpeed;
+
+	// table index 13, flags 0x20080000010001
+	UPROPERTY()
+	USoundBase* SlidingIntensitySound3P;
+
+	// table index 12, flags 0x20080000010001
+	UPROPERTY()
+	USoundBase* SlidingIntensitySound1P;
 
 	// table index 11, flags 0x20080000002000
 	UPROPERTY(Transient)
@@ -332,6 +407,10 @@ public:
 	// table index 4, flags 0x40000000080008
 	UPROPERTY()
 	UUnicornAthenaPawnSampler* UnicornPawnSampler;
+
+	// table index 3, flags 0x20080000010001
+	UPROPERTY()
+	FMarkedActorDisplayInfo MarkerDisplay;
 
 	// table index 2, flags 0x20080000010001
 	UPROPERTY()
@@ -370,6 +449,10 @@ public:
 	UFUNCTION(Server, Reliable)
 	void ServerCreativeToggleGhost(bool bEnableOnly);
 	void ServerCreativeToggleGhost_Implementation(bool bEnableOnly);
+
+	UFUNCTION(Server, Reliable)
+	void ServerSetInteractingItem(bool bClearInteraction, AActor* InteractingItem);
+	void ServerSetInteractingItem_Implementation(bool bClearInteraction, AActor* InteractingItem);
 
 	UFUNCTION(Server, Reliable)
 	void ServerSuicide(int32 MatchPlacement, bool bSuppressResurrectionChip);

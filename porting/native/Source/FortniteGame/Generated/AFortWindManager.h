@@ -9,6 +9,11 @@
 #include "FFortWindImpulseCylinder.h"
 #include "FFortWindImpulseCylinderDelta.h"
 #include "FFortWindImpulseRadius.h"
+#include "FFortWindResponder.h"
+
+class ABuildingSMActor;
+class UAudioComponent;
+class UMaterialInterface;
 
 #include "AFortWindManager.generated.h"
 
@@ -33,6 +38,10 @@ public:
 	// table index 34, flags 0x40000000010001
 	UPROPERTY()
 	float MinimumSectionBlendTime;
+
+	// table index 33, flags 0x44000000010001
+	UPROPERTY()
+	TSoftObjectPtr<UMaterialInterface> MaterialDefiningParametersToInterpolate;
 
 	// table index 32, flags 0x40000000010001
 	UPROPERTY()
@@ -66,6 +75,10 @@ public:
 	UPROPERTY(Transient)
 	TArray<FFortWindImpulseCylinder> WindImpulseCylinders;
 
+	// table index 16, flags 0x40000000002000
+	UPROPERTY(Transient)
+	TArray<FFortWindResponder> WindResponders;
+
 	// table index 14, flags 0x40000000002000
 	UPROPERTY(Transient)
 	TArray<int32> NearbyCacheIndicesForAudio;
@@ -77,6 +90,14 @@ public:
 	// table index 11, flags 0x40000000002000
 	UPROPERTY(Transient)
 	int32 NextNearbyIndexToUpdate;
+
+	// table index 10, flags 0x40000000002000
+	UPROPERTY(Transient)
+	FFortWindResponder ActiveAudioWindResponder;
+
+	// table index 7, flags 0x40008000002008
+	UPROPERTY(Transient)
+	TMap<ABuildingSMActor*, UAudioComponent*> WindActorToWindResponderAudioMap;
 
 	// table index 6, flags 0x40000000010001
 	UPROPERTY()
@@ -97,6 +118,10 @@ public:
 	// table index 2, flags 0x40000000010001
 	UPROPERTY()
 	float ViewerMovementDistanceForRefresh;
+
+	// table index 0, flags 0x40008000002008
+	UPROPERTY(Transient)
+	TArray<UAudioComponent*> WindAudioComponentPool;
 
 };
 

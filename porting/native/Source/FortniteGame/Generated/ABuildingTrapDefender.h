@@ -9,6 +9,8 @@
 #include "EFortDefenderInteractionError.h"
 #include "FDefenderPawnOrItemSet.h"
 
+class AFortAIPawn;
+
 #include "ABuildingTrapDefender.generated.h"
 
 UCLASS(config=Game)
@@ -21,6 +23,10 @@ public:
 	UPROPERTY(Transient)
 	EFortDefenderInteractionError LastInteractError;
 
+	// table index 3, flags 0x20080100000024
+	UPROPERTY(ReplicatedUsing=OnRep_DefenderPawn)
+	AFortAIPawn* DefenderPawn;
+
 	// table index 1, flags 0x20080000000024
 	UPROPERTY(Replicated)
 	int32 DefenderItemLevel;
@@ -28,6 +34,9 @@ public:
 	// table index 0, flags 0x20180010080000
 	UPROPERTY()
 	FDefenderPawnOrItemSet DefenderPawnOrItemSet;
+
+	UFUNCTION()
+	void OnRep_DefenderPawn();
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

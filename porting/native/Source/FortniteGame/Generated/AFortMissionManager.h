@@ -10,6 +10,11 @@
 #include "FOnMissionsUpdated.h"
 #include "FOnShowSecondaryMissionHeadersChanged.h"
 
+class AFortAIPawn;
+class AFortBluGloManager;
+class AFortMission;
+class UGameplayEffect;
+
 #include "AFortMissionManager.generated.h"
 
 UCLASS(config=Game)
@@ -21,6 +26,30 @@ public:
 	// table index 18, flags 0x10000000000000
 	UPROPERTY()
 	TArray<FFortMissionEventName> MissionEventNames;
+
+	// table index 17, flags 0x14000000010015
+	UPROPERTY()
+	TSoftClassPtr<UGameplayEffect> PrimaryMissionGE;
+
+	// table index 16, flags 0x20080000000020
+	UPROPERTY(Replicated)
+	AFortBluGloManager* BluGloManager;
+
+	// table index 14, flags 0x20080100000020
+	UPROPERTY(ReplicatedUsing=OnRep_Missions)
+	TArray<AFortMission*> Missions;
+
+	// table index 12, flags 0x24080100000020
+	UPROPERTY(ReplicatedUsing=OnRep_AllMissionEnemyClasses)
+	TArray<TSubclassOf<AFortAIPawn>> AllMissionEnemyClasses;
+
+	// table index 5, flags 0x20080100000020
+	UPROPERTY(ReplicatedUsing=OnRep_CurrentUIFocusedMission)
+	AFortMission* CurrentUIFocusedMission;
+
+	// table index 4, flags 0x20080000000020
+	UPROPERTY(Replicated)
+	AFortMission* MissionClosestToPar;
 
 	// table index 3, flags 0x20080010080000
 	UPROPERTY()
@@ -34,5 +63,15 @@ public:
 	UPROPERTY(Transient)
 	uint8 bDisplaySecondaryMissionHeaders : 1;
 
+	UFUNCTION()
+	void OnRep_AllMissionEnemyClasses();
+
+	UFUNCTION()
+	void OnRep_CurrentUIFocusedMission();
+
+	UFUNCTION()
+	void OnRep_Missions();
+
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

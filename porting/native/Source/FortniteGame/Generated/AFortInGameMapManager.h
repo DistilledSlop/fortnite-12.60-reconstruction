@@ -18,6 +18,8 @@
 #include "Math/Color.h"
 
 class ASceneCapture2D;
+class UMaterialInterface;
+class UTexture2D;
 
 #include "AFortInGameMapManager.generated.h"
 
@@ -58,6 +60,10 @@ public:
 	// table index 28, flags 0x24080000000015
 	UPROPERTY()
 	TSubclassOf<ASceneCapture2D> SceneCaptureBlurryClass;
+
+	// table index 27, flags 0x20080000000015
+	UPROPERTY()
+	UMaterialInterface* MapMaterial;
 
 	// table index 26, flags 0x20080000000015
 	UPROPERTY()
@@ -142,6 +148,14 @@ public:
 	// table index 6, flags 0x20080000002000
 	UPROPERTY(Transient)
 	ASceneCapture2D* SceneCaptureBlurry;
+
+	// table index 5, flags 0x20080000002000
+	UPROPERTY(Transient)
+	UTexture2D* FogMask;
+
+	// table index 4, flags 0x20080000022001
+	UPROPERTY(Transient)
+	UTexture2D* HeatmapMask;
 
 	// table index 3, flags 0x20080000000000
 	UPROPERTY()

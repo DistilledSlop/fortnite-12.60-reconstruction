@@ -42,6 +42,11 @@ void AFortPlayerState::OnRep_HeroID()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerState::OnRep_HomeActor(AActor* OldHomeActor)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPlayerState::OnRep_InGhostMode()
 {
 	// Body not recovered: reflection-derived stub.
@@ -92,6 +97,11 @@ void AFortPlayerState::OnRep_ShowHeroHeadAccessories()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerState::ServerChangeActiveVariantForCosmeticItem_Implementation(AFortPlayerPawn* PreviewPawn, const FGameplayTag& DesiredActiveVariant, const FGameplayTag& VariantChannelToChange, const FName& ItemTemplateToChange)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPlayerState::ServerSetShowHeroBackpack_Implementation(bool bShow)
 {
 	// Body not recovered: reflection-derived stub.
@@ -108,6 +118,7 @@ void AFortPlayerState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Out
 
 	DOREPLIFETIME(AFortPlayerState, bInGhostMode);
 	DOREPLIFETIME(AFortPlayerState, PlatformUniqueNetId);
+	DOREPLIFETIME(AFortPlayerState, HomeActor);
 	DOREPLIFETIME(AFortPlayerState, ReadyCheckState);
 	DOREPLIFETIME(AFortPlayerState, bAreZoneStatsFinalized);
 	DOREPLIFETIME(AFortPlayerState, ReplicatedStats_Zone);
@@ -124,6 +135,7 @@ void AFortPlayerState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Out
 	DOREPLIFETIME(AFortPlayerState, ExperienceDeltas);
 	DOREPLIFETIME(AFortPlayerState, InitialExperienceAmount);
 	DOREPLIFETIME(AFortPlayerState, InitialExperienceLevel);
+	DOREPLIFETIME(AFortPlayerState, MyBackpackPickup);
 	DOREPLIFETIME(AFortPlayerState, CurrentCharXP);
 	DOREPLIFETIME(AFortPlayerState, HeroId);
 	DOREPLIFETIME(AFortPlayerState, PartyOwnerUniqueId);

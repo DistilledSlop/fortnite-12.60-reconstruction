@@ -8,6 +8,8 @@
 
 #include "Math/Vector.h"
 
+class AThreatCloud;
+
 #include "AFortThreatVisualsManager.generated.h"
 
 UCLASS(config=Engine)
@@ -16,6 +18,10 @@ class FORTNITEGAME_API AFortThreatVisualsManager : public AActor
 	GENERATED_BODY()
 
 public:
+	// table index 22, flags 0x44000000000001
+	UPROPERTY()
+	TSubclassOf<AThreatCloud> CloudBlueprint;
+
 	// table index 21, flags 0x40000000000001
 	UPROPERTY()
 	float CloudRadius;
@@ -91,6 +97,10 @@ public:
 	// table index 0, flags 0x40000100002020
 	UPROPERTY(ReplicatedUsing=OnRep_GoalActorLocations, Transient)
 	TArray<FVector> GoalActorLocations;
+
+	UFUNCTION(NetMulticast, Reliable)
+	void BeginThreatVisualsPrecursor(const FVector& ThreatLocation, AActor* SourceActor);
+	void BeginThreatVisualsPrecursor_Implementation(const FVector& ThreatLocation, AActor* SourceActor);
 
 	UFUNCTION()
 	void OnRep_GoalActorLocations();

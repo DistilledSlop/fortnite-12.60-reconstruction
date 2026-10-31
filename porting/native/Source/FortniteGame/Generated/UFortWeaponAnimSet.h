@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "Engine/DataAsset.h"
 
+#include "FFortAnimInput_PlayerAnimAsset.h"
+
 #include "UFortWeaponAnimSet.generated.h"
 
 UCLASS()
@@ -17,6 +19,14 @@ public:
 	// table index 2, flags 0x10000000000001
 	UPROPERTY()
 	float DelayBetweenFireAndFullBodySprint;
+
+	// table index 1, flags 0x40000000000001
+	UPROPERTY()
+	FFortAnimInput_PlayerAnimAsset MaleAnimAsset;
+
+	// table index 0, flags 0x40000000000001
+	UPROPERTY()
+	FFortAnimInput_PlayerAnimAsset FemaleAnimAsset;
 
 };
 

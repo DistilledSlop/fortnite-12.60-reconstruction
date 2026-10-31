@@ -10,11 +10,14 @@
 #include "Engine/DataTable.h"
 #include "FFortDeferredNewActorData.h"
 #include "FFortLevelStreamingInfo.h"
+#include "FFortPlacementLocationTagHandler.h"
+#include "FFortStartingMissionInfo.h"
 #include "FFortTileLootData.h"
 #include "FFortWindIntensityAndDirection.h"
 #include "GameplayTagContainer.h"
 #include "Math/Vector.h"
 
+class ABuildingFoundation;
 class UFortUserCloudHelperComponent;
 class UFortWorldRecord;
 class UFortZoneRecord;
@@ -33,6 +36,10 @@ public:
 	// table index 55, flags 0x40000000000000
 	UPROPERTY()
 	TArray<FFortLevelStreamingInfo> StreamedLevels;
+
+	// table index 53, flags 0x40000000002000
+	UPROPERTY(Transient)
+	TArray<FFortPlacementLocationTagHandler> PlacementLocationTagHandlers;
 
 	// table index 52, flags 0x40000000000001
 	UPROPERTY()
@@ -146,6 +153,10 @@ public:
 	UPROPERTY()
 	FGameplayTagContainer OverrideBackupPlayerSpawnTags;
 
+	// table index 22, flags 0x40000000000001
+	UPROPERTY()
+	FFortStartingMissionInfo StartingMissionInfo;
+
 	// table index 21, flags 0x40000000000000
 	UPROPERTY()
 	UFortWorldRecord* CurrentWorldRecord;
@@ -193,6 +204,10 @@ public:
 	// table index 6, flags 0x10000000002020
 	UPROPERTY(Replicated, Transient)
 	int32 FinalNumChosenBuildingFoundations;
+
+	// table index 4, flags 0x10000000002020
+	UPROPERTY(Replicated, Transient)
+	TArray<ABuildingFoundation*> ChosenBuildingFoundations;
 
 	// table index 3, flags 0x40000000004000
 	UPROPERTY(Config)

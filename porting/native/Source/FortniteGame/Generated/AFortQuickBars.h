@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "AFortClientOnlyActor.h"
 
+class UFortWorldItem;
+
 #include "AFortQuickBars.generated.h"
 
 UCLASS(config=Engine)
@@ -14,5 +16,21 @@ class FORTNITEGAME_API AFortQuickBars : public AFortClientOnlyActor
 	GENERATED_BODY()
 
 public:
+	// table index 6, flags 0x20080000002000
+	UPROPERTY(Transient)
+	TArray<UFortWorldItem*> AllCachedTraps;
+
+	// table index 4, flags 0x20080000002000
+	UPROPERTY(Transient)
+	TArray<UFortWorldItem*> CachedFloorTraps;
+
+	// table index 2, flags 0x20080000002000
+	UPROPERTY(Transient)
+	TArray<UFortWorldItem*> CachedWallTraps;
+
+	// table index 0, flags 0x20080000002000
+	UPROPERTY(Transient)
+	TArray<UFortWorldItem*> CachedCeilingTraps;
+
 };
 

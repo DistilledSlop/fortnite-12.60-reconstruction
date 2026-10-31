@@ -28,6 +28,7 @@
 #include "Perception/AIPerceptionStimuliSourceComponent.h"
 #include "AI/NavigationSystemConfig.h"
 #include "NavSystemConfigOverride.h"
+#include "ABuildingFoundation.h"
 #include "FortniteMapStubs.generated.h"
 
 // STUB: layout unknown, replace with generated class
@@ -55,14 +56,6 @@ class FORTNITEGAME_API AAthenaNavSystemConfigOverride : public ANavSystemConfigO
 };
 
 // STUB: layout unknown, replace with generated class
-// Parent guessed: UAIPerceptionStimuliSourceComponent. Naming convention; unverified.
-UCLASS()
-class FORTNITEGAME_API UAthenaTrapAIPerceptionStimuliSourceComponent : public UAIPerceptionStimuliSourceComponent
-{
-    GENERATED_BODY()
-};
-
-// STUB: layout unknown, replace with generated class
 // Parent guessed: UObject. Naming convention; unverified.
 UCLASS()
 class FORTNITEGAME_API UBuildingEditModeSupport_Floor : public UObject
@@ -81,23 +74,7 @@ class FORTNITEGAME_API UBuildingEditModeSupport_Roof : public UObject
 // STUB: layout unknown, replace with generated class
 // Parent guessed: UObject. Naming convention; unverified.
 UCLASS()
-class FORTNITEGAME_API UBuildingEditModeSupport_Stair : public UObject
-{
-    GENERATED_BODY()
-};
-
-// STUB: layout unknown, replace with generated class
-// Parent guessed: UObject. Naming convention; unverified.
-UCLASS()
 class FORTNITEGAME_API UBuildingEditModeSupport_Wall : public UObject
-{
-    GENERATED_BODY()
-};
-
-// STUB: layout unknown, replace with generated class
-// Parent guessed: AActor. Building base, name inference only; unverified.
-UCLASS()
-class FORTNITEGAME_API ABuildingFoundation : public AActor
 {
     GENERATED_BODY()
 };
@@ -119,22 +96,6 @@ class FORTNITEGAME_API ABuildingFoundation5x5 : public ABuildingFoundation
 };
 
 // STUB: layout unknown, replace with generated class
-// Parent guessed: UObject. Naming convention; unverified.
-UCLASS()
-class FORTNITEGAME_API UBuildingLayoutRequirement : public UObject
-{
-    GENERATED_BODY()
-};
-
-// STUB: layout unknown, replace with generated class
-// Parent guessed: UActorComponent. Naming convention; unverified.
-UCLASS()
-class FORTNITEGAME_API UCaptureComponent : public UActorComponent
-{
-    GENERATED_BODY()
-};
-
-// STUB: layout unknown, replace with generated class
 // Parent guessed: UActorComponent. Naming convention; unverified.
 UCLASS()
 class FORTNITEGAME_API UComplexPawnOverlapComponent : public UActorComponent
@@ -151,41 +112,9 @@ class FORTNITEGAME_API UCreativeDeferredTaskComponent : public UActorComponent
 };
 
 // STUB: layout unknown, replace with generated class
-// Parent guessed: UActorComponent. Naming convention; unverified.
-UCLASS()
-class FORTNITEGAME_API UCreativeQuestComponent : public UActorComponent
-{
-    GENERATED_BODY()
-};
-
-// STUB: layout unknown, replace with generated class
-// Parent guessed: UActorComponent. Naming convention; unverified.
-UCLASS()
-class FORTNITEGAME_API UEdgeNavLinks : public UActorComponent
-{
-    GENERATED_BODY()
-};
-
-// STUB: layout unknown, replace with generated class
-// Parent guessed: APawn. Naming convention; unverified.
-UCLASS()
-class FORTNITEGAME_API AFortAIPawn : public APawn
-{
-    GENERATED_BODY()
-};
-
-// STUB: layout unknown, replace with generated class
 // Parent guessed: UAIPerceptionComponent. Naming convention; unverified.
 UCLASS()
 class FORTNITEGAME_API UFortAIPerceptionComponent : public UAIPerceptionComponent
-{
-    GENERATED_BODY()
-};
-
-// STUB: layout unknown, replace with generated class
-// Parent guessed: UActorComponent. Naming convention; unverified.
-UCLASS()
-class FORTNITEGAME_API UFortActorOptionsComponent : public UActorComponent
 {
     GENERATED_BODY()
 };
@@ -201,23 +130,7 @@ class FORTNITEGAME_API UFortAsyncAction_CurrentPlaylistReady : public UBlueprint
 // STUB: layout unknown, replace with generated class
 // Parent guessed: UBlueprintAsyncActionBase. Naming convention; unverified.
 UCLASS()
-class FORTNITEGAME_API UFortAsyncAction_SendQuestStatEvent : public UBlueprintAsyncActionBase
-{
-    GENERATED_BODY()
-};
-
-// STUB: layout unknown, replace with generated class
-// Parent guessed: UBlueprintAsyncActionBase. Naming convention; unverified.
-UCLASS()
 class FORTNITEGAME_API UFortAsyncAction_WaitForClientAnnouncement : public UBlueprintAsyncActionBase
-{
-    GENERATED_BODY()
-};
-
-// STUB: layout unknown, replace with generated class
-// Parent guessed: AActor. Naming convention; unverified.
-UCLASS()
-class FORTNITEGAME_API AFortAthenaPatrolPath : public AActor
 {
     GENERATED_BODY()
 };
@@ -271,14 +184,6 @@ class FORTNITEGAME_API UFortBangCheckComponent_Map : public UActorComponent
 };
 
 // STUB: layout unknown, replace with generated class
-// Parent guessed: UObject. Naming convention; unverified.
-UCLASS()
-class FORTNITEGAME_API UFortClientAnnouncement : public UObject
-{
-    GENERATED_BODY()
-};
-
-// STUB: layout unknown, replace with generated class
 // Parent guessed: UAudioComponent. Naming convention; unverified.
 UCLASS()
 class FORTNITEGAME_API UFortCollisionAudioComponent : public UAudioComponent
@@ -290,22 +195,6 @@ class FORTNITEGAME_API UFortCollisionAudioComponent : public UAudioComponent
 // Parent guessed: UActorComponent. Naming convention; unverified.
 UCLASS()
 class FORTNITEGAME_API UFortCreativeCostComponent : public UActorComponent
-{
-    GENERATED_BODY()
-};
-
-// STUB: layout unknown, replace with generated class
-// Parent guessed: UActorComponent. Naming convention; unverified.
-UCLASS()
-class FORTNITEGAME_API UFortCreativeCreatureManagerInfoComponent : public UActorComponent
-{
-    GENERATED_BODY()
-};
-
-// STUB: layout unknown, replace with generated class
-// Parent guessed: UActorComponent. Naming convention; unverified.
-UCLASS()
-class FORTNITEGAME_API UFortCreativeVolumeLinkComponent : public UActorComponent
 {
     GENERATED_BODY()
 };
@@ -327,14 +216,6 @@ class FORTNITEGAME_API AFortForcedLODZone : public AVolume
 };
 
 // STUB: layout unknown, replace with generated class
-// Parent guessed: UGameInstance. Naming convention; unverified.
-UCLASS()
-class FORTNITEGAME_API UFortGameInstance : public UGameInstance
-{
-    GENERATED_BODY()
-};
-
-// STUB: layout unknown, replace with generated class
 // Parent guessed: AGameModeBase. Naming convention; unverified.
 UCLASS()
 class FORTNITEGAME_API AFortGameModeFrontEnd : public AGameModeBase
@@ -351,38 +232,6 @@ class FORTNITEGAME_API AFortGameModeMinimal : public AGameModeBase
 };
 
 // STUB: layout unknown, replace with generated class
-// Parent guessed: AGameModeBase. Naming convention; unverified.
-UCLASS()
-class FORTNITEGAME_API AFortGameModePvE : public AGameModeBase
-{
-    GENERATED_BODY()
-};
-
-// STUB: layout unknown, replace with generated class
-// Parent guessed: UActorComponent. Naming convention; unverified.
-UCLASS()
-class FORTNITEGAME_API UFortGameplayMessageDispatcherComponent : public UActorComponent
-{
-    GENERATED_BODY()
-};
-
-// STUB: layout unknown, replace with generated class
-// Parent guessed: UActorComponent. Naming convention; unverified.
-UCLASS()
-class FORTNITEGAME_API UFortGameplayReceiverMessageComponent : public UActorComponent
-{
-    GENERATED_BODY()
-};
-
-// STUB: layout unknown, replace with generated class
-// Parent guessed: UActorComponent. Naming convention; unverified.
-UCLASS()
-class FORTNITEGAME_API UFortGameplayTriggerMessageComponent : public UActorComponent
-{
-    GENERATED_BODY()
-};
-
-// STUB: layout unknown, replace with generated class
 // Parent guessed: AStaticMeshActor. Static mesh actor, name inference only; unverified.
 UCLASS()
 class FORTNITEGAME_API AFortHLODSMActor : public AStaticMeshActor
@@ -394,14 +243,6 @@ class FORTNITEGAME_API AFortHLODSMActor : public AStaticMeshActor
 // Parent guessed: UActorComponent. Naming convention; unverified.
 UCLASS()
 class FORTNITEGAME_API UFortHealthBarComponent : public UActorComponent
-{
-    GENERATED_BODY()
-};
-
-// STUB: layout unknown, replace with generated class
-// Parent guessed: UObject. Naming convention; unverified.
-UCLASS()
-class FORTNITEGAME_API UFortHealthSet : public UObject
 {
     GENERATED_BODY()
 };
@@ -433,83 +274,7 @@ class FORTNITEGAME_API UFortJumpDownLink : public UActorComponent
 // STUB: layout unknown, replace with generated class
 // Parent guessed: UActorComponent. Naming convention; unverified.
 UCLASS()
-class FORTNITEGAME_API UFortLevelSaveComponent : public UActorComponent
-{
-    GENERATED_BODY()
-};
-
-// STUB: layout unknown, replace with generated class
-// Parent guessed: UActorComponent. Naming convention; unverified.
-UCLASS()
-class FORTNITEGAME_API UFortLinkToActorComponent : public UActorComponent
-{
-    GENERATED_BODY()
-};
-
-// STUB: layout unknown, replace with generated class
-// Parent guessed: UActorComponent. Naming convention; unverified.
-UCLASS()
-class FORTNITEGAME_API UFortMiniMapComponent : public UActorComponent
-{
-    GENERATED_BODY()
-};
-
-// STUB: layout unknown, replace with generated class
-// Parent guessed: UActorComponent. Naming convention; unverified.
-UCLASS()
-class FORTNITEGAME_API UFortMinigameLogicComponent : public UActorComponent
-{
-    GENERATED_BODY()
-};
-
-// STUB: layout unknown, replace with generated class
-// Parent guessed: UActorComponent. Naming convention; unverified.
-UCLASS()
-class FORTNITEGAME_API UFortMinigameObjectiveComponent : public UActorComponent
-{
-    GENERATED_BODY()
-};
-
-// STUB: layout unknown, replace with generated class
-// Parent guessed: UActorComponent. Naming convention; unverified.
-UCLASS()
-class FORTNITEGAME_API UFortMinigamePlayerStartComponent : public UActorComponent
-{
-    GENERATED_BODY()
-};
-
-// STUB: layout unknown, replace with generated class
-// Parent guessed: UActorComponent. Naming convention; unverified.
-UCLASS()
-class FORTNITEGAME_API UFortMinigameProgressComponent : public UActorComponent
-{
-    GENERATED_BODY()
-};
-
-// STUB: layout unknown, replace with generated class
-// Parent guessed: UActorComponent. Naming convention; unverified.
-UCLASS()
 class FORTNITEGAME_API UFortMinigameVolumeComponent : public UActorComponent
-{
-    GENERATED_BODY()
-};
-
-// STUB: layout unknown, replace with generated class
-// Parent guessed: UObject. Naming convention; unverified.
-UCLASS()
-class FORTNITEGAME_API UFortMission : public UObject
-{
-    GENERATED_BODY()
-};
-
-// STUB: layout unknown, replace with generated class
-// Interface guessed from the census Class import name; unverified.
-UINTERFACE()
-class FORTNITEGAME_API UFortMissionInterface : public UInterface
-{
-    GENERATED_BODY()
-};
-class FORTNITEGAME_API IFortMissionInterface
 {
     GENERATED_BODY()
 };
@@ -531,33 +296,9 @@ class FORTNITEGAME_API AFortNavMesh : public AActor
 };
 
 // STUB: layout unknown, replace with generated class
-// Parent guessed: UObject. Naming convention; unverified.
-UCLASS()
-class FORTNITEGAME_API UFortNavigationGraph : public UObject
-{
-    GENERATED_BODY()
-};
-
-// STUB: layout unknown, replace with generated class
-// Parent guessed: UActorComponent. Naming convention; unverified.
-UCLASS()
-class FORTNITEGAME_API UFortNavigationVisibilityComponent : public UActorComponent
-{
-    GENERATED_BODY()
-};
-
-// STUB: layout unknown, replace with generated class
 // Parent guessed: ACameraActor. Naming convention; unverified.
 UCLASS()
 class FORTNITEGAME_API AFortPOICameraActor : public ACameraActor
-{
-    GENERATED_BODY()
-};
-
-// STUB: layout unknown, replace with generated class
-// Parent guessed: AActor. Naming convention; unverified.
-UCLASS()
-class FORTNITEGAME_API AFortPlacementActor : public AActor
 {
     GENERATED_BODY()
 };
@@ -571,57 +312,9 @@ class FORTNITEGAME_API AFortPlayerControllerFrontEnd : public APlayerController
 };
 
 // STUB: layout unknown, replace with generated class
-// Parent guessed: APawn. Naming convention; unverified.
-UCLASS()
-class FORTNITEGAME_API AFortPlayerMannequin : public APawn
-{
-    GENERATED_BODY()
-};
-
-// STUB: layout unknown, replace with generated class
-// Parent guessed: APlayerStart. Naming convention; unverified.
-UCLASS()
-class FORTNITEGAME_API AFortPlayerStart : public APlayerStart
-{
-    GENERATED_BODY()
-};
-
-// STUB: layout unknown, replace with generated class
-// Parent guessed: APlayerStart. Naming convention; unverified.
-UCLASS()
-class FORTNITEGAME_API AFortPlayerStartCreative : public APlayerStart
-{
-    GENERATED_BODY()
-};
-
-// STUB: layout unknown, replace with generated class
-// Parent guessed: UObject. Naming convention; unverified.
-UCLASS()
-class FORTNITEGAME_API UFortPlaylist : public UObject
-{
-    GENERATED_BODY()
-};
-
-// STUB: layout unknown, replace with generated class
-// Parent guessed: UActorComponent. Naming convention; unverified.
-UCLASS()
-class FORTNITEGAME_API UFortPoiCollisionComponent : public UActorComponent
-{
-    GENERATED_BODY()
-};
-
-// STUB: layout unknown, replace with generated class
 // Parent guessed: UActorComponent. Naming convention; unverified.
 UCLASS()
 class FORTNITEGAME_API UFortPoi_DiscoverableComponent : public UActorComponent
-{
-    GENERATED_BODY()
-};
-
-// STUB: layout unknown, replace with generated class
-// Parent guessed: UActorComponent. Naming convention; unverified.
-UCLASS()
-class FORTNITEGAME_API UFortPortalComponent : public UActorComponent
 {
     GENERATED_BODY()
 };
@@ -643,85 +336,9 @@ class FORTNITEGAME_API AFortPvPPlayerStart : public APlayerStart
 };
 
 // STUB: layout unknown, replace with generated class
-// Parent guessed: UObject. Naming convention; unverified.
-UCLASS()
-class FORTNITEGAME_API UFortQuestManager : public UObject
-{
-    GENERATED_BODY()
-};
-
-// STUB: layout unknown, replace with generated class
-// Interface guessed from the census Class import name; unverified.
-UINTERFACE()
-class FORTNITEGAME_API UFortSpawnableByPlacementSystemInterface : public UInterface
-{
-    GENERATED_BODY()
-};
-class FORTNITEGAME_API IFortSpawnableByPlacementSystemInterface
-{
-    GENERATED_BODY()
-};
-
-// STUB: layout unknown, replace with generated class
-// Parent guessed: AActor. Naming convention; unverified.
-UCLASS()
-class FORTNITEGAME_API AFortSpectateClickableMapIcon : public AActor
-{
-    GENERATED_BODY()
-};
-
-// STUB: layout unknown, replace with generated class
-// Parent guessed: UAudioComponent. Naming convention; unverified.
-UCLASS()
-class FORTNITEGAME_API UFortSplineWaterAudioComponent : public UAudioComponent
-{
-    GENERATED_BODY()
-};
-
-// STUB: layout unknown, replace with generated class
 // Parent guessed: AVolume. Naming convention; unverified.
 UCLASS()
 class FORTNITEGAME_API AFortUndergroundVolume : public AVolume
-{
-    GENERATED_BODY()
-};
-
-// STUB: layout unknown, replace with generated class
-// Parent guessed: UActorComponent. Naming convention; unverified.
-UCLASS()
-class FORTNITEGAME_API UFortVehicleAudioVoice : public UActorComponent
-{
-    GENERATED_BODY()
-};
-
-// STUB: layout unknown, replace with generated class
-// Parent guessed: UActorComponent. Naming convention; unverified.
-UCLASS()
-class FORTNITEGAME_API UFortVisibilityComponent : public UActorComponent
-{
-    GENERATED_BODY()
-};
-
-// STUB: layout unknown, replace with generated class
-// Parent guessed: UActorComponent. Naming convention; unverified.
-UCLASS()
-class FORTNITEGAME_API UFortVolumeTimeOfDayComponent : public UActorComponent
-{
-    GENERATED_BODY()
-};
-
-// STUB: layout unknown, replace with generated class
-// Parent guessed: AActor. Naming convention; unverified.
-UCLASS()
-class FORTNITEGAME_API AFortWaterBodyActor : public AActor
-{
-    GENERATED_BODY()
-};
-
-// STUB: layout unknown, replace with generated class
-// Parent guessed: UActorComponent. Naming convention; unverified.
-UCLASS()
-class FORTNITEGAME_API UFortWaterInteractionComponent : public UActorComponent
 {
     GENERATED_BODY()
 };
@@ -770,14 +387,6 @@ class FORTNITEGAME_API UInfiltrationStatusComponent : public UActorComponent
 // Parent guessed: UActorComponent. Naming convention; unverified.
 UCLASS()
 class FORTNITEGAME_API UPlaysetLevelStreamComponent : public UActorComponent
-{
-    GENERATED_BODY()
-};
-
-// STUB: layout unknown, replace with generated class
-// Parent guessed: UActorComponent. Naming convention; unverified.
-UCLASS()
-class FORTNITEGAME_API UQuestInteractableComponent : public UActorComponent
 {
     GENERATED_BODY()
 };

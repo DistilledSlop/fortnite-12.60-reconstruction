@@ -8,6 +8,7 @@
 
 #include "EFortFootstepSurfaceType.h"
 #include "FFortFootstepAttenuationData.h"
+#include "FFortFootstepSurfaceAudioData.h"
 
 #include "UFortFootstepAudioBank.generated.h"
 
@@ -40,6 +41,14 @@ public:
 	// table index 5, flags 0x10000000010001
 	UPROPERTY()
 	float VerticalPitchTileRange;
+
+	// table index 4, flags 0x20080000010001
+	UPROPERTY()
+	FFortFootstepSurfaceAudioData SurfaceData1P[10];
+
+	// table index 3, flags 0x20080000010001
+	UPROPERTY()
+	FFortFootstepSurfaceAudioData SurfaceData3P[10];
 
 	// table index 2, flags 0x20080000010001
 	UPROPERTY()

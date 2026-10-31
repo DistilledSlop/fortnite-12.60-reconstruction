@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "APlayspaceGameState.h"
 
+class AFortMissionStormShield;
 class AFortTimeOfDayManager;
 
 #include "AFortGameStateBase.generated.h"
@@ -19,6 +20,13 @@ public:
 	// table index 1, flags 0x20080100002020
 	UPROPERTY(ReplicatedUsing=OnRep_TimeOfDayManager, Transient)
 	AFortTimeOfDayManager* FortTimeOfDayManager;
+
+	// table index 0, flags 0x20080100002020
+	UPROPERTY(ReplicatedUsing=OnRep_StormShield, Transient)
+	AFortMissionStormShield* StormShield;
+
+	UFUNCTION()
+	void OnRep_StormShield();
 
 	UFUNCTION()
 	void OnRep_TimeOfDayManager();

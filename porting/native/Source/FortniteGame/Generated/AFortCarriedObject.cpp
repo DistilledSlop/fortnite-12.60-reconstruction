@@ -2,10 +2,17 @@
 #include "AFortCarriedObject.h"
 #include "Net/UnrealNetwork.h"
 
+void AFortCarriedObject::OnRep_HolderInfo(FCarriedObjectAttachmentInfo& PreviousInfo)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortCarriedObject::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
+	DOREPLIFETIME(AFortCarriedObject, SpawnPointActor);
 	DOREPLIFETIME(AFortCarriedObject, Team);
+	DOREPLIFETIME(AFortCarriedObject, HolderInfo);
 }
 

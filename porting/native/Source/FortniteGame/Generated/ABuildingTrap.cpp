@@ -2,11 +2,17 @@
 #include "ABuildingTrap.h"
 #include "Net/UnrealNetwork.h"
 
+void ABuildingTrap::OnRep_AttachedTo()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void ABuildingTrap::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(ABuildingTrap, OriginalTrapLevel);
 	DOREPLIFETIME(ABuildingTrap, TrapLevel);
+	DOREPLIFETIME(ABuildingTrap, AttachedTo);
 }
 

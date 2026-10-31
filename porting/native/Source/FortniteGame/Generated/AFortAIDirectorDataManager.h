@@ -10,6 +10,8 @@
 #include "FAIDirectorEventData.h"
 #include "FFortAIDirectorFactorData.h"
 
+class UObject;
+
 #include "AFortAIDirectorDataManager.generated.h"
 
 UCLASS(config=Engine, abstract)
@@ -18,6 +20,10 @@ class FORTNITEGAME_API AFortAIDirectorDataManager : public AActor
 	GENERATED_BODY()
 
 public:
+	// table index 7, flags 0x20080000000000
+	UPROPERTY()
+	UObject* OwnerObject;
+
 	// table index 5, flags 0x20080000000015
 	UPROPERTY()
 	TArray<FAIDirectorEventData> EventsToTrack;

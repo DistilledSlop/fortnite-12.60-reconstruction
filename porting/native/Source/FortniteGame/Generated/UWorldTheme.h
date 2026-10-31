@@ -6,6 +6,11 @@
 #include "CoreMinimal.h"
 #include "Engine/DataAsset.h"
 
+#include "FTileGroupSelection.h"
+
+class UWorld;
+class UWorldTileGroup;
+
 #include "UWorldTheme.generated.h"
 
 UCLASS()
@@ -14,9 +19,69 @@ class FORTNITEGAME_API UWorldTheme : public UDataAsset
 	GENERATED_BODY()
 
 public:
+	// table index 15, flags 0x10000000000001
+	UPROPERTY()
+	TArray<FTileGroupSelection> TileGroups;
+
+	// table index 14, flags 0x10000000000015
+	UPROPERTY()
+	UWorldTileGroup* FillerTileGroup;
+
 	// table index 13, flags 0x10000000000015
 	UPROPERTY()
 	int32 MaxCircuitSize;
+
+	// table index 12, flags 0x24080000000001
+	UPROPERTY()
+	TSoftObjectPtr<UWorld> BorderWorld_I;
+
+	// table index 11, flags 0x24080000000001
+	UPROPERTY()
+	TSoftObjectPtr<UWorld> BorderWorld_IO;
+
+	// table index 10, flags 0x24080000000001
+	UPROPERTY()
+	TSoftObjectPtr<UWorld> BorderWorld_O;
+
+	// table index 9, flags 0x24080000000001
+	UPROPERTY()
+	TSoftObjectPtr<UWorld> BorderWorld_OO;
+
+	// table index 8, flags 0x24080000000001
+	UPROPERTY()
+	TSoftObjectPtr<UWorld> BorderWorld_OOO;
+
+	// table index 7, flags 0x24080000000001
+	UPROPERTY()
+	TSoftObjectPtr<UWorld> BorderWorld_OOOO;
+
+	// table index 6, flags 0x24080000000001
+	UPROPERTY()
+	TSoftObjectPtr<UWorld> BorderWorld_S;
+
+	// table index 5, flags 0x24080000000001
+	UPROPERTY()
+	TSoftObjectPtr<UWorld> BorderWorld_SS;
+
+	// table index 4, flags 0x24080000000001
+	UPROPERTY()
+	TSoftObjectPtr<UWorld> BorderWorld_OS;
+
+	// table index 3, flags 0x24080000000001
+	UPROPERTY()
+	TSoftObjectPtr<UWorld> BorderWorld_SO;
+
+	// table index 2, flags 0x24080000000001
+	UPROPERTY()
+	TSoftObjectPtr<UWorld> BorderWorld_SOO;
+
+	// table index 1, flags 0x24080000000001
+	UPROPERTY()
+	TSoftObjectPtr<UWorld> BorderWorld_U;
+
+	// table index 0, flags 0x24080000000001
+	UPROPERTY()
+	TSoftObjectPtr<UWorld> BorderWorld_R;
 
 };
 

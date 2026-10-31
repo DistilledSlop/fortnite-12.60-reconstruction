@@ -7,6 +7,7 @@
 #include "ACustomCosmeticModifierBase.h"
 
 #include "EFortCustomPartType.h"
+#include "FMarshalledVFXRuntimeData.h"
 
 #include "ACustomCharacterPartModifier.generated.h"
 
@@ -23,6 +24,10 @@ public:
 	// table index 2, flags 0x40000000002000
 	UPROPERTY(Transient)
 	TEnumAsByte<EFortCustomPartType::Type> PartType;
+
+	// table index 0, flags 0x40008000002000
+	UPROPERTY(Transient)
+	TArray<FMarshalledVFXRuntimeData> RuntimeParticleData;
 
 };
 

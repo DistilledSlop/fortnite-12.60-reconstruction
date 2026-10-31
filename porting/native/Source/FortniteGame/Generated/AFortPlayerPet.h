@@ -6,6 +6,11 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 
+class UAudioComponent;
+class UFortTaggedSoundBank;
+class UMaterialInterface;
+class USphereComponent;
+
 #include "AFortPlayerPet.generated.h"
 
 UCLASS(config=Engine, abstract)
@@ -14,9 +19,25 @@ class FORTNITEGAME_API AFortPlayerPet : public AActor
 	GENERATED_BODY()
 
 public:
+	// table index 6, flags 0x2008000008001c
+	UPROPERTY()
+	UAudioComponent* PetAudioComponent;
+
 	// table index 5, flags 0x20080000000014
 	UPROPERTY()
 	uint8 bIsFrontEndPreview : 1;
+
+	// table index 3, flags 0x400000000a001d
+	UPROPERTY()
+	USphereComponent* InteractionCollisionSphere;
+
+	// table index 1, flags 0x40000000002000
+	UPROPERTY(Transient)
+	TArray<UMaterialInterface*> SavedMaterials;
+
+	// table index 0, flags 0x40000000002000
+	UPROPERTY(Transient)
+	UFortTaggedSoundBank* SoundBank;
 
 };
 

@@ -2,6 +2,11 @@
 #include "AFortPawn.h"
 #include "Net/UnrealNetwork.h"
 
+void AFortPawn::ClientInternalEquipWeapon_Implementation(AFortWeapon* Weap)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPawn::HandleIsDying()
 {
 	// Body not recovered: reflection-derived stub.
@@ -67,6 +72,11 @@ void AFortPawn::OnRep_bWeaponHolstered()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPawn::OnRep_CurrentWeapon(AFortWeapon* OldWeapon)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPawn::OnRep_DamageZoneActiveBitMask()
 {
 	// Body not recovered: reflection-derived stub.
@@ -117,6 +127,11 @@ void AFortPawn::OnRep_PushMomentum()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPawn::OnRep_Sentence()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPawn::OnRep_StormShieldComponent()
 {
 	// Body not recovered: reflection-derived stub.
@@ -127,7 +142,22 @@ void AFortPawn::OnRep_TeleportCounter()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPawn::OnRep_VocalChords()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPawn::OnRep_WeaponActivated()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPawn::PlaySound_Implementation(float PitchMultiplier, float VolumeMultiplier, USoundBase* Sound)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPawn::ServerInternalEquipWeapon_Implementation(AFortWeapon* Weap)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -141,8 +171,10 @@ void AFortPawn::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetim
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
+	DOREPLIFETIME(AFortPawn, CurrentSentence);
 	DOREPLIFETIME(AFortPawn, CurrentCalloutTag);
 	DOREPLIFETIME(AFortPawn, DisplayName);
+	DOREPLIFETIME(AFortPawn, VocalChords);
 	DOREPLIFETIME(AFortPawn, EmoteWalkSpeed);
 	DOREPLIFETIME(AFortPawn, LandingFlashCountPacked);
 	DOREPLIFETIME(AFortPawn, JumpFlashCountPacked);
@@ -151,6 +183,7 @@ void AFortPawn::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetim
 	DOREPLIFETIME(AFortPawn, PushMomentum);
 	DOREPLIFETIME(AFortPawn, bIsStunned);
 	DOREPLIFETIME(AFortPawn, SpawnImmunityTime);
+	DOREPLIFETIME(AFortPawn, CurrentWeapon);
 	DOREPLIFETIME(AFortPawn, PawnUniqueID);
 	DOREPLIFETIME(AFortPawn, StormShieldComponent);
 	DOREPLIFETIME(AFortPawn, TeleportCounter);

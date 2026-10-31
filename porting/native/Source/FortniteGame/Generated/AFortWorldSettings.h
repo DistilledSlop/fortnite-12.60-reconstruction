@@ -12,11 +12,15 @@
 #include "Math/Vector2D.h"
 #include "Styling/SlateBrush.h"
 
+class AActor;
 class AFortMusicManager;
 class AFortTimeOfDayManager;
 class AFortVehicleManager;
+class UCurveTable;
 class UFortLevelOverlayManager;
 class UFortMusicManagerBank;
+class USoundBase;
+class UTexture2D;
 
 #include "AFortWorldSettings.generated.h"
 
@@ -26,6 +30,10 @@ class FORTNITEGAME_API AFortWorldSettings : public AWorldSettings
 	GENERATED_BODY()
 
 public:
+	// table index 51, flags 0x10000000002000
+	UPROPERTY(Transient)
+	TArray<AActor*> ActorsNeedingWorldReady;
+
 	// table index 49, flags 0x10000000000000
 	UPROPERTY()
 	TArray<int32> WorldCells;
@@ -114,6 +122,10 @@ public:
 	UPROPERTY()
 	FRotator MapRotation;
 
+	// table index 27, flags 0x10000000000001
+	UPROPERTY()
+	UTexture2D* MapInitialMask;
+
 	// table index 26, flags 0x10000000000001
 	UPROPERTY()
 	FSlateBrush AthenaMapImage;
@@ -149,6 +161,18 @@ public:
 	// table index 17, flags 0x10000000000001
 	UPROPERTY()
 	TArray<FIntPoint> NavGraphSkyCells;
+
+	// table index 16, flags 0x10000000000001
+	UPROPERTY()
+	UCurveTable* SearchSpeedOverride;
+
+	// table index 15, flags 0x10000000000001
+	UPROPERTY()
+	UCurveTable* ResourceRateOverride;
+
+	// table index 14, flags 0x10000000000005
+	UPROPERTY()
+	USoundBase* SoundBodyHeadshotRequired;
 
 	// table index 13, flags 0x20080000000001
 	UPROPERTY()

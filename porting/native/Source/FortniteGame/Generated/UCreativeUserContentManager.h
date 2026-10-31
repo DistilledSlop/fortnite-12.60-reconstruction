@@ -8,6 +8,9 @@
 
 #include "FCreativeThumbnailCacheData.h"
 
+class ULevelSaveRecord;
+class ULevelSaveRecordThumbnailGenerator;
+
 #include "UCreativeUserContentManager.generated.h"
 
 UCLASS(config=Engine)
@@ -16,9 +19,17 @@ class FORTNITEGAME_API UCreativeUserContentManager : public UActorComponent
 	GENERATED_BODY()
 
 public:
+	// table index 4, flags 0x40000000000000
+	UPROPERTY()
+	TMap<FName, ULevelSaveRecord*> LevelSaveRecords;
+
 	// table index 1, flags 0x40000000000000
 	UPROPERTY()
 	TMap<FName, FCreativeThumbnailCacheData> SaveThumbnails;
+
+	// table index 0, flags 0x40000000002000
+	UPROPERTY(Transient)
+	ULevelSaveRecordThumbnailGenerator* ThumbnailGenerator;
 
 };
 

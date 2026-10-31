@@ -9,6 +9,8 @@
 #include "Engine/EngineTypes.h"
 #include "Math/Vector.h"
 
+class ABuildingSMActor;
+
 #include "ABuildingWeakSpot.generated.h"
 
 UCLASS(config=Engine)
@@ -17,6 +19,10 @@ class FORTNITEGAME_API ABuildingWeakSpot : public AFortClientOnlyActor
 	GENERATED_BODY()
 
 public:
+	// table index 9, flags 0x14000000002000
+	UPROPERTY(Transient)
+	TWeakObjectPtr<ABuildingSMActor> ParentBuilding;
+
 	// table index 8, flags 0x10000000000014
 	UPROPERTY()
 	uint8 bHit : 1;

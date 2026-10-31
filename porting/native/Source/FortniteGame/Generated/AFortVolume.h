@@ -9,11 +9,20 @@
 #include "AttributeSet.h"
 #include "EVolumeShape.h"
 #include "EVolumeState.h"
+#include "FOnActorEnterExitVolume.h"
 #include "FOnRestrictionEnabledChanged.h"
 #include "FOnShowPublishWatermarkChanged.h"
 #include "FVolumeActorStats.h"
 
+class AActor;
+class AAthenaNavInvokerBox;
 class AFortAthenaCreativePortal;
+class AFortCreativeTimerObjective;
+class AFortMissionStormShield;
+class UAsyncTaskQueue;
+class UFortVolumeObjectTrackingComponent;
+class UPawnOverlapComponent;
+class UStaticMeshComponent;
 
 #include "AFortVolume.generated.h"
 
@@ -23,6 +32,30 @@ class FORTNITEGAME_API AFortVolume : public AGameplayVolume
 	GENERATED_BODY()
 
 public:
+	// table index 39, flags 0x1000000008201c
+	UPROPERTY(Transient)
+	UPawnOverlapComponent* BoundsComponent;
+
+	// table index 38, flags 0x1000000008000c
+	UPROPERTY()
+	UStaticMeshComponent* BlockingCubeFaceOne;
+
+	// table index 37, flags 0x1000000008000c
+	UPROPERTY()
+	UStaticMeshComponent* BlockingCubeFaceTwo;
+
+	// table index 36, flags 0x1000000008000c
+	UPROPERTY()
+	UStaticMeshComponent* BlockingCubeFaceThree;
+
+	// table index 35, flags 0x1000000008000c
+	UPROPERTY()
+	UStaticMeshComponent* BlockingCubeFaceFour;
+
+	// table index 34, flags 0x10000100082028
+	UPROPERTY(ReplicatedUsing=OnRep_ObjectTrackingComponent, Transient)
+	UFortVolumeObjectTrackingComponent* ObjectTrackingComponent;
+
 	// table index 32, flags 0x10000000000035
 	UPROPERTY(Replicated)
 	uint8 bNeverAllowSaving : 1;
@@ -51,9 +84,17 @@ public:
 	UPROPERTY(Transient)
 	TArray<AFortAthenaCreativePortal*> LinkedPortals;
 
+	// table index 21, flags 0x40000000002000
+	UPROPERTY(Transient)
+	TArray<AActor*> DeferredDestroyActors;
+
 	// table index 19, flags 0x40000100000021
 	UPROPERTY(ReplicatedUsing=OnRep_VolumeState)
 	EVolumeState VolumeState;
+
+	// table index 18, flags 0x40000000002000
+	UPROPERTY(Transient)
+	UAsyncTaskQueue* TaskQueue;
 
 	// table index 16, flags 0x40000000002000
 	UPROPERTY(Transient)
@@ -62,6 +103,30 @@ public:
 	// table index 15, flags 0x40000000004000
 	UPROPERTY(Config)
 	int32 MaxActiveAI;
+
+	// table index 14, flags 0x14000000000001
+	UPROPERTY()
+	TSubclassOf<AAthenaNavInvokerBox> NavInvokerClass;
+
+	// table index 13, flags 0x40000000000000
+	UPROPERTY()
+	AAthenaNavInvokerBox* NavigationInvokerBox;
+
+	// table index 11, flags 0x10000000000005
+	UPROPERTY()
+	TArray<AFortMissionStormShield*> StormShields;
+
+	// table index 9, flags 0x40000000000000
+	UPROPERTY()
+	TArray<AFortCreativeTimerObjective*> TimerObjectives;
+
+	// table index 8, flags 0x10000010082000
+	UPROPERTY(Transient)
+	FOnActorEnterExitVolume OnActorEnter;
+
+	// table index 7, flags 0x10000010082000
+	UPROPERTY(Transient)
+	FOnActorEnterExitVolume OnActorExit;
 
 	// table index 5, flags 0x10000010080000
 	UPROPERTY()
@@ -81,6 +146,9 @@ public:
 
 	UFUNCTION()
 	void OnRep_bShowPublishWatermark();
+
+	UFUNCTION()
+	void OnRep_ObjectTrackingComponent();
 
 	UFUNCTION()
 	void OnRep_UserGeneratedContentRestrictions();

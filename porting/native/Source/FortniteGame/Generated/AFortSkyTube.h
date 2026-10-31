@@ -8,6 +8,8 @@
 
 #include "AttributeSet.h"
 
+class USplineComponent;
+
 #include "AFortSkyTube.generated.h"
 
 UCLASS(config=Engine)
@@ -19,6 +21,10 @@ public:
 	// table index 31, flags 0x20080000000001
 	UPROPERTY()
 	uint8 bExemptFromShutdown : 1;
+
+	// table index 30, flags 0x1000000008000d
+	UPROPERTY()
+	USplineComponent* Spline;
 
 	// table index 29, flags 0x10000000000015
 	UPROPERTY()

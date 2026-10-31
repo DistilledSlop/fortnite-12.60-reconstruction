@@ -177,3 +177,17 @@ Evidence (logs in `/tmp/fn-editor-check/`, not tracked):
 - Staged `FortniteLinux.sh /Engine/Maps/Entry -nullrhi -nosound -unattended -ExecCmds=Quit`: exit 0, `LogLoad: LoadMap: /Engine/Maps/Entry` (`stage-run.log`).
 - Join smoke, direct mode: `porting/server/smoke_join.sh` hardcodes `porting/generated/linux-stage`, which was not modified. The same steps ran against a hardlinked copy of that stage with the new `FortniteLinux` and `FortniteLinuxServer` binaries. Result: `Local network version checksum: 683914758`, `IpNetDriver listening on port 7777`, `ss -lun` shows `UNCONN 0.0.0.0:7777` while the server runs, `Join succeeded:`, and `Welcomed by server (Level: /Game/Maps/FortniteEmptyDedicated, Game: /Script/FortniteGame.FortGameModeAthena)`.
 - The existing `porting/generated/linux-stage` still holds the old executables until it is restaged.
+
+## Staging the client: CEF3 libraries
+
+Since the plugin set grew (OnlineSubsystemUtils and friends), `FortniteLinux` links `libcef.so`. The stage
+(`porting/generated/linux-stage/LinuxNoEditor`) is assembled by copying binaries, so add the engine's CEF3
+directory where the client's RPATH looks for it. Hard links keep it free on the same filesystem:
+
+```sh
+mkdir -p porting/generated/linux-stage/LinuxNoEditor/Engine/Binaries/ThirdParty/CEF3
+cp -al /opt/fortnite/UnrealEngine/Engine/Binaries/ThirdParty/CEF3/Linux \
+   porting/generated/linux-stage/LinuxNoEditor/Engine/Binaries/ThirdParty/CEF3/Linux
+```
+
+`ldd FortniteLinux` must then report no missing libraries. The server does not need it.

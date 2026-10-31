@@ -8,7 +8,9 @@
 
 #include "EFortKickReason.h"
 #include "FOnAccumulatedItemsChanged.h"
+#include "FOnBeginSpectating.h"
 #include "FOnCurrentPawnChanged.h"
+#include "FOnSpectatingTargetChanged.h"
 #include "FOnSpectatorCountChanged.h"
 #include "FOnSpectatorsChanged.h"
 #include "FReplicatedStatValues.h"
@@ -28,6 +30,10 @@ public:
 	UPROPERTY()
 	FOnCurrentPawnChanged OnCurrentPawnChanged;
 
+	// table index 29, flags 0x40000100000020
+	UPROPERTY(ReplicatedUsing=OnRep_SpectatingTarget)
+	AFortPlayerStateZone* SpectatingTarget;
+
 	// table index 27, flags 0x10000010080000
 	UPROPERTY()
 	FOnSpectatorsChanged OnSpectatorsRemovedEvent;
@@ -35,6 +41,14 @@ public:
 	// table index 26, flags 0x10000010080000
 	UPROPERTY()
 	FOnSpectatorCountChanged OnSpectatorCountChangedEvent;
+
+	// table index 25, flags 0x10000010080000
+	UPROPERTY()
+	FOnSpectatingTargetChanged OnSpectatingTargetChangedEvent;
+
+	// table index 24, flags 0x10000010080000
+	UPROPERTY()
+	FOnBeginSpectating OnBeginSpectatingEvent;
 
 	// table index 22, flags 0x40000000000020
 	UPROPERTY(Replicated)
@@ -106,6 +120,9 @@ public:
 
 	UFUNCTION()
 	void OnRep_NumRejoins();
+
+	UFUNCTION()
+	void OnRep_SpectatingTarget();
 
 	UFUNCTION(Server, Reliable)
 	void ServerSetInAircraft(bool bNewInAircraft);

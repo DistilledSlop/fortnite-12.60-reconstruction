@@ -10,6 +10,10 @@
 #include "Math/Vector.h"
 
 class ABuildingActor;
+class AFortPawn;
+class AFortPickup;
+class AFortPlayerPawn;
+class UFortWorldItem;
 
 #include "UFortClientBotManager.generated.h"
 
@@ -159,6 +163,14 @@ public:
 	UPROPERTY()
 	float LastCheckGoodTarget;
 
+	// table index 12, flags 0x10000000000000
+	UPROPERTY()
+	AFortPawn* EnemyTarget;
+
+	// table index 11, flags 0x10000000000000
+	UPROPERTY()
+	AFortPickup* PickupTarget;
+
 	// table index 10, flags 0x10000000000000
 	UPROPERTY()
 	ABuildingActor* BuildingTarget;
@@ -182,6 +194,14 @@ public:
 	// table index 3, flags 0x10000000000000
 	UPROPERTY()
 	FVector ViewLocation;
+
+	// table index 2, flags 0x10000000000000
+	UPROPERTY()
+	AFortPlayerPawn* MyPawn;
+
+	// table index 0, flags 0x10000000000000
+	UPROPERTY()
+	TArray<UFortWorldItem*> ItemsToCheckForMaxStackSize;
 
 };
 

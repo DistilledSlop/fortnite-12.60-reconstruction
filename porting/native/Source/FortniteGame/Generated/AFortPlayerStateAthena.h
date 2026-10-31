@@ -8,6 +8,8 @@
 
 #include "EMatchAbandonState.h"
 #include "ETeamMemberState.h"
+#include "FChangeTeamInfo.h"
+#include "FDeathInfo.h"
 #include "FDetailedMetricInformation.h"
 #include "FFortCreativeMessageDispatcherErrorMessage.h"
 #include "FFortRespawnData.h"
@@ -21,6 +23,8 @@
 #include "FOnTeamScoreChanged.h"
 #include "FSimpleMetricInformation.h"
 #include "GameFramework/OnlineReplStructs.h"
+
+class UTexture2D;
 
 #include "AFortPlayerStateAthena.generated.h"
 
@@ -238,6 +242,18 @@ public:
 	UPROPERTY(Replicated, Transient)
 	uint8 bIsDisconnected : 1;
 
+	// table index 12, flags 0x40000000000000
+	UPROPERTY()
+	UTexture2D* GameModeIcon;
+
+	// table index 11, flags 0x40000100000020
+	UPROPERTY(ReplicatedUsing=OnRep_DeathInfo)
+	FDeathInfo DeathInfo;
+
+	// table index 10, flags 0x40000100000020
+	UPROPERTY(ReplicatedUsing=OnRep_ChangeTeamInfo)
+	FChangeTeamInfo ChangeTeamInfo;
+
 	// table index 9, flags 0x20080000002000
 	UPROPERTY(Transient)
 	uint8 bResurrectionChipDisabled : 1;
@@ -297,6 +313,12 @@ public:
 	UFUNCTION(Client, Reliable)
 	void ClientReportTeamKill(int32 TeamKills);
 	void ClientReportTeamKill_Implementation(int32 TeamKills);
+
+	UFUNCTION()
+	void OnRep_ChangeTeamInfo();
+
+	UFUNCTION()
+	void OnRep_DeathInfo();
 
 	UFUNCTION()
 	void OnRep_DidNotThankBusDriver();

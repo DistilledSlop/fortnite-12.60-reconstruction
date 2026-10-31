@@ -6,6 +6,9 @@
 #include "CoreMinimal.h"
 #include "UFortMiniMapIndicator.h"
 
+class AFortPlayerControllerAthena;
+class UAthenaChallengeIndicatorCache;
+
 #include "UFortMiniMapChallengeIndicators.generated.h"
 
 UCLASS(abstract)
@@ -14,5 +17,13 @@ class FORTNITEGAME_API UFortMiniMapChallengeIndicators : public UFortMiniMapIndi
 	GENERATED_BODY()
 
 public:
+	// table index 1, flags 0x40000000002000
+	UPROPERTY(Transient)
+	AFortPlayerControllerAthena* AthenaPlayerController;
+
+	// table index 0, flags 0x40000000002000
+	UPROPERTY(Transient)
+	UAthenaChallengeIndicatorCache* ChallengeIndicatorCache;
+
 };
 

@@ -9,6 +9,8 @@
 #include "GameFramework/OnlineReplStructs.h"
 #include "GameplayTagContainer.h"
 
+class APlayspaceLogic;
+
 #include "APlayspace.generated.h"
 
 UCLASS(config=Engine)
@@ -25,9 +27,17 @@ public:
 	UPROPERTY()
 	FGameplayTag RequestedPlayspaceParentTag;
 
+	// table index 9, flags 0x24080000010001
+	UPROPERTY()
+	TSubclassOf<APlayspaceLogic> PlayspaceLogicClass;
+
 	// table index 7, flags 0x24080000010001
 	UPROPERTY()
 	TArray<TSubclassOf<APlayspace>> ChildPlayspaceClasses;
+
+	// table index 5, flags 0x20080100002020
+	UPROPERTY(ReplicatedUsing=OnRep_PlayspaceLogic, Transient)
+	APlayspaceLogic* PlayspaceLogic;
 
 	// table index 3, flags 0x20080000002000
 	UPROPERTY(Transient)
@@ -37,5 +47,9 @@ public:
 	UPROPERTY(Transient)
 	TArray<FUniqueNetIdRepl> PendingUsers;
 
+	UFUNCTION()
+	void OnRep_PlayspaceLogic();
+
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

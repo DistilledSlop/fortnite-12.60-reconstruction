@@ -17,9 +17,19 @@
 #include "Math/Color.h"
 #include "Math/Vector.h"
 
+class AActor;
 class ABuildingActor;
+class APawn;
+class APlayerController;
 class UBuildingEditModeMetadata;
+class UFortAbilitySet;
+class UFortAbilitySystemComponent;
+class UFortAthenaImpulseResponseSet;
+class UFortDamageSet;
 class UFortHealthBarIndicator;
+class UFortHealthSet;
+class UGameplayEffect;
+class UStaticMeshComponent;
 class UWeaponHitNotifyAudioBank;
 
 #include "APhysicsObject.generated.h"
@@ -30,6 +40,14 @@ class FORTNITEGAME_API APhysicsObject : public AFortPhysicsPawn
 	GENERATED_BODY()
 
 public:
+	// table index 39, flags 0x200800000a001d
+	UPROPERTY()
+	UStaticMeshComponent* PhysicsMeshComponent;
+
+	// table index 38, flags 0x200800000a001d
+	UPROPERTY()
+	UStaticMeshComponent* VisibleMeshComponent;
+
 	// table index 37, flags 0x10000000010015
 	UPROPERTY()
 	TEnumAsByte<EPhysicalSurface> PrimarySurfaceType;
@@ -94,6 +112,10 @@ public:
 	UPROPERTY(Transient)
 	float LastDamagedTime;
 
+	// table index 21, flags 0x24080000000015
+	UPROPERTY()
+	TSubclassOf<UGameplayEffect> PlayerCollisionGameplayEffect;
+
 	// table index 20, flags 0x40000100002020
 	UPROPERTY(ReplicatedUsing=OnRep_CorrectTargetOrientation, Transient)
 	FVehicleTargetOrientation CorrectTargetOrientation;
@@ -101,6 +123,22 @@ public:
 	// table index 19, flags 0x40000000010001
 	UPROPERTY()
 	FFortAttributeInitializationKey AttributeInitKey;
+
+	// table index 18, flags 0x40000100082028
+	UPROPERTY(ReplicatedUsing=OnRep_AbilitySystemComponent, Transient)
+	UFortAbilitySystemComponent* AbilitySystemComponent;
+
+	// table index 17, flags 0x40000100082028
+	UPROPERTY(ReplicatedUsing=OnRep_HealthSet, Transient)
+	UFortHealthSet* HealthSet;
+
+	// table index 16, flags 0x40000000082008
+	UPROPERTY(Transient)
+	UFortAthenaImpulseResponseSet* ImpulseResponseSet;
+
+	// table index 15, flags 0x40000000080008
+	UPROPERTY()
+	UFortDamageSet* DamageSet;
 
 	// table index 14, flags 0x40000000002000
 	UPROPERTY(Transient)
@@ -130,9 +168,17 @@ public:
 	UPROPERTY()
 	FOnSurfaceTypeVehicleIsOnChanged OnSurfaceTypePhysicsObjectIsOnChangedDelegate;
 
+	// table index 5, flags 0x20080000010001
+	UPROPERTY()
+	UFortAbilitySet* StartupAbilitySet;
+
 	// table index 2, flags 0x20080100002034
 	UPROPERTY(ReplicatedUsing=OnRep_InitialParameters, Transient)
 	FPhysicsObjectInitialParameters InitialParameters;
+
+	// table index 0, flags 0x24080000000001
+	UPROPERTY()
+	TArray<TSubclassOf<AActor>> ActorsObjectDiesWhenHitting;
 
 	UFUNCTION(Client, Reliable)
 	void DebugDrawImpactBucket(const FColor& Color, const FVector& ImpactVector, const FVector& Location);
@@ -143,7 +189,13 @@ public:
 	void DrawServerAndClientBallPosition_Implementation(const FVector& ServerPosition);
 
 	UFUNCTION()
+	void OnRep_AbilitySystemComponent();
+
+	UFUNCTION()
 	void OnRep_CorrectTargetOrientation();
+
+	UFUNCTION()
+	void OnRep_HealthSet();
 
 	UFUNCTION()
 	void OnRep_InitialParameters();
@@ -153,6 +205,10 @@ public:
 
 	UFUNCTION()
 	void OnRep_SurfaceTypePhysicsObjectOn(EPhysicalSurface PreviousSurfaceOn);
+
+	UFUNCTION(NetMulticast, Reliable)
+	void ServerBroadcastHit(const FVector& ImpulseValue, const FVector& ImpactPoint, APawn* ImpulseInstigator);
+	void ServerBroadcastHit_Implementation(const FVector& ImpulseValue, const FVector& ImpactPoint, APawn* ImpulseInstigator);
 
 	UFUNCTION(NetMulticast, Reliable)
 	void UpdateClientWithPhysicsObjectTestInput(const FVector& AngularVelocity, const FVector& LinearVelocity);

@@ -10,6 +10,10 @@
 #include "Math/Color.h"
 #include "Styling/SlateBrush.h"
 
+class AFortPlayerController;
+class AFortPlayerControllerSpectating;
+class UAthenaIndicatorPlayersCache;
+
 #include "UFortMiniMapTeamIndicators.generated.h"
 
 UCLASS(abstract)
@@ -18,9 +22,21 @@ class FORTNITEGAME_API UFortMiniMapTeamIndicators : public UFortMiniMapIndicator
 	GENERATED_BODY()
 
 public:
+	// table index 17, flags 0x40000000002000
+	UPROPERTY(Transient)
+	AFortPlayerController* PlayerController;
+
 	// table index 16, flags 0x40000000002000
 	UPROPERTY(Transient)
 	uint8 bSpectating : 1;
+
+	// table index 15, flags 0x40000000002000
+	UPROPERTY(Transient)
+	AFortPlayerControllerSpectating* SpectatorPC;
+
+	// table index 14, flags 0x40000000002000
+	UPROPERTY(Transient)
+	UAthenaIndicatorPlayersCache* IndicatedPlayersCache;
 
 	// table index 13, flags 0x40000000002000
 	UPROPERTY(Transient)

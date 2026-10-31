@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "Engine/DataAsset.h"
 
+class USoundBase;
+
 #include "UFortSwimmingAudioBank.generated.h"
 
 UCLASS()
@@ -14,6 +16,14 @@ class FORTNITEGAME_API UFortSwimmingAudioBank : public UDataAsset
 	GENERATED_BODY()
 
 public:
+	// table index 4, flags 0x10000000010001
+	UPROPERTY()
+	USoundBase* SwimmingAssets1P[8];
+
+	// table index 3, flags 0x10000000010001
+	UPROPERTY()
+	USoundBase* SwimmingAssets3P[8];
+
 	// table index 2, flags 0x10000000010001
 	UPROPERTY()
 	float TeammateVolumeMultiplier;

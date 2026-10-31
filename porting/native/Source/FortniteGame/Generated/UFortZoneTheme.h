@@ -9,8 +9,14 @@
 #include "EFortZoneType.h"
 #include "GameplayTagContainer.h"
 
+class ABuildingSMActor;
+class AFortGameMode;
+class AFortLobbyBeaconHost;
 class AFortMusicManager;
+class AFortTheaterMapTile;
 class UFortMusicManagerBank;
+class UTexture2D;
+class UWorld;
 
 #include "UFortZoneTheme.generated.h"
 
@@ -20,6 +26,14 @@ class FORTNITEGAME_API UFortZoneTheme : public UPrimaryDataAsset
 	GENERATED_BODY()
 
 public:
+	// table index 30, flags 0x14000000010015
+	UPROPERTY()
+	TSoftClassPtr<AFortTheaterMapTile> TheaterMapTileClass;
+
+	// table index 29, flags 0x24080000000001
+	UPROPERTY()
+	TSoftObjectPtr<UWorld> ZoneToUse;
+
 	// table index 28, flags 0x10000000010015
 	UPROPERTY()
 	FText ZoneName;
@@ -36,9 +50,17 @@ public:
 	UPROPERTY()
 	EFortZoneType ZoneType;
 
+	// table index 23, flags 0x14000000010015
+	UPROPERTY()
+	TSoftClassPtr<AFortGameMode> ZoneGameMode;
+
 	// table index 22, flags 0x10000000010015
 	UPROPERTY()
 	FGameplayTagContainer ZoneTags;
+
+	// table index 21, flags 0x14000000010015
+	UPROPERTY()
+	TSoftClassPtr<AFortLobbyBeaconHost> LobbyBeaconHostClass;
 
 	// table index 19, flags 0x10000000010015
 	UPROPERTY()
@@ -76,6 +98,10 @@ public:
 	UPROPERTY()
 	uint8 IgnoreGeneratedRewards : 1;
 
+	// table index 9, flags 0x14000000010015
+	UPROPERTY()
+	TSoftClassPtr<ABuildingSMActor> PlayerSpawnPadClass;
+
 	// table index 8, flags 0x10000000010015
 	UPROPERTY()
 	FGameplayTagContainer InitialPlayerSpawnTags;
@@ -99,6 +125,10 @@ public:
 	// table index 3, flags 0x10000000010015
 	UPROPERTY()
 	UFortMusicManagerBank* MusicManagerBank;
+
+	// table index 2, flags 0x14000000010015
+	UPROPERTY()
+	TSoftObjectPtr<UTexture2D> BackgroundImage;
 
 };
 

@@ -8,6 +8,8 @@
 
 #include "Styling/SlateBrush.h"
 
+class UFortSpectatorCameraComponent;
+
 #include "AFortReplaySpectatorPawnBase.generated.h"
 
 UCLASS(config=Game)
@@ -16,6 +18,10 @@ class FORTNITEGAME_API AFortReplaySpectatorPawnBase : public ASpectatorPawn
 	GENERATED_BODY()
 
 public:
+	// table index 1, flags 0x200800000a001d
+	UPROPERTY()
+	UFortSpectatorCameraComponent* SpectatorCameraComponent;
+
 	// table index 0, flags 0x20080000010001
 	UPROPERTY()
 	FSlateBrush MiniMapIconBrush;

@@ -7,6 +7,10 @@
 #include "Components/ActorComponent.h"
 
 #include "EMutatorListInitState.h"
+#include "FPropertyOverrideData.h"
+
+class AFortGameplayMutator;
+class UPlaylistUserOptions;
 
 #include "UFortMutatorListComponent.generated.h"
 
@@ -28,5 +32,25 @@ public:
 	UPROPERTY()
 	EMutatorListInitState InitState;
 
+	// table index 6, flags 0x14000000000001
+	UPROPERTY()
+	TArray<TSoftClassPtr<AFortGameplayMutator>> MutatorDefs;
+
+	// table index 5, flags 0x10000000000001
+	UPROPERTY()
+	UPlaylistUserOptions* UserOptions;
+
+	// table index 3, flags 0x10000000022801
+	UPROPERTY(Transient)
+	TArray<AFortGameplayMutator*> Mutators;
+
+	// table index 0, flags 0x10000100000020
+	UPROPERTY(ReplicatedUsing=OnRep_PropertyOverrideArray)
+	FPropertyOverrideData PropertyOverrideArray;
+
+	UFUNCTION()
+	void OnRep_PropertyOverrideArray();
+
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

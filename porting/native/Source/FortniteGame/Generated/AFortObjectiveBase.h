@@ -16,6 +16,8 @@
 #include "FOnObjectiveStatusChanged.h"
 #include "GameplayTagContainer.h"
 
+class UFortMissionTimerComponent;
+
 #include "AFortObjectiveBase.generated.h"
 
 UCLASS(config=Engine)
@@ -71,6 +73,10 @@ public:
 	// table index 4, flags 0x20080101000034
 	UPROPERTY(ReplicatedUsing=OnRep_ObjectiveStatus, SaveGame)
 	EFortObjectiveStatus ObjectiveStatus;
+
+	// table index 3, flags 0x4000000008001c
+	UPROPERTY()
+	UFortMissionTimerComponent* TimerComponent;
 
 	// table index 2, flags 0x10000010080000
 	UPROPERTY()

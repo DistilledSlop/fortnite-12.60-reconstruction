@@ -9,6 +9,8 @@
 #include "Math/Color.h"
 #include "Math/Vector.h"
 
+class UStaticMeshComponent;
+
 #include "AFortPlayerMarkerBase.generated.h"
 
 UCLASS(config=Engine, abstract)
@@ -24,6 +26,10 @@ public:
 	// table index 3, flags 0x20080000000015
 	UPROPERTY()
 	FLinearColor Color;
+
+	// table index 0, flags 0x400000000a001d
+	UPROPERTY()
+	UStaticMeshComponent* StaticMeshComponent;
 
 };
 

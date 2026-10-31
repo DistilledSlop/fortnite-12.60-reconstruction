@@ -12,7 +12,17 @@ void APhysicsObject::DrawServerAndClientBallPosition_Implementation(const FVecto
 	// Body not recovered: reflection-derived stub.
 }
 
+void APhysicsObject::OnRep_AbilitySystemComponent()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void APhysicsObject::OnRep_CorrectTargetOrientation()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void APhysicsObject::OnRep_HealthSet()
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -32,6 +42,11 @@ void APhysicsObject::OnRep_SurfaceTypePhysicsObjectOn(EPhysicalSurface PreviousS
 	// Body not recovered: reflection-derived stub.
 }
 
+void APhysicsObject::ServerBroadcastHit_Implementation(const FVector& ImpulseValue, const FVector& ImpactPoint, APawn* ImpulseInstigator)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void APhysicsObject::UpdateClientWithPhysicsObjectTestInput_Implementation(const FVector& AngularVelocity, const FVector& LinearVelocity)
 {
 	// Body not recovered: reflection-derived stub.
@@ -44,6 +59,8 @@ void APhysicsObject::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLi
 	DOREPLIFETIME(APhysicsObject, InitialParameters);
 	DOREPLIFETIME(APhysicsObject, SurfaceTypePhysicsObjectOn);
 	DOREPLIFETIME(APhysicsObject, bPendingDeath);
+	DOREPLIFETIME(APhysicsObject, HealthSet);
+	DOREPLIFETIME(APhysicsObject, AbilitySystemComponent);
 	DOREPLIFETIME(APhysicsObject, CorrectTargetOrientation);
 }
 

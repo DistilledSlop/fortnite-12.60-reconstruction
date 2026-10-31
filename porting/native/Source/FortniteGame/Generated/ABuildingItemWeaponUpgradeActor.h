@@ -10,6 +10,10 @@
 #include "EFortRarity.h"
 #include "EFortWeaponUpgradeInteractionResult.h"
 
+class ABuildingSMActor;
+class UDataTable;
+class UWeaponUpgradeRequiredResources;
+
 #include "ABuildingItemWeaponUpgradeActor.generated.h"
 
 UCLASS(config=Game)
@@ -21,6 +25,10 @@ public:
 	// table index 27, flags 0x10000100002024
 	UPROPERTY(ReplicatedUsing=OnRep_AllowSecondInteraction, Transient)
 	uint8 bAllowSecondInteraction : 1;
+
+	// table index 26, flags 0x20080000010015
+	UPROPERTY()
+	UDataTable* UpgradeTable;
 
 	// table index 22, flags 0x20080000010015
 	UPROPERTY()
@@ -62,6 +70,14 @@ public:
 	UPROPERTY(Transient)
 	EFortWeaponUpgradeInteractionResult HorizontalUpgradeInteractionResult;
 
+	// table index 10, flags 0x20080000002014
+	UPROPERTY(Transient)
+	UWeaponUpgradeRequiredResources* RequiredResources;
+
+	// table index 9, flags 0x20080000002014
+	UPROPERTY(Transient)
+	UWeaponUpgradeRequiredResources* RequiredHorizontalResources;
+
 	// table index 6, flags 0x20080000002014
 	UPROPERTY(Transient)
 	EFortRarity UpgradedWeaponRarity;
@@ -85,6 +101,10 @@ public:
 	// table index 1, flags 0x20080000010015
 	UPROPERTY()
 	FScalableFloat InteractionTimeMythic;
+
+	// table index 0, flags 0x40000000002000
+	UPROPERTY(Transient)
+	ABuildingSMActor* AttachedFloorActor;
 
 	UFUNCTION()
 	void OnRep_AllowSecondInteraction();

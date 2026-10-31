@@ -9,6 +9,8 @@
 #include "Math/Rotator.h"
 #include "Math/Vector.h"
 
+class UFortCameraMode_ThirdPerson;
+
 #include "AFortAircraft.generated.h"
 
 UCLASS(config=Engine)
@@ -20,6 +22,10 @@ public:
 	// table index 3, flags 0x10000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_JumpFlashCount)
 	int32 JumpFlashCount;
+
+	// table index 2, flags 0x24080000000015
+	UPROPERTY()
+	TSubclassOf<UFortCameraMode_ThirdPerson> CameraModeClass;
 
 	// table index 1, flags 0x20080000000015
 	UPROPERTY()

@@ -6,9 +6,14 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 
+#include "FMarshalledVFXRuntimeData.h"
 #include "Math/Rotator.h"
 
+class AFortPlayerPawn;
+class UAudioComponent;
+class UFortPlayerGliderAnimSet;
 class UParticleSystemComponent;
+class USoundBase;
 
 #include "AFortPlayerParachute.generated.h"
 
@@ -18,6 +23,34 @@ class FORTNITEGAME_API AFortPlayerParachute : public AActor
 	GENERATED_BODY()
 
 public:
+	// table index 22, flags 0x14000000002000
+	UPROPERTY(Transient)
+	TSoftObjectPtr<USoundBase> GliderOpenSoundFromDef;
+
+	// table index 21, flags 0x10000000002000
+	UPROPERTY(Transient)
+	USoundBase* CurrentGliderOpenSound;
+
+	// table index 20, flags 0x14000000082008
+	UPROPERTY(Transient)
+	TWeakObjectPtr<UAudioComponent> CurrentGliderOpenAudioComponent;
+
+	// table index 19, flags 0x14000000002000
+	UPROPERTY(Transient)
+	TSoftObjectPtr<USoundBase> GliderCloseSoundFromDef;
+
+	// table index 18, flags 0x10000000002000
+	UPROPERTY(Transient)
+	USoundBase* CurrentGliderCloseSound;
+
+	// table index 17, flags 0x14000000082008
+	UPROPERTY(Transient)
+	TWeakObjectPtr<UAudioComponent> CurrentGliderCloseAudioComponent;
+
+	// table index 16, flags 0x20080100000034
+	UPROPERTY(ReplicatedUsing=OnRep_PlayerPawn)
+	AFortPlayerPawn* PlayerPawn;
+
 	// table index 14, flags 0x20080000000015
 	UPROPERTY()
 	float ParachuteHiddenAnimFinishTime;
@@ -42,6 +75,10 @@ public:
 	UPROPERTY(Transient)
 	uint8 bActivateTrailOnRationalMovement : 1;
 
+	// table index 8, flags 0x20088000002000
+	UPROPERTY(Transient)
+	FMarshalledVFXRuntimeData GliderRuntimeVFXData;
+
 	// table index 7, flags 0x20080000002000
 	UPROPERTY(Transient)
 	FRotator LastRotationalMovement;
@@ -62,9 +99,17 @@ public:
 	UPROPERTY()
 	UParticleSystemComponent* TrailParticles;
 
+	// table index 1, flags 0x40000000002000
+	UPROPERTY(Transient)
+	UFortPlayerGliderAnimSet* CurrentGliderPlayerAnimSet;
+
 	// table index 0, flags 0x10000000000015
 	UPROPERTY()
 	uint8 bUsesDayPhaseChange : 1;
 
+	UFUNCTION()
+	void OnRep_PlayerPawn();
+
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

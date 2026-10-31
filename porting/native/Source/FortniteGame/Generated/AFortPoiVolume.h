@@ -8,6 +8,8 @@
 
 #include "GameplayTagContainer.h"
 
+class UFortPoiCollisionComponent;
+
 #include "AFortPoiVolume.generated.h"
 
 UCLASS(config=Game)
@@ -35,6 +37,10 @@ public:
 	// table index 2, flags 0x20080000000001
 	UPROPERTY()
 	FGameplayTagContainer LocationTags;
+
+	// table index 0, flags 0x20080000080008
+	UPROPERTY()
+	UFortPoiCollisionComponent* PoiCollisionComp;
 
 };
 

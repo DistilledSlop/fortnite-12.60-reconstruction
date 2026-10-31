@@ -7,6 +7,11 @@ void AFortPlayerStateZone::OnRep_NumRejoins()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerStateZone::OnRep_SpectatingTarget()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPlayerStateZone::ServerSetInAircraft_Implementation(bool bNewInAircraft)
 {
 	// Body not recovered: reflection-derived stub.
@@ -30,5 +35,6 @@ void AFortPlayerStateZone::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>&
 	DOREPLIFETIME(AFortPlayerStateZone, NumRejoins);
 	DOREPLIFETIME(AFortPlayerStateZone, CarriedObject);
 	DOREPLIFETIME(AFortPlayerStateZone, KickedFromSessionReason);
+	DOREPLIFETIME(AFortPlayerStateZone, SpectatingTarget);
 }
 

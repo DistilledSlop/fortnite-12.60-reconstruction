@@ -2,6 +2,16 @@
 #include "AFortRemoteControlledPawnAthena.h"
 #include "Net/UnrealNetwork.h"
 
+void AFortRemoteControlledPawnAthena::OnRep_ControllingPlayerPawn()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortRemoteControlledPawnAthena::OnRep_OverrideAbilitySystemComponent()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortRemoteControlledPawnAthena::OnRep_TriggeredForDestroy()
 {
 	// Body not recovered: reflection-derived stub.
@@ -18,6 +28,8 @@ void AFortRemoteControlledPawnAthena::GetLifetimeReplicatedProps(TArray<FLifetim
 
 	DOREPLIFETIME(AFortRemoteControlledPawnAthena, bTriggeredForDestroy);
 	DOREPLIFETIME(AFortRemoteControlledPawnAthena, TriggeredHealthThreshold);
+	DOREPLIFETIME(AFortRemoteControlledPawnAthena, OverrideAbilitySystemComponent);
+	DOREPLIFETIME(AFortRemoteControlledPawnAthena, ControllingPlayerPawn);
 	DOREPLIFETIME(AFortRemoteControlledPawnAthena, RCTeam);
 	DOREPLIFETIME(AFortRemoteControlledPawnAthena, ServerFuseStartTime);
 	DOREPLIFETIME(AFortRemoteControlledPawnAthena, bCurrentlyDelayingLaunch);

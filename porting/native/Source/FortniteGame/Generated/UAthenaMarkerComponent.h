@@ -8,9 +8,12 @@
 
 #include "Blueprint/UserWidgetPool.h"
 #include "ECancelMarkerReason.h"
+#include "FFortClientMarkerRequest.h"
 #include "FMarkerID.h"
 
 class AFortPlayerMarkerBase;
+class UFortWorldMarker;
+class UUserWidget;
 
 #include "UAthenaMarkerComponent.generated.h"
 
@@ -20,6 +23,10 @@ class FORTNITEGAME_API UAthenaMarkerComponent : public UActorComponent
 	GENERATED_BODY()
 
 public:
+	// table index 13, flags 0x44000000000001
+	UPROPERTY()
+	TSubclassOf<UUserWidget> MarkerWidgetClass;
+
 	// table index 12, flags 0x44000000000001
 	UPROPERTY()
 	TSubclassOf<AFortPlayerMarkerBase> MarkerActorClass;
@@ -36,6 +43,14 @@ public:
 	UPROPERTY(Transient)
 	TMap<int32, int32> RemotePlayableMarkerSoundsPerPlayerIDMap;
 
+	// table index 5, flags 0x40000000000000
+	UPROPERTY()
+	UFortWorldMarker* PendingCancelMarker;
+
+	// table index 4, flags 0x40000000000000
+	UPROPERTY()
+	UFortWorldMarker* LastHoveredMarker;
+
 	// table index 2, flags 0x40000000002000
 	UPROPERTY(Transient)
 	TArray<AFortPlayerMarkerBase*> MarkerActorPool;
@@ -47,6 +62,10 @@ public:
 	// table index 0, flags 0x40000000002000
 	UPROPERTY(Transient)
 	uint8 bIsAimingDownSights : 1;
+
+	UFUNCTION(Server, Reliable)
+	void ServerAddMapMarker(const FFortClientMarkerRequest& MarkerRequest);
+	void ServerAddMapMarker_Implementation(const FFortClientMarkerRequest& MarkerRequest);
 
 	UFUNCTION(Server, Reliable)
 	void ServerRemoveMapMarker(const ECancelMarkerReason& CancelReason, int32 UnderlyingType, const FMarkerID& MarkerID);

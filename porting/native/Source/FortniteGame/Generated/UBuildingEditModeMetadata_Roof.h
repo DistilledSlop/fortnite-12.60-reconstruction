@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UBuildingEditModeMetadata_BinaryToggle.h"
 
+#include "FAuxiliaryEditTileMeshData.h"
+
 #include "UBuildingEditModeMetadata_Roof.generated.h"
 
 UCLASS()
@@ -14,5 +16,9 @@ class FORTNITEGAME_API UBuildingEditModeMetadata_Roof : public UBuildingEditMode
 	GENERATED_BODY()
 
 public:
+	// table index 0, flags 0x20080000000015
+	UPROPERTY()
+	TArray<FAuxiliaryEditTileMeshData> AuxEditTileMeshData;
+
 };
 

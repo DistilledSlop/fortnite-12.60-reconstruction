@@ -15,14 +15,30 @@
 #include "ENavigationObstacleOverride.h"
 #include "Engine/CurveTable.h"
 #include "Engine/EngineTypes.h"
+#include "FActorHealthChanged.h"
+#include "FBuildingActorOnInteract.h"
+#include "FBuildingDamagedSignature.h"
 #include "FBuildingHealthChanged.h"
 #include "FFortAttributeInitializationKey.h"
+#include "FMarkedActorDisplayInfo.h"
 #include "GameplayEffectTypes.h"
 #include "GameplayTagContainer.h"
 #include "Math/Vector.h"
 #include "Misc/Guid.h"
 
+class AFortAthenaVehicle;
+class AFortMission;
+class AFortPlacementActor;
+class UActorComponent;
+class UBuildingActorHotSpotConfig;
+class UFortAbilitySystemComponent;
+class UFortBuildingActorSet;
 class UFortHealthBarIndicator;
+class UNavArea;
+class UNavLinkDefinition;
+class UPrimitiveComponent;
+class UProjectileMovementComponent;
+class USoundBase;
 
 #include "ABuildingActor.generated.h"
 
@@ -40,6 +56,18 @@ public:
 	UPROPERTY(SaveGame)
 	float SavedHealthPct;
 
+	// table index 150, flags 0x14000000010015
+	UPROPERTY()
+	TSoftClassPtr<UNavArea> AreaClass;
+
+	// table index 149, flags 0x14000000010015
+	UPROPERTY()
+	TSoftClassPtr<UNavLinkDefinition> NavigationLinksClass;
+
+	// table index 147, flags 0x40000100002020
+	UPROPERTY(ReplicatedUsing=OnRep_InitialOverlappingVehicles, Transient)
+	TArray<AFortAthenaVehicle*> InitialOverlappingVehicles;
+
 	// table index 146, flags 0x40010101010021
 	UPROPERTY(ReplicatedUsing=OnRep_CurrentBuildingLevel, SaveGame)
 	int32 CurrentBuildingLevel;
@@ -47,6 +75,18 @@ public:
 	// table index 145, flags 0x20080000010001
 	UPROPERTY()
 	int32 MaximumBuildingLevel;
+
+	// table index 144, flags 0x24080000002000
+	UPROPERTY(Transient)
+	TSubclassOf<UFortBuildingActorSet> BuildingAttributeSetClass;
+
+	// table index 143, flags 0x20080000080008
+	UPROPERTY()
+	UFortBuildingActorSet* BuildingAttributeSet;
+
+	// table index 142, flags 0x40000100082028
+	UPROPERTY(ReplicatedUsing=OnRep_BuildingAttributeSet, Transient)
+	UFortBuildingActorSet* ReplicatedBuildingAttributeSet;
 
 	// table index 141, flags 0x20080000002000
 	UPROPERTY(Transient)
@@ -79,6 +119,14 @@ public:
 	// table index 132, flags 0x20080000010001
 	UPROPERTY()
 	float LifespanAfterDeath;
+
+	// table index 131, flags 0x20080000082008
+	UPROPERTY(Transient)
+	UFortAbilitySystemComponent* AbilitySystemComponent;
+
+	// table index 130, flags 0x40000100082028
+	UPROPERTY(ReplicatedUsing=OnRep_AbilitySystemComponent, Transient)
+	UFortAbilitySystemComponent* ReplicatedAbilitySystemComponent;
 
 	// table index 128, flags 0x10008000002000
 	UPROPERTY(Transient)
@@ -452,6 +500,22 @@ public:
 	UPROPERTY()
 	FText InteractionText;
 
+	// table index 34, flags 0x10000010080000
+	UPROPERTY()
+	FBuildingDamagedSignature OnDied;
+
+	// table index 33, flags 0x10000010080000
+	UPROPERTY()
+	FBuildingDamagedSignature OnDamaged;
+
+	// table index 32, flags 0x41000000002034
+	UPROPERTY(Replicated, Transient)
+	AFortMission* AssociatedMissionParam;
+
+	// table index 31, flags 0x40000001000020
+	UPROPERTY(Replicated, SaveGame)
+	AFortPlacementActor* OriginatingPlacementActor;
+
 	// table index 30, flags 0x20080000000001
 	UPROPERTY()
 	float BRMinDrawDistance;
@@ -468,6 +532,10 @@ public:
 	UPROPERTY()
 	float StWMaxDrawDistance;
 
+	// table index 26, flags 0x10000010080000
+	UPROPERTY()
+	FBuildingActorOnInteract OnInteract;
+
 	// table index 25, flags 0x10000000000005
 	UPROPERTY()
 	FCurveTableRowHandle InteractionSpeed;
@@ -479,6 +547,10 @@ public:
 	// table index 23, flags 0x20080000002000
 	UPROPERTY(Transient)
 	float LastTakeHitTimeTimeout;
+
+	// table index 22, flags 0x20080000010001
+	UPROPERTY()
+	USoundBase* PlayHitSound;
 
 	// table index 21, flags 0x20080000000000
 	UPROPERTY()
@@ -508,9 +580,25 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_CustomState, SaveGame)
 	FString CustomState;
 
+	// table index 13, flags 0x24080000000001
+	UPROPERTY()
+	TArray<TSubclassOf<UActorComponent>> ComponentTypesWhitelistedForReplication;
+
+	// table index 11, flags 0x2008800000000c
+	UPROPERTY()
+	TArray<UPrimitiveComponent*> OverridePrimitivesToExcludeFoliage;
+
+	// table index 10, flags 0x20080000000001
+	UPROPERTY()
+	UBuildingActorHotSpotConfig* HotSpotConfig;
+
 	// table index 9, flags 0x10000010080000
 	UPROPERTY()
 	FBuildingHealthChanged OnBuildingHealthChanged;
+
+	// table index 8, flags 0x10000010080000
+	UPROPERTY()
+	FActorHealthChanged OnActorHealthChanged;
 
 	// table index 7, flags 0x40000000020001
 	UPROPERTY()
@@ -524,6 +612,10 @@ public:
 	UPROPERTY(Transient)
 	float AccumulatedDeltaSinceLastVisualsTick;
 
+	// table index 4, flags 0x20080000082008
+	UPROPERTY(Transient)
+	UProjectileMovementComponent* ProjectileMovementComponent;
+
 	// table index 3, flags 0x20080000010001
 	UPROPERTY()
 	uint8 bCanBeMarked : 1;
@@ -536,8 +628,15 @@ public:
 	UPROPERTY()
 	FVector MarkerPositionOffset;
 
+	// table index 0, flags 0x20080000010005
+	UPROPERTY()
+	FMarkedActorDisplayInfo MarkerDisplay;
+
 	UFUNCTION()
 	void HandleDestroyed();
+
+	UFUNCTION()
+	void OnRep_AbilitySystemComponent();
 
 	UFUNCTION()
 	void OnRep_bCollisionBlockedByPawns();
@@ -546,10 +645,16 @@ public:
 	void OnRep_bForceReplayRollback();
 
 	UFUNCTION()
+	void OnRep_BuildingAttributeSet();
+
+	UFUNCTION()
 	void OnRep_CurrentBuildingLevel();
 
 	UFUNCTION()
 	void OnRep_CustomState();
+
+	UFUNCTION()
+	void OnRep_InitialOverlappingVehicles();
 
 	UFUNCTION()
 	void OnRep_InstantDeath();

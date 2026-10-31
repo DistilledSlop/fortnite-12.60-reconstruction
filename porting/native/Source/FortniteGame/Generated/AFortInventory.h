@@ -8,7 +8,9 @@
 
 #include "EFortInventoryType.h"
 
+class AFortPawn;
 class UFortItem;
+class UFortWorldItem;
 
 #include "AFortInventory.generated.h"
 
@@ -22,6 +24,10 @@ public:
 	UPROPERTY(Replicated)
 	TEnumAsByte<EFortInventoryType::Type> InventoryType;
 
+	// table index 11, flags 0x40000000000020
+	UPROPERTY(Replicated)
+	AFortPawn* ReplayPawn;
+
 	// table index 10, flags 0x40000000000000
 	UPROPERTY()
 	uint8 bRequiresLocalUpdate : 1;
@@ -33,6 +39,10 @@ public:
 	// table index 8, flags 0x40000000000000
 	UPROPERTY()
 	uint8 bIsShuttingDown : 1;
+
+	// table index 6, flags 0x40000000000000
+	UPROPERTY()
+	TArray<UFortWorldItem*> PendingInstances;
 
 	// table index 4, flags 0x40000000000000
 	UPROPERTY()

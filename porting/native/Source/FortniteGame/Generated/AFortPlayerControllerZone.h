@@ -8,8 +8,10 @@
 
 #include "EFortVoteType.h"
 #include "ELeecherStatus.h"
+#include "FFortAbilitySetHandle.h"
 #include "FFortPlayerScoreReport.h"
 #include "FFortVoteConfig.h"
+#include "FOnPlayerStartedRespawn.h"
 #include "FOnPossessedPawnDied.h"
 #include "FOnSkyDivingStateChange.h"
 #include "FOnVehicleSeatTransitionTargetIndexChange.h"
@@ -17,6 +19,10 @@
 #include "Math/Vector.h"
 #include "Misc/Guid.h"
 
+class AActor;
+class AController;
+class AFortPlayerStateZone;
+class APawn;
 class UInputComponent;
 
 #include "AFortPlayerControllerZone.generated.h"
@@ -39,6 +45,10 @@ public:
 	UPROPERTY()
 	FOnVehicleSeatTransitionTargetIndexChange OnVehicleSeatTransitionTargetIndexChange;
 
+	// table index 31, flags 0x10000010080000
+	UPROPERTY()
+	FOnPlayerStartedRespawn OnStartedRespawn;
+
 	// table index 30, flags 0x10000000000000
 	UPROPERTY()
 	uint8 bDontChangeReticleColorForEnemy : 1;
@@ -47,9 +57,17 @@ public:
 	UPROPERTY(Transient)
 	float LastVehicleSeatSwitchTime;
 
+	// table index 28, flags 0x10000000000000
+	UPROPERTY()
+	APawn* PlayerToSpectateOnDeath;
+
 	// table index 26, flags 0x20080000002000
 	UPROPERTY(Transient)
 	TSet<FGuid> GadgetTrackedAttributeItemInstanceIds;
+
+	// table index 23, flags 0x20088000002000
+	UPROPERTY(Transient)
+	TMap<FGuid, FFortAbilitySetHandle> AppliedInGameModifierAbilitySetHandles;
 
 	// table index 22, flags 0x20080000080008
 	UPROPERTY()
@@ -91,6 +109,10 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_VoiceChatChannel, Transient)
 	FString VoiceChatChannel;
 
+	// table index 7, flags 0x10000000000020
+	UPROPERTY(Replicated)
+	TArray<AActor*> DesyncNotifyList;
+
 	// table index 6, flags 0x20080000002000
 	UPROPERTY(Transient)
 	uint8 bJetpackExecuteToggle : 1;
@@ -126,6 +148,10 @@ public:
 	UFUNCTION(Client, Reliable)
 	void ClientClearDeathNotification();
 	void ClientClearDeathNotification_Implementation();
+
+	UFUNCTION(Client, Reliable)
+	void ClientOnPawnRevived(AController* EventInstigator);
+	void ClientOnPawnRevived_Implementation(AController* EventInstigator);
 
 	UFUNCTION(Client, Reliable)
 	void ClientOnPawnSpawned();
@@ -201,6 +227,14 @@ public:
 	UFUNCTION(Server, Reliable)
 	void ServerSetVehicleHealth(float NewHealth);
 	void ServerSetVehicleHealth_Implementation(float NewHealth);
+
+	UFUNCTION(Server, Reliable)
+	void ServerSpectatePlayer(bool bAllowStateChange, APawn* NewPlayerToSpectate);
+	void ServerSpectatePlayer_Implementation(bool bAllowStateChange, APawn* NewPlayerToSpectate);
+
+	UFUNCTION(Server, Reliable)
+	void ServerSpectatePlayerState(bool bAllowStateChange, AFortPlayerStateZone* PlayerToSpectate);
+	void ServerSpectatePlayerState_Implementation(bool bAllowStateChange, AFortPlayerStateZone* PlayerToSpectate);
 
 	UFUNCTION(Server, Reliable)
 	void ServerSubmitGameplayVote(int32 VoteDecision, const EFortVoteType& VoteType);

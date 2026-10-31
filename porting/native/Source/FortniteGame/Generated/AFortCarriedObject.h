@@ -6,10 +6,14 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 
+#include "FCarriedObjectAttachmentInfo.h"
 #include "Math/Rotator.h"
 #include "Math/Vector.h"
 #include "Styling/SlateBrush.h"
 #include "Styling/SlateColor.h"
+
+class ABuildingFlagSpawn;
+class UProjectileMovementComponent;
 
 #include "AFortCarriedObject.generated.h"
 
@@ -19,6 +23,14 @@ class FORTNITEGAME_API AFortCarriedObject : public AActor
 	GENERATED_BODY()
 
 public:
+	// table index 9, flags 0x40000000080008
+	UPROPERTY()
+	UProjectileMovementComponent* ProjectileComp;
+
+	// table index 8, flags 0x20080100000020
+	UPROPERTY(ReplicatedUsing=OnRep_HolderInfo)
+	FCarriedObjectAttachmentInfo HolderInfo;
+
 	// table index 7, flags 0x20080000000005
 	UPROPERTY()
 	FVector IndicatorRelativeOffset;
@@ -46,6 +58,13 @@ public:
 	// table index 1, flags 0x20080000020035
 	UPROPERTY(Replicated)
 	uint8 Team;
+
+	// table index 0, flags 0x20080000000020
+	UPROPERTY(Replicated)
+	ABuildingFlagSpawn* SpawnPointActor;
+
+	UFUNCTION()
+	void OnRep_HolderInfo(FCarriedObjectAttachmentInfo& PreviousInfo);
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

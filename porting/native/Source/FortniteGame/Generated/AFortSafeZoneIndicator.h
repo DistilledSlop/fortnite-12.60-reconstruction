@@ -11,8 +11,11 @@
 #include "Math/Vector.h"
 #include "Styling/SlateBrush.h"
 
+class UAudioComponent;
 class UCurveFloat;
+class UFortMiniMapComponent;
 class UMaterialParameterCollection;
+class UStaticMeshComponent;
 
 #include "AFortSafeZoneIndicator.generated.h"
 
@@ -22,6 +25,10 @@ class FORTNITEGAME_API AFortSafeZoneIndicator : public AActor
 	GENERATED_BODY()
 
 public:
+	// table index 50, flags 0x10000000080008
+	UPROPERTY()
+	UFortMiniMapComponent* MinimapComp;
+
 	// table index 49, flags 0x10000000000034
 	UPROPERTY(Replicated)
 	float LastRadius;
@@ -106,6 +113,10 @@ public:
 	UPROPERTY(Replicated)
 	float Radius;
 
+	// table index 28, flags 0x200800000a001d
+	UPROPERTY()
+	UStaticMeshComponent* SafeZoneMesh;
+
 	// table index 27, flags 0x20080000010001
 	UPROPERTY()
 	UCurveFloat* MovementAudioCrossfadeCurve;
@@ -181,6 +192,18 @@ public:
 	// table index 9, flags 0x20080000002000
 	UPROPERTY(Transient)
 	float MegaStormOneOverFXFadeOutTime;
+
+	// table index 8, flags 0x2008000008200c
+	UPROPERTY(Transient)
+	UAudioComponent* ShieldBoundaryAudio;
+
+	// table index 7, flags 0x2008000008200c
+	UPROPERTY(Transient)
+	UAudioComponent* HoldingAudio;
+
+	// table index 6, flags 0x2008000008200c
+	UPROPERTY(Transient)
+	UAudioComponent* HoldingTickAudio;
 
 	// table index 5, flags 0x20080000002004
 	UPROPERTY(Transient)

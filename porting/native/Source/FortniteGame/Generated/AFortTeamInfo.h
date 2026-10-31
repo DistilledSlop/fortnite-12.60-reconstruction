@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Info.h"
 
+class AController;
 class AFortTeamPrivateInfo;
 
 #include "AFortTeamInfo.generated.h"
@@ -16,6 +17,10 @@ class FORTNITEGAME_API AFortTeamInfo : public AInfo
 	GENERATED_BODY()
 
 public:
+	// table index 4, flags 0x20080000000000
+	UPROPERTY()
+	TArray<AController*> TeamMembers;
+
 	// table index 3, flags 0x20080000002020
 	UPROPERTY(Replicated, Transient)
 	uint8 Team;

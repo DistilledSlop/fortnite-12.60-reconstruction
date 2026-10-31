@@ -6,6 +6,10 @@
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
 
+class ABuildingLayoutRequirement;
+class AController;
+class AFortNavigationGraph;
+
 #include "UBuildingStructuralSupportSystem.generated.h"
 
 UCLASS()
@@ -14,5 +18,17 @@ class FORTNITEGAME_API UBuildingStructuralSupportSystem : public UObject
 	GENERATED_BODY()
 
 public:
+	// table index 3, flags 0x40000000000000
+	UPROPERTY()
+	AController* BatchedRemovalInstigator;
+
+	// table index 1, flags 0x40000000002000
+	UPROPERTY(Transient)
+	TArray<ABuildingLayoutRequirement*> LayoutRequirementActorsToRegister;
+
+	// table index 0, flags 0x20080000002000
+	UPROPERTY(Transient)
+	AFortNavigationGraph* NavGraph;
+
 };
 

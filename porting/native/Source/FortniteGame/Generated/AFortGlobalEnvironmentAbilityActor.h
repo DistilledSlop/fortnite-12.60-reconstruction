@@ -6,6 +6,9 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Info.h"
 
+class UFortAbilitySystemComponent;
+class UFortDamageSet;
+
 #include "AFortGlobalEnvironmentAbilityActor.generated.h"
 
 UCLASS(config=Engine)
@@ -14,5 +17,13 @@ class FORTNITEGAME_API AFortGlobalEnvironmentAbilityActor : public AInfo
 	GENERATED_BODY()
 
 public:
+	// table index 1, flags 0x20080000080008
+	UPROPERTY()
+	UFortAbilitySystemComponent* AbilitySystemComponent;
+
+	// table index 0, flags 0x20080000080008
+	UPROPERTY()
+	UFortDamageSet* DamageSet;
+
 };
 

@@ -17,10 +17,21 @@ void UAthenaResurrectionComponent::OnRep_PlayerIdsForResurrection()
 	// Body not recovered: reflection-derived stub.
 }
 
+void UAthenaResurrectionComponent::ServerOnBeginResurrectionInteraction_Implementation(ABuildingGameplayActorSpawnMachine* SpawnMachine)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void UAthenaResurrectionComponent::ServerOnInterruptResurrectionInteraction_Implementation(ABuildingGameplayActorSpawnMachine* SpawnMachine)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void UAthenaResurrectionComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
+	DOREPLIFETIME(UAthenaResurrectionComponent, CloneMachineRepData);
 	DOREPLIFETIME(UAthenaResurrectionComponent, PlayerIdsForResurrection);
 }
 

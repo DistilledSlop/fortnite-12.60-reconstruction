@@ -6,6 +6,9 @@
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
 
+class AController;
+class UStat;
+
 #include "UBaseStatManager.generated.h"
 
 UCLASS()
@@ -14,9 +17,17 @@ class FORTNITEGAME_API UBaseStatManager : public UObject
 	GENERATED_BODY()
 
 public:
+	// table index 2, flags 0x10000000000000
+	UPROPERTY()
+	TArray<UStat*> Stats;
+
 	// table index 1, flags 0x10000000000000
 	UPROPERTY()
 	FString StatPrefix;
+
+	// table index 0, flags 0x10000000000000
+	UPROPERTY()
+	AController* Controller;
 
 };
 

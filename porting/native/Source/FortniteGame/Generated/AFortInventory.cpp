@@ -6,6 +6,7 @@ void AFortInventory::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLi
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
+	DOREPLIFETIME(AFortInventory, ReplayPawn);
 	DOREPLIFETIME(AFortInventory, InventoryType);
 }
 

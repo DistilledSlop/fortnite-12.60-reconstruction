@@ -14,5 +14,9 @@ class FORTNITEGAME_API UFortCustomizationAssetLoader : public UObject
 	GENERATED_BODY()
 
 public:
+	// table index 0, flags 0x40000000002000
+	UPROPERTY(Transient)
+	TArray<UObject*> AllLoadedAssets;
+
 };
 

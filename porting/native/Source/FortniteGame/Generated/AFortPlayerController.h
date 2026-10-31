@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "APlayspacePlayerController.h"
 
+#include "AttributeSet.h"
 #include "EFortBuildPreviewMarkerOptionalAdjustment.h"
 #include "EFortCostInfoTypes.h"
 #include "EFortGameplayState.h"
@@ -25,10 +26,14 @@
 #include "Engine/EngineTypes.h"
 #include "Engine/NetSerialization.h"
 #include "FAIDirectorDebugInfo.h"
+#include "FAttributeModifierInfo.h"
+#include "FBuildingWeakSpotData.h"
 #include "FChoiceData.h"
+#include "FFortDamageNumberInfo.h"
 #include "FFortItemEntryStateValue.h"
 #include "FFortPersistentGameplayStatContainer.h"
 #include "FLastBuildableState.h"
+#include "FLockOnInfo.h"
 #include "FOnAutoRunEnabled.h"
 #include "FOnBuildPreviewMarkerVisibilityChanged.h"
 #include "FOnChosenSignature.h"
@@ -38,12 +43,14 @@
 #include "FOnMcpProfilesInitialized.h"
 #include "FOnOpenVoteDialog.h"
 #include "FOnPlayerEnteredBuildMode.h"
+#include "FOnPlayerPawnPossessed.h"
 #include "FOnReadyCheckCompleteBP.h"
 #include "FOnRegainedFocus.h"
 #include "FOnSetFirstPersonCamera.h"
 #include "FOnShowFPSChange.h"
 #include "FOnShowTemperatureChange.h"
 #include "FOnToggleFullscreenMap.h"
+#include "FOnWeakSpotReset.h"
 #include "GameFramework/OnlineReplStructs.h"
 #include "GameplayTagContainer.h"
 #include "Math/Color.h"
@@ -52,33 +59,50 @@
 #include "Misc/Guid.h"
 #include "UObject/CoreOnline.h"
 
+class AActor;
 class ABattleMapPawnLive;
 class ABuildingActor;
+class ABuildingPlayerPrimitivePreview;
+class ABuildingSMActor;
 class ABuildingTrapDefender;
 class ABuildingWeakSpot;
 class AFortAIDirectorDataManager;
+class AFortAIPawn;
 class AFortDamageNumbersActor;
 class AFortDecoHelper;
 class AFortInventory;
 class AFortMarkActor;
 class AFortMusicManager;
 class AFortObjectiveBase;
+class AFortPawn;
+class AFortPlayerPawn;
 class AFortQuickBars;
 class AFortSprayDecalInstance;
+class UAudioComponent;
+class UFortAbilitySystemComponent;
 class UFortCinematicCamera;
 class UFortClientBotManager;
+class UFortClientPilot_Base;
 class UFortCustomizationAssetLoader;
+class UFortGameplayAbility;
 class UFortGameplayMessageComponentBase;
 class UFortIndicatorManager;
+class UFortMinigameItemContainerComponent;
 class UFortRegisteredPlayerInfo;
 class UFortStatEventManager;
 class UHeartbeatManager;
 class UInputComponent;
 class UMaterialInstanceDynamic;
+class UMaterialInterface;
 class UMaterialParameterCollection;
+class UMediaPlayer;
+class UMediaSource;
+class UObject;
 class UQuickHealItemPicker;
+class USoundBase;
 class USoundMix;
 class UStatManager;
+class UUserWidget;
 
 #include "AFortPlayerController.generated.h"
 
@@ -88,6 +112,10 @@ class FORTNITEGAME_API AFortPlayerController : public APlayspacePlayerController
 	GENERATED_BODY()
 
 public:
+	// table index 290, flags 0x10000010080000
+	UPROPERTY()
+	FOnPlayerPawnPossessed OnPlayerPawnPossessed;
+
 	// table index 288, flags 0x20080000004000
 	UPROPERTY(Config)
 	uint8 bAllowPcbBenefits : 1;
@@ -99,6 +127,10 @@ public:
 	// table index 286, flags 0x20080000080008
 	UPROPERTY()
 	UInputComponent* AircraftInputComponent;
+
+	// table index 285, flags 0x10000000082008
+	UPROPERTY(Transient)
+	UAudioComponent* SkydiveMusicAudioComp;
 
 	// table index 284, flags 0x10000000000020
 	UPROPERTY(Replicated)
@@ -156,6 +188,22 @@ public:
 	UPROPERTY(Transient)
 	FGameplayTag RegisteredPartnerTag;
 
+	// table index 269, flags 0x20080000002000
+	UPROPERTY(Transient)
+	TArray<AFortAIPawn*> ManagedAIs;
+
+	// table index 268, flags 0x20080000002000
+	UPROPERTY(Transient)
+	AFortPlayerPawn* MyFortPawn;
+
+	// table index 267, flags 0x20080000002000
+	UPROPERTY(Transient)
+	AFortPlayerPawn* MyFortPawnBeforeTakeoverOfScriptedPawn;
+
+	// table index 266, flags 0x20080000002000
+	UPROPERTY(Transient)
+	AFortPlayerController* ScriptedPawnControllerBeforeTakeover;
+
 	// table index 265, flags 0x20080000000000
 	UPROPERTY()
 	uint8 bHasClientFinishedLoading : 1;
@@ -184,6 +232,14 @@ public:
 	UPROPERTY()
 	FVector PendingSpectatorLocation;
 
+	// table index 258, flags 0x24080000002000
+	UPROPERTY(Transient)
+	TWeakObjectPtr<AActor> ActorUnderReticle;
+
+	// table index 257, flags 0x24080000002000
+	UPROPERTY(Transient)
+	TWeakObjectPtr<AActor> AutoFireReticleTarget;
+
 	// table index 256, flags 0x20080000002000
 	UPROPERTY(Transient)
 	FTimerHandle AutofireTimerHandle;
@@ -191,6 +247,10 @@ public:
 	// table index 255, flags 0x24080000002000
 	UPROPERTY(Transient)
 	TWeakObjectPtr<ABuildingWeakSpot> WeakspotUnderReticle;
+
+	// table index 253, flags 0x20080000002000
+	UPROPERTY(Transient)
+	TArray<FBuildingWeakSpotData> ActiveWeakSpots;
 
 	// table index 252, flags 0x20080000000000
 	UPROPERTY()
@@ -235,6 +295,14 @@ public:
 	// table index 242, flags 0x10000000004000
 	UPROPERTY(Config)
 	float ReturnToMainMenuTimeoutDelay;
+
+	// table index 240, flags 0x10000000002000
+	UPROPERTY(Transient)
+	AFortPlayerController* LastDamager;
+
+	// table index 239, flags 0x10000000002000
+	UPROPERTY(Transient)
+	AFortPlayerController* LastFallInstigator;
 
 	// table index 238, flags 0x10000000004000
 	UPROPERTY(Config)
@@ -424,6 +492,14 @@ public:
 	UPROPERTY(Transient)
 	TArray<TWeakObjectPtr<AFortMarkActor>> CurrentMarks;
 
+	// table index 188, flags 0x20088000002008
+	UPROPERTY(Transient)
+	TMap<FName, UAudioComponent*> LoopingUIFeedbackComponents;
+
+	// table index 187, flags 0x20080000000000
+	UPROPERTY()
+	UFortGameplayAbility* PreviewAbility;
+
 	// table index 186, flags 0x10000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_IntensityGraphInfo)
 	FAIDirectorDebugInfo IntensityGraphInfo;
@@ -448,6 +524,10 @@ public:
 	UPROPERTY()
 	FOnBuildPreviewMarkerVisibilityChanged OnBuildPreviewMarkerVisibilityChanged;
 
+	// table index 180, flags 0x10000010080000
+	UPROPERTY()
+	FOnWeakSpotReset OnWeakSpotReset;
+
 	// table index 179, flags 0x10000000004000
 	UPROPERTY(Config)
 	uint8 bUsePredictedBuildingActors : 1;
@@ -460,9 +540,21 @@ public:
 	UPROPERTY(Config)
 	float PredictedActorLifespan;
 
+	// table index 175, flags 0x10000000002000
+	UPROPERTY(Transient)
+	TArray<ABuildingSMActor*> PredictedBuildingSMActors;
+
 	// table index 174, flags 0x20080000080008
 	UPROPERTY()
 	UInputComponent* BuildPreviewModeInputComponent;
+
+	// table index 173, flags 0x20080000002000
+	UPROPERTY(Transient)
+	ABuildingPlayerPrimitivePreview* BuildPreviewMarker;
+
+	// table index 172, flags 0x20080000002000
+	UPROPERTY(Transient)
+	ABuildingPlayerPrimitivePreview* BuildPreviewMarkerExtraPiece;
 
 	// table index 171, flags 0x20080000004000
 	UPROPERTY(Config)
@@ -484,6 +576,18 @@ public:
 	UPROPERTY(Transient)
 	ABuildingActor* TargetedBuilding;
 
+	// table index 166, flags 0x20080000002000
+	UPROPERTY(Transient)
+	AActor* TargetedVehicle;
+
+	// table index 165, flags 0x24080000002000
+	UPROPERTY(Transient)
+	TSubclassOf<ABuildingSMActor> ContextualConversionClass;
+
+	// table index 164, flags 0x24080000002000
+	UPROPERTY(Transient)
+	TSoftObjectPtr<USoundBase> StartUpgradeSound;
+
 	// table index 162, flags 0x20080000002000
 	UPROPERTY(Transient)
 	TArray<ABuildingActor*> HighlightedPrimaryBuildings;
@@ -495,6 +599,10 @@ public:
 	// table index 159, flags 0x24080000002000
 	UPROPERTY(Transient)
 	TWeakObjectPtr<ABuildingActor> HighlightedPrimaryBuilding;
+
+	// table index 158, flags 0x24080000002000
+	UPROPERTY(Transient)
+	TSoftObjectPtr<UMaterialInterface> BuildPreviewMarkerParentMaterial;
 
 	// table index 156, flags 0x20080000002000
 	UPROPERTY(Transient)
@@ -524,6 +632,14 @@ public:
 	UPROPERTY(Transient)
 	TEnumAsByte<EFortCostInfoTypes::Type> CurrentCostInfoType;
 
+	// table index 148, flags 0x24080000002000
+	UPROPERTY(Transient)
+	TSubclassOf<ABuildingSMActor> CurrentBuildableClass;
+
+	// table index 147, flags 0x24080000002000
+	UPROPERTY(Transient)
+	TSubclassOf<ABuildingSMActor> PreviousBuildableClass;
+
 	// table index 146, flags 0x20080000002000
 	UPROPERTY(Transient)
 	TEnumAsByte<EFortResourceLevel::Type> CurrentResourceLevel;
@@ -536,6 +652,10 @@ public:
 	UPROPERTY(Transient)
 	FLastBuildableState LastBuildableStateData[12];
 
+	// table index 142, flags 0x20088000002000
+	UPROPERTY(Transient)
+	TArray<FFortDamageNumberInfo> QueuedDamageNumbers;
+
 	// table index 141, flags 0x20080000002000
 	UPROPERTY(Transient)
 	AFortDamageNumbersActor* DamageNumbersActor;
@@ -543,6 +663,10 @@ public:
 	// table index 140, flags 0x20080000080008
 	UPROPERTY()
 	UInputComponent* EditModeInputComponent;
+
+	// table index 139, flags 0x20080000002000
+	UPROPERTY(Transient)
+	ABuildingSMActor* EditBuildingActor;
 
 	// table index 138, flags 0x20080000002000
 	UPROPERTY(Transient)
@@ -627,6 +751,10 @@ public:
 	// table index 113, flags 0x20080000000000
 	UPROPERTY()
 	uint8 bIsSavingGadgetLoadout : 1;
+
+	// table index 112, flags 0x20080000002000
+	UPROPERTY(Transient)
+	UFortClientPilot_Base* BotPilot;
 
 	// table index 111, flags 0x20080000002000
 	UPROPERTY(Transient)
@@ -800,6 +928,14 @@ public:
 	UPROPERTY(Transient)
 	TArray<AFortSprayDecalInstance*> ActiveSprayInstances;
 
+	// table index 49, flags 0x20080000002000
+	UPROPERTY(Transient)
+	TArray<AActor*> ActiveToyInstances;
+
+	// table index 46, flags 0x20080000002000
+	UPROPERTY(Transient)
+	TMap<TSubclassOf<UObject>, int32> ToySummonCounts;
+
 	// table index 45, flags 0x10000000004000
 	UPROPERTY(Config)
 	uint8 bSyncPeripheralLightingWithEmoteMusic : 1;
@@ -840,6 +976,10 @@ public:
 	UPROPERTY(Config)
 	float ClientSideEditPredictionTimeout;
 
+	// table index 35, flags 0x20080000002000
+	UPROPERTY(Transient)
+	ABuildingSMActor* PendingEnterEditModeActor;
+
 	// table index 34, flags 0x20080000002000
 	UPROPERTY(Transient)
 	int32 RandomCharacterIndex;
@@ -876,6 +1016,10 @@ public:
 	UPROPERTY()
 	FOnShowTemperatureChange OnShowTemperatureChange;
 
+	// table index 25, flags 0x20080000002000
+	UPROPERTY(Transient)
+	FLockOnInfo LockOnInfo;
+
 	// table index 24, flags 0x10000000002000
 	UPROPERTY(Transient)
 	uint8 bLockPrimaryInputMethodToMouse : 1;
@@ -887,6 +1031,10 @@ public:
 	// table index 22, flags 0x40000000000020
 	UPROPERTY(Replicated)
 	uint8 bFinalXPUpdateFailed : 1;
+
+	// table index 21, flags 0x40000000082008
+	UPROPERTY(Transient)
+	UUserWidget* TestUserWidget;
 
 	// table index 19, flags 0x10000000002000
 	UPROPERTY(Transient)
@@ -1005,6 +1153,10 @@ public:
 	void ClientExecuteInventoryItem_Implementation(bool bActivateSlotAfterSettingFocused, bool bForceExecute, float Delay, const FGuid& ItemGuid);
 
 	UFUNCTION(Client, Reliable)
+	void ClientFailedToBeginEditingBuildingActor(ABuildingSMActor* BuildingActorToStopEditing);
+	void ClientFailedToBeginEditingBuildingActor_Implementation(ABuildingSMActor* BuildingActorToStopEditing);
+
+	UFUNCTION(Client, Reliable)
 	void ClientFinishedInteractionInZone();
 	void ClientFinishedInteractionInZone_Implementation();
 
@@ -1045,8 +1197,16 @@ public:
 	void ClientPingMinimap_Implementation(const FLinearColor& PingColor, const FVector& WorldLocation);
 
 	UFUNCTION(Client, Reliable)
+	void ClientPrecacheMediaSource(UMediaSource* InMediaSource, UMediaPlayer* InMediaPlayer);
+	void ClientPrecacheMediaSource_Implementation(UMediaSource* InMediaSource, UMediaPlayer* InMediaPlayer);
+
+	UFUNCTION(Client, Reliable)
 	void ClientReadyCheckComplete(bool bPassed);
 	void ClientReadyCheckComplete_Implementation(bool bPassed);
+
+	UFUNCTION(Client, Reliable)
+	void ClientReceivedAttributeSources(const TArray<FAttributeModifierInfo>& Sources, UFortAbilitySystemComponent* AbilitySystemComponent, const FGameplayAttribute& Attribute);
+	void ClientReceivedAttributeSources_Implementation(const TArray<FAttributeModifierInfo>& Sources, UFortAbilitySystemComponent* AbilitySystemComponent, const FGameplayAttribute& Attribute);
 
 	UFUNCTION(Client, Reliable)
 	void ClientReceivePresetTeamChat(const FUniqueNetIdRepl& SenderID, const FText& ChatText);
@@ -1060,6 +1220,14 @@ public:
 	void ClientRegisterWithParty();
 	void ClientRegisterWithParty_Implementation();
 
+	UFUNCTION(Client, Unreliable)
+	void ClientReportDamagedResourceBuilding(bool bJustHitWeakspot, bool bDestroyed, int32 PotentialResourceCount, EFortResourceType::Type PotentialResourceType, ABuildingSMActor* BuildingSMActor);
+	void ClientReportDamagedResourceBuilding_Implementation(bool bJustHitWeakspot, bool bDestroyed, int32 PotentialResourceCount, EFortResourceType::Type PotentialResourceType, ABuildingSMActor* BuildingSMActor);
+
+	UFUNCTION(Client, Unreliable)
+	void ClientReportGotResourceFromVehicle(int32 ResourceCount, AActor* Vehicle);
+	void ClientReportGotResourceFromVehicle_Implementation(int32 ResourceCount, AActor* Vehicle);
+
 	UFUNCTION(Client, Reliable)
 	void ClientRequestReadyCheck(const FText& NoText, const FText& YesText, const FText& QueryText);
 	void ClientRequestReadyCheck_Implementation(const FText& NoText, const FText& YesText, const FText& QueryText);
@@ -1067,6 +1235,10 @@ public:
 	UFUNCTION(Client, Reliable)
 	void ClientSendConfirmationMessage(bool bClientQuitAfterMessage, const FText& ConfirmationMessage);
 	void ClientSendConfirmationMessage_Implementation(bool bClientQuitAfterMessage, const FText& ConfirmationMessage);
+
+	UFUNCTION(Client, Reliable)
+	void ClientSendMessage(USoundBase* StartSound, const FText& Message);
+	void ClientSendMessage_Implementation(USoundBase* StartSound, const FText& Message);
 
 	UFUNCTION(Client, Reliable)
 	void ClientSetActionMappingEnabled(bool bEnabled, const FName& ActionName);
@@ -1079,6 +1251,10 @@ public:
 	UFUNCTION(Client, Reliable)
 	void ClientSetSpectatorCamera(const FRotator& CameraRotation, const FVector& CameraLocation);
 	void ClientSetSpectatorCamera_Implementation(const FRotator& CameraRotation, const FVector& CameraLocation);
+
+	UFUNCTION(Client, Reliable)
+	void ClientSpawnWeakSpotOnBuildingActor(const FBuildingWeakSpotData& ReplicatedWeakSpotData);
+	void ClientSpawnWeakSpotOnBuildingActor_Implementation(const FBuildingWeakSpotData& ReplicatedWeakSpotData);
 
 	UFUNCTION(Client, Reliable)
 	void ClientStopAutoRun();
@@ -1108,6 +1284,18 @@ public:
 	void ClientUpdateServerOnPlayerChangedBuildMode();
 	void ClientUpdateServerOnPlayerChangedBuildMode_Implementation();
 
+	UFUNCTION(Client, Unreliable)
+	void FortClientPlaySound(float PitchMultiplier, float VolumeMultiplier, USoundBase* Sound);
+	void FortClientPlaySound_Implementation(float PitchMultiplier, float VolumeMultiplier, USoundBase* Sound);
+
+	UFUNCTION(Client, Unreliable)
+	void FortClientPlaySoundAtLocation(float PitchMultiplier, float VolumeMultiplier, const FVector& Location, USoundBase* Sound);
+	void FortClientPlaySoundAtLocation_Implementation(float PitchMultiplier, float VolumeMultiplier, const FVector& Location, USoundBase* Sound);
+
+	UFUNCTION(Server, Reliable)
+	void ForwardActiveVariantChangeRequest(AFortPlayerPawn* PreviewPawn, const FGameplayTag& DesiredActiveVariant, const FGameplayTag& VariantChannelToChange, const FName& ItemTemplateToChange);
+	void ForwardActiveVariantChangeRequest_Implementation(AFortPlayerPawn* PreviewPawn, const FGameplayTag& DesiredActiveVariant, const FGameplayTag& VariantChannelToChange, const FName& ItemTemplateToChange);
+
 	UFUNCTION()
 	void HandleOutpostInventoryLocalUpdate();
 
@@ -1116,6 +1304,10 @@ public:
 
 	UFUNCTION()
 	void HandleWorldInventoryLocalUpdate();
+
+	UFUNCTION(NetMulticast, Reliable)
+	void MulticastClearWeakSpotData(ABuildingSMActor* ParentBuilding);
+	void MulticastClearWeakSpotData_Implementation(ABuildingSMActor* ParentBuilding);
 
 	UFUNCTION()
 	void OnRep_bHasServerFinishedLoading();
@@ -1146,12 +1338,20 @@ public:
 	void ServerAcknowledgeDelayedQuickBarAction_Implementation(const TArray<uint32>& ProcessedActionIds);
 
 	UFUNCTION(Server, Reliable)
+	void ServerAddPawnMovementInput(bool bForce, float ScaleValue, const FVector& WorldDirection, AFortPawn* InChar);
+	void ServerAddPawnMovementInput_Implementation(bool bForce, float ScaleValue, const FVector& WorldDirection, AFortPawn* InChar);
+
+	UFUNCTION(Server, Reliable)
 	void ServerAnnouncementStoppedOnClient(const FGuid& AnnouncementID);
 	void ServerAnnouncementStoppedOnClient_Implementation(const FGuid& AnnouncementID);
 
 	UFUNCTION(Server, Reliable)
 	void ServerAttemptInventoryDrop(bool bTrash, int32 Count, const FGuid& ItemGuid);
 	void ServerAttemptInventoryDrop_Implementation(bool bTrash, int32 Count, const FGuid& ItemGuid);
+
+	UFUNCTION(Server, Reliable)
+	void ServerBeginEditingBuildingActor(ABuildingSMActor* BuildingActorToEdit);
+	void ServerBeginEditingBuildingActor_Implementation(ABuildingSMActor* BuildingActorToEdit);
 
 	UFUNCTION(Server, Reliable)
 	void ServerBroadcastPlayerChangedBuildMode(bool bIsInBuildMode);
@@ -1168,6 +1368,10 @@ public:
 	UFUNCTION(Server, Reliable)
 	void ServerCheatAll(const FString& Msg);
 	void ServerCheatAll_Implementation(const FString& Msg);
+
+	UFUNCTION(Server, Reliable)
+	void ServerClearItemList(UFortMinigameItemContainerComponent* ItemContainerComponent);
+	void ServerClearItemList_Implementation(UFortMinigameItemContainerComponent* ItemContainerComponent);
 
 	UFUNCTION(Server, Reliable)
 	void ServerClientPawnLoaded(bool bIsPawnLoaded);
@@ -1197,9 +1401,17 @@ public:
 	void ServerDropCarriedObject();
 	void ServerDropCarriedObject_Implementation();
 
+	UFUNCTION(Server, Reliable)
+	void ServerEditBuildingActor(bool bMirrored, uint8 RotationIterations, TSubclassOf<ABuildingSMActor> NewBuildingClass, ABuildingSMActor* BuildingActorToEdit);
+	void ServerEditBuildingActor_Implementation(bool bMirrored, uint8 RotationIterations, TSubclassOf<ABuildingSMActor> NewBuildingClass, ABuildingSMActor* BuildingActorToEdit);
+
 	UFUNCTION(Server, Unreliable)
 	void ServerEmote(const FName& AssetName);
 	void ServerEmote_Implementation(const FName& AssetName);
+
+	UFUNCTION(Server, Reliable)
+	void ServerEndEditingBuildingActor(ABuildingSMActor* BuildingActorToStopEditing);
+	void ServerEndEditingBuildingActor_Implementation(ABuildingSMActor* BuildingActorToStopEditing);
 
 	UFUNCTION(Server, Reliable)
 	void ServerExecuteInventoryItem(const FGuid& ItemGuid);
@@ -1220,6 +1432,10 @@ public:
 	UFUNCTION(Server, Reliable)
 	void ServerHandleMissionEvent_ToggledCursorMode(bool bOpened);
 	void ServerHandleMissionEvent_ToggledCursorMode_Implementation(bool bOpened);
+
+	UFUNCTION(Server, Reliable)
+	void ServerHandleMissionEvent_ToggledEditMode(bool bOpened, ABuildingSMActor* EditableActor);
+	void ServerHandleMissionEvent_ToggledEditMode_Implementation(bool bOpened, ABuildingSMActor* EditableActor);
 
 	UFUNCTION(Server, Reliable)
 	void ServerItemWillBeDestroyed(int32 Count, const FGuid& DestroyedItemGuid);
@@ -1274,6 +1490,10 @@ public:
 	void ServerRemoveInventoryStateValue_Implementation(EFortItemEntryState::Type StateValueType, const FGuid& ItemGuid);
 
 	UFUNCTION(Server, Reliable)
+	void ServerRepairBuildingActor(ABuildingSMActor* BuildingActorToRepair);
+	void ServerRepairBuildingActor_Implementation(ABuildingSMActor* BuildingActorToRepair);
+
+	UFUNCTION(Server, Reliable)
 	void ServerReplyToReadyCheck(bool bReady);
 	void ServerReplyToReadyCheck_Implementation(bool bReady);
 
@@ -1284,6 +1504,10 @@ public:
 	UFUNCTION(Server, Reliable)
 	void ServerRequestAIDebug();
 	void ServerRequestAIDebug_Implementation();
+
+	UFUNCTION(Server, Reliable)
+	void ServerRequestAttributeSources(UFortAbilitySystemComponent* AbilitySystemComponent, const FGameplayAttribute& Attribute);
+	void ServerRequestAttributeSources_Implementation(UFortAbilitySystemComponent* AbilitySystemComponent, const FGameplayAttribute& Attribute);
 
 	UFUNCTION(Server, Reliable)
 	void ServerRequestGameplayAction(EFortRequestedGameplayAction::Type RequestedAction);
@@ -1338,6 +1562,14 @@ public:
 	void ServerSetShouldUsePilotComponent_Implementation(bool InValue);
 
 	UFUNCTION(Server, Reliable)
+	void ServerSpawnMark(const FText& PreapprovedText, const FVector& AttachOffset, AActor* ActorToAttachTo);
+	void ServerSpawnMark_Implementation(const FText& PreapprovedText, const FVector& AttachOffset, AActor* ActorToAttachTo);
+
+	UFUNCTION(Server, Reliable)
+	void ServerSpotActor(AActor* NewlySpottedActor);
+	void ServerSpotActor_Implementation(AActor* NewlySpottedActor);
+
+	UFUNCTION(Server, Reliable)
 	void ServerStartIntensityGraphing();
 	void ServerStartIntensityGraphing_Implementation();
 
@@ -1374,8 +1606,20 @@ public:
 	void ServerUIChoiceCompleted_Implementation(int32 MenuIdentifier, int32 ChosenItem);
 
 	UFUNCTION(Server, Reliable)
+	void ServerUpdateActorOptions(const TArray<FString>& OptionsValues, const TArray<FString>& OptionsKeys, AActor* OptionsTarget);
+	void ServerUpdateActorOptions_Implementation(const TArray<FString>& OptionsValues, const TArray<FString>& OptionsKeys, AActor* OptionsTarget);
+
+	UFUNCTION(Server, Reliable)
+	void ServerUpdateGameDescriptionData(const TArray<FText>& GameDescriptionText, const FText& GameName, AActor* DataTarget);
+	void ServerUpdateGameDescriptionData_Implementation(const TArray<FText>& GameDescriptionText, const FText& GameName, AActor* DataTarget);
+
+	UFUNCTION(Server, Reliable)
 	void ServerUpdateGameplayOptions(const TArray<FString>& UserOptionsValues, const TArray<FString>& UserOptionsKeys);
 	void ServerUpdateGameplayOptions_Implementation(const TArray<FString>& UserOptionsValues, const TArray<FString>& UserOptionsKeys);
+
+	UFUNCTION(Server, Reliable)
+	void ServerUpdateItemListOptions(const TArray<FString>& OptionsValues, const TArray<FString>& OptionsKeys, int32 ItemIndex, UFortMinigameItemContainerComponent* ItemContainerComponent);
+	void ServerUpdateItemListOptions_Implementation(const TArray<FString>& OptionsValues, const TArray<FString>& OptionsKeys, int32 ItemIndex, UFortMinigameItemContainerComponent* ItemContainerComponent);
 
 	UFUNCTION(Server, Reliable)
 	void ServerUpdateMessageComponents(const TArray<FGameplayTagContainer>& NewChannelIds, const TArray<UFortGameplayMessageComponentBase*>& ModifiedComponents);

@@ -6,22 +6,26 @@
 #include "CoreMinimal.h"
 #include "AFortGameState_InGame.h"
 
+#include "EFortAIDirectorEvent.h"
 #include "EFortCompletionResult.h"
 #include "EFortVoteType.h"
 #include "EServerStability.h"
 #include "Engine/DataTable.h"
+#include "FFortAIDirectorEvent.h"
 #include "FFortItemQuantityPair.h"
 #include "FFortZoneDifficultyIncreaseRewardData.h"
 #include "FFortZoneMissionAlertData.h"
 #include "FOnCompletionResult.h"
 #include "FOnNumSurvivorsRescuedChanged.h"
 #include "FOnScoreTotalsChanged.h"
+#include "FPlayerBuildableClassContainer.h"
 #include "FReplicatedMontageMap.h"
 #include "FVoteData.h"
 #include "GameplayTagContainer.h"
 #include "UObject/NoExportTypes.h"
 
 class ABuildingActor;
+class AFortAIPawn;
 class AFortCreativePortalManager;
 class AFortCreativeRealEstatePlotManager;
 class AFortGlobalEnvironmentAbilityActor;
@@ -29,10 +33,12 @@ class AFortInGameMapManager;
 class AFortThreatParticleActor;
 class AFortThreatVisualsManager;
 class UBuildingStructuralSupportSystem;
+class UFortAbilitySystemComponent;
 class UFortCharacterCosmeticManager;
 class UFortMissionGenerator;
 class UFortSkinWeightOverrideManager;
 class UFortZoneTheme;
+class UObject;
 
 #include "AFortGameStateZone.generated.h"
 
@@ -94,6 +100,10 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_PlayerSharedTrapAttributes, Transient)
 	TArray<float> PlayerSharedMaxTrapAttributes;
 
+	// table index 69, flags 0x20080000002000
+	UPROPERTY(Transient)
+	TArray<UObject*> GameplayMutatorObservers;
+
 	// table index 68, flags 0x20080100002020
 	UPROPERTY(ReplicatedUsing=OnRep_ExplicitGloballyBlockedAbilityTags, Transient)
 	FGameplayTagContainer ExplicitGloballyBlockedAbilityTags;
@@ -133,6 +143,10 @@ public:
 	// table index 59, flags 0x20080000002020
 	UPROPERTY(Replicated, Transient)
 	AFortGlobalEnvironmentAbilityActor* GlobalEnvironmentAbilityActor;
+
+	// table index 57, flags 0x20088000002008
+	UPROPERTY(Transient)
+	TArray<UFortAbilitySystemComponent*> GlobalGameplayEventListeners;
 
 	// table index 55, flags 0x20080000002000
 	UPROPERTY(Transient)
@@ -182,6 +196,10 @@ public:
 	UPROPERTY()
 	uint8 bDrawRunVariationDebug : 1;
 
+	// table index 39, flags 0x40000000002000
+	UPROPERTY(Transient)
+	TArray<AFortAIPawn*> PawnVariationList;
+
 	// table index 38, flags 0x40000000002000
 	UPROPERTY(Transient)
 	int32 VariationIndex;
@@ -213,6 +231,10 @@ public:
 	// table index 28, flags 0x10000000002000
 	UPROPERTY(Transient)
 	TMap<TSubclassOf<ABuildingActor>, int32> AllPlayerBuildableClassesIndexLookup;
+
+	// table index 27, flags 0x20080000002000
+	UPROPERTY(Transient)
+	FPlayerBuildableClassContainer PlayerBuildableClasses[5];
 
 	// table index 26, flags 0x20080000002020
 	UPROPERTY(Replicated, Transient)
@@ -378,6 +400,14 @@ public:
 	UFUNCTION(NetMulticast, Reliable)
 	void OnWaveStart(int32 WaveNum, const FText& WaveText, int32 Level, const FText& LevelText);
 	void OnWaveStart_Implementation(int32 WaveNum, const FText& WaveText, int32 Level, const FText& LevelText);
+
+	UFUNCTION(Server, Reliable)
+	void ServerFireAIDirectorEvent(float EventMultiplier, UObject* EventTarget, UObject* EventSource, const EFortAIDirectorEvent& Event);
+	void ServerFireAIDirectorEvent_Implementation(float EventMultiplier, UObject* EventTarget, UObject* EventSource, const EFortAIDirectorEvent& Event);
+
+	UFUNCTION(Server, Reliable)
+	void ServerFireAIDirectorEventBatch(const TArray<FFortAIDirectorEvent>& Payload);
+	void ServerFireAIDirectorEventBatch_Implementation(const TArray<FFortAIDirectorEvent>& Payload);
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

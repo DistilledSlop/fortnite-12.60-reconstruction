@@ -6,9 +6,15 @@
 #include "CoreMinimal.h"
 #include "Engine/DataAsset.h"
 
+#include "FFortAthenaLTMConfig.h"
 #include "FFortMultiSizeBrush.h"
+#include "FFortPlayerSpawnPadPlacementData.h"
+#include "FFortPossibleMission.h"
 #include "GameplayTagContainer.h"
 #include "Styling/SlateBrush.h"
+
+class UFortMissionGenerationList;
+class UFortMissionInfo;
 
 #include "UFortMissionGenerator.generated.h"
 
@@ -34,6 +40,14 @@ public:
 	UPROPERTY()
 	FFortMultiSizeBrush MissionIcons;
 
+	// table index 13, flags 0x20080000010015
+	UPROPERTY()
+	FFortAthenaLTMConfig AthenaLTMConfig;
+
+	// table index 12, flags 0x24080000000015
+	UPROPERTY()
+	TSoftObjectPtr<UFortMissionInfo> PrimaryMissionInfo;
+
 	// table index 11, flags 0x20080000000001
 	UPROPERTY()
 	uint8 bUseNewMissionGeneration : 1;
@@ -42,13 +56,33 @@ public:
 	UPROPERTY()
 	FGameplayTagQuery OptionalRequirementsForAllOtherMissions;
 
+	// table index 9, flags 0x24080000000001
+	UPROPERTY()
+	TSoftObjectPtr<UFortMissionGenerationList> MissionGenerationList;
+
 	// table index 8, flags 0x20080000000001
 	UPROPERTY()
 	float MissionGenerationChance[4];
 
+	// table index 6, flags 0x20080000000015
+	UPROPERTY()
+	TArray<FFortPossibleMission> SecondaryMissionList;
+
+	// table index 4, flags 0x20080000000015
+	UPROPERTY()
+	TArray<FFortPossibleMission> TertiaryMissionList;
+
+	// table index 2, flags 0x20080000000015
+	UPROPERTY()
+	TArray<FFortPossibleMission> SurvivorMissionList;
+
 	// table index 1, flags 0x20080000000001
 	UPROPERTY()
 	uint8 bUseOverridePlayerSpawnPadPlacementData : 1;
+
+	// table index 0, flags 0x20080000000001
+	UPROPERTY()
+	FFortPlayerSpawnPadPlacementData OverridePlayerSpawnPadPlacementData;
 
 };
 

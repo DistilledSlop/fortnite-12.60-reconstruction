@@ -9,6 +9,8 @@
 #include "FOnVehicleCountByTagChanged.h"
 #include "GameplayTagContainer.h"
 
+class AFortAthenaVehicle;
+
 #include "AFortVehicleManager.generated.h"
 
 UCLASS(config=Engine)
@@ -20,6 +22,10 @@ public:
 	// table index 5, flags 0x10000010080000
 	UPROPERTY()
 	FOnVehicleCountByTagChanged OnVehicleCountByTagChanged;
+
+	// table index 3, flags 0x40000000000000
+	UPROPERTY()
+	TArray<AFortAthenaVehicle*> Vehicles;
 
 	// table index 0, flags 0x40000000000000
 	UPROPERTY()

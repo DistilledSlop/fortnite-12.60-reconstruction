@@ -6,8 +6,12 @@
 #include "CoreMinimal.h"
 #include "AFortClientOnlyActor.h"
 
+#include "FFortLightAnimSet.h"
 #include "FFortMIDAnimSet.h"
 #include "FFortParticleAnimSet.h"
+#include "FFortSplineMeshAnimSet.h"
+
+class AFortWeaponRanged;
 
 #include "AFortFXManager.generated.h"
 
@@ -17,6 +21,10 @@ class FORTNITEGAME_API AFortFXManager : public AFortClientOnlyActor
 	GENERATED_BODY()
 
 public:
+	// table index 8, flags 0x40008000002000
+	UPROPERTY(Transient)
+	TArray<FFortSplineMeshAnimSet> SplineAnimSets;
+
 	// table index 6, flags 0x40000000002000
 	UPROPERTY(Transient)
 	TArray<FFortMIDAnimSet> MIDAnimSets;
@@ -24,6 +32,14 @@ public:
 	// table index 4, flags 0x40008000002000
 	UPROPERTY(Transient)
 	TArray<FFortParticleAnimSet> ParticleAnimSets;
+
+	// table index 2, flags 0x40008000002000
+	UPROPERTY(Transient)
+	TArray<FFortLightAnimSet> LightAnimSets;
+
+	// table index 0, flags 0x40000000002000
+	UPROPERTY(Transient)
+	TArray<AFortWeaponRanged*> PendingWeaponFX;
 
 };
 

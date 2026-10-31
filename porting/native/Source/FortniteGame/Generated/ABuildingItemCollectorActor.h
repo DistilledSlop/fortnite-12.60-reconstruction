@@ -14,9 +14,13 @@
 #include "FCollectorTrackedData.h"
 #include "FFortItemQuantityPair.h"
 #include "FItemCollectorPickupSpawned.h"
+#include "FItemCollectorVehicleSpawned.h"
 #include "GameplayTagContainer.h"
 #include "Math/Rotator.h"
 #include "Math/Vector.h"
+
+class AFortPlayerController;
+class UTexture;
 
 #include "ABuildingItemCollectorActor.generated.h"
 
@@ -57,6 +61,10 @@ public:
 	// table index 34, flags 0x20080100000035
 	UPROPERTY(ReplicatedUsing=OnRep_ItemCollectorState)
 	EFortItemCollectorTrackingType TrackingType;
+
+	// table index 33, flags 0x20080100000034
+	UPROPERTY(ReplicatedUsing=OnRep_ControllingPlayer)
+	AFortPlayerController* ControllingPlayer;
 
 	// table index 32, flags 0x20080001010015
 	UPROPERTY(SaveGame)
@@ -146,13 +154,24 @@ public:
 	UPROPERTY()
 	int32 StartingGoalLevelOverride;
 
+	// table index 4, flags 0x20080000010015
+	UPROPERTY()
+	UTexture* InactiveItemTexture;
+
 	// table index 3, flags 0x20080010080000
 	UPROPERTY()
 	FItemCollectorPickupSpawned PickupSpawned;
 
+	// table index 2, flags 0x20080010080000
+	UPROPERTY()
+	FItemCollectorVehicleSpawned VehicleSpawned;
+
 	// table index 0, flags 0x40000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_TrackedInteractionData)
 	TArray<FCollectorTrackedData> TrackedInteractionData;
+
+	UFUNCTION()
+	void OnRep_ControllingPlayer();
 
 	UFUNCTION()
 	void OnRep_ItemCollectorState();

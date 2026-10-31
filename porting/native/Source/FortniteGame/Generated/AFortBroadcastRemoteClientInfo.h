@@ -7,8 +7,11 @@
 #include "GameFramework/Actor.h"
 
 #include "EFortResourceType.h"
+#include "FBuildingWeakSpotData.h"
 #include "FMarkerID.h"
 #include "Math/Vector2D.h"
+
+class ABuildingSMActor;
 
 #include "AFortBroadcastRemoteClientInfo.generated.h"
 
@@ -26,9 +29,17 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_RemoteIsInteracting)
 	uint8 bRemoteIsInteracting : 1;
 
+	// table index 12, flags 0x40000100000020
+	UPROPERTY(ReplicatedUsing=OnRep_RemoteEditActor)
+	ABuildingSMActor* RemoteEditActor;
+
 	// table index 10, flags 0x40000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_RemoteEditTileData)
 	TArray<int32> RemoteEditTileData;
+
+	// table index 9, flags 0x44000100000020
+	UPROPERTY(ReplicatedUsing=OnRep_RemoteBuildableClass)
+	TSubclassOf<ABuildingSMActor> RemoteBuildableClass;
 
 	// table index 8, flags 0x40000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_RemoteBuildingMaterial)
@@ -46,6 +57,10 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_RemoteCanDBNORevive)
 	uint8 bRemoteCanDBNORevive : 1;
 
+	// table index 3, flags 0x40000100000020
+	UPROPERTY(ReplicatedUsing=OnRep_RemoteWeakspotData)
+	FBuildingWeakSpotData RemoteWeakspotData;
+
 	// table index 2, flags 0x40000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_RemoteRespawnTime)
 	float RemoteRespawnTime;
@@ -59,6 +74,10 @@ public:
 	int32 RemoteEventScore;
 
 	UFUNCTION(NetMulticast, Reliable)
+	void ClientRemotePlayerDamagedResourceBuilding(bool bJustHitWeakspot, bool bDestroyed, int32 PotentialResourceCount, EFortResourceType::Type PotentialResourceType, ABuildingSMActor* BuildingSMActor);
+	void ClientRemotePlayerDamagedResourceBuilding_Implementation(bool bJustHitWeakspot, bool bDestroyed, int32 PotentialResourceCount, EFortResourceType::Type PotentialResourceType, ABuildingSMActor* BuildingSMActor);
+
+	UFUNCTION(NetMulticast, Reliable)
 	void ClientRemotePlayerHitMarkers(const TArray<FVector2D>& RelativeScreenPositions);
 	void ClientRemotePlayerHitMarkers_Implementation(const TArray<FVector2D>& RelativeScreenPositions);
 
@@ -70,10 +89,16 @@ public:
 	void OnRep_bActive();
 
 	UFUNCTION()
+	void OnRep_RemoteBuildableClass();
+
+	UFUNCTION()
 	void OnRep_RemoteBuildingMaterial();
 
 	UFUNCTION()
 	void OnRep_RemoteCanDBNORevive();
+
+	UFUNCTION()
+	void OnRep_RemoteEditActor();
 
 	UFUNCTION()
 	void OnRep_RemoteEditTileData();
@@ -95,6 +120,13 @@ public:
 
 	UFUNCTION()
 	void OnRep_RemoteRespawnTime();
+
+	UFUNCTION()
+	void OnRep_RemoteWeakspotData();
+
+	UFUNCTION(Server, Reliable)
+	void ServerSetPlayerBuildableClass(TSubclassOf<ABuildingSMActor> BuildableClass);
+	void ServerSetPlayerBuildableClass_Implementation(TSubclassOf<ABuildingSMActor> BuildableClass);
 
 	UFUNCTION(Server, Reliable)
 	void ServerSetPlayerBuildingMaterial(EFortResourceType::Type Material);

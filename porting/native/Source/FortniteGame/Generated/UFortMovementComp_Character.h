@@ -14,6 +14,7 @@
 #include "FWaterSprintBoostParams.h"
 #include "Math/Vector.h"
 
+class AFortPawn;
 class UCurveFloat;
 
 #include "UFortMovementComp_Character.generated.h"
@@ -31,6 +32,10 @@ public:
 	// table index 51, flags 0x10000000000005
 	UPROPERTY()
 	float LandSoundFallSpeedThreshold;
+
+	// table index 50, flags 0x14000000000005
+	UPROPERTY()
+	TSubclassOf<AFortPawn> PushBumpedPawnClass;
 
 	// table index 49, flags 0x10000000000001
 	UPROPERTY()

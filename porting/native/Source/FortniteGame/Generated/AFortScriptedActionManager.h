@@ -6,7 +6,10 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 
+#include "FFortAvailableScriptedAction.h"
 #include "FFortClientEventName.h"
+
+class AFortScriptedAction;
 
 #include "AFortScriptedActionManager.generated.h"
 
@@ -16,6 +19,18 @@ class FORTNITEGAME_API AFortScriptedActionManager : public AActor
 	GENERATED_BODY()
 
 public:
+	// table index 7, flags 0x20080000000000
+	UPROPERTY()
+	TArray<AFortScriptedAction*> ActiveScriptedActions;
+
+	// table index 5, flags 0x20080000000000
+	UPROPERTY()
+	TArray<FFortAvailableScriptedAction> AvailableScriptedActions;
+
+	// table index 3, flags 0x20080000000000
+	UPROPERTY()
+	TArray<FFortAvailableScriptedAction> PendingAvailableScriptedActions;
+
 	// table index 1, flags 0x20080000000000
 	UPROPERTY()
 	TArray<FFortClientEventName> PendingClientEvents;

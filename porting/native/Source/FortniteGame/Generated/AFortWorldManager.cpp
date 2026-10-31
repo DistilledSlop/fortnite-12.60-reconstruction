@@ -11,6 +11,7 @@ void AFortWorldManager::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Ou
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
+	DOREPLIFETIME(AFortWorldManager, ChosenBuildingFoundations);
 	DOREPLIFETIME(AFortWorldManager, FinalNumChosenBuildingFoundations);
 	DOREPLIFETIME(AFortWorldManager, InitialGlobalWind);
 }

@@ -6,13 +6,21 @@
 #include "CoreMinimal.h"
 #include "ABuildingSMActor.h"
 
+#include "FFortAbilitySetHandle.h"
+#include "FFortTargetFilter.h"
 #include "GameplayTagContainer.h"
 #include "Math/Rotator.h"
 #include "Math/Vector.h"
 
+class UAthenaTrapAIPerceptionStimuliSourceComponent;
+class UFortAbilitySet;
+class UFortDamageSet;
 class UMaterialInstance;
+class UPrimitiveComponent;
+class USceneComponent;
 class USkeletalMesh;
 class UStaticMesh;
+class UStaticMeshComponent;
 
 #include "ABuildingTrap.generated.h"
 
@@ -22,6 +30,10 @@ class FORTNITEGAME_API ABuildingTrap : public ABuildingSMActor
 	GENERATED_BODY()
 
 public:
+	// table index 39, flags 0x100000000a001d
+	UPROPERTY()
+	USceneComponent* TraceLocation;
+
 	// table index 38, flags 0x10000000000001
 	UPROPERTY()
 	USkeletalMesh* PlacementSkeletalMesh;
@@ -54,6 +66,10 @@ public:
 	UPROPERTY()
 	uint8 bShouldAffectAllPawnsInMinigames : 1;
 
+	// table index 29, flags 0x10000000000005
+	UPROPERTY()
+	FFortTargetFilter TriggerFilter;
+
 	// table index 28, flags 0x10000000010001
 	UPROPERTY()
 	FVector TrapPlacementOffset;
@@ -62,9 +78,29 @@ public:
 	UPROPERTY()
 	uint8 bTriggerAbilityOnEndoverlap : 1;
 
+	// table index 26, flags 0x10000000010001
+	UPROPERTY()
+	UFortAbilitySet* AbilitySet;
+
+	// table index 25, flags 0x10000000082008
+	UPROPERTY(Transient)
+	UFortDamageSet* DamageAttributeSet;
+
+	// table index 21, flags 0x20088000002000
+	UPROPERTY(Transient)
+	TArray<FFortAbilitySetHandle> AlterationAbilitySetHandles;
+
+	// table index 20, flags 0x20080101000020
+	UPROPERTY(ReplicatedUsing=OnRep_AttachedTo, SaveGame)
+	ABuildingSMActor* AttachedTo;
+
 	// table index 19, flags 0x20080000000005
 	UPROPERTY()
 	uint8 bTargetWithAttachedTo : 1;
+
+	// table index 18, flags 0x20080000002000
+	UPROPERTY(Transient)
+	ABuildingSMActor* LastAttachedTo;
 
 	// table index 17, flags 0x20080000000005
 	UPROPERTY()
@@ -82,6 +118,10 @@ public:
 	UPROPERTY()
 	TArray<FVector> ShouldTriggerTraceOffsets;
 
+	// table index 11, flags 0x20088000000008
+	UPROPERTY()
+	TArray<UPrimitiveComponent*> TriggerComponents;
+
 	// table index 10, flags 0x20080000010001
 	UPROPERTY()
 	uint8 bIgnoreBuildingObstructions : 1;
@@ -94,6 +134,18 @@ public:
 	UPROPERTY()
 	UMaterialInstance* AlternateMaterialInstance;
 
+	// table index 7, flags 0x200800000a001d
+	UPROPERTY()
+	UAthenaTrapAIPerceptionStimuliSourceComponent* StimSourceComponent;
+
+	// table index 5, flags 0x40008000000008
+	UPROPERTY()
+	TArray<UPrimitiveComponent*> DamageComponents;
+
+	// table index 3, flags 0x40008000000008
+	UPROPERTY()
+	TArray<UStaticMeshComponent*> StaticMeshes;
+
 	// table index 2, flags 0x40000001000020
 	UPROPERTY(Replicated, SaveGame)
 	int32 TrapLevel;
@@ -105,6 +157,9 @@ public:
 	// table index 0, flags 0x20080000010001
 	UPROPERTY()
 	FGameplayTagContainer AnalyticsTags;
+
+	UFUNCTION()
+	void OnRep_AttachedTo();
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

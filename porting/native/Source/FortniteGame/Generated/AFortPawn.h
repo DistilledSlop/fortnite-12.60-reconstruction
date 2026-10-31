@@ -14,20 +14,30 @@
 #include "Engine/DataTable.h"
 #include "Engine/EngineTypes.h"
 #include "Engine/NetSerialization.h"
+#include "FAthenaBatchedDamageGameplayCues_NonShared.h"
 #include "FAthenaBatchedDamageGameplayCues_Shared.h"
 #include "FCalloutEntry.h"
 #include "FDamageDoneInfo.h"
 #include "FDamageDoneSourceInfo.h"
 #include "FDamageDoneTargetInfo.h"
+#include "FDamagerInfo.h"
+#include "FFortConversationSentence.h"
+#include "FFortPawnEquippedWeaponSignature.h"
 #include "FFortPawnUnEquippedWeaponSignature.h"
+#include "FFortPawnVocalChord.h"
 #include "FFortPickupEntryData.h"
+#include "FOnDBNOStateChangedEvent.h"
 #include "FOnHolsteredEvent.h"
 #include "FOnPlayerStartDBNO.h"
 #include "FOnStormShieldComponentCreated.h"
 #include "FOnUnholsteredEvent.h"
 #include "FPawnDamageZones.h"
+#include "FPawnDamagedSignature.h"
+#include "FPawnDeathEffectsSignature.h"
 #include "FPawnHealthChanged.h"
+#include "FPawnTeleportedSignature.h"
 #include "FPawnUpdatedDecisionWindowStackSignature.h"
+#include "FRecordedGunshot.h"
 #include "GameplayCueInterface.h"
 #include "GameplayEffect.h"
 #include "GameplayEffectTypes.h"
@@ -37,17 +47,33 @@
 #include "Math/Vector.h"
 #include "Styling/SlateBrush.h"
 
+class AActor;
 class AFortEmitterCameraLensEffectDirectional;
+class AFortPickup;
+class AFortWeapon;
+class UAnimInstance;
+class UAudioComponent;
+class UFortAbilitySystemComponent;
+class UFortAdvancedMovementSet;
+class UFortControlResistanceSet;
+class UFortDamageSet;
 class UFortFeedbackBank;
 class UFortFootstepAudioBank;
 class UFortHealthBarIndicator;
+class UFortHealthSet;
+class UFortMovementSet;
 class UFortStormShieldComponent;
 class UFortSwimmingAudioBank;
+class UGameplayEffect;
+class UMeshComponent;
 class UParticleSystemComponent;
 class UPegasusGameEventCollector;
+class UPrimitiveComponent;
 class USkeletalMeshSocket;
 class USoundAttenuation;
+class USoundBase;
 class USoundEffectSourcePresetChain;
+class UTexture;
 class UWeaponHitNotifyAudioBank;
 
 #include "AFortPawn.generated.h"
@@ -154,6 +180,10 @@ public:
 	UPROPERTY()
 	TEnumAsByte<EFortFootstepSurfaceType::Type> FootstepSurfaceType;
 
+	// table index 175, flags 0x10000000000005
+	UPROPERTY()
+	UTexture* FootstepIconOverride;
+
 	// table index 173, flags 0x20080000010001
 	UPROPERTY()
 	EUpdateRateShiftBucket UroShiftBucket;
@@ -238,6 +268,18 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_PawnUniqueID, Transient)
 	int32 PawnUniqueID;
 
+	// table index 150, flags 0x10000100002034
+	UPROPERTY(ReplicatedUsing=OnRep_CurrentWeapon, Transient)
+	AFortWeapon* CurrentWeapon;
+
+	// table index 149, flags 0x20080000002000
+	UPROPERTY(Transient)
+	AFortWeapon* PreviousWeapon;
+
+	// table index 147, flags 0x10000000002014
+	UPROPERTY(Transient)
+	TArray<AFortWeapon*> CurrentWeaponList;
+
 	// table index 146, flags 0x10000000002000
 	UPROPERTY(Transient)
 	FString PreviousAbilityWeaponNameForTelemetry;
@@ -250,6 +292,10 @@ public:
 	UPROPERTY()
 	FName LeftHandWeaponHandSocketName;
 
+	// table index 143, flags 0x10000000000014
+	UPROPERTY()
+	AActor* SpawnSpot;
+
 	// table index 142, flags 0x10000000002000
 	UPROPERTY(Transient)
 	FGameplayTagContainer DeathTags;
@@ -257,6 +303,10 @@ public:
 	// table index 141, flags 0x10000000002034
 	UPROPERTY(Replicated, Transient)
 	float SpawnImmunityTime;
+
+	// table index 139, flags 0x10000000002000
+	UPROPERTY(Transient)
+	TArray<AFortPickup*> IncomingPickups;
 
 	// table index 137, flags 0x20080000000000
 	UPROPERTY()
@@ -298,6 +348,10 @@ public:
 	UPROPERTY()
 	FOnPlayerStartDBNO OnPlayerStartDBNO;
 
+	// table index 127, flags 0x20180010080000
+	UPROPERTY()
+	FOnDBNOStateChangedEvent OnDBNOStateChanged;
+
 	// table index 126, flags 0x10000000000005
 	UPROPERTY()
 	float TeamBeaconMaxDist;
@@ -314,9 +368,41 @@ public:
 	UPROPERTY()
 	float LastDamagedTime;
 
+	// table index 122, flags 0x40000000002000
+	UPROPERTY(Transient)
+	AFortWeapon* CurrentlyAttachedWeapon;
+
+	// table index 121, flags 0x40000000082008
+	UPROPERTY(Transient)
+	UPrimitiveComponent* CachedNavFloor;
+
 	// table index 120, flags 0x10000000000005
 	UPROPERTY()
 	float MaxFootstepDistance;
+
+	// table index 119, flags 0x10000000000005
+	UPROPERTY()
+	USoundBase* DBNOLandingSound;
+
+	// table index 118, flags 0x10000000000005
+	UPROPERTY()
+	USoundBase* DefaultFootstepSound;
+
+	// table index 117, flags 0x10000000000005
+	UPROPERTY()
+	USoundBase* DefaultFastFootstepSound;
+
+	// table index 116, flags 0x10000000000005
+	UPROPERTY()
+	USoundBase* DefaultLandingSound;
+
+	// table index 115, flags 0x10000000000005
+	UPROPERTY()
+	USoundBase* DefaultHardLandingSound;
+
+	// table index 114, flags 0x10000000000005
+	UPROPERTY()
+	USoundBase* DefaultJumpSound;
 
 	// table index 113, flags 0x10000000010001
 	UPROPERTY()
@@ -350,6 +436,10 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_LandingFlashCount)
 	uint8 LandingFlashCountPacked;
 
+	// table index 105, flags 0x1000000008001c
+	UPROPERTY()
+	UAudioComponent* EmoteAudioComp;
+
 	// table index 104, flags 0x10000000010001
 	UPROPERTY()
 	USoundAttenuation* FrontEndEmoteAudioAttenuation;
@@ -361,6 +451,14 @@ public:
 	// table index 102, flags 0x10000000010001
 	UPROPERTY()
 	USoundEffectSourcePresetChain* InGameEmoteSoundEffectSoundPresetChain;
+
+	// table index 99, flags 0x1000800000001c
+	UPROPERTY()
+	TMap<int32, UMeshComponent*> EmoteMeshComps;
+
+	// table index 96, flags 0x10000000000014
+	UPROPERTY()
+	TMap<int32, AActor*> EmotePropActors;
 
 	// table index 93, flags 0x1000800000001c
 	UPROPERTY()
@@ -390,13 +488,61 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_EmoteWalkSpeed)
 	float EmoteWalkSpeed;
 
+	// table index 84, flags 0x10000010080000
+	UPROPERTY()
+	FPawnTeleportedSignature OnPawnTeleported;
+
+	// table index 80, flags 0x10000010080000
+	UPROPERTY()
+	FPawnDamagedSignature OnDied;
+
+	// table index 79, flags 0x10000010080000
+	UPROPERTY()
+	FPawnDeathEffectsSignature OnDeathEffects;
+
+	// table index 78, flags 0x10000010080000
+	UPROPERTY()
+	FPawnDamagedSignature OnDamaged;
+
+	// table index 77, flags 0x10000010080000
+	UPROPERTY()
+	FPawnDamagedSignature OnDidDamage;
+
 	// table index 76, flags 0x10000000010005
 	UPROPERTY()
 	UFortFootstepAudioBank* FootstepBank;
 
+	// table index 75, flags 0x10000010080000
+	UPROPERTY()
+	FFortPawnEquippedWeaponSignature OnWeaponEquippedDelegate;
+
 	// table index 74, flags 0x10000010080000
 	UPROPERTY()
 	FFortPawnUnEquippedWeaponSignature OnWeaponUnEquippedDelegate;
+
+	// table index 73, flags 0x10000010080000
+	UPROPERTY()
+	FFortPawnEquippedWeaponSignature OnWeaponAttachmentChangedDelegate;
+
+	// table index 72, flags 0x24080000000015
+	UPROPERTY()
+	TSubclassOf<UGameplayEffect> HealthRegenDelayGameplayEffect;
+
+	// table index 71, flags 0x24080000000015
+	UPROPERTY()
+	TSubclassOf<UGameplayEffect> HealthRegenGameplayEffect;
+
+	// table index 70, flags 0x24080000000015
+	UPROPERTY()
+	TSubclassOf<UGameplayEffect> ShieldRegenDelayGameplayEffect;
+
+	// table index 69, flags 0x24080000000015
+	UPROPERTY()
+	TSubclassOf<UGameplayEffect> ShieldRegenGameplayEffect;
+
+	// table index 68, flags 0x24080000002000
+	UPROPERTY(Transient)
+	TSubclassOf<UAnimInstance> CurrentWeaponAnimLayerOverlayClass;
 
 	// table index 67, flags 0x10000010080000
 	UPROPERTY()
@@ -446,6 +592,10 @@ public:
 	UPROPERTY()
 	EFortSoundIndicatorTypes PriorityModifiers_Key;
 
+	// table index 50, flags 0x20088100002020
+	UPROPERTY(ReplicatedUsing=OnRep_VocalChords, Transient)
+	TArray<FFortPawnVocalChord> VocalChords;
+
 	// table index 49, flags 0x10000000002000
 	UPROPERTY(Transient)
 	uint8 bIsDisconnectedPawn : 1;
@@ -454,9 +604,37 @@ public:
 	UPROPERTY()
 	FActiveGameplayEffectHandle MaxHealthApplicationHandle;
 
+	// table index 47, flags 0x24080000010015
+	UPROPERTY()
+	TSubclassOf<UGameplayEffect> MaxHealthApplicationGameplayEffect;
+
+	// table index 46, flags 0x20080000080008
+	UPROPERTY()
+	UFortHealthSet* HealthSet;
+
+	// table index 45, flags 0x20080000080008
+	UPROPERTY()
+	UFortControlResistanceSet* ControlResistanceSet;
+
+	// table index 44, flags 0x20080000080008
+	UPROPERTY()
+	UFortDamageSet* DamageSet;
+
+	// table index 43, flags 0x20080000080008
+	UPROPERTY()
+	UFortMovementSet* MovementSet;
+
+	// table index 42, flags 0x20080000080008
+	UPROPERTY()
+	UFortAdvancedMovementSet* AdvancedMovementSet;
+
 	// table index 41, flags 0x10000010080000
 	UPROPERTY()
 	FPawnUpdatedDecisionWindowStackSignature OnAbilityDecisionWindowStackUpdated;
+
+	// table index 40, flags 0x20080000080008
+	UPROPERTY()
+	UFortAbilitySystemComponent* AbilitySystemComponent;
 
 	// table index 37, flags 0x20080000010015
 	UPROPERTY()
@@ -465,6 +643,10 @@ public:
 	// table index 36, flags 0x20080000010035
 	UPROPERTY(Replicated)
 	FText DisplayName;
+
+	// table index 34, flags 0x10000000002000
+	UPROPERTY(Transient)
+	TArray<FDamagerInfo> Damagers;
 
 	// table index 32, flags 0x10000000002000
 	UPROPERTY(Transient)
@@ -530,6 +712,10 @@ public:
 	UPROPERTY()
 	TMap<int32, int32> LODToFrameSkipMap;
 
+	// table index 10, flags 0x20080100000020
+	UPROPERTY(ReplicatedUsing=OnRep_Sentence)
+	FFortConversationSentence CurrentSentence;
+
 	// table index 9, flags 0x10000010080000
 	UPROPERTY()
 	FPawnHealthChanged OnPawnHealthChanged;
@@ -537,6 +723,10 @@ public:
 	// table index 8, flags 0x10000000000000
 	UPROPERTY()
 	FAthenaBatchedDamageGameplayCues_Shared AccumulatedBatchData_Shared;
+
+	// table index 7, flags 0x10000000000000
+	UPROPERTY()
+	FAthenaBatchedDamageGameplayCues_NonShared AccumulatedBatchData_NonShared;
 
 	// table index 6, flags 0x10008000000000
 	UPROPERTY()
@@ -553,6 +743,14 @@ public:
 	// table index 3, flags 0x40000000080008
 	UPROPERTY()
 	UPegasusGameEventCollector* PegasusTimelineCollector;
+
+	// table index 0, flags 0x40000000002000
+	UPROPERTY(Transient)
+	TMap<uint32, FRecordedGunshot> RecordedGunshots;
+
+	UFUNCTION(Client, Reliable)
+	void ClientInternalEquipWeapon(AFortWeapon* Weap);
+	void ClientInternalEquipWeapon_Implementation(AFortWeapon* Weap);
 
 	UFUNCTION()
 	void HandleIsDying();
@@ -604,6 +802,9 @@ public:
 	void OnRep_bWeaponHolstered();
 
 	UFUNCTION()
+	void OnRep_CurrentWeapon(AFortWeapon* OldWeapon);
+
+	UFUNCTION()
 	void OnRep_DamageZoneActiveBitMask();
 
 	UFUNCTION()
@@ -634,13 +835,27 @@ public:
 	void OnRep_PushMomentum();
 
 	UFUNCTION()
+	void OnRep_Sentence();
+
+	UFUNCTION()
 	void OnRep_StormShieldComponent();
 
 	UFUNCTION()
 	void OnRep_TeleportCounter();
 
 	UFUNCTION()
+	void OnRep_VocalChords();
+
+	UFUNCTION()
 	void OnRep_WeaponActivated();
+
+	UFUNCTION(Client, Unreliable)
+	void PlaySound(float PitchMultiplier, float VolumeMultiplier, USoundBase* Sound);
+	void PlaySound_Implementation(float PitchMultiplier, float VolumeMultiplier, USoundBase* Sound);
+
+	UFUNCTION(Server, Reliable)
+	void ServerInternalEquipWeapon(AFortWeapon* Weap);
+	void ServerInternalEquipWeapon_Implementation(AFortWeapon* Weap);
 
 	UFUNCTION(Server, Reliable)
 	void ServerTeleportNearLocation(const FVector& ActorLocation);

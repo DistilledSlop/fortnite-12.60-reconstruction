@@ -2,6 +2,11 @@
 #include "AFortPlayerPetRepState.h"
 #include "Net/UnrealNetwork.h"
 
+void AFortPlayerPetRepState::OnRep_LookAtTarget()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPlayerPetRepState::OnRep_StimuliTag()
 {
 	// Body not recovered: reflection-derived stub.
@@ -12,5 +17,6 @@ void AFortPlayerPetRepState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(AFortPlayerPetRepState, StimuliTag);
+	DOREPLIFETIME(AFortPlayerPetRepState, LookAtTarget);
 }
 

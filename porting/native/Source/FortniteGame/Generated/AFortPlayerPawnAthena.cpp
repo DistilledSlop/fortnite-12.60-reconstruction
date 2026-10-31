@@ -42,6 +42,11 @@ void AFortPlayerPawnAthena::ServerCreativeToggleGhost_Implementation(bool bEnabl
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerPawnAthena::ServerSetInteractingItem_Implementation(bool bClearInteraction, AActor* InteractingItem)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPlayerPawnAthena::ServerSuicide_Implementation(int32 MatchPlacement, bool bSuppressResurrectionChip)
 {
 	// Body not recovered: reflection-derived stub.
@@ -63,5 +68,6 @@ void AFortPlayerPawnAthena::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>
 	DOREPLIFETIME(AFortPlayerPawnAthena, ItemSpecialActorID);
 	DOREPLIFETIME(AFortPlayerPawnAthena, ServerWorldTimeRevivalTime);
 	DOREPLIFETIME(AFortPlayerPawnAthena, DBNORevivalStacking);
+	DOREPLIFETIME(AFortPlayerPawnAthena, ItemInteractionActor);
 }
 

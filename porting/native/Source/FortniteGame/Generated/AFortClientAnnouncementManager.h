@@ -6,7 +6,10 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 
+#include "FFortClientAnnouncementQueue.h"
 #include "Misc/Guid.h"
+
+class AFortClientAnnouncement;
 
 #include "AFortClientAnnouncementManager.generated.h"
 
@@ -16,12 +19,27 @@ class FORTNITEGAME_API AFortClientAnnouncementManager : public AActor
 	GENERATED_BODY()
 
 public:
+	// table index 5, flags 0x20080100000020
+	UPROPERTY(ReplicatedUsing=OnRep_ClientAnnouncements)
+	TArray<AFortClientAnnouncement*> ClientAnnouncements;
+
+	// table index 3, flags 0x20080000000000
+	UPROPERTY()
+	TArray<AFortClientAnnouncement*> LocalClientAnnouncements;
+
 	// table index 1, flags 0x20080100000020
 	UPROPERTY(ReplicatedUsing=OnRep_CancelledAnnouncements)
 	TArray<FGuid> CancelledAnnouncements;
 
+	// table index 0, flags 0x20080000000000
+	UPROPERTY()
+	FFortClientAnnouncementQueue Channels[3];
+
 	UFUNCTION()
 	void OnRep_CancelledAnnouncements();
+
+	UFUNCTION()
+	void OnRep_ClientAnnouncements(TArray<AFortClientAnnouncement*>& PreviousClientAnnouncements);
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

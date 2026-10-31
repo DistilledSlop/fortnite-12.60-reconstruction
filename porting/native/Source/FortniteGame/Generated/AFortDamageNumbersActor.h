@@ -7,6 +7,8 @@
 #include "AFortClientOnlyActor.h"
 
 #include "FFortDamageNumberColorInfo.h"
+#include "FLiveDamageNumberComponent.h"
+#include "FPooledDamageNumberComponents.h"
 #include "Math/Color.h"
 
 class UStaticMesh;
@@ -134,6 +136,22 @@ public:
 	// table index 5, flags 0x20080000010001
 	UPROPERTY()
 	FName MoveToCameraParameterName;
+
+	// table index 4, flags 0x20088000002000
+	UPROPERTY(Transient)
+	FPooledDamageNumberComponents PooledComponentsByElement[5];
+
+	// table index 3, flags 0x20088000002000
+	UPROPERTY(Transient)
+	FPooledDamageNumberComponents PooledComponentsCritBuildingImpact;
+
+	// table index 2, flags 0x20088000002000
+	UPROPERTY(Transient)
+	FPooledDamageNumberComponents PooledComponentsByScoreCategory[3];
+
+	// table index 0, flags 0x20088000002000
+	UPROPERTY(Transient)
+	TArray<FLiveDamageNumberComponent> LiveComponents;
 
 };
 

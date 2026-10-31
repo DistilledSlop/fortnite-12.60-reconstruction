@@ -14,8 +14,14 @@
 #include "GameFramework/OnlineReplStructs.h"
 #include "Misc/Guid.h"
 
+class UFortAwardManager;
+class UFortCollectionBookManager;
 class UFortCustomizationAssetLoader;
+class UFortExpeditionManager;
 class UFortHero;
+class UFortLinkedAccountManager;
+class UFortMinigameManager;
+class UFortQuestManager;
 
 #include "UFortRegisteredPlayerInfo.generated.h"
 
@@ -81,13 +87,37 @@ public:
 	UPROPERTY()
 	FTimerHandle PollForDedicatedServerReadyToShutdownTimerHandle;
 
+	// table index 15, flags 0x40000000000000
+	UPROPERTY()
+	UFortQuestManager* QuestManagers[2];
+
+	// table index 14, flags 0x0
+	UPROPERTY()
+	UFortAwardManager* AwardManagers;
+
 	// table index 12, flags 0x0
 	UPROPERTY()
 	ESubGame AwardManagers_Key;
 
+	// table index 10, flags 0x0
+	UPROPERTY()
+	UFortMinigameManager* MinigameManagers;
+
 	// table index 8, flags 0x0
 	UPROPERTY()
 	ESubGame MinigameManagers_Key;
+
+	// table index 6, flags 0x40000000000000
+	UPROPERTY()
+	UFortCollectionBookManager* CollectionBookManager;
+
+	// table index 5, flags 0x40000000000000
+	UPROPERTY()
+	UFortExpeditionManager* ExpeditionManager;
+
+	// table index 4, flags 0x40000000000000
+	UPROPERTY()
+	UFortLinkedAccountManager* LinkedAccountManager;
 
 	// table index 3, flags 0x40000000002000
 	UPROPERTY(Transient)

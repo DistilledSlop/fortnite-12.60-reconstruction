@@ -6,6 +6,11 @@
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
 
+#include "FFortStatEvent.h"
+#include "FFortStatEventSequence.h"
+
+class AFortPlayerController;
+
 #include "UFortStatEventManager.generated.h"
 
 UCLASS()
@@ -14,5 +19,17 @@ class FORTNITEGAME_API UFortStatEventManager : public UObject
 	GENERATED_BODY()
 
 public:
+	// table index 4, flags 0x10000000002000
+	UPROPERTY(Transient)
+	AFortPlayerController* FPC;
+
+	// table index 2, flags 0x10000000000015
+	UPROPERTY()
+	TArray<FFortStatEvent> StatEvents;
+
+	// table index 0, flags 0x10000000000015
+	UPROPERTY()
+	TArray<FFortStatEventSequence> StatEventSequences;
+
 };
 

@@ -8,6 +8,9 @@
 
 #include "FFortFeedbackEventData.h"
 
+class AController;
+class AFortPawn_FeedbackAnnouncer;
+
 #include "AFortFeedbackManager.generated.h"
 
 UCLASS(config=Engine)
@@ -28,5 +31,18 @@ public:
 	UPROPERTY()
 	TArray<FFortFeedbackEventData> BankDefinedFeedbackEvents;
 
+	// table index 3, flags 0x14000000010015
+	UPROPERTY()
+	TSubclassOf<AFortPawn_FeedbackAnnouncer> AnnouncerPawnClass;
+
+	// table index 2, flags 0x20080000000020
+	UPROPERTY(Replicated)
+	AFortPawn_FeedbackAnnouncer* Announcer;
+
+	// table index 0, flags 0x24080000000020
+	UPROPERTY(Replicated)
+	TArray<TWeakObjectPtr<AController>> SuppressedControllers;
+
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

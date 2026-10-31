@@ -8,27 +8,34 @@
 
 #include "EFortGameplayState.h"
 #include "FAdditionalLevelStreamed.h"
+#include "FAppliedHomebaseData.h"
 #include "FBuildingContainerDebugInfo.h"
 #include "FEndOfDayRecap.h"
+#include "FGameStateLootInfo.h"
 #include "FOnPoiManagerReplicated.h"
 #include "FOnTimeHitInfo.h"
+#include "FTeamChangeRequest.h"
 #include "Math/Color.h"
 #include "Math/Rotator.h"
 #include "Math/Vector.h"
 #include "UObject/NoExportTypes.h"
 
+class AFortAIPawn;
 class AFortClientAnnouncementManager;
 class AFortFXManager;
 class AFortFeedbackManager;
 class AFortGlobalAbilityTargetingActor;
+class AFortLobbyBeaconState;
 class AFortMissionManager;
 class AFortMusicManager;
+class AFortPawn;
 class AFortPlayerState;
 class AFortPoiManager;
 class AFortScriptedActionManager;
 class AFortTeamInfo;
 class AFortVisibilityManager;
 class AFortWindManager;
+class AFortWorldManager;
 class UCreativeQuestManager;
 class UFortAmbientAudioController;
 class UFortMovementComp_Character;
@@ -118,6 +125,14 @@ public:
 	UPROPERTY()
 	AFortScriptedActionManager* ScriptedActionManager;
 
+	// table index 37, flags 0x20080000000000
+	UPROPERTY()
+	AFortLobbyBeaconState* LobbyGameState;
+
+	// table index 36, flags 0x20080100002020
+	UPROPERTY(ReplicatedUsing=OnRep_WorldManager, Transient)
+	AFortWorldManager* WorldManager;
+
 	// table index 35, flags 0x20080100002020
 	UPROPERTY(ReplicatedUsing=OnRep_GameplayState, Transient)
 	TEnumAsByte<EFortGameplayState::Type> GameplayState;
@@ -141,6 +156,14 @@ public:
 	// table index 29, flags 0x20088000002008
 	UPROPERTY(Transient)
 	TArray<UFortMovementComp_Character*> ManagedCharMovementComponents;
+
+	// table index 27, flags 0x20080000002000
+	UPROPERTY(Transient)
+	TArray<AFortAIPawn*> ManagedAnimPawns;
+
+	// table index 26, flags 0x20080100002020
+	UPROPERTY(ReplicatedUsing=OnRep_PawnForReplayRelevancy, Transient)
+	AFortPawn* PawnForReplayRelevancy;
 
 	// table index 25, flags 0x20080100002020
 	UPROPERTY(ReplicatedUsing=OnRep_RecorderPlayerState, Transient)
@@ -174,6 +197,10 @@ public:
 	UPROPERTY()
 	uint8 bSkipTeamReplication : 1;
 
+	// table index 13, flags 0x20080000000020
+	UPROPERTY(Replicated)
+	TArray<FTeamChangeRequest> PendingTeamChangeRequests;
+
 	// table index 12, flags 0x20080000000000
 	UPROPERTY()
 	uint8 bAllowPendingTeamChangeRequests : 1;
@@ -185,6 +212,14 @@ public:
 	// table index 10, flags 0x40000000000000
 	UPROPERTY()
 	AFortGlobalAbilityTargetingActor* GlobalAbilityTargetingActor;
+
+	// table index 8, flags 0x20088000002000
+	UPROPERTY(Transient)
+	TArray<FAppliedHomebaseData> AppliedHomebaseDataArray;
+
+	// table index 7, flags 0x10000000000015
+	UPROPERTY()
+	FGameStateLootInfo LootInfo;
 
 	// table index 5, flags 0x40000000000020
 	UPROPERTY(Replicated)
@@ -258,6 +293,9 @@ public:
 	void OnRep_MusicManagerSubclass();
 
 	UFUNCTION()
+	void OnRep_PawnForReplayRelevancy(AFortPawn* OldPawnForReplayRelevancy);
+
+	UFUNCTION()
 	void OnRep_PoiManager();
 
 	UFUNCTION()
@@ -268,6 +306,9 @@ public:
 
 	UFUNCTION()
 	void OnRep_WorldDaysElapsed();
+
+	UFUNCTION()
+	void OnRep_WorldManager();
 
 	UFUNCTION(NetMulticast, Reliable)
 	void RunPerfMemCheatScript(bool bStartStatFiles);

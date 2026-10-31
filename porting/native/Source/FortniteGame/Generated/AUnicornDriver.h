@@ -6,6 +6,9 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Info.h"
 
+class UUnicornSocialComponent;
+class UUnicornWebAPIComponent;
+
 #include "AUnicornDriver.generated.h"
 
 UCLASS(config=Game)
@@ -129,6 +132,14 @@ public:
 	// table index 3, flags 0x10000000004000
 	UPROPERTY(Config)
 	float HighlightAnnotationTime;
+
+	// table index 2, flags 0x40000000080008
+	UPROPERTY()
+	UUnicornSocialComponent* SocialComponent;
+
+	// table index 1, flags 0x40000000080008
+	UPROPERTY()
+	UUnicornWebAPIComponent* WebAPIComponent;
 
 	// table index 0, flags 0x40000000004000
 	UPROPERTY(Config)

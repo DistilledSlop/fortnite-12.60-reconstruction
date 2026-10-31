@@ -2,13 +2,20 @@
 #include "AFortMarkActor.h"
 #include "Net/UnrealNetwork.h"
 
+void AFortMarkActor::OnRep_AttachedToActor()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortMarkActor::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(AFortMarkActor, AttachmentOffset);
+	DOREPLIFETIME(AFortMarkActor, AttachedToActor);
 	DOREPLIFETIME(AFortMarkActor, bFinishedEditing);
 	DOREPLIFETIME(AFortMarkActor, PreapprovedMarkString);
 	DOREPLIFETIME(AFortMarkActor, MarkString);
+	DOREPLIFETIME(AFortMarkActor, OwningPlayer);
 }
 

@@ -77,6 +77,11 @@ void AFortGameState::OnRep_MusicManagerSubclass()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortGameState::OnRep_PawnForReplayRelevancy(AFortPawn* OldPawnForReplayRelevancy)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortGameState::OnRep_PoiManager()
 {
 	// Body not recovered: reflection-derived stub.
@@ -97,6 +102,11 @@ void AFortGameState::OnRep_WorldDaysElapsed()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortGameState::OnRep_WorldManager()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortGameState::RunPerfMemCheatScript_Implementation(bool bStartStatFiles)
 {
 	// Body not recovered: reflection-derived stub.
@@ -108,13 +118,16 @@ void AFortGameState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLi
 
 	DOREPLIFETIME(AFortGameState, AmmoBoxInfos);
 	DOREPLIFETIME(AFortGameState, TreasureChestInfos);
+	DOREPLIFETIME(AFortGameState, PendingTeamChangeRequests);
 	DOREPLIFETIME(AFortGameState, Teams);
 	DOREPLIFETIME(AFortGameState, VisibilityManager);
 	DOREPLIFETIME(AFortGameState, RecorderPlayerState);
+	DOREPLIFETIME(AFortGameState, PawnForReplayRelevancy);
 	DOREPLIFETIME(AFortGameState, GameSessionId);
 	DOREPLIFETIME(AFortGameState, MusicManagerBank);
 	DOREPLIFETIME(AFortGameState, MusicManagerSubclass);
 	DOREPLIFETIME(AFortGameState, GameplayState);
+	DOREPLIFETIME(AFortGameState, WorldManager);
 	DOREPLIFETIME(AFortGameState, AnnouncementManager);
 	DOREPLIFETIME(AFortGameState, MissionManager);
 	DOREPLIFETIME(AFortGameState, FeedbackManager);

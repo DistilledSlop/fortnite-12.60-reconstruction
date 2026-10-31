@@ -12,7 +12,9 @@
 #include "FOnItemAddedToCreativeQuickbar.h"
 #include "FOnItemAddedToMoveTool.h"
 
+class AActor;
 class UInputComponent;
+class ULevelSaveRecord;
 
 #include "UCreativeQuickbarComponent.generated.h"
 
@@ -50,6 +52,10 @@ public:
 	UPROPERTY()
 	uint8 bIsCreativeQuickbarEquipped : 1;
 
+	// table index 2, flags 0x20080000000000
+	UPROPERTY()
+	ULevelSaveRecord* CurrentQuickbarRequestSaveRecord;
+
 	// table index 1, flags 0x40000000080008
 	UPROPERTY()
 	UInputComponent* CreativeQuickbarInputComponent;
@@ -57,6 +63,10 @@ public:
 	// table index 0, flags 0x40000000080008
 	UPROPERTY()
 	UInputComponent* CreativeQuickbarActiveInputComponent;
+
+	UFUNCTION(Server, Reliable)
+	void ServerAddToQuickBar(int32 DesiredSlotIndex, const TArray<AActor*>& Actors);
+	void ServerAddToQuickBar_Implementation(int32 DesiredSlotIndex, const TArray<AActor*>& Actors);
 
 };
 

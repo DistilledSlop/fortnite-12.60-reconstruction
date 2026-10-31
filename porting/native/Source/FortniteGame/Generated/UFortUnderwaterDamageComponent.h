@@ -9,6 +9,9 @@
 #include "AttributeSet.h"
 #include "GameplayEffectTypes.h"
 
+class UAbilitySystemComponent;
+class UGameplayEffect;
+
 #include "UFortUnderwaterDamageComponent.generated.h"
 
 UCLASS(config=Engine)
@@ -17,6 +20,10 @@ class FORTNITEGAME_API UFortUnderwaterDamageComponent : public UActorComponent
 	GENERATED_BODY()
 
 public:
+	// table index 8, flags 0x24080000010001
+	UPROPERTY()
+	TSubclassOf<UGameplayEffect> GE_UnderWaterDamage;
+
 	// table index 7, flags 0x20080000010001
 	UPROPERTY()
 	FScalableFloat DamageDelay;
@@ -44,6 +51,10 @@ public:
 	// table index 1, flags 0x40000000002000
 	UPROPERTY(Transient)
 	FActiveGameplayEffectHandle GE_UnderWaterDamage_Handle;
+
+	// table index 0, flags 0x44000000082008
+	UPROPERTY(Transient)
+	TWeakObjectPtr<UAbilitySystemComponent> OwnerAbilityComp;
 
 };
 

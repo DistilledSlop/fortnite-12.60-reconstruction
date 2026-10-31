@@ -7,6 +7,7 @@
 #include "GameFramework/Info.h"
 
 class AFortAthenaCreativePortal;
+class AFortPlayerControllerAthena;
 
 #include "AFortCreativePortalManager.generated.h"
 
@@ -19,6 +20,10 @@ public:
 	// table index 2, flags 0x40000000002000
 	UPROPERTY(Transient)
 	TArray<AFortAthenaCreativePortal*> AllPortals;
+
+	// table index 0, flags 0x44000000002000
+	UPROPERTY(Transient)
+	TArray<TWeakObjectPtr<AFortPlayerControllerAthena>> PendingPortalReservations;
 
 };
 

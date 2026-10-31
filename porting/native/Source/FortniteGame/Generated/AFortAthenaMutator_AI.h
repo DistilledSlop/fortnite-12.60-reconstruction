@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "AFortGameplayMutator.h"
 
+class UFortMovementComp_AIChar;
+
 #include "AFortAthenaMutator_AI.generated.h"
 
 UCLASS(config=Engine)
@@ -14,5 +16,9 @@ class FORTNITEGAME_API AFortAthenaMutator_AI : public AFortGameplayMutator
 	GENERATED_BODY()
 
 public:
+	// table index 0, flags 0x20088000000008
+	UPROPERTY()
+	TArray<UFortMovementComp_AIChar*> DeimosMoveComponents;
+
 };
 

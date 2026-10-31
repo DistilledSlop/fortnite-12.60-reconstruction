@@ -82,6 +82,11 @@ void AFortPlayerControllerAthena::ClientNotifyAbortRespawn_Implementation()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerControllerAthena::ClientNotifyLost_Implementation(const EEndOfMatchReason& LostReason, APawn* WinningPawn)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPlayerControllerAthena::ClientNotifyTeamLost_Implementation()
 {
 	// Body not recovered: reflection-derived stub.
@@ -93,6 +98,11 @@ void AFortPlayerControllerAthena::ClientPreviewScreenshotModeActivated_Implement
 }
 
 void AFortPlayerControllerAthena::ClientPublishCreativePlotComplete_Implementation(const FString& LinkJson, const FString& ResultErrorCode)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerControllerAthena::ClientReceiveKillNotification_Implementation(AFortPlayerStateZone* Killed, AFortPlayerStateZone* Killer)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -192,6 +202,11 @@ void AFortPlayerControllerAthena::OnRep_CreativePlotLinkedVolume()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerControllerAthena::OnRep_FocalPoint()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPlayerControllerAthena::OnRep_SkydiveLeader()
 {
 	// Body not recovered: reflection-derived stub.
@@ -243,6 +258,16 @@ void AFortPlayerControllerAthena::ServerClientIsReadyToRespawn_Implementation()
 }
 
 void AFortPlayerControllerAthena::ServerCreateProfileGoCollectionForSublevels_Implementation(int32 Quad, int32 RotationSteps, int32 GridStepsY, int32 GridStepsX, const FString& SublevelSearchString)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerControllerAthena::ServerDBNOReviveInterrupted_Implementation(AFortPlayerPawnAthena* DBNOPawn)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerControllerAthena::ServerDBNOReviveStarted_Implementation(AFortPlayerPawnAthena* DBNOPawn)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -362,6 +387,11 @@ void AFortPlayerControllerAthena::ServerSaveIslandCheckpoint_Implementation(AFor
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerControllerAthena::ServerSelectMutatorItem_Implementation(int32 ItemIndex, AFortGameplayMutator* Mutator)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPlayerControllerAthena::ServerSendSquadFriend_Implementation(AFortPlayerStateAthena* FriendInSquad)
 {
 	// Body not recovered: reflection-derived stub.
@@ -398,6 +428,11 @@ void AFortPlayerControllerAthena::ServerSetUseSolaris_Implementation(bool bShoul
 }
 
 void AFortPlayerControllerAthena::ServerSimulateLevelUp_Implementation(int32 ClientSimulatedLevel)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerControllerAthena::ServerSpawnCreativeSupplyDrop_Implementation(TSubclassOf<AActor> InSupplyDropClass, const FVector& Position)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -526,5 +561,6 @@ void AFortPlayerControllerAthena::GetLifetimeReplicatedProps(TArray<FLifetimePro
 	DOREPLIFETIME(AFortPlayerControllerAthena, SkydiveLeader);
 	DOREPLIFETIME(AFortPlayerControllerAthena, FocalPointFOV);
 	DOREPLIFETIME(AFortPlayerControllerAthena, FocalPointOffset);
+	DOREPLIFETIME(AFortPlayerControllerAthena, FocalPoint);
 }
 

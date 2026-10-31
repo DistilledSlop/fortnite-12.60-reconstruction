@@ -7,9 +7,17 @@
 #include "ABuildingActor.h"
 
 #include "Engine/DataTable.h"
+#include "FBuildingGameplayActorAbilityDeliveryInfo.h"
+#include "FOnDeliverableAbilityInfoAppliedToTouchingActor.h"
+#include "FOnDeliverableAbilityInfoChangedForExitingTouchActor.h"
+#include "FOnProximityEffectsApplied.h"
 #include "FOnProximityPrePulse.h"
 #include "FOnProximityPulse.h"
 #include "GameplayTagContainer.h"
+
+class UFortAbilitySet;
+class UFortDamageSet;
+class UPrimitiveComponent;
 
 #include "ABuildingGameplayActor.generated.h"
 
@@ -19,6 +27,18 @@ class FORTNITEGAME_API ABuildingGameplayActor : public ABuildingActor
 	GENERATED_BODY()
 
 public:
+	// table index 17, flags 0x10000020000000
+	UPROPERTY()
+	UFortAbilitySet* AbilitySet;
+
+	// table index 16, flags 0x10000000010001
+	UPROPERTY()
+	UFortAbilitySet* InherentAbilitySets[5];
+
+	// table index 15, flags 0x10000000082008
+	UPROPERTY(Transient)
+	UFortDamageSet* DamageSet;
+
 	// table index 14, flags 0x10000000000015
 	UPROPERTY()
 	FDataTableRowHandle DamageStatHandle;
@@ -35,6 +55,18 @@ public:
 	UPROPERTY()
 	FOnProximityPrePulse OnProximityPrePulseDelegate;
 
+	// table index 10, flags 0x10000010080000
+	UPROPERTY()
+	FOnProximityEffectsApplied OnProximityEffectsAppliedDelegate;
+
+	// table index 9, flags 0x10000010080000
+	UPROPERTY()
+	FOnDeliverableAbilityInfoAppliedToTouchingActor OnDeliverableAbilityInfoAppliedToTouchingActor;
+
+	// table index 8, flags 0x10000010080000
+	UPROPERTY()
+	FOnDeliverableAbilityInfoChangedForExitingTouchActor OnDeliverableAbilityInfoChangedForExitingTouchActor;
+
 	// table index 7, flags 0x20080000010015
 	UPROPERTY()
 	uint8 bIgnoreInstigatorCollision : 1;
@@ -47,6 +79,10 @@ public:
 	UPROPERTY()
 	int32 AbilitySourceLevel;
 
+	// table index 4, flags 0x20088000010015
+	UPROPERTY()
+	FBuildingGameplayActorAbilityDeliveryInfo DeliverableAbilityInfo;
+
 	// table index 3, flags 0x20080000010001
 	UPROPERTY()
 	uint8 bApplyDefaultEnabledAbilityBucketsOnInit : 1;
@@ -54,6 +90,10 @@ public:
 	// table index 2, flags 0x20080000010001
 	UPROPERTY()
 	uint8 bUseSimpleActorTouchSetupForAbilityBuckets : 1;
+
+	// table index 1, flags 0x20080000082008
+	UPROPERTY(Transient)
+	UPrimitiveComponent* RegisteredTouchComponent;
 
 	// table index 0, flags 0x20080000010001
 	UPROPERTY()

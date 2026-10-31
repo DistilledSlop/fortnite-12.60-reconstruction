@@ -8,6 +8,8 @@
 
 #include "Math/Vector.h"
 
+class AActor;
+
 #include "AFortEmitterCameraLensEffectDirectional.generated.h"
 
 UCLASS(config=Engine)
@@ -16,6 +18,10 @@ class FORTNITEGAME_API AFortEmitterCameraLensEffectDirectional : public AEmitter
 	GENERATED_BODY()
 
 public:
+	// table index 4, flags 0x10000000000000
+	UPROPERTY()
+	AActor* DamageDealer;
+
 	// table index 3, flags 0x10000000000000
 	UPROPERTY()
 	FVector DamageDealerLocation;

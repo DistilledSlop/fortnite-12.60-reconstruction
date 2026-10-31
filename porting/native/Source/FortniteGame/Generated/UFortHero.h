@@ -10,6 +10,8 @@
 #include "FMcpVariantReader.h"
 
 class UCustomCharacterPart;
+class UFortAbilityKit;
+class UFortHeroSpecialization;
 
 #include "UFortHero.generated.h"
 
@@ -38,6 +40,14 @@ public:
 	// table index 10, flags 0x10000000000000
 	UPROPERTY()
 	TArray<FMcpVariantReader> BackblingVariants;
+
+	// table index 8, flags 0x10000000000000
+	UPROPERTY()
+	TArray<UFortHeroSpecialization*> Specializations;
+
+	// table index 6, flags 0x10000000000000
+	UPROPERTY()
+	TArray<UFortAbilityKit*> SpecializationAbilityKits;
 
 	// table index 4, flags 0x10000000000000
 	UPROPERTY()

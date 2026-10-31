@@ -33,14 +33,6 @@ class FORTNITEGAME_API UFortMetaNavArea_Obstacles : public UNavAreaMeta
     GENERATED_BODY()
 };
 
-// The recovered map's navigation config names this native class. Its full
-// Fortnite-specific behavior still needs reconstruction.
-UCLASS()
-class FORTNITEGAME_API UFortNavSystem : public UNavigationSystemV1
-{
-    GENERATED_BODY()
-};
-
 UCLASS()
 class FORTNITEGAME_API AFortSkydivingShadowProxy : public AActor
 {

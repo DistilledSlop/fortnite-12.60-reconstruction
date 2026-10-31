@@ -11,8 +11,11 @@
 #include "GameFramework/OnlineReplStructs.h"
 #include "Math/Vector.h"
 
+class AActor;
 class AFortPlayerStateAthena;
 class AFortVolume;
+class UCapsuleComponent;
+class UPrimitiveComponent;
 class UTexture2DDynamic;
 
 #include "AFortAthenaCreativePortal.generated.h"
@@ -26,6 +29,10 @@ public:
 	// table index 32, flags 0x10000000000805
 	UPROPERTY()
 	int32 PortalIndex;
+
+	// table index 31, flags 0x10000000000815
+	UPROPERTY()
+	AActor* DestinationActor;
 
 	// table index 30, flags 0x10000000000815
 	UPROPERTY()
@@ -91,6 +98,10 @@ public:
 	UPROPERTY(Transient)
 	FText SanitizedCreatorName;
 
+	// table index 14, flags 0x2008000008001c
+	UPROPERTY()
+	UPrimitiveComponent* InteractComponent;
+
 	// table index 13, flags 0x40000100002034
 	UPROPERTY(ReplicatedUsing=OnRep_PopulationChanged, Transient)
 	uint8 CurrentPopulation;
@@ -134,6 +145,10 @@ public:
 	// table index 2, flags 0x20080000002014
 	UPROPERTY(Transient)
 	UTexture2DDynamic* ThumbnailTexture;
+
+	// table index 1, flags 0x2408000008200c
+	UPROPERTY(Transient)
+	TWeakObjectPtr<UCapsuleComponent> InteractIconPlacementCapsule;
 
 	// table index 0, flags 0x10000000000005
 	UPROPERTY()

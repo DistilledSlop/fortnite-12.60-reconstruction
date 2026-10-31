@@ -8,6 +8,8 @@
 
 #include "GameplayTagContainer.h"
 
+class UFortItemIconDefinition;
+
 #include "UFortWorker.generated.h"
 
 UCLASS()
@@ -47,6 +49,10 @@ public:
 	// table index 1, flags 0x10000000000014
 	UPROPERTY()
 	FGameplayTagContainer SetBonusTag;
+
+	// table index 0, flags 0x44000000022001
+	UPROPERTY(Transient)
+	TSoftObjectPtr<UFortItemIconDefinition> IconDefinition;
 
 };
 
