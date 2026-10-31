@@ -1,6 +1,6 @@
 # Master plan to the stated goal
 
-> **Current state and how to resume: see `HANDOFF.md`** (written when the session wound down).
+> **Current state and how to resume: see the latest snapshot in `HANDOFF.md`.**
 
 Goal: a UE project rebuildable from source that joins a full reconstructed
 server with vanilla parity. `progress/components.json` is the measure; a
@@ -20,7 +20,7 @@ using historical instructions below.
    widgets and assets. Record a rebuilt-client launch reaching an interactive main
    menu. The existing Entry/test maps and Wine login screen do not meet this gate.
 2. **Lobby (M2).** Implement the frontend login and lobby flow and the backend
-   contracts it uses. Locate the client response parser and verify schema and case
+   contracts it uses. The client response parser has been located; continue verifying schema and case
    against binary/reflection evidence; complete needed profile, party, presence and
    session behavior. Record a rebuilt client joining and remaining in a lobby on
    the reconstructed services. Current native direct join is a foundation only.
@@ -36,6 +36,10 @@ using historical instructions below.
    multi-client match through its end with sound and visuals working, and compare
    behavior and presentation against the supplied 12.60 build.
 
+## Current work (2026-10-31 23:47 UTC)
+
+Stage 2 (`2cbbd18`) passed the recorded full regression, including 4,617 offline checksum matches and 71 backend tests. The regression ran while unrelated HEAD and worktree changes were in flight; see the handoff for provenance. The current banner widget load still fails on a cooked export index with content missing, so prioritize the native owner's loader investigation and root UI probes. The response parser and session/websocket corrections are documented in `server/EVIDENCE.md`; no end-to-end lobby or matchmaking result exists. All four gates remain open.
+
 ## Standing constraints
 
 - Storage: `/` has ~100 GB free after the original client moved to the new 1 TB
@@ -48,7 +52,9 @@ using historical instructions below.
 - Source-level identity with Epic's unreleased code is not reachable by
   analysis alone. Parity is judged by behavior and wire format.
 
-## AES key commands
+## Historical closure commands
+
+The full extraction and earlier frontend hard-closure scans have since completed; see `extraction_status.md` and `frontend/readiness.md`. These original small-cap commands are retained as historical examples, not current completeness evidence.
 
 Each adds `--all-keys` for the GUID-keyed paks and `--key-file=<path>` so an agent can run it unattended.
 
@@ -56,8 +62,7 @@ Each adds `--all-keys` for the GUID-keyed paks and `--key-file=<path>` so an age
 2. Same for `FortniteGame/Content/Maps/FortniteTransition` (cap 200).
 3. Same for `FortniteGame/Content/Maps/UI/Frontend_Lobby_Default` (cap 400).
 
-Why: the Frontend widget graph, 2,171 unseen WidgetBlueprints and pakchunk
-1000-1002 are unmeasured without the key (see `ui_audio_census.md`).
+The original graph and package-coverage assumptions below these commands predate the full extraction; see the current snapshot for remaining UI gaps.
 
 ## Decisions made autonomously
 

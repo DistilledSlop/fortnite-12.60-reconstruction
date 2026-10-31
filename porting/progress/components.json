@@ -6,19 +6,19 @@
       "id": "m1",
       "text": "The rebuilt client reaches the main menu with feature parity to the 12.60 original",
       "done": false,
-      "evidence": "The native project reaches engine Entry and recovered test maps, not an interactive main menu. The original client under Wine reached the login screen; an AppES access gate was observed with auth flags (direct_connect_results.md)."
+      "evidence": "The native project reaches engine Entry and test maps, not an interactive main menu. A stage 2 banner widget probe failed on an invalid cooked export index with missing content (frontend/readiness.md). The original client under Wine reached login; an AppES access gate was observed with auth flags."
     },
     {
       "id": "m2",
       "text": "The client joins a lobby on the reconstructed server",
       "done": false,
-      "evidence": "Native client/server direct joins pass, including an Athena pawn and network checksum 683914758. The last full regression reports 4,591 of 4,591 generated classes matching the offline checksum model; this does not establish runtime wire parity or a rebuilt-client lobby (native_classes_status.md)."
+      "evidence": "Native client/server direct joins pass, including an Athena pawn and network checksum 683914758. The last full regression reports 4,617 of 4,617 generated classes matching the offline checksum model; this does not establish runtime wire parity or a rebuilt-client lobby (native_classes_status.md)."
     },
     {
       "id": "m3",
       "text": "The client matchmakes to the reconstructed UE dedicated server",
       "done": false,
-      "evidence": "Ticket, websocket, session and key routes exist; 70 backend tests passed in the last full regression. Response shapes remain partly inferred, the client parser is unidentified, and no rebuilt-client end-to-end matchmaking run is recorded (server/EVIDENCE.md)."
+      "evidence": "Ticket, websocket, session and key routes exist; 71 backend tests passed in the last full regression. The client response parser has been located and session-key and websocket responses corrected; response shapes remain partly inferred and no rebuilt-client end-to-end matchmaking run is recorded (server/EVIDENCE.md)."
     },
     {
       "id": "m4",

@@ -1,22 +1,14 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
-## Current snapshot (2026-10-31 23:34 UTC)
+## Current snapshot (2026-10-31 23:47 UTC)
 
-- HEAD is `4aba038`. Five stage-two files are modified: `gen_native_classes.py`,
-  `native_class_set.txt`, and the three `native/Source/FortniteLinux*.Target.cs` files.
-  Validation is in progress; these changes are not covered by the last green run.
-- The last full green regression is `generated/regress/20261031T230432Z-1684625/`
-  (`result.json`): clean `4aba038`, build and both native joins passed, 4,591 of
-  4,591 generated classes matched the offline checksum model, NetSerialize self-test
-  passed, and 70 backend tests and schema check passed. This is not runtime wire or
-  gameplay parity. The tracked dashboard ledger contains older checks.
-- The census has stopped. All branches are merged and there is no remote. The
-  dashboard is static generated output; refresh it after the relevant commits.
-- All four product milestones remain open. Prioritize a rebuilt-client frontend
-  and lobby, then end-to-end matchmaking, replicated multiplayer gameplay and a
-  complete audiovisual match; see `master_plan.md` for acceptance evidence.
-- The original Wine run reached login and stopped at the observed AppES access
-  gate with auth flags; this is an unresolved observation, not a product milestone.
+- Stage 2 native generation and module changes are committed as `2cbbd18`. Full regression `generated/regress/20261031T233838Z-1983199/result.json` passed promote, client/server build, restage, two join smokes, NetSerialize, class checksum, behavior, backend and schema checks. It reports offline parity 4,617/4,617 and 71 backend tests; it does not establish runtime wire, UI, or gameplay parity. The run began at HEAD `523082c`, ended at `b23b30f`, with stage 2 changes uncommitted during the run; the matching native changes were committed afterward. Documentation/backend HEAD changed during the run.
+- The stage 2 banner widget probe `generated/frontend-banner-probe-stage2.log` exited 139: invalid cooked export index 45381 with 96 exports, plus missing content packages; the earlier `BP_OnHovered` SuperStruct message was absent. The event declaration candidate in `/opt/fortnite/ui-event-worktree` is unmerged and unvalidated; defer it while the native owner investigates the loader. `frontend/readiness.md` records the observed root UI path and owner-aware import report.
+- The client response parser was located (`739a867`); session-key identifiers, websocket envelope/Play and ReadyCheck corrections are committed (`b23b30f`, `38ac2ec`, `5ec4c4c`). All 71 backend tests and the matchmaking smoke passed. No rebuilt-client end-to-end matchmaking is demonstrated. A separate agent is recovering small frontend native helpers in an isolated worktree.
+- The adjacent `/opt/fortnite/UnrealEngine` tree has seven modified files (gitdeps, GLTF importer, Fortnite branch version, FieldPath and Linker). Preserve and inspect these existing patches; the native owner is investigating. Do not run concurrent UE builds, promotion or staging. The census has stopped; do not start another.
+- All four product milestones remain open. Resume by reviewing the loader investigation and focused widget probe, following `frontend/readiness.md`; then work toward actual root layout/login UI and end-to-end lobby. Keep one native/build owner, preserve other agents' edits, and use `gpt-6.1-terra` with high reasoning for complex work and medium for bounded tasks when delegating. No remote is configured.
+- Dashboard `evidence.json` records prior-run smoke logs and a fresh checksum self-test; origin metadata distinguishes the source and recorded HEAD. Render after the relevant changes are committed. The original Wine login access gate remains an observation, not a completed product milestone.
+- Matching symbols resolve the widget failure through `FFieldPath::operator<<` and `UStruct::SerializeExpr`; staged symbols were stale. The local regression wrapper now copies and verifies emitted `.debug`/`.sym` companions (six staged files verified in `generated/regress/20261031T234720Z-2039923/result.json`). The tile is unversioned on disk; its inspector-reported UE version is a fallback, so do not change the loader format from that printed value alone.
 
 Everything below is historical context. This snapshot supersedes earlier status,
 counts, process claims and next-step instructions when they differ; verify before

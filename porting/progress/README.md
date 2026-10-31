@@ -43,7 +43,7 @@ plots the evidence-based series as a dashed line under the overall.
 | `progress.py` | yes | Generator. Stdlib only, offline, runs in under a second for HEAD. |
 | `components.json` | yes | The model: categories, components, weights, measures, rationale, milestones. |
 | `totals.json` | yes | Denominators counted from local extraction data by `refresh_totals.py`. Tracked, so every commit can be replayed. |
-| `evidence.json` | yes | Evidence ledger of check results written by `record_evidence.py`. Tracked. Starts empty. |
+| `evidence.json` | yes | Evidence ledger of check results written by `record_evidence.py`. Tracked. |
 | `refresh_totals.py` | yes | Regenerates `totals.json` (stdlib, deterministic). |
 | `record_evidence.py` | yes | Runs or judges one check and records it in `evidence.json`. |
 | `serve.sh` | yes | Static LAN server for `out/` on port 8765. |
@@ -136,6 +136,10 @@ and it fails if the count file's `.uasset` total differs from the summary. It re
 takes about three seconds, and fails (leaving the file unchanged) if a source is missing. Each entry records its `source` file, its
 `method`, and a `generated_utc` taken from the source file's modification time, so unchanged data
 gives identical bytes. Commit the result.
+
+### Latest regression provenance
+
+The latest full run `porting/generated/regress/20261031T233838Z-1983199/result.json` passed promote, build, restage and seven checks, including 4,617 offline class matches and 71 backend tests. It ran with the stage 2 changes uncommitted (later committed as `2cbbd18`); HEAD moved from `523082c` to `b23b30f` during the run. The smoke ledger entries were recorded from the already-produced step logs, with `exit_code: null` for log-only inspection and the wrapper's recorded exit 0 in separate provenance fields. The network checksum was matched in the shared server log during that run; the corresponding client log also matched. The checksum tool self-test was run separately through the recorder and passed 31 checks. These results do not establish runtime wire parity or a UI milestone.
 
 ### Recording evidence
 
