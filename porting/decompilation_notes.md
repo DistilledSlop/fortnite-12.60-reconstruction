@@ -611,3 +611,80 @@ are MEDIUM for this reason. The generator owner should confirm the order with on
 3. `FUN_142c0c240` (10 records alone) and `FUN_14079d060`: the `FText` family. Name `FUN_14079d060` first.
 4. `0x1406aaec0` (6 records alone): copy constructor of the GameplayCue struct; needs the struct name.
 5. Generator: the 130 `proposed` declarations (exec, validate, impl, onrep) and the delegate parameter order above.
+
+## Fourth pass: blocker identities, delegate order, generator gaps [observed unless marked]
+
+Scope: the four blockers of the third pass (`0x1419d3ff0`, `0x140685370`, `FUN_142c0c240` and `FUN_14079d060`, `0x1406aaec0`),
+the delegate parameter-order check with more delegates, and the manifest hygiene (`behavior/MANIFEST.json`). Probe: `ghidra/probe_callees.py`
+on five addresses (one Ghidra process, about 13 s; outputs in the session scratchpad, not in the repo; the project was rolled back and
+the same bookkeeping files under `fortnite-slim.rep` changed as before).
+
+### vtable slot order (Win64 shipping layout, from the engine headers)
+
+Counted from `Engine/Source/Runtime/CoreUObject/Public/UObject/{UObjectBase,UObjectBaseUtility,Object}.h` and `Engine/Classes/GameFramework/Actor.h`.
+Rules used: a virtual destructor takes one slot (MSVC scalar deleting destructor); virtuals inside `#if WITH_EDITOR` /
+`WITH_EDITORONLY_DATA` are dropped (both are 0 in the client shipping build); `#if WITH_ENGINE` is kept (1).
+
+| Slot | Offset | Function | Evidence |
+|---:|---:|---|---|
+| 0 to 2 | 0x00 to 0x10 | `UObjectBase`: `~UObjectBase`, `RegisterDependencies`, `DeferredRegister` | `UObjectBase.h` lines 60, 77, 87 |
+| 3 to 6 | 0x18 to 0x30 | `UObjectBaseUtility`: `CanBeClusterRoot`, `CanBeInCluster`, `CreateCluster`, `OnClusterMarkedAsPendingKill` | `UObjectBaseUtility.h` 337 to 357 |
+| 7 to 59 | | `UObject` virtuals (filtered), starting `GetDetailedInfoInternal` | `Object.h` |
+| 42 | 0x150 | `UObject::GetWorld() const` | `Object.h` line 557, `[if WITH_ENGINE]`; the 36th kept `UObject` virtual |
+| 66 | 0x210 | `UObject::ProcessEvent(UFunction*, void*)` | `Object.h` line 1164; 66 * 8 = 0x210. Confirmed: the multicast dispatcher `0x1406a9dc0` calls `+0x210` with two arguments |
+
+So `+0x150` is `GetWorld()` and `+0x210` is `ProcessEvent`, both HIGH (the count gives the same slot for both; a non-MSVC layout would move `ProcessEvent` to `+0x218`, which the binary does not use).
+Slot 4 (`+0x20`) is `UObjectBaseUtility::CanBeInCluster() const` on a UObject; the predicate of `0x140685370` uses it on an element pointer whose type is not established (see below).
+
+### Identities
+
+| Name (proposed) | Address | Identity | Confidence | Evidence |
+|---|---|---|---|---|
+| accessor `GetFortGameStateAthena` (was `FUN_1419d3ff0`) | `0x1419d3ff0` | `Cast<AFortGameStateAthena>(GetWorld()->GameState)`: calls `GetWorld()` (slot `+0x150`) on its argument, reads `UWorld::GameState` at `+0x130`, and returns it if `IsA(AFortGameStateAthena::StaticClass())` | high (slots, IsA) / high (`+0x130`) | The `+0x130` offset is `GameState` in the reflection group of `UWorld` (group 4926, property `GameState`, offset 0x130; the same group has `AuthorityGameMode` at 0x128 and `AISystem` at 0x138). The IsA test is `UStruct::IsChildOfUsingStructArray` (`Class.h` 262): the decompile compares the parent's chain index with the child's chain count and the chain entry with the parent's address. `FUN_14290f690` is `AFortGameStateAthena::StaticClass`. |
+| `FUN_142c0c240` | `0x142c0c240` | `FText::FText()` default constructor | high | `Core/Private/Internationalization/Text.cpp` line 221: `TextData(FText::GetEmpty().TextData), Flags(0)`. The decompile calls `FUN_1407c2c80` (`FText::GetEmpty`), copies the two-word `TSharedRef`, increments the reference count at +8 of the controller and writes 0 to the flags dword. |
+| `FUN_14079d060` | `0x14079d060` | `FText::operator=(const FText&)` (defaulted copy assignment) | high (behaviour), medium (name) | Copy-and-swap of the `TSharedRef` (temporary copy with +1, swap, release of the old value), then the flags dword is copied. This is the `TSharedRef` assignment; the name is by behaviour, the header not checked. |
+| `FUN_140685370` | `0x140685370` | Compaction of a `TArray` of 16-byte elements `{ T* Ptr @+0, int32 Flag @+8 }` with a predicate (`TArray::RemoveAll`-like) | low-medium | Removes element `i` when `Flag == 0`, or `Ptr == null`, or `Ptr->vfn[+0x20]()` is true (`FUN_140690780(this, i, 1, 1)`, probably `RemoveAt`); then resizes through `FUN_1406911b0` when the count changes. The element type `T` is not known; 11 callers and 10 data references would name it. Not ported. |
+| `0x1406aaec0` | `0x1406aaec0` | Copy constructor of a 0xB8-byte struct: fields at +0 and +4 (4-byte), a pointer-and-count pair at +0x10 (refcount +1, non-atomic), 8-byte fields, two `TArray` members at +0x30 and +0x50 (copy assignment `FUN_143e8a690`) | low-medium (type) | Shape matches `FGameplayCueParameters` (floats, handle, two tags, two tag containers, vectors, weak pointers, levels) in name order, but the decompile writes a constant address (`DAT_1459aede0`) at +0x08 that no 4.25 member explains, and the increment is non-atomic. Not named, not ported. |
+
+### Delegate parameter order: confirmed on two more delegates
+
+The binary's UFunction parameter table (`generated/reflection/fortnite_game_reflection.json`, `params[].offset`) and the asm agree on this:
+the parameter block lays out the parameters in the reverse of the macro order. Three data points now:
+
+| Delegate | Macro order (generated header) | Binary offsets | Reading |
+|---|---|---|---|
+| `FOnMutatorGameplayEvent` (earlier pass) | EventParam3, EventParam2, EventParam1, EventId | EventId 0, EventParam1 4, EventParam2 8, EventParam3 12 | reversed |
+| `OnInGameLoadScreenChanged` (new) | HUDReasonText, bEnableLoadScreen, PlayerController | PlayerController 0, HUDReasonText 16, `bEnableLoadScreen` (bit, no offset in the table) | reversed |
+| `IslandCreationCompleted` (new, reflection name) | Reason, bSuccess | Reason 8, `bSuccess` (bit, no offset in the table) | reversed (the bool is at 0 in the asm of the `ClientBroadcastOn*_Implementation` bodies, which broadcast a bool and an FText at offsets 0 and 8) |
+
+The two new rows match the rule. The bool offsets are not in the table; the asm gives 0. This is the finding for the generator owner: the generated `Broadcast()` and the Parms struct must follow the binary offsets, not the macro order.
+
+### Corrections to the third pass
+
+- `ClientBroadcastOn*_Implementation` (the FText family): the FText is not dropped. The body builds a parameter block `{ bool bSuccess @0; FText Reason @8 }` (`FUN_142c0c240` constructs the FText in the block, `FUN_14079d060` assigns `Reason` to it, `FUN_1406a9dc0` broadcasts). Its only unnamed call was `FUN_14079d060`, now named, so the body is fully named.
+- Blocked by the generator, not by a callee: the broadcast target is the member at `+0x2xxx` of `AFortPlayerControllerAthena`, an `InlineMulticastDelegate` that the generated header does not declare. Offsets from the reflection table: `OnMakeNewCreativePlotFinished` 0x2DD0, `OnDestroyCreativePlotFinished` 0x2DE0, `OnRestoreCreativePlotFinished` 0x2DF0, `OnDuplicateCreativePlotFinished` 0x2E00, `OnUpdateCreativePlotName` 0x2E30, `OnUpdateCreativeDescriptionTags` 0x2E40. Eight `InlineMulticastDelegate` properties of the class are missing from `native/Source/FortniteGame/Generated/AFortPlayerControllerAthena.h` (these six, plus `InGameMatchmakingQueuedStatusUpdated` and `InGameMatchmakingStateChanged`). The six bodies stay skipped until the generator emits the members; a snippet must not name a member that the generated class does not have.
+
+### Blockers that did not unblock any function
+
+- `0x1419d3ff0` (17 records): every caller also calls `FUN_141991bf0` (queue row 5), `FUN_141a3c2b0` (row 2) or `FUN_141a3c390` (row 3), which are not ported. Checked for the `OnRep_Num*`, `OnRep_Kills`, `OnRep_AIKills`, `OnRep_DeathInfo` and `OnClientVolumeManagerReplicated` callers. The accessor's identity is recorded in `behavior/CALLEE_PORT_QUEUE.md`; no snippet was added.
+- `FUN_142c0c240` and `FUN_14079d060`: the callers that use only them are the six `ClientBroadcastOn*` bodies above; the others (`GetPlaylistGameTypeText`, `OnServerMarkerAdded`, `ClientStartRespawnPreparation`, `ServerAddSimulatedXp`) also call unnamed helpers.
+
+### Manifest hygiene (task 1)
+
+- `ServerSendZiplineState_Implementation`, `ServerSendZiplineState_Validate` (AFortPlayerPawn) and `ClientReceiveSquadQuickChatMessage_Implementation` (AFortPlayerControllerAthena): now `skipped`, `signature_status: not_declared`, no `inc_path`, reason in `notes`. Their parameter structs (`FZiplinePawnState`, `FAthenaQuickChatActiveEntry`) are not generated (no match in `native/Source`), so the RPC declarations cannot be emitted.
+- `SetDamageCameraShakeClass` (AFortPlayerPawnAthena): signature is now `void SetDamageCameraShakeClass(TSubclassOf<UCameraShake> NewValue)` (the reflection type; `native/Source/.../AFortPlayerPawnAthena.h` declares `DamageCameraShakeClass` as `TSubclassOf<UCameraShake>`). Body re-checked: the decompile stores the 8-byte argument unchanged at +0x3070 and makes no class check; `TSubclassOf` is one `UClass` pointer, so the body is `DamageCameraShakeClass = NewValue;` (medium, unchanged).
+- The stale "Declared in generated header" lines were refreshed in 57 snippets (no: the generator emits the declaration when the splice is on; yes: the header has it), and in `_shared/validate_return_true.inc`.
+- `python3 -I porting/behavior/check_behavior.py`: 199 ported, 196 skipped, FAIL 0, pending declarations 3 (`SetDamageCameraShakeClass`, `GetPreviousPosition`, `GetPreviousVelocity`). Counts in `behavior/COUNTS.txt`.
+- Note for the build owner: the promote run at 16:05 used the manifest before these edits. Re-run the promote step after this change, because the splice report now sees the new signature and the three demoted entries.
+
+### Snippets (task 3)
+
+No new snippets this pass. Ported total: 199 (202 before the three demotions). Every function these identities unblock is still blocked by another unnamed callee or by the generator's missing delegate members (listed above).
+
+### Next blockers
+
+1. Generator: emit the eight missing `InlineMulticastDelegate` members of `AFortPlayerControllerAthena`; then the six `ClientBroadcastOn*_Implementation` bodies can be ported (their body is fully named). Also make the generated delegate Parms follow the binary offsets (reverse of the macro order, see above).
+2. `FUN_141991bf0` (queue row 5, pair at `+0x1df8`/`+0x1df0` of `AFortGameStateAthena`), then `FUN_141a3c2b0` (row 2) and `FUN_141a3c390` (row 3). Together they block the 17 callers of `0x1419d3ff0`, which is now named.
+3. `0x140685370`: the element type of the 16-byte `{ptr, flag}` array. Look at its data references (`0x148463250`, `0x14734ef38`, `0x14734ef6c`) for the owning type.
+4. `0x1406aaec0`: confirm the layout of `FGameplayCueParameters` in this build (the constant at +0x08).
+5. Generator: the 129 `proposed` declarations, as before.

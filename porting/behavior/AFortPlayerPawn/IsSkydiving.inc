@@ -3,6 +3,6 @@
 // Decompile source: porting/generated/decomp/AFortPlayerPawn/IsSkydiving.c
 // Proxy score: 92.2 (portability.json)
 // Inferred: Decompile reads byte +0x10e7 bit 0x1. bool_bits.py maps (0x10e7, 0x1) to bLocalIsSkydiving (or8). The function name says skydiving; the mapped flag is the bit that is read.
-// Declared in generated header: no (generator must emit this declaration)
+// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 // CONFIDENCE: MEDIUM
 return bLocalIsSkydiving;

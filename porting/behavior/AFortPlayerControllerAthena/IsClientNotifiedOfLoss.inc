@@ -3,6 +3,6 @@
 // Decompile source: porting/generated/decomp/AFortPlayerControllerAthena/IsClientNotifiedOfLoss.c
 // Proxy score: 92.5 (portability.json)
 // Inferred: Decompile returns the whole byte +0x2c35. bool_bits.py maps that byte to bClientNotifiedOfLoss alone (mov8 setter, which writes the whole byte), so the byte equals the flag.
-// Declared in generated header: no (generator must emit this declaration)
+// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 // CONFIDENCE: MEDIUM
 return bClientNotifiedOfLoss;

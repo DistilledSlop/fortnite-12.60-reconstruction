@@ -3,6 +3,6 @@
 // Decompile source: porting/generated/decomp/AFortGameStateAthena/GetSafeZoneIndicator.c
 // Proxy score: 87.5 (portability.json)
 // Inferred: SafeZoneIndicator pointer at +0x1770 (reflection). Returned unchanged.
-// Declared in generated header: no (generator must emit this declaration)
+// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 // CONFIDENCE: HIGH
 return SafeZoneIndicator;

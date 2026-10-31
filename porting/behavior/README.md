@@ -4,13 +4,7 @@ Hand-ported native function bodies, taken from the decompiled output of the ship
 (`porting/generated/decomp/` and `porting/generated/decomp_improved/`, both git-ignored). Each `.inc`
 is our own C++ re-expression of what the decompile does, not a copy of it.
 
-Status (see `MANIFEST.json`, 395 entries): **202 ported** (32 getters, 17 onrep, 55 impl, 25 exec, 73 validate;
-confidence 185 high, 17 medium), **193 skipped** with a reason (of which 17 are callees from the queue).
-Of the 202, 72 are declared in the generated headers; 130 need a declaration that the generator does not emit yet.
-`python3 porting/behavior/check_behavior.py` reports 2 failures, both on ported entries whose declarations are missing
-from the currently generated headers (`AFortPlayerPawn::ServerSendZiplineState_Implementation`,
-`AFortPlayerControllerAthena::ClientReceiveSquadQuickChatMessage_Implementation`). The headers came from another
-generator run; the snippets themselves pass.
+Status (see `MANIFEST.json`, 395 entries): **199 ported** (32 getters, 17 onrep, 53 impl, 25 exec, 72 validate; confidence 182 high, 17 medium), **196 skipped** with a reason (of which 17 are callees from the queue). Of the 199, 70 are declared in the generated headers; 129 need a declaration that the generator does not emit yet. `python3 porting/behavior/check_behavior.py` reports 0 failures and 3 pending declarations (`AFortPlayerPawnAthena::SetDamageCameraShakeClass`, `AFortPlayerPawn::GetPreviousPosition`, `AFortPlayerPawn::GetPreviousVelocity`). Three RPC entries that an earlier generator run declared (`ServerSendZiplineState_Implementation`, `ServerSendZiplineState_Validate`, `ClientReceiveSquadQuickChatMessage_Implementation`) are now skipped as not declared: their parameter structs (`FZiplinePawnState`, `FAthenaQuickChatActiveEntry`) are not generated.
 
 Third pass (35 new bodies, see `porting/decompilation_notes.md`, "Third pass"): 15 empty bodies (exec thunks that
 tail-jump to the shared `ret` at `0x1406801c0`), 14 bodies that broadcast a multicast delegate through the dispatcher
@@ -30,9 +24,9 @@ and the RPC validates that share folded bodies with mismatched argument register
     the generator must emit it), or `not_declared` (skipped entries).
 - `<ClassName>/<FunctionName>.inc`: one snippet per ported function with its own header comment.
 - `_shared/validate_return_true.inc` and `_shared/impl_empty.inc`: one body each for the folded stubs.
-  - `0x1406801d0` (`mov al,1; ret`, returns true) is the body of 72 `_Validate` functions.
-  - `0x1406801c0` (`ret 0`, empty) is the body of 51 ported `_Implementation` functions. Two more with the same
-    body are skipped because the header does not declare them.
+  - `0x1406801d0` (`mov al,1; ret`, returns true) is the body of 71 ported `_Validate` functions.
+  - `0x1406801c0` (`ret 0`, empty) is the body of 49 ported `_Implementation` functions. Four more with the same
+    body are skipped because the generated tree does not declare them.
   - Each manifest entry names the shared address in its `notes`.
 - `bool_bits.py`: maps every bool property to its byte offset and bit mask from its SetBit function. It imports
   `porting/class_checksum.py` (read only) and writes `porting/generated/reflection/bool_bits.json` (git-ignored).
@@ -60,7 +54,7 @@ and the RPC validates that share folded bodies with mismatched argument register
 
 ## Splice (implemented in gen_native_classes.py)
 
-`gen_native_classes.py --promote` splices the ported entries (`status == "ported"`, 167 today). It is on by default.
+`gen_native_classes.py --promote` splices the ported entries (`status == "ported"`, 199 today). It is on by default.
 Turn it off with `--no-behavior` or `FN_BEHAVIOR_SPLICE=0`; the output then equals the stub output. Per entry:
 
 - `getter`, `exec` (`signature_status: proposed`): the non-RPC reflection function is emitted as
@@ -78,8 +72,7 @@ the `.cpp` (types used by the body); types used by a signature go into the `.h` 
 every spliced function is checked for one declaration, the UFUNCTION line in front of it, one definition with the same
 signature, and a body equal to the snippet; a mismatch stops the run before anything is written.
 
-Snippet bodies keep their comment header as written. Some say "Declared in generated header: no", which is stale once
-the splice is on; the snippet owner can update those lines.
+Snippet bodies keep their comment header as written. The "Declared in generated header" lines were refreshed in the fourth pass (no: the generator emits the declaration once the splice is on; yes: the header has it).
 
 ## Checker
 

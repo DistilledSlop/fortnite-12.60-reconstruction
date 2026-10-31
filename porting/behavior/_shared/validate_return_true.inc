@@ -3,6 +3,6 @@
 // Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
 // Proxy score: see the manifest entry of each function
 // Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
-// Declared in generated header: no (generator must emit `bool <Name>_Validate(params)` and the WithValidation specifier)
+// Declared in generated header: no (the generator emits `bool <Name>_Validate(params)` with the WithValidation specifier when the behaviour splice is on)
 // CONFIDENCE: HIGH
 return true;

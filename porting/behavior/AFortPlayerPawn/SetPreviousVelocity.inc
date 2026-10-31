@@ -3,6 +3,6 @@
 // Decompile source: porting/generated/decomp_improved/AFortPlayerPawn/SetPreviousVelocity.c
 // Proxy score: 71.2 (portability.json)
 // Inferred: Decompile stores the 12-byte FVector parameter into PreviousVelocity.
-// Declared in generated header: no (generator must emit this declaration)
+// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 // CONFIDENCE: HIGH
 PreviousVelocity = OldVelocity;

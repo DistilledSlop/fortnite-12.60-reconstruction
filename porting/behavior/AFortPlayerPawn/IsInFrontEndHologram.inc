@@ -3,6 +3,6 @@
 // Decompile source: porting/generated/decomp/AFortPlayerPawn/IsInFrontEndHologram.c
 // Proxy score: 92.2 (portability.json)
 // Inferred: Decompile reads byte +0x10ea bit 0x40. bool_bits.py maps (0x10ea, 0x40) to bIsInFrontEndHologram (or8 setter).
-// Declared in generated header: no (generator must emit this declaration)
+// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 // CONFIDENCE: HIGH
 return bIsInFrontEndHologram;

@@ -3,6 +3,6 @@
 // Decompile source: porting/generated/decomp/AFortPawn/IsSpinning.c
 // Proxy score: 92.9 (portability.json)
 // Inferred: LocalSpin = float at +0x638 (reflection offset 1592, header AFortPawn.h). Decompile stores 0 when LocalSpin == 0.0 and 1 otherwise.
-// Declared in generated header: no (generator must emit this declaration)
+// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 // CONFIDENCE: HIGH
 return LocalSpin != 0.0f;

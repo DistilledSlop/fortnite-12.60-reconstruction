@@ -3,6 +3,6 @@
 // Decompile source: porting/generated/decomp/AFortPlayerPawnAthena/SetBushEnabled.c
 // Proxy score: 86.2 (portability.json)
 // Inferred: Direct call to 0x1406801c0, which is `ret 0` (disassembled). The native body therefore has no effect.
-// Declared in generated header: no (generator must emit this declaration)
+// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 // CONFIDENCE: HIGH
 // The decompile calls only the empty function Stub_Empty (0x1406801c0, ret 0) with the argument: no effect.

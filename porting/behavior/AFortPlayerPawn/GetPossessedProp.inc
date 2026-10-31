@@ -3,6 +3,6 @@
 // Decompile source: porting/generated/decomp/AFortPlayerPawn/GetPossessedProp.c
 // Proxy score: 86.6 (portability.json)
 // Inferred: PossessedProp pointer at +0x15e8 (reflection). Returned unchanged.
-// Declared in generated header: no (generator must emit this declaration)
+// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 // CONFIDENCE: HIGH
 return PossessedProp;

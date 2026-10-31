@@ -3,6 +3,6 @@
 // Decompile source: porting/generated/decomp/AFortPlayerPawn/GetStasisMode.c
 // Proxy score: 92.2 (portability.json)
 // Inferred: StasisMode = 1-byte enum (EFortPawnStasisMode) at +0x1065 (reflection). Returned unchanged.
-// Declared in generated header: no (generator must emit this declaration)
+// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 // CONFIDENCE: HIGH
 return StasisMode;

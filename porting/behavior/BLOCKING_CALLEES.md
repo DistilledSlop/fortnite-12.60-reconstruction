@@ -1,5 +1,7 @@
 # Blocking callees (work list for the next Ghidra identification pass)
 
+> Fourth pass: rank 4 `0x1419d3ff0` is identified (accessor over `GetWorld()` and `UWorld::GameState`, see `porting/decompilation_notes.md`, "Fourth pass"). Its callers still wait for ranks 2, 3 and 5.
+
 > Third pass: rank 1 `0x1406a9dc0` is identified as `TMulticastScriptDelegate<FWeakObjectPtr>::ProcessMulticastDelegate<UObject>` (high). Its callers are ported where the rest of the body is clear. See `porting/decompilation_notes.md`, "Third pass". The table below is the pass-one ranking and is kept as it was.
 
 Generated from the screen of `porting/generated/decomp/` (exec records) and `porting/generated/decomp_improved/` (RPC records). The screen covers the 750 `portable` and `needs names` records. Counts use the rule `skip reason = unnamed_call` (the record calls at least one `FUN_*` that is not identified).

@@ -3,6 +3,6 @@
 // Decompile source: porting/generated/decomp/AFortPlayerPawn/GetActivePlayerHandSplashInWaterComponent.c
 // Proxy score: 87.5 (portability.json)
 // Inferred: NiagaraPlayerHandSplashInWater pointer at +0x2818 (reflection). Returned unchanged.
-// Declared in generated header: no (generator must emit this declaration)
+// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 // CONFIDENCE: HIGH
 return NiagaraPlayerHandSplashInWater;

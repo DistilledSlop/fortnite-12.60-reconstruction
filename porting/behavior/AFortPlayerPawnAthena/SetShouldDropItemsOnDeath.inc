@@ -3,6 +3,6 @@
 // Decompile source: porting/generated/decomp/AFortPlayerPawnAthena/SetShouldDropItemsOnDeath.c
 // Proxy score: 89.6 (portability.json)
 // Inferred: Decompile stores (argument != 0) to the byte at +0x2972 (10610). bool_bits.py maps +0x2972 to bShouldDropItemsOnDeath; the header declares it as a native bool.
-// Declared in generated header: no (generator must emit this declaration)
+// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 // CONFIDENCE: HIGH
 bShouldDropItemsOnDeath = bInShouldDropItemsOnDeath;

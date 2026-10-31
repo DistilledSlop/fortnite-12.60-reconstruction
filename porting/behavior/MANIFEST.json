@@ -549,7 +549,7 @@
     "class": "AFortPlayerPawnAthena",
     "function": "SetDamageCameraShakeClass",
     "kind": "exec",
-    "signature": "void SetDamageCameraShakeClass(UObject* NewValue)",
+    "signature": "void SetDamageCameraShakeClass(TSubclassOf<UCameraShake> NewValue)",
     "signature_status": "proposed",
     "inc_path": "porting/behavior/AFortPlayerPawnAthena/SetDamageCameraShakeClass.inc",
     "confidence": "medium",
@@ -557,7 +557,7 @@
     "status": "ported",
     "proxy_score": 86.2,
     "decompile_source": "porting/generated/decomp/AFortPlayerPawnAthena/SetDamageCameraShakeClass.c",
-    "notes": "Decompile stores the 8-byte argument unchanged to +0x3070 (DamageCameraShakeClass, TSubclassOf<UCameraShake> in the header). No class check is made in the decompile, so the cast is a raw pointer store."
+    "notes": "Decompile stores the 8-byte argument unchanged to +0x3070 (DamageCameraShakeClass, TSubclassOf<UCameraShake> in the generated header). The signature now uses that reflection type (it was UObject*, which the splice rejected). TSubclassOf<UCameraShake> is one UClass pointer, so the body is a plain assignment. No class check is made in the decompile."
   },
   {
     "class": "AFortPlayerPawnAthena",
@@ -1068,28 +1068,28 @@
     "function": "ServerSendZiplineState_Validate",
     "kind": "validate",
     "signature": "bool ServerSendZiplineState_Validate(const FZiplinePawnState& InZiplineState)",
-    "signature_status": "proposed",
-    "inc_path": "porting/behavior/_shared/validate_return_true.inc",
-    "confidence": "high",
+    "signature_status": "not_declared",
+    "inc_path": null,
+    "confidence": null,
     "address": "0x1406801d0",
-    "status": "ported",
+    "status": "skipped",
     "proxy_score": 98.2,
     "decompile_source": "porting/generated/decomp_improved/AFortPlayerPawn/ServerSendZiplineState_Validate.c",
-    "notes": "folded body at 0x1406801d0 shared by 72 functions (mov al,1; ret = return true). Vtable slot 500 of AFortPlayerPawnAthena. Generator must add the _Validate declaration with WithValidation."
+    "notes": "Not declared: the RPC is not in the generated tree. Its parameter type FZiplinePawnState is not generated (no FZiplinePawnState in native/Source), so the WithValidation declaration cannot be emitted. Folded body 0x1406801d0 (return true, vtable slot 500 of AFortPlayerPawnAthena) recorded for reference only."
   },
   {
     "class": "AFortPlayerPawn",
     "function": "ServerSendZiplineState_Implementation",
     "kind": "impl",
     "signature": "void ServerSendZiplineState_Implementation(const FZiplinePawnState& InZiplineState)",
-    "signature_status": "declared",
-    "inc_path": "porting/behavior/_shared/impl_empty.inc",
-    "confidence": "high",
+    "signature_status": "not_declared",
+    "inc_path": null,
+    "confidence": null,
     "address": "0x1406801c0",
-    "status": "ported",
+    "status": "skipped",
     "proxy_score": 98.2,
     "decompile_source": "porting/generated/decomp_improved/AFortPlayerPawn/ServerSendZiplineState_Implementation.c",
-    "notes": "folded empty body at 0x1406801c0 shared by 51 functions (ret 0 = no statements). Vtable slot 501 of AFortPlayerPawnAthena."
+    "notes": "Not declared: the RPC is not in the generated tree. Its parameter type FZiplinePawnState is not generated (no FZiplinePawnState in native/Source), so the declaration cannot be emitted. Folded empty body at 0x1406801c0 (vtable slot 501 of AFortPlayerPawnAthena) recorded for reference only."
   },
   {
     "class": "AFortPlayerPawn",
@@ -2300,14 +2300,14 @@
     "function": "ClientReceiveSquadQuickChatMessage_Implementation",
     "kind": "impl",
     "signature": "void ClientReceiveSquadQuickChatMessage_Implementation(AFortPlayerController* SenderPC, const FAthenaQuickChatActiveEntry& ChatEntry)",
-    "signature_status": "declared",
-    "inc_path": "porting/behavior/_shared/impl_empty.inc",
-    "confidence": "high",
+    "signature_status": "not_declared",
+    "inc_path": null,
+    "confidence": null,
     "address": "0x1406801c0",
-    "status": "ported",
+    "status": "skipped",
     "proxy_score": 98.2,
     "decompile_source": "porting/generated/decomp_improved/AFortPlayerControllerAthena/ClientReceiveSquadQuickChatMessage_Implementation.c",
-    "notes": "folded empty body at 0x1406801c0 shared by 51 functions (ret 0 = no statements). Vtable slot 1275 of AFortPlayerControllerAthena."
+    "notes": "Not declared: the RPC is not in the generated tree. Its parameter type FAthenaQuickChatActiveEntry is not generated (no FAthenaQuickChatActiveEntry in native/Source). Folded empty body 0x1406801c0 (vtable slot 1275 of AFortPlayerControllerAthena) recorded for reference only."
   },
   {
     "class": "AFortPlayerControllerAthena",

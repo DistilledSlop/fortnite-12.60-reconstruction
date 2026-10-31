@@ -3,6 +3,6 @@
 // Decompile source: porting/generated/decomp/AFortGameStateAthena/HasValidFocalPointActor.c
 // Proxy score: 92.5 (portability.json)
 // Inferred: FocalPointActor = AActor* at +0x1320 (reflection). Decompile tests only for non-null.
-// Declared in generated header: no (generator must emit this declaration)
+// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 // CONFIDENCE: HIGH
 return FocalPointActor != nullptr;

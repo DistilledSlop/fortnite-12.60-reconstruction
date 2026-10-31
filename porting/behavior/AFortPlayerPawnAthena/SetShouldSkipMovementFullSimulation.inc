@@ -3,6 +3,6 @@
 // Decompile source: porting/generated/decomp/AFortPlayerPawnAthena/SetShouldSkipMovementFullSimulation.c
 // Proxy score: 89.6 (portability.json)
 // Inferred: Decompile stores (argument != 0) to the byte at +0x2973 (10611). bool_bits.py maps +0x2973 to bShouldSkipMovementFullSimulation; the header declares a native bool.
-// Declared in generated header: no (generator must emit this declaration)
+// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 // CONFIDENCE: HIGH
 bShouldSkipMovementFullSimulation = bInShouldSkipMovementFullSimulation;
