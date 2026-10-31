@@ -1,7 +1,8 @@
 {
   "_meta": {
     "note": "Helper identities for the Athena decompile (porting/ghidra/improve_decompile.py). Addresses are the slim project's program /FortniteClient-Win64-Shipping.runtime.exe. Evidence is in porting/decompilation_notes.md ('Helper identities').",
-    "type_strings": "int32 uint32 int64 uint64 int16 uint16 float uint8 bool FName FString TArray FText FScriptDelegate UObject void; ptr:T pointer; struct:Name:size placeholder struct; ptr:FFrame and ptr:UFunction names resolve to the FFrame struct or void*"
+    "type_strings": "int32 uint32 int64 uint64 int16 uint16 float uint8 bool FName FString TArray FText FScriptDelegate UObject void; ptr:T pointer; struct:Name:size placeholder struct; ptr:FFrame and ptr:UFunction names resolve to the FFrame struct or void*",
+    "second_pass": "Second pass (porting/ghidra/probe_callees.py evidence): added the entries with confidence and evidence. Each new entry is applied by apply_helpers in improve_decompile.py. The name is the function name applied in Ghidra."
   },
   "functions": [
     {
@@ -22,7 +23,10 @@
           "ptr:void"
         ]
       ],
-      "source": "FFrame::Step(UObject* Context, RESULT_DECL) (CoreUObject/Private/UObject/ScriptCore.cpp:335)"
+      "source": "FFrame::Step(UObject* Context, RESULT_DECL) (CoreUObject/Private/UObject/ScriptCore.cpp:335)",
+      "confidence": "high",
+      "evidence": "Reads Code at +0x20, B = *Code++, then GNatives[B](Context, *this, Result) through the table at 0x148262b60. Source: CoreUObject/Private/UObject/ScriptCore.cpp:335",
+      "signature": "void FFrame_Step(FFrame* Stack, UObject* Context, void* Result)"
     },
     {
       "name": "FFrame_StepExplicitProperty",
@@ -42,7 +46,10 @@
           "ptr:void"
         ]
       ],
-      "source": "FFrame::StepExplicitProperty(void* const Result, FProperty* Property) (ScriptCore.cpp:341)"
+      "source": "FFrame::StepExplicitProperty(void* const Result, FProperty* Property) (ScriptCore.cpp:341)",
+      "confidence": "high",
+      "evidence": "Tests Property->PropertyFlags (+0x40) for CPF_OutParm (0x100); walks OutParms (+0x78) or uses Locals (+0x28) plus Offset_Internal (+0x4c). ScriptCore.cpp:341",
+      "signature": "void FFrame_StepExplicitProperty(FFrame* Stack, void* Result, void* Property)"
     },
     {
       "name": "FMemory_Free",
@@ -54,7 +61,10 @@
           "ptr:void"
         ]
       ],
-      "source": "FMemory::Free(void*): if (Ptr) GMalloc->Free(Ptr)"
+      "source": "FMemory::Free(void*): if (Ptr) GMalloc->Free(Ptr)",
+      "confidence": "high",
+      "evidence": "if (Ptr) GMalloc->Free(Ptr); GMalloc is the global at 0x14823d250 (FMalloc vtable slot +0x30 = Free, MemoryBase.h:105)",
+      "signature": "void FMemory_Free(void* Ptr)"
     },
     {
       "name": "RPC_ValidateFailed",
@@ -66,7 +76,10 @@
           "ptr:uint16"
         ]
       ],
-      "source": "RPC_ValidateFailed(const TCHAR* Reason) sets GLastRPCFailedReason (CoreUObject/Private/UObject/CoreNet.cpp:521)"
+      "source": "RPC_ValidateFailed(const TCHAR* Reason) sets GLastRPCFailedReason (CoreUObject/Private/UObject/CoreNet.cpp:521)",
+      "confidence": "high",
+      "evidence": "Body is MOV [0x148260c58],RCX; RET (GLastRPCFailedReason = Reason). CoreNet.cpp:521; UHT emits RPC_ValidateFailed(TEXT(\"X_Validate\")) (CodeGenerator.cpp:5061)",
+      "signature": "void RPC_ValidateFailed(uint16* Reason)"
     },
     {
       "name": "FMallocThreadSafeProxy_Malloc",
@@ -86,7 +99,10 @@
           "uint32"
         ]
       ],
-      "source": "GMalloc is FMallocThreadSafeProxy (vtable 0x1465c5df0, slot +0x10). Body: lock, UsedMalloc->Malloc(Count, Alignment) (MemoryBase.h Malloc)"
+      "source": "GMalloc is FMallocThreadSafeProxy (vtable 0x1465c5df0, slot +0x10). Body: lock, UsedMalloc->Malloc(Count, Alignment) (MemoryBase.h Malloc)",
+      "confidence": "high",
+      "evidence": "Body: lock, UsedMalloc->Malloc(Count, Alignment); reached through GMalloc vtable slot +0x10 (MemoryBase.h:82)",
+      "signature": "void* FMallocThreadSafeProxy_Malloc(void* this, uint64 Count, uint32 Alignment)"
     },
     {
       "name": "FMallocThreadSafeProxy_Realloc",
@@ -110,7 +126,10 @@
           "uint32"
         ]
       ],
-      "source": "proxy vtable slot +0x20. Body: lock, UsedMalloc->Realloc(Original, Count, Alignment) (MemoryBase.h Realloc)"
+      "source": "proxy vtable slot +0x20. Body: lock, UsedMalloc->Realloc(Original, Count, Alignment) (MemoryBase.h Realloc)",
+      "confidence": "high",
+      "evidence": "Body: lock, UsedMalloc->Realloc; reached through GMalloc vtable slot +0x20 (MemoryBase.h:93)",
+      "signature": "void* FMallocThreadSafeProxy_Realloc(void* this, void* Original, uint64 Count, uint32 Alignment)"
     },
     {
       "name": "FMallocThreadSafeProxy_Free",
@@ -126,7 +145,435 @@
           "ptr:void"
         ]
       ],
-      "source": "proxy vtable slot +0x30. Body: if (Original) { lock; UsedMalloc->Free(Original); unlock } (MemoryBase.h Free)"
+      "source": "proxy vtable slot +0x30. Body: if (Original) { lock; UsedMalloc->Free(Original); unlock } (MemoryBase.h Free)",
+      "confidence": "high",
+      "evidence": "Body: if Original, lock, UsedMalloc->Free, unlock; reached through slot +0x30 (MemoryBase.h:105)",
+      "signature": "void FMallocThreadSafeProxy_Free(void* this, void* Original)"
+    },
+    {
+      "name": "FMemory_QuantizeSize",
+      "address": "0x142bfce10",
+      "returns": "uint64",
+      "params": [
+        [
+          "Count",
+          "uint64"
+        ],
+        [
+          "Alignment",
+          "uint32"
+        ]
+      ],
+      "evidence": "Calls GMalloc vtable slot +0x38, which is QuantizeSize (MemoryBase.h:113; the order is Malloc +0x10, TryMalloc, Realloc +0x20, TryRealloc, Free +0x30, QuantizeSize +0x38). Return value is the rounded size: callers use result>>4 and result>>3 as element capacity (TArray growth). Returns Count when GMalloc is null.",
+      "confidence": "high",
+      "source": "FMemory::QuantizeSize(SIZE_T Count, uint32 Alignment) (Core/Public/HAL/MemoryBase.h:113)",
+      "signature": "uint64 FMemory_QuantizeSize(uint64 Count, uint32 Alignment)"
+    },
+    {
+      "name": "FMemory_Realloc",
+      "address": "0x142bfd200",
+      "returns": "ptr:void",
+      "params": [
+        [
+          "Original",
+          "ptr:void"
+        ],
+        [
+          "Count",
+          "uint64"
+        ],
+        [
+          "Alignment",
+          "uint32"
+        ]
+      ],
+      "evidence": "Calls FUN_142bee820 (the GMalloc creator) when GMalloc is null, then GMalloc vtable slot +0x20 = Realloc (MemoryBase.h:93). Same slot as FMallocThreadSafeProxy_Realloc (0x142bfd190). Called from TArray resize paths (6638 call sites via FUN_140690bb0 and others).",
+      "confidence": "high",
+      "source": "FMemory::Realloc(void* Original, SIZE_T Count, uint32 Alignment) (MemoryBase.h:93)",
+      "signature": "void* FMemory_Realloc(void* Original, uint64 Count, uint32 Alignment)"
+    },
+    {
+      "name": "TArray8_ResizeGrow",
+      "address": "0x140690bb0",
+      "returns": "void",
+      "params": [
+        [
+          "this",
+          "ptr:void"
+        ],
+        [
+          "OldNum",
+          "int32"
+        ]
+      ],
+      "evidence": "TArray with 8-byte elements (Data +0, ArrayNum +8, ArrayMax +0xc; byte counts use <<3). New capacity: max(1, ArrayNum) when ArrayMax is 0, otherwise ArrayNum + 3/8 of ArrayNum (integer). Allocated size from FMemory_QuantizeSize (0x142bfce10), capacity = size>>3 clamped to 0x7fffffff, then FMemory_Realloc (0x142bfd200). Same shape as TArray::ResizeGrow (Core/Public/Containers/Array.h).",
+      "confidence": "high",
+      "source": "TArray<T>::ResizeGrow(int32 OldNum) for 8-byte elements (6638 call sites)",
+      "signature": "void TArray8_ResizeGrow(void* this, int32 OldNum)"
+    },
+    {
+      "name": "TArray16_ShrinkIfSparse",
+      "address": "0x140690e50",
+      "returns": "void",
+      "params": [
+        [
+          "this",
+          "ptr:void"
+        ]
+      ],
+      "evidence": "TArray with 16-byte elements (<<4 byte counts). Reallocates to ArrayNum (QuantizeSize, then Realloc) only when the slack exceeds 0x3fff bytes or ArrayNum*3 < ArrayMax*2 (2/3 rule). Not a direct UE 4.25 name; the exact call site is in TArray::RemoveAt slack handling.",
+      "confidence": "medium",
+      "source": "TArray<T>::ResizeTo/Shrink for 16-byte elements (258 call sites)",
+      "signature": "void TArray16_ShrinkIfSparse(void* this)"
+    },
+    {
+      "name": "TInlineAllocator4_ResizeAllocation16",
+      "address": "0x1406d94c0",
+      "returns": "void",
+      "params": [
+        [
+          "this",
+          "ptr:void"
+        ],
+        [
+          "NewMax",
+          "uint32"
+        ],
+        [
+          "PrevMax",
+          "uint32"
+        ]
+      ],
+      "evidence": "Inline allocator with 4 inline elements of 16 bytes: NewMax<5 uses the inline buffer (capacity 4), otherwise QuantizeSize (0x142bfce10) and capacity = size>>4. Realloc through FMemory_Realloc when the capacity changes (this+0x40 heap pointer, this+0x4c capacity). Called once: the copy-on-stack TArray in FUN_1406a9dc0.",
+      "confidence": "medium",
+      "source": "TInlineAllocator<4>::ResizeAllocation for 16-byte elements (UE 4.25 Containers/ContainerAllocationPolicies.h)",
+      "signature": "void TInlineAllocator4_ResizeAllocation16(void* this, uint32 NewMax, uint32 PrevMax)"
+    },
+    {
+      "name": "FWeakObjectPtr_Get",
+      "address": "0x142ee5dd0",
+      "returns": "ptr:UObject",
+      "params": [
+        [
+          "this",
+          "ptr:void"
+        ]
+      ],
+      "evidence": "FUObjectArray lookup: index in [0, NumElements) (_DAT_148263a2c), chunk table _DAT_148263a18, 64K elements per chunk (>>0x10), 24-byte FUObjectItem (*0x18). Serial at item+0x10 must equal the weak pointer serial (param+4). Returns item->Object only if flags (item+8) & 0x30000000 (PendingKill|Unreachable) is zero; otherwise null. This is FWeakObjectPtr::Get(false).",
+      "confidence": "high",
+      "source": "FWeakObjectPtr::Get() (CoreUObject/Public/UObject/WeakObjectPtrTemplates.h)",
+      "signature": "UObject* FWeakObjectPtr_Get(void* this)"
+    },
+    {
+      "name": "FWeakObjectPtr_GetEvenIfPendingKill",
+      "address": "0x142ee5e30",
+      "returns": "ptr:UObject",
+      "params": [
+        [
+          "this",
+          "ptr:void"
+        ],
+        [
+          "bEvenIfPendingKill",
+          "bool"
+        ]
+      ],
+      "evidence": "Same lookup as FWeakObjectPtr_Get. When bEvenIfPendingKill is false the flag test is (flags & 0x30000000)==0; when true only the Unreachable bit (0x10000000) is checked. Returns the object or null. 45 call sites.",
+      "confidence": "high",
+      "source": "FWeakObjectPtr::Get(bool bEvenIfPendingKill)",
+      "signature": "UObject* FWeakObjectPtr_GetEvenIfPendingKill(void* this, bool bEvenIfPendingKill)"
+    },
+    {
+      "name": "FWeakObjectPtr_IsValid",
+      "address": "0x142ee7880",
+      "returns": "bool",
+      "params": [
+        [
+          "this",
+          "ptr:void"
+        ]
+      ],
+      "evidence": "Same chunk lookup and serial check as FWeakObjectPtr_Get; returns true when the item exists, the serial matches and (flags & 0x30000000)==0. Serial zero returns false (item-less weak pointer). 3597 call sites.",
+      "confidence": "high",
+      "source": "FWeakObjectPtr::IsValid(bool bEvenIfPendingKill=false, ...)",
+      "signature": "bool FWeakObjectPtr_IsValid(void* this)"
+    },
+    {
+      "name": "FName_EqualsEName",
+      "address": "0x142cd8ed0",
+      "returns": "bool",
+      "params": [
+        [
+          "ComparisonIndex",
+          "int32"
+        ],
+        [
+          "EName",
+          "int32"
+        ]
+      ],
+      "evidence": "Returns ComparisonIndex == DAT_14825b800[EName], the comparison index of a predefined name (table of ENames). The most frequent helper (4200 call sites), usually with EName 0 (NAME_None).",
+      "confidence": "medium",
+      "source": "FName::operator==(ENames) against a predefined name index",
+      "signature": "bool FName_EqualsEName(int32 ComparisonIndex, int32 EName)"
+    },
+    {
+      "name": "UObject_FindFunction",
+      "address": "0x142ec7720",
+      "returns": "ptr:void",
+      "params": [
+        [
+          "Object",
+          "ptr:UObject"
+        ],
+        [
+          "InName",
+          "FName"
+        ]
+      ],
+      "evidence": "Calls FUN_142d64270(Object->ClassPrivate (+0x10), InName, 1): the 1 is EIncludeSuperFlag::IncludeSuper. Returns the UFunction or null. The same pair of calls appears in UObject_FindFunctionChecked, whose fatal message matches ScriptCore.cpp:1238. 1292 call sites.",
+      "confidence": "high",
+      "source": "UObject::FindFunction(FName) = GetClass()->FindFunctionByName(InName) (CoreUObject/Private/UObject/ScriptCore.cpp:1228)",
+      "signature": "void* UObject_FindFunction(UObject* Object, FName InName)"
+    },
+    {
+      "name": "UObject_FindFunctionChecked",
+      "address": "0x142ec7730",
+      "returns": "ptr:void",
+      "params": [
+        [
+          "Object",
+          "ptr:UObject"
+        ],
+        [
+          "InName",
+          "FName"
+        ]
+      ],
+      "evidence": "Calls FUN_142d64270(Object->ClassPrivate, InName, 1); when that returns null it logs a fatal error with the format 'Failed to find function %s in %s' (string literal in the body). 3801 call sites.",
+      "confidence": "high",
+      "source": "UObject::FindFunctionChecked(FName) (CoreUObject/Private/UObject/ScriptCore.cpp:1233-1238)",
+      "signature": "void* UObject_FindFunctionChecked(UObject* Object, FName InName)"
+    },
+    {
+      "name": "GetPrivateStaticClassBody",
+      "address": "0x142d698b0",
+      "returns": "void",
+      "params": [
+        [
+          "PackageName",
+          "ptr:uint16"
+        ],
+        [
+          "Name",
+          "ptr:uint16"
+        ],
+        [
+          "ReturnClass",
+          "ptr:void"
+        ],
+        [
+          "RegisterNativeFunc",
+          "ptr:void"
+        ],
+        [
+          "InSize",
+          "uint32"
+        ],
+        [
+          "InAlign",
+          "uint32"
+        ],
+        [
+          "InFlags",
+          "uint32"
+        ],
+        [
+          "InClassCastFlags",
+          "uint64"
+        ],
+        [
+          "InConfigName",
+          "ptr:uint16"
+        ],
+        [
+          "InClassConstructor",
+          "ptr:void"
+        ],
+        [
+          "InClassVTableHelperCtorCaller",
+          "ptr:void"
+        ],
+        [
+          "InClassAddReferencedObjects",
+          "ptr:void"
+        ],
+        [
+          "InSuperClassFn",
+          "ptr:void"
+        ],
+        [
+          "InWithinClassFn",
+          "ptr:void"
+        ],
+        [
+          "bIsDynamic",
+          "bool"
+        ]
+      ],
+      "evidence": "Allocates and fills a UClass (FUN_142ec0180 object allocation, 0x248 bytes) and writes *ReturnClass. Every *_StaticClass getter below calls it with a L\"/Script/...\" package literal, a class-name literal, the class size and a config name. 15 parameters, bIsDynamic last (param_15).",
+      "confidence": "high",
+      "source": "UObject GetPrivateStaticClassBody (UE 4.25 CoreUObject/Private/UObject/Class.cpp, generated per class by UHT)",
+      "signature": "void GetPrivateStaticClassBody(uint16* PackageName, uint16* Name, void* ReturnClass, void* RegisterNativeFunc, uint32 InSize, uint32 InAlign, uint32 InFlags, uint64 InClassCastFlags, uint16* InConfigName, void* InClassConstructor, void* InClassVTableHelperCtorCaller, void* InClassAddReferencedObjects, void* InSuperClassFn, void* InWithinClassFn, bool bIsDynamic)"
+    },
+    {
+      "name": "AFortGameStateAthena_StaticClass",
+      "address": "0x14290f690",
+      "returns": "ptr:void",
+      "params": [],
+      "evidence": "Lazy static (cached in 0x148199598): GetPrivateStaticClassBody(L\"/Script/FortniteGame\", L\"FortGameStateAthena\", ..., size 0x2948, config L\"Game\"). The size matches AFortGameStateAthena in struct_layouts.json. Used as the class in IsA checks (1116 call sites).",
+      "confidence": "high",
+      "source": "AFortGameStateAthena::StaticClass() (UHT GPSC body)",
+      "signature": "void* AFortGameStateAthena_StaticClass(void)"
+    },
+    {
+      "name": "AFortPlayerControllerAthena_StaticClass",
+      "address": "0x142a53450",
+      "returns": "ptr:void",
+      "params": [],
+      "evidence": "Lazy static (cached in 0x1481b19d8): GetPrivateStaticClassBody(L\"/Script/FortniteGame\", L\"FortPlayerControllerAthena\", ..., size 0x3720, config L\"Game\"). Size matches AFortPlayerControllerAthena in struct_layouts.json. Used for IsA checks (901 call sites).",
+      "confidence": "high",
+      "source": "AFortPlayerControllerAthena::StaticClass() (UHT GPSC body)",
+      "signature": "void* AFortPlayerControllerAthena_StaticClass(void)"
+    },
+    {
+      "name": "FortMovementComp_CharacterAthena_StaticClass",
+      "address": "0x1429f6440",
+      "returns": "ptr:void",
+      "params": [],
+      "evidence": "Lazy static (cached in 0x1481aa678): GetPrivateStaticClassBody(L\"/Script/FortniteGame\", L\"FortMovementComp_CharacterAthena\", ..., size 0x1e80, config L\"Engine\").",
+      "confidence": "high",
+      "source": "UFortMovementComp_CharacterAthena::StaticClass() (UHT GPSC body)",
+      "signature": "void* FortMovementComp_CharacterAthena_StaticClass(void)"
+    },
+    {
+      "name": "FortRuntimeOptions_StaticClass",
+      "address": "0x142ac77b0",
+      "returns": "ptr:void",
+      "params": [],
+      "evidence": "Lazy static (cached in 0x1481bc360): GetPrivateStaticClassBody(L\"/Script/FortniteGame\", L\"FortRuntimeOptions\", ..., size 0xdf8, config L\"RuntimeOptions\").",
+      "confidence": "high",
+      "source": "UFortRuntimeOptions::StaticClass() (UHT GPSC body)",
+      "signature": "void* FortRuntimeOptions_StaticClass(void)"
+    },
+    {
+      "name": "FMsg_Logf_Internal",
+      "address": "0x142c54b70",
+      "returns": "void",
+      "params": [
+        [
+          "File",
+          "ptr:uint8"
+        ],
+        [
+          "Line",
+          "int32"
+        ],
+        [
+          "Category",
+          "ptr:void"
+        ],
+        [
+          "Verbosity",
+          "uint8"
+        ],
+        [
+          "Fmt",
+          "ptr:uint16"
+        ]
+      ],
+      "evidence": "Callers pass (File, Line, &Category, Verbosity, Fmt, args...). Stat and CSV names 'STAT_FMsgLogf' and 'FMsgLogfCount' are the QUICK_SCOPE_CYCLE_COUNTER and CSV_CUSTOM_STAT in Core/Private/Logging/LogMacros.cpp:74-75 (the logf path). 'Fatal error:' is the fatal-verbosity text. Verbosity 5 is ELogVerbosity::Log at the call sites. Variadic: only the five fixed parameters are declared.",
+      "confidence": "high",
+      "source": "FMsg::Logf_Internal(const ANSICHAR* File, int32 Line, const FName& Category, ELogVerbosity::Type Verbosity, const TCHAR* Fmt, ...)",
+      "signature": "void FMsg_Logf_Internal(uint8* File, int32 Line, void* Category, uint8 Verbosity, uint16* Fmt)"
+    },
+    {
+      "name": "FName_FromEName",
+      "address": "0x142cdbd60",
+      "returns": "ptr:void",
+      "params": [
+        [
+          "Out",
+          "ptr:FName"
+        ],
+        [
+          "EName",
+          "int32"
+        ]
+      ],
+      "evidence": "Lazily initialises the predefined name table (FUN_142cd4d80 on first use, flag at 0x14824b011), then writes the 32-bit comparison index for EName (table at 0x14824b3c0 + EName*4 + 0x10440) to *Out and returns Out. 578 call sites.",
+      "confidence": "medium",
+      "source": "FName::FName(EName) (predefined name constructor)",
+      "signature": "void* FName_FromEName(FName* Out, int32 EName)"
+    },
+    {
+      "name": "FTimerManager_InternalClearTimer",
+      "address": "0x144627760",
+      "returns": "void",
+      "params": [
+        [
+          "this",
+          "ptr:void"
+        ],
+        [
+          "InHandle",
+          "uint64"
+        ]
+      ],
+      "evidence": "String 'STAT_ClearTimer' is SCOPE_CYCLE_COUNTER(STAT_ClearTimer) in FTimerManager::InternalClearTimer (Engine/Private/TimerManager.cpp:541). The handle is an index in its low 24 bits, the timer data is 0x90 bytes per entry (the stride in the body), and the body also takes the disabled-stats path (DAT_1482472e4). 810 call sites.",
+      "confidence": "high",
+      "source": "FTimerManager::InternalClearTimer(FTimerHandle InHandle) (Engine/Private/TimerManager.cpp:539-541)",
+      "signature": "void FTimerManager_InternalClearTimer(void* this, uint64 InHandle)"
+    },
+    {
+      "name": "UFortRuntimeOptions_GetDefault",
+      "address": "0x1426fdde0",
+      "returns": "ptr:void",
+      "params": [],
+      "evidence": "Calls UFortRuntimeOptions_StaticClass (0x142ac77b0), reads the class default object at class+0x130 (vtable/field index 0x26), and when it is null creates it through a virtual on the class (+0x390). Shape of GetDefault<T>() on the class. 1218 call sites.",
+      "confidence": "medium",
+      "source": "UFortRuntimeOptions::GetDefault<T>() (class default object)",
+      "signature": "void* UFortRuntimeOptions_GetDefault(void)"
+    },
+    {
+      "name": "Stub_Empty",
+      "address": "0x1406801c0",
+      "returns": "void",
+      "params": [],
+      "evidence": "Byte-identical bodies folded by the linker (ICF): every vtable slot or call to this address runs the same code. Verified by disassembly: RET (empty body). 2165 call sites and 10866 data references (vtable entries of empty virtuals in many classes). Calls are no-ops.",
+      "confidence": "high",
+      "source": "empty function (no-op), folded",
+      "signature": "void Stub_Empty(void)"
+    },
+    {
+      "name": "Stub_ReturnTrue",
+      "address": "0x1406801d0",
+      "returns": "bool",
+      "params": [],
+      "evidence": "Byte-identical bodies folded by the linker (ICF): every vtable slot or call to this address runs the same code. Verified by disassembly: MOV AL,1; RET. Used as the default _Validate body: 67 call sites, 1679 data references (validate slots of many RPCs).",
+      "confidence": "high",
+      "source": "returns true (validate default), folded",
+      "signature": "bool Stub_ReturnTrue(void)"
+    },
+    {
+      "name": "Stub_ReturnFalse",
+      "address": "0x1406801e0",
+      "returns": "bool",
+      "params": [],
+      "evidence": "Byte-identical bodies folded by the linker (ICF): every vtable slot or call to this address runs the same code. Verified by disassembly: XOR AL,AL; RET. 2 slots in the RPC tables and 2129 call sites (calls with arguments are ignored).",
+      "confidence": "high",
+      "source": "returns false, folded",
+      "signature": "bool Stub_ReturnFalse(void)"
     }
   ],
   "data_labels": [

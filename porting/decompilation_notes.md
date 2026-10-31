@@ -366,3 +366,170 @@ are eligible. Full ranking: `porting/generated/decomp/portability.json`. Score a
   853 targets, and the before counts come from the existing raw outputs.
 - **Reproduce:** `porting/.venv/bin/python -I porting/ghidra/improve_decompile.py [--build-tables]` (about 70 s);
   `--rank-only` re-ranks the existing outputs.
+
+
+## Second pass 2: callee identities, RPC bodies, portability [observed unless marked]
+
+Scope: the 365 callees in `behavior/BLOCKING_CALLEES.md`, 67 extra helper candidates, the shared stub addresses, and
+every named RPC slot of the three verified vtables (277 slots). Tools (tracked): `porting/ghidra/probe_callees.py`
+(new: decompile, callers, callees, strings and disassembly per address, rolled back), `porting/ghidra/classify_callees.py`
+(new: offline evidence tags), `porting/ghidra/improve_decompile.py` (extended), `porting/ghidra/name_tables/helpers.json`
+(30 entries, 23 new, each with `evidence`, `confidence` and a C `signature`). Probe output is git-ignored under
+`porting/generated/callee_probe/`. Every run changed only the same five bookkeeping files of the project; the program
+database was not saved.
+
+### Callees identified
+
+- Probed: 365 ranked callees (one run, 45 s) and 67 extra candidates (24 s). The top 60 by blocked count were read
+  by hand; the rest are tagged by `classify_callees.py` (431 rows, 27 with a name, including helpers that are not ranked).
+- Of the 365 ranked callees, **10 are identified** (9 high, 1 medium). **9 of them are in the top 60** (ranks 6, 11,
+  17, 18, 19, 21, 22, 26, 27). Together they cover 20 of the 433 blocked-count total.
+- The other top-60 callees are described, not named. The ones that are game logic and too big to name are queued in
+  `porting/behavior/CALLEE_PORT_QUEUE.md` (17 entries, with decisions: port-fn, accessor, struct, verify).
+- Confidence: **high** = the body or a string literal matches a UE 4.25 source line (cited in the table); **medium** =
+  shape match without a source line. Call counts are whole-program references (`getReferencesTo`, call type).
+
+| Name (applied) | Address | Identity | Confidence | Calls (whole program) |
+|---|---|---|---|---|
+| `FMemory_QuantizeSize` | `0x142bfce10` | FMemory::QuantizeSize(SIZE_T Count, uint32 Alignment) (Core/Public/HAL/MemoryBase.h:113) | high | 1773 |
+| `FMemory_Realloc` | `0x142bfd200` | FMemory::Realloc(void* Original, SIZE_T Count, uint32 Alignment) (MemoryBase.h:93) | high | 23884 |
+| `TArray8_ResizeGrow` | `0x140690bb0` | TArray<T>::ResizeGrow(int32 OldNum) for 8-byte elements (6638 call sites) | high | 6638 |
+| `TArray16_ShrinkIfSparse` | `0x140690e50` | TArray<T>::ResizeTo/Shrink for 16-byte elements (258 call sites) | medium | 258 |
+| `TInlineAllocator4_ResizeAllocation16` | `0x1406d94c0` | TInlineAllocator<4>::ResizeAllocation for 16-byte elements (UE 4.25 Containers/ContainerAllocationPolicies.h) | medium | 1 |
+| `FWeakObjectPtr_Get` | `0x142ee5dd0` | FWeakObjectPtr::Get() (CoreUObject/Public/UObject/WeakObjectPtrTemplates.h) | high | 13086 |
+| `FWeakObjectPtr_GetEvenIfPendingKill` | `0x142ee5e30` | FWeakObjectPtr::Get(bool bEvenIfPendingKill) | high | 45 |
+| `FWeakObjectPtr_IsValid` | `0x142ee7880` | FWeakObjectPtr::IsValid(bool bEvenIfPendingKill=false, ...) | high | 3597 |
+| `FName_EqualsEName` | `0x142cd8ed0` | FName::operator==(ENames) against a predefined name index | medium | 4200 |
+| `UObject_FindFunction` | `0x142ec7720` | UObject::FindFunction(FName) = GetClass()->FindFunctionByName(InName) (CoreUObject/Private/UObject/ScriptCore.cpp:1228) | high | 1292 |
+| `UObject_FindFunctionChecked` | `0x142ec7730` | UObject::FindFunctionChecked(FName) (CoreUObject/Private/UObject/ScriptCore.cpp:1233-1238) | high | 3801 |
+| `GetPrivateStaticClassBody` | `0x142d698b0` | UObject GetPrivateStaticClassBody (UE 4.25 CoreUObject/Private/UObject/Class.cpp, generated per class by UHT) | high | 7004 |
+| `AFortGameStateAthena_StaticClass` | `0x14290f690` | AFortGameStateAthena::StaticClass() (UHT GPSC body) | high | 1116 |
+| `AFortPlayerControllerAthena_StaticClass` | `0x142a53450` | AFortPlayerControllerAthena::StaticClass() (UHT GPSC body) | high | 901 |
+| `FortMovementComp_CharacterAthena_StaticClass` | `0x1429f6440` | UFortMovementComp_CharacterAthena::StaticClass() (UHT GPSC body) | high | 23 |
+| `FortRuntimeOptions_StaticClass` | `0x142ac77b0` | UFortRuntimeOptions::StaticClass() (UHT GPSC body) | high | 8 |
+| `FMsg_Logf_Internal` | `0x142c54b70` | FMsg::Logf_Internal(const ANSICHAR* File, int32 Line, const FName& Category, ELogVerbosity::Type Verbosity, const TCHAR* Fmt, ...) | high | 23784 |
+| `FName_FromEName` | `0x142cdbd60` | FName::FName(EName) (predefined name constructor) | medium | 578 |
+| `FTimerManager_InternalClearTimer` | `0x144627760` | FTimerManager::InternalClearTimer(FTimerHandle InHandle) (Engine/Private/TimerManager.cpp:539-541) | high | 810 |
+| `UFortRuntimeOptions_GetDefault` | `0x1426fdde0` | UFortRuntimeOptions::GetDefault<T>() (class default object) | medium | 1218 |
+| `Stub_Empty` | `0x1406801c0` | empty function (no-op), folded | high | 2165 |
+| `Stub_ReturnTrue` | `0x1406801d0` | returns true (validate default), folded | high | 67 |
+| `Stub_ReturnFalse` | `0x1406801e0` | returns false, folded | high | 2129 |
+
+Naming the helpers changed the exec verdicts only a little: 136 portable (exec) after the first pass, 149 now. The proxy
+score penalises struct noise (`param_N`, `undefined`), unnamed vtable slots and gotos more than `FUN_` names.
+
+### RPC bodies (task 2)
+
+- Before this pass, 197 named RPC targets (the list in `BLOCKING_CALLEES.md`) had no decompile record. The causes, all in
+  `apply_rpc_prototypes`: an entry shared with another slot was skipped; an entry with no function was skipped; and the
+  controller table was read only to 1200 entries (`MAX_SLOTS`), so 95 named slots (up to slot 1294) were never reached.
+- Now every named slot of the three tables has a record: **277 records** (70 from the first pass, 207 new). The 207
+  are the 197 targets plus 10 named slots that the dump list did not include. Output:
+  `porting/generated/decomp_improved/<Class>/<Function>.c`, with `index.json` (kind `implementation` or `validate`).
+- The controller table now reads to 1379 entries (the cap is 4096). Prototypes applied to it: 35 to 75.
+- **Folded bodies.** 141 records share their entry address with other slots. These are identical bodies that the
+  linker folded (identical-code folding), not missing bodies. Verified by disassembly: `0x1406801d0` is `MOV AL,1; RET`
+  (returns true, the validate default, 72 slots), `0x1406801c0` is `RET` (empty, 53 slots), `0x140f6b550` is
+  `CMP [RDX+8],1; SETG AL; RET` (an FString argument is non-empty, 6 slots), and `0x1406801e0` is `XOR AL,AL; RET`
+  (returns false). The first-pass note that these entries are "padding, the entry is elsewhere" was wrong. An
+  unlisted `ret` is the body.
+- The RPC header is rewritten in the text (`FUN_xxx` becomes `Class_Function`, validate returns `bool`), so a folded
+  body is scored under its own RPC name.
+- **Tail jumps.** Seven records are a single tail jump through a vtable slot (`ClientInternalEquipWeapon_Implementation`
+  at `0x14230e590` jumps through `+0xc58`). They are noted as thunks, not bodies.
+- The 197 targets: **125 portable, 37 needs names, 35 not usable** (proxy). 139 of the 197 are folded bodies.
+
+### Portability before and after (proxy verdict)
+
+| Set | Raw (first decompile) | After pass 1 | After pass 2 (final) |
+|---|---|---|---|
+| 853 exec targets (portable / needs names / not usable) | 0 / 296 / 557 | 136 / 586 / 131 | **149 / 575 / 129** |
+| RPC records of pass 1 (70) | not decompiled | 1 / 27 / 42 | 5 / 23 / 42 |
+| RPC records new in pass 2 (207) | not decompiled | none | 128 / 40 / 39 |
+| All records (923 in pass 1, 1130 final) | | 137 / 613 / 173 | **282 / 638 / 210** |
+
+### Top candidates (second pass)
+
+The ranking is the proxy score (`porting/generated/decomp/portability.json`, `top60`). The top 60 has 25 getters and
+predicates, 20 RPC exec wrappers with a validate pair, 8 validate bodies and 7 implementation bodies. Most of the
+bodies are the folded trivial bodies above (`return true`, empty), so the list rewards short bodies, not value.
+The game-logic candidates that matter most are in `CALLEE_PORT_QUEUE.md`.
+
+| Rank | Function | Kind | Lines | Score | Verdict | Category |
+|---:|---|---|---:|---:|---|---|
+| 1 | AFortPawn.IsSpinning | exec | 13 | 92.9 | portable | getter/setter/predicate |
+| 2 | AFortPawn.IsStaggered | exec | 14 | 92.9 | portable | getter/setter/predicate |
+| 3 | AFortPlayerPawn.HasRespawnedInAir | exec | 14 | 92.9 | portable | getter/setter/predicate |
+| 4 | AFortPlayerPawn.OnRep_ReplicatedIsInSlipperyMovement | exec | 14 | 92.9 | portable | getter/setter/predicate |
+| 5 | AFortGameStateAthena.HasValidFocalPointActor | exec | 10 | 92.5 | portable | getter/setter/predicate |
+| 6 | AFortPlayerControllerAthena.IsClientNotifiedOfLoss | exec | 10 | 92.5 | portable | getter/setter/predicate |
+| 7 | AFortPlayerControllerAthena.IsClientNotifiedOfTeamWin | exec | 10 | 92.5 | portable | getter/setter/predicate |
+| 8 | AFortPlayerControllerAthena.IsClientNotifiedOfWin | exec | 10 | 92.5 | portable | getter/setter/predicate |
+| 9 | AFortPlayerControllerAthena.IsLoadingScreenActive | exec | 10 | 92.5 | portable | getter/setter/predicate |
+| 10 | AFortPlayerPawn.IsInCharacterCustomization | exec | 10 | 92.5 | portable | getter/setter/predicate |
+| 11 | AFortPlayerPawn.OnRep_ParachuteLockedOpen | exec | 10 | 92.5 | portable | getter/setter/predicate |
+| 12 | AFortPawn.GetControlRecoveryBehavior | exec | 9 | 92.2 | portable | getter/setter/predicate |
+| 13 | AFortPawn.GetLocalSpin | exec | 9 | 92.2 | portable | getter/setter/predicate |
+| 14 | AFortPawn.IsAllowChainStun | exec | 9 | 92.2 | portable | getter/setter/predicate |
+| 15 | AFortPawn.IsDBNO | exec | 9 | 92.2 | portable | getter/setter/predicate |
+| 16 | AFortPawn.OnlySpinWhenFalling | exec | 9 | 92.2 | portable | getter/setter/predicate |
+| 17 | AFortPlayerPawn.GetIsSlopeSliding | exec | 9 | 92.2 | portable | getter/setter/predicate |
+| 18 | AFortPlayerPawn.GetStasisMode | exec | 9 | 92.2 | portable | getter/setter/predicate |
+| 19 | AFortPlayerPawn.IsInFrontEndHologram | exec | 9 | 92.2 | portable | getter/setter/predicate |
+| 20 | AFortPlayerPawn.IsInSkyTube | exec | 9 | 92.2 | portable | getter/setter/predicate |
+| 21 | AFortPlayerPawn.IsInSlipperyMovement | exec | 9 | 92.2 | portable | getter/setter/predicate |
+| 22 | AFortPlayerPawn.IsInVortex | exec | 9 | 92.2 | portable | getter/setter/predicate |
+| 23 | AFortPlayerPawn.IsParachuteForcedOpen | exec | 9 | 92.2 | portable | getter/setter/predicate |
+| 24 | AFortPlayerPawn.IsParachuteLockedOpen | exec | 9 | 92.2 | portable | getter/setter/predicate |
+| 25 | AFortPlayerPawn.IsParachuteOpen | exec | 9 | 92.2 | portable | getter/setter/predicate |
+| 26 | AFortPlayerControllerAthena.ClientSetStreamingTestStreamingLevels | exec | 15 | 89.6 | portable | RPC (validate pair where present) |
+| 27 | AFortPlayerControllerAthena.ServerSetStreamingTestStreamingLevels | exec | 15 | 89.6 | portable | RPC (validate pair where present) |
+| 28 | AFortPlayerControllerAthena.ClientSendTeamStatsForPlayer | exec | 15 | 86.2 | portable | RPC (validate pair where present) |
+| 29 | AFortPlayerControllerAthena.ServerSetMinigameClassSlot | exec | 15 | 86.2 | portable | RPC (validate pair where present) |
+| 30 | AFortPlayerControllerAthena.ServerSetOnCreativePortalLoadedDelegate | exec | 15 | 86.2 | portable | RPC (validate pair where present) |
+| 31 | AFortPlayerControllerAthena.ServerStartInteractWithIslandPortal | exec | 15 | 86.2 | portable | RPC (validate pair where present) |
+| 32 | AFortPlayerControllerAthena.ServerTeleportViaCreativePortal | exec | 15 | 86.2 | portable | RPC (validate pair where present) |
+| 33 | AFortPlayerControllerAthena.ServerTickForDoneTeleporting | exec | 15 | 86.2 | portable | RPC (validate pair where present) |
+| 34 | AFortPlayerControllerAthena.ServerTryFindPlotItemForDefinition | exec | 15 | 86.2 | portable | RPC (validate pair where present) |
+| 35 | AFortPlayerPawn.ClientAcknowledgeVehicleInputState | exec | 15 | 86.2 | portable | RPC (validate pair where present) |
+| 36 | AFortPlayerPawn.ServerInterrogateDBNOPlayer | exec | 15 | 86.2 | portable | RPC (validate pair where present) |
+| 37 | AFortPlayerStateAthena.ClientReportDBNO | exec | 15 | 86.2 | portable | RPC (validate pair where present) |
+| 38 | AFortPlayerStateAthena.ClientReportKill | exec | 15 | 86.2 | portable | RPC (validate pair where present) |
+| 39 | AFortPlayerStateAthena.ClientReportTeamKill | exec | 15 | 86.2 | portable | RPC (validate pair where present) |
+| 40 | AFortPlayerStateAthena.Client_OnNewLevel | exec | 15 | 86.2 | portable | RPC (validate pair where present) |
+| 41 | AFortPawn.ClientInternalEquipWeapon | exec | 14 | 85.8 | portable | RPC (validate pair where present) |
+| 42 | AFortPlayerPawn.ServerHoistDBNOPlayer | exec | 14 | 85.8 | portable | RPC (validate pair where present) |
+| 43 | AFortPlayerControllerAthena.ServerRequestObjectTrackingDetails | exec | 15 | 82.2 | needs names | RPC (validate pair where present) |
+| 44 | AFortPlayerControllerAthena.ClientNotifyLost | exec | 18 | 81.6 | portable | RPC (validate pair where present) |
+| 45 | AFortPlayerControllerAthena.ClientReceiveKillNotification | exec | 18 | 81.6 | portable | RPC (validate pair where present) |
+| 46 | AFortPlayerControllerAthena.OnPostGameForced_Implementation | implementation | 7 | 98.2 | portable | other small body |
+| 47 | AFortPlayerControllerAthena.OnPostGameForced_Validate | validate | 7 | 98.2 | portable | other small body |
+| 48 | AFortPlayerStateAthena.Server_SetCanEditCreativeIsland_Validate | validate | 7 | 98.2 | portable | other small body |
+| 49 | AFortPawn.ServerInternalEquipWeapon_Validate | validate | 7 | 98.2 | portable | other small body |
+| 50 | AFortPawn.ServerTeleportNearLocation_Implementation | implementation | 7 | 98.2 | portable | other small body |
+| 51 | AFortPawn.ServerTeleportNearLocation_Validate | validate | 7 | 98.2 | portable | other small body |
+| 52 | AFortPlayerControllerAthena.ClientAddProfileGoCollection_Implementation | implementation | 7 | 98.2 | portable | other small body |
+| 53 | AFortPlayerControllerAthena.ClientReceiveSquadQuickChatMessage_Implementation | implementation | 7 | 98.2 | portable | other small body |
+| 54 | AFortPlayerControllerAthena.ResetMyCurrentCreativePlot_Implementation | implementation | 7 | 98.2 | portable | other small body |
+| 55 | AFortPlayerControllerAthena.ResetMyCurrentCreativePlot_Validate | validate | 7 | 98.2 | portable | other small body |
+| 56 | AFortPlayerControllerAthena.SendClientPhysicsBallStateToServer_Implementation | implementation | 7 | 98.2 | portable | other small body |
+| 57 | AFortPlayerControllerAthena.SendClientPhysicsBallStateToServer_Validate | validate | 7 | 98.2 | portable | other small body |
+| 58 | AFortPlayerControllerAthena.SendPhysicsBallHitToServer_Implementation | implementation | 7 | 98.2 | portable | other small body |
+| 59 | AFortPlayerControllerAthena.SendPhysicsBallHitToServer_Validate | validate | 7 | 98.2 | portable | other small body |
+| 60 | AFortPlayerControllerAthena.ServerAddSimulatedXp_Validate | validate | 7 | 98.2 | portable | other small body |
+
+### Limits and what is left
+
+- **Proxy only.** The verdict is the score in `score_text`. It is not a correctness check. The 15-function sample in
+  "Sample of 15" was not re-judged in this pass.
+- **Identities are per address** in the slim program (the runtime exe). Re-verify them if the binary changes.
+- **Medium identities** (`TArray16_ShrinkIfSparse`, `TInlineAllocator4_ResizeAllocation16`, `FName_EqualsEName`,
+  `FName_FromEName`, `UFortRuntimeOptions_GetDefault`) are shape matches. The Stub and `StaticClass` names are exact
+  (folded bodies or the class-name literals).
+- **Another process rewrote `porting/generated/reflection/native_classes_index.json` during one improve run** (03:53 to
+  03:54). The run failed to parse it once and passed on the retry. The file is not ours and was not touched.
+- **Remaining unidentified:** the 365 ranked callees minus 10, of which 17 are queued. The classifier tags the rest.
+- **Reproduce:**
+  `porting/.venv/bin/python -I porting/ghidra/probe_callees.py --input <list.json> --out porting/generated/callee_probe/<dir> --mem 32G`,
+  `porting/.venv/bin/python -I porting/ghidra/classify_callees.py --probe <dir> --out <dir>`,
+  `porting/.venv/bin/python -I porting/ghidra/improve_decompile.py --mem 32G` (about 90 to 140 s).

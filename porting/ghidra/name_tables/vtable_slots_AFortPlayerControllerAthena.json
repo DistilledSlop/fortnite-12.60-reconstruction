@@ -1,7 +1,7 @@
 {
  "class": "AFortPlayerControllerAthena",
  "table_va": "0x145e1aac0",
- "entries_read_upper_bound": 1200,
+ "entries_read_upper_bound": 1379,
  "source": "tier-1 RPC thunks: indirect CALL qword ptr [reg+disp] (validate at slot, implementation at slot+1; unvalidated: implementation at slot)",
  "slots": {
   "1106": {

@@ -58,7 +58,7 @@ VERIFIED_TABLES = {"AFortPlayerStateAthena": 0x145E35FA8, "AFortPlayerPawnAthena
                    # argument 10 of 0x142a53450) tail-jumps to the constructor 0x1419b7d70, whose only
                    # vptr store is MOV [RDI],RAX after LEA RAX,[0x145e1aac0]. Checked by slot consistency only.
                    "AFortPlayerControllerAthena": 0x145E1AAC0}
-MAX_SLOTS = 1200            # upper bound: a table is read until an entry is not executable code
+MAX_SLOTS = 4096            # upper bound: a table is read until an entry is not executable code (controller: ~1300 slots)
 FFRAME_SIZE = 0x98
 # UE 4.25 FFrame (CoreUObject/Public/UObject/Stack.h). FOutputDevice base = vptr + two bools.
 FFRAME_FIELDS = [
@@ -600,6 +600,69 @@ def apply_rpc_prototypes(ed, slot_info, natives, struct_index, class_dts, summar
     return impl_records
 
 
+#: Identical bodies that the linker folded (COMDAT folding, /OPT:ICF), found by probe_callees.py. Every vtable
+#: slot that holds one of these addresses has exactly this body, so the shared body IS the RPC body:
+#: 0x1406801c0 "ret" (empty void), 0x1406801d0 "mov al,1; ret" (validate returning true),
+#: 0x1406801e0 "xor al,al; ret" (returns false), 0x140f6b550 "cmp [rdx+8],1; setg al; ret" (FString argument
+#: non-empty: ArrayNum > 1). Only a note is added; the verdict stays the proxy verdict.
+FOLDED_BODIES = {0x1406801C0: "empty body", 0x1406801D0: "returns true", 0x1406801E0: "returns false",
+                 0x140F6B550: "returns FString argument is not empty (ArrayNum > 1)"}
+
+
+RPC_HEADER_RE = re.compile(r"^(\w+)\s+\w+\(", re.M)  # first top-level header line (FUN_xxx or a helper name)
+
+
+def rename_rpc_header(code, rec):
+    """Header of an RPC body: show the RPC name and its return type (a folded body keeps the shared address name).
+
+    Ghidra names the function after its entry address (FUN_xxx) and types a folded validate as undefined1; the
+    RPC is bool X_Validate(...) by its UHT declaration. Only the first header line is changed.
+    """
+    if rec.get("kind") not in ("validate", "implementation"):
+        return code
+
+    def sub(m):
+        ret = "bool" if rec["kind"] == "validate" else m.group(1)
+        return "%s %s_%s(" % (ret, rec["class"], rec["function"])
+
+    return RPC_HEADER_RE.sub(sub, code, count=1)
+
+
+def collect_unlisted_rpc(ed, slot_info, have, summary):
+    """Records for named RPC slots that apply_rpc_prototypes did not decompile.
+
+    apply_rpc_prototypes skips an entry when its address is shared with another slot, when no function exists at
+    it, or when the native record is missing. These records decompile the body at the entry (creating the
+    function in memory when needed) and apply NO prototype or rename: a shared entry is one body for several names.
+    """
+    have_keys = {(r["class"], r["function"]) for r in have}
+    out, counts = [], collections.Counter()
+    for table_cls, info in slot_info.items():
+        entries = info["entries"]
+        for slot, nm in info["names"].items():
+            if slot < len(entries):
+                counts[entries[slot]] += 1
+    for table_cls, info in slot_info.items():
+        entries = info["entries"]
+        for slot, nm in sorted(info["names"].items()):
+            if slot >= len(entries) or not info["evidence"].get(slot):
+                continue
+            owner = info["evidence"][slot][0].split(".", 1)[0]
+            if (owner, nm) in have_keys:
+                continue
+            have_keys.add((owner, nm))
+            addr = entries[slot]
+            ensure_function(ed, hex(addr))
+            folded = counts[addr] > 1
+            out.append({"class": owner, "function": nm,
+                        "kind": "validate" if nm.endswith("_Validate") else "implementation", "tier": 0,
+                        "address": hex(addr), "flags": None, "net_roles": [], "table": table_cls, "slot": slot,
+                        "shared_slots": counts[addr], "folded": folded, "prototype": False})
+    summary["unlisted_rpc_records"] = len(out)
+    summary["unlisted_rpc_folded_records"] = sum(1 for r in out if r["folded"])
+    return out
+
+
 def table_chain(cls):
     nci = {c["name"]: c for c in load_json(os.path.join(REFL, "native_classes_index.json"))["classes"]}
     out, n = [], cls
@@ -620,6 +683,7 @@ def run_edits(program, flat, targets, natives, struct_index, layouts, helpers):
     class_dts = apply_structs(ed, layouts, slot_info, summary)
     apply_exec(ed, targets, natives, struct_index, class_dts, ed.named["FFrame*"], summary)
     impl = apply_rpc_prototypes(ed, slot_info, natives, struct_index, class_dts, summary)
+    impl += collect_unlisted_rpc(ed, slot_info, impl, summary)
     summary["edit_log"] = ed.log[:40]
     return ed, summary, impl, slot_info
 
@@ -799,7 +863,8 @@ def decompile_all(ed, program, records, timeout, slot_info):
     rows = []
     for rec in records:
         t0 = time.time()
-        row = {k: rec.get(k) for k in ("tier", "class", "function", "address", "flags", "net_roles", "kind")}
+        row = {k: rec.get(k) for k in ("tier", "class", "function", "address", "flags", "net_roles", "kind",
+                                       "table", "slot", "shared_slots", "folded")}
         row["file"] = "decomp_improved/" + rec["relpath"].replace(os.sep, "/")
         f = ed.fm.getFunctionAt(ed.addr(rec["address"]))
         if f is None:
@@ -816,11 +881,18 @@ def decompile_all(ed, program, records, timeout, slot_info):
         ins = rec.get("_ins") or []
         code, ninfo = normalize_code(code, ins, slot_names_for(rec["class"], slot_info),
                                      ret_ctype=rec.get("_ret_ctype"), field_sizes=rec.get("_fields"))
+        code = rename_rpc_header(code, rec)
         called, indirect, strings = base.analyze_body(program, f, StringDataInstance)
         m = score_text(code)
         row.update({"status": "ok", "lines": m["lines"], "called": called, "indirect_calls": indirect,
                     "strings": strings, "ghidra_name": f.getName(), "seconds": round(time.time() - t0, 2),
                     "metrics": m, "verdict": verdict_of(m), "normalize": ninfo})
+        if rec.get("folded"):
+            # Identical code folded by the linker: this body is the body of every slot listed in the note.
+            body = FOLDED_BODIES.get(int(rec["address"], 16), "identical body")
+            row["note"] = "folded body at %s shared by %d vtable slots (%s)" % (rec["address"], rec["shared_slots"], body)
+        if "indirect jump" in code:
+            row["note"] = (row.get("note") or "") + " tail jump through a vtable slot (thunk, not a body)"
         full = os.path.join(rec["_out"], rec["relpath"])
         os.makedirs(os.path.dirname(full), exist_ok=True)
         with open(full, "w", encoding="utf-8") as fh:
