@@ -1103,3 +1103,156 @@ void CompactInvocationList(bool bCheckThreshold)
 - `porting/ghidra/name_tables/helpers.json` (12 new function identities, applied by `improve_decompile.py` on its next run)
 
 Not touched: `porting/native/`, `gen_*.py`, snippets, `behavior/MANIFEST.json`, git state, `/opt/fortnite/gen-worktree`.
+
+## Ninth pass: helpers, member fields and the stat bodies [observed unless marked]
+
+Scope: the manifest kinds `helper`, `static_helper` and `member_field` (generator contract: `behavior/README.md`, "Helpers" and
+"Member fields"). Queue rows 2, 3, 4 and 5 become ported entries, the nine `OnRep_Num*` stat bodies are ported, and the
+Eighth pass non-reflected members are declared as `member_field` entries. `porting/native/` is not touched and
+`gen_native_classes.py` is not edited: the splice was checked in a scratch promote only. Each body was checked against its
+decompile (`porting/generated/callee_probe/blocking/0x141a3c2b0.c`, `0x141a3c390.c`, `0x1419d3ff0.c`, `0x141991bf0.c`) and against
+the generated headers. No Ghidra run.
+
+### Entries (manifest 424 entries: 237 ported, 187 skipped; 28 added, 1 renamed)
+
+| Kind | Entry | Address | Notes |
+|---|---|---|---|
+| helper | `AFortPlayerStateAthena::UpdateScoreForEvent(EAthenaScoringEvent, int32, int32, const UFortPlaylistAthena*)` | `0x141a3c2b0` | queue row 2, public |
+| helper | `AFortPlayerStateAthena::UpdateTotalPlayerScore()` | `0x141a3c390` | queue row 3, public |
+| static_helper | `GetFortGameStateAthena(const UObject*)` in `AFortPlayerStateAthena.cpp` | `0x1419d3ff0` | queue row 4; includes `UObject/Object.h`, `Engine/World.h`, `GameFramework/GameStateBase.h` |
+| helper (renamed) | `AFortGameStateAthena::GetCurrentPlaylistAthena() const`, public | `0x141991bf0` | queue row 5; was `GetActivePlaylist` (protected) |
+| member_field | 11 `int32` point caches (below) | offsets | `AFortPlayerStateAthena` |
+| member_field | 4 `TMulticastDelegate<void, AFortPlayerStateAthena*, int32>` | `+0x1120`, `+0x1150`, `+0x1180`, `+0x11b0` | `Delegates/Delegate.h` |
+| member_field | `int32 AccumulatedPlayerScore` | `AFortTeamInfo +0x370` | the team's score accumulator |
+| onrep | `OnRep_NumAmmoCansOpened`, `OnRep_NumBronzeCoinsCollected`, `OnRep_NumChestsOpened`, `OnRep_NumForagedItemsConsumed`, `OnRep_NumGoldCoinsCollected`, `OnRep_NumLlamasOpened`, `OnRep_NumMinutesAlive`, `OnRep_NumSilverCoinsCollected`, `OnRep_NumSupplyDropsOpened` | `0x142a8dad0` ... `0x142a8dbd0` | exec record addresses (decompile_improved) |
+
+The stat bodies (decompile): the game state from `GetFortGameStateAthena`; when `GetCurrentPlaylistAthena()->WinConditionType`
+is `FirstToGoalScore` (3, `EAthenaWinCondition`), the cache of the stat becomes `UpdateScoreForEvent(event, stat, cache, playlist)`;
+then `UpdateTotalPlayerScore()`. `P_FINISH` (script epilogue) is not ported. `FUN_142cd3770` (profiling scope) is a no-op in
+`OnRep_NumChestsOpened` and `OnRep_NumMinutesAlive`, as the Eighth pass recommended.
+
+### Naming of the non-reflected members (the Eighth pass offsets)
+
+Each stat's points cache is the reflected counter plus 4 bytes (the decompile writes `Context->Num* + 4`). The names are ours
+(MEDIUM): the stat and the event are exact.
+
+| Field | Offset | Stat (reflected offset) | Scoring event (value) | Summed by UpdateTotalPlayerScore |
+|---|---|---|---|---|
+| `KillScorePoints` | `0xe88` | `KillScore` (0xe74), OnRep_Kills (not ported) | Elimination (1) | yes |
+| `AIKillCountPoints` | `0xeb4` | `AIKillCount` (0xeb0), OnRep_AIKills (not ported) | AIKilled (11) | **no** (decompile skips it) |
+| `NumChestsOpenedPoints` | `0xebc` | `NumChestsOpened` (0xeb8) | ChestOpened (2) | yes |
+| `NumAmmoCansOpenedPoints` | `0xec4` | `NumAmmoCansOpened` (0xec0) | AmmoCanOpened (3) | yes |
+| `NumSupplyDropsOpenedPoints` | `0xecc` | `NumSupplyDropsOpened` (0xec8) | SupplyDropOpened (4) | yes |
+| `NumLlamasOpenedPoints` | `0xed4` | `NumLlamasOpened` (0xed0) | SupplyLlamaOpened (5) | yes |
+| `NumForagedItemsConsumedPoints` | `0xedc` | `NumForagedItemsConsumed` (0xed8) | ForagedItemConsumed (6) | yes |
+| `NumMinutesAlivePoints` | `0xee4` | `NumMinutesAlive` (0xee0) | SurvivalInMinutes (7) | yes |
+| `NumBronzeCoinsCollectedPoints` | `0xeec` | `NumBronzeCoinsCollected` (0xee8) | CollectedCoinBronze (8) | yes |
+| `NumSilverCoinsCollectedPoints` | `0xef4` | `NumSilverCoinsCollected` (0xef0) | CollectedCoinSilver (9) | yes |
+| `NumGoldCoinsCollectedPoints` | `0xefc` | `NumGoldCoinsCollected` (0xef8) | CollectedCoinGold (10) | yes |
+
+The four delegates, all `TMulticastDelegate<void, AFortPlayerStateAthena*, int32>` (0x18 bytes each, MEDIUM-HIGH identity from
+the Eighth pass; `Broadcast(this, value)` in the decompile): `KillScoreNative` (`+0x1120`, OnRep_Kills), `TeamKillScoreNative`
+(`+0x1150`, OnRep_TeamKillScore; the decompile reaches it as `PlayerNameCustomOverride + 0x170`, not re-verified here),
+`TotalPlayerScoreNative` (`+0x1180`, the non-authority broadcast of UpdateTotalPlayerScore), `AIKillCountNative` (`+0x11b0`).
+`AccumulatedPlayerScore` (`AFortTeamInfo +0x370`) is the team's sum of the authority's positive score deltas (LOW name).
+
+### Quirks ported as decompiled
+
+- `UpdateScoreForEvent` broadcasts `PointsAddedToScore` with the **per-unit** value (the `(int)` of `ScoreAwarded.GetValueAtLevel(0)`)
+  and the event, not the new total `unit * points`. The decompile writes the unit at the first parameter slot and the event byte
+  at the second, and `FOnPointsAddedToScore` is `(int32 NewPoints, EAthenaScoringEvent ScoreType)` in the generated header.
+- Points: `Count / NumOccurrencesForScore` (truncated); when `NumOccurrencesPermitted` is positive the points are capped at it; the
+  broadcast happens only when `unit * points != PreviousPoints`; the return value is the last matching rule's result, or 0.
+  The rule array and its count are read on each pass, as the decompile does.
+- `UpdateTotalPlayerScore`: sums ten caches (not `AIKillCountPoints`); on the authority, a positive delta goes to the team when
+  `PlayerTeam` `IsA AFortTeamInfoAthena`; `TotalPlayerScore` is stored in every case; the native broadcast happens **only when the
+  role is not ROLE_Authority**. (The Eighth pass wording "otherwise broadcasts" meant this branch; the pseudocode there was right.)
+- The stat bodies call `UpdateTotalPlayerScore()` even when the playlist gate fails, and write their cache only inside the gate.
+
+### Corrections to earlier passes (found while porting or by the syntax check)
+
+- **Multicast spelling.** The Eighth pass wrote `TMulticastDelegate<void(AFortPlayerStateAthena*, int32)>`. UE 4.25 spells it
+  `TMulticastDelegate<void, AFortPlayerStateAthena*, int32>` (`Core/Public/Delegates/DelegateSignatureImpl.inl:1064`); the function-type
+  form is undefined and the compiler rejected it. The README example was corrected too.
+- **`UWorld::GameState` is private** in 4.25. The accessor reads it through `UWorld::GetGameState()` (inline, returns the same field at
+  `+0x130`).
+- **`AActor::Role` is private** in 4.25. The body reads it through `GetLocalRole()` (inline, `return Role`).
+- **Placeholder names** of the Eighth pass (`TeamPointsAccumulator`, `OnTotalPlayerScoreChangedNative`, `FOnKillScoreChangedNative`) are
+  replaced by `AccumulatedPlayerScore` and the `*Native` names above.
+- **`GetPlayerTeam`.** The vtable slot `+0x770` is `AFortPlayerState::GetPlayerTeam` (`0x1424192a0`, `mov rax,[rcx+0x640]; ret`, in
+  `helpers.json`). The body reads `PlayerTeam` directly. Same value unless a C++ subclass overrides it; none is in the generated
+  tree, and the declaration is not in our generated headers.
+- **Row 5 name.** `GetActivePlaylist` (kind helper, protected) is renamed `GetCurrentPlaylistAthena` (Eighth pass name) and made public:
+  `AFortGameModeAthena::SafeZoneInsideChecks` (`decomp/AFortGameModeAthena/SafeZoneInsideChecks.c`) also calls it.
+- **Argument of the accessor.** Eight of the nine stat decompiles show `FUN_1419d3ff0()` with no argument (the Chests and Minutes
+  bodies pass `Context`). The port passes `this` everywhere: the accessor calls `GetWorld()` on its argument, and `this` is the only
+  object in the body. Confirm in the disassembly before relying on it.
+
+### Checks
+
+- `python3 -I porting/behavior/check_behavior.py`: 424 entries, ported 237 (getter 32, onrep 26, impl 61, exec 25, validate 73,
+  helper 3, static_helper 1, member_field 16), skipped 187; `declared_in_header` 217, `pending_declaration` 19 (16 fields, 2 helpers,
+  `GetCurrentPlaylistAthena`), FAIL 0. `COUNTS.txt` rewritten by the checker.
+- Scratch promote (the `promote_native_classes.sh` command with `--source-root` and `--report-dir` in the scratchpad; the
+  resolved class-ref map also written there): exit 0, `behavior_splice.json` spliced **237**, rejected **0**.
+  `check_behavior.py --gen-root <scratch>/FortniteGame/Generated --splice-report <scratch>/behavior_splice.json`: 237 spliced and
+  verified, not spliced 0, **FAIL 0**.
+- Review of the scratch output by eye: the caches and delegates sit in offset order among the reflected members; the helpers are
+  declared after `GetLifetimeReplicatedProps` outside any UFUNCTION; `GetFortGameStateAthena` is in the anonymous namespace before
+  the member definitions; the two new forward declarations are `class AFortGameStateAthena;` and `class UFortPlaylistAthena;`;
+  `AFortTeamInfo` gains the field after `PrivateInfo`.
+- Syntax check (not a full build): `clang++ -fsyntax-only` from the UE 4.25 toolchain (`Engine/Extras/ThirdPartyNotUE/SDKs/HostLinux/
+  Linux_x64/v16_clang-9.0.1-centos7`, clang 9) with the `FortniteGame` compile flags of the last build (`AFortPlayerStateAthena.cpp.o.rsp`,
+  `AFortGameStateAthena.cpp.o.rsp`, same `-Werror`), the scratch `Generated` directory first. The last build's UHT output
+  (`*.generated.h`) was made for the old header lines, so two patched copies were used (only the `UCLASS` and `GENERATED_BODY`
+  line numbers in the macro names changed; the function and property lists are unchanged). Result: `AFortPlayerStateAthena.cpp` and
+  `AFortGameStateAthena.cpp`: 0 diagnostics. The first run found the three errors above; the static-helper "no matching function"
+  errors of that run did not come back once they were fixed. `AFortTeamInfo` was compiled only through `AFortPlayerStateAthena.cpp`.
+  Not checked: the UHT run itself, the `.gen.cpp` files, and the rest of the module.
+
+### Decisions
+
+- Helper access is `public` for all three new helpers and all fields: the decompile shows callers only in
+  `AFortPlayerStateAthena` and one caller of `GetCurrentPlaylistAthena` in `AFortGameModeAthena`, but the whole binary is not
+  decompiled, so no narrower access is claimed.
+- The static helper lives in `AFortPlayerStateAthena.cpp` (its nine callers are here). Its other callers (PlayerController, PlayerState
+  RPCs, GameMode, the `OnRep_Kills`/`OnRep_AIKills`/`OnRep_DeathInfo` bodies outside the stat set) need their own static_helper entry in
+  their class's .cpp, or a shared home, when they are ported.
+- The `Role` and `UWorld` names were not added to the checker as they are. `GetLocalRole`, `ROLE_Authority`, `UWorld` and
+  `AGameStateBase` were added to `ENGINE_NAMES` (`check_behavior.py`), and the local-declaration regex now accepts references and
+  `for` heads. Both are checker-only changes; they do not change what the generator accepts.
+
+### Watch-list for the build owner
+
+1. Promote into `native/`, then the full UBT and UHT build and both smoke variants. The checks above did not run UHT. Confirm that
+   UHT accepts the forward declarations and the non-UPROPERTY `TMulticastDelegate` members inside `UCLASS`, and that `-Werror` is clean.
+2. Layout: the new fields are in offset order among the reflected members, but nothing checks the C++ layout against the binary
+   (no `static_assert` on offsets or the class size). If parity matters, add gap members or assert the offsets.
+3. Line-keyed UHT macros: the next promote regenerates them; no manual patch is needed.
+4. The `*Points` names and `AccumulatedPlayerScore` are ours (MEDIUM / LOW). Rename in the manifest and in the `.inc` files together.
+5. Not ported in this pass: `OnRep_Kills` and `OnRep_AIKills` (global `Broadcast` `0x140684de0` unidentified), `OnRep_DeathInfo`,
+   `OnRep_TotalPlayerScore` (inlines the same broadcast with its lock at `+0x1194`; not examined in this pass),
+   `OnRep_TeamKillScore`, and the PC and PS callers.
+
+### Next blockers (ordered)
+
+1. Build owner: promote, build, smoke (above).
+2. `0x140684de0` (global Broadcast) and `0x142a6ee20`, `0x1423def80`, `0x1423def70`: `OnRep_Kills`, `OnRep_AIKills`, `OnRep_DeathInfo`.
+3. `OnRep_TotalPlayerScore`: examine, port if its inlined broadcast matches `TotalPlayerScoreNative`.
+4. The PC and PS bodies (`OnClientVolumeManagerReplicated`, `ClientNotifyTeamLost_Implementation`, `ClientSendMatchStatsForPlayer_Implementation`,
+   `ServerClearSkydiveLeader_Implementation`, `Server_SetCanEditCreativeIsland_Implementation`): their callees are in the caller table of the
+   Eighth pass; the static helper needs an entry in each of their classes.
+
+### Files touched
+
+- `porting/behavior/MANIFEST.json` (28 entries added; `GetActivePlaylist` renamed; four `callee` notes updated)
+- `porting/behavior/README.md` (status, ninth pass, helper/field/checker sections)
+- `porting/behavior/CALLEE_PORT_QUEUE.md` (ninth pass paragraph, rows 2 to 5, ranking item 1)
+- `porting/behavior/COUNTS.txt` (rewritten by `check_behavior.py`)
+- `porting/behavior/check_behavior.py` (`ENGINE_NAMES`, `local_names`)
+- `porting/behavior/AFortGameStateAthena/GetCurrentPlaylistAthena.inc` (renamed from `GetActivePlaylist.inc`)
+- `porting/behavior/AFortPlayerStateAthena/`: `UpdateScoreForEvent.inc`, `UpdateTotalPlayerScore.inc`, `GetFortGameStateAthena.inc`, and nine `OnRep_Num*.inc`
+- `porting/decompilation_notes.md` (this section)
+
+Scratch only (not in the repository): the promote output and reports, the syntax logs, and the patched UHT headers under the scratchpad.
+Not touched: `porting/native/`, `gen_native_classes.py` and its `.md`, the git index, `/opt/fortnite/gen-worktree`, `porting/ghidra/`.

@@ -40,9 +40,12 @@ CPP_KEYWORDS = {
     "switch", "new", "delete", "unsigned", "signed", "char", "long", "short", "TEXT", "NULL",
     "Super", "ENetRole", "TSubclassOf", "TArray", "TMap", "TSet", "TEnumAsByte",
 }
-# Engine types and casts that snippets may use without a generated header (UE 4.25 names).
+# Engine types, casts and members that snippets may use without a generated header (UE 4.25 names). UWorld and
+# AGameStateBase are used by the static helper GetFortGameStateAthena, which lists their headers in its includes.
+# GetLocalRole() is the public AActor accessor of Role (TEnumAsByte<ENetRole>, private in UE 4.25; Actor.h:484) and
+# ROLE_Authority its enumerator (Engine/Classes/Engine/EngineTypes.h).
 ENGINE_NAMES = {"UClass", "UObject", "AActor", "FWeakObjectPtr", "TWeakObjectPtr", "FName", "FString", "FText",
-                "FVector", "TArray", "static_cast", "Cast"}
+                "FVector", "TArray", "static_cast", "Cast", "UWorld", "AGameStateBase", "GetLocalRole", "ROLE_Authority"}
 PLACEHOLDER_RE = re.compile(r"\b(TODO|FIXME|TBD|XXX|PLACEHOLDER|placeholder|not recovered|stub body)\b|\.\.\.", re.I)
 
 _header_cache = {}
@@ -135,7 +138,9 @@ def signature_params(sig):
 
 def local_names(code):
     names = set()
-    for m in re.finditer(r"(?:^|[;{}\n])\s*(?:const\s+)?[A-Za-z_][\w:]*\s*\*?\s*\*?\s*(\w+)\s*(?:=|;)", code):
+    # A declaration starts a statement, a block or a for-loop head, and its name may follow '*' or '&' (a pointer or a
+    # reference). Template arguments are not matched: a local of a template type is not counted (none is used).
+    for m in re.finditer(r"(?:^|[;{}\n(])\s*(?:const\s+)?[A-Za-z_][\w:]*\s*[*&]*\s*[*&]*\s*(\w+)\s*(?:=|;)", code):
         names.add(m.group(1))
     return names
 

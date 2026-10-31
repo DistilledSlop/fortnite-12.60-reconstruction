@@ -4,13 +4,15 @@ Hand-ported native function bodies, taken from the decompiled output of the ship
 (`porting/generated/decomp/` and `porting/generated/decomp_improved/`, both git-ignored). Each `.inc`
 is our own C++ re-expression of what the decompile does, not a copy of it.
 
-Status (see `MANIFEST.json`, 395 entries): **208 ported** (32 getters, 17 onrep, 61 impl, 25 exec, 73 validate; confidence 191 high, 17 medium), **187 skipped** with a reason (of which 17 are callees from the queue). Signatures: 78 `declared` (in the generated header now) and 130 `proposed` (the generator emits them when the splice is on). `python3 porting/behavior/check_behavior.py` reports 0 failures and 1 pending declaration: `AFortPlayerPawn::ServerSendZiplineState_Validate` (the generator declares it with WithValidation). The three RPC entries that were skipped as not declared (the zipline implementation and validate, and the quick-chat implementation) are ported again.
+Status (see `MANIFEST.json`, 424 entries): **237 ported** (32 getters, 26 onrep, 61 impl, 25 exec, 73 validate, 3 helper, 1 static_helper, 16 member_field; confidence 204 high, 33 medium), **187 skipped** with a reason (of which 17 are callees from the queue). `python3 porting/behavior/check_behavior.py` reports 0 failures; `COUNTS.txt` has 217 signatures declared in the generated header and 19 pending declarations (the generator emits those when the splice is on: 16 member fields, 2 helpers and `GetCurrentPlaylistAthena`). The RPC entries that were skipped as not declared (the zipline implementation and validate, and the quick-chat implementation) are ported again.
 
 Third pass (35 new bodies, see `porting/decompilation_notes.md`, "Third pass"): 15 empty bodies (exec thunks that
 tail-jump to the shared `ret` at `0x1406801c0`), 14 bodies that broadcast a multicast delegate through the dispatcher
 `0x1406a9dc0` (identified as `ProcessMulticastDelegate`), 4 FVector accessors, a float reset, and one RPC
 validate. Held back as uncertain: six validates on the folded body `0x140f6b550` (identity rests on vtable slot names),
 and the RPC validates that share folded bodies with mismatched argument registers.
+
+Ninth pass (see `porting/decompilation_notes.md`, "Ninth pass"): 28 new entries. 16 `member_field` (eleven int32 point caches, the four native score delegate lists and the `AFortTeamInfo` int32), 2 `helper` (`UpdateScoreForEvent`, `UpdateTotalPlayerScore`), 1 `static_helper` (`GetFortGameStateAthena`) and 9 `onrep` stat bodies (`OnRep_Num*`, two of them with the profiling-scope call `0x142cd3770` ported as a no-op). The Eighth pass helper `GetActivePlaylist` is renamed `GetCurrentPlaylistAthena` in place (no second entry). Each new snippet was spliced and verified in a scratch promote run (237 spliced, 0 rejected) and syntax-checked with the UE 4.25 clang (see the decompilation notes for the scope of that check).
 
 Sixth pass (see `porting/decompilation_notes.md`, "Sixth pass"): nine bodies. Six `ClientBroadcastOn*Finished_Implementation` (the eight missing `InlineMulticastDelegate` members are emitted now; their signatures are in declaration order), the zipline implementation and validate, and `ClientReceiveSquadQuickChatMessage_Implementation`. Each was spliced and verified in a scratch promote run (208 spliced, 0 rejected).
 
@@ -52,7 +54,10 @@ Sixth pass (see `porting/decompilation_notes.md`, "Sixth pass"): nine bodies. Si
 - Members are looked up in the class and in its generated ancestors. Bitfield and native bools are read and
   assigned by their header name.
 - Engine names allowed without a generated header (checker `ENGINE_NAMES`): `UClass`, `UObject`, `AActor`,
-  `FWeakObjectPtr`, `TWeakObjectPtr`, `FName`, `FString`, `FText`, `FVector`, `TArray`, `static_cast`, `Cast`.
+  `FWeakObjectPtr`, `TWeakObjectPtr`, `FName`, `FString`, `FText`, `FVector`, `TArray`, `static_cast`, `Cast`, and (ninth
+  pass) `UWorld`, `AGameStateBase`, `GetLocalRole` (the public accessor of the private `AActor::Role`) and `ROLE_Authority`.
+  The name is accepted by the checker only; the header is still needed. An entry that is not a helper or a field has no
+  `includes`, so a body of an `impl`, `onrep`, `exec` or `getter` entry cannot bring one in.
 - Each file starts with a `//` header comment: original address, decompile source, proxy score, what was
   inferred and `CONFIDENCE: HIGH|MEDIUM|LOW`. The checker requires the tag to match the manifest.
 
@@ -97,9 +102,10 @@ Manifest fields, in addition to the usual ones (`class`, `function`, `signature`
 `status`, `decompile_source`, `notes`):
 
 - `signature`: the C++ declaration without `;`, and without `static`, `virtual` or `inline` (the kind sets the linkage).
-  The return type is spelled as it is written (`UFortPlaylistAthena* GetActivePlaylist() const`), then the name, then
-  the parameter list. Every parameter has a type and a name. `const` is allowed only on `helper`.
-- `access` (`helper` only, required): `public` or `protected`. A `static_helper` takes no access.
+  The return type is spelled as it is written (`UFortPlaylistAthena* GetCurrentPlaylistAthena() const`), then the name,
+  then the parameter list. Every parameter has a type and a name. `const` is allowed only on `helper`.
+- `access` (`helper` only, required): `public` or `protected`. A `static_helper` takes no access. A helper that another
+  class calls must be `public` (a `protected` member is not visible to that class).
 - `includes` (optional): a list of header spellings (for example `Engine/World.h`) for types that the signature or the
   body needs and the generator does not resolve itself. Each spelling must be in the engine header index of the usable
   modules, otherwise the entry is rejected. The headers go into the .cpp, and into the .h for a member helper.
@@ -111,6 +117,9 @@ Types in a helper signature (and body names, as for the other kinds):
   `FText`, `FGuid`.
 - A struct or enum of a promoted module is included by the generator.
 - A class of this module is forward declared, and it must appear as a pointer or a reference (`UFoo*`, `const UFoo&`).
+  The generator adds the class header to the .cpp only when the body names the class. A body that dereferences such a
+  parameter must therefore name its class (the ninth pass writes a typed local, `const UFortPlaylistAthena* ScoringPlaylist
+  = Playlist;`); a comment does not count.
 - Anything else (an engine class such as `UWorld`) must be listed in `includes`, or the entry is rejected.
 - A class of another module is rejected, as for bodies.
 
@@ -133,8 +142,12 @@ Where the generator writes them (with `--promote`, when the splice is on):
 Checks: `verify_spliced` in the generator checks each helper's declaration (once, not under a UFUNCTION, under its access
 label), its definition (once, with the snippet as body) and the namespace position. `check_behavior.py --gen-root` checks
 the same on a generated tree, and the field rules of both kinds (`check_kind`). The worked example is
-`AFortGameStateAthena::GetActivePlaylist` (kind `helper`, `protected`, queue row 5): it returns
-`CurrentPlaylistInfo.OverridePlaylist` when that is non-null, else `CurrentPlaylistInfo.BasePlaylist`.
+`AFortGameStateAthena::GetCurrentPlaylistAthena` (kind `helper`, `public`, queue row 5, renamed from `GetActivePlaylist` in
+the ninth pass): it returns `CurrentPlaylistInfo.OverridePlaylist` when that is non-null, else `CurrentPlaylistInfo.BasePlaylist`.
+The static helper example is `GetFortGameStateAthena` (kind `static_helper`, queue row 4). It takes its world-context
+object as a parameter and lists its engine headers in `includes` (`UObject/Object.h`, `Engine/World.h`,
+`GameFramework/GameStateBase.h`), because its body names `UWorld` and `AGameStateBase`. The generator writes its
+definition in the .cpp of the class that owns the entry, so the other classes that call it need their own entry.
 
 ## Member fields (kind `member_field`)
 
@@ -142,7 +155,9 @@ A member field is a plain data member of a generated class that no UPROPERTY dec
 a native `TMulticastDelegate` list. It has no body, so it has no `inc_path` (an entry with one is rejected). Its fields:
 
 - `signature`: `type name`, without `;` and without the initialiser. The type is spelled as in C++, template arguments
-  included (`TMulticastDelegate<void(AFortPlayerStateAthena*, int32)> KillScoreNative`). `static`, `mutable`, `volatile`,
+  included (`TMulticastDelegate<void, AFortPlayerStateAthena*, int32> KillScoreNative`: UE 4.25 spells a multicast
+  delegate with the return type and the parameter types as template arguments, not as a function type; the first
+  spelling was rejected by the compiler in the ninth pass). `static`, `mutable`, `volatile`,
   `virtual`, `inline`, `extern`, `typedef`, `using` and `UPROPERTY` are rejected. The name is the entry's `function`.
 - `access` (required): `public`, `protected` or `private`.
 - `default` (optional): one expression, without `;`, `{`, `}` or a newline; a number is written as its text. Rendered as
@@ -179,8 +194,10 @@ name, as for reflected members; the plain token check accepts the names of the m
   placeholder/"not recovered"/"..." text (checked on the raw text, comments included);
 - best-effort token check: each bare identifier and each `this->X` in the body must be a parameter, a local,
   a type (generated header or file), a function, a member of the class or a generated ancestor, or an engine
-  name from the list above. `obj.X`, `obj->X` and `::`-qualified names are not checked. Numeric literal
-  suffixes (`0.0f`) are skipped;
+  name from the list above. A local is a declaration that starts a statement, a block or a `for` head, and its name
+  may follow `*` or `&` (ninth pass; a template-typed local is not recognised and needs a plain typed name instead).
+  The names of the class's member fields and helpers are accepted. `obj.X`, `obj->X` and `::`-qualified names are not
+  checked. Numeric literal suffixes (`0.0f`) are skipped;
 - skipped entries have a reason and no `inc_path`.
 
 Limits: the token check is textual. It does not check types or the decompile-to-C++ meaning; that is the review's job.
