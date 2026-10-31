@@ -21,7 +21,9 @@ Sixth pass (see `porting/decompilation_notes.md`, "Sixth pass"): nine bodies. Si
   several functions share one body.
   - `status`: `ported` (has an `inc_path`) or `skipped` (`inc_path` is null, `notes` holds the reason).
   - `kind`: `getter`, `onrep` (RepNotify body), `impl` (RPC `_Implementation`), `validate` (RPC `_Validate`),
-    `exec` (other BlueprintCallable body), `callee` (an unidentified helper queued in CALLEE_PORT_QUEUE.md).
+    `exec` (other BlueprintCallable body), `callee` (an unidentified helper queued in CALLEE_PORT_QUEUE.md),
+    `helper` (a non-reflected member function), `static_helper` (a static free function in the class .cpp) and
+    `member_field` (a non-reflected data member); see "Helpers" and "Member fields" below.
   - `signature_status`: `declared` (copied verbatim from the generated header), `proposed` (not in the header;
     the generator must emit it), or `not_declared` (skipped entries).
 - `<ClassName>/<FunctionName>.inc`: one snippet per ported function with its own header comment.
@@ -61,7 +63,7 @@ Turn it off with `--no-behavior` or `FN_BEHAVIOR_SPLICE=0`; the output then equa
 
 - `getter`, `exec` (`signature_status: proposed`): the non-RPC reflection function is emitted as
   `UFUNCTION(BlueprintCallable[, BlueprintPure])` (BlueprintPure when the reflection flag is set), with the manifest
-  signature (`const` included) and the snippet as body. Only these two kinds add functions that are not RPCs.
+  signature (`const` included) and the snippet as body. Apart from the helpers (see "Helpers" below), only these two kinds add functions that are not RPCs.
 Parameter order (generator change, see `porting/gen_native_classes.md`, "Parameter order"): a signature lists its
 parameters in declaration order, the order of the recorded offsets. The table lists them in reverse, so a manifest
 signature written in table order is rejected. In this pass the 27 `impl` and `validate` signatures with two or more
@@ -83,6 +85,85 @@ every spliced function is checked for one declaration, the UFUNCTION line in fro
 signature, and a body equal to the snippet; a mismatch stops the run before anything is written.
 
 Snippet bodies keep their comment header as written. The "Declared in generated header" lines were refreshed in the fourth pass (no: the generator emits the declaration once the splice is on; yes: the header has it).
+
+## Helpers (kinds `helper` and `static_helper`)
+
+A helper is a function that no reflected UFUNCTION owns, so the generator writes its declaration itself. `helper` is a
+plain C++ member of the class. `static_helper` is a static free function in the class's .cpp. Both are `status: "ported"`
+with an `inc_path`, and `signature_status: "proposed"` until the generator emits them. A helper that was queued in
+`CALLEE_PORT_QUEUE.md` is ported by adding its entry here; the queue row is not edited by the generator.
+
+Manifest fields, in addition to the usual ones (`class`, `function`, `signature`, `inc_path`, `confidence`, `address`,
+`status`, `decompile_source`, `notes`):
+
+- `signature`: the C++ declaration without `;`, and without `static`, `virtual` or `inline` (the kind sets the linkage).
+  The return type is spelled as it is written (`UFortPlaylistAthena* GetActivePlaylist() const`), then the name, then
+  the parameter list. Every parameter has a type and a name. `const` is allowed only on `helper`.
+- `access` (`helper` only, required): `public` or `protected`. A `static_helper` takes no access.
+- `includes` (optional): a list of header spellings (for example `Engine/World.h`) for types that the signature or the
+  body needs and the generator does not resolve itself. Each spelling must be in the engine header index of the usable
+  modules, otherwise the entry is rejected. The headers go into the .cpp, and into the .h for a member helper.
+
+Types in a helper signature (and body names, as for the other kinds):
+
+- Fundamentals and CoreMinimal names need no include: `void`, `bool`, `int8`..`uint64`, `float`, `double`, `TArray`,
+  `TMap`, `TSet`, `TSubclassOf`, `TWeakObjectPtr`, `TSoftObjectPtr`, `TSoftClassPtr`, `TEnumAsByte`, `FString`, `FName`,
+  `FText`, `FGuid`.
+- A struct or enum of a promoted module is included by the generator.
+- A class of this module is forward declared, and it must appear as a pointer or a reference (`UFoo*`, `const UFoo&`).
+- Anything else (an engine class such as `UWorld`) must be listed in `includes`, or the entry is rejected.
+- A class of another module is rejected, as for bodies.
+
+The body (`.inc`) follows the contract above. A member helper uses the object's members as bare names. A `static_helper`
+has no object: its body uses its parameters, its locals, its types and other static helpers, and it must not use `this`,
+bare class members or bare class member functions. Dependencies: a body may name other helpers of the same class. A
+member helper may use any emitted helper. A `static_helper` may use only static helpers, and it is rejected if it names
+a member helper. A body (of any kind) that names a helper that is not emitted is rejected. The static helpers are
+emitted dependencies first. A cycle among static helpers rejects every static helper in or behind the cycle.
+
+Where the generator writes them (with `--promote`, when the splice is on):
+
+- `helper`: the declaration goes into `<Class>.h` after the reflected members and `GetLifetimeReplicatedProps`, in a
+  block headed by a comment, outside any UFUNCTION declaration. Its access label (`public:` or `protected:`) is written
+  when it changes; the block starts public, and public helpers come first. The definition goes into `<Class>.cpp` after
+  the reflected functions.
+- `static_helper`: the definition goes into `<Class>.cpp` in `namespace { ... }  // namespace`, before every member
+  definition, written `static <ret> <name>(<params>)`. There is no header declaration.
+
+Checks: `verify_spliced` in the generator checks each helper's declaration (once, not under a UFUNCTION, under its access
+label), its definition (once, with the snippet as body) and the namespace position. `check_behavior.py --gen-root` checks
+the same on a generated tree, and the field rules of both kinds (`check_kind`). The worked example is
+`AFortGameStateAthena::GetActivePlaylist` (kind `helper`, `protected`, queue row 5): it returns
+`CurrentPlaylistInfo.OverridePlaylist` when that is non-null, else `CurrentPlaylistInfo.BasePlaylist`.
+
+## Member fields (kind `member_field`)
+
+A member field is a plain data member of a generated class that no UPROPERTY declares: a native field such as a cache, or
+a native `TMulticastDelegate` list. It has no body, so it has no `inc_path` (an entry with one is rejected). Its fields:
+
+- `signature`: `type name`, without `;` and without the initialiser. The type is spelled as in C++, template arguments
+  included (`TMulticastDelegate<void(AFortPlayerStateAthena*, int32)> KillScoreNative`). `static`, `mutable`, `volatile`,
+  `virtual`, `inline`, `extern`, `typedef`, `using` and `UPROPERTY` are rejected. The name is the entry's `function`.
+- `access` (required): `public`, `protected` or `private`.
+- `default` (optional): one expression, without `;`, `{`, `}` or a newline; a number is written as its text. Rendered as
+  `type name = default;`.
+- `offset` (optional, informational for the layout): an integer or a string such as `"0xe88"`. A field with an offset is
+  placed in declaration order among the reflected members: before the first reflected member whose offset is larger. A
+  field without an offset goes after the reflected members, in manifest order. Placement is the only use of the offset;
+  the bodies name the field, not its offset.
+- `includes` (optional): header spellings for types the generator does not resolve, as for helpers (for example
+  `Delegates/Delegate.h` for `TMulticastDelegate`).
+
+Type rules are those of helper signatures: a class of this module must be a pointer or reference, a struct or enum of a
+promoted module is included, and any other name needs `includes`. A field name must not repeat a reflected member, a
+helper or a function of the class.
+
+Output: the declaration goes into `<Class>.h` (no definition in the .cpp), under its access label. A non-public field is
+followed by `public:`, because the reflected members that follow are public. The declaration is outside any UPROPERTY and
+UFUNCTION, and the field is not replicated. The generator's `verify_spliced` checks the declaration (once, outside a
+UPROPERTY or UFUNCTION, under its access label) and the offset order. `check_behavior.py` checks the same in `--gen-root`
+mode, and in plain mode reports the field declared or pending. Helper bodies may name a field of their class as a bare
+name, as for reflected members; the plain token check accepts the names of the manifest's member fields.
 
 ## Checker
 
