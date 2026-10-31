@@ -2,6 +2,11 @@
 #include "AFortVolume.h"
 #include "Net/UnrealNetwork.h"
 
+void AFortVolume::OnRep_BoundsCollisionSetting()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortVolume::OnRep_bShowPublishWatermark()
 {
 	// Body not recovered: reflection-derived stub.
@@ -37,6 +42,7 @@ void AFortVolume::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifet
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(AFortVolume, bUserGeneratedContentRestricted);
+	DOREPLIFETIME(AFortVolume, BoundsCollisionSetting);
 	DOREPLIFETIME(AFortVolume, VolumeState);
 	DOREPLIFETIME(AFortVolume, CurrentPlayset);
 	DOREPLIFETIME(AFortVolume, bShowPublishWatermark);

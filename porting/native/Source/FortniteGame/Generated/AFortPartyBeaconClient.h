@@ -8,6 +8,7 @@
 
 #include "FEmptyServerReservation.h"
 #include "GameFramework/OnlineReplStructs.h"
+#include "PartyBeaconState.h"
 
 #include "AFortPartyBeaconClient.generated.h"
 
@@ -34,6 +35,10 @@ public:
 	bool bHasReconnected;
 
 	UFUNCTION(Client, Reliable)
+	void ClientAbandonResponse(EPartyReservationResult::Type ReservationResponse);
+	void ClientAbandonResponse_Implementation(EPartyReservationResult::Type ReservationResponse);
+
+	UFUNCTION(Client, Reliable)
 	void ClientAllowedToProceedFromReservation();
 	void ClientAllowedToProceedFromReservation_Implementation();
 
@@ -41,9 +46,17 @@ public:
 	void ClientAllowedToProceedFromReservationTimeout();
 	void ClientAllowedToProceedFromReservationTimeout_Implementation();
 
+	UFUNCTION(Client, Reliable)
+	void ClientReconnectResponse(EPartyReservationResult::Type ReservationResponse);
+	void ClientReconnectResponse_Implementation(EPartyReservationResult::Type ReservationResponse);
+
 	UFUNCTION(Server, Reliable)
 	void ServerAbandonExistingReservation(const FString& InSessionId, const FUniqueNetIdRepl& RequestingPlayer);
 	void ServerAbandonExistingReservation_Implementation(const FString& InSessionId, const FUniqueNetIdRepl& RequestingPlayer);
+
+	UFUNCTION(Server, Reliable)
+	void ServerEmptyServerReservationRequest(const FString& InSessionId, const FEmptyServerReservation& ReservationData, const FPartyReservation& Reservation);
+	void ServerEmptyServerReservationRequest_Implementation(const FString& InSessionId, const FEmptyServerReservation& ReservationData, const FPartyReservation& Reservation);
 
 	UFUNCTION(Server, Reliable)
 	void ServerReconnectExistingReservation(const FString& InSessionId, const FUniqueNetIdRepl& RequestingPlayer);

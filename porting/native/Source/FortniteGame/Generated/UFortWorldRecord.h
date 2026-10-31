@@ -8,6 +8,7 @@
 
 #include "FFortCloudSaveInfo.h"
 #include "FFortPlayerRecord.h"
+#include "FFortZoneInstanceDetails.h"
 
 #include "UFortWorldRecord.generated.h"
 
@@ -28,6 +29,10 @@ public:
 	// table index 2, flags 0x10000000002000
 	UPROPERTY(Transient)
 	TArray<FFortPlayerRecord> SavedPlayers;
+
+	// table index 1, flags 0x10000000002000
+	UPROPERTY(Transient)
+	FFortZoneInstanceDetails ZoneInstanceInfo;
 
 	// table index 0, flags 0x20080000000000
 	UPROPERTY()

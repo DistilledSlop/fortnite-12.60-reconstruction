@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortMatchmakingPolicy.h"
 
+#include "FFortInviteSessionParams.h"
+
 class UFortSessionHelper;
 
 #include "UFortMatchmakingSingleSession.generated.h"
@@ -16,6 +18,10 @@ class FORTNITEGAME_API UFortMatchmakingSingleSession : public UFortMatchmakingPo
 	GENERATED_BODY()
 
 public:
+	// table index 1, flags 0x40000000002000
+	UPROPERTY(Transient)
+	FFortInviteSessionParams CurrentSessionParams;
+
 	// table index 0, flags 0x40000000002000
 	UPROPERTY(Transient)
 	UFortSessionHelper* SessionHelper;

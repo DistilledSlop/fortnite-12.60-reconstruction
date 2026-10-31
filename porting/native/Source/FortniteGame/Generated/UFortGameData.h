@@ -6,10 +6,12 @@
 #include "CoreMinimal.h"
 #include "Engine/DataAsset.h"
 
+#include "ECommonInputType.h"
 #include "Engine/CurveTable.h"
 #include "FDamageDistanceTagEval.h"
 #include "FFortHighlightColorsContainer.h"
 #include "FFortQuestPackInfo.h"
+#include "FOnlineAccountTexts.h"
 #include "FPartnerPcbInfo.h"
 #include "FSubGameInfo.h"
 #include "GameplayTagContainer.h"
@@ -159,6 +161,10 @@ public:
 	// table index 130, flags 0x10000000000001
 	UPROPERTY()
 	UFortQuestIndicatorData* QuestIndicatorData;
+
+	// table index 129, flags 0x10000000000001
+	UPROPERTY()
+	FOnlineAccountTexts OnlineAccountTexts;
 
 	// table index 127, flags 0x10000000000001
 	UPROPERTY()
@@ -419,6 +425,10 @@ public:
 	// table index 63, flags 0x1
 	UPROPERTY()
 	UTexture2D* InputTypeIcons;
+
+	// table index 61, flags 0x1
+	UPROPERTY()
+	ECommonInputType InputTypeIcons_Key;
 
 	// table index 59, flags 0x44000000000001
 	UPROPERTY()

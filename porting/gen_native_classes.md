@@ -213,10 +213,18 @@ Promote mode differs from the draft in these ways:
   section of `porting/behavior/README.md`).
 - Net service functions (flags `FUNC_NetRequest` / `FUNC_NetResponse`, no Server/Client/NetMulticast role) are
   emitted as `UFUNCTION(ServiceRequest(...))` / `UFUNCTION(ServiceResponse(...))` (`net_service_kind`). They have no
-  `_Implementation`: their body is the programmer's, and the stub is empty (with `return {};` when they return a value).
+  `_Implementation`. A request gets no `.cpp` definition (UHT generates it, see below). A response is the programmer's body,
+  and its stub is empty (with `return {};` when it returns a value).
   The endpoint is a placeholder (`NET_SERVICE_ENDPOINT`); the response ids are `NET_RESPONSE_IDS`, read from the dump
   because the reflection tables do not carry `RPCId` / `RPCResponseId`. A response id needs `JSBridge` as the endpoint
   (UHT, HeaderParser.cpp). Request ids are 0 in the dump.
+- A service request's out parameter (`FClientUrlContext& Context`: CPF_OutParm and CPF_RepSkip, no CPF_ReferenceParm in the
+  reflection) is declared `UPARAM(NotReplicated) FClientUrlContext& Context` in the header (`header_arg`). UHT rejects any
+  non-const reference on a net function unless the parameter is NotReplicated (HeaderParser.cpp, "unless marked
+  NotReplicated"), and the flags then match the original.
+- A service request has no `.cpp` definition: UHT generates its Event thunk (a `ProcessEvent` forwarder, found in
+  `Intermediate/.../Inc/<Module>/<Class>.gen.cpp`) for every request. The first build failed at link with duplicate
+  symbols, 138 of 138 requests (`render_promoted_cpp` skips them; a spliced body raises).
 - A const RPC is emitted with `const` on the declaration and on its `_Implementation` (UHT sets `FUNC_Const` for it).
 - UCLASS has no `minimalapi` (UHT rejects it with the module API macro).
 

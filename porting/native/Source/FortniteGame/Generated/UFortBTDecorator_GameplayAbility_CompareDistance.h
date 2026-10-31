@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortBTDecorator_QueryGameplayAbility.h"
 
+#include "FDistanceToTargetComparison.h"
+
 #include "UFortBTDecorator_GameplayAbility_CompareDistance.generated.h"
 
 UCLASS()
@@ -14,5 +16,9 @@ class FORTNITEGAME_API UFortBTDecorator_GameplayAbility_CompareDistance : public
 	GENERATED_BODY()
 
 public:
+	// table index 0, flags 0x10000000000001
+	UPROPERTY()
+	TArray<FDistanceToTargetComparison> DistanceComparisons;
+
 };
 

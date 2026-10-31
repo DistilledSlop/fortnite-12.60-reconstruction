@@ -6,7 +6,13 @@
 #include "CoreMinimal.h"
 #include "UFortMcpProfile.h"
 
+#include "EAthenaCustomizationCategory.h"
+#include "FClientUrlContext.h"
+#include "FDedicatedServerUrlContext.h"
+#include "FFortAthenaLoadoutData.h"
+#include "FFortQuestObjectiveCompletion.h"
 #include "FFortSubgameClientSettings.h"
+#include "FMcpVariantReader.h"
 
 class UFortCosmeticLockerItem;
 
@@ -29,6 +35,60 @@ public:
 	// table index 0, flags 0x40000000000000
 	UPROPERTY()
 	FFortSubgameClientSettings CachedClientSettings;
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void ClaimQuestReward(const FString& QuestId, int32 SelectedRewardIndex, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void ClientQuestLogin(UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void CopyCosmeticLoadout(int32 SourceIndex, int32 TargetIndex, const FString& OptNewNameForTarget, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void DeleteCosmeticLoadout(int32 Index, int32 FallbackLoadoutIndex, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void FortRerollDailyQuest(const FString& QuestId, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void MarkNewQuestNotificationSent(const TArray<FString>& ItemIds, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void ServerQuestLogin(const FString& MatchmakingSessionId, UPARAM(NotReplicated) FDedicatedServerUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void SetActiveLoadoutIndex(int32 Index, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void SetCosmeticLockerBanner(const FString& LockerItem, const FString& BannerIconTemplateName, const FString& BannerColorTemplateName, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void SetCosmeticLockerName(const FString& LockerItem, const FString& Name, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void SetCosmeticLockerSlot(const FString& LockerItem, const EAthenaCustomizationCategory& Category, const FString& ItemToSlot, int32 SlotIndex, const TArray<FMcpVariantReader>& VariantUpdates, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void SetCosmeticLockerSlots(const FString& LockerItem, const TArray<FFortAthenaLoadoutData>& LoadoutData, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void SetItemFavoriteStatus(const FString& TargetItemId, bool bFavorite, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void SetItemFavoriteStatusBatch(const TArray<FString>& ItemIds, const TArray<bool>& itemFavStatus, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void SetPinnedQuests(const TArray<FString>& PinnedQuestIds, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void SetRandomCosmeticLoadout(UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void UpdateQuestClientObjectives(const TArray<FFortQuestObjectiveCompletion>& Advance, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void UpdateQuests(const TArray<FFortQuestObjectiveCompletion>& Advance, UPARAM(NotReplicated) FDedicatedServerUrlContext& Context);
 
 };
 

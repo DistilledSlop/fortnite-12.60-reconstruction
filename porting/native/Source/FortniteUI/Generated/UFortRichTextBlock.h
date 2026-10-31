@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "Components/Widget.h"
 
+#include "Framework/Text/TextLayout.h"
 #include "Layout/Margin.h"
 #include "Styling/SlateTypes.h"
 
@@ -39,6 +40,10 @@ public:
 	// table index 6, flags 0x10000000000001
 	UPROPERTY()
 	bool AutoWrapText;
+
+	// table index 5, flags 0x10000000000001
+	UPROPERTY()
+	TEnumAsByte<ETextJustify::Type> Justification;
 
 	// table index 4, flags 0x10000000000001
 	UPROPERTY()

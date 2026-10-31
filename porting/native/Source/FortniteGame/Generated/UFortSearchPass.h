@@ -7,6 +7,7 @@
 #include "UObject/Object.h"
 
 #include "FFortSearchPassParams.h"
+#include "FFortSearchPassState.h"
 
 class UFortSessionHelper;
 
@@ -25,6 +26,10 @@ public:
 	// table index 1, flags 0x20080000002000
 	UPROPERTY(Transient)
 	FFortSearchPassParams CurrentSearchParams;
+
+	// table index 0, flags 0x20080000002000
+	UPROPERTY(Transient)
+	FFortSearchPassState CurrentSearchPassState;
 
 };
 

@@ -9,6 +9,7 @@
 #include "EFortAccountLinkingUIConfig.h"
 #include "FChallengeObjectiveHotfix.h"
 #include "FKairosSubmitLogOptions.h"
+#include "FLoginFailureLogSubmitOptions.h"
 #include "FLogoutLogSubmitOptions.h"
 #include "FPartyFailureLogSubmit.h"
 #include "FPurchaseFailureLogSubmitOptions.h"
@@ -214,6 +215,10 @@ public:
 	// table index 101, flags 0x10000000004000
 	UPROPERTY(Config)
 	float CreativeReturnToHubTutorialDelay;
+
+	// table index 100, flags 0x10000000004000
+	UPROPERTY(Config)
+	FLoginFailureLogSubmitOptions LoginFailureOptions;
 
 	// table index 99, flags 0x10000000004000
 	UPROPERTY(Config)

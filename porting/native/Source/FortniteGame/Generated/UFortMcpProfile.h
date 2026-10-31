@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UMcpProfile.h"
 
+#include "FClientUrlContext.h"
+
 #include "UFortMcpProfile.generated.h"
 
 UCLASS(config=Engine)
@@ -14,5 +16,11 @@ class FORTNITEGAME_API UFortMcpProfile : public UMcpProfile
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void MarkItemSeen(const TArray<FString>& ItemIds, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void RemoveGiftBox(const TArray<FString>& GiftBoxItemIds, UPARAM(NotReplicated) FClientUrlContext& Context);
+
 };
 

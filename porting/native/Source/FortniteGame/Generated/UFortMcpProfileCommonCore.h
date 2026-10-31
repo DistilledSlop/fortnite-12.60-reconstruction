@@ -6,6 +6,9 @@
 #include "CoreMinimal.h"
 #include "UFortMcpProfile.h"
 
+#include "ESocialImportPanelPlatform.h"
+#include "FClientUrlContext.h"
+
 #include "UFortMcpProfileCommonCore.generated.h"
 
 UCLASS(config=Engine)
@@ -21,6 +24,39 @@ public:
 	// table index 0, flags 0x40000000004000
 	UPROPERTY(Config)
 	int32 AffiliateExpirationSeconds;
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void ClaimImportFriendsReward(const ESocialImportPanelPlatform& Network, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void ClaimMfaEnabled(bool bClaimForStw, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void CompletePlayerSurvey(const FString& SurveyId, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void IssueFriendCode(const FString& CodeTokenType, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void RefundMtxPurchase(const FString& PurchaseId, bool QuickReturn, const FString& GameContext, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void SetAffiliateName(const FString& AffiliateName, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void SetIntroGamePlayed(UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void SetMatchmakingBansViewed(UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void SetMtxPlatform(const FString& NewPlatform, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void SetReceiveGiftsEnabled(bool bReceiveGifts, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void TwitchUpdateBroadcasterRegistration(const FString& AccessToken, const FString& ChannelId, UPARAM(NotReplicated) FClientUrlContext& Context);
 
 };
 

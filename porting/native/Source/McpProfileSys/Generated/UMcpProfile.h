@@ -6,6 +6,9 @@
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
 
+#include "FBaseUrlContext.h"
+#include "FClientUrlContext.h"
+#include "FDedicatedServerUrlContext.h"
 #include "Misc/DateTime.h"
 
 class UMcpProfileGroup;
@@ -61,6 +64,24 @@ public:
 	// table index 0, flags 0x40000000000000
 	UPROPERTY()
 	FDateTime ProfileWriteLockExpireTime;
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void DeleteAllProfiles(UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void DeleteProfile(UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void LockProfileForWrite(const FString& Code, int32 Timeout, UPARAM(NotReplicated) FDedicatedServerUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void QueryProfile(UPARAM(NotReplicated) FBaseUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void QueryPublicProfile(UPARAM(NotReplicated) FBaseUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void UnlockProfileForWrite(const FString& Code, UPARAM(NotReplicated) FDedicatedServerUrlContext& Context);
 
 };
 

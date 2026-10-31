@@ -24,6 +24,7 @@
 #include "FGameplayMutatorEventData.h"
 #include "FGameplayMutatorObjectDataArray.h"
 #include "FHideGameModeMessage.h"
+#include "FMeshNetworkStatus.h"
 #include "FOnAllWinnersAnnounced.h"
 #include "FOnClientVolumeManagerReplicated.h"
 #include "FOnContextTutorialGameModeMessageRequest.h"
@@ -767,6 +768,10 @@ public:
 	UPROPERTY(Replicated)
 	float StormCNDamageVulnerabilityLevel3;
 
+	// table index 33, flags 0x10000100000020
+	UPROPERTY(ReplicatedUsing=OnRep_MeshNetworkStatus)
+	FMeshNetworkStatus MeshNetworkStatus;
+
 	// table index 32, flags 0x10000000080000
 	UPROPERTY()
 	FOnClientVolumeManagerReplicated OnClientVolumeManagerReplicated;
@@ -940,6 +945,9 @@ public:
 
 	UFUNCTION()
 	void OnRep_MapInfo();
+
+	UFUNCTION()
+	void OnRep_MeshNetworkStatus();
 
 	UFUNCTION()
 	void OnRep_MutatorEventData();

@@ -6,6 +6,16 @@
 #include "CoreMinimal.h"
 #include "UFortMcpProfileSubgame.h"
 
+#include "ECampaignCustomizationCategory.h"
+#include "FAccountIdAndMatchEndData.h"
+#include "FAccountIdAndScore.h"
+#include "FClientUrlContext.h"
+#include "FDedicatedServerUrlContext.h"
+#include "FEndZoneScoreAndAwards.h"
+#include "FFortPersistentGameplayStatValue.h"
+#include "FFortQuestEarnedBadgeData.h"
+#include "FFortQuestObjectiveCompletion.h"
+#include "FMcpVariantReader.h"
 #include "FOnDifferentHeroLoadoutActivated.h"
 
 #include "UFortMcpProfileCampaign.generated.h"
@@ -27,6 +37,177 @@ public:
 	// table index 0, flags 0x40000000004000
 	UPROPERTY(Config)
 	float HeroLoadoutCommandDelaySeconds;
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void AbandonExpedition(const FString& ExpeditionId, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void ActivateConsumable(const FString& TargetItemId, const FString& TargetAccountId, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void ApplyAlteration(const FString& TargetItemId, const FString& AlterationItemId, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void AssignGadgetToLoadout(const FString& GadgetId, const FString& LoadoutId, int32 SlotIndex, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void AssignHeroToLoadout(const FString& HeroId, const FString& LoadoutId, const FString& SlotName, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void AssignTeamPerkToLoadout(const FString& TeamPerkId, const FString& LoadoutId, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void AssignWorkerToSquad(const FString& CharacterId, const FString& SquadId, int32 SlotIndex, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void AssignWorkerToSquadBatch(const TArray<FString>& CharacterIds, const TArray<FString>& SquadIds, const TArray<int32>& SlotIndices, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void ClaimCollectedResources(const TArray<FString>& CollectorsToClaim, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void ClaimCollectionBookRewards(int32 RequiredXp, int32 SelectedRewardIndex, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void ClaimDifficultyIncreaseRewards(UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void ClaimLoginReward(UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void ClaimMissionAlertRewards(UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void ClearHeroLoadout(const FString& LoadoutId, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void CollectExpedition(const FString& ExpeditionTemplate, const FString& ExpeditionId, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void ConsumeItems(const TArray<FString>& ItemsToConsumeIds, const TArray<int32>& ItemCountsToConsume, const FString& ConsumeReason, UPARAM(NotReplicated) FDedicatedServerUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void ConvertItem(const FString& TargetItemId, int32 ConversionIndex, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void ConvertLegacyAlterations(const FString& TargetItemId, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void EarnScore(const TArray<FAccountIdAndScore>& PlayersAndScores, const FString& MatchmakingSessionId, UPARAM(NotReplicated) FDedicatedServerUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void EndMatch(const TArray<FAccountIdAndMatchEndData>& PlayersAndMatchEndData, const FString& MatchmakingSessionId, const FString& MissionName, const FString& MissionStatus, int32 DifficultyIncreaseTier, UPARAM(NotReplicated) FDedicatedServerUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void EndPrimaryMission(const TArray<FFortQuestObjectiveCompletion>& Advance, const FString& MatchmakingSessionId, const FString& MissionName, const FString& MissionStatus, const TArray<FFortQuestEarnedBadgeData>& EarnedBadgeData, const TArray<FString>& EarnedItemCaches, int32 DifficultyIncreaseTier, int32 NumMissionPoints, bool bCriticalMatchBonus, const TArray<FString>& ShuffledLoadoutUsed, int32 ShuffledLockerUsedIndex, UPARAM(NotReplicated) FDedicatedServerUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void EquipCampaignCustomization(const ECampaignCustomizationCategory& SlotName, const FString& ItemToSlot, int32 IndexWithinSlot, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void FailsafeSaveMissionResults(const FEndZoneScoreAndAwards& PlayerScoreData, const FString& MatchmakingSessionId, const FString& MissionName, const FString& MissionStatus, int32 DifficultyIncreaseTier, UPARAM(NotReplicated) FDedicatedServerUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void ModifyMission(const FString& MatchmakingSessionId, const FString& Difficulty, UPARAM(NotReplicated) FDedicatedServerUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void OpenCardPack(const FString& CardPackItemId, int32 SelectionIdx, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void OpenCardPackBatch(const TArray<FString>& CardPackItemIds, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void OverrideMissionRewardLootLevel(const FString& MatchmakingSessionId, int32 OverrideLootLevel, UPARAM(NotReplicated) FDedicatedServerUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void OverrideMissionRewardLootTierGroup(const FString& MatchmakingSessionId, const FString& OverrideRewardTag, UPARAM(NotReplicated) FDedicatedServerUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void PopulatePrerolledOffers(UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void PurchaseOrUpgradeHomebaseNode(const FString& NodeId, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void PurchaseResearchStatUpgrade(const FString& StatId, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void RecycleItem(const FString& TargetItemId, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void RecycleItemBatch(const TArray<FString>& TargetItemIds, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void RefreshExpeditions(UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void RefundItem(const FString& TargetItemId, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void ResearchItemFromCollectionBook(const FString& TemplateId, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void RespecAlteration(const FString& TargetItemId, int32 AlterationSlot, const FString& AlterationId, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void RespecResearch(UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void RespecUpgrades(UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void SetActiveHeroLoadout(const FString& SelectedLoadout, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void SetGameplayStats(const TArray<FFortPersistentGameplayStatValue>& GameplayStats, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void SetHeroCosmeticVariants(const FString& HeroItem, const TArray<FMcpVariantReader>& OutfitVariants, const TArray<FMcpVariantReader>& BackblingVariants, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void SetLoadoutName(const FString& LoadoutName, const FString& LoadoutId, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void SkipTutorial(UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void SlotItemInCollectionBook(const FString& ItemId, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void StartExpedition(const FString& ExpeditionId, const FString& SquadId, const TArray<FString>& ItemIds, const TArray<int32>& SlotIndices, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void StartPrimaryMission(const TArray<FFortQuestObjectiveCompletion>& Advance, const FString& MatchmakingSessionId, const FString& MissionName, UPARAM(NotReplicated) FDedicatedServerUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void TransmogItem(const FString& TransmogKeyTemplateId, const TArray<FString>& SacrificeItemIds, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void UnassignAllSquads(const TArray<FString>& SquadIds, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void UnloadWarehouse(const TArray<FString>& ResourceTypes, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void UnslotAllWorkers(const TArray<FString>& BuildingIds, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void UnslotItemFromCollectionBook(const FString& ItemId, const FString& Specific, const FString& TemplateId, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void UpdateBuildingLevelAndRating(const FString& BuildingId, int32 LastBuildingLevel, int32 LastBuildingRating, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void UpgradeAlteration(const FString& TargetItemId, int32 AlterationSlot, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void UpgradeItem(const FString& TargetItemId, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void UpgradeItemBulk(const FString& TargetItemId, int32 DesiredLevel, const FString& DesiredTier, int32 ConversionRecipeIndexChoice, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void UpgradeItemRarity(const FString& TargetItemId, UPARAM(NotReplicated) FClientUrlContext& Context);
 
 };
 

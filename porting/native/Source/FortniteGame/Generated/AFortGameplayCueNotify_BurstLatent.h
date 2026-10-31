@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "AFortGameplayCueNotify_Actor.h"
 
+#include "FFortBurstEffectData.h"
 #include "FFortGameplayCueSpawnResult.h"
 
 #include "AFortGameplayCueNotify_BurstLatent.generated.h"
@@ -16,6 +17,10 @@ class FORTNITEGAME_API AFortGameplayCueNotify_BurstLatent : public AFortGameplay
 	GENERATED_BODY()
 
 public:
+	// table index 2, flags 0x10000000000015
+	UPROPERTY()
+	FFortBurstEffectData BurstEffectData;
+
 	// table index 1, flags 0x10008000000014
 	UPROPERTY()
 	FFortGameplayCueSpawnResult BurstResult;

@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortMcpProfile.h"
 
+#include "FClientUrlContext.h"
+
 #include "UFortMcpProfileCollectionBook.generated.h"
 
 UCLASS(config=Engine)
@@ -14,5 +16,14 @@ class FORTNITEGAME_API UFortMcpProfileCollectionBook : public UFortMcpProfile
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void ClaimCollectionBookPageRewards(const FString& PageTemplateId, const FString& SectionId, int32 SelectedRewardIndex, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void ConvertSlottedItem(const FString& TargetItemId, int32 ConversionIndex, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void UpgradeSlottedItem(const FString& TargetItemId, int32 DesiredLevel, UPARAM(NotReplicated) FClientUrlContext& Context);
+
 };
 

@@ -9,6 +9,7 @@
 #include "FAthenaLevelInfo.h"
 #include "FAthenaMatchStats.h"
 #include "FAthenaMatchTeamStats.h"
+#include "FAthenaRewardResult.h"
 #include "FAthenaTravelRecord.h"
 #include "FDataAvailableEvent.h"
 #include "FOnTravelLogUpdated.h"
@@ -56,6 +57,10 @@ public:
 	// table index 3, flags 0x10000000000015
 	UPROPERTY()
 	bool bHasRewards;
+
+	// table index 2, flags 0x10000000000000
+	UPROPERTY()
+	FAthenaRewardResult EndOfMatchResults;
 
 	// table index 1, flags 0x10000000000015
 	UPROPERTY()

@@ -7,6 +7,7 @@
 #include "BehaviorTree/BTDecorator.h"
 
 #include "BehaviorTree/BehaviorTreeTypes.h"
+#include "BehaviorTree/Blackboard/BlackboardKeyType.h"
 
 #include "UFortBTDecorator_DistanceBetween.generated.h"
 
@@ -16,6 +17,10 @@ class FORTNITEGAME_API UFortBTDecorator_DistanceBetween : public UBTDecorator
 	GENERATED_BODY()
 
 public:
+	// table index 6, flags 0x10000000000001
+	UPROPERTY()
+	TEnumAsByte<EArithmeticKeyOperation::Type> Operator;
+
 	// table index 5, flags 0x20080000000001
 	UPROPERTY()
 	FBlackboardKeySelector BlackboardKeyA;

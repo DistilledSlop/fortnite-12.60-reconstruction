@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "GameplayCueNotify_Static.h"
 
+#include "FFortBurstEffectData.h"
 #include "FFortGameplayCueAttachInfo.h"
 #include "FFortGameplayCueSpawnCondition.h"
 
@@ -24,6 +25,10 @@ public:
 	// table index 1, flags 0x10000000000015
 	UPROPERTY()
 	FFortGameplayCueAttachInfo DefaultAttachment;
+
+	// table index 0, flags 0x10000000000015
+	UPROPERTY()
+	FFortBurstEffectData BurstEffectData;
 
 };
 

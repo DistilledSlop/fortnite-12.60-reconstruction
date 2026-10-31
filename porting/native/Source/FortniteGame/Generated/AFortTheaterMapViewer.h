@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 
+#include "FFortAvailableMissionAlerts.h"
+#include "FFortAvailableTheaterMissions.h"
 #include "FFortTheaterMapData.h"
 #include "Math/Box.h"
 
@@ -19,6 +21,14 @@ class FORTNITEGAME_API AFortTheaterMapViewer : public AActor
 	GENERATED_BODY()
 
 public:
+	// table index 17, flags 0x10000000000000
+	UPROPERTY()
+	TArray<FFortAvailableTheaterMissions> MissionAvailabilityList;
+
+	// table index 15, flags 0x10000000000000
+	UPROPERTY()
+	TArray<FFortAvailableMissionAlerts> MissionAlertAvailabilityList;
+
 	// table index 14, flags 0x10000000000000
 	UPROPERTY()
 	FBox HexMapSize;

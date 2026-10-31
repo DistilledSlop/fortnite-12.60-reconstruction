@@ -8,6 +8,7 @@
 
 #include "FOnReadiedUpStatusChanged.h"
 #include "FOnUpdateLobbyPlayerPadTop.h"
+#include "GameFramework/OnlineReplStructs.h"
 
 #include "AFortLobbyBeaconClientRM.generated.h"
 
@@ -24,6 +25,10 @@ public:
 	// table index 0, flags 0x40000010080000
 	UPROPERTY()
 	FOnUpdateLobbyPlayerPadTop OnUpdateLobbyPlayerPadTop;
+
+	UFUNCTION(Client, Reliable)
+	void ClientBroadcastLobbyPlayerPadTop(const FUniqueNetIdRepl& ReadiedPlayer, bool bIsReadiedUp) const;
+	void ClientBroadcastLobbyPlayerPadTop_Implementation(const FUniqueNetIdRepl& ReadiedPlayer, bool bIsReadiedUp) const;
 
 	UFUNCTION(Server, Reliable)
 	void ServerUpdateNewlyJoinedPlayerInternal();

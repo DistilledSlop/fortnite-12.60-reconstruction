@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortAccountItem.h"
 
+#include "FMcpLootEntry.h"
 #include "Misc/DateTime.h"
 
 #include "UFortPrerollDataItem.generated.h"
@@ -23,6 +24,10 @@ public:
 	// table index 3, flags 0x40000000000000
 	UPROPERTY()
 	FDateTime Expiration;
+
+	// table index 1, flags 0x40000000000000
+	UPROPERTY()
+	TArray<FMcpLootEntry> Items;
 
 	// table index 0, flags 0x40000000000000
 	UPROPERTY()

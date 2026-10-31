@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 
+#include "FPickupInstigatorArray.h"
 #include "FPickupInstigatorDataUpdated.h"
 
 #include "UFortPickupInstigatorRegistryComponent.generated.h"
@@ -24,5 +25,13 @@ public:
 	UPROPERTY()
 	FPickupInstigatorDataUpdated OnPickupInstigatorDataRemoved;
 
+	// table index 0, flags 0x20080100022821
+	UPROPERTY(ReplicatedUsing=OnRep_InstigatorRegistry, Transient)
+	FPickupInstigatorArray InstigatorRegistry;
+
+	UFUNCTION()
+	void OnRep_InstigatorRegistry();
+
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

@@ -7,6 +7,7 @@
 #include "UFortMinigameItemContainerComponent.h"
 
 #include "FMinigameItemData.h"
+#include "FPickupInstigatorData.h"
 
 #include "UFortMinigameItemListComponent.generated.h"
 
@@ -16,6 +17,10 @@ class FORTNITEGAME_API UFortMinigameItemListComponent : public UFortMinigameItem
 	GENERATED_BODY()
 
 public:
+	// table index 4, flags 0x20080000010005
+	UPROPERTY()
+	FPickupInstigatorData BaseInstigatorData;
+
 	// table index 3, flags 0x20080000010015
 	UPROPERTY()
 	bool bAllowItemTracking;

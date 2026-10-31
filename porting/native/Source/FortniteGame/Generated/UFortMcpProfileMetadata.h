@@ -6,6 +6,10 @@
 #include "CoreMinimal.h"
 #include "UFortMcpProfile.h"
 
+#include "FClientUrlContext.h"
+#include "FDedicatedServerUrlContext.h"
+#include "FFortOutpostCoreInfo.h"
+
 #include "UFortMcpProfileMetadata.generated.h"
 
 UCLASS(config=Engine)
@@ -14,5 +18,17 @@ class FORTNITEGAME_API UFortMcpProfileMetadata : public UFortMcpProfile
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void CreateDeployableBaseItem(const FString& TemplateId, UPARAM(NotReplicated) FDedicatedServerUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void CreateOrUpgradeOutpostItem(const FString& templateId, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void UpdateDeployableBaseTierProgression(const FString& DeployableBaseItemId, const FString& ProgressionLayoutGuid, int32 TierDefeated, UPARAM(NotReplicated) FDedicatedServerUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void UpdateOutpostCore(const FString& CoreId, const FFortOutpostCoreInfo& CoreInfo, UPARAM(NotReplicated) FDedicatedServerUrlContext& Context);
+
 };
 

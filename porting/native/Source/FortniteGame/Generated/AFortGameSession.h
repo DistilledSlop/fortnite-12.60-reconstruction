@@ -8,6 +8,7 @@
 
 #include "FFortDisconnectedPlayerReservation.h"
 #include "FFortHostSessionParams.h"
+#include "OnlineBeaconReservation.h"
 
 class AContentBeaconHostObject;
 class AFortLobbyBeaconHost;
@@ -57,6 +58,10 @@ public:
 	// table index 18, flags 0x20080000002000
 	UPROPERTY(Transient)
 	AContentBeaconHostObject* ContentBeaconHost;
+
+	// table index 16, flags 0x20080000002000
+	UPROPERTY(Transient)
+	TArray<FPlayerReservation> PlayersToRegister;
 
 	// table index 15, flags 0x20080000004000
 	UPROPERTY(Config)

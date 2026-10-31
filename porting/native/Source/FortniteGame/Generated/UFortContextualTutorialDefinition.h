@@ -8,6 +8,7 @@
 
 #include "EFortContextualTutorialPlatform.h"
 #include "EFortContextualTutorialTypes.h"
+#include "FDirectiveInput.h"
 #include "FHUDElementToHighlight.h"
 
 class UFortContextualTutorial;
@@ -35,6 +36,10 @@ public:
 	// table index 25, flags 0x40000000004001
 	UPROPERTY(Config)
 	int32 AmountOfRecallMatches;
+
+	// table index 23, flags 0x40000000004001
+	UPROPERTY(Config)
+	TArray<FDirectiveInput> DirectiveMessages;
 
 	// table index 22, flags 0x40000000004001
 	UPROPERTY(Config)

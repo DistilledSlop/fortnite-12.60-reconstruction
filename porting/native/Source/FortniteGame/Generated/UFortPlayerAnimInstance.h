@@ -36,6 +36,7 @@
 #include "FFortAnimInput_TurnInPlace.h"
 #include "FFortAnimInput_Zipline.h"
 #include "FGameplayTagAnimations.h"
+#include "Math/Axis.h"
 #include "Math/Rotator.h"
 #include "Math/TransformNonVectorized.h"
 #include "Math/Vector.h"
@@ -1300,6 +1301,10 @@ public:
 	// table index 52, flags 0x10000000000005
 	UPROPERTY()
 	FName HeadTrackingReticleSocketName;
+
+	// table index 51, flags 0x10000000000005
+	UPROPERTY()
+	TEnumAsByte<EAxis::Type> HeadTrackingReticleSocketLookAtAxis;
 
 	// table index 50, flags 0x10000000002005
 	UPROPERTY(Transient)

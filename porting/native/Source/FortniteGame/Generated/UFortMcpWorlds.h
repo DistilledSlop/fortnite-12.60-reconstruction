@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortMcpResource.h"
 
+#include "FFortActiveTheaterInfo.h"
 #include "Misc/DateTime.h"
 
 class UWorld;
@@ -18,6 +19,10 @@ class FORTNITEGAME_API UFortMcpWorlds : public UFortMcpResource
 	GENERATED_BODY()
 
 public:
+	// table index 3, flags 0x40000000000000
+	UPROPERTY()
+	FFortActiveTheaterInfo TheaterInfo;
+
 	// table index 2, flags 0x40000000000000
 	UPROPERTY()
 	int32 TheaterQueryRetry;

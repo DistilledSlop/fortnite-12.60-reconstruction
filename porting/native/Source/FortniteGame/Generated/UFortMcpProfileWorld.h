@@ -6,8 +6,16 @@
 #include "CoreMinimal.h"
 #include "UFortMcpProfile.h"
 
+#include "FClientUrlContext.h"
+#include "FDedicatedServerUrlContext.h"
+#include "FFortBatchUpdatePlayer_DeployableBaseUpdate.h"
+#include "FFortBatchUpdatePlayer_Update.h"
+#include "FFortCloudSaveInfo.h"
+#include "FFortOutpostCoreInfo.h"
 #include "FFortWorldPlayerLoadout.h"
 #include "FFortWorldProfileUpdateRequest.h"
+#include "FItemIdAndQuantityPair.h"
+#include "FItemTransferOperation.h"
 
 class AFortInventory;
 class UFortWorldItem;
@@ -39,6 +47,42 @@ public:
 	// table index 0, flags 0x20080000000000
 	UPROPERTY()
 	bool bIsInventoryInitialized;
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void BatchUpdatePlayers(const TArray<FFortBatchUpdatePlayer_Update>& Updates, UPARAM(NotReplicated) FDedicatedServerUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void BatchUpdatePlayers_DeployableBase(const TArray<FFortBatchUpdatePlayer_Update>& Updates, const TArray<FFortBatchUpdatePlayer_DeployableBaseUpdate>& DeployableBaseUpdates, UPARAM(NotReplicated) FDedicatedServerUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void BatchUpdatePlayers_Outpost(const TArray<FFortBatchUpdatePlayer_Update>& Updates, const FString& OutpostId, const FFortOutpostCoreInfo& OutpostInfo, const FFortCloudSaveInfo& CloudSaveInfo, UPARAM(NotReplicated) FDedicatedServerUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void CraftWorldItem(const FString& TargetSchematicItemId, int32 NumTimesToCraft, const FString& TargetSchematicTier, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void DepositPostResources(const TArray<FString>& itemsToDepositIds, const TArray<int32>& itemCountsToDeposit, UPARAM(NotReplicated) FDedicatedServerUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void DestroyWorldItems(const TArray<FString>& ItemIds, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void DisassembleWorldItems(const TArray<FItemIdAndQuantityPair>& TargetItemIdAndQuantityPairs, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void InitializeTheater(const FString& TheaterGuid, UPARAM(NotReplicated) FDedicatedServerUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void LockProfiles(const FString& Code, int32 Timeout, UPARAM(NotReplicated) FDedicatedServerUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void ModifyQuickbar(const TArray<FString>& PrimaryQuickbarChoices, const FString& SecondaryQuickbarChoice, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void StorageTransfer(const TArray<FItemTransferOperation>& TransferOperations, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void UnlockProfiles(const FString& Code, UPARAM(NotReplicated) FDedicatedServerUrlContext& Context);
 
 };
 

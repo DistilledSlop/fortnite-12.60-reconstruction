@@ -7,6 +7,7 @@
 #include "AFortPickupAthena.h"
 
 #include "FOnPickupReplicated.h"
+#include "FPickupInstigatorData.h"
 
 class UFortCreativeCostComponent;
 
@@ -29,6 +30,10 @@ public:
 	// table index 4, flags 0x20080100002020
 	UPROPERTY(ReplicatedUsing=OnRep_PickupInstigatorIndex, Transient)
 	int32 CachedPickupInstigatorHandle;
+
+	// table index 3, flags 0x20080000002000
+	UPROPERTY(Transient)
+	FPickupInstigatorData CachedInstigatorData;
 
 	// table index 2, flags 0x20080000010001
 	UPROPERTY()

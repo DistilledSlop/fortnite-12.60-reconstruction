@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortMcpProfile.h"
 
+#include "FClientUrlContext.h"
+
 #include "UFortMcpProfileCommonPublic.generated.h"
 
 UCLASS(config=Engine)
@@ -14,5 +16,11 @@ class FORTNITEGAME_API UFortMcpProfileCommonPublic : public UFortMcpProfile
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void SetHomebaseBanner(const FString& HomebaseBannerIconId, const FString& HomebaseBannerColorId, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void SetHomebaseName(const FString& HomebaseName, UPARAM(NotReplicated) FClientUrlContext& Context);
+
 };
 

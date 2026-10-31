@@ -48,6 +48,7 @@
 #include "FOnEnterVehiclePassenger.h"
 #include "FOnExitVehicle.h"
 #include "FOnMcpProfilesInitialized.h"
+#include "FOnNotifyInputFiltered.h"
 #include "FOnOpenVoteDialog.h"
 #include "FOnPlayerEnteredBuildMode.h"
 #include "FOnPlayerPawnPossessed.h"
@@ -59,6 +60,7 @@
 #include "FOnShowTemperatureChange.h"
 #include "FOnToggleFullscreenMap.h"
 #include "FOnWeakSpotReset.h"
+#include "FProfileUpdateSingle.h"
 #include "FRecentlyRemovedQuickbarInfo.h"
 #include "GameFramework/OnlineReplStructs.h"
 #include "GameplayTagContainer.h"
@@ -138,6 +140,10 @@ public:
 	// table index 290, flags 0x10000010080000
 	UPROPERTY()
 	FOnPlayerPawnPossessed OnPlayerPawnPossessed;
+
+	// table index 289, flags 0x10000010080000
+	UPROPERTY()
+	FOnNotifyInputFiltered OnInputFiltered;
 
 	// table index 288, flags 0x20080000004000
 	UPROPERTY(Config)
@@ -1456,6 +1462,10 @@ public:
 
 	UFUNCTION()
 	void OnRep_UpdatedUnsavedPrimaryMissionProgress();
+
+	UFUNCTION(Client, Reliable)
+	void ProcessMcpProfileUpdate(const FProfileUpdateSingle& Update);
+	void ProcessMcpProfileUpdate_Implementation(const FProfileUpdateSingle& Update);
 
 	UFUNCTION(Server, Reliable)
 	void ServerAcknowledgeDelayedQuickBarAction(const TArray<uint32>& ProcessedActionIds);

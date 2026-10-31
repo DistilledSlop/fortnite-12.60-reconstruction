@@ -1227,6 +1227,12 @@ def self_test():
     # A CPF_ConstParm without CPF_ReferenceParm is emitted by value (as UHT spells it). Promote mode adds
     # const& for replicated non-scalar parameters (rpc_arg).
     check("const value param is by value", fn["ClientTell"]["decl"] == "void ClientTell(FString Text);")
+    # Service request out parameters get UPARAM(NotReplicated) in the header only; RPC parameters are unchanged.
+    check("service request out parameter is UPARAM(NotReplicated)",
+          header_arg({"service": "Request"}, "FClientUrlContext& Context") == "UPARAM(NotReplicated) FClientUrlContext& Context")
+    check("service request const parameter unchanged",
+          header_arg({"service": "Request"}, "const FString& Code") == "const FString& Code")
+    check("RPC out parameter unchanged", header_arg({"service": None}, "FClientUrlContext& Context") == "FClientUrlContext& Context")
     check("undecoded flags reported", bool(fn["Unknown"]["todo"]) and fn["Unknown"]["flags"] is None)
     header = render_header(model, "SELFTEST_API", "self-test")
     cpp = render_cpp(model, "self-test")
@@ -1423,6 +1429,17 @@ def rpc_arg(decl, enum_args=()):
     if ctype.startswith(("TSubclassOf<", "TSoftClassPtr<")):
         return decl
     return "const %s& %s" % (ctype, name)
+
+
+def header_arg(f, arg):
+    """A service request's out parameter (`T& Context`, reflection: CPF_OutParm + CPF_RepSkip, no CPF_ReferenceParm)
+    is a non-const reference on a net function, which UHT rejects ("Replicated ... cannot be passed by non-const
+    reference"). UPARAM(NotReplicated) makes UHT treat it as an unreplicated out parameter (UHT's own rule for
+    service requests, HeaderParser.cpp "unless marked NotReplicated"), which matches the original flags. Header only."""
+    ctype = arg.rsplit(" ", 1)[0]
+    if f.get("service") == "Request" and ctype.endswith("&") and not ctype.startswith("const "):
+        return "UPARAM(NotReplicated) " + arg
+    return arg
 
 
 def function_view(fn, owner_fns):
@@ -2276,7 +2293,8 @@ def render_promoted_header(model, api, parent_include, source_label):
         lines.extend(field_lines(fd))
     for f in model["functions"]:
         lines.append("\tUFUNCTION(%s)" % ", ".join(f["specifiers"]))
-        lines.append("\t%s %s(%s)%s;" % (f.get("ret", "void"), f["name"], ", ".join(f["args"]),
+        lines.append("\t%s %s(%s)%s;" % (f.get("ret", "void"), f["name"],
+                                       ", ".join(header_arg(f, a) for a in f["args"]),
                                        " const" if f.get("const") else ""))
         if f["rpc"] and not f.get("service"):
             lines.append("\tvoid %s_Implementation(%s)%s;" % (f["name"], ", ".join(f["args"]),
@@ -2385,8 +2403,13 @@ def render_promoted_cpp(model, source_label):
         lines.append("}  // namespace")
         lines.append("")
     for f in model["functions"]:
-        # A net service function is the programmer's own body (UHT: CustomThunk for a request, CppImplName = the
-        # name for a response), so it has no _Implementation.
+        # A service request has no definition here: UHT generates its Event thunk (a ProcessEvent forwarder, one per
+        # request: 138 of 138 in the scratch build), and a second definition is a duplicate symbol at link time.
+        if f.get("service") == "Request":
+            if f.get("body") is not None:
+                raise ValueError("%s: a behaviour body cannot be spliced into a service request (UHT generates it)" % f["name"])
+            continue
+        # A net service response is the programmer's own body (UHT: CppImplName = the name), so it has no _Implementation.
         impl = "%s_Implementation" % f["name"] if f["rpc"] and not f.get("service") else f["name"]
         args = ", ".join(f["args"])
         lines.append("%s %s::%s(%s)%s" % (f.get("ret", "void"), name, impl, args, " const" if f.get("const") else ""))

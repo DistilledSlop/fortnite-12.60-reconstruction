@@ -9,6 +9,7 @@
 #include "AttributeSet.h"
 #include "EVolumeShape.h"
 #include "EVolumeState.h"
+#include "Engine/EngineTypes.h"
 #include "FAsyncTaskCallbackDelegate.h"
 #include "FOnActorEnterExitVolume.h"
 #include "FOnRestrictionEnabledChanged.h"
@@ -155,6 +156,10 @@ public:
 	UPROPERTY()
 	EVolumeShape BoundsShape;
 
+	// table index 2, flags 0x40000100000020
+	UPROPERTY(ReplicatedUsing=OnRep_BoundsCollisionSetting)
+	TEnumAsByte<ECollisionEnabled::Type> BoundsCollisionSetting;
+
 	// table index 1, flags 0x10000010080000
 	UPROPERTY()
 	FOnRestrictionEnabledChanged OnUserGeneratedContentRestrictionChanged;
@@ -162,6 +167,9 @@ public:
 	// table index 0, flags 0x40000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_UserGeneratedContentRestrictions)
 	bool bUserGeneratedContentRestricted;
+
+	UFUNCTION()
+	void OnRep_BoundsCollisionSetting();
 
 	UFUNCTION()
 	void OnRep_bShowPublishWatermark();

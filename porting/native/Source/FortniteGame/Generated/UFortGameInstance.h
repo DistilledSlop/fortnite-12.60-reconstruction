@@ -6,13 +6,16 @@
 #include "CoreMinimal.h"
 #include "Engine/GameInstance.h"
 
+#include "EFortGameFeature.h"
 #include "FAthenaDataTableSet.h"
 #include "FAudioDynamicSoundData.h"
 #include "FFortKairosLoadElectraPlayerDelegate.h"
 #include "FFortOnSubGameChangedBP.h"
 #include "FPlaylistFrontEndSettings.h"
 #include "FPlaylistOverrideData.h"
+#include "FWebEnvUrl.h"
 #include "Misc/Guid.h"
+#include "WebJSFunction.h"
 
 class AContentBeaconClient;
 class UFortAppActivationSoundMixManager;
@@ -218,6 +221,10 @@ public:
 	UPROPERTY(Config)
 	int32 KairosUIResY;
 
+	// table index 12, flags 0x40000000004000
+	UPROPERTY(Config)
+	TArray<FWebEnvUrl> KairosWebUrls;
+
 	// table index 11, flags 0x40000000004000
 	UPROPERTY(Config)
 	int32 KairosMinSupportedAppVersion;
@@ -261,6 +268,78 @@ public:
 	// table index 0, flags 0x40000000002000
 	UPROPERTY(Transient)
 	AContentBeaconClient* ContentBeaconClient;
+
+	UFUNCTION(ServiceResponse(JSBridge, ResponseId=1))
+	void CancelContentInstall();
+
+	UFUNCTION(ServiceResponse(JSBridge, ResponseId=1))
+	bool CancelUninstallAllOptionalContentOnNextBoot();
+
+	UFUNCTION(ServiceResponse(JSBridge, ResponseId=1))
+	bool CancelUninstallFortniteBROnNextBoot();
+
+	UFUNCTION(ServiceResponse(JSBridge, ResponseId=1))
+	void CheckLatestClient(const FWebJSResponse& Response);
+
+	UFUNCTION(ServiceResponse(JSBridge, ResponseId=1))
+	void GetAnalyticsSessionDetails(const FWebJSResponse& Response);
+
+	UFUNCTION(ServiceResponse(JSBridge, ResponseId=1))
+	void GetContentState(const EFortGameFeature& Feature, const FWebJSResponse& Response);
+
+	UFUNCTION(ServiceResponse(JSBridge, ResponseId=1))
+	void GetFeatureRequiredSizes(const EFortGameFeature& Feature, const FWebJSResponse& Response);
+
+	UFUNCTION(ServiceResponse(JSBridge, ResponseId=1))
+	void GetFeatureRequiredSizesOptionalOnly(const EFortGameFeature& Feature, const FWebJSResponse& Response);
+
+	UFUNCTION(ServiceResponse(JSBridge, ResponseId=1))
+	void GetFeatureRequiredSizesRequiredOnly(const EFortGameFeature& Feature, const FWebJSResponse& Response);
+
+	UFUNCTION(ServiceResponse(JSBridge, ResponseId=1))
+	void GetHotfixHasApplied(const FWebJSResponse& Response);
+
+	UFUNCTION(ServiceResponse(JSBridge, ResponseId=1))
+	void GetProjectVersion(const FWebJSResponse& Response);
+
+	UFUNCTION(ServiceResponse(JSBridge, ResponseId=1))
+	void GetUserSetting(const FString& Key, const FWebJSResponse& Response);
+
+	UFUNCTION(ServiceResponse(JSBridge, ResponseId=1))
+	void IsContentUpToDate(const EFortGameFeature& Feature, const FWebJSResponse& Response);
+
+	UFUNCTION(ServiceResponse(JSBridge, ResponseId=1))
+	void KairosSubmitBugReport(const FString& Subject, const FString& Body, const FWebJSResponse& Response);
+
+	UFUNCTION(ServiceResponse(JSBridge, ResponseId=1))
+	void OpenUpdateApp();
+
+	UFUNCTION(ServiceResponse(JSBridge, ResponseId=1))
+	void PauseContentInstall();
+
+	UFUNCTION(ServiceResponse(JSBridge, ResponseId=1))
+	void RequestBroadcast();
+
+	UFUNCTION(ServiceResponse(JSBridge, ResponseId=1))
+	void SetErrorSimulationCommands(const FString& CommandLine);
+
+	UFUNCTION(ServiceResponse(JSBridge, ResponseId=1))
+	void SetFeatureStatusCallback(const FWebJSFunction& Callback);
+
+	UFUNCTION(ServiceResponse(JSBridge, ResponseId=1))
+	void SetHotfixCompleteCallback(const FWebJSFunction& Callback);
+
+	UFUNCTION(ServiceResponse(JSBridge, ResponseId=1))
+	void SetMultipleUserSettings(const TMap<FString, FString>& Settings, const FWebJSResponse& Response);
+
+	UFUNCTION(ServiceResponse(JSBridge, ResponseId=1))
+	void SetUserSetting(const FString& Key, const FString& Value, const FWebJSResponse& Response);
+
+	UFUNCTION(ServiceResponse(JSBridge, ResponseId=1))
+	bool UninstallAllOptionalContentOnNextBoot(bool bRestartApp, bool bPromptForRestart);
+
+	UFUNCTION(ServiceResponse(JSBridge, ResponseId=1))
+	bool UninstallFortniteBROnNextBoot(bool bRestartApp, bool bPromptForRestart);
 
 };
 

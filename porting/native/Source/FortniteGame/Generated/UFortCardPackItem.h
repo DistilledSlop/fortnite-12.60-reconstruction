@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortAccountItem.h"
 
+#include "FMcpLootEntry.h"
+
 #include "UFortCardPackItem.generated.h"
 
 UCLASS()
@@ -14,6 +16,10 @@ class FORTNITEGAME_API UFortCardPackItem : public UFortAccountItem
 	GENERATED_BODY()
 
 public:
+	// table index 3, flags 0x10000000000000
+	UPROPERTY()
+	TArray<FMcpLootEntry> options;
+
 	// table index 2, flags 0x10000000000014
 	UPROPERTY()
 	FString pack_source;

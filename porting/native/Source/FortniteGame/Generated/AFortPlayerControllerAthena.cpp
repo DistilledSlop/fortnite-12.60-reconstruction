@@ -242,6 +242,11 @@ void AFortPlayerControllerAthena::ClientSendDebugPoiVolumeData_Implementation(co
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerControllerAthena::ClientSendEndBattleRoyaleMatchForPlayer_Implementation(bool bSuccess, const FAthenaRewardResult& Result)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPlayerControllerAthena::ClientSendEndMatchReportHeartbeat_Implementation()
 {
 	// Body not recovered: reflection-derived stub.

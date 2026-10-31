@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintAsyncActionBase.h"
 
+#include "FMeshNetworkReadyAsyncDelegate.h"
+
 #include "UFortAsyncAction_MeshNetworkReady.generated.h"
 
 UCLASS()
@@ -14,5 +16,9 @@ class FORTNITEGAME_API UFortAsyncAction_MeshNetworkReady : public UBlueprintAsyn
 	GENERATED_BODY()
 
 public:
+	// table index 0, flags 0x10000010080000
+	UPROPERTY()
+	FMeshNetworkReadyAsyncDelegate OnReady;
+
 };
 

@@ -6,6 +6,14 @@
 #include "CoreMinimal.h"
 #include "UFortMcpProfileSubgame.h"
 
+#include "FAthenaAccolades.h"
+#include "FAthenaMatchStats.h"
+#include "FClientUrlContext.h"
+#include "FDedicatedServerUrlContext.h"
+#include "FFortQuestObjectiveCompletion.h"
+#include "FHardcoreModifierUpdate.h"
+#include "FSecondaryXpGained.h"
+
 class UFortQuestItem;
 
 #include "UFortMcpProfileAthena.generated.h"
@@ -23,6 +31,39 @@ public:
 	// table index 0, flags 0x40000000002000
 	UPROPERTY(Transient)
 	UFortQuestItem* PartyAssistedQuest;
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void ApplyVote(const FString& OfferId, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void ChallengeBundleLevelUp(const FString& BundleIdToLevel, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void EndBattleRoyaleGame(const TArray<FFortQuestObjectiveCompletion>& Advance, const FString& PlaylistId, const FAthenaMatchStats& MatchStats, int32 TotalXPAccum, int32 RestedXPAccum, int32 FriendshipXpBoost, int32 CosmeticXpBoost, float AntiAddictionPlayTimeMultiplier, bool ShouldAccumulateToProfileStats, bool ShouldSaveToRecentGameLists, const TArray<FAthenaAccolades>& Accolades, const TArray<FString>& ShuffledLoadoutUsed, int32 ShuffledLockerUsedIndex, const TArray<FString>& GrantedQuestDefs, const TArray<FSecondaryXpGained>& SecondaryXp, UPARAM(NotReplicated) FDedicatedServerUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void ExchangeGiftToken(UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void ReportConsumableUsed(int32 UsedQuantity, const FString& ItemType, UPARAM(NotReplicated) FDedicatedServerUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void RequestRestedStateIncrease(int32 timeToCompensateFor, int32 restedXpGenAccumulated, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void SetHardcoreModifier(const TArray<FHardcoreModifierUpdate>& Updates, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void SetPartyAssistQuest(const FString& QuestToPinAsPartyAssist, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void SetRewardGraphConfig(const TArray<FString>& state, const FString& rewardGraphId, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void ToggleQuestActiveState(const TArray<FString>& QuestIds, UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void UnlockRewardNode(const FString& nodeId, const FString& rewardGraphId, const FString& rewardCfg, UPARAM(NotReplicated) FClientUrlContext& Context);
 
 };
 

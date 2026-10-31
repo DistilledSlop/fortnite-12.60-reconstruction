@@ -6,6 +6,10 @@
 #include "CoreMinimal.h"
 #include "Subsystems/GameInstanceSubsystem.h"
 
+#include "FOnMeshNetworkEventBurst.h"
+#include "FOnMeshNetworkEventEnd.h"
+#include "FOnMeshNetworkEventStart.h"
+
 #include "UFortMeshNetworkEventsSubsystem.generated.h"
 
 UCLASS()
@@ -14,5 +18,17 @@ class FORTNITEGAME_API UFortMeshNetworkEventsSubsystem : public UGameInstanceSub
 	GENERATED_BODY()
 
 public:
+	// table index 2, flags 0x20080010080000
+	UPROPERTY()
+	FOnMeshNetworkEventBurst OnMeshNetworkEventBurst;
+
+	// table index 1, flags 0x20080010080000
+	UPROPERTY()
+	FOnMeshNetworkEventStart OnMeshNetworkEventStart;
+
+	// table index 0, flags 0x20080010080000
+	UPROPERTY()
+	FOnMeshNetworkEventEnd OnMeshNetworkEventEnd;
+
 };
 

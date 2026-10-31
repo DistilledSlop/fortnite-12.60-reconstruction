@@ -347,6 +347,11 @@ void AFortPlayerController::OnRep_UpdatedUnsavedPrimaryMissionProgress()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerController::ProcessMcpProfileUpdate_Implementation(const FProfileUpdateSingle& Update)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPlayerController::ServerAcknowledgeDelayedQuickBarAction_Implementation(const TArray<uint32>& ProcessedActionIds)
 {
 	// Body not recovered: reflection-derived stub.

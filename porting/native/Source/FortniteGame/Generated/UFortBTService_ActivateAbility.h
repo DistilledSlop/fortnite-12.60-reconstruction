@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "BehaviorTree/BTService.h"
 
+#include "FDistanceToTargetComparison.h"
 #include "GameplayTagContainer.h"
 
 #include "UFortBTService_ActivateAbility.generated.h"
@@ -31,6 +32,10 @@ public:
 	// table index 2, flags 0x20080000000001
 	UPROPERTY()
 	FGameplayTagContainer ProhibitedTargetTags;
+
+	// table index 0, flags 0x20080000000001
+	UPROPERTY()
+	TArray<FDistanceToTargetComparison> DistanceChecks;
 
 };
 

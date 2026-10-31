@@ -141,6 +141,11 @@ void AFortGameStateAthena::OnRep_MapInfo()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortGameStateAthena::OnRep_MeshNetworkStatus()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortGameStateAthena::OnRep_MutatorEventData()
 {
 	// Behaviour snippet: AFortGameStateAthena::OnRep_MutatorEventData (body only; spliced into the generated member function).
@@ -353,6 +358,7 @@ void AFortGameStateAthena::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>&
 	DOREPLIFETIME(AFortGameStateAthena, SpawnMachineRepData);
 	DOREPLIFETIME(AFortGameStateAthena, LocalizationService);
 	DOREPLIFETIME(AFortGameStateAthena, VolumeManager);
+	DOREPLIFETIME(AFortGameStateAthena, MeshNetworkStatus);
 	DOREPLIFETIME(AFortGameStateAthena, StormCNDamageVulnerabilityLevel3);
 	DOREPLIFETIME(AFortGameStateAthena, StormCNDamageVulnerabilityLevel2);
 	DOREPLIFETIME(AFortGameStateAthena, StormCNDamageVulnerabilityLevel1);

@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "AFortGameplayCueNotify_Actor.h"
 
+#include "FFortBurstEffectData.h"
 #include "FFortGameplayCueAttachInfo.h"
 #include "FFortGameplayCueAudioInfo_Looping.h"
 #include "FFortGameplayCueCameraLensEffectInfo.h"
@@ -21,6 +22,10 @@ class FORTNITEGAME_API AFortGameplayCueNotify_Loop : public AFortGameplayCueNoti
 	GENERATED_BODY()
 
 public:
+	// table index 15, flags 0x10000000000015
+	UPROPERTY()
+	FFortBurstEffectData ApplicationBurst;
+
 	// table index 14, flags 0x10008000000014
 	UPROPERTY()
 	FFortGameplayCueSpawnResult ApplicationResult;
@@ -49,9 +54,17 @@ public:
 	UPROPERTY()
 	FFortGameplayCueSpawnResult LoopingResult;
 
+	// table index 5, flags 0x10000000000015
+	UPROPERTY()
+	FFortBurstEffectData RecurringBurst;
+
 	// table index 4, flags 0x10008000000014
 	UPROPERTY()
 	FFortGameplayCueSpawnResult RecurringResult;
+
+	// table index 3, flags 0x10000000000015
+	UPROPERTY()
+	FFortBurstEffectData RemovalBurst;
 
 	// table index 2, flags 0x10008000000014
 	UPROPERTY()

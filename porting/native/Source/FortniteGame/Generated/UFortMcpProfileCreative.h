@@ -6,6 +6,10 @@
 #include "CoreMinimal.h"
 #include "UFortMcpProfile.h"
 
+#include "EFortCreativePlotPermission.h"
+#include "FClientUrlContext.h"
+#include "FDedicatedServerUrlContext.h"
+
 class UFortCreativeRealEstatePlotItemDefinition;
 
 #include "UFortMcpProfileCreative.generated.h"
@@ -23,6 +27,42 @@ public:
 	// table index 0, flags 0x44000000004000
 	UPROPERTY(Config)
 	TSoftObjectPtr<UFortCreativeRealEstatePlotItemDefinition> DefaultBattleLabPlot;
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void CreateNewBattleLabFile(const FString& TemplateId, const FString& Locale, const FString& Title, UPARAM(NotReplicated) FDedicatedServerUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void CreateNewIsland(const FString& TemplateId, const FString& Locale, const FString& Title, UPARAM(NotReplicated) FDedicatedServerUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void CreateNewIslandFromLinkCode(const FString& LinkCode, const FString& Locale, const FString& Title, UPARAM(NotReplicated) FDedicatedServerUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void DeleteBattleLabIsland(UPARAM(NotReplicated) FClientUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void DeleteIsland(const FString& PlotItemId, UPARAM(NotReplicated) FDedicatedServerUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void DuplicateIsland(const FString& IslandId, const FString& Locale, const FString& NewTitle, UPARAM(NotReplicated) FDedicatedServerUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void ModifyCreativePlotPermissions(const FString& PlotItemId, const EFortCreativePlotPermission& Permission, const TArray<FString>& AccountIds, UPARAM(NotReplicated) FDedicatedServerUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void RestoreDeletedIsland(const FString& PlotItemId, UPARAM(NotReplicated) FDedicatedServerUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void SetCreativePlotMetadata(const FString& PlotItemId, const FString& Locale, const FString& Title, const FString& Tagline, const TArray<FString>& DescriptionTags, const FString& YoutubeVideoId, const FString& Introduction, UPARAM(NotReplicated) FDedicatedServerUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void SetLastUsedBattleLabFile(const FString& PlotItemId, UPARAM(NotReplicated) FDedicatedServerUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void SetLastUsedCreativePlot(const FString& PlotItemId, UPARAM(NotReplicated) FDedicatedServerUrlContext& Context);
+
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void UpdatePlotPublishInfo(const FString& PlotItemId, const FString& LinkCode, int32 LinkVersion, UPARAM(NotReplicated) FDedicatedServerUrlContext& Context);
 
 };
 

@@ -7,6 +7,7 @@
 #include "UFortQueryTest_GoalBase.h"
 
 #include "EDistanceMode.h"
+#include "EnvironmentQuery/Tests/EnvQueryTest_Distance.h"
 #include "FGoalDistanceData.h"
 
 class UEnvQueryContext;
@@ -26,6 +27,14 @@ public:
 	// table index 4, flags 0x24080000010001
 	UPROPERTY()
 	TSubclassOf<UEnvQueryContext> DistanceTo;
+
+	// table index 3, flags 0x20080000010001
+	UPROPERTY()
+	TEnumAsByte<EEnvTestDistance::Type> ScreeningTestMode;
+
+	// table index 2, flags 0x20080000010001
+	UPROPERTY()
+	TEnumAsByte<EEnvTestDistance::Type> TestMode;
 
 	// table index 0, flags 0x20088000010001
 	UPROPERTY()

@@ -8,6 +8,8 @@
 
 #include "EFortTheaterMapTileType.h"
 #include "Engine/DataTable.h"
+#include "FFortAvailableMissionAlertData.h"
+#include "FFortAvailableMissionData.h"
 #include "FFortHexMapCoord.h"
 #include "Math/Vector.h"
 
@@ -107,9 +109,21 @@ public:
 	UPROPERTY()
 	FVector InitialLocation;
 
+	// table index 6, flags 0x20080000000000
+	UPROPERTY()
+	FFortAvailableMissionData MissionData;
+
+	// table index 5, flags 0x20080000000000
+	UPROPERTY()
+	FFortAvailableMissionData LastValidMissionData;
+
 	// table index 4, flags 0x20080000000000
 	UPROPERTY()
 	FDataTableRowHandle ZoneDifficultyInfo;
+
+	// table index 3, flags 0x20080000000000
+	UPROPERTY()
+	FFortAvailableMissionAlertData MissionAlertData;
 
 	// table index 2, flags 0x400000000a001d
 	UPROPERTY()

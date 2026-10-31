@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortAccountItem.h"
 
+#include "FGiftBoxInfo.h"
+
 #include "UFortGiftBoxItem.generated.h"
 
 UCLASS()
@@ -14,5 +16,9 @@ class FORTNITEGAME_API UFortGiftBoxItem : public UFortAccountItem
 	GENERATED_BODY()
 
 public:
+	// table index 0, flags 0x10000000000014
+	UPROPERTY()
+	FGiftBoxInfo GiftBoxInfo;
+
 };
 

@@ -8,6 +8,7 @@
 
 #include "EFortSessionHelperJoinResult.h"
 #include "EFortSessionHelperJoinState.h"
+#include "PartyBeaconState.h"
 
 class AFortPartyBeaconClient;
 
@@ -30,6 +31,10 @@ public:
 	// table index 4, flags 0x40000000002000
 	UPROPERTY(Transient)
 	FName CurrentSessionName;
+
+	// table index 3, flags 0x40000000002000
+	UPROPERTY(Transient)
+	TEnumAsByte<EPartyReservationResult::Type> LastBeaconResponse;
 
 	// table index 2, flags 0x40000000002000
 	UPROPERTY(Transient)

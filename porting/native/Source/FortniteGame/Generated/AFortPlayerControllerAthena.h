@@ -15,6 +15,7 @@
 #include "FAthenaMatchStats.h"
 #include "FAthenaMatchTeamStats.h"
 #include "FAthenaQuickChatActiveEntry.h"
+#include "FAthenaRewardResult.h"
 #include "FBuildingEditAnalyticEvent.h"
 #include "FCreativeIslandData.h"
 #include "FCreativeIslandInfo.h"
@@ -895,6 +896,10 @@ public:
 	UFUNCTION(Client, Reliable)
 	void ClientSendDebugPoiVolumeData(const FString& PoiVolumes);
 	void ClientSendDebugPoiVolumeData_Implementation(const FString& PoiVolumes);
+
+	UFUNCTION(Client, Reliable)
+	void ClientSendEndBattleRoyaleMatchForPlayer(bool bSuccess, const FAthenaRewardResult& Result);
+	void ClientSendEndBattleRoyaleMatchForPlayer_Implementation(bool bSuccess, const FAthenaRewardResult& Result);
 
 	UFUNCTION(Client, Reliable)
 	void ClientSendEndMatchReportHeartbeat();

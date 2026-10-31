@@ -7,6 +7,7 @@
 #include "SpectatorBeaconClient.h"
 
 #include "GameFramework/OnlineReplStructs.h"
+#include "SpectatorBeaconState.h"
 
 #include "AFortSpectatorBeaconClient.generated.h"
 
@@ -29,12 +30,20 @@ public:
 	bool bHasReconnected;
 
 	UFUNCTION(Client, Reliable)
+	void ClientAbandonResponse(ESpectatorReservationResult::Type ReservationResponse);
+	void ClientAbandonResponse_Implementation(ESpectatorReservationResult::Type ReservationResponse);
+
+	UFUNCTION(Client, Reliable)
 	void ClientAllowedToProceedFromReservation();
 	void ClientAllowedToProceedFromReservation_Implementation();
 
 	UFUNCTION(Client, Reliable)
 	void ClientAllowedToProceedFromReservationTimeout();
 	void ClientAllowedToProceedFromReservationTimeout_Implementation();
+
+	UFUNCTION(Client, Reliable)
+	void ClientReconnectResponse(ESpectatorReservationResult::Type ReservationResponse);
+	void ClientReconnectResponse_Implementation(ESpectatorReservationResult::Type ReservationResponse);
 
 	UFUNCTION(Server, Reliable)
 	void ServerAbandonExistingReservation(const FString& InSessionId, const FUniqueNetIdRepl& RequestingPlayer);

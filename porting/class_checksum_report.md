@@ -13,7 +13,7 @@ Type mismatches: none, in 0 classes (a native `bool` is emitted as a `uint8` bit
 
 | Classes | Parity yes | Parity no | Unknown | Class checksum yes | RPC set yes | Ancestor-only no |
 |---|---|---|---|---|---|---|
-| 4572 | 4535 | 37 | 0 | 4567 | 4540 | 17 |
+| 4572 | 4572 | 0 | 0 | 4572 | 4572 | 0 |
 
 Parity = ClassChecksum equal and the RPC set equal (UE NetFieldExportGroup semantics, see the docstring). Ancestor-only = no own gap, but a generated ancestor's gap changes the class.
 
@@ -26,9 +26,9 @@ Parity = ClassChecksum equal and the RPC set equal (UE NetFieldExportGroup seman
 | BlueprintContext | 2 | 2 | 0 | 0 | 0 |
 | CommonInput | 4 | 4 | 0 | 0 | 0 |
 | CommonUI | 58 | 58 | 0 | 0 | 0 |
-| FortniteGame | 2827 | 2791 | 36 | 0 | 17 |
+| FortniteGame | 2827 | 2827 | 0 | 0 | 0 |
 | FortniteUI | 1641 | 1641 | 0 | 0 | 0 |
-| McpProfileSys | 5 | 4 | 1 | 0 | 0 |
+| McpProfileSys | 5 | 5 | 0 | 0 | 0 |
 | MeshNetwork | 9 | 9 | 0 | 0 | 0 |
 | ModularGameplay | 6 | 6 | 0 | 0 | 0 |
 | PlayspaceFramework | 14 | 14 | 0 | 0 | 0 |
@@ -38,25 +38,22 @@ Parity = ClassChecksum equal and the RPC set equal (UE NetFieldExportGroup seman
 | Depth | Classes | Yes | No | Ancestor-only |
 |---|---|---|---|---|
 | 0 | 109 | 109 | 0 | 0 |
-| 1 | 305 | 304 | 1 | 0 |
-| 2 | 873 | 870 | 3 | 0 |
-| 3 | 695 | 686 | 9 | 1 |
-| 4 | 560 | 558 | 2 | 0 |
-| 5 | 741 | 738 | 3 | 0 |
-| 6 | 511 | 508 | 3 | 2 |
-| 7 | 373 | 370 | 3 | 3 |
-| 8 | 283 | 279 | 4 | 3 |
-| 9 | 80 | 74 | 6 | 6 |
-| 10 | 27 | 26 | 1 | 0 |
-| 11 | 15 | 13 | 2 | 2 |
+| 1 | 305 | 305 | 0 | 0 |
+| 2 | 873 | 873 | 0 | 0 |
+| 3 | 695 | 695 | 0 | 0 |
+| 4 | 560 | 560 | 0 | 0 |
+| 5 | 741 | 741 | 0 | 0 |
+| 6 | 511 | 511 | 0 | 0 |
+| 7 | 373 | 373 | 0 | 0 |
+| 8 | 283 | 283 | 0 | 0 |
+| 9 | 80 | 80 | 0 | 0 |
+| 10 | 27 | 27 | 0 | 0 |
+| 11 | 15 | 15 | 0 | 0 |
 
 ### Cause of each non-parity class
 
 | Cause | Classes |
 |---|---|
-| own | 9 |
-| own+ancestor | 11 |
-| ancestor-only | 17 |
 
 ### Top skip reasons (classes made non-parity)
 
@@ -64,39 +61,18 @@ A class counts under a reason when one of its blocking gaps (own, or in a genera
 
 | Reason | Classes touched | Solo | Gaps |
 |---|---|---|---|
-| struct_other_module | 16 | 15 | 16 |
-| net_flag_without_role | 13 | 13 | 284 |
-| struct_member_unresolved | 5 | 4 | 5 |
-| enum_not_available | 3 | 2 | 5 |
-| struct_not_available | 1 | 0 | 1 |
-| static_or_const_rpc | 1 | 1 | 1 |
 
 ### Worklist: fixes that flip the most classes to parity (greedy)
 
-Each step adds the fix that completes the most remaining classes (all of a class's blocking keys must be fixed). 37 non-parity classes are fixable this way; 0 are not (unexplained or ungenerated ancestors). After the 10 steps below, 0 classes stay open.
+Each step adds the fix that completes the most remaining classes (all of a class's blocking keys must be fixed). 0 non-parity classes are fixable this way; 0 are not (unexplained or ungenerated ancestors). After the 0 steps below, 0 classes stay open.
 
 | # | Fix | Classes completed now | Classes touched | Cumulative flipped |
 |---|---|---|---|---|
-| 1 | struct FProfileUpdateSingle | 15 | 16 | 15 |
-| 2 | RPC flags without a Server/Client/NetMulticast role | 13 | 13 | 28 |
-| 3 | struct FMeshNetworkStatus | 3 | 3 | 31 |
-| 4 | struct FAthenaRewardResult | 1 | 1 | 32 |
-| 5 | enum ESpectatorReservationResult::Type | 1 | 1 | 33 |
-| 6 | struct FPickupInstigatorArray | 1 | 1 | 34 |
-| 7 | enum ECollisionEnabled::Type | 1 | 1 | 35 |
-| 8 | static_or_const_rpc | 1 | 1 | 36 |
-| 9 | enum EPartyReservationResult::Type | 0 | 1 | 36 |
-| 10 | struct FPartyReservation | 1 | 1 | 37 |
 
 ### Generated ancestors that fail the most descendants
 
 | Ancestor | Descendant failures |
 |---|---|
-| AFortPlayerController | 15 |
-| UMcpProfile | 11 |
-| UFortMcpProfile | 10 |
-| UFortMcpProfileSubgame | 2 |
-| AFortGameStateAthena | 2 |
 
 ### RPC digest: what changed from v1
 
@@ -104,7 +80,7 @@ v1 chained the RPC digest through the super class (`rpc_chain_v1`). CoreNet.cpp 
 
 ### Assumptions
 
-- Emitted side = the generated header of each set class: replicated UPROPERTY names, the header's C++ type and array dimension; UFUNCTION(Server|Client|NetMulticast) names. Offsets come from the reflection.
+- Emitted side = the generated header of each set class: replicated UPROPERTY names, the header's C++ type and array dimension; UFUNCTION(Server|Client|NetMulticast|ServiceRequest|ServiceResponse) names. Offsets come from the reflection.
 - Emitted UFUNCTION flags are the reflection's (the header's role specifiers are cross-checked against the net bits; table-index flags of properties are cross-checked too).
 - Engine and non-set ancestors are not generated: their expected value is their emitted value.
 - Struct layouts are the reflection's (the emitted F<Struct>.h is checked for existence only).
