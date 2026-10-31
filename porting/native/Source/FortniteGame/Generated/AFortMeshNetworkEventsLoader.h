@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Info.h"
 
+#include "FMeshNetworkEventStateDataArray.h"
+
 #include "AFortMeshNetworkEventsLoader.generated.h"
 
 UCLASS(config=Engine)
@@ -18,9 +20,14 @@ public:
 	UPROPERTY(Transient)
 	bool bMeshNetworkReady;
 
+	// table index 0, flags 0x20080000002020
+	UPROPERTY(Replicated, Transient)
+	FMeshNetworkEventStateDataArray ActiveMeshNetworkEvents;
+
 	UFUNCTION(NetMulticast, Reliable)
 	void MulticastMeshNetEventBurst(const FName& EventName);
 	void MulticastMeshNetEventBurst_Implementation(const FName& EventName);
 
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

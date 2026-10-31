@@ -11,6 +11,6 @@ void UCobaltPlayerComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	DOREPLIFETIME(UCobaltPlayerComponent, CachedMutator);
+	DOREPLIFETIME_CONDITION(UCobaltPlayerComponent, CachedMutator, COND_InitialOnly);
 }
 

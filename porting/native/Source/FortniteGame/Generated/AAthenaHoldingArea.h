@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "ABuildingGameplayActor.h"
 
+#include "FIgnoredPlayerPawnArray.h"
+
 class UStaticMeshComponent;
 
 #include "AAthenaHoldingArea.generated.h"
@@ -24,8 +26,15 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_bHoldingAreaActive)
 	uint8 bHoldingAreaActive : 1;
 
+	// table index 0, flags 0x40000100000020
+	UPROPERTY(ReplicatedUsing=OnRep_IgnoredPlayerPawns)
+	FIgnoredPlayerPawnArray IgnoredPlayerPawns;
+
 	UFUNCTION()
 	void OnRep_bHoldingAreaActive();
+
+	UFUNCTION()
+	void OnRep_IgnoredPlayerPawns();
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

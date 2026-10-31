@@ -141,19 +141,19 @@ void AFortBroadcastRemoteClientInfo::GetLifetimeReplicatedProps(TArray<FLifetime
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	DOREPLIFETIME(AFortBroadcastRemoteClientInfo, RemoteEventScore);
-	DOREPLIFETIME(AFortBroadcastRemoteClientInfo, RemotePoiTagID);
-	DOREPLIFETIME(AFortBroadcastRemoteClientInfo, RemoteRespawnTime);
-	DOREPLIFETIME(AFortBroadcastRemoteClientInfo, RemoteWeakspotData);
-	DOREPLIFETIME(AFortBroadcastRemoteClientInfo, RemoteChatEntry);
-	DOREPLIFETIME(AFortBroadcastRemoteClientInfo, bRemoteCanDBNORevive);
-	DOREPLIFETIME(AFortBroadcastRemoteClientInfo, bRemoteIsInventoryActive);
-	DOREPLIFETIME(AFortBroadcastRemoteClientInfo, bRemoteIsFullScreenMapActive);
-	DOREPLIFETIME(AFortBroadcastRemoteClientInfo, RemoteBuildingMaterial);
-	DOREPLIFETIME(AFortBroadcastRemoteClientInfo, RemoteBuildableClass);
-	DOREPLIFETIME(AFortBroadcastRemoteClientInfo, RemoteEditTileData);
-	DOREPLIFETIME(AFortBroadcastRemoteClientInfo, RemoteEditActor);
-	DOREPLIFETIME(AFortBroadcastRemoteClientInfo, bRemoteIsInteracting);
-	DOREPLIFETIME(AFortBroadcastRemoteClientInfo, bActive);
+	DOREPLIFETIME_CONDITION(AFortBroadcastRemoteClientInfo, RemoteEventScore, COND_SkipOwner);
+	DOREPLIFETIME_CONDITION(AFortBroadcastRemoteClientInfo, RemotePoiTagID, COND_SkipOwner);
+	DOREPLIFETIME_CONDITION(AFortBroadcastRemoteClientInfo, RemoteRespawnTime, COND_SkipOwner);
+	DOREPLIFETIME_CONDITION(AFortBroadcastRemoteClientInfo, RemoteWeakspotData, COND_SkipOwner);
+	DOREPLIFETIME_CONDITION(AFortBroadcastRemoteClientInfo, RemoteChatEntry, COND_SkipOwner);
+	DOREPLIFETIME_CONDITION(AFortBroadcastRemoteClientInfo, bRemoteCanDBNORevive, COND_SkipOwner);
+	DOREPLIFETIME_CONDITION(AFortBroadcastRemoteClientInfo, bRemoteIsInventoryActive, COND_SkipOwner);
+	DOREPLIFETIME_CONDITION(AFortBroadcastRemoteClientInfo, bRemoteIsFullScreenMapActive, COND_SkipOwner);
+	DOREPLIFETIME_CONDITION(AFortBroadcastRemoteClientInfo, RemoteBuildingMaterial, COND_SkipOwner);
+	DOREPLIFETIME_CONDITION(AFortBroadcastRemoteClientInfo, RemoteBuildableClass, COND_SkipOwner);
+	DOREPLIFETIME_CONDITION(AFortBroadcastRemoteClientInfo, RemoteEditTileData, COND_SkipOwner);
+	DOREPLIFETIME_CONDITION(AFortBroadcastRemoteClientInfo, RemoteEditActor, COND_SkipOwner);
+	DOREPLIFETIME_CONDITION(AFortBroadcastRemoteClientInfo, bRemoteIsInteracting, COND_SkipOwner);
+	DOREPLIFETIME_CONDITION(AFortBroadcastRemoteClientInfo, bActive, COND_OwnerOnly);
 }
 

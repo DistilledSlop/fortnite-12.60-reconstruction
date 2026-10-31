@@ -26,6 +26,6 @@ void AFortAthenaDoghouseVehicle::GetLifetimeReplicatedProps(TArray<FLifetimeProp
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	DOREPLIFETIME(AFortAthenaDoghouseVehicle, ControlState);
+	DOREPLIFETIME_CONDITION(AFortAthenaDoghouseVehicle, ControlState, COND_SkipOwner);
 }
 

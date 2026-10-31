@@ -2,6 +2,11 @@
 #include "AFortPlayerPawnAthena.h"
 #include "Net/UnrealNetwork.h"
 
+void AFortPlayerPawnAthena::FastSharedReplication_Implementation(const FSharedRepMovement& SharedRepMovement)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPlayerPawnAthena::ForceReviveFromDBNO()
 {
 	// Behaviour snippet: AFortPlayerPawnAthena::ForceReviveFromDBNO (body only; spliced into the generated member function).
@@ -159,9 +164,10 @@ void AFortPlayerPawnAthena::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(AFortPlayerPawnAthena, bIsCreativeGhostModeActivated);
-	DOREPLIFETIME(AFortPlayerPawnAthena, FastReplicationMinimalReplicationTags);
-	DOREPLIFETIME(AFortPlayerPawnAthena, SimulatedProxyGameplayCues);
-	DOREPLIFETIME(AFortPlayerPawnAthena, ReplayRepAnimMontageInfo);
+	DOREPLIFETIME_CONDITION(AFortPlayerPawnAthena, EncryptedPawnReplayData, COND_SkipOwner);
+	DOREPLIFETIME_CONDITION(AFortPlayerPawnAthena, FastReplicationMinimalReplicationTags, COND_SkipOwner);
+	DOREPLIFETIME_CONDITION(AFortPlayerPawnAthena, SimulatedProxyGameplayCues, COND_SkipOwner);
+	DOREPLIFETIME_CONDITION(AFortPlayerPawnAthena, ReplayRepAnimMontageInfo, COND_ReplayOnly);
 	DOREPLIFETIME(AFortPlayerPawnAthena, AttributeReplicationProxy);
 	DOREPLIFETIME(AFortPlayerPawnAthena, MeshHeightAdjustAthena);
 	DOREPLIFETIME(AFortPlayerPawnAthena, CapsuleHalfHeightAthena);

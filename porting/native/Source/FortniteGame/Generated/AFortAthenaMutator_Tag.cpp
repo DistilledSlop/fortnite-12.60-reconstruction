@@ -6,6 +6,7 @@ void AFortAthenaMutator_Tag::GetLifetimeReplicatedProps(TArray<FLifetimeProperty
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
+	DOREPLIFETIME(AFortAthenaMutator_Tag, TagTeamInfo);
 	DOREPLIFETIME(AFortAthenaMutator_Tag, ServerEndTime);
 }
 

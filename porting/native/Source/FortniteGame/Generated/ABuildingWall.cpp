@@ -22,7 +22,7 @@ void ABuildingWall::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLif
 	DOREPLIFETIME(ABuildingWall, SlidingDoorDesiredXLocation);
 	DOREPLIFETIME(ABuildingWall, DoorDesiredXLocation);
 	DOREPLIFETIME(ABuildingWall, DoorDesiredRotOffset);
-	DOREPLIFETIME(ABuildingWall, DoubleDoorMesh);
-	DOREPLIFETIME(ABuildingWall, DoorMesh);
+	DOREPLIFETIME_CONDITION(ABuildingWall, DoubleDoorMesh, COND_ReplayOnly);
+	DOREPLIFETIME_CONDITION(ABuildingWall, DoorMesh, COND_ReplayOnly);
 }
 

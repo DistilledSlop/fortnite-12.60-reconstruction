@@ -19,7 +19,7 @@ void ABuildingTrap::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLif
 	DOREPLIFETIME(ABuildingTrap, OriginalTrapLevel);
 	DOREPLIFETIME(ABuildingTrap, TrapLevel);
 	DOREPLIFETIME(ABuildingTrap, AttachedTo);
-	DOREPLIFETIME(ABuildingTrap, AppliedAlterations);
+	DOREPLIFETIME(ABuildingTrap, AppliedAlterations);  // TODO: replication condition not recovered (COND_None assumed)
 	DOREPLIFETIME(ABuildingTrap, TrapData);
 }
 

@@ -11,6 +11,7 @@ void AFortAthenaMutator_Wax::GetLifetimeReplicatedProps(TArray<FLifetimeProperty
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
+	DOREPLIFETIME(AFortAthenaMutator_Wax, PlayerData);
 	DOREPLIFETIME(AFortAthenaMutator_Wax, TeamLeadersInOrder);
 }
 

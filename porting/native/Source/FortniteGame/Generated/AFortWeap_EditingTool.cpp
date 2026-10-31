@@ -11,6 +11,6 @@ void AFortWeap_EditingTool::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	DOREPLIFETIME(AFortWeap_EditingTool, EditActor);
+	DOREPLIFETIME_CONDITION(AFortWeap_EditingTool, EditActor, COND_OwnerOnly);
 }
 

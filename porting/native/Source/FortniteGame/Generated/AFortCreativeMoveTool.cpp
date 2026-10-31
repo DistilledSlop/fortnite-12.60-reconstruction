@@ -214,7 +214,7 @@ void AFortCreativeMoveTool::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>
 	DOREPLIFETIME(AFortCreativeMoveTool, SelectionProperty);
 	DOREPLIFETIME(AFortCreativeMoveTool, ScaleModifier);
 	DOREPLIFETIME(AFortCreativeMoveTool, ConnectedActorStates);
-	DOREPLIFETIME(AFortCreativeMoveTool, PlaysetPreviewInteractionBehavior);
+	DOREPLIFETIME(AFortCreativeMoveTool, PlaysetPreviewInteractionBehavior);  // TODO: replication condition not recovered (COND_None assumed)
 	DOREPLIFETIME(AFortCreativeMoveTool, DeleteObjectsInteractionBehavior);
 	DOREPLIFETIME(AFortCreativeMoveTool, InteractionBehaviors);
 	DOREPLIFETIME(AFortCreativeMoveTool, bIsPreviewingMove);

@@ -11,9 +11,9 @@ void UFortChargingSet_SneakySnow::GetLifetimeReplicatedProps(TArray<FLifetimePro
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	DOREPLIFETIME(UFortChargingSet_SneakySnow, ServerTimeChargeIncrements);
-	DOREPLIFETIME(UFortChargingSet_SneakySnow, ChargeRate);
-	DOREPLIFETIME(UFortChargingSet_SneakySnow, MaxCharge);
-	DOREPLIFETIME(UFortChargingSet_SneakySnow, Charge);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortChargingSet_SneakySnow, ServerTimeChargeIncrements, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortChargingSet_SneakySnow, ChargeRate, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortChargingSet_SneakySnow, MaxCharge, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortChargingSet_SneakySnow, Charge, COND_OwnerOnly, REPNOTIFY_Always);
 }
 

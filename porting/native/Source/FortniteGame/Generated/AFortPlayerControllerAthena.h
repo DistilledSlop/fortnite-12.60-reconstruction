@@ -54,6 +54,7 @@
 #include "FPlayerStateEncryptionKey.h"
 #include "FProfileGoScenario.h"
 #include "FQuickBarData.h"
+#include "FTimeStampedPhysicsPawnState.h"
 #include "GameFramework/OnlineReplStructs.h"
 #include "GameplayTagContainer.h"
 #include "Math/Color.h"
@@ -1006,6 +1007,14 @@ public:
 	UFUNCTION(Server, Reliable)
 	void RestoreCreativePlot(const FString& IslandId);
 	void RestoreCreativePlot_Implementation(const FString& IslandId);
+
+	UFUNCTION(Server, Reliable)
+	void SendClientPhysicsBallStateToServer(APhysicsObject* PhysicsObject, float ClientPing, const FTimeStampedPhysicsPawnState& ClientBallState);
+	void SendClientPhysicsBallStateToServer_Implementation(APhysicsObject* PhysicsObject, float ClientPing, const FTimeStampedPhysicsPawnState& ClientBallState);
+
+	UFUNCTION(Server, Reliable)
+	void SendPhysicsBallHitToServer(APhysicsObject* PhysicsObject, float ClientPing, APawn* HittingPawn, const FVector& VelocityOfHitter, const FVector& HitNormal, const FTimeStampedPhysicsPawnState& ClientBallState);
+	void SendPhysicsBallHitToServer_Implementation(APhysicsObject* PhysicsObject, float ClientPing, APawn* HittingPawn, const FVector& VelocityOfHitter, const FVector& HitNormal, const FTimeStampedPhysicsPawnState& ClientBallState);
 
 	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerAddSimulatedXp(float XpAmmount, const FText& Source, const FGameplayTag& MetaData);

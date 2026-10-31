@@ -94,6 +94,11 @@ void AFortGameStateAthena::OnRep_CurrentPlaylistId()
 	// Empty body: the native function does nothing (see Inferred).
 }
 
+void AFortGameStateAthena::OnRep_CurrentPlaylistInfo()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortGameStateAthena::OnRep_DamageForStormCapMarking()
 {
 	// Behaviour snippet: AFortGameStateAthena::OnRep_DamageForStormCapMarking (body only; spliced into the generated member function).
@@ -324,6 +329,7 @@ void AFortGameStateAthena::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>&
 	DOREPLIFETIME(AFortGameStateAthena, bEnvironmentDamageBlocked);
 	DOREPLIFETIME(AFortGameStateAthena, CosmeticUsageReport);
 	DOREPLIFETIME(AFortGameStateAthena, GoldenPoiLocationTags);
+	DOREPLIFETIME(AFortGameStateAthena, SpawnMachineRepData);
 	DOREPLIFETIME(AFortGameStateAthena, LocalizationService);
 	DOREPLIFETIME(AFortGameStateAthena, VolumeManager);
 	DOREPLIFETIME(AFortGameStateAthena, StormCNDamageVulnerabilityLevel3);
@@ -341,23 +347,26 @@ void AFortGameStateAthena::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>&
 	DOREPLIFETIME(AFortGameStateAthena, MutatorGenericInt_2);
 	DOREPLIFETIME(AFortGameStateAthena, MutatorGenericInt_1);
 	DOREPLIFETIME(AFortGameStateAthena, MutatorGenericInt_0);
+	DOREPLIFETIME(AFortGameStateAthena, MutatorObjectDataArray);
 	DOREPLIFETIME(AFortGameStateAthena, MutatorEventData);
 	DOREPLIFETIME(AFortGameStateAthena, LobbyAction);
 	DOREPLIFETIME(AFortGameStateAthena, bAircraftIsLocked);
 	DOREPLIFETIME(AFortGameStateAthena, Aircrafts);
 	DOREPLIFETIME(AFortGameStateAthena, PlayerBotsLeft);
-	DOREPLIFETIME(AFortGameStateAthena, TotalPlayersBots);
+	DOREPLIFETIME(AFortGameStateAthena, TotalPlayersBots);  // TODO: replication condition not recovered (COND_None assumed)
 	DOREPLIFETIME(AFortGameStateAthena, SafeZonePhase);
-	DOREPLIFETIME(AFortGameStateAthena, bGameModeWillSkipAircraft);
+	DOREPLIFETIME(AFortGameStateAthena, bGameModeWillSkipAircraft);  // TODO: replication condition not recovered (COND_None assumed)
+	DOREPLIFETIME(AFortGameStateAthena, CurrentPlaylistInfo);
 	DOREPLIFETIME(AFortGameStateAthena, bIsCustomMatch);
 	DOREPLIFETIME(AFortGameStateAthena, EventTournamentRound);
-	DOREPLIFETIME(AFortGameStateAthena, ReasonWereInSetupPhase);
+	DOREPLIFETIME(AFortGameStateAthena, ReasonWereInSetupPhase);  // TODO: replication condition not recovered (COND_None assumed)
 	DOREPLIFETIME(AFortGameStateAthena, GamePhase);
 	DOREPLIFETIME(AFortGameStateAthena, BroadcastSpectatorInfo);
 	DOREPLIFETIME(AFortGameStateAthena, MapInfo);
 	DOREPLIFETIME(AFortGameStateAthena, SafeZoneIndicator);
-	DOREPLIFETIME(AFortGameStateAthena, CurrentPlaylistId);
+	DOREPLIFETIME(AFortGameStateAthena, CurrentPlaylistId);  // TODO: replication condition not recovered (COND_None assumed)
 	DOREPLIFETIME(AFortGameStateAthena, ActiveTeamNums);
+	DOREPLIFETIME(AFortGameStateAthena, GameMemberInfoArray);
 	DOREPLIFETIME(AFortGameStateAthena, SpectateAPartyMemberAvailable);
 	DOREPLIFETIME(AFortGameStateAthena, FriendlyFireType);
 	DOREPLIFETIME(AFortGameStateAthena, bStormReachedFinalPosition);
@@ -381,13 +390,13 @@ void AFortGameStateAthena::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>&
 	DOREPLIFETIME(AFortGameStateAthena, TeamXPlayersLeft);
 	DOREPLIFETIME(AFortGameStateAthena, DamageForStormCapMarking);
 	DOREPLIFETIME(AFortGameStateAthena, StormCapState);
-	DOREPLIFETIME(AFortGameStateAthena, bCheatRespawnEnabled);
+	DOREPLIFETIME(AFortGameStateAthena, bCheatRespawnEnabled);  // TODO: replication condition not recovered (COND_None assumed)
 	DOREPLIFETIME(AFortGameStateAthena, FocalPointFOV);
 	DOREPLIFETIME(AFortGameStateAthena, FocalPointOffset);
 	DOREPLIFETIME(AFortGameStateAthena, FocalPointActor);
 	DOREPLIFETIME(AFortGameStateAthena, ClientVehicleClassesToLoad);
 	DOREPLIFETIME(AFortGameStateAthena, PlayersLeft);
-	DOREPLIFETIME(AFortGameStateAthena, TotalPlayers);
+	DOREPLIFETIME(AFortGameStateAthena, TotalPlayers);  // TODO: replication condition not recovered (COND_None assumed)
 	DOREPLIFETIME(AFortGameStateAthena, EndGameKickPlayerTime);
 	DOREPLIFETIME(AFortGameStateAthena, EndGameStartTime);
 	DOREPLIFETIME(AFortGameStateAthena, SafeZonesStartTime);
@@ -402,7 +411,7 @@ void AFortGameStateAthena::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>&
 	DOREPLIFETIME(AFortGameStateAthena, bSkyTubesDisabled);
 	DOREPLIFETIME(AFortGameStateAthena, bSkyTubesShuttingDown);
 	DOREPLIFETIME(AFortGameStateAthena, bPlaylistStoppedSafeZonePhases);
-	DOREPLIFETIME(AFortGameStateAthena, TotalFinalCountdownTime);
+	DOREPLIFETIME(AFortGameStateAthena, TotalFinalCountdownTime);  // TODO: replication condition not recovered (COND_None assumed)
 	DOREPLIFETIME(AFortGameStateAthena, SafeZonePauseTime);
 	DOREPLIFETIME(AFortGameStateAthena, PlaylistEndTime);
 }

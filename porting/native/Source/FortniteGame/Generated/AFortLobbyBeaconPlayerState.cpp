@@ -54,7 +54,7 @@ void AFortLobbyBeaconPlayerState::GetLifetimeReplicatedProps(TArray<FLifetimePro
 	DOREPLIFETIME(AFortLobbyBeaconPlayerState, CharacterGender);
 	DOREPLIFETIME(AFortLobbyBeaconPlayerState, SelectedGadgets);
 	DOREPLIFETIME(AFortLobbyBeaconPlayerState, HomeBaseVersion);
-	DOREPLIFETIME(AFortLobbyBeaconPlayerState, LobbyTimeRemaining);
+	DOREPLIFETIME_CONDITION(AFortLobbyBeaconPlayerState, LobbyTimeRemaining, COND_OwnerOnly);
 	DOREPLIFETIME(AFortLobbyBeaconPlayerState, BannerInfo);
 	DOREPLIFETIME(AFortLobbyBeaconPlayerState, HeroType);
 	DOREPLIFETIME(AFortLobbyBeaconPlayerState, HeroId);

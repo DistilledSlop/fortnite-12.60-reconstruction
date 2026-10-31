@@ -17,6 +17,11 @@ void AFortAthenaMutator_Cobalt::OnRep_bIsFinishedDisplayingRoundEndUI()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortAthenaMutator_Cobalt::OnRep_CombatStormShieldArray()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortAthenaMutator_Cobalt::OnRep_RoundStartWidgetSequenceRunning()
 {
 	// Body not recovered: reflection-derived stub.
@@ -49,6 +54,7 @@ void AFortAthenaMutator_Cobalt::GetLifetimeReplicatedProps(TArray<FLifetimePrope
 	DOREPLIFETIME(AFortAthenaMutator_Cobalt, FirstRound);
 	DOREPLIFETIME(AFortAthenaMutator_Cobalt, bIsCobaltFinished);
 	DOREPLIFETIME(AFortAthenaMutator_Cobalt, ActiveRound);
+	DOREPLIFETIME(AFortAthenaMutator_Cobalt, CombatStormShieldArray);
 	DOREPLIFETIME(AFortAthenaMutator_Cobalt, bRoundStartWidgetSequenceRunning);
 	DOREPLIFETIME(AFortAthenaMutator_Cobalt, bTeleportComplete);
 }

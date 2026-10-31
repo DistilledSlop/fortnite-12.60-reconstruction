@@ -6,6 +6,8 @@ void AFortDeployableBaseManager::GetLifetimeReplicatedProps(TArray<FLifetimeProp
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
+	DOREPLIFETIME(AFortDeployableBaseManager, DeployableBaseArray);
+	DOREPLIFETIME(AFortDeployableBaseManager, ActiveTieredCollectionLayouts);
 	DOREPLIFETIME(AFortDeployableBaseManager, DeployableBaseUseType);
 	DOREPLIFETIME(AFortDeployableBaseManager, bBusyWithPlotActions);
 	DOREPLIFETIME(AFortDeployableBaseManager, bRestrictedBuildingActive);

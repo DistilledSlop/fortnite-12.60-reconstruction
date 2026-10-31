@@ -6,6 +6,9 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Info.h"
 
+#include "FLatentRepTeamDataArray.h"
+#include "FPrivateTeamDataArray.h"
+
 class AFortTeamInfo;
 
 #include "AFortTeamPrivateInfo.generated.h"
@@ -20,9 +23,20 @@ public:
 	UPROPERTY(Transient)
 	AFortTeamInfo* TeamInfo;
 
+	// table index 2, flags 0x20080100000020
+	UPROPERTY(ReplicatedUsing=OnRep_RepData)
+	FPrivateTeamDataArray RepData;
+
+	// table index 1, flags 0x20080000000020
+	UPROPERTY(Replicated)
+	FLatentRepTeamDataArray LatentTeamRepData;
+
 	// table index 0, flags 0x20080000002020
 	UPROPERTY(Replicated, Transient)
 	uint16 AverageDamageDealt;
+
+	UFUNCTION()
+	void OnRep_RepData();
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

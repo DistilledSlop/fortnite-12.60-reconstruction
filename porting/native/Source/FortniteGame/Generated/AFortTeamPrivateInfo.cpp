@@ -2,10 +2,17 @@
 #include "AFortTeamPrivateInfo.h"
 #include "Net/UnrealNetwork.h"
 
+void AFortTeamPrivateInfo::OnRep_RepData()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortTeamPrivateInfo::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(AFortTeamPrivateInfo, AverageDamageDealt);
+	DOREPLIFETIME(AFortTeamPrivateInfo, LatentTeamRepData);
+	DOREPLIFETIME(AFortTeamPrivateInfo, RepData);
 }
 

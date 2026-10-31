@@ -38,7 +38,7 @@ void ABuildingItemCollectorActor::GetLifetimeReplicatedProps(TArray<FLifetimePro
 	DOREPLIFETIME(ABuildingItemCollectorActor, OverrideOutputItems);
 	DOREPLIFETIME(ABuildingItemCollectorActor, bUseInstanceLootValueOverrides);
 	DOREPLIFETIME(ABuildingItemCollectorActor, ControllingPlayer);
-	DOREPLIFETIME(ABuildingItemCollectorActor, TrackingType);
+	DOREPLIFETIME(ABuildingItemCollectorActor, TrackingType);  // TODO: replication condition not recovered (COND_None assumed)
 	DOREPLIFETIME(ABuildingItemCollectorActor, ItemCollectorState);
 }
 

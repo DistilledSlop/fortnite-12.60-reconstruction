@@ -22,6 +22,6 @@ void AFortInGameMapManager::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(AFortInGameMapManager, bClearAllFog);
-	DOREPLIFETIME(AFortInGameMapManager, MapData);
+	DOREPLIFETIME_CONDITION(AFortInGameMapManager, MapData, COND_InitialOnly);
 }
 

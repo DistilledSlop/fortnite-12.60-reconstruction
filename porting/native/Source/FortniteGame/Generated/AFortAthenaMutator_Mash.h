@@ -16,6 +16,7 @@
 #include "FMashLeaderboardQuery.h"
 #include "FMashLootTierOverrideAssetData.h"
 #include "FMashObjectiveAreaInstanceData.h"
+#include "FMashPlayerDataArray.h"
 #include "FMashScoreData.h"
 #include "FMashScoreMultiplierSpawnData.h"
 #include "FOnMashPhaseChanged.h"
@@ -277,6 +278,10 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_TeamScoreMultiplier, Transient)
 	uint8 TeamScoreMultiplier;
 
+	// table index 7, flags 0x20080100000034
+	UPROPERTY(ReplicatedUsing=OnRep_PlayerData)
+	FMashPlayerDataArray PlayerDataArray;
+
 	// table index 6, flags 0x20080100002034
 	UPROPERTY(ReplicatedUsing=OnRep_CurrentPhase, Transient)
 	TEnumAsByte<EMashPhase::Type> CurrentPhase;
@@ -303,6 +308,9 @@ public:
 
 	UFUNCTION()
 	void OnRep_CurrentPhase();
+
+	UFUNCTION()
+	void OnRep_PlayerData();
 
 	UFUNCTION()
 	void OnRep_TeamScoreMultiplier();

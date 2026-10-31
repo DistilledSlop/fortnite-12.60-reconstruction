@@ -72,21 +72,21 @@ void AFortWeapon::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifet
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(AFortWeapon, AppliedAlterations);
-	DOREPLIFETIME(AFortWeapon, ImpactAbilitySpecHandle);
-	DOREPLIFETIME(AFortWeapon, ReloadAbilitySpecHandle);
-	DOREPLIFETIME(AFortWeapon, SecondaryAbilitySpecHandle);
-	DOREPLIFETIME(AFortWeapon, PrimaryAbilitySpecHandle);
-	DOREPLIFETIME(AFortWeapon, ActiveAbility);
+	DOREPLIFETIME_CONDITION(AFortWeapon, ImpactAbilitySpecHandle, COND_OwnerOnly);
+	DOREPLIFETIME_CONDITION(AFortWeapon, ReloadAbilitySpecHandle, COND_OwnerOnly);
+	DOREPLIFETIME_CONDITION(AFortWeapon, SecondaryAbilitySpecHandle, COND_OwnerOnly);
+	DOREPLIFETIME_CONDITION(AFortWeapon, PrimaryAbilitySpecHandle, COND_OwnerOnly);
+	DOREPLIFETIME(AFortWeapon, ActiveAbility);  // TODO: replication condition not recovered (COND_None assumed)
 	DOREPLIFETIME(AFortWeapon, ChargeStatusPack);
-	DOREPLIFETIME(AFortWeapon, AmmoCount);
-	DOREPLIFETIME(AFortWeapon, WeaponLevel);
-	DOREPLIFETIME(AFortWeapon, ItemEntryGuid);
-	DOREPLIFETIME(AFortWeapon, LastFireTimeVerified);
-	DOREPLIFETIME(AFortWeapon, EquippedWeaponDestroyWrapperRepCounter);
+	DOREPLIFETIME_CONDITION_NOTIFY(AFortWeapon, AmmoCount, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION(AFortWeapon, WeaponLevel, COND_InitialOnly);
+	DOREPLIFETIME_CONDITION(AFortWeapon, ItemEntryGuid, COND_InitialOnly);
+	DOREPLIFETIME_CONDITION(AFortWeapon, LastFireTimeVerified, COND_SkipOwner);
+	DOREPLIFETIME_CONDITION(AFortWeapon, EquippedWeaponDestroyWrapperRepCounter, COND_OwnerOnly);
 	DOREPLIFETIME(AFortWeapon, CosmeticOverrideWeaponData);
-	DOREPLIFETIME(AFortWeapon, WeaponData);
-	DOREPLIFETIME(AFortWeapon, bIsChargingWeapon);
-	DOREPLIFETIME(AFortWeapon, bIsReloadingWeapon);
-	DOREPLIFETIME(AFortWeapon, bIsEquippingWeapon);
+	DOREPLIFETIME_CONDITION(AFortWeapon, WeaponData, COND_InitialOnly);
+	DOREPLIFETIME_CONDITION(AFortWeapon, bIsChargingWeapon, COND_SkipOwner);
+	DOREPLIFETIME_CONDITION(AFortWeapon, bIsReloadingWeapon, COND_SkipOwner);
+	DOREPLIFETIME_CONDITION(AFortWeapon, bIsEquippingWeapon, COND_SkipOwner);
 }
 

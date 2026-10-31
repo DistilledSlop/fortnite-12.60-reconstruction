@@ -16,6 +16,6 @@ void UValetRaisinComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	DOREPLIFETIME(UValetRaisinComponent, ReplicatedSource);
+	DOREPLIFETIME_CONDITION_NOTIFY(UValetRaisinComponent, ReplicatedSource, COND_None, REPNOTIFY_Always);
 }
 

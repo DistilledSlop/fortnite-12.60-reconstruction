@@ -9,6 +9,7 @@
 #include "Blueprint/UserWidgetPool.h"
 #include "ECancelMarkerReason.h"
 #include "FFortClientMarkerRequest.h"
+#include "FFortWorldMarkerContainer.h"
 #include "FMarkerID.h"
 
 class AFortPlayerMarkerBase;
@@ -30,6 +31,10 @@ public:
 	// table index 12, flags 0x44000000000001
 	UPROPERTY()
 	TSubclassOf<AFortPlayerMarkerBase> MarkerActorClass;
+
+	// table index 11, flags 0x40008000000020
+	UPROPERTY(Replicated)
+	FFortWorldMarkerContainer MarkerStream;
 
 	// table index 10, flags 0x40000000002000
 	UPROPERTY(Transient)
@@ -71,5 +76,6 @@ public:
 	void ServerRemoveMapMarker(const FMarkerID& MarkerID, const ECancelMarkerReason& CancelReason);
 	void ServerRemoveMapMarker_Implementation(const FMarkerID& MarkerID, const ECancelMarkerReason& CancelReason);
 
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

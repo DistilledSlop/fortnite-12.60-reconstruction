@@ -7,6 +7,7 @@
 #include "Components/ActorComponent.h"
 
 #include "FMinigameTrackedObjectiveUpdated.h"
+#include "FTrackedObjectiveArray.h"
 
 #include "UFortMinigameObjectiveTrackerComponent.generated.h"
 
@@ -40,5 +41,10 @@ public:
 	UPROPERTY()
 	FMinigameTrackedObjectiveUpdated OnTrackedObjectiveTeamUpdated;
 
+	// table index 0, flags 0x20080000022821
+	UPROPERTY(Replicated, Transient)
+	FTrackedObjectiveArray ObjectiveArray;
+
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

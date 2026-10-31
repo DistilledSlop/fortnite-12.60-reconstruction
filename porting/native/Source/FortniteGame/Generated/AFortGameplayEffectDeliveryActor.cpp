@@ -21,8 +21,8 @@ void AFortGameplayEffectDeliveryActor::GetLifetimeReplicatedProps(TArray<FLifeti
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	DOREPLIFETIME(AFortGameplayEffectDeliveryActor, SpawnContext);
-	DOREPLIFETIME(AFortGameplayEffectDeliveryActor, bHasExploded);
+	DOREPLIFETIME_CONDITION(AFortGameplayEffectDeliveryActor, SpawnContext, COND_InitialOnly);
+	DOREPLIFETIME_CONDITION(AFortGameplayEffectDeliveryActor, bHasExploded, COND_ReplayOnly);
 	DOREPLIFETIME(AFortGameplayEffectDeliveryActor, bIsBeingKilled);
 }
 

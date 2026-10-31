@@ -10,6 +10,7 @@
 #include "EFortItemType.h"
 #include "Engine/EngineTypes.h"
 #include "FAthenaGameMessageData.h"
+#include "FCobaltCombatStormShieldArray.h"
 #include "FCobaltHideVsDisplay.h"
 #include "FCobaltPreRoundDisplayVisibility.h"
 #include "FCobaltRoundAdvanced.h"
@@ -323,6 +324,10 @@ public:
 	UPROPERTY()
 	AFortAthenaMutator_InventoryOverride* InventoryOverrideMutator;
 
+	// table index 15, flags 0x40000100000020
+	UPROPERTY(ReplicatedUsing=OnRep_CombatStormShieldArray)
+	FCobaltCombatStormShieldArray CombatStormShieldArray;
+
 	// table index 14, flags 0x40000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_ActiveRound)
 	int8 ActiveRound;
@@ -375,6 +380,9 @@ public:
 
 	UFUNCTION()
 	void OnRep_bIsFinishedDisplayingRoundEndUI();
+
+	UFUNCTION()
+	void OnRep_CombatStormShieldArray();
 
 	UFUNCTION()
 	void OnRep_RoundStartWidgetSequenceRunning();

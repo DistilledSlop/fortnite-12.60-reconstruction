@@ -19,7 +19,7 @@ void AFortSafeZoneIndicator::GetLifetimeReplicatedProps(TArray<FLifetimeProperty
 	DOREPLIFETIME(AFortSafeZoneIndicator, NextNextMegaStormGridCellThickness);
 	DOREPLIFETIME(AFortSafeZoneIndicator, bPausedForPreview);
 	DOREPLIFETIME(AFortSafeZoneIndicator, bPaused);
-	DOREPLIFETIME(AFortSafeZoneIndicator, bSafezoneEventDriven);
+	DOREPLIFETIME(AFortSafeZoneIndicator, bSafezoneEventDriven);  // TODO: replication condition not recovered (COND_None assumed)
 	DOREPLIFETIME(AFortSafeZoneIndicator, SafeZoneFinishShrinkTime);
 	DOREPLIFETIME(AFortSafeZoneIndicator, SafeZoneStartShrinkTime);
 	DOREPLIFETIME(AFortSafeZoneIndicator, NextNextCenter);

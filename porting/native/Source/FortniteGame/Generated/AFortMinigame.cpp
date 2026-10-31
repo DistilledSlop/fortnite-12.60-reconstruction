@@ -22,6 +22,11 @@ void AFortMinigame::OnRep_CurrentState()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortMinigame::OnRep_MinigamePlayer()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortMinigame::OnRep_PlayerBuckets()
 {
 	// Body not recovered: reflection-derived stub.
@@ -54,7 +59,7 @@ void AFortMinigame::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLif
 	DOREPLIFETIME(AFortMinigame, PlayerBuckets);
 	DOREPLIFETIME(AFortMinigame, RoundWinHistory);
 	DOREPLIFETIME(AFortMinigame, bVolumeNavigationHasBuilt);
-	DOREPLIFETIME(AFortMinigame, NumMinigameComponentsServer);
+	DOREPLIFETIME_CONDITION(AFortMinigame, NumMinigameComponentsServer, COND_Custom);
 	DOREPLIFETIME(AFortMinigame, bAllowFriendlyFire);
 	DOREPLIFETIME(AFortMinigame, bShowCumulativeScoreboard);
 	DOREPLIFETIME(AFortMinigame, DefeatAudioIndex);
@@ -89,11 +94,13 @@ void AFortMinigame::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLif
 	DOREPLIFETIME(AFortMinigame, GameWinnerDisplayTime);
 	DOREPLIFETIME(AFortMinigame, PostGameResetDelay);
 	DOREPLIFETIME(AFortMinigame, WarmupDuration);
-	DOREPLIFETIME(AFortMinigame, PostGameSpawnLocationSetting);
-	DOREPLIFETIME(AFortMinigame, SpawnLocationSetting);
-	DOREPLIFETIME(AFortMinigame, AutoStartDelay);
+	DOREPLIFETIME(AFortMinigame, PostGameSpawnLocationSetting);  // TODO: replication condition not recovered (COND_None assumed)
+	DOREPLIFETIME(AFortMinigame, SpawnLocationSetting);  // TODO: replication condition not recovered (COND_None assumed)
+	DOREPLIFETIME(AFortMinigame, AutoStartDelay);  // TODO: replication condition not recovered (COND_None assumed)
 	DOREPLIFETIME(AFortMinigame, DisplayName);
 	DOREPLIFETIME(AFortMinigame, EndConditionArray);
+	DOREPLIFETIME(AFortMinigame, SpectatingPlayerArray);
+	DOREPLIFETIME(AFortMinigame, PlayerArray);
 	DOREPLIFETIME(AFortMinigame, TotalRounds);
 	DOREPLIFETIME(AFortMinigame, CurrentRound);
 	DOREPLIFETIME(AFortMinigame, TimeLimit);

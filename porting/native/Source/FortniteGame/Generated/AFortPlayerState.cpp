@@ -136,13 +136,13 @@ void AFortPlayerState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Out
 	DOREPLIFETIME(AFortPlayerState, HomeActor);
 	DOREPLIFETIME(AFortPlayerState, ReadyCheckState);
 	DOREPLIFETIME(AFortPlayerState, bAreZoneStatsFinalized);
-	DOREPLIFETIME(AFortPlayerState, ReplicatedStats_Zone);
-	DOREPLIFETIME(AFortPlayerState, ReplicatedStats_Campaign);
+	DOREPLIFETIME(AFortPlayerState, ReplicatedStats_Zone);  // replication condition confidence: medium
+	DOREPLIFETIME(AFortPlayerState, ReplicatedStats_Campaign);  // replication condition confidence: medium
 	DOREPLIFETIME(AFortPlayerState, PlayerTeamPrivate);
 	DOREPLIFETIME(AFortPlayerState, PlayerTeam);
 	DOREPLIFETIME(AFortPlayerState, CharacterPartColorSwatches);
 	DOREPLIFETIME(AFortPlayerState, CharacterColorSwatches);
-	DOREPLIFETIME(AFortPlayerState, CharacterData);
+	DOREPLIFETIME_CONDITION_NOTIFY(AFortPlayerState, CharacterData, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME(AFortPlayerState, CharacterBodyType);
 	DOREPLIFETIME(AFortPlayerState, CharacterGender);
 	DOREPLIFETIME(AFortPlayerState, bIsSimulatingDamage);

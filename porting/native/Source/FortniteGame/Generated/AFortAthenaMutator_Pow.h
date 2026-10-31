@@ -10,6 +10,7 @@
 #include "FAthenaGameMessageData.h"
 #include "FFortRespawnLogicData_Teams.h"
 #include "FOnRespawnTimeRemainingUpdate.h"
+#include "FPowPlayerDataArray.h"
 
 #include "AFortAthenaMutator_Pow.generated.h"
 
@@ -50,6 +51,10 @@ public:
 	// table index 2, flags 0x20080000010001
 	UPROPERTY()
 	FScalableFloat GrantMaxHealthAtRespawnsOff;
+
+	// table index 1, flags 0x20080000000034
+	UPROPERTY(Replicated)
+	FPowPlayerDataArray PlayerData;
 
 	// table index 0, flags 0x40000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_RespawningCurrentlyAllowed)

@@ -17,11 +17,23 @@ void AFortThreatVisualsManager::OnRep_HideClouds()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortThreatVisualsManager::OnRep_StormWinds()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortThreatVisualsManager::OnRep_ThreatLocations()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortThreatVisualsManager::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(AFortThreatVisualsManager, GoalActorLocations);
+	DOREPLIFETIME(AFortThreatVisualsManager, StormWindArray);
+	DOREPLIFETIME(AFortThreatVisualsManager, ThreatLocations);
 	DOREPLIFETIME(AFortThreatVisualsManager, bHideClouds);
 }
 

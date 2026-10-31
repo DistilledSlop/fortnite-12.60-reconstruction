@@ -7,6 +7,7 @@
 #include "AFortAthenaMutator.h"
 
 #include "FLimitedLifeByTeamData.h"
+#include "FLimitedLifeDataArray.h"
 
 class AFortPlayerState;
 
@@ -26,9 +27,14 @@ public:
 	UPROPERTY()
 	TMap<uint8, FLimitedLifeByTeamData> SpecificTeamData;
 
+	// table index 2, flags 0x20080000000020
+	UPROPERTY(Replicated)
+	FLimitedLifeDataArray LiveData;
+
 	// table index 0, flags 0x20080000000000
 	UPROPERTY()
 	TSet<AFortPlayerState*> AlreadySeenStates;
 
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

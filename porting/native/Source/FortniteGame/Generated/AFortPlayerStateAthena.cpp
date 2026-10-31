@@ -266,7 +266,7 @@ void AFortPlayerStateAthena::GetLifetimeReplicatedProps(TArray<FLifetimeProperty
 	DOREPLIFETIME(AFortPlayerStateAthena, bPreserveSquad);
 	DOREPLIFETIME(AFortPlayerStateAthena, BotUniqueId);
 	DOREPLIFETIME(AFortPlayerStateAthena, bIsAnAthenaGameParticipant);
-	DOREPLIFETIME(AFortPlayerStateAthena, MatchAbandonState);
+	DOREPLIFETIME_CONDITION(AFortPlayerStateAthena, MatchAbandonState, COND_OwnerOnly);
 	DOREPLIFETIME(AFortPlayerStateAthena, bHoldsRebootVanLock);
 	DOREPLIFETIME(AFortPlayerStateAthena, RebootCounter);
 	DOREPLIFETIME(AFortPlayerStateAthena, bResurrectingNow);
@@ -284,25 +284,25 @@ void AFortPlayerStateAthena::GetLifetimeReplicatedProps(TArray<FLifetimeProperty
 	DOREPLIFETIME(AFortPlayerStateAthena, SquadId);
 	DOREPLIFETIME(AFortPlayerStateAthena, TeamAverageDamageDealt);
 	DOREPLIFETIME(AFortPlayerStateAthena, StormSurgeEffectCount);
-	DOREPLIFETIME(AFortPlayerStateAthena, TotalPlayerScore);
-	DOREPLIFETIME(AFortPlayerStateAthena, NumGoldCoinsCollected);
-	DOREPLIFETIME(AFortPlayerStateAthena, NumSilverCoinsCollected);
-	DOREPLIFETIME(AFortPlayerStateAthena, NumBronzeCoinsCollected);
-	DOREPLIFETIME(AFortPlayerStateAthena, NumMinutesAlive);
-	DOREPLIFETIME(AFortPlayerStateAthena, NumForagedItemsConsumed);
-	DOREPLIFETIME(AFortPlayerStateAthena, NumLlamasOpened);
-	DOREPLIFETIME(AFortPlayerStateAthena, NumSupplyDropsOpened);
-	DOREPLIFETIME(AFortPlayerStateAthena, NumAmmoCansOpened);
-	DOREPLIFETIME(AFortPlayerStateAthena, NumChestsOpened);
+	DOREPLIFETIME(AFortPlayerStateAthena, TotalPlayerScore);  // TODO: replication condition not recovered (COND_None assumed)
+	DOREPLIFETIME_CONDITION(AFortPlayerStateAthena, NumGoldCoinsCollected, COND_OwnerOnly);
+	DOREPLIFETIME_CONDITION(AFortPlayerStateAthena, NumSilverCoinsCollected, COND_OwnerOnly);
+	DOREPLIFETIME_CONDITION(AFortPlayerStateAthena, NumBronzeCoinsCollected, COND_OwnerOnly);
+	DOREPLIFETIME_CONDITION(AFortPlayerStateAthena, NumMinutesAlive, COND_OwnerOnly);
+	DOREPLIFETIME_CONDITION(AFortPlayerStateAthena, NumForagedItemsConsumed, COND_OwnerOnly);
+	DOREPLIFETIME_CONDITION(AFortPlayerStateAthena, NumLlamasOpened, COND_OwnerOnly);
+	DOREPLIFETIME_CONDITION(AFortPlayerStateAthena, NumSupplyDropsOpened, COND_OwnerOnly);
+	DOREPLIFETIME_CONDITION(AFortPlayerStateAthena, NumAmmoCansOpened, COND_OwnerOnly);
+	DOREPLIFETIME_CONDITION(AFortPlayerStateAthena, NumChestsOpened, COND_OwnerOnly);
 	DOREPLIFETIME(AFortPlayerStateAthena, SeasonLevelUIDisplay);
 	DOREPLIFETIME(AFortPlayerStateAthena, KillScore);
-	DOREPLIFETIME(AFortPlayerStateAthena, DownScore);
+	DOREPLIFETIME_CONDITION(AFortPlayerStateAthena, DownScore, COND_OwnerOnly);
 	DOREPLIFETIME(AFortPlayerStateAthena, Place);
 	DOREPLIFETIME(AFortPlayerStateAthena, TeamScore);
 	DOREPLIFETIME(AFortPlayerStateAthena, TeamScorePlacement);
 	DOREPLIFETIME(AFortPlayerStateAthena, TeamIndex);
 	DOREPLIFETIME(AFortPlayerStateAthena, TeamKillScore);
 	DOREPLIFETIME(AFortPlayerStateAthena, ReplicatedTeamMemberState);
-	DOREPLIFETIME(AFortPlayerStateAthena, PersonalLobbyAction);
+	DOREPLIFETIME_CONDITION(AFortPlayerStateAthena, PersonalLobbyAction, COND_OwnerOnly);
 }
 

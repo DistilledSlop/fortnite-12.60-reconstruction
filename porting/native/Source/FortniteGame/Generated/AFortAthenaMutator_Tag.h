@@ -7,6 +7,7 @@
 #include "AFortAthenaMutator.h"
 
 #include "AttributeSet.h"
+#include "FTagTeamInfoArray.h"
 #include "FTagVisualsData.h"
 #include "Math/Vector2D.h"
 #include "Styling/SlateBrush.h"
@@ -56,6 +57,10 @@ public:
 	// table index 3, flags 0x20080000000000
 	UPROPERTY()
 	uint8 RedTeamSquad;
+
+	// table index 2, flags 0x20080000000020
+	UPROPERTY(Replicated)
+	FTagTeamInfoArray TagTeamInfo;
 
 	// table index 0, flags 0x20080000000000
 	UPROPERTY()

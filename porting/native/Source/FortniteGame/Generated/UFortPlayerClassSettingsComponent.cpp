@@ -6,6 +6,6 @@ void UFortPlayerClassSettingsComponent::GetLifetimeReplicatedProps(TArray<FLifet
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	DOREPLIFETIME(UFortPlayerClassSettingsComponent, ClassSlotIndex);
+	DOREPLIFETIME_CONDITION(UFortPlayerClassSettingsComponent, ClassSlotIndex, COND_InitialOnly);
 }
 

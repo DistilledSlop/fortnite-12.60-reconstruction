@@ -22,6 +22,11 @@ void AFortPhysicsPawn::OnRep_SafeTeleportInfo()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPhysicsPawn::ServerMove_Implementation(const FReplicatedPhysicsPawnState& InState)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPhysicsPawn::ServerUpdateStateSync_Implementation(const TArray<uint8>& StateSyncData)
 {
 	// Body not recovered: reflection-derived stub.

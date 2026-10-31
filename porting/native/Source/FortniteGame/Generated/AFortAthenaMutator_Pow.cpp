@@ -12,5 +12,6 @@ void AFortAthenaMutator_Pow::GetLifetimeReplicatedProps(TArray<FLifetimeProperty
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(AFortAthenaMutator_Pow, bRespawningCurrentlyAllowed);
+	DOREPLIFETIME(AFortAthenaMutator_Pow, PlayerData);
 }
 

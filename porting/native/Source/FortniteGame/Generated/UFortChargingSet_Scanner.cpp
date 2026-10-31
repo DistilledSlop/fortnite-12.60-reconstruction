@@ -11,9 +11,9 @@ void UFortChargingSet_Scanner::GetLifetimeReplicatedProps(TArray<FLifetimeProper
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	DOREPLIFETIME(UFortChargingSet_Scanner, ServerTimeChargeIncrements);
-	DOREPLIFETIME(UFortChargingSet_Scanner, ChargeRate);
-	DOREPLIFETIME(UFortChargingSet_Scanner, MaxCharge);
-	DOREPLIFETIME(UFortChargingSet_Scanner, Charge);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortChargingSet_Scanner, ServerTimeChargeIncrements, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortChargingSet_Scanner, ChargeRate, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortChargingSet_Scanner, MaxCharge, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortChargingSet_Scanner, Charge, COND_OwnerOnly, REPNOTIFY_Always);
 }
 

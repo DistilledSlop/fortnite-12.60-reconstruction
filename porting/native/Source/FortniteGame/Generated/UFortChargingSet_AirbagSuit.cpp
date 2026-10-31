@@ -11,9 +11,9 @@ void UFortChargingSet_AirbagSuit::GetLifetimeReplicatedProps(TArray<FLifetimePro
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	DOREPLIFETIME(UFortChargingSet_AirbagSuit, ServerTimeChargeIncrements);
-	DOREPLIFETIME(UFortChargingSet_AirbagSuit, ChargeRate);
-	DOREPLIFETIME(UFortChargingSet_AirbagSuit, MaxCharge);
-	DOREPLIFETIME(UFortChargingSet_AirbagSuit, Charge);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortChargingSet_AirbagSuit, ServerTimeChargeIncrements, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortChargingSet_AirbagSuit, ChargeRate, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortChargingSet_AirbagSuit, MaxCharge, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortChargingSet_AirbagSuit, Charge, COND_OwnerOnly, REPNOTIFY_Always);
 }
 

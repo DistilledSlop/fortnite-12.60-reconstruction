@@ -12,6 +12,11 @@ void AFortMissionManager::OnRep_CurrentUIFocusedMission()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortMissionManager::OnRep_EarnedBadgesArray()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortMissionManager::OnRep_Missions()
 {
 	// Body not recovered: reflection-derived stub.
@@ -26,6 +31,7 @@ void AFortMissionManager::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& 
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
+	DOREPLIFETIME(AFortMissionManager, EarnedBadgesArray);
 	DOREPLIFETIME(AFortMissionManager, MissionClosestToPar);
 	DOREPLIFETIME(AFortMissionManager, CurrentUIFocusedMission);
 	DOREPLIFETIME(AFortMissionManager, MissionUIActors);

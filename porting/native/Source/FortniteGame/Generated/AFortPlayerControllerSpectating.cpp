@@ -11,6 +11,6 @@ void AFortPlayerControllerSpectating::GetLifetimeReplicatedProps(TArray<FLifetim
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	DOREPLIFETIME(AFortPlayerControllerSpectating, FollowedPlayerRemoteClientInfo);
+	DOREPLIFETIME_CONDITION(AFortPlayerControllerSpectating, FollowedPlayerRemoteClientInfo, COND_SkipReplay);
 }
 

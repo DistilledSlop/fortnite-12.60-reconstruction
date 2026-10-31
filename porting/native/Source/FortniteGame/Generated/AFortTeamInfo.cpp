@@ -7,7 +7,8 @@ void AFortTeamInfo::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLif
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(AFortTeamInfo, PrivateInfo);
+	DOREPLIFETIME(AFortTeamInfo, TeamSpottedActors);
 	DOREPLIFETIME(AFortTeamInfo, ChatRoomID);
-	DOREPLIFETIME(AFortTeamInfo, Team);
+	DOREPLIFETIME_CONDITION(AFortTeamInfo, Team, COND_InitialOnly);
 }
 

@@ -11,6 +11,6 @@ void AFortWeap_BuildingTool::GetLifetimeReplicatedProps(TArray<FLifetimeProperty
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	DOREPLIFETIME(AFortWeap_BuildingTool, DefaultMetadata);
+	DOREPLIFETIME_CONDITION(AFortWeap_BuildingTool, DefaultMetadata, COND_OwnerOnly);
 }
 

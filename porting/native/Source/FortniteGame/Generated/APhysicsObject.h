@@ -9,8 +9,10 @@
 #include "EFortBaseWeaponDamage.h"
 #include "Engine/EngineTypes.h"
 #include "FFortAttributeInitializationKey.h"
+#include "FHitData.h"
 #include "FOnSurfaceTypeVehicleIsOnChanged.h"
 #include "FPhysicsObjectInitialParameters.h"
+#include "FTimeStampedPhysicsPawnState.h"
 #include "FVehicleHealthChanged.h"
 #include "FVehicleTargetOrientation.h"
 #include "GameplayTagContainer.h"
@@ -172,6 +174,14 @@ public:
 	UPROPERTY()
 	UFortAbilitySet* StartupAbilitySet;
 
+	// table index 4, flags 0x40000100002020
+	UPROPERTY(ReplicatedUsing=OnRep_CurrentServerPhysicsState, Transient)
+	FTimeStampedPhysicsPawnState CurrentServerPhysicsState;
+
+	// table index 3, flags 0x40000100002020
+	UPROPERTY(ReplicatedUsing=OnRep_LastServerConfirmedHit, Transient)
+	FHitData LastServerConfirmedHit;
+
 	// table index 2, flags 0x20080100002034
 	UPROPERTY(ReplicatedUsing=OnRep_InitialParameters, Transient)
 	FPhysicsObjectInitialParameters InitialParameters;
@@ -195,10 +205,16 @@ public:
 	void OnRep_CorrectTargetOrientation();
 
 	UFUNCTION()
+	void OnRep_CurrentServerPhysicsState();
+
+	UFUNCTION()
 	void OnRep_HealthSet();
 
 	UFUNCTION()
 	void OnRep_InitialParameters();
+
+	UFUNCTION()
+	void OnRep_LastServerConfirmedHit();
 
 	UFUNCTION()
 	void OnRep_PendingDeath();
@@ -209,6 +225,10 @@ public:
 	UFUNCTION(NetMulticast, Reliable)
 	void ServerBroadcastHit(APawn* ImpulseInstigator, const FVector& ImpactPoint, const FVector& ImpulseValue);
 	void ServerBroadcastHit_Implementation(APawn* ImpulseInstigator, const FVector& ImpactPoint, const FVector& ImpulseValue);
+
+	UFUNCTION(NetMulticast, Reliable)
+	void ServerBroadcastHitFromClient(APlayerController* HittingController, APawn* HittingPawn, const FVector& VelocityOfHitter, const FVector& HitNormal, const FTimeStampedPhysicsPawnState& ClientBallState);
+	void ServerBroadcastHitFromClient_Implementation(APlayerController* HittingController, APawn* HittingPawn, const FVector& VelocityOfHitter, const FVector& HitNormal, const FTimeStampedPhysicsPawnState& ClientBallState);
 
 	UFUNCTION(NetMulticast, Reliable)
 	void UpdateClientWithPhysicsObjectTestInput(const FVector& LinearVelocity, const FVector& AngularVelocity);

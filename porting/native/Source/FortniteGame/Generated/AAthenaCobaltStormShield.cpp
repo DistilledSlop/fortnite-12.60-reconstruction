@@ -12,6 +12,6 @@ void AAthenaCobaltStormShield::GetLifetimeReplicatedProps(TArray<FLifetimeProper
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(AAthenaCobaltStormShield, ClientStormShieldShrinkTimerValue);
-	DOREPLIFETIME(AAthenaCobaltStormShield, CachedMutator);
+	DOREPLIFETIME_CONDITION(AAthenaCobaltStormShield, CachedMutator, COND_InitialOnly);
 }
 

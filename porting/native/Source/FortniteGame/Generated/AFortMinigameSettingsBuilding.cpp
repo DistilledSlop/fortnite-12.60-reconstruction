@@ -22,7 +22,7 @@ void AFortMinigameSettingsBuilding::GetLifetimeReplicatedProps(TArray<FLifetimeP
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(AFortMinigameSettingsBuilding, SettingsVolume);
-	DOREPLIFETIME(AFortMinigameSettingsBuilding, SolarisString);
+	DOREPLIFETIME_CONDITION(AFortMinigameSettingsBuilding, SolarisString, COND_Custom);
 	DOREPLIFETIME(AFortMinigameSettingsBuilding, GameNameData);
 	DOREPLIFETIME(AFortMinigameSettingsBuilding, GameDescriptionData);
 }

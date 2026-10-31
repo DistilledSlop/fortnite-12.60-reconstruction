@@ -42,8 +42,8 @@ void AFortCharacterVehicle_Ostrich::GetLifetimeReplicatedProps(TArray<FLifetimeP
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(AFortCharacterVehicle_Ostrich, CachedWeaponState);
-	DOREPLIFETIME(AFortCharacterVehicle_Ostrich, bKickRep);
-	DOREPLIFETIME(AFortCharacterVehicle_Ostrich, bDashing);
+	DOREPLIFETIME_CONDITION(AFortCharacterVehicle_Ostrich, bKickRep, COND_SimulatedOnly);
+	DOREPLIFETIME_CONDITION(AFortCharacterVehicle_Ostrich, bDashing, COND_SimulatedOnly);
 	DOREPLIFETIME(AFortCharacterVehicle_Ostrich, DetonationState);
 	DOREPLIFETIME(AFortCharacterVehicle_Ostrich, bAutomaticallyFiringShotgun);
 	DOREPLIFETIME(AFortCharacterVehicle_Ostrich, bChargingRockets);

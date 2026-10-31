@@ -11,9 +11,9 @@ void UFortChargingSet_Arsenic_Sniff::GetLifetimeReplicatedProps(TArray<FLifetime
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	DOREPLIFETIME(UFortChargingSet_Arsenic_Sniff, ServerTimeChargeIncrements);
-	DOREPLIFETIME(UFortChargingSet_Arsenic_Sniff, ChargeTime);
-	DOREPLIFETIME(UFortChargingSet_Arsenic_Sniff, MaxCharge);
-	DOREPLIFETIME(UFortChargingSet_Arsenic_Sniff, CurrentCharge);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortChargingSet_Arsenic_Sniff, ServerTimeChargeIncrements, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortChargingSet_Arsenic_Sniff, ChargeTime, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortChargingSet_Arsenic_Sniff, MaxCharge, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortChargingSet_Arsenic_Sniff, CurrentCharge, COND_OwnerOnly, REPNOTIFY_Always);
 }
 

@@ -81,32 +81,74 @@ void AFortPlayerControllerAthena::ClientBotStopDogpile_Implementation()
 
 void AFortPlayerControllerAthena::ClientBroadcastOnDestroyCreativePlotFinished_Implementation(bool bSuccess, const FText& Reason)
 {
-	// Body not recovered: reflection-derived stub.
+	// Behaviour snippet: AFortPlayerControllerAthena::ClientBroadcastOnDestroyCreativePlotFinished_Implementation (body only; spliced into the generated member function).
+	// Original address: 0x1419c5470
+	// Decompile source: porting/generated/decomp_improved/AFortPlayerControllerAthena/ClientBroadcastOnDestroyCreativePlotFinished_Implementation.c
+	// Proxy score: n/a (RPC body, not in the exec screen)
+	// Inferred: the body builds the parameter block { bool bSuccess @0; FText Reason @8 } (FUN_142c0c240 = FText::FText, FUN_14079d060 = FText::operator=), then broadcasts it through the dispatcher 0x1406a9dc0 (TMulticastScriptDelegate::ProcessMulticastDelegate) on the member at +0x2de0, which is OnDestroyCreativePlotFinished (reflection offset 11744). The release code after the call is the destructor of the local FText. Parameters are in declaration order (bSuccess, Reason), as the generated header declares them.
+	// Declared in generated header: yes
+	// CONFIDENCE: HIGH
+	OnDestroyCreativePlotFinished.Broadcast(bSuccess, Reason);
 }
 
 void AFortPlayerControllerAthena::ClientBroadcastOnDuplicateCreativePlotFinished_Implementation(bool bSuccess, const FText& Reason)
 {
-	// Body not recovered: reflection-derived stub.
+	// Behaviour snippet: AFortPlayerControllerAthena::ClientBroadcastOnDuplicateCreativePlotFinished_Implementation (body only; spliced into the generated member function).
+	// Original address: 0x1419c5480
+	// Decompile source: porting/generated/decomp_improved/AFortPlayerControllerAthena/ClientBroadcastOnDuplicateCreativePlotFinished_Implementation.c
+	// Proxy score: n/a (RPC body, not in the exec screen)
+	// Inferred: the body builds the parameter block { bool bSuccess @0; FText Reason @8 } (FUN_142c0c240 = FText::FText, FUN_14079d060 = FText::operator=), then broadcasts it through the dispatcher 0x1406a9dc0 (TMulticastScriptDelegate::ProcessMulticastDelegate) on the member at +0x2e00, which is OnDuplicateCreativePlotFinished (reflection offset 11776). The release code after the call is the destructor of the local FText. Parameters are in declaration order (bSuccess, Reason), as the generated header declares them.
+	// Declared in generated header: yes
+	// CONFIDENCE: HIGH
+	OnDuplicateCreativePlotFinished.Broadcast(bSuccess, Reason);
 }
 
 void AFortPlayerControllerAthena::ClientBroadcastOnMakeNewCreativePlotFinished_Implementation(bool bSuccess, const FText& Reason)
 {
-	// Body not recovered: reflection-derived stub.
+	// Behaviour snippet: AFortPlayerControllerAthena::ClientBroadcastOnMakeNewCreativePlotFinished_Implementation (body only; spliced into the generated member function).
+	// Original address: 0x1419c5490
+	// Decompile source: porting/generated/decomp_improved/AFortPlayerControllerAthena/ClientBroadcastOnMakeNewCreativePlotFinished_Implementation.c
+	// Proxy score: n/a (RPC body, not in the exec screen)
+	// Inferred: the body builds the parameter block { bool bSuccess @0; FText Reason @8 } (FUN_142c0c240 = FText::FText, FUN_14079d060 = FText::operator=), then broadcasts it through the dispatcher 0x1406a9dc0 (TMulticastScriptDelegate::ProcessMulticastDelegate) on the member at +0x2dd0, which is OnMakeNewCreativePlotFinished (reflection offset 11728). The release code after the call is the destructor of the local FText. Parameters are in declaration order (bSuccess, Reason), as the generated header declares them.
+	// Declared in generated header: yes
+	// CONFIDENCE: HIGH
+	OnMakeNewCreativePlotFinished.Broadcast(bSuccess, Reason);
 }
 
 void AFortPlayerControllerAthena::ClientBroadcastOnRestoreCreativePlotFinished_Implementation(bool bSuccess, const FText& Reason)
 {
-	// Body not recovered: reflection-derived stub.
+	// Behaviour snippet: AFortPlayerControllerAthena::ClientBroadcastOnRestoreCreativePlotFinished_Implementation (body only; spliced into the generated member function).
+	// Original address: 0x1419c54a0
+	// Decompile source: porting/generated/decomp_improved/AFortPlayerControllerAthena/ClientBroadcastOnRestoreCreativePlotFinished_Implementation.c
+	// Proxy score: n/a (RPC body, not in the exec screen)
+	// Inferred: the body builds the parameter block { bool bSuccess @0; FText Reason @8 } (FUN_142c0c240 = FText::FText, FUN_14079d060 = FText::operator=), then broadcasts it through the dispatcher 0x1406a9dc0 (TMulticastScriptDelegate::ProcessMulticastDelegate) on the member at +0x2df0, which is OnRestoreCreativePlotFinished (reflection offset 11760). The release code after the call is the destructor of the local FText. Parameters are in declaration order (bSuccess, Reason), as the generated header declares them.
+	// Declared in generated header: yes
+	// CONFIDENCE: HIGH
+	OnRestoreCreativePlotFinished.Broadcast(bSuccess, Reason);
 }
 
 void AFortPlayerControllerAthena::ClientBroadcastOnUpdateCreativeDescriptionTags_Implementation(bool bSuccess, const FText& Reason)
 {
-	// Body not recovered: reflection-derived stub.
+	// Behaviour snippet: AFortPlayerControllerAthena::ClientBroadcastOnUpdateCreativeDescriptionTags_Implementation (body only; spliced into the generated member function).
+	// Original address: 0x1419c54b0
+	// Decompile source: porting/generated/decomp_improved/AFortPlayerControllerAthena/ClientBroadcastOnUpdateCreativeDescriptionTags_Implementation.c
+	// Proxy score: n/a (RPC body, not in the exec screen)
+	// Inferred: the body builds the parameter block { bool bSuccess @0; FText Reason @8 } (FUN_142c0c240 = FText::FText, FUN_14079d060 = FText::operator=), then broadcasts it through the dispatcher 0x1406a9dc0 (TMulticastScriptDelegate::ProcessMulticastDelegate) on the member at +0x2e40, which is OnUpdateCreativeDescriptionTags (reflection offset 11840). The release code after the call is the destructor of the local FText. Parameters are in declaration order (bSuccess, Reason), as the generated header declares them.
+	// Declared in generated header: yes
+	// CONFIDENCE: HIGH
+	OnUpdateCreativeDescriptionTags.Broadcast(bSuccess, Reason);
 }
 
 void AFortPlayerControllerAthena::ClientBroadcastOnUpdateCreativePlotName_Implementation(bool bSuccess, const FText& Reason)
 {
-	// Body not recovered: reflection-derived stub.
+	// Behaviour snippet: AFortPlayerControllerAthena::ClientBroadcastOnUpdateCreativePlotName_Implementation (body only; spliced into the generated member function).
+	// Original address: 0x1419c54c0
+	// Decompile source: porting/generated/decomp_improved/AFortPlayerControllerAthena/ClientBroadcastOnUpdateCreativePlotName_Implementation.c
+	// Proxy score: n/a (RPC body, not in the exec screen)
+	// Inferred: the body builds the parameter block { bool bSuccess @0; FText Reason @8 } (FUN_142c0c240 = FText::FText, FUN_14079d060 = FText::operator=), then broadcasts it through the dispatcher 0x1406a9dc0 (TMulticastScriptDelegate::ProcessMulticastDelegate) on the member at +0x2e30, which is OnUpdateCreativePlotName (reflection offset 11824). The release code after the call is the destructor of the local FText. Parameters are in declaration order (bSuccess, Reason), as the generated header declares them.
+	// Declared in generated header: yes
+	// CONFIDENCE: HIGH
+	OnUpdateCreativePlotName.Broadcast(bSuccess, Reason);
 }
 
 void AFortPlayerControllerAthena::ClientBroadcastPlotItemID_Implementation(const FString& PlotID)
@@ -171,7 +213,13 @@ void AFortPlayerControllerAthena::ClientReceiveKillNotification_Implementation(A
 
 void AFortPlayerControllerAthena::ClientReceiveSquadQuickChatMessage_Implementation(const FAthenaQuickChatActiveEntry& ChatEntry, AFortPlayerController* SenderPC)
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 49 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
 }
 
 void AFortPlayerControllerAthena::ClientReportTournamentPlacementPointsScored_Implementation(int32 Placement, int32 PointsEarned)
@@ -456,6 +504,16 @@ bool AFortPlayerControllerAthena::ResetMyCurrentCreativePlot_Validate()
 }
 
 void AFortPlayerControllerAthena::RestoreCreativePlot_Implementation(const FString& IslandId)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerControllerAthena::SendClientPhysicsBallStateToServer_Implementation(APhysicsObject* PhysicsObject, float ClientPing, const FTimeStampedPhysicsPawnState& ClientBallState)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerControllerAthena::SendPhysicsBallHitToServer_Implementation(APhysicsObject* PhysicsObject, float ClientPing, APawn* HittingPawn, const FVector& VelocityOfHitter, const FVector& HitNormal, const FTimeStampedPhysicsPawnState& ClientBallState)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -1576,8 +1634,8 @@ void AFortPlayerControllerAthena::GetLifetimeReplicatedProps(TArray<FLifetimePro
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	DOREPLIFETIME(AFortPlayerControllerAthena, CreativeObjectTrackingComponent);
-	DOREPLIFETIME(AFortPlayerControllerAthena, CreativeUserContentManager);
+	DOREPLIFETIME_CONDITION(AFortPlayerControllerAthena, CreativeObjectTrackingComponent, COND_OwnerOnly);
+	DOREPLIFETIME_CONDITION(AFortPlayerControllerAthena, CreativeUserContentManager, COND_OwnerOnly);
 	DOREPLIFETIME(AFortPlayerControllerAthena, CurrentPlayset);
 	DOREPLIFETIME(AFortPlayerControllerAthena, CachedPurchasedItems);
 	DOREPLIFETIME(AFortPlayerControllerAthena, OwnedPortal);
@@ -1586,7 +1644,7 @@ void AFortPlayerControllerAthena::GetLifetimeReplicatedProps(TArray<FLifetimePro
 	DOREPLIFETIME(AFortPlayerControllerAthena, PartyAssistedMemberData);
 	DOREPLIFETIME(AFortPlayerControllerAthena, bIsAllowedToPublish);
 	DOREPLIFETIME(AFortPlayerControllerAthena, LastUsedSavePlot);
-	DOREPLIFETIME(AFortPlayerControllerAthena, CreativeIslands);
+	DOREPLIFETIME_CONDITION_NOTIFY(AFortPlayerControllerAthena, CreativeIslands, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME(AFortPlayerControllerAthena, bMarkedAlive);
 	DOREPLIFETIME(AFortPlayerControllerAthena, MaxPlotCount);
 	DOREPLIFETIME(AFortPlayerControllerAthena, bCanUseSolaris);

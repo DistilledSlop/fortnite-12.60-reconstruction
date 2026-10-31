@@ -10,6 +10,7 @@
 #include "FAthenaLevelInfo.h"
 #include "FCardSlotMedalData.h"
 #include "FFortQuestObjectiveCompletion.h"
+#include "FXPEventArray.h"
 #include "FXPEventEntry.h"
 
 class UAthenaSeasonItemDefinition;
@@ -31,6 +32,10 @@ public:
 	// table index 22, flags 0x20080000002000
 	UPROPERTY(Transient)
 	TArray<FCardSlotMedalData> LocalPunchCardMedals;
+
+	// table index 21, flags 0x20088000000020
+	UPROPERTY(Replicated)
+	FXPEventArray EventArray;
 
 	// table index 19, flags 0x20080000000000
 	UPROPERTY()

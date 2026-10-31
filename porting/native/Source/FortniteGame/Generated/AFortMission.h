@@ -9,6 +9,7 @@
 #include "EFortMissionAudibility.h"
 #include "EFortMissionStatus.h"
 #include "EMissionGenerationCategory.h"
+#include "FFortBadgeCountArray.h"
 #include "FFortGeneratedDifficultyOptions.h"
 #include "FFortMissionEventName.h"
 #include "FFortMissionFocusDisplayData.h"
@@ -213,6 +214,10 @@ public:
 	UPROPERTY(Replicated, SaveGame)
 	int32 ChosenRewardIdx;
 
+	// table index 3, flags 0x20080100002020
+	UPROPERTY(ReplicatedUsing=OnRep_PotentialBadgesArray, Transient)
+	FFortBadgeCountArray PotentialBadgesArray;
+
 	// table index 2, flags 0x20080000000000
 	UPROPERTY()
 	FFortGeneratedDifficultyOptions GeneratedMissionOptions;
@@ -239,6 +244,9 @@ public:
 
 	UFUNCTION()
 	void OnRep_MissionStatus();
+
+	UFUNCTION()
+	void OnRep_PotentialBadgesArray();
 
 	UFUNCTION()
 	void OnRep_QuestOwnerAccount();

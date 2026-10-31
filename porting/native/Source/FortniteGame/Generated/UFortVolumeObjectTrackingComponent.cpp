@@ -20,8 +20,8 @@ void UFortVolumeObjectTrackingComponent::GetLifetimeReplicatedProps(TArray<FLife
 	DOREPLIFETIME(UFortVolumeObjectTrackingComponent, ThermalGroupCostMatrix);
 	DOREPLIFETIME(UFortVolumeObjectTrackingComponent, ThermalGroupMatrixSizeY);
 	DOREPLIFETIME(UFortVolumeObjectTrackingComponent, ThermalGroupMatrixSizeX);
-	DOREPLIFETIME(UFortVolumeObjectTrackingComponent, ObjectTrackingHeatmapHighPrecision);
-	DOREPLIFETIME(UFortVolumeObjectTrackingComponent, ObjectTrackingHeatmap);
+	DOREPLIFETIME_CONDITION(UFortVolumeObjectTrackingComponent, ObjectTrackingHeatmapHighPrecision, COND_Custom);
+	DOREPLIFETIME_CONDITION(UFortVolumeObjectTrackingComponent, ObjectTrackingHeatmap, COND_Custom);
 	DOREPLIFETIME(UFortVolumeObjectTrackingComponent, bUseHeatmapHighPrecision);
 	DOREPLIFETIME(UFortVolumeObjectTrackingComponent, ObjectTrackingHeatmapSize);
 	DOREPLIFETIME(UFortVolumeObjectTrackingComponent, bHeatmapEnabled);

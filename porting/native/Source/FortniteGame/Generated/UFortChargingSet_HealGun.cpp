@@ -11,9 +11,9 @@ void UFortChargingSet_HealGun::GetLifetimeReplicatedProps(TArray<FLifetimeProper
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	DOREPLIFETIME(UFortChargingSet_HealGun, ServerTimeChargeIncrements);
-	DOREPLIFETIME(UFortChargingSet_HealGun, ChargeRate);
-	DOREPLIFETIME(UFortChargingSet_HealGun, MaxCharge);
-	DOREPLIFETIME(UFortChargingSet_HealGun, Charge);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortChargingSet_HealGun, ServerTimeChargeIncrements, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortChargingSet_HealGun, ChargeRate, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortChargingSet_HealGun, MaxCharge, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortChargingSet_HealGun, Charge, COND_OwnerOnly, REPNOTIFY_Always);
 }
 

@@ -6,7 +6,7 @@ void UFortGliderPackSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& O
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	DOREPLIFETIME(UFortGliderPackSet, CurrentCharges);
-	DOREPLIFETIME(UFortGliderPackSet, MaxCharges);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortGliderPackSet, CurrentCharges, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortGliderPackSet, MaxCharges, COND_None, REPNOTIFY_Always);
 }
 

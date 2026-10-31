@@ -25,6 +25,7 @@
 #include "FFortAthenaVehicleInputStateReliable.h"
 #include "FFortAthenaVehicleInputStateUnreliable.h"
 #include "FFortCharacterPartsRepMontageInfo.h"
+#include "FFortClientObservedStatArray.h"
 #include "FFortDBNOCarryHoisterData.h"
 #include "FIgnoreCollisionActor.h"
 #include "FNewPlayerStateDelegate.h"
@@ -739,6 +740,10 @@ public:
 	// table index 161, flags 0x40000100002020
 	UPROPERTY(ReplicatedUsing=OnRep_CharPartAnimMontageInfo, Transient)
 	FFortCharacterPartsRepMontageInfo RepCharPartAnimMontageInfo;
+
+	// table index 160, flags 0x40000000002020
+	UPROPERTY(Replicated, Transient)
+	FFortClientObservedStatArray ClientObservedStats;
 
 	// table index 159, flags 0x24080100002020
 	UPROPERTY(ReplicatedUsing=OnRep_AnimBPOverride, Transient)
@@ -1631,9 +1636,10 @@ public:
 	void ServerSendAimbotDetectionStatus(const TArray<uint8>& Payload);
 	void ServerSendAimbotDetectionStatus_Implementation(const TArray<uint8>& Payload);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerSendZiplineState(const FZiplinePawnState& InZiplineState);
 	void ServerSendZiplineState_Implementation(const FZiplinePawnState& InZiplineState);
+	bool ServerSendZiplineState_Validate(const FZiplinePawnState& InZiplineState);
 
 	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerSetAimbotDetection(bool bEnableDetection);

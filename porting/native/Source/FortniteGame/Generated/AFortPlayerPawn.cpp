@@ -816,7 +816,25 @@ void AFortPlayerPawn::ServerSendAimbotDetectionStatus_Implementation(const TArra
 
 void AFortPlayerPawn::ServerSendZiplineState_Implementation(const FZiplinePawnState& InZiplineState)
 {
-	// Body not recovered: reflection-derived stub.
+	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
+	// Original address: 0x1406801c0 (shared by 49 ported vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Implementation.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
+	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
+	// CONFIDENCE: HIGH
+}
+
+bool AFortPlayerPawn::ServerSendZiplineState_Validate(const FZiplinePawnState& InZiplineState)
+{
+	// Shared body for every validate function whose native body is the folded stub at 0x1406801d0.
+	// Original address: 0x1406801d0 (shared by 72 vtable slots; one body serves all of them)
+	// Decompile source: porting/generated/decomp_improved/<Class>/<Function>_Validate.c (one per function, listed in MANIFEST.json)
+	// Proxy score: see the manifest entry of each function
+	// Inferred: disassembly is `mov al,1; ret` (returns bool true). Each function is tied to its RPC by the vtable slot name.
+	// Declared in generated header: no (the generator emits `bool <Name>_Validate(params)` with the WithValidation specifier when the behaviour splice is on)
+	// CONFIDENCE: HIGH
+	return true;
 }
 
 void AFortPlayerPawn::ServerSetAimbotDetection_Implementation(bool bEnableDetection)
@@ -1028,7 +1046,7 @@ void AFortPlayerPawn::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutL
 	DOREPLIFETIME(AFortPlayerPawn, FacialTypeOverride);
 	DOREPLIFETIME(AFortPlayerPawn, StoredControlRotation);
 	DOREPLIFETIME(AFortPlayerPawn, ControlledRCPawn);
-	DOREPLIFETIME(AFortPlayerPawn, RemoteViewData32);
+	DOREPLIFETIME_CONDITION(AFortPlayerPawn, RemoteViewData32, COND_SkipOwner);
 	DOREPLIFETIME(AFortPlayerPawn, GliderOverrideStack);
 	DOREPLIFETIME(AFortPlayerPawn, PetState);
 	DOREPLIFETIME(AFortPlayerPawn, ReplicatedWaterBody);
@@ -1036,58 +1054,59 @@ void AFortPlayerPawn::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutL
 	DOREPLIFETIME(AFortPlayerPawn, VortexParams);
 	DOREPLIFETIME(AFortPlayerPawn, AttachmentMesh);
 	DOREPLIFETIME(AFortPlayerPawn, bParachuteLockedOpen);
-	DOREPLIFETIME(AFortPlayerPawn, LandingMontagePair);
+	DOREPLIFETIME_CONDITION(AFortPlayerPawn, LandingMontagePair, COND_SimulatedOnly);
 	DOREPLIFETIME(AFortPlayerPawn, bNetMovementPrioritized);
 	DOREPLIFETIME(AFortPlayerPawn, RepAnimMontageStartSection);
-	DOREPLIFETIME(AFortPlayerPawn, RepAnimMontageInfo);
-	DOREPLIFETIME(AFortPlayerPawn, AccelerationPack);
-	DOREPLIFETIME(AFortPlayerPawn, PlayerStatus);
-	DOREPLIFETIME(AFortPlayerPawn, PackedReplicatedSlopeAngles);
-	DOREPLIFETIME(AFortPlayerPawn, DBNOHoistee);
+	DOREPLIFETIME_CONDITION(AFortPlayerPawn, RepAnimMontageInfo, COND_SimulatedOnly);
+	DOREPLIFETIME_CONDITION(AFortPlayerPawn, AccelerationPack, COND_SkipOwner);
+	DOREPLIFETIME_CONDITION(AFortPlayerPawn, PlayerStatus, COND_SkipOwner);
+	DOREPLIFETIME_CONDITION(AFortPlayerPawn, PackedReplicatedSlopeAngles, COND_SimulatedOnly);
+	DOREPLIFETIME_CONDITION(AFortPlayerPawn, DBNOHoistee, COND_OwnerOnly);
 	DOREPLIFETIME(AFortPlayerPawn, DBNOHoisterData);
-	DOREPLIFETIME(AFortPlayerPawn, FootstepBankOverride);
-	DOREPLIFETIME(AFortPlayerPawn, AnimBPOverride);
+	DOREPLIFETIME_CONDITION_NOTIFY(AFortPlayerPawn, FootstepBankOverride, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(AFortPlayerPawn, AnimBPOverride, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME(AFortPlayerPawn, ClientObservedStats);
 	DOREPLIFETIME(AFortPlayerPawn, RepCharPartAnimMontageInfo);
 	DOREPLIFETIME(AFortPlayerPawn, CosmeticLoadout);
 	DOREPLIFETIME(AFortPlayerPawn, PossessedProp);
 	DOREPLIFETIME(AFortPlayerPawn, VehicleStateRep);
-	DOREPLIFETIME(AFortPlayerPawn, bCanPredictJumpApex);
-	DOREPLIFETIME(AFortPlayerPawn, ZiplineState);
+	DOREPLIFETIME_CONDITION(AFortPlayerPawn, bCanPredictJumpApex, COND_SkipOwner);
+	DOREPLIFETIME_CONDITION(AFortPlayerPawn, ZiplineState, COND_SimulatedOnly);
 	DOREPLIFETIME(AFortPlayerPawn, bIsInsideSafeZone);
 	DOREPLIFETIME(AFortPlayerPawn, bIsInAnyStorm);
-	DOREPLIFETIME(AFortPlayerPawn, VehicleInputStateUnreliable);
+	DOREPLIFETIME_CONDITION(AFortPlayerPawn, VehicleInputStateUnreliable, COND_SkipOwner);
 	DOREPLIFETIME(AFortPlayerPawn, GroupEmoteLookTarget);
 	DOREPLIFETIME(AFortPlayerPawn, bDoubleFileEmoteSecondLine);
 	DOREPLIFETIME(AFortPlayerPawn, bShouldJitterAnimationSyncWithEmoteLeader);
 	DOREPLIFETIME(AFortPlayerPawn, bShouldSyncAnimationWithEmoteLeader);
-	DOREPLIFETIME(AFortPlayerPawn, bIsEmoteLeader);
-	DOREPLIFETIME(AFortPlayerPawn, bIsWaitingForEmoteInteraction);
-	DOREPLIFETIME(AFortPlayerPawn, bIsRespawningInAir);
-	DOREPLIFETIME(AFortPlayerPawn, bIsRespawning);
+	DOREPLIFETIME_CONDITION(AFortPlayerPawn, bIsEmoteLeader, COND_OwnerOnly);
+	DOREPLIFETIME_CONDITION(AFortPlayerPawn, bIsWaitingForEmoteInteraction, COND_SimulatedOnly);
+	DOREPLIFETIME_CONDITION(AFortPlayerPawn, bIsRespawningInAir, COND_OwnerOnly);
+	DOREPLIFETIME_CONDITION(AFortPlayerPawn, bIsRespawning, COND_OwnerOnly);
 	DOREPLIFETIME(AFortPlayerPawn, bIsPlayingEmote);
 	DOREPLIFETIME(AFortPlayerPawn, bIsUsingJetpack);
-	DOREPLIFETIME(AFortPlayerPawn, bStartedInteractSearch);
+	DOREPLIFETIME_CONDITION(AFortPlayerPawn, bStartedInteractSearch, COND_SkipOwner);
 	DOREPLIFETIME(AFortPlayerPawn, bInGliderRedeploy);
-	DOREPLIFETIME(AFortPlayerPawn, bIsProxySimulationTimedOut);
-	DOREPLIFETIME(AFortPlayerPawn, bIsSlopeSliding);
+	DOREPLIFETIME_CONDITION(AFortPlayerPawn, bIsProxySimulationTimedOut, COND_SimulatedOnly);
+	DOREPLIFETIME_CONDITION(AFortPlayerPawn, bIsSlopeSliding, COND_SimulatedOnly);
 	DOREPLIFETIME(AFortPlayerPawn, bReplicatedIsInSlipperyMovement);
 	DOREPLIFETIME(AFortPlayerPawn, bReplicatedIsInVortex);
 	DOREPLIFETIME(AFortPlayerPawn, bIsSkydivingFromLaunchPad);
 	DOREPLIFETIME(AFortPlayerPawn, bIsSkydivingFromBus);
-	DOREPLIFETIME(AFortPlayerPawn, bIsParachuteForcedOpen);
-	DOREPLIFETIME(AFortPlayerPawn, bIsParachuteOpen);
+	DOREPLIFETIME_CONDITION(AFortPlayerPawn, bIsParachuteForcedOpen, COND_SimulatedOnly);
+	DOREPLIFETIME_CONDITION(AFortPlayerPawn, bIsParachuteOpen, COND_SimulatedOnly);
 	DOREPLIFETIME(AFortPlayerPawn, bIsSkydiving);
-	DOREPLIFETIME(AFortPlayerPawn, BalloonActiveCount);
+	DOREPLIFETIME_CONDITION(AFortPlayerPawn, BalloonActiveCount, COND_SimulatedOnly);
 	DOREPLIFETIME(AFortPlayerPawn, CachedTeamControllingRC);
-	DOREPLIFETIME(AFortPlayerPawn, bIsInWaterVolume);
-	DOREPLIFETIME(AFortPlayerPawn, AccelerationZPack);
-	DOREPLIFETIME(AFortPlayerPawn, BuildingState);
+	DOREPLIFETIME_CONDITION(AFortPlayerPawn, bIsInWaterVolume, COND_SimulatedOnly);
+	DOREPLIFETIME_CONDITION(AFortPlayerPawn, AccelerationZPack, COND_SkipOwner);
+	DOREPLIFETIME_CONDITION(AFortPlayerPawn, BuildingState, COND_SkipOwner);
 	DOREPLIFETIME(AFortPlayerPawn, StasisMode);
-	DOREPLIFETIME(AFortPlayerPawn, bIsTargeting);
-	DOREPLIFETIME(AFortPlayerPawn, bIsWaterSprintBoostPending);
-	DOREPLIFETIME(AFortPlayerPawn, bIsWaterSprintBoost);
-	DOREPLIFETIME(AFortPlayerPawn, bIsWaterJump);
-	DOREPLIFETIME(AFortPlayerPawn, bIsNearSafeZoneEdge);
-	DOREPLIFETIME(AFortPlayerPawn, VehicleInputStateReliable);
+	DOREPLIFETIME_CONDITION(AFortPlayerPawn, bIsTargeting, COND_SkipOwner);
+	DOREPLIFETIME_CONDITION(AFortPlayerPawn, bIsWaterSprintBoostPending, COND_SimulatedOnly);
+	DOREPLIFETIME_CONDITION(AFortPlayerPawn, bIsWaterSprintBoost, COND_SimulatedOnly);
+	DOREPLIFETIME_CONDITION(AFortPlayerPawn, bIsWaterJump, COND_SimulatedOnly);
+	DOREPLIFETIME_CONDITION(AFortPlayerPawn, bIsNearSafeZoneEdge, COND_OwnerOnly);
+	DOREPLIFETIME_CONDITION(AFortPlayerPawn, VehicleInputStateReliable, COND_ReplayOnly);
 }
 

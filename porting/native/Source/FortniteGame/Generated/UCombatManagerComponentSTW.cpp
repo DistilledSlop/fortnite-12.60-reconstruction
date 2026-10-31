@@ -21,9 +21,9 @@ void UCombatManagerComponentSTW::GetLifetimeReplicatedProps(TArray<FLifetimeProp
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	DOREPLIFETIME(UCombatManagerComponentSTW, MaxHeatEver);
-	DOREPLIFETIME(UCombatManagerComponentSTW, MaximumTotalHeat);
-	DOREPLIFETIME(UCombatManagerComponentSTW, CurrentTotalHeat);
-	DOREPLIFETIME(UCombatManagerComponentSTW, ReplicatedCombatEventHeat);
+	DOREPLIFETIME_CONDITION(UCombatManagerComponentSTW, MaxHeatEver, COND_OwnerOnly);
+	DOREPLIFETIME_CONDITION(UCombatManagerComponentSTW, MaximumTotalHeat, COND_OwnerOnly);
+	DOREPLIFETIME_CONDITION(UCombatManagerComponentSTW, CurrentTotalHeat, COND_OwnerOnly);
+	DOREPLIFETIME_CONDITION(UCombatManagerComponentSTW, ReplicatedCombatEventHeat, COND_OwnerOnly);
 }
 

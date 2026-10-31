@@ -7,10 +7,16 @@ void AAthenaHoldingArea::OnRep_bHoldingAreaActive()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AAthenaHoldingArea::OnRep_IgnoredPlayerPawns()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AAthenaHoldingArea::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
+	DOREPLIFETIME(AAthenaHoldingArea, IgnoredPlayerPawns);
 	DOREPLIFETIME(AAthenaHoldingArea, bHoldingAreaActive);
 }
 

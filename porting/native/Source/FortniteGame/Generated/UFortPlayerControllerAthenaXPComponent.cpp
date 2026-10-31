@@ -44,8 +44,9 @@ void UFortPlayerControllerAthenaXPComponent::GetLifetimeReplicatedProps(TArray<F
 	DOREPLIFETIME(UFortPlayerControllerAthenaXPComponent, SurvivalXp);
 	DOREPLIFETIME(UFortPlayerControllerAthenaXPComponent, MedalBonusXp);
 	DOREPLIFETIME(UFortPlayerControllerAthenaXPComponent, TotalXpEarned);
-	DOREPLIFETIME(UFortPlayerControllerAthenaXPComponent, CurrentLevel);
+	DOREPLIFETIME(UFortPlayerControllerAthenaXPComponent, CurrentLevel);  // TODO: replication condition not recovered (COND_None assumed)
 	DOREPLIFETIME(UFortPlayerControllerAthenaXPComponent, bRegisteredWithQuestManager);
 	DOREPLIFETIME(UFortPlayerControllerAthenaXPComponent, RestXp);
+	DOREPLIFETIME(UFortPlayerControllerAthenaXPComponent, EventArray);
 }
 

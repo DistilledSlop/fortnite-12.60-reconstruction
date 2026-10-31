@@ -7,6 +7,6 @@ void UFortCreativeCostComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProp
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(UFortCreativeCostComponent, ItemCosts);
-	DOREPLIFETIME(UFortCreativeCostComponent, bShowCostInInteractionIndicator);
+	DOREPLIFETIME(UFortCreativeCostComponent, bShowCostInInteractionIndicator);  // TODO: replication condition not recovered (COND_None assumed)
 }
 

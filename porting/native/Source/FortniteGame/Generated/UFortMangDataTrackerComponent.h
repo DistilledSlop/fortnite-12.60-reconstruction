@@ -7,6 +7,7 @@
 #include "UFortGameplayDataTrackerComponent.h"
 
 #include "AttributeSet.h"
+#include "FFortMangBotInfoArray.h"
 #include "FFortMangSentryInfo.h"
 #include "GameplayTagContainer.h"
 
@@ -144,6 +145,10 @@ public:
 	UPROPERTY(Transient)
 	TArray<AFortAthenaAIBotController*> MangBotControllers;
 
+	// table index 4, flags 0x40000100002020
+	UPROPERTY(ReplicatedUsing=OnRep_BotInfos, Transient)
+	FFortMangBotInfoArray BotInfos;
+
 	// table index 2, flags 0x40000000002000
 	UPROPERTY(Transient)
 	TArray<FFortMangSentryInfo> CameraInfos;
@@ -152,5 +157,9 @@ public:
 	UPROPERTY(Transient)
 	TArray<FFortMangSentryInfo> TurretInfos;
 
+	UFUNCTION()
+	void OnRep_BotInfos();
+
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

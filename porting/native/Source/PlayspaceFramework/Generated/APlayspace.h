@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Info.h"
 
+#include "FPlayspaceUserList.h"
 #include "GameFramework/OnlineReplStructs.h"
 #include "GameplayTagContainer.h"
 
@@ -36,6 +37,10 @@ public:
 	UPROPERTY()
 	TArray<TSubclassOf<APlayspace>> ChildPlayspaceClasses;
 
+	// table index 6, flags 0x20080100002020
+	UPROPERTY(ReplicatedUsing=OnRep_PlayspaceUsers, Transient)
+	FPlayspaceUserList PlayspaceUsers;
+
 	// table index 5, flags 0x20080100002020
 	UPROPERTY(ReplicatedUsing=OnRep_PlayspaceLogic, Transient)
 	APlayspaceLogic* PlayspaceLogic;
@@ -54,6 +59,9 @@ public:
 
 	UFUNCTION()
 	void OnRep_PlayspaceLogic();
+
+	UFUNCTION()
+	void OnRep_PlayspaceUsers();
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

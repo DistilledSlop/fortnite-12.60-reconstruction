@@ -7,6 +7,6 @@ void UFortPlayerTeamSettingsComponent::GetLifetimeReplicatedProps(TArray<FLifeti
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(UFortPlayerTeamSettingsComponent, bRunOutTimeToWin);
-	DOREPLIFETIME(UFortPlayerTeamSettingsComponent, TeamIndex);
+	DOREPLIFETIME_CONDITION(UFortPlayerTeamSettingsComponent, TeamIndex, COND_InitialOnly);
 }
 

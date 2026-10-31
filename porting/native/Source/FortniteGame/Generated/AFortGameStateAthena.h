@@ -20,7 +20,9 @@
 #include "FCosmeticUsageReport.h"
 #include "FDynamicLandData.h"
 #include "FFortWinnerPlayerData.h"
+#include "FGameMemberInfoArray.h"
 #include "FGameplayMutatorEventData.h"
+#include "FGameplayMutatorObjectDataArray.h"
 #include "FHideGameModeMessage.h"
 #include "FOnAllWinnersAnnounced.h"
 #include "FOnClientVolumeManagerReplicated.h"
@@ -56,9 +58,11 @@
 #include "FOnWinningTeamAnnounced.h"
 #include "FPickupOnDestroy.h"
 #include "FPickupOnSpawnReady.h"
+#include "FPlaylistPropertyArray.h"
 #include "FRepositionGameModeMessage.h"
 #include "FSetDefaultGameModeMessage.h"
 #include "FShowGameModeMessage.h"
+#include "FSpawnMachineRepDataArray.h"
 #include "FStormCapDamageThresholdInfo.h"
 #include "FUpdateNamedPoiColorDelegate.h"
 #include "GameplayTagContainer.h"
@@ -510,6 +514,10 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_SpectateAPartyMemberAvailable)
 	bool SpectateAPartyMemberAvailable;
 
+	// table index 103, flags 0x20080000000020
+	UPROPERTY(Replicated)
+	FGameMemberInfoArray GameMemberInfoArray;
+
 	// table index 101, flags 0x20080000000020
 	UPROPERTY(Replicated)
 	TArray<uint8> ActiveTeamNums;
@@ -626,6 +634,10 @@ public:
 	UPROPERTY(Replicated)
 	bool bIsCustomMatch;
 
+	// table index 69, flags 0x20080100000020
+	UPROPERTY(ReplicatedUsing=OnRep_CurrentPlaylistInfo)
+	FPlaylistPropertyArray CurrentPlaylistInfo;
+
 	// table index 68, flags 0x20080000000020
 	UPROPERTY(Replicated)
 	bool bGameModeWillSkipAircraft;
@@ -673,6 +685,10 @@ public:
 	// table index 54, flags 0x10000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_MutatorEventData)
 	FGameplayMutatorEventData MutatorEventData;
+
+	// table index 53, flags 0x10000000000020
+	UPROPERTY(Replicated)
+	FGameplayMutatorObjectDataArray MutatorObjectDataArray;
 
 	// table index 52, flags 0x10000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_MutatorGenericInt_0)
@@ -777,6 +793,10 @@ public:
 	// table index 26, flags 0x20080000010001
 	UPROPERTY()
 	FSlateBrush SpawnCardIconBrush;
+
+	// table index 25, flags 0x20080000002020
+	UPROPERTY(Replicated, Transient)
+	FSpawnMachineRepDataArray SpawnMachineRepData;
 
 	// table index 24, flags 0x20080000010001
 	UPROPERTY()
@@ -895,6 +915,9 @@ public:
 
 	UFUNCTION()
 	void OnRep_CurrentPlaylistId();
+
+	UFUNCTION()
+	void OnRep_CurrentPlaylistInfo();
 
 	UFUNCTION()
 	void OnRep_DamageForStormCapMarking();

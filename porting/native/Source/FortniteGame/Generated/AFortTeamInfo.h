@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Info.h"
 
+#include "FTeamSpottedActorInfoArray.h"
+
 class AController;
 class AFortTeamPrivateInfo;
 
@@ -28,6 +30,10 @@ public:
 	// table index 2, flags 0x20080000002020
 	UPROPERTY(Replicated, Transient)
 	FString ChatRoomID;
+
+	// table index 1, flags 0x20080000000020
+	UPROPERTY(Replicated)
+	FTeamSpottedActorInfoArray TeamSpottedActors;
 
 	// table index 0, flags 0x20080000000020
 	UPROPERTY(Replicated)

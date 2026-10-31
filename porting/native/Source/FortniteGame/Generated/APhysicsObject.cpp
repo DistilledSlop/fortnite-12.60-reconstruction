@@ -22,12 +22,22 @@ void APhysicsObject::OnRep_CorrectTargetOrientation()
 	// Body not recovered: reflection-derived stub.
 }
 
+void APhysicsObject::OnRep_CurrentServerPhysicsState()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void APhysicsObject::OnRep_HealthSet()
 {
 	// Body not recovered: reflection-derived stub.
 }
 
 void APhysicsObject::OnRep_InitialParameters()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void APhysicsObject::OnRep_LastServerConfirmedHit()
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -47,6 +57,11 @@ void APhysicsObject::ServerBroadcastHit_Implementation(APawn* ImpulseInstigator,
 	// Body not recovered: reflection-derived stub.
 }
 
+void APhysicsObject::ServerBroadcastHitFromClient_Implementation(APlayerController* HittingController, APawn* HittingPawn, const FVector& VelocityOfHitter, const FVector& HitNormal, const FTimeStampedPhysicsPawnState& ClientBallState)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void APhysicsObject::UpdateClientWithPhysicsObjectTestInput_Implementation(const FVector& LinearVelocity, const FVector& AngularVelocity)
 {
 	// Body not recovered: reflection-derived stub.
@@ -56,11 +71,13 @@ void APhysicsObject::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLi
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	DOREPLIFETIME(APhysicsObject, InitialParameters);
+	DOREPLIFETIME_CONDITION(APhysicsObject, InitialParameters, COND_InitialOnly);
+	DOREPLIFETIME(APhysicsObject, LastServerConfirmedHit);
+	DOREPLIFETIME(APhysicsObject, CurrentServerPhysicsState);
 	DOREPLIFETIME(APhysicsObject, SurfaceTypePhysicsObjectOn);
 	DOREPLIFETIME(APhysicsObject, bPendingDeath);
-	DOREPLIFETIME(APhysicsObject, HealthSet);
-	DOREPLIFETIME(APhysicsObject, AbilitySystemComponent);
+	DOREPLIFETIME(APhysicsObject, HealthSet);  // TODO: replication condition not recovered (COND_None assumed)
+	DOREPLIFETIME(APhysicsObject, AbilitySystemComponent);  // TODO: replication condition not recovered (COND_None assumed)
 	DOREPLIFETIME(APhysicsObject, CorrectTargetOrientation);
 }
 

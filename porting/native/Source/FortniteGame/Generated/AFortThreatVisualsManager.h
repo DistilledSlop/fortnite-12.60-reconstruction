@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 
+#include "FStormWindArray.h"
+#include "FThreatLocationArray.h"
 #include "Math/Vector.h"
 
 class AThreatCloud;
@@ -94,6 +96,14 @@ public:
 	UPROPERTY()
 	float StormWindDirectionAdditionalAngle;
 
+	// table index 3, flags 0x40000100002020
+	UPROPERTY(ReplicatedUsing=OnRep_ThreatLocations, Transient)
+	FThreatLocationArray ThreatLocations;
+
+	// table index 2, flags 0x40000100002020
+	UPROPERTY(ReplicatedUsing=OnRep_StormWinds, Transient)
+	FStormWindArray StormWindArray;
+
 	// table index 0, flags 0x40000100002020
 	UPROPERTY(ReplicatedUsing=OnRep_GoalActorLocations, Transient)
 	TArray<FVector> GoalActorLocations;
@@ -107,6 +117,12 @@ public:
 
 	UFUNCTION()
 	void OnRep_HideClouds();
+
+	UFUNCTION()
+	void OnRep_StormWinds();
+
+	UFUNCTION()
+	void OnRep_ThreatLocations();
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

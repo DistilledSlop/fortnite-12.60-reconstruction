@@ -7,11 +7,13 @@
 #include "AFortPlayerPawn.h"
 
 #include "Abilities/GameplayAbilityTypes.h"
+#include "FAthenaPawnReplayData.h"
 #include "FFortEffectDistanceQuality.h"
 #include "FFortPlayerAthenaAttributeReplicationProxy.h"
 #include "FMarkedActorDisplayInfo.h"
 #include "FOnFortPlayerDied.h"
 #include "FOnInteractionFailedCallback.h"
+#include "FSharedRepMovement.h"
 #include "GameplayCueInterface.h"
 #include "GameplayEffectTypes.h"
 #include "GameplayTagContainer.h"
@@ -304,6 +306,10 @@ public:
 	UPROPERTY()
 	float MeleeCombatSlowDuration;
 
+	// table index 31, flags 0x10000000002020
+	UPROPERTY(Replicated, Transient)
+	FAthenaPawnReplayData EncryptedPawnReplayData;
+
 	// table index 30, flags 0x1000000009001d
 	UPROPERTY()
 	UAudioComponent* InAirAudioComp;
@@ -423,6 +429,10 @@ public:
 	// table index 0, flags 0x20080000010001
 	UPROPERTY()
 	FGameplayTagContainer DamageTagsExcludedFromCameraShake;
+
+	UFUNCTION(NetMulticast, Unreliable)
+	void FastSharedReplication(const FSharedRepMovement& SharedRepMovement);
+	void FastSharedReplication_Implementation(const FSharedRepMovement& SharedRepMovement);
 
 	UFUNCTION(BlueprintCallable)
 	void ForceReviveFromDBNO();

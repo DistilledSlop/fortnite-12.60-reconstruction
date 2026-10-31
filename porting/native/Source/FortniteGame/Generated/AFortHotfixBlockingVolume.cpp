@@ -11,6 +11,6 @@ void AFortHotfixBlockingVolume::GetLifetimeReplicatedProps(TArray<FLifetimePrope
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	DOREPLIFETIME(AFortHotfixBlockingVolume, ReplicatedExtent);
+	DOREPLIFETIME_CONDITION(AFortHotfixBlockingVolume, ReplicatedExtent, COND_InitialOnly);
 }
 

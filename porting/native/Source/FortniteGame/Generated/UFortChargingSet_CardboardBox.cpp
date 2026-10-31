@@ -11,9 +11,9 @@ void UFortChargingSet_CardboardBox::GetLifetimeReplicatedProps(TArray<FLifetimeP
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	DOREPLIFETIME(UFortChargingSet_CardboardBox, ServerTimeChargeIncrements);
-	DOREPLIFETIME(UFortChargingSet_CardboardBox, ChargeRate);
-	DOREPLIFETIME(UFortChargingSet_CardboardBox, MaxCharge);
-	DOREPLIFETIME(UFortChargingSet_CardboardBox, Charge);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortChargingSet_CardboardBox, ServerTimeChargeIncrements, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortChargingSet_CardboardBox, ChargeRate, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortChargingSet_CardboardBox, MaxCharge, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortChargingSet_CardboardBox, Charge, COND_OwnerOnly, REPNOTIFY_Always);
 }
 

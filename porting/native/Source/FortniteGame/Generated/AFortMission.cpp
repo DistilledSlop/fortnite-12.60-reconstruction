@@ -27,6 +27,11 @@ void AFortMission::OnRep_MissionStatus()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortMission::OnRep_PotentialBadgesArray()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortMission::OnRep_QuestOwnerAccount()
 {
 	// Body not recovered: reflection-derived stub.
@@ -41,13 +46,14 @@ void AFortMission::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLife
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
+	DOREPLIFETIME(AFortMission, PotentialBadgesArray);
 	DOREPLIFETIME(AFortMission, ChosenRewardIdx);
 	DOREPLIFETIME(AFortMission, StartingDay);
-	DOREPLIFETIME(AFortMission, MissionGuid);
-	DOREPLIFETIME(AFortMission, MissionAudibility);
+	DOREPLIFETIME_CONDITION(AFortMission, MissionGuid, COND_InitialOnly);
+	DOREPLIFETIME_CONDITION(AFortMission, MissionAudibility, COND_InitialOnly);
 	DOREPLIFETIME(AFortMission, bIsMissionVisible);
 	DOREPLIFETIME(AFortMission, MissionStatus);
-	DOREPLIFETIME(AFortMission, ParticipatingButDisconnectedAccounts);
+	DOREPLIFETIME(AFortMission, ParticipatingButDisconnectedAccounts);  // TODO: replication condition not recovered (COND_None assumed)
 	DOREPLIFETIME(AFortMission, ParticipatingAccounts);
 	DOREPLIFETIME(AFortMission, ActiveObjectives);
 	DOREPLIFETIME(AFortMission, bSilentDestroyNextFrame);
@@ -55,7 +61,7 @@ void AFortMission::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLife
 	DOREPLIFETIME(AFortMission, MissionActivationTime);
 	DOREPLIFETIME(AFortMission, QuestOwnerAccount);
 	DOREPLIFETIME(AFortMission, UIIndex);
-	DOREPLIFETIME(AFortMission, MissionCategory);
-	DOREPLIFETIME(AFortMission, MissionInfo);
+	DOREPLIFETIME_CONDITION(AFortMission, MissionCategory, COND_InitialOnly);
+	DOREPLIFETIME_CONDITION(AFortMission, MissionInfo, COND_InitialOnly);
 }
 

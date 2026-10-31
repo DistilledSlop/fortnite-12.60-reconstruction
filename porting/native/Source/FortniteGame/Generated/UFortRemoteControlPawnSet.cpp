@@ -6,20 +6,20 @@ void UFortRemoteControlPawnSet::GetLifetimeReplicatedProps(TArray<FLifetimePrope
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	DOREPLIFETIME(UFortRemoteControlPawnSet, PlayerCanDetonate);
-	DOREPLIFETIME(UFortRemoteControlPawnSet, OutOfHealthExplodeDelay);
-	DOREPLIFETIME(UFortRemoteControlPawnSet, LaunchSpeed);
-	DOREPLIFETIME(UFortRemoteControlPawnSet, LaunchDelay);
-	DOREPLIFETIME(UFortRemoteControlPawnSet, UseLaunchDelay);
-	DOREPLIFETIME(UFortRemoteControlPawnSet, MaxAcceleration);
-	DOREPLIFETIME(UFortRemoteControlPawnSet, MaxSpeed);
-	DOREPLIFETIME(UFortRemoteControlPawnSet, TouchTurnRate);
-	DOREPLIFETIME(UFortRemoteControlPawnSet, ControllerTurnRate);
-	DOREPLIFETIME(UFortRemoteControlPawnSet, KeyboardTurnRate);
-	DOREPLIFETIME(UFortRemoteControlPawnSet, GyroTurnRateMax);
-	DOREPLIFETIME(UFortRemoteControlPawnSet, MouseTurnRateMax);
-	DOREPLIFETIME(UFortRemoteControlPawnSet, MouseTurnRate);
-	DOREPLIFETIME(UFortRemoteControlPawnSet, MouseTurnCap);
-	DOREPLIFETIME(UFortRemoteControlPawnSet, FuseLength);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortRemoteControlPawnSet, PlayerCanDetonate, COND_OwnerOnly, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortRemoteControlPawnSet, OutOfHealthExplodeDelay, COND_OwnerOnly, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortRemoteControlPawnSet, LaunchSpeed, COND_OwnerOnly, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortRemoteControlPawnSet, LaunchDelay, COND_OwnerOnly, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortRemoteControlPawnSet, UseLaunchDelay, COND_OwnerOnly, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortRemoteControlPawnSet, MaxAcceleration, COND_OwnerOnly, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortRemoteControlPawnSet, MaxSpeed, COND_OwnerOnly, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortRemoteControlPawnSet, TouchTurnRate, COND_OwnerOnly, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortRemoteControlPawnSet, ControllerTurnRate, COND_OwnerOnly, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortRemoteControlPawnSet, KeyboardTurnRate, COND_OwnerOnly, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortRemoteControlPawnSet, GyroTurnRateMax, COND_OwnerOnly, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortRemoteControlPawnSet, MouseTurnRateMax, COND_OwnerOnly, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortRemoteControlPawnSet, MouseTurnRate, COND_OwnerOnly, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortRemoteControlPawnSet, MouseTurnCap, COND_OwnerOnly, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortRemoteControlPawnSet, FuseLength, COND_OwnerOnly, REPNOTIFY_Always);
 }
 

@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 
+#include "FEarnedBadgeEntryArray.h"
 #include "FFortMissionEventName.h"
 #include "FFortMissionEventReceiverByGameplayTagQuery.h"
 #include "FFortMissionUIActorHandle.h"
@@ -69,6 +70,10 @@ public:
 	UPROPERTY()
 	FOnMissionsUpdated OnMissionsUpdated;
 
+	// table index 2, flags 0x20080100002020
+	UPROPERTY(ReplicatedUsing=OnRep_EarnedBadgesArray, Transient)
+	FEarnedBadgeEntryArray EarnedBadgesArray;
+
 	// table index 1, flags 0x10000010080000
 	UPROPERTY()
 	FOnShowSecondaryMissionHeadersChanged OnShouldShowSecondaryMissionHeadersChanged;
@@ -82,6 +87,9 @@ public:
 
 	UFUNCTION()
 	void OnRep_CurrentUIFocusedMission();
+
+	UFUNCTION()
+	void OnRep_EarnedBadgesArray();
 
 	UFUNCTION()
 	void OnRep_Missions();

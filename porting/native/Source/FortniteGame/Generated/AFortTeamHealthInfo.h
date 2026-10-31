@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Info.h"
 
+#include "FPrivateTeamDataArray.h"
+
 class AFortTeamInfo;
 class UFortPlayerHealthInfoComponent;
 
@@ -25,9 +27,16 @@ public:
 	UPROPERTY(Transient)
 	AFortTeamInfo* FortTeamInfo;
 
+	// table index 1, flags 0x40000100000020
+	UPROPERTY(ReplicatedUsing=OnRep_RepDataReplicated)
+	FPrivateTeamDataArray RepData;
+
 	// table index 0, flags 0x40000000000020
 	UPROPERTY(Replicated)
 	uint8 TeamNum;
+
+	UFUNCTION()
+	void OnRep_RepDataReplicated();
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

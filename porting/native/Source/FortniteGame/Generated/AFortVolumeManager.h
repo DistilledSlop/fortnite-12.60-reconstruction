@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Info.h"
 
+#include "FFortVolumeActiveUsers.h"
 #include "FOnClientEnterVolume.h"
 #include "FOnClientExitVolume.h"
 #include "FOnClientVolumeRestrictionStateChanged.h"
@@ -43,6 +44,10 @@ public:
 	// table index 18, flags 0x20080000002000
 	UPROPERTY(Transient)
 	TArray<AFortVolume*> VolumeObjects;
+
+	// table index 17, flags 0x40000000000020
+	UPROPERTY(Replicated)
+	FFortVolumeActiveUsers VolumeActivePlayers;
 
 	// table index 16, flags 0x24080000010015
 	UPROPERTY()

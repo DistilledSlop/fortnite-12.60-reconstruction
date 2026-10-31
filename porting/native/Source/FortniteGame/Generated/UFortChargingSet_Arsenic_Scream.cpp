@@ -11,9 +11,9 @@ void UFortChargingSet_Arsenic_Scream::GetLifetimeReplicatedProps(TArray<FLifetim
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	DOREPLIFETIME(UFortChargingSet_Arsenic_Scream, ServerTimeChargeIncrements);
-	DOREPLIFETIME(UFortChargingSet_Arsenic_Scream, ChargeTime);
-	DOREPLIFETIME(UFortChargingSet_Arsenic_Scream, MaxCharge);
-	DOREPLIFETIME(UFortChargingSet_Arsenic_Scream, CurrentCharge);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortChargingSet_Arsenic_Scream, ServerTimeChargeIncrements, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortChargingSet_Arsenic_Scream, ChargeTime, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortChargingSet_Arsenic_Scream, MaxCharge, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortChargingSet_Arsenic_Scream, CurrentCharge, COND_OwnerOnly, REPNOTIFY_Always);
 }
 

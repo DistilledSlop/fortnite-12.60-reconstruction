@@ -11,6 +11,6 @@ void AFortLobbyBeaconStateRM::GetLifetimeReplicatedProps(TArray<FLifetimePropert
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	DOREPLIFETIME(AFortLobbyBeaconStateRM, LobbyTimeRemaining);
+	DOREPLIFETIME_CONDITION(AFortLobbyBeaconStateRM, LobbyTimeRemaining, COND_OwnerOnly);
 }
 

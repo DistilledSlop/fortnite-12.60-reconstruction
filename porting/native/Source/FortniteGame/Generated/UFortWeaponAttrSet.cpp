@@ -83,11 +83,11 @@ void UFortWeaponAttrSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& O
 	DOREPLIFETIME(UFortWeaponAttrSet, WeaponOverheatMultiplier);
 	DOREPLIFETIME(UFortWeaponAttrSet, WeaponChargeRate);
 	DOREPLIFETIME(UFortWeaponAttrSet, WeaponAmmoClipSize);
-	DOREPLIFETIME(UFortWeaponAttrSet, WeaponReloadSpeed);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortWeaponAttrSet, WeaponReloadSpeed, COND_OwnerOnly, REPNOTIFY_Always);
 	DOREPLIFETIME(UFortWeaponAttrSet, WeaponSpreadReduction);
 	DOREPLIFETIME(UFortWeaponAttrSet, WeaponVerticalRecoil);
 	DOREPLIFETIME(UFortWeaponAttrSet, WeaponHorizontalRecoil);
-	DOREPLIFETIME(UFortWeaponAttrSet, WeaponRateOfFire);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortWeaponAttrSet, WeaponRateOfFire, COND_OwnerOnly, REPNOTIFY_Always);
 	DOREPLIFETIME(UFortWeaponAttrSet, AccumulatedWeaponChanceToNotConsumeAmmo);
 	DOREPLIFETIME(UFortWeaponAttrSet, WeaponChanceToNotConsumeAmmo);
 }

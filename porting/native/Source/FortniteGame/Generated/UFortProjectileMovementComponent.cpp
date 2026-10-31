@@ -31,6 +31,6 @@ void UFortProjectileMovementComponent::GetLifetimeReplicatedProps(TArray<FLifeti
 	DOREPLIFETIME(UFortProjectileMovementComponent, AccelerationMagnitude);
 	DOREPLIFETIME(UFortProjectileMovementComponent, DesiredDirection);
 	DOREPLIFETIME(UFortProjectileMovementComponent, bReplicatedAutoRegisterUpdatedComponent);
-	DOREPLIFETIME(UFortProjectileMovementComponent, HomingData);
+	DOREPLIFETIME_CONDITION(UFortProjectileMovementComponent, HomingData, COND_Custom);
 }
 

@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Info.h"
 
+#include "FMinigameScoreArray.h"
 #include "FMinigameScoreDelegate.h"
 #include "FMinigameScoreTemplate.h"
 #include "FMinigameScoresUpdatedDelegate.h"
@@ -40,8 +41,15 @@ public:
 	UPROPERTY()
 	FMinigameScoresUpdatedDelegate OnScoreRankingsUpdated;
 
+	// table index 0, flags 0x20080100022021
+	UPROPERTY(ReplicatedUsing=OnRep_Scores, Transient)
+	FMinigameScoreArray Scores;
+
 	UFUNCTION()
 	void OnRep_Playset();
+
+	UFUNCTION()
+	void OnRep_Scores();
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

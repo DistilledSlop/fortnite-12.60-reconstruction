@@ -121,18 +121,18 @@ void AFortPlayerControllerGameplay::GetLifetimeReplicatedProps(TArray<FLifetimeP
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	DOREPLIFETIME(AFortPlayerControllerGameplay, bIsCreativeIslandExporterEnabled);
-	DOREPLIFETIME(AFortPlayerControllerGameplay, bIsCreativeThermometerNewUIEnabled);
-	DOREPLIFETIME(AFortPlayerControllerGameplay, bIsCreativeQuickbarEnabled);
-	DOREPLIFETIME(AFortPlayerControllerGameplay, bIsCreativeModeEnabled);
+	DOREPLIFETIME_CONDITION(AFortPlayerControllerGameplay, bIsCreativeIslandExporterEnabled, COND_OwnerOnly);
+	DOREPLIFETIME_CONDITION(AFortPlayerControllerGameplay, bIsCreativeThermometerNewUIEnabled, COND_OwnerOnly);
+	DOREPLIFETIME_CONDITION(AFortPlayerControllerGameplay, bIsCreativeQuickbarEnabled, COND_OwnerOnly);
+	DOREPLIFETIME_CONDITION(AFortPlayerControllerGameplay, bIsCreativeModeEnabled, COND_OwnerOnly);
 	DOREPLIFETIME(AFortPlayerControllerGameplay, bIsFlightSprinting);
 	DOREPLIFETIME(AFortPlayerControllerGameplay, UIMetricsDisplayIndex);
 	DOREPLIFETIME(AFortPlayerControllerGameplay, FlyingModifierIndex);
-	DOREPLIFETIME(AFortPlayerControllerGameplay, bDisplayNPCNumbers);
-	DOREPLIFETIME(AFortPlayerControllerGameplay, ServerMaxNumNPCs);
-	DOREPLIFETIME(AFortPlayerControllerGameplay, ServerNumNPCs);
+	DOREPLIFETIME(AFortPlayerControllerGameplay, bDisplayNPCNumbers);  // TODO: replication condition not recovered (COND_None assumed)
+	DOREPLIFETIME(AFortPlayerControllerGameplay, ServerMaxNumNPCs);  // TODO: replication condition not recovered (COND_None assumed)
+	DOREPLIFETIME(AFortPlayerControllerGameplay, ServerNumNPCs);  // TODO: replication condition not recovered (COND_None assumed)
 	DOREPLIFETIME(AFortPlayerControllerGameplay, GhostModeRepData);
-	DOREPLIFETIME(AFortPlayerControllerGameplay, CreativeQuickbarComponent);
+	DOREPLIFETIME_CONDITION(AFortPlayerControllerGameplay, CreativeQuickbarComponent, COND_OwnerOnly);
 	DOREPLIFETIME(AFortPlayerControllerGameplay, PoiTagContainerTableID);
 }
 

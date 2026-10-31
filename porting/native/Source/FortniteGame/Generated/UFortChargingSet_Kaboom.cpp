@@ -11,9 +11,9 @@ void UFortChargingSet_Kaboom::GetLifetimeReplicatedProps(TArray<FLifetimePropert
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	DOREPLIFETIME(UFortChargingSet_Kaboom, ServerTimeChargeIncrements);
-	DOREPLIFETIME(UFortChargingSet_Kaboom, ChargeRate);
-	DOREPLIFETIME(UFortChargingSet_Kaboom, MaxCharge);
-	DOREPLIFETIME(UFortChargingSet_Kaboom, Charge);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortChargingSet_Kaboom, ServerTimeChargeIncrements, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortChargingSet_Kaboom, ChargeRate, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortChargingSet_Kaboom, MaxCharge, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortChargingSet_Kaboom, Charge, COND_OwnerOnly, REPNOTIFY_Always);
 }
 

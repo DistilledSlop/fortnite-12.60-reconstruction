@@ -11,6 +11,6 @@ void UInfiltrationStatusComponent::GetLifetimeReplicatedProps(TArray<FLifetimePr
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	DOREPLIFETIME(UInfiltrationStatusComponent, CachedMutator);
+	DOREPLIFETIME_CONDITION(UInfiltrationStatusComponent, CachedMutator, COND_InitialOnly);
 }
 

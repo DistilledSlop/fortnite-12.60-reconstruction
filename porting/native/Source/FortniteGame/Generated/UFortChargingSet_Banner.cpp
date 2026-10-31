@@ -11,9 +11,9 @@ void UFortChargingSet_Banner::GetLifetimeReplicatedProps(TArray<FLifetimePropert
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	DOREPLIFETIME(UFortChargingSet_Banner, ServerTimeChargeIncrements);
-	DOREPLIFETIME(UFortChargingSet_Banner, ChargeRate);
-	DOREPLIFETIME(UFortChargingSet_Banner, MaxCharge);
-	DOREPLIFETIME(UFortChargingSet_Banner, Charge);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortChargingSet_Banner, ServerTimeChargeIncrements, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortChargingSet_Banner, ChargeRate, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortChargingSet_Banner, MaxCharge, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortChargingSet_Banner, Charge, COND_OwnerOnly, REPNOTIFY_Always);
 }
 

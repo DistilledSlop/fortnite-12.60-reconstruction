@@ -26,7 +26,7 @@ void AFortProjectileAthena::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	DOREPLIFETIME(AFortProjectileAthena, PawnHitResult);
-	DOREPLIFETIME(AFortProjectileAthena, FireStartLoc);
+	DOREPLIFETIME_CONDITION(AFortProjectileAthena, PawnHitResult, COND_SkipOwner);
+	DOREPLIFETIME_CONDITION(AFortProjectileAthena, FireStartLoc, COND_InitialOrOwner);
 }
 

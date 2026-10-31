@@ -11,7 +11,7 @@ void AFortCreativeStormShield::GetLifetimeReplicatedProps(TArray<FLifetimeProper
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	DOREPLIFETIME(AFortCreativeStormShield, InstancedServerTime);
+	DOREPLIFETIME_CONDITION(AFortCreativeStormShield, InstancedServerTime, COND_InitialOnly);
 	DOREPLIFETIME(AFortCreativeStormShield, NextNextTargetLocation);
 	DOREPLIFETIME(AFortCreativeStormShield, NextNextTargetRadius);
 	DOREPLIFETIME(AFortCreativeStormShield, NextTargetLocation);

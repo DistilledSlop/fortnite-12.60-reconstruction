@@ -16,9 +16,9 @@ void UFortMedicPackSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Ou
 	DOREPLIFETIME(UFortMedicPackSet, FuelRegenDelay);
 	DOREPLIFETIME(UFortMedicPackSet, FuelRegenRate);
 	DOREPLIFETIME(UFortMedicPackSet, FuelBurnRate);
-	DOREPLIFETIME(UFortMedicPackSet, ReserveFuel);
-	DOREPLIFETIME(UFortMedicPackSet, ReserveMaxFuel);
-	DOREPLIFETIME(UFortMedicPackSet, Fuel);
-	DOREPLIFETIME(UFortMedicPackSet, MaxFuel);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortMedicPackSet, ReserveFuel, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortMedicPackSet, ReserveMaxFuel, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortMedicPackSet, Fuel, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortMedicPackSet, MaxFuel, COND_None, REPNOTIFY_Always);
 }
 

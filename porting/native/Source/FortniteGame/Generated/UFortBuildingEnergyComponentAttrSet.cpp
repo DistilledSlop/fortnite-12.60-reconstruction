@@ -16,8 +16,8 @@ void UFortBuildingEnergyComponentAttrSet::GetLifetimeReplicatedProps(TArray<FLif
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	DOREPLIFETIME(UFortBuildingEnergyComponentAttrSet, EnergyCapacity);
-	DOREPLIFETIME(UFortBuildingEnergyComponentAttrSet, EnergyCost);
-	DOREPLIFETIME(UFortBuildingEnergyComponentAttrSet, CurrentEnergyLevel);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortBuildingEnergyComponentAttrSet, EnergyCapacity, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortBuildingEnergyComponentAttrSet, EnergyCost, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortBuildingEnergyComponentAttrSet, CurrentEnergyLevel, COND_None, REPNOTIFY_Always);
 }
 

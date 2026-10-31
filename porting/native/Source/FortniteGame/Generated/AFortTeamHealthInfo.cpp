@@ -2,11 +2,17 @@
 #include "AFortTeamHealthInfo.h"
 #include "Net/UnrealNetwork.h"
 
+void AFortTeamHealthInfo::OnRep_RepDataReplicated()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortTeamHealthInfo::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(AFortTeamHealthInfo, TeamNum);
+	DOREPLIFETIME(AFortTeamHealthInfo, RepData);
 	DOREPLIFETIME(AFortTeamHealthInfo, OwnerHealthComponent);
 }
 

@@ -18,7 +18,7 @@ void AFortAthenaMutator_Zinc::GetLifetimeReplicatedProps(TArray<FLifetimePropert
 
 	DOREPLIFETIME(AFortAthenaMutator_Zinc, RoundResults);
 	DOREPLIFETIME(AFortAthenaMutator_Zinc, CurrentRound);
-	DOREPLIFETIME(AFortAthenaMutator_Zinc, NumRounds);
+	DOREPLIFETIME_CONDITION(AFortAthenaMutator_Zinc, NumRounds, COND_Custom);
 	DOREPLIFETIME(AFortAthenaMutator_Zinc, ZincPhase);
 }
 

@@ -141,8 +141,8 @@ void AFortPlayerControllerZone::GetLifetimeReplicatedProps(TArray<FLifetimePrope
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	DOREPLIFETIME(AFortPlayerControllerZone, DesyncNotifyList);
-	DOREPLIFETIME(AFortPlayerControllerZone, VoiceChatChannel);
+	DOREPLIFETIME_CONDITION(AFortPlayerControllerZone, DesyncNotifyList, COND_OwnerOnly);
+	DOREPLIFETIME_CONDITION(AFortPlayerControllerZone, VoiceChatChannel, COND_OwnerOnly);
 	DOREPLIFETIME(AFortPlayerControllerZone, PlayerLeecherStatus);
 }
 

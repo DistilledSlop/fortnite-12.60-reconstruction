@@ -24,10 +24,10 @@ void UFortJumpBoostSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Ou
 	DOREPLIFETIME(UFortJumpBoostSet, FuelRegenDelay);
 	DOREPLIFETIME(UFortJumpBoostSet, FuelRegenRate);
 	DOREPLIFETIME(UFortJumpBoostSet, FuelBurnRate);
-	DOREPLIFETIME(UFortJumpBoostSet, ReserveFuel);
-	DOREPLIFETIME(UFortJumpBoostSet, ReserveMaxFuel);
-	DOREPLIFETIME(UFortJumpBoostSet, Fuel);
-	DOREPLIFETIME(UFortJumpBoostSet, MaxFuel);
-	DOREPLIFETIME(UFortJumpBoostSet, BoostActive);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortJumpBoostSet, ReserveFuel, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortJumpBoostSet, ReserveMaxFuel, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortJumpBoostSet, Fuel, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortJumpBoostSet, MaxFuel, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortJumpBoostSet, BoostActive, COND_OwnerOnly, REPNOTIFY_Always);
 }
 

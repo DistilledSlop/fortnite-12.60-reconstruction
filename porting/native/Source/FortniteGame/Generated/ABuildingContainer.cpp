@@ -26,14 +26,14 @@ void ABuildingContainer::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& O
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	DOREPLIFETIME(ABuildingContainer, TimeUntilLootRegenerates);
+	DOREPLIFETIME(ABuildingContainer, TimeUntilLootRegenerates);  // TODO: replication condition not recovered (COND_None assumed)
 	DOREPLIFETIME(ABuildingContainer, SearchBounceData);
-	DOREPLIFETIME(ABuildingContainer, bRegenerateLoot);
-	DOREPLIFETIME(ABuildingContainer, bHasRaisedTreasure);
-	DOREPLIFETIME(ABuildingContainer, bBuriedTreasure);
-	DOREPLIFETIME(ABuildingContainer, bAlreadySearched);
+	DOREPLIFETIME(ABuildingContainer, bRegenerateLoot);  // TODO: replication condition not recovered (COND_None assumed)
+	DOREPLIFETIME(ABuildingContainer, bHasRaisedTreasure);  // TODO: replication condition not recovered (COND_None assumed)
+	DOREPLIFETIME(ABuildingContainer, bBuriedTreasure);  // TODO: replication condition not recovered (COND_None assumed)
+	DOREPLIFETIME_CONDITION(ABuildingContainer, bAlreadySearched, COND_Custom);
 	DOREPLIFETIME(ABuildingContainer, ChosenRandomUpgrade);
 	DOREPLIFETIME(ABuildingContainer, ReplicatedLootTier);
-	DOREPLIFETIME(ABuildingContainer, SearchedMesh);
+	DOREPLIFETIME_CONDITION(ABuildingContainer, SearchedMesh, COND_InitialOnly);
 }
 

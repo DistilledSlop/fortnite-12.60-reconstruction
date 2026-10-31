@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 
+#include "FVisibiltyInfoArray.h"
+
 #include "AFortVisibilityManager.generated.h"
 
 UCLASS(config=Game)
@@ -14,5 +16,10 @@ class FORTNITEGAME_API AFortVisibilityManager : public AActor
 	GENERATED_BODY()
 
 public:
+	// table index 0, flags 0x20088000000020
+	UPROPERTY(Replicated)
+	FVisibiltyInfoArray VisibilityInfoArray;
+
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

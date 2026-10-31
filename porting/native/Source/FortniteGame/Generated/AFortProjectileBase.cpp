@@ -32,11 +32,11 @@ void AFortProjectileBase::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& 
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(AFortProjectileBase, CurrentSkyTube);
-	DOREPLIFETIME(AFortProjectileBase, SyncId);
+	DOREPLIFETIME_CONDITION(AFortProjectileBase, SyncId, COND_InitialOnly);
 	DOREPLIFETIME(AFortProjectileBase, ResumeSimulationCount);
 	DOREPLIFETIME(AFortProjectileBase, SimulationStoppingHit);
-	DOREPLIFETIME(AFortProjectileBase, ChargePercent);
-	DOREPLIFETIME(AFortProjectileBase, GravityScale);
-	DOREPLIFETIME(AFortProjectileBase, ReplicatedMaxSpeed);
+	DOREPLIFETIME_CONDITION(AFortProjectileBase, ChargePercent, COND_InitialOnly);
+	DOREPLIFETIME_CONDITION(AFortProjectileBase, GravityScale, COND_InitialOnly);
+	DOREPLIFETIME_CONDITION(AFortProjectileBase, ReplicatedMaxSpeed, COND_InitialOnly);
 }
 

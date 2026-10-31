@@ -11,6 +11,7 @@
 #include "EFortVoteType.h"
 #include "EServerStability.h"
 #include "Engine/DataTable.h"
+#include "FActiveGameplayModifierArray.h"
 #include "FFortAIDirectorEvent.h"
 #include "FFortItemQuantityPair.h"
 #include "FFortZoneDifficultyIncreaseRewardData.h"
@@ -152,6 +153,10 @@ public:
 	// table index 57, flags 0x20088000002008
 	UPROPERTY(Transient)
 	TArray<UFortAbilitySystemComponent*> GlobalGameplayEventListeners;
+
+	// table index 56, flags 0x20080100002020
+	UPROPERTY(ReplicatedUsing=OnRep_ActiveGameplayModifiers, Transient)
+	FActiveGameplayModifierArray ActiveGameplayModifiers;
 
 	// table index 55, flags 0x20080000002000
 	UPROPERTY(Transient)
@@ -344,6 +349,9 @@ public:
 	UFUNCTION(NetMulticast, Reliable)
 	void NotifyEndFailedGameplayVoteLockout(const EFortVoteType& VoteType);
 	void NotifyEndFailedGameplayVoteLockout_Implementation(const EFortVoteType& VoteType);
+
+	UFUNCTION()
+	void OnRep_ActiveGameplayModifiers();
 
 	UFUNCTION()
 	void OnRep_AllSpawnGroupUpgradeModifierDefs();

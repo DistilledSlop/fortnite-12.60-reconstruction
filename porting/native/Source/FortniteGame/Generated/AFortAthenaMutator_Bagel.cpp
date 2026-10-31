@@ -7,6 +7,11 @@ void AFortAthenaMutator_Bagel::OnRep_CurrentPhase()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortAthenaMutator_Bagel::OnRep_PlayerData()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortAthenaMutator_Bagel::OnRep_TeamScoreMultiplier()
 {
 	// Body not recovered: reflection-derived stub.
@@ -18,6 +23,7 @@ void AFortAthenaMutator_Bagel::GetLifetimeReplicatedProps(TArray<FLifetimeProper
 
 	DOREPLIFETIME(AFortAthenaMutator_Bagel, FinalBoss);
 	DOREPLIFETIME(AFortAthenaMutator_Bagel, CurrentPhase);
+	DOREPLIFETIME(AFortAthenaMutator_Bagel, PlayerDataArray);
 	DOREPLIFETIME(AFortAthenaMutator_Bagel, TeamScoreMultiplier);
 	DOREPLIFETIME(AFortAthenaMutator_Bagel, TotalObjectiveAreaCount);
 	DOREPLIFETIME(AFortAthenaMutator_Bagel, bIsRespawningAllowed);

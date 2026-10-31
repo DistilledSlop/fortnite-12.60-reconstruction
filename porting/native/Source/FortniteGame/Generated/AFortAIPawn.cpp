@@ -2,12 +2,22 @@
 #include "AFortAIPawn.h"
 #include "Net/UnrealNetwork.h"
 
+void AFortAIPawn::FastSharedReplication_Implementation(const FFortAISharedRepMovement& SharedRepMovement)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortAIPawn::NetMulticast_BatchedDamageCues_Implementation(const FFortAIBatchedDamageCues& Data)
 {
 	// Body not recovered: reflection-derived stub.
 }
 
 void AFortAIPawn::OnRep_AppearanceOverrideEntryIndex()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortAIPawn::OnRep_AttributeProxy()
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -69,35 +79,36 @@ void AFortAIPawn::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifet
 	DOREPLIFETIME(AFortAIPawn, CurrentFortAILODLevel);
 	DOREPLIFETIME(AFortAIPawn, CurrentAimTarget);
 	DOREPLIFETIME(AFortAIPawn, AdditionalModifierDefinitions);
-	DOREPLIFETIME(AFortAIPawn, SpawnModifierDefinitions);
+	DOREPLIFETIME_CONDITION(AFortAIPawn, SpawnModifierDefinitions, COND_InitialOnly);
 	DOREPLIFETIME(AFortAIPawn, MinimapViewableDistance);
-	DOREPLIFETIME(AFortAIPawn, AppearanceOverrideEntryIndex);
-	DOREPLIFETIME(AFortAIPawn, Inventory);
-	DOREPLIFETIME(AFortAIPawn, CurrentAIRotationRate);
+	DOREPLIFETIME_CONDITION(AFortAIPawn, AppearanceOverrideEntryIndex, COND_InitialOnly);
+	DOREPLIFETIME_CONDITION(AFortAIPawn, Inventory, COND_Custom);
+	DOREPLIFETIME(AFortAIPawn, CurrentAIRotationRate);  // TODO: replication condition not recovered (COND_None assumed)
 	DOREPLIFETIME(AFortAIPawn, DefenderPlacedTime);
-	DOREPLIFETIME(AFortAIPawn, DefenderSquadId);
-	DOREPLIFETIME(AFortAIPawn, DefenderItemInstanceId);
-	DOREPLIFETIME(AFortAIPawn, PlayerManager);
-	DOREPLIFETIME(AFortAIPawn, UpgradeUIData);
-	DOREPLIFETIME(AFortAIPawn, Team);
-	DOREPLIFETIME(AFortAIPawn, AIType);
+	DOREPLIFETIME_CONDITION(AFortAIPawn, DefenderSquadId, COND_InitialOnly);
+	DOREPLIFETIME_CONDITION(AFortAIPawn, DefenderItemInstanceId, COND_InitialOnly);
+	DOREPLIFETIME_CONDITION(AFortAIPawn, PlayerManager, COND_InitialOnly);
+	DOREPLIFETIME_CONDITION(AFortAIPawn, UpgradeUIData, COND_InitialOnly);
+	DOREPLIFETIME_CONDITION(AFortAIPawn, Team, COND_InitialOnly);
+	DOREPLIFETIME_CONDITION(AFortAIPawn, AIType, COND_InitialOnly);
 	DOREPLIFETIME(AFortAIPawn, MovementUrgency);
 	DOREPLIFETIME(AFortAIPawn, bCanInteract);
 	DOREPLIFETIME(AFortAIPawn, bCanLookAtGoal);
-	DOREPLIFETIME(AFortAIPawn, bShouldStartSleeping);
-	DOREPLIFETIME(AFortAIPawn, bIsSleeping);
+	DOREPLIFETIME_CONDITION(AFortAIPawn, bShouldStartSleeping, COND_InitialOnly);
+	DOREPLIFETIME_CONDITION(AFortAIPawn, bIsSleeping, COND_Custom);
 	DOREPLIFETIME(AFortAIPawn, MinimapGoalByTagColorIndex);
-	DOREPLIFETIME(AFortAIPawn, SpawnRift);
-	DOREPLIFETIME(AFortAIPawn, AIDifficultyLevel);
+	DOREPLIFETIME_CONDITION(AFortAIPawn, SpawnRift, COND_InitialOnly);
+	DOREPLIFETIME_CONDITION(AFortAIPawn, AIDifficultyLevel, COND_InitialOnly);
 	DOREPLIFETIME(AFortAIPawn, FastReplicationMinimalGameplayCueProxy);
 	DOREPLIFETIME(AFortAIPawn, FastReplicationMinimalReplicationTags);
 	DOREPLIFETIME(AFortAIPawn, bEnableBlockingCollisionWithOtherAI);
 	DOREPLIFETIME(AFortAIPawn, bIsCowering);
 	DOREPLIFETIME(AFortAIPawn, bIsCharging);
-	DOREPLIFETIME(AFortAIPawn, bFrozen);
-	DOREPLIFETIME(AFortAIPawn, bHasGoalActor);
-	DOREPLIFETIME(AFortAIPawn, SimulatedProxyGameplayCues);
-	DOREPLIFETIME(AFortAIPawn, RepSharedAnimInfo);
-	DOREPLIFETIME(AFortAIPawn, RepAnimMontageInfo);
+	DOREPLIFETIME_CONDITION(AFortAIPawn, bFrozen, COND_SimulatedOnly);
+	DOREPLIFETIME_CONDITION(AFortAIPawn, bHasGoalActor, COND_SimulatedOnly);
+	DOREPLIFETIME_CONDITION(AFortAIPawn, SimulatedProxyGameplayCues, COND_SimulatedOnly);
+	DOREPLIFETIME_CONDITION(AFortAIPawn, RepSharedAnimInfo, COND_SimulatedOnly);
+	DOREPLIFETIME_CONDITION(AFortAIPawn, RepAnimMontageInfo, COND_SimulatedOnly);
+	DOREPLIFETIME(AFortAIPawn, AttributeReplicationProxy);
 }
 

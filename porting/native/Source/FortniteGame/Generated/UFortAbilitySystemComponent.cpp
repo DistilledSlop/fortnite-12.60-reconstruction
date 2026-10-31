@@ -16,7 +16,7 @@ void UFortAbilitySystemComponent::GetLifetimeReplicatedProps(TArray<FLifetimePro
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	DOREPLIFETIME(UFortAbilitySystemComponent, RepSharedAnimInfo);
+	DOREPLIFETIME(UFortAbilitySystemComponent, RepSharedAnimInfo);  // TODO: replication condition not recovered (COND_None assumed)
 	DOREPLIFETIME(UFortAbilitySystemComponent, LandingMontagePair);
 }
 

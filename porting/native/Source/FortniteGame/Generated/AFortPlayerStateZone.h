@@ -8,6 +8,7 @@
 
 #include "EFortKickReason.h"
 #include "FAccumulatedItemEntry.h"
+#include "FFortSpectatorZoneArray.h"
 #include "FOnAccumulatedItemsChanged.h"
 #include "FOnBeginSpectating.h"
 #include "FOnCurrentPawnChanged.h"
@@ -36,6 +37,10 @@ public:
 	// table index 29, flags 0x40000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_SpectatingTarget)
 	AFortPlayerStateZone* SpectatingTarget;
+
+	// table index 28, flags 0x10000000000020
+	UPROPERTY(Replicated)
+	FFortSpectatorZoneArray Spectators;
 
 	// table index 27, flags 0x10000010080000
 	UPROPERTY()

@@ -12,6 +12,6 @@ void AFortAthenaSupplyDrop::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(AFortAthenaSupplyDrop, NumPlayersInteracting);
-	DOREPLIFETIME(AFortAthenaSupplyDrop, SpecialActorID);
+	DOREPLIFETIME(AFortAthenaSupplyDrop, SpecialActorID);  // TODO: replication condition not recovered (COND_None assumed)
 }
 

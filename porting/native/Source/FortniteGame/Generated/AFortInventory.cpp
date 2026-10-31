@@ -2,11 +2,17 @@
 #include "AFortInventory.h"
 #include "Net/UnrealNetwork.h"
 
+void AFortInventory::HandleInventoryLocalUpdate()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortInventory::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	DOREPLIFETIME(AFortInventory, ReplayPawn);
+	DOREPLIFETIME_CONDITION(AFortInventory, ReplayPawn, COND_ReplayOnly);
+	DOREPLIFETIME(AFortInventory, Inventory);
 	DOREPLIFETIME(AFortInventory, InventoryType);
 }
 

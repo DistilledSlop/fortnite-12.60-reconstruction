@@ -56,7 +56,7 @@ void ABuildingActor::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLi
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	DOREPLIFETIME(ABuildingActor, BaselineScale);
+	DOREPLIFETIME_CONDITION(ABuildingActor, BaselineScale, COND_InitialOnly);
 	DOREPLIFETIME(ABuildingActor, CustomState);
 	DOREPLIFETIME(ABuildingActor, OriginatingPlacementActor);
 	DOREPLIFETIME(ABuildingActor, AssociatedMissionParam);
@@ -68,14 +68,14 @@ void ABuildingActor::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLi
 	DOREPLIFETIME(ABuildingActor, bForceBlockBuildings);
 	DOREPLIFETIME(ABuildingActor, bDoNotBlockBuildings);
 	DOREPLIFETIME(ABuildingActor, bInstantDeath);
-	DOREPLIFETIME(ABuildingActor, bPlayerPlaced);
+	DOREPLIFETIME_CONDITION(ABuildingActor, bPlayerPlaced, COND_InitialOnly);
 	DOREPLIFETIME(ABuildingActor, bDestroyed);
 	DOREPLIFETIME(ABuildingActor, bIsInvulnerable);
 	DOREPLIFETIME(ABuildingActor, ForceMetadataRelevant);
 	DOREPLIFETIME(ABuildingActor, HealthBarIndicatorDifficultyRating);
-	DOREPLIFETIME(ABuildingActor, ReplicatedAbilitySystemComponent);
+	DOREPLIFETIME(ABuildingActor, ReplicatedAbilitySystemComponent);  // replication condition confidence: medium
 	DOREPLIFETIME(ABuildingActor, OwnerPersistentID);
-	DOREPLIFETIME(ABuildingActor, ReplicatedBuildingAttributeSet);
+	DOREPLIFETIME(ABuildingActor, ReplicatedBuildingAttributeSet);  // replication condition confidence: medium
 	DOREPLIFETIME(ABuildingActor, CurrentBuildingLevel);
 	DOREPLIFETIME(ABuildingActor, InitialOverlappingVehicles);
 }

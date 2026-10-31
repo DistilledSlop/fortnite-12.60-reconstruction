@@ -20,6 +20,7 @@
 #include "FMinigameClassSlot.h"
 #include "FMinigameEndCondition.h"
 #include "FMinigamePlayerBucket.h"
+#include "FMinigamePlayers.h"
 #include "FMinigameTeam.h"
 #include "FOnBossInfoChanged.h"
 #include "FOnCurrentRoundChanged.h"
@@ -177,6 +178,14 @@ public:
 	// table index 112, flags 0x10000000020025
 	UPROPERTY(Replicated)
 	int32 TotalRounds;
+
+	// table index 111, flags 0x10000100022821
+	UPROPERTY(ReplicatedUsing=OnRep_MinigamePlayer, Transient)
+	FMinigamePlayers PlayerArray;
+
+	// table index 110, flags 0x10000000022821
+	UPROPERTY(Replicated, Transient)
+	FMinigamePlayers SpectatingPlayerArray;
 
 	// table index 108, flags 0x10000000020035
 	UPROPERTY(Replicated)
@@ -529,6 +538,9 @@ public:
 
 	UFUNCTION()
 	void OnRep_CurrentState();
+
+	UFUNCTION()
+	void OnRep_MinigamePlayer();
 
 	UFUNCTION()
 	void OnRep_PlayerBuckets();

@@ -13,6 +13,7 @@
 #include "FWaxEventSignature_NoParams.h"
 #include "FWaxNoStormZone.h"
 #include "FWaxPartOverrideData.h"
+#include "FWaxPlayerDataArray.h"
 #include "FWaxRespawnLogicData.h"
 #include "FWaxTokenFlashSignature.h"
 #include "FWaxVisibilityModifiers.h"
@@ -328,6 +329,10 @@ public:
 	// table index 13, flags 0x20080000000001
 	UPROPERTY()
 	FScalableFloat ShouldSwapSkins;
+
+	// table index 12, flags 0x20080000000020
+	UPROPERTY(Replicated)
+	FWaxPlayerDataArray PlayerData;
 
 	// table index 9, flags 0x40000000000000
 	UPROPERTY()

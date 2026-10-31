@@ -91,8 +91,8 @@ void AFortAthenaVehicle::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& O
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	DOREPLIFETIME(AFortAthenaVehicle, HealthSet);
-	DOREPLIFETIME(AFortAthenaVehicle, AbilitySystemComponent);
+	DOREPLIFETIME(AFortAthenaVehicle, HealthSet);  // TODO: replication condition not recovered (COND_None assumed)
+	DOREPLIFETIME(AFortAthenaVehicle, AbilitySystemComponent);  // TODO: replication condition not recovered (COND_None assumed)
 	DOREPLIFETIME(AFortAthenaVehicle, CorrectTargetOrientation);
 	DOREPLIFETIME(AFortAthenaVehicle, DisabledCollisionShapes);
 	DOREPLIFETIME(AFortAthenaVehicle, IgnoredBuildingActors);
@@ -100,7 +100,7 @@ void AFortAthenaVehicle::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& O
 	DOREPLIFETIME(AFortAthenaVehicle, SurfaceTypeVehicleOn);
 	DOREPLIFETIME(AFortAthenaVehicle, EmptyDriverInputState);
 	DOREPLIFETIME(AFortAthenaVehicle, bOnFire);
-	DOREPLIFETIME(AFortAthenaVehicle, bHasDriver);
+	DOREPLIFETIME(AFortAthenaVehicle, bHasDriver);  // TODO: replication condition not recovered (COND_None assumed)
 	DOREPLIFETIME(AFortAthenaVehicle, bPendingDeath);
 	DOREPLIFETIME(AFortAthenaVehicle, SoftOverrideItemWrap);
 }

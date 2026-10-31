@@ -23,6 +23,6 @@ void AFortWeaponRanged::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Ou
 
 	DOREPLIFETIME(AFortWeaponRanged, TimeOverheatedBegan);
 	DOREPLIFETIME(AFortWeaponRanged, OverheatState);
-	DOREPLIFETIME(AFortWeaponRanged, bIsMuzzleTraceNearWall);
+	DOREPLIFETIME_CONDITION(AFortWeaponRanged, bIsMuzzleTraceNearWall, COND_SimulatedOnly);
 }
 

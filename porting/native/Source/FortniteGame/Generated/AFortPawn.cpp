@@ -102,6 +102,11 @@ void AFortPawn::MovingEmoteStopped()
 	// Empty body: the native function does nothing (see Inferred).
 }
 
+void AFortPawn::NetMulticast_Athena_BatchedDamageCues_Implementation(const FAthenaBatchedDamageGameplayCues_Shared& SharedData, const FAthenaBatchedDamageGameplayCues_NonShared& NonSharedData)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPawn::NetMulticast_InvokeGameplayCueAdded_Implementation(const FGameplayTag& GameplayCueTag, const FPredictionKey& PredictionKey, const FGameplayEffectContextHandle& EffectContext)
 {
 	// Body not recovered: reflection-derived stub.
@@ -305,34 +310,34 @@ void AFortPawn::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetim
 
 	DOREPLIFETIME(AFortPawn, CurrentSentence);
 	DOREPLIFETIME(AFortPawn, CurrentCalloutTag);
-	DOREPLIFETIME(AFortPawn, DisplayName);
+	DOREPLIFETIME(AFortPawn, DisplayName);  // TODO: replication condition not recovered (COND_None assumed)
 	DOREPLIFETIME(AFortPawn, VocalChords);
-	DOREPLIFETIME(AFortPawn, EmoteWalkSpeed);
+	DOREPLIFETIME_CONDITION(AFortPawn, EmoteWalkSpeed, COND_OwnerOnly);
 	DOREPLIFETIME(AFortPawn, LastReplicatedEmoteExecuted);
-	DOREPLIFETIME(AFortPawn, LandingFlashCountPacked);
-	DOREPLIFETIME(AFortPawn, JumpFlashCountPacked);
+	DOREPLIFETIME_CONDITION(AFortPawn, LandingFlashCountPacked, COND_SkipOwner);
+	DOREPLIFETIME_CONDITION(AFortPawn, JumpFlashCountPacked, COND_SkipOwner);
 	DOREPLIFETIME(AFortPawn, DamageZoneActiveBitMask);
 	DOREPLIFETIME(AFortPawn, LocalSpin);
-	DOREPLIFETIME(AFortPawn, PushMomentum);
-	DOREPLIFETIME(AFortPawn, bIsStunned);
+	DOREPLIFETIME_CONDITION(AFortPawn, PushMomentum, COND_OwnerOnly);
+	DOREPLIFETIME_CONDITION(AFortPawn, bIsStunned, COND_SkipOwner);
 	DOREPLIFETIME(AFortPawn, SpawnImmunityTime);
-	DOREPLIFETIME(AFortPawn, CurrentWeapon);
-	DOREPLIFETIME(AFortPawn, PawnUniqueID);
+	DOREPLIFETIME_CONDITION(AFortPawn, CurrentWeapon, COND_SkipOwner);
+	DOREPLIFETIME_CONDITION(AFortPawn, PawnUniqueID, COND_InitialOnly);
 	DOREPLIFETIME(AFortPawn, StormShieldComponent);
 	DOREPLIFETIME(AFortPawn, TeleportCounter);
-	DOREPLIFETIME(AFortPawn, CurrentMovementStyle);
+	DOREPLIFETIME_CONDITION(AFortPawn, CurrentMovementStyle, COND_SkipOwner);
 	DOREPLIFETIME(AFortPawn, bWasDBNOOnDeath);
 	DOREPLIFETIME(AFortPawn, bIsDBNO);
-	DOREPLIFETIME(AFortPawn, bWeaponHolstered);
-	DOREPLIFETIME(AFortPawn, bWeaponActivated);
-	DOREPLIFETIME(AFortPawn, bSpotted);
+	DOREPLIFETIME_CONDITION(AFortPawn, bWeaponHolstered, COND_SkipOwner);
+	DOREPLIFETIME(AFortPawn, bWeaponActivated);  // TODO: replication condition not recovered (COND_None assumed)
+	DOREPLIFETIME_CONDITION(AFortPawn, bSpotted, COND_SkipOwner);
 	DOREPLIFETIME(AFortPawn, bIsInvulnerable);
 	DOREPLIFETIME(AFortPawn, bMovingEmoteSkipLandingFX);
 	DOREPLIFETIME(AFortPawn, bMovingEmoteFollowingOnly);
-	DOREPLIFETIME(AFortPawn, bMovingEmoteForwardOnly);
+	DOREPLIFETIME_CONDITION(AFortPawn, bMovingEmoteForwardOnly, COND_OwnerOnly);
 	DOREPLIFETIME(AFortPawn, bMovingEmote);
-	DOREPLIFETIME(AFortPawn, bIsStaggered);
-	DOREPLIFETIME(AFortPawn, bIsKnockedback);
+	DOREPLIFETIME_CONDITION(AFortPawn, bIsStaggered, COND_SkipOwner);
+	DOREPLIFETIME_CONDITION(AFortPawn, bIsKnockedback, COND_SkipOwner);
 	DOREPLIFETIME(AFortPawn, bIsHiddenForDeath);
 	DOREPLIFETIME(AFortPawn, bIsDying);
 	DOREPLIFETIME(AFortPawn, bIgnoreNextFallingDamage);

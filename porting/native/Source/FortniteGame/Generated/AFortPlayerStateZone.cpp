@@ -42,16 +42,17 @@ void AFortPlayerStateZone::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>&
 	DOREPLIFETIME(AFortPlayerStateZone, bInAircraft);
 	DOREPLIFETIME(AFortPlayerStateZone, SimulatedAttributes);
 	DOREPLIFETIME(AFortPlayerStateZone, AccumulatedItems);
-	DOREPLIFETIME(AFortPlayerStateZone, MaxSignalInStorm);
-	DOREPLIFETIME(AFortPlayerStateZone, CurrentSignalInStorm);
-	DOREPLIFETIME(AFortPlayerStateZone, MaxShield);
-	DOREPLIFETIME(AFortPlayerStateZone, CurrentShield);
-	DOREPLIFETIME(AFortPlayerStateZone, MaxHealth);
-	DOREPLIFETIME(AFortPlayerStateZone, CurrentHealth);
+	DOREPLIFETIME_CONDITION(AFortPlayerStateZone, MaxSignalInStorm, COND_OwnerOnly);
+	DOREPLIFETIME_CONDITION(AFortPlayerStateZone, CurrentSignalInStorm, COND_OwnerOnly);
+	DOREPLIFETIME_CONDITION(AFortPlayerStateZone, MaxShield, COND_OwnerOnly);
+	DOREPLIFETIME_CONDITION(AFortPlayerStateZone, CurrentShield, COND_OwnerOnly);
+	DOREPLIFETIME_CONDITION(AFortPlayerStateZone, MaxHealth, COND_OwnerOnly);
+	DOREPLIFETIME_CONDITION(AFortPlayerStateZone, CurrentHealth, COND_OwnerOnly);
 	DOREPLIFETIME(AFortPlayerStateZone, bInvincibleDueToUI);
 	DOREPLIFETIME(AFortPlayerStateZone, NumRejoins);
 	DOREPLIFETIME(AFortPlayerStateZone, CarriedObject);
 	DOREPLIFETIME(AFortPlayerStateZone, KickedFromSessionReason);
-	DOREPLIFETIME(AFortPlayerStateZone, SpectatingTarget);
+	DOREPLIFETIME_CONDITION(AFortPlayerStateZone, Spectators, COND_OwnerOnly);
+	DOREPLIFETIME_CONDITION(AFortPlayerStateZone, SpectatingTarget, COND_OwnerOnly);
 }
 

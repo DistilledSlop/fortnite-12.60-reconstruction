@@ -6,6 +6,6 @@ void AFortDeployableBasePickup::GetLifetimeReplicatedProps(TArray<FLifetimePrope
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	DOREPLIFETIME(AFortDeployableBasePickup, AssociatedPlotOccupant);
+	DOREPLIFETIME_CONDITION(AFortDeployableBasePickup, AssociatedPlotOccupant, COND_InitialOnly);
 }
 

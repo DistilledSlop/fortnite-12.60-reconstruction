@@ -11,9 +11,9 @@ void UFortChargingSet_Disguise::GetLifetimeReplicatedProps(TArray<FLifetimePrope
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	DOREPLIFETIME(UFortChargingSet_Disguise, ServerTimeChargeIncrements);
-	DOREPLIFETIME(UFortChargingSet_Disguise, ChargeRate);
-	DOREPLIFETIME(UFortChargingSet_Disguise, MaxCharge);
-	DOREPLIFETIME(UFortChargingSet_Disguise, Charge);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortChargingSet_Disguise, ServerTimeChargeIncrements, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortChargingSet_Disguise, ChargeRate, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortChargingSet_Disguise, MaxCharge, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortChargingSet_Disguise, Charge, COND_OwnerOnly, REPNOTIFY_Always);
 }
 

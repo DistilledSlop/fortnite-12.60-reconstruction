@@ -51,8 +51,8 @@ void AFortAthenaMutator_Uranium::GetLifetimeReplicatedProps(TArray<FLifetimeProp
 	DOREPLIFETIME(AFortAthenaMutator_Uranium, CurrentRoundPhase);
 	DOREPLIFETIME(AFortAthenaMutator_Uranium, RoundData);
 	DOREPLIFETIME(AFortAthenaMutator_Uranium, CurrentPOI);
-	DOREPLIFETIME(AFortAthenaMutator_Uranium, RespawnLocation_DefenderTeam);
-	DOREPLIFETIME(AFortAthenaMutator_Uranium, RespawnLocation_PusherTeam);
+	DOREPLIFETIME_CONDITION(AFortAthenaMutator_Uranium, RespawnLocation_DefenderTeam, COND_Custom);
+	DOREPLIFETIME_CONDITION(AFortAthenaMutator_Uranium, RespawnLocation_PusherTeam, COND_Custom);
 	DOREPLIFETIME(AFortAthenaMutator_Uranium, StormShield);
 	DOREPLIFETIME(AFortAthenaMutator_Uranium, PushCart);
 }

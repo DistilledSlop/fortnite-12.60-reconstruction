@@ -7,5 +7,6 @@ void AFortVolumeManager::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& O
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(AFortVolumeManager, bInSpawningStartup);
+	DOREPLIFETIME(AFortVolumeManager, VolumeActivePlayers);
 }
 

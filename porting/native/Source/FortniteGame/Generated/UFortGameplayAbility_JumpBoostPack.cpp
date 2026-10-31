@@ -16,7 +16,7 @@ void UFortGameplayAbility_JumpBoostPack::GetLifetimeReplicatedProps(TArray<FLife
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	DOREPLIFETIME(UFortGameplayAbility_JumpBoostPack, bAbilityMarkedForPendingKill);
-	DOREPLIFETIME(UFortGameplayAbility_JumpBoostPack, ServerCurrentState);
+	DOREPLIFETIME_CONDITION(UFortGameplayAbility_JumpBoostPack, bAbilityMarkedForPendingKill, COND_OwnerOnly);
+	DOREPLIFETIME_CONDITION(UFortGameplayAbility_JumpBoostPack, ServerCurrentState, COND_OwnerOnly);
 }
 

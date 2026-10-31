@@ -7,6 +7,7 @@
 #include "GameFramework/Actor.h"
 
 #include "EFortInventoryType.h"
+#include "FFortItemList.h"
 
 class AFortPawn;
 class UFortItem;
@@ -23,6 +24,10 @@ public:
 	// table index 13, flags 0x40000000000020
 	UPROPERTY(Replicated)
 	TEnumAsByte<EFortInventoryType::Type> InventoryType;
+
+	// table index 12, flags 0x40000101000020
+	UPROPERTY(ReplicatedUsing=HandleInventoryLocalUpdate, SaveGame)
+	FFortItemList Inventory;
 
 	// table index 11, flags 0x40000000000020
 	UPROPERTY(Replicated)
@@ -55,6 +60,9 @@ public:
 	// table index 0, flags 0x40000000000000
 	UPROPERTY()
 	TArray<UFortItem*> RecentlyChanged;
+
+	UFUNCTION()
+	void HandleInventoryLocalUpdate();
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

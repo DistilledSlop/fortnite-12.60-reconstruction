@@ -6,6 +6,9 @@
 #include "CoreMinimal.h"
 #include "UFortControllerComponent.h"
 
+#include "FIndicatedActorInfoArray.h"
+#include "FStenciledActorInfoArray.h"
+
 #include "UFortControllerComponent_IndicatedActorManagement.generated.h"
 
 UCLASS(config=Game)
@@ -14,5 +17,14 @@ class FORTNITEGAME_API UFortControllerComponent_IndicatedActorManagement : publi
 	GENERATED_BODY()
 
 public:
+	// table index 1, flags 0x40000000000020
+	UPROPERTY(Replicated)
+	FIndicatedActorInfoArray IndicatedActorList;
+
+	// table index 0, flags 0x40000000000020
+	UPROPERTY(Replicated)
+	FStenciledActorInfoArray StenciledActorList;
+
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

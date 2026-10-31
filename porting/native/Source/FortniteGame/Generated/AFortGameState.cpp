@@ -121,8 +121,8 @@ void AFortGameState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLi
 	DOREPLIFETIME(AFortGameState, PendingTeamChangeRequests);
 	DOREPLIFETIME(AFortGameState, Teams);
 	DOREPLIFETIME(AFortGameState, VisibilityManager);
-	DOREPLIFETIME(AFortGameState, RecorderPlayerState);
-	DOREPLIFETIME(AFortGameState, PawnForReplayRelevancy);
+	DOREPLIFETIME_CONDITION(AFortGameState, RecorderPlayerState, COND_ReplayOnly);
+	DOREPLIFETIME_CONDITION(AFortGameState, PawnForReplayRelevancy, COND_ReplayOnly);
 	DOREPLIFETIME(AFortGameState, GameSessionId);
 	DOREPLIFETIME(AFortGameState, MusicManagerBank);
 	DOREPLIFETIME(AFortGameState, MusicManagerSubclass);

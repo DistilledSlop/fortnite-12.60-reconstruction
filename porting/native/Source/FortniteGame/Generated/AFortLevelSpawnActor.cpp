@@ -6,6 +6,6 @@ void AFortLevelSpawnActor::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>&
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	DOREPLIFETIME(AFortLevelSpawnActor, SpecialActorID);
+	DOREPLIFETIME(AFortLevelSpawnActor, SpecialActorID);  // TODO: replication condition not recovered (COND_None assumed)
 }
 

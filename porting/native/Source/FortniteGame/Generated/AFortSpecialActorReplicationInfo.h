@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Info.h"
 
+#include "FSpecialActorRepDataArray.h"
 #include "FSpecialActorStatData.h"
 
 #include "AFortSpecialActorReplicationInfo.generated.h"
@@ -16,9 +17,14 @@ class FORTNITEGAME_API AFortSpecialActorReplicationInfo : public AInfo
 	GENERATED_BODY()
 
 public:
+	// table index 2, flags 0x10000000000020
+	UPROPERTY(Replicated)
+	FSpecialActorRepDataArray SpecialActorRepList;
+
 	// table index 0, flags 0x10000000000000
 	UPROPERTY()
 	TArray<FSpecialActorStatData> SpecialActorStats;
 
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

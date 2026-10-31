@@ -16,14 +16,14 @@ void UFortControlResistanceSet::GetLifetimeReplicatedProps(TArray<FLifetimePrope
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	DOREPLIFETIME(UFortControlResistanceSet, ImpactDamageMultiplier);
-	DOREPLIFETIME(UFortControlResistanceSet, ImpactDamageResistance);
-	DOREPLIFETIME(UFortControlResistanceSet, KnockbackMultiplier);
-	DOREPLIFETIME(UFortControlResistanceSet, KnockbackThreshold);
-	DOREPLIFETIME(UFortControlResistanceSet, ControlResistanceRegenThreshold);
-	DOREPLIFETIME(UFortControlResistanceSet, ControlResistanceRegenDelay);
-	DOREPLIFETIME(UFortControlResistanceSet, ControlResistanceRegenRate);
-	DOREPLIFETIME(UFortControlResistanceSet, MaxControlResistance);
-	DOREPLIFETIME(UFortControlResistanceSet, ControlResistance);
+	DOREPLIFETIME(UFortControlResistanceSet, ImpactDamageMultiplier);  // TODO: replication condition not recovered (COND_None assumed)
+	DOREPLIFETIME(UFortControlResistanceSet, ImpactDamageResistance);  // TODO: replication condition not recovered (COND_None assumed)
+	DOREPLIFETIME(UFortControlResistanceSet, KnockbackMultiplier);  // TODO: replication condition not recovered (COND_None assumed)
+	DOREPLIFETIME(UFortControlResistanceSet, KnockbackThreshold);  // TODO: replication condition not recovered (COND_None assumed)
+	DOREPLIFETIME(UFortControlResistanceSet, ControlResistanceRegenThreshold);  // TODO: replication condition not recovered (COND_None assumed)
+	DOREPLIFETIME(UFortControlResistanceSet, ControlResistanceRegenDelay);  // TODO: replication condition not recovered (COND_None assumed)
+	DOREPLIFETIME(UFortControlResistanceSet, ControlResistanceRegenRate);  // TODO: replication condition not recovered (COND_None assumed)
+	DOREPLIFETIME(UFortControlResistanceSet, MaxControlResistance);  // TODO: replication condition not recovered (COND_None assumed)
+	DOREPLIFETIME(UFortControlResistanceSet, ControlResistance);  // TODO: replication condition not recovered (COND_None assumed)
 }
 

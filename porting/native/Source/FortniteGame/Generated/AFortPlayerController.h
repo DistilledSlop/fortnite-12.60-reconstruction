@@ -30,6 +30,8 @@
 #include "FAttributeModifierInfo.h"
 #include "FBuildingWeakSpotData.h"
 #include "FChoiceData.h"
+#include "FCreateBuildingActorData.h"
+#include "FDelayedQuickBarActionContainer.h"
 #include "FFortAthenaLoadout.h"
 #include "FFortDamageNumberInfo.h"
 #include "FFortItemEntryStateValue.h"
@@ -737,6 +739,10 @@ public:
 	UPROPERTY(Transient)
 	TArray<FRecentlyRemovedQuickbarInfo> RecentlyRemovedQuickbarInfo;
 
+	// table index 125, flags 0x40000100000020
+	UPROPERTY(ReplicatedUsing=OnRep_DelayedQuickBarActions)
+	FDelayedQuickBarActionContainer DelayedQuickBarActions;
+
 	// table index 123, flags 0x40000000002000
 	UPROPERTY(Transient)
 	TSet<uint32> ClientProcessedQuickBarActions;
@@ -1425,6 +1431,9 @@ public:
 	void OnRep_CheatMovement();
 
 	UFUNCTION()
+	void OnRep_DelayedQuickBarActions();
+
+	UFUNCTION()
 	void OnRep_HoldingObject();
 
 	UFUNCTION()
@@ -1499,6 +1508,10 @@ public:
 	UFUNCTION(Server, Reliable)
 	void ServerCraftSchematic(const FString& ItemId, int32 PostCraftSlot, int32 CraftAmount, const EFortItemTier& RequestedTier, bool bIsQuickCrafted);
 	void ServerCraftSchematic_Implementation(const FString& ItemId, int32 PostCraftSlot, int32 CraftAmount, const EFortItemTier& RequestedTier, bool bIsQuickCrafted);
+
+	UFUNCTION(Server, Reliable)
+	void ServerCreateBuildingActor(const FCreateBuildingActorData& CreateBuildingData);
+	void ServerCreateBuildingActor_Implementation(const FCreateBuildingActorData& CreateBuildingData);
 
 	UFUNCTION(Server, Reliable)
 	void ServerDeployDefender(ABuildingTrapDefender* DefenderTrap, const FString& SelectedItemInstanceId, const FName& DefenderSquadId, const FGuid& WeaponToGiveGuid, int32 AmmoQuantity);

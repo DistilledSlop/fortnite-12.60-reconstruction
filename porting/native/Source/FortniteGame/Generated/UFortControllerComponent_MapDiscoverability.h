@@ -7,6 +7,7 @@
 #include "UFortControllerComponent_HasCoupledWidgets.h"
 
 #include "AttributeSet.h"
+#include "FPoiDiscoverabilityDataArray.h"
 
 class UMaterialInstanceDynamic;
 class UMaterialInterface;
@@ -45,9 +46,14 @@ public:
 	UPROPERTY()
 	TSoftObjectPtr<UMaterialInterface> StencilMaterial;
 
+	// table index 1, flags 0x20088000000020
+	UPROPERTY(Replicated)
+	FPoiDiscoverabilityDataArray DiscoveredData;
+
 	// table index 0, flags 0x20080000000000
 	UPROPERTY()
 	UMaterialInstanceDynamic* StencilMID;
 
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

@@ -16,6 +16,7 @@
 #include "FBagelLeaderboardQuery.h"
 #include "FBagelLootTierOverrideAssetData.h"
 #include "FBagelObjectiveAreaInstanceData.h"
+#include "FBagelPlayerDataArray.h"
 #include "FBagelScoreData.h"
 #include "FBagelScoreMultiplierSpawnData.h"
 #include "FOnBagelPhaseChanged.h"
@@ -277,6 +278,10 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_TeamScoreMultiplier, Transient)
 	uint8 TeamScoreMultiplier;
 
+	// table index 7, flags 0x20080100000034
+	UPROPERTY(ReplicatedUsing=OnRep_PlayerData)
+	FBagelPlayerDataArray PlayerDataArray;
+
 	// table index 6, flags 0x20080100002034
 	UPROPERTY(ReplicatedUsing=OnRep_CurrentPhase, Transient)
 	TEnumAsByte<EBagelPhase::Type> CurrentPhase;
@@ -303,6 +308,9 @@ public:
 
 	UFUNCTION()
 	void OnRep_CurrentPhase();
+
+	UFUNCTION()
+	void OnRep_PlayerData();
 
 	UFUNCTION()
 	void OnRep_TeamScoreMultiplier();

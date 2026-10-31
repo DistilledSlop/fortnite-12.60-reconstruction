@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Info.h"
 
+#include "FPropertyOverrideDataRepl.h"
+
 #include "AFortPropertyOverrideReplShared.generated.h"
 
 UCLASS(config=Engine)
@@ -14,5 +16,13 @@ class FORTNITEGAME_API AFortPropertyOverrideReplShared : public AInfo
 	GENERATED_BODY()
 
 public:
+	// table index 0, flags 0x10008100022021
+	UPROPERTY(ReplicatedUsing=OnRep_ReplOverrides, Transient)
+	FPropertyOverrideDataRepl ReplOverrides;
+
+	UFUNCTION()
+	void OnRep_ReplOverrides();
+
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

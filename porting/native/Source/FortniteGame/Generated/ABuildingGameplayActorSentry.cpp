@@ -16,7 +16,7 @@ void ABuildingGameplayActorSentry::GetLifetimeReplicatedProps(TArray<FLifetimePr
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	DOREPLIFETIME(ABuildingGameplayActorSentry, ExactIdleRotation);
+	DOREPLIFETIME_CONDITION_NOTIFY(ABuildingGameplayActorSentry, ExactIdleRotation, COND_InitialOnly, REPNOTIFY_Always);
 	DOREPLIFETIME(ABuildingGameplayActorSentry, IdleRotationDestination);
 	DOREPLIFETIME(ABuildingGameplayActorSentry, StartingIdleRotation);
 	DOREPLIFETIME(ABuildingGameplayActorSentry, PawnBeingTracked);

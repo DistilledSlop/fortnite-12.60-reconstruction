@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
 
+#include "FReplicatedPhysicsPawnState.h"
 #include "FVehicleSafeTeleportInfo.h"
 #include "Math/Vector.h"
 
@@ -38,6 +39,10 @@ public:
 
 	UFUNCTION()
 	void OnRep_SafeTeleportInfo();
+
+	UFUNCTION(Server, Unreliable)
+	void ServerMove(const FReplicatedPhysicsPawnState& InState);
+	void ServerMove_Implementation(const FReplicatedPhysicsPawnState& InState);
 
 	UFUNCTION(Server, Reliable)
 	void ServerUpdateStateSync(const TArray<uint8>& StateSyncData);

@@ -7,6 +7,8 @@
 #include "GameFramework/Info.h"
 
 #include "EDeployableBaseUseType.h"
+#include "FActiveTieredCollectionLayoutArray.h"
+#include "FDeployableBaseArray.h"
 #include "FEnvironmentBuildingRestorationRecord.h"
 #include "FOnDeployableBasePlotsSpawned.h"
 #include "FOnLocalDeployablePlotInventoryChanged.h"
@@ -56,6 +58,10 @@ public:
 	UPROPERTY(Replicated, Transient)
 	EDeployableBaseUseType DeployableBaseUseType;
 
+	// table index 20, flags 0x20080000002020
+	UPROPERTY(Replicated, Transient)
+	FActiveTieredCollectionLayoutArray ActiveTieredCollectionLayouts;
+
 	// table index 19, flags 0x20080010080000
 	UPROPERTY()
 	FOnDeployableBasePlotsSpawned OnDeployableBasePlotsSpawned;
@@ -71,6 +77,10 @@ public:
 	// table index 16, flags 0x20080010080000
 	UPROPERTY()
 	FOnLocalDeployablePlotInventoryChanged OnLocalDeployablePlotInventoryChangedEvent;
+
+	// table index 15, flags 0x40000000002020
+	UPROPERTY(Replicated, Transient)
+	FDeployableBaseArray DeployableBaseArray;
 
 	// table index 14, flags 0x40000000002000
 	UPROPERTY(Transient)

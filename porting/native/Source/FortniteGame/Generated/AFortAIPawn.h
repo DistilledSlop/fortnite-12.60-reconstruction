@@ -19,9 +19,11 @@
 #include "EScoreDistributionType.h"
 #include "Engine/EngineTypes.h"
 #include "FFortAIAppearanceOverrideEntry.h"
+#include "FFortAIAttributeReplicationProxy.h"
 #include "FFortAIBatchedDamageCues.h"
 #include "FFortAIInteraction.h"
 #include "FFortAIInventoryUpdated.h"
+#include "FFortAISharedRepMovement.h"
 #include "FFortAISpawnGroupUpgradeUIData.h"
 #include "FFortCrowdOverlap.h"
 #include "FFortDBNO.h"
@@ -74,6 +76,10 @@ public:
 	// table index 194, flags 0x10008000000000
 	UPROPERTY()
 	FGameplayCueParameters DeimosBatchedGameplayCueParameters;
+
+	// table index 193, flags 0x10000100000020
+	UPROPERTY(ReplicatedUsing=OnRep_AttributeProxy)
+	FFortAIAttributeReplicationProxy AttributeReplicationProxy;
 
 	// table index 192, flags 0x10000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_ReplicatedAnimMontage)
@@ -780,11 +786,18 @@ public:
 	UFortAccountItem* DefenderItem;
 
 	UFUNCTION(NetMulticast, Unreliable)
+	void FastSharedReplication(const FFortAISharedRepMovement& SharedRepMovement);
+	void FastSharedReplication_Implementation(const FFortAISharedRepMovement& SharedRepMovement);
+
+	UFUNCTION(NetMulticast, Unreliable)
 	void NetMulticast_BatchedDamageCues(const FFortAIBatchedDamageCues& Data);
 	void NetMulticast_BatchedDamageCues_Implementation(const FFortAIBatchedDamageCues& Data);
 
 	UFUNCTION()
 	void OnRep_AppearanceOverrideEntryIndex();
+
+	UFUNCTION()
+	void OnRep_AttributeProxy();
 
 	UFUNCTION()
 	void OnRep_bIsSleeping();

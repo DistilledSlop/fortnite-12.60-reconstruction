@@ -41,6 +41,6 @@ void AFortTimeOfDayManager::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>
 	DOREPLIFETIME(AFortTimeOfDayManager, bTimeStarted);
 	DOREPLIFETIME(AFortTimeOfDayManager, TimeOfDaySpeed);
 	DOREPLIFETIME(AFortTimeOfDayManager, TimeOfDayReplicated);
-	DOREPLIFETIME(AFortTimeOfDayManager, TimeOfDay);
+	DOREPLIFETIME_CONDITION(AFortTimeOfDayManager, TimeOfDay, COND_InitialOnly);
 }
 

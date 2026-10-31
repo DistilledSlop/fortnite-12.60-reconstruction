@@ -22,7 +22,7 @@ void AFortObjectiveBase::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& O
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(AFortObjectiveBase, ObjectiveStatus);
-	DOREPLIFETIME(AFortObjectiveBase, ObjectiveAudiblity);
+	DOREPLIFETIME_CONDITION(AFortObjectiveBase, ObjectiveAudiblity, COND_InitialOnly);
 	DOREPLIFETIME(AFortObjectiveBase, bIsProgressBarHidden);
 	DOREPLIFETIME(AFortObjectiveBase, VisibilityOverride);
 	DOREPLIFETIME(AFortObjectiveBase, bIsObjectiveVisible);

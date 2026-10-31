@@ -7,9 +7,9 @@ void UFortGuidedMissilePackSet::GetLifetimeReplicatedProps(TArray<FLifetimePrope
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(UFortGuidedMissilePackSet, ReloadDelay);
-	DOREPLIFETIME(UFortGuidedMissilePackSet, ReserveMissiles);
-	DOREPLIFETIME(UFortGuidedMissilePackSet, ReserveMaxMissiles);
-	DOREPLIFETIME(UFortGuidedMissilePackSet, Missiles);
-	DOREPLIFETIME(UFortGuidedMissilePackSet, MaxMissiles);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortGuidedMissilePackSet, ReserveMissiles, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortGuidedMissilePackSet, ReserveMaxMissiles, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortGuidedMissilePackSet, Missiles, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortGuidedMissilePackSet, MaxMissiles, COND_None, REPNOTIFY_Always);
 }
 

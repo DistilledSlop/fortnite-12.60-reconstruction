@@ -6,6 +6,6 @@ void UFortStormShieldComponent::GetLifetimeReplicatedProps(TArray<FLifetimePrope
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	DOREPLIFETIME(UFortStormShieldComponent, bCareAboutEdgeOfStorm);
+	DOREPLIFETIME_CONDITION(UFortStormShieldComponent, bCareAboutEdgeOfStorm, COND_InitialOnly);
 }
 

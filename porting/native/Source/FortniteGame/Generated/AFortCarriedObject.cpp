@@ -11,8 +11,8 @@ void AFortCarriedObject::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& O
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	DOREPLIFETIME(AFortCarriedObject, SpawnPointActor);
-	DOREPLIFETIME(AFortCarriedObject, Team);
+	DOREPLIFETIME_CONDITION(AFortCarriedObject, SpawnPointActor, COND_InitialOnly);
+	DOREPLIFETIME_CONDITION(AFortCarriedObject, Team, COND_InitialOnly);
 	DOREPLIFETIME(AFortCarriedObject, HolderInfo);
 }
 

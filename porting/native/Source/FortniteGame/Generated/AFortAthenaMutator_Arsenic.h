@@ -8,8 +8,10 @@
 
 #include "AttributeSet.h"
 #include "EArsenicGameMsgId.h"
+#include "FArsenicPlayerDataArray.h"
 #include "FAthenaGameMessageData.h"
 #include "FOnPlayerTeamRevealed.h"
+#include "FTagTeamInfoArray.h"
 
 class USoundBase;
 
@@ -72,6 +74,14 @@ public:
 	// table index 3, flags 0x40000000000000
 	UPROPERTY()
 	uint8 InfectedTeam;
+
+	// table index 2, flags 0x40000000002020
+	UPROPERTY(Replicated, Transient)
+	FTagTeamInfoArray TagTeamInfo;
+
+	// table index 1, flags 0x40000000002020
+	UPROPERTY(Replicated, Transient)
+	FArsenicPlayerDataArray PlayerDataArray;
 
 	// table index 0, flags 0x40000000002020
 	UPROPERTY(Replicated, Transient)

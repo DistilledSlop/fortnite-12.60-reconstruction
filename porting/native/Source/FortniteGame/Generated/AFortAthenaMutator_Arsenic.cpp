@@ -6,7 +6,9 @@ void AFortAthenaMutator_Arsenic::GetLifetimeReplicatedProps(TArray<FLifetimeProp
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	DOREPLIFETIME(AFortAthenaMutator_Arsenic, bCheatHeartbeatEnabled);
+	DOREPLIFETIME_CONDITION(AFortAthenaMutator_Arsenic, bCheatHeartbeatEnabled, COND_Custom);
+	DOREPLIFETIME(AFortAthenaMutator_Arsenic, PlayerDataArray);
+	DOREPLIFETIME(AFortAthenaMutator_Arsenic, TagTeamInfo);
 	DOREPLIFETIME(AFortAthenaMutator_Arsenic, Winner);
 }
 

@@ -809,6 +809,10 @@ public:
 	void MovingEmoteStopped();
 
 	UFUNCTION(NetMulticast, Unreliable)
+	void NetMulticast_Athena_BatchedDamageCues(const FAthenaBatchedDamageGameplayCues_Shared& SharedData, const FAthenaBatchedDamageGameplayCues_NonShared& NonSharedData);
+	void NetMulticast_Athena_BatchedDamageCues_Implementation(const FAthenaBatchedDamageGameplayCues_Shared& SharedData, const FAthenaBatchedDamageGameplayCues_NonShared& NonSharedData);
+
+	UFUNCTION(NetMulticast, Unreliable)
 	void NetMulticast_InvokeGameplayCueAdded(const FGameplayTag& GameplayCueTag, const FPredictionKey& PredictionKey, const FGameplayEffectContextHandle& EffectContext);
 	void NetMulticast_InvokeGameplayCueAdded_Implementation(const FGameplayTag& GameplayCueTag, const FPredictionKey& PredictionKey, const FGameplayEffectContextHandle& EffectContext);
 

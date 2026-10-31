@@ -46,7 +46,7 @@ void AFortPickup::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifet
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	DOREPLIFETIME(AFortPickup, SpecialActorID);
+	DOREPLIFETIME(AFortPickup, SpecialActorID);  // TODO: replication condition not recovered (COND_None assumed)
 	DOREPLIFETIME(AFortPickup, PawnWhoDroppedPickup);
 	DOREPLIFETIME(AFortPickup, OverrideInteractAimRadius);
 	DOREPLIFETIME(AFortPickup, ServerImpactSoundFlash);
@@ -59,6 +59,6 @@ void AFortPickup::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifet
 	DOREPLIFETIME(AFortPickup, PickupLocationData);
 	DOREPLIFETIME(AFortPickup, MultiItemPickupEntries);
 	DOREPLIFETIME(AFortPickup, PrimaryPickupItemEntry);
-	DOREPLIFETIME(AFortPickup, bRandomRotation);
+	DOREPLIFETIME_CONDITION(AFortPickup, bRandomRotation, COND_InitialOnly);
 }
 

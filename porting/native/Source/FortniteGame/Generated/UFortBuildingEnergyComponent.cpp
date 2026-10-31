@@ -11,6 +11,6 @@ void UFortBuildingEnergyComponent::GetLifetimeReplicatedProps(TArray<FLifetimePr
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	DOREPLIFETIME(UFortBuildingEnergyComponent, EnergyComponentAttrSet);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortBuildingEnergyComponent, EnergyComponentAttrSet, COND_None, REPNOTIFY_Always);
 }
 

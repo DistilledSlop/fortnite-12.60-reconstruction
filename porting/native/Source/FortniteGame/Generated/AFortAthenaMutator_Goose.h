@@ -8,6 +8,7 @@
 
 #include "AttributeSet.h"
 #include "FPlaneLootTypeEntry.h"
+#include "FPlaneSquadInfoArray.h"
 #include "Math/Vector.h"
 
 class AActor;
@@ -111,6 +112,10 @@ public:
 	UPROPERTY()
 	TSubclassOf<AActor> BoundsXYSplineClass;
 
+	// table index 4, flags 0x20080000000020
+	UPROPERTY(Replicated)
+	FPlaneSquadInfoArray SquadInfoArray;
+
 	// table index 2, flags 0x20080000000000
 	UPROPERTY()
 	TArray<AFortAthenaVehicle*> SpawnedVehicles;
@@ -119,5 +124,6 @@ public:
 	UPROPERTY()
 	TArray<AAthenaGoosePickup*> SpawnedPickups;
 
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

@@ -7,10 +7,16 @@ void AFortMinigameScoreRegistry::OnRep_Playset()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortMinigameScoreRegistry::OnRep_Scores()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortMinigameScoreRegistry::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
+	DOREPLIFETIME(AFortMinigameScoreRegistry, Scores);
 	DOREPLIFETIME(AFortMinigameScoreRegistry, ScoreTemplate);
 	DOREPLIFETIME(AFortMinigameScoreRegistry, Playset);
 }

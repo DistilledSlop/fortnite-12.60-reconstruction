@@ -13,7 +13,7 @@ Type mismatches: none, in 0 classes (a native `bool` is emitted as a `uint8` bit
 
 | Classes | Parity yes | Parity no | Unknown | Class checksum yes | RPC set yes | Ancestor-only no |
 |---|---|---|---|---|---|---|
-| 4572 | 4445 | 127 | 0 | 4484 | 4505 | 67 |
+| 4572 | 4535 | 37 | 0 | 4567 | 4540 | 17 |
 
 Parity = ClassChecksum equal and the RPC set equal (UE NetFieldExportGroup semantics, see the docstring). Ancestor-only = no own gap, but a generated ancestor's gap changes the class.
 
@@ -26,12 +26,12 @@ Parity = ClassChecksum equal and the RPC set equal (UE NetFieldExportGroup seman
 | BlueprintContext | 2 | 2 | 0 | 0 | 0 |
 | CommonInput | 4 | 4 | 0 | 0 | 0 |
 | CommonUI | 58 | 58 | 0 | 0 | 0 |
-| FortniteGame | 2827 | 2702 | 125 | 0 | 67 |
+| FortniteGame | 2827 | 2791 | 36 | 0 | 17 |
 | FortniteUI | 1641 | 1641 | 0 | 0 | 0 |
 | McpProfileSys | 5 | 4 | 1 | 0 | 0 |
 | MeshNetwork | 9 | 9 | 0 | 0 | 0 |
 | ModularGameplay | 6 | 6 | 0 | 0 | 0 |
-| PlayspaceFramework | 14 | 13 | 1 | 0 | 0 |
+| PlayspaceFramework | 14 | 14 | 0 | 0 | 0 |
 
 ### By depth (number of ancestors in the reflection)
 
@@ -39,24 +39,24 @@ Parity = ClassChecksum equal and the RPC set equal (UE NetFieldExportGroup seman
 |---|---|---|---|---|
 | 0 | 109 | 109 | 0 | 0 |
 | 1 | 305 | 304 | 1 | 0 |
-| 2 | 873 | 864 | 9 | 0 |
-| 3 | 695 | 672 | 23 | 2 |
-| 4 | 560 | 545 | 15 | 9 |
-| 5 | 741 | 720 | 21 | 6 |
-| 6 | 511 | 491 | 20 | 15 |
-| 7 | 373 | 357 | 16 | 16 |
-| 8 | 283 | 277 | 6 | 5 |
-| 9 | 80 | 73 | 7 | 6 |
-| 10 | 27 | 25 | 2 | 1 |
-| 11 | 15 | 8 | 7 | 7 |
+| 2 | 873 | 870 | 3 | 0 |
+| 3 | 695 | 686 | 9 | 1 |
+| 4 | 560 | 558 | 2 | 0 |
+| 5 | 741 | 738 | 3 | 0 |
+| 6 | 511 | 508 | 3 | 2 |
+| 7 | 373 | 370 | 3 | 3 |
+| 8 | 283 | 279 | 4 | 3 |
+| 9 | 80 | 74 | 6 | 6 |
+| 10 | 27 | 26 | 1 | 0 |
+| 11 | 15 | 13 | 2 | 2 |
 
 ### Cause of each non-parity class
 
 | Cause | Classes |
 |---|---|
-| own | 44 |
-| own+ancestor | 16 |
-| ancestor-only | 67 |
+| own | 9 |
+| own+ancestor | 11 |
+| ancestor-only | 17 |
 
 ### Top skip reasons (classes made non-parity)
 
@@ -64,58 +64,39 @@ A class counts under a reason when one of its blocking gaps (own, or in a genera
 
 | Reason | Classes touched | Solo | Gaps |
 |---|---|---|---|
-| struct_custom_netserialize | 109 | 90 | 174 |
-| struct_other_module | 16 | 0 | 16 |
+| struct_other_module | 16 | 15 | 16 |
 | net_flag_without_role | 13 | 13 | 284 |
-| struct_member_unresolved | 5 | 1 | 5 |
+| struct_member_unresolved | 5 | 4 | 5 |
 | enum_not_available | 3 | 2 | 5 |
 | struct_not_available | 1 | 0 | 1 |
 | static_or_const_rpc | 1 | 1 | 1 |
 
 ### Worklist: fixes that flip the most classes to parity (greedy)
 
-Each step adds the fix that completes the most remaining classes (all of a class's blocking keys must be fixed). 127 non-parity classes are fixable this way; 0 are not (unexplained or ungenerated ancestors). After the 25 steps below, 49 classes stay open.
+Each step adds the fix that completes the most remaining classes (all of a class's blocking keys must be fixed). 37 non-parity classes are fixable this way; 0 are not (unexplained or ungenerated ancestors). After the 10 steps below, 0 classes stay open.
 
 | # | Fix | Classes completed now | Classes touched | Cumulative flipped |
 |---|---|---|---|---|
-| 1 | custom NetSerialize (struct not identified) | 21 | 32 | 21 |
-| 2 | RPC flags without a Server/Client/NetMulticast role | 13 | 13 | 34 |
-| 3 | custom NetSerialize struct FActiveGameplayModifierArray | 7 | 10 | 41 |
-| 4 | custom NetSerialize struct FFortBadgeCountArray | 7 | 7 | 48 |
-| 5 | custom NetSerialize struct FFortSpectatorZoneArray | 7 | 7 | 55 |
-| 6 | custom NetSerialize struct FFortItemList | 2 | 2 | 57 |
-| 7 | custom NetSerialize struct FTeamSpottedActorInfoArray | 2 | 2 | 59 |
-| 8 | custom NetSerialize struct FPlayspaceUserList | 2 | 2 | 61 |
-| 9 | custom NetSerialize struct FTagTeamInfoArray | 1 | 2 | 62 |
-| 10 | custom NetSerialize struct FPrivateTeamDataArray | 1 | 2 | 63 |
-| 11 | custom NetSerialize struct FPoiDiscoverabilityDataArray | 1 | 1 | 64 |
-| 12 | custom NetSerialize struct FTrackedObjectiveArray | 1 | 1 | 65 |
-| 13 | struct FPickupInstigatorArray | 1 | 1 | 66 |
-| 14 | enum ECollisionEnabled::Type | 1 | 1 | 67 |
-| 15 | custom NetSerialize struct FFortVolumeActiveUsers | 1 | 1 | 68 |
-| 16 | custom NetSerialize struct FMashPlayerDataArray | 1 | 1 | 69 |
-| 17 | custom NetSerialize struct FLimitedLifeDataArray | 1 | 1 | 70 |
-| 18 | custom NetSerialize struct FBagelPlayerDataArray | 1 | 1 | 71 |
-| 19 | custom NetSerialize struct FPowPlayerDataArray | 1 | 1 | 72 |
-| 20 | custom NetSerialize struct FEarnedBadgeEntryArray | 1 | 1 | 73 |
-| 21 | custom NetSerialize struct FMinigameScoreArray | 1 | 1 | 74 |
-| 22 | custom NetSerialize struct FVisibiltyInfoArray | 1 | 1 | 75 |
-| 23 | custom NetSerialize struct FLatentRepTeamDataArray | 1 | 1 | 76 |
-| 24 | custom NetSerialize struct FPropertyOverrideDataRepl | 1 | 1 | 77 |
-| 25 | custom NetSerialize struct FIgnoredPlayerPawnArray | 1 | 1 | 78 |
+| 1 | struct FProfileUpdateSingle | 15 | 16 | 15 |
+| 2 | RPC flags without a Server/Client/NetMulticast role | 13 | 13 | 28 |
+| 3 | struct FMeshNetworkStatus | 3 | 3 | 31 |
+| 4 | enum ECollisionEnabled::Type | 1 | 1 | 32 |
+| 5 | static_or_const_rpc | 1 | 1 | 33 |
+| 6 | struct FPickupInstigatorArray | 1 | 1 | 34 |
+| 7 | struct FAthenaRewardResult | 1 | 1 | 35 |
+| 8 | enum ESpectatorReservationResult::Type | 1 | 1 | 36 |
+| 9 | enum EPartyReservationResult::Type | 0 | 1 | 36 |
+| 10 | struct FPartyReservation | 1 | 1 | 37 |
 
 ### Generated ancestors that fail the most descendants
 
 | Ancestor | Descendant failures |
 |---|---|
-| AFortPhysicsPawn | 22 |
 | AFortPlayerController | 15 |
-| AFortPawn | 11 |
 | UMcpProfile | 11 |
 | UFortMcpProfile | 10 |
-| AFortGameStateZone | 9 |
-| AFortPlayerStateZone | 6 |
-| AFortMission | 6 |
+| UFortMcpProfileSubgame | 2 |
+| AFortGameStateAthena | 2 |
 
 ### RPC digest: what changed from v1
 

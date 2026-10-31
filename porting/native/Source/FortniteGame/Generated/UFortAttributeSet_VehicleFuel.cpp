@@ -11,12 +11,12 @@ void UFortAttributeSet_VehicleFuel::GetLifetimeReplicatedProps(TArray<FLifetimeP
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	DOREPLIFETIME(UFortAttributeSet_VehicleFuel, MaxFuelAtSpawn);
-	DOREPLIFETIME(UFortAttributeSet_VehicleFuel, MinFuelAtSpawn);
-	DOREPLIFETIME(UFortAttributeSet_VehicleFuel, FuelPerSecondBoosting);
-	DOREPLIFETIME(UFortAttributeSet_VehicleFuel, FuelPerSecondDriving);
-	DOREPLIFETIME(UFortAttributeSet_VehicleFuel, FuelPerSecondIdle);
-	DOREPLIFETIME(UFortAttributeSet_VehicleFuel, FuelTankCapacity);
-	DOREPLIFETIME(UFortAttributeSet_VehicleFuel, Fuel);
+	DOREPLIFETIME(UFortAttributeSet_VehicleFuel, MaxFuelAtSpawn);  // TODO: replication condition not recovered (COND_None assumed)
+	DOREPLIFETIME(UFortAttributeSet_VehicleFuel, MinFuelAtSpawn);  // TODO: replication condition not recovered (COND_None assumed)
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortAttributeSet_VehicleFuel, FuelPerSecondBoosting, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortAttributeSet_VehicleFuel, FuelPerSecondDriving, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortAttributeSet_VehicleFuel, FuelPerSecondIdle, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortAttributeSet_VehicleFuel, FuelTankCapacity, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortAttributeSet_VehicleFuel, Fuel, COND_None, REPNOTIFY_Always);
 }
 

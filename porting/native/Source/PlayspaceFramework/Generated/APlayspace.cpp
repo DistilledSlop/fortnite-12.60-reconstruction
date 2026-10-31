@@ -7,10 +7,16 @@ void APlayspace::OnRep_PlayspaceLogic()
 	// Body not recovered: reflection-derived stub.
 }
 
+void APlayspace::OnRep_PlayspaceUsers()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void APlayspace::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(APlayspace, PlayspaceLogic);
+	DOREPLIFETIME(APlayspace, PlayspaceUsers);
 }
 

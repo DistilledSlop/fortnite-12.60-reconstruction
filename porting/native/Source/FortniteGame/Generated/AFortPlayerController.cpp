@@ -302,6 +302,11 @@ void AFortPlayerController::OnRep_CheatMovement()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerController::OnRep_DelayedQuickBarActions()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortPlayerController::OnRep_HoldingObject()
 {
 	// Body not recovered: reflection-derived stub.
@@ -403,6 +408,11 @@ void AFortPlayerController::ServerCombineInventoryItems_Implementation(const FGu
 }
 
 void AFortPlayerController::ServerCraftSchematic_Implementation(const FString& ItemId, int32 PostCraftSlot, int32 CraftAmount, const EFortItemTier& RequestedTier, bool bIsQuickCrafted)
+{
+	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerController::ServerCreateBuildingActor_Implementation(const FCreateBuildingActorData& CreateBuildingData)
 {
 	// Body not recovered: reflection-derived stub.
 }
@@ -738,17 +748,17 @@ void AFortPlayerController::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>
 
 	DOREPLIFETIME(AFortPlayerController, MeshParentIds);
 	DOREPLIFETIME(AFortPlayerController, bFinalXPUpdateFailed);
-	DOREPLIFETIME(AFortPlayerController, CameraPrototypeName);
-	DOREPLIFETIME(AFortPlayerController, JumpStaminaCost);
-	DOREPLIFETIME(AFortPlayerController, AimHelpMode);
-	DOREPLIFETIME(AFortPlayerController, OverriddenBackpackSize);
+	DOREPLIFETIME(AFortPlayerController, CameraPrototypeName);  // TODO: replication condition not recovered (COND_None assumed)
+	DOREPLIFETIME(AFortPlayerController, JumpStaminaCost);  // TODO: replication condition not recovered (COND_None assumed)
+	DOREPLIFETIME_CONDITION(AFortPlayerController, AimHelpMode, COND_Custom);
+	DOREPLIFETIME_CONDITION(AFortPlayerController, OverriddenBackpackSize, COND_Custom);
 	DOREPLIFETIME(AFortPlayerController, bIsNearActiveEncounters);
-	DOREPLIFETIME(AFortPlayerController, bEnableShotLogging);
-	DOREPLIFETIME(AFortPlayerController, bCheatFly);
-	DOREPLIFETIME(AFortPlayerController, bCheatGhost);
-	DOREPLIFETIME(AFortPlayerController, bInfiniteDurability);
-	DOREPLIFETIME(AFortPlayerController, bNoCoolDown);
-	DOREPLIFETIME(AFortPlayerController, bInfiniteAmmo);
+	DOREPLIFETIME_CONDITION(AFortPlayerController, bEnableShotLogging, COND_Custom);
+	DOREPLIFETIME_CONDITION(AFortPlayerController, bCheatFly, COND_Custom);
+	DOREPLIFETIME_CONDITION(AFortPlayerController, bCheatGhost, COND_Custom);
+	DOREPLIFETIME_CONDITION(AFortPlayerController, bInfiniteDurability, COND_Custom);
+	DOREPLIFETIME_CONDITION(AFortPlayerController, bNoCoolDown, COND_Custom);
+	DOREPLIFETIME_CONDITION(AFortPlayerController, bInfiniteAmmo, COND_Custom);
 	DOREPLIFETIME(AFortPlayerController, TutorialCompletedState);
 	DOREPLIFETIME(AFortPlayerController, bHasUnsavedPrimaryMissionProgress);
 	DOREPLIFETIME(AFortPlayerController, UpdatedObjectiveStats);
@@ -757,12 +767,13 @@ void AFortPlayerController::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>
 	DOREPLIFETIME(AFortPlayerController, OutpostInventory);
 	DOREPLIFETIME(AFortPlayerController, WorldInventory);
 	DOREPLIFETIME(AFortPlayerController, bAutoEquipBetterItems);
-	DOREPLIFETIME(AFortPlayerController, bCraftFree);
-	DOREPLIFETIME(AFortPlayerController, bBuildFree);
-	DOREPLIFETIME(AFortPlayerController, PIDContributionsGraphInfo);
-	DOREPLIFETIME(AFortPlayerController, PIDValuesGraphInfo);
-	DOREPLIFETIME(AFortPlayerController, IntensityGraphInfo);
-	DOREPLIFETIME(AFortPlayerController, bHoldingObject);
+	DOREPLIFETIME(AFortPlayerController, DelayedQuickBarActions);
+	DOREPLIFETIME_CONDITION(AFortPlayerController, bCraftFree, COND_Custom);
+	DOREPLIFETIME_CONDITION(AFortPlayerController, bBuildFree, COND_Custom);
+	DOREPLIFETIME_CONDITION(AFortPlayerController, PIDContributionsGraphInfo, COND_Custom);
+	DOREPLIFETIME_CONDITION(AFortPlayerController, PIDValuesGraphInfo, COND_Custom);
+	DOREPLIFETIME_CONDITION(AFortPlayerController, IntensityGraphInfo, COND_Custom);
+	DOREPLIFETIME_CONDITION(AFortPlayerController, bHoldingObject, COND_OwnerOnly);
 	DOREPLIFETIME(AFortPlayerController, bHasServerFinishedLoading);
 	DOREPLIFETIME(AFortPlayerController, bHasInitiallySpawned);
 	DOREPLIFETIME(AFortPlayerController, bFailedToRespawn);

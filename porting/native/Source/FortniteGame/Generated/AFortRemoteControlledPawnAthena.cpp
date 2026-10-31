@@ -32,6 +32,6 @@ void AFortRemoteControlledPawnAthena::GetLifetimeReplicatedProps(TArray<FLifetim
 	DOREPLIFETIME(AFortRemoteControlledPawnAthena, ControllingPlayerPawn);
 	DOREPLIFETIME(AFortRemoteControlledPawnAthena, RCTeam);
 	DOREPLIFETIME(AFortRemoteControlledPawnAthena, ServerFuseStartTime);
-	DOREPLIFETIME(AFortRemoteControlledPawnAthena, bCurrentlyDelayingLaunch);
+	DOREPLIFETIME_CONDITION_NOTIFY(AFortRemoteControlledPawnAthena, bCurrentlyDelayingLaunch, COND_OwnerOnly, REPNOTIFY_Always);
 }
 

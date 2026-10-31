@@ -7,6 +7,11 @@ void AFortGameStateZone::NotifyEndFailedGameplayVoteLockout_Implementation(const
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortGameStateZone::OnRep_ActiveGameplayModifiers()
+{
+	// Body not recovered: reflection-derived stub.
+}
+
 void AFortGameStateZone::OnRep_AllSpawnGroupUpgradeModifierDefs()
 {
 	// Body not recovered: reflection-derived stub.
@@ -153,6 +158,7 @@ void AFortGameStateZone::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& O
 	DOREPLIFETIME(AFortGameStateZone, MissionGeneratorClass);
 	DOREPLIFETIME(AFortGameStateZone, ZoneTheme);
 	DOREPLIFETIME(AFortGameStateZone, ZoneDifficultyInfoRow);
+	DOREPLIFETIME(AFortGameStateZone, ActiveGameplayModifiers);
 	DOREPLIFETIME(AFortGameStateZone, GlobalEnvironmentAbilityActor);
 	DOREPLIFETIME(AFortGameStateZone, bGlobalCeaseFire);
 	DOREPLIFETIME(AFortGameStateZone, MaxPlayerStructures);

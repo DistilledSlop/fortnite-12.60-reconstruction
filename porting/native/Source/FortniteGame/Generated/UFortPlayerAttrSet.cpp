@@ -121,14 +121,14 @@ void UFortPlayerAttrSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& O
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	DOREPLIFETIME(UFortPlayerAttrSet, TurboBuildInterval);
-	DOREPLIFETIME(UFortPlayerAttrSet, TurboBuildFirstInterval);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortPlayerAttrSet, TurboBuildInterval, COND_OwnerOnly, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortPlayerAttrSet, TurboBuildFirstInterval, COND_OwnerOnly, REPNOTIFY_Always);
 	DOREPLIFETIME(UFortPlayerAttrSet, Resistance_Team);
 	DOREPLIFETIME(UFortPlayerAttrSet, Tech_Team);
 	DOREPLIFETIME(UFortPlayerAttrSet, Offense_Team);
 	DOREPLIFETIME(UFortPlayerAttrSet, Fortitude_Team);
 	DOREPLIFETIME(UFortPlayerAttrSet, ResurrectTeammateDuration);
-	DOREPLIFETIME(UFortPlayerAttrSet, ExtraLives);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortPlayerAttrSet, ExtraLives, COND_OwnerOnly, REPNOTIFY_Always);
 	DOREPLIFETIME(UFortPlayerAttrSet, HarvestingTool);
 	DOREPLIFETIME(UFortPlayerAttrSet, ResourceHarvesting);
 	DOREPLIFETIME(UFortPlayerAttrSet, CraftItemLevelBonusMax);
@@ -137,14 +137,14 @@ void UFortPlayerAttrSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& O
 	DOREPLIFETIME(UFortPlayerAttrSet, DoubleCraftChance);
 	DOREPLIFETIME(UFortPlayerAttrSet, DoubleItemLootChance);
 	DOREPLIFETIME(UFortPlayerAttrSet, DoubleLootRollChance);
-	DOREPLIFETIME(UFortPlayerAttrSet, ItemMaxStack);
-	DOREPLIFETIME(UFortPlayerAttrSet, ItemRegenCooldown);
-	DOREPLIFETIME(UFortPlayerAttrSet, ItemRegenMaxStack);
-	DOREPLIFETIME(UFortPlayerAttrSet, SprintCost);
-	DOREPLIFETIME(UFortPlayerAttrSet, StaminaCost);
-	DOREPLIFETIME(UFortPlayerAttrSet, MaxStamina);
-	DOREPLIFETIME(UFortPlayerAttrSet, StaminaRegenDelay);
-	DOREPLIFETIME(UFortPlayerAttrSet, StaminaRegenRate);
-	DOREPLIFETIME(UFortPlayerAttrSet, Stamina);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortPlayerAttrSet, ItemMaxStack, COND_OwnerOnly, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortPlayerAttrSet, ItemRegenCooldown, COND_OwnerOnly, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortPlayerAttrSet, ItemRegenMaxStack, COND_OwnerOnly, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortPlayerAttrSet, SprintCost, COND_OwnerOnly, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortPlayerAttrSet, StaminaCost, COND_OwnerOnly, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortPlayerAttrSet, MaxStamina, COND_OwnerOnly, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortPlayerAttrSet, StaminaRegenDelay, COND_OwnerOnly, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortPlayerAttrSet, StaminaRegenRate, COND_OwnerOnly, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortPlayerAttrSet, Stamina, COND_OwnerOnly, REPNOTIFY_Always);
 }
 

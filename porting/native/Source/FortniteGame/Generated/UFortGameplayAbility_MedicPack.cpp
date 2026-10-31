@@ -16,7 +16,7 @@ void UFortGameplayAbility_MedicPack::GetLifetimeReplicatedProps(TArray<FLifetime
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	DOREPLIFETIME(UFortGameplayAbility_MedicPack, bAbilityMarkedForPendingKill);
-	DOREPLIFETIME(UFortGameplayAbility_MedicPack, ServerCurrentState);
+	DOREPLIFETIME_CONDITION(UFortGameplayAbility_MedicPack, bAbilityMarkedForPendingKill, COND_OwnerOnly);
+	DOREPLIFETIME_CONDITION(UFortGameplayAbility_MedicPack, ServerCurrentState, COND_OwnerOnly);
 }
 

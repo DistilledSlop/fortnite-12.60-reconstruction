@@ -44,11 +44,11 @@ void UFortHealthSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLi
 	DOREPLIFETIME(UFortHealthSet, DamageVulnerability);
 	DOREPLIFETIME(UFortHealthSet, DamageResistance);
 	DOREPLIFETIME(UFortHealthSet, Armor);
-	DOREPLIFETIME(UFortHealthSet, MaxSignalInStorm);
-	DOREPLIFETIME(UFortHealthSet, SignalInStorm);
-	DOREPLIFETIME(UFortHealthSet, Shield);
-	DOREPLIFETIME(UFortHealthSet, CurrentShield);
-	DOREPLIFETIME(UFortHealthSet, MaxHealth);
-	DOREPLIFETIME(UFortHealthSet, Health);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortHealthSet, MaxSignalInStorm, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortHealthSet, SignalInStorm, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortHealthSet, Shield, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortHealthSet, CurrentShield, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortHealthSet, MaxHealth, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortHealthSet, Health, COND_None, REPNOTIFY_Always);
 }
 

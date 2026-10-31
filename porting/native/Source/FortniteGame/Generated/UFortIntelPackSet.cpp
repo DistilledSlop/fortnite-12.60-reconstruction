@@ -10,7 +10,7 @@ void UFortIntelPackSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Ou
 	DOREPLIFETIME(UFortIntelPackSet, RevealedTargetsDuration);
 	DOREPLIFETIME(UFortIntelPackSet, RevealedTargetsRange);
 	DOREPLIFETIME(UFortIntelPackSet, StormTrackerCost);
-	DOREPLIFETIME(UFortIntelPackSet, CurrentCharges);
-	DOREPLIFETIME(UFortIntelPackSet, MaxCharges);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortIntelPackSet, CurrentCharges, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UFortIntelPackSet, MaxCharges, COND_None, REPNOTIFY_Always);
 }
 
