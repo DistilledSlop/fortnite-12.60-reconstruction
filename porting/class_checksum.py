@@ -43,8 +43,9 @@ The setter code is read from the runtime dump (the shipping exe is encrypted on 
 Emitted side (ground truth): the generator output under porting/native/Source/<Module>/Generated/<Class>.h. A
 replicated property is emitted when the class header declares it UPROPERTY(Replicated[Using=...]); its checksum uses
 the header's declared C++ type and array dimension (the reflection supplies offsets and the rest). A net RPC is
-emitted when the header declares it UFUNCTION(Server|Client|NetMulticast, ...). The header's table-index comment
-(flags) and role specifiers are cross-checked against the reflection. Structs are taken as the reflection describes
+emitted when the header declares it UFUNCTION(Server|Client|NetMulticast, ...), or UFUNCTION(ServiceRequest(...)) or
+UFUNCTION(ServiceResponse(...)) for a net service function (no role bit: its flags are NetRequest or NetResponse). The
+header's table-index comment (flags) and role specifiers are cross-checked against the reflection. Structs are taken as the reflection describes
 them (their emitted headers are checked for existence only).
 
 Inputs (porting/generated/reflection/, git-ignored): fortnite_game_reflection.json (with set_bit_fn),
@@ -105,7 +106,13 @@ FUNC_NET_RELIABLE = 0x00000080
 FUNC_NET_MULTICAST = 0x00004000
 FUNC_NET_SERVER = 0x00200000
 FUNC_NET_CLIENT = 0x01000000
-ROLE_BITS = {"Server": FUNC_NET_SERVER, "Client": FUNC_NET_CLIENT, "NetMulticast": FUNC_NET_MULTICAST}
+FUNC_NET_REQUEST = 0x00000100   # UE net service request (UHT ServiceRequest)
+FUNC_NET_RESPONSE = 0x00001000  # UE net service response (UHT ServiceResponse)
+FUNC_CONST = 0x40000000
+# Specifiers of a net function that must agree with its reflection flags: the roles, and const (the RPC checksum
+# covers the flags, so a const RPC without FUNC_Const would not match).
+ROLE_BITS = {"Server": FUNC_NET_SERVER, "Client": FUNC_NET_CLIENT, "NetMulticast": FUNC_NET_MULTICAST,
+             "Request": FUNC_NET_REQUEST, "Response": FUNC_NET_RESPONSE, "Const": FUNC_CONST}
 GEN_NATIVE_BOOL = 0x20
 DELEGATE_SUFFIX = "__DelegateSignature"
 TABLE_FLAGS_RE = re.compile(r"table index \d+, flags (0x[0-9A-Fa-f]+)")
@@ -305,7 +312,8 @@ def parse_class_header(text, class_name):
     """(replicated, rpcs) declared by one generated class.
 
     replicated: [{name, type, dim (int or None), table_flags}] for UPROPERTY(Replicated / ReplicatedUsing=...).
-    rpcs:       [{name, roles, reliable}] for UFUNCTION with a Server, Client or NetMulticast specifier.
+    rpcs:       [{name, roles, reliable}] for UFUNCTION with a Server, Client, NetMulticast, ServiceRequest or
+                ServiceResponse specifier. roles also holds "Const" for a const function (see ROLE_BITS).
     """
     rep = []
     rpcs = []
@@ -326,13 +334,19 @@ def parse_class_header(text, class_name):
             rep.append({"name": m.group("name"), "type": header_type(m.group("type"), bool(bitfield)),
                         "dim": dim, "table_flags": mem["table_flags"]})
         else:
-            roles = sorted(set(re.findall(r"\b(Server|Client|NetMulticast)\b", mem["args"])))
+            roles = set(re.findall(r"\b(Server|Client|NetMulticast)\b", mem["args"]))
+            if re.search(r"\bServiceRequest\b", mem["args"]):
+                roles.add("Request")
+            if re.search(r"\bServiceResponse\b", mem["args"]):
+                roles.add("Response")
             if not roles:
                 continue
             fm = re.match(r"[^(]*?(\w+)\s*\(", mem["statement"])
             if not fm:
                 raise UnknownType("cannot parse RPC declaration: %s" % mem["statement"])
-            rpcs.append({"name": fm.group(1), "roles": roles,
+            if re.search(r"\)\s*const\s*$", mem["statement"]):
+                roles.add("Const")
+            rpcs.append({"name": fm.group(1), "roles": sorted(roles),
                          "reliable": bool(re.search(r"\bReliable\b", mem["args"]))})
     return rep, rpcs
 
@@ -962,6 +976,12 @@ public:
 	void Local();
 	UFUNCTION(NetMulticast, Unreliable)
 	void MulticastPing();
+	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
+	void ServiceAsk();
+	UFUNCTION(ServiceResponse(UnrecoveredEndpoint))
+	void ServiceAnswer();
+	UFUNCTION(Client, Reliable)
+	void ClientTellConst() const;
 };
 """
 
@@ -1006,9 +1026,11 @@ def self_test(model, image_path):
     check("header parser: a bool bitfield is bool, a uint8 bitfield is uint8, TSubclassOf array is TArray",
           rep[2]["type"] == "bool" and rep[1]["type"] == "TArray" and header_type("uint8", True) == "uint8",
           str([r["type"] for r in rep]))
-    check("header parser: RPCs are the Server and NetMulticast functions only",
+    check("header parser: RPCs are the Server, NetMulticast, service and const functions by their role",
           [(r["name"], r["roles"], r["reliable"]) for r in rpcs] ==
-          [("ServerDo", ["Server"], True), ("MulticastPing", ["NetMulticast"], False)], str(rpcs))
+          [("ServerDo", ["Server"], True), ("MulticastPing", ["NetMulticast"], False),
+           ("ServiceAsk", ["Request"], False), ("ServiceAnswer", ["Response"], False),
+           ("ClientTellConst", ["Client", "Const"], True)], str(rpcs))
 
     # Bool setters: every bool record with a setter decodes to a byte offset inside the outer object.
     if os.path.exists(image_path):
@@ -1439,7 +1461,8 @@ def run(args):
                    "image": os.path.basename(args.image)},
         "assumptions": [
             "Emitted side = the generated header of each set class: replicated UPROPERTY names, the header's C++ type "
-            "and array dimension; UFUNCTION(Server|Client|NetMulticast) names. Offsets come from the reflection.",
+            "and array dimension; UFUNCTION(Server|Client|NetMulticast|ServiceRequest|ServiceResponse) names. "
+            "Offsets come from the reflection.",
             "Emitted UFUNCTION flags are the reflection's (the header's role specifiers are cross-checked against "
             "the net bits; table-index flags of properties are cross-checked too).",
             "Engine and non-set ancestors are not generated: their expected value is their emitted value.",

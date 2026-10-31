@@ -68,6 +68,8 @@ CPF_INTERP = 0x200000000
 # EFunctionFlags (Script.h, UE 4.25)
 FUNC_NET = 0x40
 FUNC_NET_RELIABLE = 0x80
+FUNC_NET_REQUEST = 0x100    # UE net service request (ServiceRequest); no role bit
+FUNC_NET_RESPONSE = 0x1000  # UE net service response (ServiceResponse); no role bit
 FUNC_EXEC = 0x200
 FUNC_STATIC = 0x2000
 FUNC_NET_MULTICAST = 0x4000
@@ -1297,6 +1299,26 @@ RUNTIME_MODULE_PACKAGES = (
 )
 HAND_WRITTEN_MODULES = ("FortniteGame", "PlayspaceFramework")   # Build.cs and IMPLEMENT_* files are not generated
 PROMOTE_PACKAGES = ("/Script/FortniteGame", "/Script/PlayspaceFramework") + RUNTIME_MODULE_PACKAGES
+# Runtime modules that a FortniteGame item may use the types of (TypeGate.cross_module_allowed). FortniteUI is not
+# one: it depends on FortniteGame (its parents), so the reverse edge would be a module cycle.
+CROSS_MODULE_TARGETS = tuple(p for p in RUNTIME_MODULE_PACKAGES if p != "/Script/FortniteUI")
+# UHT needs an endpoint name on every ServiceRequest/ServiceResponse (HeaderParser.cpp). The binary's UFunction does
+# not carry it and no generated code reads it (the request body is not recovered), so this is a placeholder.
+NET_SERVICE_ENDPOINT = "UnrecoveredEndpoint"
+# RPCResponseId of each ServiceResponse, read from FFunctionParams+70 in the runtime dump (not in the reflection tables).
+# Every entry is a UFortGameInstance JS-bridge response. Its endpoint is JSBridge: UHT exempts that endpoint from the
+# rule that a response id needs its request in the same class (HeaderParser.cpp, "RPCResponseId > 0"). Requests have
+# RPCId 0, so they need no Id. The id is wire-relevant (UFunction::RPCResponseId).
+NET_RESPONSE_IDS = {
+    "CancelContentInstall": 1, "CancelUninstallAllOptionalContentOnNextBoot": 1,
+    "CancelUninstallFortniteBROnNextBoot": 1, "CheckLatestClient": 1, "GetAnalyticsSessionDetails": 1,
+    "GetContentState": 1, "GetFeatureRequiredSizes": 1, "GetFeatureRequiredSizesOptionalOnly": 1,
+    "GetFeatureRequiredSizesRequiredOnly": 1, "GetHotfixHasApplied": 1, "GetProjectVersion": 1,
+    "GetUserSetting": 1, "IsContentUpToDate": 1, "KairosSubmitBugReport": 1, "OpenUpdateApp": 1,
+    "PauseContentInstall": 1, "RequestBroadcast": 1, "SetErrorSimulationCommands": 1,
+    "SetFeatureStatusCallback": 1, "SetHotfixCompleteCallback": 1, "SetMultipleUserSettings": 1,
+    "SetUserSetting": 1, "UninstallAllOptionalContentOnNextBoot": 1, "UninstallFortniteBROnNextBoot": 1,
+}
 ENGINE_PACKAGES = ("/Script/Engine", "/Script/CoreUObject")
 FUNC_NET_ANY = FUNC_NET | FUNC_NET_SERVER | FUNC_NET_CLIENT | FUNC_NET_MULTICAST
 ENGINE_CLASS_DECL_RE = re.compile(
@@ -1359,6 +1381,19 @@ def skip_record(item, entry, name, category, reason, tokens):
 def skip_function(fn, category, reason, tokens=()):
     return {"item": "function", "name": fn.get("name"), "category": category, "reason": reason,
             "flags": fn.get("flags"), "net_roles": fn.get("net_roles"), "tokens": sorted(set(tokens))}
+
+
+def net_service_kind(flags):
+    """'Request' for FUNC_NetRequest and 'Response' for FUNC_NetResponse: UE net-service functions (UHT
+    ServiceRequest / ServiceResponse). They carry FUNC_Net but no Server/Client/NetMulticast role, so they are not
+    RPCs of those kinds. None for any other flags (including a role, which takes precedence)."""
+    if flags & (FUNC_NET_SERVER | FUNC_NET_CLIENT | FUNC_NET_MULTICAST):
+        return None
+    if flags & FUNC_NET_REQUEST:
+        return "Request"
+    if flags & FUNC_NET_RESPONSE:
+        return "Response"
+    return None
 
 
 def function_specifiers(flags):
@@ -1428,12 +1463,18 @@ def build_functions_promoted(functions, resolver, notify_names, owner_fns, splic
         if is_splice and flags & FUNC_STATIC:
             resolver.skipped.append(skip_function(fn, "snippet_static", "static function with a snippet is not emitted"))
             continue
-        if is_rpc and not flags & (FUNC_NET_SERVER | FUNC_NET_CLIENT | FUNC_NET_MULTICAST):
+        service = net_service_kind(flags) if is_rpc else None
+        if is_rpc and service is None and not flags & (FUNC_NET_SERVER | FUNC_NET_CLIENT | FUNC_NET_MULTICAST):
             resolver.skipped.append(skip_function(fn, "net_flag_without_role",
-                                                  "net flag without a Server/Client/NetMulticast role"))
+                                                  "net flag without a Server/Client/NetMulticast or net service role"))
             continue
-        if is_rpc and flags & (FUNC_CONST | FUNC_STATIC):
-            resolver.skipped.append(skip_function(fn, "static_or_const_rpc", "static or const RPC is not emitted"))
+        if is_rpc and flags & (FUNC_NET_REQUEST | FUNC_NET_RESPONSE) and service is None:
+            resolver.skipped.append(skip_function(fn, "net_service_with_role",
+                                                  "net service flags with a Server/Client/NetMulticast role"))
+            continue
+        # A const RPC is emitted: UHT only sets FUNC_Const for it (the flag is part of the function checksum).
+        if is_rpc and flags & FUNC_STATIC:
+            resolver.skipped.append(skip_function(fn, "static_rpc", "static RPC is not emitted"))
             continue
         if params is None:
             resolver.skipped.append(skip_function(fn, "params_not_decoded", problem))
@@ -1451,14 +1492,32 @@ def build_functions_promoted(functions, resolver, notify_names, owner_fns, splic
                                                   new_tokens))
             continue
         # An RPC parameter struct with a custom NetSerialize is emitted (see build_members for the fallback).
-        if ret != "void" and not is_splice:
+        # A net service function may return a value (UHT: the replicated-return check excludes net services).
+        if ret != "void" and not is_splice and service is None:
             resolver.skipped.append(skip_function(fn, "non_void_return", "return type %s is not emitted" % ret))
             continue
+        if service == "Response":
+            # UHT treats a response like any replicated function here: no out, reference or delegate parameters.
+            if any(a.endswith("&") and not a.startswith("const ") for a in args) or any(
+                    "Delegate" in str(p.get("kind")) for p in params):
+                resolver.skipped.append(skip_function(fn, "net_response_parameter",
+                                                      "net response with an out, reference or delegate parameter"))
+                continue
         if is_rpc:
             args = [rpc_arg(arg, enum_args) for arg in args]
-        rec = {"name": name, "rpc": is_rpc, "ret": ret, "const": is_splice and bool(flags & FUNC_CONST),
+        response_id = NET_RESPONSE_IDS.get(name, 0) if service == "Response" else 0
+        if service == "Request":
+            specifiers = ["ServiceRequest(%s)" % NET_SERVICE_ENDPOINT]
+        elif response_id:
+            specifiers = ["ServiceResponse(JSBridge, ResponseId=%d)" % response_id]
+        elif service:
+            specifiers = ["ServiceResponse(%s)" % NET_SERVICE_ENDPOINT]
+        else:
+            specifiers = function_specifiers(flags) if is_rpc else []
+        rec = {"name": name, "rpc": is_rpc, "service": service, "ret": ret,
+               "const": bool(flags & FUNC_CONST) and (is_rpc or is_splice),
                "notify": name in notify_names, "splice": is_splice,
-               "specifiers": function_specifiers(flags) if is_rpc else [], "args": args, "used": used}
+               "specifiers": specifiers, "args": args, "used": used}
         if is_splice:
             # A snippet makes a non-RPC function a BlueprintCallable member; BlueprintPure follows the reflection flag.
             rec["specifiers"] = ["BlueprintCallable"] + (["BlueprintPure"] if flags & FUNC_BLUEPRINT_PURE else [])
@@ -1987,10 +2046,11 @@ def attach_snippets(name, functions, entries, ctx, package, skipped=(), member_n
         elif kind == "impl" and fname.endswith("_Implementation"):
             base = fname[:-len("_Implementation")]
             target = by_name.get(base)
-            if target is None or not target["rpc"]:
+            if target is None or not target["rpc"] or target.get("service"):
                 reject("RPC %s not emitted: %s" % (base, not_emitted_reason(skipped, base)))
                 continue
-            want = "void %s_Implementation(%s)" % (base, ", ".join(target["args"]))
+            want = "void %s_Implementation(%s)%s" % (base, ", ".join(target["args"]),
+                                                    " const" if target.get("const") else "")
         elif kind == "validate" and fname.endswith("_Validate"):
             base = fname[:-len("_Validate")]
             target = by_name.get(base)
@@ -2085,7 +2145,7 @@ def verify_spliced(model, header, cpp):
             idx = hsq.index(decl)
             if idx == 0 or hsq[idx - 1] != ufunc:
                 problems.append("%s: UFUNCTION specifiers differ from %s" % (tag, ufunc))
-        if f["rpc"]:
+        if f["rpc"] and not f.get("service"):
             impl = "%s_Implementation" % f["name"]
             if count(hsq, squash("void %s(%s);" % (impl, args))) != 1:
                 problems.append("%s: _Implementation declaration missing or repeated" % tag)
@@ -2218,8 +2278,9 @@ def render_promoted_header(model, api, parent_include, source_label):
         lines.append("\tUFUNCTION(%s)" % ", ".join(f["specifiers"]))
         lines.append("\t%s %s(%s)%s;" % (f.get("ret", "void"), f["name"], ", ".join(f["args"]),
                                        " const" if f.get("const") else ""))
-        if f["rpc"]:
-            lines.append("\tvoid %s_Implementation(%s);" % (f["name"], ", ".join(f["args"])))
+        if f["rpc"] and not f.get("service"):
+            lines.append("\tvoid %s_Implementation(%s)%s;" % (f["name"], ", ".join(f["args"]),
+                                                          " const" if f.get("const") else ""))
         if f.get("validate"):
             lines.append("\tbool %s_Validate(%s);" % (f["name"], ", ".join(f["args"])))
         lines.append("")
@@ -2324,11 +2385,16 @@ def render_promoted_cpp(model, source_label):
         lines.append("}  // namespace")
         lines.append("")
     for f in model["functions"]:
-        impl = "%s_Implementation" % f["name"] if f["rpc"] else f["name"]
+        # A net service function is the programmer's own body (UHT: CustomThunk for a request, CppImplName = the
+        # name for a response), so it has no _Implementation.
+        impl = "%s_Implementation" % f["name"] if f["rpc"] and not f.get("service") else f["name"]
         args = ", ".join(f["args"])
         lines.append("%s %s::%s(%s)%s" % (f.get("ret", "void"), name, impl, args, " const" if f.get("const") else ""))
         lines.append("{")
-        lines.extend(body_lines(f.get("body")))
+        body = body_lines(f.get("body"))
+        if f.get("body") is None and f.get("service") and f.get("ret", "void") != "void":
+            body.append("\treturn {};")  # the stub of a net service function that returns a value still returns one
+        lines.extend(body)
         lines.append("}")
         lines.append("")
         if f.get("validate"):
@@ -2395,18 +2461,36 @@ def engine_macro_names(engine_root):
     return {"F%sDelegate" % name for name in found if name != "Type"}
 
 
+def cross_module_allowed(current_package, target_package):
+    """True when an item of current_package may use a promoted type of target_package. Only the game module does, and
+    only for the runtime modules in CROSS_MODULE_TARGETS: its Build.cs lists them and they do not depend on it. Other
+    pairs stay refused (TypeGate: OtherModule), which keeps the module graph acyclic; promote also refuses a cycle."""
+    return current_package == "/Script/FortniteGame" and target_package in CROSS_MODULE_TARGETS
+
+
 def own_includes(gate, used, package):
-    """Headers the items of one package include: engine headers and the package's own promoted types. A promoted
-    type of another package is never included (TypeGate skips it), which keeps the module graph acyclic."""
+    """Headers the items of one package include: engine headers, the package's own promoted types, and promoted
+    types of another package that cross_module_allowed admits (their module is a dependency, see cross_module_modules)."""
     out = set()
     for fn in used:
         info = gate.info(fn)
-        if info is not None and info.package in PROMOTE_PACKAGES and info.package != package:
+        if (info is not None and info.package in PROMOTE_PACKAGES and info.package != package
+                and not cross_module_allowed(package, info.package)):
             continue
         inc = gate.include_of(fn)
         if inc:
             out.add(inc)
     return sorted(out)
+
+
+def cross_module_modules(gate, used, package):
+    """Modules of the promoted types of other packages that the items of one package use (module dependencies)."""
+    out = set()
+    for fn in used:
+        info = gate.info(fn)
+        if info is not None and info.package in PROMOTE_PACKAGES and info.package != package:
+            out.add(info.module)
+    return out
 
 
 def find_module_cycle(module_deps, promoted_modules):
@@ -2636,6 +2720,7 @@ def promote(args):
         if parent_pkg and parent_pkg != package:
             add_deps(module, [parent_pkg.rsplit("/", 1)[-1]])
         add_deps(module, [gate.engine.module_of_inc.get(inc) for inc in model["includes"] + model["cpp_includes"]])
+        add_deps(module, cross_module_modules(gate, model["used"], package))
         # Forward-declared classes of another generated package need that module (a cycle is refused below).
         add_deps(module, [(package_of.get(ref) or "").rsplit("/", 1)[-1] for ref in model["forward_decls"]
                           if (package_of.get(ref) or "") in PROMOTE_PACKAGES and package_of.get(ref) != package])
@@ -2684,6 +2769,7 @@ def promote(args):
         info = gate.info(fn)
         module_deps.setdefault(info.module, set())
         add_deps(info.module, [gate.engine.module_of_inc.get(inc) for inc in model["includes"]])
+        add_deps(info.module, cross_module_modules(gate, model["used"], info.package))
 
     # FortniteUI classes include headers of FortniteGame's promoted classes; the include map covers engine modules only.
     if "FortniteUI" in module_deps:
@@ -2853,7 +2939,14 @@ TYPE_DECL_RE = {
     "delegate": re.compile(r"\bDECLARE_(?:DYNAMIC_)?(?:MULTICAST_)?(?:SPARSE_)?DELEGATE\w*\(\s*(F[A-Za-z0-9_]+)"),
 }
 ENGINE_ROOT_DEFAULT = os.environ.get("FN_ENGINE_ROOT", "/opt/fortnite/UnrealEngine/Engine")
-ENGINE_SCAN_DIRS = ("Source/Runtime", "Plugins/Runtime", "Plugins/Developer", "Source/Developer")
+# OnlineSubsystemUtils declares the party and spectator beacon state types (PartyBeaconState.h, SpectatorBeaconState.h)
+# that the beacon RPCs use. Only that plugin is scanned: the rest of Plugins/Online would add headers of modules that
+# the project's Build.cs does not list (WebBrowser, LoginFlow). Only usable modules are indexed (ModuleRegistry).
+ENGINE_SCAN_DIRS = ("Source/Runtime", "Plugins/Runtime", "Plugins/Developer", "Source/Developer",
+                    "Plugins/Online/OnlineSubsystemUtils")
+# A namespaced enum (UE: `namespace ECollisionEnabled { enum Type {...}; }`) is named ECollisionEnabled::Type in C++.
+# TYPE_DECL_RE only sees `enum E...` at the start of a line, so the namespaced form is indexed by this pattern.
+NAMESPACE_ENUM_RE = re.compile(r"^\s*namespace\s+(E[A-Za-z0-9_]+)\s*\{?\s*enum\s+Type\b", re.M)
 KIND_LABEL = {"struct": "Struct", "enum": "Enum", "delegate": "Delegate"}
 
 
@@ -3027,6 +3120,8 @@ class EngineTypeIndex:
                     for kind, rx in TYPE_DECL_RE.items():
                         for match in rx.finditer(text):
                             self.index[kind].setdefault(match.group(1), inc)
+                    for match in NAMESPACE_ENUM_RE.finditer(text):
+                        self.index["enum"].setdefault(match.group(1) + "::Type", inc)
 
     def lookup(self, kind, cpp_name):
         return self.index[kind].get(cpp_name)
@@ -3115,7 +3210,7 @@ class TypeGate:
             # next to the engine header that declares it. Not emitted.
             return resolver.todo(label + "NameClash", fn)
         if info.package in PROMOTE_PACKAGES:
-            if info.package != self.current_package:
+            if info.package != self.current_package and not cross_module_allowed(self.current_package, info.package):
                 return resolver.todo(label + "OtherModule", fn)
             if self.reason(info) is not None:
                 return resolver.todo(label + "NotEmittable", fn)
