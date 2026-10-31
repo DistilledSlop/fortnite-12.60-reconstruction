@@ -78,7 +78,8 @@ Updated 2026-10-31 after the second session. Everything below is on `main` (HEAD
   still need to run. They unlock the Frontend widget graph and the GUID-keyed paks. Agents may use the AES keys
   (user decision, 2026-10-31). Pass them to `Cue4Inspect` with `--key-file=<path>` (or `FORTNITE_AES_KEY_FILE`);
   the file lives outside the repository (one `primary=<64 hex>` line plus one `<guid digits>=<64 hex>` line per
-  GUID-keyed chunk) and the keys must never be committed, printed or logged. Without a key file the tool still
+  GUID-keyed chunk; the current file is `/home/vibrato/.config/fortnite-port/aes_keys`, verified to mount 31 of 31 paks)
+  and the keys must never be committed, printed or logged. Without a key file the tool still
   falls back to its interactive hidden prompt.
 - **Ghidra project and dump** live under `/opt/fortnite/ghidra-projects/fortnite-slim` and
   `porting/generated/dump/` (git-ignored). Do not re-run the full auto-analysis: it dies of heap
