@@ -44,6 +44,8 @@ EVIDENCE_REL = "porting/progress/evidence.json"  # written by record_evidence.py
 AGE_CACHE = {}
 
 TREEMAP_W, TREEMAP_H = 1000, 640
+# Phone layout: a tall, narrow treemap drawn 1:1 at about 360 px wide, shown at 640 px and below.
+TREEMAP_NARROW_W, TREEMAP_NARROW_H = 360, 900
 STANDALONE_W, STANDALONE_H = 1000, 720
 
 
@@ -1415,29 +1417,28 @@ TREEMAP_CSS = TREEMAP_PALETTE_CSS + """
 """.strip()
 
 
-def interactive_treemap(groups, width, height, grids=None):
+def interactive_treemap(groups, width, height, grids=None, prefix="", svg_class="tm-svg"):
     """Treemap for the dashboard page: two precomputed layers (sorted by weight
     and by progress); the page's inline script swaps the visible layer.
-    No layout math in JS."""
-    layer_w = render_treemap(groups, width, height, interactive=True, grids=grids, prefix="w")
-    layer_p = render_treemap(groups, width, height, interactive=True, sort_mode="progress", grids=grids, prefix="p")
-    return (f'<svg id="treemap" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {width} {height}" '
-            f'width="100%" role="img" aria-label="Treemap of port progress: click a tile to read its details" '
+    No layout math in JS. prefix keeps clipPath ids unique across the two sizes."""
+    layer_w = render_treemap(groups, width, height, interactive=True, grids=grids, prefix=prefix + "w")
+    layer_p = render_treemap(groups, width, height, interactive=True, sort_mode="progress", grids=grids, prefix=prefix + "p")
+    return (f'<svg class="{svg_class}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {width} {height}" '
+            f'width="100%" role="img" aria-label="Treemap of port progress: tap or click a tile to read its details" '
             f'font-family="system-ui,-apple-system,Segoe UI,sans-serif">'
-            f'<style>{TREEMAP_CSS}{TM_SVG_CSS}</style>'
             f'<g class="layer layer-weight">{layer_w}</g>'
             f'<g class="layer layer-progress">{layer_p}</g>'
             f'</svg>')
 
 
 TM_SVG_CSS = """
-#treemap .tile{cursor:pointer}
-#treemap .tile rect{vector-effect:non-scaling-stroke}
-#treemap .tile.grp>.tile-frame{pointer-events:all}
-#treemap .tile:hover>.tile-frame{stroke:var(--tm-ink);stroke-width:2}
-#treemap .tile.sel>.tile-frame{stroke:var(--tm-done-edge);stroke-width:2}
-#treemap.sort-progress .layer-weight{display:none}
-#treemap:not(.sort-progress) .layer-progress{display:none}
+.tm-wrap .tile{cursor:pointer}
+.tm-wrap .tile rect{vector-effect:non-scaling-stroke}
+.tm-wrap .tile.grp>.tile-frame{pointer-events:all}
+.tm-wrap .tile:hover>.tile-frame{stroke:var(--tm-ink);stroke-width:2}
+.tm-wrap .tile.sel>.tile-frame{stroke:var(--tm-done-edge);stroke-width:2}
+.tm-wrap.sort-progress .layer-weight{display:none}
+.tm-wrap:not(.sort-progress) .layer-progress{display:none}
 """.strip()
 
 
@@ -1466,7 +1467,7 @@ html.tmjs .tm-bar{display:flex}
 TM_PAGE_JS = """
 (function () {
   "use strict";
-  var svg = document.getElementById("treemap");
+  var svg = document.getElementById("tm-wrap");
   var tip = document.getElementById("tm-tip");
   var detail = document.getElementById("tm-detail");
   var wrap = document.getElementById("tm-wrap");
@@ -1482,6 +1483,20 @@ TM_PAGE_JS = """
   var sortMode = "weight";
 
   var hot = null;
+  // Touch has no hover: a tap shows the tooltip and it stays until the next tap.
+  var touchTip = false;
+  svg.addEventListener("pointerdown", function (e) {
+    if (e.pointerType === "mouse") return;
+    touchTip = true;
+    var t = e.target.closest ? e.target.closest(".tile") : null;
+    if (!t) { hot = null; tip.hidden = true; return; }
+    hot = t;
+    showTip(t);
+    moveTip(e);
+  });
+  document.addEventListener("pointerdown", function (e) {
+    if (touchTip && !wrap.contains(e.target)) { hot = null; tip.hidden = true; }
+  });
   svg.addEventListener("pointerover", function (e) {
     var t = e.target.closest ? e.target.closest(".tile") : null;
     if (!t || t === hot) return;
@@ -1489,6 +1504,7 @@ TM_PAGE_JS = """
     showTip(t);
   });
   svg.addEventListener("pointerout", function (e) {
+    if (touchTip) return;
     var t = e.target.closest ? e.target.closest(".tile") : null;
     if (!t || t !== hot) return;
     var to = e.relatedTarget && e.relatedTarget.closest ? e.relatedTarget.closest(".tile") : null;
@@ -1691,12 +1707,23 @@ code{font-size:.9em}
 .fillscale{display:inline-block;width:120px;height:12px;border-radius:4px;border:1px solid var(--line);background:linear-gradient(to right,var(--tm-neutral),var(--tm-done-fill))}
 .mini{display:inline-block;width:48px;height:8px;border-radius:4px;background:var(--tm-neutral);overflow:hidden;vertical-align:middle;margin-right:6px}
 .mini i{display:block;height:100%;width:var(--pct);background:var(--tm-done-fill)}
-.tm-wrap{width:100%}
-.tm-wrap svg{display:block;width:100%;height:auto}
+.tm-wrap{width:100%;min-width:0;max-width:100%}
+.tm-svg{display:block;width:100%;max-width:100%;height:auto}
+.tm-svg-n{display:none}
+.chart-scroll{width:100%;min-width:0;max-width:100%}
+.chart-scroll svg{display:block;width:100%;height:auto}
 @media (max-width:640px){
-  /* Keep tile labels legible: the chart scrolls inside its own box, the page does not. */
-  .tm-wrap{overflow-x:auto}
-  .tm-wrap svg{min-width:760px}
+  /* Phones get the tall treemap, drawn about 1:1 so its labels stay legible. */
+  .tm-svg-w{display:none}
+  .tm-svg-n{display:block}
+  /* The history chart scrolls inside its own box; the page does not. */
+  .chart-scroll{overflow-x:auto}
+  .chart-scroll svg{min-width:640px}
+  /* Tap targets of at least 40 px. */
+  .sort button,.d-kids button{min-height:40px;padding:8px 12px}
+  .stat{min-width:0;flex:1 1 140px}
+  main,p,li,td,code{overflow-wrap:anywhere;min-width:0}
+  .tm-tip{max-width:calc(100% - 8px)}
 }
 table{width:100%;border-collapse:collapse;font-size:.9rem}
 th,td{text-align:left;padding:5px 6px;border-bottom:1px solid var(--line);vertical-align:top}
@@ -1746,7 +1773,8 @@ def index_html(res, head, subject, date, model, when_note, grids=None):
         for m in res["milestones"])
     cats = "".join(f'<div class="stat"><div class="lbl">{esc(g["name"])}</div><div class="big" style="font-size:1.3rem">{fmt_pct(g["pct"])}</div></div>'
                    for g in res["groups"])
-    svg = interactive_treemap(res["groups"], TREEMAP_W, TREEMAP_H, grids)
+    svg_wide = interactive_treemap(res["groups"], TREEMAP_W, TREEMAP_H, grids, prefix="", svg_class="tm-svg tm-svg-w")
+    svg_narrow = interactive_treemap(res["groups"], TREEMAP_NARROW_W, TREEMAP_NARROW_H, grids, prefix="n", svg_class="tm-svg tm-svg-n")
     tm_json = json.dumps(res["groups"]).replace("</", "<\\/")
     return f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8">
@@ -1788,7 +1816,8 @@ def index_html(res, head, subject, date, model, when_note, grids=None):
 <button data-sort="progress" type="button">progress</button>
 </div>
 </div>
-<div class="tm-wrap" id="tm-wrap">{svg}<div class="tm-tip" id="tm-tip" hidden></div></div>
+<style>{TREEMAP_CSS}{TM_SVG_CSS}</style>
+<div class="tm-wrap" id="tm-wrap">{svg_wide}{svg_narrow}<div class="tm-tip" id="tm-tip" hidden></div></div>
 <div class="tm-detail" id="tm-detail" hidden></div>
 
 <h2>Category summary</h2>
@@ -1894,7 +1923,7 @@ svg text{{font-family:system-ui,-apple-system,Segoe UI,sans-serif}}
 </header>
 <p class="warn">Definition of 100% is the original unmodified Fortnite 12.60 client under Linux/Wine reaching the lobby, matchmaking to our reconstructed server and playing a match with all visuals and audio. Overall values here are estimates, not that definition.</p>
 <h2>Overall progress per commit</h2>
-<div class="tm-wrap">{chart}</div>
+<div class="chart-scroll">{chart}</div>
 <p class="meta">Solid line: overall including manual estimates. Dashed line: evidence-based progress only (basis <em>git</em>, <em>local</em> or <em>documented</em>), i.e. the objective lower bound. Points marked replay used the current components.json manual estimates and current ignored local outputs, so they are indicative. Hook-recorded points measure HEAD at commit time.</p>
 <h2>Commits</h2>
 <div class="tablewrap"><table>
