@@ -771,11 +771,28 @@
           "name": "Party and lobby beacons, session discovery",
           "weight": 30,
           "measure": {
-            "kind": "manual",
-            "pct": 0
+            "kind": "checks",
+            "stub_credit": 0.5,
+            "checks": [
+              {
+                "label": "Session discovery route (matchmaking session record) referenced",
+                "pattern": "api/matchmaking/session",
+                "in": "porting/server/**"
+              },
+              {
+                "label": "Session key route referenced",
+                "pattern": "matchmaking/account/",
+                "in": "porting/server/**"
+              },
+              {
+                "label": "BeaconPort session attribute served",
+                "pattern": "BeaconPort",
+                "in": "porting/server/**"
+              }
+            ]
           },
-          "rationale": "Beacon hosts and the session record are not implemented. No objective metric yet: beacon hosts and session discovery routes are not in the static route scan.",
-          "ceiling": 0
+          "rationale": "Measured by checks now that the session discovery route formats and the BeaconPort attribute are evidenced in the binary (see porting/server/EVIDENCE.md). Beacon hosts are UE net-driver code in the native server (AOnlineBeaconHost, AFortPartyBeaconHost), not HTTP routes, so no backend check can show them. The ceiling of 10 keeps the leaf at the session-discovery share.",
+          "ceiling": 10
         },
         {
           "id": "backend.stats_cloud",

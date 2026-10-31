@@ -29,6 +29,7 @@ sys.path.insert(0, str(HERE))
 
 import api_common  # noqa: E402
 import matchmaking  # noqa: E402
+import schema_check  # noqa: E402
 import probe_server  # noqa: E402
 import smoke_matchmaking as ws  # noqa: E402  (websocket client helpers)
 from api_common import Err  # noqa: E402
@@ -928,6 +929,97 @@ class MatchmakingTests(ServiceTestCase):
         sock.close()
         self.assertEqual(opcode, 0x8)
         self.assertEqual(int.from_bytes(payload[:2], "big"), 1008)
+
+
+class SchemaTests(ServiceTestCase):
+    """Responses checked against the reflection-derived schemas (schema_check.py).
+
+    The MCP profile shape comes from the McpProfileSys headers. The other shapes come from
+    reflection_schemas.json (chat, storefront catalog, calendar). Each check fails on a missing member,
+    a JSON type the reflected member cannot hold, or a key the struct does not declare.
+    """
+
+    def setUp(self):
+        super().setUp()
+        self.token = self.sign_in()["access_token"]
+        self.structs = schema_check.parse_structs()
+        self.others = schema_check.load_reflected_schemas()
+
+    def query(self, profile="athena"):
+        status, body, _ = mcp(self.base, self.token, LOCAL, "QueryProfile", profile)
+        self.assertEqual(status, 200, body)
+        return body
+
+    def test_query_profile_root_matches_reflected_profile_update(self):
+        body = self.query("athena")
+        self.assertEqual(schema_check.check_profile_response(body, self.structs), [])
+
+    def test_command_and_multi_update_entries_match_reflected_profile_update(self):
+        status, body, _ = mcp(self.base, self.token, LOCAL, "ClientQuestLogin", "athena")
+        self.assertEqual(status, 200, body)
+        self.assertEqual(schema_check.check_profile_response(body, self.structs), [])
+        # SetBattleRoyaleBanner also changes common_public, so the response has a multiUpdate entry.
+        status, body, _ = mcp(self.base, self.token, LOCAL, "SetBattleRoyaleBanner", "athena",
+                              body={"bannerIconTemplate": "BannerIcon_Check", "bannerColorTemplate": "BannerColor_Check"})
+        self.assertEqual(status, 200, body)
+        self.assertTrue(body["multiUpdate"], "expected a multiUpdate entry")
+        self.assertEqual(schema_check.check_profile_response(body, self.structs), [])
+
+    def test_profile_update_members_are_the_reflected_ones(self):
+        names = sorted(member["json_name"] for member in self.structs["FProfileUpdateSingle"]["members"])
+        self.assertEqual(names, sorted(["profileRevision", "profileId", "profileChangesBaseRevision",
+                                        "profileChanges", "lockExpiration", "notifications",
+                                        "profileCommandRevision"]))
+
+    def test_checker_flags_a_missing_and_a_mistyped_member(self):
+        broken = dict(self.query("athena"))
+        del broken["lockExpiration"]
+        broken["profileRevision"] = "2"
+        issues = schema_check.check_profile_response(broken, self.structs)
+        self.assertTrue(any("lockExpiration" in issue and "missing" in issue for issue in issues), issues)
+        self.assertTrue(any("profileRevision" in issue and "integer" in issue for issue in issues), issues)
+
+    def test_headers_agree_with_reflection_struct_blocks(self):
+        reflection = HERE.parent / "generated" / "reflection" / "struct_blocks.json"
+        if not reflection.exists():
+            self.skipTest("porting/generated/reflection/struct_blocks.json is git-ignored and not present")
+        blocks = json.loads(reflection.read_text(encoding="utf-8"))["structs"]
+        by_name = {block["name"]: block for block in blocks if block.get("name")}
+        for header_name, reflected_name in (("FProfileUpdateSingle", "ProfileUpdateSingle"),
+                                            ("FMcpLootResult", "McpLootResult"),
+                                            ("FGiftBoxInfo", "GiftBoxInfo")):
+            with self.subTest(struct=header_name):
+                self.assertIn(reflected_name, by_name)
+                reflected = {prop["name"] for prop in by_name[reflected_name]["properties"]}
+                declared = {member["name"] for member in self.structs[header_name]["members"]}
+                self.assertEqual(reflected, declared)
+
+    def test_chat_reserve_matches_reflected_general_chat_return(self):
+        status, body, _ = jcall(self.base, "POST",
+                                f"/fortnite/api/game/v2/chat/{LOCAL}/reserveGeneralChatRooms/fortnite/Windows",
+                                token=self.token, body={})
+        self.assertEqual(status, 200, body)
+        self.assertEqual(schema_check.check_reflected_object(body, "GeneralChatReturn", self.others), [])
+
+    def test_storefront_catalog_matches_reflected_catalog_download(self):
+        status, body, _ = jcall(self.base, "GET", "/fortnite/api/storefront/v2/catalog", token=self.token)
+        self.assertEqual(status, 200, body)
+        self.assertEqual(schema_check.check_reflected_object(body, "CatalogDownload", self.others), [])
+
+    def test_calendar_timeline_matches_reflected_calendar_download(self):
+        status, body, _ = jcall(self.base, "GET", "/fortnite/api/calendar/v1/timeline", token=self.token)
+        self.assertEqual(status, 200, body)
+        self.assertEqual(schema_check.check_reflected_object(body, "CalendarDownload", self.others), [])
+        self.assertTrue(body["channels"])
+        for name, channel in body["channels"].items():
+            with self.subTest(channel=name):
+                self.assertEqual(schema_check.check_reflected_object(channel, "EventsTimeline", self.others), [])
+
+    def test_reflected_checker_flags_a_missing_catalog_member(self):
+        status, body, _ = jcall(self.base, "GET", "/fortnite/api/storefront/v2/catalog", token=self.token)
+        partial = {key: value for key, value in body.items() if key != "expiration"}
+        issues = schema_check.check_reflected_object(partial, "CatalogDownload", self.others)
+        self.assertTrue(any("expiration" in issue and "missing" in issue for issue in issues), issues)
 
 
 class ServiceFacadeTests(unittest.TestCase):

@@ -36,6 +36,10 @@ from api_common import ApiError, Err
 from profile_defaults import (CATEGORY_BY_PREFIX, MAX_SLOT_INDEX, MTX_PLATFORMS, PROFILE_IDS,
                               SLOT_CATEGORIES, build, empty_slots)
 
+# lockExpiration is an FDateTime (reflected member of FProfileUpdateSingle, sent as ISO 8601). A profile
+# that is not locked carries FDateTime::MinValue. The value is a convention; the member is reflected.
+LOCK_EXPIRATION_UNLOCKED = "0001-01-01T00:00:00.000Z"
+
 # observed: these names are in the 12.60 binary but have no implementation here yet.
 UNIMPLEMENTED = ("PurchaseCatalogEntry", "GiftCatalogEntry", "RemoveGiftBox",
                  "RefreshExpeditions", "SetActiveHeroLoadout", "ClearHeroLoadout")
@@ -395,11 +399,15 @@ class ProfileService:
 
     @staticmethod
     def _entry(profile_id, profile, base_rvn, changes):
+        # One FProfileUpdateSingle (McpProfileSys reflection): the root carries these members and
+        # so does every multiUpdate entry. Names follow FJsonObjectConverter::StandardizeCase.
         return {
             "profileRevision": profile["rvn"],
             "profileId": profile_id,
             "profileChangesBaseRevision": base_rvn,
             "profileChanges": changes,
+            "lockExpiration": LOCK_EXPIRATION_UNLOCKED,
+            "notifications": [],
             "profileCommandRevision": profile["commandRevision"],
         }
 

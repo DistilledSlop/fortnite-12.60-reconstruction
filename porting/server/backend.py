@@ -16,6 +16,7 @@ Services (each module registers its own routes and keeps its own state):
   content_service    lightswitch, version check, storefront, calendar, datarouter
   cloudstorage_service  system files (local directory) and user files (memory)
   frontend_stubs     friends, social ban, receipts, billing and other guess answers
+  chat_service       game chat room reservation (empty room lists)
   matchmaking        ticket, session and session-key routes, and the websocket
 """
 
@@ -32,6 +33,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import profile_service  # noqa: E402
 from account_service import AccountService
 from api_common import DEFAULT_SEED, ApiError, Context, Err, Request, Router, error_body
+from chat_service import ChatService
 from cloudstorage_service import CloudStorageService
 from content_service import ContentService
 from frontend_stubs import FrontendStubs
@@ -54,13 +56,14 @@ class Backend:
         self.content = ContentService(self.ctx)
         self.cloud = CloudStorageService(self.ctx, self.oauth, cloudstorage_dir)
         self.frontend = FrontendStubs(self.ctx)
+        self.chat = ChatService(self.ctx, self.oauth)
         if state_step_sec is None:
             self.matchmaking = MatchmakingService(self.ctx, self.accounts)
         else:
             self.matchmaking = MatchmakingService(self.ctx, self.accounts, state_step_sec=state_step_sec)
         self.router = Router()
         for service in (self.oauth, self.accounts, self.profiles, self.party, self.content,
-                        self.cloud, self.frontend, self.matchmaking):
+                        self.cloud, self.frontend, self.chat, self.matchmaking):
             service.register(self.router)
         self.request_log = deque(maxlen=log_size)
         self._sequence = itertools.count(1)

@@ -138,55 +138,73 @@ shipping binary's own entitlement/anti-tamper logic.
 ## Local service layer (implemented in `porting/server/`)
 
 The stand-in covers the account, OAuth, MCP profile, party, presence, lightswitch,
-cloud storage and matchmaking routes that the client calls or whose paths are in the
-binary. Every route and command carries an evidence label. `server/README.md` has the
-full table, generated from the code by `python3 -I server/backend.py --routes` and
-`--commands`. The tests are `python3 -I server/test_services.py` (61 pass).
+cloud storage, storefront, calendar, chat and matchmaking routes. Each route now has an evidence
+class from `porting/server/EVIDENCE.md` (generated table, `endpoint_evidence.json`). The classes are
+`wine_log` (an earlier Wine run), `reflection` (a reflected struct), `binary` (route format in the exe
+and code that loads it), `asset` (cooked config), `binary_string_only` (in the exe, no code reference)
+and `convention` (public naming, not seen locally). `server/README.md` has the route table. The tests are
+`python3 -I server/test_services.py` (70 pass, including the schema checks).
 
-### Evidence-based (observed in the 12.60 binary, the cooked config, or the earlier login capture)
+### Evidence-based (observed in the 12.60 binary, the cooked config, reflection, or the earlier login capture)
 
 - OAuth: `POST /account/api/oauth/token` (client_credentials and exchange_code), session kill (both forms).
+  Class `wine_log` (verbs and order) and `binary` (`/api/oauth/token`, `/api/oauth/sessions/kill`).
 - Accounts: `GET /account/api/public/account/{id}`, the `accountId=` list, `externalAuths`,
-  `tryPlayOnPlatform`, `profileToken/verify`, `/api/v1/user/setting`.
-- MCP: `POST /fortnite/api/game/v2/profile/{id}/{client|dedicated_server|public}/{command}`.
-  The command names listed in `server/README.md` are in the binary. The envelope and
-  change-type names are too (`profileChanges`, `profileChangesBaseRevision`,
-  `profileRevision`, `profileCommandRevision`, `multiUpdate`, `fullProfileUpdate`,
-  `itemAdded`, `itemAttrChanged`, `statModified`). So are the attributes `locker_slots_data`,
-  `loadouts`, `last_applied_loadout`, `item_seen`, `current_mtx_platform` and others.
-  The default athena item templates exist in the cooked pak index.
-- Party v2: `ServiceName="party"` in `DefaultEngine.ini`, the `/api/v1/{namespace}/parties`
-  and member, invite, meta, promote and ping templates, and the field names
-  (`revision`, `members`, `invites`, `pings`, `joinability`, `join_info`, `role`,
-  `CAPTAIN`, `connections`, `sendPing`, `maxSize`). The party error codes are in the binary.
-- Presence: the `/presence/api/v1/_/{id}/last-online` and `subscriptions` templates.
-- Lightswitch: `bulk/status`, with the field names `serviceInstanceId`, `status`,
-  `allowedActions`, `banned`. Version check `NO_UPDATE`. `enabled_features`. `datarouter`.
-- Cloud storage: system and user paths, the `uniqueFilename`, `filename`, `hash256`,
-  `length`, `contentType` fields, and the file error codes.
-- Matchmaking: the ticket, session and key paths, and the websocket states (unchanged).
+  `tryPlayOnPlatform`, `profileToken/verify`, `/api/v1/user/setting`. Class `wine_log`, with `binary`
+  for each template.
+- MCP: `POST /fortnite/api/game/v2/profile/{id}/{client|dedicated_server|public}/{command}`. The
+  template is in `DefaultEngine.ini` (class `asset`). The response is checked against
+  `FProfileUpdateSingle` (class `reflection`, the tracked headers). The command names are in the
+  binary. The envelope names are in the binary in PascalCase only (`ProfileRevision`, `MultiUpdate`,
+  `LockExpiration`, ...); the camelCase wire form follows the engine's `StandardizeCase` rule.
+- Party v1: the route formats in the binary (`/api/v1/{namespace}/parties...`, members, invites,
+  pings, user, notifications count). Class `binary`; the `{namespace}` is `Fortnite` from config. Verbs
+  are not confirmed. The party error codes are in the binary.
+- Presence: `/presence/api/v1/_/{id}/last-online`, `subscriptions`, `settings/subscriptions`, `nudged`.
+  Class `binary`.
+- Lightswitch: `/api/service/bulk/status` (class `wine_log` and `binary`), with the field names
+  `serviceInstanceId`, `status`, `allowedActions`, `banned`. The single-service route is `convention`.
+- Version check `/api/v2/versioncheck/{platform}` (`wine_log`, `binary`) with answer `NO_UPDATE`.
+- `GET /fortnite/api/game/v2/enabled_features` (`wine_log`, `binary`).
+- Calendar `GET /api/calendar/v1/timeline` (`binary`, `reflection`: CalendarDownload and EventsTimeline).
+- Storefront `GET /api/storefront/v2/catalog` (`binary`, `asset` for `ListCatalogEntriesUrl`, `reflection`:
+  CatalogDownload).
+- Keychain `GET /api/storefront/v2/keychain` (`wine_log`: an array of `guid:base64key:path` strings).
+  The literal has no code reference, so `binary_string_only`.
+- Chat `POST /api/game/v2/chat/{accountId}/reserveGeneralChatRooms/{subgame}/{platform}` (`binary` route,
+  `reflection` GeneralChatReturn; the verb is `convention`).
+- Cloud storage: system and user paths (`binary`), and the field names `uniqueFilename`, `filename`,
+  `hash256`, `length`, `contentType`. The user list is `wine_log`.
+- Datarouter `POST /datarouter/api/v1/public/data` (`wine_log` 204; the literal has `?SessionID=` and no code
+  reference, so `binary_string_only`).
+- Matchmaking: the ticket, session and key paths (`binary`, one loading function each), and the websocket
+  states (`convention` and the earlier implementation).
 
-### Inferred (path observed or reasoned, shape not verified against a capture)
+### Inferred or convention (path or name in the binary, shape or verb not confirmed)
 
-- HTTP methods and bodies for the party and presence routes, and the nesting of party objects.
+- HTTP verbs for the party and presence routes not in the login capture, and the request bodies. These
+  stay `convention`.
 - Invite and ping shapes, `expires_at` semantics (informational only), the build-id key
   `urn:epic:cfg:build-id_s`, and the CLOSED joinability value.
-- Profile command body keys (for example `newPlatform`, `itemIds`, `lockerItem`,
-  `slotIndex`), the multiUpdate entry shape, and the revision rules (described in `server/README.md`).
-- `GET /account/api/oauth/exchange` and `verify`, and the `expiresInSeconds` and `creatingClientId` names.
-- The single-service lightswitch route, and the status values UP, DOWN and MAINTENANCE.
-- Cloud storage hash (sha1), `storageType`, `uploaded` and the user file list shape.
-- The default athena locker layout and the attribute value types.
-- Token lifetimes (8 h access, 32 h refresh), which are the earlier stub's values.
+- Profile command body keys (for example `newPlatform`, `itemIds`, `lockerItem`, `slotIndex`). The
+  literals are not in the binary as standalone strings, so these are `convention`.
+- `GET /account/api/oauth/exchange` and `verify` (`binary`), and the `expiresInSeconds` and
+  `creatingClientId` names (`creatingClientId` is a literal in the exe; the rest of the shape is not).
+- The lightswitch status values UP, DOWN and MAINTENANCE (`convention`).
+- Token lifetimes (8 h access, 32 h refresh), which are the earlier stub's values (`convention`).
 
-### Guess (no evidence beyond the earlier stub or the task)
+### Guess (no evidence beyond the earlier stub)
 
-- `EquipBattleRoyaleCustomization` and `SetBattleRoyaleBanner`. These names are not in the
-  12.60 binary strings, so the client may never send them.
-- `PATCH .../parties/{id}/meta`, the calendar, storefront and content page bodies, and
-  every route in `frontend_stubs.py`.
+- `EquipBattleRoyaleCustomization` and `SetBattleRoyaleBanner`. These names are not in the 12.60 binary
+  strings, so the client may never send them.
+- `PATCH .../parties/{id}/meta`: the `/parties/{partyId}/meta` literal is not in the binary (the member
+  meta route is).
+- The keychain placeholder (32 zero bytes, not a key) and the session key field `key` (see EVIDENCE.md).
+- The content page `/content/api/pages/fortnite-game`: no string in the exe. Seen only in the refresh pass
+  of the earlier Wine run (`wine_log`, verb not recorded). Its body is a guess.
 - Client id `3446cd72694c4a4485d81b77adbb2141`, which the earlier stub used and the binary does not show.
-- The keychain placeholder (32 zero bytes, not a key).
+- The friends, social ban, privacy, receipts, billing, storeaccess and presence-nudged answers in
+  `frontend_stubs.py`. Their route formats are in the binary or the refresh pass, but the bodies are not.
 
 ### Remaining gaps
 

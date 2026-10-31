@@ -9,8 +9,9 @@ Evidence:
   inferred  the single-service lightswitch route /lightswitch/api/service/{id}/status
             (answers one object, not a list), and the status values UP, DOWN and
             MAINTENANCE.
-  guess     the calendar timeline, the storefront catalog and keychain bodies,
-            and the content page. These are the earlier stub's answers. The keychain
+  reflection the calendar timeline (CalendarDownload, EventsTimeline) and the storefront catalog
+            (CatalogDownload) member names and kinds; see reflection_schemas.json.
+  guess     the keychain body (storefront) and the content page. These are the earlier stub's answers. The keychain
             entry is 32 zero bytes as a placeholder. It is not a real key.
 """
 
@@ -74,7 +75,7 @@ class ContentService:
             "client-matchmaking": {"states": [], "cacheExpire": far},
             "client-events": {"states": [{"validFrom": "2020-01-01T00:00:00.000Z",
                                           "activeEvents": [], "state": state}], "cacheExpire": far},
-        }, "eventsTimeOffsetHrs": 0.0, "cacheIntervalMins": 10.0, "currentTime": now}
+        }, "cacheIntervalMins": 10.0, "currentTime": now}  # CalendarDownload members (reflection)
 
     def catalog(self, req, match):
         far = "2099-01-01T00:00:00.000Z"
