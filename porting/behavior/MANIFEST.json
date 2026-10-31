@@ -5528,5 +5528,20 @@
     "proxy_score": 92.9,
     "decompile_source": "porting/generated/decomp_improved/AFortPlayerPawn/EndGhostModeExit.c",
     "notes": "Header: float GhostModeExitStartTime (AFortPlayerPawn.h:1234), float GhostModeExitDuration (AFortPlayerPawn.h:1238)."
+  },
+  {
+    "class": "AFortGameStateAthena",
+    "function": "GetActivePlaylist",
+    "kind": "helper",
+    "signature": "UFortPlaylistAthena* GetActivePlaylist() const",
+    "signature_status": "proposed",
+    "access": "protected",
+    "inc_path": "porting/behavior/AFortGameStateAthena/GetActivePlaylist.inc",
+    "confidence": "high",
+    "address": "0x141991bf0",
+    "status": "ported",
+    "proxy_score": null,
+    "decompile_source": "porting/generated/callee_probe/blocking/0x141991bf0.c",
+    "notes": "Queue row 5 of CALLEE_PORT_QUEUE.md, the worked example of kind helper. Returns CurrentPlaylistInfo.OverridePlaylist when it is non-null, else CurrentPlaylistInfo.BasePlaylist (offsets 0x1df8 and 0x1df0 of AFortGameStateAthena). The same pair is tested by 0x141991ce0, 0x14199e430, 0x14199e4e0, 0x1419920d0 and 0x141995550 (queue row 5), which are not ported here."
   }
 ]

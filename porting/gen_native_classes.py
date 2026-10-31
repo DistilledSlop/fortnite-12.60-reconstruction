@@ -1002,6 +1002,187 @@ def types_self_test(check):
         PARAM_ORDER = saved_order
 
 
+def helper_self_test(check):
+    """Helper kinds on synthetic input: signature forms, type rules, dependency order, attach and verify."""
+    def rejects(sig, static):
+        try:
+            parse_helper_signature(sig, static)
+        except ValueError:
+            return True
+        return False
+
+    check("helper signature: return type, name, const",
+          parse_helper_signature("UFortPlaylistAthena* GetActivePlaylist() const", False)
+          == ("UFortPlaylistAthena*", "GetActivePlaylist", [], True))
+    check("helper signature: parameters in order, template commas kept",
+          parse_helper_signature("bool Find(const FGuid& Id, TMap<FName, int32> Vals)", False)
+          == ("bool", "Find", ["const FGuid& Id", "TMap<FName, int32> Vals"], False))
+    check("static helper cannot be const", rejects("int32 F() const", True))
+    check("static helper cannot spell static", rejects("static int32 F()", True))
+    check("helper parameter needs a name", rejects("void F(int32)", False))
+    check("helper signature needs parentheses", rejects("int32 F", False))
+    check("qualified enum: only the enum name is a type",
+          helper_type_names("EFortCustomPartType::Type", [])[0] == {"EFortCustomPartType"})
+    ordered, left = static_order(["A", "B", "C", "D"], {"A": set(), "B": {"A"}, "C": {"B", "D"}, "D": {"C"}})
+    check("static order: dependencies first, cycles left", ordered == ["A", "B"] and left == {"C", "D"})
+
+    class FakeEngine:
+        module_of_inc = {"Engine/World.h": "Engine"}
+
+    class FakeGate:
+        engine = FakeEngine()
+
+        def include_of(self, fn):
+            return None
+
+    ctx = {"class_pkg": {"ASelfTest": "/Script/FortniteGame", "UFortPlaylistAthena": "/Script/FortniteGame"},
+           "struct_index": {}, "gate": FakeGate(), "other_promoted": set()}
+    entries = [
+        {"kind": "static_helper", "function": "StaticB", "signature": "int32 StaticB()",
+         "body": "return StaticA() + 1;"},
+        {"kind": "static_helper", "function": "StaticA", "signature": "int32 StaticA()", "body": "return 1;"},
+        {"kind": "helper", "function": "Pick", "access": "protected",
+         "signature": "UFortPlaylistAthena* Pick() const", "body": "return nullptr;"},
+        {"kind": "helper", "function": "Bad", "access": "private", "signature": "void Bad()", "body": ";"},
+        {"kind": "static_helper", "function": "UsesMember", "signature": "int32 UsesMember()",
+         "body": "return Pick() ? 1 : 0;"},
+        {"kind": "static_helper", "function": "CycleX", "signature": "int32 CycleX()", "body": "return CycleY();"},
+        {"kind": "static_helper", "function": "CycleY", "signature": "int32 CycleY()", "body": "return CycleX();"},
+        {"kind": "helper", "function": "NoBody", "access": "public", "signature": "void NoBody()", "body": None,
+         "reject": "snippet file missing: x"},
+    ]
+    res = attach_snippets("ASelfTest", [], entries, ctx, "/Script/FortniteGame")
+    check("helper accepted: Pick, StaticA, StaticB",
+          sorted(res["accepted"]) == ["ASelfTest::Pick", "ASelfTest::StaticA", "ASelfTest::StaticB"])
+    check("static helpers emitted dependencies first",
+          [s["name"] for s in res["static_helpers"]] == ["StaticA", "StaticB"])
+    reasons = {r["entry"]: r["reason"] for r in res["rejected"]}
+    check("helper with private access rejected", "public or protected" in reasons.get("ASelfTest::Bad", ""))
+    check("static helper naming a member helper rejected",
+          "member helper Pick" in reasons.get("ASelfTest::UsesMember", ""))
+    check("static helper cycle rejected",
+          "cycle" in reasons.get("ASelfTest::CycleX", "") and "cycle" in reasons.get("ASelfTest::CycleY", ""))
+    check("helper without a usable body rejected", "snippet file missing" in reasons.get("ASelfTest::NoBody", ""))
+    check("helper forward declares its class type", res["forward_decls"] == {"UFortPlaylistAthena"})
+    model = {"name": "ASelfTest", "parent": "AActor", "uclass": "UCLASS()",
+             "forward_decls": sorted(res["forward_decls"]), "includes": sorted(res["header_includes"]),
+             "cpp_includes": sorted(res["includes"]), "members_table_order": [], "members_decl_order": [],
+             "functions": [], "helpers": res["helpers"], "static_helpers": res["static_helpers"]}
+    header = render_promoted_header(model, "SELFTEST_API", "AActor.h", "self-test")
+    cpp = render_promoted_cpp(model, "self-test")
+    check("protected helper declared under its label, outside UFUNCTION",
+          "protected:\n\tUFortPlaylistAthena* Pick() const;" in header)
+    check("static helper has no header declaration", "StaticA" not in header)
+    check("static helpers precede the namespace close and member definitions",
+          cpp.index("static int32 StaticB()") < cpp.index("}  // namespace")
+          < cpp.index("UFortPlaylistAthena* ASelfTest::Pick() const"))
+
+    def verifies(h, c):
+        try:
+            verify_spliced(model, h, c)
+        except SystemExit:
+            return False
+        return True
+
+    check("rendered helpers verify", verifies(header, cpp))
+    check("verify: access label removed is detected", not verifies(header.replace("protected:\n", "", 1), cpp))
+    check("verify: body edit is detected", not verifies(header, cpp.replace("return 1;", "return 2;", 1)))
+    check("verify: static outside the namespace is detected",
+          not verifies(header, cpp.replace("namespace\n{", "{", 1)))
+def field_self_test(check):
+    """member_field kind on synthetic input: signature, rules, placement by offset, rendering and verification."""
+    def field_rejects(sig):
+        try:
+            parse_field_signature(sig)
+        except ValueError:
+            return True
+        return False
+
+    check("field signature: template and pointer types, then the name",
+          parse_field_signature("TMulticastDelegate<void(AFortPlayerStateAthena*, int32)> ScoreDel")
+          == ("TMulticastDelegate<void(AFortPlayerStateAthena*, int32)>", "ScoreDel"))
+    check("field signature: plain type and name", parse_field_signature("int32 KillPointsCache")
+          == ("int32", "KillPointsCache"))
+    check("field signature: a name alone is rejected", field_rejects("int32"))
+    check("field signature: static is rejected", field_rejects("static int32 X"))
+    check("field offset: hex, decimal, absent",
+          field_offset("0xe88") == 0xe88 and field_offset(3720) == 3720 and field_offset(None) is None)
+
+    class FakeEngine:
+        module_of_inc = {"Delegates/Delegate.h": "Core"}
+
+    class FakeGate:
+        engine = FakeEngine()
+
+        def include_of(self, fn):
+            return None
+
+    ctx = {"class_pkg": {"ASelfTest": "/Script/FortniteGame", "AFortPlayerStateAthena": "/Script/FortniteGame"},
+           "struct_index": {}, "gate": FakeGate(), "other_promoted": set()}
+    entries = [
+        {"kind": "member_field", "function": "PointsA", "signature": "int32 PointsA", "access": "public",
+         "offset": "0x100", "default": "0"},
+        {"kind": "member_field", "function": "ScoreDel", "access": "protected", "offset": 0x150,
+         "signature": "TMulticastDelegate<void(AFortPlayerStateAthena*, int32)> ScoreDel",
+         "includes": ["Delegates/Delegate.h"]},
+        {"kind": "member_field", "function": "NoOffset", "signature": "int32 NoOffset", "access": "private",
+         "default": 3},
+        {"kind": "member_field", "function": "Reflected", "signature": "int32 Reflected", "access": "public"},
+        {"kind": "member_field", "function": "NoType", "signature": "UWorld* NoType", "access": "public",
+         "offset": 0x200},
+        {"kind": "member_field", "function": "BadAccess", "signature": "int32 BadAccess", "access": "package"},
+        {"kind": "member_field", "function": "HasBody", "signature": "int32 HasBody", "access": "public",
+         "inc_path": "x.inc"},
+    ]
+    res = attach_snippets("ASelfTest", [], entries, ctx, "/Script/FortniteGame", (), {"Reflected"})
+    check("fields accepted: PointsA, ScoreDel, NoOffset",
+          sorted(res["accepted"]) == ["ASelfTest::NoOffset", "ASelfTest::PointsA", "ASelfTest::ScoreDel"])
+    check("fields in offset order, no offset last",
+          [f["name"] for f in res["fields"]] == ["PointsA", "ScoreDel", "NoOffset"])
+    reasons = {r["entry"]: r["reason"] for r in res["rejected"]}
+    check("field clashing with a reflected member rejected", "already a member" in reasons.get("ASelfTest::Reflected", ""))
+    check("field with an unknown type rejected", "not known" in reasons.get("ASelfTest::NoType", ""))
+    check("field with an unknown access rejected", "access" in reasons.get("ASelfTest::BadAccess", ""))
+    check("field with a body rejected", "no body" in reasons.get("ASelfTest::HasBody", ""))
+    check("field default number rendered as text",
+          [f["decl"] for f in res["fields"] if f["name"] == "NoOffset"] == ["int32 NoOffset = 3;"])
+    check("field includes reach the header", "Delegates/Delegate.h" in res["header_includes"])
+    members = [
+        {"name": "A", "decl": "int32 A;", "specifiers": ["Transient"], "table_index": 1, "property_flags": "0x1",
+         "replicated": False, "offset": 0xF0},
+        {"name": "B", "decl": "int32 B;", "specifiers": ["Transient"], "table_index": 0, "property_flags": "0x1",
+         "replicated": False, "offset": 0x200},
+    ]
+    model = {"name": "ASelfTest", "parent": "AActor", "uclass": "UCLASS()",
+             "forward_decls": sorted(res["forward_decls"]), "includes": sorted(res["header_includes"]),
+             "cpp_includes": [], "members_table_order": members, "members_decl_order": members,
+             "functions": [], "helpers": [], "static_helpers": [], "fields": res["fields"]}
+    header = render_promoted_header(model, "SELFTEST_API", "AActor.h", "self-test")
+    cpp = render_promoted_cpp(model, "self-test")
+    at = [header.index(s) for s in ("int32 A;", "int32 PointsA = 0;", "ScoreDel;", "int32 B;", "int32 NoOffset = 3;")]
+    check("fields placed by offset among the reflected members", at == sorted(at))
+    check("protected field under its label, public restored after it",
+          header.index("protected:") < header.index("ScoreDel;") < header.index("public:", header.index("ScoreDel;")))
+    check("private field under its label", "private:\n" in header and header.index("private:") < header.index("NoOffset"))
+    check("no field under UPROPERTY", "UPROPERTY()\n\tTMulticast" not in header
+          and "UPROPERTY(Transient)\n\tint32 PointsA" not in header)
+
+    def verifies(model_, h, c):
+        try:
+            verify_spliced(model_, h, c)
+        except SystemExit:
+            return False
+        return True
+
+    check("rendered fields verify", verifies(model, header, cpp))
+    check("verify: field access label removed is detected",
+          not verifies(model, header.replace("protected:\n", "", 1), cpp))
+    check("verify: field under UPROPERTY is detected",
+          not verifies(model, header.replace("\tTMulticastDelegate<void(AFortPlayerStateAthena*, int32)> ScoreDel;",
+                                             "\tUPROPERTY()\n\tTMulticastDelegate<void(AFortPlayerStateAthena*, int32)> ScoreDel;", 1),
+                       cpp))
+    moved = dict(model, fields=[dict(f, offset=0x300) if f["name"] == "PointsA" else f for f in res["fields"]])
+    check("verify: field placed against its offset is detected", not verifies(moved, header, cpp))
 def self_test():
     failures = []
     count = [0]
@@ -1093,6 +1274,8 @@ def self_test():
     check("no net-role mismatch on common UFUNCTION", result["net_role_mismatches"] == 0)
     check("reversed declaration order detected as mismatch", result["order_match"] is False)
     types_self_test(check)
+    helper_self_test(check)
+    field_self_test(check)
     if failures:
         print("SELF-TEST FAILED:", *failures, sep="\n  ")
         return 1
@@ -1291,7 +1474,8 @@ def build_class_promoted(block, name, resolver, parent_entry, owner_fns, snippet
     notify_names = {m["rep_notify"] for m in members if m["rep_notify"]}
     splice_names = {e["function"] for e in snippets if e["kind"] in ("getter", "exec") and e.get("body") is not None}
     functions = build_functions_promoted(block.get("functions") or [], resolver, notify_names, owner_fns, splice_names)
-    splice = (attach_snippets(name, functions, snippets, splice_ctx, parent_entry.get("package"), resolver.skipped)
+    splice = (attach_snippets(name, functions, snippets, splice_ctx, parent_entry.get("package"), resolver.skipped,
+                              {m["name"] for m in members})
               if snippets else None)
     if splice is not None:
         functions = [f for f in functions if not (f["splice"] and not f.get("accepted"))]
@@ -1314,7 +1498,11 @@ def build_class_promoted(block, name, resolver, parent_entry, owner_fns, snippet
         "functions": functions,
         "splice": splice or {"accepted": [], "rejected": []},
         "cpp_includes": sorted(splice["includes"]) if splice else [],
-        "forward_decls": sorted(ref for ref in resolver.class_refs if ref not in (name, parent)),
+        "helpers": (splice or {}).get("helpers", []),
+        "static_helpers": (splice or {}).get("static_helpers", []),
+        "fields": (splice or {}).get("fields", []),
+        "forward_decls": sorted(ref for ref in (set(resolver.class_refs) | (splice or {}).get("forward_decls", set()))
+                                if ref not in (name, parent)),
         "used": merge_used([m["used"] for m in members] + [f["used"] for f in functions]),
         "skipped": list(resolver.skipped),
         "functions_in_table": len(block.get("functions") or []),
@@ -1434,13 +1622,353 @@ def not_emitted_reason(skipped, fname):
     return "not in the reflection table"
 
 
-def attach_snippets(name, functions, entries, ctx, package, skipped=()):
+# ---------------------------------------------------------------- helpers (non-reflected functions, porting/behavior)
+# kind "helper": a plain C++ member function. Its declaration goes into the header's "Non-reflected helpers" block,
+# after the reflected functions and GetLifetimeReplicatedProps and outside any UFUNCTION declaration, with the
+# entry's access. Its definition goes into the .cpp after the reflected functions.
+# kind "static_helper": a static free function in an anonymous namespace at the top of the class .cpp. It has no header
+# declaration and every member definition comes after it. Contract: porting/behavior/README.md, "helper".
+HELPER_KINDS = ("helper", "static_helper")
+HELPER_ACCESS = ("public", "protected")
+HELPER_SIG_RE = re.compile(r"^(?P<ret>.+?)\s*\b(?P<name>[A-Za-z_]\w*)\s*\((?P<args>[^()]*)\)\s*(?P<const>const)?$")
+HELPER_TYPE_WORDS = frozenset(("void", "bool", "int8", "int16", "int32", "int64", "uint8", "uint16", "uint32",
+                               "uint64", "float", "double", "const", "unsigned", "signed", "char", "TArray", "TMap",
+                               "TSet", "TSubclassOf", "TWeakObjectPtr", "TSoftObjectPtr", "TSoftClassPtr",
+                               "TEnumAsByte", "FString", "FName", "FText", "FGuid"))
+TYPE_NAME_RE = re.compile(r"(?<![\w:])[A-Za-z_]\w*")   # an identifier that is not the member part of A::B
+
+
+def split_params(text):
+    """Top-level comma split of a parameter list; commas inside <...> do not split."""
+    parts, depth, cur = [], 0, ""
+    for ch in text:
+        if ch == "<":
+            depth += 1
+        elif ch == ">":
+            depth -= 1
+        if ch == "," and depth == 0:
+            parts.append(cur.strip())
+            cur = ""
+        else:
+            cur += ch
+    if cur.strip():
+        parts.append(cur.strip())
+    return parts
+
+
+def parse_helper_signature(sig, static):
+    """(ret, name, params, const) of a helper signature: a C++ declaration without ';' and without 'static'.
+    params are 'type name' strings in declaration order. Raises ValueError when the text is not one."""
+    text = re.sub(r"\s+", " ", sig or "").strip().rstrip(";").strip()
+    m = HELPER_SIG_RE.match(text)
+    if not m:
+        raise ValueError("signature is not 'ret name(params) [const]': %r" % (sig,))
+    ret, name = m.group("ret").strip(), m.group("name")
+    const = m.group("const") is not None
+    if re.match(r"(static|virtual|inline|FORCEINLINE)\b", ret):
+        raise ValueError("signature must not spell %s: the kind sets the linkage" % ret.split()[0])
+    params = split_params(m.group("args"))
+    for p in params:
+        if "=" in p or not re.match(r"^.+[\s*&]\s*[A-Za-z_]\w*$", p):
+            raise ValueError("parameter needs a type and a name: %r" % (p,))
+    if static and const:
+        raise ValueError("a static helper is a free function and cannot be const")
+    return ret, name, params, const
+
+
+def param_type(param):
+    """The type text of a 'type name' parameter (the name is removed)."""
+    return re.sub(r"(?<=[\s*&>])[A-Za-z_]\w*$", "", param).strip()
+
+
+def helper_type_names(ret, params):
+    """(names, texts): the identifiers of the return and parameter types, and the type texts."""
+    texts = [ret] + [param_type(p) for p in params]
+    names = set()
+    for t in texts:
+        names |= set(TYPE_NAME_RE.findall(t))
+    return names, texts
+
+
+def usable_include(inc, ctx):
+    """True for an include spelling the engine header index knows (headers of usable modules)."""
+    return isinstance(inc, str) and inc.endswith(".h") and inc in ctx["gate"].engine.module_of_inc
+
+
+def type_include(tok, package, ctx):
+    """(include, problem) for a struct or enum name of ctx["struct_index"] used by a helper signature."""
+    info = ctx["struct_index"][tok]
+    if info.package in PROMOTE_PACKAGES:
+        if info.package != package:
+            return None, "uses %s, a type of another module" % tok
+        return info.header_name, None
+    inc = ctx["gate"].include_of(info.fn)
+    if inc is None:
+        return None, "uses engine type %s with no include" % tok
+    return inc, None
+
+
+def helper_type_refs(names, texts, package, ctx, explicit):
+    """(includes, forward_decls, problems) for the names of a helper signature. A class of this module is forward
+    declared and must be used by pointer or reference. A struct or enum of a promoted module is included. A name the
+    generator does not know needs an explicit includes entry in the manifest entry."""
+    joined = " ".join(texts)
+    includes, fwd, problems, unknown = set(), set(), [], []
+    for tok in sorted(names):
+        if tok in HELPER_TYPE_WORDS:
+            continue
+        if tok in ctx["class_pkg"]:
+            if ctx["class_pkg"][tok] != package:
+                problems.append("signature uses %s, a class of another module" % tok)
+            elif not re.search(r"\b%s\b\s*[*&]" % re.escape(tok), joined):
+                problems.append("signature uses class %s by value (pointer or reference needed)" % tok)
+            else:
+                fwd.add(tok)
+        elif tok in ctx["struct_index"]:
+            inc, problem = type_include(tok, package, ctx)
+            if problem:
+                problems.append("signature " + problem)
+            else:
+                includes.add(inc)
+        else:
+            unknown.append(tok)
+    if unknown and not explicit:
+        problems.append("signature type(s) %s are not known: list their headers in includes" % ", ".join(unknown))
+    return includes, fwd, problems
+
+
+def static_order(nodes, deps):
+    """Dependencies-first order of nodes (deps: node -> set of names). Returns (ordered, left): left holds the nodes
+    that are in or behind a dependency cycle."""
+    ordered, remaining = [], set(nodes)
+    while True:
+        ready = sorted(n for n in remaining if not (deps[n] & remaining))
+        if not ready:
+            return ordered, remaining
+        ordered.extend(ready)
+        remaining -= set(ready)
+
+
+def check_helper_entry(e, name, package, ctx, by_name, all_names, taken):
+    """(candidate, None) for a helper entry whose signature, types, includes and body are usable, else (None, reason).
+    taken: the helper names already accepted for this class."""
+    kind, fname = e["kind"], e.get("function") or ""
+    if e.get("body") is None:
+        return None, e.get("reject") or "no body"
+    try:
+        ret, sname, params, const = parse_helper_signature(e.get("signature"), kind == "static_helper")
+    except ValueError as exc:
+        return None, str(exc)
+    if sname != fname:
+        return None, "signature names %s, the entry names %s" % (sname, fname)
+    if fname in by_name or fname in taken:
+        return None, "%s is already a function of this class" % fname
+    access = e.get("access")
+    if kind == "helper" and access not in HELPER_ACCESS:
+        return None, "a helper needs access public or protected, not %r" % (access,)
+    if kind == "static_helper" and access is not None:
+        return None, "a static helper is not a member and takes no access"
+    explicit = list(e.get("includes") or [])
+    bad = [inc for inc in explicit if not usable_include(inc, ctx)]
+    if bad:
+        return None, "includes not in the engine header index: %s" % ", ".join(str(b) for b in bad)
+    names, texts = helper_type_names(ret, params)
+    inc_sig, fwd, problems = helper_type_refs(names, texts, package, ctx, bool(explicit))
+    if problems:
+        return None, "; ".join(problems)
+    inc_body, problems = body_refs(e["body"], name, package, ctx)
+    if problems:
+        return None, "; ".join(problems)
+    refs = (set(re.findall(r"[A-Za-z_]\w*", strip_comments(e["body"]))) & all_names) - {fname}
+    return {"name": fname, "kind": kind, "tag": "%s::%s" % (name, fname), "ret": ret, "args": params,
+            "const": const, "access": access, "body": e["body"], "refs": refs,
+            "includes": inc_body | inc_sig | set(explicit), "header_includes": inc_sig | set(explicit),
+            "forward": fwd}, None
+
+
+def attach_helpers(name, entries, ctx, package, by_name):
+    """Helper entries (kinds helper and static_helper) of one class. Each one is checked by check_helper_entry. Then
+    a helper is dropped when its body names a helper that is not emitted, a static helper when its body names a member
+    helper, and static helpers in a dependency cycle are dropped. Returns {"members", "statics", "accepted",
+    "rejected", "includes", "header_includes", "forward_decls", "missing"}: members public first, statics dependencies
+    first, missing the names of the class's helper entries that are not emitted."""
+    out = {"members": [], "statics": [], "accepted": [], "rejected": [], "includes": set(), "header_includes": set(),
+           "forward_decls": set(), "missing": set()}
+    helper_entries = [e for e in entries if e.get("kind") in HELPER_KINDS]
+    all_names = {e.get("function") or "" for e in helper_entries}
+    cands, taken = {}, set()
+    for e in helper_entries:
+        cand, reason = check_helper_entry(e, name, package, ctx, by_name, all_names, taken)
+        if cand is None:
+            out["rejected"].append({"entry": "%s::%s" % (name, e.get("function")), "kind": e.get("kind"),
+                                    "reason": reason})
+            continue
+        cands[cand["name"]] = cand
+        taken.add(cand["name"])
+    members = {n for n in cands if cands[n]["kind"] == "helper"}
+    statics = {n for n in cands if cands[n]["kind"] == "static_helper"}
+    accepted, dropped = set(cands), {}
+    changed = True
+    while changed:
+        changed = False
+        for n in sorted(accepted):
+            for r in sorted(cands[n]["refs"]):
+                if r not in accepted:
+                    dropped[n] = "uses helper %s, which is not emitted" % r
+                elif cands[n]["kind"] == "static_helper" and r in members:
+                    dropped[n] = "static helper uses member helper %s" % r
+                if n in dropped:
+                    break
+            if n in dropped:
+                accepted.discard(n)
+                changed = True
+        _ordered, cyclic = static_order(accepted & statics, {n: cands[n]["refs"] for n in statics})
+        for n in sorted(cyclic):
+            accepted.discard(n)
+            dropped[n] = "static helper is in or behind a dependency cycle"
+            changed = True
+    ordered, _left = static_order(accepted & statics, {n: cands[n]["refs"] for n in statics})
+    member_order = sorted((n for n in cands if n in accepted and n in members),
+                          key=lambda n: cands[n]["access"] != "public")
+    out["members"] = [cands[n] for n in member_order]
+    out["statics"] = [cands[n] for n in ordered]
+    out["accepted"] = [cands[n]["tag"] for n in cands if n in accepted]
+    out["rejected"].extend({"entry": cands[n]["tag"], "kind": cands[n]["kind"], "reason": why}
+                           for n, why in sorted(dropped.items()))
+    for n in accepted:
+        cand = cands[n]
+        out["includes"] |= cand["includes"]
+        out["forward_decls"] |= cand["forward"]
+        if cand["kind"] == "helper":
+            out["header_includes"] |= cand["header_includes"]
+    out["missing"] = all_names - accepted
+    return out
+
+
+# ---------------------------------------------------------------- member fields (non-reflected data members)
+# kind "member_field": a plain data member of the class, declared in the header outside any UPROPERTY, under the
+# entry's access, with an optional default initialiser. It is not replicated and has no body (no inc_path). A field
+# with an offset is placed in declaration order among the reflected members: before the first member whose offset is
+# larger. A field without an offset goes after the reflected members. Contract: porting/behavior/README.md, "member_field".
+FIELD_KIND = "member_field"
+FIELD_ACCESS = ("public", "protected", "private")
+FIELD_SIG_RE = re.compile(r"^(?P<type>.*?[\s*&>])\s*(?P<name>[A-Za-z_]\w*)$")
+
+
+def parse_field_signature(sig):
+    """(type, name) of a member_field signature: 'type name', without ';' and without the initialiser."""
+    text = re.sub(r"\s+", " ", sig or "").strip().rstrip(";").strip()
+    m = FIELD_SIG_RE.match(text)
+    if not m or not m.group("type").strip():
+        raise ValueError("field signature is not 'type name': %r" % (sig,))
+    typ, name = m.group("type").strip(), m.group("name")
+    if re.match(r"(static|mutable|volatile|virtual|inline|extern|typedef|using|UPROPERTY)\b", typ):
+        raise ValueError("a member field takes no %s" % typ.split()[0])
+    return typ, name
+
+
+def field_offset(value):
+    """The offset of a member_field entry: an int, or a decimal or 0x string. None when the entry has none."""
+    if value is None:
+        return None
+    if isinstance(value, int) and not isinstance(value, bool):
+        return value
+    if isinstance(value, str):
+        return int(value, 0)
+    raise ValueError("offset must be a number or a string such as 0xe88")
+
+
+def check_field_entry(e, name, package, ctx, taken_names):
+    """(field, None) for a usable member_field entry, else (None, reason). taken_names: names already in the class."""
+    fname = e.get("function") or ""
+    if e.get("inc_path"):
+        return None, "a member field has no body: inc_path must be absent"
+    try:
+        typ, sname = parse_field_signature(e.get("signature"))
+        offset = field_offset(e.get("offset"))
+    except ValueError as exc:
+        return None, str(exc)
+    if sname != fname:
+        return None, "signature names %s, the entry names %s" % (sname, fname)
+    if fname in taken_names:
+        return None, "%s is already a member, helper or function of this class" % fname
+    access = e.get("access")
+    if access not in FIELD_ACCESS:
+        return None, "a member field needs access public, protected or private, not %r" % (access,)
+    default = e.get("default")
+    if isinstance(default, (int, float)) and not isinstance(default, bool):
+        default = str(default)
+    if default is not None and (not isinstance(default, str) or re.search(r"[;{}\n]", default)):
+        return None, "default must be one expression without ; { } or a newline"
+    if default == "":
+        default = None
+    explicit = list(e.get("includes") or [])
+    bad = [inc for inc in explicit if not usable_include(inc, ctx)]
+    if bad:
+        return None, "includes not in the engine header index: %s" % ", ".join(str(b) for b in bad)
+    inc_sig, fwd, problems = helper_type_refs(set(TYPE_NAME_RE.findall(typ)), [typ], package, ctx, bool(explicit))
+    if problems:
+        return None, "; ".join(problems)
+    decl = ("%s %s = %s;" % (typ, fname, default)) if default is not None else ("%s %s;" % (typ, fname))
+    return {"name": fname, "tag": "%s::%s" % (name, fname), "type": typ, "decl": decl, "access": access,
+            "default": default, "offset": offset, "includes": inc_sig | set(explicit), "forward": fwd}, None
+
+
+def attach_fields(name, entries, ctx, package, taken_names):
+    """The member_field entries of one class. taken_names: the reflected member, helper and function names of the class.
+    Returns {"fields", "accepted", "rejected", "header_includes", "forward_decls"}; fields in offset order (no offset
+    last, manifest order within a tie)."""
+    out = {"fields": [], "accepted": [], "rejected": [], "header_includes": set(), "forward_decls": set()}
+    cands, taken = [], set(taken_names)
+    for e in entries:
+        if e.get("kind") != FIELD_KIND:
+            continue
+        field, reason = check_field_entry(e, name, package, ctx, taken)
+        if field is None:
+            out["rejected"].append({"entry": "%s::%s" % (name, e.get("function")), "kind": FIELD_KIND,
+                                    "reason": reason})
+            continue
+        cands.append(field)
+        taken.add(field["name"])
+    cands.sort(key=lambda f: (f["offset"] is None, f["offset"] or 0))
+    out["fields"] = cands
+    for f in cands:
+        out["accepted"].append(f["tag"])
+        out["header_includes"] |= f["includes"]
+        out["forward_decls"] |= f["forward"]
+    return out
+
+
+def field_lines(fd):
+    """Header lines of one member_field: a plain declaration under its access label, outside any UPROPERTY. A label
+    other than public is restored to public afterwards, since the reflected members that follow are public."""
+    where = "" if fd.get("offset") is None else ", offset 0x%x" % fd["offset"]
+    lines = [] if fd["access"] == "public" else ["%s:" % fd["access"]]
+    lines.append("\t// Non-reflected field (behaviour kind \"member_field\"%s): not a UPROPERTY, not replicated." % where)
+    lines.append("\t%s" % fd["decl"])
+    if fd["access"] != "public":
+        lines.append("public:")
+    lines.append("")
+    return lines
+
+
+def attach_snippets(name, functions, entries, ctx, package, skipped=(), member_names=()):
     """Attach one class's snippets to its emitted functions, in place. Sets body/validate/accepted keys and returns
     {"accepted": [tag], "rejected": [{entry, kind, reason}], "includes": set}. Rejected getter/exec records are removed
     by the caller. skipped is the class's skip list (why an RPC was not emitted)."""
     by_name = {f["name"]: f for f in functions}
-    out = {"accepted": [], "rejected": [], "includes": set()}
+    helpers = attach_helpers(name, entries, ctx, package, by_name)
+    helper_names = {e.get("function") for e in entries if e.get("kind") in HELPER_KINDS}
+    fields = attach_fields(name, entries, ctx, package, set(member_names) | set(by_name) | helper_names)
+    out = {"accepted": list(helpers["accepted"]) + fields["accepted"],
+           "rejected": list(helpers["rejected"]) + fields["rejected"],
+           "includes": set(helpers["includes"]),
+           "header_includes": set(helpers["header_includes"]) | fields["header_includes"],
+           "forward_decls": set(helpers["forward_decls"]) | fields["forward_decls"], "helpers": helpers["members"],
+           "static_helpers": helpers["statics"], "fields": fields["fields"]}
     for e in entries:
+        if e.get("kind") in HELPER_KINDS or e.get("kind") == FIELD_KIND:
+            continue
         tag = "%s::%s" % (name, e["function"])
         kind, fname = e.get("kind"), e.get("function") or ""
 
@@ -1492,6 +2020,10 @@ def attach_snippets(name, functions, entries, ctx, package, skipped=()):
         elif target.get("body") is not None:
             reject("second snippet for %s" % fname)
             continue
+        hit = sorted(set(re.findall(r"[A-Za-z_]\w*", strip_comments(e["body"]))) & helpers["missing"])
+        if hit:
+            reject("body uses helper %s, which is not emitted" % hit[0])
+            continue
         includes, problems = body_refs(e["body"], name, package, ctx)
         if problems:
             reject("; ".join(problems))
@@ -1536,6 +2068,8 @@ def verify_spliced(model, header, cpp):
             return
         if clines[i + 2:end] != expected:
             problems.append("%s: cpp body differs from the snippet" % tag)
+            return None
+        return i
 
     for f in model["functions"]:
         if f.get("body") is None and not f.get("validate"):
@@ -1566,8 +2100,79 @@ def verify_spliced(model, header, cpp):
                 problems.append("%s: _Validate declaration missing or repeated" % tag)
             check_def("bool %s::%s_Validate(%s)" % (name, f["name"], args),
                       body_lines(f.get("validate_body")), tag + "_Validate")
+    ns_open = next((i for i, line in enumerate(clines) if line == "namespace" and i + 1 < len(clines)
+                    and clines[i + 1] == "{"), None)
+    ns_close = next((i for i, line in enumerate(clines) if line == "}  // namespace"), None)
+    member_defs = [i for i, line in enumerate(clines) if re.match(r"^\S.*\b%s::" % re.escape(name), line)]
+    for h in model.get("helpers") or []:
+        ret, args = h["ret"], ", ".join(h["args"])
+        const = " const" if h["const"] else ""
+        tag = "%s::%s" % (name, h["name"])
+        decl = squash("%s %s(%s)%s;" % (ret, h["name"], args, const))
+        if count(hsq, decl) != 1:
+            problems.append("%s: declaration found %d times in header" % (tag, count(hsq, decl)))
+        else:
+            idx = hsq.index(decl)
+            if idx == 0 or hsq[idx - 1].startswith("UFUNCTION"):
+                problems.append("%s: helper declared inside a UFUNCTION declaration" % tag)
+            access = next((hsq[j] for j in range(idx - 1, -1, -1)
+                           if hsq[j] in ("public:", "protected:", "private:")), None)
+            if access != h["access"] + ":":
+                problems.append("%s: declared under %s, not %s:" % (tag, access, h["access"]))
+        check_def("%s %s::%s(%s)%s" % (ret, name, h["name"], args, const), body_lines(h["body"]), tag)
+    for s in model.get("static_helpers") or []:
+        ret, args = s["ret"], ", ".join(s["args"])
+        tag = "%s::%s" % (name, s["name"])
+        if count(hsq, squash("%s %s(%s);" % (ret, s["name"], args))) != 0:
+            problems.append("%s: static helper declared in the header" % tag)
+        i = check_def("static %s %s(%s)" % (ret, s["name"], args), body_lines(s["body"]), tag)
+        if i is None:
+            continue
+        if ns_open is None or ns_close is None or not ns_open < i < ns_close:
+            problems.append("%s: static helper outside the anonymous namespace" % tag)
+        elif member_defs and i > min(member_defs):
+            problems.append("%s: static helper defined after a member function" % tag)
+    members = model.get("members_decl_order") or []
+    for fd in model.get("fields") or []:
+        tag = "%s::%s" % (name, fd["name"])
+        decl = squash(fd["decl"])
+        if count(hsq, decl) != 1:
+            problems.append("%s: field declaration found %d times in header" % (tag, count(hsq, decl)))
+            continue
+        idx = hsq.index(decl)
+        if idx > 0 and hsq[idx - 1].startswith(("UPROPERTY", "UFUNCTION")):
+            problems.append("%s: field declared under a UPROPERTY or UFUNCTION" % tag)
+        access = next((hsq[j] for j in range(idx - 1, -1, -1) if hsq[j] in ("public:", "protected:", "private:")), None)
+        if access != fd["access"] + ":":
+            problems.append("%s: field declared under %s, not %s:" % (tag, access, fd["access"]))
+        if fd.get("offset") is not None:
+            pos = {squash(m["decl"]): hsq.index(squash(m["decl"])) for m in members
+                   if m.get("offset") is not None and squash(m["decl"]) in hsq}
+            before = [pos[squash(m["decl"])] for m in members if m.get("offset") is not None
+                      and m["offset"] < fd["offset"] and squash(m["decl"]) in pos]
+            after = [pos[squash(m["decl"])] for m in members if m.get("offset") is not None
+                     and m["offset"] > fd["offset"] and squash(m["decl"]) in pos]
+            if (before and idx < max(before)) or (after and idx > min(after)):
+                problems.append("%s: field out of offset order among the reflected members" % tag)
     if problems:
         raise SystemExit("behaviour splice verification failed for %s:\n  %s" % (name, "\n  ".join(problems)))
+
+
+def render_helper_declarations(model):
+    """Header lines of the helper entries: plain member declarations after the reflected members, outside any UFUNCTION
+    declaration. The access label is written when it changes (the class body starts public)."""
+    helpers = model.get("helpers") or []
+    if not helpers:
+        return []
+    lines = ["", "\t// Non-reflected helpers (behaviour kind \"helper\", porting/behavior/README.md): plain C++ member",
+             "\t// functions, not UFUNCTIONs and not part of any UFUNCTION declaration."]
+    current = "public"
+    for h in helpers:
+        if h["access"] != current:
+            lines.append("%s:" % h["access"])
+            current = h["access"]
+        lines.append("\t%s %s(%s)%s;" % (h["ret"], h["name"], ", ".join(h["args"]), " const" if h["const"] else ""))
+    return lines
 
 
 def render_promoted_header(model, api, parent_include, source_label):
@@ -1598,11 +2203,17 @@ def render_promoted_header(model, api, parent_include, source_label):
     lines.append("\tGENERATED_BODY()")
     lines.append("")
     lines.append("public:")
+    pending = sorted(model.get("fields") or [], key=lambda f: (f.get("offset") is None, f.get("offset") or 0))
     for m in model["members_decl_order"]:
+        while (pending and pending[0].get("offset") is not None and m.get("offset") is not None
+               and pending[0]["offset"] < m["offset"]):
+            lines.extend(field_lines(pending.pop(0)))
         lines.append("\t// table index %s, flags %s" % (m["table_index"], m["property_flags"]))
         lines.append("\t%s" % uproperty_line(m["specifiers"]))
         lines.append("\t%s" % m["decl"])
         lines.append("")
+    for fd in pending:
+        lines.extend(field_lines(fd))
     for f in model["functions"]:
         lines.append("\tUFUNCTION(%s)" % ", ".join(f["specifiers"]))
         lines.append("\t%s %s(%s)%s;" % (f.get("ret", "void"), f["name"], ", ".join(f["args"]),
@@ -1614,6 +2225,7 @@ def render_promoted_header(model, api, parent_include, source_label):
         lines.append("")
     if rep:
         lines.append("\tvirtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;")
+    lines.extend(render_helper_declarations(model))
     lines.append("};")
     lines.append("")
     return "\n".join(lines) + "\n"
@@ -1699,6 +2311,18 @@ def render_promoted_cpp(model, source_label):
     if rep:
         lines.append("#include \"Net/UnrealNetwork.h\"")
     lines.append("")
+    statics = model.get("static_helpers") or []
+    if statics:
+        lines.append("namespace")
+        lines.append("{")
+        for h in statics:
+            lines.append("static %s %s(%s)" % (h["ret"], h["name"], ", ".join(h["args"])))
+            lines.append("{")
+            lines.extend(body_lines(h["body"]))
+            lines.append("}")
+            lines.append("")
+        lines.append("}  // namespace")
+        lines.append("")
     for f in model["functions"]:
         impl = "%s_Implementation" % f["name"] if f["rpc"] else f["name"]
         args = ", ".join(f["args"])
@@ -1713,6 +2337,13 @@ def render_promoted_cpp(model, source_label):
             lines.extend(body_lines(f.get("validate_body")))
             lines.append("}")
             lines.append("")
+    for h in model.get("helpers") or []:
+        lines.append("%s %s::%s(%s)%s" % (h["ret"], name, h["name"], ", ".join(h["args"]),
+                                          " const" if h["const"] else ""))
+        lines.append("{")
+        lines.extend(body_lines(h["body"]))
+        lines.append("}")
+        lines.append("")
     if rep:
         lines.append("void %s::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const" % name)
         lines.append("{")
@@ -1986,7 +2617,8 @@ def promote(args):
         gate.current_package = package
         model = build_class_promoted(blocks_by_va[block], name, resolver, parents[block], owner_fns,
                                      snippets_by_class.get(name, []), splice_ctx)
-        model["includes"] = own_includes(gate, model["used"], package)
+        model["includes"] = sorted(set(own_includes(gate, model["used"], package))
+                                   | set(model["splice"].get("header_includes", set())))
         class_models.append(model)
         splice_done.extend(model["splice"]["accepted"])
         splice_rejects.extend(model["splice"]["rejected"])

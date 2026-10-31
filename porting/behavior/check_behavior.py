@@ -11,6 +11,10 @@ For every manifest entry with status "ported" it checks:
      a type, a function, or a member declared in the class or a generated ancestor header.
 Skipped entries are checked for a non-empty reason.
 
+Kinds helper and static_helper (contract: porting/behavior/README.md, "helper"): a helper is a non-reflected
+member declared in the class header outside any UFUNCTION, under its access label; a static_helper is a static free
+function defined in the anonymous namespace at the top of the class .cpp, with no header declaration and no use of
+this or of class members.
 Usage:  python3 porting/behavior/check_behavior.py [--verbose]
         python3 porting/behavior/check_behavior.py --gen-root <dir>/FortniteGame/Generated [--splice-report <behavior_splice.json>]
 The --gen-root mode checks a generated tree instead of native/ (it does not write COUNTS.txt). For each ported entry
@@ -44,6 +48,12 @@ PLACEHOLDER_RE = re.compile(r"\b(TODO|FIXME|TBD|XXX|PLACEHOLDER|placeholder|not 
 _header_cache = {}
 _members_cache = {}
 DECLARED = set()   # "Class::Function" of ported entries whose signature is found in the generated header
+HELPER_KINDS = ("helper", "static_helper")
+FIELD_KIND = "member_field"
+FIELD_ACCESS = ("public", "protected", "private")
+FIELD_SIG_RE = re.compile(r"^(?P<type>.*?[\s*&>])\s*(?P<name>[A-Za-z_]\w*)$")
+KNOWN_KINDS = {"getter", "exec", "impl", "validate", "onrep", "callee", FIELD_KIND} | set(HELPER_KINDS)
+HELPER_NAMES = {}  # class -> names of its ported helper and static_helper entries (callable from any body)
 
 
 def read_header(cls):
@@ -99,7 +109,7 @@ def header_identifiers(cls):
         if mf and s.endswith(";") and "=" not in s.split("(")[0]:
             funcs.add(mf.group(1))
         # member declaration: "<type> Name;", "<type> Name[N];", "<type> Name : 1;"
-        mm = re.match(r"[\w:<>\*&\s,]+?[\s\*&](\w+)\s*(\[[^\]]*\])?\s*(:\s*\d+)?\s*;\s*$", s)
+        mm = re.match(r"[\w:<>\*&\s,]+?[\s\*&](\w+)\s*(\[[^\]]*\])?\s*(:\s*\d+)?\s*(=[^;]*)?;\s*$", s)
         if mm and "(" not in s:
             members.add(mm.group(1))
     _members_cache[cls] = (members, funcs, types)
@@ -143,7 +153,9 @@ def check_entry(e, problems, infos, waived=frozenset()):
         problems.append(("FAIL", tag, "missing signature"))
         return
     declared_text = normalize(hdr)
-    if normalize(sig) + ";" in declared_text:
+    if e.get("kind") == "static_helper":
+        pass   # defined in the .cpp only; declared_in_header does not apply (check_generated checks the definition)
+    elif normalize(sig) + ";" in declared_text:
         DECLARED.add(tag)
     elif tag in waived:
         infos.append(("NOT_SPLICED", tag, "rejected by the splice report, declaration not emitted"))
@@ -183,7 +195,13 @@ def check_entry(e, problems, infos, waived=frozenset()):
         members |= mem
         funcs |= fn_
         types |= ty
-    allowed = set(CPP_KEYWORDS) | signature_params(sig) | local_names(code) | funcs | members
+    allowed = set(CPP_KEYWORDS) | signature_params(sig) | local_names(code) | HELPER_NAMES.get(cls, set())
+    if e.get("kind") == "static_helper":
+        # a free function has no object: the members and member functions of the class are not names it can use
+        if re.search(r"\bthis\b", code):
+            problems.append(("FAIL", tag, "static helper uses this"))
+    else:
+        allowed |= funcs | members
     allowed |= {c for c in chain}
     bad = []
     tokens = list(re.finditer(r"[A-Za-z_]\w*", code))
@@ -214,6 +232,83 @@ def check_entry(e, problems, infos, waived=frozenset()):
         if b not in seen:
             seen.add(b)
             problems.append(("FAIL", tag, "identifier not found in class chain or signature: %s" % b))
+
+
+def check_kind(e, problems):
+    """Kind-specific fields of an entry (contract: porting/behavior/README.md, "helper")."""
+    tag = "%s::%s" % (e.get("class"), e.get("function"))
+    kind = e.get("kind")
+    if kind not in KNOWN_KINDS:
+        problems.append(("FAIL", tag, "unknown kind %r" % (kind,)))
+        return
+    sig = e.get("signature") or ""
+    if kind == FIELD_KIND:
+        parse = FIELD_SIG_RE.match(re.sub(r"\s+", " ", sig).strip())
+        if not parse or re.match(r"(static|mutable|volatile|virtual|inline|extern|typedef|using|UPROPERTY)\b",
+                                 parse.group("type").strip()):
+            problems.append(("FAIL", tag, "field signature is not 'type name' (no static, virtual, ...): %r" % sig))
+        if e.get("inc_path"):
+            problems.append(("FAIL", tag, "a member field has no body: inc_path must be absent"))
+        if e.get("access") not in FIELD_ACCESS:
+            problems.append(("FAIL", tag, "member_field needs access public, protected or private, not %r"
+                             % (e.get("access"),)))
+        default = e.get("default")
+        if default is not None and (not isinstance(default, (str, int, float)) or re.search(r"[;{}\n]", str(default))):
+            problems.append(("FAIL", tag, "default must be one expression without ; { } or a newline"))
+        off = e.get("offset")
+        if off is not None and not (isinstance(off, int) or (isinstance(off, str) and re.match(r"^(0x[0-9a-fA-F]+|\d+)$", off))):
+            problems.append(("FAIL", tag, "offset must be a number or a string such as 0xe88"))
+    elif kind not in HELPER_KINDS:
+        return
+    if re.match(r"\s*(static|virtual|inline|FORCEINLINE)\b", sig):
+        problems.append(("FAIL", tag, "signature must not spell its linkage (static, virtual, inline)"))
+    if kind == "helper" and e.get("access") not in ("public", "protected"):
+        problems.append(("FAIL", tag, "helper needs access public or protected, not %r" % (e.get("access"),)))
+    if kind == "static_helper":
+        if e.get("access") is not None:
+            problems.append(("FAIL", tag, "static_helper takes no access"))
+        if re.search(r"\bconst\s*$", sig.strip()):
+            problems.append(("FAIL", tag, "static_helper cannot be const"))
+    inc = e.get("includes")
+    if inc is not None and (not isinstance(inc, list) or not all(isinstance(x, str) and x.endswith(".h") for x in inc)):
+        problems.append(("FAIL", tag, "includes must be a list of header spellings ending in .h"))
+
+
+def check_field(e, problems, infos, rejected, gen_root, counts):
+    """member_field: a plain declaration in the class header and no body. Plain mode reports it declared or pending.
+    --gen-root checks that the declaration is there once, outside any UPROPERTY or UFUNCTION, under its access label."""
+    cls, fn = e["class"], e["function"]
+    tag = "%s::%s" % (cls, fn)
+    hdr = read_header(cls)
+    if hdr is None:
+        problems.append(("FAIL", tag, "generated header %s.h not found" % cls))
+        return
+    parse = FIELD_SIG_RE.match(re.sub(r"\s+", " ", e.get("signature") or "").strip())
+    if not parse or parse.group("name") != fn:
+        return   # check_kind has reported the signature
+    typ = parse.group("type").strip()
+    default = e.get("default")
+    decl = ("%s %s = %s;" % (typ, fn, default)) if default not in (None, "") else ("%s %s;" % (typ, fn))
+    if gen_root and tag in rejected:
+        counts["not_spliced"] += 1
+        return
+    hl = [squash(line) for line in hdr.splitlines()]
+    if not gen_root:
+        if squash(decl) in hl:
+            DECLARED.add(tag)
+        else:
+            infos.append(("PENDING_DECL", tag, "generator must declare: %s" % decl))
+        return
+    if hl.count(squash(decl)) != 1:
+        problems.append(("FAIL", tag, "field declaration %r found %d times in header" % (decl, hl.count(squash(decl)))))
+        return
+    idx = hl.index(squash(decl))
+    if idx > 0 and hl[idx - 1].startswith(("UPROPERTY", "UFUNCTION")):
+        problems.append(("FAIL", tag, "field declared under a UPROPERTY or UFUNCTION: %r" % hl[idx - 1]))
+    access = next((hl[j] for j in range(idx - 1, -1, -1) if hl[j] in ("public:", "protected:", "private:")), None)
+    if access != e.get("access", "") + ":":
+        problems.append(("FAIL", tag, "field declared under %r, not %s:" % (access, e.get("access"))))
+    counts["spliced"] += 1
 
 
 def check_skipped(e, problems):
@@ -249,6 +344,9 @@ def check_generated(e, rejected, problems, counts):
         problems.append(("FAIL", tag, "cannot parse signature %r" % e.get("signature")))
         return
     ret, sfn, args, const = m["ret"], m["fn"], m["args"], " const" if m["const"] else ""
+    if e["kind"] == "static_helper":
+        check_static_helper(e, tag, ret, sfn, args, hdr, cpp, problems, counts)
+        return
     hl = [squash(line) for line in hdr.splitlines()]
     decl_key = squash("%s %s(%s)%s;" % (ret, sfn, args, const))
     if hl.count(decl_key) != 1:
@@ -256,6 +354,13 @@ def check_generated(e, rejected, problems, counts):
         return
     decl_index = hl.index(decl_key)
     ufunc = hl[decl_index - 1] if decl_index else ""
+    if e["kind"] == "helper":
+        if ufunc.startswith("UFUNCTION"):
+            problems.append(("FAIL", tag, "helper declaration sits under a UFUNCTION: %r" % ufunc))
+        access = next((hl[j] for j in range(decl_index - 1, -1, -1) if hl[j] in ("public:", "protected:", "private:")),
+                      None)
+        if access != e.get("access", "") + ":":
+            problems.append(("FAIL", tag, "helper declared under %r, not %s:" % (access, e.get("access"))))
     if e["kind"] in ("getter", "exec") and "UFUNCTION(BlueprintCallable" not in ufunc:
         problems.append(("FAIL", tag, "UFUNCTION before the declaration lacks BlueprintCallable: %r" % ufunc))
     if e["kind"] == "validate":
@@ -282,6 +387,39 @@ def check_generated(e, rejected, problems, counts):
         problems.append(("FAIL", tag, "body is not the snippet (stub or other text) and the entry is not a rejection"))
 
 
+def check_static_helper(e, tag, ret, sfn, args, hdr, cpp, problems, counts):
+    """--gen-root: a static helper is a static free function in the anonymous namespace at the top of the .cpp. It has no
+    header declaration, it is defined before every member definition, and its body is the snippet."""
+    if squash("%s %s(%s);" % (ret, sfn, args)) in [squash(line) for line in hdr.splitlines()]:
+        problems.append(("FAIL", tag, "static helper is declared in the class header"))
+        return
+    if cpp is None:
+        problems.append(("FAIL", tag, "generated %s.cpp not found" % e["class"]))
+        return
+    cl = [line.rstrip() for line in cpp.splitlines()]
+    key = squash("static %s %s(%s)" % (ret, sfn, args))
+    starts = [i for i, line in enumerate(cl) if squash(line) == key]
+    if len(starts) != 1 or starts[0] + 1 >= len(cl) or cl[starts[0] + 1] != "{":
+        problems.append(("FAIL", tag, "definition %r found %d times in cpp (or not followed by '{')" % (key, len(starts))))
+        return
+    i = starts[0]
+    opened = next((j for j, line in enumerate(cl) if line == "namespace"), None)
+    closed = next((j for j, line in enumerate(cl) if line == "}  // namespace"), None)
+    if opened is None or closed is None or not opened < i < closed:
+        problems.append(("FAIL", tag, "static helper is not inside the anonymous namespace"))
+        return
+    members_at = [j for j, line in enumerate(cl) if re.match(r"^\S.*\b%s::" % re.escape(e["class"]), line)]
+    if members_at and i > min(members_at):
+        problems.append(("FAIL", tag, "static helper is defined after a member function"))
+        return
+    end = next((j for j in range(i + 2, len(cl)) if cl[j] == "}"), None)
+    body = cl[i + 2:end] if end is not None else None
+    if body == snippet_body_lines(e["inc_path"]):
+        counts["spliced"] += 1
+    else:
+        problems.append(("FAIL", tag, "body is not the snippet"))
+
+
 def read_cpp(cls):
     path = os.path.join(GEN, cls + ".cpp")
     return open(path, encoding="utf-8", errors="replace").read() if os.path.exists(path) else None
@@ -297,14 +435,21 @@ def main():
         GEN = os.path.abspath(gen_root)
         _header_cache.clear()
     manifest = json.load(open(MANIFEST, encoding="utf-8"))
+    for e in manifest:
+        if e.get("status") == "ported" and e.get("kind") in HELPER_KINDS + (FIELD_KIND,):
+            HELPER_NAMES.setdefault(e["class"], set()).add(e["function"])
     rejected = set()
     if splice_report:
         rejected = {r["entry"] for r in json.load(open(splice_report, encoding="utf-8")).get("rejections", [])}
     problems, infos = [], []
     counts = {"ported": 0, "skipped": 0, "spliced": 0, "not_spliced": 0}
     for e in manifest:
+        check_kind(e, problems)
         if e.get("status") == "ported":
             counts["ported"] += 1
+            if e.get("kind") == FIELD_KIND:
+                check_field(e, problems, infos, rejected, gen_root, counts)
+                continue
             check_entry(e, problems, infos, waived=rejected if gen_root else frozenset())
             if gen_root and not any(p[1] == "%s::%s" % (e["class"], e["function"]) for p in problems):
                 check_generated(e, rejected, problems, counts)
