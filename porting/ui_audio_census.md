@@ -1,7 +1,8 @@
 # Frontend/lobby UI and audio census
 
-Analysis as of 2026-10-30. No UE build, no staged-game run, no pak read, and no
-change under `porting/native/`. Regenerate with:
+Analysis as of 2026-10-31 (rerun after the AES-key closures; the 2026-10-30 figures
+are superseded where they differ). No UE build, no staged-game run, no pak read by
+this script, and no change under `porting/native/`. Regenerate with:
 
 ```sh
 python3 porting/census_ui_audio.py                    # full run, about 40 s
@@ -17,19 +18,29 @@ and never prompts for a key.
 
 - **Maps:** 3,694 maps, native (`/Script`) imports only. A map's `/Game` asset
   imports are counts, not names. The primary-key scan covers 28 paks.
-- **Packages:** 457 recovered `.uasset` files were classified by the loose
-  cue4inspect pass (`--imports` plus export summary, no key).
-- **Unmeasured paks:** `pakchunk1000`, `1001` and `1002` are GUID-keyed and not
-  indexed by the primary key. Any frontend or sound content in them is unknown.
-- **Widgets:** the registry has 2,175 WidgetBlueprints. Four recovered packages are
-  widget-related: they sit under `UI/` or import UMG, CommonUI or FortniteUI. The
-  other 2,171 are unseen.
-- **Sounds:** the registry has 106,362 SoundWave assets. 311 sound-class, mix and
-  cue packages are recovered. No SoundWave payload is recovered.
+- **Packages:** 1,434 recovered `.uasset` files (up from 457) were classified by the
+  loose cue4inspect pass (`--imports` plus export summary, no key). 1,364 parsed; 70
+  did not parse and are excluded from the type counts below.
+- **Unmeasured paks:** the census's primary-key scan still skips `pakchunk1000`,
+  `1001` and `1002` (GUID-keyed). The closures ran with `--all-keys`, so some of
+  their packages may be among the 1,434, but this census does not attribute packages
+  to a pak. Their content is therefore not separately measured.
+- **Widgets:** the registry has 2,175 WidgetBlueprints. The census's widget heuristic
+  (under `UI/`, or importing UMG, CommonUI or FortniteUI) now flags 146 recovered
+  packages (up from 4). Of these, 19 export a `UWidgetBlueprintGeneratedClass`. The
+  heuristic also picks up some gameplay Blueprints. The 2,171 unseen widgets are not
+  all recovered: the 146 is the measured set, not the full registry.
+- **Sounds:** the registry has 106,362 SoundWave assets. 396 sound packages are recovered
+  (census `recovered_sound_packages`; up from 311). Only 7 packages export a
+  `USoundWave`, so almost no SoundWave payload is recovered.
 - **Import counts:** this census excludes `Package` and `Default__` rows, so the
   BP_BannerEditorTile count (52) differs from the 77 in `asset_compatibility.md`.
 
 ## Key findings
+
+Findings 1 to 6 are the 2026-10-30 readings. The 2026-10-31 rerun changes counts and
+the unresolved-native list: see "Native classes the Frontend graph still needs" at the
+end of this file.
 
 1. **The entry Frontend map has no UI natives of its own.** `Maps/Frontend.umap`
    has 48 native imports, none from UMG, CommonUI or FortniteUI. Its 290 asset
@@ -235,10 +246,27 @@ Closures write to `porting/generated/extracted/`. A closure that stops at the ca
 prints `pending` above zero, so rerun with a higher `--max-packages`. Afterwards,
 `python3 porting/census_ui_audio.py` runs with no key and picks up the new packages.
 
+Run 2026-10-31 (all four with `--all-keys --key-file=<path>`; 0 packages failed in
+each). The caps were hit, so every closure still has a frontier:
+
+| Closure | Cap | Visited | Pending at stop |
+|---|---|---|---|
+| `Maps/Frontend` | 400 | 400 | 949 |
+| `Maps/FortniteTransition` | 200 | 200 | 209 |
+| `Maps/UI/Frontend_Lobby_Default` | 400 | 400 | 2,003 |
+| `Maps/UI/Frontend_Lobby_StW_Season11` | 600 | 600 | 1,806 |
+
+`porting/generated/extracted/` now holds 3,166 files (219 MB) in total, including earlier
+extractions; the tree is git-ignored. The Frontend graph is partial until the pending
+frontier is drained with higher caps.
+
 ## Blockers
 
-- **Key-gated:** the Frontend asset graph, the 2,171 unseen WidgetBlueprints,
-  106,362 SoundWave payloads, and the three GUID-keyed paks.
+- **Key-gated, partly open:** the Frontend asset graph is partly recovered (400 of an
+  unknown total, 949 pending); the 2,171 unseen WidgetBlueprints are partly recovered
+  (146 widget-related packages measured); 106,362 SoundWave payloads remain
+  unrecovered (7 packages export a `USoundWave`); the three GUID-keyed paks are not
+  separately measured.
 - **Host audio:** no PCM device and no sound server. Real audio output needs a
   host-level decision: a working HDA PCM device, or a user-session PipeWire or
   PulseAudio null sink. Nothing here starts a sound server.
@@ -246,3 +274,87 @@ prints `pending` above zero, so rerun with a higher `--max-packages`. Afterwards
   roots would let the loose pass see `/Game` dependencies without a key. This is
   a small `porting/cue4inspect` change and was left alone under the analysis-only
   scope.
+
+## Native classes the Frontend graph still needs
+
+Method: the census `widget_blueprints.native_imports` rows (1,434 packages scanned,
+146 widget packages, 308 imports of kind Class or component type after filtering out
+Function, struct, enum and delegate rows). Each row was cross-checked against
+`porting/native_class_set.txt` (A/U prefix variants), the reflection index
+`porting/generated/reflection/native_class_index.json` (6,958 classes), and the census
+status. Ranked by the number of widget packages that import the name. Engine-owned
+imports are excluded because the set holds project closure classes, not engine classes.
+
+- Class imports not in the set: 168, of which 158 are engine-owned (out of scope for
+  the set) and 10 are not.
+- Of the 10: 2 are missing from both the set and source (`FortSocialNameTextBlock`,
+  `FortMediaSubtitlesPlayer`), 2 are hand-written in `porting/native/Source` but not in
+  the generated set (`FortKismetLibrary`, `FortStaticMeshActor`), and 6 are present in
+  an engine plugin (GameplayAbilities, AnimationBudgetAllocator, ChaosCloth, Niagara).
+  The reflection index has all 10.
+- The 29 rows below include 10 Class imports and 19 component-typed imports. The
+  component-typed rows are object names whose import class is a component type
+  (for example `FortniteUI.Root` as `SceneComponent`). They are not `/Script` classes,
+  and the reflection index has no entry for 17 of the 19 object names (`In reflection`
+is `no`). Treat
+  them as template or subobject names to resolve from the widget Blueprint, not as
+  classes to implement.
+
+| Rank | Import | Kind | Widget packages | In reflection | Status |
+|---|---|---|---|---|---|
+| 1 | FortniteGame.FortKismetLibrary | class | 16 | yes | hand-written in porting/native source, not in set |
+| 2 | FortniteGame.CameraComponent | subobject (CameraComponent) | 6 | yes | project module, source not recovered |
+| 3 | FortniteGame.SceneComponent | subobject (SceneComponent) | 6 | yes | project module, source not recovered |
+| 4 | FortniteUI.FortSocialNameTextBlock | class | 3 | yes | missing from set and source |
+| 5 | FortniteUI.PrimarySceneComponent | subobject (ChildActorComponent) | 2 | no | project module, source not recovered |
+| 6 | FortniteUI.Root | subobject (SceneComponent) | 2 | no | project module, source not recovered |
+| 7 | FortniteUI.SceneChangeRootComponent | subobject (SceneComponent) | 2 | no | project module, source not recovered |
+| 8 | FortniteUI.SecondarySceneComponent | subobject (ChildActorComponent) | 2 | no | project module, source not recovered |
+| 9 | FortniteUI.TransitionCameraComponent | subobject (CameraComponent) | 2 | no | project module, source not recovered |
+| 10 | GameplayAbilities.AbilitySystemBlueprintLibrary | class | 2 | yes | present in engine plugin, not in set |
+| 11 | SubtitlesWidgets.FortMediaSubtitlesPlayer | class | 2 | yes | missing from set and source (plugin absent) |
+| 12 | AnimationBudgetAllocator.SkeletalMeshComponentBudgeted | class | 1 | yes | present in engine plugin, not in set |
+| 13 | ChaosCloth.ChaosClothingSimulationFactory | class | 1 | yes | present in engine plugin, not in set |
+| 14 | FortniteGame.FortStaticMeshActor | class | 1 | yes | hand-written in porting/native source, not in set |
+| 15 | FortniteGame.StaticMeshComponent0 | subobject (StaticMeshComponent) | 1 | no | project module, source not recovered |
+| 16 | FortniteUI.FocusCameraTargetComponent | subobject (ChildActorComponent) | 1 | no | project module, source not recovered |
+| 17 | FortniteUI.PedestalBase | subobject (ChildActorComponent) | 1 | no | project module, source not recovered |
+| 18 | FortniteUI.PedestalChildrenRoot | subobject (SceneComponent) | 1 | no | project module, source not recovered |
+| 19 | FortniteUI.SceneRoot | subobject (SceneComponent) | 1 | no | project module, source not recovered |
+| 20 | FortniteUI.VaultBackgroundComponent | subobject (ChildActorComponent) | 1 | no | project module, source not recovered |
+| 21 | FortniteUI.VaultRotatorComponent | subobject (ChildActorComponent) | 1 | no | project module, source not recovered |
+| 22 | FortniteUI.WidgetComponent_BattlePassInfo | subobject (WidgetComponent) | 1 | no | project module, source not recovered |
+| 23 | FortniteUI.WidgetComponent_CompletedFeatInfo | subobject (WidgetComponent) | 1 | no | project module, source not recovered |
+| 24 | FortniteUI.WidgetComponent_FillOpenSlot | subobject (WidgetComponent) | 1 | no | project module, source not recovered |
+| 25 | FortniteUI.WidgetComponent_MemberInfo | subobject (WidgetComponent) | 1 | no | project module, source not recovered |
+| 26 | FortniteUI.WidgetComponentsRoot | subobject (SceneComponent) | 1 | no | project module, source not recovered |
+| 27 | GameplayAbilities.AbilitySystemComponent | class | 1 | yes | present in engine plugin, not in set |
+| 28 | Niagara.NiagaraComponent | class | 1 | yes | present in engine plugin, not in set |
+| 29 | Niagara.NiagaraSystem | class | 1 | yes | present in engine plugin, not in set |
+
+Frontend map natives (the census `frontend_native_classes_all`): 171 unique, 7
+unresolved, all FortniteGame functions or one enum: `SendClientStatEvent` (2 maps),
+`EFrontEndCamera` (enum), `GetFirstLocalFortPlayerController`,
+`GetLocalFortPlayerControllers`, `GetPartSkeletalMeshComponent`, `OnMatchStarted`,
+`RunFacialAnimationTest`. The earlier 14-row list in "Native classes needed by the
+frontend" is superseded: the census no longer reports those classes as unresolved,
+although the 171 imports are unchanged. Other agents change `porting/native/` during
+this work, so the status column reflects that tree at the time of the run.
+
+### Cooked asset counts present locally
+
+Counts are packages with at least one export of the type, among the 1,364 packages
+that parsed (from 1,434 `.uasset` files on disk; 1,449 `.uexp`; 268 `.ubulk`; 15
+`.umap`). Packages can hold several types, so the rows do not sum.
+
+| Type | Packages | Note |
+|---|---|---|
+| Textures (`UTexture2D`) | 130 | plus 5 `UTextureCube` |
+| Materials (`UMaterial`, `UMaterialInstanceConstant`, `UMaterialFunction`) | 101, 98, 78 | plus 8 `UMaterialParameterCollection` |
+| Sounds (`USoundClass`, `USoundCue`, `USoundWave`) | 188, 58, 7 | `USoundWave` payloads are almost absent |
+| Fonts (`UFont`) | 2 | |
+| Widget blueprints (`UWidgetBlueprintGeneratedClass`) | 19 | 146 widget-related packages by the census heuristic |
+
+`UWidgetBlueprint` has no exports (only the generated class is cooked in these
+packages). The 146 figure is broader and includes gameplay Blueprints that import
+UMG, so the 19 exported generated classes is the stricter count.
