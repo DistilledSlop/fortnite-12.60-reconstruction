@@ -1,1 +1,51 @@
-{"checks": {}}
+{
+ "checks": {
+  "checksum_tool_selftest": {
+   "command": "python3 -I porting/class_checksum.py --self-test",
+   "commit": "97d4db3ad58644e95d5427df83cc1f5f20b6c800",
+   "exit_code": 0,
+   "id": "checksum_tool_selftest",
+   "key_lines": [
+    "ok   RPC group of a class contains every net function of its parents (expected)",
+    "ok   emitted replicated and RPC subsets are never larger than the expected sets",
+    "self-test: 31 checks, 0 failed"
+   ],
+   "result": "pass",
+   "utc": "2026-10-31T16:24:10Z"
+  },
+  "net_version_checksum": {
+   "command": "(log only) porting/generated/dedicated-server-client-test.log",
+   "commit": "97d4db3ad58644e95d5427df83cc1f5f20b6c800",
+   "exit_code": null,
+   "id": "net_version_checksum",
+   "key_lines": [
+    "[2026.10.31-16.23.43:936][ 66]LogFortniteNet: Local network version checksum: 683914758 (0x28C3B606)"
+   ],
+   "matches": 1,
+   "result": "pass",
+   "utc": "2026-10-31T16:24:05Z"
+  },
+  "smoke_athena": {
+   "command": "bash porting/server/smoke_join.sh '/Game/Maps/FortniteEmptyDedicated?game=/Script/FortniteGame.FortGameModeAthena'",
+   "commit": "97d4db3ad58644e95d5427df83cc1f5f20b6c800",
+   "exit_code": 0,
+   "id": "smoke_athena",
+   "key_lines": [
+    "Local UE join succeeded. Logs: /opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/dedicated-server-client-test.log and /opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated..."
+   ],
+   "result": "pass",
+   "utc": "2026-10-31T16:24:02Z"
+  },
+  "smoke_default": {
+   "command": "bash porting/server/smoke_join.sh",
+   "commit": "97d4db3ad58644e95d5427df83cc1f5f20b6c800",
+   "exit_code": 0,
+   "id": "smoke_default",
+   "key_lines": [
+    "Local UE join succeeded. Logs: /opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/dedicated-server-client-test.log and /opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated..."
+   ],
+   "result": "pass",
+   "utc": "2026-10-31T16:23:35Z"
+  }
+ }
+}
