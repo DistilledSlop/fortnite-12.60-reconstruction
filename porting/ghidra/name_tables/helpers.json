@@ -574,6 +574,225 @@
       "confidence": "high",
       "source": "returns false, folded",
       "signature": "bool Stub_ReturnFalse(void)"
+    },
+    {
+      "name": "FScalableFloat_GetValueAtLevel",
+      "address": "0x14070fe00",
+      "returns": "float",
+      "params": [
+        [
+          "this",
+          "ptr:FScalableFloat"
+        ],
+        [
+          "Level",
+          "float"
+        ],
+        [
+          "ContextString",
+          "ptr:FString"
+        ]
+      ],
+      "source": "FScalableFloat::GetValueAtLevel(float, const FString*) const (GameplayAbilities/Private/AttributeSet.cpp:421)",
+      "confidence": "high",
+      "evidence": "Eighth pass. Field-by-field match: LocalCachedCurveID @+4 against UCurveTable::GetGlobalCachedCurveID (0x147cdd300), Curve.CurveTable @+8, FinalCurve @+0x18, FRealCurve::Eval at vfn +0x88, default context literal 'FScalableFloat::GetValueAtLevel' at 0x1459c5a60. Level is XMM1, ContextString is R8 (Win64).",
+      "signature": "float FScalableFloat_GetValueAtLevel(const FScalableFloat* this, float Level, const FString* ContextString)"
+    },
+    {
+      "name": "TMulticastDelegate_PlayerStateInt32_Broadcast",
+      "address": "0x1407ac640",
+      "returns": "void",
+      "params": [
+        [
+          "InvocationList",
+          "ptr:void"
+        ],
+        [
+          "PlayerState",
+          "ptr:UObject"
+        ],
+        [
+          "Value",
+          "int32"
+        ]
+      ],
+      "source": "TMulticastDelegate<void(AFortPlayerStateAthena*, int32)>::Broadcast (Core/Public/Delegates/DelegateSignatureImpl.inl:998)",
+      "confidence": "high",
+      "evidence": "Eighth pass. Lock++ at +0x14, reverse loop, vfn +0x50 (ExecuteIfSafe, slot 10 with TryGetBoundFunctionName compiled out in shipping) on each element, lock--, then CompactInvocationList (0x140685370) when a call failed. Callers pass the player state and an int32 (OnRep_Kills, OnRep_AIKills, OnRep_TeamKillScore, UpdateTotalPlayerScore). Argument types medium-high.",
+      "signature": "void TMulticastDelegate_PlayerStateInt32_Broadcast(void* InvocationList, AFortPlayerStateAthena* PlayerState, int32 Value)"
+    },
+    {
+      "name": "FMulticastDelegateBase_CompactInvocationList",
+      "address": "0x140685370",
+      "returns": "void",
+      "params": [
+        [
+          "InvocationList",
+          "ptr:void"
+        ],
+        [
+          "bCheckThreshold",
+          "bool"
+        ]
+      ],
+      "source": "FMulticastDelegateBase::CompactInvocationList(bool) (Core/Public/Delegates/MulticastDelegateBase.h)",
+      "confidence": "high",
+      "evidence": "Eighth pass. TArray<FDelegateBase> at +0, CompactionThreshold at +0x10, InvocationListLockCount at +0x14. Returns when locked; with the flag set, --threshold > Num returns; removes null or IsCompactable() (vfn +0x20 = slot 4) entries with RemoveAtSwap; threshold = max(2, 2*Num); Shrink when old Num > threshold.",
+      "signature": "void FMulticastDelegateBase_CompactInvocationList(void* InvocationList, bool bCheckThreshold)"
+    },
+    {
+      "name": "GetFortGameStateAthena",
+      "address": "0x1419d3ff0",
+      "returns": "ptr:UObject",
+      "params": [
+        [
+          "Object",
+          "ptr:UObject"
+        ]
+      ],
+      "source": "Cast<AFortGameStateAthena>(Object->GetWorld()->GameState) (AFortGameStateAthena::StaticClass at 0x14290f690)",
+      "confidence": "high",
+      "evidence": "Fourth pass; eighth pass re-read the asm: vfn +0x150 (GetWorld) on the argument with a null test, UWorld::GameState at +0x130 with a null test, then IsA through the class depth and SuperStructs array; returns the game state or null.",
+      "signature": "AFortGameStateAthena* GetFortGameStateAthena(const UObject* Object)"
+    },
+    {
+      "name": "GetCurrentPlaylistAthena",
+      "address": "0x141991bf0",
+      "returns": "ptr:UObject",
+      "params": [
+        [
+          "GameState",
+          "ptr:UObject"
+        ]
+      ],
+      "source": "AFortGameStateAthena::CurrentPlaylistInfo (FPlaylistPropertyArray at +0x1cd0): OverridePlaylist ? OverridePlaylist : BasePlaylist",
+      "confidence": "high",
+      "evidence": "Sixth pass; eighth pass re-read the asm: mov rax,[rcx+0x1df8]; test; jne; mov rax,[rcx+0x1df0]; ret. Reflection: BasePlaylist at struct +0x120, OverridePlaylist at +0x128 (UFortPlaylistAthena*).",
+      "signature": "UFortPlaylistAthena* GetCurrentPlaylistAthena(AFortGameStateAthena* GameState)"
+    },
+    {
+      "name": "AFortPlayerStateAthena_UpdateScoreForEvent",
+      "address": "0x141a3c2b0",
+      "returns": "int32",
+      "params": [
+        [
+          "this",
+          "ptr:UObject"
+        ],
+        [
+          "Event",
+          "uint8"
+        ],
+        [
+          "Count",
+          "int32"
+        ],
+        [
+          "PreviousPoints",
+          "int32"
+        ],
+        [
+          "Playlist",
+          "ptr:UObject"
+        ]
+      ],
+      "source": "Scoring loop over UFortPlaylistAthena::ScoringData.ScoreDataList (FAthenaScoreData, 0x68 bytes at playlist +0x4e8 / count +0x4f0)",
+      "confidence": "high",
+      "evidence": "Eighth pass (queue row 2). Asm checked: ScoringEvent @0 == Event and NumOccurrencesForScore @0x40 > 0; points = Count / divisor, capped by NumOccurrencesPermitted @0x44 when > 0; Unit = (int)ScoreAwarded.GetValueAtLevel(0) (FScalableFloat at +0x48); Result = Unit * points; PointsAddedToScore.Broadcast(Unit, Event) at this+0xf08 when Result != PreviousPoints; returns the last Result. Names medium.",
+      "signature": "int32 AFortPlayerStateAthena_UpdateScoreForEvent(AFortPlayerStateAthena* this, EAthenaScoringEvent Event, int32 Count, int32 PreviousPoints, UFortPlaylistAthena* Playlist)"
+    },
+    {
+      "name": "AFortPlayerStateAthena_UpdateTotalPlayerScore",
+      "address": "0x141a3c390",
+      "returns": "void",
+      "params": [
+        [
+          "this",
+          "ptr:UObject"
+        ]
+      ],
+      "source": "Total score recomputation (queue row 3)",
+      "confidence": "high",
+      "evidence": "Eighth pass. Asm checked: total = sum of ten int32 point caches (+0xefc, +0xef4, +0xeec, +0xee4, +0xedc, +0xed4, +0xecc, +0xec4, +0xebc, +0xe88); if Role (+0xf0) == 3 and total - TotalPlayerScore (+0xf00) > 0, vfn +0x770 (PlayerTeam) and IsA(FortTeamInfoAthena) gate the add to team +0x370; stores +0xf00; if Role != 3 broadcasts the list at +0x1180 through Broadcast_PlayerStateInt32.",
+      "signature": "void AFortPlayerStateAthena_UpdateTotalPlayerScore(AFortPlayerStateAthena* this)"
+    },
+    {
+      "name": "AFortPlayerState_GetPlayerTeam",
+      "address": "0x1424192a0",
+      "returns": "ptr:UObject",
+      "params": [
+        [
+          "this",
+          "ptr:UObject"
+        ]
+      ],
+      "source": "Virtual slot 238 (+0x770) of the AFortPlayerStateAthena vtable at 0x145e35fa8: returns AFortPlayerState::PlayerTeam",
+      "confidence": "high",
+      "evidence": "Eighth pass, asm: mov rax,[rcx+0x640]; ret. PlayerTeam is the reflected Object property at 0x640 (AFortTeamInfo*, replicated, OnRep_PlayerTeam). Declared name medium.",
+      "signature": "AFortTeamInfo* AFortPlayerState_GetPlayerTeam(const AFortPlayerState* this)"
+    },
+    {
+      "name": "FGameplayCueParameters_CopyCtor",
+      "address": "0x1406aaec0",
+      "returns": "ptr:void",
+      "params": [
+        [
+          "this",
+          "ptr:void"
+        ],
+        [
+          "Other",
+          "ptr:void"
+        ]
+      ],
+      "source": "Implicit copy constructor of FGameplayCueParameters (GameplayAbilities/Public/GameplayEffectTypes.h:922, size 0xB8)",
+      "confidence": "high",
+      "evidence": "Eighth pass (queue row 7). The constant at +0x08 is the vtable 0x1459aede0 of FGameplayEffectContextHandle (virtual destructor, GameplayEffectTypes.h:596; its dtor 0x1406afe20 stores that vtable at offset 0). Offsets +0x10/+0x18 are the TSharedPtr (non-atomic count +8), +0x30 and +0x50 are FGameplayTagContainer copies (FUN_143e8a690). Reflection block 0x14782dd20 is 184 bytes.",
+      "signature": "FGameplayCueParameters* FGameplayCueParameters_CopyCtor(FGameplayCueParameters* this, const FGameplayCueParameters* Other)"
+    },
+    {
+      "name": "FGameplayCueParameters_Dtor",
+      "address": "0x1406ae340",
+      "returns": "void",
+      "params": [
+        [
+          "this",
+          "ptr:void"
+        ]
+      ],
+      "source": "Implicit destructor of FGameplayCueParameters",
+      "confidence": "medium",
+      "evidence": "Eighth pass (queue row 6): frees the four TArray buffers at +0x30, +0x40, +0x50, +0x60 (two FGameplayTagContainer members), then releases the EffectContext controller. Compiler-generated: port as = default.",
+      "signature": "void FGameplayCueParameters_Dtor(FGameplayCueParameters* this)"
+    },
+    {
+      "name": "FGameplayTagContainer_CopyAssign",
+      "address": "0x143e8a690",
+      "returns": "ptr:void",
+      "params": [
+        [
+          "this",
+          "ptr:void"
+        ],
+        [
+          "Other",
+          "ptr:void"
+        ]
+      ],
+      "source": "FGameplayTagContainer::operator=(const FGameplayTagContainer&) (GameplayTags/Classes/GameplayTagContainer.h:835, two TArray<FGameplayTag>)",
+      "confidence": "high",
+      "evidence": "Eighth pass (queue row 9, corrected). Two TArray members with 8-byte elements (FGameplayTag = FName): GameplayTags at +0, ParentTags at +0x10 (count at +0x18), memcpy of count*8 after a resize (FUN_1406d9a30). Used by the copy constructors of FGameplayCueParameters. Name medium (shape high).",
+      "signature": "FGameplayTagContainer* FGameplayTagContainer_CopyAssign(FGameplayTagContainer* this, const FGameplayTagContainer* Other)"
+    },
+    {
+      "name": "AFortPlayerStateAthena_GetPrivateStaticClass",
+      "address": "0x142a8ae70",
+      "returns": "ptr:UObject",
+      "params": [],
+      "source": "AFortPlayerStateAthena::GetPrivateStaticClass (UClass registration with /Script/FortniteGame, FortPlayerStateAthena, size 0x1400)",
+      "confidence": "high",
+      "evidence": "Eighth pass: decompile in generated/decomp-vtable/AFortPlayerStateAthena/GetPrivateStaticClass__142a8ae70.c calls FUN_142d698b0 (GetPrivateStaticClassBody, helpers.json) with the class name strings.",
+      "signature": "UClass* AFortPlayerStateAthena_GetPrivateStaticClass(void)"
     }
   ],
   "data_labels": [

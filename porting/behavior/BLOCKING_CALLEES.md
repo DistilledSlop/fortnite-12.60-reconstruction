@@ -1,5 +1,7 @@
 # Blocking callees (work list for the next Ghidra identification pass)
 
+> Eighth pass (research only, no Ghidra run; see `porting/decompilation_notes.md`, "Eighth pass"): ranks 2, 3 and 5 are identified (`UpdateScoreForEvent`, `UpdateTotalPlayerScore`, `GetCurrentPlaylistAthena`; HIGH bodies). `0x1407ac640` is the `Broadcast` of `TMulticastDelegate<void(AFortPlayerStateAthena*, int32)>` and `0x140685370` its `CompactInvocationList`. `0x14070fe00` is `FScalableFloat::GetValueAtLevel`. vfn `+0x770` is `GetPlayerTeam()`. The `0x1406aaec0` family is `FGameplayCueParameters` (implicit copy and dtor). `FUN_142a8ae70` is `GetPrivateStaticClass`. The remaining blockers are the generator (helper splice and non-reflected members) and about 25 callees of the PC and PS bodies (see `porting/behavior/CALLEE_PORT_QUEUE.md`, "Ranking after the eighth pass").
+
 > Fourth pass: rank 4 `0x1419d3ff0` is identified (accessor over `GetWorld()` and `UWorld::GameState`, see `porting/decompilation_notes.md`, "Fourth pass"). Its callers still wait for ranks 2, 3 and 5.
 
 > Sixth pass: rank 2 `0x141a3c2b0`, rank 3 `0x141a3c390` and rank 5 `0x141991bf0` are identified in part (see `porting/decompilation_notes.md`, "Sixth pass"). Row 5 is the `CurrentPlaylistInfo` accessor (HIGH). Row 2 is the playlist scoring loop (MEDIUM-HIGH). Row 3 depends on the lock-counted list family `0x1407ac640` / `0x140685370` and on vfn slot `0x770`. No new bodies: non-reflected helpers cannot be spliced yet.

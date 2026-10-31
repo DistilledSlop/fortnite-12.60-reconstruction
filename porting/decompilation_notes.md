@@ -874,3 +874,232 @@ Data: `porting/replication_conditions.json` (generated, tracked). The generator 
 `class_checksum.py` parity (native set, 4,572 classes): 4,445 to 4,535 (non-parity 127 to 37). Remaining causes:
 `struct_other_module` 16 (`FProfileUpdateSingle`, `FMeshNetworkStatus`, `FAthenaRewardResult`, ...), RPC flags without a role 13,
 `struct_member_unresolved` 5, enums 3, `static_or_const_rpc` 1. No class that was parity-yes became non-parity.
+
+## Eighth pass: lock-counted delegate list, vfn 0x770, scoring rules, FScalableFloat, FGameplayCueParameters [observed unless marked]
+
+Scope: queue rows 2, 3 and 5 (bodies and their callees), the lock-counted 16-byte list family (`0x1407ac640`, `0x140685370`), the
+virtual slot `+0x770` of `AFortPlayerStateAthena`, `FUN_14070fe00`, the playlist scoring structs, and `0x1406aaec0`.
+Research only: no snippet, MANIFEST, native/, generator or git change. No Ghidra process was started this pass; every
+decompile and disassembly below is an existing probe output or was taken from the read-only runtime dump bytes with
+`objdump -D -b binary -mi386:x86-64` (not in the repo). Reflection: `generated/reflection/*.json`. Engine: `/opt/fortnite/UnrealEngine/Engine/Source`
+and `Engine/Plugins/Runtime/GameplayAbilities/Source` (the 4.25 tree; `FScalableFloat` and `FGameplayCueParameters` live in the plugin).
+
+### Identities
+
+| Name (proposed) | Address | Identity | Confidence | Evidence |
+|---|---|---|---|---|
+| `Broadcast_PlayerStateInt32` (was `FUN_1407ac640`) | `0x1407ac640` | `TMulticastDelegate<void(AFortPlayerStateAthena*, int32)>::Broadcast`, UE 4.25 `Core/Public/Delegates/DelegateSignatureImpl.inl:998` | HIGH (structure), MEDIUM-HIGH (argument types) | Lock++ at `+0x14`; reverse loop over the list; `vfn +0x50` on each element (`ExecuteIfSafe`); a failed call sets the compaction flag; lock--; then `CompactInvocationList` (`0x140685370`, flag 0). Callers pass the list, the player state and an int32 (17 `call` references in the binary's xref data). |
+| `FMulticastDelegateBase::CompactInvocationList` (was `0x140685370`) | `0x140685370` | UE 4.25 `Core/Public/Delegates/MulticastDelegateBase.h` | HIGH | `InvocationList` (`TArray<FDelegateBase>`) at `+0`, `CompactionThreshold` at `+0x10`, `InvocationListLockCount` at `+0x14` (the 4.25 member order, 0x18 bytes). Returns when locked; with the flag set returns when `--threshold > Num`; removes null entries and entries whose `vfn +0x20` (`IsCompactable`) is true with `RemoveAtSwap` (`0x140690780`); `threshold = max(2, 2*Num)`; `Shrink` (`0x1406911b0`) when the old count exceeds the threshold. Replaces the "element type unknown" of the third and sixth passes. |
+| element of the list | 16 bytes at `list+0` | `FDelegateBase`: `DelegateAllocator` (heap pointer to an `IDelegateInstance`) at `+0`, `DelegateSize` (int32) at `+8`; 0 means empty | HIGH | `Core/Public/Delegates/DelegateBase.h` (allocator alias `void*`, `DelegateSize`). The asm null-tests both the size and the pointer. |
+| vfn slot numbers of the instance | | Shipping build (`UE_BUILD_SHIPPING`): `TryGetBoundFunctionName` is compiled out (`Delegates/DelegateSettings.h`). Slots: `GetUObject` 0, `GetObjectForTimerManager` 1, `GetBoundProgramCounterForTimerManager` 2, `HasSameObject` 3, `IsCompactable` 4 (`+0x20`), `IsSafeToExecute` 5, `GetHandle` 6, `~IDelegateInstance` 7, `CreateCopy` 8, `Execute` 9, `ExecuteIfSafe` 10 (`+0x50`) | HIGH | Two independent offsets agree with this count: `+0x20` is the no-argument bool (`IsCompactable`, used by `0x140685370`) and `+0x50` is the bool call with two arguments (`ExecuteIfSafe(PlayerState, value)`, used by `0x1407ac640`). `IBaseDelegateInstance<void(...)>` in `Delegates/DelegateInstanceInterface.h:34-47`. |
+| four native stat-change delegates of `AFortPlayerStateAthena` | `+0x1120`, `+0x1150`, `+0x1180`, `+0x11b0` | `TMulticastDelegate<void(AFortPlayerStateAthena*, int32)>`, 0x18 bytes each (list, threshold, lock at `+0x14` of each). `+0x1120` = KillScore (OnRep_Kills, the `FUN_1407ac640(this+0x1120, this, KillScore)` tail call); `+0x1150` = TeamKillScore (OnRep_TeamKillScore; the decompile's `PlayerNameCustomOverride + 0x170` is the same address); `+0x1180` = TotalPlayerScore (UpdateTotalPlayerScore; OnRep_TotalPlayerScore inlines the same broadcast, lock at `+0x1194`); `+0x11b0` = AIKillCount (OnRep_AIKills) | MEDIUM-HIGH | Not in the reflection (native delegates are not reflected). The names are placeholders: `FOnKillScoreChangedNative` and so on. The generated header declares none of them (no gap members), so snippets cannot name them yet. |
+| `Broadcast_Global` (`0x140684de0`, not identified) | `0x140684de0` | The same `Broadcast` template on a static list (the list pointer is loaded from `0x148351eb8`). Callers: OnRep_Kills, OnRep_AIKills, OnRep_DeathInfo, ClientNotifyTeamLost. The argument list is not established. | LOW-MEDIUM | Asm: `inc [rcx+0x14]`, reverse loop, `call [rax+0x50]`, unlock, compaction. Next blocker. |
+| vfn `+0x770` of `AFortPlayerStateAthena` (slot 238, vtable `0x145e35fa8`) | `0x1424192a0` | `GetPlayerTeam()`: returns `PlayerTeam` (`AFortTeamInfo*`, reflected Object at `+0x640` of `AFortPlayerState`, replicated, `OnRep_PlayerTeam`) | HIGH (body), MEDIUM (declared name) | The asm is two instructions: `mov rax,[rcx+0x640]; ret`. The vtable read is from the dump (`vtable[238]`). |
+| `FortTeamInfoAthena +0x370` | `AFortTeamInfo` `+0x370` | A non-reflected int32 in `AFortTeamInfo`, directly after the reflected `PrivateInfo` (Object at `+0x368`). `AFortTeamInfoAthena::BotInfo` is at `+0x388` (class size `0x398`, registration in the sixth pass). The Authority branch of the score update adds the player's score delta to it. | MEDIUM (class and offset), LOW (name) | `0x141a3c390` asm: `add [rbp+0x370], esi` after the `IsA` test. No other function in the decompiles touches it. |
+| `FScalableFloat::GetValueAtLevel` (was `FUN_14070fe00`) | `0x14070fe00` | `float FScalableFloat::GetValueAtLevel(float Level, const FString* ContextString) const`, GameplayAbilities `Private/AttributeSet.cpp:421` | HIGH | Field-by-field against the 4.25 source: `LocalCachedCurveID` at `+4` against `UCurveTable::GetGlobalCachedCurveID()` (global `0x147cdd300`); `Curve.CurveTable` at `+8`; `FinalCurve` at `+0x18`; `Curve.GetCurve(ContextString)` at `0x144166df0`; `FRealCurve::Eval` at `vfn +0x88`; default context literal `"FScalableFloat::GetValueAtLevel"` at `0x1459c5a60`. FScalableFloat is 0x20 bytes: `Value` at `+0`, the curve handle at `+8`, the cache at `+0x18`. The reflection's `ScalableFloat` record (32 bytes, `Value` at 0, `Curve` at 8) agrees. |
+| playlist `+0x467` | `UFortPlaylistAthena::WinConditionType` | `EAthenaWinCondition` (3 = `FirstToGoalScore`, `EAthenaWinCondition.h:15`) | HIGH | Reflection offset 0x467; OnRep callers and row 2 gate on `== 3`. |
+| playlist `+0x4a8` / `+0x4e8` / `+0x4f0` | `ScoringData` (`FWinConditionScoreData`, 80 bytes) | `GoalScore` (FScalableFloat) at `+0`, `BigScoreThreshold` (FScalableFloat) at `+0x20`, `ScoreDataList` (`TArray<FAthenaScoreData>`) at `+0x40` | HIGH | Reflection: `ScoringData` Struct at 0x4a8 (struct `0x142a97fe0`, size 80); `ScoreDataList` at 80-byte offset 64. Row 2 reads the data pointer at `playlist+0x4e8` and the count at `+0x4f0`. |
+| scoring rule (0x68 = 104 bytes) | `FAthenaScoreData` | `ScoringEvent` (EAthenaScoringEvent, uint8) at `+0`; `ScoreNameText` (FText) at `+8`; `EventInclusionTags` (FGameplayTagContainer) at `+0x20`; `NumOccurrencesForScore` (int32, divisor) at `+0x40`; `NumOccurrencesPermitted` (int32, cap) at `+0x44`; `ScoreAwarded` (FScalableFloat) at `+0x48` | HIGH | Reflection record `AthenaScoreData` (block `0x147b75d70`, size 104) and the generated `FAthenaScoreData.h` agree; row 2 asm uses `+0`, `+0x40`, `+0x44` and `+0x48` (the FScalableFloat call). |
+| `GetCurrentPlaylistAthena` (was `0x141991bf0`) | `0x141991bf0` | `return CurrentPlaylistInfo.OverridePlaylist ? OverridePlaylist : BasePlaylist` on `AFortGameStateAthena` (`CurrentPlaylistInfo` at `+0x1cd0`, `FPlaylistPropertyArray`: `BasePlaylist` at `+0x120`, `OverridePlaylist` at `+0x128`, both `UFortPlaylistAthena*`) | HIGH | Asm: `mov rax,[rcx+0x1df8]; test; jne; mov rax,[rcx+0x1df0]; ret`. Reflection `CurrentPlaylistInfo` at 0x1cd0 and the struct offsets 288 and 296. |
+| `GetFortGameStateAthena` (was `0x1419d3ff0`, fourth pass) | `0x1419d3ff0` | `Cast<AFortGameStateAthena>(Object->GetWorld()->GameState)` | HIGH | Re-read in the asm: vfn `+0x150` with a null test, `UWorld::GameState` at `+0x130` with a null test, `IsA` through the class depth and the SuperStructs array against `StaticClass` (`0x14290f690`); returns the game state or null. |
+| `UpdateScoreForEvent` (row 2, `0x141a3c2b0`) | `0x141a3c2b0` | `int32 AFortPlayerStateAthena::UpdateScoreForEvent(EAthenaScoringEvent Event, int32 Count, int32 PreviousPoints, UFortPlaylistAthena* Playlist)` | HIGH (body), MEDIUM (names) | Pseudocode below. Every callee is now named: `0x14070fe00` (FScalableFloat), `0x1406a9dc0` (the dynamic broadcast of `PointsAddedToScore` at `this+0xf08`, third pass). Returns the points of the last matching rule. |
+| `UpdateTotalPlayerScore` (row 3, `0x141a3c390`) | `0x141a3c390` | `void AFortPlayerStateAthena::UpdateTotalPlayerScore()` | HIGH (body), MEDIUM (names) | Pseudocode below. Callees: `0x1424192a0` (PlayerTeam), `0x142af1340` (FortTeamInfoAthena::StaticClass, sixth pass), `0x1407ac640` (Broadcast). |
+| `FGameplayCueParameters` copy constructor (row 7, `0x1406aaec0`) | `0x1406aaec0` | Implicit copy constructor of `FGameplayCueParameters` (`GameplayAbilities/Public/GameplayEffectTypes.h:922`, 0xB8 bytes; reflection block `0x14782dd20`, size 184) | HIGH | Asm layout check (below). The constant at `+8` is the vtable `0x1459aede0` of `FGameplayEffectContextHandle`: the handle has a virtual destructor (`GameplayEffectTypes.h:596`), so it is 24 bytes (vptr `+0`, `TSharedPtr` `+8`); the dtor `0x1406afe20` stores that vtable at offset 0. The previous "+0x08 constant mismatch" is this vptr. |
+| `FGameplayCueParameters` destructor (row 6, `0x1406ae340`) | `0x1406ae340` | Implicit destructor: frees the four TArray buffers at `+0x30`, `+0x40`, `+0x50`, `+0x60` (two `FGameplayTagContainer` members), then releases the handle's controller | MEDIUM-HIGH | Compiler-generated; port as `= default` (no body needed). |
+| `FGameplayTagContainer::operator=` (row 9, corrected) | `0x143e8a690` | Copy-assign of two `TArray<FGameplayTag>` (8-byte elements, FName): `GameplayTags` at `+0`, `ParentTags` at `+0x10`, memcpy of count*8 after a resize (`0x1406d9a30`) | HIGH (shape), MEDIUM (name; engine-wide, 1252 call sites) | Third pass called it a generic TArray copy; the second array at `+0x10` shows it is the 2-array container. |
+| `FUN_142a8ae70` | `0x142a8ae70` | `AFortPlayerStateAthena::GetPrivateStaticClass` (the UClass registration with `/Script/FortniteGame`, `FortPlayerStateAthena`, size 0x1400, calls `FUN_142d698b0`) | HIGH | `generated/decomp-vtable/AFortPlayerStateAthena/GetPrivateStaticClass__142a8ae70.c`. It was the unnamed callee of two PC bodies. |
+| `FUN_142cd3770` | `0x142cd3770` | Ends a stat scope for `STAT_InvNPerfHook_PSA_RCO`, gated by the byte at `0x1482472e4` (profiling only) | LOW | Not identified beyond the gate. Port as a no-op (`SCOPE_CYCLE_COUNTER`-style). Two bodies call it (OnRep_NumChestsOpened, OnRep_NumMinutesAlive). |
+
+### The 10 reads of the total (queue row 3): offset relation resolved
+
+Row 3 reads ten int32 values (asm of `0x141a3c390`: `+0xefc, +0xef4, +0xeec, +0xee4, +0xedc, +0xed4, +0xecc, +0xec4, +0xebc, +0xe88`).
+Nine of them are the reflected `Int` counters at `+4`. Each OnRep caller writes the points of its stat into that `+4` slot:
+
+| Stat (reflected offset) | Cache read by row 3 | Scoring event (written by) |
+|---|---|---|
+| `KillScore` (0xe74) | `0xe88` (not `+4`) | 1 Elimination (OnRep_Kills) |
+| `AIKillCount` (0xeb0) | `0xeb4` (**not summed**) | 11 AIKilled (OnRep_AIKills) |
+| `NumChestsOpened` (0xeb8) | `0xebc` | 2 ChestOpened |
+| `NumAmmoCansOpened` (0xec0) | `0xec4` | 3 AmmoCanOpened |
+| `NumSupplyDropsOpened` (0xec8) | `0xecc` | 4 SupplyDropOpened |
+| `NumLlamasOpened` (0xed0) | `0xed4` | 5 SupplyLlamaOpened |
+| `NumForagedItemsConsumed` (0xed8) | `0xedc` | 6 ForagedItemConsumed |
+| `NumMinutesAlive` (0xee0) | `0xee4` | 7 SurvivalInMinutes |
+| `NumBronzeCoinsCollected` (0xee8) | `0xeec` | 8 CollectedCoinBronze |
+| `NumSilverCoinsCollected` (0xef0) | `0xef4` | 9 CollectedCoinSilver |
+| `NumGoldCoinsCollected` (0xef8) | `0xefc` | 10 CollectedCoinGold |
+
+So the "+4" shift of the sixth pass is the per-stat points cache (the value `UpdateScoreForEvent` returns), not a counter offset.
+The AI-kill cache is written by OnRep_AIKills and never read into the total (observed; a runtime check would confirm whether that is intended).
+
+### Callers of `0x1419d3ff0` (the 17 OnRep and RPC bodies) after this pass
+
+The table gives the unnamed callees each body still had after the queue's named helpers, then after this pass (`decomp_improved` files).
+
+| Body | Other unnamed callees before | After this pass |
+|---|---|---|
+| OnRep_NumAmmoCansOpened, OnRep_NumBronzeCoinsCollected, OnRep_NumForagedItemsConsumed, OnRep_NumGoldCoinsCollected, OnRep_NumLlamasOpened, OnRep_NumSilverCoinsCollected, OnRep_NumSupplyDropsOpened | rows 2, 3, 5 | none: **ready to port** (needs a helper splice and the cache members) |
+| OnRep_NumChestsOpened, OnRep_NumMinutesAlive | rows 2, 3, 5; `FUN_142cd3770` | `FUN_142cd3770` only (profiling no-op): **ready** |
+| OnRep_Kills | rows 2, 3, 5; `FUN_1407ac640` | `FUN_140684de0` (global Broadcast), `FUN_1423def80`, `FUN_142a6ee20` |
+| OnRep_AIKills | rows 2, 3, 5; `FUN_1407ac640` | `FUN_140684de0`, `FUN_1423def70`, `FUN_142a6ee20` |
+| OnRep_DeathInfo | row 5 only (no rows 2, 3) | about 80 unnamed (`FUN_1406800e0`, `FUN_140684de0`, `FUN_142a6ee20`, `FUN_141a2d0b0`, ...): low priority |
+| OnClientVolumeManagerReplicated (PC) | none of rows 2, 3, 5 | `FUN_140694550`, `FUN_1419c1a40`, `FUN_1419e0370`, `FUN_141c74820`, `FUN_141c7d420` |
+| ClientNotifyTeamLost_Implementation (PC) | none | `FUN_140684de0`, `FUN_140f95ae0` (row 11), `FUN_1419922b0`, `FUN_1419967f0`, `FUN_142bad740`, `FUN_142ee3b30`, `FUN_144621fb0` (row 16), `FUN_1446278d0` |
+| ClientSendMatchStatsForPlayer_Implementation (PC) | none | `FUN_141b5d450`, `FUN_141b6bb40`, `FUN_141e8db50`, `FUN_141ed1800`, `FUN_141ed2350`, `FUN_14463f970` |
+| ServerClearSkydiveLeader_Implementation (PC) | none | `FUN_1419982c0`, `FUN_1419e89a0` (`FUN_142a8ae70` is now named) |
+| Server_SetCanEditCreativeIsland_Implementation (PS) | none | `FUN_14199e3c0`, `FUN_1419c3880` (row 14), `FUN_141a2c5b0`, `FUN_141f0a3c0`, `FUN_1423a0aa0`, `FUN_142414c60`, `FUN_14297b320` |
+
+The fourth pass said that every caller of the accessor also calls row 2, row 3 or row 5. That is true for the twelve stat and death
+bodies but not for the five PC and PS bodies in the last three rows, which have their own blockers. The accessor alone unblocks none of them.
+
+### Ready-to-port pseudocode (UE 4.25 API)
+
+These are the bodies for the next round. Names are proposed; the member names are the generated header's where they exist. The
+non-reflected members (the caches and the four delegates) need the generator (see "Generator requirements" below). The asm checks are
+in the identity table above.
+
+```cpp
+// 1. GetFortGameStateAthena  (0x1419d3ff0)  HIGH
+AFortGameStateAthena* GetFortGameStateAthena(const UObject* Object)
+{
+    UWorld* World = Object->GetWorld();                      // vfn +0x150
+    if (!World) return nullptr;
+    AGameStateBase* GS = World->GameState;                   // UWorld +0x130
+    return (GS && GS->IsA(AFortGameStateAthena::StaticClass()))
+        ? static_cast<AFortGameStateAthena*>(GS) : nullptr;
+}
+
+// 2. GetCurrentPlaylistAthena  (0x141991bf0)  HIGH
+UFortPlaylistAthena* GetCurrentPlaylistAthena(const AFortGameStateAthena* GameState)
+{
+    const FPlaylistPropertyArray& Info = GameState->CurrentPlaylistInfo;
+    return Info.OverridePlaylist ? Info.OverridePlaylist : Info.BasePlaylist;
+}
+
+// 3. UpdateScoreForEvent  (0x141a3c2b0, queue row 2)  HIGH body
+int32 AFortPlayerStateAthena::UpdateScoreForEvent(EAthenaScoringEvent Event, int32 Count,
+                                                  int32 PreviousPoints, UFortPlaylistAthena* Playlist)
+{
+    int32 Result = 0;
+    const TArray<FAthenaScoreData>& Rules = Playlist->ScoringData.ScoreDataList;
+    for (int32 i = 0; i < Rules.Num(); ++i)
+    {
+        const FAthenaScoreData& Rule = Rules[i];
+        if (Rule.ScoringEvent != Event || Rule.NumOccurrencesForScore <= 0)
+            continue;
+        int32 Points = Count / Rule.NumOccurrencesForScore;             // idiv: truncates toward zero
+        if (Rule.NumOccurrencesPermitted > 0 && Points > Rule.NumOccurrencesPermitted)
+            Points = Rule.NumOccurrencesPermitted;
+        const int32 Unit = (int32)Rule.ScoreAwarded.GetValueAtLevel(0.f);   // level 0, null context
+        Result = Unit * Points;
+        if (Result != PreviousPoints)
+            PointsAddedToScore.Broadcast(Unit, Event);                  // FOnPointsAddedToScore(NewPoints, ScoreType)
+    }
+    return Result;                                                      // last matching rule; 0 if none
+}
+
+// 4. UpdateTotalPlayerScore  (0x141a3c390, queue row 3)  HIGH body
+void AFortPlayerStateAthena::UpdateTotalPlayerScore()
+{
+    // Ten point caches. The AI-kill cache (+0xeb4) is not in the sum.
+    const int32 NewTotal = KillPointsCache        // +0xe88
+        + ChestPointsCache     + AmmoCanPointsCache   + SupplyDropPointsCache + LlamaPointsCache
+        + ForagedPointsCache   + MinutesPointsCache   + BronzePointsCache     + SilverPointsCache
+        + GoldPointsCache;                            // +0xebc, +0xec4, ..., +0xefc
+
+    if (Role == ROLE_Authority)                       // AActor::Role at +0xf0
+    {
+        const int32 Delta = NewTotal - TotalPlayerScore;               // +0xf00
+        if (Delta > 0)
+        {
+            AFortTeamInfo* Team = GetPlayerTeam();                     // vfn +0x770, PlayerTeam at +0x640
+            if (Team && Team->IsA(AFortTeamInfoAthena::StaticClass()))
+            {
+                Team->TeamPointsAccumulator += Delta;                  // AFortTeamInfo +0x370 (non-reflected)
+            }
+        }
+    }
+    TotalPlayerScore = NewTotal;
+    if (Role != ROLE_Authority)
+    {
+        OnTotalPlayerScoreChangedNative.Broadcast(this, NewTotal);     // native list at +0x1180
+    }
+}
+
+// 5. TMulticastDelegate<void(AFortPlayerStateAthena*, int32)>::Broadcast  (0x1407ac640)  HIGH structure
+void Broadcast(AFortPlayerStateAthena* PlayerState, int32 Value) const
+{
+    ++InvocationListLockCount;                                          // +0x14
+    bool bNeedsCompaction = false;
+    for (int32 i = InvocationList.Num() - 1; i >= 0; --i)               // reverse order
+    {
+        IDelegateInstance* Instance = InvocationList[i].GetDelegateInstanceProtected();   // null if DelegateSize == 0
+        if (!Instance || !static_cast<IBaseDelegateInstance<void(AFortPlayerStateAthena*, int32)>*>(Instance)
+                              ->ExecuteIfSafe(PlayerState, Value))           // vfn +0x50
+        {
+            bNeedsCompaction = true;
+        }
+    }
+    --InvocationListLockCount;
+    if (bNeedsCompaction)
+        CompactInvocationList(false);                                   // 0x140685370
+}
+
+// 6. FMulticastDelegateBase::CompactInvocationList  (0x140685370)  HIGH
+void CompactInvocationList(bool bCheckThreshold)
+{
+    if (InvocationListLockCount > 0) return;
+    if (bCheckThreshold && --CompactionThreshold > InvocationList.Num()) return;
+    const int32 OldNum = InvocationList.Num();
+    for (int32 i = 0; i < InvocationList.Num(); )
+    {
+        IDelegateInstance* Instance = InvocationList[i].GetDelegateInstanceProtected();
+        if (!Instance || Instance->IsCompactable())                     // vfn +0x20
+            InvocationList.RemoveAtSwap(i);                             // 0x140690780
+        else
+            ++i;
+    }
+    CompactionThreshold = FMath::Max(2, 2 * InvocationList.Num());
+    if (OldNum > CompactionThreshold)
+        InvocationList.Shrink();                                        // 0x1406911b0
+}
+
+// 7. FScalableFloat::GetValueAtLevel (0x14070fe00) and the implicit FGameplayCueParameters copy/dtor
+//    (0x1406aaec0, 0x1406ae340) and FGameplayTagContainer::operator= (0x143e8a690): engine code. Use the 4.25 types;
+//    no port body is needed.
+```
+
+### Generator requirements found by this pass
+
+1. A splice kind for non-reflected member functions (already the top blocker): the five bodies above are named now and cannot be spliced without it.
+2. Non-reflected data members used by the bodies. Either declare them as gap members with their offsets, or give the helper kind raw-offset accessors:
+   - int32 caches: `+0xe88`, `+0xeb4`, `+0xebc`, `+0xec4`, `+0xecc`, `+0xed4`, `+0xedc`, `+0xee4`, `+0xeec`, `+0xef4`, `+0xefc` (on `AFortPlayerStateAthena`).
+   - four `TMulticastDelegate<void(AFortPlayerStateAthena*, int32)>` members, 0x18 bytes each, at `+0x1120`, `+0x1150`, `+0x1180`, `+0x11b0`.
+   - int32 `TeamPointsAccumulator` at `AFortTeamInfo +0x370` (name is a placeholder).
+3. Virtual slot 238 (`+0x770`) of `AFortPlayerStateAthena` is the `PlayerTeam` getter. A body can call `PlayerTeam` directly; the slot is not needed for the port.
+
+### Corrections to earlier passes
+
+- Third pass: `FUN_140685370` is `CompactInvocationList`, and `FUN_1407ac640` is the `Broadcast` of a native multicast delegate. The element is `FDelegateBase`, not an unknown type.
+- Third pass: `FUN_143e8a690` is `FGameplayTagContainer::operator=` (two arrays), not a generic TArray copy.
+- Sixth pass row 3: the offsets are ten reads, and the `+4` shift is the per-stat points cache, not a counter offset.
+- Fourth pass: "every caller also calls row 2, 3 or 5" holds for the stat and death bodies only (see the caller table).
+- Row 7 (`0x1406aaec0`): the "constant at +0x08" is the vtable of `FGameplayEffectContextHandle`; the struct is `FGameplayCueParameters`. The earlier 0xB8 versus 4.25 concern came from counting the handle as 16 bytes.
+
+### Next blockers (ordered)
+
+1. Generator: the helper splice kind and the non-reflected members listed above. Unblocks nine stat bodies now (rows 2, 3, 5 are bodies, not blockers) and OnRep_Kills and OnRep_AIKills after item 2.
+2. `0x140684de0` (global Broadcast; four callers) and `0x142a6ee20`, `0x1423def80`, `0x1423def70` (OnRep_Kills, OnRep_AIKills, OnRep_DeathInfo). Find the global delegate's signature and the three helpers.
+3. `0x142cd3770`: decide to port the profiling scope as a no-op (recommended) or identify it. Two bodies.
+4. The PC and PS bodies of the last three caller rows: about 25 unnamed callees (listed in the caller table).
+5. OnRep_DeathInfo: about 80 unnamed callees; not started.
+6. Queue rows 8 and 10 (`0x142c64fe0`, `0x143e8a780`) were not examined this pass.
+
+### Files touched
+
+- `porting/decompilation_notes.md` (this section)
+- `porting/behavior/CALLEE_PORT_QUEUE.md` (eighth-pass ranking)
+- `porting/behavior/BLOCKING_CALLEES.md` (eighth-pass note)
+- `porting/ghidra/name_tables/helpers.json` (12 new function identities, applied by `improve_decompile.py` on its next run)
+
+Not touched: `porting/native/`, `gen_*.py`, snippets, `behavior/MANIFEST.json`, git state, `/opt/fortnite/gen-worktree`.
