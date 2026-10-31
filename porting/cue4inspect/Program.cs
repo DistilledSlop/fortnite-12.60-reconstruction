@@ -28,6 +28,9 @@ bool showPseudo = args.Contains("--pseudo");
 bool showImports = args.Contains("--imports");
 bool registryMode = args.Contains("--registry");
 bool pakSources = args.Contains("--pak-sources");
+bool registryPaths = args.Contains("--registry-paths");
+bool seedList = args.Contains("--seed-list");
+bool followSoft = args.Contains("--follow-soft");
 bool scanMaps = args.Contains("--scan-maps");
 bool scanNative = args.Contains("--scan-native");
 bool allKeys = args.Contains("--all-keys");
@@ -59,9 +62,9 @@ if (maxArgument is not null && (!int.TryParse(maxArgument[15..], out maxPackages
     Console.Error.WriteLine("--max-packages must be a positive integer");
     return 2;
 }
-string[] positional = args.Where(arg => arg != maxArgument && arg != keyFileArgument && arg is not ("--all" or "--pseudo" or "--imports" or "--registry" or "--pak-sources" or "--scan-maps" or "--scan-native" or "--all-keys" or "--save-package" or "--save-list" or "--sizes" or "--save-folder" or "--save-closure" or "--export-glb" or "--export-landscape" or "--export-landscape-grid" or "--export-landscape-weightmap-grid" or "--export-png" or "--export-landscape-weightmaps" or "--material-report" or "--function-report" or "--landscape-report" or "--actor-report" or "--versions" or "--ue426" or "--loose")).ToArray();
-bool packageLess = registryMode || pakSources || scanMaps || scanNative || exportLandscapeGrid || exportLandscapeWeightmapGrid;
-if (new[] { registryMode, pakSources, scanMaps, scanNative, exportLandscapeGrid, exportLandscapeWeightmapGrid }.Count(mode => mode) > 1 || (packageLess ? positional.Length > 1 : positional.Length is < 1 or > 2))
+string[] positional = args.Where(arg => arg != maxArgument && arg != keyFileArgument && arg is not ("--all" or "--pseudo" or "--imports" or "--registry" or "--pak-sources" or "--registry-paths" or "--seed-list" or "--follow-soft" or "--scan-maps" or "--scan-native" or "--all-keys" or "--save-package" or "--save-list" or "--sizes" or "--save-folder" or "--save-closure" or "--export-glb" or "--export-landscape" or "--export-landscape-grid" or "--export-landscape-weightmap-grid" or "--export-png" or "--export-landscape-weightmaps" or "--material-report" or "--function-report" or "--landscape-report" or "--actor-report" or "--versions" or "--ue426" or "--loose")).ToArray();
+bool packageLess = registryMode || pakSources || registryPaths || scanMaps || scanNative || exportLandscapeGrid || exportLandscapeWeightmapGrid;
+if (new[] { registryMode, pakSources, registryPaths, scanMaps, scanNative, exportLandscapeGrid, exportLandscapeWeightmapGrid }.Count(mode => mode) > 1 || (packageLess ? positional.Length > 1 : positional.Length is < 1 or > 2))
 {
     Console.Error.WriteLine("Usage: Cue4Inspect <asset-path-without-extension> [pak-directory] [--all] [--pseudo] [--imports] [--save-package] [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect <folder-prefix> [pak-directory] --save-folder [--all-keys]");
@@ -251,6 +254,22 @@ try
         return 0;
     }
 
+    if (registryPaths)
+    {
+        // One row per registry asset: resolved package path (or a #unresolved marker), asset class, presence.
+        var registryBytes = provider.SaveAsset("FortniteGame/AssetRegistry.bin");
+        var registry = new FAssetRegistryState(new FByteArchive("AssetRegistry.bin", registryBytes, provider.Versions));
+        var pluginRoots = BuildPluginContentRoots(provider.Files.Keys);
+        foreach (var asset in registry.PreallocatedAssetDataBuffers)
+        {
+            var packageName = asset.PackageName.Text;
+            var target = ResolvePackageRoot(packageName, pluginRoots, path => provider.Files.ContainsKey(path + ".uasset"));
+            bool present = target is not null && provider.Files.ContainsKey(target + ".uasset");
+            Console.WriteLine($"{target ?? "#unresolved:" + packageName}\t{asset.AssetClass.Text}\t{(present ? "present" : "absent")}");
+        }
+        return 0;
+    }
+
     if (pakSources)
     {
         // One row per recovered .uasset: package path, then the pak whose entry the provider serves.
@@ -338,8 +357,22 @@ try
     {
         var pending = new Queue<string>();
         var visited = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-        pending.Enqueue(assetPath!);
+        var pluginRoots = BuildPluginContentRoots(provider.Files.Keys);
+        if (seedList)
+        {
+            // --seed-list: the positional argument is a file of package paths (FortniteGame/Content/... or Engine/Content/...).
+            foreach (var seed in File.ReadLines(Path.GetFullPath(assetPath!))
+                .Select(line => line.Trim())
+                .Where(line => line.Length > 0 && !line.StartsWith('#'))
+                .Distinct(StringComparer.OrdinalIgnoreCase))
+                pending.Enqueue(seed);
+        }
+        else
+        {
+            pending.Enqueue(assetPath!);
+        }
         int failed = 0;
+        int softFollowed = 0;
         while (pending.Count > 0 && visited.Count < maxPackages)
         {
             var current = pending.Dequeue();
@@ -348,16 +381,28 @@ try
             {
                 if (provider.LoadPackage(current) is not Package package)
                     throw new InvalidDataException("Not a legacy package");
-                SaveRecoveredFiles(provider.SavePackage(current));
+                var files = provider.SavePackage(current);
+                SaveRecoveredFiles(files);
                 foreach (var root in package.ImportMap.Select(import => RootImportName(package, import)).Distinct())
                 {
-                    if (root.StartsWith("/Game/", StringComparison.Ordinal))
-                        pending.Enqueue("FortniteGame/Content" + root[5..]);
-                    else if (root.StartsWith("/Engine/", StringComparison.Ordinal))
-                        pending.Enqueue("Engine/Content" + root[7..]);
+                    var target = ResolvePackageRoot(root, pluginRoots, path => provider.Files.ContainsKey(path + ".uasset"));
+                    if (target is not null)
+                        pending.Enqueue(target);
                     else if (root.StartsWith("/", StringComparison.Ordinal) &&
                              !root.StartsWith("/Script/", StringComparison.Ordinal))
                         Console.Error.WriteLine($"Unmapped package root: {root}");
+                }
+                if (followSoft)
+                {
+                    foreach (var soft in SoftPackageRoots(files))
+                    {
+                        var target = ResolvePackageRoot(soft, pluginRoots, path => provider.Files.ContainsKey(path + ".uasset"));
+                        if (target is not null && provider.Files.ContainsKey(target + ".uasset") && !visited.Contains(target))
+                        {
+                            pending.Enqueue(target);
+                            softFollowed++;
+                        }
+                    }
                 }
             }
             catch (Exception error)
@@ -368,6 +413,7 @@ try
             if (visited.Count % 25 == 0) Console.Error.WriteLine($"Recovered {visited.Count} package(s); pending {pending.Count}");
         }
         Console.Error.WriteLine($"Closure: {visited.Count} visited, {failed} failed, {pending.Count} pending");
+        if (followSoft) Console.Error.WriteLine($"Soft references enqueued: {softFollowed}");
         return failed == 0 && pending.Count == 0 ? 0 : 1;
     }
 
@@ -399,7 +445,9 @@ try
         foreach (var package in packages)
         {
             if (!(package.StartsWith("FortniteGame/Content/", StringComparison.Ordinal) ||
-                  package.StartsWith("Engine/Content/", StringComparison.Ordinal)) ||
+                  package.StartsWith("Engine/Content/", StringComparison.Ordinal) ||
+                  package.StartsWith("FortniteGame/Plugins/", StringComparison.Ordinal) ||
+                  package.StartsWith("Engine/Plugins/", StringComparison.Ordinal)) ||
                 package.Split('/').Any(part => part is ".." or "."))
             {
                 Console.Error.WriteLine($"Unsafe package path: {package}");
@@ -928,6 +976,61 @@ static string ReadHiddenKey(string prompt)
     if (result.Length != 64)
         throw new ArgumentException("Expected a 64-character AES-256 hex key");
     return result;
+}
+
+// Plugin content mounts as /<Plugin>/... in the engine but is stored under Engine/Plugins/**/<Plugin>/Content
+// (or FortniteGame/Plugins/**). Returns plugin name -> content folder prefixes (e.g. Engine/Plugins/FX/Niagara/Content).
+static Dictionary<string, List<string>> BuildPluginContentRoots(IEnumerable<string> keys)
+{
+    var roots = new Dictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase);
+    foreach (var key in keys)
+    {
+        if (!(key.StartsWith("Engine/Plugins/", StringComparison.OrdinalIgnoreCase) ||
+              key.StartsWith("FortniteGame/Plugins/", StringComparison.OrdinalIgnoreCase)))
+            continue;
+        int index = key.IndexOf("/Content/", StringComparison.OrdinalIgnoreCase);
+        if (index < 0) continue;
+        string prefix = key[..(index + "/Content".Length)];
+        string pluginFolder = prefix[..^"/Content".Length];
+        string name = pluginFolder[(pluginFolder.LastIndexOf('/') + 1)..];
+        if (!roots.TryGetValue(name, out var list)) roots[name] = list = new List<string>();
+        if (!list.Contains(prefix, StringComparer.OrdinalIgnoreCase)) list.Add(prefix);
+    }
+    return roots;
+}
+
+// Maps an engine import/soft root to the package path (no extension). /Game and /Engine map directly;
+// /<Plugin>/... maps to the first plugin content folder that holds the package. Null when unresolvable.
+static string? ResolvePackageRoot(string root, Dictionary<string, List<string>> pluginRoots, Func<string, bool> exists)
+{
+    if (root.StartsWith("/Game/", StringComparison.Ordinal)) return "FortniteGame/Content" + root[5..];
+    if (root.StartsWith("/Engine/", StringComparison.Ordinal)) return "Engine/Content" + root[7..];
+    if (!root.StartsWith('/') || root.StartsWith("/Script/", StringComparison.Ordinal)) return null;
+    int slash = root.IndexOf('/', 1);
+    if (slash < 0) return null;
+    string rest = root[slash..];
+    if (!pluginRoots.TryGetValue(root[1..slash], out var prefixes)) return null;
+    foreach (var prefix in prefixes)
+        if (exists(prefix + rest)) return prefix + rest;
+    return null;
+}
+
+// Candidate package roots stored as data: ASCII and UTF-16 text inside the package bytes, e.g. soft object
+// paths or string asset references. Returns root-form paths such as /Game/UI/Foo/Bar (no object suffix).
+static HashSet<string> SoftPackageRoots(IReadOnlyDictionary<string, byte[]> files)
+{
+    var found = new HashSet<string>(StringComparer.Ordinal);
+    var pattern = new System.Text.RegularExpressions.Regex("/[A-Za-z][A-Za-z0-9_]*/[A-Za-z0-9_/\\-]+");
+    foreach (var bytes in files.Values)
+    {
+        var texts = new List<string> { System.Text.Encoding.Latin1.GetString(bytes) };
+        for (int offset = 0; offset < 2 && offset < bytes.Length; offset++)
+            texts.Add(System.Text.Encoding.Unicode.GetString(bytes, offset, (bytes.Length - offset) - ((bytes.Length - offset) % 2)));
+        foreach (var text in texts)
+            foreach (System.Text.RegularExpressions.Match match in pattern.Matches(text))
+                found.Add(match.Value.TrimEnd('/'));
+    }
+    return found;
 }
 
 static void SaveRecoveredFiles(IReadOnlyDictionary<string, byte[]> files)

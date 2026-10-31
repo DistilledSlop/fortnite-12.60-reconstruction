@@ -9,6 +9,8 @@ Reads only data already on disk:
   porting/generated/extracted/                 recovered cooked packages
   porting/generated/pak-sources.tsv            package -> winning pak (optional; written by
                                                `Cue4Inspect --pak-sources --all-keys --key-file=<path>`)
+  porting/generated/widget-blueprints.txt      registry WidgetBlueprint packages (optional; written from
+                                               `Cue4Inspect --registry-paths`, filtered to class WidgetBlueprint)
   porting/native/Source/                       project source already written
   <UE engine>/Source, <UE engine>/Plugins     engine headers (class index)
   <UE engine>/Config/Unix/UnixEngine.ini      Linux audio backend selection
@@ -559,6 +561,30 @@ def pak_attribution(pkg_rows: list[dict], widget_packages: list[dict]) -> dict:
     }
 
 
+def widget_presence() -> dict:
+    """Registry WidgetBlueprints present under porting/generated/extracted, by folder.
+
+    The list comes from `Cue4Inspect --registry-paths` (porting/generated/widget-blueprints.txt holds the
+    registry rows whose class is WidgetBlueprint and whose package resolves to a present .uasset)."""
+    listing = GEN / "widget-blueprints.txt"
+    if not listing.exists():
+        return {"available": False, "reason": "write porting/generated/widget-blueprints.txt from --registry-paths"}
+    packages = [line.strip() for line in read_text(listing).splitlines() if line.strip()]
+    present = [p for p in packages if (EXTRACTED / (p + ".uasset")).exists()]
+    present_set = set(present)
+    def folder(package: str) -> str:
+        parts = package.split("/")
+        return "/".join(parts[2:4]) if len(parts) > 3 else package
+    return {
+        "available": True,
+        "registry_widget_blueprints": len(packages),
+        "present_locally": len(present),
+        "missing_locally": len(packages) - len(present),
+        "present_by_folder": dict(collections.Counter(folder(p) for p in present).most_common()),
+        "missing_by_folder": dict(collections.Counter(folder(p) for p in packages if p not in present_set).most_common()),
+    }
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--skip-tool", action="store_true", help="reuse the cached package imports instead of running cue4inspect")
@@ -607,6 +633,7 @@ def main() -> int:
         "engine_audio_backend": engine_audio_backend(),
         "pak_listing_scope": pak_listing_scope(),
         "pak_attribution": pak_attribution(pkg_rows, widget_packages),
+        "widget_presence": widget_presence(),
     }
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(json.dumps(report, indent=1) + "\n", encoding="utf-8")
