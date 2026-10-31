@@ -7,7 +7,7 @@
 // The wrap helper 0x142bc0d80 is re-expressed as clamp(Yaw - trunc(Yaw/360)*360, -360, 360) (MEDIUM).
 // CONFIDENCE: MEDIUM (layout and constants HIGH; the wrap of the saving yaw is MEDIUM)
 Ar.SerializeInt(BuildingClassHandle, 0x1ff);
-Ar.SerializeBool(bMirrored);
+Ar << bMirrored;
 Ar.Serialize(&BuildLoc.X, 4);
 Ar.Serialize(&BuildLoc.Y, 4);
 Ar.Serialize(&BuildLoc.Z, 4);

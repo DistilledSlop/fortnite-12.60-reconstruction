@@ -195,6 +195,8 @@ name, as for reflected members; the plain token check accepts the names of the m
 
 ## Native NetSerialize (kind struct_net)
 
+**UE 4.25 bool rule:** in a non-editor build `FArchive::SerializeBool` does not exist (it is `#if WITH_EDITOR` and protected, Archive.h ~line 1228). Write `Ar << MyBool;` instead: `operator<<(FArchive&, bool&)` serializes a 32-bit UBOOL, the same bytes the editor-only `SerializeBool` writes and the original binary's body produced. (Found by the struct_net build, which failed with 158 `no member named 'SerializeBool'` errors until the two affected snippets used `Ar << x`.)
+
 A struct with a custom `NetSerialize` has no UFUNCTION and no `.cpp`, so its body cannot use the other kinds. The kind
 `struct_net` splices the recovered body into the struct header. Its fields:
 
