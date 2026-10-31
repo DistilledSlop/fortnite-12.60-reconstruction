@@ -13,6 +13,24 @@ and 581 delegates. The list is `porting/native_class_set.txt`. All three targets
 indices. The offline parity count is in "Offline class checksum parity" (the checksum tool covers the first 168 entries
 only, see Next steps).
 
+## Coverage stages
+
+Stage notes for the gap closure in `native_class_coverage.md` (cause codes C1 to C5). Each green stage is promoted, built,
+restaged and verified before the next one starts. Not every stage is committed by its builder; the orchestrator commits.
+
+Stage 1 (C2, 19 FortniteUI interfaces), green 2026-10-31 22:02:
+
+- `native_class_set.txt`: 4,572 to 4,591 entries. The 19 interfaces (`UINTERFACE`, parent `UInterface`) are generated as
+  `native/Source/FortniteUI/Generated/` (19 `.h` and 19 `.cpp`). No module added. Promote 12 s.
+- Build `FortniteLinux` and `FortniteLinuxServer` (Development, 706 actions): exit 0, 423 s. Log `porting/generated/build-stage1.log`.
+- Smoke, default map: exit 0. Smoke, `FortGameModeAthena`: exit 0. Network checksum 683914758 on both peers. The Athena
+  pawn is authority 1 on the server and 0 on the client.
+- `FortniteLinux -NetSerializeSelfTest` (through `FortniteLinux.sh`): ALL PASS, exit 0.
+- `class_checksum.py`: parity 4,591 of 4,591 classes. `check_behavior.py`: 249 spliced and verified, FAIL 0.
+
+Stale module list, corrected in this stage: Niagara, AnimationSharing, PhysXVehicles, AnimationBudgetAllocator and
+SignificanceManager are enabled in `native/FortniteLinux.uproject` (they were listed as not enabled below, which is no longer true).
+
 ## Results
 
 | Measure | Round 1 (21) | Round 2 (168) | Round 3 final (1,099 entries) |
@@ -110,14 +128,14 @@ The per-class table of the 168-class pass was removed: it no longer matches the 
 counts for all 993 classes are in `porting/generated/reflection/native_classes_index.json` (git-ignored), and skipped
 records in `skipped_properties.json`.
 
-## Blocked and not generated (blocklist, 18 entries)
+## Blocked and not generated (blocklist, 8 entries)
 
 `porting/native_class_blocklist.txt` (`ClassName<TAB>reason`). It was 238 entries before the runtime modules. Counts by reason:
 
 | Reason | Classes |
 |---|---|
 | Hand-written in `porting/native/Source` (`AFortGameModeAthena`, `AFortLevelScriptActor`, `AFortStaticMeshActor`, `AFortSkydivingShadowProxy`, `UFortKismetLibrary`, `UFortMetaNavArea_Obstacles`) | 6 |
-| Ancestor in a plugin the project does not enable: NiagaraAnimNotifies (Niagara) 3, AnimationSharing 2, PhysXVehicles 2, AnimationBudgetAllocator 2, SignificanceManager 1 | 10 |
+| Round 3 (historical): ancestor in a plugin the project did not enable then: NiagaraAnimNotifies (Niagara) 3, AnimationSharing 2, PhysXVehicles 2, AnimationBudgetAllocator 2, SignificanceManager 1. These plugins are enabled in `FortniteLinux.uproject` now, and the blocklist has no plugin entries | 10 |
 | UINTERFACE extending another interface (`UAbilitySystemInterface`, `UGenericTeamAgentInterface`; the generator emits only interfaces whose parent is `UInterface`) | 2 |
 
 The 220 entries that were blocked on McpProfileSys, ModularGameplay, BlueprintContext, MeshNetwork, CommonUI, Account and
@@ -221,9 +239,9 @@ Runtime modules round (this section, builds 1 to 6 of 16 used in the round):
 1. **Interfaces.** Recover the implemented interfaces of each class (the reflection records only `interface_count`; the
    names must come from the class's `FImplementedInterface` table or from the runtime dump), then inherit the `I<Name>`
    class and emit the interface UFUNCTIONs. Until then, `TScriptInterface<I...>` properties are the only interface uses.
-2. **Remaining plugins.** Niagara (71 classes via `NiagaraAnimNotifies` and others), AnimationSharing, PhysXVehicles,
-   AnimationBudgetAllocator and SignificanceManager are not enabled. Decide whether to enable them (each adds a module
-   compile) or keep them blocklisted.
+2. **Remaining plugins.** Niagara, AnimationSharing, PhysXVehicles, AnimationBudgetAllocator and SignificanceManager are
+   enabled in `native/FortniteLinux.uproject`, so they are no longer a blocker. Engine plugins the project does not enable
+   are still C4 or b-not-enabled in `native_class_coverage.md` (section 7, item 7).
 3. **Remaining plugins and packages.** CommonInput (4 classes), Qos (4) and Lobby (4) are missing from the native set, and the
    plugin modules in the table (Niagara and the others) are not enabled. The 10 classes they block stay blocklisted.
 4. **Class references (`class_outside_native_set`, 311 properties).** Re-run `resolve_class_refs.py` and widen the set to

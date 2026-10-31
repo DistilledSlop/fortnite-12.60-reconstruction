@@ -4615,3 +4615,24 @@ UWaxTokenEventWidgetBase
 UWeaponOverheatWidget
 UWinterQuestData
 UWumbaSidegradeButton
+
+# Stage 1 (coverage cause C2): the 19 FortniteUI UINTERFACEs whose parent is UInterface (no blocker).
+UAthenaPlayerInfoBaseWidgetInterface
+UFortAthenaMOTDNewsChildren
+UFortBangInterface
+UFortBangWrapperContentInterface
+UFortGlobalActionDetailsDataSource
+UFortHUDObjectiveSizeInterface
+UFortHUDShutdownTimerInterface
+UFortItemListEntryWidgetInterface
+UFortItemListViewInterface
+UFortItemManagementMulchPanel
+UFortItemViewContextInterface
+UFortMobileActionButtonInterface
+UFortNodeCanvasEntityInterface
+UFortNodeCanvasInterface
+UFortPrimaryContentInterface
+UFortPrioritizedWidget
+UFortTabButtonInterface
+UFortTimespanDataSource
+UHUDLayoutToolInterface

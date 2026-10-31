@@ -9,10 +9,10 @@ Scope: 1 reflected type in a package that is out of scope for this analysis is e
 **Are we porting all native classes the exe reflects? No.**
 
 - Reflected types: 15049 in total (6966 class blocks, of which 210 are `UINTERFACE`; 4512 structs; 2056 enums; 1515 delegates). 10 class blocks have no name in the name map (2 classes, 8 interfaces) and cannot be matched.
-- **Game classes** (module is our project or a module absent from the UE 4.25 tree; 4763 named classes and interfaces): 4572 generated (a), 7 hand-written stand-ins (c), 2 blocklisted (d), **182 missing (e)**. So 96.0% have a generated source.
+- **Game classes** (module is our project or a module absent from the UE 4.25 tree; 4763 named classes and interfaces): 4591 generated (a), 7 hand-written stand-ins (c), 2 blocklisted (d), **163 missing (e)**. So 96.4% have a generated source. (Stage 1 update: was 4572 and 182; see the stage notes in `native_classes_status.md`.)
 - **Engine and plugin classes** (2193 named): 2004 engine source in an enabled module (b-enabled), 151 engine source in a plugin that is not enabled (b-not-enabled: declared in the 4.25 tree, not compiled into our build), 14 adapted porting-plugin source (Water, c), 24 missing (e).
-- **Missing named classes and interfaces: 206** (plus 10 unnamed blocks). **Missing structs, enums and delegates: 1657** (1350 of them are not referenced by any promoted class; they are outside the promotion closure).
-- MISSING count by cause category (all kinds, incl. the 10 unnamed blocks): C1 297, C2 19, C3 94, C4 103, C5 1360.
+- **Missing named classes and interfaces: 187** (was 206 before stage 1; plus 10 unnamed blocks). **Missing structs, enums and delegates: 1657** (1350 of them are not referenced by any promoted class; they are outside the promotion closure).
+- MISSING count by cause category (all kinds, incl. the 10 unnamed blocks): C1 297, C2 0 (was 19; stage 1), C3 94, C4 103, C5 1360.
 
 Cause categories (section 6 has the table): **C1** missing plugin/runtime module in our project; **C2** not in `native_class_set.txt` (add it); **C3** blocked by a generator limitation; **C4** engine class not present in the UE 4.25 source; **C5** other (unnamed block, or a struct/enum/delegate outside the promotion closure).
 
@@ -41,18 +41,18 @@ Top actions (full ordered list in section 7):
 | Kind | a generated | b-enabled | b-not-enabled | c hand/porting | d blocklisted | e missing | Total |
 |---|---:|---:|---:|---:|---:|---:|---:|
 | class | 4463 | 1935 | 150 | 21 | 0 | 185 | 6754 |
-| interface | 109 | 69 | 1 | 0 | 2 | 21 | 202 |
+| interface | 128 | 69 | 1 | 0 | 2 | 2 | 202 |
 | struct | 1628 | 1521 | 435 | 4 | 0 | 924 | 4512 |
 | enum | 629 | 820 | 97 | 1 | 0 | 509 | 2056 |
 | delegate | 1006 | 253 | 30 | 2 | 0 | 224 | 1515 |
-| **all named** | **7835** | **4598** | **713** | **28** | **2** | **1863** | 15039 |
+| **all named** | **7854** | **4598** | **713** | **28** | **2** | **1844** | 15039 |
 
 ### 3b. By package (all kinds; unnamed blocks shown as `(none)`)
 
 | Package | Types | a | b-enabled | b-not-enabled | c | d | e | Classes+ifaces e |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
 | /Script/FortniteGame | 6515 | 5482 | 0 | 0 | 7 | 2 | 1024 | 6 |
-| /Script/FortniteUI | 2602 | 2172 | 0 | 0 | 0 | 0 | 430 | 40 |
+| /Script/FortniteUI | 2602 | 2191 | 0 | 0 | 0 | 0 | 411 | 21 |
 | /Script/Engine | 2143 | 0 | 2122 | 0 | 0 | 0 | 21 | 5 |
 | /Script/ControlRig | 377 | 0 | 0 | 372 | 0 | 0 | 5 | 1 |
 | /Script/AIModule | 273 | 0 | 271 | 0 | 0 | 0 | 2 | 0 |
@@ -216,6 +216,8 @@ Top actions (full ordered list in section 7):
 `e` in the package table includes the unnamed blocks (package `(none)`).
 
 ## 4. MISSING classes and interfaces (named 206, unnamed 10)
+
+Stage 1 (C2) added the 19 FortniteUI interfaces listed below; their rows are kept as the 2026-10-31 analysis record (named missing now 187).
 
 Cause code and short reason per row; the parent is the reflected parent. `ancestor` in the reason means the blocking type is a parent.
 
@@ -758,7 +760,7 @@ Reasons (count): return, out or non-const reference parameter (4); parameter typ
 | Code | Category | Classes+ifaces | Structs+enums+delegates | Total | Meaning and action |
 |---|---|---:|---:|---:|---|
 | C1 | missing plugin/runtime module in our project | 156 | 141 | 297 | The module is absent from the UE 4.25 tree and the UE 4.26 tree, so no source exists. Generate it as a runtime module (as CommonUI and McpProfileSys were), add it to the uproject and the game Build.cs, then add its classes to the set. |
-| C2 | not in native_class_set.txt (just add it) | 19 | 0 | 19 | Usable module, and the parent is generated or engine. |
+| C2 | not in native_class_set.txt (just add it) | 0 | 0 | 0 | Done in stage 1 (19 FortniteUI interfaces added; was 19). Usable module, parent generated or engine. |
 | C3 | blocked by a generator limitation | 7 | 87 | 94 | Classes: a hand-written stand-in parent (a generated child would clash with it). Structs and delegates: `not_emittable` (out/return/non-const reference delegate parameter, or a type from another module). |
 | C4 | engine class not present in UE 4.25 source | 24 | 79 | 103 | The reflected package is an engine or plugin module, which the generator cannot write into. Some names exist in the UE 4.26 tree (hint). |
 | C5 | other | 10 | 1350 | 1360 | Unnamed blocks (no name), or a struct, enum or delegate outside the promotion closure (not referenced by any promoted class). |
@@ -770,7 +772,7 @@ Unnamed blocks are counted under C5 in the classes column (10).
 1. **Generate the C1 modules.** Add these packages to `RUNTIME_MODULE_PACKAGES` in `porting/gen_native_classes.py`, register them in `porting/native/FortniteLinux.uproject`, list them in the game Build.cs, then add their classes and interfaces (and non-engine ancestors) to `native_class_set.txt`. Modules (count = C1 items rooted in the module, classes and non-class types): SocialUMG (42), KairosSceneCapture (23), GameSubCatalog (22), SmartObjectsModule (20), MantisRuntime (19), NVIDIAGfeSDK (17), LauncherSocialDefaults (16), EpicCMSUIFramework (15), FortSoundCueTemplates (14), HoagieRuntime (13), GameplayBehaviorsModule (12), LauncherSocialTypes (12), SubtitlesWidgets (9), EpicGameplayStatsRuntime (9), LiveStreamAnimation (6), EventModeRuntime (5), SidecarSys (5), Solaris (5), LocalNotifications (5), PurchaseFlow (4), ScheduledEvents (4), NetUI (3), EventModeUI (2), LiveStreamVoice (2), ForwardingChannels (2), GameFeedback (2), HoagieUI (1), FacialAnimSystem (1), Crashlytics (1), DiscordRPC (1), UACBase (1), F5Player (1), F5PlayerFactory (1), SolarisUi (1), FortniteEngineLoadingScreen (1). Non-class types of a module enter the emitted closure only when a promoted class uses them.
    - Decision: NVIDIAGfeSDK (17 non-class types) is a third-party SDK package; generate it only if a class of ours needs it.
    - Modules that only carry non-class types (no class in the list above) need no set entry; their structs and enums enter the closure only when a promoted class uses them.
-2. **Add the 19 FortniteUI interfaces (C2) to `native_class_set.txt`:** UAthenaPlayerInfoBaseWidgetInterface, UFortAthenaMOTDNewsChildren, UFortBangInterface, UFortBangWrapperContentInterface, UFortGlobalActionDetailsDataSource, UFortHUDObjectiveSizeInterface, UFortHUDShutdownTimerInterface, UFortItemListEntryWidgetInterface, UFortItemListViewInterface, UFortItemManagementMulchPanel, UFortItemViewContextInterface, UFortMobileActionButtonInterface, UFortNodeCanvasEntityInterface, UFortNodeCanvasInterface, UFortPrimaryContentInterface, UFortPrioritizedWidget, UFortTabButtonInterface, UFortTimespanDataSource, UHUDLayoutToolInterface. Each has parent `UInterface`, which the generator emits.
+2. **DONE in stage 1.** Add the 19 FortniteUI interfaces (C2) to `native_class_set.txt`: UAthenaPlayerInfoBaseWidgetInterface, UFortAthenaMOTDNewsChildren, UFortBangInterface, UFortBangWrapperContentInterface, UFortGlobalActionDetailsDataSource, UFortHUDObjectiveSizeInterface, UFortHUDShutdownTimerInterface, UFortItemListEntryWidgetInterface, UFortItemListViewInterface, UFortItemManagementMulchPanel, UFortItemViewContextInterface, UFortMobileActionButtonInterface, UFortNodeCanvasEntityInterface, UFortNodeCanvasInterface, UFortPrimaryContentInterface, UFortPrioritizedWidget, UFortTabButtonInterface, UFortTimespanDataSource, UHUDLayoutToolInterface. Each has parent `UInterface`, which the generator emits.
 3. **Resolve the hand-written stand-ins (C3, 7 classes).** `AFortGameModeAthena` (Apollo stand-in, blocklisted), `AFortStaticMeshActor`, `AFortHLODSMActor`, `AFortLevelScriptActor` (hand-written in `native/Source/FortniteGame/Public/`) block AFortGameModeBR, AFortPlayspaceGameMode, AFortAthenaTutorialMarker, AFortAthenaTutorialShootingAutofireTarget, AFortInstancedStaticMeshActor, AFortHLODSMSectionActor, AFortFrontendLevelScriptActor. Replacing a stand-in is a decision (it changes Apollo behaviour); until then these 7 stay missing.
 4. **Generator: support out and return delegate parameters, and the `TODO_*Other*Module` types (C3 structs and delegates, 87 rows).** Most `TODO_StructOtherModule`/`TODO_EnumOtherModule` entries resolve once their module is added (step 1). Out/return delegate parameters are already listed as a next step in `native_classes_status.md`.
 5. **Engine and plugin classes (C4, 24 classes, 79 structs/enums/delegates).** Cannot be generated into an engine module. Options per item: backport from the UE 4.26 tree (47 names are present there by name, for example UVirtualTexture2D, UAudioBus, UVirtualTextureBuilder, UMovieSceneSpawnTrack), or leave as is. The adapted Water plugin also lacks 3 classes (AWaterBodyProxy and two others) that the exe reflects.
