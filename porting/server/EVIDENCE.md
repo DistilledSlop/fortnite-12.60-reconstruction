@@ -84,19 +84,20 @@ The check is `schema_check.py` with the tests in `test_services.py` (`SchemaTest
 4. **`GeneralChatReturn` has five bool bitfields** (`bIsSubGameGlobalChatDisabled` and four more) that have no
    memory offset. A reader that skipped offset-less members would miss them. The chat route
    (`chat_service.py`) sends all five, as `false`.
-5. **The MCP envelope names `serverTime`, `responseVersion` and `multiUpdate` are in no McpProfileSys header.**
-   Their PascalCase names are in the binary. Their types are a convention (`ENVELOPE_FIELDS` in
-   `schema_check.py`). The element type of `multiUpdate` is taken to be `FProfileUpdateSingle`, which is an
-   inference.
+5. **The MCP envelope is reflected.** `ProfileUpdate` inherits `ProfileUpdateSingle` and declares
+   `ResponseVersion` (Int), `ServerTime` (DateTime) and `MultiUpdate` (array of ProfileUpdateSingle).
+   The enclosing header is not generated; `ENVELOPE_FIELDS` records the recovered types. The
+   checker requires a complete response even though the shipped converter skips absent properties.
 
 ## Open conflicts and risks
 
-- **Key case.** The engine writes `ProfileRevision` as `profileRevision`, but its reader
-  (`JsonObjectToUStruct`, `JsonObjectConverter.cpp` around line 799) looks up the exact PascalCase
-  property name. So if the client parsed MCP responses with the stock reader, our camelCase keys would be
-  ignored. The binary has the camelCase log text (`Missing new 'profileChangesBaseRevision' key`) and the
-  standalone literal `profileId`, which point to camelCase on the wire. The parser was not located, so this
-  is not proven.
+- **Key case.** Stock UE 4.25 `JsonAttributesToUStruct` looks up the property name in a
+  `TMap<FString, ...>` (`JsonObjectConverter.cpp:799`). `FString::operator==` uses `Stricmp`
+  (`Core/Public/Containers/UnrealString.h:1008-1010`), and its hash is case-insensitive
+  (`UnrealString.h:1936-1940`), so this stock lookup can match `ProfileRevision` to
+  `profileRevision`. The earlier assertion that the stock reader requires exact case was wrong.
+  The shipped MCP path uses a reflected-struct converter, but its comparison helper has not been
+  independently verified; maintain the existing camelCase wire keys pending that evidence.
 - **Session key field.** The backend's `key` (`matchmaking.py`, `SESSION_KEY_FIELD`) is a guess. A search for
   it found no literal of four or more characters, and the scan's 3-character search found it only as a
   generic identifier in 8 functions. The exe does have the literal `EncryptionKey` (UTF-16), but it sits in a
@@ -131,7 +132,7 @@ instructions that load it. Served rows only; the unserved route strings are in `
 | `account.user_setting` | POST | `/api/v1/user/setting` | 0x145aacdc8 | 1 | - | wine_log, binary | yes |
 | `account.try_play_on_platform` | POST | `%s/api/game/v2/tryPlayOnPlatform/account/%s?platform=%s` | 0x1460e5940 | 1 | - | wine_log, binary | yes |
 | `account.profile_token_verify` | POST | `/api/game/v2/profileToken/verify/`accountId` | 0x1460dd5c0 | 2 | - | wine_log, binary | yes |
-| `profile.command` | POST | `(config) McpClientCommandUrl=/api/game/v2/profile/`accountId/client/`fname?profileId=`profileId` | - | 0 | FProfileUpdateSingle (+ serverTime, responseVersion, multiUpdate) | wine_log, reflection, asset | yes |
+| `profile.command` | POST | `(config) McpClientCommandUrl=/api/game/v2/profile/`accountId/client/`fname?profileId=`profileId` | - | 0 | FProfileUpdate (inherits FProfileUpdateSingle) | wine_log, reflection, asset | yes |
 | `party.create` | POST | `/api/v1/{namespace}/parties` | 0x145a9fd28 | 1 | - | binary | yes |
 | `party.get` | GET | `/api/v1/{namespace}/parties/{partyId}` | 0x145a9fd60 | 2 | - | binary | yes |
 | `party.member.join` | POST | `/api/v1/{namespace}/parties/{partyId}/members/{accountId}/join` | 0x145a9f5b0 | 1 | - | binary | yes |
@@ -182,12 +183,30 @@ instructions that load it. Served rows only; the unserved route strings are in `
 | `matchmaking.session_key` | GET | `/api/game/v2/matchmaking/account/`accountId/session/`sessionId` | 0x1460dfbe0 | 1 | - | binary | yes |
 <!-- END GENERATED TABLE (build_evidence.py) -->
 
-## Open question: how the client reads response keys
+## MCP response conversion trace
 
-Stock UE 4.25 `FJsonObjectConverter` writes keys with `StandardizeCase` (camelCase, JsonObjectConverter.cpp:265) but
-`JsonObjectToUStruct` looks them up by the exact PascalCase property name (JsonObjectConverter.cpp:799), so the stock reader
-cannot parse its own output. The shipped client therefore must read MCP responses with its own code. The exe carries
-camelCase key literals and the backend serves camelCase (the publicly documented wire form), but the parsing function has not
-been located. Next step: find it from the key-string load sites (`evidence_scan.py` already lists them) and confirm which
-keys it requires and whether lookups are case-insensitive. Until then the response key spelling is `binary`/`convention`,
-not confirmed by a parser.
+The runtime image contains the UTF-16 diagnostic `MCP-Profile: Missing new
+'profileChangesBaseRevision' key. Assuming base of %lld` at `0x145bfd4d0`. The LEA scan places
+its code reference at RVA `0x11029f1` in `0x1411028a0`, which applies an already-decoded profile
+update. Its caller `0x141102520` identifies itself as `UMcpProfile::HandleProfileUpdate`.
+
+The response path `0x1411036a0` accepts an object or array. For an object, it obtains the
+`/Script/McpProfileSys.ProfileUpdate` struct through `0x141113e20` and calls `0x143eed4a0`,
+which forwards to `0x143eecfd0`. The latter iterates reflected properties, looks up names in the
+JSON map, skips missing fields, converts values, and contains the log string
+`JsonObjectToUStruct - Unable to parse %s.%s from JSON`: strong evidence identifying the shipped
+converter path. An array element instead uses `AccountIdAndProfileResponse` from `0x1411136a0`,
+whose reflected `Response` is `ProfileUpdate`. The reflection blocks identify the `ProfileUpdate`
+superclass and all three envelope types; the test checks these relationships directly.
+
+UE 4.25 source uses case-insensitive `FString` equality and hashing for the JSON attribute map
+(see “Key case” above). The shipped binary's comparison helper is not independently verified, so
+its exact case behavior remains open. Existing camelCase responses remain unchanged. The backend
+schema checker demands every field as a completeness policy; a missing property alone does not
+mean the converter rejects the response.
+
+The standalone `profileId` literal at `0x145bff818` is referenced at RVA `0x10f00fc` in
+`0x1410effd0`, which builds a request with `profileId` and `clientCommandRevision`; it is not
+response-parser evidence. Ghidra slim decompiles, disassembly and caller metadata are in the
+ignored `generated/mcp-parser-probe/`, `mcp-caller-probe/`, `mcp-caller2-probe/`,
+`mcp-parser3-probe/` and `mcp-parser4-probe/` directories. Probe transactions were rolled back.

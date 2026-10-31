@@ -347,7 +347,7 @@
     "text": "McpClientCommandUrl=/api/game/v2/profile/`accountId/client/`fname?profileId=`profileId"
    },
    "schema": {
-    "response": "FProfileUpdateSingle (+ serverTime, responseVersion, multiUpdate)",
+    "response": "FProfileUpdate (inherits FProfileUpdateSingle)",
     "source": "reflection",
     "members": [
      {
@@ -384,6 +384,21 @@
       "json_name": "profileCommandRevision",
       "type": "integer",
       "cpp": "int32"
+     },
+     {
+      "json_name": "serverTime",
+      "type": "datetime",
+      "cpp": "FDateTime"
+     },
+     {
+      "json_name": "responseVersion",
+      "type": "integer",
+      "cpp": "int32"
+     },
+     {
+      "json_name": "multiUpdate",
+      "type": "array of FProfileUpdateSingle",
+      "cpp": "TArray<FProfileUpdateSingle>"
      }
     ]
    },
@@ -3460,6 +3475,58 @@
      "json_name": "profileCommandRevision",
      "type": "integer",
      "cpp": "int32"
+    }
+   ],
+   "FProfileUpdate": [
+    {
+     "json_name": "profileRevision",
+     "type": "integer",
+     "cpp": "int64"
+    },
+    {
+     "json_name": "profileId",
+     "type": "string",
+     "cpp": "FString"
+    },
+    {
+     "json_name": "profileChangesBaseRevision",
+     "type": "integer",
+     "cpp": "int64"
+    },
+    {
+     "json_name": "profileChanges",
+     "type": "array of object",
+     "cpp": "TArray<FJsonObjectWrapper>"
+    },
+    {
+     "json_name": "lockExpiration",
+     "type": "datetime",
+     "cpp": "FDateTime"
+    },
+    {
+     "json_name": "notifications",
+     "type": "array of object",
+     "cpp": "TArray<FJsonObjectWrapper>"
+    },
+    {
+     "json_name": "profileCommandRevision",
+     "type": "integer",
+     "cpp": "int32"
+    },
+    {
+     "json_name": "serverTime",
+     "type": "datetime",
+     "cpp": "FDateTime"
+    },
+    {
+     "json_name": "responseVersion",
+     "type": "integer",
+     "cpp": "int32"
+    },
+    {
+     "json_name": "multiUpdate",
+     "type": "array of FProfileUpdateSingle",
+     "cpp": "TArray<FProfileUpdateSingle>"
     }
    ]
   },

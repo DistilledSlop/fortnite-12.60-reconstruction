@@ -994,6 +994,25 @@ class SchemaTests(ServiceTestCase):
                 declared = {member["name"] for member in self.structs[header_name]["members"]}
                 self.assertEqual(reflected, declared)
 
+    def test_profile_update_envelope_matches_reflection(self):
+        reflection = HERE.parent / "generated" / "reflection" / "struct_blocks.json"
+        if not reflection.exists():
+            self.skipTest("porting/generated/reflection/struct_blocks.json is git-ignored and not present")
+        blocks = json.loads(reflection.read_text(encoding="utf-8"))["structs"]
+        by_name = {block["name"]: block for block in blocks if block.get("name")}
+        root, single, date = (by_name[name] for name in ("ProfileUpdate", "ProfileUpdateSingle", "DateTime"))
+        self.assertEqual(root["super_fn"], single["construct_fns"][0])
+        outer = {p["name"]: p for p in root["properties"] if not p.get("array_inner_of")}
+        self.assertEqual({schema_check.standardize_case(name) for name in outer}, set(schema_check.ENVELOPE_FIELDS))
+        self.assertEqual({name: p["kind"] for name, p in outer.items()},
+                         {"MultiUpdate": "Array", "ServerTime": "Struct", "ResponseVersion": "Int"})
+        self.assertEqual(outer["ServerTime"]["type_refs"]["struct"], date["construct_fns"][0])
+        inner = [p for p in root["properties"] if p.get("array_inner_of") == "MultiUpdate"]
+        self.assertEqual(len(inner), 1)
+        self.assertEqual(inner[0]["kind"], "Struct")
+        self.assertEqual(inner[0]["type_refs"]["struct"], single["construct_fns"][0])
+        self.assertEqual(schema_check.ENVELOPE_FIELDS["multiUpdate"]["type"], ("array", "FProfileUpdateSingle"))
+
     def test_chat_reserve_matches_reflected_general_chat_return(self):
         status, body, _ = jcall(self.base, "POST",
                                 f"/fortnite/api/game/v2/chat/{LOCAL}/reserveGeneralChatRooms/fortnite/Windows",

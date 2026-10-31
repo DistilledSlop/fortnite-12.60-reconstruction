@@ -216,10 +216,11 @@ def config_hits():
 
 def mcp_schema():
     structs = schema_check.parse_structs()
-    return {
-        "FProfileUpdateSingle": [{"json_name": m["json_name"], "type": schema_check.describe(m["type"]),
-                                  "cpp": m["cpp_type"]} for m in structs["FProfileUpdateSingle"]["members"]],
-    }
+    single = [{"json_name": m["json_name"], "type": schema_check.describe(m["type"]),
+               "cpp": m["cpp_type"]} for m in structs["FProfileUpdateSingle"]["members"]]
+    envelope = [{"json_name": name, "type": schema_check.describe(spec["type"]), "cpp": spec["cpp"]}
+                for name, spec in schema_check.ENVELOPE_FIELDS.items()]
+    return {"FProfileUpdateSingle": single, "FProfileUpdate": single + envelope}
 
 
 def reflected_struct_schema(struct_blocks_path):
@@ -324,8 +325,8 @@ def build_rows(backend, scan, keyfuncs, bins, config):
             row["wine_log"] = {"method": None, "where": WINE_LOG_PATH_ONLY[name]}
             classes.append("wine_log")
         if name == "profile.command":
-            row["schema"] = {"response": "FProfileUpdateSingle (+ serverTime, responseVersion, multiUpdate)",
-                             "source": "reflection", "members": mcp_schema()["FProfileUpdateSingle"]}
+            row["schema"] = {"response": "FProfileUpdate (inherits FProfileUpdateSingle)",
+                             "source": "reflection", "members": mcp_schema()["FProfileUpdate"]}
             classes.append("reflection")
         if name == "chat.reserve_general_rooms":
             row["schema"] = {"response": "GeneralChatReturn", "source": "reflection"}

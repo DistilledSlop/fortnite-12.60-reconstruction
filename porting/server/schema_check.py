@@ -29,6 +29,8 @@ Checks. A response is checked against a struct with `check_object`. Every member
 with a compatible JSON type. Keys the struct does not declare are reported as extra, and they fail
 unless the caller allows them (`allow_extra`). The MCP envelope names that are not in any McpProfileSys
 header (serverTime, responseVersion, multiUpdate) are listed in ENVELOPE_FIELDS with their evidence.
+This is a completeness check; the shipped converter skips absent properties, so a missing
+member reported here is not by itself proof that the client rejects the response.
 """
 
 import json
@@ -45,15 +47,13 @@ NUMBER_TYPES = {"float", "double"}
 STRING_TYPES = {"FString", "FName", "FText"}
 ISO_8601 = re.compile(r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d{1,9})?(Z|[+-]\d{2}:\d{2})?")
 
-# Envelope fields of an MCP command response that no McpProfileSys header declares.
-# Each entry gives the JSON type and where the name is seen. The types are a convention
-# (the engine writes these as ServerTime, ResponseVersion and MultiUpdate, and the binary has
-# those PascalCase names), so they are the lowest-confidence part of the schema.
+# ProfileUpdate inherits ProfileUpdateSingle and declares these three fields in the
+# recovered reflection. The enclosing header is not generated; see EVIDENCE.md.
 ENVELOPE_FIELDS = {
-    "serverTime": {"type": "datetime", "evidence": "binary: ServerTime (ASCII property name); convention for type"},
-    "responseVersion": {"type": "integer", "evidence": "binary: ResponseVersion (ASCII); convention for type"},
-    "multiUpdate": {"type": ("array", "FProfileUpdateSingle"),
-                    "evidence": "binary: MultiUpdate (ASCII); element type is FProfileUpdateSingle (see note)"},
+    "serverTime": {"type": "datetime", "cpp": "FDateTime", "evidence": "reflection: ProfileUpdate.ServerTime"},
+    "responseVersion": {"type": "integer", "cpp": "int32", "evidence": "reflection: ProfileUpdate.ResponseVersion"},
+    "multiUpdate": {"type": ("array", "FProfileUpdateSingle"), "cpp": "TArray<FProfileUpdateSingle>",
+                    "evidence": "reflection: ProfileUpdate.MultiUpdate"},
 }
 
 _STRUCT_RE = re.compile(r"USTRUCT\(\)\s*struct\s+(\w+)\s*(?::\s*public\s+(\w+))?\s*\{(.*?)\n\};", re.DOTALL)
