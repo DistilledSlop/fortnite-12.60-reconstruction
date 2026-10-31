@@ -7,6 +7,8 @@ Reads only data already on disk:
   porting/generated/asset-registry-summary.txt asset class counts
   porting/generated/FortniteGame.uproject      enabled plugins and modules
   porting/generated/extracted/                 recovered cooked packages
+  porting/generated/pak-sources.tsv            package -> winning pak (optional; written by
+                                               `Cue4Inspect --pak-sources --all-keys --key-file=<path>`)
   porting/native/Source/                       project source already written
   <UE engine>/Source, <UE engine>/Plugins     engine headers (class index)
   <UE engine>/Config/Unix/UnixEngine.ini      Linux audio backend selection
@@ -535,6 +537,28 @@ def build_plugins(enabled: list[str], engine_plugins: dict[str, Path], evidence:
     }
 
 
+def pak_attribution(pkg_rows: list[dict], widget_packages: list[dict]) -> dict:
+    """Count recovered packages by the pak that supplies them (pak-sources.tsv, optional)."""
+    index_path = GEN / "pak-sources.tsv"
+    if not index_path.exists():
+        return {"available": False, "reason": "run Cue4Inspect --pak-sources to write porting/generated/pak-sources.tsv"}
+    source = {}
+    for line in read_text(index_path).splitlines():
+        package, _, pak = line.partition("\t")
+        if pak:
+            source[package] = pak
+    recovered = collections.Counter(source.get(row["package"], "unknown") for row in pkg_rows)
+    widgets = collections.Counter(source.get(row["package"], "unknown") for row in widget_packages)
+    return {
+        "available": True,
+        "index_rows": len(source),
+        "recovered_packages_by_pak": dict(recovered.most_common()),
+        "widget_packages_by_pak": dict(widgets.most_common()),
+        "pakchunk1000_1002_recovered": {pak: recovered.get(pak, 0) for pak in (
+            "pakchunk1000-WindowsClient.pak", "pakchunk1001-WindowsClient.pak", "pakchunk1002-WindowsClient.pak")},
+    }
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--skip-tool", action="store_true", help="reuse the cached package imports instead of running cue4inspect")
@@ -582,6 +606,7 @@ def main() -> int:
         "host_audio": host_audio_probe(),
         "engine_audio_backend": engine_audio_backend(),
         "pak_listing_scope": pak_listing_scope(),
+        "pak_attribution": pak_attribution(pkg_rows, widget_packages),
     }
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(json.dumps(report, indent=1) + "\n", encoding="utf-8")

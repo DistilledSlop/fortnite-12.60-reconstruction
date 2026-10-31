@@ -27,6 +27,7 @@ bool showAll = args.Contains("--all");
 bool showPseudo = args.Contains("--pseudo");
 bool showImports = args.Contains("--imports");
 bool registryMode = args.Contains("--registry");
+bool pakSources = args.Contains("--pak-sources");
 bool scanMaps = args.Contains("--scan-maps");
 bool scanNative = args.Contains("--scan-native");
 bool allKeys = args.Contains("--all-keys");
@@ -58,9 +59,9 @@ if (maxArgument is not null && (!int.TryParse(maxArgument[15..], out maxPackages
     Console.Error.WriteLine("--max-packages must be a positive integer");
     return 2;
 }
-string[] positional = args.Where(arg => arg != maxArgument && arg != keyFileArgument && arg is not ("--all" or "--pseudo" or "--imports" or "--registry" or "--scan-maps" or "--scan-native" or "--all-keys" or "--save-package" or "--save-list" or "--sizes" or "--save-folder" or "--save-closure" or "--export-glb" or "--export-landscape" or "--export-landscape-grid" or "--export-landscape-weightmap-grid" or "--export-png" or "--export-landscape-weightmaps" or "--material-report" or "--function-report" or "--landscape-report" or "--actor-report" or "--versions" or "--ue426" or "--loose")).ToArray();
-bool packageLess = registryMode || scanMaps || scanNative || exportLandscapeGrid || exportLandscapeWeightmapGrid;
-if (new[] { registryMode, scanMaps, scanNative, exportLandscapeGrid, exportLandscapeWeightmapGrid }.Count(mode => mode) > 1 || (packageLess ? positional.Length > 1 : positional.Length is < 1 or > 2))
+string[] positional = args.Where(arg => arg != maxArgument && arg != keyFileArgument && arg is not ("--all" or "--pseudo" or "--imports" or "--registry" or "--pak-sources" or "--scan-maps" or "--scan-native" or "--all-keys" or "--save-package" or "--save-list" or "--sizes" or "--save-folder" or "--save-closure" or "--export-glb" or "--export-landscape" or "--export-landscape-grid" or "--export-landscape-weightmap-grid" or "--export-png" or "--export-landscape-weightmaps" or "--material-report" or "--function-report" or "--landscape-report" or "--actor-report" or "--versions" or "--ue426" or "--loose")).ToArray();
+bool packageLess = registryMode || pakSources || scanMaps || scanNative || exportLandscapeGrid || exportLandscapeWeightmapGrid;
+if (new[] { registryMode, pakSources, scanMaps, scanNative, exportLandscapeGrid, exportLandscapeWeightmapGrid }.Count(mode => mode) > 1 || (packageLess ? positional.Length > 1 : positional.Length is < 1 or > 2))
 {
     Console.Error.WriteLine("Usage: Cue4Inspect <asset-path-without-extension> [pak-directory] [--all] [--pseudo] [--imports] [--save-package] [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect <folder-prefix> [pak-directory] --save-folder [--all-keys]");
@@ -247,6 +248,17 @@ try
             .OrderByDescending(group => group.Count())
             .Take(showAll ? int.MaxValue : 25))
             Console.WriteLine($"{group.Key}: {group.Count()}");
+        return 0;
+    }
+
+    if (pakSources)
+    {
+        // One row per recovered .uasset: package path, then the pak whose entry the provider serves.
+        foreach (var entry in provider.Files.Values
+            .OfType<CUE4Parse.UE4.VirtualFileSystem.VfsEntry>()
+            .Where(file => file.Path.EndsWith(".uasset", StringComparison.OrdinalIgnoreCase))
+            .OrderBy(file => file.Path, StringComparer.Ordinal))
+            Console.WriteLine($"{entry.Path[..^".uasset".Length]}\t{entry.Vfs.Name}");
         return 0;
     }
 
