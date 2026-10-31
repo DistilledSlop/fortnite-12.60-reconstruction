@@ -30,6 +30,9 @@ CPP_KEYWORDS = {
     "switch", "new", "delete", "unsigned", "signed", "char", "long", "short", "TEXT", "NULL",
     "Super", "ENetRole", "TSubclassOf", "TArray", "TMap", "TSet", "TEnumAsByte",
 }
+# Engine types and casts that snippets may use without a generated header (UE 4.25 names).
+ENGINE_NAMES = {"UClass", "UObject", "AActor", "FWeakObjectPtr", "TWeakObjectPtr", "FName", "FString", "FText",
+                "FVector", "TArray", "static_cast", "Cast"}
 PLACEHOLDER_RE = re.compile(r"\b(TODO|FIXME|TBD|XXX|PLACEHOLDER|placeholder|not recovered|stub body)\b|\.\.\.", re.I)
 
 _header_cache = {}
@@ -192,7 +195,7 @@ def check_entry(e, problems, infos):
             continue
         if before.endswith("::"):
             continue
-        if name in allowed or name.startswith("__"):
+        if name in allowed or name in ENGINE_NAMES or name.startswith("__"):
             continue
         if name in types or os.path.exists(os.path.join(GEN, name + ".h")):
             continue
@@ -239,6 +242,10 @@ def main():
     if verbose:
         for p in pending:
             print("  PENDING %s: %s" % (p[1], p[2]))
+    # Tracked, deterministic counts for the progress dashboard (porting/progress/components.json reads this).
+    with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "COUNTS.txt"), "w", encoding="utf-8") as fh:
+        fh.write("ported: %d\nskipped: %d\ndeclared_in_header: %d\npending_declaration: %d\nfail: %d\n"
+                 % (counts["ported"], counts["skipped"], decl_ok, len(pending), len(fails)))
     sys.exit(1 if fails else 0)
 
 

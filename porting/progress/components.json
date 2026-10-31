@@ -525,13 +525,12 @@
           "name": "Native function bodies ported (behaviour)",
           "weight": 150,
           "measure": {
-            "kind": "tracked_count",
-            "globs": [
-              "porting/behavior/**/*.inc"
-            ],
+            "kind": "tracked_regex",
+            "file": "porting/behavior/COUNTS.txt",
+            "pattern": "^ported:\\s*(\\d+)",
             "total_key": "native_functions_with_exec"
           },
-          "rationale": "Done: committed .inc function bodies under porting/behavior, one per ported function. Total: native functions with an execution address in the decompiled image (native_funcs.json, totals.json). Only committed bodies count. An honest small percentage is expected while the port is at the reflection stage."
+          "rationale": "Done: committed .inc function bodies under porting/behavior, one per ported function. Total: native functions with an execution address in the decompiled image (native_funcs.json, totals.json). Only committed bodies count. An honest small percentage is expected while the port is at the reflection stage. Counts ported FUNCTIONS (manifest entries with status 'ported', written by porting/behavior/check_behavior.py to COUNTS.txt), not snippet files: two shared bodies serve 123 trivial validate/empty-implementation functions. Trivial bodies count the same as large ones here; the breakdown by kind is in porting/behavior/MANIFEST.json."
         }
       ]
     },
