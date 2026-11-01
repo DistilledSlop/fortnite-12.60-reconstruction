@@ -69,7 +69,9 @@ def main():
             if decoded['shader_library']['sha256'] != mapped['archive_sha256']:
                 raise ValueError('material records reference a different shader library')
             rows = []
-            for record in decoded['material_shaders']['records']:
+            shader_records = decoded['material_shaders']['records'] + [
+                r for mesh in decoded.get('mesh_shader_maps', []) for r in mesh['records']]
+            for record in shader_records:
                 index = record['library_association']['index']
                 mapped_shader, reflected_shader = mapped_shaders[index], reflected_shaders[index]
                 code = Path(mapped_shader['output']).resolve()
@@ -87,6 +89,7 @@ def main():
                 remaining = [d for d in reflected_shader['descriptors'] if linked is None or
                              (d['set'], d['binding']) != (linked['descriptor_set'], linked['descriptor_binding'])]
                 rows.append(dict(shader_type=record['type']['name'], shader_index=index,
+                    vertex_factory=record['vertex_factory']['name'],
                     output_hash=record['output_hash']['hash'], frequency=record['frequency'],
                     spirv_sha256=code_hash, material_uniform_binding=linked,
                     remaining_descriptors=remaining))
