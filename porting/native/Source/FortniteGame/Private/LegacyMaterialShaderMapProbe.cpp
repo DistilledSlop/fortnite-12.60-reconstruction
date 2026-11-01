@@ -3021,7 +3021,7 @@ void RegisterLegacyOriginalMaterialProvider()
         {GLegacyFlogoPath, GLegacyFlogoParentPath, TEXT("d6b8dad3c9d015dca6a389a82eb5abc25a72aee3"), TEXT("ad8aee1ef762a6ecadee2807b485131a7f3f4426"), FString(), TEXT("fortnite.legacy-material-ingress.v4"), TEXT("UMaterialInstanceConstant"), GLegacyFlogoParentPath, GLegacyFlogoPath, false, false},
         {GLegacySocialPath, GLegacySocialPath, TEXT("d5c2198bee653b99a95b219f517870d82979dd5f"), TEXT("c505c4a9977115634e87809ccd0b5e981bfc417d"), FString(), TEXT("fortnite.legacy-material-ingress.v5"), TEXT("UMaterial"), FString(), GLegacySocialPath, false, false},
         {GLegacyMediaPath, GLegacyMediaPath, TEXT("a920df3ab39fdca2bb82a62f6a2a9ac4601b91d0"), TEXT("8c5013f615de83c1fbaf6d3435c6aaa7f3414a69"), FString(), TEXT("fortnite.legacy-material-ingress.v4"), TEXT("UMaterial"), FString(), GLegacyMediaPath, false, false},
-        {GLegacyGooglePath,GLegacyGooglePath,TEXT("7e127c308659a4a87be659d9d17829ceb691a4dc"),TEXT("e91924af4f38c08d7c9648768835473df361c16e"),FString(),TEXT("fortnite.legacy-material-ingress.v4"),TEXT("UMaterial"),FString(),GLegacyGooglePath,false,false}
+        {GLegacyGooglePath,GLegacyGooglePath,TEXT("a519120049649f3c0835b5e341e27778aa4ee781"),TEXT("e91924af4f38c08d7c9648768835473df361c16e"),FString(),TEXT("fortnite.legacy-material-ingress.v4"),TEXT("UMaterial"),FString(),GLegacyGooglePath,false,false}
     };
     auto IsHex=[](const FString& Value, int32 Length)
     {
