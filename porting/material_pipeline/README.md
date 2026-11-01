@@ -40,3 +40,16 @@ python3 -I porting/material_pipeline/translate_dxbc.py \
 ```
 
 All 44 selected original DXBC shaders compiled and passed Vulkan 1.0 SPIR-V validation. **Twelve jobs emit `shader_sm4_read_instruction_modifier` diagnostics for unhandled resource/data modifiers with this compiler version.** The receipt retains the exact messages and `compiler_diagnostic_jobs` count. They require investigation with a compiler that handles the observed modifiers; zero compile/validator exits do not prove semantic preservation. Original uniform values, descriptor bindings, vertex interfaces, render state, and inline shader-map reconstruction still require implementation and visual tests. No output is yet verified in a UE draw.
+
+## Original D3D wrapper bindings
+
+`inspect_d3d_code.py` parses the original wrapper before and after the DXBC container. Its prefix follows the local engine's `FD3D11ShaderResourceTable` serializer (`RenderCore/Public/ShaderCore.h`, `Windows/D3D11RHI/Public/D3D11ShaderResources.h`): resource-table bits, SRV/sampler/UAV/layout-hash arrays, then the texture map. It decodes packed resource entries using `RHI/Public/RHIDefinitions.h`. Its suffix follows `FShaderCodeReader`'s optional-data framing and decodes the packed resource counts and uniform-buffer names. Every boundary must align exactly with the DXBC container from the verified source report; changed wrapper hashes are rejected.
+
+```sh
+python3 -I porting/material_pipeline/inspect_d3d_code.py \
+  --source-report porting/generated/material_pipeline/frontend-game-library.json \
+  --report porting/generated/material_pipeline/d3d-wrapper-inspection.json
+python3 -I porting/material_pipeline/test_inspect_d3d_code.py
+```
+
+All 44 recovered wrappers pass exact prefix/DXBC/optional framing. Nineteen have active resource-table bits; the other 25 have empty maps. Across the 44, the decoded maps contain 28 SRV, 18 sampler, 18 texture, and zero UAV entries. Optional `p` and `u` records are present in each. The evidence report preserves each original map and decoded entry, including layout hashes and uniform-buffer names. Those entries are D3D bindings; they have not been matched to the translated SPIR-V descriptors or installed in UE's Vulkan RHI. The same 12 shaders with compiler diagnostics all have active D3D resource-table bits, so their semantics and binding correspondence need direct validation before rendering claims.
