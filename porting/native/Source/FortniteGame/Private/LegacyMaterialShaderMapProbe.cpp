@@ -27,6 +27,7 @@ RENDERER_API void UpdateNoiseTextureParameters(FViewUniformShaderParameters& Par
 #include "LegacySlateMaterial.h"
 #include "LegacyMaterialAsset.h"
 #include "LegacyOriginalMaterialReader.h"
+#include "LegacyMaterialManifestSHA256.h"
 #include "Dom/JsonObject.h"
 #include "Serialization/JsonReader.h"
 #include "Serialization/JsonSerializer.h"
@@ -45,7 +46,7 @@ struct FLegacySpirvDescriptor
     uint32 Binding = UINT32_MAX;
 };
 
-static bool RewriteLegacySpirv(const FString& Path, const FString& ExpectedSha1,
+static bool RewriteLegacySpirv(const FString& Path, const FString& ExpectedSha1, const FString& ExpectedSha256,
     uint32 ExpectedModel, TArray<uint32>& Words, uint32& Crc,
     TMap<uint32, FLegacySpirvDescriptor>& Descriptors, FString& Error)
 {
@@ -56,6 +57,9 @@ static bool RewriteLegacySpirv(const FString& Path, const FString& ExpectedSha1,
     FSHA1::HashBuffer(Bytes.GetData(), Bytes.Num(), Hash.Hash);
     if (ExpectedSha1.Len() != 40 || !Hash.ToString().Equals(ExpectedSha1, ESearchCase::IgnoreCase))
     { Error = TEXT("SPIR-V digest mismatch"); return false; }
+    uint8 Digest[32]; LegacyManifestSHA256(Bytes.GetData(),uint32(Bytes.Num()),Digest);
+    if (ExpectedSha256.Len()!=64 || !BytesToHex(Digest,32).Equals(ExpectedSha256,ESearchCase::IgnoreCase))
+    { Error=TEXT("SPIR-V SHA-256 mismatch"); return false; }
     Words.SetNumUninitialized(Bytes.Num() / 4);
     FMemory::Memcpy(Words.GetData(), Bytes.GetData(), Bytes.Num());
     if (Words[0] != 0x07230203 || Words[3] == 0 || Words[3] > 1000000)
@@ -134,7 +138,7 @@ static bool PrepareLegacyOutput(const TSharedPtr<FJsonObject>& Shader, const FRH
     TArray<uint32> Spirv;
     TMap<uint32, FLegacySpirvDescriptor> Decorations;
     uint32 Crc = 0;
-    if (!RewriteLegacySpirv(Reflection->GetStringField(TEXT("output")), Shader->GetStringField(TEXT("spirv_sha1")),
+    if (!RewriteLegacySpirv(Reflection->GetStringField(TEXT("output")), Shader->GetStringField(TEXT("spirv_sha1")), Reflection->GetStringField(TEXT("spirv_sha256")),
         bVertex ? 0 : 4, Spirv, Crc, Decorations, Error)) return false;
 
     FVulkanShaderHeader Header(FVulkanShaderHeader::EZero);
@@ -329,6 +333,36 @@ public:
     virtual bool GetTextureValue(const FHashedMaterialParameterInfo&, const URuntimeVirtualTexture**, const FMaterialRenderContext&) const override { return false; }
 };
 
+static bool ReadLegacyOverrides(const TSharedPtr<FJsonObject>& Case, TArray<FLegacyOverride>& Out, FString& Error)
+{
+    const TArray<TSharedPtr<FJsonValue>>* Values=nullptr;
+    if (!Case || !Case->TryGetArrayField(TEXT("overrides"),Values) || Values->Num()>256)
+    { Error=TEXT("invalid parameter overrides"); return false; }
+    for (const auto& Value : *Values)
+    {
+        const auto O=Value->AsObject();
+        if (!O) { Error=TEXT("invalid parameter override"); return false; }
+        const auto P=O->GetObjectField(TEXT("parameter"));
+        const auto N=P ? P->GetObjectField(TEXT("name")) : nullptr;
+        if (!N) { Error=TEXT("missing override identity"); return false; }
+        const int32 Number=int32(N->GetNumberField(TEXT("number"))), Association=int32(P->GetNumberField(TEXT("association"))), Index=int32(P->GetNumberField(TEXT("index")));
+        const FString Type=O->GetStringField(TEXT("type"));
+        if (Number<0 || Association<0 || Association>2 || Index< -1 || (Type!=TEXT("scalar") && Type!=TEXT("vector")))
+        { Error=TEXT("invalid override identity or type"); return false; }
+        auto& Item=Out.AddDefaulted_GetRef();
+        Item.Parameter=FHashedMaterialParameterInfo(FName(*N->GetStringField(TEXT("name")),Number),static_cast<EMaterialParameterAssociation>(Association),Index);
+        Item.bVector=Type==TEXT("vector");
+        if (Item.bVector)
+        {
+            const auto& V=O->GetArrayField(TEXT("value"));
+            if (V.Num()!=4) { Error=TEXT("invalid vector override"); return false; }
+            Item.Value=FLinearColor(V[0]->AsNumber(),V[1]->AsNumber(),V[2]->AsNumber(),V[3]->AsNumber());
+        }
+        else Item.Value.R=O->GetNumberField(TEXT("value"));
+    }
+    return true;
+}
+
 static bool CheckLegacyUniforms(const FUniformExpressionSet& Uniforms, const TSharedPtr<FJsonObject>& Root, const TCHAR* Stage, FString& Error, UMaterialInterface* Owner = nullptr, const TCHAR* CasesField = TEXT("uniform_cases"))
 {
     TArray<FLegacyUniformCase> Cases;
@@ -345,23 +379,7 @@ static bool CheckLegacyUniforms(const FUniformExpressionSet& Uniforms, const TSh
         const auto& Expected = Case->GetArrayField(TEXT("numeric_values"));
         if (Expected.Num() != NumericSize / 4) { Error = TEXT("invalid numeric reference"); return false; }
         for (const auto& V : Expected) C.Expected.Add(float(V->AsNumber()));
-        for (const auto& OverrideValue : Case->GetArrayField(TEXT("overrides")))
-        {
-            const auto O = OverrideValue->AsObject();
-            const auto P = O->GetObjectField(TEXT("parameter"));
-            const auto N = P->GetObjectField(TEXT("name"));
-            const FName Name(*N->GetStringField(TEXT("name")), int32(N->GetNumberField(TEXT("number"))));
-            auto& Out = C.Overrides.AddDefaulted_GetRef();
-            Out.Parameter = FHashedMaterialParameterInfo(Name, static_cast<EMaterialParameterAssociation>(int32(P->GetNumberField(TEXT("association")))), int32(P->GetNumberField(TEXT("index"))));
-            Out.bVector = O->GetStringField(TEXT("type")) == TEXT("vector");
-            if (Out.bVector)
-            {
-                const auto& V = O->GetArrayField(TEXT("value"));
-                if (V.Num() != 4) { Error = TEXT("invalid vector override"); return false; }
-                Out.Value = FLinearColor(V[0]->AsNumber(), V[1]->AsNumber(), V[2]->AsNumber(), V[3]->AsNumber());
-            }
-            else Out.Value.R = O->GetNumberField(TEXT("value"));
-        }
+        if (!ReadLegacyOverrides(Case,C.Overrides,Error)) return false;
     }
     UMaterialInterface* DefaultMaterial = Owner ? Owner : UMaterial::GetDefaultMaterial(MD_Surface);
     if (!DefaultMaterial) { Error = TEXT("default material unavailable"); return false; }
@@ -409,7 +427,7 @@ static bool DrawLegacySlateQuad(const TRefCountPtr<FMaterialShaderMap>& Map, con
     UMaterialInterface* DefaultMaterial = Owner ? Owner : UMaterial::GetDefaultMaterial(MD_Surface);
     if (!VertexType || !PixelType || !DefaultMaterial) { Error = TEXT("draw shader or material unavailable"); return false; }
     const FMaterialRenderProxy* Base = DefaultMaterial->GetRenderProxy();
-    struct FViewCase { float Game, Real; };
+    struct FViewCase { float Game=0.f, Real=0.f; TArray<FLegacyOverride> Overrides; };
     TArray<FViewCase> ViewCases;
     if (ViewFixture)
     {
@@ -426,9 +444,13 @@ static bool DrawLegacySlateQuad(const TRefCountPtr<FMaterialShaderMap>& Map, con
             const float Game=Case->GetNumberField(TEXT("game_time")), Real=Case->GetNumberField(TEXT("real_time"));
             if (Game!=float(Case->GetNumberField(TEXT("expected_game_time"))) || Real!=float(Case->GetNumberField(TEXT("expected_real_time"))))
             { Error=TEXT("invalid View time expectation"); return false; }
-            ViewCases.Add({Game,Real});
+            auto& Out=ViewCases.AddDefaulted_GetRef(); Out.Game=Game; Out.Real=Real;
+            if (!ReadLegacyOverrides(Case,Out.Overrides,Error)) return false;
         }
-        if (ViewCases.Num()!=4) { Error=TEXT("invalid View case count"); return false; }
+        if (ViewCases.Num()!=4 || ViewCases[0].Game!=ViewCases[2].Game || ViewCases[1].Game!=ViewCases[3].Game ||
+            ViewCases[0].Real!=ViewCases[1].Real || ViewCases[2].Real!=ViewCases[3].Real ||
+            ViewCases[0].Game==ViewCases[1].Game || ViewCases[0].Real==ViewCases[2].Real)
+        { Error=TEXT("invalid View case time isolation"); return false; }
     }
     bool bPassed = true;
     FString Failure;
@@ -477,9 +499,7 @@ static bool DrawLegacySlateQuad(const TRefCountPtr<FMaterialShaderMap>& Map, con
             if (IconOverride) {}
             else if (ViewCases.Num())
             {
-                auto& O=Proxy.Overrides.AddDefaulted_GetRef();
-                O.Parameter=FHashedMaterialParameterInfo(TEXT("s_UseShineSwipe"));
-                O.bVector=false; O.Value.R=1.f;
+                Proxy.Overrides=ViewCases[bColorDraw ? 1 : Pass].Overrides;
                 if (bColorDraw)
                 {
                     auto& Color=Proxy.Overrides.AddDefaulted_GetRef();
@@ -736,6 +756,8 @@ static bool ParseLegacyMaterial(const TSharedPtr<FJsonObject>& Root, FLegacyMate
 struct FLegacyIngressPin
 {
     FString Owner, ShaderIdentity, BundleHash, ResourceHash, Json;
+    FString Schema, OwnerType, Parent, ResourceOwner;
+    bool bRequiresView = false, bManifest = false;
 };
 static TArray<FLegacyIngressPin> GLegacyIngressPins;
 static bool GLegacyIngressConfigInvalid = false;
@@ -795,10 +817,17 @@ static bool SameOriginalExpressions(const FLegacyMaterialIR& A, const FLegacyMat
 static ELegacyMaterialAssetResult ProvideLegacyOriginal(const FLegacyMaterialAssetContext& Context,
     TRefCountPtr<FMaterialShaderMap>& Map, TSharedPtr<const FLegacyMaterialAssetProvenance, ESPMode::ThreadSafe>& Provenance, FString& Error)
 {
+    const bool bTrace=FParse::Param(FCommandLine::Get(),TEXT("FortniteLegacyMaterialTrace"));
+    if (bTrace) UE_LOG(LogTemp,Display,TEXT("Legacy material trace: owner=%s entry"),*Context.OwnerPath);
     const FLegacyIngressPin* Pin = nullptr;
     for (const auto& Candidate : GLegacyIngressPins)
         if (Candidate.Owner == Context.OwnerPath) { Pin = &Candidate; break; }
-    if (!Pin) return ELegacyMaterialAssetResult::NotApplicable;
+    if (!Pin)
+    {
+        if (bTrace) UE_LOG(LogTemp,Display,TEXT("Legacy material trace: owner=%s not applicable"),*Context.OwnerPath);
+        return ELegacyMaterialAssetResult::NotApplicable;
+    }
+    if (bTrace) UE_LOG(LogTemp,Display,TEXT("Legacy material trace: owner=%s pinned"),*Context.OwnerPath);
     auto Fail = [&Error](const TCHAR* Why) { Error=Why; return ELegacyMaterialAssetResult::Failed; };
     if (GLegacyIngressConfigInvalid || Pin->Json.IsEmpty()) return Fail(TEXT("invalid pinned ingress configuration"));
     TSharedPtr<FJsonObject> Bundle;
@@ -831,11 +860,12 @@ static ELegacyMaterialAssetResult ProvideLegacyOriginal(const FLegacyMaterialAss
     if (!OriginalHash.ToString().Equals(Pin->ResourceHash,ESearchCase::IgnoreCase))
         return Fail(TEXT("Locker source digest mismatch"));
     if (!DecodeLegacyOriginalMaterial(P->Decoded,Error)) return ELegacyMaterialAssetResult::Failed;
+    if (Pin->bManifest && P->Decoded.IR.Texture2DParameters.Num()) return Fail(TEXT("manifest texture resources unsupported"));
     if (P->Decoded.MaterialPath != Pin->ShaderIdentity || P->Decoded.Records.Num()!=19) return Fail(TEXT("Locker decoded identity mismatch"));
     // The library receipt covers all source records, including LocalVF records
     // that this Slate-only runtime factory does not convert.
     const auto Report=Bundle->GetObjectField(TEXT("decoded"));
-    if (!Report || int32(Report->GetNumberField(TEXT("shader_record_count")))!=19) return Fail(TEXT("invalid complete shader report"));
+    if (!Report || (Pin->bManifest && int32(Report->GetObjectField(TEXT("parameter_collections"))->GetNumberField(TEXT("count")))!=0) || int32(Report->GetNumberField(TEXT("shader_record_count")))!=19) return Fail(TEXT("invalid complete shader report"));
     TArray<TSharedPtr<FJsonValue>> Rows=Report->GetObjectField(TEXT("material_shaders"))->GetArrayField(TEXT("records"));
     for (const auto& Mesh : Report->GetArrayField(TEXT("mesh_shader_maps")))
         Rows.Append(Mesh->AsObject()->GetArrayField(TEXT("records")));
@@ -876,7 +906,7 @@ static ELegacyMaterialAssetResult ProvideLegacyOriginal(const FLegacyMaterialAss
             for (const auto& Value : Shaders)
             {
                 const auto Shader=Value->AsObject();
-                if (!Shader || !PrepareLegacyOutput(Shader,Uniforms.GetUniformBufferLayout(),Outputs.AddDefaulted_GetRef(),OutError,false,Pin->Owner==GLegacyMenuPath)) return false;
+                if (!Shader || !PrepareLegacyOutput(Shader,Uniforms.GetUniformBufferLayout(),Outputs.AddDefaulted_GetRef(),OutError,false,Pin->bRequiresView)) return false;
             }
             return true;
         },Error);
@@ -887,12 +917,12 @@ static ELegacyMaterialAssetResult ProvideLegacyOriginal(const FLegacyMaterialAss
     Provenance=P; return ELegacyMaterialAssetResult::Converted;
 }
 // Compare the actual instance values by their complete serialized identities.
-static bool CheckMainLOwnerOverrides(const UMaterialInstance* Instance, const TSharedPtr<FJsonObject>& Bundle, FString& Error)
+static bool CheckLegacyOwnerExpectations(const UMaterialInstance* Instance, const TSharedPtr<FJsonObject>& Bundle, bool bOverridesOnly, FString& Error)
 {
-    if (!Instance || !Bundle) { Error=TEXT("missing MainL instance or bundle"); return false; }
+    if (!Bundle) { Error=TEXT("missing owner bundle"); return false; }
     const auto Fixture=Bundle->GetObjectField(TEXT("runtime_fixture"));
     const auto& Values=Fixture->GetArrayField(TEXT("owner_parameter_expectations"));
-    if (Values.Num()!=9) { Error=TEXT("unexpected MainL override count"); return false; }
+    if (Values.Num()>256 || (!Instance && Values.Num())) { Error=TEXT("invalid owner expectation count"); return false; }
     for (const auto& Value : Values)
     {
         const auto Row=Value->AsObject(); const auto Parameter=Row->GetObjectField(TEXT("parameter"));
@@ -901,25 +931,26 @@ static bool CheckMainLOwnerOverrides(const UMaterialInstance* Instance, const TS
         const int32 Association=int32(Parameter->GetNumberField(TEXT("association")));
         const int32 Index=int32(Parameter->GetNumberField(TEXT("index")));
         if (Number<0 || Association<0 || Association>2 || Index< -1)
-        { Error=TEXT("invalid MainL parameter identity"); return false; }
+        { Error=TEXT("invalid owner parameter identity"); return false; }
         const FHashedMaterialParameterInfo Info(FName(*Name->GetStringField(TEXT("name")),Number),static_cast<EMaterialParameterAssociation>(Association),Index);
         const FString Kind=Row->GetStringField(TEXT("type"));
         if (Kind==TEXT("scalar"))
         {
             float Actual=0.f;
-            if (!Instance->GetScalarParameterValue(Info,Actual,true) || !FMath::IsNearlyEqual(Actual,float(Row->GetNumberField(TEXT("value"))),1.e-5f))
-            { Error=FString::Printf(TEXT("MainL scalar override differs: %s"),*Name->GetStringField(TEXT("name"))); return false; }
+            if (!Instance->GetScalarParameterValue(Info,Actual,bOverridesOnly) || !FMath::IsNearlyEqual(Actual,float(Row->GetNumberField(TEXT("value"))),1.e-5f))
+            { Error=FString::Printf(TEXT("owner scalar value differs: %s"),*Name->GetStringField(TEXT("name"))); return false; }
         }
         else if (Kind==TEXT("vector"))
         {
             const auto& V=Row->GetArrayField(TEXT("value")); FLinearColor Actual;
-            if (V.Num()!=4 || !Instance->GetVectorParameterValue(Info,Actual,true) ||
+            if (V.Num()!=4 || !Instance->GetVectorParameterValue(Info,Actual,bOverridesOnly) ||
                 !Actual.Equals(FLinearColor(V[0]->AsNumber(),V[1]->AsNumber(),V[2]->AsNumber(),V[3]->AsNumber()),1.e-5f))
-            { Error=FString::Printf(TEXT("MainL vector override differs: %s"),*Name->GetStringField(TEXT("name"))); return false; }
+            { Error=FString::Printf(TEXT("owner vector value differs: %s"),*Name->GetStringField(TEXT("name"))); return false; }
         }
-        else { Error=TEXT("invalid MainL override type"); return false; }
+        else { Error=TEXT("invalid owner parameter type"); return false; }
     }
-    UE_LOG(LogTemp,Display,TEXT("Legacy material ingress: verified %d MainL source override identities and values"),Values.Num());
+    if (bOverridesOnly) { UE_LOG(LogTemp,Display,TEXT("Legacy material ingress: verified %d MainL source override identities and values"),Values.Num()); }
+    else { UE_LOG(LogTemp,Display,TEXT("Legacy material ingress: verified %d source owner parameter identities and values"),Values.Num()); }
     return true;
 }
 #endif
@@ -927,48 +958,190 @@ static bool CheckMainLOwnerOverrides(const UMaterialInstance* Instance, const TS
 void RegisterLegacyOriginalMaterialProvider()
 {
 #if PLATFORM_LINUX && !UE_SERVER
-    FString Path;
-    if (!FParse::Value(FCommandLine::Get(),TEXT("FortniteLegacyMaterialIngress="),Path,false)) return;
-    // Pinned entries are immutable after startup. Each invocation parses its own JSON.
+    FString Path, ManifestPath, ManifestDigest;
+    const bool bHasPaths=FParse::Value(FCommandLine::Get(),TEXT("FortniteLegacyMaterialIngress="),Path,false);
+    const bool bHasManifest=FParse::Value(FCommandLine::Get(),TEXT("FortniteLegacyMaterialManifest="),ManifestPath,false);
+    const bool bHasDigest=FParse::Value(FCommandLine::Get(),TEXT("FortniteLegacyMaterialManifestSHA256="),ManifestDigest,false);
+    if (!bHasPaths && !bHasManifest && !bHasDigest) return;
+    // Fixed pins remain immutable and continue to require the original CLI paths.
     GLegacyIngressPins = {
-        {GLegacyLockerPath, GLegacyLockerPath, TEXT("0f750204f6008e6e3219d0b002d8409e28c22426"), TEXT("bc2d2f509b6909a4820f65188b85485fce989a2a"), FString()},
-        {GLegacyGradientPath, GLegacyGradientPath, TEXT("87617e2d5b3c8ee57d8ede04783abe2a32fafd74"), TEXT("a088433310c1bb0de8b63eb3096929fed602ba4f"), FString()},
-        {GLegacyPowerToastPath, GLegacyGradientPath, TEXT("1aef96f25f926219b10ceb69c8f3731a3b118fa6"), TEXT("d8b5194ca11c187ffad72b17e9517ecf40fd1266"), FString()},
-        {GLegacyMainLPath, GLegacyGradientPath, TEXT("61800f5706ffab57cc5d50ea4eaa9cf642564662"), TEXT("5837fd2391001dbf6bafb3b06db5cd050399fbf4"), FString()},
-        {GLegacyMenuPath, GLegacyMenuPath, TEXT("0b49a605763b907dbdf1f0041715208a81d4744a"), TEXT("955e034f179ab1129d49286356357039e57260e4"), FString()},
-        {GLegacyDonutPath, GLegacyDonutPath, TEXT("e794ad691e278ecf653dfef34c0ae07375f32d7d"), TEXT("2a27448730935ebe70c3a30e765ad6784a163668"), FString()}
+        {GLegacyLockerPath, GLegacyLockerPath, TEXT("0f750204f6008e6e3219d0b002d8409e28c22426"), TEXT("bc2d2f509b6909a4820f65188b85485fce989a2a"), FString(), TEXT("fortnite.legacy-material-ingress.v1"), TEXT("UMaterial"), FString(), GLegacyLockerPath, false, false},
+        {GLegacyGradientPath, GLegacyGradientPath, TEXT("87617e2d5b3c8ee57d8ede04783abe2a32fafd74"), TEXT("a088433310c1bb0de8b63eb3096929fed602ba4f"), FString(), TEXT("fortnite.legacy-material-ingress.v2"), TEXT("UMaterial"), FString(), GLegacyGradientPath, false, false},
+        {GLegacyPowerToastPath, GLegacyGradientPath, TEXT("1aef96f25f926219b10ceb69c8f3731a3b118fa6"), TEXT("d8b5194ca11c187ffad72b17e9517ecf40fd1266"), FString(), TEXT("fortnite.legacy-material-ingress.v2"), TEXT("UMaterialInstanceConstant"), GLegacyGradientPath, GLegacyPowerToastPath, false, false},
+        {GLegacyMainLPath, GLegacyGradientPath, TEXT("61800f5706ffab57cc5d50ea4eaa9cf642564662"), TEXT("5837fd2391001dbf6bafb3b06db5cd050399fbf4"), FString(), TEXT("fortnite.legacy-material-ingress.v2"), TEXT("UMaterialInstanceConstant"), GLegacyGradientPath, GLegacyMainLPath, false, false},
+        {GLegacyMenuPath, GLegacyMenuPath, TEXT("0b49a605763b907dbdf1f0041715208a81d4744a"), TEXT("955e034f179ab1129d49286356357039e57260e4"), FString(), TEXT("fortnite.legacy-material-ingress.v2"), TEXT("UMaterial"), FString(), GLegacyMenuPath, true, false},
+        {GLegacyDonutPath, GLegacyDonutPath, TEXT("e794ad691e278ecf653dfef34c0ae07375f32d7d"), TEXT("2a27448730935ebe70c3a30e765ad6784a163668"), FString(), TEXT("fortnite.legacy-material-ingress.v3"), TEXT("UMaterial"), FString(), GLegacyDonutPath, false, false}
     };
+    auto IsHex=[](const FString& Value, int32 Length)
+    {
+        if (Value.Len()!=Length) return false;
+        for (TCHAR C : Value) if (!((C>='0' && C<='9') || (C>='a' && C<='f') || (C>='A' && C<='F'))) return false;
+        return true;
+    };
+    auto LoadBounded=[](const FString& Filename, int64 Limit, TArray<uint8>& Bytes)
+    {
+        const int64 Size=IFileManager::Get().FileSize(*Filename);
+        return Size>=0 && Size<=Limit && FFileHelper::LoadFileToArray(Bytes,*Filename) && Bytes.Num()==Size;
+    };
+    auto LoadSha256Json=[&](const FString& Filename, const FString& Expected, TSharedPtr<FJsonObject>& Out) -> bool
+    {
+        TArray<uint8> Bytes; uint8 Digest[32];
+        if (!IsHex(Expected,64) || !LoadBounded(Filename,4*1024*1024,Bytes)) return false;
+        LegacyManifestSHA256(Bytes.GetData(),uint32(Bytes.Num()),Digest);
+        if (!BytesToHex(Digest,32).Equals(Expected,ESearchCase::IgnoreCase)) return false;
+        FString Text; FFileHelper::BufferToString(Text,Bytes.GetData(),Bytes.Num());
+        return FJsonSerializer::Deserialize(TJsonReaderFactory<>::Create(Text),Out) && Out.IsValid();
+    };
+    int64 TotalBundleBytes=0;
+    auto LoadBundle=[&](FLegacyIngressPin& Pin, const FString& Filename) -> bool
+    {
+        TArray<uint8> Bytes; FSHAHash Hash;
+        if (!Pin.Json.IsEmpty() || !LoadBounded(Filename,32*1024*1024,Bytes) || Bytes.Num()>256*1024*1024-TotalBundleBytes) return false;
+        TotalBundleBytes+=Bytes.Num();
+        FSHA1::HashBuffer(Bytes.GetData(),Bytes.Num(),Hash.Hash);
+        if (!Hash.ToString().Equals(Pin.BundleHash,ESearchCase::IgnoreCase)) return false;
+        FFileHelper::BufferToString(Pin.Json,Bytes.GetData(),Bytes.Num());
+        TSharedPtr<FJsonObject> Bundle;
+        if (!FJsonSerializer::Deserialize(TJsonReaderFactory<>::Create(Pin.Json),Bundle) || !Bundle) return false;
+        FString Schema, Owner, Parent, OwnerType, ResourceOwner, ShaderIdentity;
+        if (!Bundle->TryGetStringField(TEXT("schema"),Schema) || Schema!=Pin.Schema) return false;
+        if (Schema!=TEXT("fortnite.legacy-material-ingress.v1") &&
+            (!Bundle->TryGetStringField(TEXT("owner_path"),Owner) || Owner!=Pin.Owner ||
+             !Bundle->TryGetStringField(TEXT("parent_path"),Parent) || Parent!=Pin.Parent ||
+             !Bundle->TryGetStringField(TEXT("owner_type"),OwnerType) || OwnerType!=Pin.OwnerType)) return false;
+        if (Pin.bManifest &&
+            (!Bundle->TryGetStringField(TEXT("resource_owner_path"),ResourceOwner) || ResourceOwner!=Pin.ResourceOwner ||
+             !Bundle->TryGetStringField(TEXT("shader_identity"),ShaderIdentity) || ShaderIdentity!=Pin.ShaderIdentity)) return false;
+        if (Pin.bManifest && Pin.bRequiresView)
+        {
+            const TSharedPtr<FJsonObject>* Fixture=nullptr; const TSharedPtr<FJsonObject>* Contract=nullptr;
+            if (!Bundle->TryGetObjectField(TEXT("runtime_fixture"),Fixture) || !Fixture->IsValid() || !(*Fixture)->TryGetObjectField(TEXT("view_contract"),Contract) || !Contract->IsValid() ||
+                (*Contract)->GetStringField(TEXT("buffer_name"))!=TEXT("View") || (*Contract)->GetStringField(TEXT("struct_name"))!=TEXT("FViewUniformShaderParameters") ||
+                (*Contract)->GetStringField(TEXT("field_name"))!=TEXT("GameTime") || (*Contract)->GetStringField(TEXT("scalar_type"))!=TEXT("float32") ||
+                int32((*Contract)->GetNumberField(TEXT("original_byte_offset")))!=2264 || int32((*Contract)->GetNumberField(TEXT("expected_current_byte_offset")))!=2264 ||
+                int32((*Contract)->GetNumberField(TEXT("shader_visible_bytes")))!=2272 || int32((*Contract)->GetNumberField(TEXT("original_struct_bytes")))!=3952) return false;
+            TSharedPtr<FJsonObject> OriginalProof, AccessProof;
+            if (!LoadSha256Json((*Contract)->GetStringField(TEXT("proof_path")),(*Contract)->GetStringField(TEXT("proof_sha256")),OriginalProof) ||
+                !LoadSha256Json((*Contract)->GetStringField(TEXT("access_proof_path")),(*Contract)->GetStringField(TEXT("access_proof_sha256")),AccessProof)) return false;
+            const auto Conclusion=OriginalProof->GetObjectField(TEXT("conclusion"));
+            if (!Conclusion || Conclusion->GetStringField(TEXT("struct"))!=TEXT("FViewUniformShaderParameters") ||
+                Conclusion->GetStringField(TEXT("member"))!=TEXT("GameTime") || int32(Conclusion->GetNumberField(TEXT("byte_offset")))!=2264 ||
+                Conclusion->GetStringField(TEXT("type"))!=TEXT("float32 scalar") || int32(Conclusion->GetNumberField(TEXT("original_struct_size")))!=3952 || AccessProof->GetStringField(TEXT("schema"))!=TEXT("fortnite.shader-view-access.v1")) return false;
+            const auto& Records=AccessProof->GetArrayField(TEXT("records"));
+            const auto& Shaders=(*Fixture)->GetArrayField(TEXT("shaders"));
+            if (Records.Num()>256 || Shaders.Num()!=7) return false;
+            int32 PixelShaders=0;
+            for (const auto& Value : Shaders)
+            {
+                const auto Shader=Value->AsObject();
+                if (!Shader) return false;
+                const auto Record=Shader->GetObjectField(TEXT("record"));
+                if (!Record) return false;
+                if (int32(Record->GetNumberField(TEXT("frequency")))!=3) continue;
+                ++PixelShaders;
+                const auto Mapped=Shader->GetObjectField(TEXT("mapped")); const auto Reflection=Shader->GetObjectField(TEXT("reflection"));
+                if (!Mapped || !Reflection) return false;
+                const int32 Index=int32(Mapped->GetNumberField(TEXT("shader_index")));
+                const FString CodeHash=Reflection->GetStringField(TEXT("spirv_sha256"));
+                if (!IsHex(CodeHash,64)) return false;
+                const FJsonObject* Match=nullptr;
+                for (const auto& ProofValue : Records)
+                {
+                    const auto Proof=ProofValue->AsObject();
+                    if (!Proof) return false;
+                    if (int32(Proof->GetNumberField(TEXT("shader_index")))==Index && Proof->GetStringField(TEXT("spirv_sha256")).Equals(CodeHash,ESearchCase::IgnoreCase))
+                    { if (Match) return false; Match=Proof.Get(); }
+                }
+                if (!Match || Match->GetStringField(TEXT("field_name"))!=TEXT("GameTime") || Match->GetStringField(TEXT("scalar_type"))!=TEXT("float32") ||
+                    int32(Match->GetNumberField(TEXT("byte_offset")))!=2264 || int32(Match->GetNumberField(TEXT("shader_visible_bytes")))!=2272 ||
+                    int32(Match->GetNumberField(TEXT("pointer_escapes")))!=0) return false;
+                const auto& Accesses=Match->GetArrayField(TEXT("accesses"));
+                if (!Accesses.Num() || Accesses.Num()>4096) return false;
+                for (const auto& AccessValue : Accesses)
+                {
+                    const auto Access=AccessValue->AsObject();
+                    if (!Access || int32(Access->GetNumberField(TEXT("byte_offset")))!=2264 || int32(Access->GetNumberField(TEXT("byte_count")))!=4 ||
+                        Access->GetStringField(TEXT("scalar_type"))!=TEXT("float32")) return false;
+                }
+            }
+            if (PixelShaders!=5) return false;
+        }
+        return true;
+    };
+    if (bHasManifest != bHasDigest || (bHasDigest && !IsHex(ManifestDigest,64))) GLegacyIngressConfigInvalid=true;
     TArray<FString> Paths;
-    Path.ParseIntoArray(Paths, TEXT(","), true);
+    if (bHasPaths) Path.ParseIntoArray(Paths,TEXT(","),true);
+    if (bHasPaths && !Paths.Num()) GLegacyIngressConfigInvalid=true;
     for (const FString& BundlePath : Paths)
     {
         TArray<uint8> Bytes; FSHAHash Hash;
-        if (!FFileHelper::LoadFileToArray(Bytes,*BundlePath) || Bytes.Num()>32*1024*1024)
-        { GLegacyIngressConfigInvalid=true; break; }
+        if (!LoadBounded(BundlePath,32*1024*1024,Bytes)) { GLegacyIngressConfigInvalid=true; break; }
         FSHA1::HashBuffer(Bytes.GetData(),Bytes.Num(),Hash.Hash);
         FLegacyIngressPin* Match=nullptr;
-        for (auto& Pin : GLegacyIngressPins)
-            if (Hash.ToString().Equals(Pin.BundleHash,ESearchCase::IgnoreCase)) { Match=&Pin; break; }
-        if (!Match || !Match->Json.IsEmpty()) { GLegacyIngressConfigInvalid=true; break; }
-        FFileHelper::BufferToString(Match->Json,Bytes.GetData(),Bytes.Num());
-        TSharedPtr<FJsonObject> Bundle;
-        if (!FJsonSerializer::Deserialize(TJsonReaderFactory<>::Create(Match->Json),Bundle) || !Bundle)
-        { GLegacyIngressConfigInvalid=true; break; }
-        const FString Schema=Bundle->GetStringField(TEXT("schema"));
-        if ((Match->Owner==GLegacyLockerPath && Schema!=TEXT("fortnite.legacy-material-ingress.v1")) ||
-            (Match->Owner!=GLegacyLockerPath && (Schema!=(Match->Owner==GLegacyDonutPath ? TEXT("fortnite.legacy-material-ingress.v3") : TEXT("fortnite.legacy-material-ingress.v2")) ||
-             Bundle->GetStringField(TEXT("owner_path"))!=Match->Owner ||
-             Bundle->GetStringField(TEXT("parent_path"))!=((Match->Owner==GLegacyPowerToastPath || Match->Owner==GLegacyMainLPath) ? FString(GLegacyGradientPath) : FString()) ||
-             Bundle->GetStringField(TEXT("owner_type"))!=((Match->Owner==GLegacyPowerToastPath || Match->Owner==GLegacyMainLPath) ? TEXT("UMaterialInstanceConstant") : TEXT("UMaterial")))))
-        { GLegacyIngressConfigInvalid=true; break; }
+        for (auto& Pin : GLegacyIngressPins) if (Hash.ToString().Equals(Pin.BundleHash,ESearchCase::IgnoreCase)) { Match=&Pin; break; }
+        if (!Match || !LoadBundle(*Match,BundlePath)) { GLegacyIngressConfigInvalid=true; break; }
     }
-    if (!Paths.Num()) GLegacyIngressConfigInvalid=true;
+    if (bHasManifest && !GLegacyIngressConfigInvalid)
+    {
+        TArray<uint8> Bytes; uint8 Digest[32];
+        if (!LoadBounded(ManifestPath,4*1024*1024,Bytes)) GLegacyIngressConfigInvalid=true;
+        else
+        {
+            LegacyManifestSHA256(Bytes.GetData(),uint32(Bytes.Num()),Digest);
+            if (!BytesToHex(Digest,32).Equals(ManifestDigest,ESearchCase::IgnoreCase)) GLegacyIngressConfigInvalid=true;
+        }
+        FString Text; TSharedPtr<FJsonObject> Manifest;
+        if (!GLegacyIngressConfigInvalid)
+        {
+            FFileHelper::BufferToString(Text,Bytes.GetData(),Bytes.Num());
+            const TArray<TSharedPtr<FJsonValue>>* Entries=nullptr; FString Schema;
+            if (!FJsonSerializer::Deserialize(TJsonReaderFactory<>::Create(Text),Manifest) || !Manifest ||
+                !Manifest->TryGetStringField(TEXT("schema"),Schema) || Schema!=TEXT("fortnite.legacy-material-manifest.v1") ||
+                !Manifest->TryGetArrayField(TEXT("entries"),Entries) || Entries->Num()==0 || Entries->Num()>256)
+                GLegacyIngressConfigInvalid=true;
+            else for (const auto& Value : *Entries)
+            {
+                const auto Row=Value->AsObject(); FLegacyIngressPin Pin; FString BundlePath;
+                if (!Row || !Row->TryGetStringField(TEXT("owner_path"),Pin.Owner) || !Row->TryGetStringField(TEXT("owner_type"),Pin.OwnerType) ||
+                    !Row->TryGetStringField(TEXT("parent_path"),Pin.Parent) || !Row->TryGetStringField(TEXT("shader_identity"),Pin.ShaderIdentity) ||
+                    !Row->TryGetStringField(TEXT("resource_owner_path"),Pin.ResourceOwner) || !Row->TryGetStringField(TEXT("resource_sha1"),Pin.ResourceHash) ||
+                    !Row->TryGetStringField(TEXT("bundle_sha1"),Pin.BundleHash) || !Row->TryGetStringField(TEXT("bundle_schema"),Pin.Schema) ||
+                    !Row->TryGetStringField(TEXT("bundle_path"),BundlePath) || !Row->TryGetBoolField(TEXT("requires_view"),Pin.bRequiresView) ||
+                    !Pin.Owner.StartsWith(TEXT("/Game/")) || !Pin.ShaderIdentity.StartsWith(TEXT("/Game/")) || !Pin.ResourceOwner.StartsWith(TEXT("/Game/")) ||
+                    (Pin.OwnerType!=TEXT("UMaterial") && Pin.OwnerType!=TEXT("UMaterialInstanceConstant")) ||
+                    (Pin.OwnerType==TEXT("UMaterial") ? (!Pin.Parent.IsEmpty() || Pin.ResourceOwner!=Pin.Owner || Pin.ShaderIdentity!=Pin.Owner) : !Pin.Parent.StartsWith(TEXT("/Game/"))) ||
+                    Pin.Schema!=TEXT("fortnite.legacy-material-ingress.v2") || !IsHex(Pin.ResourceHash,40) || !IsHex(Pin.BundleHash,40) || BundlePath.IsEmpty())
+                { GLegacyIngressConfigInvalid=true; break; }
+                for (const auto& Existing : GLegacyIngressPins) if (Existing.Owner==Pin.Owner) { GLegacyIngressConfigInvalid=true; break; }
+                if (GLegacyIngressConfigInvalid) break;
+                Pin.bManifest=true;
+                if (FPaths::IsRelative(BundlePath)) BundlePath=FPaths::Combine(FPaths::GetPath(ManifestPath),BundlePath);
+                if (!LoadBundle(Pin,BundlePath)) { GLegacyIngressConfigInvalid=true; break; }
+                GLegacyIngressPins.Add(MoveTemp(Pin));
+            }
+        }
+    }
+    // A non-static instance points to its actual resource-owning ancestor; it is
+    // not treated as another serialized resource or an independent shader map.
+    if (!GLegacyIngressConfigInvalid)
+        for (const auto& Pin : GLegacyIngressPins) if (Pin.bManifest)
+        {
+            const FLegacyIngressPin* Owner=nullptr;
+            for (const auto& Candidate : GLegacyIngressPins) if (Candidate.Owner==Pin.ResourceOwner) { Owner=&Candidate; break; }
+            if (!Owner || Owner->Json.IsEmpty() || Owner->ResourceOwner!=Owner->Owner || Owner->ResourceHash!=Pin.ResourceHash || Owner->ShaderIdentity!=Pin.ShaderIdentity || Owner->bRequiresView!=Pin.bRequiresView)
+            { GLegacyIngressConfigInvalid=true; break; }
+        }
+    if (GLegacyIngressConfigInvalid)
+    {
+        UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: invalid pinned configuration or manifest"));
+        FPlatformMisc::RequestExitWithStatus(false,1);
+        return;
+    }
     FModuleManager::LoadModuleChecked<IModuleInterface>(TEXT("SlateRHIRenderer"));
     RegisterLegacyMaterialAssetProvider(&ProvideLegacyOriginal);
-    UE_LOG(LogTemp,Display,TEXT("Legacy material ingress: registered pinned provider, configuration valid=%d"),!GLegacyIngressConfigInvalid);
+    UE_LOG(LogTemp,Display,TEXT("Legacy material ingress: registered pinned provider, configuration valid=1"));
 #endif
 }
-
 void ProbeLegacyOriginalMaterial()
 {
 #if PLATFORM_LINUX && !UE_SERVER
@@ -981,6 +1154,16 @@ void ProbeLegacyOriginalMaterial()
     if (!Pin || GLegacyIngressConfigInvalid || !FJsonSerializer::Deserialize(TJsonReaderFactory<>::Create(Pin->Json),Bundle) || !Bundle)
     { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: probe has no valid bundle")); FPlatformMisc::RequestExitWithStatus(false,1); return; }
     UMaterialInterface* Material=LoadObject<UMaterialInterface>(nullptr,*OwnerPath);
+    if (Pin->bManifest)
+    {
+        UMaterial* Base=Material ? Material->GetMaterial() : nullptr;
+        UMaterialInstance* Instance=Cast<UMaterialInstance>(Material);
+        FString ExpectationError;
+        if (!Material || !Base || Base->GetPathName()!=Pin->ShaderIdentity ||
+            (Pin->OwnerType==TEXT("UMaterial") ? Cast<UMaterial>(Material)==nullptr : (!Instance || !Instance->Parent || Instance->Parent->GetPathName()!=Pin->Parent)) ||
+            !CheckLegacyOwnerExpectations(Instance,Bundle,false,ExpectationError))
+        { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: actual manifest owner/parent or parameter mismatch: %s"),*ExpectationError); FPlatformMisc::RequestExitWithStatus(false,1); return; }
+    }
     if (OwnerPath == GLegacyPowerToastPath || OwnerPath == GLegacyMainLPath)
     {
         UMaterialInstance* Instance=Cast<UMaterialInstance>(Material);
@@ -998,7 +1181,7 @@ void ProbeLegacyOriginalMaterial()
             !Instance->GetVectorParameterValue(FHashedMaterialParameterInfo(TEXT("RGBA1")),Color1,true) || !Color1.Equals(FLinearColor(.033105f,.246201f,1.f,1.f),1.e-5f)))
         { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: real instance parent or original overrides differ")); FPlatformMisc::RequestExitWithStatus(false,1); return; }
         FString OverrideError;
-        if (OwnerPath==GLegacyMainLPath && !CheckMainLOwnerOverrides(Instance,Bundle,OverrideError))
+        if (OwnerPath==GLegacyMainLPath && !CheckLegacyOwnerExpectations(Instance,Bundle,true,OverrideError))
         { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: %s"),*OverrideError); FPlatformMisc::RequestExitWithStatus(false,1); return; }
         const FLegacyIngressPin* ParentPin=nullptr;
         for (const auto& Candidate : GLegacyIngressPins) if (Candidate.Owner==ParentPath) { ParentPin=&Candidate; break; }
@@ -1023,7 +1206,7 @@ void ProbeLegacyOriginalMaterial()
     FMaterialShaderMap* Map=Resource ? Resource->GetGameThreadShaderMap() : nullptr;
     const auto Provenance=Map ? Map->GetLegacyMaterialProvenance() : nullptr;
     const bool bOriginal=Provenance.IsValid() && Provenance->OriginalShaderRecordCount==19 &&
-        Provenance->SourceIdentity==OwnerPath &&
+        Provenance->SourceIdentity==Pin->ResourceOwner &&
         Provenance->ResourceHash.ToString().Equals(Pin->ResourceHash,ESearchCase::IgnoreCase);
     const bool bComplete=Map && Resource && Map->IsComplete(Resource,false);
     bool bRenderAttached=false;
@@ -1096,7 +1279,9 @@ void ProbeLegacyOriginalMaterial()
     TArray<uint8> BadEnd=Bytes; const int64 EscapingEnd=int64(Bytes.Num())+1;
     FMemory::Memcpy(BadEnd.GetData()+Original->Decoded.Records[0].Begin+8,&EscapingEnd,sizeof(EscapingEnd));
     TArray<uint8> BadName=Bytes; const int32 InvalidName=MAX_int32;
-    const int32 FirstExpression=int32(Bundle->GetObjectField(TEXT("decoded"))->GetObjectField(TEXT("uniform_expression_arrays"))->GetObjectField(TEXT("vector"))->GetNumberField(TEXT("offset")))+4;
+    const auto Arrays=Bundle->GetObjectField(TEXT("decoded"))->GetObjectField(TEXT("uniform_expression_arrays"));
+    const auto FirstArray=Arrays->GetObjectField(TEXT("vector"))->GetNumberField(TEXT("count"))>0 ? Arrays->GetObjectField(TEXT("vector")) : Arrays->GetObjectField(TEXT("scalar"));
+    const int32 FirstExpression=int32(FirstArray->GetNumberField(TEXT("offset")))+4;
     if (!BadName.IsValidIndex(FirstExpression+3)) { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: invalid mutation offset")); FPlatformMisc::RequestExitWithStatus(false,1); return; }
     FMemory::Memcpy(BadName.GetData()+FirstExpression,&InvalidName,sizeof(InvalidName));
     bool bNegativeChecks=true;
@@ -1111,11 +1296,18 @@ void ProbeLegacyOriginalMaterial()
     { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: live uniform cases failed: %s"),*Error); FPlatformMisc::RequestExitWithStatus(false,1); return; }
     if ((OwnerPath == GLegacyPowerToastPath || OwnerPath == GLegacyMainLPath) && !CheckLegacyUniforms(Map->GetUniformExpressionSet(),Bundle->GetObjectField(TEXT("runtime_fixture")),TEXT("instance"),Error,Material,TEXT("owner_uniform_cases")))
     { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: live instance uniform cases failed: %s"),*Error); FPlatformMisc::RequestExitWithStatus(false,1); return; }
+    if (Pin->bManifest && !CheckLegacyUniforms(Map->GetUniformExpressionSet(),Bundle->GetObjectField(TEXT("runtime_fixture")),TEXT("manifest owner"),Error,Material,TEXT("owner_uniform_cases")))
+    { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: manifest owner uniform cases failed: %s"),*Error); FPlatformMisc::RequestExitWithStatus(false,1); return; }
     if (OwnerPath==GLegacyDonutPath && !CheckLegacyUniforms(Map->GetUniformExpressionSet(),Bundle->GetObjectField(TEXT("runtime_fixture")),TEXT("Donut owner"),Error,Material,TEXT("owner_uniform_cases")))
     { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: Donut owner uniform cases failed: %s"),*Error); FPlatformMisc::RequestExitWithStatus(false,1); return; }
+    const auto Fixture=Bundle->GetObjectField(TEXT("runtime_fixture"));
+    const TArray<TSharedPtr<FJsonValue>>* ManifestViewCases=nullptr;
+    const bool bManifestView=Pin->bManifest && Pin->bRequiresView && Fixture->TryGetArrayField(TEXT("view_cases"),ManifestViewCases);
+    if (bManifestView && !CheckLegacyUniforms(Map->GetUniformExpressionSet(),Fixture,TEXT("manifest View draw"),Error,Material,TEXT("view_cases")))
+    { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: manifest View draw uniforms failed: %s"),*Error); FPlatformMisc::RequestExitWithStatus(false,1); return; }
     if (OwnerPath==GLegacyMenuPath && !CheckLegacyUniforms(Map->GetUniformExpressionSet(),Bundle->GetObjectField(TEXT("runtime_fixture")),TEXT("View draw"),Error,nullptr,TEXT("view_cases")))
     { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: View draw uniforms failed: %s"),*Error); FPlatformMisc::RequestExitWithStatus(false,1); return; }
-    if (OwnerPath==GLegacyMenuPath)
+    if (OwnerPath==GLegacyMenuPath || bManifestView)
     {
         const FShaderParametersMetadata* Metadata=FViewUniformShaderParameters::FTypeInfo::GetStructMetadata();
         const auto& Layout=Metadata->GetLayout();
@@ -1137,12 +1329,11 @@ void ProbeLegacyOriginalMaterial()
             { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: cannot write View layout receipt")); FPlatformMisc::RequestExitWithStatus(false,1); return; }
         }
     }
-    FLegacyDrawBindings Bindings; bool bVS=false, bPS=false, bView=OwnerPath!=GLegacyMenuPath, bAllShaders=true; int32 CheckedShaders=0;
-    const auto Fixture=Bundle->GetObjectField(TEXT("runtime_fixture"));
+    FLegacyDrawBindings Bindings; bool bVS=false, bPS=false, bView=!Pin->bRequiresView, bAllShaders=true; int32 CheckedShaders=0;
     for (const auto& Value : Fixture->GetArrayField(TEXT("shaders")))
     {
         const auto Shader=Value->AsObject(); FLegacySlateShaderInput Input;
-        if (!PrepareLegacyOutput(Shader,Map->GetUniformExpressionSet().GetUniformBufferLayout(),Input,Error,true,OwnerPath==GLegacyMenuPath)) { bAllShaders=false; break; }
+        if (!PrepareLegacyOutput(Shader,Map->GetUniformExpressionSet().GetUniformBufferLayout(),Input,Error,true,Pin->bRequiresView)) { bAllShaders=false; break; }
         FShaderType* Type=FindShaderTypeByName(FHashedName(*Input.TypeName));
         const TShaderRef<FShader> Frozen=Type ? Map->GetShader(Type,Input.PermutationId) : TShaderRef<FShader>();
         const FShaderMapResourceCode* Code=Map->GetResourceCode();
@@ -1159,8 +1350,20 @@ void ProbeLegacyOriginalMaterial()
             bPS=Input.Output.ParameterMap.FindParameterAllocation(TEXT("GammaAndAlphaValues"),Bindings.GammaBuffer,Bindings.GammaOffset,Size) && Size==sizeof(FVector4) &&
                 Input.Output.ParameterMap.FindParameterAllocation(TEXT("ShaderParams"),Bindings.ParamsBuffer,Bindings.ParamsOffset,Size) && Size==sizeof(FVector4) &&
                 Input.Output.ParameterMap.FindParameterAllocation(TEXT("Material"),Bindings.MaterialBuffer,Base,Size) && Base==FVulkanShaderHeader::UniformBuffer && Size==1;
-        if (OwnerPath==GLegacyMenuPath && Input.TypeName==TEXT("TSlateMaterialShaderPSDefault"))
+        if (Pin->bRequiresView && Input.TypeName==TEXT("TSlateMaterialShaderPSDefault"))
             bView=Input.Output.ParameterMap.FindParameterAllocation(TEXT("View"),Bindings.ViewBuffer,Base,Size) && Base==FVulkanShaderHeader::UniformBuffer && Size==1;
+    }
+    if (Pin->bManifest)
+    {
+        if (!bAllShaders || CheckedShaders!=7)
+        { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: manifest shader verification failed: %s"),*Error); FPlatformMisc::RequestExitWithStatus(false,1); return; }
+        UE_LOG(LogTemp,Display,TEXT("Legacy material ingress: manifest owner %s uses original resource owner %s, complete and attached on both threads; seven shaders and all uniform cases passed"),*OwnerPath,*Pin->ResourceOwner);
+        if (bManifestView)
+        {
+            if (!bVS || !bPS || !bView || !DrawLegacySlateQuad(Map,Bindings,Error,Material,Resource,TEXT(""),TEXT("FeatureViewQuad"),Fixture))
+            { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: manifest View draw failed: %s"),*Error); FPlatformMisc::RequestExitWithStatus(false,1); return; }
+        }
+        return;
     }
     UTexture* IconOverride=nullptr;
     if (OwnerPath==GLegacyDonutPath)
