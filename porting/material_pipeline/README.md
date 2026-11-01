@@ -123,3 +123,17 @@ python3 -I porting/material_pipeline/test_inspect_material_resource.py
 | `M-Border-PowerToastGlow` | 0..14311 | 2299 | 3999..14311 | 44 | parent `M_UI_GradientPanel` |
 
 These are the four material packages reached by the failing frontend probes. Each has one resource location (offset 0, feature level 3, quality level 1), and its declared byte count ends at its export boundary. In all four, the local engine's `FMaterialShaderMapId::Serialize` would interpret the zero word immediately after the original 20-byte hash as `MaxFieldAlignment` and the following material-name length (16, 23, 20, or 19) as layout flags. The local layout structure requires an initialized flag and usable alignment; it then reads the material-name bytes as `FrozenContentSize`, explaining the observed `0x49555f4d` (`M_UI`) read for Donut. This establishes the first format divergence at the material shader-map ID/base boundary. It does **not** establish the full original shader-map schema or make Windows-cooked shader maps usable by the Linux Vulkan runtime. The exact wrapper bounds replace the earlier inferred 205-byte origin; archive `Tell` and `.uexp` positions use different coordinate systems in the captured trace.
+
+
+## Pre-freeze uniform expression prefix
+
+`legacy_shader_map.py` strictly parses the observed original resource header and eight uniform-expression arrays, including their supported recursive expression types. It checks package and resource identities against the framing report and stops at the first unknown field; it does not decode the remaining compilation output or reconstruct a runnable shader map. `test_legacy_shader_map.py` exercises the supported prefix and rejects malformed or unsupported input. The reports under `generated/material_pipeline/*-legacy-prefix.json` record the decoded nodes and these boundaries:
+
+| Resource | Expression nodes | First unknown resource-relative offset | First unknown `.uexp` offset |
+| --- | ---: | ---: | ---: |
+| Donut | 13 | 518 | 2699 |
+| Locker | 220 | 4593 | 7390 |
+| MenuButton | 124 | 2820 | 7350 |
+| PowerToast | 81 | 1886 | 5885 |
+
+These boundaries are evidence for continuing the parser, not proof of uniform values, resource binding correspondence, shader semantics, or UE draw parity.
