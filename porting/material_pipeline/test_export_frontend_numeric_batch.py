@@ -11,9 +11,15 @@ import tempfile
 from unittest import mock
 
 BATCH_PATH = None
+BASELINE_PATH = None
 if '--batch' in sys.argv:
     option = sys.argv.index('--batch')
     BATCH_PATH = Path(sys.argv[option + 1]).resolve()
+    del sys.argv[option:option + 2]
+
+if '--baseline' in sys.argv:
+    option = sys.argv.index('--baseline')
+    BASELINE_PATH = Path(sys.argv[option + 1]).resolve()
     del sys.argv[option:option + 2]
 
 spec = importlib.util.spec_from_file_location('batch', Path(__file__).with_name('export_frontend_numeric_batch.py'))
@@ -32,6 +38,19 @@ def row(path, parent='', values=(), static=False):
 
 
 class BatchTests(unittest.TestCase):
+    def test_visible_time_delta_policy_is_master_only(self):
+        master = '/Game/UI/Foundation/Buttons/Materials/Feature/M_FeatureButton_Master.M_FeatureButton_Master'
+        policy = batch.feature_view_draw_policy(master)
+        self.assertIs(policy['require_time_delta'],True)
+        self.assertEqual(policy['different_image_pairs'],[[0,1],[2,3]])
+        for name in ('M_Button_Feature_Base','M_Button_Feature_Disabled','M_Button_Feature_Hovered','M_Button_Feature_Pressed','M_Button_Feature_Text_Base'):
+            child = '/Game/UI/Foundation/Buttons/Materials/Feature/' + name + '.' + name
+            policy = batch.feature_view_draw_policy(child)
+            self.assertIs(policy['require_time_delta'],False)
+            self.assertEqual(policy['different_image_pairs'],[])
+            self.assertEqual(policy['equal_image_pairs'],[[0,2],[1,3]])
+            self.assertIn('mask shine',policy['time_delta_rationale'])
+
     def test_chain_retains_direct_parent_and_base_separately(self):
         base = row('/Game/Base.Base')
         parent = row('/Game/Parent.Parent', base['owner_path'], static=True)
@@ -206,7 +225,9 @@ class GeneratedBatchAudit(unittest.TestCase):
                     cases = fixture['view_cases']
                     self.assertEqual(len(cases),4)
                     self.assertEqual(fixture['view_draw_expectations']['equal_image_pairs'],[[0,2],[1,3]])
-                    self.assertEqual(fixture['view_draw_expectations']['different_image_pairs'],[[0,1],[2,3]])
+                    expected_policy = batch.feature_view_draw_policy(entry['owner_path'])
+                    for field in ('require_time_delta','different_image_pairs','equal_image_pairs'):
+                        self.assertEqual(fixture['view_draw_expectations'][field],expected_policy[field])
                     for case in cases:
                         numeric = batch.evaluator.evaluate_report(bundle['decoded'],batch.evaluator.overrides_from_json(case['overrides']))[0]
                         self.assertEqual(batch.digest(numeric),case['numeric_sha256'])
@@ -226,6 +247,24 @@ class GeneratedBatchAudit(unittest.TestCase):
                 self.assertEqual(hashlib.sha1(code).hexdigest(),shader['spirv_sha1'])
                 batch.typed_contract(shader['record'],shader['reflection'],view_evidence if entry['requires_view'] else None)
         print('Audited %d manifest bundles and %d numeric cases' % (len(manifest['entries']),case_count))
+
+
+@unittest.skipUnless(BATCH_PATH is not None and BASELINE_PATH is not None,'pass --batch and --baseline to compare preserved numeric cases')
+class PriorBatchCasesAudit(unittest.TestCase):
+    def test_all_previous_cases_preserved_under_new_draw_policy(self):
+        old = json.loads((BASELINE_PATH / 'manifest.json').read_bytes())
+        new = json.loads((BATCH_PATH / 'manifest.json').read_bytes())
+        current = {e['owner_path']:e for e in new['entries']}
+        cases = 0
+        for entry in old['entries']:
+            prior = json.loads(Path(entry['bundle_path']).read_bytes())['runtime_fixture']
+            fresh = json.loads(Path(current[entry['owner_path']]['bundle_path']).read_bytes())['runtime_fixture']
+            for field in ('uniform_cases','owner_uniform_cases','view_cases'):
+                self.assertEqual(prior.get(field),fresh.get(field))
+                cases += len(prior.get(field,[]))
+            if entry['owner_path'].endswith(('.M_Button_Feature_Hovered','.M_Button_Feature_Pressed')):
+                self.assertAlmostEqual(fresh['view_cases'][1]['game_time'],1.5833333730697632)
+        print('Preserved %d prior numeric cases from %s' % (cases,BASELINE_PATH.name))
 
 
 if __name__ == '__main__':

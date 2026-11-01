@@ -10,11 +10,11 @@ Earlier exporters, bundles and runtime pins remain separate.
 python3 -I porting/material_pipeline/test_export_frontend_numeric_batch.py
 python3 -I porting/material_pipeline/export_frontend_numeric_batch.py \
   --inventory porting/generated/frontend-probes/frontend-material-inventory/summary.json \
-  --output porting/generated/material_pipeline/frontend-numeric-batch-7 \
-  --view-access-report porting/generated/material_pipeline/feature-view-access-2.json \
+  --output porting/generated/material_pipeline/frontend-numeric-batch-9 \
+  --view-access-report porting/generated/material_pipeline/frontend-view-access-all-1.json \
   --view-original-metadata porting/generated/material_pipeline/view-identity/evidence.json
 python3 -I porting/material_pipeline/test_export_frontend_numeric_batch.py \
-  --batch porting/generated/material_pipeline/frontend-numeric-batch-7
+  --batch porting/generated/material_pipeline/frontend-numeric-batch-9
 ```
 
 Choose a fresh output path when repeating the command. An existing directory is
@@ -123,7 +123,51 @@ rationale. These are source-derived diagnostic expectations, not successful GPU
 readbacks. The batch-7 audit passes 12 tests covering 50 bundles, 350 shader
 references and 924 numeric cases (including all 24 View cases).
 
-The final batch-7 manifest SHA-256 is
+The preserved batch-7 manifest SHA-256 is
 `5a77ff5ee75f769785fcb434f6713671fa37fb1f4ca7da40f93c6d4bd73eae56`.
 Frozen Donut/Menu exclusions in the batch report describe this exporter's scope;
 they do not invalidate those owners' separately preserved runtime checkpoints.
+
+
+Batch-9 preserves all earlier batches, including the inherited Base draw failure.
+The actual master diagnostic changed 1,864 pixels and passed RealTime isolation;
+the actual inherited Base diagnostic changed zero pixels despite passing its
+source identity and numeric checks. Base's original ShineRGBA is
+(0, 0, 0, 0.498039). Selecting an active timer window therefore does not establish
+that every inherited owner's source appearance produces a visible time effect.
+No source color or other appearance override is invented to force visibility.
+
+Every Feature profile now has an explicit boolean
+`view_draw_expectations.require_time_delta`. It is true only for the observed
+master diagnostic, with different pairs (0,1)/(2,3). Inherited profiles set it to
+false and have an empty `different_image_pairs` list. Their mandatory equal pairs
+(0,2)/(1,3) still verify RealTime isolation. Their GameTime changes remain
+observations; zero changed pixels does not establish original-client pixel parity.
+All original effective overrides, CPU expected numeric cases and source-derived
+thresholds remain unchanged, including Hovered/Pressed's approximately
+1.583333373 active time.
+
+Batch-9 consumes the complete 49-program View access proof at
+`generated/material_pipeline/frontend-view-access-all-1.json`. It includes 88
+eligible owners (34 own resources and 54 inherited), excludes five eligible
+frozen existing owners, and explicitly rejects 54 owners. The 167 selected unique
+Slate programs remain structurally validated. This expands proved access
+coverage without inventing draw profiles for other programs.
+
+```sh
+python3 -I porting/material_pipeline/test_export_frontend_numeric_batch.py \
+  --batch porting/generated/material_pipeline/frontend-numeric-batch-9 \
+  --baseline porting/generated/material_pipeline/frontend-numeric-batch-8
+python3 -I porting/material_pipeline/test_export_frontend_numeric_batch.py \
+  --batch porting/generated/material_pipeline/frontend-numeric-batch-9 \
+  --baseline porting/generated/material_pipeline/frontend-numeric-batch-7
+```
+
+Both commands pass 14 tests. The artifact audit validates all 88 bundles, 616
+shader references and 1,604 numeric cases. Baseline comparisons confirm all 1,604
+batch-8 numeric cases and all 924 batch-7 numeric cases are unchanged. Only the
+visible-delta policy changes; controlled native runtime validation remains a
+separate gate.
+
+Batch-9 manifest SHA-256:
+`3c6effeedd6851ba71fc6ffb8d176cca31c35118564daecd2de50b40d0445b51`.

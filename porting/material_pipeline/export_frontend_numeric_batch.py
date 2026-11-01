@@ -218,7 +218,17 @@ def numeric_cases(parsed, nodes, inherited):
     return cases
 
 
-def add_feature_view_profile(fixture, parsed, inherited):
+def feature_view_draw_policy(owner_path):
+    """Require a visible timer delta only for the observed master diagnostic."""
+    require_delta = owner_path == '/Game/UI/Foundation/Buttons/Materials/Feature/M_FeatureButton_Master.M_FeatureButton_Master'
+    return dict(require_time_delta=require_delta, equal_image_pairs=[[0,2],[1,3]],
+                different_image_pairs=[[0,1],[2,3]] if require_delta else [],
+                scope='Controlled Feature GameTime sensitivity and RealTime isolation; no original-client pixel or full View ABI claim',
+                time_delta_rationale=('The master diagnostic has demonstrated visible GameTime sensitivity' if require_delta else
+                    'Source appearance parameters can mask shine; inherited time deltas are observational and zero changed pixels does not establish original pixel parity'))
+
+
+def add_feature_view_profile(fixture, parsed, inherited, owner_path):
     """Controlled original Feature PS diagnostic using its observed timer slots."""
     programs = {3558:'66e1f3e0fbc687787eafa1e161c645c53133e7994e268f49066bf3a7ea43dc26',
                 3559:'4fc49bec9850cc07fe798e555f9313e2b9d2d6cb9de0c03c56ec818046cfbd80',
@@ -251,13 +261,12 @@ def add_feature_view_profile(fixture, parsed, inherited):
         numeric_values=values, numeric_sha256=digest(raw), abs_tolerance=0.00001, rel_tolerance=0.00001,
         game_time=game, real_time=real, expected_game_time=game, expected_real_time=real)
         for game, real in ((0.0,10.0),(active,10.0),(0.0,20.0),(active,20.0))]
-    fixture['view_draw_expectations'] = dict(equal_image_pairs=[[0,2],[1,3]], different_image_pairs=[[0,1],[2,3]],
+    fixture['view_draw_expectations'] = dict(**feature_view_draw_policy(owner_path),
         shader_time_window=dict(register='cb2_2[24].yz', threshold=threshold, period=period, active_time=active,
             threshold_numeric_index=97, period_numeric_index=98, enable_register='cb2_2[24].w', enable_numeric_index=99,
             source_default_ps_library_index=3559, source_default_ps_spirv_sha256=programs[3559],
             view_register='cb1_1[141].z', view_byte_offset=2264,
-            rationale='Zero precedes the source timer threshold; threshold+0.25 exercises the inspected active window'),
-        scope='Controlled Feature GameTime sensitivity and RealTime isolation; no original-client pixel or full View ABI claim')
+            rationale='Zero precedes the source timer threshold; threshold+0.25 exercises the inspected active window'))
     fixture['view_draw_profile_status'] = dict(status='source_derived', source_programs=programs,
         access_proof_sha256=fixture['view_contract']['access_proof_sha256'])
 
@@ -518,7 +527,7 @@ def export_batch(inventory, output, view_access_report=None, view_original_metad
             if requires_view:
                 fixture['view_contract'] = copy.deepcopy(view_evidence['contract'])
                 fixture['view_contract']['shader_access_records'] = [view_evidence['records'][x['record']['library_association']['index']] for x in shaders if x['record']['frequency'] == 3]
-                add_feature_view_profile(fixture, parsed, c['used'])
+                add_feature_view_profile(fixture, parsed, c['used'], row['owner_path'])
             decoded = dict(parsed, package=resource['framing']['package'], resource_start=resource['framing']['resource_start'], resource_end=resource['framing']['resource_end'], shader_library=dict(path=str(archive_path), sha256=archive_sha))
             data = dict(schema='fortnite.legacy-material-ingress.v2', owner_path=row['owner_path'], owner_type=row['owner']['type'],
                 parent_path=row['parent_path'], shader_identity=status['shader_identity'], resource_owner_path=status['resource_owner_path'],
