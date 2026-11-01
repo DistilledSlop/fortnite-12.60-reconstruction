@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Synthetic grammar tests; original-file evidence is produced by the CLI."""
 import struct
+import json
+import hashlib
 import unittest
 import importlib.util
 from types import SimpleNamespace
@@ -222,6 +224,68 @@ class LegacyPrefixTests(unittest.TestCase):
                       (0, -1, -2, 0, 0), (0, -1, -1, 3, 0), (0, -1, -1, 0, 2)]:
             with self.subTest(words=words), self.assertRaisesRegex(ValueError, 'texture expression'):
                 Reader(head + pack('ihhiI', *words), NAMES).expression()
+
+    def test_texture_property_nested_grammar_and_bounds(self):
+        names = NAMES + [PREFIX + 'Texture', PREFIX + 'TextureProperty']
+        texture = name(len(NAMES)) + pack('ihhiI', 2, -1, 3, 2, 1)
+        for child in (texture, TEXTURE):
+            for prop in (0, 1):
+                encoded = name(len(NAMES) + 1) + child + pack('B', prop)
+                node = Reader(encoded, names).expression()
+                self.assertEqual(node['end'], len(encoded))
+                self.assertEqual(node['property'], prop)
+                self.assertEqual(node['inputs'][0]['end'], len(encoded) - 1)
+                for cut in range(len(encoded)):
+                    with self.subTest(cut=cut), self.assertRaises(ValueError):
+                        Reader(encoded[:cut], names).expression()
+                with self.assertRaisesRegex(ValueError, 'texture property'):
+                    Reader(encoded[:-1] + pack('B', 2), names).expression()
+        for words in [(-2, -1, -1, 0, 0), (0, -2, -1, 0, 0),
+                      (0, -1, -2, 0, 0), (0, -1, -1, 3, 0), (0, -1, -1, 0, 2)]:
+            with self.subTest(words=words), self.assertRaisesRegex(ValueError, 'texture expression'):
+                Reader(name(len(NAMES)) + pack('ihhiI', *words), names).expression()
+        with self.assertRaisesRegex(ValueError, 'complexity'):
+            Reader(name(len(NAMES) + 1) * 64 + texture + bytes(64), names).expression()
+
+    def test_new_texture_expressions_remain_unsupported_by_numeric_bridge(self):
+        evaluator = module._load_sibling('evaluate_uniforms')
+        fixture = module._load_sibling('export_runtime_fixture')
+        for kind in ('Texture', 'TextureProperty'):
+            node = {'type': PREFIX + kind}
+            with self.subTest(kind=kind), self.assertRaisesRegex(ValueError, 'unsupported'):
+                evaluator.evaluate(node, {}, set())
+            with self.subTest(kind=kind), self.assertRaisesRegex(ValueError, 'unsupported'):
+                fixture.flatten_expressions({'vector': {'count': 0, 'expressions': []},
+                                             'scalar': {'count': 1, 'expressions': [node]}})
+
+    def test_recovered_texture_resources_exact_eof_and_archive(self):
+        generated = Path(__file__).resolve().parents[1] / 'generated'
+        summary = generated / 'frontend-probes/frontend-material-inventory-textures/summary.json'
+        extraction = Path('/mnt/vibrato/fortnite-extracted-full')
+        archive_path = extraction / 'FortniteGame/Content/ShaderArchive-FortniteGame-PCD3D_SM5.ushaderbytecode'
+        if not summary.is_file() or not archive_path.is_file():
+            self.skipTest('local original extraction and overlay are not present')
+        data = json.loads(summary.read_text())
+        updated = set(data['overlay_provenance']['changed_packages'])
+        self.assertEqual(len(updated), 10)
+        archive_module = module._load_sibling('shader_archive')
+        with archive_module.ShaderArchive(archive_path, layout='fortnite-12.60') as archive:
+            for entry in data['entries']:
+                if entry['package'] not in updated:
+                    continue
+                with self.subTest(package=entry['package']):
+                    framing = json.loads(Path(entry['report']).with_suffix('.inline-resource.json').read_text())
+                    raw = (extraction / (entry['package'] + '.uexp')).read_bytes()
+                    self.assertEqual(hashlib.sha256(raw).hexdigest(), framing['uexp_sha256'])
+                    blob = raw[framing['resource_start']:framing['resource_end']]
+                    self.assertEqual(hashlib.sha256(blob).hexdigest(), framing['resource_sha256'])
+                    result = parse_prefix(blob, framing['names'])
+                    self.assertEqual(result['undecoded_bytes'], 0)
+                    self.assertEqual(result['decoded_prefix_bytes'], len(blob))
+                    self.assertEqual(result['shader_record_count'], 19)
+                    module.associate_library(result, archive)
+                    records = result['material_shaders']['records'] + [record for mesh in result['mesh_shader_maps'] for record in mesh['records']]
+                    self.assertEqual(sum('library_association' in record for record in records), 19)
 
     def test_shader_identities_and_declared_end_are_checked(self):
         original = resource()

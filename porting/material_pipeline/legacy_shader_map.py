@@ -91,20 +91,25 @@ class Reader:
         if tag['number'] or not tag['name'].startswith(PREFIX):
             raise ValueError(f'invalid expression type at {start}')
         result = {'offset': start, 'type': tag['name']}
-        if kind in ('VectorParameter', 'ScalarParameter', 'TextureParameter'):
+        if kind in ('VectorParameter', 'ScalarParameter'):
             result['parameter'] = self.parameter()
+            result['default'] = self.read('4f' if kind == 'VectorParameter' else 'f')
+        elif kind in ('Texture', 'TextureParameter'):
             if kind == 'TextureParameter':
-                # Original runtime Serialize 0x14433eb60 proves widths
-                # int32,int16,int16,int32,bool32, totaling sixteen bytes.
-                texture_index, layer, page_layer, sampler, virtual = self.read('ihhiI')
-                if (texture_index < -1 or layer < -1 or page_layer < -1
-                        or sampler not in (0, 1, 2) or virtual not in (0, 1)):
-                    raise ValueError(f'invalid original texture expression at {start}')
-                result['texture'] = {'texture_index': texture_index, 'layer_index': layer,
-                                     'page_table_layer_index': page_layer,
-                                     'sampler_source': sampler, 'virtual_texture': bool(virtual)}
-            else:
-                result['default'] = self.read('4f' if kind == 'VectorParameter' else 'f')
+                result['parameter'] = self.parameter()
+            # Original 0x14433eb60 serializes this base payload in both types.
+            texture_index, layer, page_layer, sampler, virtual = self.read('ihhiI')
+            if (texture_index < -1 or layer < -1 or page_layer < -1
+                    or sampler not in (0, 1, 2) or virtual not in (0, 1)):
+                raise ValueError(f'invalid original texture expression at {start}')
+            result['texture'] = {'texture_index': texture_index, 'layer_index': layer,
+                                 'page_table_layer_index': page_layer,
+                                 'sampler_source': sampler, 'virtual_texture': bool(virtual)}
+        elif kind == 'TextureProperty':
+            result['inputs'] = [self.expression(depth + 1)]
+            result['property'] = self.read('B')
+            if result['property'] not in (0, 1):
+                raise ValueError(f'invalid texture property at {start}')
         elif kind == 'Constant':
             result['value'], result['value_type'] = self.read('4f'), self.read('B')
         elif kind in ('ComponentSwizzle', 'FoldedMath', 'AppendVector', 'TrigMath', 'Max', 'Saturate'):
