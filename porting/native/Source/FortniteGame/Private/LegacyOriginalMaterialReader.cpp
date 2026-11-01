@@ -50,7 +50,7 @@ public:
         FString T = Name().ToString(); const FString Prefix(TEXT("FMaterialUniformExpression"));
         if (!T.RemoveFromStart(Prefix)) { Fail(TEXT("invalid expression tag")); return INDEX_NONE; }
         FLegacyMaterialExpression E;
-        if (bTextureRoot && T != TEXT("TextureParameter")) Fail(TEXT("invalid texture root"));
+        if (bTextureRoot && T != TEXT("TextureParameter") && T != TEXT("Texture")) Fail(TEXT("invalid texture root"));
         if (T == TEXT("Constant")) { E.Kind = ELegacyMaterialExpression::Constant; E.Value.R=Read<float>(); E.Value.G=Read<float>(); E.Value.B=Read<float>(); E.Value.A=Read<float>(); E.ValueType=Read<uint8>(); }
         else if (T == TEXT("ScalarParameter") || T == TEXT("VectorParameter"))
         {
@@ -58,9 +58,16 @@ public:
             ParameterInfo(E); E.Value.R=Read<float>();
             if (T == TEXT("VectorParameter")) { E.Value.G=Read<float>(); E.Value.B=Read<float>(); E.Value.A=Read<float>(); }
         }
-        else if (T == TEXT("TextureParameter"))
+        else if (T == TEXT("TextureParameter") || T == TEXT("Texture"))
         {
-            ParameterInfo(E); int32 Index=Read<int32>(); int16 Layer=Read<int16>(), Page=Read<int16>(); int32 Sampler=Read<int32>(); uint32 Virtual=Read<uint32>();
+            if (T == TEXT("TextureParameter"))
+            {
+                ParameterInfo(E);
+                if (E.Parameter.Name.IsNone()) Fail(TEXT("named texture parameter has no name"));
+            }
+            // For the original plain Texture expression the canonical default
+            // FMaterialParameterInfo is NAME_None, GlobalParameter, INDEX_NONE.
+            int32 Index=Read<int32>(); int16 Layer=Read<int16>(), Page=Read<int16>(); int32 Sampler=Read<int32>(); uint32 Virtual=Read<uint32>();
             if (Index < -1 || Layer < -1 || Page < -1 || Sampler < 0 || Sampler > 2 || Virtual > 1) Fail(TEXT("invalid texture expression"));
             if (!bTextureRoot || Depth != 0 || Index < 0 || Layer != -1 || Page != -1 || Virtual != 0)
                 Fail(TEXT("unsupported texture expression"));
