@@ -8116,8 +8116,70 @@
   "frontend_event_signature_86be4fd63c1f3750": {
    "id": "frontend_event_signature_86be4fd63c1f3750",
    "label": "/Script/CommonUI.CommonButton:BP_OnHovered",
-   "result": "pending",
-   "scope": "Original-owner signature and both-target compiled registration remain uncredited; header name presence is insufficient."
+   "result": "pass",
+   "utc": "2026-11-01T11:56:04.002224+00:00",
+   "original_signature": {
+    "path": "/Script/CommonUI.CommonButton:BP_OnHovered",
+    "cpp_class": "UCommonButton",
+    "create_func": "0x140806830",
+    "outer_func": "0x140805cb0",
+    "flags": "0x8080800",
+    "parameters": []
+   },
+   "source_native_commit": "2f40d73",
+   "engine_commit": "d7e04d4b6",
+   "build_checkpoint": {
+    "path": "porting/generated/material_pipeline/frontend-media-social-failure-checkpoint-results-1.json",
+    "sha256": "147b551097d98e73380586ebd660a51ac054e3df5b6a97cb06a8bffa58842536"
+   },
+   "root_checkpoint_audit": {
+    "path": "porting/generated/material_pipeline/frontend-media-social-failure-root-checkpoint-audit-1.json",
+    "sha256": "868a0e2b5ce6db12135bc4b2b44e3bb422fecefa20acbf576922484521757ed3"
+   },
+   "independent_compiled_elf_audit": {
+    "path": "porting/generated/frontend-framework-signatures-2/root-framework-elf-signature-audit-3.json",
+    "sha256": "6fb0f2fbba83e05a9b3933ff8aabc898eeab673e06bcd2fb7ca762c538d821fe"
+   },
+   "compiled": {
+    "client": {
+     "proof": {
+      "path": "porting/generated/frontend-framework-signatures-2/root-framework-elf-signature-audit-3.json",
+      "sha256": "6fb0f2fbba83e05a9b3933ff8aabc898eeab673e06bcd2fb7ca762c538d821fe"
+     },
+     "function_symbol": "_ZN56Z_Construct_UFunction_UCommonButton_BP_OnHovered_Statics10FuncParamsE",
+     "flags": "0x8080800",
+     "parameter_struct_size": 0,
+     "property_record_count": 0,
+     "object_snapshot": {
+      "path": "/mnt/vibrato/fortnite-evidence/frozen-runtime/media-social-frozen-runtime-1/registration-signatures/FortniteLinux/Development/CommonUI/Module.CommonUI.gen.cpp.o",
+      "sha256": "74789898944f74a5acd9e504a98f246dff2cba01fe70abf4a168cf9882eb9e0d"
+     },
+     "generated_cpp_snapshot": {
+      "path": "/mnt/vibrato/fortnite-evidence/frozen-runtime/media-social-frozen-runtime-1/registration-signatures/FortniteLinux/Inc/CommonUI/UCommonButton.gen.cpp",
+      "sha256": "8b24e60ae02764274d1d1f9bff8706c4543aaf73b09a0866a866635884493ccf"
+     }
+    },
+    "server": {
+     "proof": {
+      "path": "porting/generated/frontend-framework-signatures-2/root-framework-elf-signature-audit-3.json",
+      "sha256": "6fb0f2fbba83e05a9b3933ff8aabc898eeab673e06bcd2fb7ca762c538d821fe"
+     },
+     "function_symbol": "_ZN56Z_Construct_UFunction_UCommonButton_BP_OnHovered_Statics10FuncParamsE",
+     "flags": "0x8080800",
+     "parameter_struct_size": 0,
+     "property_record_count": 0,
+     "object_snapshot": {
+      "path": "/mnt/vibrato/fortnite-evidence/frozen-runtime/media-social-frozen-runtime-1/registration-signatures/FortniteLinuxServer/Development/CommonUI/Module.CommonUI.gen.cpp.o",
+      "sha256": "058307ee6ee52ab09b9b6cdc1efe097e3d72fe8ef607f9bd9afd05bdf43b076b"
+     },
+     "generated_cpp_snapshot": {
+      "path": "/mnt/vibrato/fortnite-evidence/frozen-runtime/media-social-frozen-runtime-1/registration-signatures/FortniteLinuxServer/Inc/CommonUI/UCommonButton.gen.cpp",
+      "sha256": "8b24e60ae02764274d1d1f9bff8706c4543aaf73b09a0866a866635884493ccf"
+     }
+    }
+   },
+   "material_phase_passed": false,
+   "scope": "Exact original non-Native Blueprint signature and both-target compiled registration only. This closes the fixed 41-event inventory. The associated Social material probe failed before rendering checks; no material acceptance, Native lifecycle behavior, widget integration or interactive milestone credit."
   },
   "frontend_event_signature_be009a77ba833c9e": {
    "id": "frontend_event_signature_be009a77ba833c9e",
@@ -9573,74 +9635,1140 @@
   "frontend_event_signature_c927837cfa8d256e": {
    "id": "frontend_event_signature_c927837cfa8d256e",
    "label": "/Script/UMG.UserWidget:Construct",
-   "result": "pending",
-   "scope": "Original-owner signature and both-target compiled registration remain uncredited; header name presence is insufficient."
+   "result": "pass",
+   "utc": "2026-11-01T11:56:04.003277+00:00",
+   "original_signature": {
+    "path": "/Script/UMG.UserWidget:Construct",
+    "cpp_class": "UUserWidget",
+    "create_func": "0x143dbd280",
+    "outer_func": "0x143dbd0b0",
+    "flags": "0x8020808",
+    "parameters": []
+   },
+   "source_native_commit": "2f40d73",
+   "engine_commit": "d7e04d4b6",
+   "build_checkpoint": {
+    "path": "porting/generated/material_pipeline/frontend-media-social-failure-checkpoint-results-1.json",
+    "sha256": "147b551097d98e73380586ebd660a51ac054e3df5b6a97cb06a8bffa58842536"
+   },
+   "root_checkpoint_audit": {
+    "path": "porting/generated/material_pipeline/frontend-media-social-failure-root-checkpoint-audit-1.json",
+    "sha256": "868a0e2b5ce6db12135bc4b2b44e3bb422fecefa20acbf576922484521757ed3"
+   },
+   "independent_compiled_elf_audit": {
+    "path": "porting/generated/frontend-framework-signatures-2/root-framework-elf-signature-audit-3.json",
+    "sha256": "6fb0f2fbba83e05a9b3933ff8aabc898eeab673e06bcd2fb7ca762c538d821fe"
+   },
+   "compiled": {
+    "client": {
+     "proof": {
+      "path": "porting/generated/frontend-framework-signatures-2/root-framework-elf-signature-audit-3.json",
+      "sha256": "6fb0f2fbba83e05a9b3933ff8aabc898eeab673e06bcd2fb7ca762c538d821fe"
+     },
+     "function_symbol": "_ZN51Z_Construct_UFunction_UUserWidget_Construct_Statics10FuncParamsE",
+     "flags": "0x8020808",
+     "parameter_struct_size": 0,
+     "property_record_count": 0,
+     "object_snapshot": {
+      "path": "/mnt/vibrato/fortnite-evidence/frozen-runtime/media-social-frozen-runtime-1/registration-signatures/FortniteLinux/Development/UMG/Module.UMG.gen.7_of_11.cpp.o",
+      "sha256": "599b67cd40e934fd5a7ac3a306595babad56ef7eb1c9166adfc8d9eaf49c1c79"
+     },
+     "generated_cpp_snapshot": {
+      "path": "/mnt/vibrato/fortnite-evidence/frozen-runtime/media-social-frozen-runtime-1/registration-signatures/FortniteLinux/Inc/UMG/UserWidget.gen.cpp",
+      "sha256": "772c3499a4a05015ef5874d877a31d3093c7ccbb102c182e1da62169458e3e54"
+     }
+    },
+    "server": {
+     "proof": {
+      "path": "porting/generated/frontend-framework-signatures-2/root-framework-elf-signature-audit-3.json",
+      "sha256": "6fb0f2fbba83e05a9b3933ff8aabc898eeab673e06bcd2fb7ca762c538d821fe"
+     },
+     "function_symbol": "_ZN51Z_Construct_UFunction_UUserWidget_Construct_Statics10FuncParamsE",
+     "flags": "0x8020808",
+     "parameter_struct_size": 0,
+     "property_record_count": 0,
+     "object_snapshot": {
+      "path": "/mnt/vibrato/fortnite-evidence/frozen-runtime/media-social-frozen-runtime-1/registration-signatures/FortniteLinuxServer/Development/UMG/Module.UMG.gen.7_of_11.cpp.o",
+      "sha256": "00f4549207afbeb16c087444e57418ca9ec7b6b811918d3b3238044099a6f3ff"
+     },
+     "generated_cpp_snapshot": {
+      "path": "/mnt/vibrato/fortnite-evidence/frozen-runtime/media-social-frozen-runtime-1/registration-signatures/FortniteLinuxServer/Inc/UMG/UserWidget.gen.cpp",
+      "sha256": "772c3499a4a05015ef5874d877a31d3093c7ccbb102c182e1da62169458e3e54"
+     }
+    }
+   },
+   "material_phase_passed": false,
+   "scope": "Exact original non-Native Blueprint signature and both-target compiled registration only. This closes the fixed 41-event inventory. The associated Social material probe failed before rendering checks; no material acceptance, Native lifecycle behavior, widget integration or interactive milestone credit."
   },
   "frontend_event_signature_e1cc754f9f891a6d": {
    "id": "frontend_event_signature_e1cc754f9f891a6d",
    "label": "/Script/UMG.UserWidget:Destruct",
-   "result": "pending",
-   "scope": "Original-owner signature and both-target compiled registration remain uncredited; header name presence is insufficient."
+   "result": "pass",
+   "utc": "2026-11-01T11:56:04.004401+00:00",
+   "original_signature": {
+    "path": "/Script/UMG.UserWidget:Destruct",
+    "cpp_class": "UUserWidget",
+    "create_func": "0x143dbd2b0",
+    "outer_func": "0x143dbd0b0",
+    "flags": "0x8020808",
+    "parameters": []
+   },
+   "source_native_commit": "2f40d73",
+   "engine_commit": "d7e04d4b6",
+   "build_checkpoint": {
+    "path": "porting/generated/material_pipeline/frontend-media-social-failure-checkpoint-results-1.json",
+    "sha256": "147b551097d98e73380586ebd660a51ac054e3df5b6a97cb06a8bffa58842536"
+   },
+   "root_checkpoint_audit": {
+    "path": "porting/generated/material_pipeline/frontend-media-social-failure-root-checkpoint-audit-1.json",
+    "sha256": "868a0e2b5ce6db12135bc4b2b44e3bb422fecefa20acbf576922484521757ed3"
+   },
+   "independent_compiled_elf_audit": {
+    "path": "porting/generated/frontend-framework-signatures-2/root-framework-elf-signature-audit-3.json",
+    "sha256": "6fb0f2fbba83e05a9b3933ff8aabc898eeab673e06bcd2fb7ca762c538d821fe"
+   },
+   "compiled": {
+    "client": {
+     "proof": {
+      "path": "porting/generated/frontend-framework-signatures-2/root-framework-elf-signature-audit-3.json",
+      "sha256": "6fb0f2fbba83e05a9b3933ff8aabc898eeab673e06bcd2fb7ca762c538d821fe"
+     },
+     "function_symbol": "_ZN50Z_Construct_UFunction_UUserWidget_Destruct_Statics10FuncParamsE",
+     "flags": "0x8020808",
+     "parameter_struct_size": 0,
+     "property_record_count": 0,
+     "object_snapshot": {
+      "path": "/mnt/vibrato/fortnite-evidence/frozen-runtime/media-social-frozen-runtime-1/registration-signatures/FortniteLinux/Development/UMG/Module.UMG.gen.7_of_11.cpp.o",
+      "sha256": "599b67cd40e934fd5a7ac3a306595babad56ef7eb1c9166adfc8d9eaf49c1c79"
+     },
+     "generated_cpp_snapshot": {
+      "path": "/mnt/vibrato/fortnite-evidence/frozen-runtime/media-social-frozen-runtime-1/registration-signatures/FortniteLinux/Inc/UMG/UserWidget.gen.cpp",
+      "sha256": "772c3499a4a05015ef5874d877a31d3093c7ccbb102c182e1da62169458e3e54"
+     }
+    },
+    "server": {
+     "proof": {
+      "path": "porting/generated/frontend-framework-signatures-2/root-framework-elf-signature-audit-3.json",
+      "sha256": "6fb0f2fbba83e05a9b3933ff8aabc898eeab673e06bcd2fb7ca762c538d821fe"
+     },
+     "function_symbol": "_ZN50Z_Construct_UFunction_UUserWidget_Destruct_Statics10FuncParamsE",
+     "flags": "0x8020808",
+     "parameter_struct_size": 0,
+     "property_record_count": 0,
+     "object_snapshot": {
+      "path": "/mnt/vibrato/fortnite-evidence/frozen-runtime/media-social-frozen-runtime-1/registration-signatures/FortniteLinuxServer/Development/UMG/Module.UMG.gen.7_of_11.cpp.o",
+      "sha256": "00f4549207afbeb16c087444e57418ca9ec7b6b811918d3b3238044099a6f3ff"
+     },
+     "generated_cpp_snapshot": {
+      "path": "/mnt/vibrato/fortnite-evidence/frozen-runtime/media-social-frozen-runtime-1/registration-signatures/FortniteLinuxServer/Inc/UMG/UserWidget.gen.cpp",
+      "sha256": "772c3499a4a05015ef5874d877a31d3093c7ccbb102c182e1da62169458e3e54"
+     }
+    }
+   },
+   "material_phase_passed": false,
+   "scope": "Exact original non-Native Blueprint signature and both-target compiled registration only. This closes the fixed 41-event inventory. The associated Social material probe failed before rendering checks; no material acceptance, Native lifecycle behavior, widget integration or interactive milestone credit."
   },
   "frontend_event_signature_3720cf4e31f354ee": {
    "id": "frontend_event_signature_3720cf4e31f354ee",
    "label": "/Script/UMG.UserWidget:OnAnalogValueChanged",
-   "result": "pending",
-   "scope": "Original-owner signature and both-target compiled registration remain uncredited; header name presence is insufficient."
+   "result": "pass",
+   "utc": "2026-11-01T11:56:04.005370+00:00",
+   "original_signature": {
+    "path": "/Script/UMG.UserWidget:OnAnalogValueChanged",
+    "cpp_class": "UUserWidget",
+    "create_func": "0x143dbd760",
+    "outer_func": "0x143dbd0b0",
+    "flags": "0x8020800",
+    "parameters": [
+     {
+      "index": 0,
+      "name": "ReturnValue",
+      "kind": "Struct",
+      "kind_raw": "0x19",
+      "property_flags": "0x10000000000580",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 120,
+      "type_refs": {
+       "struct": "0x143dbade0"
+      }
+     },
+     {
+      "index": 1,
+      "name": "InAnalogInputEvent",
+      "kind": "Struct",
+      "kind_raw": "0x19",
+      "property_flags": "0x10000000000080",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 56,
+      "type_refs": {
+       "struct": "0x142fdaff0"
+      }
+     },
+     {
+      "index": 2,
+      "name": "MyGeometry",
+      "kind": "Struct",
+      "kind_raw": "0x19",
+      "property_flags": "0x10000000000080",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "type_refs": {
+       "struct": "0x142fdb2f0"
+      }
+     }
+    ]
+   },
+   "source_native_commit": "2f40d73",
+   "engine_commit": "d7e04d4b6",
+   "build_checkpoint": {
+    "path": "porting/generated/material_pipeline/frontend-media-social-failure-checkpoint-results-1.json",
+    "sha256": "147b551097d98e73380586ebd660a51ac054e3df5b6a97cb06a8bffa58842536"
+   },
+   "root_checkpoint_audit": {
+    "path": "porting/generated/material_pipeline/frontend-media-social-failure-root-checkpoint-audit-1.json",
+    "sha256": "868a0e2b5ce6db12135bc4b2b44e3bb422fecefa20acbf576922484521757ed3"
+   },
+   "independent_compiled_elf_audit": {
+    "path": "porting/generated/frontend-framework-signatures-2/root-framework-elf-signature-audit-3.json",
+    "sha256": "6fb0f2fbba83e05a9b3933ff8aabc898eeab673e06bcd2fb7ca762c538d821fe"
+   },
+   "compiled": {
+    "client": {
+     "proof": {
+      "path": "porting/generated/frontend-framework-signatures-2/root-framework-elf-signature-audit-3.json",
+      "sha256": "6fb0f2fbba83e05a9b3933ff8aabc898eeab673e06bcd2fb7ca762c538d821fe"
+     },
+     "function_symbol": "_ZN62Z_Construct_UFunction_UUserWidget_OnAnalogValueChanged_Statics10FuncParamsE",
+     "flags": "0x8020800",
+     "parameter_struct_size": 304,
+     "property_record_count": 3,
+     "object_snapshot": {
+      "path": "/mnt/vibrato/fortnite-evidence/frozen-runtime/media-social-frozen-runtime-1/registration-signatures/FortniteLinux/Development/UMG/Module.UMG.gen.7_of_11.cpp.o",
+      "sha256": "599b67cd40e934fd5a7ac3a306595babad56ef7eb1c9166adfc8d9eaf49c1c79"
+     },
+     "generated_cpp_snapshot": {
+      "path": "/mnt/vibrato/fortnite-evidence/frozen-runtime/media-social-frozen-runtime-1/registration-signatures/FortniteLinux/Inc/UMG/UserWidget.gen.cpp",
+      "sha256": "772c3499a4a05015ef5874d877a31d3093c7ccbb102c182e1da62169458e3e54"
+     }
+    },
+    "server": {
+     "proof": {
+      "path": "porting/generated/frontend-framework-signatures-2/root-framework-elf-signature-audit-3.json",
+      "sha256": "6fb0f2fbba83e05a9b3933ff8aabc898eeab673e06bcd2fb7ca762c538d821fe"
+     },
+     "function_symbol": "_ZN62Z_Construct_UFunction_UUserWidget_OnAnalogValueChanged_Statics10FuncParamsE",
+     "flags": "0x8020800",
+     "parameter_struct_size": 304,
+     "property_record_count": 3,
+     "object_snapshot": {
+      "path": "/mnt/vibrato/fortnite-evidence/frozen-runtime/media-social-frozen-runtime-1/registration-signatures/FortniteLinuxServer/Development/UMG/Module.UMG.gen.7_of_11.cpp.o",
+      "sha256": "00f4549207afbeb16c087444e57418ca9ec7b6b811918d3b3238044099a6f3ff"
+     },
+     "generated_cpp_snapshot": {
+      "path": "/mnt/vibrato/fortnite-evidence/frozen-runtime/media-social-frozen-runtime-1/registration-signatures/FortniteLinuxServer/Inc/UMG/UserWidget.gen.cpp",
+      "sha256": "772c3499a4a05015ef5874d877a31d3093c7ccbb102c182e1da62169458e3e54"
+     }
+    }
+   },
+   "material_phase_passed": false,
+   "scope": "Exact original non-Native Blueprint signature and both-target compiled registration only. This closes the fixed 41-event inventory. The associated Social material probe failed before rendering checks; no material acceptance, Native lifecycle behavior, widget integration or interactive milestone credit."
   },
   "frontend_event_signature_46979d00c23e6599": {
    "id": "frontend_event_signature_46979d00c23e6599",
    "label": "/Script/UMG.UserWidget:OnInitialized",
-   "result": "pending",
-   "scope": "Original-owner signature and both-target compiled registration remain uncredited; header name presence is insufficient."
+   "result": "pass",
+   "utc": "2026-11-01T11:56:04.006333+00:00",
+   "original_signature": {
+    "path": "/Script/UMG.UserWidget:OnInitialized",
+    "cpp_class": "UUserWidget",
+    "create_func": "0x143dbd970",
+    "outer_func": "0x143dbd0b0",
+    "flags": "0x8020808",
+    "parameters": []
+   },
+   "source_native_commit": "2f40d73",
+   "engine_commit": "d7e04d4b6",
+   "build_checkpoint": {
+    "path": "porting/generated/material_pipeline/frontend-media-social-failure-checkpoint-results-1.json",
+    "sha256": "147b551097d98e73380586ebd660a51ac054e3df5b6a97cb06a8bffa58842536"
+   },
+   "root_checkpoint_audit": {
+    "path": "porting/generated/material_pipeline/frontend-media-social-failure-root-checkpoint-audit-1.json",
+    "sha256": "868a0e2b5ce6db12135bc4b2b44e3bb422fecefa20acbf576922484521757ed3"
+   },
+   "independent_compiled_elf_audit": {
+    "path": "porting/generated/frontend-framework-signatures-2/root-framework-elf-signature-audit-3.json",
+    "sha256": "6fb0f2fbba83e05a9b3933ff8aabc898eeab673e06bcd2fb7ca762c538d821fe"
+   },
+   "compiled": {
+    "client": {
+     "proof": {
+      "path": "porting/generated/frontend-framework-signatures-2/root-framework-elf-signature-audit-3.json",
+      "sha256": "6fb0f2fbba83e05a9b3933ff8aabc898eeab673e06bcd2fb7ca762c538d821fe"
+     },
+     "function_symbol": "_ZN55Z_Construct_UFunction_UUserWidget_OnInitialized_Statics10FuncParamsE",
+     "flags": "0x8020808",
+     "parameter_struct_size": 0,
+     "property_record_count": 0,
+     "object_snapshot": {
+      "path": "/mnt/vibrato/fortnite-evidence/frozen-runtime/media-social-frozen-runtime-1/registration-signatures/FortniteLinux/Development/UMG/Module.UMG.gen.7_of_11.cpp.o",
+      "sha256": "599b67cd40e934fd5a7ac3a306595babad56ef7eb1c9166adfc8d9eaf49c1c79"
+     },
+     "generated_cpp_snapshot": {
+      "path": "/mnt/vibrato/fortnite-evidence/frozen-runtime/media-social-frozen-runtime-1/registration-signatures/FortniteLinux/Inc/UMG/UserWidget.gen.cpp",
+      "sha256": "772c3499a4a05015ef5874d877a31d3093c7ccbb102c182e1da62169458e3e54"
+     }
+    },
+    "server": {
+     "proof": {
+      "path": "porting/generated/frontend-framework-signatures-2/root-framework-elf-signature-audit-3.json",
+      "sha256": "6fb0f2fbba83e05a9b3933ff8aabc898eeab673e06bcd2fb7ca762c538d821fe"
+     },
+     "function_symbol": "_ZN55Z_Construct_UFunction_UUserWidget_OnInitialized_Statics10FuncParamsE",
+     "flags": "0x8020808",
+     "parameter_struct_size": 0,
+     "property_record_count": 0,
+     "object_snapshot": {
+      "path": "/mnt/vibrato/fortnite-evidence/frozen-runtime/media-social-frozen-runtime-1/registration-signatures/FortniteLinuxServer/Development/UMG/Module.UMG.gen.7_of_11.cpp.o",
+      "sha256": "00f4549207afbeb16c087444e57418ca9ec7b6b811918d3b3238044099a6f3ff"
+     },
+     "generated_cpp_snapshot": {
+      "path": "/mnt/vibrato/fortnite-evidence/frozen-runtime/media-social-frozen-runtime-1/registration-signatures/FortniteLinuxServer/Inc/UMG/UserWidget.gen.cpp",
+      "sha256": "772c3499a4a05015ef5874d877a31d3093c7ccbb102c182e1da62169458e3e54"
+     }
+    }
+   },
+   "material_phase_passed": false,
+   "scope": "Exact original non-Native Blueprint signature and both-target compiled registration only. This closes the fixed 41-event inventory. The associated Social material probe failed before rendering checks; no material acceptance, Native lifecycle behavior, widget integration or interactive milestone credit."
   },
   "frontend_event_signature_abcf6a4a1c87315b": {
    "id": "frontend_event_signature_abcf6a4a1c87315b",
    "label": "/Script/UMG.UserWidget:OnMouseButtonDown",
-   "result": "pending",
-   "scope": "Original-owner signature and both-target compiled registration remain uncredited; header name presence is insufficient."
+   "result": "pass",
+   "utc": "2026-11-01T11:56:04.007283+00:00",
+   "original_signature": {
+    "path": "/Script/UMG.UserWidget:OnMouseButtonDown",
+    "cpp_class": "UUserWidget",
+    "create_func": "0x143dbda90",
+    "outer_func": "0x143dbd0b0",
+    "flags": "0x8420808",
+    "parameters": [
+     {
+      "index": 0,
+      "name": "ReturnValue",
+      "kind": "Struct",
+      "kind_raw": "0x19",
+      "property_flags": "0x10000000000580",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 168,
+      "type_refs": {
+       "struct": "0x143dbade0"
+      }
+     },
+     {
+      "index": 1,
+      "name": "MouseEvent",
+      "kind": "Struct",
+      "kind_raw": "0x19",
+      "property_flags": "0x10000008000182",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 56,
+      "type_refs": {
+       "struct": "0x142fdb470"
+      }
+     },
+     {
+      "index": 2,
+      "name": "MyGeometry",
+      "kind": "Struct",
+      "kind_raw": "0x19",
+      "property_flags": "0x10000000000080",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "type_refs": {
+       "struct": "0x142fdb2f0"
+      }
+     }
+    ]
+   },
+   "source_native_commit": "2f40d73",
+   "engine_commit": "d7e04d4b6",
+   "build_checkpoint": {
+    "path": "porting/generated/material_pipeline/frontend-media-social-failure-checkpoint-results-1.json",
+    "sha256": "147b551097d98e73380586ebd660a51ac054e3df5b6a97cb06a8bffa58842536"
+   },
+   "root_checkpoint_audit": {
+    "path": "porting/generated/material_pipeline/frontend-media-social-failure-root-checkpoint-audit-1.json",
+    "sha256": "868a0e2b5ce6db12135bc4b2b44e3bb422fecefa20acbf576922484521757ed3"
+   },
+   "independent_compiled_elf_audit": {
+    "path": "porting/generated/frontend-framework-signatures-2/root-framework-elf-signature-audit-3.json",
+    "sha256": "6fb0f2fbba83e05a9b3933ff8aabc898eeab673e06bcd2fb7ca762c538d821fe"
+   },
+   "compiled": {
+    "client": {
+     "proof": {
+      "path": "porting/generated/frontend-framework-signatures-2/root-framework-elf-signature-audit-3.json",
+      "sha256": "6fb0f2fbba83e05a9b3933ff8aabc898eeab673e06bcd2fb7ca762c538d821fe"
+     },
+     "function_symbol": "_ZN59Z_Construct_UFunction_UUserWidget_OnMouseButtonDown_Statics10FuncParamsE",
+     "flags": "0x8420808",
+     "parameter_struct_size": 352,
+     "property_record_count": 3,
+     "object_snapshot": {
+      "path": "/mnt/vibrato/fortnite-evidence/frozen-runtime/media-social-frozen-runtime-1/registration-signatures/FortniteLinux/Development/UMG/Module.UMG.gen.7_of_11.cpp.o",
+      "sha256": "599b67cd40e934fd5a7ac3a306595babad56ef7eb1c9166adfc8d9eaf49c1c79"
+     },
+     "generated_cpp_snapshot": {
+      "path": "/mnt/vibrato/fortnite-evidence/frozen-runtime/media-social-frozen-runtime-1/registration-signatures/FortniteLinux/Inc/UMG/UserWidget.gen.cpp",
+      "sha256": "772c3499a4a05015ef5874d877a31d3093c7ccbb102c182e1da62169458e3e54"
+     }
+    },
+    "server": {
+     "proof": {
+      "path": "porting/generated/frontend-framework-signatures-2/root-framework-elf-signature-audit-3.json",
+      "sha256": "6fb0f2fbba83e05a9b3933ff8aabc898eeab673e06bcd2fb7ca762c538d821fe"
+     },
+     "function_symbol": "_ZN59Z_Construct_UFunction_UUserWidget_OnMouseButtonDown_Statics10FuncParamsE",
+     "flags": "0x8420808",
+     "parameter_struct_size": 352,
+     "property_record_count": 3,
+     "object_snapshot": {
+      "path": "/mnt/vibrato/fortnite-evidence/frozen-runtime/media-social-frozen-runtime-1/registration-signatures/FortniteLinuxServer/Development/UMG/Module.UMG.gen.7_of_11.cpp.o",
+      "sha256": "00f4549207afbeb16c087444e57418ca9ec7b6b811918d3b3238044099a6f3ff"
+     },
+     "generated_cpp_snapshot": {
+      "path": "/mnt/vibrato/fortnite-evidence/frozen-runtime/media-social-frozen-runtime-1/registration-signatures/FortniteLinuxServer/Inc/UMG/UserWidget.gen.cpp",
+      "sha256": "772c3499a4a05015ef5874d877a31d3093c7ccbb102c182e1da62169458e3e54"
+     }
+    }
+   },
+   "material_phase_passed": false,
+   "scope": "Exact original non-Native Blueprint signature and both-target compiled registration only. This closes the fixed 41-event inventory. The associated Social material probe failed before rendering checks; no material acceptance, Native lifecycle behavior, widget integration or interactive milestone credit."
   },
   "frontend_event_signature_acc366dcab5dd9aa": {
    "id": "frontend_event_signature_acc366dcab5dd9aa",
    "label": "/Script/UMG.UserWidget:OnMouseButtonUp",
-   "result": "pending",
-   "scope": "Original-owner signature and both-target compiled registration remain uncredited; header name presence is insufficient."
+   "result": "pass",
+   "utc": "2026-11-01T11:56:04.008226+00:00",
+   "original_signature": {
+    "path": "/Script/UMG.UserWidget:OnMouseButtonUp",
+    "cpp_class": "UUserWidget",
+    "create_func": "0x143dbdac0",
+    "outer_func": "0x143dbd0b0",
+    "flags": "0x8420808",
+    "parameters": [
+     {
+      "index": 0,
+      "name": "ReturnValue",
+      "kind": "Struct",
+      "kind_raw": "0x19",
+      "property_flags": "0x10000000000580",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 168,
+      "type_refs": {
+       "struct": "0x143dbade0"
+      }
+     },
+     {
+      "index": 1,
+      "name": "MouseEvent",
+      "kind": "Struct",
+      "kind_raw": "0x19",
+      "property_flags": "0x10000008000182",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 56,
+      "type_refs": {
+       "struct": "0x142fdb470"
+      }
+     },
+     {
+      "index": 2,
+      "name": "MyGeometry",
+      "kind": "Struct",
+      "kind_raw": "0x19",
+      "property_flags": "0x10000000000080",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "type_refs": {
+       "struct": "0x142fdb2f0"
+      }
+     }
+    ]
+   },
+   "source_native_commit": "2f40d73",
+   "engine_commit": "d7e04d4b6",
+   "build_checkpoint": {
+    "path": "porting/generated/material_pipeline/frontend-media-social-failure-checkpoint-results-1.json",
+    "sha256": "147b551097d98e73380586ebd660a51ac054e3df5b6a97cb06a8bffa58842536"
+   },
+   "root_checkpoint_audit": {
+    "path": "porting/generated/material_pipeline/frontend-media-social-failure-root-checkpoint-audit-1.json",
+    "sha256": "868a0e2b5ce6db12135bc4b2b44e3bb422fecefa20acbf576922484521757ed3"
+   },
+   "independent_compiled_elf_audit": {
+    "path": "porting/generated/frontend-framework-signatures-2/root-framework-elf-signature-audit-3.json",
+    "sha256": "6fb0f2fbba83e05a9b3933ff8aabc898eeab673e06bcd2fb7ca762c538d821fe"
+   },
+   "compiled": {
+    "client": {
+     "proof": {
+      "path": "porting/generated/frontend-framework-signatures-2/root-framework-elf-signature-audit-3.json",
+      "sha256": "6fb0f2fbba83e05a9b3933ff8aabc898eeab673e06bcd2fb7ca762c538d821fe"
+     },
+     "function_symbol": "_ZN57Z_Construct_UFunction_UUserWidget_OnMouseButtonUp_Statics10FuncParamsE",
+     "flags": "0x8420808",
+     "parameter_struct_size": 352,
+     "property_record_count": 3,
+     "object_snapshot": {
+      "path": "/mnt/vibrato/fortnite-evidence/frozen-runtime/media-social-frozen-runtime-1/registration-signatures/FortniteLinux/Development/UMG/Module.UMG.gen.7_of_11.cpp.o",
+      "sha256": "599b67cd40e934fd5a7ac3a306595babad56ef7eb1c9166adfc8d9eaf49c1c79"
+     },
+     "generated_cpp_snapshot": {
+      "path": "/mnt/vibrato/fortnite-evidence/frozen-runtime/media-social-frozen-runtime-1/registration-signatures/FortniteLinux/Inc/UMG/UserWidget.gen.cpp",
+      "sha256": "772c3499a4a05015ef5874d877a31d3093c7ccbb102c182e1da62169458e3e54"
+     }
+    },
+    "server": {
+     "proof": {
+      "path": "porting/generated/frontend-framework-signatures-2/root-framework-elf-signature-audit-3.json",
+      "sha256": "6fb0f2fbba83e05a9b3933ff8aabc898eeab673e06bcd2fb7ca762c538d821fe"
+     },
+     "function_symbol": "_ZN57Z_Construct_UFunction_UUserWidget_OnMouseButtonUp_Statics10FuncParamsE",
+     "flags": "0x8420808",
+     "parameter_struct_size": 352,
+     "property_record_count": 3,
+     "object_snapshot": {
+      "path": "/mnt/vibrato/fortnite-evidence/frozen-runtime/media-social-frozen-runtime-1/registration-signatures/FortniteLinuxServer/Development/UMG/Module.UMG.gen.7_of_11.cpp.o",
+      "sha256": "00f4549207afbeb16c087444e57418ca9ec7b6b811918d3b3238044099a6f3ff"
+     },
+     "generated_cpp_snapshot": {
+      "path": "/mnt/vibrato/fortnite-evidence/frozen-runtime/media-social-frozen-runtime-1/registration-signatures/FortniteLinuxServer/Inc/UMG/UserWidget.gen.cpp",
+      "sha256": "772c3499a4a05015ef5874d877a31d3093c7ccbb102c182e1da62169458e3e54"
+     }
+    }
+   },
+   "material_phase_passed": false,
+   "scope": "Exact original non-Native Blueprint signature and both-target compiled registration only. This closes the fixed 41-event inventory. The associated Social material probe failed before rendering checks; no material acceptance, Native lifecycle behavior, widget integration or interactive milestone credit."
   },
   "frontend_event_signature_725ac5635b4bd5ff": {
    "id": "frontend_event_signature_725ac5635b4bd5ff",
    "label": "/Script/UMG.UserWidget:OnMouseEnter",
-   "result": "pending",
-   "scope": "Original-owner signature and both-target compiled registration remain uncredited; header name presence is insufficient."
+   "result": "pass",
+   "utc": "2026-11-01T11:56:04.009166+00:00",
+   "original_signature": {
+    "path": "/Script/UMG.UserWidget:OnMouseEnter",
+    "cpp_class": "UUserWidget",
+    "create_func": "0x143dbdb20",
+    "outer_func": "0x143dbd0b0",
+    "flags": "0x8420808",
+    "parameters": [
+     {
+      "index": 0,
+      "name": "MouseEvent",
+      "kind": "Struct",
+      "kind_raw": "0x19",
+      "property_flags": "0x10000008000182",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 56,
+      "type_refs": {
+       "struct": "0x142fdb470"
+      }
+     },
+     {
+      "index": 1,
+      "name": "MyGeometry",
+      "kind": "Struct",
+      "kind_raw": "0x19",
+      "property_flags": "0x10000000000080",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "type_refs": {
+       "struct": "0x142fdb2f0"
+      }
+     }
+    ]
+   },
+   "source_native_commit": "2f40d73",
+   "engine_commit": "d7e04d4b6",
+   "build_checkpoint": {
+    "path": "porting/generated/material_pipeline/frontend-media-social-failure-checkpoint-results-1.json",
+    "sha256": "147b551097d98e73380586ebd660a51ac054e3df5b6a97cb06a8bffa58842536"
+   },
+   "root_checkpoint_audit": {
+    "path": "porting/generated/material_pipeline/frontend-media-social-failure-root-checkpoint-audit-1.json",
+    "sha256": "868a0e2b5ce6db12135bc4b2b44e3bb422fecefa20acbf576922484521757ed3"
+   },
+   "independent_compiled_elf_audit": {
+    "path": "porting/generated/frontend-framework-signatures-2/root-framework-elf-signature-audit-3.json",
+    "sha256": "6fb0f2fbba83e05a9b3933ff8aabc898eeab673e06bcd2fb7ca762c538d821fe"
+   },
+   "compiled": {
+    "client": {
+     "proof": {
+      "path": "porting/generated/frontend-framework-signatures-2/root-framework-elf-signature-audit-3.json",
+      "sha256": "6fb0f2fbba83e05a9b3933ff8aabc898eeab673e06bcd2fb7ca762c538d821fe"
+     },
+     "function_symbol": "_ZN54Z_Construct_UFunction_UUserWidget_OnMouseEnter_Statics10FuncParamsE",
+     "flags": "0x8420808",
+     "parameter_struct_size": 168,
+     "property_record_count": 2,
+     "object_snapshot": {
+      "path": "/mnt/vibrato/fortnite-evidence/frozen-runtime/media-social-frozen-runtime-1/registration-signatures/FortniteLinux/Development/UMG/Module.UMG.gen.7_of_11.cpp.o",
+      "sha256": "599b67cd40e934fd5a7ac3a306595babad56ef7eb1c9166adfc8d9eaf49c1c79"
+     },
+     "generated_cpp_snapshot": {
+      "path": "/mnt/vibrato/fortnite-evidence/frozen-runtime/media-social-frozen-runtime-1/registration-signatures/FortniteLinux/Inc/UMG/UserWidget.gen.cpp",
+      "sha256": "772c3499a4a05015ef5874d877a31d3093c7ccbb102c182e1da62169458e3e54"
+     }
+    },
+    "server": {
+     "proof": {
+      "path": "porting/generated/frontend-framework-signatures-2/root-framework-elf-signature-audit-3.json",
+      "sha256": "6fb0f2fbba83e05a9b3933ff8aabc898eeab673e06bcd2fb7ca762c538d821fe"
+     },
+     "function_symbol": "_ZN54Z_Construct_UFunction_UUserWidget_OnMouseEnter_Statics10FuncParamsE",
+     "flags": "0x8420808",
+     "parameter_struct_size": 168,
+     "property_record_count": 2,
+     "object_snapshot": {
+      "path": "/mnt/vibrato/fortnite-evidence/frozen-runtime/media-social-frozen-runtime-1/registration-signatures/FortniteLinuxServer/Development/UMG/Module.UMG.gen.7_of_11.cpp.o",
+      "sha256": "00f4549207afbeb16c087444e57418ca9ec7b6b811918d3b3238044099a6f3ff"
+     },
+     "generated_cpp_snapshot": {
+      "path": "/mnt/vibrato/fortnite-evidence/frozen-runtime/media-social-frozen-runtime-1/registration-signatures/FortniteLinuxServer/Inc/UMG/UserWidget.gen.cpp",
+      "sha256": "772c3499a4a05015ef5874d877a31d3093c7ccbb102c182e1da62169458e3e54"
+     }
+    }
+   },
+   "material_phase_passed": false,
+   "scope": "Exact original non-Native Blueprint signature and both-target compiled registration only. This closes the fixed 41-event inventory. The associated Social material probe failed before rendering checks; no material acceptance, Native lifecycle behavior, widget integration or interactive milestone credit."
   },
   "frontend_event_signature_a18b8fa106e94b89": {
    "id": "frontend_event_signature_a18b8fa106e94b89",
    "label": "/Script/UMG.UserWidget:OnMouseLeave",
-   "result": "pending",
-   "scope": "Original-owner signature and both-target compiled registration remain uncredited; header name presence is insufficient."
+   "result": "pass",
+   "utc": "2026-11-01T11:56:04.010126+00:00",
+   "original_signature": {
+    "path": "/Script/UMG.UserWidget:OnMouseLeave",
+    "cpp_class": "UUserWidget",
+    "create_func": "0x143dbdb50",
+    "outer_func": "0x143dbd0b0",
+    "flags": "0x8420808",
+    "parameters": [
+     {
+      "index": 0,
+      "name": "MouseEvent",
+      "kind": "Struct",
+      "kind_raw": "0x19",
+      "property_flags": "0x10000008000182",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "type_refs": {
+       "struct": "0x142fdb470"
+      }
+     }
+    ]
+   },
+   "source_native_commit": "2f40d73",
+   "engine_commit": "d7e04d4b6",
+   "build_checkpoint": {
+    "path": "porting/generated/material_pipeline/frontend-media-social-failure-checkpoint-results-1.json",
+    "sha256": "147b551097d98e73380586ebd660a51ac054e3df5b6a97cb06a8bffa58842536"
+   },
+   "root_checkpoint_audit": {
+    "path": "porting/generated/material_pipeline/frontend-media-social-failure-root-checkpoint-audit-1.json",
+    "sha256": "868a0e2b5ce6db12135bc4b2b44e3bb422fecefa20acbf576922484521757ed3"
+   },
+   "independent_compiled_elf_audit": {
+    "path": "porting/generated/frontend-framework-signatures-2/root-framework-elf-signature-audit-3.json",
+    "sha256": "6fb0f2fbba83e05a9b3933ff8aabc898eeab673e06bcd2fb7ca762c538d821fe"
+   },
+   "compiled": {
+    "client": {
+     "proof": {
+      "path": "porting/generated/frontend-framework-signatures-2/root-framework-elf-signature-audit-3.json",
+      "sha256": "6fb0f2fbba83e05a9b3933ff8aabc898eeab673e06bcd2fb7ca762c538d821fe"
+     },
+     "function_symbol": "_ZN54Z_Construct_UFunction_UUserWidget_OnMouseLeave_Statics10FuncParamsE",
+     "flags": "0x8420808",
+     "parameter_struct_size": 112,
+     "property_record_count": 1,
+     "object_snapshot": {
+      "path": "/mnt/vibrato/fortnite-evidence/frozen-runtime/media-social-frozen-runtime-1/registration-signatures/FortniteLinux/Development/UMG/Module.UMG.gen.7_of_11.cpp.o",
+      "sha256": "599b67cd40e934fd5a7ac3a306595babad56ef7eb1c9166adfc8d9eaf49c1c79"
+     },
+     "generated_cpp_snapshot": {
+      "path": "/mnt/vibrato/fortnite-evidence/frozen-runtime/media-social-frozen-runtime-1/registration-signatures/FortniteLinux/Inc/UMG/UserWidget.gen.cpp",
+      "sha256": "772c3499a4a05015ef5874d877a31d3093c7ccbb102c182e1da62169458e3e54"
+     }
+    },
+    "server": {
+     "proof": {
+      "path": "porting/generated/frontend-framework-signatures-2/root-framework-elf-signature-audit-3.json",
+      "sha256": "6fb0f2fbba83e05a9b3933ff8aabc898eeab673e06bcd2fb7ca762c538d821fe"
+     },
+     "function_symbol": "_ZN54Z_Construct_UFunction_UUserWidget_OnMouseLeave_Statics10FuncParamsE",
+     "flags": "0x8420808",
+     "parameter_struct_size": 112,
+     "property_record_count": 1,
+     "object_snapshot": {
+      "path": "/mnt/vibrato/fortnite-evidence/frozen-runtime/media-social-frozen-runtime-1/registration-signatures/FortniteLinuxServer/Development/UMG/Module.UMG.gen.7_of_11.cpp.o",
+      "sha256": "00f4549207afbeb16c087444e57418ca9ec7b6b811918d3b3238044099a6f3ff"
+     },
+     "generated_cpp_snapshot": {
+      "path": "/mnt/vibrato/fortnite-evidence/frozen-runtime/media-social-frozen-runtime-1/registration-signatures/FortniteLinuxServer/Inc/UMG/UserWidget.gen.cpp",
+      "sha256": "772c3499a4a05015ef5874d877a31d3093c7ccbb102c182e1da62169458e3e54"
+     }
+    }
+   },
+   "material_phase_passed": false,
+   "scope": "Exact original non-Native Blueprint signature and both-target compiled registration only. This closes the fixed 41-event inventory. The associated Social material probe failed before rendering checks; no material acceptance, Native lifecycle behavior, widget integration or interactive milestone credit."
   },
   "frontend_event_signature_ea85d14aa60b13ef": {
    "id": "frontend_event_signature_ea85d14aa60b13ef",
    "label": "/Script/UMG.UserWidget:OnTouchEnded",
-   "result": "pending",
-   "scope": "Original-owner signature and both-target compiled registration remain uncredited; header name presence is insufficient."
+   "result": "pass",
+   "utc": "2026-11-01T11:56:04.011076+00:00",
+   "original_signature": {
+    "path": "/Script/UMG.UserWidget:OnTouchEnded",
+    "cpp_class": "UUserWidget",
+    "create_func": "0x143dbdca0",
+    "outer_func": "0x143dbd0b0",
+    "flags": "0x8420808",
+    "parameters": [
+     {
+      "index": 0,
+      "name": "ReturnValue",
+      "kind": "Struct",
+      "kind_raw": "0x19",
+      "property_flags": "0x10000000000580",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 168,
+      "type_refs": {
+       "struct": "0x143dbade0"
+      }
+     },
+     {
+      "index": 1,
+      "name": "InTouchEvent",
+      "kind": "Struct",
+      "kind_raw": "0x19",
+      "property_flags": "0x10000008000182",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 56,
+      "type_refs": {
+       "struct": "0x142fdb470"
+      }
+     },
+     {
+      "index": 2,
+      "name": "MyGeometry",
+      "kind": "Struct",
+      "kind_raw": "0x19",
+      "property_flags": "0x10000000000080",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "type_refs": {
+       "struct": "0x142fdb2f0"
+      }
+     }
+    ]
+   },
+   "source_native_commit": "2f40d73",
+   "engine_commit": "d7e04d4b6",
+   "build_checkpoint": {
+    "path": "porting/generated/material_pipeline/frontend-media-social-failure-checkpoint-results-1.json",
+    "sha256": "147b551097d98e73380586ebd660a51ac054e3df5b6a97cb06a8bffa58842536"
+   },
+   "root_checkpoint_audit": {
+    "path": "porting/generated/material_pipeline/frontend-media-social-failure-root-checkpoint-audit-1.json",
+    "sha256": "868a0e2b5ce6db12135bc4b2b44e3bb422fecefa20acbf576922484521757ed3"
+   },
+   "independent_compiled_elf_audit": {
+    "path": "porting/generated/frontend-framework-signatures-2/root-framework-elf-signature-audit-3.json",
+    "sha256": "6fb0f2fbba83e05a9b3933ff8aabc898eeab673e06bcd2fb7ca762c538d821fe"
+   },
+   "compiled": {
+    "client": {
+     "proof": {
+      "path": "porting/generated/frontend-framework-signatures-2/root-framework-elf-signature-audit-3.json",
+      "sha256": "6fb0f2fbba83e05a9b3933ff8aabc898eeab673e06bcd2fb7ca762c538d821fe"
+     },
+     "function_symbol": "_ZN54Z_Construct_UFunction_UUserWidget_OnTouchEnded_Statics10FuncParamsE",
+     "flags": "0x8420808",
+     "parameter_struct_size": 352,
+     "property_record_count": 3,
+     "object_snapshot": {
+      "path": "/mnt/vibrato/fortnite-evidence/frozen-runtime/media-social-frozen-runtime-1/registration-signatures/FortniteLinux/Development/UMG/Module.UMG.gen.7_of_11.cpp.o",
+      "sha256": "599b67cd40e934fd5a7ac3a306595babad56ef7eb1c9166adfc8d9eaf49c1c79"
+     },
+     "generated_cpp_snapshot": {
+      "path": "/mnt/vibrato/fortnite-evidence/frozen-runtime/media-social-frozen-runtime-1/registration-signatures/FortniteLinux/Inc/UMG/UserWidget.gen.cpp",
+      "sha256": "772c3499a4a05015ef5874d877a31d3093c7ccbb102c182e1da62169458e3e54"
+     }
+    },
+    "server": {
+     "proof": {
+      "path": "porting/generated/frontend-framework-signatures-2/root-framework-elf-signature-audit-3.json",
+      "sha256": "6fb0f2fbba83e05a9b3933ff8aabc898eeab673e06bcd2fb7ca762c538d821fe"
+     },
+     "function_symbol": "_ZN54Z_Construct_UFunction_UUserWidget_OnTouchEnded_Statics10FuncParamsE",
+     "flags": "0x8420808",
+     "parameter_struct_size": 352,
+     "property_record_count": 3,
+     "object_snapshot": {
+      "path": "/mnt/vibrato/fortnite-evidence/frozen-runtime/media-social-frozen-runtime-1/registration-signatures/FortniteLinuxServer/Development/UMG/Module.UMG.gen.7_of_11.cpp.o",
+      "sha256": "00f4549207afbeb16c087444e57418ca9ec7b6b811918d3b3238044099a6f3ff"
+     },
+     "generated_cpp_snapshot": {
+      "path": "/mnt/vibrato/fortnite-evidence/frozen-runtime/media-social-frozen-runtime-1/registration-signatures/FortniteLinuxServer/Inc/UMG/UserWidget.gen.cpp",
+      "sha256": "772c3499a4a05015ef5874d877a31d3093c7ccbb102c182e1da62169458e3e54"
+     }
+    }
+   },
+   "material_phase_passed": false,
+   "scope": "Exact original non-Native Blueprint signature and both-target compiled registration only. This closes the fixed 41-event inventory. The associated Social material probe failed before rendering checks; no material acceptance, Native lifecycle behavior, widget integration or interactive milestone credit."
   },
   "frontend_event_signature_a7a890054c988e28": {
    "id": "frontend_event_signature_a7a890054c988e28",
    "label": "/Script/UMG.UserWidget:OnTouchStarted",
-   "result": "pending",
-   "scope": "Original-owner signature and both-target compiled registration remain uncredited; header name presence is insufficient."
+   "result": "pass",
+   "utc": "2026-11-01T11:56:04.012024+00:00",
+   "original_signature": {
+    "path": "/Script/UMG.UserWidget:OnTouchStarted",
+    "cpp_class": "UUserWidget",
+    "create_func": "0x143dbdd60",
+    "outer_func": "0x143dbd0b0",
+    "flags": "0x8420808",
+    "parameters": [
+     {
+      "index": 0,
+      "name": "ReturnValue",
+      "kind": "Struct",
+      "kind_raw": "0x19",
+      "property_flags": "0x10000000000580",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 168,
+      "type_refs": {
+       "struct": "0x143dbade0"
+      }
+     },
+     {
+      "index": 1,
+      "name": "InTouchEvent",
+      "kind": "Struct",
+      "kind_raw": "0x19",
+      "property_flags": "0x10000008000182",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 56,
+      "type_refs": {
+       "struct": "0x142fdb470"
+      }
+     },
+     {
+      "index": 2,
+      "name": "MyGeometry",
+      "kind": "Struct",
+      "kind_raw": "0x19",
+      "property_flags": "0x10000000000080",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "type_refs": {
+       "struct": "0x142fdb2f0"
+      }
+     }
+    ]
+   },
+   "source_native_commit": "2f40d73",
+   "engine_commit": "d7e04d4b6",
+   "build_checkpoint": {
+    "path": "porting/generated/material_pipeline/frontend-media-social-failure-checkpoint-results-1.json",
+    "sha256": "147b551097d98e73380586ebd660a51ac054e3df5b6a97cb06a8bffa58842536"
+   },
+   "root_checkpoint_audit": {
+    "path": "porting/generated/material_pipeline/frontend-media-social-failure-root-checkpoint-audit-1.json",
+    "sha256": "868a0e2b5ce6db12135bc4b2b44e3bb422fecefa20acbf576922484521757ed3"
+   },
+   "independent_compiled_elf_audit": {
+    "path": "porting/generated/frontend-framework-signatures-2/root-framework-elf-signature-audit-3.json",
+    "sha256": "6fb0f2fbba83e05a9b3933ff8aabc898eeab673e06bcd2fb7ca762c538d821fe"
+   },
+   "compiled": {
+    "client": {
+     "proof": {
+      "path": "porting/generated/frontend-framework-signatures-2/root-framework-elf-signature-audit-3.json",
+      "sha256": "6fb0f2fbba83e05a9b3933ff8aabc898eeab673e06bcd2fb7ca762c538d821fe"
+     },
+     "function_symbol": "_ZN56Z_Construct_UFunction_UUserWidget_OnTouchStarted_Statics10FuncParamsE",
+     "flags": "0x8420808",
+     "parameter_struct_size": 352,
+     "property_record_count": 3,
+     "object_snapshot": {
+      "path": "/mnt/vibrato/fortnite-evidence/frozen-runtime/media-social-frozen-runtime-1/registration-signatures/FortniteLinux/Development/UMG/Module.UMG.gen.7_of_11.cpp.o",
+      "sha256": "599b67cd40e934fd5a7ac3a306595babad56ef7eb1c9166adfc8d9eaf49c1c79"
+     },
+     "generated_cpp_snapshot": {
+      "path": "/mnt/vibrato/fortnite-evidence/frozen-runtime/media-social-frozen-runtime-1/registration-signatures/FortniteLinux/Inc/UMG/UserWidget.gen.cpp",
+      "sha256": "772c3499a4a05015ef5874d877a31d3093c7ccbb102c182e1da62169458e3e54"
+     }
+    },
+    "server": {
+     "proof": {
+      "path": "porting/generated/frontend-framework-signatures-2/root-framework-elf-signature-audit-3.json",
+      "sha256": "6fb0f2fbba83e05a9b3933ff8aabc898eeab673e06bcd2fb7ca762c538d821fe"
+     },
+     "function_symbol": "_ZN56Z_Construct_UFunction_UUserWidget_OnTouchStarted_Statics10FuncParamsE",
+     "flags": "0x8420808",
+     "parameter_struct_size": 352,
+     "property_record_count": 3,
+     "object_snapshot": {
+      "path": "/mnt/vibrato/fortnite-evidence/frozen-runtime/media-social-frozen-runtime-1/registration-signatures/FortniteLinuxServer/Development/UMG/Module.UMG.gen.7_of_11.cpp.o",
+      "sha256": "00f4549207afbeb16c087444e57418ca9ec7b6b811918d3b3238044099a6f3ff"
+     },
+     "generated_cpp_snapshot": {
+      "path": "/mnt/vibrato/fortnite-evidence/frozen-runtime/media-social-frozen-runtime-1/registration-signatures/FortniteLinuxServer/Inc/UMG/UserWidget.gen.cpp",
+      "sha256": "772c3499a4a05015ef5874d877a31d3093c7ccbb102c182e1da62169458e3e54"
+     }
+    }
+   },
+   "material_phase_passed": false,
+   "scope": "Exact original non-Native Blueprint signature and both-target compiled registration only. This closes the fixed 41-event inventory. The associated Social material probe failed before rendering checks; no material acceptance, Native lifecycle behavior, widget integration or interactive milestone credit."
   },
   "frontend_event_signature_a61d1d649bb8c042": {
    "id": "frontend_event_signature_a61d1d649bb8c042",
    "label": "/Script/UMG.UserWidget:PreConstruct",
-   "result": "pending",
-   "scope": "Original-owner signature and both-target compiled registration remain uncredited; header name presence is insufficient."
+   "result": "pass",
+   "utc": "2026-11-01T11:56:04.012965+00:00",
+   "original_signature": {
+    "path": "/Script/UMG.UserWidget:PreConstruct",
+    "cpp_class": "UUserWidget",
+    "create_func": "0x143dbcb90",
+    "outer_func": "0x143dbd0b0",
+    "flags": "0x8020808",
+    "parameters": [
+     {
+      "index": 0,
+      "name": "IsDesignTime",
+      "kind": "Bool",
+      "kind_raw": "0x2c",
+      "property_flags": "0x10000000000080",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "element_size": 1,
+      "size_of_outer": 1,
+      "bitfield": true,
+      "set_bit_fn": "0x1406966a0",
+      "offset": null
+     }
+    ]
+   },
+   "source_native_commit": "2f40d73",
+   "engine_commit": "d7e04d4b6",
+   "build_checkpoint": {
+    "path": "porting/generated/material_pipeline/frontend-media-social-failure-checkpoint-results-1.json",
+    "sha256": "147b551097d98e73380586ebd660a51ac054e3df5b6a97cb06a8bffa58842536"
+   },
+   "root_checkpoint_audit": {
+    "path": "porting/generated/material_pipeline/frontend-media-social-failure-root-checkpoint-audit-1.json",
+    "sha256": "868a0e2b5ce6db12135bc4b2b44e3bb422fecefa20acbf576922484521757ed3"
+   },
+   "independent_compiled_elf_audit": {
+    "path": "porting/generated/frontend-framework-signatures-2/root-framework-elf-signature-audit-3.json",
+    "sha256": "6fb0f2fbba83e05a9b3933ff8aabc898eeab673e06bcd2fb7ca762c538d821fe"
+   },
+   "compiled": {
+    "client": {
+     "proof": {
+      "path": "porting/generated/frontend-framework-signatures-2/root-framework-elf-signature-audit-3.json",
+      "sha256": "6fb0f2fbba83e05a9b3933ff8aabc898eeab673e06bcd2fb7ca762c538d821fe"
+     },
+     "function_symbol": "_ZN54Z_Construct_UFunction_UUserWidget_PreConstruct_Statics10FuncParamsE",
+     "flags": "0x8020808",
+     "parameter_struct_size": 1,
+     "property_record_count": 1,
+     "object_snapshot": {
+      "path": "/mnt/vibrato/fortnite-evidence/frozen-runtime/media-social-frozen-runtime-1/registration-signatures/FortniteLinux/Development/UMG/Module.UMG.gen.7_of_11.cpp.o",
+      "sha256": "599b67cd40e934fd5a7ac3a306595babad56ef7eb1c9166adfc8d9eaf49c1c79"
+     },
+     "generated_cpp_snapshot": {
+      "path": "/mnt/vibrato/fortnite-evidence/frozen-runtime/media-social-frozen-runtime-1/registration-signatures/FortniteLinux/Inc/UMG/UserWidget.gen.cpp",
+      "sha256": "772c3499a4a05015ef5874d877a31d3093c7ccbb102c182e1da62169458e3e54"
+     }
+    },
+    "server": {
+     "proof": {
+      "path": "porting/generated/frontend-framework-signatures-2/root-framework-elf-signature-audit-3.json",
+      "sha256": "6fb0f2fbba83e05a9b3933ff8aabc898eeab673e06bcd2fb7ca762c538d821fe"
+     },
+     "function_symbol": "_ZN54Z_Construct_UFunction_UUserWidget_PreConstruct_Statics10FuncParamsE",
+     "flags": "0x8020808",
+     "parameter_struct_size": 1,
+     "property_record_count": 1,
+     "object_snapshot": {
+      "path": "/mnt/vibrato/fortnite-evidence/frozen-runtime/media-social-frozen-runtime-1/registration-signatures/FortniteLinuxServer/Development/UMG/Module.UMG.gen.7_of_11.cpp.o",
+      "sha256": "00f4549207afbeb16c087444e57418ca9ec7b6b811918d3b3238044099a6f3ff"
+     },
+     "generated_cpp_snapshot": {
+      "path": "/mnt/vibrato/fortnite-evidence/frozen-runtime/media-social-frozen-runtime-1/registration-signatures/FortniteLinuxServer/Inc/UMG/UserWidget.gen.cpp",
+      "sha256": "772c3499a4a05015ef5874d877a31d3093c7ccbb102c182e1da62169458e3e54"
+     }
+    }
+   },
+   "material_phase_passed": false,
+   "scope": "Exact original non-Native Blueprint signature and both-target compiled registration only. This closes the fixed 41-event inventory. The associated Social material probe failed before rendering checks; no material acceptance, Native lifecycle behavior, widget integration or interactive milestone credit."
   },
   "frontend_event_signature_da1eeac922dcfbda": {
    "id": "frontend_event_signature_da1eeac922dcfbda",
    "label": "/Script/UMG.UserWidget:Tick",
-   "result": "pending",
-   "scope": "Original-owner signature and both-target compiled registration remain uncredited; header name presence is insufficient."
+   "result": "pass",
+   "utc": "2026-11-01T11:56:04.013916+00:00",
+   "original_signature": {
+    "path": "/Script/UMG.UserWidget:Tick",
+    "cpp_class": "UUserWidget",
+    "create_func": "0x143dbcf80",
+    "outer_func": "0x143dbd0b0",
+    "flags": "0x8020808",
+    "parameters": [
+     {
+      "index": 0,
+      "name": "InDeltaTime",
+      "kind": "Float",
+      "kind_raw": "0xa",
+      "property_flags": "0x10000000000080",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 56
+     },
+     {
+      "index": 1,
+      "name": "MyGeometry",
+      "kind": "Struct",
+      "kind_raw": "0x19",
+      "property_flags": "0x10000000000080",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "type_refs": {
+       "struct": "0x142fdb2f0"
+      }
+     }
+    ]
+   },
+   "source_native_commit": "2f40d73",
+   "engine_commit": "d7e04d4b6",
+   "build_checkpoint": {
+    "path": "porting/generated/material_pipeline/frontend-media-social-failure-checkpoint-results-1.json",
+    "sha256": "147b551097d98e73380586ebd660a51ac054e3df5b6a97cb06a8bffa58842536"
+   },
+   "root_checkpoint_audit": {
+    "path": "porting/generated/material_pipeline/frontend-media-social-failure-root-checkpoint-audit-1.json",
+    "sha256": "868a0e2b5ce6db12135bc4b2b44e3bb422fecefa20acbf576922484521757ed3"
+   },
+   "independent_compiled_elf_audit": {
+    "path": "porting/generated/frontend-framework-signatures-2/root-framework-elf-signature-audit-3.json",
+    "sha256": "6fb0f2fbba83e05a9b3933ff8aabc898eeab673e06bcd2fb7ca762c538d821fe"
+   },
+   "compiled": {
+    "client": {
+     "proof": {
+      "path": "porting/generated/frontend-framework-signatures-2/root-framework-elf-signature-audit-3.json",
+      "sha256": "6fb0f2fbba83e05a9b3933ff8aabc898eeab673e06bcd2fb7ca762c538d821fe"
+     },
+     "function_symbol": "_ZN46Z_Construct_UFunction_UUserWidget_Tick_Statics10FuncParamsE",
+     "flags": "0x8020808",
+     "parameter_struct_size": 60,
+     "property_record_count": 2,
+     "object_snapshot": {
+      "path": "/mnt/vibrato/fortnite-evidence/frozen-runtime/media-social-frozen-runtime-1/registration-signatures/FortniteLinux/Development/UMG/Module.UMG.gen.7_of_11.cpp.o",
+      "sha256": "599b67cd40e934fd5a7ac3a306595babad56ef7eb1c9166adfc8d9eaf49c1c79"
+     },
+     "generated_cpp_snapshot": {
+      "path": "/mnt/vibrato/fortnite-evidence/frozen-runtime/media-social-frozen-runtime-1/registration-signatures/FortniteLinux/Inc/UMG/UserWidget.gen.cpp",
+      "sha256": "772c3499a4a05015ef5874d877a31d3093c7ccbb102c182e1da62169458e3e54"
+     }
+    },
+    "server": {
+     "proof": {
+      "path": "porting/generated/frontend-framework-signatures-2/root-framework-elf-signature-audit-3.json",
+      "sha256": "6fb0f2fbba83e05a9b3933ff8aabc898eeab673e06bcd2fb7ca762c538d821fe"
+     },
+     "function_symbol": "_ZN46Z_Construct_UFunction_UUserWidget_Tick_Statics10FuncParamsE",
+     "flags": "0x8020808",
+     "parameter_struct_size": 60,
+     "property_record_count": 2,
+     "object_snapshot": {
+      "path": "/mnt/vibrato/fortnite-evidence/frozen-runtime/media-social-frozen-runtime-1/registration-signatures/FortniteLinuxServer/Development/UMG/Module.UMG.gen.7_of_11.cpp.o",
+      "sha256": "00f4549207afbeb16c087444e57418ca9ec7b6b811918d3b3238044099a6f3ff"
+     },
+     "generated_cpp_snapshot": {
+      "path": "/mnt/vibrato/fortnite-evidence/frozen-runtime/media-social-frozen-runtime-1/registration-signatures/FortniteLinuxServer/Inc/UMG/UserWidget.gen.cpp",
+      "sha256": "772c3499a4a05015ef5874d877a31d3093c7ccbb102c182e1da62169458e3e54"
+     }
+    }
+   },
+   "material_phase_passed": false,
+   "scope": "Exact original non-Native Blueprint signature and both-target compiled registration only. This closes the fixed 41-event inventory. The associated Social material probe failed before rendering checks; no material acceptance, Native lifecycle behavior, widget integration or interactive milestone credit."
   },
   "material_keybind_asset_ingress": {
    "id": "material_keybind_asset_ingress",
