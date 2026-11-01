@@ -1662,7 +1662,7 @@
         {
           "id": "ui.lifecycle",
           "name": "Frontend lifecycle and native helpers",
-          "weight": 13,
+          "weight": 12,
           "measure": {
             "kind": "manual",
             "pct": 0
@@ -1705,7 +1705,7 @@
         },
         {
           "id": "ui.context_source_stage",
-          "name": "Generic context source candidate",
+          "name": "Generic context source reconstruction",
           "weight": 1,
           "measure": {
             "kind": "ledger",
@@ -1714,6 +1714,22 @@
             ]
           },
           "rationale": "One lifecycle point for reviewed generic context lookup, registry and base lifecycle source/generator work, distinct from event signatures. Concrete contexts, authentic startup, linked UE runtime and integration remain in lifecycle."
+        },
+        {
+          "id": "ui.context_runtime_stage",
+          "name": "Generic context diagnostic runtime",
+          "weight": 1,
+          "measure": {
+            "kind": "ledger",
+            "checks": [
+              "frontend_context_runtime_metadata",
+              "frontend_context_runtime_reflection",
+              "frontend_context_runtime_lookup",
+              "frontend_context_runtime_registry",
+              "frontend_context_runtime_lifecycle"
+            ]
+          },
+          "rationale": "One lifecycle point for bounded generic context metadata, lookup, registry and lifecycle runtime; concrete context methods, authentic startup and playable UI remain unfinished."
         },
         {
           "id": "ui.panel_source_stage",

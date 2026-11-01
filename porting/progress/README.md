@@ -477,3 +477,25 @@ tile's numerator: it is the leaf's own done signal intersected with the unit lis
 `out/` and `history.json` are git-ignored in the top-level `.gitignore`. The
 generator never writes into tracked paths. The hook appends output to
 `porting/generated/progress-hook.log`, and it always exits 0.
+
+### Generic context runtime allocation (2026-11-01)
+
+One point was split from the 13-point zero-valued lifecycle remainder for the
+verified generic context diagnostic runtime, leaving 12 unfinished lifecycle
+points. Five checks cover exact original Native metadata in both targets, three
+measured loaded properties, lookup selection, registry/GC/removal/deinit, and
+world travel/deferred timer/copied-map dispatch. This is distinct from the
+previously credited generic source and 41 non-Native event signatures. Concrete
+context methods, authentic startup and playable UI remain unverified; all four
+product milestones remain false. Root and Login still stop at OnBeginIntro and
+the Google material respectively.
+
+Total weight remains 1,855. This judgment-based model revision adds one point,
+changing the estimate from 21.172% to 21.226% at the same HEAD and local data;
+it is not a retroactive historical gain or measured engineering time. The
+importer pins a green checkpoint, independent full strict report and independent
+integrity audit, and checks their source, binary, metadata and runtime bindings.
+The audit covers 122 committed source bindings, 1,416 artifacts and 18 binary
+rows. These receipts and the audited artifacts are external to the ledger; the
+integrity audit currently lives under /tmp and must remain available at its pinned
+path for re-verification. The ledger alone is an attestation.

@@ -10975,6 +10975,76 @@
    "frozen_bindings_verified": 66,
    "scope": "Isolated bounded input/device/lifecycle and delegate candidate, generator tests, UHT and syntax; excludes global action dispatch, held/interface completion, cursor warp, shared build and runtime.",
    "provenance_note": "Frozen source-stage evidence; external receipt availability is required for independent re-verification."
+  },
+  "frontend_context_runtime_metadata": {
+   "id": "frontend_context_runtime_metadata",
+   "result": "pass",
+   "exit_code": 0,
+   "command": "python3 -I porting/progress/record_frontend_context_runtime.py",
+   "checkpoint": "porting/generated/material_pipeline/frontend-context-checkpoint-results-3.json",
+   "checkpoint_sha256": "22b6b87c942044d7f46067a660e1f1e25e289262810fc52cf878d868f88ca8e6",
+   "strict_report": "porting/generated/frontend-native-evidence/context-runtime-3/root-report-1.json",
+   "strict_report_sha256": "ab5e924073e9559675093f9f8aabeb6f1cb5346caaed267f51713deda24713cb",
+   "integrity_audit": "porting/generated/frontend-native-evidence/context-runtime-3/integrity-audit-1.json",
+   "integrity_audit_sha256": "d09c52d9d05333a680c40c6e000c9fa1b641f49333d7a4c66a1fe535a8a43828",
+   "scope": "Exact original Native metadata in both targets: UHT, object and linked ELF. Generic diagnostic runtime only; concrete context methods, authentic startup, playable UI and all four product milestones remain unverified.",
+   "provenance_note": "Pinned external receipts and their independently audited source and artifact bindings must remain available for re-verification."
+  },
+  "frontend_context_runtime_reflection": {
+   "id": "frontend_context_runtime_reflection",
+   "result": "pass",
+   "exit_code": 0,
+   "command": "python3 -I porting/progress/record_frontend_context_runtime.py",
+   "checkpoint": "porting/generated/material_pipeline/frontend-context-checkpoint-results-3.json",
+   "checkpoint_sha256": "22b6b87c942044d7f46067a660e1f1e25e289262810fc52cf878d868f88ca8e6",
+   "strict_report": "porting/generated/frontend-native-evidence/context-runtime-3/root-report-1.json",
+   "strict_report_sha256": "ab5e924073e9559675093f9f8aabeb6f1cb5346caaed267f51713deda24713cb",
+   "integrity_audit": "porting/generated/frontend-native-evidence/context-runtime-3/integrity-audit-1.json",
+   "integrity_audit_sha256": "d09c52d9d05333a680c40c6e000c9fa1b641f49333d7a4c66a1fe535a8a43828",
+   "scope": "Three measured loaded properties and exact original flags plus source-proven computed bits. Generic diagnostic runtime only; concrete context methods, authentic startup, playable UI and all four product milestones remain unverified.",
+   "provenance_note": "Pinned external receipts and their independently audited source and artifact bindings must remain available for re-verification."
+  },
+  "frontend_context_runtime_lookup": {
+   "id": "frontend_context_runtime_lookup",
+   "result": "pass",
+   "exit_code": 0,
+   "command": "python3 -I porting/progress/record_frontend_context_runtime.py",
+   "checkpoint": "porting/generated/material_pipeline/frontend-context-checkpoint-results-3.json",
+   "checkpoint_sha256": "22b6b87c942044d7f46067a660e1f1e25e289262810fc52cf878d868f88ca8e6",
+   "strict_report": "porting/generated/frontend-native-evidence/context-runtime-3/root-report-1.json",
+   "strict_report_sha256": "ab5e924073e9559675093f9f8aabeb6f1cb5346caaed267f51713deda24713cb",
+   "integrity_audit": "porting/generated/frontend-native-evidence/context-runtime-3/integrity-audit-1.json",
+   "integrity_audit_sha256": "d09c52d9d05333a680c40c6e000c9fa1b641f49333d7a4c66a1fe535a8a43828",
+   "scope": "Real local player, game instance, player and widget lookup selection in diagnostic runtime. Generic diagnostic runtime only; concrete context methods, authentic startup, playable UI and all four product milestones remain unverified.",
+   "provenance_note": "Pinned external receipts and their independently audited source and artifact bindings must remain available for re-verification."
+  },
+  "frontend_context_runtime_registry": {
+   "id": "frontend_context_runtime_registry",
+   "result": "pass",
+   "exit_code": 0,
+   "command": "python3 -I porting/progress/record_frontend_context_runtime.py",
+   "checkpoint": "porting/generated/material_pipeline/frontend-context-checkpoint-results-3.json",
+   "checkpoint_sha256": "22b6b87c942044d7f46067a660e1f1e25e289262810fc52cf878d868f88ca8e6",
+   "strict_report": "porting/generated/frontend-native-evidence/context-runtime-3/root-report-1.json",
+   "strict_report_sha256": "ab5e924073e9559675093f9f8aabeb6f1cb5346caaed267f51713deda24713cb",
+   "integrity_audit": "porting/generated/frontend-native-evidence/context-runtime-3/integrity-audit-1.json",
+   "integrity_audit_sha256": "d09c52d9d05333a680c40c6e000c9fa1b641f49333d7a4c66a1fe535a8a43828",
+   "scope": "Legacy registry replacement, GC retention, removal and deinitialization in diagnostic runtime. Generic diagnostic runtime only; concrete context methods, authentic startup, playable UI and all four product milestones remain unverified.",
+   "provenance_note": "Pinned external receipts and their independently audited source and artifact bindings must remain available for re-verification."
+  },
+  "frontend_context_runtime_lifecycle": {
+   "id": "frontend_context_runtime_lifecycle",
+   "result": "pass",
+   "exit_code": 0,
+   "command": "python3 -I porting/progress/record_frontend_context_runtime.py",
+   "checkpoint": "porting/generated/material_pipeline/frontend-context-checkpoint-results-3.json",
+   "checkpoint_sha256": "22b6b87c942044d7f46067a660e1f1e25e289262810fc52cf878d868f88ca8e6",
+   "strict_report": "porting/generated/frontend-native-evidence/context-runtime-3/root-report-1.json",
+   "strict_report_sha256": "ab5e924073e9559675093f9f8aabeb6f1cb5346caaed267f51713deda24713cb",
+   "integrity_audit": "porting/generated/frontend-native-evidence/context-runtime-3/integrity-audit-1.json",
+   "integrity_audit_sha256": "d09c52d9d05333a680c40c6e000c9fa1b641f49333d7a4c66a1fe535a8a43828",
+   "scope": "Actual world travel, deferred timer and copied-map dispatch in diagnostic runtime. Generic diagnostic runtime only; concrete context methods, authentic startup, playable UI and all four product milestones remain unverified.",
+   "provenance_note": "Pinned external receipts and their independently audited source and artifact bindings must remain available for re-verification."
   }
  }
 }
