@@ -3219,8 +3219,64 @@
   "material_frontend_owner_699241b5b952ce61": {
    "id": "material_frontend_owner_699241b5b952ce61",
    "owner_path": "/Game/UI/Materials/M_MediaPlayerButton_Base.M_MediaPlayerButton_Base",
-   "result": "pending",
-   "scope": "Material owner in the bounded frontend closure; actual-owner runtime ingress has not been credited."
+   "label": "Original Media player button material",
+   "result": "pass",
+   "utc": "2026-11-01T12:26:03.419711+00:00",
+   "source_native_commit": "8f87ade",
+   "engine_commit": "d7e04d4b6",
+   "command": [
+    "env",
+    "-u",
+    "LD_LIBRARY_PATH",
+    "VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/lvp_icd.json",
+    "SDL_AUDIODRIVER=dummy",
+    "LP_NUM_THREADS=8",
+    "xvfb-run",
+    "-a",
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/paper2d-matched-stage-3/LinuxNoEditor/FortniteLinux.sh",
+    "-vulkan",
+    "-windowed",
+    "-ResX=1280",
+    "-ResY=720",
+    "-nosound",
+    "-unattended",
+    "-FortniteLegacyMaterialIngress=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/locker-ingress-bundle.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/gradient-panel-ingress-bundle.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/power-toast-ingress-bundle.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/menu-button-ingress-bundle-active-time.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/donut-ingress-bundle.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/mainl-ingress-bundle-checked.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/keybind-ingress-3/bundle.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/hollow-ingress-3/bundle.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/flogo-ingress-3/bundle.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/social-atlas-corrected-ingress-3/bundle.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/media_button-ingress-1/bundle.json",
+    "-FortniteLegacyMaterialManifest=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/frontend-numeric-batch-12/manifest.json",
+    "-FortniteProbeLegacyOriginalMaterial",
+    "-FortniteLegacyFieldPaths",
+    "-FortniteLegacyMaterialProbeOwner=/Game/UI/Materials/M_MediaPlayerButton_Base.M_MediaPlayerButton_Base",
+    "-ExecCmds=Quit",
+    "-log",
+    "-FortniteLegacySequencer",
+    "-FortniteLegacyMaterialManifestSHA256=d4dd8dbb275f2c395abb9bfb52edbdf98a37f73d070b1559e46cab2c74a81e03",
+    "-FortniteLegacyMaterialArtifactDir=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/media-social-owner-probes-2/media-defaults-artifacts"
+   ],
+   "exit_code": 0,
+   "log": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/media-social-owner-probes-2/media-defaults.log",
+   "log_sha256": "578da1968cedb2ebfac29c29c082c891167c44c9202fa79182cb197a546484d4",
+   "runtime_checkpoint": {
+    "path": "porting/generated/material_pipeline/frontend-media-social-checkpoint-results-2.json",
+    "sha256": "d59f65a8e332eae196159281495c245e4cfefea6943482d86416a08ddcea39be"
+   },
+   "root_checkpoint_audit": {
+    "path": "porting/generated/material_pipeline/frontend-media-social-root-checkpoint-audit-1.json",
+    "sha256": "01f995348590e1bf33230a3c0dad741521818ef0204949b4134c150bfb7ff9fe"
+   },
+   "original_source_bundle": {
+    "path": "porting/generated/material_pipeline/media_button-ingress-1/bundle.json",
+    "sha256": "d545fac7b20104ac1c070000a16172a299ff2c499fc6f28310b5038bce463852"
+   },
+   "independent_runtime_verification": [
+    {
+     "path": "porting/generated/frontend-probes/media-social-owner-probes-2/media-defaults-root-validation-1.json",
+     "sha256": "b598fc04fedf100f44ee8404420dc048438435220ced1991857f0058a3664506"
+    },
+    {
+     "path": "porting/generated/frontend-probes/media-social-owner-probes-2/media-combined-root-validation-1.json",
+     "sha256": "986aa195532555146af5d55c9842fda90a846824895180ed93716e1470d04433"
+    }
+   ],
+   "scope": "Actual original owner/cache attaches all seven Slate shaders on both threads, with all 19 source records retained, original indexed texture and exact GPU mip bytes, source/copy equality in defaults and combined profiles, and positive combined checker effect. World-clamp sampler differs from source asset wrap and requires no named proxy. Bounded 142-owner material closure only; widget/lifecycle, original-client pixel, interactive frontend and gameplay parity remain unverified."
   },
   "material_frontend_owner_6cf1c33082ec2c66": {
    "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/duplicate-defaults-owner-probes-1/034-M_Border_Solid_DkBlue-artifacts-dashboard-validation-o4z4uswp.json",
@@ -3952,8 +4008,64 @@
   "material_frontend_owner_88faed927c75cd8d": {
    "id": "material_frontend_owner_88faed927c75cd8d",
    "owner_path": "/Game/UI/SocialPanel/Art/Materials/M_UI_SocialUserItemBorder_Master.M_UI_SocialUserItemBorder_Master",
-   "result": "pending",
-   "scope": "Material owner in the bounded frontend closure; actual-owner runtime ingress has not been credited."
+   "label": "Original Social atlas border material",
+   "result": "pass",
+   "utc": "2026-11-01T12:26:03.416079+00:00",
+   "source_native_commit": "8f87ade",
+   "engine_commit": "d7e04d4b6",
+   "command": [
+    "env",
+    "-u",
+    "LD_LIBRARY_PATH",
+    "VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/lvp_icd.json",
+    "SDL_AUDIODRIVER=dummy",
+    "LP_NUM_THREADS=8",
+    "xvfb-run",
+    "-a",
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/paper2d-matched-stage-3/LinuxNoEditor/FortniteLinux.sh",
+    "-vulkan",
+    "-windowed",
+    "-ResX=1280",
+    "-ResY=720",
+    "-nosound",
+    "-unattended",
+    "-FortniteLegacyMaterialIngress=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/locker-ingress-bundle.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/gradient-panel-ingress-bundle.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/power-toast-ingress-bundle.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/menu-button-ingress-bundle-active-time.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/donut-ingress-bundle.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/mainl-ingress-bundle-checked.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/keybind-ingress-3/bundle.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/hollow-ingress-3/bundle.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/flogo-ingress-3/bundle.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/social-atlas-corrected-ingress-3/bundle.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/media_button-ingress-1/bundle.json",
+    "-FortniteLegacyMaterialManifest=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/frontend-numeric-batch-12/manifest.json",
+    "-FortniteProbeLegacyOriginalMaterial",
+    "-FortniteLegacyFieldPaths",
+    "-FortniteLegacyMaterialProbeOwner=/Game/UI/SocialPanel/Art/Materials/M_UI_SocialUserItemBorder_Master.M_UI_SocialUserItemBorder_Master",
+    "-ExecCmds=Quit",
+    "-log",
+    "-FortniteLegacySequencer",
+    "-FortniteLegacyMaterialManifestSHA256=d4dd8dbb275f2c395abb9bfb52edbdf98a37f73d070b1559e46cab2c74a81e03",
+    "-FortniteLegacyMaterialArtifactDir=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/media-social-owner-probes-2/social-defaults-artifacts"
+   ],
+   "exit_code": 0,
+   "log": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/media-social-owner-probes-2/social-defaults.log",
+   "log_sha256": "46fcfcdd19393fb6b832f284c8346e688a1cfd45f865c6754fa435e54a544758",
+   "runtime_checkpoint": {
+    "path": "porting/generated/material_pipeline/frontend-media-social-checkpoint-results-2.json",
+    "sha256": "d59f65a8e332eae196159281495c245e4cfefea6943482d86416a08ddcea39be"
+   },
+   "root_checkpoint_audit": {
+    "path": "porting/generated/material_pipeline/frontend-media-social-root-checkpoint-audit-1.json",
+    "sha256": "01f995348590e1bf33230a3c0dad741521818ef0204949b4134c150bfb7ff9fe"
+   },
+   "original_source_bundle": {
+    "path": "porting/generated/material_pipeline/social-atlas-corrected-ingress-3/bundle.json",
+    "sha256": "bfa6dba715fd7f72ce4084eba67cb29b237bb6c5df9da9a1dbb115ccc3819a65"
+   },
+   "independent_runtime_verification": [
+    {
+     "path": "porting/generated/frontend-probes/media-social-owner-probes-2/social-defaults-root-validation-1.json",
+     "sha256": "a207400a833b6f0b9e086c3eccfab56102f554c7d09217891d85e259d3d0a646"
+    },
+    {
+     "path": "porting/generated/frontend-probes/media-social-owner-probes-2/social-combined-root-validation-1.json",
+     "sha256": "1fa781dc0aa39049b1ac9bb487576c1423a7b91c1c21359045bc90d8ae30f4a9"
+    }
+   ],
+   "scope": "Actual original owner/cache attaches all seven Slate shaders on both threads, with all 19 source records retained, original indexed texture and exact GPU mip bytes, source/copy equality in defaults and combined profiles, and positive combined checker effect. Direct texture-size root bits, five separate scratch VM cases and 15 rejected forms pass. Original inherited World LODGroup remains explicitly an inference. Bounded 142-owner material closure only; widget/lifecycle, original-client pixel, interactive frontend and gameplay parity remain unverified."
   },
   "material_frontend_owner_894d848218709a26": {
    "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/duplicate-defaults-owner-probes-1/096-M-FontShadow-artifacts-dashboard-validation-8f6uqfmm.json",
