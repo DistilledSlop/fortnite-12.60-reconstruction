@@ -10,6 +10,8 @@ class FReader
     int32 P = 0, Limit, Nodes = 0;
     int32 Counts[7] = {};
     bool bOk = true;
+    struct FPendingTextureSize { int32 Node; FLegacyMaterialTextureParameter Texture; };
+    TArray<FPendingTextureSize> PendingTextureSizes;
 public:
     FReader(FLegacyOriginalMaterial& In, FString& E) : O(In), Error(E), Limit(In.Bytes.Num()) {}
     bool Fail(const TCHAR* Why) { if (bOk) Error = FString::Printf(TEXT("%s at resource offset %d"), Why, P); bOk = false; return false; }
@@ -44,7 +46,7 @@ public:
         if (A > 2 || I < -1) Fail(TEXT("invalid parameter identity"));
         E.Parameter = FMaterialParameterInfo(N, static_cast<EMaterialParameterAssociation>(A), I);
     }
-    int32 Expression(int32 Depth, bool bTextureRoot = false)
+    int32 Expression(int32 Depth, bool bTextureRoot = false, bool bDirectVectorRoot = false)
     {
         if (Depth >= 64 || ++Nodes > 65536) { Fail(TEXT("expression complexity")); return INDEX_NONE; }
         FString T = Name().ToString(); const FString Prefix(TEXT("FMaterialUniformExpression"));
@@ -76,6 +78,22 @@ public:
             Texture.PageTableLayerIndex=Page; Texture.SamplerSource=uint8(Sampler); Texture.bVirtualTexture=Virtual != 0;
             O.IR.Texture2DParameters.Add(MoveTemp(Texture));
             return INDEX_NONE;
+        }
+        else if (T == TEXT("TextureProperty"))
+        {
+            if (Depth != 0 || !bDirectVectorRoot || bTextureRoot)
+            { Fail(TEXT("TextureProperty requires a direct vector root")); return INDEX_NONE; }
+            if (++Nodes > 65536 || Name() != FName(TEXT("FMaterialUniformExpressionTexture")))
+            { Fail(TEXT("direct texture size requires a regular Texture child")); return INDEX_NONE; }
+            FLegacyMaterialTextureParameter Texture;
+            Texture.TextureIndex=Read<int32>(); Texture.TextureLayerIndex=Read<int16>(); Texture.PageTableLayerIndex=Read<int16>();
+            const int32 Sampler=Read<int32>(); const uint32 Virtual=Read<uint32>(); const uint8 Property=Read<uint8>();
+            if (Property != 0 || Texture.TextureIndex < 0 || Texture.TextureLayerIndex != -1 ||
+                Texture.PageTableLayerIndex != -1 || Sampler < 0 || Sampler > 2 || Virtual != 0)
+            { Fail(TEXT("unsupported direct texture-size payload")); return INDEX_NONE; }
+            Texture.SamplerSource=uint8(Sampler); Texture.bVirtualTexture=false;
+            E.Kind=ELegacyMaterialExpression::TextureSize2D; E.ValueType=MCT_Float4;
+            PendingTextureSizes.Add({O.IR.Expressions.Num(),Texture});
         }
         else if (T == TEXT("Max") || T == TEXT("Saturate"))
         {
@@ -154,7 +172,21 @@ public:
         {
             if(A==7 && Count()!=0) Fail(TEXT("unsupported VT stacks"));
             int32 N=Count(); if(A>2 && N) Fail(TEXT("unsupported texture root array")); if(A<6) Counts[A]=N; else if(A==7) Counts[6]=N;
-            for(int32 I=0;I<N;++I) { int32 X=Expression(0, A==2); if(A==0) O.IR.VectorRoots.Add(X); else if(A==1) O.IR.ScalarRoots.Add(X); }
+            for(int32 I=0;I<N;++I) { int32 X=Expression(0, A==2, A==0); if(A==0) O.IR.VectorRoots.Add(X); else if(A==1) O.IR.ScalarRoots.Add(X); }
+        }
+        for (const auto& Pending : PendingTextureSizes)
+        {
+            int32 Match=INDEX_NONE, Matches=0;
+            for (int32 I=0; I<O.IR.Texture2DParameters.Num(); ++I)
+            {
+                const auto& A=Pending.Texture; const auto& B=O.IR.Texture2DParameters[I];
+                if (A.Parameter==B.Parameter && A.TextureIndex==B.TextureIndex && A.TextureLayerIndex==B.TextureLayerIndex &&
+                    A.PageTableLayerIndex==B.PageTableLayerIndex && A.SamplerSource==B.SamplerSource && A.bVirtualTexture==B.bVirtualTexture)
+                { Match=I; ++Matches; }
+            }
+            if (Matches!=1 || !O.IR.Expressions.IsValidIndex(Pending.Node))
+                return Fail(TEXT("texture-size child has no unambiguous Standard2D slot"));
+            O.IR.Expressions[Pending.Node].TextureParameterIndex=Match;
         }
         for(int32 I=Count(); I-- > 0;) for(int32 J=0; J<4; ++J) Read<uint32>();
         O.UsedSceneTextures=Read<uint32>(); O.TextureSamplesVS=Read<uint16>(); O.TextureSamplesPS=Read<uint16>(); O.VirtualTextureLookups=Read<uint16>(); O.UVScalars=Read<uint8>(); O.CustomInterpolatorScalars=Read<uint8>(); O.VirtualTextureMask=Read<uint8>(); O.Flags=Read<uint8>();
