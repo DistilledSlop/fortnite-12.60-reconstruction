@@ -2,14 +2,34 @@
 
 ## Current resume point (2026-11-01)
 
-- Current unvalidated integration: complete main CommonButton IsInteractionEnabled query is now
-  normally generated with exact owner/signature guards, both proven native defaults and a native-only
-  global-input adapter forwarder. It caches visibility before GetIsEnabled and rejects Hidden/Collapsed
-  or either disabled native bit. This does not implement the remaining constructor/state producers.
-  New opt-in MainButtonStateProbe exercises actual defaults, UFunction native metadata and40states
-  through direct, alias and reflected calls (44rows total). Shared builds/runtime are pending; root owns.
-  Promotion /tmp/main-button-query-root-integration-1 changed only UCommonButton CPP/header and
-  restored12553unchanged timestamps. Policy22tests and generator141checks pass.
+- Latest validated Native5590b97b9fc1e80800a0740f09a540432313148f / Engined7e04d4b6:
+  main CommonButton IsInteractionEnabled query is normally generated with exact owner/signature guards,
+  both proven native defaults and a native-only global-input forwarder. It caches visibility first and
+  rejects Hidden/Collapsed, Widget disabled or either native bit disabled. This does not implement the
+  remaining constructor/state producers or Initialize. Both builds PASS156.067/130.837s; all12555Native
+  source files unchanged. MainButtonStateProbe passes44rows (40states through direct/alias/ProcessEvent,
+  defaults and loaded native function metadata); retained internal button34rows, activation40rows and
+  registry/lifecycle checks pass in five distinct bound processes. Default/Athena joins PASS21.576/21.591s.
+  No new exhaustive original metadata/link or material/pixel audit. Build/results /tmp/main-button-query-native-build-1.
+- Query checkpoint generated/material_pipeline/frontend-main-button-query-runtime-checkpoint-results-1.json
+  SHA2562856a0b378639eb893bf8198cfce3ab3655ba3755c14b82c5488b14c7429ec4b;
+  root report generated/frontend-native-evidence/main-button-query-runtime-1/root-report.json
+  SHA256d1ebc1fe1dbe66411fb4aac8e18f8f1e19793febf28aae2bee56e2f7e2f1ec2b.
+  Archive /mnt/vibrato/fortnite-evidence/frozen-runtime/main-button-query-runtime-1 holds52artifacts,
+  13critical committed source snapshots and6binaries; all18binarypaths verified. Source-release.json
+  SHA25644d204004d1f73899ff63774210ed09b75148a45ed9ae313a13ca21cb76e9ee6.
+  All five runs, joins and build session8316 are terminal; ownership released. Root verification only
+  for this query checkpoint; prior internal-button independent audit remains below. Policy22tests,
+  generator141checks and diagnostic tooling14tests pass. Promotion restored12553unchanged mtimes.
+- Next bounded integration candidate: /tmp/panel-intro-path-candidate-1/HANDOFF.md, receiptSHA256
+  5ac05cfbe699222b671105dd826f6118af57db243a91ef3423dc0865236de139.
+  Scratch candidate implements ActivateWidget -> original Panel NativeActivateRequest -> real protected
+  OnBeginIntro BlueprintNativeEvent -> EndIntro -> full Panel activation override. Imports only canonical
+  native input multicast and global priority field, plus explicit CommonUI->CommonInput module dependency.
+  Seven-class generation,7policy tests,14rejection checks and actual-body portable C++ controls pass.
+  No shared promotion/UHT/UEbuild/runtime yet. Root must review generator changes and selected original
+  windows against current late image (leaf proof used old604900 image), then run isolated/full UE checks.
+  No outro/deactivation/public BeginIntro/IsIntroed/full constructor or input producer/manager queue claim.
 - New source checkpoints: /tmp/main-button-init-callbacks-1 proves all Initialize callback bindings and
   the exact dependency frontier (selection, hover/style, input routing). Enabled/disabled native hooks
   call their BP event and THEN OnCurrentTextStyleChanged; combined with the visual helper, preserve
@@ -26,7 +46,7 @@
   after crediting one existing CommonUI behavior point for the independently audited internal-button
   diagnostic. Twenty CommonUI behavior points remain unfinished. Material owners126/142; signatures41/41.
   Importer record_frontend_button_runtime.py pins the checkpoint/root/audit/release; all28progress tests pass.
-- Current Native source82b35764ba1c2dbd1a62a59b8b7b50aadf44bf82 / Engined7e04d4b6 builds PASS:
+- Prior independently audited Native82b35764ba1c2dbd1a62a59b8b7b50aadf44bf82 / Engined7e04d4b6:
   client129.952s, server121.582s. Full12553-file Native snapshot stayed unchanged through both builds.
   New generated internal button factory/lifecycle/callbacks, manager suspension getter, enabled-state
   bridge and manual SCommonButton are now built and tested in real runtime. Root's build session35187
@@ -67,9 +87,8 @@
   639newartifacts,42inheritedmetadata/objects and18binarypaths. Preserve all earlier failures/baselines.
   Latest actual Root load observation in that baseline is missing CommonActivatablePanel.OnBeginIntro
   (AsyncLoading3126); Login Facebook material/MemoryImage1064. These class probes exit139, not UI acceptance.
-- Next implementation: compose main CommonButton constructor/state producers and its actual Initialize
-  lifecycle before the Panel/queue/global/held-input integration. RebuildWidget is inherited; do not add
-  an invented override. /tmp/button-inner-lifecycle-1/HANDOFF.md proves Initialize1407cd7d0 calls Super
+- Main-button work still required alongside Panel/queue/global/held integration: remaining constructor,
+  state producers and actual Initialize lifecycle. RebuildWidget is inherited; do not add an override. /tmp/button-inner-lifecycle-1/HANDOFF.md proves Initialize1407cd7d0 calls Super
   first and returns unchanged on false; constructs InternalRootButton under WidgetTree and assigns weak+ad0.
   If old root is null, root replacement and ALL callback binding are skipped. Existing-root path needs
   exact slot API/native callback identities before integration. This method does not set sizes/styles.

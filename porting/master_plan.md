@@ -12,6 +12,8 @@ The broader strict material/activation baseline is native `c06a5cb` / Engine `d7
 
 New internal-button runtime at Native `82b3576` / Engine `d7e04d4b6` passes both builds (129.952/121.582s), 34 real UObject/Slate diagnostic rows, retained activation/context live checks and both fresh default/Athena joins. Independent audit rehashes 12,553 Native files, 40 small artifacts and all 18 binary paths with no mismatches. The existing CommonUI budget now separately credits this one-point diagnostic; 20 behavior points remain unfinished. This phase did not repeat the broader original metadata/link or material/pixel checks. Exact pinned receipts and limitations are in the latest HANDOFF snapshot.
 
+The main button interaction query is now integrated and runtime-verified at Native `5590b97`: both builds pass, all40 state combinations agree through direct/native-adapter/reflected calls (44rows including defaults/metadata), retained four diagnostics and both joins pass. Main-button constructor/state-producer/lifecycle work remains unfinished; no extra percentage or milestone credit was added. The next actual load-blocker candidate is the authenticated Panel intro request/native event/EndIntro/full activation path in `/tmp/panel-intro-path-candidate-1`; it has generator/portable checks but still needs root review and UE validation. See HANDOFF.md for immutable query receipts and the candidate's exact limits.
+
 ## Critical path and acceptance gates
 
 These gates describe the rebuilt native client and reconstructed server. Work on
