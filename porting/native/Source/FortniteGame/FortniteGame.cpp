@@ -25,6 +25,7 @@ DEFINE_LOG_CATEGORY_STATIC(LogFortniteNet, Log, All);
 // and exits the process (0 when every case passes, 1 otherwise).
 void RunNetSerializeSelfTest();
 void RunOriginalVulkanShaderProbe();
+void RunLegacyMaterialShaderMapProbe();
 
 // Network version checksum the original 12.60 client sends in NMT_Hello
 // (client log: "Checksum: 683914758").
@@ -167,6 +168,7 @@ public:
         FCoreDelegates::OnPostEngineInit.AddStatic(&FFortniteGameModule::OnEngineInitForNetwork);
         FCoreDelegates::OnPostEngineInit.AddStatic(&FFortniteGameModule::ProbeAsset);
         FCoreDelegates::OnPostEngineInit.AddStatic(&RunOriginalVulkanShaderProbe);
+        FCoreDelegates::OnPostEngineInit.AddStatic(&RunLegacyMaterialShaderMapProbe);
         FCoreDelegates::OnPostEngineInit.AddStatic(&FFortniteGameModule::ProbeGameVersion);
         FWorldDelegates::OnPostWorldInitialization.AddStatic(&FFortniteGameModule::OnWorldInitialized);
         if (FParse::Param(FCommandLine::Get(), TEXT("NetSerializeSelfTest")))
