@@ -53,3 +53,13 @@ python3 -I porting/material_pipeline/test_inspect_d3d_code.py
 ```
 
 All 44 recovered wrappers pass exact prefix/DXBC/optional framing. Nineteen have active resource-table bits; the other 25 have empty maps. Across the 44, the decoded maps contain 28 SRV, 18 sampler, 18 texture, and zero UAV entries. Optional `p` and `u` records are present in each. The evidence report preserves each original map and decoded entry, including layout hashes and uniform-buffer names. Those entries are D3D bindings; they have not been matched to the translated SPIR-V descriptors or installed in UE's Vulkan RHI. The same 12 shaders with compiler diagnostics all have active D3D resource-table bits, so their semantics and binding correspondence need direct validation before rendering claims.
+
+`inspect_spirv_bindings.py` independently reads the validated SPIR-V binaries, extracts `DescriptorSet`/`Binding` decorations on variables, and places them beside the original D3D resource-table entries. It requires the same source-report identity and hashes each output before inspection. The generated correspondence report covers all 44 shaders and 180 SPIR-V descriptor records (100 constant-buffer, 54 texture, 26 sampler names); all observed sets are zero. This is a concrete binding inventory, not a verified mapping: the compiler can renumber D3D registers, and the UE Vulkan shader header, uniform values, and shader-map registration are still absent.
+
+```sh
+python3 -I porting/material_pipeline/inspect_spirv_bindings.py \
+  --d3d-report porting/generated/material_pipeline/d3d-wrapper-inspection.json \
+  --translation-report porting/generated/material_pipeline/frontend-translated/translation-report.json \
+  --report porting/generated/material_pipeline/binding-correspondence.json
+python3 -I porting/material_pipeline/test_inspect_spirv_bindings.py
+```

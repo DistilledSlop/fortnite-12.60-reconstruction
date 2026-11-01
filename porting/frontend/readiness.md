@@ -34,9 +34,9 @@ The old `porting/generated/blueprint-asset-probe.log` reported `Could not find S
 
 The field-path failures in `porting/map_compatibility.md` are separate Apollo Blueprint observations, not an observed failure of this tile: `BP_DisplayShadowProxy_01` reported unresolved `InstancedStaticMesh` in its construction script; storm and POI probes hit invalid export indexes during `UStruct::SerializeExpr` after `FFieldPath` data. The 4.26 branch-version backport changed indices but did not fix those crashes. Neither demonstrates this UI package's next failure.
 
-## Next controlled native probe
+## Completed banner class-load probe
 
-Repeat the experimental class-load probe from the stage directory, disabling core dumps and keeping the log:
+The banner tile class-load probe ran from the stage directory with core dumps disabled:
 
 ```sh
 cd /opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/linux-stage/LinuxNoEditor
@@ -46,7 +46,7 @@ ulimit -c 0
   -ExecCmds=Quit > ../../frontend-banner-probe.log 2>&1
 ```
 
-Check exit status, `Fortnite asset probe: ... -> ...`, and the first missing dependency, assertion, or `Unresolved cooked field path:` in the log. A successful class load is only a deserialization check; it does not create or display a widget. The old run lacked numerous content packages; compare missing package paths with the read-only full extraction before drawing conclusions. Avoid copying an entire closure into the shared stage without coordinating its ownership and cleanup. For the actual frontend, separately stage its closure in an isolated runtime copy and test `/Game/Maps/Frontend`; it has not yet been demonstrated to load or display a menu.
+The resulting `generated/frontend-banner-probe-events.log` records a partial `WidgetBlueprintGeneratedClass` load and exit 0, with missing imports/outers still logged. This is a deserialization check; it did not create or display a widget. Later root probes used an isolated hard-import closure and reached a separate material shader-map blocker, as recorded at the top of this page. The actual `/Game/Maps/Frontend` runtime has not yet displayed a menu.
 
 ## Event declaration validation
 
@@ -60,7 +60,7 @@ The existing original-client log `porting/generated/direct-connect/runs/01-nomcp
 
 The actual root assets are `/Game/UI/Foundation/UIManager_Startup.UIManager_Startup_C`, `/Game/UI/Foundation/RootLayout_Athena.RootLayout_Athena_C`, and `/Game/UI/Foundation/StateLayouts/LoginScreen.LoginScreen_C`. Their `.uasset` and `.uexp` exist in the full extraction. Loose CUE4Parse inspection of the latter two reports 323 and 381 imports respectively; `RootLayout_Athena` imports `FortRootViewportLayout_Athena`, and `LoginScreen` imports `FortUIStateWidget_Login` and exports one WidgetBlueprintGeneratedClass. These are stronger frontend probes than the profile tile, but generated native class headers do not establish UI-manager or widget behavior.
 
-After the tile probe and after coordinating an isolated stage, probe `RootLayout_Athena.RootLayout_Athena_C` using the same `-FortniteProbeAsset` command above with that asset path; then probe `LoginScreen.LoginScreen_C` independently. Save separate logs and inspect the first missing import or field-path assertion and the final class-load result. Include their required asset dependencies in the isolated stage and report exactly what was staged. Next, separately load `/Game/Maps/Frontend` and observe whether the rebuilt game instance creates the root layout and login widget; verify a visible, interactive menu in a graphics-enabled run. A successful `StaticLoadObject` or headless map load alone cannot meet that milestone.
+The root classes were probed separately in the isolated runtime. Both reached Windows-cooked inline material shader-map deserialization and crashed, as detailed above. The next root probe should follow a verified inline-material serializer correction and then test `/Game/Maps/Frontend` for the original `UFortGameInstance::InitializeUI` flow. A graphics-enabled run must show an interactive menu to meet the milestone; class loading alone cannot do so.
 
 ### Read-only native import comparison
 
