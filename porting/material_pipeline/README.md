@@ -26,3 +26,17 @@ Use repeated `--material-uexp` arguments, a bounded `--shader-index`, or `--map-
 Verified local evidence is in `generated/material_pipeline/frontend-game-library.json`: the four currently failing frontend material files (`M_UI_DonutIcons`, `Athena_LockerTabMaster`, `M_MenuButton_Master`, `M-Border-PowerToastGlow`) each contain 38 exact shader-output-hash occurrences, identifying 44 unique library shaders together. All 44 payloads decode to their declared sizes and contain bounded DXBC containers (30 frequency-3, 12 frequency-0, two frequency-4). The original Global sample also decodes, and the rebuilt Vulkan library's 940 shaders/35 maps parse with the other layout. These are exact byte matches, not yet a decoder of the inline material fields or proof that every candidate belongs to an executable draw.
 
 The surviving material reports show stripped arithmetic nodes. Original bytecode therefore provides a concrete recovery input, but inline material/shader serialization, uniform/resource bindings, DXBC-to-Vulkan translation, actual draw execution, and visual comparison all remain necessary. No root menu or visual-parity milestone is complete from this evidence.
+
+## Verified SPIR-V translation
+
+`translate_dxbc.py` verifies each recovered wrapper hash and checks the DXBC bytes against its exact wrapper slice before invoking the compiler. It publishes a SPIR-V file only after `spirv-val --target-env vulkan1.0` succeeds, with compiler/library/validator and input/output hashes in the receipt. Partial or failed files are not published as validated outputs. Use the receipt, not an output glob, to consume successful jobs.
+
+The local tools are unpacked Ubuntu packages under ignored `generated/material_pipeline/tools/root/usr`; no system packages were installed. Versions tested: `vkd3d-compiler` and `libvkd3d-shader1` `1.2-15build1`, `spirv-tools` `2026.1-1`. Their `.deb` files remain in `tools/packages`. The [Ubuntu compiler reference](https://manpages.ubuntu.com/manpages/resolute/man1/vkd3d-compiler.1.html) documents its DXBC source and target options; the actual installed tool lists `spirv-binary` support.
+
+```sh
+python3 -I porting/material_pipeline/translate_dxbc.py \
+  --source-report porting/generated/material_pipeline/frontend-game-library.json \
+  --output porting/generated/material_pipeline/frontend-translated
+```
+
+All 44 selected original DXBC shaders compiled and passed Vulkan 1.0 SPIR-V validation. This proves translation and structural validation, not a correct UE draw: original uniform values, descriptor bindings, vertex interfaces, render state, and inline shader-map reconstruction still require implementation and visual tests.
