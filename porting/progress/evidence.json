@@ -1,5 +1,21 @@
 {
  "checks": {
+  "backend_local_tests": {
+   "command": "python3 -I porting/server/test_services.py",
+   "commit": "5d6dedf80cc96f781c3fe354e2f0ef3f34f2b035",
+   "exit_code": 0,
+   "id": "backend_local_tests",
+   "key_lines": [
+    "Ran 72 tests in 4.892s",
+    "OK"
+   ],
+   "log": "porting/generated/frontend-probes/dashboard-backend-tests-20261101.log",
+   "log_sha256": "8eb05dac0440a33176bffd43b5c94e123a5844006b0b4097a488a327f4b45bcc",
+   "result": "pass",
+   "scope": "Local backend HTTP/schema/party tests only; original client integration and complete protocol behavior remain unverified",
+   "source_backend_commit": "365693f92f48a79185be880050e38b93aec60ac5",
+   "utc": "2026-11-01T02:53:08Z"
+  },
   "checksum_tool_selftest": {
    "command": "python3 -I porting/class_checksum.py --self-test",
    "commit": "7b2a97ff6d77efb6689d3e496970d236ce81fa37",
@@ -12,6 +28,20 @@
    ],
    "result": "pass",
    "utc": "2026-11-01T00:06:36Z"
+  },
+  "frontend_source_bundle": {
+   "command": "python3 -I porting/asset_pipeline/import_manifest.py --selection porting/asset_pipeline/frontend_selection.json --tool-dir porting/generated/asset_pipeline/tool-snapshot-frontend",
+   "commit": "5d6dedf80cc96f781c3fe354e2f0ef3f34f2b035",
+   "exit_code": 0,
+   "id": "frontend_source_bundle",
+   "key_lines": [
+    "6 selected source mesh packages pass original source/tool/output fingerprint and GLB structure checks; import-review manifest emitted"
+   ],
+   "result": "pass",
+   "scope": "Verified GLB exports and reviewable import settings only; UE import/cook/runtime/material parity remain unverified",
+   "utc": "2026-11-01T02:53:08Z",
+   "verification_receipt": "porting/generated/asset_pipeline/frontend-evidence/dashboard-import-review.json",
+   "verification_receipt_sha256": "9f216a5dc4b338128ad2d491c7761d76e203bddad9998993d4079df1a8248865"
   },
   "game_version_probe": {
    "command": "(log only) porting/generated/frontend-probes/probe-getgameversion.log",
@@ -49,6 +79,96 @@
    "source_native_commit": "afb32b7",
    "utc": "2026-11-01T02:23:01Z",
    "wrapper_exit_code": 0
+  },
+  "material_locker_draw": {
+   "artifact_validation_receipt": "porting/generated/frontend-probes/dashboard-locker-artifact-validation.json",
+   "command": "python3 -I porting/material_pipeline/verify_progress_evidence.py all --report porting/generated/material_pipeline/dashboard-material-evidence.json",
+   "commit": "5d6dedf80cc96f781c3fe354e2f0ef3f34f2b035",
+   "engine_commit": "757e0087a",
+   "exit_code": 0,
+   "id": "material_locker_draw",
+   "key_lines": [
+    "{\"changed_pixels\": 2832, \"log_sha256\": \"1f809f5f73d77be094f129fda31732479b34ef097cec92b767b5bf5621124fd7\", \"post_freeze_cases\": 8, \"pre_freeze_cases\": 8, \"scope\": \"Detached Locker controlled draw; asset attachment and original-client visual parity are separate gates\"}"
+   ],
+   "result": "pass",
+   "scope": "Only the named material engineering deliverable; no product milestone or full parity assertion",
+   "source_native_commit": "afb32b7",
+   "utc": "2026-11-01T02:53:08Z",
+   "verification_receipt": "porting/generated/material_pipeline/dashboard-material-evidence.json",
+   "verification_receipt_sha256": "bdc9f8497e2782b61ab646adb82ace3e500527d0b216d99ad2f7014db0b662e5",
+   "verified_scope": {
+    "changed_pixels": 2832,
+    "log_sha256": "1f809f5f73d77be094f129fda31732479b34ef097cec92b767b5bf5621124fd7",
+    "post_freeze_cases": 8,
+    "pre_freeze_cases": 8,
+    "scope": "Detached Locker controlled draw; asset attachment and original-client visual parity are separate gates"
+   }
+  },
+  "material_original_maps": {
+   "command": "python3 -I porting/material_pipeline/verify_progress_evidence.py all --report porting/generated/material_pipeline/dashboard-material-evidence.json",
+   "commit": "5d6dedf80cc96f781c3fe354e2f0ef3f34f2b035",
+   "exit_code": 0,
+   "id": "material_original_maps",
+   "key_lines": [
+    "{\"exact_resource_eof\": true, \"maps\": 4, \"shader_records\": 76, \"unique_library_shaders\": 44}"
+   ],
+   "result": "pass",
+   "scope": "Only the named material engineering deliverable; no product milestone or full parity assertion",
+   "utc": "2026-11-01T02:53:08Z",
+   "verification_receipt": "porting/generated/material_pipeline/dashboard-material-evidence.json",
+   "verification_receipt_sha256": "bdc9f8497e2782b61ab646adb82ace3e500527d0b216d99ad2f7014db0b662e5",
+   "verified_scope": {
+    "exact_resource_eof": true,
+    "maps": 4,
+    "shader_records": 76,
+    "unique_library_shaders": 44
+   }
+  },
+  "material_shader_translation": {
+   "command": "python3 -I porting/material_pipeline/verify_progress_evidence.py all --report porting/generated/material_pipeline/dashboard-material-evidence.json",
+   "commit": "5d6dedf80cc96f781c3fe354e2f0ef3f34f2b035",
+   "exit_code": 0,
+   "id": "material_shader_translation",
+   "key_lines": [
+    "{\"compiler_diagnostics\": 0, \"descriptors\": 180, \"matched_resource_entries\": 64, \"shaders\": 44, \"spirv_validator\": \"vulkan1.0\", \"unmatched_resource_entries\": 0}"
+   ],
+   "result": "pass",
+   "scope": "Only the named material engineering deliverable; no product milestone or full parity assertion",
+   "utc": "2026-11-01T02:53:08Z",
+   "verification_receipt": "porting/generated/material_pipeline/dashboard-material-evidence.json",
+   "verification_receipt_sha256": "bdc9f8497e2782b61ab646adb82ace3e500527d0b216d99ad2f7014db0b662e5",
+   "verified_scope": {
+    "compiler_diagnostics": 0,
+    "descriptors": 180,
+    "matched_resource_entries": 64,
+    "shaders": 44,
+    "spirv_validator": "vulkan1.0",
+    "unmatched_resource_entries": 0
+   }
+  },
+  "material_uniform_evaluation": {
+   "command": "python3 -I porting/material_pipeline/verify_progress_evidence.py all --report porting/generated/material_pipeline/dashboard-material-evidence.json",
+   "commit": "5d6dedf80cc96f781c3fe354e2f0ef3f34f2b035",
+   "exit_code": 0,
+   "id": "material_uniform_evaluation",
+   "key_lines": [
+    "{\"layouts\": 4, \"numeric_bytes\": {\"donut\": 96, \"locker\": 320, \"menu-button\": 288, \"power-toast\": 192}, \"scope\": \"Serialized defaults; original floating-point parity and texture values unverified\"}"
+   ],
+   "result": "pass",
+   "scope": "Only the named material engineering deliverable; no product milestone or full parity assertion",
+   "utc": "2026-11-01T02:53:08Z",
+   "verification_receipt": "porting/generated/material_pipeline/dashboard-material-evidence.json",
+   "verification_receipt_sha256": "bdc9f8497e2782b61ab646adb82ace3e500527d0b216d99ad2f7014db0b662e5",
+   "verified_scope": {
+    "layouts": 4,
+    "numeric_bytes": {
+     "donut": 96,
+     "locker": 320,
+     "menu-button": 288,
+     "power-toast": 192
+    },
+    "scope": "Serialized defaults; original floating-point parity and texture values unverified"
+   }
   },
   "net_version_checksum": {
    "binary_hash_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/runtime-material-joins-20261101T021940Z/binary-hashes.json",
