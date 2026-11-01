@@ -3061,7 +3061,8 @@ def promote(args):
     print("behaviour snippets: %s, %d spliced, %d rejected" % ("on" if splice_on else "off (disabled)",
                                                               len(splice_done), len(splice_rejects)), file=sys.stderr)
 
-    engine_shared = sorted(m for m in deps if m in registry.modules and m not in promoted_modules)
+    public_deps = build_cs_public_modules(FORTNITE_BUILD_CS)
+    engine_shared = sorted(m for m in public_deps if m in registry.modules and m not in promoted_modules)
     for module in sorted(module_deps):
         if module in HAND_WRITTEN_MODULES:
             continue
@@ -3313,6 +3314,39 @@ def build_cs_modules(path):
     """Module names listed in a Build.cs (every quoted identifier; the file only lists dependencies this way)."""
     with open(path, "r", encoding="utf-8") as fh:
         return set(re.findall(r'"([A-Za-z0-9_]+)"', fh.read()))
+
+
+def build_cs_public_modules(path):
+    """Extract only literal public dependency additions; reject unsupported syntax.
+
+    The hand-written game Build.cs may also have conditional private dependencies
+    that must not become unconditional public dependencies of generated modules.
+    """
+    with open(path, "r", encoding="utf-8") as fh:
+        text = fh.read()
+    # Preserve quoted strings while removing comments, so a quoted module name in
+    # a comment cannot be mistaken for a dependency. Keep offsets stable.
+    token = re.compile(r'"(?:\\.|[^"\\])*"|//[^\r\n]*|/\*[\s\S]*?\*/')
+    clean = token.sub(lambda m: m.group(0) if m.group(0).startswith('"') else
+                      ''.join('\n' if c == '\n' else ' ' for c in m.group(0)), text)
+    masked = token.sub(lambda m: ''.join('\n' if c == '\n' else ' ' for c in m.group(0)), clean)
+    mentions = list(re.finditer(r'\bPublicDependencyModuleNames\b', masked))
+    add = re.compile(r'PublicDependencyModuleNames\s*\.\s*Add\s*\(\s*"([A-Za-z0-9_]+)"\s*\)\s*;')
+    add_range = re.compile(r'PublicDependencyModuleNames\s*\.\s*AddRange\s*\(\s*new\s*(?:string\s*)?\[\s*\]\s*\{([^{}]*)\}\s*\)\s*;', re.S)
+    entries = re.compile(r'\s*(?:"[A-Za-z0-9_]+"\s*(?:,\s*"[A-Za-z0-9_]+"\s*)*,?)?\s*', re.S)
+    modules = set()
+    for mention in mentions:
+        match = add.match(clean, mention.start())
+        if match:
+            modules.add(match.group(1))
+            continue
+        match = add_range.match(clean, mention.start())
+        if not match or not entries.fullmatch(match.group(1)):
+            raise ValueError("unsupported PublicDependencyModuleNames syntax in %s" % path)
+        modules.update(re.findall(r'"([A-Za-z0-9_]+)"', match.group(1)))
+    if not mentions:
+        raise ValueError("no literal PublicDependencyModuleNames in %s" % path)
+    return modules
 
 
 class EngineTypeIndex:
