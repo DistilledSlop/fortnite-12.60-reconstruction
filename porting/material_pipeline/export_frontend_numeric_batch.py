@@ -147,8 +147,21 @@ def inherited_values(chain, nodes):
 
 
 def numeric_contract(parsed):
-    if not parsed['complete_serialized_shader_map'] or parsed['undecoded_bytes'] or parsed['shader_record_count'] != 19:
+    material = parsed['material_shaders']
+    meshes = parsed['mesh_shader_maps']
+    records = bundle.all_records(parsed)
+    count = parsed['shader_record_count']
+    if (not parsed['complete_serialized_shader_map'] or parsed['undecoded_bytes']
+            or type(count) is not int or not 7 <= count <= 256 or len(records) != count
+            or material['count'] != len(material['records'])
+            or material['mesh_shader_maps_count'] != len(meshes)
+            or any(mesh['count'] != len(mesh['records']) for mesh in meshes)):
         raise ValueError('unsupported or incomplete shader record shape')
+    supported_mesh = bundle.decoder._records.MESH_VS | bundle.decoder._records.MESH_PS | bundle.decoder._records.MESH_GS
+    if any(mesh['vertex_factory'] != dict(name='FLocalVertexFactory', number=0)
+           or any(record['type']['number'] or record['type']['name'] not in supported_mesh
+                  for record in mesh['records']) for mesh in meshes):
+        raise ValueError('unsupported mesh shader family')
     arrays = parsed['uniform_expression_arrays']
     if any(a['count'] for n, a in arrays.items() if n.startswith('texture_')):
         raise ValueError('texture expressions')
@@ -158,7 +171,7 @@ def numeric_contract(parsed):
     if not nodes or not roots['vector_roots'] and not roots['scalar_roots']:
         raise ValueError('numeric provider requires nonempty numeric graph')
     records = parsed['material_shaders']['records']
-    if len(records) != 7 or {r['type']['name'] for r in records} != SLATE_TYPES:
+    if len(records) != 7 or any(r['type']['number'] for r in records) or {r['type']['name'] for r in records} != SLATE_TYPES:
         raise ValueError('unsupported Slate shader record set')
     size = 16 * len(roots['vector_roots']) + 16 * ((len(roots['scalar_roots']) + 3) // 4)
     layout = dict(constant_bytes=size + 16, resource_offsets=[size, size + 8], resource_types=[8, 8])

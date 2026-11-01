@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Contract tests independent of recovered game data."""
 import importlib.util
+import copy
 import hashlib
 import json
 import struct
@@ -197,13 +198,43 @@ class BatchTests(unittest.TestCase):
             self.assertEqual(sentinel.read_bytes(), b'preserve')
             self.assertEqual(list(output.iterdir()), [sentinel])
 
-    def test_unsupported_resource_shape_and_textures(self):
-        with self.assertRaisesRegex(ValueError, 'record shape'):
-            batch.numeric_contract(dict(complete_serialized_shader_map=True, undecoded_bytes=0, shader_record_count=14))
-        material = dict(complete_serialized_shader_map=True, undecoded_bytes=0, shader_record_count=19,
-                        uniform_expression_arrays=dict(texture_2d=dict(count=1)))
-        with self.assertRaisesRegex(ValueError, 'texture expressions'):
-            batch.numeric_contract(material)
+    def test_original_fourteen_record_shape_and_rejections(self):
+        path = (Path(__file__).resolve().parent.parent / 'generated/frontend-probes/frontend-material-inventory/'
+                'FortniteGame_Content_UI_Foundation_Lobby_materials_M_UI_Border_HGrad.decoded.json')
+        if not path.exists():
+            self.skipTest('local original HGrad evidence is unavailable')
+        original = json.loads(path.read_bytes())
+        self.assertEqual(original['resource_sha256'], '8568ae19af007ab8b5b734bb53ffb786d815b6e80f1a3a0cc262afd1fd701b35')
+        self.assertEqual(original['shader_record_count'], 14)
+        records = batch.bundle.all_records(original)
+        self.assertEqual(len(records), 14)
+        self.assertTrue(all('index' in record['library_association'] for record in records))
+        self.assertEqual(original['resource_end'] - original['resource_start'], 6163)
+        self.assertEqual(original['decoded_prefix_bytes'], 6163)
+        batch.numeric_contract(original)
+        for mutation in ('missing', 'extra', 'count', 'group_count', 'slate_missing', 'family', 'incomplete', 'texture'):
+            parsed = copy.deepcopy(original)
+            mesh = parsed['mesh_shader_maps'][0]
+            if mutation == 'missing':
+                mesh['records'].pop()
+            elif mutation == 'extra':
+                mesh['records'].append(copy.deepcopy(mesh['records'][0]))
+            elif mutation == 'count':
+                parsed['shader_record_count'] += 1
+            elif mutation == 'group_count':
+                mesh['count'] += 1
+            elif mutation == 'slate_missing':
+                parsed['material_shaders']['records'].pop()
+                parsed['material_shaders']['count'] -= 1
+                parsed['shader_record_count'] -= 1
+            elif mutation == 'family':
+                mesh['records'][0]['type']['name'] = 'UnsupportedShader'
+            elif mutation == 'incomplete':
+                parsed['undecoded_bytes'] = 1
+            else:
+                parsed['uniform_expression_arrays']['texture_2d']['count'] = 1
+            with self.subTest(mutation=mutation), self.assertRaises(ValueError):
+                batch.numeric_contract(parsed)
 
     def test_numeric_case_identity_isolation_and_owner_defaults(self):
         p = parameter('Amount')
@@ -244,8 +275,16 @@ class GeneratedBatchAudit(unittest.TestCase):
             self.assertEqual(batch.digest(payload), entry['resource_sha256'])
             source = batch.EXTRACTION / (bundle['framing']['package'] + '.uexp')
             self.assertEqual(batch.bundle.validate_source(source.read_bytes(), bundle['framing']), payload)
-            self.assertEqual(len(bundle['original_shader_code']), 19)
-            self.assertEqual(len(batch.bundle.all_records(bundle['decoded'])), 19)
+            records = batch.bundle.all_records(bundle['decoded'])
+            self.assertEqual(len(records), bundle['decoded']['shader_record_count'])
+            self.assertGreaterEqual(len(records), 7)
+            self.assertLessEqual(len(records), 256)
+            self.assertEqual(len(bundle['original_shader_code']), len(records))
+            for record, receipt in zip(records, bundle['original_shader_code']):
+                self.assertEqual(receipt['type'], record['type'])
+                self.assertEqual(receipt['library_index'], record['library_association']['index'])
+                self.assertEqual(receipt['output_hash'], record['output_hash']['hash'])
+                self.assertEqual(receipt['frequency'], record['frequency'])
             self.assertEqual(bundle['decoded']['material_path'], entry['shader_identity'])
             fixture = bundle['runtime_fixture']
             graph = {batch.evaluator.identity(x['parameter']) for x in fixture['nodes'] if x['type'] in ('ScalarParameter','VectorParameter')}
