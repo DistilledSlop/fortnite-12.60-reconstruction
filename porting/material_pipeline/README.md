@@ -131,16 +131,18 @@ These are the four material packages reached by the failing frontend probes. Eac
 eight uniform-expression arrays, the intervening virtual-texture stack slot,
 parameter collections, and the compilation output scalar prefix. It checks
 package and resource identities against the framing report. All four original
-resources have zero virtual-texture stacks and zero parameter collections. The
-parser stops before packed compilation flags: the public 4.24 serializer's
-following debug-string boundary does not match the original bytes. It does not
-decode shader records or reconstruct a runnable shader map. Eight tests cover
+resources have zero virtual-texture stacks and zero parameter collections.
+The Donut texture parameter follows the older four-word 4.23 texture
+serializer; reading only two words produced a false boundary. The parser stops
+before packed compilation flags: the public 4.24 serializer's following
+debug-string boundary does not match the original bytes. It does not
+decode shader records or reconstruct a runnable shader map. Ten tests cover
 the supported prefix and malformed input. Reports under
 `generated/material_pipeline/*-legacy-prefix.json` record these boundaries:
 
 | Resource | Expression nodes | First unknown resource-relative offset | First unknown `.uexp` offset |
 | --- | ---: | ---: | ---: |
-| Donut | 13 | 538 | 2719 |
+| Donut | 13 | 546 | 2727 |
 | Locker | 220 | 4613 | 7410 |
 | MenuButton | 124 | 2840 | 7370 |
 | PowerToast | 81 | 1906 | 5905 |
