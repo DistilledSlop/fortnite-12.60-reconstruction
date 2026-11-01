@@ -2,6 +2,49 @@
 
 ## Current resume point (2026-11-01)
 
+- Latest confirmation type closure is source aa91a8efab55281d348c07c995bcded98fb414d9, now runtime-validated.
+  The existing FortniteUI->FortniteGame dependency is admitted by type resolution; reverse direction remains
+  refused. Cross-module struct exports are emitted without relocating ownership. This restores39enums,
+  56structs,36delegates and264class properties:131added/188changed generated files, none removed;
+  12380unchanged mtimes restored.197properties remain skipped and32types remain unemittable.
+  Both full builds PASS218.780/162.101s, all12699Native sources stable. Isolated full UHT and12targeted
+  C++ checks pass with zero writes outside scratch. Generator141self-checks and3new policy tests pass.
+- Root class load still exits0, now with ZERO unresolved-bytecode-field warnings (all four former dialog
+  field paths resolve). Both joins PASS21.619/21.572s. Fresh7retained diagnostics all pass: Panel outro60rows,
+  intro49, main-button44, internal-button34, activation40, context registry and lifecycle. These controlled
+  diagnostics do not establish Blueprint VM execution, original constructor semantics, async confirmation
+  action behavior, interactive UI or pixel parity. No extra behavior/milestone credit was assigned.
+- Checkpoint generated/frontend-native-evidence/confirmation-closure-runtime-1/checkpoint.json SHA256
+  ea72ddcf52338cb18fe5dde10e7d7d0dc85cf20d1189f75f6dfe5647708f2590 binds321critical committed sources,
+  136archive pairs,18binarypaths,bothbuilds,Root and joins; Native tree12699files rehashed unchanged.
+  Independent bounded audit /mnt/vibrato/fortnite-work/confirmation-closure-audit-1 verifies source hashes,
+  receipts and critical types (does not rehash large debug binaries). Archive source-release.json SHA256
+  c5babdd46ec0580ca4f365bb2797938fe263390ece42421cba0063bd9928ced3 at
+  /mnt/vibrato/fortnite-evidence/frozen-runtime/confirmation-closure-runtime-1 releases ownership. All handles
+  TERMINAL: build40159/stage31498/Root28458/joins24531/retained40593/freeze93788. All workers finished.
+- Reproduction scripts in /mnt/vibrato/fortnite-work: build_confirmation_closure_native_1.py,
+  stage_confirmation_closure_native_1.py, run_confirmation_closure_probe_1.py, run_confirmation_closure_joins_1.py and
+  run_confirmation_closure_regressions_1.py. Build receipts in confirmation-closure-native-build-1;
+  promotion confirmation-closure-integration-1/result.json; isolated confirmation-closure-ue-preflight-1.
+  /tmp reached its inode limit during an isolated copy; no shared Native mutation occurred. Large scratch
+  trees moved to /mnt/vibrato/fortnite-work, with old-path symlinks retained. Use that drive for new large
+  scratch trees. Generated headers retain the generator's pre-existing extra blank line at EOF.
+- NEXT behavior closure: original native action implementation is NOT emitted yet. Read source proofs:
+  /tmp/confirmation-factory-body-1/HANDOFF.md (factory144b1a660/core144b1a460),
+  /mnt/vibrato/fortnite-work/confirmation-description-ctor-1/HANDOFF.md (ctor142b1bea0),
+  /mnt/vibrato/fortnite-work/confirmation-action-ctor-1/HANDOFF.md (ctor144ae1d30), and
+  /mnt/vibrato/fortnite-work/confirmation-activate-slot-1/HANDOFF.md (Activate144ae8b90, callback144afc830).
+  Factory transiently constructs the action, casts explicit FortLocalPlayer, initializes Description and
+  sets Cancelable=false. Helper14514f020 is GetUIManagerWidget;1407c1790 resolves CommonUISubsystem;
+  1407faa40 is the FE input-suspension setter, matching existing bridge NativeSetExternalInputSuspended.
+  Action flag+168 records suspension cleared by the factory. Constructor uses real Description ctor and
+  leaves both native delegates unbound; Description defaults include Dismissable=true, Cancelable=false.
+  Its32unreflected tail bytes are two16byte delegate-like values (+f8/+108), not padding. Activate binds
+  the first to144afc830, then calls UI-manager interface vslot+40; interface contract and second delegate
+  signature still need recovery before faithful implementation. Callback carries EFortDialogResult byte
+  and FName BY VALUE: reflected offsets0/4 match its native parameter buffer; failure is Unknown/NAME_None.
+  The earlier guessed constructor1406801c0 was wrong (shared no-op/AddReferencedObjects); correct class
+  constructor thunk1451f52f0 calls144ae1d30. Do not add empty handlers or force startup phases.
 - Goal unchanged: full reconstructed client/server with feature, visual and wire parity. All four product
   milestones remain open. Dashboard approximately21.44%,116leaves,totalweight1855; materials129/142,
   bounded non-Native signatures41/41. Only the TrackingLlama pending check becamepass this phase.

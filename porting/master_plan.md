@@ -10,11 +10,12 @@ credentials in Git, and the orchestrator reviews and commits.
 
 ## Current baseline
 
-At Native `3e97743`, TrackingLlama and the ordinary source-authenticated Texture2D path pass both builds,
-actual texture/sampler checks, independent shader payload validation and both joins. The material closure
-is129/142 with unchanged weights. The original Root class now loads successfully; its four unresolved
-Blueprint fields and authentic startup/widget execution are the next frontend work. All four product
-milestones remain open. Exact receipts, limitations and source release are at the top of HANDOFF.md.
+At Native `aa91a8e`, the original Root class loads with no unresolved bytecode-field warnings. The
+existing UI-to-Game dependency now resolves39enums,56structs,36delegates and264additional properties;
+both builds, both joins and seven retained Native diagnostics pass. Material compatibility remains129/142.
+The next work is the authentic confirmation async-action factory, constructor/callback state and Activate
+interface call, using recovered original bodies. Interactive startup, VM behavior and original pixels remain
+unverified; all four product milestones are open. Exact receipts and source release are in HANDOFF.md.
 
 ## Earlier checkpoints (historical)
 
