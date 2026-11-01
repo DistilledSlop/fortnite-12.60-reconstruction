@@ -437,3 +437,99 @@ leaf definitions in batches31/34, which were created in transactions and rolled
 back. Ghidra was not saved or renamed; its five bookkeeping-file changes are
 retained in each integrity record. The original client was not executed.
 No Native/Engine/stage source, runtime cache, or reconstructed lifecycle changed.
+
+## Checkpoint 5: existing-player startup and real LocalPlayer teardown
+
+Separate immutable receipt
+`generated/frontend-native-evidence/native-ui-startup-checkpoint-5/receipt.json`,
+SHA-256 **40cc5232ca791d8d635e6e0d11a35d7deb1eefb86f31627d2c8714f34f8d8736**,
+freezes 924 inputs and batches1–48. Reproduce with `--last-batch 48`, the same
+packages-4 selection, and a fresh output directory. Checkpoint4 remains
+unchanged. Batch40 includes the original shared module cache's consumers;
+retaining these full bodies avoids reducing unrelated context consumers to
+inferred call patterns.
+
+The original FinishInitialLoading body `141df4af0` calls **14238a5c0** for
+each FortLocalPlayer after `141dec440(this,6,8,0)`. This 108-byte helper first
+invokes the proven BlueprintContext module slot `40` with that LocalPlayer.
+Then, if the LocalPlayer's field `288` is null, it tail-calls LocalPlayer
+virtual **280**. This closes checkpoint4's *location* gap for context creation
+of players present before phase4; it does not justify calling the helper
+outside its original startup sequence.
+
+That virtual is not a guessed subsystem initialization hook. The original
+FortLocalPlayer class getter `142989f60` registers constructor callback
+`142988640`, which calls actual constructor **142366a90**. That constructor
+calls LocalPlayer constructor `1442eb960`, then installs **14612ead8** as the
+primary table. The base constructor installs **14642c9d0**. Their relevant
+slots are:
+
+| Slot | Base LocalPlayer | Original FortLocalPlayer |
+| --- | --- | --- |
+| `278` | `1442fa540` | `1423a2410` |
+| `280` | `1406801c0` (RET) | `14238bde0` |
+| `288` | `1442fa570` | `1423a2490` |
+
+The base `278` stores the viewport client, calls virtual SetControllerId,
+and initializes the subsystem collection. Base `288` deinitializes that
+collection. These bodies agree with public Engine LocalPlayer's ordered
+`PlayerAdded`, `InitOnlineSession`, `PlayerRemoved` API; the source-installed
+vtable and superclass calls establish the actual override binding.
+
+**FortOnlineAccount is the reflected field at LocalPlayer offset `288`**,
+with original Object metadata (decimal648), rather than an input manager.
+Original InitOnlineSession `14238bde0` returns while startup phase<4.
+When the account is absent it creates original class **FortOnlineAccount**
+(getter `142a07490`, literal `/Script/FortniteGame.FortOnlineAccount`) with
+the LocalPlayer as Outer, stores it, and calls account virtual `260` with
+this player's world. The full 1,198-byte method retains further stored callback
+forwarding and GI/service subscriptions; these are not optional or ported by
+this investigation. They require their own typed method/callback identities
+before implementing the entire method.
+
+Original PlayerRemoved **1423a2490** (319 bytes) performs its preceding service
+unsubscribe/cleanup, calls base `1442fa570`, then, if FortOnlineAccount is
+present, invokes its virtual `270` and clears the field. Finally it tail-calls
+BlueprintContext module **48** with this LocalPlayer. This binds context
+destruction to the actual original PlayerRemoved override. It would lose
+source behavior to replace that entire method with only DestroyContexts.
+
+### Strong value traversal is recovered
+
+The context manager's installed FGCObject table `145a0fbd8` has its second
+entry **140820460**. That method iterates each live player entry and calls
+**14081f5d0** on its nested class map. The nested helper traverses each live
+24-byte key/value entry and passes the **value pointer by reference**
+(entry+8) to the collector's virtual `38`, with the original null referencing
+object/property arguments. It does not trace the weak-player key or class-map
+key through that call. This is concrete strong ownership of context instances;
+retain the original nested traversal and weak-key pruning distinction.
+
+### Remaining startup boundary
+
+`141dedeb0` is now named by its own original log:
+**SetStartupWindowClosedForAlwaysLoadedAssets**. It obtains a shared manager,
+locks its critical section at `1a0`, updates byte `1c8` if different (or logs
+an already-set value), then unlocks. It is not an implicit UI-ready event.
+The phase state writer `141dec440` writes the selected entry's state, resets
+associated state, calls phase updater `141e17270`, then retains its original
+notifications and dependent-feature work. The full body is frozen; none of
+those phases are replaced with a ready flag.
+
+Original enum accessor `142b24410` directly binds block `147bd8078`, whose name
+is **EFortGameFeatureState**. Its raw enumerators are Unknown0, Unavailable1,
+Downloading2, DownloadFailed3, Available4, Preloading5, Preloaded6, Loading7,
+Loaded8, Count8. This pins the original state enum separately from the still
+unproven map-key type. The accessor's first pointer `142a02c30` obtains the
+FortniteGame package; it is not a separate enum constructor.
+
+Next exact dependencies are the source feature-loading/state notification
+chain that invokes InitializeUI, the FortOnlineAccount/service callbacks in
+InitOnlineSession/PlayerRemoved, and the actual derived context initialization
+bodies used by Root/Login. Registry creation, world dispatch, GC ownership,
+phase-finish creation and removal are source-proven prerequisites. They do not
+establish that existing generated context bodies provide original behavior.
+No Native/Engine source or runtime changed. Batch42's missing constructor
+callback definition was created only in a rolled-back Ghidra transaction;
+all other new batches used the read-only view helper. Program save/rename did
+not occur, and the five bookkeeping-file changes remain disclosed.

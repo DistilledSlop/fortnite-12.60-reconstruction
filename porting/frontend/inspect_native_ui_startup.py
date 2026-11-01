@@ -55,6 +55,10 @@ def main():
     enum_fields = struct.unpack_from('<5QII', data, 0x147bd80e8 - BASE)
     decoded['EFortStartupPhase'] = [{'name': image.cstr(image.u64(enum_fields[4] + i * 16)), 'value': struct.unpack_from('<q', data, enum_fields[4] - BASE + i * 16 + 8)[0]} for i in range(enum_fields[5])]
     assert decoded['EFortStartupPhase'][3] == {'name': 'EFortStartupPhase::GameStartupLoading', 'value': 3}
+    game_state_fields = struct.unpack_from('<5QII', data, 0x147bd8078 - BASE)
+    assert image.cstr(game_state_fields[2]) == 'EFortGameFeatureState'
+    decoded['EFortGameFeatureState'] = [{'name': image.cstr(image.u64(game_state_fields[4] + i * 16)), 'value': struct.unpack_from('<q', data, game_state_fields[4] - BASE + i * 16 + 8)[0]} for i in range(game_state_fields[5])]
+    assert decoded['EFortGameFeatureState'][8] == {'name': 'EFortGameFeatureState::Loaded', 'value': 8}
     (out / 'metadata.json').write_text(json.dumps(decoded, indent=2) + '\n')
     windows = {0x141e6c120: 0x400, 0x141856620: 0x100, 0x145312730: 0x100, 0x14700fc30: 0x2a8, 0x147011440: 0x2c0, 0x14515a550: 0x300, 0x145176990: 0x300, 0x1451746d0: 0x400, 0x145146bc0: 0x200, 0x14514ab50: 0x100, 0x145146470: 0x200, 0x14514b080: 0x200, 0x14515aac0: 0x80, 0x14515a790: 0x400}
     windows.update({0x146fc7bf0: 0x4a0, 0x146fc80c8: 0x4a0,
@@ -85,8 +89,28 @@ def main():
                     0x144691ab0: 0x990, 0x144687a40: 0x570,
                     0x144640340: 0xa0, 0x144627d90: 0x270,
                     0x142b24410: 0x30, 0x147bd8078: 8})
+    # Checkpoint 5: real existing-player startup, teardown and strong value traversal.
+    windows.update({0x14238a5c0: 0x70, 0x1423a2490: 0x150,
+                    0x142989f60: 0xc0, 0x142988640: 0x30,
+                    0x142366a90: 0x200, 0x14612ead8: 0x2c0,
+                    0x1442eb960: 0x170, 0x14642c9d0: 0x2c0,
+                    0x1442fa570: 0x10, 0x1442fa540: 0x30,
+                    0x1423a2410: 0x80, 0x14238bde0: 0x4b0,
+                    0x142a07490: 0xc0, 0x145a0fbd8: 0x20,
+                    0x140820420: 0x40, 0x140820460: 0x210,
+                    0x14081f5d0: 0x230, 0x141dedeb0: 0x90,
+                    0x141dec440: 0x3a0, 0x142a02c30: 0x30})
+    assert image.u64(0x14612ead8 + 0x280) == 0x14238bde0
+    assert image.u64(0x14612ead8 + 0x288) == 0x1423a2490
+    assert image.u64(0x14642c9d0 + 0x288) == 0x1442fa570
+    assert image.u64(0x145a0fbd8 + 8) == 0x140820460
+    assert next(x for x in decoded['FortLocalPlayer']['properties'] if x['name'] == 'FortOnlineAccount')['offset'] == 0x288
     for offset, target in [(0x278, 0x1408229f0), (0x290, 0x1408229f0)]:
         assert image.u64(0x145a0f930 + offset) == target
+    windows[0x147bd8078] = 48
+    windows[game_state_fields[4]] = game_state_fields[5] * 16
+    for ptr in [game_state_fields[2]] + [image.u64(game_state_fields[4] + i * 16) for i in range(game_state_fields[5])]:
+        windows[ptr] = len(image.cstr(ptr).encode()) + 1
     windows[enum_fields[4]] = enum_fields[5] * 16
     for address, size in windows.items():
         (out / (hex(address) + '.bin')).write_bytes(data[address - BASE:address - BASE + size])
