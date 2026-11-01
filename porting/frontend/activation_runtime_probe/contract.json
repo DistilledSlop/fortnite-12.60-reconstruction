@@ -1,0 +1,323 @@
+{
+  "approved_generator_inputs": {
+    "porting/frontend/common_panel_runtime/CommonActivationCore.h": {
+      "path": "/tmp/activation-base-rebase-1/candidate/porting/frontend/common_panel_runtime/CommonActivationCore.h",
+      "sha256": "74d43321e1116949aefb56d79d4335f66aa5335e4040b0722c106d26997f7b5c"
+    },
+    "porting/frontend/common_panel_runtime/CommonActivationNative.h": {
+      "path": "/tmp/activation-base-rebase-1/candidate/porting/frontend/common_panel_runtime/CommonActivationNative.h",
+      "sha256": "122f9d89663623cbca7113db36dc72cc96d047c04719e9bd4766ac5368a4ca9e"
+    },
+    "porting/frontend/common_panel_runtime/base-declarations.inc": {
+      "path": "/tmp/activation-base-rebase-1/candidate/porting/frontend/common_panel_runtime/base-declarations.inc",
+      "sha256": "e62cedae62c95cf7e3a04586d1efff78fa262439f1563b4a00ed102c50059b83"
+    },
+    "porting/frontend/common_panel_runtime/base-definitions.inc": {
+      "path": "/tmp/activation-base-rebase-1/candidate/porting/frontend/common_panel_runtime/base-definitions.inc",
+      "sha256": "383c724535ad66c3961a58470c0b78c8b3268c127a470a52d91c172f68fa4e2d"
+    },
+    "porting/frontend/common_panel_runtime/base-original-policy.json": {
+      "path": "/tmp/activation-base-rebase-1/candidate/porting/frontend/common_panel_runtime/base-original-policy.json",
+      "sha256": "50f5c52b66da8a7842fc16a8b49aa5591fef2772a310f3504f3cb34ceeec9d69"
+    },
+    "porting/frontend/common_panel_runtime/base-stage-evidence.md": {
+      "path": "/tmp/activation-base-rebase-1/candidate/porting/frontend/common_panel_runtime/base-stage-evidence.md",
+      "sha256": "df690dbf725230791b84cd24bd0ebc80a5d2c703e4dfba1093c11c25aa08dcc6"
+    },
+    "porting/frontend/common_panel_runtime/policy.py": {
+      "path": "/tmp/activation-base-rebase-1/candidate/porting/frontend/common_panel_runtime/policy.py",
+      "sha256": "938eab0097aefdb0f5aa8e0873a7238c7e5f44acfd20910f9d0669f6a738524a"
+    },
+    "porting/frontend/common_panel_runtime/test_activation_core.cpp": {
+      "path": "/tmp/activation-base-rebase-1/candidate/porting/frontend/common_panel_runtime/test_activation_core.cpp",
+      "sha256": "dff985ebbd8449b8c9f1422989f5577cb1b734dd33a003f4392ebbccd20e9ff4"
+    },
+    "porting/frontend/common_panel_runtime/test_policy.py": {
+      "path": "/tmp/activation-base-rebase-1/candidate/porting/frontend/common_panel_runtime/test_policy.py",
+      "sha256": "b2c6ea4fe0b2a67e8933f7f2c7d9679a8ad8486d7767f947cc62bdf0453f9c7d"
+    },
+    "porting/native_class_blocklist.txt": {
+      "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/native_class_blocklist.txt",
+      "sha256": "40ae3e20e0aea434053dd82a18e56577a8ebbf246f07338e2baf8b46d160edbe"
+    },
+    "porting/replication_conditions.json": {
+      "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/replication_conditions.json",
+      "sha256": "09d14b6faaf781bb2113ca0a6472571c63be8e870739f15311d3be9f8f577601"
+    }
+  },
+  "approved_native": {
+    "CommonUI/Generated/CommonActivationCore.h": {
+      "path": "/tmp/activation-base-rebase-1/generated-full/Source/CommonUI/Generated/CommonActivationCore.h",
+      "sha256": "74d43321e1116949aefb56d79d4335f66aa5335e4040b0722c106d26997f7b5c"
+    },
+    "CommonUI/Generated/CommonActivationNative.h": {
+      "path": "/tmp/activation-base-rebase-1/generated-full/Source/CommonUI/Generated/CommonActivationNative.h",
+      "sha256": "122f9d89663623cbca7113db36dc72cc96d047c04719e9bd4766ac5368a4ca9e"
+    },
+    "CommonUI/Generated/UCommonActivatableWidget.cpp": {
+      "path": "/tmp/activation-base-rebase-1/generated-full/Source/CommonUI/Generated/UCommonActivatableWidget.cpp",
+      "sha256": "bc2f6d436db50886e5bf478b91460bd0607f97f3563d3770b6a491ec3838ec39"
+    },
+    "CommonUI/Generated/UCommonActivatableWidget.h": {
+      "path": "/tmp/activation-base-rebase-1/generated-full/Source/CommonUI/Generated/UCommonActivatableWidget.h",
+      "sha256": "00f428cdc25bf8fee0515b69e4b4ca081905763c0d80f8323f26a2d7971d44b5"
+    },
+    "FortniteGame/ActivationBaseProbe.cpp": {
+      "path": "/tmp/activation-probe-preflight-2/source/ActivationBaseProbe.cpp",
+      "sha256": "e489dc893543b5b083b746174fbd45411b143017f77d90b379e7917b56c7300d"
+    },
+    "FortniteGame/ActivationBaseProbe.h": {
+      "path": "/tmp/activation-probe-preflight-2/source/ActivationBaseProbe.h",
+      "sha256": "39df9ef08abb603b21ebdb54f50d4dcfd695403e5290dee6bf02bed91d70d134"
+    },
+    "FortniteGame/FortniteGame.cpp": {
+      "path": "/tmp/activation-probe-preflight-2/source/FortniteGame.cpp",
+      "sha256": "97bcec8115316410010b1585a9bd306ad6fb293a738fe25c0b658906e5326118"
+    }
+  },
+  "baseline_context_expectations": {
+    "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/frontend/context_runtime_probe/source-expectations.json",
+    "sha256": "7776875c4c71d9a9785005bd2fb261f8f06ec847fdf0681ca168e9ab382738e1"
+  },
+  "context_tools": {
+    "audit_manifest.py": {
+      "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/frontend/context_runtime_probe/audit_manifest.py",
+      "sha256": "bfd6d443f356d86cd7e7b8b46b155ec569e10266a227a1fdfb134e7ab7cfe83b"
+    },
+    "provenance.py": {
+      "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/frontend/context_runtime_probe/provenance.py",
+      "sha256": "d526e5cbebcc48080167df67fff9ef8927aad218d764bee3fbc21e283a538a26"
+    },
+    "unity.py": {
+      "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/frontend/context_runtime_probe/unity.py",
+      "sha256": "a066020e8688dbac707410dd59e5026bd768d259333b65af75190950c7cf811b"
+    },
+    "verify_events.py": {
+      "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/frontend/context_runtime_probe/verify_events.py",
+      "sha256": "0cf5bf7bcd62b3e44498b6a40e0398e9a17465c718dd3681b035cfa9cb4ca030"
+    },
+    "verify_metadata.py": {
+      "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/frontend/context_runtime_probe/verify_metadata.py",
+      "sha256": "4a2642b685b552ace8a32c77fc2602974b41151a5824564021b98b5c50552efd"
+    },
+    "verify_reflection.py": {
+      "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/frontend/context_runtime_probe/verify_reflection.py",
+      "sha256": "796c3ddce98934f87acf8119359c8c5ab9e5f3453ecdc0895de9e6875ac9afad"
+    },
+    "verify_report.py": {
+      "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/frontend/context_runtime_probe/verify_report.py",
+      "sha256": "ea15498ad771894d4a64de2648d7b73ab22d113a00acdd9508986c2c6102a78e"
+    },
+    "verify_v1.py": {
+      "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/frontend/context_runtime_probe/verify_v1.py",
+      "sha256": "51e21af9150d49324fd5f4500952d9c7e132c696977be565e339dd05021f6a57"
+    }
+  },
+  "expected_source": {
+    "porting/gen_native_classes.py": "1a1b529e819b5f9bc28cc39f53253595c729b635cb89f9b63cb2b9f0d5329174",
+    "porting/native/Source/BlueprintContext/Private/BlueprintContextRuntime.cpp": "6b417a0f628f62faf013463482200e4070f363ef2e61c84c18507aaf92b906f8",
+    "porting/native/Source/BlueprintContext/Public/BlueprintContextCore.h": "8ee87917c8082a6fd71b474489f57e46204512ed97e882fe05609f9789705c2e",
+    "porting/native/Source/BlueprintContext/Public/BlueprintContextRuntime.h": "3619937ed832234c5d579e4cabcfe94a1f433cbbaecbc6c22993c1129c4f317f",
+    "porting/native/Source/FortniteGame/ContextRuntimeProbe.cpp": "69768406da06e8ed2d0e4034e9361b517d5e6858db34e5d14a8391ca850a2f6e",
+    "porting/native/Source/FortniteGame/FortniteGame.cpp": "97bcec8115316410010b1585a9bd306ad6fb293a738fe25c0b658906e5326118"
+  },
+  "frozen_receipts": [
+    {
+      "path": "/tmp/activation-base-rebase-1/receipt.json",
+      "sha256": "e6ea0cff9759b6b5724225d1babd60b1d326122ea2b7ce5d44c904a2c37ab699"
+    },
+    {
+      "path": "/tmp/activation-base-live-probe-1/receipt.json",
+      "sha256": "af49750a02f6b572161f78426d5425fb65b3cbd00f053a76b88b417b568e3f4a"
+    }
+  ],
+  "generator": {
+    "path": "/tmp/activation-base-rebase-1/candidate/porting/gen_native_classes.py",
+    "sha256": "1a1b529e819b5f9bc28cc39f53253595c729b635cb89f9b63cb2b9f0d5329174"
+  },
+  "inputs": [
+    {
+      "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/native_class_set.txt",
+      "sha256": "828a600b6b8cd2cbe5d8ba581e3fd1b2c9ac6899a0490c71d1cab9362a3d5d98",
+      "size": 135839
+    },
+    {
+      "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/reflection/fortnite_game_reflection.json",
+      "sha256": "c11cc036439fd2832514681e1bac12c933ee78b6a351f36d44dabf170d8eab1b",
+      "size": 47602119
+    },
+    {
+      "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/reflection/class_name_map.json",
+      "sha256": "8a7babdd6ea32e831e883b97f56ba9bd92f8f24f966243c70804e358aff2b4ed",
+      "size": 321847
+    },
+    {
+      "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/reflection/class_name_map.evidence.json",
+      "sha256": "6aecbf0ca6bf466a8cae04a70884635670ad77710577bca57b8fcc0a9ed437e1",
+      "size": 1791365
+    },
+    {
+      "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/reflection/class_parent_map.json",
+      "sha256": "2947b7aab38c4a85df7df3bacdd3f14012408b53e1c1efc08e5aa2fdbb084056",
+      "size": 2351752
+    },
+    {
+      "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/reflection/class_ref_map.json",
+      "sha256": "434e3467067eff556e55b4d95e8cebf70e035ea5dd607d48d38e08323296f755",
+      "size": 264369
+    },
+    {
+      "path": "/tmp/common-panel-native-runtime-candidate-1/frozen-rotation-handoff-2/receipt.json",
+      "sha256": "fda18f12e083b35469bc53e578845520f1b73a6d9c18fce1a4a1fde3bfd44d71",
+      "size": 71458
+    },
+    {
+      "path": "/tmp/common-panel-native-runtime-candidate-1/frozen-base-stage-1/receipt.json",
+      "sha256": "c727a782c26059a767f8703085d63f54fd6d9f4bda8865bf62ae0225c2ff6255",
+      "size": 5086148
+    },
+    {
+      "path": "/tmp/common-panel-native-runtime-candidate-1/frozen-base-supplement-2/receipt.json",
+      "sha256": "6a8ab900289535d8d61217479e8faa3584dabf9e6894bc9a1220111d953918a8",
+      "size": 11142
+    },
+    {
+      "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/reflection/behavior_splice.json",
+      "sha256": "a904510fc6c168d50c8e89d2142514f93d292db3f3083abd9caeb43c4dfcc021"
+    },
+    {
+      "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/reflection/bool_bits.json",
+      "sha256": "c65e8d4abc52683c7a4e646e846f22941d63a36aa493985fd6ac16c1f07b3e99"
+    },
+    {
+      "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/reflection/class_checksums.json",
+      "sha256": "61683f041563ef41a860b79b145d2d4d16a4ed953ce76b7c97eee58287677249"
+    },
+    {
+      "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/reflection/construct_fn_to_block.json",
+      "sha256": "622adb082e24aab7b21191cb542c1515a3b91b6d8ca49a4dc1c4ff388864d45e"
+    },
+    {
+      "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/reflection/decompile_targets.json",
+      "sha256": "b6a07d6c95c99aa45a49a88b7b5e8be49cc2080a47e80885447c7e1bccd11e84"
+    },
+    {
+      "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/reflection/delegate_blocks.json",
+      "sha256": "d17744c2407b214d4e38b182bdc5b3ca6ff4283f65a18b1155cecd9d1b80c056"
+    },
+    {
+      "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/reflection/enum_blocks.json",
+      "sha256": "e8452329db4fc0389e67f1c0536a25450dd4b6f86dd84079132b86441eac5d90"
+    },
+    {
+      "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/reflection/fortnite_game_reflection.fort-groups-2740.bak.json",
+      "sha256": "3ea6e64b06393fa5e8a275bec8125638e4d1cfee6323e89ba10a21bc641db310"
+    },
+    {
+      "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/reflection/function_blocks.json",
+      "sha256": "a91890539be0788e7f333897330be8b65866f7ac57ac5a98bb881efa8b815965"
+    },
+    {
+      "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/reflection/native_class_index.json",
+      "sha256": "cf93bebd2c25514774522f444c5ecccd7f0ee02dd1a1707979ff3b70ff363d84"
+    },
+    {
+      "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/reflection/native_classes_index.json",
+      "sha256": "81866435e79544cac128005f3cf39f1840a3c5552614956cef830ae482490ce9"
+    },
+    {
+      "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/reflection/native_funcs.json",
+      "sha256": "502d85e9136e0aa9cd930ec4662320ba1fc453e035a25aac5c500a8d1856ba59"
+    },
+    {
+      "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/reflection/required_modules.json",
+      "sha256": "c6a04fe9f2c82bec266b0be6ddbda97def63587f45daa665701360a3b4d53e61"
+    },
+    {
+      "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/reflection/skipped_properties.json",
+      "sha256": "c829180779e9155785fb8362eb464249a73758605be1277da980b9f32b42ca26"
+    },
+    {
+      "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/reflection/struct_blocks.json",
+      "sha256": "5fb33b2a9527d6e8dddd5d17934b0e47ba4b1f954757ff0fe8be262e929f1ad5"
+    },
+    {
+      "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/reflection/type_block_candidates.json",
+      "sha256": "af99255c2b0089992a4ca2f60ce9b5b45910f4fdc6f1536db04459a839198e06"
+    },
+    {
+      "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/reflection/type_block_xref_input.json",
+      "sha256": "1a04e4d6d72d96f79115d1c419e153e139c9b06527710eddbdf86022ef28c4a1"
+    },
+    {
+      "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/reflection/type_block_xrefs.json",
+      "sha256": "deea0b1ac7fc78b0b4bedda697e96c99a2dc7c9dea76afcf905b7ec2cb5684dd"
+    },
+    {
+      "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/reflection/type_closure.json",
+      "sha256": "5f632f7e8a8d944c4bfe3893338d4591700499df10259de5908c7c81a6930351"
+    },
+    {
+      "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/reflection/type_validation.json",
+      "sha256": "ce7eacb9795977ffebd49bc465361eb0a9bf425add3737f5a6ca6c1204153d3a"
+    },
+    {
+      "path": "/tmp/activation-base-rebase-1/candidate/porting/frontend/common_panel_runtime/CommonActivationCore.h",
+      "sha256": "74d43321e1116949aefb56d79d4335f66aa5335e4040b0722c106d26997f7b5c"
+    },
+    {
+      "path": "/tmp/activation-base-rebase-1/candidate/porting/frontend/common_panel_runtime/CommonActivationNative.h",
+      "sha256": "122f9d89663623cbca7113db36dc72cc96d047c04719e9bd4766ac5368a4ca9e"
+    },
+    {
+      "path": "/tmp/activation-base-rebase-1/candidate/porting/frontend/common_panel_runtime/base-declarations.inc",
+      "sha256": "e62cedae62c95cf7e3a04586d1efff78fa262439f1563b4a00ed102c50059b83"
+    },
+    {
+      "path": "/tmp/activation-base-rebase-1/candidate/porting/frontend/common_panel_runtime/base-definitions.inc",
+      "sha256": "383c724535ad66c3961a58470c0b78c8b3268c127a470a52d91c172f68fa4e2d"
+    },
+    {
+      "path": "/tmp/activation-base-rebase-1/candidate/porting/frontend/common_panel_runtime/base-original-policy.json",
+      "sha256": "50f5c52b66da8a7842fc16a8b49aa5591fef2772a310f3504f3cb34ceeec9d69"
+    },
+    {
+      "path": "/tmp/activation-base-rebase-1/candidate/porting/frontend/common_panel_runtime/base-stage-evidence.md",
+      "sha256": "df690dbf725230791b84cd24bd0ebc80a5d2c703e4dfba1093c11c25aa08dcc6"
+    },
+    {
+      "path": "/tmp/activation-base-rebase-1/candidate/porting/frontend/common_panel_runtime/policy.py",
+      "sha256": "938eab0097aefdb0f5aa8e0873a7238c7e5f44acfd20910f9d0669f6a738524a"
+    },
+    {
+      "path": "/tmp/activation-base-rebase-1/candidate/porting/frontend/common_panel_runtime/test_activation_core.cpp",
+      "sha256": "dff985ebbd8449b8c9f1422989f5577cb1b734dd33a003f4392ebbccd20e9ff4"
+    },
+    {
+      "path": "/tmp/activation-base-rebase-1/candidate/porting/frontend/common_panel_runtime/test_policy.py",
+      "sha256": "b2c6ea4fe0b2a67e8933f7f2c7d9679a8ad8486d7767f947cc62bdf0453f9c7d"
+    }
+  ],
+  "limitations": [
+    "Future integration/run only. Current preflight no live build/runtime.",
+    "Generated leading source-label comment may vary only; all remaining bytes exact.",
+    "No original private C++ ABI or cooked BP/UI or product milestone proof.",
+    "Bounded local diagnostic only: no exhaustive hermetic loader/shared-module, toolchain, library or asset closure is recorded. Exact process executable hash/inode, frozen Native/Engine state, fresh compilation artifacts/recipes and relevant linked implementation bytes are checked.",
+    "The retained UBT link script/response is recipe evidence; actual relevant linked implementation identity is independently checked by relocated object-code bytes and native exec references. Non-LTO x86_64 ELF only; unsupported relocations fail closed."
+  ],
+  "policy_authority": {
+    "path": "/tmp/activation-base-rebase-1/candidate/porting/frontend/common_panel_runtime/policy.py",
+    "sha256": "938eab0097aefdb0f5aa8e0873a7238c7e5f44acfd20910f9d0669f6a738524a"
+  },
+  "prior_fresh_uht": [
+    {
+      "path": "/tmp/activation-base-live-probe-1/uht-1/CommonUI/UCommonActivatableWidget.gen.cpp",
+      "sha256": "a0ac734d76067a5d58c6b18841c225d637d1cd964a970fac15e1a21516323687"
+    },
+    {
+      "path": "/tmp/activation-base-live-probe-1/uht-1/FortniteGame/ActivationBaseProbe.gen.cpp",
+      "sha256": "b69b9e475cdf390337259070dba599e909cb0130100c19689d8493f14a1c3445"
+    }
+  ],
+  "schema": "activation-base-preflight-contract-v1"
+}
