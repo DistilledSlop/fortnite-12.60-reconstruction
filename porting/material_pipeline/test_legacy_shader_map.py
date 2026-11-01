@@ -44,9 +44,13 @@ HEADER = pack('4I', 1, 1, 1, 3) + bytes(range(20)) + pack('I', 0)
 HEADER += string('M_Test') + string('/Game/UI/M_Test.M_Test')
 
 
-def resource(arrays=None, tail=b'\x78\x56\x34\x12'):
+def resource(arrays=None, tail=b'\x78\x56\x34\x12', collections=(), vt_count=0):
     arrays = arrays or [[VECTOR, SWIZZLE], [SCALAR], [TEXTURE]] + [[] for _ in range(5)]
-    return HEADER + b''.join(pack('i', len(a)) + b''.join(a) for a in arrays) + tail
+    encoded = [pack('i', len(a)) + b''.join(a) for a in arrays]
+    encoded.insert(7, pack('i', vt_count))
+    return (HEADER + b''.join(encoded) + pack('i', len(collections))
+            + b''.join(pack('4I', *guid) for guid in collections)
+            + pack('IHHHBB', 5, 2, 3, 4, 6, 7) + tail)
 
 
 class LegacyPrefixTests(unittest.TestCase):
@@ -63,7 +67,26 @@ class LegacyPrefixTests(unittest.TestCase):
         self.assertEqual(swizzle['channels'], [0, 1, 2, -1])
         self.assertEqual(swizzle['inputs'][0]['inputs'][0]['inputs'][0]['value_type'], 15)
         self.assertEqual(arrays['texture_2d']['expressions'][0]['serialized_texture_words'], [0, -1])
-        self.assertEqual(arrays['texture_2d_array']['end'], result['decoded_prefix_bytes'])
+        self.assertEqual(arrays['texture_2d_array']['end'], result['parameter_collections']['offset'])
+        self.assertEqual(result['virtual_texture_stacks']['count'], 0)
+        self.assertEqual(result['compilation_output_scalars']['used_scene_textures'], 5)
+        self.assertEqual(result['compilation_output_scalars']['estimated_virtual_texture_lookups'], 4)
+        self.assertEqual(result['compilation_output_scalars']['used_custom_interpolator_scalars'], 7)
+        self.assertEqual(result['compilation_output_scalars']['end'], result['decoded_prefix_bytes'])
+
+    def test_collection_guids_and_nonempty_vt_rejection(self):
+        result = parse_prefix(resource(collections=[(1, 2, 3, 0xffffffff)]), NAMES)
+        self.assertEqual(result['parameter_collections']['guids'], [[1, 2, 3, 0xffffffff]])
+        with self.assertRaisesRegex(ValueError, 'unsupported nonempty VT stacks'):
+            parse_prefix(resource(vt_count=1), NAMES)
+
+    def test_invalid_collection_count_is_rejected(self):
+        data = bytearray(resource())
+        offset = parse_prefix(data, NAMES)['parameter_collections']['offset']
+        for count in (-1, 4097):
+            data[offset:offset + 4] = pack('i', count)
+            with self.assertRaisesRegex(ValueError, 'array count'):
+                parse_prefix(data, NAMES)
 
     def test_every_truncation_of_verified_prefix_fails(self):
         data = resource(tail=b'')

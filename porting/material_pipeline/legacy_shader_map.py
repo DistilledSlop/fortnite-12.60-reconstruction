@@ -6,8 +6,10 @@ fail at their tag; the undecoded compilation-output tail is returned explicitly.
 The recursive grammar matches Epic's pre-freeze serializers, available at:
 https://github.com/folgerwang/UnrealEngine/blob/release/Engine/Source/Runtime/Engine/Private/Materials/MaterialUniformExpressions.h
 https://github.com/folgerwang/UnrealEngine/blob/release/Engine/Source/Runtime/Engine/Private/Materials/MaterialUniformExpressions.cpp
-The two identity strings and subsequent array boundaries are independently
-observed in the four original resource payloads. No LayoutParams are present.
+The later pre-freeze collection/compilation scalar order is documented in:
+https://github.com/HenryZheng1/UnrealEngine-4.24.3-release/blob/master/Engine/Source/Runtime/Engine/Private/Materials/MaterialUniformExpressions.cpp
+https://github.com/HenryZheng1/UnrealEngine-4.24.3-release/blob/master/Engine/Source/Runtime/Engine/Private/Materials/MaterialShared.cpp
+No LayoutParams are present. Compilation flags and shader records remain unknown.
 """
 import argparse
 import hashlib
@@ -114,8 +116,8 @@ class Reader:
 def parse_prefix(data, names):
     """Return verified prefix with relative offsets and an explicit unknown tail.
 
-    The post-array collection slot is intentionally left undecoded: later UE
-    branches add VT metadata and change compilation output around this boundary.
+    Nonempty VT stacks are unsupported. The packed compilation flags are left
+    undecoded because their layout differs between the pre-freeze branches.
     """
     if len(data) > MAX_BYTES:
         raise ValueError('legacy resource exceeds size bound')
@@ -132,24 +134,55 @@ def parse_prefix(data, names):
         raise ValueError('inconsistent legacy shader-map identity')
     arrays = {}
     for name in ARRAYS:
+        if name == 'texture_2d_array':
+            # 4.24 inserts VTStacks before Uniform2DArrayTextureExpressions.
+            # These are not expression records: never interpret a nonzero stack
+            # count as an expression-array count or search for a later boundary.
+            start = reader.cursor
+            count = reader.count()
+            if count:
+                raise ValueError(f'unsupported nonempty VT stacks at {start}')
+            vt_stacks = {'offset': start, 'end': reader.cursor, 'count': count}
         start = reader.cursor
         count = reader.count()
         expressions = [reader.expression() for _ in range(count)]
         arrays[name] = {'offset': start, 'end': reader.cursor, 'count': count,
                         'expressions': expressions}
+    start = reader.cursor
+    count = reader.count()
+    collections = {'offset': start, 'count': count,
+                   'guids': [reader.read('4I') for _ in range(count)],
+                   'end': reader.cursor}
+    start = reader.cursor
+    compilation = {'offset': start, 'used_scene_textures': reader.read('I'),
+                   'estimated_texture_samples_vs': reader.read('H'),
+                   'estimated_texture_samples_ps': reader.read('H'),
+                   'estimated_virtual_texture_lookups': reader.read('H'),
+                   'used_uv_scalars': reader.read('B'),
+                   'used_custom_interpolator_scalars': reader.read('B'),
+                   'end': reader.cursor}
     cursor = reader.cursor
     return {'complete_shader_map': False,
             'limitations': ['Prefix grammar only; no shader records or runtime loading verified',
                 'TextureParameter trailing words are structurally framed but semantics remain unresolved',
-                'Empty texture-array labels follow the public pre-freeze serializer order'],
+                'Nonempty VT stacks are unsupported',
+                'Compilation flags differ across pre-freeze branches; no flag or shader-record grammar verified'],
             'cooked': cooked, 'valid': valid,
             'quality_level': quality, 'feature_level': feature,
             'cooked_shader_map_id_hash': shader_map_hash, 'shader_platform': platform,
             'friendly_name': friendly, 'material_path': path,
             'uniform_expression_arrays': arrays, 'expression_nodes': reader.nodes,
+            'virtual_texture_stacks': vt_stacks, 'parameter_collections': collections,
+            'compilation_output_scalars': compilation,
+            'tail_grammar_sources': [
+                'https://github.com/HenryZheng1/UnrealEngine-4.24.3-release/blob/master/Engine/Source/Runtime/Engine/Private/Materials/MaterialUniformExpressions.cpp#L106',
+                'https://github.com/HenryZheng1/UnrealEngine-4.24.3-release/blob/master/Engine/Source/Runtime/Engine/Private/Materials/MaterialShared.cpp#L489'],
             'decoded_prefix_bytes': cursor,
             'first_unknown': {'offset': cursor,
-                'description': 'post-texture-array uniform-expression-set/compilation-output fields',
+                'description': 'packed compilation flags and subsequent shader-map fields',
+                'blocker': '4.24 serializes one packed-flag byte then DebugDescription; '
+                    'the original resources do not match that subsequent FString boundary. '
+                    'Do not search for DebugDescription or skip to shader hashes.',
                 'next_32_hex': data[cursor:cursor + 32].hex()},
             'undecoded_bytes': len(data) - cursor,
             'resource_sha256': hashlib.sha256(data).hexdigest()}
