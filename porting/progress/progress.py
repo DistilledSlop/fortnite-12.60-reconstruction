@@ -15,7 +15,7 @@ Usage:
   python3 porting/progress/progress.py            record HEAD, then render
   python3 porting/progress/progress.py --seed     replay every commit, then render
   python3 porting/progress/progress.py --no-record render from HEAD without writing history
-  --quiet suppresses the summary line (used by the post-commit hook).
+  --quiet suppresses the summary line for scripted callers.
 """
 
 import argparse

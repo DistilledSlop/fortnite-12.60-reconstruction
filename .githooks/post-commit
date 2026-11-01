@@ -5,6 +5,6 @@
 root=$(git rev-parse --show-toplevel 2>/dev/null) || exit 0
 gen="$root/porting/generated"
 mkdir -p "$gen" 2>/dev/null || exit 0
-(cd "$root" && python3 -I porting/progress/progress.py --quiet) \
+(cd "$root" && python3 -I porting/progress/progress.py) \
   >>"$gen/progress-hook.log" 2>&1 </dev/null || :
 exit 0
