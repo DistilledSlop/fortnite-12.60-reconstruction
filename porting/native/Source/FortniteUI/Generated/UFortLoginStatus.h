@@ -37,5 +37,10 @@ public:
 	UPROPERTY()
 	UCommonButton* Button_Status;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetContinueButtonText(const FText& ContinueText);
+public:
+
 };
 
