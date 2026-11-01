@@ -1943,7 +1943,7 @@ static bool CheckSocialTextureBinding(UMaterialInterface* Owner, FMaterialResour
     UTexture2D* Texture=References.Num()==1 ? Cast<UTexture2D>(References[0]) : nullptr;
     if (!Texture || Texture->GetPathName()!=GLegacySocialTexturePath || Texture->GetClass()->GetPathName()!=TEXT("/Script/Engine.CurveLinearColorAtlas") ||
         Texture->GetSizeX()!=32 || Texture->GetSizeY()!=32 || Texture->GetNumMips()!=1 || Texture->GetPixelFormat()!=PF_FloatRGBA ||
-        !Texture->SRGB || Texture->AddressX!=TA_Wrap || Texture->AddressY!=TA_Wrap)
+        Texture->SRGB || Texture->Filter!=TF_Bilinear || Texture->CompressionSettings!=TC_HDR || Texture->AddressX!=TA_Clamp || Texture->AddressY!=TA_Clamp)
     { Error=TEXT("Social original atlas metadata differs"); return false; }
     const auto& Uniforms=Map->GetUniformExpressionSet();
     if (Uniforms.GetNumTextures(EMaterialTextureParameterType::Standard2D)!=1 || !Uniforms.GetSummaryString().StartsWith(TEXT("(5 vectors, 9 scalars,")))
@@ -1994,7 +1994,7 @@ static bool CheckSocialTextureBinding(UMaterialInterface* Owner, FMaterialResour
     FString Directory; if (!FParse::Value(FCommandLine::Get(),TEXT("FortniteLegacyMaterialArtifactDir="),Directory)) { Error=TEXT("Social artifact directory missing"); return false; }
     const auto& Layout=Uniforms.GetUniformBufferLayout(); FString Resources;
     for (int32 I=0;I<Layout.Resources.Num();++I) Resources+=FString::Printf(TEXT("%s{\"offset\":%u,\"type\":%u}"),I ? TEXT(",") : TEXT(""),uint32(Layout.Resources[I].MemberOffset),uint32(Layout.Resources[I].MemberType));
-    const FString Json=FString::Printf(TEXT("{\"texture_path\":\"%s\",\"width\":32,\"height\":32,\"format\":\"PF_FloatRGBA\",\"srgb\":true,\"mips\":1,\"named_proxy_calls\":%d,\"gpu_half_bytes\":8192,\"gpu_half_sha256\":\"36e082f7fafe908ba57a4e2964752bab086991cd7bace6a902af701d92d79836\",\"root\":2,\"root_bits\":[\"%08x\",\"%08x\",\"%08x\",\"%08x\"],\"sampler_source\":2,\"bound_sampler_resource\":3,\"layout_hash\":%u,\"constant_bytes\":%u,\"resources\":[%s],\"scope\":\"actual owner/cache/RHI, exact original half-float GPU mip and direct-root preshader bits\"}\n"),GLegacySocialTexturePath,NamedCalls,Bits[0],Bits[1],Bits[2],Bits[3],Layout.GetHash(),uint32(Layout.ConstantBufferSize),*Resources);
+    const FString Json=FString::Printf(TEXT("{\"texture_path\":\"%s\",\"width\":32,\"height\":32,\"format\":\"PF_FloatRGBA\",\"srgb\":false,\"filter\":\"TF_Bilinear\",\"addressX\":\"TA_Clamp\",\"addressY\":\"TA_Clamp\",\"compressionSettings\":\"TC_HDR\",\"mips\":1,\"named_proxy_calls\":%d,\"gpu_half_bytes\":8192,\"gpu_half_sha256\":\"36e082f7fafe908ba57a4e2964752bab086991cd7bace6a902af701d92d79836\",\"root\":2,\"root_bits\":[\"%08x\",\"%08x\",\"%08x\",\"%08x\"],\"sampler_source\":2,\"bound_sampler_resource\":3,\"layout_hash\":%u,\"constant_bytes\":%u,\"resources\":[%s],\"scope\":\"actual owner/cache/RHI, exact original half-float GPU mip and direct-root preshader bits\"}\n"),GLegacySocialTexturePath,NamedCalls,Bits[0],Bits[1],Bits[2],Bits[3],Layout.GetHash(),uint32(Layout.ConstantBufferSize),*Resources);
     const FString RawPath=FPaths::Combine(Directory,TEXT("SocialTexture.rgba16f"));
     if (FPaths::FileExists(RawPath) || !FFileHelper::SaveArrayToFile(HalfBytes,*RawPath)) { Error=TEXT("cannot write Social original GPU half-float mip"); return false; }
     const FString Path=FPaths::Combine(Directory,TEXT("SocialTexture.json"));
@@ -2761,7 +2761,7 @@ void RegisterLegacyOriginalMaterialProvider()
         {GLegacyKeybindPath, GLegacyKeybindPath, TEXT("63025b4e3574fffd143a59a0856c17a3db84bcac"), TEXT("6329d72ac27bedb040512ab9965240416d9756fa"), FString(), TEXT("fortnite.legacy-material-ingress.v4"), TEXT("UMaterial"), FString(), GLegacyKeybindPath, false, false},
         {GLegacyHollowPath, GLegacyHollowPath, TEXT("765d5711cda5c0e8915022e817619f3ae7d5abae"), TEXT("591d3a158913e24dbcc0196440a8c3c40efd24aa"), FString(), TEXT("fortnite.legacy-material-ingress.v4"), TEXT("UMaterial"), FString(), GLegacyHollowPath, false, false},
         {GLegacyFlogoPath, GLegacyFlogoParentPath, TEXT("d6b8dad3c9d015dca6a389a82eb5abc25a72aee3"), TEXT("ad8aee1ef762a6ecadee2807b485131a7f3f4426"), FString(), TEXT("fortnite.legacy-material-ingress.v4"), TEXT("UMaterialInstanceConstant"), GLegacyFlogoParentPath, GLegacyFlogoPath, false, false},
-        {GLegacySocialPath, GLegacySocialPath, TEXT("cd1b751d05b478c067f07e438a7967128bf8f88d"), TEXT("c505c4a9977115634e87809ccd0b5e981bfc417d"), FString(), TEXT("fortnite.legacy-material-ingress.v5"), TEXT("UMaterial"), FString(), GLegacySocialPath, false, false},
+        {GLegacySocialPath, GLegacySocialPath, TEXT("d5c2198bee653b99a95b219f517870d82979dd5f"), TEXT("c505c4a9977115634e87809ccd0b5e981bfc417d"), FString(), TEXT("fortnite.legacy-material-ingress.v5"), TEXT("UMaterial"), FString(), GLegacySocialPath, false, false},
         {GLegacyMediaPath, GLegacyMediaPath, TEXT("a920df3ab39fdca2bb82a62f6a2a9ac4601b91d0"), TEXT("8c5013f615de83c1fbaf6d3435c6aaa7f3414a69"), FString(), TEXT("fortnite.legacy-material-ingress.v4"), TEXT("UMaterial"), FString(), GLegacyMediaPath, false, false}
     };
     auto IsHex=[](const FString& Value, int32 Length)
