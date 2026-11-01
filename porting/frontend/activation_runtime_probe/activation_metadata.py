@@ -20,6 +20,10 @@ def function_constructor(syms,name):
  # A bool SetBit helper ends in EPv; match the complete no-arg function name.
  return m.one_syms(syms,prefix,prefix+'v')
 
+def native_registration(syms):
+ name='StaticRegisterNativesUCommonActivatableWidget'
+ return m.one_syms(syms,name,name+'Ev')
+
 def audit(cpp,obj,binary,debug):
  text=Path(cpp).read_text();m.need(m.build_id(binary)==m.build_id(debug),'activation ELF/debug build ID')
  e=m.ObjectELF(obj);linked=m.LinkedELF(binary);syms=symbols(debug)
@@ -50,5 +54,5 @@ def audit(cpp,obj,binary,debug):
    setter=m.one_syms(syms,prefix,'NewProp_ReturnValue_SetBitEPv');m.need(e.rel(prop,48)==setter[2] and m.unpack('Q',pb,48)[0]==setter[0],'native bool setter pointer')
   else:m.need(m.unpack('Q',raw,48)[0]==0 and m.unpack('Q',b,48)[0]==0,'no parameters '+name)
   outputs[name]={'function_hex':b.hex(),'native_exec':execsym[2]}
- register=m.one_syms(syms,'StaticRegisterNativesUCommonActivatableWidget','Ev');m.need(m.instruction_ref(binary,register[0],register[1],lr[0]),'linked native registration consumes exact pair array')
+ register=native_registration(syms);m.need(m.instruction_ref(binary,register[0],register[1],lr[0]),'linked native registration consumes exact pair array')
  return {'passed':True,'build_id':m.build_id(binary),'functions':outputs,'scope':'Activation Linux UHT metadata/native pairs only; no original private C++ ABI identity'}
