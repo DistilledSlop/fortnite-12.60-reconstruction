@@ -16,16 +16,21 @@ mesh shader records remain unknown. All offsets are resource-relative.
 """
 import argparse
 import hashlib
+import importlib.util
 import json
 from pathlib import Path
 import struct
-try:
-    from .legacy_shader_records import material_shader_records
-except ImportError:
-    try:
-        from porting.material_pipeline.legacy_shader_records import material_shader_records
-    except ModuleNotFoundError:
-        from legacy_shader_records import material_shader_records
+
+
+def _load_sibling(name):
+    """Load trusted sibling code even when Python -I removes script paths."""
+    spec = importlib.util.spec_from_file_location(name, Path(__file__).with_name(name + '.py'))
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+material_shader_records = _load_sibling('legacy_shader_records').material_shader_records
 
 MAX_BYTES = 64 * 1024 * 1024
 ARRAYS = ('vector', 'scalar', 'texture_2d', 'texture_cube', 'texture_volume',
@@ -267,14 +272,11 @@ def main():
             for name, address in result['original_serializer_evidence'].items()
             if isinstance(address, str) and address.startswith('0x')}
         if args.shader_archive:
-            try:
-                from .shader_archive import ShaderArchive, sha256
-            except ImportError:
-                from shader_archive import ShaderArchive, sha256
-            with ShaderArchive(args.shader_archive, layout='fortnite-12.60') as archive:
+            library_parser = _load_sibling('shader_archive')
+            with library_parser.ShaderArchive(args.shader_archive, layout='fortnite-12.60') as archive:
                 associate_library(result, archive)
                 result['shader_library'] = {'path': str(args.shader_archive.resolve()),
-                    'sha256': sha256(args.shader_archive), 'bytes': len(archive.data),
+                    'sha256': library_parser.sha256(args.shader_archive), 'bytes': len(archive.data),
                     'layout': archive.layout, 'associated_records': len(result['material_shaders']['records'])}
         args.report.parent.mkdir(parents=True, exist_ok=True)
         args.report.write_text(json.dumps(result, indent=2, allow_nan=False) + '\n')
