@@ -67,6 +67,40 @@ be translated faithfully into the generated classes; no snippets were added
 for these four functions. `BlueprintContextLibrary::GetContext` remains blocked
 on its context-manager lookup and unknown fields.
 
+Additional frontend helper probes (2026-11-01) are preserved under ignored
+`generated/frontend-native-evidence/{ui-helper-candidates,ui-helper-bodies,execute-client-event-deps,get-frontend-camera-deps,get-context-deps}/`.
+Each directory has raw `.c`, `.asm`, `.json`, and `index.json` output from
+`ghidra/probe_callees.py`; the corresponding input address lists are in the
+parent evidence directory. No new snippet was ported from these probes:
+
+- `UFortKismetLibrary::ExecuteClientEvent` exec `0x14296a4b0` calls body
+  `0x141eece20`. The body resolves a world context with `0x141e5b2c0` and
+  forwards four event arguments to `0x141e59c80`, or logs `No WorldContext!`.
+  The dispatcher is 1,216 bytes and builds `HandleClientEvent_%s` function
+  names, searches an event registry, and invokes a virtual slot. Its registry
+  and argument types have not been mapped to generated classes. A generic
+  Blueprint event call would not preserve the observed filtering and fallback.
+- `UFortFrontEndContext::GetFrontEndCamera` exec `0x14523a750` calls
+  `0x144ccc6f0`. That body obtains an object through `0x144cb7c20`, follows
+  another object through `0x141ca78b0`, and reads byte `+0xba`
+  through `0x1412b1090`; it returns zero when either lookup fails. The
+  concrete object and byte field have not been identified. This getter is a
+  dependency clue for `SetFrontEndCamera`, not a safely portable body yet.
+- `UBlueprintContextLibrary::GetContext` exec `0x140823580` calls
+  `0x140822310`. Its `0x140822490` lookup is 751 bytes and handles several
+  context classes and a manager at offset `+0x20`; `0x140822100` initializes
+  a shared singleton. The requested class lookup and manager representation
+  remain unidentified, so returning a guessed subsystem would be wrong.
+
+Reproduce these bounded probes with `porting/.venv/bin/python -I
+porting/ghidra/probe_callees.py --input
+porting/generated/frontend-native-evidence/<input>.json --out
+porting/generated/frontend-native-evidence/<output> --timeout 35 --mem 12G`.
+The five input basenames match the five output directories above. The script rolled
+back its program transaction, though Ghidra project index/metadata files
+changed during the read-only run. These probes alone do not validate UI class
+loading or display.
+
 ## Files
 
 - `MANIFEST.json`: array of entries `{class, function, kind, signature, signature_status, inc_path,
