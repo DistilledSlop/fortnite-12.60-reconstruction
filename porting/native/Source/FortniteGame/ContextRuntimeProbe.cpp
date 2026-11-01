@@ -28,6 +28,28 @@ void Check(const TCHAR* Name, bool Value)
 {
     UE_LOG(LogTemp, Display, TEXT("CONTEXT_PROBE_V1 %s %s"), Name, Value ? TEXT("PASS") : TEXT("FAIL"));
 }
+// Original ConstructFProperties class/object cases OR these exact pointer bits.
+static_assert((uint64(CPF_IsPlainOldData) | uint64(CPF_NoDestructor) | uint64(CPF_ZeroConstructor) | uint64(CPF_HasGetValueTypeHash)) == 0x0008001040000200ULL, "original object property computed flag constants");
+// Current C++ pointer type traits must equal the source-proven original OR bits.
+struct FContextProbeObjectFlags final : TPropertyTypeFundamentals<UObject*>
+{
+    static uint64 Get() { return uint64(GetComputedFlagsPropertyFlags()); }
+};
+void LogContextReflectionProperty(UFunction* Function,const TCHAR* Name,uint64 Raw,uint64 Computed,
+                                  int32 Offset,const TCHAR* Kind,UClass* PropertyClass,UClass* MetaClass)
+{
+    FProperty* P=Function ? FindFProperty<FProperty>(Function,Name) : nullptr;
+    const FObjectPropertyBase* Object=CastField<FObjectPropertyBase>(P);
+    const FClassProperty* Class=CastField<FClassProperty>(P);
+    const FString ActualKind=P ? P->GetClass()->GetName() : TEXT("-");
+    const FString ActualClass=Object && Object->PropertyClass ? Object->PropertyClass->GetPathName() : TEXT("-");
+    const FString ActualMeta=Class && Class->MetaClass ? Class->MetaClass->GetPathName() : TEXT("-");
+    const FString ExpectedClass=PropertyClass ? PropertyClass->GetPathName() : TEXT("-");
+    const FString ExpectedMeta=MetaClass ? MetaClass->GetPathName() : TEXT("-");
+    UE_LOG(LogTemp,Display,TEXT("CONTEXT_REFLECTION name=%s found=%d kind=%s expected_kind=%s raw_flags=%016llx computed_flags=%016llx actual_flags=%016llx expected_flags=%016llx actual_offset=%d expected_offset=%d actual_dim=%d expected_dim=1 property_class=%s expected_property_class=%s meta_class=%s expected_meta_class=%s"),
+        Name,P!=nullptr,*ActualKind,Kind,Raw,Computed,P ? uint64(P->PropertyFlags) : 0ULL,Raw|Computed,
+        P ? P->GetOffset_ForInternal() : -1,Offset,P ? P->ArrayDim : -1,*ActualClass,*ExpectedClass,*ActualMeta,*ExpectedMeta);
+}
 int32 LiveCount(UClass* Class)
 {
     int32 Count = 0;
@@ -58,10 +80,15 @@ void Run(UWorld* World)
     FObjectProperty* Ret = Function ? FindFProperty<FObjectProperty>(Function, TEXT("ReturnValue")) : nullptr;
     FClassProperty* ClassProp = Function ? FindFProperty<FClassProperty>(Function, TEXT("Class")) : nullptr;
     FObjectProperty* Obj = Function ? FindFProperty<FObjectProperty>(Function, TEXT("ContextObject")) : nullptr;
+    const uint64 ComputedFlags=FContextProbeObjectFlags::Get();
+    Check(TEXT("reflection_computed_flags"), ComputedFlags==0x0008001040000200ULL);
+    LogContextReflectionProperty(Function,TEXT("ReturnValue"),0x10000000000580ULL,ComputedFlags,16,TEXT("ObjectProperty"),USubsystem::StaticClass(),nullptr);
+    LogContextReflectionProperty(Function,TEXT("Class"),0x14000000000080ULL,ComputedFlags,8,TEXT("ClassProperty"),UClass::StaticClass(),USubsystem::StaticClass());
+    LogContextReflectionProperty(Function,TEXT("ContextObject"),0x10000000000080ULL,ComputedFlags,0,TEXT("ObjectProperty"),UObject::StaticClass(),nullptr);
     Check(TEXT("reflection_function"), Function && Function->GetOuter() == UBlueprintContextLibrary::StaticClass() && Function->FunctionFlags == 0x14022409 && Function->ParmsSize == 24 && Function->NumParms == 3 && Function->GetNativeFunc() != nullptr);
-    Check(TEXT("reflection_return"), Ret && Ret->GetOffset_ForInternal() == 16 && Ret->ArrayDim == 1 && uint64(Ret->PropertyFlags) == 0x10000000000580ULL && Ret->PropertyClass == USubsystem::StaticClass());
-    Check(TEXT("reflection_class"), ClassProp && ClassProp->GetOffset_ForInternal() == 8 && ClassProp->ArrayDim == 1 && uint64(ClassProp->PropertyFlags) == 0x14000000000080ULL && ClassProp->PropertyClass == UClass::StaticClass() && ClassProp->MetaClass == USubsystem::StaticClass());
-    Check(TEXT("reflection_object"), Obj && Obj->GetOffset_ForInternal() == 0 && Obj->ArrayDim == 1 && uint64(Obj->PropertyFlags) == 0x10000000000080ULL && Obj->PropertyClass == UObject::StaticClass());
+    Check(TEXT("reflection_return"), Ret && Ret->GetOffset_ForInternal() == 16 && Ret->ArrayDim == 1 && uint64(Ret->PropertyFlags) == (0x10000000000580ULL | ComputedFlags) && Ret->PropertyClass == USubsystem::StaticClass());
+    Check(TEXT("reflection_class"), ClassProp && ClassProp->GetOffset_ForInternal() == 8 && ClassProp->ArrayDim == 1 && uint64(ClassProp->PropertyFlags) == (0x14000000000080ULL | ComputedFlags) && ClassProp->PropertyClass == UClass::StaticClass() && ClassProp->MetaClass == USubsystem::StaticClass());
+    Check(TEXT("reflection_object"), Obj && Obj->GetOffset_ForInternal() == 0 && Obj->ArrayDim == 1 && uint64(Obj->PropertyFlags) == (0x10000000000080ULL | ComputedFlags) && Obj->PropertyClass == UObject::StaticClass());
     Check(TEXT("null"), Lookup(nullptr, Legacy) == nullptr);
     const int32 Before = LiveCount(Legacy);
     Check(TEXT("lookup_no_create"), Lookup(LP, Legacy) == nullptr && LiveCount(Legacy) == Before);

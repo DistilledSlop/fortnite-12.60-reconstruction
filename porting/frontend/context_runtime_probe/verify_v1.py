@@ -6,7 +6,7 @@ import json
 from pathlib import Path
 import re
 
-REQUIRED = ('preconditions','classes','families','reflection_function','reflection_return','reflection_class','reflection_object','null','lookup_no_create','widget_owner',
+REQUIRED = ('preconditions','classes','families','reflection_computed_flags','reflection_function','reflection_return','reflection_class','reflection_object','null','lookup_no_create','widget_owner',
             'subsystems_present','local_front','local_global','game_director','player_selection',
             'registry_creation','registry_gc_retains','registry_replacement','registry_remove','registry_pending_reachable',
             'registry_collect_after_remove')

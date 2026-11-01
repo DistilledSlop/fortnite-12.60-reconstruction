@@ -6,6 +6,7 @@ import provenance as p
 import verify_metadata as m
 import verify_events as e
 import verify_v1
+import verify_reflection
 
 def check(v,msg):
  if not v: raise ValueError(msg)
@@ -30,8 +31,9 @@ def main():
   check(run['binary_sha256']==build['targets']['FortniteLinux']['binary']['sha256'] and p.digest(run['argv'][0])==run['binary_sha256'] and '-ContextRuntimeProbe' in run['argv'] and '-ContextProbeCase='+case in run['argv'],'live executable binding '+case)
   log=Path(run['log']['path']);check(log.resolve()==(root/(case+'.runtime.log')).resolve() and p.digest(log)==run['log']['sha256'],'live log hash '+case)
   text=log.read_text();check(text.count('CONTEXT_DRIVER start case='+case+' ')==1 and text.count('CONTEXT_DRIVER complete case='+case)==1 and 'CONTEXT_DRIVER timeout' not in text,'automatic driver completion');check(case!='registry' or verify_v1.verify(text),'live lookups, GC, removal and reflection checks')
+  reflection=verify_reflection.verify(text) if case=='registry' else None
   detail=e.registry(text) if case=='registry' else e.lifecycle(text)
-  runs[case]={'run_sha256':p.digest(path),'log_sha256':p.digest(log),'pid':run['pid'],'start_ns':run['start_ns'],'end_ns':run['end_ns'],'observer':detail}
+  runs[case]={'run_sha256':p.digest(path),'log_sha256':p.digest(log),'pid':run['pid'],'start_ns':run['start_ns'],'end_ns':run['end_ns'],'observer':detail,'loaded_reflection':reflection}
  check(runs['registry']['pid']!=runs['lifecycle']['pid'] or runs['registry']['end_ns']<runs['lifecycle']['start_ns'],'distinct process invocations')
  report={'schema':'context-live-verification-v1','passed':True,'source_receipt_sha256':p.RH,'candidate_patch_sha256':p.PH,'root_audit_sha256':p.AH,'build_sha256':p.digest(build_file),'metadata':outputs,'live_cases':runs,'limitations':'Diagnostic creation only; concrete subsystem init/tick/service behavior, authentic startup and four product milestones remain unverified.'}
  p.write_new(args.report,report);print(json.dumps({'report':str(args.report.resolve()),'sha256':p.digest(args.report),'passed':True}))

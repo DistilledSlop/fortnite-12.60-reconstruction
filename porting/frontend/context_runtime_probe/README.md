@@ -46,3 +46,22 @@ python3 -m unittest discover -s porting/frontend/context_runtime_probe/tests -v
 The synthetic ELF, event mutations and portable source-contract checks test
 the evidence tools; actual UE build and runtime acceptance remains separate.
 `audit_manifest.py` replays the archived candidate's strict file manifest.
+
+
+V6 loaded-property diagnostics preserve the exact raw original UHT/object/ELF audit.
+Original ConstructFProperties class/object cases add exactly `0x0008001040000200`
+to raw flags. The probe exposes the current typed `UObject*` traits computation,
+requires that result exactly, and compares loaded flags with raw OR that exact
+result. A static guard verifies all four enum-bit constants. No unknown-bit mask
+is used. Three `CONTEXT_REFLECTION` rows measure found state, actual/expected
+flags, offset, array dimension, field kind, PropertyClass and MetaClass. Missing,
+duplicate, malformed or changed rows fail the independent measured-row verifier.
+Raw metadata checks and generic runtime implementation are unchanged.
+
+Use the existing `-stdout` launcher with the source-evidenced `-NOCONSOLE` option
+for the two disposable client cases; keep other normal arguments, including
+`-log`, unchanged. Unix normally installs a second console output device, so
+without this transport option every observed event is printed twice. Never
+normalize or deduplicate recorded events. Phase2 retains both original transports
+and the actual loaded-property failures; V6 requires fresh measured live rows.
+The original static constructor proof does not claim original runtime heap fields.
