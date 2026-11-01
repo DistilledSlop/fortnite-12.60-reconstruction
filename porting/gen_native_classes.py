@@ -1581,6 +1581,31 @@ UI_PARAMETERIZED_BLUEPRINT_EVENTS = {
 }
 
 
+# Original class-link and FFunctionParams evidence: frontend/parameterless_super_events_evidence.md.
+OBSERVED_PARAMETERLESS_SUPER_EVENTS = (
+    ('UCommonActivatableWidget', 'BP_OnActivated', '0x1408079b0', '0x140805d90', 0x08080800, 'protected'),
+    ('UCommonButton', 'BP_OnClicked', '0x140805cb0', '0x140806710', 0x08080800, 'protected'),
+    ('UCommonButton', 'BP_OnDisabled', '0x140805cb0', '0x1408067a0', 0x08080800, 'protected'),
+    ('UCommonButton', 'BP_OnEnabled', '0x140805cb0', '0x140806800', 0x08080800, 'protected'),
+    ('UCommonButton', 'BP_OnUnhovered', '0x140805cb0', '0x140806890', 0x08080800, 'protected'),
+    ('UCommonButton', 'OnActionComplete', '0x140805cb0', '0x140806e40', 0x08080800, 'protected'),
+    ('UCommonButton', 'OnCurrentTextStyleChanged', '0x140805cb0', '0x140806ea0', 0x08080800, 'protected'),
+    ('UEmergencyNoticeBase', 'HideNotice', '0x1451e6f80', '0x1451e7070', 0x08080800, 'protected'),
+    ('UFortFriendSubscriptionToastWidget', 'OnPlayCloseAnimation', '0x145235570', '0x145235650', 0x08080800, 'protected'),
+    ('UFortFriendSubscriptionToastWidget', 'OnPlayOpenAnimation', '0x145235570', '0x145235680', 0x08080800, 'protected'),
+    ('UFortPlayerPowerRatingToast', 'ShowToast', '0x1452a12b0', '0x1452a13d0', 0x08080800, 'protected'),
+    ('UFortVoiceChannelChangePopup', 'OnPlayCloseAnimation', '0x14531fef0', '0x1453202a0', 0x08080800, 'protected'),
+    ('UFortVoiceChannelChangePopup', 'OnPlayOpenAnimation', '0x14531fef0', '0x145320310', 0x08080800, 'protected'),
+    ('UFortWebLoginWidget', 'DismissWidget', '0x1453208a0', '0x1453208d0', 0x0c020800, 'public'),
+)
+for _owner, _name, _outer, _create, _flags, _access in OBSERVED_PARAMETERLESS_SUPER_EVENTS:
+    UI_PARAMETERIZED_BLUEPRINT_EVENTS.setdefault(_owner, {})[_name] = {
+        "owner_fn": _outer, "create_func": _create, "flags": _flags, "params": [], "args": [],
+        "specifiers": ["BlueprintImplementableEvent"] + (["BlueprintCallable"] if _flags & 0x04000000 else []),
+        "access": _access,
+    }
+
+
 def build_functions_promoted(functions, resolver, notify_names, owner_fns, splice_names=frozenset(),
                              blueprint_events=frozenset(), parameterized_blueprint_events=None):
     """Emit RPCs, RepNotify targets, snippet functions and narrowly selected observed Blueprint events.
