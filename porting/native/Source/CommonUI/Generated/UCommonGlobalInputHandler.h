@@ -14,5 +14,7 @@ class COMMONUI_API UCommonGlobalInputHandler : public UObject
 	GENERATED_BODY()
 
 public:
+public:
+    uint32 NativePriorityFilter = 0;
 };
 

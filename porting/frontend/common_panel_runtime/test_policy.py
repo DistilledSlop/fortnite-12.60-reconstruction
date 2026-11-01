@@ -27,5 +27,6 @@ class Policy(unittest.TestCase):
         m=self.model();m['functions']=[{'name':'ActivateWidget'}]
         with self.assertRaises(ValueError):self.run_policy(model=m)
     def test_panel_not_stubbed(self):
-        m={'name':'UCommonActivatablePanel','functions':[]};self.assertEqual(p.apply(m,{},set())['functions'],[])
+        m={'name':'UCommonActivatablePanel','functions':[]}
+        with self.assertRaises(ValueError):p.apply(m,{},set())
 if __name__=='__main__':unittest.main()

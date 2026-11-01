@@ -62,3 +62,19 @@ actual UFunction via `ProcessEvent`, alongside direct and alias queries. A
 matching transcript alone does not establish its provenance. This controlled
 query and native-flags fixture does not establish the state producer, the whole
 constructor or `Initialize`, button styling, or acceptance of the main UI.
+
+## Panel intro diagnostic
+
+Use `--case panel-intro` to launch `-PanelIntroProbe`; the runner checks its
+ordered transcript and records the result in the receipt and `verification.json`.
+It can also be checked independently:
+
+```sh
+python3 porting/frontend/button_internal_runtime_probe/panel_intro_verifier.py path/to/runtime.log --output path/to/result.json
+```
+
+The controlled fixture checks defaults and metadata, completion and activation
+callback order, deferred requests, reentry, and input-method notifications. It
+uses C++ `ProcessEvent` interception to defer intro and observe events; this does
+not establish Blueprint VM behavior, authentic UI behavior, or deactivation.
+The transcript alone does not establish its provenance.

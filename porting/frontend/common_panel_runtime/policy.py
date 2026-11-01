@@ -111,3 +111,21 @@ def emit_headers(source_root, generated_names):
     target=Path(source_root)/'CommonUI/Generated'
     for name in ['CommonActivationCore.h','CommonActivationNative.h']:
         (target/name).write_text((HERE/name).read_text())
+
+# Bounded Panel intro activation extension; original base/button/manager policies above retained.
+import importlib.util as _intro_import
+_intro_spec=_intro_import.spec_from_file_location('panel_intro_activation_policy',HERE/'panel_intro_policy.py')
+_intro=_intro_import.module_from_spec(_intro_spec);_intro_spec.loader.exec_module(_intro)
+_prior_apply=apply
+_prior_header_prelude=header_prelude
+_prior_declarations=declarations
+_prior_definitions=definitions
+_prior_emit_headers=emit_headers
+def apply(model,block,owner_fns):
+    return _intro.apply(_prior_apply(model,block,owner_fns),block,owner_fns)
+def header_prelude(model):return _intro.header_prelude(_prior_header_prelude(model))
+def declarations(model):return _prior_declarations(model)+_intro.declarations(model)
+def definitions(model):return _prior_definitions(model)+_intro.definitions(model)
+def emit_headers(source_root,generated_names):
+    _prior_emit_headers(source_root,generated_names)
+    _intro.emit_headers(source_root,generated_names)

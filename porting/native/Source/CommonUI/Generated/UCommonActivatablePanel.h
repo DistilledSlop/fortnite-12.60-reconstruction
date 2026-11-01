@@ -6,7 +6,10 @@
 #include "CoreMinimal.h"
 #include "UCommonActivatableWidget.h"
 
+#include "CommonPanelActivationNative.h"
 #include "FOnWidgetActivationChangedDynamic.h"
+
+class UCommonInputManager;
 
 #include "UCommonActivatablePanel.generated.h"
 
@@ -36,5 +39,38 @@ public:
 	UPROPERTY()
 	bool bShouldBypassStack;
 
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void OnBeginIntro();
+public:
+
+protected:
+	UFUNCTION(BlueprintCallable)
+	void EndIntro();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnInputModeChanged(bool bUsingGamepad);
+public:
+
+protected:
+    virtual void OnBeginIntro_Implementation();
+    virtual void NativeActivateRequest() override;
+    virtual void NativeHandleActivated() override;
+    virtual void NativeIntroComplete();
+    virtual void NativeInputMethodChangedHook(ECommonInputType InputType);
+    virtual uint32 NativeGetGlobalInputPriorityFilter() const;
+private:
+    friend class UCommonInputManager;
+#if !UE_BUILD_SHIPPING && !UE_BUILD_TEST
+    friend struct FPanelIntroProbeAccess;
+#endif
+    void NativeInputMethodChanged(ECommonInputType InputType);
+    bool bNativeIsIntroed = false;
+    TWeakObjectPtr<UCommonInputManager> NativeInputManager;
+    FDelegateHandle NativeInputMethodHandle;
+    FCommonPanelOperationCallback NativePreActivation;
+    FCommonPanelOperationCallback NativePostActivation;
 };
 

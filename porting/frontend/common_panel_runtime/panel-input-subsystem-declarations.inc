@@ -1,0 +1,2 @@
+public:
+    FCommonInputNativeMethodChanged NativeInputMethodChanged;

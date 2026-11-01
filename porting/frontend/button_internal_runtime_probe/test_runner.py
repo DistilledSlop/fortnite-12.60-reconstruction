@@ -41,6 +41,8 @@ class RunnerTests(unittest.TestCase):
                          [str(self.binary), '-ButtonInternalProbe', *runner.BASE_ARGS])
         self.assertEqual(runner.command(self.binary, 'main-button'),
                          [str(self.binary), '-MainButtonStateProbe', *runner.BASE_ARGS])
+        self.assertEqual(runner.command(self.binary, 'panel-intro'),
+                         [str(self.binary), '-PanelIntroProbe', *runner.BASE_ARGS])
         self.assertEqual(runner.command(self.binary, 'activation'),
                          [str(self.binary), '-ActivationBaseProbe', *runner.BASE_ARGS])
         for case in ('registry', 'lifecycle'):
@@ -74,6 +76,21 @@ class RunnerTests(unittest.TestCase):
         receipt = json.loads((self.root / 'out/receipt.json').read_text())
         self.assertFalse(receipt['transcript']['passed'])
         self.assertEqual(receipt['transcript'], json.loads((self.root / 'out/verification.json').read_text()))
+
+    def test_panel_intro_requires_transcript(self):
+        self.assertFalse(runner.run(self.args('panel-intro')))
+        receipt = json.loads((self.root / 'out/receipt.json').read_text())
+        self.assertFalse(receipt['transcript']['passed'])
+        self.assertEqual(receipt['transcript'], json.loads((self.root / 'out/verification.json').read_text()))
+
+    def test_panel_intro_records_successful_verification(self):
+        result = {'passed': True, 'rows': 49, 'scope': 'test'}
+        with mock.patch.object(runner.panel_intro_verifier, 'verify', return_value=result) as verify:
+            self.assertTrue(runner.run(self.args('panel-intro')))
+        verify.assert_called_once()
+        receipt = json.loads((self.root / 'out/receipt.json').read_text())
+        self.assertEqual(receipt['transcript'], result)
+        self.assertEqual(json.loads((self.root / 'out/verification.json').read_text()), result)
 
     def test_empty_cmdline_is_retried_but_wrong_nonempty_is_rejected(self):
         original = Path.read_bytes

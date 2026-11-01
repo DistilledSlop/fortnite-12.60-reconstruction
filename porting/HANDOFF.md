@@ -2,6 +2,24 @@
 
 ## Current resume point (2026-11-01)
 
+- Current integration pending shared build/runtime: authentic Panel NativeActivateRequest ->
+  OnBeginIntro BlueprintNativeEvent -> EndIntro -> full Panel activation override is now normally
+  generated. Native input multicast/global priority fields and CommonUI->CommonInput dependency are
+  included; callback defaults are proven RET/zero leaves, not invented native-event stubs. Root restored
+  the omitted first-request CSV event: category Slate/default-enabled, format Activate: %s, FName string
+  temporary destroyed before introed flag changes. Category inline literal146638c20 and init140488d46..6c
+  prove the name; API matches FCsvProfiler::RecordEventfInternal, not UE_LOG. No extra TRACE_BOOKMARK.
+  Source proof /tmp/panel-intro-root-integration-1/csv-proof.json. All11old candidate windows match late
+  image338c...de680 in /tmp/panel-intro-late-audit-1/report.json. Root owns subsequent builds/stage.
+- Promotion /tmp/panel-intro-root-integration-1/generation-result.json changes five expected files,
+  adds two real helper headers and restores12552unchanged timestamps. Tests:27policy/core,141generator,
+  19diagnostic tooling pass. Isolated /tmp/panel-intro-ue-preflight-1 passes fresh UHT and14actual UE
+  source/glue syntax units for pre-CSV/pre-probe candidate; monolithic COMMONINPUT_API was supplied
+  explicitly because the old response file predated the new dependency. Full updated build still needed.
+- New opt-in PanelIntroProbe has49orderedrows: actual default/deferred/completion-reentry activation,
+  metadata, pre/base/Panel/post ordering, real input listener/priority write, fixture cleanup/restoration.
+  ProcessEvent interception is controlled C++ evidence, not Blueprint VM or authentic UI startup.
+  Deactivation/outro and input/manager producers remain unfinished. No new runtime pass or gate credit yet.
 - Latest validated Native5590b97b9fc1e80800a0740f09a540432313148f / Engined7e04d4b6:
   main CommonButton IsInteractionEnabled query is normally generated with exact owner/signature guards,
   both proven native defaults and a native-only global-input forwarder. It caches visibility first and

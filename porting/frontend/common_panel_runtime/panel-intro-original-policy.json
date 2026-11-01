@@ -1,0 +1,96 @@
+{
+  "OnBeginIntro": {
+    "name": "OnBeginIntro",
+    "create_func": "0x1408057b0",
+    "flags": [
+      "0x8080c00"
+    ],
+    "replicated_function": false,
+    "net_roles": [],
+    "outer_fn": "0x140807980",
+    "params": []
+  },
+  "EndIntro": {
+    "name": "EndIntro",
+    "create_func": "0x140807ca0",
+    "flags": [
+      "0x4080401"
+    ],
+    "replicated_function": false,
+    "net_roles": [],
+    "outer_fn": "0x140807980",
+    "params": []
+  },
+  "OnInputModeChanged": {
+    "name": "OnInputModeChanged",
+    "create_func": "0x140805810",
+    "flags": [
+      "0x8080800"
+    ],
+    "replicated_function": false,
+    "net_roles": [],
+    "params_note": "ambiguous: candidates disagree on parameter table",
+    "candidates": [
+      {
+        "owning_class": null,
+        "outer_fn": "0x140807980",
+        "flags": "0x8080800",
+        "nprop": 1,
+        "params": [
+          {
+            "index": 0,
+            "name": "bUsingGamepad",
+            "kind": "Bool",
+            "kind_raw": "0x2c",
+            "property_flags": "0x10000000000080",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "element_size": 1,
+            "size_of_outer": 1,
+            "bitfield": true,
+            "set_bit_fn": "0x1406966a0",
+            "offset": null
+          }
+        ]
+      },
+      {
+        "owning_class": null,
+        "outer_fn": "0x14531fef0",
+        "flags": "0x8080800",
+        "nprop": 2,
+        "params": [
+          {
+            "index": 0,
+            "name": "NewInputType",
+            "kind": "Enum",
+            "kind_raw": "0x1e",
+            "property_flags": "0x10000000000080",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 0,
+            "type_refs": {
+              "enum": "0x14081ee20"
+            }
+          },
+          {
+            "index": 1,
+            "name": "UnderlyingType",
+            "kind": "Byte",
+            "kind_raw": "0x0",
+            "property_flags": "0x0",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 0,
+            "enum_underlying_of": "NewInputType"
+          }
+        ]
+      }
+    ]
+  }
+}

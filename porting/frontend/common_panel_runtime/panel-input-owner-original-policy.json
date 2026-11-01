@@ -1,0 +1,214 @@
+{
+  "0x145a058e0": {
+    "block_va": "0x145a058e0",
+    "properties": []
+  },
+  "0x145a0e0d0": {
+    "block_va": "0x145a0e0d0",
+    "properties": [
+      {
+        "index": 0,
+        "name": "bIsGamepadSimulatedClick",
+        "kind": "Bool",
+        "kind_raw": "0x2c",
+        "property_flags": "0x40000000002000",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "element_size": 1,
+        "size_of_outer": 240,
+        "bitfield": true,
+        "set_bit_fn": "0x140757a30",
+        "offset": null
+      },
+      {
+        "index": 1,
+        "name": "CurrentInputLocks",
+        "kind": "Map",
+        "kind_raw": "0x17",
+        "property_flags": "0x40000000002000",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 128
+      },
+      {
+        "index": 2,
+        "name": "CurrentInputLocks_Key",
+        "kind": "Name",
+        "kind_raw": "0x14",
+        "property_flags": "0x0",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 0
+      },
+      {
+        "index": 3,
+        "name": "CurrentInputLocks",
+        "kind": "Enum",
+        "kind_raw": "0x1e",
+        "property_flags": "0x0",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 1,
+        "type_refs": {
+          "enum": "0x14081ee20"
+        }
+      },
+      {
+        "index": 4,
+        "name": "UnderlyingType",
+        "kind": "Byte",
+        "kind_raw": "0x0",
+        "property_flags": "0x0",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 0,
+        "enum_underlying_of": "CurrentInputLocks"
+      },
+      {
+        "index": 5,
+        "name": "GamepadInputType",
+        "kind": "Enum",
+        "kind_raw": "0x1e",
+        "property_flags": "0x40000000002000",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 122,
+        "type_refs": {
+          "enum": "0x14081edf0"
+        }
+      },
+      {
+        "index": 6,
+        "name": "UnderlyingType",
+        "kind": "Byte",
+        "kind_raw": "0x0",
+        "property_flags": "0x0",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 0,
+        "enum_underlying_of": "GamepadInputType"
+      },
+      {
+        "index": 7,
+        "name": "CurrentInputType",
+        "kind": "Enum",
+        "kind_raw": "0x1e",
+        "property_flags": "0x40000000002000",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 121,
+        "type_refs": {
+          "enum": "0x14081ee20"
+        }
+      },
+      {
+        "index": 8,
+        "name": "UnderlyingType",
+        "kind": "Byte",
+        "kind_raw": "0x0",
+        "property_flags": "0x0",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 0,
+        "enum_underlying_of": "CurrentInputType"
+      },
+      {
+        "index": 9,
+        "name": "LastInputType",
+        "kind": "Enum",
+        "kind_raw": "0x1e",
+        "property_flags": "0x40000000002000",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 120,
+        "type_refs": {
+          "enum": "0x14081ee20"
+        }
+      },
+      {
+        "index": 10,
+        "name": "UnderlyingType",
+        "kind": "Byte",
+        "kind_raw": "0x0",
+        "property_flags": "0x0",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 0,
+        "enum_underlying_of": "LastInputType"
+      },
+      {
+        "index": 11,
+        "name": "LastTimeInputMethodThrashingBegan",
+        "kind": "Double",
+        "kind_raw": "0xb",
+        "property_flags": "0x40000000002000",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 112
+      },
+      {
+        "index": 12,
+        "name": "LastInputMethodChangeTime",
+        "kind": "Double",
+        "kind_raw": "0xb",
+        "property_flags": "0x40000000002000",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 104
+      },
+      {
+        "index": 13,
+        "name": "NumberOfInputMethodChangesRecently",
+        "kind": "Int",
+        "kind_raw": "0x3",
+        "property_flags": "0x40000000002000",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 96
+      },
+      {
+        "index": 14,
+        "name": "OnInputMethodChanged",
+        "kind": "InlineMulticastDelegate",
+        "kind_raw": "0x1b",
+        "property_flags": "0x40000010080000",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 80,
+        "type_refs": {
+          "signature": "0x14081edc0"
+        }
+      }
+    ]
+  }
+}

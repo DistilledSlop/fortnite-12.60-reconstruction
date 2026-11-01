@@ -1,0 +1,56 @@
+#include "CommonActivationCore.h"
+#include "UCommonInputSubsystem.h"
+#include "UCommonInputManager.h"
+#include "UCommonGlobalInputHandler.h"
+#include "UCommonUISubsystem.h"
+#include "Engine/LocalPlayer.h"
+#include "Engine/GameInstance.h"
+#include "ProfilingDebugging/CsvProfiler.h"
+CSV_DECLARE_CATEGORY_MODULE_EXTERN(SLATECORE_API, Slate);
+void UCommonActivatablePanel::NativeActivateRequest()
+{
+    if (bNativeIsIntroed) return;
+#if CSV_PROFILER
+    {
+        const FString Name = GetFName().ToString();
+        FCsvProfiler::RecordEventf(CSV_CATEGORY_INDEX(Slate), TEXT("Activate: %s"), *Name);
+    }
+#endif
+    bNativeIsIntroed = true;
+    OnBeginIntro();
+}
+void UCommonActivatablePanel::OnBeginIntro_Implementation() { EndIntro(); }
+void UCommonActivatablePanel::EndIntro()
+{
+    CommonActivationCore::EndIntro([this]{NativeIntroComplete();},[this]{return bIsActive;},
+        [this](bool Value){bIsActive=Value;},[this]{NativeHandleActivated();});
+}
+void UCommonActivatablePanel::NativeHandleActivated()
+{
+    ULocalPlayer* Player=GetOwningLocalPlayer();
+    UCommonInputSubsystem* Input=Player?Player->GetSubsystem<UCommonInputSubsystem>():nullptr;
+    if(Input)
+    {
+        UGameInstance* GI=GetGameInstance();
+        UCommonUISubsystem* UI=GI?GI->GetSubsystem<UCommonUISubsystem>():nullptr;
+        if(UI&&UI->CommonInputManager&&UI->CommonInputManager->GlobalInputHandler)
+            UI->CommonInputManager->GlobalInputHandler->NativePriorityFilter=NativeGetGlobalInputPriorityFilter();
+        NativeInputMethodHandle=Input->NativeInputMethodChanged.AddUObject(this,&UCommonActivatablePanel::NativeInputMethodChanged);
+    }
+    NativePreActivation.ExecuteIfBound(this);
+    (void)NativeInputManager.Get();
+    Super::NativeHandleActivated();
+    OnWidgetActivated.Broadcast(this);
+    NativePostActivation.ExecuteIfBound(this);
+}
+void UCommonActivatablePanel::NativeInputMethodChanged(ECommonInputType InputType)
+{
+    NativeInputMethodChangedHook(InputType);
+    OnInputModeChanged(InputType==ECommonInputType::Gamepad);
+}
+// Original constructor primary vtable 1459edb10: slots 4d0 and 4e0
+// both target 1406801c0, exact bytes c2 00 00 (RET 0). Calls remain virtual.
+void UCommonActivatablePanel::NativeIntroComplete() {}
+void UCommonActivatablePanel::NativeInputMethodChangedHook(ECommonInputType) {}
+// Slot 4c8 targets 140680300, exact bytes 33 c0 c3 (XOR EAX,EAX; RET).
+uint32 UCommonActivatablePanel::NativeGetGlobalInputPriorityFilter() const { return 0; }

@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "Subsystems/LocalPlayerSubsystem.h"
 
+#include "CommonInputMethodNative.h"
 #include "ECommonGamepadType.h"
 #include "ECommonInputType.h"
 #include "FInputMethodChangedDelegate.h"
@@ -54,5 +55,7 @@ public:
 	UPROPERTY(Transient)
 	bool bIsGamepadSimulatedClick;
 
+public:
+    FCommonInputNativeMethodChanged NativeInputMethodChanged;
 };
 

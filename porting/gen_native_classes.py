@@ -2943,13 +2943,13 @@ def render_promoted_header(model, api, parent_include, source_label):
     for fd in pending:
         lines.extend(field_lines(fd))
     for f in model["functions"]:
-        if f.get("blueprint_event"):
+        if f.get("blueprint_event") or f.get("access") == "protected":
             lines.append(f.get("access", "protected") + ":")
         lines.append("\tUFUNCTION(%s)" % ", ".join(f["specifiers"]))
         lines.append("\t%s%s %s(%s)%s;" % ("static " if f.get("static") else "", f.get("ret", "void"), f["name"],
                                        ", ".join(header_arg(f, a) for a in f["args"]),
                                        " const" if f.get("const") else ""))
-        if f.get("blueprint_event"):
+        if f.get("blueprint_event") or f.get("access") == "protected":
             lines.append("public:")
         if f["rpc"] and not f.get("service"):
             lines.append("\tvoid %s_Implementation(%s)%s;" % (f["name"], ", ".join(f["args"]),
@@ -3427,6 +3427,7 @@ def promote(args):
             add_deps(module, [parent_pkg.rsplit("/", 1)[-1]])
         add_deps(module, [gate.engine.module_of_inc.get(inc) for inc in model["includes"] + model["cpp_includes"]])
         add_deps(module, cross_module_modules(gate, model["used"], package))
+        add_deps(module, model.get("runtime_module_dependencies", []))
         # Forward-declared classes of another generated package need that module (a cycle is refused below).
         add_deps(module, [(package_of.get(ref) or "").rsplit("/", 1)[-1] for ref in model["forward_decls"]
                           if (package_of.get(ref) or "") in PROMOTE_PACKAGES and package_of.get(ref) != package])
