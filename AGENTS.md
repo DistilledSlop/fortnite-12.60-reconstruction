@@ -11,3 +11,7 @@ Record exact commands, outcomes, and artifact paths in the handoff. Distinguish 
 Preserve the current Luna/Terra/Sol model configuration in compaction summaries and handoffs. It supersedes the earlier `gpt-6-sol` implementation default.
 
 The primary agent also performs difficult implementation, debugging, and problem solving directly when that best advances the goal, while continuing to plan, orchestrate, and review delegated work.
+
+# Input and tool-output efficiency
+
+Keep input-token use economical. Start with bounded searches and small head/tail or matched-context excerpts; cap result counts and tool output. Process large generated files with scripts and return only the needed fields or summaries. Read short log tails and relevant failure windows instead of repetitive full logs. Expand the read window only when the smaller view is insufficient; reading a reasonably sized full file is acceptable when needed. Preserve this preference alongside the subagent configuration in handoffs and compaction summaries.
