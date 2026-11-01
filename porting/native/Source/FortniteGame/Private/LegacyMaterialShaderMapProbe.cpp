@@ -15,6 +15,8 @@
 #include "Misc/FileHelper.h"
 #include "Misc/SecureHash.h"
 #include "LegacySlateMaterial.h"
+#include "LegacyMaterialAsset.h"
+#include "LegacyOriginalMaterialReader.h"
 #include "Dom/JsonObject.h"
 #include "Serialization/JsonReader.h"
 #include "Serialization/JsonSerializer.h"
@@ -106,7 +108,7 @@ static bool RewriteLegacySpirv(const FString& Path, const FString& ExpectedSha1,
 }
 
 static bool PrepareLegacyOutput(const TSharedPtr<FJsonObject>& Shader, const FRHIUniformBufferLayout& Layout,
-    FLegacySlateShaderInput& Input, FString& Error)
+    FLegacySlateShaderInput& Input, FString& Error, bool bWriteArtifacts = true)
 {
     const TSharedPtr<FJsonObject> Record = Shader->GetObjectField(TEXT("record"));
     const TSharedPtr<FJsonObject> Reflection = Shader->GetObjectField(TEXT("reflection"));
@@ -224,7 +226,7 @@ static bool PrepareLegacyOutput(const TSharedPtr<FJsonObject>& Shader, const FRH
     Input.Output.bSucceeded = true;
     Input.Output.GenerateOutputHash();
     FString ArtifactDirectory;
-    if (FParse::Value(FCommandLine::Get(), TEXT("FortniteLegacyMaterialArtifactDir="), ArtifactDirectory))
+    if (bWriteArtifacts && FParse::Value(FCommandLine::Get(), TEXT("FortniteLegacyMaterialArtifactDir="), ArtifactDirectory))
     {
         if (!FPaths::DirectoryExists(ArtifactDirectory) || Input.TypeName.IsEmpty() ||
             FPaths::GetCleanFilename(Input.TypeName) != Input.TypeName)
@@ -339,18 +341,18 @@ struct FLegacyDrawBindings
     uint16 ParamsBuffer = 0, ParamsOffset = 0, MaterialBuffer = 0;
 };
 
-static bool DrawLegacySlateQuad(const TRefCountPtr<FMaterialShaderMap>& Map, const FLegacyDrawBindings& Bindings, FString& Error)
+static bool DrawLegacySlateQuad(const TRefCountPtr<FMaterialShaderMap>& Map, const FLegacyDrawBindings& Bindings, FString& Error, UMaterial* Owner = nullptr, const FMaterial* ExpectedOwnerResource = nullptr)
 {
     FShaderType* VertexType = FindShaderTypeByName(FHashedName(TEXT("TSlateMaterialShaderVSfalse")));
     FShaderType* PixelType = FindShaderTypeByName(FHashedName(TEXT("TSlateMaterialShaderPSDefault")));
-    UMaterial* DefaultMaterial = UMaterial::GetDefaultMaterial(MD_Surface);
+    UMaterial* DefaultMaterial = Owner ? Owner : UMaterial::GetDefaultMaterial(MD_Surface);
     if (!VertexType || !PixelType || !DefaultMaterial) { Error = TEXT("draw shader or material unavailable"); return false; }
     const FMaterialRenderProxy* Base = DefaultMaterial->GetRenderProxy();
     bool bPassed = true;
     FString Failure;
     TArray<FColor> Images[2];
     int32 Different = 0;
-    ENQUEUE_RENDER_COMMAND(DrawOriginalLockerSlate)([Map, VertexType, PixelType, Base, Bindings, &bPassed, &Failure, &Images, &Different](FRHICommandListImmediate& RHICmdList)
+    ENQUEUE_RENDER_COMMAND(DrawOriginalLockerSlate)([Map, VertexType, PixelType, Base, Bindings, ExpectedOwnerResource, &bPassed, &Failure, &Images, &Different](FRHICommandListImmediate& RHICmdList)
     {
         const TShaderRef<FShader> VS = Map->GetShader(VertexType, 0);
         const TShaderRef<FShader> PS = Map->GetShader(PixelType, 0);
@@ -383,6 +385,7 @@ static bool DrawLegacySlateQuad(const TRefCountPtr<FMaterialShaderMap>& Map, con
         FLegacyProbeProxy Proxy; Proxy.Base = Base;
         const FMaterialRenderProxy* Fallback = nullptr;
         const FMaterial& Material = Base->GetMaterialWithFallback(ERHIFeatureLevel::SM5, Fallback);
+        if (ExpectedOwnerResource && &Material != ExpectedOwnerResource) { bPassed=false; Failure=TEXT("owner render proxy selected a fallback resource"); return; }
         FMaterialRenderContext Context(&Proxy, Material, nullptr);
         FUniformExpressionCache Cache;
         for (int32 Pass = 0; Pass < 2; ++Pass)
@@ -554,7 +557,230 @@ static bool ParseLegacyMaterial(const TSharedPtr<FJsonObject>& Root, FLegacyMate
     }
     return true;
 }
+// Registered before asset loading; this callback performs CPU-only conversion.
+static FString GLegacyIngressBundleJson;
+static const TCHAR* GLegacyLockerPath = TEXT("/Game/UI/Foundation/Materials/Athena_LockerTabMaster.Athena_LockerTabMaster");
+struct FLockerProvenance final : FLegacyMaterialAssetProvenance
+{
+    FLegacyOriginalMaterial Decoded;
+    FString BundleJson;
+    int32 ArchiveUE4Version = 0, ArchiveLicenseeVersion = 0;
+};
+
+static bool SameOriginalExpressions(const FLegacyMaterialIR& A, const FLegacyMaterialIR& B)
+{
+    if (A.OriginalMapHash != B.OriginalMapHash || A.QualityLevel != B.QualityLevel || A.FeatureLevel != B.FeatureLevel ||
+        A.VectorRoots != B.VectorRoots || A.ScalarRoots != B.ScalarRoots || A.Expressions.Num() != B.Expressions.Num()) return false;
+    for (int32 I=0; I<A.Expressions.Num(); ++I)
+    {
+        const auto& X=A.Expressions[I]; const auto& Y=B.Expressions[I];
+        if (X.Kind!=Y.Kind || X.A!=Y.A || X.B!=Y.B || X.C!=Y.C || X.Value!=Y.Value ||
+            X.Parameter!=Y.Parameter || X.ValueType!=Y.ValueType || X.Operation!=Y.Operation || X.Components!=Y.Components ||
+            FMemory::Memcmp(X.Swizzle,Y.Swizzle,sizeof(X.Swizzle))) return false;
+    }
+    return true;
+}
+
+static ELegacyMaterialAssetResult ProvideLockerOriginal(const FLegacyMaterialAssetContext& Context,
+    TRefCountPtr<FMaterialShaderMap>& Map, TSharedPtr<const FLegacyMaterialAssetProvenance, ESPMode::ThreadSafe>& Provenance, FString& Error)
+{
+    if (Context.OwnerPath != GLegacyLockerPath) return ELegacyMaterialAssetResult::NotApplicable;
+    auto Fail = [&Error](const TCHAR* Why) { Error=Why; return ELegacyMaterialAssetResult::Failed; };
+    TSharedPtr<FJsonObject> Bundle;
+    if (!FJsonSerializer::Deserialize(TJsonReaderFactory<>::Create(GLegacyIngressBundleJson),Bundle) || !Bundle)
+        return Fail(TEXT("cannot parse pinned Locker bundle"));
+    if (Context.ResourceEnd-Context.ResourceBegin != 12513 ||
+        Context.Archive.Tell()!=Context.ResourceBegin+8) return Fail(TEXT("Locker resource bounds mismatch"));
+    TSharedRef<FLockerProvenance, ESPMode::ThreadSafe> P=MakeShared<FLockerProvenance, ESPMode::ThreadSafe>();
+    P->ArchiveUE4Version=Context.Archive.UE4Ver();
+    P->ArchiveLicenseeVersion=Context.Archive.LicenseeUE4Ver();
+    UE_LOG(LogTemp, Display, TEXT("Legacy material ingress: Locker archive UE4=%d licensee=%d"), P->ArchiveUE4Version, P->ArchiveLicenseeVersion);
+    P->Decoded.Bytes.SetNumUninitialized(int32(Context.ResourceEnd-Context.ResourceBegin));
+    P->Decoded.Names.Append(Context.Names.GetData(), Context.Names.Num());
+    const auto Framing=Bundle->GetObjectField(TEXT("framing"));
+    const auto& ExpectedNames=Framing->GetArrayField(TEXT("names"));
+    if (ExpectedNames.Num()!=P->Decoded.Names.Num()) return Fail(TEXT("Locker local name count mismatch"));
+    for (int32 I=0; I<ExpectedNames.Num(); ++I)
+        if (!ExpectedNames[I]->AsString().Equals(P->Decoded.Names[I].ToString(), ESearchCase::IgnoreCase)) return Fail(TEXT("Locker local name mismatch"));
+    Context.Archive.Seek(Context.ResourceBegin);
+    Context.Archive.Serialize(P->Decoded.Bytes.GetData(),P->Decoded.Bytes.Num());
+    if (Context.Archive.IsError()) return Fail(TEXT("cannot read Locker resource"));
+    const FString Hex=Bundle->GetStringField(TEXT("resource_raw_hex"));
+    if (Hex.Len()!=P->Decoded.Bytes.Num()*2) return Fail(TEXT("Locker resource receipt length mismatch"));
+    for(int32 I=0; I<P->Decoded.Bytes.Num(); ++I)
+    {
+        int32 Hi=FParse::HexDigit(Hex[I*2]), Lo=FParse::HexDigit(Hex[I*2+1]);
+        if(Hi<0 || Lo<0 || P->Decoded.Bytes[I] != uint8((Hi<<4)|Lo)) return Fail(TEXT("Locker resource differs from pinned original"));
+    }
+    FSHAHash OriginalHash; FSHA1::HashBuffer(P->Decoded.Bytes.GetData(),P->Decoded.Bytes.Num(),OriginalHash.Hash);
+    if (!OriginalHash.ToString().Equals(TEXT("bc2d2f509b6909a4820f65188b85485fce989a2a"),ESearchCase::IgnoreCase))
+        return Fail(TEXT("Locker source digest mismatch"));
+    if (!DecodeLegacyOriginalMaterial(P->Decoded,Error)) return ELegacyMaterialAssetResult::Failed;
+    if (P->Decoded.MaterialPath != GLegacyLockerPath || P->Decoded.Records.Num()!=19) return Fail(TEXT("Locker decoded identity mismatch"));
+    // The library receipt covers all source records, including LocalVF records
+    // that this Slate-only runtime factory does not convert.
+    const auto Report=Bundle->GetObjectField(TEXT("decoded"));
+    if (!Report || int32(Report->GetNumberField(TEXT("shader_record_count")))!=19) return Fail(TEXT("invalid complete shader report"));
+    TArray<TSharedPtr<FJsonValue>> Rows=Report->GetObjectField(TEXT("material_shaders"))->GetArrayField(TEXT("records"));
+    for (const auto& Mesh : Report->GetArrayField(TEXT("mesh_shader_maps")))
+        Rows.Append(Mesh->AsObject()->GetArrayField(TEXT("records")));
+    if (Rows.Num()!=P->Decoded.Records.Num()) return Fail(TEXT("original shader receipt count mismatch"));
+    for (int32 I=0; I<Rows.Num(); ++I)
+    {
+        const auto Row=Rows[I]->AsObject(); const auto Association=Row->GetObjectField(TEXT("library_association"));
+        const auto& Record=P->Decoded.Records[I];
+        if (!Association || Row->GetObjectField(TEXT("type"))->GetStringField(TEXT("name"))!=Record.Type ||
+            int32(Row->GetNumberField(TEXT("offset")))!=Record.Begin || int32(Row->GetNumberField(TEXT("end")))!=Record.End ||
+            !Row->GetObjectField(TEXT("output_hash"))->GetStringField(TEXT("hash")).Equals(Record.OutputHash.ToString(),ESearchCase::IgnoreCase) ||
+            uint32(Association->GetNumberField(TEXT("frequency")))!=Record.Frequency ||
+            uint32(Association->GetNumberField(TEXT("uncompressed_bytes")))!=Record.UncompressedBytes)
+            return Fail(TEXT("original shader library association mismatch"));
+        const int32 LibraryIndex=int32(Association->GetNumberField(TEXT("index")));
+        if (LibraryIndex<0) return Fail(TEXT("invalid shader library index"));
+    }
+    const auto Fixture=Bundle->GetObjectField(TEXT("runtime_fixture"));
+    FLegacyMaterialIR Expected;
+    if (!Fixture || P->Decoded.IR.DebugDescription != Fixture->GetObjectField(TEXT("material"))->GetStringField(TEXT("debug_description")) ||
+        !ParseLegacyMaterial(Fixture,Expected,Error) || !SameOriginalExpressions(P->Decoded.IR,Expected))
+        return Fail(TEXT("decoded source graph differs from validated runtime fixture"));
+    const auto& Shaders=Fixture->GetArrayField(TEXT("shaders"));
+    if (Shaders.Num()!=7) return Fail(TEXT("invalid Slate fixture count"));
+    for (int32 I=0; I<Shaders.Num(); ++I)
+    {
+        const auto Row=Shaders[I]->AsObject()->GetObjectField(TEXT("record"));
+        if (!Row || Row->GetObjectField(TEXT("type"))->GetStringField(TEXT("name"))!=P->Decoded.Records[I].Type ||
+            !Row->GetObjectField(TEXT("output_hash"))->GetStringField(TEXT("hash")).Equals(P->Decoded.Records[I].OutputHash.ToString(),ESearchCase::IgnoreCase) ||
+            uint32(Row->GetNumberField(TEXT("frequency")))!=P->Decoded.Records[I].Frequency)
+            return Fail(TEXT("Slate shader receipt does not match original record"));
+    }
+    P->Decoded.IR.UniformBufferSize=Expected.UniformBufferSize;
+    P->Decoded.IR.Resources=Expected.Resources;
+    Map=FMaterialShaderMap::CreateLegacySlateMap(P->Decoded.IR,
+        [&Shaders](const FUniformExpressionSet& Uniforms, const FShaderParametersMetadata&, TArray<FLegacySlateShaderInput>& Outputs, FString& OutError)
+        {
+            for (const auto& Value : Shaders)
+            {
+                const auto Shader=Value->AsObject();
+                if (!Shader || !PrepareLegacyOutput(Shader,Uniforms.GetUniformBufferLayout(),Outputs.AddDefaulted_GetRef(),OutError,false)) return false;
+            }
+            return true;
+        },Error);
+    if (!Map.IsValid()) return ELegacyMaterialAssetResult::Failed;
+    P->OriginalResource=P->Decoded.Bytes;
+    FSHA1::HashBuffer(P->OriginalResource.GetData(),P->OriginalResource.Num(),P->ResourceHash.Hash);
+    P->SourceIdentity=GLegacyLockerPath; P->OriginalShaderRecordCount=P->Decoded.Records.Num(); P->BundleJson=GLegacyIngressBundleJson;
+    Provenance=P; return ELegacyMaterialAssetResult::Converted;
+}
 #endif
+
+void RegisterLegacyOriginalMaterialProvider()
+{
+#if PLATFORM_LINUX && !UE_SERVER
+    FString Path;
+    if (!FParse::Value(FCommandLine::Get(),TEXT("FortniteLegacyMaterialIngress="),Path)) return;
+    // An invalid receipt still installs the exact-owner provider, which fails closed.
+    auto RejectConfig=[](const TCHAR* Why) { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: %s"),Why); RegisterLegacyMaterialAssetProvider(&ProvideLockerOriginal); };
+    TArray<uint8> Bytes; FSHAHash Hash;
+    if (!FFileHelper::LoadFileToArray(Bytes,*Path) || Bytes.Num()>32*1024*1024)
+    { RejectConfig(TEXT("cannot read bundle")); return; }
+    FSHA1::HashBuffer(Bytes.GetData(),Bytes.Num(),Hash.Hash);
+    if (!Hash.ToString().Equals(TEXT("0f750204f6008e6e3219d0b002d8409e28c22426"),ESearchCase::IgnoreCase))
+    { RejectConfig(TEXT("bundle digest mismatch")); return; }
+    FFileHelper::BufferToString(GLegacyIngressBundleJson,Bytes.GetData(),Bytes.Num());
+    TSharedPtr<FJsonObject> Bundle;
+    if (!FJsonSerializer::Deserialize(TJsonReaderFactory<>::Create(GLegacyIngressBundleJson),Bundle) || !Bundle ||
+        Bundle->GetStringField(TEXT("schema"))!=TEXT("fortnite.legacy-material-ingress.v1"))
+    { GLegacyIngressBundleJson.Reset(); RejectConfig(TEXT("invalid bundle")); return; }
+    FModuleManager::LoadModuleChecked<IModuleInterface>(TEXT("SlateRHIRenderer"));
+    RegisterLegacyMaterialAssetProvider(&ProvideLockerOriginal);
+    UE_LOG(LogTemp,Display,TEXT("Legacy material ingress: registered pinned Locker provider"));
+#endif
+}
+
+void ProbeLegacyOriginalMaterial()
+{
+#if PLATFORM_LINUX && !UE_SERVER
+    if (!FParse::Param(FCommandLine::Get(),TEXT("FortniteProbeLegacyOriginalMaterial"))) return;
+    TSharedPtr<FJsonObject> Bundle;
+    if (!FJsonSerializer::Deserialize(TJsonReaderFactory<>::Create(GLegacyIngressBundleJson),Bundle) || !Bundle)
+    { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: probe has no valid bundle")); FPlatformMisc::RequestExitWithStatus(false,1); return; }
+    UMaterial* Material=LoadObject<UMaterial>(nullptr,GLegacyLockerPath);
+    FMaterialResource* Resource=Material ? Material->GetMaterialResource(GMaxRHIFeatureLevel) : nullptr;
+    FMaterialShaderMap* Map=Resource ? Resource->GetGameThreadShaderMap() : nullptr;
+    const auto Provenance=Map ? Map->GetLegacyMaterialProvenance() : nullptr;
+    const bool bOriginal=Provenance.IsValid() && Provenance->OriginalShaderRecordCount==19 &&
+        Provenance->SourceIdentity==GLegacyLockerPath &&
+        Provenance->ResourceHash.ToString().Equals(TEXT("bc2d2f509b6909a4820f65188b85485fce989a2a"),ESearchCase::IgnoreCase);
+    const bool bComplete=Map && Resource && Map->IsComplete(Resource,false);
+    bool bRenderAttached=false;
+    if (bOriginal && bComplete)
+    {
+        ENQUEUE_RENDER_COMMAND(CheckOriginalMaterialAttachment)([Resource, Map, &bRenderAttached](FRHICommandListImmediate&)
+        { bRenderAttached=Resource->GetRenderingThreadShaderMap()==Map; });
+        FlushRenderingCommands();
+    }
+    if (!bOriginal || !bComplete || !bRenderAttached)
+    {
+        UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: original Locker attachment failed owner=%d map=%d provenance=%d complete=%d render=%d"),
+            Material!=nullptr,Map!=nullptr,bOriginal,bComplete,bRenderAttached);
+        FPlatformMisc::RequestExitWithStatus(false,1);
+        return;
+    }
+    const auto* Original=static_cast<const FLockerProvenance*>(Provenance.Get());
+    auto RejectMutation = [&Original](const TCHAR* Case, TArray<uint8> Bytes) -> bool
+    {
+        FLegacyOriginalMaterial Test; Test.Bytes=MoveTemp(Bytes); Test.Names=Original->Decoded.Names;
+        FString Error; const bool bRejected=!DecodeLegacyOriginalMaterial(Test,Error);
+        UE_LOG(LogTemp,Display,TEXT("Legacy material ingress reader negative %s: %s"),Case,bRejected ? TEXT("rejected") : TEXT("ACCEPTED"));
+        return bRejected;
+    };
+    const auto& Bytes=Original->Decoded.Bytes;
+    TArray<uint8> Truncated=Bytes; Truncated.SetNum(Original->Decoded.Records[0].Begin+24);
+    TArray<uint8> Appended=Bytes; Appended.Add(0);
+    TArray<uint8> BadEnd=Bytes; const int64 EscapingEnd=int64(Bytes.Num())+1;
+    FMemory::Memcpy(BadEnd.GetData()+Original->Decoded.Records[0].Begin+8,&EscapingEnd,sizeof(EscapingEnd));
+    TArray<uint8> BadName=Bytes; const int32 InvalidName=MAX_int32;
+    const int32 FirstExpression=int32(Bundle->GetObjectField(TEXT("decoded"))->GetObjectField(TEXT("uniform_expression_arrays"))->GetObjectField(TEXT("vector"))->GetNumberField(TEXT("offset")))+4;
+    if (!BadName.IsValidIndex(FirstExpression+3)) { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: invalid mutation offset")); FPlatformMisc::RequestExitWithStatus(false,1); return; }
+    FMemory::Memcpy(BadName.GetData()+FirstExpression,&InvalidName,sizeof(InvalidName));
+    bool bNegativeChecks=true;
+    bNegativeChecks &= RejectMutation(TEXT("truncated shader record"),MoveTemp(Truncated));
+    bNegativeChecks &= RejectMutation(TEXT("trailing byte"),MoveTemp(Appended));
+    bNegativeChecks &= RejectMutation(TEXT("shader end escapes resource"),MoveTemp(BadEnd));
+    bNegativeChecks &= RejectMutation(TEXT("invalid local expression name"),MoveTemp(BadName));
+    if (!bNegativeChecks)
+    { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: original reader negative check failed")); FPlatformMisc::RequestExitWithStatus(false,1); return; }
+    FLegacyDrawBindings Bindings; bool bVS=false, bPS=false, bAllShaders=true; int32 CheckedShaders=0; FString Error;
+    const auto Fixture=Bundle->GetObjectField(TEXT("runtime_fixture"));
+    for (const auto& Value : Fixture->GetArrayField(TEXT("shaders")))
+    {
+        const auto Shader=Value->AsObject(); FLegacySlateShaderInput Input;
+        if (!PrepareLegacyOutput(Shader,Map->GetUniformExpressionSet().GetUniformBufferLayout(),Input,Error)) { bAllShaders=false; break; }
+        FShaderType* Type=FindShaderTypeByName(FHashedName(*Input.TypeName));
+        const TShaderRef<FShader> Frozen=Type ? Map->GetShader(Type,Input.PermutationId) : TShaderRef<FShader>();
+        const FShaderMapResourceCode* Code=Map->GetResourceCode();
+        const int32 Index=Frozen.IsValid() ? Frozen->GetResourceIndex() : INDEX_NONE;
+        const int32 Frequency=int32(Shader->GetObjectField(TEXT("record"))->GetNumberField(TEXT("frequency")));
+        if (!Code || !Code->ShaderHashes.IsValidIndex(Index) || !Code->ShaderEntries.IsValidIndex(Index) ||
+            Code->ShaderHashes[Index]!=Input.Output.OutputHash || int32(Code->ShaderEntries[Index].Frequency)!=Frequency)
+        { Error=TEXT("attached frozen shader resource mismatch"); bAllShaders=false; break; }
+        ++CheckedShaders;
+        uint16 Size=0, Base=0;
+        if (Input.TypeName==TEXT("TSlateMaterialShaderVSfalse"))
+            bVS=Input.Output.ParameterMap.FindParameterAllocation(TEXT("ViewProjection"),Bindings.MatrixBuffer,Bindings.MatrixOffset,Size) && Size==sizeof(FMatrix);
+        if (Input.TypeName==TEXT("TSlateMaterialShaderPSDefault"))
+            bPS=Input.Output.ParameterMap.FindParameterAllocation(TEXT("GammaAndAlphaValues"),Bindings.GammaBuffer,Bindings.GammaOffset,Size) && Size==sizeof(FVector4) &&
+                Input.Output.ParameterMap.FindParameterAllocation(TEXT("ShaderParams"),Bindings.ParamsBuffer,Bindings.ParamsOffset,Size) && Size==sizeof(FVector4) &&
+                Input.Output.ParameterMap.FindParameterAllocation(TEXT("Material"),Bindings.MaterialBuffer,Base,Size) && Base==FVulkanShaderHeader::UniformBuffer && Size==1;
+    }
+    if (!bAllShaders || CheckedShaders!=7 || !bVS || !bPS || !DrawLegacySlateQuad(Map,Bindings,Error,Material,Resource))
+    {
+        UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: attached owner draw failed: %s"),*Error);
+        FPlatformMisc::RequestExitWithStatus(false,1); return;
+    }
+    UE_LOG(LogTemp,Display,TEXT("Legacy material ingress: original Locker owner attached complete map with 19 original records on game and render threads and drew its Slate quad"));
+#endif
+}
 
 void RunLegacyMaterialShaderMapProbe()
 {
