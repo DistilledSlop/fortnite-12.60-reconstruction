@@ -39,7 +39,7 @@ python3 -I porting/material_pipeline/translate_dxbc.py \
   --output porting/generated/material_pipeline/frontend-translated
 ```
 
-All 44 selected original DXBC shaders compiled and passed Vulkan 1.0 SPIR-V validation. **Twelve jobs emit `shader_sm4_read_instruction_modifier` diagnostics for unhandled resource/data modifiers with this compiler version.** The receipt retains the exact messages and `compiler_diagnostic_jobs` count. They require investigation with a compiler that handles the observed modifiers; zero compile/validator exits do not prove semantic preservation. Original uniform values, descriptor bindings, vertex interfaces, render state, and inline shader-map reconstruction still require implementation and visual tests. No output is yet verified in a UE draw.
+All 44 selected original DXBC shaders compiled and passed Vulkan 1.0 SPIR-V validation. **Twelve jobs emit `shader_sm4_read_instruction_modifier` diagnostics for unhandled resource/data modifiers with this compiler version.** The receipt retains the exact messages and `compiler_diagnostic_jobs` count. The later comparison below examines these modifiers with vkd3d 2.0; zero compile/validator exits do not prove semantic preservation. Original uniform values, descriptor bindings, vertex interfaces, render state, and inline shader-map reconstruction still require implementation and visual tests. No output is yet verified in a UE draw.
 
 ## Original D3D wrapper bindings
 
@@ -52,7 +52,7 @@ python3 -I porting/material_pipeline/inspect_d3d_code.py \
 python3 -I porting/material_pipeline/test_inspect_d3d_code.py
 ```
 
-All 44 recovered wrappers pass exact prefix/DXBC/optional framing. Nineteen have active resource-table bits; the other 25 have empty maps. Across the 44, the decoded maps contain 28 SRV, 18 sampler, 18 texture, and zero UAV entries. Optional `p` and `u` records are present in each. The evidence report preserves each original map and decoded entry, including layout hashes and uniform-buffer names. Those entries are D3D bindings; they have not been matched to the translated SPIR-V descriptors or installed in UE's Vulkan RHI. The same 12 shaders with compiler diagnostics all have active D3D resource-table bits, so their semantics and binding correspondence need direct validation before rendering claims.
+All 44 recovered wrappers pass exact prefix/DXBC/optional framing. Nineteen have active resource-table bits; the other 25 have empty maps. Across the 44, the decoded maps contain 28 SRV, 18 sampler, 18 texture, and zero UAV entries. Optional `p` and `u` records are present in each. The evidence report preserves each original map and decoded entry, including layout hashes and uniform-buffer names. Those entries are D3D bindings; they have not been verified as mappings to the translated SPIR-V descriptors or installed in UE's Vulkan RHI. The same 12 shaders with compiler diagnostics all have active D3D resource-table bits, so their semantics and binding correspondence need direct validation before rendering claims.
 
 `inspect_spirv_bindings.py` independently reads the validated SPIR-V binaries, extracts `DescriptorSet`/`Binding` decorations on variables, and places them beside the original D3D resource-table entries. It requires the same source-report identity and hashes each output before inspection. The generated correspondence report covers all 44 shaders and 180 SPIR-V descriptor records (100 constant-buffer, 54 texture, 26 sampler names); all observed sets are zero. This is a concrete binding inventory, not a verified mapping: the compiler can renumber D3D registers, and the UE Vulkan shader header, uniform values, and shader-map registration are still absent.
 
@@ -63,6 +63,26 @@ python3 -I porting/material_pipeline/inspect_spirv_bindings.py \
   --report porting/generated/material_pipeline/binding-correspondence.json
 python3 -I porting/material_pipeline/test_inspect_spirv_bindings.py
 ```
+
+
+## Compiler version comparison
+
+The existing receipts also cover a locally built official Wine vkd3d 2.0 compiler from [vkd3d 2.0 source](https://dl.winehq.org/vkd3d/source/vkd3d-2.0.tar.xz). The same 44 input hashes compile and validate for Vulkan 1.0 with both versions. The 1.2 receipt records diagnostics on shader indices 25, 116, 117, 120, 2452, 2453, 2456, 2458, 2466, 3692, 6859, and 13209; the 2.0 receipt records none. These receipts contain hashes of each compiler, shader library and validator. A successful validation and absence of diagnostics do not establish semantic equivalence.
+
+In the 2.0 `libs/vkd3d-shader/tpf.c` parser, resource type `0xc` is `VKD3D_SM4_RESOURCE_STRUCTURED_BUFFER` and data type `0x6` is `VKD3D_SM4_DATA_MIXED`. The new parser marks the former structured and maps it to a buffer resource, and maps the latter to `VSIR_DATA_MIXED`. The 1.2 diagnostic explicitly says it did not handle these values; that establishes an older parser limitation, not by itself the observable impact of the fallback.
+
+The following comparison checks the input and output hashes against both receipts and their binding reports, then disassembles one bounded example. Across all 44, each shader has the same multiset of descriptor set, binding, and storage class values in the two inventories (180 descriptors each). This comparison does not establish descriptor types or D3D-to-Vulkan mapping. For shader 25 specifically, both outputs declare unsigned integer and float buffer images; the `OpTypeImage` depth operand changes from `0` to `2`, and both contain 16 unsigned and three float `OpImageFetch` instructions. Counts and declarations do not establish equal addressing, fetched values, or execution semantics. Other instructions and shaders have not been exhaustively compared.
+
+```sh
+python3 -I porting/material_pipeline/compare_vkd3d_reports.py \
+  --old porting/generated/material_pipeline/frontend-translated/translation-report.json \
+  --new porting/generated/material_pipeline/frontend-translated-vkd3d2/translation-report.json \
+  --old-bindings porting/generated/material_pipeline/binding-correspondence.json \
+  --new-bindings porting/generated/material_pipeline/binding-correspondence-vkd3d2.json \
+  --spirv-dis porting/generated/material_pipeline/tools/root/usr/bin/spirv-dis
+```
+
+The script consumes the already generated reports and binaries, whose receipt paths are local to the workspace. It checks recorded successful validation status, but does not rerun `spirv-val`. The 2.0 outputs are not installed in UE, and bindings, uniform values, shader-map reconstruction, draw execution, and visual parity remain unverified.
 
 ## Original inline material framing
 
