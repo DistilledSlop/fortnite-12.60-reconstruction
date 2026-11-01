@@ -13,15 +13,15 @@ struct UCommonInputManager { bool fd=false, fe=false; bool IsInputSuspended()con
 struct UCommonUISubsystem { UCommonInputManager* CommonInputManager=nullptr; };
 struct UGameInstance { UCommonUISubsystem* sub=nullptr;template<class T>T* GetSubsystem(){return sub;} };
 struct UWorld { UGameInstance* gi=nullptr;UGameInstance* GetGameInstance(){return gi;} };
-struct UButton { int clicks=0,presses=0,releases=0;FReply SlateHandleClicked(){++clicks;return {true,42};}void SlateHandlePressed(){++presses;}void SlateHandleReleased(){++releases;} };
+struct UButton { int clicks=0,presses=0,releases=0,setEnabledCalls=0;void SetIsEnabled(bool){++setEnabledCalls;}FReply SlateHandleClicked(){++clicks;return {true,42};}void SlateHandlePressed(){++presses;}void SlateHandleReleased(){++releases;} };
 struct ReplyDelegate { std::function<FReply()> fn;bool safe=true;bool IsBound(){return bool(fn)&&safe;}FReply Execute(){return fn();} };
 struct VoidDelegate { std::function<void()> fn;bool safe=true;bool IsBound(){return bool(fn)&&safe;}void Broadcast(){if(IsBound())fn();}void ExecuteIfBound(){if(IsBound())fn();} };
-struct SCommonButton { bool enabled=true;int calls=0;void SetInteractionEnabled(bool b){enabled=b;++calls;} };
-struct ButtonPtr { SCommonButton* p=nullptr;SCommonButton* Get(){return p;} };
+struct SCommonButton { bool bButtonEnabled=true;bool enabled=true;int calls=0;void SetInteractionEnabled(bool b){enabled=b;++calls;} };
+struct ButtonPtr { SCommonButton* p=nullptr;SCommonButton* Get(){return p;}bool IsValid()const{return p!=nullptr;}SCommonButton* operator->(){return p;} };
 struct UCommonButtonInternal : UButton {
- UWorld* world=nullptr;UWorld* GetWorld(){return world;}bool bInteractionEnabled=true;ButtonPtr NativeCommonButton;
+ UWorld* world=nullptr;UWorld* GetWorld(){return world;}bool bInteractionEnabled=true,bButtonEnabled=true;ButtonPtr NativeCommonButton;
  ReplyDelegate NativeDoubleClickDelegate;VoidDelegate OnDoubleClicked,NativeFocusReceivedDelegate;
- bool IsCommonInputSuspended();FReply SlateHandleCommonClicked();FReply SlateHandleCommonDoubleClicked();void SlateHandleCommonPressed();void SlateHandleCommonReleased();void SlateHandleCommonFocusReceived();void NativeSetInteractionEnabled(bool);
+ bool IsCommonInputSuspended();FReply SlateHandleCommonClicked();FReply SlateHandleCommonDoubleClicked();void SlateHandleCommonPressed();void SlateHandleCommonReleased();void SlateHandleCommonFocusReceived();void NativeSetInteractionEnabled(bool);void NativeSetButtonEnabled(bool);
 };
 '''
 tests=r'''
@@ -53,6 +53,19 @@ int main(){
  b.NativeSetInteractionEnabled(false);assert(!b.bInteractionEnabled&&sb.calls==present);if(present)assert(!sb.enabled);
  b.NativeSetInteractionEnabled(false);assert(sb.calls==present);
  b.NativeSetInteractionEnabled(true);assert(b.bInteractionEnabled&&sb.calls==2*present);if(present)assert(sb.enabled);
+ }
+ for(int present=0;present<2;++present){UCommonButtonInternal b;SCommonButton sb;b.NativeCommonButton.p=present?&sb:nullptr;
+ int callbacks=0;b.NativeDoubleClickDelegate.fn=[&](){++callbacks;return FReply::Handled();};
+ b.OnDoubleClicked.fn=[&](){++callbacks;};b.NativeFocusReceivedDelegate.fn=[&](){++callbacks;};
+ for(bool value : {false,true,false,true}){
+ sb.bButtonEnabled=!value;b.NativeSetButtonEnabled(value);
+ assert(b.bButtonEnabled==value);if(present)assert(sb.bButtonEnabled==value);else assert(sb.bButtonEnabled!=value);
+ assert(b.bInteractionEnabled&&sb.enabled&&sb.calls==0);
+ assert(b.setEnabledCalls==0&&b.clicks==0&&b.presses==0&&b.releases==0&&callbacks==0);
+ }
+ // Repeated values still synchronize a live Slate object whose flag changed independently.
+ if(present){sb.bButtonEnabled=false;b.NativeSetButtonEnabled(true);assert(sb.bButtonEnabled);}
+ assert(b.setEnabledCalls==0&&sb.calls==0&&callbacks==0);
  }
 }
 '''

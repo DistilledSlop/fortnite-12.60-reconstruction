@@ -2,12 +2,37 @@
 
 ## Current resume point (2026-11-01)
 
+- Latest bounded checkpoint: native enabled-state bridge added to the CommonButtonInternal generator
+  inputs. It propagates the original main-button inline flag writes to the internal UObject and live
+  custom Slate child without calling UWidget::SetIsEnabled or adding callbacks. Callback controls now
+  cover true/false, null/live child and repeated-value synchronization with no extra side effects.
+  The previous fixture compile failure remains in /tmp/button-enabled-bridge-policy-tests-1.log;
+  corrected suite passes18 tests plus exact-body ASan/UBSan controls in tests-2.log. Generator self-test
+  passes141 checks in /tmp/button-enabled-bridge-generator-tests-1.log. Normal promotion receipt:
+  /tmp/button-enabled-bridge-root-integration-1/generation-result.json: only two expected generated
+  files changed,12549 unchanged mtimes restored. Actual regenerated CPP passes real UE Clang9
+  standalone syntax with matching promoted-header glue (syntax-3/result.json). Earlier syntax/
+  missing source-only PCH and syntax-2/ incompatible old manager glue failures are preserved; no
+  macro aliases added. Commands are in each command.json, cwd Engine/Source. Fresh shared build/runtime pending.
+- Real-widget probe worker has finished its bounded source checkpoint and stopped:
+  /tmp/button-internal-runtime-probe-1/HANDOFF.md, receipt SHA-256
+  0cbed18edf2ea3a258f987550e6a6ca6175c30c7c8637838e96b2fbcc03ceea2.
+  Patch SHA-256 202edcb621a2067a2bb820980fa0c731f8d7ac6c6396799f265492ea5c99fc8d.
+  Fresh isolated UHT against promoted headers, probe/glue standalone syntax, write confinement and
+  transcript mutations pass. The scratch patch is not promoted. Root must review full unity, integrate
+  maintained verifier/process binding and run fresh builds/runtime. No new runtime/product credit.
+- Finished read-only API binding: original UButton native table pair14683a8e0/14683a8e8 names SetStyle
+  at145a03128 and points to exec143da6180. Thunk copies the reflected style into a2a0-byte temporary
+  then calls143d905c0, which assigns this+128 and updates live child+418. This matches current
+  UButton::SetStyle(const FButtonStyle&) in Engine Button.cpp:105. Exact original Windows source
+  revision remains unproven; use the established typed API for the main-button visual helper.
+
 - Goal remains the full reconstructed client/server with all four product milestones and 100% parity.
   All four gates are false. Latest fully green runtime is Nativec06a5cb / Engined7e04d4b6,
   immutable build2 validated by new run-only attempt5 using tools973d38e. All ownership is released.
   New manual Native `CommonUI/Private/SCommonButton.h/.cpp` source is now composed and syntax-checked;
   both real builds now PASS132.06/120.84s; results/logs /tmp/scommonbutton-native-build-1/.
-  No widget runtime or UObject factory wiring is claimed. Root owns subsequent Native integration.
+  No widget runtime or shared build of the new factory is claimed. Root owns subsequent Native integration.
 - Base activation is implemented and runtime verified: actual constructor/defaults, guarded activation,
   visibility, Blueprint/native/dynamic notification order and reentry pass40orderedrows. Both target
   UHT/object/linked implementation and full generic context proofs pass. Root independently reran
@@ -28,13 +53,13 @@
   syntax units also pass; no shared build/runtime validation of these new generated bodies yet.
   Source checkpoint /tmp/button-internal-generator-policy-1, receipt
   de3dbeb879a09ee7b33fa562234bcd86a7ec2524a973b0f2e2dfe4d36b60509c.
-  Next: finish /root/button_internal_runtime_probe's bounded real-widget diagnostic, review/promote, then one frozen build/runtime phase.
+  Next: review/promote the completed scratch real-widget diagnostic, then one frozen build/runtime phase.
   Probe must create a real UUserWidget/WidgetTree owner: UWidget outer-PC alone has no world in this engine.
   Original SynchronizeProperties is inherited: slot298 in both original internal/base vtables targets143d949f0;
   typed two-anchor witness in /tmp/button-internal-sync-properties-1 proves the slot. Do not invent an override.
 - Button implementation requirements and source checkpoints:
-  Complete manual SCommonButton source is in CommonUI/Private and passes combined UE syntax; it still needs a build,
-  UObject factory wiring and runtime tests. Source composition receipt: /tmp/scommonbutton-composed-1.
+  Complete manual SCommonButton source is in CommonUI/Private and passes both real builds.
+  UObject factory wiring is normally generated; its shared build and runtime tests remain pending. Source composition receipt: /tmp/scommonbutton-composed-1.
   Factory checkpoint /tmp/button-internal-rebuild-factory-1 is complete: +468 owns SBox, +478 owns custom SCommonButton,
   +418 separately owns that same child in UButton::MyButton. Return the SBox; preserve both child owning references.
   SBox applies float(MinWidth/Height), including zero/negative. Custom factory does not forward PressMethod or hover callbacks.
@@ -49,7 +74,7 @@
   (kind2c includesNativeBool20); extraction bitfield label is not a new representation mismatch.
   Two native flag defaults model the UObject zero-allocation path; original allocator parity remains a documented inference.
   Queue and external feature-callsite integration are still pending; getter alone does not complete manager behavior.
-  Source callback and manager integration remains pending. Slate+5c8 is a focus delegate; +250 is IsPressed, not focus support.
+  Full main-button callers and manager producer integration remain pending. Slate+5c8 is a focus delegate; +250 is IsPressed, not focus support.
   Cursor clamp source is complete off workspace at /tmp/cursor-viewport-clamp-2; producer/runtime integration pending.
 - Persistent collaboration: root plans/integrates/reviews and performs difficult work directly. Use bounded
   Luna-medium read-only tasks, Terra-medium/high regular tasks, Sol6.1-medium complex tasks, always fork_turns:none.

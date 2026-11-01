@@ -47,6 +47,7 @@ public:
     FOnClicked NativeDoubleClickDelegate;      // original Win64 +428
     FSimpleDelegate NativeFocusReceivedDelegate; // original Win64 +448
     void NativeSetInteractionEnabled(bool bEnabled);
+    void NativeSetButtonEnabled(bool bEnabled);
 protected:
     virtual void ReleaseSlateResources(bool bReleaseChildren) override;
     virtual TSharedRef<SWidget> RebuildWidget() override;

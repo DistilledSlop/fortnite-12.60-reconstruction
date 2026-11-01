@@ -130,3 +130,14 @@ void UCommonButtonInternal::NativeSetInteractionEnabled(bool bEnabled)
         }
     }
 }
+
+// Original inline path in CommonButton::SetIsEnabled, 1407f78f0.
+// This writes the internal and custom Slate flags without invoking UWidget's setter.
+void UCommonButtonInternal::NativeSetButtonEnabled(bool bEnabled)
+{
+    bButtonEnabled = bEnabled;
+    if (NativeCommonButton.IsValid())
+    {
+        NativeCommonButton->bButtonEnabled = bEnabled;
+    }
+}
