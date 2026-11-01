@@ -124,8 +124,10 @@
    "scope": "Material owner in the bounded frontend closure; actual-owner runtime ingress has not been credited."
   },
   "material_frontend_owner_063d3f629e391688": {
-   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/feature-master-artifacts-dashboard-validation.json",
+   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/feature-master-artifacts-dashboard-validation-k7mvu7st.json",
    "artifact_validation_sha256": "4a8ba51848e044b0abcfdfa3d0342e782941577fb6d19a64bf6ce0a77f8c7c7c",
+   "build_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/build-batch7-client-1.result.json",
+   "build_receipt_sha256": "81d60282d63be6303c05fe31b0da0de9eadc0a22ca5cd4bcd6fb4306bafeaecf",
    "bundle": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/frontend-numeric-batch-7/bundles/063d3f629e391688c48c.json",
    "bundle_sha256": "6dcbf92a64ae0acc1fcb1fb3286a55982cf5a0a1e8bb6409c606ff33038eafef",
    "command": [
@@ -154,12 +156,15 @@
     "-FortniteLegacyMaterialManifestSHA256=5a77ff5ee75f769785fcb434f6713671fa37fb1f4ca7da40f93c6d4bd73eae56",
     "-FortniteLegacyMaterialArtifactDir=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/feature-master-artifacts"
    ],
+   "commit": "669e5b5ca13cffb07a4c3c020acae21a1ae032f6",
+   "engine_commit": "08ebac023147bf943b3c4d1ab49b24a87a97998e",
    "exit_code": 0,
    "id": "material_frontend_owner_063d3f629e391688",
    "key_lines": [
     "[2026.11.01-04.47.15:504][  0]LogMaterial: Display: Legacy actual-owner completeness owner=/Game/UI/Foundation/Buttons/Materials/Feature/M_FeatureButton_Master.M_FeatureButton_Master domain=5 blend=2 shading=MSM_Unlit quality=1 feature=3 flags=2816 required=7 missing=0 complete=1",
     "[2026.11.01-04.47.15:600][  0]LogTemp: Display: Legacy material probe: 9 manifest owner live uniform cases passed",
-    "[2026.11.01-04.47.15:610][  0]LogTemp: Display: Legacy material ingress: manifest owner /Game/UI/Foundation/Buttons/Materials/Feature/M_FeatureButton_Master.M_FeatureButton_Master uses original resource owner /Game/UI/Foundation/Buttons/Materials/Feature/M_FeatureButton_Master.M_FeatureButton_Master, complete and attached on both threads; seven shaders and all uniform cases passed"
+    "[2026.11.01-04.47.15:610][  0]LogTemp: Display: Legacy material ingress: manifest owner /Game/UI/Foundation/Buttons/Materials/Feature/M_FeatureButton_Master.M_FeatureButton_Master uses original resource owner /Game/UI/Foundation/Buttons/Materials/Feature/M_FeatureButton_Master.M_FeatureButton_Master, complete and attached on both threads; seven shaders and all uniform cases passed",
+    "[2026.11.01-04.47.15:600][  0]LogTemp: Display: Legacy material probe: 4 manifest View draw live uniform cases passed"
    ],
    "log": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/feature-master.log",
    "log_sha256": "ea5f6b8190c6a56722d9fab4f943aacf8238e00ce605cba58f3f7f6f8475513c",
@@ -169,8 +174,15 @@
    "resource_owner_path": "/Game/UI/Foundation/Buttons/Materials/Feature/M_FeatureButton_Master.M_FeatureButton_Master",
    "result": "pass",
    "run_receipt": "porting/generated/material_pipeline/batch7-owner-probes-1.result.json",
+   "run_receipt_sha256": "1abfc05ffe492afb26b68aa8d6cbdaaa4837e79ed8494cf4b1271d6b197e7684",
+   "runtime_checkpoint": "porting/generated/material_pipeline/frontend-batch7-intermediate-checkpoint-results.json",
+   "runtime_checkpoint_sha256": "4b76ea31bb7f1b0caae52905ba8bc1a3bf2764bbd757afd6895bf4bff789cb79",
    "scope": "This owner original material map compatibility and attachment in the bounded frontend closure; widget integration and original visual parity remain unverified.",
-   "source_frozen_inputs": "porting/generated/material_pipeline/batch7-build-inputs-1.json"
+   "source_and_staged_client_sha256": "8102a8102532a08b4062489045a6ab854cb6980ebdea97f6813409e7d7c8fc74",
+   "source_frozen_inputs": "porting/generated/material_pipeline/batch7-build-inputs-1.json",
+   "source_frozen_inputs_sha256": "3e32214a2b5e78a0dccc7715098efb66e22032a866e9d064ad2fa85f2122a4b4",
+   "source_native_commit": "a22aa211431c6d3875714bceef261de2f0983125",
+   "utc": "2026-11-01T05:06:41Z"
   },
   "material_frontend_owner_0913e00f5e97b9ef": {
    "id": "material_frontend_owner_0913e00f5e97b9ef",
@@ -179,8 +191,10 @@
    "scope": "Material owner in the bounded frontend closure; actual-owner runtime ingress has not been credited."
   },
   "material_frontend_owner_0b06ba64698a35cc": {
-   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/036-M_UI_Tab_Main_Backing_Selected_Hovered-artifacts-dashboard-validation-7egigm49.json",
+   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/036-M_UI_Tab_Main_Backing_Selected_Hovered-artifacts-dashboard-validation-7vvsl6eo.json",
    "artifact_validation_sha256": "5dac5ff03c863a8352069115f39778a618a6d316e5dfd70f72dc25266a2af395",
+   "build_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/build-batch7-client-1.result.json",
+   "build_receipt_sha256": "81d60282d63be6303c05fe31b0da0de9eadc0a22ca5cd4bcd6fb4306bafeaecf",
    "bundle": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/frontend-numeric-batch-7/bundles/0b06ba64698a35cc0b28.json",
    "bundle_sha256": "8278669c7bdb6cf424e3dbd2bd74cad703e7d5617b0ea3806f189254925904d6",
    "command": [
@@ -209,6 +223,8 @@
     "-FortniteLegacyMaterialManifestSHA256=5a77ff5ee75f769785fcb434f6713671fa37fb1f4ca7da40f93c6d4bd73eae56",
     "-FortniteLegacyMaterialArtifactDir=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/036-M_UI_Tab_Main_Backing_Selected_Hovered-artifacts"
    ],
+   "commit": "669e5b5ca13cffb07a4c3c020acae21a1ae032f6",
+   "engine_commit": "08ebac023147bf943b3c4d1ab49b24a87a97998e",
    "exit_code": 0,
    "id": "material_frontend_owner_0b06ba64698a35cc",
    "key_lines": [
@@ -224,13 +240,21 @@
    "resource_owner_path": "/Game/UI/Foundation/Buttons/Materials/Tab/UI_Refresh/M_UI_Tab_Main_Backing_Master.M_UI_Tab_Main_Backing_Master",
    "result": "pass",
    "run_receipt": "porting/generated/material_pipeline/batch7-owner-probes-1.result.json",
+   "run_receipt_sha256": "1abfc05ffe492afb26b68aa8d6cbdaaa4837e79ed8494cf4b1271d6b197e7684",
+   "runtime_checkpoint": "porting/generated/material_pipeline/frontend-batch7-intermediate-checkpoint-results.json",
+   "runtime_checkpoint_sha256": "4b76ea31bb7f1b0caae52905ba8bc1a3bf2764bbd757afd6895bf4bff789cb79",
    "scope": "This owner original material map compatibility and attachment in the bounded frontend closure; widget integration and original visual parity remain unverified.",
+   "source_and_staged_client_sha256": "8102a8102532a08b4062489045a6ab854cb6980ebdea97f6813409e7d7c8fc74",
    "source_frozen_inputs": "porting/generated/material_pipeline/batch7-build-inputs-1.json",
-   "source_frozen_inputs_sha256": "3e32214a2b5e78a0dccc7715098efb66e22032a866e9d064ad2fa85f2122a4b4"
+   "source_frozen_inputs_sha256": "3e32214a2b5e78a0dccc7715098efb66e22032a866e9d064ad2fa85f2122a4b4",
+   "source_native_commit": "a22aa211431c6d3875714bceef261de2f0983125",
+   "utc": "2026-11-01T05:06:48Z"
   },
   "material_frontend_owner_0d309c58ac5bb800": {
-   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/003-M_UI_Speech_Bubble-artifacts-dashboard-validation.json",
+   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/003-M_UI_Speech_Bubble-artifacts-dashboard-validation-9k3hsruu.json",
    "artifact_validation_sha256": "1acf09d0c81856d19e04dd2be5acf6542fd74df092fa7bbf41f37843ec2c8702",
+   "build_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/build-batch7-client-1.result.json",
+   "build_receipt_sha256": "81d60282d63be6303c05fe31b0da0de9eadc0a22ca5cd4bcd6fb4306bafeaecf",
    "bundle": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/frontend-numeric-batch-7/bundles/0d309c58ac5bb800b36d.json",
    "bundle_sha256": "ce758b13bc19078507e330be3a779d5cad4f626687bd064f94543f21c3c09db4",
    "command": [
@@ -259,6 +283,8 @@
     "-FortniteLegacyMaterialManifestSHA256=5a77ff5ee75f769785fcb434f6713671fa37fb1f4ca7da40f93c6d4bd73eae56",
     "-FortniteLegacyMaterialArtifactDir=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/003-M_UI_Speech_Bubble-artifacts"
    ],
+   "commit": "669e5b5ca13cffb07a4c3c020acae21a1ae032f6",
+   "engine_commit": "08ebac023147bf943b3c4d1ab49b24a87a97998e",
    "exit_code": 0,
    "id": "material_frontend_owner_0d309c58ac5bb800",
    "key_lines": [
@@ -274,8 +300,15 @@
    "resource_owner_path": "/Game/Athena/UI/Frontend/Art/M_UI_Speech_Bubble.M_UI_Speech_Bubble",
    "result": "pass",
    "run_receipt": "porting/generated/material_pipeline/batch7-owner-probes-1.result.json",
+   "run_receipt_sha256": "1abfc05ffe492afb26b68aa8d6cbdaaa4837e79ed8494cf4b1271d6b197e7684",
+   "runtime_checkpoint": "porting/generated/material_pipeline/frontend-batch7-intermediate-checkpoint-results.json",
+   "runtime_checkpoint_sha256": "4b76ea31bb7f1b0caae52905ba8bc1a3bf2764bbd757afd6895bf4bff789cb79",
    "scope": "This owner original material map compatibility and attachment in the bounded frontend closure; widget integration and original visual parity remain unverified.",
-   "source_frozen_inputs": "porting/generated/material_pipeline/batch7-build-inputs-1.json"
+   "source_and_staged_client_sha256": "8102a8102532a08b4062489045a6ab854cb6980ebdea97f6813409e7d7c8fc74",
+   "source_frozen_inputs": "porting/generated/material_pipeline/batch7-build-inputs-1.json",
+   "source_frozen_inputs_sha256": "3e32214a2b5e78a0dccc7715098efb66e22032a866e9d064ad2fa85f2122a4b4",
+   "source_native_commit": "a22aa211431c6d3875714bceef261de2f0983125",
+   "utc": "2026-11-01T05:06:42Z"
   },
   "material_frontend_owner_0d6eef0eedb3a105": {
    "id": "material_frontend_owner_0d6eef0eedb3a105",
@@ -290,8 +323,10 @@
    "scope": "Material owner in the bounded frontend closure; actual-owner runtime ingress has not been credited."
   },
   "material_frontend_owner_117e56c2db40977a": {
-   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/007-M_Ui_Skewed_Vfor9slices_BG_Separator_Inst-artifacts-dashboard-validation.json",
+   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/007-M_Ui_Skewed_Vfor9slices_BG_Separator_Inst-artifacts-dashboard-validation-_trcke_p.json",
    "artifact_validation_sha256": "2ead0ca246d7935e6d37fab4888e62f716dc84ec807849f3182343f01572c5d5",
+   "build_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/build-batch7-client-1.result.json",
+   "build_receipt_sha256": "81d60282d63be6303c05fe31b0da0de9eadc0a22ca5cd4bcd6fb4306bafeaecf",
    "bundle": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/frontend-numeric-batch-7/bundles/117e56c2db40977ad61d.json",
    "bundle_sha256": "c081bcbcad6d3e6760a17c58ca73b90b2fe7602cda7fd2b63447834759aa1ef2",
    "command": [
@@ -320,6 +355,8 @@
     "-FortniteLegacyMaterialManifestSHA256=5a77ff5ee75f769785fcb434f6713671fa37fb1f4ca7da40f93c6d4bd73eae56",
     "-FortniteLegacyMaterialArtifactDir=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/007-M_Ui_Skewed_Vfor9slices_BG_Separator_Inst-artifacts"
    ],
+   "commit": "669e5b5ca13cffb07a4c3c020acae21a1ae032f6",
+   "engine_commit": "08ebac023147bf943b3c4d1ab49b24a87a97998e",
    "exit_code": 0,
    "id": "material_frontend_owner_117e56c2db40977a",
    "key_lines": [
@@ -335,8 +372,15 @@
    "resource_owner_path": "/Game/Athena/UI/ReplayBrowser/M_Ui_ReplayBrowserRow.M_Ui_ReplayBrowserRow",
    "result": "pass",
    "run_receipt": "porting/generated/material_pipeline/batch7-owner-probes-1.result.json",
+   "run_receipt_sha256": "1abfc05ffe492afb26b68aa8d6cbdaaa4837e79ed8494cf4b1271d6b197e7684",
+   "runtime_checkpoint": "porting/generated/material_pipeline/frontend-batch7-intermediate-checkpoint-results.json",
+   "runtime_checkpoint_sha256": "4b76ea31bb7f1b0caae52905ba8bc1a3bf2764bbd757afd6895bf4bff789cb79",
    "scope": "This owner original material map compatibility and attachment in the bounded frontend closure; widget integration and original visual parity remain unverified.",
-   "source_frozen_inputs": "porting/generated/material_pipeline/batch7-build-inputs-1.json"
+   "source_and_staged_client_sha256": "8102a8102532a08b4062489045a6ab854cb6980ebdea97f6813409e7d7c8fc74",
+   "source_frozen_inputs": "porting/generated/material_pipeline/batch7-build-inputs-1.json",
+   "source_frozen_inputs_sha256": "3e32214a2b5e78a0dccc7715098efb66e22032a866e9d064ad2fa85f2122a4b4",
+   "source_native_commit": "a22aa211431c6d3875714bceef261de2f0983125",
+   "utc": "2026-11-01T05:06:43Z"
   },
   "material_frontend_owner_12b4b9d27db4bd2a": {
    "id": "material_frontend_owner_12b4b9d27db4bd2a",
@@ -345,8 +389,10 @@
    "scope": "Material owner in the bounded frontend closure; actual-owner runtime ingress has not been credited."
   },
   "material_frontend_owner_1617aeaa75413901": {
-   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/008-M_Ui_Skewed_Vfor9slices_Inst-artifacts-dashboard-validation.json",
+   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/008-M_Ui_Skewed_Vfor9slices_Inst-artifacts-dashboard-validation-efxf_9h5.json",
    "artifact_validation_sha256": "17b491a1312b85e9ddf175416eb457aa031f94a16a96073533ae001a9be38529",
+   "build_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/build-batch7-client-1.result.json",
+   "build_receipt_sha256": "81d60282d63be6303c05fe31b0da0de9eadc0a22ca5cd4bcd6fb4306bafeaecf",
    "bundle": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/frontend-numeric-batch-7/bundles/1617aeaa75413901f642.json",
    "bundle_sha256": "5effb3050fc5b706ac11a128839e9663793772abb56a02cb9dabee40ea17857a",
    "command": [
@@ -375,6 +421,8 @@
     "-FortniteLegacyMaterialManifestSHA256=5a77ff5ee75f769785fcb434f6713671fa37fb1f4ca7da40f93c6d4bd73eae56",
     "-FortniteLegacyMaterialArtifactDir=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/008-M_Ui_Skewed_Vfor9slices_Inst-artifacts"
    ],
+   "commit": "669e5b5ca13cffb07a4c3c020acae21a1ae032f6",
+   "engine_commit": "08ebac023147bf943b3c4d1ab49b24a87a97998e",
    "exit_code": 0,
    "id": "material_frontend_owner_1617aeaa75413901",
    "key_lines": [
@@ -390,8 +438,15 @@
    "resource_owner_path": "/Game/Athena/UI/ReplayBrowser/M_Ui_ReplayBrowserRow.M_Ui_ReplayBrowserRow",
    "result": "pass",
    "run_receipt": "porting/generated/material_pipeline/batch7-owner-probes-1.result.json",
+   "run_receipt_sha256": "1abfc05ffe492afb26b68aa8d6cbdaaa4837e79ed8494cf4b1271d6b197e7684",
+   "runtime_checkpoint": "porting/generated/material_pipeline/frontend-batch7-intermediate-checkpoint-results.json",
+   "runtime_checkpoint_sha256": "4b76ea31bb7f1b0caae52905ba8bc1a3bf2764bbd757afd6895bf4bff789cb79",
    "scope": "This owner original material map compatibility and attachment in the bounded frontend closure; widget integration and original visual parity remain unverified.",
-   "source_frozen_inputs": "porting/generated/material_pipeline/batch7-build-inputs-1.json"
+   "source_and_staged_client_sha256": "8102a8102532a08b4062489045a6ab854cb6980ebdea97f6813409e7d7c8fc74",
+   "source_frozen_inputs": "porting/generated/material_pipeline/batch7-build-inputs-1.json",
+   "source_frozen_inputs_sha256": "3e32214a2b5e78a0dccc7715098efb66e22032a866e9d064ad2fa85f2122a4b4",
+   "source_native_commit": "a22aa211431c6d3875714bceef261de2f0983125",
+   "utc": "2026-11-01T05:06:43Z"
   },
   "material_frontend_owner_1796b4e99a45332a": {
    "id": "material_frontend_owner_1796b4e99a45332a",
@@ -400,8 +455,10 @@
    "scope": "Material owner in the bounded frontend closure; actual-owner runtime ingress has not been credited."
   },
   "material_frontend_owner_18764c8406b4145c": {
-   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/030-M_UI_Tab_Main_Backing_Disabled-artifacts-dashboard-validation-82ddb9mc.json",
+   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/030-M_UI_Tab_Main_Backing_Disabled-artifacts-dashboard-validation-9q7k81yc.json",
    "artifact_validation_sha256": "4e529e36ea88c6332e908509960de550ccd573194f9704cc84bf6a882c7eb746",
+   "build_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/build-batch7-client-1.result.json",
+   "build_receipt_sha256": "81d60282d63be6303c05fe31b0da0de9eadc0a22ca5cd4bcd6fb4306bafeaecf",
    "bundle": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/frontend-numeric-batch-7/bundles/18764c8406b4145c1f58.json",
    "bundle_sha256": "9b15ffee2c8ed7c5ba86700e978b67e5e517103ccd8b2dcb004cff680b4de793",
    "command": [
@@ -430,6 +487,8 @@
     "-FortniteLegacyMaterialManifestSHA256=5a77ff5ee75f769785fcb434f6713671fa37fb1f4ca7da40f93c6d4bd73eae56",
     "-FortniteLegacyMaterialArtifactDir=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/030-M_UI_Tab_Main_Backing_Disabled-artifacts"
    ],
+   "commit": "669e5b5ca13cffb07a4c3c020acae21a1ae032f6",
+   "engine_commit": "08ebac023147bf943b3c4d1ab49b24a87a97998e",
    "exit_code": 0,
    "id": "material_frontend_owner_18764c8406b4145c",
    "key_lines": [
@@ -445,9 +504,15 @@
    "resource_owner_path": "/Game/UI/Foundation/Buttons/Materials/Tab/UI_Refresh/M_UI_Tab_Main_Backing_Master.M_UI_Tab_Main_Backing_Master",
    "result": "pass",
    "run_receipt": "porting/generated/material_pipeline/batch7-owner-probes-1.result.json",
+   "run_receipt_sha256": "1abfc05ffe492afb26b68aa8d6cbdaaa4837e79ed8494cf4b1271d6b197e7684",
+   "runtime_checkpoint": "porting/generated/material_pipeline/frontend-batch7-intermediate-checkpoint-results.json",
+   "runtime_checkpoint_sha256": "4b76ea31bb7f1b0caae52905ba8bc1a3bf2764bbd757afd6895bf4bff789cb79",
    "scope": "This owner original material map compatibility and attachment in the bounded frontend closure; widget integration and original visual parity remain unverified.",
+   "source_and_staged_client_sha256": "8102a8102532a08b4062489045a6ab854cb6980ebdea97f6813409e7d7c8fc74",
    "source_frozen_inputs": "porting/generated/material_pipeline/batch7-build-inputs-1.json",
-   "source_frozen_inputs_sha256": "3e32214a2b5e78a0dccc7715098efb66e22032a866e9d064ad2fa85f2122a4b4"
+   "source_frozen_inputs_sha256": "3e32214a2b5e78a0dccc7715098efb66e22032a866e9d064ad2fa85f2122a4b4",
+   "source_native_commit": "a22aa211431c6d3875714bceef261de2f0983125",
+   "utc": "2026-11-01T05:06:47Z"
   },
   "material_frontend_owner_1dc4a097333f93f2": {
    "id": "material_frontend_owner_1dc4a097333f93f2",
@@ -462,8 +527,10 @@
    "scope": "Material owner in the bounded frontend closure; actual-owner runtime ingress has not been credited."
   },
   "material_frontend_owner_1f088da64e08242a": {
-   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/018-M_Border_SoftShadow-artifacts-dashboard-validation.json",
+   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/018-M_Border_SoftShadow-artifacts-dashboard-validation-d4_kw3qk.json",
    "artifact_validation_sha256": "bd735aeae91068849cba5bba359e519997c23767a3adda572704d102f3b792e3",
+   "build_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/build-batch7-client-1.result.json",
+   "build_receipt_sha256": "81d60282d63be6303c05fe31b0da0de9eadc0a22ca5cd4bcd6fb4306bafeaecf",
    "bundle": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/frontend-numeric-batch-7/bundles/1f088da64e08242a4b3a.json",
    "bundle_sha256": "2057417b2aa55af12493387ad890b34f3ed6e43c92a46903473f394380808a1b",
    "command": [
@@ -492,6 +559,8 @@
     "-FortniteLegacyMaterialManifestSHA256=5a77ff5ee75f769785fcb434f6713671fa37fb1f4ca7da40f93c6d4bd73eae56",
     "-FortniteLegacyMaterialArtifactDir=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/018-M_Border_SoftShadow-artifacts"
    ],
+   "commit": "669e5b5ca13cffb07a4c3c020acae21a1ae032f6",
+   "engine_commit": "08ebac023147bf943b3c4d1ab49b24a87a97998e",
    "exit_code": 0,
    "id": "material_frontend_owner_1f088da64e08242a",
    "key_lines": [
@@ -507,8 +576,15 @@
    "resource_owner_path": "/Game/UI/Foundation/Border/Materials/M_Border_SoftShadow.M_Border_SoftShadow",
    "result": "pass",
    "run_receipt": "porting/generated/material_pipeline/batch7-owner-probes-1.result.json",
+   "run_receipt_sha256": "1abfc05ffe492afb26b68aa8d6cbdaaa4837e79ed8494cf4b1271d6b197e7684",
+   "runtime_checkpoint": "porting/generated/material_pipeline/frontend-batch7-intermediate-checkpoint-results.json",
+   "runtime_checkpoint_sha256": "4b76ea31bb7f1b0caae52905ba8bc1a3bf2764bbd757afd6895bf4bff789cb79",
    "scope": "This owner original material map compatibility and attachment in the bounded frontend closure; widget integration and original visual parity remain unverified.",
-   "source_frozen_inputs": "porting/generated/material_pipeline/batch7-build-inputs-1.json"
+   "source_and_staged_client_sha256": "8102a8102532a08b4062489045a6ab854cb6980ebdea97f6813409e7d7c8fc74",
+   "source_frozen_inputs": "porting/generated/material_pipeline/batch7-build-inputs-1.json",
+   "source_frozen_inputs_sha256": "3e32214a2b5e78a0dccc7715098efb66e22032a866e9d064ad2fa85f2122a4b4",
+   "source_native_commit": "a22aa211431c6d3875714bceef261de2f0983125",
+   "utc": "2026-11-01T05:06:45Z"
   },
   "material_frontend_owner_228a3818abe7e12b": {
    "id": "material_frontend_owner_228a3818abe7e12b",
@@ -517,8 +593,10 @@
    "scope": "Material owner in the bounded frontend closure; actual-owner runtime ingress has not been credited."
   },
   "material_frontend_owner_2417aa268eef1a39": {
-   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/021-M_UI_Border-SolidBG-Purple-artifacts-dashboard-validation.json",
+   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/021-M_UI_Border-SolidBG-Purple-artifacts-dashboard-validation-f9iirhrc.json",
    "artifact_validation_sha256": "64db3acaa9e2d7ef8958eb57ed5ee5b73f3e00dbc22bf50677ef3776c108cf2b",
+   "build_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/build-batch7-client-1.result.json",
+   "build_receipt_sha256": "81d60282d63be6303c05fe31b0da0de9eadc0a22ca5cd4bcd6fb4306bafeaecf",
    "bundle": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/frontend-numeric-batch-7/bundles/2417aa268eef1a397d64.json",
    "bundle_sha256": "6bc34229d59253648fc5645fc0007d8ca0233898a6c7af1a9aaecedb30b2a5a3",
    "command": [
@@ -547,6 +625,8 @@
     "-FortniteLegacyMaterialManifestSHA256=5a77ff5ee75f769785fcb434f6713671fa37fb1f4ca7da40f93c6d4bd73eae56",
     "-FortniteLegacyMaterialArtifactDir=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/021-M_UI_Border-SolidBG-Purple-artifacts"
    ],
+   "commit": "669e5b5ca13cffb07a4c3c020acae21a1ae032f6",
+   "engine_commit": "08ebac023147bf943b3c4d1ab49b24a87a97998e",
    "exit_code": 0,
    "id": "material_frontend_owner_2417aa268eef1a39",
    "key_lines": [
@@ -562,8 +642,15 @@
    "resource_owner_path": "/Game/UI/Foundation/Border/Materials/M_UI_Border-SolidBG-Purple.M_UI_Border-SolidBG-Purple",
    "result": "pass",
    "run_receipt": "porting/generated/material_pipeline/batch7-owner-probes-1.result.json",
+   "run_receipt_sha256": "1abfc05ffe492afb26b68aa8d6cbdaaa4837e79ed8494cf4b1271d6b197e7684",
+   "runtime_checkpoint": "porting/generated/material_pipeline/frontend-batch7-intermediate-checkpoint-results.json",
+   "runtime_checkpoint_sha256": "4b76ea31bb7f1b0caae52905ba8bc1a3bf2764bbd757afd6895bf4bff789cb79",
    "scope": "This owner original material map compatibility and attachment in the bounded frontend closure; widget integration and original visual parity remain unverified.",
-   "source_frozen_inputs": "porting/generated/material_pipeline/batch7-build-inputs-1.json"
+   "source_and_staged_client_sha256": "8102a8102532a08b4062489045a6ab854cb6980ebdea97f6813409e7d7c8fc74",
+   "source_frozen_inputs": "porting/generated/material_pipeline/batch7-build-inputs-1.json",
+   "source_frozen_inputs_sha256": "3e32214a2b5e78a0dccc7715098efb66e22032a866e9d064ad2fa85f2122a4b4",
+   "source_native_commit": "a22aa211431c6d3875714bceef261de2f0983125",
+   "utc": "2026-11-01T05:06:45Z"
   },
   "material_frontend_owner_24db817708f03e94": {
    "id": "material_frontend_owner_24db817708f03e94",
@@ -578,8 +665,10 @@
    "scope": "Material owner in the bounded frontend closure; actual-owner runtime ingress has not been credited."
   },
   "material_frontend_owner_2653ef5701a87e0d": {
-   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/011-M_UI_AthenaSeason_Stylized_Font-artifacts-dashboard-validation.json",
+   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/011-M_UI_AthenaSeason_Stylized_Font-artifacts-dashboard-validation-__xs9gnt.json",
    "artifact_validation_sha256": "367a9b59b4c8d09d31b5218c14d7235aa6cb660b8043be1aee0c773f9f65a1eb",
+   "build_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/build-batch7-client-1.result.json",
+   "build_receipt_sha256": "81d60282d63be6303c05fe31b0da0de9eadc0a22ca5cd4bcd6fb4306bafeaecf",
    "bundle": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/frontend-numeric-batch-7/bundles/2653ef5701a87e0dc587.json",
    "bundle_sha256": "d339ff8b0a808ff26023590f073ba37bcfe5cc26a243c99ecf51887a0d030f10",
    "command": [
@@ -608,6 +697,8 @@
     "-FortniteLegacyMaterialManifestSHA256=5a77ff5ee75f769785fcb434f6713671fa37fb1f4ca7da40f93c6d4bd73eae56",
     "-FortniteLegacyMaterialArtifactDir=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/011-M_UI_AthenaSeason_Stylized_Font-artifacts"
    ],
+   "commit": "669e5b5ca13cffb07a4c3c020acae21a1ae032f6",
+   "engine_commit": "08ebac023147bf943b3c4d1ab49b24a87a97998e",
    "exit_code": 0,
    "id": "material_frontend_owner_2653ef5701a87e0d",
    "key_lines": [
@@ -623,8 +714,15 @@
    "resource_owner_path": "/Game/Athena/UI/Season/Art/M_UI_AthenaSeason_Stylized_Font.M_UI_AthenaSeason_Stylized_Font",
    "result": "pass",
    "run_receipt": "porting/generated/material_pipeline/batch7-owner-probes-1.result.json",
+   "run_receipt_sha256": "1abfc05ffe492afb26b68aa8d6cbdaaa4837e79ed8494cf4b1271d6b197e7684",
+   "runtime_checkpoint": "porting/generated/material_pipeline/frontend-batch7-intermediate-checkpoint-results.json",
+   "runtime_checkpoint_sha256": "4b76ea31bb7f1b0caae52905ba8bc1a3bf2764bbd757afd6895bf4bff789cb79",
    "scope": "This owner original material map compatibility and attachment in the bounded frontend closure; widget integration and original visual parity remain unverified.",
-   "source_frozen_inputs": "porting/generated/material_pipeline/batch7-build-inputs-1.json"
+   "source_and_staged_client_sha256": "8102a8102532a08b4062489045a6ab854cb6980ebdea97f6813409e7d7c8fc74",
+   "source_frozen_inputs": "porting/generated/material_pipeline/batch7-build-inputs-1.json",
+   "source_frozen_inputs_sha256": "3e32214a2b5e78a0dccc7715098efb66e22032a866e9d064ad2fa85f2122a4b4",
+   "source_native_commit": "a22aa211431c6d3875714bceef261de2f0983125",
+   "utc": "2026-11-01T05:06:43Z"
   },
   "material_frontend_owner_28869e2c3b7228c9": {
    "id": "material_frontend_owner_28869e2c3b7228c9",
@@ -639,8 +737,10 @@
    "scope": "Material owner in the bounded frontend closure; actual-owner runtime ingress has not been credited."
   },
   "material_frontend_owner_2b046459bb5f6410": {
-   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/004-M_Ui_ReplayBrowserRow-artifacts-dashboard-validation.json",
+   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/004-M_Ui_ReplayBrowserRow-artifacts-dashboard-validation-k5vq7gnm.json",
    "artifact_validation_sha256": "eff544fe11193c28bb46aef9b8fa8a05c806b90f91981af59c49ea029d86a48d",
+   "build_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/build-batch7-client-1.result.json",
+   "build_receipt_sha256": "81d60282d63be6303c05fe31b0da0de9eadc0a22ca5cd4bcd6fb4306bafeaecf",
    "bundle": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/frontend-numeric-batch-7/bundles/2b046459bb5f641004ba.json",
    "bundle_sha256": "499f6a7ea9640ad44b092213c6602a479ae0ef6cf38fc13dd51ff32a6dbc7795",
    "command": [
@@ -669,6 +769,8 @@
     "-FortniteLegacyMaterialManifestSHA256=5a77ff5ee75f769785fcb434f6713671fa37fb1f4ca7da40f93c6d4bd73eae56",
     "-FortniteLegacyMaterialArtifactDir=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/004-M_Ui_ReplayBrowserRow-artifacts"
    ],
+   "commit": "669e5b5ca13cffb07a4c3c020acae21a1ae032f6",
+   "engine_commit": "08ebac023147bf943b3c4d1ab49b24a87a97998e",
    "exit_code": 0,
    "id": "material_frontend_owner_2b046459bb5f6410",
    "key_lines": [
@@ -684,8 +786,15 @@
    "resource_owner_path": "/Game/Athena/UI/ReplayBrowser/M_Ui_ReplayBrowserRow.M_Ui_ReplayBrowserRow",
    "result": "pass",
    "run_receipt": "porting/generated/material_pipeline/batch7-owner-probes-1.result.json",
+   "run_receipt_sha256": "1abfc05ffe492afb26b68aa8d6cbdaaa4837e79ed8494cf4b1271d6b197e7684",
+   "runtime_checkpoint": "porting/generated/material_pipeline/frontend-batch7-intermediate-checkpoint-results.json",
+   "runtime_checkpoint_sha256": "4b76ea31bb7f1b0caae52905ba8bc1a3bf2764bbd757afd6895bf4bff789cb79",
    "scope": "This owner original material map compatibility and attachment in the bounded frontend closure; widget integration and original visual parity remain unverified.",
-   "source_frozen_inputs": "porting/generated/material_pipeline/batch7-build-inputs-1.json"
+   "source_and_staged_client_sha256": "8102a8102532a08b4062489045a6ab854cb6980ebdea97f6813409e7d7c8fc74",
+   "source_frozen_inputs": "porting/generated/material_pipeline/batch7-build-inputs-1.json",
+   "source_frozen_inputs_sha256": "3e32214a2b5e78a0dccc7715098efb66e22032a866e9d064ad2fa85f2122a4b4",
+   "source_native_commit": "a22aa211431c6d3875714bceef261de2f0983125",
+   "utc": "2026-11-01T05:06:42Z"
   },
   "material_frontend_owner_2d07a9a8cc7b4259": {
    "id": "material_frontend_owner_2d07a9a8cc7b4259",
@@ -700,8 +809,10 @@
    "scope": "Material owner in the bounded frontend closure; actual-owner runtime ingress has not been credited."
   },
   "material_frontend_owner_32eda186ebb5ce56": {
-   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/012-M-Border-MainL-Black-artifacts-dashboard-validation.json",
+   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/012-M-Border-MainL-Black-artifacts-dashboard-validation-rbo7flxq.json",
    "artifact_validation_sha256": "47bcd8ae0ec6652c1d7374920b2465c3dbb1f40af265d24008a06422bea61e09",
+   "build_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/build-batch7-client-1.result.json",
+   "build_receipt_sha256": "81d60282d63be6303c05fe31b0da0de9eadc0a22ca5cd4bcd6fb4306bafeaecf",
    "bundle": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/frontend-numeric-batch-7/bundles/32eda186ebb5ce563def.json",
    "bundle_sha256": "66961234b3912b40adbeab3c328a70bb9e0668c84568566bcb8c54fbf66130dd",
    "command": [
@@ -730,6 +841,8 @@
     "-FortniteLegacyMaterialManifestSHA256=5a77ff5ee75f769785fcb434f6713671fa37fb1f4ca7da40f93c6d4bd73eae56",
     "-FortniteLegacyMaterialArtifactDir=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/012-M-Border-MainL-Black-artifacts"
    ],
+   "commit": "669e5b5ca13cffb07a4c3c020acae21a1ae032f6",
+   "engine_commit": "08ebac023147bf943b3c4d1ab49b24a87a97998e",
    "exit_code": 0,
    "id": "material_frontend_owner_32eda186ebb5ce56",
    "key_lines": [
@@ -745,8 +858,15 @@
    "resource_owner_path": "/Game/UI/Foundation/Border/Materials/M-Border-MainL.M-Border-MainL",
    "result": "pass",
    "run_receipt": "porting/generated/material_pipeline/batch7-owner-probes-1.result.json",
+   "run_receipt_sha256": "1abfc05ffe492afb26b68aa8d6cbdaaa4837e79ed8494cf4b1271d6b197e7684",
+   "runtime_checkpoint": "porting/generated/material_pipeline/frontend-batch7-intermediate-checkpoint-results.json",
+   "runtime_checkpoint_sha256": "4b76ea31bb7f1b0caae52905ba8bc1a3bf2764bbd757afd6895bf4bff789cb79",
    "scope": "This owner original material map compatibility and attachment in the bounded frontend closure; widget integration and original visual parity remain unverified.",
-   "source_frozen_inputs": "porting/generated/material_pipeline/batch7-build-inputs-1.json"
+   "source_and_staged_client_sha256": "8102a8102532a08b4062489045a6ab854cb6980ebdea97f6813409e7d7c8fc74",
+   "source_frozen_inputs": "porting/generated/material_pipeline/batch7-build-inputs-1.json",
+   "source_frozen_inputs_sha256": "3e32214a2b5e78a0dccc7715098efb66e22032a866e9d064ad2fa85f2122a4b4",
+   "source_native_commit": "a22aa211431c6d3875714bceef261de2f0983125",
+   "utc": "2026-11-01T05:06:44Z"
   },
   "material_frontend_owner_3404cdb51f0042b7": {
    "id": "material_frontend_owner_3404cdb51f0042b7",
@@ -791,8 +911,10 @@
    "scope": "Material owner in the bounded frontend closure; actual-owner runtime ingress has not been credited."
   },
   "material_frontend_owner_3d3453906eeb002d": {
-   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/001-M_UI_RadialGradientMaster-artifacts-dashboard-validation.json",
+   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/001-M_UI_RadialGradientMaster-artifacts-dashboard-validation-qvpd5h26.json",
    "artifact_validation_sha256": "6cea12799bc32bfbc9e8ccaaa1223165ab2eb427a1c9ba0c6270d7d667905558",
+   "build_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/build-batch7-client-1.result.json",
+   "build_receipt_sha256": "81d60282d63be6303c05fe31b0da0de9eadc0a22ca5cd4bcd6fb4306bafeaecf",
    "bundle": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/frontend-numeric-batch-7/bundles/3d3453906eeb002d3e0d.json",
    "bundle_sha256": "1778010c664c65d82e8d3cd3a61cf06f0c072472337bb3d66074d2264421b183",
    "command": [
@@ -821,6 +943,8 @@
     "-FortniteLegacyMaterialManifestSHA256=5a77ff5ee75f769785fcb434f6713671fa37fb1f4ca7da40f93c6d4bd73eae56",
     "-FortniteLegacyMaterialArtifactDir=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/001-M_UI_RadialGradientMaster-artifacts"
    ],
+   "commit": "669e5b5ca13cffb07a4c3c020acae21a1ae032f6",
+   "engine_commit": "08ebac023147bf943b3c4d1ab49b24a87a97998e",
    "exit_code": 0,
    "id": "material_frontend_owner_3d3453906eeb002d",
    "key_lines": [
@@ -836,8 +960,15 @@
    "resource_owner_path": "/Game/Athena/UI/Frontend/Art/M_UI_RadialGradientMaster.M_UI_RadialGradientMaster",
    "result": "pass",
    "run_receipt": "porting/generated/material_pipeline/batch7-owner-probes-1.result.json",
+   "run_receipt_sha256": "1abfc05ffe492afb26b68aa8d6cbdaaa4837e79ed8494cf4b1271d6b197e7684",
+   "runtime_checkpoint": "porting/generated/material_pipeline/frontend-batch7-intermediate-checkpoint-results.json",
+   "runtime_checkpoint_sha256": "4b76ea31bb7f1b0caae52905ba8bc1a3bf2764bbd757afd6895bf4bff789cb79",
    "scope": "This owner original material map compatibility and attachment in the bounded frontend closure; widget integration and original visual parity remain unverified.",
-   "source_frozen_inputs": "porting/generated/material_pipeline/batch7-build-inputs-1.json"
+   "source_and_staged_client_sha256": "8102a8102532a08b4062489045a6ab854cb6980ebdea97f6813409e7d7c8fc74",
+   "source_frozen_inputs": "porting/generated/material_pipeline/batch7-build-inputs-1.json",
+   "source_frozen_inputs_sha256": "3e32214a2b5e78a0dccc7715098efb66e22032a866e9d064ad2fa85f2122a4b4",
+   "source_native_commit": "a22aa211431c6d3875714bceef261de2f0983125",
+   "utc": "2026-11-01T05:06:41Z"
   },
   "material_frontend_owner_3e61495beb42f46a": {
    "id": "material_frontend_owner_3e61495beb42f46a",
@@ -876,8 +1007,10 @@
    "scope": "Material owner in the bounded frontend closure; actual-owner runtime ingress has not been credited."
   },
   "material_frontend_owner_4c2aac70b3f3dbd1": {
-   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/017-M_Border_DropShadow-artifacts-dashboard-validation.json",
+   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/017-M_Border_DropShadow-artifacts-dashboard-validation-kz5lafh5.json",
    "artifact_validation_sha256": "7c32d314935979169bb8449b61d27d4e14c6d671913ada746f79bd6d87517616",
+   "build_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/build-batch7-client-1.result.json",
+   "build_receipt_sha256": "81d60282d63be6303c05fe31b0da0de9eadc0a22ca5cd4bcd6fb4306bafeaecf",
    "bundle": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/frontend-numeric-batch-7/bundles/4c2aac70b3f3dbd19a5c.json",
    "bundle_sha256": "db26654052b93167a4716d2fe97af9a2c6acac6d4f448564669ff9019ea9f98f",
    "command": [
@@ -906,6 +1039,8 @@
     "-FortniteLegacyMaterialManifestSHA256=5a77ff5ee75f769785fcb434f6713671fa37fb1f4ca7da40f93c6d4bd73eae56",
     "-FortniteLegacyMaterialArtifactDir=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/017-M_Border_DropShadow-artifacts"
    ],
+   "commit": "669e5b5ca13cffb07a4c3c020acae21a1ae032f6",
+   "engine_commit": "08ebac023147bf943b3c4d1ab49b24a87a97998e",
    "exit_code": 0,
    "id": "material_frontend_owner_4c2aac70b3f3dbd1",
    "key_lines": [
@@ -921,8 +1056,15 @@
    "resource_owner_path": "/Game/UI/Foundation/Border/Materials/M_Border_DropShadow.M_Border_DropShadow",
    "result": "pass",
    "run_receipt": "porting/generated/material_pipeline/batch7-owner-probes-1.result.json",
+   "run_receipt_sha256": "1abfc05ffe492afb26b68aa8d6cbdaaa4837e79ed8494cf4b1271d6b197e7684",
+   "runtime_checkpoint": "porting/generated/material_pipeline/frontend-batch7-intermediate-checkpoint-results.json",
+   "runtime_checkpoint_sha256": "4b76ea31bb7f1b0caae52905ba8bc1a3bf2764bbd757afd6895bf4bff789cb79",
    "scope": "This owner original material map compatibility and attachment in the bounded frontend closure; widget integration and original visual parity remain unverified.",
-   "source_frozen_inputs": "porting/generated/material_pipeline/batch7-build-inputs-1.json"
+   "source_and_staged_client_sha256": "8102a8102532a08b4062489045a6ab854cb6980ebdea97f6813409e7d7c8fc74",
+   "source_frozen_inputs": "porting/generated/material_pipeline/batch7-build-inputs-1.json",
+   "source_frozen_inputs_sha256": "3e32214a2b5e78a0dccc7715098efb66e22032a866e9d064ad2fa85f2122a4b4",
+   "source_native_commit": "a22aa211431c6d3875714bceef261de2f0983125",
+   "utc": "2026-11-01T05:06:45Z"
   },
   "material_frontend_owner_4cfe3467e5741e39": {
    "id": "material_frontend_owner_4cfe3467e5741e39",
@@ -967,8 +1109,10 @@
    "scope": "Material owner in the bounded frontend closure; actual-owner runtime ingress has not been credited."
   },
   "material_frontend_owner_608199fda7d1e82e": {
-   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/027-M_Button_Feature_Pressed-artifacts-dashboard-validation-xjyo291_.json",
+   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/027-M_Button_Feature_Pressed-artifacts-dashboard-validation-3ehx9e4r.json",
    "artifact_validation_sha256": "3f2410b65b46e56223f6aff8d03b2f2a4c6ec07b1fe7900d732dc6fdffa5765e",
+   "build_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/build-batch7-client-1.result.json",
+   "build_receipt_sha256": "81d60282d63be6303c05fe31b0da0de9eadc0a22ca5cd4bcd6fb4306bafeaecf",
    "bundle": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/frontend-numeric-batch-7/bundles/608199fda7d1e82e458a.json",
    "bundle_sha256": "ca8997a1f46b32b940ecb7f31083cacb4213c845f2600cae9abb482911f762d1",
    "command": [
@@ -997,6 +1141,8 @@
     "-FortniteLegacyMaterialManifestSHA256=5a77ff5ee75f769785fcb434f6713671fa37fb1f4ca7da40f93c6d4bd73eae56",
     "-FortniteLegacyMaterialArtifactDir=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/027-M_Button_Feature_Pressed-artifacts"
    ],
+   "commit": "669e5b5ca13cffb07a4c3c020acae21a1ae032f6",
+   "engine_commit": "08ebac023147bf943b3c4d1ab49b24a87a97998e",
    "exit_code": 0,
    "id": "material_frontend_owner_608199fda7d1e82e",
    "key_lines": [
@@ -1013,9 +1159,15 @@
    "resource_owner_path": "/Game/UI/Foundation/Buttons/Materials/Feature/M_FeatureButton_Master.M_FeatureButton_Master",
    "result": "pass",
    "run_receipt": "porting/generated/material_pipeline/batch7-owner-probes-1.result.json",
+   "run_receipt_sha256": "1abfc05ffe492afb26b68aa8d6cbdaaa4837e79ed8494cf4b1271d6b197e7684",
+   "runtime_checkpoint": "porting/generated/material_pipeline/frontend-batch7-intermediate-checkpoint-results.json",
+   "runtime_checkpoint_sha256": "4b76ea31bb7f1b0caae52905ba8bc1a3bf2764bbd757afd6895bf4bff789cb79",
    "scope": "This owner original material map compatibility and attachment in the bounded frontend closure; widget integration and original visual parity remain unverified.",
+   "source_and_staged_client_sha256": "8102a8102532a08b4062489045a6ab854cb6980ebdea97f6813409e7d7c8fc74",
    "source_frozen_inputs": "porting/generated/material_pipeline/batch7-build-inputs-1.json",
-   "source_frozen_inputs_sha256": "3e32214a2b5e78a0dccc7715098efb66e22032a866e9d064ad2fa85f2122a4b4"
+   "source_frozen_inputs_sha256": "3e32214a2b5e78a0dccc7715098efb66e22032a866e9d064ad2fa85f2122a4b4",
+   "source_native_commit": "a22aa211431c6d3875714bceef261de2f0983125",
+   "utc": "2026-11-01T05:06:46Z"
   },
   "material_frontend_owner_61384ac1a8df8d33": {
    "id": "material_frontend_owner_61384ac1a8df8d33",
@@ -1048,8 +1200,10 @@
    "scope": "Material owner in the bounded frontend closure; actual-owner runtime ingress has not been credited."
   },
   "material_frontend_owner_6664a1649c7c749d": {
-   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/005-M_Ui_Skewed_Vfor9slices-artifacts-dashboard-validation.json",
+   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/005-M_Ui_Skewed_Vfor9slices-artifacts-dashboard-validation-fg35p93w.json",
    "artifact_validation_sha256": "6e0e1580f1c4989f382f024746f05cca9c32b6a84e08e21db2df535221559e6f",
+   "build_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/build-batch7-client-1.result.json",
+   "build_receipt_sha256": "81d60282d63be6303c05fe31b0da0de9eadc0a22ca5cd4bcd6fb4306bafeaecf",
    "bundle": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/frontend-numeric-batch-7/bundles/6664a1649c7c749d5171.json",
    "bundle_sha256": "c14561e8c9d05ed50b8950661a9cf55e8ee3009e906871a0bd6cd183ae613ba3",
    "command": [
@@ -1078,6 +1232,8 @@
     "-FortniteLegacyMaterialManifestSHA256=5a77ff5ee75f769785fcb434f6713671fa37fb1f4ca7da40f93c6d4bd73eae56",
     "-FortniteLegacyMaterialArtifactDir=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/005-M_Ui_Skewed_Vfor9slices-artifacts"
    ],
+   "commit": "669e5b5ca13cffb07a4c3c020acae21a1ae032f6",
+   "engine_commit": "08ebac023147bf943b3c4d1ab49b24a87a97998e",
    "exit_code": 0,
    "id": "material_frontend_owner_6664a1649c7c749d",
    "key_lines": [
@@ -1093,8 +1249,15 @@
    "resource_owner_path": "/Game/Athena/UI/ReplayBrowser/M_Ui_ReplayBrowserRow.M_Ui_ReplayBrowserRow",
    "result": "pass",
    "run_receipt": "porting/generated/material_pipeline/batch7-owner-probes-1.result.json",
+   "run_receipt_sha256": "1abfc05ffe492afb26b68aa8d6cbdaaa4837e79ed8494cf4b1271d6b197e7684",
+   "runtime_checkpoint": "porting/generated/material_pipeline/frontend-batch7-intermediate-checkpoint-results.json",
+   "runtime_checkpoint_sha256": "4b76ea31bb7f1b0caae52905ba8bc1a3bf2764bbd757afd6895bf4bff789cb79",
    "scope": "This owner original material map compatibility and attachment in the bounded frontend closure; widget integration and original visual parity remain unverified.",
-   "source_frozen_inputs": "porting/generated/material_pipeline/batch7-build-inputs-1.json"
+   "source_and_staged_client_sha256": "8102a8102532a08b4062489045a6ab854cb6980ebdea97f6813409e7d7c8fc74",
+   "source_frozen_inputs": "porting/generated/material_pipeline/batch7-build-inputs-1.json",
+   "source_frozen_inputs_sha256": "3e32214a2b5e78a0dccc7715098efb66e22032a866e9d064ad2fa85f2122a4b4",
+   "source_native_commit": "a22aa211431c6d3875714bceef261de2f0983125",
+   "utc": "2026-11-01T05:06:42Z"
   },
   "material_frontend_owner_68c6b793868fb135": {
    "id": "material_frontend_owner_68c6b793868fb135",
@@ -1115,8 +1278,10 @@
    "scope": "Material owner in the bounded frontend closure; actual-owner runtime ingress has not been credited."
   },
   "material_frontend_owner_6cf1c33082ec2c66": {
-   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/020-M_Border_Solid_DkBlue-artifacts-dashboard-validation.json",
+   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/020-M_Border_Solid_DkBlue-artifacts-dashboard-validation-9xsybdu3.json",
    "artifact_validation_sha256": "8b879fd915b6de28b439c6cc25a5c8ea636edbf5a43e55adf2b9170c980b9633",
+   "build_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/build-batch7-client-1.result.json",
+   "build_receipt_sha256": "81d60282d63be6303c05fe31b0da0de9eadc0a22ca5cd4bcd6fb4306bafeaecf",
    "bundle": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/frontend-numeric-batch-7/bundles/6cf1c33082ec2c66bc53.json",
    "bundle_sha256": "4e5faa5ad634cbfd11d29add3b8bc53d81261ba53f5b2ff6d28cf5d688be4f51",
    "command": [
@@ -1145,6 +1310,8 @@
     "-FortniteLegacyMaterialManifestSHA256=5a77ff5ee75f769785fcb434f6713671fa37fb1f4ca7da40f93c6d4bd73eae56",
     "-FortniteLegacyMaterialArtifactDir=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/020-M_Border_Solid_DkBlue-artifacts"
    ],
+   "commit": "669e5b5ca13cffb07a4c3c020acae21a1ae032f6",
+   "engine_commit": "08ebac023147bf943b3c4d1ab49b24a87a97998e",
    "exit_code": 0,
    "id": "material_frontend_owner_6cf1c33082ec2c66",
    "key_lines": [
@@ -1160,8 +1327,15 @@
    "resource_owner_path": "/Game/UI/Foundation/Border/Materials/M_Border_Solid_DkBlue.M_Border_Solid_DkBlue",
    "result": "pass",
    "run_receipt": "porting/generated/material_pipeline/batch7-owner-probes-1.result.json",
+   "run_receipt_sha256": "1abfc05ffe492afb26b68aa8d6cbdaaa4837e79ed8494cf4b1271d6b197e7684",
+   "runtime_checkpoint": "porting/generated/material_pipeline/frontend-batch7-intermediate-checkpoint-results.json",
+   "runtime_checkpoint_sha256": "4b76ea31bb7f1b0caae52905ba8bc1a3bf2764bbd757afd6895bf4bff789cb79",
    "scope": "This owner original material map compatibility and attachment in the bounded frontend closure; widget integration and original visual parity remain unverified.",
-   "source_frozen_inputs": "porting/generated/material_pipeline/batch7-build-inputs-1.json"
+   "source_and_staged_client_sha256": "8102a8102532a08b4062489045a6ab854cb6980ebdea97f6813409e7d7c8fc74",
+   "source_frozen_inputs": "porting/generated/material_pipeline/batch7-build-inputs-1.json",
+   "source_frozen_inputs_sha256": "3e32214a2b5e78a0dccc7715098efb66e22032a866e9d064ad2fa85f2122a4b4",
+   "source_native_commit": "a22aa211431c6d3875714bceef261de2f0983125",
+   "utc": "2026-11-01T05:06:45Z"
   },
   "material_frontend_owner_6e588337f96d7197": {
    "id": "material_frontend_owner_6e588337f96d7197",
@@ -1200,8 +1374,10 @@
    "scope": "Material owner in the bounded frontend closure; actual-owner runtime ingress has not been credited."
   },
   "material_frontend_owner_7c362ccf47797f25": {
-   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/028-M_Button_Feature_Text_Base-artifacts-dashboard-validation-2bfmhcna.json",
+   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/028-M_Button_Feature_Text_Base-artifacts-dashboard-validation-a1zkl3_z.json",
    "artifact_validation_sha256": "e8addb472e41dd161cdd16d976d49de599f6bab9c99859e69225fb3e7679047c",
+   "build_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/build-batch7-client-1.result.json",
+   "build_receipt_sha256": "81d60282d63be6303c05fe31b0da0de9eadc0a22ca5cd4bcd6fb4306bafeaecf",
    "bundle": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/frontend-numeric-batch-7/bundles/7c362ccf47797f25f7dd.json",
    "bundle_sha256": "693057494c30f76073a73244bfc6097251e6c51e9d2e2807d61a3d82d1d16b7d",
    "command": [
@@ -1230,6 +1406,8 @@
     "-FortniteLegacyMaterialManifestSHA256=5a77ff5ee75f769785fcb434f6713671fa37fb1f4ca7da40f93c6d4bd73eae56",
     "-FortniteLegacyMaterialArtifactDir=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/028-M_Button_Feature_Text_Base-artifacts"
    ],
+   "commit": "669e5b5ca13cffb07a4c3c020acae21a1ae032f6",
+   "engine_commit": "08ebac023147bf943b3c4d1ab49b24a87a97998e",
    "exit_code": 0,
    "id": "material_frontend_owner_7c362ccf47797f25",
    "key_lines": [
@@ -1246,13 +1424,21 @@
    "resource_owner_path": "/Game/UI/Foundation/Buttons/Materials/Feature/M_FeatureButton_Master.M_FeatureButton_Master",
    "result": "pass",
    "run_receipt": "porting/generated/material_pipeline/batch7-owner-probes-1.result.json",
+   "run_receipt_sha256": "1abfc05ffe492afb26b68aa8d6cbdaaa4837e79ed8494cf4b1271d6b197e7684",
+   "runtime_checkpoint": "porting/generated/material_pipeline/frontend-batch7-intermediate-checkpoint-results.json",
+   "runtime_checkpoint_sha256": "4b76ea31bb7f1b0caae52905ba8bc1a3bf2764bbd757afd6895bf4bff789cb79",
    "scope": "This owner original material map compatibility and attachment in the bounded frontend closure; widget integration and original visual parity remain unverified.",
+   "source_and_staged_client_sha256": "8102a8102532a08b4062489045a6ab854cb6980ebdea97f6813409e7d7c8fc74",
    "source_frozen_inputs": "porting/generated/material_pipeline/batch7-build-inputs-1.json",
-   "source_frozen_inputs_sha256": "3e32214a2b5e78a0dccc7715098efb66e22032a866e9d064ad2fa85f2122a4b4"
+   "source_frozen_inputs_sha256": "3e32214a2b5e78a0dccc7715098efb66e22032a866e9d064ad2fa85f2122a4b4",
+   "source_native_commit": "a22aa211431c6d3875714bceef261de2f0983125",
+   "utc": "2026-11-01T05:06:46Z"
   },
   "material_frontend_owner_7e7e96890e8e2cb9": {
-   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/038-Athena_AngledBlue_Base-artifacts-dashboard-validation-o5vicolu.json",
+   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/038-Athena_AngledBlue_Base-artifacts-dashboard-validation-qp9o5evy.json",
    "artifact_validation_sha256": "920185bc4e0af3f17991bb7644efa78e3764c8e3e3203a4d01f22276ff19f633",
+   "build_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/build-batch7-client-1.result.json",
+   "build_receipt_sha256": "81d60282d63be6303c05fe31b0da0de9eadc0a22ca5cd4bcd6fb4306bafeaecf",
    "bundle": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/frontend-numeric-batch-7/bundles/7e7e96890e8e2cb969d2.json",
    "bundle_sha256": "722797427595f02f477473e5bc2d6e7c9e7571bba866019ea1031dd8f53191c0",
    "command": [
@@ -1281,6 +1467,8 @@
     "-FortniteLegacyMaterialManifestSHA256=5a77ff5ee75f769785fcb434f6713671fa37fb1f4ca7da40f93c6d4bd73eae56",
     "-FortniteLegacyMaterialArtifactDir=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/038-Athena_AngledBlue_Base-artifacts"
    ],
+   "commit": "669e5b5ca13cffb07a4c3c020acae21a1ae032f6",
+   "engine_commit": "08ebac023147bf943b3c4d1ab49b24a87a97998e",
    "exit_code": 0,
    "id": "material_frontend_owner_7e7e96890e8e2cb9",
    "key_lines": [
@@ -1296,9 +1484,15 @@
    "resource_owner_path": "/Game/UI/Foundation/Materials/Athena_AngledBlue_Base.Athena_AngledBlue_Base",
    "result": "pass",
    "run_receipt": "porting/generated/material_pipeline/batch7-owner-probes-1.result.json",
+   "run_receipt_sha256": "1abfc05ffe492afb26b68aa8d6cbdaaa4837e79ed8494cf4b1271d6b197e7684",
+   "runtime_checkpoint": "porting/generated/material_pipeline/frontend-batch7-intermediate-checkpoint-results.json",
+   "runtime_checkpoint_sha256": "4b76ea31bb7f1b0caae52905ba8bc1a3bf2764bbd757afd6895bf4bff789cb79",
    "scope": "This owner original material map compatibility and attachment in the bounded frontend closure; widget integration and original visual parity remain unverified.",
+   "source_and_staged_client_sha256": "8102a8102532a08b4062489045a6ab854cb6980ebdea97f6813409e7d7c8fc74",
    "source_frozen_inputs": "porting/generated/material_pipeline/batch7-build-inputs-1.json",
-   "source_frozen_inputs_sha256": "3e32214a2b5e78a0dccc7715098efb66e22032a866e9d064ad2fa85f2122a4b4"
+   "source_frozen_inputs_sha256": "3e32214a2b5e78a0dccc7715098efb66e22032a866e9d064ad2fa85f2122a4b4",
+   "source_native_commit": "a22aa211431c6d3875714bceef261de2f0983125",
+   "utc": "2026-11-01T05:06:48Z"
   },
   "material_frontend_owner_80ccd638caec3952": {
    "id": "material_frontend_owner_80ccd638caec3952",
@@ -1307,8 +1501,10 @@
    "scope": "Material owner in the bounded frontend closure; actual-owner runtime ingress has not been credited."
   },
   "material_frontend_owner_82e095670ddb3361": {
-   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/034-M_UI_Tab_Main_Backing_Pressed-artifacts-dashboard-validation-ghlzs_8l.json",
+   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/034-M_UI_Tab_Main_Backing_Pressed-artifacts-dashboard-validation-p9etsso7.json",
    "artifact_validation_sha256": "a44e9b94a866eb4ff5ca15b3e30630352bfd397b2eb27e588688bfbb5ac8ef7c",
+   "build_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/build-batch7-client-1.result.json",
+   "build_receipt_sha256": "81d60282d63be6303c05fe31b0da0de9eadc0a22ca5cd4bcd6fb4306bafeaecf",
    "bundle": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/frontend-numeric-batch-7/bundles/82e095670ddb3361e07d.json",
    "bundle_sha256": "1621ced824eafe275f66eaf61c6d30c4bef55511182084ae6569f70b0f46802b",
    "command": [
@@ -1337,6 +1533,8 @@
     "-FortniteLegacyMaterialManifestSHA256=5a77ff5ee75f769785fcb434f6713671fa37fb1f4ca7da40f93c6d4bd73eae56",
     "-FortniteLegacyMaterialArtifactDir=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/034-M_UI_Tab_Main_Backing_Pressed-artifacts"
    ],
+   "commit": "669e5b5ca13cffb07a4c3c020acae21a1ae032f6",
+   "engine_commit": "08ebac023147bf943b3c4d1ab49b24a87a97998e",
    "exit_code": 0,
    "id": "material_frontend_owner_82e095670ddb3361",
    "key_lines": [
@@ -1352,9 +1550,15 @@
    "resource_owner_path": "/Game/UI/Foundation/Buttons/Materials/Tab/UI_Refresh/M_UI_Tab_Main_Backing_Master.M_UI_Tab_Main_Backing_Master",
    "result": "pass",
    "run_receipt": "porting/generated/material_pipeline/batch7-owner-probes-1.result.json",
+   "run_receipt_sha256": "1abfc05ffe492afb26b68aa8d6cbdaaa4837e79ed8494cf4b1271d6b197e7684",
+   "runtime_checkpoint": "porting/generated/material_pipeline/frontend-batch7-intermediate-checkpoint-results.json",
+   "runtime_checkpoint_sha256": "4b76ea31bb7f1b0caae52905ba8bc1a3bf2764bbd757afd6895bf4bff789cb79",
    "scope": "This owner original material map compatibility and attachment in the bounded frontend closure; widget integration and original visual parity remain unverified.",
+   "source_and_staged_client_sha256": "8102a8102532a08b4062489045a6ab854cb6980ebdea97f6813409e7d7c8fc74",
    "source_frozen_inputs": "porting/generated/material_pipeline/batch7-build-inputs-1.json",
-   "source_frozen_inputs_sha256": "3e32214a2b5e78a0dccc7715098efb66e22032a866e9d064ad2fa85f2122a4b4"
+   "source_frozen_inputs_sha256": "3e32214a2b5e78a0dccc7715098efb66e22032a866e9d064ad2fa85f2122a4b4",
+   "source_native_commit": "a22aa211431c6d3875714bceef261de2f0983125",
+   "utc": "2026-11-01T05:06:47Z"
   },
   "material_frontend_owner_8310f3e2e82adf74": {
    "id": "material_frontend_owner_8310f3e2e82adf74",
@@ -1381,8 +1585,10 @@
    "scope": "Material owner in the bounded frontend closure; actual-owner runtime ingress has not been credited."
   },
   "material_frontend_owner_89ef13495431e896": {
-   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/002-M_UI_RadialGradientMaster_Inst-artifacts-dashboard-validation.json",
+   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/002-M_UI_RadialGradientMaster_Inst-artifacts-dashboard-validation-m0ncrbww.json",
    "artifact_validation_sha256": "490c6b2130e518a9e21c660d5868ce92bb9a72fb8af791d9f09b8c1dc4fa3b76",
+   "build_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/build-batch7-client-1.result.json",
+   "build_receipt_sha256": "81d60282d63be6303c05fe31b0da0de9eadc0a22ca5cd4bcd6fb4306bafeaecf",
    "bundle": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/frontend-numeric-batch-7/bundles/89ef13495431e8961660.json",
    "bundle_sha256": "93ba9ae38e83e699cf991fa285286530cdeebabf84a45502d0d4f7717c69f661",
    "command": [
@@ -1411,6 +1617,8 @@
     "-FortniteLegacyMaterialManifestSHA256=5a77ff5ee75f769785fcb434f6713671fa37fb1f4ca7da40f93c6d4bd73eae56",
     "-FortniteLegacyMaterialArtifactDir=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/002-M_UI_RadialGradientMaster_Inst-artifacts"
    ],
+   "commit": "669e5b5ca13cffb07a4c3c020acae21a1ae032f6",
+   "engine_commit": "08ebac023147bf943b3c4d1ab49b24a87a97998e",
    "exit_code": 0,
    "id": "material_frontend_owner_89ef13495431e896",
    "key_lines": [
@@ -1426,12 +1634,21 @@
    "resource_owner_path": "/Game/Athena/UI/Frontend/Art/M_UI_RadialGradientMaster.M_UI_RadialGradientMaster",
    "result": "pass",
    "run_receipt": "porting/generated/material_pipeline/batch7-owner-probes-1.result.json",
+   "run_receipt_sha256": "1abfc05ffe492afb26b68aa8d6cbdaaa4837e79ed8494cf4b1271d6b197e7684",
+   "runtime_checkpoint": "porting/generated/material_pipeline/frontend-batch7-intermediate-checkpoint-results.json",
+   "runtime_checkpoint_sha256": "4b76ea31bb7f1b0caae52905ba8bc1a3bf2764bbd757afd6895bf4bff789cb79",
    "scope": "This owner original material map compatibility and attachment in the bounded frontend closure; widget integration and original visual parity remain unverified.",
-   "source_frozen_inputs": "porting/generated/material_pipeline/batch7-build-inputs-1.json"
+   "source_and_staged_client_sha256": "8102a8102532a08b4062489045a6ab854cb6980ebdea97f6813409e7d7c8fc74",
+   "source_frozen_inputs": "porting/generated/material_pipeline/batch7-build-inputs-1.json",
+   "source_frozen_inputs_sha256": "3e32214a2b5e78a0dccc7715098efb66e22032a866e9d064ad2fa85f2122a4b4",
+   "source_native_commit": "a22aa211431c6d3875714bceef261de2f0983125",
+   "utc": "2026-11-01T05:06:42Z"
   },
   "material_frontend_owner_8a40608645c131f5": {
-   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/023-M_UI_Border-SolidBG-Yellow-artifacts-dashboard-validation.json",
+   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/023-M_UI_Border-SolidBG-Yellow-artifacts-dashboard-validation-uuep_unj.json",
    "artifact_validation_sha256": "5ab19146633f3191eab4b9dba2dd417a976c4f967ea4fb643b03c582480fc41f",
+   "build_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/build-batch7-client-1.result.json",
+   "build_receipt_sha256": "81d60282d63be6303c05fe31b0da0de9eadc0a22ca5cd4bcd6fb4306bafeaecf",
    "bundle": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/frontend-numeric-batch-7/bundles/8a40608645c131f57221.json",
    "bundle_sha256": "429db40a4a7ea85c38331d0421c1b0e20ad649087009cd92302bc1bcdec848d2",
    "command": [
@@ -1460,6 +1677,8 @@
     "-FortniteLegacyMaterialManifestSHA256=5a77ff5ee75f769785fcb434f6713671fa37fb1f4ca7da40f93c6d4bd73eae56",
     "-FortniteLegacyMaterialArtifactDir=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/023-M_UI_Border-SolidBG-Yellow-artifacts"
    ],
+   "commit": "669e5b5ca13cffb07a4c3c020acae21a1ae032f6",
+   "engine_commit": "08ebac023147bf943b3c4d1ab49b24a87a97998e",
    "exit_code": 0,
    "id": "material_frontend_owner_8a40608645c131f5",
    "key_lines": [
@@ -1475,8 +1694,15 @@
    "resource_owner_path": "/Game/UI/Foundation/Border/Materials/M_UI_Border-SolidBG-Yellow.M_UI_Border-SolidBG-Yellow",
    "result": "pass",
    "run_receipt": "porting/generated/material_pipeline/batch7-owner-probes-1.result.json",
+   "run_receipt_sha256": "1abfc05ffe492afb26b68aa8d6cbdaaa4837e79ed8494cf4b1271d6b197e7684",
+   "runtime_checkpoint": "porting/generated/material_pipeline/frontend-batch7-intermediate-checkpoint-results.json",
+   "runtime_checkpoint_sha256": "4b76ea31bb7f1b0caae52905ba8bc1a3bf2764bbd757afd6895bf4bff789cb79",
    "scope": "This owner original material map compatibility and attachment in the bounded frontend closure; widget integration and original visual parity remain unverified.",
-   "source_frozen_inputs": "porting/generated/material_pipeline/batch7-build-inputs-1.json"
+   "source_and_staged_client_sha256": "8102a8102532a08b4062489045a6ab854cb6980ebdea97f6813409e7d7c8fc74",
+   "source_frozen_inputs": "porting/generated/material_pipeline/batch7-build-inputs-1.json",
+   "source_frozen_inputs_sha256": "3e32214a2b5e78a0dccc7715098efb66e22032a866e9d064ad2fa85f2122a4b4",
+   "source_native_commit": "a22aa211431c6d3875714bceef261de2f0983125",
+   "utc": "2026-11-01T05:06:46Z"
   },
   "material_frontend_owner_8d0e73389b345ed5": {
    "id": "material_frontend_owner_8d0e73389b345ed5",
@@ -1523,8 +1749,10 @@
    "scope": "Material owner in the bounded frontend closure; actual-owner runtime ingress has not been credited."
   },
   "material_frontend_owner_938763ddeabcd36f": {
-   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/019-M_Border_SoftShadow_DarkBLue-artifacts-dashboard-validation.json",
+   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/019-M_Border_SoftShadow_DarkBLue-artifacts-dashboard-validation-c1_gy87l.json",
    "artifact_validation_sha256": "a505bcc45328f0ff64b481255a911ce3e9a92a003befc5f380c9a8deaa846715",
+   "build_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/build-batch7-client-1.result.json",
+   "build_receipt_sha256": "81d60282d63be6303c05fe31b0da0de9eadc0a22ca5cd4bcd6fb4306bafeaecf",
    "bundle": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/frontend-numeric-batch-7/bundles/938763ddeabcd36f661b.json",
    "bundle_sha256": "1559ce1cdb0550ef2f418520654f0903b2c77d43762c75476a5251d77c3cff8c",
    "command": [
@@ -1553,6 +1781,8 @@
     "-FortniteLegacyMaterialManifestSHA256=5a77ff5ee75f769785fcb434f6713671fa37fb1f4ca7da40f93c6d4bd73eae56",
     "-FortniteLegacyMaterialArtifactDir=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/019-M_Border_SoftShadow_DarkBLue-artifacts"
    ],
+   "commit": "669e5b5ca13cffb07a4c3c020acae21a1ae032f6",
+   "engine_commit": "08ebac023147bf943b3c4d1ab49b24a87a97998e",
    "exit_code": 0,
    "id": "material_frontend_owner_938763ddeabcd36f",
    "key_lines": [
@@ -1568,12 +1798,21 @@
    "resource_owner_path": "/Game/UI/Foundation/Border/Materials/M_Border_SoftShadow.M_Border_SoftShadow",
    "result": "pass",
    "run_receipt": "porting/generated/material_pipeline/batch7-owner-probes-1.result.json",
+   "run_receipt_sha256": "1abfc05ffe492afb26b68aa8d6cbdaaa4837e79ed8494cf4b1271d6b197e7684",
+   "runtime_checkpoint": "porting/generated/material_pipeline/frontend-batch7-intermediate-checkpoint-results.json",
+   "runtime_checkpoint_sha256": "4b76ea31bb7f1b0caae52905ba8bc1a3bf2764bbd757afd6895bf4bff789cb79",
    "scope": "This owner original material map compatibility and attachment in the bounded frontend closure; widget integration and original visual parity remain unverified.",
-   "source_frozen_inputs": "porting/generated/material_pipeline/batch7-build-inputs-1.json"
+   "source_and_staged_client_sha256": "8102a8102532a08b4062489045a6ab854cb6980ebdea97f6813409e7d7c8fc74",
+   "source_frozen_inputs": "porting/generated/material_pipeline/batch7-build-inputs-1.json",
+   "source_frozen_inputs_sha256": "3e32214a2b5e78a0dccc7715098efb66e22032a866e9d064ad2fa85f2122a4b4",
+   "source_native_commit": "a22aa211431c6d3875714bceef261de2f0983125",
+   "utc": "2026-11-01T05:06:45Z"
   },
   "material_frontend_owner_96b3ea6c980a0471": {
-   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/033-M_UI_Tab_Main_Backing_Normal-artifacts-dashboard-validation-rpjimsf1.json",
+   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/033-M_UI_Tab_Main_Backing_Normal-artifacts-dashboard-validation-7xjp98fm.json",
    "artifact_validation_sha256": "99f9c4599e85c2638b1575b1c826ca97a31f593b2e3550ed775181df4b2c8bd4",
+   "build_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/build-batch7-client-1.result.json",
+   "build_receipt_sha256": "81d60282d63be6303c05fe31b0da0de9eadc0a22ca5cd4bcd6fb4306bafeaecf",
    "bundle": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/frontend-numeric-batch-7/bundles/96b3ea6c980a0471b0ee.json",
    "bundle_sha256": "7eadd4e450a763379d6255439695ddcaf0aa8de5c5a7d2a0bb4216f9cf934e96",
    "command": [
@@ -1602,6 +1841,8 @@
     "-FortniteLegacyMaterialManifestSHA256=5a77ff5ee75f769785fcb434f6713671fa37fb1f4ca7da40f93c6d4bd73eae56",
     "-FortniteLegacyMaterialArtifactDir=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/033-M_UI_Tab_Main_Backing_Normal-artifacts"
    ],
+   "commit": "669e5b5ca13cffb07a4c3c020acae21a1ae032f6",
+   "engine_commit": "08ebac023147bf943b3c4d1ab49b24a87a97998e",
    "exit_code": 0,
    "id": "material_frontend_owner_96b3ea6c980a0471",
    "key_lines": [
@@ -1617,9 +1858,15 @@
    "resource_owner_path": "/Game/UI/Foundation/Buttons/Materials/Tab/UI_Refresh/M_UI_Tab_Main_Backing_Master.M_UI_Tab_Main_Backing_Master",
    "result": "pass",
    "run_receipt": "porting/generated/material_pipeline/batch7-owner-probes-1.result.json",
+   "run_receipt_sha256": "1abfc05ffe492afb26b68aa8d6cbdaaa4837e79ed8494cf4b1271d6b197e7684",
+   "runtime_checkpoint": "porting/generated/material_pipeline/frontend-batch7-intermediate-checkpoint-results.json",
+   "runtime_checkpoint_sha256": "4b76ea31bb7f1b0caae52905ba8bc1a3bf2764bbd757afd6895bf4bff789cb79",
    "scope": "This owner original material map compatibility and attachment in the bounded frontend closure; widget integration and original visual parity remain unverified.",
+   "source_and_staged_client_sha256": "8102a8102532a08b4062489045a6ab854cb6980ebdea97f6813409e7d7c8fc74",
    "source_frozen_inputs": "porting/generated/material_pipeline/batch7-build-inputs-1.json",
-   "source_frozen_inputs_sha256": "3e32214a2b5e78a0dccc7715098efb66e22032a866e9d064ad2fa85f2122a4b4"
+   "source_frozen_inputs_sha256": "3e32214a2b5e78a0dccc7715098efb66e22032a866e9d064ad2fa85f2122a4b4",
+   "source_native_commit": "a22aa211431c6d3875714bceef261de2f0983125",
+   "utc": "2026-11-01T05:06:47Z"
   },
   "material_frontend_owner_96bfe15951a896cf": {
    "id": "material_frontend_owner_96bfe15951a896cf",
@@ -1658,8 +1905,10 @@
    "scope": "Material owner in the bounded frontend closure; actual-owner runtime ingress has not been credited."
   },
   "material_frontend_owner_9d410fe06d5264a2": {
-   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/022-M_UI_Border-SolidBG-RewardBack-artifacts-dashboard-validation.json",
+   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/022-M_UI_Border-SolidBG-RewardBack-artifacts-dashboard-validation-y1kg66qo.json",
    "artifact_validation_sha256": "c71a36afa000ccfdcdc49a906ee9f2a95a70932dfd9a7ad0f014988566c19631",
+   "build_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/build-batch7-client-1.result.json",
+   "build_receipt_sha256": "81d60282d63be6303c05fe31b0da0de9eadc0a22ca5cd4bcd6fb4306bafeaecf",
    "bundle": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/frontend-numeric-batch-7/bundles/9d410fe06d5264a2aa49.json",
    "bundle_sha256": "c207fe7ce258070c7b5dac7a0ba7ec150431f9ea55cf94fdb7df0ffc89e8d398",
    "command": [
@@ -1688,6 +1937,8 @@
     "-FortniteLegacyMaterialManifestSHA256=5a77ff5ee75f769785fcb434f6713671fa37fb1f4ca7da40f93c6d4bd73eae56",
     "-FortniteLegacyMaterialArtifactDir=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/022-M_UI_Border-SolidBG-RewardBack-artifacts"
    ],
+   "commit": "669e5b5ca13cffb07a4c3c020acae21a1ae032f6",
+   "engine_commit": "08ebac023147bf943b3c4d1ab49b24a87a97998e",
    "exit_code": 0,
    "id": "material_frontend_owner_9d410fe06d5264a2",
    "key_lines": [
@@ -1703,8 +1954,15 @@
    "resource_owner_path": "/Game/UI/Foundation/Border/Materials/M_UI_Border-SolidBG-RewardBack.M_UI_Border-SolidBG-RewardBack",
    "result": "pass",
    "run_receipt": "porting/generated/material_pipeline/batch7-owner-probes-1.result.json",
+   "run_receipt_sha256": "1abfc05ffe492afb26b68aa8d6cbdaaa4837e79ed8494cf4b1271d6b197e7684",
+   "runtime_checkpoint": "porting/generated/material_pipeline/frontend-batch7-intermediate-checkpoint-results.json",
+   "runtime_checkpoint_sha256": "4b76ea31bb7f1b0caae52905ba8bc1a3bf2764bbd757afd6895bf4bff789cb79",
    "scope": "This owner original material map compatibility and attachment in the bounded frontend closure; widget integration and original visual parity remain unverified.",
-   "source_frozen_inputs": "porting/generated/material_pipeline/batch7-build-inputs-1.json"
+   "source_and_staged_client_sha256": "8102a8102532a08b4062489045a6ab854cb6980ebdea97f6813409e7d7c8fc74",
+   "source_frozen_inputs": "porting/generated/material_pipeline/batch7-build-inputs-1.json",
+   "source_frozen_inputs_sha256": "3e32214a2b5e78a0dccc7715098efb66e22032a866e9d064ad2fa85f2122a4b4",
+   "source_native_commit": "a22aa211431c6d3875714bceef261de2f0983125",
+   "utc": "2026-11-01T05:06:46Z"
   },
   "material_frontend_owner_9fa2c9fa5a0adce3": {
    "id": "material_frontend_owner_9fa2c9fa5a0adce3",
@@ -1737,8 +1995,10 @@
    "scope": "Material owner in the bounded frontend closure; actual-owner runtime ingress has not been credited."
   },
   "material_frontend_owner_a330ba5dc5ca850c": {
-   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/015-M-Border-SolidBG-White-artifacts-dashboard-validation.json",
+   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/015-M-Border-SolidBG-White-artifacts-dashboard-validation-rdqmhkh9.json",
    "artifact_validation_sha256": "62aaf8a4465f074858fac419b22ab9275396bb914019fd176103c645ce032851",
+   "build_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/build-batch7-client-1.result.json",
+   "build_receipt_sha256": "81d60282d63be6303c05fe31b0da0de9eadc0a22ca5cd4bcd6fb4306bafeaecf",
    "bundle": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/frontend-numeric-batch-7/bundles/a330ba5dc5ca850cdfdf.json",
    "bundle_sha256": "0ef9d2b8e5240cbc47361182b2c787b9af5e7a0dca9463304123486bb2e5d302",
    "command": [
@@ -1767,6 +2027,8 @@
     "-FortniteLegacyMaterialManifestSHA256=5a77ff5ee75f769785fcb434f6713671fa37fb1f4ca7da40f93c6d4bd73eae56",
     "-FortniteLegacyMaterialArtifactDir=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/015-M-Border-SolidBG-White-artifacts"
    ],
+   "commit": "669e5b5ca13cffb07a4c3c020acae21a1ae032f6",
+   "engine_commit": "08ebac023147bf943b3c4d1ab49b24a87a97998e",
    "exit_code": 0,
    "id": "material_frontend_owner_a330ba5dc5ca850c",
    "key_lines": [
@@ -1782,12 +2044,21 @@
    "resource_owner_path": "/Game/UI/Foundation/Border/Materials/M-Border-SolidBG-White.M-Border-SolidBG-White",
    "result": "pass",
    "run_receipt": "porting/generated/material_pipeline/batch7-owner-probes-1.result.json",
+   "run_receipt_sha256": "1abfc05ffe492afb26b68aa8d6cbdaaa4837e79ed8494cf4b1271d6b197e7684",
+   "runtime_checkpoint": "porting/generated/material_pipeline/frontend-batch7-intermediate-checkpoint-results.json",
+   "runtime_checkpoint_sha256": "4b76ea31bb7f1b0caae52905ba8bc1a3bf2764bbd757afd6895bf4bff789cb79",
    "scope": "This owner original material map compatibility and attachment in the bounded frontend closure; widget integration and original visual parity remain unverified.",
-   "source_frozen_inputs": "porting/generated/material_pipeline/batch7-build-inputs-1.json"
+   "source_and_staged_client_sha256": "8102a8102532a08b4062489045a6ab854cb6980ebdea97f6813409e7d7c8fc74",
+   "source_frozen_inputs": "porting/generated/material_pipeline/batch7-build-inputs-1.json",
+   "source_frozen_inputs_sha256": "3e32214a2b5e78a0dccc7715098efb66e22032a866e9d064ad2fa85f2122a4b4",
+   "source_native_commit": "a22aa211431c6d3875714bceef261de2f0983125",
+   "utc": "2026-11-01T05:06:44Z"
   },
   "material_frontend_owner_a48ed3d16a59ff02": {
-   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/009-M_Ui_Skewed_Vfor9slices_Inst1-artifacts-dashboard-validation.json",
+   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/009-M_Ui_Skewed_Vfor9slices_Inst1-artifacts-dashboard-validation-5usz9bp8.json",
    "artifact_validation_sha256": "5e4a98ea4ecdfc38d878b06a80485a641a6546ed578a769c02928a16221eb350",
+   "build_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/build-batch7-client-1.result.json",
+   "build_receipt_sha256": "81d60282d63be6303c05fe31b0da0de9eadc0a22ca5cd4bcd6fb4306bafeaecf",
    "bundle": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/frontend-numeric-batch-7/bundles/a48ed3d16a59ff0244f6.json",
    "bundle_sha256": "b5f6657e168ac3bed6e3ff6ca1b12c49f219732135d60e7b13e978c1acc387ff",
    "command": [
@@ -1816,6 +2087,8 @@
     "-FortniteLegacyMaterialManifestSHA256=5a77ff5ee75f769785fcb434f6713671fa37fb1f4ca7da40f93c6d4bd73eae56",
     "-FortniteLegacyMaterialArtifactDir=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/009-M_Ui_Skewed_Vfor9slices_Inst1-artifacts"
    ],
+   "commit": "669e5b5ca13cffb07a4c3c020acae21a1ae032f6",
+   "engine_commit": "08ebac023147bf943b3c4d1ab49b24a87a97998e",
    "exit_code": 0,
    "id": "material_frontend_owner_a48ed3d16a59ff02",
    "key_lines": [
@@ -1831,12 +2104,21 @@
    "resource_owner_path": "/Game/Athena/UI/ReplayBrowser/M_Ui_ReplayBrowserRow.M_Ui_ReplayBrowserRow",
    "result": "pass",
    "run_receipt": "porting/generated/material_pipeline/batch7-owner-probes-1.result.json",
+   "run_receipt_sha256": "1abfc05ffe492afb26b68aa8d6cbdaaa4837e79ed8494cf4b1271d6b197e7684",
+   "runtime_checkpoint": "porting/generated/material_pipeline/frontend-batch7-intermediate-checkpoint-results.json",
+   "runtime_checkpoint_sha256": "4b76ea31bb7f1b0caae52905ba8bc1a3bf2764bbd757afd6895bf4bff789cb79",
    "scope": "This owner original material map compatibility and attachment in the bounded frontend closure; widget integration and original visual parity remain unverified.",
-   "source_frozen_inputs": "porting/generated/material_pipeline/batch7-build-inputs-1.json"
+   "source_and_staged_client_sha256": "8102a8102532a08b4062489045a6ab854cb6980ebdea97f6813409e7d7c8fc74",
+   "source_frozen_inputs": "porting/generated/material_pipeline/batch7-build-inputs-1.json",
+   "source_frozen_inputs_sha256": "3e32214a2b5e78a0dccc7715098efb66e22032a866e9d064ad2fa85f2122a4b4",
+   "source_native_commit": "a22aa211431c6d3875714bceef261de2f0983125",
+   "utc": "2026-11-01T05:06:43Z"
   },
   "material_frontend_owner_aa1d5d94cd13e2d1": {
-   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/035-M_UI_Tab_Main_Backing_Selected-artifacts-dashboard-validation-8u2amiuz.json",
+   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/035-M_UI_Tab_Main_Backing_Selected-artifacts-dashboard-validation-fnyoe3yj.json",
    "artifact_validation_sha256": "ee3444c9e0100abe27eea4f3d22db949043f606e504e055bff9550e933cfb2be",
+   "build_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/build-batch7-client-1.result.json",
+   "build_receipt_sha256": "81d60282d63be6303c05fe31b0da0de9eadc0a22ca5cd4bcd6fb4306bafeaecf",
    "bundle": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/frontend-numeric-batch-7/bundles/aa1d5d94cd13e2d10c42.json",
    "bundle_sha256": "8bf2e1364d2636e16e40acaa85b50b28230f4dcceea7e5f3e5f15f6a332ee1e1",
    "command": [
@@ -1865,6 +2147,8 @@
     "-FortniteLegacyMaterialManifestSHA256=5a77ff5ee75f769785fcb434f6713671fa37fb1f4ca7da40f93c6d4bd73eae56",
     "-FortniteLegacyMaterialArtifactDir=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/035-M_UI_Tab_Main_Backing_Selected-artifacts"
    ],
+   "commit": "669e5b5ca13cffb07a4c3c020acae21a1ae032f6",
+   "engine_commit": "08ebac023147bf943b3c4d1ab49b24a87a97998e",
    "exit_code": 0,
    "id": "material_frontend_owner_aa1d5d94cd13e2d1",
    "key_lines": [
@@ -1880,9 +2164,15 @@
    "resource_owner_path": "/Game/UI/Foundation/Buttons/Materials/Tab/UI_Refresh/M_UI_Tab_Main_Backing_Master.M_UI_Tab_Main_Backing_Master",
    "result": "pass",
    "run_receipt": "porting/generated/material_pipeline/batch7-owner-probes-1.result.json",
+   "run_receipt_sha256": "1abfc05ffe492afb26b68aa8d6cbdaaa4837e79ed8494cf4b1271d6b197e7684",
+   "runtime_checkpoint": "porting/generated/material_pipeline/frontend-batch7-intermediate-checkpoint-results.json",
+   "runtime_checkpoint_sha256": "4b76ea31bb7f1b0caae52905ba8bc1a3bf2764bbd757afd6895bf4bff789cb79",
    "scope": "This owner original material map compatibility and attachment in the bounded frontend closure; widget integration and original visual parity remain unverified.",
+   "source_and_staged_client_sha256": "8102a8102532a08b4062489045a6ab854cb6980ebdea97f6813409e7d7c8fc74",
    "source_frozen_inputs": "porting/generated/material_pipeline/batch7-build-inputs-1.json",
-   "source_frozen_inputs_sha256": "3e32214a2b5e78a0dccc7715098efb66e22032a866e9d064ad2fa85f2122a4b4"
+   "source_frozen_inputs_sha256": "3e32214a2b5e78a0dccc7715098efb66e22032a866e9d064ad2fa85f2122a4b4",
+   "source_native_commit": "a22aa211431c6d3875714bceef261de2f0983125",
+   "utc": "2026-11-01T05:06:48Z"
   },
   "material_frontend_owner_ad65bb4edb5c0278": {
    "id": "material_frontend_owner_ad65bb4edb5c0278",
@@ -1897,8 +2187,10 @@
    "scope": "Material owner in the bounded frontend closure; actual-owner runtime ingress has not been credited."
   },
   "material_frontend_owner_ae24ce856a758b68": {
-   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/006-M_Ui_Skewed_Vfor9slices_BG_Separator-artifacts-dashboard-validation.json",
+   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/006-M_Ui_Skewed_Vfor9slices_BG_Separator-artifacts-dashboard-validation-u1bf_bb0.json",
    "artifact_validation_sha256": "770895085f32b5235a285d474fa24426621e024088c07222191f878151eead9e",
+   "build_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/build-batch7-client-1.result.json",
+   "build_receipt_sha256": "81d60282d63be6303c05fe31b0da0de9eadc0a22ca5cd4bcd6fb4306bafeaecf",
    "bundle": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/frontend-numeric-batch-7/bundles/ae24ce856a758b68d09c.json",
    "bundle_sha256": "f8620967baade19059a05f152026877a869e759efb054cbb189cde3325ce7dec",
    "command": [
@@ -1927,6 +2219,8 @@
     "-FortniteLegacyMaterialManifestSHA256=5a77ff5ee75f769785fcb434f6713671fa37fb1f4ca7da40f93c6d4bd73eae56",
     "-FortniteLegacyMaterialArtifactDir=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/006-M_Ui_Skewed_Vfor9slices_BG_Separator-artifacts"
    ],
+   "commit": "669e5b5ca13cffb07a4c3c020acae21a1ae032f6",
+   "engine_commit": "08ebac023147bf943b3c4d1ab49b24a87a97998e",
    "exit_code": 0,
    "id": "material_frontend_owner_ae24ce856a758b68",
    "key_lines": [
@@ -1942,8 +2236,15 @@
    "resource_owner_path": "/Game/Athena/UI/ReplayBrowser/M_Ui_ReplayBrowserRow.M_Ui_ReplayBrowserRow",
    "result": "pass",
    "run_receipt": "porting/generated/material_pipeline/batch7-owner-probes-1.result.json",
+   "run_receipt_sha256": "1abfc05ffe492afb26b68aa8d6cbdaaa4837e79ed8494cf4b1271d6b197e7684",
+   "runtime_checkpoint": "porting/generated/material_pipeline/frontend-batch7-intermediate-checkpoint-results.json",
+   "runtime_checkpoint_sha256": "4b76ea31bb7f1b0caae52905ba8bc1a3bf2764bbd757afd6895bf4bff789cb79",
    "scope": "This owner original material map compatibility and attachment in the bounded frontend closure; widget integration and original visual parity remain unverified.",
-   "source_frozen_inputs": "porting/generated/material_pipeline/batch7-build-inputs-1.json"
+   "source_and_staged_client_sha256": "8102a8102532a08b4062489045a6ab854cb6980ebdea97f6813409e7d7c8fc74",
+   "source_frozen_inputs": "porting/generated/material_pipeline/batch7-build-inputs-1.json",
+   "source_frozen_inputs_sha256": "3e32214a2b5e78a0dccc7715098efb66e22032a866e9d064ad2fa85f2122a4b4",
+   "source_native_commit": "a22aa211431c6d3875714bceef261de2f0983125",
+   "utc": "2026-11-01T05:06:42Z"
   },
   "material_frontend_owner_b252a23b73c6fb81": {
    "id": "material_frontend_owner_b252a23b73c6fb81",
@@ -1976,8 +2277,10 @@
    "scope": "Material owner in the bounded frontend closure; actual-owner runtime ingress has not been credited."
   },
   "material_frontend_owner_bc329a3f5f9a9ef3": {
-   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/000-M_UI_LetoPromptBackground-artifacts-dashboard-validation.json",
+   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/000-M_UI_LetoPromptBackground-artifacts-dashboard-validation-hxmc65_n.json",
    "artifact_validation_sha256": "54d465c804491380cbcd6b877796652c36d1c896aa852b5649ad395807456095",
+   "build_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/build-batch7-client-1.result.json",
+   "build_receipt_sha256": "81d60282d63be6303c05fe31b0da0de9eadc0a22ca5cd4bcd6fb4306bafeaecf",
    "bundle": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/frontend-numeric-batch-7/bundles/bc329a3f5f9a9ef3afb0.json",
    "bundle_sha256": "689429e027d4c23a1b300cb040be7aa03c9e1774fefacac6c80489262a2e8cfe",
    "command": [
@@ -2006,6 +2309,8 @@
     "-FortniteLegacyMaterialManifestSHA256=5a77ff5ee75f769785fcb434f6713671fa37fb1f4ca7da40f93c6d4bd73eae56",
     "-FortniteLegacyMaterialArtifactDir=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/000-M_UI_LetoPromptBackground-artifacts"
    ],
+   "commit": "669e5b5ca13cffb07a4c3c020acae21a1ae032f6",
+   "engine_commit": "08ebac023147bf943b3c4d1ab49b24a87a97998e",
    "exit_code": 0,
    "id": "material_frontend_owner_bc329a3f5f9a9ef3",
    "key_lines": [
@@ -2021,12 +2326,21 @@
    "resource_owner_path": "/Game/Athena/UI/Frontend/Art/M_UI_Speech_Bubble.M_UI_Speech_Bubble",
    "result": "pass",
    "run_receipt": "porting/generated/material_pipeline/batch7-owner-probes-1.result.json",
+   "run_receipt_sha256": "1abfc05ffe492afb26b68aa8d6cbdaaa4837e79ed8494cf4b1271d6b197e7684",
+   "runtime_checkpoint": "porting/generated/material_pipeline/frontend-batch7-intermediate-checkpoint-results.json",
+   "runtime_checkpoint_sha256": "4b76ea31bb7f1b0caae52905ba8bc1a3bf2764bbd757afd6895bf4bff789cb79",
    "scope": "This owner original material map compatibility and attachment in the bounded frontend closure; widget integration and original visual parity remain unverified.",
-   "source_frozen_inputs": "porting/generated/material_pipeline/batch7-build-inputs-1.json"
+   "source_and_staged_client_sha256": "8102a8102532a08b4062489045a6ab854cb6980ebdea97f6813409e7d7c8fc74",
+   "source_frozen_inputs": "porting/generated/material_pipeline/batch7-build-inputs-1.json",
+   "source_frozen_inputs_sha256": "3e32214a2b5e78a0dccc7715098efb66e22032a866e9d064ad2fa85f2122a4b4",
+   "source_native_commit": "a22aa211431c6d3875714bceef261de2f0983125",
+   "utc": "2026-11-01T05:06:41Z"
   },
   "material_frontend_owner_c304e323fb4aa651": {
-   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/010-M_Ui_Skewed_Vfor9slices_Inst_Inverted-artifacts-dashboard-validation.json",
+   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/010-M_Ui_Skewed_Vfor9slices_Inst_Inverted-artifacts-dashboard-validation-414m7i09.json",
    "artifact_validation_sha256": "9ce0eddaeef044854c680b569df81b113b260b84ed953afa11da8da53951c42f",
+   "build_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/build-batch7-client-1.result.json",
+   "build_receipt_sha256": "81d60282d63be6303c05fe31b0da0de9eadc0a22ca5cd4bcd6fb4306bafeaecf",
    "bundle": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/frontend-numeric-batch-7/bundles/c304e323fb4aa6516100.json",
    "bundle_sha256": "dd7247076eb2410df2e532057b2f676b84e91914d75d7656ac19d3aaebb9c9eb",
    "command": [
@@ -2055,6 +2369,8 @@
     "-FortniteLegacyMaterialManifestSHA256=5a77ff5ee75f769785fcb434f6713671fa37fb1f4ca7da40f93c6d4bd73eae56",
     "-FortniteLegacyMaterialArtifactDir=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/010-M_Ui_Skewed_Vfor9slices_Inst_Inverted-artifacts"
    ],
+   "commit": "669e5b5ca13cffb07a4c3c020acae21a1ae032f6",
+   "engine_commit": "08ebac023147bf943b3c4d1ab49b24a87a97998e",
    "exit_code": 0,
    "id": "material_frontend_owner_c304e323fb4aa651",
    "key_lines": [
@@ -2070,12 +2386,21 @@
    "resource_owner_path": "/Game/Athena/UI/ReplayBrowser/M_Ui_ReplayBrowserRow.M_Ui_ReplayBrowserRow",
    "result": "pass",
    "run_receipt": "porting/generated/material_pipeline/batch7-owner-probes-1.result.json",
+   "run_receipt_sha256": "1abfc05ffe492afb26b68aa8d6cbdaaa4837e79ed8494cf4b1271d6b197e7684",
+   "runtime_checkpoint": "porting/generated/material_pipeline/frontend-batch7-intermediate-checkpoint-results.json",
+   "runtime_checkpoint_sha256": "4b76ea31bb7f1b0caae52905ba8bc1a3bf2764bbd757afd6895bf4bff789cb79",
    "scope": "This owner original material map compatibility and attachment in the bounded frontend closure; widget integration and original visual parity remain unverified.",
-   "source_frozen_inputs": "porting/generated/material_pipeline/batch7-build-inputs-1.json"
+   "source_and_staged_client_sha256": "8102a8102532a08b4062489045a6ab854cb6980ebdea97f6813409e7d7c8fc74",
+   "source_frozen_inputs": "porting/generated/material_pipeline/batch7-build-inputs-1.json",
+   "source_frozen_inputs_sha256": "3e32214a2b5e78a0dccc7715098efb66e22032a866e9d064ad2fa85f2122a4b4",
+   "source_native_commit": "a22aa211431c6d3875714bceef261de2f0983125",
+   "utc": "2026-11-01T05:06:43Z"
   },
   "material_frontend_owner_c33708b9c35ea6a8": {
-   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/016-M-Border-TabM-artifacts-dashboard-validation.json",
+   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/016-M-Border-TabM-artifacts-dashboard-validation-v0gxr81f.json",
    "artifact_validation_sha256": "757c5d070d171c7646c0628396e2c47e62f8f8fb43230048134386b521a6aa77",
+   "build_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/build-batch7-client-1.result.json",
+   "build_receipt_sha256": "81d60282d63be6303c05fe31b0da0de9eadc0a22ca5cd4bcd6fb4306bafeaecf",
    "bundle": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/frontend-numeric-batch-7/bundles/c33708b9c35ea6a8a435.json",
    "bundle_sha256": "992386f12cffc7c340a9e0597ce83ac8f07e0981d96290c5ab5f869c018221b2",
    "command": [
@@ -2104,6 +2429,8 @@
     "-FortniteLegacyMaterialManifestSHA256=5a77ff5ee75f769785fcb434f6713671fa37fb1f4ca7da40f93c6d4bd73eae56",
     "-FortniteLegacyMaterialArtifactDir=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/016-M-Border-TabM-artifacts"
    ],
+   "commit": "669e5b5ca13cffb07a4c3c020acae21a1ae032f6",
+   "engine_commit": "08ebac023147bf943b3c4d1ab49b24a87a97998e",
    "exit_code": 0,
    "id": "material_frontend_owner_c33708b9c35ea6a8",
    "key_lines": [
@@ -2119,8 +2446,15 @@
    "resource_owner_path": "/Game/UI/Foundation/Border/Materials/M-Border-TabM.M-Border-TabM",
    "result": "pass",
    "run_receipt": "porting/generated/material_pipeline/batch7-owner-probes-1.result.json",
+   "run_receipt_sha256": "1abfc05ffe492afb26b68aa8d6cbdaaa4837e79ed8494cf4b1271d6b197e7684",
+   "runtime_checkpoint": "porting/generated/material_pipeline/frontend-batch7-intermediate-checkpoint-results.json",
+   "runtime_checkpoint_sha256": "4b76ea31bb7f1b0caae52905ba8bc1a3bf2764bbd757afd6895bf4bff789cb79",
    "scope": "This owner original material map compatibility and attachment in the bounded frontend closure; widget integration and original visual parity remain unverified.",
-   "source_frozen_inputs": "porting/generated/material_pipeline/batch7-build-inputs-1.json"
+   "source_and_staged_client_sha256": "8102a8102532a08b4062489045a6ab854cb6980ebdea97f6813409e7d7c8fc74",
+   "source_frozen_inputs": "porting/generated/material_pipeline/batch7-build-inputs-1.json",
+   "source_frozen_inputs_sha256": "3e32214a2b5e78a0dccc7715098efb66e22032a866e9d064ad2fa85f2122a4b4",
+   "source_native_commit": "a22aa211431c6d3875714bceef261de2f0983125",
+   "utc": "2026-11-01T05:06:44Z"
   },
   "material_frontend_owner_c84d1b524ca65932": {
    "id": "material_frontend_owner_c84d1b524ca65932",
@@ -2129,8 +2463,10 @@
    "scope": "Material owner in the bounded frontend closure; actual-owner runtime ingress has not been credited."
   },
   "material_frontend_owner_c9d88259c847c84d": {
-   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/013-M-Border-MainModal-artifacts-dashboard-validation.json",
+   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/013-M-Border-MainModal-artifacts-dashboard-validation-tfjggfs3.json",
    "artifact_validation_sha256": "3b04e1c0a0dcc87bcd9df3365e3c8c1afe95c06858f765af6c0a4de5976d3923",
+   "build_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/build-batch7-client-1.result.json",
+   "build_receipt_sha256": "81d60282d63be6303c05fe31b0da0de9eadc0a22ca5cd4bcd6fb4306bafeaecf",
    "bundle": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/frontend-numeric-batch-7/bundles/c9d88259c847c84d65e9.json",
    "bundle_sha256": "261e5a7bb2a2a76e0dc7416325a2280b648693cb132c7f9cb5f7807cc29bb681",
    "command": [
@@ -2159,6 +2495,8 @@
     "-FortniteLegacyMaterialManifestSHA256=5a77ff5ee75f769785fcb434f6713671fa37fb1f4ca7da40f93c6d4bd73eae56",
     "-FortniteLegacyMaterialArtifactDir=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/013-M-Border-MainModal-artifacts"
    ],
+   "commit": "669e5b5ca13cffb07a4c3c020acae21a1ae032f6",
+   "engine_commit": "08ebac023147bf943b3c4d1ab49b24a87a97998e",
    "exit_code": 0,
    "id": "material_frontend_owner_c9d88259c847c84d",
    "key_lines": [
@@ -2174,8 +2512,15 @@
    "resource_owner_path": "/Game/UI/Foundation/Border/Materials/M-Border-MainL.M-Border-MainL",
    "result": "pass",
    "run_receipt": "porting/generated/material_pipeline/batch7-owner-probes-1.result.json",
+   "run_receipt_sha256": "1abfc05ffe492afb26b68aa8d6cbdaaa4837e79ed8494cf4b1271d6b197e7684",
+   "runtime_checkpoint": "porting/generated/material_pipeline/frontend-batch7-intermediate-checkpoint-results.json",
+   "runtime_checkpoint_sha256": "4b76ea31bb7f1b0caae52905ba8bc1a3bf2764bbd757afd6895bf4bff789cb79",
    "scope": "This owner original material map compatibility and attachment in the bounded frontend closure; widget integration and original visual parity remain unverified.",
-   "source_frozen_inputs": "porting/generated/material_pipeline/batch7-build-inputs-1.json"
+   "source_and_staged_client_sha256": "8102a8102532a08b4062489045a6ab854cb6980ebdea97f6813409e7d7c8fc74",
+   "source_frozen_inputs": "porting/generated/material_pipeline/batch7-build-inputs-1.json",
+   "source_frozen_inputs_sha256": "3e32214a2b5e78a0dccc7715098efb66e22032a866e9d064ad2fa85f2122a4b4",
+   "source_native_commit": "a22aa211431c6d3875714bceef261de2f0983125",
+   "utc": "2026-11-01T05:06:44Z"
   },
   "material_frontend_owner_ca7e3de8f5664d6e": {
    "id": "material_frontend_owner_ca7e3de8f5664d6e",
@@ -2244,8 +2589,10 @@
    "scope": "Material owner in the bounded frontend closure; actual-owner runtime ingress has not been credited."
   },
   "material_frontend_owner_d69046cddd3aa006": {
-   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/031-M_UI_Tab_Main_Backing_Hovered-artifacts-dashboard-validation-8ujh_cl7.json",
+   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/031-M_UI_Tab_Main_Backing_Hovered-artifacts-dashboard-validation-capzbkei.json",
    "artifact_validation_sha256": "b6d40aaf6f36d0848015fe540dd8670d240cf3067fcdd50a2e76c38e3941965a",
+   "build_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/build-batch7-client-1.result.json",
+   "build_receipt_sha256": "81d60282d63be6303c05fe31b0da0de9eadc0a22ca5cd4bcd6fb4306bafeaecf",
    "bundle": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/frontend-numeric-batch-7/bundles/d69046cddd3aa0060e43.json",
    "bundle_sha256": "8b5e54a5e14afc812d3988d832c3e7bff1730526bd31af37d53032268078d98e",
    "command": [
@@ -2274,6 +2621,8 @@
     "-FortniteLegacyMaterialManifestSHA256=5a77ff5ee75f769785fcb434f6713671fa37fb1f4ca7da40f93c6d4bd73eae56",
     "-FortniteLegacyMaterialArtifactDir=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/031-M_UI_Tab_Main_Backing_Hovered-artifacts"
    ],
+   "commit": "669e5b5ca13cffb07a4c3c020acae21a1ae032f6",
+   "engine_commit": "08ebac023147bf943b3c4d1ab49b24a87a97998e",
    "exit_code": 0,
    "id": "material_frontend_owner_d69046cddd3aa006",
    "key_lines": [
@@ -2289,9 +2638,15 @@
    "resource_owner_path": "/Game/UI/Foundation/Buttons/Materials/Tab/UI_Refresh/M_UI_Tab_Main_Backing_Master.M_UI_Tab_Main_Backing_Master",
    "result": "pass",
    "run_receipt": "porting/generated/material_pipeline/batch7-owner-probes-1.result.json",
+   "run_receipt_sha256": "1abfc05ffe492afb26b68aa8d6cbdaaa4837e79ed8494cf4b1271d6b197e7684",
+   "runtime_checkpoint": "porting/generated/material_pipeline/frontend-batch7-intermediate-checkpoint-results.json",
+   "runtime_checkpoint_sha256": "4b76ea31bb7f1b0caae52905ba8bc1a3bf2764bbd757afd6895bf4bff789cb79",
    "scope": "This owner original material map compatibility and attachment in the bounded frontend closure; widget integration and original visual parity remain unverified.",
+   "source_and_staged_client_sha256": "8102a8102532a08b4062489045a6ab854cb6980ebdea97f6813409e7d7c8fc74",
    "source_frozen_inputs": "porting/generated/material_pipeline/batch7-build-inputs-1.json",
-   "source_frozen_inputs_sha256": "3e32214a2b5e78a0dccc7715098efb66e22032a866e9d064ad2fa85f2122a4b4"
+   "source_frozen_inputs_sha256": "3e32214a2b5e78a0dccc7715098efb66e22032a866e9d064ad2fa85f2122a4b4",
+   "source_native_commit": "a22aa211431c6d3875714bceef261de2f0983125",
+   "utc": "2026-11-01T05:06:47Z"
   },
   "material_frontend_owner_da03e8ca979e7f9a": {
    "id": "material_frontend_owner_da03e8ca979e7f9a",
@@ -2318,8 +2673,10 @@
    "scope": "Material owner in the bounded frontend closure; actual-owner runtime ingress has not been credited."
   },
   "material_frontend_owner_e40404ad8584d6f7": {
-   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/039-Athena_AngledBlue_Disabled-artifacts-dashboard-validation-t5r6dri1.json",
+   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/039-Athena_AngledBlue_Disabled-artifacts-dashboard-validation-81g7kqtv.json",
    "artifact_validation_sha256": "c99344651c2f0ccbaa863d6f76bcc643ad233a8159dd0d6400e2bce6e330b961",
+   "build_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/build-batch7-client-1.result.json",
+   "build_receipt_sha256": "81d60282d63be6303c05fe31b0da0de9eadc0a22ca5cd4bcd6fb4306bafeaecf",
    "bundle": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/frontend-numeric-batch-7/bundles/e40404ad8584d6f7e267.json",
    "bundle_sha256": "44c2c7690951a76022adb639c0fe5219ac245ec0d7d2c9b20fc13160274821b5",
    "command": [
@@ -2348,6 +2705,8 @@
     "-FortniteLegacyMaterialManifestSHA256=5a77ff5ee75f769785fcb434f6713671fa37fb1f4ca7da40f93c6d4bd73eae56",
     "-FortniteLegacyMaterialArtifactDir=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/039-Athena_AngledBlue_Disabled-artifacts"
    ],
+   "commit": "669e5b5ca13cffb07a4c3c020acae21a1ae032f6",
+   "engine_commit": "08ebac023147bf943b3c4d1ab49b24a87a97998e",
    "exit_code": 0,
    "id": "material_frontend_owner_e40404ad8584d6f7",
    "key_lines": [
@@ -2363,9 +2722,15 @@
    "resource_owner_path": "/Game/UI/Foundation/Materials/Athena_AngledBlue_Base.Athena_AngledBlue_Base",
    "result": "pass",
    "run_receipt": "porting/generated/material_pipeline/batch7-owner-probes-1.result.json",
+   "run_receipt_sha256": "1abfc05ffe492afb26b68aa8d6cbdaaa4837e79ed8494cf4b1271d6b197e7684",
+   "runtime_checkpoint": "porting/generated/material_pipeline/frontend-batch7-intermediate-checkpoint-results.json",
+   "runtime_checkpoint_sha256": "4b76ea31bb7f1b0caae52905ba8bc1a3bf2764bbd757afd6895bf4bff789cb79",
    "scope": "This owner original material map compatibility and attachment in the bounded frontend closure; widget integration and original visual parity remain unverified.",
+   "source_and_staged_client_sha256": "8102a8102532a08b4062489045a6ab854cb6980ebdea97f6813409e7d7c8fc74",
    "source_frozen_inputs": "porting/generated/material_pipeline/batch7-build-inputs-1.json",
-   "source_frozen_inputs_sha256": "3e32214a2b5e78a0dccc7715098efb66e22032a866e9d064ad2fa85f2122a4b4"
+   "source_frozen_inputs_sha256": "3e32214a2b5e78a0dccc7715098efb66e22032a866e9d064ad2fa85f2122a4b4",
+   "source_native_commit": "a22aa211431c6d3875714bceef261de2f0983125",
+   "utc": "2026-11-01T05:06:48Z"
   },
   "material_frontend_owner_e4dee38b6dfad9d0": {
    "id": "material_frontend_owner_e4dee38b6dfad9d0",
@@ -2398,8 +2763,10 @@
    "scope": "Material owner in the bounded frontend closure; actual-owner runtime ingress has not been credited."
   },
   "material_frontend_owner_ee4465dd06707423": {
-   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/032-M_UI_Tab_Main_Backing_Master-artifacts-dashboard-validation-sd0bw273.json",
+   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/032-M_UI_Tab_Main_Backing_Master-artifacts-dashboard-validation-l713na6u.json",
    "artifact_validation_sha256": "50b6c417c32e6ac2b0d58c4748f603b564b2a67f8a45f81ca1fac3e8694b75d9",
+   "build_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/build-batch7-client-1.result.json",
+   "build_receipt_sha256": "81d60282d63be6303c05fe31b0da0de9eadc0a22ca5cd4bcd6fb4306bafeaecf",
    "bundle": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/frontend-numeric-batch-7/bundles/ee4465dd067074236fe2.json",
    "bundle_sha256": "e78c169b613c99377e11c1e7b8176581cd377c8f6f06cee32c8f8d10fe9a0e3a",
    "command": [
@@ -2428,6 +2795,8 @@
     "-FortniteLegacyMaterialManifestSHA256=5a77ff5ee75f769785fcb434f6713671fa37fb1f4ca7da40f93c6d4bd73eae56",
     "-FortniteLegacyMaterialArtifactDir=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/032-M_UI_Tab_Main_Backing_Master-artifacts"
    ],
+   "commit": "669e5b5ca13cffb07a4c3c020acae21a1ae032f6",
+   "engine_commit": "08ebac023147bf943b3c4d1ab49b24a87a97998e",
    "exit_code": 0,
    "id": "material_frontend_owner_ee4465dd06707423",
    "key_lines": [
@@ -2443,13 +2812,21 @@
    "resource_owner_path": "/Game/UI/Foundation/Buttons/Materials/Tab/UI_Refresh/M_UI_Tab_Main_Backing_Master.M_UI_Tab_Main_Backing_Master",
    "result": "pass",
    "run_receipt": "porting/generated/material_pipeline/batch7-owner-probes-1.result.json",
+   "run_receipt_sha256": "1abfc05ffe492afb26b68aa8d6cbdaaa4837e79ed8494cf4b1271d6b197e7684",
+   "runtime_checkpoint": "porting/generated/material_pipeline/frontend-batch7-intermediate-checkpoint-results.json",
+   "runtime_checkpoint_sha256": "4b76ea31bb7f1b0caae52905ba8bc1a3bf2764bbd757afd6895bf4bff789cb79",
    "scope": "This owner original material map compatibility and attachment in the bounded frontend closure; widget integration and original visual parity remain unverified.",
+   "source_and_staged_client_sha256": "8102a8102532a08b4062489045a6ab854cb6980ebdea97f6813409e7d7c8fc74",
    "source_frozen_inputs": "porting/generated/material_pipeline/batch7-build-inputs-1.json",
-   "source_frozen_inputs_sha256": "3e32214a2b5e78a0dccc7715098efb66e22032a866e9d064ad2fa85f2122a4b4"
+   "source_frozen_inputs_sha256": "3e32214a2b5e78a0dccc7715098efb66e22032a866e9d064ad2fa85f2122a4b4",
+   "source_native_commit": "a22aa211431c6d3875714bceef261de2f0983125",
+   "utc": "2026-11-01T05:06:47Z"
   },
   "material_frontend_owner_f0139bb67f9deede": {
-   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/014-M-Border-ModalHeader-procedural-artifacts-dashboard-validation.json",
+   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/014-M-Border-ModalHeader-procedural-artifacts-dashboard-validation-ydbs4oyr.json",
    "artifact_validation_sha256": "dcc5f501342eaa5c2f90d013204e68c1a4bd1f0543748b9210b1043d2863f80a",
+   "build_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/build-batch7-client-1.result.json",
+   "build_receipt_sha256": "81d60282d63be6303c05fe31b0da0de9eadc0a22ca5cd4bcd6fb4306bafeaecf",
    "bundle": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/frontend-numeric-batch-7/bundles/f0139bb67f9deede6f1c.json",
    "bundle_sha256": "a679a7b40ce6773229b6c04980ead8d18e7e741927a9ac6693b8db58a4f99d04",
    "command": [
@@ -2478,6 +2855,8 @@
     "-FortniteLegacyMaterialManifestSHA256=5a77ff5ee75f769785fcb434f6713671fa37fb1f4ca7da40f93c6d4bd73eae56",
     "-FortniteLegacyMaterialArtifactDir=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/014-M-Border-ModalHeader-procedural-artifacts"
    ],
+   "commit": "669e5b5ca13cffb07a4c3c020acae21a1ae032f6",
+   "engine_commit": "08ebac023147bf943b3c4d1ab49b24a87a97998e",
    "exit_code": 0,
    "id": "material_frontend_owner_f0139bb67f9deede",
    "key_lines": [
@@ -2493,12 +2872,21 @@
    "resource_owner_path": "/Game/UI/Foundation/Materials/M_UI_GradientPanel.M_UI_GradientPanel",
    "result": "pass",
    "run_receipt": "porting/generated/material_pipeline/batch7-owner-probes-1.result.json",
+   "run_receipt_sha256": "1abfc05ffe492afb26b68aa8d6cbdaaa4837e79ed8494cf4b1271d6b197e7684",
+   "runtime_checkpoint": "porting/generated/material_pipeline/frontend-batch7-intermediate-checkpoint-results.json",
+   "runtime_checkpoint_sha256": "4b76ea31bb7f1b0caae52905ba8bc1a3bf2764bbd757afd6895bf4bff789cb79",
    "scope": "This owner original material map compatibility and attachment in the bounded frontend closure; widget integration and original visual parity remain unverified.",
-   "source_frozen_inputs": "porting/generated/material_pipeline/batch7-build-inputs-1.json"
+   "source_and_staged_client_sha256": "8102a8102532a08b4062489045a6ab854cb6980ebdea97f6813409e7d7c8fc74",
+   "source_frozen_inputs": "porting/generated/material_pipeline/batch7-build-inputs-1.json",
+   "source_frozen_inputs_sha256": "3e32214a2b5e78a0dccc7715098efb66e22032a866e9d064ad2fa85f2122a4b4",
+   "source_native_commit": "a22aa211431c6d3875714bceef261de2f0983125",
+   "utc": "2026-11-01T05:06:44Z"
   },
   "material_frontend_owner_f031e14c46854c80": {
-   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/037-M_UI_Tab_Main_Backing_Selected_Pressed-artifacts-dashboard-validation-uv4_409o.json",
+   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/037-M_UI_Tab_Main_Backing_Selected_Pressed-artifacts-dashboard-validation-va9ya7k2.json",
    "artifact_validation_sha256": "832715c63e9a491b8e0dbc726d5b86025ff6f5277e308532ef737443c62b0012",
+   "build_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/build-batch7-client-1.result.json",
+   "build_receipt_sha256": "81d60282d63be6303c05fe31b0da0de9eadc0a22ca5cd4bcd6fb4306bafeaecf",
    "bundle": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/frontend-numeric-batch-7/bundles/f031e14c46854c809b99.json",
    "bundle_sha256": "5bf02b6f90733a4b4cae023551eaa7d03406e754a83a1816716bb18574d33bf6",
    "command": [
@@ -2527,6 +2915,8 @@
     "-FortniteLegacyMaterialManifestSHA256=5a77ff5ee75f769785fcb434f6713671fa37fb1f4ca7da40f93c6d4bd73eae56",
     "-FortniteLegacyMaterialArtifactDir=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/037-M_UI_Tab_Main_Backing_Selected_Pressed-artifacts"
    ],
+   "commit": "669e5b5ca13cffb07a4c3c020acae21a1ae032f6",
+   "engine_commit": "08ebac023147bf943b3c4d1ab49b24a87a97998e",
    "exit_code": 0,
    "id": "material_frontend_owner_f031e14c46854c80",
    "key_lines": [
@@ -2542,13 +2932,21 @@
    "resource_owner_path": "/Game/UI/Foundation/Buttons/Materials/Tab/UI_Refresh/M_UI_Tab_Main_Backing_Master.M_UI_Tab_Main_Backing_Master",
    "result": "pass",
    "run_receipt": "porting/generated/material_pipeline/batch7-owner-probes-1.result.json",
+   "run_receipt_sha256": "1abfc05ffe492afb26b68aa8d6cbdaaa4837e79ed8494cf4b1271d6b197e7684",
+   "runtime_checkpoint": "porting/generated/material_pipeline/frontend-batch7-intermediate-checkpoint-results.json",
+   "runtime_checkpoint_sha256": "4b76ea31bb7f1b0caae52905ba8bc1a3bf2764bbd757afd6895bf4bff789cb79",
    "scope": "This owner original material map compatibility and attachment in the bounded frontend closure; widget integration and original visual parity remain unverified.",
+   "source_and_staged_client_sha256": "8102a8102532a08b4062489045a6ab854cb6980ebdea97f6813409e7d7c8fc74",
    "source_frozen_inputs": "porting/generated/material_pipeline/batch7-build-inputs-1.json",
-   "source_frozen_inputs_sha256": "3e32214a2b5e78a0dccc7715098efb66e22032a866e9d064ad2fa85f2122a4b4"
+   "source_frozen_inputs_sha256": "3e32214a2b5e78a0dccc7715098efb66e22032a866e9d064ad2fa85f2122a4b4",
+   "source_native_commit": "a22aa211431c6d3875714bceef261de2f0983125",
+   "utc": "2026-11-01T05:06:48Z"
   },
   "material_frontend_owner_f182c51cd1dfcc3b": {
-   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/026-M_Button_Feature_Hovered-artifacts-dashboard-validation-zsu1z7lc.json",
+   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/026-M_Button_Feature_Hovered-artifacts-dashboard-validation-munwoe69.json",
    "artifact_validation_sha256": "47c6548bbea501af3281c35e1043ec24afbf2111bc9a3852e0a912c2b876eb53",
+   "build_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/build-batch7-client-1.result.json",
+   "build_receipt_sha256": "81d60282d63be6303c05fe31b0da0de9eadc0a22ca5cd4bcd6fb4306bafeaecf",
    "bundle": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/frontend-numeric-batch-7/bundles/f182c51cd1dfcc3b2d3f.json",
    "bundle_sha256": "a62157d8db146bb8031a2a38d88ff9bc73c919c1ad500a3927634509c78819b9",
    "command": [
@@ -2577,6 +2975,8 @@
     "-FortniteLegacyMaterialManifestSHA256=5a77ff5ee75f769785fcb434f6713671fa37fb1f4ca7da40f93c6d4bd73eae56",
     "-FortniteLegacyMaterialArtifactDir=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch7-owner-probes-1/026-M_Button_Feature_Hovered-artifacts"
    ],
+   "commit": "669e5b5ca13cffb07a4c3c020acae21a1ae032f6",
+   "engine_commit": "08ebac023147bf943b3c4d1ab49b24a87a97998e",
    "exit_code": 0,
    "id": "material_frontend_owner_f182c51cd1dfcc3b",
    "key_lines": [
@@ -2593,9 +2993,15 @@
    "resource_owner_path": "/Game/UI/Foundation/Buttons/Materials/Feature/M_FeatureButton_Master.M_FeatureButton_Master",
    "result": "pass",
    "run_receipt": "porting/generated/material_pipeline/batch7-owner-probes-1.result.json",
+   "run_receipt_sha256": "1abfc05ffe492afb26b68aa8d6cbdaaa4837e79ed8494cf4b1271d6b197e7684",
+   "runtime_checkpoint": "porting/generated/material_pipeline/frontend-batch7-intermediate-checkpoint-results.json",
+   "runtime_checkpoint_sha256": "4b76ea31bb7f1b0caae52905ba8bc1a3bf2764bbd757afd6895bf4bff789cb79",
    "scope": "This owner original material map compatibility and attachment in the bounded frontend closure; widget integration and original visual parity remain unverified.",
+   "source_and_staged_client_sha256": "8102a8102532a08b4062489045a6ab854cb6980ebdea97f6813409e7d7c8fc74",
    "source_frozen_inputs": "porting/generated/material_pipeline/batch7-build-inputs-1.json",
-   "source_frozen_inputs_sha256": "3e32214a2b5e78a0dccc7715098efb66e22032a866e9d064ad2fa85f2122a4b4"
+   "source_frozen_inputs_sha256": "3e32214a2b5e78a0dccc7715098efb66e22032a866e9d064ad2fa85f2122a4b4",
+   "source_native_commit": "a22aa211431c6d3875714bceef261de2f0983125",
+   "utc": "2026-11-01T05:06:46Z"
   },
   "material_frontend_owner_fb47eed205e1343f": {
    "id": "material_frontend_owner_fb47eed205e1343f",
