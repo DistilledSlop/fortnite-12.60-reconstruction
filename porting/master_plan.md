@@ -54,3 +54,52 @@ overrides, then retry root-widget loading/construction and recover native UI
 lifecycle/helpers. Continue through login/lobby/matchmaking and full gameplay.
 No interactive root menu or original-client visual parity is verified. Exact
 current source/build/runtime receipts and work ownership are in HANDOFF.
+
+The dashboard tracks 104 work items with 1,855 total effort weight. Its five UI
+integration phases now count PowerToast, MenuButton and Donut; widget integration
+and original pixel comparison still need evidence. Declarations, local tests and
+direct joins remain separate from implementation and full gameplay/wire parity.
+
+## Standing constraints
+
+- Storage: `/` has ~100 GB free after the original client moved to the new 1 TB
+  drive. `Fortnite/` is now a symlink to `/mnt/vibrato/Fortnite` (checksum-verified
+  copy; all scripts keep their paths). Keep large artifacts out of the repo and
+  clean only intermediates an agent created. UE source and build output stay on `/`.
+- Pak access needs the AES keys. Agents are authorized to use them (user, 2026-10-31). Pass them with
+  `--key-file=<path>` (or `FORTNITE_AES_KEY_FILE`); the file stays outside the repository and the keys are never
+  committed, printed or logged. See `HANDOFF.md`, "Still to do".
+- Source-level identity with Epic's unreleased code is not reachable by
+  analysis alone. Parity is judged by behavior and wire format.
+
+## Historical closure commands
+
+The full extraction and earlier frontend hard-closure scans have since completed; see `extraction_status.md` and `frontend/readiness.md`. These original small-cap commands are retained as historical examples, not current completeness evidence.
+
+Each adds `--all-keys` for the GUID-keyed paks and `--key-file=<path>` so an agent can run it unattended.
+
+1. `dotnet porting/cue4inspect/bin/Release/net10.0/Cue4Inspect.dll FortniteGame/Content/Maps/Frontend --save-closure --max-packages=400 --all-keys`
+2. Same for `FortniteGame/Content/Maps/FortniteTransition` (cap 200).
+3. Same for `FortniteGame/Content/Maps/UI/Frontend_Lobby_Default` (cap 400).
+
+The original graph and package-coverage assumptions below these commands predate the full extraction; see the current snapshot for remaining UI gaps.
+
+## Decisions made autonomously
+
+- 2026-10-30: the supplied `.id0/.id1/.nam` IDA files are untrusted (user); the
+  exe `.text` is encrypted on disk, so code is recovered from a read-only
+  runtime dump of our own Wine run (user: approved).
+- Audio on this host: use `SDL_AUDIODRIVER=dummy` (or `disk` for verification)
+  until a real sink exists.
+- 2026-10-30: the original exe cannot be used as a handshake oracle through
+  the frontend. Without `-AUTH_*` flags it demands a manual sign-in; with them
+  it stopped at the AppES entitlement gate
+  (`direct_connect_results.md`). Wire parity is therefore checked offline:
+  compute class net checksums and replicated layouts from the recovered
+  reflection tables and compare with the native classes, and use the native
+  client against the native server for live joins.
+- 2026-10-31: moved the 86 GB original client to `/mnt/vibrato/Fortnite` (copy verified
+  by rsync checksum, then inspect_install.py, extract_reflection.py and a Wine launch
+  were run through the symlink). Both drives benchmark alike (~440-510 MB/s write,
+  ~580-790 MB/s read), so speed was not a factor. UE source and build state stay on `/`
+  because build tools record absolute paths.
