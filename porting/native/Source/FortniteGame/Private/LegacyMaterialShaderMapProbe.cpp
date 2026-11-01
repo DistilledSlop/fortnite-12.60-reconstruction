@@ -193,7 +193,10 @@ static bool PrepareLegacyOutput(const TSharedPtr<FJsonObject>& Shader, const FRH
         }
         else if (Kind == TEXT("cbv") && RegisterIndex == (bHasView ? 2 : 1) && !bVertex && !bMaterial && DescriptorType == VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER)
         {
-            if (!Layout.Resources.Num() || int32(D->GetNumberField(TEXT("block_span_bytes"))) > int32(Layout.Resources[0].MemberOffset) || (Layout.Resources.Num()==2 && int32(D->GetNumberField(TEXT("block_span_bytes"))) != int32(Layout.Resources[0].MemberOffset)) || Layout.GetHash() == 0)
+            // The original compiler may omit unused trailing constant registers.
+            // Keep the entire source layout; only bound the shader's declared span.
+            const int32 Span=int32(D->GetNumberField(TEXT("block_span_bytes")));
+            if (!Layout.Resources.Num() || Span<=0 || Span%16 || Span>int32(Layout.Resources[0].MemberOffset) || Layout.GetHash()==0)
             { Error = TEXT("unexpected Material descriptor"); return false; }
             const uint16 Index=Header.UniformBuffers.Num();
             MaterialIndex=Index;
