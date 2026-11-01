@@ -15,7 +15,7 @@
 - Original Root class load NOW PASSES: generated/frontend-probes/tracking-llama-root-1 exits0 and reports
   /Game/UI/Foundation/RootLayout_Athena.RootLayout_Athena_C -> WidgetBlueprintGeneratedClass. It still warns
   about unresolved Blueprint fields; loading a class is not executing its VM or showing interactive UI.
-  The four direct Root paths are FortDialogDescription_NUI:{Cancelable,ShowSound,DeclineButtonInputAction}
+  The four paths in Root and its confirmation window are FortDialogDescription_NUI:{Cancelable,ShowSound,DeclineButtonInputAction}
   under /Script/FortniteGame and FortAsyncAction_ShowConfirmation_NUI:DialogResult under /Script/FortniteUI.
   Current action header emits only WorldContextObject/TargetLocalPlayer; standalone dialog struct/enum
   headers were not found. Scout /tmp/root-confirmation-delegate-frontier-1 used older typed-events reports:
