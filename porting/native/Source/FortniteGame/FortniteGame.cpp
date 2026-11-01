@@ -31,6 +31,7 @@ DEFINE_LOG_CATEGORY_STATIC(LogFortniteNet, Log, All);
 void RunNetSerializeSelfTest();
 void RegisterContextRuntimeProbeDriver();
 void RegisterActivationBaseProbeDriver();
+void RegisterButtonInternalProbeDriver();
 void RunOriginalVulkanShaderProbe();
 void RunLegacyMaterialShaderMapProbe();
 void RegisterLegacyOriginalMaterialProvider();
@@ -173,6 +174,7 @@ public:
         FDefaultGameModuleImpl::StartupModule();
         RegisterContextRuntimeProbeDriver();
         RegisterActivationBaseProbeDriver();
+        RegisterButtonInternalProbeDriver();
         RegisterLegacyOriginalMaterialProvider();
         FNetworkVersion::GetLocalNetworkVersionOverride.BindStatic(&GetFortniteNetworkVersion);
         FNetworkVersion::IsNetworkCompatibleOverride.BindStatic(&IsFortniteNetworkCompatible);

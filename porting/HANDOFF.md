@@ -2,6 +2,13 @@
 
 ## Current resume point (2026-11-01)
 
+- Current next validation: the completed real-widget diagnostic is now promoted as opt-in
+  -ButtonInternalProbe, with maintained tools in frontend/button_internal_runtime_probe/ (5 tests pass).
+  Root strengthened it to34 rows: real Slate focus event/factory delegate/reply and both independent
+  enabled-state transitions are exercised. Existing direct UObject click/press/release checks retain
+  that limited scope. Full real-widget runtime and new shared builds are pending; root owns both.
+  Previous activation/context strict contracts remain historical and pinned to their original sources;
+  no old strict report is claimed for the new tree.
 - Latest bounded checkpoint: native enabled-state bridge added to the CommonButtonInternal generator
   inputs. It propagates the original main-button inline flag writes to the internal UObject and live
   custom Slate child without calling UWidget::SetIsEnabled or adding callbacks. Callback controls now
@@ -17,10 +24,10 @@
 - Real-widget probe worker has finished its bounded source checkpoint and stopped:
   /tmp/button-internal-runtime-probe-1/HANDOFF.md, receipt SHA-256
   0cbed18edf2ea3a258f987550e6a6ca6175c30c7c8637838e96b2fbcc03ceea2.
-  Patch SHA-256 202edcb621a2067a2bb820980fa0c731f8d7ac6c6396799f265492ea5c99fc8d.
+  Original scratch patch SHA-256 202edcb621a2067a2bb820980fa0c731f8d7ac6c6396799f265492ea5c99fc8d.
   Fresh isolated UHT against promoted headers, probe/glue standalone syntax, write confinement and
-  transcript mutations pass. The scratch patch is not promoted. Root must review full unity, integrate
-  maintained verifier/process binding and run fresh builds/runtime. No new runtime/product credit.
+  transcript mutations pass. Root promoted and strengthened the diagnostic as described above;
+  full unity/build/runtime and process binding remain pending. No new runtime/product credit.
 - Finished read-only API binding: original UButton native table pair14683a8e0/14683a8e8 names SetStyle
   at145a03128 and points to exec143da6180. Thunk copies the reflected style into a2a0-byte temporary
   then calls143d905c0, which assigns this+128 and updates live child+418. This matches current
