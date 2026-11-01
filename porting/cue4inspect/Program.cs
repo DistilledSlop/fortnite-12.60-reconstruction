@@ -73,13 +73,14 @@ Globals.FatalObjectSerializationErrors = exportGlb || exportLandscape || exportL
 string? keyFileArgument = args.SingleOrDefault(arg => arg.StartsWith("--key-file=", StringComparison.Ordinal));
 string? keyFilePath = keyFileArgument is not null ? keyFileArgument["--key-file=".Length..] : Environment.GetEnvironmentVariable("FORTNITE_AES_KEY_FILE");
 string? maxArgument = args.SingleOrDefault(arg => arg.StartsWith("--max-packages=", StringComparison.Ordinal));
+string? closureOutputArgument = args.SingleOrDefault(arg => arg.StartsWith("--closure-output=", StringComparison.Ordinal));
 int maxPackages = 250;
 if (maxArgument is not null && (!int.TryParse(maxArgument[15..], out maxPackages) || maxPackages < 1))
 {
     Console.Error.WriteLine("--max-packages must be a positive integer");
     return 2;
 }
-string[] positional = args.Where(arg => arg != maxArgument && arg != keyFileArgument && arg != extractOutput && arg != extractWorkersArgument && arg != extractPlanArgument && arg != extractSummaryArgument && arg != extractSampleArgument && arg != extractSeedArgument && arg != duplicatesOutArgument && arg is not ("--all" or "--pseudo" or "--imports" or "--imports-json" or "--registry" or "--pak-sources" or "--registry-paths" or "--seed-list" or "--follow-soft" or "--scan-maps" or "--scan-native" or "--all-keys" or "--save-package" or "--save-list" or "--sizes" or "--save-folder" or "--save-closure" or "--export-glb" or "--export-landscape" or "--export-landscape-grid" or "--export-landscape-weightmap-grid" or "--export-png" or "--export-landscape-weightmaps" or "--material-report" or "--function-report" or "--landscape-report" or "--actor-report" or "--versions" or "--ue426" or "--loose" or "--extract-all" or "--dry-run" or "--verify" or "--audit-duplicates" or "--repair")).ToArray();
+string[] positional = args.Where(arg => arg != maxArgument && arg != closureOutputArgument && arg != keyFileArgument && arg != extractOutput && arg != extractWorkersArgument && arg != extractPlanArgument && arg != extractSummaryArgument && arg != extractSampleArgument && arg != extractSeedArgument && arg != duplicatesOutArgument && arg is not ("--all" or "--pseudo" or "--imports" or "--imports-json" or "--registry" or "--pak-sources" or "--registry-paths" or "--seed-list" or "--follow-soft" or "--scan-maps" or "--scan-native" or "--all-keys" or "--save-package" or "--save-list" or "--sizes" or "--save-folder" or "--save-closure" or "--export-glb" or "--export-landscape" or "--export-landscape-grid" or "--export-landscape-weightmap-grid" or "--export-png" or "--export-landscape-weightmaps" or "--material-report" or "--function-report" or "--landscape-report" or "--actor-report" or "--versions" or "--ue426" or "--loose" or "--extract-all" or "--dry-run" or "--verify" or "--audit-duplicates" or "--repair")).ToArray();
 bool packageLess = registryMode || pakSources || registryPaths || scanMaps || scanNative || exportLandscapeGrid || exportLandscapeWeightmapGrid || extractAll;
 if (new[] { registryMode, pakSources, registryPaths, scanMaps, scanNative, exportLandscapeGrid, exportLandscapeWeightmapGrid, extractAll }.Count(mode => mode) > 1 || (packageLess ? positional.Length > 1 : positional.Length is < 1 or > 2))
 {
@@ -88,7 +89,7 @@ if (new[] { registryMode, pakSources, registryPaths, scanMaps, scanNative, expor
     Console.Error.WriteLine("   or: Cue4Inspect <folder-prefix> [pak-directory] --save-folder [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect <newline-list-file> [pak-directory] --save-list [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect <newline-list-file> [pak-directory] --sizes [--all-keys]");
-    Console.Error.WriteLine("   or: Cue4Inspect <asset-path> [pak-directory] --save-closure [--max-packages=250] [--all-keys]");
+    Console.Error.WriteLine("   or: Cue4Inspect <asset-path> [source-directory] --save-closure [--max-packages=250] [--closure-output=<new frontend-probes directory>] [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect <static-mesh-path> [pak-directory] --export-glb [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect <landscape-map-path> [pak-directory] --export-landscape [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect --export-landscape-grid [pak-directory] [--max-packages=64] [--all-keys]");
@@ -133,6 +134,27 @@ if (!Directory.Exists(sourceDirectory))
     return 2;
 }
 
+string? closureOutput = null;
+if (closureOutputArgument is not null)
+{
+    // An explicit closure destination is isolated from the extracted source and
+    // existing staged assets. Refuse existing destinations and symlinked parents.
+    string root = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "../../../../generated/frontend-probes"));
+    closureOutput = Path.GetFullPath(closureOutputArgument["--closure-output=".Length..]);
+    if (!saveClosure || !closureOutput.StartsWith(root + Path.DirectorySeparatorChar, StringComparison.Ordinal) ||
+        Directory.Exists(closureOutput) || File.Exists(closureOutput))
+    {
+        Console.Error.WriteLine("--closure-output must be a new directory under porting/generated/frontend-probes, with --save-closure");
+        return 2;
+    }
+    for (DirectoryInfo? parent = new DirectoryInfo(closureOutput).Parent; parent is not null; parent = parent.Parent)
+        if (parent.LinkTarget is not null)
+        {
+            Console.Error.WriteLine("--closure-output may not have a symlinked parent");
+            return 2;
+        }
+}
+
 try
 {
     var versions = new VersionContainer(ue426 ? EGame.GAME_UE4_26 : EGame.GAME_UE4_25_Plus,
@@ -144,7 +166,6 @@ try
         });
     var provider = loose
         ? new DefaultFileProvider(new DirectoryInfo(Path.Combine(sourceDirectory, "FortniteGame")),
-            [new DirectoryInfo(Path.Combine(sourceDirectory, "Engine"))],
             SearchOption.AllDirectories, versions, StringComparer.OrdinalIgnoreCase)
         : new DefaultFileProvider(sourceDirectory, SearchOption.TopDirectoryOnly,
             versions, StringComparer.OrdinalIgnoreCase);
@@ -153,7 +174,19 @@ try
 
     if (loose)
     {
-        (importsJson ? Console.Error : Console.Out).WriteLine($"Indexed {provider.LooseFileCount} loose package(s).");
+        // DefaultFileProvider derives extra-directory paths relative to its
+        // primary directory. Mount Engine independently to preserve Engine/Content paths.
+        var engineDirectory = new DirectoryInfo(Path.Combine(sourceDirectory, "Engine"));
+        int enginePackages = 0;
+        if (engineDirectory.Exists)
+        {
+            var engineProvider = new DefaultFileProvider(engineDirectory, SearchOption.AllDirectories, versions,
+                                                         StringComparer.OrdinalIgnoreCase);
+            engineProvider.Initialize();
+            provider.Files.AddFiles(engineProvider.Files);
+            enginePackages = engineProvider.LooseFileCount;
+        }
+        (importsJson ? Console.Error : Console.Out).WriteLine($"Indexed {provider.LooseFileCount + enginePackages} loose package(s).");
     }
     else
     {
@@ -432,12 +465,14 @@ try
                 if (provider.LoadPackage(current) is not Package package)
                     throw new InvalidDataException("Not a legacy package");
                 var files = provider.SavePackage(current);
-                SaveRecoveredFiles(files);
+                SaveRecoveredFiles(files, closureOutput);
                 foreach (var root in package.ImportMap.Select(import => RootImportName(package, import)).Distinct())
                 {
                     var target = ResolvePackageRoot(root, pluginRoots, path => provider.Files.ContainsKey(path + ".uasset"));
-                    if (target is not null && queued.Add(target))
-                        pending.Enqueue(target);
+                    if (target is not null)
+                    {
+                        if (queued.Add(target)) pending.Enqueue(target);
+                    }
                     else if (root.StartsWith("/", StringComparison.Ordinal) &&
                              !root.StartsWith("/Script/", StringComparison.Ordinal))
                         Console.Error.WriteLine($"Unmapped package root: {root}");
@@ -1098,9 +1133,9 @@ static HashSet<string> SoftPackageRoots(IReadOnlyDictionary<string, byte[]> file
     return found;
 }
 
-static void SaveRecoveredFiles(IReadOnlyDictionary<string, byte[]> files)
+static void SaveRecoveredFiles(IReadOnlyDictionary<string, byte[]> files, string? output = null)
 {
-    var destination = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "../../../../generated/extracted"));
+    var destination = output ?? Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "../../../../generated/extracted"));
     foreach (var (name, bytes) in files)
     {
         var relative = name.Replace('\\', '/');
