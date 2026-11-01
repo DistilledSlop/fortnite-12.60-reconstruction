@@ -80,6 +80,45 @@
    "utc": "2026-11-01T02:23:01Z",
    "wrapper_exit_code": 0
   },
+  "material_locker_asset_ingress": {
+   "artifact_validation_receipt": "porting/generated/frontend-probes/legacy-material-ingress-artifacts-3-validation.json",
+   "artifact_validation_receipt_sha256": "134f49d15a89c6d80759c23e6c283f87e423665ef4d178885bedc48f5afc7107",
+   "binary_hash_receipt": "porting/generated/frontend-probes/legacy-ingress-reload-joins-20261101T030500Z/binary-hashes.json",
+   "binary_hash_receipt_sha256": "eff16b946eed6b3cadbf0726e9ffe65b2d5d6ff22d627a1807054256d474e735",
+   "command": [
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/original-vulkan-stage/LinuxNoEditor/FortniteLinux.sh",
+    "-vulkan",
+    "-windowed",
+    "-ResX=1280",
+    "-ResY=720",
+    "-nosound",
+    "-unattended",
+    "-FortniteLegacyMaterialIngress=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/locker-ingress-bundle.json",
+    "-FortniteProbeLegacyOriginalMaterial",
+    "-FortniteLegacyFieldPaths",
+    "-FortniteLegacyMaterialArtifactDir=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/legacy-material-ingress-artifacts-3",
+    "-ExecCmds=Quit",
+    "-log"
+   ],
+   "commit": "350c651830ad4ace280b797258fa9b4a74f52853",
+   "engine_commit": "e6e962a435d6f6da6dc4cbc90adbeef752972b60",
+   "exit_code": 0,
+   "id": "material_locker_asset_ingress",
+   "key_lines": [
+    "[2026.11.01-03.05.01:970][  0]LogMaterial: Display: Legacy actual-owner completeness owner=/Game/UI/Foundation/Materials/Athena_LockerTabMaster.Athena_LockerTabMaster domain=5 blend=2 shading=MSM_Unlit quality=1 feature=3 flags=2816 required=7 missing=0 complete=1",
+    "[2026.11.01-03.05.02:105][  0]LogTemp: Display: Legacy material probe: original Slate quad readback changed 2832 pixels",
+    "[2026.11.01-03.05.02:105][  0]LogTemp: Display: Legacy material ingress: original Locker owner attached complete map with 19 original records on game and render threads and drew its Slate quad"
+   ],
+   "log": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/legacy-material-ingress-owner-3.log",
+   "log_sha256": "6fec7dc6d60878181894cb703117ec9ae98d9bea872c5ddecfceefd5ac17176d",
+   "observed_process_exit_code": 0,
+   "origin_run": "porting/generated/frontend-probes/legacy-ingress-reload-joins-20261101T030500Z/exit-status.json",
+   "result": "pass",
+   "runtime_reload_verified": false,
+   "scope": "Original Locker asset only: actual-owner completeness, normal GT/RT attachment, preserved 19 source records and original Slate quad. Other layouts, interactive UI and original-client pixel parity remain incomplete.",
+   "source_native_commit": "c8ec1132b1e8d0077620087eec41f9c170eb5b00",
+   "utc": "2026-11-01T03:08:08Z"
+  },
   "material_locker_draw": {
    "artifact_validation_receipt": "porting/generated/frontend-probes/dashboard-locker-artifact-validation.json",
    "command": "python3 -I porting/material_pipeline/verify_progress_evidence.py all --report porting/generated/material_pipeline/dashboard-material-evidence.json",
@@ -170,25 +209,77 @@
     "scope": "Serialized defaults; original floating-point parity and texture values unverified"
    }
   },
+  "native_build_client": {
+   "binary_hash_receipt": "porting/generated/frontend-probes/legacy-ingress-reload-joins-20261101T030500Z/binary-hashes.json",
+   "binary_hash_receipt_sha256": "eff16b946eed6b3cadbf0726e9ffe65b2d5d6ff22d627a1807054256d474e735",
+   "build_receipt": "porting/generated/material_pipeline/build-legacy-ingress-reload-final-results.json",
+   "build_receipt_sha256": "effe5fa2c476275a04500caf6239711e4c4ca7b0842426e0c58c33077c451868",
+   "command": [
+    "Engine/Build/BatchFiles/Linux/Build.sh",
+    "FortniteLinux",
+    "Linux",
+    "Development",
+    "-project=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/native/FortniteLinux.uproject",
+    "-NoHotReload"
+   ],
+   "commit": "350c651830ad4ace280b797258fa9b4a74f52853",
+   "engine_commit": "e6e962a435d6f6da6dc4cbc90adbeef752972b60",
+   "exit_code": 0,
+   "id": "native_build_client",
+   "key_lines": [
+    "FortniteLinux build exited 0 in 110.23 seconds"
+   ],
+   "log_sha256": "1c79aaf10308766703020dee67980b2d0430e5089192c9dc8cff34b5bdcdd7e3",
+   "origin_run": "porting/generated/frontend-probes/legacy-ingress-reload-joins-20261101T030500Z/exit-status.json",
+   "result": "pass",
+   "scope": "Current non-editor Linux target with preserved local Engine prerequisites; complete content and Editor parity are separate",
+   "source_native_commit": "c8ec1132b1e8d0077620087eec41f9c170eb5b00",
+   "utc": "2026-11-01T03:08:08Z"
+  },
+  "native_build_server": {
+   "binary_hash_receipt": "porting/generated/frontend-probes/legacy-ingress-reload-joins-20261101T030500Z/binary-hashes.json",
+   "binary_hash_receipt_sha256": "eff16b946eed6b3cadbf0726e9ffe65b2d5d6ff22d627a1807054256d474e735",
+   "build_receipt": "porting/generated/material_pipeline/build-legacy-ingress-reload-final-results.json",
+   "build_receipt_sha256": "effe5fa2c476275a04500caf6239711e4c4ca7b0842426e0c58c33077c451868",
+   "command": [
+    "Engine/Build/BatchFiles/Linux/Build.sh",
+    "FortniteLinuxServer",
+    "Linux",
+    "Development",
+    "-project=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/native/FortniteLinux.uproject",
+    "-NoHotReload"
+   ],
+   "commit": "350c651830ad4ace280b797258fa9b4a74f52853",
+   "engine_commit": "e6e962a435d6f6da6dc4cbc90adbeef752972b60",
+   "exit_code": 0,
+   "id": "native_build_server",
+   "key_lines": [
+    "FortniteLinuxServer build exited 0 in 104.54 seconds"
+   ],
+   "log_sha256": "e589e0d4548818f8139ceecdd73a2efdb7531d229e598c701f1ea11ee6cb9aa3",
+   "origin_run": "porting/generated/frontend-probes/legacy-ingress-reload-joins-20261101T030500Z/exit-status.json",
+   "result": "pass",
+   "scope": "Current non-editor Linux target with preserved local Engine prerequisites; complete content and Editor parity are separate",
+   "source_native_commit": "c8ec1132b1e8d0077620087eec41f9c170eb5b00",
+   "utc": "2026-11-01T03:08:08Z"
+  },
   "net_version_checksum": {
-   "binary_hash_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/runtime-material-joins-20261101T021940Z/binary-hashes.json",
-   "binary_hash_receipt_sha256": "22267c4a0a85552329f08a430095f649c93ed72a2836bea2741c35ba3df7e1b7",
-   "command": "(log only) /opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/runtime-material-joins-20261101T021940Z/default-server.log",
-   "commit": "b0597c2d5c39e4733848168503659bb208d6feee",
-   "engine_commit": "757e0087a",
-   "exit_code": null,
+   "binary_hash_receipt": "porting/generated/frontend-probes/legacy-ingress-reload-joins-20261101T030500Z/binary-hashes.json",
+   "binary_hash_receipt_sha256": "eff16b946eed6b3cadbf0726e9ffe65b2d5d6ff22d627a1807054256d474e735",
+   "command": "(runtime log) porting/generated/frontend-probes/legacy-ingress-reload-joins-20261101T030500Z/default-server.log",
+   "commit": "350c651830ad4ace280b797258fa9b4a74f52853",
+   "engine_commit": "e6e962a435d6f6da6dc4cbc90adbeef752972b60",
+   "exit_code": 0,
    "id": "net_version_checksum",
    "key_lines": [
-    "[2026.11.01-02.19.46:741][ 69]LogFortniteNet: Local network version checksum: 683914758 (0x28C3B606)"
+    "[2026.11.01-03.05.23:540][ 64]LogFortniteNet: Local network version checksum: 683914758 (0x28C3B606)"
    ],
-   "log_sha256": "a86bb1cdb52ccea931ae4a3123a5c2ece5a0b67e799c64a1076f4d9ec1879bcc",
-   "matches": 1,
-   "origin_run": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/runtime-material-joins-20261101T021940Z/exit-status.json",
-   "provenance_note": "Final engine/native targets built, current isolated default/Athena wrappers both exited0; parent checked source/staged binary digests. No wider regression rerun.",
+   "log_sha256": "f71362b198c64c90a4790a8ac70c2c702b3b65f1bf706a136a357e2a4ea7004e",
+   "origin_run": "porting/generated/frontend-probes/legacy-ingress-reload-joins-20261101T030500Z/exit-status.json",
    "result": "pass",
-   "source_native_commit": "afb32b7",
-   "utc": "2026-11-01T02:23:01Z",
-   "wrapper_exit_code": 0
+   "scope": "Runtime network version constant only; full wire parity remains unverified",
+   "source_native_commit": "c8ec1132b1e8d0077620087eec41f9c170eb5b00",
+   "utc": "2026-11-01T03:08:08Z"
   },
   "shader_structural_validation": {
    "command": "python3 -c 'import hashlib,json,pathlib; p=json.load(open(\"porting/generated/material_pipeline/frontend-translated/translation-report.json\")); rows=p[\"records\"]; assert len(rows)==44 and p[\"validated_jobs\"]==44; assert all(r[\"compile_exit\"]==0 and r[\"validation_exit\"]==0 for r in rows); assert all(hashlib.sha256(pathlib.Path(r[k]).read_bytes()).hexdigest()==r[k+\"_sha256\"] for r in rows for k in (\"input\",\"output\")); print(\"SPIR-V structural validation: 44/44; compiler diagnostics:\",p[\"compiler_diagnostic_jobs\"],\"; rendering unverified\")'",
@@ -207,43 +298,41 @@
    "utc": "2026-11-01T00:39:06Z"
   },
   "smoke_athena": {
-   "binary_hash_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/runtime-material-joins-20261101T021940Z/binary-hashes.json",
-   "binary_hash_receipt_sha256": "22267c4a0a85552329f08a430095f649c93ed72a2836bea2741c35ba3df7e1b7",
-   "command": "(log only) /opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/runtime-material-joins-20261101T021940Z/athena-result.log",
-   "commit": "b0597c2d5c39e4733848168503659bb208d6feee",
-   "engine_commit": "757e0087a",
-   "exit_code": null,
+   "binary_hash_receipt": "porting/generated/frontend-probes/legacy-ingress-reload-joins-20261101T030500Z/binary-hashes.json",
+   "binary_hash_receipt_sha256": "eff16b946eed6b3cadbf0726e9ffe65b2d5d6ff22d627a1807054256d474e735",
+   "command": "JOIN_NAME=athena bash porting/generated/frontend-probes/legacy-ingress-reload-joins-20261101T030500Z/smoke_join_isolated.sh",
+   "commit": "350c651830ad4ace280b797258fa9b4a74f52853",
+   "engine_commit": "e6e962a435d6f6da6dc4cbc90adbeef752972b60",
+   "exit_code": 0,
    "id": "smoke_athena",
    "key_lines": [
-    "Local UE join succeeded. Logs: /opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/runtime-material-joins-20261101T021940Z/athena-server.log and /opt/fortnite/FortniteC..."
+    "Local UE join succeeded. Logs: /opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/legacy-ingress-reload-joins-20261101T030500Z/athena-server.log and /opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/legacy-ingress-reload-joins-20261101T030500Z/athena-client.log"
    ],
-   "log_sha256": "69980233b5d476863c6b96d2d210c913e0eea2f25997556ac20830c435bfa50c",
-   "matches": 1,
-   "origin_run": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/runtime-material-joins-20261101T021940Z/exit-status.json",
-   "provenance_note": "Final engine/native targets built, current isolated default/Athena wrappers both exited0; parent checked source/staged binary digests. No wider regression rerun.",
+   "log_sha256": "41f63e60231ee44eba15af1427c6fe34dfd7f924aaca1687e912d376a1d99a1b",
+   "origin_run": "porting/generated/frontend-probes/legacy-ingress-reload-joins-20261101T030500Z/exit-status.json",
    "result": "pass",
-   "source_native_commit": "afb32b7",
-   "utc": "2026-11-01T02:23:01Z",
+   "scope": "Current native direct join; no frontend, matchmaking or original-client wire-parity claim",
+   "source_native_commit": "c8ec1132b1e8d0077620087eec41f9c170eb5b00",
+   "utc": "2026-11-01T03:08:08Z",
    "wrapper_exit_code": 0
   },
   "smoke_default": {
-   "binary_hash_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/runtime-material-joins-20261101T021940Z/binary-hashes.json",
-   "binary_hash_receipt_sha256": "22267c4a0a85552329f08a430095f649c93ed72a2836bea2741c35ba3df7e1b7",
-   "command": "(log only) /opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/runtime-material-joins-20261101T021940Z/default-result.log",
-   "commit": "b0597c2d5c39e4733848168503659bb208d6feee",
-   "engine_commit": "757e0087a",
-   "exit_code": null,
+   "binary_hash_receipt": "porting/generated/frontend-probes/legacy-ingress-reload-joins-20261101T030500Z/binary-hashes.json",
+   "binary_hash_receipt_sha256": "eff16b946eed6b3cadbf0726e9ffe65b2d5d6ff22d627a1807054256d474e735",
+   "command": "JOIN_NAME=default bash porting/generated/frontend-probes/legacy-ingress-reload-joins-20261101T030500Z/smoke_join_isolated.sh",
+   "commit": "350c651830ad4ace280b797258fa9b4a74f52853",
+   "engine_commit": "e6e962a435d6f6da6dc4cbc90adbeef752972b60",
+   "exit_code": 0,
    "id": "smoke_default",
    "key_lines": [
-    "Local UE join succeeded. Logs: /opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/runtime-material-joins-20261101T021940Z/default-server.log and /opt/fortnite/Fortnite..."
+    "Local UE join succeeded. Logs: /opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/legacy-ingress-reload-joins-20261101T030500Z/default-server.log and /opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/legacy-ingress-reload-joins-20261101T030500Z/default-client.log"
    ],
-   "log_sha256": "c6b2622f9c94d36a5dd73ce28b92e6cecd1088cde79f83fd261fd902db365dcc",
-   "matches": 1,
-   "origin_run": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/runtime-material-joins-20261101T021940Z/exit-status.json",
-   "provenance_note": "Final engine/native targets built, current isolated default/Athena wrappers both exited0; parent checked source/staged binary digests. No wider regression rerun.",
+   "log_sha256": "570871d4b510b91e0946970c5a269186a29d5ac754a14e15f497aab0ca62e166",
+   "origin_run": "porting/generated/frontend-probes/legacy-ingress-reload-joins-20261101T030500Z/exit-status.json",
    "result": "pass",
-   "source_native_commit": "afb32b7",
-   "utc": "2026-11-01T02:23:00Z",
+   "scope": "Current native direct join; no frontend, matchmaking or original-client wire-parity claim",
+   "source_native_commit": "c8ec1132b1e8d0077620087eec41f9c170eb5b00",
+   "utc": "2026-11-01T03:08:08Z",
    "wrapper_exit_code": 0
   },
   "ui_banner_classload": {

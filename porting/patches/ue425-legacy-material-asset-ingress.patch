@@ -1,0 +1,589 @@
+From 6750d43f557f3781a4e6abbc4636cf461cbf3d9c Mon Sep 17 00:00:00 2001
+From: Codex <codex@local.invalid>
+Date: Sun, 1 Nov 2026 02:57:08 +0000
+Subject: [PATCH 1/2] Add bounded legacy material asset ingress and
+ actual-owner completeness gate
+
+---
+ .../Classes/Materials/MaterialInterface.h     |   3 +-
+ .../Private/Materials/LegacyMaterialAsset.cpp |  75 +++++++++++++
+ .../Private/Materials/LegacySlateMaterial.cpp |  21 +++-
+ .../Engine/Private/Materials/Material.cpp     |  26 ++++-
+ .../Private/Materials/MaterialInstance.cpp    |   5 +-
+ .../Private/Materials/MaterialShared.cpp      | 100 ++++++++++++++++--
+ .../Engine/Public/LegacyMaterialAsset.h       |  31 ++++++
+ .../Engine/Public/LegacySlateMaterial.h       |   5 +
+ .../Runtime/Engine/Public/MaterialShared.h    |  24 ++++-
+ 9 files changed, 271 insertions(+), 19 deletions(-)
+ create mode 100644 Engine/Source/Runtime/Engine/Private/Materials/LegacyMaterialAsset.cpp
+ create mode 100644 Engine/Source/Runtime/Engine/Public/LegacyMaterialAsset.h
+
+diff --git a/Engine/Source/Runtime/Engine/Classes/Materials/MaterialInterface.h b/Engine/Source/Runtime/Engine/Classes/Materials/MaterialInterface.h
+index f32626052..407b06a2d 100644
+--- a/Engine/Source/Runtime/Engine/Classes/Materials/MaterialInterface.h
++++ b/Engine/Source/Runtime/Engine/Classes/Materials/MaterialInterface.h
+@@ -971,7 +971,8 @@ extern void SerializeInlineShaderMaps(
+ 	const TMap<const class ITargetPlatform*, TArray<FMaterialResource*>>* PlatformMaterialResourcesToSave,
+ 	FArchive& Ar,
+ 	TArray<FMaterialResource>& OutLoadedResources,
+-	uint32* OutOffsetToFirstResource = nullptr);
++	uint32* OutOffsetToFirstResource = nullptr,
++	const FString& OwnerPath = FString());
+ /** Helper function to process (register) serialized inline shader maps for the given material resources. */
+ extern void ProcessSerializedInlineShaderMaps(UMaterialInterface* Owner, TArray<FMaterialResource>& LoadedResources, FMaterialResource* (&OutMaterialResourcesLoaded)[EMaterialQualityLevel::Num][ERHIFeatureLevel::Num]);
+ 
+diff --git a/Engine/Source/Runtime/Engine/Private/Materials/LegacyMaterialAsset.cpp b/Engine/Source/Runtime/Engine/Private/Materials/LegacyMaterialAsset.cpp
+new file mode 100644
+index 000000000..181045b7e
+--- /dev/null
++++ b/Engine/Source/Runtime/Engine/Private/Materials/LegacyMaterialAsset.cpp
+@@ -0,0 +1,75 @@
++// Copyright Epic Games, Inc. All Rights Reserved.
++#include "LegacyMaterialAsset.h"
++#include "MaterialShared.h"
++#include "Materials/Material.h"
++#include "Materials/MaterialInstance.h"
++#include "MaterialShaderMapLayout.h"
++#include "MeshMaterialShaderType.h"
++#include "VertexFactory.h"
++
++bool ValidateLegacyMaterialAsset(FMaterialResource& Resource, UMaterialInterface* Owner)
++{
++ check(IsInGameThread());
++ FMaterialShaderMap* Map = Resource.GetGameThreadShaderMap();
++ if (!Resource.HasLegacyMaterialAsset() && !(Map && Map->GetLegacyMaterialProvenance().IsValid())) return true;
++ UMaterial* Base = Owner ? Owner->GetMaterial() : nullptr;
++ if (!Map || !Base)
++ {
++  UE_LOG(LogMaterial, Error, TEXT("Legacy material has no actual owner or map"));
++  Resource.ReleaseShaderMap();
++  return false;
++ }
++ const FMaterialShaderMapId& Id = Map->GetShaderMapId();
++ if (Id.FeatureLevel >= ERHIFeatureLevel::Num || Id.QualityLevel > EMaterialQualityLevel::Num || Map->GetShaderPlatform() != GMaxRHIShaderPlatform)
++ {
++  UE_LOG(LogMaterial, Error, TEXT("Legacy material %s has incompatible platform/quality/feature"), *Owner->GetPathName());
++  Resource.ReleaseShaderMap();
++  return false;
++ }
++ TArray<bool, TInlineAllocator<EMaterialQualityLevel::Num>> Usage;
++ Base->GetQualityLevelUsage(Usage, Map->GetShaderPlatform());
++ TUniquePtr<FMaterialResource> Validation(Cast<UMaterialInstance>(Owner) ? CastChecked<UMaterialInstance>(Owner)->AllocatePermutationResource() : Base->AllocateResource());
++ const bool QualityHasDifferentNodes = STORE_ONLY_ACTIVE_SHADERMAPS || (Id.QualityLevel < EMaterialQualityLevel::Num && Usage[Id.QualityLevel]);
++ Validation->SetMaterial(Base, Id.QualityLevel, QualityHasDifferentNodes, Id.FeatureLevel, Cast<UMaterialInstance>(Owner));
++ const FMaterialShaderParameters Parameters(Validation.Get());
++ const FMaterialShaderMapLayout& Layout = AcquireMaterialShaderMapLayout(Map->GetShaderPlatform(), Parameters);
++ const FMaterialShaderMapContent* Content = Map->GetContent();
++ int32 Missing = 0, Required = 0;
++ auto Shader = [&](const FShaderLayoutEntry& Entry, FVertexFactoryType* VF, const FMeshMaterialShaderMap* Mesh)
++ {
++  if (Validation->ShouldCache(Map->GetShaderPlatform(), Entry.ShaderType, VF))
++  {
++   ++Required;
++   if (!(VF ? Mesh && Mesh->HasShader(Entry.ShaderType, Entry.PermutationId) : Content->HasShader(Entry.ShaderType, Entry.PermutationId)))
++   {
++    ++Missing;
++    UE_LOG(LogMaterial, Error, TEXT("Legacy owner %s missing shader=%s permutation=%d VF=%s"), *Owner->GetPathName(), Entry.ShaderType->GetName(), Entry.PermutationId, VF ? VF->GetName() : TEXT("none"));
++   }
++  }
++ };
++ auto Pipeline = [&](const FShaderPipelineType* Entry, FVertexFactoryType* VF, const FMeshMaterialShaderMap* Mesh)
++ {
++  if (Validation->ShouldCachePipeline(Map->GetShaderPlatform(), Entry, VF))
++  {
++   ++Required;
++   if (!(VF ? Mesh && Mesh->HasShaderPipeline(Entry) : Content->HasShaderPipeline(Entry)))
++   {
++    ++Missing;
++    UE_LOG(LogMaterial, Error, TEXT("Legacy owner %s missing pipeline=%s VF=%s"), *Owner->GetPathName(), Entry->GetName(), VF ? VF->GetName() : TEXT("none"));
++   }
++  }
++ };
++ for (const FShaderLayoutEntry& Entry : Layout.Shaders) Shader(Entry, nullptr, nullptr);
++ for (const FShaderPipelineType* Entry : Layout.ShaderPipelines) Pipeline(Entry, nullptr, nullptr);
++ for (const FMeshMaterialShaderMapLayout& Mesh : Layout.MeshShaderMaps)
++ {
++  const FMeshMaterialShaderMap* Candidate = Map->GetMeshShaderMap(Mesh.VertexFactoryType);
++  for (const FShaderLayoutEntry& Entry : Mesh.Shaders) Shader(Entry, Mesh.VertexFactoryType, Candidate);
++  for (const FShaderPipelineType* Entry : Mesh.ShaderPipelines) Pipeline(Entry, Mesh.VertexFactoryType, Candidate);
++ }
++ const bool Complete = Map->IsComplete(Validation.Get(), false) && Missing == 0;
++ UE_LOG(LogMaterial, Display, TEXT("Legacy actual-owner completeness owner=%s domain=%d blend=%d shading=%s quality=%d feature=%d flags=%llu required=%d missing=%d complete=%d"),
++  *Owner->GetPathName(), int32(Validation->GetMaterialDomain()), int32(Validation->GetBlendMode()), *GetShadingModelFieldString(Validation->GetShadingModels()), int32(Id.QualityLevel), int32(Id.FeatureLevel), (unsigned long long)Parameters.PackedFlags, Required, Missing, int32(Complete));
++ if (!Complete) Resource.ReleaseShaderMap();
++ return Complete;
++}
+diff --git a/Engine/Source/Runtime/Engine/Private/Materials/LegacySlateMaterial.cpp b/Engine/Source/Runtime/Engine/Private/Materials/LegacySlateMaterial.cpp
+index 05e4abee1..03d9035d1 100644
+--- a/Engine/Source/Runtime/Engine/Private/Materials/LegacySlateMaterial.cpp
++++ b/Engine/Source/Runtime/Engine/Private/Materials/LegacySlateMaterial.cpp
+@@ -17,7 +17,26 @@ TRefCountPtr<FMaterialShaderMap> FMaterialShaderMap::CreateLegacySlateMap(
+  TRefCountPtr<FMaterialShaderMap> Map = new FMaterialShaderMap();
+  FMaterialShaderMapContent* Content = new FMaterialShaderMapContent(Material.Platform);
+  Map->AssignContent(Content);
+- FUniformExpressionSet& Uniforms = Content->MaterialCompilationOutput.UniformExpressionSet;
++ FMaterialCompilationOutput& Compilation = Content->MaterialCompilationOutput;
++ if (Material.CompilationFlags & 0x80) return Fail(TEXT("Unknown original compilation flags"));
++ Compilation.UsedSceneTextures = Material.UsedSceneTextures;
++ Compilation.bNeedsSceneTextures = Material.UsedSceneTextures != 0;
++ Compilation.RuntimeVirtualTextureOutputAttributeMask = Material.RuntimeVirtualTextureOutputAttributeMask;
++ Compilation.bUsesEyeAdaptation = !!(Material.CompilationFlags & (1 << 0));
++ Compilation.bModifiesMeshPosition = !!(Material.CompilationFlags & (1 << 1));
++ Compilation.bUsesWorldPositionOffset = !!(Material.CompilationFlags & (1 << 2));
++ Compilation.bUsesGlobalDistanceField = !!(Material.CompilationFlags & (1 << 3));
++ Compilation.bUsesPixelDepthOffset = !!(Material.CompilationFlags & (1 << 4));
++ Compilation.bUsesDistanceCullFade = !!(Material.CompilationFlags & (1 << 5));
++ Compilation.bHasRuntimeVirtualTextureOutputNode = !!(Material.CompilationFlags & (1 << 6));
++#if WITH_EDITOR
++ Compilation.EstimatedNumTextureSamplesVS = Material.EstimatedTextureSamplesVS;
++ Compilation.EstimatedNumTextureSamplesPS = Material.EstimatedTextureSamplesPS;
++ Compilation.EstimatedNumVirtualTextureLookups = Material.EstimatedVirtualTextureLookups;
++ Compilation.NumUsedUVScalars = Material.UsedUVScalars;
++ Compilation.NumUsedCustomInterpolatorScalars = Material.UsedCustomInterpolatorScalars;
++#endif
++ FUniformExpressionSet& Uniforms = Compilation.UniformExpressionSet;
+  TArray<TRefCountPtr<FMaterialUniformExpression>> Nodes;
+  TArray<uint32> Depths, Costs;
+  for (int32 Index = 0; Index < Material.Expressions.Num(); ++Index)
+diff --git a/Engine/Source/Runtime/Engine/Private/Materials/Material.cpp b/Engine/Source/Runtime/Engine/Private/Materials/Material.cpp
+index 4c171473f..f81179c98 100644
+--- a/Engine/Source/Runtime/Engine/Private/Materials/Material.cpp
++++ b/Engine/Source/Runtime/Engine/Private/Materials/Material.cpp
+@@ -5,6 +5,7 @@
+ =============================================================================*/
+ 
+ #include "Materials/Material.h"
++#include "LegacyMaterialAsset.h"
+ #include "Stats/StatsMisc.h"
+ #include "Misc/FeedbackContext.h"
+ #include "UObject/RenderingObjectVersion.h"
+@@ -662,7 +663,8 @@ void SerializeInlineShaderMaps(
+ 	const TMap<const ITargetPlatform*, TArray<FMaterialResource*>>* PlatformMaterialResourcesToSavePtr,
+ 	FArchive& Ar,
+ 	TArray<FMaterialResource>& OutLoadedResources,
+-	uint32* OutOffsetToFirstResource)
++	uint32* OutOffsetToFirstResource,
++	const FString& OwnerPath)
+ {
+ 	LLM_SCOPE(ELLMTag::Shaders);
+ 	SCOPED_LOADTIMER(SerializeInlineShaderMaps);
+@@ -721,7 +723,11 @@ void SerializeInlineShaderMaps(
+ 			EMaterialQualityLevel::Type QualityLevel = GetCachedScalabilityCVars().MaterialQualityLevel;
+ 			FMaterialResourceProxyReader ResourceAr(Ar, FeatureLevel, QualityLevel);
+ 			OutLoadedResources.Empty(1);
+-			OutLoadedResources[OutLoadedResources.AddDefaulted()].SerializeInlineShaderMap(ResourceAr);
++			int64 Begin, End;
++            if (!ResourceAr.GetResourceRange(ResourceAr.Tell(), Begin, End)) { Ar.SetError(); return; }
++            const FLegacyMaterialAssetContext Context{ResourceAr, OwnerPath, Begin, End, ResourceAr.GetLocalNames()};
++            OutLoadedResources[OutLoadedResources.AddDefaulted()].SerializeInlineShaderMap(ResourceAr, &Context);
++            if (ResourceAr.IsError()) { Ar.SetError(); return; }
+ #else
+ 			ERHIFeatureLevel::Type FeatureLevel = ERHIFeatureLevel::Num;
+ 			EMaterialQualityLevel::Type QualityLevel = EMaterialQualityLevel::Num;
+@@ -730,7 +736,11 @@ void SerializeInlineShaderMaps(
+ 			for (int32 ResourceIndex = 0; ResourceIndex < NumLoadedResources; ++ResourceIndex)
+ 			{
+ 				FMaterialResource& LoadedResource = OutLoadedResources[OutLoadedResources.AddDefaulted()];
+-				LoadedResource.SerializeInlineShaderMap(ResourceAr);
++				int64 Begin, End;
++                if (!ResourceAr.GetResourceRange(ResourceAr.Tell(), Begin, End)) { Ar.SetError(); return; }
++                const FLegacyMaterialAssetContext Context{ResourceAr, OwnerPath, Begin, End, ResourceAr.GetLocalNames()};
++                LoadedResource.SerializeInlineShaderMap(ResourceAr, &Context);
++                if (ResourceAr.IsError()) { Ar.SetError(); return; }
+ 			}
+ #endif
+ 		}
+@@ -752,7 +762,10 @@ void ProcessSerializedInlineShaderMaps(UMaterialInterface* Owner, TArray<FMateri
+ #endif
+ 	for (FMaterialResource& Resource : LoadedResources)
+ 	{
+-		Resource.RegisterInlineShaderMap(bLoadedByCookedMaterial);
++		if (ValidateLegacyMaterialAsset(Resource, Owner))
++		{
++			Resource.RegisterInlineShaderMap(bLoadedByCookedMaterial);
++		}
+ 	}
+ 	
+ 	if (CVarDiscardUnusedQualityLevels.GetValueOnAnyThread())
+@@ -3188,7 +3201,7 @@ void UMaterial::Serialize(FArchive& Ar)
+ 	{
+ #if WITH_EDITOR
+ 		static_assert(!STORE_ONLY_ACTIVE_SHADERMAPS, "Only discard unused SMs in cooked build");
+-		SerializeInlineShaderMaps(&CachedMaterialResourcesForCooking, Ar, LoadedMaterialResources);
++		SerializeInlineShaderMaps(&CachedMaterialResourcesForCooking, Ar, LoadedMaterialResources, nullptr, GetPathName());
+ #else
+ 		SerializeInlineShaderMaps(
+ 			NULL,
+@@ -3196,7 +3209,10 @@ void UMaterial::Serialize(FArchive& Ar)
+ 			LoadedMaterialResources
+ #if STORE_ONLY_ACTIVE_SHADERMAPS
+ 			, &OffsetToFirstResource
++#else
++			, nullptr
+ #endif
++			, GetPathName()
+ 		);
+ #endif
+ 	}
+diff --git a/Engine/Source/Runtime/Engine/Private/Materials/MaterialInstance.cpp b/Engine/Source/Runtime/Engine/Private/Materials/MaterialInstance.cpp
+index 948b3e92c..894c79438 100644
+--- a/Engine/Source/Runtime/Engine/Private/Materials/MaterialInstance.cpp
++++ b/Engine/Source/Runtime/Engine/Private/Materials/MaterialInstance.cpp
+@@ -3277,7 +3277,7 @@ void UMaterialInstance::Serialize(FArchive& Ar)
+ 
+ #if WITH_EDITOR
+ 			static_assert(!STORE_ONLY_ACTIVE_SHADERMAPS, "Only discard unused SMs in cooked build");
+-			SerializeInlineShaderMaps(&CachedMaterialResourcesForCooking, Ar, LoadedMaterialResources);
++			SerializeInlineShaderMaps(&CachedMaterialResourcesForCooking, Ar, LoadedMaterialResources, nullptr, GetPathName());
+ #else
+ 			SerializeInlineShaderMaps(
+ 				NULL,
+@@ -3285,7 +3285,10 @@ void UMaterialInstance::Serialize(FArchive& Ar)
+ 				LoadedMaterialResources
+ #if STORE_ONLY_ACTIVE_SHADERMAPS
+ 				, &OffsetToFirstResource
++#else
++			, nullptr
+ #endif
++			, GetPathName()
+ 			);
+ #endif
+ 		}
+diff --git a/Engine/Source/Runtime/Engine/Private/Materials/MaterialShared.cpp b/Engine/Source/Runtime/Engine/Private/Materials/MaterialShared.cpp
+index 146df7406..b37568755 100644
+--- a/Engine/Source/Runtime/Engine/Private/Materials/MaterialShared.cpp
++++ b/Engine/Source/Runtime/Engine/Private/Materials/MaterialShared.cpp
+@@ -5,6 +5,7 @@
+ =============================================================================*/
+ 
+ #include "MaterialShared.h"
++#include "LegacyMaterialAsset.h"
+ #include "Stats/StatsMisc.h"
+ #include "UObject/CoreObjectVersion.h"
+ #include "UObject/FrameworkObjectVersion.h"
+@@ -206,7 +207,12 @@ bool ReloadMaterialResource(
+ 
+ 	FMaterialResourceProxyReader Ar(*Filename, OffsetToFirstResource, FeatureLevel, QualityLevel);
+ 	FMaterialResource& Tmp = *InOutMaterialResource;
+-	Tmp.SerializeInlineShaderMap(Ar);
++	int64 Begin, End;
++    if (!Ar.GetResourceRange(Ar.Tell(), Begin, End)) { Ar.SetError(); return false; }
++    const FString OwnerPath = Tmp.GetMaterialInterface() ? Tmp.GetMaterialInterface()->GetPathName() : FString();
++    const FLegacyMaterialAssetContext Context{Ar, OwnerPath, Begin, End, Ar.GetLocalNames()};
++    Tmp.SerializeInlineShaderMap(Ar, &Context);
++    if (Ar.IsError() || !ValidateLegacyMaterialAsset(Tmp, Tmp.GetMaterialInterface())) return false;
+ 	if (Tmp.GetGameThreadShaderMap())
+ 	{
+ 		//Tmp.GetGameThreadShaderMap()->RegisterSerializedShaders(false);
+@@ -902,7 +908,16 @@ void FMaterial::LegacySerialize(FArchive& Ar)
+ 	SerializeInlineShaderMap(Ar);
+ }
+ 
+-void FMaterial::SerializeInlineShaderMap(FArchive& Ar)
++static TAtomic<FLegacyMaterialAssetProvider> GLegacyMaterialAssetProvider(nullptr);
++void RegisterLegacyMaterialAssetProvider(FLegacyMaterialAssetProvider Provider)
++{
++ check(IsInGameThread());
++ const FLegacyMaterialAssetProvider Previous = GLegacyMaterialAssetProvider.Load();
++ check(!Provider || !Previous || Provider == Previous);
++ GLegacyMaterialAssetProvider.Store(Provider);
++}
++
++void FMaterial::SerializeInlineShaderMap(FArchive& Ar, const FLegacyMaterialAssetContext* LegacyContext)
+ {
+ 	bool bCooked = Ar.IsCooking();
+ 	Ar << bCooked;
+@@ -936,7 +951,46 @@ void FMaterial::SerializeInlineShaderMap(FArchive& Ar)
+ 
+ 			if (bValid)
+ 			{
+-				TRefCountPtr<FMaterialShaderMap> LoadedShaderMap = new FMaterialShaderMap();
++				const FLegacyMaterialAssetProvider LegacyProvider = GLegacyMaterialAssetProvider.Load();
++                if (Ar.IsLoading() && LegacyContext && LegacyProvider && !Ar.IsError())
++                {
++                    const int64 OriginalPosition = Ar.Tell();
++                    TRefCountPtr<FMaterialShaderMap> Candidate;
++                    TSharedPtr<const FLegacyMaterialAssetProvenance, ESPMode::ThreadSafe> Provenance;
++                    FString Error;
++                    const ELegacyMaterialAssetResult Result = LegacyProvider(*LegacyContext, Candidate, Provenance, Error);
++                    if (Result == ELegacyMaterialAssetResult::Converted)
++                    {
++                        FSHAHash VerifiedResourceHash;
++                        if (Provenance.IsValid()) FSHA1::HashBuffer(Provenance->OriginalResource.GetData(), Provenance->OriginalResource.Num(), VerifiedResourceHash.Hash);
++                        if (!Ar.IsError() && Ar.Tell() == LegacyContext->ResourceEnd && Candidate && Candidate->IsValidForRendering() &&
++                            Candidate->CompiledSuccessfully() && Provenance.IsValid() &&
++                            Provenance->OriginalResource.Num() == LegacyContext->ResourceEnd - LegacyContext->ResourceBegin &&
++                            Provenance->ResourceHash != FSHAHash() && Provenance->ResourceHash == VerifiedResourceHash && Provenance->OriginalShaderRecordCount > 0)
++                        {
++                            Candidate->RetainLegacyMaterialProvenance(Provenance);
++                            GameThreadShaderMap = MoveTemp(Candidate);
++                            LegacyMaterialProvenance = MoveTemp(Provenance);
++                            return;
++                        }
++                        Error = TEXT("Converted provider result lacks finalized map, complete raw provenance or exact end consumption");
++                    }
++                    else if (Result == ELegacyMaterialAssetResult::NotApplicable && !Ar.IsError() && Ar.Tell() == OriginalPosition)
++                    {
++                        // Preserve the ordinary reader only on a side-effect-free decline.
++                    }
++                    else if (Result == ELegacyMaterialAssetResult::NotApplicable)
++                    {
++                        Error = TEXT("Provider changed archive state while declining resource");
++                    }
++                    if (Result != ELegacyMaterialAssetResult::NotApplicable || Ar.IsError() || Ar.Tell() != OriginalPosition)
++                    {
++                        Ar.SetError();
++                        UE_LOG(LogMaterial, Error, TEXT("Legacy material ingress failed for %s: %s"), *LegacyContext->OwnerPath, *Error);
++                        return;
++                    }
++                }
++                TRefCountPtr<FMaterialShaderMap> LoadedShaderMap = new FMaterialShaderMap();
+ 				if (LoadedShaderMap->Serialize(Ar, true, bCooked && Ar.IsLoading()))
+ 				{
+ 					GameThreadShaderMap = MoveTemp(LoadedShaderMap);
+@@ -3890,7 +3944,7 @@ static inline void AdjustForSingleRead(
+ 		{
+ 			QualityLevel = EMaterialQualityLevel::High;
+ 			Loc = FindMaterialResourceLocOnDisk(Locs, FeatureLevel, QualityLevel);
+-			check(Loc);
++			if (!Loc) { Ar.SetError(); return; }
+ 		}
+ 		if (Loc->Offset)
+ 		{
+@@ -3942,7 +3996,9 @@ FArchive& FMaterialResourceProxyReader::operator<<(class FName& Name)
+ {
+ 	int32 NameIdx;
+ 	decltype(DeclVal<FName>().GetNumber()) InstNum;
++	if (Tell() < 0 || Tell() > ResourceBytes - 8) { SetError(); return *this; }
+ 	InnerArchive << NameIdx << InstNum;
++	if (!Names.IsValidIndex(NameIdx) || InstNum < 0) { SetError(); return *this; }
+ 	Name = FName(Names[NameIdx], InstNum);
+ 	return *this;
+ }
+@@ -3956,6 +4012,7 @@ void FMaterialResourceProxyReader::Initialize(
+ 
+ 	decltype(Names.Num()) NumNames;
+ 	InnerArchive << NumNames;
++	if (NumNames < 0 || NumNames > 65536) { SetError(); return; }
+ 	Names.Empty(NumNames);
+ 	for (int32 Idx = 0; Idx < NumNames; ++Idx)
+ 	{
+@@ -3964,14 +4021,26 @@ void FMaterialResourceProxyReader::Initialize(
+ 		Names.Add(Entry);
+ 	}
+ 
+-	TArray<FMaterialResourceLocOnDisk> Locs;
+-	InnerArchive << Locs;
+-	check(Locs[0].Offset == 0);
++	TArray<FMaterialResourceLocOnDisk>& Locs = ResourceLocations;
++	int32 NumLocations = 0;
++    InnerArchive << NumLocations;
++    if (NumLocations <= 0 || NumLocations > 256) { SetError(); return; }
++    Locs.SetNum(NumLocations);
++    for (FMaterialResourceLocOnDisk& Loc : Locs) InnerArchive << Loc;
+ 	decltype(DeclVal<TArray<uint8>>().Num()) NumBytes;
+ 	InnerArchive << NumBytes;
+ 
+ 	OffsetToFirstResource = InnerArchive.Tell();
+-	AdjustForSingleRead(&InnerArchive, Locs, OffsetToFirstResource, FeatureLevel, QualityLevel);
++    ResourceBytes = NumBytes;
++    if (IsError() || NumBytes <= 0 || Locs.Num() == 0 || Locs[0].Offset != 0 ||
++        (InnerArchive.TotalSize() >= 0 && OffsetToFirstResource > InnerArchive.TotalSize() - NumBytes)) { SetError(); return; }
++    for (int32 Index = 0; Index < Locs.Num(); ++Index)
++    {
++        if (Locs[Index].Offset >= uint32(NumBytes) || Locs[Index].FeatureLevel >= ERHIFeatureLevel::Num ||
++            Locs[Index].QualityLevel > EMaterialQualityLevel::Num || (Index > 0 && Locs[Index].Offset <= Locs[Index - 1].Offset))
++        { SetError(); return; }
++    }
++    AdjustForSingleRead(&InnerArchive, Locs, OffsetToFirstResource, FeatureLevel, QualityLevel);
+ 
+ 	if (bSeekToEnd)
+ 	{
+@@ -3979,6 +4048,21 @@ void FMaterialResourceProxyReader::Initialize(
+ 	}
+ }
+ 
++bool FMaterialResourceProxyReader::GetResourceRange(int64 Position, int64& Begin, int64& End) const
++{
++ if (IsError()) return false;
++ for (int32 Index = 0; Index < ResourceLocations.Num(); ++Index)
++ {
++  if (Position == ResourceLocations[Index].Offset)
++  {
++   Begin = Position;
++   End = Index + 1 < ResourceLocations.Num() ? ResourceLocations[Index + 1].Offset : ResourceBytes;
++   return End > Begin;
++  }
++ }
++ return false;
++}
++
+ typedef TMap<FMaterial*, FMaterialShaderMap*> FMaterialsToUpdateMap;
+ 
+ void SetShaderMapsOnMaterialResources_RenderThread(FRHICommandListImmediate& RHICmdList, const FMaterialsToUpdateMap& MaterialsToUpdate)
+diff --git a/Engine/Source/Runtime/Engine/Public/LegacyMaterialAsset.h b/Engine/Source/Runtime/Engine/Public/LegacyMaterialAsset.h
+new file mode 100644
+index 000000000..8335355b7
+--- /dev/null
++++ b/Engine/Source/Runtime/Engine/Public/LegacyMaterialAsset.h
+@@ -0,0 +1,31 @@
++// Copyright Epic Games, Inc. All Rights Reserved.
++#pragma once
++#include "CoreMinimal.h"
++#include "Misc/SecureHash.h"
++class FMaterialShaderMap;
++/** Immutable lifetime anchor; adapters may retain their complete decoded representation. */
++struct ENGINE_API FLegacyMaterialAssetProvenance
++{
++ virtual ~FLegacyMaterialAssetProvenance() = default;
++ TArray<uint8> OriginalResource;
++ FSHAHash ResourceHash;
++ FString SourceIdentity;
++ uint32 OriginalShaderRecordCount = 0;
++};
++/** Positions use Archive coordinates; Names and OwnerPath are borrowed only for the callback.
++ * Archive is positioned after the cooked/valid flags. Preserve state when declining. */
++struct FLegacyMaterialAssetContext
++{
++ FArchive& Archive;
++ const FString& OwnerPath;
++ int64 ResourceBegin;
++ int64 ResourceEnd;
++ TArrayView<const FName> Names;
++};
++enum class ELegacyMaterialAssetResult : uint8 { NotApplicable, Converted, Failed };
++using FLegacyMaterialAssetProvider = ELegacyMaterialAssetResult (*)(
++ const FLegacyMaterialAssetContext&, TRefCountPtr<FMaterialShaderMap>&,
++ TSharedPtr<const FLegacyMaterialAssetProvenance, ESPMode::ThreadSafe>&, FString&);
++/** Register once on the game thread, before async asset loading starts. Null unregisters after loading stops. */
++ENGINE_API void RegisterLegacyMaterialAssetProvider(FLegacyMaterialAssetProvider Provider);
++ENGINE_API bool ValidateLegacyMaterialAsset(class FMaterialResource& Resource, class UMaterialInterface* Owner);
+diff --git a/Engine/Source/Runtime/Engine/Public/LegacySlateMaterial.h b/Engine/Source/Runtime/Engine/Public/LegacySlateMaterial.h
+index 65abc765f..db280445d 100644
+--- a/Engine/Source/Runtime/Engine/Public/LegacySlateMaterial.h
++++ b/Engine/Source/Runtime/Engine/Public/LegacySlateMaterial.h
+@@ -35,6 +35,11 @@ struct FLegacyMaterialIR
+  TArray<int32> ScalarRoots;
+  TArray<FLegacyMaterialResource> Resources;
+  uint32 UniformBufferSize = 0;
++ uint32 UsedSceneTextures = 0;
++ uint16 EstimatedTextureSamplesVS = 0, EstimatedTextureSamplesPS = 0, EstimatedVirtualTextureLookups = 0;
++ uint8 UsedUVScalars = 0, UsedCustomInterpolatorScalars = 0;
++ uint8 RuntimeVirtualTextureOutputAttributeMask = 0;
++ uint8 CompilationFlags = 0;
+  FSHAHash OriginalMapHash;
+  EShaderPlatform Platform = SP_VULKAN_SM5;
+  EMaterialQualityLevel::Type QualityLevel = EMaterialQualityLevel::High;
+diff --git a/Engine/Source/Runtime/Engine/Public/MaterialShared.h b/Engine/Source/Runtime/Engine/Public/MaterialShared.h
+index f6c60f817..391a0d10b 100644
+--- a/Engine/Source/Runtime/Engine/Public/MaterialShared.h
++++ b/Engine/Source/Runtime/Engine/Public/MaterialShared.h
+@@ -1202,6 +1202,8 @@ public:
+ 	uint32 GetCompilingId() const { return CompilingId; }
+ 	bool IsCompilationFinalized() const { return bCompilationFinalized; }
+ 	bool CompiledSuccessfully() const { return bCompiledSuccessfully; }
++    void RetainLegacyMaterialProvenance(TSharedPtr<const struct FLegacyMaterialAssetProvenance, ESPMode::ThreadSafe> InProvenance) { LegacyAssetProvenance = MoveTemp(InProvenance); }
++    const TSharedPtr<const struct FLegacyMaterialAssetProvenance, ESPMode::ThreadSafe>& GetLegacyMaterialProvenance() const { return LegacyAssetProvenance; }
+ 
+ #if WITH_EDITORONLY_DATA
+ 	const TCHAR* GetFriendlyName() const { return *GetContent()->FriendlyName; }
+@@ -1284,6 +1286,7 @@ private:
+ 
+ 	/** The static parameter set that this shader map was compiled with and other parameters unique to this shadermap */
+ 	FMaterialShaderMapId ShaderMapId;
++    TSharedPtr<const struct FLegacyMaterialAssetProvenance, ESPMode::ThreadSafe> LegacyAssetProvenance;
+ 
+ 	/** The platform being compiled, or nullptr for current platform */
+ 	const ITargetPlatform* CompilingTargetPlatform;
+@@ -1506,7 +1509,8 @@ public:
+ 	ENGINE_API virtual void LegacySerialize(FArchive& Ar);
+ 
+ 	/** Serializes the shader map inline in this material, including any shader dependencies. */
+-	void SerializeInlineShaderMap(FArchive& Ar);
++	void SerializeInlineShaderMap(FArchive& Ar, const struct FLegacyMaterialAssetContext* LegacyContext = nullptr);
++	bool HasLegacyMaterialAsset() const { return LegacyMaterialProvenance.IsValid(); }
+ 
+ 	/** Serializes the shader map inline in this material, including any shader dependencies. */
+ 	void RegisterInlineShaderMap(bool bLoadedByCookedMaterial);
+@@ -1934,6 +1938,7 @@ private:
+ 	 * During an async compile, this will be NULL and will not contain the actual shader map until compilation is complete.
+ 	 */
+ 	TRefCountPtr<FMaterialShaderMap> GameThreadShaderMap;
++	TSharedPtr<const struct FLegacyMaterialAssetProvenance, ESPMode::ThreadSafe> LegacyMaterialProvenance;
+ 
+ 	/** 
+ 	 * Shader map for this material resource which is accessible by the rendering thread. 
+@@ -2861,16 +2866,29 @@ public:
+ 
+ 	virtual void Seek(int64 InPos) override
+ 	{
++		if (InPos < 0 || InPos > ResourceBytes) { SetError(); return; }
+ 		InnerArchive.Seek(OffsetToFirstResource + InPos);
+ 	}
+ 
+-	virtual FArchive& operator<<(class FName& Name) override;
++	virtual void Serialize(void* Data, int64 Length) override
++    {
++        const int64 Position = Tell();
++        if (Length < 0 || Position < 0 || Position > ResourceBytes || Length > ResourceBytes - Position) { SetError(); return; }
++        InnerArchive.Serialize(Data, Length);
++        if (InnerArchive.IsError()) SetError();
++    }
++    virtual int64 TotalSize() override { return ResourceBytes; }
++    virtual FArchive& operator<<(class FName& Name) override;
+ 
+ 	virtual FString GetArchiveName() const override { return TEXT("FMaterialResourceProxyReader"); }
++	bool GetResourceRange(int64 Position, int64& Begin, int64& End) const;
++	TArrayView<const FName> GetLocalNames() const { return Names; }
+ 
+ private:
+ 	TArray<FName> Names;
+-	int64 OffsetToFirstResource;
++	TArray<FMaterialResourceLocOnDisk> ResourceLocations;
++	int64 ResourceBytes = 0;
++	int64 OffsetToFirstResource = 0;
+ 	int64 OffsetToEnd;
+ 	bool bReleaseInnerArchive;
+ 
+-- 
+2.53.0
+
+
+From e6e962a435d6f6da6dc4cbc90adbeef752972b60 Mon Sep 17 00:00:00 2001
+From: Codex <codex@local.invalid>
+Date: Sun, 1 Nov 2026 03:04:22 +0000
+Subject: [PATCH 2/2] Bind original owners before reloading inline material
+ resources
+
+---
+ Engine/Source/Runtime/Engine/Private/Materials/Material.cpp      | 1 +
+ .../Source/Runtime/Engine/Private/Materials/MaterialInstance.cpp | 1 +
+ 2 files changed, 2 insertions(+)
+
+diff --git a/Engine/Source/Runtime/Engine/Private/Materials/Material.cpp b/Engine/Source/Runtime/Engine/Private/Materials/Material.cpp
+index f81179c98..c089d9367 100644
+--- a/Engine/Source/Runtime/Engine/Private/Materials/Material.cpp
++++ b/Engine/Source/Runtime/Engine/Private/Materials/Material.cpp
+@@ -3010,6 +3010,7 @@ void UMaterial::CacheResourceShadersForRendering(bool bRegenerateId)
+ 			if (MaterialResource && !MaterialResource->GetGameThreadShaderMap())
+ 			{
+ 				FMaterialResource Tmp;
++				Tmp.SetMaterial(this, LocalActiveQL, true, FeatureLevel);
+ 				FName PackageFileName = GetOutermost()->FileName;
+ 				UE_CLOG(PackageFileName.IsNone(), LogMaterial, Warning,
+ 					TEXT("UMaterial::CacheResourceShadersForRendering - Can't reload material resource '%s'. File system based reload is unsupported in this build."),
+diff --git a/Engine/Source/Runtime/Engine/Private/Materials/MaterialInstance.cpp b/Engine/Source/Runtime/Engine/Private/Materials/MaterialInstance.cpp
+index 894c79438..836a97306 100644
+--- a/Engine/Source/Runtime/Engine/Private/Materials/MaterialInstance.cpp
++++ b/Engine/Source/Runtime/Engine/Private/Materials/MaterialInstance.cpp
+@@ -2776,6 +2776,7 @@ void UMaterialInstance::CacheResourceShadersForRendering()
+ 			if (!MaterialResource->GetGameThreadShaderMap())
+ 			{
+ 				FMaterialResource Tmp;
++				Tmp.SetMaterial(GetMaterial(), LocalActiveQL, true, FeatureLevel, this);
+ 				FName PackageFileName = GetOutermost()->FileName;
+ 				UE_CLOG(PackageFileName.IsNone(), LogMaterial, Warning,
+ 					TEXT("UMaterialInstance::CacheResourceShadersForRendering - Can't reload material resource '%s'. File system based reload is unsupported in this build."),
+-- 
+2.53.0
+

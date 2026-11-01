@@ -25,7 +25,7 @@ Evidence for each route is in `porting/server_surface.md`.
 | `matchmaking.py` | Ticket, session and session-key routes. Websocket state machine (`local_ws.py` is the RFC 6455 side). |
 | `fortnite_stub.py` | Compatibility facade for `probe_server.py --stub`. Keeps the earlier `respond()` and `websocket_route()` names. |
 | `probe_server.py` | HTTP server. `--stub` serves the backend. Without it, it only records requests and serves fixtures. |
-| `test_services.py` | Self-contained tests. 71 tests over real HTTP on a random localhost port, including `SchemaTests` (reflection checks). |
+| `test_services.py` | Self-contained tests. 72 tests over real HTTP on a random localhost port, including `SchemaTests` (reflection checks). |
 | `chat_service.py` | Game chat room reservation (`reserveGeneralChatRooms`), answered with `GeneralChatReturn` members and no rooms. |
 | `schema_check.py` | Reflection-derived struct schemas and response completeness checks; requiring each member is a policy, not proof the client requires it. `python3 -I schema_check.py` prints the members. |
 | `reflection_schemas.json` | Member names and kinds of the non-MCP reflected structs used by the checks (generated). |
@@ -38,7 +38,7 @@ Evidence for each route is in `porting/server_surface.md`.
 ## Running
 
 ```sh
-python3 -I porting/server/test_services.py          # 71 tests, about 5 s, no sudo, no subprocess
+python3 -I porting/server/test_services.py          # 72 tests, about 5 s, no sudo, no subprocess
 python3 -I porting/server/smoke_matchmaking.py      # lobby-to-match smoke test
 python3 -I porting/server/probe_server.py --stub --port 8080 [--cloudstorage-dir DIR]
 python3 -I porting/server/backend.py --routes       # route table with evidence labels
