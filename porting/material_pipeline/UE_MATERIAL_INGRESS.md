@@ -1,8 +1,8 @@
 # Original material ingress
 
-The bounded, opt-in Locker ingress described below is implemented in the current Engine and native working trees; its actual-owner runtime probe passed in the staged Linux Vulkan client. The previously verified detached map at Engine `757e0087a` and native `afb32b7` evaluates live preshaders and draws an original Slate quad. The subsequent actual-owner probe establishes those properties for the tested Locker resource and current non-editor layout. All four product dashboard gates remain open.
+The bounded, opt-in Locker ingress described below is implemented in Engine `e6e962a43` and native `c8ec113`; its actual-owner runtime probe passed in the staged Linux Vulkan client. The previously verified detached map at Engine `757e0087a` and native `afb32b7` evaluates live preshaders and draws an original Slate quad. The subsequent actual-owner probe establishes those properties for the tested Locker resource and current non-editor layout. All four product dashboard gates remain open.
 
-The Linux client registers the pinned provider with `-FortniteLegacyMaterialIngress=<absolute path to porting/generated/material_pipeline/locker-ingress-bundle.json>`. Add `-FortniteProbeLegacyOriginalMaterial` to load the original Locker owner, check the attached game-thread and render-thread map and actual-owner `IsComplete`, exercise reader rejection cases, and draw its quad. These switches are diagnostic and require the matching staged original asset and Vulkan environment. The staged software Vulkan run exited 0 in 4.434 seconds; its command, environment and artifacts are in `porting/generated/frontend-probes/legacy-material-ingress-owner-2.json` and the corresponding `.log`. It reported domain 5 (UI), blend 2 (translucent), `MSM_Unlit`, quality 1, feature 3, packed flags 2816, seven required shaders, zero missing and complete=1. The actual game-thread and rendering-thread resources held the same map; its original Slate quad changed 2,832 pixels between red and green overrides. Four malformed-reader cases were rejected. The earlier owner-1 run reported missing SmoothStep; owner-2 staged that dependency. The owner-2 log still reports missing Water assets and a handled Vulkan vendor ensure.
+The Linux client registers the pinned provider with `-FortniteLegacyMaterialIngress=<absolute path to porting/generated/material_pipeline/locker-ingress-bundle.json>`. Add `-FortniteProbeLegacyOriginalMaterial` to load the original Locker owner, check the attached game-thread and render-thread map and actual-owner `IsComplete`, exercise reader rejection cases, and draw its quad. These switches are diagnostic and require the matching staged original asset and Vulkan environment. The staged software Vulkan run exited 0 in 4.785 seconds; its command, environment and artifacts are in `porting/generated/frontend-probes/legacy-material-ingress-owner-3.json` and the corresponding `.log`. It reported domain 5 (UI), blend 2 (translucent), `MSM_Unlit`, quality 1, feature 3, packed flags 2816, seven required shaders, zero missing and complete=1. The actual game-thread and rendering-thread resources held the same map; its original Slate quad changed 2,832 pixels between red and green overrides. Four malformed-reader cases were rejected. The earlier owner-1 run reported missing SmoothStep; owner-2 staged that dependency. The owner-2 log still reports missing Water assets and a handled Vulkan vendor ensure.
 
 The bundle SHA-1 is `0f750204f6008e6e3219d0b002d8409e28c22426`. It pins `/Game/UI/Foundation/Materials/Athena_LockerTabMaster.Athena_LockerTabMaster`, local names and the complete 12,513-byte original resource (SHA-1 `bc2d2f509b6909a4820f65188b85485fce989a2a`). In the `.uexp` framing the wrapper starts at 1037 and the selected resource is `[2797,15310)`; those offsets are not archive `Tell` coordinates. The single location has relative offset 0, feature level 3 and quality level 1. The 46 local names include seven Slate shader types and `FLocalVertexFactory` plus its original shader and uniform names; the bundle records the full ordered list. The source property report `material-locker.json` identifies the original as UI domain, unlit and translucent, consistent with this runtime report.
 
@@ -65,3 +65,22 @@ The original Locker owner passed its current non-editor requirements with all or
 ## Next View-buffer investigation
 
 The MenuButton's five Slate PS records use library indices 6853, 6854, 6855, 6856 and 6854 (Border shares Default). Reflection of the four unique translated modules shows `View` as `cb1_1`, set 0 binding 1, with a 2,272-byte span; their only read is vec4 element 141 lane 2, byte offset 2,264, using constant indices. The four original DXBC modules contain ISGN, OSGN and SHEX but no RDEF. This establishes an original-buffer offset, not the semantic identity of the value or its mapping to a current UE View field; neither GameTime nor RealTime should be assumed without further evidence.
+
+## Final revision and reload coverage
+
+Engine `6750d43f5` adds the provider and owner gate; `e6e962a43` binds both
+real owners to temporary resources before the guarded reload call. Native
+`c8ec113` supplies the reader, Vulkan adapter and actual-owner probe. Final
+client/server builds, owner-3 and both native joins pass; receipts are under
+`generated/frontend-probes/legacy-ingress-reload-joins-20261101T030500Z/`.
+The three affected translation units also pass standalone syntax checks with
+`STORE_ONLY_ACTIVE_SHADERMAPS=1`, using fresh copied header definitions rather
+than a PCH built with zero. Runtime reload and alternate async reload remain
+unverified; the tested Linux build uses zero. The portable two-commit patch is
+`patches/ue425-legacy-material-asset-ingress.patch`.
+
+Next, extend numeric conversion to PowerToast (8 vector/15 scalar slots, 208-byte
+layout), preserving the actual material-instance/parent shader identity. MenuButton
+needs its 304-byte numeric layout plus a verified View mapping; Donut needs original
+texture parameter/reference/sampler conversion. These require actual-owner loading
+and completeness checks before root-widget integration and original visual tests.

@@ -183,3 +183,11 @@ The serialized owner properties in `generated/frontend-probes/material-locker.js
 explicitly record `MD_UI`, translucent blending and unlit shading. Actual-owner
 shader requirements still need checking in the runtime described by
 [the ingress plan](UE_MATERIAL_INGRESS.md).
+
+The subsequent actual-asset bridge is now verified for Locker: native `c8ec113`
+and Engine `e6e962a43` load the original owner, retain all 19 source records,
+require seven shaders with zero missing, attach the same map on both threads
+and draw its quad. Owner-3 and independent artifact receipts are under
+`generated/frontend-probes/legacy-material-ingress-*`; the full command and
+remaining material, UI-root and original-comparison work are documented in
+[UE_MATERIAL_INGRESS.md](UE_MATERIAL_INGRESS.md). All four product gates remain open.

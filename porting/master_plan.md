@@ -38,7 +38,26 @@ using historical instructions below.
 
 ## Current work (2026-11-01)
 
-Earlier native `a494a4a` client and server builds and default and Athena smoke joins pass in an isolated matched stage. Historical native `907e1dc` with engine `f716e0cb6` builds and passes both joins, 4,617 offline checksums, 251 snippets and 71 backend tests in the earlier regression (separate build/runtime receipts in HANDOFF); the subsequent party-roster session-key change passes 72 backend tests, with delimiter, admission, capacity and error status remaining local policies and no client end-to-end verification. Native FortGameInstance is selected by config; an isolated stage verified Entry, a live instance and direct join, while UI methods remain stubbed. The corrected root hard-import closure is complete and UIManager class loads; actual root widgets remain blocked on original inline shader-map ABI. All 44 candidate frontend DXBC shaders translate to structurally validated SPIR-V with both vkd3d 1.2 and official Wine vkd3d 2.0: 12 modifier diagnostics with 1.2 and none with 2.0. Descriptor set, binding and storage-class inventories are unchanged, but general semantics remain unverified; the Locker quad draw is described below. Original D3D wrappers now parse with exact framing; 19 carry active resource-table bits with 28 SRV, 18 sampler, 18 texture and zero UAV entries. Explicit vkd3d scan and interface mappings cover 180 SPIR-V descriptors across 44 validated shaders and match all 64 original resource-table entries, with zero unmatched entries or compiler diagnostics; decoration word offsets support future UE remapping. Normal material attachment remains unverified. Exact export-map checks now locate one original inline resource in each of four failing materials: Donut spans `.uexp` 2181..10601, with `M_UI` name bytes at 2225. The local layout misreads the original zero word after the shader-map ID hash as alignment, name length 16 as flags and `M_UI` as frozen size. The strict parser decodes all four original serialized shader maps to exact EOF, including 19 records per material, with all 76 archive hashes, frequencies and uncompressed sizes validated. The detached Locker bridge now runs in the non-editor Vulkan client: eight live uniform cases pass, a seven-shader map freezes and seven RHI shaders construct; independent artifact verification passes. A subsequent Vulkan Locker quad draw and readback showed different red and green override results; normal material attachment and original visual parity remain unproven. Original client metadata reports build CL 13315662, distinct from the workspace folder CL 13477524; its network CL is 12896485. Archive Tell 2020 and `.uexp` positions have different coordinates, so the former `+205` origin inference is withdrawn. PowerToast uses parent `M_UI_GradientPanel` as shader identity. Frontend event probes identify GameInstance class `0x1428ea7f0`, FortClientEventInterface `0x142877b10`, and its weak listener registry at `+0x6c0` with registration and removal; fallback is `HandleClientEvent_Undefined`, while lifecycle ownership and arguments remain unknown, and no helper was ported. Prioritize the genuine material/binding bridge and real root UI draws, then authentic UI lifecycle/missing native helpers and lobby/matchmaking. All four gates remain open.
+Native `c8ec113` and Engine `e6e962a43` build for both non-editor targets and
+pass fresh default/Athena direct joins. The original Locker material now passes
+normal bounded asset deserialization and actual-owner completeness (seven required,
+zero missing), retains all 19 source records and attaches on game/render threads.
+Its actual map draws a parameter-sensitive Vulkan quad; independent header/module
+verification and readback checks pass. Exact commands, hashes and the distinction
+between runtime proof and guarded-reload syntax checks are in `HANDOFF.md`.
+
+Continue with the other failing frontend materials: PowerToast's numeric layout
+and real instance/parent relationship, MenuButton's View buffer, and Donut's texture
+bindings. The only observed MenuButton View read is float byte 2264; identify its
+original semantic field before mapping it. Then load and construct real root
+widgets, recover native UI lifecycle/helpers, and connect login/lobby/matchmaking.
+An interactive root menu and original visual parity are still unverified.
+
+The dashboard now represents 104 bounded and unfinished work items, including
+material reconstruction, original-feature inventory, plugin/module integration,
+input/settings/localization/accessibility, progression and end-to-end parity.
+Its 20.538% is an effort estimate; all four acceptance gates remain open. Source
+coverage, local tests and direct joins do not establish full gameplay or wire parity.
 
 ## Standing constraints
 
