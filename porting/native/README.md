@@ -225,3 +225,10 @@ client using that stage completed a direct join on `FortniteEmptyDedicated`
 with `FortGameModeAthena`; the client was stopped by the test timeout. The
 startup still reported missing Water plugin assets. This smoke test does not
 validate the original frontend or UI behavior.
+
+The Linux client accepts `-FortniteOriginalVulkanShaderProbe` with
+`-FortniteOriginalSpirvDir=<mapped directory>` under the Vulkan RHI. It tests
+original geometry shaders 26 and 2459 through `FVulkanShaderHeader` round-trip
+serialization and the RHI shader factory. The isolated software Vulkan result
+and overlay manifest are recorded in `porting/HANDOFF.md`; this does not create
+a Vulkan module or pipeline or issue a draw.
