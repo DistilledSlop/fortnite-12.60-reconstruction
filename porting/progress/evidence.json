@@ -11058,6 +11058,22 @@
    "integrity_audit_sha256": "d09c52d9d05333a680c40c6e000c9fa1b641f49333d7a4c66a1fe535a8a43828",
    "scope": "Actual world travel, deferred timer and copied-map dispatch in diagnostic runtime. Generic diagnostic runtime only; concrete context methods, authentic startup, playable UI and all four product milestones remain unverified.",
    "provenance_note": "Pinned external receipts and their independently audited source and artifact bindings must remain available for re-verification."
+  },
+  "frontend_commonui_base_activation_runtime": {
+   "id": "frontend_commonui_base_activation_runtime",
+   "result": "pass",
+   "exit_code": 0,
+   "command": "python3 -I porting/progress/record_frontend_activation_runtime.py",
+   "checkpoint": "porting/generated/material_pipeline/frontend-activation-runtime-checkpoint-results-5.json",
+   "checkpoint_sha256": "cb324a725852bbe89fced9a13d5422a7a589b04667faa0ec98921a6c5f1124e3",
+   "strict_report": "porting/generated/frontend-native-evidence/activation-runtime-5/root-report-1.json",
+   "strict_report_sha256": "f00bc357859ba6d9a6fed7daa0242b7febdbec218b0e00edfbbb22c67f679bfc",
+   "integrity_audit": "porting/generated/frontend-native-evidence/activation-runtime-5/integrity-audit-1.json",
+   "integrity_audit_sha256": "a0fe10546c7e37854d95219af39eaf91437b6029a87c070ad214584ed421b771",
+   "binary_audit": "porting/generated/frontend-native-evidence/activation-runtime-5/integrity-audit-2.json",
+   "binary_audit_sha256": "4c11866f0c1b479d57b257e3dd463211280531d1d0fdf793f771db1f7bb60ae4",
+   "scope": "Bounded CommonUI base activation diagnostic with both-target original UHT metadata and linked implementation; inherited phase-2 builds and three fresh runtime processes. Panel, input, full CommonUI, authentic startup, interactive UI and all four milestones remain unverified.",
+   "provenance_note": "Pinned external receipts and independently audited source and artifact bindings must remain available for re-verification."
   }
  }
 }

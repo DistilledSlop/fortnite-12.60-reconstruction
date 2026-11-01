@@ -3,26 +3,32 @@
 ## Current resume point (2026-11-01)
 
 - Goal remains the full reconstructed client/server with all four product milestones and 100% parity.
-  All four gates are false. Latest fully green runtime is Native5d45ea2 / Engined7e04d4b6.
-- Base activation source is integrated as c06a5cb. Both real builds passed196.381/192.277s.
-  Attempt3 fresh activation passed40orderedrows; fresh registry/lifecycle and full context proof passed.
-  Subsequent metadata observer ambiguities are corrected, and root now passes BOTH actual targets'
-  complete metadata plus implementation/link audits. Full retained regressions/joins remain pending.
-- Next: one new run-only attempt using maintained activation_runtime_probe tools and immutable phase2 builds.
-  No UE rebuild or Native/source correction is needed. Native/gen/Engine remain unchanged; new retry must pin
-  current tools, use fixed baseline launch arguments and require new diagnostic processes. Preserve all failures.
-- Dashboard:126/142 material owners,41/41 non-Native signatures,113leaves,totalweight1855,21.226%.
-  One existing CommonUI behavior point is reserved for verified base activation and is still pending;
-  source-stage points are separate. Do not award it before full evidence and independent audit pass.
-- Cursor clamp source candidate is complete off workspace at /tmp/cursor-viewport-clamp-2; no producer/runtime proof.
-  Button raw predicate is now correctly identified as interaction-enabled-gated hover, confirmed by original
-  mouse-enter/leave bit writes. Two touch-hover method fragments are at /tmp/button-touch-hover-methods-1;
-  full custom Slate/widget/input composition remains unfinished. See detailed checkpoints below.
+  All four gates are false. Latest fully green runtime is Nativec06a5cb / Engined7e04d4b6,
+  immutable build2 validated by new run-only attempt5 using tools973d38e. All ownership is released.
+- Base activation is implemented and runtime verified: actual constructor/defaults, guarded activation,
+  visibility, Blueprint/native/dynamic notification order and reentry pass40orderedrows. Both target
+  UHT/object/linked implementation and full generic context proofs pass. Root independently reran
+  full strict verification and obtained byte-identical reports. Retained controls and both joins pass.
+- Checkpoint `generated/material_pipeline/frontend-activation-runtime-checkpoint-results-5.json`
+  SHA-256 `cb324a725852bbe89fced9a13d5422a7a589b04667faa0ec98921a6c5f1124e3`;
+  root aggregate `generated/frontend-native-evidence/activation-runtime-5/root-aggregate-audit-1.json`.
+  Independent audits verify639newartifacts,42inheritedmetadata/objects and all18binarypaths (~14GB).
+  Builds remain the original196.381/192.277s; attempt5 did not compile or restamp anything.
+- Dashboard:126/142 material owners,41/41 non-Native signatures,113leaves,totalweight1855,
+  approximately21.280%. The existing one-point base activation behavior share is now earned;
+  source-stage points remain separate. No weights, denominators, historical points or gates changed.
+- Actual Root boundary is missing CommonActivatablePanel.OnBeginIntro at AsyncLoading3126;
+  Login still reaches Facebook material / MemoryImage1064. All class probes exit139; no UI acceptance.
+- Next implementation: complete real CommonUI Panel/queue/input and authentic startup. Button source
+  fragments now cover gated hover/interaction setter, touch enter/leave and mouse down/up/double click;
+  all remain off workspace until composed with the real factory and remaining handlers. The actual
+  double-click callback1407fb600 is the next bounded source task. Slate+5c8 is a delegate, not two ints.
+  Cursor clamp is complete off workspace at /tmp/cursor-viewport-clamp-2; producer/runtime integration pending.
 - Persistent collaboration: root plans/integrates/reviews and performs difficult work directly. Use bounded
   Luna-medium read-only tasks, Terra-medium/high regular tasks, Sol6.1-medium complex tasks, always fork_turns:none.
   Keep reads/output economical; checkpoint and rotate when old context stops helping. One Native/build/stage owner.
 
-## Latest verified runtime and bounded work (2026-11-01)
+## Previous integration details (2026-11-01, retained history)
 
 - **Latest green runtime: Native `5d45ea2` / Engine `d7e04d4b6`.** Google phase2 passes both builds
   (156.851/130.768s), defaults and combined strict material verification, full context metadata/loaded

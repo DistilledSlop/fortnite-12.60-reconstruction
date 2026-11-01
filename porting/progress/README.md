@@ -528,14 +528,19 @@ not a count of methods or elapsed hours. The prior one-point activation source
 candidate and one-point input source candidate remain separate. Header and event
 signature coverage and the material pipeline measure different work.
 
-The new ledger check is absent and earns zero until a complete fresh phase passes
-and independent audit verifies its pinned evidence: both target builds, source and
-linked implementation provenance, all bounded activation runtime cases, retained
-regressions and joins, and the phase checkpoint, artifact integrity and source
-release. A future importer must validate and pin the actual phase and audit before
-recording a pass; a source-only test, isolated probe, partial or failed phase is
-insufficient. The check is a single all-or-nothing result, not a claim about all
-CommonUI classes, Panel/queue, input, an interactive root or original-client parity.
-The four milestones stay unchanged. This allocation preserves total weight 1,855
-and recorded history; if earned, one point changes overall by about 0.054 percentage
-points at the same remaining evidence.
+The check now passes on the pinned phase-5 checkpoint, independent full strict
+report, integrity audit and separate 18-row inherited-binary audit. Both target
+builds are inherited from phase 2; three new runtime processes pass after the
+retry epoch, including 40 activation rows and the inherited context checks.
+Both targets pass original UHT metadata and linked implementation verification.
+The audit covers 639 new artifacts, 42 inherited metadata files and 18 binary
+rows. Pinned external receipts and their audited artifacts must remain available
+for re-verification. This one check covers base activation only; Panel/queue,
+input, full CommonUI, authentic startup, interactive UI and original-client
+parity remain unverified. All four milestones remain false. The allocation
+preserves total weight 1,855 and prior history; the one point adds about 0.054
+percentage points at the same remaining evidence.
+
+The current Root probe first encountered missing CommonActivatablePanel.OnBeginIntro
+at AsyncLoading.cpp:3126; Login first encountered M_TempIcon_Login_Facebook at
+MemoryImage.cpp:1064. Asynchronous load order can change the first boundary.
