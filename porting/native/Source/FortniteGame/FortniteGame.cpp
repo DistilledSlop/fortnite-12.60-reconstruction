@@ -18,6 +18,11 @@
 #include "Modules/ModuleManager.h"
 #include "PhysicsEngine/BodySetup.h"
 #include "UObject/UObjectGlobals.h"
+#include "UObject/UObjectHash.h"
+#include "UObject/UnrealType.h"
+#include "Misc/Paths.h"
+#include "Misc/PackageName.h"
+#include "LegacyMaterialManifestSHA256.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogFortniteNet, Log, All);
 
@@ -281,17 +286,122 @@ private:
         });
     }
 
+    static bool ProbeOriginalFloatChannel(UObject* Asset, FString& Error)
+    {
+        if (!Asset || !FParse::Param(FCommandLine::Get(),TEXT("FortniteLegacySequencer")) ||
+            Asset->GetOutermost()->GetName()!=TEXT("/Game/UI/Login/SplashScreen/SplashScreenWidget"))
+        { Error=TEXT("wrong source package or missing legacy sequencer switch"); return false; }
+        FString PackageFilename;
+        if (!FPackageName::DoesPackageExist(Asset->GetOutermost()->GetName(),nullptr,&PackageFilename) ||
+            FPaths::GetExtension(PackageFilename)!=TEXT("uasset"))
+        { Error=TEXT("could not resolve actual source package filename"); return false; }
+        const FString ExportFilename=FPaths::ChangeExtension(PackageFilename,TEXT("uexp"));
+        auto HashSource=[](const FString& Path, int64 ExpectedBytes, const TCHAR* ExpectedHash)->bool
+        {
+            if (IFileManager::Get().FileSize(*Path)!=ExpectedBytes) return false;
+            TArray<uint8> Data; if (!FFileHelper::LoadFileToArray(Data,*Path) || Data.Num()!=ExpectedBytes) return false;
+            uint8 Digest[32]; LegacyManifestSHA256(Data.GetData(),uint32(Data.Num()),Digest);
+            return BytesToHex(Digest,32).Equals(ExpectedHash,ESearchCase::IgnoreCase);
+        };
+        if (!HashSource(PackageFilename,15958,TEXT("93645cada4aa03443fe94dbf095bc8b77680f9a7172bfc0e3c0725a980a7bd89")) ||
+            !HashSource(ExportFilename,14683,TEXT("629573bd8d3d9fa6ed6faf198c5e3a7773444ce99e2707b7d7aa6a80f2bff89a")))
+        { Error=TEXT("actual loaded package source bytes differ from original evidence"); return false; }
+        UObject* Section=nullptr; int32 Matches=0;
+        ForEachObjectWithOuter(Asset->GetOutermost(),[&](UObject* Object)
+        {
+            if (Object->GetName()!=TEXT("MovieSceneFloatSection_0") ||
+                Object->GetClass()->GetPathName()!=TEXT("/Script/MovieSceneTracks.MovieSceneFloatSection")) return;
+            UObject* Track=Object->GetOuter(); UObject* Scene=Track ? Track->GetOuter() : nullptr;
+            UObject* Animation=Scene ? Scene->GetOuter() : nullptr; UObject* BP=Animation ? Animation->GetOuter() : nullptr;
+            if (Track && Scene && Animation && BP && Track->GetName()==TEXT("MovieSceneFloatTrack_0") &&
+                Scene->GetName()==TEXT("InputPromptIdle") && Animation->GetName()==TEXT("InputPromptIdle_INST") &&
+                BP->GetName()==TEXT("SplashScreenWidget_C") && BP->GetOuter()==Asset->GetOutermost())
+            { Section=Object; ++Matches; }
+        },true);
+        if (Matches!=1 || !Section) { Error=TEXT("original float section outer chain missing or ambiguous"); return false; }
+        auto StructProperty=[](const UStruct* Type,const TCHAR* Name,const TCHAR* Expected)->FStructProperty*
+        {
+            FStructProperty* P=FindFProperty<FStructProperty>(Type,Name);
+            return P && P->Struct && P->Struct->GetName()==Expected ? P : nullptr;
+        };
+        auto FloatValue=[](const UStruct* Type,const void* Data,const TCHAR* Name,float& Out)->bool
+        {
+            const FFloatProperty* P=FindFProperty<FFloatProperty>(Type,Name);
+            if (!P) return false; Out=P->GetPropertyValue(P->ContainerPtrToValuePtr<void>(Data)); return true;
+        };
+        auto ByteValue=[](const UStruct* Type,const void* Data,const TCHAR* Name,uint8& Out)->bool
+        {
+            const FByteProperty* P=FindFProperty<FByteProperty>(Type,Name);
+            if (!P) return false; Out=P->GetPropertyValue(P->ContainerPtrToValuePtr<void>(Data)); return true;
+        };
+        FStructProperty* Curve=StructProperty(Section->GetClass(),TEXT("FloatCurve"),TEXT("MovieSceneFloatChannel"));
+        if (!Curve) { Error=TEXT("missing float channel property"); return false; }
+        void* Channel=Curve->ContainerPtrToValuePtr<void>(Section);
+        FArrayProperty* Times=FindFProperty<FArrayProperty>(Curve->Struct,TEXT("Times"));
+        FArrayProperty* Values=FindFProperty<FArrayProperty>(Curve->Struct,TEXT("Values"));
+        auto* TimeInner=Times ? CastField<FStructProperty>(Times->Inner) : nullptr;
+        auto* ValueInner=Values ? CastField<FStructProperty>(Values->Inner) : nullptr;
+        if (!TimeInner || !ValueInner || !TimeInner->Struct || !ValueInner->Struct ||
+            TimeInner->Struct->GetName()!=TEXT("FrameNumber") || ValueInner->Struct->GetName()!=TEXT("MovieSceneFloatValue"))
+        { Error=TEXT("float channel array element types differ"); return false; }
+        FScriptArrayHelper T(Times,Times->ContainerPtrToValuePtr<void>(Channel));
+        FScriptArrayHelper V(Values,Values->ContainerPtrToValuePtr<void>(Channel));
+        if (T.Num()!=3 || V.Num()!=3) { Error=TEXT("original float channel key count differs"); return false; }
+        const FIntProperty* Frame=FindFProperty<FIntProperty>(TimeInner->Struct,TEXT("Value"));
+        FStructProperty* Tangent=StructProperty(ValueInner->Struct,TEXT("Tangent"),TEXT("MovieSceneTangentData"));
+        if (!Frame || !Tangent) { Error=TEXT("float channel key structure differs"); return false; }
+        const int32 ExpectedTimes[]={0,30000,60000}; const uint32 ExpectedValueBits[]={0x3f800000u,0u,0x3f800000u};
+        FString Keys;
+        for (int32 I=0;I<3;++I)
+        {
+            const int32 Time=Frame->GetPropertyValue(Frame->ContainerPtrToValuePtr<void>(T.GetRawPtr(I)));
+            void* Key=V.GetRawPtr(I); void* TangentData=Tangent->ContainerPtrToValuePtr<void>(Key);
+            float Value,Arrive,Leave,ArriveWeight,LeaveWeight; uint8 Interp,Mode,WeightMode;
+            if (!FloatValue(ValueInner->Struct,Key,TEXT("Value"),Value) || !ByteValue(ValueInner->Struct,Key,TEXT("InterpMode"),Interp) ||
+                !ByteValue(ValueInner->Struct,Key,TEXT("TangentMode"),Mode) ||
+                !FloatValue(Tangent->Struct,TangentData,TEXT("ArriveTangent"),Arrive) || !FloatValue(Tangent->Struct,TangentData,TEXT("LeaveTangent"),Leave) ||
+                !FloatValue(Tangent->Struct,TangentData,TEXT("ArriveTangentWeight"),ArriveWeight) || !FloatValue(Tangent->Struct,TangentData,TEXT("LeaveTangentWeight"),LeaveWeight) ||
+                !ByteValue(Tangent->Struct,TangentData,TEXT("TangentWeightMode"),WeightMode))
+            { Error=TEXT("float channel key property type differs"); return false; }
+            uint32 Bits[5]; FMemory::Memcpy(&Bits[0],&Value,4); FMemory::Memcpy(&Bits[1],&Arrive,4); FMemory::Memcpy(&Bits[2],&Leave,4);
+            FMemory::Memcpy(&Bits[3],&ArriveWeight,4); FMemory::Memcpy(&Bits[4],&LeaveWeight,4);
+            if (Time!=ExpectedTimes[I] || Bits[0]!=ExpectedValueBits[I] || Bits[1] || Bits[2] || Bits[3] || Bits[4] || Interp!=2 || Mode!=0 || WeightMode!=0)
+            { Error=FString::Printf(TEXT("original float channel key %d differs"),I); return false; }
+            Keys+=FString::Printf(TEXT("%s{\"time\":%d,\"value_bits\":\"%08x\",\"interp\":%u,\"tangent_mode\":%u,\"arrive_bits\":\"%08x\",\"leave_bits\":\"%08x\",\"weight_mode\":%u,\"arrive_weight_bits\":\"%08x\",\"leave_weight_bits\":\"%08x\"}"),I ? TEXT(",") : TEXT(""),Time,Bits[0],Interp,Mode,Bits[1],Bits[2],WeightMode,Bits[3],Bits[4]);
+        }
+        FString Artifact;
+        if (!FParse::Value(FCommandLine::Get(),TEXT("FortniteLegacyFloatChannelArtifact="),Artifact) || Artifact.IsEmpty() || FPaths::FileExists(Artifact))
+        { Error=TEXT("float channel probe requires a new artifact path"); return false; }
+        const FString Json=FString::Printf(TEXT("{\"schema\":\"fortnite.original-float-channel-runtime.v1\",\"source_package\":\"/Game/UI/Login/SplashScreen/SplashScreenWidget\",\"section\":\"%s\",\"section_class\":\"%s\",\"package_sha256\":\"93645cada4aa03443fe94dbf095bc8b77680f9a7172bfc0e3c0725a980a7bd89\",\"export_sha256\":\"629573bd8d3d9fa6ed6faf198c5e3a7773444ce99e2707b7d7aa6a80f2bff89a\",\"keys\":[%s],\"evidence_receipt_sha256\":\"fb652f574d2aa1335a9db7dcd5c33af2f2fd3b270498acafa1268ec732593bec\"}\n"),*Section->GetPathName(),*Section->GetClass()->GetPathName(),*Keys);
+        if (!FFileHelper::SaveStringToFile(Json,*Artifact)) { Error=TEXT("failed writing float channel artifact"); return false; }
+        UE_LOG(LogTemp,Display,TEXT("Original float channel probe passed: %s"),*Section->GetPathName());
+        return true;
+    }
+
     static void ProbeAsset()
     {
         FString AssetPath;
         if (!FParse::Value(FCommandLine::Get(), TEXT("FortniteProbeAsset="), AssetPath))
         {
+            if (FParse::Param(FCommandLine::Get(),TEXT("FortniteProbeLegacyFloatChannel")))
+            {
+                UE_LOG(LogTemp,Error,TEXT("Original float channel probe requires FortniteProbeAsset"));
+                FPlatformMisc::RequestExitWithStatus(false,1);
+            }
             return;
         }
 
         UObject* Asset = StaticLoadObject(UObject::StaticClass(), nullptr, *AssetPath);
         UE_LOG(LogTemp, Display, TEXT("Fortnite asset probe: %s -> %s"),
             *AssetPath, Asset ? *Asset->GetClass()->GetName() : TEXT("LOAD_FAILED"));
+        if (FParse::Param(FCommandLine::Get(),TEXT("FortniteProbeLegacyFloatChannel")))
+        {
+            FString Error;
+            const bool bPassed=ProbeOriginalFloatChannel(Asset,Error);
+            if (!bPassed) UE_LOG(LogTemp,Error,TEXT("Original float channel probe failed: %s"),*Error);
+            FPlatformMisc::RequestExitWithStatus(false,bPassed ? 0 : 1);
+            return;
+        }
         if (const UTexture2D* Texture = Cast<UTexture2D>(Asset))
         {
             const int64 FirstMipBytes = Texture->PlatformData && Texture->PlatformData->Mips.Num() > 0
