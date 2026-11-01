@@ -1547,6 +1547,22 @@ UI_BLUEPRINT_EVENT_FLAGS = 0x08080800  # BlueprintEvent | Protected | Event; not
 # Parameterized events require an individually evidenced owner, function,
 # complete serialized signature and explicitly reviewed UHT declaration.
 UI_PARAMETERIZED_BLUEPRINT_EVENTS = {
+    "UFortSplashScreenWidget": {
+        "OnInputMethodChanged": {
+            "owner_fn": "0x1452e3dd0", "create_func": "0x1452e3e00", "flags": 0x08080800,
+            "params": [
+                {"index": 0, "name": "InputType", "kind": "Enum", "kind_raw": "0x1e",
+                 "property_flags": "0x10000000000080", "replicated": False, "rep_notify": None,
+                 "array_dim": 1, "object_flags": "0x45", "offset": 0, "type_refs": {"enum": "0x14081ee20"}},
+                {"index": 1, "name": "UnderlyingType", "kind": "Byte", "kind_raw": "0x0",
+                 "property_flags": "0x0", "replicated": False, "rep_notify": None,
+                 "array_dim": 1, "object_flags": "0x45", "offset": 0, "enum_underlying_of": "InputType"},
+            ],
+            "args": ["ECommonInputType InputType"], "specifiers": ["BlueprintImplementableEvent"],
+            "access": "protected", "resolve_args": True,
+            "allowed_type_packages": {"0x14081ee20": "/Script/CommonInput"},
+        },
+    },
     "AFortEntryMusicController": {
         "StartMusic": {
             "owner_fn": "0x1428dc600", "create_func": "0x1428dc630", "flags": 0x08020800,
@@ -1591,10 +1607,28 @@ def build_functions_promoted(functions, resolver, notify_names, owner_fns, splic
                 resolver.skipped.append(skip_function(fn, "blueprint_event_mismatch",
                     "original parameterized event owner, flags or exact signature differs"))
                 continue
+            used = {}
+            if policy.get("resolve_args"):
+                mark = len(resolver.tokens)
+                resolver.wire_used = False
+                resolver.used = {}
+                resolver.observed_event_type_packages = policy.get("allowed_type_packages", {})
+                try:
+                    ret, args = decode_params(params, resolver)
+                finally:
+                    resolver.observed_event_type_packages = {}
+                used = resolver.used
+                for ref in policy.get("allowed_type_packages", {}):
+                    if ref in used:
+                        used[ref].add("ObservedBlueprintEventType")
+                if resolver.tokens[mark:] or ret != "void" or args != policy["args"]:
+                    resolver.skipped.append(skip_function(fn, "blueprint_event_mismatch",
+                        "original Blueprint event parameter types could not be resolved exactly"))
+                    continue
             emitted.append({"name": name, "rpc": False, "service": None, "ret": "void",
                             "const": False, "notify": False, "splice": False,
                             "blueprint_event": True, "access": policy["access"], "specifiers": list(policy["specifiers"]),
-                            "args": list(policy["args"]), "used": {}})
+                            "args": list(policy["args"]), "used": used})
             continue
         if is_blueprint_event:
             # The imported events have no parameters and exactly these flags. Refuse to invent
@@ -2668,7 +2702,8 @@ def own_includes(gate, used, package):
     for fn in used:
         info = gate.info(fn)
         if (info is not None and info.package in PROMOTE_PACKAGES and info.package != package
-                and not cross_module_allowed(package, info.package)):
+                and not cross_module_allowed(package, info.package)
+                and "ObservedBlueprintEventType" not in used[fn]):
             continue
         inc = gate.include_of(fn)
         if inc:
@@ -3490,7 +3525,8 @@ class TypeGate:
             # next to the engine header that declares it. Not emitted.
             return resolver.todo(label + "NameClash", fn)
         if info.package in PROMOTE_PACKAGES:
-            if info.package != self.current_package and not cross_module_allowed(self.current_package, info.package):
+            if (info.package != self.current_package and not cross_module_allowed(self.current_package, info.package)
+                    and getattr(resolver, "observed_event_type_packages", {}).get(info.fn) != info.package):
                 return resolver.todo(label + "OtherModule", fn)
             if self.reason(info) is not None:
                 return resolver.todo(label + "NotEmittable", fn)
