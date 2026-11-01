@@ -1,6 +1,7 @@
 #include "CoreMinimal.h"
 
 #if PLATFORM_LINUX && !UE_SERVER
+#include "DynamicRHI.h"
 #include "Misc/Crc.h"
 #include "Misc/CommandLine.h"
 #include "Misc/Parse.h"
@@ -8,6 +9,9 @@
 #include "Modules/ModuleManager.h"
 #include "Materials/Material.h"
 #include "RenderingThread.h"
+#include "Rendering/RenderingCommon.h"
+#include "PipelineStateCache.h"
+#include "RHIStaticStates.h"
 #include "Misc/FileHelper.h"
 #include "Misc/SecureHash.h"
 #include "LegacySlateMaterial.h"
@@ -136,6 +140,12 @@ static bool PrepareLegacyOutput(const TSharedPtr<FJsonObject>& Shader, const FRH
         const FString Name = D->GetStringField(TEXT("name"));
         if (!S || S->Set != uint32(D->GetNumberField(TEXT("set"))) || S->Binding != uint32(D->GetNumberField(TEXT("binding"))) || S->Set != 0 || S->Binding > UINT16_MAX || D->GetArrayField(TEXT("resource_table_entries")).Num())
         { Error = TEXT("descriptor receipt mismatch"); return false; }
+        const auto Register = D->GetObjectField(TEXT("d3d_register"));
+        const TCHAR* ExpectedKind = Name.StartsWith(TEXT("cb")) ? TEXT("cbv") : Name == TEXT("s0") ? TEXT("sampler") : Name == TEXT("t0") ? TEXT("srv") : TEXT("");
+        const int32 ExpectedIndex = Name == TEXT("cb1_1") ? 1 : 0;
+        if (!Register || Register->GetStringField(TEXT("kind")) != ExpectedKind ||
+            int32(Register->GetNumberField(TEXT("space"))) != 0 || int32(Register->GetNumberField(TEXT("index"))) != ExpectedIndex)
+        { Error = TEXT("D3D register receipt mismatch"); return false; }
         const int32 DescriptorType = int32(D->GetNumberField(TEXT("vulkan_descriptor_type")));
         if (Name == TEXT("cb0_0") && !bPacked && DescriptorType == VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER)
         {
@@ -259,7 +269,7 @@ public:
     virtual bool GetTextureValue(const FHashedMaterialParameterInfo&, const URuntimeVirtualTexture**, const FMaterialRenderContext&) const override { return false; }
 };
 
-static bool CheckLegacyUniforms(const FUniformExpressionSet& Uniforms, const TSharedPtr<FJsonObject>& Root, FString& Error)
+static bool CheckLegacyUniforms(const FUniformExpressionSet& Uniforms, const TSharedPtr<FJsonObject>& Root, const TCHAR* Stage, FString& Error)
 {
     TArray<FLegacyUniformCase> Cases;
     const auto& Values = Root->GetArrayField(TEXT("uniform_cases"));
@@ -319,7 +329,130 @@ static bool CheckLegacyUniforms(const FUniformExpressionSet& Uniforms, const TSh
     });
     FlushRenderingCommands();
     if (!bPassed) { Error = Failure; return false; }
-    UE_LOG(LogTemp, Display, TEXT("Legacy material probe: eight live uniform cases passed"));
+    UE_LOG(LogTemp, Display, TEXT("Legacy material probe: eight %s live uniform cases passed"), Stage);
+    return true;
+}
+
+struct FLegacyDrawBindings
+{
+    uint16 MatrixBuffer = 0, MatrixOffset = 0, GammaBuffer = 0, GammaOffset = 0;
+    uint16 ParamsBuffer = 0, ParamsOffset = 0, MaterialBuffer = 0;
+};
+
+static bool DrawLegacySlateQuad(const TRefCountPtr<FMaterialShaderMap>& Map, const FLegacyDrawBindings& Bindings, FString& Error)
+{
+    FShaderType* VertexType = FindShaderTypeByName(FHashedName(TEXT("TSlateMaterialShaderVSfalse")));
+    FShaderType* PixelType = FindShaderTypeByName(FHashedName(TEXT("TSlateMaterialShaderPSDefault")));
+    UMaterial* DefaultMaterial = UMaterial::GetDefaultMaterial(MD_Surface);
+    if (!VertexType || !PixelType || !DefaultMaterial) { Error = TEXT("draw shader or material unavailable"); return false; }
+    const FMaterialRenderProxy* Base = DefaultMaterial->GetRenderProxy();
+    bool bPassed = true;
+    FString Failure;
+    TArray<FColor> Images[2];
+    int32 Different = 0;
+    ENQUEUE_RENDER_COMMAND(DrawOriginalLockerSlate)([Map, VertexType, PixelType, Base, Bindings, &bPassed, &Failure, &Images, &Different](FRHICommandListImmediate& RHICmdList)
+    {
+        const TShaderRef<FShader> VS = Map->GetShader(VertexType, 0);
+        const TShaderRef<FShader> PS = Map->GetShader(PixelType, 0);
+        if (!VS.IsValid() || !PS.IsValid()) { bPassed = false; Failure = TEXT("missing draw shader"); return; }
+        FVertexDeclarationElementList Elements;
+        const uint32 Stride = sizeof(FSlateVertex);
+        Elements.Add(FVertexElement(0, STRUCT_OFFSET(FSlateVertex, TexCoords), VET_Float4, 0, Stride));
+        Elements.Add(FVertexElement(0, STRUCT_OFFSET(FSlateVertex, MaterialTexCoords), VET_Float2, 1, Stride));
+        Elements.Add(FVertexElement(0, STRUCT_OFFSET(FSlateVertex, Position), VET_Float2, 2, Stride));
+        Elements.Add(FVertexElement(0, STRUCT_OFFSET(FSlateVertex, Color), VET_Color, 3, Stride));
+        Elements.Add(FVertexElement(0, STRUCT_OFFSET(FSlateVertex, PixelSize), VET_UShort2, 4, Stride));
+        const FVertexDeclarationRHIRef Declaration = PipelineStateCache::GetOrCreateVertexDeclaration(Elements);
+        FSlateVertex Vertices[6];
+        const FVector2D Positions[] = {{-1,-1}, {1,-1}, {-1,1}, {-1,1}, {1,-1}, {1,1}};
+        const FVector2D UV[] = {{0,1}, {1,1}, {0,0}, {0,0}, {1,1}, {1,0}};
+        for (int32 I = 0; I < 6; ++I)
+        {
+            Vertices[I].Position = Positions[I]; Vertices[I].MaterialTexCoords = UV[I];
+            Vertices[I].TexCoords[0] = UV[I].X; Vertices[I].TexCoords[1] = UV[I].Y;
+            Vertices[I].TexCoords[2] = 1.f; Vertices[I].TexCoords[3] = 1.f;
+            Vertices[I].Color = FColor::White; Vertices[I].PixelSize[0] = 64; Vertices[I].PixelSize[1] = 64;
+        }
+        FRHIResourceCreateInfo VertexInfo;
+        FVertexBufferRHIRef VertexBuffer = RHICreateVertexBuffer(sizeof(Vertices), BUF_Static, VertexInfo);
+        void* VertexData = RHILockVertexBuffer(VertexBuffer, 0, sizeof(Vertices), RLM_WriteOnly);
+        FMemory::Memcpy(VertexData, Vertices, sizeof(Vertices));
+        RHIUnlockVertexBuffer(VertexBuffer);
+        FRHIResourceCreateInfo TargetInfo(FClearValueBinding::Transparent);
+        FTexture2DRHIRef Target = RHICreateTexture2D(64, 64, PF_B8G8R8A8, 1, 1, TexCreate_RenderTargetable | TexCreate_ShaderResource, TargetInfo);
+        FLegacyProbeProxy Proxy; Proxy.Base = Base;
+        const FMaterialRenderProxy* Fallback = nullptr;
+        const FMaterial& Material = Base->GetMaterialWithFallback(ERHIFeatureLevel::SM5, Fallback);
+        FMaterialRenderContext Context(&Proxy, Material, nullptr);
+        FUniformExpressionCache Cache;
+        for (int32 Pass = 0; Pass < 2; ++Pass)
+        {
+            Proxy.Overrides.Reset();
+            for (const TCHAR* Name : {TEXT("RBGA1")})
+            {
+                auto& O = Proxy.Overrides.AddDefaulted_GetRef();
+                O.Parameter = FHashedMaterialParameterInfo(Name);
+                O.bVector = true;
+                O.Value = Pass == 0 ? FLinearColor(1, 0, 0, 1) : FLinearColor(0, 1, 0, 1);
+            }
+            alignas(16) uint8 Contents[336] = {};
+            const FUniformExpressionSet& Uniforms = Map->GetUniformExpressionSet();
+            Uniforms.FillUniformBuffer(Context, Cache, Contents, sizeof(Contents));
+            FUniformBufferRHIRef MaterialUB = RHICreateUniformBuffer(Contents, Uniforms.GetUniformBufferLayout(), UniformBuffer_SingleDraw);
+            RHICmdList.TransitionResource(EResourceTransitionAccess::EWritable, Target);
+            FRHIRenderPassInfo PassInfo(Target, ERenderTargetActions::Clear_Store);
+            RHICmdList.BeginRenderPass(PassInfo, TEXT("OriginalLockerSlate"));
+            FGraphicsPipelineStateInitializer PSO;
+            RHICmdList.ApplyCachedRenderTargets(PSO);
+            PSO.BlendState = TStaticBlendState<>::GetRHI();
+            PSO.RasterizerState = TStaticRasterizerState<FM_Solid, CM_None>::GetRHI();
+            PSO.DepthStencilState = TStaticDepthStencilState<false, CF_Always>::GetRHI();
+            PSO.PrimitiveType = PT_TriangleList;
+            PSO.BoundShaderState.VertexDeclarationRHI = Declaration;
+            PSO.BoundShaderState.VertexShaderRHI = VS.GetVertexShader();
+            PSO.BoundShaderState.PixelShaderRHI = PS.GetPixelShader();
+            SetGraphicsPipelineState(RHICmdList, PSO);
+            RHICmdList.SetViewport(0, 0, 0, 64, 64, 1);
+            const FMatrix Matrix = FMatrix::Identity;
+            const FVector4 Gamma(1.f, 1.f / 2.2f, 0.f, 1.f);
+            const FVector4 Params(0.f, 0.f, 0.f, 0.f);
+            RHICmdList.SetShaderParameter(VS.GetVertexShader(), Bindings.MatrixBuffer, Bindings.MatrixOffset, sizeof(Matrix), &Matrix);
+            RHICmdList.SetShaderParameter(PS.GetPixelShader(), Bindings.GammaBuffer, Bindings.GammaOffset, sizeof(Gamma), &Gamma);
+            RHICmdList.SetShaderParameter(PS.GetPixelShader(), Bindings.ParamsBuffer, Bindings.ParamsOffset, sizeof(Params), &Params);
+            RHICmdList.SetShaderUniformBuffer(PS.GetPixelShader(), Bindings.MaterialBuffer, MaterialUB);
+            RHICmdList.SetStreamSource(0, VertexBuffer, 0);
+            RHICmdList.DrawPrimitive(0, 2, 1);
+            RHICmdList.EndRenderPass();
+            RHICmdList.TransitionResource(EResourceTransitionAccess::EReadable, Target);
+            FReadSurfaceDataFlags Flags(RCM_UNorm); Flags.SetLinearToGamma(false);
+            RHICmdList.ReadSurfaceData(Target, FIntRect(0, 0, 64, 64), Images[Pass], Flags);
+        }
+        if (Images[0].Num() != 4096 || Images[1].Num() != 4096)
+        { bPassed = false; Failure = TEXT("invalid draw readback size"); return; }
+        for (int32 I = 0; I < 4096; ++I) Different += Images[0][I] != Images[1][I] ? 1 : 0;
+        if (!Different) { bPassed = false; Failure = TEXT("override draws produced identical pixels"); }
+        UE_LOG(LogTemp, Display, TEXT("Legacy material probe: original Slate quad readback changed %d pixels"), Different);
+    });
+    FlushRenderingCommands();
+    FString ArtifactDirectory;
+    if (Images[0].Num() == 4096 && Images[1].Num() == 4096 && FParse::Value(FCommandLine::Get(), TEXT("FortniteLegacyMaterialArtifactDir="), ArtifactDirectory))
+    {
+        FSHAHash Hashes[2];
+        for (int32 I = 0; I < 2; ++I)
+        {
+            const FString Path = FPaths::Combine(ArtifactDirectory, I == 0 ? TEXT("LockerQuad-Red.rgba") : TEXT("LockerQuad-Green.rgba"));
+            if (FPaths::FileExists(Path)) { Error = TEXT("draw artifact already exists"); return false; }
+            TArray<uint8> Bytes;
+            for (const FColor& Pixel : Images[I]) { Bytes.Add(Pixel.R); Bytes.Add(Pixel.G); Bytes.Add(Pixel.B); Bytes.Add(Pixel.A); }
+            FSHA1::HashBuffer(Bytes.GetData(), Bytes.Num(), Hashes[I].Hash);
+            if (!FFileHelper::SaveArrayToFile(Bytes, *Path)) { Error = TEXT("cannot write draw artifact"); return false; }
+        }
+        const FString MetadataPath = FPaths::Combine(ArtifactDirectory, TEXT("LockerQuad.json"));
+        const FString Metadata = FString::Printf(TEXT("{\n  \"width\": 64, \"height\": 64, \"format\": \"RGBA8\",\n  \"red_sha1\": \"%s\", \"green_sha1\": \"%s\",\n  \"changed_pixels\": %d\n}\n"), *Hashes[0].ToString(), *Hashes[1].ToString(), Different);
+        if (FPaths::FileExists(MetadataPath) || !FFileHelper::SaveStringToFile(Metadata, *MetadataPath))
+        { Error = TEXT("cannot write draw metadata"); return false; }
+    }
+    if (!bPassed) { Error = Failure; return false; }
     return true;
 }
 
@@ -428,6 +561,8 @@ void RunLegacyMaterialShaderMapProbe()
 #if PLATFORM_LINUX && !UE_SERVER
     FString FixturePath;
     if (!FParse::Value(FCommandLine::Get(), TEXT("FortniteLegacyMaterialFixture="), FixturePath)) return;
+    if (!GDynamicRHI || FCString::Strcmp(GDynamicRHI->GetName(), TEXT("Vulkan")) != 0 || GMaxRHIShaderPlatform != SP_VULKAN_SM5)
+    { UE_LOG(LogTemp, Error, TEXT("Legacy material probe: Vulkan SM5 RHI required")); return; }
     FString Text, Error;
     TArray<uint8> FixtureBytes;
     FSHAHash FixtureHash;
@@ -449,10 +584,13 @@ void RunLegacyMaterialShaderMapProbe()
     if (Shaders.Num() != 7)
     { UE_LOG(LogTemp, Error, TEXT("Legacy material probe: expected seven shaders")); return; }
     FModuleManager::LoadModuleChecked<IModuleInterface>(TEXT("SlateRHIRenderer"));
+    TArray<FSHAHash> OutputHashes;
+    FLegacyDrawBindings DrawBindings;
+    bool bHaveVSBindings = false, bHavePSBindings = false;
     TRefCountPtr<FMaterialShaderMap> Map = FMaterialShaderMap::CreateLegacySlateMap(IR,
-        [&Shaders, &Root](const FUniformExpressionSet& Uniforms, const FShaderParametersMetadata&, TArray<FLegacySlateShaderInput>& Outputs, FString& OutError)
+        [&Shaders, &Root, &OutputHashes, &DrawBindings, &bHaveVSBindings, &bHavePSBindings](const FUniformExpressionSet& Uniforms, const FShaderParametersMetadata&, TArray<FLegacySlateShaderInput>& Outputs, FString& OutError)
         {
-            if (!CheckLegacyUniforms(Uniforms, Root, OutError)) return false;
+            if (!CheckLegacyUniforms(Uniforms, Root, TEXT("pre-freeze"), OutError)) return false;
             const FRHIUniformBufferLayout& Layout = Uniforms.GetUniformBufferLayout();
             for (const auto& Value : Shaders)
             {
@@ -460,18 +598,42 @@ void RunLegacyMaterialShaderMapProbe()
                 if (!Record) { OutError = TEXT("invalid shader record"); return false; }
                 FLegacySlateShaderInput& Input = Outputs.AddDefaulted_GetRef();
                 if (!PrepareLegacyOutput(Record, Layout, Input, OutError)) return false;
+                OutputHashes.Add(Input.Output.OutputHash);
+                uint16 Size = 0, Base = 0;
+                if (Input.TypeName == TEXT("TSlateMaterialShaderVSfalse"))
+                {
+                    bHaveVSBindings = Input.Output.ParameterMap.FindParameterAllocation(TEXT("ViewProjection"), DrawBindings.MatrixBuffer, DrawBindings.MatrixOffset, Size) && Size == sizeof(FMatrix);
+                }
+                if (Input.TypeName == TEXT("TSlateMaterialShaderPSDefault"))
+                {
+                    bHavePSBindings = Input.Output.ParameterMap.FindParameterAllocation(TEXT("GammaAndAlphaValues"), DrawBindings.GammaBuffer, DrawBindings.GammaOffset, Size) && Size == sizeof(FVector4) &&
+                        Input.Output.ParameterMap.FindParameterAllocation(TEXT("ShaderParams"), DrawBindings.ParamsBuffer, DrawBindings.ParamsOffset, Size) && Size == sizeof(FVector4) &&
+                        Input.Output.ParameterMap.FindParameterAllocation(TEXT("Material"), DrawBindings.MaterialBuffer, Base, Size) && Base == FVulkanShaderHeader::UniformBuffer && Size == 1;
+                }
             }
             return true;
         }, Error);
     if (!Map.IsValid())
     { UE_LOG(LogTemp, Error, TEXT("Legacy material probe: %s"), *Error); return; }
+    if (!CheckLegacyUniforms(Map->GetUniformExpressionSet(), Root, TEXT("post-freeze"), Error))
+    { UE_LOG(LogTemp, Error, TEXT("Legacy material probe: %s"), *Error); return; }
     TArray<FShaderType*> Types;
+    int32 ShaderNumber = 0;
     for (const auto& Shader : Shaders)
     {
         const auto Record = Shader->AsObject()->GetObjectField(TEXT("record"));
         FShaderType* Type = FindShaderTypeByName(FHashedName(*Record->GetObjectField(TEXT("type"))->GetStringField(TEXT("name"))));
         if (!Type || !Map->GetShader(Type, 0).IsValid())
         { UE_LOG(LogTemp, Error, TEXT("Legacy material probe: frozen shader lookup failed")); return; }
+        const TShaderRef<FShader> Frozen = Map->GetShader(Type, 0);
+        const int32 Index = Frozen->GetResourceIndex();
+        const FShaderMapResourceCode* Code = Map->GetResourceCode();
+        const int32 OriginalFrequency = int32(Record->GetNumberField(TEXT("frequency")));
+        if (!OutputHashes.IsValidIndex(ShaderNumber) || !Code->ShaderHashes.IsValidIndex(Index) ||
+            !Code->ShaderEntries.IsValidIndex(Index) || Code->ShaderHashes[Index] != OutputHashes[ShaderNumber] ||
+            int32(Code->ShaderEntries[Index].Frequency) != OriginalFrequency)
+        { UE_LOG(LogTemp, Error, TEXT("Legacy material probe: frozen shader resource mismatch")); return; }
+        ++ShaderNumber;
         Types.Add(Type);
     }
     bool bRhiPassed = true;
@@ -487,5 +649,10 @@ void RunLegacyMaterialShaderMapProbe()
     FlushRenderingCommands();
     if (!bRhiPassed) { UE_LOG(LogTemp, Error, TEXT("Legacy material probe: RHI shader creation failed")); return; }
     UE_LOG(LogTemp, Display, TEXT("Legacy material probe: detached map and seven RHI shaders constructed"));
+    if (FParse::Param(FCommandLine::Get(), TEXT("FortniteLegacyMaterialDraw")))
+    {
+        if (!bHaveVSBindings || !bHavePSBindings || !DrawLegacySlateQuad(Map, DrawBindings, Error))
+        { UE_LOG(LogTemp, Error, TEXT("Legacy material probe draw: %s"), *Error); return; }
+    }
 #endif
 }
