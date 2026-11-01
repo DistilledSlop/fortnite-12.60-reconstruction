@@ -533,3 +533,149 @@ No Native/Engine source or runtime changed. Batch42's missing constructor
 callback definition was created only in a rolled-back Ghidra transaction;
 all other new batches used the read-only view helper. Program save/rename did
 not occur, and the five bookkeeping-file changes remain disclosed.
+
+## Checkpoint 6: Root/Login use concrete tickable LocalPlayerSubsystems
+
+Separate immutable receipt
+`generated/frontend-native-evidence/native-ui-startup-checkpoint-6/receipt.json`,
+SHA-256 **33135dc68bec913acc8e96076576ca693c0f6b838eee64d524aeae840c4856bc**,
+freezes 1,036 inputs, batches1–63, original hierarchy/hook windows and typed
+property metadata. Reproduce with `--last-batch 63`, packages-4, and a fresh
+output. The old receipts and frozen source snapshots remain unchanged.
+
+### Closed routing and inheritance boundary
+
+The original LoginScreen report contains typed GetContext return properties
+for **FortFrontEndContext** and **FortGlobalUIContext**; RootLayout_Athena
+contains FortGlobalUIContext. Original getters `145235090` and `14523f270`
+register these classes with superclass thunk `1428cd110`, resolving to getter
+**14298a020** and the literal **FortLocalPlayerSubsystem**. Consequently these
+requests take the already-proven **LocalPlayerSubsystem collection branch**
+in `140822490`. The legacy BlueprintContextBase registry is a different family
+and cannot supply their original initialization.
+
+FortLocalPlayerSubsystem registers size **30**, callback **142988660**.
+That callback calls USubsystem constructor `144602970`, installs primary
+**1463afca8**, and returns. It does **not** construct a secondary tickable base.
+Its ShouldCreate slot `260` returns true; Initialize `268` and Deinitialize
+`270` are RET. The concrete context constructors introduce the second base:
+
+| Class | Constructor callback | Primary table | Secondary table, at object+30 |
+| --- | --- | --- | --- |
+| FortFrontEndContext | `145236e60` | `146d4c470` | `146d4c6e8` |
+| FortGlobalUIContext | `1452422f0` | `146f3bce8` | `146f3bf60` |
+
+Each calls the original tickable constructor **144617dd0(this+30)**, then
+stores its concrete secondary table there. Their primary tables end after
+`270`: reading primary+278 as another primary virtual would accidentally read
+the adjacent secondary table. Add tickable inheritance on the two concrete
+classes, not FortLocalPlayerSubsystem.
+
+The tickable constructor installs **146b42428**, registers its address in the
+shared tick array (or deferred queue under the original initialization guard),
+and excludes tick type2. Its destructor `144619bb0` removes that registration.
+The eight-method secondary layout and constructor algorithm agree with the
+pinned public Engine FTickableGameObject sources; naming that C++ interface is
+supported by this correspondence, while the original tables control behavior.
+
+| Secondary slot | Base tickable | FrontEnd | GlobalUI |
+| --- | --- | --- | --- |
+| `0` Tick | `_purecall` | `144cec950` | `144cecf50` |
+| `8` tick type | return0 | return0 | `142992770` |
+| `10` IsTickable | true | `144cd7d10` | true |
+| `18` GetStatId | `_purecall` | `1407c5180` | `1407c5180` |
+| `20` destructor | `144619bb0` | `144cbec84` | `1452429f4` |
+| `28`, `30` paused/editor | false | false | false |
+| `38` GetWorld | null | `142992760` | `142992760` |
+
+The `_purecall` identity is primary import evidence: target **1458092e1**
+indirect-jumps through IAT **1458fd5b8**, whose original import descriptor/lookup
+names **VCRUNTIME140.dll!_purecall**. Both Tick and GetStatId in the base point
+there; they are not empty defaults. Base zero/false/true leaves are separately
+frozen. `142992770` returns `1 + ((UObjectFlags >>4)&1)` from the complete object,
+so the ordinary instance uses type1 and the CDO type2; the pinned Engine enum
+names those Always/Never. FrontEnd uses conditional type0 and its nontrivial
+213-byte IsTickable guard. `142992760` adjusts secondary-this by `-30`, then
+tail-calls the primary object's GetWorld at `150`.
+
+**One exact unresolved body prevents claiming complete tickable closure:**
+shared concrete GetStatId **1407c5180** jumps to **1407c5138**, then to
+**1495a0c8c**. At that destination this pinned memory snapshot contains
+invalid/protected instruction bytes (`39 9a fb d6 76 2e c5 fa ...`), and Ghidra
+reports bad instruction data. Its actual stat-ID behavior is unavailable here.
+Do not invent a zero stat ID, use `_purecall`, or call it an empty method.
+The next exact source target is the decoded body behind that gateway from
+independently authorized original evidence. The concrete tick bodies are
+available (FrontEnd1,534 bytes, GlobalUI893 bytes) and have real per-frame work;
+adding inheritance with no-op ticks would omit it.
+
+### Derived initialization dependency map
+
+Original primary hook bodies are:
+
+| Class | Initialize `268` | Deinitialize `270` |
+| --- | --- | --- |
+| FrontEnd | `144cd59b0`, 403 bytes | `144cc3570`, 123 bytes |
+| GlobalUI | `144cd5b50`, 2,266 bytes | `144cc35f0`, 717 bytes |
+
+FrontEnd Initialize performs this order:
+
+1. Validate its Outer as FortLocalPlayer and, if valid, weak-bind callbacks to
+   that player's native delegates `348`, `360`, `378` (targets `144cda450`,
+   `144cdc3f0`, `1442a3540`).
+2. Call **14460fe10(Collection, FortGlobalUIContext::StaticClass())**. Its
+   original collection guards/creation behavior match InitializeDependency;
+   preserve the dependency rather than inserting an unrelated global singleton.
+3. Call **144cbf970**, the full 4,965-byte feature-configuration helper.
+4. NewObject original class **FortServerBrowserHelper** (`1452c5c50`) with
+   this context as Outer, assigning reflected **ServerBrowserHelper at400**.
+
+FrontEnd Deinitialize resets eleven consecutive feature records, clearing
+owned dynamic storage. The captured body does not perform an added blanket
+unsubscribe. Its player `378` callback **1442a3540** is a closed 14-byte body
+broadcasting reflected **OnPlayerLoggedOut at198**. The `360` callback
+**144cdc3f0** first broadcasts **OnPlayerLoggedIn at188**, then performs guarded
+daily-notification effects; a broadcast-only replacement would discard them.
+The `348` callback and feature helper retain additional controller/service
+subscriptions and need typed callback closure before the whole method is ported.
+
+GlobalUI Initialize parses original `subgame=` and `tournamentmode` options,
+binds LocalPlayer delegates `348`, `3d8`, `360`, `378`, then binds GI/service,
+platform and input/settings notifications. Its helpers **144cb7480** and
+**141e63650** bind the GI and GI field448 respectively; full implementations
+and callback addresses are retained. GlobalUI Deinitialize removes the exact
+recorded subscriptions, clears its source timer **AddictionMsgTimer at398**
+through the world's timer manager, and releases associated state. Its recorded
+LP RemoveAll calls cover348/3d8/360; do not silently add378 as a cleanup fix.
+A complete port still needs those private delegate and service identities.
+
+The useful implementation seam is the complete original GetContext routing
+onto native engine subsystem collections plus the separately proven registry
+for its actual consumers. The Root/Login classes must retain their own native
+initialization, ticking and teardown; registry insertion or init-only behavior
+cannot substitute for these methods.
+
+### Actual UI-entry caller remains separate
+
+New original callers of InitializeUI are retained in batch49. The body at
+**141e72150** contains the original OnPostLoadMap literal and calls InitializeUI
+after decrementing GI pending counter688 to zero, outside its guarded world
+mode. **141e664e0** names itself HandlePendingActiveGameFeature and calls it on
+entering the Kairos feature range from outside that range. **144da09b0** validates
+GEngine/GameEngine and its GI before calling it. The actual live registration
+of the first and third bodies remains unbound; missing static references are
+not proof that they are unreachable.
+
+The installed FortGI primary table **145fef1a0** has Init `280=141e67d50`,
+which jumps through obfuscated prologue gateway **1492b711a**, reaches
+`141e67d8a`, then branches to `141e67d44`. Existing Ghidra function splits do not
+recover that complete control-flow graph. This is an explicit next target,
+not permission to invoke InitializeUI unconditionally or force startup phase4.
+
+The two failed batch53 command forms are preserved in a separate frozen
+failure note; the successful command uses repeated `--only` arguments. One
+failed form stopped at argparse, the other raised AddressFormatException after
+opening Ghidra without creating a function; that exception did not emit a
+bookkeeping diff. Successful missing-function probes53/61/62 used rollback
+transactions. No program was saved or renamed. No original execution,
+Native/Engine/stage mutation or runtime parity is claimed.

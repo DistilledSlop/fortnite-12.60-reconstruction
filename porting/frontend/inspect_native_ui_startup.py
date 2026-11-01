@@ -45,12 +45,21 @@ def main():
                           ('FortRootViewportLayout', 0x146fc4ea0),
                           ('FortRootViewportLayout_Athena', 0x146fc4f50),
                           ('FortGameInstance', 0x1463cbc30),
-                          ('FortLocalPlayer', 0x14642adf0)]:
+                          ('FortLocalPlayer', 0x14642adf0),
+                          ('FortLocalPlayerSubsystem', 0x14642b270),
+                          ('FortFrontEndContext', 0x146f2c260),
+                          ('FortGlobalUIContext', 0x146f34ea0)]:
         offset = address - BASE
         decoded[name] = {'class_block': hex(address), 'properties': reflection.decode_props(image, struct.unpack_from('<Q', data, offset + 40)[0], struct.unpack_from('<I', data, offset + 64)[0])}
     for name, address, slots in [('Director', 0x14700fc30, [0x268, 0x270, 0x280, 0x290]), ('StartupManager', 0x147011440, [0x268, 0x280, 0x290, 0x298]),
                                  ('RootBase', 0x146fc7bf0, [0x260, 0x2a8, 0x490, 0x498]),
-                                 ('RootAthena', 0x146fc80c8, [0x260, 0x2a8, 0x490, 0x498])]:
+                                 ('RootAthena', 0x146fc80c8, [0x260, 0x2a8, 0x490, 0x498]),
+                                 ('FrontEndContextPrimary', 0x146d4c470, [0x260, 0x268, 0x270]),
+                                 ('GlobalUIContextPrimary', 0x146f3bce8, [0x260, 0x268, 0x270]),
+                                 ('FrontEndContextSecondary', 0x146d4c6e8, list(range(0, 0x40, 8))),
+                                 ('GlobalUIContextSecondary', 0x146f3bf60, list(range(0, 0x40, 8))),
+                                 ('TickableBase', 0x146b42428, list(range(0, 0x40, 8))),
+                                 ('FortLocalPlayerSubsystemPrimary', 0x1463afca8, [0x260, 0x268, 0x270])]:
         decoded[name + '_vtable'] = {'address': hex(address), 'slots': {hex(slot): hex(image.u64(address + slot)) for slot in slots}}
     enum_fields = struct.unpack_from('<5QII', data, 0x147bd80e8 - BASE)
     decoded['EFortStartupPhase'] = [{'name': image.cstr(image.u64(enum_fields[4] + i * 16)), 'value': struct.unpack_from('<q', data, enum_fields[4] - BASE + i * 16 + 8)[0]} for i in range(enum_fields[5])]
@@ -105,6 +114,58 @@ def main():
     assert image.u64(0x14642c9d0 + 0x288) == 0x1442fa570
     assert image.u64(0x145a0fbd8 + 8) == 0x140820460
     assert next(x for x in decoded['FortLocalPlayer']['properties'] if x['name'] == 'FortOnlineAccount')['offset'] == 0x288
+    # Checkpoint 6: actual LocalPlayerSubsystem hierarchy and concrete tick bases.
+    windows.update({0x145235090: 0xc0, 0x14523f270: 0xc0,
+                    0x145236e60: 0x600, 0x1452422f0: 0x500,
+                    0x1428cd110: 0x10, 0x14298a020: 0xc0,
+                    0x142988660: 0x40, 0x1463afca8: 0x278,
+                    0x146d4c470: 0x278, 0x146f3bce8: 0x278,
+                    0x146d4c6e8: 0x40, 0x146f3bf60: 0x40,
+                    0x144617dd0: 0xe0, 0x146b42428: 0x40,
+                    0x144619bb0: 0x120, 0x1458092e1: 6,
+                    0x144cd59b0: 0x1a0, 0x144cc3570: 0x80,
+                    0x144cd5b50: 0x8e0, 0x144cc35f0: 0x2d0,
+                    0x144cec950: 0x600, 0x144cecf50: 0x380,
+                    0x142992760: 0x10, 0x142992770: 0x20,
+                    0x144cd7d10: 0xe0, 0x1407c5180: 2,
+                    0x1407c5138: 5, 0x1495a0c8c: 0x40,
+                    0x1406801e0: 3, 0x140680300: 3,
+                    0x144cbf970: 0x1370, 0x1452c5c50: 0xb0,
+                    0x144cda450: 0x640, 0x144cdc3f0: 0x170,
+                    0x1442a3540: 0x10, 0x144cb7480: 0xc0,
+                    0x141e63650: 0x20, 0x14460fe10: 0x130,
+                    0x141e72150: 0x790, 0x141e664e0: 0xa00,
+                    0x144da09b0: 0xf0, 0x141e67d50: 5,
+                    0x1492b711a: 0x80, 0x141e67d8a: 0x10,
+                    0x141e48c70: 0x780, 0x145fef1a0: 0x388})
+    # The original base Tick/GetStatId entries are import thunks, not empty methods.
+    thunk = 0x1458092e1
+    assert data[thunk - BASE:thunk - BASE + 2] == bytes.fromhex('ff25')
+    iat = thunk + 6 + struct.unpack_from('<i', data, thunk - BASE + 2)[0]
+    pe = struct.unpack_from('<I', data, 0x3c)[0]
+    imports, imports_size = struct.unpack_from('<II', data, pe + 24 + 112 + 8)
+    purecall = []
+    for at in range(imports, imports + imports_size, 20):
+        original_thunks, _, _, dll_name, first_thunk = struct.unpack_from('<5I', data, at)
+        if not first_thunk:
+            break
+        index = (iat - BASE - first_thunk) // 8
+        if index < 0 or first_thunk + index * 8 != iat - BASE:
+            continue
+        lookup = original_thunks + index * 8
+        if lookup + 8 > len(data):
+            continue
+        name_rva = struct.unpack_from('<Q', data, lookup)[0]
+        if name_rva >= len(data):
+            continue
+        if image.cstr(BASE + dll_name) == 'VCRUNTIME140.dll' and image.cstr(BASE + name_rva + 2) == '_purecall':
+            windows[BASE + at] = 20
+            windows[BASE + lookup] = 8
+            windows[BASE + dll_name] = 17
+            windows[BASE + name_rva] = 12
+            purecall.append({'dll': 'VCRUNTIME140.dll', 'name': '_purecall', 'thunk': hex(thunk), 'iat': hex(iat)})
+    assert len(purecall) == 1
+    (out / 'tickable-base-import.json').write_text(json.dumps(purecall[0], indent=2) + '\n')
     for offset, target in [(0x278, 0x1408229f0), (0x290, 0x1408229f0)]:
         assert image.u64(0x145a0f930 + offset) == target
     windows[0x147bd8078] = 48
@@ -132,6 +193,8 @@ def main():
     assert asset_manager == ['AssetManagerClassName=/Script/FortniteGame.FortAssetManager']
     (out / 'source-ui-data-selection.json').write_text(json.dumps({'game_ini': {'path': str(config), 'sha256': sha(config), 'selected_lines': ui_config}, 'engine_ini': {'path': str(engine_config), 'sha256': sha(engine_config), 'selected_lines': asset_manager}}, indent=2) + '\n')
     sources = [Path(__file__).resolve(), ROOT / 'porting/extract_reflection.py', ROOT / 'porting/material_pipeline/view_original_probe.py', ROOT / 'porting/ghidra/decompile_targets.py']
+    sources.append(ROOT / 'porting/generated/frontend-native-evidence/native-ui-startup-53-failed-invocations.json')
+    sources += [Path('/opt/fortnite/UnrealEngine/Engine/Source/Runtime/Engine/Public/Tickable.h'), Path('/opt/fortnite/UnrealEngine/Engine/Source/Runtime/Engine/Private/Tickable.cpp')]
     for report_path in sorted(args.packages.glob('*.json')):
         report = json.loads(report_path.read_text())
         sources.append(report_path)
