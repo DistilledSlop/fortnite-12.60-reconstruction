@@ -291,11 +291,11 @@
             "kind": "manual",
             "pct": 0
           },
-          "rationale": "Inventory shipped plugins and modules, reconstruct required functionality and verify it in the rebuilt client."
+          "rationale": "Enumerate the individual shipped plugins and project modules, reconstruct required functionality, and verify their build and runtime integration. The separate metadata-count entry does not establish this inventory."
         },
         {
           "id": "assets.plugin_inventory",
-          "name": "Original enabled-plugin inventory",
+          "name": "Original project plugin-count metadata",
           "weight": 1,
           "measure": {
             "kind": "tracked_regex",
@@ -303,7 +303,7 @@
             "regex": "declares six project modules and (\\d+) enabled plugins",
             "total": 123
           },
-          "rationale": "The recovered project metadata lists 123 enabled plugins; 63 are absent from public UE 4.25. Inventory does not establish implementation, builds or runtime loading."
+          "rationale": "The recovered project metadata reports 123 enabled plugins and six project modules. This checks the documented count only; it does not inventory individual plugins or establish implementation, build or runtime loading."
         },
         {
           "id": "assets.other_content",

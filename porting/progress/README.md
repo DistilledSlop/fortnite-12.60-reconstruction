@@ -118,9 +118,8 @@ worlds and modes, unclassified original features, native and UI lifecycle, conte
 conversion and cooking, security and entitlements, input, settings, localization,
 accessibility, account progression, backend services, custom serializers, network
 relevancy, audio, visuals and full original-behavior comparison. These are scope
-allocations, not claims that an exhaustive feature inventory is complete. A plugin
-metadata inventory has its own small tracked share; implementation and runtime
-loading remain separate. Class-header coverage is likewise separated from behavior
+allocations, not claims that an exhaustive feature inventory is complete. The documented original plugin count has its own small tracked share; inventory
+of individual plugins, implementation, and runtime loading remain separate. Class-header coverage is likewise separated from behavior
 and runtime verification (one quarter of the previous reflection leaf weights is
 allocated to declarations, three quarters to unfinished implementation). These
 allocation choices are judgment, not measured engineering hours. Source-reference
