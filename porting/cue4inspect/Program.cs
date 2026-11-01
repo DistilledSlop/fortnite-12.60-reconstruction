@@ -836,11 +836,23 @@ try
                     scalars = instance.ScalarParameterValues.Select(value => new
                     {
                         parameter = value.Name,
+                        parameterInfo = value.ParameterInfo is not { } info ? null : new
+                        {
+                            name = new { name = info.Name.PlainText, number = info.Name.Number },
+                            association = (byte) info.Association,
+                            index = info.Index
+                        },
                         value = value.ParameterValue
                     }).ToArray(),
                     vectors = instance.VectorParameterValues.Select(value => new
                     {
                         parameter = value.Name,
+                        parameterInfo = value.ParameterInfo is not { } info ? null : new
+                        {
+                            name = new { name = info.Name.PlainText, number = info.Name.Number },
+                            association = (byte) info.Association,
+                            index = info.Index
+                        },
                         value = value.ParameterValue is not { } color ? null : new[]
                         {
                             color.R, color.G, color.B, color.A
