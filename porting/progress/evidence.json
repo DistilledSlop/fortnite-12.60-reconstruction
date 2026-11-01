@@ -4656,8 +4656,68 @@
   "material_frontend_owner_9b8adcef0120976a": {
    "id": "material_frontend_owner_9b8adcef0120976a",
    "owner_path": "/Game/Athena/UI/Season/Art/M_UI_AthenaSeason_FadedFlogo.M_UI_AthenaSeason_FadedFlogo",
-   "result": "pending",
-   "scope": "Material owner in the bounded frontend closure; actual-owner runtime ingress has not been credited."
+   "result": "pass",
+   "label": "Original FadedFlogo static instance and named texture",
+   "utc": "2026-11-01T10:30:12.791595+00:00",
+   "source_native_commit": "1f0340e",
+   "engine_commit": "66105c47c",
+   "command": [
+    "env",
+    "-u",
+    "LD_LIBRARY_PATH",
+    "VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/lvp_icd.json",
+    "SDL_AUDIODRIVER=dummy",
+    "LP_NUM_THREADS=8",
+    "xvfb-run",
+    "-a",
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/paper2d-matched-stage-3/LinuxNoEditor/FortniteLinux.sh",
+    "-vulkan",
+    "-windowed",
+    "-ResX=1280",
+    "-ResY=720",
+    "-nosound",
+    "-unattended",
+    "-FortniteLegacyMaterialIngress=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/locker-ingress-bundle.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/gradient-panel-ingress-bundle.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/power-toast-ingress-bundle.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/menu-button-ingress-bundle-active-time.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/donut-ingress-bundle.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/mainl-ingress-bundle-checked.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/keybind-ingress-3/bundle.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/hollow-ingress-3/bundle.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/flogo-ingress-3/bundle.json",
+    "-FortniteLegacyMaterialManifest=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/frontend-numeric-batch-12/manifest.json",
+    "-FortniteProbeLegacyOriginalMaterial",
+    "-FortniteLegacyFieldPaths",
+    "-FortniteLegacyMaterialProbeOwner=/Game/Athena/UI/Season/Art/M_UI_AthenaSeason_FadedFlogo.M_UI_AthenaSeason_FadedFlogo",
+    "-ExecCmds=Quit",
+    "-log",
+    "-FortniteLegacySequencer",
+    "-FortniteLegacyMaterialManifestSHA256=d4dd8dbb275f2c395abb9bfb52edbdf98a37f73d070b1559e46cab2c74a81e03",
+    "-FortniteLegacyMaterialArtifactDir=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/flogo-owner-probes-1/flogo-defaults-artifacts"
+   ],
+   "exit_code": 0,
+   "log": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/flogo-owner-probes-1/flogo-defaults.log",
+   "log_sha256": "8430654b0416f8fdb91b30a74b6bbfbea01981ad43b07f92461d5a5097eb1035",
+   "runtime_checkpoint": {
+    "path": "porting/generated/material_pipeline/frontend-flogo-checkpoint-results-1.json",
+    "sha256": "fcf857b47374458acf23b8aa1dae3b506064851f1626c0ac9c9c6319bd722ac5"
+   },
+   "root_checkpoint_audit": {
+    "path": "porting/generated/material_pipeline/frontend-flogo-root-checkpoint-audit-1.json",
+    "sha256": "a7ce34adeb32b490b74610235a9a61b96a6c90f27ef4e13b6c2be4737140a878"
+   },
+   "original_source_bundle": {
+    "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/flogo-ingress-3/bundle.json",
+    "sha256": "c12942d8480aeadefc94739a17c4a005c04f8d747722ad14e5bb62ab8c38bab1"
+   },
+   "root_source_audit": {
+    "path": "porting/generated/material_pipeline/flogo-ingress-root-audit-1.json",
+    "sha256": "d76f5299564a0ba4b4270aade21eb8e9b4efa7a2448630cb5effffcaa2f81bad"
+   },
+   "independent_runtime_verification": [
+    {
+     "path": "porting/generated/frontend-probes/flogo-owner-probes-1/flogo-defaults-root-validation-1.json",
+     "sha256": "27e5d8318b731709a1c73c18d88f0d5e087d5cbb76f534a5d5cab138b5ab44a9"
+    },
+    {
+     "path": "porting/generated/frontend-probes/flogo-owner-probes-1/flogo-combined-root-validation-1.json",
+     "sha256": "352e8c534630731546b8a7b89a861786d21da6abaf9688af57ea94f086646f82"
+    }
+   ],
+   "scope": "Actual original static-permutation instance and parent attach complete maps on both threads; all 19 child records retained, seven shader payloads verified, all 14 original numeric overrides and 9 graph/9 owner cases pass. Real indexed parent default and child TextureMask override, original compressed DXT5 source and exact-copy shader draws agree; separate checker changes output. Known 142-owner denominator and numeric 120-owner manifest unchanged. Raw GPU-compressed bytes, widget integration and original-client pixel parity remain unverified."
   },
   "material_frontend_owner_9d410fe06d5264a2": {
    "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/duplicate-defaults-owner-probes-1/036-M_UI_Border-SolidBG-RewardBack-artifacts-dashboard-validation-j05kj_pu.json",

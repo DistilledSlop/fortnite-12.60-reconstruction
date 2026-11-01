@@ -8,7 +8,7 @@ milestone is done only with logged evidence. Rules for every wave: at most
 three agents at once, one owner for `native/` and the UE build, no keys or
 credentials in Git, and the orchestrator reviews and commits.
 
-Current verified checkpoint: native `a821c93` / Engine `66105c47c`, with both builds and fresh joins passing. Dashboard evidence credits 28/41 bounded frontend event registrations and 122/142 bounded material owners; all four milestones remain open. RootLayout currently needs SocialUserItemBorder TextureProperty compatibility; Login needs the original FadedFlogo instance/texture path. Authentic startup additionally requires source-selected FortAssetManager progression, UI director/root/layer construction and context initialization. See the exact immutable receipts and ownership in `HANDOFF.md`.
+Current verified checkpoint: native `1f0340e` / Engine `66105c47c`, with both builds and fresh joins passing. Dashboard evidence credits 28/41 bounded frontend event registrations and 123/142 bounded material owners; all four milestones remain open. RootLayout currently needs SocialUserItemBorder TextureProperty compatibility; Login now stops at M_MediaPlayerButton_Base after verified FadedFlogo instance/texture ingress. Authentic startup additionally requires source-selected FortAssetManager progression, UI director/root/layer construction and context initialization. See the exact immutable receipts and ownership in `HANDOFF.md`.
 
 ## Critical path and acceptance gates
 
