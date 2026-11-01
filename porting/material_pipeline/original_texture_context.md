@@ -4,8 +4,9 @@ The original texture index is an index into an ordered runtime reference array.
 It is not an import-table index. The original parent material rebuilds this array
 from its stored expression list during PostLoad, including referenced material
 functions. The bounded ComicBubble parent mapping is now proven: index 0 is
-T_TilingClouds_02 and index 1 is T_UI_Bubble_Tail. This establishes reference
-identity, not texture conversion or runtime compatibility.
+T_TilingClouds_02 and index 1 is T_UI_Bubble_Tail. ComicBubble_Inst rebuilds that
+same two-entry array and uses only index 0 in its compiled static permutation.
+This establishes reference identity, not texture conversion or runtime compatibility.
 
 Primary local evidence is
 `generated/material_pipeline/original-texture-context-evidence.json`, SHA-256
@@ -189,10 +190,69 @@ seven rejection checks pass: unproven function texture expression, missing
 dependency, altered source hash, missing FunctionExpressions property and
 duplicate function report, wrong function root export index and wrong function
 root name. No runtime fixture or Linux texture conversion was
-produced. Instance `+0x148` construction remains unproven, so this receipt does
-not generalize the mapping to arbitrary instances. Texture-bearing functions,
-layers, texture parameters and TextureProperty resource dimensions need further
-work for the remaining owners.
+produced. The subsequent bounded instance proof below does not generalize the
+mapping to arbitrary instances. Texture-bearing functions, layers, texture
+parameters and TextureProperty resource dimensions need further work for the
+remaining owners.
+
+## ComicBubble_Inst array construction
+
+`generated/material_pipeline/original-texture-context-evidence-v4.json`, SHA-256
+`95b4887076fbda3e278d53e8de93a0fc6063932e77e862928de22cd941166c5b`,
+pins 64 immutable snapshots for the subsequent instance investigation. The
+receipt includes original class registration, constructor, PostLoad, array
+writer and property-layout evidence, plus the isolated inspection tool source
+and executable, raw-source-bound instance properties and bounded replay.
+
+Original MaterialInstance/Constant class registrations in directory 25 lead
+through callbacks in directory 26 to constructors in directory 27. Constant
+constructor `0x14431cc10` installs vtable `0x146abc450`; its base constructor
+`0x14431ca10` installs `0x146abba10` and initializes both the reference array at
+`+0x148/+0x150` and layer-parameter array at `+0x188/+0x190` to zero.
+Constant PostLoad `0x144336890` jumps directly to base PostLoad `0x144336390`.
+The base invokes static-resource initialization `0x144321a10`, whose path calls
+`0x1443225d0`. This writer clears `+0x148`, then fills it through virtual
+`+0x3a0 = 0x1443215c0` before processing its shader resources.
+
+The original instance `+0x3a0` traverses overridden MaterialLayersParameters
+entries, appending each non-null layer function's textures, then each blend
+function's textures via `+0x298`. It then invokes **Parent `+0x3a0`**. Instance
+layer references therefore precede parent references. Empty texture overrides
+alone would not establish the instance's index mapping.
+
+Direct original reflection-table reads, retained in
+`original-texture-instance-layout-1.json`, establish MaterialInstance's
+StaticParameters property at `+0x158`, its type getter `0x144802230`, and that
+getter's struct block `0x147de9aa0` (directory 34). That struct's reflected
+MaterialLayersParameters field is at `+0x30`, matching the writer's instance
+`+0x188` array. The original bHasStaticPermutationResource setter writes bit 0
+at `+0xd8`; its raw bytes and five instance vtable checks are retained in
+`original-texture-instance-additional-slots-1.json`.
+
+The isolated inspector's explicit `--instance` mode retained this source under
+`comicbubble-instance-properties-1/`, with both original package hashes. The
+serialized StaticParameters has only two StaticSwitchParameters, NoShape and
+UseDefaultUV, both overridden true. The MaterialLayersParameters tag is absent;
+the original constructor establishes its empty default. Thus no layer texture
+is appended before the parent, and the ordered array remains [cloud, tail].
+
+`prove_comicbubble_instance_texture_context.py` requires the pinned parent proof,
+the exact parent object/export index, the source package hashes, static
+permutation ownership, an absent/empty layer array and no texture overrides. It
+also checks the complete original 19-record instance resource and export map.
+Its `comicbubble-instance-texture-context-proof-1.json`, SHA-256
+`dfe83f55271429ad438fc661de89c029c8a21cfcdaf9828f47920e3e98130487`,
+binds the instance's sole regular Texture uniform to index 0/cloud, sampler
+source 0, layer/page -1 and virtual false. Preserve the complete two-entry
+reference array despite this single compiled texture use. The original instance
+resource SHA-256 is
+`fab8a4749b2b9b619eb3d4233bdf9b02de19486f1a400e9a578d38e666cbd655`.
+
+The isolated inspector build passes with zero warnings/errors. The instance
+replay and five rejection checks pass: layer entries, wrong parent export index,
+changed raw-source hash, texture overrides and changed parent proof. These are
+offline reference-identity checks; dimensions, conversion and an actual Linux
+draw remain unverified.
 
 ## Reproduction and integrity
 
@@ -231,3 +291,11 @@ python3 -I porting/material_pipeline/prove_comicbubble_texture_context.py --func
 
 Both report tools require a new output destination. Reproduction must choose
 fresh destinations to preserve the pinned evidence.
+
+The subsequent instance commands were:
+
+```sh
+dotnet build porting/material_pipeline/original_texture_function_probe/OriginalTextureFunctionProbe.csproj --configuration Release --nologo > porting/generated/material_pipeline/original-texture-instance-probe-build-1.log
+dotnet porting/material_pipeline/original_texture_function_probe/bin/Release/net10.0/OriginalTextureFunctionProbe.dll /mnt/vibrato/fortnite-extracted-full porting/generated/material_pipeline/comicbubble-instance-properties-1 --instance FortniteGame/Content/Environments/FrontEnd/BackPlates/UITakeovers/M_UI_ComicBubble_Inst
+python3 -I porting/material_pipeline/prove_comicbubble_instance_texture_context.py --instance-report porting/generated/material_pipeline/comicbubble-instance-properties-1/FortniteGame_Content_Environments_FrontEnd_BackPlates_UITakeovers_M_UI_ComicBubble_Inst.json --parent-proof porting/generated/material_pipeline/comicbubble-texture-context-proof-4.json --out porting/generated/material_pipeline/comicbubble-instance-texture-context-proof-1.json
+```
