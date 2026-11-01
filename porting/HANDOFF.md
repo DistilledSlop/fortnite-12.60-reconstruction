@@ -2,130 +2,81 @@
 
 ## Current resume point (2026-11-01)
 
-- Panel shared build attempt1 (Native9543b13) is terminal, client exit6 after69.314s;
-  source snapshot unchanged. Only error is diagnostic FPanelIntroProbeAccess::Initial taking mutable
-  pointer while GetDefault returnsconst. Corrected helper toconst; next fresh attempt required.
-  Failed log/results /tmp/panel-intro-native-build-1 retained; do not restart session80472.
-- Current integration pending shared build/runtime: authentic Panel NativeActivateRequest ->
-  OnBeginIntro BlueprintNativeEvent -> EndIntro -> full Panel activation override is now normally
-  generated. Native input multicast/global priority fields and CommonUI->CommonInput dependency are
-  included; callback defaults are proven RET/zero leaves, not invented native-event stubs. Root restored
-  the omitted first-request CSV event: category Slate/default-enabled, format Activate: %s, FName string
-  temporary destroyed before introed flag changes. Category inline literal146638c20 and init140488d46..6c
-  prove the name; API matches FCsvProfiler::RecordEventfInternal, not UE_LOG. No extra TRACE_BOOKMARK.
-  Source proof /tmp/panel-intro-root-integration-1/csv-proof.json. All11old candidate windows match late
-  image338c...de680 in /tmp/panel-intro-late-audit-1/report.json. Root owns subsequent builds/stage.
-- Promotion /tmp/panel-intro-root-integration-1/generation-result.json changes five expected files,
-  adds two real helper headers and restores12552unchanged timestamps. Tests:27policy/core,141generator,
-  19diagnostic tooling pass. Isolated /tmp/panel-intro-ue-preflight-1 passes fresh UHT and14actual UE
-  source/glue syntax units for pre-CSV/pre-probe candidate; monolithic COMMONINPUT_API was supplied
-  explicitly because the old response file predated the new dependency. Full updated build still needed.
-- New opt-in PanelIntroProbe has49orderedrows: actual default/deferred/completion-reentry activation,
-  metadata, pre/base/Panel/post ordering, real input listener/priority write, fixture cleanup/restoration.
-  ProcessEvent interception is controlled C++ evidence, not Blueprint VM or authentic UI startup.
-  Deactivation/outro and input/manager producers remain unfinished. No new runtime pass or gate credit yet.
-- Latest validated Native5590b97b9fc1e80800a0740f09a540432313148f / Engined7e04d4b6:
-  main CommonButton IsInteractionEnabled query is normally generated with exact owner/signature guards,
-  both proven native defaults and a native-only global-input forwarder. It caches visibility first and
-  rejects Hidden/Collapsed, Widget disabled or either native bit disabled. This does not implement the
-  remaining constructor/state producers or Initialize. Both builds PASS156.067/130.837s; all12555Native
-  source files unchanged. MainButtonStateProbe passes44rows (40states through direct/alias/ProcessEvent,
-  defaults and loaded native function metadata); retained internal button34rows, activation40rows and
-  registry/lifecycle checks pass in five distinct bound processes. Default/Athena joins PASS21.576/21.591s.
-  No new exhaustive original metadata/link or material/pixel audit. Build/results /tmp/main-button-query-native-build-1.
-- Query checkpoint generated/material_pipeline/frontend-main-button-query-runtime-checkpoint-results-1.json
-  SHA2562856a0b378639eb893bf8198cfce3ab3655ba3755c14b82c5488b14c7429ec4b;
-  root report generated/frontend-native-evidence/main-button-query-runtime-1/root-report.json
-  SHA256d1ebc1fe1dbe66411fb4aac8e18f8f1e19793febf28aae2bee56e2f7e2f1ec2b.
-  Archive /mnt/vibrato/fortnite-evidence/frozen-runtime/main-button-query-runtime-1 holds52artifacts,
-  13critical committed source snapshots and6binaries; all18binarypaths verified. Source-release.json
-  SHA25644d204004d1f73899ff63774210ed09b75148a45ed9ae313a13ca21cb76e9ee6.
-  All five runs, joins and build session8316 are terminal; ownership released. Root verification only
-  for this query checkpoint; prior internal-button independent audit remains below. Policy22tests,
-  generator141checks and diagnostic tooling14tests pass. Promotion restored12553unchanged mtimes.
-- Next bounded integration candidate: /tmp/panel-intro-path-candidate-1/HANDOFF.md, receiptSHA256
-  5ac05cfbe699222b671105dd826f6118af57db243a91ef3423dc0865236de139.
-  Scratch candidate implements ActivateWidget -> original Panel NativeActivateRequest -> real protected
-  OnBeginIntro BlueprintNativeEvent -> EndIntro -> full Panel activation override. Imports only canonical
-  native input multicast and global priority field, plus explicit CommonUI->CommonInput module dependency.
-  Seven-class generation,7policy tests,14rejection checks and actual-body portable C++ controls pass.
-  No shared promotion/UHT/UEbuild/runtime yet. Root must review generator changes and selected original
-  windows against current late image (leaf proof used old604900 image), then run isolated/full UE checks.
-  No outro/deactivation/public BeginIntro/IsIntroed/full constructor or input producer/manager queue claim.
-- New source checkpoints: /tmp/main-button-init-callbacks-1 proves all Initialize callback bindings and
-  the exact dependency frontier (selection, hover/style, input routing). Enabled/disabled native hooks
-  call their BP event and THEN OnCurrentTextStyleChanged; combined with the visual helper, preserve
-  two text-style notifications per ordinary transition. /tmp/main-button-slot-apis-1 now binds all
-  three slot setters through original name/exec pairs to actual4.25 APIs. Constructor unresolved
-  members/defaults are frozen in /tmp/main-button-ctor-state-1; do not drop nontrivial native fields.
-- Critical-path correction: main button query is a global-input dependency, not a direct prerequisite
-  of Panel.OnBeginIntro. That real native event defaults to EndIntro in the Panel draft, whose exact
-  phase semantics and Panel activation override dependencies must be composed with the current base.
-  Do not register a reduced event or inherit the base notify path while omitting the original Panel
-  override. Candidate next-stage-draft/panel-definitions.inc and CommonActivationCore hold the bodies.
-- Goal remains the reconstructed client and multiplayer server with full feature/visual/wire parity.
-  All four product milestones remain false. Dashboard is approximately21.334%,114leaves,1855weight
-  after crediting one existing CommonUI behavior point for the independently audited internal-button
-  diagnostic. Twenty CommonUI behavior points remain unfinished. Material owners126/142; signatures41/41.
-  Importer record_frontend_button_runtime.py pins the checkpoint/root/audit/release; all28progress tests pass.
-- Prior independently audited Native82b35764ba1c2dbd1a62a59b8b7b50aadf44bf82 / Engined7e04d4b6:
-  client129.952s, server121.582s. Full12553-file Native snapshot stayed unchanged through both builds.
-  New generated internal button factory/lifecycle/callbacks, manager suspension getter, enabled-state
-  bridge and manual SCommonButton are now built and tested in real runtime. Root's build session35187
-  and runtime/join sessions are terminal; do not restart old handles. Results/logs /tmp/button-internal-native-build-1.
-- Button runtime phase1:34 ordered rows PASS. Real UObject/WidgetTree ownership, SBox/child identity,
-  desired size, interaction/enabled/hover behavior, Enter handling, native-before-reflected double-click,
-  actual Slate focus binding/reply, suspension guards and cleanup/Slate destruction pass. The temporary
-  manager fixture is restored. Click/press/release guard checks invoke real UObject handlers directly;
-  capture/touch/paint/full gestures and authentic manager/UI startup are not established by this diagnostic.
-- Four distinct fresh processes (button/activation/registry/lifecycle) exit0, exact executable inode/argv/cwd
-  and before/after binary hashes verified. Retained activation40rows, context registry/GC/loaded reflection
-  and lifecycle event checks PASS. Fresh default/Athena joins PASS21.555/21.560s, including authority/client
-  pawn creation. No material/pixel rerun or new exhaustive original metadata/relocated implementation audit
-  was performed in this phase; earlier strict reports remain historical, pinned to their original build.
-- Checkpoint generated/material_pipeline/frontend-button-internal-runtime-checkpoint-results-1.json
-  SHA256c9f4c509cf39a9e67afd8ca2fcdb1e79a74c4a99eb37660d4c205c79dbe6a223.
-  Runtime evidence generated/frontend-native-evidence/button-internal-runtime-1; root-report.json
-  SHA2566b5ecdd20e41d5d2afbacaae322843b2e745a58486c77b618939fc1b724bc527.
-  Archive /mnt/vibrato/fortnite-evidence/frozen-runtime/button-internal-runtime-1 stores40small artifacts,
-  nine critical committed sources and six binaries; all18source/archive/stage binary paths were hashed.
-  source-release.json SHA25620ac4b3367c755dad48caa8bdb23745eba3bebfcbdb99eba7efc409c0627b7a8
-  confirms all processes terminal and Native/build/stage ownership released. Independent integrity audit
-  integrity-audit-1.json SHA256b1220c97b767069d7573b1e7063b3af27c986e0ce7d852e8070d6bca5e52a503
-  rehashes40artifacts(source+archive),9source snapshots,18binarypaths and12553current Native files with
-  no mismatches; independently repeats34button/40activation rows. Context semantic checks were root-run,
-  not independently repeated by that audit. Source/build/stage ownership is fully released.
-- Maintained diagnostic tools frontend/button_internal_runtime_probe/ have10 passing tests, including
-  real compiled ELF binding and rejection of malformed/incomplete/failed transcripts. The Linux exec
-  empty-cmdline race is fixed with a bounded retry only while live; wrong nonempty argv still fails.
-  Earlier failed controls /tmp/button-binding-diagnose-zoi9vivp are preserved. Policies pass18tests plus
-  exact-body ASan/UBSan callback controls; generator passes141checks. Normal bridge promotion changed
-  only two expected files and restored12549unchanged mtimes; /tmp/button-enabled-bridge-root-integration-1.
-- Broader strict material/activation baseline remains Nativec06a5cb / Engined7e04d4b6, immutable build2
-  validated by run-only activation attempt5/tools973d38e. Checkpoint
-  generated/material_pipeline/frontend-activation-runtime-checkpoint-results-5.json
-  SHA256cb324a725852bbe89fced9a13d5422a7a589b04667faa0ec98921a6c5f1124e3.
-  Root independently reran strict activation/context reports byte-identically; separate audits verify
-  639newartifacts,42inheritedmetadata/objects and18binarypaths. Preserve all earlier failures/baselines.
-  Latest actual Root load observation in that baseline is missing CommonActivatablePanel.OnBeginIntro
-  (AsyncLoading3126); Login Facebook material/MemoryImage1064. These class probes exit139, not UI acceptance.
-- Main-button work still required alongside Panel/queue/global/held integration: remaining constructor,
-  state producers and actual Initialize lifecycle. RebuildWidget is inherited; do not add an override. /tmp/button-inner-lifecycle-1/HANDOFF.md proves Initialize1407cd7d0 calls Super
-  first and returns unchanged on false; constructs InternalRootButton under WidgetTree and assigns weak+ad0.
-  If old root is null, root replacement and ALL callback binding are skipped. Existing-root path needs
-  exact slot API/native callback identities before integration. This method does not set sizes/styles.
-- Source helpers: /tmp/button-visual-helper-1 proves1407f5ce0 selects SelectedStyle first, else NormalStyle
-  for native enabledbit02, else DisabledStyle; resolved inner required, SetStyle then OnCurrentTextStyleChanged.
-  UButton SetStyle binding143d905c0 is proven via native name/thunk; event+4f0 is OnCurrentTextStyleChanged.
-  Main ctor/defaults/getter/SetIsEnabled source: /tmp/common-button-native-state-root-1 and maintained
-  frontend/common_button_interaction_state_evidence.md. No main-button lifecycle/body parity claimed yet.
-  Canonical global input candidate stage19, Panel/held/cursor candidates and their source proofs remain
-  off-workspace; see historical details for exact receipts. Internal SynchronizeProperties is inherited:
-  original base/internal slot298 both143d949f0; no extra override. Keep separate child owning references.
-- Persistent collaboration: root plans/integrates/reviews and performs difficult work directly. Bounded
-  Luna-medium small read-only, Terra-medium/high regular, Sol6.1-medium complex tasks, always fork_turns:none.
-  Checkpoint/rotate when old context stops helping. Keep file/log reads economical. One Native/build/stage
-  owner. Preserve the five existing Engine dirty files and external CUE edit; no remote/push configured.
+- Goal remains full reconstructed client and multiplayer server with feature/visual/wire parity and
+  all four product milestones. All four gates remain false. Dashboard approximately21.388%,115leaves,
+  totalweight1855: one existing CommonUI behavior point now credits the independently audited Panel
+  intro diagnostic, leaving19unfinished behavior points. Material126/142; bounded signatures41/41.
+  All32progress tests pass; history and denominators preserved.
+- Latest validated Nativeb06234ec750f94286836e5c7830d3eb2921c131b / Engined7e04d4b6: both builds
+  PASS136.491/150.019s, full12559Native source snapshot unchanged. Real protected BlueprintNativeEvent
+  OnBeginIntro -> EndIntro -> complete Panel activation override is now generated, including original
+  NativeActivateRequest, pre/base/Panel/post callbacks, priority assignment and native input binding.
+  Uses actual canonical native input multicast/global field and CommonUI->CommonInput dependency.
+  RET/zero defaults are independently proven original leaves. No fake native-event bypass or forced phase.
+- Preserved original CSV side effect: first request obtains FName string, records Slate-category
+  Activate: %s, destroys temporary, then sets introed and dispatches OnBeginIntro. Root identified
+  FCsvProfiler::RecordEventfInternal via primary Core source; category inline literal146638c20 is Slate,
+  initializer140488d46..6c registers default-enabled/non-global. Actual public RecordEventf API used;
+  no speculative UE_LOG substitution or extra TRACE_BOOKMARK. Proof /tmp/panel-intro-root-integration-1/csv-proof.json.
+- Runtime49ordered Panel rows PASS: default native completion, deferred C++ ProcessEvent interception,
+  repeat suppression, completion reentry, metadata, pre/base/Panel/post order, actual input/priority fixture
+  and explicit cleanup/restoration. This is controlled C++ evidence, not Blueprint VM/authentic startup.
+  Retained main query44/internal button34/base activation40/registry/lifecycle checks pass in six distinct
+  processes, each actual executable inode/argv/cwd/log/before-after hashes bound to build. Fresh default/
+  Athena joins PASS21.606/21.596s. No new exhaustive original metadata/link or material/pixel rerun.
+- Actual original Root class import advances: missing OnBeginIntro dependency is gone. New boundary is
+  CommonActivatablePanel.OnBeginOutro: Could not find SuperStruct OnBeginOutro (AsyncLoading3126), exit139.
+  Logs generated/frontend-probes/panel-intro-root-load-2; pinned observation in the phase evidence.
+  This is real class-load progress, not interactive UI acceptance. Broader Login Facebook/MemoryImage1064
+  boundary is the earlier observation; not rerun in this phase.
+- Checkpoint generated/material_pipeline/frontend-panel-intro-runtime-checkpoint-results-2.json
+  SHA2566ee95ee5892bc85f03e60fbaaf867c9c7d62fb57c1ef6e64c05259db49af78ea.
+  Evidence generated/frontend-native-evidence/panel-intro-runtime-2; root-report.json
+  SHA25676745b7bfd04f1920889196bda99d8fb9a2309a47997fdc9b7697b2a0cd5c2b0.
+  Independent integrity-audit-1.json SHA256df1101e05c74d0523af8f8d8d67a25b6c13f1385a0f3339369097321ad5031ce
+  rehashes74artifact pairs,22critical committed sources,18binarypaths and12559Native files; no mismatches.
+  Independently repeats49/44/34/40verifiers; context semantic checks were root-run, not independently repeated.
+  Archive /mnt/vibrato/fortnite-evidence/frozen-runtime/panel-intro-runtime-2; source-release.json
+  SHAc27b7b998f37bc1ebc886e3895b47f86ca48bdbcf1d0df0b381b49903de6a931 confirms all processes terminal,
+  Native/build/stage ownership released. Build session45147, six-diagnostic71595 and join/root52208 are terminal.
+- Failed attempt1 Native9543b13: client exit6 after69.314s from const mismatch in probe CDO check;
+  source unchanged, logs/results /tmp/panel-intro-native-build-1 preserved. Fixed asb06234e. No restart.
+  Promotion /tmp/panel-intro-root-integration-1 changes five expected files/adds two helper headers,
+  restores12552unchanged timestamps. Tests27policy/core(includingCSV on/off),141generator,19diagnostic
+  tooling pass. Pre-CSV/pre-probe isolated UHT+14actual UE syntax units also passed in panel-intro-ue-preflight-1;
+  final full builds above supersede source-only preflight. Raw late-image audit matches all11old candidate windows.
+- NEXT bounded integration: review /tmp/manager-interface-resolver-1/candidate.patch and HANDOFF.md.
+  It fixes genuine available-interface alias mapping in generator: manager property index5 at originala8
+  CurrentlyHeldActionInputHandler kindInterface/raw13 flags44000000000000, typeref140806da0 resolves
+  to145a00be0/UCommonActionHandlerInterface -> TScriptInterface<ICommonActionHandlerInterface>.
+  Existing generated UINTERFACE/Iclass already exist. Scratch generation restores22skipped properties
+  across22headers (17Interface scalars,1array,4delegate props) and adds2delegate headers, no new skips or
+  module graph changes. Three focused tests and141generator checks pass; no UHT/UEbuild/runtime yet.
+  Review full structural impact before promotion; interface native methods/routing remain unported.
+- Then compose /tmp/panel-outro-path-candidate-1/HANDOFF.md: authentic NativeDeactivateRequest ->
+  OnBeginOutro -> EndOutro -> full deactivation/held cleanup. Request logs CSV Slate Deactivate: %s
+  AFTER held clear and OnBeginOutro (including synchronous completion); preserve order. Held clear
+  re-resolves weak manager after progress callback. Import full canonical action record/map, never a
+  progress-only substitute. Original OutroComplete slot4d8 is proven RET. Candidate is scratch source only,
+  not generator-integrated/tested. Manager interface field above is its immediate typed prerequisite.
+- Main CommonButton remains partial: complete original interaction query and two native defaults are
+  integrated and runtime44rows verified at5590b97; actual remaining constructor/state producers/Initialize
+  and callback graph need porting. /tmp/main-button-init-callbacks-1 proves twice-per-transition text-style
+  notifications (visual helper, then BP enabled/disabled and another style event), and callback frontier.
+  /tmp/main-button-slot-apis-1 has exact original native name/exec/helper bindings to real4.25 slot APIs.
+  /tmp/main-button-ctor-state-1 and button-native-member-types-1 preserve unresolved/native constructor data.
+  RebuildWidget is inherited; actual main Initialize1407cd7d0 creates InternalRootButton; null old root
+  skips replacement/all callback bindings. Preserve both separate child Slate owning refs in internal button.
+- Earlier immutable baselines remain retained: main query runtime1 checkpoint2856a0b3...; independently
+  audited internal-button phase1 checkpointc9f4c509...; broader strict material/activation baseline Nativec06a5cb
+  immutable build2/run-only attempt5/tools973d38e checkpointcb324a7258.... These old strict reports are
+  historical, tied to their own build, not new exhaustive proofs of current sources. Generic context,
+  held/cursor/global-input-stage19 candidates and source receipts remain in previous details below.
+- Persistent collaboration: root plans/orchestrates/reviews and performs difficult work directly.
+  Luna-medium small read-only, Terra-medium/high regular, Sol6.1-medium complex, always fork_turns:none.
+  Use bounded task runners; checkpoint/rotate when prior context stops helping. Keep file/log reads and
+  outputs economical. One Native/build/stage owner. Preserve five existing Engine dirty edits and external
+  CUE edit; no remote/push configured. No pending worker owns a milestone or broad dashboard group.
 
 ## Previous integration details (2026-11-01, retained history)
 

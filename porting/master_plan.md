@@ -14,6 +14,8 @@ New internal-button runtime at Native `82b3576` / Engine `d7e04d4b6` passes both
 
 The main button interaction query is now integrated and runtime-verified at Native `5590b97`: both builds pass, all40 state combinations agree through direct/native-adapter/reflected calls (44rows including defaults/metadata), retained four diagnostics and both joins pass. Main-button constructor/state-producer/lifecycle work remains unfinished; no extra percentage or milestone credit was added. The next actual load-blocker candidate is the authenticated Panel intro request/native event/EndIntro/full activation path in `/tmp/panel-intro-path-candidate-1`; it has generator/portable checks but still needs root review and UE validation. See HANDOFF.md for immutable query receipts and the candidate's exact limits.
 
+Panel intro is now integrated and runtime-verified at Native `b06234e` / Engine `d7e04d4b6`: both builds, 49 intro-path rows, five retained diagnostics and both fresh joins pass. The original Root import now reaches missing `OnBeginOutro` instead of `OnBeginIntro`; it still exits139 and establishes no interactive UI. An independent audit verifies74artifact pairs/22critical sources/18binarypaths/12559Native files. Existing CommonUI budget allocates one diagnostic point here: approximately21.388%,115leaves,total1855;19behavior points remain unfinished. Next is the reviewed interface-alias resolver candidate (22 restored properties), then authentic outro/held cleanup. Exact receipts, failure retention and limits are at the top of HANDOFF.md.
+
 ## Critical path and acceptance gates
 
 These gates describe the rebuilt native client and reconstructed server. Work on
@@ -44,7 +46,7 @@ using historical instructions below.
 
 ## Current work (2026-11-01)
 
-The dashboard separates three frozen frontend source stages, generic context runtime and two bounded CommonUI runtime diagnostics from unfinished UI behavior. Current effort is approximately21.334%, with total1,855weight and historical points preserved;114leaves. Base activation and internal-button diagnostics each earn one existing behavior point. Product gates and remaining main-button/Panel/queue/input/gesture/UI parity stay unverified. Source importer rehashes46,166 frozen bindings; runtime importers pin their respective source/build/process reports and independent audits. All28 progress tests pass. See progress/README.md for allocation and provenance limits.
+The dashboard separates three frozen frontend source stages, generic context runtime and two bounded CommonUI runtime diagnostics from unfinished UI behavior. Current effort is approximately21.388%, with total1,855weight and historical points preserved;115leaves. Base activation, internal-button and Panel intro diagnostics each earn one existing behavior point. Product gates and remaining main-button/Panel/queue/input/gesture/UI parity stay unverified. Source importer rehashes46,166 frozen bindings; runtime importers pin their respective source/build/process reports and independent audits. All32 progress tests pass. See progress/README.md for allocation and provenance limits.
 
 Social and Media now pass both profiles and independent strict verifiers, original GPU bytes, exact binding/size checks and controls. Phase 2 is frozen and root-audited at 95 sources/six immutable binaries/1,388 artifacts, with two passing builds and joins. Preserve failed phase 1 and older baselines. Original atlas World LODGroup remains an explicit inference; actual UI and original pixel parity remain unfinished.
 

@@ -556,3 +556,14 @@ percentage points at the same remaining evidence.
 The current Root probe first encountered missing CommonActivatablePanel.OnBeginIntro
 at AsyncLoading.cpp:3126; Login first encountered M_TempIcon_Login_Facebook at
 MemoryImage.cpp:1064. Asynchronous load order can change the first boundary.
+
+### CommonUI Panel intro runtime allocation
+
+One point is allocated from remaining CommonUI behavior to the controlled Panel
+intro diagnostic, leaving 19 points for unfinished behavior. It exercises the
+real intro, EndIntro and full activation path, including input and priority in a
+fixture and C++ ProcessEvent interception. It does not establish Blueprint VM,
+the whole Panel, outro, deactivation, input producer, manager, full UI or parity.
+The phase includes two builds, six processes and two joins; it does not repeat
+the broader original metadata, link, material or pixel checks. The denominator
+remains 1,855, history is preserved and all four milestone gates remain false.

@@ -11088,6 +11088,20 @@
    "integrity_audit_sha256": "b1220c97b767069d7573b1e7063b3af27c986e0ce7d852e8070d6bca5e52a503",
    "scope": "Controlled real UObject and Slate internal button factory, lifecycle, core input and callback diagnostic; two builds, four live processes and two joins. No new exhaustive original UHT/ELF audit or material rerun; main CommonButton, Panel, queue, full UI, gesture and parity remain unverified.",
    "provenance_note": "Pinned external receipts and independently audited artifacts must remain available for re-verification."
+  },
+  "frontend_commonui_panel_intro_runtime": {
+   "id": "frontend_commonui_panel_intro_runtime",
+   "result": "pass",
+   "exit_code": 0,
+   "command": "python3 -I porting/progress/record_frontend_panel_intro_runtime.py",
+   "checkpoint": "porting/generated/material_pipeline/frontend-panel-intro-runtime-checkpoint-results-2.json",
+   "checkpoint_sha256": "6ee95ee5892bc85f03e60fbaaf867c9c7d62fb57c1ef6e64c05259db49af78ea",
+   "runtime_report": "porting/generated/frontend-native-evidence/panel-intro-runtime-2/root-report.json",
+   "runtime_report_sha256": "76745b7bfd04f1920889196bda99d8fb9a2309a47997fdc9b7697b2a0cd5c2b0",
+   "integrity_audit": "porting/generated/frontend-native-evidence/panel-intro-runtime-2/integrity-audit-1.json",
+   "integrity_audit_sha256": "df1101e05c74d0523af8f8d8d67a25b6c13f1385a0f3339369097321ad5031ce",
+   "scope": "Controlled real Panel intro, EndIntro and full activation path with input and priority fixture and C++ ProcessEvent interception; two builds, six processes and two joins. Blueprint VM, whole Panel, outro, deactivation, input producer, manager, full UI and parity remain unverified. No new exhaustive original metadata, link, material or pixel checks.",
+   "provenance_note": "Pinned external receipts and independently audited artifacts must remain available for re-verification."
   }
  }
 }
