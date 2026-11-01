@@ -38,22 +38,22 @@ using historical instructions below.
 
 ## Current work (2026-11-01)
 
-Native `46b4675` and Engine `08ebac023` build for both non-editor targets and
-pass fresh default/Athena direct joins against the full staged frontend closure.
-Donut now samples its original indexed PC icon and real App2 texture override;
-five graph/five owner cases pass, the real owner requires seven shaders with zero
-missing, all 19 source records are retained, and 1,290 pixels change. Prior
-Locker/PowerToast/Menu probes remain green; all 28 shader payloads independently
-validate. Dashboard effort is 20.861%, with all four product gates still open.
+Native `a1d337e` and Engine `08ebac023` build for both non-editor targets and
+pass fresh default/Athena joins. Original MainL now retains its distinct static
+map and all 19 records, requires seven shaders with zero missing, verifies nine
+overrides and six graph/six owner cases, and changes 4,096 pixels. Prior Donut,
+MenuButton, PowerToast and Locker probes remain green. Root independently
+verified source, binaries, symbols and artifacts in the MainL aggregate receipt.
+Dashboard effort is 20.861%, with all four product gates still open.
 
-Actual RootLayout/LoginScreen still fail in another original material. Gdb proves
-MainL is the next declined owner. Its own static-permutation resource and nine
-original overrides have now been decoded; all six unique Slate programs map and
-validate. Implement its pinned actual-owner bridge, verify completeness and live
-overrides, then retry root-widget loading/construction and recover native UI
-lifecycle/helpers. Continue through login/lobby/matchmaking and full gameplay.
-No interactive root menu or original-client visual parity is verified. Exact
-current source/build/runtime receipts and work ownership are in HANDOFF.
+Actual RootLayout/LoginScreen next fail on FeatureButton Master. Its programs
+are decoded/mapped and now have strict, field-only GameTime access proof. The
+batch producer classifies the whole known closure, preserving own-resource versus
+inherited instance identity; generic manifest/runtime support and a controlled
+Feature View draw are in progress. Batch source validation is not runtime proof.
+Run those owners and real root widgets, recover native lifecycle/helpers, then
+continue through login/lobby/matchmaking and full gameplay. Exact current source,
+pins, receipts, incomplete contracts and active file ownership are in HANDOFF.
 
 The dashboard tracks 104 work items with 1,855 total effort weight. Its five UI
 integration phases now count PowerToast, MenuButton and Donut; widget integration

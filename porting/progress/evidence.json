@@ -168,6 +168,30 @@
     "scope": "Detached Locker controlled draw; asset attachment and original-client visual parity are separate gates"
    }
   },
+  "material_mainl_asset_ingress": {
+   "artifact_validation_receipt": "porting/generated/frontend-probes/legacy-mainl-artifacts-1-root-validation.json",
+   "artifact_validation_receipt_sha256": "6650f8eaebe664cfcea0ae9f5ac6b9975f757ac9e5f1fb3e05a1805a8961cc24",
+   "command": "env -u LD_LIBRARY_PATH VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/lvp_icd.json SDL_AUDIODRIVER=dummy LP_NUM_THREADS=8 xvfb-run -a /opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/original-vulkan-stage/LinuxNoEditor/FortniteLinux.sh -vulkan -windowed -ResX=1280 -ResY=720 -nosound -unattended -FortniteLegacyMaterialIngress=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/gradient-panel-ingress-bundle.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/mainl-ingress-bundle-checked.json -FortniteProbeLegacyOriginalMaterial -FortniteLegacyFieldPaths -FortniteLegacyMaterialProbeOwner=/Game/UI/Foundation/Border/Materials/M-Border-MainL.M-Border-MainL -FortniteLegacyMaterialArtifactDir=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/legacy-mainl-artifacts-1 -ExecCmds=Quit -log",
+   "commit": "a1d337e",
+   "engine_commit": "08ebac023",
+   "exit_code": 0,
+   "id": "material_mainl_asset_ingress",
+   "key_lines": [
+    "[2026.11.01-04.30.51:039][  0]LogMaterial: Display: Legacy actual-owner completeness owner=/Game/UI/Foundation/Border/Materials/M-Border-MainL.M-Border-MainL domain=5 blend=0 shading=MSM_Unlit quality=1 feature=3 flags=2848 required=7 missing=0 complete=1",
+    "[2026.11.01-04.30.51:040][  0]LogTemp: Display: Legacy material ingress: verified 9 MainL source override identities and values",
+    "[2026.11.01-04.30.51:135][  0]LogTemp: Display: Legacy material probe: 6 owner live uniform cases passed",
+    "[2026.11.01-04.30.51:135][  0]LogTemp: Display: Legacy material probe: 6 instance live uniform cases passed",
+    "[2026.11.01-04.30.51:256][  0]LogTemp: Display: Legacy material probe: original Slate quad readback changed 4096 pixels"
+   ],
+   "log": "porting/generated/frontend-probes/legacy-mainl-1.log",
+   "log_sha256": "6697985534d930d3bc0f4632f4d5195cc3cf91798354fe75323bbe603a0ddb72",
+   "result": "pass",
+   "scope": "Actual original MainL static-permutation map, distinct from real Gradient parent; nine source override identities, six graph/six owner cases, seven required/zero missing,19retainedrecords,GT/RT attachment,4096controlledcolorpixels. Original pixels and rootwidgetintegration remain unverified.",
+   "source_native_commit": "a1d337e",
+   "utc": "2026-11-01T04:46:08Z",
+   "verification_receipt": "porting/generated/material_pipeline/numeric-mainl-checkpoint-results.json",
+   "verification_receipt_sha256": "5ae8e3aeecbdab92928a1f1a0f3487ddeb1cdaa1c1ade3e1ed74bb254e3ec7b2"
+  },
   "material_menubutton_asset_ingress": {
    "artifact_validation_receipt": "porting/generated/frontend-probes/legacy-numeric-menu-artifacts-4-root-validation.json",
    "artifact_validation_receipt_sha256": "cfcdb0f306a091fe93794982277872a65aad4ec5ff59438e53fca55c1a7d38ff",
@@ -283,37 +307,37 @@
   },
   "native_build_client": {
    "command": "Engine/Build/BatchFiles/Linux/Build.sh FortniteLinux Linux Development -project=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/native/FortniteLinux.uproject -NoHotReload",
-   "commit": "46b4675",
+   "commit": "a1d337e",
    "engine_commit": "08ebac023",
    "exit_code": 0,
    "id": "native_build_client",
    "key_lines": [
-    "Total time in Local executor: 294.64 seconds",
-    "Total execution time: 315.07 seconds"
+    "Total time in Local executor: 116.08 seconds",
+    "Total execution time: 129.27 seconds"
    ],
    "result": "pass",
    "scope": "Current non-editor target only; full content and Editor parity remain unverified",
-   "source_native_commit": "46b4675",
-   "utc": "2026-11-01T04:28:42Z",
-   "verification_receipt": "porting/generated/material_pipeline/texture-donut-checkpoint-results.json",
-   "verification_receipt_sha256": "6b98477fa78ff98922ea7e647f63de769c809c33632dc55b316e1175f960ae2d"
+   "source_native_commit": "a1d337e",
+   "utc": "2026-11-01T04:46:08Z",
+   "verification_receipt": "porting/generated/material_pipeline/numeric-mainl-checkpoint-results.json",
+   "verification_receipt_sha256": "5ae8e3aeecbdab92928a1f1a0f3487ddeb1cdaa1c1ade3e1ed74bb254e3ec7b2"
   },
   "native_build_server": {
    "command": "Engine/Build/BatchFiles/Linux/Build.sh FortniteLinuxServer Linux Development -project=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/native/FortniteLinux.uproject -NoHotReload",
-   "commit": "46b4675",
+   "commit": "a1d337e",
    "engine_commit": "08ebac023",
    "exit_code": 0,
    "id": "native_build_server",
    "key_lines": [
-    "Total time in Local executor: 414.11 seconds",
-    "Total execution time: 429.06 seconds"
+    "Total time in Local executor: 103.55 seconds",
+    "Total execution time: 117.59 seconds"
    ],
    "result": "pass",
    "scope": "Current non-editor target only; full content and Editor parity remain unverified",
-   "source_native_commit": "46b4675",
-   "utc": "2026-11-01T04:28:42Z",
-   "verification_receipt": "porting/generated/material_pipeline/texture-donut-checkpoint-results.json",
-   "verification_receipt_sha256": "6b98477fa78ff98922ea7e647f63de769c809c33632dc55b316e1175f960ae2d"
+   "source_native_commit": "a1d337e",
+   "utc": "2026-11-01T04:46:08Z",
+   "verification_receipt": "porting/generated/material_pipeline/numeric-mainl-checkpoint-results.json",
+   "verification_receipt_sha256": "5ae8e3aeecbdab92928a1f1a0f3487ddeb1cdaa1c1ade3e1ed74bb254e3ec7b2"
   },
   "net_version_checksum": {
    "command": "(runtime logs) porting/generated/frontend-probes/donut-material-joins-1",
@@ -350,39 +374,39 @@
    "utc": "2026-11-01T00:39:06Z"
   },
   "smoke_athena": {
-   "command": "env -u LD_LIBRARY_PATH JOIN_NAME=athena bash /opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/donut-material-joins-1/smoke_join_isolated.sh '/Game/Maps/FortniteEmptyDedicated?game=/Script/FortniteGame.FortGameModeAthena'",
-   "commit": "46b4675",
+   "command": "env -u LD_LIBRARY_PATH JOIN_NAME=athena bash /opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/mainl-material-joins-1/smoke_join_isolated.sh '/Game/Maps/FortniteEmptyDedicated?game=/Script/FortniteGame.FortGameModeAthena'",
+   "commit": "a1d337e",
    "engine_commit": "08ebac023",
    "exit_code": 0,
    "id": "smoke_athena",
    "key_lines": [
-    "Local UE join succeeded. Logs: /opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/donut-material-joins-1/athena-server.log and /opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/donut-material-joins-1/athena-client.log"
+    "Local UE join succeeded. Logs: /opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/mainl-material-joins-1/athena-server.log and /opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/mainl-material-joins-1/athena-client.log"
    ],
    "log_sha256": "3a5fdd2c95cd41c6abcc16f22decd678222b84176c4859d2ef0ff761a53bc05e",
    "result": "pass",
    "scope": "Current native direct test-map join only; frontend/matchmaking/original wire parity remain unverified",
-   "source_native_commit": "46b4675",
-   "utc": "2026-11-01T04:28:42Z",
-   "verification_receipt": "porting/generated/material_pipeline/texture-donut-checkpoint-results.json",
-   "verification_receipt_sha256": "6b98477fa78ff98922ea7e647f63de769c809c33632dc55b316e1175f960ae2d",
+   "source_native_commit": "a1d337e",
+   "utc": "2026-11-01T04:46:08Z",
+   "verification_receipt": "porting/generated/material_pipeline/numeric-mainl-checkpoint-results.json",
+   "verification_receipt_sha256": "5ae8e3aeecbdab92928a1f1a0f3487ddeb1cdaa1c1ade3e1ed74bb254e3ec7b2",
    "wrapper_exit_code": 0
   },
   "smoke_default": {
-   "command": "env -u LD_LIBRARY_PATH JOIN_NAME=default bash /opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/donut-material-joins-1/smoke_join_isolated.sh",
-   "commit": "46b4675",
+   "command": "env -u LD_LIBRARY_PATH JOIN_NAME=default bash /opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/mainl-material-joins-1/smoke_join_isolated.sh",
+   "commit": "a1d337e",
    "engine_commit": "08ebac023",
    "exit_code": 0,
    "id": "smoke_default",
    "key_lines": [
-    "Local UE join succeeded. Logs: /opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/donut-material-joins-1/default-server.log and /opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/donut-material-joins-1/default-client.log"
+    "Local UE join succeeded. Logs: /opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/mainl-material-joins-1/default-server.log and /opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/mainl-material-joins-1/default-client.log"
    ],
    "log_sha256": "f26b72a3794b1398631ce34e9bd130578aca9819dd0f5b58fdbfc49a90754626",
    "result": "pass",
    "scope": "Current native direct test-map join only; frontend/matchmaking/original wire parity remain unverified",
-   "source_native_commit": "46b4675",
-   "utc": "2026-11-01T04:28:42Z",
-   "verification_receipt": "porting/generated/material_pipeline/texture-donut-checkpoint-results.json",
-   "verification_receipt_sha256": "6b98477fa78ff98922ea7e647f63de769c809c33632dc55b316e1175f960ae2d",
+   "source_native_commit": "a1d337e",
+   "utc": "2026-11-01T04:46:08Z",
+   "verification_receipt": "porting/generated/material_pipeline/numeric-mainl-checkpoint-results.json",
+   "verification_receipt_sha256": "5ae8e3aeecbdab92928a1f1a0f3487ddeb1cdaa1c1ade3e1ed74bb254e3ec7b2",
    "wrapper_exit_code": 0
   },
   "ui_banner_classload": {
