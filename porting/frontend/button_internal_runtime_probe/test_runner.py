@@ -39,6 +39,8 @@ class RunnerTests(unittest.TestCase):
     def test_fixed_commands(self):
         self.assertEqual(runner.command(self.binary, 'button'),
                          [str(self.binary), '-ButtonInternalProbe', *runner.BASE_ARGS])
+        self.assertEqual(runner.command(self.binary, 'main-button'),
+                         [str(self.binary), '-MainButtonStateProbe', *runner.BASE_ARGS])
         self.assertEqual(runner.command(self.binary, 'activation'),
                          [str(self.binary), '-ActivationBaseProbe', *runner.BASE_ARGS])
         for case in ('registry', 'lifecycle'):
@@ -66,6 +68,12 @@ class RunnerTests(unittest.TestCase):
         self.assertFalse(receipt['passed'])
         with self.assertRaises(FileExistsError):
             runner.run(self.args())
+
+    def test_main_button_requires_transcript(self):
+        self.assertFalse(runner.run(self.args('main-button')))
+        receipt = json.loads((self.root / 'out/receipt.json').read_text())
+        self.assertFalse(receipt['transcript']['passed'])
+        self.assertEqual(receipt['transcript'], json.loads((self.root / 'out/verification.json').read_text()))
 
     def test_empty_cmdline_is_retried_but_wrong_nonempty_is_rejected(self):
         original = Path.read_bytes

@@ -10,6 +10,7 @@ import subprocess
 import time
 
 import verifier
+import main_button_verifier
 
 ENVIRONMENT = ('DISPLAY', 'VK_ICD_FILENAMES', 'SDL_AUDIODRIVER', 'LP_NUM_THREADS')
 BASE_ARGS = ('-stdout', 'FortniteLinux', '/Engine/Maps/Entry', '-vulkan', '-windowed',
@@ -31,7 +32,8 @@ def command(binary, case):
                  '-ContextProbeTravelMap=/Engine/Maps/Entry')
     else:
         flags = {'button': ('-ButtonInternalProbe',),
-                 'activation': ('-ActivationBaseProbe',)}[case]
+                 'activation': ('-ActivationBaseProbe',),
+                 'main-button': ('-MainButtonStateProbe',)}[case]
     return [str(binary), *flags, *BASE_ARGS]
 
 
@@ -140,9 +142,10 @@ def run(args):
     except OSError as exc:
         receipt['error'] = (receipt['error'] or '') + ' binary recheck failed: ' + str(exc)
     receipt['log'] = {'path': str(log), 'sha256': digest(log)}
-    if args.case == 'button':
+    if args.case in ('button', 'main-button'):
         try:
-            result = verifier.verify(log.read_text(errors='replace'))
+            transcript_verifier = verifier if args.case == 'button' else main_button_verifier
+            result = transcript_verifier.verify(log.read_text(errors='replace'))
         except (ValueError, OSError) as exc:
             result = {'passed': False, 'error': str(exc)[:300]}
         write_json(out / 'verification.json', result)
@@ -150,7 +153,7 @@ def run(args):
     receipt['passed'] = (receipt['returncode'] == 0 and not receipt['timed_out'] and
                          receipt['proc_exe_inode_verified'] and receipt['binary_after_verified'] and
                          receipt['error'] is None and
-                         (args.case != 'button' or receipt['transcript']['passed']))
+                         (args.case not in ('button', 'main-button') or receipt['transcript']['passed']))
     write_json(receipt_path, receipt)
     return receipt['passed']
 
@@ -161,7 +164,7 @@ def main():
     parser.add_argument('--binary', type=Path, required=True)
     parser.add_argument('--cwd', type=Path, required=True)
     parser.add_argument('--out', type=Path, required=True)
-    parser.add_argument('--case', choices=('button', 'activation', 'registry', 'lifecycle'), required=True)
+    parser.add_argument('--case', choices=('button', 'main-button', 'activation', 'registry', 'lifecycle'), required=True)
     parser.add_argument('--timeout', type=float, default=240)
     args = parser.parse_args()
     try:

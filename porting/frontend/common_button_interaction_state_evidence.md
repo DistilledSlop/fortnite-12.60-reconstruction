@@ -19,7 +19,8 @@ The setter preserves meaningful ordering and transition guards:
 - Enabling first calls the original UWidget setter143d8bb50, then returns if
   native bit02 is already set. Otherwise it sets that bit, updates the internal
   button and its custom Slate widget, calls visual helper1407f5ce0 and invokes
-  BP_OnEnabled through slot4e0.
+  the enabled hook through slot4e0. That hook calls BP_OnEnabled and then
+  OnCurrentTextStyleChanged.
 - Disabling first clears the underlying Widget enabled flag, then returns if
   native bit02 is already clear. Otherwise it clears the bit, updates internal
   button/Slate state, calls the visual helper and invokes BP_OnDisabled via4e8.
@@ -48,3 +49,20 @@ It preserves77 original windows, including the full537-byte constructor and
 semantic classification additionally comes from the reviewed registration,
 constructor and setter dataflow. No original process, shared Ghidra project,
 Native source, Engine source or stage was modified.
+
+Additional hook binding (2026-11-01): installed slot4e0 targets1407d2bd0;
+wrapper140808d10 uses FName1480d22c8, initialized from UTF-16 BP_OnEnabled
+at145a02120 by1401c5e40. Slot4e8 targets1407d2b70; wrapper140808c90 uses
+FName1480d22b8, initialized from BP_OnDisabled at145a02098 by1401c5e00.
+Both hooks then dispatch slot4f0 (OnCurrentTextStyleChanged) unconditionally.
+The visual helper already sends that notification when the inner resolves,
+so an ordinary enabled transition has two text-style notifications, separated
+by the BP enabled/disabled event. Bounded replay and exact windows:
+`/tmp/main-button-init-callbacks-1/replay-enabled-hooks.py` (PASS).
+
+The complete IsInteractionEnabled query is now emitted through the guarded
+main-button-query generator policy, with its real BlueprintPure const native
+signature and the two native state defaults established by the constructor.
+This query work does not implement the remaining constructor fields, state
+producers or Initialize/callback graph. NativeIsInteractionEnabled is a C++
+forwarder for the global input adapter, not an extra reflected function.

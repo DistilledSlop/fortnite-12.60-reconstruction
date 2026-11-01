@@ -2,6 +2,25 @@
 
 ## Current resume point (2026-11-01)
 
+- Current unvalidated integration: complete main CommonButton IsInteractionEnabled query is now
+  normally generated with exact owner/signature guards, both proven native defaults and a native-only
+  global-input adapter forwarder. It caches visibility before GetIsEnabled and rejects Hidden/Collapsed
+  or either disabled native bit. This does not implement the remaining constructor/state producers.
+  New opt-in MainButtonStateProbe exercises actual defaults, UFunction native metadata and40states
+  through direct, alias and reflected calls (44rows total). Shared builds/runtime are pending; root owns.
+  Promotion /tmp/main-button-query-root-integration-1 changed only UCommonButton CPP/header and
+  restored12553unchanged timestamps. Policy22tests and generator141checks pass.
+- New source checkpoints: /tmp/main-button-init-callbacks-1 proves all Initialize callback bindings and
+  the exact dependency frontier (selection, hover/style, input routing). Enabled/disabled native hooks
+  call their BP event and THEN OnCurrentTextStyleChanged; combined with the visual helper, preserve
+  two text-style notifications per ordinary transition. /tmp/main-button-slot-apis-1 now binds all
+  three slot setters through original name/exec pairs to actual4.25 APIs. Constructor unresolved
+  members/defaults are frozen in /tmp/main-button-ctor-state-1; do not drop nontrivial native fields.
+- Critical-path correction: main button query is a global-input dependency, not a direct prerequisite
+  of Panel.OnBeginIntro. That real native event defaults to EndIntro in the Panel draft, whose exact
+  phase semantics and Panel activation override dependencies must be composed with the current base.
+  Do not register a reduced event or inherit the base notify path while omitting the original Panel
+  override. Candidate next-stage-draft/panel-definitions.inc and CommonActivationCore hold the bodies.
 - Goal remains the reconstructed client and multiplayer server with full feature/visual/wire parity.
   All four product milestones remain false. Dashboard is approximately21.334%,114leaves,1855weight
   after crediting one existing CommonUI behavior point for the independently audited internal-button

@@ -4,9 +4,12 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 EXPECTED = json.loads((HERE / 'base-original-policy.json').read_text())
 BUTTON_EXPECTED = json.loads((HERE / 'button-original-policy.json').read_text())
+MAIN_BUTTON_QUERY_EXPECTED = json.loads((HERE / 'main-button-query-original-policy.json').read_text())
 MANAGER_EXPECTED = json.loads((HERE / 'manager-original-policy.json').read_text())
 
 def apply(model, block, owner_fns):
+    if model['name'] == 'UCommonButton':
+        return apply_main_button_query(model, block, owner_fns)
     if model['name'] == 'UCommonButtonInternal':
         return apply_button(model, block, owner_fns)
     if model['name'] == 'UCommonInputManager':
@@ -30,6 +33,27 @@ def apply(model, block, owner_fns):
             'specifiers':['BlueprintImplementableEvent'] if event else
                 ['BlueprintCallable','BlueprintPure'] if name=='IsActivated' else ['BlueprintCallable'], 'used':{}})
     model['common_activation_runtime']=True
+    return model
+
+def apply_main_button_query(model, block, owner_fns):
+    if (block.get('block_va') != '0x145a01210' or model['package'] != '/Script/CommonUI'
+            or '0x140805cb0' not in owner_fns):
+        raise ValueError('original CommonButton owner mismatch')
+    found = [f for f in block.get('functions', []) if f.get('name') == 'IsInteractionEnabled']
+    if found != [MAIN_BUTTON_QUERY_EXPECTED]:
+        raise ValueError('original IsInteractionEnabled signature mismatch')
+    names = {'IsInteractionEnabled', 'NativeIsInteractionEnabled',
+             'bNativeButtonEnabled', 'bNativeInteractionEnabled'}
+    for group in ('functions', 'members_table_order', 'members_decl_order', 'fields', 'helpers', 'static_helpers'):
+        if any(item.get('name') in names for item in model.get(group, [])):
+            raise ValueError('CommonButton query declaration collision: ' + group)
+    if model.get('common_button_query_runtime'):
+        raise ValueError('CommonButton query runtime already emitted')
+    model['functions'].append({'name':'IsInteractionEnabled', 'rpc':False, 'service':None,
+        'ret':'bool', 'args':[], 'const':True, 'notify':False, 'splice':False,
+        'blueprint_event':False, 'access':'public', 'runtime_implementation':True,
+        'specifiers':['BlueprintCallable','BlueprintPure'], 'used':{}})
+    model['common_button_query_runtime'] = True
     return model
 
 def apply_manager(model, block, owner_fns):
@@ -69,12 +93,14 @@ def header_prelude(model):
     return result
 
 def declarations(model):
+    if model.get('common_button_query_runtime'): return (HERE/'main-button-query-declarations.inc').read_text()
     if model.get('common_button_internal_runtime'): return (HERE/'button-declarations.inc').read_text()
     if model.get('common_activation_runtime'): return (HERE/'base-declarations.inc').read_text()
     if model.get('common_input_suspension_runtime'): return (HERE/'manager-declarations.inc').read_text()
     return ''
 
 def definitions(model):
+    if model.get('common_button_query_runtime'): return (HERE/'main-button-query-definitions.inc').read_text()
     if model.get('common_button_internal_runtime'): return (HERE/'button-definitions.inc').read_text()
     if model.get('common_activation_runtime'): return '\n#include "CommonActivationCore.h"\n'+(HERE/'base-definitions.inc').read_text()
     if model.get('common_input_suspension_runtime'): return (HERE/'manager-definitions.inc').read_text()

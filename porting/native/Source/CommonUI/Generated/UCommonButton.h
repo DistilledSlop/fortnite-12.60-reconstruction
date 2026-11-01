@@ -191,5 +191,14 @@ protected:
 	void OnTriggeredInputActionChanged(const FDataTableRowHandle& NewTriggeredAction);
 public:
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsInteractionEnabled() const;
+
+public:
+    bool NativeIsInteractionEnabled() const;
+protected:
+    // The original constructor sets both native state bits. These are not UPROPERTYs.
+    bool bNativeButtonEnabled = true;
+    bool bNativeInteractionEnabled = true;
 };
 

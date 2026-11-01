@@ -43,3 +43,22 @@ validate each transcript separately. Failures and timeouts after launch retain
 the log and receipt. Run under `xvfb-run` externally so the child is the ELF
 itself. The recorded build result and source head are limited provenance, not
 an exhaustive toolchain or link closure, and do not establish full UI behavior.
+
+## MainButton query diagnostic
+
+Use `--case main-button` with the runner to launch the fixed
+`-MainButtonStateProbe` case and record its transcript verification in the
+receipt and `verification.json`. It can also be checked independently:
+
+```sh
+python3 porting/frontend/button_internal_runtime_probe/main_button_verifier.py path/to/runtime.log --output path/to/result.json
+```
+
+The verifier requires the 44 ordered `MAINBTN` rows: begin, defaults, metadata,
+40 visibility and native flag combinations, and complete. It checks all three
+query results and every success flag against the controlled fixture's expected
+values. The fixture checks defaults and UFunction metadata and invokes the
+actual UFunction via `ProcessEvent`, alongside direct and alias queries. A
+matching transcript alone does not establish its provenance. This controlled
+query and native-flags fixture does not establish the state producer, the whole
+constructor or `Initialize`, button styling, or acceptance of the main UI.
