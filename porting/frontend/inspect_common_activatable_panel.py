@@ -20,6 +20,7 @@ def sha(path):
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument('--output', required=True, type=Path)
+    ap.add_argument('--last-batch', type=int, default=13)
     args = ap.parse_args()
     out = args.output.resolve()
     out.mkdir(parents=True, exist_ok=False)
@@ -38,7 +39,11 @@ def main():
     assert image.imagebase == BASE
     data = image.m
     records = {}
-    for name, address in [('Panel', 0x145a00360), ('Widget', 0x145a004e0)]:
+    for name, address in [('Panel', 0x145a00360), ('Widget', 0x145a004e0),
+                          ('CommonUISubsystem', 0x145a0b9c0),
+                          ('CommonInputManager', 0x145a05fd0),
+                          ('CommonInputSubsystem', 0x145a0e0d0),
+                          ('CommonGlobalInputHandler', 0x145a058e0)]:
         offset = address - BASE
         prop_array = struct.unpack_from('<Q', data, offset + 40)[0]
         count = struct.unpack_from('<i', data, offset + 64)[0]
@@ -53,7 +58,10 @@ def main():
         offset = address - BASE
         records['event_params'][name] = {'address': hex(address), 'raw72': data[offset:offset + 72].hex(), 'flags': hex(struct.unpack_from('<I', data, offset + 64)[0]), 'num_properties': struct.unpack_from('<I', data, offset + 56)[0]}
     (out / 'decoded.json').write_text(json.dumps(records, indent=2) + '\n')
-    starts = [0x1407bb5f0, 0x1407bb630, 0x1407d1fb0, 0x1407d26e0, 0x1407d2330, 0x1407d2950, 0x140807e00, 0x140808180, 0x1407ae640, 0x1407c9500]
+    starts = [0x1407bb5f0, 0x1407bb630, 0x1407d1fb0, 0x1407d26e0, 0x1407d2330, 0x1407d2950, 0x140807e00, 0x140808180, 0x1407ae640, 0x1407c9500,
+              0x1407dbc80, 0x1407dbdd0, 0x1407dbf20, 0x1407dc080,
+              0x1407dc280, 0x1407fc000, 0x1407c2eb0, 0x1407f66a0,
+              0x1408091b0, 0x140818410, 0x14080f000, 0x1407ac590]
     raw = {}
     for address in starts:
         # Preserve a bounded raw window, not an inferred function extent.
@@ -66,8 +74,10 @@ def main():
     for address in [0x14080bc70, 0x14080bc90, 0x14080a2c0, 0x14080a2e0, 0x14080bae0, 0x14080bb80, 0x140777600, 0x140808fc0, 0x140808fd0, 0x1406801c0]:
         (out / (hex(address) + '.bin')).write_bytes(data[address - BASE:address - BASE + 32])
     (out / 'raw-functions.json').write_text(json.dumps(raw, indent=2) + '\n')
+    for address, size in [(0x1401c5c80, 0xc0), (0x145a03300, 0x120)]:
+        (out / (hex(address) + '.bin')).write_bytes(data[address - BASE:address - BASE + size])
     sources = [Path(__file__).resolve(), ROOT / 'porting/extract_reflection.py', ROOT / 'porting/material_pipeline/view_original_probe.py', ROOT / 'porting/ghidra/decompile_targets.py', ROOT / 'porting/generated/reflection/native_funcs.json', ROOT / 'porting/generated/reflection/native_class_index.json', ROOT / 'porting/generated/frontend-probes/native-super-classification-6.json']
-    for batch in range(1, 14):
+    for batch in range(1, args.last_batch + 1):
         sources.extend(sorted((ROOT / f'porting/generated/frontend-native-evidence/common-activatable-panel-events-{batch}').rglob('*')))
     bindings = []
     frozen = out / 'inputs'

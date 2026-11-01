@@ -188,3 +188,89 @@ field `3b0` and four callback fields, and `1407ac590`/`1407bdba0`. No action-rou
 focus-restoration or input-manager source identity is claimed from modern
 CommonUI analogies. No Native/Engine/stage file, runtime, UE build or original
 client was changed/executed by this investigation.
+
+## Input and callback closure (second checkpoint)
+
+The follow-up supersedes the unresolved identities above without changing the
+first receipt or any of its 133 snapshots. New receipt:
+`generated/frontend-native-evidence/common-activatable-panel-checkpoint-3/receipt.json`,
+SHA-256 `cd36309e30a5df75da88940c59ba452ef9b457d86bfe7f530a3e5f05f3ba27dd`,
+217 immutable inputs, including additional batches 14–24. Reproduce into a fresh
+directory with the same command plus `--last-batch 24`. The original helper source
+used for checkpoint 2 remains available at its immutable source snapshot; the
+working helper now also captures subsystem properties and the follow-up windows.
+
+The activation input effect has exact reflected/API identities:
+
+| Original object/member | Binding evidence |
+| --- | --- |
+| CommonUISubsystem.CommonInputManager, `50` | Original property table `145a0b9c0`; GetInputManager exec `140818410` returns `this+50`; return getter `14080f000` is a thunk to CommonInputManager getter `14080e600` |
+| CommonInputManager.GlobalInputHandler, `c8` | Original property table `145a05fd0`; class reference `14080e430` resolves to CommonGlobalInputHandler getter `14080e270` |
+| GlobalInputHandlerPriorityFilter, GlobalInputHandler `68` | GetGlobalInputHandlerPriorityFilter exec `14080ffe0` calls `1407c2eb0`, which returns manager `c8` object's `68` or 0 when absent. Setter exec `140811070` calls `1407f66a0`, which writes exactly that field when the handler exists |
+| CommonInputManager.CurrentlyHeldActionInputHandler, `a8` | Original reflected interface property at `a8`, two words. These are exactly the words reset by `1407ae640` |
+
+Thus activation sets the **global input handler priority filter** to the result
+of Panel virtual `4c8` (Panel default zero). This is a precise name bound through
+the original public getter/setter, even though the underlying filter field is
+not reflected. No modern action-router identity is needed or implied.
+
+`CommonInputSubsystem`'s native multicast at `30` is separate from its reflected
+dynamic OnInputMethodChanged property at `50`; do not subscribe to both or
+silently substitute the dynamic delegate. Its bound Panel callback
+`1407c9500` invokes virtual `4e0`, then `1408091b0`. The latter wraps
+ProcessEvent with one byte. FName initializer `1401c5ce0` binds global
+`1480d2268` to literal **OnInputModeChanged** at `145a03378`. Original reflection
+names the Bool argument **bUsingGamepad**. The callback supplies `inputType == 1`.
+
+The weak Panel member `3b0` resolves to **CommonInputManager**. Its
+StartNextOperation `1407fc000` stores a weak reference to `this` into Panel
+`3b0` immediately before either invoking OnBeginIntro or setting bIsActive and
+calling activation virtual `488`. This is the same manager whose reflected
+Operations array is at `e8` and ActivatablePanelStack at `b8`. Original log
+literals name StartNextOperation; this identification does not rely on current
+engine source. The function's full 4,061-byte assembly/decompilation is frozen.
+
+StartNextOperation binds private single-cast fields to the following weak manager
+callbacks with a captured 16-byte operation identifier. `140786850` constructs
+the UObject-weak delegate and copies all 16 captured bytes. It replaces the
+single-cast binding rather than appending a multicast listener.
+
+| Panel field | Original callback | Proven consumer effects, excluding logging/temp-string cleanup |
+| --- | --- | --- |
+| `3d0` | `1407dc080`, log OnPrePanelActivated | If Panel exists, unbind/free `3d0`, then broadcast manager native multicast `60` with Panel |
+| `3e0` | `1407dbc80`, log OnPostPanelActivated | If Panel exists, unbind/free `3e0`, then call manager StartNextOperation |
+| `3f0` | `1407dc280`, log OnPrePanelDeactivatedForPop | If Panel exists, unbind/free `3f0`. Only if found in manager ActivatablePanelStack: remove every occurrence preserving other order; if Panel byte `304` is true, clear it, call wrapper `1408091f0`, then virtual `4f0`; broadcast manager native multicast `30` with Panel |
+| `400` | `1407dbdd0`, log OnPostPanelDeactivatedForPop | If Panel exists, unbind/free `400`, decrement manager outstanding pop count `f8`, and call StartNextOperation only when the decremented count equals zero |
+| `400` | `1407dbf20`, log OnPostPanelDeactivatedForPush | If Panel exists, unbind/free `400`; call StartNextOperation regardless of whether Panel exists |
+
+The original unbind operations can occur while the single-cast delegate is being
+executed. Preserve delegate execution/lifetime semantics, rather than storing a
+raw callable and invalidating it unsafely. The four callbacks are meaningful
+operation-completion phases; dropping them leaves the input manager's queue and
+stack inconsistent. Manager `30`/`60` multicast source identifiers remain
+unreflected/unresolved; the exact offsets, argument and execution semantics are
+proven. The names in the table are original log strings, not recovered symbols.
+
+Cleanup `1407ae640` is now more specifically typed. Its `1407bdba0` lookup hashes
+the 16-byte key (object pointer plus FName), matching a DataTable row handle,
+against entries of stride `98`. When the held duration `308` is positive and an
+entry exists, it **broadcasts float 0.0** to the entry's native multicast at
+`10`: caller `XORPS XMM1,XMM1`; `1407ac590` preserves XMM1 and supplies it to
+each binding. The decompiler's undefined/integer-looking second argument is
+incorrect; the assembly proves the float calling convention. It then resets
+duration/key and the manager's CurrentlyHeldActionInputHandler interface.
+The entry's original C++ type/member name is not recovered; a faithful port must
+preserve the float progress broadcast without inventing an action identity.
+
+The remaining implementation dependency is now the **original CommonInputManager
+operation queue**, not the two event defaults themselves. `1407fc000` is recovered
+in full, including batched-pop paths, binding installation, stack writes,
+operation removal and synchronous reentry through completion callbacks. Its
+operation record layout (stride `28`) and push/pop enqueue helpers such as
+`1407e0c80` still need a reviewed source reconstruction before manager behavior
+can be claimed complete. The exact public callback bodies and Panel/Base phase
+ordering above can be implemented against typed members; wiring them to empty
+manager placeholders would still lose original behavior. Focus restoration and
+modern action-router behavior are not additional inferred side effects in these
+original bodies. No runtime, build or UI activation claim follows from this
+read-only evidence.
