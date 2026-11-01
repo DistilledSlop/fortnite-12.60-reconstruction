@@ -18,6 +18,20 @@ spec.loader.exec_module(recorder)
 
 
 class ReceiptTests(unittest.TestCase):
+    def test_attachment_receipts_preserve_owner_and_shared_map_provenance(self):
+        owner, resource, shared = '/Game/Child.Child', '/Game/Parent.Parent', '/Game/Shared.Shared'
+        prefix = '[timestamp]LogTemp: Display: Legacy material ingress: manifest owner ' + owner + ' uses original resource owner ' + resource
+        success = 'complete and attached on both threads; seven shaders and all uniform cases passed'
+        old = prefix + ', ' + success
+        current = prefix + ', shared map provenance owner ' + shared + '; ' + success
+        self.assertTrue(recorder.attachment_proof(old, owner, resource, {resource}))
+        self.assertTrue(recorder.attachment_proof(current, owner, resource, {resource, shared}))
+        self.assertFalse(recorder.attachment_proof(current, owner, resource, {resource}))
+        self.assertFalse(recorder.attachment_proof(current, '/Game/Other.Other', resource, {shared}))
+        self.assertFalse(recorder.attachment_proof(current, owner, '/Game/Other.Other', {shared}))
+        self.assertFalse(recorder.attachment_proof(current.replace('both threads', 'game thread'), owner, resource, {shared}))
+        self.assertFalse(recorder.attachment_proof(current + ' trailing unverified text', owner, resource, {shared}))
+
     def test_frozen_native_source_uses_commit_not_modified_worktree(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

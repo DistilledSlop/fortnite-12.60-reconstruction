@@ -33,6 +33,19 @@ def owner_id(owner):
     return 'material_frontend_owner_' + hashlib.sha256(owner.encode()).hexdigest()[:16]
 
 
+def attachment_proof(line, owner, resource, provenance_owners):
+    """Accept pinned old receipts and the newer explicit shared-map receipt."""
+    prefix = 'Legacy material ingress: manifest owner ' + owner + ' uses original resource owner ' + resource
+    success = 'complete and attached on both threads; seven shaders and all uniform cases passed'
+    if prefix + ', ' + success in line:
+        return line.endswith(prefix + ', ' + success)
+    marker = prefix + ', shared map provenance owner '
+    if marker not in line:
+        return False
+    provenance, separator, result = line.split(marker, 1)[1].partition('; ')
+    return bool(separator and provenance in provenance_owners and result == success)
+
+
 def inventory_owners(path):
     owners = []
     for entry in json.loads(path.read_text())['entries']:
@@ -217,8 +230,15 @@ def main():
         resource = entry['resource_owner_path']
         complete = [l for l in lines if 'Legacy actual-owner completeness owner=' + resource + ' ' in l
                     and 'required=7 missing=0 complete=1' in l]
-        attach = [l for l in lines if 'manifest owner ' + owner + ' uses original resource owner ' + resource +
-                  ', complete and attached on both threads; seven shaders and all uniform cases passed' in l]
+        # Shared maps may legitimately retain another resource's provenance.
+        # Require that resource to have the same pinned raw bytes and shader
+        # identity; the frozen native reader additionally verifies ordered names,
+        # per-owner receipts, canonical map identity and both-thread attachment.
+        provenance_owners = {resource} | {
+            e['resource_owner_path'] for e in manifest.values()
+            if e.get('resource_sha256') and e['resource_sha256'] == entry.get('resource_sha256')
+            and e['shader_identity'] == entry['shader_identity']}
+        attach = [l for l in lines if attachment_proof(l, owner, resource, provenance_owners)]
         uniform = [l for l in lines if re.search(r'\b[1-9][0-9]* manifest owner live uniform cases passed', l)]
         fixture = json.loads(bundle.read_text())['runtime_fixture']
         view = [l for l in lines if re.search(r'\b[1-9][0-9]* manifest View draw live uniform cases passed', l)]
