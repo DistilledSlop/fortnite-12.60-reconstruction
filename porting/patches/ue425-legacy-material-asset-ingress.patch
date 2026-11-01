@@ -780,3 +780,139 @@ index db280445d..92c165552 100644
 -- 
 2.53.0
 
+From 8c4445ea314186c429d2d6ab5c7f14fc1f983f02 Mon Sep 17 00:00:00 2001
+From: Codex <codex@local.invalid>
+Date: Sun, 1 Nov 2026 05:29:59 +0000
+Subject: [PATCH 1/2] Preserve serialized owner provenance when installing
+ material shader maps
+
+---
+ .../Runtime/Engine/Private/Materials/Material.cpp |  8 ++++----
+ .../Engine/Private/Materials/MaterialInstance.cpp |  2 +-
+ .../Source/Runtime/Engine/Public/MaterialShared.h | 15 +++++++++++++++
+ 3 files changed, 20 insertions(+), 5 deletions(-)
+
+diff --git a/Engine/Source/Runtime/Engine/Private/Materials/Material.cpp b/Engine/Source/Runtime/Engine/Private/Materials/Material.cpp
+index c089d9367..c48b187a4 100644
+--- a/Engine/Source/Runtime/Engine/Private/Materials/Material.cpp
++++ b/Engine/Source/Runtime/Engine/Private/Materials/Material.cpp
+@@ -815,7 +815,7 @@ void ProcessSerializedInlineShaderMaps(UMaterialInterface* Owner, TArray<FMateri
+ 							OwnerMaterialInstance ? OwnerMaterialInstance->AllocatePermutationResource() : OwnerMaterial->AllocateResource();
+ 					}
+ 					OutMaterialResourcesLoaded[QualityLevelIndex][FeatureIdx]->ReleaseShaderMap();
+-					OutMaterialResourcesLoaded[QualityLevelIndex][FeatureIdx]->SetInlineShaderMap(DesiredQLShaderMap);
++					OutMaterialResourcesLoaded[QualityLevelIndex][FeatureIdx]->SetInlineShaderMap(*DesiredQLMaterialResource[FeatureIdx]);
+ 				}
+ 			}
+ 		}
+@@ -837,7 +837,7 @@ void ProcessSerializedInlineShaderMaps(UMaterialInterface* Owner, TArray<FMateri
+ 					OutMaterialResourcesLoaded[LoadedQualityLevel][LoadedFeatureLevel] =
+ 						OwnerMaterialInstance ? OwnerMaterialInstance->AllocatePermutationResource() : OwnerMaterial->AllocateResource();
+ 				}
+-				OutMaterialResourcesLoaded[LoadedQualityLevel][LoadedFeatureLevel]->SetInlineShaderMap(LoadedShaderMap);
++				OutMaterialResourcesLoaded[LoadedQualityLevel][LoadedFeatureLevel]->SetInlineShaderMap(LoadedResources[0]);
+ 			}
+ 		}
+ #else
+@@ -870,7 +870,7 @@ void ProcessSerializedInlineShaderMaps(UMaterialInterface* Owner, TArray<FMateri
+ 									OwnerMaterialInstance ? OwnerMaterialInstance->AllocatePermutationResource() : OwnerMaterial->AllocateResource();
+ 							}
+ 
+-							OutMaterialResourcesLoaded[QualityLevelIndex][LoadedFeatureLevel]->SetInlineShaderMap(LoadedShaderMap);
++							OutMaterialResourcesLoaded[QualityLevelIndex][LoadedFeatureLevel]->SetInlineShaderMap(LoadedResource);
+ 						}
+ 					}
+ 				}
+@@ -3017,7 +3017,7 @@ void UMaterial::CacheResourceShadersForRendering(bool bRegenerateId)
+ 					*GetFullName());
+ 				if (!PackageFileName.IsNone() && ReloadMaterialResource(&Tmp, PackageFileName.ToString(), OffsetToFirstResource, FeatureLevel, LocalActiveQL))
+ 				{
+-					MaterialResource->SetInlineShaderMap(Tmp.GetGameThreadShaderMap());
++					MaterialResource->SetInlineShaderMap(Tmp);
+ 				}
+ 			}
+ #endif
+diff --git a/Engine/Source/Runtime/Engine/Private/Materials/MaterialInstance.cpp b/Engine/Source/Runtime/Engine/Private/Materials/MaterialInstance.cpp
+index 836a97306..e9f56c412 100644
+--- a/Engine/Source/Runtime/Engine/Private/Materials/MaterialInstance.cpp
++++ b/Engine/Source/Runtime/Engine/Private/Materials/MaterialInstance.cpp
+@@ -2783,7 +2783,7 @@ void UMaterialInstance::CacheResourceShadersForRendering()
+ 					*GetFullName());
+ 				if (!PackageFileName.IsNone() && ReloadMaterialResource(&Tmp, PackageFileName.ToString(), OffsetToFirstResource, FeatureLevel, LocalActiveQL))
+ 				{
+-					MaterialResource->SetInlineShaderMap(Tmp.GetGameThreadShaderMap());
++					MaterialResource->SetInlineShaderMap(Tmp);
+ 				}
+ 			}
+ #endif
+diff --git a/Engine/Source/Runtime/Engine/Public/MaterialShared.h b/Engine/Source/Runtime/Engine/Public/MaterialShared.h
+index 391a0d10b..6c4c5d714 100644
+--- a/Engine/Source/Runtime/Engine/Public/MaterialShared.h
++++ b/Engine/Source/Runtime/Engine/Public/MaterialShared.h
+@@ -1511,6 +1511,8 @@ public:
+ 	/** Serializes the shader map inline in this material, including any shader dependencies. */
+ 	void SerializeInlineShaderMap(FArchive& Ar, const struct FLegacyMaterialAssetContext* LegacyContext = nullptr);
+ 	bool HasLegacyMaterialAsset() const { return LegacyMaterialProvenance.IsValid(); }
++	/** Original serialized owner receipt, independent of a possibly shared shader map. */
++	const TSharedPtr<const struct FLegacyMaterialAssetProvenance, ESPMode::ThreadSafe>& GetLegacyMaterialAssetProvenance() const { return LegacyMaterialProvenance; }
+ 
+ 	/** Serializes the shader map inline in this material, including any shader dependencies. */
+ 	void RegisterInlineShaderMap(bool bLoadedByCookedMaterial);
+@@ -1760,6 +1762,8 @@ public:
+ 	void SetInlineShaderMap(FMaterialShaderMap* InMaterialShaderMap)
+ 	{
+ 		checkSlow(IsInGameThread() || IsInAsyncLoadingThread());
++		// A map alone cannot identify the serialized owner of a shared map.
++		LegacyMaterialProvenance.Reset();
+ 		GameThreadShaderMap = InMaterialShaderMap;
+ 		bContainsInlineShaders = true;
+ 		bLoadedCookedShaderMapId = true;
+@@ -1771,6 +1775,17 @@ public:
+ 		});
+ 	}
+ 
++	/** Copy the selected serialized resource's own receipt as well as its map.
++	 * RegisterInlineShaderMap may have reused another owner's identical map;
++	 * the immutable resource receipt must continue to describe this source.
++	 */
++	void SetInlineShaderMap(const FMaterial& SerializedResource)
++	{
++		auto SourceProvenance = SerializedResource.LegacyMaterialProvenance;
++		SetInlineShaderMap(SerializedResource.GetGameThreadShaderMap());
++		LegacyMaterialProvenance = MoveTemp(SourceProvenance);
++	}
++
+ 	ENGINE_API class FMaterialShaderMap* GetRenderingThreadShaderMap() const;
+ 
+ 	/** Note: SetGameThreadShaderMap must also be called with the same value, but from the game thread. */
+-- 
+2.53.0
+
+
+From c13bb7dd2b89dfc3a44ea3cd418eca2b697016e7 Mon Sep 17 00:00:00 2001
+From: Codex <codex@local.invalid>
+Date: Sun, 1 Nov 2026 05:30:00 +0000
+Subject: [PATCH 2/2] Preserve original finite Max operand tie selection
+
+---
+ .../Runtime/Engine/Private/Materials/LegacySlateMaterial.cpp  | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/Engine/Source/Runtime/Engine/Private/Materials/LegacySlateMaterial.cpp b/Engine/Source/Runtime/Engine/Private/Materials/LegacySlateMaterial.cpp
+index 95cab1a54..744aa8dad 100644
+--- a/Engine/Source/Runtime/Engine/Private/Materials/LegacySlateMaterial.cpp
++++ b/Engine/Source/Runtime/Engine/Private/Materials/LegacySlateMaterial.cpp
+@@ -173,7 +173,9 @@ TRefCountPtr<FMaterialShaderMap> FMaterialShaderMap::CreateLegacySlateMap(
+    case ELegacyMaterialExpression::Length: Expression = new FMaterialUniformExpressionLength(A, N.ValueType); break;
+    case ELegacyMaterialExpression::Periodic: Expression = new FMaterialUniformExpressionPeriodic(A); break;
+    case ELegacyMaterialExpression::Min: Expression = new FMaterialUniformExpressionMin(A, B); break;
+-   case ELegacyMaterialExpression::Max: Expression = new FMaterialUniformExpressionMax(A, B); break;
++   // Original finite MAXSS ties select the second input (including +/-0),
++   // while UE's FMath::Max selects the first. Reverse operands to preserve it.
++   case ELegacyMaterialExpression::Max: Expression = new FMaterialUniformExpressionMax(B, A); break;
+    case ELegacyMaterialExpression::Clamp: Expression = new FMaterialUniformExpressionClamp(A, B, C); break;
+    case ELegacyMaterialExpression::Saturate: Expression = new FMaterialUniformExpressionSaturate(A); break;
+    case ELegacyMaterialExpression::Abs: Expression = new FMaterialUniformExpressionAbs(A); break;
+-- 
+2.53.0
+

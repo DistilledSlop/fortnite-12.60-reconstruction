@@ -44,21 +44,24 @@ map and all 19 records, requires seven shaders with zero missing, verifies nine
 overrides and six graph/six owner cases, and changes 4,096 pixels. Prior Donut,
 MenuButton, PowerToast and Locker probes remain green. Root independently
 verified source, binaries, symbols and artifacts in the MainL aggregate receipt.
-Dashboard effort is 20.861%, with all four product gates still open.
+Dashboard effort is 20.891%, with all four product gates still open.
 
-Actual RootLayout/LoginScreen next fail on FeatureButton Master. Its programs
-are decoded/mapped and now have strict, field-only GameTime access proof. The
-batch producer classifies the whole known closure, preserving own-resource versus
-inherited instance identity; generic manifest/runtime support and a controlled
-Feature View draw are in progress. Batch source validation is not runtime proof.
-Run those owners and real root widgets, recover native lifecycle/helpers, then
-continue through login/lobby/matchmaking and full gameplay. Exact current source,
-pins, receipts, incomplete contracts and active file ownership are in HANDOFF.
+Original numeric UI materials now include the real AngledBox parent and
+SimpleFillColor. The Engine preserves final-resource provenance through loading
+and legitimate shared-map reuse. Exact finite Max/Saturate tests include signed
+zero, and the complete 65-resource known frontend inventory decodes structurally.
+The current source batch has 118 eligible owners; runtime checking and the matching
+server build are still running. Source eligibility is not runtime proof.
 
-The dashboard tracks 104 work items with 1,855 total effort weight. Its five UI
-integration phases now count PowerToast, MenuButton and Donut; widget integration
-and original pixel comparison still need evidence. Declarations, local tests and
-direct joins remain separate from implementation and full gameplay/wire parity.
+RootLayout/LoginScreen now reach an original Paper2D stock plugin material whose
+legacy shader map still needs a faithful conversion. Recover its compiled original
+semantics and legacy overrides before using a matched stock cook; current graph
+comparison alone does not prove parity. Then retry actual root widget construction,
+recover native lifecycle/helpers and continue login/lobby/matchmaking and gameplay.
+The dashboard credits 39 of 142 remaining known closure owners; real widget
+integration and original visual parity remain separate unfinished phases. All four
+milestones remain open. Exact current pins, failures and work ownership are in HANDOFF.
+
 
 ## Standing constraints
 

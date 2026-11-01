@@ -1,5 +1,26 @@
 # Original material ingress
 
+## Current frontend batch (2026-11-01)
+
+Engine `c13bb7dd2` and native `8f1d95f` preserve the serialized owner's provenance
+on the final material resource, including after normal identical-map reuse.
+Actual AngledBox and SimpleFillColor owners pass seven required/zero missing
+shaders, game/render attachment and numeric cases. The bounded adapter accepts
+shorter shader declarations within the exact original numeric buffer; it retains
+the complete source layout, including AngledBox's 736 numeric/752 total bytes.
+Exact live Max/Saturate bit checks cover signed-zero ties for finite values.
+
+The current immutable batch-11 manifest and work in progress are recorded in
+[HANDOFF](../HANDOFF.md); [batch instructions](FRONTEND_NUMERIC_BATCH.md) explain
+source versus resource owner, inheritance, proof inputs and validation. Current
+source selection has 118 eligible owners; the runtime suite and matching server
+build are not yet finished. All 65 owned frontend resources now decode structurally,
+while texture/property runtime conversion remains incomplete. Both actual root
+classes next fail on the original Paper2D TranslucentUnlitSpriteMaterial. Current
+stock source has not been established as equivalent to that cooked reference.
+All four product milestones, real widget construction and original pixels remain
+unverified. The checkpoints below retain their historical scopes.
+
 ## Donut texture checkpoint (2026-11-01)
 
 Native `46b4675` and Engine `08ebac023` now load the original Donut material
