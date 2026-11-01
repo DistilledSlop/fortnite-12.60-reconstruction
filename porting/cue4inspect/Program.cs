@@ -5,6 +5,8 @@ using CUE4Parse.FileProvider;
 using CUE4Parse.FileProvider.Objects;
 using CUE4Parse.UE4.VirtualFileSystem;
 using CUE4Parse.UE4.Assets;
+using CUE4Parse.UE4.Assets.Objects;
+using CUE4Parse.UE4.Assets.Objects.Properties;
 using CUE4Parse.UE4.AssetRegistry;
 using CUE4Parse.UE4.Assets.Exports.StaticMesh;
 using CUE4Parse.UE4.Assets.Exports.Actor;
@@ -801,7 +803,14 @@ try
     }
     if (materialReport)
     {
-        var materials = packageData.GetExports().OfType<UMaterialInterface>().ToArray();
+        // Metadata is unrelated to the report and can fail on uncooked editor
+        // packages. Do not deserialize it; disclose every skipped export.
+        var skipped = packageData is Package mp ? mp.ExportMap
+            .Where(e => e.ClassName == "MetaData").Select(e => e.ObjectName.Text).ToArray() : [];
+        var materialExports = packageData is Package ep ? ep.ExportMap.Select((e, i) => (e, i))
+            .Where(x => x.e.ClassName != "MetaData").Select(x => packageData.ExportsLazy[x.i].Value).ToArray()
+            : packageData.GetExports().ToArray();
+        var materials = materialExports.OfType<UMaterialInterface>().ToArray();
         var imports = packageData is Package materialPackage
             ? materialPackage.ImportMap
                 .Select(import => new
@@ -817,6 +826,7 @@ try
         Console.WriteLine(JsonSerializer.Serialize(new
         {
             path = assetPath,
+            skippedMetadataExports = skipped,
             materials = materials.Select(material => new
             {
                 name = material.Name,
@@ -825,6 +835,7 @@ try
                 shadingModel = (material as UMaterial)?.ShadingModel.ToString(),
                 twoSided = (material as UMaterial)?.TwoSided,
                 expressionCount = (material as UMaterial)?.Expressions.Length,
+                opacityMaskClipValue = (material as UMaterial)?.OpacityMaskClipValue,
                 referencedTextures = (material as UMaterial)?.ReferencedTextures.Select(reference => reference?.Name).ToArray(),
                 parent = (material as UMaterialInstance)?.Parent?.Name,
                 staticPermutation = (material as UMaterialInstance)?.bHasStaticPermutationResource
@@ -862,16 +873,22 @@ try
                 {
                     name = property.Name.Text,
                     type = property.PropertyType.Text,
-                    value = property.Tag?.ToString()
+                    value = property.Tag?.ToString(),
+                    structured = MaterialValue(property.Tag)
                 }).ToArray()
             }).ToArray(),
-            instanceParameters = packageData.GetExports().OfType<UMaterialInstanceConstant>()
+            instanceParameters = materialExports.OfType<UMaterialInstanceConstant>()
                 .Select(instance => new
                 {
                     name = instance.Name,
                     textures = instance.TextureParameterValues.Select(value => new
                     {
                         parameter = value.Name,
+                        parameterInfo = value.ParameterInfo is not { } info ? null : new
+                        {
+                            name = new { name = info.Name.PlainText, number = info.Name.Number },
+                            association = (byte) info.Association, index = info.Index
+                        },
                         texture = value.ParameterValue?.Name,
                         package = value.ParameterValue is { IsImport: true } && packageData is Package p
                             ? RootImportName(p, p.ImportMap[-value.ParameterValue.Index - 1]) : null
@@ -902,7 +919,7 @@ try
                         }
                     }).ToArray()
                 }).ToArray(),
-            expressionExports = packageData.GetExports()
+            expressionExports = materialExports
                 .Where(item => item.ExportType.StartsWith("MaterialExpression", StringComparison.Ordinal))
                 .Select(item => new
                 {
@@ -913,10 +930,11 @@ try
                     {
                         name = property.Name.Text,
                         type = property.PropertyType.Text,
-                        value = property.Tag?.ToString()
+                        value = property.Tag?.ToString(),
+                        structured = MaterialValue(property.Tag)
                     }).ToArray()
                 }).ToArray(),
-            textureSamples = packageData.GetExports().OfType<UMaterialExpressionTextureSample>()
+            textureSamples = materialExports.OfType<UMaterialExpressionTextureSample>()
                 .Select(sample => new
                 {
                     name = sample.Name,
@@ -1909,6 +1927,28 @@ static void WriteJson(string? path, object value)
     Directory.CreateDirectory(Path.GetDirectoryName(full)!);
     File.WriteAllText(full, JsonSerializer.Serialize(value, new JsonSerializerOptions { WriteIndented = true }));
     Console.WriteLine($"Wrote {full}");
+}
+
+// Restrict recursive reporting to known material property representations. Unknown
+// types remain explicit so absence of a decoder cannot masquerade as parity.
+static object? MaterialValue(object? value, int depth = 0)
+{
+    if (value is null) return null;
+    if (depth > 12) return new { unsupported = "depth limit" };
+    return value switch
+    {
+        FPropertyTagType tag => MaterialValue(tag.GenericValue, depth + 1),
+        FScriptStruct script => MaterialValue(script.StructType, depth + 1),
+        FStructFallback fallback => fallback.Properties.Select(p => new { name = p.Name.Text, type = p.PropertyType.Text, value = MaterialValue(p.Tag, depth + 1) }).ToArray(),
+        UScriptArray array => array.Properties.Select(p => MaterialValue(p, depth + 1)).ToArray(),
+        FExpressionInput input => new { expression = input.Expression?.Name, expressionIndex = input.Expression?.Index, inputName = input.InputName.Text, expressionName = input.ExpressionName.Text, input.OutputIndex, input.Mask, input.MaskR, input.MaskG, input.MaskB, input.MaskA, fallback = MaterialValue(input.FallbackStruct, depth + 1) },
+        FPackageIndex index => new { name = index.Name, index = index.Index, isImport = index.IsImport },
+        FName name => name.Text,
+        FGuid guid => new { type = "FGuid", value = guid.ToString() },
+        string or bool or byte or sbyte or short or ushort or int or uint or long or ulong or float or double => value,
+        _ when value.GetType().IsEnum => value.ToString(),
+        _ => new { unsupported = value.GetType().FullName, display = value.ToString() }
+    };
 }
 
 sealed record ExtractOptions(bool DryRun, bool Verify, int Workers, string? PlanOut, string? SummaryOut, int SampleCount, int Seed, string PakDirectory,
