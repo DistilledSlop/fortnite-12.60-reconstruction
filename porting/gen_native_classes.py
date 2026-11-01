@@ -2152,6 +2152,11 @@ def apply_blueprint_context_runtime_policy(model, block, name, resolver, parent_
         model['source_context_phases'] = True
         model['cpp_includes'] = sorted(set(model.get('cpp_includes', [])) | {'BlueprintContextCore.h', 'BlueprintContextRuntime.h', 'Engine/GameInstance.h'})
     return model
+import importlib.util as _common_activation_import
+_common_activation_spec = _common_activation_import.spec_from_file_location(
+    "common_activation_policy", os.path.join(os.path.dirname(__file__), "frontend", "common_panel_runtime", "policy.py"))
+_common_activation_policy = _common_activation_import.module_from_spec(_common_activation_spec)
+_common_activation_spec.loader.exec_module(_common_activation_policy)
 
 
 def build_class_promoted(block, name, resolver, parent_entry, owner_fns, snippets=(), splice_ctx=None):
@@ -2200,7 +2205,7 @@ def build_class_promoted(block, name, resolver, parent_entry, owner_fns, snippet
                                  if function_view(f, owner_fns)[0] is not None
                                  and function_view(f, owner_fns)[0] & FUNC_NET_ANY),
     }
-
+    model = _common_activation_policy.apply(model, block, owner_fns)
     return apply_blueprint_context_runtime_policy(model, block, name, resolver, parent_entry, owner_fns, snippets, splice_ctx)
 
 # ---------------------------------------------------------------- behaviour snippets (porting/behavior)
@@ -2894,6 +2899,7 @@ def render_promoted_header(model, api, parent_include, source_label):
     if model.get('source_context_phases'):
         model['includes'] = sorted(set(model.get('includes', [])) | {'Engine/LocalPlayer.h'})
         model['forward_decls'] = sorted(set(model['forward_decls']) | {'UWorld'})
+    model = _common_activation_policy.header_prelude(model)
     name = model["name"]
     rep = [m for m in model["members_table_order"] if m["replicated"]]
     lines = [
@@ -2956,6 +2962,7 @@ def render_promoted_header(model, api, parent_include, source_label):
     lines.extend(render_helper_declarations(model))
     if model.get("source_context_phases"):
         lines.extend(BLUEPRINT_CONTEXT_PHASE_DECLS.rstrip("\n").split("\n"))
+    lines.extend(_common_activation_policy.declarations(model).splitlines())
     lines.append("};")
     lines.append("")
     return "\n".join(lines) + "\n"
@@ -3055,7 +3062,7 @@ def render_promoted_cpp(model, source_label):
         lines.append("")
     for f in model["functions"]:
         # UHT generates the ProcessEvent forwarder for BlueprintImplementableEvent.
-        if f.get("blueprint_event"):
+        if f.get("blueprint_event") or f.get("runtime_implementation"):
             continue
         # A service request has no definition here: UHT generates its Event thunk (a ProcessEvent forwarder, one per
         # request: 138 of 138 in the scratch build), and a second definition is a duplicate symbol at link time.
@@ -3097,7 +3104,9 @@ def render_promoted_cpp(model, source_label):
         lines.append("}")
         lines.append("")
     result = "\n".join(lines) + "\n"
-    return result + BLUEPRINT_CONTEXT_PHASE_BODIES if model.get("source_context_phases") else result
+    if model.get("source_context_phases"):
+        result += BLUEPRINT_CONTEXT_PHASE_BODIES
+    return result + _common_activation_policy.definitions(model)
 
 
 def build_engine_header_index(root):
@@ -3546,6 +3555,7 @@ def promote(args):
             fh.write(header)
         with open(os.path.join(out_dir, name + ".cpp"), "w", encoding="utf-8", newline="\n") as fh:
             fh.write(cpp)
+    _common_activation_policy.emit_headers(args.source_root, generated_names)
     os.makedirs(args.report_dir, exist_ok=True)
     with open(os.path.join(args.report_dir, "behavior_splice.json"), "w", encoding="utf-8", newline="\n") as fh:
         json.dump({"enabled": splice_on, "manifest": os.path.join(args.behavior_dir, "MANIFEST.json"),

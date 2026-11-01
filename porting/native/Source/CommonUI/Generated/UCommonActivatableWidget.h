@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "CommonActivationNative.h"
 #include "Components/SlateWrapperTypes.h"
 #include "FOnWidgetActivationChanged.h"
 
@@ -70,5 +71,29 @@ protected:
 	void BP_OnActivated();
 public:
 
+	UFUNCTION(BlueprintCallable)
+	void ActivateWidget();
+
+	UFUNCTION(BlueprintCallable)
+	void DeactivateWidget();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsActivated() const;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_OnDeactivated();
+public:
+
+public:
+    UCommonActivatableWidget(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+    // Project-local names: original private native delegate names are unavailable.
+    FCommonWidgetActivationNative NativeWidgetActivated;
+    FCommonWidgetActivationNative NativeWidgetDeactivated;
+protected:
+    virtual void NativeActivateRequest();
+    virtual void NativeDeactivateRequest();
+    virtual void NativeHandleActivated();
+    virtual void NativeHandleDeactivated();
 };
 

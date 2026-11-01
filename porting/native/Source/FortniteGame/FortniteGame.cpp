@@ -30,6 +30,7 @@ DEFINE_LOG_CATEGORY_STATIC(LogFortniteNet, Log, All);
 // and exits the process (0 when every case passes, 1 otherwise).
 void RunNetSerializeSelfTest();
 void RegisterContextRuntimeProbeDriver();
+void RegisterActivationBaseProbeDriver();
 void RunOriginalVulkanShaderProbe();
 void RunLegacyMaterialShaderMapProbe();
 void RegisterLegacyOriginalMaterialProvider();
@@ -171,6 +172,7 @@ public:
     {
         FDefaultGameModuleImpl::StartupModule();
         RegisterContextRuntimeProbeDriver();
+        RegisterActivationBaseProbeDriver();
         RegisterLegacyOriginalMaterialProvider();
         FNetworkVersion::GetLocalNetworkVersionOverride.BindStatic(&GetFortniteNetworkVersion);
         FNetworkVersion::IsNetworkCompatibleOverride.BindStatic(&IsFortniteNetworkCompatible);
