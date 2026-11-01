@@ -8,25 +8,25 @@
 
 #include "FConfirmationDialogAction.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FConfirmationDialogAction
 {
 	GENERATED_BODY()
 
 	// table index 3, offset 0, flags 0x10000000000004
-	UPROPERTY()
+	UPROPERTY(BlueprintReadWrite)
 	FText DisplayName;
 
 	// table index 2, offset 24, flags 0x10000000000004
-	UPROPERTY()
+	UPROPERTY(BlueprintReadWrite)
 	FName ResultName;
 
 	// table index 1, offset 32, flags 0x10000000000004
-	UPROPERTY()
+	UPROPERTY(BlueprintReadWrite)
 	FSlateBrush Icon;
 
 	// table index 0, offset 168, flags 0x10000000000004
-	UPROPERTY()
+	UPROPERTY(BlueprintReadWrite)
 	FName ActionName;
 
 };
