@@ -40,17 +40,37 @@ class ProgressModelTests(unittest.TestCase):
         leaves = list(progress.walk_spec(model['tree']))
         material = [leaf for leaf in leaves if leaf['id'].startswith('ui.material_')]
         self.assertEqual(sum(leaf['weight'] for leaf in material), 20)
-        self.assertEqual(len(leaves), 104)
+        self.assertEqual(len(leaves), 107)
         self.assertEqual(sum(leaf['weight'] for leaf in leaves), 1855)
         self.assertEqual(sum(leaf['weight'] for leaf in material if leaf['measure']['kind'] == 'ledger'), 20)
-        integration = next(leaf for leaf in material if leaf['id'] == 'ui.material_integration')
-        self.assertEqual(integration['weight'], 10)
-        self.assertEqual(integration['measure'], {'kind': 'ledger', 'checks': [
+        by_id = {leaf['id']: leaf for leaf in material}
+        self.assertEqual({key: by_id[key]['weight'] for key in (
+            'ui.material_named_ingress', 'ui.material_frontend_closure',
+            'ui.material_widget_integration', 'ui.material_visual_parity')}, {
+            'ui.material_named_ingress': 6, 'ui.material_frontend_closure': 2,
+            'ui.material_widget_integration': 1, 'ui.material_visual_parity': 1})
+        self.assertEqual(by_id['ui.material_named_ingress']['measure']['checks'], [
             'material_powertoast_asset_ingress', 'material_menubutton_asset_ingress',
-            'material_donut_asset_ingress', 'material_frontend_widget_integration',
-            'material_original_visual_parity',
-        ]})
-        self.assertEqual(next(leaf for leaf in material if leaf['id'] == 'ui.material_locker_ingress')['measure']['checks'], ['material_locker_asset_ingress'])
+            'material_donut_asset_ingress'])
+        self.assertEqual(by_id['ui.material_widget_integration']['measure']['checks'], ['material_frontend_widget_integration'])
+        self.assertEqual(by_id['ui.material_visual_parity']['measure']['checks'], ['material_original_visual_parity'])
+        self.assertEqual(by_id['ui.material_locker_ingress']['measure']['checks'], ['material_locker_asset_ingress'])
+        spec = importlib.util.spec_from_file_location("record_frontend_materials", Path(__file__).with_name("record_frontend_materials.py"))
+        recorder = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(recorder)
+        EXCLUDED, inventory_owners, owner_id = recorder.EXCLUDED, recorder.inventory_owners, recorder.owner_id
+        inventory = Path(__file__).parent.parent / 'generated/frontend-probes/frontend-material-inventory/summary.json'
+        # Generated inventory is local evidence and may be absent in a clean checkout.
+        checks = by_id['ui.material_frontend_closure']['measure']['checks']
+        ledger = json.loads(Path(__file__).with_name('evidence.json').read_text())['checks']
+        owners = [ledger[check]['owner_path'] for check in checks]
+        self.assertEqual(len(owners), 142)
+        self.assertEqual(len(set(owners)), 142)
+        self.assertEqual(checks, [owner_id(owner) for owner in owners])
+        self.assertFalse(EXCLUDED & {owner.rsplit('.', 1)[1] for owner in owners})
+        self.assertTrue(any(owner.endswith('.M-Border-MainL') for owner in owners))
+        if inventory.exists():
+            self.assertEqual(owners, inventory_owners(inventory))
         self.assertFalse(any(m.get('done') for m in model['milestones']))
         self.assertFalse(any('ceiling' in leaf for leaf in leaves))
 

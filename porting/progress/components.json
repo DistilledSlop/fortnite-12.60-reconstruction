@@ -1,6 +1,6 @@
 {
   "_about": "Hand-edited model for porting/progress/progress.py. Leaves with a \"measure\" are computed; leaves with kind \"manual\" use the pct you set, with rationale. Weights are manual effort estimates (relative points, roughly engineer-weeks) and set the treemap area. Edit a weight or pct, commit, and the post-commit hook regenerates the dashboard. Basis ladder, most objective first: git (computed from tracked files, replayable per commit), local (computed from git-ignored outputs), documented (typed count), manual (typed percent). Denominators come from porting/progress/totals.json; checks from porting/progress/evidence.json. See README 'Objectivity audit'.",
-  "definition": "100% = the entire game can be launched into the menu, joined into a game and matchmade on the reconstructed server, and played with sound/audio and visuals 100% working. In other words: the client — the exact same client as the 12.60 original, feature-complete and unstripped, rebuilt as a UE project — reaches the lobby, matchmakes to the reconstructed UE dedicated server (which carries every structure and feature the original dedicated server would have) and plays a match with all visuals and audio. The supplied 12.60 build is the completeness reference; the original binary under Wine is an analysis oracle, not the deliverable.",
+  "definition": "100% = the entire game can be launched into the menu, joined into a game and matchmade on the reconstructed server, and played with sound/audio and visuals 100% working. In other words: the client \u2014 the exact same client as the 12.60 original, feature-complete and unstripped, rebuilt as a UE project \u2014 reaches the lobby, matchmakes to the reconstructed UE dedicated server (which carries every structure and feature the original dedicated server would have) and plays a match with all visuals and audio. The supplied 12.60 build is the completeness reference; the original binary under Wine is an analysis oracle, not the deliverable.",
   "milestones": [
     {
       "id": "m1",
@@ -881,7 +881,7 @@
       "children": [
         {
           "id": "backend.version_lightswitch",
-          "name": "Version check and lightswitch — source references",
+          "name": "Version check and lightswitch \u2014 source references",
           "weight": 7.5,
           "measure": {
             "kind": "checks",
@@ -913,7 +913,7 @@
         },
         {
           "id": "backend.oauth_account",
-          "name": "OAuth and account routes — source references",
+          "name": "OAuth and account routes \u2014 source references",
           "weight": 12.5,
           "measure": {
             "kind": "routes",
@@ -937,7 +937,7 @@
         },
         {
           "id": "backend.matchmaking",
-          "name": "Matchmaking ticket and session routes — source references",
+          "name": "Matchmaking ticket and session routes \u2014 source references",
           "weight": 20.0,
           "measure": {
             "kind": "routes",
@@ -960,7 +960,7 @@
         },
         {
           "id": "backend.game_profile",
-          "name": "Game v2 profile, world, chat and voice routes — source references",
+          "name": "Game v2 profile, world, chat and voice routes \u2014 source references",
           "weight": 15.0,
           "measure": {
             "kind": "routes",
@@ -1008,7 +1008,7 @@
         },
         {
           "id": "backend.public_catalog",
-          "name": "Public catalog, payment and asset routes — source references",
+          "name": "Public catalog, payment and asset routes \u2014 source references",
           "weight": 12.5,
           "measure": {
             "kind": "routes",
@@ -1034,7 +1034,7 @@
         },
         {
           "id": "backend.party_xmpp",
-          "name": "Party and XMPP — source references",
+          "name": "Party and XMPP \u2014 source references",
           "weight": 15.0,
           "measure": {
             "kind": "checks",
@@ -1098,7 +1098,7 @@
         },
         {
           "id": "backend.stats_cloud",
-          "name": "Stats, events, cloud storage and datarouter — source references",
+          "name": "Stats, events, cloud storage and datarouter \u2014 source references",
           "weight": 10.0,
           "measure": {
             "kind": "checks",
@@ -1396,26 +1396,197 @@
         {
           "id": "ui.material_integration",
           "name": "Material attachment and frontend visual parity",
-          "weight": 10,
-          "measure": {
-            "kind": "ledger",
-            "checks": [
-              "material_powertoast_asset_ingress",
-              "material_menubutton_asset_ingress",
-              "material_donut_asset_ingress",
-              "material_frontend_widget_integration",
-              "material_original_visual_parity"
-            ]
-          },
-          "rationale": "Five bounded UI material bridge phases: PowerToast, MenuButton and Donut actual-owner ingress, frontend widget integration, and original visual parity. Each phase requires its own passing evidence; these phases do not measure the whole game. Locker ingress is accounted for separately. See porting/material_pipeline/UE_MATERIAL_INGRESS.md.",
-          "evidence_links": [
+          "children": [
             {
-              "label": "Material pipeline evidence",
-              "href": "material-evidence.txt"
+              "id": "ui.material_named_ingress",
+              "name": "PowerToast, MenuButton and Donut ingress",
+              "weight": 6,
+              "measure": {
+                "kind": "ledger",
+                "checks": [
+                  "material_powertoast_asset_ingress",
+                  "material_menubutton_asset_ingress",
+                  "material_donut_asset_ingress"
+                ]
+              },
+              "rationale": "Three individually verified original material owner ingress checks; Locker is separately weighted."
             },
             {
-              "label": "Runtime bridge evidence",
-              "href": "material-bridge-evidence.txt"
+              "id": "ui.material_frontend_closure",
+              "name": "Known frontend closure material owners",
+              "weight": 2,
+              "measure": {
+                "kind": "ledger",
+                "checks": [
+                  "material_frontend_owner_b5fcb772a31ecd36",
+                  "material_frontend_owner_bc329a3f5f9a9ef3",
+                  "material_frontend_owner_3d3453906eeb002d",
+                  "material_frontend_owner_89ef13495431e896",
+                  "material_frontend_owner_0d309c58ac5bb800",
+                  "material_frontend_owner_2b046459bb5f6410",
+                  "material_frontend_owner_6664a1649c7c749d",
+                  "material_frontend_owner_ae24ce856a758b68",
+                  "material_frontend_owner_117e56c2db40977a",
+                  "material_frontend_owner_1617aeaa75413901",
+                  "material_frontend_owner_a48ed3d16a59ff02",
+                  "material_frontend_owner_c304e323fb4aa651",
+                  "material_frontend_owner_9b8adcef0120976a",
+                  "material_frontend_owner_2653ef5701a87e0d",
+                  "material_frontend_owner_5eb5902d97b5aa44",
+                  "material_frontend_owner_cf4d079608bc2f33",
+                  "material_frontend_owner_ffc6370f2c221fd9",
+                  "material_frontend_owner_24db817708f03e94",
+                  "material_frontend_owner_03dc9bacf030cc07",
+                  "material_frontend_owner_717e40e8fa8e2c32",
+                  "material_frontend_owner_8d0e73389b345ed5",
+                  "material_frontend_owner_7bfee806c2a07e24",
+                  "material_frontend_owner_d1d318ba4f03ccbb",
+                  "material_frontend_owner_ec6952c187bd91c9",
+                  "material_frontend_owner_01005a35c43064b9",
+                  "material_frontend_owner_fe10ec5e8832653d",
+                  "material_frontend_owner_b8b839b3819ae1c2",
+                  "material_frontend_owner_1796b4e99a45332a",
+                  "material_frontend_owner_32eda186ebb5ce56",
+                  "material_frontend_owner_8f511158d4db10b1",
+                  "material_frontend_owner_c9d88259c847c84d",
+                  "material_frontend_owner_f0139bb67f9deede",
+                  "material_frontend_owner_bae7af1c2339c8e9",
+                  "material_frontend_owner_a330ba5dc5ca850c",
+                  "material_frontend_owner_6ef29112792555b3",
+                  "material_frontend_owner_c33708b9c35ea6a8",
+                  "material_frontend_owner_4c2aac70b3f3dbd1",
+                  "material_frontend_owner_1f088da64e08242a",
+                  "material_frontend_owner_938763ddeabcd36f",
+                  "material_frontend_owner_6cf1c33082ec2c66",
+                  "material_frontend_owner_2417aa268eef1a39",
+                  "material_frontend_owner_9d410fe06d5264a2",
+                  "material_frontend_owner_8a40608645c131f5",
+                  "material_frontend_owner_5f050df5e87273f4",
+                  "material_frontend_owner_a14da5c803dc7ee1",
+                  "material_frontend_owner_f182c51cd1dfcc3b",
+                  "material_frontend_owner_608199fda7d1e82e",
+                  "material_frontend_owner_7c362ccf47797f25",
+                  "material_frontend_owner_063d3f629e391688",
+                  "material_frontend_owner_1ef3291cb638eec6",
+                  "material_frontend_owner_549fb1eeb6758cd1",
+                  "material_frontend_owner_b252a23b73c6fb81",
+                  "material_frontend_owner_e4dee38b6dfad9d0",
+                  "material_frontend_owner_28869e2c3b7228c9",
+                  "material_frontend_owner_3cb1dbe7865244da",
+                  "material_frontend_owner_0913e00f5e97b9ef",
+                  "material_frontend_owner_6324393b933fcd96",
+                  "material_frontend_owner_de03144ff3e7efc4",
+                  "material_frontend_owner_8d8f9c33c99f3c19",
+                  "material_frontend_owner_0d6eef0eedb3a105",
+                  "material_frontend_owner_3404cdb51f0042b7",
+                  "material_frontend_owner_e301c2b9ca5016a9",
+                  "material_frontend_owner_d3c3351b9a43e296",
+                  "material_frontend_owner_1dc4a097333f93f2",
+                  "material_frontend_owner_24f51f6b50f7f669",
+                  "material_frontend_owner_d15c22ba8ecb47eb",
+                  "material_frontend_owner_9fa2c9fa5a0adce3",
+                  "material_frontend_owner_c84d1b524ca65932",
+                  "material_frontend_owner_d4d005a96f5fcbac",
+                  "material_frontend_owner_3e61495beb42f46a",
+                  "material_frontend_owner_97661b3fd8a7cdae",
+                  "material_frontend_owner_345056c2af5ba66c",
+                  "material_frontend_owner_4cfe3467e5741e39",
+                  "material_frontend_owner_18764c8406b4145c",
+                  "material_frontend_owner_d69046cddd3aa006",
+                  "material_frontend_owner_ee4465dd06707423",
+                  "material_frontend_owner_96b3ea6c980a0471",
+                  "material_frontend_owner_82e095670ddb3361",
+                  "material_frontend_owner_aa1d5d94cd13e2d1",
+                  "material_frontend_owner_0b06ba64698a35cc",
+                  "material_frontend_owner_f031e14c46854c80",
+                  "material_frontend_owner_00deb035d0f12b57",
+                  "material_frontend_owner_35485889509ef94c",
+                  "material_frontend_owner_a1592d429e518930",
+                  "material_frontend_owner_e2e417961e86ee57",
+                  "material_frontend_owner_468ac6254646f83f",
+                  "material_frontend_owner_a27ecd263b4e0be1",
+                  "material_frontend_owner_eab2e0733bb2c0b0",
+                  "material_frontend_owner_7e7e96890e8e2cb9",
+                  "material_frontend_owner_e40404ad8584d6f7",
+                  "material_frontend_owner_41ec3f75c33fb3e1",
+                  "material_frontend_owner_12b4b9d27db4bd2a",
+                  "material_frontend_owner_4885a4e3746af65a",
+                  "material_frontend_owner_cec9824e0de68cc2",
+                  "material_frontend_owner_68c6b793868fb135",
+                  "material_frontend_owner_451308c403d819d9",
+                  "material_frontend_owner_38326995e5da4628",
+                  "material_frontend_owner_5093bf7499fb0868",
+                  "material_frontend_owner_102ccff623f49560",
+                  "material_frontend_owner_fb47eed205e1343f",
+                  "material_frontend_owner_da03e8ca979e7f9a",
+                  "material_frontend_owner_b90cda314897166b",
+                  "material_frontend_owner_eb8157410a8eab95",
+                  "material_frontend_owner_2d07a9a8cc7b4259",
+                  "material_frontend_owner_894d848218709a26",
+                  "material_frontend_owner_96bfe15951a896cf",
+                  "material_frontend_owner_90ddca0528cff0a6",
+                  "material_frontend_owner_998a56b515851671",
+                  "material_frontend_owner_228a3818abe7e12b",
+                  "material_frontend_owner_4b42fa72c08462c5",
+                  "material_frontend_owner_ffbd51b27d50cb73",
+                  "material_frontend_owner_35e8669e63fbe450",
+                  "material_frontend_owner_64b7b96001bfef4d",
+                  "material_frontend_owner_7250d437e180d476",
+                  "material_frontend_owner_61384ac1a8df8d33",
+                  "material_frontend_owner_80ccd638caec3952",
+                  "material_frontend_owner_29755c4cfd6666f4",
+                  "material_frontend_owner_ad9caa93275c1135",
+                  "material_frontend_owner_54983de3a5747f9a",
+                  "material_frontend_owner_cf3c32b152f73b30",
+                  "material_frontend_owner_61a7f3b113aa2f08",
+                  "material_frontend_owner_63269f654c717009",
+                  "material_frontend_owner_d30b3e8fe8337e75",
+                  "material_frontend_owner_2f5d8a82c5e52049",
+                  "material_frontend_owner_9b5b3166703bd591",
+                  "material_frontend_owner_68d6d9631d5952e9",
+                  "material_frontend_owner_ca7e3de8f5664d6e",
+                  "material_frontend_owner_96d352985327c1b0",
+                  "material_frontend_owner_ea40fc1498463f86",
+                  "material_frontend_owner_840e96f4a8e8d0e8",
+                  "material_frontend_owner_3ac27ee2271ff052",
+                  "material_frontend_owner_554fedcce7794993",
+                  "material_frontend_owner_7073d28348adc145",
+                  "material_frontend_owner_caf8370896015506",
+                  "material_frontend_owner_fef06d412a5f85d9",
+                  "material_frontend_owner_a06d6ac78ef215dd",
+                  "material_frontend_owner_ad65bb4edb5c0278",
+                  "material_frontend_owner_699241b5b952ce61",
+                  "material_frontend_owner_d0d4dd84423d89df",
+                  "material_frontend_owner_88faed927c75cd8d",
+                  "material_frontend_owner_6e588337f96d7197",
+                  "material_frontend_owner_8310f3e2e82adf74"
+                ]
+              },
+              "rationale": "142 distinct material owners from the 147 exports in porting/generated/frontend-probes/frontend-material-inventory/summary.json, bounded to the 721-root frontend closure. Excludes separately weighted Locker, GradientPanel, PowerToast, MenuButton and Donut. MainL is included. Each check requires actual-owner runtime completeness, attachment and independent payload validation; missing checks receive no credit. This is not the whole game, widget integration or original visual parity. Owner paths are recorded in passing ledger entries."
+            },
+            {
+              "id": "ui.material_widget_integration",
+              "name": "Frontend root widget material integration",
+              "weight": 1,
+              "measure": {
+                "kind": "ledger",
+                "checks": [
+                  "material_frontend_widget_integration"
+                ]
+              },
+              "rationale": "Requires evidence of material integration into frontend root widgets."
+            },
+            {
+              "id": "ui.material_visual_parity",
+              "name": "Original material visual parity",
+              "weight": 1,
+              "measure": {
+                "kind": "ledger",
+                "checks": [
+                  "material_original_visual_parity"
+                ]
+              },
+              "rationale": "Requires comparison to original-client visuals."
             }
           ]
         },
