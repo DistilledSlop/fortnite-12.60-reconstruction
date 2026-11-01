@@ -59,3 +59,15 @@ Without `--bundles`, `--output` names a single source-checkpoint JSON file. That
 schema explicitly has `runtime_ready=false`; it is not accepted as a runtime
 manifest. No native code, engine code, shared generated headers or source
 promotion is performed by either mode.
+
+Phase 2 at Native `de38015` now restores both original references for each owner and
+checks live GT/RT indexed lookups, nonwhite DXT1 resources and the exact texture and
+sampler slots. The independent verifier consumes `ComicBubbleTextureBindings.json`
+alongside all fourteen shader payload files per owner. Both owners pass the
+existing progress importer; closure is128/142. The checkpoint is
+`generated/material_pipeline/comicbubble-credit-2/checkpoint.json`, SHA-256
+`68a27bb37520a33719d3704e72cb8aa17be10c5b9726cb73d3f1808f2e5efd70`.
+Initial GPU residency was seven mips/64 by64 for each texture; this is measured
+residency, with all original9/11 source mips retained. No raw compressed GPU
+readback, draw or original-client pixel comparison is established. The failed
+phase1 texture-reference audit is preserved; it received no credit.

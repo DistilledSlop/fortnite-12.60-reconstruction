@@ -2825,10 +2825,39 @@
    "utc": "2026-11-01T06:49:16Z"
   },
   "material_frontend_owner_5eb5902d97b5aa44": {
+   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/comicbubble-parent-4/material-dashboard-validation-a1mseitk.json",
+   "artifact_validation_sha256": "6e3b2cef314e30a8e135038711f36a82ef3225ba888faa0dedc42fced4d790da",
+   "build_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/comicbubble-credit-2/client-build-adapter.json",
+   "build_receipt_sha256": "481cf401c2e6f1fecb17f8ad59ea7a07aa5c586f2c43f6c9bd5aeba4065b3e02",
+   "bundle": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/comicbubble-ingress-3/M_UI_ComicBubble.json",
+   "bundle_sha256": "d65ce4d5323dc6b4ec51641d6fd51e1a2b2601b026e923576e7c8fe9cb8b748e",
+   "command": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/paper2d-matched-stage-3/LinuxNoEditor/FortniteLinux/Binaries/Linux/FortniteLinux -stdout FortniteLinux /Engine/Maps/Entry -vulkan -windowed -ResX=1280 -ResY=720 -nosound -unattended -log -FortniteLegacySequencer -FortniteLegacyFieldPaths -NOCONSOLE -FortniteLegacyMaterialIngress=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/locker-ingress-bundle.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/gradient-panel-ingress-bundle.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/power-toast-ingress-bundle.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/menu-button-ingress-bundle-active-time.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/donut-ingress-bundle.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/mainl-ingress-bundle-checked.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/keybind-ingress-3/bundle.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/hollow-ingress-3/bundle.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/flogo-ingress-3/bundle.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/social-atlas-corrected-ingress-3/bundle.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/media_button-ingress-1/bundle.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/google-envelope-1-a/bundle.json -FortniteLegacyMaterialManifest=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/comicbubble-ingress-3/combined-manifest.json -FortniteLegacyMaterialManifestSHA256=c0657d1b75e6f363b1280f10d89885b557d187b3e2ea9400bc7564c70810865d -FortniteLegacyMaterialTrace -FortniteLegacyMaterialTrace=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/comicbubble-parent-4/material-trace.json -stdout -FullStdOutLogOutput -ExecCmds=Quit -FortniteProbeLegacyOriginalMaterial -FortniteLegacyMaterialProbeOwner=/Game/Environments/FrontEnd/BackPlates/UITakeovers/M_UI_ComicBubble.M_UI_ComicBubble -FortniteLegacyMaterialArtifactDir=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/comicbubble-parent-4/material",
+   "commit": "de38015676923e69251ac2f9173df9b208089e5f",
+   "engine_commit": "d7e04d4b65fb8ee464082849414cf5f7ae4d7bca",
+   "exit_code": 0,
    "id": "material_frontend_owner_5eb5902d97b5aa44",
+   "key_lines": [
+    "[2026.11.01-21.27.51:469][  0]LogMaterial: Display: Legacy actual-owner completeness owner=/Game/Environments/FrontEnd/BackPlates/UITakeovers/M_UI_ComicBubble.M_UI_ComicBubble domain=5 blend=2 shading=MSM_Unlit quality=1 feature=3 flags=2816 required=7 missing=0 complete=1",
+    "[2026.11.01-21.27.51:555][  0]LogTemp: Display: Legacy material probe: 33 manifest owner live uniform cases passed",
+    "[2026.11.01-21.27.51:564][  0]LogTemp: Display: Legacy material ingress: manifest owner /Game/Environments/FrontEnd/BackPlates/UITakeovers/M_UI_ComicBubble.M_UI_ComicBubble uses original resource owner /Game/Environments/FrontEnd/BackPlates/UITakeovers/M_UI_ComicBubble.M_UI_ComicBubble, shared map provenance owner /Game/Environments/FrontEnd/BackPlates/UITakeovers/M_UI_ComicBubble.M_UI_ComicBubble; complete and attached on both threads; seven shaders and all uniform cases passed"
+   ],
+   "log": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/comicbubble-parent-4/stdout.log",
+   "log_sha256": "4f8e800c04ddee29236d6ce2edb66998d1e0a3763a65de47a55bbbd4fb1b5d28",
+   "manifest": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/comicbubble-ingress-3/combined-manifest.json",
+   "manifest_sha256": "c0657d1b75e6f363b1280f10d89885b557d187b3e2ea9400bc7564c70810865d",
    "owner_path": "/Game/Environments/FrontEnd/BackPlates/UITakeovers/M_UI_ComicBubble.M_UI_ComicBubble",
-   "result": "pending",
-   "scope": "Material owner in the bounded frontend closure; actual-owner runtime ingress has not been credited."
+   "resource_owner_path": "/Game/Environments/FrontEnd/BackPlates/UITakeovers/M_UI_ComicBubble.M_UI_ComicBubble",
+   "result": "pass",
+   "run_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/comicbubble-credit-2/owner-run-adapter.json",
+   "run_receipt_sha256": "95d062da2da4a42a042167d8dc588e39baf984eb1506716849f22afb542773b7",
+   "runtime_checkpoint": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/comicbubble-credit-2/checkpoint.json",
+   "runtime_checkpoint_sha256": "68a27bb37520a33719d3704e72cb8aa17be10c5b9726cb73d3f1808f2e5efd70",
+   "scope": "This owner original material map compatibility and attachment in the bounded frontend closure; widget integration and original visual parity remain unverified.",
+   "source_and_staged_client_sha256": "4121b22ff84fe709e16377544adb0f76d2e05ddea57f19fcd9bc8651e558d273",
+   "source_frozen_inputs": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/comicbubble-credit-2/inputs.json",
+   "source_frozen_inputs_sha256": "74d14e9dd6bdd3eda1cb25d1707dd5c388e4092c8a348f5a361cc1f64094726b",
+   "source_native_commit": "de38015676923e69251ac2f9173df9b208089e5f",
+   "utc": "2026-11-01T21:31:46Z"
   },
   "material_frontend_owner_5f050df5e87273f4": {
    "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/batch12-owner-probes-1/038-M_Button_Feature_Base-artifacts-dashboard-validation-birdh8kw.json",
@@ -6308,10 +6337,39 @@
    "utc": "2026-11-01T06:49:16Z"
   },
   "material_frontend_owner_cf4d079608bc2f33": {
+   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/comicbubble-instance-4/material-dashboard-validation-psix_08m.json",
+   "artifact_validation_sha256": "182009e73f517f3db6a76a7200e768658e2d444957af7c35ab6d45c0771c9c94",
+   "build_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/comicbubble-credit-2/client-build-adapter.json",
+   "build_receipt_sha256": "481cf401c2e6f1fecb17f8ad59ea7a07aa5c586f2c43f6c9bd5aeba4065b3e02",
+   "bundle": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/comicbubble-ingress-3/M_UI_ComicBubble_Inst.json",
+   "bundle_sha256": "7a8e2eba8ecf7d3fc6846414d1ced291ce1ccc602f05c49261397e628efb9dc3",
+   "command": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/paper2d-matched-stage-3/LinuxNoEditor/FortniteLinux/Binaries/Linux/FortniteLinux -stdout FortniteLinux /Engine/Maps/Entry -vulkan -windowed -ResX=1280 -ResY=720 -nosound -unattended -log -FortniteLegacySequencer -FortniteLegacyFieldPaths -NOCONSOLE -FortniteLegacyMaterialIngress=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/locker-ingress-bundle.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/gradient-panel-ingress-bundle.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/power-toast-ingress-bundle.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/menu-button-ingress-bundle-active-time.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/donut-ingress-bundle.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/mainl-ingress-bundle-checked.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/keybind-ingress-3/bundle.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/hollow-ingress-3/bundle.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/flogo-ingress-3/bundle.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/social-atlas-corrected-ingress-3/bundle.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/media_button-ingress-1/bundle.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/google-envelope-1-a/bundle.json -FortniteLegacyMaterialManifest=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/comicbubble-ingress-3/combined-manifest.json -FortniteLegacyMaterialManifestSHA256=c0657d1b75e6f363b1280f10d89885b557d187b3e2ea9400bc7564c70810865d -FortniteLegacyMaterialTrace -FortniteLegacyMaterialTrace=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/comicbubble-instance-4/material-trace.json -stdout -FullStdOutLogOutput -ExecCmds=Quit -FortniteProbeLegacyOriginalMaterial -FortniteLegacyMaterialProbeOwner=/Game/Environments/FrontEnd/BackPlates/UITakeovers/M_UI_ComicBubble_Inst.M_UI_ComicBubble_Inst -FortniteLegacyMaterialArtifactDir=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/comicbubble-instance-4/material",
+   "commit": "de38015676923e69251ac2f9173df9b208089e5f",
+   "engine_commit": "d7e04d4b65fb8ee464082849414cf5f7ae4d7bca",
+   "exit_code": 0,
    "id": "material_frontend_owner_cf4d079608bc2f33",
+   "key_lines": [
+    "[2026.11.01-21.28.25:040][  0]LogMaterial: Display: Legacy actual-owner completeness owner=/Game/Environments/FrontEnd/BackPlates/UITakeovers/M_UI_ComicBubble_Inst.M_UI_ComicBubble_Inst domain=5 blend=0 shading=MSM_Unlit quality=1 feature=3 flags=2848 required=7 missing=0 complete=1",
+    "[2026.11.01-21.28.25:090][  0]LogTemp: Display: Legacy material probe: 19 manifest owner live uniform cases passed",
+    "[2026.11.01-21.28.25:099][  0]LogTemp: Display: Legacy material ingress: manifest owner /Game/Environments/FrontEnd/BackPlates/UITakeovers/M_UI_ComicBubble_Inst.M_UI_ComicBubble_Inst uses original resource owner /Game/Environments/FrontEnd/BackPlates/UITakeovers/M_UI_ComicBubble_Inst.M_UI_ComicBubble_Inst, shared map provenance owner /Game/Environments/FrontEnd/BackPlates/UITakeovers/M_UI_ComicBubble_Inst.M_UI_ComicBubble_Inst; complete and attached on both threads; seven shaders and all uniform cases passed"
+   ],
+   "log": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/comicbubble-instance-4/stdout.log",
+   "log_sha256": "f37f76868ec899bc320a16b86ed0c036accb24e55de490bc580e59d638b70279",
+   "manifest": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/comicbubble-ingress-3/combined-manifest.json",
+   "manifest_sha256": "c0657d1b75e6f363b1280f10d89885b557d187b3e2ea9400bc7564c70810865d",
    "owner_path": "/Game/Environments/FrontEnd/BackPlates/UITakeovers/M_UI_ComicBubble_Inst.M_UI_ComicBubble_Inst",
-   "result": "pending",
-   "scope": "Material owner in the bounded frontend closure; actual-owner runtime ingress has not been credited."
+   "resource_owner_path": "/Game/Environments/FrontEnd/BackPlates/UITakeovers/M_UI_ComicBubble_Inst.M_UI_ComicBubble_Inst",
+   "result": "pass",
+   "run_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/comicbubble-credit-2/owner-run-adapter.json",
+   "run_receipt_sha256": "95d062da2da4a42a042167d8dc588e39baf984eb1506716849f22afb542773b7",
+   "runtime_checkpoint": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/comicbubble-credit-2/checkpoint.json",
+   "runtime_checkpoint_sha256": "68a27bb37520a33719d3704e72cb8aa17be10c5b9726cb73d3f1808f2e5efd70",
+   "scope": "This owner original material map compatibility and attachment in the bounded frontend closure; widget integration and original visual parity remain unverified.",
+   "source_and_staged_client_sha256": "4121b22ff84fe709e16377544adb0f76d2e05ddea57f19fcd9bc8651e558d273",
+   "source_frozen_inputs": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/comicbubble-credit-2/inputs.json",
+   "source_frozen_inputs_sha256": "74d14e9dd6bdd3eda1cb25d1707dd5c388e4092c8a348f5a361cc1f64094726b",
+   "source_native_commit": "de38015676923e69251ac2f9173df9b208089e5f",
+   "utc": "2026-11-01T21:31:46Z"
   },
   "material_frontend_owner_d0d4dd84423d89df": {
    "id": "material_frontend_owner_d0d4dd84423d89df",

@@ -2,13 +2,82 @@
 
 ## Current resume point (2026-11-01)
 
+- ComicBubble phase2 source de38015 is independently verified and credited (128/142 material owners). Root reviewed/applied the168line
+  maintained Native candidate restoring the proven full2reference context and adding actual GT/RT/RHI
+  texture/sampler checks, with real ComicBubbleTextureBindings.json receipts; verifier gains exact
+  2texture layout/receipt support. Both actual UE-target standalone syntax checks pass
+  /tmp/comicbubble-candidate-checks-1.json; all54verifier tests pass. Both builds PASS141.576/122.258s,
+  all12568Native source files stable. Parent/instance probes at comicbubble-{parent,instance}-4 PASS
+  33/19graph+owner uniform cases, seven shaders and4reader negatives each,6instance overrides and real
+  indexed GT/RT/RHI texture+sampler checks; zero invalidTextureIndex warnings. Source9/11mips remain,
+  actual initial GPU residency7mips/64x64 each is measured, not falsely called full residency. Independent
+  report_for passes actual14payloads+binding receipt perowner. Default/Athena joins PASS21.566/21.585s.
+  Root attempt5 stillfails-11 at TrackingLlama/MemoryImage1064 afterComic passes. No GPU BC1 readback,
+  pixel or authenticUI acceptance. All jobs build28302/stage77438/parent58350/instance42983/root45226/
+  joins27359 are TERMINAL. Root sole Native/build/stage owner; stage stable. Actual build/stage receipts
+  /tmp/comicbubble-native-build-2 and generated/frontend-native-evidence/comicbubble-runtime-2;
+  archive frozen-runtime/comicbubble-runtime-2. Same immutable ingress3/combined manifest. New bounded
+  phase2 credit audit passed the unchanged strict importer for exactly2owners. Checkpoint
+  generated/material_pipeline/comicbubble-credit-2/checkpoint.json SHA256
+  68a27bb37520a33719d3704e72cb8aa17be10c5b9726cb73d3f1808f2e5efd70 freezes56committed
+  source snapshots,113artifacts,bothbuilds,18binarypaths and joins. Root rehashes12568Native source
+  files,56critical sources and167source/archive pairs; root-integrity.json SHA256
+  93310cac2ecbe03a267360b5c408b4a7279c46d15d192ffd43ad5e555fe67c08. Archive source-release.json
+  SHA2568de360162bbbb72736fcf1ba874611e2569dd123deed1ab6ac3fd22442605fab releases Native/build/stage
+  ownership; all workers/jobs terminal. Only2pending owner checks becamepass, components/history/weights
+  unchanged; all36progress tests pass. Root did not rerun the full older CommonUI diagnostic suite or
+  exhaustive original metadata/relocation proof in this material phase. Source proof /tmp/tracking-llama-texture-context-1/HANDOFF.md now
+  establishes original index0 Icon-Llama-NoEyes, all5calledfunction roots onlynull slots/no dependencies;
+  includes fresh source inspector replay and source/tool hashes. Its bounded worker completed.
+- ComicBubble phase1 PARTIAL: source commit2298bed adds a bounded parent/instance exporter,
+  12passing rejection tests and removes the obsolete manifest-wide texture rejection from the maintained
+  Native provider. Existing decoder/source digest/full graph/typed binding checks remain. Both builds
+  PASS140.718/117.273s with12568sources stable. Parent/instance actual probes PASS33/19graph and owner
+  uniform cases, four source-reader negatives each, seven shaders each and both-thread attachment;
+  six instance override identities verified. Default/Athena joins PASS21.572/21.570s. No GPU draw/pixel
+  acceptance is established. Build77193/stage22138/parent91244/instance17291/joins63801 are TERMINAL.
+  Root owns Native/build/stage, currently stable; phase /tmp/comicbubble-native-build-1 and
+  generated/frontend-native-evidence/comicbubble-runtime-1. Archive frozen-runtime/comicbubble-runtime-1
+  has all six binaries and18source/archive/stage hash rows; formal progress checkpoint audit is pending.
+  Final offline candidate generated/material_pipeline/comicbubble-ingress-3/manifest.json
+  SHAb80be54d783161148144db694651eab14ef5db7c4734d2a895a0136b541ec963; combined with old120manifest
+  entries in combined-manifest.json SHAc0657d1b75e6f363b1280f10d89885b557d187b3e2ea9400bc7564c70810865d.
+  Exact14mapped shader chains and10GameTime-only View proofs pass in comicbubble-shaders-1. Every parent
+  PS has material texture resources0/2,samplers3/5; fonts additionally have loose ElementTexture t2/s2.
+  Instance everyPS has texture0/sampler1; fonts add loose t1/s1. An earlier scout misread loose parameter
+  maps as full UB tables; corrected /tmp/comicbubble-binding-audit-1/HANDOFF.md is authoritative.
+  Parent has38vector/59scalar/twoTexture roots; instance16/20/oneClouds root and6numeric overrides.
+  Both inherit reference0Clouds/1Tail; parent compiled orderTail/source2 thenCloud/source0. All20original
+  BC1 mip payloads framed with15reject controls at /tmp/comicbubble-texture-framing-1/receipt.json
+  SHA6d58f503f6ff875ae5920025ad81806224c8bb0364f0ff7e11f38d97b56cfdcc. Constructor proves TF_Default
+  and default sRGBtrue, tail serializes false; wrap/tailWorld/effective sampler remain inferred; evidence
+  /tmp/comicbubble-sampler-defaults-1. Baseline live parent probe failed1 at the exact blanket rejection,
+  retained generated/frontend-probes/comicbubble-parent-1 with live inode/argv/cwd+binary hash binding.
+  Scratch /tmp/run_comicbubble_probe_1.py supports parent/instance/root, optional epoch and environment
+  COMICBUBBLE_STAGE_RECEIPT; /tmp/stage_comicbubble_native_1.py stages only after both successful builds.
+  New parent/instance successful runs generated/frontend-probes/comicbubble-{parent,instance}-2. Root
+  attempts2/3 pass ComicBubble then fail at TrackingLlama: /Game/UI/Foundation/Modals/ErrorWindow/
+  Materials/M_UI_TrackingLlama.M_UI_TrackingLlama entry/notapplicable -> MemoryImage1064, exit-11.
+  Both raw observations are retained; attempt3 enables the actual boolean trace flag. All six staged
+  cloud/tail package files are byte-identical to original, independently checked in phase/stage-texture-parity.json.
+  Independent credit audit refuses both owners: actual logs have invalid TextureIndex(1/0,parent) and
+  (0/0,instance), because PrepareOwner hardcodes prior owners and skipsComicBubble; actual references
+  remain empty despite valid map/math. No progress/gate credit. Verifier additionally lacks2texture
+  layout support and requires a real texture-binding/layout receipt, absent in phase1. Failed adapter
+  checkpoint generated/material_pipeline/comicbubble-credit-1/checkpoint.json SHAebe0f9def271decc84831f95a96791acf4c2e50bafe49193a1de98d775939d9c
+  is NOT importer-validated. Preserve it and /tmp/comicbubble-material-credit-1/HANDOFF.md. New bounded
+  candidate /root/comicbubble_runtime_texture_context owns scratch /tmp/comicbubble-runtime-texture-context-1
+  for faithful full2reference PrepareOwner restore and real GT/RT/RHI sampler diagnostic; root alone may
+  integrate/build/stage. /root/comicbubble_material_credit now owns only verifier capability+tests for the
+  actual new receipt, with no ledger mutation until fresh successful runtime observations. New source
+  changes need a separately committed phase2/new builds and receipts; never overwrite phase1 artifacts.
 - Goal remains the full reconstructed client and multiplayer server with feature/visual/wire parity.
-  All four product milestones are false. Dashboard approximately21.442%,116leaves,totalweight1855;
+  All four product milestones are false. Dashboard approximately21.44%,116leaves,totalweight1855;
   an existing CommonUI behavior point now credits independently audited outro/held cleanup, leaving18
   unfinished behavior points. Four bounded behavior diagnostics are separately credited; none is a
-  product gate. Source/header allocations remain separate. Material126/142; bounded signatures41/41.
+  product gate. Source/header allocations remain separate. Material128/142; bounded signatures41/41.
   All36progress tests pass; no historical points/denominator changes.
-- Latest validated Nativea99655f487efb11a49fa94822206ac1401fa6785 / Engined7e04d4b6. Client/server
+- Latest full CommonUI diagnostic Nativea99655f487efb11a49fa94822206ac1401fa6785 / Engined7e04d4b6. Client/server
   builds PASS184.454/153.841s with all12568Native source files unchanged. Actual outro60rows, intro49,
   main query44, internal button34, activation40 and registry/lifecycle diagnostics pass in seven fresh
   processes with executable inode/argv/cwd/rawlog/before-after hash binding. Default/Athena joins
