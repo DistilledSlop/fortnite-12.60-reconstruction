@@ -5,6 +5,8 @@
 - Goal remains the full reconstructed client/server with all four product milestones and 100% parity.
   All four gates are false. Latest fully green runtime is Nativec06a5cb / Engined7e04d4b6,
   immutable build2 validated by new run-only attempt5 using tools973d38e. All ownership is released.
+  New manual Native `CommonUI/Private/SCommonButton.h/.cpp` source is now composed and syntax-checked;
+  it is NOT built/linked/runtime-verified yet. Root owns subsequent Native integration.
 - Base activation is implemented and runtime verified: actual constructor/defaults, guarded activation,
   visibility, Blueprint/native/dynamic notification order and reentry pass40orderedrows. Both target
   UHT/object/linked implementation and full generic context proofs pass. Root independently reran
@@ -21,8 +23,12 @@
   Login still reaches Facebook material / MemoryImage1064. All class probes exit139; no UI acceptance.
 - Next implementation: complete real CommonUI Panel/queue/input and authentic startup. Button source
   fragments now cover gated hover/interaction setter, touch enter/leave and mouse down/up/double click;
-  all remain off workspace until composed with the real factory and remaining handlers. The actual
-  double-click callback1407fb600 is the next bounded source task. Slate+5c8 is a delegate, not two ints.
+  the complete Slate primitive is now composed into manual Native source (14 original virtual differences,
+  constructor/Construct and interaction helper). UObject factory/callback/manager integration remains pending.
+  Its double-click callback1407fb600 guard and delegate order are recovered at /tmp/button-double-click-callback-1.
+  Slate+5c8 is a focus delegate, not two ints; +250 is IsPressed, not SupportsKeyboardFocus.
+  The original has TWO owning Slate refs (+478 custom and+418base): preserve both. The setter fragment
+  was corrected at /tmp/button-interaction-setter-2 (receipt e48c8d157e4a23950411cef3ee54112cf19afe6d3335249961fbcd9d4385bf69).
   Cursor clamp is complete off workspace at /tmp/cursor-viewport-clamp-2; producer/runtime integration pending.
 - Persistent collaboration: root plans/integrates/reviews and performs difficult work directly. Use bounded
   Luna-medium read-only tasks, Terra-medium/high regular tasks, Sol6.1-medium complex tasks, always fork_turns:none.
