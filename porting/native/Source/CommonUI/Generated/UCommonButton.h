@@ -141,5 +141,15 @@ public:
 	UPROPERTY()
 	UCommonActionWidget* InputActionWidget;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_OnHovered();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_OnSelected();
+public:
+
 };
 

@@ -413,7 +413,7 @@ def check_generated(e, rejected, problems, counts):
         check_static_helper(e, tag, ret, sfn, args, hdr, cpp, problems, counts)
         return
     hl = [squash(line) for line in hdr.splitlines()]
-    decl_key = squash("%s %s(%s)%s;" % (ret, sfn, args, const))
+    decl_key = squash("%s%s %s(%s)%s;" % ("static " if e.get("static") else "", ret, sfn, args, const))
     if hl.count(decl_key) != 1:
         problems.append(("FAIL", tag, "declaration %r found %d times in header" % (decl_key, hl.count(decl_key))))
         return

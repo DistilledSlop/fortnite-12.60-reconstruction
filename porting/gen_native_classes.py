@@ -1203,6 +1203,53 @@ def field_self_test(check):
                        cpp))
     moved = dict(model, fields=[dict(f, offset=0x300) if f["name"] == "PointsA" else f for f in res["fields"]])
     check("verify: field placed against its offset is detected", not verifies(moved, header, cpp))
+def static_reflected_self_test(check):
+    """Staticness comes from reflection and is required by the snippet and declaration."""
+    resolver = Resolver({})
+    resolver.skipped = []
+    fn = {"name": "Find", "flags": ["0x14022401"], "params": []}
+    functions = build_functions_promoted([fn], resolver, set(), set(), {"Find"})
+    check("static reflected function emitted from flags", len(functions) == 1 and functions[0]["static"])
+    ctx = {"class_pkg": {"ASelfTest": "/Script/FortniteGame"}, "struct_index": {},
+           "gate": None, "other_promoted": set()}
+    entry = {"kind": "getter", "function": "Find", "signature": "void Find()", "static": True,
+             "body": "return;"}
+    bad = dict(entry, static=False)
+    rejected = attach_snippets("ASelfTest", functions, [bad], ctx, "/Script/FortniteGame")
+    check("staticness mismatch rejected", any("staticness" in r["reason"] for r in rejected["rejected"]))
+    rejected = attach_snippets("ASelfTest", functions, [dict(entry, body="this->Bad();")], ctx,
+                               "/Script/FortniteGame")
+    check("static reflected function rejects this", any("uses this" in r["reason"] for r in rejected["rejected"]))
+    rejected = attach_snippets("ASelfTest", functions, [dict(entry, body="Count = 1;")], ctx,
+                               "/Script/FortniteGame", member_names={"Count"})
+    check("static reflected function rejects bare instance member", bool(rejected["rejected"]))
+    accepted = attach_snippets("ASelfTest", functions, [entry], ctx, "/Script/FortniteGame")
+    check("static reflected snippet accepted", accepted["accepted"] == ["ASelfTest::Find"])
+    model = {"name": "ASelfTest", "parent": "AActor", "uclass": "UCLASS()", "forward_decls": [],
+             "includes": [], "cpp_includes": [], "members_table_order": [], "members_decl_order": [],
+             "functions": functions, "helpers": [], "static_helpers": []}
+    hdr = render_promoted_header(model, "SELFTEST_API", "AActor.h", "self-test")
+    cpp = render_promoted_cpp(model, "self-test")
+    check("static declaration carries static", "static void Find();" in hdr)
+    check("out-of-class static definition omits static", "void ASelfTest::Find()" in cpp)
+    try:
+        verify_spliced(model, hdr, cpp)
+        valid = True
+    except SystemExit:
+        valid = False
+    check("static declaration and body verify", valid)
+    try:
+        verify_spliced(model, hdr.replace("static void Find();", "void Find();"), cpp)
+        detects_missing_static = False
+    except SystemExit:
+        detects_missing_static = True
+    check("verification detects missing static", detects_missing_static)
+    bad_fn = dict(fn, flags=["0x54022401"])
+    resolver2 = Resolver({})
+    resolver2.skipped = []
+    check("static const combination rejected", not build_functions_promoted([bad_fn], resolver2, set(), set(), {"Find"}))
+
+
 def self_test():
     failures = []
     count = [0]
@@ -1302,6 +1349,7 @@ def self_test():
     types_self_test(check)
     helper_self_test(check)
     field_self_test(check)
+    static_reflected_self_test(check)
     if failures:
         print("SELF-TEST FAILED:", *failures, sep="\n  ")
         return 1
@@ -1479,9 +1527,15 @@ def function_view(fn, owner_fns):
     return flags, fn["params"], None
 
 
-def build_functions_promoted(functions, resolver, notify_names, owner_fns, splice_names=frozenset()):
-    """RPCs and RepNotify targets only, plus the non-RPC functions named in splice_names (behaviour snippets, see
-    attach_snippets). A function whose flags cannot be classified is recorded, since it might be an RPC."""
+# Narrow, observed cooked Blueprint imports. Expand only with matching reflection and runtime evidence.
+UI_BLUEPRINT_EVENTS = {"UCommonButton": frozenset({"BP_OnHovered", "BP_OnSelected"})}
+UI_BLUEPRINT_EVENT_FLAGS = 0x08080800  # BlueprintEvent | Protected | Event; not Native
+
+
+def build_functions_promoted(functions, resolver, notify_names, owner_fns, splice_names=frozenset(),
+                             blueprint_events=frozenset()):
+    """Emit RPCs, RepNotify targets, snippet functions and narrowly selected observed Blueprint events.
+    A function whose flags cannot be classified is recorded, since it might be an RPC."""
     emitted = []
     for fn in functions:
         name = fn.get("name") or "UnnamedFunction"
@@ -1491,13 +1545,26 @@ def build_functions_promoted(functions, resolver, notify_names, owner_fns, splic
             continue
         is_rpc = bool(flags & FUNC_NET_ANY)
         is_splice = name in splice_names and not is_rpc
+        is_blueprint_event = name in blueprint_events
+        if is_blueprint_event:
+            # The imported events have no parameters and exactly these flags. Refuse to invent
+            # a signature or native implementation if the reflection join changes.
+            if flags != UI_BLUEPRINT_EVENT_FLAGS or params != [] or is_splice or name in notify_names:
+                resolver.skipped.append(skip_function(fn, "blueprint_event_mismatch",
+                    "expected protected non-native Blueprint event with no parameters"))
+                continue
+            emitted.append({"name": name, "rpc": False, "service": None, "ret": "void",
+                            "const": False, "notify": False, "splice": False,
+                            "blueprint_event": True, "specifiers": ["BlueprintImplementableEvent"],
+                            "args": [], "used": {}})
+            continue
         if not is_rpc and name not in notify_names and not is_splice:
             continue
         if name in splice_names and is_rpc:
             resolver.skipped.append(skip_function(fn, "snippet_on_rpc", "a getter/exec snippet names an RPC"))
             continue
-        if is_splice and flags & FUNC_STATIC:
-            resolver.skipped.append(skip_function(fn, "snippet_static", "static function with a snippet is not emitted"))
+        if is_splice and flags & FUNC_STATIC and flags & FUNC_CONST:
+            resolver.skipped.append(skip_function(fn, "snippet_static_const", "static function cannot be const"))
             continue
         service = net_service_kind(flags) if is_rpc else None
         if is_rpc and service is None and not flags & (FUNC_NET_SERVER | FUNC_NET_CLIENT | FUNC_NET_MULTICAST):
@@ -1551,6 +1618,7 @@ def build_functions_promoted(functions, resolver, notify_names, owner_fns, splic
         else:
             specifiers = function_specifiers(flags) if is_rpc else []
         rec = {"name": name, "rpc": is_rpc, "service": service, "ret": ret,
+               "static": bool(flags & FUNC_STATIC),
                "const": bool(flags & FUNC_CONST) and (is_rpc or is_splice),
                "notify": name in notify_names, "splice": is_splice,
                "specifiers": specifiers, "args": args, "used": used}
@@ -1568,7 +1636,8 @@ def build_class_promoted(block, name, resolver, parent_entry, owner_fns, snippet
     members, _notes = build_members(block.get("properties") or [], resolver, promote=True)
     notify_names = {m["rep_notify"] for m in members if m["rep_notify"]}
     splice_names = {e["function"] for e in snippets if e["kind"] in ("getter", "exec") and e.get("body") is not None}
-    functions = build_functions_promoted(block.get("functions") or [], resolver, notify_names, owner_fns, splice_names)
+    functions = build_functions_promoted(block.get("functions") or [], resolver, notify_names, owner_fns,
+                                         splice_names, UI_BLUEPRINT_EVENTS.get(name, frozenset()))
     splice = (attach_snippets(name, functions, snippets, splice_ctx, parent_entry.get("package"), resolver.skipped,
                               {m["name"] for m in members})
               if snippets else None)
@@ -2109,6 +2178,21 @@ def attach_snippets(name, functions, entries, ctx, package, skipped=(), member_n
         if squash(e.get("signature")) != squash(want):
             reject("manifest signature %r differs from the reflection-derived %r" % (e.get("signature"), want))
             continue
+        if kind in ("getter", "exec") and e.get("static", False) != target.get("static", False):
+            reject("manifest staticness differs from reflection")
+            continue
+        if kind in ("getter", "exec") and target.get("static"):
+            code = strip_comments(e["body"])
+            if re.search(r"\bthis\b", code):
+                reject("static reflected function uses this")
+                continue
+            instance_names = set(member_names) | {f["name"] for f in fields["fields"]}
+            instance_names |= {f["name"] for f in functions if not f.get("static")}
+            instance_names |= {h["name"] for h in helpers["members"]}
+            used_members = sorted(set(re.findall(r"(?<![\w.:>])[A-Za-z_]\w*", code)) & instance_names)
+            if used_members:
+                reject("static reflected function uses instance member %s" % used_members[0])
+                continue
         if kind == "validate":
             if target.get("validate"):
                 reject("second validate snippet for %s" % base)
@@ -2174,7 +2258,7 @@ def verify_spliced(model, header, cpp):
         const = " const" if f.get("const") else ""
         tag = "%s::%s" % (name, f["name"])
         ufunc = squash("UFUNCTION(%s)" % ", ".join(f["specifiers"]))
-        decl = squash("%s %s(%s)%s;" % (ret, f["name"], args, const))
+        decl = squash("%s%s %s(%s)%s;" % ("static " if f.get("static") else "", ret, f["name"], args, const))
         if count(hsq, decl) != 1:
             problems.append("%s: declaration found %d times in header" % (tag, count(hsq, decl)))
         else:
@@ -2315,10 +2399,14 @@ def render_promoted_header(model, api, parent_include, source_label):
     for fd in pending:
         lines.extend(field_lines(fd))
     for f in model["functions"]:
+        if f.get("blueprint_event"):
+            lines.append("protected:")
         lines.append("\tUFUNCTION(%s)" % ", ".join(f["specifiers"]))
-        lines.append("\t%s %s(%s)%s;" % (f.get("ret", "void"), f["name"],
+        lines.append("\t%s%s %s(%s)%s;" % ("static " if f.get("static") else "", f.get("ret", "void"), f["name"],
                                        ", ".join(header_arg(f, a) for a in f["args"]),
                                        " const" if f.get("const") else ""))
+        if f.get("blueprint_event"):
+            lines.append("public:")
         if f["rpc"] and not f.get("service"):
             lines.append("\tvoid %s_Implementation(%s)%s;" % (f["name"], ", ".join(f["args"]),
                                                           " const" if f.get("const") else ""))
@@ -2426,6 +2514,9 @@ def render_promoted_cpp(model, source_label):
         lines.append("}  // namespace")
         lines.append("")
     for f in model["functions"]:
+        # UHT generates the ProcessEvent forwarder for BlueprintImplementableEvent.
+        if f.get("blueprint_event"):
+            continue
         # A service request has no definition here: UHT generates its Event thunk (a ProcessEvent forwarder, one per
         # request: 138 of 138 in the scratch build), and a second definition is a duplicate symbol at link time.
         if f.get("service") == "Request":

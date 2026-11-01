@@ -18,6 +18,12 @@ only, see Next steps).
 Stage notes for the gap closure in `native_class_coverage.md` (cause codes C1 to C5). Each green stage is promoted, built,
 restaged and verified before the next one starts. Not every stage is committed by its builder; the orchestrator commits.
 
+**2026-11-01 frontend prerequisite:** the generator emits the observed protected CommonButton Blueprint events and a static
+`UFortRuntimeOptions::GetRuntimeOptions` body. Promotion accepted 250 behavior snippets with zero rejects; the full
+client/server build, restage and regression passed with 4,617/4,617 class parity, 71 backend tests and zero behavior
+failures (`porting/generated/regress/20261031T235803Z-2105216/result.json`). Engine source was at `f716e0cb6`.
+The tile class load and its limits are recorded in `porting/frontend/readiness.md`.
+
 **2026-10-31: Stage 2 batch 1 retry passed**, superseding the reverted attempt below. SocialUMG and KairosSceneCapture
 add 26 classes, bringing offline parity to 4,617 of 4,617 (zero mismatches or unknowns). The generator now includes
 cross-module class headers and retains actual dependencies on FortniteGame in generated module Build.cs files; the previous

@@ -3357,5 +3357,8 @@ public:
 	UPROPERTY(Config)
 	bool bBuildingPossessionShown;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static UFortRuntimeOptions* GetRuntimeOptions();
+
 };
 

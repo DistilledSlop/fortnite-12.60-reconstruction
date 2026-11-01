@@ -6184,5 +6184,20 @@
     "proxy_score": null,
     "decompile_source": "porting/decompilation_notes.md, Eleventh pass (ops vtable 0x1464a87e8, thunk 0x142a3dc40)",
     "notes": "Eleventh pass: the native NetSerialize (HasNetSerializer only). Layout HIGH: 9-bit handle, bMirrored as UBOOL, BuildLoc raw floats, UpgradeLevel, then the SyncKey 24-bit code (13x quantizer, nearest-even) and a 2-bit yaw code. MEDIUM: the saving yaw wrap (helper 0x142bc0d80 re-expressed). BuildRot Pitch and Roll are never written. FAthenaPawnReplayData is not in this set (its body is blocked, see the same pass)."
+  },
+  {
+    "class": "UFortRuntimeOptions",
+    "function": "GetRuntimeOptions",
+    "kind": "getter",
+    "signature": "UFortRuntimeOptions* GetRuntimeOptions()",
+    "static": true,
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/UFortRuntimeOptions/GetRuntimeOptions.inc",
+    "confidence": "high",
+    "address": "0x142ace3c0",
+    "status": "ported",
+    "proxy_score": null,
+    "decompile_source": "runtime image 0x142ace3c0 and 0x1426fdde0",
+    "notes": "Static BlueprintPure callable (flags 0x14022401); thunk returns UFortRuntimeOptions class default object via 0x1426fdde0. GetMutableDefault matches its non-const UObject return."
   }
 ]

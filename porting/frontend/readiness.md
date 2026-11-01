@@ -1,10 +1,14 @@
 # Frontend asset readiness, 2026-10-31
 
-This is a static audit while the client/server build is active. No UE process was launched and no asset was staged or modified. A generated header is evidence of a type declaration, not proof of a loadable module, complete Blueprint functions, behavior, or a working menu.
+This document combines the original static audit with the later native class-load probes. A generated header or successful class load does not establish complete Blueprint behavior or a working menu.
 
-## Current probe snapshot (stage 2)
+## Current probe snapshot (2026-11-01)
 
-The stage 2 native source was committed as `2cbbd18`. The subsequent tile probe (`porting/generated/frontend-banner-probe-stage2.log`) exited 139 with invalid cooked export index 45381 for an export map of 96, and reported missing content packages. It does **not** contain the earlier `BP_OnHovered` SuperStruct message. That absence does not prove the event exists or that the tile loads. The isolated event candidate remains unmerged and unvalidated; defer it while the native owner investigates the current loader failure and existing engine patches.
+The stage 2 tile probe exited 139 with invalid cooked export index 45381 for an export map of 96 (`porting/generated/frontend-banner-probe-stage2.log`). The unversioned file actually stores the old full field path without an owner index: the following byte is a Blueprint opcode. Engine commit `f716e0cb6` adds the experimental, explicit `-FortniteLegacyFieldPaths` option for unversioned packages. With it, the tile advanced to a missing CommonButton `BP_OnHovered` SuperStruct (`porting/generated/frontend-banner-probe-legacy.log`).
+
+The generator now emits the two observed protected non-native CommonButton Blueprint events and the static `UFortRuntimeOptions::GetRuntimeOptions` getter. With these changes and the experimental option, the tile probe exited 0 and returned `WidgetBlueprintGeneratedClass` (`porting/generated/frontend-banner-probe-events.log`). It also logged missing content packages, skipped native imports, and missing widget outers; this is a partial class-load result, not proof of widget creation, display, or gameplay. Full build and regressions passed (`porting/generated/regress/20261031T235803Z-2105216/result.json`).
+
+The option is off by default and affects **all unversioned packages loaded while enabled**, not only 12.60 assets. A locally cooked unversioned empty map loaded with it, and a versioned locally cooked Blueprint class loaded with and without it; these controls do not prove every field reference or package is compatible. Do not enable it globally on this evidence.
 
 ## Entrypoints and scope
 
@@ -16,29 +20,29 @@ The smallest historically exercised UI probe is `/Game/UI/Foundation/Profile/BP_
 
 The earlier UI census's claims that CommonUI and FortniteUI were absent predate generation. Current source includes `UCommonButton`, `UCommonActivatableWidget`, `UFortBangWrapper_NUI`, `UFortPlayerProfileBannerEditorTile`, `UFortBannerUtilities`, `UFortAccountItem`, `UFortHomebaseBannerColorItem`, `UFortHomebaseBannerIconItem`, `AFortGameModeFrontEnd`, `AFortPlayerControllerFrontEnd`, `AFrontEndSettings`, and `UFortFrontEndContext`. This establishes declarations only. `UFortSocialNameTextBlock` and `UFortMediaSubtitlesPlayer` have no generated headers in the present tree; the latter's `SubtitlesWidgets` module is listed as missing in class coverage. They are graph-level dependencies, not proven dependencies of the selected tile.
 
-The old `porting/generated/blueprint-asset-probe.log` reports `Could not find SuperStruct BP_OnHovered`, resolving `/Script/CommonUI.CommonButton:BP_OnHovered`, and exit 139. The current `UCommonButton.h` still lacks `BP_OnHovered` and `BP_OnSelected`. Reflection records both with zero parameters and flags `0x8080800`; the old tile imports both. Candidate for the generator owner: emit reflection-compatible Blueprint event declarations with correct flags, owner, and signatures, and test UHT/registration and asset loading. A header being present is insufficient. Do not hand-edit generated headers. There may be subsequent missing imports or content.
+The old `porting/generated/blueprint-asset-probe.log` reported `Could not find SuperStruct BP_OnHovered`. Reflection records that event and `BP_OnSelected` with zero parameters and flags `0x08080800`; both are now generated as protected Blueprint events, compiled and exercised by the successful partial tile class load above. Missing imports and content remain in that probe.
 
 The field-path failures in `porting/map_compatibility.md` are separate Apollo Blueprint observations, not an observed failure of this tile: `BP_DisplayShadowProxy_01` reported unresolved `InstancedStaticMesh` in its construction script; storm and POI probes hit invalid export indexes during `UStruct::SerializeExpr` after `FFieldPath` data. The 4.26 branch-version backport changed indices but did not fix those crashes. Neither demonstrates this UI package's next failure.
 
 ## Next controlled native probe
 
-After the active build and restaging finish, the build owner can repeat the prior exact load from the stage directory, disabling core dumps and keeping the log:
+Repeat the experimental class-load probe from the stage directory, disabling core dumps and keeping the log:
 
 ```sh
 cd /opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/linux-stage/LinuxNoEditor
 ulimit -c 0
-./FortniteLinux.sh -nullrhi -nosound -unattended -log \
+./FortniteLinux.sh -nullrhi -nosound -unattended -log -FortniteLegacyFieldPaths \
   -FortniteProbeAsset=/Game/UI/Foundation/Profile/BP_BannerEditorTile.BP_BannerEditorTile_C \
   -ExecCmds=Quit > ../../frontend-banner-probe.log 2>&1
 ```
 
 Check exit status, `Fortnite asset probe: ... -> ...`, and the first missing dependency, assertion, or `Unresolved cooked field path:` in the log. A successful class load is only a deserialization check; it does not create or display a widget. The old run lacked numerous content packages; compare missing package paths with the read-only full extraction before drawing conclusions. Avoid copying an entire closure into the shared stage without coordinating its ownership and cleanup. For the actual frontend, separately stage its closure in an isolated runtime copy and test `/Game/Maps/Frontend`; it has not yet been demonstrated to load or display a menu.
 
-## Isolated event declaration candidate
+## Event declaration validation
 
-Worktree `/opt/fortnite/ui-event-worktree`, branch `gen/ui-events`, contains an uncommitted narrow generator change for the two observed `UCommonButton` imports and `porting/frontend/test_ui_events.py`. It emits protected, non-native `BlueprintImplementableEvent` declarations only when the reflected flags equal `0x08080800` and the parameter list is empty; mismatches are recorded as skipped. UE 4.25 UHT source assigns Event and BlueprintEvent, clears Native, and derives Protected from C++ access for this declaration. No handwritten event body is emitted. This is a candidate until UHT/build and the native asset probe pass.
+The integrated generator emits protected, non-native `BlueprintImplementableEvent` declarations for the two observed `UCommonButton` imports only when the reflected flags equal `0x08080800` and the parameter list is empty; mismatches are recorded as skipped. UE 4.25 UHT assigns Event and BlueprintEvent, clears Native, and derives Protected from C++ access. No handwritten event body is emitted.
 
-Static verification in that worktree: `python3 -I porting/frontend/test_ui_events.py /opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/reflection/fortnite_game_reflection.json` passed 2 tests; `python3 -I porting/gen_native_classes.py --self-test` passed 129 checks. No promotion, UHT, build, or runtime load was run for this change.
+`python3 -I porting/frontend/test_ui_events.py` passed 2 tests and `python3 -I porting/gen_native_classes.py --self-test` passed 139 checks. Promotion, UHT, build, regression and the limited class-load probe passed as described above.
 
 ## Observed original frontend initialization and next root probe
 
@@ -52,7 +56,7 @@ After the tile probe and after coordinating an isolated stage, probe `RootLayout
 
 A repeatable flat-name comparison is `python3 -I porting/frontend/audit_imports.py <Cue4Inspect-import-report> ...`. It reads `--imports` output and project headers, including handwritten declarations; it does not inspect engine headers or establish function ownership, reflected flags, signatures, registered modules, or functionality. Regenerate the three input reports with Cue4Inspect's `--loose --imports`: use `FortniteGame/Content/UI/Foundation/UIManager_Startup` with `/mnt/vibrato/fortnite-extracted-full`, and `FortniteGame/Content/UI/Foundation/RootLayout_Athena` and `FortniteGame/Content/UI/Foundation/StateLayouts/LoginScreen` with `/mnt/vibrato/fortnite-extracted`. Save stdout separately outside the extraction tree. The full root scan indexed 455,088 loose packages and took longer than the smaller closure scan.
 
-On the current source snapshot, every imported project class name in these three reports has a project declaration (including handwritten `UFortKismetLibrary`). This is a name check, not proof of runtime registration or matching ancestry. The following imported function names were absent from the corresponding project module's headers:
+At the earlier audit snapshot, every imported project class name in these three reports had a project declaration (including handwritten `UFortKismetLibrary`). This is a name check, not proof of runtime registration or matching ancestry. The following imported function names were absent from the corresponding project module's headers at that time; `GetRuntimeOptions` has since been generated and its body spliced:
 
 - RootLayout: `BlueprintContext.GetContext`, `FortniteGame.ExecuteClientEvent`, `FortniteUI.QuitGame`, `FortniteUI.ShowSimpleConfirmationDialog_CustomInput`.
 - LoginScreen: `BlueprintContext.GetContext`, `FortniteGame.GetGameVersion`, `FortniteGame.GetRuntimeOptions`, `FortniteUI.SetFrontEndCamera`, `FortniteUI.SetInputMode`, `FortniteUI.UpdateWatermark`.
@@ -64,7 +68,7 @@ Some missing functions may be required before a root class can load; the import 
 
 `Cue4Inspect --imports-json` preserves each legacy package import's raw index, outer index, and root-to-member chain as JSON; the existing `--imports` format remains available. The owner-aware `python3 -I porting/frontend/audit_import_owners.py /tmp/root-imports.json /tmp/login-imports.json` joins these chains to class reflection and parent chains, then searches the imported owner and its project ancestors' headers for declarations. Its output gives raw reflection flags and parameter types/construct pointers; found header text is only a candidate, not proof of matching UFUNCTION metadata or signature. Engine ancestors are outside the header scan.
 
-On this source snapshot, none of these exact owner or project-ancestor headers declares the imported member:
+At the earlier audit snapshot, none of these exact owner or project-ancestor headers declared the imported member. `FortRuntimeOptions:GetRuntimeOptions` has since been generated and its body spliced:
 
 - RootLayout: `BlueprintContext.BlueprintContextLibrary:GetContext` (`0x14022409`, ContextObject/Class/ReturnValue); `FortniteGame.FortKismetLibrary:ExecuteClientEvent` (`0x4022409`, WorldContextObject/EventType/EventSource/EventFocus); `FortniteUI.FortAsyncAction_ShowConfirmation_NUI:ShowSimpleConfirmationDialog_CustomInput` (`0x4022401`, 11 reflected parameters including return); `FortniteUI.FortGlobalUIContext:QuitGame` (`0x4020401`, no parameters).
 - LoginScreen: `BlueprintContext.BlueprintContextLibrary:GetContext` as above; `FortniteGame.FortRuntimeOptions:GetGameVersion` (`0x54020401`, string return) and `GetRuntimeOptions` (`0x14022401`, object return); `FortniteUI.FortBuildWatermark:UpdateWatermark` (`0x4080401`, no parameters); `FortniteUI.FortFrontEndContext:SetFrontEndCamera` (`0x4020401`, enum NewState); `FortniteUI.FortGlobalUIContext:SetInputMode` (`0x4020401`, enum InMode).

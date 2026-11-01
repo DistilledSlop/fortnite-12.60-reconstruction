@@ -4,14 +4,14 @@ Hand-ported native function bodies, taken from the decompiled output of the ship
 (`porting/generated/decomp/` and `porting/generated/decomp_improved/`, both git-ignored). Each `.inc`
 is our own C++ re-expression of what the decompile does, not a copy of it.
 
-Status (see `MANIFEST.json`, 437 entries): **249 ported** (32 getters, 29 onrep, 61 impl, 25 exec, 73 validate, 4 helper, 1 static_helper, 19 member_field, 5 struct_net; confidence 209 high, 40 medium), **188 skipped** with a reason (of which 17 are callees from the queue). `python3 porting/behavior/check_behavior.py` reports 0 failures; `COUNTS.txt` has 243 signatures declared in the generated header and 5 pending declarations (the generator emits those when the splice is on: the five `struct_net` NetSerialize declarations of the eleventh pass, until the native tree is regenerated). The RPC entries that were skipped as not declared (the zipline implementation and validate, and the quick-chat implementation) are ported again.
+Status (see `MANIFEST.json`, 438 entries): **250 ported** (33 getters, 29 onrep, 61 impl, 25 exec, 73 validate, 4 helper, 1 static_helper, 19 member_field, 5 struct_net; confidence 210 high, 40 medium), **188 skipped** with a reason (of which 17 are callees from the queue). `python3 -I porting/behavior/check_behavior.py` reports 0 failures; `COUNTS.txt` has 244 signatures declared in the generated header and 5 pending declarations. The generated-tree check separately verified all 250 splices with no failures.
 
 Eleventh pass, the native NetSerialize bodies (see `porting/decompilation_notes.md`, "Eleventh pass"): five structs get their
 recovered `NetSerialize` through the new kind `struct_net` (below): `FSharedRepMovement`, `FFortAISharedRepMovement`,
 `FReplicatedPhysicsPawnState`, `FFortAIAttributeReplicationProxy` and `FCreateBuildingActorData` (the last one MEDIUM on the
 saving yaw wrap). `FAthenaPawnReplayData` stays on its fallback (its wire depends on runtime state and key handling).
 
-Twelfth pass (see `porting/decompilation_notes.md`, "Twelfth pass"): no new entries; the counts above are unchanged (437 entries, 249 ported, 188 skipped). One probe run over 18 callees of the five bodies that the tenth pass found blocked (`ServerClearSkydiveLeader_Implementation`, `OnClientVolumeManagerReplicated`, `Server_SetCanEditCreativeIsland_Implementation`, `ClientSendMatchStatsForPlayer_Implementation`, `ClientNotifyTeamLost_Implementation`). The identities are recorded in the notes and the queue, and none of the five bodies is ported: each still has an unnamed member, virtual slot or large callee (the notes give the exact blocker). The scratch promote splices 249 entries with 0 rejected, and `check_behavior.py --gen-root` on that tree reports FAIL 0.
+Twelfth pass (see `porting/decompilation_notes.md`, "Twelfth pass"): no new entries; at that point there were 437 entries, 249 ported and 188 skipped. One probe run over 18 callees of the five bodies that the tenth pass found blocked (`ServerClearSkydiveLeader_Implementation`, `OnClientVolumeManagerReplicated`, `Server_SetCanEditCreativeIsland_Implementation`, `ClientSendMatchStatsForPlayer_Implementation`, `ClientNotifyTeamLost_Implementation`). The identities are recorded in the notes and the queue, and none of the five bodies is ported: each still has an unnamed member, virtual slot or large callee (the notes give the exact blocker). The scratch promote splices 249 entries with 0 rejected, and `check_behavior.py --gen-root` on that tree reports FAIL 0.
 
 Tenth pass (see `porting/decompilation_notes.md`, "Tenth pass"): the four rank-2 callees of `CALLEE_PORT_QUEUE.md` are identified (one small probe run) and the stat-kill bodies that use them are ported: `OnRep_Kills` (onrep), `OnRep_TotalPlayerScore` (onrep, one tail call), `OnRep_TeamKillScore` (onrep, its callee `0x1419e4f10` identified from two instructions) and `OnRep_AIKills` (helper, protected: it is not a RepNotify, so the generator declares it). Three new `member_field` entries are the no-argument delegates of the controllers (`AFortPlayerControllerZone` at `+0x28f0` and `+0x2908`, `AFortPlayerControllerAthena` at `+0x3210`), with placeholder names. `OnRep_DeathInfo` stays skipped (75 unnamed callees). The rank-3 scope call `0x142cd3770` is a no-op. `GetOwner` was added to `ENGINE_NAMES` (checker only).
 
@@ -24,6 +24,15 @@ and the RPC validates that share folded bodies with mismatched argument register
 Ninth pass (see `porting/decompilation_notes.md`, "Ninth pass"): 28 new entries. 16 `member_field` (eleven int32 point caches, the four native score delegate lists and the `AFortTeamInfo` int32), 2 `helper` (`UpdateScoreForEvent`, `UpdateTotalPlayerScore`), 1 `static_helper` (`GetFortGameStateAthena`) and 9 `onrep` stat bodies (`OnRep_Num*`, two of them with the profiling-scope call `0x142cd3770` ported as a no-op). The Eighth pass helper `GetActivePlaylist` is renamed `GetCurrentPlaylistAthena` in place (no second entry). Each new snippet was spliced and verified in a scratch promote run (237 spliced, 0 rejected) and syntax-checked with the UE 4.25 clang (see the decompilation notes for the scope of that check).
 
 Sixth pass (see `porting/decompilation_notes.md`, "Sixth pass"): nine bodies. Six `ClientBroadcastOn*Finished_Implementation` (the eight missing `InlineMulticastDelegate` members are emitted now; their signatures are in declaration order), the zipline implementation and validate, and `ClientReceiveSquadQuickChatMessage_Implementation`. Each was spliced and verified in a scratch promote run (208 spliced, 0 rejected).
+
+Frontend prerequisite: `UFortRuntimeOptions::GetRuntimeOptions` is a reflected static BlueprintPure
+function (`0x14022401`). Its exec thunk at `0x142ace3c0` calls `0x1426fdde0`, whose
+class-default-object lookup returns the `UFortRuntimeOptions` default object. The snippet uses
+`::GetMutableDefault<UFortRuntimeOptions>()` for the same mutable pointer. Recover the two bodies
+with `probe_callees.py` at those addresses; the original bytes contain no additional instance
+field access. This evidence establishes the getter's body, not frontend initialization or a load.
+`GetContext` still depends on unresolved context lookups; `GetGameVersion` derives its result
+from runtime branch and version information and is not replaced by a constant.
 
 ## Files
 
@@ -81,7 +90,10 @@ Turn it off with `--no-behavior` or `FN_BEHAVIOR_SPLICE=0`; the output then equa
 
 - `getter`, `exec` (`signature_status: proposed`): the non-RPC reflection function is emitted as
   `UFUNCTION(BlueprintCallable[, BlueprintPure])` (BlueprintPure when the reflection flag is set), with the manifest
-  signature (`const` included) and the snippet as body. Apart from the helpers (see "Helpers" below), only these two kinds add functions that are not RPCs.
+  signature (`const` included) and the snippet as body. For a reflected `FUNC_Static` function the manifest must have
+  `"static": true`; the generator verifies staticness and emits `static` on the declaration only. Static-and-const
+  reflection is rejected, as are static bodies using `this` or an unqualified instance member known to this class.
+  These textual checks do not prove that a body compiles or catches inherited instance members. Apart from the helpers (see "Helpers" below), only these two kinds add functions that are not RPCs.
 Parameter order (generator change, see `porting/gen_native_classes.md`, "Parameter order"): a signature lists its
 parameters in declaration order, the order of the recorded offsets. The table lists them in reverse, so a manifest
 signature written in table order is rejected. In this pass the 27 `impl` and `validate` signatures with two or more
