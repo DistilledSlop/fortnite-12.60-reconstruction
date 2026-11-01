@@ -215,6 +215,11 @@ class Resolver:
             target = self.ifaces.get(fn.lower()) if fn else None
             if target is None:
                 return self.todo("Interface", fn)
+            if self.gate is not None:
+                package = self.gate.iface_packages[target]
+                current = self.gate.current_package
+                if package != current and not cross_module_allowed(current, package):
+                    return self.todo("InterfaceOtherModule", fn)
             self.class_refs.add(target)
             return "TScriptInterface<%s>" % target
         if kind == "Array":
@@ -2159,7 +2164,7 @@ _common_activation_policy = _common_activation_import.module_from_spec(_common_a
 _common_activation_spec.loader.exec_module(_common_activation_policy)
 
 
-def build_class_promoted(block, name, resolver, parent_entry, owner_fns, snippets=(), splice_ctx=None):
+def build_class_promoted(block, name, resolver, parent_entry, owner_fns, snippets=(), splice_ctx=None, native_execs=None):
     resolver.todos = []
     resolver.class_refs = set()
     resolver.skipped = []
@@ -2205,7 +2210,7 @@ def build_class_promoted(block, name, resolver, parent_entry, owner_fns, snippet
                                  if function_view(f, owner_fns)[0] is not None
                                  and function_view(f, owner_fns)[0] & FUNC_NET_ANY),
     }
-    model = _common_activation_policy.apply(model, block, owner_fns)
+    model = _common_activation_policy.apply(model, block, owner_fns, native_execs)
     return apply_blueprint_context_runtime_policy(model, block, name, resolver, parent_entry, owner_fns, snippets, splice_ctx)
 
 # ---------------------------------------------------------------- behaviour snippets (porting/behavior)
@@ -3148,6 +3153,39 @@ def engine_macro_names(engine_root):
     return {"F%sDelegate" % name for name in found if name != "Type"}
 
 
+def build_interface_map(names, listed, blocks, parents, evidence_fns, class_refs):
+    """Only alias an actual emitted direct UInterface, never an ordinary or unavailable class."""
+    eligible = {}
+    packages = {}
+    for block, name in names.items():
+        record, parent = blocks.get(block) or {}, parents.get(block) or {}
+        if (name in listed and name.startswith("U") and len(name) > 1
+                and hx(record.get("class_flags")) & CLASS_INTERFACE
+                and parent.get("parent_name") == "UInterface"
+                and parent.get("package") in PROMOTE_PACKAGES):
+            iname = "I" + name[1:]
+            eligible[block] = iname
+            packages[iname] = parent["package"]
+    result = {}
+    for block, iname in eligible.items():
+        for fn in evidence_fns.get(block, []):
+            result[fn.lower()] = iname
+    for ref, block in class_refs.items():
+        iname = eligible.get(str(block).lower())
+        if iname:
+            result[ref.lower()] = iname
+    return result, packages
+
+
+def include_interface_headers(model, iface_packages):
+    """UHT needs the UINTERFACE header, even in its own module."""
+    refs = set(model.get("forward_decls", [])) & set(iface_packages)
+    model["includes"] = sorted(set(model.get("includes", [])) | {"U%s.h" % ref[1:] for ref in refs})
+    if "forward_decls" in model:
+        model["forward_decls"] = [ref for ref in model["forward_decls"] if ref not in refs]
+    return sorted({iface_packages[ref].rsplit("/", 1)[-1] for ref in refs})
+
+
 def cross_module_allowed(current_package, target_package):
     """True when an item of current_package may use a promoted type of target_package. Only the game module does, and
     only for the runtime modules in CROSS_MODULE_TARGETS: its Build.cs lists them and they do not depend on it. Other
@@ -3337,15 +3375,16 @@ def promote(args):
     tables = TypeTables(args.types_dir or os.path.dirname(args.reflection))
     for fn, info in tables.by_fn.items():
         type_map.setdefault(fn, info.cpp_name)
-    iface_map = {}
-    for block, name in names.items():
-        if name in listed and is_interface(block):
-            for fn in evidence_fns.get(block, []):
-                iface_map[fn] = "I" + name[1:]
+    iface_map, iface_packages = build_interface_map(names, listed, blocks_by_va, parents, evidence_fns, class_refs)
     resolver = Resolver(type_map, known_fns=known, iface_map=iface_map)
     gate = TypeGate(tables, EngineTypeIndex(args.engine_root, registry), resolver)
+    gate.iface_packages = iface_packages
     gate.name_clashes = engine_macro_names(args.engine_root)
     resolver.gate = gate
+    panel_native_execs = None
+    if 'UCommonActivatablePanel' in listed:
+        panel_native_execs = load_json(os.path.join(os.path.dirname(args.reflection), 'native_funcs.json')).get('UCommonActivatablePanel')
+        _common_activation_policy.validate_panel_outro_types(gate)
     header_index = ModuleHeaderIndex(registry)
     source_label = os.path.relpath(args.reflection, REPO)
 
@@ -3396,9 +3435,12 @@ def promote(args):
         owner_fns = set(evidence_fns.get(block, []))
         gate.current_package = package
         model = build_class_promoted(blocks_by_va[block], name, resolver, parents[block], owner_fns,
-                                     snippets_by_class.get(name, []), splice_ctx)
+                                     snippets_by_class.get(name, []), splice_ctx,
+                                     native_execs=panel_native_execs if name == "UCommonActivatablePanel" else None)
         model["includes"] = sorted(set(own_includes(gate, model["used"], package))
                                    | set(model["splice"].get("header_includes", set())))
+        interface_modules = include_interface_headers(model, iface_packages)
+        add_deps(module, interface_modules)
         # Forward-declared classes of another promoted module: their full definition must be visible to the
         # UHT-generated code (the class's Z_Construct and API macro), which a bare forward declaration does not
         # provide. Include the header (the module dependency is added below); the bare decl is dropped from the
@@ -3500,6 +3542,7 @@ def promote(args):
         module_deps.setdefault(info.module, set())
         add_deps(info.module, [gate.engine.module_of_inc.get(inc) for inc in model["includes"]])
         add_deps(info.module, cross_module_modules(gate, model["used"], info.package))
+        add_deps(info.module, model.get("interface_modules", []))
 
     # FortniteUI classes include headers of FortniteGame's promoted classes; the include map covers engine modules only.
     if "FortniteUI" in module_deps:
@@ -4249,6 +4292,7 @@ class TypeGate:
                 args.reverse()
             model = {"fn": info.fn, "cpp_name": info.cpp_name, "kind": "delegate", "package": info.package,
                      "params": args, "used": merge_used([child.used]),
+                     "forward_decls": sorted(child.class_refs),
                      "multicast": bool(info.rec.get("multicast"))}
             return model, None
         finally:
@@ -4377,6 +4421,7 @@ def render_struct_header(model, source_label):
         lines.append("\tUPROPERTY(BlueprintReadWrite)" if m.get("blueprint_read_write") else "\tUPROPERTY()")
         lines.append("\t%s" % m["decl"])
         lines.append("")
+    lines.extend(_common_activation_policy.struct_declarations(model))
     if delta:
         item = net["item"]
         lines.append("\t// Native NetDeltaSerialize, the FFastArraySerializer pattern (ops vtable %s, traits %s): the"
@@ -4501,6 +4546,7 @@ def emit_types(gate, seeds, source_label):
         if (model.get("net") or {}).get("kind") == "native":
             # Types the native NetSerialize body names (TypeGate.native_net_serializer) are included too.
             model["includes"] = sorted(set(model["includes"]) | set(model["net"]["includes"]))
+        model["interface_modules"] = include_interface_headers(model, gate.iface_packages)
         if info.kind == "struct" and model["parent"] is not None:
             parent_fn = info.rec.get("super_fn")
             model["parent_include"] = gate.include_of(parent_fn) if parent_fn else None

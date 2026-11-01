@@ -1,0 +1,38 @@
+{
+  "EndOutro": {
+    "name": "EndOutro",
+    "create_func": "0x140807d90",
+    "flags": [
+      "0x4080401"
+    ],
+    "replicated_function": false,
+    "net_roles": [],
+    "outer_fn": "0x140807980",
+    "params": [],
+    "original_native_exec": {
+      "exec_addr": "0x14080a2e0",
+      "flags": "0x4080401",
+      "params": [],
+      "create_func": "0x140807d90",
+      "source": "lea"
+    }
+  },
+  "OnBeginOutro": {
+    "name": "OnBeginOutro",
+    "create_func": "0x1408057e0",
+    "flags": [
+      "0x8080c00"
+    ],
+    "replicated_function": false,
+    "net_roles": [],
+    "outer_fn": "0x140807980",
+    "params": [],
+    "original_native_exec": {
+      "exec_addr": "0x14080bc90",
+      "flags": "0x8080c00",
+      "params": [],
+      "create_func": "0x1408057e0",
+      "source": "lea"
+    }
+  }
+}

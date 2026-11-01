@@ -8,6 +8,7 @@
 
 #include "UCommonLoadGuard.h"
 #include "UCommonTileView.h"
+#include "UFortItemManagementMulchPanel.h"
 
 class UFortInventoryContext;
 class UFortItemManagementMulchDetailsPanel;
@@ -21,6 +22,10 @@ class FORTNITEUI_API UFortMulchConfirmationModalWidget : public UFortActivatable
 	GENERATED_BODY()
 
 public:
+	// table index 5, flags 0x24080000000014
+	UPROPERTY()
+	TScriptInterface<IFortItemManagementMulchPanel> HostItemManagementMulchPanel;
+
 	// table index 4, flags 0x2008000008001c
 	UPROPERTY()
 	UCommonTileView* RecycleItemTileView;

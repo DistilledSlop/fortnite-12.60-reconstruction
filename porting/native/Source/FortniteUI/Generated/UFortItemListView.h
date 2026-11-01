@@ -8,6 +8,7 @@
 
 #include "FOnInventoryUpdated.h"
 #include "UFortItem.h"
+#include "UFortItemViewContextInterface.h"
 
 #include "UFortItemListView.generated.h"
 
@@ -44,6 +45,10 @@ public:
 	// table index 1, flags 0x44000000000000
 	UPROPERTY()
 	TArray<TWeakObjectPtr<UFortItem>> ItemsForListView;
+
+	// table index 0, flags 0x44000000000000
+	UPROPERTY()
+	TScriptInterface<IFortItemViewContextInterface> ItemViewContext;
 
 };
 

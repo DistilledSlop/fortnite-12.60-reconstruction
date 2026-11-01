@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 
+#include "FFortOnCameraFrameTargetSettingsChangedDelegate.h"
+
 class UAthenaCharacterPartItemDefinition;
 
 #include "AFortBodyPartOverridePreviewActor.generated.h"
@@ -19,6 +21,10 @@ public:
 	// table index 1, flags 0x20080000000000
 	UPROPERTY()
 	UAthenaCharacterPartItemDefinition* MyCosmeticItem;
+
+	// table index 0, flags 0x20080000080000
+	UPROPERTY()
+	FFortOnCameraFrameTargetSettingsChangedDelegate OnSettingsChangedDelegate;
 
 };
 

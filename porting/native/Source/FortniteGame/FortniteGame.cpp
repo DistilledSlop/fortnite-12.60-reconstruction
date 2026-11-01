@@ -34,6 +34,7 @@ void RegisterActivationBaseProbeDriver();
 void RegisterButtonInternalProbeDriver();
 void RegisterMainButtonStateProbeDriver();
 void RegisterPanelIntroProbeDriver();
+void RegisterPanelOutroProbeDriver();
 void RunOriginalVulkanShaderProbe();
 void RunLegacyMaterialShaderMapProbe();
 void RegisterLegacyOriginalMaterialProvider();
@@ -179,6 +180,7 @@ public:
         RegisterButtonInternalProbeDriver();
         RegisterMainButtonStateProbeDriver();
         RegisterPanelIntroProbeDriver();
+        RegisterPanelOutroProbeDriver();
         RegisterLegacyOriginalMaterialProvider();
         FNetworkVersion::GetLocalNetworkVersionOverride.BindStatic(&GetFortniteNetworkVersion);
         FNetworkVersion::IsNetworkCompatibleOverride.BindStatic(&IsFortniteNetworkCompatible);

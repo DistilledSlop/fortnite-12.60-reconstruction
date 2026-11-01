@@ -7,6 +7,7 @@
 #include "UObject/Object.h"
 
 #include "FOperation.h"
+#include "UCommonActionHandlerInterface.h"
 
 class UCommonActivatablePanel;
 class UCommonGlobalInputHandler;
@@ -19,6 +20,10 @@ class COMMONUI_API UCommonInputManager : public UObject
 	GENERATED_BODY()
 
 public:
+	// table index 5, flags 0x44000000000000
+	UPROPERTY()
+	TScriptInterface<ICommonActionHandlerInterface> CurrentlyHeldActionInputHandler;
+
 	// table index 3, flags 0x40008000000008
 	UPROPERTY()
 	TArray<UCommonActivatablePanel*> ActivatablePanelStack;

@@ -9,6 +9,7 @@
 #include "FOnDifferentSquadSlotSelected.h"
 #include "FOnRequestSquadSlotAction.h"
 #include "FSquadSlotSortTypes.h"
+#include "UFortItemViewContextInterface.h"
 
 class UFortCommittableButtonGroup;
 class UFortDisableAutoSlottingPromptAction;
@@ -60,6 +61,10 @@ public:
 	// table index 1, flags 0x40000000000000
 	UPROPERTY()
 	UFortCommittableButtonGroup* SquadSlotButtonGroup;
+
+	// table index 0, flags 0x44000000000000
+	UPROPERTY()
+	TScriptInterface<IFortItemViewContextInterface> ItemViewContext;
 
 };
 

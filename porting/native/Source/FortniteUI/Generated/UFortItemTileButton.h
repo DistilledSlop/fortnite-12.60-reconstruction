@@ -8,6 +8,7 @@
 
 #include "EFortItemCardSize.h"
 #include "UFortItem.h"
+#include "UFortItemViewContextInterface.h"
 
 class UFortMultiSizeItemCard;
 
@@ -34,6 +35,10 @@ public:
 	// table index 1, flags 0x20080000000015
 	UPROPERTY()
 	bool IsRewardCard;
+
+	// table index 0, flags 0x24080000000000
+	UPROPERTY()
+	TScriptInterface<IFortItemViewContextInterface> ItemViewContext;
 
 };
 

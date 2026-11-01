@@ -6,7 +6,11 @@
 #include "CoreMinimal.h"
 #include "UCommonActivatableWidget.h"
 
+#include "CommonPanelActionNative.h"
 #include "CommonPanelActivationNative.h"
+#include "FCommonActionCompleteSingle.h"
+#include "FCommonActionProgressSingle.h"
+#include "FCommonInputActionHandlerData.h"
 #include "FOnWidgetActivationChangedDynamic.h"
 
 class UCommonInputManager;
@@ -55,6 +59,16 @@ protected:
 public:
 
 protected:
+	UFUNCTION(BlueprintCallable)
+	void EndOutro();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void OnBeginOutro();
+public:
+
+protected:
     virtual void OnBeginIntro_Implementation();
     virtual void NativeActivateRequest() override;
     virtual void NativeHandleActivated() override;
@@ -72,5 +86,20 @@ private:
     FDelegateHandle NativeInputMethodHandle;
     FCommonPanelOperationCallback NativePreActivation;
     FCommonPanelOperationCallback NativePostActivation;
+protected:
+    virtual void OnBeginOutro_Implementation();
+    virtual void NativeDeactivateRequest() override;
+    virtual void NativeHandleDeactivated() override;
+    virtual void NativeOutroComplete();
+private:
+#if !UE_BUILD_SHIPPING && !UE_BUILD_TEST
+    friend struct FPanelOutroProbeAccess;
+#endif
+    void NativeClearHeldAction();
+    float NativeHeldActionDuration = 0.0f;
+    FDataTableRowHandle NativeHeldAction;
+    FCommonPanelActionMap NativeActionRecords;
+    FCommonPanelOperationCallback NativePreDeactivation;
+    FCommonPanelOperationCallback NativePostDeactivation;
 };
 

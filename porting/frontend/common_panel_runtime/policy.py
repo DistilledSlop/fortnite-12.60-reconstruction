@@ -129,3 +129,22 @@ def definitions(model):return _prior_definitions(model)+_intro.definitions(model
 def emit_headers(source_root,generated_names):
     _prior_emit_headers(source_root,generated_names)
     _intro.emit_headers(source_root,generated_names)
+
+# Bounded Panel outro/held-cleanup extension, preserving intro input lifecycle.
+_outro_spec=_intro_import.spec_from_file_location('panel_outro_policy',HERE/'panel_outro_policy.py')
+_outro=_intro_import.module_from_spec(_outro_spec);_outro_spec.loader.exec_module(_outro)
+_intro_apply=apply
+_intro_header_prelude=header_prelude
+_intro_declarations=declarations
+_intro_definitions=definitions
+_intro_emit_headers=emit_headers
+def apply(model,block,owner_fns,native_execs=None):
+    return _outro.apply(_intro_apply(model,block,owner_fns),block,owner_fns,native_execs)
+def header_prelude(model):return _outro.header_prelude(_intro_header_prelude(model))
+def declarations(model):return _intro_declarations(model)+_outro.declarations(model)
+def definitions(model):return _intro_definitions(model)+_outro.definitions(model)
+def emit_headers(source_root,generated_names):
+    _intro_emit_headers(source_root,generated_names)
+    _outro.emit_headers(source_root,generated_names)
+def validate_panel_outro_types(gate):return _outro.validate_types(gate)
+def struct_declarations(model):return _outro.struct_declarations(model)

@@ -8,6 +8,7 @@
 
 #include "EFortItemInspectionMode.h"
 #include "UFortItem.h"
+#include "UFortItemViewContextInterface.h"
 
 #include "UFortItemDetailElementWidget.generated.h"
 
@@ -28,6 +29,10 @@ public:
 	// table index 5, flags 0x20080000020815
 	UPROPERTY()
 	bool bShouldPreviewUpgradingItem;
+
+	// table index 4, flags 0x24080000000014
+	UPROPERTY()
+	TScriptInterface<IFortItemViewContextInterface> ItemViewContext;
 
 	// table index 2, flags 0x20080000000014
 	UPROPERTY()

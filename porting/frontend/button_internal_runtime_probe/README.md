@@ -78,3 +78,20 @@ callback order, deferred requests, reentry, and input-method notifications. It
 uses C++ `ProcessEvent` interception to defer intro and observe events; this does
 not establish Blueprint VM behavior, authentic UI behavior, or deactivation.
 The transcript alone does not establish its provenance.
+
+## Panel outro diagnostic
+
+Use `--case panel-outro` to launch `-PanelOutroProbe`; the runner checks its
+60 ordered transcript rows and records the result in the receipt and
+`verification.json`. It can also be checked independently:
+
+```sh
+python3 porting/frontend/button_internal_runtime_probe/panel_outro_verifier.py path/to/runtime.log --output path/to/result.json
+```
+
+The controlled fixture checks activation and deactivation order, deferred and
+repeated pending outro requests, listener removal, held-action cleanup, and a
+manager swap during the progress callback. The fixture uses C++ `ProcessEvent`
+interception and does not establish Blueprint VM behavior, authentic UI, or
+full interface routing. A matching transcript alone does not establish its
+provenance.

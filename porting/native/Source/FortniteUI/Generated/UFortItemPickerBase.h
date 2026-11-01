@@ -7,6 +7,7 @@
 #include "UCommonUserWidget.h"
 
 #include "FOnItemSelectionEvent.h"
+#include "UFortItemViewContextInterface.h"
 
 class UFortItemTileView;
 class UListView;
@@ -59,6 +60,10 @@ public:
 	// table index 1, flags 0x20080000000000
 	UPROPERTY()
 	UObject* NewlySelectedItem;
+
+	// table index 0, flags 0x44000000000000
+	UPROPERTY()
+	TScriptInterface<IFortItemViewContextInterface> ItemViewContext;
 
 };
 

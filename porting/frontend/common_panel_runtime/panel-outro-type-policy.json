@@ -1,0 +1,144 @@
+{
+  "0x140809900": {
+    "block_va": "0x14782f1d0",
+    "name": "CommonInputActionHandlerData",
+    "construct_fns": [
+      "0x140809900"
+    ],
+    "package_fn": "0x140812ee0",
+    "package": "/Script/CommonUI",
+    "super_fn": null,
+    "struct_ops_fn": "0x140807080",
+    "size": 32,
+    "align": 8,
+    "struct_flags": "0x1",
+    "struct_flag_names": [
+      "Native"
+    ],
+    "object_flags": "0x45",
+    "struct_ops": {
+      "vtable_va": "0x145a03728",
+      "ops_size": 32,
+      "ops_align": 8,
+      "size_matches": true,
+      "align_matches": true,
+      "traits": {
+        "HasNoopConstructor": false,
+        "HasZeroConstructor": false,
+        "HasDestructor": true,
+        "HasSerializer": false,
+        "HasStructuredSerializer": false,
+        "HasPostSerialize": false,
+        "HasNetSerializer": false,
+        "HasNetSharedSerialization": false,
+        "HasNetDeltaSerializer": false,
+        "HasPostScriptConstruct": false,
+        "IsPlainOldData": false,
+        "HasCopy": true,
+        "HasIdentical": false,
+        "HasExportTextItem": false,
+        "HasImportTextItem": false,
+        "HasAddStructReferencedObjects": false,
+        "HasSerializeFromMismatchedTag": false,
+        "HasStructuredSerializeFromMismatchedTag": false,
+        "HasGetTypeHash": false
+      },
+      "unclassified_slots": []
+    },
+    "properties": [
+      {
+        "index": 0,
+        "name": "State",
+        "kind": "Enum",
+        "kind_raw": "0x1e",
+        "property_flags": "0x40000000000001",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 16,
+        "type_refs": {
+          "enum": "0x140817fb0"
+        }
+      },
+      {
+        "index": 1,
+        "name": "UnderlyingType",
+        "kind": "Byte",
+        "kind_raw": "0x0",
+        "property_flags": "0x0",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 0,
+        "enum_underlying_of": "State"
+      },
+      {
+        "index": 2,
+        "name": "InputActionRow",
+        "kind": "Struct",
+        "kind_raw": "0x19",
+        "property_flags": "0x10000000000015",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 0,
+        "type_refs": {
+          "struct": "0x1446f2880"
+        }
+      }
+    ],
+    "num_properties": 3
+  },
+  "0x140809750": {
+    "block_va": "0x14782f070",
+    "name": "CommonActionCompleteSingle__DelegateSignature",
+    "owning_class": null,
+    "delegate_name": null,
+    "construct_fns": [
+      "0x140809750"
+    ],
+    "package": "/Script/CommonUI",
+    "outer_fn": "0x140812ee0",
+    "function_flags": "0x120000",
+    "function_flag_names": [
+      "Delegate"
+    ],
+    "params": [],
+    "multicast": false,
+    "type_name": "FCommonActionCompleteSingle"
+  },
+  "0x1408097b0": {
+    "block_va": "0x14782efd0",
+    "name": "CommonActionProgressSingle__DelegateSignature",
+    "owning_class": null,
+    "delegate_name": null,
+    "construct_fns": [
+      "0x1408097b0"
+    ],
+    "package": "/Script/CommonUI",
+    "outer_fn": "0x140812ee0",
+    "function_flags": "0x120000",
+    "function_flag_names": [
+      "Delegate"
+    ],
+    "params": [
+      {
+        "index": 0,
+        "name": "HeldPercent",
+        "kind": "Float",
+        "kind_raw": "0xa",
+        "property_flags": "0x10000000000080",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 0
+      }
+    ],
+    "multicast": false,
+    "type_name": "FCommonActionProgressSingle"
+  }
+}

@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "UFortItemViewContextInterface.h"
+
 class UFortSquadSlotItemDetailsHostPanel;
 
 #include "UFortSquadSlotDetailsPanel.generated.h"
@@ -19,6 +21,10 @@ public:
 	// table index 1, flags 0x2008000008001c
 	UPROPERTY()
 	UFortSquadSlotItemDetailsHostPanel* ItemDetailsPanel;
+
+	// table index 0, flags 0x24080000000000
+	UPROPERTY()
+	TScriptInterface<IFortItemViewContextInterface> ItemViewContext;
 
 };
 

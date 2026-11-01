@@ -7,6 +7,7 @@
 #include "Components/Widget.h"
 
 #include "UFortItem.h"
+#include "UFortItemViewContextInterface.h"
 
 #include "UFortItemWidget_NUI.generated.h"
 
@@ -19,6 +20,10 @@ public:
 	// table index 1, flags 0x25080000000014
 	UPROPERTY()
 	TWeakObjectPtr<UFortItem> ItemToRepresent;
+
+	// table index 0, flags 0x25080000000014
+	UPROPERTY()
+	TScriptInterface<IFortItemViewContextInterface> ItemViewContext;
 
 };
 

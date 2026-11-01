@@ -59,6 +59,7 @@
 #include "Math/Vector.h"
 #include "Misc/Guid.h"
 #include "Styling/SlateBrush.h"
+#include "UFortArmoredInterface.h"
 
 class AActor;
 class ABuildingGameplayActor;
@@ -500,6 +501,10 @@ public:
 	// table index 225, flags 0x20080000000015
 	UPROPERTY()
 	float SetByCallerReviveSignalInStorm;
+
+	// table index 224, flags 0x24080000000000
+	UPROPERTY()
+	TScriptInterface<IFortArmoredInterface> ArmoredInterface;
 
 	// table index 223, flags 0x20080000002000
 	UPROPERTY(Transient)

@@ -28,6 +28,7 @@
 #include "FUtilityData.h"
 #include "FUtilityTypeFloatPair.h"
 #include "GameplayTagContainer.h"
+#include "UFortPatrolWardInterface.h"
 
 class ABuildingProp_AISpawner;
 class AFortAIController;
@@ -365,6 +366,10 @@ public:
 	// table index 14, flags 0x10000000000005
 	UPROPERTY()
 	float EncounterRelevantDistanceToDefender;
+
+	// table index 12, flags 0x44000000002000
+	UPROPERTY(Transient)
+	TArray<TScriptInterface<IFortPatrolWardInterface>> PatrolWards;
 
 	// table index 11, flags 0x10000000002000
 	UPROPERTY(Transient)

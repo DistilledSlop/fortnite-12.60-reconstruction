@@ -7,6 +7,7 @@
 #include "UCommonButton.h"
 
 #include "FOnRequestSquadSlotAction.h"
+#include "UFortItemViewContextInterface.h"
 
 class UFortSquadSlotWidget;
 class UMenuAnchor;
@@ -34,6 +35,10 @@ public:
 	// table index 1, flags 0x2008000008001c
 	UPROPERTY()
 	UMenuAnchor* PopupMenuAnchor;
+
+	// table index 0, flags 0x24080000000000
+	UPROPERTY()
+	TScriptInterface<IFortItemViewContextInterface> ItemViewContext;
 
 };
 

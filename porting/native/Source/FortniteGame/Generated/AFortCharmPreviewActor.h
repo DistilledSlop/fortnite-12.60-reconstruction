@@ -7,6 +7,7 @@
 #include "GameFramework/Actor.h"
 
 #include "EFortCustomCharmType.h"
+#include "FFortOnCameraFrameTargetSettingsChangedDelegate.h"
 
 class UAthenaCharmItemDefinition;
 
@@ -25,6 +26,10 @@ public:
 	// table index 1, flags 0x20080000000000
 	UPROPERTY()
 	TEnumAsByte<EFortCustomCharmType::Type> CharmSlot;
+
+	// table index 0, flags 0x20080000080000
+	UPROPERTY()
+	FFortOnCameraFrameTargetSettingsChangedDelegate OnSettingsChangedDelegate;
 
 };
 

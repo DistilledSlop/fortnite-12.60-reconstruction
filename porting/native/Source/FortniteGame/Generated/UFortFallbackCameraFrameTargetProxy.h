@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
 
+#include "FFortOnCameraFrameTargetSettingsChangedDelegate.h"
+
 #include "UFortFallbackCameraFrameTargetProxy.generated.h"
 
 UCLASS()
@@ -14,5 +16,9 @@ class FORTNITEGAME_API UFortFallbackCameraFrameTargetProxy : public UObject
 	GENERATED_BODY()
 
 public:
+	// table index 0, flags 0x40000000080000
+	UPROPERTY()
+	FFortOnCameraFrameTargetSettingsChangedDelegate OnSettingsChangedDelegate;
+
 };
 

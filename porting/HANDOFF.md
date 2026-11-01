@@ -2,6 +2,24 @@
 
 ## Current resume point (2026-11-01)
 
+- Current shared integration NOT YET fully built/runtime validated: available-interface alias resolver
+  restores22skipped properties across22headers, including manager.CurrentlyHeldActionInputHandler as
+  TScriptInterface<ICommonActionHandlerInterface>. Fresh isolated UHT(-WarningsAsErrors) and48actual
+  clang9 source/glue/header units pass at /tmp/interface-alias-ue-preflight-1; no outside-scratch UHT writes.
+  Source tests3interface/141generator pass. No interface native methods/routing were fabricated.
+- Authentic outro/held cleanup policy now normally generated atop alias fix: exact protected OnBeginOutro
+  BlueprintNativeEvent/EndOutro descriptors and execs, full native deactivation, real listener removal,
+  complete canonical action record/map, progress/reset and unchecked second weak-manager resolution.
+  NaN held duration broadcasts zero as original COMISS/JAE; no speculative null fallback. Deactivate CSV
+  event remains AFTER held clear/OnBeginOutro. Source34policy/core tests and24diagnostic tests pass.
+  Promotion /tmp/panel-outro-root-integration-1 changes24headers/CPP files, adds7realheaders, restores12535
+  unchanged timestamps. Partial isolated UHT/11actualtarget syntax units and explicit map/delegate/weak
+  instantiation pass at /tmp/outro-map-ue-preflight-1; final fullproject UHT still exporting at snapshot.
+- New opt-in PanelOutroProbe and strict60-row verifier cover real activate/deactivate/reactivate,
+  default/deferred/repeated pending requests, listener removal (retained handle maystayvalid), complete
+  interface-word reset, held row/duration/missing/NaN cases and callback swapping manager. Controlled
+  C++ ProcessEvent/structural-interface fixture only; not Blueprint VM, full interface routing or UI gate.
+  No current outro runtime pass claimed; root owns next full target builds and sole stage/runtime.
 - User-requested history UI updated in progress.py: responsive commit tick/dot density, All/Recent50,
   older/newer/zoom controls, pointer detail and visible-subset vertical scaling; All retainszero baseline.
   Underlying380existing history points/values/order and table preserved. Python compile/6history tests

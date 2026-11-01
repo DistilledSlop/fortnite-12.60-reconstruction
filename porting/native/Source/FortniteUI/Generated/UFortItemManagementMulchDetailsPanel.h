@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "UFortItemManagementMulchPanel.h"
+
 class UFortInventoryContext;
 class UFortItemQuantityListBase;
 
@@ -20,6 +22,10 @@ public:
 	// table index 2, flags 0x2008000008001c
 	UPROPERTY()
 	UFortItemQuantityListBase* ResourceList;
+
+	// table index 1, flags 0x24080000000014
+	UPROPERTY()
+	TScriptInterface<IFortItemManagementMulchPanel> HostItemManagementMulchPanel;
 
 	// table index 0, flags 0x40000000002000
 	UPROPERTY(Transient)

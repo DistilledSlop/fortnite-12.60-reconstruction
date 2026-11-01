@@ -11,6 +11,7 @@
 #include "UCommonBorder.h"
 #include "UCommonLoadGuard.h"
 #include "UFortItem.h"
+#include "UFortItemViewContextInterface.h"
 #include "UFortTooltipLoadingWrapper.h"
 
 class UNamedSlot;
@@ -51,6 +52,10 @@ public:
 	// table index 10, flags 0x2008000008001c
 	UPROPERTY()
 	UCommonBorder* HighRarityBorder;
+
+	// table index 9, flags 0x24080000000014
+	UPROPERTY()
+	TScriptInterface<IFortItemViewContextInterface> ItemViewContext;
 
 	// table index 7, flags 0x20080000000014
 	UPROPERTY()

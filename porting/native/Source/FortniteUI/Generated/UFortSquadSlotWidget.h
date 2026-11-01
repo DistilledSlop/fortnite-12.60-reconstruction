@@ -7,6 +7,7 @@
 #include "Components/Widget.h"
 
 #include "EFortItemCardSize.h"
+#include "UFortItemViewContextInterface.h"
 
 class UFortMultiSizeItemCard;
 
@@ -25,6 +26,10 @@ public:
 	// table index 1, flags 0x40000000080008
 	UPROPERTY()
 	UFortMultiSizeItemCard* SlottedItemCard;
+
+	// table index 0, flags 0x44000000000000
+	UPROPERTY()
+	TScriptInterface<IFortItemViewContextInterface> ItemViewContext;
 
 };
 

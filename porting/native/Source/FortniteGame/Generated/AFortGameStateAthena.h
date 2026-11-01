@@ -42,6 +42,7 @@
 #include "FOnGameModeRemoveMarker.h"
 #include "FOnGameModeShowMarker.h"
 #include "FOnGamePhaseChanged.h"
+#include "FOnGamePhaseStepChanged.h"
 #include "FOnHideGameModeMessageRequest.h"
 #include "FOnKillFeedUpdated.h"
 #include "FOnMutatorGameplayEvent.h"
@@ -291,6 +292,10 @@ public:
 	// table index 175, flags 0x10000010080000
 	UPROPERTY()
 	FOnWinningScoreAnnounced WinningScoreDetermined;
+
+	// table index 174, flags 0x10000010080000
+	UPROPERTY()
+	FOnGamePhaseStepChanged GamePhaseStepChanged;
 
 	// table index 173, flags 0x10000010080000
 	UPROPERTY()

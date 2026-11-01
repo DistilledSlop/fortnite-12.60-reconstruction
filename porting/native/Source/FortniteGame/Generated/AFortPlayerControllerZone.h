@@ -20,6 +20,7 @@
 #include "GameFramework/OnlineReplStructs.h"
 #include "Math/Vector.h"
 #include "Misc/Guid.h"
+#include "UFortHUDTargetUnderReticleInterface.h"
 
 class AActor;
 class AController;
@@ -104,6 +105,10 @@ public:
 
 	// Non-reflected field (behaviour kind "member_field", offset 0x2908): not a UPROPERTY, not replicated.
 	TMulticastDelegate<void> ZoneAIKillCountChangedNative;
+
+	// table index 14, flags 0x24080000002000
+	UPROPERTY(Transient)
+	TScriptInterface<IFortHUDTargetUnderReticleInterface> HUDTargetUnderReticle;
 
 	// table index 12, flags 0x20080000000000
 	UPROPERTY()
