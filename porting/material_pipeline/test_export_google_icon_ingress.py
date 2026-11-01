@@ -44,4 +44,29 @@ class SourceProofTests(unittest.TestCase):
   for d in bad['descriptors']:
    if d['d3d_register']['kind']=='sampler' and d['resource_table_entries']:d['resource_table_entries'][0]['resource']=3
   with self.assertRaises(ValueError):producer.typed_contract(f['record'],bad)
+
+class NativeEnvelopeContractTests(unittest.TestCase):
+ @classmethod
+ def setUpClass(c):
+  c.bundle=producer.create_bundle(I,R/'google-texture-1/texture-report.json',R/'google-shaders-1')
+ @staticmethod
+ def accepts(bundle):
+  # LoadBundle's non-v1 TryGetStringField checks against the fixed Google pin.
+  pin=dict(schema='fortnite.legacy-material-ingress.v4',owner_path=producer.OWNER,parent_path='',owner_type='UMaterial')
+  return all(type(bundle.get(k)) is str and bundle[k]==v for k,v in pin.items())
+ def test_exported_envelope_matches_fixed_google_pin(self):
+  self.assertTrue(self.accepts(self.bundle))
+  # Google is a fixed pin, not a manifest pin; these identities still agree.
+  self.assertEqual(self.bundle['shader_identity'],producer.OWNER)
+  self.assertEqual(self.bundle['resource_owner_path'],producer.OWNER)
+ def test_missing_wrong_type_and_nonempty_parent_rejected(self):
+  for value in (None,17,'/Game/Unexpected.Parent'):
+   bad=dict(self.bundle)
+   if value is None: del bad['parent_path']
+   else: bad['parent_path']=value
+   with self.subTest(value=value): self.assertFalse(self.accepts(bad))
+ def test_other_required_envelope_fields_rejected_when_changed(self):
+  for key in ('schema','owner_path','owner_type'):
+   bad=dict(self.bundle);bad[key]='incorrect'
+   with self.subTest(field=key): self.assertFalse(self.accepts(bad))
 if __name__=='__main__':unittest.main()

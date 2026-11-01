@@ -94,3 +94,22 @@ unchanged fixture above and by `ReadGoogleCompressedSource` in the manual Probe.
 A future bounded retry must first repair and independently review the producer
 contract, regenerate fresh bundle pins, and freeze a new Native phase. Do not
 alter or overwrite phase1 evidence or weaken the general loader gate.
+
+## Reviewed envelope correction for phase 2
+
+The general non-v1 Native loader requires an explicit parent string even for a
+base material. The producer now emits `parent_path: ""`, matching Google's
+empty parent pin. New regressions check a freshly produced envelope and reject
+missing, non-string and nonempty parents plus mismatched schema/owner/type.
+All11 producer and10 verifier tests pass; source resource,19records,seven
+programs and ten mips are unchanged.
+
+Two fresh corrected exports match: bundle SHA-1
+`a519120049649f3c0835b5e341e27778aa4ee781`, SHA-256
+`b4f58ba6519eec121e32757c60bf9611c1aca78cbcec0c861af2155351f9e327`.
+The independently regenerated fixture remains
+`21a60f0dc74358cc8801bd16875af8a4b1c2e47ee7355e7533476c1e6fc87325`.
+The pending one-line Probe pin patch and reviewed source receipt are in
+`/tmp/google-bundle-envelope-1/`, receipt SHA-256
+`6b002b5fe97f18c9b0a3e8249436c02180653e4c11bb4fd3bef67a6a5b5c8fcc`.
+Phase1 remains failed and immutable; a fresh coordinated runtime phase is required.
