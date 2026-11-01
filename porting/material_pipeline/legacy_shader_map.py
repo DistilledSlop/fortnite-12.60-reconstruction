@@ -2,22 +2,30 @@
 """Strict, partial decoder of the pre-memory-image Fortnite 12.60 shader map.
 
 This decodes a PREFIX, never an executable shader map. Unknown expression types
-fail at their tag; the undecoded compilation-output tail is returned explicitly.
+fail at their tag; the undecoded mesh-shader tail is returned explicitly.
 The recursive grammar matches Epic's pre-freeze serializers, available at:
 https://github.com/folgerwang/UnrealEngine/blob/release/Engine/Source/Runtime/Engine/Private/Materials/MaterialUniformExpressions.h
 https://github.com/folgerwang/UnrealEngine/blob/release/Engine/Source/Runtime/Engine/Private/Materials/MaterialUniformExpressions.cpp
-The four-word texture base record follows the 4.23 pre-freeze serializer:
-https://github.com/CFHH/UnrealEngine-4.23.1-ps/blob/master/Engine/Source/Runtime/Engine/Private/Materials/MaterialUniformExpressions.cpp#L918
-The later pre-freeze collection/compilation scalar order is documented in:
+Texture base widths int32,int16,int16,int32,bool32 are recovered from the
+original runtime and match the 4.24 pre-freeze serializer, also documenting
+the collection/compilation scalar order:
 https://github.com/HenryZheng1/UnrealEngine-4.24.3-release/blob/master/Engine/Source/Runtime/Engine/Private/Materials/MaterialUniformExpressions.cpp
 https://github.com/HenryZheng1/UnrealEngine-4.24.3-release/blob/master/Engine/Source/Runtime/Engine/Private/Materials/MaterialShared.cpp
-No LayoutParams are present. Compilation flags and shader records remain unknown.
+No LayoutParams are present. Seven Slate records per original sample are decoded;
+mesh shader records remain unknown. All offsets are resource-relative.
 """
 import argparse
 import hashlib
 import json
 from pathlib import Path
 import struct
+try:
+    from .legacy_shader_records import material_shader_records
+except ImportError:
+    try:
+        from porting.material_pipeline.legacy_shader_records import material_shader_records
+    except ModuleNotFoundError:
+        from legacy_shader_records import material_shader_records
 
 MAX_BYTES = 64 * 1024 * 1024
 ARRAYS = ('vector', 'scalar', 'texture_2d', 'texture_cube', 'texture_volume',
@@ -28,10 +36,11 @@ PREFIX = 'FMaterialUniformExpression'
 class Reader:
     def __init__(self, data, names):
         self.data, self.names, self.cursor, self.nodes = data, names, 0, 0
+        self.limit = len(data)
 
     def read(self, fmt):
         size = struct.calcsize('<' + fmt)
-        if self.cursor + size > len(self.data):
+        if self.cursor + size > self.limit:
             raise ValueError(f'truncated legacy shader-map field at {self.cursor}')
         value = struct.unpack_from('<' + fmt, self.data, self.cursor)
         self.cursor += size
@@ -51,7 +60,7 @@ class Reader:
 
     def string(self):
         count = self.read('i')
-        if not 1 <= count <= 4096 or self.cursor + count > len(self.data):
+        if not 1 <= count <= 4096 or self.cursor + count > self.limit:
             raise ValueError('invalid identity FString length')
         raw = self.data[self.cursor:self.cursor + count]
         self.cursor += count
@@ -78,14 +87,14 @@ class Reader:
         if kind in ('VectorParameter', 'ScalarParameter', 'TextureParameter'):
             result['parameter'] = self.parameter()
             if kind == 'TextureParameter':
-                # 4.23 adds LayerIndex and bVirtualTexture to the older
-                # TextureIndex/SamplerSource pair. Archive bool occupies four
-                # bytes. Donut stores [0, -1, 0, 0]; reading only the first two
-                # words incorrectly absorbs the remaining zeros as array counts.
-                texture_index, layer, sampler, virtual = self.read('iiiI')
-                if texture_index < -1 or layer < -1 or sampler not in (0, 1, 2) or virtual not in (0, 1):
-                    raise ValueError(f'invalid 4.23 texture expression at {start}')
+                # Original runtime Serialize 0x14433eb60 proves widths
+                # int32,int16,int16,int32,bool32, totaling sixteen bytes.
+                texture_index, layer, page_layer, sampler, virtual = self.read('ihhiI')
+                if (texture_index < -1 or layer < -1 or page_layer < -1
+                        or sampler not in (0, 1, 2) or virtual not in (0, 1)):
+                    raise ValueError(f'invalid original texture expression at {start}')
                 result['texture'] = {'texture_index': texture_index, 'layer_index': layer,
+                                     'page_table_layer_index': page_layer,
                                      'sampler_source': sampler, 'virtual_texture': bool(virtual)}
             else:
                 result['default'] = self.read('4f' if kind == 'VectorParameter' else 'f')
@@ -122,8 +131,7 @@ class Reader:
 def parse_prefix(data, names):
     """Return verified prefix with relative offsets and an explicit unknown tail.
 
-    Nonempty VT stacks are unsupported. The packed compilation flags are left
-    undecoded because their layout differs between the pre-freeze branches.
+    Nonempty VT stacks and mesh shader records are currently unsupported.
     """
     if len(data) > MAX_BYTES:
         raise ValueError('legacy resource exceeds size bound')
@@ -167,12 +175,26 @@ def parse_prefix(data, names):
                    'used_uv_scalars': reader.read('B'),
                    'used_custom_interpolator_scalars': reader.read('B'),
                    'end': reader.cursor}
+    # Original FMaterialCompilationOutput::Serialize 0x144338180 reads the
+    # output mask at object+0x134, then flags shifted into object+0x135 bits1..7.
+    start = reader.cursor
+    mask, flags = reader.read('BB')
+    if flags & 0x80:
+        raise ValueError('unsupported compilation flag bit')
+    compilation_flags = {'offset': start, 'runtime_virtual_texture_output_attribute_mask': mask,
+                         'packed_flags': flags, 'end': reader.cursor}
+    flag_names = ('uses_eye_adaptation', 'modifies_mesh_position', 'uses_world_position_offset',
+                  'uses_global_distance_field', 'uses_pixel_depth_offset', 'uses_distance_cull_fade',
+                  'has_runtime_virtual_texture_output_node')
+    compilation_flags.update({name: bool(flags & (1 << bit)) for bit, name in enumerate(flag_names)})
+    debug_description = reader.string()
+    shader_records = material_shader_records(reader, shader_map_hash,
+        [arrays[name]['count'] for name in ARRAYS[:6]] + [arrays['texture_2d_array']['count']])
     cursor = reader.cursor
     return {'complete_shader_map': False,
-            'limitations': ['Prefix grammar only; no shader records or runtime loading verified',
-                'TextureParameter uses the four-word 4.23 base record, not the five-word 4.24 variant',
+            'limitations': ['Material Slate records decoded; mesh shader records and runtime loading remain unverified',
                 'Nonempty VT stacks are unsupported',
-                'Compilation flags differ across pre-freeze branches; no flag or shader-record grammar verified'],
+                'Nonempty parameter-binding arrays and material shader pipelines are unsupported'],
             'cooked': cooked, 'valid': valid,
             'quality_level': quality, 'feature_level': feature,
             'cooked_shader_map_id_hash': shader_map_hash, 'shader_platform': platform,
@@ -180,19 +202,39 @@ def parse_prefix(data, names):
             'uniform_expression_arrays': arrays, 'expression_nodes': reader.nodes,
             'virtual_texture_stacks': vt_stacks, 'parameter_collections': collections,
             'compilation_output_scalars': compilation,
+            'compilation_output_flags': compilation_flags,
+            'debug_description': debug_description, 'material_shaders': shader_records,
+            'original_serializer_evidence': {
+                'runtime_dump_sha256': '604900985a724144b6e0fc6e033b0cef2adb74a295a65a4fe01aceebb52df93d',
+                'texture': '0x14433eb60', 'uniform_expression_set': '0x144364bf0',
+                'compilation_output': '0x144338180', 'material_shader_map': '0x1443383f0',
+                'material_shader': '0x1434f9590', 'slate_vs': '0x143cfa820',
+                'slate_ps': '0x143cfb4e0', 'shader_base': '0x143aaae20',
+                'shader_resource': '0x143aaab80'},
             'tail_grammar_sources': [
-                'https://github.com/CFHH/UnrealEngine-4.23.1-ps/blob/master/Engine/Source/Runtime/Engine/Private/Materials/MaterialUniformExpressions.cpp#L918',
                 'https://github.com/HenryZheng1/UnrealEngine-4.24.3-release/blob/master/Engine/Source/Runtime/Engine/Private/Materials/MaterialUniformExpressions.cpp#L106',
                 'https://github.com/HenryZheng1/UnrealEngine-4.24.3-release/blob/master/Engine/Source/Runtime/Engine/Private/Materials/MaterialShared.cpp#L489'],
             'decoded_prefix_bytes': cursor,
             'first_unknown': {'offset': cursor,
-                'description': 'packed compilation flags and subsequent shader-map fields',
-                'blocker': '4.24 serializes one packed-flag byte then DebugDescription; '
-                    'the original resources do not match that subsequent FString boundary. '
-                    'Do not search for DebugDescription or skip to shader hashes.',
+                'description': 'first mesh shader-map vertex-factory name and shader records',
+                'blocker': 'Mesh shader subclass/vertex-factory parameter serializers remain undecoded; '
+                    'material shader records were read sequentially and checked against their declared ends.',
                 'next_32_hex': data[cursor:cursor + 32].hex()},
             'undecoded_bytes': len(data) - cursor,
             'resource_sha256': hashlib.sha256(data).hexdigest()}
+
+
+def associate_library(result, archive):
+    """Associate parsed record identities with a fully validated archive index."""
+    for record in result['material_shaders']['records']:
+        index = archive.shader_lookup.get(bytes.fromhex(record['output_hash']['hash']))
+        if index is None:
+            raise ValueError('decoded shader hash is absent from supplied library')
+        _, compressed, expanded, frequency = archive.shaders[index]
+        if frequency != record['frequency'] or expanded != record['resource']['uncompressed_code_bytes']:
+            raise ValueError('library shader target/size disagrees with decoded resource')
+        record['library_association'] = {'index': index, 'frequency': frequency,
+                                         'compressed_bytes': compressed, 'uncompressed_bytes': expanded}
 
 
 def main():
@@ -200,6 +242,8 @@ def main():
     parser.add_argument('--uexp', type=Path, required=True)
     parser.add_argument('--resource-report', type=Path, required=True)
     parser.add_argument('--report', type=Path, required=True)
+    parser.add_argument('--shader-archive', type=Path,
+                        help='validate decoded record identities against the original Fortnite shader library')
     args = parser.parse_args()
     try:
         generated = Path(__file__).resolve().parents[1] / 'generated'
@@ -217,9 +261,25 @@ def main():
             raise ValueError('resource identity does not match resource report')
         result.update(package=framing['package'], resource_start=start, resource_end=end,
                       first_unknown_uexp_offset=start + result['first_unknown']['offset'])
+        result['original_serializer_evidence']['probe_directory'] = str(generated / 'material_pipeline')
+        result['original_serializer_evidence']['decompilation_files'] = {
+            name: str(generated / 'material_pipeline' / f'original-{address}.c')
+            for name, address in result['original_serializer_evidence'].items()
+            if isinstance(address, str) and address.startswith('0x')}
+        if args.shader_archive:
+            try:
+                from .shader_archive import ShaderArchive, sha256
+            except ImportError:
+                from shader_archive import ShaderArchive, sha256
+            with ShaderArchive(args.shader_archive, layout='fortnite-12.60') as archive:
+                associate_library(result, archive)
+                result['shader_library'] = {'path': str(args.shader_archive.resolve()),
+                    'sha256': sha256(args.shader_archive), 'bytes': len(archive.data),
+                    'layout': archive.layout, 'associated_records': len(result['material_shaders']['records'])}
         args.report.parent.mkdir(parents=True, exist_ok=True)
         args.report.write_text(json.dumps(result, indent=2, allow_nan=False) + '\n')
-        print(f'{result["expression_nodes"]} expression nodes; first unknown .uexp offset '
+        print(f'{result["expression_nodes"]} expression nodes; '
+              f'{result["material_shaders"]["count"]} shader records; first unknown .uexp offset '
               f'{result["first_unknown_uexp_offset"]}; {args.report}')
     except (OSError, ValueError, KeyError, TypeError) as error:
         parser.exit(1, f'error: {error}\n')
