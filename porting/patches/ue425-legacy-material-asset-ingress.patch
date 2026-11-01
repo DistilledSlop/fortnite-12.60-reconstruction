@@ -980,3 +980,157 @@ index cbb61f12f..c505d77ed 100644
        (N.Parameter.Association == GlobalParameter ? N.Parameter.Index != INDEX_NONE : N.Parameter.Index < 0) ||
        N.TextureIndex < 0 || N.TextureLayerIndex != INDEX_NONE || N.PageTableLayerIndex != INDEX_NONE ||
        N.bVirtualTexture || N.SamplerSource > uint8(SSM_Clamp_WorldGroupSettings))
+diff --git a/Engine/Source/Runtime/Engine/Private/Materials/LegacySlateMaterial.cpp b/Engine/Source/Runtime/Engine/Private/Materials/LegacySlateMaterial.cpp
+index c505d77ed..7d223ed42 100644
+--- a/Engine/Source/Runtime/Engine/Private/Materials/LegacySlateMaterial.cpp
++++ b/Engine/Source/Runtime/Engine/Private/Materials/LegacySlateMaterial.cpp
+@@ -4,6 +4,31 @@
+ #include "MaterialShaderType.h"
+ #include "ShaderParameterMetadata.h"
+ 
++namespace
++{
++class FLegacyTextureSize2DExpression final : public FMaterialUniformExpression
++{
++ DECLARE_MATERIALUNIFORMEXPRESSION_TYPE(FLegacyTextureSize2DExpression);
++public:
++ explicit FLegacyTextureSize2DExpression(int32 InTextureIndex) : TextureIndex(InTextureIndex) {}
++ virtual void WriteNumberOpcodes(FMaterialPreshaderData& OutData) const override
++ {
++  OutData.WriteOpcode(EMaterialPreshaderOpcode::LegacyTextureSize2D).Write<int32>(TextureIndex);
++ }
++ virtual bool IsIdentical(const FMaterialUniformExpression* Other) const override
++ {
++  return Other && Other->GetType() == GetType() &&
++   static_cast<const FLegacyTextureSize2DExpression*>(Other)->TextureIndex == TextureIndex;
++ }
++private:
++ int32 TextureIndex;
++};
++IMPLEMENT_MATERIALUNIFORMEXPRESSION_TYPE(FLegacyTextureSize2DExpression);
++static_assert(uint8(EMaterialPreshaderOpcode::TextureSize) == 37 &&
++ uint8(EMaterialPreshaderOpcode::RuntimeVirtualTextureUniform) == 41 &&
++ uint8(EMaterialPreshaderOpcode::LegacyTextureSize2D) == 42, "Legacy preshader opcode ordinals changed");
++}
++
+ TRefCountPtr<FMaterialShaderMap> FMaterialShaderMap::CreateLegacySlateMap(
+  const FLegacyMaterialIR& Material, FLegacySlatePrepareOutputs PrepareOutputs, FString& Error)
+ {
+@@ -79,11 +104,25 @@ TRefCountPtr<FMaterialShaderMap> FMaterialShaderMap::CreateLegacySlateMap(
+   const FLegacyMaterialExpression& N = Material.Expressions[Index];
+   auto Child = [&](int32 I) -> FMaterialUniformExpression* { return I >= 0 && I < Index ? Nodes[I].GetReference() : nullptr; };
+   FMaterialUniformExpression* A = Child(N.A), *B = Child(N.B), *C = Child(N.C);
++  if (N.Kind == ELegacyMaterialExpression::TextureSize2D)
++  {
++   if (!Material.VectorRoots.Contains(Index) || Material.ScalarRoots.Contains(Index) ||
++       N.A != INDEX_NONE || N.B != INDEX_NONE || N.C != INDEX_NONE || N.Operation != 0 ||
++       N.ValueType != MCT_Float4 || !Material.Texture2DParameters.IsValidIndex(N.TextureParameterIndex))
++    return Fail(TEXT("Legacy texture size requires an original direct vector property-0 root"));
++   const FLegacyMaterialTextureParameter& T = Material.Texture2DParameters[N.TextureParameterIndex];
++   if (T.Parameter.Name != NAME_None || T.Parameter.Name.GetNumber() != 0 ||
++       T.Parameter.Association != GlobalParameter || T.Parameter.Index != INDEX_NONE ||
++       T.TextureIndex < 0 || T.TextureLayerIndex != INDEX_NONE || T.PageTableLayerIndex != INDEX_NONE || T.bVirtualTexture)
++    return Fail(TEXT("Legacy texture size requires a plain indexed Standard2D expression"));
++  }
++  else if (N.TextureParameterIndex != INDEX_NONE)
++   return Fail(TEXT("Unexpected legacy texture-size slot on numeric expression"));
+   int32 Arity = 1;
+   switch (N.Kind)
+   {
+    case ELegacyMaterialExpression::Constant: case ELegacyMaterialExpression::ScalarParameter:
+-   case ELegacyMaterialExpression::VectorParameter: Arity = 0; break;
++   case ELegacyMaterialExpression::VectorParameter: case ELegacyMaterialExpression::TextureSize2D: Arity = 0; break;
+    case ELegacyMaterialExpression::FoldedMath: case ELegacyMaterialExpression::AppendVector:
+    case ELegacyMaterialExpression::Min: case ELegacyMaterialExpression::Max:
+    case ELegacyMaterialExpression::Fmod: Arity = 2; break;
+@@ -95,13 +134,20 @@ TRefCountPtr<FMaterialShaderMap> FMaterialShaderMap::CreateLegacySlateMap(
+    return Fail(TEXT("Invalid original expression child: graph must be topologically ordered"));
+   uint32 Depth = 1, Cost = 1;
+   const int32 Children[] = {N.A, N.B, N.C};
+-  for (int32 I = 0; I < Arity; ++I) { Depth = FMath::Max(Depth, Depths[Children[I]] + 1); Cost += Costs[Children[I]]; }
++  for (int32 I = 0; I < Arity; ++I)
++  {
++   if (Material.Expressions[Children[I]].Kind == ELegacyMaterialExpression::TextureSize2D)
++    return Fail(TEXT("Nested original texture-size expressions are not source-proven"));
++   Depth = FMath::Max(Depth, Depths[Children[I]] + 1); Cost += Costs[Children[I]];
++  }
+   if (Depth > 256 || Cost > 65536) return Fail(TEXT("Original numeric graph exceeds bounded preshader budget"));
+   if (N.ValueType != MCT_Float && N.ValueType != MCT_Float1 && N.ValueType != MCT_Float2 && N.ValueType != MCT_Float3 && N.ValueType != MCT_Float4)
+    return Fail(TEXT("Unsupported original numeric value type"));
+   TRefCountPtr<FMaterialUniformExpression> Expression;
+   switch (N.Kind)
+   {
++   case ELegacyMaterialExpression::TextureSize2D:
++    Expression = new FLegacyTextureSize2DExpression(Material.Texture2DParameters[N.TextureParameterIndex].TextureIndex); break;
+    case ELegacyMaterialExpression::Constant:
+     Expression = new FMaterialUniformExpressionConstant(N.Value, uint8(N.ValueType)); break;
+    case ELegacyMaterialExpression::ScalarParameter:
+diff --git a/Engine/Source/Runtime/Engine/Private/Materials/MaterialUniformExpressions.cpp b/Engine/Source/Runtime/Engine/Private/Materials/MaterialUniformExpressions.cpp
+index e893ef84c..37b4ae1df 100644
+--- a/Engine/Source/Runtime/Engine/Private/Materials/MaterialUniformExpressions.cpp
++++ b/Engine/Source/Runtime/Engine/Private/Materials/MaterialUniformExpressions.cpp
+@@ -759,6 +759,21 @@ static void EvaluateTextureSize(const FMaterialRenderContext& Context, FPreshade
+ 	}
+ }
+ 
++// Original direct vector callers clear all four lanes before property-0 evaluation.
++// Use the real indexed texture/resource on every evaluation; absent values remain +0.
++static void EvaluateLegacyTextureSize2D(const FMaterialRenderContext& Context, FPreshaderStack& Stack, FPreshaderDataPtr& RESTRICT Data)
++{
++	const int32 TextureIndex = ReadPreshaderValue<int32>(Data);
++	const UTexture* Texture = GetIndexedTexture<UTexture>(Context.Material, TextureIndex);
++	FLinearColor Result(0.0f, 0.0f, 0.0f, 0.0f);
++	if (Texture && Texture->Resource)
++	{
++		Result.R = (float)Texture->Resource->GetSizeX();
++		Result.G = (float)Texture->Resource->GetSizeY();
++	}
++	Stack.Add(Result);
++}
++
+ static void EvaluateTexelSize(const FMaterialRenderContext& Context, FPreshaderStack& Stack, FPreshaderDataPtr& RESTRICT Data)
+ {
+ 	const UTexture* Texture = GetTextureParameter(Context, Data);
+@@ -910,6 +925,7 @@ static void EvaluatePreshader(const FUniformExpressionSet* UniformExpressionSet,
+ 		case EMaterialPreshaderOpcode::ComponentSwizzle: EvaluateComponentSwizzle(Stack, Data); break;
+ 		case EMaterialPreshaderOpcode::AppendVector: EvaluateAppenedVector(Stack, Data); break;
+ 		case EMaterialPreshaderOpcode::TextureSize: EvaluateTextureSize(Context, Stack, Data); break;
++		case EMaterialPreshaderOpcode::LegacyTextureSize2D: EvaluateLegacyTextureSize2D(Context, Stack, Data); break;
+ 		case EMaterialPreshaderOpcode::TexelSize: EvaluateTexelSize(Context, Stack, Data); break;
+ 		case EMaterialPreshaderOpcode::ExternalTextureCoordinateScaleRotation: EvaluateExternalTextureCoordinateScaleRotation(Context, Stack, Data); break;
+ 		case EMaterialPreshaderOpcode::ExternalTextureCoordinateOffset: EvaluateExternalTextureCoordinateOffset(Context, Stack, Data); break;
+diff --git a/Engine/Source/Runtime/Engine/Public/LegacySlateMaterial.h b/Engine/Source/Runtime/Engine/Public/LegacySlateMaterial.h
+index 92c165552..d9bf771d1 100644
+--- a/Engine/Source/Runtime/Engine/Public/LegacySlateMaterial.h
++++ b/Engine/Source/Runtime/Engine/Public/LegacySlateMaterial.h
+@@ -10,7 +10,7 @@ enum class ELegacyMaterialExpression : uint8
+ {
+  Constant, ScalarParameter, VectorParameter, FoldedMath, AppendVector,
+  ComponentSwizzle, TrigMath, Sine, SquareRoot, Length, Periodic, Min, Max,
+- Clamp, Saturate, Abs, Floor, Ceil, Frac, Fmod, Logarithm2, Logarithm10
++ Clamp, Saturate, Abs, Floor, Ceil, Frac, Fmod, Logarithm2, Logarithm10, TextureSize2D
+ };
+ struct FLegacyMaterialExpression
+ {
+@@ -22,6 +22,8 @@ struct FLegacyMaterialExpression
+  uint8 Operation = 0;
+  uint8 Components = 1;
+  int8 Swizzle[4] = {0, -1, -1, -1};
++ // TextureSize2D only: serialized Standard2D expression slot, not a numeric child.
++ int32 TextureParameterIndex = INDEX_NONE;
+ };
+ struct FLegacyMaterialResource
+ {
+diff --git a/Engine/Source/Runtime/Engine/Public/MaterialShared.h b/Engine/Source/Runtime/Engine/Public/MaterialShared.h
+index 6c4c5d714..df398a2d3 100644
+--- a/Engine/Source/Runtime/Engine/Public/MaterialShared.h
++++ b/Engine/Source/Runtime/Engine/Public/MaterialShared.h
+@@ -250,6 +250,8 @@ enum class EMaterialPreshaderOpcode : uint8
+ 	ExternalTextureCoordinateScaleRotation,
+ 	ExternalTextureCoordinateOffset,
+ 	RuntimeVirtualTextureUniform,
++	// Compatibility-only direct legacy vector root. Keep every existing opcode ordinal.
++	LegacyTextureSize2D,
+ };
+ 
+ class FMaterialPreshaderData
