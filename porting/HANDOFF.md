@@ -1,6 +1,6 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
-## Current snapshot (2026-11-01, after `67bf80d`)
+## Current snapshot (2026-11-01)
 
 - **Native source `907e1dc`, closure tooling `2d99465`, engine `f716e0cb6`.** Native build and runtime suites pass separately: `generated/frontend-probes/build-getgameversion.log` and `generated/regress/20261101T002525Z-2242896/result.json` prove builds; `generated/regress/20261101T002339Z-2232871/result.json` proves restage, both joins, NetSerialize, 4,617/4,617 offline checksums, 251 behavior splices, 71 backend tests and schema checks. Generator checks pass 141. Earlier run `20261101T002007Z-2216551` has a wrapper FAIL solely because its old mtime rule rejected an already-current client despite Build.sh exiting 0. The external local-model wrapper now records both target hashes and accepts a valid incremental build. Do not hide the failed record or call it a compiler failure.
 - **Actual UI dependency closure:** isolated `generated/frontend-probes/closure-fixed` visits 721 packages, 0 failures/0 pending, including Engine content after the corrected loose mount. `runtime-fixed-manifest.json` records the separate stage overlay without overwriting existing converted files. `UIManager_Startup_C` loads as BlueprintGeneratedClass (exit 0); RootLayout_Athena and LoginScreen still crash in original inline material shader-map parsing. The prior banner WidgetBlueprintGeneratedClass also loads with `-FortniteLegacyFieldPaths`; this does not establish widget construction/display or M1.
