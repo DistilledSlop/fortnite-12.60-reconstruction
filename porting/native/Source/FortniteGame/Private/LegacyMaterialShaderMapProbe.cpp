@@ -485,6 +485,86 @@ static bool ProbeLegacyMaxSaturateBits(UMaterialInterface* Owner, FString& Error
     return true;
 }
 
+// Opt-in bitwise test of two source parameters with the same full identity
+// and distinct defaults. The actual owner supplies the render context only.
+static bool ProbeLegacyDuplicateDefaults(UMaterialInterface* Owner, FString& Error)
+{
+    if (!IsInGameThread() || !Owner) { Error=TEXT("duplicate-default diagnostic requires game thread and a real owner"); return false; }
+    FString Directory;
+    if (!FParse::Value(FCommandLine::Get(),TEXT("FortniteLegacyMaterialArtifactDir="),Directory) || !FPaths::DirectoryExists(Directory))
+    { Error=TEXT("duplicate-default diagnostic requires an existing artifact directory"); return false; }
+    const uint32 ExpectedDefaults[10]={0x3f800000u,0x3f800000u,0x3f800000u,0x3f800000u,0x3f000000u,0x3f000000u,0x3f000000u,0x3f800000u,0x00000000u,0x80000000u};
+    const uint32 ExpectedOverrides[10]={0x3e000000u,0x3f600000u,0x3e800000u,0x3f800000u,0x3e000000u,0x3f600000u,0x3e800000u,0x3f800000u,0x3ec00000u,0x3ec00000u};
+    FLegacyMaterialIR IR; IR.OriginalMapHash.Hash[0]=2; IR.DebugDescription=TEXT("Legacy duplicate-default bit diagnostic");
+    auto AddVector=[&IR](const FLinearColor& Value)
+    {
+        FLegacyMaterialExpression E; E.Kind=ELegacyMaterialExpression::VectorParameter;
+        E.Parameter=FMaterialParameterInfo(FName(TEXT("Color")),GlobalParameter,INDEX_NONE); E.Value=Value;
+        return IR.Expressions.Add(MoveTemp(E));
+    };
+    auto AddScalar=[&IR](uint32 Bits)
+    {
+        FLegacyMaterialExpression E; E.Kind=ELegacyMaterialExpression::ScalarParameter;
+        E.Parameter=FMaterialParameterInfo(FName(TEXT("DuplicateScalar")),GlobalParameter,INDEX_NONE);
+        FMemory::Memcpy(&E.Value.R,&Bits,sizeof(Bits)); return IR.Expressions.Add(MoveTemp(E));
+    };
+    const int32 White=AddVector(FLinearColor(1.f,1.f,1.f,1.f)), Gray=AddVector(FLinearColor(.5f,.5f,.5f,1.f));
+    const int32 PositiveZero=AddScalar(0x00000000u), NegativeZero=AddScalar(0x80000000u);
+    IR.VectorRoots={White,Gray}; IR.ScalarRoots={PositiveZero,NegativeZero}; IR.UniformBufferSize=64;
+    IR.Resources.Add({48,UBMT_SAMPLER}); IR.Resources.Add({56,UBMT_SAMPLER});
+    const FMaterialRenderProxy* Base=Owner->GetRenderProxy();
+    const FMaterial* ExpectedOwnerResource=Owner->GetMaterialResource(GMaxRHIFeatureLevel);
+    if (!Base || !ExpectedOwnerResource) { Error=TEXT("duplicate-default diagnostic owner resource missing"); return false; }
+    uint32 Actual[2][10]={}; bool bCallback=false, bFilled=false;
+    const FString Stop=TEXT("duplicate-default numeric diagnostic intentionally stopped before shader construction");
+    FString FactoryError;
+    TRefCountPtr<FMaterialShaderMap> Map=FMaterialShaderMap::CreateLegacySlateMap(IR,
+        [Base,ExpectedOwnerResource,&Actual,&bCallback,&bFilled,&Stop](const FUniformExpressionSet& Uniforms,const FShaderParametersMetadata&,TArray<FLegacySlateShaderInput>&,FString& OutError)
+        {
+            bCallback=true;
+            ENQUEUE_RENDER_COMMAND(CheckLegacyDuplicateDefaults)([Base,ExpectedOwnerResource,&Uniforms,&Actual,&bFilled](FRHICommandListImmediate&)
+            {
+                const FMaterialRenderProxy* Fallback=nullptr;
+                const FMaterial& Material=Base->GetMaterialWithFallback(ERHIFeatureLevel::SM5,Fallback);
+                if (&Material!=ExpectedOwnerResource) return;
+                FLegacyProbeProxy Proxy; Proxy.Base=Base; Proxy.bInherit=false;
+                FMaterialRenderContext Context(&Proxy,Material,nullptr); FUniformExpressionCache Cache;
+                for (int32 Pass=0;Pass<2;++Pass)
+                {
+                    if (Pass==1)
+                    {
+                        auto& Vector=Proxy.Overrides.AddDefaulted_GetRef();
+                        Vector.Parameter=FHashedMaterialParameterInfo(TEXT("Color")); Vector.bVector=true;
+                        Vector.Value=FLinearColor(.125f,.875f,.25f,1.f);
+                        auto& Scalar=Proxy.Overrides.AddDefaulted_GetRef();
+                        Scalar.Parameter=FHashedMaterialParameterInfo(TEXT("DuplicateScalar")); Scalar.Value.R=.375f;
+                    }
+                    alignas(16) uint8 Buffer[64]={}; Uniforms.FillUniformBuffer(Context,Cache,Buffer,sizeof(Buffer));
+                    FMemory::Memcpy(Actual[Pass],Buffer,sizeof(Actual[Pass]));
+                }
+                bFilled=true;
+            });
+            FlushRenderingCommands(); OutError=Stop; return false;
+        },FactoryError);
+    if (Map.IsValid() || !bCallback || !bFilled || FactoryError!=Stop)
+    { Error=FString::Printf(TEXT("duplicate-default diagnostic did not stop at callback: %s"),*FactoryError); return false; }
+    FString ActualJson[2], ExpectedJson[2]; bool bMatches=true;
+    const uint32* Expected[2]={ExpectedDefaults,ExpectedOverrides};
+    for (int32 Pass=0;Pass<2;++Pass) for (int32 I=0;I<10;++I)
+    {
+        if (Actual[Pass][I]!=Expected[Pass][I]) bMatches=false;
+        ActualJson[Pass]+=FString::Printf(TEXT("%s\"%08x\""),I ? TEXT(",") : TEXT(""),Actual[Pass][I]);
+        ExpectedJson[Pass]+=FString::Printf(TEXT("%s\"%08x\""),I ? TEXT(",") : TEXT(""),Expected[Pass][I]);
+    }
+    const FString Json=FString::Printf(TEXT("{\"scope\":\"numeric-only; transient factory map discarded before shader construction/finalization/installation\",\"owner\":\"%s\",\"defaults\":{\"actual_bits\":[%s],\"expected_bits\":[%s]},\"overrides\":{\"actual_bits\":[%s],\"expected_bits\":[%s]},\"passed\":%s}\n"),*Owner->GetPathName(),*ActualJson[0],*ExpectedJson[0],*ActualJson[1],*ExpectedJson[1],bMatches ? TEXT("true") : TEXT("false"));
+    const FString Path=FPaths::Combine(Directory,TEXT("DuplicateDefaultsBits.json"));
+    if (FPaths::FileExists(Path) || !FFileHelper::SaveStringToFile(Json,*Path))
+    { Error=TEXT("cannot write duplicate-default diagnostic receipt"); return false; }
+    if (!bMatches) { Error=TEXT("duplicate-default exact bit pattern mismatch"); return false; }
+    UE_LOG(LogTemp,Display,TEXT("Legacy material probe: duplicate parameter defaults and overrides exact bit patterns passed using real owner context"));
+    return true;
+}
+
 struct FLegacyDrawBindings
 {
     uint16 MatrixBuffer = 0, MatrixOffset = 0, GammaBuffer = 0, GammaOffset = 0;
@@ -1360,6 +1440,12 @@ void ProbeLegacyOriginalMaterial()
     {
         FString NumericError;
         if (!ProbeLegacyMaxSaturateBits(Material,NumericError))
+        { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: %s"),*NumericError); FPlatformMisc::RequestExitWithStatus(false,1); return; }
+    }
+    if (FParse::Param(FCommandLine::Get(),TEXT("FortniteLegacyMaterialDuplicateDefaultsProbe")))
+    {
+        FString NumericError;
+        if (!ProbeLegacyDuplicateDefaults(Material,NumericError))
         { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: %s"),*NumericError); FPlatformMisc::RequestExitWithStatus(false,1); return; }
     }
     if (OwnerPath==GLegacyDonutPath)
