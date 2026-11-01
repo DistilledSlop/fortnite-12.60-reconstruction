@@ -87,10 +87,12 @@ parent evidence directory. No new snippet was ported from these probes:
   concrete object and byte field have not been identified. This getter is a
   dependency clue for `SetFrontEndCamera`, not a safely portable body yet.
 - `UBlueprintContextLibrary::GetContext` exec `0x140823580` calls
-  `0x140822310`. Its `0x140822490` lookup is 751 bytes and handles several
-  context classes and a manager at offset `+0x20`; `0x140822100` initializes
-  a shared singleton. The requested class lookup and manager representation
-  remain unidentified, so returning a guessed subsystem would be wrong.
+  `0x140822310`. Its 751-byte lookup `0x140822490` handles local-player and
+  game-instance subsystems, then a separate context registry at manager `+0x20`;
+  `0x140822100` initializes a shared singleton. Six original class literals now
+  prove the widget/controller/local-player routing and subsystem types; see
+  [context-lookup-evidence.md](../frontend/context-lookup-evidence.md). Registry
+  construction and lifecycle remain unfinished; no helper body was ported.
 
 Reproduce these bounded probes with `porting/.venv/bin/python -I
 porting/ghidra/probe_callees.py --input
