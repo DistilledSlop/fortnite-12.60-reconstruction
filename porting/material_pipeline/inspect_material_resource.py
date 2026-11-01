@@ -154,6 +154,8 @@ def main():
         map_bytes = args.export_map.read_bytes()
         map_json = next(line for line in map_bytes.splitlines() if line.startswith(b'{'))
         export_map = json.loads(map_json)
+        if args.uexp.stem != export_map['package'].rsplit('/', 1)[-1]:
+            raise ValueError('uexp basename does not match export-map package')
         export = next(row for row in export_map['exports'] if row['index'] == args.export_index)
         first = export['serialOffset'] - export_map['headerBytes']
         end = first + export['serialSize']
