@@ -171,3 +171,27 @@ separate gate.
 
 Batch-9 manifest SHA-256:
 `3c6effeedd6851ba71fc6ffb8d176cca31c35118564daecd2de50b40d0445b51`.
+
+Batch-11 consumes the full 65-resource structural inventory at
+`generated/frontend-probes/frontend-material-inventory-textures/summary.json`
+(SHA-256 `06f45720da994337266ac1a5774116675a88aa15f36786554fadbdd31e0c0254`)
+and the same 49-program View proof. Original shader compilation can trim unused
+trailing constant-buffer registers: for the two-sampler numeric contract, the
+Material declaration must have a positive 16-byte-aligned span no larger than the
+original numeric region, and must still match the original record's bound Material
+register. The complete original 752-byte AngledBox layout, including its 736-byte
+numeric region and two sampler slots, remains intact. Its original pixel programs
+declare 608 or 720 bytes. These bounds do not authorize a change to original graph
+nodes, shader instructions, layouts, or hashes. The verifier independently checks
+the same bound for this layout against original typed register bindings.
+
+The immutable batch-11 manifest SHA-256 is
+`a38a5e5fdd04637326f662cac4462185d3470734ccc2c3a9b1fa9d886f331523`.
+It contains 118 eligible owners (44 own resources and 74 inherited), five frozen
+owners and 24 rejected owners (22 texture expressions and two record shapes).
+The audit checks 2,144 numeric cases and preserves all 1,676 batch-10 cases.
+Every eligible owner with an inventoried direct parent has a non-rejected parent
+in the report, but this is **source eligibility, not runtime parent readiness**.
+Runtime validation must establish each parent before claiming a dependent child;
+the previous SimpleFill failed-parent probe remains a failure until rerun and
+verified. Texture and TextureProperty expressions remain unsupported and pending.

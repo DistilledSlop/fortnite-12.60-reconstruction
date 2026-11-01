@@ -44,7 +44,7 @@ def uniform_layout_hash(size, offsets, types, static_slot=255):
     return result & 0xffffffff
 
 
-def expected_uniform_bindings(record, shader, material_hash, view_hash):
+def expected_uniform_bindings(record, shader, material_hash, view_hash, layout=None):
     """Original typed registers determine roles; header order/debug names do not."""
     roles = {}
     material = record['material_uniform_buffer']
@@ -63,6 +63,10 @@ def expected_uniform_bindings(record, shader, material_hash, view_hash):
         register = descriptor.get('d3d_register', {})
         if register.get('kind') == 'cbv' and register.get('space') == 0 and register['index'] in roles:
             role = roles[register['index']]
+            if role[0] == 'Material' and layout is not None and layout['resource_types'] == [8, 8]:
+                span = descriptor['block_span_bytes']
+                if not 0 < span <= layout['resource_offsets'][0] or span % 16:
+                    raise ValueError('Material descriptor span outside numeric layout')
             if descriptor['binding'] in bindings:
                 raise ValueError('mapped uniform register roles overlap')
             bindings[descriptor['binding']] = role
@@ -269,7 +273,7 @@ def main():
             references = [(b[3], b[4], b[1]) for b in header['packed_buffers']]
             if len(header['uniform_buffers']) != len(header['uniform_offsets']) or len(header['globals']) != len(header['global_offsets']):
                 raise ValueError('native header descriptor metadata count mismatch')
-            expected_uniforms = expected_uniform_bindings(record, shader, layout_hash, view_hash)
+            expected_uniforms = expected_uniform_bindings(record, shader, layout_hash, view_hash, layout)
             if len(expected_uniforms) != len(header['uniform_buffers']):
                 raise ValueError('native uniform count differs from original typed bindings')
             for uniform, offsets in zip(header['uniform_buffers'], header['uniform_offsets']):

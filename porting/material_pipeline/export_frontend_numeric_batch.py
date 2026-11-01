@@ -350,8 +350,8 @@ def typed_contract(record, reflected, view_evidence=None):
             elif slot == 0 and desc['block_span_bytes'] == (80 if vertex else 64):
                 semantic = 'SlateLooseConstants'
             elif (not vertex and slot == (2 if has_view else 1) and material == dict(base_index=slot, bound=True) and
-                    (0 < desc['block_span_bytes'] <= record['debug_uniform_buffer_layout']['resource_offsets'][0] if has_view else
-                     desc['block_span_bytes'] == record['debug_uniform_buffer_layout']['resource_offsets'][0])):
+                    (0 < desc['block_span_bytes'] <= record['debug_uniform_buffer_layout']['resource_offsets'][0] and
+                     desc['block_span_bytes'] % 16 == 0)):
                 semantic = 'Material'
             else:
                 raise ValueError('unclassified constant buffer register or span ' + str(slot))

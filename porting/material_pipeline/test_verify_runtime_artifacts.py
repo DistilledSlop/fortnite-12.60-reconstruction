@@ -60,6 +60,27 @@ class RuntimeArtifactVerificationTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'actual current metadata'):
             verifier.expected_uniform_bindings(record, shader, 111, None)
 
+    def test_trimmed_material_binding_uses_original_register_and_layout(self):
+        record = dict(material_uniform_buffer=dict(base_index=1, bound=True), uniform_parameters=[])
+        descriptor = dict(binding=4, d3d_register=dict(kind='cbv', space=0, index=1), block_span_bytes=608)
+        shader = dict(reflection=dict(descriptors=[descriptor]))
+        layout = dict(resource_offsets=[736, 744], resource_types=[8, 8])
+        for span in (608, 720, 736):
+            descriptor['block_span_bytes'] = span
+            self.assertEqual(verifier.expected_uniform_bindings(record, shader, 111, None, layout), {4: ('Material', 111)})
+        for span in (0, 607, 752):
+            descriptor['block_span_bytes'] = span
+            with self.assertRaisesRegex(ValueError, 'span'):
+                verifier.expected_uniform_bindings(record, shader, 111, None, layout)
+        descriptor['block_span_bytes'] = 608
+        descriptor['d3d_register']['index'] = 2
+        with self.assertRaisesRegex(ValueError, 'roles'):
+            verifier.expected_uniform_bindings(record, shader, 111, None, layout)
+        descriptor['d3d_register']['index'] = 1
+        record['material_uniform_buffer']['base_index'] = 2
+        with self.assertRaisesRegex(ValueError, 'roles'):
+            verifier.expected_uniform_bindings(record, shader, 111, None, layout)
+
     def test_name_only_adaptation_preserves_interfaces_and_other_instructions(self):
         original = verifier.normalize_entrypoint(module('main'))
         changed_name = verifier.normalize_entrypoint(module('main_00000000_12345678'))

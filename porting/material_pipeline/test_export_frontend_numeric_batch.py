@@ -114,6 +114,47 @@ class BatchTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'span'):
             batch.typed_contract(rec, dict(descriptors=descriptors))
 
+    def test_trimmed_angled_material_spans_and_original_binding(self):
+        record = dict(frequency=3, uniform_parameters=[], material_uniform_buffer=dict(base_index=1, bound=True),
+                      debug_uniform_buffer_layout=dict(resource_offsets=[736, 744], resource_types=[8, 8], constant_bytes=752))
+        def descriptor(index, span):
+            return dict(d3d_register=dict(space=0, kind='cbv', index=index), set=0,
+                        resource_table_entries=[], vulkan_descriptor_type=6, block_span_bytes=span)
+        descriptors = [descriptor(0, 64), descriptor(1, 608)]
+        for span in (608, 720, 736):
+            descriptors[1]['block_span_bytes'] = span
+            self.assertEqual(batch.typed_contract(record, dict(descriptors=descriptors))[1]['semantic'], 'Material')
+        for span in (0, 607, 752):
+            descriptors[1]['block_span_bytes'] = span
+            with self.assertRaisesRegex(ValueError, 'span'):
+                batch.typed_contract(record, dict(descriptors=descriptors))
+        descriptors[1]['block_span_bytes'] = 608
+        for binding in (dict(base_index=2, bound=True), dict(base_index=1, bound=False)):
+            record['material_uniform_buffer'] = binding
+            with self.assertRaisesRegex(ValueError, 'span'):
+                batch.typed_contract(record, dict(descriptors=descriptors))
+        record['material_uniform_buffer'] = dict(base_index=1, bound=True)
+        descriptors[1]['d3d_register']['index'] = 2
+        with self.assertRaisesRegex(ValueError, 'span'):
+            batch.typed_contract(record, dict(descriptors=descriptors))
+
+    def test_real_angled_source_records_and_reflected_spans(self):
+        generated = Path(__file__).resolve().parent.parent / 'generated'
+        decoded_path = generated / 'frontend-probes/frontend-material-inventory/FortniteGame_Content_UI_Art_ToolKit_AngledBoxes_M_UI_AngledBox_Master.decoded.json'
+        reflected_path = generated / 'material_pipeline/frontend-numeric-batch-10/shaders-000/reflection.json'
+        if not decoded_path.exists() or not reflected_path.exists():
+            self.skipTest('local original AngledBox evidence is unavailable')
+        source = json.loads(decoded_path.read_bytes())['material_shaders']['records']
+        reflected = {r['shader_index']: r for r in json.loads(reflected_path.read_bytes())['records']}
+        pixel = [r for r in source if r['type']['name'].startswith('TSlateMaterialShaderPS')]
+        self.assertEqual(len(pixel), 5)
+        for record, index, span in zip(pixel, range(3186, 3191), (608, 720, 720, 608, 720)):
+            self.assertEqual(record['debug_uniform_buffer_layout']['resource_offsets'], [736, 744])
+            self.assertEqual(record['material_uniform_buffer'], dict(base_index=1, bound=True))
+            self.assertEqual(next(d['block_span_bytes'] for d in reflected[index]['descriptors']
+                                  if d['d3d_register'] == dict(kind='cbv', space=0, index=1)), span)
+            self.assertIn('Material', [b['semantic'] for b in batch.typed_contract(record, reflected[index])])
+
     def test_view_proof_requires_exact_module_and_fresh_inspection(self):
         proof = dict(shader_index=7, spirv_sha256='a'*64, field_name='GameTime', byte_offset=2264, output='/old/path')
         inspector = mock.Mock()
