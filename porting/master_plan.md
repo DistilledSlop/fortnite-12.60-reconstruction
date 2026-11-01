@@ -36,9 +36,9 @@ using historical instructions below.
    multi-client match through its end with sound and visuals working, and compare
    behavior and presentation against the supplied 12.60 build.
 
-## Current work (2026-11-01 00:37 UTC)
+## Current work (2026-11-01 00:47 UTC)
 
-Native `907e1dc` with engine `f716e0cb6` builds and passes both joins, 4,617 offline checksums, 251 snippets and 71 backend tests (separate build/runtime receipts in HANDOFF). The corrected root hard-import closure is complete and UIManager class loads; actual root widgets remain blocked on original inline shader-map ABI. Original bytecode is recoverable: 44 candidate frontend DXBC shaders now translate to structurally validated SPIR-V, with 12 modifier diagnostics still requiring semantic investigation. Prioritize the genuine material/binding bridge and real root UI draws, not proxy materials. Then port authentic UI lifecycle/missing native helpers and verify lobby/matchmaking. All four gates remain open.
+Native `907e1dc` with engine `f716e0cb6` builds and passes both joins, 4,617 offline checksums, 251 snippets and 71 backend tests (separate build/runtime receipts in HANDOFF). The corrected root hard-import closure is complete and UIManager class loads; actual root widgets remain blocked on original inline shader-map ABI. All 44 candidate frontend DXBC shaders translate to structurally validated SPIR-V, with 12 modifier diagnostics still requiring semantic investigation. Original D3D wrappers now parse with exact framing; 19 carry active resource-table bits with 28 SRV, 18 sampler, 18 texture and zero UAV entries. All 44 translated shaders expose 180 SPIR-V descriptors, all in set 0; no D3D-to-SPIR-V/UE draw mapping has been verified. A read-only inline audit found `M_UI` at `.uexp` offset 2225 versus archive Tell 2020; the `+205` origin is inferred only and the wrapper start/schema divergence remains unresolved. Frontend helper probes exposed unresolved call chains and yielded no implementation. Prioritize the genuine material/binding bridge and real root UI draws, then authentic UI lifecycle/missing native helpers and lobby/matchmaking. All four gates remain open.
 
 ## Standing constraints
 
