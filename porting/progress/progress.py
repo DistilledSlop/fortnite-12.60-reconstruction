@@ -1853,7 +1853,7 @@ def standalone_svg(res, head, subject, date, grids=None):
             f'<rect class="tm-bg" x="0" y="0" width="{width}" height="{height}"/>{header}'
             f'<g transform="translate(0,60)">{body}</g>'
             f'<text x="12" y="{height - 10}" font-size="11" class="tm-head" font-weight="400">'
-            f'Definition of 100%: the original unmodified Fortnite 12.60 client under Linux/Wine reaches the lobby, matchmakes to our reconstructed server and plays a match with all visuals and audio.</text>'
+            f'100%: feature-complete rebuilt 12.60 client and server, with all four milestones verified.</text>'
             f'</svg>')
 
 
@@ -1921,7 +1921,7 @@ svg text{{font-family:system-ui,-apple-system,Segoe UI,sans-serif}}
 <h1>Port progress history</h1>
 <p class="meta">One point per commit: overall effort-weighted progress. <a href="index.html">back to the dashboard</a> &middot; <a href="progress.json">progress.json</a></p>
 </header>
-<p class="warn">Definition of 100% is the original unmodified Fortnite 12.60 client under Linux/Wine reaching the lobby, matchmaking to our reconstructed server and playing a match with all visuals and audio. Overall values here are estimates, not that definition.</p>
+<p class="warn">{esc(model["definition"])} Overall values here estimate reconstruction effort; the four milestones require end-to-end evidence.</p>
 <h2>Overall progress per commit</h2>
 <div class="chart-scroll">{chart}</div>
 <p class="meta">Solid line: overall including manual estimates. Dashed line: evidence-based progress only (basis <em>git</em>, <em>local</em> or <em>documented</em>), i.e. the objective lower bound. Points marked replay used the current components.json manual estimates and current ignored local outputs, so they are indicative. Hook-recorded points measure HEAD at commit time.</p>
@@ -1984,6 +1984,22 @@ def measure_commit(model, sha, subject, date, head_sha, seeded, fallback_totals=
     return res, entry_from(res, sha, subject, date, seeded), files
 
 
+def reconcile_history(history, revisions, head_entry, replay_missing):
+    """Keep recorded measurements and repair gaps left by interrupted hooks.
+
+    Git supplies the reachable commit order. Existing historical measurements
+    retain their original values; only missing points are replayed.
+    """
+    known = {entry['commit']: entry for entry in history if 'commit' in entry}
+    known[head_entry['commit']] = head_entry
+    result = []
+    for revision in revisions:
+        if revision not in known:
+            known[revision] = replay_missing(revision)
+        result.append(known[revision])
+    return result
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--seed", action="store_true", help="replay all commits and rebuild history.json")
@@ -2016,8 +2032,14 @@ def main(argv=None):
             head_res, head_entry, files = measure_commit(model, head, subject, date, head, seeded=False,
                                                          fallback_totals=head_fb)
             if not args.no_record:
-                history = [e for e in history if e.get("commit") != head]
-                history.append(head_entry)
+                def replay_missing(sha):
+                    replay_subject = git("log", "-1", "--format=%s", sha).strip()
+                    replay_date = git("log", "-1", "--format=%cI", sha).strip()
+                    _, entry, _ = measure_commit(model, sha, replay_subject, replay_date, head,
+                                                 seeded=True, fallback_totals=head_fb)
+                    return entry
+                revisions = git("rev-list", "--reverse", head).split()
+                history = reconcile_history(history, revisions, head_entry, replay_missing)
 
         if not args.no_record or args.seed:
             write_atomic(HISTORY, json.dumps(history, indent=1, sort_keys=False) + "\n")

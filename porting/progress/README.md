@@ -61,8 +61,11 @@ python3 porting/progress/progress.py --no-record # render HEAD without touching 
 bash porting/progress/serve.sh                  # http://192.168.4.186:8765/ and localhost
 ```
 
-`--seed` replays every commit (about sixteen seconds for 98 commits). It is the only way to
-refresh history for old commits. A normal run measures only HEAD.
+`--seed` replays every commit and rebuilds all historical measurements. A normal
+run measures HEAD and replays any missing commit points while preserving the
+previously recorded values. Replayed points are marked in the history. The
+post-commit hook finishes this refresh before returning; failures are logged in
+`generated/progress-hook.log` and do not fail the Git commit.
 
 ## Editing estimates
 
