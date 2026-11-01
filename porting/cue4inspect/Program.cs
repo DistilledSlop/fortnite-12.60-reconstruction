@@ -7,6 +7,8 @@ using CUE4Parse.UE4.VirtualFileSystem;
 using CUE4Parse.UE4.Assets;
 using CUE4Parse.UE4.Assets.Objects;
 using CUE4Parse.UE4.Assets.Objects.Properties;
+using CUE4Parse.UE4.Assets.Readers;
+using CUE4Parse.UE4.Assets.Exports;
 using CUE4Parse.UE4.AssetRegistry;
 using CUE4Parse.UE4.Assets.Exports.StaticMesh;
 using CUE4Parse.UE4.Assets.Exports.Actor;
@@ -54,6 +56,7 @@ bool actorReport = args.Contains("--actor-report");
 bool exportPng = args.Contains("--export-png");
 bool exportLandscapeWeightmaps = args.Contains("--export-landscape-weightmaps");
 bool materialReport = args.Contains("--material-report");
+bool legacyMaterialStart = args.Contains("--legacy-material-start");
 bool textureReport = args.Contains("--texture-report");
 string? textureOutputArgument = args.SingleOrDefault(arg => arg.StartsWith("--texture-output=", StringComparison.Ordinal));
 bool functionReport = args.Contains("--function-report");
@@ -85,7 +88,7 @@ if (maxArgument is not null && (!int.TryParse(maxArgument[15..], out maxPackages
     Console.Error.WriteLine("--max-packages must be a positive integer");
     return 2;
 }
-string[] positional = args.Where(arg => arg != maxArgument && arg != closureOutputArgument && arg != keyFileArgument && arg != extractOutput && arg != extractWorkersArgument && arg != extractPlanArgument && arg != extractSummaryArgument && arg != extractSampleArgument && arg != extractSeedArgument && arg != duplicatesOutArgument && arg != textureOutputArgument && arg is not ("--all" or "--pseudo" or "--imports" or "--imports-json" or "--export-map-json" or "--registry" or "--pak-sources" or "--registry-paths" or "--seed-list" or "--follow-soft" or "--scan-maps" or "--scan-native" or "--all-keys" or "--save-package" or "--save-list" or "--sizes" or "--save-folder" or "--save-closure" or "--export-glb" or "--export-landscape" or "--export-landscape-grid" or "--export-landscape-weightmap-grid" or "--export-png" or "--export-landscape-weightmaps" or "--material-report" or "--texture-report" or "--function-report" or "--landscape-report" or "--actor-report" or "--versions" or "--ue426" or "--loose" or "--extract-all" or "--dry-run" or "--verify" or "--audit-duplicates" or "--repair")).ToArray();
+string[] positional = args.Where(arg => arg != maxArgument && arg != closureOutputArgument && arg != keyFileArgument && arg != extractOutput && arg != extractWorkersArgument && arg != extractPlanArgument && arg != extractSummaryArgument && arg != extractSampleArgument && arg != extractSeedArgument && arg != duplicatesOutArgument && arg != textureOutputArgument && arg is not ("--all" or "--pseudo" or "--imports" or "--imports-json" or "--export-map-json" or "--registry" or "--pak-sources" or "--registry-paths" or "--seed-list" or "--follow-soft" or "--scan-maps" or "--scan-native" or "--all-keys" or "--save-package" or "--save-list" or "--sizes" or "--save-folder" or "--save-closure" or "--export-glb" or "--export-landscape" or "--export-landscape-grid" or "--export-landscape-weightmap-grid" or "--export-png" or "--export-landscape-weightmaps" or "--material-report" or "--legacy-material-start" or "--texture-report" or "--function-report" or "--landscape-report" or "--actor-report" or "--versions" or "--ue426" or "--loose" or "--extract-all" or "--dry-run" or "--verify" or "--audit-duplicates" or "--repair")).ToArray();
 bool packageLess = registryMode || pakSources || registryPaths || scanMaps || scanNative || exportLandscapeGrid || exportLandscapeWeightmapGrid || extractAll;
 if (new[] { registryMode, pakSources, registryPaths, scanMaps, scanNative, exportLandscapeGrid, exportLandscapeWeightmapGrid, extractAll }.Count(mode => mode) > 1 || (packageLess ? positional.Length > 1 : positional.Length is < 1 or > 2))
 {
@@ -565,6 +568,46 @@ try
     }
 
     var packageData = provider.LoadPackage(assetPath!);
+    if (legacyMaterialStart)
+    {
+        if (!loose || packageData is not Package p || p.Summary.FileVersionUE.FileVersionUE4 != 379)
+            throw new InvalidDataException("Legacy start probe only supports loose version 379 packages");
+        var matches = p.ExportMap.Select((e, i) => (e, i)).Where(x => x.e.ClassName == "MaterialInstanceConstant").ToArray();
+        if (matches.Length != 1) throw new InvalidDataException("Expected one material instance constant");
+        var (entry, index) = matches[0];
+        if (p.HasFlags(EPackageFlags.PKG_Cooked) || p.HasFlags(EPackageFlags.PKG_FilterEditorOnly) ||
+            ((EObjectFlags) entry.ObjectFlags).HasFlag(EObjectFlags.RF_ClassDefaultObject))
+            throw new InvalidDataException("Expected uncooked non-default editor instance");
+        var material = p.ExportsLazy[index].Value as UMaterialInstanceConstant
+            ?? throw new InvalidDataException("Invalid instance export");
+        if (!material.bHasStaticPermutationResource) throw new InvalidDataException("Expected static permutation resource");
+        var path = Path.GetFullPath(Path.Combine(sourceDirectory, assetPath!.TrimStart('/').Replace('/', Path.DirectorySeparatorChar) + ".uasset"));
+        var bytes = File.ReadAllBytes(path);
+        if (entry.SerialOffset < 0 || entry.SerialSize < 0 || entry.SerialOffset + entry.SerialSize > bytes.Length)
+            throw new InvalidDataException("Export outside standalone uasset");
+        var ver = new VersionContainer(EGame.GAME_UE4_25_Plus, ver: p.Summary.FileVersionUE, customVersions: p.Summary.CustomVersionContainer);
+        var ar = new FAssetArchive(new FByteArchive(path, bytes, ver), p);
+        ar.Position = entry.SerialOffset;
+        // UObject::Serialize reads NetIndex for this UE4 version.
+        int? netIndex = null;
+        if (ar.Ver < EUnrealEngineObjectUE4Version.REMOVE_NET_INDEX) netIndex = ar.Read<int>();
+        var names = new List<string>();
+        while (true)
+        {
+            if (ar.Position >= entry.SerialOffset + entry.SerialSize || names.Count > 512) throw new InvalidDataException("Invalid tagged property bounds");
+            var tag = new FPropertyTag(ar, true);
+            if (tag.Name.IsNone) break;
+            names.Add(tag.Name.Text);
+        }
+        var guidFlag = ar.Read<int>();
+        if (guidFlag is not (0 or 1)) throw new InvalidDataException("Invalid object GUID flag");
+        if (guidFlag == 1) ar.Position += 16;
+        if (ar.Position > entry.SerialOffset + entry.SerialSize) throw new InvalidDataException("Tags exceed export bounds");
+        var parsed = material.Properties.Select(x => x.Name.Text).ToArray();
+        if (!names.SequenceEqual(parsed)) throw new InvalidDataException("Tag list disagrees with normal object parser");
+        Console.WriteLine(JsonSerializer.Serialize(new { package = assetPath, sourceSha256 = Convert.ToHexString(System.Security.Cryptography.SHA256.HashData(bytes)).ToLowerInvariant(), ue4 = p.Summary.FileVersionUE.FileVersionUE4, customVersions = p.Summary.CustomVersionContainer?.Versions.Length, cooked = false, filterEditorOnly = false, classDefaultObject = false, staticPermutation = material.bHasStaticPermutationResource, exportOffset = entry.SerialOffset, exportSize = entry.SerialSize, netIndex, tagNames = names, guidFlag, nativeStart = ar.Position, constants = new { removeNetIndex = (int) EUnrealEngineObjectUE4Version.REMOVE_NET_INDEX, overrides = (int) EUnrealEngineObjectUE4Version.MATERIAL_INSTANCE_BASE_PROPERTY_OVERRIDES, phase2 = (int) EUnrealEngineObjectUE4Version.MATERIAL_INSTANCE_BASE_PROPERTY_OVERRIDES_PHASE_2, fixedSerialization = (int) EUnrealEngineObjectUE4Version.FIX_MATERIAL_PROPERTY_OVERRIDE_SERIALIZE, shadowDepth = (int) EUnrealEngineObjectUE4Version.STATIC_SHADOW_DEPTH_MAPS, dither = (int) EUnrealEngineObjectUE4Version.MATERIAL_INSTANCE_BASE_PROPERTY_OVERRIDES_DITHERED_LOD_TRANSITION, purged = (int) EUnrealEngineObjectUE4Version.PURGED_FMATERIAL_COMPILE_OUTPUTS, collections = (int) EUnrealEngineObjectUE4Version.COLLECTIONS_IN_SHADERMAPID } }));
+        return 0;
+    }
     if (exportMapJson)
     {
         if (packageData is not Package exportPackage)
