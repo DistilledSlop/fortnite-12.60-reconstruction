@@ -1276,12 +1276,24 @@
         {
           "id": "ui.commonui_umg.implementation",
           "name": "CommonUI and UMG behavior and widgets",
-          "weight": 22.0,
+          "weight": 21.0,
           "measure": {
             "kind": "manual",
             "pct": 0
           },
-          "rationale": "Remaining implementation, integration and parity are not established by the coverage count. Progress here requires separate evidence."
+          "rationale": "Remaining CommonUI and UMG behavior includes Panel and operation queue, input dispatch and held actions, buttons and other widgets, their integration, and behavior parity. Header coverage, source candidates and the bounded base activation runtime are separately allocated; none establishes this remainder."
+        },
+        {
+          "id": "ui.commonui_activation_runtime",
+          "name": "CommonUI base activation diagnostic runtime",
+          "weight": 1.0,
+          "measure": {
+            "kind": "ledger",
+            "checks": [
+              "frontend_commonui_base_activation_runtime"
+            ]
+          },
+          "rationale": "One point for integrated base activation behavior verified in a complete fresh runtime phase and independently audited. The existing activation source candidate point covers source work; headers, event signatures and material work are separate. This diagnostic does not establish Panel, queue, input, other widget behavior, interactive UI or parity."
         },
         {
           "id": "ui.material_original_maps",

@@ -73,7 +73,7 @@ class ProgressModelTests(unittest.TestCase):
         leaves = list(progress.walk_spec(model['tree']))
         material = [leaf for leaf in leaves if leaf['id'].startswith('ui.material_')]
         self.assertEqual(sum(leaf['weight'] for leaf in material), 20)
-        self.assertEqual(len(leaves), 112)
+        self.assertEqual(len(leaves), 113)
         self.assertEqual(sum(leaf['weight'] for leaf in leaves), 1855)
         self.assertEqual(sum(leaf['weight'] for leaf in material if leaf['measure']['kind'] == 'ledger'), 20)
         by_id = {leaf['id']: leaf for leaf in material}
@@ -106,6 +106,24 @@ class ProgressModelTests(unittest.TestCase):
             self.assertEqual(owners, inventory_owners(inventory))
         self.assertFalse(any(m.get('done') for m in model['milestones']))
         self.assertFalse(any('ceiling' in leaf for leaf in leaves))
+
+    def test_commonui_runtime_is_separate_and_pending(self):
+        import json
+        folder = Path(__file__).parent
+        model = json.loads((folder / 'components.json').read_text())
+        leaves = {leaf['id']: leaf for leaf in progress.walk_spec(model['tree'])}
+        remaining = leaves['ui.commonui_umg.implementation']
+        runtime = leaves['ui.commonui_activation_runtime']
+        self.assertEqual(remaining['weight'] + runtime['weight'], 22)
+        self.assertEqual(remaining['measure'], dict(kind='manual', pct=0))
+        self.assertEqual(runtime['measure'], dict(kind='ledger', checks=['frontend_commonui_base_activation_runtime']))
+        self.assertEqual(leaves['ui.panel_source_stage']['weight'], 1)
+        self.assertEqual(leaves['ui.input_source_stage']['weight'], 1)
+        evidence = json.loads((folder / 'evidence.json').read_text())
+        evidence['checks'].pop('frontend_commonui_base_activation_runtime', None)
+        ctx = progress.Ctx({progress.EVIDENCE_REL: json.dumps(evidence)}, False, [])
+        self.assertEqual(progress.evaluate(runtime, ctx)['pct'], 0)
+        self.assertTrue(all(not gate['done'] for gate in model['milestones']))
 
     def test_weighted_coverage_cannot_claim_unfinished_implementation(self):
         class Context:

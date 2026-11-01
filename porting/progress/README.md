@@ -517,3 +517,25 @@ The first observed Root and Login boundaries are now M_UI_ComicBubble and
 M_TempIcon_Login_Facebook respectively, both at MemoryImage.cpp:1064; async
 load order may change which appears first. Native OnBeginIntro remains
 unimplemented. Earlier history points are preserved.
+
+### CommonUI base activation runtime allocation
+
+One point of the 22-point unfinished CommonUI behavior share is reserved for the
+integrated base activation diagnostic runtime; the remaining 21 points cover
+Panel and operation queue, input dispatch and held actions, buttons and other
+widgets, integration and behavior parity. These are rough relative effort shares,
+not a count of methods or elapsed hours. The prior one-point activation source
+candidate and one-point input source candidate remain separate. Header and event
+signature coverage and the material pipeline measure different work.
+
+The new ledger check is absent and earns zero until a complete fresh phase passes
+and independent audit verifies its pinned evidence: both target builds, source and
+linked implementation provenance, all bounded activation runtime cases, retained
+regressions and joins, and the phase checkpoint, artifact integrity and source
+release. A future importer must validate and pin the actual phase and audit before
+recording a pass; a source-only test, isolated probe, partial or failed phase is
+insufficient. The check is a single all-or-nothing result, not a claim about all
+CommonUI classes, Panel/queue, input, an interactive root or original-client parity.
+The four milestones stay unchanged. This allocation preserves total weight 1,855
+and recorded history; if earned, one point changes overall by about 0.054 percentage
+points at the same remaining evidence.
