@@ -994,6 +994,17 @@ static bool SameOriginalExpressions(const FLegacyMaterialIR& A, const FLegacyMat
     return true;
 }
 
+// Derive the complete record count from the pinned decoded report. Fixed
+// historical bundles retain their original strict 19-record contract.
+static bool ReadLegacySourceRecordCount(const TSharedPtr<FJsonObject>& Bundle, bool bManifest, int32& OutCount)
+{
+    const TSharedPtr<FJsonObject>* Report=nullptr; double Count=0;
+    if (!Bundle || !Bundle->TryGetObjectField(TEXT("decoded"),Report) || !Report->IsValid() ||
+        !(*Report)->TryGetNumberField(TEXT("shader_record_count"),Count) || !FMath::IsFinite(float(Count)) ||
+        Count<7 || Count>256 || Count!=double(int32(Count)) || (!bManifest && Count!=19)) return false;
+    OutCount=int32(Count); return true;
+}
+
 static ELegacyMaterialAssetResult ProvideLegacyOriginal(const FLegacyMaterialAssetContext& Context,
     TRefCountPtr<FMaterialShaderMap>& Map, TSharedPtr<const FLegacyMaterialAssetProvenance, ESPMode::ThreadSafe>& Provenance, FString& Error)
 {
@@ -1041,15 +1052,33 @@ static ELegacyMaterialAssetResult ProvideLegacyOriginal(const FLegacyMaterialAss
         return Fail(TEXT("Locker source digest mismatch"));
     if (!DecodeLegacyOriginalMaterial(P->Decoded,Error)) return ELegacyMaterialAssetResult::Failed;
     if (Pin->bManifest && P->Decoded.IR.Texture2DParameters.Num()) return Fail(TEXT("manifest texture resources unsupported"));
-    if (P->Decoded.MaterialPath != Pin->ShaderIdentity || P->Decoded.Records.Num()!=19) return Fail(TEXT("Locker decoded identity mismatch"));
-    // The library receipt covers all source records, including LocalVF records
-    // that this Slate-only runtime factory does not convert.
+    int32 ExpectedRecordCount=0;
+    if (!ReadLegacySourceRecordCount(Bundle,Pin->bManifest,ExpectedRecordCount) ||
+        P->Decoded.MaterialPath!=Pin->ShaderIdentity || P->Decoded.Records.Num()!=ExpectedRecordCount)
+        return Fail(TEXT("decoded original identity or source record count mismatch"));
+    // Preserve every source record, including LocalVF records that this
+    // Slate-only runtime factory does not convert.
     const auto Report=Bundle->GetObjectField(TEXT("decoded"));
-    if (!Report || (Pin->bManifest && int32(Report->GetObjectField(TEXT("parameter_collections"))->GetNumberField(TEXT("count")))!=0) || int32(Report->GetNumberField(TEXT("shader_record_count")))!=19) return Fail(TEXT("invalid complete shader report"));
-    TArray<TSharedPtr<FJsonValue>> Rows=Report->GetObjectField(TEXT("material_shaders"))->GetArrayField(TEXT("records"));
-    for (const auto& Mesh : Report->GetArrayField(TEXT("mesh_shader_maps")))
-        Rows.Append(Mesh->AsObject()->GetArrayField(TEXT("records")));
-    if (Rows.Num()!=P->Decoded.Records.Num()) return Fail(TEXT("original shader receipt count mismatch"));
+    const auto MaterialShaders=Report->GetObjectField(TEXT("material_shaders"));
+    const TArray<TSharedPtr<FJsonValue>>* MaterialRows=nullptr; const TArray<TSharedPtr<FJsonValue>>* Meshes=nullptr;
+    double MaterialCount=0, MeshCount=0;
+    if (!MaterialShaders || !MaterialShaders->TryGetNumberField(TEXT("count"),MaterialCount) || MaterialCount!=7.0 ||
+        !MaterialShaders->TryGetArrayField(TEXT("records"),MaterialRows) || MaterialRows->Num()!=7 ||
+        !MaterialShaders->TryGetNumberField(TEXT("mesh_shader_maps_count"),MeshCount) ||
+        !Report->TryGetArrayField(TEXT("mesh_shader_maps"),Meshes) || Meshes->Num()>256 || MeshCount!=double(Meshes->Num()) ||
+        (Pin->bManifest && Report->GetObjectField(TEXT("parameter_collections"))->GetNumberField(TEXT("count"))!=0.0))
+        return Fail(TEXT("invalid complete shader report"));
+    TArray<TSharedPtr<FJsonValue>> Rows=*MaterialRows;
+    for (const auto& Mesh : *Meshes)
+    {
+        const auto MeshObject=Mesh->AsObject(); const TArray<TSharedPtr<FJsonValue>>* MeshRows=nullptr; double Count=0;
+        if (!MeshObject || !MeshObject->TryGetNumberField(TEXT("count"),Count) ||
+            !MeshObject->TryGetArrayField(TEXT("records"),MeshRows) || MeshRows->Num()>256 || Count!=double(MeshRows->Num()) ||
+            Rows.Num()+MeshRows->Num()>ExpectedRecordCount)
+            return Fail(TEXT("invalid original mesh shader count"));
+        Rows.Append(*MeshRows);
+    }
+    if (Rows.Num()!=ExpectedRecordCount || Rows.Num()!=P->Decoded.Records.Num()) return Fail(TEXT("original shader receipt count mismatch"));
     for (int32 I=0; I<Rows.Num(); ++I)
     {
         const auto Row=Rows[I]->AsObject(); const auto Association=Row->GetObjectField(TEXT("library_association"));
@@ -1342,6 +1371,9 @@ void ProbeLegacyOriginalMaterial()
     TSharedPtr<FJsonObject> Bundle;
     if (!Pin || GLegacyIngressConfigInvalid || !FJsonSerializer::Deserialize(TJsonReaderFactory<>::Create(Pin->Json),Bundle) || !Bundle)
     { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: probe has no valid bundle")); FPlatformMisc::RequestExitWithStatus(false,1); return; }
+    int32 ExpectedRecordCount=0;
+    if (!ReadLegacySourceRecordCount(Bundle,Pin->bManifest,ExpectedRecordCount))
+    { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: invalid source record count")); FPlatformMisc::RequestExitWithStatus(false,1); return; }
     UMaterialInterface* Material=LoadObject<UMaterialInterface>(nullptr,*OwnerPath);
     if (Pin->bManifest)
     {
@@ -1410,16 +1442,16 @@ void ProbeLegacyOriginalMaterial()
         (Resource && Resource->HasLegacyMaterialAsset() && LiveReceipt && OwnerReceipt.IsValid() && MapReceipt && MapPin && !MapPin->Json.IsEmpty() &&
          MapPin->ResourceOwner==MapPin->Owner && MapPin->ResourceHash.Equals(Pin->ResourceHash,ESearchCase::IgnoreCase) && MapPin->ShaderIdentity==Pin->ShaderIdentity &&
          OwnerReceipt->SourceIdentity==Pin->ResourceOwner && LiveReceipt->SourceIdentity==Pin->ResourceOwner &&
-         LiveReceipt->ResourceHash==OwnerReceipt->ResourceHash && LiveReceipt->OriginalShaderRecordCount==19 &&
+         LiveReceipt->ResourceHash==OwnerReceipt->ResourceHash && LiveReceipt->OriginalShaderRecordCount==uint32(ExpectedRecordCount) &&
          LiveReceipt->OriginalResource==OwnerReceipt->Decoded.Bytes && LiveReceipt->Decoded.Bytes==OwnerReceipt->Decoded.Bytes &&
          LiveReceipt->Decoded.Names==OwnerReceipt->Decoded.Names && LiveReceipt->Decoded.IR.OriginalMapHash==OwnerReceipt->Decoded.IR.OriginalMapHash &&
          OwnerReceipt->ResourceHash==Provenance->ResourceHash &&
          OwnerReceipt->Decoded.Bytes==Provenance->OriginalResource && OwnerReceipt->Decoded.Bytes==MapReceipt->Decoded.Bytes && OwnerReceipt->Decoded.Names==MapReceipt->Decoded.Names &&
          OwnerReceipt->Decoded.IR.OriginalMapHash==MapReceipt->Decoded.IR.OriginalMapHash &&
          Map && Map->GetShaderMapId().CookedShaderMapIdHash==OwnerReceipt->Decoded.IR.OriginalMapHash &&
-         OwnerReceipt->Decoded.MaterialPath==Pin->ShaderIdentity && OwnerReceipt->OriginalShaderRecordCount==19) :
+         OwnerReceipt->Decoded.MaterialPath==Pin->ShaderIdentity && OwnerReceipt->OriginalShaderRecordCount==uint32(ExpectedRecordCount)) :
         (Provenance.IsValid() && Provenance->SourceIdentity==Pin->ResourceOwner);
-    const bool bOriginal=Provenance.IsValid() && Provenance->OriginalShaderRecordCount==19 && bIdentity &&
+    const bool bOriginal=Provenance.IsValid() && Provenance->OriginalShaderRecordCount==uint32(ExpectedRecordCount) && bIdentity &&
         Provenance->ResourceHash.ToString().Equals(Pin->ResourceHash,ESearchCase::IgnoreCase);
     const bool bComplete=Map && Resource && Map->IsComplete(Resource,false);
     bool bRenderAttached=false;
