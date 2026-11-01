@@ -1398,10 +1398,16 @@
           "name": "Material attachment and frontend visual parity",
           "weight": 10,
           "measure": {
-            "kind": "manual",
-            "pct": 0
+            "kind": "ledger",
+            "checks": [
+              "material_powertoast_asset_ingress",
+              "material_menubutton_asset_ingress",
+              "material_donut_asset_ingress",
+              "material_frontend_widget_integration",
+              "material_original_visual_parity"
+            ]
           },
-          "rationale": "Remaining material layouts, textures, View resources, original-output comparisons and working UI roots are not yet verified. The separately measured Locker actual-owner ingress is a bounded proof. See porting/material_pipeline/UE_MATERIAL_INGRESS.md.",
+          "rationale": "Five bounded UI material bridge phases: PowerToast, MenuButton and Donut actual-owner ingress, frontend widget integration, and original visual parity. Each phase requires its own passing evidence; these phases do not measure the whole game. Locker ingress is accounted for separately. See porting/material_pipeline/UE_MATERIAL_INGRESS.md.",
           "evidence_links": [
             {
               "label": "Material pipeline evidence",

@@ -1,5 +1,13 @@
 # Original material ingress
 
+## Numeric PowerToast checkpoint
+
+Engine `6925baad3` and native `25bf1c4` passed the non-editor Linux Vulkan checkpoint recorded in `generated/material_pipeline/numeric-power-checkpoint-results.json`, including exact commands, source and artifact hashes. The original GradientPanel base and PowerToastGlow material instance load through two pinned bundles. For each original resource all 19 shader records are retained, seven converted and zero required shaders missing; the map attaches on both game and render threads. Eight graph cases and eight real-owner uniform cases pass, and an attached quad changes 3,952 pixels. Five source instance parameter override identities were verified. Independent verification passes all seven PowerToast shader artifacts and all seven Locker artifacts. Client and server builds and fresh default and Athena joins pass. Six missing graph dependency packages were recovered verbatim; owner-package import warnings are absent, while preexisting Water startup warnings remain.
+
+Pass multiple absolute bundle paths as one unquoted comma-separated argument, e.g. `-FortniteLegacyMaterialIngress=/absolute/gradient-panel-ingress-bundle.json,/absolute/power-toast-ingress-bundle.json`. Select the actual owner exactly with `-FortniteLegacyMaterialProbeOwner=/Game/UI/Foundation/Border/Materials/M-Border-PowerToastGlow.M-Border-PowerToastGlow` alongside `-FortniteProbeLegacyOriginalMaterial`. The material instance owner and parent shader identity are distinct; both source identities must be preserved. The existing single Locker bundle and pin remain supported.
+
+Numeric layouts include PowerToast 208 bytes, MenuButton 304 bytes and Locker 336 bytes, including their sampler resources. MenuButton original View byte 2264 is now identified as GameTime by original metadata helpers and current declarations (`view_original_identity.md`); native offset and runtime View binding remain unverified. Donut texture conversion, widget integration, Editor rebuild behavior and original-client pixel comparison also remain open. All four product gates remain open.
+
 The bounded, opt-in Locker ingress described below is implemented in Engine `e6e962a43` and native `c8ec113`; its actual-owner runtime probe passed in the staged Linux Vulkan client. The previously verified detached map at Engine `757e0087a` and native `afb32b7` evaluates live preshaders and draws an original Slate quad. The subsequent actual-owner probe establishes those properties for the tested Locker resource and current non-editor layout. All four product dashboard gates remain open.
 
 The Linux client registers the pinned provider with `-FortniteLegacyMaterialIngress=<absolute path to porting/generated/material_pipeline/locker-ingress-bundle.json>`. Add `-FortniteProbeLegacyOriginalMaterial` to load the original Locker owner, check the attached game-thread and render-thread map and actual-owner `IsComplete`, exercise reader rejection cases, and draw its quad. These switches are diagnostic and require the matching staged original asset and Vulkan environment. The staged software Vulkan run exited 0 in 4.785 seconds; its command, environment and artifacts are in `porting/generated/frontend-probes/legacy-material-ingress-owner-3.json` and the corresponding `.log`. It reported domain 5 (UI), blend 2 (translucent), `MSM_Unlit`, quality 1, feature 3, packed flags 2816, seven required shaders, zero missing and complete=1. The actual game-thread and rendering-thread resources held the same map; its original Slate quad changed 2,832 pixels between red and green overrides. Four malformed-reader cases were rejected. The earlier owner-1 run reported missing SmoothStep; owner-2 staged that dependency. The owner-2 log still reports missing Water assets and a handled Vulkan vendor ensure.
@@ -39,7 +47,7 @@ The resource proxy retains validated selected `[begin,end)` bounds derived from 
 
 The bounded original reader decodes the original representation: compilation output, recursive expressions, all shader records and library associations. It retains raw/decoded records and their provenance. Locker's original 12 mesh records must remain accounted for alongside its seven Slate records, even if the current runtime layout does not require their conversion. Successful decoding requires exact end consumption. Seeking past shader data, setting it invalid, or substituting a synthetic `UMaterial` is not this proposal.
 
-The provider remains separate from Vulkan adaptation: Engine owns neutral IR and map construction; the registered native adapter owns validated Vulkan outputs. The current factory is Locker-only and rejects other slot layouts.
+The provider remains separate from Vulkan adaptation: Engine owns neutral IR and map construction; the registered native adapter owns validated Vulkan outputs. The validated factory supports the tested numeric Locker and PowerToast layouts; other resource layouts require their own conversion and runtime verification.
 
 ## Determine completeness from the actual owner
 
@@ -64,7 +72,7 @@ The original Locker owner passed its current non-editor requirements with all or
 
 ## Next View-buffer investigation
 
-The MenuButton's five Slate PS records use library indices 6853, 6854, 6855, 6856 and 6854 (Border shares Default). Reflection of the four unique translated modules shows `View` as `cb1_1`, set 0 binding 1, with a 2,272-byte span; their only read is vec4 element 141 lane 2, byte offset 2,264, using constant indices. The four original DXBC modules contain ISGN, OSGN and SHEX but no RDEF. This establishes an original-buffer offset, not the semantic identity of the value or its mapping to a current UE View field; neither GameTime nor RealTime should be assumed without further evidence.
+The MenuButton's five Slate PS records use library indices 6853, 6854, 6855, 6856 and 6854 (Border shares Default). Reflection of the four unique translated modules shows `View` as `cb1_1`, set 0 binding 1, with a 2,272-byte span; their only read is vec4 element 141 lane 2, byte offset 2,264, using constant indices. The four original DXBC modules contain ISGN, OSGN and SHEX but no RDEF. Subsequent original metadata helper evidence identifies this field as GameTime; see `view_original_identity.md`. Native offset and runtime binding still require verification.
 
 ## Final revision and reload coverage
 
@@ -79,8 +87,4 @@ than a PCH built with zero. Runtime reload and alternate async reload remain
 unverified; the tested Linux build uses zero. The portable two-commit patch is
 `patches/ue425-legacy-material-asset-ingress.patch`.
 
-Next, extend numeric conversion to PowerToast (8 vector/15 scalar slots, 208-byte
-layout), preserving the actual material-instance/parent shader identity. MenuButton
-needs its 304-byte numeric layout plus a verified View mapping; Donut needs original
-texture parameter/reference/sampler conversion. These require actual-owner loading
-and completeness checks before root-widget integration and original visual tests.
+Next, verify MenuButton actual-owner ingress and runtime View binding; Donut needs original texture parameter/reference/sampler conversion. These require actual-owner loading and completeness checks before root-widget integration and original visual tests.

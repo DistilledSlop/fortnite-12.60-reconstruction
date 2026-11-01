@@ -40,8 +40,16 @@ class ProgressModelTests(unittest.TestCase):
         leaves = list(progress.walk_spec(model['tree']))
         material = [leaf for leaf in leaves if leaf['id'].startswith('ui.material_')]
         self.assertEqual(sum(leaf['weight'] for leaf in material), 20)
-        self.assertEqual(sum(leaf['weight'] for leaf in material if leaf['measure']['kind'] == 'ledger'), 10)
-        self.assertEqual(next(leaf for leaf in material if leaf['id'] == 'ui.material_integration')['measure']['pct'], 0)
+        self.assertEqual(len(leaves), 104)
+        self.assertEqual(sum(leaf['weight'] for leaf in leaves), 1855)
+        self.assertEqual(sum(leaf['weight'] for leaf in material if leaf['measure']['kind'] == 'ledger'), 20)
+        integration = next(leaf for leaf in material if leaf['id'] == 'ui.material_integration')
+        self.assertEqual(integration['weight'], 10)
+        self.assertEqual(integration['measure'], {'kind': 'ledger', 'checks': [
+            'material_powertoast_asset_ingress', 'material_menubutton_asset_ingress',
+            'material_donut_asset_ingress', 'material_frontend_widget_integration',
+            'material_original_visual_parity',
+        ]})
         self.assertEqual(next(leaf for leaf in material if leaf['id'] == 'ui.material_locker_ingress')['measure']['checks'], ['material_locker_asset_ingress'])
         self.assertFalse(any(m.get('done') for m in model['milestones']))
         self.assertFalse(any('ceiling' in leaf for leaf in leaves))
