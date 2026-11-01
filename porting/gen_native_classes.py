@@ -2046,6 +2046,114 @@ def build_functions_promoted(functions, resolver, notify_names, owner_fns, splic
     return emitted
 
 
+
+
+BLUEPRINT_CONTEXT_GET_CONTEXT_POLICY = {'name': 'GetContext',
+ 'create_func': '0x140823490',
+ 'flags': ['0x14022409'],
+ 'replicated_function': False,
+ 'net_roles': [],
+ 'outer_fn': '0x140823460',
+ 'params': [{'index': 0,
+             'name': 'ReturnValue',
+             'kind': 'Object',
+             'kind_raw': '0x12',
+             'property_flags': '0x10000000000580',
+             'replicated': False,
+             'rep_notify': None,
+             'array_dim': 1,
+             'object_flags': '0x45',
+             'offset': 16,
+             'type_refs': {'class': '0x1447ff950'}},
+            {'index': 1,
+             'name': 'Class',
+             'kind': 'Class',
+             'kind_raw': '0x11',
+             'property_flags': '0x14000000000080',
+             'replicated': False,
+             'rep_notify': None,
+             'array_dim': 1,
+             'object_flags': '0x45',
+             'offset': 8,
+             'type_refs': {'meta_class': '0x1447ff950', 'class': '0x142e497d0'}},
+            {'index': 2,
+             'name': 'ContextObject',
+             'kind': 'Object',
+             'kind_raw': '0x12',
+             'property_flags': '0x10000000000080',
+             'replicated': False,
+             'rep_notify': None,
+             'array_dim': 1,
+             'object_flags': '0x45',
+             'offset': 0,
+             'type_refs': {'class': '0x142eea520'}}]}
+BLUEPRINT_CONTEXT_PHASE_DECLS = '''	// Project-local names for proven source phases, with the original no-arg native hook.
+	virtual void PostInitProperties() override; // original primary +40
+	virtual void BeginDestroy() override; // original primary +80
+	virtual UWorld* GetWorld() const override; // original primary +150
+	virtual void ContextInitialize(); // original +278, invoked by PostInitProperties
+	virtual void ContextPostInitialize(); // original +280, after all contexts exist
+	virtual void ContextNativeInitialize(); // original +288, no arguments
+	virtual void ContextWorldInitialized(UWorld* World); // original +290, forwards to +288
+	virtual void ContextWorldCleanup(UWorld* World); // original +298
+	virtual void ContextRemoved(UWorld* World); // original +2a0
+'''
+BLUEPRINT_CONTEXT_PHASE_BODIES = '''
+void UBlueprintContextBase::PostInitProperties()
+{
+    BlueprintContextCore::InstancePhase([this]() { Super::PostInitProperties(); },
+        [this]() { return HasAnyFlags(RF_ClassDefaultObject); }, [this]() { BlueprintContextRuntime::ObserveContextInitialize(this, true); ContextInitialize(); BlueprintContextRuntime::ObserveContextInitialize(this, false); });
+}
+void UBlueprintContextBase::BeginDestroy()
+{
+    BlueprintContextCore::InstancePhase([this]() { Super::BeginDestroy(); },
+        [this]() { return HasAnyFlags(RF_ClassDefaultObject); }, [this]() { BlueprintContextRuntime::ObserveContextDeinitialize(this, true); Deinitialize(); BlueprintContextRuntime::ObserveContextDeinitialize(this, false); });
+}
+UWorld* UBlueprintContextBase::GetWorld() const
+{
+    const ULocalPlayer* Player = Cast<ULocalPlayer>(GetOuter());
+    UGameInstance* GI = Player ? Player->GetGameInstance() : nullptr;
+    return GI ? GI->GetWorld() : nullptr;
+}
+void UBlueprintContextBase::ContextInitialize() { ContextNativeInitialize(); }
+void UBlueprintContextBase::ContextPostInitialize() {}
+void UBlueprintContextBase::ContextNativeInitialize() {}
+void UBlueprintContextBase::ContextWorldInitialized(UWorld*) { ContextNativeInitialize(); }
+void UBlueprintContextBase::ContextWorldCleanup(UWorld*) {}
+void UBlueprintContextBase::ContextRemoved(UWorld*) {}
+'''
+
+def apply_blueprint_context_runtime_policy(model, block, name, resolver, parent_entry, owner_fns, snippets=(), splice_ctx=None):
+    if name == 'UBlueprintContextLibrary':
+        if block.get('block_va') != '0x145a0fec0' or parent_entry.get('package') != '/Script/BlueprintContext':
+            raise ValueError('original GetContext class identity mismatch')
+        found = [f for f in block.get('functions', []) if f.get('name') == 'GetContext']
+        if found != [BLUEPRINT_CONTEXT_GET_CONTEXT_POLICY] or owner_fns != {'0x140823460'}:
+            raise ValueError('original Native static GetContext signature/owner mismatch')
+        if model['functions']:
+            raise ValueError('GetContext already emitted or unexpected functions present')
+        ret, args = decode_params(BLUEPRINT_CONTEXT_GET_CONTEXT_POLICY['params'], resolver)
+        if ret != 'USubsystem*' or args != ['UObject* ContextObject', 'TSubclassOf<USubsystem> Class']:
+            raise ValueError('original Native parameter type resolution differs')
+        model['functions'].append({'name': 'GetContext', 'rpc': False, 'service': None,
+            'ret': ret, 'args': args, 'static': True, 'const': False, 'notify': False,
+            'splice': False, 'specifiers': ['BlueprintCallable', 'BlueprintPure', 'BlueprintCosmetic'], 'used': {},
+            'body': 'return BlueprintContextRuntime::GetContext(ContextObject, Class);'})
+        model['includes'] = sorted(set(model.get('includes', [])) | {'Subsystems/Subsystem.h'})
+        model['cpp_includes'] = sorted(set(model.get('cpp_includes', [])) | {'BlueprintContextRuntime.h'})
+    elif name == 'UBlueprintContextBase':
+        if block.get('block_va') != '0x145a0fe30':
+            raise ValueError('original BlueprintContextBase identity mismatch')
+        if not model['uclass'].endswith(')'):
+            raise ValueError('unexpected UCLASS rendering')
+        model['uclass'] = model['uclass'][:-1] + ', Within=LocalPlayer)'
+        model['includes'] = sorted(set(model.get('includes', [])) | {'Engine/LocalPlayer.h'})
+        model['forward_decls'] = sorted(set(model['forward_decls']) | {'UWorld'})
+        model['source_context_phases'] = True
+        model['cpp_includes'] = sorted(set(model.get('cpp_includes', [])) | {'BlueprintContextCore.h', 'BlueprintContextRuntime.h', 'Engine/GameInstance.h'})
+    return model
+
+
 def build_class_promoted(block, name, resolver, parent_entry, owner_fns, snippets=(), splice_ctx=None):
     resolver.todos = []
     resolver.class_refs = set()
@@ -2069,7 +2177,7 @@ def build_class_promoted(block, name, resolver, parent_entry, owner_fns, snippet
             m["specifiers"] = ["Replicated" if s.startswith("ReplicatedUsing=") else s for s in m["specifiers"]]
             m["rep_notify"] = None
     parent = parent_entry.get("parent_name")
-    return {
+    model = {
         "name": name,
         "block_va": block.get("block_va"),
         "parent": parent,
@@ -2093,6 +2201,7 @@ def build_class_promoted(block, name, resolver, parent_entry, owner_fns, snippet
                                  and function_view(f, owner_fns)[0] & FUNC_NET_ANY),
     }
 
+    return apply_blueprint_context_runtime_policy(model, block, name, resolver, parent_entry, owner_fns, snippets, splice_ctx)
 
 # ---------------------------------------------------------------- behaviour snippets (porting/behavior)
 # The ported function bodies of porting/behavior/MANIFEST.json (contract: porting/behavior/README.md). Per entry:
@@ -2779,6 +2888,12 @@ def render_helper_declarations(model):
 
 
 def render_promoted_header(model, api, parent_include, source_label):
+    model = dict(model)
+    if model['name'] == 'UBlueprintContextLibrary':
+        model['includes'] = sorted(set(model.get('includes', [])) | {'Subsystems/Subsystem.h'})
+    if model.get('source_context_phases'):
+        model['includes'] = sorted(set(model.get('includes', [])) | {'Engine/LocalPlayer.h'})
+        model['forward_decls'] = sorted(set(model['forward_decls']) | {'UWorld'})
     name = model["name"]
     rep = [m for m in model["members_table_order"] if m["replicated"]]
     lines = [
@@ -2839,6 +2954,8 @@ def render_promoted_header(model, api, parent_include, source_label):
     if rep:
         lines.append("\tvirtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;")
     lines.extend(render_helper_declarations(model))
+    if model.get("source_context_phases"):
+        lines.extend(BLUEPRINT_CONTEXT_PHASE_DECLS.rstrip("\n").split("\n"))
     lines.append("};")
     lines.append("")
     return "\n".join(lines) + "\n"
@@ -2979,7 +3096,8 @@ def render_promoted_cpp(model, source_label):
             lines.append(replication_line(name, m["name"]))
         lines.append("}")
         lines.append("")
-    return "\n".join(lines) + "\n"
+    result = "\n".join(lines) + "\n"
+    return result + BLUEPRINT_CONTEXT_PHASE_BODIES if model.get("source_context_phases") else result
 
 
 def build_engine_header_index(root):

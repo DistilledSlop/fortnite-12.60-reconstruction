@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 
+#include "Subsystems/Subsystem.h"
+
 #include "UBlueprintContextLibrary.generated.h"
 
 UCLASS()
@@ -14,5 +16,8 @@ class BLUEPRINTCONTEXT_API UBlueprintContextLibrary : public UBlueprintFunctionL
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(BlueprintCallable, BlueprintPure, BlueprintCosmetic)
+	static USubsystem* GetContext(UObject* ContextObject, TSubclassOf<USubsystem> Class);
+
 };
 

@@ -6,13 +6,27 @@
 #include "CoreMinimal.h"
 #include "Subsystems/Subsystem.h"
 
+#include "Engine/LocalPlayer.h"
+
+class UWorld;
+
 #include "UBlueprintContextBase.generated.h"
 
-UCLASS(abstract, transient)
+UCLASS(abstract, transient, Within=LocalPlayer)
 class BLUEPRINTCONTEXT_API UBlueprintContextBase : public USubsystem
 {
 	GENERATED_BODY()
 
 public:
+	// Project-local names for proven source phases, with the original no-arg native hook.
+	virtual void PostInitProperties() override; // original primary +40
+	virtual void BeginDestroy() override; // original primary +80
+	virtual UWorld* GetWorld() const override; // original primary +150
+	virtual void ContextInitialize(); // original +278, invoked by PostInitProperties
+	virtual void ContextPostInitialize(); // original +280, after all contexts exist
+	virtual void ContextNativeInitialize(); // original +288, no arguments
+	virtual void ContextWorldInitialized(UWorld* World); // original +290, forwards to +288
+	virtual void ContextWorldCleanup(UWorld* World); // original +298
+	virtual void ContextRemoved(UWorld* World); // original +2a0
 };
 

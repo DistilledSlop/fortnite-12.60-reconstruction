@@ -29,6 +29,7 @@ DEFINE_LOG_CATEGORY_STATIC(LogFortniteNet, Log, All);
 // Private/NetSerializeSelfTest.cpp: round-trip checks of the recovered struct_net bodies. Runs only with -NetSerializeSelfTest
 // and exits the process (0 when every case passes, 1 otherwise).
 void RunNetSerializeSelfTest();
+void RegisterContextRuntimeProbeDriver();
 void RunOriginalVulkanShaderProbe();
 void RunLegacyMaterialShaderMapProbe();
 void RegisterLegacyOriginalMaterialProvider();
@@ -169,6 +170,7 @@ public:
     virtual void StartupModule() override
     {
         FDefaultGameModuleImpl::StartupModule();
+        RegisterContextRuntimeProbeDriver();
         RegisterLegacyOriginalMaterialProvider();
         FNetworkVersion::GetLocalNetworkVersionOverride.BindStatic(&GetFortniteNetworkVersion);
         FNetworkVersion::IsNetworkCompatibleOverride.BindStatic(&IsFortniteNetworkCompatible);
