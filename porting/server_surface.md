@@ -29,8 +29,9 @@ does not define response schemas or the game-session simulation.
 4. Implement the actual UE game-session protocol and authoritative gameplay
    state. HTTP route emulation alone will not put a player into a game.
 
-The new native client project should use local service endpoints and omit EAC
-integration. The supplied Windows client has not been modified.
+The new native client project should use local service endpoints. Launcher,
+anti-cheat and entitlement compatibility remain part of the full parity goal.
+The supplied Windows client has not been modified in the probes described here.
 
 `server/probe_server.py` is the local HTTP server. It records request metadata and
 can return observed response fixtures. With `--stub` it serves the local service layer
@@ -43,8 +44,8 @@ with `-nullrhi -nosound -NoSplash -unattended -log` and an isolated ignored
 Wine prefix exited with code 1. Its console output showed an engine exit and
 shutdown of `LauncherPlatform`, `LauncherCheck`, and `Solaris`, without a
 request trace. This does not establish a working client startup sequence or
-anti-cheat removal from the original binary. The new native project remains
-the path where EAC is absent by construction.
+anti-cheat behavior in the original binary. The new native project requires
+its own compatible launcher, access and security behavior before full parity.
 
 The new `FortniteLinuxServer` target now provides a native UE dedicated server
 for the reconstructed project. A local new-client/new-server probe completed
@@ -131,9 +132,10 @@ skipping mcp entitlement check`, implying there is a non-HTTP, binary-level
 entitlement/launcher-origin check (likely tied to the Epic Games Launcher
 provenance / "AppES" app-entitlement-service client component, possibly
 checking how the process was launched rather than calling out to a server) that a
-pure HTTP mock backend cannot satisfy. This was not resolved; the gate is not
-yet bypassed. Passing it would require reverse-engineering and altering the
-shipping binary's own entitlement/anti-tamper logic.
+pure HTTP mock backend cannot satisfy. Resolving this gate is active project
+work. The observed launch path requires further investigation of the client's
+launcher provenance and entitlement checks before the Wine analysis run can
+reach the lobby.
 
 ## Local service layer (implemented in `porting/server/`)
 

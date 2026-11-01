@@ -3,8 +3,9 @@
 This is a newly authored UE project used to test Linux compilation and to
 reconstruct the game module incrementally. Its module is named `FortniteGame`
 so that future classes can use the `/Script/FortniteGame` path found in cooked
-assets. It contains no Fortnite gameplay code, no supplied assets, and no EAC
-integration. It is not playable yet.
+assets. It contains no Fortnite gameplay code or supplied assets. Launcher,
+anti-cheat and entitlement compatibility remain required for the finished
+project. It is not playable yet.
 
 After the UE 4.25 source checkout is set up, build a Linux Development target:
 
