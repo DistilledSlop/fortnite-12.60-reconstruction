@@ -14,6 +14,9 @@ GENERATED = HERE.parent / 'generated'
 spec = importlib.util.spec_from_file_location('spirv_reflection', HERE / 'reflect_mapped_spirv.py')
 reflection = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(reflection)
+spec = importlib.util.spec_from_file_location('original_texture_bindings', HERE / 'verify_original_texture_bindings.py')
+original_textures = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(original_textures)
 
 
 def digest(data):
@@ -290,10 +293,18 @@ def main():
         bundle = json.loads(fixture_bytes)
         fixture = bundle.get('runtime_fixture', bundle)
         layout = fixture['expected_layout']
+        ordinary = (bundle.get('schema') == 'fortnite.legacy-material-ingress.v2'
+                    and bundle.get('owner_type') == 'UMaterial' and bundle.get('parent_path') == ''
+                    and bundle.get('resource_owner_path') == bundle.get('owner_path')
+                    and bundle.get('shader_identity') == bundle.get('owner_path')
+                    and fixture.get('texture_context_proof', {}).get('schema') == 'fortnite.original-material-texture-context-proof.v1'
+                    and 'textures' in fixture.get('texture_contract', {}))
+        ordinary_types = [5, 8] * len(fixture.get('texture_2d_parameters', [])) + [8, 8]
         if (layout['resource_types'] not in ([8, 8], [5, 8, 8, 8]) and not
                 (layout['resource_types'] == [5, 8, 5, 8, 8, 8] and
                  bundle.get('owner_path') in COMIC_OWNERS and
-                 'textures' in fixture.get('texture_contract', {}))):
+                 'textures' in fixture.get('texture_contract', {})) and not
+                (ordinary and layout['resource_types'] == ordinary_types)):
             raise ValueError('unsupported checked material resource layout')
         layout_hash = uniform_layout_hash(layout['constant_bytes'], layout['resource_offsets'], layout['resource_types'])
         texture_receipt = None
@@ -301,6 +312,10 @@ def main():
             path = args.artifacts / 'ComicBubbleTextureBindings.json'
             texture_receipt = json.loads(path.read_text(encoding='utf-8-sig'))
             verify_comic_texture_bindings(bundle.get('owner_path'), fixture, texture_receipt)
+        elif ordinary:
+            path = args.artifacts / 'OriginalTextureBindings.json'
+            texture_receipt = json.loads(path.read_text(encoding='utf-8-sig'))
+            original_textures.verify(bundle['owner_path'], fixture, texture_receipt, layout_hash)
         elif fixture.get('texture_contract'):
             path = args.artifacts / 'DonutMaterialLayout.json'
             texture_receipt = json.loads(path.read_text(encoding='utf-8-sig'))

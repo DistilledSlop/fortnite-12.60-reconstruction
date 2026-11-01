@@ -1094,7 +1094,89 @@ struct FLegacyIngressProvenance final : FLegacyMaterialAssetProvenance
             TArray<UTexture*> SourceReferences; SourceReferences.Add(Texture);
             return RestoreLegacyMaterialTextureReferences(Parent,SourceReferences,Error);
         }
-        if (SourceIdentity!=GLegacyDonutPath && SourceIdentity!=GLegacyKeybindPath && SourceIdentity!=GLegacyHollowPath && SourceIdentity!=GLegacySocialPath && SourceIdentity!=GLegacyMediaPath && SourceIdentity!=GLegacyGooglePath) return true;
+        if (SourceIdentity!=GLegacyDonutPath && SourceIdentity!=GLegacyKeybindPath && SourceIdentity!=GLegacyHollowPath && SourceIdentity!=GLegacySocialPath && SourceIdentity!=GLegacyMediaPath && SourceIdentity!=GLegacyGooglePath)
+        {
+            // Numeric-only manifests need no texture context. Only authenticated
+            // base-material manifests may enter the general texture path.
+            if (Decoded.IR.Texture2DParameters.Num()==0) return true;
+            const FLegacyIngressPin* Pin=nullptr;
+            for (const auto& Candidate : GLegacyIngressPins)
+                if (Candidate.Owner==SourceIdentity) { Pin=&Candidate; break; }
+            if (!Pin || !Pin->bManifest || Pin->OwnerType!=TEXT("UMaterial")) return true;
+            UMaterial* Base=Owner ? Owner->GetMaterial() : nullptr;
+            TSharedPtr<FJsonObject> Bundle;
+            FString OwnerType, OwnerPath, Shader, Parent, ResourceOwner;
+            if (!IsInGameThread() || !Owner || !Cast<UMaterial>(Owner) || !Base || Owner->GetPathName()!=SourceIdentity || Base->GetPathName()!=SourceIdentity ||
+                Pin->OwnerType!=TEXT("UMaterial") || !Pin->Parent.IsEmpty() || Pin->ShaderIdentity!=SourceIdentity || Pin->ResourceOwner!=SourceIdentity ||
+                !FJsonSerializer::Deserialize(TJsonReaderFactory<>::Create(BundleJson),Bundle) || !Bundle ||
+                !Bundle->TryGetStringField(TEXT("owner_type"),OwnerType) || OwnerType!=TEXT("UMaterial") ||
+                !Bundle->TryGetStringField(TEXT("owner_path"),OwnerPath) || OwnerPath!=SourceIdentity ||
+                !Bundle->TryGetStringField(TEXT("parent_path"),Parent) || !Parent.IsEmpty() ||
+                !Bundle->TryGetStringField(TEXT("shader_identity"),Shader) || Shader!=SourceIdentity ||
+                !Bundle->TryGetStringField(TEXT("resource_owner_path"),ResourceOwner) || ResourceOwner!=SourceIdentity)
+            { Error=TEXT("invalid generic texture owner identity"); return false; }
+            const TSharedPtr<FJsonObject>* FixturePtr=nullptr; const TSharedPtr<FJsonObject>* ProofPtr=nullptr;
+            if (!Bundle->TryGetObjectField(TEXT("runtime_fixture"),FixturePtr) || !FixturePtr->IsValid() ||
+                !(*FixturePtr)->TryGetObjectField(TEXT("texture_context_proof"),ProofPtr) || !ProofPtr->IsValid())
+            { Error=TEXT("missing generic texture source proof"); return false; }
+            const auto& Fixture=*FixturePtr; const auto& Proof=*ProofPtr;
+            const TArray<TSharedPtr<FJsonValue>> *Refs=nullptr,*SourceRefs=nullptr,*Entries=nullptr,*Bindings=nullptr;
+            FString Schema, ProofOwner, OwnerPackage, OwnerObject;
+            if (!SourceIdentity.StartsWith(TEXT("/Game/")) || !SourceIdentity.Split(TEXT("."),&OwnerPackage,&OwnerObject,ESearchCase::CaseSensitive,ESearchDir::FromEnd) ||
+                OwnerObject.IsEmpty() || OwnerPackage.Contains(TEXT("..")) || OwnerObject.Contains(TEXT("/")) ||
+                !Proof->TryGetStringField(TEXT("schema"),Schema) || Schema!=TEXT("fortnite.original-material-texture-context-proof.v1") ||
+                !Proof->TryGetStringField(TEXT("owner"),ProofOwner) || ProofOwner!=TEXT("FortniteGame/Content/")+OwnerPackage.Mid(6) ||
+                !Fixture->TryGetArrayField(TEXT("ordered_texture_references"),Refs) || Refs->Num()==0 || Refs->Num()>128 ||
+                !Proof->TryGetArrayField(TEXT("ordered_texture_objects"),SourceRefs) || SourceRefs->Num()!=Refs->Num() ||
+                !Fixture->TryGetArrayField(TEXT("texture_2d_parameters"),Entries) || Entries->Num()!=Decoded.IR.Texture2DParameters.Num() ||
+                !Proof->TryGetArrayField(TEXT("texture_2d_bindings"),Bindings) || Bindings->Num()!=Entries->Num())
+            { Error=TEXT("invalid generic texture source context"); return false; }
+            FString ProofResource;
+            uint8 ResourceDigest[32]; LegacyManifestSHA256(Decoded.Bytes.GetData(),uint32(Decoded.Bytes.Num()),ResourceDigest);
+            if (!Proof->TryGetStringField(TEXT("original_resource_sha256"),ProofResource) ||
+                !BytesToHex(ResourceDigest,32).Equals(ProofResource,ESearchCase::IgnoreCase))
+            { Error=TEXT("generic texture proof belongs to another original resource"); return false; }
+            TArray<UTexture*> References; TSet<FString> Seen;
+            for (int32 I=0; I<Refs->Num(); ++I)
+            {
+                if ((*Refs)[I]->Type!=EJson::String || (*SourceRefs)[I]->Type!=EJson::String)
+                { Error=TEXT("invalid generic texture reference type"); return false; }
+                const FString Path=(*Refs)[I]->AsString(); FString Package, Object;
+                if (!Path.StartsWith(TEXT("/Game/")) || !Path.Split(TEXT("."),&Package,&Object,ESearchCase::CaseSensitive,ESearchDir::FromEnd) ||
+                    Object.IsEmpty() || Package.Contains(TEXT("..")) || Object.Contains(TEXT("/")) || Seen.Contains(Path) ||
+                    (*SourceRefs)[I]->AsString()!=TEXT("FortniteGame/Content/")+Path.Mid(6))
+                { Error=TEXT("generic texture reference order or path differs"); return false; }
+                Seen.Add(Path);
+                UTexture2D* Texture=LoadObject<UTexture2D>(nullptr,*Path);
+                if (!Texture || Texture->GetClass()!=UTexture2D::StaticClass() || Texture->GetPathName()!=Path)
+                { Error=TEXT("generic source Texture2D missing or wrong class"); return false; }
+                References.Add(Texture);
+            }
+            for (int32 I=0; I<Entries->Num(); ++I)
+            {
+                const auto E=(*Entries)[I]->AsObject(), B=(*Bindings)[I]->AsObject(); const auto& T=Decoded.IR.Texture2DParameters[I];
+                if (!E || !B || !E->HasTypedField<EJson::String>(TEXT("expression_kind")) || E->GetStringField(TEXT("expression_kind"))!=TEXT("Texture") ||
+                    !E->HasTypedField<EJson::Null>(TEXT("parameter")) ||
+                    !E->HasTypedField<EJson::Number>(TEXT("texture_index")) || !E->HasTypedField<EJson::Number>(TEXT("sampler_source")) ||
+                    !E->HasTypedField<EJson::Number>(TEXT("texture_layer_index")) || !E->HasTypedField<EJson::Number>(TEXT("page_table_layer_index")) ||
+                    !E->HasTypedField<EJson::Boolean>(TEXT("virtual_texture")) || !E->HasTypedField<EJson::String>(TEXT("default_texture_path")) ||
+                    !B->HasTypedField<EJson::Number>(TEXT("uniform_position")) || !B->HasTypedField<EJson::Number>(TEXT("texture_index")) ||
+                    !B->HasTypedField<EJson::Number>(TEXT("sampler_source")) || !B->HasTypedField<EJson::Number>(TEXT("layer_index")) ||
+                    !B->HasTypedField<EJson::Number>(TEXT("page_table_layer_index")) || !B->HasTypedField<EJson::Boolean>(TEXT("virtual_texture")) ||
+                    !B->HasTypedField<EJson::String>(TEXT("texture_object")) ||
+                    !T.Parameter.Name.IsNone() || T.Parameter.Name.GetNumber()!=0 || T.Parameter.Association!=GlobalParameter || T.Parameter.Index!=INDEX_NONE ||
+                    !References.IsValidIndex(T.TextureIndex) || T.SamplerSource>2 || T.TextureLayerIndex!=-1 || T.PageTableLayerIndex!=-1 || T.bVirtualTexture ||
+                    E->GetNumberField(TEXT("texture_index"))!=T.TextureIndex || E->GetNumberField(TEXT("sampler_source"))!=T.SamplerSource ||
+                    E->GetNumberField(TEXT("texture_layer_index"))!=-1 || E->GetNumberField(TEXT("page_table_layer_index"))!=-1 || E->GetBoolField(TEXT("virtual_texture")) ||
+                    E->GetStringField(TEXT("default_texture_path"))!=(*Refs)[T.TextureIndex]->AsString() ||
+                    B->GetNumberField(TEXT("uniform_position"))!=I || B->GetNumberField(TEXT("texture_index"))!=T.TextureIndex ||
+                    B->GetNumberField(TEXT("sampler_source"))!=T.SamplerSource || B->GetNumberField(TEXT("layer_index"))!=-1 ||
+                    B->GetNumberField(TEXT("page_table_layer_index"))!=-1 || B->GetBoolField(TEXT("virtual_texture")) ||
+                    B->GetStringField(TEXT("texture_object"))!=(*SourceRefs)[T.TextureIndex]->AsString())
+                { Error=TEXT("generic decoded texture binding differs from source proof"); return false; }
+            }
+            return RestoreLegacyMaterialTextureReferences(Base,References,Error);
+        }
         UMaterial* Base=Owner ? Owner->GetMaterial() : nullptr;
         if (!IsInGameThread() || !Base || Base->GetPathName()!=SourceIdentity || Decoded.IR.Texture2DParameters.Num()!=1 ||
             Decoded.IR.Texture2DParameters[0].TextureIndex!=0)
@@ -1246,6 +1328,135 @@ static bool CheckComicTextureBindings(UMaterialInterface* Owner, FMaterialResour
         const FString Json=FString::Printf(TEXT("{\"schema\":\"fortnite.comicbubble-texture-bindings.v1\",\"owner_path\":\"%s\",\"ordered_texture_references\":[\"%s\",\"%s\"],\"constant_bytes\":%u,\"static_slot\":%u,\"layout_hash\":%u,\"resource_offsets\":[%s],\"resource_types\":[%s],\"uniforms\":[%s],\"named_proxy_calls\":%d,\"shared_wrap_nonnull\":true,\"shared_clamp_nonnull\":true,\"scope\":\"indexed GT/RT and RHI bindings; no raw BC1 GPU readback or pixel proof\"}\n"),*Owner->GetPathName(),GLegacyComicTextures[0],GLegacyComicTextures[1],uint32(Layout.ConstantBufferSize),uint32(Layout.StaticSlot),Layout.GetHash(),*OffsetsJson,*TypesJson,*UniformRows,Observed.NamedCalls);
         const FString Path=FPaths::Combine(Directory,TEXT("ComicBubbleTextureBindings.json"));
         if (FPaths::FileExists(Path) || !FFileHelper::SaveStringToFile(Json,*Path)) { Error=TEXT("cannot write ComicBubble texture artifact"); return false; }
+    }
+    return true;
+}
+
+// Opt-in live check for authenticated ordinary base-material texture contexts.
+static bool CheckGenericTextureBindings(UMaterialInterface* Owner, FMaterialResource* Resource,
+    const TRefCountPtr<FMaterialShaderMap>& Map, const TSharedPtr<FJsonObject>& Fixture,
+    const FLegacyMaterialIR& IR, FString& Error)
+{
+    if (!IsInGameThread() || !Owner || !Resource || !Map || !Fixture) { Error=TEXT("invalid generic texture probe context"); return false; }
+    const auto Contract=Fixture->GetObjectField(TEXT("texture_contract"));
+    const auto Expected=Fixture->GetObjectField(TEXT("expected_layout"));
+    const TArray<TSharedPtr<FJsonValue>> *Rows=nullptr,*Offsets=nullptr,*Types=nullptr,*Paths=nullptr;
+    const auto References=Resource->GetReferencedTextures();
+    const auto& Uniforms=Map->GetUniformExpressionSet(); const auto& Layout=Uniforms.GetUniformBufferLayout();
+    const int32 Count=IR.Texture2DParameters.Num(), Numeric=IR.VectorRoots.Num()*16+((IR.ScalarRoots.Num()+3)/4)*16;
+    if (!Contract || !Expected || !Contract->TryGetArrayField(TEXT("textures"),Rows) ||
+        !Fixture->TryGetArrayField(TEXT("ordered_texture_references"),Paths) || Rows->Num()!=References.Num() || Paths->Num()!=References.Num() ||
+        !Expected->TryGetArrayField(TEXT("resource_offsets"),Offsets) || !Expected->TryGetArrayField(TEXT("resource_types"),Types) ||
+        Count<=0 || Count>128 || Uniforms.GetNumTextures(EMaterialTextureParameterType::Standard2D)!=Count ||
+        Offsets->Num()!=2*Count+2 || Types->Num()!=Offsets->Num() || Layout.Resources.Num()!=Offsets->Num() ||
+        Layout.ConstantBufferSize!=uint32(Numeric+8*Offsets->Num()) || Expected->GetNumberField(TEXT("constant_bytes"))!=Layout.ConstantBufferSize ||
+        uint32(Layout.StaticSlot)!=255u || Layout.ConstantBufferSize>8192)
+    { Error=TEXT("generic texture layout or reference count differs"); return false; }
+    for (int32 I=0; I<Offsets->Num(); ++I)
+        if ((*Offsets)[I]->AsNumber()!=Numeric+8*I || (*Types)[I]->AsNumber()!=(I<2*Count && I%2==0 ? 5 : 8) ||
+            Layout.Resources[I].MemberOffset!=Numeric+8*I || uint32(Layout.Resources[I].MemberType)!=uint32((*Types)[I]->AsNumber()))
+        { Error=TEXT("generic texture resource layout differs"); return false; }
+    struct FTexture { UTexture2D* Object=nullptr; FString Path, Format; uint32 Width=0,Height=0,Mips=0; EPixelFormat Pixel=PF_Unknown; bool SRGB=false; };
+    TArray<FTexture> Textures;
+    for (int32 I=0; I<References.Num(); ++I)
+    {
+        const auto Row=(*Rows)[I]->AsObject(); const auto Source=Row ? Row->GetObjectField(TEXT("source_platform_data")) : nullptr;
+        const auto Metadata=Source ? Source->GetObjectField(TEXT("inspector_metadata")) : nullptr;
+        const TArray<TSharedPtr<FJsonValue>> *Mips=nullptr,*SourceMips=nullptr;
+        FTexture T; T.Object=Cast<UTexture2D>(References[I]); T.Path=(*Paths)[I]->AsString();
+        if (!Row || !Source || !Metadata || !Metadata->HasTypedField<EJson::Boolean>(TEXT("srgb")) ||
+            !Row->TryGetArrayField(TEXT("mips"),Mips) || !Source->TryGetArrayField(TEXT("mips"),SourceMips) ||
+            !T.Object || T.Object->GetClass()!=UTexture2D::StaticClass() || T.Object->GetPathName()!=T.Path ||
+            !T.Path.StartsWith(TEXT("/Game/")) || Row->GetStringField(TEXT("texture_object"))!=TEXT("FortniteGame/Content/")+T.Path.Mid(6) ||
+            Source->GetStringField(TEXT("texture_object"))!=Row->GetStringField(TEXT("texture_object")))
+        { Error=TEXT("generic source texture metadata missing"); return false; }
+        const double W=Source->GetNumberField(TEXT("logical_width")), H=Source->GetNumberField(TEXT("logical_height")), N=Source->GetNumberField(TEXT("mip_count"));
+        T.Format=Source->GetStringField(TEXT("pixel_format")); T.Pixel=T.Format==TEXT("PF_DXT1") ? PF_DXT1 : T.Format==TEXT("PF_DXT3") ? PF_DXT3 : T.Format==TEXT("PF_DXT5") ? PF_DXT5 : PF_Unknown;
+        if (W<1 || W>16384 || H<1 || H>16384 || N<1 || N>15 || W!=double(int32(W)) || H!=double(int32(H)) || N!=double(int32(N)) ||
+            T.Pixel==PF_Unknown || Source->GetNumberField(TEXT("first_mip"))!=0 || Source->GetBoolField(TEXT("platform_virtual_flag")) || Mips->Num()!=int32(N) || SourceMips->Num()!=int32(N))
+        { Error=TEXT("invalid generic source platform data"); return false; }
+        T.Width=uint32(W); T.Height=uint32(H); T.Mips=uint32(N); T.SRGB=Metadata->GetBoolField(TEXT("srgb"));
+        for (int32 M=0; M<Mips->Num(); ++M)
+        {
+            const auto A=(*Mips)[M]->AsObject(), B=(*SourceMips)[M]->AsObject(); FString Hex;
+            const uint32 MW=FMath::Max(1u,T.Width>>M), MH=FMath::Max(1u,T.Height>>M), Bytes=FMath::Max(1u,(MW+3)/4)*FMath::Max(1u,(MH+3)/4)*(T.Pixel==PF_DXT1 ? 8u : 16u);
+            if (!A || !B || !A->TryGetStringField(TEXT("compressed_hex"),Hex) || Hex.Len()!=int32(Bytes*2) ||
+                A->GetNumberField(TEXT("level"))!=M || B->GetNumberField(TEXT("level"))!=M ||
+                A->GetNumberField(TEXT("logical_width"))!=MW || A->GetNumberField(TEXT("logical_height"))!=MH ||
+                B->GetNumberField(TEXT("logical_width"))!=MW || B->GetNumberField(TEXT("logical_height"))!=MH ||
+                A->GetNumberField(TEXT("compressed_bytes"))!=Bytes || B->GetNumberField(TEXT("compressed_bytes"))!=Bytes ||
+                A->GetStringField(TEXT("sha256"))!=B->GetStringField(TEXT("sha256")))
+            { Error=TEXT("generic source mip metadata differs"); return false; }
+            TArray<uint8> Raw; Raw.SetNumUninitialized(Bytes);
+            for (uint32 K=0; K<Bytes; ++K)
+            {
+                const int32 Hi=FParse::HexDigit(Hex[K*2]), Lo=FParse::HexDigit(Hex[K*2+1]);
+                if (Hi<0 || Lo<0) { Error=TEXT("invalid generic compressed mip hex"); return false; }
+                Raw[K]=uint8((Hi<<4)|Lo);
+            }
+            uint8 Digest[32]; LegacyManifestSHA256(Raw.GetData(),Bytes,Digest);
+            if (!BytesToHex(Digest,32).Equals(A->GetStringField(TEXT("sha256")),ESearchCase::IgnoreCase))
+            { Error=TEXT("generic compressed mip digest differs"); return false; }
+        }
+        if (T.Object->GetSizeX()!=int32(T.Width) || T.Object->GetSizeY()!=int32(T.Height) || T.Object->GetNumMips()!=int32(T.Mips) || T.Object->GetPixelFormat()!=T.Pixel || bool(T.Object->SRGB)!=T.SRGB)
+        { Error=TEXT("generic loaded texture metadata differs"); return false; }
+        Textures.Add(MoveTemp(T));
+    }
+    for (int32 I=0; I<Count; ++I)
+    {
+        const auto& T=IR.Texture2DParameters[I]; const auto& E=Uniforms.GetTextureParameter(EMaterialTextureParameterType::Standard2D,I);
+        const auto Info=E.GetParameterInfo(); UTexture* Value=nullptr;
+        if (!Textures.IsValidIndex(T.TextureIndex) || !E.ParameterInfo.Name.IsNone() || !Info.Name.IsNone() || Info.Association!=GlobalParameter || Info.Index!=INDEX_NONE || E.TextureIndex!=T.TextureIndex || E.SamplerSource!=T.SamplerSource)
+        { Error=TEXT("generic compiled texture differs"); return false; }
+        Uniforms.GetGameThreadTextureValue(EMaterialTextureParameterType::Standard2D,I,Owner,*Resource,Value,false);
+        if (Value!=Textures[T.TextureIndex].Object) { Error=TEXT("generic game-thread indexed lookup differs"); return false; }
+    }
+    struct FObserved { bool Matched=false; int32 Named=-1; TArray<uint32> Width,Height,Mips; } Observed;
+    Observed.Width.SetNumZeroed(Textures.Num()); Observed.Height.SetNumZeroed(Textures.Num()); Observed.Mips.SetNumZeroed(Textures.Num());
+    const FMaterialRenderProxy* Base=Owner->GetRenderProxy();
+    ENQUEUE_RENDER_COMMAND(CheckGenericTextureBindings)([Base,Resource,Map,Textures,IR,&Observed](FRHICommandListImmediate&)
+    {
+        class FPlainProxy final : public FLegacyProbeProxy { public: mutable int32 Calls=0; virtual bool GetTextureValue(const FHashedMaterialParameterInfo&,const UTexture**,const FMaterialRenderContext&) const override { ++Calls; return false; } } Proxy;
+        const FMaterialRenderProxy* Fallback=nullptr; const FMaterial& Material=Base->GetMaterialWithFallback(ERHIFeatureLevel::SM5,Fallback);
+        if (&Material!=Resource) return;
+        for (int32 I=0; I<Textures.Num(); ++I)
+        {
+            const auto& T=Textures[I]; if (!T.Object->Resource || !T.Object->TextureReference.TextureReferenceRHI || !T.Object->Resource->SamplerStateRHI) return;
+            FRHITexture* RHI=T.Object->TextureReference.TextureReferenceRHI->GetReferencedTexture(); FRHITexture2D* RHI2D=RHI ? RHI->GetTexture2D() : nullptr;
+            if (!RHI2D || RHI==GWhiteTexture->TextureRHI.GetReference() || RHI2D->GetFormat()!=T.Pixel || bool(RHI2D->GetFlags() & TexCreate_SRGB)!=T.SRGB) return;
+            const uint32 M=RHI2D->GetNumMips(); Observed.Mips[I]=M; Observed.Width[I]=RHI2D->GetSizeX(); Observed.Height[I]=RHI2D->GetSizeY();
+            if (!M || M>T.Mips || Observed.Width[I]!=FMath::Max(1u,T.Width>>(T.Mips-M)) || Observed.Height[I]!=FMath::Max(1u,T.Height>>(T.Mips-M))) return;
+        }
+        Proxy.Base=Base; Proxy.bInherit=false; FMaterialRenderContext Context(&Proxy,Material,nullptr); FUniformExpressionCache Cache;
+        const auto& U=Map->GetUniformExpressionSet(); const auto& L=U.GetUniformBufferLayout();
+        alignas(16) uint8 Contents[8192]={}; U.FillUniformBuffer(Context,Cache,Contents,sizeof(Contents));
+        TArray<void*> Slots; Slots.SetNumZeroed(L.Resources.Num()); for (int32 I=0; I<Slots.Num(); ++I) FMemory::Memcpy(&Slots[I],Contents+L.Resources[I].MemberOffset,sizeof(void*));
+        const int32 Count=IR.Texture2DParameters.Num(); if (!Slots[Count*2] || !Slots[Count*2+1]) return;
+        for (int32 I=0; I<Count; ++I)
+        {
+            const auto& Entry=IR.Texture2DParameters[I]; const auto& T=Textures[Entry.TextureIndex]; const UTexture* Value=nullptr;
+            U.GetTextureValue(EMaterialTextureParameterType::Standard2D,I,Context,Material,Value);
+            void* Sampler=Entry.SamplerSource==0 ? T.Object->Resource->SamplerStateRHI.GetReference() : Slots[Count*2+(Entry.SamplerSource==2 ? 1 : 0)];
+            if (Value!=T.Object || Slots[I*2]!=T.Object->TextureReference.TextureReferenceRHI.GetReference() || Slots[I*2+1]!=Sampler) return;
+        }
+        Observed.Named=Proxy.Calls; Observed.Matched=Observed.Named==0;
+    });
+    FlushRenderingCommands();
+    if (!Observed.Matched) { Error=TEXT("generic render texture binding differs"); return false; }
+    FString Directory;
+    if (FParse::Value(FCommandLine::Get(),TEXT("FortniteLegacyMaterialArtifactDir="),Directory))
+    {
+        FString PathsJson, OffsetsJson, TypesJson, UniformRows;
+        for (int32 I=0; I<Textures.Num(); ++I) PathsJson+=FString::Printf(TEXT("%s\"%s\""),I?TEXT(","):TEXT(""),*Textures[I].Path);
+        for (int32 I=0; I<Layout.Resources.Num(); ++I) { OffsetsJson+=FString::Printf(TEXT("%s%u"),I?TEXT(","):TEXT(""),uint32(Layout.Resources[I].MemberOffset)); TypesJson+=FString::Printf(TEXT("%s%u"),I?TEXT(","):TEXT(""),uint32(Layout.Resources[I].MemberType)); }
+        for (int32 I=0; I<Count; ++I)
+        {
+            const auto& E=IR.Texture2DParameters[I]; const auto& T=Textures[E.TextureIndex]; const int32 Sampled=E.SamplerSource==0 ? I*2+1 : Count*2+(E.SamplerSource==2 ? 1 : 0);
+            UniformRows+=FString::Printf(TEXT("%s{\"uniform_index\":%d,\"texture_index\":%d,\"texture_path\":\"%s\",\"sampler_source\":%d,\"texture_resource_index\":%d,\"paired_sampler_resource_index\":%d,\"sampled_sampler_resource_index\":%d,\"gt_indexed_match\":true,\"rt_indexed_match\":true,\"texture_binding_match\":true,\"sampler_binding_match\":true,\"nonwhite_texture\":true,\"pixel_format\":\"%s\",\"logical_width\":%u,\"logical_height\":%u,\"source_mips\":%u,\"resident_mips\":%u,\"rhi_width\":%u,\"rhi_height\":%u,\"srgb\":%s}"),I?TEXT(","):TEXT(""),I,E.TextureIndex,*T.Path,int32(E.SamplerSource),I*2,I*2+1,Sampled,*T.Format,T.Width,T.Height,T.Mips,Observed.Mips[E.TextureIndex],Observed.Width[E.TextureIndex],Observed.Height[E.TextureIndex],T.SRGB?TEXT("true"):TEXT("false"));
+        }
+        const FString Json=FString::Printf(TEXT("{\"schema\":\"fortnite.original-texture-bindings.v1\",\"owner_path\":\"%s\",\"ordered_texture_references\":[%s],\"constant_bytes\":%u,\"static_slot\":%u,\"layout_hash\":%u,\"resource_offsets\":[%s],\"resource_types\":[%s],\"uniforms\":[%s],\"named_proxy_calls\":%d,\"shared_wrap_nonnull\":true,\"shared_clamp_nonnull\":true,\"scope\":\"indexed GT/RT and RHI bindings; sRGB compared to source inspector metadata; no GPU pixel proof\"}\n"),*Owner->GetPathName(),*PathsJson,uint32(Layout.ConstantBufferSize),uint32(Layout.StaticSlot),Layout.GetHash(),*OffsetsJson,*TypesJson,*UniformRows,Observed.Named);
+        const FString Path=FPaths::Combine(Directory,TEXT("OriginalTextureBindings.json"));
+        if (FPaths::FileExists(Path) || !FFileHelper::SaveStringToFile(Json,*Path)) { Error=TEXT("cannot write generic texture artifact"); return false; }
     }
     return true;
 }
@@ -3482,6 +3693,13 @@ void ProbeLegacyOriginalMaterial()
         FString TextureError;
         if (!CheckComicTextureBindings(Material,Resource,Map,TextureError))
         { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: %s"),*TextureError); FPlatformMisc::RequestExitWithStatus(false,1); return; }
+    }
+    if (FParse::Param(FCommandLine::Get(),TEXT("FortniteLegacyMaterialGenericTextureProbe")))
+    {
+        FString TextureError;
+        if (!Pin->bManifest || Pin->OwnerType!=TEXT("UMaterial") || Pin->Owner!=Pin->ShaderIdentity || Pin->ResourceOwner!=Pin->Owner ||
+            !LiveReceipt || !CheckGenericTextureBindings(Material,Resource,Map,Bundle->GetObjectField(TEXT("runtime_fixture")),LiveReceipt->Decoded.IR,TextureError))
+        { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: generic texture probe failed: %s"),*TextureError); FPlatformMisc::RequestExitWithStatus(false,1); return; }
     }
     if (OwnerPath==GLegacyKeybindPath)
     {
