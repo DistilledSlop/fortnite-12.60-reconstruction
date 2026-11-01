@@ -158,3 +158,28 @@ These are the four material packages reached by the failing frontend probes. Eac
 Decoding alone does not establish runtime behavior. The implemented detached Locker bridge is described in [UE_BRIDGE.md](UE_BRIDGE.md). Its fixture `generated/material_pipeline/locker-runtime-fixture.json` (pin SHA-1 `3c379d3b0b97bb8e57e9b7b8b7286182ac78a700`) has 220 nodes, seven shader records and eight cases: defaults, four individual overrides, combined overrides, wrong association and wrong index. The cases check 312 meaningful numeric bytes within the 336-byte layout.
 
 The actual non-editor software Vulkan/Xvfb run exited 0 and passed all eight live `FillUniformBuffer` cases, froze the detached map and constructed seven RHI shaders (`generated/frontend-probes/legacy-material-runtime-1.log`). The 14 emitted artifacts in `generated/frontend-probes/legacy-material-artifacts-1` were independently verified against the actual seven SPIR-V modules and payloads; the validation receipt is `generated/frontend-probes/legacy-material-artifacts-1-validation.json`. Instruction streams changed only for entry-point names; header offsets match actual descriptors; current layout hash 22544639 derives from the original shape; SourceHash, CRC and embedded code match. Three verifier tests pass. A subsequent actual Vulkan run drew a 64×64 Locker quad and read back two `RBGA1` overrides: 2,832 of 4,096 pixels differed, with red and green center pixels (`generated/frontend-probes/legacy-material-runtime-draw-1.log`, `generated/frontend-probes/legacy-material-artifacts-2/LockerQuad.json` and RGBA files). Eight pre-freeze and eight post-freeze uniform cases passed. Normal material attachment and visual parity against an original oracle remain unverified.
+
+## Complete source bundle for asset ingress
+
+```sh
+python3 -I porting/material_pipeline/export_ingress_bundle.py
+python3 -I porting/material_pipeline/test_export_ingress_bundle.py
+```
+
+The separate `generated/material_pipeline/locker-ingress-bundle.json` preserves
+the existing runtime fixture while adding the original resource bytes, local
+names, complete decoded report, all 19 shader-library associations and hashes
+of the original code payloads. The exporter rereads the original `.uexp` and
+shader archive, recomputes the wrapper and full parse, and checks the runtime
+graph and mapped modules against their receipts. Its initial SHA-1 is
+`0f750204f6008e6e3219d0b002d8409e28c22426`; the original 12,513-byte
+resource has SHA-1 `bc2d2f509b6909a4820f65188b85485fce989a2a`.
+
+Four tests cover changed source bytes, export bounds, local name/resource
+identity and complete parameter identity. An original-input negative run also
+rejects a corrupted mesh shader record. The bundle supports independent parsing
+of live archive bytes; it does not prove loading, completeness or attachment.
+The serialized owner properties in `generated/frontend-probes/material-locker.json`
+explicitly record `MD_UI`, translucent blending and unlit shading. Actual-owner
+shader requirements still need checking in the runtime described by
+[the ingress plan](UE_MATERIAL_INGRESS.md).
