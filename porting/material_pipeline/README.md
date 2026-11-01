@@ -156,3 +156,9 @@ These are the four material packages reached by the failing frontend probes. Eac
 `legacy_shader_map.py` decodes the original resource header, uniform expressions, virtual-texture and collection slots, compilation output, packed flags and shader records through exact EOF for all four resources. The texture parameter layout is `int32`, `int16`, `int16`, `int32`, `bool32`, totaling 16 bytes, as in the 4.24 layout; the earlier four-word 4.23 versus five-word 4.24 claim was incorrect. Each map contains 19 sequential shader records: seven Slate and twelve LocalVF, no pipelines, and cooking marker 1. Across the four maps, all 76 records have their archive hash, frequency and uncompressed size validated, representing 44 unique archive associations (15, 15, 14 and 14 unique per sample). Their union exactly matches the 44 originally recovered shader selections, confirming their association for these four samples. Donut, Locker, MenuButton and PowerToast resource byte counts are 8420, 12513, 10802 and 10312, ending at `.uexp` offsets 10601, 15310, 15332 and 14311 respectively. Full commands and counts are in `generated/material_pipeline/full-original-shader-map-validation.json`; `original-serializer-evidence.json` records immutable hashes and 29 decompilation files. Reports record `complete_serialized_shader_map=true`, `first_unknown=null`, zero undecoded bytes and `runtime_loading_verified=false`. Seventeen isolated tests cover the decoder.
 
 Decoding the serialized data does not reconstruct a runnable shader map or establish runtime values, resource binding, shader semantics or draw parity.
+
+The concrete next runtime implementation is in [UE_BRIDGE.md](UE_BRIDGE.md):
+live preshader conversion, registered Slate constructors, paired Vulkan headers
+and parameter allocations, and checked output-hash finalization in non-editor
+builds. Its first detached Locker gate precedes pipeline/draw testing and normal
+material attachment.
