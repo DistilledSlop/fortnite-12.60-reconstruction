@@ -30,6 +30,7 @@ bool showAll = args.Contains("--all");
 bool showPseudo = args.Contains("--pseudo");
 bool showImports = args.Contains("--imports");
 bool importsJson = args.Contains("--imports-json");
+bool exportMapJson = args.Contains("--export-map-json");
 bool registryMode = args.Contains("--registry");
 bool pakSources = args.Contains("--pak-sources");
 bool registryPaths = args.Contains("--registry-paths");
@@ -80,12 +81,13 @@ if (maxArgument is not null && (!int.TryParse(maxArgument[15..], out maxPackages
     Console.Error.WriteLine("--max-packages must be a positive integer");
     return 2;
 }
-string[] positional = args.Where(arg => arg != maxArgument && arg != closureOutputArgument && arg != keyFileArgument && arg != extractOutput && arg != extractWorkersArgument && arg != extractPlanArgument && arg != extractSummaryArgument && arg != extractSampleArgument && arg != extractSeedArgument && arg != duplicatesOutArgument && arg is not ("--all" or "--pseudo" or "--imports" or "--imports-json" or "--registry" or "--pak-sources" or "--registry-paths" or "--seed-list" or "--follow-soft" or "--scan-maps" or "--scan-native" or "--all-keys" or "--save-package" or "--save-list" or "--sizes" or "--save-folder" or "--save-closure" or "--export-glb" or "--export-landscape" or "--export-landscape-grid" or "--export-landscape-weightmap-grid" or "--export-png" or "--export-landscape-weightmaps" or "--material-report" or "--function-report" or "--landscape-report" or "--actor-report" or "--versions" or "--ue426" or "--loose" or "--extract-all" or "--dry-run" or "--verify" or "--audit-duplicates" or "--repair")).ToArray();
+string[] positional = args.Where(arg => arg != maxArgument && arg != closureOutputArgument && arg != keyFileArgument && arg != extractOutput && arg != extractWorkersArgument && arg != extractPlanArgument && arg != extractSummaryArgument && arg != extractSampleArgument && arg != extractSeedArgument && arg != duplicatesOutArgument && arg is not ("--all" or "--pseudo" or "--imports" or "--imports-json" or "--export-map-json" or "--registry" or "--pak-sources" or "--registry-paths" or "--seed-list" or "--follow-soft" or "--scan-maps" or "--scan-native" or "--all-keys" or "--save-package" or "--save-list" or "--sizes" or "--save-folder" or "--save-closure" or "--export-glb" or "--export-landscape" or "--export-landscape-grid" or "--export-landscape-weightmap-grid" or "--export-png" or "--export-landscape-weightmaps" or "--material-report" or "--function-report" or "--landscape-report" or "--actor-report" or "--versions" or "--ue426" or "--loose" or "--extract-all" or "--dry-run" or "--verify" or "--audit-duplicates" or "--repair")).ToArray();
 bool packageLess = registryMode || pakSources || registryPaths || scanMaps || scanNative || exportLandscapeGrid || exportLandscapeWeightmapGrid || extractAll;
 if (new[] { registryMode, pakSources, registryPaths, scanMaps, scanNative, exportLandscapeGrid, exportLandscapeWeightmapGrid, extractAll }.Count(mode => mode) > 1 || (packageLess ? positional.Length > 1 : positional.Length is < 1 or > 2))
 {
     Console.Error.WriteLine("Usage: Cue4Inspect <asset-path-without-extension> [pak-directory] [--all] [--pseudo] [--imports] [--save-package] [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect <package-path> [source-directory] --imports-json [--loose]");
+    Console.Error.WriteLine("   or: Cue4Inspect <package-path> [source-directory] --export-map-json [--loose]");
     Console.Error.WriteLine("   or: Cue4Inspect <folder-prefix> [pak-directory] --save-folder [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect <newline-list-file> [pak-directory] --save-list [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect <newline-list-file> [pak-directory] --sizes [--all-keys]");
@@ -559,6 +561,24 @@ try
     }
 
     var packageData = provider.LoadPackage(assetPath!);
+    if (exportMapJson)
+    {
+        if (packageData is not Package exportPackage)
+            throw new InvalidDataException("Export map requires a legacy package");
+        Console.WriteLine(JsonSerializer.Serialize(new
+        {
+            package = assetPath,
+            headerBytes = exportPackage.Summary.TotalHeaderSize,
+            exports = exportPackage.ExportMap.Select((item, index) => new
+            {
+                index = index + 1,
+                name = item.ObjectName.Text,
+                serialOffset = item.SerialOffset,
+                serialSize = item.SerialSize
+            }).ToArray()
+        }));
+        return 0;
+    }
     if (importsJson)
     {
         if (packageData is not Package importPackage)

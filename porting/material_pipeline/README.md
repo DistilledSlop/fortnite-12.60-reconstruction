@@ -63,3 +63,30 @@ python3 -I porting/material_pipeline/inspect_spirv_bindings.py \
   --report porting/generated/material_pipeline/binding-correspondence.json
 python3 -I porting/material_pipeline/test_inspect_spirv_bindings.py
 ```
+
+## Original inline material framing
+
+`Cue4Inspect --export-map-json` reads the legacy package's export table without relying on guessed `.uexp` positions. `inspect_material_resource.py` then scans only the selected export for the exact `FMaterialResourceMemoryWriter` wrapper: serialized name entries, resource locations, byte count, and a payload ending exactly at the export boundary. It requires one unambiguous match and records SHA-256 identities. The scanner also checks the observed cooked/valid, quality/feature, 20-byte shader-map ID hash, and two length-prefixed material identity strings at the start of the resource payload. The word after the hash is recorded without assigning it an unverified field meaning.
+
+Example, with the built tool's path adjusted to the current isolated output:
+
+```sh
+dotnet porting/generated/frontend-probes/cue4inspect-export-map/Cue4Inspect.dll \
+  /Game/Athena/UI/Challenges/Art/Donut/M_UI_DonutIcons \
+  /mnt/vibrato/fortnite-extracted-full --export-map-json --loose \
+  > porting/generated/material_pipeline/donut-export-map.raw
+python3 -I porting/material_pipeline/inspect_material_resource.py \
+  --uexp /mnt/vibrato/fortnite-extracted-full/FortniteGame/Content/Athena/UI/Challenges/Art/Donut/M_UI_DonutIcons.uexp \
+  --export-map porting/generated/material_pipeline/donut-export-map.raw \
+  --report porting/generated/material_pipeline/donut-inline-resource.json
+python3 -I porting/material_pipeline/test_inspect_material_resource.py
+```
+
+| Original package | Export `.uexp` range | Wrapper start | Resource range | Name entries | Identity in resource |
+| --- | ---: | ---: | ---: | ---: | --- |
+| `M_UI_DonutIcons` | 0..10601 | 683 | 2181..10601 | 37 | `M_UI_DonutIcons` |
+| `Athena_LockerTabMaster` | 0..15310 | 1037 | 2797..15310 | 46 | `Athena_LockerTabMaster` |
+| `M_MenuButton_Master` | 0..15332 | 2566 | 4530..15332 | 54 | `M_MenuButton_Master` |
+| `M-Border-PowerToastGlow` | 0..14311 | 2299 | 3999..14311 | 44 | parent `M_UI_GradientPanel` |
+
+These are the four material packages reached by the failing frontend probes. Each has one resource location (offset 0, feature level 3, quality level 1), and its declared byte count ends at its export boundary. In all four, the local engine's `FMaterialShaderMapId::Serialize` would interpret the zero word immediately after the original 20-byte hash as `MaxFieldAlignment` and the following material-name length (16, 23, 20, or 19) as layout flags. The local layout structure requires an initialized flag and usable alignment; it then reads the material-name bytes as `FrozenContentSize`, explaining the observed `0x49555f4d` (`M_UI`) read for Donut. This establishes the first format divergence at the material shader-map ID/base boundary. It does **not** establish the full original shader-map schema or make Windows-cooked shader maps usable by the Linux Vulkan runtime. The exact wrapper bounds replace the earlier inferred 205-byte origin; archive `Tell` and `.uexp` positions use different coordinate systems in the captured trace.
