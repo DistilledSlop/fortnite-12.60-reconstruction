@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Strict, partial decoder of the pre-memory-image Fortnite 12.60 shader map.
 
-This decodes a PREFIX, never an executable shader map. Unknown expression types
-fail at their tag; the undecoded mesh-shader tail is returned explicitly.
+This decodes serialized metadata, never an executable shader map. Unknown
+expression/shader types fail closed. The complete verified grammar must end
+exactly at the declared resource boundary.
 The recursive grammar matches Epic's pre-freeze serializers, available at:
 https://github.com/folgerwang/UnrealEngine/blob/release/Engine/Source/Runtime/Engine/Private/Materials/MaterialUniformExpressions.h
 https://github.com/folgerwang/UnrealEngine/blob/release/Engine/Source/Runtime/Engine/Private/Materials/MaterialUniformExpressions.cpp
@@ -11,8 +12,8 @@ original runtime and match the 4.24 pre-freeze serializer, also documenting
 the collection/compilation scalar order:
 https://github.com/HenryZheng1/UnrealEngine-4.24.3-release/blob/master/Engine/Source/Runtime/Engine/Private/Materials/MaterialUniformExpressions.cpp
 https://github.com/HenryZheng1/UnrealEngine-4.24.3-release/blob/master/Engine/Source/Runtime/Engine/Private/Materials/MaterialShared.cpp
-No LayoutParams are present. Seven Slate records per original sample are decoded;
-mesh shader records remain unknown. All offsets are resource-relative.
+No LayoutParams are present. Seven Slate and twelve LocalVF mesh records per
+original sample are decoded. All offsets are resource-relative.
 """
 import argparse
 import hashlib
@@ -30,7 +31,8 @@ def _load_sibling(name):
     return module
 
 
-material_shader_records = _load_sibling('legacy_shader_records').material_shader_records
+_records = _load_sibling('legacy_shader_records')
+material_shader_records, mesh_shader_maps = _records.material_shader_records, _records.mesh_shader_maps
 
 MAX_BYTES = 64 * 1024 * 1024
 ARRAYS = ('vector', 'scalar', 'texture_2d', 'texture_cube', 'texture_volume',
@@ -134,9 +136,9 @@ class Reader:
 
 
 def parse_prefix(data, names):
-    """Return verified prefix with relative offsets and an explicit unknown tail.
+    """Return the verified serialized shader map with exact resource EOF.
 
-    Nonempty VT stacks and mesh shader records are currently unsupported.
+    Nonempty VT stacks and parameter-binding arrays remain unsupported.
     """
     if len(data) > MAX_BYTES:
         raise ValueError('legacy resource exceeds size bound')
@@ -195,11 +197,20 @@ def parse_prefix(data, names):
     debug_description = reader.string()
     shader_records = material_shader_records(reader, shader_map_hash,
         [arrays[name]['count'] for name in ARRAYS[:6]] + [arrays['texture_2d_array']['count']])
+    mesh_maps = mesh_shader_maps(reader, shader_records['mesh_shader_maps_count'], shader_map_hash,
+        [arrays[name]['count'] for name in ARRAYS[:6]] + [arrays['texture_2d_array']['count']])
+    cooking_offset = reader.cursor
+    if reader.read('I') != 1:
+        raise ValueError('only cooked original material shader maps are supported')
+    if reader.cursor != len(data):
+        raise ValueError(f'unexpected trailing shader-map bytes at {reader.cursor}')
     cursor = reader.cursor
-    return {'complete_shader_map': False,
-            'limitations': ['Material Slate records decoded; mesh shader records and runtime loading remain unverified',
+    return {'complete_shader_map': True, 'complete_serialized_shader_map': True,
+            'runtime_loading_verified': False,
+            'limitations': ['Complete serialized metadata does not establish runtime loading, shader semantics or draw parity',
                 'Nonempty VT stacks are unsupported',
-                'Nonempty parameter-binding arrays and material shader pipelines are unsupported'],
+                'Nonempty parameter-binding arrays and shader pipelines are unsupported',
+                'Only the observed Slate and LocalVF mesh shader types are supported'],
             'cooked': cooked, 'valid': valid,
             'quality_level': quality, 'feature_level': feature,
             'cooked_shader_map_id_hash': shader_map_hash, 'shader_platform': platform,
@@ -209,29 +220,34 @@ def parse_prefix(data, names):
             'compilation_output_scalars': compilation,
             'compilation_output_flags': compilation_flags,
             'debug_description': debug_description, 'material_shaders': shader_records,
+            'mesh_shader_maps': mesh_maps,
+            'shader_record_count': shader_records['count'] + sum(m['count'] for m in mesh_maps),
+            'cooking': {'offset': cooking_offset, 'value': True, 'end': reader.cursor},
             'original_serializer_evidence': {
                 'runtime_dump_sha256': '604900985a724144b6e0fc6e033b0cef2adb74a295a65a4fe01aceebb52df93d',
                 'texture': '0x14433eb60', 'uniform_expression_set': '0x144364bf0',
                 'compilation_output': '0x144338180', 'material_shader_map': '0x1443383f0',
                 'material_shader': '0x1434f9590', 'slate_vs': '0x143cfa820',
                 'slate_ps': '0x143cfb4e0', 'shader_base': '0x143aaae20',
-                'shader_resource': '0x143aaab80'},
+                'shader_resource': '0x143aaab80', 'mesh_material_shader': '0x1434f99c0',
+                'base_pass_shader': '0x1431e2ea0', 'shadow_depth_pixel_shader': '0x143237540',
+                'vertex_factory_parameter_ref': '0x143a7b010',
+                'local_vertex_factory_parameter_constructor': '0x1442f01e0',
+                'local_vertex_factory_parameters': '0x1442fc610'},
             'tail_grammar_sources': [
                 'https://github.com/HenryZheng1/UnrealEngine-4.24.3-release/blob/master/Engine/Source/Runtime/Engine/Private/Materials/MaterialUniformExpressions.cpp#L106',
                 'https://github.com/HenryZheng1/UnrealEngine-4.24.3-release/blob/master/Engine/Source/Runtime/Engine/Private/Materials/MaterialShared.cpp#L489'],
             'decoded_prefix_bytes': cursor,
-            'first_unknown': {'offset': cursor,
-                'description': 'first mesh shader-map vertex-factory name and shader records',
-                'blocker': 'Mesh shader subclass/vertex-factory parameter serializers remain undecoded; '
-                    'material shader records were read sequentially and checked against their declared ends.',
-                'next_32_hex': data[cursor:cursor + 32].hex()},
+            'first_unknown': None,
             'undecoded_bytes': len(data) - cursor,
             'resource_sha256': hashlib.sha256(data).hexdigest()}
 
 
 def associate_library(result, archive):
     """Associate parsed record identities with a fully validated archive index."""
-    for record in result['material_shaders']['records']:
+    records = result['material_shaders']['records'] + [
+        record for mesh_map in result.get('mesh_shader_maps', []) for record in mesh_map['records']]
+    for record in records:
         index = archive.shader_lookup.get(bytes.fromhex(record['output_hash']['hash']))
         if index is None:
             raise ValueError('decoded shader hash is absent from supplied library')
@@ -265,7 +281,7 @@ def main():
         if result['resource_sha256'] != framing['resource_sha256']:
             raise ValueError('resource identity does not match resource report')
         result.update(package=framing['package'], resource_start=start, resource_end=end,
-                      first_unknown_uexp_offset=start + result['first_unknown']['offset'])
+                      first_unknown_uexp_offset=None)
         result['original_serializer_evidence']['probe_directory'] = str(generated / 'material_pipeline')
         result['original_serializer_evidence']['decompilation_files'] = {
             name: str(generated / 'material_pipeline' / f'original-{address}.c')
@@ -277,12 +293,12 @@ def main():
                 associate_library(result, archive)
                 result['shader_library'] = {'path': str(args.shader_archive.resolve()),
                     'sha256': library_parser.sha256(args.shader_archive), 'bytes': len(archive.data),
-                    'layout': archive.layout, 'associated_records': len(result['material_shaders']['records'])}
+                    'layout': archive.layout, 'associated_records': result['shader_record_count']}
         args.report.parent.mkdir(parents=True, exist_ok=True)
         args.report.write_text(json.dumps(result, indent=2, allow_nan=False) + '\n')
         print(f'{result["expression_nodes"]} expression nodes; '
-              f'{result["material_shaders"]["count"]} shader records; first unknown .uexp offset '
-              f'{result["first_unknown_uexp_offset"]}; {args.report}')
+              f'{result["shader_record_count"]} shader records; exact resource EOF '
+              f'{result["resource_end"]}; {args.report}')
     except (OSError, ValueError, KeyError, TypeError) as error:
         parser.exit(1, f'error: {error}\n')
 
