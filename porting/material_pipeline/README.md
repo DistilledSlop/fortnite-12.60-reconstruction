@@ -39,4 +39,4 @@ python3 -I porting/material_pipeline/translate_dxbc.py \
   --output porting/generated/material_pipeline/frontend-translated
 ```
 
-All 44 selected original DXBC shaders compiled and passed Vulkan 1.0 SPIR-V validation. This proves translation and structural validation, not a correct UE draw: original uniform values, descriptor bindings, vertex interfaces, render state, and inline shader-map reconstruction still require implementation and visual tests.
+All 44 selected original DXBC shaders compiled and passed Vulkan 1.0 SPIR-V validation. **Twelve jobs emit `shader_sm4_read_instruction_modifier` diagnostics for unhandled resource/data modifiers with this compiler version.** The receipt retains the exact messages and `compiler_diagnostic_jobs` count. They require investigation with a compiler that handles the observed modifiers; zero compile/validator exits do not prove semantic preservation. Original uniform values, descriptor bindings, vertex interfaces, render state, and inline shader-map reconstruction still require implementation and visual tests. No output is yet verified in a UE draw.

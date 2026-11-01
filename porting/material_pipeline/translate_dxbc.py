@@ -77,6 +77,7 @@ def main():
                    'compile_exit': compiled.returncode,
                    'validation_exit': validation.returncode if validation else None,
                    'diagnostic': compiled.stderr + (validation.stdout + validation.stderr if validation else ''),
+                   'compiler_diagnostics_present': bool(compiled.stderr.strip()),
                    'validated': passed}
             if digest(path) != identity:
                 passed = False
@@ -93,11 +94,13 @@ def main():
                   'archive_sha256': source['sha256'], 'tool_sha256': identities, 'target_env': 'vulkan1.0',
                   'selected_jobs': len(jobs), 'attempted_jobs': len(rows), 'truncated': len(jobs) > args.limit,
                   'validated_jobs': sum(row['validated'] for row in rows), 'records': rows,
+                  'compiler_diagnostic_jobs': sum(row['compiler_diagnostics_present'] for row in rows),
                   'limitations': ['Not inserted into UE shader maps; material bindings and actual draw parity remain unverified']}
         receipt = output / 'translation-report.json'
         receipt.with_suffix('.tmp').write_text(json.dumps(report, indent=2) + '\n')
         receipt.with_suffix('.tmp').replace(receipt)
-        print(f"validated {report['validated_jobs']}/{len(rows)}; selected {len(jobs)}; report {receipt}")
+        print(f"structurally validated {report['validated_jobs']}/{len(rows)}; "
+              f"compiler diagnostics {report['compiler_diagnostic_jobs']}; selected {len(jobs)}; report {receipt}")
         return 0 if all(row['validated'] for row in rows) else 1
     except (OSError, ValueError, KeyError, TypeError, subprocess.TimeoutExpired) as error:
         parser.exit(1, f'error: {error}\n')
