@@ -24,6 +24,7 @@ RENDERER_API void UpdateNoiseTextureParameters(FViewUniformShaderParameters& Par
 #include "RHIStaticStates.h"
 #include "Misc/FileHelper.h"
 #include "Misc/SecureHash.h"
+#include "Misc/ScopeLock.h"
 #include "LegacySlateMaterial.h"
 #include "LegacyMaterialAsset.h"
 #include "LegacyOriginalMaterialReader.h"
@@ -414,13 +415,80 @@ static bool CheckLegacyUniforms(const FUniformExpressionSet& Uniforms, const TSh
     return true;
 }
 
+// Opt-in diagnostic only: use the factory's real current preshader and the
+// already loaded owner's render context, then stop before shader construction.
+static bool ProbeLegacyMaxSaturateBits(UMaterialInterface* Owner, FString& Error)
+{
+    if (!IsInGameThread() || !Owner) { Error=TEXT("numeric diagnostic requires game thread and a real owner"); return false; }
+    FString Directory;
+    if (!FParse::Value(FCommandLine::Get(),TEXT("FortniteLegacyMaterialArtifactDir="),Directory) || !FPaths::DirectoryExists(Directory))
+    { Error=TEXT("numeric diagnostic requires an existing artifact directory"); return false; }
+    const uint32 InputA[4]={0x00000000u,0x80000000u,0xc0a00000u,0x40e00000u};
+    const uint32 InputB[4]={0x80000000u,0x00000000u,0x40000000u,0xc0400000u};
+    const uint32 InputS[4]={0x80000000u,0xc0000000u,0x3ecccccdu,0x40000000u};
+    const uint32 Expected[8]={0x80000000u,0x00000000u,0x40000000u,0x40e00000u,0x80000000u,0x00000000u,0x3ecccccdu,0x3f800000u};
+    FLegacyMaterialIR IR; IR.OriginalMapHash.Hash[0]=1; IR.DebugDescription=TEXT("Legacy numeric bit diagnostic");
+    auto AddConstant=[&IR](const uint32 (&Bits)[4])
+    {
+        FLegacyMaterialExpression E; E.Kind=ELegacyMaterialExpression::Constant; E.ValueType=MCT_Float4;
+        FMemory::Memcpy(&E.Value,Bits,sizeof(Bits)); return IR.Expressions.Add(MoveTemp(E));
+    };
+    const int32 A=AddConstant(InputA), B=AddConstant(InputB);
+    FLegacyMaterialExpression Max; Max.Kind=ELegacyMaterialExpression::Max; Max.A=A; Max.B=B;
+    const int32 MaxRoot=IR.Expressions.Add(MoveTemp(Max));
+    const int32 S=AddConstant(InputS);
+    FLegacyMaterialExpression Sat; Sat.Kind=ELegacyMaterialExpression::Saturate; Sat.A=S;
+    const int32 SatRoot=IR.Expressions.Add(MoveTemp(Sat));
+    IR.VectorRoots={MaxRoot,SatRoot}; IR.UniformBufferSize=48;
+    IR.Resources.Add({32,UBMT_SAMPLER}); IR.Resources.Add({40,UBMT_SAMPLER});
+    const FMaterialRenderProxy* Base=Owner->GetRenderProxy();
+    const FMaterial* ExpectedOwnerResource=Owner->GetMaterialResource(GMaxRHIFeatureLevel);
+    if (!Base || !ExpectedOwnerResource) { Error=TEXT("numeric diagnostic owner resource missing"); return false; }
+    uint32 Actual[8]={}; bool bCallback=false, bFilled=false;
+    const FString Stop=TEXT("numeric-only diagnostic intentionally stopped before shader construction");
+    FString FactoryError;
+    TRefCountPtr<FMaterialShaderMap> Map=FMaterialShaderMap::CreateLegacySlateMap(IR,
+        [Base,ExpectedOwnerResource,&Actual,&bCallback,&bFilled,&Stop](const FUniformExpressionSet& Uniforms,const FShaderParametersMetadata&,TArray<FLegacySlateShaderInput>&,FString& OutError)
+        {
+            bCallback=true;
+            ENQUEUE_RENDER_COMMAND(CheckLegacyMaxSaturateBits)([Base,ExpectedOwnerResource,&Uniforms,&Actual,&bFilled](FRHICommandListImmediate&)
+            {
+                const FMaterialRenderProxy* Fallback=nullptr;
+                const FMaterial& Material=Base->GetMaterialWithFallback(ERHIFeatureLevel::SM5,Fallback);
+                if (&Material!=ExpectedOwnerResource) return;
+                FMaterialRenderContext Context(Base,Material,nullptr); FUniformExpressionCache Cache;
+                alignas(16) uint8 Buffer[48]={};
+                Uniforms.FillUniformBuffer(Context,Cache,Buffer,sizeof(Buffer));
+                FMemory::Memcpy(Actual,Buffer,sizeof(Actual)); bFilled=true;
+            });
+            FlushRenderingCommands(); OutError=Stop; return false;
+        },FactoryError);
+    if (Map.IsValid() || !bCallback || !bFilled || FactoryError!=Stop)
+    { Error=FString::Printf(TEXT("numeric diagnostic did not stop at callback: %s"),*FactoryError); return false; }
+    FString ActualJson, ExpectedJson;
+    bool bMatches=true;
+    for (int32 I=0;I<8;++I)
+    {
+        if (Actual[I]!=Expected[I]) bMatches=false;
+        ActualJson+=FString::Printf(TEXT("%s\"%08x\""),I ? TEXT(",") : TEXT(""),Actual[I]);
+        ExpectedJson+=FString::Printf(TEXT("%s\"%08x\""),I ? TEXT(",") : TEXT(""),Expected[I]);
+    }
+    const FString Json=FString::Printf(TEXT("{\"scope\":\"numeric-only; transient factory map discarded before shader construction/finalization/installation\",\"owner\":\"%s\",\"actual_bits\":[%s],\"expected_bits\":[%s],\"passed\":%s}\n"),*Owner->GetPathName(),*ActualJson,*ExpectedJson,bMatches ? TEXT("true") : TEXT("false"));
+    const FString Path=FPaths::Combine(Directory,TEXT("MaxSaturateBits.json"));
+    if (FPaths::FileExists(Path) || !FFileHelper::SaveStringToFile(Json,*Path))
+    { Error=TEXT("cannot write numeric diagnostic receipt"); return false; }
+    if (!bMatches) { Error=TEXT("Max/Saturate exact bit pattern mismatch"); return false; }
+    UE_LOG(LogTemp,Display,TEXT("Legacy material probe: Max/Saturate exact bit patterns passed using real owner context"));
+    return true;
+}
+
 struct FLegacyDrawBindings
 {
     uint16 MatrixBuffer = 0, MatrixOffset = 0, GammaBuffer = 0, GammaOffset = 0;
     uint16 ParamsBuffer = 0, ParamsOffset = 0, MaterialBuffer = 0, ViewBuffer = 0;
 };
 
-static bool DrawLegacySlateQuad(const TRefCountPtr<FMaterialShaderMap>& Map, const FLegacyDrawBindings& Bindings, FString& Error, UMaterialInterface* Owner = nullptr, const FMaterial* ExpectedOwnerResource = nullptr, const TCHAR* OverrideName = TEXT("RBGA1"), const TCHAR* ArtifactPrefix = TEXT("LockerQuad"), const TSharedPtr<FJsonObject>& ViewFixture = nullptr, bool bColorDraw = false, const UTexture* IconOverride = nullptr)
+static bool DrawLegacySlateQuad(const TRefCountPtr<FMaterialShaderMap>& Map, const FLegacyDrawBindings& Bindings, FString& Error, UMaterialInterface* Owner = nullptr, const FMaterial* ExpectedOwnerResource = nullptr, const TCHAR* OverrideName = TEXT("RBGA1"), const TCHAR* ArtifactPrefix = TEXT("LockerQuad"), const TSharedPtr<FJsonObject>& ViewFixture = nullptr, bool bColorDraw = false, const UTexture* IconOverride = nullptr, bool bRequireExplicitViewPolicy = false)
 {
     FShaderType* VertexType = FindShaderTypeByName(FHashedName(TEXT("TSlateMaterialShaderVSfalse")));
     FShaderType* PixelType = FindShaderTypeByName(FHashedName(TEXT("TSlateMaterialShaderPSDefault")));
@@ -429,6 +497,7 @@ static bool DrawLegacySlateQuad(const TRefCountPtr<FMaterialShaderMap>& Map, con
     const FMaterialRenderProxy* Base = DefaultMaterial->GetRenderProxy();
     struct FViewCase { float Game=0.f, Real=0.f; TArray<FLegacyOverride> Overrides; };
     TArray<FViewCase> ViewCases;
+    bool bHasViewPolicy=false, bRequireTimeDelta=true;
     if (ViewFixture)
     {
         const auto Contract=ViewFixture->GetObjectField(TEXT("view_contract"));
@@ -438,6 +507,26 @@ static bool DrawLegacySlateQuad(const TRefCountPtr<FMaterialShaderMap>& Map, con
             int32(Contract->GetNumberField(TEXT("expected_current_byte_offset")))!=2264 ||
             int32(Contract->GetNumberField(TEXT("shader_visible_bytes")))!=2272)
         { Error=TEXT("invalid View contract"); return false; }
+        const TSharedPtr<FJsonObject>* Policy=nullptr;
+        if (ViewFixture->TryGetObjectField(TEXT("view_draw_expectations"),Policy))
+        {
+            if (!Policy->IsValid()) { Error=TEXT("invalid View draw policy"); return false; }
+            bHasViewPolicy=(*Policy)->TryGetBoolField(TEXT("require_time_delta"),bRequireTimeDelta);
+            if (!bHasViewPolicy && bRequireExplicitViewPolicy)
+            { Error=TEXT("missing explicit View draw policy"); return false; }
+            const TArray<TSharedPtr<FJsonValue>>* Equal=nullptr; const TArray<TSharedPtr<FJsonValue>>* Different=nullptr;
+            if (!(*Policy)->TryGetArrayField(TEXT("equal_image_pairs"),Equal) || !(*Policy)->TryGetArrayField(TEXT("different_image_pairs"),Different) ||
+                Equal->Num()!=2 || Different->Num()!=(bRequireTimeDelta ? 2 : 0))
+            { Error=TEXT("invalid View draw comparison policy"); return false; }
+            auto Pair=[](const TSharedPtr<FJsonValue>& V, int32 A, int32 B)
+            {
+                const auto& X=V->AsArray();
+                return X.Num()==2 && X[0]->AsNumber()==A && X[1]->AsNumber()==B;
+            };
+            if (!Pair((*Equal)[0],0,2) || !Pair((*Equal)[1],1,3) ||
+                (bRequireTimeDelta && (!Pair((*Different)[0],0,1) || !Pair((*Different)[1],2,3))))
+            { Error=TEXT("unsupported View draw comparison pairs"); return false; }
+        }
         for (const auto& Value : ViewFixture->GetArrayField(TEXT("view_cases")))
         {
             const auto Case=Value->AsObject();
@@ -456,7 +545,7 @@ static bool DrawLegacySlateQuad(const TRefCountPtr<FMaterialShaderMap>& Map, con
     FString Failure;
     TArray<FColor> Images[4];
     int32 Different = 0;
-    ENQUEUE_RENDER_COMMAND(DrawOriginalLockerSlate)([Map, VertexType, PixelType, Base, Bindings, ExpectedOwnerResource, OverrideName, ViewCases, bColorDraw, IconOverride, &bPassed, &Failure, &Images, &Different](FRHICommandListImmediate& RHICmdList)
+    ENQUEUE_RENDER_COMMAND(DrawOriginalLockerSlate)([Map, VertexType, PixelType, Base, Bindings, ExpectedOwnerResource, OverrideName, ViewCases, bColorDraw, IconOverride, bRequireTimeDelta, &bPassed, &Failure, &Images, &Different](FRHICommandListImmediate& RHICmdList)
     {
         const TShaderRef<FShader> VS = Map->GetShader(VertexType, 0);
         const TShaderRef<FShader> PS = Map->GetShader(PixelType, 0);
@@ -585,8 +674,8 @@ static bool DrawLegacySlateQuad(const TRefCountPtr<FMaterialShaderMap>& Map, con
         if (Images[0].Num() != 4096 || Images[1].Num() != 4096)
         { bPassed = false; Failure = TEXT("invalid draw readback size"); return; }
         for (int32 I = 0; I < 4096; ++I) Different += Images[0][I] != Images[1][I] ? 1 : 0;
-        if (!Different) { bPassed = false; Failure = TEXT("draws produced identical pixels"); }
-        if (ViewCases.Num() && !bColorDraw && (Images[2].Num()!=4096 || Images[3].Num()!=4096 || Images[0]!=Images[2] || Images[1]!=Images[3] || Images[2]==Images[3]))
+        if (!Different && bRequireTimeDelta) { bPassed = false; Failure = TEXT("draws produced identical pixels"); }
+        if (ViewCases.Num() && !bColorDraw && (Images[2].Num()!=4096 || Images[3].Num()!=4096 || Images[0]!=Images[2] || Images[1]!=Images[3] || (bRequireTimeDelta && Images[2]==Images[3])))
         { bPassed=false; Failure=TEXT("View time field isolation failed"); }
         UE_LOG(LogTemp, Display, TEXT("Legacy material probe: original Slate quad readback changed %d pixels"), Different);
     });
@@ -611,7 +700,8 @@ static bool DrawLegacySlateQuad(const TRefCountPtr<FMaterialShaderMap>& Map, con
         }
         const FString MetadataPath = FPaths::Combine(ArtifactDirectory, FString(ArtifactPrefix) + TEXT(".json"));
         const FString Metadata = ViewCases.Num() && !bColorDraw ?
-            FString::Printf(TEXT("{\"width\":64,\"height\":64,\"format\":\"RGBA8\",\"cases\":[%s],\"changed_pixels\":%d}\n"),*CaseJson,Different) :
+            (bHasViewPolicy ? FString::Printf(TEXT("{\"width\":64,\"height\":64,\"format\":\"RGBA8\",\"cases\":[%s],\"time_delta_policy\":\"%s\",\"changed_pixels\":%d}\n"),*CaseJson,bRequireTimeDelta ? TEXT("required") : TEXT("observed"),Different) :
+             FString::Printf(TEXT("{\"width\":64,\"height\":64,\"format\":\"RGBA8\",\"cases\":[%s],\"changed_pixels\":%d}\n"),*CaseJson,Different)) :
             IconOverride ? FString::Printf(TEXT("{\"width\":64,\"height\":64,\"format\":\"RGBA8\",\"default_sha1\":\"%s\",\"override_sha1\":\"%s\",\"default_texture\":\"/Game/Athena/UI/Challenges/Art/Donut/T_UI_Donut_PC_Icon.T_UI_Donut_PC_Icon\",\"override_texture\":\"%s\",\"material_layout_hash\":%u,\"changed_pixels\":%d}\n"),*Hashes[0].ToString(),*Hashes[1].ToString(),*IconOverride->GetPathName(),Map->GetUniformExpressionSet().GetUniformBufferLayout().GetHash(),Different) :
             bColorDraw ? FString::Printf(TEXT("{\"width\":64,\"height\":64,\"format\":\"RGBA8\",\"game_time\":%.9g,\"real_time\":%.9g,\"red_sha1\":\"%s\",\"green_sha1\":\"%s\",\"changed_pixels\":%d}\n"),ViewCases[1].Game,ViewCases[1].Real,*Hashes[0].ToString(),*Hashes[1].ToString(),Different) :
             FString::Printf(TEXT("{\n  \"width\": 64, \"height\": 64, \"format\": \"RGBA8\",\n  \"red_sha1\": \"%s\", \"green_sha1\": \"%s\",\n  \"changed_pixels\": %d\n}\n"), *Hashes[0].ToString(), *Hashes[1].ToString(), Different);
@@ -694,6 +784,8 @@ static bool ParseLegacyMaterial(const TSharedPtr<FJsonObject>& Root, FLegacyMate
         else if (Kind == TEXT("AppendVector")) E.Kind = ELegacyMaterialExpression::AppendVector;
         else if (Kind == TEXT("ComponentSwizzle")) E.Kind = ELegacyMaterialExpression::ComponentSwizzle;
         else if (Kind == TEXT("TrigMath")) E.Kind = ELegacyMaterialExpression::TrigMath;
+        else if (Kind == TEXT("Max")) E.Kind = ELegacyMaterialExpression::Max;
+        else if (Kind == TEXT("Saturate")) E.Kind = ELegacyMaterialExpression::Saturate;
         else { Error = FString::Printf(TEXT("unsupported expression %s"), *Kind); return false; }
         const TArray<TSharedPtr<FJsonValue>>* Inputs = nullptr;
         if (Node->TryGetArrayField(TEXT("inputs"), Inputs))
@@ -794,6 +886,11 @@ struct FLegacyIngressProvenance final : FLegacyMaterialAssetProvenance
         return RestoreLegacyMaterialTextureReferences(Base,References,Error);
     }
 };
+
+// Diagnostic receipts prove each resource-owning package was decoded before
+// UE may reuse an identical registered shader map for another owner.
+static FCriticalSection GLegacyReceiptLock;
+static TMap<FString,TSharedPtr<const FLegacyIngressProvenance,ESPMode::ThreadSafe>> GLegacyReceipts;
 
 static bool SameOriginalExpressions(const FLegacyMaterialIR& A, const FLegacyMaterialIR& B)
 {
@@ -914,6 +1011,15 @@ static ELegacyMaterialAssetResult ProvideLegacyOriginal(const FLegacyMaterialAss
     P->OriginalResource=P->Decoded.Bytes;
     FSHA1::HashBuffer(P->OriginalResource.GetData(),P->OriginalResource.Num(),P->ResourceHash.Hash);
     P->SourceIdentity=Pin->Owner; P->OriginalShaderRecordCount=P->Decoded.Records.Num(); P->BundleJson=Pin->Json;
+    if (FParse::Param(FCommandLine::Get(),TEXT("FortniteProbeLegacyOriginalMaterial")) || FParse::Param(FCommandLine::Get(),TEXT("FortniteLegacyMaterialTrace")))
+    {
+        FScopeLock Lock(&GLegacyReceiptLock);
+        const auto* Existing=GLegacyReceipts.Find(Pin->Owner);
+        if (Existing && ((*Existing)->Decoded.Bytes!=P->Decoded.Bytes || (*Existing)->Decoded.Names!=P->Decoded.Names ||
+                         (*Existing)->Decoded.IR.OriginalMapHash!=P->Decoded.IR.OriginalMapHash))
+            return Fail(TEXT("conflicting original resource conversion receipt"));
+        if (!Existing) GLegacyReceipts.Add(Pin->Owner,P);
+    }
     Provenance=P; return ELegacyMaterialAssetResult::Converted;
 }
 // Compare the actual instance values by their complete serialized identities.
@@ -1205,8 +1311,32 @@ void ProbeLegacyOriginalMaterial()
     FMaterialResource* Resource=Material ? Material->GetMaterialResource(GMaxRHIFeatureLevel) : nullptr;
     FMaterialShaderMap* Map=Resource ? Resource->GetGameThreadShaderMap() : nullptr;
     const auto Provenance=Map ? Map->GetLegacyMaterialProvenance() : nullptr;
-    const bool bOriginal=Provenance.IsValid() && Provenance->OriginalShaderRecordCount==19 &&
-        Provenance->SourceIdentity==Pin->ResourceOwner &&
+    const auto ResourceProvenance=Resource ? Resource->GetLegacyMaterialAssetProvenance() : nullptr;
+    const auto* LiveReceipt=ResourceProvenance.IsValid() ? static_cast<const FLegacyIngressProvenance*>(ResourceProvenance.Get()) : nullptr;
+    TSharedPtr<const FLegacyIngressProvenance,ESPMode::ThreadSafe> OwnerReceipt;
+    if (Pin->bManifest)
+    {
+        FScopeLock Lock(&GLegacyReceiptLock);
+        if (const auto* Found=GLegacyReceipts.Find(Pin->ResourceOwner)) OwnerReceipt=*Found;
+    }
+    const FLegacyIngressPin* MapPin=nullptr;
+    if (Provenance.IsValid()) for (const auto& Candidate : GLegacyIngressPins)
+        if (Candidate.Owner==Provenance->SourceIdentity) { MapPin=&Candidate; break; }
+    const auto* MapReceipt=Provenance.IsValid() ? static_cast<const FLegacyIngressProvenance*>(Provenance.Get()) : nullptr;
+    const bool bIdentity=Pin->bManifest ?
+        (Resource && Resource->HasLegacyMaterialAsset() && LiveReceipt && OwnerReceipt.IsValid() && MapReceipt && MapPin && !MapPin->Json.IsEmpty() &&
+         MapPin->ResourceOwner==MapPin->Owner && MapPin->ResourceHash.Equals(Pin->ResourceHash,ESearchCase::IgnoreCase) && MapPin->ShaderIdentity==Pin->ShaderIdentity &&
+         OwnerReceipt->SourceIdentity==Pin->ResourceOwner && LiveReceipt->SourceIdentity==Pin->ResourceOwner &&
+         LiveReceipt->ResourceHash==OwnerReceipt->ResourceHash && LiveReceipt->OriginalShaderRecordCount==19 &&
+         LiveReceipt->OriginalResource==OwnerReceipt->Decoded.Bytes && LiveReceipt->Decoded.Bytes==OwnerReceipt->Decoded.Bytes &&
+         LiveReceipt->Decoded.Names==OwnerReceipt->Decoded.Names && LiveReceipt->Decoded.IR.OriginalMapHash==OwnerReceipt->Decoded.IR.OriginalMapHash &&
+         OwnerReceipt->ResourceHash==Provenance->ResourceHash &&
+         OwnerReceipt->Decoded.Bytes==Provenance->OriginalResource && OwnerReceipt->Decoded.Bytes==MapReceipt->Decoded.Bytes && OwnerReceipt->Decoded.Names==MapReceipt->Decoded.Names &&
+         OwnerReceipt->Decoded.IR.OriginalMapHash==MapReceipt->Decoded.IR.OriginalMapHash &&
+         Map && Map->GetShaderMapId().CookedShaderMapIdHash==OwnerReceipt->Decoded.IR.OriginalMapHash &&
+         OwnerReceipt->Decoded.MaterialPath==Pin->ShaderIdentity && OwnerReceipt->OriginalShaderRecordCount==19) :
+        (Provenance.IsValid() && Provenance->SourceIdentity==Pin->ResourceOwner);
+    const bool bOriginal=Provenance.IsValid() && Provenance->OriginalShaderRecordCount==19 && bIdentity &&
         Provenance->ResourceHash.ToString().Equals(Pin->ResourceHash,ESearchCase::IgnoreCase);
     const bool bComplete=Map && Resource && Map->IsComplete(Resource,false);
     bool bRenderAttached=false;
@@ -1222,6 +1352,12 @@ void ProbeLegacyOriginalMaterial()
             Material!=nullptr,Map!=nullptr,bOriginal,bComplete,bRenderAttached);
         FPlatformMisc::RequestExitWithStatus(false,1);
         return;
+    }
+    if (FParse::Param(FCommandLine::Get(),TEXT("FortniteLegacyMaterialMaxSaturateProbe")))
+    {
+        FString NumericError;
+        if (!ProbeLegacyMaxSaturateBits(Material,NumericError))
+        { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: %s"),*NumericError); FPlatformMisc::RequestExitWithStatus(false,1); return; }
     }
     if (OwnerPath==GLegacyDonutPath)
     {
@@ -1303,11 +1439,14 @@ void ProbeLegacyOriginalMaterial()
     const auto Fixture=Bundle->GetObjectField(TEXT("runtime_fixture"));
     const TArray<TSharedPtr<FJsonValue>>* ManifestViewCases=nullptr;
     const bool bManifestView=Pin->bManifest && Pin->bRequiresView && Fixture->TryGetArrayField(TEXT("view_cases"),ManifestViewCases);
+    const TSharedPtr<FJsonObject>* ManifestViewPolicy=nullptr;
+    if (bManifestView && (!Fixture->TryGetObjectField(TEXT("view_draw_expectations"),ManifestViewPolicy) || !ManifestViewPolicy->IsValid()))
+    { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: missing manifest View draw policy")); FPlatformMisc::RequestExitWithStatus(false,1); return; }
     if (bManifestView && !CheckLegacyUniforms(Map->GetUniformExpressionSet(),Fixture,TEXT("manifest View draw"),Error,Material,TEXT("view_cases")))
     { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: manifest View draw uniforms failed: %s"),*Error); FPlatformMisc::RequestExitWithStatus(false,1); return; }
     if (OwnerPath==GLegacyMenuPath && !CheckLegacyUniforms(Map->GetUniformExpressionSet(),Bundle->GetObjectField(TEXT("runtime_fixture")),TEXT("View draw"),Error,nullptr,TEXT("view_cases")))
     { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: View draw uniforms failed: %s"),*Error); FPlatformMisc::RequestExitWithStatus(false,1); return; }
-    if (OwnerPath==GLegacyMenuPath || bManifestView)
+    if (OwnerPath==GLegacyMenuPath || (Pin->bManifest && Pin->bRequiresView))
     {
         const FShaderParametersMetadata* Metadata=FViewUniformShaderParameters::FTypeInfo::GetStructMetadata();
         const auto& Layout=Metadata->GetLayout();
@@ -1357,10 +1496,10 @@ void ProbeLegacyOriginalMaterial()
     {
         if (!bAllShaders || CheckedShaders!=7)
         { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: manifest shader verification failed: %s"),*Error); FPlatformMisc::RequestExitWithStatus(false,1); return; }
-        UE_LOG(LogTemp,Display,TEXT("Legacy material ingress: manifest owner %s uses original resource owner %s, complete and attached on both threads; seven shaders and all uniform cases passed"),*OwnerPath,*Pin->ResourceOwner);
+        UE_LOG(LogTemp,Display,TEXT("Legacy material ingress: manifest owner %s uses original resource owner %s, shared map provenance owner %s; complete and attached on both threads; seven shaders and all uniform cases passed"),*OwnerPath,*Pin->ResourceOwner,*Provenance->SourceIdentity);
         if (bManifestView)
         {
-            if (!bVS || !bPS || !bView || !DrawLegacySlateQuad(Map,Bindings,Error,Material,Resource,TEXT(""),TEXT("FeatureViewQuad"),Fixture))
+            if (!bVS || !bPS || !bView || !DrawLegacySlateQuad(Map,Bindings,Error,Material,Resource,TEXT(""),TEXT("FeatureViewQuad"),Fixture,false,nullptr,true))
             { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: manifest View draw failed: %s"),*Error); FPlatformMisc::RequestExitWithStatus(false,1); return; }
         }
         return;

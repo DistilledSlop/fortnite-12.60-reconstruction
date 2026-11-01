@@ -70,6 +70,12 @@ public:
             O.IR.Texture2DParameters.Add(MoveTemp(Texture));
             return INDEX_NONE;
         }
+        else if (T == TEXT("Max") || T == TEXT("Saturate"))
+        {
+            E.A=Expression(Depth+1);
+            if (T == TEXT("Max")) { E.B=Expression(Depth+1); E.Kind=ELegacyMaterialExpression::Max; }
+            else E.Kind=ELegacyMaterialExpression::Saturate;
+        }
         else if (T == TEXT("ComponentSwizzle") || T == TEXT("FoldedMath") || T == TEXT("AppendVector") || T == TEXT("TrigMath"))
         {
             E.A=Expression(Depth+1); if (T != TEXT("ComponentSwizzle")) E.B=Expression(Depth+1);
