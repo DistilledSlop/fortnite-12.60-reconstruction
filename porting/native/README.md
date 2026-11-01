@@ -206,3 +206,20 @@ env -u LD_LIBRARY_PATH stdbuf -oL -eL porting/generated/linux-stage/LinuxNoEdito
 
 It logs one `NetSerializeSelfTest: <Struct> <case> PASS` or `FAIL` line per case, then `NetSerializeSelfTest: ALL PASS`
 (exit 0) or `FAILED n` (exit 1). The flag is ignored by any other run.
+
+## Game instance selection
+
+`DefaultEngine.ini` selects `/Script/FortniteGame.FortGameInstance`, matching the
+extracted 12.60 configuration. The generated native class is present, but its
+methods are largely stubs; this setting alone does not implement the original
+frontend or its initialization lifecycle. The Entry map and Athena game mode
+remain the defaults for the working native direct-join path.
+
+A November 2026 isolated hardlinked copy of the existing Linux stage, with the
+updated config copied over, loaded `/Engine/Maps/Entry` under `-nullrhi` and
+`obj list class=FortGameInstance` listed one live instance under the game engine.
+The process exited normally after `Quit`. A dedicated server on port 17777 and a
+client using that stage completed a direct join on `FortniteEmptyDedicated`
+with `FortGameModeAthena`; the client was stopped by the test timeout. The
+startup still reported missing Water plugin assets. This smoke test does not
+validate the original frontend or UI behavior.
