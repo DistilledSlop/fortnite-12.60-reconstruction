@@ -198,6 +198,42 @@ class BatchTests(unittest.TestCase):
             self.assertEqual(sentinel.read_bytes(), b'preserve')
             self.assertEqual(list(output.iterdir()), [sentinel])
 
+    def test_invalid_record_reports_rejected_without_local_assets(self):
+        # These reports are only negative inputs; they do not model a valid resource.
+        slate = [dict(type=dict(name=name, number=0)) for name in sorted(batch.SLATE_TYPES)]
+        mesh = [dict(type=dict(name='FConvertToUniformMeshVS', number=0)) for _ in range(7)]
+        base = dict(complete_serialized_shader_map=True, undecoded_bytes=0, shader_record_count=14,
+                    material_shaders=dict(count=7, records=slate, mesh_shader_maps_count=1),
+                    mesh_shader_maps=[dict(count=7, records=mesh,
+                                           vertex_factory=dict(name='FLocalVertexFactory', number=0))])
+        for corruption in ('missing', 'extra', 'group_count', 'bool_count', 'low_count',
+                           'high_count', 'vertex_factory', 'shader_family'):
+            parsed = copy.deepcopy(base)
+            group = parsed['mesh_shader_maps'][0]
+            if corruption == 'missing':
+                group['records'].pop()
+            elif corruption == 'extra':
+                group['records'].append(copy.deepcopy(group['records'][0]))
+            elif corruption == 'group_count':
+                group['count'] = 6
+            elif corruption == 'bool_count':
+                parsed['shader_record_count'] = True
+            elif corruption == 'low_count':
+                parsed['shader_record_count'] = 6
+            elif corruption == 'high_count':
+                parsed['shader_record_count'] = 257
+            elif corruption == 'vertex_factory':
+                group['vertex_factory']['name'] = 'FUnsupportedVertexFactory'
+            else:
+                group['records'][0]['type']['name'] = 'UnsupportedShader'
+            with self.subTest(corruption=corruption), self.assertRaises(ValueError):
+                batch.numeric_contract(parsed)
+
+        textured = copy.deepcopy(base)
+        textured['uniform_expression_arrays'] = dict(texture_2d=dict(count=1))
+        with self.assertRaisesRegex(ValueError, 'texture expressions'):
+            batch.numeric_contract(textured)
+
     def test_original_fourteen_record_shape_and_rejections(self):
         path = (Path(__file__).resolve().parent.parent / 'generated/frontend-probes/frontend-material-inventory/'
                 'FortniteGame_Content_UI_Foundation_Lobby_materials_M_UI_Border_HGrad.decoded.json')
