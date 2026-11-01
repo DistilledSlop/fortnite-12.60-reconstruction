@@ -1,0 +1,28 @@
+{
+  "name": "IsInputSuspended",
+  "create_func": "0x14080ec90",
+  "flags": [
+    "0x54020401"
+  ],
+  "replicated_function": false,
+  "net_roles": [],
+  "outer_fn": "0x14080e9a0",
+  "params": [
+    {
+      "index": 0,
+      "name": "ReturnValue",
+      "kind": "Bool",
+      "kind_raw": "0x2c",
+      "property_flags": "0x10000000000580",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "element_size": 1,
+      "size_of_outer": 1,
+      "bitfield": true,
+      "set_bit_fn": "0x1406966a0",
+      "offset": null
+    }
+  ]
+}

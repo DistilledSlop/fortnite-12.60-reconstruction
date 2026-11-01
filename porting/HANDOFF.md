@@ -6,7 +6,8 @@
   All four gates are false. Latest fully green runtime is Nativec06a5cb / Engined7e04d4b6,
   immutable build2 validated by new run-only attempt5 using tools973d38e. All ownership is released.
   New manual Native `CommonUI/Private/SCommonButton.h/.cpp` source is now composed and syntax-checked;
-  it is NOT built/linked/runtime-verified yet. Root owns subsequent Native integration.
+  both real builds now PASS132.06/120.84s; results/logs /tmp/scommonbutton-native-build-1/.
+  No widget runtime or UObject factory wiring is claimed. Root owns subsequent Native integration.
 - Base activation is implemented and runtime verified: actual constructor/defaults, guarded activation,
   visibility, Blueprint/native/dynamic notification order and reentry pass40orderedrows. Both target
   UHT/object/linked implementation and full generic context proofs pass. Root independently reran
@@ -33,7 +34,11 @@
   Suspended manager flagFD is operation state; FE writer1407faa40 is a direct bool store with no broadcast.
   Typed manager callers set FE true/false, and reset clears it: /tmp/manager-external-suspend-writer-1.
   Setter/caller feature names and exhaustive writer coverage remain unproven; do not invent a public reflected API.
-  IsInputSuspended needs its real OR getter/flag producer integration; current generated manager lacks that method.
+  IsInputSuspended generator input is now applied from /tmp/manager-suspend-getter-policy-1; promotion/build pending.
+  Root verified its entire original bool-return descriptor equals the already runtime-verified IsActivated descriptor
+  (kind2c includesNativeBool20); extraction bitfield label is not a new representation mismatch.
+  Two native flag defaults model the UObject zero-allocation path; original allocator parity remains a documented inference.
+  Queue and external feature-callsite integration are still pending; getter alone does not complete manager behavior.
   Source callback and manager integration remains pending. Slate+5c8 is a focus delegate; +250 is IsPressed, not focus support.
   Cursor clamp source is complete off workspace at /tmp/cursor-viewport-clamp-2; producer/runtime integration pending.
 - Persistent collaboration: root plans/integrates/reviews and performs difficult work directly. Use bounded

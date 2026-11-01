@@ -3,8 +3,11 @@ import json
 from pathlib import Path
 HERE = Path(__file__).resolve().parent
 EXPECTED = json.loads((HERE / 'base-original-policy.json').read_text())
+MANAGER_EXPECTED = json.loads((HERE / 'manager-original-policy.json').read_text())
 
 def apply(model, block, owner_fns):
+    if model['name'] == 'UCommonInputManager':
+        return apply_manager(model, block, owner_fns)
     if model['name'] != 'UCommonActivatableWidget':
         return model
     if block.get('block_va') != '0x145a004e0' or model['package'] != '/Script/CommonUI' or '0x1408079b0' not in owner_fns:
@@ -26,6 +29,21 @@ def apply(model, block, owner_fns):
     model['common_activation_runtime']=True
     return model
 
+def apply_manager(model, block, owner_fns):
+    if block.get('block_va') != '0x145a05fd0' or model['package'] != '/Script/CommonUI' or '0x14080e9a0' not in owner_fns:
+        raise ValueError('original CommonInputManager owner mismatch')
+    found = [f for f in block.get('functions', []) if f.get('name') == 'IsInputSuspended']
+    if found != [MANAGER_EXPECTED]:
+        raise ValueError('original IsInputSuspended signature mismatch')
+    if any(f['name'] == 'IsInputSuspended' for f in model['functions']):
+        raise ValueError('IsInputSuspended already emitted')
+    model['functions'].append({'name':'IsInputSuspended', 'rpc':False, 'service':None,
+        'ret':'bool', 'args':[], 'const':True, 'notify':False, 'splice':False,
+        'blueprint_event':False, 'access':'public', 'runtime_implementation':True,
+        'specifiers':['BlueprintCallable','BlueprintPure'], 'used':{}})
+    model['common_input_suspension_runtime']=True
+    return model
+
 def header_prelude(model):
     result=dict(model)
     if result.get('common_activation_runtime'):
@@ -33,10 +51,14 @@ def header_prelude(model):
     return result
 
 def declarations(model):
-    return (HERE/'base-declarations.inc').read_text() if model.get('common_activation_runtime') else ''
+    if model.get('common_activation_runtime'): return (HERE/'base-declarations.inc').read_text()
+    if model.get('common_input_suspension_runtime'): return (HERE/'manager-declarations.inc').read_text()
+    return ''
 
 def definitions(model):
-    return ('\n#include "CommonActivationCore.h"\n'+(HERE/'base-definitions.inc').read_text()) if model.get('common_activation_runtime') else ''
+    if model.get('common_activation_runtime'): return '\n#include "CommonActivationCore.h"\n'+(HERE/'base-definitions.inc').read_text()
+    if model.get('common_input_suspension_runtime'): return (HERE/'manager-definitions.inc').read_text()
+    return ''
 
 def emit_headers(source_root, generated_names):
     if 'UCommonActivatableWidget' not in generated_names:return
