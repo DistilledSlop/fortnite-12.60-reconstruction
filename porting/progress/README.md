@@ -139,7 +139,7 @@ gives identical bytes. Commit the result.
 
 ### Latest regression provenance
 
-Full run `porting/generated/regress/20261031T235803Z-2105216/result.json` passed build/restage and seven checks, including 4,617 class matches, 250 verified behavior snippets and 71 backend tests. Its native inputs were uncommitted at HEAD `4a14b8c` and later committed as `7b2a97f`; engine source was `f716e0cb6`. Smoke ledger entries judge saved logs, with null recorder exit codes and separate wrapper exit/provenance fields. The checksum tool self-test is a fresh executed check. `ui_banner_classload` records class deserialization with an opt-in loader flag; it does not establish widget creation/display or a milestone. All four gates remain open.
+Native `907e1dc` has separate build and runtime receipts. Build `generated/regress/20261101T002525Z-2242896/result.json` passes the corrected incremental-build gate; `generated/regress/20261101T002339Z-2232871/result.json` passes restage and seven checks (4,617 offline classes, 251 behavior snippets, 71 backend tests). The earlier wrapper failure at `20261101T002007Z-2216551` was its mtime rule after Build.sh exit0, not a compiler failure. Engine source remains `f716e0cb6`. The smoke ledger judges existing logs with separate wrapper exits and source provenance. UIManager class loading and the local version getter are limited probes, not milestones. Shader receipts verify 44 structurally valid SPIR-V candidates, with twelve compiler diagnostics and no semantic or rendering proof. All four product gates remain open.
 
 ### Recording evidence
 

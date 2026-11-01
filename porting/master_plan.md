@@ -36,9 +36,9 @@ using historical instructions below.
    multi-client match through its end with sound and visuals working, and compare
    behavior and presentation against the supplied 12.60 build.
 
-## Current work (2026-11-01 00:07 UTC)
+## Current work (2026-11-01 00:37 UTC)
 
-Native `7b2a97f` with engine `f716e0cb6` passes the full regression (4,617 offline class matches, 250 behavior snippets, 71 backend tests). A partially staged banner Blueprint class loads with the opt-in legacy field-path reader; widget creation/display and the root menu remain unverified. Prioritize isolated root UI dependencies and missing native helpers, then lobby/matchmaking. Backend parser and protocol corrections are recorded in `server/EVIDENCE.md`. All four product gates remain open; see `HANDOFF.md` for exact provenance and preserved engine edits.
+Native `907e1dc` with engine `f716e0cb6` builds and passes both joins, 4,617 offline checksums, 251 snippets and 71 backend tests (separate build/runtime receipts in HANDOFF). The corrected root hard-import closure is complete and UIManager class loads; actual root widgets remain blocked on original inline shader-map ABI. Original bytecode is recoverable: 44 candidate frontend DXBC shaders now translate to structurally validated SPIR-V, with 12 modifier diagnostics still requiring semantic investigation. Prioritize the genuine material/binding bridge and real root UI draws, not proxy materials. Then port authentic UI lifecycle/missing native helpers and verify lobby/matchmaking. All four gates remain open.
 
 ## Standing constraints
 

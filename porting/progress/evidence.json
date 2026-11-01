@@ -13,28 +13,58 @@
       "result": "pass",
       "utc": "2026-11-01T00:06:36Z"
     },
-    "net_version_checksum": {
-      "command": "(log only) porting/generated/dedicated-server-client-test.log",
-      "commit": "7b2a97ff6d77efb6689d3e496970d236ce81fa37",
+    "game_version_probe": {
+      "command": "(log only) porting/generated/frontend-probes/probe-getgameversion.log",
+      "commit": "532d81a110890a9bf8d06538c3cf0b91fb8c5b4c",
       "exit_code": null,
-      "id": "net_version_checksum",
+      "id": "game_version_probe",
       "key_lines": [
-        "[2026.11.01-00.03.58:600][ 67]LogFortniteNet: Local network version checksum: 683914758 (0x28C3B606)"
+        "[2026.11.01-00.19.43:026][  0]LogTemp: Display: Fortnite game version probe: v4.25 (0)"
       ],
       "matches": 1,
       "result": "pass",
-      "utc": "2026-11-01T00:06:30Z",
-      "source_native_commit": "7b2a97f",
+      "utc": "2026-11-01T00:39:06Z",
+      "source_native_commit": "907e1dc",
       "engine_commit": "f716e0cb6",
-      "origin_run": "porting/generated/regress/20261031T235803Z-2105216/result.json",
-      "origin_run_head_before": "4a14b8c",
-      "origin_run_head_after": "4a14b8c",
-      "origin_run_worktree": "UI event/static getter inputs uncommitted during run, later committed as 7b2a97f",
-      "provenance_note": "Saved log judged without rerunning. Full wrapper recorded both smoke exits 0; compiled source matches the later native commit."
+      "observed_process_exit_code": 0,
+      "provenance_note": "Saved local-engine probe; v4.25 (0) is not original Fortnite version metadata."
+    },
+    "net_version_checksum": {
+      "command": "(log only) porting/generated/dedicated-server-client-test.log",
+      "commit": "532d81a110890a9bf8d06538c3cf0b91fb8c5b4c",
+      "exit_code": null,
+      "id": "net_version_checksum",
+      "key_lines": [
+        "[2026.11.01-00.24.37:476][ 67]LogFortniteNet: Local network version checksum: 683914758 (0x28C3B606)"
+      ],
+      "matches": 1,
+      "result": "pass",
+      "utc": "2026-11-01T00:39:06Z",
+      "source_native_commit": "907e1dc",
+      "engine_commit": "f716e0cb6",
+      "origin_run": "porting/generated/regress/20261101T002339Z-2232871/result.json",
+      "origin_run_worktree": "GetGameVersion inputs uncommitted during the recorded runtime suite, subsequently committed as 907e1dc",
+      "provenance_note": "Existing logs evaluated without rerunning smokes; wrapper recorded exit0. Native build evidence is separate at generated/regress/20261101T002525Z-2242896/result.json after mtime-gate correction."
+    },
+    "shader_structural_validation": {
+      "command": "python3 -c 'import hashlib,json,pathlib; p=json.load(open(\"porting/generated/material_pipeline/frontend-translated/translation-report.json\")); rows=p[\"records\"]; assert len(rows)==44 and p[\"validated_jobs\"]==44; assert all(r[\"compile_exit\"]==0 and r[\"validation_exit\"]==0 for r in rows); assert all(hashlib.sha256(pathlib.Path(r[k]).read_bytes()).hexdigest()==r[k+\"_sha256\"] for r in rows for k in (\"input\",\"output\")); print(\"SPIR-V structural validation: 44/44; compiler diagnostics:\",p[\"compiler_diagnostic_jobs\"],\"; rendering unverified\")'",
+      "commit": "532d81a110890a9bf8d06538c3cf0b91fb8c5b4c",
+      "exit_code": 0,
+      "id": "shader_structural_validation",
+      "key_lines": [
+        "SPIR-V structural validation: 44/44; compiler diagnostics: 12 ; rendering unverified"
+      ],
+      "result": "pass",
+      "utc": "2026-11-01T00:39:06Z",
+      "reader_commit": "8d3a3cb",
+      "translator_commit": "532d81a",
+      "receipt": "porting/generated/material_pipeline/frontend-translated/translation-report.json",
+      "compiler_diagnostic_jobs": 12,
+      "provenance_note": "Executed local receipt/hash verification;44modulecompile/SPIRVvalidation results retained. Twelve modifier diagnostics require semantic investigation; no UE draw verified."
     },
     "smoke_athena": {
-      "command": "(log only) porting/generated/regress/20261031T235803Z-2105216/smoke_athena.log",
-      "commit": "7b2a97ff6d77efb6689d3e496970d236ce81fa37",
+      "command": "(log only) porting/generated/regress/20261101T002339Z-2232871/smoke_athena.log",
+      "commit": "532d81a110890a9bf8d06538c3cf0b91fb8c5b4c",
       "exit_code": null,
       "id": "smoke_athena",
       "key_lines": [
@@ -42,19 +72,17 @@
       ],
       "matches": 1,
       "result": "pass",
-      "utc": "2026-11-01T00:06:30Z",
-      "source_native_commit": "7b2a97f",
+      "utc": "2026-11-01T00:39:06Z",
+      "source_native_commit": "907e1dc",
       "engine_commit": "f716e0cb6",
-      "origin_run": "porting/generated/regress/20261031T235803Z-2105216/result.json",
-      "origin_run_head_before": "4a14b8c",
-      "origin_run_head_after": "4a14b8c",
-      "origin_run_worktree": "UI event/static getter inputs uncommitted during run, later committed as 7b2a97f",
-      "provenance_note": "Saved log judged without rerunning. Full wrapper recorded both smoke exits 0; compiled source matches the later native commit.",
+      "origin_run": "porting/generated/regress/20261101T002339Z-2232871/result.json",
+      "origin_run_worktree": "GetGameVersion inputs uncommitted during the recorded runtime suite, subsequently committed as 907e1dc",
+      "provenance_note": "Existing logs evaluated without rerunning smokes; wrapper recorded exit0. Native build evidence is separate at generated/regress/20261101T002525Z-2242896/result.json after mtime-gate correction.",
       "wrapper_exit_code": 0
     },
     "smoke_default": {
-      "command": "(log only) porting/generated/regress/20261031T235803Z-2105216/smoke_default.log",
-      "commit": "7b2a97ff6d77efb6689d3e496970d236ce81fa37",
+      "command": "(log only) porting/generated/regress/20261101T002339Z-2232871/smoke_default.log",
+      "commit": "532d81a110890a9bf8d06538c3cf0b91fb8c5b4c",
       "exit_code": null,
       "id": "smoke_default",
       "key_lines": [
@@ -62,32 +90,46 @@
       ],
       "matches": 1,
       "result": "pass",
-      "utc": "2026-11-01T00:06:30Z",
-      "source_native_commit": "7b2a97f",
+      "utc": "2026-11-01T00:39:06Z",
+      "source_native_commit": "907e1dc",
       "engine_commit": "f716e0cb6",
-      "origin_run": "porting/generated/regress/20261031T235803Z-2105216/result.json",
-      "origin_run_head_before": "4a14b8c",
-      "origin_run_head_after": "4a14b8c",
-      "origin_run_worktree": "UI event/static getter inputs uncommitted during run, later committed as 7b2a97f",
-      "provenance_note": "Saved log judged without rerunning. Full wrapper recorded both smoke exits 0; compiled source matches the later native commit.",
+      "origin_run": "porting/generated/regress/20261101T002339Z-2232871/result.json",
+      "origin_run_worktree": "GetGameVersion inputs uncommitted during the recorded runtime suite, subsequently committed as 907e1dc",
+      "provenance_note": "Existing logs evaluated without rerunning smokes; wrapper recorded exit0. Native build evidence is separate at generated/regress/20261101T002525Z-2242896/result.json after mtime-gate correction.",
       "wrapper_exit_code": 0
     },
     "ui_banner_classload": {
       "command": "(log only) porting/generated/frontend-banner-probe-events.log",
       "commit": "7b2a97ff6d77efb6689d3e496970d236ce81fa37",
+      "engine_commit": "f716e0cb6",
       "exit_code": null,
       "id": "ui_banner_classload",
       "key_lines": [
         "[2026.11.01-00.04.35:511][  0]LogTemp: Display: Fortnite asset probe: /Game/UI/Foundation/Profile/BP_BannerEditorTile.BP_BannerEditorTile_C -> WidgetBlueprintGeneratedClass"
       ],
       "matches": 1,
+      "observed_process_exit_code": 0,
+      "provenance_note": "Saved probe log, exit 0 observed by build owner. Only partially staged Blueprint class deserialization; content warnings remain and no widget was created or displayed.",
+      "required_option": "-FortniteLegacyFieldPaths",
       "result": "pass",
-      "utc": "2026-11-01T00:06:36Z",
       "source_native_commit": "7b2a97f",
+      "utc": "2026-11-01T00:06:36Z"
+    },
+    "ui_manager_classload": {
+      "command": "(log only) porting/generated/frontend-probes/probe-fixed-uimanager.log",
+      "commit": "532d81a110890a9bf8d06538c3cf0b91fb8c5b4c",
+      "exit_code": null,
+      "id": "ui_manager_classload",
+      "key_lines": [
+        "[2026.11.01-00.13.40:972][  0]LogTemp: Display: Fortnite asset probe: /Game/UI/Foundation/UIManager_Startup.UIManager_Startup_C -> BlueprintGeneratedClass"
+      ],
+      "matches": 1,
+      "result": "pass",
+      "utc": "2026-11-01T00:39:06Z",
+      "source_native_baseline": "7b2a97f before version-getter recovery",
       "engine_commit": "f716e0cb6",
       "observed_process_exit_code": 0,
-      "required_option": "-FortniteLegacyFieldPaths",
-      "provenance_note": "Saved probe log, exit 0 observed by build owner. Only partially staged Blueprint class deserialization; content warnings remain and no widget was created or displayed."
+      "provenance_note": "Saved class-only probe log from isolated runtime; root widget creation/display not verified."
     }
   }
 }

@@ -6,7 +6,7 @@
       "id": "m1",
       "text": "The rebuilt client reaches the main menu with feature parity to the 12.60 original",
       "done": false,
-      "evidence": "A recovered banner WidgetBlueprintGeneratedClass deserializes with the opt-in legacy field-path reader; content warnings remain. No root widget has been created/displayed and no interactive main menu exists (frontend/readiness.md)."
+      "evidence": "The isolated hard-import closure reaches 721 packages with no failed/pending. UIManager class loads, but RootLayout/LoginScreen crash in original inline shader-map ABI. Recovered shader candidates translate/validate structurally with outstanding compiler diagnostics; no root widget or interactive menu is displayed (frontend/readiness.md, material_pipeline/README.md)."
     },
     {
       "id": "m2",
