@@ -1,0 +1,351 @@
+{
+  "FortDialogDescription_NUI": {
+    "block_va": "0x147bd4950",
+    "name": "FortDialogDescription_NUI",
+    "construct_fns": [
+      "0x142b25370"
+    ],
+    "package_fn": "0x142a02c30",
+    "package": "/Script/FortniteGame",
+    "super_fn": null,
+    "struct_ops_fn": "0x142b1b360",
+    "size": 280,
+    "align": 8,
+    "struct_flags": "0x205",
+    "struct_flag_names": [
+      "Native",
+      "HasInstancedReference",
+      "RequiredAPI"
+    ],
+    "object_flags": "0x45",
+    "struct_ops": {
+      "vtable_va": "0x146556f68",
+      "ops_size": 280,
+      "ops_align": 8,
+      "size_matches": true,
+      "align_matches": true,
+      "traits": {
+        "HasNoopConstructor": false,
+        "HasZeroConstructor": false,
+        "HasDestructor": true,
+        "HasSerializer": false,
+        "HasStructuredSerializer": false,
+        "HasPostSerialize": false,
+        "HasNetSerializer": false,
+        "HasNetSharedSerialization": false,
+        "HasNetDeltaSerializer": false,
+        "HasPostScriptConstruct": false,
+        "IsPlainOldData": false,
+        "HasCopy": true,
+        "HasIdentical": false,
+        "HasExportTextItem": false,
+        "HasImportTextItem": false,
+        "HasAddStructReferencedObjects": false,
+        "HasSerializeFromMismatchedTag": false,
+        "HasStructuredSerializeFromMismatchedTag": false,
+        "HasGetTypeHash": false
+      },
+      "unclassified_slots": []
+    },
+    "properties": [
+      {
+        "index": 0,
+        "name": "ShowSound",
+        "kind": "Object",
+        "kind_raw": "0x12",
+        "property_flags": "0x10000000000014",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 240,
+        "type_refs": {
+          "class": "0x1447eafa0"
+        }
+      },
+      {
+        "index": 1,
+        "name": "NotificationHandler",
+        "kind": "Object",
+        "kind_raw": "0x12",
+        "property_flags": "0x10000000000004",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 232,
+        "type_refs": {
+          "class": "0x142a02bf0"
+        }
+      },
+      {
+        "index": 2,
+        "name": "bShouldWaitForLatentActionOnConfirmAction",
+        "kind": "Bool",
+        "kind_raw": "0x2c",
+        "property_flags": "0x10000000000014",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "element_size": 1,
+        "size_of_outer": 280,
+        "bitfield": true,
+        "offset": null
+      },
+      {
+        "index": 3,
+        "name": "Cancelable",
+        "kind": "Bool",
+        "kind_raw": "0x2c",
+        "property_flags": "0x10000000000004",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "element_size": 1,
+        "size_of_outer": 280,
+        "bitfield": true,
+        "offset": null
+      },
+      {
+        "index": 4,
+        "name": "Dismissable",
+        "kind": "Bool",
+        "kind_raw": "0x2c",
+        "property_flags": "0x10000000000004",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "element_size": 1,
+        "size_of_outer": 280,
+        "bitfield": true,
+        "offset": null
+      },
+      {
+        "index": 5,
+        "name": "DisplayTime",
+        "kind": "Float",
+        "kind_raw": "0xa",
+        "property_flags": "0x10000000000004",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 224
+      },
+      {
+        "index": 6,
+        "name": "LeftAdditionalContent",
+        "kind": "Object",
+        "kind_raw": "0x12",
+        "property_flags": "0x1000000008000c",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 216,
+        "type_refs": {
+          "class": "0x143dc3650"
+        }
+      },
+      {
+        "index": 7,
+        "name": "AdditionalContent",
+        "kind": "Object",
+        "kind_raw": "0x12",
+        "property_flags": "0x1000000008000c",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 208,
+        "type_refs": {
+          "class": "0x143dc3650"
+        }
+      },
+      {
+        "index": 8,
+        "name": "DeclineButtonInputAction",
+        "kind": "Name",
+        "kind_raw": "0x14",
+        "property_flags": "0x10000000000004",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 200
+      },
+      {
+        "index": 9,
+        "name": "ConfirmButtonInputActions",
+        "kind": "Array",
+        "kind_raw": "0x16",
+        "property_flags": "0x10000000000004",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 184
+      },
+      {
+        "index": 10,
+        "name": "ConfirmButtonInputActions",
+        "kind": "Struct",
+        "kind_raw": "0x19",
+        "property_flags": "0x0",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 0,
+        "type_refs": {
+          "struct": "0x142b25040"
+        },
+        "array_inner_of": "ConfirmButtonInputActions"
+      },
+      {
+        "index": 11,
+        "name": "MessageBody",
+        "kind": "Text",
+        "kind_raw": "0x1d",
+        "property_flags": "0x10000000000004",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 160
+      },
+      {
+        "index": 12,
+        "name": "MessageHeader",
+        "kind": "Text",
+        "kind_raw": "0x1d",
+        "property_flags": "0x10000000000004",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 136
+      },
+      {
+        "index": 13,
+        "name": "Icon",
+        "kind": "Struct",
+        "kind_raw": "0x19",
+        "property_flags": "0x10000000000004",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 0,
+        "type_refs": {
+          "struct": "0x142fdb590"
+        }
+      }
+    ],
+    "num_properties": 14
+  },
+  "FortDialogExternalLatentActionHandle": {
+    "block_va": "0x147bd49c0",
+    "name": "FortDialogExternalLatentActionHandle",
+    "construct_fns": [
+      "0x142b253a0"
+    ],
+    "package_fn": "0x142a02c30",
+    "package": "/Script/FortniteGame",
+    "super_fn": null,
+    "struct_ops_fn": "0x142b1b3e0",
+    "size": 4,
+    "align": 4,
+    "struct_flags": "0x201",
+    "struct_flag_names": [
+      "Native",
+      "RequiredAPI"
+    ],
+    "object_flags": "0x45",
+    "struct_ops": {
+      "vtable_va": "0x146557098",
+      "ops_size": 4,
+      "ops_align": 4,
+      "size_matches": true,
+      "align_matches": true,
+      "traits": {
+        "HasNoopConstructor": false,
+        "HasZeroConstructor": false,
+        "HasDestructor": true,
+        "HasSerializer": false,
+        "HasStructuredSerializer": false,
+        "HasPostSerialize": false,
+        "HasNetSerializer": false,
+        "HasNetSharedSerialization": false,
+        "HasNetDeltaSerializer": false,
+        "HasPostScriptConstruct": false,
+        "IsPlainOldData": false,
+        "HasCopy": true,
+        "HasIdentical": false,
+        "HasExportTextItem": false,
+        "HasImportTextItem": false,
+        "HasAddStructReferencedObjects": false,
+        "HasSerializeFromMismatchedTag": false,
+        "HasStructuredSerializeFromMismatchedTag": false,
+        "HasGetTypeHash": false
+      },
+      "unclassified_slots": []
+    },
+    "properties": [
+      {
+        "index": 0,
+        "name": "Handle",
+        "kind": "Int",
+        "kind_raw": "0x3",
+        "property_flags": "0x40000000000000",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 0
+      }
+    ],
+    "num_properties": 1
+  },
+  "EFortDialogResult": {
+    "block_va": "0x147bd8548",
+    "name": "EFortDialogResult",
+    "cpp_type": "EFortDialogResult",
+    "construct_fns": [
+      "0x142b242c0"
+    ],
+    "package_fn": "0x142a02c30",
+    "package": "/Script/FortniteGame",
+    "cpp_form": "EnumClass",
+    "dynamic_type": "NotDynamic",
+    "enumerators": [
+      {
+        "name": "EFortDialogResult::Confirmed",
+        "value": 0
+      },
+      {
+        "name": "EFortDialogResult::Declined",
+        "value": 1
+      },
+      {
+        "name": "EFortDialogResult::Ignored",
+        "value": 2
+      },
+      {
+        "name": "EFortDialogResult::Killed",
+        "value": 3
+      },
+      {
+        "name": "EFortDialogResult::TimedOut",
+        "value": 4
+      },
+      {
+        "name": "EFortDialogResult::Unknown",
+        "value": 5
+      }
+    ]
+  }
+}

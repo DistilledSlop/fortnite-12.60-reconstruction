@@ -2162,6 +2162,10 @@ _common_activation_spec = _common_activation_import.spec_from_file_location(
     "common_activation_policy", os.path.join(os.path.dirname(__file__), "frontend", "common_panel_runtime", "policy.py"))
 _common_activation_policy = _common_activation_import.module_from_spec(_common_activation_spec)
 _common_activation_spec.loader.exec_module(_common_activation_policy)
+_confirmation_spec = _common_activation_import.spec_from_file_location(
+    "confirmation_runtime_policy", os.path.join(os.path.dirname(__file__), "frontend", "confirmation_runtime", "policy.py"))
+_confirmation_policy = _common_activation_import.module_from_spec(_confirmation_spec)
+_confirmation_spec.loader.exec_module(_confirmation_policy)
 
 
 def build_class_promoted(block, name, resolver, parent_entry, owner_fns, snippets=(), splice_ctx=None, native_execs=None):
@@ -4137,6 +4141,7 @@ class TypeGate:
                 model["blueprint_type"] = True
                 for member in model["members"]:
                     member["blueprint_read_write"] = True
+            model = _confirmation_policy.apply_struct(self, info, model)
             return model, None
         finally:
             self.current_package = saved
@@ -4410,6 +4415,7 @@ def render_struct_header(model, source_label):
         lines.append("// TODO: the native net serializer of %s is not recovered (ops vtable %s; %s). The default"
                      % (name, net.get("vtable"), ", ".join(net.get("traits", []))))
         lines.append("// serialization is used until it is ported.")
+    lines.extend(_confirmation_policy.preamble(model))
     lines.append("USTRUCT(BlueprintType)" if model.get("blueprint_type") else "USTRUCT()")
     lines.append("struct %s%s%s" % (model.get("api", ""), name, " : public %s" % model["parent"] if model["parent"] else ""))
     lines.append("{")
@@ -4421,6 +4427,7 @@ def render_struct_header(model, source_label):
         lines.append("\t%s" % m["decl"])
         lines.append("")
     lines.extend(_common_activation_policy.struct_declarations(model))
+    lines.extend(_confirmation_policy.declarations(model))
     if delta:
         item = net["item"]
         lines.append("\t// Native NetDeltaSerialize, the FFastArraySerializer pattern (ops vtable %s, traits %s): the"
@@ -4445,6 +4452,7 @@ def render_struct_header(model, source_label):
         lines.append("")
     lines.append("};")
     lines.append("")
+    lines.extend(_confirmation_policy.footer(model))
     if delta:
         lines.append("template<>")
         lines.append("struct TStructOpsTypeTraits<%s> : public TStructOpsTypeTraitsBase2<%s>" % (name, name))

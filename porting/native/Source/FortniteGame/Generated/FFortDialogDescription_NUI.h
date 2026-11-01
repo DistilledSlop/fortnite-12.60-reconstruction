@@ -4,7 +4,9 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "EFortDialogResult.h"
 #include "FConfirmationDialogAction.h"
+#include "FFortDialogExternalLatentActionHandle.h"
 #include "Styling/SlateBrush.h"
 
 class UFortNotificationHandler;
@@ -12,6 +14,10 @@ class USoundBase;
 class UWidget;
 
 #include "FFortDialogDescription_NUI.generated.h"
+
+// Project-local names for the original native single-cast callback contracts.
+DECLARE_DELEGATE_TwoParams(FNativeConfirmationResult, EFortDialogResult, FName);
+DECLARE_DELEGATE_FourParams(FNativeAdvancedConfirmationResult, EFortDialogResult, FName, bool, FFortDialogExternalLatentActionHandle);
 
 USTRUCT()
 struct FORTNITEGAME_API FFortDialogDescription_NUI
@@ -70,5 +76,23 @@ struct FORTNITEGAME_API FFortDialogDescription_NUI
 	UPROPERTY()
 	USoundBase* ShowSound;
 
+	FFortDialogDescription_NUI()
+		: AdditionalContent(nullptr)
+		, LeftAdditionalContent(nullptr)
+		, DisplayTime(0.0f)
+		, Dismissable(true)
+		, Cancelable(false)
+		, bShouldWaitForLatentActionOnConfirmAction(false)
+		, NotificationHandler(nullptr)
+		, ShowSound(nullptr)
+	{
+	}
+
+	// Project-local names; the original source identifiers were not recovered.
+	FNativeConfirmationResult NativeResultCallback;
+	FNativeAdvancedConfirmationResult NativeAdvancedResultCallback;
 };
+
+static_assert(TStructOpsTypeTraits<FFortDialogDescription_NUI>::WithCopy,
+    "Confirmation description must copy its native delegates through C++ struct ops");
 

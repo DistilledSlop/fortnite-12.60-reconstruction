@@ -1,0 +1,78 @@
+{
+  "image_sha256": "338c83a2314ccac1040a2c0bb520b893013cc7b58eda58e550da67f5d84de680",
+  "image_base": "0x140000000",
+  "spans": [
+    {
+      "name": "description_constructor",
+      "start": "0x142b1bea0",
+      "end": "0x142b1bfb7",
+      "sha256": "c158879a99cc021f7a844c2f3b5ef8b93d2a61d4c1806fa732c980acdc7ba0aa"
+    },
+    {
+      "name": "description_destructor",
+      "start": "0x142b1fb50",
+      "end": "0x142b1fc0f",
+      "sha256": "b146a41b87d80a1d389879ed3b4d1bf2ef84d3415687523d48523d382cd213bb"
+    },
+    {
+      "name": "delegate_destructor",
+      "start": "0x140692d60",
+      "end": "0x140692dc4",
+      "sha256": "4d47081f222812d7a816d17fc92e11a3463ec22672c1b7afee8645545cf3d2c0"
+    },
+    {
+      "name": "text_default_constructor",
+      "start": "0x142c0c240",
+      "end": "0x142c0c275",
+      "sha256": "e9d7eaeb86cccf5540bb395530ce8f2e5a0fb1017b1a12967c6cae88a4299f7d"
+    },
+    {
+      "name": "description_construct_thunk",
+      "start": "0x142b1d5f0",
+      "end": "0x142b1d5f8",
+      "sha256": "5d6e74239cf272744acca9d605467e69f25bb49c3a212aeaf48df920af2b05a3"
+    },
+    {
+      "name": "description_struct_ops_vtable",
+      "start": "0x146556f68",
+      "end": "0x146557018",
+      "sha256": "ccdc707d7b6a5099c476477c3d5c8513d231c120cb36a4e398fe34158dd19c76"
+    },
+    {
+      "name": "description_copy_cfg",
+      "start": "0x142b1e520",
+      "end": "0x142b1e6e7",
+      "sha256": "101ac471c0b2b321f9afe63ef123facbfbf2f1e37fc7b34c08fcd73a6774187b"
+    },
+    {
+      "name": "advanced_action_constructor",
+      "start": "0x144ae1cf0",
+      "end": "0x144ae1d24",
+      "sha256": "fa500a3959c2fd7680df62d7cf5468bed1ee011549a990caffecf7fe15f8de4a"
+    },
+    {
+      "name": "advanced_action_activate_cfg",
+      "start": "0x144ae8950",
+      "end": "0x144ae8b90",
+      "sha256": "7ec866d9efe4ff7aac85b65cf7d9dbaae3b4675b7a0a1907cf0d5c90efb2c974"
+    },
+    {
+      "name": "advanced_delegate_execute_if_safe",
+      "start": "0x144af5e10",
+      "end": "0x144af5e89",
+      "sha256": "33385a0329534872b19394b63c895a2169467dbb19207b127c1e988153f105c9"
+    },
+    {
+      "name": "advanced_action_callback",
+      "start": "0x144afc7c0",
+      "end": "0x144afc82c",
+      "sha256": "2c1a9d177780a17a99205735f599b82aa1ba791ef756f27d36490f587babd677"
+    },
+    {
+      "name": "process_confirmation_result_exec",
+      "start": "0x14524a510",
+      "end": "0x14524a99b",
+      "sha256": "41bf29238d52b885c4dd7754f670d3620a8371dac237dc4b4b113acd8e0c5fac"
+    }
+  ]
+}

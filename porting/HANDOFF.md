@@ -10,10 +10,22 @@
   `python3 porting/progress/progress.py --no-record` renders all 391 existing points; `git diff --check`
   passes. Browser interaction remains untested because no browser runtime is installed. No progress
   weights or milestone evidence changed.
-- The separate confirmation-description runtime candidate is finished in scratch only:
-  /mnt/vibrato/fortnite-work/confirmation-description-runtime-1/HANDOFF.md and
-  confirmation-runtime.patch. Its portable checks pass; root review, shared promotion, UE/UHT,
-  ABI/lifetime and live verification are still pending. It is not part of the validated Native baseline.
+- Confirmation-description source is now integrated through generator policy: recovered defaults and
+  two typed native single-cast callbacks, with C++ copy/destruction and a WithCopy compile assertion.
+  Normal promotion changed only FFortDialogDescription_NUI.h, restoring 12698 unchanged mtimes.
+  Policy/lifetime tests3, Blueprint-struct tests4, cross-module tests3 and generator141 checks pass;
+  verify_original.py rehashes the immutable image and12 hash-only constructor/lifetime/signature spans.
+  Isolated UHT and13 targeted C++ units pass; file audit finds zero writes outside scratch.
+  Preflight /mnt/vibrato/fortnite-work/confirmation-description-ue-preflight-1/{run_uht.py,
+  audit_uht_writes.py,syntax.py}; promotion confirmation-description-integration-1/result.json.
+  The opt-in -ConfirmationDescriptionProbe checks actual UE layout/defaults/delegate copy ownership;
+  its runner/verifier are integrated. Full builds and live ABI/lifetime checks remain pending.
+  This source is not yet the validated runtime baseline; aa91a8e below remains that baseline.
+- Next recovered contracts: confirmation-queue-presentation-1/HANDOFF.md and
+  confirmation-factory-manager-resolution-1/HANDOFF.md under /mnt/vibrato/fortnite-work/.
+  The queue paths have different readiness/activation/empty-queue effects; do not stub dependencies.
+  Factory suspension reads external FE alone (IsInputSuspended combines FD||FE). GetUIManagerWidget
+  casts the director pair object itself to the manager widget; it does not search PlayerWidgets.
 - Latest confirmation type closure is source aa91a8efab55281d348c07c995bcded98fb414d9, now runtime-validated.
   The existing FortniteUI->FortniteGame dependency is admitted by type resolution; reverse direction remains
   refused. Cross-module struct exports are emitted without relocating ownership. This restores39enums,
