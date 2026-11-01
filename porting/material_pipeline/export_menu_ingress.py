@@ -71,7 +71,15 @@ def add_view_contract(bundle):
     # Changing RealTime alone must not change this program's output.
     time_parameters = overrides([('s_UseShineSwipe', 1.0)])
     view_cases = []
-    for game_time, real_time in ((0.0, 10.0), (1.0, 10.0), (0.0, 20.0), (1.0, 20.0)):
+    # Original cb2[14].zw gates the shine window before Fract(abs(GameTime)).
+    # Samples 0/1 (and 0/.25) both miss that window. Derive an active phase
+    # from the evaluated original material slots, keeping RealTime isolated.
+    window = case('time_window_parameters', time_parameters)['numeric_values']
+    threshold, period = window[14*4+2:14*4+4]
+    if not 0 <= threshold < period or period - threshold < 0.25:
+        raise ValueError('original MenuButton time window differs from inspected shader contract')
+    active_time = threshold + 0.25
+    for game_time, real_time in ((0.0, 10.0), (active_time, 10.0), (0.0, 20.0), (active_time, 20.0)):
         row = case(f'GameTime_{game_time:g}_RealTime_{real_time:g}', time_parameters)
         row.update(game_time=game_time, real_time=real_time, expected_game_time=game_time,
                    expected_real_time=real_time)
@@ -79,6 +87,7 @@ def add_view_contract(bundle):
     fixture['view_cases'] = view_cases
     fixture['view_draw_expectations'] = dict(equal_image_pairs=[[0, 2], [1, 3]],
         different_image_pairs=[[0, 1], [2, 3]],
+        shader_time_window=dict(register='cb2_2[14].zw', threshold=threshold, period=period, active_time=active_time),
         scope='Controlled time sensitivity and field isolation, not an original-client pixel oracle')
     bundle['provenance']['menu_exporter_sha256'] = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
     return bundle

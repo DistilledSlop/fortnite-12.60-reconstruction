@@ -21,6 +21,26 @@ def module(name, literal=17):
 
 
 class RuntimeArtifactVerificationTests(unittest.TestCase):
+    def test_rhi_hash_preserves_reverse_type_packing_and_layout_bounds(self):
+        self.assertEqual(verifier.uniform_layout_hash(336, [320, 328], [8, 8]), 22544639)
+        self.assertEqual(verifier.uniform_layout_hash(208, [192, 200], [8, 8]), 14156031)
+        self.assertEqual(verifier.uniform_layout_hash(32, [16, 24], [5, 8]), 0x002500ff)
+        self.assertEqual(verifier.uniform_layout_hash(48, [16, 24, 32, 40], [5, 8, 6, 7]), 0x053806f8)
+        for offsets, types in [([17], [8]), ([32], [8]), ([16, 24], [8])]:
+            with self.assertRaisesRegex(ValueError, 'layout shape'):
+                verifier.uniform_layout_hash(32, offsets, types)
+
+    def test_original_typed_registers_distinguish_view_and_material(self):
+        record = dict(material_uniform_buffer=dict(base_index=2, bound=True), uniform_parameters=[
+            dict(struct_name=dict(name='FViewUniformShaderParameters'), binding=dict(base_index=1, bound=True))])
+        shader = dict(reflection=dict(descriptors=[
+            dict(binding=9, d3d_register=dict(kind='cbv', space=0, index=2)),
+            dict(binding=4, d3d_register=dict(kind='cbv', space=0, index=1))]))
+        self.assertEqual(verifier.expected_uniform_bindings(record, shader, 111, 222),
+                         {9: ('Material', 111), 4: ('View', 222)})
+        with self.assertRaisesRegex(ValueError, 'actual current metadata'):
+            verifier.expected_uniform_bindings(record, shader, 111, None)
+
     def test_name_only_adaptation_preserves_interfaces_and_other_instructions(self):
         original = verifier.normalize_entrypoint(module('main'))
         changed_name = verifier.normalize_entrypoint(module('main_00000000_12345678'))

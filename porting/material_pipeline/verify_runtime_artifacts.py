@@ -20,6 +20,57 @@ def digest(data):
     return hashlib.sha256(data).hexdigest()
 
 
+def uniform_layout_hash(size, offsets, types, static_slot=255):
+    """FRHIUniformBufferLayout::ComputeHash, including reverse packed type groups."""
+    if (not 0 < size <= 65536 or not 0 <= static_slot <= 255 or len(offsets) != len(types)
+            or any(not 0 <= value <= 255 for value in types)
+            or any(offset < 0 or offset % 8 or offset + 8 > size for offset in offsets)):
+        raise ValueError('invalid uniform layout shape')
+    result = ((size << 16) | static_slot) & 0xffffffff
+    for offset in offsets:
+        result ^= offset
+    remaining = len(types)
+    while remaining >= 4:
+        for shift in (0, 8, 16, 24):
+            remaining -= 1
+            result ^= types[remaining] << shift
+    if remaining >= 2:
+        remaining -= 1
+        result ^= types[remaining]
+        remaining -= 1
+        result ^= types[remaining] << 16
+    if remaining:
+        result ^= types[0]
+    return result & 0xffffffff
+
+
+def expected_uniform_bindings(record, shader, material_hash, view_hash):
+    """Original typed registers determine roles; header order/debug names do not."""
+    roles = {}
+    material = record['material_uniform_buffer']
+    if material['bound']:
+        roles[material['base_index']] = ('Material', material_hash)
+    for parameter in record['uniform_parameters']:
+        if parameter['struct_name']['name'] == 'FViewUniformShaderParameters' and parameter['binding']['bound']:
+            if view_hash is None:
+                raise ValueError('original View binding requires actual current metadata receipt')
+            index = parameter['binding']['base_index']
+            if index in roles:
+                raise ValueError('original uniform register roles overlap')
+            roles[index] = ('View', view_hash)
+    bindings = {}
+    for descriptor in shader['reflection']['descriptors']:
+        register = descriptor.get('d3d_register', {})
+        if register.get('kind') == 'cbv' and register.get('space') == 0 and register['index'] in roles:
+            role = roles[register['index']]
+            if descriptor['binding'] in bindings:
+                raise ValueError('mapped uniform register roles overlap')
+            bindings[descriptor['binding']] = role
+    if len(bindings) != len(roles):
+        raise ValueError('original uniform roles do not match mapped descriptors')
+    return bindings
+
+
 class Reader:
     def __init__(self, data):
         self.data, self.cursor = data, 0
@@ -113,6 +164,7 @@ def main():
     parser.add_argument('--fixture', type=Path, required=True)
     parser.add_argument('--artifacts', type=Path, required=True)
     parser.add_argument('--validator', type=Path, default=GENERATED / 'material_pipeline/tools/root/usr/bin/spirv-val')
+    parser.add_argument('--view-layout', type=Path, help='actual compiled View metadata receipt (defaults to artifacts/GTViewLayout.json)')
     parser.add_argument('--report', type=Path, required=True)
     args = parser.parse_args()
     try:
@@ -120,14 +172,27 @@ def main():
             raise ValueError('verification report must stay in porting/generated')
         fixture_bytes = args.fixture.read_bytes()
         fixture = json.loads(fixture_bytes)
+        fixture = fixture.get('runtime_fixture', fixture)
         layout = fixture['expected_layout']
-        # FRHIUniformBufferLayout::ComputeHash, current no-static-slot layout.
-        layout_hash = (layout['constant_bytes'] << 16) | 255
-        for offset in layout['resource_offsets']:
-            layout_hash ^= offset
         if layout['resource_types'] != [8, 8]:
             raise ValueError('unsupported checked material resource layout')
-        layout_hash ^= 8 | (8 << 16)
+        layout_hash = uniform_layout_hash(layout['constant_bytes'], layout['resource_offsets'], layout['resource_types'])
+        view_hash, view_receipt = None, None
+        if fixture.get('view_contract'):
+            path = args.view_layout or args.artifacts / 'GTViewLayout.json'
+            view_receipt = json.loads(path.read_text(encoding='utf-8-sig'))
+            resources = view_receipt['resources']
+            view_hash = uniform_layout_hash(view_receipt['constant_bytes'],
+                [row['offset'] for row in resources], [row['type'] for row in resources], view_receipt['static_slot'])
+            contract = fixture['view_contract']
+            fields = {field['name']: field for field in view_receipt['fields']}
+            if (view_hash != view_receipt['layout_hash'] or
+                    view_receipt['game_time_offset'] != contract['expected_current_byte_offset'] or
+                    view_receipt['real_time_offset'] != 2268 or
+                    view_receipt['constant_bytes'] < contract['shader_visible_bytes'] or
+                    any(fields.get(name) != dict(name=name, offset=offset, type=4, size=4)
+                        for name, offset in [('GameTime', 2264), ('RealTime', 2268)])):
+                raise ValueError('compiled View metadata differs from proven original field contract')
         records = []
         for shader in fixture['shaders']:
             record = shader['record']; name = record['type']['name']
@@ -161,9 +226,14 @@ def main():
             references = [(b[3], b[4], b[1]) for b in header['packed_buffers']]
             if len(header['uniform_buffers']) != len(header['uniform_offsets']) or len(header['globals']) != len(header['global_offsets']):
                 raise ValueError('native header descriptor metadata count mismatch')
+            expected_uniforms = expected_uniform_bindings(record, shader, layout_hash, view_hash)
+            if len(expected_uniforms) != len(header['uniform_buffers']):
+                raise ValueError('native uniform count differs from original typed bindings')
             for uniform, offsets in zip(header['uniform_buffers'], header['uniform_offsets']):
-                if uniform['layout_hash'] != layout_hash:
-                    raise ValueError('native Material layout hash differs from source-computed shape')
+                role = expected_uniforms.get(uniform['binding'])
+                if role is None or uniform['layout_hash'] != role[1]:
+                    raise ValueError('native uniform layout differs from its original typed register role')
+                uniform['verified_role'] = role[0]
                 references.append((*offsets, uniform['binding']))
             references += [(*offsets, info['binding']) for info, offsets in zip(header['globals'], header['global_offsets'])]
             declared = {(d['set_word_offset'], d['binding_word_offset'], d['binding']) for d in reflected['descriptors']}
@@ -177,6 +247,8 @@ def main():
         report = dict(fixture_sha256=digest(fixture_bytes), verifier_sha256=digest(Path(__file__).read_bytes()),
                       validator_sha256=digest(args.validator.read_bytes()), layout_hash=layout_hash, records=records,
                       limitations=['Header/module artifacts verified; actual pipeline execution and visual parity are separate runtime gates'])
+        if view_receipt is not None:
+            report['view_layout'] = view_receipt
         args.report.parent.mkdir(parents=True, exist_ok=True)
         temporary = args.report.with_suffix('.tmp')
         temporary.write_text(json.dumps(report, indent=2) + '\n'); temporary.replace(args.report)
