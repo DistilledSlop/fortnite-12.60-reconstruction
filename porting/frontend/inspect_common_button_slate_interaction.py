@@ -43,11 +43,22 @@ def inspect(image, manifest):
         raise ValueError('base predicate must read byte28 bit0')
     if windows['slate-interaction-getter'].hex() != '80b9d90500000074070fb641282401c332c0c3':
         raise ValueError('custom predicate must add independent interaction gate')
+    if windows['base-widget-hover-enter'][-4:] != bytes.fromhex('80492801'):
+        raise ValueError('mouse enter must set the queried hover bit')
+    if windows['base-widget-hover-leave'][-4:] != bytes.fromhex('806128fe'):
+        raise ValueError('mouse leave must clear the queried hover bit')
+    enter = windows['base-button-enter-call']
+    if enter[9] != 0xe8 or 0x1430b2c6a + struct.unpack_from('<i', enter, 10)[0] != 0x142f71f20:
+        raise ValueError('base button enter must call widget hover entry')
+    leave = windows['base-button-leave-query-call']
+    if leave[9:15] != bytes.fromhex('ff90c8010000') or leave[24] != 0xe8 or 0x1430b2e2c + struct.unpack_from('<i', leave, 25)[0] != 0x142f71f90:
+        raise ValueError('base button leave must query slot1c8 then clear widget hover')
     return {'passed': True, 'image_sha256': proof['image_sha256'],
             'windows': len(windows), 'window_bytes': sum(map(len, windows.values())),
             'slate_type': 'SCommonButton', 'custom_predicate': '0x1407cf560',
             'base_predicate': '0x1407cf580',
-            'relation': 'custom interaction byte is nonzero AND base predicate is true',
+            'relation': 'custom interaction-enabled gate AND base hover state',
+            'typed_adapter': 'bInteractionEnabled && SButton::IsHovered()',
             'runtime_verified': False}
 
 

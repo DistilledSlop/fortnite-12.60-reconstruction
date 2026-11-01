@@ -122,8 +122,36 @@
       "length": 76,
       "sha256": "a64f0cb8b3a41b109873077716759b1fdba15fce71e2d9cf1fb2a09eb8536934",
       "bytes_hex": "40534883ec2083790800488bd97435488b094885c9742d488b01ff502884c07423837b0800740f488b0b488b014883c4205b48ff605033c9488b014883c4205b48ff605032c04883c4205bc3"
+    },
+    {
+      "name": "base-widget-hover-enter",
+      "va": "0x142f71f20",
+      "length": 19,
+      "sha256": "ea09a2288f3022fa89a3c99f0dd953e7b2cecee092ee478494175cf0443517d8",
+      "bytes_hex": "48895c24084889742410574883ec2080492801"
+    },
+    {
+      "name": "base-widget-hover-leave",
+      "va": "0x142f71f90",
+      "length": 14,
+      "sha256": "b6f826d547dedd93da1be4e0c2cc8439ede60128364a16ac9c139dab061bd7fd",
+      "bytes_hex": "48895c2408574883ec20806128fe"
+    },
+    {
+      "name": "base-button-enter-call",
+      "va": "0x1430b2c5c",
+      "length": 14,
+      "sha256": "9086ca7023e1373eabacb44406ad9f2af6d4cfb95c7478e86e66e3b71389f6d2",
+      "bytes_hex": "4c8bc6488bd5488bcbe8b6f2ebff"
+    },
+    {
+      "name": "base-button-leave-query-call",
+      "va": "0x1430b2e0f",
+      "length": 29,
+      "sha256": "5397c7a474b649932613dfebc6260ef053f59ac6ba416ada5a91a681ec68e76f",
+      "bytes_hex": "488b01488bfa488bd9ff90c8010000488bd7488bcb0fb6f0e864f1ebff"
     }
   ],
   "parent_receipt_sha256": "c3117c5e4bee8989f2caaa2531af59bcb793455591378df08224168565fb87f5",
-  "scope": "Original SCommonButton allocation, object vtable, interaction getter and base-predicate relation; delegate helper raw body only. No complete widget or runtime proof."
+  "scope": "Original SCommonButton construction and interaction-enabled-gated hover query; base mouse enter/leave bind byte28bit0 to hover state. No full widget or runtime proof."
 }
