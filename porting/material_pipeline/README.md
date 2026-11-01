@@ -67,7 +67,20 @@ python3 -I porting/material_pipeline/test_inspect_spirv_bindings.py
 
 ## Compiler version comparison
 
-The existing receipts also cover a locally built official Wine vkd3d 2.0 compiler from [vkd3d 2.0 source](https://dl.winehq.org/vkd3d/source/vkd3d-2.0.tar.xz). The same 44 input hashes compile and validate for Vulkan 1.0 with both versions. The 1.2 receipt records diagnostics on shader indices 25, 116, 117, 120, 2452, 2453, 2456, 2458, 2466, 3692, 6859, and 13209; the 2.0 receipt records none. These receipts contain hashes of each compiler, shader library and validator. A successful validation and absence of diagnostics do not establish semantic equivalence.
+The existing receipts also cover a locally built official Wine vkd3d 2.0 compiler from [vkd3d 2.0 source](https://dl.winehq.org/vkd3d/source/vkd3d-2.0.tar.xz) (source tar SHA-256 `9ad29bb236808186a47ec66e853b21e6fca59b9dc62a9474b05d5e3eda2710ef`). The isolated build lives under ignored `generated/material_pipeline/tools/build-vkd3d2`; its compiler SHA-256 is `962b4898d5ceb71b20ada3df4c3da2130bb48ea8959425896e2e59724f4ed0d7` and shader library SHA-256 is `481674c3dd9266a85e3504cf41bf70617431daf916bc3d94e66997c361a91571`. Build dependencies were unpacked locally under `tools/root` and no system package was installed; a temporary `/usr/bin/m4` symlink used during generation was removed. The same 44 input hashes compile and validate for Vulkan 1.0 with both versions. The 1.2 receipt records diagnostics on shader indices 25, 116, 117, 120, 2452, 2453, 2456, 2458, 2466, 3692, 6859, and 13209; the 2.0 receipt records none. These receipts contain hashes of each compiler, shader library and validator. A successful validation and absence of diagnostics do not establish semantic equivalence.
+
+Recreate the 2.0 receipt from the existing isolated build and verified original DXBC inputs:
+
+```sh
+python3 -I porting/material_pipeline/translate_dxbc.py \
+  --source-report porting/generated/material_pipeline/frontend-game-library.json \
+  --tool-prefix porting/generated/material_pipeline/tools/vkd3d2-compiled \
+  --output porting/generated/material_pipeline/frontend-translated-vkd3d2
+python3 -I porting/material_pipeline/inspect_spirv_bindings.py \
+  --d3d-report porting/generated/material_pipeline/d3d-wrapper-inspection.json \
+  --translation-report porting/generated/material_pipeline/frontend-translated-vkd3d2/translation-report.json \
+  --report porting/generated/material_pipeline/binding-correspondence-vkd3d2.json
+```
 
 In the 2.0 `libs/vkd3d-shader/tpf.c` parser, resource type `0xc` is `VKD3D_SM4_RESOURCE_STRUCTURED_BUFFER` and data type `0x6` is `VKD3D_SM4_DATA_MIXED`. The new parser marks the former structured and maps it to a buffer resource, and maps the latter to `VSIR_DATA_MIXED`. The 1.2 diagnostic explicitly says it did not handle these values; that establishes an older parser limitation, not by itself the observable impact of the fallback.
 
