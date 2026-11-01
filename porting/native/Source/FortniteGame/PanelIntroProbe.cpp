@@ -29,7 +29,7 @@ struct FPanelIntroProbeAccess {
         W->NativePreActivation.Unbind(); W->NativePostActivation.Unbind();
     }
     static bool Introed(UCommonActivatablePanel* W) { return W->bNativeIsIntroed; }
-    static bool Initial(UCommonActivatablePanel* W) { return !W->bNativeIsIntroed && !W->NativeInputManager.IsValid() && !W->NativeInputMethodHandle.IsValid() && !W->NativePreActivation.IsBound() && !W->NativePostActivation.IsBound(); }
+    static bool Initial(const UCommonActivatablePanel* W) { return !W->bNativeIsIntroed && !W->NativeInputManager.IsValid() && !W->NativeInputMethodHandle.IsValid() && !W->NativePreActivation.IsBound() && !W->NativePostActivation.IsBound(); }
     static bool Bound(UCommonActivatablePanel* W) { return W->NativeInputMethodHandle.IsValid(); }
 };
 namespace PanelIntroProbeInternal {

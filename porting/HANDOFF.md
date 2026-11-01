@@ -2,6 +2,10 @@
 
 ## Current resume point (2026-11-01)
 
+- Panel shared build attempt1 (Native9543b13) is terminal, client exit6 after69.314s;
+  source snapshot unchanged. Only error is diagnostic FPanelIntroProbeAccess::Initial taking mutable
+  pointer while GetDefault returnsconst. Corrected helper toconst; next fresh attempt required.
+  Failed log/results /tmp/panel-intro-native-build-1 retained; do not restart session80472.
 - Current integration pending shared build/runtime: authentic Panel NativeActivateRequest ->
   OnBeginIntro BlueprintNativeEvent -> EndIntro -> full Panel activation override is now normally
   generated. Native input multicast/global priority fields and CommonUI->CommonInput dependency are
