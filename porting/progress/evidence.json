@@ -29,23 +29,45 @@
    "source_native_commit": "907e1dc",
    "utc": "2026-11-01T00:39:06Z"
   },
+  "legacy_slate_runtime": {
+   "artifact_validation_receipt": "porting/generated/frontend-probes/legacy-material-artifacts-2-validation.json",
+   "binary_hash_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/runtime-material-joins-20261101T021940Z/binary-hashes.json",
+   "binary_hash_receipt_sha256": "22267c4a0a85552329f08a430095f649c93ed72a2836bea2741c35ba3df7e1b7",
+   "command": "(log only) porting/generated/frontend-probes/legacy-material-runtime-draw-1.log",
+   "commit": "b0597c2d5c39e4733848168503659bb208d6feee",
+   "engine_commit": "757e0087a",
+   "exit_code": null,
+   "id": "legacy_slate_runtime",
+   "key_lines": [
+    "[2026.11.01-02.15.37:551][  0]LogTemp: Display: Legacy material probe: original Slate quad readback changed 2832 pixels"
+   ],
+   "log_sha256": "1f809f5f73d77be094f129fda31732479b34ef097cec92b767b5bf5621124fd7",
+   "matches": 1,
+   "provenance_note": "Actual Vulkan process exit0 reported by engine build owner. Parent independently validated all seven native headers/modules and both RGBA hashes/2832 changed pixels.",
+   "result": "pass",
+   "scope": "Detached original Locker seven-Slate map and controlled quad only. Normal asset attachment, original visual parity and the four product milestones remain unverified.",
+   "source_native_commit": "afb32b7",
+   "utc": "2026-11-01T02:23:01Z",
+   "wrapper_exit_code": 0
+  },
   "net_version_checksum": {
-   "binary_hash_receipt": "porting/generated/frontend-probes/original-vulkan-joins/binary-hashes.txt",
-   "binary_hash_receipt_sha256": "4f9780deac44f970e7ffecb278defba9b1ee7911867c7d8048348ebea35ee248",
-   "command": "(log only) porting/generated/frontend-probes/original-vulkan-joins/default-server.log",
-   "commit": "5e5babeaf9f3255fc409e08aced316b2a786807e",
-   "engine_commit": "f716e0cb6",
+   "binary_hash_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/runtime-material-joins-20261101T021940Z/binary-hashes.json",
+   "binary_hash_receipt_sha256": "22267c4a0a85552329f08a430095f649c93ed72a2836bea2741c35ba3df7e1b7",
+   "command": "(log only) /opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/runtime-material-joins-20261101T021940Z/default-server.log",
+   "commit": "b0597c2d5c39e4733848168503659bb208d6feee",
+   "engine_commit": "757e0087a",
    "exit_code": null,
    "id": "net_version_checksum",
    "key_lines": [
-    "[2026.11.01-01.42.59:104][ 64]LogFortniteNet: Local network version checksum: 683914758 (0x28C3B606)"
+    "[2026.11.01-02.19.46:741][ 69]LogFortniteNet: Local network version checksum: 683914758 (0x28C3B606)"
    ],
+   "log_sha256": "a86bb1cdb52ccea931ae4a3123a5c2ece5a0b67e799c64a1076f4d9ec1879bcc",
    "matches": 1,
-   "origin_run": "porting/generated/frontend-probes/original-vulkan-joins/exit-status.txt",
-   "provenance_note": "Existing logs judged after both current native target builds and isolated matched-stage joins. Wrapper exits verified zero; binary hashes independently checked. Current two joins only; earlier broader regression remains separate.",
+   "origin_run": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/runtime-material-joins-20261101T021940Z/exit-status.json",
+   "provenance_note": "Final engine/native targets built, current isolated default/Athena wrappers both exited0; parent checked source/staged binary digests. No wider regression rerun.",
    "result": "pass",
-   "source_native_commit": "a494a4a",
-   "utc": "2026-11-01T01:45:02Z",
+   "source_native_commit": "afb32b7",
+   "utc": "2026-11-01T02:23:01Z",
    "wrapper_exit_code": 0
   },
   "shader_structural_validation": {
@@ -65,41 +87,43 @@
    "utc": "2026-11-01T00:39:06Z"
   },
   "smoke_athena": {
-   "binary_hash_receipt": "porting/generated/frontend-probes/original-vulkan-joins/binary-hashes.txt",
-   "binary_hash_receipt_sha256": "4f9780deac44f970e7ffecb278defba9b1ee7911867c7d8048348ebea35ee248",
-   "command": "(log only) porting/generated/frontend-probes/original-vulkan-joins/athena-result.log",
-   "commit": "5e5babeaf9f3255fc409e08aced316b2a786807e",
-   "engine_commit": "f716e0cb6",
+   "binary_hash_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/runtime-material-joins-20261101T021940Z/binary-hashes.json",
+   "binary_hash_receipt_sha256": "22267c4a0a85552329f08a430095f649c93ed72a2836bea2741c35ba3df7e1b7",
+   "command": "(log only) /opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/runtime-material-joins-20261101T021940Z/athena-result.log",
+   "commit": "b0597c2d5c39e4733848168503659bb208d6feee",
+   "engine_commit": "757e0087a",
    "exit_code": null,
    "id": "smoke_athena",
    "key_lines": [
-    "Local UE join succeeded. Logs: /opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/original-vulkan-joins/athena-server.log and /opt/fortnite/FortniteClient-12.60-CL-134..."
+    "Local UE join succeeded. Logs: /opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/runtime-material-joins-20261101T021940Z/athena-server.log and /opt/fortnite/FortniteC..."
    ],
+   "log_sha256": "69980233b5d476863c6b96d2d210c913e0eea2f25997556ac20830c435bfa50c",
    "matches": 1,
-   "origin_run": "porting/generated/frontend-probes/original-vulkan-joins/exit-status.txt",
-   "provenance_note": "Existing logs judged after both current native target builds and isolated matched-stage joins. Wrapper exits verified zero; binary hashes independently checked. Current two joins only; earlier broader regression remains separate.",
+   "origin_run": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/runtime-material-joins-20261101T021940Z/exit-status.json",
+   "provenance_note": "Final engine/native targets built, current isolated default/Athena wrappers both exited0; parent checked source/staged binary digests. No wider regression rerun.",
    "result": "pass",
-   "source_native_commit": "a494a4a",
-   "utc": "2026-11-01T01:45:02Z",
+   "source_native_commit": "afb32b7",
+   "utc": "2026-11-01T02:23:01Z",
    "wrapper_exit_code": 0
   },
   "smoke_default": {
-   "binary_hash_receipt": "porting/generated/frontend-probes/original-vulkan-joins/binary-hashes.txt",
-   "binary_hash_receipt_sha256": "4f9780deac44f970e7ffecb278defba9b1ee7911867c7d8048348ebea35ee248",
-   "command": "(log only) porting/generated/frontend-probes/original-vulkan-joins/default-result.log",
-   "commit": "5e5babeaf9f3255fc409e08aced316b2a786807e",
-   "engine_commit": "f716e0cb6",
+   "binary_hash_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/runtime-material-joins-20261101T021940Z/binary-hashes.json",
+   "binary_hash_receipt_sha256": "22267c4a0a85552329f08a430095f649c93ed72a2836bea2741c35ba3df7e1b7",
+   "command": "(log only) /opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/runtime-material-joins-20261101T021940Z/default-result.log",
+   "commit": "b0597c2d5c39e4733848168503659bb208d6feee",
+   "engine_commit": "757e0087a",
    "exit_code": null,
    "id": "smoke_default",
    "key_lines": [
-    "Local UE join succeeded. Logs: /opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/original-vulkan-joins/default-server.log and /opt/fortnite/FortniteClient-12.60-CL-13..."
+    "Local UE join succeeded. Logs: /opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/runtime-material-joins-20261101T021940Z/default-server.log and /opt/fortnite/Fortnite..."
    ],
+   "log_sha256": "c6b2622f9c94d36a5dd73ce28b92e6cecd1088cde79f83fd261fd902db365dcc",
    "matches": 1,
-   "origin_run": "porting/generated/frontend-probes/original-vulkan-joins/exit-status.txt",
-   "provenance_note": "Existing logs judged after both current native target builds and isolated matched-stage joins. Wrapper exits verified zero; binary hashes independently checked. Current two joins only; earlier broader regression remains separate.",
+   "origin_run": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/runtime-material-joins-20261101T021940Z/exit-status.json",
+   "provenance_note": "Final engine/native targets built, current isolated default/Athena wrappers both exited0; parent checked source/staged binary digests. No wider regression rerun.",
    "result": "pass",
-   "source_native_commit": "a494a4a",
-   "utc": "2026-11-01T01:45:02Z",
+   "source_native_commit": "afb32b7",
+   "utc": "2026-11-01T02:23:00Z",
    "wrapper_exit_code": 0
   },
   "ui_banner_classload": {
