@@ -103,7 +103,7 @@ def main():
             raise ValueError('original report identities differ')
         originals = {r['shader_index']: r for r in d3d['records']}
         shaders = source['shaders']
-        if len(originals) != len(d3d['records']) or len({s['index'] for s in shaders}) != len(shaders):
+        if not shaders or len(originals) != len(d3d['records']) or len({s['index'] for s in shaders}) != len(shaders):
             raise ValueError('duplicate original shader index')
         output.mkdir(parents=True, exist_ok=True)
         helper = output / 'map-dxbc-bindings'
