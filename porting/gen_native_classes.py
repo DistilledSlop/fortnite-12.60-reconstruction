@@ -1547,13 +1547,19 @@ UI_BLUEPRINT_EVENT_FLAGS = 0x08080800  # BlueprintEvent | Protected | Event; not
 # Parameterized events require an individually evidenced owner, function,
 # complete serialized signature and explicitly reviewed UHT declaration.
 UI_PARAMETERIZED_BLUEPRINT_EVENTS = {
+    "AFortEntryMusicController": {
+        "StartMusic": {
+            "owner_fn": "0x1428dc600", "create_func": "0x1428dc630", "flags": 0x08020800,
+            "params": [], "args": [], "specifiers": ["BlueprintImplementableEvent"], "access": "public",
+        },
+    },
     "UFortLoginStatus": {
         "SetContinueButtonText": {
             "owner_fn": "0x145282560", "create_func": "0x1452825a0", "flags": 0x08480800,
             "params": [{"index": 0, "name": "ContinueText", "kind": "Text", "kind_raw": "0x1d",
                         "property_flags": "0x10000008000182", "replicated": False, "rep_notify": None,
                         "array_dim": 1, "object_flags": "0x45", "offset": 0}],
-            "args": ["const FText& ContinueText"], "specifiers": ["BlueprintImplementableEvent"],
+            "args": ["const FText& ContinueText"], "specifiers": ["BlueprintImplementableEvent"], "access": "protected",
         },
     },
 }
@@ -1576,16 +1582,18 @@ def build_functions_promoted(functions, resolver, notify_names, owner_fns, splic
         is_blueprint_event = name in blueprint_events or policy is not None
         if policy is not None:
             owned = [c for c in fn.get("candidates", []) if str(c.get("outer_fn") or "").lower() in owner_fns]
+            joined = owned[0] if len(owned) == 1 else fn if not fn.get("candidates") else None
             if (flags != policy["flags"] or is_splice or name in notify_names or
                     policy["owner_fn"] not in owner_fns or str(fn.get("create_func") or "").lower() != policy["create_func"] or
-                    len(owned) != 1 or str(owned[0].get("outer_fn") or "").lower() != policy["owner_fn"] or
-                    owned[0].get("nprop") != len(policy["params"]) or params != policy["params"]):
+                    joined is None or str(joined.get("outer_fn") or "").lower() != policy["owner_fn"] or
+                    (fn.get("candidates") and joined.get("nprop") != len(policy["params"])) or
+                    params != policy["params"] or policy.get("access") not in ("public", "protected")):
                 resolver.skipped.append(skip_function(fn, "blueprint_event_mismatch",
                     "original parameterized event owner, flags or exact signature differs"))
                 continue
             emitted.append({"name": name, "rpc": False, "service": None, "ret": "void",
                             "const": False, "notify": False, "splice": False,
-                            "blueprint_event": True, "specifiers": list(policy["specifiers"]),
+                            "blueprint_event": True, "access": policy["access"], "specifiers": list(policy["specifiers"]),
                             "args": list(policy["args"]), "used": {}})
             continue
         if is_blueprint_event:
@@ -2448,7 +2456,7 @@ def render_promoted_header(model, api, parent_include, source_label):
         lines.extend(field_lines(fd))
     for f in model["functions"]:
         if f.get("blueprint_event"):
-            lines.append("protected:")
+            lines.append(f.get("access", "protected") + ":")
         lines.append("\tUFUNCTION(%s)" % ", ".join(f["specifiers"]))
         lines.append("\t%s%s %s(%s)%s;" % ("static " if f.get("static") else "", f.get("ret", "void"), f["name"],
                                        ", ".join(header_arg(f, a) for a in f["args"]),
