@@ -93,7 +93,7 @@ def evaluate(node, overrides, used, budget=None, depth=0):
         if not isinstance(value, list) or len(value) != 4:
             raise ValueError('vector parameter must have four components')
         return [f32(v) for v in value]
-    expected = {'ComponentSwizzle': 1, 'FoldedMath': 2, 'AppendVector': 2, 'TrigMath': 2}
+    expected = {'ComponentSwizzle': 1, 'FoldedMath': 2, 'AppendVector': 2, 'TrigMath': 2, 'Max': 2, 'Saturate': 1}
     if kind not in expected:
         raise ValueError('unsupported expression type ' + str(kind))
     inputs = node['inputs']
@@ -106,7 +106,11 @@ def evaluate(node, overrides, used, budget=None, depth=0):
         if len(channels) != 4 or n not in (1, 2, 3, 4) or any(c not in range(4) for c in channels[:n]) or any(c != -1 for c in channels[n:]):
             raise ValueError('invalid component swizzle')
         return [a[channels[0]]] * 4 if n == 1 else [a[c] for c in channels[:n]] + [0.0] * (4 - n)
+    if kind == 'Saturate':
+        return [0.0 if x < 0.0 else (1.0 if x >= 1.0 else x) for x in a]
     b = values[1]
+    if kind == 'Max':
+        return [x if x > y else y for x, y in zip(a, b)]
     if kind == 'AppendVector':
         n = node['components_a']
         if n not in range(5):

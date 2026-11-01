@@ -16,7 +16,7 @@ evaluator = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(evaluator)
 PREFIX = 'FMaterialUniformExpression'
 KINDS = {'Constant', 'ScalarParameter', 'VectorParameter', 'FoldedMath', 'AppendVector',
-         'ComponentSwizzle', 'TrigMath'}
+         'ComponentSwizzle', 'TrigMath', 'Max', 'Saturate'}
 
 
 def digest(data):

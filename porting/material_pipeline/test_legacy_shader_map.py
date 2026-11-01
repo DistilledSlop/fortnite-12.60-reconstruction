@@ -101,6 +101,23 @@ def mesh_resource(type_index=16, frequency=0):
     return prefix + name(type_index) + pack('q', body_offset + len(body)) + body + pack('iI', 0, 1)
 
 
+class OriginalMaxSaturateTests(unittest.TestCase):
+    def test_nested_children_and_truncation(self):
+        names = NAMES + [PREFIX + 'Max', PREFIX + 'Saturate']
+        maximum, saturate = len(NAMES), len(NAMES) + 1
+        encoded = name(saturate) + name(maximum) + CONSTANT + SCALAR
+        parsed = Reader(encoded, names).expression()
+        self.assertEqual(parsed['end'], len(encoded))
+        self.assertEqual(parsed['inputs'][0]['end'], len(encoded))
+        self.assertEqual(len(parsed['inputs'][0]['inputs']), 2)
+        for cut in range(len(encoded)):
+            with self.assertRaises(ValueError):
+                Reader(encoded[:cut], names).expression()
+        nested = name(saturate) * 64 + CONSTANT
+        with self.assertRaisesRegex(ValueError, 'complexity'):
+            Reader(nested, names).expression()
+
+
 class LegacyPrefixTests(unittest.TestCase):
     def test_recursive_values_and_exact_boundary(self):
         data = resource()

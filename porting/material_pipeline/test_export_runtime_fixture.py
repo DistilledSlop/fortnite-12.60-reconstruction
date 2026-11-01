@@ -37,6 +37,18 @@ class RuntimeFixtureTests(unittest.TestCase):
         self.assertEqual(nodes[0]['parameter'], parameter['parameter'])
         self.assertNotEqual(roots['scalar_roots'][0], roots['vector_roots'][1])
 
+    def test_max_saturate_flatten_postorder(self):
+        p = scalar('X', .2)
+        maximum = dict(type=exporter.PREFIX + 'Max', inputs=[p, p])
+        saturated = dict(type=exporter.PREFIX + 'Saturate', inputs=[maximum])
+        nodes, roots = exporter.flatten_expressions(dict(vector=dict(count=0, expressions=[]),
+                                                          scalar=dict(count=1, expressions=[saturated])))
+        self.assertEqual([n['type'] for n in nodes], ['ScalarParameter', 'ScalarParameter', 'Max', 'Saturate'])
+        self.assertEqual(nodes[2]['inputs'], [0, 1])
+        self.assertEqual(nodes[3]['inputs'], [2])
+        self.assertEqual(nodes[0]['parameter'], p['parameter'])
+        self.assertEqual(roots['scalar_roots'], [3])
+
     def test_unknown_expression_and_deep_nesting_fail(self):
         unknown = dict(type=exporter.PREFIX + 'TextureParameter')
         with self.assertRaisesRegex(ValueError, 'unsupported'):

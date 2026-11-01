@@ -107,9 +107,9 @@ class Reader:
                 result['default'] = self.read('4f' if kind == 'VectorParameter' else 'f')
         elif kind == 'Constant':
             result['value'], result['value_type'] = self.read('4f'), self.read('B')
-        elif kind in ('ComponentSwizzle', 'FoldedMath', 'AppendVector', 'TrigMath'):
+        elif kind in ('ComponentSwizzle', 'FoldedMath', 'AppendVector', 'TrigMath', 'Max', 'Saturate'):
             result['inputs'] = [self.expression(depth + 1)]
-            if kind != 'ComponentSwizzle':
+            if kind not in ('ComponentSwizzle', 'Saturate'):
                 result['inputs'].append(self.expression(depth + 1))
             if kind == 'ComponentSwizzle':
                 channels = self.read('4b')
@@ -125,7 +125,7 @@ class Reader:
                 result['components_a'] = self.read('I')
                 if not 1 <= result['components_a'] <= 4:
                     raise ValueError('invalid append component count')
-            else:
+            elif kind == 'TrigMath':
                 result['operation'] = self.read('B')
                 if result['operation'] > 6:
                     raise ValueError('invalid trigonometric operation')

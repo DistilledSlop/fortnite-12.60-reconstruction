@@ -58,6 +58,24 @@ class UniformEvaluationTests(unittest.TestCase):
         multiply = op('FoldedMath', [const(.1, .1, .1, .1), const(.2, .2, .2, .2)], operation=2, value_type=15)
         self.assertEqual(u.evaluate(multiply, {}, set())[0], u.f32(u.f32(.1) * u.f32(.2)))
 
+    def test_max_saturate_and_parameter_identity(self):
+        parameter = param('Tint', [-2, .1, .75, 2], 'VectorParameter')
+        parameter['parameter']['name']['number'] = 3
+        parameter['parameter']['index'] = 7
+        override = u.overrides_from_json([{'type': 'vector', 'parameter': parameter['parameter'],
+                                            'value': [-2, .1, .75, 2]}])
+        node = op('Saturate', [op('Max', [parameter, const(-3, .2, .5, 1.5)])])
+        used = set()
+        self.assertEqual(u.evaluate(node, override, used), [0, u.f32(.2), .75, 1])
+        self.assertEqual(used, set(override))
+        self.assertEqual(u.evaluate(op('Max', [const(-4, -1, 2, 4), const(-3, -2, 3, 1)]), {}, set()), [-3, -1, 3, 4])
+        zeros = op('Max', [const(0., -0., 0., -0.), const(-0., 0., 0., -0.)])
+        self.assertEqual(struct.pack('<4f', *u.evaluate(zeros, {}, set())), struct.pack('<4f', -0., 0., 0., -0.))
+        self.assertEqual(struct.pack('<f', u.evaluate(op('Saturate', [const(-0., 0., 1., 2.)]), {}, set())[0]), struct.pack('<f', -0.))
+        for invalid in (op('Saturate', []), op('Max', [parameter])):
+            with self.assertRaisesRegex(ValueError, 'input count'):
+                u.evaluate(invalid, {}, set())
+
     def test_safe_divisor(self):
         node = op('FoldedMath', [const(1, 1, 1, 1), const(0, -0.0, -0.000001, 2)], operation=3, value_type=15)
         result = u.evaluate(node, {}, set())
