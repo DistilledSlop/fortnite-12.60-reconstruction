@@ -38,29 +38,13 @@ using historical instructions below.
 
 ## Current work (2026-11-01)
 
-Native `a1d337e` and Engine `08ebac023` build for both non-editor targets and
-pass fresh default/Athena joins. Original MainL now retains its distinct static
-map and all 19 records, requires seven shaders with zero missing, verifies nine
-overrides and six graph/six owner cases, and changes 4,096 pixels. Prior Donut,
-MenuButton, PowerToast and Locker probes remain green. Root independently
-verified source, binaries, symbols and artifacts in the MainL aggregate receipt.
-Dashboard effort is 20.891%, with all four product gates still open.
+Native `8f1d95f` / Engine `c13bb7dd2` build for both non-editor targets and pass fresh default/Athena joins. Frozen batch-11 evidence contains 95 successful owner probes, one real Throbber failure and 22 unattempted owners. Independent verification covers 12 source blobs/snapshots, 18 binary/symbol/debug records, 1,738 artifacts/logs and every passing seven-shader payload set. The dashboard now credits MainL plus those 95 owners: 96/142 known closure owners, 20.934% estimated effort. All four product acceptance milestones remain open.
 
-Original numeric UI materials now include the real AngledBox parent and
-SimpleFillColor. The Engine preserves final-resource provenance through loading
-and legitimate shared-map reuse. Exact finite Max/Saturate tests include signed
-zero, and the complete 65-resource known frontend inventory decodes structurally.
-The current source batch has 118 eligible owners; runtime checking and the matching
-server build are still running. Source eligibility is not runtime proof.
+Throbber repeats the same full Color parameter identity with different expression-local white/gray defaults. The current Engine CPP fix retains separate exact fallback bits while named overrides apply consistently. Native `aeabd2c` adds live exact-bit diagnostics including scalar +0/-0. Targeted syntax passes; the new paired builds/probes/joins are still pending. Do not conflate edits or source eligibility with the frozen green baseline.
 
-RootLayout/LoginScreen now reach an original Paper2D stock plugin material whose
-legacy shader map still needs a faithful conversion. Recover its compiled original
-semantics and legacy overrides before using a matched stock cook; current graph
-comparison alone does not prove parity. Then retry actual root widget construction,
-recover native lifecycle/helpers and continue login/lobby/matchmaking and gameplay.
-The dashboard credits 39 of 142 remaining known closure owners; real widget
-integration and original visual parity remain separate unfinished phases. All four
-milestones remain open. Exact current pins, failures and work ownership are in HANDOFF.
+RootLayout/LoginScreen reach an original Paper2D plugin shader map. Original compiled sprite color/opacity math and current source instance legacy translucent overrides are now proven (`b45b992`, `f95a334`), supporting an isolated matched-source Linux representation cook as the next experiment. Cook results, full shader-map/all-pass equivalence and original pixels remain unverified. The sole build owner will cook a no-C++ project, overlay only matched framework materials into a separate stage, and retain original raw packages/textures. Then retry actual widget construction and native lifecycle/helpers before login/lobby/matchmaking and gameplay.
+
+The complete 65-resource known frontend inventory decodes structurally; runtime texture semantics and the remaining 14-record map shape need further work. Preserve full original record sets and canonical actual-owner completeness gates. Real widget integration and original visual parity remain separate unfinished phases; all four milestones remain open. Exact current pins, failure artifacts and live ownership are in HANDOFF.
 
 
 ## Standing constraints
