@@ -254,6 +254,58 @@ changed raw-source hash, texture overrides and changed parent proof. These are
 offline reference-identity checks; dimensions, conversion and an actual Linux
 draw remain unverified.
 
+## TextureProperty dimension access
+
+The next original-code evidence is
+`generated/material_pipeline/original-texture-context-evidence-v5.json`, SHA-256
+`c70a12b30eea35dfbeae40679050a89231fe520c3a367c79269d808f52aede44`.
+It pins 38 immutable artifacts from directories 36–46 and the original
+TextureProperty evaluator, and checks eight original vtable entries.
+
+Original Texture2D registration `0x1448046d0`, callback `0x144803e60` and
+constructor `0x144602a00` establish class vtable `0x146b3e8e8`. UpdateResource
+`0x144615940` calls its `+0x2f8 = 0x144606ba0` resource factory and stores the
+result at texture `+0x78`, exactly the pointer read by TextureProperty.
+
+For an ordinary Texture2D, factory constructor `0x144601df0` installs resource
+vtable `0x146b3e400` and stores the owner at resource `+0x60`:
+
+- Resource `+0x40 = 0x14460cef0` reads the owner's PlatformData pointer at
+  `owner+0xe8` and returns its first uint32, or zero for missing PlatformData.
+- Resource `+0x48 = 0x14460cf70` returns the uint32 at PlatformData `+4`, or
+  zero for missing PlatformData.
+
+Thus ordinary Texture2D dimensions come from the logical platform header,
+without resident-mip scaling. Original Texture2D Serialize `0x144612c90` calls
+`0x14462e920`, which obtains the running PlatformData pointer through virtual
+`+0x320`, allocates/loads it, and calls `0x14462ece0`. The latter serializes
+width and height as the first two 32-bit fields. Do not substitute a decoded
+PNG's dimensions without binding them to these source fields.
+
+The factory's virtual-texture branch is different. It installs resource vtable
+`0x146b3e458`, stores virtual texture data at resource `+0x68`, and a bias at
+`+0x7c`. Size methods `0x14460cf30/0x14460cfb0` return
+`max(1, VTData dimension >> bias)` for fields `VTData+8/+0xc`. The branch's
+actual Texture2D predicate `+0x310 = 0x14416c3c0` requires flag bit 2 at
+`texture+0x65`, non-null PlatformData, and non-null virtual data at
+`PlatformData+0x28`. Ordinary and virtual dimensions must not share an assumed
+size rule.
+
+TextureProperty `0x14433e4b0` writes only output lanes 0 and 1. Property 0
+converts resource width/height to float; property 1 divides the original pinned
+`1.0f` constant at `0x1459a86f8` by those dimensions. Missing texture/resource
+leaves output untouched; lanes 2 and 3 are untouched even on success. No
+caller initialization, actual texture resource existence, or specific asset
+dimensions were proven in this step, so it does not justify inserting zero
+lanes or enabling numeric flattening.
+
+The scanned texture overlay has one TextureProperty owner:
+M_UI_SocialUserItemBorder_Master, vector uniform position 2, property 0, with
+a regular Texture child referencing index 0/sampler source 2. Its ordered
+reference context, actual source dimensions and the caller's untouched-lane
+contract are precise next targets. This step produced no runtime fixture or
+Linux draw evidence.
+
 ## Reproduction and integrity
 
 All probes ran from the repository root using the existing read-only tool:
