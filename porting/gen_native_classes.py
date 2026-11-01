@@ -1249,6 +1249,19 @@ def static_reflected_self_test(check):
     resolver2.skipped = []
     check("static const combination rejected", not build_functions_promoted([bad_fn], resolver2, set(), set(), {"Find"}))
 
+    class FakeEngine:
+        module_of_inc = {"Misc/App.h": "Core"}
+    class FakeGate:
+        engine = FakeEngine()
+    ctx["gate"] = FakeGate()
+    fn2 = dict(functions[0], body=None)
+    good = dict(entry, includes=["Misc/App.h"])
+    res = attach_snippets("ASelfTest", [fn2], [good], ctx, "/Script/FortniteGame")
+    check("snippet include accepted and emitted", res["includes"] == {"Misc/App.h"})
+    res = attach_snippets("ASelfTest", [dict(fn2, body=None)], [dict(entry, includes=["Missing.h"])], ctx,
+                          "/Script/FortniteGame")
+    check("unknown snippet include rejected", bool(res["rejected"]))
+
 
 def self_test():
     failures = []
@@ -2208,6 +2221,11 @@ def attach_snippets(name, functions, entries, ctx, package, skipped=(), member_n
         if problems:
             reject("; ".join(problems))
             continue
+        explicit_includes = e.get("includes") or []
+        if not isinstance(explicit_includes, list) or any(not usable_include(inc, ctx) for inc in explicit_includes):
+            reject("snippet includes not in the engine header index")
+            continue
+        includes.update(explicit_includes)
         if kind == "validate":
             target["validate"] = True
             target["validate_body"] = e["body"]

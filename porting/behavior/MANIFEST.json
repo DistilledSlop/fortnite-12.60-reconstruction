@@ -6199,5 +6199,23 @@
     "proxy_score": null,
     "decompile_source": "runtime image 0x142ace3c0 and 0x1426fdde0",
     "notes": "Static BlueprintPure callable (flags 0x14022401); thunk returns UFortRuntimeOptions class default object via 0x1426fdde0. GetMutableDefault matches its non-const UObject return."
+  },
+  {
+    "class": "UFortRuntimeOptions",
+    "function": "GetGameVersion",
+    "kind": "getter",
+    "signature": "FString GetGameVersion() const",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/UFortRuntimeOptions/GetGameVersion.inc",
+    "confidence": "high",
+    "address": "0x142acdef0",
+    "status": "ported",
+    "proxy_score": null,
+    "decompile_source": "porting/generated/frontend-native-evidence/fortnite-frontend-bodies/0x1426ff110.c",
+    "includes": [
+      "Misc/App.h",
+      "Misc/EngineVersion.h"
+    ],
+    "notes": "Exec thunk 0x142acdef0 calls 0x1426ff110. Build/branch string and current engine changelist are read dynamically; see README for evidence and compile/runtime validation limits."
   }
 ]

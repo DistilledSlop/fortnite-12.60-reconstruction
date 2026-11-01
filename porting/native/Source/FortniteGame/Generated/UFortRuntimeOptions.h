@@ -3358,6 +3358,9 @@ public:
 	bool bBuildingPossessionShown;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FString GetGameVersion() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	static UFortRuntimeOptions* GetRuntimeOptions();
 
 };

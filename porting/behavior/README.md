@@ -4,7 +4,7 @@ Hand-ported native function bodies, taken from the decompiled output of the ship
 (`porting/generated/decomp/` and `porting/generated/decomp_improved/`, both git-ignored). Each `.inc`
 is our own C++ re-expression of what the decompile does, not a copy of it.
 
-Status (see `MANIFEST.json`, 438 entries): **250 ported** (33 getters, 29 onrep, 61 impl, 25 exec, 73 validate, 4 helper, 1 static_helper, 19 member_field, 5 struct_net; confidence 210 high, 40 medium), **188 skipped** with a reason (of which 17 are callees from the queue). `python3 -I porting/behavior/check_behavior.py` reports 0 failures; `COUNTS.txt` has 244 signatures declared in the generated header and 5 pending declarations. The generated-tree check separately verified all 250 splices with no failures.
+Status (see `MANIFEST.json`, 439 entries): **251 ported** (34 getters, 29 onrep, 61 impl, 25 exec, 73 validate, 4 helper, 1 static_helper, 19 member_field, 5 struct_net; confidence 211 high, 40 medium), **188 skipped** with a reason (of which 17 are callees from the queue). `python3 -I porting/behavior/check_behavior.py` reports 0 failures; `COUNTS.txt` has 244 signatures declared in the previously generated header and 6 pending declarations. The regenerated tree separately verified all 251 splices with no failures.
 
 Eleventh pass, the native NetSerialize bodies (see `porting/decompilation_notes.md`, "Eleventh pass"): five structs get their
 recovered `NetSerialize` through the new kind `struct_net` (below): `FSharedRepMovement`, `FFortAISharedRepMovement`,
@@ -33,6 +33,39 @@ with `probe_callees.py` at those addresses; the original bytes contain no additi
 field access. This evidence establishes the getter's body, not frontend initialization or a load.
 `GetContext` still depends on unresolved context lookups; `GetGameVersion` derives its result
 from runtime branch and version information and is not replaced by a constant.
+
+Frontend candidate `UFortRuntimeOptions::GetGameVersion`: the exec at `0x142acdef0`
+calls `0x1426ff110`. The latter uses the build-version and branch strings (`0x142ba33f0`,
+`0x142ba33d0`), extracts after the last `+` and before `-CL-`, removes `Release-`
+case-insensitively, falls back to the branch if the result is empty, and appends the
+current engine changelist. The `UE4` branch instead starts with `Dev Build `. The
+`0x142c96130`/`0x142c88340` current-version construction and `0x142c96f60` changelist
+mask match `FEngineVersion::Current().GetChangelist()`; UE 4.25 `FApp` wraps the two
+build-settings getters. The snippet calls those runtime APIs rather than hardcoding the
+supplied build's values. `FortniteLinux` compiled (`generated/frontend-probes/build-getgameversion.log`),
+and an opt-in runtime probe returned `v4.25 (0)` for the local `++UE4+Release-4.25-CL-0`
+build (`generated/frontend-probes/probe-getgameversion.log`). This does not establish the
+original client's display string or an interactive frontend.
+Decompiles and disassembly are in ignored `generated/frontend-native-evidence/`:
+`fortnite-frontend-{thunks,bodies}/` and `version-dependencies/`. To repeat the new
+probes, run `porting/.venv/bin/python -I porting/ghidra/probe_callees.py --input INPUT.json
+--out porting/generated/frontend-native-evidence/version-dependencies --timeout 45 --mem 12G`
+with `INPUT.json` a list of addresses `0x142ba33d0`, `0x142ba33f0`, `0x142c88340`,
+`0x142c96130`, `0x142bace90`, and `0x142bb18c0`. The probe rolls back its transaction.
+
+The next frontend helper probe is in this worktree's ignored
+`generated/frontend-next-{thunks,bodies}/`. `UFortGlobalUIContext::QuitGame`
+exec `0x14524a9c0` jumps to `0x144ce3b10`; its 341-byte body checks object
+types and calls seven unidentified or low-level functions plus one virtual
+slot. `SetInputMode` exec `0x14524b770` calls `0x144ce7b00` (284 bytes,
+three direct calls and five indirect calls). `UFortFrontEndContext::SetFrontEndCamera`
+exec `0x14523cf30` calls `0x144ce6fd0` (1,986 bytes, 36 direct calls and four
+indirect calls). `UFortBuildWatermark::UpdateWatermark` exec `0x14520a5a0`
+jumps to `0x144e235f0` (593 bytes, 12 direct and five indirect calls, including
+widget text updates through unresolved fields). The native bodies cannot yet
+be translated faithfully into the generated classes; no snippets were added
+for these four functions. `BlueprintContextLibrary::GetContext` remains blocked
+on its context-manager lookup and unknown fields.
 
 ## Files
 
@@ -78,8 +111,8 @@ from runtime branch and version information and is not replaced by a constant.
   Tenth pass: `GetOwner` (the public accessor of `AActor::Owner`, which is not declared in any generated header).
   Eleventh pass: `FMath` (`FMath::Abs` in the struct_net body of `FCreateBuildingActorData`). The C library call
   `::nearbyintf` is `::`-qualified, so the checker does not see it.
-  The name is accepted by the checker only; the header is still needed. An entry that is not a helper or a field has no
-  `includes`, so a body of an `impl`, `onrep`, `exec` or `getter` entry cannot bring one in.
+  The name is accepted by the checker only; the header is still needed. A getter or exec can declare validated engine
+  `includes` in the manifest; the generator emits those in the corresponding `.cpp`.
 - Each file starts with a `//` header comment: original address, decompile source, proxy score, what was
   inferred and `CONFIDENCE: HIGH|MEDIUM|LOW`. The checker requires the tag to match the manifest.
 
@@ -93,7 +126,9 @@ Turn it off with `--no-behavior` or `FN_BEHAVIOR_SPLICE=0`; the output then equa
   signature (`const` included) and the snippet as body. For a reflected `FUNC_Static` function the manifest must have
   `"static": true`; the generator verifies staticness and emits `static` on the declaration only. Static-and-const
   reflection is rejected, as are static bodies using `this` or an unqualified instance member known to this class.
-  These textual checks do not prove that a body compiles or catches inherited instance members. Apart from the helpers (see "Helpers" below), only these two kinds add functions that are not RPCs.
+  These textual checks do not prove that a body compiles or catches inherited instance members.
+  A getter or exec may list explicit engine `includes`; the generator validates these against its usable engine
+  header index and includes them in the generated `.cpp`, not the header. Apart from the helpers (see "Helpers" below), only these two kinds add functions that are not RPCs.
 Parameter order (generator change, see `porting/gen_native_classes.md`, "Parameter order"): a signature lists its
 parameters in declaration order, the order of the recorded offsets. The table lists them in reverse, so a manifest
 signature written in table order is rejected. In this pass the 27 `impl` and `validate` signatures with two or more

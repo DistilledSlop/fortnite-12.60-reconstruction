@@ -1,5 +1,6 @@
 #include "Engine/NetworkDelegates.h"
 #include "AFortPlayerPawn.h"
+#include "UFortRuntimeOptions.h"
 #include "Engine/StaticMesh.h"
 #include "Engine/StaticMeshActor.h"
 #include "Engine/Texture2D.h"
@@ -164,6 +165,7 @@ public:
         BindNetworkEncryptionDelegate();
         FCoreDelegates::OnPostEngineInit.AddStatic(&FFortniteGameModule::OnEngineInitForNetwork);
         FCoreDelegates::OnPostEngineInit.AddStatic(&FFortniteGameModule::ProbeAsset);
+        FCoreDelegates::OnPostEngineInit.AddStatic(&FFortniteGameModule::ProbeGameVersion);
         FWorldDelegates::OnPostWorldInitialization.AddStatic(&FFortniteGameModule::OnWorldInitialized);
         if (FParse::Param(FCommandLine::Get(), TEXT("NetSerializeSelfTest")))
         {
@@ -172,6 +174,14 @@ public:
     }
 
 private:
+    static void ProbeGameVersion()
+    {
+        if (!FParse::Param(FCommandLine::Get(), TEXT("FortniteProbeGameVersion")))
+            return;
+        const UFortRuntimeOptions* Options = GetDefault<UFortRuntimeOptions>();
+        UE_LOG(LogTemp, Display, TEXT("Fortnite game version probe: %s"), *Options->GetGameVersion());
+    }
+
     static void OnEngineInitForNetwork()
     {
         BindNetworkEncryptionDelegate();
