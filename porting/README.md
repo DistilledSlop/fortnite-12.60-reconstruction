@@ -28,9 +28,13 @@ express the no-stripping constraint, not the deliverable.
 
 ## Current evidence
 
+Read the current snapshot in `HANDOFF.md` before the historical probes below.
+The four dashboard milestones remain the product acceptance gates.
+
 - The client is `FortniteClient-12.60-CL-13477524`, a packaged Win64 build.
-- The adjacent engine checkout is Epic's public UE 4.25.0 release at Git
-  revision `f8f4b403eb682ffc055613c7caf9d2ba5df7f319`.
+- The adjacent engine checkout is based on Epic's public UE 4.25.0 release
+  `f8f4b403eb682ffc055613c7caf9d2ba5df7f319`, with local compatibility commit
+  `f716e0cb6`. See `HANDOFF.md` for required build state and preserved local edits.
 - All 31 game paks use pak version 10 and have encrypted indexes. Version 10
   is Unreal's path-hash index format. The public UE 4.25 source only defines
   pak versions through 9, so its `UnrealPak` cannot simply read these files.

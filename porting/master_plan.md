@@ -36,9 +36,9 @@ using historical instructions below.
    multi-client match through its end with sound and visuals working, and compare
    behavior and presentation against the supplied 12.60 build.
 
-## Current work (2026-10-31 23:47 UTC)
+## Current work (2026-11-01 00:07 UTC)
 
-Stage 2 (`2cbbd18`) passed the recorded full regression, including 4,617 offline checksum matches and 71 backend tests. The regression ran while unrelated HEAD and worktree changes were in flight; see the handoff for provenance. The current banner widget load still fails on a cooked export index with content missing, so prioritize the native owner's loader investigation and root UI probes. The response parser and session/websocket corrections are documented in `server/EVIDENCE.md`; no end-to-end lobby or matchmaking result exists. All four gates remain open.
+Native `7b2a97f` with engine `f716e0cb6` passes the full regression (4,617 offline class matches, 250 behavior snippets, 71 backend tests). A partially staged banner Blueprint class loads with the opt-in legacy field-path reader; widget creation/display and the root menu remain unverified. Prioritize isolated root UI dependencies and missing native helpers, then lobby/matchmaking. Backend parser and protocol corrections are recorded in `server/EVIDENCE.md`. All four product gates remain open; see `HANDOFF.md` for exact provenance and preserved engine edits.
 
 ## Standing constraints
 

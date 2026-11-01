@@ -2,7 +2,7 @@
   "checks": {
     "checksum_tool_selftest": {
       "command": "python3 -I porting/class_checksum.py --self-test",
-      "commit": "38ac2ecec877086bfecef0728bf9c81aafa43d6e",
+      "commit": "7b2a97ff6d77efb6689d3e496970d236ce81fa37",
       "exit_code": 0,
       "id": "checksum_tool_selftest",
       "key_lines": [
@@ -11,26 +11,30 @@
         "self-test: 31 checks, 0 failed"
       ],
       "result": "pass",
-      "utc": "2026-10-31T23:47:25Z"
+      "utc": "2026-11-01T00:06:36Z"
     },
     "net_version_checksum": {
       "command": "(log only) porting/generated/dedicated-server-client-test.log",
-      "commit": "38ac2ecec877086bfecef0728bf9c81aafa43d6e",
+      "commit": "7b2a97ff6d77efb6689d3e496970d236ce81fa37",
       "exit_code": null,
       "id": "net_version_checksum",
       "key_lines": [
-        "[2026.10.31-23.43.49:421][ 66]LogFortniteNet: Local network version checksum: 683914758 (0x28C3B606)"
+        "[2026.11.01-00.03.58:600][ 67]LogFortniteNet: Local network version checksum: 683914758 (0x28C3B606)"
       ],
       "matches": 1,
       "result": "pass",
-      "utc": "2026-10-31T23:47:19Z",
-      "origin_run": "porting/generated/regress/20261031T233838Z-1983199/result.json",
-      "source_native_commit": "2cbbd18",
-      "provenance_note": "Matched server log timestamp 23:43:49 during Athena smoke; wrapper recorded Athena smoke exit 0. Client log also records the same checksum; shared logs may later be overwritten."
+      "utc": "2026-11-01T00:06:30Z",
+      "source_native_commit": "7b2a97f",
+      "engine_commit": "f716e0cb6",
+      "origin_run": "porting/generated/regress/20261031T235803Z-2105216/result.json",
+      "origin_run_head_before": "4a14b8c",
+      "origin_run_head_after": "4a14b8c",
+      "origin_run_worktree": "UI event/static getter inputs uncommitted during run, later committed as 7b2a97f",
+      "provenance_note": "Saved log judged without rerunning. Full wrapper recorded both smoke exits 0; compiled source matches the later native commit."
     },
     "smoke_athena": {
-      "command": "(log only) porting/generated/regress/20261031T233838Z-1983199/smoke_athena.log",
-      "commit": "38ac2ecec877086bfecef0728bf9c81aafa43d6e",
+      "command": "(log only) porting/generated/regress/20261031T235803Z-2105216/smoke_athena.log",
+      "commit": "7b2a97ff6d77efb6689d3e496970d236ce81fa37",
       "exit_code": null,
       "id": "smoke_athena",
       "key_lines": [
@@ -38,18 +42,19 @@
       ],
       "matches": 1,
       "result": "pass",
-      "utc": "2026-10-31T23:47:19Z",
-      "origin_run": "porting/generated/regress/20261031T233838Z-1983199/result.json",
-      "source_native_commit": "2cbbd18",
-      "origin_run_head_before": "523082c",
-      "origin_run_head_after": "b23b30f",
-      "origin_run_worktree": "stage 2 native changes uncommitted during run, later committed as 2cbbd18",
-      "wrapper_exit_code": 0,
-      "provenance_note": "Existing step log judged by recorder; no smoke rerun. exit_code null denotes log-only evaluation; wrapper recorded exit 0."
+      "utc": "2026-11-01T00:06:30Z",
+      "source_native_commit": "7b2a97f",
+      "engine_commit": "f716e0cb6",
+      "origin_run": "porting/generated/regress/20261031T235803Z-2105216/result.json",
+      "origin_run_head_before": "4a14b8c",
+      "origin_run_head_after": "4a14b8c",
+      "origin_run_worktree": "UI event/static getter inputs uncommitted during run, later committed as 7b2a97f",
+      "provenance_note": "Saved log judged without rerunning. Full wrapper recorded both smoke exits 0; compiled source matches the later native commit.",
+      "wrapper_exit_code": 0
     },
     "smoke_default": {
-      "command": "(log only) porting/generated/regress/20261031T233838Z-1983199/smoke_default.log",
-      "commit": "38ac2ecec877086bfecef0728bf9c81aafa43d6e",
+      "command": "(log only) porting/generated/regress/20261031T235803Z-2105216/smoke_default.log",
+      "commit": "7b2a97ff6d77efb6689d3e496970d236ce81fa37",
       "exit_code": null,
       "id": "smoke_default",
       "key_lines": [
@@ -57,14 +62,32 @@
       ],
       "matches": 1,
       "result": "pass",
-      "utc": "2026-10-31T23:47:19Z",
-      "origin_run": "porting/generated/regress/20261031T233838Z-1983199/result.json",
-      "source_native_commit": "2cbbd18",
-      "origin_run_head_before": "523082c",
-      "origin_run_head_after": "b23b30f",
-      "origin_run_worktree": "stage 2 native changes uncommitted during run, later committed as 2cbbd18",
-      "wrapper_exit_code": 0,
-      "provenance_note": "Existing step log judged by recorder; no smoke rerun. exit_code null denotes log-only evaluation; wrapper recorded exit 0."
+      "utc": "2026-11-01T00:06:30Z",
+      "source_native_commit": "7b2a97f",
+      "engine_commit": "f716e0cb6",
+      "origin_run": "porting/generated/regress/20261031T235803Z-2105216/result.json",
+      "origin_run_head_before": "4a14b8c",
+      "origin_run_head_after": "4a14b8c",
+      "origin_run_worktree": "UI event/static getter inputs uncommitted during run, later committed as 7b2a97f",
+      "provenance_note": "Saved log judged without rerunning. Full wrapper recorded both smoke exits 0; compiled source matches the later native commit.",
+      "wrapper_exit_code": 0
+    },
+    "ui_banner_classload": {
+      "command": "(log only) porting/generated/frontend-banner-probe-events.log",
+      "commit": "7b2a97ff6d77efb6689d3e496970d236ce81fa37",
+      "exit_code": null,
+      "id": "ui_banner_classload",
+      "key_lines": [
+        "[2026.11.01-00.04.35:511][  0]LogTemp: Display: Fortnite asset probe: /Game/UI/Foundation/Profile/BP_BannerEditorTile.BP_BannerEditorTile_C -> WidgetBlueprintGeneratedClass"
+      ],
+      "matches": 1,
+      "result": "pass",
+      "utc": "2026-11-01T00:06:36Z",
+      "source_native_commit": "7b2a97f",
+      "engine_commit": "f716e0cb6",
+      "observed_process_exit_code": 0,
+      "required_option": "-FortniteLegacyFieldPaths",
+      "provenance_note": "Saved probe log, exit 0 observed by build owner. Only partially staged Blueprint class deserialization; content warnings remain and no widget was created or displayed."
     }
   }
 }

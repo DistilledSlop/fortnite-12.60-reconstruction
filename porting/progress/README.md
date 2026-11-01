@@ -139,7 +139,7 @@ gives identical bytes. Commit the result.
 
 ### Latest regression provenance
 
-The latest full run `porting/generated/regress/20261031T233838Z-1983199/result.json` passed promote, build, restage and seven checks, including 4,617 offline class matches and 71 backend tests. It ran with the stage 2 changes uncommitted (later committed as `2cbbd18`); HEAD moved from `523082c` to `b23b30f` during the run. The smoke ledger entries were recorded from the already-produced step logs, with `exit_code: null` for log-only inspection and the wrapper's recorded exit 0 in separate provenance fields. The network checksum was matched in the shared server log during that run; the corresponding client log also matched. The checksum tool self-test was run separately through the recorder and passed 31 checks. These results do not establish runtime wire parity or a UI milestone.
+Full run `porting/generated/regress/20261031T235803Z-2105216/result.json` passed build/restage and seven checks, including 4,617 class matches, 250 verified behavior snippets and 71 backend tests. Its native inputs were uncommitted at HEAD `4a14b8c` and later committed as `7b2a97f`; engine source was `f716e0cb6`. Smoke ledger entries judge saved logs, with null recorder exit codes and separate wrapper exit/provenance fields. The checksum tool self-test is a fresh executed check. `ui_banner_classload` records class deserialization with an opt-in loader flag; it does not establish widget creation/display or a milestone. All four gates remain open.
 
 ### Recording evidence
 
