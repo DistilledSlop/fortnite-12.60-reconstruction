@@ -68,6 +68,25 @@ def main():
                     0x141df8a70: 0x60, 0x141dfb870: 0x10,
                     0x140822100: 0x220, 0x147bd80e8: 56,
                     0x142b24950: 0x40})
+    # Checkpoint 4: actual phase transitions and process-global context lifecycle.
+    windows.update({0x141e17270: 0x1e0, 0x141df4af0: 0x280,
+                    0x141df80d0: 0xb0, 0x14081fca0: 0x400,
+                    0x140820790: 0x700, 0x140820f00: 0x260,
+                    0x1408200c0: 0x360, 0x140821ca0: 0x460,
+                    0x140822910: 0xe0, 0x140822a30: 0x1d0,
+                    0x140822c00: 0x120, 0x1408206a0: 0x20,
+                    0x1408206c0: 0x20, 0x1408234d0: 0x40,
+                    0x1408232c0: 0x110, 0x1408143c0: 0x10,
+                    0x144786700: 0xc0, 0x145a0f930: 0x2a8,
+                    0x1408229f0: 10, 0x140822a00: 0x30,
+                    0x145a0f798: 0x58, 0x14081f190: 0x140,
+                    0x14081f2c0: 0x140, 0x14081f3f0: 0x90,
+                    0x141e4f680: 0x220, 0x1402c0cd0: 0x20,
+                    0x144691ab0: 0x990, 0x144687a40: 0x570,
+                    0x144640340: 0xa0, 0x144627d90: 0x270,
+                    0x142b24410: 0x30, 0x147bd8078: 8})
+    for offset, target in [(0x278, 0x1408229f0), (0x290, 0x1408229f0)]:
+        assert image.u64(0x145a0f930 + offset) == target
     windows[enum_fields[4]] = enum_fields[5] * 16
     for address, size in windows.items():
         (out / (hex(address) + '.bin')).write_bytes(data[address - BASE:address - BASE + size])

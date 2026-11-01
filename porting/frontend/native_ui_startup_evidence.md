@@ -320,3 +320,120 @@ deferred world callbacks and teardown still need to be bound before implementing
 GetContext for the Root/Login Blueprint scripts. The receipt proves source
 creation/state/layer prerequisites, not interactive widgets, authentication or
 context behavior in the rebuilt client.
+
+## Checkpoint 4: source phase transitions and context lifecycle
+
+New immutable receipt
+`generated/frontend-native-evidence/native-ui-startup-checkpoint-4/receipt.json`,
+SHA-256 **3459ba0ebe7777b8d60c6015a290c8c4d820c5b63afe1a7d849a681cdaee9834**,
+freezes 374 inputs, including the updated inspector and original batches 1–39.
+The previous receipts and their content-addressed source snapshots remain
+unchanged. Reproduce with the inspector's `--last-batch 39 --packages
+porting/generated/frontend-native-evidence/native-ui-startup-packages-4` and a
+fresh `--output`. This checkpoint advances the unresolved boundaries described
+above; it does not establish a complete startup implementation.
+
+### Phase changes require original feature states
+
+`141e17270` is the original phase updater. Its state lookup `141df80d0` searches
+an asset-manager map at `6d0`, keyed by a byte, with `1a8`-byte entries; the
+state byte is at entry `+8`, and a missing entry returns zero. The recovered
+phase transitions are:
+
+| Guard, in original priority order | Effect |
+| --- | --- |
+| Current phase is 4 | Return immediately |
+| State for key 1 or key 6 is exactly 8 | If current phase <5, set phase4, conditionally enable automatic audio precache, then call `141dedeb0(true)`; invalid backward transition logs |
+| Otherwise state for key1 or key6 is >=5 | If current phase <4 and not3, set phase3 and conditionally call `141dedeb0(false)`; already3 returns |
+| Otherwise current phase0 | Set phase1 and disable automatic audio precache |
+| Then current phase1 and state for key3 >=5 | Set phase2 and call `141dedeb0(true)` |
+
+The table intentionally retains numeric feature keys until their original map
+key type and enum binding are proven. `142b24410` is an original enum accessor
+through `147bd8078`; it is not by itself proof of the map's key identity.
+`141df4af0` contains the original FinishInitialLoading log and only performs
+its game-startup block at phase3: superclass work, bundle operations, a feature
+state operation `141dec440(this,6,8,0)`, then iteration over FortLocalPlayers
+calling `14238a5c0`. The exact readiness/event chain and those helpers still
+need recovery before replacing the current FortAssetManager stub.
+
+A second real phase gate now ties contexts to player insertion. Original
+`141e4f680` calls base `144205160` and returns if it fails. It then invokes
+BlueprintContext module slot `40` to create this player's contexts **only if
+`141ed7750()>3`**, before assigning a primary player if needed and calling
+UIDirector slot `280`. The original `AddLocalPlayer: Set %s to Primary Player`
+literal and full 532-byte body are retained in batch38/39. Its module name comes
+from static initializer `1402c0cd0`, with the literal BlueprintContext and
+FName destination `14812df80`. Context creation for players already present
+when the phase finishes remains an explicit caller gap; do not bypass it by
+unconditionally initializing contexts in a LocalPlayer subsystem.
+
+### Actual registry construction and destruction
+
+The module factory `140822a00` allocates an eight-byte module object and installs
+`145a0f798`. That vtable's custom API is `40=14081f190` create,
+`48=14081f2c0` destroy, and `50=14081f3f0` lookup. Create/destroy contain
+original BlueprintContext player/GI log messages. Both use the process-global
+shared manager; lookup retains its null-player guard.
+
+Manager creation `140820790` prunes expired weak player keys, finds or inserts
+the player's map, obtains all classes derived from BlueprintContextBase, and
+skips abstract classes. It creates every context with **the LocalPlayer as
+Outer**, inserts it under its actual class key, and only after the complete
+class set exists iterates the map to call each context's virtual `280()`.
+This ordering permits peer-context lookup during initialization. The map's
+iteration order must not be replaced with an invented sorted order.
+
+The original BlueprintContextBase registration passes Within getter
+`1408143c0`, which resolves to original LocalPlayer getter `144786700`.
+Constructor callback `1408234d0` calls the USubsystem constructor and installs
+`145a0f930`; its source class contract therefore needs **Within=LocalPlayer**.
+The installed base table contains:
+
+| Slot | Target / base behavior |
+| --- | --- |
+| `268`, `270`, `280`, `288`, `298`, `2a0` | Original shared RET body `1406801c0` |
+| `278`, `290` | `1408229f0`: load primary vtable and tail-jump to slot `288` |
+
+These are slot identities, not guessed C++ method names. In particular, world
+initialization at `290` may reach a derived override of `288`; the base RET does
+not justify dropping that phase. The full raw forwarding body has no extra
+state change or call.
+
+Destroy `140820f00` obtains the LocalPlayer's world, finds its weak-key map,
+calls every context's virtual `2a0(context,world)`, marks each context with
+original GC flag `20000000`, and removes the player entry. The exact outer
+caller of the module's destroy API still needs binding.
+
+### Deferred world notifications and GC ownership
+
+The manager constructor `14081fca0` binds original globals `147ce0788` and
+`147ce07b8`. Their original producer bodies are frozen in batch29:
+`144691ab0` broadcasts the former after world initialization with World and
+initialization values; `144687a40` logs UWorld::CleanupWorld and broadcasts the
+latter with World and both cleanup booleans. Current Engine delegate names
+OnPostWorldInitialization/OnWorldCleanup agree with those signatures.
+
+Initialization callback `140822a30` stores a weak World under its name and,
+when the manager's weak GI is valid, schedules `140822910` using the original
+GI TimerManager (`+c0`) and `144627d90` (original STAT_SetTimerForNextTick).
+The deferred callback removes the pending name entry, resolves its weak World,
+then uses `144640340` to locate its engine world context. It only dispatches
+when that context's owning GI (`+218`) equals the manager's GI. Iteration
+`140821ca0` visits player/class maps through copied class maps, and callback
+`1408206a0` calls each context's virtual `290(context,world)`.
+Cleanup `140822c00` applies the same GI check and uses `1408206c0` to call
+virtual `298(context,world)`; its extra cleanup booleans do not affect that body.
+
+The manager is also an original FGCObject referencer, registered in its
+constructor through the original UGCObjectReferencer path. Treating all context
+storage as weak references would lose this ownership. Destructor `1408200c0`
+removes both delegate handles (`c8/d0`), destroys maps, and unregisters that
+referencer. The full ownership traversal and process-global shutdown caller
+remain implementation prerequisites.
+
+Batches27–39 used only read-only view/decompilation helpers, except missing
+leaf definitions in batches31/34, which were created in transactions and rolled
+back. Ghidra was not saved or renamed; its five bookkeeping-file changes are
+retained in each integrity record. The original client was not executed.
+No Native/Engine/stage source, runtime cache, or reconstructed lifecycle changed.
