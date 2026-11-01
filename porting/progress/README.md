@@ -411,7 +411,7 @@ its tile on those fonts; characters outside the set default to the widest entry.
 ## Unit squares
 
 Decomposable leaves additionally render one square per unit, drawn under the
-tile's label. Each unit is its own square of identical size, with no merging into
+tile's label, over the same bottom-up progress fill used by other leaves. Each unit is its own square of identical size, with no merging into
 stripes or stretching: done is the `unit-done` blue and not-done the `unit-todo` neutral. Both are palette
 variables (see Colour), so they swap with the page theme. Units are grouped by
 asset type, package or class; groups are contiguous, with a gap row between groups
@@ -422,12 +422,12 @@ units, `UNIT_PITCH_MAX`) at which every unit fits in the grid region: the tile m
 the fitted name and percentage, `label_strip`) and a 3px inset on the other sides.
 A square is `s` wide, minus a 1px gap when `s >= 4`. The grid is left and top
 aligned, filling rows left to right, so a tile with few units shows a small block in its
-top-left corner and the rest stays the neutral tile surface. Squares carry no labels; the
+top-left corner; the background shows the tile's progress fill. Squares carry no labels; the
 done/total is in the hover summary and the detail panel.
 
 A grid is kept only when it reconciles with its leaf: the grid's done and total must
 equal the leaf's own measured done and total (`build_unit_grids`). A grid that does not
-reconcile is dropped and the leaf shows its fill level, which is driven by the leaf's
+reconcile is dropped and the leaf shows its fill level alone, which is driven by the leaf's
 pct, so a grid never contradicts its tile's percentage. Currently `assets.static_meshes`
 (71 of its 77 done items are converted `.glb` stems outside the SM_ unit list),
 `gameplay.native_behavior` (126 ported functions have no exec address, so they are
@@ -435,7 +435,7 @@ outside the 20,574 units) and `gameplay.reflection_exact` (one tracked header,
 `UFortMatchmakingKnobsDataSource`, is not in the named-class denominator) are dropped.
 Adding those items as units would change the leaf total, which the measure fixes.
 
-A tile uses its fill level instead of squares when its grid is dropped by the
+A tile shows its fill level without squares when its grid is dropped by the
 reconciliation check, when its units cannot fit at pitch 2 or more, or when it has more
 than `UNIT_GRID_MAX` (6000) units. `assets.package_coverage` (about 450k cooked packages)
 has no grid and is a plain fill-level tile. The done set of a grid never exceeds the

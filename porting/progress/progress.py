@@ -1236,9 +1236,8 @@ def unit_label(name, pct_s, rw, rh):
 def unit_tile_svg(node, cells, rx, ry, rw, rh):
     """Squares and label for a unit tile, in paint order (squares first, so text is never
     under a square). The label sits in a strip at the top and the grid takes the area
-    beneath it on the neutral surface, with no fill level: the squares are the progress.
-    Returns None when the tile has no grid or its grid does not fit; the caller then
-    draws the plain fill-level tile instead."""
+    beneath it, over the tile's fill level. Returns None when the tile has no grid or
+    its grid does not fit; the caller still draws the fill level and label."""
     if not cells or len(cells) > UNIT_GRID_MAX:
         return None
     lab = unit_label(node["name"], fmt_pct(node["pct"]), rw, rh)
@@ -1323,8 +1322,8 @@ def render_treemap(groups, width, height, css_class="tm", interactive=False, sor
     sort_mode orders siblings at every level: weight (area, default) or
     progress (largest percent first). grids maps leaf ids to per-unit cell
     lists; such a tile shows one square per unit below a label strip (see
-    unit_tile_svg). Every other leaf is a neutral tile whose blue fill rises
-    from the bottom edge to its percent complete (see fill_svg). prefix keeps
+    unit_tile_svg). Every leaf has a blue fill rising from the bottom edge to
+    its percent complete (see fill_svg), including those with squares. prefix keeps
     clipPath ids unique when two layers share one document."""
     parts = []
     leaves_out = []   # (node, x, y, w, h)
@@ -1379,10 +1378,10 @@ def render_treemap(groups, width, height, css_class="tm", interactive=False, sor
         else:
             parts.append(f'<g><title>{html.escape(tooltip_text(node))}</title>')
         parts.append(f'<rect class="tile-body" x="{rx:.1f}" y="{ry:.1f}" width="{rw:.1f}" height="{rh:.1f}" rx="{GRP_RADIUS}"/>')
+        parts.extend(fill_svg(rx, ry, rw, rh, node["pct"], f"{prefix}{css_class}-c{k}"))
         shapes = unit_tile_svg(node, (grids or {}).get(node["id"]), rx, ry, rw, rh)
         if shapes is None:
-            shapes = (fill_svg(rx, ry, rw, rh, node["pct"], f"{prefix}{css_class}-c{k}")
-                      + label_svg(leaf_label(node["name"], fmt_pct(node["pct"]), rw, rh), rx, ry, node["pct"]))
+            shapes = label_svg(leaf_label(node["name"], fmt_pct(node["pct"]), rw, rh), rx, ry, node["pct"])
         parts.extend(shapes)
         # Frame last, so the hover and selection outline paints over the fill.
         parts.append(f'<rect class="tile-frame" x="{rx:.1f}" y="{ry:.1f}" width="{rw:.1f}" height="{rh:.1f}" rx="{GRP_RADIUS}"/>')
@@ -1675,7 +1674,7 @@ def legend_html(weight_by_basis=None):
     complete), then the basis shares."""
     out = ('<div class="legend"><span>empty = 0%</span><span class="fillscale" aria-hidden="true"></span>'
            '<span>full = 100%</span><span>A tile&rsquo;s blue fill rises from its bottom edge to its percent '
-           'complete. On unit tiles each blue square is one finished unit.</span></div>')
+           'complete. On tiles with squares, each blue square is one finished unit.</span></div>')
     return out + basis_legend_html(weight_by_basis or {})
 
 
@@ -1821,7 +1820,7 @@ def index_html(res, head, subject, date, model, when_note, grids=None):
 <ul class="ms">{milestones}</ul>
 
 <h2>Treemap</h2>
-<p class="meta">Tile area = estimated effort weight. Each tile is a neutral surface with a blue fill that rises from its bottom edge to its percent complete, so empty is 0% and full is 100%. Names and percentages are never cut off; a tile too small for its name shows its percentage alone. Decomposable components show one square per unit under the name instead of a fill level, at most 9 px each, packed from the top-left: blue when done, a neutral square when not, grouped by asset type, package or class with a gap row between groups. Squares are the progress on those tiles. A tile too small for its squares, too large to draw, or whose units do not reconcile with its own done/total uses the fill level instead. The tile's done/total is in the hover summary. Hover a tile for the summary, click to read the evidence below. The sort toggle re-lays out the tiles by progress instead of area.</p>
+<p class="meta">Tile area = estimated effort weight. Each tile is a neutral surface with a blue fill that rises from its bottom edge to its percent complete, so empty is 0% and full is 100%. Names and percentages are never cut off; a tile too small for its name shows its percentage alone. Decomposable components also show one square per unit under the name, at most 9 px each, packed from the top-left: blue when done, a neutral square when not, grouped by asset type, package or class with a gap row between groups. A tile too small for its squares, too large to draw, or whose units do not reconcile with its own done/total shows the fill level alone. The tile's done/total is in the hover summary. Hover a tile for the summary, click to read the evidence below. The sort toggle re-lays out the tiles by progress instead of area.</p>
 {legend_html(res["weight_by_basis"])}
 <div class="tm-bar" id="tm-bar">
 <div class="sort"><span>Sort tiles by</span>
