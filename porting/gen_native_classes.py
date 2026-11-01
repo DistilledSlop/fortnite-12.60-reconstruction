@@ -1544,9 +1544,23 @@ def function_view(fn, owner_fns):
 UI_BLUEPRINT_EVENTS = {"UCommonButton": frozenset({"BP_OnHovered", "BP_OnSelected"})}
 UI_BLUEPRINT_EVENT_FLAGS = 0x08080800  # BlueprintEvent | Protected | Event; not Native
 
+# Parameterized events require an individually evidenced owner, function,
+# complete serialized signature and explicitly reviewed UHT declaration.
+UI_PARAMETERIZED_BLUEPRINT_EVENTS = {
+    "UFortLoginStatus": {
+        "SetContinueButtonText": {
+            "owner_fn": "0x145282560", "create_func": "0x1452825a0", "flags": 0x08480800,
+            "params": [{"index": 0, "name": "ContinueText", "kind": "Text", "kind_raw": "0x1d",
+                        "property_flags": "0x10000008000182", "replicated": False, "rep_notify": None,
+                        "array_dim": 1, "object_flags": "0x45", "offset": 0}],
+            "args": ["const FText& ContinueText"], "specifiers": ["BlueprintImplementableEvent"],
+        },
+    },
+}
+
 
 def build_functions_promoted(functions, resolver, notify_names, owner_fns, splice_names=frozenset(),
-                             blueprint_events=frozenset()):
+                             blueprint_events=frozenset(), parameterized_blueprint_events=None):
     """Emit RPCs, RepNotify targets, snippet functions and narrowly selected observed Blueprint events.
     A function whose flags cannot be classified is recorded, since it might be an RPC."""
     emitted = []
@@ -1558,7 +1572,22 @@ def build_functions_promoted(functions, resolver, notify_names, owner_fns, splic
             continue
         is_rpc = bool(flags & FUNC_NET_ANY)
         is_splice = name in splice_names and not is_rpc
-        is_blueprint_event = name in blueprint_events
+        policy = (parameterized_blueprint_events or {}).get(name)
+        is_blueprint_event = name in blueprint_events or policy is not None
+        if policy is not None:
+            owned = [c for c in fn.get("candidates", []) if str(c.get("outer_fn") or "").lower() in owner_fns]
+            if (flags != policy["flags"] or is_splice or name in notify_names or
+                    policy["owner_fn"] not in owner_fns or str(fn.get("create_func") or "").lower() != policy["create_func"] or
+                    len(owned) != 1 or str(owned[0].get("outer_fn") or "").lower() != policy["owner_fn"] or
+                    owned[0].get("nprop") != len(policy["params"]) or params != policy["params"]):
+                resolver.skipped.append(skip_function(fn, "blueprint_event_mismatch",
+                    "original parameterized event owner, flags or exact signature differs"))
+                continue
+            emitted.append({"name": name, "rpc": False, "service": None, "ret": "void",
+                            "const": False, "notify": False, "splice": False,
+                            "blueprint_event": True, "specifiers": list(policy["specifiers"]),
+                            "args": list(policy["args"]), "used": {}})
+            continue
         if is_blueprint_event:
             # The imported events have no parameters and exactly these flags. Refuse to invent
             # a signature or native implementation if the reflection join changes.
@@ -1650,7 +1679,8 @@ def build_class_promoted(block, name, resolver, parent_entry, owner_fns, snippet
     notify_names = {m["rep_notify"] for m in members if m["rep_notify"]}
     splice_names = {e["function"] for e in snippets if e["kind"] in ("getter", "exec") and e.get("body") is not None}
     functions = build_functions_promoted(block.get("functions") or [], resolver, notify_names, owner_fns,
-                                         splice_names, UI_BLUEPRINT_EVENTS.get(name, frozenset()))
+                                         splice_names, UI_BLUEPRINT_EVENTS.get(name, frozenset()),
+                                         UI_PARAMETERIZED_BLUEPRINT_EVENTS.get(name, {}))
     splice = (attach_snippets(name, functions, snippets, splice_ctx, parent_entry.get("package"), resolver.skipped,
                               {m["name"] for m in members})
               if snippets else None)
