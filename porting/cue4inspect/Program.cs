@@ -52,6 +52,8 @@ bool actorReport = args.Contains("--actor-report");
 bool exportPng = args.Contains("--export-png");
 bool exportLandscapeWeightmaps = args.Contains("--export-landscape-weightmaps");
 bool materialReport = args.Contains("--material-report");
+bool textureReport = args.Contains("--texture-report");
+string? textureOutputArgument = args.SingleOrDefault(arg => arg.StartsWith("--texture-output=", StringComparison.Ordinal));
 bool functionReport = args.Contains("--function-report");
 bool versionReport = args.Contains("--versions");
 bool sizeList = args.Contains("--sizes");
@@ -81,7 +83,7 @@ if (maxArgument is not null && (!int.TryParse(maxArgument[15..], out maxPackages
     Console.Error.WriteLine("--max-packages must be a positive integer");
     return 2;
 }
-string[] positional = args.Where(arg => arg != maxArgument && arg != closureOutputArgument && arg != keyFileArgument && arg != extractOutput && arg != extractWorkersArgument && arg != extractPlanArgument && arg != extractSummaryArgument && arg != extractSampleArgument && arg != extractSeedArgument && arg != duplicatesOutArgument && arg is not ("--all" or "--pseudo" or "--imports" or "--imports-json" or "--export-map-json" or "--registry" or "--pak-sources" or "--registry-paths" or "--seed-list" or "--follow-soft" or "--scan-maps" or "--scan-native" or "--all-keys" or "--save-package" or "--save-list" or "--sizes" or "--save-folder" or "--save-closure" or "--export-glb" or "--export-landscape" or "--export-landscape-grid" or "--export-landscape-weightmap-grid" or "--export-png" or "--export-landscape-weightmaps" or "--material-report" or "--function-report" or "--landscape-report" or "--actor-report" or "--versions" or "--ue426" or "--loose" or "--extract-all" or "--dry-run" or "--verify" or "--audit-duplicates" or "--repair")).ToArray();
+string[] positional = args.Where(arg => arg != maxArgument && arg != closureOutputArgument && arg != keyFileArgument && arg != extractOutput && arg != extractWorkersArgument && arg != extractPlanArgument && arg != extractSummaryArgument && arg != extractSampleArgument && arg != extractSeedArgument && arg != duplicatesOutArgument && arg != textureOutputArgument && arg is not ("--all" or "--pseudo" or "--imports" or "--imports-json" or "--export-map-json" or "--registry" or "--pak-sources" or "--registry-paths" or "--seed-list" or "--follow-soft" or "--scan-maps" or "--scan-native" or "--all-keys" or "--save-package" or "--save-list" or "--sizes" or "--save-folder" or "--save-closure" or "--export-glb" or "--export-landscape" or "--export-landscape-grid" or "--export-landscape-weightmap-grid" or "--export-png" or "--export-landscape-weightmaps" or "--material-report" or "--texture-report" or "--function-report" or "--landscape-report" or "--actor-report" or "--versions" or "--ue426" or "--loose" or "--extract-all" or "--dry-run" or "--verify" or "--audit-duplicates" or "--repair")).ToArray();
 bool packageLess = registryMode || pakSources || registryPaths || scanMaps || scanNative || exportLandscapeGrid || exportLandscapeWeightmapGrid || extractAll;
 if (new[] { registryMode, pakSources, registryPaths, scanMaps, scanNative, exportLandscapeGrid, exportLandscapeWeightmapGrid, extractAll }.Count(mode => mode) > 1 || (packageLess ? positional.Length > 1 : positional.Length is < 1 or > 2))
 {
@@ -732,6 +734,47 @@ try
         ExportLandscapes(packageData, assetPath!);
         return 0;
     }
+    if (textureReport)
+    {
+        if (textureOutputArgument is null)
+            throw new InvalidDataException("--texture-report requires --texture-output=<fresh directory under porting/generated>");
+        var destination = Path.GetFullPath(textureOutputArgument["--texture-output=".Length..]);
+        var generated = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "porting/generated"));
+        if (!destination.StartsWith(generated + Path.DirectorySeparatorChar, StringComparison.Ordinal) || Directory.Exists(destination))
+            throw new InvalidDataException("Texture output must be a fresh directory under porting/generated; run from repository root");
+        var texture = packageData.GetExports().OfType<UTexture2D>().Single();
+        var decoded = texture.Decode() ?? throw new InvalidDataException("Texture has no decodable mip data");
+        var rgba = DecodeRgbaPixels(decoded);
+        var png = EncodeRgbaPng(decoded);
+        Directory.CreateDirectory(destination);
+        var rgbaPath = Path.Combine(destination, texture.Name + ".rgba");
+        var pngPath = Path.Combine(destination, texture.Name + ".png");
+        File.WriteAllBytes(rgbaPath, rgba);
+        File.WriteAllBytes(pngPath, png);
+        var report = new
+        {
+            package = assetPath,
+            name = texture.Name,
+            width = decoded.Width, height = decoded.Height,
+            pixelFormat = texture.Format.ToString(), decodedPixelFormat = decoded.PixelFormat.ToString(),
+            srgb = texture.SRGB, filter = texture.Filter.ToString(), lodGroup = texture.LODGroup.ToString(),
+            addressX = texture.AddressX.ToString(), addressY = texture.AddressY.ToString(),
+            firstMip = texture.PlatformData.FirstMipToSerialize,
+            mips = texture.PlatformData.Mips.Select(mip => new
+            {
+                width = mip.SizeX, height = mip.SizeY, depth = mip.SizeZ,
+                bulkFlags = mip.BulkData?.BulkDataFlags.ToString(),
+                bulkOffset = mip.BulkData?.Header.OffsetInFile, bulkBytes = mip.BulkData?.Header.SizeOnDisk
+            }).ToArray(),
+            rgba = rgbaPath, rgbaSha256 = Convert.ToHexString(System.Security.Cryptography.SHA256.HashData(rgba)).ToLowerInvariant(),
+            png = pngPath, pngSha256 = Convert.ToHexString(System.Security.Cryptography.SHA256.HashData(png)).ToLowerInvariant(),
+            properties = texture.Properties.Select(property => new { name = property.Name.Text, value = property.Tag?.ToString() }).ToArray()
+        };
+        var json = JsonSerializer.Serialize(report, new JsonSerializerOptions { WriteIndented = true });
+        File.WriteAllText(Path.Combine(destination, "texture-report.json"), json);
+        Console.WriteLine(json);
+        return 0;
+    }
     if (exportPng)
     {
         var texture = packageData.GetExports().OfType<UTexture2D>().FirstOrDefault()
@@ -1030,6 +1073,15 @@ static void ExportLandscapeWeightmaps(IPackage package, string assetPath)
 
 static byte[] EncodeRgbaPng(CTexture texture)
 {
+    var rgba = DecodeRgbaPixels(texture);
+    using var image = Image.LoadPixelData<Rgba32>(rgba, texture.Width, texture.Height);
+    using var buffer = new MemoryStream();
+    image.SaveAsPng(buffer);
+    return buffer.ToArray();
+}
+
+static byte[] DecodeRgbaPixels(CTexture texture)
+{
     var pixelCount = checked(texture.Width * texture.Height);
     byte[] rgba;
     switch (texture.PixelFormat)
@@ -1057,10 +1109,7 @@ static byte[] EncodeRgbaPng(CTexture texture)
     }
     if (rgba.Length != checked(pixelCount * 4))
         throw new InvalidDataException("Decoded texture byte count does not match its dimensions");
-    using var image = Image.LoadPixelData<Rgba32>(rgba, texture.Width, texture.Height);
-    using var buffer = new MemoryStream();
-    image.SaveAsPng(buffer);
-    return buffer.ToArray();
+    return rgba;
 }
 
 // Reads "name=<64 hex>" lines (name is "primary" or a GUID in digits form). Blank lines and lines

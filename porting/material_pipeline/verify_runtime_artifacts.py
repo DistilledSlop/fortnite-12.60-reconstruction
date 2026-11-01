@@ -71,6 +71,38 @@ def expected_uniform_bindings(record, shader, material_hash, view_hash):
     return bindings
 
 
+def check_material_resource_links(record, shader, layout, header):
+    """Match each original UB texture/sampler entry to the emitted Global index."""
+    expected = []
+    for descriptor in shader['reflection']['descriptors']:
+        entries = descriptor.get('resource_table_entries', [])
+        if not entries:
+            continue
+        if len(entries) != 1:
+            raise ValueError('ambiguous original texture resource entry')
+        entry = entries[0]
+        register = descriptor['d3d_register']
+        resource = entry['resource']
+        base_type = 8 if register['kind'] == 'sampler' else 5 if register['kind'] == 'srv' else -1
+        table = 'sampler' if base_type == 8 else 'texture'
+        if (entry['uniform_buffer'] != record['material_uniform_buffer']['base_index'] or
+                entry['bind'] != register['index'] or entry['table'] != table or
+                not 0 <= resource < len(layout['resource_types']) or layout['resource_types'][resource] != base_type):
+            raise ValueError('original texture entry disagrees with typed Material layout')
+        matches = [(index, value) for index, value in enumerate(header['globals']) if value['binding'] == descriptor['binding']]
+        if len(matches) != 1:
+            raise ValueError('original texture descriptor lacks a unique Global link')
+        index, info = matches[0]
+        if (not 0 <= info['type_index'] < len(header['global_types']) or
+                header['global_types'][info['type_index']] != descriptor['vulkan_descriptor_type']):
+            raise ValueError('native Global descriptor type differs from original resource')
+        expected.append([resource, entry['bind'], index, base_type])
+    actual = [resource for uniform in header['uniform_buffers'] if uniform.get('verified_role') == 'Material'
+              for resource in uniform['resources']]
+    if len(expected) != len(actual) or sorted(expected) != sorted(actual):
+        raise ValueError('native Material resource-table links differ from original shader')
+
+
 class Reader:
     def __init__(self, data):
         self.data, self.cursor = data, 0
@@ -174,9 +206,20 @@ def main():
         fixture = json.loads(fixture_bytes)
         fixture = fixture.get('runtime_fixture', fixture)
         layout = fixture['expected_layout']
-        if layout['resource_types'] != [8, 8]:
+        if layout['resource_types'] not in ([8, 8], [5, 8, 8, 8]):
             raise ValueError('unsupported checked material resource layout')
         layout_hash = uniform_layout_hash(layout['constant_bytes'], layout['resource_offsets'], layout['resource_types'])
+        texture_receipt = None
+        if fixture.get('texture_contract'):
+            path = args.artifacts / 'DonutMaterialLayout.json'
+            texture_receipt = json.loads(path.read_text(encoding='utf-8-sig'))
+            resources = texture_receipt['resources']
+            if (texture_receipt['layout_hash'] != layout_hash or texture_receipt['constant_bytes'] != layout['constant_bytes'] or
+                    texture_receipt['static_slot'] != 255 or
+                    [row['offset'] for row in resources] != layout['resource_offsets'] or
+                    [row['type'] for row in resources] != layout['resource_types'] or
+                    texture_receipt['indexed_texture'] != fixture['texture_contract']['default_texture_path']):
+                raise ValueError('compiled texture layout/reference differs from original source contract')
         view_hash, view_receipt = None, None
         if fixture.get('view_contract'):
             path = args.view_layout or args.artifacts / 'GTViewLayout.json'
@@ -235,6 +278,7 @@ def main():
                     raise ValueError('native uniform layout differs from its original typed register role')
                 uniform['verified_role'] = role[0]
                 references.append((*offsets, uniform['binding']))
+            check_material_resource_links(record, shader, layout, header)
             references += [(*offsets, info['binding']) for info, offsets in zip(header['globals'], header['global_offsets'])]
             declared = {(d['set_word_offset'], d['binding_word_offset'], d['binding']) for d in reflected['descriptors']}
             if len(references) != len(declared) or set(references) != declared:
@@ -249,6 +293,8 @@ def main():
                       limitations=['Header/module artifacts verified; actual pipeline execution and visual parity are separate runtime gates'])
         if view_receipt is not None:
             report['view_layout'] = view_receipt
+        if texture_receipt is not None:
+            report['texture_layout'] = texture_receipt
         args.report.parent.mkdir(parents=True, exist_ok=True)
         temporary = args.report.with_suffix('.tmp')
         temporary.write_text(json.dumps(report, indent=2) + '\n'); temporary.replace(args.report)

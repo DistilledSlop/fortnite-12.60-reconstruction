@@ -21,6 +21,25 @@ def module(name, literal=17):
 
 
 class RuntimeArtifactVerificationTests(unittest.TestCase):
+    def test_texture_links_use_material_resource_slots_and_exclude_font_globals(self):
+        def descriptor(kind, table, resource, binding, vk_type):
+            return dict(binding=binding, vulkan_descriptor_type=vk_type,
+                        d3d_register=dict(kind=kind, index=0), resource_table_entries=[
+                            dict(uniform_buffer=1, resource=resource, bind=0, table=table)])
+        record=dict(material_uniform_buffer=dict(base_index=1))
+        shader=dict(reflection=dict(descriptors=[descriptor('srv','texture',0,3,2),
+            descriptor('sampler','sampler',1,2,0), dict(binding=5, resource_table_entries=[])]))
+        layout=dict(resource_types=[5,8,8,8])
+        header=dict(globals=[dict(binding=3,type_index=0),dict(binding=2,type_index=1),dict(binding=5,type_index=2)],
+                    global_types=[2,0,2], uniform_buffers=[dict(verified_role='Material',resources=[[0,0,0,5],[1,0,1,8]])])
+        verifier.check_material_resource_links(record,shader,layout,header)
+        header['uniform_buffers'][0]['resources'].append([2,1,2,5])
+        with self.assertRaisesRegex(ValueError,'resource-table links'):
+            verifier.check_material_resource_links(record,shader,layout,header)
+        header['uniform_buffers'][0]['resources']=[[1,0,0,5],[0,0,1,8]]
+        with self.assertRaisesRegex(ValueError,'resource-table links'):
+            verifier.check_material_resource_links(record,shader,layout,header)
+
     def test_rhi_hash_preserves_reverse_type_packing_and_layout_bounds(self):
         self.assertEqual(verifier.uniform_layout_hash(336, [320, 328], [8, 8]), 22544639)
         self.assertEqual(verifier.uniform_layout_hash(208, [192, 200], [8, 8]), 14156031)
