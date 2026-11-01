@@ -14,5 +14,10 @@ class FORTNITEGAME_API AFortEntryMusicController : public AActor
 	GENERATED_BODY()
 
 public:
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void StartMusic();
+public:
+
 };
 
