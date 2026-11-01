@@ -127,13 +127,22 @@ These are the four material packages reached by the failing frontend probes. Eac
 
 ## Pre-freeze uniform expression prefix
 
-`legacy_shader_map.py` strictly parses the observed original resource header and eight uniform-expression arrays, including their supported recursive expression types. It checks package and resource identities against the framing report and stops at the first unknown field; it does not decode the remaining compilation output or reconstruct a runnable shader map. `test_legacy_shader_map.py` exercises the supported prefix and rejects malformed or unsupported input. The reports under `generated/material_pipeline/*-legacy-prefix.json` record the decoded nodes and these boundaries:
+`legacy_shader_map.py` strictly parses the observed original resource header,
+eight uniform-expression arrays, the intervening virtual-texture stack slot,
+parameter collections, and the compilation output scalar prefix. It checks
+package and resource identities against the framing report. All four original
+resources have zero virtual-texture stacks and zero parameter collections. The
+parser stops before packed compilation flags: the public 4.24 serializer's
+following debug-string boundary does not match the original bytes. It does not
+decode shader records or reconstruct a runnable shader map. Eight tests cover
+the supported prefix and malformed input. Reports under
+`generated/material_pipeline/*-legacy-prefix.json` record these boundaries:
 
 | Resource | Expression nodes | First unknown resource-relative offset | First unknown `.uexp` offset |
 | --- | ---: | ---: | ---: |
-| Donut | 13 | 518 | 2699 |
-| Locker | 220 | 4593 | 7390 |
-| MenuButton | 124 | 2820 | 7350 |
-| PowerToast | 81 | 1886 | 5885 |
+| Donut | 13 | 538 | 2719 |
+| Locker | 220 | 4613 | 7410 |
+| MenuButton | 124 | 2840 | 7370 |
+| PowerToast | 81 | 1906 | 5905 |
 
 These boundaries are evidence for continuing the parser, not proof of uniform values, resource binding correspondence, shader semantics, or UE draw parity.
