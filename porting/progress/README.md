@@ -553,7 +553,7 @@ parity remain unverified. All four milestones remain false. The allocation
 preserves total weight 1,855 and prior history; the one point adds about 0.054
 percentage points at the same remaining evidence.
 
-The current Root probe first encountered missing CommonActivatablePanel.OnBeginIntro
+At the base-activation checkpoint, the Root probe first encountered missing CommonActivatablePanel.OnBeginIntro
 at AsyncLoading.cpp:3126; Login first encountered M_TempIcon_Login_Facebook at
 MemoryImage.cpp:1064. Asynchronous load order can change the first boundary.
 
@@ -579,3 +579,21 @@ parity remain unverified. Interface restoration source work uses the existing
 reflection budget. Two builds, seven processes and two joins are covered by pinned
 evidence and an independent audit. The denominator remains 1,855, history is
 preserved and all four milestone gates remain false.
+
+### Confirmation runtime allocation
+
+One point is split from the existing 30-point FortniteUI behavior budget, leaving
+29 points there. Four equally weighted checks cover description construction/copy,
+the authentic async action, queued presentation and user interaction. The pinned
+`record_frontend_confirmation_description_runtime.py` importer credits only the
+first check: actual UE defaults, original size/alignment, and typed native delegate
+ownership through C++ and UScriptStruct copying. The family therefore shows 25%.
+The denominator stays 1,855; no milestone is marked complete.
+
+At Native `00e1279`, both builds, eight diagnostic processes and both joins pass.
+The original Root class loads with no unresolved bytecode-field warnings; earlier
+intro/outro load failures are resolved. No original Root widget instance or
+interactive presentation has been established. The importer rechecks archived
+artifacts and source pairs; stage binary fields are cross-checked without
+rehashing binary contents. The original build/stage/freeze receipts carry those
+binary hashes. Frozen external evidence must remain available for re-verification.

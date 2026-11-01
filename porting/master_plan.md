@@ -10,12 +10,15 @@ credentials in Git, and the orchestrator reviews and commits.
 
 ## Current baseline
 
-At Native `aa91a8e`, the original Root class loads with no unresolved bytecode-field warnings. The
-existing UI-to-Game dependency now resolves39enums,56structs,36delegates and264additional properties;
-both builds, both joins and seven retained Native diagnostics pass. Material compatibility remains129/142.
-The next work is the authentic confirmation async-action factory, constructor/callback state and Activate
-interface call, using recovered original bodies. Interactive startup, VM behavior and original pixels remain
-unverified; all four product milestones are open. Exact receipts and source release are in HANDOFF.md.
+At Native `00e1279`, both builds, both joins, the actual-engine confirmation description diagnostic
+and seven retained Native diagnostics pass. The description now has recovered defaults, original
+size/alignment and two typed callbacks with verified C++/UScriptStruct copy ownership. The original
+Root class loads with no unresolved bytecode-field warnings. Material compatibility remains129/142.
+The next runtime step is original Root widget construction/initialization through the real startup
+player/controller, beyond class loading. A scratch observational probe is ready for root review;
+confirmation async-action factories, Activate/interface dispatch and queued presentation remain
+unfinished. Interactive startup, Blueprint execution and original pixels remain unverified; all four
+product milestones are open. Exact receipts and source release are in HANDOFF.md.
 
 ## Earlier checkpoints (historical)
 

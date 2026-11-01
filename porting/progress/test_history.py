@@ -61,6 +61,21 @@ class HistoryChartTests(unittest.TestCase):
 
 
 class ProgressModelTests(unittest.TestCase):
+    def test_confirmation_family_only_credits_verified_description(self):
+        import json
+        model = json.loads(Path(__file__).with_name('components.json').read_text())
+        leaves = {leaf['id']: leaf for leaf in progress.walk_spec(model['tree'])}
+        family = leaves['ui.confirmation_runtime']
+        self.assertEqual(family['weight'] + leaves['ui.fortniteui_classes.implementation']['weight'], 30)
+        checks = family['measure']['checks']
+        self.assertEqual(len(checks), 4)
+        verified = {'checks': {checks[0]: {'result': 'pass'}}}
+        ctx = progress.Ctx({progress.EVIDENCE_REL: json.dumps(verified)}, False, [])
+        self.assertEqual(progress.evaluate(family, ctx)['pct'], 25)
+        ctx = progress.Ctx({progress.EVIDENCE_REL: json.dumps({'checks': {}})}, False, [])
+        self.assertEqual(progress.evaluate(family, ctx)['pct'], 0)
+        self.assertTrue(all(not gate['done'] for gate in model['milestones']))
+
     def test_event_registration_scope_preserves_lifecycle_budget(self):
         import json
         folder = Path(__file__).parent
@@ -100,7 +115,7 @@ class ProgressModelTests(unittest.TestCase):
         leaves = list(progress.walk_spec(model['tree']))
         material = [leaf for leaf in leaves if leaf['id'].startswith('ui.material_')]
         self.assertEqual(sum(leaf['weight'] for leaf in material), 20)
-        self.assertEqual(len(leaves), 116)
+        self.assertEqual(len(leaves), 117)
         self.assertEqual(sum(leaf['weight'] for leaf in leaves), 1855)
         self.assertEqual(sum(leaf['weight'] for leaf in material if leaf['measure']['kind'] == 'ledger'), 20)
         by_id = {leaf['id']: leaf for leaf in material}

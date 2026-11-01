@@ -6,7 +6,7 @@
       "id": "m1",
       "text": "The rebuilt client reaches the main menu with feature parity to the 12.60 original",
       "done": false,
-      "evidence": "The fixed hard-import closure contains 721 packages. The bounded material ledger credits 126/142 owners and all 41 fixed non-Native frontend event signatures match original metadata and both compiled targets. Native c06a5cb / Engine d7e04d4b6 passes both inherited phase-2 builds, the full bounded CommonUI base activation diagnostic, retained material and context diagnostics, and fresh default/Athena joins. Fresh Root first observed missing CommonActivatablePanel.OnBeginIntro at AsyncLoading.cpp:3126; Login observed M_TempIcon_Login_Facebook at MemoryImage.cpp:1064. Async load order may change the first boundary. Panel and input behavior, authentic startup/context hooks, widget construction, an interactive menu and original visual parity remain unfinished (HANDOFF.md)."
+      "evidence": "The fixed hard-import closure contains 721 packages. The bounded material ledger credits 129/142 owners and all 41 fixed non-Native frontend event signatures match original metadata and both compiled targets. Native 00e1279 / Engine d7e04d4b6 passes both builds, the 13-row actual-engine confirmation description layout/default/copy diagnostic, seven retained native diagnostics, Root class loading with zero unresolved bytecode-field warnings, and fresh default/Athena joins. This does not instantiate the original Root widget or prove its Blueprint execution. Authentic startup, confirmation actions/presentation, interactive menus and original visual parity remain unfinished (HANDOFF.md)."
     },
     {
       "id": "m2",
@@ -1744,12 +1744,27 @@
         {
           "id": "ui.fortniteui_classes.implementation",
           "name": "FortniteUI module behavior and runtime verification",
-          "weight": 30.0,
+          "weight": 29.0,
           "measure": {
             "kind": "manual",
             "pct": 0
           },
           "rationale": "Generated reflection declarations do not establish module behavior, integration or runtime parity. Function bodies and runtime checks have separate evidence; complete module behavior remains unverified."
+        },
+        {
+          "id": "ui.confirmation_runtime",
+          "name": "Confirmation dialogs: runtime reconstruction",
+          "weight": 1.0,
+          "measure": {
+            "kind": "ledger",
+            "checks": [
+              "frontend_confirmation_description_runtime",
+              "frontend_confirmation_async_action_runtime",
+              "frontend_confirmation_presentation_runtime",
+              "frontend_confirmation_interaction_runtime"
+            ]
+          },
+          "rationale": "One point split from the existing 30-point FortniteUI behavior budget, divided equally across description construction/copy, authentic async action, queued presentation, and user interaction. Only the bounded description constructor/layout/delegate ownership diagnostic is currently verified. Class loading, native fixture checks and offline recovery do not complete the remaining checks or any product milestone."
         },
         {
           "id": "ui.context_source_stage",

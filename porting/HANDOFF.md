@@ -10,22 +10,58 @@
   `python3 porting/progress/progress.py --no-record` renders all 391 existing points; `git diff --check`
   passes. Browser interaction remains untested because no browser runtime is installed. No progress
   weights or milestone evidence changed.
-- Confirmation-description source is now integrated through generator policy: recovered defaults and
-  two typed native single-cast callbacks, with C++ copy/destruction and a WithCopy compile assertion.
-  Normal promotion changed only FFortDialogDescription_NUI.h, restoring 12698 unchanged mtimes.
-  Policy/lifetime tests3, Blueprint-struct tests4, cross-module tests3 and generator141 checks pass;
-  verify_original.py rehashes the immutable image and12 hash-only constructor/lifetime/signature spans.
-  Isolated UHT and13 targeted C++ units pass; file audit finds zero writes outside scratch.
-  Preflight /mnt/vibrato/fortnite-work/confirmation-description-ue-preflight-1/{run_uht.py,
-  audit_uht_writes.py,syntax.py}; promotion confirmation-description-integration-1/result.json.
-  The opt-in -ConfirmationDescriptionProbe checks actual UE layout/defaults/delegate copy ownership;
-  its runner/verifier are integrated. Full builds and live ABI/lifetime checks remain pending.
-  This source is not yet the validated runtime baseline; aa91a8e below remains that baseline.
+- Latest validated Native source is00e127967abad8711a089052ae6eac71c9ff08a3 / Engine d7e04d4b6.
+  Confirmation-description construction and two typed native single-cast callbacks are integrated
+  through guarded generator policy. Normal promotion changed only FFortDialogDescription_NUI.h,
+  restoring12698 unchanged mtimes. Both builds PASS126.507/125.866s with12701 Native sources stable.
+  The actual UE probe passes13rows: original size280/align8, native callback offsets248/264,
+  recovered defaults, C++ copy/assignment, and real UScriptStruct copy/destruction ownership.
+  Root class load exits0 with zero unresolved-bytecode-field warnings. Seven retained diagnostics
+  pass; default/Athena joins PASS21.605/21.559s. This does not prove confirmation action/factory,
+  queue presentation, original Root construction, Blueprint execution, interactive UI or pixel parity.
+- Checkpoint generated/frontend-native-evidence/confirmation-description-runtime-1/checkpoint.json
+  SHA256 6be18260996d52ffd1f2fcf43884048a5934dc74d3392d5a195028aa48df5594 binds15committed sources,
+  185artifact pairs and18binary rows. Archive /mnt/vibrato/fortnite-evidence/frozen-runtime/
+  confirmation-description-runtime-1; source-release.json SHA256
+  c7a9541c6ff5b9c7bb313f55d2813349ca1bc8cba0d3ff7c8fac72a20f86ed74 releases ownership.
+  TERMINAL handles: builds10226/stage39214/diagnostics67003/Root5278/joins59111/freeze70962.
+  Native/build/stage ownership is released; no process is awaiting observation.
+- Reproduce using /mnt/vibrato/fortnite-work/{promote_confirmation_description_1.py,
+  build_confirmation_description_native_1.py,stage_confirmation_description_native_1.py,
+  run_confirmation_description_regressions_1.py,run_confirmation_description_probe_1.py,
+  run_confirmation_description_joins_1.py,freeze_confirmation_description_runtime_1.py}.
+  Runtime phase needs its parent directory and sources/results/stage receipts copied from build
+  before running the retained script (an initial missing-parent launcher failed before any UE run).
+  Root command uses env CONFIRMATION_DESCRIPTION_STAGE_RECEIPT pointing to the build's stage.json,
+  the tracking-llama-bundle-2/combined-manifest.json and fresh epoch. Build receipts live in
+  confirmation-description-native-build-1; promotion in confirmation-description-integration-1.
+- Policy/lifetime3, Blueprint-struct4, cross-module3, generator141, verifier18 and runner10 checks pass.
+  verify_original.py verifies the immutable image and12 hash-only constructor/lifetime/signature
+  spans. Isolated UHT and13 C++ units pass with zero writes outside scratch:
+  confirmation-description-ue-preflight-1/{run_uht.py,audit_uht_writes.py,syntax.py}.
+  Independent bounded source audit confirmation-description-source-audit-1 found no issues; it
+  explicitly excludes live execution and debug-binary rehashing.
 - Next recovered contracts: confirmation-queue-presentation-1/HANDOFF.md and
   confirmation-factory-manager-resolution-1/HANDOFF.md under /mnt/vibrato/fortnite-work/.
   The queue paths have different readiness/activation/empty-queue effects; do not stub dependencies.
   Factory suspension reads external FE alone (IsInputSuspended combines FD||FE). GetUIManagerWidget
   casts the director pair object itself to the manager widget; it does not search PlayerWidgets.
+- Simple factories/default Confirm/Decline names and action value constructor now have a replayable
+  root proof at confirmation-simple-factory-proof-1/HANDOFF.md under /mnt/vibrato/fortnite-work/.
+  Next runtime step: original Root widget construction/initialization, beyond StaticLoadObject.
+  Scratch-only candidate root-widget-instance-probe-candidate-1/HANDOFF.md waits for actual startup
+  player/controller, loads the original class and brackets CreateWidget without callback interception
+  or forced state. It is uncompiled/unrun; root must review/promote/validate separately. Inventory
+  root-widget-instantiation-probe-inventory-1 has historic load-boundary notes; those old intro/outro
+  failures are resolved by the current baseline and must not be treated as current failures.
+- Dashboard now exposes four confirmation-family checks within one point split from the existing
+  30-point FortniteUI behavior budget (29 remain elsewhere). Only description construction/copy
+  is credited, so this family is25%, not complete. Total weight1855,117 leaves, all4 gates open;
+  expected overall21.457% after the receipt commit. The pinned importer
+  porting/progress/record_frontend_confirmation_description_runtime.py verifies15 source pairs,
+  185 archived artifacts, process/log identity and the strict13-row transcript; it cross-checks18
+  binary fields without independently rehashing binary contents. Six importer tests and all46
+  progress tests pass. Existing source/stage/freezer performed the actual binary hashes.
 - Latest confirmation type closure is source aa91a8efab55281d348c07c995bcded98fb414d9, now runtime-validated.
   The existing FortniteUI->FortniteGame dependency is admitted by type resolution; reverse direction remains
   refused. Cross-module struct exports are emitted without relocating ownership. This restores39enums,

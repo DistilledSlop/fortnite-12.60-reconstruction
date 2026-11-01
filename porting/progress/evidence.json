@@ -11203,6 +11203,18 @@
    "integrity_audit_sha256": "0d4e3ed4418b60a535f6823935a237b44e239e4650b5e7a7c770397f66daaa0c",
    "scope": "Controlled full Panel intro, outro, reacquisition and listener lifecycle with held-action map, NaN duration, callback manager relookup and structural interface reset fixtures and C++ ProcessEvent interception; two builds, seven processes and two joins. Blueprint VM, full interface routing, native input producer, queue, main button, authentic UI and parity remain unverified. No new exhaustive original metadata, link, material or pixel checks.",
    "provenance_note": "Pinned external receipts and independently audited artifacts must remain available for re-verification."
+  },
+  "frontend_confirmation_description_runtime": {
+   "id": "frontend_confirmation_description_runtime",
+   "result": "pass",
+   "exit_code": 0,
+   "command": "python3 -I porting/progress/record_frontend_confirmation_description_runtime.py",
+   "checkpoint": "porting/generated/frontend-native-evidence/confirmation-description-runtime-1/checkpoint.json",
+   "checkpoint_sha256": "6be18260996d52ffd1f2fcf43884048a5934dc74d3392d5a195028aa48df5594",
+   "release": "/mnt/vibrato/fortnite-evidence/frozen-runtime/confirmation-description-runtime-1/source-release.json",
+   "release_sha256": "c7a9541c6ff5b9c7bb313f55d2813349ca1bc8cba0d3ff7c8fac72a20f86ed74",
+   "scope": "Actual UE description constructor, layout and typed delegate copy/destruction diagnostic, Root class loading, eight retained processes and two joins. No confirmation action, interactive UI, Blueprint execution or parity claim. Stage binary size and hash fields are cross-checked; binary contents are not rehashed.",
+   "provenance_note": "Pinned source pairs and frozen artifacts must remain available for re-verification."
   }
  }
 }
