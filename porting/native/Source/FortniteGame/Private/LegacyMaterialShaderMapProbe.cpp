@@ -992,6 +992,8 @@ static const TCHAR* GLegacyHollowPath = TEXT("/Game/UI/Materials/Athena_HollowCi
 static const TCHAR* GLegacyHollowTexturePath = TEXT("/Game/UI/Materials/PolarCoords.PolarCoords");
 static const TCHAR* GLegacySocialPath = TEXT("/Game/UI/SocialPanel/Art/Materials/M_UI_SocialUserItemBorder_Master.M_UI_SocialUserItemBorder_Master");
 static const TCHAR* GLegacySocialTexturePath = TEXT("/Game/UI/SocialPanel/Art/CA_SocialPanel.CA_SocialPanel");
+static const TCHAR* GLegacyGooglePath=TEXT("/Game/UI/Login/Art/M_TempIcon_Login_Google.M_TempIcon_Login_Google");
+static const TCHAR* GLegacyGoogleTexturePath=TEXT("/Game/UI/Login/Art/T_TempIcon_Login_Google.T_TempIcon_Login_Google");
 static const TCHAR* GLegacyMediaPath = TEXT("/Game/UI/Materials/M_MediaPlayerButton_Base.M_MediaPlayerButton_Base");
 static const TCHAR* GLegacyMediaTexturePath = TEXT("/Game/UI/Icons/T_UI_MediaPlayerButton_Layered_A.T_UI_MediaPlayerButton_Layered_A");
 static const TCHAR* GLegacyFlogoPath = TEXT("/Game/Athena/UI/Season/Art/M_UI_AthenaSeason_FadedFlogo.M_UI_AthenaSeason_FadedFlogo");
@@ -1042,7 +1044,7 @@ struct FLegacyIngressProvenance final : FLegacyMaterialAssetProvenance
             TArray<UTexture*> SourceReferences; SourceReferences.Add(Texture);
             return RestoreLegacyMaterialTextureReferences(Parent,SourceReferences,Error);
         }
-        if (SourceIdentity!=GLegacyDonutPath && SourceIdentity!=GLegacyKeybindPath && SourceIdentity!=GLegacyHollowPath && SourceIdentity!=GLegacySocialPath && SourceIdentity!=GLegacyMediaPath) return true;
+        if (SourceIdentity!=GLegacyDonutPath && SourceIdentity!=GLegacyKeybindPath && SourceIdentity!=GLegacyHollowPath && SourceIdentity!=GLegacySocialPath && SourceIdentity!=GLegacyMediaPath && SourceIdentity!=GLegacyGooglePath) return true;
         UMaterial* Base=Owner ? Owner->GetMaterial() : nullptr;
         if (!IsInGameThread() || !Base || Base->GetPathName()!=SourceIdentity || Decoded.IR.Texture2DParameters.Num()!=1 ||
             Decoded.IR.Texture2DParameters[0].TextureIndex!=0)
@@ -1053,7 +1055,14 @@ struct FLegacyIngressProvenance final : FLegacyMaterialAssetProvenance
         const auto Fixture=Bundle->GetObjectField(TEXT("runtime_fixture"));
         const auto& Textures=Fixture->GetArrayField(TEXT("texture_2d_parameters"));
         const bool bPlain=SourceIdentity==GLegacyKeybindPath || SourceIdentity==GLegacyHollowPath || SourceIdentity==GLegacySocialPath || SourceIdentity==GLegacyMediaPath;
-        const FString Expected=SourceIdentity==GLegacyMediaPath ? FString(GLegacyMediaTexturePath) : SourceIdentity==GLegacySocialPath ? FString(GLegacySocialTexturePath) : SourceIdentity==GLegacyHollowPath ? FString(GLegacyHollowTexturePath) : bPlain ? FString(GLegacyKeybindTexturePath) : FString(TEXT("/Game/Athena/UI/Challenges/Art/Donut/T_UI_Donut_PC_Icon.T_UI_Donut_PC_Icon"));
+        const FString Expected=SourceIdentity==GLegacyGooglePath ? FString(GLegacyGoogleTexturePath) : SourceIdentity==GLegacyMediaPath ? FString(GLegacyMediaTexturePath) : SourceIdentity==GLegacySocialPath ? FString(GLegacySocialTexturePath) : SourceIdentity==GLegacyHollowPath ? FString(GLegacyHollowTexturePath) : bPlain ? FString(GLegacyKeybindTexturePath) : FString(TEXT("/Game/Athena/UI/Challenges/Art/Donut/T_UI_Donut_PC_Icon.T_UI_Donut_PC_Icon"));
+        if (SourceIdentity==GLegacyGooglePath)
+        {
+            const auto& T=Decoded.IR.Texture2DParameters[0];const TArray<TSharedPtr<FJsonValue>>* Refs=nullptr;
+            if (T.Parameter.Name!=FName(TEXT("Texture")) || T.Parameter.Association!=GlobalParameter || T.Parameter.Index!=INDEX_NONE || T.SamplerSource!=SSM_FromTextureAsset ||
+                !Fixture->TryGetArrayField(TEXT("ordered_texture_references"),Refs) || Refs->Num()!=1 || (*Refs)[0]->AsString()!=Expected)
+            { Error=TEXT("invalid Google original named reference context"); return false; }
+        }
         if (bPlain)
         {
             const auto& T=Decoded.IR.Texture2DParameters[0];
@@ -1865,6 +1874,255 @@ static bool DrawFlogoTextureControls(UMaterialInterface* Owner, FMaterialResourc
     const FString JsonPath=FPaths::Combine(Directory,TEXT("FlogoDraw.json"));
     if (FPaths::FileExists(JsonPath) || !FFileHelper::SaveStringToFile(Json,*JsonPath)) { Error=TEXT("cannot write texture draw receipt"); return false; }
     UE_LOG(LogTemp,Display,TEXT("Legacy Flogo texture: original source and exact copy agree; checker changes %d pixels"),Changed);
+    return true;
+}
+
+
+
+
+// Google uses an original named parameter and an original multi-file BC1 mip chain.
+static bool ReadGoogleCompressedSource(const UTexture* Texture,const TSharedPtr<FJsonObject>& Fixture,
+                                      TArray<TArray<uint8>>& OutMips,FString& Error)
+{
+    FString Asset;
+    if (!Texture || Texture->GetPathName()!=GLegacyGoogleTexturePath || !Fixture ||
+        !FPackageName::DoesPackageExist(Texture->GetOutermost()->GetName(),nullptr,&Asset) || FPaths::GetExtension(Asset)!=TEXT("uasset"))
+    { Error=TEXT("invalid Google source texture/package"); return false; }
+    auto ReadChecked=[](const FString& Path,int32 Size,const TCHAR* Expected,TArray<uint8>& Bytes)
+    {
+        if (IFileManager::Get().FileSize(*Path)!=Size || !FFileHelper::LoadFileToArray(Bytes,*Path) || Bytes.Num()!=Size) return false;
+        uint8 Hash[32]; LegacyManifestSHA256(Bytes.GetData(),uint32(Bytes.Num()),Hash);
+        return BytesToHex(Hash,32).Equals(Expected,ESearchCase::IgnoreCase);
+    };
+    TArray<uint8> Header,Exports,Bulk;
+    if (!ReadChecked(Asset,730,TEXT("dd5b879570082e8a9ce2b5422bce4defab5cb4ce33fc1504c8adaf8d05928077"),Header) ||
+        !ReadChecked(FPaths::ChangeExtension(Asset,TEXT("uexp")),3310,TEXT("d8ccb6760cb477ccca194f1e33596a6b4f9298fabd8ec7e8d8acb7750c5ea4d4"),Exports) ||
+        !ReadChecked(FPaths::ChangeExtension(Asset,TEXT("ubulk")),172032,TEXT("7e16cf5d986d0d1fc186102733357143beeac6f401850a0e91acd0ef17d0af72"),Bulk))
+    { Error=TEXT("Google actual staged source bytes differ"); return false; }
+    const auto Source=Fixture->GetObjectField(TEXT("texture_contract"))->GetObjectField(TEXT("source_platform_data"));
+    const TArray<TSharedPtr<FJsonValue>>* Records=nullptr;
+    if (!Source || Source->GetNumberField(TEXT("mip_count"))!=10 || Source->GetNumberField(TEXT("first_mip"))!=0 ||
+        Source->GetNumberField(TEXT("bulk_data_start_offset"))!=4036 || !Source->TryGetArrayField(TEXT("mip_receipts"),Records) || Records->Num()!=10)
+    { Error=TEXT("Google source mip-chain receipt differs"); return false; }
+    const int32 Offsets[]={0,131072,163840,322,2406,2954,3118,3186,3230,3274};
+    const int64 Stored[]={-4036,127036,159804,1052,3136,3684,3848,3916,3960,4004};
+    for (int32 I=0;I<10;++I)
+    {
+        const int32 Dim=FMath::Max(512>>I,1), Blocks=FMath::Max((Dim+3)/4,1), Count=Blocks*Blocks*8;
+        const auto R=(*Records)[I]->AsObject(); const TArray<uint8>& Bytes=I<3 ? Bulk : Exports;
+        if (!R || R->GetNumberField(TEXT("level"))!=I || R->GetNumberField(TEXT("logical_width"))!=Dim ||
+            R->GetNumberField(TEXT("logical_height"))!=Dim || R->GetNumberField(TEXT("stored_width"))!=FMath::Max(Dim,4) ||
+            R->GetNumberField(TEXT("stored_height"))!=FMath::Max(Dim,4) || R->GetNumberField(TEXT("compressed_bytes"))!=Count ||
+            R->GetNumberField(TEXT("stored_bulk_offset"))!=double(Stored[I]) || R->GetNumberField(TEXT("resolved_file_offset"))!=Offsets[I] ||
+            R->GetNumberField(TEXT("cue_reported_bulk_offset"))!=double(Stored[I]+4036) ||
+            R->GetStringField(TEXT("storage"))!=(I<3 ? TEXT("ubulk") : TEXT("uexp")) || Offsets[I]>Bytes.Num()-Count)
+        { Error=TEXT("Google signed offset/physical mip frame differs"); return false; }
+        auto& Data=OutMips.AddDefaulted_GetRef(); Data.Append(Bytes.GetData()+Offsets[I],Count);
+        uint8 Hash[32]; LegacyManifestSHA256(Data.GetData(),uint32(Data.Num()),Hash);
+        if (!BytesToHex(Hash,32).Equals(R->GetStringField(TEXT("bc1_sha256")),ESearchCase::IgnoreCase))
+        { Error=TEXT("Google original BC1 mip hash differs"); return false; }
+    }
+    return true;
+}
+
+static bool CheckGoogleTextureBinding(UMaterialInterface* Owner,FMaterialResource* Resource,
+    const TRefCountPtr<FMaterialShaderMap>& Map,const TSharedPtr<FJsonObject>& Fixture,FString& Error)
+{
+    if (!IsInGameThread() || !Owner || Owner->GetPathName()!=GLegacyGooglePath || !Resource || !Map)
+    { Error=TEXT("invalid Google actual owner"); return false; }
+    const auto Refs=Resource->GetReferencedTextures(); UTexture2D* Texture=Refs.Num()==1 ? Cast<UTexture2D>(Refs[0]) : nullptr;
+    if (!Texture || Texture->GetPathName()!=GLegacyGoogleTexturePath || Texture->GetSizeX()!=512 || Texture->GetSizeY()!=512 ||
+        Texture->GetPixelFormat()!=PF_DXT1 || Texture->GetNumMips()!=10 || !Texture->SRGB || Texture->Filter!=TF_Default ||
+        Texture->LODGroup!=TEXTUREGROUP_World || Texture->AddressX!=TA_Wrap || Texture->AddressY!=TA_Wrap)
+    { Error=TEXT("Google original texture metadata differs"); return false; }
+    TArray<TArray<uint8>> OriginalMips; if (!ReadGoogleCompressedSource(Texture,Fixture,OriginalMips,Error)) return false;
+    const int32 Before=Texture->GetNumResidentMips();
+    // Explicit diagnostic residency request, after real owner load. No package/cache edits.
+    Texture->SetForceMipLevelsToBeResident(60.f);
+    if (Texture->GetNumResidentMips()!=10) { Texture->StreamIn(10,true); Texture->WaitForStreaming(); }
+    FlushRenderingCommands();
+    if (Texture->GetNumResidentMips()!=10) { Error=TEXT("Google full original ten-mip residency unavailable"); return false; }
+    const auto& U=Map->GetUniformExpressionSet();
+    if (U.GetNumTextures(EMaterialTextureParameterType::Standard2D)!=1) { Error=TEXT("Google expression count differs"); return false; }
+    const auto& E=U.GetTextureParameter(EMaterialTextureParameterType::Standard2D,0);
+    if (E.GetParameterInfo()!=FMaterialParameterInfo(FName(TEXT("Texture")),GlobalParameter,INDEX_NONE) || E.TextureIndex!=0 || E.SamplerSource!=SSM_FromTextureAsset)
+    { Error=TEXT("Google exact named identity differs"); return false; }
+    UTexture* GT=nullptr; U.GetGameThreadTextureValue(EMaterialTextureParameterType::Standard2D,0,Owner,*Resource,GT,false);
+    if (GT!=Texture) { Error=TEXT("Google GT named/indexed lookup differs"); return false; }
+    const FMaterialRenderProxy* Base=Owner->GetRenderProxy(); bool Matched=false; int32 Calls=0;
+    ENQUEUE_RENDER_COMMAND(CheckGoogleTextureBinding)([Base,Resource,Map,Texture,&Matched,&Calls](FRHICommandListImmediate&)
+    {
+        class FNamedProxy final:public FLegacyProbeProxy
+        {
+        public:
+            mutable int32 Calls=0; mutable bool Wrong=false;
+            virtual bool GetTextureValue(const FHashedMaterialParameterInfo& Info,const UTexture** Value,const FMaterialRenderContext& Context) const override
+            { ++Calls; if (Info!=FHashedMaterialParameterInfo(FName(TEXT("Texture")),GlobalParameter,INDEX_NONE)) Wrong=true; return bInherit && Base->GetTextureValue(Info,Value,Context); }
+        } Proxy;
+        const FMaterialRenderProxy* Fallback=nullptr;const FMaterial& Actual=Base->GetMaterialWithFallback(ERHIFeatureLevel::SM5,Fallback);
+        if (&Actual!=Resource || !Texture->Resource || !Texture->TextureReference.TextureReferenceRHI || !Texture->Resource->SamplerStateRHI) return;
+        auto* RHI=Texture->TextureReference.TextureReferenceRHI->GetReferencedTexture();auto* R=RHI ? RHI->GetTexture2D() : nullptr;
+        if (!R || RHI==GWhiteTexture->TextureRHI.GetReference() || R->GetSizeX()!=512 || R->GetSizeY()!=512 || R->GetNumMips()!=10 || R->GetFormat()!=PF_DXT1 || !(R->GetFlags()&TexCreate_SRGB)) return;
+        Proxy.Base=Base;Proxy.bInherit=false;FMaterialRenderContext Default(&Proxy,Actual,nullptr);const UTexture* Indexed=nullptr;
+        Map->GetUniformExpressionSet().GetTextureValue(EMaterialTextureParameterType::Standard2D,0,Default,Actual,Indexed);
+        if (Indexed!=Texture || Proxy.Wrong) return;
+        Proxy.Calls=0;Proxy.bInherit=true;FMaterialRenderContext Context(&Proxy,Actual,nullptr);FUniformExpressionCache Cache;alignas(16) uint8 Contents[4112]={};
+        Map->GetUniformExpressionSet().FillUniformBuffer(Context,Cache,Contents,sizeof(Contents));Calls=Proxy.Calls;
+        void* Slot=nullptr;void* Sampler=nullptr;FMemory::Memcpy(&Slot,Contents+48,sizeof(Slot));FMemory::Memcpy(&Sampler,Contents+56,sizeof(Sampler));
+        Matched=!Proxy.Wrong && Calls>0 && Slot==Texture->TextureReference.TextureReferenceRHI.GetReference() && Sampler==Texture->Resource->SamplerStateRHI.GetReference();
+    });
+    FlushRenderingCommands();if (!Matched) { Error=TEXT("Google exact named/asset sampler RHI binding differs");return false; }
+    FString Directory;FParse::Value(FCommandLine::Get(),TEXT("FortniteLegacyMaterialArtifactDir="),Directory);
+    const FString Path=FPaths::Combine(Directory,TEXT("GoogleTexture.json"));
+    const FString Json=FString::Printf(TEXT("{\"texture_path\":\"%s\",\"parameter_name\":\"Texture\",\"parameter_number\":0,\"association\":2,\"index\":-1,\"width\":512,\"height\":512,\"format\":\"PF_DXT1\",\"srgb\":true,\"mips\":10,\"layout_hash\":%u,\"constant_bytes\":%u,\"resource_offsets\":[48,56,64,72],\"resource_types\":[5,8,8,8],\"resident_mips_before\":%d,\"resident_mips_after\":10,\"sampler_source\":0,\"asset_sampler_binding_match\":true,\"named_proxy_calls\":%d,\"indexed_default_match\":true,\"raw_bc1_gpu_readback_measured\":false}\n"),GLegacyGoogleTexturePath,U.GetUniformBufferLayout().GetHash(),uint32(U.GetUniformBufferLayout().ConstantBufferSize),Before,Calls);
+    if (FPaths::FileExists(Path) || !FFileHelper::SaveStringToFile(Json,*Path)) { Error=TEXT("cannot save Google binding receipt");return false; }
+    return true;
+}
+static bool DrawGoogleTextureControls(UMaterialInterface* Owner, FMaterialResource* Resource,
+    const TRefCountPtr<FMaterialShaderMap>& Map, const FLegacyDrawBindings& Bindings,
+    const TSharedPtr<FJsonObject>& Fixture, FString& Error)
+{
+    if (!IsInGameThread() || !Owner || !Resource || !Map || !Fixture) { Error=TEXT("invalid Google texture draw owner"); return false; }
+    FString Directory;
+    if (!FParse::Value(FCommandLine::Get(),TEXT("FortniteLegacyMaterialArtifactDir="),Directory) || !FPaths::DirectoryExists(Directory))
+    { Error=TEXT("Google texture draw requires artifact directory"); return false; }
+    FString Profile=TEXT("defaults"), RequestedProfile;
+    if (FParse::Value(FCommandLine::Get(),TEXT("FortniteLegacyGoogleProfile="),RequestedProfile)) Profile=RequestedProfile;
+    TArray<FLegacyOverride> ProfileOverrides;
+    if (Profile==TEXT("combined"))
+    {
+        const auto& Cases=Fixture->GetArrayField(TEXT("uniform_cases"));
+        TSharedPtr<FJsonObject> Combined; int32 Matches=0;
+        for (const auto& Value : Cases)
+        {
+            const auto Case=Value->AsObject();
+            if (Case && Case->GetStringField(TEXT("name"))==Profile) { Combined=Case; ++Matches; }
+        }
+        if (Matches!=1 || !ReadLegacyOverrides(Combined,ProfileOverrides,Error)) return false;
+    }
+    else if (Profile!=TEXT("defaults")) { Error=TEXT("unknown Google texture diagnostic profile"); return false; }
+    FShaderType* VertexType=FindShaderTypeByName(FHashedName(TEXT("TSlateMaterialShaderVSfalse")));
+    FShaderType* PixelType=FindShaderTypeByName(FHashedName(TEXT("TSlateMaterialShaderPSDefault")));
+    const FMaterialRenderProxy* Base=Owner->GetRenderProxy();
+    const auto SourceReferences=Resource->GetReferencedTextures();
+    UTexture* SourceTexture=SourceReferences.Num()==1 ? Cast<UTexture>(SourceReferences[0]) : nullptr;
+    if (!VertexType || !PixelType || !Base || !SourceTexture || SourceTexture->GetPathName()!=GLegacyGoogleTexturePath) { Error=TEXT("Google texture draw shader unavailable"); return false; }
+    TArray<TArray<uint8>> SourceMips;
+    if (!ReadGoogleCompressedSource(SourceTexture,Fixture,SourceMips,Error)) return false;
+    TArray<FColor> Images[3]; bool bPassed=true; FString Failure; int32 NamedCalls=-1;
+    ENQUEUE_RENDER_COMMAND(DrawGoogleTextureControls)([Map,Resource,Bindings,VertexType,PixelType,Base,SourceTexture,SourceMips,ProfileOverrides,&Images,&bPassed,&Failure,&NamedCalls](FRHICommandListImmediate& RHICmdList)
+    {
+        class FPlainProxy final : public FLegacyProbeProxy
+        {
+        public:
+            mutable int32 Calls=0; mutable bool Wrong=false;
+            virtual bool GetTextureValue(const FHashedMaterialParameterInfo& Info,const UTexture** Value,const FMaterialRenderContext& Context) const override
+            { ++Calls; if (Info!=FHashedMaterialParameterInfo(FName(TEXT("Texture")),GlobalParameter,INDEX_NONE)) Wrong=true; return bInherit && Base->GetTextureValue(Info,Value,Context); }
+        } Proxy;
+        const auto VS=Map->GetShader(VertexType,0), PS=Map->GetShader(PixelType,0);
+        if (!VS.IsValid() || !PS.IsValid()) { bPassed=false; Failure=TEXT("missing original Google texture shaders"); return; }
+        const FMaterialRenderProxy* Fallback=nullptr;
+        const FMaterial& Material=Base->GetMaterialWithFallback(ERHIFeatureLevel::SM5,Fallback);
+        if (&Material!=Resource) { bPassed=false; Failure=TEXT("Google texture draw selected fallback"); return; }
+        Proxy.Base=Base; Proxy.bInherit=true; Proxy.Overrides=ProfileOverrides;
+        FMaterialRenderContext Context(&Proxy,Material,nullptr); FUniformExpressionCache Cache;
+        const auto& Uniforms=Map->GetUniformExpressionSet();
+        const auto& Layout=Uniforms.GetUniformBufferLayout();
+        if (Layout.Resources.Num()!=4 || Layout.Resources[0].MemberOffset!=48 || Layout.Resources[0].MemberType!=UBMT_TEXTURE)
+        { bPassed=false; Failure=TEXT("unexpected source texture slot"); return; }
+        alignas(16) uint8 Contents[4112]={};
+        Uniforms.FillUniformBuffer(Context,Cache,Contents,sizeof(Contents)); NamedCalls=Proxy.Calls;
+        void* SourceSlot=nullptr; FMemory::Memcpy(&SourceSlot,Contents+48,sizeof(SourceSlot));
+        if (!SourceTexture->TextureReference.TextureReferenceRHI || SourceSlot!=SourceTexture->TextureReference.TextureReferenceRHI.GetReference())
+        { bPassed=false; Failure=TEXT("default draw does not bind original texture reference"); return; }
+        if (NamedCalls<=0 || Proxy.Wrong) { bPassed=false; Failure=TEXT("Google texture did not query its exact named override"); return; }
+        FTexture2DRHIRef Controls[2];
+        for (int32 Which=0; Which<2; ++Which)
+        {
+            FRHIResourceCreateInfo Info;
+
+            Controls[Which]=RHICreateTexture2D(512,512,PF_DXT1,10,1,TexCreate_ShaderResource | TexCreate_SRGB,Info);
+            if (!Controls[Which] || SourceMips.Num()!=10) { bPassed=false; Failure=TEXT("cannot create Google ten-mip BC1 control"); return; }
+            for (int32 Mip=0;Mip<10;++Mip)
+            {
+                const int32 Dim=FMath::Max(512>>Mip,1),Blocks=FMath::Max((Dim+3)/4,1),RowBytes=Blocks*8;uint32 Stride=0;
+                uint8* Dest=static_cast<uint8*>(RHILockTexture2D(Controls[Which],Mip,RLM_WriteOnly,Stride,false));
+                if (!Dest || Stride<uint32(RowBytes) || SourceMips[Mip].Num()!=RowBytes*Blocks)
+                { if (Dest) RHIUnlockTexture2D(Controls[Which],Mip,false);bPassed=false;Failure=TEXT("cannot fill Google original BC1 mip");return; }
+                for (int32 Y=0;Y<Blocks;++Y) for (int32 X=0;X<Blocks;++X)
+                {
+                    uint8* Block=Dest+Y*Stride+X*8;
+                    if (!Which) FMemory::Memcpy(Block,SourceMips[Mip].GetData()+(Y*Blocks+X)*8,8);
+                    else { const bool Cell=((X/7)+(Y/11))%2!=0;Block[0]=0x00;Block[1]=0xf8;Block[2]=0xe0;Block[3]=0x07;FMemory::Memset(Block+4,Cell ? 0x55 : 0x00,4); }
+                }
+                RHIUnlockTexture2D(Controls[Which],Mip,false);
+            }
+        }
+        FVertexDeclarationElementList Elements; const uint32 Stride=sizeof(FSlateVertex);
+        Elements.Add(FVertexElement(0,STRUCT_OFFSET(FSlateVertex,TexCoords),VET_Float4,0,Stride));
+        Elements.Add(FVertexElement(0,STRUCT_OFFSET(FSlateVertex,MaterialTexCoords),VET_Float2,1,Stride));
+        Elements.Add(FVertexElement(0,STRUCT_OFFSET(FSlateVertex,Position),VET_Float2,2,Stride));
+        Elements.Add(FVertexElement(0,STRUCT_OFFSET(FSlateVertex,Color),VET_Color,3,Stride));
+        Elements.Add(FVertexElement(0,STRUCT_OFFSET(FSlateVertex,PixelSize),VET_UShort2,4,Stride));
+        const auto Declaration=PipelineStateCache::GetOrCreateVertexDeclaration(Elements);
+        FSlateVertex Vertices[6];
+        const FVector2D Positions[]={{-1,-1},{1,-1},{-1,1},{-1,1},{1,-1},{1,1}};
+        const FVector2D UV[]={{0,1},{1,1},{0,0},{0,0},{1,1},{1,0}};
+        for (int32 I=0;I<6;++I)
+        {
+            Vertices[I].Position=Positions[I]; Vertices[I].MaterialTexCoords=UV[I];
+            Vertices[I].TexCoords[0]=UV[I].X; Vertices[I].TexCoords[1]=UV[I].Y;
+            Vertices[I].TexCoords[2]=1.f; Vertices[I].TexCoords[3]=1.f;
+            Vertices[I].Color=FColor::White; Vertices[I].PixelSize[0]=64; Vertices[I].PixelSize[1]=64;
+        }
+        FRHIResourceCreateInfo VertexInfo; FVertexBufferRHIRef VB=RHICreateVertexBuffer(sizeof(Vertices),BUF_Static,VertexInfo);
+        void* VertexData=RHILockVertexBuffer(VB,0,sizeof(Vertices),RLM_WriteOnly); FMemory::Memcpy(VertexData,Vertices,sizeof(Vertices)); RHIUnlockVertexBuffer(VB);
+        FRHIResourceCreateInfo TargetInfo(FClearValueBinding::Transparent);
+        FTexture2DRHIRef Target=RHICreateTexture2D(64,64,PF_B8G8R8A8,1,1,TexCreate_RenderTargetable | TexCreate_ShaderResource,TargetInfo);
+        for (int32 Pass=0; Pass<3; ++Pass)
+        {
+            alignas(16) uint8 Scratch[4112]; FMemory::Memcpy(Scratch,Contents,sizeof(Scratch));
+            if (Pass) { FRHITexture* Override=Controls[Pass-1].GetReference(); FMemory::Memcpy(Scratch+48,&Override,sizeof(Override)); }
+            FUniformBufferRHIRef MaterialUB=RHICreateUniformBuffer(Scratch,Layout,UniformBuffer_SingleDraw);
+            RHICmdList.TransitionResource(EResourceTransitionAccess::EWritable,Target);
+            FRHIRenderPassInfo PassInfo(Target,ERenderTargetActions::Clear_Store); RHICmdList.BeginRenderPass(PassInfo,TEXT("OriginalPlainTextureControl"));
+            FGraphicsPipelineStateInitializer PSO; RHICmdList.ApplyCachedRenderTargets(PSO);
+            PSO.BlendState=TStaticBlendState<>::GetRHI(); PSO.RasterizerState=TStaticRasterizerState<FM_Solid,CM_None>::GetRHI();
+            PSO.DepthStencilState=TStaticDepthStencilState<false,CF_Always>::GetRHI(); PSO.PrimitiveType=PT_TriangleList;
+            PSO.BoundShaderState.VertexDeclarationRHI=Declaration; PSO.BoundShaderState.VertexShaderRHI=VS.GetVertexShader(); PSO.BoundShaderState.PixelShaderRHI=PS.GetPixelShader();
+            SetGraphicsPipelineState(RHICmdList,PSO); RHICmdList.SetViewport(0,0,0,64,64,1);
+            const FMatrix Matrix=FMatrix::Identity; const FVector4 Gamma(1.f,1.f/2.2f,0.f,1.f), Params(0.f,0.f,0.f,0.f);
+            RHICmdList.SetShaderParameter(VS.GetVertexShader(),Bindings.MatrixBuffer,Bindings.MatrixOffset,sizeof(Matrix),&Matrix);
+            RHICmdList.SetShaderParameter(PS.GetPixelShader(),Bindings.GammaBuffer,Bindings.GammaOffset,sizeof(Gamma),&Gamma);
+            RHICmdList.SetShaderParameter(PS.GetPixelShader(),Bindings.ParamsBuffer,Bindings.ParamsOffset,sizeof(Params),&Params);
+            RHICmdList.SetShaderUniformBuffer(PS.GetPixelShader(),Bindings.MaterialBuffer,MaterialUB);
+            RHICmdList.SetStreamSource(0,VB,0); RHICmdList.DrawPrimitive(0,2,1); RHICmdList.EndRenderPass();
+            RHICmdList.TransitionResource(EResourceTransitionAccess::EReadable,Target);
+            FReadSurfaceDataFlags Flags(RCM_UNorm); Flags.SetLinearToGamma(false);
+            RHICmdList.ReadSurfaceData(Target,FIntRect(0,0,64,64),Images[Pass],Flags);
+        }
+    });
+    FlushRenderingCommands();
+    if (!bPassed) { Error=Failure; return false; }
+    if (Images[0].Num()!=4096 || Images[1].Num()!=4096 || Images[2].Num()!=4096)
+    { Error=TEXT("invalid Google source/copy/checker frame sizes"); return false; }
+    int32 Changed=0; FSHAHash Hashes[3];
+    for (int32 I=0;I<4096;++I) if (Images[0][I]!=Images[2][I]) ++Changed;
+    const bool bEqual=Images[0]==Images[1],bRequired=Profile==TEXT("combined");
+    const TCHAR* Names[]={TEXT("GoogleDraw-Source.rgba"),TEXT("GoogleDraw-Copy.rgba"),TEXT("GoogleDraw-Checker.rgba")};
+    for (int32 Pass=0;Pass<3;++Pass)
+    {
+        TArray<uint8> Bytes; Bytes.Reserve(4096*4);
+        for (const FColor& Pixel : Images[Pass]) { Bytes.Add(Pixel.R); Bytes.Add(Pixel.G); Bytes.Add(Pixel.B); Bytes.Add(Pixel.A); }
+        FSHA1::HashBuffer(Bytes.GetData(),Bytes.Num(),Hashes[Pass].Hash);
+        const FString Path=FPaths::Combine(Directory,Names[Pass]);
+        if (FPaths::FileExists(Path) || !FFileHelper::SaveArrayToFile(Bytes,*Path)) { Error=TEXT("cannot write texture draw artifact"); return false; }
+    }
+    const FString Json=FString::Printf(TEXT("{\"width\":64,\"height\":64,\"format\":\"RGBA8\",\"source_sha1\":\"%s\",\"copy_sha1\":\"%s\",\"checker_sha1\":\"%s\",\"checker_changed_pixels\":%d,\"named_proxy_calls\":%d,\"numeric_profile\":\"%s\",\"source_mips_uploaded\":10,\"source_texture_format\":\"BC1_SRGB\",\"source_copy_equal\":%s,\"checker_delta_policy\":\"%s\",\"raw_bc1_gpu_readback_measured\":false,\"scope\":\"diagnostic scratch uniform buffers; source asset and material cache unchanged\"}\n"),*Hashes[0].ToString(),*Hashes[1].ToString(),*Hashes[2].ToString(),Changed,NamedCalls,*Profile,bEqual ? TEXT("true") : TEXT("false"),bRequired ? TEXT("required_positive") : TEXT("observational"));
+    const FString JsonPath=FPaths::Combine(Directory,TEXT("GoogleDraw.json"));
+    if (FPaths::FileExists(JsonPath) || !FFileHelper::SaveStringToFile(Json,*JsonPath)) { Error=TEXT("cannot write texture draw receipt"); return false; }
+    if (!bEqual || (bRequired && !Changed)) { Error=TEXT("Google source/copy or combined checker failure; all frames preserved");return false; }
+    UE_LOG(LogTemp,Display,TEXT("Legacy Google texture: original source and exact copy agree; checker changes %d pixels"),Changed);
     return true;
 }
 
@@ -2762,7 +3020,8 @@ void RegisterLegacyOriginalMaterialProvider()
         {GLegacyHollowPath, GLegacyHollowPath, TEXT("765d5711cda5c0e8915022e817619f3ae7d5abae"), TEXT("591d3a158913e24dbcc0196440a8c3c40efd24aa"), FString(), TEXT("fortnite.legacy-material-ingress.v4"), TEXT("UMaterial"), FString(), GLegacyHollowPath, false, false},
         {GLegacyFlogoPath, GLegacyFlogoParentPath, TEXT("d6b8dad3c9d015dca6a389a82eb5abc25a72aee3"), TEXT("ad8aee1ef762a6ecadee2807b485131a7f3f4426"), FString(), TEXT("fortnite.legacy-material-ingress.v4"), TEXT("UMaterialInstanceConstant"), GLegacyFlogoParentPath, GLegacyFlogoPath, false, false},
         {GLegacySocialPath, GLegacySocialPath, TEXT("d5c2198bee653b99a95b219f517870d82979dd5f"), TEXT("c505c4a9977115634e87809ccd0b5e981bfc417d"), FString(), TEXT("fortnite.legacy-material-ingress.v5"), TEXT("UMaterial"), FString(), GLegacySocialPath, false, false},
-        {GLegacyMediaPath, GLegacyMediaPath, TEXT("a920df3ab39fdca2bb82a62f6a2a9ac4601b91d0"), TEXT("8c5013f615de83c1fbaf6d3435c6aaa7f3414a69"), FString(), TEXT("fortnite.legacy-material-ingress.v4"), TEXT("UMaterial"), FString(), GLegacyMediaPath, false, false}
+        {GLegacyMediaPath, GLegacyMediaPath, TEXT("a920df3ab39fdca2bb82a62f6a2a9ac4601b91d0"), TEXT("8c5013f615de83c1fbaf6d3435c6aaa7f3414a69"), FString(), TEXT("fortnite.legacy-material-ingress.v4"), TEXT("UMaterial"), FString(), GLegacyMediaPath, false, false},
+        {GLegacyGooglePath,GLegacyGooglePath,TEXT("7e127c308659a4a87be659d9d17829ceb691a4dc"),TEXT("e91924af4f38c08d7c9648768835473df361c16e"),FString(),TEXT("fortnite.legacy-material-ingress.v4"),TEXT("UMaterial"),FString(),GLegacyGooglePath,false,false}
     };
     auto IsHex=[](const FString& Value, int32 Length)
     {
@@ -3114,6 +3373,12 @@ void ProbeLegacyOriginalMaterial()
         }
         UE_LOG(LogTemp,Display,TEXT("Legacy Donut: indexed source texture and actual uniform texture/sampler match %s"),*TexturePath);
     }
+    if (OwnerPath==GLegacyGooglePath)
+    {
+        FString TextureError;
+        if (!CheckGoogleTextureBinding(Material,Resource,Map,Bundle->GetObjectField(TEXT("runtime_fixture")),TextureError))
+        { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: Google original binding failed: %s"),*TextureError);FPlatformMisc::RequestExitWithStatus(false,1);return; }
+    }
     if (OwnerPath==GLegacyMediaPath)
     {
         FString TextureError;
@@ -3202,13 +3467,13 @@ void ProbeLegacyOriginalMaterial()
     if (!bNegativeChecks)
     { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: original reader negative check failed")); FPlatformMisc::RequestExitWithStatus(false,1); return; }
     FString Error;
-    if (!CheckLegacyUniforms(Map->GetUniformExpressionSet(),Bundle->GetObjectField(TEXT("runtime_fixture")),TEXT("owner"),Error,(OwnerPath==GLegacyDonutPath || OwnerPath==GLegacyKeybindPath || OwnerPath==GLegacyHollowPath || OwnerPath==GLegacySocialPath || OwnerPath==GLegacyMediaPath) ? Material : nullptr))
+    if (!CheckLegacyUniforms(Map->GetUniformExpressionSet(),Bundle->GetObjectField(TEXT("runtime_fixture")),TEXT("owner"),Error,(OwnerPath==GLegacyDonutPath || OwnerPath==GLegacyKeybindPath || OwnerPath==GLegacyHollowPath || OwnerPath==GLegacySocialPath || OwnerPath==GLegacyMediaPath || OwnerPath==GLegacyGooglePath) ? Material : nullptr))
     { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: live uniform cases failed: %s"),*Error); FPlatformMisc::RequestExitWithStatus(false,1); return; }
     if ((OwnerPath == GLegacyPowerToastPath || OwnerPath == GLegacyMainLPath) && !CheckLegacyUniforms(Map->GetUniformExpressionSet(),Bundle->GetObjectField(TEXT("runtime_fixture")),TEXT("instance"),Error,Material,TEXT("owner_uniform_cases")))
     { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: live instance uniform cases failed: %s"),*Error); FPlatformMisc::RequestExitWithStatus(false,1); return; }
     if (Pin->bManifest && !CheckLegacyUniforms(Map->GetUniformExpressionSet(),Bundle->GetObjectField(TEXT("runtime_fixture")),TEXT("manifest owner"),Error,Material,TEXT("owner_uniform_cases")))
     { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: manifest owner uniform cases failed: %s"),*Error); FPlatformMisc::RequestExitWithStatus(false,1); return; }
-    if ((OwnerPath==GLegacyKeybindPath || OwnerPath==GLegacyHollowPath || OwnerPath==GLegacyFlogoPath || OwnerPath==GLegacySocialPath || OwnerPath==GLegacyMediaPath) && !CheckLegacyUniforms(Map->GetUniformExpressionSet(),Bundle->GetObjectField(TEXT("runtime_fixture")),TEXT("plain texture owner"),Error,Material,TEXT("owner_uniform_cases")))
+    if ((OwnerPath==GLegacyKeybindPath || OwnerPath==GLegacyHollowPath || OwnerPath==GLegacyFlogoPath || OwnerPath==GLegacySocialPath || OwnerPath==GLegacyMediaPath || OwnerPath==GLegacyGooglePath) && !CheckLegacyUniforms(Map->GetUniformExpressionSet(),Bundle->GetObjectField(TEXT("runtime_fixture")),TEXT("plain texture owner"),Error,Material,TEXT("owner_uniform_cases")))
     { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: plain texture owner uniforms failed: %s"),*Error); FPlatformMisc::RequestExitWithStatus(false,1); return; }
     if (OwnerPath==GLegacyDonutPath && !CheckLegacyUniforms(Map->GetUniformExpressionSet(),Bundle->GetObjectField(TEXT("runtime_fixture")),TEXT("Donut owner"),Error,Material,TEXT("owner_uniform_cases")))
     { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: Donut owner uniform cases failed: %s"),*Error); FPlatformMisc::RequestExitWithStatus(false,1); return; }
@@ -3295,6 +3560,13 @@ void ProbeLegacyOriginalMaterial()
         { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: Hollow texture draw failed: %s"),*Error); FPlatformMisc::RequestExitWithStatus(false,1); return; }
         UE_LOG(LogTemp,Display,TEXT("Legacy material ingress: Hollow owner complete and attached on both threads; seven shaders and controlled source sampling passed"));
         return;
+    }
+    if (OwnerPath==GLegacyGooglePath)
+    {
+        if (!bAllShaders || CheckedShaders!=7 || !bVS || !bPS || !bView || !DrawGoogleTextureControls(Material,Resource,Map,Bindings,Fixture,Error))
+        { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: Google texture draw failed: %s"),*Error);FPlatformMisc::RequestExitWithStatus(false,1);return; }
+        UE_LOG(LogTemp,Display,TEXT("Legacy material ingress: Google owner complete and attached on both threads; seven shaders and original ten-mip source/copy controls passed"));
+        FPlatformMisc::RequestExit(false);return;
     }
     if (OwnerPath==GLegacyMediaPath)
     {
