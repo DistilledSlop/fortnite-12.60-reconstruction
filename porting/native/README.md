@@ -1,11 +1,12 @@
 # Native build harness
 
-This is a newly authored UE project used to test Linux compilation and to
-reconstruct the game module incrementally. Its module is named `FortniteGame`
-so that future classes can use the `/Script/FortniteGame` path found in cooked
-assets. It contains no Fortnite gameplay code or supplied assets. Launcher,
-anti-cheat and entitlement compatibility remain required for the finished
-project. It is not playable yet.
+This UE project rebuilds the `/Script/FortniteGame` module for Linux against
+the recovered 12.60 classes and cooked assets. The latest offline checksum
+model matches 4,617 of 4,617 generated classes, and 251 recovered
+behavior bodies are spliced into the build. Both native client/server direct
+joins pass. Most game behavior, interactive UI and usable content remain
+unfinished, so the project is not playable yet. Launcher, anti-cheat and
+entitlement compatibility remain required for the finished project.
 
 After the UE 4.25 source checkout is set up, build a Linux Development target:
 
@@ -34,8 +35,8 @@ Stage the cooked project with `RunUAT.sh BuildCookRun` using `-skipbuild
 -skipcook -stage -archive -platform=Linux -clientconfig=Development`. A staged
 headless run with `-nullrhi -nosound -unattended -ExecCmds=Quit` loaded
 `/Engine/Maps/Entry` and exited with code 0. The staged output stays ignored
-by Git. This validates only the empty engine map; Fortnite gameplay, content,
-and server integration remain to be implemented.
+by Git. That historical probe validates only the empty engine map; later
+recovered-map and direct-join probes are recorded in `porting/HANDOFF.md`.
 
 The optional `-FortniteProbeAsset=/Game/Path/Asset.Asset` switch asks the game
 module to load one asset after engine initialization and logs its resolved

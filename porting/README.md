@@ -242,8 +242,9 @@ See `mesh_conversion.md` for the first static mesh conversion and editor import.
    path-hash reader from UE 4.26 or repack recovered packages for the runtime.
 2. **Linux client:** reconstruct game classes and content in a new UE project;
    convert or rebuild platform-specific assets; build and cook for Linux.
-   The empty native project now builds, cooks, and launches a staged Linux
-   executable. Launcher, anti-cheat and entitlement compatibility remain work
+   The native project builds, cooks, stages and completes direct client/server
+   joins; interactive frontend and gameplay parity remain open. Launcher,
+   anti-cheat and entitlement compatibility remain work
    for the complete result.
 3. **Local server:** identify the client protocols and state machine, then
    implement the minimum local services for login, lobby, matchmaking, and a
@@ -257,11 +258,11 @@ and joins a new local UE dedicated server. A recovered Fortnite character,
 original gameplay rules, account services, and full island content have not
 yet been reconstructed.
 
-`porting/native/` is a minimal build harness with the `/Script/FortniteGame`
-module name. It contains no supplied assets; launcher, anti-cheat and entitlement
-compatibility remain on the project work list. It must not be described as a
-playable port until it actually loads content and
-implements gameplay. See its README for the build command.
+`porting/native/` is the reconstructed `/Script/FortniteGame` project, with
+generated classes, selected recovered behavior, and partial content. Launcher,
+anti-cheat and entitlement compatibility remain on the project work list. It
+must not be described as playable until the frontend, content and gameplay
+work end to end. See its README for the build command.
 
 UE 4.25's original `Setup.sh` manifest failed because Epic's old dependency
 URL returned HTTP 403. The locally supplied replacement manifest let `Setup.sh`
