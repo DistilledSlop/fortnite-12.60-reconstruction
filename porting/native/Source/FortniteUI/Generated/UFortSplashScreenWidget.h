@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonActivatablePanel.h"
 
+#include "ECommonInputType.h"
+
 #include "UFortSplashScreenWidget.generated.h"
 
 UCLASS(abstract)
@@ -14,5 +16,10 @@ class FORTNITEUI_API UFortSplashScreenWidget : public UCommonActivatablePanel
 	GENERATED_BODY()
 
 public:
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnInputMethodChanged(ECommonInputType InputType);
+public:
+
 };
 
