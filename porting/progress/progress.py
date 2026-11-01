@@ -1922,6 +1922,118 @@ def history_html(history, model):
     chart = (f'<svg viewBox="0 0 {W} {H}" width="100%" role="img" aria-label="Overall progress per commit">'
              f'{"".join(grid)}{meas_line}{line}{"".join(dots)}{xlabels}</svg>')
 
+    # Embed the original values; the client only changes the visible index range.
+    chart_data = json.dumps([
+        {"short": e["short"], "date": e["date"][:10], "subject": e["subject"],
+         "overall": e["overall_pct"], "measured": e.get("measured_pct")}
+        for e in entries
+    ], ensure_ascii=True).replace("<", "\\u003c")
+    chart_script = r'''<script>
+(() => {
+  const data = DATA_PLACEHOLDER;
+  const svg = document.querySelector('#history-chart svg');
+  const status = document.getElementById('history-range');
+  const detail = document.getElementById('history-detail');
+  const buttons = document.querySelectorAll('[data-history-action]');
+  document.querySelector('.history-controls').hidden = false;
+  detail.hidden = false;
+  const ns = 'http://www.w3.org/2000/svg';
+  let start = 0, end = data.length - 1;
+  function element(name, attrs, parent, content) {
+    const node = document.createElementNS(ns, name);
+    for (const [key, value] of Object.entries(attrs)) node.setAttribute(key, value);
+    if (content !== undefined) node.textContent = content;
+    parent.appendChild(node);
+    return node;
+  }
+  function render() {
+    const width = Math.max(220, Math.round(svg.parentElement.clientWidth));
+    const height = 300, left = 52, right = 16, top = 16, bottom = 34;
+    const inner = width - left - right, plotHeight = height - top - bottom;
+    const count = end - start + 1;
+    svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+    svg.replaceChildren();
+    if (!data.length) { status.textContent = 'No recorded commits'; buttons.forEach(button => button.disabled = true); return; }
+    const visible = data.slice(start, end + 1);
+    let ymin = 0, ymax, step;
+    if (count === data.length) {
+      ymax = visible.reduce((max, p) => Math.max(max, Math.ceil(p.overall / 5) * 5), 10);
+      step = ymax > 10 ? 5 : 2;
+    } else {
+      const values = visible.flatMap(p => p.measured == null ? [p.overall] : [p.overall, p.measured]);
+      const min = values.reduce((a, b) => Math.min(a, b));
+      const max = values.reduce((a, b) => Math.max(a, b));
+      const padding = Math.max((max - min) * 0.1, 0.001);
+      const rawStep = (max - min + 2 * padding) / 5;
+      const magnitude = Math.pow(10, Math.floor(Math.log10(rawStep)));
+      const fraction = rawStep / magnitude;
+      step = (fraction <= 1 ? 1 : fraction <= 2 ? 2 : fraction <= 5 ? 5 : 10) * magnitude;
+      ymin = Math.floor((min - padding) / step) * step;
+      ymax = Math.ceil((max + padding) / step) * step;
+    }
+    const x = i => left + (count > 1 ? inner * i / (count - 1) : inner / 2);
+    const y = v => top + plotHeight * (ymax - v) / (ymax - ymin);
+    const decimals = Math.max(0, Math.min(12, -Math.floor(Math.log10(step))));
+    const tickCount = Math.round((ymax - ymin) / step);
+    for (let i = 0; i <= tickCount; i++) {
+      const tick = ymin + i * step;
+      element('line', {x1:left, x2:width-right, y1:y(tick), y2:y(tick), stroke:'var(--line)'}, svg);
+      element('text', {x:left-6, y:y(tick)+4, 'text-anchor':'end', 'font-size':11, fill:'var(--ink2)'}, svg, `${(Math.abs(tick) < step / 1000 ? 0 : tick).toFixed(decimals)}%`);
+    }
+    const line = (field, attrs) => {
+      const points = visible.map((p, i) => p[field] == null ? null : `${x(i)},${y(p[field])}`).filter(Boolean);
+      if (points.length > 1) element('polyline', {points:points.join(' '), fill:'none', ...attrs}, svg);
+    };
+    line('measured', {stroke:'var(--ink2)', 'stroke-width':1.5, 'stroke-dasharray':'5 4'});
+    line('overall', {stroke:'var(--accent)', 'stroke-width':2});
+    // Dense series retain every line vertex; only the decorative dots are hidden.
+    if (count === 1 || inner / (count - 1) >= 9) visible.forEach((p, i) => {
+      const dot = element('circle', {cx:x(i), cy:y(p.overall), r:3, fill:'var(--accent)'}, svg);
+      element('title', {}, dot, `${p.short} ${p.date}: ${p.overall.toFixed(2)}% | ${p.subject}`);
+    });
+    const labelCount = Math.min(count, Math.max(2, Math.floor(inner / 95) + 1));
+    const indexes = new Set();
+    for (let i = 0; i < labelCount; i++) indexes.add(labelCount === 1 ? 0 : Math.round(i * (count - 1) / (labelCount - 1)));
+    indexes.forEach(i => element('text', {x:x(i), y:height-10, 'text-anchor':i === 0 ? 'start' : i === count-1 ? 'end' : 'middle', 'font-size':11, fill:'var(--ink2)'}, svg, visible[i].short));
+    const overlay = element('rect', {x:left, y:top, width:inner, height:plotHeight, fill:'transparent', 'pointer-events':'all'}, svg);
+    overlay.addEventListener('pointermove', event => {
+      const rect = svg.getBoundingClientRect();
+      const position = (event.clientX - rect.left) * width / rect.width;
+      const index = count === 1 ? 0 : Math.max(0, Math.min(count - 1, Math.round((position - left) / inner * (count - 1))));
+      const p = visible[index];
+      detail.textContent = `${p.short} ${p.date}: ${p.overall.toFixed(2)}% | ${p.subject}`;
+    });
+    status.textContent = `Showing commits ${start + 1}–${end + 1} of ${data.length}`;
+    buttons.forEach(button => {
+      const action = button.dataset.historyAction;
+      button.disabled = action === 'older' ? start === 0 : action === 'newer' ? end === data.length - 1 :
+        action === 'in' ? count <= 2 : action === 'out' || action === 'all' ? count === data.length : data.length <= 50;
+    });
+  }
+  function setRange(first, count) {
+    count = Math.max(1, Math.min(data.length, count));
+    start = Math.max(0, Math.min(data.length - count, first));
+    end = start + count - 1;
+    detail.textContent = 'Move over the chart to inspect a commit.';
+    render();
+  }
+  buttons.forEach(button => button.addEventListener('click', () => {
+    const count = end - start + 1, action = button.dataset.historyAction;
+    if (action === 'all') setRange(0, data.length);
+    if (action === 'recent') setRange(data.length - 50, 50);
+    if (action === 'older') setRange(start - Math.max(1, Math.floor(count / 2)), count);
+    if (action === 'newer') setRange(start + Math.max(1, Math.floor(count / 2)), count);
+    if (action === 'in' || action === 'out') {
+      const next = action === 'in' ? Math.max(2, Math.ceil(count / 2)) : Math.min(data.length, count * 2);
+      setRange(Math.round((start + end - next + 1) / 2), next);
+    }
+  }));
+  if (window.ResizeObserver) new ResizeObserver(render).observe(svg.parentElement);
+  else window.addEventListener('resize', render);
+  render();
+})();
+</script>'''.replace('DATA_PLACEHOLDER', chart_data)
+
     cat_ids = [g["id"] for g in model["tree"]]
     cat_names = {g["id"]: g["name"] for g in model["tree"]}
     head_cells = "".join(f'<th>{esc(cat_names[c])}</th>' for c in cat_ids)
@@ -1939,6 +2051,10 @@ def history_html(history, model):
 <title>Port progress history</title>
 <style>{PAGE_CSS}
 svg text{{font-family:system-ui,-apple-system,Segoe UI,sans-serif}}
+#history-chart svg{{min-width:0}}
+.history-controls:not([hidden]){{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:.5rem 0}}
+.history-controls button{{font:inherit;padding:5px 9px}}
+#history-detail{{min-height:1.5em}}
 </style></head>
 <body><main>
 <header>
@@ -1947,14 +2063,25 @@ svg text{{font-family:system-ui,-apple-system,Segoe UI,sans-serif}}
 </header>
 <p class="warn">{esc(model["definition"])} Overall values here estimate reconstruction effort; the four milestones require end-to-end evidence.</p>
 <h2>Overall progress per commit</h2>
-<div class="chart-scroll">{chart}</div>
-<p class="meta">Solid line: overall including manual estimates. Dashed line: evidence-based progress only (basis <em>git</em>, <em>local</em> or <em>documented</em>), which includes documented counts. Estimates use the model in effect at each recording; model revisions can cause discontinuities. Points marked replay used the current components.json manual estimates and current ignored local outputs, so they are indicative. Hook-recorded points measure HEAD at commit time.</p>
+<div class="history-controls" aria-label="History range controls" hidden>
+<button type="button" data-history-action="all">All commits</button>
+<button type="button" data-history-action="recent">Recent 50</button>
+<button type="button" data-history-action="older">← Older</button>
+<button type="button" data-history-action="newer">Newer →</button>
+<button type="button" data-history-action="in">Zoom in</button>
+<button type="button" data-history-action="out">Zoom out</button>
+<span id="history-range" class="meta"></span>
+</div>
+<div class="chart-scroll" id="history-chart">{chart}</div>
+<p class="meta" id="history-detail" hidden>Move over the chart to inspect a commit.</p>
+<p class="meta">Selected ranges use a fitted vertical scale; all commits use a zero baseline. Solid line: overall including manual estimates. Dashed line: evidence-based progress only (basis <em>git</em>, <em>local</em> or <em>documented</em>), which includes documented counts. Estimates use the model in effect at each recording; model revisions can cause discontinuities. Points marked replay used the current components.json manual estimates and current ignored local outputs, so they are indicative. Hook-recorded points measure HEAD at commit time.</p>
 <h2>Commits</h2>
 <div class="tablewrap"><table>
 <thead><tr><th>Date (UTC)</th><th>Commit</th><th>Subject</th><th>Overall</th>{head_cells}<th>Source</th></tr></thead>
 <tbody>{''.join(rows)}</tbody>
 </table></div>
 <footer>Generated offline by porting/progress/progress.py.</footer>
+{chart_script}
 </main></body></html>
 """
 

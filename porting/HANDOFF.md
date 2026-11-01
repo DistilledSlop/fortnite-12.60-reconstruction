@@ -2,6 +2,11 @@
 
 ## Current resume point (2026-11-01)
 
+- User-requested history UI updated in progress.py: responsive commit tick/dot density, All/Recent50,
+  older/newer/zoom controls, pointer detail and visible-subset vertical scaling; All retainszero baseline.
+  Underlying380existing history points/values/order and table preserved. Python compile/6history tests
+  pass; rootexecutedactualemittedJSinV8withDOMfixture at1280/320width, varying/flatdata: allvertices,
+  recent50, older/newer, zoomin/out, pointerinspection andfinitescales pass. No realbrowser rendering claim.
 - Goal remains full reconstructed client and multiplayer server with feature/visual/wire parity and
   all four product milestones. All four gates remain false. Dashboard approximately21.388%,115leaves,
   totalweight1855: one existing CommonUI behavior point now credits the independently audited Panel
