@@ -23,7 +23,10 @@ ACCESSORS = {
     0x1447867C0: 'LocalPlayerSubsystem',
     0x14470A080: 'GameInstanceSubsystem',
     0x144801560: 'Subsystem',
+    0x1408232C0: 'BlueprintContextBase',
 }
+LOOKUP_AND_MANAGER = (0x140822310, 0x140822490, 0x14081FCA0,
+                      0x1408219D0, 0x140821B10, 0x140822A30, 0x140822C00)
 
 
 def digest(data):
@@ -54,7 +57,7 @@ def main():
                 raise ValueError('exception entries are not ordered')
             args.out.mkdir(parents=True, exist_ok=False)
             functions = []
-            for address in (0x140822310, 0x140822490, *ACCESSORS):
+            for address in (*LOOKUP_AND_MANAGER, *ACCESSORS):
                 offset = address - IMAGE_BASE
                 index = bisect.bisect_right(starts, offset) - 1
                 begin, end, _ = bounds[index]
@@ -73,7 +76,7 @@ def main():
                              disassembly=str(asm_path), disassembly_sha256=digest(asm_path.read_bytes()))
                 if address in ACCESSORS:
                     # This pinned accessor family passes its class literal in RDX
-                    # to GetPrivateStaticClassBody, shared by all six functions.
+                    # to GetPrivateStaticClassBody, shared by all seven functions.
                     matches = list(re.finditer(b'\x48\x8d\x15....', code, re.DOTALL))
                     if len(matches) != 1 or not re.search(r'call\s+0x142d698b0\b', disassembly):
                         raise ValueError('unexpected static class accessor shape')
@@ -94,7 +97,7 @@ def main():
                   limitations=['Static class identities and bounded original code only.',
                                'Custom registry creation/lifetime and runtime GetContext remain unverified.'])
     (args.out / 'receipt.json').write_text(json.dumps(report, indent=2) + '\n')
-    print(f'Verified {len(ACCESSORS)} original class identities and two context lookup bodies: {args.out}')
+    print(f'Verified {len(ACCESSORS)} original class identities and {len(LOOKUP_AND_MANAGER)} lookup/manager bodies: {args.out}')
 
 
 if __name__ == '__main__':

@@ -89,7 +89,7 @@ parent evidence directory. No new snippet was ported from these probes:
 - `UBlueprintContextLibrary::GetContext` exec `0x140823580` calls
   `0x140822310`. Its 751-byte lookup `0x140822490` handles local-player and
   game-instance subsystems, then a separate context registry at manager `+0x20`;
-  `0x140822100` initializes a shared singleton. Six original class literals now
+  `0x140822100` initializes a shared singleton. Seven original class literals now
   prove the widget/controller/local-player routing and subsystem types; see
   [context-lookup-evidence.md](../frontend/context-lookup-evidence.md). Registry
   construction and lifecycle remain unfinished; no helper body was ported.

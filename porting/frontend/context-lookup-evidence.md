@@ -9,7 +9,7 @@ recovery before porting this helper.
 
 `inspect_context_accessors.py` verifies the original memory-image SHA-256,
 uses its RVA-based exception directory to bound each function, and preserves raw
-bytes and direct objdump disassembly. Six static class accessors load the literals
+bytes and direct objdump disassembly. Seven static class accessors load the literals
 below into RDX and call the same `GetPrivateStaticClassBody` target
 `0x142d698b0`. These are original executable class literals, not names inferred
 from current engine offsets.
@@ -22,13 +22,15 @@ from current engine offsets.
 | `0x1447867c0` | `LocalPlayerSubsystem` | First requested-class branch |
 | `0x14470a080` | `GameInstanceSubsystem` | Second requested-class branch |
 | `0x144801560` | `Subsystem` | Requested-class validation |
+| `0x1408232c0` | `BlueprintContextBase` | Custom registry class-key validation |
 
 The input is
 `generated/dump/FortniteClient-Win64-Shipping.runtime.bin`, SHA-256
 `604900985a724144b6e0fc6e033b0cef2adb74a295a65a4fe01aceebb52df93d`.
 It is a memory image with stale PE section raw offsets: **VA = `0x140000000` +
 file offset**. The tool deliberately uses RVAs directly. Fresh proof is under
-`generated/frontend-native-evidence/context-accessor-identities-1/receipt.json`.
+`generated/frontend-native-evidence/context-accessor-identities-2/receipt.json`.
+The first run with six engine-class identities remains preserved separately.
 
 ## Observed lookup behavior
 
@@ -58,10 +60,26 @@ accessors, but the original offsets must not be copied into rebuilt classes.
 The final branch uses manager storage `+0x20`. It builds a two-word player key,
 looks up a player entry of stride `0x60`, then looks up the requested class in
 that entry's storage at `+8` (class-entry stride `0x18`) and returns its object
-at `+8`. Either reported `INDEX_NONE` produces null. The helper implementations,
-key lifetime, registration, and teardown remain unfinished. The manager
-constructor at `0x14081fca0`, the two lookup helpers `0x1408219d0` and
-`0x140821b10`, and their writers are concrete next targets.
+at `+8`. Either reported `INDEX_NONE` produces null. The player-key helper
+`0x1408219d0` hashes and compares both 32-bit key words. The class-key helper
+`0x140821b10` hashes the class pointer, validates both candidate and requested
+keys against `BlueprintContextBase`, then compares the validated pointers
+exactly. It walks hash collisions rather than constructing missing contexts.
+
+The 998-byte manager constructor `0x14081fca0` initializes the player map and
+another map at `+0x78`, stores a weak reference to its supplied object at `+0x70`,
+and subscribes raw callbacks `0x140822a30` / `0x140822c00` to globals
+`0x147ce0788` / `0x147ce07b8`, retaining handles at `+0xc8` / `+0xd0`.
+The first callback inserts an object's name and weak reference into the second
+map and schedules a bound `0x140822910` callback through a helper. The other
+checks an engine lookup against the weak owner and invokes an iteration helper
+with callback `0x1408206c0`. The original delegate names, complete callback
+semantics, player/context insertion, GC ownership and teardown are still
+unfinished; these callbacks must not be guessed to be local-player events.
+The five fresh decompiles are in
+`generated/frontend-native-evidence/context-manager-decomp-1/`, with disclosed
+Ghidra bookkeeping changes and no saved program. The direct-disassembly tool
+also snapshots these bounded original functions without opening Ghidra.
 
 ## Reproduction and limits
 
@@ -69,7 +87,7 @@ From the repository root:
 
 ```sh
 python3 -I porting/frontend/inspect_context_accessors.py \
-  --out porting/generated/frontend-native-evidence/context-accessor-identities-1
+  --out porting/generated/frontend-native-evidence/context-accessor-identities-2
 ```
 
 Use a fresh output directory for subsequent runs. The command requires the
