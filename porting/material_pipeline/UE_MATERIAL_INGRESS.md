@@ -1,12 +1,41 @@
 # Original material ingress
 
+## MenuButton and final numeric checkpoint
+
+Native `ebea44e` and Engine `6925baad3` pass final client4/server2 builds,
+Locker/PowerToast/MenuButton probes and default/Athena joins. The complete
+command/source/binary/artifact receipt is `generated/material_pipeline/numeric-menu-checkpoint-results.json`.
+MenuButton's real owner requires seven shaders with zero missing, preserves all
+19 original records and attaches on both threads. Eight numeric cases and four
+View scenarios pass. All 21 emitted payloads across the three probes independently
+validate.
+
+The observed original GameTime field at 2264 matches compiled current metadata;
+RealTime is separately at 2268. Real current View layout: 4032 bytes, 61 resources,
+hash 130419238. Menu Material layout hash: 20447487. The original View struct
+size is 3952; this proves only the observed field access, not full ABI equality.
+The adapter uses the original typed D3D b1 View/b2 Material roles and the real UE
+FSceneView uniform construction, with no shader instruction changes beyond the
+entry-point name. Controlled GameTime 0/3.25 changes 1851 pixels; RealTime 10/20
+alone leaves both corresponding images identical. A separate fixed-time Primary
+Color red/green draw changes 4096 pixels. Current artifacts and root verifier
+receipt are `generated/frontend-probes/legacy-numeric-menu-artifacts-4/` and
+`legacy-numeric-menu-artifacts-4-root-validation.json`.
+
+Use the immutable `menu-button-ingress-bundle-active-time.json`, SHA-1
+`0b49a605763b907dbdf1f0041715208a81d4744a`. Earlier 0/1-second scenarios both
+missed the inspected original shine window (threshold 3.0, period 4.5); their failed
+runs are retained. Source-derived active phase 3.25 exercises it. Original-client
+pixel comparison, full View layout compatibility, Donut textures and root-widget
+integration remain unverified. All four product milestones remain open.
+
 ## Numeric PowerToast checkpoint
 
 Engine `6925baad3` and native `25bf1c4` passed the non-editor Linux Vulkan checkpoint recorded in `generated/material_pipeline/numeric-power-checkpoint-results.json`, including exact commands, source and artifact hashes. The original GradientPanel base and PowerToastGlow material instance load through two pinned bundles. For each original resource all 19 shader records are retained, seven converted and zero required shaders missing; the map attaches on both game and render threads. Eight graph cases and eight real-owner uniform cases pass, and an attached quad changes 3,952 pixels. Five source instance parameter override identities were verified. Independent verification passes all seven PowerToast shader artifacts and all seven Locker artifacts. Client and server builds and fresh default and Athena joins pass. Six missing graph dependency packages were recovered verbatim; owner-package import warnings are absent, while preexisting Water startup warnings remain.
 
 Pass multiple absolute bundle paths as one unquoted comma-separated argument, e.g. `-FortniteLegacyMaterialIngress=/absolute/gradient-panel-ingress-bundle.json,/absolute/power-toast-ingress-bundle.json`. Select the actual owner exactly with `-FortniteLegacyMaterialProbeOwner=/Game/UI/Foundation/Border/Materials/M-Border-PowerToastGlow.M-Border-PowerToastGlow` alongside `-FortniteProbeLegacyOriginalMaterial`. The material instance owner and parent shader identity are distinct; both source identities must be preserved. The existing single Locker bundle and pin remain supported.
 
-Numeric layouts include PowerToast 208 bytes, MenuButton 304 bytes and Locker 336 bytes, including their sampler resources. MenuButton original View byte 2264 is now identified as GameTime by original metadata helpers and current declarations (`view_original_identity.md`); native offset and runtime View binding remain unverified. Donut texture conversion, widget integration, Editor rebuild behavior and original-client pixel comparison also remain open. All four product gates remain open.
+Numeric layouts include PowerToast 208 bytes, MenuButton 304 bytes and Locker 336 bytes, including their sampler resources. MenuButton original View byte 2264 is now identified as GameTime by original metadata helpers and current declarations (`view_original_identity.md`); native offsets and the observed GameTime runtime binding are now verified. Donut texture conversion, widget integration, Editor rebuild behavior and original-client pixel comparison also remain open. All four product gates remain open.
 
 The bounded, opt-in Locker ingress described below is implemented in Engine `e6e962a43` and native `c8ec113`; its actual-owner runtime probe passed in the staged Linux Vulkan client. The previously verified detached map at Engine `757e0087a` and native `afb32b7` evaluates live preshaders and draws an original Slate quad. The subsequent actual-owner probe establishes those properties for the tested Locker resource and current non-editor layout. All four product dashboard gates remain open.
 
@@ -47,7 +76,7 @@ The resource proxy retains validated selected `[begin,end)` bounds derived from 
 
 The bounded original reader decodes the original representation: compilation output, recursive expressions, all shader records and library associations. It retains raw/decoded records and their provenance. Locker's original 12 mesh records must remain accounted for alongside its seven Slate records, even if the current runtime layout does not require their conversion. Successful decoding requires exact end consumption. Seeking past shader data, setting it invalid, or substituting a synthetic `UMaterial` is not this proposal.
 
-The provider remains separate from Vulkan adaptation: Engine owns neutral IR and map construction; the registered native adapter owns validated Vulkan outputs. The validated factory supports the tested numeric Locker and PowerToast layouts; other resource layouts require their own conversion and runtime verification.
+The provider remains separate from Vulkan adaptation: Engine owns neutral IR and map construction; the registered native adapter owns validated Vulkan outputs. The validated factory supports the tested numeric Locker, PowerToast and MenuButton layouts; other resource layouts require their own conversion and runtime verification.
 
 ## Determine completeness from the actual owner
 
@@ -72,7 +101,7 @@ The original Locker owner passed its current non-editor requirements with all or
 
 ## Next View-buffer investigation
 
-The MenuButton's five Slate PS records use library indices 6853, 6854, 6855, 6856 and 6854 (Border shares Default). Reflection of the four unique translated modules shows `View` as `cb1_1`, set 0 binding 1, with a 2,272-byte span; their only read is vec4 element 141 lane 2, byte offset 2,264, using constant indices. The four original DXBC modules contain ISGN, OSGN and SHEX but no RDEF. Subsequent original metadata helper evidence identifies this field as GameTime; see `view_original_identity.md`. Native offset and runtime binding still require verification.
+The MenuButton's five Slate PS records use library indices 6853, 6854, 6855, 6856 and 6854 (Border shares Default). Reflection of the four unique translated modules shows `View` as `cb1_1`, set 0 binding 1, with a 2,272-byte span; their only read is vec4 element 141 lane 2, byte offset 2,264, using constant indices. The four original DXBC modules contain ISGN, OSGN and SHEX but no RDEF. Subsequent original metadata helper evidence identifies this field as GameTime; see `view_original_identity.md`. Native offsets and the observed GameTime runtime binding are now verified; full View ABI parity is unproven.
 
 ## Final revision and reload coverage
 
@@ -87,4 +116,4 @@ than a PCH built with zero. Runtime reload and alternate async reload remain
 unverified; the tested Linux build uses zero. The portable two-commit patch is
 `patches/ue425-legacy-material-asset-ingress.patch`.
 
-Next, verify MenuButton actual-owner ingress and runtime View binding; Donut needs original texture parameter/reference/sampler conversion. These require actual-owner loading and completeness checks before root-widget integration and original visual tests.
+MenuButton actual-owner ingress and its observed View binding are verified; next Donut needs original texture parameter/reference/sampler conversion. These require actual-owner loading and completeness checks before root-widget integration and original visual tests.

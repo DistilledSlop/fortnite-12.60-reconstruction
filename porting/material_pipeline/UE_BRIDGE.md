@@ -126,3 +126,11 @@ The provider retains all 19 original shader records and their library provenance
 ## Generic numeric checkpoint
 
 Engine `6925baad3` supports the tested numeric layouts, with native `25bf1c4` retaining the existing Locker path and loading the original GradientPanel base and PowerToastGlow instance. The complete PowerToast layout is 208 bytes, MenuButton 304 bytes and Locker 336 bytes, including sampler resources; a layout alone does not prove its runtime binding. The PowerToast actual-owner run retains 19 records, converts seven, reports zero missing, checks game/render attachment and passes eight graph and eight owner uniform cases. Its quad changes 3,952 pixels. Five source instance override identities were verified, and all seven PowerToast and Locker artifacts independently pass. Exact build, probe, join and hash receipts are in `generated/material_pipeline/numeric-power-checkpoint-results.json`. See [UE_MATERIAL_INGRESS.md](UE_MATERIAL_INGRESS.md) for owner and parent identity, CLI and remaining work.
+
+The later native `ebea44e` / Engine `6925baad3` checkpoint also verifies the
+original MenuButton owner and real View uniform binding. GameTime 0/3.25 changes
+1851 pixels with RealTime isolation; separate fixed-time Primary Color overrides
+change 4096 pixels. All 21 final emitted shader payloads, both builds and both
+joins pass. See `generated/material_pipeline/numeric-menu-checkpoint-results.json`
+and [UE_MATERIAL_INGRESS.md](UE_MATERIAL_INGRESS.md). Full View ABI and original
+pixels remain unverified; Donut texture resources and actual root widgets are next.

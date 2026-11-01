@@ -38,26 +38,26 @@ using historical instructions below.
 
 ## Current work (2026-11-01)
 
-Native `c8ec113` and Engine `e6e962a43` build for both non-editor targets and
-pass fresh default/Athena direct joins. The original Locker material now passes
-normal bounded asset deserialization and actual-owner completeness (seven required,
-zero missing), retains all 19 source records and attaches on game/render threads.
-Its actual map draws a parameter-sensitive Vulkan quad; independent header/module
-verification and readback checks pass. Exact commands, hashes and the distinction
-between runtime proof and guarded-reload syntax checks are in `HANDOFF.md`.
+Native `ebea44e` and Engine `6925baad3` build for both non-editor targets and
+pass fresh default/Athena direct joins. Locker, GradientPanel, PowerToastGlow and
+MenuButton now load their original resources, preserve all 19 source records each,
+pass real-owner completeness and attach on both threads. PowerToast preserves its
+real parent and opaque override. MenuButton binds the real current View buffer:
+its proven GameTime read changes 1,851 pixels, RealTime alone leaves pixels
+unchanged, and fixed-time color overrides change 4,096 pixels. All 21 emitted
+shader payloads independently validate. Exact commands and hashes are in HANDOFF.
 
-Continue with the other failing frontend materials: PowerToast's numeric layout
-and real instance/parent relationship, MenuButton's View buffer, and Donut's texture
-bindings. The only observed MenuButton View read is float byte 2264; identify its
-original semantic field before mapping it. Then load and construct real root
-widgets, recover native UI lifecycle/helpers, and connect login/lobby/matchmaking.
-An interactive root menu and original visual parity are still unverified.
+Next convert Donut's original texture parameter/reference/sampler resources and
+resource-table bindings. Then retry real root-widget loading and construction,
+recover native UI lifecycle/helpers and connect login/lobby/matchmaking. No
+interactive root menu or original-client visual parity is verified. Menu's observed
+GameTime offset matches; the entire original/current View layouts do not.
 
-The dashboard now represents 104 bounded and unfinished work items, including
-material reconstruction, original-feature inventory, plugin/module integration,
-input/settings/localization/accessibility, progression and end-to-end parity.
-Its 20.538% is an effort estimate; all four acceptance gates remain open. Source
-coverage, local tests and direct joins do not establish full gameplay or wire parity.
+The dashboard has 104 bounded and unfinished work items. Its 20.753% is an effort
+estimate; all four acceptance gates remain open. The five explicit UI integration
+phases count PowerToast and MenuButton; Donut, widget integration and original
+pixel comparison remain unverified. Declarations, local tests and direct joins
+continue to be separate from implementation and full gameplay/wire parity.
 
 ## Standing constraints
 

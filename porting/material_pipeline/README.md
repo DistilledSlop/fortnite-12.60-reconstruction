@@ -196,4 +196,12 @@ remaining material, UI-root and original-comparison work are documented in
 
 Engine `6925baad3` and native `25bf1c4` extend the verified actual-owner path to the original GradientPanel base and PowerToastGlow instance. Each retains 19 original records, converts seven and has zero missing required shaders; eight graph and eight actual-owner uniform cases pass, and the attached quad changes 3,952 pixels. Five source instance parameter override identities were verified. Both PowerToast and Locker pass independent verification of all seven artifacts. Client/server builds and fresh default/Athena joins pass. Exact commands, hashes and receipts are in `generated/material_pipeline/numeric-power-checkpoint-results.json`. Six graph dependencies were recovered verbatim; owner-package import warnings are absent and preexisting Water startup warnings remain. These tests do not establish original pixels, Editor rebuild or full UI parity.
 
-The CUE report now preserves full scalar/vector `ParameterInfo` identities; `export_numeric_ingress.py` produces immutable v2 bundles from the original source and owner report, without changing the original Locker pin. It requires `--key` and `--owner-report` and writes to a fresh generated path. See [UE_MATERIAL_INGRESS.md](UE_MATERIAL_INGRESS.md) for multiple-bundle invocation and exact owner selection. MenuButton's original View byte 2264 is identified as GameTime in [view_original_identity.md](view_original_identity.md), while native offset and runtime binding remain unverified.
+The CUE report now preserves full scalar/vector `ParameterInfo` identities; `export_numeric_ingress.py` produces immutable v2 bundles from the original source and owner report, without changing the original Locker pin. It requires `--key` and `--owner-report` and writes to a fresh generated path. See [UE_MATERIAL_INGRESS.md](UE_MATERIAL_INGRESS.md) for multiple-bundle invocation and exact owner selection. MenuButton's original View byte 2264 is identified as GameTime in [view_original_identity.md](view_original_identity.md), while native offsets and the observed GameTime runtime binding are now verified.
+
+The later native `ebea44e` / Engine `6925baad3` checkpoint also verifies the
+original MenuButton owner and real View uniform binding. GameTime 0/3.25 changes
+1851 pixels with RealTime isolation; separate fixed-time Primary Color overrides
+change 4096 pixels. All 21 final emitted shader payloads, both builds and both
+joins pass. See `generated/material_pipeline/numeric-menu-checkpoint-results.json`
+and [UE_MATERIAL_INGRESS.md](UE_MATERIAL_INGRESS.md). Full View ABI and original
+pixels remain unverified; Donut texture resources and actual root widgets are next.

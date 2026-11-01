@@ -251,4 +251,18 @@ The pinned bundle preserves all 19 original records and library provenance; seve
 
 The validated Engine `6925baad3` / native `25bf1c4` checkpoint loads the original GradientPanel base and PowerToastGlow instance through two pinned bundles. Both retain 19 original records, convert seven, have zero missing required shaders and attach on game and render threads. Eight graph and eight actual-owner uniform cases pass, five source instance override identities are verified, and the PowerToast quad changes 3,952 pixels. Independent verification passes all seven artifacts for each of PowerToast and Locker. Client/server builds and fresh default/Athena joins pass; `porting/generated/material_pipeline/numeric-power-checkpoint-results.json` records commands, logs and hashes. Six graph dependencies were recovered verbatim, with no owner-package import warnings; preexisting Water startup warnings remain.
 
-Use `-FortniteLegacyMaterialIngress=/absolute/gradient-panel-ingress-bundle.json,/absolute/power-toast-ingress-bundle.json` and `-FortniteLegacyMaterialProbeOwner=/Game/UI/Foundation/Border/Materials/M-Border-PowerToastGlow.M-Border-PowerToastGlow` with `-FortniteProbeLegacyOriginalMaterial`. Bundle paths form one unquoted comma-separated argument; the original single Locker pin remains supported. Owner identity and parent shader identity are distinct. MenuButton runtime View binding, Donut textures, interactive widgets and original visual comparison remain open; see `porting/material_pipeline/UE_MATERIAL_INGRESS.md`.
+Use `-FortniteLegacyMaterialIngress=/absolute/gradient-panel-ingress-bundle.json,/absolute/power-toast-ingress-bundle.json` and `-FortniteLegacyMaterialProbeOwner=/Game/UI/Foundation/Border/Materials/M-Border-PowerToastGlow.M-Border-PowerToastGlow` with `-FortniteProbeLegacyOriginalMaterial`. Bundle paths form one unquoted comma-separated argument; the original single Locker pin remains supported. Owner identity and parent shader identity are distinct. MenuButton's observed GameTime binding is verified by the subsequent checkpoint; Donut textures, interactive widgets and original visual comparison remain open; see `porting/material_pipeline/UE_MATERIAL_INGRESS.md`.
+
+## MenuButton live View checkpoint
+
+Native `ebea44e` and Engine `6925baad3` pass both non-editor builds, all three
+owner probes and both direct joins. MenuButton's real owner passes completeness,
+19-record preservation and GT/RT attachment. Actual current View metadata is
+4032 bytes/61 resources/hash 130419238, GameTime offset 2264 and RealTime 2268;
+only the observed original GameTime access is proven compatible. The active
+`menu-button-ingress-bundle-active-time.json` uses GameTime 0/3.25 and RealTime
+10/20: 1851 pixels change with GameTime and both RealTime-only pairs stay equal.
+A separate fixed-time Primary Color draw changes 4096 pixels. Independent checks
+pass all 21 final payloads. Receipt: `porting/generated/material_pipeline/numeric-menu-checkpoint-results.json`.
+The original 0/1 time-case failures remain recorded. No original-pixel, full View
+ABI, Editor, interactive-root or product-milestone claim follows from these probes.
