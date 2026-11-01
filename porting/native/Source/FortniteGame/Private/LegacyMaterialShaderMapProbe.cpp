@@ -2878,7 +2878,9 @@ static ELegacyMaterialAssetResult ProvideLegacyOriginal(const FLegacyMaterialAss
     if (!OriginalHash.ToString().Equals(Pin->ResourceHash,ESearchCase::IgnoreCase))
         return Fail(TEXT("Locker source digest mismatch"));
     if (!DecodeLegacyOriginalMaterial(P->Decoded,Error)) return ELegacyMaterialAssetResult::Failed;
-    if (Pin->bManifest && P->Decoded.IR.Texture2DParameters.Num()) return Fail(TEXT("manifest texture resources unsupported"));
+    // Manifest owners use the same bounded texture decoder and shader factory
+    // as fixed pins. The source digest above, complete graph comparison below,
+    // and typed resource-table checks also apply to every texture entry.
     int32 ExpectedRecordCount=0;
     if (!ReadLegacySourceRecordCount(Bundle,Pin->bManifest,ExpectedRecordCount) ||
         P->Decoded.MaterialPath!=Pin->ShaderIdentity || P->Decoded.Records.Num()!=ExpectedRecordCount)
