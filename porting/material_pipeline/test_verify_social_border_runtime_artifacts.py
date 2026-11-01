@@ -27,7 +27,7 @@ class SamplingContract(unittest.TestCase):
             ordered_texture_references=[verifier.ATLAS],
             texture_2d_parameters=[dict(parameter=None, expression_kind='Texture', texture_index=0, sampler_source=2)],
             nodes=[dict(type='TextureSize2D', texture_parameter_index=0)], vector_roots=[0, 0, 0], expected_layout=self.layout)
-        self.meta = dict(texture_path=verifier.ATLAS, width=32, height=32, format='PF_FloatRGBA', srgb=True, mips=1,
+        self.meta = dict(texture_path=verifier.ATLAS, width=32, height=32, format='PF_FloatRGBA', srgb=False, mips=1, filter='TF_Bilinear', addressX='TA_Clamp', addressY='TA_Clamp', compressionSettings='TC_HDR',
             named_proxy_calls=0, sampler_source=2, bound_sampler_resource=3, root=2,
             root_bits=['42000000', '42000000', '00000000', '00000000'], constant_bytes=160,
             layout_hash=94898423, resources=[dict(offset=o, type=t) for o, t in zip(self.layout['resource_offsets'], self.layout['resource_types'])],
@@ -78,6 +78,13 @@ class SamplingContract(unittest.TestCase):
             with self.subTest(field=key), self.assertRaises(ValueError):
                 self.check()
 
+    def test_atlas_constructor_metadata_mutations_are_rejected(self):
+        for key, value in [('srgb', True), ('filter', 'TF_Default'), ('addressX', 'TA_Wrap'),
+                           ('addressY', 'TA_Wrap'), ('compressionSettings', 'TC_Default')]:
+            self.write('SocialTexture.json', dict(self.meta, **{key: value}))
+            with self.subTest(field=key), self.assertRaises(ValueError):
+                self.check()
+
     def test_gpu_source_bytes_cannot_be_changed_with_a_matching_self_hash(self):
         wrong = b'\x01' + self.half[1:]
         (self.folder / 'SocialTexture.rgba16f').write_bytes(wrong)
@@ -106,7 +113,7 @@ class SamplingContract(unittest.TestCase):
 
 class VMAndCliContract(unittest.TestCase):
     def test_original_staged_pair_and_corruption(self):
-        fixture_path = verifier.GENERATED / 'material_pipeline/social_border-ingress-3/runtime-fixture.json'
+        fixture_path = verifier.GENERATED / 'material_pipeline/social-atlas-corrected-ingress-3/runtime-fixture.json'
         source = Path('/mnt/vibrato/fortnite-extracted-full/FortniteGame/Content/UI/SocialPanel/Art/CA_SocialPanel')
         asset, exports = source.with_suffix('.uasset'), source.with_suffix('.uexp')
         if not fixture_path.exists() or not asset.exists() or not exports.exists():
@@ -151,7 +158,7 @@ class VMAndCliContract(unittest.TestCase):
                 verifier.check_vm_controls(folder)
 
     def test_actual_fixture_cli_gate_rejects_another_material(self):
-        good = verifier.GENERATED / 'material_pipeline/social_border-ingress-3/runtime-fixture.json'
+        good = verifier.GENERATED / 'material_pipeline/social-atlas-corrected-ingress-3/runtime-fixture.json'
         wrong = verifier.GENERATED / 'material_pipeline/flogo-ingress-3/runtime-fixture.json'
         if not good.exists() or not wrong.exists():
             self.skipTest('optional original fixtures unavailable')

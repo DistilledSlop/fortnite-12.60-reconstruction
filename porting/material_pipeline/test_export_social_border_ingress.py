@@ -16,6 +16,13 @@ def parsed():
  a=dict(vector=dict(count=3,expressions=[constant(),constant(),size()]),scalar=dict(count=0,expressions=[]))
  return dict(uniform_expression_arrays=a)
 class PortableTests(unittest.TestCase):
+ def test_atlas_constructor_defaults_fail_closed_on_tags(self):
+  meta=dict(package=m.social.ATLAS,export_type='CurveLinearColorAtlas',properties=[dict(name='TextureSize')],lodGroup='TEXTUREGROUP_World')
+  actual=m.atlas_defaults(meta)
+  self.assertEqual((actual['srgb'],actual['filter'],actual['addressX'],actual['addressY'],actual['compressionSettings']), (False,'TF_Bilinear','TA_Clamp','TA_Clamp','TC_HDR'))
+  for name in ('SRGB','Filter','AddressX','AddressY','CompressionSettings','LODGroup'):
+   with self.subTest(name=name),self.assertRaises(ValueError):m.atlas_defaults(dict(meta,properties=[dict(name=name)]))
+  with self.assertRaises(ValueError):m.atlas_defaults(dict(meta,export_type='Texture2D'))
  def test_direct_root_remains_dynamic_and_source_zero_lanes(self):
   p=parsed();nodes,roots=m.flatten(p['uniform_expression_arrays']);node=nodes[roots['vector_roots'][2]]
   self.assertEqual(node,dict(type='TextureSize2D',texture_parameter_index=0))
@@ -56,15 +63,15 @@ class PortableTests(unittest.TestCase):
    blob.write_bytes(b'wrong')
    with self.assertRaisesRegex(ValueError,'output snapshot'):m.verify_original_proof(data,proof)
    with self.assertRaisesRegex(ValueError,'hash differs'):m.checked_json(proof,'0'*64)
-@unittest.skipUnless((m.ROOT/'social_border-ingress-3/bundle.json').exists(),'optional local original fixture unavailable')
+@unittest.skipUnless((m.ROOT/'social-atlas-corrected-ingress-3/bundle.json').exists(),'optional local original fixture unavailable')
 class OriginalFixtureTests(unittest.TestCase):
  def test_original_fixture_reproduces_exact_root_and_shader_records(self):
-  x=json.loads((m.ROOT/'social_border-ingress-3/bundle.json').read_text());f=x['runtime_fixture'];self.assertEqual(x['schema'],'fortnite.legacy-material-ingress.v5');self.assertEqual(len(x['original_shader_code']),19);self.assertEqual(len(f['shaders']),7)
+  x=json.loads((m.ROOT/'social-atlas-corrected-ingress-3/bundle.json').read_text());f=x['runtime_fixture'];self.assertEqual(x['schema'],'fortnite.legacy-material-ingress.v5');self.assertEqual(len(x['original_shader_code']),19);self.assertEqual(len(f['shaders']),7)
   self.assertEqual(f['nodes'][f['vector_roots'][2]],dict(type='TextureSize2D',texture_parameter_index=0));self.assertEqual(f['ordered_texture_references'],[m.ATLAS_PATH]);self.assertEqual(f['texture_2d_parameters'][0]['sampler_source'],2)
   raw=struct.pack('<'+'f'*len(f['uniform_cases'][0]['numeric_values']),*f['uniform_cases'][0]['numeric_values']);self.assertEqual(raw[32:48],struct.pack('<4f',32,32,0,0));self.assertEqual(f['texture_size_contract']['missing_resource_result_bits'],['00000000']*4)
   for c in f['shader_binding_contracts']:
    if 'WorldClampSampler' in c['roles']:self.assertEqual(c['world_clamp_sampler_resource_index'],3)
  def test_original_numeric_cases_preserve_full_identity_isolation(self):
-  f=json.loads((m.ROOT/'social_border-ingress-3/runtime-fixture.json').read_text());cases={x['name']:x for x in f['uniform_cases']}
+  f=json.loads((m.ROOT/'social-atlas-corrected-ingress-3/runtime-fixture.json').read_text());cases={x['name']:x for x in f['uniform_cases']}
   for name in ('unmatched_association','unmatched_index','unmatched_number'):self.assertEqual(cases[name]['numeric_sha256'],cases['defaults']['numeric_sha256'])
 if __name__=='__main__':unittest.main()

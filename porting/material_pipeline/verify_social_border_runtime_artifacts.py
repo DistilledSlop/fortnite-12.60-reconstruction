@@ -12,7 +12,7 @@ import sys
 
 HERE = Path(__file__).resolve().parent
 GENERATED = HERE.parent / 'generated'
-FIXTURE_SHA256 = '1c4d71bbbca09b43b3adfefa89fd6625d6bc7449d052dcea722326206797f11e'
+FIXTURE_SHA256 = 'db3c8a1bf00347d86e9d47b9ea1aff778a21cf9d5dff0e0f6601eaec61e45cc6'
 ATLAS = '/Game/UI/SocialPanel/Art/CA_SocialPanel.CA_SocialPanel'
 spec = importlib.util.spec_from_file_location('common', HERE / 'verify_runtime_artifacts.py')
 common = importlib.util.module_from_spec(spec)
@@ -89,7 +89,9 @@ def check_sampling(fixture, artifacts, profile, source_half):
     resources = [dict(offset=offset, type=kind) for offset, kind in zip(layout['resource_offsets'], layout['resource_types'])]
     layout_hash = common.uniform_layout_hash(layout['constant_bytes'], layout['resource_offsets'], layout['resource_types'])
     if (meta['texture_path'] != ATLAS or (meta['width'], meta['height']) != (32, 32)
-            or meta['format'] != 'PF_FloatRGBA' or meta['srgb'] is not True or meta['mips'] != 1
+            or meta['format'] != 'PF_FloatRGBA' or meta['srgb'] is not False or meta['mips'] != 1
+            or meta['filter'] != 'TF_Bilinear' or meta['addressX'] != 'TA_Clamp' or meta['addressY'] != 'TA_Clamp'
+            or meta['compressionSettings'] != 'TC_HDR'
             or meta['named_proxy_calls'] != 0 or meta['sampler_source'] != 2 or meta['bound_sampler_resource'] != 3
             or meta['root'] != 2 or [word.lower() for word in meta['root_bits']] != ['42000000', '42000000', '00000000', '00000000']
             or meta['constant_bytes'] != 160 or meta['layout_hash'] != layout_hash or meta['resources'] != resources):

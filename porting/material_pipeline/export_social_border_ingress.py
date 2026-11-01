@@ -17,12 +17,15 @@ HERE=Path(__file__).resolve().parent
 
 def sibling(name):
  spec=importlib.util.spec_from_file_location(name,HERE/(name+'.py'));module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module);return module
-social=sibling('social_border_source');h=social.h;evaluator=h.evaluator
+social=sibling('social_border_source');h=social.h;evaluator=h.evaluator;atlas_proof=sibling('inspect_social_atlas_defaults')
 ROOT=h.ROOT; GENERATED=h.GENERATED
 SOURCE=ROOT/'social_border-source-1/source.json'; SOURCE_SHA='765b8321e271cfe3e11b195b6ad4ba94ba9c61d7f652f0ba728a5fea8b3500ec'
 FROZEN=ROOT/'social_border-frozen-inputs-1/receipt.json'; FROZEN_SHA='037123d240c58df507d01142339eafd5369056b2e648731ddeec052ad4ced9e3'
 CALLER=ROOT/'texture-property-caller-proof-2/receipt.json'; CALLER_SHA='03a19ce546da78b2a0229d909d107c5e8f76af51fc05d78a440c839101535c13'
 GETTER=GENERATED/'frontend-native-evidence/original-curve-atlas-reference-proof-1/receipt.json'; GETTER_SHA='f007855d75984f806382e05b2b79a1cc2899b28edc28ee032fc1372569e2a202'
+DEFAULTS_PROOF=ROOT/'social-atlas-defaults-proof-1/receipt.json'; DEFAULTS_SHA='787cd43f8289a5ddad33905c4ef9e8c22bad628f6d1a0ee690a45d26fd0b6815'
+TAG_PROOF=ROOT/'social-atlas-independent-tags-1/receipt.json'; TAG_SHA='c33b34e17d6fea309b682e4c15ad6cf57999fdb561ac9e1cb1f3d878b48edd94'
+DUMP=GENERATED/'dump/FortniteClient-Win64-Shipping.runtime.bin'
 ATLAS_PATH='/Game/UI/SocialPanel/Art/CA_SocialPanel.CA_SocialPanel'
 PREFIX='FMaterialUniformExpression'; SOURCE_TEXTURE=dict(texture_index=0,layer_index=-1,page_table_layer_index=-1,sampler_source=2,virtual_texture=False)
 
@@ -38,11 +41,40 @@ def verify_original_proof(receipt,path):
  if receipt.get('runtime_claim') is not False or receipt.get('original',{}).get('sha256')!='604900985a724144b6e0fc6e033b0cef2adb74a295a65a4fe01aceebb52df93d':
   raise ValueError('original proof identity differs')
  for row in receipt.get('inputs',[]):
-  item=Path(row['snapshot'])
+  item=Path(row['snapshot']);item=item if item.is_absolute() else path.parent/item
   if not item.is_file() or digest(item.read_bytes())!=row['sha256']:raise ValueError('proof input snapshot changed')
  for row in receipt['outputs']:
   item=Path(row['path']);item=item if item.is_absolute() else path.parent/item
   if not item.is_file() or digest(item.read_bytes())!=row['sha256'] or ('bytes' in row and item.stat().st_size!=row['bytes']):raise ValueError('proof output snapshot changed')
+
+def verify_atlas_defaults(meta):
+ tags_proof=checked_json(TAG_PROOF,TAG_SHA)
+ if tags_proof['schema']!='social-atlas-independent-tags-v1' or tags_proof['constructor_proof_sha256']!=DEFAULTS_SHA or tags_proof['image_sha256']!=atlas_proof.IMAGE or tags_proof['no_runtime_claim'] is not True:
+  raise ValueError('atlas independent tag proof identity differs')
+ for key in ('inputs','outputs'):
+  for row in tags_proof[key]:
+   item=Path(row.get('snapshot',row.get('path'))); item=item if item.is_absolute() else TAG_PROOF.parent/item
+   raw=item.read_bytes()
+   if digest(raw)!=row['sha256'] or ('bytes' in row and len(raw)!=row['bytes']):raise ValueError('atlas tag proof snapshot differs')
+ atlas_proof.verify_proof(DEFAULTS_PROOF,DUMP.read_bytes())
+ asset=social.EXTRACTED/social.ATLAS
+ header=atlas_proof.read(asset.with_suffix('.uasset'),atlas_proof.ASSET)
+ payload=atlas_proof.read(asset.with_suffix('.uexp'),atlas_proof.EXPORT)
+ actual=atlas_proof.decode_tags(header,payload)
+ if actual!=json.loads((TAG_PROOF.parent/'serialized-tags.json').read_bytes()):raise ValueError('atlas serialized tag replay differs')
+ if [row['name'] for row in actual['tags']]!=[row['name'] for row in meta['properties']]:raise ValueError('parsed tags differ from source report')
+ return actual
+
+
+def atlas_defaults(meta):
+ # CUE's generic texture defaults are not this atlas subclass's defaults.
+ # Tagged overrides require decoding and cannot use these constructor values.
+ if meta['export_type']!='CurveLinearColorAtlas' or meta['package']!=social.ATLAS:
+  raise ValueError('unexpected atlas class or package')
+ if {p['name'] for p in meta['properties']} & {'SRGB','Filter','AddressX','AddressY','CompressionSettings','LODGroup'}:
+  raise ValueError('atlas texture property override requires explicit decoding')
+ return dict(meta,width=32,height=32,srgb=False,filter='TF_Bilinear',addressX='TA_Clamp',addressY='TA_Clamp',compressionSettings='TC_HDR')
+
 
 def derive_references(source):
  trace=source['source_context']['trace']; expected=social.ATLAS_OBJECT
@@ -140,7 +172,7 @@ def make_bundle():
  if (source['resource_sha1']!='c505c4a9977115634e87809ccd0b5e981bfc417d' or
      digest(bytes.fromhex(source['resource_raw_hex']))!=social.RESOURCE_SHA256 or len(source['original_shader_code'])!=19 or len(source['shader_records'])!=7):
   raise ValueError('original resource or shader association differs')
- atlas=source['atlas_frame'];meta=source['atlas_metadata']
+ atlas=source['atlas_frame'];meta=source['atlas_metadata'];verify_atlas_defaults(meta)
  if (atlas['logical_width'],atlas['logical_height'],atlas['format'],atlas['raw_sha256'])!=(32,32,'PF_FloatRGBA','36e082f7fafe908ba57a4e2964752bab086991cd7bace6a902af701d92d79836'):
   raise ValueError('original logical atlas dimensions or source pixels differ')
  original_frame=social.atlas_frame(meta,(social.EXTRACTED/(social.ATLAS+'.uexp')).read_bytes(),(social.EXTRACTED/(social.ATLAS+'.uasset')).stat().st_size)
@@ -155,7 +187,7 @@ def make_bundle():
   if digest(code)!=item['reflection']['spirv_sha256']:raise ValueError('original mapped shader bytes changed')
   shaders.append(dict(record=item['record'],mapped=item['mapped'],reflection=item['reflection'],spirv_sha1=hashlib.sha1(code).hexdigest()))
  texture=dict(expression_kind='Texture',parameter=None,texture_index=0,texture_layer_index=-1,page_table_layer_index=-1,sampler_source=2,virtual_texture=False,default_texture_path=ATLAS_PATH)
- default_meta=dict(meta,width=32,height=32)
+ default_meta=atlas_defaults(meta)
  fixture=dict(schema='fortnite.legacy-slate.v5',material={k:parsed[k] for k in ('friendly_name','material_path','quality_level','feature_level','cooked_shader_map_id_hash','debug_description')},
   expected_layout=copy.deepcopy(social.LAYOUT),nodes=nodes,**roots,shaders=shaders,numeric_comparison_bytes=116,
   uniform_cases=uniform_cases,owner_uniform_cases=copy.deepcopy(uniform_cases),owner_parameter_expectations=[],
@@ -169,12 +201,13 @@ def make_bundle():
       missing_resource_result_bits=['00000000']*4,scope='only the original direct vector root; runtime size must be queried dynamically'),
   shader_binding_contracts=[dict(shader_type=r['record']['type'],library_index=r['record']['library_association']['index'],**r['contract']) for r in source['shader_records']],
   expected_uniform_layout_hash=h.verifier.uniform_layout_hash(size=160,offsets=social.LAYOUT['resource_offsets'],types=social.LAYOUT['resource_types']),
-  provenance=dict(resource_sha256=social.RESOURCE_SHA256,shader_library_sha256=source['provenance']['shader_library']['sha256']))
+  provenance=dict(resource_sha256=social.RESOURCE_SHA256,shader_library_sha256=source['provenance']['shader_library']['sha256'],atlas_defaults_receipt_sha256=DEFAULTS_SHA,atlas_tags_receipt_sha256=TAG_SHA,original_image_sha256=atlas_proof.IMAGE))
  return dict(schema='fortnite.legacy-material-ingress.v5',owner_path=social.OWNER,owner_type='UMaterial',parent_path='',shader_identity=social.OWNER,resource_owner_path=social.OWNER,
   framing=source['framing'],decoded=parsed,runtime_fixture=fixture,resource_raw_hex=source['resource_raw_hex'],original_shader_code=source['original_shader_code'],
-  provenance=dict(source_sha256=SOURCE_SHA,source_snapshot_receipt_sha256=FROZEN_SHA,caller_receipt_sha256=CALLER_SHA,atlas_getter_receipt_sha256=GETTER_SHA,
-      resource_sha1=source['resource_sha1'],exporter_sha256=digest(Path(__file__).read_bytes())),
-  limitations=['Only original direct vector TextureProperty size root is supported; no nested TextureProperty operation',
+  provenance=dict(source_sha256=SOURCE_SHA,source_snapshot_receipt_sha256=FROZEN_SHA,caller_receipt_sha256=CALLER_SHA,atlas_getter_receipt_sha256=GETTER_SHA,atlas_defaults_receipt_sha256=DEFAULTS_SHA,atlas_tags_receipt_sha256=TAG_SHA,original_image_sha256=atlas_proof.IMAGE,
+      lod_group_scope='World retained from parser metadata; original constructor/initializer default unproven',resource_sha1=source['resource_sha1'],exporter_sha256=digest(Path(__file__).read_bytes())),
+  limitations=['World LODGroup is retained from parser metadata; original inherited initialization remains unproven',
+    'Only original direct vector TextureProperty size root is supported; no nested TextureProperty operation',
     'TextureSize2D is retained dynamically; [32,32,+0,+0] is source-derived test expectation, not a replacement node',
     'Source evidence and mapped shaders only; actual GT/RT attachment, live dynamic uniform data and rendering remain unverified'])
 
