@@ -1,8 +1,10 @@
 # Original Slate shaders into the local UE 4.25 runtime
 
-This is a source-checked construction design, not an implemented runtime bridge. It targets the checked-out `/opt/fortnite/UnrealEngine` (4.25.0), the fully decoded original records, and the mapped SPIR-V receipts. No engine, native, or staged files were changed for this design.
+The detached Locker bridge is implemented and exercised in the non-editor Linux client. Engine `757e0087a` adds neutral material IR/API, live current preshaders, registered Slate shader construction and checked known-output-hash finalization through the normal freeze/resource initialization path. The portable patch is `patches/ue425-legacy-slate-material-bridge.patch` (main repo `4a95007`); its reverse check was tested. Preserve the five pre-existing dirty Engine files. Native `2144eba` supplies the opt-in fixture caller. The sections below retain the construction rationale and describe the implemented path; later-material examples and the draw/attachment gates remain future work.
 
-## First implementation
+The actual Vulkan run `generated/frontend-probes/legacy-material-runtime-1.log` exited 0 under Xvfb: eight live `FillUniformBuffer` cases passed, the detached map froze, and seven RHI shaders were constructed. An independent verifier checked the 14 emitted files and all seven SPIR-V/payloads (`generated/frontend-probes/legacy-material-artifacts-1-validation.json`): instructions differ only in the entry-point name; header offsets match actual descriptors; layout hash 22544639 is computed from the original shape; SourceHash, CRC and embedded code match. Three verifier tests pass. That first gate did not test a draw or attachment. A later Vulkan SM5 run used original VSfalse/PSDefault shaders and drew a 64×64 RGBA8 Locker quad: eight pre-freeze and eight post-freeze live uniform cases passed; two `RBGA1` overrides changed 2,832 of 4,096 pixels, with red and green center pixels respectively (`generated/frontend-probes/legacy-material-runtime-draw-1.log`, `generated/frontend-probes/legacy-material-artifacts-2/LockerQuad.json` and RGBA files). It exited 0. No original visual oracle or normal material attachment has been tested.
+
+## Detached Locker scope
 
 Build an opt-in, detached `FMaterialShaderMap` containing the **seven original Locker Slate records**. Locker has no material texture expressions; it still exercises live parameter lookup, all supported recursive numeric expression forms, both Slate VS variants, and the five Slate PS types. Preserve its 12 vector/30 scalar output slots: 320 numeric bytes, 336-byte complete `Material` layout, sampler resources at offsets 320/328. Do not attach this detached seven-shader map to a material or claim `IsComplete(Material)` until the current platform's required shader layout has been checked. The original 12 mesh records remain required whenever that layout requests them.
 
@@ -21,7 +23,7 @@ FShader* Shader = Type->ConstructCompiled(Init);
 Content->AddShader(Type->GetHashedName(), Record.PermutationId, Shader);
 ```
 
-This is construction pseudocode inside the proposed factory, with validated IR/outputs as inputs. Check `GetMaterialShaderType()`, expected frequency, permutation 0, null pipeline/VF, and exact type-name allowlist before construction. Ensure SlateRHIRenderer is loaded so registration exists. `ConstructCompiled` is available outside editor builds; it dispatches the registered constructor without exposing `SlateMaterialShader.h` across module boundaries.
+This illustrates construction inside the factory, with validated IR/outputs as inputs. Check `GetMaterialShaderType()`, expected frequency, permutation 0, null pipeline/VF, and exact type-name allowlist before construction. Ensure SlateRHIRenderer is loaded so registration exists. `ConstructCompiled` is available outside editor builds; it dispatches the registered constructor without exposing `SlateMaterialShader.h` across module boundaries.
 
 Actual local constructors bind these names:
 
@@ -37,7 +39,7 @@ Source: `Runtime/SlateRHIRenderer/Private/SlateMaterialShader.cpp` (constructors
 
 ## Convert the graphs into live preshaders
 
-Put the converter inside a new `FMaterialShaderMap` member/static factory. That class is already a friend of `FUniformExpressionSet` and `FMaterialShaderMapContent`, giving legitimate access to their protected/private arrays and compilation output. An ordinary game-module helper cannot write those fields. Suggested public declaration in a new Engine header:
+The converter is inside an `FMaterialShaderMap` member/static factory. That class is already a friend of `FUniformExpressionSet` and `FMaterialShaderMapContent`, giving legitimate access to their protected/private arrays and compilation output. An ordinary game-module helper cannot write those fields. The neutral Engine API has this shape (consult the header for the exact declaration):
 
 ```cpp
 // New API, taking bounded neutral IR rather than JSON or cooked object memory.
@@ -89,11 +91,11 @@ Write `Header` then SPIR-V with `FMemoryWriter` into `Output.ShaderCode.GetWrite
 
 Source: `Developer/VulkanShaderFormat/Private/VulkanShaderCompiler.cpp:575,652,898,1213,1498`; `Runtime/VulkanRHI/Public/VulkanShaderResources.h:60`; `Runtime/VulkanRHI/Private/VulkanCommands.cpp:331,420,554`; `Runtime/RenderCore/Private/ShaderParameters.cpp:84`; `ShaderCore.cpp:442`.
 
-## Runtime finalization is the required small RenderCore change
+## Runtime finalization
 
 The actual Linux client defines `WITH_EDITORONLY_DATA=0` (`native/Intermediate/Build/Linux/B4D820EA/FortniteLinux/Development/SlateRHIRenderer/Definitions.SlateRHIRenderer.h:26`). In that configuration, compiled `FShader` instances do not store `OutputHash`; `GetOutputHash()` returns `ShaderSourceDefaultHash`. Existing `FShader::Finalize(Code)` looks up that value. Thus compiled-constructor + ordinary `FinalizeContent()` alone cannot build this runtime map.
 
-Add a checked overload `FShader::Finalize(const FShaderMapResourceCode*, const FSHAHash& KnownOutputHash)` in `RenderCore/Public/Shader.h` and `Private/Shader.cpp`. It resolves the code index, checks existence/frequency and any prior index, and assigns private `ResourceIndex`. Preserve existing editor behavior. In the non-editor branch of the existing overload, require an already resolved, in-range index with matching frequency instead of attempting the unavailable output-hash lookup. Do not expose an unchecked index setter.
+The bridge adds a checked overload `FShader::Finalize(const FShaderMapResourceCode*, const FSHAHash& KnownOutputHash)` in `RenderCore/Public/Shader.h` and `Private/Shader.cpp`. It resolves the code index, checks existence/frequency and any prior index, and assigns private `ResourceIndex`. Preserve existing editor behavior. In the non-editor branch of the existing overload, require an already resolved, in-range index with matching frequency instead of attempting the unavailable output-hash lookup. Do not expose an unchecked index setter.
 
 **Add all seven outputs before resolving any indices:** `AddShaderCode` inserts hashes in sorted order and can shift earlier indices. Then construct the seven shaders, finalize each with its known converted output hash, and add them to the content. Ordinary `FMaterialShaderMap::FinalizeContent()` can now sort/hash the content and execute the existing memory-image freeze and `FShaderMapResource_InlineCode` initialization. This preserves the engine's normal finalization path.
 
@@ -101,15 +103,15 @@ The Engine factory assigns a new `FMaterialShaderMapContent(TargetPlatform)` thr
 
 Source: `Runtime/RenderCore/Private/Shader.cpp:500,550,653`; `ShaderResource.cpp:156,161`; `ShaderMap.cpp:57,65,681`; `Runtime/Engine/Private/Materials/MaterialShader.cpp:1263,2303`; `Runtime/Engine/Public/MaterialShared.h:726,969,1258`.
 
-## Concrete first patch and gate
+## Implementation and remaining gate
 
-Patch only the two RenderCore finalization files above, add the neutral Engine IR/API header and factory implementation in `Runtime/Engine/Private/Materials`, and add an opt-in native caller beside `OriginalVulkanShaderProbe.cpp`. No changes to Slate shader layouts are needed. Keep Vulkan header construction in the native caller/bridge module so Engine acquires no Vulkan dependency. Current Slate constructors are sufficient.
+The patch changes the two RenderCore finalization files above and adds the neutral Engine IR/API header and factory implementation in `Runtime/Engine/Private/Materials`; native supplies an opt-in caller. No changes to Slate shader layouts are needed. Keep Vulkan header construction in the native caller/bridge module so Engine acquires no Vulkan dependency. Current Slate constructors are sufficient.
 
-The first gate must demonstrate all of these for Locker, before material attachment:
+The first detached Locker gate demonstrated these before material attachment:
 
 1. Current preshader evaluation through `FillUniformBuffer` matches `evaluate_uniforms.py` for original defaults and several overrides of `Rotation_U`, `Offset_U`, `RBGA1` and `SelectionColor`; verify association/index isolation, preserved output-slot positions and padding. Use the existing reference evaluator's float behavior/declared tolerance for transcendental operations rather than asserting universal cross-platform bit identity.
 2. Checked layout equals 336 bytes with sampler offsets 320/328; all seven constructors resolve their recovered allocations, and current `ParameterMapInfo` reflects those **Vulkan** allocations.
 3. Frozen detached map resolves all seven types/permutation 0 through `GetShader`; each resource index points to the matching converted output hash/frequency; current frozen-content validation passes in the actual non-editor Linux build.
-4. Request VS/PS RHI objects on the rendering thread. Header/factory success is a construction milestone only. A subsequent gate must create the real Slate vertex declaration/pipeline, bind the live material UB and loose cb0 parameters, draw an original material quad, and read pixels back. `IsComplete(Material)` and any mesh requirements must be checked before normal material attachment via `SetInlineShaderMap`/registration.
+4. VS/PS RHI objects were requested on the rendering thread. Header/factory success is a construction milestone only. A subsequent gate created a Slate pipeline, bound the material uniform buffer and loose parameters, drew the original Locker quad and read pixels back as described above. `IsComplete(Material)` and any mesh requirements must be checked before normal material attachment via `SetInlineShaderMap`/registration.
 
-The remaining risks are specific: runtime finalization has not been compiled/tested; the constructed Vulkan parameter/header pair has not been exercised by a pipeline; descriptor resource classes and VS input locations must match the actual Slate vertex declaration; preshader/live-parameter equivalence needs execution; seven-shader completeness does not establish completeness of the material's requested current mesh layout.
+The constructed Vulkan parameter/header pair was exercised by the Locker quad pipeline; other material and vertex interfaces remain unverified. The eight fixture cases establish the tested live-parameter behavior only; seven-shader completeness does not establish completeness of the material’s requested current mesh layout.
