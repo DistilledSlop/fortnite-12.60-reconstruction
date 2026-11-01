@@ -67,5 +67,15 @@ public:
 	UPROPERTY()
 	UFortKeybindWidget* Action_HoldKeybindWidget;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPlayCloseAnimation();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPlayOpenAnimation();
+public:
+
 };
 

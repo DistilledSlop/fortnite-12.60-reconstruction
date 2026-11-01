@@ -65,5 +65,10 @@ public:
 	UPROPERTY()
 	bool bIsActive;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_OnActivated();
+public:
+
 };
 

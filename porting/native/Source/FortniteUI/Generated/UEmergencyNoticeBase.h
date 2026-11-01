@@ -14,5 +14,10 @@ class FORTNITEUI_API UEmergencyNoticeBase : public UCommonUserWidget
 	GENERATED_BODY()
 
 public:
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void HideNotice();
+public:
+
 };
 

@@ -95,5 +95,15 @@ public:
 	UPROPERTY()
 	UFortKeybindWidget* HoldKeybindWidget_GamePad;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPlayCloseAnimation();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPlayOpenAnimation();
+public:
+
 };
 

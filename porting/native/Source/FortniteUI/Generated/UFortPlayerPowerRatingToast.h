@@ -43,5 +43,10 @@ public:
 	UPROPERTY()
 	UCommonTextBlock* Text_Description;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ShowToast();
+public:
+
 };
 

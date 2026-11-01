@@ -14,5 +14,10 @@ class FORTNITEUI_API UFortWebLoginWidget : public UCommonActivatablePanel
 	GENERATED_BODY()
 
 public:
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void DismissWidget();
+public:
+
 };
 

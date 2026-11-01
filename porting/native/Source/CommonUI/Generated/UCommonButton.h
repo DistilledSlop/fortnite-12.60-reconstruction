@@ -143,12 +143,42 @@ public:
 
 protected:
 	UFUNCTION(BlueprintImplementableEvent)
+	void BP_OnClicked();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_OnDisabled();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_OnEnabled();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
 	void BP_OnHovered();
 public:
 
 protected:
 	UFUNCTION(BlueprintImplementableEvent)
 	void BP_OnSelected();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_OnUnhovered();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnActionComplete();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnCurrentTextStyleChanged();
 public:
 
 };
