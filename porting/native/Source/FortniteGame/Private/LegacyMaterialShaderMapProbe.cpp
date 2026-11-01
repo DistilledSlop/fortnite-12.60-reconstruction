@@ -11,6 +11,12 @@
 #include "Materials/MaterialInterface.h"
 #include "Materials/MaterialInstance.h"
 #include "RenderingThread.h"
+#include "SceneView.h"
+#include "RenderUtils.h"
+#include "UnrealClient.h"
+#include "ShowFlags.h"
+
+RENDERER_API void UpdateNoiseTextureParameters(FViewUniformShaderParameters& Parameters);
 #include "Rendering/RenderingCommon.h"
 #include "PipelineStateCache.h"
 #include "RHIStaticStates.h"
@@ -110,7 +116,7 @@ static bool RewriteLegacySpirv(const FString& Path, const FString& ExpectedSha1,
 }
 
 static bool PrepareLegacyOutput(const TSharedPtr<FJsonObject>& Shader, const FRHIUniformBufferLayout& Layout,
-    FLegacySlateShaderInput& Input, FString& Error, bool bWriteArtifacts = true)
+    FLegacySlateShaderInput& Input, FString& Error, bool bWriteArtifacts = true, bool bHasView = false)
 {
     const TSharedPtr<FJsonObject> Record = Shader->GetObjectField(TEXT("record"));
     const TSharedPtr<FJsonObject> Reflection = Shader->GetObjectField(TEXT("reflection"));
@@ -134,7 +140,7 @@ static bool PrepareLegacyOutput(const TSharedPtr<FJsonObject>& Shader, const FRH
     Header.SpirvCRC = Crc;
     const auto& DescriptorValues = Reflection->GetArrayField(TEXT("descriptors"));
     if (DescriptorValues.Num() != Decorations.Num()) { Error = TEXT("descriptor count mismatch"); return false; }
-    bool bPacked = false, bMaterial = false, bSampler = false, bTexture = false;
+    bool bPacked = false, bMaterial = false, bView = false, bSampler = false, bTexture = false;
     for (const TSharedPtr<FJsonValue>& Value : DescriptorValues)
     {
         const TSharedPtr<FJsonObject> D = Value->AsObject();
@@ -160,14 +166,30 @@ static bool PrepareLegacyOutput(const TSharedPtr<FJsonObject>& Shader, const FRH
             P.SPIRVDescriptorSetOffset = S->SetOffset; P.SPIRVBindingIndexOffset = S->BindingOffset;
             bPacked = true;
         }
-        else if (Kind == TEXT("cbv") && RegisterIndex == 1 && !bVertex && !bMaterial && DescriptorType == VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER)
+        else if (Kind == TEXT("cbv") && RegisterIndex == 1 && bHasView && !bVertex && !bView && DescriptorType == VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER)
+        {
+            const FShaderParametersMetadata* ViewMetadata=FViewUniformShaderParameters::FTypeInfo::GetStructMetadata();
+            if (STRUCT_OFFSET(FViewUniformShaderParameters, GameTime)!=2264 ||
+                STRUCT_OFFSET(FViewUniformShaderParameters, RealTime)!=2268 ||
+                int32(D->GetNumberField(TEXT("block_span_bytes")))!=2272 || !ViewMetadata ||
+                !ViewMetadata->GetLayout().GetHash())
+            { Error=TEXT("View layout does not match original GameTime contract"); return false; }
+            const uint16 Index=Header.UniformBuffers.Num();
+            auto& U=Header.UniformBuffers.AddDefaulted_GetRef();
+            U.LayoutHash=ViewMetadata->GetLayout().GetHash(); U.ConstantDataOriginalBindingIndex=S->Binding; U.bOnlyHasResources=0;
+            Header.UniformBufferSpirvInfos.Emplace(S->SetOffset,S->BindingOffset);
+            Input.Output.ParameterMap.AddParameterAllocation(TEXT("View"),Index,FVulkanShaderHeader::UniformBuffer,1,EShaderParameterType::UniformBuffer);
+            bView=true;
+        }
+        else if (Kind == TEXT("cbv") && RegisterIndex == (bHasView ? 2 : 1) && !bVertex && !bMaterial && DescriptorType == VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER)
         {
             if (int32(D->GetNumberField(TEXT("block_span_bytes"))) != (Layout.Resources.Num() == 2 ? int32(Layout.Resources[0].MemberOffset) : -1) || Layout.GetHash() == 0)
             { Error = TEXT("unexpected Material descriptor"); return false; }
+            const uint16 Index=Header.UniformBuffers.Num();
             auto& U = Header.UniformBuffers.AddDefaulted_GetRef();
             U.LayoutHash = Layout.GetHash(); U.ConstantDataOriginalBindingIndex = S->Binding; U.bOnlyHasResources = 0;
             Header.UniformBufferSpirvInfos.Emplace(S->SetOffset, S->BindingOffset);
-            Input.Output.ParameterMap.AddParameterAllocation(TEXT("Material"), 0, FVulkanShaderHeader::UniformBuffer, 1, EShaderParameterType::UniformBuffer);
+            Input.Output.ParameterMap.AddParameterAllocation(TEXT("Material"), Index, FVulkanShaderHeader::UniformBuffer, 1, EShaderParameterType::UniformBuffer);
             bMaterial = true;
         }
         else if ((Kind == TEXT("sampler") && RegisterIndex == 0 && !bSampler && DescriptorType == VK_DESCRIPTOR_TYPE_SAMPLER) ||
@@ -186,7 +208,7 @@ static bool PrepareLegacyOutput(const TSharedPtr<FJsonObject>& Shader, const FRH
         }
         else { Error = TEXT("unsupported descriptor"); return false; }
     }
-    if (!bPacked || bMaterial == bVertex || bSampler != bTexture)
+    if (!bPacked || bMaterial == bVertex || bView != (bHasView && !bVertex) || bSampler != bTexture)
     { Error = TEXT("missing shader descriptor"); return false; }
     const TCHAR* VsNames[] = {TEXT("ViewProjection"), TEXT("SwitchVerticalAxisMultiplier")};
     const TCHAR* PsNames[] = {TEXT("GammaAndAlphaValues"), TEXT("ShaderParams"), TEXT("DrawFlags")};
@@ -343,21 +365,42 @@ static bool CheckLegacyUniforms(const FUniformExpressionSet& Uniforms, const TSh
 struct FLegacyDrawBindings
 {
     uint16 MatrixBuffer = 0, MatrixOffset = 0, GammaBuffer = 0, GammaOffset = 0;
-    uint16 ParamsBuffer = 0, ParamsOffset = 0, MaterialBuffer = 0;
+    uint16 ParamsBuffer = 0, ParamsOffset = 0, MaterialBuffer = 0, ViewBuffer = 0;
 };
 
-static bool DrawLegacySlateQuad(const TRefCountPtr<FMaterialShaderMap>& Map, const FLegacyDrawBindings& Bindings, FString& Error, UMaterialInterface* Owner = nullptr, const FMaterial* ExpectedOwnerResource = nullptr, const TCHAR* OverrideName = TEXT("RBGA1"), const TCHAR* ArtifactPrefix = TEXT("LockerQuad"))
+static bool DrawLegacySlateQuad(const TRefCountPtr<FMaterialShaderMap>& Map, const FLegacyDrawBindings& Bindings, FString& Error, UMaterialInterface* Owner = nullptr, const FMaterial* ExpectedOwnerResource = nullptr, const TCHAR* OverrideName = TEXT("RBGA1"), const TCHAR* ArtifactPrefix = TEXT("LockerQuad"), const TSharedPtr<FJsonObject>& ViewFixture = nullptr, bool bColorDraw = false)
 {
     FShaderType* VertexType = FindShaderTypeByName(FHashedName(TEXT("TSlateMaterialShaderVSfalse")));
     FShaderType* PixelType = FindShaderTypeByName(FHashedName(TEXT("TSlateMaterialShaderPSDefault")));
     UMaterialInterface* DefaultMaterial = Owner ? Owner : UMaterial::GetDefaultMaterial(MD_Surface);
     if (!VertexType || !PixelType || !DefaultMaterial) { Error = TEXT("draw shader or material unavailable"); return false; }
     const FMaterialRenderProxy* Base = DefaultMaterial->GetRenderProxy();
+    struct FViewCase { float Game, Real; };
+    TArray<FViewCase> ViewCases;
+    if (ViewFixture)
+    {
+        const auto Contract=ViewFixture->GetObjectField(TEXT("view_contract"));
+        if (!Contract || Contract->GetStringField(TEXT("buffer_name"))!=TEXT("View") ||
+            Contract->GetStringField(TEXT("field_name"))!=TEXT("GameTime") ||
+            int32(Contract->GetNumberField(TEXT("original_byte_offset")))!=2264 ||
+            int32(Contract->GetNumberField(TEXT("expected_current_byte_offset")))!=2264 ||
+            int32(Contract->GetNumberField(TEXT("shader_visible_bytes")))!=2272)
+        { Error=TEXT("invalid View contract"); return false; }
+        for (const auto& Value : ViewFixture->GetArrayField(TEXT("view_cases")))
+        {
+            const auto Case=Value->AsObject();
+            const float Game=Case->GetNumberField(TEXT("game_time")), Real=Case->GetNumberField(TEXT("real_time"));
+            if (Game!=float(Case->GetNumberField(TEXT("expected_game_time"))) || Real!=float(Case->GetNumberField(TEXT("expected_real_time"))))
+            { Error=TEXT("invalid View time expectation"); return false; }
+            ViewCases.Add({Game,Real});
+        }
+        if (ViewCases.Num()!=4) { Error=TEXT("invalid View case count"); return false; }
+    }
     bool bPassed = true;
     FString Failure;
-    TArray<FColor> Images[2];
+    TArray<FColor> Images[4];
     int32 Different = 0;
-    ENQUEUE_RENDER_COMMAND(DrawOriginalLockerSlate)([Map, VertexType, PixelType, Base, Bindings, ExpectedOwnerResource, OverrideName, &bPassed, &Failure, &Images, &Different](FRHICommandListImmediate& RHICmdList)
+    ENQUEUE_RENDER_COMMAND(DrawOriginalLockerSlate)([Map, VertexType, PixelType, Base, Bindings, ExpectedOwnerResource, OverrideName, ViewCases, bColorDraw, &bPassed, &Failure, &Images, &Different](FRHICommandListImmediate& RHICmdList)
     {
         const TShaderRef<FShader> VS = Map->GetShader(VertexType, 0);
         const TShaderRef<FShader> PS = Map->GetShader(PixelType, 0);
@@ -393,10 +436,22 @@ static bool DrawLegacySlateQuad(const TRefCountPtr<FMaterialShaderMap>& Map, con
         if (ExpectedOwnerResource && &Material != ExpectedOwnerResource) { bPassed=false; Failure=TEXT("owner render proxy selected a fallback resource"); return; }
         FMaterialRenderContext Context(&Proxy, Material, nullptr);
         FUniformExpressionCache Cache;
-        for (int32 Pass = 0; Pass < 2; ++Pass)
+        for (int32 Pass = 0; Pass < (ViewCases.Num() && !bColorDraw ? 4 : 2); ++Pass)
         {
             Proxy.Overrides.Reset();
-            for (const TCHAR* Name : {OverrideName})
+            if (ViewCases.Num())
+            {
+                auto& O=Proxy.Overrides.AddDefaulted_GetRef();
+                O.Parameter=FHashedMaterialParameterInfo(TEXT("s_UseShineSwipe"));
+                O.bVector=false; O.Value.R=1.f;
+                if (bColorDraw)
+                {
+                    auto& Color=Proxy.Overrides.AddDefaulted_GetRef();
+                    Color.Parameter=FHashedMaterialParameterInfo(OverrideName); Color.bVector=true;
+                    Color.Value=Pass==0 ? FLinearColor(1,0,0,1) : FLinearColor(0,1,0,1);
+                }
+            }
+            else for (const TCHAR* Name : {OverrideName})
             {
                 auto& O = Proxy.Overrides.AddDefaulted_GetRef();
                 O.Parameter = FHashedMaterialParameterInfo(Name);
@@ -428,6 +483,35 @@ static bool DrawLegacySlateQuad(const TRefCountPtr<FMaterialShaderMap>& Map, con
             RHICmdList.SetShaderParameter(PS.GetPixelShader(), Bindings.GammaBuffer, Bindings.GammaOffset, sizeof(Gamma), &Gamma);
             RHICmdList.SetShaderParameter(PS.GetPixelShader(), Bindings.ParamsBuffer, Bindings.ParamsOffset, sizeof(Params), &Params);
             RHICmdList.SetShaderUniformBuffer(PS.GetPixelShader(), Bindings.MaterialBuffer, MaterialUB);
+            TUniformBufferRef<FViewUniformShaderParameters> ViewUB;
+            if (ViewCases.Num())
+            {
+                class FProbeTarget final : public FRenderTarget
+                {
+                public:
+                    explicit FProbeTarget(const FTexture2DRHIRef& Texture) { RenderTargetTextureRHI=Texture; }
+                    virtual FIntPoint GetSizeXY() const override { return FIntPoint(64,64); }
+                } ProbeTarget(Target);
+                FEngineShowFlags Flags(ESFIM_Game);
+                FSceneViewFamilyContext Family(FSceneViewFamily::ConstructionValues(&ProbeTarget,nullptr,Flags)
+                    .SetWorldTimes(ViewCases[bColorDraw ? 1 : Pass].Game,0.f,ViewCases[bColorDraw ? 1 : Pass].Real).SetRealtimeUpdate(true));
+                FSceneViewInitOptions Options;
+                const FIntRect Rect(0,0,64,64);
+                Options.ViewFamily=&Family; Options.SetViewRectangle(Rect); Options.ViewOrigin=FVector::ZeroVector;
+                Options.ViewRotationMatrix=FMatrix::Identity; Options.ProjectionMatrix=FMatrix::Identity;
+                Options.BackgroundColor=FLinearColor::Black; Options.OverlayColor=FLinearColor::White;
+                FSceneView* View=new FSceneView(Options); Family.Views.Add(View);
+                FViewUniformShaderParameters Parameters;
+                Parameters.VTFeedbackBuffer=GEmptyVertexBufferWithUAV->UnorderedAccessViewRHI;
+                View->SetupCommonViewUniformBufferParameters(Parameters,FIntPoint(64,64),1,Rect,View->ViewMatrices,FViewMatrices());
+                Parameters.WorldViewOrigin=View->ViewMatrices.GetViewOrigin();
+                Parameters.MobilePreviewMode=0.f;
+                UpdateNoiseTextureParameters(Parameters);
+                if (Parameters.GameTime!=ViewCases[bColorDraw ? 1 : Pass].Game || Parameters.RealTime!=ViewCases[bColorDraw ? 1 : Pass].Real)
+                { bPassed=false; Failure=TEXT("scene View times differ from receipt"); return; }
+                ViewUB=TUniformBufferRef<FViewUniformShaderParameters>::CreateUniformBufferImmediate(Parameters,UniformBuffer_SingleFrame);
+                RHICmdList.SetShaderUniformBuffer(PS.GetPixelShader(),Bindings.ViewBuffer,ViewUB);
+            }
             RHICmdList.SetStreamSource(0, VertexBuffer, 0);
             RHICmdList.DrawPrimitive(0, 2, 1);
             RHICmdList.EndRenderPass();
@@ -438,25 +522,35 @@ static bool DrawLegacySlateQuad(const TRefCountPtr<FMaterialShaderMap>& Map, con
         if (Images[0].Num() != 4096 || Images[1].Num() != 4096)
         { bPassed = false; Failure = TEXT("invalid draw readback size"); return; }
         for (int32 I = 0; I < 4096; ++I) Different += Images[0][I] != Images[1][I] ? 1 : 0;
-        if (!Different) { bPassed = false; Failure = TEXT("override draws produced identical pixels"); }
+        if (!Different) { bPassed = false; Failure = TEXT("draws produced identical pixels"); }
+        if (ViewCases.Num() && !bColorDraw && (Images[2].Num()!=4096 || Images[3].Num()!=4096 || Images[0]!=Images[2] || Images[1]!=Images[3] || Images[2]==Images[3]))
+        { bPassed=false; Failure=TEXT("View time field isolation failed"); }
         UE_LOG(LogTemp, Display, TEXT("Legacy material probe: original Slate quad readback changed %d pixels"), Different);
     });
     FlushRenderingCommands();
     FString ArtifactDirectory;
     if (Images[0].Num() == 4096 && Images[1].Num() == 4096 && FParse::Value(FCommandLine::Get(), TEXT("FortniteLegacyMaterialArtifactDir="), ArtifactDirectory))
     {
-        FSHAHash Hashes[2];
-        for (int32 I = 0; I < 2; ++I)
+        FSHAHash Hashes[4];
+        const int32 Count=ViewCases.Num() && !bColorDraw ? 4 : 2;
+        FString CaseJson;
+        for (int32 I = 0; I < Count; ++I)
         {
-            const FString Path = FPaths::Combine(ArtifactDirectory, FString(ArtifactPrefix) + (I == 0 ? TEXT("-Red.rgba") : TEXT("-Green.rgba")));
-            if (FPaths::FileExists(Path)) { Error = TEXT("draw artifact already exists"); return false; }
+            const FString Suffix=ViewCases.Num() && !bColorDraw ? FString::Printf(TEXT("-%d.rgba"),I) : (I == 0 ? TEXT("-Red.rgba") : TEXT("-Green.rgba"));
+            const FString Path = FPaths::Combine(ArtifactDirectory, FString(ArtifactPrefix) + Suffix);
+            if (Images[I].Num()!=4096 || FPaths::FileExists(Path)) { Error = TEXT("invalid or duplicate draw artifact"); return false; }
             TArray<uint8> Bytes;
             for (const FColor& Pixel : Images[I]) { Bytes.Add(Pixel.R); Bytes.Add(Pixel.G); Bytes.Add(Pixel.B); Bytes.Add(Pixel.A); }
             FSHA1::HashBuffer(Bytes.GetData(), Bytes.Num(), Hashes[I].Hash);
             if (!FFileHelper::SaveArrayToFile(Bytes, *Path)) { Error = TEXT("cannot write draw artifact"); return false; }
+            if (ViewCases.Num() && !bColorDraw)
+                CaseJson+=FString::Printf(TEXT("%s{\"game_time\":%.9g,\"real_time\":%.9g,\"sha1\":\"%s\"}"),I ? TEXT(",") : TEXT(""),ViewCases[I].Game,ViewCases[I].Real,*Hashes[I].ToString());
         }
         const FString MetadataPath = FPaths::Combine(ArtifactDirectory, FString(ArtifactPrefix) + TEXT(".json"));
-        const FString Metadata = FString::Printf(TEXT("{\n  \"width\": 64, \"height\": 64, \"format\": \"RGBA8\",\n  \"red_sha1\": \"%s\", \"green_sha1\": \"%s\",\n  \"changed_pixels\": %d\n}\n"), *Hashes[0].ToString(), *Hashes[1].ToString(), Different);
+        const FString Metadata = ViewCases.Num() && !bColorDraw ?
+            FString::Printf(TEXT("{\"width\":64,\"height\":64,\"format\":\"RGBA8\",\"cases\":[%s],\"changed_pixels\":%d}\n"),*CaseJson,Different) :
+            bColorDraw ? FString::Printf(TEXT("{\"width\":64,\"height\":64,\"format\":\"RGBA8\",\"game_time\":%.9g,\"real_time\":%.9g,\"red_sha1\":\"%s\",\"green_sha1\":\"%s\",\"changed_pixels\":%d}\n"),ViewCases[1].Game,ViewCases[1].Real,*Hashes[0].ToString(),*Hashes[1].ToString(),Different) :
+            FString::Printf(TEXT("{\n  \"width\": 64, \"height\": 64, \"format\": \"RGBA8\",\n  \"red_sha1\": \"%s\", \"green_sha1\": \"%s\",\n  \"changed_pixels\": %d\n}\n"), *Hashes[0].ToString(), *Hashes[1].ToString(), Different);
         if (FPaths::FileExists(MetadataPath) || !FFileHelper::SaveStringToFile(Metadata, *MetadataPath))
         { Error = TEXT("cannot write draw metadata"); return false; }
     }
@@ -574,6 +668,7 @@ struct FLegacyIngressPin
 };
 static TArray<FLegacyIngressPin> GLegacyIngressPins;
 static bool GLegacyIngressConfigInvalid = false;
+static const TCHAR* GLegacyMenuPath = TEXT("/Game/UI/Foundation/Materials/M_MenuButton_Master.M_MenuButton_Master");
 static const TCHAR* GLegacyGradientPath = TEXT("/Game/UI/Foundation/Materials/M_UI_GradientPanel.M_UI_GradientPanel");
 static const TCHAR* GLegacyPowerToastPath = TEXT("/Game/UI/Foundation/Border/Materials/M-Border-PowerToastGlow.M-Border-PowerToastGlow");
 static const TCHAR* GLegacyLockerPath = TEXT("/Game/UI/Foundation/Materials/Athena_LockerTabMaster.Athena_LockerTabMaster");
@@ -677,12 +772,12 @@ static ELegacyMaterialAssetResult ProvideLegacyOriginal(const FLegacyMaterialAss
     P->Decoded.IR.UniformBufferSize=Expected.UniformBufferSize;
     P->Decoded.IR.Resources=Expected.Resources;
     Map=FMaterialShaderMap::CreateLegacySlateMap(P->Decoded.IR,
-        [&Shaders](const FUniformExpressionSet& Uniforms, const FShaderParametersMetadata&, TArray<FLegacySlateShaderInput>& Outputs, FString& OutError)
+        [&Shaders, Pin](const FUniformExpressionSet& Uniforms, const FShaderParametersMetadata&, TArray<FLegacySlateShaderInput>& Outputs, FString& OutError)
         {
             for (const auto& Value : Shaders)
             {
                 const auto Shader=Value->AsObject();
-                if (!Shader || !PrepareLegacyOutput(Shader,Uniforms.GetUniformBufferLayout(),Outputs.AddDefaulted_GetRef(),OutError,false)) return false;
+                if (!Shader || !PrepareLegacyOutput(Shader,Uniforms.GetUniformBufferLayout(),Outputs.AddDefaulted_GetRef(),OutError,false,Pin->Owner==GLegacyMenuPath)) return false;
             }
             return true;
         },Error);
@@ -703,7 +798,8 @@ void RegisterLegacyOriginalMaterialProvider()
     GLegacyIngressPins = {
         {GLegacyLockerPath, GLegacyLockerPath, TEXT("0f750204f6008e6e3219d0b002d8409e28c22426"), TEXT("bc2d2f509b6909a4820f65188b85485fce989a2a"), FString()},
         {GLegacyGradientPath, GLegacyGradientPath, TEXT("87617e2d5b3c8ee57d8ede04783abe2a32fafd74"), TEXT("a088433310c1bb0de8b63eb3096929fed602ba4f"), FString()},
-        {GLegacyPowerToastPath, GLegacyGradientPath, TEXT("1aef96f25f926219b10ceb69c8f3731a3b118fa6"), TEXT("d8b5194ca11c187ffad72b17e9517ecf40fd1266"), FString()}
+        {GLegacyPowerToastPath, GLegacyGradientPath, TEXT("1aef96f25f926219b10ceb69c8f3731a3b118fa6"), TEXT("d8b5194ca11c187ffad72b17e9517ecf40fd1266"), FString()},
+        {GLegacyMenuPath, GLegacyMenuPath, TEXT("0b49a605763b907dbdf1f0041715208a81d4744a"), TEXT("955e034f179ab1129d49286356357039e57260e4"), FString()}
     };
     TArray<FString> Paths;
     Path.ParseIntoArray(Paths, TEXT(","), true);
@@ -832,12 +928,36 @@ void ProbeLegacyOriginalMaterial()
     { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: live uniform cases failed: %s"),*Error); FPlatformMisc::RequestExitWithStatus(false,1); return; }
     if (OwnerPath == GLegacyPowerToastPath && !CheckLegacyUniforms(Map->GetUniformExpressionSet(),Bundle->GetObjectField(TEXT("runtime_fixture")),TEXT("instance"),Error,Material,TEXT("owner_uniform_cases")))
     { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: live instance uniform cases failed: %s"),*Error); FPlatformMisc::RequestExitWithStatus(false,1); return; }
-    FLegacyDrawBindings Bindings; bool bVS=false, bPS=false, bAllShaders=true; int32 CheckedShaders=0;
+    if (OwnerPath==GLegacyMenuPath && !CheckLegacyUniforms(Map->GetUniformExpressionSet(),Bundle->GetObjectField(TEXT("runtime_fixture")),TEXT("View draw"),Error,nullptr,TEXT("view_cases")))
+    { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: View draw uniforms failed: %s"),*Error); FPlatformMisc::RequestExitWithStatus(false,1); return; }
+    if (OwnerPath==GLegacyMenuPath)
+    {
+        const FShaderParametersMetadata* Metadata=FViewUniformShaderParameters::FTypeInfo::GetStructMetadata();
+        const auto& Layout=Metadata->GetLayout();
+        FString Fields, Resources, Directory;
+        int32 FieldCount=0;
+        for (const auto& Field : Metadata->GetMembers())
+        {
+            if (FCString::Strcmp(Field.GetName(),TEXT("GameTime")) && FCString::Strcmp(Field.GetName(),TEXT("RealTime"))) continue;
+            Fields+=FString::Printf(TEXT("%s{\"name\":\"%s\",\"offset\":%u,\"type\":%u,\"size\":%u}"),FieldCount++ ? TEXT(",") : TEXT(""),Field.GetName(),Field.GetOffset(),uint32(Field.GetBaseType()),Field.GetMemberSize());
+        }
+        for (int32 I=0; I<Layout.Resources.Num(); ++I)
+            Resources+=FString::Printf(TEXT("%s{\"offset\":%u,\"type\":%u}"),I ? TEXT(",") : TEXT(""),uint32(Layout.Resources[I].MemberOffset),uint32(Layout.Resources[I].MemberType));
+        if (FieldCount!=2) { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: View fields missing")); FPlatformMisc::RequestExitWithStatus(false,1); return; }
+        if (FParse::Value(FCommandLine::Get(),TEXT("FortniteLegacyMaterialArtifactDir="),Directory))
+        {
+            const FString Path=FPaths::Combine(Directory,TEXT("GTViewLayout.json"));
+            const FString Json=FString::Printf(TEXT("{\"constant_bytes\":%u,\"static_slot\":%u,\"layout_hash\":%u,\"game_time_offset\":%u,\"real_time_offset\":%u,\"resources\":[%s],\"fields\":[%s]}\n"),uint32(Layout.ConstantBufferSize),uint32(Layout.StaticSlot),Layout.GetHash(),uint32(STRUCT_OFFSET(FViewUniformShaderParameters,GameTime)),uint32(STRUCT_OFFSET(FViewUniformShaderParameters,RealTime)),*Resources,*Fields);
+            if (FPaths::FileExists(Path) || !FFileHelper::SaveStringToFile(Json,*Path))
+            { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: cannot write View layout receipt")); FPlatformMisc::RequestExitWithStatus(false,1); return; }
+        }
+    }
+    FLegacyDrawBindings Bindings; bool bVS=false, bPS=false, bView=OwnerPath!=GLegacyMenuPath, bAllShaders=true; int32 CheckedShaders=0;
     const auto Fixture=Bundle->GetObjectField(TEXT("runtime_fixture"));
     for (const auto& Value : Fixture->GetArrayField(TEXT("shaders")))
     {
         const auto Shader=Value->AsObject(); FLegacySlateShaderInput Input;
-        if (!PrepareLegacyOutput(Shader,Map->GetUniformExpressionSet().GetUniformBufferLayout(),Input,Error)) { bAllShaders=false; break; }
+        if (!PrepareLegacyOutput(Shader,Map->GetUniformExpressionSet().GetUniformBufferLayout(),Input,Error,true,OwnerPath==GLegacyMenuPath)) { bAllShaders=false; break; }
         FShaderType* Type=FindShaderTypeByName(FHashedName(*Input.TypeName));
         const TShaderRef<FShader> Frozen=Type ? Map->GetShader(Type,Input.PermutationId) : TShaderRef<FShader>();
         const FShaderMapResourceCode* Code=Map->GetResourceCode();
@@ -854,12 +974,18 @@ void ProbeLegacyOriginalMaterial()
             bPS=Input.Output.ParameterMap.FindParameterAllocation(TEXT("GammaAndAlphaValues"),Bindings.GammaBuffer,Bindings.GammaOffset,Size) && Size==sizeof(FVector4) &&
                 Input.Output.ParameterMap.FindParameterAllocation(TEXT("ShaderParams"),Bindings.ParamsBuffer,Bindings.ParamsOffset,Size) && Size==sizeof(FVector4) &&
                 Input.Output.ParameterMap.FindParameterAllocation(TEXT("Material"),Bindings.MaterialBuffer,Base,Size) && Base==FVulkanShaderHeader::UniformBuffer && Size==1;
+        if (OwnerPath==GLegacyMenuPath && Input.TypeName==TEXT("TSlateMaterialShaderPSDefault"))
+            bView=Input.Output.ParameterMap.FindParameterAllocation(TEXT("View"),Bindings.ViewBuffer,Base,Size) && Base==FVulkanShaderHeader::UniformBuffer && Size==1;
     }
-    if (!bAllShaders || CheckedShaders!=7 || !bVS || !bPS || !DrawLegacySlateQuad(Map,Bindings,Error,Material,Resource,OwnerPath==GLegacyLockerPath ? TEXT("RBGA1") : TEXT("RGBA1"),OwnerPath==GLegacyLockerPath ? TEXT("LockerQuad") : TEXT("PowerToastQuad")))
+    if (!bAllShaders || CheckedShaders!=7 || !bVS || !bPS || !bView || !DrawLegacySlateQuad(Map,Bindings,Error,Material,Resource,OwnerPath==GLegacyLockerPath ? TEXT("RBGA1") : TEXT("RGBA1"),OwnerPath==GLegacyLockerPath ? TEXT("LockerQuad") : OwnerPath==GLegacyMenuPath ? TEXT("MenuQuad") : TEXT("PowerToastQuad"),OwnerPath==GLegacyMenuPath ? Fixture : nullptr))
     {
         UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: attached owner draw failed: %s"),*Error);
         FPlatformMisc::RequestExitWithStatus(false,1); return;
     }
+    if (OwnerPath==GLegacyMenuPath &&
+        (!Fixture->GetStringField(TEXT("draw_parameter")).Equals(TEXT("Primary Color")) ||
+         !DrawLegacySlateQuad(Map,Bindings,Error,Material,Resource,TEXT("Primary Color"),TEXT("MenuColorQuad"),Fixture,true)))
+    { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: Menu color draw failed: %s"),*Error); FPlatformMisc::RequestExitWithStatus(false,1); return; }
     UE_LOG(LogTemp,Display,TEXT("Legacy material ingress: original owner attached complete map with 19 original records on game and render threads and drew its Slate quad"));
 #endif
 }

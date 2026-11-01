@@ -18,6 +18,7 @@ public class FortniteGame : ModuleRules
             "Account", "AmbientAudio", "BlueprintContext", "CommonInput", "CommonUI", "MeshNetwork", "ModularGameplay", "McpProfileSys" });
         if (Target.IsInPlatformGroup(UnrealPlatformGroup.Linux) && Target.Type != TargetType.Server)
         {
+            PrivateDependencyModuleNames.Add("Renderer");
             PrivateIncludePaths.Add(Path.Combine(EngineDirectory, "Source/Runtime/VulkanRHI/Public"));
             AddEngineThirdPartyPrivateStaticDependencies(Target, "Vulkan", "HLSLCC");
         }
