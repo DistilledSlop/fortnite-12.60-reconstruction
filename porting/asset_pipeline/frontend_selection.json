@@ -1,0 +1,22 @@
+{
+  "selection_basis": "Direct StaticMesh imports from recovered frontend maps; package identity is the /Game outer import, not a basename match. Selection is geometry preparation, not evidence of a working UI.",
+  "sources": [
+    {
+      "map": "/Game/Maps/Frontend",
+      "packages": [
+        "FortniteGame/Content/Athena/Items/Consumables/SmokeGrenade/SM_INvertedSphere",
+        "FortniteGame/Content/Environments/Props/Transylvania/GothicRuins/Meshes/SM_TRV_GothicRuins_Grass_01"
+      ]
+    },
+    {
+      "map": "/Game/Maps/UI/Frontend_Lobby_Default",
+      "packages": [
+        "FortniteGame/Content/UI/Foundation/Lobby/meshes/SM_Lobby_Floor",
+        "FortniteGame/Content/UI/Foundation/Lobby/meshes/SM_Lobby_Halo",
+        "FortniteGame/Content/UI/Foundation/Lobby/meshes/SM_Lobby_Room",
+        "FortniteGame/Content/UI/Foundation/Lobby/meshes/SM_Lobby_wall"
+      ]
+    }
+  ],
+  "method": "Cue4Inspect --loose --imports-json, import kind StaticMesh, /Game package outer and matching object name. Reports stored under generated/asset_pipeline/frontend-evidence/."
+}
