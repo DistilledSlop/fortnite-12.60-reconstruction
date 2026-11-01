@@ -20,7 +20,7 @@ Default checker effect is observational; the combined numeric profile requires
 positive effect. Valid frames are retained before sampling-policy rejection.
 There is no raw compressed-GPU readback or original-client pixel-parity claim.
 
-Final-path source replays `google-promotion-2-a` and `google-promotion-2-b` match:
+Historical pre-correction source replays `google-promotion-2-a` and `google-promotion-2-b` match:
 
 - Bundle SHA-1: `7e127c308659a4a87be659d9d17829ceb691a4dc`.
 - Bundle SHA-256: `3697ae77e1e20dde264403d0a5559e8ebfc2ea85ba0f3d872fa65ad33bdf4a44`.
@@ -113,3 +113,30 @@ The pending one-line Probe pin patch and reviewed source receipt are in
 `/tmp/google-bundle-envelope-1/`, receipt SHA-256
 `6b002b5fe97f18c9b0a3e8249436c02180653e4c11bb4fd3bef67a6a5b5c8fcc`.
 Phase1 remains failed and immutable; a fresh coordinated runtime phase is required.
+
+## Native runtime phase 2 (passed, source released)
+
+The producer now emits mandatory `parent_path: ""`; the existing loader remains
+unchanged. Corrected deterministic bundle SHA-1 is
+`a519120049649f3c0835b5e341e27778aa4ee781`, SHA-256
+`b4f58ba6519eec121e32757c60bf9611c1aca78cbcec0c861af2155351f9e327`.
+The runtime fixture and original resource, shader and mip bytes are unchanged.
+Producer and verifier tests total 21 passes.
+
+Native `5d45ea2` / Engine `d7e04d4b6` passes both fresh builds, both Google
+profiles and independent strict verification. Each profile verifies seven shader
+payloads, ten resident mips, exact source/copy draws and 4,096 changed checker
+pixels. Full context checks, retained numeric/fixed/texture/Splash regressions
+and fresh default/Athena joins also pass. Class-load diagnostics now first
+encounter Facebook and ComicBubble; Native OnBeginIntro remains unimplemented.
+
+Checkpoint `generated/material_pipeline/frontend-google-checkpoint-results-2.json`
+SHA-256 `aacafe94827d5d717f5f73650d245e06904b877c7e4f6738c701e281925a4fd8`
+binds 202 committed sources, 18 binary rows and 1,693 artifacts. Root aggregate
+`generated/material_pipeline/google-runtime-root-audit-2.json` SHA-256
+`0768befa2f3e39cf1b60546152edd4343ae6e92ee3df41522fa6a168e0d4b5d7`
+binds fresh root strict Google/context reports and the separate checksum audit.
+Source ownership is explicitly released in the phase2 frozen-runtime directory.
+The existing owner now counts toward 126/142 material owners. All four product
+milestones remain open; interactive widget integration, raw BC1 GPU readback
+and original-client pixel parity are outside this bounded acceptance result.

@@ -4636,8 +4636,21 @@
   "material_frontend_owner_96d352985327c1b0": {
    "id": "material_frontend_owner_96d352985327c1b0",
    "owner_path": "/Game/UI/Login/Art/M_TempIcon_Login_Google.M_TempIcon_Login_Google",
-   "result": "pending",
-   "scope": "Material owner in the bounded frontend closure; actual-owner runtime ingress has not been credited."
+   "result": "pass",
+   "exit_code": 0,
+   "command": "python3 -I porting/progress/record_frontend_google_runtime.py",
+   "source_native_commit": "5d45ea265da7f3ac617af31cc35d1ebdd8c577e7",
+   "engine_commit": "d7e04d4b6",
+   "receipts": {
+    "porting/generated/material_pipeline/frontend-google-checkpoint-results-2.json": "aacafe94827d5d717f5f73650d245e06904b877c7e4f6738c701e281925a4fd8",
+    "porting/generated/frontend-native-evidence/google-runtime-2/integrity-audit-1.json": "424df964f0dec72e4966c02b5e8caa4435f4763f929337c95b636095e978c6ec",
+    "porting/generated/frontend-native-evidence/google-runtime-2/root-context-validation-1.json": "163bbddfd1c730b5d88bbc660e915ecde10b8d00408126578e7746ff54320d33",
+    "porting/generated/frontend-probes/google-owner-probes-2/google-defaults-root-validation-1.json": "d4be75da4e4f0f802f5e93af0f1aaea1f152aae6429be64500065d55f2fa3603",
+    "porting/generated/frontend-probes/google-owner-probes-2/google-combined-root-validation-1.json": "1658e889602ab677b4715a41ad363893cf0ff09d2b3e2c7f3aef12f429a548a0",
+    "porting/generated/material_pipeline/google-runtime-root-audit-2.json": "0768befa2f3e39cf1b60546152edd4343ae6e92ee3df41522fa6a168e0d4b5d7"
+   },
+   "scope": "Actual Google material owner diagnostic runtime ingress, named texture binding, all-mip sampling controls and seven shader payloads. Raw GPU-compressed readback, original-client pixel parity, widget integration and interactive UI remain unverified.",
+   "provenance_note": "Pinned external receipts and their independently audited source and artifact bindings must remain available for re-verification."
   },
   "material_frontend_owner_97661b3fd8a7cdae": {
    "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/duplicate-defaults-owner-probes-1/065-M-Tab-Main-Disabled-artifacts-dashboard-validation-jhcyo5fp.json",

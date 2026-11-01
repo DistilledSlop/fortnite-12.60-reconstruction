@@ -499,3 +499,21 @@ The audit covers 122 committed source bindings, 1,416 artifacts and 18 binary
 rows. These receipts and the audited artifacts are external to the ledger; the
 integrity audit currently lives under /tmp and must remain available at its pinned
 path for re-verification. The ledger alone is an attestation.
+
+### Google material runtime credit (2026-11-01)
+
+The existing Google owner now passes, bringing the bounded material closure to
+126/142. `record_frontend_google_runtime.py` pins the successful Native
+`5d45ea2` / Engine `d7e04d4b6` checkpoint, two fresh strict Google reports,
+the full context report, independent integrity audit and root aggregate audit.
+The profiles verify named texture binding, diagnostic ten-mip sampling controls
+and seven shader payloads. Raw BC1 GPU readback, original-client pixel parity,
+widget integration and interactive UI remain unverified. The audit covers 202
+committed source bindings, 1,693 artifact rows and 18 binary rows; the pinned
+external receipts and their audited artifacts must remain available for
+re-verification. This changes no weights, leaves or acceptance gates.
+
+The first observed Root and Login boundaries are now M_UI_ComicBubble and
+M_TempIcon_Login_Facebook respectively, both at MemoryImage.cpp:1064; async
+load order may change which appears first. Native OnBeginIntro remains
+unimplemented. Earlier history points are preserved.
