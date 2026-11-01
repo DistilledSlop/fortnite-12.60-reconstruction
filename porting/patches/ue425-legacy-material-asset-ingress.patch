@@ -1,23 +1,3 @@
-From 6750d43f557f3781a4e6abbc4636cf461cbf3d9c Mon Sep 17 00:00:00 2001
-From: Codex <codex@local.invalid>
-Date: Sun, 1 Nov 2026 02:57:08 +0000
-Subject: [PATCH 1/2] Add bounded legacy material asset ingress and
- actual-owner completeness gate
-
----
- .../Classes/Materials/MaterialInterface.h     |   3 +-
- .../Private/Materials/LegacyMaterialAsset.cpp |  75 +++++++++++++
- .../Private/Materials/LegacySlateMaterial.cpp |  21 +++-
- .../Engine/Private/Materials/Material.cpp     |  26 ++++-
- .../Private/Materials/MaterialInstance.cpp    |   5 +-
- .../Private/Materials/MaterialShared.cpp      | 100 ++++++++++++++++--
- .../Engine/Public/LegacyMaterialAsset.h       |  31 ++++++
- .../Engine/Public/LegacySlateMaterial.h       |   5 +
- .../Runtime/Engine/Public/MaterialShared.h    |  24 ++++-
- 9 files changed, 271 insertions(+), 19 deletions(-)
- create mode 100644 Engine/Source/Runtime/Engine/Private/Materials/LegacyMaterialAsset.cpp
- create mode 100644 Engine/Source/Runtime/Engine/Public/LegacyMaterialAsset.h
-
 diff --git a/Engine/Source/Runtime/Engine/Classes/Materials/MaterialInterface.h b/Engine/Source/Runtime/Engine/Classes/Materials/MaterialInterface.h
 index f32626052..407b06a2d 100644
 --- a/Engine/Source/Runtime/Engine/Classes/Materials/MaterialInterface.h
@@ -114,10 +94,30 @@ index 000000000..181045b7e
 + return Complete;
 +}
 diff --git a/Engine/Source/Runtime/Engine/Private/Materials/LegacySlateMaterial.cpp b/Engine/Source/Runtime/Engine/Private/Materials/LegacySlateMaterial.cpp
-index 05e4abee1..03d9035d1 100644
+index 05e4abee1..93d4ff629 100644
 --- a/Engine/Source/Runtime/Engine/Private/Materials/LegacySlateMaterial.cpp
 +++ b/Engine/Source/Runtime/Engine/Private/Materials/LegacySlateMaterial.cpp
-@@ -17,7 +17,26 @@ TRefCountPtr<FMaterialShaderMap> FMaterialShaderMap::CreateLegacySlateMap(
+@@ -11,13 +11,45 @@ TRefCountPtr<FMaterialShaderMap> FMaterialShaderMap::CreateLegacySlateMap(
+  auto Fail = [&Error](const TCHAR* Message) -> TRefCountPtr<FMaterialShaderMap> { Error = Message; return nullptr; };
+  if (Material.Platform != SP_VULKAN_SM5 || Material.FeatureLevel != ERHIFeatureLevel::SM5 ||
+      Material.OriginalMapHash == FSHAHash() || Material.Expressions.Num() > 8192 ||
+-     Material.VectorRoots.Num() != 12 || Material.ScalarRoots.Num() != 30 || Material.UniformBufferSize != 336)
++     Material.VectorRoots.Num() > 1024 || Material.ScalarRoots.Num() > 1024 || Material.UniformBufferSize > 65535)
+   return Fail(TEXT("Unsupported original Slate material identity, platform or slot layout"));
+ 
++ // Numeric preshaders occupy vector4 slots; scalar roots share vector4 slots.
++ // The only supported resources are the two built-in world-group samplers.
++ // Validate the serialized shape before asking UE to construct its metadata,
++ // then independently compare that metadata below. Texture/VT layouts require
++ // their own original resource conversion and must not be inferred here.
++ const uint32 NumericBytes = uint32(Material.VectorRoots.Num()) * sizeof(FVector4) +
++  ((uint32(Material.ScalarRoots.Num()) + 3u) / 4u) * sizeof(FVector4);
++ const uint32 ExpectedSize = Align(NumericBytes + 2u * SHADER_PARAMETER_POINTER_ALIGNMENT, SHADER_PARAMETER_STRUCT_ALIGNMENT);
++ if (Material.Resources.Num() != 2 || Material.UniformBufferSize != ExpectedSize ||
++     Material.Resources[0].Offset != NumericBytes || Material.Resources[0].BaseType != UBMT_SAMPLER ||
++     Material.Resources[1].Offset != NumericBytes + SHADER_PARAMETER_POINTER_ALIGNMENT || Material.Resources[1].BaseType != UBMT_SAMPLER)
++  return Fail(TEXT("Unsupported original numeric uniform resource layout"));
++
   TRefCountPtr<FMaterialShaderMap> Map = new FMaterialShaderMap();
   FMaterialShaderMapContent* Content = new FMaterialShaderMapContent(Material.Platform);
   Map->AssignContent(Content);
@@ -146,7 +146,7 @@ index 05e4abee1..03d9035d1 100644
   TArray<uint32> Depths, Costs;
   for (int32 Index = 0; Index < Material.Expressions.Num(); ++Index)
 diff --git a/Engine/Source/Runtime/Engine/Private/Materials/Material.cpp b/Engine/Source/Runtime/Engine/Private/Materials/Material.cpp
-index 4c171473f..f81179c98 100644
+index 4c171473f..c089d9367 100644
 --- a/Engine/Source/Runtime/Engine/Private/Materials/Material.cpp
 +++ b/Engine/Source/Runtime/Engine/Private/Materials/Material.cpp
 @@ -5,6 +5,7 @@
@@ -205,7 +205,15 @@ index 4c171473f..f81179c98 100644
  	}
  	
  	if (CVarDiscardUnusedQualityLevels.GetValueOnAnyThread())
-@@ -3188,7 +3201,7 @@ void UMaterial::Serialize(FArchive& Ar)
+@@ -2997,6 +3010,7 @@ void UMaterial::CacheResourceShadersForRendering(bool bRegenerateId)
+ 			if (MaterialResource && !MaterialResource->GetGameThreadShaderMap())
+ 			{
+ 				FMaterialResource Tmp;
++				Tmp.SetMaterial(this, LocalActiveQL, true, FeatureLevel);
+ 				FName PackageFileName = GetOutermost()->FileName;
+ 				UE_CLOG(PackageFileName.IsNone(), LogMaterial, Warning,
+ 					TEXT("UMaterial::CacheResourceShadersForRendering - Can't reload material resource '%s'. File system based reload is unsupported in this build."),
+@@ -3188,7 +3202,7 @@ void UMaterial::Serialize(FArchive& Ar)
  	{
  #if WITH_EDITOR
  		static_assert(!STORE_ONLY_ACTIVE_SHADERMAPS, "Only discard unused SMs in cooked build");
@@ -214,7 +222,7 @@ index 4c171473f..f81179c98 100644
  #else
  		SerializeInlineShaderMaps(
  			NULL,
-@@ -3196,7 +3209,10 @@ void UMaterial::Serialize(FArchive& Ar)
+@@ -3196,7 +3210,10 @@ void UMaterial::Serialize(FArchive& Ar)
  			LoadedMaterialResources
  #if STORE_ONLY_ACTIVE_SHADERMAPS
  			, &OffsetToFirstResource
@@ -226,10 +234,18 @@ index 4c171473f..f81179c98 100644
  #endif
  	}
 diff --git a/Engine/Source/Runtime/Engine/Private/Materials/MaterialInstance.cpp b/Engine/Source/Runtime/Engine/Private/Materials/MaterialInstance.cpp
-index 948b3e92c..894c79438 100644
+index 948b3e92c..836a97306 100644
 --- a/Engine/Source/Runtime/Engine/Private/Materials/MaterialInstance.cpp
 +++ b/Engine/Source/Runtime/Engine/Private/Materials/MaterialInstance.cpp
-@@ -3277,7 +3277,7 @@ void UMaterialInstance::Serialize(FArchive& Ar)
+@@ -2776,6 +2776,7 @@ void UMaterialInstance::CacheResourceShadersForRendering()
+ 			if (!MaterialResource->GetGameThreadShaderMap())
+ 			{
+ 				FMaterialResource Tmp;
++				Tmp.SetMaterial(GetMaterial(), LocalActiveQL, true, FeatureLevel, this);
+ 				FName PackageFileName = GetOutermost()->FileName;
+ 				UE_CLOG(PackageFileName.IsNone(), LogMaterial, Warning,
+ 					TEXT("UMaterialInstance::CacheResourceShadersForRendering - Can't reload material resource '%s'. File system based reload is unsupported in this build."),
+@@ -3277,7 +3278,7 @@ void UMaterialInstance::Serialize(FArchive& Ar)
  
  #if WITH_EDITOR
  			static_assert(!STORE_ONLY_ACTIVE_SHADERMAPS, "Only discard unused SMs in cooked build");
@@ -238,7 +254,7 @@ index 948b3e92c..894c79438 100644
  #else
  			SerializeInlineShaderMaps(
  				NULL,
-@@ -3285,7 +3285,10 @@ void UMaterialInstance::Serialize(FArchive& Ar)
+@@ -3285,7 +3286,10 @@ void UMaterialInstance::Serialize(FArchive& Ar)
  				LoadedMaterialResources
  #if STORE_ONLY_ACTIVE_SHADERMAPS
  				, &OffsetToFirstResource
@@ -545,45 +561,3 @@ index f6c60f817..391a0d10b 100644
  	int64 OffsetToEnd;
  	bool bReleaseInnerArchive;
  
--- 
-2.53.0
-
-
-From e6e962a435d6f6da6dc4cbc90adbeef752972b60 Mon Sep 17 00:00:00 2001
-From: Codex <codex@local.invalid>
-Date: Sun, 1 Nov 2026 03:04:22 +0000
-Subject: [PATCH 2/2] Bind original owners before reloading inline material
- resources
-
----
- Engine/Source/Runtime/Engine/Private/Materials/Material.cpp      | 1 +
- .../Source/Runtime/Engine/Private/Materials/MaterialInstance.cpp | 1 +
- 2 files changed, 2 insertions(+)
-
-diff --git a/Engine/Source/Runtime/Engine/Private/Materials/Material.cpp b/Engine/Source/Runtime/Engine/Private/Materials/Material.cpp
-index f81179c98..c089d9367 100644
---- a/Engine/Source/Runtime/Engine/Private/Materials/Material.cpp
-+++ b/Engine/Source/Runtime/Engine/Private/Materials/Material.cpp
-@@ -3010,6 +3010,7 @@ void UMaterial::CacheResourceShadersForRendering(bool bRegenerateId)
- 			if (MaterialResource && !MaterialResource->GetGameThreadShaderMap())
- 			{
- 				FMaterialResource Tmp;
-+				Tmp.SetMaterial(this, LocalActiveQL, true, FeatureLevel);
- 				FName PackageFileName = GetOutermost()->FileName;
- 				UE_CLOG(PackageFileName.IsNone(), LogMaterial, Warning,
- 					TEXT("UMaterial::CacheResourceShadersForRendering - Can't reload material resource '%s'. File system based reload is unsupported in this build."),
-diff --git a/Engine/Source/Runtime/Engine/Private/Materials/MaterialInstance.cpp b/Engine/Source/Runtime/Engine/Private/Materials/MaterialInstance.cpp
-index 894c79438..836a97306 100644
---- a/Engine/Source/Runtime/Engine/Private/Materials/MaterialInstance.cpp
-+++ b/Engine/Source/Runtime/Engine/Private/Materials/MaterialInstance.cpp
-@@ -2776,6 +2776,7 @@ void UMaterialInstance::CacheResourceShadersForRendering()
- 			if (!MaterialResource->GetGameThreadShaderMap())
- 			{
- 				FMaterialResource Tmp;
-+				Tmp.SetMaterial(GetMaterial(), LocalActiveQL, true, FeatureLevel, this);
- 				FName PackageFileName = GetOutermost()->FileName;
- 				UE_CLOG(PackageFileName.IsNone(), LogMaterial, Warning,
- 					TEXT("UMaterialInstance::CacheResourceShadersForRendering - Can't reload material resource '%s'. File system based reload is unsupported in this build."),
--- 
-2.53.0
-
