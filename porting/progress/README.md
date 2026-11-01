@@ -567,3 +567,15 @@ the whole Panel, outro, deactivation, input producer, manager, full UI or parity
 The phase includes two builds, six processes and two joins; it does not repeat
 the broader original metadata, link, material or pixel checks. The denominator
 remains 1,855, history is preserved and all four milestone gates remain false.
+
+### CommonUI Panel outro runtime allocation
+
+One point is allocated from remaining CommonUI behavior, leaving 18 points, for
+the controlled Panel intro, outro, reacquisition and listener lifecycle diagnostic.
+It includes held-action map, NaN duration, callback manager relookup and structural
+interface reset fixtures with C++ ProcessEvent interception. Blueprint VM, full
+interface routing, native input producer, queue, main button, authentic UI and
+parity remain unverified. Interface restoration source work uses the existing
+reflection budget. Two builds, seven processes and two joins are covered by pinned
+evidence and an independent audit. The denominator remains 1,855, history is
+preserved and all four milestone gates remain false.

@@ -73,7 +73,7 @@ class ProgressModelTests(unittest.TestCase):
         leaves = list(progress.walk_spec(model['tree']))
         material = [leaf for leaf in leaves if leaf['id'].startswith('ui.material_')]
         self.assertEqual(sum(leaf['weight'] for leaf in material), 20)
-        self.assertEqual(len(leaves), 115)
+        self.assertEqual(len(leaves), 116)
         self.assertEqual(sum(leaf['weight'] for leaf in leaves), 1855)
         self.assertEqual(sum(leaf['weight'] for leaf in material if leaf['measure']['kind'] == 'ledger'), 20)
         by_id = {leaf['id']: leaf for leaf in material}
@@ -116,21 +116,25 @@ class ProgressModelTests(unittest.TestCase):
         runtime = leaves['ui.commonui_activation_runtime']
         button = leaves['ui.commonui_button_internal_runtime']
         panel = leaves['ui.commonui_panel_intro_runtime']
-        self.assertEqual(remaining['weight'] + runtime['weight'] + button['weight'] + panel['weight'], 22)
+        outro = leaves['ui.commonui_panel_outro_runtime']
+        self.assertEqual(remaining['weight'] + runtime['weight'] + button['weight'] + panel['weight'] + outro['weight'], 22)
         self.assertEqual(remaining['measure'], dict(kind='manual', pct=0))
         self.assertEqual(runtime['measure'], dict(kind='ledger', checks=['frontend_commonui_base_activation_runtime']))
         self.assertEqual(button['measure'], dict(kind='ledger', checks=['frontend_commonui_internal_button_runtime']))
         self.assertEqual(panel['measure'], dict(kind='ledger', checks=['frontend_commonui_panel_intro_runtime']))
+        self.assertEqual(outro['measure'], dict(kind='ledger', checks=['frontend_commonui_panel_outro_runtime']))
         self.assertEqual(leaves['ui.panel_source_stage']['weight'], 1)
         self.assertEqual(leaves['ui.input_source_stage']['weight'], 1)
         evidence = json.loads((folder / 'evidence.json').read_text())
         evidence['checks'].pop('frontend_commonui_base_activation_runtime', None)
         evidence['checks'].pop('frontend_commonui_internal_button_runtime', None)
         evidence['checks'].pop('frontend_commonui_panel_intro_runtime', None)
+        evidence['checks'].pop('frontend_commonui_panel_outro_runtime', None)
         ctx = progress.Ctx({progress.EVIDENCE_REL: json.dumps(evidence)}, False, [])
         self.assertEqual(progress.evaluate(runtime, ctx)['pct'], 0)
         self.assertEqual(progress.evaluate(button, ctx)['pct'], 0)
         self.assertEqual(progress.evaluate(panel, ctx)['pct'], 0)
+        self.assertEqual(progress.evaluate(outro, ctx)['pct'], 0)
         self.assertTrue(all(not gate['done'] for gate in model['milestones']))
 
     def test_weighted_coverage_cannot_claim_unfinished_implementation(self):

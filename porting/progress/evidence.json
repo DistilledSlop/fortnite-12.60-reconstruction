@@ -11102,6 +11102,20 @@
    "integrity_audit_sha256": "df1101e05c74d0523af8f8d8d67a25b6c13f1385a0f3339369097321ad5031ce",
    "scope": "Controlled real Panel intro, EndIntro and full activation path with input and priority fixture and C++ ProcessEvent interception; two builds, six processes and two joins. Blueprint VM, whole Panel, outro, deactivation, input producer, manager, full UI and parity remain unverified. No new exhaustive original metadata, link, material or pixel checks.",
    "provenance_note": "Pinned external receipts and independently audited artifacts must remain available for re-verification."
+  },
+  "frontend_commonui_panel_outro_runtime": {
+   "id": "frontend_commonui_panel_outro_runtime",
+   "result": "pass",
+   "exit_code": 0,
+   "command": "python3 -I porting/progress/record_frontend_panel_outro_runtime.py",
+   "checkpoint": "porting/generated/material_pipeline/frontend-panel-outro-runtime-checkpoint-results-1.json",
+   "checkpoint_sha256": "fe8c7bffce934727e3d1ec3af154839f9cd3361e056613538528257852e52219",
+   "runtime_report": "porting/generated/frontend-native-evidence/panel-outro-runtime-1/root-report.json",
+   "runtime_report_sha256": "2ec8ffb191e6bf18eca7efc868133756213c239e779379de27272844984d96f4",
+   "integrity_audit": "porting/generated/frontend-native-evidence/panel-outro-runtime-1/integrity-audit-1.json",
+   "integrity_audit_sha256": "0d4e3ed4418b60a535f6823935a237b44e239e4650b5e7a7c770397f66daaa0c",
+   "scope": "Controlled full Panel intro, outro, reacquisition and listener lifecycle with held-action map, NaN duration, callback manager relookup and structural interface reset fixtures and C++ ProcessEvent interception; two builds, seven processes and two joins. Blueprint VM, full interface routing, native input producer, queue, main button, authentic UI and parity remain unverified. No new exhaustive original metadata, link, material or pixel checks.",
+   "provenance_note": "Pinned external receipts and independently audited artifacts must remain available for re-verification."
   }
  }
 }

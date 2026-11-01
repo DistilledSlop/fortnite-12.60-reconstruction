@@ -1276,12 +1276,24 @@
         {
           "id": "ui.commonui_umg.implementation",
           "name": "CommonUI and UMG behavior and widgets",
-          "weight": 19.0,
+          "weight": 18.0,
           "measure": {
             "kind": "manual",
             "pct": 0
           },
           "rationale": "Remaining CommonUI and UMG behavior includes Panel and operation queue, input dispatch and held actions, the main CommonButton and other widgets, their integration, and behavior parity. Header coverage, source candidates, the bounded base activation, Panel intro and internal button diagnostics are separately allocated; none establishes this remainder."
+        },
+        {
+          "id": "ui.commonui_panel_outro_runtime",
+          "name": "CommonUI Panel outro diagnostic runtime",
+          "weight": 1.0,
+          "measure": {
+            "kind": "ledger",
+            "checks": [
+              "frontend_commonui_panel_outro_runtime"
+            ]
+          },
+          "rationale": "One point for controlled Panel intro, outro, reacquisition and listener lifecycle with held-action map, NaN duration, callback manager relookup, structural interface reset fixtures and C++ ProcessEvent interception. Blueprint VM, full interface routing, native input producer, queue, main button, authentic UI and parity remain unverified. Interface restoration source work remains within the existing reflection budget."
         },
         {
           "id": "ui.commonui_panel_intro_runtime",
