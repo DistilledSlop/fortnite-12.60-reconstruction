@@ -742,6 +742,7 @@ static bool GLegacyIngressConfigInvalid = false;
 static const TCHAR* GLegacyDonutPath = TEXT("/Game/Athena/UI/Challenges/Art/Donut/M_UI_DonutIcons.M_UI_DonutIcons");
 static const TCHAR* GLegacyMenuPath = TEXT("/Game/UI/Foundation/Materials/M_MenuButton_Master.M_MenuButton_Master");
 static const TCHAR* GLegacyGradientPath = TEXT("/Game/UI/Foundation/Materials/M_UI_GradientPanel.M_UI_GradientPanel");
+static const TCHAR* GLegacyMainLPath = TEXT("/Game/UI/Foundation/Border/Materials/M-Border-MainL.M-Border-MainL");
 static const TCHAR* GLegacyPowerToastPath = TEXT("/Game/UI/Foundation/Border/Materials/M-Border-PowerToastGlow.M-Border-PowerToastGlow");
 static const TCHAR* GLegacyLockerPath = TEXT("/Game/UI/Foundation/Materials/Athena_LockerTabMaster.Athena_LockerTabMaster");
 struct FLegacyIngressProvenance final : FLegacyMaterialAssetProvenance
@@ -885,6 +886,42 @@ static ELegacyMaterialAssetResult ProvideLegacyOriginal(const FLegacyMaterialAss
     P->SourceIdentity=Pin->Owner; P->OriginalShaderRecordCount=P->Decoded.Records.Num(); P->BundleJson=Pin->Json;
     Provenance=P; return ELegacyMaterialAssetResult::Converted;
 }
+// Compare the actual instance values by their complete serialized identities.
+static bool CheckMainLOwnerOverrides(const UMaterialInstance* Instance, const TSharedPtr<FJsonObject>& Bundle, FString& Error)
+{
+    if (!Instance || !Bundle) { Error=TEXT("missing MainL instance or bundle"); return false; }
+    const auto Fixture=Bundle->GetObjectField(TEXT("runtime_fixture"));
+    const auto& Values=Fixture->GetArrayField(TEXT("owner_parameter_expectations"));
+    if (Values.Num()!=9) { Error=TEXT("unexpected MainL override count"); return false; }
+    for (const auto& Value : Values)
+    {
+        const auto Row=Value->AsObject(); const auto Parameter=Row->GetObjectField(TEXT("parameter"));
+        const auto Name=Parameter->GetObjectField(TEXT("name"));
+        const int32 Number=int32(Name->GetNumberField(TEXT("number")));
+        const int32 Association=int32(Parameter->GetNumberField(TEXT("association")));
+        const int32 Index=int32(Parameter->GetNumberField(TEXT("index")));
+        if (Number<0 || Association<0 || Association>2 || Index< -1)
+        { Error=TEXT("invalid MainL parameter identity"); return false; }
+        const FHashedMaterialParameterInfo Info(FName(*Name->GetStringField(TEXT("name")),Number),static_cast<EMaterialParameterAssociation>(Association),Index);
+        const FString Kind=Row->GetStringField(TEXT("type"));
+        if (Kind==TEXT("scalar"))
+        {
+            float Actual=0.f;
+            if (!Instance->GetScalarParameterValue(Info,Actual,true) || !FMath::IsNearlyEqual(Actual,float(Row->GetNumberField(TEXT("value"))),1.e-5f))
+            { Error=FString::Printf(TEXT("MainL scalar override differs: %s"),*Name->GetStringField(TEXT("name"))); return false; }
+        }
+        else if (Kind==TEXT("vector"))
+        {
+            const auto& V=Row->GetArrayField(TEXT("value")); FLinearColor Actual;
+            if (V.Num()!=4 || !Instance->GetVectorParameterValue(Info,Actual,true) ||
+                !Actual.Equals(FLinearColor(V[0]->AsNumber(),V[1]->AsNumber(),V[2]->AsNumber(),V[3]->AsNumber()),1.e-5f))
+            { Error=FString::Printf(TEXT("MainL vector override differs: %s"),*Name->GetStringField(TEXT("name"))); return false; }
+        }
+        else { Error=TEXT("invalid MainL override type"); return false; }
+    }
+    UE_LOG(LogTemp,Display,TEXT("Legacy material ingress: verified %d MainL source override identities and values"),Values.Num());
+    return true;
+}
 #endif
 
 void RegisterLegacyOriginalMaterialProvider()
@@ -897,6 +934,7 @@ void RegisterLegacyOriginalMaterialProvider()
         {GLegacyLockerPath, GLegacyLockerPath, TEXT("0f750204f6008e6e3219d0b002d8409e28c22426"), TEXT("bc2d2f509b6909a4820f65188b85485fce989a2a"), FString()},
         {GLegacyGradientPath, GLegacyGradientPath, TEXT("87617e2d5b3c8ee57d8ede04783abe2a32fafd74"), TEXT("a088433310c1bb0de8b63eb3096929fed602ba4f"), FString()},
         {GLegacyPowerToastPath, GLegacyGradientPath, TEXT("1aef96f25f926219b10ceb69c8f3731a3b118fa6"), TEXT("d8b5194ca11c187ffad72b17e9517ecf40fd1266"), FString()},
+        {GLegacyMainLPath, GLegacyGradientPath, TEXT("61800f5706ffab57cc5d50ea4eaa9cf642564662"), TEXT("5837fd2391001dbf6bafb3b06db5cd050399fbf4"), FString()},
         {GLegacyMenuPath, GLegacyMenuPath, TEXT("0b49a605763b907dbdf1f0041715208a81d4744a"), TEXT("955e034f179ab1129d49286356357039e57260e4"), FString()},
         {GLegacyDonutPath, GLegacyDonutPath, TEXT("e794ad691e278ecf653dfef34c0ae07375f32d7d"), TEXT("2a27448730935ebe70c3a30e765ad6784a163668"), FString()}
     };
@@ -920,8 +958,8 @@ void RegisterLegacyOriginalMaterialProvider()
         if ((Match->Owner==GLegacyLockerPath && Schema!=TEXT("fortnite.legacy-material-ingress.v1")) ||
             (Match->Owner!=GLegacyLockerPath && (Schema!=(Match->Owner==GLegacyDonutPath ? TEXT("fortnite.legacy-material-ingress.v3") : TEXT("fortnite.legacy-material-ingress.v2")) ||
              Bundle->GetStringField(TEXT("owner_path"))!=Match->Owner ||
-             Bundle->GetStringField(TEXT("parent_path"))!=(Match->Owner==GLegacyPowerToastPath ? FString(GLegacyGradientPath) : FString()) ||
-             Bundle->GetStringField(TEXT("owner_type"))!=(Match->Owner==GLegacyPowerToastPath ? TEXT("UMaterialInstanceConstant") : TEXT("UMaterial")))))
+             Bundle->GetStringField(TEXT("parent_path"))!=((Match->Owner==GLegacyPowerToastPath || Match->Owner==GLegacyMainLPath) ? FString(GLegacyGradientPath) : FString()) ||
+             Bundle->GetStringField(TEXT("owner_type"))!=((Match->Owner==GLegacyPowerToastPath || Match->Owner==GLegacyMainLPath) ? TEXT("UMaterialInstanceConstant") : TEXT("UMaterial")))))
         { GLegacyIngressConfigInvalid=true; break; }
     }
     if (!Paths.Num()) GLegacyIngressConfigInvalid=true;
@@ -943,21 +981,25 @@ void ProbeLegacyOriginalMaterial()
     if (!Pin || GLegacyIngressConfigInvalid || !FJsonSerializer::Deserialize(TJsonReaderFactory<>::Create(Pin->Json),Bundle) || !Bundle)
     { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: probe has no valid bundle")); FPlatformMisc::RequestExitWithStatus(false,1); return; }
     UMaterialInterface* Material=LoadObject<UMaterialInterface>(nullptr,*OwnerPath);
-    if (OwnerPath == GLegacyPowerToastPath)
+    if (OwnerPath == GLegacyPowerToastPath || OwnerPath == GLegacyMainLPath)
     {
         UMaterialInstance* Instance=Cast<UMaterialInstance>(Material);
         UMaterial* Base=Material ? Material->GetMaterial() : nullptr;
         const FString ParentPath=Bundle->GetStringField(TEXT("parent_path"));
         float Rotation=0.f, Scale=0.f, Bias=0.f;
         FLinearColor Color0, Color1;
-        if (!Instance || !Instance->Parent || Instance->Parent->GetPathName()!=ParentPath || !Base ||
-            Base->GetPathName()!=Pin->ShaderIdentity ||
+        if (!Instance || !Instance->Parent || Instance->Parent->GetPathName()!=ParentPath || !Base || Base->GetPathName()!=Pin->ShaderIdentity)
+        { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: real instance parent differs")); FPlatformMisc::RequestExitWithStatus(false,1); return; }
+        if (OwnerPath == GLegacyPowerToastPath && (
             !Instance->GetScalarParameterValue(FHashedMaterialParameterInfo(TEXT("Rotation")),Rotation,true) || !FMath::IsNearlyEqual(Rotation,1.f) ||
             !Instance->GetScalarParameterValue(FHashedMaterialParameterInfo(TEXT("Scale")),Scale,true) || !FMath::IsNearlyEqual(Scale,1.5f) ||
             !Instance->GetScalarParameterValue(FHashedMaterialParameterInfo(TEXT("RefractionDepthBias")),Bias,true) || !FMath::IsNearlyZero(Bias) ||
             !Instance->GetVectorParameterValue(FHashedMaterialParameterInfo(TEXT("RGBA0")),Color0,true) || !Color0.Equals(FLinearColor(.033105f,.246201f,1.f,0.f),1.e-5f) ||
-            !Instance->GetVectorParameterValue(FHashedMaterialParameterInfo(TEXT("RGBA1")),Color1,true) || !Color1.Equals(FLinearColor(.033105f,.246201f,1.f,1.f),1.e-5f))
+            !Instance->GetVectorParameterValue(FHashedMaterialParameterInfo(TEXT("RGBA1")),Color1,true) || !Color1.Equals(FLinearColor(.033105f,.246201f,1.f,1.f),1.e-5f)))
         { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: real instance parent or original overrides differ")); FPlatformMisc::RequestExitWithStatus(false,1); return; }
+        FString OverrideError;
+        if (OwnerPath==GLegacyMainLPath && !CheckMainLOwnerOverrides(Instance,Bundle,OverrideError))
+        { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: %s"),*OverrideError); FPlatformMisc::RequestExitWithStatus(false,1); return; }
         const FLegacyIngressPin* ParentPin=nullptr;
         for (const auto& Candidate : GLegacyIngressPins) if (Candidate.Owner==ParentPath) { ParentPin=&Candidate; break; }
         FMaterialResource* ParentResource=Base->GetMaterialResource(GMaxRHIFeatureLevel);
@@ -1067,7 +1109,7 @@ void ProbeLegacyOriginalMaterial()
     FString Error;
     if (!CheckLegacyUniforms(Map->GetUniformExpressionSet(),Bundle->GetObjectField(TEXT("runtime_fixture")),TEXT("owner"),Error,OwnerPath==GLegacyDonutPath ? Material : nullptr))
     { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: live uniform cases failed: %s"),*Error); FPlatformMisc::RequestExitWithStatus(false,1); return; }
-    if (OwnerPath == GLegacyPowerToastPath && !CheckLegacyUniforms(Map->GetUniformExpressionSet(),Bundle->GetObjectField(TEXT("runtime_fixture")),TEXT("instance"),Error,Material,TEXT("owner_uniform_cases")))
+    if ((OwnerPath == GLegacyPowerToastPath || OwnerPath == GLegacyMainLPath) && !CheckLegacyUniforms(Map->GetUniformExpressionSet(),Bundle->GetObjectField(TEXT("runtime_fixture")),TEXT("instance"),Error,Material,TEXT("owner_uniform_cases")))
     { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: live instance uniform cases failed: %s"),*Error); FPlatformMisc::RequestExitWithStatus(false,1); return; }
     if (OwnerPath==GLegacyDonutPath && !CheckLegacyUniforms(Map->GetUniformExpressionSet(),Bundle->GetObjectField(TEXT("runtime_fixture")),TEXT("Donut owner"),Error,Material,TEXT("owner_uniform_cases")))
     { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: Donut owner uniform cases failed: %s"),*Error); FPlatformMisc::RequestExitWithStatus(false,1); return; }
@@ -1129,7 +1171,7 @@ void ProbeLegacyOriginalMaterial()
             IconOverride->GetPathName()!=TEXT("/Game/Athena/UI/Challenges/Art/Donut/T_UI_Donut_App_Icon.T_UI_Donut_App_Icon"))
         { UE_LOG(LogTemp,Error,TEXT("Legacy Donut: actual App2 Icon override differs")); FPlatformMisc::RequestExitWithStatus(false,1); return; }
     }
-    if (!bAllShaders || CheckedShaders!=7 || !bVS || !bPS || !bView || !DrawLegacySlateQuad(Map,Bindings,Error,Material,Resource,OwnerPath==GLegacyLockerPath ? TEXT("RBGA1") : TEXT("RGBA1"),OwnerPath==GLegacyLockerPath ? TEXT("LockerQuad") : OwnerPath==GLegacyMenuPath ? TEXT("MenuQuad") : OwnerPath==GLegacyDonutPath ? TEXT("DonutQuad") : TEXT("PowerToastQuad"),OwnerPath==GLegacyMenuPath ? Fixture : nullptr,false,IconOverride))
+    if (!bAllShaders || CheckedShaders!=7 || !bVS || !bPS || !bView || !DrawLegacySlateQuad(Map,Bindings,Error,Material,Resource,OwnerPath==GLegacyLockerPath ? TEXT("RBGA1") : TEXT("RGBA1"),OwnerPath==GLegacyLockerPath ? TEXT("LockerQuad") : OwnerPath==GLegacyMenuPath ? TEXT("MenuQuad") : OwnerPath==GLegacyDonutPath ? TEXT("DonutQuad") : OwnerPath==GLegacyMainLPath ? TEXT("MainLQuad") : TEXT("PowerToastQuad"),OwnerPath==GLegacyMenuPath ? Fixture : nullptr,false,IconOverride))
     {
         UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: attached owner draw failed: %s"),*Error);
         FPlatformMisc::RequestExitWithStatus(false,1); return;
