@@ -6,6 +6,8 @@ fail at their tag; the undecoded compilation-output tail is returned explicitly.
 The recursive grammar matches Epic's pre-freeze serializers, available at:
 https://github.com/folgerwang/UnrealEngine/blob/release/Engine/Source/Runtime/Engine/Private/Materials/MaterialUniformExpressions.h
 https://github.com/folgerwang/UnrealEngine/blob/release/Engine/Source/Runtime/Engine/Private/Materials/MaterialUniformExpressions.cpp
+The four-word texture base record follows the 4.23 pre-freeze serializer:
+https://github.com/CFHH/UnrealEngine-4.23.1-ps/blob/master/Engine/Source/Runtime/Engine/Private/Materials/MaterialUniformExpressions.cpp#L918
 The later pre-freeze collection/compilation scalar order is documented in:
 https://github.com/HenryZheng1/UnrealEngine-4.24.3-release/blob/master/Engine/Source/Runtime/Engine/Private/Materials/MaterialUniformExpressions.cpp
 https://github.com/HenryZheng1/UnrealEngine-4.24.3-release/blob/master/Engine/Source/Runtime/Engine/Private/Materials/MaterialShared.cpp
@@ -76,11 +78,15 @@ class Reader:
         if kind in ('VectorParameter', 'ScalarParameter', 'TextureParameter'):
             result['parameter'] = self.parameter()
             if kind == 'TextureParameter':
-                # Original Donut stores [0, -1]. The second word differs from
-                # the public old SamplerSource enum; preserve its bits without
-                # assigning that unverified meaning. Subsequent array counts
-                # validate this record boundary.
-                result['serialized_texture_words'] = self.read('ii')
+                # 4.23 adds LayerIndex and bVirtualTexture to the older
+                # TextureIndex/SamplerSource pair. Archive bool occupies four
+                # bytes. Donut stores [0, -1, 0, 0]; reading only the first two
+                # words incorrectly absorbs the remaining zeros as array counts.
+                texture_index, layer, sampler, virtual = self.read('iiiI')
+                if texture_index < -1 or layer < -1 or sampler not in (0, 1, 2) or virtual not in (0, 1):
+                    raise ValueError(f'invalid 4.23 texture expression at {start}')
+                result['texture'] = {'texture_index': texture_index, 'layer_index': layer,
+                                     'sampler_source': sampler, 'virtual_texture': bool(virtual)}
             else:
                 result['default'] = self.read('4f' if kind == 'VectorParameter' else 'f')
         elif kind == 'Constant':
@@ -164,7 +170,7 @@ def parse_prefix(data, names):
     cursor = reader.cursor
     return {'complete_shader_map': False,
             'limitations': ['Prefix grammar only; no shader records or runtime loading verified',
-                'TextureParameter trailing words are structurally framed but semantics remain unresolved',
+                'TextureParameter uses the four-word 4.23 base record, not the five-word 4.24 variant',
                 'Nonempty VT stacks are unsupported',
                 'Compilation flags differ across pre-freeze branches; no flag or shader-record grammar verified'],
             'cooked': cooked, 'valid': valid,
@@ -175,6 +181,7 @@ def parse_prefix(data, names):
             'virtual_texture_stacks': vt_stacks, 'parameter_collections': collections,
             'compilation_output_scalars': compilation,
             'tail_grammar_sources': [
+                'https://github.com/CFHH/UnrealEngine-4.23.1-ps/blob/master/Engine/Source/Runtime/Engine/Private/Materials/MaterialUniformExpressions.cpp#L918',
                 'https://github.com/HenryZheng1/UnrealEngine-4.24.3-release/blob/master/Engine/Source/Runtime/Engine/Private/Materials/MaterialUniformExpressions.cpp#L106',
                 'https://github.com/HenryZheng1/UnrealEngine-4.24.3-release/blob/master/Engine/Source/Runtime/Engine/Private/Materials/MaterialShared.cpp#L489'],
             'decoded_prefix_bytes': cursor,

@@ -39,7 +39,7 @@ FOLDED = name(4) + SCALAR + CONSTANT + pack('BI', 2, 15)
 TRIG = name(6) + FOLDED + FOLDED + pack('B', 0)
 APPEND = name(5) + TRIG + VECTOR + pack('I', 1)
 SWIZZLE = name(3) + APPEND + pack('4bB', 0, 1, 2, -1, 3)
-TEXTURE = name(7) + parameter(9) + pack('ii', 0, -1)
+TEXTURE = name(7) + parameter(9) + pack('iiiI', 0, -1, 0, 0)
 HEADER = pack('4I', 1, 1, 1, 3) + bytes(range(20)) + pack('I', 0)
 HEADER += string('M_Test') + string('/Game/UI/M_Test.M_Test')
 
@@ -66,7 +66,9 @@ class LegacyPrefixTests(unittest.TestCase):
         swizzle = arrays['vector']['expressions'][1]
         self.assertEqual(swizzle['channels'], [0, 1, 2, -1])
         self.assertEqual(swizzle['inputs'][0]['inputs'][0]['inputs'][0]['value_type'], 15)
-        self.assertEqual(arrays['texture_2d']['expressions'][0]['serialized_texture_words'], [0, -1])
+        self.assertEqual(arrays['texture_2d']['expressions'][0]['texture'],
+                         {'texture_index': 0, 'layer_index': -1,
+                          'sampler_source': 0, 'virtual_texture': False})
         self.assertEqual(arrays['texture_2d_array']['end'], result['parameter_collections']['offset'])
         self.assertEqual(result['virtual_texture_stacks']['count'], 0)
         self.assertEqual(result['compilation_output_scalars']['used_scene_textures'], 5)
@@ -87,6 +89,25 @@ class LegacyPrefixTests(unittest.TestCase):
             data[offset:offset + 4] = pack('i', count)
             with self.assertRaisesRegex(ValueError, 'array count'):
                 parse_prefix(data, NAMES)
+
+    def test_texture_record_width_and_validation(self):
+        head = name(7) + parameter(9)
+        encoded = head + pack('iiiI', 2, -1, 2, 1) + SCALAR
+        reader = Reader(encoded, NAMES)
+        texture = reader.expression()
+        self.assertEqual(texture['end'], len(head) + 16)
+        self.assertEqual(reader.expression()['type'], PREFIX + 'ScalarParameter')
+        self.assertTrue(texture['texture']['virtual_texture'])
+        for words in [(-2, -1, 0, 0), (0, -2, 0, 0), (0, -1, 3, 0), (0, -1, 0, 2)]:
+            with self.subTest(words=words), self.assertRaisesRegex(ValueError, 'texture expression'):
+                Reader(head + pack('iiiI', *words), NAMES).expression()
+
+    def test_one_byte_trig_operation_followed_by_another_expression(self):
+        # The constructor takes ETrigMathOperation, but serialized member Op is
+        # uint8. A nonzero tag immediately after it catches accidental widening.
+        reader = Reader(TRIG + SCALAR, NAMES)
+        self.assertEqual(reader.expression()['end'], len(TRIG))
+        self.assertEqual(reader.expression()['type'], PREFIX + 'ScalarParameter')
 
     def test_every_truncation_of_verified_prefix_fails(self):
         data = resource(tail=b'')
