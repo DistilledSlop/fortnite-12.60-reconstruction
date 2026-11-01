@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanel.h"
 
+#include "FConfirmationDialogAction.h"
 #include "FFortConfirmationButtonInfo.h"
 #include "UCommonButton.h"
 #include "UCommonLoadGuard.h"
@@ -67,6 +68,16 @@ public:
 	// table index 1, flags 0x40000000082008
 	UPROPERTY(Transient)
 	UCommonButton* DeclineButton;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ConfigureConfirmationButton(UCommonButton* Button, const FConfirmationDialogAction& Action, bool bSimpleConfirm);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ConfigureDeclineButton(UCommonButton* Button);
+public:
 
 };
 

@@ -70,5 +70,10 @@ public:
 	UPROPERTY()
 	uint32 MaxOverflowErrorCodes;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnOverrideCloseButtonText(const FText& OverrideText);
+public:
+
 };
 

@@ -178,7 +178,17 @@ public:
 
 protected:
 	UFUNCTION(BlueprintImplementableEvent)
+	void OnActionProgress(float HeldPercent);
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
 	void OnCurrentTextStyleChanged();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnTriggeredInputActionChanged(const FDataTableRowHandle& NewTriggeredAction);
 public:
 
 };

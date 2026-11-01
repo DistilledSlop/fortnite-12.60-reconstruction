@@ -14,5 +14,10 @@ class FORTNITEUI_API UFortRestartClientModal : public UFortActivatablePanel
 	GENERATED_BODY()
 
 public:
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnButtonSet(bool InbShouldExit, bool bShouldShow);
+public:
+
 };
 

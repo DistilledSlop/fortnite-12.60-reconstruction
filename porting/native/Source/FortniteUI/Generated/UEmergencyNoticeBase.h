@@ -19,5 +19,10 @@ protected:
 	void HideNotice();
 public:
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void ShowNotice(const FText& Title, const FText& Body);
+public:
+
 };
 

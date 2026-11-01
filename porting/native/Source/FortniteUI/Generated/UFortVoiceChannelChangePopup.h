@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "ECommonInputType.h"
 #include "FOnToastDisplayFinished.h"
 #include "UCommonButton.h"
 #include "UCommonRichTextBlock.h"
@@ -94,6 +95,11 @@ public:
 	// table index 0, flags 0x40000000080008
 	UPROPERTY()
 	UFortKeybindWidget* HoldKeybindWidget_GamePad;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnInputModeChanged(ECommonInputType NewInputType);
+public:
 
 protected:
 	UFUNCTION(BlueprintImplementableEvent)

@@ -20,5 +20,10 @@ public:
 	UPROPERTY()
 	UCommonTextBlock* Text_PlayerName;
 
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateBorderWidth(float HalfBorderWidth);
+public:
+
 };
 

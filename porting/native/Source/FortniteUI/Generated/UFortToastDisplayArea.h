@@ -52,5 +52,10 @@ public:
 	UPROPERTY()
 	UCommonUserWidget* ToastWidgetDonut;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnDisplayToast(UFortUINotification* NewToast);
+public:
+
 };
 

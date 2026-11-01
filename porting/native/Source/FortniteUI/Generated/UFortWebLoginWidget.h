@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonActivatablePanel.h"
 
+class UWidget;
+
 #include "UFortWebLoginWidget.generated.h"
 
 UCLASS(abstract)
@@ -17,6 +19,11 @@ public:
 public:
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void DismissWidget();
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void DisplayWidget(UWidget* WebWidget);
 public:
 
 };
