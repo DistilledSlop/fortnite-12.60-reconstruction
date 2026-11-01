@@ -6,7 +6,7 @@
       "id": "m1",
       "text": "The rebuilt client reaches the main menu with feature parity to the 12.60 original",
       "done": false,
-      "evidence": "The isolated hard-import closure reaches 721 packages with no failed/pending. UIManager class loads, but RootLayout/LoginScreen crash in original inline shader-map ABI. All 44 recovered D3D wrappers parse with exact framing; 19 have active resource-table bits (28 SRV, 18 sampler, 18 texture, zero UAV entries). All 44 translated shaders expose 180 SPIR-V descriptors in set 0, but 12 have compiler modifier diagnostics and no D3D-to-SPIR-V/UE draw mapping is verified. Inline M_UI offset 2225 versus archive Tell 2020 leaves wrapper origin/schema unresolved; no root widget or interactive menu is displayed (frontend/readiness.md, material_pipeline/README.md, HANDOFF.md)."
+      "evidence": "The isolated hard-import closure reaches 721 packages with no failed/pending. UIManager class loads, but RootLayout/LoginScreen crash in original inline shader-map ABI. All 44 recovered D3D wrappers parse with exact framing; 19 have active resource-table bits (28 SRV, 18 sampler, 18 texture, zero UAV entries). All 44 translated shaders expose 180 SPIR-V descriptors in set 0, but 12 have compiler modifier diagnostics and no D3D-to-SPIR-V/UE draw mapping is verified. Exact export-map checks locate one original inline resource in each of four failing materials; Donut spans .uexp 2181..10601, with M_UI name bytes at 2225. Local layout misreads the zero word after the shader-map ID hash, name length 16 and M_UI bytes; full schema/runtime bridge remain unresolved. No root widget or interactive menu is displayed (material_pipeline/README.md, HANDOFF.md)."
     },
     {
       "id": "m2",
