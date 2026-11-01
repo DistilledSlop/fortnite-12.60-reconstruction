@@ -51,7 +51,10 @@ def source_check(p,c,root):
 def snapshot_check(p,c,out):
  st=load(out/'start.json');root=Path(st['workspace']);source_check(p,c,root)
  need(p.tree(root/'porting/native/Source')==st['snapshot']['source_tree'] and p.engine_state(Path(st['snapshot']['engine']['root']))==st['snapshot']['engine'] and digest(root/'porting/gen_native_classes.py')==st['snapshot']['generator'],'immutable source/build closure')
- a=load(out/'activation.start.json');need(a['context_start_sha256']==digest(out/'start.json') and a['contract_sha256']==digest(CONTRACT) and a['binder_sha256']==digest(__file__) and a['metadata_tool_sha256']==digest(HERE/'activation_metadata.py') and a['implementation_tool_sha256']==digest(HERE/'implementation_link.py'),'activation start pins')
+ a=load(out/'activation.start.json')
+ if (out/'activation.retry-start.json').exists():
+  retry_check(p,c,out)
+ else:need(a['context_start_sha256']==digest(out/'start.json') and a['contract_sha256']==digest(CONTRACT) and a['binder_sha256']==digest(__file__) and a['metadata_tool_sha256']==digest(HERE/'activation_metadata.py') and a['implementation_tool_sha256']==digest(HERE/'implementation_link.py'),'activation start pins')
  return st,root
 
 def artifact(p,path,since,fresh=True):
@@ -77,16 +80,16 @@ def start(a):
  p,c=context();source_check(p,c,a.workspace.resolve());p.start(a)
  p.write_new(a.out/'activation.start.json',{'schema':'activation-start-v1','context_start_sha256':digest(a.out/'start.json'),'contract_sha256':digest(CONTRACT),'binder_sha256':digest(__file__),'metadata_tool_sha256':digest(HERE/'activation_metadata.py'),'implementation_tool_sha256':digest(HERE/'implementation_link.py')})
 def build(a):
- p,c=context();snapshot_check(p,c,a.out);p.build_target(a)
+ p,c=context();need(not (a.out/'activation.retry-start.json').exists(),'run-only resume cannot build');snapshot_check(p,c,a.out);p.build_target(a)
 def finish(a):
- p,c=context();st,root=snapshot_check(p,c,a.out);p.finish(a)
+ p,c=context();need(not (a.out/'activation.retry-start.json').exists(),'run-only resume cannot finish/restamp build');st,root=snapshot_check(p,c,a.out);p.finish(a)
  p.write_new(a.out/'activation.build.json',{'schema':'activation-build-v1','context_build_sha256':digest(a.out/'build.json'),'activation_start_sha256':digest(a.out/'activation.start.json'),'targets':collect(p,a.out,st,root),'finished_ns':time.time_ns()})
 
 def activation_command(binary,case,travel,args):
  need(case=='activation','activation case');extra=list(args);extra=extra[1:] if extra and extra[0]=='--' else extra
  # No caller-controlled startup/phase/driver flags: keep this driver isolated.
  need(not extra,'activation runner accepts no extra arguments')
- return [str(binary),'-ActivationBaseProbe','-stdout','-NOCONSOLE']
+ return [str(binary),'-ActivationBaseProbe','-stdout']+BASELINE_ARGS
 def run(a):
  p,c=context();snapshot_check(p,c,a.out);b=load(a.out/'activation.build.json');need(b['context_build_sha256']==digest(a.out/'build.json'),'activation/context build chain')
  a.case='activation';a.travel_map='/Engine/Maps/Entry';a.args=[]
@@ -119,6 +122,7 @@ def verify(a):
  need(r['binary_sha256']==binary['sha256'] and digest(r['argv'][0])==binary['sha256'] and r['argv']==activation_command(Path(r['argv'][0]),'activation','',[]),'exact staged/executed executable/argv')
  need(Path(r['cwd']).is_absolute() and Path(r['cwd']).is_dir() and r['start_ns']>b['finished_ns'] and r['end_ns']>r['start_ns'],'fresh runtime/cwd')
  need(Path(r['log']['path']).resolve()==log.resolve() and digest(log)==r['log']['sha256'],'raw complete runtime log hash')
+ if (a.out/'activation.retry-start.json').exists():fresh_retry_runs(a.out)
  for case in ('registry','lifecycle'):
   other=load(a.out/(case+'.run.json'));need(r['pid']!=other['pid'] or r['start_ns']>other['end_ns'] or other['start_ns']>r['end_ns'],'separate diagnostic process')
  text=log.read_text();need('CONTEXT_DRIVER' not in text,'single activation driver')
@@ -126,15 +130,93 @@ def verify(a):
  verifier=Path('/tmp/activation-base-live-probe-1/verify_log.py');old=load(c['frozen_receipts'][1]['path']);item=next(x for x in old['bindings'] if x['path']==str(verifier));pinned(item)
  import importlib.util
  spec=importlib.util.spec_from_file_location('activation_log',verifier);v=importlib.util.module_from_spec(spec);spec.loader.exec_module(v);transcript=v.verify(text)
- p.write_new(a.report,{'schema':'activation-live-verification-v2','passed':True,'full_ready':True,'scope':'Bounded local activation behavior diagnostic; all inherited context checks and both target implementation/native metadata links pass.','gaps':[], 'context_report_sha256':digest(a.context_report),'activation_build_sha256':digest(a.out/'activation.build.json'),'run_sha256':digest(runfile),'log_sha256':digest(log),'metadata':metadata,'transcript':transcript,'runtime_provenance_verified':True,'limits':c['limitations'][1:]})
+ p.write_new(a.report,{'schema':'activation-live-verification-v2','passed':True,'full_ready':True,'scope':'Bounded local activation behavior diagnostic; all inherited context checks and both target implementation/native metadata links pass.','gaps':[], 'context_report_sha256':digest(a.context_report),'activation_build_sha256':digest(a.out/'activation.build.json'),'run_sha256':digest(runfile),'log_sha256':digest(log),'metadata':metadata,'transcript':transcript,'runtime_provenance_verified':True,'build_origin':'inherited immutable phase2 build' if (a.out/'activation.retry-start.json').exists() else 'fresh build','retry_start_sha256':digest(a.out/'activation.retry-start.json') if (a.out/'activation.retry-start.json').exists() else None,'limits':c['limitations'][1:]})
+
+
+# Exact successful phase2 context startup baseline, with only diagnostic driver
+# arguments replaced. Keep renderer/project/map/compatibility settings fixed.
+BASELINE_ARGS=['FortniteLinux','/Engine/Maps/Entry','-vulkan','-windowed','-ResX=1280','-ResY=720','-nosound','-unattended','-log','-FortniteLegacySequencer','-FortniteLegacyFieldPaths','-NOCONSOLE']
+PARENT_SHA='2f6ae1bee29f1579b1dc90af3f599f1f70881cc1390dd19b02e2af89a856b4a4'
+RELEASE_SHA='2a457d888601347836aca5dbe23361987fb31c887b0a9a291fbd209596766c2e'
+# SHA256 of git 824af00646e001c555bb8e55b74aac050836671c:binder.py
+OLD_BINDER_SHA='ecfed853ae19ac1b5a1b8f15b6796f143046b5cfffae56d051ae111fbb8a27a2'
+INHERITED=('start.json','build.json','activation.start.json','activation.build.json')
+def binding(path):return {'path':str(Path(path).resolve()),'sha256':digest(path)}
+def tool_bindings():return {name:binding(HERE/name) for name in ('binder.py','activation_metadata.py','implementation_link.py','contract.json','source-expectations.json')}
+def validate_parent(checkpoint,release,previous,check_artifacts=True):
+ need(digest(checkpoint)==PARENT_SHA and digest(release)==RELEASE_SHA,'exact parent checkpoint/release')
+ cp=load(checkpoint);rel=load(release)
+ need(rel['released'] is True and rel['native_source_build_stage_released'] is True and rel['all_phase_processes_terminal'] is True and rel['checkpoint_sha256']==PARENT_SHA and Path(rel['checkpoint']).resolve()==Path(checkpoint).resolve(),'released parent phase')
+ need(all(x['exit']==0 for x in cp['builds']) and {x['target'] for x in cp['builds']}=={'FortniteLinux','FortniteLinuxServer'},'successful inherited builds')
+ # The pinned frozen manifest authenticates all four original receipt bytes.
+ manifest=Path(release).parent/'runtime-evidence-manifest.json'
+ need(digest(manifest)==cp['runtime_evidence_manifest_sha256'],'parent runtime evidence manifest')
+ rows=load(manifest)
+ for name in INHERITED:
+  row=next(x for x in rows if Path(x['path']).name==name);pinned(row)
+  need(digest(previous/name)==row['sha256'],'inherited receipt '+name)
+ need(digest(previous/'build.json')==cp['build_finish_sha256'] and digest(previous/'activation.build.json')==cp['activation_build_sha256'],'checkpoint build binding')
+ st=load(previous/'start.json');ab=load(previous/'activation.build.json');ast=load(previous/'activation.start.json');build=load(previous/'build.json')
+ need(build['schema']=='context-build-v1' and build['start_sha256']==digest(previous/'start.json') and ab['schema']=='activation-build-v1' and ab['context_build_sha256']==digest(previous/'build.json') and ab['activation_start_sha256']==digest(previous/'activation.start.json'),'old build chain')
+ need(ast['binder_sha256']==OLD_BINDER_SHA and ast['context_start_sha256']==digest(previous/'start.json') and ast['contract_sha256']==digest(CONTRACT) and ast['metadata_tool_sha256']==digest(HERE/'activation_metadata.py') and ast['implementation_tool_sha256']==digest(HERE/'implementation_link.py'),'exact reviewed old binder and unchanged audit tools')
+ need(build['finished_ns']>st['start_ns'] and ab['finished_ns']>=build['finished_ns'],'inherited build epoch')
+ # Context artifacts and invocation/log receipts are rehashed without restamping.
+ for target,r in build['targets'].items():
+  # Full ELF/debug/artifact rehash occurs once at resume, then again in
+  # the unchanged final strict verifier. Runs still pin receipts/recipes
+  # and p.run hashes the executed binary before and after its process.
+  if check_artifacts:
+   for value in r.values():pinned(value)
+  else:
+   pinned(r['build_run']);pinned(r['log'])
+  br=load(r['build_run']['path'])
+  need(br['schema']=='context-build-run-v1' and br['target']==target and br['exit']==0 and br['start_sha256']==build['start_sha256'] and br['start_ns']>=st['start_ns'] and br['log_sha256']==r['log']['sha256'],'inherited successful invocation')
+ return st,ab
+
+def retry_check(p,c,out):
+ retry=load(out/'activation.retry-start.json');need(retry['schema']=='activation-runtime-retry-v1','explicit resume schema')
+ for item in retry['bindings'].values():pinned(item)
+ need(retry['tools']==tool_bindings(),'current retry tools/contract')
+ prev=Path(retry['previous']);st,ab=validate_parent(Path(retry['bindings']['checkpoint']['path']),Path(retry['bindings']['release']['path']),prev,check_artifacts=False)
+ need(set(retry['inherited'])==set(INHERITED),'exact inherited files')
+ for name in INHERITED:
+  need(retry['inherited'][name]==binding(prev/name) and (out/name).is_symlink() and (out/name).resolve()==(prev/name).resolve() and digest(out/name)==retry['inherited'][name]['sha256'],'unchanged inherited symlink '+name)
+ need(retry['start_ns']>max(ab['finished_ns'],load(retry['bindings']['release']['path'])['released_ns']),'fresh retry epoch')
+ need(ab['targets']==collect(p,out,st,Path(st['workspace'])),'inherited exact objects/metadata/link recipes')
+ return retry
+
+def resume(a):
+ p,c=context();previous=a.previous.resolve();st,ab=validate_parent(a.parent_checkpoint,a.release,previous)
+ root=Path(st['workspace']);source_check(p,c,root)
+ need(p.tree(root/'porting/native/Source')==st['snapshot']['source_tree'] and p.engine_state(Path(st['snapshot']['engine']['root']))==st['snapshot']['engine'] and digest(root/'porting/gen_native_classes.py')==st['snapshot']['generator'],'immutable inherited source closure')
+ need(ab['targets']==collect(p,previous,st,root),'immutable inherited activation build artifacts')
+ need(not a.out.exists(),'resume requires new attempt directory');a.out.mkdir(parents=True)
+ for name in INHERITED:(a.out/name).symlink_to(previous/name)
+ p.write_new(a.out/'activation.retry-start.json',{'schema':'activation-runtime-retry-v1','previous':str(previous),'bindings':{'checkpoint':binding(a.parent_checkpoint),'release':binding(a.release)},'inherited':{name:binding(previous/name) for name in INHERITED},'tools':tool_bindings(),'start_ns':time.time_ns(),'build_origin':'inherited immutable phase2 build; no compilation'})
+ # Initial parent/source/collection validation above already authenticated
+ # these bytes; subsequent stages revalidate the receipt and references.
+
+def fresh_retry_runs(out):
+ retry=load(out/'activation.retry-start.json')
+ for case in ('activation','registry','lifecycle'):
+  r=load(out/(case+'.run.json'));need(r['start_ns']>=retry['start_ns'] and r['end_ns']>r['start_ns'],'fresh retry process '+case)
+  expected=activation_command(Path(r['argv'][0]),'activation','',[]) if case=='activation' else [r['argv'][0],'-ContextRuntimeProbe','-ContextProbeCase='+case,'-ContextProbeTravelMap=/Engine/Maps/Entry','-stdout']+BASELINE_ARGS
+  need(r['argv']==expected,'exact retry startup command '+case)
+
+def run_context(a):
+ p,c=context();need((a.out/'activation.retry-start.json').exists(),'context runner requires explicit validated resume');snapshot_check(p,c,a.out)
+ a.travel_map='/Engine/Maps/Entry';a.args=list(BASELINE_ARGS);p.run(a)
 
 def main():
  parser=argparse.ArgumentParser();subs=parser.add_subparsers(required=True)
- for name,fn in [('start',start),('build',build),('finish',finish),('run',run),('verify',verify)]:
+ for name,fn in [('start',start),('resume',resume),('build',build),('finish',finish),('run',run),('run-context',run_context),('verify',verify)]:
   q=subs.add_parser(name);q.add_argument('--out',type=Path,required=True);q.set_defaults(fn=fn)
   if name=='start':q.add_argument('--workspace',type=Path,required=True);q.add_argument('--engine',type=Path,required=True)
   if name=='build':q.add_argument('--target',choices=['FortniteLinux','FortniteLinuxServer'],required=True);q.add_argument('args',nargs=argparse.REMAINDER)
-  if name=='run':q.add_argument('--target',choices=['FortniteLinux'],default='FortniteLinux');q.add_argument('--binary',type=Path,required=True);q.add_argument('--cwd',type=Path,required=True);q.add_argument('--timeout',type=int,default=240)
+  if name=='resume':
+   q.add_argument('--previous',type=Path,required=True);q.add_argument('--parent-checkpoint',type=Path,required=True);q.add_argument('--release',type=Path,required=True)
+  if name in ('run','run-context'):q.add_argument('--target',choices=['FortniteLinux'],default='FortniteLinux');q.add_argument('--binary',type=Path,required=True);q.add_argument('--cwd',type=Path,required=True);q.add_argument('--timeout',type=int,default=240)
+  if name=='run-context':q.add_argument('--case',choices=['registry','lifecycle'],required=True)
   if name=='verify':q.add_argument('--original',type=Path,required=True);q.add_argument('--context-report',type=Path,required=True);q.add_argument('--report',type=Path,required=True)
  a=parser.parse_args();a.out=a.out.resolve();a.fn(a)
 if __name__=='__main__':main()

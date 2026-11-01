@@ -20,7 +20,7 @@ class ContractTests(unittest.TestCase):
    p.unlink()
    with self.assertRaises(ValueError):b.pinned(item)
  def test_exact_command_no_other_driver_or_phase(self):
-  self.assertEqual(b.activation_command(Path('/tmp/bin'),'activation','',[]),['/tmp/bin','-ActivationBaseProbe','-stdout','-NOCONSOLE'])
+  self.assertEqual(b.activation_command(Path('/tmp/bin'),'activation','',[]),['/tmp/bin','-ActivationBaseProbe','-stdout']+b.BASELINE_ARGS)
   for args in [['-ContextRuntimeProbe'],['-ActivationBaseProbe'],['-ForcePhase'],['--','-foo']]:
    with self.assertRaises(ValueError):b.activation_command(Path('/tmp/bin'),'activation','',args)
   with self.assertRaises(ValueError):b.activation_command(Path('/tmp/bin'),'registry','',[])
@@ -75,7 +75,7 @@ class RunMutationTests(unittest.TestCase):
    targets={t:{'base_cpp':{'object':{'path':'unused'}},'base_glue':{'cpp':{'path':'unused'},'object':{'path':'unused'}}} for t in ('FortniteLinux','FortniteLinuxServer')}
    write('activation.build.json',{'schema':'activation-build-v1','context_build_sha256':b.digest(out/'build.json'),'activation_start_sha256':b.digest(out/'activation.start.json'),'targets':targets,'finished_ns':1})
    for case in ('registry','lifecycle'):write(case+'.run.json',{'pid':2,'start_ns':2,'end_ns':3})
-   run={'schema':'context-run-v2','case':'activation','target':'FortniteLinux','build_sha256':b.digest(out/'build.json'),'exit':0,'error':None,'timed_out':False,'proc_exe_inode_verified':True,'binary_after_verified':True,'binary_sha256':b.digest(binary),'argv':[str(binary),'-ActivationBaseProbe','-stdout','-NOCONSOLE'],'cwd':str(out),'start_ns':4,'end_ns':5,'pid':3,'log':{'path':str(log),'sha256':b.digest(log)}}
+   run={'schema':'context-run-v2','case':'activation','target':'FortniteLinux','build_sha256':b.digest(out/'build.json'),'exit':0,'error':None,'timed_out':False,'proc_exe_inode_verified':True,'binary_after_verified':True,'binary_sha256':b.digest(binary),'argv':b.activation_command(binary,'activation','',[]),'cwd':str(out),'start_ns':4,'end_ns':5,'pid':3,'log':{'path':str(log),'sha256':b.digest(log)}}
    args=SimpleNamespace(out=out,original=out/'unused',context_report=out/'context.report',report=out/'report')
    def context_verify():args.context_report.write_text('{}')
    patches=[patch.object(b,'context',return_value=(p,c)),patch.object(b,'snapshot_check',return_value=({},out)),patch.object(b,'collect',return_value=targets),patch.object(verify_report,'main',side_effect=context_verify),patch.object(activation_metadata,'audit',return_value={'passed':True}),patch.object(implementation_link,'audit',return_value={'passed':True,'synthetic_test_only':True})]
