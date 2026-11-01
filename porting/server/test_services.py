@@ -939,7 +939,45 @@ class MatchmakingTests(ServiceTestCase):
                                     f"/api/game/v2/matchmaking/account/{account}/session/{session_id}")
         self.assertEqual(status, 200)
         self.assertEqual(repeated, key)
+        self.assertError(jcall(self.base, "GET",
+                               f"/api/game/v2/matchmaking/account/{'2' * 32}/session/{session_id}"),
+                         404, Err.NOT_FOUND)
         self.assertError(jcall(self.base, "GET", f"/fortnite/api/matchmaking/session/{'1' * 32}"),
+                         404, Err.NOT_FOUND)
+
+    def test_party_ticket_session_roster_and_keys(self):
+        other = self.new_account("SecondPlayer")
+        status, ticket, _ = jcall(
+            self.base, "GET", f"/fortnite/api/game/v2/matchmakingservice/ticket/player/{LOCAL}"
+            f"?partyPlayerIds={other},{LOCAL},{other}&bucketId=UNKNOWN:0:1")
+        self.assertEqual(status, 200)
+        path = urllib.parse.urlsplit(ticket["serviceUrl"]).path
+        sock, stream, status_line, accepted = ws.ws_open(self.server.port, path, None)
+        self.assertTrue(status_line.startswith("HTTP/1.1 101") and accepted)
+        try:
+            while True:
+                opcode, payload = ws.ws_recv(stream)
+                self.assertEqual(opcode, 0x1)
+                message = json.loads(payload)
+                if message["name"] == "Play":
+                    session_id = message["payload"]["sessionId"]
+                    break
+        finally:
+            sock.close()
+        status, record, _ = jcall(self.base, "GET", f"/fortnite/api/matchmaking/session/{session_id}")
+        self.assertEqual(status, 200)
+        self.assertEqual(record["publicPlayers"], [LOCAL, other])
+        self.assertEqual(record["openPublicPlayers"], record["maxPublicPlayers"] - 2)
+        keys = []
+        for account in (LOCAL, other):
+            status, body, _ = jcall(self.base, "GET",
+                                      f"/api/game/v2/matchmaking/account/{account}/session/{session_id}")
+            self.assertEqual(status, 200)
+            self.assertEqual(body["accountId"], account)
+            keys.append(body["key"])
+        self.assertEqual(keys[0], keys[1], "party members must receive one session encryption key")
+        self.assertError(jcall(self.base, "GET",
+                               f"/api/game/v2/matchmaking/account/{'2' * 32}/session/{session_id}"),
                          404, Err.NOT_FOUND)
 
     def test_unknown_ticket_is_closed_with_1008(self):

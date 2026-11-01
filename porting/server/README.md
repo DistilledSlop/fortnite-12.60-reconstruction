@@ -240,6 +240,11 @@ session keys come from `secrets`. Websocket messages use the binary-observed `na
 object `payload` envelope; Play includes match id, session id and join delay. The session-key
 answer contains account id, session id and a Base64 key. See `EVIDENCE.md` for the client
 reader traces and the unverified state values and end-to-end flow.
+The local ticket's comma-separated `partyPlayerIds` become the session's public roster,
+with duplicates removed and the ticket player included. Available public slots reflect
+that roster. Only listed players can retrieve the session key; they receive the same key.
+The party delimiter, roster policy and denial status are local choices, not confirmed
+against the original client or Epic service.
 The state step is 0.5 s by default, and `Backend(state_step_sec=0)` removes it for tests.
 
 ## Provenance

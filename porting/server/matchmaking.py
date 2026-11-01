@@ -75,7 +75,7 @@ class MatchmakingService:
         self._sessions = {}
         self._session_keys = {}
 
-    def _session_record(self, owner_id, owner_name):
+    def _session_record(self, owner_id, owner_name, players):
         return {
             "ownerId": owner_id,  # [guess] field value; name [observed] in binary
             "ownerName": owner_name,  # [guess]
@@ -83,8 +83,8 @@ class MatchmakingService:
             "serverAddress": SESSION_SERVER_ADDRESS,  # [guess]
             "serverPort": SESSION_SERVER_PORT,  # [guess]
             "maxPublicPlayers": 100,  # [guess]
-            "openPublicPlayers": 99,  # [guess] max minus the owner
-            "publicPlayers": [owner_id],  # [guess]
+            "openPublicPlayers": 100 - len(players),  # [guess] available public slots
+            "publicPlayers": players,  # [guess] ticket party members
             "privatePlayers": [],  # [guess]
             "attributes": {"BeaconPort": SESSION_BEACON_PORT},  # [observed] name "BeaconPort"; value [guess]
             "buildUniqueId": BUILD_UNIQUE_ID,  # [observed] name; value [given]
@@ -93,6 +93,13 @@ class MatchmakingService:
 
     def ticket(self, account_id, query):
         """Answer GET .../matchmakingservice/ticket/player/{id}. Returns (status, body)."""
+        # [observed] partyPlayerIds is sent in the ticket request. Its delimiter and
+        # server-side roster rules are not recovered; use the comma-separated form
+        # used by this local service, with the requesting player always included.
+        party_ids = [value.strip() for value in query.get("partyPlayerIds", "").split(",")]
+        players = list(dict.fromkeys([account_id] + [value for value in party_ids if value]))
+        if len(players) > 100:
+            raise ApiError(400, Err.INVALID_PAYLOAD, "The party exceeds the session capacity.")
         ticket_id = self.ctx.new_id("ticket")
         match_id = self.ctx.new_id("match")
         session_id = self.ctx.new_id("session")
@@ -113,7 +120,7 @@ class MatchmakingService:
         owner_name = self.accounts.display_name(account_id)
         with self._lock:
             self._tickets[ticket_id] = {"matchId": match_id, "sessionId": session_id}
-            self._sessions[session_id] = self._session_record(account_id, owner_name)
+            self._sessions[session_id] = self._session_record(account_id, owner_name, players)
         body = {  # [observed] field names per section 3; values [guess]
             "serviceUrl": f"wss://{MATCHMAKING_HOST}{MATCHMAKING_WS_PATH}/{ticket_id}",
             "ticketType": TICKET_TYPE,
@@ -180,11 +187,12 @@ class MatchmakingService:
     def session_key(self, account_id, session_id):
         """Answer GET .../matchmaking/account/{acct}/session/{sid}. None if the session is unknown.
 
-        The key is 32 random bytes, created on first request for the session and kept in
-        memory only. The account id is not checked, because this is a local stand-in.
+        The key is 32 random bytes, created on first request for a session player
+        and kept in memory only.
         """
         with self._lock:
-            if session_id not in self._sessions:
+            session = self._sessions.get(session_id)
+            if session is None or account_id not in session["publicPlayers"] + session["privatePlayers"]:
                 return None
             key = self._session_keys.get(session_id)
             if key is None:

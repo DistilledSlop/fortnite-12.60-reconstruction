@@ -224,6 +224,16 @@ server-side encryption and a client round trip remain unverified. The ignored de
 disassembly and caller metadata are under `generated/sessionkey-probe/`,
 `sessionkey-callback/`, `sessionkey-parser/` and `sessionkey-fields/`.
 
+The ticket request's `partyPlayerIds` parameter and the OnlineSessionMcp
+`publicPlayers`, `openPublicPlayers` and `maxPublicPlayers` fields appear in the client
+route/field inventory (`original_client_net_protocol.md`, section 3). The backend now
+keeps those local values consistent for a comma-separated party roster: each listed
+player can request the same session key, and an unlisted account gets a 404. The
+delimiter, admission rule, 100-player capacity and error status are local policies;
+binary evidence does not establish Epic's exact behavior. The HTTP/websocket test
+`MatchmakingTests.test_party_ticket_session_roster_and_keys` verifies this flow without
+a reconstructed-client join.
+
 ## Matchmaking websocket message trace
 
 The client handler containing `0x14106b115` loads top-level `name` and `payload`, reads
