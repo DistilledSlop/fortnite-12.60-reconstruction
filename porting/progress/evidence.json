@@ -80,6 +80,29 @@
    "utc": "2026-11-01T02:23:01Z",
    "wrapper_exit_code": 0
   },
+  "material_donut_asset_ingress": {
+   "artifact_validation_receipt": "porting/generated/frontend-probes/legacy-texture-donut-artifacts-1-root-validation.json",
+   "artifact_validation_receipt_sha256": "fc39c0bb5f80ab51861a37d5edbea846ef85d984ee9fc231bc4766609db0ccf1",
+   "command": "env -u LD_LIBRARY_PATH VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/lvp_icd.json SDL_AUDIODRIVER=dummy LP_NUM_THREADS=8 xvfb-run -a /opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/original-vulkan-stage/LinuxNoEditor/FortniteLinux.sh -vulkan -windowed -ResX=1280 -ResY=720 -nosound -unattended -FortniteLegacyMaterialIngress=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/donut-ingress-bundle.json -FortniteProbeLegacyOriginalMaterial -FortniteLegacyFieldPaths -FortniteLegacyMaterialProbeOwner=/Game/Athena/UI/Challenges/Art/Donut/M_UI_DonutIcons.M_UI_DonutIcons -FortniteLegacyMaterialArtifactDir=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/legacy-texture-donut-artifacts-1 -ExecCmds=Quit -log",
+   "commit": "46b46751a74168c314362bc46017d15fce830c89",
+   "engine_commit": "08ebac023",
+   "exit_code": 0,
+   "id": "material_donut_asset_ingress",
+   "key_lines": [
+    "[2026.11.01-04.14.38:193][  0]LogMaterial: Display: Legacy actual-owner completeness owner=/Game/Athena/UI/Challenges/Art/Donut/M_UI_DonutIcons.M_UI_DonutIcons domain=5 blend=2 shading=MSM_Unlit quality=1 feature=3 flags=2816 required=7 missing=0 complete=1",
+    "[2026.11.01-04.14.38:295][  0]LogTemp: Display: Legacy material probe: 5 owner live uniform cases passed",
+    "[2026.11.01-04.14.38:296][  0]LogTemp: Display: Legacy material probe: 5 Donut owner live uniform cases passed",
+    "[2026.11.01-04.14.38:465][  0]LogTemp: Display: Legacy material probe: original Slate quad readback changed 1290 pixels"
+   ],
+   "log": "porting/generated/frontend-probes/legacy-texture-donut-1.log",
+   "log_sha256": "a0c42624a7309b6f78db1ca5faa1fca3aa5a7d273e08b70c1b19edfb257f9eb7",
+   "result": "pass",
+   "scope": "Actual original Donut owner, indexed default texture and actual App2 override; seven required/zero missing shaders and game/render attachment. Server and final broad joins are tracked separately; original-client pixels and frontend widget integration remain unverified.",
+   "source_native_commit": "46b4675",
+   "utc": "2026-11-01T04:23:11Z",
+   "verification_receipt": "porting/generated/material_pipeline/donut-independent-checkpoint-results.json",
+   "verification_receipt_sha256": "fd4b9f4619fb791bf02abfa886399bdf17763b8a55fda909ff3319019a489bf7"
+  },
   "material_locker_asset_ingress": {
    "artifact_validation_receipt": "porting/generated/frontend-probes/legacy-material-ingress-artifacts-3-validation.json",
    "artifact_validation_receipt_sha256": "134f49d15a89c6d80759c23e6c283f87e423665ef4d178885bedc48f5afc7107",

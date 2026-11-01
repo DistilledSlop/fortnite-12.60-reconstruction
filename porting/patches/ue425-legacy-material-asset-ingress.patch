@@ -560,4 +560,223 @@ index f6c60f817..391a0d10b 100644
 +	int64 OffsetToFirstResource = 0;
  	int64 OffsetToEnd;
  	bool bReleaseInnerArchive;
+
+From 08ebac023147bf943b3c4d1ab49b24a87a97998e Mon Sep 17 00:00:00 2001
+From: Codex <codex@local.invalid>
+Date: Sun, 1 Nov 2026 04:18:31 +0000
+Subject: [PATCH] Restore original Slate material texture parameters and owner
+ references
+
+---
+ .../Engine/Classes/Materials/Material.h       |  2 +
+ .../Private/Materials/LegacyMaterialAsset.cpp | 46 +++++++++++++++++++
+ .../Private/Materials/LegacySlateMaterial.cpp | 43 ++++++++++++-----
+ .../Engine/Public/LegacyMaterialAsset.h       |  8 ++++
+ .../Engine/Public/LegacySlateMaterial.h       | 13 ++++++
+ 5 files changed, 101 insertions(+), 11 deletions(-)
+
+diff --git a/Engine/Source/Runtime/Engine/Classes/Materials/Material.h b/Engine/Source/Runtime/Engine/Classes/Materials/Material.h
+index 1ddd0652e..1df1538ec 100644
+--- a/Engine/Source/Runtime/Engine/Classes/Materials/Material.h
++++ b/Engine/Source/Runtime/Engine/Classes/Materials/Material.h
+@@ -953,6 +953,8 @@ private:
+ 	UPROPERTY()
+ 	FMaterialCachedExpressionData CachedExpressionData;
  
++	friend bool RestoreLegacyMaterialTextureReferences(UMaterial* Owner, TArrayView<UTexture* const> References, FString& Error);
++
+ #if WITH_EDITORONLY_DATA
+ 	UPROPERTY()
+ 	TArray<FGuid> ReferencedTextureGuids;
+diff --git a/Engine/Source/Runtime/Engine/Private/Materials/LegacyMaterialAsset.cpp b/Engine/Source/Runtime/Engine/Private/Materials/LegacyMaterialAsset.cpp
+index 181045b7e..65df63a9b 100644
+--- a/Engine/Source/Runtime/Engine/Private/Materials/LegacyMaterialAsset.cpp
++++ b/Engine/Source/Runtime/Engine/Private/Materials/LegacyMaterialAsset.cpp
+@@ -3,10 +3,48 @@
+ #include "MaterialShared.h"
+ #include "Materials/Material.h"
+ #include "Materials/MaterialInstance.h"
++#include "Engine/Texture.h"
+ #include "MaterialShaderMapLayout.h"
+ #include "MeshMaterialShaderType.h"
+ #include "VertexFactory.h"
+ 
++bool RestoreLegacyMaterialTextureReferences(UMaterial* Owner, TArrayView<UTexture* const> References, FString& Error)
++{
++ check(IsInGameThread());
++ if (!Owner || References.Num() > 128)
++ {
++  Error = TEXT("Invalid original material texture reference owner/count");
++  return false;
++ }
++ for (UTexture* Texture : References)
++  if (!Texture || !Texture->IsValidLowLevel())
++  {
++   Error = TEXT("Original material texture reference did not resolve to a valid source texture");
++   return false;
++  }
++ TArray<UObject*>& Existing = Owner->CachedExpressionData.ReferencedTextures;
++ if (Existing.Num())
++ {
++  if (Existing.Num() != References.Num())
++  {
++   Error = TEXT("Original material texture references conflict with serialized owner data");
++   return false;
++  }
++  for (int32 I = 0; I < Existing.Num(); ++I)
++   if (Existing[I] != References[I])
++   {
++    Error = TEXT("Original material texture reference index conflicts with serialized owner data");
++    return false;
++   }
++ }
++ else
++ {
++  Existing.Reserve(References.Num());
++  for (UTexture* Texture : References) Existing.Add(Texture);
++ }
++ return true;
++}
++
+ bool ValidateLegacyMaterialAsset(FMaterialResource& Resource, UMaterialInterface* Owner)
+ {
+  check(IsInGameThread());
+@@ -19,6 +57,14 @@ bool ValidateLegacyMaterialAsset(FMaterialResource& Resource, UMaterialInterface
+   Resource.ReleaseShaderMap();
+   return false;
+  }
++ FString OwnerError;
++ const auto& Provenance = Map->GetLegacyMaterialProvenance();
++ if (Provenance.IsValid() && !Provenance->PrepareOwner(Owner, OwnerError))
++ {
++  UE_LOG(LogMaterial, Error, TEXT("Legacy material %s original owner preparation failed: %s"), *Owner->GetPathName(), *OwnerError);
++  Resource.ReleaseShaderMap();
++  return false;
++ }
+  const FMaterialShaderMapId& Id = Map->GetShaderMapId();
+  if (Id.FeatureLevel >= ERHIFeatureLevel::Num || Id.QualityLevel > EMaterialQualityLevel::Num || Map->GetShaderPlatform() != GMaxRHIShaderPlatform)
+  {
+diff --git a/Engine/Source/Runtime/Engine/Private/Materials/LegacySlateMaterial.cpp b/Engine/Source/Runtime/Engine/Private/Materials/LegacySlateMaterial.cpp
+index 93d4ff629..95cab1a54 100644
+--- a/Engine/Source/Runtime/Engine/Private/Materials/LegacySlateMaterial.cpp
++++ b/Engine/Source/Runtime/Engine/Private/Materials/LegacySlateMaterial.cpp
+@@ -11,21 +11,27 @@ TRefCountPtr<FMaterialShaderMap> FMaterialShaderMap::CreateLegacySlateMap(
+  auto Fail = [&Error](const TCHAR* Message) -> TRefCountPtr<FMaterialShaderMap> { Error = Message; return nullptr; };
+  if (Material.Platform != SP_VULKAN_SM5 || Material.FeatureLevel != ERHIFeatureLevel::SM5 ||
+      Material.OriginalMapHash == FSHAHash() || Material.Expressions.Num() > 8192 ||
+-     Material.VectorRoots.Num() > 1024 || Material.ScalarRoots.Num() > 1024 || Material.UniformBufferSize > 65535)
++     Material.VectorRoots.Num() > 1024 || Material.ScalarRoots.Num() > 1024 ||
++     Material.Texture2DParameters.Num() > 128 || Material.UniformBufferSize > 65535)
+   return Fail(TEXT("Unsupported original Slate material identity, platform or slot layout"));
+ 
+- // Numeric preshaders occupy vector4 slots; scalar roots share vector4 slots.
+- // The only supported resources are the two built-in world-group samplers.
+- // Validate the serialized shape before asking UE to construct its metadata,
+- // then independently compare that metadata below. Texture/VT layouts require
+- // their own original resource conversion and must not be inferred here.
++ // Each Standard2D expression contributes a texture and its sampler after the
++ // packed numeric slots. UE appends the two built-in world-group samplers.
++ // Reject unsupported serialized shapes before metadata construction, then
++ // independently compare CreateBufferStruct's actual layout below.
+  const uint32 NumericBytes = uint32(Material.VectorRoots.Num()) * sizeof(FVector4) +
+   ((uint32(Material.ScalarRoots.Num()) + 3u) / 4u) * sizeof(FVector4);
+- const uint32 ExpectedSize = Align(NumericBytes + 2u * SHADER_PARAMETER_POINTER_ALIGNMENT, SHADER_PARAMETER_STRUCT_ALIGNMENT);
+- if (Material.Resources.Num() != 2 || Material.UniformBufferSize != ExpectedSize ||
+-     Material.Resources[0].Offset != NumericBytes || Material.Resources[0].BaseType != UBMT_SAMPLER ||
+-     Material.Resources[1].Offset != NumericBytes + SHADER_PARAMETER_POINTER_ALIGNMENT || Material.Resources[1].BaseType != UBMT_SAMPLER)
+-  return Fail(TEXT("Unsupported original numeric uniform resource layout"));
++ const int32 TextureResourceCount = Material.Texture2DParameters.Num() * 2;
++ const int32 ResourceCount = TextureResourceCount + 2;
++ const uint32 ExpectedSize = Align(NumericBytes + uint32(ResourceCount) * SHADER_PARAMETER_POINTER_ALIGNMENT, SHADER_PARAMETER_STRUCT_ALIGNMENT);
++ if (Material.Resources.Num() != ResourceCount || Material.UniformBufferSize != ExpectedSize)
++  return Fail(TEXT("Unsupported original uniform resource size/count"));
++ for (int32 I = 0; I < ResourceCount; ++I)
++ {
++  const EUniformBufferBaseType Type = I < TextureResourceCount && I % 2 == 0 ? UBMT_TEXTURE : UBMT_SAMPLER;
++  if (Material.Resources[I].Offset != NumericBytes + uint32(I) * SHADER_PARAMETER_POINTER_ALIGNMENT || Material.Resources[I].BaseType != Type)
++   return Fail(TEXT("Unsupported original uniform resource layout"));
++ }
+ 
+  TRefCountPtr<FMaterialShaderMap> Map = new FMaterialShaderMap();
+  FMaterialShaderMapContent* Content = new FMaterialShaderMapContent(Material.Platform);
+@@ -50,6 +56,21 @@ TRefCountPtr<FMaterialShaderMap> FMaterialShaderMap::CreateLegacySlateMap(
+  Compilation.NumUsedCustomInterpolatorScalars = Material.UsedCustomInterpolatorScalars;
+ #endif
+  FUniformExpressionSet& Uniforms = Compilation.UniformExpressionSet;
++ for (const FLegacyMaterialTextureParameter& N : Material.Texture2DParameters)
++ {
++  if (N.Parameter.Name.IsNone() || N.Parameter.Association > GlobalParameter ||
++      (N.Parameter.Association == GlobalParameter ? N.Parameter.Index != INDEX_NONE : N.Parameter.Index < 0) ||
++      N.TextureIndex < 0 || N.TextureLayerIndex != INDEX_NONE || N.PageTableLayerIndex != INDEX_NONE ||
++      N.bVirtualTexture || N.SamplerSource > uint8(SSM_Clamp_WorldGroupSettings))
++   return Fail(TEXT("Unsupported original Standard2D texture parameter identity or sampler record"));
++  auto& P = Uniforms.UniformTextureParameters[uint32(EMaterialTextureParameterType::Standard2D)].AddDefaulted_GetRef();
++  P.ParameterInfo = FHashedMaterialParameterInfo(N.Parameter);
++  P.ParameterName = N.Parameter.Name.ToString();
++  P.TextureIndex = N.TextureIndex;
++  P.SamplerSource = ESamplerSourceMode(N.SamplerSource);
++  P.VirtualTextureLayerIndex = uint8(N.TextureLayerIndex);
++ }
++
+  TArray<TRefCountPtr<FMaterialUniformExpression>> Nodes;
+  TArray<uint32> Depths, Costs;
+  for (int32 Index = 0; Index < Material.Expressions.Num(); ++Index)
+diff --git a/Engine/Source/Runtime/Engine/Public/LegacyMaterialAsset.h b/Engine/Source/Runtime/Engine/Public/LegacyMaterialAsset.h
+index 8335355b7..45c4f75ac 100644
+--- a/Engine/Source/Runtime/Engine/Public/LegacyMaterialAsset.h
++++ b/Engine/Source/Runtime/Engine/Public/LegacyMaterialAsset.h
+@@ -3,10 +3,15 @@
+ #include "CoreMinimal.h"
+ #include "Misc/SecureHash.h"
+ class FMaterialShaderMap;
++class UMaterialInterface;
++class UMaterial;
++class UTexture;
+ /** Immutable lifetime anchor; adapters may retain their complete decoded representation. */
+ struct ENGINE_API FLegacyMaterialAssetProvenance
+ {
+  virtual ~FLegacyMaterialAssetProvenance() = default;
++ /** Restore verified original owner data after serialization, on the game thread. */
++ virtual bool PrepareOwner(UMaterialInterface* Owner, FString& Error) const { return true; }
+  TArray<uint8> OriginalResource;
+  FSHAHash ResourceHash;
+  FString SourceIdentity;
+@@ -29,3 +34,6 @@ using FLegacyMaterialAssetProvider = ELegacyMaterialAssetResult (*)(
+ /** Register once on the game thread, before async asset loading starts. Null unregisters after loading stops. */
+ ENGINE_API void RegisterLegacyMaterialAssetProvider(FLegacyMaterialAssetProvider Provider);
+ ENGINE_API bool ValidateLegacyMaterialAsset(class FMaterialResource& Resource, class UMaterialInterface* Owner);
++
++/** Restore the complete source-derived texture index array. Existing data must agree. */
++ENGINE_API bool RestoreLegacyMaterialTextureReferences(UMaterial* Owner, TArrayView<UTexture* const> References, FString& Error);
+diff --git a/Engine/Source/Runtime/Engine/Public/LegacySlateMaterial.h b/Engine/Source/Runtime/Engine/Public/LegacySlateMaterial.h
+index db280445d..92c165552 100644
+--- a/Engine/Source/Runtime/Engine/Public/LegacySlateMaterial.h
++++ b/Engine/Source/Runtime/Engine/Public/LegacySlateMaterial.h
+@@ -28,11 +28,24 @@ struct FLegacyMaterialResource
+  uint16 Offset = 0;
+  EUniformBufferBaseType BaseType = UBMT_SAMPLER;
+ };
++/** Original Standard2D expression record, in serialized resource-slot order.
++ * TextureIndex addresses the actual owning material's referenced-texture array.
++ * Keep layer/page/VT fields so unsupported texture forms fail closed.
++ */
++struct FLegacyMaterialTextureParameter
++{
++ FMaterialParameterInfo Parameter;
++ int32 TextureIndex = INDEX_NONE;
++ int16 TextureLayerIndex = INDEX_NONE, PageTableLayerIndex = INDEX_NONE;
++ uint8 SamplerSource = 0;
++ bool bVirtualTexture = false;
++};
+ struct FLegacyMaterialIR
+ {
+  TArray<FLegacyMaterialExpression> Expressions;
+  TArray<int32> VectorRoots;
+  TArray<int32> ScalarRoots;
++ TArray<FLegacyMaterialTextureParameter> Texture2DParameters;
+  TArray<FLegacyMaterialResource> Resources;
+  uint32 UniformBufferSize = 0;
+  uint32 UsedSceneTextures = 0;
+-- 
+2.53.0
+

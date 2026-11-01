@@ -1,5 +1,43 @@
 # Original material ingress
 
+## Donut texture checkpoint (2026-11-01)
+
+Native `46b4675` and Engine `08ebac023` now load the original Donut material
+with its original indexed texture and sampler. The client build and Vulkan
+probe pass. All 19 original records remain retained, the actual owner requires
+seven shaders with zero missing, and the map attaches on both game and render
+threads. Five graph and five owner uniform cases pass. Independent validation
+passes all seven emitted shader payloads, including their original D3D resource
+table links. The 128-byte Material layout has hash 92801271 and resource offsets
+96/104/112/120 with types texture/sampler/sampler/sampler.
+
+The source default is `T_UI_Donut_PC_Icon`; the real `M_UI_DonutIcons_App2`
+instance overrides `Icon` with `T_UI_Donut_App_Icon`. Both original textures are
+128×128 BC1, sRGB, eight mips. Their source metadata and CPU decodes are retained;
+these are separate from GPU output. The actual override changes 1,290 pixels in
+the controlled 64×64 quad, independently counted from the RGBA readbacks. Exact
+command, client digest and 24 hashed evidence files are in
+`generated/material_pipeline/donut-independent-checkpoint-results.json`.
+The pinned v3 bundle is `donut-ingress-bundle.json`, SHA-1
+`e794ad691e278ecf653dfef34c0ae07375f32d7d`.
+
+The Engine restores source-indexed texture references on the real owner before
+completeness validation. This does not reconstruct the full original cached
+expression data. Its synchronous game-thread texture load during PostLoad emits
+a possible-streaming-hitch warning; async dependency handling remains work.
+The portable ingress patch includes Engine `08ebac023` and reverse-checks clean.
+Matching server build and broad joins are tracked separately from this client
+probe.
+
+Actual RootLayout and LoginScreen still fail after the full hard-import closure
+is staged. Gdb identifies the next declined original material instance as
+`/Game/UI/Foundation/Border/Materials/M-Border-MainL.M-Border-MainL` immediately
+before the incompatible current frozen shader-map reader asserts. Evidence:
+`generated/frontend-probes/gdb-donut-root-owner-3.log`. Recover and convert its
+actual resource next, then retry real widget loading and construction. All four
+product gates and original-client pixel parity remain open. Earlier checkpoints
+below retain their historical scope.
+
 ## MenuButton and final numeric checkpoint
 
 Native `ebea44e` and Engine `6925baad3` pass final client4/server2 builds,
