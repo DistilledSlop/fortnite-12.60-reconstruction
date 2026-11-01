@@ -1,0 +1,92 @@
+{
+  "block_va": "0x145a00850",
+  "name": null,
+  "name_status": "unresolved",
+  "config_name": null,
+  "class_flags": "0xa000a0",
+  "dependency_fns": [
+    "0x143da38f0",
+    "0x140812ee0"
+  ],
+  "package_fn": "0x143da38f0",
+  "base_fn": "0x140812ee0",
+  "class_noregister_fn": "0x140807a90",
+  "interface_count": 0,
+  "properties": [
+    {
+      "index": 0,
+      "name": "bInteractionEnabled",
+      "kind": "Bool",
+      "kind_raw": "0x2c",
+      "property_flags": "0x20080000000000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "element_size": 1,
+      "size_of_outer": 1160,
+      "bitfield": true,
+      "set_bit_fn": "0x140808f70",
+      "offset": null
+    },
+    {
+      "index": 1,
+      "name": "bButtonEnabled",
+      "kind": "Bool",
+      "kind_raw": "0x2c",
+      "property_flags": "0x20080000000000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "element_size": 1,
+      "size_of_outer": 1160,
+      "bitfield": true,
+      "set_bit_fn": "0x140808ef0",
+      "offset": null
+    },
+    {
+      "index": 2,
+      "name": "MinHeight",
+      "kind": "Int",
+      "kind_raw": "0x3",
+      "property_flags": "0x20080000000000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 1116
+    },
+    {
+      "index": 3,
+      "name": "MinWidth",
+      "kind": "Int",
+      "kind_raw": "0x3",
+      "property_flags": "0x20080000000000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 1112
+    },
+    {
+      "index": 4,
+      "name": "OnDoubleClicked",
+      "kind": "InlineMulticastDelegate",
+      "kind_raw": "0x1b",
+      "property_flags": "0x10000010080000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 1080,
+      "type_refs": {
+        "signature": "0x143da4410"
+      }
+    }
+  ],
+  "replicated_properties": [],
+  "functions": [],
+  "replicated_functions": [],
+  "dependency0_fn": "0x143da38f0"
+}

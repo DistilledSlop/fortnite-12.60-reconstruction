@@ -3,9 +3,12 @@ import json
 from pathlib import Path
 HERE = Path(__file__).resolve().parent
 EXPECTED = json.loads((HERE / 'base-original-policy.json').read_text())
+BUTTON_EXPECTED = json.loads((HERE / 'button-original-policy.json').read_text())
 MANAGER_EXPECTED = json.loads((HERE / 'manager-original-policy.json').read_text())
 
 def apply(model, block, owner_fns):
+    if model['name'] == 'UCommonButtonInternal':
+        return apply_button(model, block, owner_fns)
     if model['name'] == 'UCommonInputManager':
         return apply_manager(model, block, owner_fns)
     if model['name'] != 'UCommonActivatableWidget':
@@ -44,18 +47,35 @@ def apply_manager(model, block, owner_fns):
     model['common_input_suspension_runtime']=True
     return model
 
+def apply_button(model, block, owner_fns):
+    # This original owner has five properties and no reflected functions. All
+    # runtime additions below are native C++ only, never invented UFUNCTIONs.
+    if (model['package'] != '/Script/CommonUI' or model.get('parent') != 'UButton'
+            or owner_fns != {'0x1408096f0'} or block != BUTTON_EXPECTED):
+        raise ValueError('original CommonButtonInternal owner/property/signature mismatch')
+    if (model.get('common_button_internal_runtime') or model.get('functions')
+            or model.get('helpers') or model.get('fields')):
+        raise ValueError('CommonButtonInternal runtime declarations already emitted or conflicting')
+    model['common_button_internal_runtime'] = True
+    return model
+
 def header_prelude(model):
     result=dict(model)
     if result.get('common_activation_runtime'):
         result['includes']=sorted(set(result.get('includes', []))|{'CommonActivationNative.h'})
+    if result.get('common_button_internal_runtime'):
+        result['includes']=sorted(set(result.get('includes', []))|{'Widgets/Input/SButton.h','Input/Reply.h'})
+        result['forward_decls']=sorted(set(result.get('forward_decls', []))|{'SBox','SCommonButton'})
     return result
 
 def declarations(model):
+    if model.get('common_button_internal_runtime'): return (HERE/'button-declarations.inc').read_text()
     if model.get('common_activation_runtime'): return (HERE/'base-declarations.inc').read_text()
     if model.get('common_input_suspension_runtime'): return (HERE/'manager-declarations.inc').read_text()
     return ''
 
 def definitions(model):
+    if model.get('common_button_internal_runtime'): return (HERE/'button-definitions.inc').read_text()
     if model.get('common_activation_runtime'): return '\n#include "CommonActivationCore.h"\n'+(HERE/'base-definitions.inc').read_text()
     if model.get('common_input_suspension_runtime'): return (HERE/'manager-definitions.inc').read_text()
     return ''

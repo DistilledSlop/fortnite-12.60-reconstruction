@@ -22,7 +22,17 @@
   source-stage points remain separate. No weights, denominators, historical points or gates changed.
 - Actual Root boundary is missing CommonActivatablePanel.OnBeginIntro at AsyncLoading3126;
   Login still reaches Facebook material / MemoryImage1064. All class probes exit139; no UI acceptance.
-- Next implementation: integrate UCommonButtonInternal through generator inputs; never hand-edit its generated files.
+- UCommonButtonInternal factory/lifecycle/callback policy is now applied and normally generated.
+  Only its CPP/header and the manager CPP/header changed; 12,572 unchanged timestamps were restored.
+  141 generator checks and18 policy/callback tests pass. Candidate fresh UHT and four actual CPP/glue
+  syntax units also pass; no shared build/runtime validation of these new generated bodies yet.
+  Source checkpoint /tmp/button-internal-generator-policy-1, receipt
+  de3dbeb879a09ee7b33fa562234bcd86a7ec2524a973b0f2e2dfe4d36b60509c.
+  Next: finish /root/button_internal_runtime_probe's bounded real-widget diagnostic, review/promote, then one frozen build/runtime phase.
+  Probe must create a real UUserWidget/WidgetTree owner: UWidget outer-PC alone has no world in this engine.
+  Original SynchronizeProperties is inherited: slot298 in both original internal/base vtables targets143d949f0;
+  typed two-anchor witness in /tmp/button-internal-sync-properties-1 proves the slot. Do not invent an override.
+- Button implementation requirements and source checkpoints:
   Complete manual SCommonButton source is in CommonUI/Private and passes combined UE syntax; it still needs a build,
   UObject factory wiring and runtime tests. Source composition receipt: /tmp/scommonbutton-composed-1.
   Factory checkpoint /tmp/button-internal-rebuild-factory-1 is complete: +468 owns SBox, +478 owns custom SCommonButton,
@@ -34,7 +44,7 @@
   Suspended manager flagFD is operation state; FE writer1407faa40 is a direct bool store with no broadcast.
   Typed manager callers set FE true/false, and reset clears it: /tmp/manager-external-suspend-writer-1.
   Setter/caller feature names and exhaustive writer coverage remain unproven; do not invent a public reflected API.
-  IsInputSuspended generator input is now applied from /tmp/manager-suspend-getter-policy-1; promotion/build pending.
+  IsInputSuspended input from /tmp/manager-suspend-getter-policy-1 is now normally generated; shared build/runtime pending.
   Root verified its entire original bool-return descriptor equals the already runtime-verified IsActivated descriptor
   (kind2c includesNativeBool20); extraction bitfield label is not a new representation mismatch.
   Two native flag defaults model the UObject zero-allocation path; original allocator parity remains a documented inference.
