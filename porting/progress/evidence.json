@@ -4782,8 +4782,72 @@
   "material_frontend_owner_a06d6ac78ef215dd": {
    "id": "material_frontend_owner_a06d6ac78ef215dd",
    "owner_path": "/Game/UI/Materials/Athena_HollowCircularProgressBar.Athena_HollowCircularProgressBar",
-   "result": "pending",
-   "scope": "Material owner in the bounded frontend closure; actual-owner runtime ingress has not been credited."
+   "result": "pass",
+   "label": "Original Hollow circular progress material",
+   "utc": "2026-11-01T10:13:47.282355+00:00",
+   "source_native_commit": "a821c93",
+   "engine_commit": "66105c47c",
+   "command": [
+    "env",
+    "-u",
+    "LD_LIBRARY_PATH",
+    "VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/lvp_icd.json",
+    "SDL_AUDIODRIVER=dummy",
+    "LP_NUM_THREADS=8",
+    "xvfb-run",
+    "-a",
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/paper2d-matched-stage-3/LinuxNoEditor/FortniteLinux.sh",
+    "-vulkan",
+    "-windowed",
+    "-ResX=1280",
+    "-ResY=720",
+    "-nosound",
+    "-unattended",
+    "-FortniteLegacyMaterialIngress=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/locker-ingress-bundle.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/gradient-panel-ingress-bundle.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/power-toast-ingress-bundle.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/menu-button-ingress-bundle-active-time.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/donut-ingress-bundle.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/mainl-ingress-bundle-checked.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/keybind-ingress-3/bundle.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/hollow-ingress-3/bundle.json",
+    "-FortniteLegacyMaterialManifest=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/frontend-numeric-batch-12/manifest.json",
+    "-FortniteProbeLegacyOriginalMaterial",
+    "-FortniteLegacyFieldPaths",
+    "-FortniteLegacyMaterialProbeOwner=/Game/UI/Materials/Athena_HollowCircularProgressBar.Athena_HollowCircularProgressBar",
+    "-ExecCmds=Quit",
+    "-log",
+    "-FortniteLegacySequencer",
+    "-FortniteLegacyMaterialManifestSHA256=d4dd8dbb275f2c395abb9bfb52edbdf98a37f73d070b1559e46cab2c74a81e03",
+    "-FortniteLegacyMaterialArtifactDir=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/hollow-owner-probes-1/hollow-defaults-artifacts"
+   ],
+   "exit_code": 0,
+   "log": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/hollow-owner-probes-1/hollow-defaults.log",
+   "log_sha256": "61c213d80b30cb9db0fc9a0e07c0b87c9d779d3a39a083b54add6c938d5b92b8",
+   "runtime_checkpoint": {
+    "path": "porting/generated/material_pipeline/frontend-hollow-checkpoint-results-1.json",
+    "sha256": "c33ca05f88a9ef92e9cb95f5e8114c3b8aa49ae1473dc37a1b449ea03d12e7f0"
+   },
+   "root_checkpoint_audit": {
+    "path": "porting/generated/material_pipeline/frontend-hollow-root-checkpoint-audit-1.json",
+    "sha256": "4f466b16ce4171884d96cefef72f299261a1255705f3d30b0c6f181c10e807ab"
+   },
+   "original_source_bundle": {
+    "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/hollow-ingress-3/bundle.json",
+    "sha256": "3e65d3341435387d125b4c1118c70107478a3fbf0942bc80a6cfc3aa7285f852"
+   },
+   "source_receipt": {
+    "path": "porting/generated/material_pipeline/hollow-ingress-frozen-inputs-1/receipt.json",
+    "sha256": "7f680ec060cb6c85358f09166494005a874148cc040475380062bf4d61f10eaf"
+   },
+   "root_source_audit": {
+    "path": "porting/generated/material_pipeline/hollow-ingress-root-audit-1.json",
+    "sha256": "be815c859e655493e1bc0f5ed0156f0f8e0e971d9eeb3c8c8dd03b437b6ec423"
+   },
+   "independent_runtime_verification": [
+    {
+     "path": "porting/generated/frontend-probes/hollow-owner-probes-1/hollow-defaults-root-validation-1.json",
+     "sha256": "3986700affc9bcfc033c5fc4b2b210e481f9dfd58f4dbe38b70025342ac14fb0"
+    },
+    {
+     "path": "porting/generated/frontend-probes/hollow-owner-probes-1/hollow-combined-root-validation-1.json",
+     "sha256": "c4844987ecc7b6bd764429b2bf45955401d5d4d202b00dc13ae252f12bcd224d"
+    }
+   ],
+   "scope": "Actual original owner loads and attaches seven shaders on both threads with19retained records, original eight-mip PolarCoords texture, exact GPU top-mip source bytes and source/copy/checker sampling. Known142-owner closure unchanged; numeric120-owner manifest unchanged. Widget integration and original-client pixel parity remain unverified."
   },
   "material_frontend_owner_a14da5c803dc7ee1": {
    "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/duplicate-defaults-owner-probes-1/039-M_Button_Feature_Disabled-artifacts-dashboard-validation-4t7zxt_1.json",
@@ -8092,8 +8156,66 @@
   "frontend_event_signature_7f410db84053bf97": {
    "id": "frontend_event_signature_7f410db84053bf97",
    "label": "/Script/CommonUI.CommonButton:OnActionProgress",
-   "result": "pending",
-   "scope": "Original-owner signature and both-target compiled registration remain uncredited; header name presence is insufficient."
+   "result": "pass",
+   "utc": "2026-11-01T10:13:47.282355+00:00",
+   "original_signature": {
+    "path": "/Script/CommonUI.CommonButton:OnActionProgress",
+    "cpp_class": "UCommonButton",
+    "create_func": "0x140806e70",
+    "outer_func": "0x140805cb0",
+    "flags": "0x8080800",
+    "parameters": [
+     {
+      "index": 0,
+      "name": "HeldPercent",
+      "kind": "Float",
+      "kind_raw": "0xa",
+      "property_flags": "0x10000000000080",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0
+     }
+    ]
+   },
+   "source_native_commit": "e06c28b",
+   "engine_commit": "66105c47c",
+   "runtime_checkpoint": {
+    "path": "porting/generated/material_pipeline/frontend-typed-events-checkpoint-results-2.json",
+    "sha256": "39f79c6bc70501aac7c4ec102a228b231c1293f602eee9d3996529398d87ade6"
+   },
+   "root_checkpoint_audit": {
+    "path": "porting/generated/material_pipeline/frontend-typed-events-root-checkpoint-audit-1.json",
+    "sha256": "ee3f6efe83a9b9c2a289fcf3ab5eb8096086045cbb270d103102f4b325db032a"
+   },
+   "independent_compiled_elf_audit": {
+    "path": "porting/generated/frontend-typed-events-2/root-typed-elf-symbol-audit-1.json",
+    "sha256": "02562ff31ceab0efb350d6b76c41a360e37e7a2cf44e59979fa64948b142f514"
+   },
+   "compiled": {
+    "client": {
+     "proof": {
+      "path": "porting/generated/frontend-typed-events-2/uht-client-elf-proof-frozen.json",
+      "sha256": "6713b2ac6d5f8430e3525800c72af1ae2807f64d3364d1d43478c4158708e765"
+     },
+     "function_symbol": "_ZN60Z_Construct_UFunction_UCommonButton_OnActionProgress_Statics10FuncParamsE",
+     "flags": "0x8080800",
+     "parameter_struct_size": 4,
+     "property_record_count": 1
+    },
+    "server": {
+     "proof": {
+      "path": "porting/generated/frontend-typed-events-2/uht-server-elf-proof-frozen.json",
+      "sha256": "d991441ef11124c9a5d100d1378afa237745cbd91b186b4efb4ef200a9a096c9"
+     },
+     "function_symbol": "_ZN60Z_Construct_UFunction_UCommonButton_OnActionProgress_Statics10FuncParamsE",
+     "flags": "0x8080800",
+     "parameter_struct_size": 4,
+     "property_record_count": 1
+    }
+   },
+   "scope": "Exact original non-Native Blueprint signature and both-target compiled registration, including original property flags, bool offsets and referenced struct layout. Native lifecycle, actual widgets and original UI behavior remain unverified."
   },
   "frontend_event_signature_cad49b19554f2294": {
    "id": "frontend_event_signature_cad49b19554f2294",
@@ -8145,8 +8267,69 @@
   "frontend_event_signature_082e932ed60cc28a": {
    "id": "frontend_event_signature_082e932ed60cc28a",
    "label": "/Script/CommonUI.CommonButton:OnTriggeredInputActionChanged",
-   "result": "pending",
-   "scope": "Original-owner signature and both-target compiled registration remain uncredited; header name presence is insufficient."
+   "result": "pass",
+   "utc": "2026-11-01T10:13:47.282355+00:00",
+   "original_signature": {
+    "path": "/Script/CommonUI.CommonButton:OnTriggeredInputActionChanged",
+    "cpp_class": "UCommonButton",
+    "create_func": "0x140806fc0",
+    "outer_func": "0x140805cb0",
+    "flags": "0x8480800",
+    "parameters": [
+     {
+      "index": 0,
+      "name": "NewTriggeredAction",
+      "kind": "Struct",
+      "kind_raw": "0x19",
+      "property_flags": "0x10000008000182",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "type_refs": {
+       "struct": "0x1446f2880"
+      }
+     }
+    ]
+   },
+   "source_native_commit": "e06c28b",
+   "engine_commit": "66105c47c",
+   "runtime_checkpoint": {
+    "path": "porting/generated/material_pipeline/frontend-typed-events-checkpoint-results-2.json",
+    "sha256": "39f79c6bc70501aac7c4ec102a228b231c1293f602eee9d3996529398d87ade6"
+   },
+   "root_checkpoint_audit": {
+    "path": "porting/generated/material_pipeline/frontend-typed-events-root-checkpoint-audit-1.json",
+    "sha256": "ee3f6efe83a9b9c2a289fcf3ab5eb8096086045cbb270d103102f4b325db032a"
+   },
+   "independent_compiled_elf_audit": {
+    "path": "porting/generated/frontend-typed-events-2/root-typed-elf-symbol-audit-1.json",
+    "sha256": "02562ff31ceab0efb350d6b76c41a360e37e7a2cf44e59979fa64948b142f514"
+   },
+   "compiled": {
+    "client": {
+     "proof": {
+      "path": "porting/generated/frontend-typed-events-2/uht-client-elf-proof-frozen.json",
+      "sha256": "6713b2ac6d5f8430e3525800c72af1ae2807f64d3364d1d43478c4158708e765"
+     },
+     "function_symbol": "_ZN73Z_Construct_UFunction_UCommonButton_OnTriggeredInputActionChanged_Statics10FuncParamsE",
+     "flags": "0x8480800",
+     "parameter_struct_size": 16,
+     "property_record_count": 1
+    },
+    "server": {
+     "proof": {
+      "path": "porting/generated/frontend-typed-events-2/uht-server-elf-proof-frozen.json",
+      "sha256": "d991441ef11124c9a5d100d1378afa237745cbd91b186b4efb4ef200a9a096c9"
+     },
+     "function_symbol": "_ZN73Z_Construct_UFunction_UCommonButton_OnTriggeredInputActionChanged_Statics10FuncParamsE",
+     "flags": "0x8480800",
+     "parameter_struct_size": 16,
+     "property_record_count": 1
+    }
+   },
+   "scope": "Exact original non-Native Blueprint signature and both-target compiled registration, including original property flags, bool offsets and referenced struct layout. Native lifecycle, actual widgets and original UI behavior remain unverified."
   },
   "frontend_event_signature_5974ea6157df96a1": {
    "id": "frontend_event_signature_5974ea6157df96a1",
@@ -8245,26 +8428,307 @@
   "frontend_event_signature_d4680cda66578a74": {
    "id": "frontend_event_signature_d4680cda66578a74",
    "label": "/Script/FortniteUI.EmergencyNoticeBase:ShowNotice",
-   "result": "pending",
-   "scope": "Original-owner signature and both-target compiled registration remain uncredited; header name presence is insufficient."
+   "result": "pass",
+   "utc": "2026-11-01T10:13:47.282355+00:00",
+   "original_signature": {
+    "path": "/Script/FortniteUI.EmergencyNoticeBase:ShowNotice",
+    "cpp_class": "UEmergencyNoticeBase",
+    "create_func": "0x1451e70a0",
+    "outer_func": "0x1451e6f80",
+    "flags": "0x8480800",
+    "parameters": [
+     {
+      "index": 0,
+      "name": "Body",
+      "kind": "Text",
+      "kind_raw": "0x1d",
+      "property_flags": "0x10000008000182",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 24
+     },
+     {
+      "index": 1,
+      "name": "Title",
+      "kind": "Text",
+      "kind_raw": "0x1d",
+      "property_flags": "0x10000008000182",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0
+     }
+    ]
+   },
+   "source_native_commit": "e06c28b",
+   "engine_commit": "66105c47c",
+   "runtime_checkpoint": {
+    "path": "porting/generated/material_pipeline/frontend-typed-events-checkpoint-results-2.json",
+    "sha256": "39f79c6bc70501aac7c4ec102a228b231c1293f602eee9d3996529398d87ade6"
+   },
+   "root_checkpoint_audit": {
+    "path": "porting/generated/material_pipeline/frontend-typed-events-root-checkpoint-audit-1.json",
+    "sha256": "ee3f6efe83a9b9c2a289fcf3ab5eb8096086045cbb270d103102f4b325db032a"
+   },
+   "independent_compiled_elf_audit": {
+    "path": "porting/generated/frontend-typed-events-2/root-typed-elf-symbol-audit-1.json",
+    "sha256": "02562ff31ceab0efb350d6b76c41a360e37e7a2cf44e59979fa64948b142f514"
+   },
+   "compiled": {
+    "client": {
+     "proof": {
+      "path": "porting/generated/frontend-typed-events-2/uht-client-elf-proof-frozen.json",
+      "sha256": "6713b2ac6d5f8430e3525800c72af1ae2807f64d3364d1d43478c4158708e765"
+     },
+     "function_symbol": "_ZN61Z_Construct_UFunction_UEmergencyNoticeBase_ShowNotice_Statics10FuncParamsE",
+     "flags": "0x8480800",
+     "parameter_struct_size": 48,
+     "property_record_count": 2
+    },
+    "server": {
+     "proof": {
+      "path": "porting/generated/frontend-typed-events-2/uht-server-elf-proof-frozen.json",
+      "sha256": "d991441ef11124c9a5d100d1378afa237745cbd91b186b4efb4ef200a9a096c9"
+     },
+     "function_symbol": "_ZN61Z_Construct_UFunction_UEmergencyNoticeBase_ShowNotice_Statics10FuncParamsE",
+     "flags": "0x8480800",
+     "parameter_struct_size": 48,
+     "property_record_count": 2
+    }
+   },
+   "scope": "Exact original non-Native Blueprint signature and both-target compiled registration, including original property flags, bool offsets and referenced struct layout. Native lifecycle, actual widgets and original UI behavior remain unverified."
   },
   "frontend_event_signature_b1669f5a7a25b463": {
    "id": "frontend_event_signature_b1669f5a7a25b463",
    "label": "/Script/FortniteUI.FortConfirmationWindow:ConfigureConfirmationButton",
-   "result": "pending",
-   "scope": "Original-owner signature and both-target compiled registration remain uncredited; header name presence is insufficient."
+   "result": "pass",
+   "utc": "2026-11-01T10:13:47.282355+00:00",
+   "original_signature": {
+    "path": "/Script/FortniteUI.FortConfirmationWindow:ConfigureConfirmationButton",
+    "cpp_class": "UFortConfirmationWindow",
+    "create_func": "0x145215d90",
+    "outer_func": "0x145215cf0",
+    "flags": "0x8480800",
+    "parameters": [
+     {
+      "index": 0,
+      "name": "bSimpleConfirm",
+      "kind": "Bool",
+      "kind_raw": "0x2c",
+      "property_flags": "0x10000000000080",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "element_size": 1,
+      "size_of_outer": 192,
+      "bitfield": true,
+      "set_bit_fn": "0x140746280",
+      "offset": null
+     },
+     {
+      "index": 1,
+      "name": "Action",
+      "kind": "Struct",
+      "kind_raw": "0x19",
+      "property_flags": "0x10000008000182",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 8,
+      "type_refs": {
+       "struct": "0x142b25040"
+      }
+     },
+     {
+      "index": 2,
+      "name": "Button",
+      "kind": "Object",
+      "kind_raw": "0x12",
+      "property_flags": "0x10000000080080",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "type_refs": {
+       "class": "0x140807800"
+      }
+     }
+    ]
+   },
+   "source_native_commit": "e06c28b",
+   "engine_commit": "66105c47c",
+   "runtime_checkpoint": {
+    "path": "porting/generated/material_pipeline/frontend-typed-events-checkpoint-results-2.json",
+    "sha256": "39f79c6bc70501aac7c4ec102a228b231c1293f602eee9d3996529398d87ade6"
+   },
+   "root_checkpoint_audit": {
+    "path": "porting/generated/material_pipeline/frontend-typed-events-root-checkpoint-audit-1.json",
+    "sha256": "ee3f6efe83a9b9c2a289fcf3ab5eb8096086045cbb270d103102f4b325db032a"
+   },
+   "independent_compiled_elf_audit": {
+    "path": "porting/generated/frontend-typed-events-2/root-typed-elf-symbol-audit-1.json",
+    "sha256": "02562ff31ceab0efb350d6b76c41a360e37e7a2cf44e59979fa64948b142f514"
+   },
+   "compiled": {
+    "client": {
+     "proof": {
+      "path": "porting/generated/frontend-typed-events-2/uht-client-elf-proof-frozen.json",
+      "sha256": "6713b2ac6d5f8430e3525800c72af1ae2807f64d3364d1d43478c4158708e765"
+     },
+     "function_symbol": "_ZN81Z_Construct_UFunction_UFortConfirmationWindow_ConfigureConfirmationButton_Statics10FuncParamsE",
+     "flags": "0x8480800",
+     "parameter_struct_size": 192,
+     "property_record_count": 3
+    },
+    "server": {
+     "proof": {
+      "path": "porting/generated/frontend-typed-events-2/uht-server-elf-proof-frozen.json",
+      "sha256": "d991441ef11124c9a5d100d1378afa237745cbd91b186b4efb4ef200a9a096c9"
+     },
+     "function_symbol": "_ZN81Z_Construct_UFunction_UFortConfirmationWindow_ConfigureConfirmationButton_Statics10FuncParamsE",
+     "flags": "0x8480800",
+     "parameter_struct_size": 192,
+     "property_record_count": 3
+    }
+   },
+   "scope": "Exact original non-Native Blueprint signature and both-target compiled registration, including original property flags, bool offsets and referenced struct layout. Native lifecycle, actual widgets and original UI behavior remain unverified."
   },
   "frontend_event_signature_d948f4dfac455d84": {
    "id": "frontend_event_signature_d948f4dfac455d84",
    "label": "/Script/FortniteUI.FortConfirmationWindow:ConfigureDeclineButton",
-   "result": "pending",
-   "scope": "Original-owner signature and both-target compiled registration remain uncredited; header name presence is insufficient."
+   "result": "pass",
+   "utc": "2026-11-01T10:13:47.282355+00:00",
+   "original_signature": {
+    "path": "/Script/FortniteUI.FortConfirmationWindow:ConfigureDeclineButton",
+    "cpp_class": "UFortConfirmationWindow",
+    "create_func": "0x145215dc0",
+    "outer_func": "0x145215cf0",
+    "flags": "0x8080800",
+    "parameters": [
+     {
+      "index": 0,
+      "name": "Button",
+      "kind": "Object",
+      "kind_raw": "0x12",
+      "property_flags": "0x10000000080080",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "type_refs": {
+       "class": "0x140807800"
+      }
+     }
+    ]
+   },
+   "source_native_commit": "e06c28b",
+   "engine_commit": "66105c47c",
+   "runtime_checkpoint": {
+    "path": "porting/generated/material_pipeline/frontend-typed-events-checkpoint-results-2.json",
+    "sha256": "39f79c6bc70501aac7c4ec102a228b231c1293f602eee9d3996529398d87ade6"
+   },
+   "root_checkpoint_audit": {
+    "path": "porting/generated/material_pipeline/frontend-typed-events-root-checkpoint-audit-1.json",
+    "sha256": "ee3f6efe83a9b9c2a289fcf3ab5eb8096086045cbb270d103102f4b325db032a"
+   },
+   "independent_compiled_elf_audit": {
+    "path": "porting/generated/frontend-typed-events-2/root-typed-elf-symbol-audit-1.json",
+    "sha256": "02562ff31ceab0efb350d6b76c41a360e37e7a2cf44e59979fa64948b142f514"
+   },
+   "compiled": {
+    "client": {
+     "proof": {
+      "path": "porting/generated/frontend-typed-events-2/uht-client-elf-proof-frozen.json",
+      "sha256": "6713b2ac6d5f8430e3525800c72af1ae2807f64d3364d1d43478c4158708e765"
+     },
+     "function_symbol": "_ZN76Z_Construct_UFunction_UFortConfirmationWindow_ConfigureDeclineButton_Statics10FuncParamsE",
+     "flags": "0x8080800",
+     "parameter_struct_size": 8,
+     "property_record_count": 1
+    },
+    "server": {
+     "proof": {
+      "path": "porting/generated/frontend-typed-events-2/uht-server-elf-proof-frozen.json",
+      "sha256": "d991441ef11124c9a5d100d1378afa237745cbd91b186b4efb4ef200a9a096c9"
+     },
+     "function_symbol": "_ZN76Z_Construct_UFunction_UFortConfirmationWindow_ConfigureDeclineButton_Statics10FuncParamsE",
+     "flags": "0x8080800",
+     "parameter_struct_size": 8,
+     "property_record_count": 1
+    }
+   },
+   "scope": "Exact original non-Native Blueprint signature and both-target compiled registration, including original property flags, bool offsets and referenced struct layout. Native lifecycle, actual widgets and original UI behavior remain unverified."
   },
   "frontend_event_signature_805e8ce2cd0b59d4": {
    "id": "frontend_event_signature_805e8ce2cd0b59d4",
    "label": "/Script/FortniteUI.FortErrorWindow:OnOverrideCloseButtonText",
-   "result": "pending",
-   "scope": "Original-owner signature and both-target compiled registration remain uncredited; header name presence is insufficient."
+   "result": "pass",
+   "utc": "2026-11-01T10:13:47.282355+00:00",
+   "original_signature": {
+    "path": "/Script/FortniteUI.FortErrorWindow:OnOverrideCloseButtonText",
+    "cpp_class": "UFortErrorWindow",
+    "create_func": "0x14522c3b0",
+    "outer_func": "0x14522c380",
+    "flags": "0x8480800",
+    "parameters": [
+     {
+      "index": 0,
+      "name": "OverrideText",
+      "kind": "Text",
+      "kind_raw": "0x1d",
+      "property_flags": "0x10000008000182",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0
+     }
+    ]
+   },
+   "source_native_commit": "e06c28b",
+   "engine_commit": "66105c47c",
+   "runtime_checkpoint": {
+    "path": "porting/generated/material_pipeline/frontend-typed-events-checkpoint-results-2.json",
+    "sha256": "39f79c6bc70501aac7c4ec102a228b231c1293f602eee9d3996529398d87ade6"
+   },
+   "root_checkpoint_audit": {
+    "path": "porting/generated/material_pipeline/frontend-typed-events-root-checkpoint-audit-1.json",
+    "sha256": "ee3f6efe83a9b9c2a289fcf3ab5eb8096086045cbb270d103102f4b325db032a"
+   },
+   "independent_compiled_elf_audit": {
+    "path": "porting/generated/frontend-typed-events-2/root-typed-elf-symbol-audit-1.json",
+    "sha256": "02562ff31ceab0efb350d6b76c41a360e37e7a2cf44e59979fa64948b142f514"
+   },
+   "compiled": {
+    "client": {
+     "proof": {
+      "path": "porting/generated/frontend-typed-events-2/uht-client-elf-proof-frozen.json",
+      "sha256": "6713b2ac6d5f8430e3525800c72af1ae2807f64d3364d1d43478c4158708e765"
+     },
+     "function_symbol": "_ZN72Z_Construct_UFunction_UFortErrorWindow_OnOverrideCloseButtonText_Statics10FuncParamsE",
+     "flags": "0x8480800",
+     "parameter_struct_size": 24,
+     "property_record_count": 1
+    },
+    "server": {
+     "proof": {
+      "path": "porting/generated/frontend-typed-events-2/uht-server-elf-proof-frozen.json",
+      "sha256": "d991441ef11124c9a5d100d1378afa237745cbd91b186b4efb4ef200a9a096c9"
+     },
+     "function_symbol": "_ZN72Z_Construct_UFunction_UFortErrorWindow_OnOverrideCloseButtonText_Statics10FuncParamsE",
+     "flags": "0x8480800",
+     "parameter_struct_size": 24,
+     "property_record_count": 1
+    }
+   },
+   "scope": "Exact original non-Native Blueprint signature and both-target compiled registration, including original property flags, bool offsets and referenced struct layout. Native lifecycle, actual widgets and original UI behavior remain unverified."
   },
   "frontend_event_signature_6f584de16f39d26f": {
    "id": "frontend_event_signature_6f584de16f39d26f",
@@ -8363,8 +8827,66 @@
   "frontend_event_signature_a7f746f057ea7969": {
    "id": "frontend_event_signature_a7f746f057ea7969",
    "label": "/Script/FortniteUI.FortLetoLayoutBorder:UpdateBorderWidth",
-   "result": "pending",
-   "scope": "Original-owner signature and both-target compiled registration remain uncredited; header name presence is insufficient."
+   "result": "pass",
+   "utc": "2026-11-01T10:13:47.282355+00:00",
+   "original_signature": {
+    "path": "/Script/FortniteUI.FortLetoLayoutBorder:UpdateBorderWidth",
+    "cpp_class": "UFortLetoLayoutBorder",
+    "create_func": "0x1452c3ea0",
+    "outer_func": "0x1452c3e10",
+    "flags": "0x8080800",
+    "parameters": [
+     {
+      "index": 0,
+      "name": "HalfBorderWidth",
+      "kind": "Float",
+      "kind_raw": "0xa",
+      "property_flags": "0x10000000000080",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0
+     }
+    ]
+   },
+   "source_native_commit": "e06c28b",
+   "engine_commit": "66105c47c",
+   "runtime_checkpoint": {
+    "path": "porting/generated/material_pipeline/frontend-typed-events-checkpoint-results-2.json",
+    "sha256": "39f79c6bc70501aac7c4ec102a228b231c1293f602eee9d3996529398d87ade6"
+   },
+   "root_checkpoint_audit": {
+    "path": "porting/generated/material_pipeline/frontend-typed-events-root-checkpoint-audit-1.json",
+    "sha256": "ee3f6efe83a9b9c2a289fcf3ab5eb8096086045cbb270d103102f4b325db032a"
+   },
+   "independent_compiled_elf_audit": {
+    "path": "porting/generated/frontend-typed-events-2/root-typed-elf-symbol-audit-1.json",
+    "sha256": "02562ff31ceab0efb350d6b76c41a360e37e7a2cf44e59979fa64948b142f514"
+   },
+   "compiled": {
+    "client": {
+     "proof": {
+      "path": "porting/generated/frontend-typed-events-2/uht-client-elf-proof-frozen.json",
+      "sha256": "6713b2ac6d5f8430e3525800c72af1ae2807f64d3364d1d43478c4158708e765"
+     },
+     "function_symbol": "_ZN69Z_Construct_UFunction_UFortLetoLayoutBorder_UpdateBorderWidth_Statics10FuncParamsE",
+     "flags": "0x8080800",
+     "parameter_struct_size": 4,
+     "property_record_count": 1
+    },
+    "server": {
+     "proof": {
+      "path": "porting/generated/frontend-typed-events-2/uht-server-elf-proof-frozen.json",
+      "sha256": "d991441ef11124c9a5d100d1378afa237745cbd91b186b4efb4ef200a9a096c9"
+     },
+     "function_symbol": "_ZN69Z_Construct_UFunction_UFortLetoLayoutBorder_UpdateBorderWidth_Statics10FuncParamsE",
+     "flags": "0x8080800",
+     "parameter_struct_size": 4,
+     "property_record_count": 1
+    }
+   },
+   "scope": "Exact original non-Native Blueprint signature and both-target compiled registration, including original property flags, bool offsets and referenced struct layout. Native lifecycle, actual widgets and original UI behavior remain unverified."
   },
   "frontend_event_signature_3b15a4585c645518": {
    "id": "frontend_event_signature_3b15a4585c645518",
@@ -8476,8 +8998,86 @@
   "frontend_event_signature_6519358e05e107dc": {
    "id": "frontend_event_signature_6519358e05e107dc",
    "label": "/Script/FortniteUI.FortRestartClientModal:OnButtonSet",
-   "result": "pending",
-   "scope": "Original-owner signature and both-target compiled registration remain uncredited; header name presence is insufficient."
+   "result": "pass",
+   "utc": "2026-11-01T10:13:47.282355+00:00",
+   "original_signature": {
+    "path": "/Script/FortniteUI.FortRestartClientModal:OnButtonSet",
+    "cpp_class": "UFortRestartClientModal",
+    "create_func": "0x1452bfd60",
+    "outer_func": "0x1452bfd00",
+    "flags": "0x8080800",
+    "parameters": [
+     {
+      "index": 0,
+      "name": "bShouldShow",
+      "kind": "Bool",
+      "kind_raw": "0x2c",
+      "property_flags": "0x10000000000080",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "element_size": 1,
+      "size_of_outer": 2,
+      "bitfield": true,
+      "set_bit_fn": "0x1407579e0",
+      "offset": null
+     },
+     {
+      "index": 1,
+      "name": "InbShouldExit",
+      "kind": "Bool",
+      "kind_raw": "0x2c",
+      "property_flags": "0x10000000000080",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "element_size": 1,
+      "size_of_outer": 2,
+      "bitfield": true,
+      "set_bit_fn": "0x1406966a0",
+      "offset": null
+     }
+    ]
+   },
+   "source_native_commit": "e06c28b",
+   "engine_commit": "66105c47c",
+   "runtime_checkpoint": {
+    "path": "porting/generated/material_pipeline/frontend-typed-events-checkpoint-results-2.json",
+    "sha256": "39f79c6bc70501aac7c4ec102a228b231c1293f602eee9d3996529398d87ade6"
+   },
+   "root_checkpoint_audit": {
+    "path": "porting/generated/material_pipeline/frontend-typed-events-root-checkpoint-audit-1.json",
+    "sha256": "ee3f6efe83a9b9c2a289fcf3ab5eb8096086045cbb270d103102f4b325db032a"
+   },
+   "independent_compiled_elf_audit": {
+    "path": "porting/generated/frontend-typed-events-2/root-typed-elf-symbol-audit-1.json",
+    "sha256": "02562ff31ceab0efb350d6b76c41a360e37e7a2cf44e59979fa64948b142f514"
+   },
+   "compiled": {
+    "client": {
+     "proof": {
+      "path": "porting/generated/frontend-typed-events-2/uht-client-elf-proof-frozen.json",
+      "sha256": "6713b2ac6d5f8430e3525800c72af1ae2807f64d3364d1d43478c4158708e765"
+     },
+     "function_symbol": "_ZN65Z_Construct_UFunction_UFortRestartClientModal_OnButtonSet_Statics10FuncParamsE",
+     "flags": "0x8080800",
+     "parameter_struct_size": 2,
+     "property_record_count": 2
+    },
+    "server": {
+     "proof": {
+      "path": "porting/generated/frontend-typed-events-2/uht-server-elf-proof-frozen.json",
+      "sha256": "d991441ef11124c9a5d100d1378afa237745cbd91b186b4efb4ef200a9a096c9"
+     },
+     "function_symbol": "_ZN65Z_Construct_UFunction_UFortRestartClientModal_OnButtonSet_Statics10FuncParamsE",
+     "flags": "0x8080800",
+     "parameter_struct_size": 2,
+     "property_record_count": 2
+    }
+   },
+   "scope": "Exact original non-Native Blueprint signature and both-target compiled registration, including original property flags, bool offsets and referenced struct layout. Native lifecycle, actual widgets and original UI behavior remain unverified."
   },
   "frontend_event_signature_aed5bb04f983aaea": {
    "id": "frontend_event_signature_aed5bb04f983aaea",
@@ -8558,14 +9158,149 @@
   "frontend_event_signature_8273b2a360af95f0": {
    "id": "frontend_event_signature_8273b2a360af95f0",
    "label": "/Script/FortniteUI.FortToastDisplayArea:OnDisplayToast",
-   "result": "pending",
-   "scope": "Original-owner signature and both-target compiled registration remain uncredited; header name presence is insufficient."
+   "result": "pass",
+   "utc": "2026-11-01T10:13:47.282355+00:00",
+   "original_signature": {
+    "path": "/Script/FortniteUI.FortToastDisplayArea:OnDisplayToast",
+    "cpp_class": "UFortToastDisplayArea",
+    "create_func": "0x145300da0",
+    "outer_func": "0x145300cb0",
+    "flags": "0x8020800",
+    "parameters": [
+     {
+      "index": 0,
+      "name": "NewToast",
+      "kind": "Object",
+      "kind_raw": "0x12",
+      "property_flags": "0x10000000000080",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "type_refs": {
+       "class": "0x142b26c60"
+      }
+     }
+    ]
+   },
+   "source_native_commit": "e06c28b",
+   "engine_commit": "66105c47c",
+   "runtime_checkpoint": {
+    "path": "porting/generated/material_pipeline/frontend-typed-events-checkpoint-results-2.json",
+    "sha256": "39f79c6bc70501aac7c4ec102a228b231c1293f602eee9d3996529398d87ade6"
+   },
+   "root_checkpoint_audit": {
+    "path": "porting/generated/material_pipeline/frontend-typed-events-root-checkpoint-audit-1.json",
+    "sha256": "ee3f6efe83a9b9c2a289fcf3ab5eb8096086045cbb270d103102f4b325db032a"
+   },
+   "independent_compiled_elf_audit": {
+    "path": "porting/generated/frontend-typed-events-2/root-typed-elf-symbol-audit-1.json",
+    "sha256": "02562ff31ceab0efb350d6b76c41a360e37e7a2cf44e59979fa64948b142f514"
+   },
+   "compiled": {
+    "client": {
+     "proof": {
+      "path": "porting/generated/frontend-typed-events-2/uht-client-elf-proof-frozen.json",
+      "sha256": "6713b2ac6d5f8430e3525800c72af1ae2807f64d3364d1d43478c4158708e765"
+     },
+     "function_symbol": "_ZN66Z_Construct_UFunction_UFortToastDisplayArea_OnDisplayToast_Statics10FuncParamsE",
+     "flags": "0x8020800",
+     "parameter_struct_size": 8,
+     "property_record_count": 1
+    },
+    "server": {
+     "proof": {
+      "path": "porting/generated/frontend-typed-events-2/uht-server-elf-proof-frozen.json",
+      "sha256": "d991441ef11124c9a5d100d1378afa237745cbd91b186b4efb4ef200a9a096c9"
+     },
+     "function_symbol": "_ZN66Z_Construct_UFunction_UFortToastDisplayArea_OnDisplayToast_Statics10FuncParamsE",
+     "flags": "0x8020800",
+     "parameter_struct_size": 8,
+     "property_record_count": 1
+    }
+   },
+   "scope": "Exact original non-Native Blueprint signature and both-target compiled registration, including original property flags, bool offsets and referenced struct layout. Native lifecycle, actual widgets and original UI behavior remain unverified."
   },
   "frontend_event_signature_37a6db2b59f63e51": {
    "id": "frontend_event_signature_37a6db2b59f63e51",
    "label": "/Script/FortniteUI.FortVoiceChannelChangePopup:OnInputModeChanged",
-   "result": "pending",
-   "scope": "Original-owner signature and both-target compiled registration remain uncredited; header name presence is insufficient."
+   "result": "pass",
+   "utc": "2026-11-01T10:13:47.282355+00:00",
+   "original_signature": {
+    "path": "/Script/FortniteUI.FortVoiceChannelChangePopup:OnInputModeChanged",
+    "cpp_class": "UFortVoiceChannelChangePopup",
+    "create_func": "0x145320240",
+    "outer_func": "0x14531fef0",
+    "flags": "0x8080800",
+    "parameters": [
+     {
+      "index": 0,
+      "name": "NewInputType",
+      "kind": "Enum",
+      "kind_raw": "0x1e",
+      "property_flags": "0x10000000000080",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "type_refs": {
+       "enum": "0x14081ee20"
+      }
+     },
+     {
+      "index": 1,
+      "name": "UnderlyingType",
+      "kind": "Byte",
+      "kind_raw": "0x0",
+      "property_flags": "0x0",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "enum_underlying_of": "NewInputType"
+     }
+    ]
+   },
+   "source_native_commit": "e06c28b",
+   "engine_commit": "66105c47c",
+   "runtime_checkpoint": {
+    "path": "porting/generated/material_pipeline/frontend-typed-events-checkpoint-results-2.json",
+    "sha256": "39f79c6bc70501aac7c4ec102a228b231c1293f602eee9d3996529398d87ade6"
+   },
+   "root_checkpoint_audit": {
+    "path": "porting/generated/material_pipeline/frontend-typed-events-root-checkpoint-audit-1.json",
+    "sha256": "ee3f6efe83a9b9c2a289fcf3ab5eb8096086045cbb270d103102f4b325db032a"
+   },
+   "independent_compiled_elf_audit": {
+    "path": "porting/generated/frontend-typed-events-2/root-typed-elf-symbol-audit-1.json",
+    "sha256": "02562ff31ceab0efb350d6b76c41a360e37e7a2cf44e59979fa64948b142f514"
+   },
+   "compiled": {
+    "client": {
+     "proof": {
+      "path": "porting/generated/frontend-typed-events-2/uht-client-elf-proof-frozen.json",
+      "sha256": "6713b2ac6d5f8430e3525800c72af1ae2807f64d3364d1d43478c4158708e765"
+     },
+     "function_symbol": "_ZN77Z_Construct_UFunction_UFortVoiceChannelChangePopup_OnInputModeChanged_Statics10FuncParamsE",
+     "flags": "0x8080800",
+     "parameter_struct_size": 1,
+     "property_record_count": 2
+    },
+    "server": {
+     "proof": {
+      "path": "porting/generated/frontend-typed-events-2/uht-server-elf-proof-frozen.json",
+      "sha256": "d991441ef11124c9a5d100d1378afa237745cbd91b186b4efb4ef200a9a096c9"
+     },
+     "function_symbol": "_ZN77Z_Construct_UFunction_UFortVoiceChannelChangePopup_OnInputModeChanged_Statics10FuncParamsE",
+     "flags": "0x8080800",
+     "parameter_struct_size": 1,
+     "property_record_count": 2
+    }
+   },
+   "scope": "Exact original non-Native Blueprint signature and both-target compiled registration, including original property flags, bool offsets and referenced struct layout. Native lifecycle, actual widgets and original UI behavior remain unverified."
   },
   "frontend_event_signature_f6471223d54183eb": {
    "id": "frontend_event_signature_f6471223d54183eb",
@@ -8711,8 +9446,69 @@
   "frontend_event_signature_925ce33dae931e0b": {
    "id": "frontend_event_signature_925ce33dae931e0b",
    "label": "/Script/FortniteUI.FortWebLoginWidget:DisplayWidget",
-   "result": "pending",
-   "scope": "Original-owner signature and both-target compiled registration remain uncredited; header name presence is insufficient."
+   "result": "pass",
+   "utc": "2026-11-01T10:13:47.282355+00:00",
+   "original_signature": {
+    "path": "/Script/FortniteUI.FortWebLoginWidget:DisplayWidget",
+    "cpp_class": "UFortWebLoginWidget",
+    "create_func": "0x145320900",
+    "outer_func": "0x1453208a0",
+    "flags": "0xc020800",
+    "parameters": [
+     {
+      "index": 0,
+      "name": "WebWidget",
+      "kind": "Object",
+      "kind_raw": "0x12",
+      "property_flags": "0x10000000080080",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "type_refs": {
+       "class": "0x143dc3650"
+      }
+     }
+    ]
+   },
+   "source_native_commit": "e06c28b",
+   "engine_commit": "66105c47c",
+   "runtime_checkpoint": {
+    "path": "porting/generated/material_pipeline/frontend-typed-events-checkpoint-results-2.json",
+    "sha256": "39f79c6bc70501aac7c4ec102a228b231c1293f602eee9d3996529398d87ade6"
+   },
+   "root_checkpoint_audit": {
+    "path": "porting/generated/material_pipeline/frontend-typed-events-root-checkpoint-audit-1.json",
+    "sha256": "ee3f6efe83a9b9c2a289fcf3ab5eb8096086045cbb270d103102f4b325db032a"
+   },
+   "independent_compiled_elf_audit": {
+    "path": "porting/generated/frontend-typed-events-2/root-typed-elf-symbol-audit-1.json",
+    "sha256": "02562ff31ceab0efb350d6b76c41a360e37e7a2cf44e59979fa64948b142f514"
+   },
+   "compiled": {
+    "client": {
+     "proof": {
+      "path": "porting/generated/frontend-typed-events-2/uht-client-elf-proof-frozen.json",
+      "sha256": "6713b2ac6d5f8430e3525800c72af1ae2807f64d3364d1d43478c4158708e765"
+     },
+     "function_symbol": "_ZN63Z_Construct_UFunction_UFortWebLoginWidget_DisplayWidget_Statics10FuncParamsE",
+     "flags": "0xc020800",
+     "parameter_struct_size": 8,
+     "property_record_count": 1
+    },
+    "server": {
+     "proof": {
+      "path": "porting/generated/frontend-typed-events-2/uht-server-elf-proof-frozen.json",
+      "sha256": "d991441ef11124c9a5d100d1378afa237745cbd91b186b4efb4ef200a9a096c9"
+     },
+     "function_symbol": "_ZN63Z_Construct_UFunction_UFortWebLoginWidget_DisplayWidget_Statics10FuncParamsE",
+     "flags": "0xc020800",
+     "parameter_struct_size": 8,
+     "property_record_count": 1
+    }
+   },
+   "scope": "Exact original non-Native Blueprint signature and both-target compiled registration, including original property flags, bool offsets and referenced struct layout. Native lifecycle, actual widgets and original UI behavior remain unverified."
   },
   "frontend_event_signature_c927837cfa8d256e": {
    "id": "frontend_event_signature_c927837cfa8d256e",
@@ -8785,6 +9581,67 @@
    "label": "/Script/UMG.UserWidget:Tick",
    "result": "pending",
    "scope": "Original-owner signature and both-target compiled registration remain uncredited; header name presence is insufficient."
+  },
+  "material_keybind_asset_ingress": {
+   "id": "material_keybind_asset_ingress",
+   "result": "pass",
+   "label": "Original Keybind indexed texture ingress",
+   "utc": "2026-11-01T09:38:31.572279+00:00",
+   "source_native_commit": "6b235fd",
+   "engine_commit": "32351fe30",
+   "owner_path": "/Game/UI/InGame/KeybindWidget/Materials/M_Buttonborder_DF.M_Buttonborder_DF",
+   "command": [
+    "env",
+    "-u",
+    "LD_LIBRARY_PATH",
+    "VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/lvp_icd.json",
+    "SDL_AUDIODRIVER=dummy",
+    "LP_NUM_THREADS=8",
+    "xvfb-run",
+    "-a",
+    "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/paper2d-matched-stage-3/LinuxNoEditor/FortniteLinux.sh",
+    "-vulkan",
+    "-windowed",
+    "-ResX=1280",
+    "-ResY=720",
+    "-nosound",
+    "-unattended",
+    "-FortniteLegacyMaterialIngress=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/locker-ingress-bundle.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/gradient-panel-ingress-bundle.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/power-toast-ingress-bundle.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/menu-button-ingress-bundle-active-time.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/donut-ingress-bundle.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/mainl-ingress-bundle-checked.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/keybind-ingress-3/bundle.json",
+    "-FortniteLegacyMaterialManifest=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/frontend-numeric-batch-12/manifest.json",
+    "-FortniteProbeLegacyOriginalMaterial",
+    "-FortniteLegacyFieldPaths",
+    "-FortniteLegacyMaterialProbeOwner=/Game/UI/InGame/KeybindWidget/Materials/M_Buttonborder_DF.M_Buttonborder_DF",
+    "-ExecCmds=Quit",
+    "-log",
+    "-FortniteLegacyMaterialManifestSHA256=d4dd8dbb275f2c395abb9bfb52edbdf98a37f73d070b1559e46cab2c74a81e03",
+    "-FortniteLegacyMaterialArtifactDir=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/keybind-current-owner-probes-1/keybind-defaults-artifacts"
+   ],
+   "exit_code": 0,
+   "log": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/keybind-current-owner-probes-1/keybind-defaults.log",
+   "log_sha256": "4882914421868608fcde03fae4cef92c320c90fa77b9845709461b325c3cb30c",
+   "runtime_checkpoint": {
+    "path": "porting/generated/material_pipeline/frontend-keybind-current-checkpoint-results.json",
+    "sha256": "b671d326cb8caae576ef774b12de0f87430822c829596c8f0cb0dbcb063806ec"
+   },
+   "root_checkpoint_audit": {
+    "path": "porting/generated/material_pipeline/frontend-keybind-current-root-checkpoint-audit-1.json",
+    "sha256": "d4820d4148c02130668b5e761d01e2ca38db07d70b72f2e4320694a6a9eaf4b0"
+   },
+   "original_source_bundle": {
+    "path": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/keybind-ingress-3/bundle.json",
+    "sha256": "072453e01e19e50574d57b7c93ae5721d24481b0023af504461fcea6fe67dd18"
+   },
+   "independent_runtime_verification": [
+    {
+     "path": "porting/generated/frontend-probes/keybind-current-owner-probes-1/keybind-defaults-root-validation-3.json",
+     "sha256": "97af3d17dcb1ef835a70668f18c7cdddb1f16fa4ee83ce04e5b66eefb504ec5f"
+    },
+    {
+     "path": "porting/generated/frontend-probes/keybind-current-owner-probes-1/keybind-combined-root-validation-1.json",
+     "sha256": "37fe5855e1679f8bfe6b489a42b03d63f5a221200a79d4f70678afc19d39a782"
+    }
+   ],
+   "scope": "Original regular Texture default without parameter identity; exact GPU source bytes, typed layout, 19 records, seven shaders attached on both threads, ten uniform cases, source/copy equality and checker effect. Combined is a separate diagnostic. Widget integration and original-client pixel parity remain unverified."
   }
  }
 }

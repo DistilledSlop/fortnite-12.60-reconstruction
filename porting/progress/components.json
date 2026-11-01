@@ -6,7 +6,7 @@
       "id": "m1",
       "text": "The rebuilt client reaches the main menu with feature parity to the 12.60 original",
       "done": false,
-      "evidence": "The fixed hard-import closure contains 721 packages, and the bounded material ledger credits 121/142 owners across frozen actual-owner checkpoints. Both builds, material regressions and fresh default/Athena joins pass at frozen Keybind source 6b235fd / Engine 32351fe30. The Keybind regular texture additionally passes exact GPU source-byte and source/copy/checker sampling controls; RootLayout then stops at Athena_HollowCircularProgressBar. Login has passed the prior super-event failures and now stops at original MovieScene float-channel version framing. Seventeen original event signatures have both-target compiled UHT/ELF evidence; the fixed registration scope is 41 non-Native targets. The animation reader fix and actual loaded-key probe are undergoing validation. Widget construction, native lifecycle integration, an interactive menu and original visual parity remain unfinished (HANDOFF.md)."
+      "evidence": "The fixed hard-import closure contains 721 packages. The existing bounded material ledger now credits 122/142 owners across immutable actual-owner checkpoints, including Hollow with original eight-mip texture GPU/control verification. Latest paired build source is native a821c93 / Engine 66105c47c; both builds, 12 prior material regressions, eight fixed-owner cases, Splash loaded-key readback and fresh default/Athena joins pass. Original MovieScene version 11 framing preserves all three source animation keys. Twenty-eight of 41 fixed non-Native frontend event targets have independently audited both-target compiled signatures. RootLayout now stops at SocialUserItemBorder_Master; Login stops at M_UI_AthenaSeason_FadedFlogo. Native startup/lifecycle integration, widget construction, an interactive menu and original visual parity remain unfinished (HANDOFF.md)."
     },
     {
       "id": "m2",
@@ -1399,17 +1399,18 @@
           "children": [
             {
               "id": "ui.material_named_ingress",
-              "name": "PowerToast, MenuButton and Donut ingress",
+              "name": "Verified named material ingress",
               "weight": 6,
               "measure": {
                 "kind": "ledger",
                 "checks": [
                   "material_powertoast_asset_ingress",
                   "material_menubutton_asset_ingress",
-                  "material_donut_asset_ingress"
+                  "material_donut_asset_ingress",
+                  "material_keybind_asset_ingress"
                 ]
               },
-              "rationale": "Three individually verified original material owner ingress checks; Locker is separately weighted."
+              "rationale": "Four individually verified original material cases: PowerToast, MenuButton, Donut and Keybind. The effort weight is unchanged; additional known-closure compatibility, actual widgets and original visual parity remain separate measures."
             },
             {
               "id": "ui.material_frontend_closure",

@@ -84,7 +84,7 @@ class ProgressModelTests(unittest.TestCase):
             'ui.material_widget_integration': 1, 'ui.material_visual_parity': 1})
         self.assertEqual(by_id['ui.material_named_ingress']['measure']['checks'], [
             'material_powertoast_asset_ingress', 'material_menubutton_asset_ingress',
-            'material_donut_asset_ingress'])
+            'material_donut_asset_ingress', 'material_keybind_asset_ingress'])
         self.assertEqual(by_id['ui.material_widget_integration']['measure']['checks'], ['material_frontend_widget_integration'])
         self.assertEqual(by_id['ui.material_visual_parity']['measure']['checks'], ['material_original_visual_parity'])
         self.assertEqual(by_id['ui.material_locker_ingress']['measure']['checks'], ['material_locker_asset_ingress'])
