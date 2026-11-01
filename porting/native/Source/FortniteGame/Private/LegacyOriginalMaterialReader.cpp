@@ -44,12 +44,13 @@ public:
         if (A > 2 || I < -1) Fail(TEXT("invalid parameter identity"));
         E.Parameter = FMaterialParameterInfo(N, static_cast<EMaterialParameterAssociation>(A), I);
     }
-    int32 Expression(int32 Depth)
+    int32 Expression(int32 Depth, bool bTextureRoot = false)
     {
         if (Depth >= 64 || ++Nodes > 65536) { Fail(TEXT("expression complexity")); return INDEX_NONE; }
         FString T = Name().ToString(); const FString Prefix(TEXT("FMaterialUniformExpression"));
         if (!T.RemoveFromStart(Prefix)) { Fail(TEXT("invalid expression tag")); return INDEX_NONE; }
         FLegacyMaterialExpression E;
+        if (bTextureRoot && T != TEXT("TextureParameter")) Fail(TEXT("invalid texture root"));
         if (T == TEXT("Constant")) { E.Kind = ELegacyMaterialExpression::Constant; E.Value.R=Read<float>(); E.Value.G=Read<float>(); E.Value.B=Read<float>(); E.Value.A=Read<float>(); E.ValueType=Read<uint8>(); }
         else if (T == TEXT("ScalarParameter") || T == TEXT("VectorParameter"))
         {
@@ -61,8 +62,13 @@ public:
         {
             ParameterInfo(E); int32 Index=Read<int32>(); int16 Layer=Read<int16>(), Page=Read<int16>(); int32 Sampler=Read<int32>(); uint32 Virtual=Read<uint32>();
             if (Index < -1 || Layer < -1 || Page < -1 || Sampler < 0 || Sampler > 2 || Virtual > 1) Fail(TEXT("invalid texture expression"));
-            // Texture conversion is not implemented; preserve the full record but fail closed.
-            Fail(TEXT("texture expression conversion unsupported"));
+            if (!bTextureRoot || Depth != 0 || Index < 0 || Layer != -1 || Page != -1 || Virtual != 0)
+                Fail(TEXT("unsupported texture expression"));
+            FLegacyMaterialTextureParameter Texture;
+            Texture.Parameter=E.Parameter; Texture.TextureIndex=Index; Texture.TextureLayerIndex=Layer;
+            Texture.PageTableLayerIndex=Page; Texture.SamplerSource=uint8(Sampler); Texture.bVirtualTexture=Virtual != 0;
+            O.IR.Texture2DParameters.Add(MoveTemp(Texture));
+            return INDEX_NONE;
         }
         else if (T == TEXT("ComponentSwizzle") || T == TEXT("FoldedMath") || T == TEXT("AppendVector") || T == TEXT("TrigMath"))
         {
@@ -134,8 +140,8 @@ public:
         for(int32 A=0; A<8; ++A)
         {
             if(A==7 && Count()!=0) Fail(TEXT("unsupported VT stacks"));
-            int32 N=Count(); if(A<6) Counts[A]=N; else if(A==7) Counts[6]=N;
-            for(int32 I=0;I<N;++I) { int32 X=Expression(0); if(A==0) O.IR.VectorRoots.Add(X); else if(A==1) O.IR.ScalarRoots.Add(X); }
+            int32 N=Count(); if(A>2 && N) Fail(TEXT("unsupported texture root array")); if(A<6) Counts[A]=N; else if(A==7) Counts[6]=N;
+            for(int32 I=0;I<N;++I) { int32 X=Expression(0, A==2); if(A==0) O.IR.VectorRoots.Add(X); else if(A==1) O.IR.ScalarRoots.Add(X); }
         }
         for(int32 I=Count(); I-- > 0;) for(int32 J=0; J<4; ++J) Read<uint32>();
         O.UsedSceneTextures=Read<uint32>(); O.TextureSamplesVS=Read<uint16>(); O.TextureSamplesPS=Read<uint16>(); O.VirtualTextureLookups=Read<uint16>(); O.UVScalars=Read<uint8>(); O.CustomInterpolatorScalars=Read<uint8>(); O.VirtualTextureMask=Read<uint8>(); O.Flags=Read<uint8>();
