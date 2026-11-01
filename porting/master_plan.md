@@ -38,67 +38,19 @@ using historical instructions below.
 
 ## Current work (2026-11-01)
 
-Native `ebea44e` and Engine `6925baad3` build for both non-editor targets and
-pass fresh default/Athena direct joins. Locker, GradientPanel, PowerToastGlow and
-MenuButton now load their original resources, preserve all 19 source records each,
-pass real-owner completeness and attach on both threads. PowerToast preserves its
-real parent and opaque override. MenuButton binds the real current View buffer:
-its proven GameTime read changes 1,851 pixels, RealTime alone leaves pixels
-unchanged, and fixed-time color overrides change 4,096 pixels. All 21 emitted
-shader payloads independently validate. Exact commands and hashes are in HANDOFF.
+Native `46b4675` and Engine `08ebac023` build for both non-editor targets and
+pass fresh default/Athena direct joins against the full staged frontend closure.
+Donut now samples its original indexed PC icon and real App2 texture override;
+five graph/five owner cases pass, the real owner requires seven shaders with zero
+missing, all 19 source records are retained, and 1,290 pixels change. Prior
+Locker/PowerToast/Menu probes remain green; all 28 shader payloads independently
+validate. Dashboard effort is 20.861%, with all four product gates still open.
 
-Next convert Donut's original texture parameter/reference/sampler resources and
-resource-table bindings. Then retry real root-widget loading and construction,
-recover native UI lifecycle/helpers and connect login/lobby/matchmaking. No
-interactive root menu or original-client visual parity is verified. Menu's observed
-GameTime offset matches; the entire original/current View layouts do not.
-
-The dashboard has 104 bounded and unfinished work items. Its 20.753% is an effort
-estimate; all four acceptance gates remain open. The five explicit UI integration
-phases count PowerToast and MenuButton; Donut, widget integration and original
-pixel comparison remain unverified. Declarations, local tests and direct joins
-continue to be separate from implementation and full gameplay/wire parity.
-
-## Standing constraints
-
-- Storage: `/` has ~100 GB free after the original client moved to the new 1 TB
-  drive. `Fortnite/` is now a symlink to `/mnt/vibrato/Fortnite` (checksum-verified
-  copy; all scripts keep their paths). Keep large artifacts out of the repo and
-  clean only intermediates an agent created. UE source and build output stay on `/`.
-- Pak access needs the AES keys. Agents are authorized to use them (user, 2026-10-31). Pass them with
-  `--key-file=<path>` (or `FORTNITE_AES_KEY_FILE`); the file stays outside the repository and the keys are never
-  committed, printed or logged. See `HANDOFF.md`, "Still to do".
-- Source-level identity with Epic's unreleased code is not reachable by
-  analysis alone. Parity is judged by behavior and wire format.
-
-## Historical closure commands
-
-The full extraction and earlier frontend hard-closure scans have since completed; see `extraction_status.md` and `frontend/readiness.md`. These original small-cap commands are retained as historical examples, not current completeness evidence.
-
-Each adds `--all-keys` for the GUID-keyed paks and `--key-file=<path>` so an agent can run it unattended.
-
-1. `dotnet porting/cue4inspect/bin/Release/net10.0/Cue4Inspect.dll FortniteGame/Content/Maps/Frontend --save-closure --max-packages=400 --all-keys`
-2. Same for `FortniteGame/Content/Maps/FortniteTransition` (cap 200).
-3. Same for `FortniteGame/Content/Maps/UI/Frontend_Lobby_Default` (cap 400).
-
-The original graph and package-coverage assumptions below these commands predate the full extraction; see the current snapshot for remaining UI gaps.
-
-## Decisions made autonomously
-
-- 2026-10-30: the supplied `.id0/.id1/.nam` IDA files are untrusted (user); the
-  exe `.text` is encrypted on disk, so code is recovered from a read-only
-  runtime dump of our own Wine run (user: approved).
-- Audio on this host: use `SDL_AUDIODRIVER=dummy` (or `disk` for verification)
-  until a real sink exists.
-- 2026-10-30: the original exe cannot be used as a handshake oracle through
-  the frontend. Without `-AUTH_*` flags it demands a manual sign-in; with them
-  it stopped at the AppES entitlement gate
-  (`direct_connect_results.md`). Wire parity is therefore checked offline:
-  compute class net checksums and replicated layouts from the recovered
-  reflection tables and compare with the native classes, and use the native
-  client against the native server for live joins.
-- 2026-10-31: moved the 86 GB original client to `/mnt/vibrato/Fortnite` (copy verified
-  by rsync checksum, then inspect_install.py, extract_reflection.py and a Wine launch
-  were run through the symlink). Both drives benchmark alike (~440-510 MB/s write,
-  ~580-790 MB/s read), so speed was not a factor. UE source and build state stay on `/`
-  because build tools record absolute paths.
+Actual RootLayout/LoginScreen still fail in another original material. Gdb proves
+MainL is the next declined owner. Its own static-permutation resource and nine
+original overrides have now been decoded; all six unique Slate programs map and
+validate. Implement its pinned actual-owner bridge, verify completeness and live
+overrides, then retry root-widget loading/construction and recover native UI
+lifecycle/helpers. Continue through login/lobby/matchmaking and full gameplay.
+No interactive root menu or original-client visual parity is verified. Exact
+current source/build/runtime receipts and work ownership are in HANDOFF.

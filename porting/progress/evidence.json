@@ -96,6 +96,8 @@
    ],
    "log": "porting/generated/frontend-probes/legacy-texture-donut-1.log",
    "log_sha256": "a0c42624a7309b6f78db1ca5faa1fca3aa5a7d273e08b70c1b19edfb257f9eb7",
+   "paired_build_join_receipt": "porting/generated/material_pipeline/texture-donut-checkpoint-results.json",
+   "paired_build_join_receipt_sha256": "6b98477fa78ff98922ea7e647f63de769c809c33632dc55b316e1175f960ae2d",
    "result": "pass",
    "scope": "Actual original Donut owner, indexed default texture and actual App2 override; seven required/zero missing shaders and game/render attachment. Server and final broad joins are tracked separately; original-client pixels and frontend widget integration remain unverified.",
    "source_native_commit": "46b4675",
@@ -281,52 +283,55 @@
   },
   "native_build_client": {
    "command": "Engine/Build/BatchFiles/Linux/Build.sh FortniteLinux Linux Development -project=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/native/FortniteLinux.uproject -NoHotReload",
-   "commit": "ebea44e88cc999f25532706224b3292e8151bd63",
-   "engine_commit": "6925baad3",
+   "commit": "46b4675",
+   "engine_commit": "08ebac023",
    "exit_code": 0,
    "id": "native_build_client",
    "key_lines": [
-    "Current Linux non-editor target build passed"
+    "Total time in Local executor: 294.64 seconds",
+    "Total execution time: 315.07 seconds"
    ],
    "result": "pass",
    "scope": "Current non-editor target only; full content and Editor parity remain unverified",
-   "source_native_commit": "ebea44e",
-   "utc": "2026-11-01T03:52:39Z",
-   "verification_receipt": "porting/generated/material_pipeline/numeric-menu-checkpoint-results.json",
-   "verification_receipt_sha256": "3452c6120258f4e9eb6a72e683952e9b7080fcc5411123fafb6c178eb17081b6"
+   "source_native_commit": "46b4675",
+   "utc": "2026-11-01T04:28:42Z",
+   "verification_receipt": "porting/generated/material_pipeline/texture-donut-checkpoint-results.json",
+   "verification_receipt_sha256": "6b98477fa78ff98922ea7e647f63de769c809c33632dc55b316e1175f960ae2d"
   },
   "native_build_server": {
    "command": "Engine/Build/BatchFiles/Linux/Build.sh FortniteLinuxServer Linux Development -project=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/native/FortniteLinux.uproject -NoHotReload",
-   "commit": "ebea44e88cc999f25532706224b3292e8151bd63",
-   "engine_commit": "6925baad3",
+   "commit": "46b4675",
+   "engine_commit": "08ebac023",
    "exit_code": 0,
    "id": "native_build_server",
    "key_lines": [
-    "Current Linux non-editor target build passed"
+    "Total time in Local executor: 414.11 seconds",
+    "Total execution time: 429.06 seconds"
    ],
    "result": "pass",
    "scope": "Current non-editor target only; full content and Editor parity remain unverified",
-   "source_native_commit": "ebea44e",
-   "utc": "2026-11-01T03:52:39Z",
-   "verification_receipt": "porting/generated/material_pipeline/numeric-menu-checkpoint-results.json",
-   "verification_receipt_sha256": "3452c6120258f4e9eb6a72e683952e9b7080fcc5411123fafb6c178eb17081b6"
+   "source_native_commit": "46b4675",
+   "utc": "2026-11-01T04:28:42Z",
+   "verification_receipt": "porting/generated/material_pipeline/texture-donut-checkpoint-results.json",
+   "verification_receipt_sha256": "6b98477fa78ff98922ea7e647f63de769c809c33632dc55b316e1175f960ae2d"
   },
   "net_version_checksum": {
-   "command": "(runtime log) porting/generated/frontend-probes/menu-material-joins-1/default-server.log",
-   "commit": "ebea44e88cc999f25532706224b3292e8151bd63",
-   "engine_commit": "6925baad3",
+   "command": "(runtime logs) porting/generated/frontend-probes/donut-material-joins-1",
+   "commit": "46b4675",
+   "engine_commit": "08ebac023",
    "exit_code": 0,
    "id": "net_version_checksum",
    "key_lines": [
-    "[2026.11.01-03.47.42:814][ 64]LogFortniteNet: Local network version checksum: 683914758 (0x28C3B606)"
+    "[2026.11.01-04.26.12:834][ 70]LogFortniteNet: Local network version checksum: 683914758 (0x28C3B606)",
+    "[2026.11.01-04.26.12:826][157]LogFortniteNet: Local network version checksum: 683914758 (0x28C3B606)"
    ],
    "log_sha256": "c3f947acae6cd045a4cac0f8ead444d47f603d7e3ca88aecb97b3979ec5f6a62",
    "result": "pass",
    "scope": "Runtime checksum constant only, not full wire parity",
-   "source_native_commit": "ebea44e",
-   "utc": "2026-11-01T03:52:39Z",
-   "verification_receipt": "porting/generated/material_pipeline/numeric-menu-checkpoint-results.json",
-   "verification_receipt_sha256": "3452c6120258f4e9eb6a72e683952e9b7080fcc5411123fafb6c178eb17081b6"
+   "source_native_commit": "46b4675",
+   "utc": "2026-11-01T04:28:42Z",
+   "verification_receipt": "porting/generated/material_pipeline/texture-donut-checkpoint-results.json",
+   "verification_receipt_sha256": "6b98477fa78ff98922ea7e647f63de769c809c33632dc55b316e1175f960ae2d"
   },
   "shader_structural_validation": {
    "command": "python3 -c 'import hashlib,json,pathlib; p=json.load(open(\"porting/generated/material_pipeline/frontend-translated/translation-report.json\")); rows=p[\"records\"]; assert len(rows)==44 and p[\"validated_jobs\"]==44; assert all(r[\"compile_exit\"]==0 and r[\"validation_exit\"]==0 for r in rows); assert all(hashlib.sha256(pathlib.Path(r[k]).read_bytes()).hexdigest()==r[k+\"_sha256\"] for r in rows for k in (\"input\",\"output\")); print(\"SPIR-V structural validation: 44/44; compiler diagnostics:\",p[\"compiler_diagnostic_jobs\"],\"; rendering unverified\")'",
@@ -345,39 +350,39 @@
    "utc": "2026-11-01T00:39:06Z"
   },
   "smoke_athena": {
-   "command": "env -u LD_LIBRARY_PATH JOIN_NAME=athena bash porting/generated/frontend-probes/menu-material-joins-1/smoke_join_isolated.sh '/Game/Maps/FortniteEmptyDedicated?game=/Script/FortniteGame.FortGameModeAthena'",
-   "commit": "ebea44e88cc999f25532706224b3292e8151bd63",
-   "engine_commit": "6925baad3",
+   "command": "env -u LD_LIBRARY_PATH JOIN_NAME=athena bash /opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/donut-material-joins-1/smoke_join_isolated.sh '/Game/Maps/FortniteEmptyDedicated?game=/Script/FortniteGame.FortGameModeAthena'",
+   "commit": "46b4675",
+   "engine_commit": "08ebac023",
    "exit_code": 0,
    "id": "smoke_athena",
    "key_lines": [
-    "Local UE join succeeded. Logs: /opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/menu-material-joins-1/athena-server.log and /opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/menu-material-joins-1/athena-client.log"
+    "Local UE join succeeded. Logs: /opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/donut-material-joins-1/athena-server.log and /opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/donut-material-joins-1/athena-client.log"
    ],
    "log_sha256": "3a5fdd2c95cd41c6abcc16f22decd678222b84176c4859d2ef0ff761a53bc05e",
    "result": "pass",
    "scope": "Current native direct test-map join only; frontend/matchmaking/original wire parity remain unverified",
-   "source_native_commit": "ebea44e",
-   "utc": "2026-11-01T03:52:39Z",
-   "verification_receipt": "porting/generated/material_pipeline/numeric-menu-checkpoint-results.json",
-   "verification_receipt_sha256": "3452c6120258f4e9eb6a72e683952e9b7080fcc5411123fafb6c178eb17081b6",
+   "source_native_commit": "46b4675",
+   "utc": "2026-11-01T04:28:42Z",
+   "verification_receipt": "porting/generated/material_pipeline/texture-donut-checkpoint-results.json",
+   "verification_receipt_sha256": "6b98477fa78ff98922ea7e647f63de769c809c33632dc55b316e1175f960ae2d",
    "wrapper_exit_code": 0
   },
   "smoke_default": {
-   "command": "env -u LD_LIBRARY_PATH JOIN_NAME=default bash porting/generated/frontend-probes/menu-material-joins-1/smoke_join_isolated.sh",
-   "commit": "ebea44e88cc999f25532706224b3292e8151bd63",
-   "engine_commit": "6925baad3",
+   "command": "env -u LD_LIBRARY_PATH JOIN_NAME=default bash /opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/donut-material-joins-1/smoke_join_isolated.sh",
+   "commit": "46b4675",
+   "engine_commit": "08ebac023",
    "exit_code": 0,
    "id": "smoke_default",
    "key_lines": [
-    "Local UE join succeeded. Logs: /opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/menu-material-joins-1/default-server.log and /opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/menu-material-joins-1/default-client.log"
+    "Local UE join succeeded. Logs: /opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/donut-material-joins-1/default-server.log and /opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/donut-material-joins-1/default-client.log"
    ],
    "log_sha256": "f26b72a3794b1398631ce34e9bd130578aca9819dd0f5b58fdbfc49a90754626",
    "result": "pass",
    "scope": "Current native direct test-map join only; frontend/matchmaking/original wire parity remain unverified",
-   "source_native_commit": "ebea44e",
-   "utc": "2026-11-01T03:52:39Z",
-   "verification_receipt": "porting/generated/material_pipeline/numeric-menu-checkpoint-results.json",
-   "verification_receipt_sha256": "3452c6120258f4e9eb6a72e683952e9b7080fcc5411123fafb6c178eb17081b6",
+   "source_native_commit": "46b4675",
+   "utc": "2026-11-01T04:28:42Z",
+   "verification_receipt": "porting/generated/material_pipeline/texture-donut-checkpoint-results.json",
+   "verification_receipt_sha256": "6b98477fa78ff98922ea7e647f63de769c809c33632dc55b316e1175f960ae2d",
    "wrapper_exit_code": 0
   },
   "ui_banner_classload": {
