@@ -2,6 +2,14 @@
 
 ## Current resume point (2026-11-01)
 
+- Validation in progress at Native82b3576: new client build PASS129.952s with full Native source
+  snapshot unchanged; server build is still owned by root (live exec session35187), do not restart it
+  from an old status note. Build receipts/logs /tmp/button-internal-native-build-1. New practical
+  diagnostic runner records the actual PID/executable inode/argv/cwd and before/after staged hashes
+  against this build receipt. Its10 focused tests pass. A real Linux empty-cmdline exec race was
+  reproduced and corrected with a bounded live-only retry; failures retained in
+  /tmp/button-binding-diagnose-zoi9vivp, successful controls /tmp/button-binding-verified-qsulnk0u.
+  The runner does not replace prior full strict metadata/link validation or claim full UI acceptance.
 - Current next validation: the completed real-widget diagnostic is now promoted as opt-in
   -ButtonInternalProbe, with maintained tools in frontend/button_internal_runtime_probe/ (5 tests pass).
   Root strengthened it to34 rows: real Slate focus event/factory delegate/reply and both independent
