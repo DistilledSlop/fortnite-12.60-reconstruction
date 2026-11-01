@@ -916,3 +916,52 @@ index 95cab1a54..744aa8dad 100644
 -- 
 2.53.0
 
+
+From 8fba83b4496598b67d6c17ed751205bc054cf546 Mon Sep 17 00:00:00 2001
+From: Codex <codex@local.invalid>
+Date: Sun, 1 Nov 2026 06:25:34 +0000
+Subject: [PATCH] Preserve expression-local defaults for repeated legacy
+ parameters
+
+---
+ .../Engine/Private/Materials/LegacySlateMaterial.cpp  | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
+
+diff --git a/Engine/Source/Runtime/Engine/Private/Materials/LegacySlateMaterial.cpp b/Engine/Source/Runtime/Engine/Private/Materials/LegacySlateMaterial.cpp
+index 744aa8dad..cbb61f12f 100644
+--- a/Engine/Source/Runtime/Engine/Private/Materials/LegacySlateMaterial.cpp
++++ b/Engine/Source/Runtime/Engine/Private/Materials/LegacySlateMaterial.cpp
+@@ -110,13 +110,16 @@ TRefCountPtr<FMaterialShaderMap> FMaterialShaderMap::CreateLegacySlateMap(
+         (N.Parameter.Association == GlobalParameter ? N.Parameter.Index != INDEX_NONE : N.Parameter.Index < 0))
+      return Fail(TEXT("Invalid original numeric parameter identity"));
+     const FHashedMaterialParameterInfo Identity(N.Parameter);
++    // Legacy defaults belong to individual expressions. Share a table entry only
++    // for the same full identity and exact float bits; named overrides still
++    // query every entry by that identity, regardless of its fallback default.
+     int32 ParameterIndex = INDEX_NONE;
+     if (N.Kind == ELegacyMaterialExpression::ScalarParameter)
+     {
+      for (int32 I = 0; I < Uniforms.UniformScalarParameters.Num(); ++I)
+-      if (Uniforms.UniformScalarParameters[I].ParameterInfo == Identity)
++      if (Uniforms.UniformScalarParameters[I].ParameterInfo == Identity &&
++          FMemory::Memcmp(&Uniforms.UniformScalarParameters[I].DefaultValue, &N.Value.R, sizeof(float)) == 0)
+       {
+-       if (Uniforms.UniformScalarParameters[I].DefaultValue != N.Value.R) return Fail(TEXT("Conflicting original scalar parameter defaults"));
+        ParameterIndex = I; break;
+       }
+      if (ParameterIndex == INDEX_NONE)
+@@ -130,9 +133,9 @@ TRefCountPtr<FMaterialShaderMap> FMaterialShaderMap::CreateLegacySlateMap(
+     else
+     {
+      for (int32 I = 0; I < Uniforms.UniformVectorParameters.Num(); ++I)
+-      if (Uniforms.UniformVectorParameters[I].ParameterInfo == Identity)
++      if (Uniforms.UniformVectorParameters[I].ParameterInfo == Identity &&
++          FMemory::Memcmp(&Uniforms.UniformVectorParameters[I].DefaultValue, &N.Value, sizeof(FLinearColor)) == 0)
+       {
+-       if (Uniforms.UniformVectorParameters[I].DefaultValue != N.Value) return Fail(TEXT("Conflicting original vector parameter defaults"));
+        ParameterIndex = I; break;
+       }
+      if (ParameterIndex == INDEX_NONE)
+--
+2.53.0
+
