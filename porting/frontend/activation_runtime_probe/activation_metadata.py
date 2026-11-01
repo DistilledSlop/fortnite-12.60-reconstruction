@@ -15,6 +15,11 @@ def symbols(debug):
   if match:result.append((int(match[1],16),int(match[2],16),match[3]))
  err=proc.stderr.read();rc=proc.wait();m.need(rc==0,'nm activation symbols '+err[-200:]);return result
 
+def function_constructor(syms,name):
+ prefix='Z_Construct_UFunction_UCommonActivatableWidget_'+name
+ # A bool SetBit helper ends in EPv; match the complete no-arg function name.
+ return m.one_syms(syms,prefix,prefix+'v')
+
 def audit(cpp,obj,binary,debug):
  text=Path(cpp).read_text();m.need(m.build_id(binary)==m.build_id(debug),'activation ELF/debug build ID')
  e=m.ObjectELF(obj);linked=m.LinkedELF(binary);syms=symbols(debug)
@@ -30,7 +35,7 @@ def audit(cpp,obj,binary,debug):
   m.need(e.rel(fn,0).endswith('Z_Construct_UClass_UCommonActivatableWidgetv') and e.rel(fn,16,True)==name,'object owner/name '+name)
   lf=m.one_syms(syms,prefix,'10FuncParamsE');b=linked.read(lf[0],72)
   m.need(b[40:48]==raw[40:48] and b[56:72]==raw[56:72] and m.unpack('Q',b,0)[0]==owner[0] and linked.cstr(m.unpack('Q',b,16)[0])==name,'linked function fields/owner/name '+name)
-  creator=m.one_syms(syms,'Z_Construct_UFunction_UCommonActivatableWidget_'+name,'v');m.need(m.instruction_ref(binary,creator[0],creator[1],lf[0]),'linked constructor binds params '+name)
+  creator=function_constructor(syms,name);m.need(m.instruction_ref(binary,creator[0],creator[1],lf[0]),'linked constructor binds params '+name)
   native='UCommonActivatableWidget'+str(4+len(name))+'exec'+name
   execsym=m.one_syms(syms,native)
   m.need(e.rel(reg,i*16,True)==name and native in e.rel(reg,i*16+8),'object native pair '+name)

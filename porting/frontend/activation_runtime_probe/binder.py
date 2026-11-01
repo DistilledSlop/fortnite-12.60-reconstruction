@@ -140,6 +140,9 @@ PARENT_SHA='2f6ae1bee29f1579b1dc90af3f599f1f70881cc1390dd19b02e2af89a856b4a4'
 RELEASE_SHA='2a457d888601347836aca5dbe23361987fb31c887b0a9a291fbd209596766c2e'
 # SHA256 of git 824af00646e001c555bb8e55b74aac050836671c:binder.py
 OLD_BINDER_SHA='ecfed853ae19ac1b5a1b8f15b6796f143046b5cfffae56d051ae111fbb8a27a2'
+# Original phase2 observer bytes; current corrected observer is separately bound
+# in retry tools and must still perform all object/ELF/metadata checks.
+OLD_METADATA_SHA='3e4ab1aafae95482c26f7fdfc5d72064bd9ccafa8732c529655afb6a16cbec13'
 INHERITED=('start.json','build.json','activation.start.json','activation.build.json')
 def binding(path):return {'path':str(Path(path).resolve()),'sha256':digest(path)}
 def tool_bindings():return {name:binding(HERE/name) for name in ('binder.py','activation_metadata.py','implementation_link.py','contract.json','source-expectations.json')}
@@ -158,7 +161,7 @@ def validate_parent(checkpoint,release,previous,check_artifacts=True):
  need(digest(previous/'build.json')==cp['build_finish_sha256'] and digest(previous/'activation.build.json')==cp['activation_build_sha256'],'checkpoint build binding')
  st=load(previous/'start.json');ab=load(previous/'activation.build.json');ast=load(previous/'activation.start.json');build=load(previous/'build.json')
  need(build['schema']=='context-build-v1' and build['start_sha256']==digest(previous/'start.json') and ab['schema']=='activation-build-v1' and ab['context_build_sha256']==digest(previous/'build.json') and ab['activation_start_sha256']==digest(previous/'activation.start.json'),'old build chain')
- need(ast['binder_sha256']==OLD_BINDER_SHA and ast['context_start_sha256']==digest(previous/'start.json') and ast['contract_sha256']==digest(CONTRACT) and ast['metadata_tool_sha256']==digest(HERE/'activation_metadata.py') and ast['implementation_tool_sha256']==digest(HERE/'implementation_link.py'),'exact reviewed old binder and unchanged audit tools')
+ need(ast['binder_sha256']==OLD_BINDER_SHA and ast['context_start_sha256']==digest(previous/'start.json') and ast['contract_sha256']==digest(CONTRACT) and ast['metadata_tool_sha256']==OLD_METADATA_SHA and ast['implementation_tool_sha256']==digest(HERE/'implementation_link.py'),'exact reviewed old binder/metadata and unchanged implementation tool')
  need(build['finished_ns']>st['start_ns'] and ab['finished_ns']>=build['finished_ns'],'inherited build epoch')
  # Context artifacts and invocation/log receipts are rehashed without restamping.
  for target,r in build['targets'].items():

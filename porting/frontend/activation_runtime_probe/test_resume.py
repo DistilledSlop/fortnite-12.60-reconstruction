@@ -11,7 +11,7 @@ class ResumeTests(unittest.TestCase):
   def write(path,value):path.write_text(json.dumps(value));return path
   st={'schema':'context-build-start-v1','workspace':str(root),'start_ns':1,'snapshot':{'source_tree':{},'engine':{'root':str(root)},'generator':'generator'}}
   write(prev/'start.json',st)
-  ast={'context_start_sha256':b.digest(prev/'start.json'),'binder_sha256':b.OLD_BINDER_SHA,'contract_sha256':b.digest(b.CONTRACT),'metadata_tool_sha256':b.digest(b.HERE/'activation_metadata.py'),'implementation_tool_sha256':b.digest(b.HERE/'implementation_link.py')}
+  ast={'context_start_sha256':b.digest(prev/'start.json'),'binder_sha256':b.OLD_BINDER_SHA,'contract_sha256':b.digest(b.CONTRACT),'metadata_tool_sha256':b.OLD_METADATA_SHA,'implementation_tool_sha256':b.digest(b.HERE/'implementation_link.py')}
   write(prev/'activation.start.json',ast)
   targets={}
   for target in ('FortniteLinux','FortniteLinuxServer'):

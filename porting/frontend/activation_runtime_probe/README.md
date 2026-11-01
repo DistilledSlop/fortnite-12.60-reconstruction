@@ -53,3 +53,11 @@ loader/toolchain/library/asset closure, original private ABI, actual cooked
 Blueprint behavior and product milestone acceptance remain outside this bounded
 diagnostic. The earlier startup stall cause remains unproven; these tools claim
 no activation runtime pass.
+
+The attempt3 metadata audit exposed two symbols ending in `v`: the UFunction
+constructor and the bool setter ending in `EPv`. Constructor selection now
+matches the complete no-argument constructor name. The old phase2 metadata
+observer hash remains explicitly recognized as historical evidence; the corrected
+observer is separately pinned in each retry and still performs every object and
+linked metadata check. Native/generator/Engine bytes are unchanged. The real
+ambiguous pair and missing/duplicate-constructor rejection have regression tests.
