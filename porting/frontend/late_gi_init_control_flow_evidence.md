@@ -152,7 +152,10 @@ Exact getter/field/data outputs are in `class-identities.json`,
 Additional observed registrations remain separately typed work:
 
 - UpdateManager+40 receives weak-UObject callback **141e70c30**. Its input is
-  byte-sized in the original body; the exact enum name is not proven here.
+  byte-sized in the original body. The subsequent independent proof in
+  `gi_update_completion_evidence.md` identifies the event as OnUpdateCheckComplete
+  and its exact argument as EUpdateCompletionStatus; the full callback still
+  needs its original service/player implementations.
 - Actual **FortAssetManager**, obtained by **141df62a0**, has its +758 native
   event bound to **141e70480**. That callback validates an opaque result/context,
   routes equal/pending mode bytes **8b0/8b1** through **141e52bb0/141e664e0**, and
