@@ -2,6 +2,83 @@
 
 ## Current resume point (2026-11-01)
 
+- Goal unchanged: full reconstructed client/server with feature, visual and wire parity. All four product
+  milestones remain open. Dashboard approximately21.44%,116leaves,totalweight1855; materials129/142,
+  bounded non-Native signatures41/41. Only the TrackingLlama pending check becamepass this phase.
+- Latest validated material/build source3e97743 / Engine d7e04d4b65fb8ee464082849414cf5f7ae4d7bca.
+  Both builds PASS151.094/120.596s with all12568Native sources stable. TrackingLlama passes actual indexed
+  GT/RT texture lookup, asset sampler/RHI slots, all7shaders and8graph/owner uniform cases each, plus
+  4reader negatives. Independent verifier checks14shader payload files and source mip/binding receipts.
+  Existing ComicBubble parent also passes the new generic2texture diagnostic, reversed indices and
+  asset/shared-clamp samplers. Default/Athena joins PASS21.582/21.572s. No raw compressed GPU readback,
+  rendered quad, original pixels or authentic frontend behavior is established by these probes.
+- Original Root class load NOW PASSES: generated/frontend-probes/tracking-llama-root-1 exits0 and reports
+  /Game/UI/Foundation/RootLayout_Athena.RootLayout_Athena_C -> WidgetBlueprintGeneratedClass. It still warns
+  about unresolved Blueprint fields; loading a class is not executing its VM or showing interactive UI.
+  The four direct Root paths are FortDialogDescription_NUI:{Cancelable,ShowSound,DeclineButtonInputAction}
+  under /Script/FortniteGame and FortAsyncAction_ShowConfirmation_NUI:DialogResult under /Script/FortniteUI.
+  Current action header emits only WorldContextObject/TargetLocalPlayer; standalone dialog struct/enum
+  headers were not found. Scout /tmp/root-confirmation-delegate-frontier-1 used older typed-events reports:
+  DialogResult delegate FFortConfirmationResultDelegate_NUI was blocked by EFortDialogResult cross-module
+  closure; class block146edd640, delegate1451f5b70, enum142b242c0, struct142b25370. Recheck CURRENT generator
+  metadata and module dependencies before implementing. Recover exact types/signatures and real action
+  behavior; do not add fake handlers or force startup phases. Broader pending native work: main-button
+  constructor/Initialize/state/callback graph, Panel constructor/public phase APIs, interface routing,
+  queue/global/held-action/input producers, complete original GameInstance startup and interactive UI.
+- New ordinary base-UMaterial manifest path validates original proof/reference order/decoded expressions
+  and resource SHA, restores exact Texture2D refs, and has an opt-in diagnostic for real RHI bindings.
+  Existing fixed owners/Comic handling remain intact. TrackingLlama original Icon-Llama-NoEyes is256square
+  PF_DXT5 with9mips (2external/7inline); all3stage files matchoriginal. Initial GPU residency is7mips/64square,
+  explicitly observed rather than full residency. Source defaults remain qualified. All7original programs
+  translate/reflection-pass without View: MaterialCBV1/span112, texture0/sampler1; fonts add loose t1/s1.
+- Checkpoint generated/material_pipeline/tracking-llama-credit-1/checkpoint.json SHA256
+  dbc24e995d3a70ae5546d79ef20b45a82b3c7b99d8867231b08fd2e3da1b2df4 freezes61committed source snapshots,
+  97artifacts,18binaryrows,bothbuilds,one credited probe and joins. Independent report SHA256
+  7ceae38a50ecc724e49316a8957bca14311b7cef1802a9d8fb35047f46bfba97. Root rehashes12568Native files,
+  61critical sources and143archivepairs; phase root-integrity.json SHA256
+  f192c9d982d5b22841a5a1ff91a6cf44158234c0bb4737c31d48ca09223b3c97. Archive
+  /mnt/vibrato/fortnite-evidence/frozen-runtime/tracking-llama-runtime-1/source-release.json SHA256
+  021502abf1c5fcda3a66f0a887a746a23bf6c0588e87cffff537a64fdd617382 releases Native/build/stage ownership.
+  All handles TERMINAL: build55175/stage44840/material80698/regression98945/root35746/joins18043.
+  All workers finished. Four exporter/source rejection tests and57verifier tests pass. Full older
+  CommonUI diagnostics and exhaustive original metadata/relocation proof were not repeated this phase.
+- Reproduction: /tmp/build_tracking_llama_native_1.py, /tmp/stage_tracking_llama_native_1.py,
+  /tmp/run_tracking_llama_probe_1.py material|root <manifest> <epoch> with
+  TRACKING_LLAMA_STAGE_RECEIPT=/tmp/tracking-llama-native-build-1/stage.json; /tmp/run_tracking_llama_joins_1.py.
+  Use fresh output epochs. Final manifest tracking-llama-bundle-2/combined-manifest.json SHA256
+  321c84c9d1fc72c8d65569b931a1cd2a228f90efd8ea7eb805a57805b2962e9b (old122+new1 owners).
+  Credit adapter/commands /tmp/tracking-llama-material-credit-1/HANDOFF.md; source context replay and texture
+  frame dependencies /tmp/tracking-llama-{texture-context,texture-frame}-1 are copied into the archive.
+- Persistent collaboration: root plans/orchestrates/reviews and also implements difficult work. Luna-medium
+  small read-only; Terra-medium/high regular; Sol6.1-medium complex; always fork_turns:none. Bounded tasks,
+  rotate at useful checkpoints. Economical file/log reads. One Native/build/stage owner; preserve the five
+  pre-existing Engine edits and external CUE edit. No remote/push. Keep the full goal active.
+
+## Superseded resume snapshot (2026-11-01, historical)
+
+- TrackingLlama work IN PROGRESS at source3e97743 (not runtime-validated yet). Root owns Native/build/stage;
+  full client/server build session55175 RUNNING via /tmp/build_tracking_llama_native_1.py, outputs
+  /tmp/tracking-llama-native-build-1. Do not mutate Native or launch another build while live. Code adds
+  source-authenticated TrackingLlama exporter/context replay and a general plain Texture2D BASE UMaterial
+  manifest PrepareOwner/opt-in GT/RT/RHI diagnostic, preserving fixed/Comic behavior. Source refs/proof/
+  decoded fields must match; resource SHA checked before restore. Generic receipt OriginalTextureBindings.json
+  requires -FortniteLegacyMaterialGenericTextureProbe; verifier checks exact source frames/mip bytes and
+  typed live bindings. Both-target standalone UE syntax checks PASS /tmp/ordinary-texture-candidate-checks-1.json;
+  57verifier tests plus4exporter/source rejection tests PASS. Original seven selected shaders convert/reflection
+  PASS generated/material_pipeline/tracking-llama-shaders-1; no View, MaterialCBV1/span112, texture0/sampler1,
+  font loose ElementTexture t1/s1. Full19source wrappers,5vector/6scalar roots and8numeric cases retained.
+  Final exporter bundle generated/material_pipeline/tracking-llama-bundle-2/manifest.json
+  SHA32fb2c5334f8758486c018ef7766bb7c13178fa8f86be7c971fa71022a54165b; combined old122+new1
+  combined-manifest.json SHA321c84c9d1fc72c8d65569b931a1cd2a228f90efd8ea7eb805a57805b2962e9b.
+  Original Icon-Llama-NoEyes256squarePF_DXT5/9mips,2external+7inline; all source mip bytes preserved.
+  /tmp/tracking-llama-texture-frame-1/receipt.json SHA0a04773f887a655bff04e6ebf78a6ed1f13e21da309848af20400c37f313d25f,
+  8frame rejection controls; all3stagedpackagefiles byte-identical, /tmp/tracking-llama-stage-parity-1.json.
+  Inspector sampling/sRGB defaults are qualified, actual sRGB/RHI flags must match at runtime; no pixels
+  claimed. Stage when builds pass with /tmp/stage_tracking_llama_native_1.py -> NEW archive
+  frozen-runtime/tracking-llama-runtime-1. Runner /tmp/run_tracking_llama_probe_1.py material|root
+  <combinedmanifest> <epoch> requires TRACKING_LLAMA_STAGE_RECEIPT=/tmp/tracking-llama-native-build-1/stage.json.
+  Then independent verifier/importer and fresh /tmp/run_tracking_llama_joins_1.py; no credit until actual
+  runtime succeeds. Prior Comic de38015 checkpoint/source release below remains the validated baseline.
 - ComicBubble phase2 source de38015 is independently verified and credited (128/142 material owners). Root reviewed/applied the168line
   maintained Native candidate restoring the proven full2reference context and adding actual GT/RT/RHI
   texture/sampler checks, with real ComicBubbleTextureBindings.json receipts; verifier gains exact

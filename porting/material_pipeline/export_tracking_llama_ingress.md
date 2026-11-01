@@ -7,3 +7,13 @@
 The exporter reparses the original complete 19-record resource and preserves all archive wrappers, evaluates numeric defaults and parameter perturbations, revalidates the seven mapped shader programs and reflected descriptor provenance, and checks all nine original DXT5 mips against the pinned texture framing receipt and source bytes. The shaders have no View descriptor. The receipt records inspector defaults separately; effective original sampler and sRGB are not inferred. This is offline source conversion, not runtime loading, GPU rendering, or pixel parity evidence.
 
 Run `python3 porting/material_pipeline/test_export_tracking_llama_ingress.py` for source and rejection checks. The shader reports, source files, and scratch receipts must be available for the tests.
+
+Runtime checkpoint at Native `3e97743` passes both builds, the original indexed
+texture/asset sampler checks, all seven shaders and eight graph/owner uniform
+cases, independent payload verification and both joins. The material owner is
+credited, bringing the bounded closure to129/142. Initial residency was seven
+mips/64square, with all nine original source mips retained. RootLayout_Athena_C
+now loads as WidgetBlueprintGeneratedClass; unresolved Blueprint fields remain.
+This does not establish a draw, VM behavior, interactive frontend or pixel parity.
+Checkpoint `generated/material_pipeline/tracking-llama-credit-1/checkpoint.json`
+SHA-256 `dbc24e995d3a70ae5546d79ef20b45a82b3c7b99d8867231b08fd2e3da1b2df4`.

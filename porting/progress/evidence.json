@@ -1607,10 +1607,39 @@
    "utc": "2026-11-01T06:48:54Z"
   },
   "material_frontend_owner_2d07a9a8cc7b4259": {
+   "artifact_validation_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/tracking-llama-material-1/material-dashboard-validation-jkeb0wrp.json",
+   "artifact_validation_sha256": "7ceae38a50ecc724e49316a8957bca14311b7cef1802a9d8fb35047f46bfba97",
+   "build_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/tracking-llama-credit-1/client-build-adapter.json",
+   "build_receipt_sha256": "75f43c31cbc9dcc3d6281efab8d79e24a2b6db17c6a9233e8350f5c2acc9faf8",
+   "bundle": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/tracking-llama-bundle-2/M_UI_TrackingLlama.json",
+   "bundle_sha256": "9d180cda469bf862ca3b41e8b87d6f1b476deb16b40c956cbbfe343aa404a393",
+   "command": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/paper2d-matched-stage-3/LinuxNoEditor/FortniteLinux/Binaries/Linux/FortniteLinux -stdout FortniteLinux /Engine/Maps/Entry -vulkan -windowed -ResX=1280 -ResY=720 -nosound -unattended -log -FortniteLegacySequencer -FortniteLegacyFieldPaths -NOCONSOLE -FortniteLegacyMaterialIngress=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/locker-ingress-bundle.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/gradient-panel-ingress-bundle.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/power-toast-ingress-bundle.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/menu-button-ingress-bundle-active-time.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/donut-ingress-bundle.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/mainl-ingress-bundle-checked.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/keybind-ingress-3/bundle.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/hollow-ingress-3/bundle.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/flogo-ingress-3/bundle.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/social-atlas-corrected-ingress-3/bundle.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/media_button-ingress-1/bundle.json,/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/google-envelope-1-a/bundle.json -FortniteLegacyMaterialManifest=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/tracking-llama-bundle-2/combined-manifest.json -FortniteLegacyMaterialManifestSHA256=321c84c9d1fc72c8d65569b931a1cd2a228f90efd8ea7eb805a57805b2962e9b -FortniteLegacyMaterialTrace -FortniteLegacyMaterialTrace=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/tracking-llama-material-1/material-trace.json -stdout -FullStdOutLogOutput -ExecCmds=Quit -FortniteLegacyMaterialGenericTextureProbe -FortniteProbeLegacyOriginalMaterial -FortniteLegacyMaterialProbeOwner=/Game/UI/Foundation/Modals/ErrorWindow/Materials/M_UI_TrackingLlama.M_UI_TrackingLlama -FortniteLegacyMaterialArtifactDir=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/tracking-llama-material-1/material",
+   "commit": "3e977431d5231fb91f14bbe862af92edc3ae7c8c",
+   "engine_commit": "d7e04d4b65fb8ee464082849414cf5f7ae4d7bca",
+   "exit_code": 0,
    "id": "material_frontend_owner_2d07a9a8cc7b4259",
+   "key_lines": [
+    "[2026.11.01-21.53.58:797][  0]LogMaterial: Display: Legacy actual-owner completeness owner=/Game/UI/Foundation/Modals/ErrorWindow/Materials/M_UI_TrackingLlama.M_UI_TrackingLlama domain=5 blend=2 shading=MSM_Unlit quality=1 feature=3 flags=2816 required=7 missing=0 complete=1",
+    "[2026.11.01-21.53.58:909][  0]LogTemp: Display: Legacy material probe: 8 manifest owner live uniform cases passed",
+    "[2026.11.01-21.53.58:916][  0]LogTemp: Display: Legacy material ingress: manifest owner /Game/UI/Foundation/Modals/ErrorWindow/Materials/M_UI_TrackingLlama.M_UI_TrackingLlama uses original resource owner /Game/UI/Foundation/Modals/ErrorWindow/Materials/M_UI_TrackingLlama.M_UI_TrackingLlama, shared map provenance owner /Game/UI/Foundation/Modals/ErrorWindow/Materials/M_UI_TrackingLlama.M_UI_TrackingLlama; complete and attached on both threads; seven shaders and all uniform cases passed"
+   ],
+   "log": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-probes/tracking-llama-material-1/stdout.log",
+   "log_sha256": "2c084d535d267f97bbb9aacd29a95a753ed00758136511be7f02755e5df0084c",
+   "manifest": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/tracking-llama-bundle-2/combined-manifest.json",
+   "manifest_sha256": "321c84c9d1fc72c8d65569b931a1cd2a228f90efd8ea7eb805a57805b2962e9b",
    "owner_path": "/Game/UI/Foundation/Modals/ErrorWindow/Materials/M_UI_TrackingLlama.M_UI_TrackingLlama",
-   "result": "pending",
-   "scope": "Material owner in the bounded frontend closure; actual-owner runtime ingress has not been credited."
+   "resource_owner_path": "/Game/UI/Foundation/Modals/ErrorWindow/Materials/M_UI_TrackingLlama.M_UI_TrackingLlama",
+   "result": "pass",
+   "run_receipt": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/tracking-llama-credit-1/owner-run-adapter.json",
+   "run_receipt_sha256": "5b18d414b548e11c9226c1d9189a84250e2778cf7942cd4453d086016eff7414",
+   "runtime_checkpoint": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/tracking-llama-credit-1/checkpoint.json",
+   "runtime_checkpoint_sha256": "dbc24e995d3a70ae5546d79ef20b45a82b3c7b99d8867231b08fd2e3da1b2df4",
+   "scope": "This owner original material map compatibility and attachment in the bounded frontend closure; widget integration and original visual parity remain unverified.",
+   "source_and_staged_client_sha256": "19409e5a7f90853ab731b205e97a898ba729e61b17bd3bdedde015fb6ac5293b",
+   "source_frozen_inputs": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/material_pipeline/tracking-llama-credit-1/inputs.json",
+   "source_frozen_inputs_sha256": "de0af6b6bafcf4c0128f3afff70b1bf427e2f3dfbe0a9c1b20edae3b2e7cb94d",
+   "source_native_commit": "3e977431d5231fb91f14bbe862af92edc3ae7c8c",
+   "utc": "2026-11-01T21:58:36Z"
   },
   "material_frontend_owner_2f5d8a82c5e52049": {
    "id": "material_frontend_owner_2f5d8a82c5e52049",

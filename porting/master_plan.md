@@ -8,6 +8,16 @@ milestone is done only with logged evidence. Rules for every wave: at most
 three bounded task agents at once, rotating fresh after relevant checkpoints, one owner for `native/` and the UE build, no keys or
 credentials in Git, and the orchestrator reviews and commits.
 
+## Current baseline
+
+At Native `3e97743`, TrackingLlama and the ordinary source-authenticated Texture2D path pass both builds,
+actual texture/sampler checks, independent shader payload validation and both joins. The material closure
+is129/142 with unchanged weights. The original Root class now loads successfully; its four unresolved
+Blueprint fields and authentic startup/widget execution are the next frontend work. All four product
+milestones remain open. Exact receipts, limitations and source release are at the top of HANDOFF.md.
+
+## Earlier checkpoints (historical)
+
 The broader strict material/activation baseline is native `c06a5cb` / Engine `d7e04d4b6`: immutable phase2 builds and fresh activation attempt5 pass full original UHT/object/linked implementation, 40 activation rows, full context proofs, retained material/texture/Splash controls and both joins. Root independently reran the strict proof; separate audits verify639newartifacts,42metadata/object snapshots and all18binarypaths. The dashboard credits126/142 bounded material owners,41/41 non-Native signatures and the existing one-point base activation behavior share. All four milestones remain open. Root still stops at missing CommonActivatablePanel.OnBeginIntro; Login at Facebook/MemoryImage1064. Exact receipts, limitations and next bounded source tasks are at the top of HANDOFF.md.
 
 New internal-button runtime at Native `82b3576` / Engine `d7e04d4b6` passes both builds (129.952/121.582s), 34 real UObject/Slate diagnostic rows, retained activation/context live checks and both fresh default/Athena joins. Independent audit rehashes 12,553 Native files, 40 small artifacts and all 18 binary paths with no mismatches. The existing CommonUI budget now separately credits this one-point diagnostic; 20 behavior points remain unfinished. This phase did not repeat the broader original metadata/link or material/pixel checks. Exact pinned receipts and limitations are in the latest HANDOFF snapshot.
@@ -50,7 +60,7 @@ using historical instructions below.
 
 ## Current work (2026-11-01)
 
-The dashboard separates three frozen frontend source stages, generic context runtime and two bounded CommonUI runtime diagnostics from unfinished UI behavior. Current effort is approximately21.44%, with total1,855weight and historical points preserved;116leaves. Base activation, internal-button, Panel intro and outro diagnostics each earn one existing behavior point. Product gates and remaining main-button/Panel/queue/input/gesture/UI parity stay unverified. Source importer rehashes46,166 frozen bindings; runtime importers pin their respective source/build/process reports and independent audits. All36 progress tests pass. See progress/README.md for allocation and provenance limits.
+The dashboard separates three frozen frontend source stages, generic context runtime and two bounded CommonUI runtime diagnostics from unfinished UI behavior. Current effort is approximately21.44%, with materials129/142 and total1,855weight and historical points preserved;116leaves. Base activation, internal-button, Panel intro and outro diagnostics each earn one existing behavior point. Product gates and remaining main-button/Panel/queue/input/gesture/UI parity stay unverified. Source importer rehashes46,166 frozen bindings; runtime importers pin their respective source/build/process reports and independent audits. All36 progress tests pass. See progress/README.md for allocation and provenance limits.
 
 Social and Media now pass both profiles and independent strict verifiers, original GPU bytes, exact binding/size checks and controls. Phase 2 is frozen and root-audited at 95 sources/six immutable binaries/1,388 artifacts, with two passing builds and joins. Preserve failed phase 1 and older baselines. Original atlas World LODGroup remains an explicit inference; actual UI and original pixel parity remain unfinished.
 
