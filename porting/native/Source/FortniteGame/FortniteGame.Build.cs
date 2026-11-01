@@ -16,7 +16,7 @@ public class FortniteGame : ModuleRules
             "WebBrowser",
             // Runtime modules generated from packages outside the engine tree (porting/native_classes_status.md).
             "Account", "AmbientAudio", "BlueprintContext", "CommonInput", "CommonUI", "MeshNetwork", "ModularGameplay", "McpProfileSys" });
-        if (Target.IsInPlatformGroup(UnrealPlatformGroup.Linux))
+        if (Target.IsInPlatformGroup(UnrealPlatformGroup.Linux) && Target.Type != TargetType.Server)
         {
             PrivateIncludePaths.Add(Path.Combine(EngineDirectory, "Source/Runtime/VulkanRHI/Public"));
             AddEngineThirdPartyPrivateStaticDependencies(Target, "Vulkan", "HLSLCC");

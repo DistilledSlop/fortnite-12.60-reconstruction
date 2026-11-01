@@ -2,7 +2,7 @@
 #include "Misc/CommandLine.h"
 #include "Misc/Parse.h"
 
-#if PLATFORM_LINUX
+#if PLATFORM_LINUX && !UE_SERVER
 #include "DynamicRHI.h"
 #include "Misc/Crc.h"
 #include "Misc/FileHelper.h"
@@ -103,7 +103,7 @@ static bool ProbeOriginalGeometry(const FString& Directory, const TCHAR* File, c
 void RunOriginalVulkanShaderProbe()
 {
     if (!FParse::Param(FCommandLine::Get(), TEXT("FortniteOriginalVulkanShaderProbe"))) return;
-#if PLATFORM_LINUX
+#if PLATFORM_LINUX && !UE_SERVER
     FString Directory;
     if (!FParse::Value(FCommandLine::Get(), TEXT("FortniteOriginalSpirvDir="), Directory) ||
         !GDynamicRHI || FCString::Stricmp(GDynamicRHI->GetName(), TEXT("Vulkan")) != 0)
@@ -115,6 +115,6 @@ void RunOriginalVulkanShaderProbe()
     const bool B = ProbeOriginalGeometry(Directory, TEXT("2459-902588da6ec2c15d140f.spv"), TEXT("9f240c5d61753a1710c860696578dfcccdd8cf4b"));
     UE_LOG(LogTemp, Display, TEXT("Original Vulkan shader probe: %s"), A && B ? TEXT("PASS") : TEXT("FAIL"));
 #else
-    UE_LOG(LogTemp, Error, TEXT("Original Vulkan shader probe is supported only on Linux"));
+    UE_LOG(LogTemp, Error, TEXT("Original Vulkan shader probe requires a Linux client"));
 #endif
 }
