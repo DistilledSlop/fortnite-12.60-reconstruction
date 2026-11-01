@@ -335,7 +335,7 @@ so the ceilings (35, 30) are their only limit.
 A leaf's colour is not a hue. Each leaf is a neutral tile, and its blue fill rises from the
 bottom edge to its percent complete: the fill is pct/100 of the tile height, clipped to the
 tile's rounded corners, with a 2px edge line along its top when the fill is partial. 0% is
-empty and 100% fills the tile. Unit-square tiles show squares instead (see Unit squares).
+empty and 100% fills the tile. Unit-square tiles overlay squares on the same fill (see Unit squares).
 The percentage is printed on every tile, so colour is never the only cue. The treemap key
 is an empty-to-full scale under the chart.
 
