@@ -9,3 +9,5 @@ Preserve existing edits. Stage specific paths, review and commit completed valid
 Record exact commands, outcomes, and artifact paths in the handoff. Distinguish a previous green baseline from current unvalidated edits, offline checksum parity from runtime compatibility, and extracted assets from usable content. Update the handoff before stopping so the next session can resume without reconstructing the history.
 
 Use `gpt-6-luna` with medium reasoning for read-only investigation and review; use `gpt-6-sol` with medium or low reasoning for implementation, tests, documentation changes, and operations. Keep `fork_turns: "none"` and preserve this configuration in compaction summaries and handoffs.
+
+The primary agent also performs difficult implementation, debugging, and problem solving directly when that best advances the goal, while continuing to plan, orchestrate, and review delegated work.
