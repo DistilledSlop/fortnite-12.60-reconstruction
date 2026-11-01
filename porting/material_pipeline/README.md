@@ -52,9 +52,9 @@ python3 -I porting/material_pipeline/inspect_d3d_code.py \
 python3 -I porting/material_pipeline/test_inspect_d3d_code.py
 ```
 
-All 44 recovered wrappers pass exact prefix/DXBC/optional framing. Nineteen have active resource-table bits; the other 25 have empty maps. Across the 44, the decoded maps contain 28 SRV, 18 sampler, 18 texture, and zero UAV entries. Optional `p` and `u` records are present in each. The evidence report preserves each original map and decoded entry, including layout hashes and uniform-buffer names. Those entries are D3D bindings; they have not been verified as mappings to the translated SPIR-V descriptors or installed in UE's Vulkan RHI. The same 12 shaders with compiler diagnostics all have active D3D resource-table bits, so their semantics and binding correspondence need direct validation before rendering claims.
+All 44 recovered wrappers pass exact prefix/DXBC/optional framing. Nineteen have active resource-table bits; the other 25 have empty maps. Across the 44, the decoded maps contain 28 SRV, 18 sampler, 18 texture, and zero UAV entries. Optional `p` and `u` records are present in each. The evidence report preserves each original map and decoded entry, including layout hashes and uniform-buffer names. Those entries are D3D bindings; explicit compiler API mapping is documented below, but they have not been installed in UE's Vulkan RHI. The same 12 shaders with compiler diagnostics all have active D3D resource-table bits, so their semantics and binding correspondence need direct validation before rendering claims.
 
-`inspect_spirv_bindings.py` independently reads the validated SPIR-V binaries, extracts `DescriptorSet`/`Binding` decorations on variables, and places them beside the original D3D resource-table entries. It requires the same source-report identity and hashes each output before inspection. The generated correspondence report covers all 44 shaders and 180 SPIR-V descriptor records (100 constant-buffer, 54 texture, 26 sampler names); all observed sets are zero. This is a concrete binding inventory, not a verified mapping: the compiler can renumber D3D registers, and the UE Vulkan shader header, uniform values, and shader-map registration are still absent.
+`inspect_spirv_bindings.py` independently reads the validated SPIR-V binaries, extracts `DescriptorSet`/`Binding` decorations on variables, and places them beside the original D3D resource-table entries. It requires the same source-report identity and hashes each output before inspection. The generated correspondence report covers all 44 shaders and 180 SPIR-V descriptor records (100 constant-buffer, 54 texture, 26 sampler names); all observed sets are zero. This earlier inventory alone does not establish mapping because the compiler can renumber D3D registers; the explicit API mapping below supplies that correspondence. The UE Vulkan shader header, uniform values, and shader-map registration are still absent.
 
 ```sh
 python3 -I porting/material_pipeline/inspect_spirv_bindings.py \
@@ -96,6 +96,24 @@ python3 -I porting/material_pipeline/compare_vkd3d_reports.py \
 ```
 
 The script consumes the already generated reports and binaries, whose receipt paths are local to the workspace. It checks recorded successful validation status, but does not rerun `spirv-val`. The 2.0 outputs are not installed in UE, and bindings, uniform values, shader-map reconstruction, draw execution, and visual parity remain unverified.
+
+## Explicit register mappings
+
+`translate_mapped_dxbc.py` uses the vkd3d 2.0 scan and explicit interface APIs to map original D3D registers to SPIR-V descriptors. The hash-checked `frontend-mapped/mapped-translation-report.json` records 44 validated shaders, 180 descriptors, 64 matched original resource-table entries and zero unmatched entries or compiler diagnostics. It records the exact SPIR-V `DescriptorSet` and `Binding` literal word offsets needed for UE remapping. An independent audit checked hashes, offsets and table counts. A separate `frontend-mapped-offset` run for shader 25 with binding base 32 differs from its base-zero output only in five `Binding` literal words.
+
+```sh
+python3 -I porting/material_pipeline/translate_mapped_dxbc.py \
+  --source-report porting/generated/material_pipeline/frontend-game-library.json \
+  --d3d-report porting/generated/material_pipeline/d3d-wrapper-inspection.json \
+  --output porting/generated/material_pipeline/frontend-mapped
+python3 -I porting/material_pipeline/translate_mapped_dxbc.py \
+  --source-report porting/generated/material_pipeline/frontend-game-library.json \
+  --d3d-report porting/generated/material_pipeline/d3d-wrapper-inspection.json \
+  --output porting/generated/material_pipeline/frontend-mapped-offset \
+  --binding-base 32 --limit 1
+```
+
+These reports establish the recorded register correspondence, not runtime semantics. UE shader headers, runtime uniform values, resource binding, shader-map installation, real draws and visual comparison remain unresolved.
 
 ## Original inline material framing
 
