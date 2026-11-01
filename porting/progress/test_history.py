@@ -42,7 +42,7 @@ class ProgressModelTests(unittest.TestCase):
         ledger = json.loads((folder / 'evidence.json').read_text())['checks']
         leaves = {leaf['id']: leaf for leaf in progress.walk_spec(model['tree'])}
         events = leaves['ui.frontend_event_registrations']
-        self.assertEqual(events['weight'] + leaves['ui.lifecycle']['weight'], 15)
+        self.assertEqual(events['weight'] + leaves['ui.lifecycle']['weight'] + leaves['ui.context_source_stage']['weight'], 15)
         self.assertEqual(leaves['ui.lifecycle']['measure'], dict(kind='manual', pct=0))
         self.assertEqual(len(targets['targets']), 41)
         self.assertEqual(len({row['path'] for row in targets['targets']}), 41)
@@ -73,7 +73,7 @@ class ProgressModelTests(unittest.TestCase):
         leaves = list(progress.walk_spec(model['tree']))
         material = [leaf for leaf in leaves if leaf['id'].startswith('ui.material_')]
         self.assertEqual(sum(leaf['weight'] for leaf in material), 20)
-        self.assertEqual(len(leaves), 108)
+        self.assertEqual(len(leaves), 111)
         self.assertEqual(sum(leaf['weight'] for leaf in leaves), 1855)
         self.assertEqual(sum(leaf['weight'] for leaf in material if leaf['measure']['kind'] == 'ledger'), 20)
         by_id = {leaf['id']: leaf for leaf in material}

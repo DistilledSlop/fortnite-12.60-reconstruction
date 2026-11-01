@@ -1276,7 +1276,7 @@
         {
           "id": "ui.commonui_umg.implementation",
           "name": "CommonUI and UMG behavior and widgets",
-          "weight": 24.0,
+          "weight": 22.0,
           "measure": {
             "kind": "manual",
             "pct": 0
@@ -1662,7 +1662,7 @@
         {
           "id": "ui.lifecycle",
           "name": "Frontend lifecycle and native helpers",
-          "weight": 14,
+          "weight": 13,
           "measure": {
             "kind": "manual",
             "pct": 0
@@ -1702,6 +1702,42 @@
             "pct": 0
           },
           "rationale": "Generated reflection declarations do not establish module behavior, integration or runtime parity. Function bodies and runtime checks have separate evidence; complete module behavior remains unverified."
+        },
+        {
+          "id": "ui.context_source_stage",
+          "name": "Generic context source candidate",
+          "weight": 1,
+          "measure": {
+            "kind": "ledger",
+            "checks": [
+              "frontend_context_source_stage"
+            ]
+          },
+          "rationale": "One lifecycle point for reviewed generic context lookup, registry and base lifecycle source/generator work, distinct from event signatures. Concrete contexts, authentic startup, linked UE runtime and integration remain in lifecycle."
+        },
+        {
+          "id": "ui.panel_source_stage",
+          "name": "CommonUI activation base source candidate",
+          "weight": 1,
+          "measure": {
+            "kind": "ledger",
+            "checks": [
+              "frontend_panel_base_source_stage"
+            ]
+          },
+          "rationale": "One CommonUI implementation point for isolated activation base source, portable tests, UHT and syntax. Panel/queue, shared build and runtime remain unfinished."
+        },
+        {
+          "id": "ui.input_source_stage",
+          "name": "CommonUI input source candidate",
+          "weight": 1,
+          "measure": {
+            "kind": "ledger",
+            "checks": [
+              "frontend_input_source_stage"
+            ]
+          },
+          "rationale": "One CommonUI implementation point for bounded input/device/lifecycle and delegate source, tests, UHT and syntax. Action dispatch, cursor, shared build and runtime remain unfinished."
         }
       ]
     }

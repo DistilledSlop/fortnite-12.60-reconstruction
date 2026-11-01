@@ -10942,6 +10942,39 @@
     }
    ],
    "scope": "Original regular Texture default without parameter identity; exact GPU source bytes, typed layout, 19 records, seven shaders attached on both threads, ten uniform cases, source/copy equality and checker effect. Combined is a separate diagnostic. Widget integration and original-client pixel parity remain unverified."
+  },
+  "frontend_context_source_stage": {
+   "id": "frontend_context_source_stage",
+   "result": "pass",
+   "exit_code": 0,
+   "command": "python3 -I porting/progress/record_frontend_source_stages.py",
+   "verification_receipt": "porting/generated/frontend-native-evidence/native-context-runtime-root-audit-1.json",
+   "verification_receipt_sha256": "d52405265c36dab4812a583edf171792bf5b4b12e5fb5919223a64adf65eb147",
+   "frozen_bindings_verified": 31105,
+   "scope": "Reviewed generic lookup/registry/base-lifecycle source and generator candidate, portable and policy tests; excludes concrete derived contexts, startup integration, fresh UE build and runtime.",
+   "provenance_note": "Frozen source-stage evidence; external receipt availability is required for independent re-verification."
+  },
+  "frontend_panel_base_source_stage": {
+   "id": "frontend_panel_base_source_stage",
+   "result": "pass",
+   "exit_code": 0,
+   "command": "python3 -I porting/progress/record_frontend_source_stages.py",
+   "verification_receipt": "/tmp/common-panel-native-runtime-candidate-1/frozen-base-stage-1/receipt.json",
+   "verification_receipt_sha256": "c727a782c26059a767f8703085d63f54fd6d9f4bda8865bf62ae0225c2ff6255",
+   "frozen_bindings_verified": 14995,
+   "scope": "Isolated base activation candidate with portable/policy tests, fresh UHT and two syntax units; excludes Panel queue integration, shared build, link and runtime.",
+   "provenance_note": "Frozen source-stage evidence; external receipt availability is required for independent re-verification."
+  },
+  "frontend_input_source_stage": {
+   "id": "frontend_input_source_stage",
+   "result": "pass",
+   "exit_code": 0,
+   "command": "python3 -I porting/progress/record_frontend_source_stages.py",
+   "verification_receipt": "/tmp/common-input-native-dependencies-1/frozen-global-weak-stage-7/receipt.json",
+   "verification_receipt_sha256": "138e3dd5ffb4b7bb131cb30799d5b8c89bffa342090810dc7cd5c10a78e9c882",
+   "frozen_bindings_verified": 66,
+   "scope": "Isolated bounded input/device/lifecycle and delegate candidate, generator tests, UHT and syntax; excludes global action dispatch, held/interface completion, cursor warp, shared build and runtime.",
+   "provenance_note": "Frozen source-stage evidence; external receipt availability is required for independent re-verification."
   }
  }
 }

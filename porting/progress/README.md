@@ -126,6 +126,37 @@ allocation choices are judgment, not measured engineering hours. Source-referenc
 checks use half of their former broad backend leaf weight, with the other half for
 behavior and integration; the reference count no longer claims functional progress.
 
+### Frontend source-stage allocation (2026-11-01)
+
+Three one-point shares were split from existing zero-valued work: one from the
+14-point lifecycle bucket for the root-reviewed generic context source/generator
+candidate, and two from the 24-point CommonUI behavior bucket for isolated base
+activation and input dependency candidates. `record_frontend_source_stages.py`
+pins and validates their frozen receipt hashes, rehashes their archived source
+and original-window bindings, and records the narrowly stated
+source-stage scope. The context source is now applied, but the subsequent unity
+build failed; the two CommonUI candidates are off-workspace. Their isolated UHT
+and syntax checks do not prove shared integration, link or runtime. Concrete
+contexts, authentic startup, the Panel queue, input dispatch, interactive UI and
+visual parity retain separate unfinished allocations. The fixed event-signature
+and material receipts cover different work and are not counted again here.
+
+Total weight remains 1,855. At the same HEAD and local data, this model revision
+changes the estimate from 21.010% to 21.172%, of which 0.162 percentage points
+are newly enumerated source work, not a measured elapsed-time gain. The one-point
+shares are judgment about the bounded work relative to remaining full-game work,
+not measured hours. Recorded historical points retain their original models; a
+model change does not imply that work occurred at that commit. External receipts
+are pinned but must remain available for independent re-verification; the
+tracked ledger alone is an attestation, not the underlying evidence.
+
+The 142-owner material closure has two points because the shader/map decoding,
+uniforms, detached draw, named ingress and remaining integration/parity are
+already separately allocated within the same 20-point material budget. Its small
+per-owner increment should not be interpreted as the total value of the material
+pipeline. Further weight changes require a scope/remaining-effort comparison,
+not the number of hours recently spent or a target percentage.
+
 ### Raw pak extraction and package coverage
 
 - `assets.pak_extraction` (basis `local`) is a `fraction` whose `count_file` is
