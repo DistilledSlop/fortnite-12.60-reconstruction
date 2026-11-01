@@ -1,0 +1,360 @@
+From 757e0087a3714059d013370fb1ce15cf604febbe Mon Sep 17 00:00:00 2001
+From: Codex <codex@local.invalid>
+Date: Sun, 1 Nov 2026 02:02:37 +0000
+Subject: [PATCH] Build detached original Slate shader maps with live
+ preshaders
+
+---
+ .../Private/Materials/LegacySlateMaterial.cpp | 205 ++++++++++++++++++
+ .../Engine/Public/LegacySlateMaterial.h       |  59 +++++
+ .../Runtime/Engine/Public/MaterialShared.h    |   6 +
+ .../Runtime/RenderCore/Private/Shader.cpp     |  25 ++-
+ .../Source/Runtime/RenderCore/Public/Shader.h |   1 +
+ 5 files changed, 291 insertions(+), 5 deletions(-)
+ create mode 100644 Engine/Source/Runtime/Engine/Private/Materials/LegacySlateMaterial.cpp
+ create mode 100644 Engine/Source/Runtime/Engine/Public/LegacySlateMaterial.h
+
+diff --git a/Engine/Source/Runtime/Engine/Private/Materials/LegacySlateMaterial.cpp b/Engine/Source/Runtime/Engine/Private/Materials/LegacySlateMaterial.cpp
+new file mode 100644
+index 000000000..05e4abee1
+--- /dev/null
++++ b/Engine/Source/Runtime/Engine/Private/Materials/LegacySlateMaterial.cpp
+@@ -0,0 +1,205 @@
++// Copyright Epic Games, Inc. All Rights Reserved.
++#include "LegacySlateMaterial.h"
++#include "MaterialUniformExpressions.h"
++#include "MaterialShaderType.h"
++#include "ShaderParameterMetadata.h"
++
++TRefCountPtr<FMaterialShaderMap> FMaterialShaderMap::CreateLegacySlateMap(
++ const FLegacyMaterialIR& Material, FLegacySlatePrepareOutputs PrepareOutputs, FString& Error)
++{
++ Error.Reset();
++ auto Fail = [&Error](const TCHAR* Message) -> TRefCountPtr<FMaterialShaderMap> { Error = Message; return nullptr; };
++ if (Material.Platform != SP_VULKAN_SM5 || Material.FeatureLevel != ERHIFeatureLevel::SM5 ||
++     Material.OriginalMapHash == FSHAHash() || Material.Expressions.Num() > 8192 ||
++     Material.VectorRoots.Num() != 12 || Material.ScalarRoots.Num() != 30 || Material.UniformBufferSize != 336)
++  return Fail(TEXT("Unsupported original Slate material identity, platform or slot layout"));
++
++ TRefCountPtr<FMaterialShaderMap> Map = new FMaterialShaderMap();
++ FMaterialShaderMapContent* Content = new FMaterialShaderMapContent(Material.Platform);
++ Map->AssignContent(Content);
++ FUniformExpressionSet& Uniforms = Content->MaterialCompilationOutput.UniformExpressionSet;
++ TArray<TRefCountPtr<FMaterialUniformExpression>> Nodes;
++ TArray<uint32> Depths, Costs;
++ for (int32 Index = 0; Index < Material.Expressions.Num(); ++Index)
++ {
++  const FLegacyMaterialExpression& N = Material.Expressions[Index];
++  auto Child = [&](int32 I) -> FMaterialUniformExpression* { return I >= 0 && I < Index ? Nodes[I].GetReference() : nullptr; };
++  FMaterialUniformExpression* A = Child(N.A), *B = Child(N.B), *C = Child(N.C);
++  int32 Arity = 1;
++  switch (N.Kind)
++  {
++   case ELegacyMaterialExpression::Constant: case ELegacyMaterialExpression::ScalarParameter:
++   case ELegacyMaterialExpression::VectorParameter: Arity = 0; break;
++   case ELegacyMaterialExpression::FoldedMath: case ELegacyMaterialExpression::AppendVector:
++   case ELegacyMaterialExpression::Min: case ELegacyMaterialExpression::Max:
++   case ELegacyMaterialExpression::Fmod: Arity = 2; break;
++   case ELegacyMaterialExpression::Clamp: Arity = 3; break;
++   case ELegacyMaterialExpression::TrigMath: Arity = N.Operation == TMO_Atan2 ? 2 : 1; break;
++   default: break;
++  }
++  if ((Arity >= 1 && !A) || (Arity >= 2 && !B) || (Arity >= 3 && !C))
++   return Fail(TEXT("Invalid original expression child: graph must be topologically ordered"));
++  uint32 Depth = 1, Cost = 1;
++  const int32 Children[] = {N.A, N.B, N.C};
++  for (int32 I = 0; I < Arity; ++I) { Depth = FMath::Max(Depth, Depths[Children[I]] + 1); Cost += Costs[Children[I]]; }
++  if (Depth > 256 || Cost > 65536) return Fail(TEXT("Original numeric graph exceeds bounded preshader budget"));
++  if (N.ValueType != MCT_Float && N.ValueType != MCT_Float1 && N.ValueType != MCT_Float2 && N.ValueType != MCT_Float3 && N.ValueType != MCT_Float4)
++   return Fail(TEXT("Unsupported original numeric value type"));
++  TRefCountPtr<FMaterialUniformExpression> Expression;
++  switch (N.Kind)
++  {
++   case ELegacyMaterialExpression::Constant:
++    Expression = new FMaterialUniformExpressionConstant(N.Value, uint8(N.ValueType)); break;
++   case ELegacyMaterialExpression::ScalarParameter:
++   case ELegacyMaterialExpression::VectorParameter:
++   {
++    if (N.Parameter.Name.IsNone() || N.Parameter.Association > GlobalParameter ||
++        (N.Parameter.Association == GlobalParameter ? N.Parameter.Index != INDEX_NONE : N.Parameter.Index < 0))
++     return Fail(TEXT("Invalid original numeric parameter identity"));
++    const FHashedMaterialParameterInfo Identity(N.Parameter);
++    int32 ParameterIndex = INDEX_NONE;
++    if (N.Kind == ELegacyMaterialExpression::ScalarParameter)
++    {
++     for (int32 I = 0; I < Uniforms.UniformScalarParameters.Num(); ++I)
++      if (Uniforms.UniformScalarParameters[I].ParameterInfo == Identity)
++      {
++       if (Uniforms.UniformScalarParameters[I].DefaultValue != N.Value.R) return Fail(TEXT("Conflicting original scalar parameter defaults"));
++       ParameterIndex = I; break;
++      }
++     if (ParameterIndex == INDEX_NONE)
++     {
++      ParameterIndex = Uniforms.UniformScalarParameters.Num();
++      auto& P = Uniforms.UniformScalarParameters.AddDefaulted_GetRef();
++      P.ParameterInfo = Identity; P.ParameterName = N.Parameter.Name.ToString(); P.DefaultValue = N.Value.R;
++     }
++     Expression = new FMaterialUniformExpressionScalarParameter(N.Parameter, ParameterIndex);
++    }
++    else
++    {
++     for (int32 I = 0; I < Uniforms.UniformVectorParameters.Num(); ++I)
++      if (Uniforms.UniformVectorParameters[I].ParameterInfo == Identity)
++      {
++       if (Uniforms.UniformVectorParameters[I].DefaultValue != N.Value) return Fail(TEXT("Conflicting original vector parameter defaults"));
++       ParameterIndex = I; break;
++      }
++     if (ParameterIndex == INDEX_NONE)
++     {
++      ParameterIndex = Uniforms.UniformVectorParameters.Num();
++      auto& P = Uniforms.UniformVectorParameters.AddDefaulted_GetRef();
++      P.ParameterInfo = Identity; P.ParameterName = N.Parameter.Name.ToString(); P.DefaultValue = N.Value;
++     }
++     Expression = new FMaterialUniformExpressionVectorParameter(N.Parameter, ParameterIndex);
++    }
++    break;
++   }
++   case ELegacyMaterialExpression::FoldedMath:
++    if (N.Operation > FMO_Cross) return Fail(TEXT("Invalid original folded math operation"));
++    Expression = new FMaterialUniformExpressionFoldedMath(A, B, N.Operation, N.ValueType); break;
++   case ELegacyMaterialExpression::AppendVector:
++    if (N.Components < 1 || N.Components > 3) return Fail(TEXT("Invalid original append width"));
++    Expression = new FMaterialUniformExpressionAppendVector(A, B, N.Components); break;
++   case ELegacyMaterialExpression::ComponentSwizzle:
++   {
++    int32 Count = 0;
++    for (int32 I = 0; I < 4; ++I)
++    {
++     if (N.Swizzle[I] < -1 || N.Swizzle[I] > 3 || (N.Swizzle[I] >= 0 && Count != I))
++      return Fail(TEXT("Invalid original component swizzle"));
++     if (N.Swizzle[I] >= 0) ++Count;
++    }
++    if (Count < 1 || Count != N.Components) return Fail(TEXT("Original swizzle element count mismatch"));
++    Expression = new FMaterialUniformExpressionComponentSwizzle(A, N.Swizzle[0], N.Swizzle[1], N.Swizzle[2], N.Swizzle[3]); break;
++   }
++   case ELegacyMaterialExpression::TrigMath:
++    if (N.Operation > TMO_Atan2) return Fail(TEXT("Invalid original trig operation"));
++    Expression = N.Operation == TMO_Atan2 ? new FMaterialUniformExpressionTrigMath(A, B, ETrigMathOperation(N.Operation)) : new FMaterialUniformExpressionTrigMath(A, ETrigMathOperation(N.Operation)); break;
++   case ELegacyMaterialExpression::Sine:
++    if (N.Operation > 1) return Fail(TEXT("Invalid original sine operation"));
++    Expression = new FMaterialUniformExpressionSine(A, N.Operation != 0); break;
++   case ELegacyMaterialExpression::SquareRoot: Expression = new FMaterialUniformExpressionSquareRoot(A); break;
++   case ELegacyMaterialExpression::Length: Expression = new FMaterialUniformExpressionLength(A, N.ValueType); break;
++   case ELegacyMaterialExpression::Periodic: Expression = new FMaterialUniformExpressionPeriodic(A); break;
++   case ELegacyMaterialExpression::Min: Expression = new FMaterialUniformExpressionMin(A, B); break;
++   case ELegacyMaterialExpression::Max: Expression = new FMaterialUniformExpressionMax(A, B); break;
++   case ELegacyMaterialExpression::Clamp: Expression = new FMaterialUniformExpressionClamp(A, B, C); break;
++   case ELegacyMaterialExpression::Saturate: Expression = new FMaterialUniformExpressionSaturate(A); break;
++   case ELegacyMaterialExpression::Abs: Expression = new FMaterialUniformExpressionAbs(A); break;
++   case ELegacyMaterialExpression::Floor: Expression = new FMaterialUniformExpressionFloor(A); break;
++   case ELegacyMaterialExpression::Ceil: Expression = new FMaterialUniformExpressionCeil(A); break;
++   case ELegacyMaterialExpression::Frac: Expression = new FMaterialUniformExpressionFrac(A); break;
++   case ELegacyMaterialExpression::Fmod: Expression = new FMaterialUniformExpressionFmod(A, B); break;
++   case ELegacyMaterialExpression::Logarithm2: Expression = new FMaterialUniformExpressionLogarithm2(A); break;
++   case ELegacyMaterialExpression::Logarithm10: Expression = new FMaterialUniformExpressionLogarithm10(A); break;
++   default: return Fail(TEXT("Unsupported original numeric expression"));
++  }
++  Nodes.Add(Expression); Depths.Add(Depth); Costs.Add(Cost);
++ }
++ uint32 TotalCost = 0;
++ auto Emit = [&](const TArray<int32>& Roots, TMemoryImageArray<FMaterialUniformPreshaderHeader>& Headers) -> bool
++ {
++  for (int32 Root : Roots)
++  {
++   if (!Nodes.IsValidIndex(Root) || TotalCost + Costs[Root] > 262144) return false;
++   TotalCost += Costs[Root];
++   auto& Header = Headers.AddDefaulted_GetRef();
++   Header.OpcodeOffset = Uniforms.UniformPreshaderData.Num();
++   Nodes[Root]->WriteNumberOpcodes(Uniforms.UniformPreshaderData);
++   Header.OpcodeSize = Uniforms.UniformPreshaderData.Num() - Header.OpcodeOffset;
++  }
++  return true;
++ };
++ if (!Emit(Material.VectorRoots, Uniforms.UniformVectorPreshaders) || !Emit(Material.ScalarRoots, Uniforms.UniformScalarPreshaders))
++  return Fail(TEXT("Invalid or oversized original preshader output roots"));
++ TUniquePtr<FShaderParametersMetadata> Metadata(Uniforms.CreateBufferStruct());
++ const FRHIUniformBufferLayout& Layout = Uniforms.GetUniformBufferLayout();
++ if (Layout.ConstantBufferSize != Material.UniformBufferSize || Layout.Resources.Num() != Material.Resources.Num())
++  return Fail(TEXT("Current Material uniform layout size/resource count differs from original"));
++ for (int32 I = 0; I < Material.Resources.Num(); ++I)
++  if (Layout.Resources[I].MemberOffset != Material.Resources[I].Offset || Layout.Resources[I].MemberType != Material.Resources[I].BaseType)
++   return Fail(TEXT("Current Material uniform resource layout differs from original"));
++ TArray<FLegacySlateShaderInput> Inputs;
++ if (!PrepareOutputs(Uniforms, *Metadata, Inputs, Error)) return nullptr;
++ static const TCHAR* Names[] = {
++  TEXT("TSlateMaterialShaderVStrue"), TEXT("TSlateMaterialShaderVSfalse"),
++  TEXT("TSlateMaterialShaderPSCustom"), TEXT("TSlateMaterialShaderPSDefault"),
++  TEXT("TSlateMaterialShaderPSBorder"), TEXT("TSlateMaterialShaderPSGrayscaleFont"), TEXT("TSlateMaterialShaderPSColorFont")};
++ if (Inputs.Num() != UE_ARRAY_COUNT(Names)) return Fail(TEXT("Detached original Slate map requires exactly seven records"));
++ TArray<FShaderType*> Types;
++ uint32 Seen = 0;
++ for (FLegacySlateShaderInput& Input : Inputs)
++ {
++  int32 NameIndex = INDEX_NONE;
++  for (int32 I = 0; I < UE_ARRAY_COUNT(Names); ++I) if (Input.TypeName == Names[I]) { NameIndex = I; break; }
++  if (NameIndex == INDEX_NONE || (Seen & (1u << NameIndex))) return Fail(TEXT("Unknown or duplicate original Slate shader type"));
++  Seen |= 1u << NameIndex;
++  FShaderType* Type = FindShaderTypeByName(FHashedName(*Input.TypeName));
++  const auto& Output = Input.Output;
++  const EShaderFrequency ExpectedFrequency = NameIndex < 2 ? SF_Vertex : SF_Pixel;
++  if (!Type || !Type->GetMaterialShaderType() || Type->GetFrequency() != ExpectedFrequency || Input.PermutationId != 0 ||
++      !Output.bSucceeded || Output.Target.GetPlatform() != Material.Platform || Output.Target.GetFrequency() != ExpectedFrequency ||
++      Output.OutputHash == FSHAHash() || Output.ShaderCode.GetReadAccess().Num() == 0)
++   return Fail(TEXT("Invalid output or unregistered current original Slate constructor"));
++  // Verify the supplied identity really is generated from the supplied code/map.
++  const FSHAHash KnownHash = Input.Output.OutputHash;
++  Input.Output.GenerateOutputHash();
++  if (KnownHash != Input.Output.OutputHash) return Fail(TEXT("Original Slate output hash does not match converted code"));
++  Types.Add(Type);
++ }
++ FShaderMapResourceCode* Code = Map->GetResourceCode();
++ for (const auto& Input : Inputs) Code->AddShaderCompilerOutput(Input.Output);
++ // Hash insertion is sorted: resolve only after every output has been added.
++ for (int32 I = 0; I < Inputs.Num(); ++I)
++ {
++  const auto& Input = Inputs[I];
++  FMaterialShaderType::CompiledShaderInitializerType Init(Types[I], Input.PermutationId, Input.Output, Uniforms, Material.OriginalMapHash, nullptr, nullptr, Material.DebugDescription);
++  FShader* Shader = Types[I]->ConstructCompiled(Init);
++  Shader->Finalize(Code, Input.Output.OutputHash);
++  Content->AddShader(Types[I]->GetHashedName(), Input.PermutationId, Shader);
++ }
++ Map->ShaderMapId.CookedShaderMapIdHash = Material.OriginalMapHash;
++ Map->ShaderMapId.QualityLevel = Material.QualityLevel;
++ Map->ShaderMapId.FeatureLevel = Material.FeatureLevel;
++ Map->ShaderMapId.LayoutParams.InitializeForCurrent();
++ Map->FinalizeContent();
++ return Map;
++}
+diff --git a/Engine/Source/Runtime/Engine/Public/LegacySlateMaterial.h b/Engine/Source/Runtime/Engine/Public/LegacySlateMaterial.h
+new file mode 100644
+index 000000000..65abc765f
+--- /dev/null
++++ b/Engine/Source/Runtime/Engine/Public/LegacySlateMaterial.h
+@@ -0,0 +1,59 @@
++// Copyright Epic Games, Inc. All Rights Reserved.
++#pragma once
++
++#include "CoreMinimal.h"
++#include "MaterialShared.h"
++#include "ShaderCore.h"
++
++/** Bounded, pointer-free numeric IR. Children must precede their parent. */
++enum class ELegacyMaterialExpression : uint8
++{
++ Constant, ScalarParameter, VectorParameter, FoldedMath, AppendVector,
++ ComponentSwizzle, TrigMath, Sine, SquareRoot, Length, Periodic, Min, Max,
++ Clamp, Saturate, Abs, Floor, Ceil, Frac, Fmod, Logarithm2, Logarithm10
++};
++struct FLegacyMaterialExpression
++{
++ ELegacyMaterialExpression Kind = ELegacyMaterialExpression::Constant;
++ int32 A = INDEX_NONE, B = INDEX_NONE, C = INDEX_NONE;
++ FLinearColor Value = FLinearColor::Black;
++ FMaterialParameterInfo Parameter;
++ uint32 ValueType = MCT_Float;
++ uint8 Operation = 0;
++ uint8 Components = 1;
++ int8 Swizzle[4] = {0, -1, -1, -1};
++};
++struct FLegacyMaterialResource
++{
++ uint16 Offset = 0;
++ EUniformBufferBaseType BaseType = UBMT_SAMPLER;
++};
++struct FLegacyMaterialIR
++{
++ TArray<FLegacyMaterialExpression> Expressions;
++ TArray<int32> VectorRoots;
++ TArray<int32> ScalarRoots;
++ TArray<FLegacyMaterialResource> Resources;
++ uint32 UniformBufferSize = 0;
++ FSHAHash OriginalMapHash;
++ EShaderPlatform Platform = SP_VULKAN_SM5;
++ EMaterialQualityLevel::Type QualityLevel = EMaterialQualityLevel::High;
++ ERHIFeatureLevel::Type FeatureLevel = ERHIFeatureLevel::SM5;
++ FString DebugDescription;
++};
++struct FLegacySlateShaderInput
++{
++ FString TypeName;
++ int32 PermutationId = 0;
++ FShaderCompilerOutput Output;
++};
++/** Called only after the exact current Material layout is validated. Metadata is
++ * owned by the factory and valid throughout this callback and shader construction.
++ * The callback may evaluate Uniforms.FillUniformBuffer using real render contexts.
++ * It must return the seven original Slate records, with fully built/hash-finalized outputs.
++ */
++using FLegacySlatePrepareOutputs = TFunctionRef<bool(
++ const FUniformExpressionSet& Uniforms,
++ const FShaderParametersMetadata& Metadata,
++ TArray<FLegacySlateShaderInput>& Outputs,
++ FString& Error)>;
+diff --git a/Engine/Source/Runtime/Engine/Public/MaterialShared.h b/Engine/Source/Runtime/Engine/Public/MaterialShared.h
+index 9e47fd946..f6c60f817 100644
+--- a/Engine/Source/Runtime/Engine/Public/MaterialShared.h
++++ b/Engine/Source/Runtime/Engine/Public/MaterialShared.h
+@@ -1037,6 +1037,12 @@ public:
+ 	 * @param Platform - The platform to lookup for
+ 	 * @return NULL if no cached shader map was found.
+ 	 */
++	/** Construct an unregistered detached map from validated original numeric IR. */
++	static ENGINE_API TRefCountPtr<FMaterialShaderMap> CreateLegacySlateMap(
++		const struct FLegacyMaterialIR& Material,
++		TFunctionRef<bool(const FUniformExpressionSet&, const FShaderParametersMetadata&, TArray<struct FLegacySlateShaderInput>&, FString&)> PrepareOutputs,
++		FString& Error);
++
+ 	static TRefCountPtr<FMaterialShaderMap> FindId(const FMaterialShaderMapId& ShaderMapId, EShaderPlatform Platform);
+ 
+ #if ALLOW_SHADERMAP_DEBUG_DATA
+diff --git a/Engine/Source/Runtime/RenderCore/Private/Shader.cpp b/Engine/Source/Runtime/RenderCore/Private/Shader.cpp
+index ee3637a90..7e83b4067 100644
+--- a/Engine/Source/Runtime/RenderCore/Private/Shader.cpp
++++ b/Engine/Source/Runtime/RenderCore/Private/Shader.cpp
+@@ -547,11 +547,26 @@ FShader::~FShader()
+ 
+ void FShader::Finalize(const FShaderMapResourceCode* Code)
+ {
+-	// Finalize may be called multiple times, as a given shader may be in shader list, as well as pipeline
+-	const FSHAHash& Hash = GetOutputHash();
+-	const int32 NewResourceIndex = Code->FindShaderIndex(Hash);
+-	checkf(NewResourceIndex != INDEX_NONE, TEXT("Missing shader code %s"), *Hash.ToString());
+-	checkf(ResourceIndex == INDEX_NONE || ResourceIndex == NewResourceIndex, TEXT("Incoming index %d, existing index %d for shader %s"), NewResourceIndex, ResourceIndex, *Hash.ToString());
++#if WITH_EDITORONLY_DATA
++	Finalize(Code, GetOutputHash());
++#else
++	// Cooked compiled constructors cannot retain OutputHash. A bridge must first
++	// resolve it through the checked hash overload, after adding all sorted code.
++	check(Code && Code->ShaderEntries.IsValidIndex(ResourceIndex));
++	check(Code->ShaderEntries[ResourceIndex].Frequency == GetFrequency());
++#endif
++}
++
++void FShader::Finalize(const FShaderMapResourceCode* Code, const FSHAHash& KnownOutputHash)
++{
++	check(Code);
++#if WITH_EDITORONLY_DATA
++	check(KnownOutputHash == GetOutputHash());
++#endif
++	const int32 NewResourceIndex = Code->FindShaderIndex(KnownOutputHash);
++	checkf(Code->ShaderEntries.IsValidIndex(NewResourceIndex), TEXT("Missing shader code %s"), *KnownOutputHash.ToString());
++	check(Code->ShaderEntries[NewResourceIndex].Frequency == GetFrequency());
++	checkf(ResourceIndex == INDEX_NONE || ResourceIndex == NewResourceIndex, TEXT("Shader code indices changed after resolution"));
+ 	ResourceIndex = NewResourceIndex;
+ }
+ 
+diff --git a/Engine/Source/Runtime/RenderCore/Public/Shader.h b/Engine/Source/Runtime/RenderCore/Public/Shader.h
+index c4aa57299..7b57fa76f 100644
+--- a/Engine/Source/Runtime/RenderCore/Public/Shader.h
++++ b/Engine/Source/Runtime/RenderCore/Public/Shader.h
+@@ -696,6 +696,7 @@ public:
+ 	const FSHAHash& GetOutputHash() const;
+ 
+ 	void Finalize(const FShaderMapResourceCode* Code);
++	RENDERCORE_API void Finalize(const FShaderMapResourceCode* Code, const FSHAHash& KnownOutputHash);
+ 
+ 	// Accessors.
+ 	inline FShaderType* GetType(const FShaderMapPointerTable& InPointerTable) const { return Type.Get(InPointerTable.ShaderTypes); }
+-- 
+2.53.0
+
