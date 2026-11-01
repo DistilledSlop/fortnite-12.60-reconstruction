@@ -965,3 +965,18 @@ index 744aa8dad..cbb61f12f 100644
 --
 2.53.0
 
+
+diff --git a/Engine/Source/Runtime/Engine/Private/Materials/LegacySlateMaterial.cpp b/Engine/Source/Runtime/Engine/Private/Materials/LegacySlateMaterial.cpp
+index cbb61f12f..c505d77ed 100644
+--- a/Engine/Source/Runtime/Engine/Private/Materials/LegacySlateMaterial.cpp
++++ b/Engine/Source/Runtime/Engine/Private/Materials/LegacySlateMaterial.cpp
+@@ -58,7 +58,8 @@ TRefCountPtr<FMaterialShaderMap> FMaterialShaderMap::CreateLegacySlateMap(
+  FUniformExpressionSet& Uniforms = Compilation.UniformExpressionSet;
+  for (const FLegacyMaterialTextureParameter& N : Material.Texture2DParameters)
+  {
+-  if (N.Parameter.Name.IsNone() || N.Parameter.Association > GlobalParameter ||
++  if (N.Parameter.Association > GlobalParameter ||
++      (N.Parameter.Name.IsNone() && (N.Parameter.Association != GlobalParameter || N.Parameter.Index != INDEX_NONE)) ||
+       (N.Parameter.Association == GlobalParameter ? N.Parameter.Index != INDEX_NONE : N.Parameter.Index < 0) ||
+       N.TextureIndex < 0 || N.TextureLayerIndex != INDEX_NONE || N.PageTableLayerIndex != INDEX_NONE ||
+       N.bVirtualTexture || N.SamplerSource > uint8(SSM_Clamp_WorldGroupSettings))

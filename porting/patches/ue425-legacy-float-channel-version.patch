@@ -1,0 +1,75 @@
+--- a/Engine/Source/Runtime/MovieScene/Private/Channels/MovieSceneFloatChannel.cpp
++++ b/Engine/Source/Runtime/MovieScene/Private/Channels/MovieSceneFloatChannel.cpp
+@@ -5,6 +5,9 @@
+ #include "Channels/MovieSceneChannelProxy.h"
+ #include "MovieSceneFrameMigration.h"
+ #include "UObject/SequencerObjectVersion.h"
++#include "UObject/LinkerLoad.h"
++#include "Misc/CommandLine.h"
++#include "Misc/Parse.h"
+ #include "HAL/ConsoleManager.h"
+ 
+ static TAutoConsoleVariable<int32> CVarSequencerLinearCubicInterpolation(
+@@ -19,15 +22,34 @@
+ 	TEXT("If 1 Auto Tangent will use new algorithm to gradually flatten maximum/minimum keys, if 0 Auto Tangent will average all keys (pre 4.23 behavior)."),
+ 	ECVF_Default);
+ 
++// Fortnite 12.60 registers Dev-Sequencer version 11. Unversioned source
++// packages carry tagged channels and 23-byte float values; the stock loader
++// substitutes version 12, whose complete native channel format is different.
++static int32 GetFloatChannelSequencerVersion(FArchive& Ar)
++{
++	const int32 Version = Ar.CustomVer(FSequencerObjectVersion::GUID);
++	if (Ar.IsLoading() && Version >= FSequencerObjectVersion::SerializeFloatChannelCompletely &&
++		FParse::Param(FCommandLine::Get(), TEXT("FortniteLegacySequencer")))
++	{
++		const FLinkerLoad* SourceLinker = Cast<FLinkerLoad>(Ar.GetLinker());
++		if (SourceLinker && SourceLinker->Summary.bUnversioned)
++		{
++			return FSequencerObjectVersion::ModifyLinearKeysForOldInterp; // original version 11
++		}
++	}
++	return Version;
++}
++
+ bool FMovieSceneTangentData::Serialize(FArchive& Ar)
+ {
+ 	Ar.UsingCustomVersion(FSequencerObjectVersion::GUID);
+-	if (Ar.CustomVer(FSequencerObjectVersion::GUID) < FSequencerObjectVersion::SerializeFloatChannel)
++	const int32 SequencerVersion = GetFloatChannelSequencerVersion(Ar);
++	if (SequencerVersion < FSequencerObjectVersion::SerializeFloatChannel)
+ 	{
+ 		return false;
+ 	}
+ 
+-	if (Ar.CustomVer(FSequencerObjectVersion::GUID) < FSequencerObjectVersion::SerializeFloatChannelCompletely)
++	if (SequencerVersion < FSequencerObjectVersion::SerializeFloatChannelCompletely)
+ 	{
+ 		Ar << ArriveTangent;
+ 		Ar << LeaveTangent;
+@@ -60,12 +82,13 @@
+ bool FMovieSceneFloatValue::Serialize(FArchive& Ar)
+ {
+ 	Ar.UsingCustomVersion(FSequencerObjectVersion::GUID);
+-	if (Ar.CustomVer(FSequencerObjectVersion::GUID) < FSequencerObjectVersion::SerializeFloatChannel)
++	const int32 SequencerVersion = GetFloatChannelSequencerVersion(Ar);
++	if (SequencerVersion < FSequencerObjectVersion::SerializeFloatChannel)
+ 	{
+ 		return false;
+ 	}
+ 	
+-	if (Ar.CustomVer(FSequencerObjectVersion::GUID) < FSequencerObjectVersion::SerializeFloatChannelCompletely)
++	if (SequencerVersion < FSequencerObjectVersion::SerializeFloatChannelCompletely)
+ 	{
+ 		// Serialization is handled manually to avoid the extra size overhead of FProperty tagging.
+ 		// Otherwise with many keys in a FMovieSceneFloatValue the size can become quite large.
+@@ -1078,7 +1101,8 @@
+ bool FMovieSceneFloatChannel::Serialize(FArchive& Ar)
+ {
+ 	Ar.UsingCustomVersion(FSequencerObjectVersion::GUID);
+-	if (Ar.CustomVer(FSequencerObjectVersion::GUID) < FSequencerObjectVersion::SerializeFloatChannelCompletely)
++	const int32 SequencerVersion = GetFloatChannelSequencerVersion(Ar);
++	if (SequencerVersion < FSequencerObjectVersion::SerializeFloatChannelCompletely)
+ 	{
+ 		return false;
+ 	}
