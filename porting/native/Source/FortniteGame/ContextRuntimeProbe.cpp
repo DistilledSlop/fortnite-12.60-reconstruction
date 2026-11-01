@@ -129,8 +129,8 @@ void LifecycleEnd(UWorld* W)
     UE_LOG(LogTemp, Display, TEXT("CONTEXT_LIFE removed player=%llx"), (uint64)P);
     LifecyclePlayer.Reset();
 }
-FAutoConsoleCommandWithWorld Start(TEXT("Fort.ContextLifecycleBegin"), TEXT("Diagnostic: keep contexts through natural world transition"), FConsoleCommandWithWorldDelegate::CreateStatic(&LifecycleBegin));
-FAutoConsoleCommandWithWorld Stop(TEXT("Fort.ContextLifecycleEnd"), TEXT("Diagnostic: remove contexts after natural world transition"), FConsoleCommandWithWorldDelegate::CreateStatic(&LifecycleEnd));
+FAutoConsoleCommandWithWorld GFortContextLifecycleBeginCommand(TEXT("Fort.ContextLifecycleBegin"), TEXT("Diagnostic: keep contexts through natural world transition"), FConsoleCommandWithWorldDelegate::CreateStatic(&LifecycleBegin));
+FAutoConsoleCommandWithWorld GFortContextLifecycleEndCommand(TEXT("Fort.ContextLifecycleEnd"), TEXT("Diagnostic: remove contexts after natural world transition"), FConsoleCommandWithWorldDelegate::CreateStatic(&LifecycleEnd));
 }
 
 namespace {
