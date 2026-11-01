@@ -15,3 +15,7 @@ The primary agent also performs difficult implementation, debugging, and problem
 # Input and tool-output efficiency
 
 Keep input-token use economical. Start with bounded searches and small head/tail or matched-context excerpts; cap result counts and tool output. Process large generated files with scripts and return only the needed fields or summaries. Read short log tails and relevant failure windows instead of repetitive full logs. Expand the read window only when the smaller view is insufficient; reading a reasonably sized full file is acceptable when needed. Preserve this preference alongside the subagent configuration in handoffs and compaction summaries.
+
+# Bounded subagent tasks and rotation
+
+Use subagents as bounded function or task runners, implementers, explorers, or researchers. Do not give one long-lived subagent an entire milestone or broad group of dashboard tiles. Follow-up turns are allowed while the bounded task still benefits from its context. At a reasonable stopping point where much prior context is no longer relevant, have the agent freeze a concise handoff and finish, then start a new subagent for the next bounded task. The primary agent retains planning, integration, review, and overall ownership. Preserve this preference alongside the model configuration and input-efficiency rules in handoffs and compaction summaries.
