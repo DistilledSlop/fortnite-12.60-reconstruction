@@ -33,5 +33,34 @@ class HistoryRepairTests(unittest.TestCase):
         self.assertEqual(repaired, [current])
 
 
+class ProgressModelTests(unittest.TestCase):
+    def test_material_work_has_explicit_remaining_weight_and_no_gates_pass(self):
+        import json
+        model = json.loads(Path(__file__).with_name('components.json').read_text())
+        leaves = list(progress.walk_spec(model['tree']))
+        material = [leaf for leaf in leaves if leaf['id'].startswith('ui.material_')]
+        self.assertEqual(sum(leaf['weight'] for leaf in material), 20)
+        self.assertEqual(sum(leaf['weight'] for leaf in material if leaf['measure']['kind'] == 'ledger'), 8)
+        self.assertEqual(next(leaf for leaf in material if leaf['id'] == 'ui.material_integration')['measure']['pct'], 0)
+        self.assertFalse(any(m.get('done') for m in model['milestones']))
+        self.assertFalse(any('ceiling' in leaf for leaf in leaves))
+
+    def test_weighted_coverage_cannot_claim_unfinished_implementation(self):
+        class Context:
+            files = {'some/tracked/file': ''}
+            replay = False
+            used_local = False
+            def reset_leaf(self): pass
+        coverage = {'id': 'coverage', 'name': 'Coverage', 'weight': 2,
+                    'measure': {'kind': 'fraction', 'done': 1, 'total': 2}}
+        remaining = {'id': 'remaining', 'name': 'Remaining', 'weight': 8,
+                     'measure': {'kind': 'manual', 'pct': 0}}
+        # Supply the same total lookup normally provided by Ctx.
+        ctx = Context()
+        ctx.total_value = lambda spec: (spec['total'], 'test')
+        result = progress.evaluate({'id': 'group', 'name': 'Group', 'children': [coverage, remaining]}, ctx)
+        self.assertEqual(result['pct'], 10)
+
+
 if __name__ == '__main__':
     unittest.main()

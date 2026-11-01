@@ -96,6 +96,37 @@ the overall figure) and a `measure`. Measures, from most objective to least:
   takes `sources` (`root`, `suffix`, `name_regex`) and `distinct` (count distinct names).
 - `manual`: `pct`, your estimate (basis `manual`).
 
+### Material pipeline accounting
+
+The frontend allocation includes four separately evidenced material deliverables and
+remaining attachment and visual parity work. The four ledger IDs are
+`material_original_maps`, `material_shader_translation`, `material_uniform_evaluation`,
+and `material_locker_draw`: missing or failing entries earn no credit. Their source
+receipts are available from the dashboard as tracked evidence documents copied from
+the measured commit. The allocation moves 20 of the existing 60 frontend weight units
+into material work, including 12 units for unfinished integration; total project weight
+is unchanged. A completed detached draw is not a working UI root or visual parity.
+
+Coverage-only terrain, background, gameplay and CommonUI leaves are separate from
+their unfinished implementation, using the earlier cap shares as explicit weights.
+A partial coverage count now earns that fraction of its share instead of reaching a
+plateau early. Historical recorded overall values are retained; model changes make
+successive history points estimates under different models, not directly comparable.
+
+The scope also reserves unfinished work for all shipped plugins and project modules,
+worlds and modes, unclassified original features, native and UI lifecycle, content
+conversion and cooking, security and entitlements, input, settings, localization,
+accessibility, account progression, backend services, custom serializers, network
+relevancy, audio, visuals and full original-behavior comparison. These are scope
+allocations, not claims that an exhaustive feature inventory is complete. A plugin
+metadata inventory has its own small tracked share; implementation and runtime
+loading remain separate. Class-header coverage is likewise separated from behavior
+and runtime verification (one quarter of the previous reflection leaf weights is
+allocated to declarations, three quarters to unfinished implementation). These
+allocation choices are judgment, not measured engineering hours. Source-reference
+checks use half of their former broad backend leaf weight, with the other half for
+behavior and integration; the reference count no longer claims functional progress.
+
 ### Raw pak extraction and package coverage
 
 - `assets.pak_extraction` (basis `local`) is a `fraction` whose `count_file` is
@@ -109,9 +140,7 @@ the overall figure) and a `measure`. Measures, from most objective to least:
   read from the same summary (`byExtension['.uasset'].files`), not the older 28-pak index.
 
 Denominators (`total_key` and optional `total_sub`) are read from `porting/progress/totals.json`.
-If a key is missing the leaf shows 0 and says why. A leaf may have `"ceiling": N`, which caps its
-value where the measure overstates progress, with the reason in `rationale`. Groups take the
-weight-averaged value of their children. Set `"done": true` on a milestone only when its end-to-end acceptance evidence is recorded. Route literal matches can include tests and documentation, so they do not establish served-route coverage (see `../server/EVIDENCE.md`).
+If a key is missing the leaf shows 0 and says why. Current leaves use explicit weighted work breakdowns instead of percentage ceilings: narrow coverage and the remaining implementation are separate leaves. Historical model versions may still use `ceiling`; the generator retains support for them. Stub credit for source references and generated declarations is partial because these do not establish behavior. Groups take the weight-averaged value of their children. Set `"done": true` on a milestone only when its end-to-end acceptance evidence is recorded. Route literal matches can include tests and documentation, so they do not establish served-route coverage (see `../server/EVIDENCE.md`).
 
 Edit, commit, and the post-commit hook regenerates the dashboard. The totals and the ledger are
 measured from the commit, so commit `totals.json` and `evidence.json` in the same commit that

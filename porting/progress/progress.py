@@ -557,7 +557,7 @@ def measure_leaf(node, ctx):
         "weight": float(node["weight"]), "pct": round(pct, 3),
         "done": result["done"], "total": result["total"],
         "evidence": evidence, "basis": basis, "carried": carried,
-        "rationale": node.get("rationale", ""),
+        "rationale": node.get("rationale", ""), "evidence_links": node.get("evidence_links", []),
     }
 
 
@@ -1590,6 +1590,17 @@ TM_PAGE_JS = """
       r.textContent = n.rationale;
       detail.appendChild(r);
     }
+    if (n.evidence_links && n.evidence_links.length) {
+      var links = document.createElement("p");
+      n.evidence_links.forEach(function (link) {
+        var a = document.createElement("a");
+        a.href = link.href;
+        a.textContent = link.label;
+        links.appendChild(a);
+        links.appendChild(document.createTextNode(" "));
+      });
+      detail.appendChild(links);
+    }
     if (n.children) {
       var kids = document.createElement("div");
       kids.className = "d-kids";
@@ -1761,13 +1772,15 @@ def index_html(res, head, subject, date, model, when_note, grids=None):
         else:
             cls = "sub" if depth > 1 else ""
             frac = f'{node["done"]}/{node["total"]}' if node.get("done") is not None and node.get("total") else "-"
+            links = " ".join(f'<a href="{esc(link["href"])}">{esc(link["label"])}</a>'
+                             for link in node.get("evidence_links", []))
             rows.append(
                 f'<tr class="{cls}"><td class="name">{esc(node["name"])}</td>'
                 f'<td class="num">{node["weight"]:g}</td>'
                 f'<td class="num">{frac}</td>'
                 f'<td class="num"><span class="mini" style="--pct:{node["pct"]:.1f}%"><i></i></span> {node["pct"]:.1f}%</td>'
                 f'<td class="ev">{esc(node.get("basis", ""))}</td>'
-                f'<td class="ev">{esc(node.get("evidence", ""))}<br><em>{esc(node.get("rationale", ""))}</em></td></tr>')
+                f'<td class="ev">{esc(node.get("evidence", ""))}<br><em>{esc(node.get("rationale", ""))}</em><br>{links}</td></tr>')
     milestones = "".join(
         f'<li>{"[x]" if m.get("done") else "[ ]"} {esc(m["text"])}<br><span class="ev">{esc(m.get("evidence", ""))}</span></li>'
         for m in res["milestones"])
@@ -1924,7 +1937,7 @@ svg text{{font-family:system-ui,-apple-system,Segoe UI,sans-serif}}
 <p class="warn">{esc(model["definition"])} Overall values here estimate reconstruction effort; the four milestones require end-to-end evidence.</p>
 <h2>Overall progress per commit</h2>
 <div class="chart-scroll">{chart}</div>
-<p class="meta">Solid line: overall including manual estimates. Dashed line: evidence-based progress only (basis <em>git</em>, <em>local</em> or <em>documented</em>), i.e. the objective lower bound. Points marked replay used the current components.json manual estimates and current ignored local outputs, so they are indicative. Hook-recorded points measure HEAD at commit time.</p>
+<p class="meta">Solid line: overall including manual estimates. Dashed line: evidence-based progress only (basis <em>git</em>, <em>local</em> or <em>documented</em>), which includes documented counts. Estimates use the model in effect at each recording; model revisions can cause discontinuities. Points marked replay used the current components.json manual estimates and current ignored local outputs, so they are indicative. Hook-recorded points measure HEAD at commit time.</p>
 <h2>Commits</h2>
 <div class="tablewrap"><table>
 <thead><tr><th>Date (UTC)</th><th>Commit</th><th>Subject</th><th>Overall</th>{head_cells}<th>Source</th></tr></thead>
@@ -2043,6 +2056,12 @@ def main(argv=None):
 
         if not args.no_record or args.seed:
             write_atomic(HISTORY, json.dumps(history, indent=1, sort_keys=False) + "\n")
+
+        # Publish tracked evidence documents from the same commit as the measurements.
+        for source, target in (("porting/material_pipeline/README.md", "material-evidence.txt"),
+                               ("porting/material_pipeline/UE_BRIDGE.md", "material-bridge-evidence.txt")):
+            if source in files:
+                write_atomic(os.path.join(OUT, target), files[source])
 
         # Render from the HEAD measurement. Overall, categories and milestones are the same
         # whether read from history or measured fresh.
