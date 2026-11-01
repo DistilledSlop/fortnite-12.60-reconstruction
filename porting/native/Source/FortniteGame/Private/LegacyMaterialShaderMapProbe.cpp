@@ -1005,6 +1005,10 @@ static const TCHAR* GLegacyGradientPath = TEXT("/Game/UI/Foundation/Materials/M_
 static const TCHAR* GLegacyMainLPath = TEXT("/Game/UI/Foundation/Border/Materials/M-Border-MainL.M-Border-MainL");
 static const TCHAR* GLegacyPowerToastPath = TEXT("/Game/UI/Foundation/Border/Materials/M-Border-PowerToastGlow.M-Border-PowerToastGlow");
 static const TCHAR* GLegacyLockerPath = TEXT("/Game/UI/Foundation/Materials/Athena_LockerTabMaster.Athena_LockerTabMaster");
+static const TCHAR* GLegacyComicPath=TEXT("/Game/Environments/FrontEnd/BackPlates/UITakeovers/M_UI_ComicBubble.M_UI_ComicBubble");
+static const TCHAR* GLegacyComicInstancePath=TEXT("/Game/Environments/FrontEnd/BackPlates/UITakeovers/M_UI_ComicBubble_Inst.M_UI_ComicBubble_Inst");
+static const TCHAR* GLegacyComicTextures[]={TEXT("/Game/Packages/Fortnite_UniqueMaterials_1/PostProcess/T_TilingClouds_02.T_TilingClouds_02"), TEXT("/Game/Environments/FrontEnd/BackPlates/UITakeovers/T_UI_Bubble_Tail.T_UI_Bubble_Tail")};
+static const TCHAR* GLegacyComicSourceTextures[]={TEXT("FortniteGame/Content/Packages/Fortnite_UniqueMaterials_1/PostProcess/T_TilingClouds_02.T_TilingClouds_02"), TEXT("FortniteGame/Content/Environments/FrontEnd/BackPlates/UITakeovers/T_UI_Bubble_Tail.T_UI_Bubble_Tail")};
 struct FLegacyIngressProvenance final : FLegacyMaterialAssetProvenance
 {
     FLegacyOriginalMaterial Decoded;
@@ -1012,6 +1016,52 @@ struct FLegacyIngressProvenance final : FLegacyMaterialAssetProvenance
     int32 ArchiveUE4Version = 0, ArchiveLicenseeVersion = 0;
     virtual bool PrepareOwner(UMaterialInterface* Owner, FString& Error) const override
     {
+        if (SourceIdentity==GLegacyComicPath || SourceIdentity==GLegacyComicInstancePath)
+        {
+            const bool bInstance=SourceIdentity==GLegacyComicInstancePath;
+            UMaterial* Base=Owner ? Owner->GetMaterial() : nullptr;
+            UMaterialInstance* Instance=Cast<UMaterialInstance>(Owner);
+            TSharedPtr<FJsonObject> Bundle;
+            if (!IsInGameThread() || !Owner || Owner->GetPathName()!=SourceIdentity || !Base || Base->GetPathName()!=GLegacyComicPath ||
+                (bInstance ? (!Instance || !Instance->Parent || Instance->Parent->GetPathName()!=GLegacyComicPath || Instance->TextureParameterValues.Num()!=0) : Cast<UMaterial>(Owner)==nullptr) ||
+                !FJsonSerializer::Deserialize(TJsonReaderFactory<>::Create(BundleJson),Bundle) || !Bundle ||
+                Bundle->GetStringField(TEXT("owner_path"))!=SourceIdentity || Bundle->GetStringField(TEXT("shader_identity"))!=GLegacyComicPath ||
+                Bundle->GetStringField(TEXT("parent_path"))!=(bInstance ? FString(GLegacyComicPath) : FString()))
+            { Error=TEXT("invalid ComicBubble owner or bundle identity"); return false; }
+            const auto Fixture=Bundle->GetObjectField(TEXT("runtime_fixture"));
+            const auto Proof=Fixture ? Fixture->GetObjectField(TEXT("texture_context_proof")) : nullptr;
+            const TArray<TSharedPtr<FJsonValue>> *Refs=nullptr,*SourceRefs=nullptr,*Entries=nullptr,*Bindings=nullptr;
+            if (!Fixture || !Proof || Proof->GetStringField(TEXT("schema"))!=(bInstance ? TEXT("fortnite.original-material-instance-texture-context-proof.v1") : TEXT("fortnite.original-material-texture-context-proof.v1")) ||
+                Proof->GetStringField(TEXT("owner"))!=(bInstance ? TEXT("FortniteGame/Content/Environments/FrontEnd/BackPlates/UITakeovers/M_UI_ComicBubble_Inst") : TEXT("FortniteGame/Content/Environments/FrontEnd/BackPlates/UITakeovers/M_UI_ComicBubble")) ||
+                (bInstance && (Proof->GetNumberField(TEXT("instance_layer_entries"))!=0 || Proof->GetBoolField(TEXT("layer_array_tag_present")))) ||
+                !Fixture->TryGetArrayField(TEXT("ordered_texture_references"),Refs) || Refs->Num()!=2 ||
+                !Proof->TryGetArrayField(TEXT("ordered_texture_objects"),SourceRefs) || SourceRefs->Num()!=2 ||
+                !Fixture->TryGetArrayField(TEXT("texture_2d_parameters"),Entries) || Entries->Num()!=(bInstance ? 1 : 2) ||
+                !Proof->TryGetArrayField(TEXT("texture_2d_bindings"),Bindings) || Bindings->Num()!=Entries->Num() || Decoded.IR.Texture2DParameters.Num()!=Entries->Num())
+            { Error=TEXT("invalid ComicBubble source reference context"); return false; }
+            TArray<UTexture*> References;
+            for (int32 I=0; I<2; ++I)
+            {
+                if ((*Refs)[I]->AsString()!=GLegacyComicTextures[I] || (*SourceRefs)[I]->AsString()!=GLegacyComicSourceTextures[I])
+                { Error=TEXT("ComicBubble source reference order differs"); return false; }
+                UTexture* Texture=LoadObject<UTexture>(nullptr,GLegacyComicTextures[I]);
+                if (!Texture || Texture->GetPathName()!=GLegacyComicTextures[I]) { Error=TEXT("ComicBubble source texture missing"); return false; }
+                References.Add(Texture);
+            }
+            for (int32 I=0; I<Entries->Num(); ++I)
+            {
+                const int32 Index=(!bInstance && I==0) ? 1 : 0, Sampler=Index==1 ? 2 : 0;
+                const auto E=(*Entries)[I]->AsObject(), B=(*Bindings)[I]->AsObject();
+                const auto& T=Decoded.IR.Texture2DParameters[I];
+                if (!E || !B || E->GetStringField(TEXT("expression_kind"))!=TEXT("Texture") || !E->HasTypedField<EJson::Null>(TEXT("parameter")) ||
+                    E->GetNumberField(TEXT("texture_index"))!=Index || E->GetNumberField(TEXT("sampler_source"))!=Sampler ||
+                    E->GetNumberField(TEXT("texture_layer_index"))!=-1 || E->GetNumberField(TEXT("page_table_layer_index"))!=-1 || E->GetBoolField(TEXT("virtual_texture")) || E->GetStringField(TEXT("default_texture_path"))!=GLegacyComicTextures[Index] ||
+                    B->GetNumberField(TEXT("uniform_position"))!=I || B->GetNumberField(TEXT("texture_index"))!=Index || B->GetNumberField(TEXT("sampler_source"))!=Sampler || B->GetNumberField(TEXT("layer_index"))!=-1 || B->GetNumberField(TEXT("page_table_layer_index"))!=-1 || B->GetBoolField(TEXT("virtual_texture")) || B->GetStringField(TEXT("texture_object"))!=GLegacyComicSourceTextures[Index] ||
+                    !T.Parameter.Name.IsNone() || T.Parameter.Association!=GlobalParameter || T.Parameter.Index!=INDEX_NONE || T.TextureIndex!=Index || T.SamplerSource!=Sampler || T.TextureLayerIndex!=-1 || T.PageTableLayerIndex!=-1 || T.bVirtualTexture)
+                { Error=TEXT("ComicBubble expression or source binding differs"); return false; }
+            }
+            return RestoreLegacyMaterialTextureReferences(Base,References,Error);
+        }
         if (SourceIdentity==GLegacyFlogoParentPath)
         {
             const FLegacyIngressPin* Flogo=nullptr;
@@ -1088,6 +1138,118 @@ static TMap<FString,TSharedPtr<const FLegacyIngressProvenance,ESPMode::ThreadSaf
 
 // Plain Texture expressions have no parameter identity: both game and render
 // thread paths must use the actual source reference, never a named override.
+// This checks live indexed lookups and filled resource slots; it does not read BC1 pixels.
+static bool CheckComicTextureBindings(UMaterialInterface* Owner, FMaterialResource* Resource,
+    const TRefCountPtr<FMaterialShaderMap>& Map, FString& Error)
+{
+    if (!IsInGameThread() || !Owner || !Resource || !Map) { Error=TEXT("invalid ComicBubble probe context"); return false; }
+    const bool bInstance=Owner->GetPathName()==GLegacyComicInstancePath;
+    const auto& Uniforms=Map->GetUniformExpressionSet();
+    const int32 Count=bInstance ? 1 : 2;
+    const auto References=Resource->GetReferencedTextures();
+    UTexture2D* Textures[2]={};
+    if (References.Num()!=2 || Uniforms.GetNumTextures(EMaterialTextureParameterType::Standard2D)!=Count)
+    { Error=TEXT("ComicBubble reference or uniform count differs"); return false; }
+    for (int32 I=0; I<2; ++I)
+    {
+        Textures[I]=Cast<UTexture2D>(References[I]);
+        const int32 Size=I==0 ? 1024 : 256, Mips=I==0 ? 11 : 9;
+        if (!Textures[I] || Textures[I]->GetPathName()!=GLegacyComicTextures[I] || Textures[I]->GetSizeX()!=Size || Textures[I]->GetSizeY()!=Size ||
+            Textures[I]->GetNumMips()!=Mips || Textures[I]->GetPixelFormat()!=PF_DXT1 || Textures[I]->SRGB!=(I==0))
+        { Error=TEXT("ComicBubble source texture metadata differs"); return false; }
+    }
+    for (int32 I=0; I<Count; ++I)
+    {
+        const int32 Index=(!bInstance && I==0) ? 1 : 0, Sampler=Index==1 ? 2 : 0;
+        const auto& Entry=Uniforms.GetTextureParameter(EMaterialTextureParameterType::Standard2D,I);
+        const auto Info=Entry.GetParameterInfo(); UTexture* Value=nullptr;
+        if (!Entry.ParameterInfo.Name.IsNone() || !Info.Name.IsNone() || Info.Association!=GlobalParameter || Info.Index!=INDEX_NONE ||
+            Entry.TextureIndex!=Index || Entry.SamplerSource!=Sampler)
+        { Error=TEXT("ComicBubble compiled texture entry differs"); return false; }
+        Uniforms.GetGameThreadTextureValue(EMaterialTextureParameterType::Standard2D,I,Owner,*Resource,Value,false);
+        if (Value!=Textures[Index]) { Error=TEXT("ComicBubble game thread texture lookup differs"); return false; }
+    }
+    const auto& Layout=Uniforms.GetUniformBufferLayout();
+    const uint32 ParentOffsets[]={848,856,864,872,880,888}, InstanceOffsets[]={336,344,352,360};
+    const uint32 ParentTypes[]={5,8,5,8,8,8}, InstanceTypes[]={5,8,8,8};
+    const uint32* Offsets=bInstance ? InstanceOffsets : ParentOffsets;
+    const uint32* Types=bInstance ? InstanceTypes : ParentTypes;
+    if (Layout.ConstantBufferSize!=(bInstance ? 368u : 896u) || uint32(Layout.StaticSlot)!=255u || Layout.Resources.Num()!=Count*2+2)
+    { Error=TEXT("ComicBubble uniform layout size differs"); return false; }
+    for (int32 I=0; I<Layout.Resources.Num(); ++I)
+        if (Layout.Resources[I].MemberOffset!=Offsets[I] || uint32(Layout.Resources[I].MemberType)!=Types[I])
+        { Error=TEXT("ComicBubble uniform layout resources differ"); return false; }
+    struct FObservation { bool bMatched=false; int32 NamedCalls=-1; uint32 Width[2]={}, Height[2]={}, Mips[2]={}; } Observed;
+    const FMaterialRenderProxy* Base=Owner->GetRenderProxy();
+    UTexture2D* Cloud=Textures[0]; UTexture2D* Tail=Textures[1];
+    ENQUEUE_RENDER_COMMAND(CheckComicTextureBindings)([Base,Resource,Map,Cloud,Tail,bInstance,Count,&Observed](FRHICommandListImmediate&)
+    {
+        class FPlainProxy final : public FLegacyProbeProxy
+        {
+        public:
+            mutable int32 Calls=0;
+            virtual bool GetTextureValue(const FHashedMaterialParameterInfo&,const UTexture**,const FMaterialRenderContext&) const override
+            { ++Calls; return false; }
+        } Proxy;
+        const FMaterialRenderProxy* Fallback=nullptr;
+        const FMaterial& Material=Base->GetMaterialWithFallback(ERHIFeatureLevel::SM5,Fallback);
+        if (&Material!=Resource) return;
+        UTexture2D* T[]={Cloud,Tail};
+        for (int32 I=0; I<2; ++I)
+        {
+            if (!T[I]->Resource || !T[I]->TextureReference.TextureReferenceRHI || !T[I]->Resource->SamplerStateRHI) return;
+            FRHITexture* RHI=T[I]->TextureReference.TextureReferenceRHI->GetReferencedTexture();
+            FRHITexture2D* RHI2D=RHI ? RHI->GetTexture2D() : nullptr;
+            if (!RHI2D || RHI==GWhiteTexture->TextureRHI.GetReference() || RHI2D->GetFormat()!=PF_DXT1 ||
+                bool(RHI2D->GetFlags() & TexCreate_SRGB)!=(I==0)) return;
+            Observed.Width[I]=RHI2D->GetSizeX(); Observed.Height[I]=RHI2D->GetSizeY(); Observed.Mips[I]=RHI2D->GetNumMips();
+            const uint32 SourceMips=I==0 ? 11 : 9, SourceSize=I==0 ? 1024 : 256;
+            if (!Observed.Mips[I] || Observed.Mips[I]>SourceMips ||
+                Observed.Width[I]!=FMath::Max(1u,SourceSize >> (SourceMips-Observed.Mips[I])) || Observed.Height[I]!=Observed.Width[I]) return;
+        }
+        Proxy.Base=Base; Proxy.bInherit=false;
+        FMaterialRenderContext Context(&Proxy,Material,nullptr); FUniformExpressionCache Cache;
+        const auto& U=Map->GetUniformExpressionSet();
+        const auto& L=U.GetUniformBufferLayout();
+        alignas(16) uint8 Contents[4112]={}; U.FillUniformBuffer(Context,Cache,Contents,sizeof(Contents));
+        void* Slots[6]={};
+        for (int32 I=0; I<L.Resources.Num(); ++I) FMemory::Memcpy(&Slots[I],Contents+L.Resources[I].MemberOffset,sizeof(void*));
+        if (!Slots[Count*2] || !Slots[Count*2+1]) return;
+        for (int32 I=0; I<Count; ++I)
+        {
+            const int32 Index=(!bInstance && I==0) ? 1 : 0;
+            const UTexture* Value=nullptr;
+            U.GetTextureValue(EMaterialTextureParameterType::Standard2D,I,Context,Material,Value);
+            void* ExpectedSampler=Index==1 ? Slots[Count*2+1] : T[Index]->Resource->SamplerStateRHI.GetReference();
+            if (Value!=T[Index] || Slots[I*2]!=T[Index]->TextureReference.TextureReferenceRHI.GetReference() || Slots[I*2+1]!=ExpectedSampler) return;
+        }
+        Observed.NamedCalls=Proxy.Calls; Observed.bMatched=Observed.NamedCalls==0;
+    });
+    FlushRenderingCommands();
+    if (!Observed.bMatched) { Error=TEXT("ComicBubble render lookup or texture/sampler binding differs"); return false; }
+    FString Directory;
+    if (FParse::Value(FCommandLine::Get(),TEXT("FortniteLegacyMaterialArtifactDir="),Directory))
+    {
+        FString OffsetsJson, TypesJson, UniformRows;
+        for (int32 I=0; I<Layout.Resources.Num(); ++I)
+        {
+            OffsetsJson+=FString::Printf(TEXT("%s%u"),I ? TEXT(",") : TEXT(""),Offsets[I]);
+            TypesJson+=FString::Printf(TEXT("%s%u"),I ? TEXT(",") : TEXT(""),Types[I]);
+        }
+        for (int32 I=0; I<Count; ++I)
+        {
+            const int32 Index=(!bInstance && I==0) ? 1 : 0;
+            UniformRows+=FString::Printf(TEXT("%s{\"uniform_index\":%d,\"texture_index\":%d,\"texture_path\":\"%s\",\"sampler_source\":%d,\"texture_resource_index\":%d,\"paired_sampler_resource_index\":%d,\"sampled_sampler_resource_index\":%d,\"gt_indexed_match\":true,\"rt_indexed_match\":true,\"texture_binding_match\":true,\"sampler_binding_match\":true,\"nonwhite_texture\":true,\"pixel_format\":\"PF_DXT1\",\"logical_width\":%d,\"logical_height\":%d,\"source_mips\":%d,\"resident_mips\":%u,\"rhi_width\":%u,\"rhi_height\":%u,\"srgb\":%s}"),
+                I ? TEXT(",") : TEXT(""),I,Index,GLegacyComicTextures[Index],Index==1 ? 2 : 0,I*2,I*2+1,Index==1 ? Count*2+1 : I*2+1,
+                Index==0 ? 1024 : 256,Index==0 ? 1024 : 256,Index==0 ? 11 : 9,Observed.Mips[Index],Observed.Width[Index],Observed.Height[Index],Index==0 ? TEXT("true") : TEXT("false"));
+        }
+        const FString Json=FString::Printf(TEXT("{\"schema\":\"fortnite.comicbubble-texture-bindings.v1\",\"owner_path\":\"%s\",\"ordered_texture_references\":[\"%s\",\"%s\"],\"constant_bytes\":%u,\"static_slot\":%u,\"layout_hash\":%u,\"resource_offsets\":[%s],\"resource_types\":[%s],\"uniforms\":[%s],\"named_proxy_calls\":%d,\"shared_wrap_nonnull\":true,\"shared_clamp_nonnull\":true,\"scope\":\"indexed GT/RT and RHI bindings; no raw BC1 GPU readback or pixel proof\"}\n"),*Owner->GetPathName(),GLegacyComicTextures[0],GLegacyComicTextures[1],uint32(Layout.ConstantBufferSize),uint32(Layout.StaticSlot),Layout.GetHash(),*OffsetsJson,*TypesJson,*UniformRows,Observed.NamedCalls);
+        const FString Path=FPaths::Combine(Directory,TEXT("ComicBubbleTextureBindings.json"));
+        if (FPaths::FileExists(Path) || !FFileHelper::SaveStringToFile(Json,*Path)) { Error=TEXT("cannot write ComicBubble texture artifact"); return false; }
+    }
+    return true;
+}
+
 static bool CheckOriginalPlainTexture(UMaterialInterface* Owner, FMaterialResource* Resource,
     const TRefCountPtr<FMaterialShaderMap>& Map, const TSharedPtr<FJsonObject>& Fixture, FString& Error)
 {
@@ -3314,6 +3476,12 @@ void ProbeLegacyOriginalMaterial()
         FString NumericError;
         if (!ProbeLegacyDuplicateDefaults(Material,NumericError))
         { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: %s"),*NumericError); FPlatformMisc::RequestExitWithStatus(false,1); return; }
+    }
+    if (OwnerPath==GLegacyComicPath || OwnerPath==GLegacyComicInstancePath)
+    {
+        FString TextureError;
+        if (!CheckComicTextureBindings(Material,Resource,Map,TextureError))
+        { UE_LOG(LogTemp,Error,TEXT("Legacy material ingress: %s"),*TextureError); FPlatformMisc::RequestExitWithStatus(false,1); return; }
     }
     if (OwnerPath==GLegacyKeybindPath)
     {

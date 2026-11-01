@@ -44,6 +44,86 @@ def uniform_layout_hash(size, offsets, types, static_slot=255):
     return result & 0xffffffff
 
 
+
+COMIC_PREFIX = '/Game/Environments/FrontEnd/BackPlates/UITakeovers/'
+COMIC_OWNERS = {
+    COMIC_PREFIX + 'M_UI_ComicBubble.M_UI_ComicBubble': (896, [848, 856, 864, 872, 880, 888],
+        [5, 8, 5, 8, 8, 8], [(0, 1, 2, 0, 1, 5), (1, 0, 0, 2, 3, 3)]),
+    COMIC_PREFIX + 'M_UI_ComicBubble_Inst.M_UI_ComicBubble_Inst': (368, [336, 344, 352, 360],
+        [5, 8, 8, 8], [(0, 0, 0, 0, 1, 1)]),
+}
+COMIC_TEXTURES = [
+    ('/Game/Packages/Fortnite_UniqueMaterials_1/PostProcess/T_TilingClouds_02.T_TilingClouds_02', 1024, 1024, 11, True),
+    (COMIC_PREFIX + 'T_UI_Bubble_Tail.T_UI_Bubble_Tail', 256, 256, 9, False),
+]
+
+
+def verify_comic_texture_bindings(owner, fixture, receipt):
+    """Require source-indexed references and observed GT/RT/RHI bindings for this owner."""
+    if owner not in COMIC_OWNERS:
+        raise ValueError('unsupported multi-texture owner')
+    size, offsets, types, indices = COMIC_OWNERS[owner]
+    layout = fixture['expected_layout']
+    if layout != dict(constant_bytes=size, resource_offsets=offsets, resource_types=types):
+        raise ValueError('ComicBubble source material layout differs')
+    paths = [item[0] for item in COMIC_TEXTURES]
+    if (receipt.get('schema') != 'fortnite.comicbubble-texture-bindings.v1' or
+            receipt.get('owner_path') != owner or receipt.get('ordered_texture_references') != paths or
+            receipt.get('constant_bytes') != size or receipt.get('static_slot') != 255 or
+            receipt.get('resource_offsets') != offsets or receipt.get('resource_types') != types or
+            receipt.get('layout_hash') != uniform_layout_hash(size, offsets, types) or
+            receipt.get('named_proxy_calls') != 0 or receipt.get('shared_wrap_nonnull') is not True or
+            receipt.get('shared_clamp_nonnull') is not True):
+        raise ValueError('ComicBubble observed layout or references differ')
+    contract = fixture['texture_contract']
+    if (contract.get('expression_kind') != 'Texture' or contract.get('parameter') is not None or
+            contract.get('named_overrides_allowed') is not False or len(contract['textures']) != 2):
+        raise ValueError('ComicBubble source texture contract differs')
+    for path, width, height, mips, srgb in COMIC_TEXTURES:
+        source_name = 'FortniteGame/Content/' + path[len('/Game/'):]
+        matches = [item for item in contract['textures'] if item.get('texture_object') == source_name]
+        if len(matches) != 1:
+            raise ValueError('ComicBubble source texture reference differs')
+        source = matches[0]['source_platform_data']
+        if (source['texture_object'] != source_name or source['pixel_format'] != 'PF_DXT1' or
+                (source['logical_width'], source['logical_height'], source['mip_count']) != (width, height, mips) or
+                source['inspector_metadata']['srgb'] is not srgb or source['first_mip'] != 0 or
+                source['platform_virtual_flag'] is not False or len(source['source_files']) != 3):
+            raise ValueError('ComicBubble source texture metadata differs')
+        source_files = source['source_files']
+        expected_stem = source_name.split('.', 1)[0]
+        if {str(Path(e['path']))[-len(expected_stem + suffix):] for e in source_files for suffix in (Path(e['path']).suffix,)} != {expected_stem + suffix for suffix in ('.uasset', '.uexp', '.ubulk')}:
+            raise ValueError('ComicBubble source texture files differ')
+        for entry in source_files:
+            data = Path(entry['path']).read_bytes()
+            if len(data) != entry['bytes'] or digest(data) != entry['sha256']:
+                raise ValueError('ComicBubble source texture package changed')
+    uniforms = fixture['texture_2d_parameters']
+    rows = receipt.get('uniforms')
+    if len(uniforms) != len(indices) or not isinstance(rows, list) or len(rows) != len(indices):
+        raise ValueError('ComicBubble texture uniform count differs')
+    for uniform, row, expected in zip(uniforms, rows, indices):
+        ui, ti, sampler, texture_slot, pair_slot, sampled_slot = expected
+        path, width, height, mips, srgb = COMIC_TEXTURES[ti]
+        if (uniform.get('expression_kind') != 'Texture' or uniform.get('parameter') is not None or
+                uniform.get('texture_index') != ti or uniform.get('sampler_source') != sampler or
+                uniform.get('texture_layer_index') != -1 or uniform.get('page_table_layer_index') != -1 or
+                uniform.get('virtual_texture') is not False or uniform.get('default_texture_path') != path):
+            raise ValueError('ComicBubble source uniform differs')
+        actual = tuple(row.get(k) for k in ('uniform_index', 'texture_index', 'sampler_source',
+                       'texture_resource_index', 'paired_sampler_resource_index', 'sampled_sampler_resource_index'))
+        if (actual != expected or any(type(value) is not int for value in actual) or row.get('texture_path') != path or row.get('pixel_format') != 'PF_DXT1' or
+                (row.get('logical_width'), row.get('logical_height'), row.get('source_mips')) != (width, height, mips) or
+                row.get('srgb') is not srgb or any(row.get(k) is not True for k in
+                    ('gt_indexed_match', 'rt_indexed_match', 'texture_binding_match', 'sampler_binding_match', 'nonwhite_texture'))):
+            raise ValueError('ComicBubble observed texture uniform differs')
+        resident = row.get('resident_mips')
+        if (type(resident) is not int or not 1 <= resident <= mips or
+                row.get('rhi_width') != max(1, width >> (mips - resident)) or
+                row.get('rhi_height') != max(1, height >> (mips - resident))):
+            raise ValueError('ComicBubble resident texture dimensions differ')
+
+
 def expected_uniform_bindings(record, shader, material_hash, view_hash, layout=None):
     """Original typed registers determine roles; header order/debug names do not."""
     roles = {}
@@ -207,14 +287,21 @@ def main():
         if GENERATED.resolve() not in args.report.resolve().parents:
             raise ValueError('verification report must stay in porting/generated')
         fixture_bytes = args.fixture.read_bytes()
-        fixture = json.loads(fixture_bytes)
-        fixture = fixture.get('runtime_fixture', fixture)
+        bundle = json.loads(fixture_bytes)
+        fixture = bundle.get('runtime_fixture', bundle)
         layout = fixture['expected_layout']
-        if layout['resource_types'] not in ([8, 8], [5, 8, 8, 8]):
+        if (layout['resource_types'] not in ([8, 8], [5, 8, 8, 8]) and not
+                (layout['resource_types'] == [5, 8, 5, 8, 8, 8] and
+                 bundle.get('owner_path') in COMIC_OWNERS and
+                 'textures' in fixture.get('texture_contract', {}))):
             raise ValueError('unsupported checked material resource layout')
         layout_hash = uniform_layout_hash(layout['constant_bytes'], layout['resource_offsets'], layout['resource_types'])
         texture_receipt = None
-        if fixture.get('texture_contract'):
+        if bundle.get('owner_path') in COMIC_OWNERS and 'textures' in fixture.get('texture_contract', {}):
+            path = args.artifacts / 'ComicBubbleTextureBindings.json'
+            texture_receipt = json.loads(path.read_text(encoding='utf-8-sig'))
+            verify_comic_texture_bindings(bundle.get('owner_path'), fixture, texture_receipt)
+        elif fixture.get('texture_contract'):
             path = args.artifacts / 'DonutMaterialLayout.json'
             texture_receipt = json.loads(path.read_text(encoding='utf-8-sig'))
             resources = texture_receipt['resources']
