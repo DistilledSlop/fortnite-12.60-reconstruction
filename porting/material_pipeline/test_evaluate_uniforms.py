@@ -1,8 +1,16 @@
+import importlib.util
+import json
 import math
+from pathlib import Path
+import subprocess
+import sys
+import tempfile
 import struct
 import unittest
 
-import evaluate_uniforms as u
+spec = importlib.util.spec_from_file_location('evaluate_uniforms', Path(__file__).with_name('evaluate_uniforms.py'))
+u = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(u)
 
 
 def const(*v):
@@ -65,6 +73,40 @@ class UniformEvaluationTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'virtual texture'):
             r = report([], []); r['virtual_texture_stacks']['count'] = 1
             u.evaluate_report(r)
+
+    def test_malformed_numbers_overrides_and_limits(self):
+        with self.assertRaises(ValueError):
+            u.overrides_from_json({'type': 'scalar'})
+        with self.assertRaises(ValueError):
+            u.overrides_from_json([{'type': 'vector', 'parameter': param('A', 1)['parameter'], 'value': [1, 2, 3, math.nan]}])
+        with self.assertRaises(ValueError):
+            u.evaluate(op('FoldedMath', [const(3e38, 0, 0, 0), const(2, 0, 0, 0)], operation=2, value_type=15), {}, set())
+        node = const(1, 1, 1, 1)
+        for _ in range(u.MAX_DEPTH + 1):
+            node = op('ComponentSwizzle', [node], channels=[0, -1, -1, -1], elements=1)
+        with self.assertRaisesRegex(ValueError, 'depth limit'):
+            u.evaluate(node, {}, set())
+        with self.assertRaisesRegex(ValueError, 'node limit'):
+            u.evaluate(const(1, 1, 1, 1), {}, set(), [0])
+
+    def test_output_guard_and_concise_cli_failure(self):
+        self.assertTrue(u.output_path(u.GENERATED_ROOT / 'test.bin').is_relative_to(u.GENERATED_ROOT.resolve()))
+        with self.assertRaisesRegex(ValueError, 'under porting/generated'):
+            u.output_path(u.GENERATED_ROOT / '..' / 'test.bin')
+        with tempfile.TemporaryDirectory() as temp:
+            path = Path(temp)
+            source = path / 'input.json'
+            source.write_text(json.dumps(report([], [const(1, 2, 3, float('nan'))])))
+            result = subprocess.run([sys.executable, '-I', str(Path(u.__file__)), str(source), '--output', str(path / 'bad.bin'), '--metadata', str(path / 'bad.json')], capture_output=True, text=True)
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn('under porting/generated', result.stderr)
+            self.assertNotIn('Traceback', result.stderr)
+            self.assertFalse((path / 'bad.bin').exists())
+            result = subprocess.run([sys.executable, '-I', str(Path(u.__file__)), str(source), '--output', str(u.GENERATED_ROOT / 'test-unsafe.bin'), '--metadata', str(u.GENERATED_ROOT / 'test-unsafe.json')], capture_output=True, text=True)
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn('finite', result.stderr)
+            self.assertNotIn('Traceback', result.stderr)
+            self.assertFalse((u.GENERATED_ROOT / 'test-unsafe.bin').exists())
 
 
 if __name__ == '__main__':

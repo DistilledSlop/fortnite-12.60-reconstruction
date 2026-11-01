@@ -10,27 +10,40 @@ import argparse
 import hashlib
 import json
 import math
+import os
+import tempfile
 import struct
 from pathlib import Path
 
 PREFIX = 'FMaterialUniformExpression'
+GENERATED_ROOT = Path(__file__).resolve().parents[1] / 'generated'
+MAX_DEPTH = 128
+MAX_NODES = 100000
 
 
 def f32(value):
     if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value):
         raise ValueError('expected finite number')
     try:
-        return struct.unpack('<f', struct.pack('<f', value))[0]
+        result = struct.unpack('<f', struct.pack('<f', value))[0]
+        if not math.isfinite(result):
+            raise ValueError('number outside finite float32 range')
+        return result
     except (OverflowError, struct.error) as exc:
         raise ValueError('number outside finite float32 range') from exc
 
 
 def identity(parameter):
     name = parameter['name']
-    return (name['name'], name['number'], parameter['association'], parameter['index'])
+    result = (name['name'], name['number'], parameter['association'], parameter['index'])
+    if not isinstance(result[0], str) or not all(type(x) is int for x in result[1:]):
+        raise ValueError('invalid parameter identity')
+    return result
 
 
 def overrides_from_json(data):
+    if not isinstance(data, list):
+        raise ValueError('overrides must be a list')
     result = {}
     for entry in data:
         kind = entry['type']
@@ -50,16 +63,23 @@ def overrides_from_json(data):
     return result
 
 
-def evaluate(node, overrides, used):
+def evaluate(node, overrides, used, budget=None, depth=0):
+    if budget is None:
+        budget = [MAX_NODES]
+    if depth > MAX_DEPTH:
+        raise ValueError('expression depth limit exceeded')
+    budget[0] -= 1
+    if budget[0] < 0:
+        raise ValueError('expression node limit exceeded')
     kind = node['type']
-    if not kind.startswith(PREFIX):
-        raise ValueError('unsupported expression type ' + kind)
+    if not isinstance(kind, str) or not kind.startswith(PREFIX):
+        raise ValueError('unsupported expression type ' + str(kind))
     kind = kind[len(PREFIX):]
     if kind == 'Constant':
-        if node['value_type'] not in (1, 2, 4, 8, 15):
+        if type(node['value_type']) is not int or node['value_type'] not in (1, 2, 4, 8, 15):
             raise ValueError('unsupported constant value type')
         value = node['value']
-        if len(value) != 4:
+        if not isinstance(value, list) or len(value) != 4:
             raise ValueError('constant must have four components')
         return [f32(v) for v in value]
     if kind in ('ScalarParameter', 'VectorParameter'):
@@ -75,11 +95,11 @@ def evaluate(node, overrides, used):
         return [f32(v) for v in value]
     expected = {'ComponentSwizzle': 1, 'FoldedMath': 2, 'AppendVector': 2, 'TrigMath': 2}
     if kind not in expected:
-        raise ValueError('unsupported expression type ' + kind)
+        raise ValueError('unsupported expression type ' + str(kind))
     inputs = node['inputs']
     if len(inputs) != expected[kind]:
         raise ValueError('invalid input count for ' + kind)
-    values = [evaluate(item, overrides, used) for item in inputs]
+    values = [evaluate(item, overrides, used, budget, depth + 1) for item in inputs]
     a = values[0]
     if kind == 'ComponentSwizzle':
         channels, n = node['channels'], node['elements']
@@ -93,12 +113,14 @@ def evaluate(node, overrides, used):
             raise ValueError('invalid append component count')
         return a[:n] + b[:4-n]
     op = node['operation']
+    if type(op) is not int:
+        raise ValueError('invalid operation')
     if kind == 'TrigMath':
         if op not in (0, 1):
             raise ValueError('unsupported trig operation ' + str(op))
         fn = (math.sin, math.cos)[op]
         return [f32(fn(v)) for v in a]
-    if node['value_type'] not in (1, 2, 4, 8, 15):
+    if type(node['value_type']) is not int or node['value_type'] not in (1, 2, 4, 8, 15):
         raise ValueError('unsupported folded math value type')
     if op not in (0, 1, 2, 3):
         raise ValueError('unsupported folded math operation ' + str(op))
@@ -122,12 +144,13 @@ def evaluate_report(report, overrides=None):
         raise ValueError('virtual texture uniform data is unsupported')
     used = set()
     results = {}
+    budget = [MAX_NODES]
     for kind in ('vector', 'scalar'):
         array = arrays[kind]
         expressions = array['expressions']
         if len(expressions) != array['count']:
             raise ValueError('expression count mismatch for ' + kind)
-        results[kind] = [evaluate(e, overrides, used) for e in expressions]
+        results[kind] = [evaluate(e, overrides, used, budget) for e in expressions]
     if set(overrides) != used:
         raise ValueError('unused parameter overrides: ' + repr(sorted(set(overrides) - used)))
     values = [component for vector in results['vector'] for component in vector]
@@ -145,6 +168,41 @@ def main():
     parser.add_argument('--output', type=Path, required=True, help='output numeric constant bytes')
     parser.add_argument('--metadata', type=Path, required=True, help='output provenance and values JSON')
     args = parser.parse_args()
+    try:
+        run(args)
+    except (ValueError, TypeError, KeyError, IndexError, AttributeError, OverflowError, RecursionError, OSError) as exc:
+        parser.exit(2, f'{parser.prog}: error: {exc}\n')
+
+
+def output_path(path):
+    resolved = path.resolve()
+    if not resolved.is_relative_to(GENERATED_ROOT.resolve()) or resolved == GENERATED_ROOT.resolve():
+        raise ValueError('outputs must resolve under porting/generated')
+    return resolved
+
+
+def publish(outputs):
+    # Validate and stage every output before replacing either destination.
+    staged = []
+    try:
+        for path, content in outputs:
+            with tempfile.NamedTemporaryFile(dir=path.parent, prefix='.' + path.name + '.', delete=False) as stream:
+                staged.append(Path(stream.name))
+                stream.write(content)
+        for temp, (path, _) in zip(staged, outputs):
+            os.replace(temp, path)
+    finally:
+        for temp in staged:
+            temp.unlink(missing_ok=True)
+
+
+def run(args):
+    output, metadata_path = output_path(args.output), output_path(args.metadata)
+    inputs = {args.report.resolve()}
+    if args.overrides:
+        inputs.add(args.overrides.resolve())
+    if output == metadata_path or output in inputs or metadata_path in inputs:
+        raise ValueError('outputs must be distinct from each other and inputs')
     raw = args.report.read_bytes()
     report = json.loads(raw)
     override_raw = args.overrides.read_bytes() if args.overrides else None
@@ -156,6 +214,7 @@ def main():
         if offsets and min(offsets) != len(data):
             raise ValueError('numeric span does not match first serialized resource offset')
     metadata = {
+        'evaluator_sha256': hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         'input_report_sha256': hashlib.sha256(raw).hexdigest(),
         'override_sha256': hashlib.sha256(override_raw).hexdigest() if override_raw is not None else None,
         'resource_sha256': report.get('resource_sha256'),
@@ -174,8 +233,8 @@ def main():
             'Numeric bytes exclude separate texture and sampler resources; no runtime binding or shader semantic equivalence is established.',
         ],
     }
-    args.output.write_bytes(data)
-    args.metadata.write_text(json.dumps(metadata, indent=2, allow_nan=False) + '\n')
+    metadata_bytes = (json.dumps(metadata, indent=2, allow_nan=False) + '\n').encode('utf-8')
+    publish([(output, data), (metadata_path, metadata_bytes)])
     print(json.dumps({k: metadata[k] for k in ('material_path', 'numeric_bytes', 'vector_count', 'scalar_count', 'padding_bytes', 'numeric_bytes_sha256')}))
 
 
