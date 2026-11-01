@@ -9,7 +9,7 @@
 #include "FFortItemQuantityPair.generated.h"
 
 USTRUCT()
-struct FFortItemQuantityPair
+struct FORTNITEGAME_API FFortItemQuantityPair
 {
 	GENERATED_BODY()
 

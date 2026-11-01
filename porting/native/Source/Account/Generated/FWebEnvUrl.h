@@ -8,7 +8,7 @@
 #include "FWebEnvUrl.generated.h"
 
 USTRUCT()
-struct FWebEnvUrl
+struct ACCOUNT_API FWebEnvUrl
 {
 	GENERATED_BODY()
 

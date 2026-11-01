@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UBlueprintContextBase.h"
 
+#include "FCmsJsonMessages.h"
+
 class UFortPlayerSurveyCMSSurveyDataSource;
 
 #include "UCMSContext.generated.h"
@@ -16,6 +18,10 @@ class FORTNITEUI_API UCMSContext : public UBlueprintContextBase
 	GENERATED_BODY()
 
 public:
+	// table index 1, flags 0x40000000002000
+	UPROPERTY(Transient)
+	FCmsJsonMessages CachedCmsMessages;
+
 	// table index 0, flags 0x40000000002000
 	UPROPERTY(Transient)
 	UFortPlayerSurveyCMSSurveyDataSource* CMSSurveyDataSource;

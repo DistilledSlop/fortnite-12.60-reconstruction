@@ -14,7 +14,7 @@ class UUserWidget;
 #include "FMarkedActorDisplayInfo.generated.h"
 
 USTRUCT()
-struct FMarkedActorDisplayInfo
+struct FORTNITEGAME_API FMarkedActorDisplayInfo
 {
 	GENERATED_BODY()
 

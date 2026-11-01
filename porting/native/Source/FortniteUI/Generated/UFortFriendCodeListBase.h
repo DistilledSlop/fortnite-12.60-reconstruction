@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanel.h"
 
+#include "FFriendCode.h"
+
 class UDynamicEntryBox;
 class UFortFriendCodeEntryBase;
 class URichTextBlock;
@@ -18,6 +20,10 @@ class FORTNITEUI_API UFortFriendCodeListBase : public UFortActivatablePanel
 	GENERATED_BODY()
 
 public:
+	// table index 3, flags 0x20080000000014
+	UPROPERTY()
+	TArray<FFriendCode> BacchusFriendCodes;
+
 	// table index 2, flags 0x24080000000001
 	UPROPERTY()
 	TSubclassOf<UFortFriendCodeEntryBase> FriendCodeEntryClass;

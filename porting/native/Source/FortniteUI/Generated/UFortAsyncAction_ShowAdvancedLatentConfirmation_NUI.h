@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintAsyncActionBase.h"
 
+#include "FFortAdvancedLatentConfirmationDialogResultDelegate_NUI.h"
+#include "FFortDialogDescription_NUI.h"
 #include "UFortLocalPlayer.h"
 
 class UObject;
@@ -18,6 +20,10 @@ class FORTNITEUI_API UFortAsyncAction_ShowAdvancedLatentConfirmation_NUI : publi
 	GENERATED_BODY()
 
 public:
+	// table index 3, flags 0x10000010080000
+	UPROPERTY()
+	FFortAdvancedLatentConfirmationDialogResultDelegate_NUI DialogResult;
+
 	// table index 2, flags 0x40000000002000
 	UPROPERTY(Transient)
 	UObject* WorldContextObject;
@@ -25,6 +31,10 @@ public:
 	// table index 1, flags 0x40000000002000
 	UPROPERTY(Transient)
 	UFortLocalPlayer* TargetLocalPlayer;
+
+	// table index 0, flags 0x40008000000000
+	UPROPERTY()
+	FFortDialogDescription_NUI Description;
 
 };
 

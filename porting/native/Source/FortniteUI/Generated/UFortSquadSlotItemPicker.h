@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortItemPickerBase.h"
 
+#include "FFortSquadSlotSortChanged.h"
+
 #include "UFortSquadSlotItemPicker.generated.h"
 
 UCLASS(abstract)
@@ -14,5 +16,9 @@ class FORTNITEUI_API UFortSquadSlotItemPicker : public UFortItemPickerBase
 	GENERATED_BODY()
 
 public:
+	// table index 0, flags 0x10000010080000
+	UPROPERTY()
+	FFortSquadSlotSortChanged OnSortChanged;
+
 };
 

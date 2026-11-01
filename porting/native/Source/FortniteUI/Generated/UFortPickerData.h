@@ -6,9 +6,11 @@
 #include "CoreMinimal.h"
 #include "Engine/DataAsset.h"
 
+#include "FBuildingCategoryOptionData.h"
 #include "FBuildingOptionData.h"
 #include "FChatOptionData.h"
 #include "FEmoteOptionData.h"
+#include "FItemCategoryOptionData.h"
 #include "FMapNoteOptionData.h"
 #include "FRadialOptionData.h"
 #include "UAthenaQuickChatBank.h"
@@ -21,6 +23,10 @@ class FORTNITEUI_API UFortPickerData : public UDataAsset
 	GENERATED_BODY()
 
 public:
+	// table index 22, flags 0x10000000010015
+	UPROPERTY()
+	TArray<FBuildingCategoryOptionData> BuildingCategories;
+
 	// table index 20, flags 0x10000000010015
 	UPROPERTY()
 	TArray<FBuildingOptionData> WallOptions;
@@ -36,6 +42,14 @@ public:
 	// table index 14, flags 0x10000000010015
 	UPROPERTY()
 	TArray<FBuildingOptionData> RoofOptions;
+
+	// table index 12, flags 0x10000000010015
+	UPROPERTY()
+	TArray<FItemCategoryOptionData> TrapCategories;
+
+	// table index 10, flags 0x10000000010015
+	UPROPERTY()
+	TArray<FItemCategoryOptionData> WeaponCategories;
 
 	// table index 8, flags 0x10000000010015
 	UPROPERTY()

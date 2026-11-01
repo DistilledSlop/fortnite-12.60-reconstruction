@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
 
+#include "FItemListCategoryArray.h"
 #include "FLoadItemsComplete.h"
 #include "UFortItemDefinition.h"
 
@@ -22,6 +23,10 @@ public:
 	// table index 4, flags 0x10000000002014
 	UPROPERTY(Transient)
 	TArray<UFortItemDefinition*> AllItems;
+
+	// table index 2, flags 0x10000000002014
+	UPROPERTY(Transient)
+	TArray<FItemListCategoryArray> CategoryList;
 
 	// table index 1, flags 0x10000010080000
 	UPROPERTY()

@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UBacchusResizableHUDElement.h"
 
+#include "FHudLayoutToolProxyPropertyData.h"
+
 #include "UHUDLayoutToolProxy.generated.h"
 
 UCLASS()
@@ -14,5 +16,9 @@ class FORTNITEUI_API UHUDLayoutToolProxy : public UBacchusResizableHUDElement
 	GENERATED_BODY()
 
 public:
+	// table index 0, flags 0x20080000000015
+	UPROPERTY()
+	TMap<FName, FHudLayoutToolProxyPropertyData> ProxyProperties;
+
 };
 

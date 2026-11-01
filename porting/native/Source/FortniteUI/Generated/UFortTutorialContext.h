@@ -6,6 +6,9 @@
 #include "CoreMinimal.h"
 #include "UBlueprintContextBase.h"
 
+#include "FOnNewClientAnnouncementOnClientDelegate.h"
+#include "FUpdateTutorialAnnouncementDelegate.h"
+
 #include "UFortTutorialContext.generated.h"
 
 UCLASS(transient)
@@ -14,5 +17,13 @@ class FORTNITEUI_API UFortTutorialContext : public UBlueprintContextBase
 	GENERATED_BODY()
 
 public:
+	// table index 1, flags 0x10000010080000
+	UPROPERTY()
+	FUpdateTutorialAnnouncementDelegate OnUpdateTutorialAnnouncement;
+
+	// table index 0, flags 0x10000010080000
+	UPROPERTY()
+	FOnNewClientAnnouncementOnClientDelegate OnNewAnnouncementStartedOnClientDelegate;
+
 };
 

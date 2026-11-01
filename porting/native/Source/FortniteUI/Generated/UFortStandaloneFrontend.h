@@ -8,6 +8,7 @@
 
 #include "Engine/DataTable.h"
 #include "FActivatableScreenClosedEvent.h"
+#include "FFortAthenaLoadout.h"
 #include "Math/Vector.h"
 #include "UCommonButton.h"
 #include "UCommonWidgetSwitcher.h"
@@ -51,6 +52,10 @@ public:
 	// table index 3, flags 0x20080000080008
 	UPROPERTY()
 	UWidget* Content_LoadingIndicator;
+
+	// table index 2, flags 0x40000000002000
+	UPROPERTY(Transient)
+	FFortAthenaLoadout InitialLoadoutData;
 
 	// table index 1, flags 0x40000000080008
 	UPROPERTY()

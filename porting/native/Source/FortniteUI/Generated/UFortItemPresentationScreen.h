@@ -7,6 +7,7 @@
 #include "UFortItemPreviewScreen.h"
 
 #include "Engine/DataTable.h"
+#include "FFortReceivedItemLootInfo.h"
 #include "FOnFinalGiftingComplete.h"
 #include "UCommonBorder.h"
 #include "UCommonButton.h"
@@ -39,6 +40,14 @@ public:
 	// table index 30, flags 0x24080000000001
 	UPROPERTY()
 	TSubclassOf<UFortItemPresentationEntry> ItemCardClass;
+
+	// table index 28, flags 0x20080000000014
+	UPROPERTY()
+	TArray<FFortReceivedItemLootInfo> ItemDefs;
+
+	// table index 26, flags 0x20080000000014
+	UPROPERTY()
+	TArray<FFortReceivedItemLootInfo> PaidBattlePassItemDefs;
 
 	// table index 25, flags 0x20080000002000
 	UPROPERTY(Transient)

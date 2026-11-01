@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 
+#include "FCreativeAdData.h"
+
 #include "UFortCreativeAdsView.generated.h"
 
 UCLASS()
@@ -14,5 +16,9 @@ class FORTNITEUI_API UFortCreativeAdsView : public UUserWidget
 	GENERATED_BODY()
 
 public:
+	// table index 0, flags 0x20080000000014
+	UPROPERTY()
+	TArray<FCreativeAdData> CreativeAdList;
+
 };
 

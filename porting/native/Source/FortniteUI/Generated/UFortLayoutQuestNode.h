@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "FFortQuestMapNode.h"
+
 class UFortQuestMapQuestTile;
 
 #include "UFortLayoutQuestNode.generated.h"
@@ -23,6 +25,10 @@ public:
 	// table index 1, flags 0x10000000000015
 	UPROPERTY()
 	int32 QuestNodeIndex;
+
+	// table index 0, flags 0x40000000002000
+	UPROPERTY(Transient)
+	FFortQuestMapNode QuestMapNode;
 
 };
 

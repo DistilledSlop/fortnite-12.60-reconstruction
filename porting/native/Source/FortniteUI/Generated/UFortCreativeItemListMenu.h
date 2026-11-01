@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonActivatableWidget.h"
 
+#include "FSelectItemToSpawnDelegate.h"
 #include "UCommonButton.h"
 #include "UCommonWidgetSwitcher.h"
 
@@ -56,6 +57,10 @@ public:
 	// table index 18, flags 0x20080000000001
 	UPROPERTY()
 	int32 MaxNumItemsInCreativeChests;
+
+	// table index 17, flags 0x40000010080000
+	UPROPERTY()
+	FSelectItemToSpawnDelegate BP_OnItemSelected;
 
 	// table index 16, flags 0x4000000008001c
 	UPROPERTY()

@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
 
+#include "FAthenaAccolades.h"
+
 #include "UAthenaAccoladeWrapper.generated.h"
 
 UCLASS()
@@ -14,5 +16,9 @@ class FORTNITEUI_API UAthenaAccoladeWrapper : public UObject
 	GENERATED_BODY()
 
 public:
+	// table index 0, flags 0x10000000000000
+	UPROPERTY()
+	FAthenaAccolades AccoladeData;
+
 };
 

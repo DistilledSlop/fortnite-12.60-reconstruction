@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "Components/DynamicEntryBox.h"
 
+#include "FMcpVariantChannelInfo.h"
 #include "UAthenaCosmeticAccountItem.h"
 #include "UAthenaCosmeticItemDefinition.h"
 
@@ -24,6 +25,10 @@ public:
 	// table index 2, flags 0x40000000000000
 	UPROPERTY()
 	UAthenaCosmeticItemDefinition* CurrentItemDef;
+
+	// table index 0, flags 0x40000000000000
+	UPROPERTY()
+	TArray<FMcpVariantChannelInfo> CurrentItemVariants;
 
 };
 

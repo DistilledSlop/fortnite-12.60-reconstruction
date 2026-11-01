@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "ESquadSlotType.h"
 #include "FOnDifferentSquadSlotSelected.h"
 #include "FOnRequestSquadSlotAction.h"
 #include "FSquadSlotSortTypes.h"
@@ -53,6 +54,10 @@ public:
 	// table index 6, flags 0x1
 	UPROPERTY()
 	FSquadSlotSortTypes SquadSlotSortTypesMap;
+
+	// table index 4, flags 0x1
+	UPROPERTY()
+	ESquadSlotType SquadSlotSortTypesMap_Key;
 
 	// table index 2, flags 0x24080000000001
 	UPROPERTY()

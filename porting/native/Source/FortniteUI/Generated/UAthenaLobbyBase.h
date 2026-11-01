@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortLobbyWidget.h"
 
+#include "EFortLobbyType.h"
 #include "Engine/DataTable.h"
 #include "UCatalogMessaging.h"
 #include "UCommonActivatableWidget.h"
@@ -33,6 +34,10 @@ public:
 	// table index 19, flags 0x20080000002000
 	UPROPERTY(Transient)
 	bool ShownGlyphBundleUpdate;
+
+	// table index 17, flags 0x20080000000004
+	UPROPERTY()
+	EFortLobbyType CurrentLobbyType;
 
 	// table index 16, flags 0x24080000000001
 	UPROPERTY()

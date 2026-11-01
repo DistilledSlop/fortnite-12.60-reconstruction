@@ -8,7 +8,7 @@
 #include "FFortChangeMonitoringStruct.generated.h"
 
 USTRUCT()
-struct FFortChangeMonitoringStruct
+struct FORTNITEGAME_API FFortChangeMonitoringStruct
 {
 	GENERATED_BODY()
 

@@ -8,6 +8,7 @@
 
 #include "AFortAthenaMutator_Mash.h"
 #include "AFortPlayerControllerAthena.h"
+#include "EMashPhase.h"
 
 #include "UMashPhaseWidget.generated.h"
 
@@ -17,6 +18,10 @@ class FORTNITEUI_API UMashPhaseWidget : public ULTMWidgetBase
 	GENERATED_BODY()
 
 public:
+	// table index 4, flags 0x20080000002014
+	UPROPERTY(Transient)
+	TEnumAsByte<EMashPhase::Type> CurrentPhase;
+
 	// table index 3, flags 0x20080000002000
 	UPROPERTY(Transient)
 	int32 CurrentObjectiveAreaIndex;

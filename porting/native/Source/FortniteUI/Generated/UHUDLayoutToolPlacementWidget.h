@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "FHUDLayoutDataEntry.h"
 #include "GameplayTagContainer.h"
 
 class UBacchusHUDElement;
@@ -75,6 +76,10 @@ public:
 	// table index 2, flags 0x20080000000815
 	UPROPERTY()
 	TMap<FName, float> FloatProperties;
+
+	// table index 1, flags 0x20080000002000
+	UPROPERTY(Transient)
+	FHUDLayoutDataEntry DefaultEntry;
 
 	// table index 0, flags 0x20080000080008
 	UPROPERTY()

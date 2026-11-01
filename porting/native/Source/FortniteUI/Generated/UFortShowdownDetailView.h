@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "ETimespanAsTextFormat.h"
 #include "FFortTournamentDisplayInfo.h"
 #include "FShowdownTournamentEntry.h"
 #include "Layout/Margin.h"
@@ -48,6 +49,10 @@ public:
 	// table index 3, flags 0x20080000000001
 	UPROPERTY()
 	bool bTimeRemainingUppercase;
+
+	// table index 1, flags 0x20080000000001
+	UPROPERTY()
+	ETimespanAsTextFormat TimeRemainingFormatType;
 
 	// table index 0, flags 0x20080000000015
 	UPROPERTY()

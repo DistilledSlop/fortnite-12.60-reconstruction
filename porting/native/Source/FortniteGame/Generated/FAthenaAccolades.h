@@ -10,7 +10,7 @@ class UFortAccoladeItemDefinition;
 #include "FAthenaAccolades.generated.h"
 
 USTRUCT()
-struct FAthenaAccolades
+struct FORTNITEGAME_API FAthenaAccolades
 {
 	GENERATED_BODY()
 

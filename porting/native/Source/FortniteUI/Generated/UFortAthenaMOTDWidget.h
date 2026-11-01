@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonActivatableWidget.h"
 
+#include "EFrontEndCamera.h"
 #include "Engine/DataTable.h"
 #include "FPrimaryContentSetup.h"
 #include "GameplayTagContainer.h"
@@ -52,6 +53,10 @@ public:
 	// table index 17, flags 0x44000000000001
 	UPROPERTY()
 	TSubclassOf<UBattlePassPurchaseScreen> BattlePassPurchaseScreenClass;
+
+	// table index 15, flags 0x40000000000001
+	UPROPERTY()
+	EFrontEndCamera ActivationFrontendCamera;
 
 	// table index 14, flags 0x40000000000001
 	UPROPERTY()

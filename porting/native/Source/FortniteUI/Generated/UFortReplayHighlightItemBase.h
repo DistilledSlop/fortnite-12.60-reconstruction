@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonButton.h"
 
+#include "EHighlightReelTypes.h"
 #include "Styling/SlateBrush.h"
 
 class UImage;
@@ -34,6 +35,10 @@ public:
 	// table index 4, flags 0x1
 	UPROPERTY()
 	FSlateBrush IconMap;
+
+	// table index 2, flags 0x1
+	UPROPERTY()
+	EHighlightReelTypes IconMap_Key;
 
 	// table index 0, flags 0x20080000000015
 	UPROPERTY()

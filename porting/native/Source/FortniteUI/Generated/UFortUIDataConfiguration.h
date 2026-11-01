@@ -7,8 +7,10 @@
 #include "Engine/DataAsset.h"
 
 #include "Curves/CurveFloat.h"
+#include "EFortBrushSize.h"
 #include "EFortBuffState.h"
 #include "EFortItemCardSize.h"
+#include "EFortItemType.h"
 #include "EFortReturnToFrontendBehavior.h"
 #include "Engine/Scene.h"
 #include "FFortItemCard_L_ItemInstance_Configuration.h"
@@ -121,6 +123,10 @@ public:
 	// table index 205, flags 0x14000000010001
 	UPROPERTY()
 	TSoftClassPtr<UAthenaBroadcastHUDBase> AthenaStateWidget_Replay;
+
+	// table index 202, flags 0x10000000010001
+	UPROPERTY()
+	TMap<TEnumAsByte<EFortBrushSize::Type>, int32> StandardImageBrushSizes;
 
 	// table index 201, flags 0x14000000010001
 	UPROPERTY()
@@ -294,6 +300,14 @@ public:
 	UPROPERTY()
 	TSoftObjectPtr<UDataTable> UpgradesDisplayDataTable;
 
+	// table index 145, flags 0x14000000010041
+	UPROPERTY()
+	TMap<TEnumAsByte<EFortBrushSize::Type>, TSubclassOf<UCommonTextStyle>> ItemCardPowerRatingTextStylesByBrushSize;
+
+	// table index 142, flags 0x14000000010041
+	UPROPERTY()
+	TMap<TEnumAsByte<EFortBrushSize::Type>, TSubclassOf<UCommonTextStyle>> ItemCardStackCountTextStylesByBrushSize;
+
 	// table index 141, flags 0x14000000010001
 	UPROPERTY()
 	TSoftObjectPtr<UMaterialInterface> ItemCardLevelMeterMaterial;
@@ -441,6 +455,14 @@ public:
 	// table index 92, flags 0x1
 	UPROPERTY()
 	EFortItemCardSize CosmeticItemCardMaterial_Key;
+
+	// table index 88, flags 0x10000000010001
+	UPROPERTY()
+	TArray<EFortItemType> ItemTypesWhoseImagesReplaceCardBackgrounds;
+
+	// table index 85, flags 0x10000000010001
+	UPROPERTY()
+	TSet<EFortItemType> ItemTypesToHideCountWhenCountEqualsOne;
 
 	// table index 84, flags 0x4000000000001
 	UPROPERTY()
@@ -685,6 +707,10 @@ public:
 	// table index 11, flags 0x10000000010001
 	UPROPERTY()
 	float ItemViewCompetingAxisInputThreshold;
+
+	// table index 8, flags 0x10000000010001
+	UPROPERTY()
+	TArray<EFortItemType> ItemTypesToUseVaultCamera;
 
 	// table index 7, flags 0x14000000010001
 	UPROPERTY()

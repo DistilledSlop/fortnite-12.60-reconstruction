@@ -7,6 +7,7 @@
 #include "UFortItemPickerBase.h"
 
 #include "EFortDefenderSlotType.h"
+#include "EInventoryContentSortType.h"
 
 #include "UFortDefenderSlotItemPicker.generated.h"
 
@@ -19,6 +20,14 @@ public:
 	// table index 5, flags 0x10000000000815
 	UPROPERTY()
 	EFortDefenderSlotType DefenderSlotType;
+
+	// table index 2, flags 0x20080000000014
+	UPROPERTY()
+	TArray<EInventoryContentSortType> SortTypesList;
+
+	// table index 0, flags 0x20080000000014
+	UPROPERTY()
+	EInventoryContentSortType CurrentSortType;
 
 };
 

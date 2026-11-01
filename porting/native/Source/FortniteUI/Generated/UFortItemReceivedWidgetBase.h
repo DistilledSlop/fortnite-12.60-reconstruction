@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanelWithItemPreview.h"
 
+#include "FFortReceivedItemLootInfo.h"
 #include "UFortGiftBoxItem.h"
 
 class UHorizontalBox;
@@ -20,6 +21,10 @@ class FORTNITEUI_API UFortItemReceivedWidgetBase : public UFortActivatablePanelW
 	GENERATED_BODY()
 
 public:
+	// table index 5, flags 0x20080000000014
+	UPROPERTY()
+	TArray<FFortReceivedItemLootInfo> ItemDefs;
+
 	// table index 4, flags 0x20080000002014
 	UPROPERTY(Transient)
 	UFortGiftBoxItem* GiftBoxItem;

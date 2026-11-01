@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 
+#include "FFortItemViewSettings.h"
+
 class AFortCameraTargetPedestal;
 class UChildActorComponent;
 
@@ -28,6 +30,10 @@ public:
 	// table index 3, flags 0x40000000002000
 	UPROPERTY(Transient)
 	TArray<AFortCameraTargetPedestal*> BackgroundCameraTargetPedestals;
+
+	// table index 2, flags 0x40000000002000
+	UPROPERTY(Transient)
+	FFortItemViewSettings ItemViewSettings;
 
 	// table index 0, flags 0x44000000002000
 	UPROPERTY(Transient)

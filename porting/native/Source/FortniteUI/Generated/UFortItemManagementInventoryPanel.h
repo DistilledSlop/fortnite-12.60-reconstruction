@@ -7,6 +7,7 @@
 #include "UCommonUserWidget.h"
 
 #include "EFortItemCardSize.h"
+#include "EInventoryContentSortType.h"
 #include "FFortItemManagementInventoryFilterTabLabelInfo.h"
 #include "UCommonButton.h"
 #include "UCommonButtonStyle.h"
@@ -31,6 +32,10 @@ public:
 	// table index 24, flags 0x20080000000014
 	UPROPERTY()
 	FName CurrentFilterName;
+
+	// table index 22, flags 0x20080000000014
+	UPROPERTY()
+	EInventoryContentSortType CurrentSortType;
 
 	// table index 21, flags 0x24080000000001
 	UPROPERTY()

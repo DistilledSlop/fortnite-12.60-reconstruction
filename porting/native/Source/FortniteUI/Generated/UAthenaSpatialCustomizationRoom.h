@@ -8,6 +8,7 @@
 
 #include "ESpatialCustomizationRoomState.h"
 #include "Engine/DataTable.h"
+#include "FMcpVariantChannelInfo.h"
 #include "UFortGameStateComponent_EventLevel.h"
 
 class UAthenaSpatialCustomizationCategories;
@@ -44,6 +45,10 @@ public:
 	// table index 8, flags 0x40000000082008
 	UPROPERTY(Transient)
 	UFortGameStateComponent_EventLevel* EventGameStateComponent;
+
+	// table index 6, flags 0x40000000000000
+	UPROPERTY()
+	TArray<FMcpVariantChannelInfo> CurrentVariantChannelStates;
 
 	// table index 4, flags 0x40008000000008
 	UPROPERTY()

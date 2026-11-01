@@ -9,7 +9,7 @@
 #include "FConfirmationDialogAction.generated.h"
 
 USTRUCT(BlueprintType)
-struct FConfirmationDialogAction
+struct FORTNITEGAME_API FConfirmationDialogAction
 {
 	GENERATED_BODY()
 

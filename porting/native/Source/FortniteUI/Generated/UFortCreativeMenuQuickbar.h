@@ -7,6 +7,7 @@
 #include "UCommonActivatableWidget.h"
 
 #include "EFortCreativeItemType.h"
+#include "FOnEquipSelectionDelegate.h"
 #include "FOnFocusChangedDelegate.h"
 #include "UFortItemDefinition.h"
 
@@ -24,6 +25,10 @@ public:
 	// table index 8, flags 0x10000010080000
 	UPROPERTY()
 	FOnFocusChangedDelegate OnFocusChanged;
+
+	// table index 7, flags 0x10000010080000
+	UPROPERTY()
+	FOnEquipSelectionDelegate OnEquipItem;
 
 	// table index 6, flags 0x20080000000014
 	UPROPERTY()

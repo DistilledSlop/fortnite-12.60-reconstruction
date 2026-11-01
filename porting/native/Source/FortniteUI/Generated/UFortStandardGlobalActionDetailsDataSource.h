@@ -7,6 +7,7 @@
 #include "UObject/Object.h"
 
 #include "AFortPlayerController.h"
+#include "FFortGlobalActionDetailsFunctionContext.h"
 #include "UCommonInputSubsystem.h"
 
 class UFortGlobalUIContext;
@@ -30,6 +31,10 @@ public:
 	// table index 1, flags 0x20080000000000
 	UPROPERTY()
 	AFortPlayerController* FortPlayerController;
+
+	// table index 0, flags 0x20080000000000
+	UPROPERTY()
+	FFortGlobalActionDetailsFunctionContext ActionDetailsContext;
 
 };
 

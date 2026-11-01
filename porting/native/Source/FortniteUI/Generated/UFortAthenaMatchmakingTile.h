@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonButton.h"
 
+#include "FAthenaPlaylistEntry.h"
+#include "FPlaylistFrontEndData.h"
 #include "UCommonBorder.h"
 #include "UCommonTextBlock.h"
 
@@ -43,9 +45,17 @@ public:
 	UPROPERTY()
 	int32 BorderDisplayStyle;
 
+	// table index 2, flags 0x20080000000014
+	UPROPERTY()
+	FAthenaPlaylistEntry CMSPlaylistEntry;
+
 	// table index 1, flags 0x20080000080008
 	UPROPERTY()
 	UFortActiveFriendsViolator* Violator_ActiveFriends;
+
+	// table index 0, flags 0x40000000002000
+	UPROPERTY(Transient)
+	FPlaylistFrontEndData TilePlaylistData;
 
 };
 

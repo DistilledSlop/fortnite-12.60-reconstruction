@@ -7,6 +7,7 @@
 #include "UBlueprintContextBase.h"
 
 #include "FOnCloseLayoutTool.h"
+#include "FOnFireModeChange.h"
 #include "FOnHUDLayoutModeChange.h"
 #include "FOnLayoutDirtyUpdated.h"
 #include "FOnNewViewOffsetLerp.h"
@@ -69,6 +70,10 @@ public:
 	// table index 2, flags 0x10000010080000
 	UPROPERTY()
 	FOnOpenCloseFireModePanel OnOpenCloseFireModePanelDelegate;
+
+	// table index 1, flags 0x10000010080000
+	UPROPERTY()
+	FOnFireModeChange OnFireModeChangeDelegate;
 
 	// table index 0, flags 0x10000000000004
 	UPROPERTY()

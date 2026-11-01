@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "FFortQuestMapNode.h"
 #include "UCommonButton.h"
 
 #include "UFortQuestMapQuestTile.generated.h"
@@ -19,6 +20,10 @@ public:
 	// table index 1, flags 0x1000000008001c
 	UPROPERTY()
 	UCommonButton* QuestButton;
+
+	// table index 0, flags 0x40000000002000
+	UPROPERTY(Transient)
+	FFortQuestMapNode QuestNodeData;
 
 };
 

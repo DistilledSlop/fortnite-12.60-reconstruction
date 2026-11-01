@@ -7,6 +7,7 @@
 #include "UCommonUserWidget.h"
 
 #include "AttributeSet.h"
+#include "EFortBrushSize.h"
 #include "UCommonNumericTextBlock.h"
 
 class UImage;
@@ -26,6 +27,10 @@ public:
 	// table index 3, flags 0x10000000000005
 	UPROPERTY()
 	FGameplayAttribute TeamAttribute;
+
+	// table index 2, flags 0x10000000000005
+	UPROPERTY()
+	TEnumAsByte<EFortBrushSize::Type> ImageSize;
 
 	// table index 1, flags 0x1000000008001c
 	UPROPERTY()

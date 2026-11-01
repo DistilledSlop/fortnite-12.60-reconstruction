@@ -8,7 +8,7 @@
 #include "FFriendCode.generated.h"
 
 USTRUCT()
-struct FFriendCode
+struct FORTNITEGAME_API FFriendCode
 {
 	GENERATED_BODY()
 

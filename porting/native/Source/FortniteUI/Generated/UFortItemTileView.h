@@ -7,6 +7,7 @@
 #include "UCommonTileView.h"
 
 #include "EFortItemCardSize.h"
+#include "EItemListViewDisplayType.h"
 #include "FOnInventoryUpdated.h"
 #include "UFortItem.h"
 #include "UFortItemViewContextInterface.h"
@@ -26,6 +27,10 @@ public:
 	// table index 12, flags 0x10000000000801
 	UPROPERTY()
 	bool bAutomaticallyLoadItemDetails;
+
+	// table index 10, flags 0x10000000000015
+	UPROPERTY()
+	EItemListViewDisplayType DisplayType;
 
 	// table index 9, flags 0x10000000000000
 	UPROPERTY()

@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortMatchmakingWidgetBase.h"
 
+#include "EFortMatchmakingViolatorStyle.h"
 #include "UCommonButton.h"
 #include "UCommonTextBlock.h"
 #include "UFortMissionGenerator.h"
@@ -30,6 +31,10 @@ public:
 	// table index 22, flags 0x24080000000001
 	UPROPERTY()
 	TSubclassOf<UFortMissionGenerator> DefaultMissionGen;
+
+	// table index 20, flags 0x20080000000014
+	UPROPERTY()
+	EFortMatchmakingViolatorStyle NewModeStyleOverride;
 
 	// table index 19, flags 0x20080000000014
 	UPROPERTY()

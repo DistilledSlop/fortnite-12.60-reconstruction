@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 
+#include "FCreativeOptionCategoryData.h"
 #include "UCommonListView.h"
 #include "UCommonTextBlock.h"
 #include "UFortCreativeOption.h"
@@ -20,6 +21,10 @@ class FORTNITEUI_API UFortCreativeOptionsCategory : public UUserWidget
 	GENERATED_BODY()
 
 public:
+	// table index 5, flags 0x10000000000015
+	UPROPERTY()
+	FCreativeOptionCategoryData OptionCategory;
+
 	// table index 3, flags 0x10000000000000
 	UPROPERTY()
 	TArray<UFortCreativeOption*> CreativeOptions;

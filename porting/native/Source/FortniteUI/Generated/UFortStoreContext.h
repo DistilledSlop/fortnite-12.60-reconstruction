@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UBlueprintContextBase.h"
 
+#include "EFortRarity.h"
 #include "FCard.h"
 #include "FOpenedCardPack.h"
 #include "FStoreCardPackOffersChanged.h"
@@ -49,6 +50,10 @@ public:
 	// table index 6, flags 0x10000000000014
 	UPROPERTY()
 	FOpenedCardPack OpenedCardPack;
+
+	// table index 4, flags 0x10000000000014
+	UPROPERTY()
+	EFortRarity LastCardRarity;
 
 	// table index 2, flags 0x10000000000014
 	UPROPERTY()

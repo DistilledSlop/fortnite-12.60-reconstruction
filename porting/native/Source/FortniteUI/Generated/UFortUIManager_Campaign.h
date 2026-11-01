@@ -7,6 +7,7 @@
 #include "UFortUIManager.h"
 
 #include "UFortLocalPlayer.h"
+#include "UFortUIManagerInterface.h"
 
 #include "UFortUIManager_Campaign.generated.h"
 
@@ -16,5 +17,9 @@ class FORTNITEUI_API UFortUIManager_Campaign : public UFortUIManager
 	GENERATED_BODY()
 
 public:
+	// table index 0, flags 0x44000000002000
+	UPROPERTY(Transient)
+	TMap<UFortLocalPlayer*, TScriptInterface<IFortUIManagerInterface>> UIManagerInterfaces;
+
 };
 

@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortRewardNotificationData.h"
 
+#include "FFortCollectionBookRewards.h"
+
 #include "UFortRewardCollectionBookData.generated.h"
 
 UCLASS()
@@ -14,5 +16,9 @@ class FORTNITEUI_API UFortRewardCollectionBookData : public UFortRewardNotificat
 	GENERATED_BODY()
 
 public:
+	// table index 0, flags 0x10000000000004
+	UPROPERTY()
+	FFortCollectionBookRewards CollectionBookRewards;
+
 };
 

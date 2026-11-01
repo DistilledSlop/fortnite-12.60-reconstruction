@@ -3187,10 +3187,9 @@ def include_interface_headers(model, iface_packages):
 
 
 def cross_module_allowed(current_package, target_package):
-    """True when an item of current_package may use a promoted type of target_package. Only the game module does, and
-    only for the runtime modules in CROSS_MODULE_TARGETS: its Build.cs lists them and they do not depend on it. Other
-    pairs stay refused (TypeGate: OtherModule), which keeps the module graph acyclic; promote also refuses a cycle."""
-    return current_package == "/Script/FortniteGame" and target_package in CROSS_MODULE_TARGETS
+    """Permit promoted types along existing acyclic module dependencies."""
+    return ((current_package == "/Script/FortniteGame" and target_package in CROSS_MODULE_TARGETS)
+            or (current_package == "/Script/FortniteUI" and target_package == "/Script/FortniteGame"))
 
 
 def own_includes(gate, used, package):
@@ -3507,7 +3506,7 @@ def promote(args):
     for model in class_models:
         for fn, kinds in model["used"].items():
             seeds.setdefault(fn, set()).update(kinds)
-    models, texts, all_used = emit_types(gate, seeds, source_label)
+    models, texts, all_used = emit_types(gate, seeds, source_label, class_models)
     # struct_net (behaviour kind): each native NetSerialize is checked as text in its header, and every entry is reported
     # as spliced or rejected with its reason. Nothing is written before this check.
     native_structs = {}
@@ -4412,7 +4411,7 @@ def render_struct_header(model, source_label):
                      % (name, net.get("vtable"), ", ".join(net.get("traits", []))))
         lines.append("// serialization is used until it is ported.")
     lines.append("USTRUCT(BlueprintType)" if model.get("blueprint_type") else "USTRUCT()")
-    lines.append("struct %s%s" % (name, " : public %s" % model["parent"] if model["parent"] else ""))
+    lines.append("struct %s%s%s" % (model.get("api", ""), name, " : public %s" % model["parent"] if model["parent"] else ""))
     lines.append("{")
     lines.append("\tGENERATED_BODY()")
     lines.append("")
@@ -4527,7 +4526,21 @@ def render_delegate_header(model, macro_kind, source_label):
     return "\n".join(lines) + "\n"
 
 
-def emit_types(gate, seeds, source_label):
+def cross_module_struct_exports(gate, models, class_models):
+    """Export promoted structs actually consumed by another permitted module."""
+    exported = set()
+    owners = [(m["package"], m) for m in class_models]
+    owners += [(gate.info(fn).package, m) for fn, m in models.items()]
+    for package, owner in owners:
+        for used_fn in owner["used"]:
+            used = gate.info(used_fn)
+            if (used and used.fn in models and used.kind == "struct" and used.package != package
+                    and cross_module_allowed(package, used.package)):
+                exported.add(used.fn)
+    return exported
+
+
+def emit_types(gate, seeds, source_label, class_models=()):
     """Models and header texts for every promoted type reachable from seeds (fn -> used kinds). Engine types are
     not emitted. Returns (models by fn, texts by header name, all used kinds by fn)."""
     models = {}
@@ -4554,10 +4567,14 @@ def emit_types(gate, seeds, source_label):
         queue.extend(model["used"].items())
         if (model.get("net") or {}).get("kind") == "native":
             queue.extend((fn, {""}) for fn in model["net"]["uses"])   # types the native body names
+    exported = cross_module_struct_exports(gate, models, class_models)
     texts = {}
     for fn, model in models.items():
         info = gate.info(fn)
         if info.kind == "struct":
+            # Cross-module StaticStruct() must be exported by its owning module.
+            if info.fn in exported:
+                model["api"] = "%s_API " % info.module.upper()
             texts[info.header_name] = render_struct_header(model, source_label)
         elif info.kind == "enum":
             texts[info.header_name] = render_enum_header(model, source_label)

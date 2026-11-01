@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanel.h"
 
+#include "EFrontEndCamera.h"
 #include "Engine/DataTable.h"
 #include "GameplayTagContainer.h"
 
@@ -49,6 +50,10 @@ public:
 	// table index 10, flags 0x40000000010001
 	UPROPERTY()
 	bool AllowItemZooming;
+
+	// table index 8, flags 0x40000000000001
+	UPROPERTY()
+	EFrontEndCamera FrontEndCamera;
 
 	// table index 7, flags 0x40000000000001
 	UPROPERTY()

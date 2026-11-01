@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonActivatablePanel.h"
 
+#include "EQuestMapScreenMode.h"
 #include "UFortQuestItemDefinition.h"
 #include "UFortQuestMapData.h"
 #include "UFortQuestMapDataAsset.h"
@@ -37,6 +38,10 @@ public:
 	// table index 7, flags 0x1000000008000c
 	UPROPERTY()
 	UFortQuestMapViewer* QuestMapViewer;
+
+	// table index 5, flags 0x10000000000014
+	UPROPERTY()
+	EQuestMapScreenMode CurrentMode;
 
 	// table index 4, flags 0x10000000000015
 	UPROPERTY()

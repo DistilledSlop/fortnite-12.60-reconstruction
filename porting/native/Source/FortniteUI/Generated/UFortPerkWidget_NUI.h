@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "FFortUIPerk.h"
 #include "UFortTooltipContext.h"
 
 #include "UFortPerkWidget_NUI.generated.h"
@@ -16,6 +17,10 @@ class FORTNITEUI_API UFortPerkWidget_NUI : public UCommonUserWidget
 	GENERATED_BODY()
 
 public:
+	// table index 2, flags 0x11000000000004
+	UPROPERTY()
+	FFortUIPerk Perk;
+
 	// table index 1, flags 0x20080000000000
 	UPROPERTY()
 	UFortTooltipContext* CachedTooltipContext;

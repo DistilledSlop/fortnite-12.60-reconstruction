@@ -11,6 +11,8 @@
 #include "FOnPickerCommandDelegate.h"
 #include "FOnPickerOptionChosenDelegate.h"
 #include "FOnPickerOptionSelectionMovedDelegate.h"
+#include "FOnShowPickerDelegate.h"
+#include "FSquadQuickChatOptionData.h"
 #include "FTrackedTrapTimeAndCount.h"
 #include "UFortItemDefinition.h"
 #include "UFortSchematicItem.h"
@@ -26,6 +28,10 @@ class FORTNITEUI_API UFortPickerContext : public UBlueprintContextBase
 	GENERATED_BODY()
 
 public:
+	// table index 21, flags 0x10000010080000
+	UPROPERTY()
+	FOnShowPickerDelegate OnShowPicker;
+
 	// table index 20, flags 0x10000010080000
 	UPROPERTY()
 	FOnPickerCommandDelegate OnPickerConfirm;
@@ -49,6 +55,10 @@ public:
 	// table index 14, flags 0x40000000002000
 	UPROPERTY(Transient)
 	TArray<FItemDefOptionData> CustomPickerMenuItems;
+
+	// table index 12, flags 0x40000000002000
+	UPROPERTY(Transient)
+	TArray<FSquadQuickChatOptionData> SquadChatMenuItems;
 
 	// table index 9, flags 0x40000000002000
 	UPROPERTY(Transient)

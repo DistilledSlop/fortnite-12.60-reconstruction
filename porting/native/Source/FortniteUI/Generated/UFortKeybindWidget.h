@@ -6,7 +6,9 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "EFortBrushSize.h"
 #include "EFortKeybindForcedHoldStatus.h"
+#include "FFortMultiSizeBrush.h"
 #include "FMeasuredText.h"
 #include "Fonts/SlateFontInfo.h"
 #include "InputCoreTypes.h"
@@ -111,6 +113,14 @@ public:
 	// table index 3, flags 0x20080000002000
 	UPROPERTY(Transient)
 	UMaterialInstanceDynamic* ProgressPercentageMID;
+
+	// table index 2, flags 0x20080000010001
+	UPROPERTY()
+	TEnumAsByte<EFortBrushSize::Type> BrushSize;
+
+	// table index 1, flags 0x20080000010001
+	UPROPERTY()
+	FFortMultiSizeBrush FrameMultiBrush;
 
 	// table index 0, flags 0x40000000002000
 	UPROPERTY(Transient)

@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "Components/Widget.h"
 
+#include "EFortBrushSize.h"
 #include "UCommonNumericTextBlock.h"
 #include "UCommonTextBlock.h"
 #include "UCommonTextStyle.h"
@@ -50,6 +51,10 @@ public:
 	// table index 7, flags 0x10000000000014
 	UPROPERTY()
 	bool IsComparingLevels;
+
+	// table index 6, flags 0x10000000000015
+	UPROPERTY()
+	TEnumAsByte<EFortBrushSize::Type> ComparisonResultIndicatorSize;
 
 	// table index 5, flags 0x10000000000014
 	UPROPERTY()

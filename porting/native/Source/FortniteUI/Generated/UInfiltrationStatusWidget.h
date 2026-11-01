@@ -6,6 +6,9 @@
 #include "CoreMinimal.h"
 #include "ULTMWidgetBase.h"
 
+#include "EIntelStateEnum.h"
+#include "FInfiltrationModeState.h"
+
 class UInfiltrationIntelStatusWidget;
 class USoundBase;
 
@@ -17,6 +20,10 @@ class FORTNITEUI_API UInfiltrationStatusWidget : public ULTMWidgetBase
 	GENERATED_BODY()
 
 public:
+	// table index 15, flags 0x20080000000000
+	UPROPERTY()
+	FInfiltrationModeState PrevModeState;
+
 	// table index 13, flags 0x20088000000008
 	UPROPERTY()
 	TArray<UInfiltrationIntelStatusWidget*> IntelStatusWidgets;
@@ -25,13 +32,25 @@ public:
 	UPROPERTY()
 	USoundBase* AttackerAudioCues;
 
+	// table index 10, flags 0x1
+	UPROPERTY()
+	EIntelStateEnum AttackerAudioCues_Key;
+
 	// table index 8, flags 0x1
 	UPROPERTY()
 	USoundBase* DefenderAudioCues;
 
+	// table index 6, flags 0x1
+	UPROPERTY()
+	EIntelStateEnum DefenderAudioCues_Key;
+
 	// table index 4, flags 0x1
 	UPROPERTY()
 	USoundBase* SpamSounds;
+
+	// table index 2, flags 0x1
+	UPROPERTY()
+	EIntelStateEnum SpamSounds_Key;
 
 	// table index 0, flags 0x20080000000001
 	UPROPERTY()

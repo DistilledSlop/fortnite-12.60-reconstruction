@@ -10,7 +10,7 @@
 #include "FFortCollectionBookRewards.generated.h"
 
 USTRUCT()
-struct FFortCollectionBookRewards
+struct FORTNITEGAME_API FFortCollectionBookRewards
 {
 	GENERATED_BODY()
 

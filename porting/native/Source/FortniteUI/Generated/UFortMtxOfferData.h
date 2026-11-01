@@ -7,6 +7,7 @@
 #include "Engine/DataAsset.h"
 
 #include "EFortMtxOfferDisplaySize.h"
+#include "FFortItemQuantityPair.h"
 #include "FFortMtxDetailsAttribute.h"
 #include "FFortMtxGradient.h"
 #include "Math/Color.h"
@@ -41,6 +42,10 @@ public:
 	// table index 17, flags 0x10000000000015
 	UPROPERTY()
 	FText DisclaimerText;
+
+	// table index 15, flags 0x10000000000015
+	UPROPERTY()
+	TArray<FFortItemQuantityPair> GrantOverride;
 
 	// table index 14, flags 0x10000000000015
 	UPROPERTY()

@@ -7,6 +7,7 @@
 #include "UFortActivatablePanel.h"
 
 #include "AFortMinigameSettingsBuilding.h"
+#include "FPlaylistFrontEndData.h"
 #include "UCommonButton.h"
 #include "UCommonListView.h"
 #include "UCommonTextBlock.h"
@@ -53,6 +54,10 @@ public:
 	// table index 11, flags 0x40000000002000
 	UPROPERTY(Transient)
 	TArray<UObject*> OptionDataProviders;
+
+	// table index 10, flags 0x40000000002000
+	UPROPERTY(Transient)
+	FPlaylistFrontEndData FrontEndData;
 
 	// table index 7, flags 0x40000000002000
 	UPROPERTY(Transient)

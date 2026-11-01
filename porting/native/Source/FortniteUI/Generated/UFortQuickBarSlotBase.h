@@ -7,6 +7,7 @@
 #include "UCommonUserWidget.h"
 
 #include "EFortItemCardSize.h"
+#include "EFortQuickBars.h"
 #include "Math/Vector2D.h"
 #include "UCommonTextBlock.h"
 #include "UCommonWidgetSwitcher.h"
@@ -131,6 +132,10 @@ public:
 	// table index 19, flags 0x20080000000015
 	UPROPERTY()
 	int32 SlotIndex;
+
+	// table index 17, flags 0x20080000000015
+	UPROPERTY()
+	EFortQuickBars QuickBarType;
 
 	// table index 16, flags 0x20080000000015
 	UPROPERTY()

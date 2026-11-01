@@ -6,7 +6,9 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanelWithItemPreview.h"
 
+#include "EAthenaCustomizationCategory.h"
 #include "FFortTabButtonLabelInfo.h"
+#include "FMcpVariantChannelInfo.h"
 #include "UAthenaCosmeticItemDefinition.h"
 #include "UCommonButton.h"
 #include "UFortItem.h"
@@ -32,6 +34,10 @@ public:
 	// table index 19, flags 0x1
 	UPROPERTY()
 	FFortTabButtonLabelInfo ItemCategoryButtonLabelInfo;
+
+	// table index 17, flags 0x1
+	UPROPERTY()
+	EAthenaCustomizationCategory ItemCategoryButtonLabelInfo_Key;
 
 	// table index 15, flags 0x20080000000015
 	UPROPERTY()
@@ -69,6 +75,10 @@ public:
 	UPROPERTY()
 	UAthenaCosmeticItemDefinition* CurrentPreviewItemDef;
 
+	// table index 5, flags 0x20080000000000
+	UPROPERTY()
+	TArray<FMcpVariantChannelInfo> CurrentPreviewVariantChannels;
+
 	// table index 4, flags 0x40000000080008
 	UPROPERTY()
 	UFortVariantPicker* Picker_VariantSelector;
@@ -76,6 +86,10 @@ public:
 	// table index 3, flags 0x40000000080008
 	UPROPERTY()
 	UAthenaCosmeticUnlockingInfo* UnlockingInfo;
+
+	// table index 1, flags 0x40000000000000
+	UPROPERTY()
+	EAthenaCustomizationCategory CustomizeCategory;
 
 	// table index 0, flags 0x20080000000014
 	UPROPERTY()

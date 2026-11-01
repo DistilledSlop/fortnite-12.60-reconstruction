@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "EFortGameFeature.h"
 #include "UCommonNumericTextBlock.h"
 #include "UCommonTextBlock.h"
 
@@ -23,6 +24,10 @@ public:
 	// table index 10, flags 0x40000000000001
 	UPROPERTY()
 	FText ProgressStatusToastTitle;
+
+	// table index 8, flags 0x40000000000001
+	UPROPERTY()
+	EFortGameFeature GameFeature;
 
 	// table index 7, flags 0x40000000000001
 	UPROPERTY()

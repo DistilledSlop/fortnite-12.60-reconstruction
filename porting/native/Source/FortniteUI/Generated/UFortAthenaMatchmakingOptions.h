@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanel.h"
 
+#include "FAthenaPlaylistEntry.h"
+#include "FPlaylistFrontEndData.h"
 #include "UCommonButton.h"
 #include "UCommonButtonGroup.h"
 #include "UCommonTextBlock.h"
@@ -38,6 +40,14 @@ public:
 	// table index 17, flags 0x40000000002014
 	UPROPERTY(Transient)
 	UCommonButtonGroup* MatchmakingTileGroup;
+
+	// table index 16, flags 0x40000000000014
+	UPROPERTY()
+	FAthenaPlaylistEntry RepresentedPlaylistCMSEntry;
+
+	// table index 15, flags 0x40000000002000
+	UPROPERTY(Transient)
+	FPlaylistFrontEndData RepresentedPlaylist;
 
 	// table index 14, flags 0x40000000080008
 	UPROPERTY()

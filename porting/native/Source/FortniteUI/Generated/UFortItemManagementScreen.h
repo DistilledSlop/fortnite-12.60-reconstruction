@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanel.h"
 
+#include "EFortFrontendInventoryFilter.h"
 #include "EFortItemManagementMode.h"
 #include "FOnItemViewRefreshed.h"
 #include "UFortItem.h"
@@ -31,6 +32,10 @@ public:
 	// table index 12, flags 0x10000000000014
 	UPROPERTY()
 	EFortItemManagementMode Mode;
+
+	// table index 10, flags 0x10000000000014
+	UPROPERTY()
+	EFortFrontendInventoryFilter FrontendInventoryFilter;
 
 	// table index 9, flags 0x10000000000004
 	UPROPERTY()

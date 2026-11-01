@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "ULTMWidgetBase.h"
 
+#include "FFortInGameLeaderboardPlacementData.h"
+
 #include "UGGProgressWidget.generated.h"
 
 UCLASS()
@@ -17,6 +19,10 @@ public:
 	// table index 2, flags 0x20080000000001
 	UPROPERTY()
 	int32 PointsToGoalThreshold;
+
+	// table index 0, flags 0x20080000000000
+	UPROPERTY()
+	TArray<FFortInGameLeaderboardPlacementData> TopPlacedEnemies;
 
 };
 

@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanel.h"
 
+#include "EFortCreativePlotPermission.h"
+#include "FFortCreativeWhitelistUserEntry.h"
 #include "UCommonButton.h"
 #include "UCommonTextBlock.h"
 #include "UCommonWidgetSwitcher.h"
@@ -22,6 +24,14 @@ class FORTNITEUI_API UFortCreativePublishOptions : public UFortActivatablePanel
 	GENERATED_BODY()
 
 public:
+	// table index 12, flags 0x10000000000014
+	UPROPERTY()
+	EFortCreativePlotPermission CurrentPermissionsEnum;
+
+	// table index 10, flags 0x10000000000014
+	UPROPERTY()
+	TArray<FFortCreativeWhitelistUserEntry> WhitelistedUsers;
+
 	// table index 9, flags 0x40000000080008
 	UPROPERTY()
 	UHorizontalBox* IslandRestoreBox;

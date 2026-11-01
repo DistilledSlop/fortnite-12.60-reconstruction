@@ -8,6 +8,7 @@
 
 #include "EPunchCardLocation.h"
 #include "EPunchType.h"
+#include "FCardSlotMedalData.h"
 #include "FFortPrioritizedWidgetData.h"
 #include "UFortAccoladeItemDefinition.h"
 
@@ -62,6 +63,10 @@ public:
 	// table index 2, flags 0x20080000080008
 	UPROPERTY()
 	UAthenaChallengeCountdownDisplay* Timer_FrontendCountdown;
+
+	// table index 0, flags 0x20080000000000
+	UPROPERTY()
+	TArray<FCardSlotMedalData> MedalPunchData;
 
 };
 

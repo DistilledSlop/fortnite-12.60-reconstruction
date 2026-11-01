@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortHUDElementWidget.h"
 
+#include "FFortHUDTagPromptData.h"
 #include "FFortPrioritizedWidgetData.h"
 #include "FOnOpenOrClosed.h"
 #include "GameplayTagContainer.h"
@@ -36,6 +37,10 @@ public:
 	// table index 3, flags 0x10000000000000
 	UPROPERTY()
 	TMap<FGameplayTag, float> TagToTimeMap;
+
+	// table index 2, flags 0x10000000000000
+	UPROPERTY()
+	FFortHUDTagPromptData PromptDataToShow;
 
 	// table index 1, flags 0x1000000008001c
 	UPROPERTY()

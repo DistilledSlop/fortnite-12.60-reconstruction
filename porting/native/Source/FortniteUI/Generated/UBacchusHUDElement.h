@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortMobileHUDElement.h"
 
+#include "EBacchusHUDStateType.h"
+#include "FHUDLayoutDataEntry.h"
 #include "GameplayTagContainer.h"
 
 #include "UBacchusHUDElement.generated.h"
@@ -39,6 +41,102 @@ public:
 	// table index 47, flags 0x20080000000015
 	UPROPERTY()
 	bool bAlwaysShow;
+
+	// table index 45, flags 0x20080000000015
+	UPROPERTY()
+	EBacchusHUDStateType OnInBuildMode;
+
+	// table index 43, flags 0x20080000000015
+	UPROPERTY()
+	EBacchusHUDStateType OnInCombatMode;
+
+	// table index 41, flags 0x20080000000015
+	UPROPERTY()
+	EBacchusHUDStateType OnInEditMode;
+
+	// table index 39, flags 0x20080000000015
+	UPROPERTY()
+	EBacchusHUDStateType OnInCreativeMode;
+
+	// table index 37, flags 0x20080000000015
+	UPROPERTY()
+	EBacchusHUDStateType OnInBattleLabMode;
+
+	// table index 35, flags 0x20080000000015
+	UPROPERTY()
+	EBacchusHUDStateType IsFreeFalling;
+
+	// table index 33, flags 0x20080000000015
+	UPROPERTY()
+	EBacchusHUDStateType IsGliding;
+
+	// table index 31, flags 0x20080000000015
+	UPROPERTY()
+	EBacchusHUDStateType CanOpenChute;
+
+	// table index 29, flags 0x20080000000015
+	UPROPERTY()
+	EBacchusHUDStateType InLockedBus;
+
+	// table index 27, flags 0x20080000000015
+	UPROPERTY()
+	EBacchusHUDStateType InUnlockedBus;
+
+	// table index 25, flags 0x20080000000015
+	UPROPERTY()
+	EBacchusHUDStateType OnTargeting;
+
+	// table index 23, flags 0x20080000000015
+	UPROPERTY()
+	EBacchusHUDStateType OnUsingScopeTargeting;
+
+	// table index 21, flags 0x20080000000015
+	UPROPERTY()
+	EBacchusHUDStateType OnCanTarget;
+
+	// table index 19, flags 0x20080000000015
+	UPROPERTY()
+	EBacchusHUDStateType OnCanUseScopeTargeting;
+
+	// table index 17, flags 0x20080000000015
+	UPROPERTY()
+	EBacchusHUDStateType OnCrouching;
+
+	// table index 15, flags 0x20080000000015
+	UPROPERTY()
+	EBacchusHUDStateType OnCanUseSecondaryAbility;
+
+	// table index 13, flags 0x20080000000015
+	UPROPERTY()
+	EBacchusHUDStateType OnDBNO;
+
+	// table index 11, flags 0x20080000000015
+	UPROPERTY()
+	EBacchusHUDStateType OnCarryingDBNO;
+
+	// table index 9, flags 0x20080000000015
+	UPROPERTY()
+	EBacchusHUDStateType OnCarryingHeldObject;
+
+	// table index 7, flags 0x20080000000015
+	UPROPERTY()
+	EBacchusHUDStateType OnControllingRCPawn;
+
+	// table index 5, flags 0x20080000000015
+	UPROPERTY()
+	EBacchusHUDStateType OnInVehicle;
+
+	// table index 3, flags 0x20080000000015
+	UPROPERTY()
+	EBacchusHUDStateType OnDrivingVehicle;
+
+	// table index 1, flags 0x20080000000015
+	UPROPERTY()
+	EBacchusHUDStateType OnZiplining;
+
+	// table index 0, flags 0x40000000002000
+	UPROPERTY(Transient)
+	FHUDLayoutDataEntry DefaultEntry;
 
 };
 

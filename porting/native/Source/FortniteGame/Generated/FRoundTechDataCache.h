@@ -9,7 +9,7 @@
 #include "FRoundTechDataCache.generated.h"
 
 USTRUCT()
-struct FRoundTechDataCache
+struct FORTNITEGAME_API FRoundTechDataCache
 {
 	GENERATED_BODY()
 

@@ -7,6 +7,7 @@
 #include "UFortHUDElementWidget.h"
 
 #include "FFortPrioritizedWidgetData.h"
+#include "FXPUIEvent.h"
 
 #include "UAthenaAccoladesWidget.generated.h"
 
@@ -16,6 +17,14 @@ class FORTNITEUI_API UAthenaAccoladesWidget : public UFortHUDElementWidget
 	GENERATED_BODY()
 
 public:
+	// table index 2, flags 0x20080000000000
+	UPROPERTY()
+	TArray<FXPUIEvent> XPEvents;
+
+	// table index 1, flags 0x20080000000000
+	UPROPERTY()
+	FXPUIEvent CurrentEvent;
+
 	// table index 0, flags 0x20080000000001
 	UPROPERTY()
 	FFortPrioritizedWidgetData PrioritizationData;

@@ -7,6 +7,7 @@
 #include "UFortPlayerSurveyBase.h"
 
 #include "FFortPlayerSurveyConditionsContext.h"
+#include "FFortPlayerSurveyItemChangedInternalDelegate.h"
 #include "FNotificationInternalDelegate.h"
 
 class UFortPlayerSurveyCMSSurveyFactory;
@@ -30,6 +31,10 @@ public:
 	// table index 1, flags 0x20080000080000
 	UPROPERTY()
 	FNotificationInternalDelegate OnDescriptionChangedDelegate;
+
+	// table index 0, flags 0x20080000080000
+	UPROPERTY()
+	FFortPlayerSurveyItemChangedInternalDelegate OnQuestionChangedDelegate;
 
 };
 

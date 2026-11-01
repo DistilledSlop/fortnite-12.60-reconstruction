@@ -9,6 +9,7 @@
 #include "AFortPlayerPawnAthena.h"
 #include "FAthenaWinnerInfo.h"
 #include "FOnAthenaAutoFireChanged.h"
+#include "FOnAthenaGamePhaseChanged.h"
 #include "FOnAthenaHUDAllWinnersAnnounced.h"
 #include "FOnAthenaSettingsApplied.h"
 #include "FOnCanPTTChange.h"
@@ -20,6 +21,7 @@
 #include "FOnLocalPlayerDBNOStateChanged.h"
 #include "FOnLocalPlayerDeathOnWin.h"
 #include "FOnLocalPlayerKilledPlayer.h"
+#include "FOnLocalPlayerLost.h"
 #include "FOnLocalPlayerWon.h"
 #include "FOnLocalTeamLost.h"
 #include "FOnLocalTeamWon.h"
@@ -27,10 +29,12 @@
 #include "FOnPlayerFiredWeapon.h"
 #include "FOnPlayerNameChange.h"
 #include "FOnPostGameWidgetPlacement.h"
+#include "FOnQuickTimeEventFeedbackWidget.h"
 #include "FOnQuickTimeEventWidgetEnabledChange.h"
 #include "FOnResurrectingNow.h"
 #include "FOnSignalQualityChange.h"
 #include "FOnSpecialActorListChanged.h"
+#include "FPTTStateChange.h"
 #include "FShowMobilePicker.h"
 
 class UAthenaPlayerViewModel;
@@ -60,6 +64,10 @@ public:
 	UPROPERTY()
 	FOnLocalTeamLost OnLocalTeamLost;
 
+	// table index 31, flags 0x10000010080000
+	UPROPERTY()
+	FOnLocalPlayerLost OnLocalPlayerLost;
+
 	// table index 30, flags 0x10000010080000
 	UPROPERTY()
 	FOnLocalPlayerKilledPlayer OnLocalPlayerKilledPlayer;
@@ -80,6 +88,10 @@ public:
 	UPROPERTY()
 	FOnAthenaSettingsApplied OnClientSettingsShowViewersChanged;
 
+	// table index 24, flags 0x10000010080000
+	UPROPERTY()
+	FOnAthenaGamePhaseChanged OnAthenaGamePhaseChanged;
+
 	// table index 23, flags 0x10000010080000
 	UPROPERTY()
 	FOnPlayerFiredWeapon OnPlayerFiredWeapon;
@@ -87,6 +99,10 @@ public:
 	// table index 22, flags 0x10000010080000
 	UPROPERTY()
 	FOnLowPerformanceMode OnLowPerformanceMode;
+
+	// table index 21, flags 0x10000010080000
+	UPROPERTY()
+	FPTTStateChange OnPTTStateChange;
 
 	// table index 20, flags 0x10000010080000
 	UPROPERTY()
@@ -135,6 +151,10 @@ public:
 	// table index 9, flags 0x10000010080000
 	UPROPERTY()
 	FOnQuickTimeEventWidgetEnabledChange OnQuickTimeEventWidgetEnabledChange;
+
+	// table index 8, flags 0x10000010080000
+	UPROPERTY()
+	FOnQuickTimeEventFeedbackWidget OnQuickTimeEventFeedbackWidget;
 
 	// table index 7, flags 0x10000010080000
 	UPROPERTY()

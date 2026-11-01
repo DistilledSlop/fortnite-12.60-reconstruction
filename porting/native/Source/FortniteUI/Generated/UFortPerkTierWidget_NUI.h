@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "FFortUIPerkTier.h"
+
 #include "UFortPerkTierWidget_NUI.generated.h"
 
 UCLASS()
@@ -14,5 +16,9 @@ class FORTNITEUI_API UFortPerkTierWidget_NUI : public UCommonUserWidget
 	GENERATED_BODY()
 
 public:
+	// table index 0, flags 0x11000000000004
+	UPROPERTY()
+	FFortUIPerkTier FortPerkTier;
+
 };
 

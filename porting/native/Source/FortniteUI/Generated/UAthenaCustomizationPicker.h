@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortItemPickerBase.h"
 
+#include "EAthenaCustomizationCategory.h"
 #include "FFortAthenaItemManagementInventoryFilterTabLabelInfo.h"
 #include "FOnCosmeticChangeSaveEvent.h"
 #include "FOnUpdateSaveButtonVisuals.h"
@@ -59,6 +60,10 @@ public:
 	// table index 8, flags 0x20080000000014
 	UPROPERTY()
 	FName CurrentFilterName;
+
+	// table index 6, flags 0x40000000000000
+	UPROPERTY()
+	EAthenaCustomizationCategory CustomizeCategory;
 
 	// table index 5, flags 0x40000000000000
 	UPROPERTY()

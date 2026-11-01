@@ -10,7 +10,7 @@ class UFortAccoladeItemDefinition;
 #include "FCardSlotMedalData.generated.h"
 
 USTRUCT()
-struct FCardSlotMedalData
+struct FORTNITEGAME_API FCardSlotMedalData
 {
 	GENERATED_BODY()
 

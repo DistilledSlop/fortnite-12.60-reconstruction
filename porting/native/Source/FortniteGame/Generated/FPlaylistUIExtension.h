@@ -11,7 +11,7 @@ class UUserWidget;
 #include "FPlaylistUIExtension.generated.h"
 
 USTRUCT()
-struct FPlaylistUIExtension
+struct FORTNITEGAME_API FPlaylistUIExtension
 {
 	GENERATED_BODY()
 

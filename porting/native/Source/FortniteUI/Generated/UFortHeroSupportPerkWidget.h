@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 
+#include "EFortSupportBonusType.h"
 #include "EFortSupportPerkWidgetState.h"
 #include "UCommonTextBlock.h"
 #include "UFortHero.h"
@@ -23,6 +24,10 @@ public:
 	// table index 7, flags 0x14000000000014
 	UPROPERTY()
 	TWeakObjectPtr<UFortHero> HeroToRepresent;
+
+	// table index 5, flags 0x10000000000015
+	UPROPERTY()
+	EFortSupportBonusType SupportTypeToRepresent;
 
 	// table index 3, flags 0x10000000000014
 	UPROPERTY()

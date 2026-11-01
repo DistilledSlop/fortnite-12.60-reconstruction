@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "Engine/DataAsset.h"
 
+#include "FFortActionKeyMapping.h"
 #include "UCommonTextBlock.h"
 
 #include "UFortOptionsMenuInputData.generated.h"
@@ -39,6 +40,10 @@ public:
 	// table index 1, flags 0x1000000008000c
 	UPROPERTY()
 	UCommonTextBlock* TabText;
+
+	// table index 0, flags 0x10000000000000
+	UPROPERTY()
+	FFortActionKeyMapping ActionKeyMapping;
 
 };
 

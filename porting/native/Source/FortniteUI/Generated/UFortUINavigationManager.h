@@ -16,7 +16,10 @@
 #include "FFortQuestItemOp.h"
 #include "FFortSquadOp.h"
 #include "FFortSquadSlotNavigateRequest.h"
+#include "FFortTabNavigateRequest.h"
+#include "FFortUINavigationRequest.h"
 #include "FFortVaultItemNavigateRequest.h"
+#include "FFortVaultTabNavigateRequest.h"
 
 class UUserWidget;
 
@@ -28,6 +31,10 @@ class FORTNITEUI_API UFortUINavigationManager : public UUINavigationManager
 	GENERATED_BODY()
 
 public:
+	// table index 16, flags 0x10000010080000
+	UPROPERTY()
+	FFortTabNavigateRequest OnMainTabNavigateRequest;
+
 	// table index 15, flags 0x10000010080000
 	UPROPERTY()
 	FFortFeatureNavigateOp OnFeatureNavigateOp;
@@ -39,6 +46,10 @@ public:
 	// table index 13, flags 0x10000010080000
 	UPROPERTY()
 	FFortSquadSlotNavigateRequest OnSquadSlotNavigateRequest;
+
+	// table index 12, flags 0x10000010080000
+	UPROPERTY()
+	FFortVaultTabNavigateRequest OnVaultTabNavigateRequest;
 
 	// table index 11, flags 0x10000010080000
 	UPROPERTY()
@@ -71,6 +82,10 @@ public:
 	// table index 4, flags 0x10000010080000
 	UPROPERTY()
 	FFortQuestItemOp OnQuestItemOp;
+
+	// table index 2, flags 0x40000000000000
+	UPROPERTY()
+	TArray<FFortUINavigationRequest> NavigationRequests;
 
 	// table index 1, flags 0x40000000082008
 	UPROPERTY(Transient)

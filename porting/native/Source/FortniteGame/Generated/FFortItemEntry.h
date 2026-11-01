@@ -18,7 +18,7 @@ class UFortItemDefinition;
 #include "FFortItemEntry.generated.h"
 
 USTRUCT()
-struct FFortItemEntry : public FFastArraySerializerItem
+struct FORTNITEGAME_API FFortItemEntry : public FFastArraySerializerItem
 {
 	GENERATED_BODY()
 

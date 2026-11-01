@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "Components/Widget.h"
 
+#include "EFortBrushSize.h"
+#include "FFortMultiSizeBrush.h"
 #include "Math/Color.h"
 
 #include "UFortMultiSizeImage.generated.h"
@@ -16,6 +18,14 @@ class FORTNITEUI_API UFortMultiSizeImage : public UWidget
 	GENERATED_BODY()
 
 public:
+	// table index 2, flags 0x10000000000015
+	UPROPERTY()
+	FFortMultiSizeBrush MultiSizeBrush;
+
+	// table index 1, flags 0x10000000000015
+	UPROPERTY()
+	TEnumAsByte<EFortBrushSize::Type> BrushSize;
+
 	// table index 0, flags 0x10000000000015
 	UPROPERTY()
 	FLinearColor ColorAndOpacity;

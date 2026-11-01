@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "FFortItemQuantityPair.h"
 #include "UFortItemDefinition.h"
 
 #include "UFortItemBaseWidget.generated.h"
@@ -16,6 +17,10 @@ class FORTNITEUI_API UFortItemBaseWidget : public UCommonUserWidget
 	GENERATED_BODY()
 
 public:
+	// table index 1, flags 0x40000000000000
+	UPROPERTY()
+	FFortItemQuantityPair ItemQuantityPair;
+
 	// table index 0, flags 0x40000000000000
 	UPROPERTY()
 	UFortItemDefinition* ItemDefinition;

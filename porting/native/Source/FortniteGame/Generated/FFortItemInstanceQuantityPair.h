@@ -11,7 +11,7 @@ class UFortItem;
 #include "FFortItemInstanceQuantityPair.generated.h"
 
 USTRUCT()
-struct FFortItemInstanceQuantityPair
+struct FORTNITEGAME_API FFortItemInstanceQuantityPair
 {
 	GENERATED_BODY()
 

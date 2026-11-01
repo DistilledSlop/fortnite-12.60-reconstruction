@@ -9,7 +9,7 @@
 #include "FMcpLootEntry.generated.h"
 
 USTRUCT()
-struct FMcpLootEntry
+struct MCPPROFILESYS_API FMcpLootEntry
 {
 	GENERATED_BODY()
 

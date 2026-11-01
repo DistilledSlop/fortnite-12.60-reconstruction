@@ -9,7 +9,7 @@
 #include "FClientUrlContext.generated.h"
 
 USTRUCT()
-struct FClientUrlContext : public FBaseUrlContext
+struct MCPPROFILESYS_API FClientUrlContext : public FBaseUrlContext
 {
 	GENERATED_BODY()
 

@@ -7,6 +7,7 @@
 #include "UCommonActivatableWidget.h"
 
 #include "Engine/DataTable.h"
+#include "FFortTopBarTabButtonInfo.h"
 #include "UCommonActionWidget.h"
 #include "UCommonButton.h"
 #include "UCommonButtonGroup.h"
@@ -29,6 +30,10 @@ public:
 	// table index 10, flags 0x40000000000001
 	UPROPERTY()
 	FDataTableRowHandle PreviousTabInputAction;
+
+	// table index 8, flags 0x40000000000001
+	UPROPERTY()
+	TArray<FFortTopBarTabButtonInfo> TabsInfo;
 
 	// table index 7, flags 0x40000000002000
 	UPROPERTY(Transient)

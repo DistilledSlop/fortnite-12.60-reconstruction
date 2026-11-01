@@ -7,6 +7,7 @@
 #include "UCommonUserWidget.h"
 
 #include "GameplayTagContainer.h"
+#include "UFortHUDTargetUnderReticleInterface.h"
 
 #include "UFortHUDTargetUnderReticleWidget.generated.h"
 
@@ -16,6 +17,10 @@ class FORTNITEUI_API UFortHUDTargetUnderReticleWidget : public UCommonUserWidget
 	GENERATED_BODY()
 
 public:
+	// table index 2, flags 0x24080000002014
+	UPROPERTY(Transient)
+	TScriptInterface<IFortHUDTargetUnderReticleInterface> Target;
+
 	// table index 1, flags 0x40000000000801
 	UPROPERTY()
 	bool bKeepTargetUntilNewValidTarget;

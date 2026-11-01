@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 
+#include "ESubGame.h"
+
 class AFortTeamMemberPedestal;
 class USceneComponent;
 
@@ -17,6 +19,10 @@ class FORTNITEUI_API AAthenaSquadPedestalGroup : public AActor
 	GENERATED_BODY()
 
 public:
+	// table index 4, flags 0x40000000000001
+	UPROPERTY()
+	ESubGame UsedSubgame;
+
 	// table index 3, flags 0x40000000000015
 	UPROPERTY()
 	int32 MonitoredSquadIdx;

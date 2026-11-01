@@ -13,7 +13,7 @@ class UFortItemDefinition;
 #include "FAthenaRewardItemReference.generated.h"
 
 USTRUCT()
-struct FAthenaRewardItemReference
+struct FORTNITEGAME_API FAthenaRewardItemReference
 {
 	GENERATED_BODY()
 

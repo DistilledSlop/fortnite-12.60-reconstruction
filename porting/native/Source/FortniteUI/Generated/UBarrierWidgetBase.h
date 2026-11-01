@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortHUDElementWidget.h"
 
+#include "FBarrierObjectState.h"
+
 #include "UBarrierWidgetBase.generated.h"
 
 UCLASS()
@@ -14,5 +16,13 @@ class FORTNITEUI_API UBarrierWidgetBase : public UFortHUDElementWidget
 	GENERATED_BODY()
 
 public:
+	// table index 1, flags 0x20080000000000
+	UPROPERTY()
+	FBarrierObjectState FriendlyTeamState;
+
+	// table index 0, flags 0x20080000000000
+	UPROPERTY()
+	FBarrierObjectState EnemyTeamState;
+
 };
 

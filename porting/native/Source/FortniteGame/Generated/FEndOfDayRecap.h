@@ -9,7 +9,7 @@
 #include "FEndOfDayRecap.generated.h"
 
 USTRUCT()
-struct FEndOfDayRecap
+struct FORTNITEGAME_API FEndOfDayRecap
 {
 	GENERATED_BODY()
 

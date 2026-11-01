@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "EFortFuelGadgetVisualType.h"
 #include "UAthenaGadgetItemDefinition.h"
 #include "UCommonNumericTextBlock.h"
 
@@ -22,6 +23,10 @@ public:
 	// table index 4, flags 0x44000000002000
 	UPROPERTY(Transient)
 	TWeakObjectPtr<UAthenaGadgetItemDefinition> AthenaGadgetItemDefinition;
+
+	// table index 2, flags 0x40000000002000
+	UPROPERTY(Transient)
+	EFortFuelGadgetVisualType FortFuelGadgetVisualType;
 
 	// table index 1, flags 0x40000000080008
 	UPROPERTY()

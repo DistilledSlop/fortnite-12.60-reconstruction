@@ -11,7 +11,7 @@
 #include "FHUDLayoutDataEntry.generated.h"
 
 USTRUCT()
-struct FHUDLayoutDataEntry
+struct FORTNITEGAME_API FHUDLayoutDataEntry
 {
 	GENERATED_BODY()
 

@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
 
+#include "FReplayEliminationEventInfo.h"
+
 #include "UAthenaReplayActionFeedRowProxyInstance.generated.h"
 
 UCLASS()
@@ -14,5 +16,9 @@ class FORTNITEUI_API UAthenaReplayActionFeedRowProxyInstance : public UObject
 	GENERATED_BODY()
 
 public:
+	// table index 0, flags 0x10000000002014
+	UPROPERTY(Transient)
+	FReplayEliminationEventInfo RowData;
+
 };
 

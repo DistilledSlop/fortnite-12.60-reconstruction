@@ -10,7 +10,7 @@
 #include "FFortChallengeMapPoiData.generated.h"
 
 USTRUCT()
-struct FFortChallengeMapPoiData
+struct FORTNITEGAME_API FFortChallengeMapPoiData
 {
 	GENERATED_BODY()
 

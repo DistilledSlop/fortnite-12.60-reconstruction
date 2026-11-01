@@ -9,7 +9,7 @@
 #include "FFortMultiSizeBrush.generated.h"
 
 USTRUCT()
-struct FFortMultiSizeBrush
+struct FORTNITEGAME_API FFortMultiSizeBrush
 {
 	GENERATED_BODY()
 

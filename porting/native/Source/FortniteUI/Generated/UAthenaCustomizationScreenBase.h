@@ -6,7 +6,10 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanelWithItemPreview.h"
 
+#include "EAthenaCustomizationCategory.h"
 #include "Engine/DataTable.h"
+#include "FAthenaCustomizationParams.h"
+#include "FFortAthenaLoadout.h"
 #include "UCommonButton.h"
 
 class UAthenaConfirmationWindow;
@@ -33,6 +36,14 @@ public:
 	UPROPERTY()
 	bool bCustomizationSelectionBeingProcessed;
 
+	// table index 31, flags 0x20080000000004
+	UPROPERTY()
+	FAthenaCustomizationParams CustomizationParams;
+
+	// table index 29, flags 0x20080000000004
+	UPROPERTY()
+	EAthenaCustomizationCategory FirstCustomizationCategory;
+
 	// table index 28, flags 0x40000000010001
 	UPROPERTY()
 	FText CategoryDisplayNames[21];
@@ -40,6 +51,14 @@ public:
 	// table index 27, flags 0x40000000010001
 	UPROPERTY()
 	FText ItemTypeDisplayNames[21];
+
+	// table index 26, flags 0x40000000002000
+	UPROPERTY(Transient)
+	FFortAthenaLoadout LastAppliedLoadoutData;
+
+	// table index 25, flags 0x40000000002000
+	UPROPERTY(Transient)
+	FFortAthenaLoadout ScratchPadLoadoutData;
 
 	// table index 24, flags 0x44000000000001
 	UPROPERTY()

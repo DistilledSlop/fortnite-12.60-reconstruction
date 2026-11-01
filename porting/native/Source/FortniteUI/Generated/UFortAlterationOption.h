@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonButton.h"
 
+#include "FAlterationOption.h"
+
 #include "UFortAlterationOption.generated.h"
 
 UCLASS(abstract)
@@ -14,5 +16,9 @@ class FORTNITEUI_API UFortAlterationOption : public UCommonButton
 	GENERATED_BODY()
 
 public:
+	// table index 0, flags 0x40000000000000
+	UPROPERTY()
+	FAlterationOption AlterationOption;
+
 };
 

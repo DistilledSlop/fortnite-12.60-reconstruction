@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonActivatablePanel.h"
 
+#include "EHomebaseNodeType.h"
 #include "UCommonLoadGuard.h"
 #include "UCommonTileView.h"
 #include "UFortItemDefinition.h"
@@ -36,6 +37,10 @@ public:
 	// table index 5, flags 0x2008000008001c
 	UPROPERTY()
 	UFortUpgradeDetailsBase* Details;
+
+	// table index 1, flags 0x20080000000001
+	UPROPERTY()
+	TMap<FName, EHomebaseNodeType> TabToNodeTypeMap;
 
 	// table index 0, flags 0x20080000000015
 	UPROPERTY()

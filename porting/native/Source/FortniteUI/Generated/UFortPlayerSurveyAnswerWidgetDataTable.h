@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "Engine/DataAsset.h"
 
+#include "EFortPlayerSurveyQuestionType.h"
+
 #include "UFortPlayerSurveyAnswerWidgetDataTable.generated.h"
 
 UCLASS()
@@ -14,5 +16,9 @@ class FORTNITEUI_API UFortPlayerSurveyAnswerWidgetDataTable : public UPrimaryDat
 	GENERATED_BODY()
 
 public:
+	// table index 1, flags 0x1
+	UPROPERTY()
+	EFortPlayerSurveyQuestionType Entries_Key;
+
 };
 

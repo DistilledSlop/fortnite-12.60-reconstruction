@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonButton.h"
 
+#include "FFortItemEntry.h"
 #include "UFortItemDefinition.h"
 
 class UAthenaCreativeItemTileView;
@@ -25,6 +26,10 @@ public:
 	// table index 1, flags 0x20080000000014
 	UPROPERTY()
 	UFortItemDefinition* ItemDefinition;
+
+	// table index 0, flags 0x20080000000014
+	UPROPERTY()
+	FFortItemEntry ItemEntry;
 
 };
 

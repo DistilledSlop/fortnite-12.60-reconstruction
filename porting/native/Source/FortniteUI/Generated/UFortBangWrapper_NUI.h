@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "EFortBangType.h"
+
 class UNamedSlot;
 
 #include "UFortBangWrapper_NUI.generated.h"
@@ -16,6 +18,10 @@ class FORTNITEUI_API UFortBangWrapper_NUI : public UCommonUserWidget
 	GENERATED_BODY()
 
 public:
+	// table index 2, flags 0x10000000000015
+	UPROPERTY()
+	EFortBangType BangType;
+
 	// table index 1, flags 0x10000000000015
 	UPROPERTY()
 	FName TutorialNameID;

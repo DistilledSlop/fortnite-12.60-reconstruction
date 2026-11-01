@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonButton.h"
 
+#include "EAthenaCustomizationCategory.h"
 #include "GameplayTagContainer.h"
 #include "UFortItem.h"
 
@@ -21,6 +22,10 @@ class FORTNITEUI_API UAthenaCustomizationSlotSelectorButton : public UCommonButt
 	GENERATED_BODY()
 
 public:
+	// table index 7, flags 0x20080000000015
+	UPROPERTY()
+	EAthenaCustomizationCategory CustomizationType;
+
 	// table index 6, flags 0x20080000000015
 	UPROPERTY()
 	int32 SubslotIndex;

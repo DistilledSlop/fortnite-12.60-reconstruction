@@ -12,12 +12,18 @@
 #include "FFortGlobalUIContextGenericChange.h"
 #include "FFortUIFeatureStruct.h"
 #include "FOnContextHelpItemsChanged.h"
+#include "FOnEnterVehicleDriver.h"
+#include "FOnEnterVehiclePassenger.h"
+#include "FOnExitVehicle.h"
+#include "FOnInputActionHoldStarted.h"
+#include "FOnInputActionHoldStopped.h"
 #include "FOnItemReceivedNotificationShown.h"
 #include "FOnKeybindsChangedDelegate.h"
 #include "FOnLoadingScreenVisibilityChangedDelegate.h"
 #include "FOnLocalPlayerControllerConnectionChangedDelegate.h"
 #include "FOnQueryFortBackendVersionDelegate.h"
 #include "FOnScoreReportChanged.h"
+#include "FOnSubGameChanged.h"
 #include "GameFramework/OnlineReplStructs.h"
 #include "Misc/DateTime.h"
 #include "UFortHelpItem.h"
@@ -33,6 +39,10 @@ class FORTNITEUI_API UFortGlobalUIContext : public UFortLocalPlayerSubsystem
 	GENERATED_BODY()
 
 public:
+	// table index 32, flags 0x10000010080000
+	UPROPERTY()
+	FOnSubGameChanged SubGameChanged;
+
 	// table index 31, flags 0x10000010080000
 	UPROPERTY()
 	FFortGlobalUIContextGenericChange PlayerControllerChanged;
@@ -44,6 +54,26 @@ public:
 	// table index 29, flags 0x10000010080000
 	UPROPERTY()
 	FOnKeybindsChangedDelegate OnKeybindsChanged;
+
+	// table index 28, flags 0x10000010080000
+	UPROPERTY()
+	FOnInputActionHoldStarted OnInputActionHoldStarted;
+
+	// table index 27, flags 0x10000010080000
+	UPROPERTY()
+	FOnInputActionHoldStopped OnInputActionHoldStopped;
+
+	// table index 26, flags 0x10000010080000
+	UPROPERTY()
+	FOnEnterVehicleDriver OnEnterVehicleDriver;
+
+	// table index 25, flags 0x10000010080000
+	UPROPERTY()
+	FOnEnterVehiclePassenger OnEnterVehiclePassenger;
+
+	// table index 24, flags 0x10000010080000
+	UPROPERTY()
+	FOnExitVehicle OnExitVehicle;
 
 	// table index 23, flags 0x10000010080000
 	UPROPERTY()

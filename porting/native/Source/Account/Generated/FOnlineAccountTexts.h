@@ -9,7 +9,7 @@
 #include "FOnlineAccountTexts.generated.h"
 
 USTRUCT()
-struct FOnlineAccountTexts
+struct ACCOUNT_API FOnlineAccountTexts
 {
 	GENERATED_BODY()
 

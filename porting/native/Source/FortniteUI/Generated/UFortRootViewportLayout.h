@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "FFortDialogDescription_NUI.h"
 #include "UCommonActivatableWidgetQueue.h"
 
 class UFortConfirmationWindow;
@@ -33,6 +34,10 @@ public:
 	// table index 10, flags 0x40000000002000
 	UPROPERTY(Transient)
 	UFortUINotificationManager* NotificationManager;
+
+	// table index 8, flags 0x40008000002000
+	UPROPERTY(Transient)
+	TArray<FFortDialogDescription_NUI> ConfirmationQueue;
 
 	// table index 7, flags 0x40000000082008
 	UPROPERTY(Transient)

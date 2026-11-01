@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UAthenaMarkedActorIndicator.h"
 
+#include "ESpawnMachineState.h"
+
 #include "UAthenaRebootVanIndicator.generated.h"
 
 UCLASS(abstract)
@@ -17,6 +19,10 @@ public:
 	// table index 4, flags 0x20080000000015
 	UPROPERTY()
 	int32 SpawnMachineIndex;
+
+	// table index 2, flags 0x20080000000015
+	UPROPERTY()
+	ESpawnMachineState SpawnMachineState;
 
 	// table index 1, flags 0x20080000000015
 	UPROPERTY()

@@ -7,6 +7,7 @@
 #include "UCommonUserWidget.h"
 
 #include "EFortLoadoutCardType.h"
+#include "FFortAthenaLoadout.h"
 
 class USizeBox;
 
@@ -18,6 +19,10 @@ class FORTNITEUI_API UFortCosmeticLoadoutCard : public UCommonUserWidget
 	GENERATED_BODY()
 
 public:
+	// table index 7, flags 0x20080000000014
+	UPROPERTY()
+	FFortAthenaLoadout RepresentedLoadout;
+
 	// table index 5, flags 0x20080000000014
 	UPROPERTY()
 	EFortLoadoutCardType CardType;

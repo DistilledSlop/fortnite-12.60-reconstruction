@@ -6,7 +6,9 @@
 #include "CoreMinimal.h"
 #include "UFortItemPreviewScreen.h"
 
+#include "EAthenaCustomizationCategory.h"
 #include "Engine/DataTable.h"
+#include "FAthenaCustomizationParams.h"
 
 class UAthenaItemSelectorScreenBase;
 class UFortCosmeticLoadoutSelector;
@@ -23,6 +25,14 @@ public:
 	// table index 11, flags 0x20080000000014
 	UPROPERTY()
 	bool bCustomizationSelectionBeingProcessed;
+
+	// table index 10, flags 0x20080000000004
+	UPROPERTY()
+	FAthenaCustomizationParams CustomizationParams;
+
+	// table index 8, flags 0x20080000000004
+	UPROPERTY()
+	EAthenaCustomizationCategory InitialCustomizationCategory;
 
 	// table index 7, flags 0x40000000010001
 	UPROPERTY()

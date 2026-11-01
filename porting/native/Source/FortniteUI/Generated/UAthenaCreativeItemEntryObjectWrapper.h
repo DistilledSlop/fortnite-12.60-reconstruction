@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
 
+#include "FFortItemEntry.h"
+
 #include "UAthenaCreativeItemEntryObjectWrapper.generated.h"
 
 UCLASS()
@@ -14,5 +16,9 @@ class FORTNITEUI_API UAthenaCreativeItemEntryObjectWrapper : public UObject
 	GENERATED_BODY()
 
 public:
+	// table index 0, flags 0x10000000000014
+	UPROPERTY()
+	FFortItemEntry ItemEntry;
+
 };
 

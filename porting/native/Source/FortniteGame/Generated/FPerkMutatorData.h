@@ -13,7 +13,7 @@ class UUserWidget;
 #include "FPerkMutatorData.generated.h"
 
 USTRUCT()
-struct FPerkMutatorData
+struct FORTNITEGAME_API FPerkMutatorData
 {
 	GENERATED_BODY()
 

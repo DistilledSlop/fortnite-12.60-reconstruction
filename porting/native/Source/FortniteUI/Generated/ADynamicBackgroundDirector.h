@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 
+#include "EDynamicBackgroudKey.h"
 #include "FOnDonutSequenceInitiated.h"
 #include "FOnDonutSequencePlayDonutDrop.h"
 #include "FOnEnteredItemShop.h"
@@ -53,6 +54,10 @@ public:
 	// table index 2, flags 0x10000010080000
 	UPROPERTY()
 	FRequestDelegate BP_OnRequestHideBackground;
+
+	// table index 0, flags 0x20080000000015
+	UPROPERTY()
+	EDynamicBackgroudKey DynamicBackgroundKey;
 
 };
 

@@ -11,7 +11,7 @@
 #include "FFortRewardInfo.generated.h"
 
 USTRUCT()
-struct FFortRewardInfo
+struct FORTNITEGAME_API FFortRewardInfo
 {
 	GENERATED_BODY()
 

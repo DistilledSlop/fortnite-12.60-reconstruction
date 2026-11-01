@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortMobileShareButton.h"
 
+#include "FFriendCode.h"
 #include "UCommonTextBlock.h"
 
 #include "UFortFriendCodeEntryBase.generated.h"
@@ -16,6 +17,10 @@ class FORTNITEUI_API UFortFriendCodeEntryBase : public UFortMobileShareButton
 	GENERATED_BODY()
 
 public:
+	// table index 5, flags 0x10000000000000
+	UPROPERTY()
+	FFriendCode FriendCode;
+
 	// table index 4, flags 0x1000000008001c
 	UPROPERTY()
 	UCommonTextBlock* LinkDataTextBox;

@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanel.h"
 
+#include "EFortFrontendInventoryFilter.h"
+#include "EFortHomebaseSquadType.h"
 #include "Engine/DataTable.h"
 
 class UFortSquadSelectorButton;
@@ -22,9 +24,17 @@ public:
 	UPROPERTY()
 	bool bReadOnlyModeWIFE;
 
+	// table index 5, flags 0x20080000000015
+	UPROPERTY()
+	EFortHomebaseSquadType SquadType;
+
 	// table index 4, flags 0x20080000000015
 	UPROPERTY()
 	FDataTableRowHandle BackInputActionRowHandle;
+
+	// table index 2, flags 0x20080000000015
+	UPROPERTY()
+	EFortFrontendInventoryFilter ItemManagementScreenFilter;
 
 	// table index 0, flags 0x24088000000008
 	UPROPERTY()

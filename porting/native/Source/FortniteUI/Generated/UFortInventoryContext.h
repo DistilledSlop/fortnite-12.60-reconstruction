@@ -8,12 +8,19 @@
 
 #include "FItemListChangedDelegate.h"
 #include "FItemsChanged.h"
+#include "FOnCraftItemFailed.h"
 #include "FOnCraftItemStarted.h"
+#include "FOnInventoryFiltersWithUnseenItemsChanged.h"
 #include "FOnItemPickedUp.h"
+#include "FOnItemTypesWithUnseenItemsChanged.h"
+#include "FOnQuickbarContentsChanged.h"
+#include "FOnQuickbarFullUpdate.h"
 #include "FOnQuickbarRecordsChanged.h"
 #include "FOnSchematicUnlocked.h"
 #include "FOnSchematicsLockedChanged.h"
 #include "FOnVaultItemLimitStateChanged.h"
+#include "FQuickbarFocusChangedDelegate.h"
+#include "FSetWorldResourceWidgetVisibility.h"
 #include "UFortSchematicItemDefinition.h"
 
 #include "UFortInventoryContext.generated.h"
@@ -44,9 +51,25 @@ public:
 	UPROPERTY()
 	FOnItemPickedUp OnItemPickedUp;
 
+	// table index 16, flags 0x10000010080000
+	UPROPERTY()
+	FOnQuickbarContentsChanged OnQuickbarContentsChanged;
+
 	// table index 15, flags 0x10000010080000
 	UPROPERTY()
 	FOnQuickbarRecordsChanged OnQuickbarRecordsChanged;
+
+	// table index 14, flags 0x10000010080000
+	UPROPERTY()
+	FQuickbarFocusChangedDelegate OnQuickbarSlotFocusChanged;
+
+	// table index 13, flags 0x10000010080000
+	UPROPERTY()
+	FQuickbarFocusChangedDelegate OnQuickbarSecondarySlotFocusChanged;
+
+	// table index 12, flags 0x10000010080000
+	UPROPERTY()
+	FOnQuickbarFullUpdate OnQuickbarForceFullUpdate;
 
 	// table index 11, flags 0x10000010080000
 	UPROPERTY()
@@ -64,9 +87,25 @@ public:
 	UPROPERTY()
 	FOnCraftItemStarted OnCraftItemStarted;
 
+	// table index 7, flags 0x10000010080000
+	UPROPERTY()
+	FOnCraftItemFailed OnCraftItemFailed;
+
+	// table index 6, flags 0x10000010080000
+	UPROPERTY()
+	FSetWorldResourceWidgetVisibility SetWorldResourceWidgetVisibility;
+
 	// table index 5, flags 0x10000010080000
 	UPROPERTY()
 	FOnVaultItemLimitStateChanged OnVaultItemLimitStateChangedEvent;
+
+	// table index 4, flags 0x10000010080000
+	UPROPERTY()
+	FOnInventoryFiltersWithUnseenItemsChanged OnInventoryFiltersWithUnseenItemsChanged;
+
+	// table index 3, flags 0x10000010080000
+	UPROPERTY()
+	FOnItemTypesWithUnseenItemsChanged OnItemTypesWithUnseenItemsChanged;
 
 	// table index 0, flags 0x40000000002000
 	UPROPERTY(Transient)

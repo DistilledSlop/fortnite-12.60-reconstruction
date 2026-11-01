@@ -7,10 +7,23 @@
 #include "UBlueprintContextBase.h"
 
 #include "AFortCreativeMoveTool.h"
+#include "FOnCreativeGhostChanged.h"
+#include "FOnCreativeHeatmapToggled.h"
+#include "FOnCreativeModeEnabledChanged.h"
 #include "FOnCreativeQuickMenuDisplayedChanged.h"
+#include "FOnCreativeQuickbarActiveChanged.h"
+#include "FOnCreativeQuickbarEnabledChanged.h"
+#include "FOnCreativeQuickbarEquippedChanged.h"
 #include "FOnGenericBooleanStateChangedEvent.h"
 #include "FOnGenericCountDownEvent.h"
+#include "FOnMoveToolDropToFloorChanged.h"
 #include "FOnMoveToolEquippedChanged.h"
+#include "FOnMoveToolLineOfSightBlockingChanged.h"
+#include "FOnMoveToolPrecisionChanged.h"
+#include "FOnMoveToolRotationAxisChanged.h"
+#include "FOnMoveToolRotationModified.h"
+#include "FOnMoveToolScaleAxisChanged.h"
+#include "FOnMoveToolScaleModified.h"
 
 #include "UCreativeHUDLContext.generated.h"
 
@@ -20,13 +33,65 @@ class FORTNITEUI_API UCreativeHUDLContext : public UBlueprintContextBase
 	GENERATED_BODY()
 
 public:
+	// table index 18, flags 0x10000010080004
+	UPROPERTY()
+	FOnMoveToolRotationAxisChanged OnRotationAxisChanged;
+
+	// table index 17, flags 0x10000010080004
+	UPROPERTY()
+	FOnMoveToolScaleAxisChanged OnScaleAxisChanged;
+
+	// table index 16, flags 0x10000010080004
+	UPROPERTY()
+	FOnCreativeGhostChanged OnCreativeGhostChanged;
+
+	// table index 15, flags 0x10000010080004
+	UPROPERTY()
+	FOnCreativeHeatmapToggled OnCreativeHeatmapToggled;
+
+	// table index 14, flags 0x10000010080004
+	UPROPERTY()
+	FOnMoveToolDropToFloorChanged OnDropToFloorChanged;
+
+	// table index 13, flags 0x10000010080004
+	UPROPERTY()
+	FOnMoveToolPrecisionChanged OnPrecisionChanged;
+
+	// table index 12, flags 0x10000010080000
+	UPROPERTY()
+	FOnMoveToolLineOfSightBlockingChanged OnMoveToolLineOfSightBlockingChanged;
+
 	// table index 11, flags 0x10000010080000
 	UPROPERTY()
 	FOnMoveToolEquippedChanged OnMoveToolEquippedChanged;
 
+	// table index 10, flags 0x10000010080000
+	UPROPERTY()
+	FOnMoveToolScaleModified OnMoveToolScaleModified;
+
 	// table index 9, flags 0x10000010080000
 	UPROPERTY()
 	FOnCreativeQuickMenuDisplayedChanged OnCreativeQuickMenuDisplayedChanged;
+
+	// table index 8, flags 0x10000010080000
+	UPROPERTY()
+	FOnMoveToolRotationModified OnMoveToolRotationModified;
+
+	// table index 7, flags 0x10000010080000
+	UPROPERTY()
+	FOnCreativeQuickbarEnabledChanged OnCreativeQuickbarEnabledChanged;
+
+	// table index 6, flags 0x10000010080000
+	UPROPERTY()
+	FOnCreativeModeEnabledChanged OnCreativeModeEnabledChanged;
+
+	// table index 5, flags 0x10000010080000
+	UPROPERTY()
+	FOnCreativeQuickbarActiveChanged OnCreativeQuickbarActiveChanged;
+
+	// table index 4, flags 0x10000010080000
+	UPROPERTY()
+	FOnCreativeQuickbarEquippedChanged OnCreativeQuickbarEquippedChanged;
 
 	// table index 3, flags 0x10100010080000
 	UPROPERTY()

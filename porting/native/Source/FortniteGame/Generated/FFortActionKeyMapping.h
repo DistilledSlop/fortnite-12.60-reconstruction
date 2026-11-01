@@ -11,7 +11,7 @@
 #include "FFortActionKeyMapping.generated.h"
 
 USTRUCT()
-struct FFortActionKeyMapping
+struct FORTNITEGAME_API FFortActionKeyMapping
 {
 	GENERATED_BODY()
 

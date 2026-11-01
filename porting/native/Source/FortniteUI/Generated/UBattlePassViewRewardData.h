@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
 
+#include "EBattlePassRewardSource.h"
 #include "UFortItem.h"
 #include "UFortItemDefinition.h"
 
@@ -28,6 +29,10 @@ public:
 	// table index 4, flags 0x10000000000014
 	UPROPERTY()
 	bool bIsOwned;
+
+	// table index 2, flags 0x10000000000014
+	UPROPERTY()
+	EBattlePassRewardSource UnlockableSource;
 
 	// table index 1, flags 0x10000000000014
 	UPROPERTY()

@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortIconWithLabel.h"
 
+#include "EFortItemCategoryOrdinal.h"
 #include "UFortItem.h"
 
 #include "UFortItemCategoryIndicator.generated.h"
@@ -19,6 +20,10 @@ public:
 	// table index 2, flags 0x15000000000015
 	UPROPERTY()
 	TWeakObjectPtr<UFortItem> ItemToRepresent;
+
+	// table index 0, flags 0x11000000000015
+	UPROPERTY()
+	EFortItemCategoryOrdinal OrdinalOfCategoryToRepresent;
 
 };
 

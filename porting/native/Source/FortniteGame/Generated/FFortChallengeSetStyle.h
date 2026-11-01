@@ -11,7 +11,7 @@ class UObject;
 #include "FFortChallengeSetStyle.generated.h"
 
 USTRUCT()
-struct FFortChallengeSetStyle
+struct FORTNITEGAME_API FFortChallengeSetStyle
 {
 	GENERATED_BODY()
 

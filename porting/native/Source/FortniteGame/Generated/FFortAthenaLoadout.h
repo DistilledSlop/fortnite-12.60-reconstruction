@@ -27,7 +27,7 @@ class UAthenaVictoryPoseItemDefinition;
 #include "FFortAthenaLoadout.generated.h"
 
 USTRUCT()
-struct FFortAthenaLoadout
+struct FORTNITEGAME_API FFortAthenaLoadout
 {
 	GENERATED_BODY()
 

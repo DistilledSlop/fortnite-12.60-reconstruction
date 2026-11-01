@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "Components/DynamicEntryBox.h"
 
+#include "EPlaylistUIExtensionSlot.h"
+
 class UObject;
 class UUserWidget;
 
@@ -17,6 +19,10 @@ class FORTNITEUI_API UFortPlaylistUIExtensionSlot : public UDynamicEntryBox
 	GENERATED_BODY()
 
 public:
+	// table index 3, flags 0x10000000000015
+	UPROPERTY()
+	TArray<EPlaylistUIExtensionSlot> ExtensionSlots;
+
 	// table index 0, flags 0x40008000000008
 	UPROPERTY()
 	TMap<UObject*, UUserWidget*> ObjectBoundWidgets;

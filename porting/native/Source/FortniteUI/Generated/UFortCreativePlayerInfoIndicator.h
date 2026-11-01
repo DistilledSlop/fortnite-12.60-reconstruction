@@ -7,6 +7,7 @@
 #include "UFortActorIndicatorWidget.h"
 
 #include "AFortPlayerStateAthena.h"
+#include "EFortMinigameState.h"
 #include "Math/Vector.h"
 #include "Math/Vector2D.h"
 
@@ -31,6 +32,10 @@ public:
 	// table index 8, flags 0x40000000010001
 	UPROPERTY()
 	FVector2D ScreenSpaceOffsetToScale;
+
+	// table index 5, flags 0x40000000010001
+	UPROPERTY()
+	TArray<EFortMinigameState> ValidMinigameTypesToShowIndicator;
 
 	// table index 4, flags 0x40000000010001
 	UPROPERTY()

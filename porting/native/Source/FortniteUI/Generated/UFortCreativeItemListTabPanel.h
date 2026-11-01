@@ -6,7 +6,9 @@
 #include "CoreMinimal.h"
 #include "UCommonActivatableWidget.h"
 
+#include "FFortItemEntry.h"
 #include "FOnItemCountChangedDelegate.h"
+#include "FOnSelectionChangedDelegate.h"
 
 class UAthenaCreativeItemTileView;
 
@@ -18,6 +20,10 @@ class FORTNITEUI_API UFortCreativeItemListTabPanel : public UCommonActivatableWi
 	GENERATED_BODY()
 
 public:
+	// table index 12, flags 0x10000010080000
+	UPROPERTY()
+	FOnSelectionChangedDelegate OnSelectionChanged;
+
 	// table index 11, flags 0x10000010080000
 	UPROPERTY()
 	FOnItemCountChangedDelegate OnSourceItemCountChanged;
@@ -25,6 +31,10 @@ public:
 	// table index 10, flags 0x2008000008001c
 	UPROPERTY()
 	UAthenaCreativeItemTileView* CreativeTileView_ItemOptions;
+
+	// table index 9, flags 0x40000000000004
+	UPROPERTY()
+	FFortItemEntry CurrentItemEntry;
 
 	// table index 8, flags 0x40000010080000
 	UPROPERTY()
@@ -37,6 +47,14 @@ public:
 	// table index 6, flags 0x40000000000014
 	UPROPERTY()
 	FText TabLabel;
+
+	// table index 4, flags 0x40000000000014
+	UPROPERTY()
+	TArray<FFortItemEntry> Items;
+
+	// table index 2, flags 0x40000000000014
+	UPROPERTY()
+	TArray<FFortItemEntry> SourceItems;
 
 	// table index 0, flags 0x40000000000014
 	UPROPERTY()

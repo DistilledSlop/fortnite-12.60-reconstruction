@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "FAlterationOption.h"
 #include "UCommonButtonGroup.h"
 #include "UFortAlterableItem.h"
 
@@ -38,6 +39,14 @@ public:
 	// table index 3, flags 0x40000000002000
 	UPROPERTY(Transient)
 	bool bUpgradeOptionExists;
+
+	// table index 2, flags 0x40000000002000
+	UPROPERTY(Transient)
+	FAlterationOption UpgradeOption;
+
+	// table index 0, flags 0x40000000002000
+	UPROPERTY(Transient)
+	TArray<FAlterationOption> RespecOptions;
 
 };
 

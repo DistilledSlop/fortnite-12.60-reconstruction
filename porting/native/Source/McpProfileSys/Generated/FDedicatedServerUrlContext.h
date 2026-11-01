@@ -9,7 +9,7 @@
 #include "FDedicatedServerUrlContext.generated.h"
 
 USTRUCT()
-struct FDedicatedServerUrlContext : public FBaseUrlContext
+struct MCPPROFILESYS_API FDedicatedServerUrlContext : public FBaseUrlContext
 {
 	GENERATED_BODY()
 

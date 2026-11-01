@@ -12,7 +12,7 @@ class UFortItemDefinition;
 #include "FMcpVariantChannelInfo.generated.h"
 
 USTRUCT()
-struct FMcpVariantChannelInfo : public FCosmeticVariantInfo
+struct FORTNITEGAME_API FMcpVariantChannelInfo : public FCosmeticVariantInfo
 {
 	GENERATED_BODY()
 

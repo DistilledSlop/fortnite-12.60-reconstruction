@@ -11,7 +11,7 @@
 #include "FFortClientAnnouncementData_Tutorial.generated.h"
 
 USTRUCT()
-struct FFortClientAnnouncementData_Tutorial : public FFortClientAnnouncementData_Basic
+struct FORTNITEGAME_API FFortClientAnnouncementData_Tutorial : public FFortClientAnnouncementData_Basic
 {
 	GENERATED_BODY()
 

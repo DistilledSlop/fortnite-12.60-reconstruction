@@ -8,6 +8,7 @@
 
 #include "FConfirmationDialogAction.h"
 #include "FFortConfirmationButtonInfo.h"
+#include "FFortDialogDescription_NUI.h"
 #include "UCommonButton.h"
 #include "UCommonLoadGuard.h"
 #include "UCommonTextBlock.h"
@@ -68,6 +69,10 @@ public:
 	// table index 1, flags 0x40000000082008
 	UPROPERTY(Transient)
 	UCommonButton* DeclineButton;
+
+	// table index 0, flags 0x40008000000000
+	UPROPERTY()
+	FFortDialogDescription_NUI ConfirmationDescription;
 
 protected:
 	UFUNCTION(BlueprintImplementableEvent)

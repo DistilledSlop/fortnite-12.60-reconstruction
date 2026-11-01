@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortHUDElementWidget.h"
 
+#include "FFortItemQuantityPair.h"
 #include "FFortPrioritizedWidgetData.h"
 #include "GameplayTagContainer.h"
 #include "UFortQuestItem.h"
@@ -25,6 +26,10 @@ public:
 	// table index 6, flags 0x20080000000000
 	UPROPERTY()
 	TArray<UFortQuestItem*> NewlyGrantedQuests;
+
+	// table index 4, flags 0x20080000000000
+	UPROPERTY()
+	TArray<FFortItemQuantityPair> GrantedRewards;
 
 	// table index 2, flags 0x20080000000000
 	UPROPERTY()

@@ -6,6 +6,9 @@
 #include "CoreMinimal.h"
 #include "Engine/DataAsset.h"
 
+#include "EFortItemShopSection.h"
+#include "FAthenaItemShopSectionDisplayData.h"
+
 #include "UAthenaItemShopConfiguration.generated.h"
 
 UCLASS(config=Game)
@@ -14,5 +17,13 @@ class FORTNITEUI_API UAthenaItemShopConfiguration : public UDataAsset
 	GENERATED_BODY()
 
 public:
+	// table index 3, flags 0x10000000010001
+	UPROPERTY()
+	FAthenaItemShopSectionDisplayData ItemShopSectionDisplayDataList[9];
+
+	// table index 0, flags 0x40000000010001
+	UPROPERTY()
+	TArray<EFortItemShopSection> DefaultItemShopOrdering;
+
 };
 

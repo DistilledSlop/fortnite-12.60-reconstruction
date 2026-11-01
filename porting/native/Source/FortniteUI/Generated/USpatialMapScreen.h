@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UAthenaSpatialScreen.h"
 
+#include "FFortChallengeMapPoiData.h"
 #include "GameplayTagContainer.h"
 #include "UCommonBoundActionBar.h"
 #include "UCommonButton.h"
@@ -107,6 +108,10 @@ public:
 	// table index 5, flags 0x40000000004000
 	UPROPERTY(Config)
 	int32 AnimateIntroIconsMode;
+
+	// table index 3, flags 0x40000000004000
+	UPROPERTY(Config)
+	TArray<FFortChallengeMapPoiData> PoiDataConfigOverrides;
 
 	// table index 2, flags 0x40000000000001
 	UPROPERTY()

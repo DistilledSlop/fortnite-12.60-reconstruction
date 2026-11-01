@@ -7,6 +7,8 @@
 #include "UFortItemPreviewScreen.h"
 
 #include "Engine/DataTable.h"
+#include "FAthenaRewardItemReference.h"
+#include "FBattlePassRewardInfo.h"
 #include "UAthenaCosmeticItemDefinition.h"
 #include "UAthenaSeasonItemDefinition.h"
 #include "UCommonButton.h"
@@ -42,9 +44,17 @@ public:
 	UPROPERTY(Transient)
 	int32 RewardInViewLevel;
 
+	// table index 52, flags 0x40000000002000
+	UPROPERTY(Transient)
+	FAthenaRewardItemReference RewardInView;
+
 	// table index 51, flags 0x40000000002000
 	UPROPERTY(Transient)
 	int32 PendingRewardLevel;
+
+	// table index 50, flags 0x40000000002000
+	UPROPERTY(Transient)
+	FAthenaRewardItemReference PendingRewardToView;
 
 	// table index 49, flags 0x40000000002000
 	UPROPERTY(Transient)
@@ -93,6 +103,10 @@ public:
 	// table index 36, flags 0x40000000002000
 	UPROPERTY(Transient)
 	UAthenaSeasonItemDefinition* SeasonData;
+
+	// table index 34, flags 0x40000000002000
+	UPROPERTY(Transient)
+	TArray<FBattlePassRewardInfo> AllActiveSeasonRewards;
 
 	// table index 33, flags 0x40000000002000
 	UPROPERTY(Transient)

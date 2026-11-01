@@ -7,6 +7,7 @@
 #include "UAthenaHUDBase.h"
 
 #include "Engine/DataTable.h"
+#include "FPlaylistUIExtension.h"
 #include "UCommonWidgetSwitcher.h"
 
 class UAthenaBroadcastMapPanelBase;
@@ -78,6 +79,10 @@ public:
 	// table index 13, flags 0x40000000010001
 	UPROPERTY()
 	FDataTableRowHandle ToggleFullscreenMapActionRowHandle;
+
+	// table index 10, flags 0x40000000010001
+	UPROPERTY()
+	TMap<TSoftClassPtr<UUserWidget>, FPlaylistUIExtension> ExtensionWidgetOverrides;
 
 	// table index 9, flags 0x4000000008001c
 	UPROPERTY()

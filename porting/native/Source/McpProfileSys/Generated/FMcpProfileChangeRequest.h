@@ -13,7 +13,7 @@
 #include "FMcpProfileChangeRequest.generated.h"
 
 USTRUCT()
-struct FMcpProfileChangeRequest
+struct MCPPROFILESYS_API FMcpProfileChangeRequest
 {
 	GENERATED_BODY()
 

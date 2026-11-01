@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "EFortBrushSize.h"
 #include "UCommonTextBlock.h"
 #include "UFortAbilityKit.h"
 
@@ -21,6 +22,10 @@ class FORTNITEUI_API UFortHeroLoadoutPerkTileBase : public UCommonUserWidget
 	GENERATED_BODY()
 
 public:
+	// table index 10, flags 0x20080000000001
+	UPROPERTY()
+	TEnumAsByte<EFortBrushSize::Type> BrushSize;
+
 	// table index 9, flags 0x20080000000001
 	UPROPERTY()
 	bool bShowSummaryDescription;

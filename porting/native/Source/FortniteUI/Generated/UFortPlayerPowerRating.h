@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "EFortHomebaseRatingType.h"
 #include "FOnPowerRatingUpdated.h"
 
 #include "UFortPlayerPowerRating.generated.h"
@@ -19,6 +20,10 @@ public:
 	// table index 2, flags 0x10000010080000
 	UPROPERTY()
 	FOnPowerRatingUpdated OnPowerRatingUpdated;
+
+	// table index 0, flags 0x20080000000015
+	UPROPERTY()
+	EFortHomebaseRatingType PowerRatingType;
 
 };
 

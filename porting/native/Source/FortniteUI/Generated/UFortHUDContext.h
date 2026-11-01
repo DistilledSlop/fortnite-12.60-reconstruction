@@ -11,6 +11,7 @@
 #include "AFortPlayerPawn.h"
 #include "AFortPlayerState.h"
 #include "AFortWeapon.h"
+#include "FFortPawnEquippedWeaponSignature.h"
 #include "FHUDBasicDelegate.h"
 #include "FOnActiveGameplayModifiersChangedDelegate.h"
 #include "FOnActorFocusedForCreative.h"
@@ -25,7 +26,9 @@
 #include "FOnDamagedResourceBuilding.h"
 #include "FOnDebugHUDObjectiveHeightChanged.h"
 #include "FOnEarnedBadgesChanged.h"
+#include "FOnEndOfDayRecap.h"
 #include "FOnFocusedBuildingAttachedTrapChanged.h"
+#include "FOnFocusedBuildingStateChanged.h"
 #include "FOnFocusedMissionChanged.h"
 #include "FOnGameViewportActivationChangedDelegate.h"
 #include "FOnHUDElementVisibilityChanged.h"
@@ -33,12 +36,16 @@
 #include "FOnHighlightsCountChanged.h"
 #include "FOnHitPointStatChanged.h"
 #include "FOnHitPointsModified.h"
+#include "FOnHordeTierCompleteDelegate.h"
+#include "FOnHordeTierInitializedDelegate.h"
+#include "FOnHordeWaveCompleteDelegate.h"
 #include "FOnIndicatorModeChangedDelegate.h"
 #include "FOnInteractUpdated.h"
 #include "FOnInteractionCostChanged.h"
 #include "FOnMgmtMenuTabChangeRequestedDelegate.h"
 #include "FOnNumSurvivorsRescuedUpdate.h"
 #include "FOnPersonalVehicleModeChange.h"
+#include "FOnPlayerDeath.h"
 #include "FOnPlayerKillsChanged.h"
 #include "FOnPlayerPlaceChanged.h"
 #include "FOnPlayerRevived.h"
@@ -46,7 +53,9 @@
 #include "FOnPlayerTargetingChangedDelegate.h"
 #include "FOnPointOfInterestAdded.h"
 #include "FOnPointOfInterestRemoved.h"
+#include "FOnRequestPromptDisplayDelegate.h"
 #include "FOnScoreChanged.h"
+#include "FOnScoreStatChanged.h"
 #include "FOnSettingsApplied.h"
 #include "FOnShouldTriggerCooldownUpdate.h"
 #include "FOnToggleScoreboardDelegate.h"
@@ -56,6 +65,8 @@
 #include "FOnVehicleStateChanged.h"
 #include "FOnWaveBasedModifiersAppliedDelegate.h"
 #include "FOnWaveCombatStart.h"
+#include "FOnWeaponHudKeyActionUpdated.h"
+#include "FPawnUpdatedDecisionWindowStackSignature.h"
 
 class UFortTouchControlRegion;
 
@@ -74,6 +85,10 @@ public:
 	// table index 83, flags 0x10000010080000
 	UPROPERTY()
 	FOnCursorModeChangedDelegate OnCursorModeChanged;
+
+	// table index 82, flags 0x10000010080000
+	UPROPERTY()
+	FOnRequestPromptDisplayDelegate OnRequestPromptDisplay;
 
 	// table index 81, flags 0x10000010080000
 	UPROPERTY()
@@ -102,6 +117,10 @@ public:
 	// table index 75, flags 0x10000010080000
 	UPROPERTY()
 	FOnActorFocusedForCreative OnActorFocusedForCreative;
+
+	// table index 74, flags 0x10000010080000
+	UPROPERTY()
+	FOnFocusedBuildingStateChanged OnFocusedBuildingStateChanged;
 
 	// table index 73, flags 0x10000010080000
 	UPROPERTY()
@@ -143,6 +162,10 @@ public:
 	UPROPERTY()
 	FOnScoreChanged OnScoreChanged;
 
+	// table index 63, flags 0x10000010080000
+	UPROPERTY()
+	FOnScoreStatChanged OnScoreStatChanged;
+
 	// table index 62, flags 0x10000010080000
 	UPROPERTY()
 	FHUDBasicDelegate OnZoneCompleted;
@@ -166,6 +189,10 @@ public:
 	// table index 57, flags 0x10000010080000
 	UPROPERTY()
 	FOnHitPointsModified OnLocalPlayerHealthChanged;
+
+	// table index 56, flags 0x10000010080000
+	UPROPERTY()
+	FOnPlayerDeath OnLocalPlayerDied;
 
 	// table index 55, flags 0x10000010080000
 	UPROPERTY()
@@ -211,6 +238,10 @@ public:
 	UPROPERTY()
 	FOnToggleScoreboardDelegate OnToggleScoreboard;
 
+	// table index 44, flags 0x10000010080000
+	UPROPERTY()
+	FOnEndOfDayRecap OnEndOfDayRecap;
+
 	// table index 43, flags 0x10000010080000
 	UPROPERTY()
 	FOnWaveCombatStart OnWaveCombatStart;
@@ -222,6 +253,18 @@ public:
 	// table index 41, flags 0x10000010080000
 	UPROPERTY()
 	FOnActiveGameplayModifiersChangedDelegate OnActiveGameplayModifiersChanged;
+
+	// table index 40, flags 0x10000010080000
+	UPROPERTY()
+	FOnHordeTierInitializedDelegate OnHordeTierInitialized;
+
+	// table index 39, flags 0x10000010080000
+	UPROPERTY()
+	FOnHordeTierCompleteDelegate OnHordeTierComplete;
+
+	// table index 38, flags 0x10000010080000
+	UPROPERTY()
+	FOnHordeWaveCompleteDelegate OnHordeWaveComplete;
 
 	// table index 37, flags 0x10000010080000
 	UPROPERTY()
@@ -238,6 +281,18 @@ public:
 	// table index 34, flags 0x10000010080000
 	UPROPERTY()
 	FOnShouldTriggerCooldownUpdate OnShouldTriggerCooldownUpdate;
+
+	// table index 33, flags 0x10000010080000
+	UPROPERTY()
+	FFortPawnEquippedWeaponSignature OnWeaponEquippedDelegate;
+
+	// table index 32, flags 0x10000010080000
+	UPROPERTY()
+	FOnWeaponHudKeyActionUpdated OnWeaponHudKeyActionUpdated;
+
+	// table index 31, flags 0x10000010080000
+	UPROPERTY()
+	FPawnUpdatedDecisionWindowStackSignature OnAbilityDecisionWindowStackUpdated;
 
 	// table index 30, flags 0x10000010080000
 	UPROPERTY()

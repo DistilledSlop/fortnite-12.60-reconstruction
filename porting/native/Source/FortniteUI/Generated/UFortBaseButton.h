@@ -7,6 +7,8 @@
 #include "UFortUserWidget.h"
 
 #include "EFortBangSize.h"
+#include "EFortBangType.h"
+#include "EFortBrushSize.h"
 #include "EFortTutorialGlowType.h"
 #include "FFortBaseButtonClicked.h"
 #include "FFortEnabledStateChanged.h"
@@ -44,6 +46,10 @@ public:
 	UPROPERTY()
 	FVector2D BangOffset;
 
+	// table index 12, flags 0x21080000000015
+	UPROPERTY()
+	EFortBangType BangType;
+
 	// table index 11, flags 0x21080000000015
 	UPROPERTY()
 	FName TutorialNameID;
@@ -55,6 +61,10 @@ public:
 	// table index 8, flags 0x25080000000015
 	UPROPERTY()
 	TSubclassOf<UFortButtonStyle> Style;
+
+	// table index 7, flags 0x21080000000015
+	UPROPERTY()
+	TEnumAsByte<EFortBrushSize::Type> BrushSize;
 
 	// table index 6, flags 0x20080000000015
 	UPROPERTY()

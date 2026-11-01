@@ -7,6 +7,7 @@
 #include "UFortActivatablePanelLTM.h"
 
 #include "AFortAthenaMutator_PerkSystemMutator.h"
+#include "FPerkMutatorData.h"
 
 class UOverlay;
 class UPerkIntroScreenWidget;
@@ -31,6 +32,10 @@ public:
 	// table index 2, flags 0x20080000080008
 	UPROPERTY()
 	UPerkIntroScreenWidget* PerkIntroScreenWidget;
+
+	// table index 1, flags 0x20080000000000
+	UPROPERTY()
+	FPerkMutatorData MutatorData;
 
 	// table index 0, flags 0x2008000008001c
 	UPROPERTY()

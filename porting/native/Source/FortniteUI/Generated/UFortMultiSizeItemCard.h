@@ -7,6 +7,8 @@
 #include "UFortItemWidget_NUI.h"
 
 #include "EFortItemCardSize.h"
+#include "EFortItemType.h"
+#include "EFortRarity.h"
 
 #include "UFortMultiSizeItemCard.generated.h"
 
@@ -27,6 +29,14 @@ public:
 	// table index 9, flags 0x10000000000015
 	UPROPERTY()
 	int32 QuantityOverride;
+
+	// table index 7, flags 0x10000000000015
+	UPROPERTY()
+	EFortRarity RarityOverride;
+
+	// table index 5, flags 0x10000000000015
+	UPROPERTY()
+	EFortItemType EmptyItemType;
 
 	// table index 4, flags 0x10000000000015
 	UPROPERTY()

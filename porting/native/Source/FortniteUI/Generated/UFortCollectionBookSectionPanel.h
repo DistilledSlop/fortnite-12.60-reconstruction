@@ -8,9 +8,11 @@
 
 #include "ECollectionBookSectionNavTarget.h"
 #include "Engine/DataTable.h"
+#include "FFortDialogExternalLatentActionHandle.h"
 #include "FOnItemAction.h"
 #include "FOnItemInspectAction.h"
 #include "FOnPreviewXPChange.h"
+#include "FOnResearchItemAction.h"
 #include "FOnSectionCloseRequest.h"
 #include "UCommonTextBlock.h"
 #include "UFortCollectionBookSection.h"
@@ -145,6 +147,10 @@ public:
 	UPROPERTY(Transient)
 	bool bHasSummonedPanel;
 
+	// table index 5, flags 0x20080000002000
+	UPROPERTY(Transient)
+	FFortDialogExternalLatentActionHandle SlotConfirmationDialogLatentHandle;
+
 	// table index 4, flags 0x20080010080000
 	UPROPERTY()
 	FOnItemAction OnShowItemDetailEvent;
@@ -152,6 +158,10 @@ public:
 	// table index 3, flags 0x20080010080000
 	UPROPERTY()
 	FOnItemAction OnSlotItemConfirmEvent;
+
+	// table index 2, flags 0x20080010080000
+	UPROPERTY()
+	FOnResearchItemAction OnResearchItemConfirmEvent;
 
 	// table index 1, flags 0x20080010080000
 	UPROPERTY()

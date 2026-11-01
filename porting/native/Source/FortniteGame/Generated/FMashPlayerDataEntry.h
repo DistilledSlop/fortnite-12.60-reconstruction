@@ -12,7 +12,7 @@ class AFortPlayerStateAthena;
 #include "FMashPlayerDataEntry.generated.h"
 
 USTRUCT()
-struct FMashPlayerDataEntry : public FFastArraySerializerItem
+struct FORTNITEGAME_API FMashPlayerDataEntry : public FFastArraySerializerItem
 {
 	GENERATED_BODY()
 

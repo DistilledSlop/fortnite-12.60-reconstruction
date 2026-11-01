@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonActivatableWidget.h"
 
+#include "FTournamentPayoutThresholdData.h"
 #include "UCommonTextBlock.h"
 
 class UDynamicEntryBox;
@@ -33,6 +34,10 @@ public:
 	// table index 2, flags 0x40000000080008
 	UPROPERTY()
 	UDynamicEntryBox* DynamicEntryBox_PayoutThresholds;
+
+	// table index 0, flags 0x40000000002000
+	UPROPERTY(Transient)
+	TArray<FTournamentPayoutThresholdData> TournamentPayoutData;
 
 };
 

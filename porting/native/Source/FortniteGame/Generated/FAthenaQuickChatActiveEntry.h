@@ -11,7 +11,7 @@ class UObject;
 #include "FAthenaQuickChatActiveEntry.generated.h"
 
 USTRUCT()
-struct FAthenaQuickChatActiveEntry
+struct FORTNITEGAME_API FAthenaQuickChatActiveEntry
 {
 	GENERATED_BODY()
 

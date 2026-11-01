@@ -8,6 +8,7 @@
 
 #include "EFortItemCardSize.h"
 #include "Engine/EngineTypes.h"
+#include "FFortRewardInfo.h"
 #include "FOnDisplayedItemChangedEvent.h"
 #include "UFortItem.h"
 
@@ -53,6 +54,10 @@ public:
 	// table index 4, flags 0x20080000000015
 	UPROPERTY()
 	bool bDisplayAsRewardCard;
+
+	// table index 3, flags 0x20080000002000
+	UPROPERTY(Transient)
+	FFortRewardInfo RepresentedRewards;
 
 	// table index 1, flags 0x20080000002000
 	UPROPERTY(Transient)

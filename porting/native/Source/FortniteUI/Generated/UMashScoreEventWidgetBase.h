@@ -8,6 +8,7 @@
 
 #include "AFortAthenaMutator_Mash.h"
 #include "AFortPlayerStateAthena.h"
+#include "FMashPlayerDataEntry.h"
 
 #include "UMashScoreEventWidgetBase.generated.h"
 
@@ -24,6 +25,10 @@ public:
 	// table index 2, flags 0x20080000002000
 	UPROPERTY(Transient)
 	AFortPlayerStateAthena* CachedLocalPlayerState;
+
+	// table index 1, flags 0x20080000002000
+	UPROPERTY(Transient)
+	FMashPlayerDataEntry CachedLocalPlayerEntry;
 
 	// table index 0, flags 0x20080000002014
 	UPROPERTY(Transient)

@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "Engine/DataAsset.h"
 
+#include "FFortChallengeSetStyle.h"
 #include "Math/Color.h"
 
 class UTexture2D;
@@ -37,6 +38,14 @@ public:
 	// table index 2, flags 0x10000000000001
 	UPROPERTY()
 	UTexture2D* ExternalPartyAssistIcon;
+
+	// table index 1, flags 0x10000000000001
+	UPROPERTY()
+	FFortChallengeSetStyle DefaultChallengeStyle;
+
+	// table index 0, flags 0x10000000000001
+	UPROPERTY()
+	FFortChallengeSetStyle DailyChallengeStyle;
 
 };
 

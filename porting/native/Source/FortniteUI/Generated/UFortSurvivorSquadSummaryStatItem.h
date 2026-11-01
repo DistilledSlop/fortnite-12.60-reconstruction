@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "EFortBrushSize.h"
 #include "UCommonTextBlock.h"
 
 class UImage;
@@ -18,6 +19,10 @@ class FORTNITEUI_API UFortSurvivorSquadSummaryStatItem : public UCommonUserWidge
 	GENERATED_BODY()
 
 public:
+	// table index 3, flags 0x10000000000005
+	UPROPERTY()
+	TEnumAsByte<EFortBrushSize::Type> ImageSize;
+
 	// table index 2, flags 0x1000000008001c
 	UPROPERTY()
 	UImage* Icon;

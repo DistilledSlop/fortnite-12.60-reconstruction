@@ -6,6 +6,9 @@
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
 
+#include "FFortMultiSizeFont.h"
+#include "FFortMultiSizeMargin.h"
+#include "FFortStateStyle.h"
 #include "Sound/SlateSound.h"
 
 #include "UFortButtonStyle.generated.h"
@@ -16,6 +19,46 @@ class FORTNITEUI_API UFortButtonStyle : public UObject
 	GENERATED_BODY()
 
 public:
+	// table index 11, flags 0x10000000010015
+	UPROPERTY()
+	FFortStateStyle NormalBase;
+
+	// table index 10, flags 0x10000000010015
+	UPROPERTY()
+	FFortStateStyle NormalHovered;
+
+	// table index 9, flags 0x10000000010015
+	UPROPERTY()
+	FFortStateStyle NormalPressed;
+
+	// table index 8, flags 0x10000000010015
+	UPROPERTY()
+	FFortStateStyle SelectedBase;
+
+	// table index 7, flags 0x10000000010015
+	UPROPERTY()
+	FFortStateStyle SelectedHovered;
+
+	// table index 6, flags 0x10000000010015
+	UPROPERTY()
+	FFortStateStyle SelectedPressed;
+
+	// table index 5, flags 0x10000000010015
+	UPROPERTY()
+	FFortStateStyle Disabled;
+
+	// table index 4, flags 0x10000000010015
+	UPROPERTY()
+	FFortMultiSizeMargin ButtonPadding;
+
+	// table index 3, flags 0x10000000010015
+	UPROPERTY()
+	FFortMultiSizeFont Font;
+
+	// table index 2, flags 0x10000000010015
+	UPROPERTY()
+	FFortMultiSizeMargin CustomPadding;
+
 	// table index 1, flags 0x10000000010015
 	UPROPERTY()
 	FSlateSound PressedSlateSound;

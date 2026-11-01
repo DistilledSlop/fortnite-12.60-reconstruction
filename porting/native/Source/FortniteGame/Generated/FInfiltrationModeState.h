@@ -10,7 +10,7 @@
 #include "FInfiltrationModeState.generated.h"
 
 USTRUCT()
-struct FInfiltrationModeState
+struct FORTNITEGAME_API FInfiltrationModeState
 {
 	GENERATED_BODY()
 

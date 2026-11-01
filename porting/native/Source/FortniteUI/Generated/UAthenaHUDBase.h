@@ -8,6 +8,7 @@
 
 #include "AFortVolume.h"
 #include "FMutatorAddedWidgets.h"
+#include "FPlaylistUIExtension.h"
 
 class UAthenaEquippedItemBase;
 class UAthenaHUDMenu;
@@ -89,6 +90,14 @@ public:
 	// table index 4, flags 0x20080000000000
 	UPROPERTY()
 	TArray<FMutatorAddedWidgets> MutatorAddedWidgets;
+
+	// table index 2, flags 0x40000000010001
+	UPROPERTY()
+	TArray<FPlaylistUIExtension> TournamentUIExtensions;
+
+	// table index 0, flags 0x40000000010001
+	UPROPERTY()
+	TArray<FPlaylistUIExtension> ArenaTournamentUIExtensions;
 
 };
 

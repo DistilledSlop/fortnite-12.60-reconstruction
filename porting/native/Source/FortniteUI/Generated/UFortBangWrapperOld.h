@@ -7,6 +7,7 @@
 #include "Components/ContentWidget.h"
 
 #include "EFortBangSize.h"
+#include "EFortBangType.h"
 #include "EFortTutorialGlowType.h"
 #include "Math/Vector2D.h"
 
@@ -25,6 +26,10 @@ public:
 	// table index 5, flags 0x10000000000015
 	UPROPERTY()
 	FVector2D Offset;
+
+	// table index 3, flags 0x10000000000015
+	UPROPERTY()
+	EFortBangType BangType;
 
 	// table index 2, flags 0x10000000000015
 	UPROPERTY()

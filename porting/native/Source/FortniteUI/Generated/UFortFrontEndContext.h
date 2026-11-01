@@ -10,6 +10,7 @@
 #include "FLobbyEmptyPlayerClickedDelegate.h"
 #include "FLobbyPlayerGadgetsClickedDelegate.h"
 #include "FLobbyPlayerPartySuggestionAccept.h"
+#include "FOnCameraChangedDelegate.h"
 #include "FOnLobbyPlayerMutingChangedDelegate.h"
 #include "FOnLobbyPlayerTalkingChangedDelegate.h"
 #include "FOnLobbyPlayersStoppedTalkingDelegate.h"
@@ -67,6 +68,10 @@ public:
 	// table index 22, flags 0x10100010080000
 	UPROPERTY()
 	FOnRadialPickerStatusChanged OnRadialPickerStatusChanged;
+
+	// table index 21, flags 0x10000010080000
+	UPROPERTY()
+	FOnCameraChangedDelegate OnFrontEndCameraChanged;
 
 	// table index 20, flags 0x10100010080000
 	UPROPERTY()

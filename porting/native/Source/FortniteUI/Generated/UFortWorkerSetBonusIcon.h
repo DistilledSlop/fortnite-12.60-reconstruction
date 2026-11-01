@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "EFortBrushSize.h"
 #include "GameplayTagContainer.h"
 
 class UImage;
@@ -21,6 +22,10 @@ public:
 	// table index 2, flags 0x10000000000005
 	UPROPERTY()
 	FGameplayTag GameplayTag;
+
+	// table index 1, flags 0x10000000000005
+	UPROPERTY()
+	TEnumAsByte<EFortBrushSize::Type> ImageSize;
 
 	// table index 0, flags 0x1000000008001c
 	UPROPERTY()

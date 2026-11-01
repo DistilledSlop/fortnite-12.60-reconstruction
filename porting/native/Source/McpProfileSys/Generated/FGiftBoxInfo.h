@@ -11,7 +11,7 @@
 #include "FGiftBoxInfo.generated.h"
 
 USTRUCT()
-struct FGiftBoxInfo
+struct MCPPROFILESYS_API FGiftBoxInfo
 {
 	GENERATED_BODY()
 

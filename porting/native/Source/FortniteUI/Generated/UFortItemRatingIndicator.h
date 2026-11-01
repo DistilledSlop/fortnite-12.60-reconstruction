@@ -7,6 +7,7 @@
 #include "UCommonUserWidget.h"
 
 #include "EFortBuffState.h"
+#include "FFortMultiSizeBrush.h"
 #include "UFortItem.h"
 
 #include "UFortItemRatingIndicator.generated.h"
@@ -24,6 +25,10 @@ public:
 	// table index 5, flags 0x14000000000014
 	UPROPERTY()
 	TWeakObjectPtr<UFortItem> ItemToCompareWith;
+
+	// table index 4, flags 0x20080000000014
+	UPROPERTY()
+	FFortMultiSizeBrush RatingTypeIcon;
 
 	// table index 3, flags 0x20080000000014
 	UPROPERTY()

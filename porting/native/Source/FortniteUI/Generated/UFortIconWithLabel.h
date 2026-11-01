@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "Components/Widget.h"
 
+#include "EFortBrushSize.h"
 #include "UCommonTextStyle.h"
 
 #include "UFortIconWithLabel.generated.h"
@@ -23,6 +24,10 @@ public:
 	// table index 3, flags 0x11000000000015
 	UPROPERTY()
 	bool ShouldCollapseIconWhenNotShown;
+
+	// table index 2, flags 0x11000000000015
+	UPROPERTY()
+	TEnumAsByte<EFortBrushSize::Type> IconBrushSize;
 
 	// table index 1, flags 0x11000000000015
 	UPROPERTY()

@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanel.h"
 
+#include "FFortReceivedItemLootInfo.h"
 #include "UCommonButton.h"
 
 class UFortItemInfoPresentationWidget;
@@ -20,6 +21,10 @@ class FORTNITEUI_API UFortItemNotification : public UFortActivatablePanel
 	GENERATED_BODY()
 
 public:
+	// table index 5, flags 0x20080000000014
+	UPROPERTY()
+	TArray<FFortReceivedItemLootInfo> ItemDefs;
+
 	// table index 4, flags 0x20080000000001
 	UPROPERTY()
 	float BodyTextWrapWidth;

@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "EFireModeType.h"
 #include "UCommonButton.h"
 
 class UFortMovieWidget;
@@ -19,6 +20,10 @@ class FORTNITEUI_API UHUDLayoutToolFireModeButton : public UCommonUserWidget
 	GENERATED_BODY()
 
 public:
+	// table index 5, flags 0x20080000000015
+	UPROPERTY()
+	EFireModeType FireModeType;
+
 	// table index 4, flags 0x20080000000015
 	UPROPERTY()
 	FText FireModeName;

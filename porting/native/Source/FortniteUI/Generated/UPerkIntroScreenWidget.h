@@ -8,6 +8,7 @@
 
 #include "FOnPerkIntroFinished.h"
 #include "FPerkPipData.h"
+#include "FRoundTechDataCache.h"
 #include "GameplayTagContainer.h"
 
 #include "UPerkIntroScreenWidget.generated.h"
@@ -33,6 +34,10 @@ public:
 	// table index 2, flags 0x10000000000014
 	UPROPERTY()
 	TArray<FPerkPipData> PerkPipData;
+
+	// table index 1, flags 0x10000000000014
+	UPROPERTY()
+	FRoundTechDataCache StartRoundCache;
 
 	// table index 0, flags 0x10000000000014
 	UPROPERTY()

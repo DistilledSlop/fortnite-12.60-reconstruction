@@ -7,6 +7,7 @@
 #include "UPerkIntroScreenWidget.h"
 
 #include "AFortGameplayMutator.h"
+#include "UInfiltrationRoundInfoMutatorInterface.h"
 
 #include "UInfiltrationRoundInfoWidget.generated.h"
 
@@ -43,6 +44,10 @@ public:
 	// table index 1, flags 0x24080000010001
 	UPROPERTY()
 	TSubclassOf<AFortGameplayMutator> MutatorClassToWaitFor;
+
+	// table index 0, flags 0x24080000000000
+	UPROPERTY()
+	TScriptInterface<IInfiltrationRoundInfoMutatorInterface> CachedMutator;
 
 };
 

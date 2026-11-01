@@ -7,6 +7,7 @@
 #include "UFortActivatablePanelWithItemPreview.h"
 
 #include "Engine/DataTable.h"
+#include "FGiftingErrorText.h"
 #include "UCommonButton.h"
 #include "UCommonButtonGroup.h"
 #include "UCommonListView.h"
@@ -53,6 +54,14 @@ public:
 	// table index 14, flags 0x20080000002000
 	UPROPERTY(Transient)
 	UFortUserDetails* LocalPlayerDetails;
+
+	// table index 12, flags 0x20080000000001
+	UPROPERTY()
+	TArray<FGiftingErrorText> GiftingErrorMessages;
+
+	// table index 11, flags 0x20080000000001
+	UPROPERTY()
+	FGiftingErrorText GiftingErrorMessageDefault;
 
 	// table index 9, flags 0x20080000000000
 	UPROPERTY()

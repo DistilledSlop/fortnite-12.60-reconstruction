@@ -12,7 +12,7 @@ class UFortAbilityKit;
 #include "FFortSpecializationSlot.generated.h"
 
 USTRUCT()
-struct FFortSpecializationSlot
+struct FORTNITEGAME_API FFortSpecializationSlot
 {
 	GENERATED_BODY()
 

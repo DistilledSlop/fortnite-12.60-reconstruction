@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortItemPickerBase.h"
 
+#include "FOnSlotItemConfirmed.h"
 #include "UFortAccountItem.h"
 
 class UFortMulchConfirmationModalWidget;
@@ -18,6 +19,10 @@ class FORTNITEUI_API UFortCollectionBookPicker : public UFortItemPickerBase
 	GENERATED_BODY()
 
 public:
+	// table index 3, flags 0x10000010080000
+	UPROPERTY()
+	FOnSlotItemConfirmed OnSlotItemConfirmationCompleteEvent;
+
 	// table index 2, flags 0x24080000000815
 	UPROPERTY()
 	TSubclassOf<UFortMulchConfirmationModalWidget> MulchConfirmationModalClass;

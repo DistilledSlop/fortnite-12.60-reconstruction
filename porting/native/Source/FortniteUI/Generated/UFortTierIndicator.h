@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "Components/Widget.h"
 
+#include "EFortBrushSize.h"
 #include "UFortItem.h"
 
 #include "UFortTierIndicator.generated.h"
@@ -19,6 +20,10 @@ public:
 	// table index 2, flags 0x15000000000014
 	UPROPERTY()
 	TWeakObjectPtr<UFortItem> ItemToRepresent;
+
+	// table index 1, flags 0x11000000000015
+	UPROPERTY()
+	TEnumAsByte<EFortBrushSize::Type> BrushSize;
 
 	// table index 0, flags 0x11000000000015
 	UPROPERTY()

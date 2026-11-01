@@ -10,7 +10,7 @@
 #include "FProfileUpdateSingle.generated.h"
 
 USTRUCT()
-struct FProfileUpdateSingle
+struct MCPPROFILESYS_API FProfileUpdateSingle
 {
 	GENERATED_BODY()
 

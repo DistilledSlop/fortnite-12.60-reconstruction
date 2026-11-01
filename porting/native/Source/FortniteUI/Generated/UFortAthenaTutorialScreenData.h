@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "Engine/DataAsset.h"
 
+#include "FFortAthenaTutorialStandaloneStepInfo.h"
 #include "FFortAthenaTutorialStepInfo.h"
 
 #include "UFortAthenaTutorialScreenData.generated.h"
@@ -19,6 +20,10 @@ public:
 	// table index 2, flags 0x40000000000001
 	UPROPERTY()
 	TArray<FFortAthenaTutorialStepInfo> TutorialSteps;
+
+	// table index 0, flags 0x40000000000001
+	UPROPERTY()
+	TArray<FFortAthenaTutorialStandaloneStepInfo> StandaloneTutorialSteps;
 
 };
 

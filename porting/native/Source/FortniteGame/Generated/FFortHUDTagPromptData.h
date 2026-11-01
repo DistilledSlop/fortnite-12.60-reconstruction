@@ -11,7 +11,7 @@ class UUserWidget;
 #include "FFortHUDTagPromptData.generated.h"
 
 USTRUCT()
-struct FFortHUDTagPromptData
+struct FORTNITEGAME_API FFortHUDTagPromptData
 {
 	GENERATED_BODY()
 

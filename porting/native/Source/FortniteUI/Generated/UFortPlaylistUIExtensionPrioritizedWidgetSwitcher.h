@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortPrioritizedWidgetSwitcher.h"
 
+#include "EPlaylistUIExtensionSlot.h"
 #include "Types/SlateEnums.h"
 
 class UFortPlaylistUIExtensionLoader;
@@ -25,6 +26,10 @@ public:
 	// table index 4, flags 0x40000000000001
 	UPROPERTY()
 	TEnumAsByte<EVerticalAlignment> ContentVerticalAlignment;
+
+	// table index 1, flags 0x40000000000001
+	UPROPERTY()
+	TArray<EPlaylistUIExtensionSlot> ExtensionSlots;
 
 	// table index 0, flags 0x40000000002000
 	UPROPERTY(Transient)

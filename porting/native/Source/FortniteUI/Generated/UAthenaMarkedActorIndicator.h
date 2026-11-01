@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortActorIndicatorWidget.h"
 
+#include "FFortWorldMarkerData.h"
+#include "FMarkedActorDisplayInfo.h"
 #include "UCommonTextBlock.h"
 #include "UFortMarkerDetailsTable.h"
 
@@ -20,6 +22,14 @@ class FORTNITEUI_API UAthenaMarkedActorIndicator : public UFortActorIndicatorWid
 	GENERATED_BODY()
 
 public:
+	// table index 8, flags 0x20080000000000
+	UPROPERTY()
+	FFortWorldMarkerData MarkerData;
+
+	// table index 7, flags 0x20080000000014
+	UPROPERTY()
+	FMarkedActorDisplayInfo MarkerDisplay;
+
 	// table index 6, flags 0x20080000000015
 	UPROPERTY()
 	UFortMarkerDetailsTable* DetailsTable;

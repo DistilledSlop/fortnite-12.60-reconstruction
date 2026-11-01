@@ -6,6 +6,9 @@
 #include "CoreMinimal.h"
 #include "UFortMatchmakingKnobsModal.h"
 
+#include "EFortCreativePlotPermission.h"
+#include "FFortCreativeWhitelistUserEntry.h"
+
 #include "UFortCreativePermissionOptions.generated.h"
 
 UCLASS(abstract)
@@ -14,5 +17,13 @@ class FORTNITEUI_API UFortCreativePermissionOptions : public UFortMatchmakingKno
 	GENERATED_BODY()
 
 public:
+	// table index 2, flags 0x10000000000004
+	UPROPERTY()
+	EFortCreativePlotPermission CurrentPermissionsEnum;
+
+	// table index 0, flags 0x10000000000014
+	UPROPERTY()
+	TArray<FFortCreativeWhitelistUserEntry> WhitelistedUsers;
+
 };
 

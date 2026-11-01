@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanel.h"
 
+#include "EFortInventoryCustomFilter.h"
+
 class UFortItemManagementScreen;
 
 #include "UFortItemManagementCustomFilterModalWidget.generated.h"
@@ -19,6 +21,14 @@ public:
 	// table index 6, flags 0x2408000008001c
 	UPROPERTY()
 	TWeakObjectPtr<UFortItemManagementScreen> HostItemManagementScreen;
+
+	// table index 3, flags 0x20080000000014
+	UPROPERTY()
+	TArray<EFortInventoryCustomFilter> AvailableFilters;
+
+	// table index 0, flags 0x40000000002000
+	UPROPERTY(Transient)
+	TSet<EFortInventoryCustomFilter> LocalCustomFilterSet;
 
 };
 
