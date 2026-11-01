@@ -33,6 +33,33 @@ class HistoryRepairTests(unittest.TestCase):
         self.assertEqual(repaired, [current])
 
 
+class HistoryChartTests(unittest.TestCase):
+    def test_large_history_keeps_every_commit_and_safe_details(self):
+        entries = [dict(short=f"{i:07x}", date="2026-01-01T00:00:00",
+                        subject="<commit>", overall_pct=i / 100,
+                        measured_pct=i / 200, categories={}) for i in range(391)]
+        page = progress.history_html(entries, dict(tree=[], definition="test"))
+        self.assertEqual(page.count('<tr><td>2026-01-01'), 391)
+        self.assertIn('0000000', page)
+        self.assertIn('0000186', page)
+        self.assertIn('\\u003ccommit>', page)
+        self.assertNotIn('<commit>', page)
+        self.assertIn('type="range"', page)
+        self.assertIn('data-history-action="all"', page)
+
+    def test_static_full_history_scale_includes_evidence_series(self):
+        entries = [dict(short="abc", date="2026-01-01", subject="test",
+                        overall_pct=1, measured_pct=12, categories={})]
+        page = progress.history_html(entries, dict(tree=[], definition="test"))
+        self.assertIn('>15%</text>', page)
+        self.assertIn('abc', page)
+
+    def test_empty_history_renders(self):
+        page = progress.history_html([], dict(tree=[], definition="test"))
+        self.assertIn('No recorded commits', page)
+        self.assertIn('Overall progress per commit', page)
+
+
 class ProgressModelTests(unittest.TestCase):
     def test_event_registration_scope_preserves_lifecycle_budget(self):
         import json

@@ -2,6 +2,18 @@
 
 ## Current resume point (2026-11-01)
 
+- Dashboard history now opens on the latest 50 commits, retaining all history, range controls and
+  adaptive labels/marker density. A keyboard/touch slider and pointer inspect individual commits;
+  the range reports fitted versus zero-baseline scale. Evidence values participate in both scale
+  calculations. Root reviewed the bounded Terra candidate and restored an accidental unrelated
+  treemap edit. `python3 -m unittest discover -s porting/progress -p test_history.py` passes all 9 tests;
+  `python3 porting/progress/progress.py --no-record` renders all 391 existing points; `git diff --check`
+  passes. Browser interaction remains untested because no browser runtime is installed. No progress
+  weights or milestone evidence changed.
+- The separate confirmation-description runtime candidate is finished in scratch only:
+  /mnt/vibrato/fortnite-work/confirmation-description-runtime-1/HANDOFF.md and
+  confirmation-runtime.patch. Its portable checks pass; root review, shared promotion, UE/UHT,
+  ABI/lifetime and live verification are still pending. It is not part of the validated Native baseline.
 - Latest confirmation type closure is source aa91a8efab55281d348c07c995bcded98fb414d9, now runtime-validated.
   The existing FortniteUI->FortniteGame dependency is admitted by type resolution; reverse direction remains
   refused. Cross-module struct exports are emitted without relocating ownership. This restores39enums,

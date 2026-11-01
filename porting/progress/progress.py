@@ -1886,7 +1886,8 @@ def history_html(history, model):
     n = len(entries)
     W, H = 900, 300
     pl, pr, pt, pb = 52, 16, 16, 34
-    ymax = max([10.0] + [math.ceil(e["overall_pct"] / 5.0) * 5.0 for e in entries] + [5.0])
+    ymax = max([10.0] + [math.ceil(v / 5.0) * 5.0 for e in entries
+                         for v in (e["overall_pct"], e.get("measured_pct")) if v is not None])
     ymax = max(ymax, 10.0)
     inner_w, inner_h = W - pl - pr, H - pt - pb
 
@@ -1934,11 +1935,14 @@ def history_html(history, model):
   const svg = document.querySelector('#history-chart svg');
   const status = document.getElementById('history-range');
   const detail = document.getElementById('history-detail');
+  const inspector = document.getElementById('history-inspector');
+  const selection = document.getElementById('history-selection');
   const buttons = document.querySelectorAll('[data-history-action]');
   document.querySelector('.history-controls').hidden = false;
-  detail.hidden = false;
+  inspector.hidden = false;
   const ns = 'http://www.w3.org/2000/svg';
-  let start = 0, end = data.length - 1;
+  let start = Math.max(0, data.length - 50), end = data.length - 1;
+  let selected = end, marker;
   function element(name, attrs, parent, content) {
     const node = document.createElementNS(ns, name);
     for (const [key, value] of Object.entries(attrs)) node.setAttribute(key, value);
@@ -1953,11 +1957,12 @@ def history_html(history, model):
     const count = end - start + 1;
     svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
     svg.replaceChildren();
-    if (!data.length) { status.textContent = 'No recorded commits'; buttons.forEach(button => button.disabled = true); return; }
+    if (!data.length) { status.textContent = 'No recorded commits'; buttons.forEach(button => button.disabled = true); selection.disabled = true; detail.textContent = 'No commit to inspect.'; return; }
     const visible = data.slice(start, end + 1);
     let ymin = 0, ymax, step;
     if (count === data.length) {
-      ymax = visible.reduce((max, p) => Math.max(max, Math.ceil(p.overall / 5) * 5), 10);
+      ymax = visible.reduce((max, p) => Math.max(max, Math.ceil(p.overall / 5) * 5,
+        p.measured == null ? 0 : Math.ceil(p.measured / 5) * 5), 10);
       step = ymax > 10 ? 5 : 2;
     } else {
       const values = visible.flatMap(p => p.measured == null ? [p.overall] : [p.overall, p.measured]);
@@ -1995,26 +2000,42 @@ def history_html(history, model):
     const indexes = new Set();
     for (let i = 0; i < labelCount; i++) indexes.add(labelCount === 1 ? 0 : Math.round(i * (count - 1) / (labelCount - 1)));
     indexes.forEach(i => element('text', {x:x(i), y:height-10, 'text-anchor':i === 0 ? 'start' : i === count-1 ? 'end' : 'middle', 'font-size':11, fill:'var(--ink2)'}, svg, visible[i].short));
+    marker = element('line', {y1:top, y2:height-bottom, stroke:'var(--ink2)', 'stroke-width':1, 'stroke-dasharray':'3 3', 'pointer-events':'none'}, svg);
     const overlay = element('rect', {x:left, y:top, width:inner, height:plotHeight, fill:'transparent', 'pointer-events':'all'}, svg);
     overlay.addEventListener('pointermove', event => {
       const rect = svg.getBoundingClientRect();
       const position = (event.clientX - rect.left) * width / rect.width;
       const index = count === 1 ? 0 : Math.max(0, Math.min(count - 1, Math.round((position - left) / inner * (count - 1))));
-      const p = visible[index];
-      detail.textContent = `${p.short} ${p.date}: ${p.overall.toFixed(2)}% | ${p.subject}`;
+      inspect(start + index);
     });
-    status.textContent = `Showing commits ${start + 1}–${end + 1} of ${data.length}`;
+    selection.min = start;
+    selection.max = end;
+    inspect(selected);
+    status.textContent = `Showing commits ${start + 1}–${end + 1} of ${data.length} (${count === data.length ? 'zero-baseline' : 'fitted'} scale)`;
     buttons.forEach(button => {
       const action = button.dataset.historyAction;
       button.disabled = action === 'older' ? start === 0 : action === 'newer' ? end === data.length - 1 :
         action === 'in' ? count <= 2 : action === 'out' || action === 'all' ? count === data.length : data.length <= 50;
     });
   }
+  function inspect(index) {
+    selected = Math.max(start, Math.min(end, index));
+    const p = data[selected];
+    selection.value = selected;
+    const width = Math.max(220, Math.round(svg.parentElement.clientWidth));
+    const position = 52 + (end > start ? (width - 68) * (selected - start) / (end - start) : (width - 68) / 2);
+    marker.setAttribute('x1', position);
+    marker.setAttribute('x2', position);
+    selection.setAttribute('aria-valuetext', `Commit ${selected + 1} of ${data.length}: ${p.short}, ${p.date}`);
+    const measured = p.measured == null ? '' : `; evidence-based ${p.measured.toFixed(2)}%`;
+    detail.textContent = `${p.short} ${p.date}: overall ${p.overall.toFixed(2)}%${measured} | ${p.subject}`;
+  }
+  selection.addEventListener('input', () => inspect(Number(selection.value)));
   function setRange(first, count) {
     count = Math.max(1, Math.min(data.length, count));
     start = Math.max(0, Math.min(data.length - count, first));
     end = start + count - 1;
-    detail.textContent = 'Move over the chart to inspect a commit.';
+    selected = Math.max(start, Math.min(end, selected));
     render();
   }
   buttons.forEach(button => button.addEventListener('click', () => {
@@ -2054,6 +2075,7 @@ svg text{{font-family:system-ui,-apple-system,Segoe UI,sans-serif}}
 #history-chart svg{{min-width:0}}
 .history-controls:not([hidden]){{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:.5rem 0}}
 .history-controls button{{font:inherit;padding:5px 9px}}
+#history-inspector input{{width:min(100%, 35rem);vertical-align:middle}}
 #history-detail{{min-height:1.5em}}
 </style></head>
 <body><main>
@@ -2073,8 +2095,12 @@ svg text{{font-family:system-ui,-apple-system,Segoe UI,sans-serif}}
 <span id="history-range" class="meta"></span>
 </div>
 <div class="chart-scroll" id="history-chart">{chart}</div>
-<p class="meta" id="history-detail" hidden>Move over the chart to inspect a commit.</p>
-<p class="meta">Selected ranges use a fitted vertical scale; all commits use a zero baseline. Solid line: overall including manual estimates. Dashed line: evidence-based progress only (basis <em>git</em>, <em>local</em> or <em>documented</em>), which includes documented counts. Estimates use the model in effect at each recording; model revisions can cause discontinuities. Points marked replay used the current components.json manual estimates and current ignored local outputs, so they are indicative. Hook-recorded points measure HEAD at commit time.</p>
+<div id="history-inspector" hidden>
+<label for="history-selection">Inspect commit in shown range</label>
+<input id="history-selection" type="range" step="1">
+<p class="meta" id="history-detail" aria-live="polite"></p>
+</div>
+<p class="meta">The chart opens on the most recent 50 commits when there are more than 50. Use the range controls to browse or show all history, and the slider or pointer to inspect a commit. Selected ranges use a fitted vertical scale; all commits use a zero baseline. Solid line: overall including manual estimates. Dashed line: evidence-based progress only (basis <em>git</em>, <em>local</em> or <em>documented</em>), which includes documented counts. Estimates use the model in effect at each recording; model revisions can cause discontinuities. Points marked replay used the current components.json manual estimates and current ignored local outputs, so they are indicative. Hook-recorded points measure HEAD at commit time.</p>
 <h2>Commits</h2>
 <div class="tablewrap"><table>
 <thead><tr><th>Date (UTC)</th><th>Commit</th><th>Subject</th><th>Overall</th>{head_cells}<th>Source</th></tr></thead>
