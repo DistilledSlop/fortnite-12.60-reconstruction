@@ -98,13 +98,13 @@ the overall figure) and a `measure`. Measures, from most objective to least:
 
 ### Material pipeline accounting
 
-The frontend allocation includes four separately evidenced material deliverables and
+The frontend allocation includes five separately evidenced material deliverables and
 remaining attachment and visual parity work. The four ledger IDs are
 `material_original_maps`, `material_shader_translation`, `material_uniform_evaluation`,
-and `material_locker_draw`: missing or failing entries earn no credit. Their source
+and `material_locker_draw`, and `material_locker_asset_ingress`: missing or failing entries earn no credit. Their source
 receipts are available from the dashboard as tracked evidence documents copied from
 the measured commit. The allocation moves 20 of the existing 60 frontend weight units
-into material work, including 12 units for unfinished integration; total project weight
+into material work, including 10 units for unfinished integration and two for the bounded original Locker actual-owner ingress; total project weight
 is unchanged. A completed detached draw is not a working UI root or visual parity.
 
 Coverage-only terrain, background, gameplay and CommonUI leaves are separate from
@@ -216,7 +216,7 @@ suite until one exists.
 
 ## Objectivity audit
 
-The following is a historical baseline, not a current dashboard snapshot.
+The following audit and every table and ceiling below are a historical baseline, superseded by the current model described above; they are not a current dashboard snapshot.
 
 Changed by the objectivity pass (`components.json` is the source of truth; each leaf's `rationale`
 has the same facts). Baseline: HEAD 9e6c524, before the change. Values for "after" assume

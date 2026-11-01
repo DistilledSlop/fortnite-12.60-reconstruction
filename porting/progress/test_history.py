@@ -40,8 +40,9 @@ class ProgressModelTests(unittest.TestCase):
         leaves = list(progress.walk_spec(model['tree']))
         material = [leaf for leaf in leaves if leaf['id'].startswith('ui.material_')]
         self.assertEqual(sum(leaf['weight'] for leaf in material), 20)
-        self.assertEqual(sum(leaf['weight'] for leaf in material if leaf['measure']['kind'] == 'ledger'), 8)
+        self.assertEqual(sum(leaf['weight'] for leaf in material if leaf['measure']['kind'] == 'ledger'), 10)
         self.assertEqual(next(leaf for leaf in material if leaf['id'] == 'ui.material_integration')['measure']['pct'], 0)
+        self.assertEqual(next(leaf for leaf in material if leaf['id'] == 'ui.material_locker_ingress')['measure']['checks'], ['material_locker_asset_ingress'])
         self.assertFalse(any(m.get('done') for m in model['milestones']))
         self.assertFalse(any('ceiling' in leaf for leaf in leaves))
 

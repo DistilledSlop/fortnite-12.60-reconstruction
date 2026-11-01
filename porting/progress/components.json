@@ -365,7 +365,7 @@
         {
           "id": "maps.apollo_terrain",
           "name": "Converted terrain tiles",
-          "weight": 15.749999999999998,
+          "weight": 15.75,
           "measure": {
             "kind": "fraction",
             "count_file": "porting/generated/converted/apollo-landscape-grid.json",
@@ -1359,7 +1359,29 @@
               "material_locker_draw"
             ]
           },
-          "rationale": "Eight live cases before and after freeze and a detached seven-shader Locker quad draw are verified; the actual material owner, normal attachment and comparison with original output remain open. See porting/material_pipeline/UE_BRIDGE.md.",
+          "rationale": "Eight live cases before and after freeze and a detached seven-shader Locker quad draw are verified. Actual-owner ingress is accounted for separately; original-output comparison remains open. See porting/material_pipeline/UE_BRIDGE.md.",
+          "evidence_links": [
+            {
+              "label": "Material pipeline evidence",
+              "href": "material-evidence.txt"
+            },
+            {
+              "label": "Runtime bridge evidence",
+              "href": "material-bridge-evidence.txt"
+            }
+          ]
+        },
+        {
+          "id": "ui.material_locker_ingress",
+          "name": "Original Locker material actual-owner ingress and draw",
+          "weight": 2,
+          "measure": {
+            "kind": "ledger",
+            "checks": [
+              "material_locker_asset_ingress"
+            ]
+          },
+          "rationale": "An opt-in runtime loaded the original Locker material through actual-owner ingress with all 19 records retained; its seven required shaders were complete and an attached quad responded to overrides. Other materials and layouts, textures, View resources, original-output parity and working UI roots remain open. See porting/material_pipeline/UE_MATERIAL_INGRESS.md.",
           "evidence_links": [
             {
               "label": "Material pipeline evidence",
@@ -1374,12 +1396,12 @@
         {
           "id": "ui.material_integration",
           "name": "Material attachment and frontend visual parity",
-          "weight": 12,
+          "weight": 10,
           "measure": {
             "kind": "manual",
             "pct": 0
           },
-          "rationale": "Actual material-owner completeness, normal attachment, remaining layouts and shaders, original-output comparisons and working UI roots are not yet verified. See porting/material_pipeline/UE_MATERIAL_INGRESS.md.",
+          "rationale": "Remaining material layouts, textures, View resources, original-output comparisons and working UI roots are not yet verified. The separately measured Locker actual-owner ingress is a bounded proof. See porting/material_pipeline/UE_MATERIAL_INGRESS.md.",
           "evidence_links": [
             {
               "label": "Material pipeline evidence",
