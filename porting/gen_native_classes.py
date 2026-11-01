@@ -3811,6 +3811,30 @@ class TypeTables:
             self.by_fn[fn] = TypeInfo(kind, fn, rec, cpp, package, header)
 
 
+def observed_confirmation_action(info):
+    """Validate the complete original Blueprint-visible struct before enabling its UHT representation."""
+    expected = [
+        ('ActionName', 'Name', '0x14', 168, None),
+        ('Icon', 'Struct', '0x19', 32, {'struct': '0x142fdb590'}),
+        ('ResultName', 'Name', '0x14', 24, None),
+        ('DisplayName', 'Text', '0x1d', 0, None),
+    ]
+    rec = info.rec
+    if (info.kind != 'struct' or info.fn != '0x142b25040' or info.cpp_name != 'FConfirmationDialogAction' or
+            info.package != '/Script/FortniteGame' or rec.get('name') != 'ConfirmationDialogAction' or
+            rec.get('size') != 176 or rec.get('align') != 8 or rec.get('super_fn') is not None or
+            len(rec.get('properties', [])) != len(expected)):
+        return False
+    for index, (prop, (name, kind, kind_raw, offset, refs)) in enumerate(zip(rec['properties'], expected)):
+        if (prop.get('index') != index or prop.get('name') != name or prop.get('kind') != kind or
+                prop.get('kind_raw') != kind_raw or prop.get('offset') != offset or
+                hx(prop.get('property_flags')) != 0x0010000000000004 or prop.get('array_dim') != 1 or
+                prop.get('object_flags') != '0x45' or prop.get('replicated') is not False or
+                prop.get('type_refs') != refs):
+            return False
+    return True
+
+
 class TypeGate:
     """Decides whether a struct, enum or delegate type reference can be emitted, and builds its model.
 
@@ -3909,6 +3933,9 @@ class TypeGate:
         try:
             child = self._child(info)
             reason = None
+            observed_blueprint = info.cpp_name == "FConfirmationDialogAction"
+            if observed_blueprint and not observed_confirmation_action(info):
+                return None, "original ConfirmationDialogAction Blueprint struct identity or fields differ"
             if any("error" in p for p in info.rec["properties"]):
                 reason = "unreadable property record"
             parent = None
@@ -3935,6 +3962,10 @@ class TypeGate:
                      "flags": info.rec.get("struct_flag_names", []), "size": info.rec.get("size"),
                      "align": info.rec.get("align"), "struct_ops": info.rec.get("struct_ops"),
                      "net": self.net_serializer(info, members)}
+            if observed_blueprint:
+                model["blueprint_type"] = True
+                for member in model["members"]:
+                    member["blueprint_read_write"] = True
             return model, None
         finally:
             self.current_package = saved
@@ -4207,14 +4238,14 @@ def render_struct_header(model, source_label):
         lines.append("// TODO: the native net serializer of %s is not recovered (ops vtable %s; %s). The default"
                      % (name, net.get("vtable"), ", ".join(net.get("traits", []))))
         lines.append("// serialization is used until it is ported.")
-    lines.append("USTRUCT()")
+    lines.append("USTRUCT(BlueprintType)" if model.get("blueprint_type") else "USTRUCT()")
     lines.append("struct %s%s" % (name, " : public %s" % model["parent"] if model["parent"] else ""))
     lines.append("{")
     lines.append("\tGENERATED_BODY()")
     lines.append("")
     for m in model["members"]:
         lines.append("\t// table index %s, offset %s, flags %s" % (m["table_index"], m["offset"], m["property_flags"]))
-        lines.append("\tUPROPERTY()")
+        lines.append("\tUPROPERTY(BlueprintReadWrite)" if m.get("blueprint_read_write") else "\tUPROPERTY()")
         lines.append("\t%s" % m["decl"])
         lines.append("")
     if delta:
