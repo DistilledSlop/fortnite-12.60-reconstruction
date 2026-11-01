@@ -6,7 +6,7 @@
       "id": "m1",
       "text": "The rebuilt client reaches the main menu with feature parity to the 12.60 original",
       "done": false,
-      "evidence": "The isolated hard-import closure contains 721 packages; this is dependency coverage, not successful runtime loading. Original-material ingress now has frozen actual-owner evidence for 120 numeric owners across checkpoints plus six fixed-owner cases, including named overrides, a sampled texture and targeted draws. The bounded closure ledger credits 121/142 owners; additional runtime dependencies remain outside that inventory. Matched stock Paper2D parent/instance packages load without fallback in an isolated stage. Latest verified event checkpoint e4e66b1 / Engine 8fba83b44 passes both builds, 12 material regressions and fresh default/Athena joins. RootLayout still fails at the original Keybind regular-texture material; Login stops at missing CommonActivatableWidget.BP_OnActivated. A 14-event source batch is generated as 7c0aca3 and is undergoing paired build/runtime validation. Neither root widget construction nor an interactive main menu has been demonstrated. Full frontend lifecycle, resource/cache fidelity and original visual parity remain unfinished (HANDOFF.md)."
+      "evidence": "The fixed hard-import closure contains 721 packages, and the bounded material ledger credits 121/142 owners across frozen actual-owner checkpoints. Both builds, material regressions and fresh default/Athena joins pass at frozen Keybind source 6b235fd / Engine 32351fe30. The Keybind regular texture additionally passes exact GPU source-byte and source/copy/checker sampling controls; RootLayout then stops at Athena_HollowCircularProgressBar. Login has passed the prior super-event failures and now stops at original MovieScene float-channel version framing. Seventeen original event signatures have both-target compiled UHT/ELF evidence; the fixed registration scope is 41 non-Native targets. The animation reader fix and actual loaded-key probe are undergoing validation. Widget construction, native lifecycle integration, an interactive menu and original visual parity remain unfinished (HANDOFF.md)."
     },
     {
       "id": "m2",
@@ -1271,7 +1271,7 @@
             ],
             "total_key": "uht_classes_named_commonui_umg"
           },
-          "rationale": "Done: tracked reflection-exact class headers for CommonUI and UMG (no UMG headers are generated). Total: named classes in /Script/CommonUI and /Script/UMG (totals.json). A 64x64 UI texture loads. No widget is loaded: a UI Blueprint fails on a missing CommonButton function, and no CommonUI behaviour runs. This leaf measures only this narrow coverage; the separate remaining-work leaf represents functionality and parity."
+          "rationale": "Tracked class headers over named original CommonUI/UMG classes measure class declaration coverage. Method registration has a separate bounded measure. No interactive root or CommonUI lifecycle parity is established by header presence."
         },
         {
           "id": "ui.commonui_umg.implementation",
@@ -1601,14 +1601,72 @@
           "rationale": "No main menu, lobby or matchmaking UI is reproduced. No objective metric yet: no menu or lobby widget is reproduced, and the widget Blueprints are not mapped to menus."
         },
         {
+          "id": "ui.frontend_event_registrations",
+          "name": "Frontend event registrations",
+          "weight": 1,
+          "measure": {
+            "kind": "ledger",
+            "checks": [
+              "frontend_event_signature_97a7a9a26cffc1ef",
+              "frontend_event_signature_6c3745abe695e828",
+              "frontend_event_signature_cef8ed789ea4cca6",
+              "frontend_event_signature_acdd5f250c07b3f5",
+              "frontend_event_signature_86be4fd63c1f3750",
+              "frontend_event_signature_be009a77ba833c9e",
+              "frontend_event_signature_f0e8d7f839d603a6",
+              "frontend_event_signature_7f410db84053bf97",
+              "frontend_event_signature_cad49b19554f2294",
+              "frontend_event_signature_082e932ed60cc28a",
+              "frontend_event_signature_5974ea6157df96a1",
+              "frontend_event_signature_6472bb99ee9b5eae",
+              "frontend_event_signature_d4680cda66578a74",
+              "frontend_event_signature_b1669f5a7a25b463",
+              "frontend_event_signature_d948f4dfac455d84",
+              "frontend_event_signature_805e8ce2cd0b59d4",
+              "frontend_event_signature_6f584de16f39d26f",
+              "frontend_event_signature_551e74e5bd2eca40",
+              "frontend_event_signature_a7f746f057ea7969",
+              "frontend_event_signature_3b15a4585c645518",
+              "frontend_event_signature_f9d18a0bde72a1e9",
+              "frontend_event_signature_6519358e05e107dc",
+              "frontend_event_signature_aed5bb04f983aaea",
+              "frontend_event_signature_8273b2a360af95f0",
+              "frontend_event_signature_37a6db2b59f63e51",
+              "frontend_event_signature_f6471223d54183eb",
+              "frontend_event_signature_6b477b21f58cfe66",
+              "frontend_event_signature_08ac3c611a145c94",
+              "frontend_event_signature_925ce33dae931e0b",
+              "frontend_event_signature_c927837cfa8d256e",
+              "frontend_event_signature_e1cc754f9f891a6d",
+              "frontend_event_signature_3720cf4e31f354ee",
+              "frontend_event_signature_46979d00c23e6599",
+              "frontend_event_signature_abcf6a4a1c87315b",
+              "frontend_event_signature_acc366dcab5dd9aa",
+              "frontend_event_signature_725ac5635b4bd5ff",
+              "frontend_event_signature_a18b8fa106e94b89",
+              "frontend_event_signature_ea85d14aa60b13ef",
+              "frontend_event_signature_a7a890054c988e28",
+              "frontend_event_signature_a61d1d649bb8c042",
+              "frontend_event_signature_da1eeac922dcfbda"
+            ]
+          },
+          "rationale": "41 non-Native Blueprint super-event targets in the fixed 721-package header inventory. Credit requires original owner/signature/flags and both-target compiled UHT/ELF proof. This bounded registration scope excludes the two Native activation events, whose behavior remains in lifecycle. One manually estimated effort point is split from the former 15-point lifecycle budget; this is not a widget or gameplay acceptance gate.",
+          "evidence_links": [
+            {
+              "label": "Source target inventory",
+              "href": "frontend-event-targets.txt"
+            }
+          ]
+        },
+        {
           "id": "ui.lifecycle",
           "name": "Frontend lifecycle and native helpers",
-          "weight": 15,
+          "weight": 14,
           "measure": {
             "kind": "manual",
             "pct": 0
           },
-          "rationale": "Recover game-instance UI initialization, event lifecycle and native helpers and verify actual interactive UI roots."
+          "rationale": "Recover actual game-instance initialization, activation handlers, source-selected input policy, operation queue and native helpers, then verify interactive UI roots. Bounded event-registration metadata is measured separately."
         },
         {
           "id": "ui.hud",

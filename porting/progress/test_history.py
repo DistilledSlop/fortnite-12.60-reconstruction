@@ -34,13 +34,46 @@ class HistoryRepairTests(unittest.TestCase):
 
 
 class ProgressModelTests(unittest.TestCase):
+    def test_event_registration_scope_preserves_lifecycle_budget(self):
+        import json
+        folder = Path(__file__).parent
+        model = json.loads((folder / 'components.json').read_text())
+        targets = json.loads((folder / 'frontend_event_targets.json').read_text())
+        ledger = json.loads((folder / 'evidence.json').read_text())['checks']
+        leaves = {leaf['id']: leaf for leaf in progress.walk_spec(model['tree'])}
+        events = leaves['ui.frontend_event_registrations']
+        self.assertEqual(events['weight'] + leaves['ui.lifecycle']['weight'], 15)
+        self.assertEqual(leaves['ui.lifecycle']['measure'], dict(kind='manual', pct=0))
+        self.assertEqual(len(targets['targets']), 41)
+        self.assertEqual(len({row['path'] for row in targets['targets']}), 41)
+        self.assertEqual(events['measure']['checks'], [row['check_id'] for row in targets['targets']])
+        excluded = set(targets['excluded_native_behavior_targets'])
+        for target in targets['targets']:
+            self.assertNotIn(target['path'], excluded)
+            self.assertFalse(int(target['flags'], 16) & 0x400)
+            check = ledger[target['check_id']]
+            if check['result'] == 'pass':
+                self.assertEqual(check['original_signature']['path'], target['path'])
+                self.assertEqual(set(check['compiled']), {'client', 'server'})
+                for proof in check['compiled'].values():
+                    self.assertEqual(proof['flags'], target['flags'])
+                    self.assertEqual(proof['property_record_count'], target['serialized_property_count'])
+        self.assertTrue(all(not gate['done'] for gate in model['milestones']))
+        ctx = progress.Ctx({
+            'porting/progress/frontend_event_targets.json': (folder / 'frontend_event_targets.json').read_text(),
+            progress.EVIDENCE_REL: (folder / 'evidence.json').read_text(),
+        }, False, [])
+        units, done = progress._grid_event_registrations(events, ctx)
+        self.assertEqual(len(units), 41)
+        self.assertEqual(len(done), sum(ledger[cid]['result'] == 'pass' for cid in events['measure']['checks']))
+
     def test_material_work_has_explicit_remaining_weight_and_no_gates_pass(self):
         import json
         model = json.loads(Path(__file__).with_name('components.json').read_text())
         leaves = list(progress.walk_spec(model['tree']))
         material = [leaf for leaf in leaves if leaf['id'].startswith('ui.material_')]
         self.assertEqual(sum(leaf['weight'] for leaf in material), 20)
-        self.assertEqual(len(leaves), 107)
+        self.assertEqual(len(leaves), 108)
         self.assertEqual(sum(leaf['weight'] for leaf in leaves), 1855)
         self.assertEqual(sum(leaf['weight'] for leaf in material if leaf['measure']['kind'] == 'ledger'), 20)
         by_id = {leaf['id']: leaf for leaf in material}

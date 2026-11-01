@@ -862,6 +862,17 @@ def _grid_census(spec, ctx):
     return [(n, "classes") for n in members], {n for n in members if is_declared(n, declared)}
 
 
+def _grid_event_registrations(spec, ctx):
+    inventory = parse_json_or_none(ctx.files.get("porting/progress/frontend_event_targets.json")) or {}
+    targets = {row["check_id"]: row for row in inventory.get("targets", [])}
+    ledger = read_ledger(ctx)
+    ids = spec["measure"]["checks"]
+    if any(cid not in targets for cid in ids):
+        return [], set()
+    return ([(targets[cid]["path"], targets[cid]["cpp_class"]) for cid in ids],
+            {targets[cid]["path"] for cid in ids if ledger.get(cid, {}).get("result") == "pass"})
+
+
 CLASS_GRID_PACKAGES = {
     "gameplay.reflection_exact": ["/Script/FortniteGame"],
     "gameplay.weapons": ["/Script/FortniteGame"],
@@ -922,6 +933,7 @@ UNIT_PROVIDERS = {
     "gameplay.battle_bus": _grid_class_headers,
     "ui.commonui_umg": _grid_class_headers,
     "ui.fortniteui_classes": _grid_class_headers,
+    "ui.frontend_event_registrations": _grid_event_registrations,
     "audio.sound_classes": _grid_sound_classes,
 }
 
@@ -2058,7 +2070,8 @@ def main(argv=None):
 
         # Publish tracked evidence documents from the same commit as the measurements.
         for source, target in (("porting/material_pipeline/README.md", "material-evidence.txt"),
-                               ("porting/material_pipeline/UE_BRIDGE.md", "material-bridge-evidence.txt")):
+                               ("porting/material_pipeline/UE_BRIDGE.md", "material-bridge-evidence.txt"),
+                               ("porting/progress/frontend_event_targets.json", "frontend-event-targets.txt")):
             if source in files:
                 write_atomic(os.path.join(OUT, target), files[source])
 

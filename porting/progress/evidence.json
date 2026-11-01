@@ -7800,6 +7800,991 @@
    "result": "pass",
    "source_native_baseline": "7b2a97f before version-getter recovery",
    "utc": "2026-11-01T00:39:06Z"
+  },
+  "frontend_event_signature_97a7a9a26cffc1ef": {
+   "id": "frontend_event_signature_97a7a9a26cffc1ef",
+   "label": "/Script/CommonUI.CommonActivatableWidget:BP_OnActivated",
+   "result": "pass",
+   "utc": "2026-11-01T09:07:43.720961+00:00",
+   "original_signature": {
+    "path": "/Script/CommonUI.CommonActivatableWidget:BP_OnActivated",
+    "cpp_class": "UCommonActivatableWidget",
+    "create_func": "0x140805d90",
+    "outer_func": "0x1408079b0",
+    "flags": "0x8080800",
+    "parameters": []
+   },
+   "source_native_commit": "7c0aca3",
+   "engine_commit": "8fba83b44",
+   "runtime_checkpoint": {
+    "path": "porting/generated/material_pipeline/frontend-super-events-checkpoint-results.json",
+    "sha256": "dde521a1bd2d1e1ceb53ec2bc7a3f7f991da623620fa2cec04a2c193f6bf62f1"
+   },
+   "root_checkpoint_audit": {
+    "path": "porting/generated/material_pipeline/frontend-super-events-root-checkpoint-audit-2.json",
+    "sha256": "85df75218e7d7b05b8bc924f3086c522b2351497467f65c234feb0c49f3394e0"
+   },
+   "compiled": {
+    "client": {
+     "proof": {
+      "path": "porting/generated/frontend-super-events-1/uht-client-elf-proof-frozen.json",
+      "sha256": "55169a5da0b7bce8454610f5f082ccae50d0748887b8a7eb2fd7c060e70d6816"
+     },
+     "function_symbol": "_ZN69Z_Construct_UFunction_UCommonActivatableWidget_BP_OnActivated_Statics10FuncParamsE",
+     "flags": "0x8080800",
+     "parameter_struct_size": 0,
+     "property_record_count": 0
+    },
+    "server": {
+     "proof": {
+      "path": "porting/generated/frontend-super-events-1/uht-server-elf-proof-frozen.json",
+      "sha256": "a6489268d916563f081d8cc3cc77383e75df0f6f1967a0bc29b8e92e4036d867"
+     },
+     "function_symbol": "_ZN69Z_Construct_UFunction_UCommonActivatableWidget_BP_OnActivated_Statics10FuncParamsE",
+     "flags": "0x8080800",
+     "parameter_struct_size": 0,
+     "property_record_count": 0
+    }
+   },
+   "scope": "Exact original non-Native Blueprint signature and compiled registration in both targets; runtime lifecycle, widgets and original UI behavior remain unverified."
+  },
+  "frontend_event_signature_6c3745abe695e828": {
+   "id": "frontend_event_signature_6c3745abe695e828",
+   "label": "/Script/CommonUI.CommonButton:BP_OnClicked",
+   "result": "pass",
+   "utc": "2026-11-01T09:07:43.721591+00:00",
+   "original_signature": {
+    "path": "/Script/CommonUI.CommonButton:BP_OnClicked",
+    "cpp_class": "UCommonButton",
+    "create_func": "0x140806710",
+    "outer_func": "0x140805cb0",
+    "flags": "0x8080800",
+    "parameters": []
+   },
+   "source_native_commit": "7c0aca3",
+   "engine_commit": "8fba83b44",
+   "runtime_checkpoint": {
+    "path": "porting/generated/material_pipeline/frontend-super-events-checkpoint-results.json",
+    "sha256": "dde521a1bd2d1e1ceb53ec2bc7a3f7f991da623620fa2cec04a2c193f6bf62f1"
+   },
+   "root_checkpoint_audit": {
+    "path": "porting/generated/material_pipeline/frontend-super-events-root-checkpoint-audit-2.json",
+    "sha256": "85df75218e7d7b05b8bc924f3086c522b2351497467f65c234feb0c49f3394e0"
+   },
+   "compiled": {
+    "client": {
+     "proof": {
+      "path": "porting/generated/frontend-super-events-1/uht-client-elf-proof-frozen.json",
+      "sha256": "55169a5da0b7bce8454610f5f082ccae50d0748887b8a7eb2fd7c060e70d6816"
+     },
+     "function_symbol": "_ZN56Z_Construct_UFunction_UCommonButton_BP_OnClicked_Statics10FuncParamsE",
+     "flags": "0x8080800",
+     "parameter_struct_size": 0,
+     "property_record_count": 0
+    },
+    "server": {
+     "proof": {
+      "path": "porting/generated/frontend-super-events-1/uht-server-elf-proof-frozen.json",
+      "sha256": "a6489268d916563f081d8cc3cc77383e75df0f6f1967a0bc29b8e92e4036d867"
+     },
+     "function_symbol": "_ZN56Z_Construct_UFunction_UCommonButton_BP_OnClicked_Statics10FuncParamsE",
+     "flags": "0x8080800",
+     "parameter_struct_size": 0,
+     "property_record_count": 0
+    }
+   },
+   "scope": "Exact original non-Native Blueprint signature and compiled registration in both targets; runtime lifecycle, widgets and original UI behavior remain unverified."
+  },
+  "frontend_event_signature_cef8ed789ea4cca6": {
+   "id": "frontend_event_signature_cef8ed789ea4cca6",
+   "label": "/Script/CommonUI.CommonButton:BP_OnDisabled",
+   "result": "pass",
+   "utc": "2026-11-01T09:07:43.722177+00:00",
+   "original_signature": {
+    "path": "/Script/CommonUI.CommonButton:BP_OnDisabled",
+    "cpp_class": "UCommonButton",
+    "create_func": "0x1408067a0",
+    "outer_func": "0x140805cb0",
+    "flags": "0x8080800",
+    "parameters": []
+   },
+   "source_native_commit": "7c0aca3",
+   "engine_commit": "8fba83b44",
+   "runtime_checkpoint": {
+    "path": "porting/generated/material_pipeline/frontend-super-events-checkpoint-results.json",
+    "sha256": "dde521a1bd2d1e1ceb53ec2bc7a3f7f991da623620fa2cec04a2c193f6bf62f1"
+   },
+   "root_checkpoint_audit": {
+    "path": "porting/generated/material_pipeline/frontend-super-events-root-checkpoint-audit-2.json",
+    "sha256": "85df75218e7d7b05b8bc924f3086c522b2351497467f65c234feb0c49f3394e0"
+   },
+   "compiled": {
+    "client": {
+     "proof": {
+      "path": "porting/generated/frontend-super-events-1/uht-client-elf-proof-frozen.json",
+      "sha256": "55169a5da0b7bce8454610f5f082ccae50d0748887b8a7eb2fd7c060e70d6816"
+     },
+     "function_symbol": "_ZN57Z_Construct_UFunction_UCommonButton_BP_OnDisabled_Statics10FuncParamsE",
+     "flags": "0x8080800",
+     "parameter_struct_size": 0,
+     "property_record_count": 0
+    },
+    "server": {
+     "proof": {
+      "path": "porting/generated/frontend-super-events-1/uht-server-elf-proof-frozen.json",
+      "sha256": "a6489268d916563f081d8cc3cc77383e75df0f6f1967a0bc29b8e92e4036d867"
+     },
+     "function_symbol": "_ZN57Z_Construct_UFunction_UCommonButton_BP_OnDisabled_Statics10FuncParamsE",
+     "flags": "0x8080800",
+     "parameter_struct_size": 0,
+     "property_record_count": 0
+    }
+   },
+   "scope": "Exact original non-Native Blueprint signature and compiled registration in both targets; runtime lifecycle, widgets and original UI behavior remain unverified."
+  },
+  "frontend_event_signature_acdd5f250c07b3f5": {
+   "id": "frontend_event_signature_acdd5f250c07b3f5",
+   "label": "/Script/CommonUI.CommonButton:BP_OnEnabled",
+   "result": "pass",
+   "utc": "2026-11-01T09:07:43.722723+00:00",
+   "original_signature": {
+    "path": "/Script/CommonUI.CommonButton:BP_OnEnabled",
+    "cpp_class": "UCommonButton",
+    "create_func": "0x140806800",
+    "outer_func": "0x140805cb0",
+    "flags": "0x8080800",
+    "parameters": []
+   },
+   "source_native_commit": "7c0aca3",
+   "engine_commit": "8fba83b44",
+   "runtime_checkpoint": {
+    "path": "porting/generated/material_pipeline/frontend-super-events-checkpoint-results.json",
+    "sha256": "dde521a1bd2d1e1ceb53ec2bc7a3f7f991da623620fa2cec04a2c193f6bf62f1"
+   },
+   "root_checkpoint_audit": {
+    "path": "porting/generated/material_pipeline/frontend-super-events-root-checkpoint-audit-2.json",
+    "sha256": "85df75218e7d7b05b8bc924f3086c522b2351497467f65c234feb0c49f3394e0"
+   },
+   "compiled": {
+    "client": {
+     "proof": {
+      "path": "porting/generated/frontend-super-events-1/uht-client-elf-proof-frozen.json",
+      "sha256": "55169a5da0b7bce8454610f5f082ccae50d0748887b8a7eb2fd7c060e70d6816"
+     },
+     "function_symbol": "_ZN56Z_Construct_UFunction_UCommonButton_BP_OnEnabled_Statics10FuncParamsE",
+     "flags": "0x8080800",
+     "parameter_struct_size": 0,
+     "property_record_count": 0
+    },
+    "server": {
+     "proof": {
+      "path": "porting/generated/frontend-super-events-1/uht-server-elf-proof-frozen.json",
+      "sha256": "a6489268d916563f081d8cc3cc77383e75df0f6f1967a0bc29b8e92e4036d867"
+     },
+     "function_symbol": "_ZN56Z_Construct_UFunction_UCommonButton_BP_OnEnabled_Statics10FuncParamsE",
+     "flags": "0x8080800",
+     "parameter_struct_size": 0,
+     "property_record_count": 0
+    }
+   },
+   "scope": "Exact original non-Native Blueprint signature and compiled registration in both targets; runtime lifecycle, widgets and original UI behavior remain unverified."
+  },
+  "frontend_event_signature_86be4fd63c1f3750": {
+   "id": "frontend_event_signature_86be4fd63c1f3750",
+   "label": "/Script/CommonUI.CommonButton:BP_OnHovered",
+   "result": "pending",
+   "scope": "Original-owner signature and both-target compiled registration remain uncredited; header name presence is insufficient."
+  },
+  "frontend_event_signature_be009a77ba833c9e": {
+   "id": "frontend_event_signature_be009a77ba833c9e",
+   "label": "/Script/CommonUI.CommonButton:BP_OnUnhovered",
+   "result": "pass",
+   "utc": "2026-11-01T09:07:43.723289+00:00",
+   "original_signature": {
+    "path": "/Script/CommonUI.CommonButton:BP_OnUnhovered",
+    "cpp_class": "UCommonButton",
+    "create_func": "0x140806890",
+    "outer_func": "0x140805cb0",
+    "flags": "0x8080800",
+    "parameters": []
+   },
+   "source_native_commit": "7c0aca3",
+   "engine_commit": "8fba83b44",
+   "runtime_checkpoint": {
+    "path": "porting/generated/material_pipeline/frontend-super-events-checkpoint-results.json",
+    "sha256": "dde521a1bd2d1e1ceb53ec2bc7a3f7f991da623620fa2cec04a2c193f6bf62f1"
+   },
+   "root_checkpoint_audit": {
+    "path": "porting/generated/material_pipeline/frontend-super-events-root-checkpoint-audit-2.json",
+    "sha256": "85df75218e7d7b05b8bc924f3086c522b2351497467f65c234feb0c49f3394e0"
+   },
+   "compiled": {
+    "client": {
+     "proof": {
+      "path": "porting/generated/frontend-super-events-1/uht-client-elf-proof-frozen.json",
+      "sha256": "55169a5da0b7bce8454610f5f082ccae50d0748887b8a7eb2fd7c060e70d6816"
+     },
+     "function_symbol": "_ZN58Z_Construct_UFunction_UCommonButton_BP_OnUnhovered_Statics10FuncParamsE",
+     "flags": "0x8080800",
+     "parameter_struct_size": 0,
+     "property_record_count": 0
+    },
+    "server": {
+     "proof": {
+      "path": "porting/generated/frontend-super-events-1/uht-server-elf-proof-frozen.json",
+      "sha256": "a6489268d916563f081d8cc3cc77383e75df0f6f1967a0bc29b8e92e4036d867"
+     },
+     "function_symbol": "_ZN58Z_Construct_UFunction_UCommonButton_BP_OnUnhovered_Statics10FuncParamsE",
+     "flags": "0x8080800",
+     "parameter_struct_size": 0,
+     "property_record_count": 0
+    }
+   },
+   "scope": "Exact original non-Native Blueprint signature and compiled registration in both targets; runtime lifecycle, widgets and original UI behavior remain unverified."
+  },
+  "frontend_event_signature_f0e8d7f839d603a6": {
+   "id": "frontend_event_signature_f0e8d7f839d603a6",
+   "label": "/Script/CommonUI.CommonButton:OnActionComplete",
+   "result": "pass",
+   "utc": "2026-11-01T09:07:43.723867+00:00",
+   "original_signature": {
+    "path": "/Script/CommonUI.CommonButton:OnActionComplete",
+    "cpp_class": "UCommonButton",
+    "create_func": "0x140806e40",
+    "outer_func": "0x140805cb0",
+    "flags": "0x8080800",
+    "parameters": []
+   },
+   "source_native_commit": "7c0aca3",
+   "engine_commit": "8fba83b44",
+   "runtime_checkpoint": {
+    "path": "porting/generated/material_pipeline/frontend-super-events-checkpoint-results.json",
+    "sha256": "dde521a1bd2d1e1ceb53ec2bc7a3f7f991da623620fa2cec04a2c193f6bf62f1"
+   },
+   "root_checkpoint_audit": {
+    "path": "porting/generated/material_pipeline/frontend-super-events-root-checkpoint-audit-2.json",
+    "sha256": "85df75218e7d7b05b8bc924f3086c522b2351497467f65c234feb0c49f3394e0"
+   },
+   "compiled": {
+    "client": {
+     "proof": {
+      "path": "porting/generated/frontend-super-events-1/uht-client-elf-proof-frozen.json",
+      "sha256": "55169a5da0b7bce8454610f5f082ccae50d0748887b8a7eb2fd7c060e70d6816"
+     },
+     "function_symbol": "_ZN60Z_Construct_UFunction_UCommonButton_OnActionComplete_Statics10FuncParamsE",
+     "flags": "0x8080800",
+     "parameter_struct_size": 0,
+     "property_record_count": 0
+    },
+    "server": {
+     "proof": {
+      "path": "porting/generated/frontend-super-events-1/uht-server-elf-proof-frozen.json",
+      "sha256": "a6489268d916563f081d8cc3cc77383e75df0f6f1967a0bc29b8e92e4036d867"
+     },
+     "function_symbol": "_ZN60Z_Construct_UFunction_UCommonButton_OnActionComplete_Statics10FuncParamsE",
+     "flags": "0x8080800",
+     "parameter_struct_size": 0,
+     "property_record_count": 0
+    }
+   },
+   "scope": "Exact original non-Native Blueprint signature and compiled registration in both targets; runtime lifecycle, widgets and original UI behavior remain unverified."
+  },
+  "frontend_event_signature_7f410db84053bf97": {
+   "id": "frontend_event_signature_7f410db84053bf97",
+   "label": "/Script/CommonUI.CommonButton:OnActionProgress",
+   "result": "pending",
+   "scope": "Original-owner signature and both-target compiled registration remain uncredited; header name presence is insufficient."
+  },
+  "frontend_event_signature_cad49b19554f2294": {
+   "id": "frontend_event_signature_cad49b19554f2294",
+   "label": "/Script/CommonUI.CommonButton:OnCurrentTextStyleChanged",
+   "result": "pass",
+   "utc": "2026-11-01T09:07:43.724445+00:00",
+   "original_signature": {
+    "path": "/Script/CommonUI.CommonButton:OnCurrentTextStyleChanged",
+    "cpp_class": "UCommonButton",
+    "create_func": "0x140806ea0",
+    "outer_func": "0x140805cb0",
+    "flags": "0x8080800",
+    "parameters": []
+   },
+   "source_native_commit": "7c0aca3",
+   "engine_commit": "8fba83b44",
+   "runtime_checkpoint": {
+    "path": "porting/generated/material_pipeline/frontend-super-events-checkpoint-results.json",
+    "sha256": "dde521a1bd2d1e1ceb53ec2bc7a3f7f991da623620fa2cec04a2c193f6bf62f1"
+   },
+   "root_checkpoint_audit": {
+    "path": "porting/generated/material_pipeline/frontend-super-events-root-checkpoint-audit-2.json",
+    "sha256": "85df75218e7d7b05b8bc924f3086c522b2351497467f65c234feb0c49f3394e0"
+   },
+   "compiled": {
+    "client": {
+     "proof": {
+      "path": "porting/generated/frontend-super-events-1/uht-client-elf-proof-frozen.json",
+      "sha256": "55169a5da0b7bce8454610f5f082ccae50d0748887b8a7eb2fd7c060e70d6816"
+     },
+     "function_symbol": "_ZN69Z_Construct_UFunction_UCommonButton_OnCurrentTextStyleChanged_Statics10FuncParamsE",
+     "flags": "0x8080800",
+     "parameter_struct_size": 0,
+     "property_record_count": 0
+    },
+    "server": {
+     "proof": {
+      "path": "porting/generated/frontend-super-events-1/uht-server-elf-proof-frozen.json",
+      "sha256": "a6489268d916563f081d8cc3cc77383e75df0f6f1967a0bc29b8e92e4036d867"
+     },
+     "function_symbol": "_ZN69Z_Construct_UFunction_UCommonButton_OnCurrentTextStyleChanged_Statics10FuncParamsE",
+     "flags": "0x8080800",
+     "parameter_struct_size": 0,
+     "property_record_count": 0
+    }
+   },
+   "scope": "Exact original non-Native Blueprint signature and compiled registration in both targets; runtime lifecycle, widgets and original UI behavior remain unverified."
+  },
+  "frontend_event_signature_082e932ed60cc28a": {
+   "id": "frontend_event_signature_082e932ed60cc28a",
+   "label": "/Script/CommonUI.CommonButton:OnTriggeredInputActionChanged",
+   "result": "pending",
+   "scope": "Original-owner signature and both-target compiled registration remain uncredited; header name presence is insufficient."
+  },
+  "frontend_event_signature_5974ea6157df96a1": {
+   "id": "frontend_event_signature_5974ea6157df96a1",
+   "label": "/Script/FortniteGame.FortEntryMusicController:StartMusic",
+   "result": "pass",
+   "utc": "2026-11-01T09:07:43.365365+00:00",
+   "original_signature": {
+    "path": "/Script/FortniteGame.FortEntryMusicController:StartMusic",
+    "cpp_class": "AFortEntryMusicController",
+    "create_func": "0x1428dc630",
+    "outer_func": "0x1428dc600",
+    "flags": "0x8020800",
+    "parameters": []
+   },
+   "source_native_commit": "43c548d",
+   "engine_commit": "8fba83b44",
+   "runtime_checkpoint": {
+    "path": "porting/generated/material_pipeline/frontend-start-music-checkpoint-results.json",
+    "sha256": "fdb155a505bd245d51f350ddf12b483d0f6a1cb404101a1b1218c6c907cfb27f"
+   },
+   "root_checkpoint_audit": {
+    "path": "porting/generated/material_pipeline/frontend-start-music-root-checkpoint-audit-1.json",
+    "sha256": "52838c5498423d18e2e7632e8338a49b26327473e5172f2148de6f99461a095d"
+   },
+   "compiled": {
+    "client": {
+     "proof": {
+      "path": "porting/generated/frontend-start-music-event-1/uht-client-elf-proof-frozen.json",
+      "sha256": "cf6d8fbf0525723943cbe881f949f658ffab7a8781c97fc6835544f2d92a6738"
+     },
+     "function_symbol": "_ZN66Z_Construct_UFunction_AFortEntryMusicController_StartMusic_Statics10FuncParamsE",
+     "flags": "0x8020800",
+     "parameter_struct_size": 0,
+     "property_record_count": 0
+    },
+    "server": {
+     "proof": {
+      "path": "porting/generated/frontend-start-music-event-1/uht-server-elf-proof-frozen.json",
+      "sha256": "dcc95a490a1913ff831a0ffbd4ab786c09efc880bff30acc111a49556d8f2b98"
+     },
+     "function_symbol": "_ZN66Z_Construct_UFunction_AFortEntryMusicController_StartMusic_Statics10FuncParamsE",
+     "flags": "0x8020800",
+     "parameter_struct_size": 0,
+     "property_record_count": 0
+    }
+   },
+   "scope": "Exact original non-Native Blueprint signature and compiled registration in both targets; runtime lifecycle, widgets and original UI behavior remain unverified."
+  },
+  "frontend_event_signature_6472bb99ee9b5eae": {
+   "id": "frontend_event_signature_6472bb99ee9b5eae",
+   "label": "/Script/FortniteUI.EmergencyNoticeBase:HideNotice",
+   "result": "pass",
+   "utc": "2026-11-01T09:07:43.725048+00:00",
+   "original_signature": {
+    "path": "/Script/FortniteUI.EmergencyNoticeBase:HideNotice",
+    "cpp_class": "UEmergencyNoticeBase",
+    "create_func": "0x1451e7070",
+    "outer_func": "0x1451e6f80",
+    "flags": "0x8080800",
+    "parameters": []
+   },
+   "source_native_commit": "7c0aca3",
+   "engine_commit": "8fba83b44",
+   "runtime_checkpoint": {
+    "path": "porting/generated/material_pipeline/frontend-super-events-checkpoint-results.json",
+    "sha256": "dde521a1bd2d1e1ceb53ec2bc7a3f7f991da623620fa2cec04a2c193f6bf62f1"
+   },
+   "root_checkpoint_audit": {
+    "path": "porting/generated/material_pipeline/frontend-super-events-root-checkpoint-audit-2.json",
+    "sha256": "85df75218e7d7b05b8bc924f3086c522b2351497467f65c234feb0c49f3394e0"
+   },
+   "compiled": {
+    "client": {
+     "proof": {
+      "path": "porting/generated/frontend-super-events-1/uht-client-elf-proof-frozen.json",
+      "sha256": "55169a5da0b7bce8454610f5f082ccae50d0748887b8a7eb2fd7c060e70d6816"
+     },
+     "function_symbol": "_ZN61Z_Construct_UFunction_UEmergencyNoticeBase_HideNotice_Statics10FuncParamsE",
+     "flags": "0x8080800",
+     "parameter_struct_size": 0,
+     "property_record_count": 0
+    },
+    "server": {
+     "proof": {
+      "path": "porting/generated/frontend-super-events-1/uht-server-elf-proof-frozen.json",
+      "sha256": "a6489268d916563f081d8cc3cc77383e75df0f6f1967a0bc29b8e92e4036d867"
+     },
+     "function_symbol": "_ZN61Z_Construct_UFunction_UEmergencyNoticeBase_HideNotice_Statics10FuncParamsE",
+     "flags": "0x8080800",
+     "parameter_struct_size": 0,
+     "property_record_count": 0
+    }
+   },
+   "scope": "Exact original non-Native Blueprint signature and compiled registration in both targets; runtime lifecycle, widgets and original UI behavior remain unverified."
+  },
+  "frontend_event_signature_d4680cda66578a74": {
+   "id": "frontend_event_signature_d4680cda66578a74",
+   "label": "/Script/FortniteUI.EmergencyNoticeBase:ShowNotice",
+   "result": "pending",
+   "scope": "Original-owner signature and both-target compiled registration remain uncredited; header name presence is insufficient."
+  },
+  "frontend_event_signature_b1669f5a7a25b463": {
+   "id": "frontend_event_signature_b1669f5a7a25b463",
+   "label": "/Script/FortniteUI.FortConfirmationWindow:ConfigureConfirmationButton",
+   "result": "pending",
+   "scope": "Original-owner signature and both-target compiled registration remain uncredited; header name presence is insufficient."
+  },
+  "frontend_event_signature_d948f4dfac455d84": {
+   "id": "frontend_event_signature_d948f4dfac455d84",
+   "label": "/Script/FortniteUI.FortConfirmationWindow:ConfigureDeclineButton",
+   "result": "pending",
+   "scope": "Original-owner signature and both-target compiled registration remain uncredited; header name presence is insufficient."
+  },
+  "frontend_event_signature_805e8ce2cd0b59d4": {
+   "id": "frontend_event_signature_805e8ce2cd0b59d4",
+   "label": "/Script/FortniteUI.FortErrorWindow:OnOverrideCloseButtonText",
+   "result": "pending",
+   "scope": "Original-owner signature and both-target compiled registration remain uncredited; header name presence is insufficient."
+  },
+  "frontend_event_signature_6f584de16f39d26f": {
+   "id": "frontend_event_signature_6f584de16f39d26f",
+   "label": "/Script/FortniteUI.FortFriendSubscriptionToastWidget:OnPlayCloseAnimation",
+   "result": "pass",
+   "utc": "2026-11-01T09:07:43.725740+00:00",
+   "original_signature": {
+    "path": "/Script/FortniteUI.FortFriendSubscriptionToastWidget:OnPlayCloseAnimation",
+    "cpp_class": "UFortFriendSubscriptionToastWidget",
+    "create_func": "0x145235650",
+    "outer_func": "0x145235570",
+    "flags": "0x8080800",
+    "parameters": []
+   },
+   "source_native_commit": "7c0aca3",
+   "engine_commit": "8fba83b44",
+   "runtime_checkpoint": {
+    "path": "porting/generated/material_pipeline/frontend-super-events-checkpoint-results.json",
+    "sha256": "dde521a1bd2d1e1ceb53ec2bc7a3f7f991da623620fa2cec04a2c193f6bf62f1"
+   },
+   "root_checkpoint_audit": {
+    "path": "porting/generated/material_pipeline/frontend-super-events-root-checkpoint-audit-2.json",
+    "sha256": "85df75218e7d7b05b8bc924f3086c522b2351497467f65c234feb0c49f3394e0"
+   },
+   "compiled": {
+    "client": {
+     "proof": {
+      "path": "porting/generated/frontend-super-events-1/uht-client-elf-proof-frozen.json",
+      "sha256": "55169a5da0b7bce8454610f5f082ccae50d0748887b8a7eb2fd7c060e70d6816"
+     },
+     "function_symbol": "_ZN85Z_Construct_UFunction_UFortFriendSubscriptionToastWidget_OnPlayCloseAnimation_Statics10FuncParamsE",
+     "flags": "0x8080800",
+     "parameter_struct_size": 0,
+     "property_record_count": 0
+    },
+    "server": {
+     "proof": {
+      "path": "porting/generated/frontend-super-events-1/uht-server-elf-proof-frozen.json",
+      "sha256": "a6489268d916563f081d8cc3cc77383e75df0f6f1967a0bc29b8e92e4036d867"
+     },
+     "function_symbol": "_ZN85Z_Construct_UFunction_UFortFriendSubscriptionToastWidget_OnPlayCloseAnimation_Statics10FuncParamsE",
+     "flags": "0x8080800",
+     "parameter_struct_size": 0,
+     "property_record_count": 0
+    }
+   },
+   "scope": "Exact original non-Native Blueprint signature and compiled registration in both targets; runtime lifecycle, widgets and original UI behavior remain unverified."
+  },
+  "frontend_event_signature_551e74e5bd2eca40": {
+   "id": "frontend_event_signature_551e74e5bd2eca40",
+   "label": "/Script/FortniteUI.FortFriendSubscriptionToastWidget:OnPlayOpenAnimation",
+   "result": "pass",
+   "utc": "2026-11-01T09:07:43.726361+00:00",
+   "original_signature": {
+    "path": "/Script/FortniteUI.FortFriendSubscriptionToastWidget:OnPlayOpenAnimation",
+    "cpp_class": "UFortFriendSubscriptionToastWidget",
+    "create_func": "0x145235680",
+    "outer_func": "0x145235570",
+    "flags": "0x8080800",
+    "parameters": []
+   },
+   "source_native_commit": "7c0aca3",
+   "engine_commit": "8fba83b44",
+   "runtime_checkpoint": {
+    "path": "porting/generated/material_pipeline/frontend-super-events-checkpoint-results.json",
+    "sha256": "dde521a1bd2d1e1ceb53ec2bc7a3f7f991da623620fa2cec04a2c193f6bf62f1"
+   },
+   "root_checkpoint_audit": {
+    "path": "porting/generated/material_pipeline/frontend-super-events-root-checkpoint-audit-2.json",
+    "sha256": "85df75218e7d7b05b8bc924f3086c522b2351497467f65c234feb0c49f3394e0"
+   },
+   "compiled": {
+    "client": {
+     "proof": {
+      "path": "porting/generated/frontend-super-events-1/uht-client-elf-proof-frozen.json",
+      "sha256": "55169a5da0b7bce8454610f5f082ccae50d0748887b8a7eb2fd7c060e70d6816"
+     },
+     "function_symbol": "_ZN84Z_Construct_UFunction_UFortFriendSubscriptionToastWidget_OnPlayOpenAnimation_Statics10FuncParamsE",
+     "flags": "0x8080800",
+     "parameter_struct_size": 0,
+     "property_record_count": 0
+    },
+    "server": {
+     "proof": {
+      "path": "porting/generated/frontend-super-events-1/uht-server-elf-proof-frozen.json",
+      "sha256": "a6489268d916563f081d8cc3cc77383e75df0f6f1967a0bc29b8e92e4036d867"
+     },
+     "function_symbol": "_ZN84Z_Construct_UFunction_UFortFriendSubscriptionToastWidget_OnPlayOpenAnimation_Statics10FuncParamsE",
+     "flags": "0x8080800",
+     "parameter_struct_size": 0,
+     "property_record_count": 0
+    }
+   },
+   "scope": "Exact original non-Native Blueprint signature and compiled registration in both targets; runtime lifecycle, widgets and original UI behavior remain unverified."
+  },
+  "frontend_event_signature_a7f746f057ea7969": {
+   "id": "frontend_event_signature_a7f746f057ea7969",
+   "label": "/Script/FortniteUI.FortLetoLayoutBorder:UpdateBorderWidth",
+   "result": "pending",
+   "scope": "Original-owner signature and both-target compiled registration remain uncredited; header name presence is insufficient."
+  },
+  "frontend_event_signature_3b15a4585c645518": {
+   "id": "frontend_event_signature_3b15a4585c645518",
+   "label": "/Script/FortniteUI.FortLoginStatus:SetContinueButtonText",
+   "result": "pass",
+   "utc": "2026-11-01T09:07:43.330192+00:00",
+   "original_signature": {
+    "path": "/Script/FortniteUI.FortLoginStatus:SetContinueButtonText",
+    "cpp_class": "UFortLoginStatus",
+    "create_func": "0x1452825a0",
+    "outer_func": "0x145282560",
+    "flags": "0x8480800",
+    "parameters": [
+     {
+      "index": 0,
+      "name": "ContinueText",
+      "kind": "Text",
+      "kind_raw": "0x1d",
+      "property_flags": "0x10000008000182",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0
+     }
+    ]
+   },
+   "source_native_commit": "ab16cd6",
+   "engine_commit": "8fba83b44",
+   "runtime_checkpoint": {
+    "path": "porting/generated/material_pipeline/frontend-login-event-checkpoint-results.json",
+    "sha256": "622d6ce96f43da4fce931252351c6730a12e9ad96334ab25b98c3dac952affd5"
+   },
+   "root_checkpoint_audit": {
+    "path": "porting/generated/material_pipeline/frontend-login-event-root-checkpoint-audit-1.json",
+    "sha256": "1d5b4c177db3b6837d6cdb106c0286c869335c9b366404d82911a9ba9bc48a8d"
+   },
+   "compiled": {
+    "client": {
+     "proof": {
+      "path": "porting/generated/frontend-login-event-2/uht-client-elf-proof-frozen.json",
+      "sha256": "c0a6c7a0b1017cfe752e4eb6288370dfa319121262f66f46f852cb37e7bc5eda"
+     },
+     "function_symbol": "_ZN68Z_Construct_UFunction_UFortLoginStatus_SetContinueButtonText_Statics10FuncParamsE",
+     "flags": "0x8480800",
+     "parameter_struct_size": 24,
+     "property_record_count": 1
+    },
+    "server": {
+     "proof": {
+      "path": "porting/generated/frontend-login-event-2/uht-server-elf-proof-frozen.json",
+      "sha256": "1283d0995f8130f8cb7074944b8db590614a91ade5289329cb45f9f4ed6b88f1"
+     },
+     "function_symbol": "_ZN68Z_Construct_UFunction_UFortLoginStatus_SetContinueButtonText_Statics10FuncParamsE",
+     "flags": "0x8480800",
+     "parameter_struct_size": 24,
+     "property_record_count": 1
+    }
+   },
+   "scope": "Exact original non-Native Blueprint signature and compiled registration in both targets; runtime lifecycle, widgets and original UI behavior remain unverified."
+  },
+  "frontend_event_signature_f9d18a0bde72a1e9": {
+   "id": "frontend_event_signature_f9d18a0bde72a1e9",
+   "label": "/Script/FortniteUI.FortPlayerPowerRatingToast:ShowToast",
+   "result": "pass",
+   "utc": "2026-11-01T09:07:43.726945+00:00",
+   "original_signature": {
+    "path": "/Script/FortniteUI.FortPlayerPowerRatingToast:ShowToast",
+    "cpp_class": "UFortPlayerPowerRatingToast",
+    "create_func": "0x1452a13d0",
+    "outer_func": "0x1452a12b0",
+    "flags": "0x8080800",
+    "parameters": []
+   },
+   "source_native_commit": "7c0aca3",
+   "engine_commit": "8fba83b44",
+   "runtime_checkpoint": {
+    "path": "porting/generated/material_pipeline/frontend-super-events-checkpoint-results.json",
+    "sha256": "dde521a1bd2d1e1ceb53ec2bc7a3f7f991da623620fa2cec04a2c193f6bf62f1"
+   },
+   "root_checkpoint_audit": {
+    "path": "porting/generated/material_pipeline/frontend-super-events-root-checkpoint-audit-2.json",
+    "sha256": "85df75218e7d7b05b8bc924f3086c522b2351497467f65c234feb0c49f3394e0"
+   },
+   "compiled": {
+    "client": {
+     "proof": {
+      "path": "porting/generated/frontend-super-events-1/uht-client-elf-proof-frozen.json",
+      "sha256": "55169a5da0b7bce8454610f5f082ccae50d0748887b8a7eb2fd7c060e70d6816"
+     },
+     "function_symbol": "_ZN67Z_Construct_UFunction_UFortPlayerPowerRatingToast_ShowToast_Statics10FuncParamsE",
+     "flags": "0x8080800",
+     "parameter_struct_size": 0,
+     "property_record_count": 0
+    },
+    "server": {
+     "proof": {
+      "path": "porting/generated/frontend-super-events-1/uht-server-elf-proof-frozen.json",
+      "sha256": "a6489268d916563f081d8cc3cc77383e75df0f6f1967a0bc29b8e92e4036d867"
+     },
+     "function_symbol": "_ZN67Z_Construct_UFunction_UFortPlayerPowerRatingToast_ShowToast_Statics10FuncParamsE",
+     "flags": "0x8080800",
+     "parameter_struct_size": 0,
+     "property_record_count": 0
+    }
+   },
+   "scope": "Exact original non-Native Blueprint signature and compiled registration in both targets; runtime lifecycle, widgets and original UI behavior remain unverified."
+  },
+  "frontend_event_signature_6519358e05e107dc": {
+   "id": "frontend_event_signature_6519358e05e107dc",
+   "label": "/Script/FortniteUI.FortRestartClientModal:OnButtonSet",
+   "result": "pending",
+   "scope": "Original-owner signature and both-target compiled registration remain uncredited; header name presence is insufficient."
+  },
+  "frontend_event_signature_aed5bb04f983aaea": {
+   "id": "frontend_event_signature_aed5bb04f983aaea",
+   "label": "/Script/FortniteUI.FortSplashScreenWidget:OnInputMethodChanged",
+   "result": "pass",
+   "utc": "2026-11-01T09:07:43.386036+00:00",
+   "original_signature": {
+    "path": "/Script/FortniteUI.FortSplashScreenWidget:OnInputMethodChanged",
+    "cpp_class": "UFortSplashScreenWidget",
+    "create_func": "0x1452e3e00",
+    "outer_func": "0x1452e3dd0",
+    "flags": "0x8080800",
+    "parameters": [
+     {
+      "index": 0,
+      "name": "InputType",
+      "kind": "Enum",
+      "kind_raw": "0x1e",
+      "property_flags": "0x10000000000080",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "type_refs": {
+       "enum": "0x14081ee20"
+      }
+     },
+     {
+      "index": 1,
+      "name": "UnderlyingType",
+      "kind": "Byte",
+      "kind_raw": "0x0",
+      "property_flags": "0x0",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "enum_underlying_of": "InputType"
+     }
+    ]
+   },
+   "source_native_commit": "e4e66b1",
+   "engine_commit": "8fba83b44",
+   "runtime_checkpoint": {
+    "path": "porting/generated/material_pipeline/frontend-splash-event-checkpoint-results.json",
+    "sha256": "2fff9ba9e0883f3cffc162b8d688f3e08434708f1ff21f93c7814057b4df19cc"
+   },
+   "root_checkpoint_audit": {
+    "path": "porting/generated/material_pipeline/frontend-splash-event-root-checkpoint-audit-1.json",
+    "sha256": "9d4a7a1a6c5ceb7f22d4edf3a1bd1b5b320d576d07a9d35ab202ac116fd39254"
+   },
+   "compiled": {
+    "client": {
+     "proof": {
+      "path": "porting/generated/frontend-splash-event-1/uht-client-elf-proof-frozen.json",
+      "sha256": "8afdbe459729e989d2995df5ac6c687a095466bed5b02a85adb2e3ebdf976831"
+     },
+     "function_symbol": "_ZN74Z_Construct_UFunction_UFortSplashScreenWidget_OnInputMethodChanged_Statics10FuncParamsE",
+     "flags": "0x8080800",
+     "parameter_struct_size": 1,
+     "property_record_count": 2
+    },
+    "server": {
+     "proof": {
+      "path": "porting/generated/frontend-splash-event-1/uht-server-elf-proof-frozen.json",
+      "sha256": "35cb248bf327b827c798b8a43d8180dff49b39081dd21acc6f7b3f4f9981e8c4"
+     },
+     "function_symbol": "_ZN74Z_Construct_UFunction_UFortSplashScreenWidget_OnInputMethodChanged_Statics10FuncParamsE",
+     "flags": "0x8080800",
+     "parameter_struct_size": 1,
+     "property_record_count": 2
+    }
+   },
+   "scope": "Exact original non-Native Blueprint signature and compiled registration in both targets; runtime lifecycle, widgets and original UI behavior remain unverified."
+  },
+  "frontend_event_signature_8273b2a360af95f0": {
+   "id": "frontend_event_signature_8273b2a360af95f0",
+   "label": "/Script/FortniteUI.FortToastDisplayArea:OnDisplayToast",
+   "result": "pending",
+   "scope": "Original-owner signature and both-target compiled registration remain uncredited; header name presence is insufficient."
+  },
+  "frontend_event_signature_37a6db2b59f63e51": {
+   "id": "frontend_event_signature_37a6db2b59f63e51",
+   "label": "/Script/FortniteUI.FortVoiceChannelChangePopup:OnInputModeChanged",
+   "result": "pending",
+   "scope": "Original-owner signature and both-target compiled registration remain uncredited; header name presence is insufficient."
+  },
+  "frontend_event_signature_f6471223d54183eb": {
+   "id": "frontend_event_signature_f6471223d54183eb",
+   "label": "/Script/FortniteUI.FortVoiceChannelChangePopup:OnPlayCloseAnimation",
+   "result": "pass",
+   "utc": "2026-11-01T09:07:43.727509+00:00",
+   "original_signature": {
+    "path": "/Script/FortniteUI.FortVoiceChannelChangePopup:OnPlayCloseAnimation",
+    "cpp_class": "UFortVoiceChannelChangePopup",
+    "create_func": "0x1453202a0",
+    "outer_func": "0x14531fef0",
+    "flags": "0x8080800",
+    "parameters": []
+   },
+   "source_native_commit": "7c0aca3",
+   "engine_commit": "8fba83b44",
+   "runtime_checkpoint": {
+    "path": "porting/generated/material_pipeline/frontend-super-events-checkpoint-results.json",
+    "sha256": "dde521a1bd2d1e1ceb53ec2bc7a3f7f991da623620fa2cec04a2c193f6bf62f1"
+   },
+   "root_checkpoint_audit": {
+    "path": "porting/generated/material_pipeline/frontend-super-events-root-checkpoint-audit-2.json",
+    "sha256": "85df75218e7d7b05b8bc924f3086c522b2351497467f65c234feb0c49f3394e0"
+   },
+   "compiled": {
+    "client": {
+     "proof": {
+      "path": "porting/generated/frontend-super-events-1/uht-client-elf-proof-frozen.json",
+      "sha256": "55169a5da0b7bce8454610f5f082ccae50d0748887b8a7eb2fd7c060e70d6816"
+     },
+     "function_symbol": "_ZN79Z_Construct_UFunction_UFortVoiceChannelChangePopup_OnPlayCloseAnimation_Statics10FuncParamsE",
+     "flags": "0x8080800",
+     "parameter_struct_size": 0,
+     "property_record_count": 0
+    },
+    "server": {
+     "proof": {
+      "path": "porting/generated/frontend-super-events-1/uht-server-elf-proof-frozen.json",
+      "sha256": "a6489268d916563f081d8cc3cc77383e75df0f6f1967a0bc29b8e92e4036d867"
+     },
+     "function_symbol": "_ZN79Z_Construct_UFunction_UFortVoiceChannelChangePopup_OnPlayCloseAnimation_Statics10FuncParamsE",
+     "flags": "0x8080800",
+     "parameter_struct_size": 0,
+     "property_record_count": 0
+    }
+   },
+   "scope": "Exact original non-Native Blueprint signature and compiled registration in both targets; runtime lifecycle, widgets and original UI behavior remain unverified."
+  },
+  "frontend_event_signature_6b477b21f58cfe66": {
+   "id": "frontend_event_signature_6b477b21f58cfe66",
+   "label": "/Script/FortniteUI.FortVoiceChannelChangePopup:OnPlayOpenAnimation",
+   "result": "pass",
+   "utc": "2026-11-01T09:07:43.728091+00:00",
+   "original_signature": {
+    "path": "/Script/FortniteUI.FortVoiceChannelChangePopup:OnPlayOpenAnimation",
+    "cpp_class": "UFortVoiceChannelChangePopup",
+    "create_func": "0x145320310",
+    "outer_func": "0x14531fef0",
+    "flags": "0x8080800",
+    "parameters": []
+   },
+   "source_native_commit": "7c0aca3",
+   "engine_commit": "8fba83b44",
+   "runtime_checkpoint": {
+    "path": "porting/generated/material_pipeline/frontend-super-events-checkpoint-results.json",
+    "sha256": "dde521a1bd2d1e1ceb53ec2bc7a3f7f991da623620fa2cec04a2c193f6bf62f1"
+   },
+   "root_checkpoint_audit": {
+    "path": "porting/generated/material_pipeline/frontend-super-events-root-checkpoint-audit-2.json",
+    "sha256": "85df75218e7d7b05b8bc924f3086c522b2351497467f65c234feb0c49f3394e0"
+   },
+   "compiled": {
+    "client": {
+     "proof": {
+      "path": "porting/generated/frontend-super-events-1/uht-client-elf-proof-frozen.json",
+      "sha256": "55169a5da0b7bce8454610f5f082ccae50d0748887b8a7eb2fd7c060e70d6816"
+     },
+     "function_symbol": "_ZN78Z_Construct_UFunction_UFortVoiceChannelChangePopup_OnPlayOpenAnimation_Statics10FuncParamsE",
+     "flags": "0x8080800",
+     "parameter_struct_size": 0,
+     "property_record_count": 0
+    },
+    "server": {
+     "proof": {
+      "path": "porting/generated/frontend-super-events-1/uht-server-elf-proof-frozen.json",
+      "sha256": "a6489268d916563f081d8cc3cc77383e75df0f6f1967a0bc29b8e92e4036d867"
+     },
+     "function_symbol": "_ZN78Z_Construct_UFunction_UFortVoiceChannelChangePopup_OnPlayOpenAnimation_Statics10FuncParamsE",
+     "flags": "0x8080800",
+     "parameter_struct_size": 0,
+     "property_record_count": 0
+    }
+   },
+   "scope": "Exact original non-Native Blueprint signature and compiled registration in both targets; runtime lifecycle, widgets and original UI behavior remain unverified."
+  },
+  "frontend_event_signature_08ac3c611a145c94": {
+   "id": "frontend_event_signature_08ac3c611a145c94",
+   "label": "/Script/FortniteUI.FortWebLoginWidget:DismissWidget",
+   "result": "pass",
+   "utc": "2026-11-01T09:07:43.728630+00:00",
+   "original_signature": {
+    "path": "/Script/FortniteUI.FortWebLoginWidget:DismissWidget",
+    "cpp_class": "UFortWebLoginWidget",
+    "create_func": "0x1453208d0",
+    "outer_func": "0x1453208a0",
+    "flags": "0xc020800",
+    "parameters": []
+   },
+   "source_native_commit": "7c0aca3",
+   "engine_commit": "8fba83b44",
+   "runtime_checkpoint": {
+    "path": "porting/generated/material_pipeline/frontend-super-events-checkpoint-results.json",
+    "sha256": "dde521a1bd2d1e1ceb53ec2bc7a3f7f991da623620fa2cec04a2c193f6bf62f1"
+   },
+   "root_checkpoint_audit": {
+    "path": "porting/generated/material_pipeline/frontend-super-events-root-checkpoint-audit-2.json",
+    "sha256": "85df75218e7d7b05b8bc924f3086c522b2351497467f65c234feb0c49f3394e0"
+   },
+   "compiled": {
+    "client": {
+     "proof": {
+      "path": "porting/generated/frontend-super-events-1/uht-client-elf-proof-frozen.json",
+      "sha256": "55169a5da0b7bce8454610f5f082ccae50d0748887b8a7eb2fd7c060e70d6816"
+     },
+     "function_symbol": "_ZN63Z_Construct_UFunction_UFortWebLoginWidget_DismissWidget_Statics10FuncParamsE",
+     "flags": "0xc020800",
+     "parameter_struct_size": 0,
+     "property_record_count": 0
+    },
+    "server": {
+     "proof": {
+      "path": "porting/generated/frontend-super-events-1/uht-server-elf-proof-frozen.json",
+      "sha256": "a6489268d916563f081d8cc3cc77383e75df0f6f1967a0bc29b8e92e4036d867"
+     },
+     "function_symbol": "_ZN63Z_Construct_UFunction_UFortWebLoginWidget_DismissWidget_Statics10FuncParamsE",
+     "flags": "0xc020800",
+     "parameter_struct_size": 0,
+     "property_record_count": 0
+    }
+   },
+   "scope": "Exact original non-Native Blueprint signature and compiled registration in both targets; runtime lifecycle, widgets and original UI behavior remain unverified."
+  },
+  "frontend_event_signature_925ce33dae931e0b": {
+   "id": "frontend_event_signature_925ce33dae931e0b",
+   "label": "/Script/FortniteUI.FortWebLoginWidget:DisplayWidget",
+   "result": "pending",
+   "scope": "Original-owner signature and both-target compiled registration remain uncredited; header name presence is insufficient."
+  },
+  "frontend_event_signature_c927837cfa8d256e": {
+   "id": "frontend_event_signature_c927837cfa8d256e",
+   "label": "/Script/UMG.UserWidget:Construct",
+   "result": "pending",
+   "scope": "Original-owner signature and both-target compiled registration remain uncredited; header name presence is insufficient."
+  },
+  "frontend_event_signature_e1cc754f9f891a6d": {
+   "id": "frontend_event_signature_e1cc754f9f891a6d",
+   "label": "/Script/UMG.UserWidget:Destruct",
+   "result": "pending",
+   "scope": "Original-owner signature and both-target compiled registration remain uncredited; header name presence is insufficient."
+  },
+  "frontend_event_signature_3720cf4e31f354ee": {
+   "id": "frontend_event_signature_3720cf4e31f354ee",
+   "label": "/Script/UMG.UserWidget:OnAnalogValueChanged",
+   "result": "pending",
+   "scope": "Original-owner signature and both-target compiled registration remain uncredited; header name presence is insufficient."
+  },
+  "frontend_event_signature_46979d00c23e6599": {
+   "id": "frontend_event_signature_46979d00c23e6599",
+   "label": "/Script/UMG.UserWidget:OnInitialized",
+   "result": "pending",
+   "scope": "Original-owner signature and both-target compiled registration remain uncredited; header name presence is insufficient."
+  },
+  "frontend_event_signature_abcf6a4a1c87315b": {
+   "id": "frontend_event_signature_abcf6a4a1c87315b",
+   "label": "/Script/UMG.UserWidget:OnMouseButtonDown",
+   "result": "pending",
+   "scope": "Original-owner signature and both-target compiled registration remain uncredited; header name presence is insufficient."
+  },
+  "frontend_event_signature_acc366dcab5dd9aa": {
+   "id": "frontend_event_signature_acc366dcab5dd9aa",
+   "label": "/Script/UMG.UserWidget:OnMouseButtonUp",
+   "result": "pending",
+   "scope": "Original-owner signature and both-target compiled registration remain uncredited; header name presence is insufficient."
+  },
+  "frontend_event_signature_725ac5635b4bd5ff": {
+   "id": "frontend_event_signature_725ac5635b4bd5ff",
+   "label": "/Script/UMG.UserWidget:OnMouseEnter",
+   "result": "pending",
+   "scope": "Original-owner signature and both-target compiled registration remain uncredited; header name presence is insufficient."
+  },
+  "frontend_event_signature_a18b8fa106e94b89": {
+   "id": "frontend_event_signature_a18b8fa106e94b89",
+   "label": "/Script/UMG.UserWidget:OnMouseLeave",
+   "result": "pending",
+   "scope": "Original-owner signature and both-target compiled registration remain uncredited; header name presence is insufficient."
+  },
+  "frontend_event_signature_ea85d14aa60b13ef": {
+   "id": "frontend_event_signature_ea85d14aa60b13ef",
+   "label": "/Script/UMG.UserWidget:OnTouchEnded",
+   "result": "pending",
+   "scope": "Original-owner signature and both-target compiled registration remain uncredited; header name presence is insufficient."
+  },
+  "frontend_event_signature_a7a890054c988e28": {
+   "id": "frontend_event_signature_a7a890054c988e28",
+   "label": "/Script/UMG.UserWidget:OnTouchStarted",
+   "result": "pending",
+   "scope": "Original-owner signature and both-target compiled registration remain uncredited; header name presence is insufficient."
+  },
+  "frontend_event_signature_a61d1d649bb8c042": {
+   "id": "frontend_event_signature_a61d1d649bb8c042",
+   "label": "/Script/UMG.UserWidget:PreConstruct",
+   "result": "pending",
+   "scope": "Original-owner signature and both-target compiled registration remain uncredited; header name presence is insufficient."
+  },
+  "frontend_event_signature_da1eeac922dcfbda": {
+   "id": "frontend_event_signature_da1eeac922dcfbda",
+   "label": "/Script/UMG.UserWidget:Tick",
+   "result": "pending",
+   "scope": "Original-owner signature and both-target compiled registration remain uncredited; header name presence is insufficient."
   }
  }
 }
