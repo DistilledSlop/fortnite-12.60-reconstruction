@@ -25,6 +25,7 @@ def verify(image, record):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('image', type=Path)
+    parser.add_argument('--record', type=Path, default=Path(__file__).with_name('original-runtime.json'))
     args = parser.parse_args()
-    record = json.loads(Path(__file__).with_name('original-runtime.json').read_text())
+    record = json.loads(args.record.read_text())
     print('verified original source spans:', verify(args.image, record))

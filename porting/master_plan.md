@@ -10,13 +10,13 @@ credentials in Git, and the orchestrator reviews and commits.
 
 ## Current baseline
 
-At Native `00e1279`, both builds, both joins, the actual-engine confirmation description diagnostic
-and seven retained Native diagnostics pass. The description now has recovered defaults, original
-size/alignment and two typed callbacks with verified C++/UScriptStruct copy ownership. The original
-Root class loads with no unresolved bytecode-field warnings. Material compatibility remains129/142.
-The next runtime step is original Root widget construction/initialization through the real startup
-player/controller, beyond class loading. A scratch observational probe is ready for root review;
-confirmation async-action factories, Activate/interface dispatch and queued presentation remain
+At Native `6a12acc`, both builds, both joins and eight retained diagnostics pass. Original Root
+CreateWidget returns with the actual startup player/controller and a non-null tree, but its load
+still reports23 skipped native imports and3 missing-row errors. Creation is distinct from a populated
+tree, successful initialization or interactive UI. Material compatibility remains129/142.
+The original CommonUI input row and constructor defaults are now integrated in source with UHT
+and7 C++ checks passing; full builds, actual table loading and repeat Root observation are pending.
+Confirmation async-action factories, Activate/interface dispatch and queued presentation remain
 unfinished. Interactive startup, Blueprint execution and original pixels remain unverified; all four
 product milestones are open. Exact receipts and source release are in HANDOFF.md.
 

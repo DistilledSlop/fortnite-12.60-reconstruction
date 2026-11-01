@@ -2166,6 +2166,10 @@ _confirmation_spec = _common_activation_import.spec_from_file_location(
     "confirmation_runtime_policy", os.path.join(os.path.dirname(__file__), "frontend", "confirmation_runtime", "policy.py"))
 _confirmation_policy = _common_activation_import.module_from_spec(_confirmation_spec)
 _confirmation_spec.loader.exec_module(_confirmation_policy)
+_common_input_spec = _common_activation_import.spec_from_file_location(
+    "common_input_action_row_policy", os.path.join(os.path.dirname(__file__), "frontend", "common_input_action_row", "policy.py"))
+_common_input_policy = _common_activation_import.module_from_spec(_common_input_spec)
+_common_input_spec.loader.exec_module(_common_input_policy)
 
 
 def build_class_promoted(block, name, resolver, parent_entry, owner_fns, snippets=(), splice_ctx=None, native_execs=None):
@@ -3510,6 +3514,7 @@ def promote(args):
     for model in class_models:
         for fn, kinds in model["used"].items():
             seeds.setdefault(fn, set()).update(kinds)
+    _common_input_policy.add_roots(gate, seeds)
     models, texts, all_used = emit_types(gate, seeds, source_label, class_models)
     # struct_net (behaviour kind): each native NetSerialize is checked as text in its header, and every entry is reported
     # as spliced or rejected with its reason. Nothing is written before this check.
@@ -4142,6 +4147,7 @@ class TypeGate:
                 for member in model["members"]:
                     member["blueprint_read_write"] = True
             model = _confirmation_policy.apply_struct(self, info, model)
+            model = _common_input_policy.apply_struct(info, model)
             return model, None
         finally:
             self.current_package = saved
@@ -4428,6 +4434,7 @@ def render_struct_header(model, source_label):
         lines.append("")
     lines.extend(_common_activation_policy.struct_declarations(model))
     lines.extend(_confirmation_policy.declarations(model))
+    lines.extend(_common_input_policy.declarations(model))
     if delta:
         item = net["item"]
         lines.append("\t// Native NetDeltaSerialize, the FFastArraySerializer pattern (ops vtable %s, traits %s): the"
@@ -4576,6 +4583,8 @@ def emit_types(gate, seeds, source_label, class_models=()):
         if (model.get("net") or {}).get("kind") == "native":
             queue.extend((fn, {""}) for fn in model["net"]["uses"])   # types the native body names
     exported = cross_module_struct_exports(gate, models, class_models)
+    # An original asset imports this standalone row across module boundaries.
+    exported.add(_common_input_policy.ROOT)
     texts = {}
     for fn, model in models.items():
         info = gate.info(fn)

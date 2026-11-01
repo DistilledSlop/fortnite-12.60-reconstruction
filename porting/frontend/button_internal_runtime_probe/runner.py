@@ -14,6 +14,7 @@ import main_button_verifier
 import panel_intro_verifier
 import panel_outro_verifier
 import confirmation_description_verifier
+import common_input_action_row_verifier
 
 ENVIRONMENT = ('DISPLAY', 'VK_ICD_FILENAMES', 'SDL_AUDIODRIVER', 'LP_NUM_THREADS')
 BASE_ARGS = ('-stdout', 'FortniteLinux', '/Engine/Maps/Entry', '-vulkan', '-windowed',
@@ -29,6 +30,27 @@ def digest(path):
     return h.hexdigest()
 
 
+def runtime_args(path):
+    raw = path.read_bytes()
+    values = json.loads(raw)
+    allowed = {'fortnitelegacymaterialingress', 'fortnitelegacymaterialmanifest',
+               'fortnitelegacymaterialmanifestsha256'}
+    if not isinstance(values, list) or not values:
+        raise ValueError('runtime args must be a nonempty JSON array')
+    seen = set()
+    for value in values:
+        if not isinstance(value, str) or not value.startswith('-') or '=' not in value:
+            raise ValueError('invalid runtime argument')
+        key, val = value[1:].split('=', 1)
+        key = key.lower()
+        if key not in allowed or key in seen or not val or any(c in value for c in '\x00\r\n'):
+            raise ValueError('disallowed or duplicate runtime argument')
+        seen.add(key)
+    if seen != allowed:
+        raise ValueError('ingress, manifest, and manifest hash arguments are required')
+    return values, hashlib.sha256(raw).hexdigest()
+
+
 def command(binary, case):
     if case in ('registry', 'lifecycle'):
         flags = ('-ContextRuntimeProbe', '-ContextProbeCase=' + case,
@@ -39,7 +61,8 @@ def command(binary, case):
                  'main-button': ('-MainButtonStateProbe',),
                  'panel-intro': ('-PanelIntroProbe',),
                  'panel-outro': ('-PanelOutroProbe',),
-                 'confirmation-description': ('-ConfirmationDescriptionProbe',)}[case]
+                 'confirmation-description': ('-ConfirmationDescriptionProbe',),
+                 'common-input-row': ('-CommonInputActionRowProbe',)}[case]
     return [str(binary), *flags, *BASE_ARGS]
 
 
@@ -86,11 +109,21 @@ def run(args):
         raise ValueError('cwd must be a directory and timeout must be in (0, 3600]')
     build_file = args.build_results.resolve(strict=True)
     row = validate_build(build_file, binary)
+    runtime_file = getattr(args, 'runtime_args', None)
+    runtime_record = None
+    if runtime_file is not None:
+        if args.case != 'common-input-row':
+            raise ValueError('runtime args are only supported for common-input-row')
+        runtime_file = runtime_file.resolve(strict=True)
+        values, runtime_hash = runtime_args(runtime_file)
+        runtime_record = {'path': str(runtime_file), 'sha256': runtime_hash, 'values': values}
     out = args.out.absolute()
     out.mkdir(parents=False, exist_ok=False)
     log = out / 'runtime.log'
     receipt_path = out / 'receipt.json'
     argv = command(binary, args.case)
+    if runtime_record is not None:
+        argv.extend(runtime_record['values'])
     started = time.time_ns()
     deadline = time.monotonic() + args.timeout
     receipt = {'schema': 'button-diagnostic-run-v1', 'case': args.case,
@@ -101,6 +134,8 @@ def run(args):
                'timed_out': False, 'proc_exe_inode_verified': False,
                'proc_exe': None, 'proc_argv': None, 'proc_cwd': None,
                'binary_after_verified': False, 'error': None}
+    if runtime_record is not None:
+        receipt['runtime_args'] = runtime_record
     try:
         with log.open('xb') as stream:
             proc = subprocess.Popen(argv, cwd=cwd, stdout=stream, stderr=subprocess.STDOUT,
@@ -148,12 +183,13 @@ def run(args):
     except OSError as exc:
         receipt['error'] = (receipt['error'] or '') + ' binary recheck failed: ' + str(exc)
     receipt['log'] = {'path': str(log), 'sha256': digest(log)}
-    if args.case in ('button', 'main-button', 'panel-intro', 'panel-outro', 'confirmation-description'):
+    if args.case in ('button', 'main-button', 'panel-intro', 'panel-outro', 'confirmation-description', 'common-input-row'):
         try:
             transcript_verifier = {'button': verifier, 'main-button': main_button_verifier,
                                    'panel-intro': panel_intro_verifier,
                                    'panel-outro': panel_outro_verifier,
-                                   'confirmation-description': confirmation_description_verifier}[args.case]
+                                   'confirmation-description': confirmation_description_verifier,
+                                   'common-input-row': common_input_action_row_verifier}[args.case]
             result = transcript_verifier.verify(log.read_text(errors='replace'))
         except (ValueError, OSError) as exc:
             result = {'passed': False, 'error': str(exc)[:300]}
@@ -162,7 +198,7 @@ def run(args):
     receipt['passed'] = (receipt['returncode'] == 0 and not receipt['timed_out'] and
                          receipt['proc_exe_inode_verified'] and receipt['binary_after_verified'] and
                          receipt['error'] is None and
-                         (args.case not in ('button', 'main-button', 'panel-intro', 'panel-outro', 'confirmation-description') or receipt['transcript']['passed']))
+                         (args.case not in ('button', 'main-button', 'panel-intro', 'panel-outro', 'confirmation-description', 'common-input-row') or receipt['transcript']['passed']))
     write_json(receipt_path, receipt)
     return receipt['passed']
 
@@ -173,7 +209,8 @@ def main():
     parser.add_argument('--binary', type=Path, required=True)
     parser.add_argument('--cwd', type=Path, required=True)
     parser.add_argument('--out', type=Path, required=True)
-    parser.add_argument('--case', choices=('button', 'main-button', 'panel-intro', 'panel-outro', 'confirmation-description', 'activation', 'registry', 'lifecycle'), required=True)
+    parser.add_argument('--case', choices=('button', 'main-button', 'panel-intro', 'panel-outro', 'confirmation-description', 'common-input-row', 'activation', 'registry', 'lifecycle'), required=True)
+    parser.add_argument('--runtime-args', type=Path, help='JSON array of material ingress and manifest flags (common-input-row only)')
     parser.add_argument('--timeout', type=float, default=240)
     args = parser.parse_args()
     try:

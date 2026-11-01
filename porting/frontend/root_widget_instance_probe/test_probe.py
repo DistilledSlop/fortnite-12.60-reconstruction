@@ -44,6 +44,16 @@ class TranscriptTests(unittest.TestCase):
         self.assertEqual(result['blueprint_error_count'], 100)
         self.assertEqual(len(result['blueprint_errors']), 20)
 
+    def test_creation_does_not_mask_missing_native_dependencies(self):
+        for error in ('Skipping import Function /Script/FortniteUI.X:Y, depends on missing native class',
+                      'Skipping import Enum /Script/CommonUI.InputActionState, depends on missing native class',
+                      "Missing RowStruct while loading DataTable '/Game/UI/Input.Input'!"):
+            with self.subTest(error=error):
+                result = verifier.verify('\n'.join(ROWS + [error]))
+                self.assertTrue(result['creation_completed'])
+                self.assertFalse(result['passed'])
+                self.assertEqual(result['dependency_error_count'], 1)
+
 class RunnerTests(unittest.TestCase):
     def test_flags_and_timeout_receipt(self):
         with tempfile.TemporaryDirectory() as tmp:

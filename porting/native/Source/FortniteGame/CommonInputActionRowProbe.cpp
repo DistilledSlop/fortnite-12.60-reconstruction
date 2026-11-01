@@ -1,0 +1,125 @@
+#include "CommonInputActionRowProbe.h"
+#include "FCommonInputActionData.h"
+#include "Engine/DataTable.h"
+#include "HAL/PlatformMisc.h"
+#include "Misc/CommandLine.h"
+#include "Misc/CoreDelegates.h"
+#include "Misc/Parse.h"
+#include "UObject/Class.h"
+#include "UObject/UnrealType.h"
+
+namespace CommonInputActionRowProbe
+{
+bool Failed = false;
+bool Registered = false;
+FDelegateHandle FrameHandle;
+
+void Record(const TCHAR* Row, bool Passed)
+{
+    Failed |= !Passed;
+    UE_LOG(LogTemp, Display, TEXT("COMMON_INPUT_ACTION_ROW_PROBE row=%s passed=%d"), Row, int32(Passed));
+}
+
+template <typename T, typename M> int64 Offset(const T& Object, const M& Member)
+{
+    return reinterpret_cast<const uint8*>(&Member) - reinterpret_cast<const uint8*>(&Object);
+}
+
+bool InfoDefaults(const FCommonInputTypeInfo& Info)
+{
+    FSlateBrush Brush;
+    Brush.DrawAs = ESlateBrushDrawType::NoDrawType;
+    return Info.Key == FKey() && Info.OverrrideState == EInputActionState::Enabled &&
+        !Info.bActionRequiresHold && Info.HoldTime == 0.5f && Info.OverrideBrush == Brush;
+}
+
+void CheckDefaults(const TCHAR* Prefix, const FCommonInputActionData& Row)
+{
+    Record(*FString::Printf(TEXT("%s_text"), Prefix), Row.DisplayName.IsEmpty() && Row.HoldDisplayName.IsEmpty());
+    Record(*FString::Printf(TEXT("%s_keyboard"), Prefix), InfoDefaults(Row.KeyboardInputTypeInfo));
+    for (int32 Index = 0; Index < 4; ++Index)
+        Record(*FString::Printf(TEXT("%s_gamepad%d"), Prefix, Index), InfoDefaults(Row.GamepadInputTypeInfos[Index]));
+    Record(*FString::Printf(TEXT("%s_touch"), Prefix), InfoDefaults(Row.TouchInputTypeInfo));
+}
+
+bool HasCopy(UScriptStruct* Type)
+{
+    return Type && Type->GetCppStructOps() && Type->GetCppStructOps()->HasCopy();
+}
+
+void Run()
+{
+    FCommonInputActionData Row;
+    const FCommonInputTypeInfo& Info = Row.KeyboardInputTypeInfo;
+    UScriptStruct* RowStruct = FCommonInputActionData::StaticStruct();
+    FStructProperty* InfoProperty = RowStruct ? FindFProperty<FStructProperty>(RowStruct, TEXT("KeyboardInputTypeInfo")) : nullptr;
+    UScriptStruct* InfoStruct = InfoProperty ? InfoProperty->Struct : nullptr;
+    UE_LOG(LogTemp, Display, TEXT("COMMON_INPUT_ACTION_ROW_PROBE row=layout_values row_size=%d row_align=%d display=%lld hold_display=%lld keyboard=%lld gamepad=%lld touch=%lld info_size=%d info_align=%d key=%lld state=%lld requires_hold=%lld hold_time=%lld brush=%lld"),
+        int32(sizeof(Row)), int32(alignof(FCommonInputActionData)), (long long)Offset(Row, Row.DisplayName),
+        (long long)Offset(Row, Row.HoldDisplayName), (long long)Offset(Row, Row.KeyboardInputTypeInfo),
+        (long long)Offset(Row, Row.GamepadInputTypeInfos), (long long)Offset(Row, Row.TouchInputTypeInfo),
+        int32(sizeof(Info)), int32(alignof(FCommonInputTypeInfo)), (long long)Offset(Info, Info.Key),
+        (long long)Offset(Info, Info.OverrrideState), (long long)Offset(Info, Info.bActionRequiresHold),
+        (long long)Offset(Info, Info.HoldTime), (long long)Offset(Info, Info.OverrideBrush));
+    Record(TEXT("row_layout"), sizeof(Row) == 1064 && alignof(FCommonInputActionData) == 8 &&
+        Offset(Row, Row.DisplayName) == 8 && Offset(Row, Row.HoldDisplayName) == 32 &&
+        Offset(Row, Row.KeyboardInputTypeInfo) == 56 && Offset(Row, Row.GamepadInputTypeInfos) == 224 &&
+        Offset(Row, Row.TouchInputTypeInfo) == 896 && RowStruct && RowStruct->GetStructureSize() == 1064 &&
+        RowStruct->GetMinAlignment() == 8 && RowStruct->IsChildOf(FTableRowBase::StaticStruct()));
+    Record(TEXT("info_layout"), sizeof(Info) == 168 && alignof(FCommonInputTypeInfo) == 8 &&
+        Offset(Info, Info.Key) == 0 && Offset(Info, Info.OverrrideState) == 24 &&
+        Offset(Info, Info.bActionRequiresHold) == 25 && Offset(Info, Info.HoldTime) == 28 &&
+        Offset(Info, Info.OverrideBrush) == 32 && InfoStruct && InfoStruct->GetStructureSize() == 168 &&
+        InfoStruct->GetMinAlignment() == 8);
+    CheckDefaults(TEXT("cpp"), Row);
+    Record(TEXT("row_struct_ops_copy"), HasCopy(RowStruct));
+    Record(TEXT("info_struct_ops_copy"), HasCopy(InfoStruct));
+    if (RowStruct)
+    {
+        void* Storage = FMemory::Malloc(RowStruct->GetStructureSize(), RowStruct->GetMinAlignment());
+        RowStruct->InitializeStruct(Storage);
+        CheckDefaults(TEXT("script"), *static_cast<FCommonInputActionData*>(Storage));
+        RowStruct->DestroyStruct(Storage);
+        FMemory::Free(Storage);
+    }
+    else Record(TEXT("script_initialize"), false);
+    if (InfoStruct)
+    {
+        void* Storage = FMemory::Malloc(InfoStruct->GetStructureSize(), InfoStruct->GetMinAlignment());
+        InfoStruct->InitializeStruct(Storage);
+        Record(TEXT("info_script_initialize"), InfoDefaults(*static_cast<FCommonInputTypeInfo*>(Storage)));
+        InfoStruct->DestroyStruct(Storage);
+        FMemory::Free(Storage);
+    }
+    else Record(TEXT("info_script_initialize"), false);
+
+    UDataTable* Table = LoadObject<UDataTable>(nullptr, TEXT("/Game/UI/Foundation/Input/InputActionDataTable.InputActionDataTable"));
+    Record(TEXT("asset_load"), Table != nullptr);
+    Record(TEXT("asset_row_struct"), Table && RowStruct && Table->GetRowStruct() == RowStruct);
+    Record(TEXT("asset_nonempty"), Table && Table->GetRowMap().Num() > 0);
+    if (Table)
+    {
+        TArray<FString> Names;
+        for (const auto& Entry : Table->GetRowMap()) Names.Add(Entry.Key.ToString());
+        Names.Sort();
+        UE_LOG(LogTemp, Display, TEXT("COMMON_INPUT_ACTION_ROW_PROBE row=asset_values row_count=%d"), Names.Num());
+        for (int32 Index = 0; Index < FMath::Min(5, Names.Num()); ++Index)
+            UE_LOG(LogTemp, Display, TEXT("COMMON_INPUT_ACTION_ROW_PROBE row=asset_sample index=%d name=%s"), Index, *Names[Index]);
+    }
+}
+
+void Tick()
+{
+    FCoreDelegates::OnEndFrame.Remove(FrameHandle);
+    Run();
+    Record(TEXT("complete"), !Failed);
+    FPlatformMisc::RequestExitWithStatus(false, Failed ? 1 : 0);
+}
+}
+
+void RegisterCommonInputActionRowProbeDriver()
+{
+    if (CommonInputActionRowProbe::Registered || !FParse::Param(FCommandLine::Get(), TEXT("CommonInputActionRowProbe"))) return;
+    CommonInputActionRowProbe::Registered = true;
+    CommonInputActionRowProbe::FrameHandle = FCoreDelegates::OnEndFrame.AddStatic(&CommonInputActionRowProbe::Tick);
+}

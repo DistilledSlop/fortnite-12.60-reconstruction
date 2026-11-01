@@ -9,6 +9,7 @@ ROOT = '/Game/UI/Foundation/RootLayout_Athena.RootLayout_Athena_C'
 PHASES = ('registered', 'prerequisites', 'before_load', 'after_load',
           'before_create_widget', 'after_create_widget', 'observations', 'complete')
 ERROR = re.compile(r'Accessed None|Blueprint Runtime Error|(?:missing|unable to (?:find|resolve)|failed to (?:find|resolve)|could not find|unresolved).{0,100}(?:bytecode|referenced field)|(?:bytecode|referenced field).{0,100}(?:missing|unable to (?:find|resolve)|failed to (?:find|resolve)|could not find|unresolved)', re.I)
+DEPENDENCY_ERROR = re.compile(r'Skipping import (?:Function|ScriptStruct|Class|Enum) .*depends on missing native class|Missing RowStruct', re.I)
 SCOPE = 'CreateWidget return and ownership observations; not full Blueprint VM, interactive UI, or parity'
 
 
@@ -16,6 +17,9 @@ def verify(text):
     rows = []
     errors = []
     error_count = 0
+    dependencies = []
+    dependency_count = 0
+    creation_completed = False
     last = None
     problem = None
     for line in text.splitlines():
@@ -23,6 +27,10 @@ def verify(text):
             error_count += 1
             if len(errors) < 20:
                 errors.append(line.strip()[:500])
+        if DEPENDENCY_ERROR.search(line):
+            dependency_count += 1
+            if len(dependencies) < 20:
+                dependencies.append(line.strip()[:500])
         if 'ROOTINSTANCE' not in line:
             continue
         row = line[line.index('ROOTINSTANCE'):].strip()
@@ -68,11 +76,14 @@ def verify(text):
             raise ValueError('creation ownership mismatch')
         exact(6, {'ok': '1', 'scope': 'create_return_and_ownership'})
         exact(7, {'ok': '1'})
+        creation_completed = True
         if errors:
             raise ValueError('Blueprint initialization errors detected')
+        if dependencies:
+            raise ValueError('Unresolved native imports or data-table row structures')
     except ValueError as exc:
-        return {'passed': False, 'error': str(exc), 'last_phase': last, 'rows': len(rows), 'blueprint_errors': errors, 'blueprint_error_count': error_count, 'scope': SCOPE}
-    return {'passed': True, 'last_phase': last, 'rows': len(rows), 'blueprint_errors': errors, 'blueprint_error_count': error_count, 'scope': SCOPE}
+        return {'passed': False, 'error': str(exc), 'creation_completed': creation_completed, 'last_phase': last, 'rows': len(rows), 'blueprint_errors': errors, 'blueprint_error_count': error_count, 'dependency_errors': dependencies, 'dependency_error_count': dependency_count, 'scope': SCOPE}
+    return {'passed': True, 'creation_completed': creation_completed, 'last_phase': last, 'rows': len(rows), 'blueprint_errors': errors, 'blueprint_error_count': error_count, 'dependency_errors': dependencies, 'dependency_error_count': dependency_count, 'scope': SCOPE}
 
 
 def main():

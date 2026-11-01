@@ -2,12 +2,34 @@
 
 ## Current resume point (2026-11-01)
 
-- Original Root instance probe is now integrated in source, awaiting full builds/live execution.
-  It waits for the actual startup world/player/controller and calls CreateWidget on the original
-  Root class, without state forcing or callback interception. Actual C++ syntax check passes at
-  /mnt/vibrato/fortnite-work/root-widget-instance-ue-preflight-1; four runner/verifier tests pass.
-  Runtime arguments are captured from the validated class-load receipt in
-  /mnt/vibrato/fortnite-work/root-widget-instance-runtime-args-1.json. No new UI evidence yet.
+- Native6a12acc is built and observed: client/server PASS116.842/111.969s,12703 sources stable.
+  The original Root CreateWidget returns with actual startup player/controller, correct ownership
+  and a non-null WidgetTree. This does not prove a populated tree, Slate or Blueprint correctness.
+  Its load logs23 skipped native imports and3 missing-row errors. The original v1 receipt passes
+  creation observations only; the strengthened verifier reports creation_completed=true and
+  passed=false with26 dependency messages. No original receipt was overwritten. The separate
+  interpretation is /mnt/vibrato/fortnite-work/root-widget-instance-interpretation-v2.json.
+  Eight retained diagnostics, Root class-load control and joins21.678/21.631s pass.
+- Root instance checkpoint generated/frontend-native-evidence/root-widget-instance-runtime-1/
+  checkpoint.json SHA256 8113e837d27e83e6f3761e311b8b25937024b08c8ab954577a715ae773c4cb75;
+  archive /mnt/vibrato/fortnite-evidence/frozen-runtime/root-widget-instance-runtime-1 binds9source
+  files,161artifact pairs,18binary rows. Release SHA256
+  c1bb45ef6b680b2f9e481daaf50e92530a3a119847109d1d52d62ea0914ad278.
+  TERMINAL handles: build26720/stage97270/instance30902/controls62843/joins86091/class71002.
+  Freeze completed synchronously. Reproduction scripts /mnt/vibrato/fortnite-work/{build_,stage_,
+  run_,freeze_}root_widget_instance*; tracked instance runner is under porting/frontend/.
+- Current unvalidated edits add the original CommonUI.CommonInputActionData row through a guarded
+  standalone type seed, nested CommonInputTypeInfo and recovered constructor defaults. Normal
+  generation adds2headers, changes no existing generated files, restores12703 mtimes. The info
+  constructor uses Enabled,false,0.5seconds and OverrideBrush.DrawAs=NoDrawType, as proved against
+  original constructor stores and brush reflection. No padding is zeroed. Three policy tests and
+  generator141 pass; verify_original.py --record common_input_action_row/original-runtime.json
+  verifies6 original spans. UHT and all7 C++ checks pass in common-input-action-row-ue-preflight-1,
+  with zero writes outside scratch. An initial probe include used its own-module Generated/ prefix;
+  the cross-module include is corrected and its failed log is retained beside the passing rerun.
+  Actual CommonInputActionRowProbe and its strict runner are integrated but unbuilt/unrun.
+  Promotion common-input-action-row-integration-1/result.json; source/constructor proof and candidate
+  handoffs under /mnt/vibrato/fortnite-work/common-input-*; root retains current Native ownership.
 - Historical confirmation receipt checking now verifies pinned Git source plus frozen copies,
   instead of comparing the old receipt with current working files. The added committed-source
   tamper check passes; all47 progress tests pass. Previous Native runtime baseline remains below.
@@ -19,7 +41,7 @@
   `python3 porting/progress/progress.py --no-record` renders all 391 existing points; `git diff --check`
   passes. Browser interaction remains untested because no browser runtime is installed. No progress
   weights or milestone evidence changed.
-- Latest validated Native source is00e127967abad8711a089052ae6eac71c9ff08a3 / Engine d7e04d4b6.
+- Previous confirmation baseline is00e127967abad8711a089052ae6eac71c9ff08a3 / Engine d7e04d4b6.
   Confirmation-description construction and two typed native single-cast callbacks are integrated
   through guarded generator policy. Normal promotion changed only FFortDialogDescription_NUI.h,
   restoring12698 unchanged mtimes. Both builds PASS126.507/125.866s with12701 Native sources stable.
@@ -57,10 +79,9 @@
   casts the director pair object itself to the manager widget; it does not search PlayerWidgets.
 - Simple factories/default Confirm/Decline names and action value constructor now have a replayable
   root proof at confirmation-simple-factory-proof-1/HANDOFF.md under /mnt/vibrato/fortnite-work/.
-  Next runtime step: original Root widget construction/initialization, beyond StaticLoadObject.
-  Scratch-only candidate root-widget-instance-probe-candidate-1/HANDOFF.md waits for actual startup
-  player/controller, loads the original class and brackets CreateWidget without callback interception
-  or forced state. It is uncompiled/unrun; root must review/promote/validate separately. Inventory
+  Original Root creation is now observed above; a populated tree, Slate and initialization remain
+  unverified. The original scratch probe candidate is retained at root-widget-instance-probe-candidate-1.
+  Inventory
   root-widget-instantiation-probe-inventory-1 has historic load-boundary notes; those old intro/outro
   failures are resolved by the current baseline and must not be treated as current failures.
 - Dashboard now exposes four confirmation-family checks within one point split from the existing

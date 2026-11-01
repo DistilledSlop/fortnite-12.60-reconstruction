@@ -7,7 +7,9 @@ outer, world, player, controller and widget tree. It does not attach to the view
 force UI states, intercept callbacks or replace the original class.
 
 The verifier requires eight ordered phase rows and rejects Blueprint initialization
-errors. A non-null return does not establish a successful Blueprint VM or UI.
+errors, skipped native imports and missing data-table row structures. It reports
+`creation_completed` separately from `passed`: returning a widget can coexist with
+unresolved dependencies. A non-null return does not establish a successful Blueprint VM or UI.
 The runner preserves the last observed phase and exit/timeout status on failure,
 and binds the launch to the built ELF, actual process arguments and working directory.
 

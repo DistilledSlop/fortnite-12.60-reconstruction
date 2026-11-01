@@ -1,0 +1,42 @@
+{
+  "image_sha256": "338c83a2314ccac1040a2c0bb520b893013cc7b58eda58e550da67f5d84de680",
+  "image_base": "0x140000000",
+  "spans": [
+    {
+      "name": "row_struct_ops",
+      "start": "0x145a0cb50",
+      "end": "0x145a0cc78",
+      "sha256": "7f8d13317b297df30e223383288e50665f6221ae9eb8c4140b5899ec17b70158"
+    },
+    {
+      "name": "info_struct_ops",
+      "start": "0x145a0cc80",
+      "end": "0x145a0cda8",
+      "sha256": "00ff137f363f7a58755db37d8997d0dc1f4809c81b11f5d4dc76de1fc33e56a0"
+    },
+    {
+      "name": "row_ctor_thunk",
+      "start": "0x140817420",
+      "end": "0x140817428",
+      "sha256": "140b36975069f9585e9a2370e2c683c40f49dbbfc1790e4a0aa3841185b81347"
+    },
+    {
+      "name": "info_ctor_thunk",
+      "start": "0x140817430",
+      "end": "0x140817438",
+      "sha256": "c0502427ae52b0a581b400fe7d68a2dc634a8d119c885c0500e4709950bea68e"
+    },
+    {
+      "name": "row_ctor",
+      "start": "0x140794b80",
+      "end": "0x140794f50",
+      "sha256": "6aa2d147356b6d20b1f4252d735b8c5383aed93aa3b5c399ffa547a0db0df1de"
+    },
+    {
+      "name": "info_ctor",
+      "start": "0x140794ff0",
+      "end": "0x1407950a4",
+      "sha256": "9cc0e159bd453891bcff13ab1051042978c848db344e66bba4ca1d06f9ab9df1"
+    }
+  ]
+}
