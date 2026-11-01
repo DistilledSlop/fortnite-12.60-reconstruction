@@ -41,13 +41,17 @@ class ReceiptTests(unittest.TestCase):
             m.validate(checkpoint, self.release)
 
     def test_source_tamper_rejected(self):
-        source = self.checkpoint['source_files'][0]['path']
+        source = self.checkpoint['source_files'][0]['archive']
         original = m.read_pinned
         def altered(path, digest):
             if path == source:
                 raise ValueError('hash mismatch')
             return original(path, digest)
         with patch.object(m, 'read_pinned', side_effect=altered), self.assertRaises(ValueError):
+            m.validate(self.checkpoint, self.release)
+
+    def test_committed_source_tamper_rejected(self):
+        with patch.object(m.subprocess, 'check_output', return_value=b'wrong committed source'), self.assertRaises(ValueError):
             m.validate(self.checkpoint, self.release)
 
     def test_false_process_receipt_rejected(self):

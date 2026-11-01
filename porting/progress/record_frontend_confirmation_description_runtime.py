@@ -4,6 +4,7 @@ import hashlib
 import importlib.util
 import json
 from pathlib import Path
+import subprocess
 
 CHECKPOINT = 'porting/generated/frontend-native-evidence/confirmation-description-runtime-1/checkpoint.json'
 RELEASE = '/mnt/vibrato/fortnite-evidence/frozen-runtime/confirmation-description-runtime-1/source-release.json'
@@ -14,6 +15,7 @@ ENGINE = 'd7e04d4b65fb8ee464082849414cf5f7ae4d7bca'
 CASES = {'confirmation-description', 'panel-outro', 'panel-intro', 'main-button', 'button', 'activation', 'registry', 'lifecycle'}
 BASE = '/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-native-evidence/confirmation-description-runtime-1/'
 BUILD = '/mnt/vibrato/fortnite-work/confirmation-description-native-build-1/'
+REPO = Path(__file__).resolve().parents[2]
 
 
 def require(ok, message):
@@ -32,7 +34,9 @@ def validate(c, release):
     require(release['schema'] == 'fortnite.source-release.v1' and release['native_commit'] == SOURCE and release['checkpoint_sha256'] == CHECKPOINT_SHA and release['all_build_stage_probe_join_handles_terminal'] is True and release['active_native_build_or_stage_owner'] is None, 'release')
     require(len(c['source_files']) == 15 and len({x['path'] for x in c['source_files']}) == 15, 'source inventory')
     for row in c['source_files']:
-        read_pinned(row['path'], row['sha256'])
+        relative = Path(row['path']).relative_to(REPO).as_posix()
+        committed = subprocess.check_output(['git', 'show', SOURCE + ':' + relative], cwd=REPO)
+        require(hashlib.sha256(committed).hexdigest() == row['sha256'], 'committed source mismatch: ' + relative)
         read_pinned(row['archive'], row['sha256'])
     artifacts = {x['path']: x for x in c['artifacts']}
     require(len(artifacts) == len(c['artifacts']) == 185, 'artifact inventory')

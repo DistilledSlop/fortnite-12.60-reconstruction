@@ -2,6 +2,15 @@
 
 ## Current resume point (2026-11-01)
 
+- Original Root instance probe is now integrated in source, awaiting full builds/live execution.
+  It waits for the actual startup world/player/controller and calls CreateWidget on the original
+  Root class, without state forcing or callback interception. Actual C++ syntax check passes at
+  /mnt/vibrato/fortnite-work/root-widget-instance-ue-preflight-1; four runner/verifier tests pass.
+  Runtime arguments are captured from the validated class-load receipt in
+  /mnt/vibrato/fortnite-work/root-widget-instance-runtime-args-1.json. No new UI evidence yet.
+- Historical confirmation receipt checking now verifies pinned Git source plus frozen copies,
+  instead of comparing the old receipt with current working files. The added committed-source
+  tamper check passes; all47 progress tests pass. Previous Native runtime baseline remains below.
 - Dashboard history now opens on the latest 50 commits, retaining all history, range controls and
   adaptive labels/marker density. A keyboard/touch slider and pointer inspect individual commits;
   the range reports fitted versus zero-baseline scale. Evidence values participate in both scale
