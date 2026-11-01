@@ -21,15 +21,21 @@
   source-stage points remain separate. No weights, denominators, historical points or gates changed.
 - Actual Root boundary is missing CommonActivatablePanel.OnBeginIntro at AsyncLoading3126;
   Login still reaches Facebook material / MemoryImage1064. All class probes exit139; no UI acceptance.
-- Next implementation: complete real CommonUI Panel/queue/input and authentic startup. Button source
-  fragments now cover gated hover/interaction setter, touch enter/leave and mouse down/up/double click;
-  the complete Slate primitive is now composed into manual Native source (14 original virtual differences,
-  constructor/Construct and interaction helper). UObject factory/callback/manager integration remains pending.
-  Its double-click callback1407fb600 guard and delegate order are recovered at /tmp/button-double-click-callback-1.
-  Slate+5c8 is a focus delegate, not two ints; +250 is IsPressed, not SupportsKeyboardFocus.
-  The original has TWO owning Slate refs (+478 custom and+418base): preserve both. The setter fragment
-  was corrected at /tmp/button-interaction-setter-2 (receipt e48c8d157e4a23950411cef3ee54112cf19afe6d3335249961fbcd9d4385bf69).
-  Cursor clamp is complete off workspace at /tmp/cursor-viewport-clamp-2; producer/runtime integration pending.
+- Next implementation: integrate UCommonButtonInternal through generator inputs; never hand-edit its generated files.
+  Complete manual SCommonButton source is in CommonUI/Private and passes combined UE syntax; it still needs a build,
+  UObject factory wiring and runtime tests. Source composition receipt: /tmp/scommonbutton-composed-1.
+  Factory checkpoint /tmp/button-internal-rebuild-factory-1 is complete: +468 owns SBox, +478 owns custom SCommonButton,
+  +418 separately owns that same child in UButton::MyButton. Return the SBox; preserve both child owning references.
+  SBox applies float(MinWidth/Height), including zero/negative. Custom factory does not forward PressMethod or hover callbacks.
+  Source callbacks: click1407fb500, double1407fb600, press1407fbb60, release1407fbbb0, focus1407fbb00.
+  Guarded click/press/release source: /tmp/button-guarded-click-callbacks-1. Suspended click returns Handled;
+  suspended double-click returns Unhandled. Double-click native reply delegate precedes reflected broadcast/Handled replacement.
+  Suspended manager flagFD is operation state; FE writer1407faa40 is a direct bool store with no broadcast.
+  Typed manager callers set FE true/false, and reset clears it: /tmp/manager-external-suspend-writer-1.
+  Setter/caller feature names and exhaustive writer coverage remain unproven; do not invent a public reflected API.
+  IsInputSuspended needs its real OR getter/flag producer integration; current generated manager lacks that method.
+  Source callback and manager integration remains pending. Slate+5c8 is a focus delegate; +250 is IsPressed, not focus support.
+  Cursor clamp source is complete off workspace at /tmp/cursor-viewport-clamp-2; producer/runtime integration pending.
 - Persistent collaboration: root plans/integrates/reviews and performs difficult work directly. Use bounded
   Luna-medium read-only tasks, Terra-medium/high regular tasks, Sol6.1-medium complex tasks, always fork_turns:none.
   Keep reads/output economical; checkpoint and rotate when old context stops helping. One Native/build/stage owner.
