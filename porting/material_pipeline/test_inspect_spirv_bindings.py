@@ -33,6 +33,19 @@ class SpirvBindingTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'instruction length'):
             inspector.spirv_descriptors(shader()[:-4])
 
+    def test_remapping_offsets_point_to_decoration_operands(self):
+        data = shader()
+        words = list(struct.unpack('<' + 'I' * (len(data) // 4), data))
+        descriptor, = inspector.spirv_descriptors(data, include_offsets=True)
+        for field, value in [('set', 9), ('binding', 27)]:
+            offset = descriptor[field + '_word_offset']
+            self.assertEqual(words[offset], descriptor[field])
+            self.assertEqual(words[offset - 1], 34 if field == 'set' else 33)
+            words[offset] = value
+        changed = struct.pack('<' + 'I' * len(words), *words)
+        remapped, = inspector.spirv_descriptors(changed)
+        self.assertEqual((remapped['set'], remapped['binding']), (9, 27))
+
     def test_missing_variable(self):
         data = shader()
         with self.assertRaisesRegex(ValueError, 'incomplete'):

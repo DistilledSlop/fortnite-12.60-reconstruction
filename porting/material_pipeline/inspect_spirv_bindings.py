@@ -21,7 +21,7 @@ def generated_path(value):
     return path
 
 
-def spirv_descriptors(data):
+def spirv_descriptors(data, include_offsets=False):
     if len(data) < 20 or len(data) > 64 * 1024 * 1024 or len(data) % 4:
         raise ValueError('invalid SPIR-V length')
     words = struct.unpack('<' + 'I' * (len(data) // 4), data)
@@ -52,6 +52,9 @@ def spirv_descriptors(data):
                 if field in previous and previous[field] != operands[2]:
                     raise ValueError('conflicting SPIR-V descriptor decoration')
                 previous[field] = operands[2]
+                if field + '_word_offset' in previous:
+                    raise ValueError('duplicate SPIR-V descriptor decoration')
+                previous[field + '_word_offset'] = cursor + 3
         elif opcode == 59:  # OpVariable: result type, result ID, storage class.
             if len(operands) >= 3:
                 if not 0 < operands[1] < bound:
@@ -62,8 +65,12 @@ def spirv_descriptors(data):
     for identifier, decoration in decorations.items():
         if 'set' not in decoration or 'binding' not in decoration or identifier not in variables:
             raise ValueError('incomplete SPIR-V descriptor')
-        output.append({'name': names.get(identifier), 'set': decoration['set'],
-                       'binding': decoration['binding'], 'storage_class': variables[identifier]})
+        row = {'name': names.get(identifier), 'set': decoration['set'],
+               'binding': decoration['binding'], 'storage_class': variables[identifier]}
+        if include_offsets:
+            row.update(set_word_offset=decoration['set_word_offset'],
+                       binding_word_offset=decoration['binding_word_offset'])
+        output.append(row)
     output.sort(key=lambda row: (row['set'], row['binding'], row['name'] or ''))
     if len({(row['set'], row['binding']) for row in output}) != len(output):
         raise ValueError('SPIR-V descriptor binding collision')
