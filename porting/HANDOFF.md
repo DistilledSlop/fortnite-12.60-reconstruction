@@ -2,98 +2,70 @@
 
 ## Current resume point (2026-11-01)
 
-- Validation in progress at Native82b3576: new client build PASS129.952s with full Native source
-  snapshot unchanged; server build is still owned by root (live exec session35187), do not restart it
-  from an old status note. Build receipts/logs /tmp/button-internal-native-build-1. New practical
-  diagnostic runner records the actual PID/executable inode/argv/cwd and before/after staged hashes
-  against this build receipt. Its10 focused tests pass. A real Linux empty-cmdline exec race was
-  reproduced and corrected with a bounded live-only retry; failures retained in
-  /tmp/button-binding-diagnose-zoi9vivp, successful controls /tmp/button-binding-verified-qsulnk0u.
-  The runner does not replace prior full strict metadata/link validation or claim full UI acceptance.
-- Current next validation: the completed real-widget diagnostic is now promoted as opt-in
-  -ButtonInternalProbe, with maintained tools in frontend/button_internal_runtime_probe/ (5 tests pass).
-  Root strengthened it to34 rows: real Slate focus event/factory delegate/reply and both independent
-  enabled-state transitions are exercised. Existing direct UObject click/press/release checks retain
-  that limited scope. Full real-widget runtime and new shared builds are pending; root owns both.
-  Previous activation/context strict contracts remain historical and pinned to their original sources;
-  no old strict report is claimed for the new tree.
-- Latest bounded checkpoint: native enabled-state bridge added to the CommonButtonInternal generator
-  inputs. It propagates the original main-button inline flag writes to the internal UObject and live
-  custom Slate child without calling UWidget::SetIsEnabled or adding callbacks. Callback controls now
-  cover true/false, null/live child and repeated-value synchronization with no extra side effects.
-  The previous fixture compile failure remains in /tmp/button-enabled-bridge-policy-tests-1.log;
-  corrected suite passes18 tests plus exact-body ASan/UBSan controls in tests-2.log. Generator self-test
-  passes141 checks in /tmp/button-enabled-bridge-generator-tests-1.log. Normal promotion receipt:
-  /tmp/button-enabled-bridge-root-integration-1/generation-result.json: only two expected generated
-  files changed,12549 unchanged mtimes restored. Actual regenerated CPP passes real UE Clang9
-  standalone syntax with matching promoted-header glue (syntax-3/result.json). Earlier syntax/
-  missing source-only PCH and syntax-2/ incompatible old manager glue failures are preserved; no
-  macro aliases added. Commands are in each command.json, cwd Engine/Source. Fresh shared build/runtime pending.
-- Real-widget probe worker has finished its bounded source checkpoint and stopped:
-  /tmp/button-internal-runtime-probe-1/HANDOFF.md, receipt SHA-256
-  0cbed18edf2ea3a258f987550e6a6ca6175c30c7c8637838e96b2fbcc03ceea2.
-  Original scratch patch SHA-256 202edcb621a2067a2bb820980fa0c731f8d7ac6c6396799f265492ea5c99fc8d.
-  Fresh isolated UHT against promoted headers, probe/glue standalone syntax, write confinement and
-  transcript mutations pass. Root promoted and strengthened the diagnostic as described above;
-  full unity/build/runtime and process binding remain pending. No new runtime/product credit.
-- Finished read-only API binding: original UButton native table pair14683a8e0/14683a8e8 names SetStyle
-  at145a03128 and points to exec143da6180. Thunk copies the reflected style into a2a0-byte temporary
-  then calls143d905c0, which assigns this+128 and updates live child+418. This matches current
-  UButton::SetStyle(const FButtonStyle&) in Engine Button.cpp:105. Exact original Windows source
-  revision remains unproven; use the established typed API for the main-button visual helper.
-
-- Goal remains the full reconstructed client/server with all four product milestones and 100% parity.
-  All four gates are false. Latest fully green runtime is Nativec06a5cb / Engined7e04d4b6,
-  immutable build2 validated by new run-only attempt5 using tools973d38e. All ownership is released.
-  New manual Native `CommonUI/Private/SCommonButton.h/.cpp` source is now composed and syntax-checked;
-  both real builds now PASS132.06/120.84s; results/logs /tmp/scommonbutton-native-build-1/.
-  No widget runtime or shared build of the new factory is claimed. Root owns subsequent Native integration.
-- Base activation is implemented and runtime verified: actual constructor/defaults, guarded activation,
-  visibility, Blueprint/native/dynamic notification order and reentry pass40orderedrows. Both target
-  UHT/object/linked implementation and full generic context proofs pass. Root independently reran
-  full strict verification and obtained byte-identical reports. Retained controls and both joins pass.
-- Checkpoint `generated/material_pipeline/frontend-activation-runtime-checkpoint-results-5.json`
-  SHA-256 `cb324a725852bbe89fced9a13d5422a7a589b04667faa0ec98921a6c5f1124e3`;
-  root aggregate `generated/frontend-native-evidence/activation-runtime-5/root-aggregate-audit-1.json`.
-  Independent audits verify639newartifacts,42inheritedmetadata/objects and all18binarypaths (~14GB).
-  Builds remain the original196.381/192.277s; attempt5 did not compile or restamp anything.
-- Dashboard:126/142 material owners,41/41 non-Native signatures,113leaves,totalweight1855,
-  approximately21.280%. The existing one-point base activation behavior share is now earned;
-  source-stage points remain separate. No weights, denominators, historical points or gates changed.
-- Actual Root boundary is missing CommonActivatablePanel.OnBeginIntro at AsyncLoading3126;
-  Login still reaches Facebook material / MemoryImage1064. All class probes exit139; no UI acceptance.
-- UCommonButtonInternal factory/lifecycle/callback policy is now applied and normally generated.
-  Only its CPP/header and the manager CPP/header changed; 12,572 unchanged timestamps were restored.
-  141 generator checks and18 policy/callback tests pass. Candidate fresh UHT and four actual CPP/glue
-  syntax units also pass; no shared build/runtime validation of these new generated bodies yet.
-  Source checkpoint /tmp/button-internal-generator-policy-1, receipt
-  de3dbeb879a09ee7b33fa562234bcd86a7ec2524a973b0f2e2dfe4d36b60509c.
-  Next: review/promote the completed scratch real-widget diagnostic, then one frozen build/runtime phase.
-  Probe must create a real UUserWidget/WidgetTree owner: UWidget outer-PC alone has no world in this engine.
-  Original SynchronizeProperties is inherited: slot298 in both original internal/base vtables targets143d949f0;
-  typed two-anchor witness in /tmp/button-internal-sync-properties-1 proves the slot. Do not invent an override.
-- Button implementation requirements and source checkpoints:
-  Complete manual SCommonButton source is in CommonUI/Private and passes both real builds.
-  UObject factory wiring is normally generated; its shared build and runtime tests remain pending. Source composition receipt: /tmp/scommonbutton-composed-1.
-  Factory checkpoint /tmp/button-internal-rebuild-factory-1 is complete: +468 owns SBox, +478 owns custom SCommonButton,
-  +418 separately owns that same child in UButton::MyButton. Return the SBox; preserve both child owning references.
-  SBox applies float(MinWidth/Height), including zero/negative. Custom factory does not forward PressMethod or hover callbacks.
-  Source callbacks: click1407fb500, double1407fb600, press1407fbb60, release1407fbbb0, focus1407fbb00.
-  Guarded click/press/release source: /tmp/button-guarded-click-callbacks-1. Suspended click returns Handled;
-  suspended double-click returns Unhandled. Double-click native reply delegate precedes reflected broadcast/Handled replacement.
-  Suspended manager flagFD is operation state; FE writer1407faa40 is a direct bool store with no broadcast.
-  Typed manager callers set FE true/false, and reset clears it: /tmp/manager-external-suspend-writer-1.
-  Setter/caller feature names and exhaustive writer coverage remain unproven; do not invent a public reflected API.
-  IsInputSuspended input from /tmp/manager-suspend-getter-policy-1 is now normally generated; shared build/runtime pending.
-  Root verified its entire original bool-return descriptor equals the already runtime-verified IsActivated descriptor
-  (kind2c includesNativeBool20); extraction bitfield label is not a new representation mismatch.
-  Two native flag defaults model the UObject zero-allocation path; original allocator parity remains a documented inference.
-  Queue and external feature-callsite integration are still pending; getter alone does not complete manager behavior.
-  Full main-button callers and manager producer integration remain pending. Slate+5c8 is a focus delegate; +250 is IsPressed, not focus support.
-  Cursor clamp source is complete off workspace at /tmp/cursor-viewport-clamp-2; producer/runtime integration pending.
-- Persistent collaboration: root plans/integrates/reviews and performs difficult work directly. Use bounded
-  Luna-medium read-only tasks, Terra-medium/high regular tasks, Sol6.1-medium complex tasks, always fork_turns:none.
-  Keep reads/output economical; checkpoint and rotate when old context stops helping. One Native/build/stage owner.
+- Goal remains the reconstructed client and multiplayer server with full feature/visual/wire parity.
+  All four product milestones remain false. Dashboard is approximately21.334%,114leaves,1855weight
+  after crediting one existing CommonUI behavior point for the independently audited internal-button
+  diagnostic. Twenty CommonUI behavior points remain unfinished. Material owners126/142; signatures41/41.
+  Importer record_frontend_button_runtime.py pins the checkpoint/root/audit/release; all28progress tests pass.
+- Current Native source82b35764ba1c2dbd1a62a59b8b7b50aadf44bf82 / Engined7e04d4b6 builds PASS:
+  client129.952s, server121.582s. Full12553-file Native snapshot stayed unchanged through both builds.
+  New generated internal button factory/lifecycle/callbacks, manager suspension getter, enabled-state
+  bridge and manual SCommonButton are now built and tested in real runtime. Root's build session35187
+  and runtime/join sessions are terminal; do not restart old handles. Results/logs /tmp/button-internal-native-build-1.
+- Button runtime phase1:34 ordered rows PASS. Real UObject/WidgetTree ownership, SBox/child identity,
+  desired size, interaction/enabled/hover behavior, Enter handling, native-before-reflected double-click,
+  actual Slate focus binding/reply, suspension guards and cleanup/Slate destruction pass. The temporary
+  manager fixture is restored. Click/press/release guard checks invoke real UObject handlers directly;
+  capture/touch/paint/full gestures and authentic manager/UI startup are not established by this diagnostic.
+- Four distinct fresh processes (button/activation/registry/lifecycle) exit0, exact executable inode/argv/cwd
+  and before/after binary hashes verified. Retained activation40rows, context registry/GC/loaded reflection
+  and lifecycle event checks PASS. Fresh default/Athena joins PASS21.555/21.560s, including authority/client
+  pawn creation. No material/pixel rerun or new exhaustive original metadata/relocated implementation audit
+  was performed in this phase; earlier strict reports remain historical, pinned to their original build.
+- Checkpoint generated/material_pipeline/frontend-button-internal-runtime-checkpoint-results-1.json
+  SHA256c9f4c509cf39a9e67afd8ca2fcdb1e79a74c4a99eb37660d4c205c79dbe6a223.
+  Runtime evidence generated/frontend-native-evidence/button-internal-runtime-1; root-report.json
+  SHA2566b5ecdd20e41d5d2afbacaae322843b2e745a58486c77b618939fc1b724bc527.
+  Archive /mnt/vibrato/fortnite-evidence/frozen-runtime/button-internal-runtime-1 stores40small artifacts,
+  nine critical committed sources and six binaries; all18source/archive/stage binary paths were hashed.
+  source-release.json SHA25620ac4b3367c755dad48caa8bdb23745eba3bebfcbdb99eba7efc409c0627b7a8
+  confirms all processes terminal and Native/build/stage ownership released. Independent integrity audit
+  integrity-audit-1.json SHA256b1220c97b767069d7573b1e7063b3af27c986e0ce7d852e8070d6bca5e52a503
+  rehashes40artifacts(source+archive),9source snapshots,18binarypaths and12553current Native files with
+  no mismatches; independently repeats34button/40activation rows. Context semantic checks were root-run,
+  not independently repeated by that audit. Source/build/stage ownership is fully released.
+- Maintained diagnostic tools frontend/button_internal_runtime_probe/ have10 passing tests, including
+  real compiled ELF binding and rejection of malformed/incomplete/failed transcripts. The Linux exec
+  empty-cmdline race is fixed with a bounded retry only while live; wrong nonempty argv still fails.
+  Earlier failed controls /tmp/button-binding-diagnose-zoi9vivp are preserved. Policies pass18tests plus
+  exact-body ASan/UBSan callback controls; generator passes141checks. Normal bridge promotion changed
+  only two expected files and restored12549unchanged mtimes; /tmp/button-enabled-bridge-root-integration-1.
+- Broader strict material/activation baseline remains Nativec06a5cb / Engined7e04d4b6, immutable build2
+  validated by run-only activation attempt5/tools973d38e. Checkpoint
+  generated/material_pipeline/frontend-activation-runtime-checkpoint-results-5.json
+  SHA256cb324a725852bbe89fced9a13d5422a7a589b04667faa0ec98921a6c5f1124e3.
+  Root independently reran strict activation/context reports byte-identically; separate audits verify
+  639newartifacts,42inheritedmetadata/objects and18binarypaths. Preserve all earlier failures/baselines.
+  Latest actual Root load observation in that baseline is missing CommonActivatablePanel.OnBeginIntro
+  (AsyncLoading3126); Login Facebook material/MemoryImage1064. These class probes exit139, not UI acceptance.
+- Next implementation: compose main CommonButton constructor/state producers and its actual Initialize
+  lifecycle before the Panel/queue/global/held-input integration. RebuildWidget is inherited; do not add
+  an invented override. /tmp/button-inner-lifecycle-1/HANDOFF.md proves Initialize1407cd7d0 calls Super
+  first and returns unchanged on false; constructs InternalRootButton under WidgetTree and assigns weak+ad0.
+  If old root is null, root replacement and ALL callback binding are skipped. Existing-root path needs
+  exact slot API/native callback identities before integration. This method does not set sizes/styles.
+- Source helpers: /tmp/button-visual-helper-1 proves1407f5ce0 selects SelectedStyle first, else NormalStyle
+  for native enabledbit02, else DisabledStyle; resolved inner required, SetStyle then OnCurrentTextStyleChanged.
+  UButton SetStyle binding143d905c0 is proven via native name/thunk; event+4f0 is OnCurrentTextStyleChanged.
+  Main ctor/defaults/getter/SetIsEnabled source: /tmp/common-button-native-state-root-1 and maintained
+  frontend/common_button_interaction_state_evidence.md. No main-button lifecycle/body parity claimed yet.
+  Canonical global input candidate stage19, Panel/held/cursor candidates and their source proofs remain
+  off-workspace; see historical details for exact receipts. Internal SynchronizeProperties is inherited:
+  original base/internal slot298 both143d949f0; no extra override. Keep separate child owning references.
+- Persistent collaboration: root plans/integrates/reviews and performs difficult work directly. Bounded
+  Luna-medium small read-only, Terra-medium/high regular, Sol6.1-medium complex tasks, always fork_turns:none.
+  Checkpoint/rotate when old context stops helping. Keep file/log reads economical. One Native/build/stage
+  owner. Preserve the five existing Engine dirty files and external CUE edit; no remote/push configured.
 
 ## Previous integration details (2026-11-01, retained history)
 

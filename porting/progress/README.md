@@ -518,6 +518,18 @@ M_TempIcon_Login_Facebook respectively, both at MemoryImage.cpp:1064; async
 load order may change which appears first. Native OnBeginIntro remains
 unimplemented. Earlier history points are preserved.
 
+### CommonUI internal button runtime allocation
+
+One point is allocated from the remaining CommonUI behavior share to the
+controlled internal button runtime diagnostic, leaving 20 points for unfinished
+behavior. The diagnostic exercises real UObject and Slate factory, lifecycle,
+core input and callbacks in a controlled fixture; it does not establish the main
+CommonButton, Panel, queue, full UI, gesture or parity behavior. Both targets
+were rebuilt, four live processes and two joins passed, and the source and
+artifacts are pinned for independent verification. This phase did not repeat an
+exhaustive original UHT/ELF audit or the material checks. The denominator remains
+1,855 and the milestone gates remain false.
+
 ### CommonUI base activation runtime allocation
 
 One point of the 22-point unfinished CommonUI behavior share is reserved for the

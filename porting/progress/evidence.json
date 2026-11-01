@@ -11074,6 +11074,20 @@
    "binary_audit_sha256": "4c11866f0c1b479d57b257e3dd463211280531d1d0fdf793f771db1f7bb60ae4",
    "scope": "Bounded CommonUI base activation diagnostic with both-target original UHT metadata and linked implementation; inherited phase-2 builds and three fresh runtime processes. Panel, input, full CommonUI, authentic startup, interactive UI and all four milestones remain unverified.",
    "provenance_note": "Pinned external receipts and independently audited source and artifact bindings must remain available for re-verification."
+  },
+  "frontend_commonui_internal_button_runtime": {
+   "id": "frontend_commonui_internal_button_runtime",
+   "result": "pass",
+   "exit_code": 0,
+   "command": "python3 -I porting/progress/record_frontend_button_runtime.py",
+   "checkpoint": "porting/generated/material_pipeline/frontend-button-internal-runtime-checkpoint-results-1.json",
+   "checkpoint_sha256": "c9f4c509cf39a9e67afd8ca2fcdb1e79a74c4a99eb37660d4c205c79dbe6a223",
+   "runtime_report": "porting/generated/frontend-native-evidence/button-internal-runtime-1/root-report.json",
+   "runtime_report_sha256": "6b5ecdd20e41d5d2afbacaae322843b2e745a58486c77b618939fc1b724bc527",
+   "integrity_audit": "porting/generated/frontend-native-evidence/button-internal-runtime-1/integrity-audit-1.json",
+   "integrity_audit_sha256": "b1220c97b767069d7573b1e7063b3af27c986e0ce7d852e8070d6bca5e52a503",
+   "scope": "Controlled real UObject and Slate internal button factory, lifecycle, core input and callback diagnostic; two builds, four live processes and two joins. No new exhaustive original UHT/ELF audit or material rerun; main CommonButton, Panel, queue, full UI, gesture and parity remain unverified.",
+   "provenance_note": "Pinned external receipts and independently audited artifacts must remain available for re-verification."
   }
  }
 }
