@@ -1,0 +1,253 @@
+{
+  "image": "/mnt/vibrato/fortnite-evidence/original-late-capture-1/image-125.runtime.bin",
+  "historical_image_sha256": "338c83a2314ccac1040a2c0bb520b893013cc7b58eda58e550da67f5d84de680",
+  "whole_image_hash_repeated": false,
+  "class_block": "0x145a01470",
+  "class_noregister_fn": "0x1408072e0",
+  "functions": [
+    {
+      "name": "SetInputAction",
+      "create_func": "0x140807910",
+      "flags": [
+        "0x4020401"
+      ],
+      "replicated_function": false,
+      "net_roles": [],
+      "outer_fn": "0x140807790",
+      "params": [
+        {
+          "index": 0,
+          "name": "InputActionRow",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "struct": "0x1446f2880"
+          }
+        }
+      ]
+    },
+    {
+      "name": "SetInputActions",
+      "create_func": "0x140807940",
+      "flags": [
+        "0x4020401"
+      ],
+      "replicated_function": false,
+      "net_roles": [],
+      "outer_fn": "0x140807790",
+      "params": [
+        {
+          "index": 0,
+          "name": "NewInputActions",
+          "kind": "Array",
+          "kind_raw": "0x16",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0
+        },
+        {
+          "index": 1,
+          "name": "NewInputActions",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x0",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "struct": "0x1446f2880"
+          },
+          "array_inner_of": "NewInputActions"
+        }
+      ]
+    }
+  ],
+  "native": {
+    "SetInputAction": {
+      "exec_addr": "0x14080c740",
+      "flags": "0x4020401",
+      "params": [
+        {
+          "index": 0,
+          "name": "InputActionRow",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "struct": "0x1446f2880"
+          }
+        }
+      ],
+      "create_func": "0x140807910",
+      "source": "lea"
+    },
+    "SetInputActions": {
+      "exec_addr": "0x14080ce80",
+      "flags": "0x4020401",
+      "params": [
+        {
+          "index": 0,
+          "name": "NewInputActions",
+          "kind": "Array",
+          "kind_raw": "0x16",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0
+        },
+        {
+          "index": 1,
+          "name": "NewInputActions",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x0",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "struct": "0x1446f2880"
+          },
+          "array_inner_of": "NewInputActions"
+        }
+      ],
+      "create_func": "0x140807940",
+      "source": "lea"
+    }
+  },
+  "windows": [
+    {
+      "name": "class-registration",
+      "va": "0x1408072e0",
+      "size": 176,
+      "sha256": "aa36339798bc40c35a2852c7350538a673aba0988644d1fd55d8cf30a3413dcd"
+    },
+    {
+      "name": "constructor-thunk",
+      "va": "0x140807de0",
+      "size": 20,
+      "sha256": "95cb900e30e8c875dc99da8cb1f1e2781a66c816e3b3d4f678eb844bc8469cd6"
+    },
+    {
+      "name": "constructor",
+      "va": "0x140796260",
+      "size": 657,
+      "sha256": "6226b3a3b90e377921d4f90e8bffb191d6ff8e85c764c1e2322300b96c77d11c"
+    },
+    {
+      "name": "SetInputAction-exec",
+      "va": "0x14080c740",
+      "size": 144,
+      "sha256": "1e013b7b8f5b490da90ce1abd9ff13a516404f6d7b2d038e2f1a6edfaf85563a"
+    },
+    {
+      "name": "SetInputActions-exec",
+      "va": "0x14080ce80",
+      "size": 224,
+      "sha256": "c6d48a7c8b0b7c7b3eb77b1071da7663a487544d3c2c81660d3b866c5b91bf37"
+    },
+    {
+      "name": "SetInputAction",
+      "va": "0x1407f6820",
+      "size": 258,
+      "sha256": "de1dae71a455193c3922c152ede673bc89022af0dc0411be7324d022c054b212"
+    },
+    {
+      "name": "SetInputActions",
+      "va": "0x1407f7710",
+      "size": 284,
+      "sha256": "df7c6ed3b3734057909c60649e5e39b5449fdbe85692fc74a58820906e14508a"
+    },
+    {
+      "name": "set-key",
+      "va": "0x140802150",
+      "size": 169,
+      "sha256": "37ce1dcd87be627b7717a9f98d2df26226343118f72bff72eb65d4cdb31d27e2"
+    },
+    {
+      "name": "bind",
+      "va": "0x1407d0aa0",
+      "size": 391,
+      "sha256": "43882658b86349da3d2279d11cfac60f83ccdd0b44c92db80bd5c162b25cb441"
+    },
+    {
+      "name": "callback",
+      "va": "0x1407c94c0",
+      "size": 57,
+      "sha256": "15c57a667a36b1fe1e135efb2533283797c252d2a3a77d56f7be943bfbc882d6"
+    },
+    {
+      "name": "rebuilt",
+      "va": "0x1407dff40",
+      "size": 37,
+      "sha256": "fd2b2477bb5d48aa47c555aaaae7d98693ceb5d1922baf0f3867d6073a45104a"
+    },
+    {
+      "name": "release",
+      "va": "0x1407ee5e0",
+      "size": 340,
+      "sha256": "feeb3b5077d4f576cd0bca7edf2416f9141c2a3fa875ff6a826567cfa6ce4ae5"
+    },
+    {
+      "name": "deleting-destructor",
+      "va": "0x1407a7890",
+      "size": 52,
+      "sha256": "8bd5d69394bac50f51a289d4bcadb2a76a0a7fc07d0f5bab409a20732fd94225"
+    },
+    {
+      "name": "destructor",
+      "va": "0x14079b5d0",
+      "size": 281,
+      "sha256": "e2c94662df9728d472e4eef6b61c7df9ff8611e714defa02afde31f1ee4a26e3"
+    },
+    {
+      "name": "RemoveAll",
+      "va": "0x140690620",
+      "size": 340,
+      "sha256": "40f9b4678361302050e7b619e21da231ae80a258082e4b8902b8494d718ba2c2"
+    },
+    {
+      "name": "button-key-caller",
+      "va": "0x140802c00",
+      "size": 189,
+      "sha256": "09082a806b3a51b226f541dec30c8afe5033dbfcabac1663450db9da78383630"
+    },
+    {
+      "name": "vtable-delete",
+      "va": "0x1459ec8b8",
+      "size": 8,
+      "sha256": "8276fc15a3a697e108b7fb9a3cde35fdc14462e0c3dbe2a3d4efaab65720d588"
+    },
+    {
+      "name": "vtable-release",
+      "va": "0x1459ecb18",
+      "size": 8,
+      "sha256": "b4f2939aac78b498e7d958afcd2f5581c2376eaf01e1b21e17ea2c938206386b"
+    },
+    {
+      "name": "vtable-rebuilt",
+      "va": "0x1459ecb68",
+      "size": 8,
+      "sha256": "a3acbf0759e034f797107b5bf44c968fa5052a5b6efa0f4abb8f6cd97bf48b33"
+    }
+  ]
+}
