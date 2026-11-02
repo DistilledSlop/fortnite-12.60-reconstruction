@@ -1,0 +1,25 @@
+{
+  "image_sha256_previous_baseline": "338c83a2314ccac1040a2c0bb520b893013cc7b58eda58e550da67f5d84de680",
+  "windows": [
+    {
+      "va": "0x14081d830",
+      "size": 817,
+      "sha256": "0bc07caf021b8c82da22fe080467fdf110299592dc8b9387e2ae6fa79eb0494c"
+    },
+    {
+      "va": "0x14081c1e0",
+      "size": 1393,
+      "sha256": "3eef9aa2d787942b5492d9bc4c6c64a4af4547f83db258b5c4333b2a824df178"
+    },
+    {
+      "va": "0x14081b550",
+      "size": 245,
+      "sha256": "89eb3452fe725b160ca1dd04a6d01d31464a94615bd5a4c9db24189cdae1bd98"
+    },
+    {
+      "va": "0x140818f70",
+      "size": 355,
+      "sha256": "b7b4259a543fa6c4af7f123bf9f23e2aee75f7510696e8ead1764f5fa4d47d3f"
+    }
+  ]
+}
