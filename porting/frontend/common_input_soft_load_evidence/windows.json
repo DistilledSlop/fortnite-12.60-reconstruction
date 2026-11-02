@@ -1,0 +1,41 @@
+{
+  "image": "image-125.runtime.bin",
+  "image_sha256_previous_baseline": "338c83a2314ccac1040a2c0bb520b893013cc7b58eda58e550da67f5d84de680",
+  "windows": [
+    {
+      "start": "0x1407d0ea0",
+      "end_exclusive": "0x1407d105d",
+      "sha256": "6a6601080dcb1676c528de3ac77dc61a6f770331a03981f1547e7b3f6a54b0f7"
+    },
+    {
+      "start": "0x142eda260",
+      "end_exclusive": "0x142eda386",
+      "sha256": "a5d44994c4f02026e8e391f9cd7c04ff4264cd3090cdff68fe3ee96b4785f633"
+    },
+    {
+      "start": "0x14081c1e0",
+      "end_exclusive": "0x14081c751",
+      "sha256": "3eef9aa2d787942b5492d9bc4c6c64a4af4547f83db258b5c4333b2a824df178"
+    },
+    {
+      "start": "0x14081d830",
+      "end_exclusive": "0x14081db61",
+      "sha256": "0bc07caf021b8c82da22fe080467fdf110299592dc8b9387e2ae6fa79eb0494c"
+    },
+    {
+      "start": "0x14081dc20",
+      "end_exclusive": "0x14081dc55",
+      "sha256": "aca332fe1275969a9838c415831e891152b1240b9fcb32173d7edea8a0039057"
+    },
+    {
+      "start": "0x14081e5c0",
+      "end_exclusive": "0x14081e5e2",
+      "sha256": "4acc4e96daa366b71a2c7db0208fc0488238055db2991c4f268b2ee3ca392a16"
+    },
+    {
+      "start": "0x145a0f3e0",
+      "end_exclusive": "0x145a0f498",
+      "sha256": "d1cec761b4ff21f47c7bd90dd3d050b1a0621a98bedfd55cd600118fd026559b"
+    }
+  ]
+}
