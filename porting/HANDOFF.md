@@ -1,5 +1,57 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## CommonInput module/cache integration (2026-11-02, client + GUI diagnostic PASS)
+
+Previous goal turn made progress. User reports UDEV fixed; normal Vulkan/Xvfb
+startup is now verified. Native899dc12c / Engine87acab901 builds the client PASS
+117.816s, with Native source unchanged. The real GUI client exits0 and passes40
+controlled CommonInput observations, including original421-row table, module-owned
+rooted settings distinct from CDO, settings cache resolution, returned-copy
+independence and membership invalidation. This is an opt-in UObject diagnostic in
+normal GUI startup; no interactive menu, hardware-input, pixels or sound claim.
+All four product gates and the full client/server/parity goal remain open.
+
+Implementation1490cc10 integrates source-proven CommonInput module startup/shutdown,
+actual settings accessor, shared cache validation/preparation/current-platform copy,
+one module log category, and current-gamepad getter. First build failed on missing
+concrete class includes (exit6,63.898s); correction899dc12c changes generator inputs
+and regenerates. Promotion reports `/tmp/common-input-lifecycle-promotion-{1,2}/`
+PASS: first5changed/1added; correction1changed, no removals, unchanged mtimes restored.
+Three bounded original-image source policies PASS before both promotions; no full
+image read/hash repeated. Generator self-test141, candidate policy3 and runner10
+checks PASS. Current launcher uses verifier_v3; old verifiers remain for receipts.
+
+Exact commands: `python3 /tmp/promote_common_input_lifecycle_1.py`, `_2.py`;
+`python3 /tmp/build_common_input_lifecycle_1.py`, `_2.py`;
+`python3 /tmp/run_common_input_lifecycle_gui_2.py`. Build/run artifacts are under
+`porting/generated/common-input-lifecycle-{1,2}/`: `results.json`, `FortniteLinux.log`,
+and phase2 `stage.json`, `launch.json`, `input-gui/{runtime.log,receipt.json}`.
+Receipt pins build source899dc12c/report and staged client ELF; client ELF only
+staged, no symbols/archive claim. Earlier unchanged05c342ce client also passed36
+GUI observations after runner verifier correction: `common-input-batch-1/`
+`input-gui-udev-fixed-2/{runtime.log,receipt.json}` via
+`python3 /tmp/run_common_input_gui_fixed_2.py`. First GUI-fixed run exited0 but
+launcher used the obsolete verifier; retain its failure receipt. Handles87643,
+37827,25615,60107,14167,58350,2147 are terminal. Server/joins and broad unchanged
+suites were not repeated for this UI batch. Root attachment still has the prior
+source-proven missing CommonButton.SetStyle; no unchanged crash rerun this batch.
+
+Source recovery06662681 pins constructor, key setter, BOTH SetInputAction(s),
+subscription/callback, OnWidgetRebuilt, release and destructor across19 bounded
+windows and original setter/native joins. Widgets borrow registry keys and never
+delete registry records. GetIcon candidate remains guarded: complete refresh and
+Slate construction/lifecycle coherently before registering it or setting the
+verified-key marker. Next narrow recovery is refresh gate14783cb80's real
+identity/default/producer; exact next windows are in
+`frontend/common_action_widget_key_lifecycle_evidence/HANDOFF.md`. Action-widget
+runtime candidate is uncompiled except its integrated gamepad getter. Production
+input providers, selection/focus/hover/Initialize/SetStyle and frontend remain next.
+
+Dashboard rationale updated; no extra credit, weight changes or milestone claims.
+Root owns Native/promotion/stage/build; delegation remains bounded and rotated,
+Luna medium read-only, Terra medium/high regular, Sol medium complex, fork_turns
+none, at most3workers. Preserve economical reads and risk-based batch validation.
+
 ## Active CommonInput implementation batch (2026-11-02, client/headless PASS)
 
 Previous goal turn made progress: callbacks were committed/built and21 controlled

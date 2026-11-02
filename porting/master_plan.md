@@ -10,6 +10,16 @@ credentials in Git, and the orchestrator reviews and commits.
 
 ## Current baseline
 
+Native899dc12c / Engine87acab901: client build PASS117.816s and normal Vulkan/Xvfb
+GUI diagnostic PASS40 observations, including module-owned/rooted settings, cache
+resolution/copy/invalidation and original421-row input table. UDEV fix is verified;
+older EPERM notes below are historical. Module/cache lifecycle and gamepad getter
+are integrated; actual action-widget refresh/GetIcon still require authentic
+binding/lifecycle and Slate integration. Source06662681 closes both setter/key/
+subscription/release paths; next narrow dependency is refresh gate14783cb80.
+No interactive menu, sound/pixel parity or milestone credit. See latest HANDOFF.
+
+
 Native05c342ce / Engine87acab901: client build and36 CommonInput observations pass
 in the client ELF using server/NullRHI mode, including original421-row table and
 platform/settings constructors/controller brush selection. Module factory/name,
