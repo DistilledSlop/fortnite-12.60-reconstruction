@@ -100,6 +100,43 @@ Measures, from most objective to least:
   takes `sources` (`root`, `suffix`, `name_regex`) and `distinct` (count distinct names).
 - `manual`: `pct`, your estimate (basis `manual`).
 
+### UI effort review (2026-11-02)
+
+The current 1,855-point model assigns 170 points to UI overall, including 30
+to CommonUI/UMG. The 10-point FortniteUI tile measures declarations only; the
+module also has separately allocated behavior and confirmation work. These
+allocations need comparison against the full implementation scope, rather than
+against the declaration tile or recent elapsed time alone.
+
+The separate [Claude review workspace](effort_review/README.md) inventories all
+117 leaves, their evidence and accounting boundaries. Its saved proposal raises
+UI from 170 to 248 points, including CommonUI from 30 to 60, and the total from
+1,855 to 1,933. **These numeric changes are proposals and have not been applied.**
+The proposal's coarse estimate bands and rationale require independent review;
+there is no measured engineer-hour calibration. With unchanged evidence the
+proposed model would move the overall estimate from 21.458% to about 20.592%.
+That would be a model change, not lost work or a runtime result.
+
+One confirmed accounting fix is applied: `wine_starts` and startup effort belong
+only to `platform.eac_removal`; `platform.wine_launch` measures the five downstream
+Wine stages. Cross-module native-body recovery/transcription belongs to
+`gameplay.native_behavior`; feature/UI budgets cover additional adapters, assembly,
+integration and verification. CommonUI owns reusable widgets, FortniteUI owns
+module-specific behavior, lifecycle owns startup/context orchestration, and
+frontend/HUD own their respective flows and presentation. Separately measured
+source, declarations, diagnostics, events and materials must not be allocated
+again to those residual budgets. A shared proof may support different deliverables,
+but the same work must have one effort allocation.
+
+At Native `04822b2`, seven button defaults are checked on the CDO and a fresh
+widget; main-button, internal-button, activation, and Panel intro/outro diagnostics
+pass. Authentic selection/action adapters, interactive root attachment, menus,
+lobby, HUD, original behavior and presentation remain unfinished. Portable source
+cores are not integrated UI. Claude's review must assess both the relative effort
+weights and whether broad manual leaves hide verified work, without inventing
+completion or reshaping historical models. Older allocation notes below describe
+their checkpoint's model and denominator.
+
 ### Material pipeline accounting
 
 The frontend allocation includes five separately evidenced material deliverables and

@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Dashboard effort audit recommendations",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["id", "affected_ids", "problem", "evidence", "proposed_before_after", "model_impact", "confidence", "fix_scope", "validation", "unknowns"],
+    "properties": {
+      "id": {"type": "string", "minLength": 1},
+      "affected_ids": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+      "problem": {"type": "string", "minLength": 1},
+      "evidence": {"type": "array", "minItems": 1, "items": {"type": "string", "description": "Exact source file and line, commit or checkpoint, and observation."}},
+      "proposed_before_after": {"type": "string", "description": "Current and proposed weights or ranges, assumptions and rationale."},
+      "model_impact": {"type": "string", "description": "Total and category impact, overlap and historical comparability."},
+      "confidence": {"enum": ["low", "medium", "high"]},
+      "fix_scope": {"type": "string"},
+      "validation": {"type": "string"},
+      "unknowns": {"type": "array", "items": {"type": "string"}}
+    }
+  }
+}

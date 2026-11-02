@@ -1,0 +1,33 @@
+{
+  "status": "proposed-not-applied",
+  "baseline_revision": "5e939e5519b30cebe32ca79cd83888f17f2e8630",
+  "model": "ui-effort-model.json",
+  "changes": [
+    {
+      "id": "ui.commonui_umg.implementation",
+      "current": 18.0,
+      "proposed": 48
+    },
+    {
+      "id": "ui.frontend_lobby",
+      "current": 25,
+      "proposed": 40
+    },
+    {
+      "id": "ui.lifecycle",
+      "current": 12,
+      "proposed": 20
+    },
+    {
+      "id": "ui.hud",
+      "current": 40,
+      "proposed": 50
+    },
+    {
+      "id": "ui.fortniteui_classes.implementation",
+      "current": 29.0,
+      "proposed": 44
+    }
+  ],
+  "review_required": "Review total effort and scope boundaries; importance and desired progress are excluded."
+}

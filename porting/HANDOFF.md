@@ -2,6 +2,27 @@
 
 ## Current resume point (2026-11-02)
 
+- User-requested Claude effort review workspace: progress/effort_review/README.md,
+  inventory.json covers117leaves with evidence pointers; reports/research/suggestions
+  directories and recommendation schema are ready. USER starts Claude; do not invoke it.
+  Saved numeric proposal (UI170->248, CommonUI30->60, total1855->1933) is NOT applied;
+  review it before numeric reweighting. Confirmed Wine startup deduplication and explicit
+  recovery/integration budget boundaries are applied. Live total remains1855. Progress47tests pass.
+  After Claude reports, root triages evidence and spawns fresh bounded implementation agents.
+- Current candidate: GetCurrentInputType is integrated into the normal generator and
+  regenerated UCommonInputSubsystem. Real mutable-field getter, exact original enum/owner/
+  signature/native-exec guards; no input-event producers or routing are invented. New opt-in
+  CommonInputCurrentTypeProbe checks LocalPlayerSubsystem ownership, metadata and eight direct/
+  reflected mutations with state restoration (13rows). Portable policy4/probe35/generator141
+  checks pass. UE builds/runtime are pending; the verified Native baseline remains04822b2 below.
+- New bounded proofs under /mnt/vibrato/fortnite-work/: common-button-action-registration-1
+  corrects140800e60 as binding creation, actual cleanup1408018c0. Routing/dispatch still open.
+  common-action-widget-slate-mapping-1 closes SBox->SOverlay->three SImage graph, exact brush/
+  progress-visibility/layout+volatility calls and release ownership. These are source proofs,
+  not integrated UI. Both pinned-image replays pass.
+  common-action-fallback-brush-gate-1 additionally closes static FSlateNoResource fallback
+  and live CommonInput.ShowKeys console variable (default1, nonzero gate). Do not substitute
+  default FSlateBrush + NoDraw (wrong image size) or a constant gate. Replay passes.
 - Latest Native04822b2 restores six explicit CommonButton reflected flag defaults
   plus inherited focus. Both builds PASS188.045/147.589s with source/config stable;
   actual MainButtonStateProbe44rows checks all7defaults on CDO and fresh widget.
@@ -36,11 +57,9 @@
   including repeated Collapsed calls. Global gate14081d130 ignores its subsystem argument.
   Construct binding proof common-button-construct-bindings-1 closes +470 input-subsystem
   listener/+478 removal; +488 nested action registration and cleanup remain unclosed.
-- Next isolated candidate: frontend/common_input_current_type/ restores the real mutable
-  CurrentInputType accessor (not a constant). Original replay and compiled candidate tests
-  pass; not generator-integrated or UE-validated. Integrate validate_types plus exact owner
-  native_funcs entry before registration, then normal regeneration/build/runtime validation.
-  Keep input detection/routing/producer parity separate from the bounded getter proof.
+- Current accessor source and proof: frontend/common_input_current_type/. Its generator
+  integration is complete; actual builds, runtime getter and original Root import measurements
+  are the next validation. Keep input detection/routing/producer parity separate from the getter.
 - Dashboard effort audit: Luna medium screened all117leaves/1855weight units. User requires
   total effort only, excluding importance; persisted in AGENTS.md and progress/README.md.
   No numeric changes justified by metadata alone. Review overlapping package/static-mesh,

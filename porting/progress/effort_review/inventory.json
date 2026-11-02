@@ -1,0 +1,3796 @@
+{
+  "source_head": "5e939e5519b30cebe32ca79cd83888f17f2e8630",
+  "source_paths": {
+    "model": "porting/progress/components.json",
+    "evidence": "porting/progress/evidence.json"
+  },
+  "working_tree_status": [
+    " M porting/progress/components.json"
+  ],
+  "meaning": "Weights estimate total completed plus remaining effort, not a progress result. Working-tree changes are proposals, not accepted calibration.",
+  "committed_head": {
+    "model_sha256": "421f8494a61df30f9712573c2797f2a5645ec644f140b6cad197502221470137",
+    "evidence_sha256": "ca6b694a09de944bbc1ef365ce437445f79fee7daa5f862b7ad4efa65196b5da",
+    "leaf_count": 117,
+    "total_weight": 1855.0,
+    "categories": [
+      {
+        "id": "platform",
+        "name": "Platform and Linux runtime",
+        "leaf_count": 9,
+        "weight": 85
+      },
+      {
+        "id": "assets",
+        "name": "Asset pipeline",
+        "leaf_count": 14,
+        "weight": 233
+      },
+      {
+        "id": "maps",
+        "name": "Maps and world (Apollo island)",
+        "leaf_count": 9,
+        "weight": 190.0
+      },
+      {
+        "id": "gameplay",
+        "name": "Gameplay classes (/Script/FortniteGame)",
+        "leaf_count": 21,
+        "weight": 645.0
+      },
+      {
+        "id": "net",
+        "name": "Network protocol and replication",
+        "leaf_count": 11,
+        "weight": 182
+      },
+      {
+        "id": "backend",
+        "name": "Backend services (reconstructed server)",
+        "leaf_count": 18,
+        "weight": 215.0
+      },
+      {
+        "id": "audio",
+        "name": "Audio",
+        "leaf_count": 5,
+        "weight": 75
+      },
+      {
+        "id": "visuals",
+        "name": "Visuals parity",
+        "leaf_count": 4,
+        "weight": 60
+      },
+      {
+        "id": "ui",
+        "name": "Frontend and lobby UI",
+        "leaf_count": 26,
+        "weight": 170.0
+      }
+    ],
+    "leaves": [
+      {
+        "id": "platform.linux_build",
+        "category_id": "platform",
+        "category": "Platform and Linux runtime",
+        "name": "Linux target declarations and local build/stage presence",
+        "weight": 20,
+        "measure_kind": "checks",
+        "check_count": 4,
+        "rationale": "Checks target files and local binary and stage paths exist. Presence does not prove the latest source builds or that current binaries and stage match; use build and runtime receipts for those claims.",
+        "evidence_pointers": {
+          "check_sources": [
+            {
+              "label": "Linux game target tracked",
+              "file": "porting/native/Source/FortniteLinux.Target.cs"
+            },
+            {
+              "label": "Linux server target tracked",
+              "file": "porting/native/Source/FortniteLinuxServer.Target.cs"
+            },
+            {
+              "label": "Linux binaries built (local)",
+              "local": "porting/native/Binaries/Linux"
+            },
+            {
+              "label": "Linux stage present (local)",
+              "local": "porting/generated/linux-stage"
+            }
+          ]
+        }
+      },
+      {
+        "id": "platform.wine_launch",
+        "category_id": "platform",
+        "category": "Platform and Linux runtime",
+        "name": "Wine analysis oracle: original client reaches the login screen",
+        "weight": 25,
+        "measure_kind": "ledger",
+        "check_count": 6,
+        "rationale": "The six ledger checks record Wine engine start, pak mount, Frontend map, login screen, AppES entitlement and lobby map. A stage without a passing record counts as 0. The observed Wine run stopped at the AppES access gate; later stages remain unverified.",
+        "evidence_pointers": {
+          "ledger_check_ids": [
+            "wine_starts",
+            "wine_pak_mount",
+            "wine_frontend_map",
+            "wine_login_ui",
+            "wine_entitlement_passed",
+            "wine_lobby_reached"
+          ],
+          "ledger_file": "porting/progress/evidence.json",
+          "missing_ledger_ids": [
+            "wine_starts",
+            "wine_pak_mount",
+            "wine_frontend_map",
+            "wine_login_ui",
+            "wine_entitlement_passed",
+            "wine_lobby_reached"
+          ]
+        }
+      },
+      {
+        "id": "platform.eac_removal",
+        "category_id": "platform",
+        "category": "Platform and Linux runtime",
+        "name": "Wine analysis oracle: original client engine start",
+        "weight": 5,
+        "measure_kind": "ledger",
+        "check_count": 1,
+        "rationale": "The ledger records whether the original client under Wine initializes its engine using the existing launch script. This does not establish access beyond the observed AppES gate or native client functionality.",
+        "evidence_pointers": {
+          "ledger_check_ids": [
+            "wine_starts"
+          ],
+          "ledger_file": "porting/progress/evidence.json",
+          "missing_ledger_ids": [
+            "wine_starts"
+          ]
+        }
+      },
+      {
+        "id": "platform.launch_security",
+        "category_id": "platform",
+        "category": "Platform and Linux runtime",
+        "name": "Rebuilt launch, security and entitlement compatibility",
+        "weight": 10,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Recover and verify the shipped startup, anti-cheat and entitlement interactions for the rebuilt client; Wine engine startup alone is not this deliverable.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "platform.rendering",
+        "category_id": "platform",
+        "category": "Platform and Linux runtime",
+        "name": "Rendering backend on Linux (Vulkan)",
+        "weight": 20,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Software Vulkan (Lavapipe) runs with swapchain and visual captures of terrain, sky and background, but only software rendering has been tested and Fortnite shaders and materials are mostly absent. No objective metric yet: no capture set is compared against the original client's frames.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "platform.accessibility",
+        "category_id": "platform",
+        "category": "Platform and Linux runtime",
+        "name": "Input and control parity",
+        "weight": 2,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Only basic movement, look and jump input are bound; original controls and device behavior remain unverified.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "platform.settings",
+        "category_id": "platform",
+        "category": "Platform and Linux runtime",
+        "name": "Settings parity",
+        "weight": 1,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Inventory, implement and verify original client functionality in this area.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "platform.localization",
+        "category_id": "platform",
+        "category": "Platform and Linux runtime",
+        "name": "Localization parity",
+        "weight": 1,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Inventory, implement and verify original client functionality in this area.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "platform.accessibility_options",
+        "category_id": "platform",
+        "category": "Platform and Linux runtime",
+        "name": "Accessibility parity",
+        "weight": 1,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Inventory, implement and verify original client functionality in this area.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "assets.pak_index",
+        "category_id": "assets",
+        "category": "Asset pipeline",
+        "name": "Pak index decryption and parse (31 paks)",
+        "weight": 10,
+        "measure_kind": "fraction",
+        "check_count": 0,
+        "rationale": "All 31 pak indexes were decrypted and validated (README.md). The count comes from the local inventory.",
+        "evidence_pointers": {
+          "count_file": "porting/generated/inventory.json",
+          "count_key": "paks"
+        }
+      },
+      {
+        "id": "assets.map_headers",
+        "category_id": "assets",
+        "category": "Asset pipeline",
+        "name": "Map header parse (3,694 maps)",
+        "weight": 8,
+        "measure_kind": "jsonl_rows",
+        "check_count": 0,
+        "rationale": "Every cooked map header was parsed for native imports. Counted from the local census rows; the denominator is the 3,694 World assets in the asset registry (totals.json).",
+        "evidence_pointers": {
+          "file": "porting/generated/map-native-imports.jsonl",
+          "total_key": "asset_registry_counts",
+          "total_sub": "World"
+        }
+      },
+      {
+        "id": "assets.package_coverage",
+        "category_id": "assets",
+        "category": "Asset pipeline",
+        "name": "Recovered or converted package files (local count)",
+        "weight": 50,
+        "measure_kind": "local_glob",
+        "check_count": 0,
+        "rationale": "Counts local recovered or converted .uasset files against cooked assets. Recovery and filename coverage do not establish successful conversion, cooking, or runtime usability. Raw extraction is separately measured.",
+        "evidence_pointers": {
+          "roots": [
+            "porting/generated/extracted",
+            "porting/native/Content"
+          ],
+          "total_key": "cooked_uasset_entries"
+        }
+      },
+      {
+        "id": "assets.pak_extraction",
+        "category_id": "assets",
+        "category": "Asset pipeline",
+        "name": "Raw pak extraction (all 31 paks)",
+        "weight": 15,
+        "measure_kind": "fraction",
+        "check_count": 0,
+        "rationale": "Files present in the verified full raw extraction of all 31 paks (/mnt/vibrato/fortnite-extracted-full), counted from the verified summary's verification.treeFiles, against the 963,427 distinct pak paths (totals.json pak_full_distinct_paths, from the same summary's uniquePaths). The summary is written by the extraction's verify mode (extraction_status.md), so the post-commit hook never walks the million files. Counts raw extraction only, not conversion.",
+        "evidence_pointers": {
+          "count_file": "porting/generated/extract-full-summary.json",
+          "count_key": "verification.treeFiles",
+          "total_key": "pak_full_distinct_paths"
+        }
+      },
+      {
+        "id": "assets.static_meshes",
+        "category_id": "assets",
+        "category": "Asset pipeline",
+        "name": "Static mesh exports or converted packages (local count)",
+        "weight": 30,
+        "measure_kind": "local_glob",
+        "check_count": 0,
+        "rationale": "Counted: every .glb conversion under generated/converted (61 Apollo grid tiles, Background, skybox and cloud meshes) plus SM_ packages in native/Content, de-duplicated by name. Denominator: 4,727 distinct SM_-named cooked packages (full 31-pak tree, refresh_totals.py --count-tree). The SM_ rule is a naming heuristic, and the glb conversions are counted whatever their names, so this is a coverage ratio, not an exact asset count.",
+        "evidence_pointers": {
+          "total_key": "cooked_name_prefix_counts",
+          "total_sub": "static_mesh"
+        }
+      },
+      {
+        "id": "assets.landscape",
+        "category_id": "assets",
+        "category": "Asset pipeline",
+        "name": "Landscape weightmaps and streamed components",
+        "weight": 25,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "221 landscape components were decoded across the 61-tile grid export. Streaming levels, parent level and complete landscape parity remain unresolved. The 15% figure is a manual estimate; no full component denominator is available.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "assets.skeletal_anim",
+        "category_id": "assets",
+        "category": "Asset pipeline",
+        "name": "Skeletal meshes, animation and character",
+        "weight": 35,
+        "measure_kind": "local_glob",
+        "check_count": 0,
+        "rationale": "Counted: SK_ skeletal mesh packages converted in native/Content (none). Denominator: 1,719 distinct SK_-named cooked packages (naming heuristic, totals.json). No skeletal mesh or animation package has loaded in any probe. Animation sequences (A_, 7 names) are too few to matter and are not counted separately.",
+        "evidence_pointers": {
+          "total_key": "cooked_name_prefix_counts",
+          "total_sub": "skeletal_mesh"
+        }
+      },
+      {
+        "id": "assets.blueprint_load",
+        "category_id": "assets",
+        "category": "Asset pipeline",
+        "name": "Cooked Blueprint packages load",
+        "weight": 30,
+        "measure_kind": "fraction",
+        "check_count": 0,
+        "rationale": "Four Apollo Blueprint packages were replaced by authored Blueprints that load (typed count, documented). The denominator is the 22,211 Blueprint assets in the asset registry (totals.json). The original cooked gameplay Blueprints still crash on load.",
+        "evidence_pointers": {
+          "total_key": "asset_registry_counts",
+          "total_sub": "Blueprint"
+        }
+      },
+      {
+        "id": "assets.cinematics",
+        "category_id": "assets",
+        "category": "Asset pipeline",
+        "name": "Cinematics and sequences",
+        "weight": 5,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "No level sequence or cinematic asset has been tested. No objective metric yet: the registry summary has no level-sequence count, and cooked 'Sequence' names are mostly curves.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "assets.plugins",
+        "category_id": "assets",
+        "category": "Asset pipeline",
+        "name": "Shipped plugins and module integration",
+        "weight": 4,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Enumerate the individual shipped plugins and project modules, reconstruct required functionality, and verify their build and runtime integration. The separate metadata-count entry does not establish this inventory.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "assets.plugin_inventory",
+        "category_id": "assets",
+        "category": "Asset pipeline",
+        "name": "Original project plugin-count metadata",
+        "weight": 1,
+        "measure_kind": "tracked_regex",
+        "check_count": 0,
+        "rationale": "The recovered project metadata reports 123 enabled plugins and six project modules. This checks the documented count only; it does not inventory individual plugins or establish implementation, build or runtime loading.",
+        "evidence_pointers": {
+          "file": "porting/README.md"
+        }
+      },
+      {
+        "id": "assets.other_content",
+        "category_id": "assets",
+        "category": "Asset pipeline",
+        "name": "Other shipped asset types and cooking",
+        "weight": 3,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Inventory all remaining asset types and complete decoding, conversion, dependencies, Linux cooking and runtime loading.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "assets.frontend_bundle",
+        "category_id": "assets",
+        "category": "Asset pipeline",
+        "name": "Frontend source mesh bundle export",
+        "weight": 2,
+        "measure_kind": "ledger",
+        "check_count": 1,
+        "rationale": "A verified frontend source bundle establishes export artifacts and source provenance; Linux import, cook, material fidelity and runtime rendering remain open. See porting/asset_pipeline/README.md.",
+        "evidence_pointers": {
+          "ledger_check_ids": [
+            "frontend_source_bundle"
+          ],
+          "ledger_file": "porting/progress/evidence.json",
+          "missing_ledger_ids": []
+        }
+      },
+      {
+        "id": "assets.reflection_recovery",
+        "category_id": "assets",
+        "category": "Asset pipeline",
+        "name": "Native reflection recovery from the decrypted exe (names, parents, structs, enums)",
+        "weight": 15,
+        "measure_kind": "fraction",
+        "check_count": 0,
+        "rationale": "Class names recovered for 6,957 of the 6,967 UHT class blocks (class_name_map.json over the block total in totals.json). Measures recovery of the names, not rebuilt behaviour. Structs (4,512), enums (2,056) and delegates (1,515) are recovered too but not counted here. Parents are verified at 99.76% against UE 4.25 headers (binary_analysis.md). Ten blocks remain unnamed.",
+        "evidence_pointers": {
+          "count_file": "porting/generated/reflection/class_name_map.json",
+          "count_key": "",
+          "total_key": "uht_class_blocks"
+        }
+      },
+      {
+        "id": "maps.enter_play",
+        "category_id": "maps",
+        "category": "Maps and world (Apollo island)",
+        "name": "Maps that enter play in the Linux runtime",
+        "weight": 30,
+        "measure_kind": "fraction",
+        "check_count": 0,
+        "rationale": "FortniteEmptyDedicated and Skybox_Outpost_HomeBase enter play (typed count, documented). The denominator is the 3,694 World assets in the asset registry (totals.json). The partial Apollo_Terrain is not counted, since it lacks streamed levels.",
+        "evidence_pointers": {
+          "total_key": "asset_registry_counts",
+          "total_sub": "World"
+        }
+      },
+      {
+        "id": "maps.apollo_terrain",
+        "category_id": "maps",
+        "category": "Maps and world (Apollo island)",
+        "name": "Converted terrain tiles",
+        "weight": 15.75,
+        "measure_kind": "fraction",
+        "check_count": 0,
+        "rationale": "All 61 nonempty exported terrain tiles have collision and visual proxy atlases. This leaf counts exported tiles only; original materials, fidelity, missing tiles and streamed levels are represented by the separate unfinished work.",
+        "evidence_pointers": {
+          "count_file": "porting/generated/converted/apollo-landscape-grid.json"
+        }
+      },
+      {
+        "id": "maps.apollo_terrain.implementation",
+        "category_id": "maps",
+        "category": "Maps and world (Apollo island)",
+        "name": "Original terrain materials, missing tiles and runtime parity",
+        "weight": 29.25,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Remaining implementation, integration and parity are not established by the coverage count. Progress here requires separate evidence.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "maps.background",
+        "category_id": "maps",
+        "category": "Maps and world (Apollo island)",
+        "name": "Background placement coverage",
+        "weight": 7.5,
+        "measure_kind": "fraction",
+        "check_count": 0,
+        "rationale": "27 of 32 placements are recorded in the converted list. This leaf counts placement coverage only; placeholder meshes, original materials and visual parity remain in the separate unfinished work.",
+        "evidence_pointers": {
+          "count_file": "porting/generated/converted/apollo-background-placements.json"
+        }
+      },
+      {
+        "id": "maps.background.implementation",
+        "category_id": "maps",
+        "category": "Maps and world (Apollo island)",
+        "name": "Original background materials and runtime parity",
+        "weight": 17.5,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Remaining implementation, integration and parity are not established by the coverage count. Progress here requires separate evidence.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "maps.sky",
+        "category_id": "maps",
+        "category": "Maps and world (Apollo island)",
+        "name": "Sky, clouds and backdrop",
+        "weight": 20,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "A sky atmosphere replaces the black background. A simplified cloud and three backdrop materials render. The aurora and the Fortnite sky system are absent. No objective metric yet: no sky or cloud render is captured and compared with the original.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "maps.streamed_levels",
+        "category_id": "maps",
+        "category": "Maps and world (Apollo island)",
+        "name": "Apollo streamed levels (87)",
+        "weight": 28,
+        "measure_kind": "fraction",
+        "check_count": 0,
+        "rationale": "None of the 87 streamed levels load (typed count, documented). The denominator is the figure in the tracked map_compatibility.md report (totals.json).",
+        "evidence_pointers": {
+          "total_key": "apollo_streaming_levels"
+        }
+      },
+      {
+        "id": "maps.other_worlds",
+        "category_id": "maps",
+        "category": "Maps and world (Apollo island)",
+        "name": "Other shipped worlds and modes",
+        "weight": 12,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Inventory all original worlds and modes beyond Apollo and restore their content, streaming, collision and runtime behavior.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "maps.pois",
+        "category_id": "maps",
+        "category": "Maps and world (Apollo island)",
+        "name": "POIs and POI maps",
+        "weight": 30,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "The POI Blueprints fail while their cooked scripts load. The POI manager is an empty native class. No objective metric yet: no POI map enters play, so there is nothing to count.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "gameplay.framework",
+        "category_id": "gameplay",
+        "category": "Gameplay classes (/Script/FortniteGame)",
+        "name": "Athena framework (GameMode, State, Controllers, Pawn) (declared-class coverage, partial credit)",
+        "weight": 60,
+        "measure_kind": "census",
+        "check_count": 0,
+        "rationale": "",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "gameplay.weapons",
+        "category_id": "gameplay",
+        "category": "Gameplay classes (/Script/FortniteGame)",
+        "name": "Weapon reflection headers",
+        "weight": 12.0,
+        "measure_kind": "tracked_count",
+        "check_count": 0,
+        "rationale": "Done: tracked reflection-exact class headers under Source/FortniteGame/Generated whose name matches Weapon. Total: named /Script/FortniteGame classes matching the same regex (totals.json). The census cannot measure this group because no weapon class is imported by a map header. No weapon behaviour is reproduced. This leaf measures only this narrow coverage; the separate remaining-work leaf represents functionality and parity.",
+        "evidence_pointers": {
+          "total_key": "uht_fortnitegame_name_matches",
+          "total_sub": "Weapon"
+        }
+      },
+      {
+        "id": "gameplay.weapons.implementation",
+        "category_id": "gameplay",
+        "category": "Gameplay classes (/Script/FortniteGame)",
+        "name": "Weapon behavior and gameplay",
+        "weight": 48.0,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Remaining implementation, integration and parity are not established by the coverage count. Progress here requires separate evidence.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "gameplay.building",
+        "category_id": "gameplay",
+        "category": "Gameplay classes (/Script/FortniteGame)",
+        "name": "Building and edit mode (declared-class coverage, partial credit)",
+        "weight": 50,
+        "measure_kind": "census",
+        "check_count": 0,
+        "rationale": "",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "gameplay.inventory",
+        "category_id": "gameplay",
+        "category": "Gameplay classes (/Script/FortniteGame)",
+        "name": "Inventory, items and loot (declared-class coverage, partial credit)",
+        "weight": 45,
+        "measure_kind": "census",
+        "check_count": 0,
+        "rationale": "",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "gameplay.storm",
+        "category_id": "gameplay",
+        "category": "Gameplay classes (/Script/FortniteGame)",
+        "name": "Storm reflection headers",
+        "weight": 3.0,
+        "measure_kind": "tracked_count",
+        "check_count": 0,
+        "rationale": "Done: tracked reflection-exact class headers whose name matches Storm or SafeZone. Total: named /Script/FortniteGame classes matching the same regex (totals.json). FortSafeZoneStorm exists as an empty native stub, which is not counted as behaviour. This leaf measures only this narrow coverage; the separate remaining-work leaf represents functionality and parity.",
+        "evidence_pointers": {
+          "total_key": "uht_fortnitegame_name_matches",
+          "total_sub": "Storm|SafeZone"
+        }
+      },
+      {
+        "id": "gameplay.storm.implementation",
+        "category_id": "gameplay",
+        "category": "Gameplay classes (/Script/FortniteGame)",
+        "name": "Storm behavior and gameplay",
+        "weight": 12.0,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Remaining implementation, integration and parity are not established by the coverage count. Progress here requires separate evidence.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "gameplay.battle_bus",
+        "category_id": "gameplay",
+        "category": "Gameplay classes (/Script/FortniteGame)",
+        "name": "Battle bus reflection headers",
+        "weight": 5.0,
+        "measure_kind": "tracked_count",
+        "check_count": 0,
+        "rationale": "Done: tracked reflection-exact class headers whose name matches BattleBus, Aircraft, Parachute or Glider. Total: named /Script/FortniteGame classes matching the same regex (totals.json). No battle bus or glider behaviour exists. The skydiving shadow proxy stub is visual only and is counted under visuals. This leaf measures only this narrow coverage; the separate remaining-work leaf represents functionality and parity.",
+        "evidence_pointers": {
+          "total_key": "uht_fortnitegame_name_matches",
+          "total_sub": "BattleBus|Aircraft|Parachute|Glider"
+        }
+      },
+      {
+        "id": "gameplay.battle_bus.implementation",
+        "category_id": "gameplay",
+        "category": "Gameplay classes (/Script/FortniteGame)",
+        "name": "Battle bus behavior and gameplay",
+        "weight": 20.0,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Remaining implementation, integration and parity are not established by the coverage count. Progress here requires separate evidence.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "gameplay.abilities",
+        "category_id": "gameplay",
+        "category": "Gameplay classes (/Script/FortniteGame)",
+        "name": "Abilities and effects (declared-class coverage, partial credit)",
+        "weight": 30,
+        "measure_kind": "census",
+        "check_count": 0,
+        "rationale": "",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "gameplay.ai_nav",
+        "category_id": "gameplay",
+        "category": "Gameplay classes (/Script/FortniteGame)",
+        "name": "AI, spawns and navigation (declared-class coverage, partial credit)",
+        "weight": 30,
+        "measure_kind": "census",
+        "check_count": 0,
+        "rationale": "",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "gameplay.world_volumes",
+        "category_id": "gameplay",
+        "category": "Gameplay classes (/Script/FortniteGame)",
+        "name": "World managers, POIs and volumes (declared-class coverage, partial credit)",
+        "weight": 30,
+        "measure_kind": "census",
+        "check_count": 0,
+        "rationale": "",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "gameplay.other",
+        "category_id": "gameplay",
+        "category": "Gameplay classes (/Script/FortniteGame)",
+        "name": "Other classes (declared-class coverage, partial credit)",
+        "weight": 20,
+        "measure_kind": "census",
+        "check_count": 0,
+        "rationale": "",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "gameplay.unknown_inventory",
+        "category_id": "gameplay",
+        "category": "Gameplay classes (/Script/FortniteGame)",
+        "name": "Unknown shipped feature inventory and parity",
+        "weight": 4,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Inventory the supplied original comprehensively. Unclassified original client and dedicated-server features remain in scope until reconstructed and verified.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "gameplay.end_to_end_parity",
+        "category_id": "gameplay",
+        "category": "Gameplay classes (/Script/FortniteGame)",
+        "name": "Original gameplay and full match parity verification",
+        "weight": 6,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Compare all recovered modes and gameplay against the supplied original, including complete multiplayer matches through match end. Current direct joins do not establish this.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "gameplay.blueprint_logic",
+        "category_id": "gameplay",
+        "category": "Gameplay classes (/Script/FortniteGame)",
+        "name": "Blueprint gameplay logic (behaviour, not load)",
+        "weight": 35,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "No original Blueprint behaviour has been reproduced. cue4inspect pseudocode is partial and unresolved. No objective metric yet: no Blueprint behaviour is reproduced, and no metric counts it.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "gameplay.shipped_features",
+        "category_id": "gameplay",
+        "category": "Gameplay classes (/Script/FortniteGame)",
+        "name": "Vehicles, modes and remaining shipped gameplay",
+        "weight": 15,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Inventory and reconstruct vehicles, other modes, features and their authoritative behavior against original evidence.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "gameplay.authority",
+        "category_id": "gameplay",
+        "category": "Gameplay classes (/Script/FortniteGame)",
+        "name": "Server authority, match flow and persistence",
+        "weight": 10,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Attribute and implement server-authoritative match flow, combat, inventory, building, loot, storm, bus, AI, eliminations and match end; verify persistence and multiplayer behavior.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "gameplay.reflection_exact",
+        "category_id": "gameplay",
+        "category": "Gameplay classes (/Script/FortniteGame)",
+        "name": "FortniteGame reflection declarations (not behavior)",
+        "weight": 15.0,
+        "measure_kind": "tracked_count",
+        "check_count": 0,
+        "rationale": "Done: tracked class headers under Source/FortniteGame/Generated over named FortniteGame classes (totals.json). Header counts measure declarations, not implemented behavior or runtime wire compatibility.",
+        "evidence_pointers": {
+          "total_key": "uht_classes_named_by_package",
+          "total_sub": "/Script/FortniteGame"
+        }
+      },
+      {
+        "id": "gameplay.reflection_exact.implementation",
+        "category_id": "gameplay",
+        "category": "Gameplay classes (/Script/FortniteGame)",
+        "name": "FortniteGame module behavior and runtime verification",
+        "weight": 45.0,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Generated reflection declarations do not establish module behavior, integration or runtime parity. Function bodies and runtime checks have separate evidence; complete module behavior remains unverified.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "gameplay.native_behavior",
+        "category_id": "gameplay",
+        "category": "Gameplay classes (/Script/FortniteGame)",
+        "name": "Native function bodies ported (behaviour)",
+        "weight": 150,
+        "measure_kind": "tracked_regex",
+        "check_count": 0,
+        "rationale": "Done: committed .inc function bodies under porting/behavior, one per ported function. Total: native functions with an execution address in the decompiled image (native_funcs.json, totals.json). Only committed bodies count. An honest small percentage is expected while the port is at the reflection stage. Counts ported FUNCTIONS (manifest entries with status 'ported', written by porting/behavior/check_behavior.py to COUNTS.txt), not snippet files: two shared bodies serve 123 trivial validate/empty-implementation functions. Trivial bodies count the same as large ones here; the breakdown by kind is in porting/behavior/MANIFEST.json.",
+        "evidence_pointers": {
+          "file": "porting/behavior/COUNTS.txt",
+          "total_key": "native_functions_with_exec"
+        }
+      },
+      {
+        "id": "net.version_check",
+        "category_id": "net",
+        "category": "Network protocol and replication",
+        "name": "NetCL and network version override (683914758)",
+        "weight": 10,
+        "measure_kind": "checks",
+        "check_count": 2,
+        "rationale": "The Hello checksum is documented. Present in source is not the same as exercised against the client.",
+        "evidence_pointers": {
+          "check_sources": [
+            {
+              "label": "Version override bound in native source"
+            },
+            {
+              "label": "Version constant used by server"
+            }
+          ]
+        }
+      },
+      {
+        "id": "net.magic_header",
+        "category_id": "net",
+        "category": "Network protocol and replication",
+        "name": "MagicHeader 1110 on client and server",
+        "weight": 8,
+        "measure_kind": "checks",
+        "check_count": 2,
+        "rationale": "Documented as required in original_client_net_protocol.md. Not exercised against the original client.",
+        "evidence_pointers": {
+          "check_sources": [
+            {
+              "label": "Set in native config"
+            },
+            {
+              "label": "Set in server code"
+            }
+          ]
+        }
+      },
+      {
+        "id": "net.packet_handlers",
+        "category_id": "net",
+        "category": "Network protocol and replication",
+        "name": "AES and Oodle packet handler configuration",
+        "weight": 12,
+        "measure_kind": "checks",
+        "check_count": 2,
+        "rationale": "Configuration strings are in place. The handshake has not been exercised with the original client.",
+        "evidence_pointers": {
+          "check_sources": [
+            {
+              "label": "AESHandlerComponent configured"
+            },
+            {
+              "label": "Oodle disabled"
+            }
+          ]
+        }
+      },
+      {
+        "id": "net.encryption_token",
+        "category_id": "net",
+        "category": "Network protocol and replication",
+        "name": "Encryption token delegate and key route",
+        "weight": 12,
+        "measure_kind": "checks",
+        "check_count": 2,
+        "rationale": "Hooks are declared. Key validity is not tested against the client.",
+        "evidence_pointers": {
+          "check_sources": [
+            {
+              "label": "OnReceivedNetworkEncryptionToken bound"
+            },
+            {
+              "label": "Session key route answered by server"
+            }
+          ]
+        }
+      },
+      {
+        "id": "net.native_join",
+        "category_id": "net",
+        "category": "Network protocol and replication",
+        "name": "Native client joins native dedicated server",
+        "weight": 20,
+        "measure_kind": "ledger",
+        "check_count": 3,
+        "rationale": "Ledger: a native client joins the native dedicated server on the default and Athena maps (porting/server/smoke_join.sh) and the server log shows the network version checksum 683914758. Recorded with record_evidence.py; the latest result per check counts. Says nothing about the original client (see net.original_join).",
+        "evidence_pointers": {
+          "ledger_check_ids": [
+            "smoke_default",
+            "smoke_athena",
+            "net_version_checksum"
+          ],
+          "ledger_file": "porting/progress/evidence.json",
+          "missing_ledger_ids": []
+        }
+      },
+      {
+        "id": "net.original_join",
+        "category_id": "net",
+        "category": "Network protocol and replication",
+        "name": "Original client joins the reconstructed server",
+        "weight": 40,
+        "measure_kind": "ledger",
+        "check_count": 2,
+        "rationale": "The ledger currently measures original-client entitlement and lobby log stages, not a server join. The observed Wine run stopped at the AppES access gate; Hello, Login, Welcome and Join have not been verified against the original client.",
+        "evidence_pointers": {
+          "ledger_check_ids": [
+            "wine_entitlement_passed",
+            "wine_lobby_reached"
+          ],
+          "ledger_file": "porting/progress/evidence.json",
+          "missing_ledger_ids": [
+            "wine_entitlement_passed",
+            "wine_lobby_reached"
+          ]
+        }
+      },
+      {
+        "id": "net.replication_layout",
+        "category_id": "net",
+        "category": "Network protocol and replication",
+        "name": "Replicated class layout parity",
+        "weight": 30,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Property order, RPC index and struct layouts must match the original. Only the native stubs exist, and their property sets are not recovered. No objective metric yet: layout parity needs the original's per-property offsets, and the checksum leaf covers only the hash.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "net.serializers",
+        "category_id": "net",
+        "category": "Network protocol and replication",
+        "name": "Custom serializers and live wire parity",
+        "weight": 12,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Recover custom serializers and verify actual client/server wire behavior against original evidence.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "net.relevancy",
+        "category_id": "net",
+        "category": "Network protocol and replication",
+        "name": "Replication relevancy, stability and performance",
+        "weight": 8,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Verify replication conditions, relevancy and stable performance in representative multi-client sessions.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "net.checksum_parity",
+        "category_id": "net",
+        "category": "Network protocol and replication",
+        "name": "Class checksum parity",
+        "weight": 20,
+        "measure_kind": "tracked_regex",
+        "check_count": 0,
+        "rationale": "The tracked class checksum report measures an offline comparison of generated headers against recovered reflection tables over named native classes. The last full regression reported 4,617 of 4,617 generated classes matching; this is not a live wire compatibility test.",
+        "evidence_pointers": {
+          "file": "porting/class_checksum_report.md",
+          "total_key": "uht_classes_named"
+        }
+      },
+      {
+        "id": "net.replication_graph",
+        "category_id": "net",
+        "category": "Network protocol and replication",
+        "name": "Server replication graph",
+        "weight": 10,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "The original server replication graph is server-only and not started. No objective metric yet: nothing about the server replication graph is reproduced or measured.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "backend.version_lightswitch",
+        "category_id": "backend",
+        "category": "Backend services (reconstructed server)",
+        "name": "Version check and lightswitch — source references",
+        "weight": 7.5,
+        "measure_kind": "checks",
+        "check_count": 2,
+        "rationale": "Committed server code only. Uncommitted stubs do not count. Answers are canned.",
+        "evidence_pointers": {
+          "check_sources": [
+            {
+              "label": "versioncheck route"
+            },
+            {
+              "label": "lightswitch route"
+            }
+          ]
+        }
+      },
+      {
+        "id": "backend.version_lightswitch.behavior",
+        "category_id": "backend",
+        "category": "Backend services (reconstructed server)",
+        "name": "Version and lightswitch behavior and protocol",
+        "weight": 7.5,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Reference presence does not establish behavior or protocol parity. Local backend tests cover portions of the implementation; original-client integration and complete behavior remain unverified. See porting/server/EVIDENCE.md.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "backend.oauth_account",
+        "category_id": "backend",
+        "category": "Backend services (reconstructed server)",
+        "name": "OAuth and account routes — source references",
+        "weight": 12.5,
+        "measure_kind": "routes",
+        "check_count": 0,
+        "rationale": "Counts source references to matching route templates. These references can occur in tests or documentation and do not establish served routes or protocol behavior; behavior is separately tracked.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "backend.oauth_account.behavior",
+        "category_id": "backend",
+        "category": "Backend services (reconstructed server)",
+        "name": "Authentication, entitlement and account behavior",
+        "weight": 12.5,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Reference presence does not establish behavior or protocol parity. Local backend tests cover portions of the implementation; original-client integration and complete behavior remain unverified. See porting/server/EVIDENCE.md.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "backend.matchmaking",
+        "category_id": "backend",
+        "category": "Backend services (reconstructed server)",
+        "name": "Matchmaking ticket and session routes — source references",
+        "weight": 20.0,
+        "measure_kind": "routes",
+        "check_count": 0,
+        "rationale": "Route literals measure only references, including tests and documentation. Websocket envelope, Play and ReadyCheck have local tests; original-client end-to-end matchmaking and protocol parity remain unverified. See porting/server/EVIDENCE.md.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "backend.matchmaking.behavior",
+        "category_id": "backend",
+        "category": "Backend services (reconstructed server)",
+        "name": "Matchmaking ticket, websocket and session behavior",
+        "weight": 20.0,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Reference presence does not establish behavior or protocol parity. Local backend tests cover portions of the implementation; original-client integration and complete behavior remain unverified. See porting/server/EVIDENCE.md.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "backend.game_profile",
+        "category_id": "backend",
+        "category": "Backend services (reconstructed server)",
+        "name": "Game v2 profile, world, chat and voice routes — source references",
+        "weight": 15.0,
+        "measure_kind": "routes",
+        "check_count": 0,
+        "rationale": "Profile, world, enabled features, chat, voice and twitch routes. Only the stub answers exist.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "backend.game_profile.behavior",
+        "category_id": "backend",
+        "category": "Backend services (reconstructed server)",
+        "name": "Profile, persistence, social and service behavior",
+        "weight": 7.0,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Reference presence does not establish behavior or protocol parity. Local backend tests cover portions of the implementation; original-client integration and complete behavior remain unverified. See porting/server/EVIDENCE.md.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "backend.progression",
+        "category_id": "backend",
+        "category": "Backend services (reconstructed server)",
+        "name": "Account progression and persistence parity",
+        "weight": 4,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Reconstruct and verify original account progression, profile persistence and related gameplay integration.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "backend.local_tests",
+        "category_id": "backend",
+        "category": "Backend services (reconstructed server)",
+        "name": "Local backend implementation test suite",
+        "weight": 4,
+        "measure_kind": "ledger",
+        "check_count": 1,
+        "rationale": "The local backend regression suite verifies selected behaviors and schema handling. It does not establish original-client end-to-end or full protocol parity. See porting/server/EVIDENCE.md.",
+        "evidence_pointers": {
+          "ledger_check_ids": [
+            "backend_local_tests"
+          ],
+          "ledger_file": "porting/progress/evidence.json",
+          "missing_ledger_ids": []
+        }
+      },
+      {
+        "id": "backend.public_catalog",
+        "category_id": "backend",
+        "category": "Backend services (reconstructed server)",
+        "name": "Public catalog, payment and asset routes — source references",
+        "weight": 12.5,
+        "measure_kind": "routes",
+        "check_count": 0,
+        "rationale": "Store, asset, lookup and payment routes. No real catalog behaviour is reproduced.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "backend.public_catalog.behavior",
+        "category_id": "backend",
+        "category": "Backend services (reconstructed server)",
+        "name": "Catalog, payment and asset service behavior",
+        "weight": 12.5,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Reference presence does not establish behavior or protocol parity. Local backend tests cover portions of the implementation; original-client integration and complete behavior remain unverified. See porting/server/EVIDENCE.md.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "backend.party_xmpp",
+        "category_id": "backend",
+        "category": "Backend services (reconstructed server)",
+        "name": "Party and XMPP — source references",
+        "weight": 15.0,
+        "measure_kind": "checks",
+        "check_count": 1,
+        "rationale": "The reference check measures only mentions. Party roster and session-key handling have local tests; XMPP and original-client protocol parity remain unverified. See porting/server/EVIDENCE.md.",
+        "evidence_pointers": {
+          "check_sources": [
+            {
+              "label": "Party or XMPP referenced in committed server code"
+            }
+          ]
+        }
+      },
+      {
+        "id": "backend.party_xmpp.behavior",
+        "category_id": "backend",
+        "category": "Backend services (reconstructed server)",
+        "name": "Party, presence, social and XMPP behavior",
+        "weight": 15.0,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Reference presence does not establish behavior or protocol parity. Local backend tests cover portions of the implementation; original-client integration and complete behavior remain unverified. See porting/server/EVIDENCE.md.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "backend.session_beacon",
+        "category_id": "backend",
+        "category": "Backend services (reconstructed server)",
+        "name": "Session discovery references",
+        "weight": 6.0,
+        "measure_kind": "checks",
+        "check_count": 3,
+        "rationale": "These checks identify session-discovery route and BeaconPort references only. UE beacon hosts, integration and protocol behavior remain in the separate unfinished work. See porting/server/EVIDENCE.md.",
+        "evidence_pointers": {
+          "check_sources": [
+            {
+              "label": "Session discovery route (matchmaking session record) referenced"
+            },
+            {
+              "label": "Session key route referenced"
+            },
+            {
+              "label": "BeaconPort session attribute served"
+            }
+          ]
+        }
+      },
+      {
+        "id": "backend.session_beacon.implementation",
+        "category_id": "backend",
+        "category": "Backend services (reconstructed server)",
+        "name": "Session and beacon behavior and integration",
+        "weight": 24.0,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Remaining implementation, integration and parity are not established by the coverage count. Progress here requires separate evidence.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "backend.stats_cloud",
+        "category_id": "backend",
+        "category": "Backend services (reconstructed server)",
+        "name": "Stats, events, cloud storage and datarouter — source references",
+        "weight": 10.0,
+        "measure_kind": "checks",
+        "check_count": 2,
+        "rationale": "Only canned empty responses exist for these routes.",
+        "evidence_pointers": {
+          "check_sources": [
+            {
+              "label": "Cloud storage route referenced"
+            },
+            {
+              "label": "Datarouter route referenced"
+            }
+          ]
+        }
+      },
+      {
+        "id": "backend.stats_cloud.behavior",
+        "category_id": "backend",
+        "category": "Backend services (reconstructed server)",
+        "name": "Stats, cloud persistence, events and telemetry behavior",
+        "weight": 10.0,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Reference presence does not establish behavior or protocol parity. Local backend tests cover portions of the implementation; original-client integration and complete behavior remain unverified. See porting/server/EVIDENCE.md.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "audio.sound_classes",
+        "category_id": "audio",
+        "category": "Audio",
+        "name": "Sound classes and mixes load",
+        "weight": 15,
+        "measure_kind": "fraction",
+        "check_count": 0,
+        "rationale": "Only Master.Master is logged as loaded (typed count, documented, asset_compatibility.md). The denominator is the 317 cooked sound class and mix package paths (totals.json, path heuristic). The documented 306 packages in FortSoundClassesAndModes and SoundClasses are a subset of that set; mixes beyond that have not been checked.",
+        "evidence_pointers": {
+          "total_key": "sound_class_mix_packages"
+        }
+      },
+      {
+        "id": "audio.playback",
+        "category_id": "audio",
+        "category": "Audio",
+        "name": "Audio playback on the Linux runtime",
+        "weight": 20,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Every probe ran with -nosound. No audio device output has been heard or measured. No objective metric yet: every probe ran with -nosound, so there is no audio output to count.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "audio.original_comparison",
+        "category_id": "audio",
+        "category": "Audio",
+        "name": "Audio parity and original comparison",
+        "weight": 5,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Verify original audio behavior, mixing and representative sound output in the rebuilt client.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "audio.cues_music",
+        "category_id": "audio",
+        "category": "Audio",
+        "name": "Sound cues, music and ambience",
+        "weight": 25,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "No cue or music asset has been played back. No objective metric yet: no cue or music asset has been played back, and no cue count is converted.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "audio.voice",
+        "category_id": "audio",
+        "category": "Audio",
+        "name": "Voice chat",
+        "weight": 10,
+        "measure_kind": "routes",
+        "check_count": 0,
+        "rationale": "Voice routes from the static client scan (routes.json) whose literal path appears in committed server code, credited at 50%. None of the voice routes is implemented.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "visuals.lighting",
+        "category_id": "visuals",
+        "category": "Visuals parity",
+        "name": "Lighting and shadows",
+        "weight": 20,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "A sun light and a temporary replicated light exist. The shadow proxy Blueprint is not recovered. No objective metric yet: lighting parity needs captures compared against the original, and none exist.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "visuals.postprocess",
+        "category_id": "visuals",
+        "category": "Visuals parity",
+        "name": "Post-process and renderer settings parity",
+        "weight": 12,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Fortnite post-process and renderer configuration is not reproduced. No objective metric yet: no post-process setting is captured or compared with the original.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "visuals.original_comparison",
+        "category_id": "visuals",
+        "category": "Visuals parity",
+        "name": "End-to-end original presentation comparison",
+        "weight": 8,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Compare rebuilt material rendering, lighting, effects and presentation with original output across representative scenes.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "visuals.vfx",
+        "category_id": "visuals",
+        "category": "Visuals parity",
+        "name": "VFX, particles and Niagara",
+        "weight": 20,
+        "measure_kind": "local_glob",
+        "check_count": 0,
+        "rationale": "Counted: NS_ Niagara packages converted in native/Content or generated/converted (none). Denominator: 173 distinct NS_-named cooked packages (naming heuristic, totals.json, full 31-pak tree). Particle (Cascade) assets are not counted. No Niagara or particle asset has loaded.",
+        "evidence_pointers": {
+          "total_key": "cooked_name_prefix_counts",
+          "total_sub": "niagara"
+        }
+      },
+      {
+        "id": "ui.commonui_umg",
+        "category_id": "ui",
+        "category": "Frontend and lobby UI",
+        "name": "CommonUI and UMG reflection headers",
+        "weight": 6.0,
+        "measure_kind": "tracked_count",
+        "check_count": 0,
+        "rationale": "Tracked class headers over named original CommonUI/UMG classes measure class declaration coverage. Method registration has a separate bounded measure. No interactive root or CommonUI lifecycle parity is established by header presence.",
+        "evidence_pointers": {
+          "total_key": "uht_classes_named_commonui_umg"
+        }
+      },
+      {
+        "id": "ui.commonui_umg.implementation",
+        "category_id": "ui",
+        "category": "Frontend and lobby UI",
+        "name": "CommonUI and UMG behavior and widgets",
+        "weight": 18.0,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Remaining CommonUI and UMG behavior includes Panel and operation queue, input dispatch and held actions, the main CommonButton and other widgets, their integration, and behavior parity. Header coverage, source candidates, the bounded base activation, Panel intro and internal button diagnostics are separately allocated; none establishes this remainder.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "ui.commonui_panel_outro_runtime",
+        "category_id": "ui",
+        "category": "Frontend and lobby UI",
+        "name": "CommonUI Panel outro diagnostic runtime",
+        "weight": 1.0,
+        "measure_kind": "ledger",
+        "check_count": 1,
+        "rationale": "One point for controlled Panel intro, outro, reacquisition and listener lifecycle with held-action map, NaN duration, callback manager relookup, structural interface reset fixtures and C++ ProcessEvent interception. Blueprint VM, full interface routing, native input producer, queue, main button, authentic UI and parity remain unverified. Interface restoration source work remains within the existing reflection budget.",
+        "evidence_pointers": {
+          "ledger_check_ids": [
+            "frontend_commonui_panel_outro_runtime"
+          ],
+          "ledger_file": "porting/progress/evidence.json",
+          "missing_ledger_ids": []
+        }
+      },
+      {
+        "id": "ui.commonui_panel_intro_runtime",
+        "category_id": "ui",
+        "category": "Frontend and lobby UI",
+        "name": "CommonUI Panel intro diagnostic runtime",
+        "weight": 1.0,
+        "measure_kind": "ledger",
+        "check_count": 1,
+        "rationale": "One point for a controlled real Panel intro, EndIntro and full activation path including an input and priority fixture and C++ ProcessEvent interception. Blueprint VM, whole Panel, outro, deactivation, input producer, manager, full UI and parity remain unverified.",
+        "evidence_pointers": {
+          "ledger_check_ids": [
+            "frontend_commonui_panel_intro_runtime"
+          ],
+          "ledger_file": "porting/progress/evidence.json",
+          "missing_ledger_ids": []
+        }
+      },
+      {
+        "id": "ui.commonui_button_internal_runtime",
+        "category_id": "ui",
+        "category": "Frontend and lobby UI",
+        "name": "CommonUI internal button diagnostic runtime",
+        "weight": 1.0,
+        "measure_kind": "ledger",
+        "check_count": 1,
+        "rationale": "One point for a controlled real UObject and Slate internal button factory, lifecycle, core input and callback diagnostic. This does not establish the main CommonButton, Panel, queue, full UI, gesture or parity behavior.",
+        "evidence_pointers": {
+          "ledger_check_ids": [
+            "frontend_commonui_internal_button_runtime"
+          ],
+          "ledger_file": "porting/progress/evidence.json",
+          "missing_ledger_ids": []
+        }
+      },
+      {
+        "id": "ui.commonui_activation_runtime",
+        "category_id": "ui",
+        "category": "Frontend and lobby UI",
+        "name": "CommonUI base activation diagnostic runtime",
+        "weight": 1.0,
+        "measure_kind": "ledger",
+        "check_count": 1,
+        "rationale": "One point for integrated base activation behavior verified in a complete fresh runtime phase and independently audited. The existing activation source candidate point covers source work; headers, event signatures and material work are separate. This diagnostic does not establish Panel, queue, input, other widget behavior, interactive UI or parity.",
+        "evidence_pointers": {
+          "ledger_check_ids": [
+            "frontend_commonui_base_activation_runtime"
+          ],
+          "ledger_file": "porting/progress/evidence.json",
+          "missing_ledger_ids": []
+        }
+      },
+      {
+        "id": "ui.material_original_maps",
+        "category_id": "ui",
+        "category": "Frontend and lobby UI",
+        "name": "Original frontend material map decoding",
+        "weight": 2,
+        "measure_kind": "ledger",
+        "check_count": 1,
+        "rationale": "Four original resources parse to exact EOF with 76 records. This establishes serialized map recovery, not runtime attachment. See porting/material_pipeline/README.md.",
+        "evidence_pointers": {
+          "ledger_check_ids": [
+            "material_original_maps"
+          ],
+          "ledger_file": "porting/progress/evidence.json",
+          "missing_ledger_ids": []
+        }
+      },
+      {
+        "id": "ui.material_shader_translation",
+        "category_id": "ui",
+        "category": "Frontend and lobby UI",
+        "name": "Frontend shader translation and structural validation",
+        "weight": 2,
+        "measure_kind": "ledger",
+        "check_count": 1,
+        "rationale": "44 DXBC shaders mapped to validated SPIR-V with descriptor inventories checked; structural validation does not establish semantic or visual parity. See porting/material_pipeline/README.md and UE_BRIDGE.md.",
+        "evidence_pointers": {
+          "ledger_check_ids": [
+            "material_shader_translation"
+          ],
+          "ledger_file": "porting/progress/evidence.json",
+          "missing_ledger_ids": []
+        }
+      },
+      {
+        "id": "ui.material_uniforms",
+        "category_id": "ui",
+        "category": "Frontend and lobby UI",
+        "name": "Material uniform expression evaluation",
+        "weight": 2,
+        "measure_kind": "ledger",
+        "check_count": 1,
+        "rationale": "Numeric uniform expression evaluation across four layouts; full runtime resource semantics remain open. See porting/material_pipeline/README.md.",
+        "evidence_pointers": {
+          "ledger_check_ids": [
+            "material_uniform_evaluation"
+          ],
+          "ledger_file": "porting/progress/evidence.json",
+          "missing_ledger_ids": []
+        }
+      },
+      {
+        "id": "ui.material_detached_draw",
+        "category_id": "ui",
+        "category": "Frontend and lobby UI",
+        "name": "Detached Locker shader runtime and draw",
+        "weight": 2,
+        "measure_kind": "ledger",
+        "check_count": 1,
+        "rationale": "Eight live cases before and after freeze and a detached seven-shader Locker quad draw are verified. Actual-owner ingress is accounted for separately; original-output comparison remains open. See porting/material_pipeline/UE_BRIDGE.md.",
+        "evidence_pointers": {
+          "ledger_check_ids": [
+            "material_locker_draw"
+          ],
+          "ledger_file": "porting/progress/evidence.json",
+          "missing_ledger_ids": []
+        }
+      },
+      {
+        "id": "ui.material_locker_ingress",
+        "category_id": "ui",
+        "category": "Frontend and lobby UI",
+        "name": "Original Locker material actual-owner ingress and draw",
+        "weight": 2,
+        "measure_kind": "ledger",
+        "check_count": 1,
+        "rationale": "An opt-in runtime loaded the original Locker material through actual-owner ingress with all 19 records retained; its seven required shaders were complete and an attached quad responded to overrides. Other materials and layouts, textures, View resources, original-output parity and working UI roots remain open. See porting/material_pipeline/UE_MATERIAL_INGRESS.md.",
+        "evidence_pointers": {
+          "ledger_check_ids": [
+            "material_locker_asset_ingress"
+          ],
+          "ledger_file": "porting/progress/evidence.json",
+          "missing_ledger_ids": []
+        }
+      },
+      {
+        "id": "ui.material_named_ingress",
+        "category_id": "ui",
+        "category": "Frontend and lobby UI",
+        "name": "Verified named material ingress",
+        "weight": 6,
+        "measure_kind": "ledger",
+        "check_count": 4,
+        "rationale": "Four individually verified original material cases: PowerToast, MenuButton, Donut and Keybind. The effort weight is unchanged; additional known-closure compatibility, actual widgets and original visual parity remain separate measures.",
+        "evidence_pointers": {
+          "ledger_check_ids": [
+            "material_powertoast_asset_ingress",
+            "material_menubutton_asset_ingress",
+            "material_donut_asset_ingress",
+            "material_keybind_asset_ingress"
+          ],
+          "ledger_file": "porting/progress/evidence.json",
+          "missing_ledger_ids": []
+        }
+      },
+      {
+        "id": "ui.material_frontend_closure",
+        "category_id": "ui",
+        "category": "Frontend and lobby UI",
+        "name": "Known frontend closure material owners",
+        "weight": 2,
+        "measure_kind": "ledger",
+        "check_count": 142,
+        "rationale": "142 distinct material owners from the 147 exports in porting/generated/frontend-probes/frontend-material-inventory/summary.json, bounded to the 721-root frontend closure. Excludes separately weighted Locker, GradientPanel, PowerToast, MenuButton and Donut. MainL is included. Each check requires actual-owner runtime completeness, attachment and independent payload validation; missing checks receive no credit. This is not the whole game, widget integration or original visual parity. Owner paths are recorded in passing ledger entries.",
+        "evidence_pointers": {
+          "ledger_check_ids": [
+            "material_frontend_owner_b5fcb772a31ecd36",
+            "material_frontend_owner_bc329a3f5f9a9ef3",
+            "material_frontend_owner_3d3453906eeb002d",
+            "material_frontend_owner_89ef13495431e896",
+            "material_frontend_owner_0d309c58ac5bb800",
+            "material_frontend_owner_2b046459bb5f6410",
+            "material_frontend_owner_6664a1649c7c749d",
+            "material_frontend_owner_ae24ce856a758b68",
+            "material_frontend_owner_117e56c2db40977a",
+            "material_frontend_owner_1617aeaa75413901",
+            "material_frontend_owner_a48ed3d16a59ff02",
+            "material_frontend_owner_c304e323fb4aa651",
+            "material_frontend_owner_9b8adcef0120976a",
+            "material_frontend_owner_2653ef5701a87e0d",
+            "material_frontend_owner_5eb5902d97b5aa44",
+            "material_frontend_owner_cf4d079608bc2f33",
+            "material_frontend_owner_ffc6370f2c221fd9",
+            "material_frontend_owner_24db817708f03e94",
+            "material_frontend_owner_03dc9bacf030cc07",
+            "material_frontend_owner_717e40e8fa8e2c32",
+            "material_frontend_owner_8d0e73389b345ed5",
+            "material_frontend_owner_7bfee806c2a07e24",
+            "material_frontend_owner_d1d318ba4f03ccbb",
+            "material_frontend_owner_ec6952c187bd91c9",
+            "material_frontend_owner_01005a35c43064b9",
+            "material_frontend_owner_fe10ec5e8832653d",
+            "material_frontend_owner_b8b839b3819ae1c2",
+            "material_frontend_owner_1796b4e99a45332a",
+            "material_frontend_owner_32eda186ebb5ce56",
+            "material_frontend_owner_8f511158d4db10b1",
+            "material_frontend_owner_c9d88259c847c84d",
+            "material_frontend_owner_f0139bb67f9deede",
+            "material_frontend_owner_bae7af1c2339c8e9",
+            "material_frontend_owner_a330ba5dc5ca850c",
+            "material_frontend_owner_6ef29112792555b3",
+            "material_frontend_owner_c33708b9c35ea6a8",
+            "material_frontend_owner_4c2aac70b3f3dbd1",
+            "material_frontend_owner_1f088da64e08242a",
+            "material_frontend_owner_938763ddeabcd36f",
+            "material_frontend_owner_6cf1c33082ec2c66",
+            "material_frontend_owner_2417aa268eef1a39",
+            "material_frontend_owner_9d410fe06d5264a2",
+            "material_frontend_owner_8a40608645c131f5",
+            "material_frontend_owner_5f050df5e87273f4",
+            "material_frontend_owner_a14da5c803dc7ee1",
+            "material_frontend_owner_f182c51cd1dfcc3b",
+            "material_frontend_owner_608199fda7d1e82e",
+            "material_frontend_owner_7c362ccf47797f25",
+            "material_frontend_owner_063d3f629e391688",
+            "material_frontend_owner_1ef3291cb638eec6",
+            "material_frontend_owner_549fb1eeb6758cd1",
+            "material_frontend_owner_b252a23b73c6fb81",
+            "material_frontend_owner_e4dee38b6dfad9d0",
+            "material_frontend_owner_28869e2c3b7228c9",
+            "material_frontend_owner_3cb1dbe7865244da",
+            "material_frontend_owner_0913e00f5e97b9ef",
+            "material_frontend_owner_6324393b933fcd96",
+            "material_frontend_owner_de03144ff3e7efc4",
+            "material_frontend_owner_8d8f9c33c99f3c19",
+            "material_frontend_owner_0d6eef0eedb3a105",
+            "material_frontend_owner_3404cdb51f0042b7",
+            "material_frontend_owner_e301c2b9ca5016a9",
+            "material_frontend_owner_d3c3351b9a43e296",
+            "material_frontend_owner_1dc4a097333f93f2",
+            "material_frontend_owner_24f51f6b50f7f669",
+            "material_frontend_owner_d15c22ba8ecb47eb",
+            "material_frontend_owner_9fa2c9fa5a0adce3",
+            "material_frontend_owner_c84d1b524ca65932",
+            "material_frontend_owner_d4d005a96f5fcbac",
+            "material_frontend_owner_3e61495beb42f46a",
+            "material_frontend_owner_97661b3fd8a7cdae",
+            "material_frontend_owner_345056c2af5ba66c",
+            "material_frontend_owner_4cfe3467e5741e39",
+            "material_frontend_owner_18764c8406b4145c",
+            "material_frontend_owner_d69046cddd3aa006",
+            "material_frontend_owner_ee4465dd06707423",
+            "material_frontend_owner_96b3ea6c980a0471",
+            "material_frontend_owner_82e095670ddb3361",
+            "material_frontend_owner_aa1d5d94cd13e2d1",
+            "material_frontend_owner_0b06ba64698a35cc",
+            "material_frontend_owner_f031e14c46854c80",
+            "material_frontend_owner_00deb035d0f12b57",
+            "material_frontend_owner_35485889509ef94c",
+            "material_frontend_owner_a1592d429e518930",
+            "material_frontend_owner_e2e417961e86ee57",
+            "material_frontend_owner_468ac6254646f83f",
+            "material_frontend_owner_a27ecd263b4e0be1",
+            "material_frontend_owner_eab2e0733bb2c0b0",
+            "material_frontend_owner_7e7e96890e8e2cb9",
+            "material_frontend_owner_e40404ad8584d6f7",
+            "material_frontend_owner_41ec3f75c33fb3e1",
+            "material_frontend_owner_12b4b9d27db4bd2a",
+            "material_frontend_owner_4885a4e3746af65a",
+            "material_frontend_owner_cec9824e0de68cc2",
+            "material_frontend_owner_68c6b793868fb135",
+            "material_frontend_owner_451308c403d819d9",
+            "material_frontend_owner_38326995e5da4628",
+            "material_frontend_owner_5093bf7499fb0868",
+            "material_frontend_owner_102ccff623f49560",
+            "material_frontend_owner_fb47eed205e1343f",
+            "material_frontend_owner_da03e8ca979e7f9a",
+            "material_frontend_owner_b90cda314897166b",
+            "material_frontend_owner_eb8157410a8eab95",
+            "material_frontend_owner_2d07a9a8cc7b4259",
+            "material_frontend_owner_894d848218709a26",
+            "material_frontend_owner_96bfe15951a896cf",
+            "material_frontend_owner_90ddca0528cff0a6",
+            "material_frontend_owner_998a56b515851671",
+            "material_frontend_owner_228a3818abe7e12b",
+            "material_frontend_owner_4b42fa72c08462c5",
+            "material_frontend_owner_ffbd51b27d50cb73",
+            "material_frontend_owner_35e8669e63fbe450",
+            "material_frontend_owner_64b7b96001bfef4d",
+            "material_frontend_owner_7250d437e180d476",
+            "material_frontend_owner_61384ac1a8df8d33",
+            "material_frontend_owner_80ccd638caec3952",
+            "material_frontend_owner_29755c4cfd6666f4",
+            "material_frontend_owner_ad9caa93275c1135",
+            "material_frontend_owner_54983de3a5747f9a",
+            "material_frontend_owner_cf3c32b152f73b30",
+            "material_frontend_owner_61a7f3b113aa2f08",
+            "material_frontend_owner_63269f654c717009",
+            "material_frontend_owner_d30b3e8fe8337e75",
+            "material_frontend_owner_2f5d8a82c5e52049",
+            "material_frontend_owner_9b5b3166703bd591",
+            "material_frontend_owner_68d6d9631d5952e9",
+            "material_frontend_owner_ca7e3de8f5664d6e",
+            "material_frontend_owner_96d352985327c1b0",
+            "material_frontend_owner_ea40fc1498463f86",
+            "material_frontend_owner_840e96f4a8e8d0e8",
+            "material_frontend_owner_3ac27ee2271ff052",
+            "material_frontend_owner_554fedcce7794993",
+            "material_frontend_owner_7073d28348adc145",
+            "material_frontend_owner_caf8370896015506",
+            "material_frontend_owner_fef06d412a5f85d9",
+            "material_frontend_owner_a06d6ac78ef215dd",
+            "material_frontend_owner_ad65bb4edb5c0278",
+            "material_frontend_owner_699241b5b952ce61",
+            "material_frontend_owner_d0d4dd84423d89df",
+            "material_frontend_owner_88faed927c75cd8d",
+            "material_frontend_owner_6e588337f96d7197",
+            "material_frontend_owner_8310f3e2e82adf74"
+          ],
+          "ledger_file": "porting/progress/evidence.json",
+          "missing_ledger_ids": []
+        }
+      },
+      {
+        "id": "ui.material_widget_integration",
+        "category_id": "ui",
+        "category": "Frontend and lobby UI",
+        "name": "Frontend root widget material integration",
+        "weight": 1,
+        "measure_kind": "ledger",
+        "check_count": 1,
+        "rationale": "Requires evidence of material integration into frontend root widgets.",
+        "evidence_pointers": {
+          "ledger_check_ids": [
+            "material_frontend_widget_integration"
+          ],
+          "ledger_file": "porting/progress/evidence.json",
+          "missing_ledger_ids": [
+            "material_frontend_widget_integration"
+          ]
+        }
+      },
+      {
+        "id": "ui.material_visual_parity",
+        "category_id": "ui",
+        "category": "Frontend and lobby UI",
+        "name": "Original material visual parity",
+        "weight": 1,
+        "measure_kind": "ledger",
+        "check_count": 1,
+        "rationale": "Requires comparison to original-client visuals.",
+        "evidence_pointers": {
+          "ledger_check_ids": [
+            "material_original_visual_parity"
+          ],
+          "ledger_file": "porting/progress/evidence.json",
+          "missing_ledger_ids": [
+            "material_original_visual_parity"
+          ]
+        }
+      },
+      {
+        "id": "ui.frontend_lobby",
+        "category_id": "ui",
+        "category": "Frontend and lobby UI",
+        "name": "Frontend menus and lobby flow",
+        "weight": 25,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "No main menu, lobby or matchmaking UI is reproduced. No objective metric yet: no menu or lobby widget is reproduced, and the widget Blueprints are not mapped to menus.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "ui.frontend_event_registrations",
+        "category_id": "ui",
+        "category": "Frontend and lobby UI",
+        "name": "Frontend event registrations",
+        "weight": 1,
+        "measure_kind": "ledger",
+        "check_count": 41,
+        "rationale": "41 non-Native Blueprint super-event targets in the fixed 721-package header inventory. Credit requires original owner/signature/flags and both-target compiled UHT/ELF proof. This bounded registration scope excludes the two Native activation events, whose behavior remains in lifecycle. One manually estimated effort point is split from the former 15-point lifecycle budget; this is not a widget or gameplay acceptance gate.",
+        "evidence_pointers": {
+          "ledger_check_ids": [
+            "frontend_event_signature_97a7a9a26cffc1ef",
+            "frontend_event_signature_6c3745abe695e828",
+            "frontend_event_signature_cef8ed789ea4cca6",
+            "frontend_event_signature_acdd5f250c07b3f5",
+            "frontend_event_signature_86be4fd63c1f3750",
+            "frontend_event_signature_be009a77ba833c9e",
+            "frontend_event_signature_f0e8d7f839d603a6",
+            "frontend_event_signature_7f410db84053bf97",
+            "frontend_event_signature_cad49b19554f2294",
+            "frontend_event_signature_082e932ed60cc28a",
+            "frontend_event_signature_5974ea6157df96a1",
+            "frontend_event_signature_6472bb99ee9b5eae",
+            "frontend_event_signature_d4680cda66578a74",
+            "frontend_event_signature_b1669f5a7a25b463",
+            "frontend_event_signature_d948f4dfac455d84",
+            "frontend_event_signature_805e8ce2cd0b59d4",
+            "frontend_event_signature_6f584de16f39d26f",
+            "frontend_event_signature_551e74e5bd2eca40",
+            "frontend_event_signature_a7f746f057ea7969",
+            "frontend_event_signature_3b15a4585c645518",
+            "frontend_event_signature_f9d18a0bde72a1e9",
+            "frontend_event_signature_6519358e05e107dc",
+            "frontend_event_signature_aed5bb04f983aaea",
+            "frontend_event_signature_8273b2a360af95f0",
+            "frontend_event_signature_37a6db2b59f63e51",
+            "frontend_event_signature_f6471223d54183eb",
+            "frontend_event_signature_6b477b21f58cfe66",
+            "frontend_event_signature_08ac3c611a145c94",
+            "frontend_event_signature_925ce33dae931e0b",
+            "frontend_event_signature_c927837cfa8d256e",
+            "frontend_event_signature_e1cc754f9f891a6d",
+            "frontend_event_signature_3720cf4e31f354ee",
+            "frontend_event_signature_46979d00c23e6599",
+            "frontend_event_signature_abcf6a4a1c87315b",
+            "frontend_event_signature_acc366dcab5dd9aa",
+            "frontend_event_signature_725ac5635b4bd5ff",
+            "frontend_event_signature_a18b8fa106e94b89",
+            "frontend_event_signature_ea85d14aa60b13ef",
+            "frontend_event_signature_a7a890054c988e28",
+            "frontend_event_signature_a61d1d649bb8c042",
+            "frontend_event_signature_da1eeac922dcfbda"
+          ],
+          "ledger_file": "porting/progress/evidence.json",
+          "missing_ledger_ids": []
+        }
+      },
+      {
+        "id": "ui.lifecycle",
+        "category_id": "ui",
+        "category": "Frontend and lobby UI",
+        "name": "Frontend lifecycle and native helpers",
+        "weight": 12,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Recover actual game-instance initialization, activation handlers, source-selected input policy, operation queue and native helpers, then verify interactive UI roots. Bounded event-registration metadata is measured separately.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "ui.hud",
+        "category_id": "ui",
+        "category": "Frontend and lobby UI",
+        "name": "In-match HUD",
+        "weight": 40,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "No HUD is reproduced. No objective metric yet: no HUD widget is reproduced or captured.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "ui.fortniteui_classes",
+        "category_id": "ui",
+        "category": "Frontend and lobby UI",
+        "name": "FortniteUI reflection declarations (not behavior)",
+        "weight": 10.0,
+        "measure_kind": "tracked_count",
+        "check_count": 0,
+        "rationale": "Tracked FortniteUI generated headers over named original classes measure declarations only; module runtime behavior, widgets and integration are separately unfinished.",
+        "evidence_pointers": {
+          "total_key": "uht_classes_named_by_package",
+          "total_sub": "/Script/FortniteUI"
+        }
+      },
+      {
+        "id": "ui.fortniteui_classes.implementation",
+        "category_id": "ui",
+        "category": "Frontend and lobby UI",
+        "name": "FortniteUI module behavior and runtime verification",
+        "weight": 29.0,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Generated reflection declarations do not establish module behavior, integration or runtime parity. Function bodies and runtime checks have separate evidence; complete module behavior remains unverified.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "ui.confirmation_runtime",
+        "category_id": "ui",
+        "category": "Frontend and lobby UI",
+        "name": "Confirmation dialogs: runtime reconstruction",
+        "weight": 1.0,
+        "measure_kind": "ledger",
+        "check_count": 4,
+        "rationale": "One point split from the existing 30-point FortniteUI behavior budget, divided equally across description construction/copy, authentic async action, queued presentation, and user interaction. Only the bounded description constructor/layout/delegate ownership diagnostic is currently verified. Class loading, native fixture checks and offline recovery do not complete the remaining checks or any product milestone.",
+        "evidence_pointers": {
+          "ledger_check_ids": [
+            "frontend_confirmation_description_runtime",
+            "frontend_confirmation_async_action_runtime",
+            "frontend_confirmation_presentation_runtime",
+            "frontend_confirmation_interaction_runtime"
+          ],
+          "ledger_file": "porting/progress/evidence.json",
+          "missing_ledger_ids": [
+            "frontend_confirmation_async_action_runtime",
+            "frontend_confirmation_presentation_runtime",
+            "frontend_confirmation_interaction_runtime"
+          ]
+        }
+      },
+      {
+        "id": "ui.context_source_stage",
+        "category_id": "ui",
+        "category": "Frontend and lobby UI",
+        "name": "Generic context source reconstruction",
+        "weight": 1,
+        "measure_kind": "ledger",
+        "check_count": 1,
+        "rationale": "One lifecycle point for reviewed generic context lookup, registry and base lifecycle source/generator work, distinct from event signatures. Concrete contexts, authentic startup, linked UE runtime and integration remain in lifecycle.",
+        "evidence_pointers": {
+          "ledger_check_ids": [
+            "frontend_context_source_stage"
+          ],
+          "ledger_file": "porting/progress/evidence.json",
+          "missing_ledger_ids": []
+        }
+      },
+      {
+        "id": "ui.context_runtime_stage",
+        "category_id": "ui",
+        "category": "Frontend and lobby UI",
+        "name": "Generic context diagnostic runtime",
+        "weight": 1,
+        "measure_kind": "ledger",
+        "check_count": 5,
+        "rationale": "One lifecycle point for bounded generic context metadata, lookup, registry and lifecycle runtime; concrete context methods, authentic startup and playable UI remain unfinished.",
+        "evidence_pointers": {
+          "ledger_check_ids": [
+            "frontend_context_runtime_metadata",
+            "frontend_context_runtime_reflection",
+            "frontend_context_runtime_lookup",
+            "frontend_context_runtime_registry",
+            "frontend_context_runtime_lifecycle"
+          ],
+          "ledger_file": "porting/progress/evidence.json",
+          "missing_ledger_ids": []
+        }
+      },
+      {
+        "id": "ui.panel_source_stage",
+        "category_id": "ui",
+        "category": "Frontend and lobby UI",
+        "name": "CommonUI activation base source candidate",
+        "weight": 1,
+        "measure_kind": "ledger",
+        "check_count": 1,
+        "rationale": "One CommonUI implementation point for isolated activation base source, portable tests, UHT and syntax. Panel/queue, shared build and runtime remain unfinished.",
+        "evidence_pointers": {
+          "ledger_check_ids": [
+            "frontend_panel_base_source_stage"
+          ],
+          "ledger_file": "porting/progress/evidence.json",
+          "missing_ledger_ids": []
+        }
+      },
+      {
+        "id": "ui.input_source_stage",
+        "category_id": "ui",
+        "category": "Frontend and lobby UI",
+        "name": "CommonUI input source candidate",
+        "weight": 1,
+        "measure_kind": "ledger",
+        "check_count": 1,
+        "rationale": "One CommonUI implementation point for bounded input/device/lifecycle and delegate source, tests, UHT and syntax. Action dispatch, cursor, shared build and runtime remain unfinished.",
+        "evidence_pointers": {
+          "ledger_check_ids": [
+            "frontend_input_source_stage"
+          ],
+          "ledger_file": "porting/progress/evidence.json",
+          "missing_ledger_ids": []
+        }
+      }
+    ]
+  },
+  "working_tree": {
+    "model_sha256": "35af8800df1e57e336902cfcc08897f838ed0ead55cad6abb060df6bede358a7",
+    "evidence_sha256": "ca6b694a09de944bbc1ef365ce437445f79fee7daa5f862b7ad4efa65196b5da",
+    "leaf_count": 117,
+    "total_weight": 1933.0,
+    "categories": [
+      {
+        "id": "platform",
+        "name": "Platform and Linux runtime",
+        "leaf_count": 9,
+        "weight": 85
+      },
+      {
+        "id": "assets",
+        "name": "Asset pipeline",
+        "leaf_count": 14,
+        "weight": 233
+      },
+      {
+        "id": "maps",
+        "name": "Maps and world (Apollo island)",
+        "leaf_count": 9,
+        "weight": 190.0
+      },
+      {
+        "id": "gameplay",
+        "name": "Gameplay classes (/Script/FortniteGame)",
+        "leaf_count": 21,
+        "weight": 645.0
+      },
+      {
+        "id": "net",
+        "name": "Network protocol and replication",
+        "leaf_count": 11,
+        "weight": 182
+      },
+      {
+        "id": "backend",
+        "name": "Backend services (reconstructed server)",
+        "leaf_count": 18,
+        "weight": 215.0
+      },
+      {
+        "id": "audio",
+        "name": "Audio",
+        "leaf_count": 5,
+        "weight": 75
+      },
+      {
+        "id": "visuals",
+        "name": "Visuals parity",
+        "leaf_count": 4,
+        "weight": 60
+      },
+      {
+        "id": "ui",
+        "name": "Frontend and lobby UI",
+        "leaf_count": 26,
+        "weight": 248.0
+      }
+    ],
+    "leaves": [
+      {
+        "id": "platform.linux_build",
+        "category_id": "platform",
+        "category": "Platform and Linux runtime",
+        "name": "Linux target declarations and local build/stage presence",
+        "weight": 20,
+        "measure_kind": "checks",
+        "check_count": 4,
+        "rationale": "Checks target files and local binary and stage paths exist. Presence does not prove the latest source builds or that current binaries and stage match; use build and runtime receipts for those claims.",
+        "evidence_pointers": {
+          "check_sources": [
+            {
+              "label": "Linux game target tracked",
+              "file": "porting/native/Source/FortniteLinux.Target.cs"
+            },
+            {
+              "label": "Linux server target tracked",
+              "file": "porting/native/Source/FortniteLinuxServer.Target.cs"
+            },
+            {
+              "label": "Linux binaries built (local)",
+              "local": "porting/native/Binaries/Linux"
+            },
+            {
+              "label": "Linux stage present (local)",
+              "local": "porting/generated/linux-stage"
+            }
+          ]
+        }
+      },
+      {
+        "id": "platform.wine_launch",
+        "category_id": "platform",
+        "category": "Platform and Linux runtime",
+        "name": "Wine analysis oracle: original client reaches the login screen",
+        "weight": 25,
+        "measure_kind": "ledger",
+        "check_count": 5,
+        "rationale": "Five post-start Wine oracle stages: pak mount, Frontend map, login screen, AppES entitlement and lobby map. Engine startup effort and its wine_starts check belong exclusively to platform.eac_removal. Wine analysis supports reconstruction; it is not rebuilt-client acceptance. The observed run stopped at the AppES access gate.",
+        "evidence_pointers": {
+          "ledger_check_ids": [
+            "wine_pak_mount",
+            "wine_frontend_map",
+            "wine_login_ui",
+            "wine_entitlement_passed",
+            "wine_lobby_reached"
+          ],
+          "ledger_file": "porting/progress/evidence.json",
+          "missing_ledger_ids": [
+            "wine_pak_mount",
+            "wine_frontend_map",
+            "wine_login_ui",
+            "wine_entitlement_passed",
+            "wine_lobby_reached"
+          ]
+        }
+      },
+      {
+        "id": "platform.eac_removal",
+        "category_id": "platform",
+        "category": "Platform and Linux runtime",
+        "name": "Wine analysis oracle: original client engine start",
+        "weight": 5,
+        "measure_kind": "ledger",
+        "check_count": 1,
+        "rationale": "The ledger records whether the original client under Wine initializes its engine using the existing launch script. This does not establish access beyond the observed AppES gate or native client functionality. The shared engine-start check and its startup effort are allocated here only; downstream Wine analysis is allocated to wine_launch.",
+        "evidence_pointers": {
+          "ledger_check_ids": [
+            "wine_starts"
+          ],
+          "ledger_file": "porting/progress/evidence.json",
+          "missing_ledger_ids": [
+            "wine_starts"
+          ]
+        }
+      },
+      {
+        "id": "platform.launch_security",
+        "category_id": "platform",
+        "category": "Platform and Linux runtime",
+        "name": "Rebuilt launch, security and entitlement compatibility",
+        "weight": 10,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Recover and verify the shipped startup, anti-cheat and entitlement interactions for the rebuilt client; Wine engine startup alone is not this deliverable.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "platform.rendering",
+        "category_id": "platform",
+        "category": "Platform and Linux runtime",
+        "name": "Rendering backend on Linux (Vulkan)",
+        "weight": 20,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Software Vulkan (Lavapipe) runs with swapchain and visual captures of terrain, sky and background, but only software rendering has been tested and Fortnite shaders and materials are mostly absent. No objective metric yet: no capture set is compared against the original client's frames.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "platform.accessibility",
+        "category_id": "platform",
+        "category": "Platform and Linux runtime",
+        "name": "Input and control parity",
+        "weight": 2,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Only basic movement, look and jump input are bound; original controls and device behavior remain unverified.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "platform.settings",
+        "category_id": "platform",
+        "category": "Platform and Linux runtime",
+        "name": "Settings parity",
+        "weight": 1,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Inventory, implement and verify original client functionality in this area.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "platform.localization",
+        "category_id": "platform",
+        "category": "Platform and Linux runtime",
+        "name": "Localization parity",
+        "weight": 1,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Inventory, implement and verify original client functionality in this area.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "platform.accessibility_options",
+        "category_id": "platform",
+        "category": "Platform and Linux runtime",
+        "name": "Accessibility parity",
+        "weight": 1,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Inventory, implement and verify original client functionality in this area.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "assets.pak_index",
+        "category_id": "assets",
+        "category": "Asset pipeline",
+        "name": "Pak index decryption and parse (31 paks)",
+        "weight": 10,
+        "measure_kind": "fraction",
+        "check_count": 0,
+        "rationale": "All 31 pak indexes were decrypted and validated (README.md). The count comes from the local inventory.",
+        "evidence_pointers": {
+          "count_file": "porting/generated/inventory.json",
+          "count_key": "paks"
+        }
+      },
+      {
+        "id": "assets.map_headers",
+        "category_id": "assets",
+        "category": "Asset pipeline",
+        "name": "Map header parse (3,694 maps)",
+        "weight": 8,
+        "measure_kind": "jsonl_rows",
+        "check_count": 0,
+        "rationale": "Every cooked map header was parsed for native imports. Counted from the local census rows; the denominator is the 3,694 World assets in the asset registry (totals.json).",
+        "evidence_pointers": {
+          "file": "porting/generated/map-native-imports.jsonl",
+          "total_key": "asset_registry_counts",
+          "total_sub": "World"
+        }
+      },
+      {
+        "id": "assets.package_coverage",
+        "category_id": "assets",
+        "category": "Asset pipeline",
+        "name": "Recovered or converted package files (local count)",
+        "weight": 50,
+        "measure_kind": "local_glob",
+        "check_count": 0,
+        "rationale": "Counts local recovered or converted .uasset files against cooked assets. Recovery and filename coverage do not establish successful conversion, cooking, or runtime usability. Raw extraction is separately measured.",
+        "evidence_pointers": {
+          "roots": [
+            "porting/generated/extracted",
+            "porting/native/Content"
+          ],
+          "total_key": "cooked_uasset_entries"
+        }
+      },
+      {
+        "id": "assets.pak_extraction",
+        "category_id": "assets",
+        "category": "Asset pipeline",
+        "name": "Raw pak extraction (all 31 paks)",
+        "weight": 15,
+        "measure_kind": "fraction",
+        "check_count": 0,
+        "rationale": "Files present in the verified full raw extraction of all 31 paks (/mnt/vibrato/fortnite-extracted-full), counted from the verified summary's verification.treeFiles, against the 963,427 distinct pak paths (totals.json pak_full_distinct_paths, from the same summary's uniquePaths). The summary is written by the extraction's verify mode (extraction_status.md), so the post-commit hook never walks the million files. Counts raw extraction only, not conversion.",
+        "evidence_pointers": {
+          "count_file": "porting/generated/extract-full-summary.json",
+          "count_key": "verification.treeFiles",
+          "total_key": "pak_full_distinct_paths"
+        }
+      },
+      {
+        "id": "assets.static_meshes",
+        "category_id": "assets",
+        "category": "Asset pipeline",
+        "name": "Static mesh exports or converted packages (local count)",
+        "weight": 30,
+        "measure_kind": "local_glob",
+        "check_count": 0,
+        "rationale": "Counted: every .glb conversion under generated/converted (61 Apollo grid tiles, Background, skybox and cloud meshes) plus SM_ packages in native/Content, de-duplicated by name. Denominator: 4,727 distinct SM_-named cooked packages (full 31-pak tree, refresh_totals.py --count-tree). The SM_ rule is a naming heuristic, and the glb conversions are counted whatever their names, so this is a coverage ratio, not an exact asset count.",
+        "evidence_pointers": {
+          "total_key": "cooked_name_prefix_counts",
+          "total_sub": "static_mesh"
+        }
+      },
+      {
+        "id": "assets.landscape",
+        "category_id": "assets",
+        "category": "Asset pipeline",
+        "name": "Landscape weightmaps and streamed components",
+        "weight": 25,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "221 landscape components were decoded across the 61-tile grid export. Streaming levels, parent level and complete landscape parity remain unresolved. The 15% figure is a manual estimate; no full component denominator is available.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "assets.skeletal_anim",
+        "category_id": "assets",
+        "category": "Asset pipeline",
+        "name": "Skeletal meshes, animation and character",
+        "weight": 35,
+        "measure_kind": "local_glob",
+        "check_count": 0,
+        "rationale": "Counted: SK_ skeletal mesh packages converted in native/Content (none). Denominator: 1,719 distinct SK_-named cooked packages (naming heuristic, totals.json). No skeletal mesh or animation package has loaded in any probe. Animation sequences (A_, 7 names) are too few to matter and are not counted separately.",
+        "evidence_pointers": {
+          "total_key": "cooked_name_prefix_counts",
+          "total_sub": "skeletal_mesh"
+        }
+      },
+      {
+        "id": "assets.blueprint_load",
+        "category_id": "assets",
+        "category": "Asset pipeline",
+        "name": "Cooked Blueprint packages load",
+        "weight": 30,
+        "measure_kind": "fraction",
+        "check_count": 0,
+        "rationale": "Four Apollo Blueprint packages were replaced by authored Blueprints that load (typed count, documented). The denominator is the 22,211 Blueprint assets in the asset registry (totals.json). The original cooked gameplay Blueprints still crash on load.",
+        "evidence_pointers": {
+          "total_key": "asset_registry_counts",
+          "total_sub": "Blueprint"
+        }
+      },
+      {
+        "id": "assets.cinematics",
+        "category_id": "assets",
+        "category": "Asset pipeline",
+        "name": "Cinematics and sequences",
+        "weight": 5,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "No level sequence or cinematic asset has been tested. No objective metric yet: the registry summary has no level-sequence count, and cooked 'Sequence' names are mostly curves.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "assets.plugins",
+        "category_id": "assets",
+        "category": "Asset pipeline",
+        "name": "Shipped plugins and module integration",
+        "weight": 4,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Enumerate the individual shipped plugins and project modules, reconstruct required functionality, and verify their build and runtime integration. The separate metadata-count entry does not establish this inventory.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "assets.plugin_inventory",
+        "category_id": "assets",
+        "category": "Asset pipeline",
+        "name": "Original project plugin-count metadata",
+        "weight": 1,
+        "measure_kind": "tracked_regex",
+        "check_count": 0,
+        "rationale": "The recovered project metadata reports 123 enabled plugins and six project modules. This checks the documented count only; it does not inventory individual plugins or establish implementation, build or runtime loading.",
+        "evidence_pointers": {
+          "file": "porting/README.md"
+        }
+      },
+      {
+        "id": "assets.other_content",
+        "category_id": "assets",
+        "category": "Asset pipeline",
+        "name": "Other shipped asset types and cooking",
+        "weight": 3,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Inventory all remaining asset types and complete decoding, conversion, dependencies, Linux cooking and runtime loading.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "assets.frontend_bundle",
+        "category_id": "assets",
+        "category": "Asset pipeline",
+        "name": "Frontend source mesh bundle export",
+        "weight": 2,
+        "measure_kind": "ledger",
+        "check_count": 1,
+        "rationale": "A verified frontend source bundle establishes export artifacts and source provenance; Linux import, cook, material fidelity and runtime rendering remain open. See porting/asset_pipeline/README.md.",
+        "evidence_pointers": {
+          "ledger_check_ids": [
+            "frontend_source_bundle"
+          ],
+          "ledger_file": "porting/progress/evidence.json",
+          "missing_ledger_ids": []
+        }
+      },
+      {
+        "id": "assets.reflection_recovery",
+        "category_id": "assets",
+        "category": "Asset pipeline",
+        "name": "Native reflection recovery from the decrypted exe (names, parents, structs, enums)",
+        "weight": 15,
+        "measure_kind": "fraction",
+        "check_count": 0,
+        "rationale": "Class names recovered for 6,957 of the 6,967 UHT class blocks (class_name_map.json over the block total in totals.json). Measures recovery of the names, not rebuilt behaviour. Structs (4,512), enums (2,056) and delegates (1,515) are recovered too but not counted here. Parents are verified at 99.76% against UE 4.25 headers (binary_analysis.md). Ten blocks remain unnamed.",
+        "evidence_pointers": {
+          "count_file": "porting/generated/reflection/class_name_map.json",
+          "count_key": "",
+          "total_key": "uht_class_blocks"
+        }
+      },
+      {
+        "id": "maps.enter_play",
+        "category_id": "maps",
+        "category": "Maps and world (Apollo island)",
+        "name": "Maps that enter play in the Linux runtime",
+        "weight": 30,
+        "measure_kind": "fraction",
+        "check_count": 0,
+        "rationale": "FortniteEmptyDedicated and Skybox_Outpost_HomeBase enter play (typed count, documented). The denominator is the 3,694 World assets in the asset registry (totals.json). The partial Apollo_Terrain is not counted, since it lacks streamed levels.",
+        "evidence_pointers": {
+          "total_key": "asset_registry_counts",
+          "total_sub": "World"
+        }
+      },
+      {
+        "id": "maps.apollo_terrain",
+        "category_id": "maps",
+        "category": "Maps and world (Apollo island)",
+        "name": "Converted terrain tiles",
+        "weight": 15.75,
+        "measure_kind": "fraction",
+        "check_count": 0,
+        "rationale": "All 61 nonempty exported terrain tiles have collision and visual proxy atlases. This leaf counts exported tiles only; original materials, fidelity, missing tiles and streamed levels are represented by the separate unfinished work.",
+        "evidence_pointers": {
+          "count_file": "porting/generated/converted/apollo-landscape-grid.json"
+        }
+      },
+      {
+        "id": "maps.apollo_terrain.implementation",
+        "category_id": "maps",
+        "category": "Maps and world (Apollo island)",
+        "name": "Original terrain materials, missing tiles and runtime parity",
+        "weight": 29.25,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Remaining implementation, integration and parity are not established by the coverage count. Progress here requires separate evidence.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "maps.background",
+        "category_id": "maps",
+        "category": "Maps and world (Apollo island)",
+        "name": "Background placement coverage",
+        "weight": 7.5,
+        "measure_kind": "fraction",
+        "check_count": 0,
+        "rationale": "27 of 32 placements are recorded in the converted list. This leaf counts placement coverage only; placeholder meshes, original materials and visual parity remain in the separate unfinished work.",
+        "evidence_pointers": {
+          "count_file": "porting/generated/converted/apollo-background-placements.json"
+        }
+      },
+      {
+        "id": "maps.background.implementation",
+        "category_id": "maps",
+        "category": "Maps and world (Apollo island)",
+        "name": "Original background materials and runtime parity",
+        "weight": 17.5,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Remaining implementation, integration and parity are not established by the coverage count. Progress here requires separate evidence.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "maps.sky",
+        "category_id": "maps",
+        "category": "Maps and world (Apollo island)",
+        "name": "Sky, clouds and backdrop",
+        "weight": 20,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "A sky atmosphere replaces the black background. A simplified cloud and three backdrop materials render. The aurora and the Fortnite sky system are absent. No objective metric yet: no sky or cloud render is captured and compared with the original.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "maps.streamed_levels",
+        "category_id": "maps",
+        "category": "Maps and world (Apollo island)",
+        "name": "Apollo streamed levels (87)",
+        "weight": 28,
+        "measure_kind": "fraction",
+        "check_count": 0,
+        "rationale": "None of the 87 streamed levels load (typed count, documented). The denominator is the figure in the tracked map_compatibility.md report (totals.json).",
+        "evidence_pointers": {
+          "total_key": "apollo_streaming_levels"
+        }
+      },
+      {
+        "id": "maps.other_worlds",
+        "category_id": "maps",
+        "category": "Maps and world (Apollo island)",
+        "name": "Other shipped worlds and modes",
+        "weight": 12,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Inventory all original worlds and modes beyond Apollo and restore their content, streaming, collision and runtime behavior.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "maps.pois",
+        "category_id": "maps",
+        "category": "Maps and world (Apollo island)",
+        "name": "POIs and POI maps",
+        "weight": 30,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "The POI Blueprints fail while their cooked scripts load. The POI manager is an empty native class. No objective metric yet: no POI map enters play, so there is nothing to count.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "gameplay.framework",
+        "category_id": "gameplay",
+        "category": "Gameplay classes (/Script/FortniteGame)",
+        "name": "Athena framework (GameMode, State, Controllers, Pawn) (declared-class coverage, partial credit)",
+        "weight": 60,
+        "measure_kind": "census",
+        "check_count": 0,
+        "rationale": "",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "gameplay.weapons",
+        "category_id": "gameplay",
+        "category": "Gameplay classes (/Script/FortniteGame)",
+        "name": "Weapon reflection headers",
+        "weight": 12.0,
+        "measure_kind": "tracked_count",
+        "check_count": 0,
+        "rationale": "Done: tracked reflection-exact class headers under Source/FortniteGame/Generated whose name matches Weapon. Total: named /Script/FortniteGame classes matching the same regex (totals.json). The census cannot measure this group because no weapon class is imported by a map header. No weapon behaviour is reproduced. This leaf measures only this narrow coverage; the separate remaining-work leaf represents functionality and parity.",
+        "evidence_pointers": {
+          "total_key": "uht_fortnitegame_name_matches",
+          "total_sub": "Weapon"
+        }
+      },
+      {
+        "id": "gameplay.weapons.implementation",
+        "category_id": "gameplay",
+        "category": "Gameplay classes (/Script/FortniteGame)",
+        "name": "Weapon behavior and gameplay",
+        "weight": 48.0,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Remaining implementation, integration and parity are not established by the coverage count. Progress here requires separate evidence.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "gameplay.building",
+        "category_id": "gameplay",
+        "category": "Gameplay classes (/Script/FortniteGame)",
+        "name": "Building and edit mode (declared-class coverage, partial credit)",
+        "weight": 50,
+        "measure_kind": "census",
+        "check_count": 0,
+        "rationale": "",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "gameplay.inventory",
+        "category_id": "gameplay",
+        "category": "Gameplay classes (/Script/FortniteGame)",
+        "name": "Inventory, items and loot (declared-class coverage, partial credit)",
+        "weight": 45,
+        "measure_kind": "census",
+        "check_count": 0,
+        "rationale": "",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "gameplay.storm",
+        "category_id": "gameplay",
+        "category": "Gameplay classes (/Script/FortniteGame)",
+        "name": "Storm reflection headers",
+        "weight": 3.0,
+        "measure_kind": "tracked_count",
+        "check_count": 0,
+        "rationale": "Done: tracked reflection-exact class headers whose name matches Storm or SafeZone. Total: named /Script/FortniteGame classes matching the same regex (totals.json). FortSafeZoneStorm exists as an empty native stub, which is not counted as behaviour. This leaf measures only this narrow coverage; the separate remaining-work leaf represents functionality and parity.",
+        "evidence_pointers": {
+          "total_key": "uht_fortnitegame_name_matches",
+          "total_sub": "Storm|SafeZone"
+        }
+      },
+      {
+        "id": "gameplay.storm.implementation",
+        "category_id": "gameplay",
+        "category": "Gameplay classes (/Script/FortniteGame)",
+        "name": "Storm behavior and gameplay",
+        "weight": 12.0,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Remaining implementation, integration and parity are not established by the coverage count. Progress here requires separate evidence.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "gameplay.battle_bus",
+        "category_id": "gameplay",
+        "category": "Gameplay classes (/Script/FortniteGame)",
+        "name": "Battle bus reflection headers",
+        "weight": 5.0,
+        "measure_kind": "tracked_count",
+        "check_count": 0,
+        "rationale": "Done: tracked reflection-exact class headers whose name matches BattleBus, Aircraft, Parachute or Glider. Total: named /Script/FortniteGame classes matching the same regex (totals.json). No battle bus or glider behaviour exists. The skydiving shadow proxy stub is visual only and is counted under visuals. This leaf measures only this narrow coverage; the separate remaining-work leaf represents functionality and parity.",
+        "evidence_pointers": {
+          "total_key": "uht_fortnitegame_name_matches",
+          "total_sub": "BattleBus|Aircraft|Parachute|Glider"
+        }
+      },
+      {
+        "id": "gameplay.battle_bus.implementation",
+        "category_id": "gameplay",
+        "category": "Gameplay classes (/Script/FortniteGame)",
+        "name": "Battle bus behavior and gameplay",
+        "weight": 20.0,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Remaining implementation, integration and parity are not established by the coverage count. Progress here requires separate evidence.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "gameplay.abilities",
+        "category_id": "gameplay",
+        "category": "Gameplay classes (/Script/FortniteGame)",
+        "name": "Abilities and effects (declared-class coverage, partial credit)",
+        "weight": 30,
+        "measure_kind": "census",
+        "check_count": 0,
+        "rationale": "",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "gameplay.ai_nav",
+        "category_id": "gameplay",
+        "category": "Gameplay classes (/Script/FortniteGame)",
+        "name": "AI, spawns and navigation (declared-class coverage, partial credit)",
+        "weight": 30,
+        "measure_kind": "census",
+        "check_count": 0,
+        "rationale": "",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "gameplay.world_volumes",
+        "category_id": "gameplay",
+        "category": "Gameplay classes (/Script/FortniteGame)",
+        "name": "World managers, POIs and volumes (declared-class coverage, partial credit)",
+        "weight": 30,
+        "measure_kind": "census",
+        "check_count": 0,
+        "rationale": "",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "gameplay.other",
+        "category_id": "gameplay",
+        "category": "Gameplay classes (/Script/FortniteGame)",
+        "name": "Other classes (declared-class coverage, partial credit)",
+        "weight": 20,
+        "measure_kind": "census",
+        "check_count": 0,
+        "rationale": "",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "gameplay.unknown_inventory",
+        "category_id": "gameplay",
+        "category": "Gameplay classes (/Script/FortniteGame)",
+        "name": "Unknown shipped feature inventory and parity",
+        "weight": 4,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Inventory the supplied original comprehensively. Unclassified original client and dedicated-server features remain in scope until reconstructed and verified.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "gameplay.end_to_end_parity",
+        "category_id": "gameplay",
+        "category": "Gameplay classes (/Script/FortniteGame)",
+        "name": "Original gameplay and full match parity verification",
+        "weight": 6,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Compare all recovered modes and gameplay against the supplied original, including complete multiplayer matches through match end. Current direct joins do not establish this.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "gameplay.blueprint_logic",
+        "category_id": "gameplay",
+        "category": "Gameplay classes (/Script/FortniteGame)",
+        "name": "Blueprint gameplay logic (behaviour, not load)",
+        "weight": 35,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "No original Blueprint behaviour has been reproduced. cue4inspect pseudocode is partial and unresolved. No objective metric yet: no Blueprint behaviour is reproduced, and no metric counts it.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "gameplay.shipped_features",
+        "category_id": "gameplay",
+        "category": "Gameplay classes (/Script/FortniteGame)",
+        "name": "Vehicles, modes and remaining shipped gameplay",
+        "weight": 15,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Inventory and reconstruct vehicles, other modes, features and their authoritative behavior against original evidence.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "gameplay.authority",
+        "category_id": "gameplay",
+        "category": "Gameplay classes (/Script/FortniteGame)",
+        "name": "Server authority, match flow and persistence",
+        "weight": 10,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Attribute and implement server-authoritative match flow, combat, inventory, building, loot, storm, bus, AI, eliminations and match end; verify persistence and multiplayer behavior.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "gameplay.reflection_exact",
+        "category_id": "gameplay",
+        "category": "Gameplay classes (/Script/FortniteGame)",
+        "name": "FortniteGame reflection declarations (not behavior)",
+        "weight": 15.0,
+        "measure_kind": "tracked_count",
+        "check_count": 0,
+        "rationale": "Done: tracked class headers under Source/FortniteGame/Generated over named FortniteGame classes (totals.json). Header counts measure declarations, not implemented behavior or runtime wire compatibility.",
+        "evidence_pointers": {
+          "total_key": "uht_classes_named_by_package",
+          "total_sub": "/Script/FortniteGame"
+        }
+      },
+      {
+        "id": "gameplay.reflection_exact.implementation",
+        "category_id": "gameplay",
+        "category": "Gameplay classes (/Script/FortniteGame)",
+        "name": "FortniteGame module behavior and runtime verification",
+        "weight": 45.0,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Generated reflection declarations do not establish module behavior, integration or runtime parity. Function bodies and runtime checks have separate evidence; complete module behavior remains unverified.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "gameplay.native_behavior",
+        "category_id": "gameplay",
+        "category": "Gameplay classes (/Script/FortniteGame)",
+        "name": "Native function bodies ported (behaviour)",
+        "weight": 150,
+        "measure_kind": "tracked_regex",
+        "check_count": 0,
+        "rationale": "Done: committed .inc function bodies under porting/behavior, one per ported function. Total: native functions with an execution address in the decompiled image (native_funcs.json, totals.json). Only committed bodies count. An honest small percentage is expected while the port is at the reflection stage. Counts ported FUNCTIONS (manifest entries with status 'ported', written by porting/behavior/check_behavior.py to COUNTS.txt), not snippet files: two shared bodies serve 123 trivial validate/empty-implementation functions. Trivial bodies count the same as large ones here; the breakdown by kind is in porting/behavior/MANIFEST.json. Effort boundary: this allocation is the cross-module recovery and transcription of native function bodies, including UI bodies, through the ported manifest; feature and UI implementation allocations cover their additional assembly, adapters, integration and verification, not the same body-recovery effort again. Equal function counts are only a coarse progress proxy, not equal effort.",
+        "evidence_pointers": {
+          "file": "porting/behavior/COUNTS.txt",
+          "total_key": "native_functions_with_exec"
+        }
+      },
+      {
+        "id": "net.version_check",
+        "category_id": "net",
+        "category": "Network protocol and replication",
+        "name": "NetCL and network version override (683914758)",
+        "weight": 10,
+        "measure_kind": "checks",
+        "check_count": 2,
+        "rationale": "The Hello checksum is documented. Present in source is not the same as exercised against the client.",
+        "evidence_pointers": {
+          "check_sources": [
+            {
+              "label": "Version override bound in native source"
+            },
+            {
+              "label": "Version constant used by server"
+            }
+          ]
+        }
+      },
+      {
+        "id": "net.magic_header",
+        "category_id": "net",
+        "category": "Network protocol and replication",
+        "name": "MagicHeader 1110 on client and server",
+        "weight": 8,
+        "measure_kind": "checks",
+        "check_count": 2,
+        "rationale": "Documented as required in original_client_net_protocol.md. Not exercised against the original client.",
+        "evidence_pointers": {
+          "check_sources": [
+            {
+              "label": "Set in native config"
+            },
+            {
+              "label": "Set in server code"
+            }
+          ]
+        }
+      },
+      {
+        "id": "net.packet_handlers",
+        "category_id": "net",
+        "category": "Network protocol and replication",
+        "name": "AES and Oodle packet handler configuration",
+        "weight": 12,
+        "measure_kind": "checks",
+        "check_count": 2,
+        "rationale": "Configuration strings are in place. The handshake has not been exercised with the original client.",
+        "evidence_pointers": {
+          "check_sources": [
+            {
+              "label": "AESHandlerComponent configured"
+            },
+            {
+              "label": "Oodle disabled"
+            }
+          ]
+        }
+      },
+      {
+        "id": "net.encryption_token",
+        "category_id": "net",
+        "category": "Network protocol and replication",
+        "name": "Encryption token delegate and key route",
+        "weight": 12,
+        "measure_kind": "checks",
+        "check_count": 2,
+        "rationale": "Hooks are declared. Key validity is not tested against the client.",
+        "evidence_pointers": {
+          "check_sources": [
+            {
+              "label": "OnReceivedNetworkEncryptionToken bound"
+            },
+            {
+              "label": "Session key route answered by server"
+            }
+          ]
+        }
+      },
+      {
+        "id": "net.native_join",
+        "category_id": "net",
+        "category": "Network protocol and replication",
+        "name": "Native client joins native dedicated server",
+        "weight": 20,
+        "measure_kind": "ledger",
+        "check_count": 3,
+        "rationale": "Ledger: a native client joins the native dedicated server on the default and Athena maps (porting/server/smoke_join.sh) and the server log shows the network version checksum 683914758. Recorded with record_evidence.py; the latest result per check counts. Says nothing about the original client (see net.original_join).",
+        "evidence_pointers": {
+          "ledger_check_ids": [
+            "smoke_default",
+            "smoke_athena",
+            "net_version_checksum"
+          ],
+          "ledger_file": "porting/progress/evidence.json",
+          "missing_ledger_ids": []
+        }
+      },
+      {
+        "id": "net.original_join",
+        "category_id": "net",
+        "category": "Network protocol and replication",
+        "name": "Original client joins the reconstructed server",
+        "weight": 40,
+        "measure_kind": "ledger",
+        "check_count": 2,
+        "rationale": "The ledger currently measures original-client entitlement and lobby log stages, not a server join. The observed Wine run stopped at the AppES access gate; Hello, Login, Welcome and Join have not been verified against the original client.",
+        "evidence_pointers": {
+          "ledger_check_ids": [
+            "wine_entitlement_passed",
+            "wine_lobby_reached"
+          ],
+          "ledger_file": "porting/progress/evidence.json",
+          "missing_ledger_ids": [
+            "wine_entitlement_passed",
+            "wine_lobby_reached"
+          ]
+        }
+      },
+      {
+        "id": "net.replication_layout",
+        "category_id": "net",
+        "category": "Network protocol and replication",
+        "name": "Replicated class layout parity",
+        "weight": 30,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Property order, RPC index and struct layouts must match the original. Only the native stubs exist, and their property sets are not recovered. No objective metric yet: layout parity needs the original's per-property offsets, and the checksum leaf covers only the hash.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "net.serializers",
+        "category_id": "net",
+        "category": "Network protocol and replication",
+        "name": "Custom serializers and live wire parity",
+        "weight": 12,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Recover custom serializers and verify actual client/server wire behavior against original evidence.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "net.relevancy",
+        "category_id": "net",
+        "category": "Network protocol and replication",
+        "name": "Replication relevancy, stability and performance",
+        "weight": 8,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Verify replication conditions, relevancy and stable performance in representative multi-client sessions.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "net.checksum_parity",
+        "category_id": "net",
+        "category": "Network protocol and replication",
+        "name": "Class checksum parity",
+        "weight": 20,
+        "measure_kind": "tracked_regex",
+        "check_count": 0,
+        "rationale": "The tracked class checksum report measures an offline comparison of generated headers against recovered reflection tables over named native classes. The last full regression reported 4,617 of 4,617 generated classes matching; this is not a live wire compatibility test.",
+        "evidence_pointers": {
+          "file": "porting/class_checksum_report.md",
+          "total_key": "uht_classes_named"
+        }
+      },
+      {
+        "id": "net.replication_graph",
+        "category_id": "net",
+        "category": "Network protocol and replication",
+        "name": "Server replication graph",
+        "weight": 10,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "The original server replication graph is server-only and not started. No objective metric yet: nothing about the server replication graph is reproduced or measured.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "backend.version_lightswitch",
+        "category_id": "backend",
+        "category": "Backend services (reconstructed server)",
+        "name": "Version check and lightswitch — source references",
+        "weight": 7.5,
+        "measure_kind": "checks",
+        "check_count": 2,
+        "rationale": "Committed server code only. Uncommitted stubs do not count. Answers are canned.",
+        "evidence_pointers": {
+          "check_sources": [
+            {
+              "label": "versioncheck route"
+            },
+            {
+              "label": "lightswitch route"
+            }
+          ]
+        }
+      },
+      {
+        "id": "backend.version_lightswitch.behavior",
+        "category_id": "backend",
+        "category": "Backend services (reconstructed server)",
+        "name": "Version and lightswitch behavior and protocol",
+        "weight": 7.5,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Reference presence does not establish behavior or protocol parity. Local backend tests cover portions of the implementation; original-client integration and complete behavior remain unverified. See porting/server/EVIDENCE.md.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "backend.oauth_account",
+        "category_id": "backend",
+        "category": "Backend services (reconstructed server)",
+        "name": "OAuth and account routes — source references",
+        "weight": 12.5,
+        "measure_kind": "routes",
+        "check_count": 0,
+        "rationale": "Counts source references to matching route templates. These references can occur in tests or documentation and do not establish served routes or protocol behavior; behavior is separately tracked.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "backend.oauth_account.behavior",
+        "category_id": "backend",
+        "category": "Backend services (reconstructed server)",
+        "name": "Authentication, entitlement and account behavior",
+        "weight": 12.5,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Reference presence does not establish behavior or protocol parity. Local backend tests cover portions of the implementation; original-client integration and complete behavior remain unverified. See porting/server/EVIDENCE.md.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "backend.matchmaking",
+        "category_id": "backend",
+        "category": "Backend services (reconstructed server)",
+        "name": "Matchmaking ticket and session routes — source references",
+        "weight": 20.0,
+        "measure_kind": "routes",
+        "check_count": 0,
+        "rationale": "Route literals measure only references, including tests and documentation. Websocket envelope, Play and ReadyCheck have local tests; original-client end-to-end matchmaking and protocol parity remain unverified. See porting/server/EVIDENCE.md.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "backend.matchmaking.behavior",
+        "category_id": "backend",
+        "category": "Backend services (reconstructed server)",
+        "name": "Matchmaking ticket, websocket and session behavior",
+        "weight": 20.0,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Reference presence does not establish behavior or protocol parity. Local backend tests cover portions of the implementation; original-client integration and complete behavior remain unverified. See porting/server/EVIDENCE.md.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "backend.game_profile",
+        "category_id": "backend",
+        "category": "Backend services (reconstructed server)",
+        "name": "Game v2 profile, world, chat and voice routes — source references",
+        "weight": 15.0,
+        "measure_kind": "routes",
+        "check_count": 0,
+        "rationale": "Profile, world, enabled features, chat, voice and twitch routes. Only the stub answers exist.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "backend.game_profile.behavior",
+        "category_id": "backend",
+        "category": "Backend services (reconstructed server)",
+        "name": "Profile, persistence, social and service behavior",
+        "weight": 7.0,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Reference presence does not establish behavior or protocol parity. Local backend tests cover portions of the implementation; original-client integration and complete behavior remain unverified. See porting/server/EVIDENCE.md.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "backend.progression",
+        "category_id": "backend",
+        "category": "Backend services (reconstructed server)",
+        "name": "Account progression and persistence parity",
+        "weight": 4,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Reconstruct and verify original account progression, profile persistence and related gameplay integration.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "backend.local_tests",
+        "category_id": "backend",
+        "category": "Backend services (reconstructed server)",
+        "name": "Local backend implementation test suite",
+        "weight": 4,
+        "measure_kind": "ledger",
+        "check_count": 1,
+        "rationale": "The local backend regression suite verifies selected behaviors and schema handling. It does not establish original-client end-to-end or full protocol parity. See porting/server/EVIDENCE.md.",
+        "evidence_pointers": {
+          "ledger_check_ids": [
+            "backend_local_tests"
+          ],
+          "ledger_file": "porting/progress/evidence.json",
+          "missing_ledger_ids": []
+        }
+      },
+      {
+        "id": "backend.public_catalog",
+        "category_id": "backend",
+        "category": "Backend services (reconstructed server)",
+        "name": "Public catalog, payment and asset routes — source references",
+        "weight": 12.5,
+        "measure_kind": "routes",
+        "check_count": 0,
+        "rationale": "Store, asset, lookup and payment routes. No real catalog behaviour is reproduced.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "backend.public_catalog.behavior",
+        "category_id": "backend",
+        "category": "Backend services (reconstructed server)",
+        "name": "Catalog, payment and asset service behavior",
+        "weight": 12.5,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Reference presence does not establish behavior or protocol parity. Local backend tests cover portions of the implementation; original-client integration and complete behavior remain unverified. See porting/server/EVIDENCE.md.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "backend.party_xmpp",
+        "category_id": "backend",
+        "category": "Backend services (reconstructed server)",
+        "name": "Party and XMPP — source references",
+        "weight": 15.0,
+        "measure_kind": "checks",
+        "check_count": 1,
+        "rationale": "The reference check measures only mentions. Party roster and session-key handling have local tests; XMPP and original-client protocol parity remain unverified. See porting/server/EVIDENCE.md.",
+        "evidence_pointers": {
+          "check_sources": [
+            {
+              "label": "Party or XMPP referenced in committed server code"
+            }
+          ]
+        }
+      },
+      {
+        "id": "backend.party_xmpp.behavior",
+        "category_id": "backend",
+        "category": "Backend services (reconstructed server)",
+        "name": "Party, presence, social and XMPP behavior",
+        "weight": 15.0,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Reference presence does not establish behavior or protocol parity. Local backend tests cover portions of the implementation; original-client integration and complete behavior remain unverified. See porting/server/EVIDENCE.md.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "backend.session_beacon",
+        "category_id": "backend",
+        "category": "Backend services (reconstructed server)",
+        "name": "Session discovery references",
+        "weight": 6.0,
+        "measure_kind": "checks",
+        "check_count": 3,
+        "rationale": "These checks identify session-discovery route and BeaconPort references only. UE beacon hosts, integration and protocol behavior remain in the separate unfinished work. See porting/server/EVIDENCE.md.",
+        "evidence_pointers": {
+          "check_sources": [
+            {
+              "label": "Session discovery route (matchmaking session record) referenced"
+            },
+            {
+              "label": "Session key route referenced"
+            },
+            {
+              "label": "BeaconPort session attribute served"
+            }
+          ]
+        }
+      },
+      {
+        "id": "backend.session_beacon.implementation",
+        "category_id": "backend",
+        "category": "Backend services (reconstructed server)",
+        "name": "Session and beacon behavior and integration",
+        "weight": 24.0,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Remaining implementation, integration and parity are not established by the coverage count. Progress here requires separate evidence.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "backend.stats_cloud",
+        "category_id": "backend",
+        "category": "Backend services (reconstructed server)",
+        "name": "Stats, events, cloud storage and datarouter — source references",
+        "weight": 10.0,
+        "measure_kind": "checks",
+        "check_count": 2,
+        "rationale": "Only canned empty responses exist for these routes.",
+        "evidence_pointers": {
+          "check_sources": [
+            {
+              "label": "Cloud storage route referenced"
+            },
+            {
+              "label": "Datarouter route referenced"
+            }
+          ]
+        }
+      },
+      {
+        "id": "backend.stats_cloud.behavior",
+        "category_id": "backend",
+        "category": "Backend services (reconstructed server)",
+        "name": "Stats, cloud persistence, events and telemetry behavior",
+        "weight": 10.0,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Reference presence does not establish behavior or protocol parity. Local backend tests cover portions of the implementation; original-client integration and complete behavior remain unverified. See porting/server/EVIDENCE.md.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "audio.sound_classes",
+        "category_id": "audio",
+        "category": "Audio",
+        "name": "Sound classes and mixes load",
+        "weight": 15,
+        "measure_kind": "fraction",
+        "check_count": 0,
+        "rationale": "Only Master.Master is logged as loaded (typed count, documented, asset_compatibility.md). The denominator is the 317 cooked sound class and mix package paths (totals.json, path heuristic). The documented 306 packages in FortSoundClassesAndModes and SoundClasses are a subset of that set; mixes beyond that have not been checked.",
+        "evidence_pointers": {
+          "total_key": "sound_class_mix_packages"
+        }
+      },
+      {
+        "id": "audio.playback",
+        "category_id": "audio",
+        "category": "Audio",
+        "name": "Audio playback on the Linux runtime",
+        "weight": 20,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Every probe ran with -nosound. No audio device output has been heard or measured. No objective metric yet: every probe ran with -nosound, so there is no audio output to count.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "audio.original_comparison",
+        "category_id": "audio",
+        "category": "Audio",
+        "name": "Audio parity and original comparison",
+        "weight": 5,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Verify original audio behavior, mixing and representative sound output in the rebuilt client.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "audio.cues_music",
+        "category_id": "audio",
+        "category": "Audio",
+        "name": "Sound cues, music and ambience",
+        "weight": 25,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "No cue or music asset has been played back. No objective metric yet: no cue or music asset has been played back, and no cue count is converted.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "audio.voice",
+        "category_id": "audio",
+        "category": "Audio",
+        "name": "Voice chat",
+        "weight": 10,
+        "measure_kind": "routes",
+        "check_count": 0,
+        "rationale": "Voice routes from the static client scan (routes.json) whose literal path appears in committed server code, credited at 50%. None of the voice routes is implemented.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "visuals.lighting",
+        "category_id": "visuals",
+        "category": "Visuals parity",
+        "name": "Lighting and shadows",
+        "weight": 20,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "A sun light and a temporary replicated light exist. The shadow proxy Blueprint is not recovered. No objective metric yet: lighting parity needs captures compared against the original, and none exist.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "visuals.postprocess",
+        "category_id": "visuals",
+        "category": "Visuals parity",
+        "name": "Post-process and renderer settings parity",
+        "weight": 12,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Fortnite post-process and renderer configuration is not reproduced. No objective metric yet: no post-process setting is captured or compared with the original.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "visuals.original_comparison",
+        "category_id": "visuals",
+        "category": "Visuals parity",
+        "name": "End-to-end original presentation comparison",
+        "weight": 8,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Compare rebuilt material rendering, lighting, effects and presentation with original output across representative scenes.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "visuals.vfx",
+        "category_id": "visuals",
+        "category": "Visuals parity",
+        "name": "VFX, particles and Niagara",
+        "weight": 20,
+        "measure_kind": "local_glob",
+        "check_count": 0,
+        "rationale": "Counted: NS_ Niagara packages converted in native/Content or generated/converted (none). Denominator: 173 distinct NS_-named cooked packages (naming heuristic, totals.json, full 31-pak tree). Particle (Cascade) assets are not counted. No Niagara or particle asset has loaded.",
+        "evidence_pointers": {
+          "total_key": "cooked_name_prefix_counts",
+          "total_sub": "niagara"
+        }
+      },
+      {
+        "id": "ui.commonui_umg",
+        "category_id": "ui",
+        "category": "Frontend and lobby UI",
+        "name": "CommonUI and UMG reflection headers",
+        "weight": 6.0,
+        "measure_kind": "tracked_count",
+        "check_count": 0,
+        "rationale": "Tracked class headers over named original CommonUI/UMG classes measure class declaration coverage. Method registration has a separate bounded measure. No interactive root or CommonUI lifecycle parity is established by header presence.",
+        "evidence_pointers": {
+          "total_key": "uht_classes_named_commonui_umg"
+        }
+      },
+      {
+        "id": "ui.commonui_umg.implementation",
+        "category_id": "ui",
+        "category": "Frontend and lobby UI",
+        "name": "CommonUI and UMG behavior and widgets",
+        "weight": 48,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Remaining CommonUI and UMG behavior includes Panel and operation queue, input dispatch and held actions, the main CommonButton and other widgets, their integration, and behavior parity. Header coverage, source candidates, the bounded base activation, Panel intro and internal button diagnostics are separately allocated; none establishes this remainder. Weight includes completed and remaining effort; exclude native-body recovery/transcription allocated to gameplay.native_behavior and separately measured diagnostics, declarations and material work. See README effort review for boundaries and uncertainty.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "ui.commonui_panel_outro_runtime",
+        "category_id": "ui",
+        "category": "Frontend and lobby UI",
+        "name": "CommonUI Panel outro diagnostic runtime",
+        "weight": 1.0,
+        "measure_kind": "ledger",
+        "check_count": 1,
+        "rationale": "One point for controlled Panel intro, outro, reacquisition and listener lifecycle with held-action map, NaN duration, callback manager relookup, structural interface reset fixtures and C++ ProcessEvent interception. Blueprint VM, full interface routing, native input producer, queue, main button, authentic UI and parity remain unverified. Interface restoration source work remains within the existing reflection budget.",
+        "evidence_pointers": {
+          "ledger_check_ids": [
+            "frontend_commonui_panel_outro_runtime"
+          ],
+          "ledger_file": "porting/progress/evidence.json",
+          "missing_ledger_ids": []
+        }
+      },
+      {
+        "id": "ui.commonui_panel_intro_runtime",
+        "category_id": "ui",
+        "category": "Frontend and lobby UI",
+        "name": "CommonUI Panel intro diagnostic runtime",
+        "weight": 1.0,
+        "measure_kind": "ledger",
+        "check_count": 1,
+        "rationale": "One point for a controlled real Panel intro, EndIntro and full activation path including an input and priority fixture and C++ ProcessEvent interception. Blueprint VM, whole Panel, outro, deactivation, input producer, manager, full UI and parity remain unverified.",
+        "evidence_pointers": {
+          "ledger_check_ids": [
+            "frontend_commonui_panel_intro_runtime"
+          ],
+          "ledger_file": "porting/progress/evidence.json",
+          "missing_ledger_ids": []
+        }
+      },
+      {
+        "id": "ui.commonui_button_internal_runtime",
+        "category_id": "ui",
+        "category": "Frontend and lobby UI",
+        "name": "CommonUI internal button diagnostic runtime",
+        "weight": 1.0,
+        "measure_kind": "ledger",
+        "check_count": 1,
+        "rationale": "One point for a controlled real UObject and Slate internal button factory, lifecycle, core input and callback diagnostic. This does not establish the main CommonButton, Panel, queue, full UI, gesture or parity behavior.",
+        "evidence_pointers": {
+          "ledger_check_ids": [
+            "frontend_commonui_internal_button_runtime"
+          ],
+          "ledger_file": "porting/progress/evidence.json",
+          "missing_ledger_ids": []
+        }
+      },
+      {
+        "id": "ui.commonui_activation_runtime",
+        "category_id": "ui",
+        "category": "Frontend and lobby UI",
+        "name": "CommonUI base activation diagnostic runtime",
+        "weight": 1.0,
+        "measure_kind": "ledger",
+        "check_count": 1,
+        "rationale": "One point for integrated base activation behavior verified in a complete fresh runtime phase and independently audited. The existing activation source candidate point covers source work; headers, event signatures and material work are separate. This diagnostic does not establish Panel, queue, input, other widget behavior, interactive UI or parity.",
+        "evidence_pointers": {
+          "ledger_check_ids": [
+            "frontend_commonui_base_activation_runtime"
+          ],
+          "ledger_file": "porting/progress/evidence.json",
+          "missing_ledger_ids": []
+        }
+      },
+      {
+        "id": "ui.material_original_maps",
+        "category_id": "ui",
+        "category": "Frontend and lobby UI",
+        "name": "Original frontend material map decoding",
+        "weight": 2,
+        "measure_kind": "ledger",
+        "check_count": 1,
+        "rationale": "Four original resources parse to exact EOF with 76 records. This establishes serialized map recovery, not runtime attachment. See porting/material_pipeline/README.md.",
+        "evidence_pointers": {
+          "ledger_check_ids": [
+            "material_original_maps"
+          ],
+          "ledger_file": "porting/progress/evidence.json",
+          "missing_ledger_ids": []
+        }
+      },
+      {
+        "id": "ui.material_shader_translation",
+        "category_id": "ui",
+        "category": "Frontend and lobby UI",
+        "name": "Frontend shader translation and structural validation",
+        "weight": 2,
+        "measure_kind": "ledger",
+        "check_count": 1,
+        "rationale": "44 DXBC shaders mapped to validated SPIR-V with descriptor inventories checked; structural validation does not establish semantic or visual parity. See porting/material_pipeline/README.md and UE_BRIDGE.md.",
+        "evidence_pointers": {
+          "ledger_check_ids": [
+            "material_shader_translation"
+          ],
+          "ledger_file": "porting/progress/evidence.json",
+          "missing_ledger_ids": []
+        }
+      },
+      {
+        "id": "ui.material_uniforms",
+        "category_id": "ui",
+        "category": "Frontend and lobby UI",
+        "name": "Material uniform expression evaluation",
+        "weight": 2,
+        "measure_kind": "ledger",
+        "check_count": 1,
+        "rationale": "Numeric uniform expression evaluation across four layouts; full runtime resource semantics remain open. See porting/material_pipeline/README.md.",
+        "evidence_pointers": {
+          "ledger_check_ids": [
+            "material_uniform_evaluation"
+          ],
+          "ledger_file": "porting/progress/evidence.json",
+          "missing_ledger_ids": []
+        }
+      },
+      {
+        "id": "ui.material_detached_draw",
+        "category_id": "ui",
+        "category": "Frontend and lobby UI",
+        "name": "Detached Locker shader runtime and draw",
+        "weight": 2,
+        "measure_kind": "ledger",
+        "check_count": 1,
+        "rationale": "Eight live cases before and after freeze and a detached seven-shader Locker quad draw are verified. Actual-owner ingress is accounted for separately; original-output comparison remains open. See porting/material_pipeline/UE_BRIDGE.md.",
+        "evidence_pointers": {
+          "ledger_check_ids": [
+            "material_locker_draw"
+          ],
+          "ledger_file": "porting/progress/evidence.json",
+          "missing_ledger_ids": []
+        }
+      },
+      {
+        "id": "ui.material_locker_ingress",
+        "category_id": "ui",
+        "category": "Frontend and lobby UI",
+        "name": "Original Locker material actual-owner ingress and draw",
+        "weight": 2,
+        "measure_kind": "ledger",
+        "check_count": 1,
+        "rationale": "An opt-in runtime loaded the original Locker material through actual-owner ingress with all 19 records retained; its seven required shaders were complete and an attached quad responded to overrides. Other materials and layouts, textures, View resources, original-output parity and working UI roots remain open. See porting/material_pipeline/UE_MATERIAL_INGRESS.md.",
+        "evidence_pointers": {
+          "ledger_check_ids": [
+            "material_locker_asset_ingress"
+          ],
+          "ledger_file": "porting/progress/evidence.json",
+          "missing_ledger_ids": []
+        }
+      },
+      {
+        "id": "ui.material_named_ingress",
+        "category_id": "ui",
+        "category": "Frontend and lobby UI",
+        "name": "Verified named material ingress",
+        "weight": 6,
+        "measure_kind": "ledger",
+        "check_count": 4,
+        "rationale": "Four individually verified original material cases: PowerToast, MenuButton, Donut and Keybind. The effort weight is unchanged; additional known-closure compatibility, actual widgets and original visual parity remain separate measures.",
+        "evidence_pointers": {
+          "ledger_check_ids": [
+            "material_powertoast_asset_ingress",
+            "material_menubutton_asset_ingress",
+            "material_donut_asset_ingress",
+            "material_keybind_asset_ingress"
+          ],
+          "ledger_file": "porting/progress/evidence.json",
+          "missing_ledger_ids": []
+        }
+      },
+      {
+        "id": "ui.material_frontend_closure",
+        "category_id": "ui",
+        "category": "Frontend and lobby UI",
+        "name": "Known frontend closure material owners",
+        "weight": 2,
+        "measure_kind": "ledger",
+        "check_count": 142,
+        "rationale": "142 distinct material owners from the 147 exports in porting/generated/frontend-probes/frontend-material-inventory/summary.json, bounded to the 721-root frontend closure. Excludes separately weighted Locker, GradientPanel, PowerToast, MenuButton and Donut. MainL is included. Each check requires actual-owner runtime completeness, attachment and independent payload validation; missing checks receive no credit. This is not the whole game, widget integration or original visual parity. Owner paths are recorded in passing ledger entries.",
+        "evidence_pointers": {
+          "ledger_check_ids": [
+            "material_frontend_owner_b5fcb772a31ecd36",
+            "material_frontend_owner_bc329a3f5f9a9ef3",
+            "material_frontend_owner_3d3453906eeb002d",
+            "material_frontend_owner_89ef13495431e896",
+            "material_frontend_owner_0d309c58ac5bb800",
+            "material_frontend_owner_2b046459bb5f6410",
+            "material_frontend_owner_6664a1649c7c749d",
+            "material_frontend_owner_ae24ce856a758b68",
+            "material_frontend_owner_117e56c2db40977a",
+            "material_frontend_owner_1617aeaa75413901",
+            "material_frontend_owner_a48ed3d16a59ff02",
+            "material_frontend_owner_c304e323fb4aa651",
+            "material_frontend_owner_9b8adcef0120976a",
+            "material_frontend_owner_2653ef5701a87e0d",
+            "material_frontend_owner_5eb5902d97b5aa44",
+            "material_frontend_owner_cf4d079608bc2f33",
+            "material_frontend_owner_ffc6370f2c221fd9",
+            "material_frontend_owner_24db817708f03e94",
+            "material_frontend_owner_03dc9bacf030cc07",
+            "material_frontend_owner_717e40e8fa8e2c32",
+            "material_frontend_owner_8d0e73389b345ed5",
+            "material_frontend_owner_7bfee806c2a07e24",
+            "material_frontend_owner_d1d318ba4f03ccbb",
+            "material_frontend_owner_ec6952c187bd91c9",
+            "material_frontend_owner_01005a35c43064b9",
+            "material_frontend_owner_fe10ec5e8832653d",
+            "material_frontend_owner_b8b839b3819ae1c2",
+            "material_frontend_owner_1796b4e99a45332a",
+            "material_frontend_owner_32eda186ebb5ce56",
+            "material_frontend_owner_8f511158d4db10b1",
+            "material_frontend_owner_c9d88259c847c84d",
+            "material_frontend_owner_f0139bb67f9deede",
+            "material_frontend_owner_bae7af1c2339c8e9",
+            "material_frontend_owner_a330ba5dc5ca850c",
+            "material_frontend_owner_6ef29112792555b3",
+            "material_frontend_owner_c33708b9c35ea6a8",
+            "material_frontend_owner_4c2aac70b3f3dbd1",
+            "material_frontend_owner_1f088da64e08242a",
+            "material_frontend_owner_938763ddeabcd36f",
+            "material_frontend_owner_6cf1c33082ec2c66",
+            "material_frontend_owner_2417aa268eef1a39",
+            "material_frontend_owner_9d410fe06d5264a2",
+            "material_frontend_owner_8a40608645c131f5",
+            "material_frontend_owner_5f050df5e87273f4",
+            "material_frontend_owner_a14da5c803dc7ee1",
+            "material_frontend_owner_f182c51cd1dfcc3b",
+            "material_frontend_owner_608199fda7d1e82e",
+            "material_frontend_owner_7c362ccf47797f25",
+            "material_frontend_owner_063d3f629e391688",
+            "material_frontend_owner_1ef3291cb638eec6",
+            "material_frontend_owner_549fb1eeb6758cd1",
+            "material_frontend_owner_b252a23b73c6fb81",
+            "material_frontend_owner_e4dee38b6dfad9d0",
+            "material_frontend_owner_28869e2c3b7228c9",
+            "material_frontend_owner_3cb1dbe7865244da",
+            "material_frontend_owner_0913e00f5e97b9ef",
+            "material_frontend_owner_6324393b933fcd96",
+            "material_frontend_owner_de03144ff3e7efc4",
+            "material_frontend_owner_8d8f9c33c99f3c19",
+            "material_frontend_owner_0d6eef0eedb3a105",
+            "material_frontend_owner_3404cdb51f0042b7",
+            "material_frontend_owner_e301c2b9ca5016a9",
+            "material_frontend_owner_d3c3351b9a43e296",
+            "material_frontend_owner_1dc4a097333f93f2",
+            "material_frontend_owner_24f51f6b50f7f669",
+            "material_frontend_owner_d15c22ba8ecb47eb",
+            "material_frontend_owner_9fa2c9fa5a0adce3",
+            "material_frontend_owner_c84d1b524ca65932",
+            "material_frontend_owner_d4d005a96f5fcbac",
+            "material_frontend_owner_3e61495beb42f46a",
+            "material_frontend_owner_97661b3fd8a7cdae",
+            "material_frontend_owner_345056c2af5ba66c",
+            "material_frontend_owner_4cfe3467e5741e39",
+            "material_frontend_owner_18764c8406b4145c",
+            "material_frontend_owner_d69046cddd3aa006",
+            "material_frontend_owner_ee4465dd06707423",
+            "material_frontend_owner_96b3ea6c980a0471",
+            "material_frontend_owner_82e095670ddb3361",
+            "material_frontend_owner_aa1d5d94cd13e2d1",
+            "material_frontend_owner_0b06ba64698a35cc",
+            "material_frontend_owner_f031e14c46854c80",
+            "material_frontend_owner_00deb035d0f12b57",
+            "material_frontend_owner_35485889509ef94c",
+            "material_frontend_owner_a1592d429e518930",
+            "material_frontend_owner_e2e417961e86ee57",
+            "material_frontend_owner_468ac6254646f83f",
+            "material_frontend_owner_a27ecd263b4e0be1",
+            "material_frontend_owner_eab2e0733bb2c0b0",
+            "material_frontend_owner_7e7e96890e8e2cb9",
+            "material_frontend_owner_e40404ad8584d6f7",
+            "material_frontend_owner_41ec3f75c33fb3e1",
+            "material_frontend_owner_12b4b9d27db4bd2a",
+            "material_frontend_owner_4885a4e3746af65a",
+            "material_frontend_owner_cec9824e0de68cc2",
+            "material_frontend_owner_68c6b793868fb135",
+            "material_frontend_owner_451308c403d819d9",
+            "material_frontend_owner_38326995e5da4628",
+            "material_frontend_owner_5093bf7499fb0868",
+            "material_frontend_owner_102ccff623f49560",
+            "material_frontend_owner_fb47eed205e1343f",
+            "material_frontend_owner_da03e8ca979e7f9a",
+            "material_frontend_owner_b90cda314897166b",
+            "material_frontend_owner_eb8157410a8eab95",
+            "material_frontend_owner_2d07a9a8cc7b4259",
+            "material_frontend_owner_894d848218709a26",
+            "material_frontend_owner_96bfe15951a896cf",
+            "material_frontend_owner_90ddca0528cff0a6",
+            "material_frontend_owner_998a56b515851671",
+            "material_frontend_owner_228a3818abe7e12b",
+            "material_frontend_owner_4b42fa72c08462c5",
+            "material_frontend_owner_ffbd51b27d50cb73",
+            "material_frontend_owner_35e8669e63fbe450",
+            "material_frontend_owner_64b7b96001bfef4d",
+            "material_frontend_owner_7250d437e180d476",
+            "material_frontend_owner_61384ac1a8df8d33",
+            "material_frontend_owner_80ccd638caec3952",
+            "material_frontend_owner_29755c4cfd6666f4",
+            "material_frontend_owner_ad9caa93275c1135",
+            "material_frontend_owner_54983de3a5747f9a",
+            "material_frontend_owner_cf3c32b152f73b30",
+            "material_frontend_owner_61a7f3b113aa2f08",
+            "material_frontend_owner_63269f654c717009",
+            "material_frontend_owner_d30b3e8fe8337e75",
+            "material_frontend_owner_2f5d8a82c5e52049",
+            "material_frontend_owner_9b5b3166703bd591",
+            "material_frontend_owner_68d6d9631d5952e9",
+            "material_frontend_owner_ca7e3de8f5664d6e",
+            "material_frontend_owner_96d352985327c1b0",
+            "material_frontend_owner_ea40fc1498463f86",
+            "material_frontend_owner_840e96f4a8e8d0e8",
+            "material_frontend_owner_3ac27ee2271ff052",
+            "material_frontend_owner_554fedcce7794993",
+            "material_frontend_owner_7073d28348adc145",
+            "material_frontend_owner_caf8370896015506",
+            "material_frontend_owner_fef06d412a5f85d9",
+            "material_frontend_owner_a06d6ac78ef215dd",
+            "material_frontend_owner_ad65bb4edb5c0278",
+            "material_frontend_owner_699241b5b952ce61",
+            "material_frontend_owner_d0d4dd84423d89df",
+            "material_frontend_owner_88faed927c75cd8d",
+            "material_frontend_owner_6e588337f96d7197",
+            "material_frontend_owner_8310f3e2e82adf74"
+          ],
+          "ledger_file": "porting/progress/evidence.json",
+          "missing_ledger_ids": []
+        }
+      },
+      {
+        "id": "ui.material_widget_integration",
+        "category_id": "ui",
+        "category": "Frontend and lobby UI",
+        "name": "Frontend root widget material integration",
+        "weight": 1,
+        "measure_kind": "ledger",
+        "check_count": 1,
+        "rationale": "Requires evidence of material integration into frontend root widgets.",
+        "evidence_pointers": {
+          "ledger_check_ids": [
+            "material_frontend_widget_integration"
+          ],
+          "ledger_file": "porting/progress/evidence.json",
+          "missing_ledger_ids": [
+            "material_frontend_widget_integration"
+          ]
+        }
+      },
+      {
+        "id": "ui.material_visual_parity",
+        "category_id": "ui",
+        "category": "Frontend and lobby UI",
+        "name": "Original material visual parity",
+        "weight": 1,
+        "measure_kind": "ledger",
+        "check_count": 1,
+        "rationale": "Requires comparison to original-client visuals.",
+        "evidence_pointers": {
+          "ledger_check_ids": [
+            "material_original_visual_parity"
+          ],
+          "ledger_file": "porting/progress/evidence.json",
+          "missing_ledger_ids": [
+            "material_original_visual_parity"
+          ]
+        }
+      },
+      {
+        "id": "ui.frontend_lobby",
+        "category_id": "ui",
+        "category": "Frontend and lobby UI",
+        "name": "Frontend menus and lobby flow",
+        "weight": 40,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "No main menu, lobby or matchmaking UI is reproduced. No objective metric yet: no menu or lobby widget is reproduced, and the widget Blueprints are not mapped to menus. Weight includes completed and remaining effort; exclude native-body recovery/transcription allocated to gameplay.native_behavior and separately measured diagnostics, declarations and material work. See README effort review for boundaries and uncertainty.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "ui.frontend_event_registrations",
+        "category_id": "ui",
+        "category": "Frontend and lobby UI",
+        "name": "Frontend event registrations",
+        "weight": 1,
+        "measure_kind": "ledger",
+        "check_count": 41,
+        "rationale": "41 non-Native Blueprint super-event targets in the fixed 721-package header inventory. Credit requires original owner/signature/flags and both-target compiled UHT/ELF proof. This bounded registration scope excludes the two Native activation events, whose behavior remains in lifecycle. One manually estimated effort point is split from the former 15-point lifecycle budget; this is not a widget or gameplay acceptance gate.",
+        "evidence_pointers": {
+          "ledger_check_ids": [
+            "frontend_event_signature_97a7a9a26cffc1ef",
+            "frontend_event_signature_6c3745abe695e828",
+            "frontend_event_signature_cef8ed789ea4cca6",
+            "frontend_event_signature_acdd5f250c07b3f5",
+            "frontend_event_signature_86be4fd63c1f3750",
+            "frontend_event_signature_be009a77ba833c9e",
+            "frontend_event_signature_f0e8d7f839d603a6",
+            "frontend_event_signature_7f410db84053bf97",
+            "frontend_event_signature_cad49b19554f2294",
+            "frontend_event_signature_082e932ed60cc28a",
+            "frontend_event_signature_5974ea6157df96a1",
+            "frontend_event_signature_6472bb99ee9b5eae",
+            "frontend_event_signature_d4680cda66578a74",
+            "frontend_event_signature_b1669f5a7a25b463",
+            "frontend_event_signature_d948f4dfac455d84",
+            "frontend_event_signature_805e8ce2cd0b59d4",
+            "frontend_event_signature_6f584de16f39d26f",
+            "frontend_event_signature_551e74e5bd2eca40",
+            "frontend_event_signature_a7f746f057ea7969",
+            "frontend_event_signature_3b15a4585c645518",
+            "frontend_event_signature_f9d18a0bde72a1e9",
+            "frontend_event_signature_6519358e05e107dc",
+            "frontend_event_signature_aed5bb04f983aaea",
+            "frontend_event_signature_8273b2a360af95f0",
+            "frontend_event_signature_37a6db2b59f63e51",
+            "frontend_event_signature_f6471223d54183eb",
+            "frontend_event_signature_6b477b21f58cfe66",
+            "frontend_event_signature_08ac3c611a145c94",
+            "frontend_event_signature_925ce33dae931e0b",
+            "frontend_event_signature_c927837cfa8d256e",
+            "frontend_event_signature_e1cc754f9f891a6d",
+            "frontend_event_signature_3720cf4e31f354ee",
+            "frontend_event_signature_46979d00c23e6599",
+            "frontend_event_signature_abcf6a4a1c87315b",
+            "frontend_event_signature_acc366dcab5dd9aa",
+            "frontend_event_signature_725ac5635b4bd5ff",
+            "frontend_event_signature_a18b8fa106e94b89",
+            "frontend_event_signature_ea85d14aa60b13ef",
+            "frontend_event_signature_a7a890054c988e28",
+            "frontend_event_signature_a61d1d649bb8c042",
+            "frontend_event_signature_da1eeac922dcfbda"
+          ],
+          "ledger_file": "porting/progress/evidence.json",
+          "missing_ledger_ids": []
+        }
+      },
+      {
+        "id": "ui.lifecycle",
+        "category_id": "ui",
+        "category": "Frontend and lobby UI",
+        "name": "Frontend lifecycle and native helpers",
+        "weight": 20,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Recover actual game-instance initialization, activation handlers, source-selected input policy, operation queue and native helpers, then verify interactive UI roots. Bounded event-registration metadata is measured separately. Weight includes completed and remaining effort; exclude native-body recovery/transcription allocated to gameplay.native_behavior and separately measured diagnostics, declarations and material work. See README effort review for boundaries and uncertainty.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "ui.hud",
+        "category_id": "ui",
+        "category": "Frontend and lobby UI",
+        "name": "In-match HUD",
+        "weight": 50,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "No HUD is reproduced. No objective metric yet: no HUD widget is reproduced or captured. Weight includes completed and remaining effort; exclude native-body recovery/transcription allocated to gameplay.native_behavior and separately measured diagnostics, declarations and material work. See README effort review for boundaries and uncertainty.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "ui.fortniteui_classes",
+        "category_id": "ui",
+        "category": "Frontend and lobby UI",
+        "name": "FortniteUI reflection declarations (not behavior)",
+        "weight": 10.0,
+        "measure_kind": "tracked_count",
+        "check_count": 0,
+        "rationale": "Tracked FortniteUI generated headers over named original classes measure declarations only; module runtime behavior, widgets and integration are separately unfinished.",
+        "evidence_pointers": {
+          "total_key": "uht_classes_named_by_package",
+          "total_sub": "/Script/FortniteUI"
+        }
+      },
+      {
+        "id": "ui.fortniteui_classes.implementation",
+        "category_id": "ui",
+        "category": "Frontend and lobby UI",
+        "name": "FortniteUI module behavior and runtime verification",
+        "weight": 44,
+        "measure_kind": "manual",
+        "check_count": 0,
+        "rationale": "Generated reflection declarations do not establish module behavior, integration or runtime parity. Function bodies and runtime checks have separate evidence; complete module behavior remains unverified. Weight includes completed and remaining effort; exclude native-body recovery/transcription allocated to gameplay.native_behavior and separately measured diagnostics, declarations and material work. See README effort review for boundaries and uncertainty.",
+        "evidence_pointers": {}
+      },
+      {
+        "id": "ui.confirmation_runtime",
+        "category_id": "ui",
+        "category": "Frontend and lobby UI",
+        "name": "Confirmation dialogs: runtime reconstruction",
+        "weight": 1.0,
+        "measure_kind": "ledger",
+        "check_count": 4,
+        "rationale": "One point split from the existing 30-point FortniteUI behavior budget, divided equally across description construction/copy, authentic async action, queued presentation, and user interaction. Only the bounded description constructor/layout/delegate ownership diagnostic is currently verified. Class loading, native fixture checks and offline recovery do not complete the remaining checks or any product milestone.",
+        "evidence_pointers": {
+          "ledger_check_ids": [
+            "frontend_confirmation_description_runtime",
+            "frontend_confirmation_async_action_runtime",
+            "frontend_confirmation_presentation_runtime",
+            "frontend_confirmation_interaction_runtime"
+          ],
+          "ledger_file": "porting/progress/evidence.json",
+          "missing_ledger_ids": [
+            "frontend_confirmation_async_action_runtime",
+            "frontend_confirmation_presentation_runtime",
+            "frontend_confirmation_interaction_runtime"
+          ]
+        }
+      },
+      {
+        "id": "ui.context_source_stage",
+        "category_id": "ui",
+        "category": "Frontend and lobby UI",
+        "name": "Generic context source reconstruction",
+        "weight": 1,
+        "measure_kind": "ledger",
+        "check_count": 1,
+        "rationale": "One lifecycle point for reviewed generic context lookup, registry and base lifecycle source/generator work, distinct from event signatures. Concrete contexts, authentic startup, linked UE runtime and integration remain in lifecycle.",
+        "evidence_pointers": {
+          "ledger_check_ids": [
+            "frontend_context_source_stage"
+          ],
+          "ledger_file": "porting/progress/evidence.json",
+          "missing_ledger_ids": []
+        }
+      },
+      {
+        "id": "ui.context_runtime_stage",
+        "category_id": "ui",
+        "category": "Frontend and lobby UI",
+        "name": "Generic context diagnostic runtime",
+        "weight": 1,
+        "measure_kind": "ledger",
+        "check_count": 5,
+        "rationale": "One lifecycle point for bounded generic context metadata, lookup, registry and lifecycle runtime; concrete context methods, authentic startup and playable UI remain unfinished.",
+        "evidence_pointers": {
+          "ledger_check_ids": [
+            "frontend_context_runtime_metadata",
+            "frontend_context_runtime_reflection",
+            "frontend_context_runtime_lookup",
+            "frontend_context_runtime_registry",
+            "frontend_context_runtime_lifecycle"
+          ],
+          "ledger_file": "porting/progress/evidence.json",
+          "missing_ledger_ids": []
+        }
+      },
+      {
+        "id": "ui.panel_source_stage",
+        "category_id": "ui",
+        "category": "Frontend and lobby UI",
+        "name": "CommonUI activation base source candidate",
+        "weight": 1,
+        "measure_kind": "ledger",
+        "check_count": 1,
+        "rationale": "One CommonUI implementation point for isolated activation base source, portable tests, UHT and syntax. Panel/queue, shared build and runtime remain unfinished.",
+        "evidence_pointers": {
+          "ledger_check_ids": [
+            "frontend_panel_base_source_stage"
+          ],
+          "ledger_file": "porting/progress/evidence.json",
+          "missing_ledger_ids": []
+        }
+      },
+      {
+        "id": "ui.input_source_stage",
+        "category_id": "ui",
+        "category": "Frontend and lobby UI",
+        "name": "CommonUI input source candidate",
+        "weight": 1,
+        "measure_kind": "ledger",
+        "check_count": 1,
+        "rationale": "One CommonUI implementation point for bounded input/device/lifecycle and delegate source, tests, UHT and syntax. Action dispatch, cursor, shared build and runtime remain unfinished.",
+        "evidence_pointers": {
+          "ledger_check_ids": [
+            "frontend_input_source_stage"
+          ],
+          "ledger_file": "porting/progress/evidence.json",
+          "missing_ledger_ids": []
+        }
+      }
+    ]
+  },
+  "weight_changes": [
+    {
+      "id": "ui.commonui_umg.implementation",
+      "before_weight": 18.0,
+      "after_weight": 48
+    },
+    {
+      "id": "ui.fortniteui_classes.implementation",
+      "before_weight": 29.0,
+      "after_weight": 44
+    },
+    {
+      "id": "ui.frontend_lobby",
+      "before_weight": 25,
+      "after_weight": 40
+    },
+    {
+      "id": "ui.hud",
+      "before_weight": 40,
+      "after_weight": 50
+    },
+    {
+      "id": "ui.lifecycle",
+      "before_weight": 12,
+      "after_weight": 20
+    }
+  ]
+}

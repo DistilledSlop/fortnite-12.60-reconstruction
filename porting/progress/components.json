@@ -1,6 +1,6 @@
 {
   "_about": "Hand-edited model for porting/progress/progress.py. Leaves with a \"measure\" are computed; leaves with kind \"manual\" use the pct you set, with rationale. Weights are manual effort estimates (relative points, roughly engineer-weeks) and set the treemap area. Edit a weight or pct, commit, and the post-commit hook regenerates the dashboard. Basis ladder, most objective first: git (computed from tracked files, replayable per commit), local (computed from git-ignored outputs), documented (typed count), manual (typed percent). Denominators come from porting/progress/totals.json; checks from porting/progress/evidence.json. See README 'Objectivity audit'.",
-  "definition": "100% = the entire game can be launched into the menu, joined into a game and matchmade on the reconstructed server, and played with sound/audio and visuals 100% working. In other words: the client \u2014 the exact same client as the 12.60 original, feature-complete and unstripped, rebuilt as a UE project \u2014 reaches the lobby, matchmakes to the reconstructed UE dedicated server (which carries every structure and feature the original dedicated server would have) and plays a match with all visuals and audio. The supplied 12.60 build is the completeness reference; the original binary under Wine is an analysis oracle, not the deliverable.",
+  "definition": "100% = the entire game can be launched into the menu, joined into a game and matchmade on the reconstructed server, and played with sound/audio and visuals 100% working. In other words: the client — the exact same client as the 12.60 original, feature-complete and unstripped, rebuilt as a UE project — reaches the lobby, matchmakes to the reconstructed UE dedicated server (which carries every structure and feature the original dedicated server would have) and plays a match with all visuals and audio. The supplied 12.60 build is the completeness reference; the original binary under Wine is an analysis oracle, not the deliverable.",
   "milestones": [
     {
       "id": "m1",
@@ -66,7 +66,6 @@
           "measure": {
             "kind": "ledger",
             "checks": [
-              "wine_starts",
               "wine_pak_mount",
               "wine_frontend_map",
               "wine_login_ui",
@@ -74,7 +73,7 @@
               "wine_lobby_reached"
             ]
           },
-          "rationale": "The six ledger checks record Wine engine start, pak mount, Frontend map, login screen, AppES entitlement and lobby map. A stage without a passing record counts as 0. The observed Wine run stopped at the AppES access gate; later stages remain unverified."
+          "rationale": "Five post-start Wine oracle stages: pak mount, Frontend map, login screen, AppES entitlement and lobby map. Engine startup effort and its wine_starts check belong exclusively to platform.eac_removal. Wine analysis supports reconstruction; it is not rebuilt-client acceptance. The observed run stopped at the AppES access gate."
         },
         {
           "id": "platform.eac_removal",
@@ -86,7 +85,7 @@
               "wine_starts"
             ]
           },
-          "rationale": "The ledger records whether the original client under Wine initializes its engine using the existing launch script. This does not establish access beyond the observed AppES gate or native client functionality."
+          "rationale": "The ledger records whether the original client under Wine initializes its engine using the existing launch script. This does not establish access beyond the observed AppES gate or native client functionality. The shared engine-start check and its startup effort are allocated here only; downstream Wine analysis is allocated to wine_launch."
         },
         {
           "id": "platform.launch_security",
@@ -697,7 +696,7 @@
             "group": 1,
             "total_key": "native_functions_with_exec"
           },
-          "rationale": "Done: committed .inc function bodies under porting/behavior, one per ported function. Total: native functions with an execution address in the decompiled image (native_funcs.json, totals.json). Only committed bodies count. An honest small percentage is expected while the port is at the reflection stage. Counts ported FUNCTIONS (manifest entries with status 'ported', written by porting/behavior/check_behavior.py to COUNTS.txt), not snippet files: two shared bodies serve 123 trivial validate/empty-implementation functions. Trivial bodies count the same as large ones here; the breakdown by kind is in porting/behavior/MANIFEST.json."
+          "rationale": "Done: committed .inc function bodies under porting/behavior, one per ported function. Total: native functions with an execution address in the decompiled image (native_funcs.json, totals.json). Only committed bodies count. An honest small percentage is expected while the port is at the reflection stage. Counts ported FUNCTIONS (manifest entries with status 'ported', written by porting/behavior/check_behavior.py to COUNTS.txt), not snippet files: two shared bodies serve 123 trivial validate/empty-implementation functions. Trivial bodies count the same as large ones here; the breakdown by kind is in porting/behavior/MANIFEST.json. Effort boundary: this allocation is the cross-module recovery and transcription of native function bodies, including UI bodies, through the ported manifest; feature and UI implementation allocations cover their additional assembly, adapters, integration and verification, not the same body-recovery effort again. Equal function counts are only a coarse progress proxy, not equal effort."
         }
       ]
     },
@@ -881,7 +880,7 @@
       "children": [
         {
           "id": "backend.version_lightswitch",
-          "name": "Version check and lightswitch \u2014 source references",
+          "name": "Version check and lightswitch — source references",
           "weight": 7.5,
           "measure": {
             "kind": "checks",
@@ -913,7 +912,7 @@
         },
         {
           "id": "backend.oauth_account",
-          "name": "OAuth and account routes \u2014 source references",
+          "name": "OAuth and account routes — source references",
           "weight": 12.5,
           "measure": {
             "kind": "routes",
@@ -937,7 +936,7 @@
         },
         {
           "id": "backend.matchmaking",
-          "name": "Matchmaking ticket and session routes \u2014 source references",
+          "name": "Matchmaking ticket and session routes — source references",
           "weight": 20.0,
           "measure": {
             "kind": "routes",
@@ -960,7 +959,7 @@
         },
         {
           "id": "backend.game_profile",
-          "name": "Game v2 profile, world, chat and voice routes \u2014 source references",
+          "name": "Game v2 profile, world, chat and voice routes — source references",
           "weight": 15.0,
           "measure": {
             "kind": "routes",
@@ -1008,7 +1007,7 @@
         },
         {
           "id": "backend.public_catalog",
-          "name": "Public catalog, payment and asset routes \u2014 source references",
+          "name": "Public catalog, payment and asset routes — source references",
           "weight": 12.5,
           "measure": {
             "kind": "routes",
@@ -1034,7 +1033,7 @@
         },
         {
           "id": "backend.party_xmpp",
-          "name": "Party and XMPP \u2014 source references",
+          "name": "Party and XMPP — source references",
           "weight": 15.0,
           "measure": {
             "kind": "checks",
@@ -1098,7 +1097,7 @@
         },
         {
           "id": "backend.stats_cloud",
-          "name": "Stats, events, cloud storage and datarouter \u2014 source references",
+          "name": "Stats, events, cloud storage and datarouter — source references",
           "weight": 10.0,
           "measure": {
             "kind": "checks",
@@ -1281,7 +1280,7 @@
             "kind": "manual",
             "pct": 0
           },
-          "rationale": "Remaining CommonUI and UMG behavior includes Panel and operation queue, input dispatch and held actions, the main CommonButton and other widgets, their integration, and behavior parity. Header coverage, source candidates, the bounded base activation, Panel intro and internal button diagnostics are separately allocated; none establishes this remainder."
+          "rationale": "Remaining CommonUI and UMG behavior includes Panel and operation queue, input dispatch and held actions, the main CommonButton and other widgets, their integration, and behavior parity. Header coverage, source candidates, the bounded base activation, Panel intro and internal button diagnostics are separately allocated; none establishes this remainder. Weight includes completed and remaining effort; exclude native-body recovery/transcription allocated to gameplay.native_behavior and separately measured diagnostics, declarations and material work. See README effort review for boundaries and uncertainty."
         },
         {
           "id": "ui.commonui_panel_outro_runtime",
@@ -1647,7 +1646,7 @@
             "kind": "manual",
             "pct": 0
           },
-          "rationale": "No main menu, lobby or matchmaking UI is reproduced. No objective metric yet: no menu or lobby widget is reproduced, and the widget Blueprints are not mapped to menus."
+          "rationale": "No main menu, lobby or matchmaking UI is reproduced. No objective metric yet: no menu or lobby widget is reproduced, and the widget Blueprints are not mapped to menus. Weight includes completed and remaining effort; exclude native-body recovery/transcription allocated to gameplay.native_behavior and separately measured diagnostics, declarations and material work. See README effort review for boundaries and uncertainty."
         },
         {
           "id": "ui.frontend_event_registrations",
@@ -1715,7 +1714,7 @@
             "kind": "manual",
             "pct": 0
           },
-          "rationale": "Recover actual game-instance initialization, activation handlers, source-selected input policy, operation queue and native helpers, then verify interactive UI roots. Bounded event-registration metadata is measured separately."
+          "rationale": "Recover actual game-instance initialization, activation handlers, source-selected input policy, operation queue and native helpers, then verify interactive UI roots. Bounded event-registration metadata is measured separately. Weight includes completed and remaining effort; exclude native-body recovery/transcription allocated to gameplay.native_behavior and separately measured diagnostics, declarations and material work. See README effort review for boundaries and uncertainty."
         },
         {
           "id": "ui.hud",
@@ -1725,7 +1724,7 @@
             "kind": "manual",
             "pct": 0
           },
-          "rationale": "No HUD is reproduced. No objective metric yet: no HUD widget is reproduced or captured."
+          "rationale": "No HUD is reproduced. No objective metric yet: no HUD widget is reproduced or captured. Weight includes completed and remaining effort; exclude native-body recovery/transcription allocated to gameplay.native_behavior and separately measured diagnostics, declarations and material work. See README effort review for boundaries and uncertainty."
         },
         {
           "id": "ui.fortniteui_classes",
@@ -1749,7 +1748,7 @@
             "kind": "manual",
             "pct": 0
           },
-          "rationale": "Generated reflection declarations do not establish module behavior, integration or runtime parity. Function bodies and runtime checks have separate evidence; complete module behavior remains unverified."
+          "rationale": "Generated reflection declarations do not establish module behavior, integration or runtime parity. Function bodies and runtime checks have separate evidence; complete module behavior remains unverified. Weight includes completed and remaining effort; exclude native-body recovery/transcription allocated to gameplay.native_behavior and separately measured diagnostics, declarations and material work. See README effort review for boundaries and uncertainty."
         },
         {
           "id": "ui.confirmation_runtime",

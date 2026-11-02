@@ -1,0 +1,25 @@
+# Dashboard effort-weight review workspace
+
+This is a review project for a separate Claude session. The user starts that session; this workspace does not invoke an external model. Audit **all** dashboard leaves and produce reviewable findings for the primary agent to triage and implement in bounded changes. Start with `inventory.json`, then inspect the actual source and evidence. The inventory is an index, not proof of completion or a replacement for source review.
+
+## Baseline and provenance
+
+The captured source HEAD is recorded in `inventory.json` with SHA-256 hashes of both model and evidence bytes for each snapshot. At capture, committed HEAD `5e939e5519b30cebe32ca79cd83888f17f2e8630` has 117 leaves and 1,855 total points; UI is 170 and the CommonUI/UMG allocation is 30. The working tree has 117 leaves and **proposed, uncommitted** 1,933 total points; UI is 248 and CommonUI/UMG allocation is 60. The 78-point increase comprises five UI leaf changes in the inventory. These are proposals, not accepted calibration. Other working-tree changes may exist; hashes and `working_tree_status` describe the two input files only. The captured working model is preserved separately as `proposals/ui-effort-model.json` and its status/deltas in `proposals/ui-effort-status.json`; the numeric changes have not been applied to the live model. Rebuilding updates the inventory to the then-current HEAD and working tree, so retain the original capture when comparing the proposal.
+
+Run from any directory: `python3 porting/progress/effort_review/build_snapshot.py` (or use its absolute path). It reads `git show HEAD` for the committed model and ledger, and current files for the working snapshot; writes only `inventory.json`; verifies unique IDs, nonnegative weights and measure kinds; and records missing ledger IDs as gaps. It does not calculate completion. The model or ledger can evolve, so verify hashes and HEAD before relying on a report. `check_count` is the number of explicit checks, not the denominator for other measure types. Evidence pointers are indexes and may refer to local or absent files; inspect the model for complete specifications.
+
+## Review brief
+
+Weights mean relative **total effort, completed plus remaining**, required to reach the model's stated deliverable. Do not set weights using importance, urgency, milestone desirability, or a desired overall progress score. Review every leaf, including apparently small leaves, and compare adjacent allocations for omissions, overlaps, and double counting. Examine whether broad unfinished manual leaves conceal verified work; distinguish native body recovery from full feature recovery. Check actual recent UI evidence and the remaining dependencies, rather than extrapolating a small diagnostic into feature parity. Native checkpoint `04822b2` is the stated proven checkpoint; the current `GetCurrentInputType` candidate is not UE validated. Verify these claims against source receipts.
+
+For each consequential conclusion cite exact file lines and relevant commit or checkpoint IDs, indicate what was observed, and separate evidence, measured progress, and effort weight. Use estimate ranges and uncertainty; prioritize real defects over cosmetic precision. Do not invent completion. Flag missing or stale evidence and unknowns explicitly. Inspect both committed and proposed models: independently assess the proposed UI increases, without presuming acceptance. Check overlap across categories as well as within subtrees and consider whether the estimate counts already completed work and remaining work consistently.
+
+Preserve historical models and their interpretation: do not retroactively reshape past progress. Recommendations must describe forward changes, any expected denominator/model impact and historical comparability consequences. Do not modify the model during the review. The primary agent will triage findings and delegate small, separately scoped implementation tasks.
+
+## Deliverables
+
+- `reports/`: final audit, coverage of all 117 leaves, overall findings, comparisons and residual uncertainty.
+- `research/`: detailed notes, evidence trail, assumptions and source references; use links/path references, not copies of large generated files, private game assets or keys.
+- `suggestions/`: machine-readable recommendations conforming to `recommendation.schema.json` and companion prose if useful. Include low-confidence questions separately from actionable corrections. Give each recommendation stable IDs and include affected leaf IDs.
+
+Source index: `../components.json` (model, rationales, measures), `../evidence.json` (ledger), `../totals.json` (denominators), `../progress.py` (measurement semantics), `../README.md` (dashboard methodology), `../../HANDOFF.md` and relevant `../../frontend/` handoffs (recent UI work). Git history and cited checkpoint receipts are source references; generated artifacts may be local or unavailable. Never copy large generated outputs, private game assets, or keys into this workspace.
