@@ -10,22 +10,27 @@ credentials in Git, and the orchestrator reviews and commits.
 
 ## Current baseline
 
-At Native `cd06aa1`, both builds, both joins and eight retained diagnostics pass.
+At Native `d23cd34`, both builds, both joins and eight retained diagnostics pass.
 The original input table loads421rows/30checks; mutable input-type13, bindingdata26,
 engineprovider20, creation23 and new CommonButton state/text-style/weak-hover26
-cases pass. The new getters use the original serialized IconTextButton style and
+cases and CommonTextBlock style/synchronization22 cases pass. The new getters use the original serialized IconTextButton style and
 actual CDOs. Source and staged config match. Startup uses FortGameInstance,
 FortLocalPlayer, FortGameViewportClient and FortPlayerControllerAthena; Root
 creation returns seven widgets. Twenty skipped imports remain (17distinct),
 unchanged: that warning list did not include the restored getters.
 
-The original viewport retry remains failed. GDB proves execution passed the old
-GetCurrentTextStyleClass call and now hits missing CommonTextBlock.SetStyle later
-in the same IconTextButton.UpdateTextStyle Blueprint function. Next restore that
-setter's actual apply-style behavior, guided by the bounded source contract in
-HANDOFF.md. A queue still lacks its original RebuildWidget override. Interactive
-startup, original pixels and all four product milestones remain unverified.
-Material compatibility remains129/142.
+The original viewport retry remains failed. The text-style getter and text-block
+SetStyle are restored. GDB reached SetStyle's exec and native body before the next
+fatal: missing CommonTextBlock.SetTextCase in IconTextButton ExecuteUbergraph.
+The source contract proves it writes inherited TextTransformPolicy and always
+synchronizes; UE4.25 lacks the real Slate/layout feature. Next review and port
+the focused feature from local UnrealEngine4260, verify original/reference behavior
+and raw/bound/localized text semantics, then restore SetTextCase. Do not rewrite
+raw text or alias bDisplayAllCaps to evade the engine gap. A queue still lacks its
+original RebuildWidget override. Its real singleton-slot, construction arguments
+and animated switcher request/timer contracts are now traced, but full renderer
+and lifecycle implementation remain required. Interactive startup, original pixels
+and all four product milestones remain unverified. Material compatibility129/142.
 
 Selected and weak-internal-button storage now match constructor/read behavior;
 controlled diagnostic mutations test the real accessors and weak expiry. Actual

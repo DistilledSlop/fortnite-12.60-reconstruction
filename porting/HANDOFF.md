@@ -2,7 +2,61 @@
 
 ## Current resume point (2026-11-02)
 
-- Latest Native cd06aa1 restores GetSelected/GetCurrentTextStyleClass and the ACTUAL
+- Latest Native d23cd34 restores CommonTextBlock.SetStyle and its existing virtual
+  SynchronizeProperties override, direct source-ordered style writes, actual conditional
+  visibility and real UTextBlock parent synchronization. Relevant constructor defaults
+  restored; serialized overrides remain authoritative. Bothbuilds PASS123.755/139.117s,
+  Native/config stable. All22actual metadata/UObject/direct+ProcessEvent/virtualdispatch/
+  null/repeat/wrongclass/shadow/rawbound/whitespace/order/realSlate/font14->42geometry/
+  originalTextStyle-Button-Primary-M/restoration cases PASS. No fakehook/Slate added.
+- Retained26buttonstyle/26data/20provider/23creation/13inputtype/30table(421rows),
+  eight diagnostics and joins21.584/21.598s PASS. OriginalRoot creation unchanged:
+  7widgets,4startupclasses,20skippedimport occurrences (17distinct). Viewportattempt
+  still SIGSEGV(-11) before_attach; no attachment/menu/parity claim. Queue RebuildWidget
+  remains a separate ensure. Fulltext/scrolling/selection/input/route lifecycle remainopen.
+- TextBlock checkpoint: generated/frontend-native-evidence/text-block-style-runtime-1/checkpoint.json
+  SHA256 13da8c24d064dd0832aab2efa737153b0c5e9c19f86cf210477ffd4ff9c4a037;
+  archive /mnt/vibrato/fortnite-evidence/frozen-runtime/text-block-style-runtime-1,
+  64source pairs/158artifact pairs/18binary rows. Release SHA256
+  76627a2e24ff60cb5773bab6d654d1a0b783015c7d5295d2cc2ab74ae5c746fe.
+  TERMINAL promotion76602/build1failed41316/build2passed77161/stage30505/style42830/
+  retained+freeze59409. NativeSource12721; promotionchanged2/preserved12717mtimes.
+  CommonUI48/runner46/generator141/progress67 checks +source15spans/property/vtable
+  bindings PASS. Failed17cd906build1 exit6/71.132s preserved: probe constdelegate and
+  missing ScrollStyle complete type; corrected handwrittenprobeheader atd23cd34.
+  No new stage on failed build. Scripts /mnt/vibrato/fortnite-work/{promote_,build_,
+  stage_,run_,freeze_,validate_}text_block_style*1.py plus build_text_block_style_native_2.py.
+  Stageproducer hashes allbinary contents; no independent giant-debug rehash claim.
+- POST-FREEZE GDB terminal: /mnt/vibrato/fortnite-work/post-text-block-viewport-crash-1/.
+  New fatal NULL /Script/CommonUI.CommonTextBlock.SetTextCase in IconTextButton_C.
+  ExecuteUbergraph_IconTextButton, Code404/opcode395; original.uexp2427 import-56.
+  Corrected isolated trace reached SetStyle exec AND nativebody before latercrash;
+  one-shottracepoints don'tpair a particular invocation or explicitlyrecord itsreturn.
+  Firsttrace's bodybreakpoint accidentallydisabled byGDB bpnum semantics; bothruns
+  retained, secondcorrected. Source/binary/config/checkpoint hashes unchanged, symbols
+  stat-only, no hugecore. This diagnostic is outside the alreadyterminalcheckpoint.
+- NEXT: SetTextCase requires a REAL ENGINE FEATURE PORT, not a text/flag shortcut.
+  Exact proof /mnt/vibrato/fortnite-work/common-text-block-text-case-contract-1/:
+  boolsetter writes inherited TextTransformPolicy None0/ToUpper2 at original+28e,
+  ALWAYSvirtualSync; nevertouchesrawText or distinct bDisplayAllCaps(+2b0). Parent
+  syncpropagates policytoSlate. LocalUE4.25 lacks enum/property/Slate/layout support.
+  Separate read-only /opt/fortnite/UnrealEngine4260 has referenceimplementation;
+  Core FTextTransformer alreadyexists4.25. BoundedSolmediumworker
+  text_transform_engine_backport_plan preparing SCRATCHONLY candidate at
+  /mnt/vibrato/fortnite-work/text-transform-engine-backport-candidate-1. NoEngineedits
+  applied. Rootmustpreserve5existingEnginedirtyfiles and own allengine/nativebuilds.
+  Reviewenum/UTextBlock/Slateattribute+invalidation/layout+marshaller dependencychain,
+  construction/boundraw/localization/geometry/length-change/SimpleTextMode semantics.
+  4.26equivalence deeperthanoriginalsetter remainsunproven; no fullparityclaim.
+  Onlythen restore SetTextCase. No derivedGetDisplayText/rawTextrewrite substitute,
+  no bDisplayAllCaps statealias, no omittedSlateeffect or callback. Rootretains all
+  Native/gen/build/stage ownership; no liveowneractive, onlyscratchresearch/candidate.
+- Queue source prerequisitesadvanced: animated-switcher-request-interruption-1 closes
+  request/reversal/reentry/weakpending/timer ordering. queue-rebuild-arguments-1 proves
+  initialslot is actual SNullWidget::NullWidget, initindex0, callbacksbound before
+  switcherallocation. Construct consumesLIVE transition fields, notargumentdefaults;
+  serializedqueue enum/duration values remainunmeasured. Neverinvent anemptySlategraph.
+- Previous Native cd06aa1 restores GetSelected/GetCurrentTextStyleClass and the ACTUAL
   CommonButton.IsHovered override. Constructor-backed selected=false and weak internal
   button storage are mutable native members; all future real producers must use them.
   Hover checks valid weak internal then calls its virtual hover, not inherited outer
@@ -42,20 +96,11 @@
   advances to NULL CommonTextBlock.SetStyle. Original.uexp11423 EX_FinalFunction bytes
   1c c9 ff ff ff -> import-55 /Script/CommonUI.CommonTextBlock.SetStyle, runtimeopcode42/
   Code51. Source/binary/config/checkpoint hashes unchanged; debug symbols stat-only.
-- NEXT IMPLEMENTATION: faithful CommonTextBlock.SetStyle + existing virtual
-  SynchronizeProperties override, not a new style-changed hook. SourceSetter always
-  assigns class and dispatches that virtual, even null/repeated. Apply helper directly
-  writes typed CDO Font,StrikeBrush,Margin,LineHeight,SlateColor,shadow fields in order;
-  then raw Text.IsEmpty drives conditional real visibility, then actual parent sync.
-  Proof /mnt/vibrato/fortnite-work/common-text-block-set-style-contract-1/ and independent
-  common-text-block-style-binding-1/ close original field/mask bindings, parent vtable
-  target143d9a100 and localUE4.25 direct-field accessibility. Constructor defaults are
-  autoCollapsefalse/mobileMultiplier1; serialized overrides remain authoritative.
-  Bounded candidate READY at /mnt/vibrato/fortnite-work/common-text-block-style-candidate-1/
-  {candidate.patch,HANDOFF.md}; apply-check,3policy tests and compiled assignment/
-  visibility/parent-order harness PASS. NOT applied/generated/UE-built. Root must review its patch, add actual UObject/Slate/metadata/virtual-dispatch/
-  repeated/null/invalid/shadow/visibility/restoration cases, promote/build/stage and
-  rerun viewport. No setter-only assignment/drop-callback/per-property setter substitute.
+- Historical CommonTextBlock.SetStyle candidate was applied/validated atd23cd34;
+  use maintained templates +bindingproof. The callback is actual SynchronizeProperties,
+  not a newhook. Source contracts common-text-block-{set-style-contract-1,style-binding-1}
+  remain authoritative for field order/parentdispatch/defaults. Initialportablecandidate
+  needed realUE probe delegate/type corrections; allsuccessful runtimefacts are above.
 - Queue renderer, actual selected/hover producers/Initialize/NativeConstruct/input-action
   refresh/router lifecycle, async confirmation and fullUI remain product work.
 - Previous Native d97565d restores original binding Create140800e60: source-ordered

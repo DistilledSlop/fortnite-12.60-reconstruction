@@ -21,6 +21,9 @@ reflected cases, source virtual dispatch, shadow/invalid/null/repeated behavior,
 raw versus bound text and whitespace, visibility-before-parent order, actual
 STextBlock synchronization and font-size desired-geometry changes. It requires
 the original TextStyle-Button-Primary-M CDO. It restores its changed style CDO.
-Generation/model/source/portable checks pass; UE build/runtime validation is
-pending. This does not complete text producers, scrolling, full rendering or UI
+At Native `d23cd34`, both builds, all22runtime rows (including actual font-size
+desired-geometry growth and original style), retained diagnostics and both joins
+pass. Failed17cd906build1 probe delegate/type issues are preserved and corrected
+in build2. Viewport remainsfailed; GDB reaches the setter body and next identifies
+missing CommonTextBlock.SetTextCase. This does not complete text producers, scrolling, full rendering or UI
 parity. Actual viewport retry and retained checks must remain independent.
