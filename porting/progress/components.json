@@ -6,7 +6,7 @@
       "id": "m1",
       "text": "The rebuilt client reaches the main menu with feature parity to the 12.60 original",
       "done": false,
-      "evidence": "Native d08549a5 / Engine 87acab901 passes both builds, 14 base-click checks, retained 93 style-rebuild checks, other UI/input diagnostics and both local joins. Frozen button-base-click-runtime-3 has 116 source pairs, 15 Engine inputs and 680 artifacts; independent audit verifies source/receipt integrity. Actual GI subsystem lookup is observed. Root remains seven widgets, four startup classes and 19 unresolved imports; viewport still fails before attachment. Complete CommonButton initialization/callback/selection/SetStyle integration next. No interactive frontend, original pixels/audio or complete UI parity is established; all four gates stay open. See HANDOFF.md."
+      "evidence": "Native 899dc12c / Engine 87acab901 passes the client build and 40 controlled CommonInput observations through normal Vulkan/Xvfb GUI startup, including module-owned rooted settings, cache copy/invalidation and the original 421-row table (common-input-lifecycle-2). UDEV fix is verified. Last broader client/server/join baseline remains d08549a5; it was not repeated for this UI batch. Root remains seven widgets, four startup classes and 19 unresolved imports; the prior viewport failure reaches missing CommonButton.SetStyle before attachment. Complete action-widget refresh/Slate lifecycle and CommonButton initialization/selection/SetStyle integration next. No interactive menu, original pixels/audio or complete UI parity is established; all four gates stay open. See HANDOFF.md."
     },
     {
       "id": "m2",

@@ -41,16 +41,20 @@ subscription/callback, OnWidgetRebuilt, release and destructor across19 bounded
 windows and original setter/native joins. Widgets borrow registry keys and never
 delete registry records. GetIcon candidate remains guarded: complete refresh and
 Slate construction/lifecycle coherently before registering it or setting the
-verified-key marker. Next narrow recovery is refresh gate14783cb80's real
-identity/default/producer; exact next windows are in
-`frontend/common_action_widget_key_lifecycle_evidence/HANDOFF.md`. Action-widget
+verified-key marker. Follow-up source proof closes refresh gate14783cb80: `CommonInput.ShowKeys`,
+int32 reference initialized1, default flags, real console setter path. Its11-window
+and original-PE initial-data replay PASS; source-shaped candidate remains
+unintegrated/unbuilt in `frontend/common_action_widget_refresh_gate_evidence/`.
+Next is authentic Slate graph1407e6fc0:cd0 and refresh integration, using the
+existing scratch Slate-mapping handoff and key-lifecycle evidence. Action-widget
 runtime candidate is uncompiled except its integrated gamepad getter. Production
 input providers, selection/focus/hover/Initialize/SetStyle and frontend remain next.
 
 Dashboard rationale updated; no extra credit, weight changes or milestone claims.
 Root owns Native/promotion/stage/build; delegation remains bounded and rotated,
 Luna medium read-only, Terra medium/high regular, Sol medium complex, fork_turns
-none, at most3workers. Preserve economical reads and risk-based batch validation.
+none, at most3workers. All bounded workers are now finished. Preserve economical
+reads and risk-based batch validation.
 
 ## Active CommonInput implementation batch (2026-11-02, client/headless PASS)
 

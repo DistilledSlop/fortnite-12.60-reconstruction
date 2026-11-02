@@ -16,7 +16,9 @@ resolution/copy/invalidation and original421-row input table. UDEV fix is verifi
 older EPERM notes below are historical. Module/cache lifecycle and gamepad getter
 are integrated; actual action-widget refresh/GetIcon still require authentic
 binding/lifecycle and Slate integration. Source06662681 closes both setter/key/
-subscription/release paths; next narrow dependency is refresh gate14783cb80.
+subscription/release paths. Refresh gate14783cb80 is now source-proven as the live
+CommonInput.ShowKeys int32 console reference, default1; candidate is unintegrated.
+Next is the authentic Slate construction/release graph and full widget refresh.
 No interactive menu, sound/pixel parity or milestone credit. See latest HANDOFF.
 
 
