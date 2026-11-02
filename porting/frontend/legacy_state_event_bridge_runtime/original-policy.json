@@ -1,0 +1,198 @@
+{
+  "identity": {
+    "block_va": "0x147013c40",
+    "config_name": null,
+    "class_flags": "0xa010a0",
+    "dependency_fns": [
+      "0x1451eb010",
+      "0x145299720"
+    ],
+    "package_fn": "0x1451eb010",
+    "base_fn": "0x145299720",
+    "class_noregister_fn": "0x1451dbc70",
+    "interface_count": 1
+  },
+  "properties": [
+    {
+      "index": 0,
+      "name": "StackStates",
+      "kind": "Array",
+      "kind_raw": "0x16",
+      "property_flags": "0x20080000002000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 1104
+    },
+    {
+      "index": 1,
+      "name": "StackStates",
+      "kind": "Struct",
+      "kind_raw": "0x19",
+      "property_flags": "0x0",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "type_refs": {
+        "struct": "0x1453189d0"
+      },
+      "array_inner_of": "StackStates"
+    }
+  ],
+  "functions": [
+    {
+      "name": "OnEnterState",
+      "create_func": "0x145316c40",
+      "flags": [
+        "0x8020800"
+      ],
+      "replicated_function": false,
+      "net_roles": [],
+      "outer_fn": "0x145316490",
+      "params": [
+        {
+          "index": 0,
+          "name": "PreviousUIState",
+          "kind": "Enum",
+          "kind_raw": "0x1e",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "enum": "0x14531e170"
+          }
+        },
+        {
+          "index": 1,
+          "name": "UnderlyingType",
+          "kind": "Byte",
+          "kind_raw": "0x0",
+          "property_flags": "0x0",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "enum_underlying_of": "PreviousUIState"
+        }
+      ]
+    },
+    {
+      "name": "OnExitState",
+      "create_func": "0x145316c70",
+      "flags": [
+        "0x8020800"
+      ],
+      "replicated_function": false,
+      "net_roles": [],
+      "outer_fn": "0x145316490",
+      "params": [
+        {
+          "index": 0,
+          "name": "NextUIState",
+          "kind": "Enum",
+          "kind_raw": "0x1e",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "enum": "0x14531e170"
+          }
+        },
+        {
+          "index": 1,
+          "name": "UnderlyingType",
+          "kind": "Byte",
+          "kind_raw": "0x0",
+          "property_flags": "0x0",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "enum_underlying_of": "NextUIState"
+        }
+      ]
+    }
+  ],
+  "enum": {
+    "block_va": "0x147f53560",
+    "name": "EFortUIState",
+    "cpp_type": "EFortUIState",
+    "construct_fns": [
+      "0x14531e170"
+    ],
+    "package_fn": "0x145299720",
+    "package": "/Script/FortniteUI",
+    "cpp_form": "EnumClass",
+    "dynamic_type": "NotDynamic",
+    "enumerators": [
+      {
+        "name": "EFortUIState::Invalid",
+        "value": 0
+      },
+      {
+        "name": "EFortUIState::Login",
+        "value": 1
+      },
+      {
+        "name": "EFortUIState::JoinServer",
+        "value": 2
+      },
+      {
+        "name": "EFortUIState::SubgameSelect",
+        "value": 3
+      },
+      {
+        "name": "EFortUIState::FrontEnd",
+        "value": 4
+      },
+      {
+        "name": "EFortUIState::InGame_Custom",
+        "value": 5
+      },
+      {
+        "name": "EFortUIState::UNUSED",
+        "value": 6
+      },
+      {
+        "name": "EFortUIState::InGame_STW",
+        "value": 7
+      },
+      {
+        "name": "EFortUIState::Cinematic",
+        "value": 8
+      },
+      {
+        "name": "EFortUIState::InGame_BR",
+        "value": 9
+      },
+      {
+        "name": "EFortUIState::AthenaSpectator",
+        "value": 10
+      },
+      {
+        "name": "EFortUIState::Replay",
+        "value": 11
+      },
+      {
+        "name": "EFortUIState::InGame_STW_Custom",
+        "value": 12
+      },
+      {
+        "name": "EFortUIState::MAX",
+        "value": 13
+      }
+    ]
+  },
+  "owner_fn": "0x145316490"
+}

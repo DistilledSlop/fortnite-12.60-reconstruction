@@ -30,6 +30,7 @@ DEFINE_LOG_CATEGORY_STATIC(LogFortniteNet, Log, All);
 // and exits the process (0 when every case passes, 1 otherwise).
 void RunNetSerializeSelfTest();
 void RegisterContextRuntimeProbeDriver();
+void RegisterQueueConnectedFlowDriver();
 void RegisterActivationBaseProbeDriver();
 void RegisterButtonInternalProbeDriver();
 void RegisterMainButtonStateProbeDriver();
@@ -193,6 +194,7 @@ public:
     {
         FDefaultGameModuleImpl::StartupModule();
         RegisterContextRuntimeProbeDriver();
+        RegisterQueueConnectedFlowDriver();
         RegisterActivationBaseProbeDriver();
         RegisterButtonInternalProbeDriver();
         RegisterMainButtonStateProbeDriver();

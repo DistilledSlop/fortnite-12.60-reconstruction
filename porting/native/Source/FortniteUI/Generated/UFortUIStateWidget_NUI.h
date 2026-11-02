@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanel.h"
 
+#include "EFortUIState.h"
 #include "FContentPushState.h"
 
 #include "UFortUIStateWidget_NUI.generated.h"
@@ -20,5 +21,18 @@ public:
 	UPROPERTY(Transient)
 	TArray<FContentPushState> StackStates;
 
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnEnterState(EFortUIState PreviousUIState);
+public:
+
+public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnExitState(EFortUIState NextUIState);
+public:
+
+// Root-facing virtual contracts, source aliases of original slots 510/518.
+virtual void NativeActivateLegacyState510(uint8 PreviousState);
+virtual void NativeDeactivateLegacyState518(uint8 NextState);
 };
 

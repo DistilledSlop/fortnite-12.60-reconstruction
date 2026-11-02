@@ -14,5 +14,7 @@ class COMMONUI_API UCommonActivatableWidgetQueue : public UCommonActivatableWidg
 	GENERATED_BODY()
 
 public:
+public:
+virtual void NativeOnWidgetAdded1407ecbe0(UCommonActivatableWidget* Widget) override;
 };
 

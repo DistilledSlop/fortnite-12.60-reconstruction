@@ -744,5 +744,8 @@ public:
 	UPROPERTY()
 	UDataTable* PipTest;
 
+
+public:
+static UFortUIDataConfiguration* NativeGet144db86e0();
 };
 

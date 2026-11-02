@@ -2206,6 +2206,18 @@ _animated_switcher_spec = _common_activation_import.spec_from_file_location(
     "common_animated_switcher_runtime_policy", os.path.join(os.path.dirname(__file__), "frontend", "common_animated_switcher_runtime", "policy.py"))
 _animated_switcher_policy = _common_activation_import.module_from_spec(_animated_switcher_spec)
 _animated_switcher_spec.loader.exec_module(_animated_switcher_policy)
+_queue_lifecycle_spec = _common_activation_import.spec_from_file_location(
+    "common_queue_widget_lifecycle_runtime_policy", os.path.join(os.path.dirname(__file__), "frontend", "common_queue_widget_lifecycle_runtime", "policy.py"))
+_queue_lifecycle_policy = _common_activation_import.module_from_spec(_queue_lifecycle_spec)
+_queue_lifecycle_spec.loader.exec_module(_queue_lifecycle_policy)
+_ui_config_spec = _common_activation_import.spec_from_file_location(
+    "ui_config_singleton_runtime_policy", os.path.join(os.path.dirname(__file__), "frontend", "ui_config_singleton_runtime", "policy.py"))
+_ui_config_policy = _common_activation_import.module_from_spec(_ui_config_spec)
+_ui_config_spec.loader.exec_module(_ui_config_policy)
+_legacy_state_spec = _common_activation_import.spec_from_file_location(
+    "legacy_state_event_bridge_runtime_policy", os.path.join(os.path.dirname(__file__), "frontend", "legacy_state_event_bridge_runtime", "policy.py"))
+_legacy_state_policy = _common_activation_import.module_from_spec(_legacy_state_spec)
+_legacy_state_spec.loader.exec_module(_legacy_state_policy)
 _route_spec = _common_activation_import.spec_from_file_location(
     "common_action_route_connected_runtime_policy", os.path.join(os.path.dirname(__file__), "frontend", "common_action_route_connected_runtime", "policy.py"))
 _route_policy = _common_activation_import.module_from_spec(_route_spec)
@@ -2391,6 +2403,9 @@ def build_class_promoted(block, name, resolver, parent_entry, owner_fns, snippet
     model = _lazy_image_policy.apply(model, block, owner_fns, native_execs)
     model = _animated_switcher_policy.apply(model, block, owner_fns, native_execs,
         proven_dependencies=(splice_ctx or {}).get('animated_switcher_dependencies'))
+    model = _queue_lifecycle_policy.apply(model)
+    model = _ui_config_policy.apply(model, block)
+    model = _legacy_state_policy.apply(model, block, owner_fns)
     model = _widget_route_policy.apply(model, block, owner_fns)
     model = _route_policy.apply(model, block, owner_fns)
     model = _metadata_policy.apply(model, block, owner_fns)
@@ -3168,6 +3183,9 @@ def render_promoted_header(model, api, parent_include, source_label):
     lines.extend(_root_slate_policy.declarations(model).splitlines())
     lines.extend(_lazy_image_policy.declarations(model).splitlines())
     lines.extend(_animated_switcher_policy.declarations(model).splitlines())
+    lines.extend(_queue_lifecycle_policy.declarations(model).splitlines())
+    lines.extend(_ui_config_policy.declarations(model).splitlines())
+    lines.extend(_legacy_state_policy.declarations(model).splitlines())
     lines.extend(_widget_route_policy.declarations(model).splitlines())
     lines.extend(_route_policy.declarations(model).splitlines())
     lines.extend(_metadata_policy.declarations(model).splitlines())
@@ -3325,6 +3343,9 @@ def render_promoted_cpp(model, source_label):
     if model.get("source_context_phases"):
         result += BLUEPRINT_CONTEXT_PHASE_BODIES
     result += _animated_switcher_policy.definitions(model)
+    result += _queue_lifecycle_policy.definitions(model)
+    result += _ui_config_policy.definitions(model)
+    result += _legacy_state_policy.definitions(model)
     return result + _common_activation_policy.definitions(model) + _current_input_type_policy.definitions(model) + _fort_globals_policy.definitions(model) + _button_style_policy.definitions(model) + _button_click_policy.definitions(model) + _button_double_click_policy.definitions(model) + _button_selection_policy.definitions(model) + _input_settings_policy.definitions(model) + _input_cache_policy.definitions(model) + _action_widget_policy.gamepad_definitions(model) + _action_widget_policy.icon_definitions(model) + _action_receivers_policy.definitions(model) + _action_slate_policy.definitions(model) + _button_focus_policy.definitions(model) + _button_initialize_policy.definitions(model) + _button_producers_policy.definitions(model) + _button_set_style_policy.definitions(model) + _border_style_policy.definitions(model) + _global_ui_priority_policy.definitions(model) + _global_ui_zone_policy.definitions(model) + _notification_image_policy.definitions(model) + _progress_modal_policy.definitions(model) + _commonui_module_policy.definitions(model) + _root_slate_policy.definitions(model) + _lazy_image_policy.definitions(model) + _widget_route_policy.definitions(model) + _route_policy.definitions(model) + _metadata_policy.definitions(model) + _modality_policy.definitions(model) + _cursor_settings_policy.definitions(model)
 
 
@@ -3604,6 +3625,11 @@ def promote(args):
     lazy_image_sources = (_lazy_image_policy.sources(blocks_by_va, name_to_block)
                           if 'UCommonLazyImage' in listed else None)
     animated_switcher_sources = None
+    ui_config_sources = (_ui_config_policy.sources(blocks_by_va, name_to_block)
+                         if 'UFortUIDataConfiguration' in listed else None)
+    if 'UFortUIStateWidget_NUI' in listed:
+        _legacy_state_policy.validate_classes(blocks_by_va, name_to_block)
+        _legacy_state_policy.validate_types(gate)
     if 'UCommonActivatableWidgetContainerBase' in listed:
         _animated_switcher_policy.validate_types(gate)
         animated_switcher_sources = _animated_switcher_policy.sources(blocks_by_va, name_to_block, guarded_native_execs)
@@ -3729,6 +3755,8 @@ def promote(args):
         _widget_route_policy.configure_model(model)
         _modality_policy.configure_model(model)
         _animated_switcher_policy.configure_model(model)
+        _queue_lifecycle_policy.configure_model(model)
+        _legacy_state_policy.configure_model(model)
         if name == 'UCommonInputControllerData':
             _controller_brush_policy.validate_model(model)
         if model.get('common_input_settings_cache_runtime'):
@@ -3911,6 +3939,9 @@ def promote(args):
                 splice_rejects.append({"entry": "%s::%s" % (cls, e["function"]), "kind": e["kind"],
                                        "reason": "class is not generated (not in the native class set, or an interface)"})
     outputs = {n: (h, c) for n, _module, h, c in class_outputs}
+    if 'UFortUIStateWidget_NUI' in listed:
+        _legacy_state_policy.validate_output(next(m for m in class_models if m['name']=='UFortUIStateWidget_NUI'),
+            *outputs['UFortUIStateWidget_NUI'], texts[gate.info('0x14531e170').header_name])
     if animated_switcher_sources:
         activation_model = next(m for m in class_models if m['name'] == 'UCommonActivatableWidget')
         if not activation_model.get('common_activation_runtime'):
@@ -3967,6 +3998,8 @@ def promote(args):
     for model in class_models:
         _route_policy.validate_output(model, *outputs[model['name']])
         _animated_switcher_policy.validate_output(model, *outputs[model['name']])
+        _queue_lifecycle_policy.validate_output(model, *outputs[model['name']])
+        _ui_config_policy.validate_output(model, *outputs[model['name']])
         _modality_policy.validate_rendered(model, *outputs[model['name']])
         _cursor_settings_policy.validate_output(model, *outputs[model['name']])
         if model.get('activatable_route_bridge_runtime'):
@@ -3992,6 +4025,7 @@ def promote(args):
     routing_sources = {}
     if animated_switcher_sources:
         routing_sources.update(animated_switcher_sources)
+        routing_sources.update(_queue_lifecycle_policy.sources())
     if 'UCommonUIActionRouter' in generated_names:
         routing_sources.update(_route_policy.merged_sources())
     if 'UCommonActivatableWidget' in generated_names:
@@ -4004,6 +4038,10 @@ def promote(args):
     if modality_sources:
         for filename, text in modality_sources.items():
             with open(os.path.join(args.source_root, 'CommonInput', 'Generated', filename), 'w', encoding='utf-8', newline='\n') as fh:
+                fh.write(text)
+    if ui_config_sources:
+        for filename, text in ui_config_sources.items():
+            with open(os.path.join(args.source_root, 'FortniteUI', 'Generated', filename), 'w', encoding='utf-8', newline='\n') as fh:
                 fh.write(text)
     if 'UFortRootViewportLayout' in generated_names:
         for filename, text in _root_slate_policy.extra_headers().items():

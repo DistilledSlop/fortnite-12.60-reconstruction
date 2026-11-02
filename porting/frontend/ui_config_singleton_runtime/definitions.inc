@@ -1,5 +1,5 @@
 // Included in the UFortUIDataConfiguration implementation translation unit.
-// See RECOVERY.md for the two deliberately unresolved engine bindings.
+// See RECOVERY.md for the config and logging dependencies.
 static bool NativeIsBROnly141ed8a30()
 {
     static int32 Cached = -1;
@@ -17,7 +17,7 @@ static bool NativeIsBROnly141ed8a30()
         else
         {
             GConfig->GetBool(TEXT("/Script/FortniteGame.FortGlobals"), TEXT("bBROnly"),
-                bBROnly, NativeFortGlobalsConfigFilename141ed8a30());
+                bBROnly, GGameIni);
             if (FParse::Param(FCommandLine::Get(), TEXT("BROnly")))
                 bBROnly = true;
             else if (FParse::Param(FCommandLine::Get(), TEXT("NoBROnly")))
@@ -52,7 +52,8 @@ UFortUIDataConfiguration* UFortUIDataConfiguration::NativeGet144db86e0()
         }
         if (!Cached.IsValid())
         {
-            NativeLogMissingUIConfiguration144db86e0();
+            UE_LOG(LogFortUI, Error,
+                TEXT("No FortUIDataConfiguration was loaded. Creating a default config."));
             Cached = NewObject<UFortUIDataConfiguration>(GetTransientPackage());
             Cached.Get()->AddToRoot();
         }

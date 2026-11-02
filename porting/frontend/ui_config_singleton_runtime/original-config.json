@@ -1,0 +1,11 @@
+{
+  "source": "/mnt/vibrato/fortnite-extracted-full/FortniteGame/Config/DefaultGame.ini",
+  "start_line": 292,
+  "end_line": 295,
+  "entries": [
+    "[/Script/FortniteUI.FortUIDataConfiguration]",
+    "DefaultUIDataConfigurationPath=/Game/UI/Foundation/Config/DefaultUIDataConfiguration.DefaultUIDataConfiguration_C",
+    "BROnlyUIDataConfigurationPath=/Game/UI/Foundation/Config/BROnlyUIDataConfiguration.BROnlyUIDataConfiguration_C",
+    "ErebusUIDataConfigurationPath=/Game/UI/Foundation/Config/Erebus/ErebusUIDataConfiguration.ErebusUIDataConfiguration_C"
+  ]
+}

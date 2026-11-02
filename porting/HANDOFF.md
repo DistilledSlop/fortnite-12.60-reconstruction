@@ -1,5 +1,25 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Connected queue/startup provider batch: generated, validation pending (2026-11-02)
+
+Production pool acquisition, initializer/unique registration, queue insertion,
+removal and existing deferred Slate transition are now integrated through
+common_queue_widget_lifecycle_runtime. UI config singleton now uses source-proven
+GGameIni and shared LogFortUI, preserving weak cache, actual cook/BR selection,
+rooted loaded class/CDO and rooted native fallback. Original3 config paths are
+restored from DefaultGame.ini292-295. NUI510/518 now dispatch the original typed
+OnEnterState/OnExitState Blueprint events; static initializers independently
+proved both event names. Athena480 remains source-only/incomplete.
+
+Generation and bounded source/schema/type gates PASS:8 generated files changed,
+5 support files added,12760 unchanged mtimes restored. No build/runtime PASS
+for this batch yet. Root also integrated one flag-gated connected queue flow
+in hand-written FortniteGame, canonical sources common_queue_connected_flow;
+it covers actual acquisition/activation/removal/deferred lifetime/clear/reuse
+across frames. Next /tmp/build_frontend_routing_10.py then root and queue flow.
+Root owns all generation/build/staging. No unchanged server/button suites needed
+for this UI batch. Normal startup and all4 acceptance milestones remain open.
+
 ## Animated queue checkpoint: client build and root attachment complete (2026-11-02)
 
 common_animated_switcher_runtime is integrated through the generator: actual
