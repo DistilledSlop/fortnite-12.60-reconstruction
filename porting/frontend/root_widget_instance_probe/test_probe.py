@@ -47,6 +47,7 @@ class TranscriptTests(unittest.TestCase):
     def test_creation_does_not_mask_missing_native_dependencies(self):
         for error in ('Skipping import Function /Script/FortniteUI.X:Y, depends on missing native class',
                       'Skipping import Enum /Script/CommonUI.InputActionState, depends on missing native class',
+                      'Skipping import DelegateFunction /Script/FortniteUI.Result__DelegateSignature, depends on missing native class',
                       "Missing RowStruct while loading DataTable '/Game/UI/Input.Input'!"):
             with self.subTest(error=error):
                 result = verifier.verify('\n'.join(ROWS + [error]))

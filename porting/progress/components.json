@@ -6,7 +6,7 @@
       "id": "m1",
       "text": "The rebuilt client reaches the main menu with feature parity to the 12.60 original",
       "done": false,
-      "evidence": "The fixed hard-import closure contains 721 packages. The bounded material ledger credits 129/142 owners and all 41 fixed non-Native frontend event signatures match original metadata and both compiled targets. Native 00e1279 / Engine d7e04d4b6 passes both builds, the 13-row actual-engine confirmation description layout/default/copy diagnostic, seven retained native diagnostics, Root class loading with zero unresolved bytecode-field warnings, and fresh default/Athena joins. This does not instantiate the original Root widget or prove its Blueprint execution. Authentic startup, confirmation actions/presentation, interactive menus and original visual parity remain unfinished (HANDOFF.md)."
+      "evidence": "The fixed hard-import closure contains 721 packages. The bounded material ledger credits 129/142 owners and 41 fixed non-Native frontend event signatures match original metadata and both compiled targets. Native 29a2c24 / Engine d7e04d4b6 passes both builds, eight retained diagnostics, the 30-row actual-engine input-table diagnostic and both joins. The original input table now loads 421 rows; Root CreateWidget returns with startup ownership and a non-null tree. Its missing-row errors are resolved, but 22 native imports remain unresolved, so initialization is not verified. Stage config also omits the source GameInstanceClass and original viewport/local-player settings need restoration. A populated widget tree, authentic startup, input routing, confirmation presentation, interactive menus and visual parity remain unfinished (HANDOFF.md)."
     },
     {
       "id": "m2",

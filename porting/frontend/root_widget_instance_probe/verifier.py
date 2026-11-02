@@ -9,7 +9,7 @@ ROOT = '/Game/UI/Foundation/RootLayout_Athena.RootLayout_Athena_C'
 PHASES = ('registered', 'prerequisites', 'before_load', 'after_load',
           'before_create_widget', 'after_create_widget', 'observations', 'complete')
 ERROR = re.compile(r'Accessed None|Blueprint Runtime Error|(?:missing|unable to (?:find|resolve)|failed to (?:find|resolve)|could not find|unresolved).{0,100}(?:bytecode|referenced field)|(?:bytecode|referenced field).{0,100}(?:missing|unable to (?:find|resolve)|failed to (?:find|resolve)|could not find|unresolved)', re.I)
-DEPENDENCY_ERROR = re.compile(r'Skipping import (?:Function|ScriptStruct|Class|Enum) .*depends on missing native class|Missing RowStruct', re.I)
+DEPENDENCY_ERROR = re.compile(r'Skipping import .+depends on missing native class|Missing RowStruct', re.I)
 SCOPE = 'CreateWidget return and ownership observations; not full Blueprint VM, interactive UI, or parity'
 
 

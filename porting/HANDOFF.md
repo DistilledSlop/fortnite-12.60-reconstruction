@@ -1,7 +1,60 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
-## Current resume point (2026-11-01)
+## Current resume point (2026-11-02)
 
+- Validated Native source29a2c24 restores the original CommonUI input-table row and defaults.
+  Both builds PASS125.058/119.205s;12707 Native sources stable. The actual UE row probe passes30
+  diagnostic rows and loads all421 original table rows. Original row/info sizes1064/168, defaults,
+  initialization, type identity and copy-capability flags pass; row-content parity and routing are unproven.
+- Root CreateWidget still returns with startup ownership and a non-null tree. Missing-row errors
+  fall3->0 and skipped native imports23->22. Its initialization verifier correctly remains failed.
+  The frozen v2 counter reports21 because it omitted an import category; the new broad counter
+  reports22. Original receipts stay immutable. Eight retained diagnostics, Root class-load control
+  and joins21.629/21.588s pass. No interactive menu, Slate/pixel parity or milestone is established.
+- Checkpoint generated/frontend-native-evidence/common-input-action-row-runtime-1/checkpoint.json
+  SHA256 f4fc348961f36825b3cd059240e634b6ea8914fc8c122443199f63d2866abb56; archive
+  /mnt/vibrato/fortnite-evidence/frozen-runtime/common-input-action-row-runtime-1 contains19source
+  files,192artifact pairs and18binary rows. Release SHA256
+  45875fffea484bd3c73521d67e8859361144a82c1bd26a58a16c5baebdd74010. All jobs are TERMINAL:
+  builds71483/stage53521/row68788/Root63756/controls24053/joins73642/class66777/freeze53888.
+  Native/build/stage ownership is released; there is no live job awaiting observation.
+- Reproduce with /mnt/vibrato/fortnite-work/{promote_,build_,stage_,run_,freeze_}common_input_action_row*.py.
+  Build receipts common-input-action-row-native-build-1; UHT/write audit and7 C++ checks in
+  common-input-action-row-ue-preflight-1. Three policy,141 generator,32 probe-directory,5 Root-verifier
+  and47 progress tests pass. Original image and6 constructor/ops spans are independently hashed.
+- Posthoc comparison is /mnt/vibrato/fortnite-work/common-input-action-row-comparison-1.json,
+  archived under posthoc-analysis-1. The stricter current interpretation is
+  /mnt/vibrato/fortnite-work/common-input-action-row-root-interpretation-v3.json. It is an analysis
+  of the retained log, not a rerun or replacement receipt.
+- Independent bounded audit common-input-row-runtime-audit-1 verifies19 pinned Git/archive sources
+  and384 nonbinary artifact copies. Audit SHA256
+  954b9b9cc3e9b88ec8564efb1322d376af73b3e07114c67862c84a4d73ec178b; copies are in posthoc-analysis-1.
+  It confirms the421 rows and remaining22 imports; it does not independently rehash18 binary fields.
+- Next: fix configuration staging before further UI integration. Stage DefaultEngine.ini has16lines
+  and omits the GameInstanceClass already in the17-line project source. Restore original runtime
+  Engine class settings FortGameViewportClient and FortLocalPlayer from the extracted original
+  DefaultEngine.ini lines416/420, and synchronize/record source and staged config. Original GI class
+  is confirmed at line2. Existing logs show object names, not GetClass identities; measure the effective
+  classes. Athena PlayerControllerClass remains unproved and must not be guessed. Evidence:
+  /mnt/vibrato/fortnite-work/original-startup-owner-class-inventory-1/HANDOFF.md.
+- Preserve the full project objective and4 acceptance gates. The dashboard currently estimates
+  about21.46%; this table fix does not add a completed input-routing or menu gate.
+
+## Previous checkpoint details (2026-11-01)
+
+- Current row source29a2c24: both builds PASS125.058/119.205s,12707 Native sources stable;
+  stage completed. Live handles are row68788, Root63756, retained24053, joins73642, class66777.
+  Root owns Native/build/stage until these and freeze_common_input_action_row_runtime_1.py finish.
+  Receipts: common-input-action-row-native-build-1; runtime phase generated/frontend-native-evidence/
+  common-input-action-row-runtime-1. Do not restart a live handle on an observation timeout.
+- Next configuration fix is evidence-backed: the stage's DefaultEngine.ini differs from source
+  only by missing GameInstanceClass. Original extracted config at
+  /mnt/vibrato/fortnite-extracted-full/FortniteGame/Config/DefaultEngine.ini also specifies
+  FortGameViewportClient(line416) and FortLocalPlayer(line420); source currently omits those.
+  Owner-class inventory /mnt/vibrato/fortnite-work/original-startup-owner-class-inventory-1/HANDOFF.md.
+  Current probe logs object paths, not class paths, so their engine-style names are not type proof.
+  Correct and record staging/config separately after the row comparison; no Athena PC class was
+  established by that inventory and no controller-class value should be guessed.
 - Native6a12acc is built and observed: client/server PASS116.842/111.969s,12703 sources stable.
   The original Root CreateWidget returns with actual startup player/controller, correct ownership
   and a non-null WidgetTree. This does not prove a populated tree, Slate or Blueprint correctness.
