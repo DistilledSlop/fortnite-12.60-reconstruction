@@ -2,19 +2,41 @@
 
 ## Current resume point (2026-11-02)
 
-- User-requested Claude effort review workspace: progress/effort_review/README.md,
-  inventory.json covers117leaves with evidence pointers; reports/research/suggestions
-  directories and recommendation schema are ready. USER starts Claude; do not invoke it.
-  Saved numeric proposal (UI170->248, CommonUI30->60, total1855->1933) is NOT applied;
-  review it before numeric reweighting. Confirmed Wine startup deduplication and explicit
-  recovery/integration budget boundaries are applied. Live total remains1855. Progress47tests pass.
-  After Claude reports, root triages evidence and spawns fresh bounded implementation agents.
-- Current candidate: GetCurrentInputType is integrated into the normal generator and
-  regenerated UCommonInputSubsystem. Real mutable-field getter, exact original enum/owner/
-  signature/native-exec guards; no input-event producers or routing are invented. New opt-in
-  CommonInputCurrentTypeProbe checks LocalPlayerSubsystem ownership, metadata and eight direct/
-  reflected mutations with state restoration (13rows). Portable policy4/probe35/generator141
-  checks pass. UE builds/runtime are pending; the verified Native baseline remains04822b2 below.
+- Claude's effort review is implemented at dashboard commit3d62edb: 132leaves,
+  2019relative points, UI199/CommonUI44. Original +78 UI proposal was not applied.
+  Duplicate Wine/join, mesh/general-package and voice-route credit is separated; seven
+  capped census tasks now expose their declaration and unfinished integration shares.
+  Three one-point foundations are carved from residual budgets and have four source-checked
+  passing ledger entries. Missing full-game rendering/animation/physics/scale/replay scopes
+  are explicit, low-confidence estimates at0%; all original modes remain in scope.
+  Applied decisions/status: progress/effort_review/implementation_status.json. Reports and
+  original snapshot remain unchanged; USER starts Claude, do not invoke it.
+- Latest Native dcc14c3 restores original CommonInputSubsystem.GetCurrentInputType.
+  Both builds PASS132.953/138.969s with source/config stable. Real LocalPlayerSubsystem
+  metadata/direct/ProcessEvent/restoration diagnostic13rows PASS; eight retained diagnostics,
+  table421rows/30checks and both joins21.599/21.595s PASS. Original Root creation remains
+  seven widgets/all4startup classes; skipped imports fall22->20 (17distinct in actuallog).
+  Input producers/routing and interactive UI are not established. Last viewport attachment
+  remains the failed a93a1c0 attempt; GetCurrentTextStyleClass and queue renderer are still missing.
+- Current-type checkpoint: generated/frontend-native-evidence/common-input-current-type-runtime-1/checkpoint.json
+  SHA256 bad3def28dc6c5a3f72e39f9f1ab720c39675b78c718df5e6b39f5d387772192;
+  archive /mnt/vibrato/fortnite-evidence/frozen-runtime/common-input-current-type-runtime-1
+  binds14source pairs,86artifact pairs,18binary rows. Release SHA256
+  86103596459b8329ea54f862979f7e4412aa17b5c67c44723429251b81245b2b.
+  TERMINAL promotion96569/build40525/stage71343/runtime49407; no Native owner is active.
+  Scripts /mnt/vibrato/fortnite-work/*common_input_current_type*1.py. NativeSource12708files;
+  regeneration changed only UCommonInputSubsystem.h/.cpp, preserving12706other mtimes.
+  Independent Luna audit rehashes100source/artifact pairs and checks13rowtranscript/provenance;
+  /mnt/vibrato/fortnite-work/common-input-current-type-receipt-audit-1/HANDOFF.md.
+  Giant debug contents not independently rehashed; source/archive/stage producer hashes retained.
+- Foundation recorder: progress/record_frontend_foundation_runtime.py validates historical
+  releases, critical source unchanged across phases, actual pinned diagnostic verifiers,
+  process/build/stage/join receipts and frozen artifacts. Six rejection/tamper tests pass.
+  UIcredit is limited to button defaults/query, input row+accessor and startup selections.
+- History tab implements HIST01–10: deltas/replay+known model markers, scale, filters/paging,
+  detail selection, UTC presets/date axis/category trace, touch/focus/accessibility. Generated
+  Progress61tests plus JS syntax and17interactions pass in functions.exec V8 with minimal DOM double; browser/visual
+  behavior remains unverified. Smoke artifact /mnt/vibrato/fortnite-work/history-v8-smoke-1.json.
 - New bounded proofs under /mnt/vibrato/fortnite-work/: common-button-action-registration-1
   corrects140800e60 as binding creation, actual cleanup1408018c0. Routing/dispatch still open.
   common-action-widget-slate-mapping-1 closes SBox->SOverlay->three SImage graph, exact brush/
@@ -23,7 +45,7 @@
   common-action-fallback-brush-gate-1 additionally closes static FSlateNoResource fallback
   and live CommonInput.ShowKeys console variable (default1, nonzero gate). Do not substitute
   default FSlateBrush + NoDraw (wrong image size) or a constant gate. Replay passes.
-- Latest Native04822b2 restores six explicit CommonButton reflected flag defaults
+- Previous button baseline04822b2 restores six explicit CommonButton reflected flag defaults
   plus inherited focus. Both builds PASS188.045/147.589s with source/config stable;
   actual MainButtonStateProbe44rows checks all7defaults on CDO and fresh widget.
   All8retained diagnostics, original table421rows/30checks and both joins21.565/21.569s
@@ -57,9 +79,16 @@
   including repeated Collapsed calls. Global gate14081d130 ignores its subsystem argument.
   Construct binding proof common-button-construct-bindings-1 closes +470 input-subsystem
   listener/+478 removal; +488 nested action registration and cleanup remain unclosed.
-- Current accessor source and proof: frontend/common_input_current_type/. Its generator
-  integration is complete; actual builds, runtime getter and original Root import measurements
-  are the next validation. Keep input detection/routing/producer parity separate from the getter.
+- Next source integration: CommonButton selected/style/lifecycle and shared action-binding
+  registry remain unfinished. frontend/common_action_display_text/ recovers the original
+  first-row/input-type/hold-text getter but has no registered body: widget+240 is an int32
+  global binding-registry key, not a weak pointer field. Registry creation/routing and
+  ownership must be represented before wiring the helper. FCommonInputTypeInfo holdflag
+  setter is independently proved. Do not replace registry lookup with a permanent miss.
+- common-action-binding-record-types-1 proof closes142c0c240 as FText default ctor;
+  CommonButton+328/+340 and descriptor+28 are FText, not FKey. Record copy ownership includes
+  shared text, weak routing control, cloned delegates and owned FKey/float arrays. Original
+  type/API names and delegate signatures remain open; no registry integration is claimed.
 - Dashboard effort audit: Luna medium screened all117leaves/1855weight units. User requires
   total effort only, excluding importance; persisted in AGENTS.md and progress/README.md.
   No numeric changes justified by metadata alone. Review overlapping package/static-mesh,

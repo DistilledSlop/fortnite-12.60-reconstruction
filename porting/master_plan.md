@@ -10,12 +10,12 @@ credentials in Git, and the orchestrator reviews and commits.
 
 ## Current baseline
 
-At Native `04822b2`, both builds, both joins, eight retained diagnostics and the30-row input-table
+At Native `dcc14c3`, both builds, both joins, eight retained diagnostics and the30-row input-table
 diagnostic pass. The original table loads421rows. Source and staged config now match; startup
 actually uses FortGameInstance, FortLocalPlayer, FortGameViewportClient and FortPlayerControllerAthena.
 The controller constructor assignment is source-proved; the full original game mode hierarchy and
 remaining constructor are unported. Root CreateWidget returns with a populated7-widget tree, but
-22 native imports remain unresolved. Seven explicit CommonButton flag/focus defaults are restored
+20 native import occurrences (17 distinct) remain unresolved. The original current-input-type accessor now passes a 13-row real subsystem diagnostic; input detection/routing remains open. Seven explicit CommonButton flag/focus defaults are restored
 and checked on its CDO and a fresh widget. The last AddToViewport attempt at `a93a1c0` crashed
 during IconTextButton's UpdateTextStyle because CommonButton.GetCurrentTextStyleClass is missing;
 the current source still lacks that method, and no new attachment attempt is claimed.
@@ -30,8 +30,10 @@ They remain unregistered: actual state/lifecycle, input-action/brush and delegat
 must be implemented before runtime UI claims. Initialize and direct-parent lifecycle
 proofs identify real containment, callback binding and NativeConstruct dispatch; nested
 context registration and action-widget adapters remain unfinished (see HANDOFF.md).
-An independent original GetCurrentInputType accessor candidate is source-verified and tested;
-generator integration and actual runtime validation are the next bounded implementation step.
+The current-input-type accessor is generator-integrated and UE-validated. Next, represent the
+shared action-binding registry and button selection/style lifecycle, then register the recovered
+text-style/display-text helpers and restore the original queue Slate graph. The shared record
+FText/array/delegate ownership contract is partially recovered; do not substitute empty routing.
 Confirmation async-action factories, Activate/interface dispatch and queued presentation remain
 unfinished. Interactive startup, Blueprint execution and original pixels remain unverified; all four
 product milestones are open. Exact receipts and source release are in HANDOFF.md.
