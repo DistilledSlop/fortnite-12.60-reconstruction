@@ -51,9 +51,9 @@
   common-text-block-style-binding-1/ close original field/mask bindings, parent vtable
   target143d9a100 and localUE4.25 direct-field accessibility. Constructor defaults are
   autoCollapsefalse/mobileMultiplier1; serialized overrides remain authoritative.
-  Bounded candidate worker common_text_block_style_candidate writing only scratch
-  /mnt/vibrato/fortnite-work/common-text-block-style-candidate-1; NOT applied/generated/
-  UE-built. Root must review its patch, add actual UObject/Slate/metadata/virtual-dispatch/
+  Bounded candidate READY at /mnt/vibrato/fortnite-work/common-text-block-style-candidate-1/
+  {candidate.patch,HANDOFF.md}; apply-check,3policy tests and compiled assignment/
+  visibility/parent-order harness PASS. NOT applied/generated/UE-built. Root must review its patch, add actual UObject/Slate/metadata/virtual-dispatch/
   repeated/null/invalid/shadow/visibility/restoration cases, promote/build/stage and
   rerun viewport. No setter-only assignment/drop-callback/per-property setter substitute.
 - Queue renderer, actual selected/hover producers/Initialize/NativeConstruct/input-action
