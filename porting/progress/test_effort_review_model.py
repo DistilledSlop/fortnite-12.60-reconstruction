@@ -24,7 +24,7 @@ class EffortReviewModel(unittest.TestCase):
 
     def test_total_and_explicit_missing_scope(self):
         self.assertEqual(len(self.rows), len(self.by_id))
-        self.assertEqual(len(self.rows), 132)
+        self.assertEqual(len(self.rows), 133)
         self.assertEqual(sum(row['weight'] for row in self.rows), 2019)
         self.assertEqual(sum(row['weight'] for row in self.rows if row['id'].startswith('ui.')), 199)
         scopes = ['visuals.world_materials_particles', 'assets.animation_cosmetics',

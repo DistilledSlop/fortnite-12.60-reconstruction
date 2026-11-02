@@ -2,22 +2,37 @@
 
 ## Current resume point (2026-11-02)
 
-- Native build1 (bbb1fcf) failed client compile (exit6,42.320s); server not attempted, stage unchanged.
-  Correcting UE4.25 delegate aliases via DECLARE_DELEGATE/MULTICAST macros and touch key via TouchKeys[0].
-  Failed receipts: /mnt/vibrato/fortnite-work/action-binding-data-native-build-1.
-- Current data/storage candidate: frontend/common_action_binding_runtime/ implements actual
-  UE-owned binding records, FText/key/delegate copies, process TMap and modulo32 ID allocation.
-  Original signatures and ctor/storage/counter contracts are closed under work/action-binding-*
-  and common-action-binding-record-types-1. NaN classification preserves distinct tag/legacy
-  branches and ordered comparisons respect DAZ; dead weak-bound delegate instances are cloned.
-  Normal generation adds only CommonUI/Generated/CommonActionBindingData.h/.cpp and preserves
-  12710other mtimes. New ActionBindingDataProbe exercises26 engine cases (UE validation pending).
-  This is DATA/storage only: explicit resolver interface, no fabricated default provider,
-  no original UFUNCTION registration or completed production router/lifecycle/UI claim.
-  Portable fast-math/DAZ/ownership tests2 and runner/verifier38tests pass; generator141checks pass.
-  Root owns Native/generation/build/stage; no other worker may mutate them during validation.
-
-- Claude's effort review is implemented at dashboard commit3d62edb: 132leaves,
+- Latest Native cf37b21 adds engine-owned action-binding DATA/storage, with source guards
+  and ordinary FText/FKey/weak delegate/TMap ownership. Both builds PASS110.969/120.825s,
+  source/config stable. All26new engine rows PASS (types, key/NaN rules, copy, weak lifetime,
+  replacement/removal, modulo IDs and reentry). Retained getter13/table30(421rows),8diagnostics,
+  joins21.557/21.564s PASS. Root remains7widgets/20imports; no new viewport attempt.
+  Explicit fixture resolvers were used. Original registration/provider/routing/UI behavior
+  is still unintegrated; don't expose an empty fallback provider or call this complete UI.
+- Data checkpoint: generated/frontend-native-evidence/action-binding-data-runtime-1/checkpoint.json
+  SHA256 b3f7a28eec0743c1113578683b8fc16dda204e93ffc37e15ece5893e02d0f834;
+  archive /mnt/vibrato/fortnite-evidence/frozen-runtime/action-binding-data-runtime-1
+  binds14source pairs,151artifact pairs,18binary rows. Release SHA256
+  fb2b0a6af2416ba6f9b68c0d4c27e02d31fb4a9e388ab816a9f90155ce4cd93a.
+  TERMINAL build1failed53160/build2passed72409/stage61175/data31763/retained23658.
+  Scripts /mnt/vibrato/fortnite-work/*action_binding_data*1.py and build_action_binding_data_native_2.py.
+  Failed bbb1fcf client compile6/42.320s is preserved: delegate aliases needed UE4.25 macros
+  and TouchKeys[0]. Corrected source regenerated normally; no manual Generated edits.
+- Recorder progress/record_frontend_binding_data_runtime.py rehashes14source/151artifact
+  pairs, verifies source/generated equality, actual verifier replay and failure/success
+  separation. Six rejection/tamper tests pass. Stage binary hashes cross-checked, not an
+  independent giant-debug rehash. One existing CommonUI point now separately measures
+  this bounded data/storage foundation; total2019/UI199/CommonUI44 unchanged,133leaves.
+- Next Native work: close production owner/row/gamepad resolver adapters and input routing,
+  then connect the real registry to CommonButton/action-widget lifecycle and recovered getters.
+  Tag settings provider is now identified as GetDefault<UCommonUIInputSettings>(): original
+  helper140811ec0 is its static class getter; +130 is UClass CDO, not another wrapper cache.
+  Source proof /mnt/vibrato/fortnite-work/common-ui-settings-provider-1/.
+- Queue renderer proof advanced: animated-switcher-tick-contract-1 identifies vtable1459ee5e0,
+  active timer140803cb0 (not established vtable Tick), request140800440, callback int32 index
+  and bool transitioning. Transform constants, enums, interruption/reentry and lifecycle remain
+  unclosed. No placeholder Slate graph or completed renderer is claimed.
+- Claude's effort review is implemented at dashboard commit3d62edb (132leaves at that revision),
   2019relative points, UI199/CommonUI44. Original +78 UI proposal was not applied.
   Duplicate Wine/join, mesh/general-package and voice-route credit is separated; seven
   capped census tasks now expose their declaration and unfinished integration shares.
@@ -26,7 +41,7 @@
   are explicit, low-confidence estimates at0%; all original modes remain in scope.
   Applied decisions/status: progress/effort_review/implementation_status.json. Reports and
   original snapshot remain unchanged; USER starts Claude, do not invoke it.
-- Latest Native dcc14c3 restores original CommonInputSubsystem.GetCurrentInputType.
+- Previous Native dcc14c3 restores original CommonInputSubsystem.GetCurrentInputType.
   Both builds PASS132.953/138.969s with source/config stable. Real LocalPlayerSubsystem
   metadata/direct/ProcessEvent/restoration diagnostic13rows PASS; eight retained diagnostics,
   table421rows/30checks and both joins21.599/21.595s PASS. Original Root creation remains

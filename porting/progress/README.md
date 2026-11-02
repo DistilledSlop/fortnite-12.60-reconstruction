@@ -104,16 +104,19 @@ Measures, from most objective to least:
 
 Claude's report and research are retained in [effort_review](effort_review/README.md).
 The original +78 UI proposal is not applied. The reviewed model has **2,019 relative
-points and 132 leaves**: UI is 199 (formerly 170), with CommonUI/UMG 44 (formerly
+points and 133 leaves**: UI is 199 (formerly 170), with CommonUI/UMG 44 (formerly
 30). CommonUI's behavior estimate rises from 18 to 32 before splitting out two
 one-point foundations; frontend/menu flow rises from 25 to 40. FortniteUI and HUD
 budgets retain their previous values. The original units are rough relative effort,
 not measured hours or a conversion from agent runtime. Importance, urgency and a
 desired score play no part in the revision.
 
-Three one-point foundations are carved from residual budgets: actual CommonButton
+Four one-point foundations are carved from residual budgets: actual CommonButton
 query/defaults; original input-row/table and current-type accessor runtime; and
-observed startup class selections. Their ledger entries replay pinned source and
+observed startup class selections; and engine-backed action-binding data/storage.
+The last uses controlled resolvers and leaves production providers and routing open.
+The data/storage point was carved from the existing CommonUI residual after the review,
+leaving all category and total budgets unchanged. Their ledger entries replay pinned source and
 runtime receipts. They do not complete selection/routing, interactive startup or
 any product milestone. This recognizes verified work without calling an entire
 manual UI leaf complete.

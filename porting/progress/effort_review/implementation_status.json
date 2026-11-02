@@ -2,7 +2,7 @@
   "source_review_revision": "dcc14c3",
   "reviewed_native_revision": "dcc14c3",
   "model": {
-    "leaves": 132,
+    "leaves": 133,
     "total_weight": 2019,
     "ui_weight": 199,
     "commonui_weight": 44,
@@ -202,5 +202,14 @@
     "foundation_recorder": "porting/progress/record_frontend_foundation_runtime.py",
     "body_sample": "/mnt/vibrato/fortnite-work/native-feature-effort-sample-1/HANDOFF.json",
     "history_smoke": "/mnt/vibrato/fortnite-work/history-v8-smoke-1.json"
-  }
+  },
+  "post_review_updates": [
+    {
+      "native_revision": "cf37b21",
+      "change": "Carve one existing CommonUI residual point for the engine-backed action-binding data/storage diagnostic; residual29, CommonUI44/UI199/total2019 unchanged. Production providers and routing remain open.",
+      "checkpoint": "porting/generated/frontend-native-evidence/action-binding-data-runtime-1/checkpoint.json",
+      "checkpoint_sha256": "b3f7a28eec0743c1113578683b8fc16dda204e93ffc37e15ece5893e02d0f834",
+      "recorder": "porting/progress/record_frontend_binding_data_runtime.py"
+    }
+  ]
 }

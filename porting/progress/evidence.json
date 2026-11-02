@@ -11263,6 +11263,18 @@
    "release_sha256": "86103596459b8329ea54f862979f7e4412aa17b5c67c44723429251b81245b2b",
    "scope": "Four observed startup class selections and controller constructor source; Root CreateWidget produced seven widgets while 20 unresolved imports remain. Not full startup UI or parity.",
    "provenance_note": "Historical Git source and frozen source pairs and artifacts are required. Stage binary hashes are cross-checked, not rehashed."
+  },
+  "frontend_commonui_binding_data_runtime": {
+   "id": "frontend_commonui_binding_data_runtime",
+   "result": "pass",
+   "exit_code": 0,
+   "command": "python3 -I porting/progress/record_frontend_binding_data_runtime.py",
+   "checkpoint": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-native-evidence/action-binding-data-runtime-1/checkpoint.json",
+   "checkpoint_sha256": "b3f7a28eec0743c1113578683b8fc16dda204e93ffc37e15ece5893e02d0f834",
+   "release": "/mnt/vibrato/fortnite-evidence/frozen-runtime/action-binding-data-runtime-1/source-release.json",
+   "release_sha256": "fb2b0a6af2416ba6f9b68c0d4c27e02d31fb4a9e388ab816a9f90155ce4cd93a",
+   "scope": "Engine-owned binding record, data and storage component with controlled resolvers; no original UFUNCTION registration, production providers, routing or interactive UI.",
+   "provenance_note": "Pinned Git sources and frozen source and artifact pairs are rehashed; stage binary hashes are cross-checked, not independently rehashed."
   }
  }
 }

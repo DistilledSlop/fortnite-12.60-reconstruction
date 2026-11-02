@@ -10,7 +10,7 @@ credentials in Git, and the orchestrator reviews and commits.
 
 ## Current baseline
 
-At Native `dcc14c3`, both builds, both joins, eight retained diagnostics and the30-row input-table
+At Native `cf37b21`, both builds, both joins, eight retained diagnostics and the30-row input-table
 diagnostic pass. The original table loads421rows. Source and staged config now match; startup
 actually uses FortGameInstance, FortLocalPlayer, FortGameViewportClient and FortPlayerControllerAthena.
 The controller constructor assignment is source-proved; the full original game mode hierarchy and
@@ -30,10 +30,12 @@ They remain unregistered: actual state/lifecycle, input-action/brush and delegat
 must be implemented before runtime UI claims. Initialize and direct-parent lifecycle
 proofs identify real containment, callback binding and NativeConstruct dispatch; nested
 context registration and action-widget adapters remain unfinished (see HANDOFF.md).
-The current-input-type accessor is generator-integrated and UE-validated. Next, represent the
+The engine-backed binding data/storage component now passes 26 controlled runtime cases,
+with real weak/delegate/value ownership and map/ID behavior. Production adapters and routing
+remain unfinished. The current-input-type accessor is generator-integrated and UE-validated. Next, wire production adapters for the
 shared action-binding registry and button selection/style lifecycle, then register the recovered
 text-style/display-text helpers and restore the original queue Slate graph. The shared record
-FText/array/delegate ownership contract is partially recovered; do not substitute empty routing.
+FText/array/delegate ownership contract is now implemented and engine-tested; do not substitute empty routing.
 Confirmation async-action factories, Activate/interface dispatch and queued presentation remain
 unfinished. Interactive startup, Blueprint execution and original pixels remain unverified; all four
 product milestones are open. Exact receipts and source release are in HANDOFF.md.

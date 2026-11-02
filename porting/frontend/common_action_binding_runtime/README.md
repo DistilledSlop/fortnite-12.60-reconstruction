@@ -29,3 +29,5 @@ The NaN branch is classified by IEEE bits; other thresholds use a floating
 comparison so the processor's denormals-are-zero setting affects subnormal
 values. Exact floating-point exception behavior is not established. The isolated
 `AllocateIdBits` counter step supports wrap testing without resetting global state.
+
+Validated at Native `cf37b21`: client/server builds pass, all 26 actual engine data/storage rows pass, retained diagnostics and both joins pass. Native build1 failure is preserved and fixed through UE4.25 declaration macros and touch-key API. Providers and production registration/routing remain unintegrated. Checkpoint and source release hashes are in the project HANDOFF.
