@@ -95,6 +95,10 @@ def run(args):
     row = validate_build(build_file, binary)
     runtime_file = args.runtime_args.resolve(strict=True)
     values, runtime_hash = runtime_args(runtime_file)
+    config_file = getattr(args, 'config', None)
+    if config_file is not None:
+        config_file = config_file.resolve(strict=True)
+        config_hash = digest(config_file)
     out = args.out.absolute()
     out.mkdir(parents=False, exist_ok=False)
     log = out / 'runtime.log'
@@ -111,6 +115,8 @@ def run(args):
                'timed_out': False, 'proc_exe_inode_verified': False,
                'proc_exe': None, 'proc_argv': None, 'proc_cwd': None,
                'binary_after_verified': False, 'error': None}
+    if config_file is not None:
+        receipt['config'] = {'path': str(config_file), 'sha256': config_hash}
     try:
         with log.open('xb') as stream:
             proc = subprocess.Popen(argv, cwd=cwd, stdout=stream, stderr=subprocess.STDOUT,
@@ -158,6 +164,13 @@ def run(args):
     except OSError as exc:
         receipt['error'] = (receipt['error'] or '') + ' binary recheck failed: ' + str(exc)
     receipt['log'] = {'path': str(log), 'sha256': digest(log)}
+    if config_file is not None:
+        try:
+            receipt['config_after_verified'] = digest(config_file) == config_hash
+        except OSError:
+            receipt['config_after_verified'] = False
+        if not receipt['config_after_verified']:
+            receipt['error'] = (receipt['error'] or '') + ' config bytes changed during diagnostic'
     try:
         result = verifier.verify(log.read_text(errors='replace'))
     except OSError as exc:
@@ -178,6 +191,7 @@ def main():
     parser.add_argument('--cwd', type=Path, required=True)
     parser.add_argument('--out', type=Path, required=True)
     parser.add_argument('--runtime-args', type=Path, required=True, help='path to JSON array of material ingress and manifest flags')
+    parser.add_argument('--config', type=Path, help='staged config to hash before and after the launch')
     parser.add_argument('--timeout', type=float, default=240)
     args = parser.parse_args()
     try:

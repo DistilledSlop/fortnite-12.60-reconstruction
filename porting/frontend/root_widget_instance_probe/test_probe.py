@@ -20,7 +20,62 @@ ROWS = [
     'ROOTINSTANCE v=1 phase=complete ok=1',
 ]
 
+V2_ROWS = [row.replace('v=1', 'v=2') for row in ROWS]
+V2_ROWS[1] += (' game_instance_class=/Script/FortniteGame.FortGameInstance'
+               ' player_class=/Script/FortniteGame.FortLocalPlayer'
+               ' controller_class=/Script/Engine.PlayerController'
+               ' viewport_class=/Script/FortniteGame.FortGameViewportClient')
+V2_ROWS[5] += ' root_widget=Root widget_count=3'
+
 class TranscriptTests(unittest.TestCase):
+    def test_v2_observations_and_non_fort_controller(self):
+        result = verifier.verify('\n'.join(V2_ROWS))
+        self.assertTrue(result['passed'])
+        self.assertTrue(result['creation_completed'])
+        self.assertTrue(result['startup_classes_match'])
+        self.assertEqual(result['startup_class_observations']['controller_class'], '/Script/Engine.PlayerController')
+        self.assertTrue(result['tree_populated'])
+        self.assertEqual(result['widget_count'], 3)
+        historical = verifier.verify('\n'.join(ROWS))
+        self.assertTrue(historical['passed'])
+        self.assertIsNone(historical['startup_classes_match'])
+        self.assertIsNone(historical['tree_populated'])
+        self.assertIsNone(historical['widget_count'])
+
+    def test_v2_failures_preserve_observations(self):
+        cases = [
+            (1, 'FortGameInstance', 'WrongGameInstance', 'startup_classes_match'),
+            (1, '/Script/Engine.PlayerController', 'None', 'startup_classes_match'),
+            (5, 'widget_count=3', 'widget_count=0', 'tree_populated'),
+            (5, 'root_widget=Root', 'root_widget=None', 'tree_populated'),
+        ]
+        for index, old, new, key in cases:
+            with self.subTest(new=new):
+                rows = V2_ROWS.copy()
+                rows[index] = rows[index].replace(old, new)
+                result = verifier.verify('\n'.join(rows))
+                self.assertFalse(result['passed'])
+                self.assertTrue(result['creation_completed'])
+                self.assertFalse(result[key])
+        for error in ('Blueprint Runtime Error: Accessed None',
+                      'Skipping import Function X, depends on missing native class',
+                      'Missing RowStruct while loading DataTable X'):
+            result = verifier.verify('\n'.join(V2_ROWS + [error]))
+            self.assertFalse(result['passed'])
+            self.assertTrue(result['creation_completed'])
+            self.assertTrue(result['startup_classes_match'])
+            self.assertTrue(result['tree_populated'])
+
+    def test_v2_strict_rows_and_counts(self):
+        cases = [V2_ROWS[:-1], V2_ROWS + [V2_ROWS[-1]],
+                 [*V2_ROWS[:3], V2_ROWS[3].replace('v=2', 'v=1'), *V2_ROWS[4:]],
+                 [*V2_ROWS[:5], V2_ROWS[5].replace('widget_count=3', 'widget_count=-1'), *V2_ROWS[6:]],
+                 [*V2_ROWS[:5], V2_ROWS[5] + ' widget_count=3', *V2_ROWS[6:]],
+                 [*V2_ROWS[:1], V2_ROWS[1].replace(' player_class=/Script/FortniteGame.FortLocalPlayer', ''), *V2_ROWS[2:]]]
+        for rows in cases:
+            with self.subTest(rows=rows):
+                self.assertFalse(verifier.verify('\n'.join(rows))['passed'])
+
     def test_valid_and_rejections(self):
         self.assertTrue(verifier.verify('\n'.join(ROWS))['passed'])
         cases = [ROWS[:-1], ROWS + [ROWS[-1]], ROWS[1:] + ROWS[:1],
@@ -78,13 +133,17 @@ class RunnerTests(unittest.TestCase):
                                           'source_head': 'test', 'binary': {'path': str(binary),
                                           'size': binary.stat().st_size, 'sha256': runner.digest(binary)}}]))
             out = d / 'out'
+            config = d / 'DefaultEngine.ini'
+            config.write_text('; captured staged config\n')
             args = argparse.Namespace(binary=binary, cwd=d, timeout=0.3, build_results=build,
-                                      out=out, runtime_args=f)
+                                      out=out, runtime_args=f, config=config)
             self.assertFalse(runner.run(args))
             receipt = json.loads((out / 'receipt.json').read_text())
             self.assertTrue(receipt['timed_out'])
             self.assertEqual(receipt['transcript']['last_phase'], 'registered')
             self.assertTrue(receipt['proc_exe_inode_verified'])
+            self.assertEqual(receipt['config']['sha256'], runner.digest(config))
+            self.assertTrue(receipt['config_after_verified'])
             self.assertTrue((out / 'runtime.log').exists())
             self.assertNotIn('-ExecCmds=Quit', receipt['argv'])
 

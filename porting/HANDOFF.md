@@ -2,6 +2,11 @@
 
 ## Current resume point (2026-11-02)
 
+- Startup-owner config source now restores original FortGameViewportClient and FortLocalPlayer,
+  alongside the existing FortGameInstance. Byte-exact committed-config staging utility and3 tests
+  pass. Root v2 records actual class paths, root-widget identity and widget count;8 verifier/runner
+  tests and actual C++ syntax pass. Full builds and paired old/new config runs are pending; root
+  owns Native/build/stage. No controller-class default is asserted or changed.
 - Validated Native source29a2c24 restores the original CommonUI input-table row and defaults.
   Both builds PASS125.058/119.205s;12707 Native sources stable. The actual UE row probe passes30
   diagnostic rows and loads all421 original table rows. Original row/info sizes1064/168, defaults,

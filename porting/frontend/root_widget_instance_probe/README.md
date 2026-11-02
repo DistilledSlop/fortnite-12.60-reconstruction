@@ -12,6 +12,10 @@ errors, skipped native imports and missing data-table row structures. It reports
 unresolved dependencies. A non-null return does not establish a successful Blueprint VM or UI.
 The runner preserves the last observed phase and exit/timeout status on failure,
 and binds the launch to the built ELF, actual process arguments and working directory.
+Version 2 also records actual startup class paths and whether the tree contains
+widgets. It checks the three class settings proved by original config; controller
+class is observed without assuming an original Athena default. Use `--config`
+to bind each run to unchanged staged config bytes.
 
 Run under the same graphics environment as the retained frontend probes:
 
