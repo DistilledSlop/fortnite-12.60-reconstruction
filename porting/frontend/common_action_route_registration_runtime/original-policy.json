@@ -1,0 +1,50 @@
+{
+  "scope": "Association, stable removal, registry teardown only; route owner/class/acquisition remain unresolved.",
+  "windows": [
+    {
+      "va": "0x1407a90c0",
+      "length": 287,
+      "sha256": "707c984bd4d82e2947efda02cc7a1ba6c69c6b6468efe49d09737990177df5a3"
+    },
+    {
+      "va": "0x1407f0ab0",
+      "length": 138,
+      "sha256": "15f262aacedb0b85372f845f2ba820b47896ebaebe57ee7e355abb271f33cf67"
+    },
+    {
+      "va": "0x1407ef330",
+      "length": 263,
+      "sha256": "9c0a57fc2b1e557b9a5b9cc438a9351834bed160c559a23c24230615e90d6f75"
+    },
+    {
+      "va": "0x1408018c0",
+      "length": 134,
+      "sha256": "574cfaa10212327ebaeb2cdd477f7518c4a402b727f706c46272242cc01a1224"
+    },
+    {
+      "va": "0x1407ed1c0",
+      "length": 553,
+      "sha256": "ac5725416e442c6daf16f73ba19244a5e6cc61e9d0f72621296420d13c5fba97"
+    },
+    {
+      "va": "0x1407be460",
+      "length": 552,
+      "sha256": "41289819ab2b2d52ac47339caf608849e44210aba6b45a120149ae8a0d65867d"
+    },
+    {
+      "va": "0x1407be690",
+      "length": 521,
+      "sha256": "a29f0f5805a90950ba9f35e5485a56446c8251b7a20a278919d4dcfb9c73b201"
+    },
+    {
+      "va": "0x1407beb40",
+      "length": 301,
+      "sha256": "fcc067fd362e5520399c4e2010c1db6a8655c7ef1f64c5505a9fd4394a8f8e95"
+    },
+    {
+      "va": "0x1407c4240",
+      "length": 469,
+      "sha256": "50c3f431d3cb001c901f21ec7d060274da2b597318001a8c47759ac41f1d8aff"
+    }
+  ]
+}
