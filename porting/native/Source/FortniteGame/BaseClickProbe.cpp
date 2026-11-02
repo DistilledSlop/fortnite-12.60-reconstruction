@@ -50,7 +50,7 @@ bool RunBaseClickProbe(UWorld* World, TFunctionRef<void(const TCHAR*, bool)> Rec
 {
     bool All = true;
     auto Check = [&All, &Record](const TCHAR* Name, bool Pass) { All &= Pass; Record(Name, Pass); };
-    TStrongObjectPtr<UObject> Outer(NewObject<UObject>());
+    TStrongObjectPtr<UBaseClickProbeReceiver> Outer(NewObject<UBaseClickProbeReceiver>());
     TStrongObjectPtr<UBaseClickProbeButton> B(NewObject<UBaseClickProbeButton>(Outer.Get(), FName(TEXT("ClickProbe_42"))));
     TStrongObjectPtr<UBaseClickProbeReceiver> R(NewObject<UBaseClickProbeReceiver>());
     R->Button = B.Get();
