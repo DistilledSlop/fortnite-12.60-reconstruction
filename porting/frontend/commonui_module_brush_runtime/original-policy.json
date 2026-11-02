@@ -1,0 +1,199 @@
+{
+  "identity": {
+    "block_va": "0x145a08690",
+    "class_noregister_fn": "0x140812d90",
+    "base_fn": "0x140812ee0",
+    "package_fn": "0x142eea530",
+    "class_flags": "0x1000a6"
+  },
+  "properties": [
+    {
+      "index": 0,
+      "name": "RichTextDataInstance",
+      "kind": "Object",
+      "kind_raw": "0x12",
+      "property_flags": "0x40000000002000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 328,
+      "type_refs": {
+        "class": "0x140812cc0"
+      }
+    },
+    {
+      "index": 1,
+      "name": "DefaultThrobberBrush",
+      "kind": "Struct",
+      "kind_raw": "0x19",
+      "property_flags": "0x40000000002000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 192,
+      "type_refs": {
+        "struct": "0x142fdb590"
+      }
+    },
+    {
+      "index": 2,
+      "name": "DefaultThrobberMaterialInstance",
+      "kind": "Object",
+      "kind_raw": "0x12",
+      "property_flags": "0x40000000002000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 184,
+      "type_refs": {
+        "class": "0x144796250"
+      }
+    },
+    {
+      "index": 3,
+      "name": "DefaultImageResourceObjectInstance",
+      "kind": "Object",
+      "kind_raw": "0x12",
+      "property_flags": "0x40000000002000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 176,
+      "type_refs": {
+        "class": "0x142eea520"
+      }
+    },
+    {
+      "index": 4,
+      "name": "DefaultRichTextDataClass",
+      "kind": "SoftClass",
+      "kind_raw": "0xd",
+      "property_flags": "0x44000000004001",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 128,
+      "type_refs": {
+        "meta_class": "0x140812cc0"
+      }
+    },
+    {
+      "index": 5,
+      "name": "DefaultThrobberMaterial",
+      "kind": "SoftObject",
+      "kind_raw": "0x10",
+      "property_flags": "0x44000000004001",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 88,
+      "type_refs": {
+        "class": "0x144796250"
+      }
+    },
+    {
+      "index": 6,
+      "name": "DefaultImageResourceObject",
+      "kind": "SoftObject",
+      "kind_raw": "0x10",
+      "property_flags": "0x44000000004001",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 48,
+      "type_refs": {
+        "class": "0x142eea520"
+      }
+    },
+    {
+      "index": 7,
+      "name": "bAutoLoadData",
+      "kind": "Bool",
+      "kind_raw": "0x2c",
+      "property_flags": "0x40000000004001",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "element_size": 1,
+      "size_of_outer": 336,
+      "bitfield": true,
+      "set_bit_fn": "0x1407627c0",
+      "offset": null
+    }
+  ],
+  "members": {
+    "bAutoLoadData": "bool bAutoLoadData;",
+    "DefaultImageResourceObject": "TSoftObjectPtr<UObject> DefaultImageResourceObject;",
+    "DefaultThrobberMaterial": "TSoftObjectPtr<UMaterialInterface> DefaultThrobberMaterial;",
+    "DefaultRichTextDataClass": "TSoftClassPtr<UCommonUIRichTextData> DefaultRichTextDataClass;",
+    "DefaultImageResourceObjectInstance": "UObject* DefaultImageResourceObjectInstance;",
+    "DefaultThrobberMaterialInstance": "UMaterialInterface* DefaultThrobberMaterialInstance;",
+    "DefaultThrobberBrush": "FSlateBrush DefaultThrobberBrush;",
+    "RichTextDataInstance": "UCommonUIRichTextData* RichTextDataInstance;"
+  },
+  "windows": [
+    {
+      "va": "0x1401c57b0",
+      "size": 202,
+      "sha256": "3f4bd0142bc41713ebd2b42c9ecb9a80544e8b3738097a2d849a5f717decbb6a"
+    },
+    {
+      "va": "0x1407ce4b0",
+      "size": 47,
+      "sha256": "b4fda3d59b934c56f11a0217cc73a3575f70e1f8b4814a3770de3ab1fb15a6ea"
+    },
+    {
+      "va": "0x1459fa0d8",
+      "size": 88,
+      "sha256": "8c1b65ccae71f818382e6fbcfe5fcf0415eef6c975947b02ac71abcb86bc6b62"
+    },
+    {
+      "va": "0x1459eadb0",
+      "size": 18,
+      "sha256": "d88a012f69887901b0e9649adff357dc1cc913496985908b05a4640961b68611"
+    },
+    {
+      "va": "0x140680310",
+      "size": 5,
+      "sha256": "fc46ea8acdf166d47f2230b3d3975fbd0a4a0f5c898b7c2b2ec854359cb94b85"
+    },
+    {
+      "va": "0x1407fcfe0",
+      "size": 228,
+      "sha256": "f8186f1efaa608ff21204472424fe0cc4a65d234c3e0da43773435391108402a"
+    },
+    {
+      "va": "0x1407fb490",
+      "size": 107,
+      "sha256": "db5cba21e696201f0efbf02f52c50b0c20eb04555defb50bd19062ca2f9f05e3"
+    },
+    {
+      "va": "0x140798090",
+      "size": 128,
+      "sha256": "2ba927ec6adcf226dc2876672a59e8905b7aa58fa317bc4f203fe277ed77efa4"
+    },
+    {
+      "va": "0x1407d0c30",
+      "size": 620,
+      "sha256": "04916089c40529afad95251a37906f762ecb817de696c8a204546aedc038ff66"
+    },
+    {
+      "va": "0x1407c5060",
+      "size": 148,
+      "sha256": "8a0da8718275755cdf25864658e1a353ec2b32ab268597906dbb56be8310c880"
+    },
+    {
+      "va": "0x1407c5210",
+      "size": 40,
+      "sha256": "f6e5734475f594f892f4c54597a40408a4eb43d17ab669ebffbaa024ae297857"
+    }
+  ]
+}

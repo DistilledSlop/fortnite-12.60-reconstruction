@@ -1,0 +1,30 @@
+{
+  "source": "/mnt/vibrato/fortnite-extracted-full/FortniteGame/Config/DefaultGame.ini",
+  "section": "[/Script/CommonUI.CommonUISettings]",
+  "entries": [
+    {
+      "line": 2964,
+      "text": "bAutoLoadData=True"
+    },
+    {
+      "line": 2965,
+      "text": "DefaultImageResourceObject=None"
+    },
+    {
+      "line": 2966,
+      "text": "DefaultThrobberMaterial=/Game/UI/Foundation/Materials/Throbber_Material-Monochrome.Throbber_Material-Monochrome"
+    },
+    {
+      "line": 2968,
+      "text": "DefaultRichTextDataClass=/Game/UI/Foundation/RichTextData/CommonUIRichTextData.CommonUIRichTextData_C"
+    }
+  ],
+  "scope": "Four original settings only; no claim of complete original config restoration",
+  "inspected_override_files": [
+    "Windows/WindowsGame.ini",
+    "WindowsClient/WindowsClientGame.ini",
+    "Windows/WindowsEngine.ini",
+    "WindowsClient/WindowsClientEngine.ini"
+  ],
+  "matching_overrides_found": false
+}

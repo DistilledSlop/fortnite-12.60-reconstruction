@@ -2190,6 +2190,10 @@ _input_module_spec = _common_activation_import.spec_from_file_location(
     "common_input_module_runtime_policy", os.path.join(os.path.dirname(__file__), "frontend", "common_input_module_runtime", "policy.py"))
 _input_module_policy = _common_activation_import.module_from_spec(_input_module_spec)
 _input_module_spec.loader.exec_module(_input_module_policy)
+_commonui_module_spec = _common_activation_import.spec_from_file_location(
+    "commonui_module_brush_runtime_policy", os.path.join(os.path.dirname(__file__), "frontend", "commonui_module_brush_runtime", "policy.py"))
+_commonui_module_policy = _common_activation_import.module_from_spec(_commonui_module_spec)
+_commonui_module_spec.loader.exec_module(_commonui_module_policy)
 _input_cache_spec = _common_activation_import.spec_from_file_location(
     "common_input_settings_cache_runtime_policy", os.path.join(os.path.dirname(__file__), "frontend", "common_input_settings_cache_runtime", "policy.py"))
 _input_cache_policy = _common_activation_import.module_from_spec(_input_cache_spec)
@@ -2350,6 +2354,7 @@ def build_class_promoted(block, name, resolver, parent_entry, owner_fns, snippet
     model = _global_ui_zone_policy.apply(model, block, owner_fns, native_execs)
     model = _notification_image_policy.apply(model, block, owner_fns, native_execs)
     model = _progress_modal_policy.apply(model, block, owner_fns)
+    model = _commonui_module_policy.apply(model, block, owner_fns)
     model = _input_settings_policy.apply(model, block, owner_fns)
     model = _input_cache_policy.apply(model, block, owner_fns)
     return apply_blueprint_context_runtime_policy(model, block, name, resolver, parent_entry, owner_fns, snippets, splice_ctx)
@@ -3118,6 +3123,7 @@ def render_promoted_header(model, api, parent_include, source_label):
     lines.extend(_button_producers_policy.declarations(model).splitlines())
     lines.extend(_border_style_policy.declarations(model).splitlines())
     lines.extend(_progress_modal_policy.declarations(model).splitlines())
+    lines.extend(_commonui_module_policy.declarations(model).splitlines())
     if model['name'] == 'UCommonActivatablePanel':
         lines.append('    friend class UCommonButton;')
     lines.extend(_input_settings_policy.declarations(model).splitlines())
@@ -3269,7 +3275,7 @@ def render_promoted_cpp(model, source_label):
     result = "\n".join(lines) + "\n"
     if model.get("source_context_phases"):
         result += BLUEPRINT_CONTEXT_PHASE_BODIES
-    return result + _common_activation_policy.definitions(model) + _current_input_type_policy.definitions(model) + _fort_globals_policy.definitions(model) + _button_style_policy.definitions(model) + _button_click_policy.definitions(model) + _button_double_click_policy.definitions(model) + _button_selection_policy.definitions(model) + _input_settings_policy.definitions(model) + _input_cache_policy.definitions(model) + _action_widget_policy.gamepad_definitions(model) + _action_widget_policy.icon_definitions(model) + _action_receivers_policy.definitions(model) + _action_slate_policy.definitions(model) + _button_focus_policy.definitions(model) + _button_initialize_policy.definitions(model) + _button_producers_policy.definitions(model) + _button_set_style_policy.definitions(model) + _border_style_policy.definitions(model) + _global_ui_priority_policy.definitions(model) + _global_ui_zone_policy.definitions(model) + _notification_image_policy.definitions(model) + _progress_modal_policy.definitions(model)
+    return result + _common_activation_policy.definitions(model) + _current_input_type_policy.definitions(model) + _fort_globals_policy.definitions(model) + _button_style_policy.definitions(model) + _button_click_policy.definitions(model) + _button_double_click_policy.definitions(model) + _button_selection_policy.definitions(model) + _input_settings_policy.definitions(model) + _input_cache_policy.definitions(model) + _action_widget_policy.gamepad_definitions(model) + _action_widget_policy.icon_definitions(model) + _action_receivers_policy.definitions(model) + _action_slate_policy.definitions(model) + _button_focus_policy.definitions(model) + _button_initialize_policy.definitions(model) + _button_producers_policy.definitions(model) + _button_set_style_policy.definitions(model) + _border_style_policy.definitions(model) + _global_ui_priority_policy.definitions(model) + _global_ui_zone_policy.definitions(model) + _notification_image_policy.definitions(model) + _progress_modal_policy.definitions(model) + _commonui_module_policy.definitions(model)
 
 
 def build_engine_header_index(root):
@@ -3588,6 +3594,8 @@ def promote(args):
         _input_module_policy.validate_classes(blocks_by_va, name_to_block)
     input_module_sources = (_input_module_policy.sources('CommonInput', blocks_by_va, name_to_block)
                             if 'UCommonInputSettings' in listed else None)
+    commonui_module_sources = (_commonui_module_policy.sources(blocks_by_va, name_to_block)
+                              if 'UCommonUISettings' in listed else None)
     header_index = ModuleHeaderIndex(registry)
     source_label = os.path.relpath(args.reflection, REPO)
 
@@ -3862,6 +3870,9 @@ def promote(args):
     if 'UFortProgressModal' in listed:
         _progress_modal_policy.validate_output(next(m for m in class_models if m['name']=='UFortProgressModal'),
             *outputs['UFortProgressModal'])
+    if 'UCommonUISettings' in listed:
+        _commonui_module_policy.validate_output(next(m for m in class_models if m['name']=='UCommonUISettings'),
+            *outputs['UCommonUISettings'])
     for model in class_models:
         if model["splice"]["accepted"]:
             verify_spliced(model, *outputs[model["name"]])
@@ -3902,10 +3913,14 @@ def promote(args):
             fh.write(render_module_build_cs(module, own, source_label))
         with open(os.path.join(module_dir, "Private", module + ".cpp"), "w", encoding="utf-8", newline="\n") as fh:
             fh.write(input_module_sources["CommonInput.cpp"] if module == "CommonInput" and input_module_sources
+                     else commonui_module_sources['CommonUI.cpp'] if module == 'CommonUI' and commonui_module_sources
                      else render_module_cpp(module, source_label))
         if module == "CommonInput" and input_module_sources:
             with open(os.path.join(module_dir, "Generated", "CommonInputModuleRuntime.h"), "w", encoding="utf-8", newline="\n") as fh:
                 fh.write(input_module_sources["CommonInputModuleRuntime.h"])
+        if module == 'CommonUI' and commonui_module_sources:
+            with open(os.path.join(module_dir, 'Generated', 'CommonUIModuleRuntime.h'), 'w', encoding='utf-8', newline='\n') as fh:
+                fh.write(commonui_module_sources['CommonUIModuleRuntime.h'])
 
     type_files = []
     for fn, model in sorted(models.items(), key=lambda kv: (kv[1]["kind"], kv[1]["cpp_name"])):

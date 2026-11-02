@@ -3,6 +3,8 @@
 UCommonUISettings::UCommonUISettings()
     : bAutoLoadData(true), NativeDataLoaded(false)
 {
+    static_assert(STRUCT_OFFSET(UCommonUISettings, NativeDataLoaded) == 0xa8, "Original CommonUI loaded flag layout");
+    static_assert(STRUCT_OFFSET(UCommonUISettings, DefaultThrobberBrush) == 0xc0, "Original CommonUI brush layout");
 }
 
 void UCommonUISettings::NativeInitializeData()
@@ -15,7 +17,7 @@ void UCommonUISettings::NativeInitializeData()
     DefaultImageResourceObjectInstance = DefaultImageResourceObject.LoadSynchronous();
     DefaultThrobberMaterialInstance = DefaultThrobberMaterial.LoadSynchronous();
     UClass* RichTextClass = DefaultRichTextDataClass.LoadSynchronous();
-    RichTextDataInstance = RichTextClass ? RichTextClass->GetDefaultObject<UCommonUIRichTextData>() : nullptr;
+    RichTextDataInstance = RichTextClass ? static_cast<UCommonUIRichTextData*>(RichTextClass->GetDefaultObject()) : nullptr;
 
     if (GUObjectArray.IsDisregardForGC(this))
     {
@@ -26,8 +28,8 @@ void UCommonUISettings::NativeInitializeData()
 
     DefaultThrobberBrush.SetResourceObject(DefaultThrobberMaterialInstance);
     DefaultThrobberBrush.ImageSize = FVector2D(64.0f, 64.0f);
+    DefaultThrobberBrush.ImageType = ESlateBrushImageType::FullColor;
     DefaultThrobberBrush.DrawAs = DefaultThrobberMaterialInstance
         ? ESlateBrushDrawType::Image : ESlateBrushDrawType::NoDrawType;
-    DefaultThrobberBrush.ImageType = ESlateBrushImageType::FullColor;
     NativeDataLoaded = true;
 }

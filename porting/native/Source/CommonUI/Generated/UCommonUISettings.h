@@ -35,6 +35,11 @@ public:
 	UPROPERTY(Config)
 	TSoftClassPtr<UCommonUIRichTextData> DefaultRichTextDataClass;
 
+private:
+	// Non-reflected field (behaviour kind "member_field", offset 0xa8): not a UPROPERTY, not replicated.
+	bool NativeDataLoaded;
+public:
+
 	// table index 3, flags 0x40000000002000
 	UPROPERTY(Transient)
 	UObject* DefaultImageResourceObjectInstance;
@@ -51,5 +56,8 @@ public:
 	UPROPERTY(Transient)
 	UCommonUIRichTextData* RichTextDataInstance;
 
+public:
+    UCommonUISettings();
+    void NativeInitializeData();
 };
 
