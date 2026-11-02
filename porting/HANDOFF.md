@@ -2,6 +2,10 @@
 
 ## Current resume point (2026-11-02)
 
+- Current source edits extend the explicit Root probe with --attach / -RootWidgetInstanceAttach:
+  actual AddToViewport, three subsequent frame observations with GFrameCounter, then actual removal.
+  Existing creation-only mode is preserved. Actual C++ syntax passes in root-viewport-attach-ue-preflight-1;
+  14focused runner/verifier tests pass. Full build/attachment execution remain pending; root owns Native.
 - Latest validated Native is78c5b61. Original config restores FortGameInstance,
   FortLocalPlayer and FortGameViewportClient; the maintained Athena constructor restores
   PlayerControllerClass=FortPlayerControllerAthena. All4 class paths are now measured in startup.

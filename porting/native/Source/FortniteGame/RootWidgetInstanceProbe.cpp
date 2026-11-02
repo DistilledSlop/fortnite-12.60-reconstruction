@@ -24,6 +24,16 @@ TStrongObjectPtr<UUserWidget> Instance;
 double Deadline = 0;
 bool Registered = false;
 bool Complete = false;
+bool AttachRequested = false;
+bool Attached = false;
+bool ViewOK = false;
+int32 FrameIndex = 0;
+
+void LogView(const TCHAR* Phase, UUserWidget* Widget)
+{
+    UE_LOG(LogTemp, Display, TEXT("ROOTVIEW v=1 phase=%s in_viewport=%d cached_widget=%d"),
+        Phase, int32(Widget->IsInViewport()), int32(Widget->GetCachedWidget().IsValid()));
+}
 
 void Finish(bool OK)
 {
@@ -74,15 +84,48 @@ void Run(UWorld* World, UGameInstance* GameInstance, ULocalPlayer* Player, APlay
         Widget->GetWorld() == World && Widget->GetOwningLocalPlayer() == Player &&
         Widget->GetOwningPlayer() == Controller && Widget->WidgetTree;
     UE_LOG(LogTemp, Display, TEXT("ROOTINSTANCE v=2 phase=observations ok=%d scope=create_return_and_ownership"), int32(OK));
-    Finish(OK);
+    if (!AttachRequested || !OK) { Finish(OK); return; }
+
+    ViewOK = OK && !Widget->IsInViewport();
+    LogView(TEXT("before_attach"), Widget);
+    Widget->AddToViewport(0);
+    LogView(TEXT("after_attach"), Widget);
+    ViewOK = ViewOK && Widget->IsInViewport() && Widget->GetCachedWidget().IsValid();
+    Attached = true;
+    Deadline = FPlatformTime::Seconds() + 180.0;
 }
 
 void Tick()
 {
     if (FPlatformTime::Seconds() >= Deadline)
     {
+        if (Attached)
+        {
+            UE_LOG(LogTemp, Error, TEXT("ROOTVIEW v=1 phase=timeout ok=0"));
+            UE_LOG(LogTemp, Display, TEXT("ROOTVIEW v=1 phase=complete ok=0"));
+            Finish(false);
+            return;
+        }
         UE_LOG(LogTemp, Error, TEXT("ROOTINSTANCE v=2 phase=prerequisites_timeout ok=0"));
         Finish(false);
+        return;
+    }
+    if (Attached)
+    {
+        UUserWidget* Widget = Instance.Get();
+        ++FrameIndex;
+        UE_LOG(LogTemp, Display, TEXT("ROOTVIEW v=1 phase=frame index=%d engine_frame=%llu in_viewport=%d cached_widget=%d"),
+            FrameIndex, (unsigned long long)GFrameCounter, int32(Widget->IsInViewport()), int32(Widget->GetCachedWidget().IsValid()));
+        ViewOK = ViewOK && Widget->IsInViewport() && Widget->GetCachedWidget().IsValid();
+        if (FrameIndex == 3)
+        {
+            LogView(TEXT("before_remove"), Widget);
+            Widget->RemoveFromParent();
+            LogView(TEXT("after_remove"), Widget);
+            ViewOK = ViewOK && !Widget->IsInViewport();
+            UE_LOG(LogTemp, Display, TEXT("ROOTVIEW v=1 phase=complete ok=%d"), int32(ViewOK));
+            Finish(ViewOK);
+        }
         return;
     }
     if (!GEngine) return;
@@ -106,6 +149,7 @@ void RegisterRootWidgetInstanceProbeDriver()
     using namespace RootWidgetInstanceProbeInternal;
     if (Registered || !FParse::Param(FCommandLine::Get(), TEXT("RootWidgetInstanceProbe"))) return;
     Registered = true;
+    AttachRequested = FParse::Param(FCommandLine::Get(), TEXT("RootWidgetInstanceAttach"));
     Deadline = FPlatformTime::Seconds() + 180.0;
     UE_LOG(LogTemp, Display, TEXT("ROOTINSTANCE v=2 phase=registered timeout_seconds=180"));
     FrameHandle = FCoreDelegates::OnEndFrame.AddStatic(&Tick);

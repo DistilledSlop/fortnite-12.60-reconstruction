@@ -27,3 +27,11 @@ The runtime-args file is a JSON array containing only the material ingress,
 manifest and manifest-SHA256 flags from a successful original Root load receipt.
 The runner supplies the Entry map and probe flag. It rejects a conflicting
 `-FortniteProbeAsset` or `-ExecCmds=Quit` flag. Each output directory must be fresh.
+
+`--attach` also requests the opt-in viewport lifecycle. It adds the original
+instance through `AddToViewport`, observes membership and its cached Slate widget
+over three actual engine frame numbers, and removes it through `RemoveFromParent`.
+The independent viewport report preserves attachment evidence if a later phase
+fails. Successful membership does not establish rendered pixels, input routing,
+authentic startup or parity. Overall validation still rejects unresolved imports
+and Blueprint errors.

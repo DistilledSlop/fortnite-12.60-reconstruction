@@ -10,6 +10,7 @@ import subprocess
 import time
 
 import verifier
+import viewport_verifier
 
 ENVIRONMENT = ('DISPLAY', 'VK_ICD_FILENAMES', 'SDL_AUDIODRIVER', 'LP_NUM_THREADS')
 BASE_ARGS = ('-stdout', 'FortniteLinux', '/Engine/Maps/Entry', '-vulkan', '-windowed',
@@ -46,8 +47,9 @@ def runtime_args(path):
     return values, hashlib.sha256(raw).hexdigest()
 
 
-def command(binary, values):
-    return [str(binary), *BASE_ARGS, '-RootWidgetInstanceProbe', *values]
+def command(binary, values, attach=False):
+    return [str(binary), *BASE_ARGS, '-RootWidgetInstanceProbe',
+            *(['-RootWidgetInstanceAttach'] if attach else []), *values]
 
 
 def validate_build(path, binary):
@@ -103,7 +105,8 @@ def run(args):
     out.mkdir(parents=False, exist_ok=False)
     log = out / 'runtime.log'
     receipt_path = out / 'receipt.json'
-    argv = command(binary, values)
+    attach = getattr(args, 'attach', False)
+    argv = command(binary, values, attach)
     started = time.time_ns()
     deadline = time.monotonic() + args.timeout
     receipt = {'schema': 'root-widget-instance-run-v1',
@@ -175,11 +178,19 @@ def run(args):
         result = verifier.verify(log.read_text(errors='replace'))
     except OSError as exc:
         result = {'passed': False, 'error': str(exc)[:300], 'last_phase': None}
+    if attach:
+        try:
+            viewport_result = viewport_verifier.verify(log.read_text(errors='replace'))
+        except OSError as exc:
+            viewport_result = {'passed': False, 'error': str(exc)[:300], 'last_phase': None}
+        receipt['viewport'] = viewport_result
+        write_json(out / 'viewport_verification.json', viewport_result)
     write_json(out / 'verification.json', result)
     receipt['transcript'] = result
     receipt['passed'] = (receipt['returncode'] == 0 and not receipt['timed_out'] and
                          receipt['proc_exe_inode_verified'] and receipt['binary_after_verified'] and
-                         receipt['error'] is None and result['passed'])
+                         receipt['error'] is None and result['passed'] and
+                         (not attach or viewport_result['passed']))
     write_json(receipt_path, receipt)
     return receipt['passed']
 
@@ -193,6 +204,7 @@ def main():
     parser.add_argument('--runtime-args', type=Path, required=True, help='path to JSON array of material ingress and manifest flags')
     parser.add_argument('--config', type=Path, help='staged config to hash before and after the launch')
     parser.add_argument('--timeout', type=float, default=240)
+    parser.add_argument('--attach', action='store_true', help='observe viewport attachment lifecycle')
     args = parser.parse_args()
     try:
         passed = run(args)
