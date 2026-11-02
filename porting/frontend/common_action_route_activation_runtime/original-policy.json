@@ -1,0 +1,137 @@
+{
+  "image_base": "0x140000000",
+  "windows": [
+    {
+      "label": "node_gate",
+      "address": "0x1407f5d50",
+      "size": 366,
+      "sha256": "c3f4f5ec2814f298749d7ba399703b193baa7e128b143e922fd5d52bc4d418f9"
+    },
+    {
+      "label": "root_gate",
+      "address": "0x1407f5ec0",
+      "size": 389,
+      "sha256": "58d41105924ccb853186a9365fe5067d9703e8b5080de0a377c1bf378b793c71"
+    },
+    {
+      "label": "append_processor",
+      "address": "0x1407aa060",
+      "size": 207,
+      "sha256": "c4fef94e7e5feee698cda8969d86864e6fe2282e17a7a3111544de113a223ffb"
+    },
+    {
+      "label": "slate_register",
+      "address": "0x14302d500",
+      "size": 331,
+      "sha256": "b5043ec32e3d1059ad11e2db3571c41dd4b8300c072fef0c00147a3bb3bd4166"
+    },
+    {
+      "label": "slate_unregister",
+      "address": "0x143036460",
+      "size": 277,
+      "sha256": "d88dd36dbb4383da9e99f7d51c969287ba9d1ac55814c15cd217ee69a2367d74"
+    },
+    {
+      "label": "slate_add_internal",
+      "address": "0x143002650",
+      "size": 319,
+      "sha256": "8c2196bb736ede03edef65351a2b2496bfb9d05f89203738a5f7ffb142d683e3"
+    },
+    {
+      "label": "slate_remove_array",
+      "address": "0x140bbc340",
+      "size": 352,
+      "sha256": "3688ff9a9d7cd33f0ebf73ce0b56b6a9aab1d407c73cf635045a28b1157cfddc"
+    },
+    {
+      "label": "slate_remove_map",
+      "address": "0x140bbc4a0",
+      "size": 405,
+      "sha256": "ef9d315845be25807fac3586f3ffd823cc3a006056b7eef0cf6c9f945b7625eb"
+    },
+    {
+      "label": "router_processor_acquire",
+      "address": "0x1407ecc70",
+      "size": 328,
+      "sha256": "a5e27db4bcf182c696b008ea2c38e2d70886b368d1e9dbb7a871f8fc7edc0095"
+    },
+    {
+      "label": "owner_processor_transfer",
+      "address": "0x1407e53ab",
+      "size": 158,
+      "sha256": "2b20a140d20aeca0b943ff888d3c9fd008f1d668b2b9f78821c8b197660a0516"
+    },
+    {
+      "label": "node_activation_parent",
+      "address": "0x1407cca90",
+      "size": 387,
+      "sha256": "6690ee3e95821ef1dd6d6b17a244dde1bce2db6d18bbaba5edc53df58782e9f9"
+    },
+    {
+      "label": "node_deactivation",
+      "address": "0x1407ccc50",
+      "size": 505,
+      "sha256": "cf1615e6ea72d0829958ebf1d8571232ea4f5d805168ad942f289e793a300894"
+    },
+    {
+      "label": "router_root_selection",
+      "address": "0x1407f4510",
+      "size": 549,
+      "sha256": "d5b8e6ce7acf0d7a6328760100ccab13a69f6ff38b5245883c3bb3e0a0f214fb"
+    },
+    {
+      "label": "root_selected_update",
+      "address": "0x1408030f0",
+      "size": 741,
+      "sha256": "5e425c6a7c7ce1e7e0d419824dcd9ff637b1f36c825f3e0e4b64f774baf1142f"
+    },
+    {
+      "label": "select_focus_node",
+      "address": "0x1407be240",
+      "size": 529,
+      "sha256": "b332fd8ffe483d9e24bcb0e1e1766823c9286a51038274d0c6be5b531fa6efdd"
+    },
+    {
+      "label": "focus_node_order",
+      "address": "0x1407c3c30",
+      "size": 324,
+      "sha256": "5c310948c62646f1f4de24cf02f324c3f999c3d1cc07a7bf10596ccda1fce2f2"
+    },
+    {
+      "label": "save_focus",
+      "address": "0x1407ad210",
+      "size": 466,
+      "sha256": "db3ba118b2d9bd9c257f8af03276c2aec585a0135626994b26af8b1aea8b201a"
+    },
+    {
+      "label": "apply_selected",
+      "address": "0x1407aa8d0",
+      "size": 707,
+      "sha256": "1bb662953fafa9a55a1e6f24021fb513367dd5b4beb6090b35944818bea39ed0"
+    },
+    {
+      "label": "inherit_optional_config",
+      "address": "0x1407bd840",
+      "size": 308,
+      "sha256": "59140f151dca38e5f41cf8351e185f6e3f959b35a6c47363c2201040f0a00137"
+    },
+    {
+      "label": "config_apply_entry",
+      "address": "0x1407f4770",
+      "size": 159,
+      "sha256": "c962a3cf90e4623d369eb5e8ad10fe18b24028595d669c70e037fa62db01cf76"
+    }
+  ],
+  "vtable_slots": [
+    {
+      "vtable": "0x1459ecdf8",
+      "offset": 48,
+      "target": "0x1407f5d50"
+    },
+    {
+      "vtable": "0x1459ece30",
+      "offset": 48,
+      "target": "0x1407f5ec0"
+    }
+  ]
+}

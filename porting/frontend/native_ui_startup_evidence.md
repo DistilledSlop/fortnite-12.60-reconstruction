@@ -76,8 +76,10 @@ callback `145312730` installs primary vtable `14700fc30`. Relevant exact slots:
 | `280` | `145146b80` | Update/select manager, then add this local player's root when possible |
 | `290` | `14514b080` | Remove this local player's previous root |
 
-Original property metadata binds Campaign/Athena/EntrywayManagerClassPath to
+Original property metadata binds Entryway/Athena/CampaignManagerClassPath to
 `48/60/78`, their loaded class pointers to `90/98/a0`, CurrentManager to `a8`.
+Correction: the earlier Campaign/Entryway ordering here was reversed; reflection
+block14700d9a0 and director_player_root_runtime pin the named fields and selection.
 Initialize resolves the three configured soft paths and binds callback
 `145174cf0` through `142ba9030` (handle `b0`) plus callback `1451540c0` to the
 multicast returned by `142ec9f90`. Their full event identities remain open.

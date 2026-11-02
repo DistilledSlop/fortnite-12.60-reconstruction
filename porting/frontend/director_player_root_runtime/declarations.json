@@ -1,0 +1,16 @@
+{
+  "UFortUIDirector": [
+    "virtual void NativeAddLocalPlayer(UFortLocalPlayer* LocalPlayer);",
+    "void NativeUpdateManager145176990();"
+  ],
+  "UFortUIManager": [
+    "void NativeAddLocalPlayer145146bc0(UFortLocalPlayer* LocalPlayer);",
+    "void NativeCreatePlayerRoot14514ab50(UFortLocalPlayer* LocalPlayer);",
+    "void NativeAttachRoot145146470(UFortLocalPlayer* LocalPlayer, UUserWidget* Root);",
+    "void NativePlayerControllerChanged14514cba0(UFortLocalPlayer* LocalPlayer);",
+    "virtual UWorld* GetWorld() const override;"
+  ],
+  "FFortRootViewportLayoutInfo": [
+    "bool bAttached;"
+  ]
+}

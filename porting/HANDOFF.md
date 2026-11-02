@@ -1,5 +1,66 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Current checkpoint: three more native methods integrated; ten imports remain (2026-11-02)
+
+This goal turn made concrete progress. Native 75bc1057 restored the exact
+GetImageOverride accessor and IsInZone query; client build PASS142.092s and the
+original Root retry reduced missing imports14->11, without new missing imports.
+Native 34e45456 then restored protected InitializeModal with the real progress
+widget title/description/icon methods and resource-dependent visibility. Client
+build PASS127.623s, Native source unchanged. Root again exits0, creation and
+viewport attachment complete, no Blueprint errors; missing imports11->10. Strict
+gate remains FAIL. UI-only batches did not repeat unchanged button/server/join
+suites. All four milestones/full visual/audio/client/server parity remain open.
+
+IMPORTANT: normal UFortGameInstance startup still has no restored Init/InitializeUI
+path. Root attachment is through the opt-in diagnostic, not a normal interactive
+menu. Normal startup's next real chain is Init141e67d50 -> gated InitializeUI
+141e6c120 -> director player-root method145146b80, not an unconditional probe or
+AddToViewport shortcut. Original attachment uses AddToPlayerScreen. Read
+frontend/native_ui_startup_evidence.md and the new director_player_root_runtime
+handoff. Manager root-added state/input/delegate effects must accompany creation.
+Primary also closed the exact manager GetWorld outer/GI chain and corrected the
+old startup note's reversed Entryway/Campaign field ordering. Next actual startup
+method is Startup root-added145166f50, not a diagnostic attachment shortcut.
+
+Commands: python3 /tmp/promote_frontend_imports_3.py (four generated class files),
+/tmp/build_frontend_imports_3.py, /tmp/run_frontend_imports_root_3.py; then matching
+phase4 scripts (two generated files). Reports /tmp/frontend-import-promotion-3/,
+/tmp/frontend-import-promotion-4/; build/runtime receipts in
+porting/generated/frontend-import-batch-{3,4}/. Staged client ELF is phase4.
+All build/runtime handles terminal. Engine remains c945a157c with its five
+pre-existing dirty paths preserved. All new source changes are generator-driven.
+
+Review/integration notes for the next bounded work:
+
+- GetImageOverride returns existing serialized DisplayAsset; no invented asset.
+  IsInZone tests the real local-player controller for Zone, then freshly looks
+  it up for Spectating. Existing UPlayer::GetPlayerController(world) is reused.
+- common_action_route_activation_runtime closes node gate production and the
+  real IInputProcessor payload/Slate registration. common_action_route_focus_runtime
+  closes much of the root focus/config chain, including nested optional semantics.
+  These are unintegrated candidates. Finish exact enum/override/platform boundaries
+  and real lifecycle; do not replace root state with always-active nodes.
+- lazy-image notes are corrected:1407c5060 gets CommonUI MODULE settings via
+  vtable+50, not a style/default brush. Null restoration uses settings field
+  DefaultImageResourceObjectInstance. commonui_module_brush_runtime contains
+  uncompiled module/settings fragments. Reuse CLOSED common_input_soft_load_evidence
+  and settings-cache runtime: helper1407d0ea0 is LoadSynchronous and global148263a08
+  gives GUObjectArray.IsDisregardForGC. The settings guard+0xa8/constructor and
+  generated layout need integration gates. Root removed a guessed void* API for
+  module null slot+48; its return type remains unresolved, no replacement API.
+- SLoadGuard is identified in common_lazy_image_guard_runtime; both loading
+  sources, construction/visibility/delegates/release must be maintained before
+  SetBrushFromLazyDisplayAsset promotion.
+- restart_modal_click_runtime now identifies the real restart/conditional exit,
+  ctor/setter exit flag, DeactivateWidget and on-stack manager Pop path. The
+  manager operation queue remains a genuine dependency; no fake fallback added.
+
+Preserve planner/orchestrator/reviewer preference, direct difficult integration,
+bounded agents/rotation, model configuration and economical reads described below.
+Do not repeat completed diagnostics or build a source-only candidate merely to
+count it as progress; integrate connected original behavior and test changed risk.
+
 ## Current checkpoint: original Root attaches; strict gate remains open (2026-11-02)
 
 Native 2b2993fe / Engine c945a157c client build PASS 125.753s, Native source

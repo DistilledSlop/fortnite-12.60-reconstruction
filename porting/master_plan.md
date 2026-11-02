@@ -10,15 +10,17 @@ credentials in Git, and the orchestrator reviews and commits.
 
 ## Current baseline
 
-Native 2b2993fe / Engine c945a157c client build passes (125.753s), as does the
-affected border/delegate/mobile GUI flow (12 rows). Source-based border styling,
-CommonActionCommited, IsMobileGame and GetInputPriority are integrated. The actual
-original Root now exits normally, completes creation and viewport attachment,
-and has zero Blueprint errors. Its strict gate still fails on 14 unresolved
-native imports. This proves attachment, not an interactive menu or pixels/audio.
+Native 34e45456 / Engine c945a157c client build passes (127.623s); IsInZone,
+GetImageOverride and progress-modal initialization now join the integrated border,
+delegate, mobile and input-priority behavior. The original Root diagnostic exits
+normally, completes creation/viewport attachment, and has zero Blueprint errors.
+Unresolved imports fell14->11->10; the strict gate still fails. Normal game-instance
+Init/InitializeUI and director/manager startup are not implemented, so diagnostic
+attachment is not a normal interactive menu or pixels/audio parity.
 Prior production button and retained GUI checks, server build and both direct
 joins remain the unchanged baseline; this UI batch did not repeat those suites.
-Next: real input-router/legacy registration, lazy-image streaming/load guard and
+Next: real director/player-root startup and its state/input/delegate effects,
+input-router/legacy registration, CommonUI settings and lazy-image loading, and
 remaining frontend imports. All four milestones and full faithful client/server/
 visual/audio parity remain open. See HANDOFF for current receipts and source-only
 candidates versus older snapshots.

@@ -1,0 +1,166 @@
+{
+  "image_base": "0x140000000",
+  "windows": [
+    {
+      "label": "derive_config",
+      "address": "0x1407bd980",
+      "size": 257,
+      "sha256": "5626f3b50ed9b6784f0646c4847595ca001ad013560d377b56b2068123ac9bac"
+    },
+    {
+      "label": "derive_nested_optional",
+      "address": "0x1407bd840",
+      "size": 308,
+      "sha256": "59140f151dca38e5f41cf8351e185f6e3f959b35a6c47363c2201040f0a00137"
+    },
+    {
+      "label": "apply_config_0",
+      "address": "0x1407f4770",
+      "size": 1024,
+      "sha256": "d52153b759cc74a2d7dd7d3aad9307f44eb36f0302dda55b5254cdee28c92f82"
+    },
+    {
+      "label": "apply_config_400",
+      "address": "0x1407f4b70",
+      "size": 334,
+      "sha256": "30b8ce2ee7c4635092ffa070b189026949d4b3bc7e732ef34f549852cc85286d"
+    },
+    {
+      "label": "apply_focus_0",
+      "address": "0x1407bef20",
+      "size": 1024,
+      "sha256": "36909979d0fb2ceb7a4e21a651a37e61489762771755d7d693bdc87ba4cefa8b"
+    },
+    {
+      "label": "apply_focus_400",
+      "address": "0x1407bf320",
+      "size": 509,
+      "sha256": "07bca090cb02a9694f57aa1a854148bd95446c1ccc59b5d20f79aecb6bdd9e58"
+    },
+    {
+      "label": "save_focus",
+      "address": "0x1407ad210",
+      "size": 466,
+      "sha256": "db3ba118b2d9bd9c257f8af03276c2aec585a0135626994b26af8b1aea8b201a"
+    },
+    {
+      "label": "find_ancestor",
+      "address": "0x1407be930",
+      "size": 513,
+      "sha256": "0cb7a49f4f184bfba7960b610dac64cdb3bdf46622cf0e99b7d96bd5f861bc21"
+    },
+    {
+      "label": "contains_widget",
+      "address": "0x1407d00e0",
+      "size": 120,
+      "sha256": "281b720ebf8320da47588f23af168d8c682640db108e3d8a20fd5cead80d81db"
+    },
+    {
+      "label": "strict_descendant",
+      "address": "0x1407cfcd0",
+      "size": 419,
+      "sha256": "2418d62151c3bfe719649914ba2e3d3ae165c20c3110f3ab0a516b232d28c239"
+    },
+    {
+      "label": "leaf_descendant",
+      "address": "0x1407cf170",
+      "size": 149,
+      "sha256": "55b0077e986eb3d8a79b2c19d7c7ec0458a127d5c296e8f58a04fbd18139a384"
+    },
+    {
+      "label": "nested_optional_default",
+      "address": "0x1407c25c0",
+      "size": 8,
+      "sha256": "a415efa36d5620904b7423fbc7fcb524ddfa358f9ed7141b3b3db5404b7a1869"
+    },
+    {
+      "label": "config_optional_default",
+      "address": "0x1407c26c0",
+      "size": 8,
+      "sha256": "37f7dba8c3f5804190cfe47455965162c0e36032517ecf08487abc84b3db2e05"
+    },
+    {
+      "label": "desired_focus_bridge",
+      "address": "0x1407d1ee0",
+      "size": 5,
+      "sha256": "42868796a58c89dacf36595c2e8e02d8a4884c1963788359860b0842bdb56e53"
+    },
+    {
+      "label": "desired_focus_event",
+      "address": "0x140808b40",
+      "size": 70,
+      "sha256": "6fefe3425a39b8fcda865e65f3745f73b7d49dc98c7293ef814790020ac61e64"
+    },
+    {
+      "label": "auto_restore_setter",
+      "address": "0x140808ee0",
+      "size": 8,
+      "sha256": "c56d3d35c7ca4de003b38fcb615c605feebc242c874542f725bdf6fa42dfe244"
+    },
+    {
+      "label": "supports_focus_setter",
+      "address": "0x140809010",
+      "size": 8,
+      "sha256": "01b5f764910665a18c61944d2fe0552d5903ca85221279c6461b1d91c97657a1"
+    },
+    {
+      "label": "modal_setter",
+      "address": "0x140808f90",
+      "size": 8,
+      "sha256": "bf45778704d997de4d99f114edc3b1c74331058dde2653446918869deeede08a"
+    },
+    {
+      "label": "cursor_setting",
+      "address": "0x1444889f0",
+      "size": 144,
+      "sha256": "059eb64a7bb4bbf512f79c1eb69f38f0fde982795427b421b07ebb592714b8fb"
+    },
+    {
+      "label": "viewport_capture_setting",
+      "address": "0x14422dbd0",
+      "size": 235,
+      "sha256": "851c26db21507af9de45a8b6ce4180f0df68d1c76e2f14cca2fbbaa3173fd418"
+    },
+    {
+      "label": "viewport_lock_setting",
+      "address": "0x14422dcd0",
+      "size": 235,
+      "sha256": "be9593c94661993d2a42c09879da7f2b803ca8e1c13bc8fcffa25f5c7480b6b8"
+    },
+    {
+      "label": "platform_cursor_policy",
+      "address": "0x1407fb160",
+      "size": 89,
+      "sha256": "3e5e7da4a837794ef793aff5e0ae8634575c71f996834a16724ad0ae55f1aa5c"
+    },
+    {
+      "label": "reply_mouse_lock",
+      "address": "0x1407adfb0",
+      "size": 141,
+      "sha256": "749fd77b6ad6f061ce3f0e28da49ed4d92d25973ed9adc93e3f759f74aade080"
+    },
+    {
+      "label": "reply_cancel_focus",
+      "address": "0x142f4b5b0",
+      "size": 133,
+      "sha256": "969f45b9546b6d061eeb8c5a5030ee52b437856ff367f1bde8c4bd281574eacf"
+    }
+  ],
+  "vtable_slots": [
+    {
+      "vtable": "0x1459ed638",
+      "offset": 1136,
+      "target": "0x1407c25c0"
+    },
+    {
+      "vtable": "0x1459ed638",
+      "offset": 1144,
+      "target": "0x1407c26c0"
+    },
+    {
+      "vtable": "0x1459ed638",
+      "offset": 1152,
+      "target": "0x1407d1ee0"
+    }
+  ]
+}

@@ -1,0 +1,728 @@
+{
+  "status": "source-candidate; promotion blocked on real dependencies",
+  "classes": {
+    "UFortLocalPlayer": {
+      "block_va": "0x14642adf0",
+      "name": null,
+      "name_status": "unresolved",
+      "config_name": "Engine",
+      "class_flags": "0x1000ac",
+      "dependency_fns": [
+        "0x1447870b0",
+        "0x142a02c30"
+      ],
+      "package_fn": "0x1447870b0",
+      "base_fn": "0x142a02c30",
+      "class_noregister_fn": "0x14287ccf0",
+      "interface_count": 0,
+      "properties": [
+        {
+          "index": 0,
+          "name": "PoiTracker",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x40000000002000",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 1192,
+          "type_refs": {
+            "class": "0x142aa0290"
+          }
+        },
+        {
+          "index": 1,
+          "name": "PlayerReportingInfoContainer",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x40000000000000",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 1096,
+          "type_refs": {
+            "struct": "0x142b892e0"
+          }
+        },
+        {
+          "index": 2,
+          "name": "PlatformUID",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x40000000000000",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 1056,
+          "type_refs": {
+            "struct": "0x1447a2020"
+          }
+        },
+        {
+          "index": 3,
+          "name": "bControllerAttached",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x40000000000000",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 1200,
+          "bitfield": true,
+          "set_bit_fn": "0x14295c570",
+          "offset": null
+        },
+        {
+          "index": 4,
+          "name": "ContentControlsManager",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x20080000002000",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 808,
+          "type_refs": {
+            "class": "0x14288e310"
+          }
+        },
+        {
+          "index": 5,
+          "name": "ClientSettingsRecord",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x20080000002000",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 800,
+          "type_refs": {
+            "class": "0x142879190"
+          }
+        },
+        {
+          "index": 6,
+          "name": "CachedScoreReports",
+          "kind": "Array",
+          "kind_raw": "0x16",
+          "property_flags": "0x10000000000000",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 784
+        },
+        {
+          "index": 7,
+          "name": "CachedScoreReports",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x0",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "struct": "0x142a248e0"
+          },
+          "array_inner_of": "CachedScoreReports"
+        },
+        {
+          "index": 8,
+          "name": "CachedRewardReport",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000000000000",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 672,
+          "type_refs": {
+            "struct": "0x142a249a0"
+          }
+        },
+        {
+          "index": 9,
+          "name": "FortOnlineAccount",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x10000000002000",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 648,
+          "type_refs": {
+            "class": "0x142a069a0"
+          }
+        }
+      ],
+      "replicated_properties": [],
+      "functions": [
+        {
+          "name": "GetClientSettings",
+          "create_func": "0x142985300",
+          "flags": [
+            "0x40020401"
+          ],
+          "replicated_function": false,
+          "net_roles": [],
+          "outer_fn": "0x1429852d0",
+          "params": [
+            {
+              "index": 0,
+              "name": "ReturnValue",
+              "kind": "Object",
+              "kind_raw": "0x12",
+              "property_flags": "0x10000000000580",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 0,
+              "type_refs": {
+                "class": "0x142879190"
+              }
+            }
+          ]
+        },
+        {
+          "name": "GetContentControlsManager",
+          "create_func": "0x142985330",
+          "flags": [
+            "0x40020401"
+          ],
+          "replicated_function": false,
+          "net_roles": [],
+          "outer_fn": "0x1429852d0",
+          "params": [
+            {
+              "index": 0,
+              "name": "ReturnValue",
+              "kind": "Object",
+              "kind_raw": "0x12",
+              "property_flags": "0x10000000000580",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 0,
+              "type_refs": {
+                "class": "0x14288e310"
+              }
+            }
+          ]
+        },
+        {
+          "name": "GetLocalSettings",
+          "create_func": "0x142985360",
+          "flags": [
+            "0x40020401"
+          ],
+          "replicated_function": false,
+          "net_roles": [],
+          "outer_fn": "0x1429852d0",
+          "params": [
+            {
+              "index": 0,
+              "name": "ReturnValue",
+              "kind": "Object",
+              "kind_raw": "0x12",
+              "property_flags": "0x10000000000580",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 0,
+              "type_refs": {
+                "class": "0x14292dc20"
+              }
+            }
+          ]
+        }
+      ],
+      "replicated_functions": [],
+      "dependency0_fn": "0x1447870b0"
+    },
+    "UFortUIDirector": {
+      "block_va": "0x14700d9a0",
+      "name": null,
+      "name_status": "unresolved",
+      "config_name": "Game",
+      "class_flags": "0xa4",
+      "dependency_fns": [
+        "0x142b28d50",
+        "0x145299720"
+      ],
+      "package_fn": "0x142b28d50",
+      "base_fn": "0x145299720",
+      "class_noregister_fn": "0x1453113f0",
+      "interface_count": 0,
+      "properties": [
+        {
+          "index": 0,
+          "name": "CurrentManager",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x40000000002000",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 168,
+          "type_refs": {
+            "class": "0x145312460"
+          }
+        },
+        {
+          "index": 1,
+          "name": "CampaignManagerClass",
+          "kind": "Class",
+          "kind_raw": "0x11",
+          "property_flags": "0x44000000002000",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 160,
+          "type_refs": {
+            "meta_class": "0x145312460",
+            "class": "0x142e497d0"
+          }
+        },
+        {
+          "index": 2,
+          "name": "AthenaManagerClass",
+          "kind": "Class",
+          "kind_raw": "0x11",
+          "property_flags": "0x44000000002000",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 152,
+          "type_refs": {
+            "meta_class": "0x145312460",
+            "class": "0x142e497d0"
+          }
+        },
+        {
+          "index": 3,
+          "name": "EntrywayManagerClass",
+          "kind": "Class",
+          "kind_raw": "0x11",
+          "property_flags": "0x44000000002000",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 144,
+          "type_refs": {
+            "meta_class": "0x145312460",
+            "class": "0x142e497d0"
+          }
+        },
+        {
+          "index": 4,
+          "name": "CampaignManagerClassPath",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x40000000004001",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 120,
+          "type_refs": {
+            "struct": "0x142eea5c0"
+          }
+        },
+        {
+          "index": 5,
+          "name": "AthenaManagerClassPath",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x40000000004001",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 96,
+          "type_refs": {
+            "struct": "0x142eea5c0"
+          }
+        },
+        {
+          "index": 6,
+          "name": "EntrywayManagerClassPath",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x40000000004001",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 72,
+          "type_refs": {
+            "struct": "0x142eea5c0"
+          }
+        }
+      ],
+      "replicated_properties": [],
+      "functions": [],
+      "replicated_functions": [],
+      "dependency0_fn": "0x142b28d50"
+    },
+    "UFortUIManager_Athena": {
+      "block_va": "0x14700dc30",
+      "name": null,
+      "name_status": "unresolved",
+      "config_name": null,
+      "class_flags": "0x9000a0",
+      "dependency_fns": [
+        "0x145312230",
+        "0x145299720"
+      ],
+      "package_fn": "0x145312230",
+      "base_fn": "0x145299720",
+      "class_noregister_fn": "0x1453125f0",
+      "interface_count": 1,
+      "properties": [
+        {
+          "index": 0,
+          "name": "PlayerWidgets",
+          "kind": "Map",
+          "kind_raw": "0x17",
+          "property_flags": "0x40008000002008",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 192
+        },
+        {
+          "index": 1,
+          "name": "PlayerWidgets_Key",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x80008",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "class": "0x142985490"
+          }
+        },
+        {
+          "index": 2,
+          "name": "PlayerWidgets",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x80008",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 1,
+          "type_refs": {
+            "class": "0x1452c41f0"
+          }
+        },
+        {
+          "index": 3,
+          "name": "LetoHudOverlay",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x40000000082008",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 184,
+          "type_refs": {
+            "class": "0x145336800"
+          }
+        },
+        {
+          "index": 4,
+          "name": "LetoHudOverlayClass",
+          "kind": "Class",
+          "kind_raw": "0x11",
+          "property_flags": "0x44000000000001",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 176,
+          "type_refs": {
+            "meta_class": "0x145336800",
+            "class": "0x142e497d0"
+          }
+        }
+      ],
+      "replicated_properties": [],
+      "functions": [],
+      "replicated_functions": [],
+      "dependency0_fn": "0x145312230"
+    },
+    "UFortUIManager_Startup": {
+      "block_va": "0x14700dfe0",
+      "name": null,
+      "name_status": "unresolved",
+      "config_name": null,
+      "class_flags": "0x8000a0",
+      "dependency_fns": [
+        "0x145311880",
+        "0x145299720"
+      ],
+      "package_fn": "0x145311880",
+      "base_fn": "0x145299720",
+      "class_noregister_fn": "0x145312040",
+      "interface_count": 0,
+      "properties": [],
+      "replicated_properties": [],
+      "functions": [],
+      "replicated_functions": [],
+      "dependency0_fn": "0x145311880"
+    },
+    "UFortUIManager": {
+      "block_va": "0x14700e250",
+      "name": null,
+      "name_status": "unresolved",
+      "config_name": null,
+      "class_flags": "0x9000a1",
+      "dependency_fns": [
+        "0x142eea530",
+        "0x145299720"
+      ],
+      "package_fn": "0x142eea530",
+      "base_fn": "0x145299720",
+      "class_noregister_fn": "0x145311f20",
+      "interface_count": 0,
+      "properties": [
+        {
+          "index": 0,
+          "name": "RootViewportLayouts",
+          "kind": "Array",
+          "kind_raw": "0x16",
+          "property_flags": "0x20088000002000",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 88
+        },
+        {
+          "index": 1,
+          "name": "RootViewportLayouts",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x8000000000",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "struct": "0x145313fe0"
+          },
+          "array_inner_of": "RootViewportLayouts"
+        },
+        {
+          "index": 2,
+          "name": "bUseLegacyInputSystem",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x20080000000001",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 168,
+          "bitfield": true,
+          "set_bit_fn": "0x14075d4a0",
+          "offset": null
+        },
+        {
+          "index": 3,
+          "name": "LayoutClass",
+          "kind": "SoftClass",
+          "kind_raw": "0xd",
+          "property_flags": "0x24080000000001",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 40,
+          "type_refs": {
+            "meta_class": "0x143dbd0a0"
+          }
+        }
+      ],
+      "replicated_properties": [],
+      "functions": [],
+      "replicated_functions": [],
+      "dependency0_fn": "0x142eea530"
+    }
+  },
+  "windows": [
+    {
+      "label": "director_add",
+      "va": "0x145146b80",
+      "size": 57,
+      "sha256": "b42338886e72846ee6e02dcb58ae63cd1a60bf240f5bf23b4563b0e1211e1811"
+    },
+    {
+      "label": "select_manager",
+      "va": "0x145176990",
+      "size": 703,
+      "sha256": "9abaedbbfbdec35a3662041f1cdef8a4c9690718bb91323324eb3e8d33527260"
+    },
+    {
+      "label": "manager_add",
+      "va": "0x145146bc0",
+      "size": 389,
+      "sha256": "facddd9be279b6a15eaeeec6380d76ff4a32fbc4a465be6217d74bfc76514650"
+    },
+    {
+      "label": "create_root",
+      "va": "0x14514ab50",
+      "size": 186,
+      "sha256": "cdf77a90a98fdeb7376907e2062cd98512e4e1646b0f69c43cf65220d0d7bcf9"
+    },
+    {
+      "label": "attach_root",
+      "va": "0x145146470",
+      "size": 356,
+      "sha256": "1c1479c54d218ad08eacabc33462fe8e66485cee5c952a7061322d9cdcfcb930"
+    },
+    {
+      "label": "weak_callback",
+      "va": "0x14514cba0",
+      "size": 126,
+      "sha256": "3e7b360d289619226497e06bc858a1293835a7a9c81f38ced5cb4b7b2a3fb0a2"
+    },
+    {
+      "label": "weak_callback_checked",
+      "va": "0x14514d2c0",
+      "size": 156,
+      "sha256": "87ce81a1b280b2d64f21817e3c50b64a91cefc2d77d466930525bf5bef953f03"
+    },
+    {
+      "label": "manager_ctor",
+      "va": "0x145143bd0",
+      "size": 185,
+      "sha256": "67390fe14733f37abb0c5b8169d64dfff16ce97776d3fd9e9f431014cf8267af"
+    },
+    {
+      "label": "startup_root_added",
+      "va": "0x145166f50",
+      "size": 311,
+      "sha256": "eeb9b5e9a354917f6eb2c25f0b49a0add30ce58fae3be82c1cb8ce345ba90086"
+    },
+    {
+      "label": "startup_root_removed",
+      "va": "0x145167210",
+      "size": 12,
+      "sha256": "6f00b56a2db48627c9e6215293cf2f5ab454eec7685886165ea3e03c78f36b6c"
+    },
+    {
+      "label": "subgame_accessor",
+      "va": "0x141e5f160",
+      "size": 8,
+      "sha256": "3fc30e32949388701e3ba733d4a0226e7f54ef1f8f55b12718f8f88dc56328ed"
+    },
+    {
+      "label": "nomcp_predicate",
+      "va": "0x141f3ad70",
+      "size": 112,
+      "sha256": "e744d5ff5debb49c3ed69c434b84ac0e6ff08fe6f5459afa1591606403284d22"
+    },
+    {
+      "label": "nomcp_literal",
+      "va": "0x145bc3a00",
+      "size": 12,
+      "sha256": "7ae9c07dc6f9bf0e3d0d509d77482cff1fa202f20c21eb7463f6e15c3c91de63"
+    },
+    {
+      "label": "player_controller",
+      "va": "0x14447f220",
+      "size": 204,
+      "sha256": "42bf00f421b595c07af5dba2f05af6baf42d055753bf60e0903be07179fe46a4"
+    },
+    {
+      "label": "manager_get_world",
+      "va": "0x14514f610",
+      "size": 25,
+      "sha256": "12f6832dfd97dbc5125f9373772fa704e2d50f77eae8a8e92e84f0655b4befd9"
+    },
+    {
+      "label": "director_get_game_instance",
+      "va": "0x14460bc60",
+      "size": 64,
+      "sha256": "5f22bc071ef1f13244050d6eb1fe24ec8692afa8ff01cc0d63014933a1ba7ac5"
+    },
+    {
+      "label": "engine_game_instance_get_world",
+      "va": "0x144217e60",
+      "size": 18,
+      "sha256": "c92eb0c0948ecd9446973ecd4f43106aed3088abf1e396ade1c92209f3b02bc8"
+    },
+    {
+      "label": "game_instance_class_getter",
+      "va": "0x144706480",
+      "size": 176,
+      "sha256": "11503fe07c99f55451408fbb0a92422bc17fcb1482569dc9b982438be65833b0"
+    },
+    {
+      "label": "game_instance_type_name",
+      "va": "0x146ba4bb2",
+      "size": 26,
+      "sha256": "dae3e67035c6e01966f8be60b874f01ddc5349223ab02e6079b93ef78979f5be"
+    }
+  ],
+  "slots": [
+    {
+      "table": "0x14700fc30",
+      "slot": "0x280",
+      "body": "0x145146b80"
+    },
+    {
+      "table": "0x147011440",
+      "slot": "0x298",
+      "body": "0x145166f50"
+    },
+    {
+      "table": "0x147011440",
+      "slot": "0x2a8",
+      "body": "0x145167210"
+    },
+    {
+      "table": "0x147011440",
+      "slot": "0x150",
+      "body": "0x14514f610"
+    }
+  ],
+  "required_real_dependencies": [
+    "UFortUIDirector::NativeSetManager1451746d0 with director Outer, original old-manager shutdown, root re-add, interface restoration and multicast30",
+    "UFortLocalPlayer::NativePredicate14238f060 and real player native multicast348; AddWeakLambda callback signature must match its recovered producer",
+    "UFortGameInstance native byte828 subgame accessor and byte7bb UI-manager-change gate, including their real writers",
+    "UFortUIManager::NativeUpdateUIState1451755b0 and Startup virtual280=14514b4b0 plus virtual290=1451659b0",
+    "UFortUIManager::NativeOnRootAdded298 dispatched to Startup145166f50, not a no-op",
+    "UFortUIManager::NativeRemovePlayerRootScreen14516d0d0 and global cached predicate141ed92b0 for weak callback",
+    "FFortRootViewportLayoutInfo native unreflected bool bAttached +0x10, size0x18; reflected pointers remain GC-visible",
+    "Director virtual280 must override inherited real local-player lifecycle declaration; its source name is not recovered"
+  ]
+}
