@@ -19,6 +19,12 @@ void UCommonTextBlock::SetStyle(TSubclassOf<UCommonTextStyle> InStyle)
     SynchronizeProperties();
 }
 
+void UCommonTextBlock::SetTextCase(bool bUseAllCaps)
+{
+    TextTransformPolicy = bUseAllCaps ? ETextTransformPolicy::ToUpper : ETextTransformPolicy::None;
+    SynchronizeProperties();
+}
+
 void UCommonTextBlock::SynchronizeProperties()
 {
     UClass* Class = Style.Get();

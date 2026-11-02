@@ -13,6 +13,7 @@
 #include "FAsyncTaskCallbackDelegate.h"
 #include "FOnActorEnterExitVolume.h"
 #include "FOnRestrictionEnabledChanged.h"
+#include "FOnShowHUDMessage.h"
 #include "FOnShowPublishWatermarkChanged.h"
 #include "FOnVolumePerformanceMetricsUpdated.h"
 #include "FVolumeActorStats.h"
@@ -147,6 +148,10 @@ public:
 	// table index 7, flags 0x10000010082000
 	UPROPERTY(Transient)
 	FOnActorEnterExitVolume OnActorExit;
+
+	// table index 6, flags 0x10100010082000
+	UPROPERTY(Transient)
+	FOnShowHUDMessage OnShowHUDMessage;
 
 	// table index 5, flags 0x10000010080000
 	UPROPERTY()

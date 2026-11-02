@@ -44,6 +44,7 @@ void RegisterActionBindingProviderProbeDriver();
 void RegisterActionBindingCreationProbeDriver();
 void RegisterCommonButtonTextStyleProbeDriver();
 void RegisterCommonTextBlockStyleProbeDriver();
+void RegisterCommonTextTransformProbeDriver();
 void RunOriginalVulkanShaderProbe();
 void RunLegacyMaterialShaderMapProbe();
 void RegisterLegacyOriginalMaterialProvider();
@@ -194,6 +195,7 @@ public:
         RegisterActionBindingCreationProbeDriver();
         RegisterCommonButtonTextStyleProbeDriver();
         RegisterCommonTextBlockStyleProbeDriver();
+        RegisterCommonTextTransformProbeDriver();
         RegisterPanelIntroProbeDriver();
         RegisterPanelOutroProbeDriver();
         RegisterConfirmationDescriptionProbeDriver();

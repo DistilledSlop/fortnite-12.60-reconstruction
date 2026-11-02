@@ -40,6 +40,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetStyle(TSubclassOf<UCommonTextStyle> InStyle);
 
+	UFUNCTION(BlueprintCallable)
+	void SetTextCase(bool bUseAllCaps);
+
 public:
     UCommonTextBlock(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
     virtual void SynchronizeProperties() override;
