@@ -1,6 +1,6 @@
 #pragma once
 
-// Data/storage building blocks only. Registration, routing and providers are not implemented.
+// Data/storage and creation entry only. Routing and lifecycle registration remain separate.
 #include "CoreMinimal.h"
 #include "Delegates/Delegate.h"
 #include "Engine/DataTable.h"
@@ -11,6 +11,9 @@
 DECLARE_DELEGATE_OneParam(FCommonActionBindingProgress, float);
 DECLARE_MULTICAST_DELEGATE_OneParam(FCommonActionBindingProgressMulticast, float);
 
+COMMONUI_API DECLARE_LOG_CATEGORY_EXTERN(LogUIActionRouter, Log, All);
+
+class UWidget;
 class FCommonActionBindingRoute; // Identity and behavior remain unresolved.
 
 struct FCommonActionBindingDescriptor
@@ -67,6 +70,8 @@ public:
 
 namespace CommonActionBindingData
 {
+    // Original creation only: validates and inserts. Router association is separate.
+    COMMONUI_API int32 Create(const FCommonActionBindingDescriptor& Descriptor, UWidget* Owner);
     // Isolated modulo counter step; does not reset or expose the global counter.
     COMMONUI_API int32 AllocateIdBits(uint32& Counter);
     COMMONUI_API FCommonActionBindingRecord BuildRecord(const FCommonActionBindingDescriptor& Descriptor, UObject* Owner, ICommonActionBindingDataResolver& Resolver);

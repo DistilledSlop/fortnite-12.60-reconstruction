@@ -9,6 +9,8 @@
 class COMMONUI_API FCommonActionBindingEngineResolver final : public ICommonActionBindingDataResolver
 {
 public:
+    const FUIInputAction* FindTag(FName Tag);
+    const FCommonInputActionData* FindRow(const FDataTableRowHandle& Row);
     const FUIInputAction& ResolveTag(FName Tag) override;
     const FCommonInputActionData& ResolveRow(const FDataTableRowHandle& Row) override;
     int32 ResolveGamepadIndex(UObject* Owner) override;

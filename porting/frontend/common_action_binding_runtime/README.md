@@ -1,7 +1,8 @@
 # Common action binding data and storage
 
 These templates provide owned binding data/storage and original engine-backed
-data resolvers. Registration and input routing remain unfinished. The normal generator
+data resolvers. The source-backed creation candidate validates and inserts records; router association,
+lifecycle registration and input routing remain unfinished. The normal generator
 must validate `policy.validate_types(gate)` and copy the data and provider templates into CommonUI's
 Generated directory before building them. The adapter supplies a resolver whose tag
 lookup scans the original InputActions in order for the first exact tag; row lookup
@@ -54,3 +55,16 @@ and both joins pass. The checkpoint is `generated/frontend-native-evidence/
 action-binding-provider-runtime-1/checkpoint.json` (see HANDOFF for pinned hashes).
 This establishes the resolver component; original creation, registration, routing
 and interactive UI remain unfinished.
+
+
+`CommonActionBindingData::Create` recovers the original data creation entry:
+name, safe click delegate, tag, row and duplicate validation precede ID allocation
+and owned insertion. Tag and row are checked independently. Duplicate identity
+is derived name, event and resolved weak owner; other flags/text do not replace
+an existing binding. The created record's own ID is the map key, with no wrap
+sentinel avoidance. `LogUIActionRouter` is one exported shared category (default
+Log, compile All); original Error diagnostics and event labels are retained.
+`original-creation.json` pins the full entry, category construction and diagnostic
+literals. This does not implement the router's signed-ID acceptance, association,
+notification or teardown. The 23-row CreationProbe and exact log verifier are new
+and not yet engine-validated; prior checkpoints remain historical baselines.

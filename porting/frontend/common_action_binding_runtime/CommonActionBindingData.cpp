@@ -1,4 +1,8 @@
 #include "CommonActionBindingData.h"
+#include "CommonActionBindingProviders.h"
+#include "Components/Widget.h"
+
+DEFINE_LOG_CATEGORY(LogUIActionRouter);
 
 namespace
 {
@@ -96,3 +100,49 @@ FCommonActionBindingRecord CommonActionBindingData::BuildRecord(
 FCommonActionBindingRecord* CommonActionBindingData::Find(int32 Key) { return Records.Find(Key); }
 FCommonActionBindingRecord& CommonActionBindingData::Add(int32 Key, const FCommonActionBindingRecord& Record) { return Records.Add(Key, Record); }
 int32 CommonActionBindingData::Remove(int32 Key) { return Records.Remove(Key); }
+
+int32 CommonActionBindingData::Create(const FCommonActionBindingDescriptor& Descriptor, UWidget* Owner)
+{
+    if (DeriveName(Descriptor).IsNone())
+    {
+        UE_LOG(LogUIActionRouter, Error, TEXT("Cannot create action binding for widget [%s] - no action provided."), *Owner->GetFName().ToString());
+        return -1;
+    }
+    if (!Descriptor.Click.IsBound())
+    {
+        UE_LOG(LogUIActionRouter, Error, TEXT("Cannot bind widget [%s] to action [%s] - empty handler delegate."), *Owner->GetFName().ToString(), *DeriveName(Descriptor).ToString());
+        return -1;
+    }
+    FCommonActionBindingEngineResolver Resolver;
+    if (!Descriptor.Tag.IsNone() && !Resolver.FindTag(Descriptor.Tag))
+    {
+        UE_LOG(LogUIActionRouter, Error, TEXT("Cannot bind widget [%s] to action [%s] - provided tag does not map to an existing UI input action. It can be added under Project Settings->UI Input."), *Owner->GetFName().ToString(), *DeriveName(Descriptor).ToString());
+        return -1;
+    }
+    if ((Descriptor.Row.DataTable || !Descriptor.Row.RowName.IsNone()) && !Resolver.FindRow(Descriptor.Row))
+    {
+        UE_LOG(LogUIActionRouter, Error, TEXT("Cannot bind widget [%s] to action [%s] - provided legacy data table row does not resolve to valid data."), *Owner->GetFName().ToString(), *DeriveName(Descriptor).ToString());
+        return -1;
+    }
+    for (const auto& Pair : Records)
+    {
+        const FCommonActionBindingRecord& Existing = Pair.Value;
+        if (Existing.Name == DeriveName(Descriptor) && Existing.Event == Descriptor.Event && Existing.Owner.Get() == Owner)
+        {
+            const TCHAR* EventName = TEXT("Invalid");
+            switch (Descriptor.Event)
+            {
+                case 0: EventName = TEXT("Pressed"); break;
+                case 1: EventName = TEXT("Released"); break;
+                case 2: EventName = TEXT("Repeat"); break;
+                case 3: EventName = TEXT("DoubleClick"); break;
+                case 4: EventName = TEXT("Axis"); break;
+            }
+            UE_LOG(LogUIActionRouter, Error, TEXT("Widget [%s] is already bound to action [%s] [%s]! A given widget can only bind the same action once. Unregister existing binding first if you wish to change any aspect of the binding"), *Owner->GetFName().ToString(), *Existing.Name.ToString(), EventName);
+            return -1;
+        }
+    }
+    FCommonActionBindingRecord Record = BuildRecord(Descriptor, Owner, Resolver);
+    Records.Add(Record.Id, Record);
+    return Record.Id;
+}

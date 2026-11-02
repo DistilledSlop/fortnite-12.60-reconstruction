@@ -41,6 +41,7 @@ void RegisterCommonInputActionRowProbeDriver();
 void RegisterCommonInputCurrentTypeProbeDriver();
 void RegisterActionBindingDataProbeDriver();
 void RegisterActionBindingProviderProbeDriver();
+void RegisterActionBindingCreationProbeDriver();
 void RunOriginalVulkanShaderProbe();
 void RunLegacyMaterialShaderMapProbe();
 void RegisterLegacyOriginalMaterialProvider();
@@ -188,6 +189,7 @@ public:
         RegisterCommonInputCurrentTypeProbeDriver();
         RegisterActionBindingDataProbeDriver();
         RegisterActionBindingProviderProbeDriver();
+        RegisterActionBindingCreationProbeDriver();
         RegisterPanelIntroProbeDriver();
         RegisterPanelOutroProbeDriver();
         RegisterConfirmationDescriptionProbeDriver();

@@ -1,0 +1,97 @@
+{
+  "image_base": "0x140000000",
+  "image_sha256": "338c83a2314ccac1040a2c0bb520b893013cc7b58eda58e550da67f5d84de680",
+  "spans": [
+    {
+      "name": "creation_entry",
+      "start": "0x140800e60",
+      "end": "0x1408014ff",
+      "sha256": "1d921d6f1ab324900984eac5c1c07d6fb242773a75193c8f1146323f028f51af"
+    },
+    {
+      "name": "log_category_initialization",
+      "start": "0x1401c5660",
+      "end": "0x1401c56a2",
+      "sha256": "dc5910286b5705d70ea4388d70e3968a8c7b585b1902f8c84ec7ab961af38979"
+    },
+    {
+      "name": "duplicate_event_diagnostics",
+      "start": "0x14080134b",
+      "end": "0x1408013a7",
+      "sha256": "9ed3f30149988b0518b000ddbd3fc7633f862575d5430bfe6e9fed558f60f5fb"
+    },
+    {
+      "name": "category",
+      "start": "0x1459eb898",
+      "end": "0x1459eb8bc",
+      "sha256": "b44a943d50d34617a93d586040373889a95a327af02125409c0f5a26b322c8f1"
+    },
+    {
+      "name": "pressed",
+      "start": "0x1459fc888",
+      "end": "0x1459fc898",
+      "sha256": "f003bde36880390239641069fb0a5226f1e6f434fb9db00704807f7aed42c082"
+    },
+    {
+      "name": "released",
+      "start": "0x1459fc898",
+      "end": "0x1459fc8aa",
+      "sha256": "d75c45553c519d3c19ce03efe754346d32f722e7d22c8f2a7a71e5e6af5ad7cd"
+    },
+    {
+      "name": "repeat",
+      "start": "0x1459fc8b0",
+      "end": "0x1459fc8be",
+      "sha256": "27ed33e03fef9d2ee2db6d9ceb3053c8f3a6ade93f043eb53af6c4f0fe49cd26"
+    },
+    {
+      "name": "double_click",
+      "start": "0x1459fc8c0",
+      "end": "0x1459fc8d8",
+      "sha256": "34cac00c730b8eb8bea0e5a85526143d2a425b16cfcc9cc0eb1e85d91bf32845"
+    },
+    {
+      "name": "axis",
+      "start": "0x1459fc8d8",
+      "end": "0x1459fc8e2",
+      "sha256": "a2e947fa02914fa429555fcef37352f6f37c7f026938b3fe81b856fd75ba27fb"
+    },
+    {
+      "name": "invalid_event",
+      "start": "0x1459aedc0",
+      "end": "0x1459aedd0",
+      "sha256": "7214a4ec935e1a747e7013ef22696a44370c0bd4146313cf5592575a8df8d1ca"
+    },
+    {
+      "name": "rejection_0",
+      "start": "0x1459fc8f0",
+      "end": "0x1459fc976",
+      "sha256": "46ddd8e6b6c14c0822c3f90178453c6567b6254eb80e9c94fb5cc0bd743ab461"
+    },
+    {
+      "name": "rejection_1",
+      "start": "0x1459fc980",
+      "end": "0x1459fca02",
+      "sha256": "122b5ebbd0f3875ccf14e18a3cf590dd9f22055a9fa6930eff285bfbf47e52c5"
+    },
+    {
+      "name": "rejection_2",
+      "start": "0x1459fca10",
+      "end": "0x1459fcb3a",
+      "sha256": "809ddd661af610554b412944d8f007de55cedf36597f298de67697d72babf5eb"
+    },
+    {
+      "name": "rejection_3",
+      "start": "0x1459fcb40",
+      "end": "0x1459fcc10",
+      "sha256": "aa3c62849feb8d3b27df7e544741d5788aa69eaf1aba7cd8711dba4780ed511b"
+    },
+    {
+      "name": "rejection_4",
+      "start": "0x1459fcc10",
+      "end": "0x1459fcd7e",
+      "sha256": "d8f4de3c2f3f782976794ae73424dd00a4112a178d89f28d54d8ddb893a509c4"
+    }
+  ],
+  "scope": "Creation140800e60 prevalidation, duplicate scan and record.Id-as-key insertion only; original router association, lifecycle, input dispatch and UI remain unfinished. LogUIActionRouter Error diagnostics, category defaultLog/compileAll. Shared category exported for subsequent router use."
+}

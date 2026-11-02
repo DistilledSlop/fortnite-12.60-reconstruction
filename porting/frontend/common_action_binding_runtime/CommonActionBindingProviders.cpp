@@ -6,17 +6,27 @@
 #include "UCommonUIInputSettings.h"
 #include "UObject/UObjectGlobals.h"
 
-const FUIInputAction& FCommonActionBindingEngineResolver::ResolveTag(FName Tag)
+const FUIInputAction* FCommonActionBindingEngineResolver::FindTag(FName Tag)
 {
     const UCommonUIInputSettings* Settings = GetDefault<UCommonUIInputSettings>();
     const FUIInputAction* Action = Settings->InputActions.FindByPredicate(
         [Tag](const FUIInputAction& Candidate) { return Candidate.ActionTag.GetTagName() == Tag; });
-    return *Action;
+    return Action;
+}
+
+const FCommonInputActionData* FCommonActionBindingEngineResolver::FindRow(const FDataTableRowHandle& Row)
+{
+    return Row.GetRow<FCommonInputActionData>(TEXT(""));
+}
+
+const FUIInputAction& FCommonActionBindingEngineResolver::ResolveTag(FName Tag)
+{
+    return *FindTag(Tag);
 }
 
 const FCommonInputActionData& FCommonActionBindingEngineResolver::ResolveRow(const FDataTableRowHandle& Row)
 {
-    return *Row.GetRow<FCommonInputActionData>(TEXT(""));
+    return *FindRow(Row);
 }
 
 int32 FCommonActionBindingEngineResolver::ResolveGamepadIndex(UObject* Owner)

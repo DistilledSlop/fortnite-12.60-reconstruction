@@ -23,23 +23,27 @@ SHIM = r'''
 #include <cstdio>
 using uint8=uint8_t; using uint32=uint32_t; using int32=int32_t;
 #define COMMONUI_API
+using TCHAR=char;
+#define DECLARE_LOG_CATEGORY_EXTERN(Name, Default, Compile)
+#define DEFINE_LOG_CATEGORY(Name)
+#define UE_LOG(Category, Verbosity, Format, ...) std::printf(Format, __VA_ARGS__)
 #define TEXT(x) x
 #define DECLARE_DELEGATE_OneParam(Name, Type) using Name=TDelegate<void(Type)>
 #define DECLARE_MULTICAST_DELEGATE_OneParam(Name, Type) using Name=TMulticastDelegate<void(Type)>
 struct FMemory { static void Memcpy(void* a,const void* b,size_t n){std::memcpy(a,b,n);} };
 struct FString : std::string { using std::string::string; FString(std::string s):std::string(s){} const char* operator*()const{return c_str();} template<class... T> static FString Printf(const char* f,T... args){char b[256]; std::snprintf(b,sizeof(b),f,args...); return FString(b);} };
-struct FName { std::string s; FName(){} FName(const char* x):s(x){} bool IsNone()const{return s.empty();} FString ToString()const{return FString(s);} };
+struct FName { std::string s; FName(){} FName(const char* x):s(x){} bool IsNone()const{return s.empty();} bool operator==(const FName& o)const{return s==o.s;} FString ToString()const{return FString(s);} };
 const FName NAME_None;
-struct UObject { virtual ~UObject(){} FString GetName()const{return FString("Table");} };
+struct UObject { virtual ~UObject(){} FString GetName()const{return FString("Table");} FName GetFName()const{return FName("Table");} };
 struct UDataTable:UObject{};
 struct FDataTableRowHandle { const UDataTable* DataTable=nullptr; FName RowName; };
 struct FText { std::string s; bool IsEmpty()const{return s.empty();} };
 struct FKey { int key=0; bool IsValid()const{return key!=0;} };
-template<class T> using TWeakObjectPtr=T*;
+template<class T> struct TWeakObjectPtr { T* p=nullptr; TWeakObjectPtr& operator=(T* value){p=value;return *this;} T* Get()const{return p;} };
 template<class T> using TWeakPtr=std::weak_ptr<T>;
 template<class T> struct TArray:std::vector<T>{ using std::vector<T>::operator=; T& AddDefaulted_GetRef(){this->emplace_back();return this->back();} };
-template<class K,class V> struct TMap { std::map<K,V> m; V* Find(K k){auto i=m.find(k);return i==m.end()?nullptr:&i->second;} V& Add(K k,const V& v){return m.insert_or_assign(k,v).first->second;} int32 Remove(K k){return m.erase(k);} };
-struct FSimpleDelegate { std::function<void()> f; };
+template<class K,class V> struct TMap { std::map<K,V> m; V* Find(K k){auto i=m.find(k);return i==m.end()?nullptr:&i->second;} V& Add(K k,const V& v){return m.insert_or_assign(k,v).first->second;} int32 Remove(K k){return m.erase(k);} struct Pair { V& Value; }; struct Iterator { typename std::map<K,V>::iterator i; bool operator!=(const Iterator& o)const{return i!=o.i;} void operator++(){++i;} Pair operator*()const{return {i->second};} }; Iterator begin(){return {m.begin()};} Iterator end(){return {m.end()};} };
+struct FSimpleDelegate { std::function<void()> f; bool IsBound()const{return bool(f);} };
 template<class S> struct TDelegate { std::function<S> f; bool alive=true; bool IsBound()const{return bool(f) && alive;} };
 template<class S> struct TMulticastDelegate { std::vector<TDelegate<S>> a; void Add(const TDelegate<S>& d){if(d.f) a.push_back(d);} };
 struct FUIActionKeyMapping { FKey Key; float HoldTime; };
@@ -133,10 +137,14 @@ class RuntimeTests(unittest.TestCase):
             for name in ['Delegates/Delegate.h','Engine/DataTable.h','InputCoreTypes.h','FUIInputAction.h','FCommonInputActionData.h']:
                 (p/name).parent.mkdir(parents=True, exist_ok=True)
                 (p/name).write_text('#pragma once\n#include "CoreMinimal.h"\n')
-            for name in ['CommonActionBindingData.h','CommonActionBindingData.cpp']:
+            # This portable shim exercises data rules only; creation and real providers
+            # are covered by the native CreationProbe. Discard uncalled Create.
+            (p/'Components').mkdir()
+            (p/'Components/Widget.h').write_text('#pragma once\n#include "CoreMinimal.h"\nstruct UWidget:UObject{};\n')
+            for name in ['CommonActionBindingData.h','CommonActionBindingData.cpp','CommonActionBindingProviders.h']:
                 (p/name).write_text((HERE/name).read_text())
             (p/'main.cpp').write_text(MAIN)
-            subprocess.run(['c++','-std=c++17','-O2','-ffast-math','-Wall','-Wextra','-Werror','-I',td,str(p/'CommonActionBindingData.cpp'),str(p/'main.cpp'),'-o',str(p/'test')],check=True)
+            subprocess.run(['c++','-std=c++17','-O2','-ffast-math','-ffunction-sections','-fdata-sections','-Wall','-Wextra','-Werror','-I',td,str(p/'CommonActionBindingData.cpp'),str(p/'main.cpp'),'-Wl,--gc-sections','-o',str(p/'test')],check=True)
             subprocess.run([str(p/'test')],check=True)
 
 if __name__ == '__main__': unittest.main()
