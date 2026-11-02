@@ -36,3 +36,11 @@ C++ lifetime rules; the probe does not hook per-string buffer deallocation.
 This change does not register upstream accepted-click, Initialize, legacy +0x498
 routing, or SetStyle. Native callers are not connected to production lifecycle yet.
 UE/UHT builds and runtime evidence must be recorded before calling it verified.
+
+Verified baseline: Native d08549a5 / Engine87acab901; client/server builds,
+14 actual callback cases, separate real game-instance subsystem observation,
+retained diagnostics and both joins pass. Frozen button-base-click-runtime-3 and
+its independent receipt audit are linked in HANDOFF.md. Failed probe phases1/2
+are preserved; both fixes changed the fixture, not production callback semantics.
+Further testing follows AGENTS.md: coherent integration batches and changed risk,
+not a full build/regression/archival cycle for each helper or commit.

@@ -6,7 +6,7 @@
       "id": "m1",
       "text": "The rebuilt client reaches the main menu with feature parity to the 12.60 original",
       "done": false,
-      "evidence": "Native 31aeea07 / Engine 87acab901 passes both builds and 93 real style-rebuild observations covering brushes, sound combinations, MID parent/outer, SBox sizing and synchronous native/reflected reentry. Retained diagnostics and both corrected direct-ELF joins pass. Independently audited button-style-rebuild-runtime-1 pins 105 project sources, 15 Engine inputs and 533 artifacts. Root creation remains seven widgets, four startup classes and 19 unresolved imports. Viewport attachment still crashes at CommonButton.SetStyle. Its helpers are verified; production internal-button lifecycle, click/focus/selection and action routing remain unfinished. No original pixels, audio playback or complete UI parity is established. All four gates stay open; material owners remain 129/142. See HANDOFF.md."
+      "evidence": "Native d08549a5 / Engine 87acab901 passes both builds, 14 base-click checks, retained 93 style-rebuild checks, other UI/input diagnostics and both local joins. Frozen button-base-click-runtime-3 has 116 source pairs, 15 Engine inputs and 680 artifacts; independent audit verifies source/receipt integrity. Actual GI subsystem lookup is observed. Root remains seven widgets, four startup classes and 19 unresolved imports; viewport still fails before attachment. Complete CommonButton initialization/callback/selection/SetStyle integration next. No interactive frontend, original pixels/audio or complete UI parity is established; all four gates stay open. See HANDOFF.md."
     },
     {
       "id": "m2",

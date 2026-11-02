@@ -21,3 +21,32 @@ Keep input-token use economical. Start with bounded searches and small head/tail
 # Bounded subagent tasks and rotation
 
 Use subagents as bounded function or task runners, implementers, explorers, or researchers. Do not give one long-lived subagent an entire milestone or broad group of dashboard tiles. Follow-up turns are allowed while the bounded task still benefits from its context. At a reasonable stopping point where much prior context is no longer relevant, have the agent freeze a concise handoff and finish, then start a new subagent for the next bounded task. The primary agent retains planning, integration, review, and overall ownership. Preserve this preference alongside the model configuration and input-efficiency rules in handoffs and compaction summaries.
+
+# Validation cadence
+
+Test according to changed risk and coherent integration batches, not each feature,
+helper, or commit. Documentation/status commits need no build or runtime suite.
+Keep source/reflection/generation invariants fail-closed, but batch their checks
+with the implementation they protect. Do not add tests that merely mirror code.
+
+For a frontend batch, default to a client build and the real affected frontend
+flow. Use existing focused checks for new ownership/GC, delegate mutation/reentry,
+bitfield, serialization, or other difficult reconstructed contracts. Simple
+accessors and ordinary calls usually need source review and coverage in the
+combined flow, not separate probe frameworks. After a fixture correction, repeat
+only the affected build/check unless a new failure justifies broader testing.
+
+Build/test the server and run joins when networking, backend, replicated/shared
+runtime contracts or server behavior changes, and at meaningful integration
+checkpoints. UI-only changes do not automatically require them. Run broad retained
+regressions for cross-cutting Engine/generator changes or completed integration
+batches before accepting a new baseline/milestone; do not repeat unchanged suites
+because another commit exists. Investigate actual crashes or uncertain ABI/lifetime
+behavior with a debugger rather than proving ordinary calls one by one.
+
+Keep source/build/run identifiers and useful failure logs. Full binary archival,
+independent provenance audits and exhaustive evidence packages belong at meaningful
+baseline/milestone checkpoints or when evidence is suspect, not every helper.
+If verification repeatedly dominates without advancing the product path, consolidate
+the implementation batch and reassess the check selection. Preserve this preference
+in compaction summaries and handoffs alongside the delegation and input-use rules.

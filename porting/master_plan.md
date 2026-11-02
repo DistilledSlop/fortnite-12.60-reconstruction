@@ -10,23 +10,21 @@ credentials in Git, and the orchestrator reviews and commits.
 
 ## Current baseline
 
-Native `31aeea07` / Engine `87acab901` passes both builds and 93 real style-rebuild
-observations: brush/sound caches, material ownership, SBox sizing, event reentry and
-fresh post-callback reads. Retained UI/input/binding diagnostics and both joins pass.
-The join harness now waits for the actual client ELF; its earlier shell-exit log race
-is preserved separately. See HANDOFF.md for frozen receipts and independent audit.
+Native `d08549a5` / Engine `87acab901` passes both builds, 14 base-click checks,
+retained 93 style-rebuild checks and other focused diagnostics, and both joins.
+Actual game-instance subsystem lookup is observed; source and runtime receipts
+are frozen at button-base-click-runtime-3. See HANDOFF.md for exact scope.
 
-Root creation remains seven widgets/four startup classes/19 unresolved imports.
-Viewport attachment still crashes at missing CommonButton.SetStyle. Its style helpers
-are complete and verified, while internal-button initialization/click/focus/selection
-and legacy action routing remain necessary for the full setter call chain.
-The next bounded base-click candidate has source guards but still needs refinement
-and real engine validation. Use the corrected game-instance context identity.
+Root creation remains seven widgets/four startup classes/19 unresolved imports;
+viewport attachment still fails before_attach. Complete the connected CommonButton
+initialization, callback, selection and SetStyle path toward a usable original
+frontend. Integrate bounded implementation candidates in coherent batches before
+building the client and testing that flow. Validation follows the risk-based cadence
+in AGENTS.md; no exhaustive per-helper/per-commit build/audit cycle.
 
-Queue rendering, remaining input/routing and text lifecycle, original pixels, backend
-end-to-end integration and gameplay remain unfinished. All four acceptance gates stay
-open; material compatibility remains 129/142. The separate CommonActionWidget display
-text candidate remains unintegrated. Preserve the full source-client/server parity goal.
+All four acceptance gates remain open. Full UI/rendering/input, original pixels and
+audio, backend integration, replication and gameplay remain required. Material
+compatibility stays129/142. EAC/entitlement compatibility remains in scope.
 
 ## Earlier checkpoints (historical)
 

@@ -1,6 +1,57 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
-## Current resume point (2026-11-02, style reconstruction verified)
+## Current resume point (2026-11-02, base click verified; testing cadence corrected)
+
+- Native `d08549a5` (implementation `d7844a9d`) / Engine `87acab901`: real base
+  click and default analytics virtual adapters, BP/native/dynamic callback order,
+  native multicast mutation, weak receivers and synchronous reentry. Both builds
+  PASS111.807/113.755s; 14 focused rows PASS. Production Initialize/accepted click,
+  selection/focus/hover, legacy +498 and SetStyle remain unregistered/unported.
+- Retained93style/11size/32buttonstyle/23textblock/22transform/9IsErebus/26bindingdata/
+  20provider/23creation/13input/421table rows with30checks and eight diagnostics PASS.
+  Default/Athena direct-ELF joins PASS21.607/21.634s. Root remains7widgets/4startup
+  classes/19imports; viewport SIGSEGV(-11), viewport.last_phase=before_attach.
+  Last exact crash trace is prior31aeea07's missing CommonButton.SetStyle; it was
+  not rerun merely to reconfirm an unchanged unregistered call.
+- Frozen `generated/frontend-native-evidence/button-base-click-runtime-3/checkpoint.json`
+  SHA2565c6df6fce0c9264664caa4c842d120a32facb8446d40c306b10f58e1d9892b2f;
+  archive `/mnt/vibrato/fortnite-evidence/frozen-runtime/button-base-click-runtime-3`,
+  releaseSHA34652ba0de81bb9944a28ad7171e012f86c1a84c60942314f29e983c32214d28.
+  116source pairs/15Engine inputs/680artifacts/18binary rows/25fonts; Native12735.
+  Corrected independent Luna audit PASS20checks, including full Native/config hashes,
+  source/archive/Git parity, exact14 verifier, all eight GREEN retained diagnostics,
+  release linkage and GDB observations. Giant binary/debug payloads were not separately
+  rehashed by the auditor. `button-base-click-receipt-audit-1/` under scratch work.
+- GDB attempt2 proves one real CommonUISubsystem lookup owned by actual World GI,
+  none from false/null cases; direct map hit, no cache-insertion claim. First attempt
+  could not read an optimized local; preserved. GDB tty is muted: normal strict14
+  transcript is separately pinned; debugger inferior exits0. `button-base-click-lookup-debugger-2/`.
+- Failed runtime phases1/2 remain forensic: abstract UObject outer, then wrong stable
+  removal expectation. Fixed probe only (f011608f/d08549a5); production unchanged.
+  Source proves swap-compaction in button-click-compaction-proof-1/. All build/stage/
+  runtime/GDB/freeze handles terminal:76436/82014/60451/71492/46910. Scripts
+  `/mnt/vibrato/fortnite-work/{build_,stage_,validate_,freeze_}button_base_click*3.py`.
+- NEXT: complete a connected CommonButton Initialize/callback/selection/SetStyle path
+  and test original frontend viewport attachment. Use bounded scratch candidates,
+  then integrate a coherent batch before a client build. Do not make another complete
+  archive/server-join/regression cycle for each helper. Full four-milestone goal stays
+  active; no fake/no-op callbacks, feature stripping or fabricated state to pass a check.
+- Source corrections/details: common_button_click_runtime/source-evidence.md;
+  scratch panel-commit-producer-trace-1 proves concrete panel NativeCommit(bool&).
+  button-triggered-row-producer-1 locates distinct native +2c0 row setter1407fa760,
+  with unported held binding/update/event effects. Native double/hover/unhover/focus
+  +af0/+b08/+b20/+b38 are MULTICAST, correcting older singlecast labels. Focus predicate
+  1406801e0 is source-proven three-byte false; API identity remains unknown. Hover's
+  143d65fb0 nested widget-helper identity still needs closure. Each scratch proof has replay.py.
+- USER TESTING DIRECTION: testing is important for reconstruction but must follow
+  risk and integration batches, not each feature or commit. Persisted in AGENTS.md.
+  Latest small callback phase used6builds=13m39s, two debugger runs=4m44s and15-stage
+  validation=2m55s; this was excessive. See testing-cost-review-1/HANDOFF.md. Keep
+  targeted lifetime/reentry/wire checks; use client frontend flows by default, server
+  joins when affected, broad checks/archival audits at meaningful integration gates.
+
+## Previous checkpoint (style reconstruction)
+
 
 - Native `31aeea07` (implementation463a9b95) / Engine `87acab901` restores real
   CommonButton style rebuild, current-style refresh, dimensions and native-to-BP
