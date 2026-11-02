@@ -1,17 +1,35 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
-## Larger connected routing/loading batch: generated, validation pending (2026-11-02)
+## Connected routing/loading checkpoint: both builds and default join pass (2026-11-02)
 
 Previous work made progress; user explicitly requests larger related integration
-batches and dynamic allocation. Current unbuilt batch restores route hierarchy,
+batches and dynamic allocation. Source1a1d8d9a plus compatibility10d2e923 restores route hierarchy,
 registration/discovery, hold/normal dispatch, analog cursor, modality producers
 and recognition, widget release/rebuild/back handling, button Slate metadata,
 settings defaults and async lazy-image/load-guard behavior. Nineteen Native
 files changed and fifteen support files added through generation. Original
 CommonInput Game config and CommonUI Input config entries are restored. Engine
-978fb5195 backports actual typed FAnalogCursor relevance overloads from local4.26.
-The five pre-existing Engine dirty paths remain untouched. No runtime/build PASS
-is claimed for this batch yet. Baseline e56c37ac below remains the last built UI.
+978fb5195 backports actual typed FAnalogCursor relevance overloads from local4.26;
+b96f01a60 exposes the existing viewport mouse-for-touch query as in4.26.
+The five pre-existing Engine dirty paths remain untouched. Client PASS368.420s,
+Native source unchanged. Root diagnostic exits0, creation/attachment complete,
+zero Blueprint errors,9 unresolved imports (previous10), strict gate still FAIL.
+Initial run exposed missing configured input assets;144 recovered packages/288
+payload files were staged without replacing existing packages. The affected Root
+retry has no missing input-package/unloaded-settings warnings and the same9
+imports. Server PASS430.375s, Native source unchanged; fresh default join
+PASS21.637s. Both staged binaries match this connected checkpoint.
+
+Commands: /tmp/promote_frontend_routing_{7,8}.py (first build failed4 concrete
+compatibility errors; all corrected in canonical inputs),
+/tmp/build_frontend_routing_8.py, /tmp/build_frontend_routing_server_8.py,
+/tmp/run_frontend_routing_root_8.py, /tmp/stage_common_input_assets_8.py,
+/tmp/run_frontend_routing_root_input_8.py. Receipts generated/frontend-routing-
+batch-8/{results.json,root-attach-input-assets/receipt.json,input-assets-stage.json}
+and generated/frontend-routing-server-8/. Input config staging pins both Game
+and Input config. No unchanged button/checksum suites repeated.
+Join command /tmp/run_frontend_routing_joins_8.py; results are under
+generated/frontend-routing-batch-8/joins/.
 
 User read rule: bounded reads throughout, no larger-assembly exception. Read
 additional bounded ranges when more material is needed; do not limit necessary
@@ -25,8 +43,15 @@ routing_keyboard_entry_runtime, but controller continuation is not ready.
 Do not replace it with generic pass-through. Widget470 transports an opaque
 nested optional byte until its enum/derived producers are identified. Actual
 source defaults are unset; no made-up enum or derived override is supplied.
-All four milestones remain open. Next action: build the combined batch, fix
-only concrete compile/runtime failures, then update receipts/dashboard.
+All four milestones remain open. Next action: promote the connected animated
+switcher/container transition batch with its
+real Slate lifetime and ClearWidgets API. New startup class/config providers,
+root layer clear, legacy state transitions and keyboard helper bodies are source
+candidates with explicit unresolved dependencies, not promoted startup behavior.
+The switcher integration reuses the EXISTING NativeWidgetDeactivated delegate;
+NativeDeactivated2a8 in older startup candidate notes is its original-address
+alias, never a second delegate. The next UI-only batch needs client/affected flow,
+not another unchanged server/join run.
 
 ## Current checkpoint: CommonUI lifecycle and real root Slate integrated (2026-11-02)
 

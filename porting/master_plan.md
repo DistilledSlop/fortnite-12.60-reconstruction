@@ -10,6 +10,17 @@ credentials in Git, and the orchestrator reviews and commits.
 
 ## Current baseline
 
+Native10d2e923 / Engineb96f01a60: combined routing/loading/input client build
+PASS368.420s. Root creation/attachment completes, exits0, zero Blueprint errors,
+9 unresolved imports (previous10); strict gate remains FAIL. Configured input
+assets and their package-path closure are now staged, removing the initial
+missing-input-data warnings. Server PASS430.375s and default join PASS21.637s.
+Real hierarchy, registration, dispatch, cursor, input modality, widget bridge
+and lazy loading are integrated; normal GI/manager startup remains incomplete.
+Next connected source batch is animated switcher/container lifetime and queue
+transition. Keyboard/startup/config/root cleanup candidates retain explicit
+unclosed providers and are not a normal interactive frontend. All4 gates open.
+
 Native e56c37ac / Engine c945a157c client build passes (128.855s) with the original
 root Slate rebuild/teardown and configurable secondary-player border. Prior
 27d5e909 restores CommonUI module/settings lifecycle and four original configured
