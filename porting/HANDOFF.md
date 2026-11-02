@@ -19,6 +19,12 @@
   Promotion adds only2provider files, preserving12713other source mtimes; NativeSource12715.
   Component2tests/runner40tests/generator141checks/progress67tests PASS. All16provider
   source spans replay; no independently repeated giant-debug rehash claim. No Native owner active.
+- Independent Luna receipt audit: action-binding-provider-receipt-audit-1 under
+  /mnt/vibrato/fortnite-work rehashes all24archived source copies and109artifact pairs,
+  replays20provider/26data/13getter/30table verifiers and cross-checks18binary rows.
+  Live README differs only by the later validated-status wording; pinned archived copy
+  matches342d083. Giant binary contents were not independently rehashed. Creation
+  control's20import failures remain visible; no full original menu success is claimed.
 - Next bounded implementation candidate: action-binding-create-entry-candidate-1/{candidate.patch,HANDOFF.md}
   under /mnt/vibrato/fortnite-work. Four-file scratch candidate based on342d083, NOT applied/built.
   It implements original create140800e60 prevalidation/duplicate scan/id-as-key insertion,
