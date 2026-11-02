@@ -24,6 +24,8 @@ SHIM = r'''
 using uint8=uint8_t; using uint32=uint32_t; using int32=int32_t;
 #define COMMONUI_API
 #define TEXT(x) x
+#define DECLARE_DELEGATE_OneParam(Name, Type) using Name=TDelegate<void(Type)>
+#define DECLARE_MULTICAST_DELEGATE_OneParam(Name, Type) using Name=TMulticastDelegate<void(Type)>
 struct FMemory { static void Memcpy(void* a,const void* b,size_t n){std::memcpy(a,b,n);} };
 struct FString : std::string { using std::string::string; FString(std::string s):std::string(s){} const char* operator*()const{return c_str();} template<class... T> static FString Printf(const char* f,T... args){char b[256]; std::snprintf(b,sizeof(b),f,args...); return FString(b);} };
 struct FName { std::string s; FName(){} FName(const char* x):s(x){} bool IsNone()const{return s.empty();} FString ToString()const{return FString(s);} };
@@ -128,7 +130,8 @@ class RuntimeTests(unittest.TestCase):
             p=Path(td)
             (p/'Engine').mkdir()
             (p/'CoreMinimal.h').write_text(SHIM)
-            for name in ['Engine/DataTable.h','InputCoreTypes.h','FUIInputAction.h','FCommonInputActionData.h']:
+            for name in ['Delegates/Delegate.h','Engine/DataTable.h','InputCoreTypes.h','FUIInputAction.h','FCommonInputActionData.h']:
+                (p/name).parent.mkdir(parents=True, exist_ok=True)
                 (p/name).write_text('#pragma once\n#include "CoreMinimal.h"\n')
             for name in ['CommonActionBindingData.h','CommonActionBindingData.cpp']:
                 (p/name).write_text((HERE/name).read_text())

@@ -2,10 +2,14 @@
 
 // Data/storage building blocks only. Registration, routing and providers are not implemented.
 #include "CoreMinimal.h"
+#include "Delegates/Delegate.h"
 #include "Engine/DataTable.h"
 #include "InputCoreTypes.h"
 #include "FUIInputAction.h"
 #include "FCommonInputActionData.h"
+
+DECLARE_DELEGATE_OneParam(FCommonActionBindingProgress, float);
+DECLARE_MULTICAST_DELEGATE_OneParam(FCommonActionBindingProgressMulticast, float);
 
 class FCommonActionBindingRoute; // Identity and behavior remain unresolved.
 
@@ -20,7 +24,7 @@ struct FCommonActionBindingDescriptor
     uint8 Flag22;
     FText DisplayOverride;
     FSimpleDelegate Click;
-    TDelegate<void(float)> Progress;
+    FCommonActionBindingProgress Progress;
 };
 
 struct FCommonActionBindingKeyTime
@@ -44,7 +48,7 @@ struct FCommonActionBindingRecord
     int32 Id;
     TArray<FCommonActionBindingKeyTime> Press;
     TArray<FCommonActionBindingKeyTime> Hold;
-    TMulticastDelegate<void(float)> ProgressListeners;
+    FCommonActionBindingProgressMulticast ProgressListeners;
     FDataTableRowHandle Row;
     double State;
 };

@@ -2,6 +2,9 @@
 
 ## Current resume point (2026-11-02)
 
+- Native build1 (bbb1fcf) failed client compile (exit6,42.320s); server not attempted, stage unchanged.
+  Correcting UE4.25 delegate aliases via DECLARE_DELEGATE/MULTICAST macros and touch key via TouchKeys[0].
+  Failed receipts: /mnt/vibrato/fortnite-work/action-binding-data-native-build-1.
 - Current data/storage candidate: frontend/common_action_binding_runtime/ implements actual
   UE-owned binding records, FText/key/delegate copies, process TMap and modulo32 ID allocation.
   Original signatures and ctor/storage/counter contracts are closed under work/action-binding-*
@@ -11,7 +14,7 @@
   12710other mtimes. New ActionBindingDataProbe exercises26 engine cases (UE validation pending).
   This is DATA/storage only: explicit resolver interface, no fabricated default provider,
   no original UFUNCTION registration or completed production router/lifecycle/UI claim.
-  Portable fast-math/DAZ/ownership tests2 and runner/verifier41tests pass; generator141checks pass.
+  Portable fast-math/DAZ/ownership tests2 and runner/verifier38tests pass; generator141checks pass.
   Root owns Native/generation/build/stage; no other worker may mutate them during validation.
 
 - Claude's effort review is implemented at dashboard commit3d62edb: 132leaves,

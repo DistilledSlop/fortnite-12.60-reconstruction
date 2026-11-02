@@ -59,9 +59,9 @@ struct FResolver final : ICommonActionBindingDataResolver
     int32 ResolveGamepadIndex(UObject* Owner) override { Calls.Add(3); check(Owner == ExpectedOwner); return 2; }
 };
 
-struct FInspectProgress : TMulticastDelegate<void(float)>
+struct FInspectProgress : FCommonActionBindingProgressMulticast
 {
-    explicit FInspectProgress(const TMulticastDelegate<void(float)>& Other) : TMulticastDelegate<void(float)>(Other) {}
+    explicit FInspectProgress(const FCommonActionBindingProgressMulticast& Other) : FCommonActionBindingProgressMulticast(Other) {}
     int32 Count() const { return GetInvocationList().Num(); }
 };
 
@@ -123,7 +123,7 @@ void Run()
     Resolver.Legacy.KeyboardInputTypeInfo.Key = EKeys::SpaceBar;
     Resolver.Legacy.KeyboardInputTypeInfo.bActionRequiresHold = true;
     Resolver.Legacy.KeyboardInputTypeInfo.HoldTime = Float(0x7fc12345u);
-    Resolver.Legacy.TouchInputTypeInfo.Key = EKeys::Touch1;
+    Resolver.Legacy.TouchInputTypeInfo.Key = EKeys::TouchKeys[0];
     Resolver.Legacy.TouchInputTypeInfo.HoldTime = 1.0f;
     Resolver.Legacy.GamepadInputTypeInfos[0].Key = EKeys::A;
     Resolver.Legacy.GamepadInputTypeInfos[2].Key = EKeys::Gamepad_FaceButton_Bottom;
@@ -136,7 +136,7 @@ void Run()
     Record(TEXT("legacy_fields"), Legacy.Name == FName(TEXT("Legacy_BindingProbeTable_RowA"))
         && Legacy.Display.ToString() == TEXT("Legacy display") && Legacy.Id == Tagged.Id + 4);
     Record(TEXT("legacy_key_order"), Legacy.Press.Num() == 2 && Legacy.Hold.Num() == 1
-        && Legacy.Press[0].Key == EKeys::SpaceBar && Legacy.Press[1].Key == EKeys::Touch1
+        && Legacy.Press[0].Key == EKeys::SpaceBar && Legacy.Press[1].Key == EKeys::TouchKeys[0]
         && Legacy.Hold[0].Key == EKeys::Gamepad_FaceButton_Bottom);
     Record(TEXT("legacy_float_bits"), Legacy.Press.Num() == 2 && Legacy.Hold.Num() == 1
         && Bits(Legacy.Press[0].Time) == 0x7fc12345u && Bits(Legacy.Press[1].Time) == 0
