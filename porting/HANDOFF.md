@@ -2,6 +2,55 @@
 
 ## Current resume point (2026-11-02)
 
+- Latest Native sourcea93a1c0 adds an opt-in original Root viewport lifecycle probe. Both builds
+  PASS101.407/93.457s with Native/config inputs stable. Creation control still returns7widgets,
+  all4original startup classes and22unresolved imports. Actual table421rows/30checks,8retained
+  diagnostics and default/Athena joins21.762/21.637s pass. All4product milestones remain open.
+- Original attachment fails with processSIGSEGV(-11) AFTER before_attach and before after_attach.
+  No attachment/frame/removal success is claimed. Core proves fatal UObject::CallFunction(Function=null)
+  during OpenButton (IconTextButton_C) PreConstruct -> UpdateTextStyle. Bytecode offsets10/11..18
+  are EX_FinalFunction/nullpointer. Serialized original call is CommonUI.CommonButton.GetCurrentTextStyleClass,
+  import-49, no params, .uexp11379 bytes1c cf ff ff ff16. The call identity is proved, not inferred.
+- A separate earlier ensure is missing UWidget::RebuildWidget for WidgetQueue_ModalContent,
+  classCommonActivatableWidgetQueue, parentCommonActivatableWidgetContainerBase. Corrected livegdb
+  decodesexactobject/class via GNameBlocksDebug; hiddenreturn means self is RSI, not RDI. Thisensure
+  is distinct from the later fatal null-call. Do not add a spacer/emptyhandler to hide either problem.
+- Runtime checkpoint generated/frontend-native-evidence/root-viewport-attach-runtime-1/checkpoint.json
+  SHA256 ffe3158d83f58b950eec05b654a8861cb34c7c4cc013e45f0d9d3dc009c1eca9;
+  archive /mnt/vibrato/fortnite-evidence/frozen-runtime/root-viewport-attach-runtime-1 binds5sources,
+  82artifact pairs,18binary rows. Release SHA256
+  fc5a86d46996feb6617638de6a69e456b0d0d737b11e82994ca7a03f4433c6ba.
+  TERMINAL handles: build42905/stage33892/attach12848/create82360/controls55752/joins67203/row81786/
+  freeze78195. All debugger agents also finished. No live Native/build/stage/probe owner remains.
+- Reproduction scripts /mnt/vibrato/fortnite-work/{build_,stage_,run_,freeze_}root_viewport_attach*1.py;
+  nativepreflight root-viewport-attach-ue-preflight-1. Tracked runner --attach preserves independent
+  viewport_verification.json, lastphase and attachment facts even if Root dependency checks fail.
+  Originalmode stillusescreationonly. NativeSource/config/stagedRootclasses unchanged;14probe tests pass.
+- Next implementation dependency: source-faithful GetCurrentTextStyleClass plus real CommonButton
+  selected-state/style/lifecycle representation. Getterproof common-button-text-style-getter-1 has
+  classCDO fallback logic for disabled, selected-hovered, selected, hovered and normal styles.
+  Constructor clears selected bit, but public SetIsSelected, SetSelectedInternal, ClearSelection,
+  click/group paths also produce changes; do not substitute permanentfalse. Transition proof is
+  common-button-selected-transition-contract-1. Style refresh proof common-button-style-refresh-contract-1
+  closes events OnCurrentTextStyleChanged/BP_OnSelected/BP_OnDeselected and UButton::SetStyle order.
+  Next bounded work: bind three embedded FButtonStyle offsets and weak internal-button lifecycle
+  to existing metadata/policy, then close remaining reachable transition/input/delegate operations.
+- Parallel queue renderer proof activatable-queue-rebuild-contract-1 identifies original SOverlay,
+  SCommonAnimatedSwitcher and SSpacer, shared ownership and boundcallbacks. SCommonAnimatedSwitcher
+  behavior, callback signatures, initialslotidentity and releasepolicy remain unported/unproved.
+  RebuildWidget alone cannot be replaced by an invented empty Slate container.
+- All above scratch evidence is under /mnt/vibrato/fortnite-work/. Exact raw-call proof is
+  icon-text-style-raw-call-decode-1/HANDOFF.md; core/debug proof root-rebuild-widget-failure-identity-1
+  and base-rebuild-widget-instance-identity-2. Original CUE pseudocode parser skipped this function
+  because it wrongly reads an owner after legacy FFieldPath; raw decoder resolves the call anyway.
+  No sharedCUE source was modified. Posthoc investigation snapshots are archived separately.
+- Client-event argument contract is now closed at client-event-dispatch-argument-contract-1:
+  ProcessEvent buffer48bytes holds source/focus pointers plus32-byte event copy; object-pointer
+  dedup gives at mostonecallback perlistener acrossspecific/Undefined collections. Lifecycle/registry
+  integration remains open. This is source evidence, not a reason to add a placeholder dispatcher.
+
+## Previous startup-class checkpoint (2026-11-02)
+
 - Current source edits extend the explicit Root probe with --attach / -RootWidgetInstanceAttach:
   actual AddToViewport, three subsequent frame observations with GFrameCounter, then actual removal.
   Existing creation-only mode is preserved. Actual C++ syntax passes in root-viewport-attach-ue-preflight-1;

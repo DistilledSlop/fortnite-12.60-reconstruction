@@ -10,14 +10,18 @@ credentials in Git, and the orchestrator reviews and commits.
 
 ## Current baseline
 
-At Native `78c5b61`, both builds, both joins, eight retained diagnostics and the30-row input-table
+At Native `a93a1c0`, both builds, both joins, eight retained diagnostics and the30-row input-table
 diagnostic pass. The original table loads421rows. Source and staged config now match; startup
 actually uses FortGameInstance, FortLocalPlayer, FortGameViewportClient and FortPlayerControllerAthena.
 The controller constructor assignment is source-proved; the full original game mode hierarchy and
 remaining constructor are unported. Root CreateWidget returns with a populated7-widget tree, but
-22 native imports remain unresolved. It is not attached to the viewport and no interactive UI is
-established. Material compatibility remains129/142.
-Next, observe original Root Slate/viewport construction and resolve its actual dependencies.
+22 native imports remain unresolved. Actual AddToViewport now crashes during IconTextButton's
+UpdateTextStyle because its original CommonButton.GetCurrentTextStyleClass callee is missing.
+A separate queue widget also lacks its original RebuildWidget override. No attachment or interactive
+UI is established. Material compatibility remains129/142.
+Next, restore the text-style getter's actual selection/style state dependencies, then its reflected
+method. Source proofs identify the selected transition/event graph and the remaining metadata/lifecycle
+bindings. Queue rendering requires the original animated switcher and callback/resource contracts.
 Confirmation async-action factories, Activate/interface dispatch and queued presentation remain
 unfinished. Interactive startup, Blueprint execution and original pixels remain unverified; all four
 product milestones are open. Exact receipts and source release are in HANDOFF.md.
