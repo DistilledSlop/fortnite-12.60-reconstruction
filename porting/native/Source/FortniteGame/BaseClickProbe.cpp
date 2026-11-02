@@ -62,8 +62,9 @@ bool RunBaseClickProbe(UWorld* World, TFunctionRef<void(const TCHAR*, bool)> Rec
     });
     FCommonButtonBaseClickProbeAccess::Click(B.Get());
     Check(TEXT("reverse_mutation_dynamic_order"), B->Log == TArray<FString>({TEXT("BP"), TEXT("Second"), TEXT("Dynamic"), TEXT("Analytics")}) && B->WorldCalls == 0);
+    // Compaction uses RemoveAtSwap: Added replaces the removed First slot.
     B->Log.Reset(); FCommonButtonBaseClickProbeAccess::Click(B.Get());
-    Check(TEXT("added_binding_next_broadcast"), B->Log == TArray<FString>({TEXT("BP"), TEXT("Added"), TEXT("Second"), TEXT("Dynamic"), TEXT("Analytics")}));
+    Check(TEXT("added_binding_next_broadcast"), B->Log == TArray<FString>({TEXT("BP"), TEXT("Second"), TEXT("Added"), TEXT("Dynamic"), TEXT("Analytics")}));
     B->NativeClicked.Clear(); B->OnButtonClicked.Clear(); B->Log.Reset(); B->bReenter = true;
     FCommonButtonBaseClickProbeAccess::Click(B.Get());
     Check(TEXT("bp_synchronous_reentry"), B->Log == TArray<FString>({TEXT("BP"), TEXT("BP"), TEXT("Analytics"), TEXT("Analytics")}));
