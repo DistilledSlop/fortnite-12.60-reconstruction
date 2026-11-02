@@ -10,25 +10,23 @@ credentials in Git, and the orchestrator reviews and commits.
 
 ## Current baseline
 
-Native `c49ed4c` / Engine `87acab901` passes both builds, nine authenticated
-FortGlobals.IsErebus checks, the retained text/UI/binding/input diagnostics and both
-local joins. The original Win64 leaf returns false with normal frame-code handling;
-strict metadata and named registration guards preserve that exact baseline. The
-previous real UMG/Slate text-transform port and original font staging remain verified.
-See HANDOFF.md for frozen receipts, independent audits and the initial probe failure.
+Native `3fa4c77` / Engine `87acab901` passes both builds, 11 live SBox minimum-size
+checks, 32 button-style and 23 text-block cases including seven absent-CDO paths,
+retained diagnostics and both local joins. The sizing adapters preserve real fields
+and rebuild state; style lookup now matches original non-creating CDO semantics.
+See HANDOFF.md for frozen receipts, independent audits and exact scope.
 
-Root creation still returns seven widgets and four startup classes; unresolved imports
-fell from 20 to 19. Viewport attachment still crashes. Post-freeze GDB passes IsErebus
-and identifies missing CommonButton.SetStyle in IconTextButton.UpdateStyle.
-That setter needs its complete style/material/sound/event/size chain and actual
-internal-button lifecycle. A field-assignment substitute would change behavior.
-The next bounded size-adapter candidate updates real SBox minimum attributes and
-retains fields across rebuild, but still needs integration and UE validation.
+Root creation still returns seven widgets and four startup classes with 19 unresolved
+imports. Viewport attachment still crashes at CommonButton.SetStyle in
+IconTextButton.UpdateStyle. The complete style-rebuild helper candidate is ready for
+guarded integration and real-engine testing: brushes, MID, sounds, event reentry and
+fresh dimension reads. It does not register SetStyle. The original setter's complete
+chain and valid internal-button lifecycle must be available first.
 
 Queue rendering, production selection/input/routing, text lifecycle, original pixels,
 backend end-to-end integration and gameplay remain unfinished. All four acceptance
-gates stay open. Material compatibility remains 129/142. The source-backed future
-CommonActionWidget.GetDisplayText candidate remains separate and unintegrated.
+gates stay open. Material compatibility remains 129/142. The separate future
+CommonActionWidget.GetDisplayText candidate remains unintegrated.
 
 ## Earlier checkpoints (historical)
 

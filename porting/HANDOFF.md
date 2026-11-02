@@ -1,6 +1,80 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
-## Current resume point (2026-11-02, IsErebus verified)
+## Current resume point (2026-11-02, sizing and CDO reads verified)
+
+- Native `3fa4c77` / Engine `87acab901` restores source-backed internal button
+  minimum width/height updates to the real SBox, preserving signed integer fields,
+  explicit float conversion and release/rebuild retention. These are native C++
+  adapters only; no invented reflected functions or substitute Slate graph.
+- Corrected an existing source mismatch: CommonButton owner/text candidates and
+  CommonTextBlock style application used creating GetDefaultObject(). Original
+  helpers directly read ClassDefaultObject and return/fall through when absent.
+  All now use GetDefaultObject(false). Original owner/candidate reads and text-block
+  helper140802830 +130 load/null/type checks are pinned. Evidence and API details:
+  frontend/common_panel_runtime/button-size-and-cdo-evidence.md.
+- Both builds PASS 139.286/131.388 seconds with Native/config/15 Engine inputs stable;
+  12,729 Native source files. All 11 actual sizing cases PASS, including independent
+  axes, negative minima versus real child bounds, 16777217-to-float rounding, weak
+  old-box destruction and actual rebuild. Child baseline is 212x128. These are real
+  desired-size checks, not arranged viewport or pixel evidence.
+- Expanded button-style checks PASS 32 rows (six missing-CDO cases); text-block
+  checks PASS 23 rows (one missing-CDO case). Strong transient class fixtures follow
+  local engine NewObject<UClass>/SetSuperStruct/Bind/StaticLink construction, keep
+  CDOs absent through direct/reflected calls, and never remove an existing CDO.
+  Getter source corrections preserve the original null/fallback and sync behavior.
+- Retained 22 transform rows with exercised Unicode length refusal, 9 IsErebus,
+  26 binding-data, 20 provider, 23 creation, 13 input-type, 421 table rows/30 checks,
+  all eight diagnostics and joins 21.563/21.552 seconds PASS. Original Root remains
+  seven widgets, four startup classes and 19 skipped imports. Viewport still exits
+  SIGSEGV(-11) before attachment. No interactive menu, original pixels or parity claim.
+- Frozen checkpoint generated/frontend-native-evidence/button-size-runtime-1/checkpoint.json
+  SHA256 `715654d5bf717b5155808791dfdff32d03a0489fb9625f7d3923f3985233383b`;
+  archive `/mnt/vibrato/fortnite-evidence/frozen-runtime/button-size-runtime-1`:
+  94 project source pairs, 15 Engine inputs, 479 artifact pairs, 18 binary rows,
+  25 original font payloads. Release SHA256
+  `70f5b193db3a0c1d71c7e94125315edcac7435a60ae8f7ade56383518490e7f5`.
+- Independent Luna audit PASS: 94 pinned Git/source pairs, 15 Engine pairs,
+  479 artifacts, 25 fonts; pinned 11/32/23/22/9 transcript replays and all seven
+  missing-CDO records, both builds/joins/eight diagnostics. Binary triplets/sizes
+  checked; giant executable/debug/symbol payloads not independently rehashed.
+  Repro audit.py/audit.json/HANDOFF.md: `button-size-cdo-receipt-audit-1/`.
+- TERMINAL: promotions86162/63593; build54315/stage41821/size74645/
+  retained+joins+freeze91995. CommonUI50/runner52/generator141/source-anchor checks
+  PASS. Promotions changed3 then1 files; preserved12726/12728 identical mtimes.
+  Scripts `/mnt/vibrato/fortnite-work/{build_,stage_,run_,validate_,freeze_}button_size*{1,2}.py`.
+  A few launcher print labels still say old22/26 counts; verification.json/receipt.json
+  and actual strict verifiers correctly require23/32. No repeated launch was needed.
+- POST-FREEZE GDB28340 confirms current3fa4c77 reaches GetCurrentTextStyleClass exec
+  and body, then NULL CommonButton.SetStyle in IconTextButton_C.UpdateStyle,
+  Code105/final opcode96. Original final calls9521/9561 both import-54; exact branch
+  not mapped. Decode replay and unchanged source/config/binary/checkpoint hashes:
+  `post-button-size-viewport-crash-1/`. Symbols stat-only; one-shot tracepoints do
+  not pair a particular invocation/return. No core or attachment.
+- NEXT bounded integration: `button-style-rebuild-candidate-1/` contains complete
+  NativeRebuildStyle plus immediate refresh/dimension adapters, NOT SetStyle
+  registration. Review then wire policy class/struct/model gates and declaration/
+  definition output; compile its actual-engine probe with a normal driver. Source
+  replay/84 rejection guards/API pins pass. Real FSlateBrush assignment and MID
+  create/outer/parent, pressed-before-hovered legacy sound access, per-brush flag
+  rereads, cached sound decisions, virtual native-to-BP event forwarding and fresh
+  post-event CDO/weak lookups preserve source order. Independent Terra review agrees.
+- Candidate probe refinement adds non-resolving sound/name/weak-cache comparisons,
+  additional brush fields, real shared-color release/reentry cases, all64 sound
+  combinations and absent-CDO checks. It remains UNBUILT/unrun. Private rendering
+  handle ownership/refcounts and nonempty-handle release callbacks remain untested;
+  no original pixels/audio/whole BP asset override claim. Candidate sources and
+  hashes are frozen as research artifacts. No shared project edits from workers.
+- SetStyle must remain unregistered until its full rebuild and actual internal
+  lifecycle are coherent: original size update unconditionally dereferences the
+  independently resolved weak internal per axis. Existing lifecycle proofs are
+  referenced by common-button-set-style-contract-1; do not add missing-object no-ops,
+  empty callbacks or an assignment-only setter. Native/style initialization and
+  production selection/input/routing remain unfinished; queue rendering too.
+- Root owns all live Native/Engine/generation/build/stage; none active. Preserve
+  AGENTS.md model choices, fork_turns none, bounded worker rotation and economical
+  reads/output. All four product gates remain open and the full goal stays active.
+
+## Previous IsErebus checkpoint
 
 - Current Native `c49ed4c` / Engine `87acab901` restores authenticated
   FortGlobals.IsErebus (first source6bf2af8). Exact Win64 original24-byte native exec
