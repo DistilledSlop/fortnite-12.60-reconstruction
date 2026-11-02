@@ -10,26 +10,25 @@ credentials in Git, and the orchestrator reviews and commits.
 
 ## Current baseline
 
-Native `a8e1cce` / Engine `87acab901` passes both builds and22 real text-transform
-cases through the inherited UMG policy, Slate attribute/cache and text-layout model.
-All retained text style/button/binding/input diagnostics and both direct joins pass.
-Original recovered font payloads are now staged and reproducibly checked alongside
-matching cooked packages. The frozen phase and independent audit are in HANDOFF.md.
+Native `c49ed4c` / Engine `87acab901` passes both builds, nine authenticated
+FortGlobals.IsErebus checks, the retained text/UI/binding/input diagnostics and both
+local joins. The original Win64 leaf returns false with normal frame-code handling;
+strict metadata and named registration guards preserve that exact baseline. The
+previous real UMG/Slate text-transform port and original font staging remain verified.
+See HANDOFF.md for frozen receipts, independent audits and the initial probe failure.
 
-Root creation still returns7widgets/4startup classes/20skipped imports; viewport
-attachment still fails. The separate crash trace reaches restored SetTextCase then
-fails at missing FortGlobals.IsErebus in IconTextButton.UpdateStyle. Its complete
-original24-byte Win64 exec returns false; the pinned contract is ready for guarded
-integration and real invocation checks. The future
-CommonActionWidget.GetDisplayText candidate is source-backed but still needs review,
-integration and real runtime coverage. Queue rendering, production selection/input,
-routing, scrolling, text lifecycle and original visual parity remain unfinished.
-All four acceptance gates stay open. Material compatibility remains129/142.
+Root creation still returns seven widgets and four startup classes; unresolved imports
+fell from 20 to 19. Viewport attachment still crashes. Post-freeze GDB passes IsErebus
+and identifies missing CommonButton.SetStyle in IconTextButton.UpdateStyle.
+That setter needs its complete style/material/sound/event/size chain and actual
+internal-button lifecycle. A field-assignment substitute would change behavior.
+The next bounded size-adapter candidate updates real SBox minimum attributes and
+retains fields across rebuild, but still needs integration and UE validation.
 
-The text port preserves raw FText and the independent bDisplayAllCaps flag, remarshal
-on policy changes and original equal-length refusal. Original constructor-to-Slate
-simple-mode measurement bypass is statically traced. Full locale/converter callback,
-paint/shaping/wrapping and release/rebuild equivalence remain unverified.
+Queue rendering, production selection/input/routing, text lifecycle, original pixels,
+backend end-to-end integration and gameplay remain unfinished. All four acceptance
+gates stay open. Material compatibility remains 129/142. The source-backed future
+CommonActionWidget.GetDisplayText candidate remains separate and unintegrated.
 
 ## Earlier checkpoints (historical)
 

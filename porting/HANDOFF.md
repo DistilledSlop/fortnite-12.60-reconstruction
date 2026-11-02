@@ -1,6 +1,62 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
-## Current resume point (2026-11-02, text transform verified)
+## Current resume point (2026-11-02, IsErebus verified)
+
+- Current Native `c49ed4c` / Engine `87acab901` restores authenticated
+  FortGlobals.IsErebus (first source6bf2af8). Exact Win64 original24-byte native exec
+  advances non-null Code and returns false with no calls/state dependencies. Strict
+  named registration/owner/metadata/exec guards, normal static pure UFUNCTION thunk;
+  no conjectural platform test or placeholder. All9 real CDO/metadata/direct/reflected
+  and native FFrame end-marker/null-Code cases PASS. Both builds PASS112.279/114.569s,
+  Native/config/15Engine inputs stable; NativeSource12728.
+- First6bf2af8 builds PASS139.385/133.026s, but probe FAILED metadata and gated the
+  remaining calls: declaration flags were incorrectly compared with runtime flags.
+  GDB proves actual18001040000780; PropertyBool.cpp adds native-bool storage/hash traits.
+  c49ed4c checks EXACT declaration flags OR IsPlainOldData/NoDestructor/ZeroConstructor/
+  HasGetValueTypeHash. Body/guarded source metadata unchanged. Failed run and both
+  diagnostic attempts are archived; no weaker metadata acceptance was substituted.
+- Retained22transform (Unicode length refusal exercised),22text-block,26button,
+  26bindingdata/20provider/23creation/13input-type/table421rows/30checks, eight diagnostics
+  and both joins21.611/21.641s PASS. Root creation retains7widgets/4startup classes;
+  skipped imports improve20->19. Viewport remains SIGSEGV(-11) before_attach.
+- Frozen generated/frontend-native-evidence/erebus-runtime-2/checkpoint.json SHA256
+  `43b2fdcfb98ad14443db57bcbe9360d521af98198e5bcb82abe190a6ad5a40f7`;
+  archive `/mnt/vibrato/fortnite-evidence/frozen-runtime/erebus-runtime-2`:
+  86project source pairs,15Engine inputs,414artifact pairs,18binary rows,25font payloads.
+  Release SHA256 `97821da2c421ce789c40aa82f7f94d079d294bcfd241b19ec4bd7ef1c9e85cd9`.
+  Independent Luna audit PASS86Git/source+15Engine+414artifacts+25fonts and pinned9/22/22
+  transcript replays; recorded binary triplets/sizes checked, giant binary contents not
+  independently rehashed. Repro audit.py/audit.json/HANDOFF.md at `erebus-receipt-audit-1/`.
+- TERMINAL: promotion83970, initialbuild76205/stage86310/failedprobe4200,
+  metadatadebug68487,16474; finalbuild65005/stage21114/probe71911/
+  retained+joins+freeze59420. Four policy/50runner/141generator checks PASS.
+  Scripts `/mnt/vibrato/fortnite-work/{build_,stage_,run_,validate_,freeze_}erebus*{1,2}.py`.
+  Root owns planning/integration and all Native/Engine/gen/build/stage; none active.
+- POST-FREEZE GDB60487 confirms finalc49ed4c reaches IsErebus exec AND native body,
+  then NULL CommonButton.SetStyle in IconTextButton_C.UpdateStyle Code105/opcode96.
+  Original export16 .uexp9126 size485 has final calls9521/9561, both import-54 of that
+  same function; exact branch not independently mapped. Decode replay and unchanged
+  source/config/binary/checkpoint hashes at `post-erebus-viewport-crash-2/`.
+  Symbols stat-only, no core, no attachment. Earlier separate6bf trace36749 agrees.
+- NEXT full chain, NOT an assignment-only setter: `common-button-set-style-contract-1/`
+  replay pins original setter1407f9c70, rebuild1407acd30 and size refresh1407ec1c0.
+  Null/invalid/unchanged class return; valid change stores Style then synchronously
+  rebuilds three FButtonStyles, optional MID, brushes/padding/sounds, refreshes live
+  button, dispatches OnCurrentTextStyleChanged, and updates min dimensions. Size refresh
+  dereferences weak internal without a null guard; real lifecycle hookup is a precondition.
+  Need complete style adapter and initialization, not dropped callbacks/Slate updates.
+- Bounded scratch `internal-button-size-update-candidate-1/` closes min-size SBox slots
+  (MinDesiredWidth/Height, not overrides), integer field writes/conversion, real existing
+  Slate graph and rebuild retention; source/instruction verifier PASS. Candidate template
+  delta and real-engine probe fragment are UNINTEGRATED/unbuilt. Review/promote/test this
+  focused adapter, then close actual rebuild-style helper/material/sound semantics and
+  real weak internal lifecycle before registering SetStyle. Existing source lifecycle
+  proofs are referenced in the SetStyle handoff. Root retains all overall ownership.
+- All four product gates remain open. Preserve bounded worker rotation, Luna-medium
+  small read-only / Terra-medium-high regular / Sol-medium complex, fork_turns none,
+  economical reads/output, sole root Native/build/stage ownership, and full project goal.
+
+### Previous verified text-transform checkpoint
 
 - Native `a8e1cce` / Engine `87acab901` restores CommonTextBlock.SetTextCase through
   a real ten-file UMG/Slate/text-layout backport from local UE4.26 reference
