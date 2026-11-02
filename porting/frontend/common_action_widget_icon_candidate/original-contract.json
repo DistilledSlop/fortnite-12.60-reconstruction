@@ -1,0 +1,191 @@
+{
+  "class_block": "0x145a01470",
+  "class_noregister_fn": "0x1408072e0",
+  "function": {
+    "name": "GetIcon",
+    "create_func": "0x140807870",
+    "flags": [
+      "0x54020401",
+      "0x54420401"
+    ],
+    "replicated_function": null,
+    "note": "ambiguous: several FFunctionParams share this name pointer",
+    "params_note": "ambiguous: candidates disagree on parameter table",
+    "candidates": [
+      {
+        "owning_class": null,
+        "outer_fn": "0x140807790",
+        "flags": "0x54020401",
+        "nprop": 1,
+        "params": [
+          {
+            "index": 0,
+            "name": "ReturnValue",
+            "kind": "Struct",
+            "kind_raw": "0x19",
+            "property_flags": "0x10000000000580",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 0,
+            "type_refs": {
+              "struct": "0x142fdb590"
+            }
+          }
+        ]
+      },
+      {
+        "owning_class": null,
+        "outer_fn": "0x14529b320",
+        "flags": "0x54420401",
+        "nprop": 2,
+        "params": [
+          {
+            "index": 0,
+            "name": "ReturnValue",
+            "kind": "Bool",
+            "kind_raw": "0x2c",
+            "property_flags": "0x10000000000580",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "element_size": 1,
+            "size_of_outer": 144,
+            "bitfield": true,
+            "set_bit_fn": "0x140814390",
+            "offset": null
+          },
+          {
+            "index": 1,
+            "name": "Brush",
+            "kind": "Struct",
+            "kind_raw": "0x19",
+            "property_flags": "0x10000000000180",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 0,
+            "type_refs": {
+              "struct": "0x142fdb590"
+            }
+          }
+        ]
+      },
+      {
+        "owning_class": null,
+        "outer_fn": "0x14531bc10",
+        "flags": "0x54020401",
+        "nprop": 3,
+        "params": [
+          {
+            "index": 0,
+            "name": "ReturnValue",
+            "kind": "SoftObject",
+            "kind_raw": "0x10",
+            "property_flags": "0x14000000000580",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 8,
+            "type_refs": {
+              "class": "0x144803bd0"
+            }
+          },
+          {
+            "index": 1,
+            "name": "ImageSize",
+            "kind": "Enum",
+            "kind_raw": "0x1e",
+            "property_flags": "0x10000000000080",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 0,
+            "type_refs": {
+              "enum": "0x14531e260"
+            }
+          },
+          {
+            "index": 2,
+            "name": "UnderlyingType",
+            "kind": "Byte",
+            "kind_raw": "0x0",
+            "property_flags": "0x0",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 0,
+            "enum_underlying_of": "ImageSize"
+          }
+        ]
+      }
+    ]
+  },
+  "input_actions": [
+    {
+      "index": 1,
+      "name": "InputActions",
+      "kind": "Array",
+      "kind_raw": "0x16",
+      "property_flags": "0x20080000000015",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 560
+    },
+    {
+      "index": 2,
+      "name": "InputActions",
+      "kind": "Struct",
+      "kind_raw": "0x19",
+      "property_flags": "0x0",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "type_refs": {
+        "struct": "0x1446f2880"
+      },
+      "array_inner_of": "InputActions"
+    }
+  ],
+  "native_func": {
+    "exec_addr": "0x14080a9f0",
+    "flags": "0x54020401",
+    "params": [
+      {
+        "index": 0,
+        "name": "ReturnValue",
+        "kind": "Struct",
+        "kind_raw": "0x19",
+        "property_flags": "0x10000000000580",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 0,
+        "type_refs": {
+          "struct": "0x142fdb590"
+        }
+      }
+    ],
+    "create_func": "0x140807870",
+    "source": "lea"
+  },
+  "image_sha256": "338c83a2314ccac1040a2c0bb520b893013cc7b58eda58e550da67f5d84de680",
+  "windows": {
+    "0x14080a9f0": "405356574881ecc0000000488b42204533c94885c0498bf8410f95c14c03c84c894a20488d542430e8c384fbff488d4f20488bf0f20f104008488d5020f20f1147080f1040100f114710e8d124f9ff488b4e4848894f48488b4e5048894f50488d4f700f1046580f1147588b46688947680fb6466c88476c0fb6466d88476d0fb6466e88476e0fb6466f88476f488b5e78488b4670488944242048895c24284885db7403ff4308488d442420483bc174150f10010f104c24200f11442420488b5c24280f11094885db7422836b0801751c488b03488bcbff10836b0c01750e488b03ba01000000488bcbff50080fb68780000000328680000000488b9c24a800000024013087800000000fb687800000000fb68e8000000032c880e10232c8488d05e20e1e054889442430888f800000004885db7422836b0801751c488b03488bcbff10836b0c01750e488b03ba01000000488bcbff5008488b5c24704885db7422836b0801751c488b03488bcbff10836b0c01750e488b03ba01000000488bcbff50084881c4c00000005f5e5bc3",
+    "0x1407c2ee0": "48895c2408574883ec20488bd9488bfa8b8940020000e835a8ffff4885c0741c488d4810e8c72e72024885c0740e488b10488bc8ff9290020000eb0c488b03488bcbff9090020000488bc8e850850500488bd04c8d8330020000488bcfe80e000000488b5c2430488bc74883c4205fc3",
+    "0x1407c2f50": "48895c2408488974241048897c2420554154415541564157488d6c24c94881ec000100004d8b38488bf14963400833c948c1e0044c8be24903c748894c243048894c2438488945774c3bf80f84be000000488d1588712305498bcfe89096fcff488bd84885c00f84100300004d85e47440498bcce877850500498bcc0fb6f8e85c8505004084ff74284080ff0175150fb6c04869c0a80000004805e00000004803c3eb11488d83800300004080ff027404488d4338488b7810488b184c8b68084885ff7403ff47084c63742438418d4601894424383b44243c7e0d418bd6488d4c2430e8f8dbecff488b4424304b8d0c764983c71048891cc84c896cc80848897cc8104c3b7d770f8544ffffff33c90f10056aeb46078065f7fc4c8d3d878922050f57c948894daf660f7f4597498bcc0f57c00f294d87f20f100d9955a507660f7f45b7f20f114d77f30f10457bf30f1145dbf30f1145d30f57c0660f7f45e7f30f114dd7f30f114dcf4c897c2440c744244800000042c7458300000042c645a70048c745c700000000c645df00c745e303000000e846840500498bcc0fb6f8e84b840500488d4d070fb6d8e84f840500488bc840887c2420440fb6cb4c8d442430488d542440e824a20500488b4d1f440fb6f04885c97405e8e2b542028b7d1785ff7421488b5d0f4883c3180f1f00488b0b4885c97405e8c3b542024883c32883ef0175ea488b4d0f4885c97405e8acb542024584f60f84bf010000f30f104424480fb645a7488b5db7f30f104d83f30f1146080f284587f30f114e0c4c893e0f1146108846300f284597488b45af0f1146204889463848895e404885db7407ff4308488b5db7488b45bf488b7def48894648488b45c7488946508b45df0f1045cf0f1146588946680fb645e388466c0fb645e488466d0fb645e588466e0fb645e688466f488b45e74889467048897e784885ff740bff4708488b7def488b5db780a680000000fc0fb645f724034c897c24400886800000004885ff7426836f0801751c488b07488bcfff10836f0c01750e488b07ba01000000488bcfff5008488b5db74885db7422836b0801751c488b03488bcbff10836b0c01750e488b03ba01000000488bcbff5008448b7424384585f60f845a010000488b7c24304883c710488b1f4885db7422836b0801751c488b03488bcbff10836b0c01750e488b03ba01000000488bcbff50084883c7184183ee0175cce918010000e85f0b0000488bd0488bcee8a421fdff448b7424384585f60f84fa000000488b7c24304883c710488b1f4885db7422836b0801751c488b03488bcbff10836b0c01750e488b03ba01000000488bcbff50084883c7184183ee0175cce9b8000000e8ff0a0000488bd0488bcee84421fdff488b5def4c897c24404885db7422836b0801751c488b03488bcbff10836b0c01750e488b03ba01000000488bcbff5008488b5db74885db7422836b0801751c488b03488bcbff10836b0c01750e488b03ba01000000488bcbff5008448b7424384585f67443488b7c24304883c710660f1f440000488b1f4885db7422836b0801751c488b03488bcbff10836b0c01750e488b03ba01000000488bcbff50084883c7184183ee0175cc488b4c24304885c97405e81db342024c8d9c2400010000488bc6498b5b30498b7338498b7b48498be3415f415e415d415c5dc3",
+    "0x1407c3e30": "40534883ec2065488b0425580000008b0ddbbdc307ba48020000488b0cc88b040a3905f1e290077f0d488d0560e290074883c4205bc3488d0ddbe29007e8d2fb0305833dcfe29007ff75de488d1d3ee29007488bcb488d159c47a507e8bf16fdff488d0d48f80505e807fa0305488d0da4e29007e83bfb0305488bc34883c4205bc3",
+    "0x140795550": "40534883ec60488bd9488d0570c6490733c94c8d4c2450884c24480f57c048894c2440448bc14889442438488954243033d2894c2428894c242048894c2470488bcb0f11442450e834457f02488d0555642505488903488bc34883c4605b"
+  }
+}
