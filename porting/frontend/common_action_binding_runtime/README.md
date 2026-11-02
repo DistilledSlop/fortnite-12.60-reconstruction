@@ -33,7 +33,7 @@ values. Exact floating-point exception behavior is not established. The isolated
 Validated at Native `cf37b21`: client/server builds pass, all 26 actual engine data/storage rows pass, retained diagnostics and both joins pass. Native build1 failure is preserved and fixed through UE4.25 declaration macros and touch-key API. That checkpoint used fixture resolvers. The new provider candidate below is not covered by it. Checkpoint and source release hashes are in the project HANDOFF.
 
 
-The engine resolver candidate reads the settings CDO InputActions in order, uses
+The engine resolver reads the settings CDO InputActions in order, uses
 `FDataTableRowHandle::GetRow<FCommonInputActionData>(TEXT(""))`, and resolves a
 widget's owning player, its action router, then Common Input through the router's
 outer. It reads the unsigned gamepad-type byte live, without clamping. Missing
@@ -49,5 +49,8 @@ constructor note that called the router lookup a local-player lookup.
 The new opt-in `ActionBindingProviderProbe` uses actual engine settings, typed
 DataTable rows (including the original 421-row table), a widget and the live
 local-player subsystem collection. Controlled settings and input-byte mutations
-are restored; it does not drive original UI or hardware input. Runtime validation
-is pending until a new checkpoint is recorded.
+are restored; it does not drive original UI or hardware input. At Native `342d083`, both builds, all 20 provider rows, the retained diagnostics
+and both joins pass. The checkpoint is `generated/frontend-native-evidence/
+action-binding-provider-runtime-1/checkpoint.json` (see HANDOFF for pinned hashes).
+This establishes the resolver component; original creation, registration, routing
+and interactive UI remain unfinished.

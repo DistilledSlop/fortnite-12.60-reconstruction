@@ -2,7 +2,38 @@
 
 ## Current resume point (2026-11-02)
 
-- Latest Native cf37b21 adds engine-owned action-binding DATA/storage, with source guards
+- Latest Native342d083 implements engine-backed binding data providers: settings CDO
+  first-tag match, actual typed row lookup, widget->local player->router->router Outer
+  ->CommonInput unsigned gamepad byte. Both builds PASS113.319/111.031s, source/config
+  stable. All20provider rows PASS with real subsystem collection, controlled settings
+  and byte mutations/restoration; retained26data/13getter/30table(421rows),8diagnostics
+  and joins21.598/21.613s PASS. Root remains7widgets/20imports, all4startup classes;
+  no viewport attempt or input production/routing/interactive UI success is claimed.
+- Provider checkpoint: generated/frontend-native-evidence/action-binding-provider-runtime-1/checkpoint.json
+  SHA256 aa21f6dd06ab41ad110d2a97ca17c484e6db1892abfd2cd210278b40806dd54d;
+  archive /mnt/vibrato/fortnite-evidence/frozen-runtime/action-binding-provider-runtime-1
+  binds24source pairs,109artifact pairs,18binary rows. Release SHA256
+  b56772b5503db9e77bd629a7556fc5a18fe6a589f9987bd700ed2685ddaf0aaa.
+  TERMINAL promotion64265/build62661/stage12882/provider93146/retained+freeze58923.
+  Scripts /mnt/vibrato/fortnite-work/{promote_,build_,stage_,run_,freeze_,validate_}action_binding_provider*1.py.
+  Promotion adds only2provider files, preserving12713other source mtimes; NativeSource12715.
+  Component2tests/runner40tests/generator141checks/progress67tests PASS. All16provider
+  source spans replay; no independently repeated giant-debug rehash claim. No Native owner active.
+- Next bounded implementation candidate: action-binding-create-entry-candidate-1/{candidate.patch,HANDOFF.md}
+  under /mnt/vibrato/fortnite-work. Four-file scratch candidate based on342d083, NOT applied/built.
+  It implements original create140800e60 prevalidation/duplicate scan/id-as-key insertion,
+  concrete nullable FindTag/FindRow; original LogUIActionRouter Error messages and IsBound guard.
+  Root must review/log-category ownership, adapt portable tests, add real UE creation cases,
+  promote normally and validate. Creation is not full registration; route association remains.
+- New source proof action-binding-route-association-1 closes1407ed1c0 lookup/weak node/pending
+  storage and successful return without a route. Polymorphic non-thread-safe route construction,
+  self-weak initialization, notification, migration and cleanup still unclosed. No fake route object.
+- New animated-switcher-visual-tick-1 closes timer transforms/opacity/enums/constants/ordering.
+  CORRECTION: second half restarts in SAME curve direction, not opposite. Reentry/interruption,
+  timer lifetime and queue lifecycle remain open; no renderer implementation claimed.
+- Dashboard docs/ledgerbb32ef9:133leaves/2019points,20.096%,0/4gates. Provider validation
+  adds no arbitrary weight or completion allocation; original registration/routing remains residual.
+- Previous Native cf37b21 adds engine-owned action-binding DATA/storage, with source guards
   and ordinary FText/FKey/weak delegate/TMap ownership. Both builds PASS110.969/120.825s,
   source/config stable. All26new engine rows PASS (types, key/NaN rules, copy, weak lifetime,
   replacement/removal, modulo IDs and reentry). Retained getter13/table30(421rows),8diagnostics,
@@ -23,7 +54,7 @@
   separation. Six rejection/tamper tests pass. Stage binary hashes cross-checked, not an
   independent giant-debug rehash. One existing CommonUI point now separately measures
   this bounded data/storage foundation; total2019/UI199/CommonUI44 unchanged,133leaves.
-- Next Native work: close production owner/row/gamepad resolver adapters and input routing,
+- Next Native work: integrate the validated data providers with original create/registration/routing,
   then connect the real registry to CommonButton/action-widget lifecycle and recovered getters.
   Tag settings provider is now identified as GetDefault<UCommonUIInputSettings>(): original
   helper140811ec0 is its static class getter; +130 is UClass CDO, not another wrapper cache.

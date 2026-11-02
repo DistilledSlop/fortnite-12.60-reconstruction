@@ -10,7 +10,7 @@ credentials in Git, and the orchestrator reviews and commits.
 
 ## Current baseline
 
-At Native `cf37b21`, both builds, both joins, eight retained diagnostics and the30-row input-table
+At Native `342d083`, both builds, both joins, eight retained diagnostics and the30-row input-table
 diagnostic pass. The original table loads421rows. Source and staged config now match; startup
 actually uses FortGameInstance, FortLocalPlayer, FortGameViewportClient and FortPlayerControllerAthena.
 The controller constructor assignment is source-proved; the full original game mode hierarchy and
@@ -31,8 +31,9 @@ must be implemented before runtime UI claims. Initialize and direct-parent lifec
 proofs identify real containment, callback binding and NativeConstruct dispatch; nested
 context registration and action-widget adapters remain unfinished (see HANDOFF.md).
 The engine-backed binding data/storage component now passes 26 controlled runtime cases,
-with real weak/delegate/value ownership and map/ID behavior. Production adapters and routing
-remain unfinished. The current-input-type accessor is generator-integrated and UE-validated. Next, wire production adapters for the
+with real weak/delegate/value ownership and map/ID behavior. Its engine-backed settings, row
+and widget/local-player/router/CommonInput data resolvers now pass 20 additional cases;
+production creation/registration and routing remain unfinished. The current-input-type accessor is generator-integrated and UE-validated. Next, integrate the source-backed create entry for the
 shared action-binding registry and button selection/style lifecycle, then register the recovered
 text-style/display-text helpers and restore the original queue Slate graph. The shared record
 FText/array/delegate ownership contract is now implemented and engine-tested; do not substitute empty routing.
