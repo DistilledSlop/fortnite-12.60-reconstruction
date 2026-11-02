@@ -10,10 +10,12 @@ credentials in Git, and the orchestrator reviews and commits.
 
 ## Current baseline
 
-Active callback batch: double-click receiver/stop setter and base selected/deselected
-notifications are integrated with strict generator gates; client/runtime validation
-is pending. New settings/platform source proofs are in9198ef90. This is prerequisite
-work toward Initialize/SetStyle, with no new milestone credit. See HANDOFF.md.
+Native6fea4772: double-click receiver/stop setter and base selected/deselected
+notifications pass the client build and21 controlled callback observations using
+the client ELF in server/NullRHI mode. Normal GUI startup fails before diagnostics:
+sandbox UDEV monitor creation returns EPERM. Settings/platform source proofs are
+in9198ef90; controller brush candidate15e5642d remains unintegrated/unbuilt. This is
+prerequisite work toward Initialize/SetStyle, with no milestone credit. See HANDOFF.md.
 
 Native `d08549a5` / Engine `87acab901` passes both builds, 14 base-click checks,
 retained 93 style-rebuild checks and other focused diagnostics, and both joins.

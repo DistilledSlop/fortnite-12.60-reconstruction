@@ -1,6 +1,6 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
-## Active resume: connected callback batch (2026-11-02, validation pending)
+## Active resume: connected callback batch (2026-11-02, client build/headless PASS)
 
 The user resumed the full project goal and reinforced economical reads: use
 bounded patterns/excerpts and targeted log summaries; whole-file reads only when
@@ -11,10 +11,15 @@ complete, with original metadata/native-exec/rendered-output checks before write
 Initialize, accepted click/selection transitions, focus/hover, action-widget refresh
 and SetStyle remain unregistered. No interactive frontend or milestone is claimed.
 
-New CommonButton helpers preserve native/dynamic ordering, FReply, stop-bit reread
-and selected/deselected text-style virtual dispatch. Existing BaseClickProbe is
-extended for seven callback checks; current generated code and fixture are not yet
-built or run. Prior verified runtime remains d08549a5 / Engine87acab901.
+Native6fea4772 / Engine87acab901 builds the client PASS200.242s, with Native source
+unchanged during build. One Engine EncryptionKey deprecation warning; no new compile
+errors. The extended BaseClickProbe passes all21 controlled observations in the
+same client ELF using `-server -nullrhi` (exit0,1.581s). BP/native/dynamic ordering,
+real FReply, reflected stop setter/bit reread, broadcast suppression and synchronous
+selection reentry are observed. This is a controlled UObject diagnostic, not GUI,
+hardware-input, viewport or full lifecycle evidence. Old full baseline remains
+d08549a5; server was not rebuilt for this UI-only batch. Existing Engine/CUE edits
+are preserved. No joins, broad regressions or full archive/audit cycle were repeated.
 Generation `/tmp/promote_button_callbacks_1.py` then `_2.py` passed: first changed
 two files, second updated the guarded selected notification source only; no files
 added/removed, unchanged mtimes restored. Reports:
@@ -25,8 +30,38 @@ Source recovery commit9198ef90 closes InputDataClass+188, action-widget input-ty
 callback and platform cache copy/invalidation paths. Module-name/factory linkage,
 exact soft loading/root predicate and the broader action-widget graph remain open.
 `common_input_platform_evidence/replay.py IMAGE` passes four bounded windows.
-Next: one client build, extended existing callback diagnostic, then affected
-original frontend flow. Keep dashboard gates/credit unchanged until product evidence.
+Runner0cefd12b uses strict21-row verifier_v2; original14-row verifier remains intact
+for frozen receipts. Focused verifier/runner14tests PASS. Controller brush lookup
+candidate15e5642d is source-reviewed but unintegrated/unbuilt: first exact FName
+match, equal-count non-consuming key-set matching, real brush copies. Its directory
+handoff supplies generator hooks; integrate with the connected action-widget batch.
+
+Current launch environment: ordinary Vulkan/Xvfb client exits1 before diagnostics,
+zero rows, because SDL cannot initialize UDEV. Direct libudev check confirms
+udev_new succeeds but udev_monitor_new_from_netlink fails EPERM (errno1). SDL's
+normal client initialization requires it. No permission bypass or production
+feature removal was used; GUI validation requires an environment permitting the
+UDEV monitor. No viewport rerun can establish GUI behavior in this environment.
+This is the first confirmed occurrence; useful implementation work remains.
+
+Exact commands: `python3 /tmp/build_button_callbacks_1.py` (PASS),
+`python3 /tmp/run_button_callbacks_1.py` (GUI startup FAIL), and
+`python3 /tmp/run_button_callbacks_headless_1.py` (21rows PASS). Each script records
+the exact UE command and outcome under `porting/generated/button-callback-batch-1/`:
+`results.json`, `stage.json`, `launch.json`, `callbacks/{runtime.log,receipt.json}`,
+`callbacks-headless/{runtime.log,receipt.json}`. Headless receipt pins build source,
+build-report hash and unchanged client ELF hash after run. Only client ELF was
+staged; current symbol archival/debugger provenance is not claimed. All build/run
+handles18466/71102/4190 are terminal. All bounded agents finished.
+
+NEXT: continue authentic action-widget/SetInputAction dependencies and connect
+Initialize/selection/focus/hover/SetStyle; do not bind partial/no-op receivers. Reuse
+controller candidate and settings/platform evidence; close soft loading/root
+predicate and CommonInput module-name/factory linkage. Keep full client/server and
+all four milestone scope intact. Dashboard rationale updated, weights/measures and
+credit unchanged. Use only targeted reads/log summaries; no repeated GUI launch
+until environment changes. Preserve bounded delegation: Luna medium read-only,
+Terra medium/high regular, Sol medium complex, fork_turns none, root owns Native.
 
 ## Session stopped at user request (2026-11-02)
 
