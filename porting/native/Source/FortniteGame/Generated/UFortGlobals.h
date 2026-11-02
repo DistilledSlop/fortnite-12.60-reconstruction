@@ -600,5 +600,8 @@ public:
 	UPROPERTY(Transient)
 	UFortGameFeaturePluginManager* GameFeaturePluginManager;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static bool IsErebus();
+
 };
 

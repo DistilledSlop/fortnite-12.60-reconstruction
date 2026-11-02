@@ -1,0 +1,61 @@
+{
+  "image_sha256": "338c83a2314ccac1040a2c0bb520b893013cc7b58eda58e550da67f5d84de680",
+  "exec_va": "0x1409aca00",
+  "exec_bytes": "488b422033c94885c00f95c14803c848894a2041c60000c3",
+  "class_block_va": "0x1463f9920",
+  "class_noregister_fn": "0x142930580",
+  "base_fn": "0x142a02c30",
+  "package_fn": "0x142eea530",
+  "owner_fn": "0x142931bc0",
+  "function": {
+    "name": "IsErebus",
+    "create_func": "0x142930fa0",
+    "flags": [
+      "0x14022401"
+    ],
+    "replicated_function": false,
+    "net_roles": [],
+    "outer_fn": "0x142931bc0",
+    "params": [
+      {
+        "index": 0,
+        "name": "ReturnValue",
+        "kind": "Bool",
+        "kind_raw": "0x2c",
+        "property_flags": "0x10000000000580",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "element_size": 1,
+        "size_of_outer": 1,
+        "bitfield": true,
+        "set_bit_fn": "0x1406966a0",
+        "offset": null
+      }
+    ]
+  },
+  "exec": {
+    "exec_addr": "0x1409aca00",
+    "flags": "0x14022401",
+    "params": [
+      {
+        "index": 0,
+        "name": "ReturnValue",
+        "kind": "Bool",
+        "kind_raw": "0x2c",
+        "property_flags": "0x10000000000580",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "element_size": 1,
+        "size_of_outer": 1,
+        "bitfield": true,
+        "offset": null
+      }
+    ],
+    "create_func": "0x142930fa0",
+    "source": "lea"
+  }
+}

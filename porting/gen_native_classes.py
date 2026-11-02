@@ -2174,6 +2174,10 @@ _current_input_type_spec = _common_activation_import.spec_from_file_location(
     "common_input_current_type_policy", os.path.join(os.path.dirname(__file__), "frontend", "common_input_current_type", "policy.py"))
 _current_input_type_policy = _common_activation_import.module_from_spec(_current_input_type_spec)
 _current_input_type_spec.loader.exec_module(_current_input_type_policy)
+_fort_globals_spec = _common_activation_import.spec_from_file_location(
+    "fort_globals_runtime_policy", os.path.join(os.path.dirname(__file__), "frontend", "fort_globals_runtime", "policy.py"))
+_fort_globals_policy = _common_activation_import.module_from_spec(_fort_globals_spec)
+_fort_globals_spec.loader.exec_module(_fort_globals_policy)
 _binding_data_spec = _common_activation_import.spec_from_file_location(
     "common_action_binding_data_policy", os.path.join(os.path.dirname(__file__), "frontend", "common_action_binding_runtime", "policy.py"))
 _binding_data_policy = _common_activation_import.module_from_spec(_binding_data_spec)
@@ -2228,6 +2232,7 @@ def build_class_promoted(block, name, resolver, parent_entry, owner_fns, snippet
     }
     model = _common_activation_policy.apply(model, block, owner_fns, native_execs)
     model = _current_input_type_policy.apply(model, block, owner_fns, native_execs)
+    model = _fort_globals_policy.apply(model, block, owner_fns, native_execs)
     return apply_blueprint_context_runtime_policy(model, block, name, resolver, parent_entry, owner_fns, snippets, splice_ctx)
 
 # ---------------------------------------------------------------- behaviour snippets (porting/behavior)
@@ -3128,7 +3133,7 @@ def render_promoted_cpp(model, source_label):
     result = "\n".join(lines) + "\n"
     if model.get("source_context_phases"):
         result += BLUEPRINT_CONTEXT_PHASE_BODIES
-    return result + _common_activation_policy.definitions(model) + _current_input_type_policy.definitions(model)
+    return result + _common_activation_policy.definitions(model) + _current_input_type_policy.definitions(model) + _fort_globals_policy.definitions(model)
 
 
 def build_engine_header_index(root):
@@ -3398,7 +3403,7 @@ def promote(args):
     gate.name_clashes = engine_macro_names(args.engine_root)
     resolver.gate = gate
     guarded_native_execs = {}
-    if {'UCommonActivatablePanel', 'UCommonInputSubsystem', 'UCommonButton', 'UCommonTextBlock'} & set(listed):
+    if {'UCommonActivatablePanel', 'UCommonInputSubsystem', 'UCommonButton', 'UCommonTextBlock', 'UFortGlobals'} & set(listed):
         guarded_native_execs = load_json(os.path.join(os.path.dirname(args.reflection), 'native_funcs.json'))
     if 'UCommonTextBlock' in listed:
         _common_activation_policy.validate_text_block_style_classes(blocks_by_va, name_to_block)
@@ -3462,7 +3467,7 @@ def promote(args):
         model = build_class_promoted(blocks_by_va[block], name, resolver, parents[block], owner_fns,
                                      snippets_by_class.get(name, []), splice_ctx,
                                      native_execs=guarded_native_execs.get(name) if name in
-                                     ("UCommonActivatablePanel", "UCommonInputSubsystem", "UCommonButton", "UCommonTextBlock") else None)
+                                     ("UCommonActivatablePanel", "UCommonInputSubsystem", "UCommonButton", "UCommonTextBlock", "UFortGlobals") else None)
         model["includes"] = sorted(set(own_includes(gate, model["used"], package))
                                    | set(model["splice"].get("header_includes", set())))
         interface_modules = include_interface_headers(model, iface_packages)

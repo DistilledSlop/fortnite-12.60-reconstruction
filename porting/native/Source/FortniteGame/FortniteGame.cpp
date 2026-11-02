@@ -45,6 +45,7 @@ void RegisterActionBindingCreationProbeDriver();
 void RegisterCommonButtonTextStyleProbeDriver();
 void RegisterCommonTextBlockStyleProbeDriver();
 void RegisterCommonTextTransformProbeDriver();
+void RegisterFortGlobalsErebusProbeDriver();
 void RunOriginalVulkanShaderProbe();
 void RunLegacyMaterialShaderMapProbe();
 void RegisterLegacyOriginalMaterialProvider();
@@ -196,6 +197,7 @@ public:
         RegisterCommonButtonTextStyleProbeDriver();
         RegisterCommonTextBlockStyleProbeDriver();
         RegisterCommonTextTransformProbeDriver();
+        RegisterFortGlobalsErebusProbeDriver();
         RegisterPanelIntroProbeDriver();
         RegisterPanelOutroProbeDriver();
         RegisterConfirmationDescriptionProbeDriver();

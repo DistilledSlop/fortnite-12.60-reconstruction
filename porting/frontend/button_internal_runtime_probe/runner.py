@@ -22,6 +22,7 @@ import binding_creation_verifier
 import button_text_style_verifier
 import text_block_style_verifier
 import text_transform_verifier
+import erebus_verifier
 
 ENVIRONMENT = ('DISPLAY', 'VK_ICD_FILENAMES', 'SDL_AUDIODRIVER', 'LP_NUM_THREADS')
 BASE_ARGS = ('-stdout', 'FortniteLinux', '/Engine/Maps/Entry', '-vulkan', '-windowed',
@@ -76,7 +77,8 @@ def command(binary, case):
                  'action-binding-creation': ('-ActionBindingCreationProbe',),
                  'button-text-style': ('-CommonButtonTextStyleProbe',),
                  'text-block-style': ('-CommonTextBlockStyleProbe',),
-                 'text-transform': ('-CommonTextTransformProbe',)}[case]
+                 'text-transform': ('-CommonTextTransformProbe',),
+                 'erebus': ('-FortGlobalsErebusProbe',)}[case]
     return [str(binary), *flags, *BASE_ARGS]
 
 
@@ -197,7 +199,7 @@ def run(args):
     except OSError as exc:
         receipt['error'] = (receipt['error'] or '') + ' binary recheck failed: ' + str(exc)
     receipt['log'] = {'path': str(log), 'sha256': digest(log)}
-    if args.case in ('button', 'main-button', 'panel-intro', 'panel-outro', 'confirmation-description', 'common-input-row', 'common-input-current-type', 'action-binding-data', 'action-binding-provider', 'action-binding-creation', 'button-text-style', 'text-block-style', 'text-transform'):
+    if args.case in ('button', 'main-button', 'panel-intro', 'panel-outro', 'confirmation-description', 'common-input-row', 'common-input-current-type', 'action-binding-data', 'action-binding-provider', 'action-binding-creation', 'button-text-style', 'text-block-style', 'text-transform', 'erebus'):
         try:
             transcript_verifier = {'button': verifier, 'main-button': main_button_verifier,
                                    'panel-intro': panel_intro_verifier,
@@ -210,7 +212,8 @@ def run(args):
                                    'action-binding-creation': binding_creation_verifier,
                                    'button-text-style': button_text_style_verifier,
                                    'text-block-style': text_block_style_verifier,
-                                   'text-transform': text_transform_verifier}[args.case]
+                                   'text-transform': text_transform_verifier,
+                                   'erebus': erebus_verifier}[args.case]
             result = transcript_verifier.verify(log.read_text(errors='replace'))
         except (ValueError, OSError) as exc:
             result = {'passed': False, 'error': str(exc)[:300]}
@@ -219,7 +222,7 @@ def run(args):
     receipt['passed'] = (receipt['returncode'] == 0 and not receipt['timed_out'] and
                          receipt['proc_exe_inode_verified'] and receipt['binary_after_verified'] and
                          receipt['error'] is None and
-                         (args.case not in ('button', 'main-button', 'panel-intro', 'panel-outro', 'confirmation-description', 'common-input-row', 'common-input-current-type', 'action-binding-data', 'action-binding-provider', 'action-binding-creation', 'button-text-style', 'text-block-style', 'text-transform') or receipt['transcript']['passed']))
+                         (args.case not in ('button', 'main-button', 'panel-intro', 'panel-outro', 'confirmation-description', 'common-input-row', 'common-input-current-type', 'action-binding-data', 'action-binding-provider', 'action-binding-creation', 'button-text-style', 'text-block-style', 'text-transform', 'erebus') or receipt['transcript']['passed']))
     write_json(receipt_path, receipt)
     return receipt['passed']
 
@@ -230,7 +233,7 @@ def main():
     parser.add_argument('--binary', type=Path, required=True)
     parser.add_argument('--cwd', type=Path, required=True)
     parser.add_argument('--out', type=Path, required=True)
-    parser.add_argument('--case', choices=('button', 'main-button', 'panel-intro', 'panel-outro', 'confirmation-description', 'common-input-row', 'common-input-current-type', 'action-binding-data', 'action-binding-provider', 'action-binding-creation', 'button-text-style', 'text-block-style', 'text-transform', 'activation', 'registry', 'lifecycle'), required=True)
+    parser.add_argument('--case', choices=('button', 'main-button', 'panel-intro', 'panel-outro', 'confirmation-description', 'common-input-row', 'common-input-current-type', 'action-binding-data', 'action-binding-provider', 'action-binding-creation', 'button-text-style', 'text-block-style', 'text-transform', 'erebus', 'activation', 'registry', 'lifecycle'), required=True)
     parser.add_argument('--runtime-args', type=Path, help='JSON array of material ingress and manifest flags for original asset diagnostics')
     parser.add_argument('--timeout', type=float, default=240)
     args = parser.parse_args()
