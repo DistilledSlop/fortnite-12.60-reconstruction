@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "Abilities/Tasks/AbilityTask.h"
 
+#include "Abilities/GameplayAbilityTargetTypes.h"
 #include "FWaitTargetSelectionDelegate.h"
 #include "GameplayTagContainer.h"
 
@@ -24,6 +25,10 @@ public:
 	// table index 3, flags 0x10000010080000
 	UPROPERTY()
 	FWaitTargetSelectionDelegate Cancelled;
+
+	// table index 2, flags 0x20080000000000
+	UPROPERTY()
+	TEnumAsByte<EGameplayTargetingConfirmation::Type> ConfirmationType;
 
 	// table index 1, flags 0x20080000000000
 	UPROPERTY()

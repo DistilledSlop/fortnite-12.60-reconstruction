@@ -1,0 +1,538 @@
+{
+  "identity": {
+    "block_va": "0x145a01210",
+    "name": null,
+    "name_status": "unresolved",
+    "config_name": null,
+    "class_flags": "0xb010a1",
+    "dependency_fns": [
+      "0x140816d40",
+      "0x140812ee0"
+    ],
+    "package_fn": "0x140816d40",
+    "base_fn": "0x140812ee0",
+    "class_noregister_fn": "0x140807cd0",
+    "interface_count": 0,
+    "dependency0_fn": "0x140816d40"
+  },
+  "functions": [
+    {
+      "name": "ClearSelection",
+      "create_func": "0x1408068d0",
+      "flags": [
+        "0x4020401"
+      ],
+      "replicated_function": false,
+      "net_roles": [],
+      "params": [],
+      "candidates": [
+        {
+          "owning_class": null,
+          "outer_fn": "0x140805cb0",
+          "flags": "0x4020401",
+          "nprop": 0,
+          "params": []
+        },
+        {
+          "owning_class": null,
+          "outer_fn": "0x143da6e80",
+          "flags": "0x4020401",
+          "nprop": 0,
+          "params": []
+        },
+        {
+          "owning_class": null,
+          "outer_fn": "0x145271640",
+          "flags": "0x4020401",
+          "nprop": 0,
+          "params": []
+        }
+      ]
+    },
+    {
+      "name": "SetIsSelected",
+      "create_func": "0x140807220",
+      "flags": [
+        "0x4020401",
+        "0x8020800"
+      ],
+      "replicated_function": null,
+      "note": "ambiguous: several FFunctionParams share this name pointer",
+      "params_note": "ambiguous: candidates disagree on parameter table",
+      "candidates": [
+        {
+          "owning_class": null,
+          "outer_fn": "0x140805cb0",
+          "flags": "0x4020401",
+          "nprop": 2,
+          "params": [
+            {
+              "index": 0,
+              "name": "bGiveClickFeedback",
+              "kind": "Bool",
+              "kind_raw": "0x2c",
+              "property_flags": "0x10000000000080",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "element_size": 1,
+              "size_of_outer": 2,
+              "bitfield": true,
+              "set_bit_fn": "0x1407579e0",
+              "offset": null
+            },
+            {
+              "index": 1,
+              "name": "InSelected",
+              "kind": "Bool",
+              "kind_raw": "0x2c",
+              "property_flags": "0x10000000000080",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "element_size": 1,
+              "size_of_outer": 2,
+              "bitfield": true,
+              "set_bit_fn": "0x1406966a0",
+              "offset": null
+            }
+          ]
+        },
+        {
+          "owning_class": null,
+          "outer_fn": "0x1451b1eb0",
+          "flags": "0x4020401",
+          "nprop": 1,
+          "params": [
+            {
+              "index": 0,
+              "name": "bInSelected",
+              "kind": "Bool",
+              "kind_raw": "0x2c",
+              "property_flags": "0x10000000000080",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "element_size": 1,
+              "size_of_outer": 1,
+              "bitfield": true,
+              "set_bit_fn": "0x1406966a0",
+              "offset": null
+            }
+          ]
+        },
+        {
+          "owning_class": null,
+          "outer_fn": "0x1451b9db0",
+          "flags": "0x8020800",
+          "nprop": 1,
+          "params": [
+            {
+              "index": 0,
+              "name": "bIsSelected",
+              "kind": "Bool",
+              "kind_raw": "0x2c",
+              "property_flags": "0x10000000000080",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "element_size": 1,
+              "size_of_outer": 1,
+              "bitfield": true,
+              "set_bit_fn": "0x1406966a0",
+              "offset": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "SetSelectedInternal",
+      "create_func": "0x140807410",
+      "flags": [
+        "0x4080401"
+      ],
+      "replicated_function": false,
+      "net_roles": [],
+      "outer_fn": "0x140805cb0",
+      "params": [
+        {
+          "index": 0,
+          "name": "bBroadcast",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 3,
+          "bitfield": true,
+          "set_bit_fn": "0x14076c560",
+          "offset": null
+        },
+        {
+          "index": 1,
+          "name": "bAllowSound",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 3,
+          "bitfield": true,
+          "set_bit_fn": "0x1407579e0",
+          "offset": null
+        },
+        {
+          "index": 2,
+          "name": "bInSelected",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 3,
+          "bitfield": true,
+          "set_bit_fn": "0x1406966a0",
+          "offset": null
+        }
+      ]
+    },
+    {
+      "name": "SetTriggeredInputAction",
+      "create_func": "0x140807500",
+      "flags": [
+        "0x4420401"
+      ],
+      "replicated_function": false,
+      "net_roles": [],
+      "outer_fn": "0x140805cb0",
+      "params": [
+        {
+          "index": 0,
+          "name": "OldPanel",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x10000000080080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 16,
+          "type_refs": {
+            "class": "0x140805d20"
+          }
+        },
+        {
+          "index": 1,
+          "name": "InputActionRow",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000008000182",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "struct": "0x1446f2880"
+          }
+        }
+      ]
+    },
+    {
+      "name": "SetTriggeringInputAction",
+      "create_func": "0x1408075e0",
+      "flags": [
+        "0x4420401"
+      ],
+      "replicated_function": false,
+      "net_roles": [],
+      "outer_fn": "0x140805cb0",
+      "params": [
+        {
+          "index": 0,
+          "name": "InputActionRow",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000008000182",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "struct": "0x1446f2880"
+          }
+        }
+      ]
+    }
+  ],
+  "native_functions": {
+    "ClearSelection": {
+      "exec_addr": "0x14080a190",
+      "flags": "0x4020401",
+      "params": [],
+      "create_func": "0x1408068d0",
+      "source": "lea"
+    },
+    "SetIsSelected": {
+      "exec_addr": "0x14080d110",
+      "flags": "0x4020401",
+      "params": [
+        {
+          "index": 0,
+          "name": "bGiveClickFeedback",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 2,
+          "bitfield": true,
+          "offset": null
+        },
+        {
+          "index": 1,
+          "name": "InSelected",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 2,
+          "bitfield": true,
+          "offset": null
+        }
+      ],
+      "create_func": "0x140807220",
+      "source": "lea"
+    },
+    "SetSelectedInternal": {
+      "exec_addr": "0x14080d430",
+      "flags": "0x4080401",
+      "params": [
+        {
+          "index": 0,
+          "name": "bBroadcast",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 3,
+          "bitfield": true,
+          "offset": null
+        },
+        {
+          "index": 1,
+          "name": "bAllowSound",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 3,
+          "bitfield": true,
+          "offset": null
+        },
+        {
+          "index": 2,
+          "name": "bInSelected",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 3,
+          "bitfield": true,
+          "offset": null
+        }
+      ],
+      "create_func": "0x140807410",
+      "source": "lea"
+    },
+    "SetTriggeringInputAction": {
+      "exec_addr": "0x14080d8d0",
+      "flags": "0x4420401",
+      "params": [
+        {
+          "index": 0,
+          "name": "InputActionRow",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000008000182",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "struct": "0x1446f2880"
+          }
+        }
+      ],
+      "create_func": "0x1408075e0",
+      "source": "lea"
+    },
+    "SetTriggeredInputAction": {
+      "exec_addr": "0x14080d7f0",
+      "flags": "0x4420401",
+      "params": [
+        {
+          "index": 0,
+          "name": "OldPanel",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x10000000080080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 16,
+          "type_refs": {
+            "class": "0x140805d20"
+          }
+        },
+        {
+          "index": 1,
+          "name": "InputActionRow",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000008000182",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "struct": "0x1446f2880"
+          }
+        }
+      ],
+      "create_func": "0x140807500",
+      "source": "lea"
+    }
+  },
+  "windows": [
+    {
+      "va": "0x14080a190",
+      "length": 26,
+      "sha256": "97f87f3fc1f25169392dd42d28f621d397ac20c3db1135a054349a88a9af36d7"
+    },
+    {
+      "va": "0x1407ae7e0",
+      "length": 13,
+      "sha256": "765bd488ba4a1753f828706ee28694589da9885560a7d3dface1ed79425a33d7"
+    },
+    {
+      "va": "0x14080d110",
+      "length": 194,
+      "sha256": "95914f98d4c8eadf18879e2dd2ee32d5c9e0798c7201d033e5ea3bba64cbd965"
+    },
+    {
+      "va": "0x14080d430",
+      "length": 275,
+      "sha256": "46c84cb66bd1912041629d564456d3458c8dbeb9b2992180ab76dbee10f9aa89"
+    },
+    {
+      "va": "0x14080d8d0",
+      "length": 148,
+      "sha256": "c14554a643dbb6405abc3a25adc849d28ed20b42b9b3b24362d98910c62ea32f"
+    },
+    {
+      "va": "0x1407fa9e0",
+      "length": 95,
+      "sha256": "baee3a9e9acfd1e2ff5f429aa8ffbf958654b43182eee32d188f7341bf831be3"
+    },
+    {
+      "va": "0x140801750",
+      "length": 240,
+      "sha256": "893352874586f0a015bba97c92850e1219f508816710d967f36fcdc5fd26b6b6"
+    },
+    {
+      "va": "0x1407abbc0",
+      "length": 1860,
+      "sha256": "1b082a34c73d79b9b5cb12bad9bc353bb8bd3c1a0b96787ff916f6d9bf8342c9"
+    },
+    {
+      "va": "0x1408018c0",
+      "length": 134,
+      "sha256": "574cfaa10212327ebaeb2cdd477f7518c4a402b727f706c46272242cc01a1224"
+    },
+    {
+      "va": "0x140801950",
+      "length": 736,
+      "sha256": "c74556dbfaa6cbd90a475324fb77f9d3af1ea889312aceb1263f358756ae3369"
+    },
+    {
+      "va": "0x1407ac304",
+      "length": 17,
+      "sha256": "cf3a30e30809955a097413335418c54a5926fa91bb9b0144b202b63c41ff1cd8"
+    },
+    {
+      "va": "0x140801c30",
+      "length": 1,
+      "sha256": "ae3f4619b0413d70d3004b9131c3752153074e45725be13b9a148978895e359e"
+    },
+    {
+      "va": "0x14080d7f0",
+      "length": 224,
+      "sha256": "948d704cfa29c56a84b2dbec3ce5a75b6683d442a98c330883511bb1432c2bc3"
+    },
+    {
+      "va": "0x1407fa760",
+      "length": 635,
+      "sha256": "e5362dd92cae6b0738ec5ff0ff822561313e68062a69e3289a73fd374b86335f"
+    },
+    {
+      "va": "0x1459f19e0",
+      "length": 92,
+      "sha256": "c5c15d0d12a5a0dee753d2efd0c7bda91056c05bb4ebb557f22655f8c5de0c4c"
+    },
+    {
+      "va": "0x1459f1a40",
+      "length": 74,
+      "sha256": "0667d3b093a2032aac1b377ce0ff01d9b83cbda119a10a12933428bcdb4e2eac"
+    },
+    {
+      "va": "0x1459f1a90",
+      "length": 76,
+      "sha256": "3d243700a5d6225dda6acf087b8405027a1b711f73852c6e0a1075be0833a756"
+    }
+  ],
+  "vtables": [
+    {
+      "table": "0x1459f0940",
+      "slot": "0x488",
+      "target": "0x1407abbc0"
+    }
+  ]
+}

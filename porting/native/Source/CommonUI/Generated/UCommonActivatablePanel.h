@@ -101,5 +101,6 @@ private:
     FCommonPanelActionMap NativeActionRecords;
     FCommonPanelOperationCallback NativePreDeactivation;
     FCommonPanelOperationCallback NativePostDeactivation;
+    friend class UCommonButton;
 };
 

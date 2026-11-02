@@ -1,0 +1,50 @@
+[
+  {
+    "name": "selection feedback",
+    "va": "0x1407f98ef",
+    "length": 29,
+    "sha256": "a9f7f8360299b8513a790f498e0457249dc516b4873726627fb2ff5c76947293"
+  },
+  {
+    "name": "creation and shared roots",
+    "va": "0x143005fc9",
+    "length": 412,
+    "sha256": "fa51f5377988edf33476eeae7d3a38ad0515ffc353b89dae6280cada13a3aaa6"
+  },
+  {
+    "name": "application constructor",
+    "va": "0x142ffbbd0",
+    "length": 656,
+    "sha256": "05754277cc591bf70c3e414fff8e0f278a91ca9129345485c078a478803023c1"
+  },
+  {
+    "name": "sound forwarder",
+    "va": "0x143022250",
+    "length": 13,
+    "sha256": "ac1d560ffc2da91bf418b79fae0c7bd630b2fc25a317aad3f409ee8142912bef"
+  },
+  {
+    "name": "shutdown shared roots",
+    "va": "0x14303476c",
+    "length": 136,
+    "sha256": "6bdee83270173d755057e4a8854071bf607c5506eae8d8880eb336a2190691bf"
+  },
+  {
+    "name": "null device vtable",
+    "va": "0x146654d20",
+    "length": 24,
+    "sha256": "19379cb9609b8a64aa1338a43e0e7128f097847594f783402b708413a953b511"
+  },
+  {
+    "name": "null play",
+    "va": "0x1406801c0",
+    "length": 3,
+    "sha256": "b6cbececf1b07e74f37d57710c68c31f0b92cb08d51093252b321b07542e177b"
+  },
+  {
+    "name": "null duration",
+    "va": "0x1406964e0",
+    "length": 4,
+    "sha256": "71395787209f8ec2980442dd6a872d1029e9f7ddddb565be11fe704999f82dd7"
+  }
+]

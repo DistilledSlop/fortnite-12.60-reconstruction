@@ -8,6 +8,7 @@
 
 #include "GameplayTagContainer.h"
 #include "Math/Color.h"
+#include "Types/SlateEnums.h"
 
 class UButton;
 class UImage;
@@ -29,6 +30,14 @@ public:
 	// table index 14, flags 0x20080000000005
 	UPROPERTY()
 	FLinearColor UnpressedColor;
+
+	// table index 13, flags 0x200c0000000015
+	UPROPERTY()
+	TEnumAsByte<EButtonClickMethod::Type> ClickMethod;
+
+	// table index 12, flags 0x200c0000000015
+	UPROPERTY()
+	TEnumAsByte<EButtonTouchMethod::Type> TouchMethod;
 
 	// table index 11, flags 0x20080000000015
 	UPROPERTY()

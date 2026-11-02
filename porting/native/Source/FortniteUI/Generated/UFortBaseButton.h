@@ -15,6 +15,7 @@
 #include "FFortSelectedStateChanged.h"
 #include "Math/Vector2D.h"
 #include "Sound/SlateSound.h"
+#include "Types/SlateEnums.h"
 
 class UFortButtonStyle;
 
@@ -89,6 +90,10 @@ public:
 	// table index 1, flags 0x21080000000015
 	UPROPERTY()
 	bool bClickable;
+
+	// table index 0, flags 0x21080000000015
+	UPROPERTY()
+	TEnumAsByte<EButtonClickMethod::Type> ClickMethod;
 
 };
 

@@ -247,3 +247,248 @@ void UCommonButton::NativeOnDeselected(bool bBroadcast)
     }
     NativeOnCurrentTextStyleChanged();
 }
+#include "UCommonActionWidget.h"
+#include "UCommonButtonInternal.h"
+#include "UCommonInputSubsystem.h"
+#include "UCommonInputSettings.h"
+#include "UCommonUIInputData.h"
+#include "CommonInputModuleRuntime.h"
+#include "Engine/LocalPlayer.h"
+#include "Framework/Application/SlateApplication.h"
+
+void UCommonButton::NativeRefreshActionWidgetVisibility()
+{
+    if (!InputActionWidget) return;
+    ULocalPlayer* Player = GetOwningLocalPlayer();
+    UCommonInputSubsystem* Input = Player ? Player->GetSubsystem<UCommonInputSubsystem>() : nullptr;
+    bool bHide;
+    if (bHideInputAction || (Input && bHideInputActionWithKeyboard &&
+        Input->GetCurrentInputType() != ECommonInputType::Gamepad))
+        bHide = true;
+    else if (bNativeSelected)
+        bHide = !bInteractableWhenSelected && !bToggleable && !bDisplayInputActionWhenNotInteractable;
+    else
+        bHide = !bDisplayInputActionWhenNotInteractable && !bNativeInteractionEnabled;
+    // Input resolution may reenter; the original reloads the widget without a second null check.
+    InputActionWidget->NativeHidden = bHide;
+    InputActionWidget->NativeRefreshInputAction();
+}
+
+void UCommonButton::NativeUpdateActionWidget()
+{
+    if (!InputActionWidget) return;
+    FDataTableRowHandle Row;
+    if (!TriggeringInputAction.IsNull()) Row = TriggeringInputAction;
+    else if (!NativeTriggeredInputAction.IsNull()) Row = NativeTriggeredInputAction;
+    else if (bShouldUseFallbackDefaultInputAction && IsHovered())
+    {
+        UCommonInputSettings* Settings = GetCommonInputSettings();
+        UClass* InputDataClass = Settings->InputDataClass.Get();
+        if (InputDataClass && InputDataClass->IsChildOf(UCommonUIInputData::StaticClass()))
+        {
+            UObject* Default = InputDataClass->GetDefaultObject(false);
+            if (!Default)
+            {
+                InputDataClass->GetDefaultObject();
+                Default = InputDataClass->GetDefaultObject(false);
+            }
+            if (Default) Row = static_cast<UCommonUIInputData*>(Default)->DefaultClickAction;
+        }
+    }
+    InputActionWidget->SetInputAction(Row);
+    NativeRefreshActionWidgetVisibility();
+}
+
+void UCommonButton::NativeOnHovered()
+{
+    BP_OnHovered();
+    NativeHovered.Broadcast();
+    if (OnButtonHovered.IsBound()) OnButtonHovered.Broadcast(this);
+    Invalidate(EInvalidateWidget::Layout);
+    NativeOnCurrentTextStyleChanged();
+    NativeUpdateActionWidget();
+}
+
+void UCommonButton::NativeOnUnhovered()
+{
+    BP_OnUnhovered();
+    NativeUnhovered.Broadcast();
+    if (OnButtonUnhovered.IsBound()) OnButtonUnhovered.Broadcast(this);
+    Invalidate(EInvalidateWidget::Layout);
+    NativeOnCurrentTextStyleChanged();
+    NativeUpdateActionWidget();
+}
+
+void UCommonButton::NativeSetSelectedInternal(bool bSelected, bool bGiveClickFeedback, bool bBroadcast)
+{
+    bNativeSelected = bSelected;
+    NativeRefreshCurrentStyle();
+    if (bNativeSelected)
+    {
+        NativeOnSelected(bBroadcast);
+        if (!bToggleable)
+            NativeInternalButton.Get()->NativeSetInteractionEnabled(bInteractableWhenSelected);
+        if (bGiveClickFeedback)
+            FSlateApplication::Get().PlaySound(NormalStyle.PressedSlateSound, 0);
+    }
+    else
+    {
+        NativeInternalButton.Get()->NativeSetInteractionEnabled(bNativeInteractionEnabled);
+        NativeOnDeselected(bBroadcast);
+    }
+    NativeRefreshActionWidgetVisibility();
+}
+
+void UCommonButton::NativeSetIsSelected(bool bSelected, bool bGiveClickFeedback)
+{
+    const bool bWasHovered = IsHovered();
+    if (bSelectable && bSelected != bNativeSelected)
+    {
+        if (bSelected) NativeSetSelectedInternal(true, bGiveClickFeedback, true);
+        else if (bToggleable) NativeSetSelectedInternal(false, true, true);
+    }
+    const bool bNowHovered = IsHovered();
+    if (bWasHovered != bNowHovered)
+    {
+        if (bNowHovered) NativeOnHovered(); else NativeOnUnhovered();
+    }
+}
+
+void UCommonButton::NativeHandleFocusReceived()
+{
+    // Original predicate 1406801e0 is xor al,al; ret in this build.
+    if (bShouldSelectUponReceivingFocus)
+    {
+        const bool bWasHovered = IsHovered();
+        if (bSelectable && !bNativeSelected) NativeSetSelectedInternal(true, false, true);
+        const bool bNowHovered = IsHovered();
+        if (bWasHovered != bNowHovered)
+        {
+            if (bNowHovered) NativeOnHovered(); else NativeOnUnhovered();
+        }
+    }
+    NativeFocusReceived.Broadcast();
+}
+
+void UCommonButton::HandleButtonPressed()
+{
+    ULocalPlayer* Player = GetOwningLocalPlayer();
+    UCommonInputSubsystem* Input = Player ? Player->GetSubsystem<UCommonInputSubsystem>() : nullptr;
+    if (Input && Input->GetCurrentInputType() == ECommonInputType::Touch) NativeOnHovered();
+}
+
+void UCommonButton::HandleButtonReleased()
+{
+    ULocalPlayer* Player = GetOwningLocalPlayer();
+    UCommonInputSubsystem* Input = Player ? Player->GetSubsystem<UCommonInputSubsystem>() : nullptr;
+    if (Input && Input->GetCurrentInputType() == ECommonInputType::Touch) NativeOnUnhovered();
+}
+
+void UCommonButton::HandleButtonClicked()
+{
+    const ESlateVisibility Visibility = GetVisibility();
+    if (GetIsEnabled() && bNativeButtonEnabled && bNativeInteractionEnabled &&
+        Visibility != ESlateVisibility::Collapsed && Visibility != ESlateVisibility::Hidden)
+    {
+        NativeSetIsSelected(!bNativeSelected, false);
+        NativeOnClicked();
+        NativeDispatchTriggeredAction();
+    }
+}
+
+#include "UCommonActivatablePanel.h"
+#include "UCommonInputManager.h"
+#include "UCommonUISubsystem.h"
+#include "Engine/GameInstance.h"
+
+void UCommonButton::NativeDispatchTriggeredAction()
+{
+    if (NativeTriggeredInputAction.IsNull()) return;
+    UGameInstance* GameInstance = GetGameInstance();
+    UCommonUISubsystem* Subsystem = GameInstance ? GameInstance->GetSubsystem<UCommonUISubsystem>() : nullptr;
+    // The original dereferences the subsystem even when lookup returned null.
+    UCommonInputManager* Manager = Subsystem->CommonInputManager;
+    if (!Manager) return;
+    for (int32 Index = Manager->ActivatablePanelStack.Num() - 1; Index >= 0; --Index)
+    {
+        UCommonActivatablePanel* Panel = Manager->ActivatablePanelStack[Index];
+        if (!Panel) continue;
+        int32 Slot = INDEX_NONE;
+        FCommonPanelActionRecord* Record = Panel->NativeActionRecords.FindWithSlot(NativeTriggeredInputAction, Slot);
+        if (Panel->IsActivated() && Record)
+        {
+            // The original reuses the low byte of the sparse-map index as the out argument.
+            bool bPassThrough;
+            const uint8 SlotByte = static_cast<uint8>(Slot);
+            static_assert(sizeof(bPassThrough) == sizeof(SlotByte), "original one-byte bool ABI required");
+            FMemory::Memcpy(&bPassThrough, &SlotByte, sizeof(SlotByte));
+            Record->NativeCommit.ExecuteIfBound(bPassThrough);
+            uint8 ResultByte;
+            FMemory::Memcpy(&ResultByte, &bPassThrough, sizeof(ResultByte));
+            (void)(ResultByte != 0); // Original discards the out value.
+            break;
+        }
+    }
+}
+#include "Blueprint/WidgetTree.h"
+#include "Components/ButtonSlot.h"
+#include "UCommonButtonInternal.h"
+
+bool UCommonButton::Initialize()
+{
+    // Parent can synchronously call NativeOnInitialized before the internal exists.
+    if (!Super::Initialize()) return false;
+
+    UCommonButtonInternal* Internal = WidgetTree->ConstructWidget<UCommonButtonInternal>(
+        UCommonButtonInternal::StaticClass(), TEXT("InternalRootButton"));
+    Internal->ClickMethod = ClickMethod;
+    Internal->TouchMethod = TouchMethod;
+    Internal->PressMethod = PressMethod;
+    Internal->IsFocusable = bIsFocusable;
+    Internal->NativeSetButtonEnabled(bNativeButtonEnabled);
+    Internal->NativeSetInteractionEnabled(bNativeInteractionEnabled);
+    NativeInternalButton = Internal;
+
+    if (UWidget* OldRoot = WidgetTree->RootWidget)
+    {
+        UButtonSlot* Slot = Cast<UButtonSlot>(Internal->AddChild(OldRoot));
+        Slot->SetPadding(FMargin(0.0f));
+        Slot->SetHorizontalAlignment(HAlign_Fill);
+        Slot->SetVerticalAlignment(VAlign_Fill);
+        WidgetTree->RootWidget = Internal;
+
+        Internal->OnClicked.AddUniqueDynamic(this, &UCommonButton::HandleButtonClicked);
+        Internal->NativeDoubleClickDelegate.BindUObject(this, &UCommonButton::NativeHandleDoubleClicked);
+        Internal->NativeFocusReceivedDelegate.BindUObject(this, &UCommonButton::NativeHandleFocusReceived);
+        Internal->OnPressed.AddUniqueDynamic(this, &UCommonButton::HandleButtonPressed);
+        Internal->OnReleased.AddUniqueDynamic(this, &UCommonButton::HandleButtonReleased);
+    }
+    return true;
+}
+void UCommonButton::ClearSelection()
+{
+    NativeSetSelectedInternal(false, false, true);
+}
+
+void UCommonButton::SetIsSelected(bool InSelected, bool bGiveClickFeedback)
+{
+    NativeSetIsSelected(InSelected, bGiveClickFeedback);
+}
+
+void UCommonButton::SetSelectedInternal(bool bInSelected, bool bAllowSound, bool bBroadcast)
+{
+    NativeSetSelectedInternal(bInSelected, bAllowSound, bBroadcast);
+}
+// Candidate only. Register only with the complete production Initialize/lifecycle.
+// Original receiver 0x1407f9c70; NativeRebuildStyle is 0x1407acd30.
+void UCommonButton::SetStyle(TSubclassOf<UCommonButtonStyle> InStyle)
+{
+    UClass* Incoming = InStyle.Get();
+    if (!Incoming) return;
+
+    // TSubclassOf::Get validates ancestry; the old class can be invalid even
+    // when its raw stored pointer is non-null. The original checks both again.
+    if (Style.Get() == InStyle.Get()) return;
+    Style = Incoming;
+    NativeRebuildStyle();
+}

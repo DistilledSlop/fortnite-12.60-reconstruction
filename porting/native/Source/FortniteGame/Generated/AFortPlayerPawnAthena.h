@@ -13,6 +13,7 @@
 #include "FMarkedActorDisplayInfo.h"
 #include "FOnFortPlayerDied.h"
 #include "FOnInteractionFailedCallback.h"
+#include "FOnUIGameplayCueEvent.h"
 #include "FSharedRepMovement.h"
 #include "GameplayCueInterface.h"
 #include "GameplayEffectTypes.h"
@@ -109,6 +110,10 @@ public:
 	// table index 82, flags 0x10000000002000
 	UPROPERTY(Transient)
 	float BecameSpecialActorTime;
+
+	// table index 81, flags 0x10100010080000
+	UPROPERTY()
+	FOnUIGameplayCueEvent OnUIGameplayCue;
 
 	// table index 80, flags 0x10000000004000
 	UPROPERTY(Config)

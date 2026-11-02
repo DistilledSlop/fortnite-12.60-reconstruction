@@ -13,6 +13,7 @@
 #include "Input/Reply.h"
 #include "Sound/SlateSound.h"
 #include "Styling/SlateTypes.h"
+#include "Types/SlateEnums.h"
 
 class UCommonActionWidget;
 class UCommonButtonInternal;
@@ -83,6 +84,18 @@ public:
 	// table index 19, flags 0x21080000000015
 	UPROPERTY()
 	uint8 bShouldUseFallbackDefaultInputAction : 1;
+
+	// table index 18, flags 0x11000000000015
+	UPROPERTY()
+	TEnumAsByte<EButtonClickMethod::Type> ClickMethod;
+
+	// table index 17, flags 0x10000000000015
+	UPROPERTY()
+	TEnumAsByte<EButtonTouchMethod::Type> TouchMethod;
+
+	// table index 16, flags 0x10000000000015
+	UPROPERTY()
+	TEnumAsByte<EButtonPressMethod::Type> PressMethod;
 
 	// table index 15, flags 0x11000000000015
 	UPROPERTY()
@@ -216,6 +229,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	TSubclassOf<UCommonTextStyle> GetCurrentTextStyleClass() const;
 
+	UFUNCTION(BlueprintCallable)
+	void SetStyle(TSubclassOf<UCommonButtonStyle> InStyle);
+
 public:
     UCommonButton(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
     bool NativeIsInteractionEnabled() const;
@@ -262,5 +278,35 @@ protected:
     // Source aliases for original virtual slots +0x4b0 and +0x4b8.
     virtual void NativeOnSelected(bool bBroadcast);
     virtual void NativeOnDeselected(bool bBroadcast);
+public:
+    FSimpleMulticastDelegate NativeHovered;
+    FSimpleMulticastDelegate NativeUnhovered;
+    FSimpleMulticastDelegate NativeFocusReceived;
+protected:
+    UFUNCTION()
+    void HandleButtonClicked();
+    UFUNCTION()
+    void HandleButtonPressed();
+    UFUNCTION()
+    void HandleButtonReleased();
+    virtual void NativeHandleFocusReceived();
+    virtual void NativeOnHovered();
+    virtual void NativeOnUnhovered();
+    virtual void NativeUpdateActionWidget();
+    virtual void NativeDispatchTriggeredAction();
+    void NativeRefreshActionWidgetVisibility();
+    void NativeSetSelectedInternal(bool bSelected, bool bGiveClickFeedback, bool bBroadcast);
+    void NativeSetIsSelected(bool bSelected, bool bGiveClickFeedback);
+    FDataTableRowHandle NativeTriggeredInputAction;
+public:
+    virtual bool Initialize() override;
+public:
+    UFUNCTION(BlueprintCallable)
+    void ClearSelection();
+    UFUNCTION(BlueprintCallable)
+    void SetIsSelected(bool InSelected, bool bGiveClickFeedback);
+protected:
+    UFUNCTION(BlueprintCallable)
+    void SetSelectedInternal(bool bInSelected, bool bAllowSound, bool bBroadcast);
 };
 

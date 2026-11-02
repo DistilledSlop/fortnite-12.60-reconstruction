@@ -1,0 +1,208 @@
+{
+  "identity": {
+    "block_va": "0x145a01210",
+    "class_noregister_fn": "0x140807cd0",
+    "package_fn": "0x140816d40"
+  },
+  "function": {
+    "name": "SetStyle",
+    "create_func": "0x1408074a0",
+    "flags": [
+      "0x4020401",
+      "0x4420401"
+    ],
+    "replicated_function": null,
+    "note": "ambiguous: several FFunctionParams share this name pointer",
+    "params_note": "ambiguous: candidates disagree on parameter table",
+    "candidates": [
+      {
+        "owning_class": null,
+        "outer_fn": "0x140807730",
+        "flags": "0x4020401",
+        "nprop": 1,
+        "params": [
+          {
+            "index": 0,
+            "name": "InStyle",
+            "kind": "Class",
+            "kind_raw": "0x11",
+            "property_flags": "0x14000000000080",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 0,
+            "type_refs": {
+              "meta_class": "0x1408077f0",
+              "class": "0x142e497d0"
+            }
+          }
+        ]
+      },
+      {
+        "owning_class": null,
+        "outer_fn": "0x140805cb0",
+        "flags": "0x4020401",
+        "nprop": 1,
+        "params": [
+          {
+            "index": 0,
+            "name": "InStyle",
+            "kind": "Class",
+            "kind_raw": "0x11",
+            "property_flags": "0x14000000000080",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 0,
+            "type_refs": {
+              "meta_class": "0x1408064b0",
+              "class": "0x142e497d0"
+            }
+          }
+        ]
+      },
+      {
+        "owning_class": null,
+        "outer_fn": "0x140812e80",
+        "flags": "0x4020401",
+        "nprop": 1,
+        "params": [
+          {
+            "index": 0,
+            "name": "InStyle",
+            "kind": "Class",
+            "kind_raw": "0x11",
+            "property_flags": "0x14000000000080",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 0,
+            "type_refs": {
+              "meta_class": "0x1408131c0",
+              "class": "0x142e497d0"
+            }
+          }
+        ]
+      },
+      {
+        "owning_class": null,
+        "outer_fn": "0x143da38f0",
+        "flags": "0x4420401",
+        "nprop": 1,
+        "params": [
+          {
+            "index": 0,
+            "name": "InStyle",
+            "kind": "Struct",
+            "kind_raw": "0x19",
+            "property_flags": "0x10000008000182",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 0,
+            "type_refs": {
+              "struct": "0x142fdb020"
+            }
+          }
+        ]
+      },
+      {
+        "owning_class": null,
+        "outer_fn": "0x145201110",
+        "flags": "0x4020401",
+        "nprop": 1,
+        "params": [
+          {
+            "index": 0,
+            "name": "InStyle",
+            "kind": "Class",
+            "kind_raw": "0x11",
+            "property_flags": "0x14000000000080",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 0,
+            "type_refs": {
+              "meta_class": "0x1452012a0",
+              "class": "0x142e497d0"
+            }
+          }
+        ]
+      },
+      {
+        "owning_class": null,
+        "outer_fn": "0x145286470",
+        "flags": "0x4020401",
+        "nprop": 1,
+        "params": [
+          {
+            "index": 0,
+            "name": "BarStyle",
+            "kind": "Class",
+            "kind_raw": "0x11",
+            "property_flags": "0x14000000000080",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 0,
+            "type_refs": {
+              "meta_class": "0x145286b50",
+              "class": "0x142e497d0"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "property": {
+    "index": 30,
+    "name": "Style",
+    "kind": "Class",
+    "kind_raw": "0x11",
+    "property_flags": "0x25080000000015",
+    "replicated": false,
+    "rep_notify": null,
+    "array_dim": 1,
+    "object_flags": "0x45",
+    "offset": 608,
+    "type_refs": {
+      "meta_class": "0x1408064b0",
+      "class": "0x142e497d0"
+    }
+  },
+  "native": {
+    "exec_addr": "0x14080d6f0",
+    "flags": "0x4020401",
+    "params": [
+      {
+        "index": 0,
+        "name": "InStyle",
+        "kind": "Class",
+        "kind_raw": "0x11",
+        "property_flags": "0x14000000000080",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 0,
+        "type_refs": {
+          "meta_class": "0x1408064b0",
+          "class": "0x142e497d0"
+        }
+      }
+    ],
+    "create_func": "0x1408074a0",
+    "source": "lea"
+  },
+  "window": {
+    "va": "0x1407f9c70",
+    "length": 220,
+    "sha256": "53a92d15e30ca9bd55596bb084eabd364203e7953b934a12b0572f67672ed6de"
+  }
+}

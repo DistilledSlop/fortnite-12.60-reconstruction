@@ -8,7 +8,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 CONTRACT = json.loads((HERE / 'original-policy.json').read_text())
 FLAG = 'common_button_initialize_runtime'
-HELPERS = ('Initialize', 'NativeClickMethod', 'NativeTouchMethod', 'NativePressMethod')
+HELPERS = ('Initialize',)
 RECEIVERS = ('HandleButtonClicked', 'NativeHandleDoubleClicked', 'NativeHandleFocusReceived',
              'HandleButtonPressed', 'HandleButtonReleased')
 
@@ -61,6 +61,10 @@ def validate_model(model):
     if (model.get('name'), model.get('package'), model.get('block_va')) != (
             'UCommonButton', '/Script/CommonUI', CONTRACT['identity']['block_va']):
         raise ValueError('CommonButton Initialize model identity mismatch')
+    for name, enum in (('ClickMethod', 'EButtonClickMethod'), ('TouchMethod', 'EButtonTouchMethod'), ('PressMethod', 'EButtonPressMethod')):
+        expected = 'TEnumAsByte<' + enum + '::Type> ' + name + ';'
+        if [m.get('decl') for m in model.get('members_decl_order', []) if m.get('name') == name] != [expected]:
+            raise ValueError('Initialize requires reflected input method: ' + name)
 
 
 def apply(model, block, owner_fns, native_execs=None):

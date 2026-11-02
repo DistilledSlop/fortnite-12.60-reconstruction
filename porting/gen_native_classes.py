@@ -877,6 +877,8 @@ def types_self_test(check):
     namespaced = render_enum_header({"cpp_name": "ENs::Type", "form": "Namespaced", "values": [("X", 1)]}, "t")
     check("namespaced enum", "namespace ENs" in namespaced and "enum Type" in namespaced and "X = 1," in namespaced)
     check("namespaced enum includes its namespace header", '#include "ENs.generated.h"' in namespaced)
+    check("engine namespaced enum with documentation", [m.group(1) for m in NAMESPACE_ENUM_RE.finditer(
+        "namespace EDocumented\n{\n/** Enum role. */\n// Values follow.\nenum Type { Zero };\n}")] == ['EDocumented'])
     regular = render_enum_header({"cpp_name": "ERegular", "form": "Regular", "values": [("R", 0)]}, "t")
     check("regular enum", "enum ERegular\n{" in regular)
     # Delegate rendering: macro by arity and kind.
@@ -2228,6 +2230,26 @@ _button_selection_spec = _common_activation_import.spec_from_file_location(
     "common_button_selection_runtime_policy", os.path.join(os.path.dirname(__file__), "frontend", "common_button_selection_runtime", "policy.py"))
 _button_selection_policy = _common_activation_import.module_from_spec(_button_selection_spec)
 _button_selection_spec.loader.exec_module(_button_selection_policy)
+_button_initialize_spec = _common_activation_import.spec_from_file_location(
+    "common_button_initialize_runtime_policy", os.path.join(os.path.dirname(__file__), "frontend", "common_button_initialize_runtime", "policy.py"))
+_button_initialize_policy = _common_activation_import.module_from_spec(_button_initialize_spec)
+_button_initialize_spec.loader.exec_module(_button_initialize_policy)
+_button_focus_spec = _common_activation_import.spec_from_file_location(
+    "common_button_focus_selection_runtime_policy", os.path.join(os.path.dirname(__file__), "frontend", "common_button_focus_selection_runtime", "policy.py"))
+_button_focus_policy = _common_activation_import.module_from_spec(_button_focus_spec)
+_button_focus_spec.loader.exec_module(_button_focus_policy)
+_button_producers_spec = _common_activation_import.spec_from_file_location(
+    "common_button_public_producers_runtime_policy", os.path.join(os.path.dirname(__file__), "frontend", "common_button_public_producers_runtime", "policy.py"))
+_button_producers_policy = _common_activation_import.module_from_spec(_button_producers_spec)
+_button_producers_spec.loader.exec_module(_button_producers_policy)
+_button_set_style_spec = _common_activation_import.spec_from_file_location(
+    "common_button_set_style_runtime_policy", os.path.join(os.path.dirname(__file__), "frontend", "common_button_set_style_runtime", "policy.py"))
+_button_set_style_policy = _common_activation_import.module_from_spec(_button_set_style_spec)
+_button_set_style_spec.loader.exec_module(_button_set_style_policy)
+_button_sound_spec = _common_activation_import.spec_from_file_location(
+    "common_button_sound_identity_evidence_policy", os.path.join(os.path.dirname(__file__), "frontend", "common_button_sound_identity_evidence", "policy.py"))
+_button_sound_policy = _common_activation_import.module_from_spec(_button_sound_spec)
+_button_sound_spec.loader.exec_module(_button_sound_policy)
 _binding_data_spec = _common_activation_import.spec_from_file_location(
     "common_action_binding_data_policy", os.path.join(os.path.dirname(__file__), "frontend", "common_action_binding_runtime", "policy.py"))
 _binding_data_policy = _common_activation_import.module_from_spec(_binding_data_spec)
@@ -2293,6 +2315,12 @@ def build_class_promoted(block, name, resolver, parent_entry, owner_fns, snippet
     model = _button_click_policy.apply(model, block, owner_fns)
     model = _button_double_click_policy.apply(model, block, owner_fns, native_execs)
     model = _button_selection_policy.apply(model, block, owner_fns)
+    if name == 'UCommonButton':
+        model['common_button_feedback_sound_identity_proven'] = bool((splice_ctx or {}).get('button_feedback_sound_identity_proven'))
+    model = _button_focus_policy.apply(model, block, owner_fns)
+    model = _button_initialize_policy.apply(model, block, owner_fns)
+    model = _button_producers_policy.apply(model, block, owner_fns)
+    model = _button_set_style_policy.apply(model, block, owner_fns)
     model = _input_settings_policy.apply(model, block, owner_fns)
     model = _input_cache_policy.apply(model, block, owner_fns)
     return apply_blueprint_context_runtime_policy(model, block, name, resolver, parent_entry, owner_fns, snippets, splice_ctx)
@@ -3056,6 +3084,11 @@ def render_promoted_header(model, api, parent_include, source_label):
     lines.extend(_button_click_policy.declarations(model).splitlines())
     lines.extend(_button_double_click_policy.declarations(model).splitlines())
     lines.extend(_button_selection_policy.declarations(model).splitlines())
+    lines.extend(_button_focus_policy.declarations(model).splitlines())
+    lines.extend(_button_initialize_policy.declarations(model).splitlines())
+    lines.extend(_button_producers_policy.declarations(model).splitlines())
+    if model['name'] == 'UCommonActivatablePanel':
+        lines.append('    friend class UCommonButton;')
     lines.extend(_input_settings_policy.declarations(model).splitlines())
     lines.extend(_input_cache_policy.declarations(model).splitlines())
     lines.extend(_action_widget_policy.gamepad_declarations(model).splitlines())
@@ -3205,7 +3238,7 @@ def render_promoted_cpp(model, source_label):
     result = "\n".join(lines) + "\n"
     if model.get("source_context_phases"):
         result += BLUEPRINT_CONTEXT_PHASE_BODIES
-    return result + _common_activation_policy.definitions(model) + _current_input_type_policy.definitions(model) + _fort_globals_policy.definitions(model) + _button_style_policy.definitions(model) + _button_click_policy.definitions(model) + _button_double_click_policy.definitions(model) + _button_selection_policy.definitions(model) + _input_settings_policy.definitions(model) + _input_cache_policy.definitions(model) + _action_widget_policy.gamepad_definitions(model) + _action_widget_policy.icon_definitions(model) + _action_receivers_policy.definitions(model) + _action_slate_policy.definitions(model)
+    return result + _common_activation_policy.definitions(model) + _current_input_type_policy.definitions(model) + _fort_globals_policy.definitions(model) + _button_style_policy.definitions(model) + _button_click_policy.definitions(model) + _button_double_click_policy.definitions(model) + _button_selection_policy.definitions(model) + _input_settings_policy.definitions(model) + _input_cache_policy.definitions(model) + _action_widget_policy.gamepad_definitions(model) + _action_widget_policy.icon_definitions(model) + _action_receivers_policy.definitions(model) + _action_slate_policy.definitions(model) + _button_focus_policy.definitions(model) + _button_initialize_policy.definitions(model) + _button_producers_policy.definitions(model) + _button_set_style_policy.definitions(model)
 
 
 def build_engine_header_index(root):
@@ -3491,6 +3524,12 @@ def promote(args):
             load_json(os.path.join(args.types_dir or os.path.dirname(args.reflection), 'delegate_blocks.json'))['delegates'])
         _button_selection_policy.validate_classes(blocks_by_va, name_to_block,
             load_json(os.path.join(args.types_dir or os.path.dirname(args.reflection), 'delegate_blocks.json'))['delegates'])
+    if 'UCommonButton' in listed:
+        _button_focus_policy.validate_classes(blocks_by_va, name_to_block, guarded_native_execs)
+        _button_initialize_policy.validate_classes(blocks_by_va, name_to_block)
+        _button_producers_policy.validate_classes(blocks_by_va, name_to_block, guarded_native_execs)
+        _button_set_style_policy.validate_classes(blocks_by_va, name_to_block, guarded_native_execs)
+        _button_sound_policy.validate_source(os.path.dirname(os.path.abspath(args.engine_root)))
     if 'UCommonActivatablePanel' in listed:
         _common_activation_policy.validate_panel_outro_types(gate)
     if 'UCommonInputSubsystem' in listed:
@@ -3535,6 +3574,7 @@ def promote(args):
         struct_index.setdefault(info.cpp_name.split("::")[0], info)
     splice_ctx = {
         "class_pkg": package_of, "struct_index": struct_index, "gate": gate,
+        "button_feedback_sound_identity_proven": 'UCommonButton' in listed,
         "other_promoted": {n for b, n in names.items()
                            if n not in listed and (parents.get(b) or {}).get("package") in PROMOTE_PACKAGES},
     }
@@ -3761,6 +3801,12 @@ def promote(args):
             raise ValueError('original CommonButton selection delegate output unavailable')
         _button_selection_policy.validate_output(button_model,
             outputs['UCommonButton'][0], texts[selected_delegate.header_name])
+    if 'UCommonButton' in listed:
+        _button_focus_policy.validate_output(button_model, outputs['UCommonButton'][0],
+            outputs['UCommonActivatablePanel'][0], outputs['UCommonActionWidget'][0])
+        _button_initialize_policy.validate_output(button_model, *outputs['UCommonButton'])
+        _button_producers_policy.validate_output(button_model, *outputs['UCommonButton'])
+        _button_set_style_policy.validate_output(button_model, *outputs['UCommonButton'])
     for model in class_models:
         if model["splice"]["accepted"]:
             verify_spliced(model, *outputs[model["name"]])
@@ -3908,7 +3954,10 @@ ENGINE_SCAN_DIRS = ("Source/Runtime", "Plugins/Runtime", "Plugins/Developer", "S
                     "Plugins/Online/OnlineSubsystemUtils")
 # A namespaced enum (UE: `namespace ECollisionEnabled { enum Type {...}; }`) is named ECollisionEnabled::Type in C++.
 # TYPE_DECL_RE only sees `enum E...` at the start of a line, so the namespaced form is indexed by this pattern.
-NAMESPACE_ENUM_RE = re.compile(r"^\s*namespace\s+(E[A-Za-z0-9_]+)\s*\{?\s*enum\s+Type\b", re.M)
+_NAMESPACE_ENUM_GAP = r"(?:\s|/\*[\s\S]*?\*/|//[^\n]*)*"
+NAMESPACE_ENUM_RE = re.compile(
+    r"^\s*namespace\s+(E[A-Za-z0-9_]+)" + _NAMESPACE_ENUM_GAP + r"\{" +
+    _NAMESPACE_ENUM_GAP + r"enum\s+Type\b", re.M)
 KIND_LABEL = {"struct": "Struct", "enum": "Enum", "delegate": "Delegate"}
 
 

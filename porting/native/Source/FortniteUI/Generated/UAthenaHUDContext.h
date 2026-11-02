@@ -34,6 +34,7 @@
 #include "FOnResurrectingNow.h"
 #include "FOnSignalQualityChange.h"
 #include "FOnSpecialActorListChanged.h"
+#include "FOnUIGameplayCueEvent.h"
 #include "FPTTStateChange.h"
 #include "FShowMobilePicker.h"
 
@@ -75,6 +76,10 @@ public:
 	// table index 29, flags 0x10000010080000
 	UPROPERTY()
 	FOnLocalPlayerDBNOStateChanged OnLocalPlayerDBNOStateChanged;
+
+	// table index 28, flags 0x10000010080000
+	UPROPERTY()
+	FOnUIGameplayCueEvent OnUIGameplayCue;
 
 	// table index 27, flags 0x10000010080000
 	UPROPERTY()

@@ -9,9 +9,9 @@ bool UCommonButton::Initialize()
 
     UCommonButtonInternal* Internal = WidgetTree->ConstructWidget<UCommonButtonInternal>(
         UCommonButtonInternal::StaticClass(), TEXT("InternalRootButton"));
-    Internal->ClickMethod = NativeClickMethod;
-    Internal->TouchMethod = NativeTouchMethod;
-    Internal->PressMethod = NativePressMethod;
+    Internal->ClickMethod = ClickMethod;
+    Internal->TouchMethod = TouchMethod;
+    Internal->PressMethod = PressMethod;
     Internal->IsFocusable = bIsFocusable;
     Internal->NativeSetButtonEnabled(bNativeButtonEnabled);
     Internal->NativeSetInteractionEnabled(bNativeInteractionEnabled);
