@@ -1,0 +1,30 @@
+UCommonInputSettings::UCommonInputSettings(const FObjectInitializer& ObjectInitializer)
+    : Super(ObjectInitializer)
+    , bEnableInputMethodThrashingProtection(true)
+    , InputMethodThrashingLimit(30)
+    , InputMethodThrashingWindowInSeconds(3.0)
+    , InputMethodThrashingCooldownInSeconds(1.0)
+    , InputDataClass(nullptr)
+    , NativeInputDataLoaded(false)
+{
+    // Platform struct constructors supply the common baseline and empty arrays.
+    for (int32 Index = 0; Index != 2; ++Index)
+    {
+        CommonInputPlatformData[Index].bSupported = true;
+        CommonInputPlatformData[Index].DefaultInputType = ECommonInputType::MouseAndKeyboard;
+        CommonInputPlatformData[Index].bSupportsMouseAndKeyboard = true;
+    }
+    CommonInputPlatformData[2].bSupportsMouseAndKeyboard = true;
+    CommonInputPlatformData[2].DefaultGamepadType = ECommonGamepadType::PS4Controller;
+    CommonInputPlatformData[2].bCanChangeGamepadType = false;
+    CommonInputPlatformData[3].bCanChangeGamepadType = false;
+    for (int32 Index = 4; Index != 6; ++Index)
+    {
+        CommonInputPlatformData[Index].DefaultInputType = ECommonInputType::Touch;
+        CommonInputPlatformData[Index].bSupportsTouch = true;
+    }
+    CommonInputPlatformData[6].bSupportsMouseAndKeyboard = true;
+    CommonInputPlatformData[6].DefaultGamepadType = ECommonGamepadType::SwitchController;
+    CommonInputPlatformData[6].bCanChangeGamepadType = false;
+    CommonInputPlatformData[6].bSupportsTouch = true;
+}

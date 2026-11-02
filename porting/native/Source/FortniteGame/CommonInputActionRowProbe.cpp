@@ -1,5 +1,9 @@
 #include "CommonInputActionRowProbe.h"
 #include "FCommonInputActionData.h"
+#include "FCommonInputPlatformData.h"
+#include "UCommonInputSettings.h"
+#include "CommonInputControllerBrushLookup.h"
+#include "Engine/Texture2D.h"
 #include "Engine/DataTable.h"
 #include "HAL/PlatformMisc.h"
 #include "Misc/CommandLine.h"
@@ -45,6 +49,93 @@ void CheckDefaults(const TCHAR* Prefix, const FCommonInputActionData& Row)
 bool HasCopy(UScriptStruct* Type)
 {
     return Type && Type->GetCppStructOps() && Type->GetCppStructOps()->HasCopy();
+}
+
+bool PlatformDefaults(const FCommonInputPlatformData& Value)
+{
+    return !Value.bSupported && Value.DefaultInputType == ECommonInputType::Gamepad &&
+        !Value.bSupportsMouseAndKeyboard && Value.bSupportsGamepad &&
+        Value.DefaultGamepadType == ECommonGamepadType::XboxOneController &&
+        Value.bCanChangeGamepadType && !Value.bSupportsTouch &&
+        Value.ControllerData.Num() == 0 && Value.ControllerDataClasses.Num() == 0;
+}
+
+bool SamePlatform(const FCommonInputPlatformData& A, const FCommonInputPlatformData& B)
+{
+    return A.bSupported == B.bSupported && A.DefaultInputType == B.DefaultInputType &&
+        A.bSupportsMouseAndKeyboard == B.bSupportsMouseAndKeyboard && A.bSupportsGamepad == B.bSupportsGamepad &&
+        A.DefaultGamepadType == B.DefaultGamepadType && A.bCanChangeGamepadType == B.bCanChangeGamepadType &&
+        A.bSupportsTouch == B.bSupportsTouch && A.ControllerData == B.ControllerData &&
+        A.ControllerDataClasses == B.ControllerDataClasses;
+}
+
+void CheckBatch()
+{
+    UScriptStruct* Type = FCommonInputPlatformData::StaticStruct();
+    void* Storage = FMemory::Malloc(Type->GetStructureSize(), Type->GetMinAlignment());
+    FMemory::Memset(Storage, 0xa5, Type->GetStructureSize());
+    Type->InitializeStruct(Storage);
+    Record(TEXT("batch_platform_initialize"), PlatformDefaults(*static_cast<FCommonInputPlatformData*>(Storage)));
+    Type->DestroyStruct(Storage);
+    FMemory::Free(Storage);
+
+    const UCommonInputSettings* Defaults = GetDefault<UCommonInputSettings>();
+    UCommonInputSettings* Fresh = NewObject<UCommonInputSettings>();
+    bool bSettingsMatch = Defaults && Fresh;
+    if (bSettingsMatch)
+    {
+        for (int32 I = 0; I < 7; ++I)
+        {
+            const FCommonInputPlatformData& P = Defaults->CommonInputPlatformData[I];
+            UE_LOG(LogTemp, Display, TEXT("COMMON_INPUT_BATCH_SETTINGS index=%d supported=%d input=%d mouse=%d gamepad=%d padtype=%d change=%d touch=%d soft=%d classes=%d"),
+                I, int32(P.bSupported), int32(P.DefaultInputType), int32(P.bSupportsMouseAndKeyboard),
+                int32(P.bSupportsGamepad), int32(P.DefaultGamepadType), int32(P.bCanChangeGamepadType),
+                int32(P.bSupportsTouch), P.ControllerData.Num(), P.ControllerDataClasses.Num());
+            bSettingsMatch &= SamePlatform(P, Fresh->CommonInputPlatformData[I]);
+        }
+        UE_LOG(LogTemp, Display, TEXT("COMMON_INPUT_BATCH_SETTINGS thrashing=%d limit=%d window=%g cooldown=%g"),
+            int32(Defaults->bEnableInputMethodThrashingProtection), Defaults->InputMethodThrashingLimit,
+            Defaults->InputMethodThrashingWindowInSeconds, Defaults->InputMethodThrashingCooldownInSeconds);
+        bSettingsMatch &= Defaults->bEnableInputMethodThrashingProtection == Fresh->bEnableInputMethodThrashingProtection &&
+            Defaults->InputMethodThrashingLimit == Fresh->InputMethodThrashingLimit &&
+            Defaults->InputMethodThrashingWindowInSeconds == Fresh->InputMethodThrashingWindowInSeconds &&
+            Defaults->InputMethodThrashingCooldownInSeconds == Fresh->InputMethodThrashingCooldownInSeconds;
+    }
+    Record(TEXT("batch_settings_cdo_fresh"), bSettingsMatch);
+
+    UCommonInputProbeControllerFirst* First = GetMutableDefault<UCommonInputProbeControllerFirst>();
+    UCommonInputProbeControllerSecond* Second = GetMutableDefault<UCommonInputProbeControllerSecond>();
+    First->InputType = Second->InputType = ECommonInputType::Gamepad;
+    First->GamepadType = Second->GamepadType = ECommonGamepadType::PS4Controller;
+    FCommonInputKeyBrushConfiguration Entry;
+    Entry.Key = EKeys::A;
+    UTexture2D* Texture = NewObject<UTexture2D>();
+    Entry.KeyBrush.SetResourceObject(Texture);
+    Entry.KeyBrush.ImageSize = FVector2D(37.f, 19.f);
+    Second->InputBrushDataMap.Add(Entry);
+    FSlateBrush Out;
+    FCommonInputPlatformData Platform;
+    Platform.ControllerDataClasses.Add(UCommonInputProbeControllerFirst::StaticClass());
+    Platform.ControllerDataClasses.Add(UCommonInputProbeControllerSecond::StaticClass());
+    TArray<FKey> Single; Single.Add(EKeys::A);
+    Record(TEXT("batch_first_match_stops"), !FindCommonInputPlatformBrush(Platform, Single,
+        ECommonInputType::Gamepad, ECommonGamepadType::PS4Controller, Out));
+    First->GamepadType = ECommonGamepadType::XboxOneController;
+    bool bFound = FindCommonInputPlatformBrush(Platform, Single, ECommonInputType::Gamepad,
+        ECommonGamepadType::PS4Controller, Out);
+    Record(TEXT("batch_brush_copy"), bFound && Out.GetResourceObject() == Texture && Out.ImageSize == FVector2D(37.f, 19.f));
+    FCommonInputKeySetBrushConfiguration Set;
+    Set.Keys.Add(EKeys::A); Set.Keys.Add(EKeys::B);
+    Set.KeyBrush = Entry.KeyBrush;
+    First->InputBrushKeySets.Add(Set);
+    TArray<FKey> Duplicates; Duplicates.Add(EKeys::A); Duplicates.Add(EKeys::A);
+    Out = FSlateBrush();
+    bFound = FindCommonInputControllerBrush(*First, Duplicates, Out);
+    Record(TEXT("batch_keyset_nonconsuming"), bFound && Out.GetResourceObject() == Texture && Out.ImageSize == FVector2D(37.f, 19.f));
+    Duplicates.Add(EKeys::A);
+    Record(TEXT("batch_keyset_exact_count"), !FindCommonInputControllerBrush(*First, Duplicates, Out));
+    First->InputBrushKeySets.Empty();
+    Second->InputBrushDataMap.Empty();
 }
 
 void Run()
@@ -112,6 +203,7 @@ void Tick()
 {
     FCoreDelegates::OnEndFrame.Remove(FrameHandle);
     Run();
+    CheckBatch();
     Record(TEXT("complete"), !Failed);
     FPlatformMisc::RequestExitWithStatus(false, Failed ? 1 : 0);
 }

@@ -5,6 +5,8 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 CONTRACT = json.loads((HERE / 'original-policy.json').read_text())
 FIELDS = {
+    'InputType': 'ECommonInputType InputType;',
+    'GamepadType': 'ECommonGamepadType GamepadType;',
     'InputBrushDataMap': 'TArray<FCommonInputKeyBrushConfiguration> InputBrushDataMap;',
     'InputBrushKeySets': 'TArray<FCommonInputKeySetBrushConfiguration> InputBrushKeySets;',
 }
@@ -16,11 +18,26 @@ def validate_classes(blocks, name_to_block):
     if name_to_block.get('UCommonInputControllerData') != identity['block_va'] or block is None or any(
             block.get(k) != v for k, v in identity.items()):
         raise ValueError('original CommonInputControllerData identity mismatch')
-    if [p for p in block.get('properties', []) if p.get('name') in FIELDS] != CONTRACT['properties']:
+    if [p for p in block.get('properties', []) if p.get('name') in ('InputBrushDataMap', 'InputBrushKeySets')] != CONTRACT['properties']:
         raise ValueError('original controller brush arrays mismatch')
+    if [p for p in block.get('properties', []) if p.get('name') in ('InputType', 'GamepadType')
+            or p.get('enum_underlying_of') in ('InputType', 'GamepadType')] != CONTRACT['selection_properties']:
+        raise ValueError('original controller selection fields mismatch')
 
 
 def validate_types(gate):
+    for fn, kind, cpp, record in (
+            ('0x14081eee0', 'struct', 'FCommonInputPlatformData', 'CommonInputPlatformData'),
+            ('0x14081ee20', 'enum', 'ECommonInputType', 'ECommonInputType'),
+            ('0x14081edf0', 'enum', 'ECommonGamepadType', 'ECommonGamepadType')):
+        info = gate.info(fn)
+        if (info is None or info.fn != fn or info.kind != kind or info.cpp_name != cpp
+                or info.package != '/Script/CommonInput'
+                or info.rec != CONTRACT['selection_types'][record]):
+            raise ValueError('original controller selection type mismatch: ' + cpp)
+        reason = gate.reason(info)
+        if reason is not None:
+            raise ValueError('original controller selection type unavailable: ' + cpp + ': ' + reason)
     for fn, expected in CONTRACT['structs'].items():
         info = gate.info(fn)
         if (info is None or info.fn != fn or info.kind != 'struct'
@@ -41,6 +58,17 @@ def validate_model(model):
         members = [m for m in model.get('members_decl_order', []) if m.get('name') == name]
         if len(members) != 1 or members[0].get('decl') != declaration:
             raise ValueError('controller data emitted array mismatch: ' + name)
+
+
+def validate_platform_model(info, model):
+    if (info.fn != '0x14081eee0' or info.kind != 'struct'
+            or info.cpp_name != 'FCommonInputPlatformData' or info.package != '/Script/CommonInput'
+            or info.rec != CONTRACT['selection_types']['CommonInputPlatformData']):
+        raise ValueError('platform model identity mismatch')
+    members = [m for m in model.get('members', []) if m.get('name') == 'ControllerDataClasses']
+    if (len(members) != 1 or members[0].get('decl') !=
+            'TArray<TSubclassOf<UCommonInputControllerData>> ControllerDataClasses;'):
+        raise ValueError('platform controller class array declaration mismatch')
 
 
 def emit_runtime(source_root, generated_names):

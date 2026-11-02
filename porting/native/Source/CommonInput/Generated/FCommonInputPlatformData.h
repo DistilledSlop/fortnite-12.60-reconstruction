@@ -52,5 +52,15 @@ struct FCommonInputPlatformData
 	UPROPERTY()
 	TArray<TSubclassOf<UCommonInputControllerData>> ControllerDataClasses;
 
+	FCommonInputPlatformData()
+		: bSupported(false)
+		, DefaultInputType(ECommonInputType::Gamepad)
+		, bSupportsMouseAndKeyboard(false)
+		, bSupportsGamepad(true)
+		, DefaultGamepadType(ECommonGamepadType::XboxOneController)
+		, bCanChangeGamepadType(true)
+		, bSupportsTouch(false)
+	{}
+
 };
 

@@ -244,5 +244,368 @@
       ],
       "num_properties": 3
     }
+  },
+  "selection_properties": [
+    {
+      "index": 6,
+      "name": "GamepadType",
+      "kind": "Enum",
+      "kind_raw": "0x1e",
+      "property_flags": "0x10000000010001",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 41,
+      "type_refs": {
+        "enum": "0x14081edf0"
+      }
+    },
+    {
+      "index": 7,
+      "name": "UnderlyingType",
+      "kind": "Byte",
+      "kind_raw": "0x0",
+      "property_flags": "0x0",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "enum_underlying_of": "GamepadType"
+    },
+    {
+      "index": 8,
+      "name": "InputType",
+      "kind": "Enum",
+      "kind_raw": "0x1e",
+      "property_flags": "0x10000000010001",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 40,
+      "type_refs": {
+        "enum": "0x14081ee20"
+      }
+    },
+    {
+      "index": 9,
+      "name": "UnderlyingType",
+      "kind": "Byte",
+      "kind_raw": "0x0",
+      "property_flags": "0x0",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "enum_underlying_of": "InputType"
+    }
+  ],
+  "selection_types": {
+    "CommonInputPlatformData": {
+      "block_va": "0x14783d890",
+      "name": "CommonInputPlatformData",
+      "construct_fns": [
+        "0x14081eee0"
+      ],
+      "package_fn": "0x14081de60",
+      "package": "/Script/CommonInput",
+      "super_fn": null,
+      "struct_ops_fn": "0x14081dc20",
+      "size": 40,
+      "align": 8,
+      "struct_flags": "0x201",
+      "struct_flag_names": [
+        "Native",
+        "RequiredAPI"
+      ],
+      "object_flags": "0x45",
+      "struct_ops": {
+        "vtable_va": "0x145a0f3e0",
+        "ops_size": 40,
+        "ops_align": 8,
+        "size_matches": true,
+        "align_matches": true,
+        "traits": {
+          "HasNoopConstructor": false,
+          "HasZeroConstructor": false,
+          "HasDestructor": true,
+          "HasSerializer": false,
+          "HasStructuredSerializer": false,
+          "HasPostSerialize": false,
+          "HasNetSerializer": false,
+          "HasNetSharedSerialization": false,
+          "HasNetDeltaSerializer": false,
+          "HasPostScriptConstruct": false,
+          "IsPlainOldData": false,
+          "HasCopy": true,
+          "HasIdentical": false,
+          "HasExportTextItem": false,
+          "HasImportTextItem": false,
+          "HasAddStructReferencedObjects": false,
+          "HasSerializeFromMismatchedTag": false,
+          "HasStructuredSerializeFromMismatchedTag": false,
+          "HasGetTypeHash": false
+        },
+        "unclassified_slots": []
+      },
+      "properties": [
+        {
+          "index": 0,
+          "name": "ControllerDataClasses",
+          "kind": "Array",
+          "kind_raw": "0x16",
+          "property_flags": "0x24080000002000",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 24
+        },
+        {
+          "index": 1,
+          "name": "ControllerDataClasses",
+          "kind": "Class",
+          "kind_raw": "0x11",
+          "property_flags": "0x4000000000000",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "meta_class": "0x14081dcf0",
+            "class": "0x142e497d0"
+          },
+          "array_inner_of": "ControllerDataClasses"
+        },
+        {
+          "index": 2,
+          "name": "ControllerData",
+          "kind": "Array",
+          "kind_raw": "0x16",
+          "property_flags": "0x24080000010001",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 8
+        },
+        {
+          "index": 3,
+          "name": "ControllerData",
+          "kind": "SoftClass",
+          "kind_raw": "0xd",
+          "property_flags": "0x4000000000000",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "meta_class": "0x14081dcf0"
+          },
+          "array_inner_of": "ControllerData"
+        },
+        {
+          "index": 4,
+          "name": "bSupportsTouch",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x20080000010001",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 40,
+          "bitfield": true,
+          "offset": null
+        },
+        {
+          "index": 5,
+          "name": "bCanChangeGamepadType",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x20080000010001",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 40,
+          "bitfield": true,
+          "offset": null
+        },
+        {
+          "index": 6,
+          "name": "DefaultGamepadType",
+          "kind": "Enum",
+          "kind_raw": "0x1e",
+          "property_flags": "0x20080000010001",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 4,
+          "type_refs": {
+            "enum": "0x14081edf0"
+          }
+        },
+        {
+          "index": 7,
+          "name": "UnderlyingType",
+          "kind": "Byte",
+          "kind_raw": "0x0",
+          "property_flags": "0x0",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "enum_underlying_of": "DefaultGamepadType"
+        },
+        {
+          "index": 8,
+          "name": "bSupportsGamepad",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x20080000010001",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 40,
+          "bitfield": true,
+          "offset": null
+        },
+        {
+          "index": 9,
+          "name": "bSupportsMouseAndKeyboard",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x20080000010001",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 40,
+          "bitfield": true,
+          "offset": null
+        },
+        {
+          "index": 10,
+          "name": "DefaultInputType",
+          "kind": "Enum",
+          "kind_raw": "0x1e",
+          "property_flags": "0x20080000010001",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 1,
+          "type_refs": {
+            "enum": "0x14081ee20"
+          }
+        },
+        {
+          "index": 11,
+          "name": "UnderlyingType",
+          "kind": "Byte",
+          "kind_raw": "0x0",
+          "property_flags": "0x0",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "enum_underlying_of": "DefaultInputType"
+        },
+        {
+          "index": 12,
+          "name": "bSupported",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x20080000010001",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 40,
+          "bitfield": true,
+          "offset": null
+        }
+      ],
+      "num_properties": 13
+    },
+    "ECommonGamepadType": {
+      "block_va": "0x14783dca8",
+      "name": "ECommonGamepadType",
+      "cpp_type": "ECommonGamepadType",
+      "construct_fns": [
+        "0x14081edf0"
+      ],
+      "package_fn": "0x14081de60",
+      "package": "/Script/CommonInput",
+      "cpp_form": "EnumClass",
+      "dynamic_type": "NotDynamic",
+      "enumerators": [
+        {
+          "name": "ECommonGamepadType::XboxOneController",
+          "value": 0
+        },
+        {
+          "name": "ECommonGamepadType::PS4Controller",
+          "value": 1
+        },
+        {
+          "name": "ECommonGamepadType::SwitchController",
+          "value": 2
+        },
+        {
+          "name": "ECommonGamepadType::GenericController",
+          "value": 3
+        },
+        {
+          "name": "ECommonGamepadType::Count",
+          "value": 4
+        }
+      ]
+    },
+    "ECommonInputType": {
+      "block_va": "0x14783dce0",
+      "name": "ECommonInputType",
+      "cpp_type": "ECommonInputType",
+      "construct_fns": [
+        "0x14081ee20"
+      ],
+      "package_fn": "0x14081de60",
+      "package": "/Script/CommonInput",
+      "cpp_form": "EnumClass",
+      "dynamic_type": "NotDynamic",
+      "enumerators": [
+        {
+          "name": "ECommonInputType::MouseAndKeyboard",
+          "value": 0
+        },
+        {
+          "name": "ECommonInputType::Gamepad",
+          "value": 1
+        },
+        {
+          "name": "ECommonInputType::Touch",
+          "value": 2
+        },
+        {
+          "name": "ECommonInputType::Count",
+          "value": 3
+        }
+      ]
+    }
   }
 }

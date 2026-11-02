@@ -1,5 +1,24 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Active CommonInput implementation batch (2026-11-02, build pending)
+
+Previous goal turn made progress: callbacks were committed/built and21 controlled
+headless observations passed. Current batch integrates the real platform struct
+constructor, settings constructor (all seven pre-config platform defaults and
+thrashing values), and ordered controller selection/single-key/key-set brush
+lookup. Settings cache preparation, module factory-name linkage and action-widget
+refresh/SetInputAction remain unfinished; full client/server goal and0/4 gates stay.
+
+Generation `/tmp/promote_common_input_batch_1.py` failed before writes because root
+called a platform-only model validator for every struct; `_2.py` corrects that
+hook and PASS:3 changed/2 added/0 removed,12732 mtimes restored. Reports under
+`/tmp/common-input-batch-promotion-{1,2}`; generator self-test141 PASS. The existing
+input-row diagnostic now has six bounded integration checks; not built/run yet.
+No GUI rerun: last turn confirmed sandbox UDEV monitor EPERM. Root owns Native,
+promotion/stage/build. Bounded Terra tasks supplied constructors, controller
+selection and fixture; Luna provided a small API map. Delegation/input rules below
+remain in force. Next: one client build and affected headless input diagnostic.
+
 ## Active resume: connected callback batch (2026-11-02, client build/headless PASS)
 
 The user resumed the full project goal and reinforced economical reads: use

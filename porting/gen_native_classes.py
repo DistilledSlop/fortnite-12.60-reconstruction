@@ -2172,6 +2172,18 @@ _common_input_spec = _common_activation_import.spec_from_file_location(
     "common_input_action_row_policy", os.path.join(os.path.dirname(__file__), "frontend", "common_input_action_row", "policy.py"))
 _common_input_policy = _common_activation_import.module_from_spec(_common_input_spec)
 _common_input_spec.loader.exec_module(_common_input_policy)
+_input_platform_spec = _common_activation_import.spec_from_file_location(
+    "common_input_platform_policy", os.path.join(os.path.dirname(__file__), "frontend", "common_input_platform_runtime", "policy.py"))
+_input_platform_policy = _common_activation_import.module_from_spec(_input_platform_spec)
+_input_platform_spec.loader.exec_module(_input_platform_policy)
+_controller_brush_spec = _common_activation_import.spec_from_file_location(
+    "common_input_controller_brush_policy", os.path.join(os.path.dirname(__file__), "frontend", "common_input_controller_brush_runtime", "policy.py"))
+_controller_brush_policy = _common_activation_import.module_from_spec(_controller_brush_spec)
+_controller_brush_spec.loader.exec_module(_controller_brush_policy)
+_input_settings_spec = _common_activation_import.spec_from_file_location(
+    "common_input_settings_policy", os.path.join(os.path.dirname(__file__), "frontend", "common_input_settings_runtime", "policy.py"))
+_input_settings_policy = _common_activation_import.module_from_spec(_input_settings_spec)
+_input_settings_spec.loader.exec_module(_input_settings_policy)
 _current_input_type_spec = _common_activation_import.spec_from_file_location(
     "common_input_current_type_policy", os.path.join(os.path.dirname(__file__), "frontend", "common_input_current_type", "policy.py"))
 _current_input_type_policy = _common_activation_import.module_from_spec(_current_input_type_spec)
@@ -2255,6 +2267,7 @@ def build_class_promoted(block, name, resolver, parent_entry, owner_fns, snippet
     model = _button_click_policy.apply(model, block, owner_fns)
     model = _button_double_click_policy.apply(model, block, owner_fns, native_execs)
     model = _button_selection_policy.apply(model, block, owner_fns)
+    model = _input_settings_policy.apply(model, block, owner_fns)
     return apply_blueprint_context_runtime_policy(model, block, name, resolver, parent_entry, owner_fns, snippets, splice_ctx)
 
 # ---------------------------------------------------------------- behaviour snippets (porting/behavior)
@@ -3016,6 +3029,7 @@ def render_promoted_header(model, api, parent_include, source_label):
     lines.extend(_button_click_policy.declarations(model).splitlines())
     lines.extend(_button_double_click_policy.declarations(model).splitlines())
     lines.extend(_button_selection_policy.declarations(model).splitlines())
+    lines.extend(_input_settings_policy.declarations(model).splitlines())
     lines.append("};")
     lines.append("")
     return "\n".join(lines) + "\n"
@@ -3159,7 +3173,7 @@ def render_promoted_cpp(model, source_label):
     result = "\n".join(lines) + "\n"
     if model.get("source_context_phases"):
         result += BLUEPRINT_CONTEXT_PHASE_BODIES
-    return result + _common_activation_policy.definitions(model) + _current_input_type_policy.definitions(model) + _fort_globals_policy.definitions(model) + _button_style_policy.definitions(model) + _button_click_policy.definitions(model) + _button_double_click_policy.definitions(model) + _button_selection_policy.definitions(model)
+    return result + _common_activation_policy.definitions(model) + _current_input_type_policy.definitions(model) + _fort_globals_policy.definitions(model) + _button_style_policy.definitions(model) + _button_click_policy.definitions(model) + _button_double_click_policy.definitions(model) + _button_selection_policy.definitions(model) + _input_settings_policy.definitions(model)
 
 
 def build_engine_header_index(root):
@@ -3451,6 +3465,13 @@ def promote(args):
         _current_input_type_policy.validate_types(gate)
     if 'UCommonUIInputSettings' in listed:
         _binding_data_policy.validate_types(gate)
+    if 'UCommonInputControllerData' in listed:
+        _controller_brush_policy.validate_classes(blocks_by_va, name_to_block)
+        _controller_brush_policy.validate_types(gate)
+    if {'UCommonInputSettings', 'UCommonInputControllerData'} & set(listed):
+        _input_platform_policy.validate(gate)
+    if 'UCommonInputSettings' in listed:
+        _input_settings_policy.validate_classes(blocks_by_va, name_to_block)
     header_index = ModuleHeaderIndex(registry)
     source_label = os.path.relpath(args.reflection, REPO)
 
@@ -3506,6 +3527,8 @@ def promote(args):
                                      ("UCommonActivatablePanel", "UCommonInputSubsystem", "UCommonButton", "UCommonTextBlock", "UFortGlobals") else None)
         model["includes"] = sorted(set(own_includes(gate, model["used"], package))
                                    | set(model["splice"].get("header_includes", set())))
+        if name == 'UCommonInputControllerData':
+            _controller_brush_policy.validate_model(model)
         if model.get('common_button_double_click_runtime'):
             model["includes"] = sorted(set(model["includes"]) | {'Input/Reply.h'})
         interface_modules = include_interface_headers(model, iface_packages)
@@ -3692,6 +3715,7 @@ def promote(args):
             fh.write(cpp)
     _common_activation_policy.emit_headers(args.source_root, generated_names)
     _binding_data_policy.emit_runtime(args.source_root, generated_names)
+    _controller_brush_policy.emit_runtime(args.source_root, generated_names)
     os.makedirs(args.report_dir, exist_ok=True)
     with open(os.path.join(args.report_dir, "behavior_splice.json"), "w", encoding="utf-8", newline="\n") as fh:
         json.dump({"enabled": splice_on, "manifest": os.path.join(args.behavior_dir, "MANIFEST.json"),
@@ -4232,6 +4256,9 @@ class TypeGate:
                     member["blueprint_read_write"] = True
             model = _confirmation_policy.apply_struct(self, info, model)
             model = _common_input_policy.apply_struct(info, model)
+            model = _input_platform_policy.apply_struct(info, model)
+            if info.cpp_name == 'FCommonInputPlatformData':
+                _controller_brush_policy.validate_platform_model(info, model)
             return model, None
         finally:
             self.current_package = saved
@@ -4519,6 +4546,7 @@ def render_struct_header(model, source_label):
     lines.extend(_common_activation_policy.struct_declarations(model))
     lines.extend(_confirmation_policy.declarations(model))
     lines.extend(_common_input_policy.declarations(model))
+    lines.extend(_input_platform_policy.declarations(model))
     if delta:
         item = net["item"]
         lines.append("\t// Native NetDeltaSerialize, the FFastArraySerializer pattern (ops vtable %s, traits %s): the"

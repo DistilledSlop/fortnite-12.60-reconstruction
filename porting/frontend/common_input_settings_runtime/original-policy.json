@@ -1,0 +1,145 @@
+{
+  "identity": {
+    "block_va": "0x145a0e320",
+    "name": null,
+    "name_status": "unresolved",
+    "config_name": "Game",
+    "class_flags": "0x1000a6",
+    "dependency_fns": [
+      "0x142eea530",
+      "0x14081de60"
+    ],
+    "package_fn": "0x142eea530",
+    "base_fn": "0x14081de60",
+    "class_noregister_fn": "0x14081df50",
+    "interface_count": 0,
+    "replicated_properties": [],
+    "replicated_functions": [],
+    "dependency0_fn": "0x142eea530"
+  },
+  "properties": [
+    {
+      "index": 0,
+      "name": "CurrentPlatform",
+      "kind": "Struct",
+      "kind_raw": "0x19",
+      "property_flags": "0x40000000002000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 400,
+      "type_refs": {
+        "struct": "0x14081eee0"
+      }
+    },
+    {
+      "index": 1,
+      "name": "InputDataClass",
+      "kind": "Class",
+      "kind_raw": "0x11",
+      "property_flags": "0x44000000002000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 392,
+      "type_refs": {
+        "meta_class": "0x14081dce0",
+        "class": "0x142e497d0"
+      }
+    },
+    {
+      "index": 2,
+      "name": "InputMethodThrashingCooldownInSeconds",
+      "kind": "Double",
+      "kind_raw": "0xb",
+      "property_flags": "0x40000000004001",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 376
+    },
+    {
+      "index": 3,
+      "name": "InputMethodThrashingWindowInSeconds",
+      "kind": "Double",
+      "kind_raw": "0xb",
+      "property_flags": "0x40000000004001",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 368
+    },
+    {
+      "index": 4,
+      "name": "InputMethodThrashingLimit",
+      "kind": "Int",
+      "kind_raw": "0x3",
+      "property_flags": "0x40000000004001",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 364
+    },
+    {
+      "index": 5,
+      "name": "bEnableInputMethodThrashingProtection",
+      "kind": "Bool",
+      "kind_raw": "0x2c",
+      "property_flags": "0x40000000004001",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "element_size": 1,
+      "size_of_outer": 440,
+      "bitfield": true,
+      "set_bit_fn": "0x14081eb50",
+      "offset": null
+    },
+    {
+      "index": 6,
+      "name": "CommonInputPlatformData",
+      "kind": "Struct",
+      "kind_raw": "0x19",
+      "property_flags": "0x40000000004001",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 7,
+      "object_flags": "0x45",
+      "offset": 80,
+      "type_refs": {
+        "struct": "0x14081eee0"
+      }
+    },
+    {
+      "index": 7,
+      "name": "InputData",
+      "kind": "SoftClass",
+      "kind_raw": "0xd",
+      "property_flags": "0x44000000004001",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 40,
+      "type_refs": {
+        "meta_class": "0x14081dce0"
+      }
+    }
+  ],
+  "members": {
+    "InputData": "TSoftClassPtr<UCommonUIInputData> InputData;",
+    "CommonInputPlatformData": "FCommonInputPlatformData CommonInputPlatformData[7];",
+    "bEnableInputMethodThrashingProtection": "bool bEnableInputMethodThrashingProtection;",
+    "InputMethodThrashingLimit": "int32 InputMethodThrashingLimit;",
+    "InputMethodThrashingWindowInSeconds": "double InputMethodThrashingWindowInSeconds;",
+    "InputMethodThrashingCooldownInSeconds": "double InputMethodThrashingCooldownInSeconds;",
+    "InputDataClass": "TSubclassOf<UCommonUIInputData> InputDataClass;",
+    "CurrentPlatform": "FCommonInputPlatformData CurrentPlatform;"
+  }
+}

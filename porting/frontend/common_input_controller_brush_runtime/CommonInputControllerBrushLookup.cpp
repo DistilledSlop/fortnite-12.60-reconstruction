@@ -1,5 +1,6 @@
 #include "CommonInputControllerBrushLookup.h"
 #include "UCommonInputControllerData.h"
+#include "FCommonInputPlatformData.h"
 
 bool FindCommonInputControllerBrush(const UCommonInputControllerData& ControllerData,
     const TArray<FKey>& Keys, FSlateBrush& OutBrush)
@@ -46,6 +47,28 @@ bool FindCommonInputControllerBrush(const UCommonInputControllerData& Controller
                 OutBrush = Entry.KeyBrush;
                 return true;
             }
+        }
+    }
+    return false;
+}
+
+bool FindCommonInputPlatformBrush(const FCommonInputPlatformData& PlatformData,
+    const TArray<FKey>& Keys, ECommonInputType InputType,
+    ECommonGamepadType GamepadType, FSlateBrush& OutBrush)
+{
+    for (const TSubclassOf<UCommonInputControllerData>& ControllerClass : PlatformData.ControllerDataClasses)
+    {
+        UClass* Class = ControllerClass.Get();
+        if (Class == nullptr)
+        {
+            continue;
+        }
+        const UCommonInputControllerData* ControllerData =
+            static_cast<UCommonInputControllerData*>(Class->GetDefaultObject(true));
+        if (ControllerData != nullptr && ControllerData->InputType == InputType &&
+            (InputType != ECommonInputType::Gamepad || ControllerData->GamepadType == GamepadType))
+        {
+            return FindCommonInputControllerBrush(*ControllerData, Keys, OutBrush);
         }
     }
     return false;

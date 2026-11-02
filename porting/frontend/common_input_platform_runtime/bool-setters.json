@@ -1,0 +1,57 @@
+[
+  {
+    "name": "bSupportsTouch",
+    "property_record": "0x14783d690",
+    "setter": "0x14081eb70",
+    "size": 12,
+    "sha256": "0158479de44288cfc1d662dc05c5f92ef378a416fd7e39426ec6a85cfff150f0",
+    "instructions": [
+      "mov byte ptr [rcx + 6], 1",
+      "ret "
+    ]
+  },
+  {
+    "name": "bCanChangeGamepadType",
+    "property_record": "0x14783d6c8",
+    "setter": "0x14081eb40",
+    "size": 12,
+    "sha256": "180cad15205b5c405b3f1b7de77107efb51caec92cff65b2cce6db54f937f368",
+    "instructions": [
+      "mov byte ptr [rcx + 5], 1",
+      "ret "
+    ]
+  },
+  {
+    "name": "bSupportsGamepad",
+    "property_record": "0x14783d760",
+    "setter": "0x14081eb60",
+    "size": 12,
+    "sha256": "ce83e491eb623eb5837c28c985fa37454a1a8573eee0ecb50d473da4ace3e821",
+    "instructions": [
+      "mov byte ptr [rcx + 3], 1",
+      "ret "
+    ]
+  },
+  {
+    "name": "bSupportsMouseAndKeyboard",
+    "property_record": "0x14783d798",
+    "setter": "0x14076c560",
+    "size": 12,
+    "sha256": "9300c1ecca036b82a3aa2c3bfebe6b2117a98ccd36a9b167db0189cd5063622b",
+    "instructions": [
+      "mov byte ptr [rcx + 2], 1",
+      "ret "
+    ]
+  },
+  {
+    "name": "bSupported",
+    "property_record": "0x14783d830",
+    "setter": "0x1406966a0",
+    "size": 12,
+    "sha256": "abf884444199b5972b5c6c6bfdc043dd5233cf0234f768cb789d2cfa77e77ae0",
+    "instructions": [
+      "mov byte ptr [rcx], 1",
+      "ret "
+    ]
+  }
+]
