@@ -1,6 +1,7 @@
 #pragma once
 #include "UCommonTextBlock.h"
 #include "UCommonTextStyle.h"
+#include "UCommonTextScrollStyle.h"
 #include "Widgets/Text/STextBlock.h"
 #include "CommonTextBlockStyleProbe.generated.h"
 
@@ -33,7 +34,7 @@ public:
     bool HasSlate() const { return MyTextBlock.IsValid(); }
     FText SlateText() const { return MyTextBlock.IsValid() ? MyTextBlock->GetText() : FText::GetEmpty(); }
     FVector2D SlateDesired() const { if (MyTextBlock.IsValid()) { MyTextBlock->SlatePrepass(1.0f); return MyTextBlock->GetDesiredSize(); } return FVector2D::ZeroVector; }
-    UFUNCTION() FText BoundProbeText() const { return FText::FromString(TEXT("delegate text")); }
+    UFUNCTION() FText BoundProbeText() { return FText::FromString(TEXT("delegate text")); }
 };
 
 void RegisterCommonTextBlockStyleProbeDriver();
