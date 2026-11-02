@@ -1,0 +1,55 @@
+diff --git a/Engine/Source/Runtime/Engine/Classes/Kismet/KismetMaterialLibrary.h b/Engine/Source/Runtime/Engine/Classes/Kismet/KismetMaterialLibrary.h
+index d84b52d82..177d299f9 100644
+--- a/Engine/Source/Runtime/Engine/Classes/Kismet/KismetMaterialLibrary.h
++++ b/Engine/Source/Runtime/Engine/Classes/Kismet/KismetMaterialLibrary.h
+@@ -3,12 +3,21 @@
+ #pragma once
+ 
+ #include "CoreMinimal.h"
++#include "Misc/EnumClassFlags.h"
+ #include "UObject/ObjectMacros.h"
+ #include "Kismet/BlueprintFunctionLibrary.h"
+ #include "KismetMaterialLibrary.generated.h"
+ 
+ class UMaterialParameterCollection;
+ 
++UENUM(BlueprintType, meta = (Bitflags, UseEnumValuesAsMaskValuesInEditor = "true"))
++enum class EMIDCreationFlags : uint8
++{
++	None					UMETA(DisplayName = "None"),
++	Transient = 1 << 0		UMETA(DisplayName = "Transient")
++};
++ENUM_CLASS_FLAGS(EMIDCreationFlags)
++
+ UCLASS(MinimalAPI, meta=(ScriptName="MaterialLibrary"))
+ class UKismetMaterialLibrary : public UBlueprintFunctionLibrary
+ {
+@@ -32,5 +41,5 @@ class UKismetMaterialLibrary : public UBlueprintFunctionLibrary
+ 
+ 	/** Creates a Dynamic Material Instance which you can modify during gameplay. */
+ 	UFUNCTION(BlueprintCallable, Category="Rendering|Material", meta=(WorldContext="WorldContextObject", MaterialParameterCollectionFunction = "true"))
+-	static ENGINE_API class UMaterialInstanceDynamic* CreateDynamicMaterialInstance(UObject* WorldContextObject, class UMaterialInterface* Parent, FName OptionalName = NAME_None);
++	static ENGINE_API class UMaterialInstanceDynamic* CreateDynamicMaterialInstance(UObject* WorldContextObject, class UMaterialInterface* Parent, FName OptionalName = NAME_None, EMIDCreationFlags CreationFlags = EMIDCreationFlags::None);
+ };
+diff --git a/Engine/Source/Runtime/Engine/Private/KismetMaterialLibrary.cpp b/Engine/Source/Runtime/Engine/Private/KismetMaterialLibrary.cpp
+index 0bfa28670..301a30448 100644
+--- a/Engine/Source/Runtime/Engine/Private/KismetMaterialLibrary.cpp
++++ b/Engine/Source/Runtime/Engine/Private/KismetMaterialLibrary.cpp
+@@ -125,7 +125,7 @@ FLinearColor UKismetMaterialLibrary::GetVectorParameterValue(UObject* WorldConte
+ 	return ParameterValue;
+ }
+ 
+-class UMaterialInstanceDynamic* UKismetMaterialLibrary::CreateDynamicMaterialInstance(UObject* WorldContextObject, class UMaterialInterface* Parent, FName OptionalName)
++class UMaterialInstanceDynamic* UKismetMaterialLibrary::CreateDynamicMaterialInstance(UObject* WorldContextObject, class UMaterialInterface* Parent, FName OptionalName, EMIDCreationFlags CreationFlags)
+ {
+ 	UMaterialInstanceDynamic* NewMID = nullptr;
+ 
+@@ -135,7 +135,7 @@ class UMaterialInstanceDynamic* UKismetMaterialLibrary::CreateDynamicMaterialIns
+ 		// MIDs need to be created within a persistent object if in the construction script (or editor utility) or else they will not be saved.
+ 		// If this MID is created at runtime then put it in the transient package
+ 		UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::ReturnNull);
+-		UObject* MIDOuter = (World && (World->bIsRunningConstructionScript  || !World->IsGameWorld()) ? WorldContextObject : nullptr);
++		UObject* MIDOuter = (!EnumHasAnyFlags(CreationFlags, EMIDCreationFlags::Transient) &&  World && (World->bIsRunningConstructionScript  || !World->IsGameWorld()) ? WorldContextObject : nullptr);
+ 		NewMID = UMaterialInstanceDynamic::Create(Parent, MIDOuter, OptionalName);
+ 		if (MIDOuter == nullptr)
+ 		{

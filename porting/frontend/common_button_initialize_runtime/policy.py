@@ -43,6 +43,9 @@ def validate_classes(blocks, name_to_block, delegates=None):
         raise ValueError('CommonButton identity mismatch')
     if any(block.get(key) != value for key, value in expected.items()):
         raise ValueError('CommonButton original class metadata mismatch')
+    expected_methods = CONTRACT['input_method_properties']
+    if [p for p in block.get('properties', []) if p.get('name') in ('ClickMethod', 'TouchMethod', 'PressMethod')] != expected_methods:
+        raise ValueError('CommonButton original input-method properties differ')
 
     for name, expected in CONTRACT['callbacks'].items():
         records = [f for f in block.get('functions', []) if f.get('name') == name]

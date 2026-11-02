@@ -1,0 +1,34 @@
+{
+  "block_va": "0x14782f0f0",
+  "name": "CommonActionCommited__DelegateSignature",
+  "owning_class": null,
+  "delegate_name": null,
+  "construct_fns": [
+    "0x140809720"
+  ],
+  "package": "/Script/CommonUI",
+  "outer_fn": "0x140812ee0",
+  "function_flags": "0x120000",
+  "function_flag_names": [
+    "Delegate"
+  ],
+  "params": [
+    {
+      "index": 0,
+      "name": "bPassThrough",
+      "kind": "Bool",
+      "kind_raw": "0x2c",
+      "property_flags": "0x10000000000180",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "element_size": 1,
+      "size_of_outer": 1,
+      "bitfield": true,
+      "offset": null
+    }
+  ],
+  "multicast": false,
+  "type_name": "FCommonActionCommited"
+}

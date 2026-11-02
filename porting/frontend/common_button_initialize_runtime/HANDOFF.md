@@ -14,12 +14,15 @@ exist in the generated internal button and implement the original live Slate
 mirrors and effective interaction-change notifications. Neither the internal
 allocation nor AddChild/slot cast gains an invented failure guard.
 
-`declarations.inc` adds Initialize and three source aliases for the unreflected
-bytes +2a2/+2a3/+2a4. Original constructor `140796950:140796b69` never writes
-these bytes; UObject zero initialization supplies value 0 (DownAndUp for all
-three original enum roles). These remain real shared instance fields, not local
-constants in Initialize. Existing native interaction/button bits, inherited
-bIsFocusable and weak NativeInternalButton are reused.
+`declarations.inc` adds Initialize. Integration restored the original reflected
+ClickMethod/TouchMethod/PressMethod fields by fixing comment handling in engine
+enum discovery. The producer now reads these real serialized properties; there
+are no duplicate NativeClickMethod/NativeTouchMethod/NativePressMethod aliases.
+Original constructor never writes bytes +2a2/+2a3/+2a4, so normal UObject zero
+initialization supplies DownAndUp; ordinary template/cooked property copying can
+supply other values. The policy guards all three exact original property records
+and generated typed declarations. Existing native interaction/button bits,
+inherited bIsFocusable and weak NativeInternalButton are reused.
 
 Null old root deliberately leaves the constructed internal only weakly reachable
 from CommonButton, never replaces root, and never binds callbacks. The internal

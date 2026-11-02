@@ -221,5 +221,52 @@
         "params": []
       }
     }
-  }
+  },
+  "input_method_properties": [
+    {
+      "index": 16,
+      "name": "PressMethod",
+      "kind": "Byte",
+      "kind_raw": "0x0",
+      "property_flags": "0x10000000000015",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 676,
+      "type_refs": {
+        "enum": "0x142fda960"
+      }
+    },
+    {
+      "index": 17,
+      "name": "TouchMethod",
+      "kind": "Byte",
+      "kind_raw": "0x0",
+      "property_flags": "0x10000000000015",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 675,
+      "type_refs": {
+        "enum": "0x142fda990"
+      }
+    },
+    {
+      "index": 18,
+      "name": "ClickMethod",
+      "kind": "Byte",
+      "kind_raw": "0x0",
+      "property_flags": "0x11000000000015",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 674,
+      "type_refs": {
+        "enum": "0x142fda930"
+      }
+    }
+  ]
 }

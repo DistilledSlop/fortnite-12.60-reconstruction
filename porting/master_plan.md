@@ -10,6 +10,17 @@ credentials in Git, and the orchestrator reviews and commits.
 
 ## Current baseline
 
+Native7a66a401 / Engine87acab901 passes both builds, production button GUI24,
+retained style93/base-click21/widget18/input40, checksum4617/4617, and both joins.
+Production Initialize/selection/SetStyle are integrated. Root skips18imports and
+still crashes before attachment: debugger identifies ErrorLlama's fourth MID
+creation argument missing from the 4.25 native API. Enginec945a157c backports
+that real4.26 signature/behavior and is committed but unbuilt. NEXT: build/retry
+Root with the ABI correction, then finish Engine integration validation. Real
+row/router registration, Border styling and delegate closure remain. All4 gates
+stay open; the latest HANDOFF distinguishes the green baseline and pending fix.
+
+
 Native1e1fa34c / Engine87acab901: client build PASS119.000s; full connected
 CommonActionWidget controlled GUI flow PASS18; retained CommonInput40 PASS.
 Original Root creates seven widgets/four startup classes, exits0 with no Blueprint

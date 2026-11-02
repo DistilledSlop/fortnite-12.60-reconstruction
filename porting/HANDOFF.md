@@ -1,5 +1,69 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Production CommonButton verified; ErrorLlama ABI fix pending (2026-11-02)
+
+Previous goal turn made progress. Native7a66a401 / Engine87acab901 client build
+PASS168.002s, server PASS206.939s, Native source unchanged. GUI production button
+flow24 PASS: real Initialize branches/parent timing/containment/one-shot/weak GC,
+five real bindings, SetStyle rejection/equality/reentry/dimensions, selection/
+focus/click/touch dispatch and raw native commit-byte preservation. Retained GUI
+style93/base-click21/action-widget18/CommonInput40 PASS. Offline class checksum
+4617/4617 and31 self-tests PASS, plus default/Athena native joins PASS21.585/21.577s.
+These are implementation/diagnostic and direct-join checks, not a menu, lobby,
+matchmaking, full match or original pixels/audio. All4 product gates remain open.
+
+Initialize/focus/hover/selection/public selection/SetStyle are integrated through
+maintained generator policies. Sound identity is source-proven; constructor is
+reused, no duplicate ctor or extra strong internal retention. Enum discovery now
+handles comments before namespaced enum Type; real ClickMethod/TouchMethod/
+PressMethod properties are restored. Five other generated classes gain six
+original nonreplicated properties and one newly reachable delegate. Public
+SetTriggeringInputAction/SetTriggeredInputAction are still unregistered: actual
+router association and legacy-manager producer/removal bodies remain required.
+
+Original Root retry creates7widgets/4startup classes and improves19->18 skipped
+imports. Attachment still exitsSIGSEGV before_attach. Exact debugger root-debug-6
+identifies ErrorLlama_C.ExecuteUbergraph_ErrorLlama during NativeConstruct,
+CreateDynamicMaterialInstance at bytecode offset270, then leftover-argument
+misalignment at offset312 in execLocalVariable. Engine4.25 supplies three inputs;
+original cooked call/local4.26 reference supply a fourth CreationFlags enum byte.
+Engine c945a157c now backports the real signature/enum and flag-dependent MID
+creation behavior. THIS ENGINE FIX IS COMMITTED BUT UNBUILT AT THIS SNAPSHOT;
+previous green baseline is Engine87acab901. Next: client build + actual Root
+retry, then remaining Engine integration validation and server/joins. Reproducible
+patch and evidence notes: frontend/kismet_mid_creation_flags_runtime/.
+
+Exact commands: /tmp/promote_button_production_1.py (8changed/1added/no removals,
+12734mtimes restored), /tmp/build_button_production_1.py,
+/tmp/build_button_production_server_1.py, /tmp/run_button_production_1.py,
+/tmp/run_button_production_retained_1.py, /tmp/run_button_production_joins_3.py,
+/tmp/debug_button_production_root_6.py (all with python3). Reports under
+/tmp/button-production-promotion-1/; artifacts generated/button-production-batch-1/
+and generated/button-production-server-1/. Source policies/original windows,
+sound Engine-source closure, generator142, focused guards and receipt-runner10 PASS.
+Checksum commands: python3 -I porting/class_checksum.py --self-test, and
+--out porting/generated/button-production-batch-1/class-checksums.json --no-md.
+First checksum run used an incompatible raw mapped image; correct PE-layout
+input passes31/31. First two join harness attempts lacked FullStdOutLogOutput,
+hiding normal readiness logs; preserve joins/, joins-2/ failures. joins-3/ uses
+full redirected output and passes both maps, with no binary change between runs.
+GDB1 stops at the known Vulkan ensure; later runs ignore that diagnostic trap.
+GDB3 has expression failures;4 raw name IDs;5 names;6 direct bounded name-pool/
+script inspection. All handles91744/71844/59747/19609/62470/81331/91252/86620/
+3365/96193/69314/86532/79811/31655/53096/71852 are terminal. Client/server ELFs
+only staged, no archive/symbol-package/full provenance-audit claim. Engine’s
+pre-existing five dirty paths are preserved. A broad accidental diff-check read
+unrelated dependency-manifest CRLF lines; subsequent checks are path-limited.
+
+Next bounded source candidates: common_border_style_runtime (setter/synchronize/
+safe-zone code, source replay only; metadata/model gate unfinished) and
+common_action_commited_delegate_runtime (exact single-cast bool& signature,
+standalone closure root, guards/replay; unintegrated/unbuilt). All workers finished.
+Preserve original bool-byte normalization boundary and all reentry/weak lifetimes.
+Root owns Native/generation/Engine/staging/builds. Bounded rotated delegates:
+Luna medium read-only, Terra medium/high regular, Sol medium complex, fork_turns
+none, max3workers. Keep economical reads and risk-based batch validation.
+
 ## CommonActionWidget connected batch (2026-11-02, client + GUI flow PASS)
 
 Previous goal turn made progress. Source06085fbb integrates authentic widget

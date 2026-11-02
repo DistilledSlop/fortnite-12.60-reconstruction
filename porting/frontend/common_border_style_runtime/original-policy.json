@@ -1,0 +1,48 @@
+{
+  "windows": [
+    {
+      "label": "class_constructor",
+      "start": "0x140796840",
+      "end": "0x14079688b",
+      "sha256": "66ef172810f2be011405b6bff5a469802cdeae86d404f4e28672c0ff835b1583"
+    },
+    {
+      "label": "style_constructor",
+      "start": "0x140796890",
+      "end": "0x14079694b",
+      "sha256": "a0545421337a2d901f579ca59d3bbee6c7a689c5b5ec4f98901cf5a84f9ad3fa"
+    },
+    {
+      "label": "setter_exec",
+      "start": "0x14080d670",
+      "end": "0x14080d6f0",
+      "sha256": "0f7faec8a7dccafec8afb3eddf10f0f98796dcbd05d8e8024648557f97e7b7da"
+    },
+    {
+      "label": "setter",
+      "start": "0x1407f9c50",
+      "end": "0x1407f9c6c",
+      "sha256": "c75c4736af02e468e9d875de0e57a8b63d30e18e8dfd91eff729725c41f34e51"
+    },
+    {
+      "label": "synchronize",
+      "start": "0x1407fdf60",
+      "end": "0x1407fe03a",
+      "sha256": "0d720b5a989d0c9d6887e59ce558496cf35e69f2a4c1183e2a304b2d0254eca6"
+    },
+    {
+      "label": "padding",
+      "start": "0x1407f24b0",
+      "end": "0x1407f2722",
+      "sha256": "c9c11b1717ae09f53795b985878412615e5b9ff03444c7e273a3abc489b5129f"
+    }
+  ],
+  "vtable": {
+    "table": "0x1459efb98",
+    "slot": "0x298",
+    "target": "0x1407fdf60"
+  },
+  "native_array": "0x145a043b0",
+  "native_exec": "0x14080d670",
+  "name": "0x145a03128"
+}
