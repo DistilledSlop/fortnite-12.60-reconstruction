@@ -1,6 +1,11 @@
-# Root layout Slate lifecycle candidate
+# Root layout Slate lifecycle
 
-This unregistered source candidate supplies the native RebuildWidget and
+Integrated by e56c37ac: client build PASS128.855s and the original Root diagnostic
+completes creation/viewport attachment with exit0, zero Blueprint errors and10
+unresolved imports. This verifies the primary-player path; secondary-player
+runtime behavior and full UI parity remain open.
+
+These generator source inputs supply the native RebuildWidget and
 ReleaseSlateResources lifecycle. The `.inc` fragments need the startup-root
 candidate's methods and the declarations in `declarations.json`. Do not add
 the three presentation fields twice if the startup candidate is also used. Integrate

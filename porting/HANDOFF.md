@@ -1,5 +1,65 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Current checkpoint: CommonUI lifecycle and real root Slate integrated (2026-11-02)
+
+This goal turn made concrete progress. Native27d5e909 / Enginec945a157c restores
+the real CommonUI module, separate rooted UCommonUISettings, guarded synchronous
+resource initialization, conditional resource roots, and shutdown/GExitPurge path.
+Client PASS107.158s and server PASS133.660s, Native source unchanged. Fresh default
+native join PASS21.618s. Original CommonUI DefaultGame.ini values are restored:
+auto-load true, default image None, configured Throbber_Material-Monochrome and
+CommonUIRichTextData_C. Staged Game config is copied/pinned with the client ELF.
+This restores four original settings, not the whole original project config.
+
+Nativee56c37ac then integrates original UFortRootViewportLayout RebuildWidget and
+ReleaseSlateResources. Client PASS128.855s, Native source unchanged. Both phase5
+and phase6 Root runs exit0, complete creation/viewport attachment, and report zero
+Blueprint errors with10 unresolved imports; strict gate still FAIL. Primary path
+executes the real SBox + UUserWidget content overlay. The source-derived secondary
+player Leto tree, cvars and release order are integrated, but secondary-player
+runtime behavior is NOT yet verified. Normal GI/director/manager startup, menu,
+full gameplay/client/server/pixels/audio and all four milestones remain open.
+
+Commands (python3): /tmp/promote_frontend_imports_5.py,
+/tmp/build_frontend_imports_5.py, /tmp/build_frontend_imports_server_5.py,
+/tmp/run_frontend_imports_root_5.py, /tmp/run_frontend_imports_joins_5.py (default
+only; unchanged Athena mode not repeated); then matching phase6 promotion/client
+build/Root scripts. Reports /tmp/frontend-import-promotion-{5,6}/; receipts under
+porting/generated/frontend-import-batch-{5,6}/ and frontend-import-server-5/.
+Staged client is phase6; staged server remains phase5. No extra button, full
+checksum, debugger, or server-repeat suite for the UI-only phase6. All build/run
+handles are terminal; Engine's five pre-existing dirty paths remain preserved.
+
+Important review decisions: the CommonUI getter returns SETTINGS, not a brush.
+Resource initializer uses the untyped CDO getter + static cast after validated
+class loading, preserving original null/check behavior. Physical settings loaded
+flag/brush offsets are compile-time guarded. Module null slot+48 has no guessed
+void* API. Root Slate scale-box alignments are explicitly Fill (engine defaults
+Center); original Stretch None and box padding zero are preserved. Mutable cvars
+FortUI.EnableLetoBorder, FortUI.LetoBorderWidth and FortUI.LetoBorderedContentScale
+are shared, not literal substitutes. Their defaults are true/36/.95. Presentation
+setter candidates read the shared border-width variable.
+
+NEXT: integrate the real startup chain, not a probe launch. Source candidate
+startup_root_added_runtime now closes Startup root-added, inherited Athena
+PlayerWidgets, real tags, dormancy, input/Slate presentation, native GI/root
+delegates and Athena488/490 plus Login continuation. It remains unintegrated on
+concrete real dependencies: legacy selector14516f380, layer-clear14515b410,
+config/providers/state attach/remove and actual modal/router operations. Leto
+helper14516be20 is separately recovered in root_leto_action_runtime: mutable
+FortUI.EnableP2Frontend gate, real row/descriptor/weak callback and active-root
+swap; registration must use the actual router, not only create a registry record.
+Reuse previously closed module/soft-load/route operations; don't repeatedly
+rediscover them. The source is available: unresolved internal code is work to
+recover, not an external blocker. Keep bounded tasks pushing to executable source.
+
+Original full config locator: /mnt/vibrato/fortnite-extracted-full/FortniteGame/
+Config/DefaultGame.ini; existing generated native-ui-startup-checkpoint-6 receipt
+pins its source. Generated directories are ignored by rg unless --no-ignore is
+requested. Read only the relevant sections; never print keys or whole config.
+Preserve planner/orchestrator/reviewer preference, bounded rotation/model choices
+and economical reads below. Root exclusively owns Native/gen/Engine/build/stage.
+
 ## Current checkpoint: three more native methods integrated; ten imports remain (2026-11-02)
 
 This goal turn made concrete progress. Native 75bc1057 restored the exact

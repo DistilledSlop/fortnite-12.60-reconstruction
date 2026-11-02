@@ -10,17 +10,19 @@ credentials in Git, and the orchestrator reviews and commits.
 
 ## Current baseline
 
-Native 34e45456 / Engine c945a157c client build passes (127.623s); IsInZone,
-GetImageOverride and progress-modal initialization now join the integrated border,
-delegate, mobile and input-priority behavior. The original Root diagnostic exits
-normally, completes creation/viewport attachment, and has zero Blueprint errors.
-Unresolved imports fell14->11->10; the strict gate still fails. Normal game-instance
+Native e56c37ac / Engine c945a157c client build passes (128.855s) with the original
+root Slate rebuild/teardown and configurable secondary-player border. Prior
+27d5e909 restores CommonUI module/settings lifecycle and four original configured
+resource values; both targets build and a fresh default native join passes.
+The original Root diagnostic exits normally, completes creation/viewport attachment,
+and has zero Blueprint errors. Ten imports remain unresolved; strict gate fails.
+Secondary-player runtime behavior is not yet verified. Normal game-instance
 Init/InitializeUI and director/manager startup are not implemented, so diagnostic
 attachment is not a normal interactive menu or pixels/audio parity.
 Prior production button and retained GUI checks, server build and both direct
 joins remain the unchanged baseline; this UI batch did not repeat those suites.
 Next: real director/player-root startup and its state/input/delegate effects,
-input-router/legacy registration, CommonUI settings and lazy-image loading, and
+input-router/legacy registration, lazy-image loading, and
 remaining frontend imports. All four milestones and full faithful client/server/
 visual/audio parity remain open. See HANDOFF for current receipts and source-only
 candidates versus older snapshots.

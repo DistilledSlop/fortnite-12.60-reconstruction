@@ -1,0 +1,64 @@
+{
+  "UFortUIManager": [
+    "virtual void NativeOnRootAdded298(UFortLocalPlayer* LocalPlayer, UUserWidget* Root);",
+    "FGameplayTag NativeCurrentState6c;"
+  ],
+  "UFortUIManager_Startup": [
+    "virtual void NativeOnRootAdded298(UFortLocalPlayer* LocalPlayer, UUserWidget* Root) override;"
+  ],
+  "UFortRootViewportLayout": [
+    "bool NativeDormant2aa = false;",
+    "TSharedPtr<SBox> NativePresentationBox2b8;",
+    "TSharedPtr<SScaleBox> NativePresentationScale2c8;",
+    "TSharedPtr<SWidget> NativePresentationWidget2d8;",
+    "DECLARE_MULTICAST_DELEGATE_OneParam(FNativeDormancyChanged, bool);",
+    "FNativeDormancyChanged NativeDormancyChanged2f8;",
+    "void NativeSetDormant14516e780(bool bDormant);",
+    "void NativeSetPresentation145152480(uint8 Presentation);",
+    "virtual void NativeDormancyChanged488();",
+    "virtual void NativeStateChanged490(const FGameplayTag& State);",
+    "void NativeSetLegacyState14516f380(uint8 LegacySelector);",
+    "virtual void NativeClearLayers498();",
+    "void NativeAttachState145174c00(UFortUIStateWidgetBase* StateWidget);"
+  ],
+  "UFortGameInstance": [
+    "DECLARE_MULTICAST_DELEGATE(FNativeRootLayoutChanged);",
+    "FNativeRootLayoutChanged NativeRootLayoutChanged5d8;"
+  ],
+  "UFortLocalPlayer": [
+    "bool NativeRootAwake341;",
+    "bool NativePredicate14238f060() const;"
+  ],
+  "UCommonUIActionRouter": [
+    "bool NativeGate98 = false;",
+    "bool NativeGate99 = true;",
+    "void NativeSetRootGate1407f78c0(bool bEnabled);"
+  ],
+  "UFortRootViewportLayout_Athena": [
+    "virtual void NativeDormancyChanged488() override;",
+    "virtual void NativeStateChanged490(const FGameplayTag& State) override;",
+    "void NativeLoginDeactivated1451529d0(UFortUIStateWidget_Login* Login);",
+    "void NativeRefreshLetoDormancy14516be20();"
+  ],
+  "UFortGlobalUIContext": [
+    "bool NativePredicate1406801d0() const;"
+  ],
+  "UFortUIDataConfiguration": [
+    "static UFortUIDataConfiguration* NativeGet144db86e0();",
+    "virtual UClass* NativeGetHUDClass268();"
+  ],
+  "UCommonActivatableWidget": [
+    "DECLARE_MULTICAST_DELEGATE(FNativeDeactivated);",
+    "FNativeDeactivated NativeDeactivated2a8;"
+  ],
+  "UCommonActivatableWidgetContainerBase": [
+    "UCommonActivatableWidget* NativeAddWidget1407aa4c0(UClass* Class, TFunctionRef<void(UCommonActivatableWidget&)> Initialize);",
+    "void NativeRemoveWidget1407f1000(UCommonActivatableWidget* Widget);"
+  ],
+  "UFortUINotificationManager": [
+    "UFortUINotificationQueue* NativeGetQueue144e00700(uint8 Index);"
+  ],
+  "UFortToastDisplayArea": [
+    "void NativeSetQueue144fb3e40(UFortUINotificationQueue* Queue);"
+  ]
+}
