@@ -22,5 +22,8 @@ def emit_runtime(source_root, generated_names):
     if 'UCommonUIInputSettings' not in generated_names:
         return
     target = Path(source_root) / 'CommonUI' / 'Generated'
-    for name in ('CommonActionBindingData.h', 'CommonActionBindingData.cpp'):
+    if 'UCommonUIActionRouter' not in generated_names or 'UCommonInputSubsystem' not in generated_names:
+        raise ValueError('binding data providers require both local player subsystem classes')
+    for name in ('CommonActionBindingData.h', 'CommonActionBindingData.cpp',
+                 'CommonActionBindingProviders.h', 'CommonActionBindingProviders.cpp'):
         (target / name).write_text((HERE / name).read_text())

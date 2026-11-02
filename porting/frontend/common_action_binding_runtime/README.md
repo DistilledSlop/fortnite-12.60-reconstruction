@@ -1,8 +1,8 @@
 # Common action binding data and storage
 
-These templates are a data-building and owned-storage component, not registration,
-input routing, a settings provider, or a production adapter. The normal generator
-must validate `policy.validate_types(gate)` and copy both templates into CommonUI's
+These templates provide owned binding data/storage and original engine-backed
+data resolvers. Registration and input routing remain unfinished. The normal generator
+must validate `policy.validate_types(gate)` and copy the data and provider templates into CommonUI's
 Generated directory before building them. The adapter supplies a resolver whose tag
 lookup scans the original InputActions in order for the first exact tag; row lookup
 and owner-to-gamepad resolution must follow the source behavior. Resolved data and
@@ -30,4 +30,24 @@ comparison so the processor's denormals-are-zero setting affects subnormal
 values. Exact floating-point exception behavior is not established. The isolated
 `AllocateIdBits` counter step supports wrap testing without resetting global state.
 
-Validated at Native `cf37b21`: client/server builds pass, all 26 actual engine data/storage rows pass, retained diagnostics and both joins pass. Native build1 failure is preserved and fixed through UE4.25 declaration macros and touch-key API. Providers and production registration/routing remain unintegrated. Checkpoint and source release hashes are in the project HANDOFF.
+Validated at Native `cf37b21`: client/server builds pass, all 26 actual engine data/storage rows pass, retained diagnostics and both joins pass. Native build1 failure is preserved and fixed through UE4.25 declaration macros and touch-key API. That checkpoint used fixture resolvers. The new provider candidate below is not covered by it. Checkpoint and source release hashes are in the project HANDOFF.
+
+
+The engine resolver candidate reads the settings CDO InputActions in order, uses
+`FDataTableRowHandle::GetRow<FCommonInputActionData>(TEXT(""))`, and resolves a
+widget's owning player, its action router, then Common Input through the router's
+outer. It reads the unsigned gamepad-type byte live, without clamping. Missing
+actions/rows, missing player/router/subsystem, and out-of-range row indexing
+remain invalid preconditions. No empty record or index-zero fallback is supplied.
+The resolver accesses the existing generated `GamepadInputType` field; this does
+not add a reflected getter, input producer, registration or dispatch path.
+`original-providers.json` pins 16 bounded original-image spans, rechecked with
+`../confirmation_runtime/verify_original.py --record ...`. The two provider
+contract documents explain the helper identities and correct the earlier
+constructor note that called the router lookup a local-player lookup.
+
+The new opt-in `ActionBindingProviderProbe` uses actual engine settings, typed
+DataTable rows (including the original 421-row table), a widget and the live
+local-player subsystem collection. Controlled settings and input-byte mutations
+are restored; it does not drive original UI or hardware input. Runtime validation
+is pending until a new checkpoint is recorded.

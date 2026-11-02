@@ -1,0 +1,120 @@
+{
+  "image_base": "0x140000000",
+  "image_sha256": "338c83a2314ccac1040a2c0bb520b893013cc7b58eda58e550da67f5d84de680",
+  "spans": [
+    {
+      "name": "input_settings_class_getter",
+      "start": "0x140811ec0",
+      "end": "0x140811f70",
+      "sha256": "08b5fe76794c9656b24db6ac714236db712c71685ecc52d51e20afef3b05d687"
+    },
+    {
+      "name": "record_tag_cdo_lookup",
+      "start": "0x140795886",
+      "end": "0x1407958ee",
+      "sha256": "dec27a5bbddb31939c7bee0548ba52fb6e2396654d0bb1c45fa97ef7a4f6d8b6"
+    },
+    {
+      "name": "constructor",
+      "start": "0x140795760",
+      "end": "0x140795df5",
+      "sha256": "01b84f084b592ff7a7080b01bfe2e512f8636d196cf526015d6e656ea7731561"
+    },
+    {
+      "name": "router_lookup",
+      "start": "0x14078c710",
+      "end": "0x14078c7a2",
+      "sha256": "75957ab2f7cf6db3d41e1cab6da6e45b3c0773fc5543be7e6572ecad63d330af"
+    },
+    {
+      "name": "input_lookup",
+      "start": "0x1407c3b10",
+      "end": "0x1407c3ba3",
+      "sha256": "881e1a6a211b5d4acc1eab46fb87cd9d51a566a8196c253db9eccb953ec5e186"
+    },
+    {
+      "name": "router_class",
+      "start": "0x1408132b0",
+      "end": "0x14081336a",
+      "sha256": "79a874c60db8af73b72ef27808bca64b5aa31f2a6615e5bc48c54163389e677e"
+    },
+    {
+      "name": "input_class",
+      "start": "0x14081de90",
+      "end": "0x14081df4a",
+      "sha256": "2232a031a5f597e26aab650373e60ee2625230e92ccc30b3aff62279f2a63a50"
+    },
+    {
+      "name": "collection",
+      "start": "0x14460d300",
+      "end": "0x14460d385",
+      "sha256": "181ba10a8a0c2f3db17beb9ce7f2ae56d133d6709aabe967b319439e12975d84"
+    },
+    {
+      "name": "gamepad_getter",
+      "start": "0x14081b530",
+      "end": "0x14081b535",
+      "sha256": "8def35339e923bc20fe2b52ec952aed5beaf5ccedb4fc529ca42798aa4d32826"
+    },
+    {
+      "name": "router_name",
+      "start": "0x145a08ae2",
+      "end": "0x145a08b10",
+      "sha256": "921872030882cdfaff79549e0fd5dc11e1934989b46306dfe37990c20a6e55fd"
+    },
+    {
+      "name": "input_name",
+      "start": "0x145a0e4da",
+      "end": "0x145a0e500",
+      "sha256": "43809477e6829744caab6c9ec2584318c5fb056749c83ff47b086d81c1baa293"
+    },
+    {
+      "name": "handle_getrow",
+      "start": "0x14078c640",
+      "end": "0x14078c701",
+      "sha256": "0cf55488fba0ac46f9a1b31cb6706b014bf69a06402f3f76fb80ecc428781a26"
+    },
+    {
+      "name": "findrow",
+      "start": "0x14078bb10",
+      "end": "0x14078bdcf",
+      "sha256": "b89f710b8c9fe0f43ac704cdb99997749ce8472cc1f3fe3e9646ddcc8531c35d"
+    },
+    {
+      "name": "row_struct_getter",
+      "start": "0x140817c80",
+      "end": "0x140817cd2",
+      "sha256": "c3e4b882fca74cbf824785a08e888af413333a95ffa0fd07a7834f8d25de3a78"
+    },
+    {
+      "name": "struct_name",
+      "start": "0x145a0c0c0",
+      "end": "0x145a0c0ec",
+      "sha256": "d9b4fdb8bfb1fb0661f8b25516da62cb56aceb3376cefec451e38e5dcaf6a845"
+    },
+    {
+      "name": "empty_context",
+      "start": "0x1459a4b30",
+      "end": "0x1459a4b32",
+      "sha256": "96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7"
+    }
+  ],
+  "class_index": {
+    "block_va": "0x145a08040",
+    "native_arrays": [],
+    "native_method": [],
+    "native_count": 0,
+    "function_links": 0,
+    "vtable_addr": null,
+    "vtable_slots": null,
+    "vtable_status": "unverified",
+    "vtable_candidate": "0x1459c13e8",
+    "vtable_candidate_slots": 76,
+    "vtable_candidate_path": "direct",
+    "vtable_candidate_shared_by_classes": 787,
+    "gpsc_targets": [
+      "0x140811ec0"
+    ]
+  },
+  "interpretation": "Bounded production binding data provider evidence: settings CDO/first tag match; typed data-table handle lookup with empty diagnostic context; owner local-player virtual then action-router subsystem then router Outer to CommonInput subsystem, unsigned gamepad byte. Invalid data/objects/index are preconditions, without graceful fallback. Does not establish original registration, routing, constructor defaults or interactive UI."
+}
