@@ -1,0 +1,164 @@
+{
+  "identity": {
+    "block_va": "0x146f34ea0",
+    "class_noregister_fn": "0x14523f270",
+    "base_fn": "0x145299720",
+    "package_fn": "0x14298ac70",
+    "class_flags": "0x8800a0"
+  },
+  "owner_fn": "0x145241240",
+  "function": {
+    "name": "GetInputPriority",
+    "create_func": "0x14523e450",
+    "flags": [
+      "0x54020401"
+    ],
+    "replicated_function": false,
+    "net_roles": [],
+    "outer_fn": "0x145241240",
+    "params": [
+      {
+        "index": 0,
+        "name": "ReturnValue",
+        "kind": "Int",
+        "kind_raw": "0x3",
+        "property_flags": "0x10000000000580",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 4
+      },
+      {
+        "index": 1,
+        "name": "Priority",
+        "kind": "Enum",
+        "kind_raw": "0x1e",
+        "property_flags": "0x10000000000080",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 0,
+        "type_refs": {
+          "enum": "0x1451ecbb0"
+        }
+      },
+      {
+        "index": 2,
+        "name": "UnderlyingType",
+        "kind": "Byte",
+        "kind_raw": "0x0",
+        "property_flags": "0x0",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 0,
+        "enum_underlying_of": "Priority"
+      }
+    ]
+  },
+  "native": {
+    "exec_addr": "0x145247cf0",
+    "flags": "0x54020401",
+    "params": [
+      {
+        "index": 0,
+        "name": "ReturnValue",
+        "kind": "Int",
+        "kind_raw": "0x3",
+        "property_flags": "0x10000000000580",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 4
+      },
+      {
+        "index": 1,
+        "name": "Priority",
+        "kind": "Enum",
+        "kind_raw": "0x1e",
+        "property_flags": "0x10000000000080",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 0,
+        "type_refs": {
+          "enum": "0x1451ecbb0"
+        }
+      },
+      {
+        "index": 2,
+        "name": "UnderlyingType",
+        "kind": "Byte",
+        "kind_raw": "0x0",
+        "property_flags": "0x0",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 0,
+        "enum_underlying_of": "Priority"
+      }
+    ],
+    "create_func": "0x14523e450",
+    "source": "lea"
+  },
+  "enum": {
+    "block_va": "0x147e72410",
+    "name": "EInputPriority",
+    "cpp_type": "EInputPriority",
+    "construct_fns": [
+      "0x1451ecbb0"
+    ],
+    "package_fn": "0x145299720",
+    "package": "/Script/FortniteUI",
+    "cpp_form": "EnumClass",
+    "dynamic_type": "NotDynamic",
+    "enumerators": [
+      {
+        "name": "EInputPriority::Normal",
+        "value": 0
+      },
+      {
+        "name": "EInputPriority::Menu",
+        "value": 1
+      },
+      {
+        "name": "EInputPriority::Chat",
+        "value": 2
+      },
+      {
+        "name": "EInputPriority::Modal",
+        "value": 3
+      },
+      {
+        "name": "EInputPriority::Confirmation",
+        "value": 4
+      },
+      {
+        "name": "EInputPriority::Error",
+        "value": 5
+      },
+      {
+        "name": "EInputPriority::HUD",
+        "value": 6
+      }
+    ]
+  },
+  "windows": [
+    {
+      "va": "0x145247cf0",
+      "length": 133,
+      "sha256": "10818b1bfbe8016f22d6bc6e4c16866364b4957bf2b8415e91ff248ea66f65be"
+    },
+    {
+      "va": "0x141bf2c40",
+      "length": 4,
+      "sha256": "5715ab3437a9c3df20e0d3fa5cbd2c09290d0e97f45be6412ed354aa52b2193f"
+    }
+  ]
+}

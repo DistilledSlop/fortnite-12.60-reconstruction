@@ -1,5 +1,6 @@
 #include "BorderDelegateFlowProbe.h"
 #include "FortniteMapClasses.h"
+#include "UCommonUserWidget.h"
 #include "Blueprint/WidgetTree.h"
 #include "Blueprint/UserWidget.h"
 #include "Engine/Engine.h"
@@ -33,7 +34,7 @@ bool Near(float A, float B) { return FMath::IsNearlyEqual(A, B, 0.01f); }
 void Run(APlayerController* PC)
 {
     Record(TEXT("begin"), true);
-    TStrongObjectPtr<UUserWidget> Owner(CreateWidget<UUserWidget>(PC, UUserWidget::StaticClass()));
+    TStrongObjectPtr<UCommonUserWidget> Owner(CreateWidget<UCommonUserWidget>(PC, UCommonUserWidget::StaticClass()));
     TStrongObjectPtr<UBorderFlowWidget> Widget(Owner.IsValid() && Owner->WidgetTree
         ? Owner->WidgetTree->ConstructWidget<UBorderFlowWidget>() : nullptr);
     UBorderFlowStyle* Style = GetMutableDefault<UBorderFlowStyle>();

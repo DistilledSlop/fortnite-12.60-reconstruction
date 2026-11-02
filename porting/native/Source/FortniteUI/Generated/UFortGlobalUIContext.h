@@ -8,6 +8,7 @@
 
 #include "Blueprint/DragDropOperation.h"
 #include "EFortUIFeature.h"
+#include "EInputPriority.h"
 #include "Engine/EngineTypes.h"
 #include "FFortGlobalUIContextGenericChange.h"
 #include "FFortUIFeatureStruct.h"
@@ -154,6 +155,9 @@ public:
 	// table index 0, flags 0x40000000002000
 	UPROPERTY(Transient)
 	FUniqueNetIdRepl CurrentLocalPlayerUniqueNetId;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetInputPriority(EInputPriority Priority) const;
 
 };
 
