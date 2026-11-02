@@ -28,6 +28,13 @@ V2_ROWS[1] += (' game_instance_class=/Script/FortniteGame.FortGameInstance'
 V2_ROWS[5] += ' root_widget=Root widget_count=3'
 
 class TranscriptTests(unittest.TestCase):
+    def test_original_widget_name_with_spaces(self):
+        rows = V2_ROWS.copy()
+        rows[5] = rows[5].replace('root_widget=Root', 'root_widget=/Engine/Transient.Root.WidgetTree_0.Master Overlay')
+        result = verifier.verify('\n'.join(rows))
+        self.assertTrue(result['passed'])
+        self.assertEqual(result['root_widget'], '/Engine/Transient.Root.WidgetTree_0.Master Overlay')
+
     def test_v2_observations_and_non_fort_controller(self):
         result = verifier.verify('\n'.join(V2_ROWS))
         self.assertTrue(result['passed'])

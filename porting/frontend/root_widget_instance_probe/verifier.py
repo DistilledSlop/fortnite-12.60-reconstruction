@@ -39,16 +39,18 @@ def verify(text):
         if 'ROOTINSTANCE' not in line:
             continue
         row = line[line.index('ROOTINSTANCE'):].strip()
-        tokens = row.split()
         fields = {}
-        if tokens[0] != 'ROOTINSTANCE' or line.count('ROOTINSTANCE') != 1:
+        if not row.startswith('ROOTINSTANCE ') or line.count('ROOTINSTANCE') != 1:
             problem = problem or 'malformed diagnostic row'
             continue
-        for token in tokens[1:]:
-            if '=' not in token:
-                problem = problem or 'malformed diagnostic field'
-                continue
-            key, value = token.split('=', 1)
+        payload = row[len('ROOTINSTANCE '):]
+        matches = list(re.finditer(r'(?:^| )([a-z_]+)=', payload))
+        if not matches or matches[0].start() != 0:
+            problem = problem or 'malformed diagnostic field'
+        for index, match in enumerate(matches):
+            key = match.group(1)
+            end = matches[index + 1].start() if index + 1 < len(matches) else len(payload)
+            value = payload[match.end():end].strip()
             if not key or not value or key in fields:
                 problem = problem or 'malformed or duplicate diagnostic field'
             fields[key] = value
