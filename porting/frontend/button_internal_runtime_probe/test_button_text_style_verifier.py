@@ -8,7 +8,7 @@ def good():
 
 class TextStyleTranscriptTests(unittest.TestCase):
     def test_valid(self):
-        self.assertEqual(verifier.verify(good())['rows'], 26)
+        self.assertEqual(verifier.verify(good())['rows'], 32)
         self.assertIn('-CommonButtonTextStyleProbe', runner.command('/client', 'button-text-style'))
 
     def test_incomplete_failed_duplicate_and_no_asset(self):

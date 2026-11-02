@@ -30,7 +30,7 @@ void UCommonTextBlock::SynchronizeProperties()
     UClass* Class = Style.Get();
     if (Class && Class->IsChildOf(UCommonTextStyle::StaticClass()))
     {
-        const UCommonTextStyle* StyleCDO = Cast<UCommonTextStyle>(Class->GetDefaultObject());
+        const UCommonTextStyle* StyleCDO = Cast<UCommonTextStyle>(Class->GetDefaultObject(false));
         if (StyleCDO)
         {
             Font = StyleCDO->Font;

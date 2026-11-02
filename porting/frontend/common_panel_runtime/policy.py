@@ -84,6 +84,11 @@ def apply_button(model, block, owner_fns):
     if (model.get('common_button_internal_runtime') or model.get('functions')
             or model.get('helpers') or model.get('fields')):
         raise ValueError('CommonButtonInternal runtime declarations already emitted or conflicting')
+    size_methods = {'NativeSetMinimumWidth', 'NativeSetMinimumHeight'}
+    if any(item.get('name') in size_methods for group in
+            ('members_table_order', 'members_decl_order', 'static_helpers')
+            for item in model.get(group, [])):
+        raise ValueError('CommonButtonInternal size adapter declaration collision')
     model['common_button_internal_runtime'] = True
     return model
 

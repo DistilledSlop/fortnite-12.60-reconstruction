@@ -142,6 +142,44 @@ void Run(APlayerController* PC, UWorld* World)
     if (NormalProperty) NormalProperty->SetObjectPropertyValue_InContainer(S, UObject::StaticClass());
     Record(TEXT("invalid_candidate"), NormalProperty && NormalProperty->GetObjectPropertyValue_InContainer(S) == UObject::StaticClass() && StyleMeta && CheckStyle(A.Get(), Inner.Get(), StyleFn, nullptr, 2, true, true));
 
+    // A transient linked class can have a valid ancestry before a CDO exists.
+    // No existing class CDO is removed or replaced by these fixtures.
+    TStrongObjectPtr<UClass> MissingOwner(NewObject<UClass>(GetTransientPackage()));
+    TStrongObjectPtr<UClass> MissingText(NewObject<UClass>(GetTransientPackage()));
+    MissingOwner->SetSuperStruct(UCommonButtonStyle::StaticClass());
+    MissingText->SetSuperStruct(UCommonTextStyle::StaticClass());
+    MissingOwner->Bind(); MissingOwner->StaticLink(true);
+    MissingText->Bind(); MissingText->StaticLink(true);
+    A->Style = MissingOwner.Get();
+    Record(TEXT("missing_owner_cdo"), !MissingOwner->GetDefaultObject(false) && StyleMeta
+        && CheckStyle(A.Get(), Inner.Get(), StyleFn, nullptr, 0, true, true)
+        && !MissingOwner->GetDefaultObject(false));
+    A->Style = UButtonTextProbeStyle::StaticClass(); A->SetIsEnabled(true);
+    FCommonButtonTextStyleProbeAccess::Set(A.Get(), false);
+    S->NormalTextStyle = MissingText.Get(); S->NormalHoveredTextStyle = nullptr;
+    Record(TEXT("missing_normal_cdo"), !MissingText->GetDefaultObject(false) && StyleMeta
+        && CheckStyle(A.Get(), Inner.Get(), StyleFn, nullptr, 1, false, false)
+        && !MissingText->GetDefaultObject(false));
+    S->NormalTextStyle = UButtonTextProbeNormal::StaticClass();
+    S->NormalHoveredTextStyle = MissingText.Get();
+    Record(TEXT("missing_hover_cdo"), StyleMeta
+        && CheckStyle(A.Get(), Inner.Get(), StyleFn, UButtonTextProbeNormal::StaticClass(), 1, true, true)
+        && !MissingText->GetDefaultObject(false));
+    FCommonButtonTextStyleProbeAccess::Set(A.Get(), true);
+    S->SelectedTextStyle = MissingText.Get(); S->NormalHoveredTextStyle = nullptr;
+    Record(TEXT("missing_selected_cdo"), StyleMeta
+        && CheckStyle(A.Get(), Inner.Get(), StyleFn, UButtonTextProbeNormal::StaticClass(), 2, false, false)
+        && !MissingText->GetDefaultObject(false));
+    S->SelectedTextStyle = UButtonTextProbeSelected::StaticClass();
+    S->SelectedHoveredTextStyle = MissingText.Get();
+    Record(TEXT("missing_selected_hover_cdo"), StyleMeta
+        && CheckStyle(A.Get(), Inner.Get(), StyleFn, UButtonTextProbeSelected::StaticClass(), 1, true, true)
+        && !MissingText->GetDefaultObject(false));
+    A->SetIsEnabled(false); S->DisabledTextStyle = MissingText.Get();
+    Record(TEXT("missing_disabled_cdo"), StyleMeta
+        && CheckStyle(A.Get(), Inner.Get(), StyleFn, UButtonTextProbeNormal::StaticClass(), 1, false, false)
+        && !MissingText->GetDefaultObject(false));
+
     // Load the original button class used by the known viewport failure. Its
     // serialized Style must resolve; no fixture class substitutes for it.
     UClass* AssetButtonClass = LoadClass<UCommonButton>(nullptr, TEXT("/Game/UI/Foundation/Buttons/IconTextButton.IconTextButton_C"));

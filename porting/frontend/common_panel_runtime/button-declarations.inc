@@ -5,6 +5,9 @@ public:
     FSimpleDelegate NativeFocusReceivedDelegate; // original Win64 +448
     void NativeSetInteractionEnabled(bool bEnabled);
     void NativeSetButtonEnabled(bool bEnabled);
+    // Project-local native adapters for the dimension update in 0x1407ec1c0.
+    void NativeSetMinimumWidth(int32 InWidth);
+    void NativeSetMinimumHeight(int32 InHeight);
 protected:
     virtual void ReleaseSlateResources(bool bReleaseChildren) override;
     virtual TSharedRef<SWidget> RebuildWidget() override;

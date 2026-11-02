@@ -20,7 +20,7 @@ TSubclassOf<UCommonTextStyle> UCommonButton::GetCurrentTextStyleClass() const
         [this]() -> UCommonButtonStyle* {
             UClass* Class = Style.Get();
             if (!Class || !Class->IsChildOf(UCommonButtonStyle::StaticClass())) return nullptr;
-            return Cast<UCommonButtonStyle>(Class->GetDefaultObject());
+            return Cast<UCommonButtonStyle>(Class->GetDefaultObject(false));
         },
         [this]() { return GetIsEnabled(); },
         [this]() { return GetSelected(); },
@@ -35,7 +35,7 @@ TSubclassOf<UCommonTextStyle> UCommonButton::GetCurrentTextStyleClass() const
                 case Candidate::Disabled: Class = Owner->DisabledTextStyle.Get(); break;
             }
             if (!Class || !Class->IsChildOf(UCommonTextStyle::StaticClass())) return nullptr;
-            return Cast<UCommonTextStyle>(Class->GetDefaultObject());
+            return Cast<UCommonTextStyle>(Class->GetDefaultObject(false));
         },
         [](UCommonTextStyle* Object) -> TSubclassOf<UCommonTextStyle> {
             return Object->GetClass();

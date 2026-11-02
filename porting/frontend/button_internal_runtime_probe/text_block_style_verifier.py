@@ -5,7 +5,7 @@ import json
 from pathlib import Path
 
 MARKER = 'TEXTSTYLE'
-EVENTS = ('begin', 'context', 'defaults', 'metadata', 'direct_shadow_on_no_slate', 'processevent_shadow_on', 'repeated_shadow_off', 'null_style', 'wrong_class_storage', 'wrong_class_setter', 'raw_empty_with_delegate', 'raw_nonempty', 'whitespace_nonempty', 'collapse_disabled', 'rebuilt_parent_and_order', 'wrong_class_parent_slate', 'null_style_parent_slate', 'bound_slate_raw_collapse', 'font_layout_updates', 'original_asset', 'fixture_restored', 'complete')
+EVENTS = ('begin', 'context', 'defaults', 'metadata', 'direct_shadow_on_no_slate', 'processevent_shadow_on', 'repeated_shadow_off', 'null_style', 'missing_style_cdo', 'wrong_class_storage', 'wrong_class_setter', 'raw_empty_with_delegate', 'raw_nonempty', 'whitespace_nonempty', 'collapse_disabled', 'rebuilt_parent_and_order', 'wrong_class_parent_slate', 'null_style_parent_slate', 'bound_slate_raw_collapse', 'font_layout_updates', 'original_asset', 'fixture_restored', 'complete')
 EXPECTED = tuple(f'{MARKER} v=1 seq={i} event={event} ok=1'
                  for i, event in enumerate(EVENTS, 1))
 

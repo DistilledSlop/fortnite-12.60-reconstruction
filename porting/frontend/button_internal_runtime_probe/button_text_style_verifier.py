@@ -9,7 +9,8 @@ EVENTS = ('begin', 'context', 'hover_default', 'metadata_selected', 'metadata_st
           'defaults', 'independent_true', 'independent_flip', 'normal', 'normal_hover',
           'selected', 'selected_hover', 'disabled_precedence', 'disabled_fallback',
           'selected_hover_fallback', 'repeated_hover', 'normal_fallback', 'null_candidates',
-          'null_style', 'invalid_style', 'invalid_candidate', 'loaded_asset', 'hover_weak_expired', 'restored', 'complete')
+          'null_style', 'invalid_style', 'invalid_candidate', 'missing_owner_cdo', 'missing_normal_cdo', 'missing_hover_cdo',
+          'missing_selected_cdo', 'missing_selected_hover_cdo', 'missing_disabled_cdo', 'loaded_asset', 'hover_weak_expired', 'restored', 'complete')
 EXPECTED = tuple(f'{MARKER} v=1 seq={i} event={event}' +
                  (' available=1' if event == 'loaded_asset' else '') + ' ok=1'
                  for i, event in enumerate(EVENTS, 1))

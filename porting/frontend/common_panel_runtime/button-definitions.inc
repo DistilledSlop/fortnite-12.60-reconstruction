@@ -56,6 +56,24 @@ TSharedRef<SWidget> UCommonButtonInternal::RebuildWidget()
     return NativeButtonBox.ToSharedRef();
 }
 
+void UCommonButtonInternal::NativeSetMinimumWidth(int32 InWidth)
+{
+    MinWidth = InWidth;
+    if (NativeButtonBox.IsValid())
+    {
+        NativeButtonBox->SetMinDesiredWidth(FOptionalSize(static_cast<float>(InWidth)));
+    }
+}
+
+void UCommonButtonInternal::NativeSetMinimumHeight(int32 InHeight)
+{
+    MinHeight = InHeight;
+    if (NativeButtonBox.IsValid())
+    {
+        NativeButtonBox->SetMinDesiredHeight(FOptionalSize(static_cast<float>(InHeight)));
+    }
+}
+
 bool UCommonButtonInternal::IsCommonInputSuspended()
 {
     UWorld* World = GetWorld();

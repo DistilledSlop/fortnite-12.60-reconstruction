@@ -32,6 +32,11 @@ class Button(unittest.TestCase):
   for k,v in [('common_button_internal_runtime',True),('functions',[{'name':'Fake'}]),('helpers',[{}]),('fields',[{}])]:
    m=self.model();m[k]=v
    with self.subTest(k=k),self.assertRaises(ValueError):self.run_it(m=m)
+ def test_size_adapter_collisions(self):
+  for group in ('members_table_order','members_decl_order','static_helpers'):
+   for name in ('NativeSetMinimumWidth','NativeSetMinimumHeight'):
+    m=self.model();m[group]=[{'name':name}]
+    with self.subTest(group=group,name=name),self.assertRaises(ValueError):self.run_it(m=m)
  def test_header(self):
   m=p.header_prelude(self.run_it());self.assertIn('SBox',m['forward_decls']);self.assertIn('SCommonButton',m['forward_decls']);self.assertIn('Widgets/Input/SButton.h',m['includes']);self.assertIn('Input/Reply.h',m['includes'])
  def test_bodies(self):

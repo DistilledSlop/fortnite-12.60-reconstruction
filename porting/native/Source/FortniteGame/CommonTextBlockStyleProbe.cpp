@@ -87,6 +87,11 @@ void Run(APlayerController* PC, UWorld* World)
     Record(TEXT("repeated_shadow_off"), A->SyncCount == Count + 1 && Applied(A.Get(), S));
     FState Before(A.Get()); Count = A->SyncCount; A->SetStyle(nullptr);
     Record(TEXT("null_style"), !A->Style && A->SyncCount == Count + 1 && Before.Equals(A.Get()));
+    TStrongObjectPtr<UClass> MissingStyle(NewObject<UClass>(GetTransientPackage()));
+    MissingStyle->SetSuperStruct(UCommonTextStyle::StaticClass()); MissingStyle->Bind(); MissingStyle->StaticLink(true);
+    Count = A->SyncCount; A->SetStyle(MissingStyle.Get());
+    Record(TEXT("missing_style_cdo"), A->Style.Get() == MissingStyle.Get() && !MissingStyle->GetDefaultObject(false)
+        && A->SyncCount == Count + 1 && Before.Equals(A.Get()));
     FClassProperty* StyleProperty = FindFProperty<FClassProperty>(UCommonTextBlock::StaticClass(), TEXT("Style"));
     if (StyleProperty) StyleProperty->SetObjectPropertyValue_InContainer(A.Get(), UObject::StaticClass());
     A->bAutoCollapseWithEmptyText = true; A->Text = FText::GetEmpty(); Count = A->SyncCount;

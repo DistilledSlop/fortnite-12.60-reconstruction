@@ -7,7 +7,7 @@ def good():
 
 class TextBlockStyleTranscriptTests(unittest.TestCase):
     def test_valid(self):
-        self.assertEqual(verifier.verify(good())['rows'], 22)
+        self.assertEqual(verifier.verify(good())['rows'], 23)
         self.assertIn('-CommonTextBlockStyleProbe', runner.command('/client', 'text-block-style'))
 
     def test_missing_failed_duplicate_and_asset(self):
