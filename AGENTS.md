@@ -24,6 +24,12 @@ Use subagents as bounded function or task runners, implementers, explorers, or r
 
 # Validation cadence
 
+Optimize for implementing features as fast as possible without compromising any
+quality or parity. Use that as the governing rule for deciding whether a test
+resolves real correctness/parity uncertainty or wastes resources. Speed must come
+from focused work and proportionate validation, never omitted behavior, fabricated
+fallbacks, weakened requirements, or unsupported claims of completion.
+
 Test according to changed risk and coherent integration batches, not each feature,
 helper, or commit. Documentation/status commits need no build or runtime suite.
 Keep source/reflection/generation invariants fail-closed, but batch their checks

@@ -1,5 +1,41 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Session stopped at user request (2026-11-02)
+
+The user requested cleanup, updated AGENTS.md/handoff and a stop for this session.
+Pause the active goal after this cleanup; resume implementation only when authorized.
+The full client/server 100% parity objective and all four acceptance gates remain
+unchanged and incomplete. Last dashboard:20.096%,0/4 gates. Last verified Native is
+`d08549a5` / Engine`87acab901`; documentation baseline before cleanup is`0439e024`.
+No new live implementation, generation, builds or runtime runs occurred after it.
+All session build/stage/runtime/debugger handles are terminal. Both active workers
+stopped, preserved scratch handoffs and confirmed no live processes.
+
+Work in progress for the next connected initialization/SetStyle batch:
+
+- `/mnt/vibrato/fortnite-work/button-double-click-receiver-1/HANDOFF.md`: scratch
+  declarations/definitions, reflected StopDoubleClickPropagation body and metadata
+  policy. Uses existing reflected stop bit, real FReply and native multicast;
+  unintegrated and uncompiled. Needs root review, exact native-exec join, generator
+  integration and eventual binding as part of all five real Initialize receivers.
+- `/mnt/vibrato/fortnite-work/button-action-widget-update-1/HANDOFF.md`: source
+  findings only, no implementation candidate. +4a0 is140802f60, chooses triggering,
+  native-triggered or default-click row, invokes real UCommonActionWidget.SetInputAction
+  (1407f6820), then hide/refresh140803050. Remaining bounded recovery is CommonInput
+  module virtual+40/settings getter and InputDataClass+188, callback1407c94c0 and
+  dependent action-widget refresh/registry behavior. Do not substitute no-op calls.
+- Hover dependency is now mapped:143d65fb0 = inherited UUserWidget::Invalidate(
+  EInvalidateWidget::Layout), including UpdateCanTick. Local UE4.25 UserWidget.cpp
+  lines628–635 corroborate it. InvalidateLayoutAndVolatility omits that update and
+  is not equivalent. Preserve source ordering before text-style/action-widget calls.
+
+AGENTS.md persists the latest governing rule: implement features as fast as possible
+without compromising any quality or parity; test according to actual risk and coherent
+integration batches, not each feature/helper/commit. Delegation models, bounded tasks,
+input economy and root ownership remain in force. No new tests for this docs-only
+cleanup. Preserve unrelated existing Engine/CUE edits and all scratch/frozen evidence.
+
+
 ## Current resume point (2026-11-02, base click verified; testing cadence corrected)
 
 - Native `d08549a5` (implementation `d7844a9d`) / Engine `87acab901`: real base
@@ -42,7 +78,11 @@
   with unported held binding/update/event effects. Native double/hover/unhover/focus
   +af0/+b08/+b20/+b38 are MULTICAST, correcting older singlecast labels. Focus predicate
   1406801e0 is source-proven three-byte false; API identity remains unknown. Hover's
-  143d65fb0 nested widget-helper identity still needs closure. Each scratch proof has replay.py.
+  143d65fb0 is now mapped to UUserWidget::Invalidate(Layout), including UpdateCanTick;
+  see the newer paused-session source findings above. Earlier scratch proofs retain replay.py.
+- GOVERNING USER RULE: implement features as fast as possible without compromising
+  any quality or parity. Test to resolve real correctness/parity risks; do not use
+  test volume as progress. Persisted alongside cadence/delegation rules in AGENTS.md.
 - USER TESTING DIRECTION: testing is important for reconstruction but must follow
   risk and integration batches, not each feature or commit. Persisted in AGENTS.md.
   Latest small callback phase used6builds=13m39s, two debugger runs=4m44s and15-stage
