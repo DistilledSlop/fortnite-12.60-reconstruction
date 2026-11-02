@@ -1,5 +1,33 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Active resume: connected callback batch (2026-11-02, validation pending)
+
+The user resumed the full project goal and reinforced economical reads: use
+bounded patterns/excerpts and targeted log summaries; whole-file reads only when
+necessary. Prior turn was a user-requested documentation cleanup, not a live wait.
+Root owns Native, generation, staging and builds. Bounded Terra tasks supplied
+double-click and selection base notifications; source review and integration are
+complete, with original metadata/native-exec/rendered-output checks before writes.
+Initialize, accepted click/selection transitions, focus/hover, action-widget refresh
+and SetStyle remain unregistered. No interactive frontend or milestone is claimed.
+
+New CommonButton helpers preserve native/dynamic ordering, FReply, stop-bit reread
+and selected/deselected text-style virtual dispatch. Existing BaseClickProbe is
+extended for seven callback checks; current generated code and fixture are not yet
+built or run. Prior verified runtime remains d08549a5 / Engine87acab901.
+Generation `/tmp/promote_button_callbacks_1.py` then `_2.py` passed: first changed
+two files, second updated the guarded selected notification source only; no files
+added/removed, unchanged mtimes restored. Reports:
+`/tmp/button-callback-promotion-{1,2}/`. Generator self-test141 and double-click/
+base-click policy suites pass; no broad/server regression cycle was repeated.
+
+Source recovery commit9198ef90 closes InputDataClass+188, action-widget input-type
+callback and platform cache copy/invalidation paths. Module-name/factory linkage,
+exact soft loading/root predicate and the broader action-widget graph remain open.
+`common_input_platform_evidence/replay.py IMAGE` passes four bounded windows.
+Next: one client build, extended existing callback diagnostic, then affected
+original frontend flow. Keep dashboard gates/credit unchanged until product evidence.
+
 ## Session stopped at user request (2026-11-02)
 
 The user requested cleanup, updated AGENTS.md/handoff and a stop for this session.

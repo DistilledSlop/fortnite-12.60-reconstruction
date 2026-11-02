@@ -1590,6 +1590,8 @@ UI_PARAMETERIZED_BLUEPRINT_EVENTS = {
 OBSERVED_PARAMETERLESS_SUPER_EVENTS = (
     ('UCommonActivatableWidget', 'BP_OnActivated', '0x1408079b0', '0x140805d90', 0x08080800, 'protected'),
     ('UCommonButton', 'BP_OnClicked', '0x140805cb0', '0x140806710', 0x08080800, 'protected'),
+    ('UCommonButton', 'BP_OnDeselected', '0x140805cb0', '0x140806770', 0x08080800, 'protected'),
+    ('UCommonButton', 'BP_OnDoubleClicked', '0x140805cb0', '0x1408067d0', 0x08080800, 'protected'),
     ('UCommonButton', 'BP_OnDisabled', '0x140805cb0', '0x1408067a0', 0x08080800, 'protected'),
     ('UCommonButton', 'BP_OnEnabled', '0x140805cb0', '0x140806800', 0x08080800, 'protected'),
     ('UCommonButton', 'BP_OnUnhovered', '0x140805cb0', '0x140806890', 0x08080800, 'protected'),
@@ -2186,6 +2188,14 @@ _button_click_spec = _common_activation_import.spec_from_file_location(
     "common_button_click_runtime_policy", os.path.join(os.path.dirname(__file__), "frontend", "common_button_click_runtime", "policy.py"))
 _button_click_policy = _common_activation_import.module_from_spec(_button_click_spec)
 _button_click_spec.loader.exec_module(_button_click_policy)
+_button_double_click_spec = _common_activation_import.spec_from_file_location(
+    "common_button_double_click_runtime_policy", os.path.join(os.path.dirname(__file__), "frontend", "common_button_double_click_runtime", "policy.py"))
+_button_double_click_policy = _common_activation_import.module_from_spec(_button_double_click_spec)
+_button_double_click_spec.loader.exec_module(_button_double_click_policy)
+_button_selection_spec = _common_activation_import.spec_from_file_location(
+    "common_button_selection_runtime_policy", os.path.join(os.path.dirname(__file__), "frontend", "common_button_selection_runtime", "policy.py"))
+_button_selection_policy = _common_activation_import.module_from_spec(_button_selection_spec)
+_button_selection_spec.loader.exec_module(_button_selection_policy)
 _binding_data_spec = _common_activation_import.spec_from_file_location(
     "common_action_binding_data_policy", os.path.join(os.path.dirname(__file__), "frontend", "common_action_binding_runtime", "policy.py"))
 _binding_data_policy = _common_activation_import.module_from_spec(_binding_data_spec)
@@ -2243,6 +2253,8 @@ def build_class_promoted(block, name, resolver, parent_entry, owner_fns, snippet
     model = _fort_globals_policy.apply(model, block, owner_fns, native_execs)
     model = _button_style_policy.apply(model, block, owner_fns)
     model = _button_click_policy.apply(model, block, owner_fns)
+    model = _button_double_click_policy.apply(model, block, owner_fns, native_execs)
+    model = _button_selection_policy.apply(model, block, owner_fns)
     return apply_blueprint_context_runtime_policy(model, block, name, resolver, parent_entry, owner_fns, snippets, splice_ctx)
 
 # ---------------------------------------------------------------- behaviour snippets (porting/behavior)
@@ -3002,6 +3014,8 @@ def render_promoted_header(model, api, parent_include, source_label):
     lines.extend(_common_activation_policy.declarations(model).splitlines())
     lines.extend(_button_style_policy.declarations(model).splitlines())
     lines.extend(_button_click_policy.declarations(model).splitlines())
+    lines.extend(_button_double_click_policy.declarations(model).splitlines())
+    lines.extend(_button_selection_policy.declarations(model).splitlines())
     lines.append("};")
     lines.append("")
     return "\n".join(lines) + "\n"
@@ -3145,7 +3159,7 @@ def render_promoted_cpp(model, source_label):
     result = "\n".join(lines) + "\n"
     if model.get("source_context_phases"):
         result += BLUEPRINT_CONTEXT_PHASE_BODIES
-    return result + _common_activation_policy.definitions(model) + _current_input_type_policy.definitions(model) + _fort_globals_policy.definitions(model) + _button_style_policy.definitions(model) + _button_click_policy.definitions(model)
+    return result + _common_activation_policy.definitions(model) + _current_input_type_policy.definitions(model) + _fort_globals_policy.definitions(model) + _button_style_policy.definitions(model) + _button_click_policy.definitions(model) + _button_double_click_policy.definitions(model) + _button_selection_policy.definitions(model)
 
 
 def build_engine_header_index(root):
@@ -3427,6 +3441,10 @@ def promote(args):
         _button_style_policy.validate_classes(blocks_by_va, name_to_block, optional_sound.rec)
         _button_click_policy.validate_classes(blocks_by_va, name_to_block,
             load_json(os.path.join(args.types_dir or os.path.dirname(args.reflection), 'delegate_blocks.json'))['delegates'])
+        _button_double_click_policy.validate_classes(blocks_by_va, name_to_block,
+            load_json(os.path.join(args.types_dir or os.path.dirname(args.reflection), 'delegate_blocks.json'))['delegates'])
+        _button_selection_policy.validate_classes(blocks_by_va, name_to_block,
+            load_json(os.path.join(args.types_dir or os.path.dirname(args.reflection), 'delegate_blocks.json'))['delegates'])
     if 'UCommonActivatablePanel' in listed:
         _common_activation_policy.validate_panel_outro_types(gate)
     if 'UCommonInputSubsystem' in listed:
@@ -3488,6 +3506,8 @@ def promote(args):
                                      ("UCommonActivatablePanel", "UCommonInputSubsystem", "UCommonButton", "UCommonTextBlock", "UFortGlobals") else None)
         model["includes"] = sorted(set(own_includes(gate, model["used"], package))
                                    | set(model["splice"].get("header_includes", set())))
+        if model.get('common_button_double_click_runtime'):
+            model["includes"] = sorted(set(model["includes"]) | {'Input/Reply.h'})
         interface_modules = include_interface_headers(model, iface_packages)
         add_deps(module, interface_modules)
         # Forward-declared classes of another promoted module: their full definition must be visible to the
@@ -3650,6 +3670,14 @@ def promote(args):
             next(m for m in class_models if m['name'] == 'UCommonButton'),
             outputs['UCommonButton'][0], texts[click_delegate.header_name],
             outputs['UCommonUISubsystem'][0])
+        button_model = next(m for m in class_models if m['name'] == 'UCommonButton')
+        _button_double_click_policy.validate_output(button_model,
+            outputs['UCommonButton'][0], texts[click_delegate.header_name], outputs['UCommonButton'][1])
+        selected_delegate = gate.info('0x140809840')
+        if selected_delegate is None or selected_delegate.header_name not in texts:
+            raise ValueError('original CommonButton selection delegate output unavailable')
+        _button_selection_policy.validate_output(button_model,
+            outputs['UCommonButton'][0], texts[selected_delegate.header_name])
     for model in class_models:
         if model["splice"]["accepted"]:
             verify_spliced(model, *outputs[model["name"]])

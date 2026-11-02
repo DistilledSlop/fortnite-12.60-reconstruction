@@ -6217,5 +6217,17 @@
       "Misc/EngineVersion.h"
     ],
     "notes": "Exec thunk 0x142acdef0 calls 0x1426ff110. Build/branch string and current engine changelist are read dynamically; see README for evidence and compile/runtime validation limits."
+  },
+  {
+    "class": "UCommonButton",
+    "function": "StopDoubleClickPropagation",
+    "kind": "exec",
+    "signature": "void StopDoubleClickPropagation()",
+    "signature_status": "confirmed",
+    "inc_path": "porting/frontend/common_button_double_click_runtime/StopDoubleClickPropagation.inc",
+    "confidence": "high",
+    "address": "0x1407fd0d0",
+    "status": "ported",
+    "notes": "Original exec 0x14080d970 jumps to shared reflected stop bit setter; exact exec/create metadata gated by runtime policy."
   }
 ]

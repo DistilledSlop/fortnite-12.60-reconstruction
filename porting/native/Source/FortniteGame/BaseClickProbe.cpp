@@ -8,6 +8,9 @@
 struct FCommonButtonBaseClickProbeAccess
 {
     static void Click(UCommonButton* Button) { Button->NativeOnClicked(); }
+    static FReply DoubleClick(UCommonButton* Button) { return Button->NativeHandleDoubleClicked(); }
+    static void Select(UCommonButton* Button, bool Broadcast) { Button->NativeOnSelected(Broadcast); }
+    static void Deselect(UCommonButton* Button, bool Broadcast) { Button->NativeOnDeselected(Broadcast); }
     static bool DefaultAnalytics(UCommonButton* Button, FString& A, FString& B, FString& C)
     { return Button->UCommonButton::NativeGetClickAnalytics(A, B, C); }
 };
@@ -32,8 +35,30 @@ void UBaseClickProbeButton::ProcessEvent(UFunction* Function, void* Parameters)
             bInside = false;
         }
     }
+    if (Function && Function->GetFName() == FName(TEXT("BP_OnDoubleClicked")))
+    {
+        Log.Add(TEXT("DoubleBP"));
+        if (bStopDouble)
+        {
+            if (UFunction* Setter = FindFunction(FName(TEXT("StopDoubleClickPropagation"))))
+                ProcessEvent(Setter, nullptr);
+        }
+    }
+    if (Function && Function->GetFName() == FName(TEXT("BP_OnSelected")))
+    {
+        Log.Add(TEXT("SelectedBP"));
+        if (bReenterSelection && !bInside)
+        {
+            bInside = true;
+            FCommonButtonBaseClickProbeAccess::Deselect(this, false);
+            bInside = false;
+        }
+    }
+    if (Function && Function->GetFName() == FName(TEXT("BP_OnDeselected")))
+        Log.Add(TEXT("DeselectedBP"));
     Super::ProcessEvent(Function, Parameters);
 }
+void UBaseClickProbeButton::NativeOnCurrentTextStyleChanged() { Log.Add(TEXT("Text")); }
 bool UBaseClickProbeButton::NativeGetClickAnalytics(FString& A, FString& B, FString& C)
 {
     Log.Add(TEXT("Analytics"));
@@ -44,6 +69,10 @@ void UBaseClickProbeReceiver::OnDynamic(UCommonButton* Clicked)
 {
     if (Button) Button->Log.Add(Clicked == Button ? TEXT("Dynamic") : TEXT("DynamicWrongArgument"));
 }
+void UBaseClickProbeReceiver::OnDoubleDynamic(UCommonButton* Clicked)
+{ if (Button) Button->Log.Add(Clicked == Button ? TEXT("DoubleDynamic") : TEXT("DoubleWrongArgument")); }
+void UBaseClickProbeReceiver::OnSelectionDynamic(UCommonButton* SelectedButton, bool Selected)
+{ if (Button) Button->Log.Add(SelectedButton != Button ? TEXT("SelectionWrongArgument") : Selected ? TEXT("SelectedDynamic") : TEXT("DeselectedDynamic")); }
 void UBaseClickProbeReceiver::OnNative() { if (Button) Button->Log.Add(TEXT("Weak")); }
 
 bool RunBaseClickProbe(UWorld* World, TFunctionRef<void(const TCHAR*, bool)> Record)
@@ -96,5 +125,30 @@ bool RunBaseClickProbe(UWorld* World, TFunctionRef<void(const TCHAR*, bool)> Rec
     BaseClickProbeRealLookup(B.Get());
     Record(TEXT("real_lookup_end"), true);
     Check(TEXT("true_analytics_real_world"), RealContext && B->WorldCalls == 1 && B->Log == TArray<FString>({TEXT("BP"), TEXT("Analytics")}));
+    // Invoke the reflected native setter first to verify each receiver clears stale state.
+    UFunction* Stop = B->FindFunction(FName(TEXT("StopDoubleClickPropagation")));
+    Check(TEXT("double_stop_setter_reflected"), Stop != nullptr);
+    if (Stop) B->ProcessEvent(Stop, nullptr);
+    B->OnButtonDoubleClicked.AddDynamic(R.Get(), &UBaseClickProbeReceiver::OnDoubleDynamic);
+    B->NativeDoubleClicked.AddLambda([&] { B->Log.Add(TEXT("DoubleNative")); });
+    B->Log.Reset();
+    const FReply ClearReply = FCommonButtonBaseClickProbeAccess::DoubleClick(B.Get());
+    Check(TEXT("double_clears_stale_stop_and_order"), Stop && !ClearReply.IsEventHandled() && B->Log == TArray<FString>({TEXT("DoubleBP"), TEXT("DoubleNative"), TEXT("DoubleDynamic")}));
+    B->bStopDouble = true; B->Log.Reset();
+    const FReply StopReply = FCommonButtonBaseClickProbeAccess::DoubleClick(B.Get());
+    Check(TEXT("double_reflected_stop_and_order"), Stop && StopReply.IsEventHandled() && B->Log == TArray<FString>({TEXT("DoubleBP"), TEXT("DoubleNative"), TEXT("DoubleDynamic")}));
+    B->bStopDouble = false;
+    B->OnSelectedChanged.AddDynamic(R.Get(), &UBaseClickProbeReceiver::OnSelectionDynamic);
+    B->NativeSelectedChanged.AddLambda([&](bool Selected) { B->Log.Add(Selected ? TEXT("SelectedNative") : TEXT("DeselectedNative")); });
+    B->Log.Reset(); FCommonButtonBaseClickProbeAccess::Select(B.Get(), true);
+    Check(TEXT("selection_broadcast_order"), B->Log == TArray<FString>({TEXT("SelectedBP"), TEXT("SelectedNative"), TEXT("SelectedDynamic"), TEXT("Text")}));
+    B->Log.Reset(); FCommonButtonBaseClickProbeAccess::Deselect(B.Get(), true);
+    Check(TEXT("deselection_broadcast_order"), B->Log == TArray<FString>({TEXT("DeselectedBP"), TEXT("DeselectedNative"), TEXT("DeselectedDynamic"), TEXT("Text")}));
+    B->Log.Reset(); FCommonButtonBaseClickProbeAccess::Select(B.Get(), false);
+    FCommonButtonBaseClickProbeAccess::Deselect(B.Get(), false);
+    Check(TEXT("selection_suppressed_broadcast"), B->Log == TArray<FString>({TEXT("SelectedBP"), TEXT("Text"), TEXT("DeselectedBP"), TEXT("Text")}));
+    B->bReenterSelection = true; B->Log.Reset();
+    FCommonButtonBaseClickProbeAccess::Select(B.Get(), true);
+    Check(TEXT("selection_synchronous_reentry"), B->Log == TArray<FString>({TEXT("SelectedBP"), TEXT("DeselectedBP"), TEXT("Text"), TEXT("SelectedNative"), TEXT("SelectedDynamic"), TEXT("Text")}));
     return All;
 }

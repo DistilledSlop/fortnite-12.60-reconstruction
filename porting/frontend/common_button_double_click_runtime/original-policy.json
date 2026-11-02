@@ -1,0 +1,116 @@
+{
+  "identity": {
+    "block_va": "0x145a01210",
+    "name": null,
+    "name_status": "unresolved",
+    "config_name": null,
+    "class_flags": "0xb010a1",
+    "dependency_fns": [
+      "0x140816d40",
+      "0x140812ee0"
+    ],
+    "package_fn": "0x140816d40",
+    "base_fn": "0x140812ee0",
+    "class_noregister_fn": "0x140807cd0",
+    "interface_count": 0,
+    "dependency0_fn": "0x140816d40"
+  },
+  "delegate": {
+    "block_va": "0x147831de0",
+    "name": "CommonButtonClicked__DelegateSignature",
+    "owning_class": null,
+    "delegate_name": null,
+    "construct_fns": [
+      "0x140809810"
+    ],
+    "package": "/Script/CommonUI",
+    "outer_fn": "0x140812ee0",
+    "function_flags": "0x130000",
+    "function_flag_names": [
+      "Delegate",
+      "MulticastDelegate"
+    ],
+    "params": [
+      {
+        "index": 0,
+        "name": "Button",
+        "kind": "Object",
+        "kind_raw": "0x12",
+        "property_flags": "0x10000000080080",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 0,
+        "type_refs": {
+          "class": "0x140807800"
+        }
+      }
+    ],
+    "multicast": true,
+    "type_name": "FCommonButtonClicked"
+  },
+  "delegate_header": "UDELEGATE()\nDECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FCommonButtonClicked, UCommonButton*, Button);",
+  "event": {
+    "name": "BP_OnDoubleClicked",
+    "create_func": "0x1408067d0",
+    "flags": [
+      "0x8080800"
+    ],
+    "replicated_function": false,
+    "net_roles": [],
+    "outer_fn": "0x140805cb0",
+    "params": []
+  },
+  "stop": {
+    "name": "StopDoubleClickPropagation",
+    "create_func": "0x140807610",
+    "flags": [
+      "0x4080401"
+    ],
+    "replicated_function": false,
+    "net_roles": [],
+    "outer_fn": "0x140805cb0",
+    "params": []
+  },
+  "bit": {
+    "index": 1,
+    "name": "bStopDoubleClickPropagation",
+    "kind": "Bool",
+    "kind_raw": "0xc",
+    "property_flags": "0x40000000002000",
+    "replicated": false,
+    "rep_notify": null,
+    "array_dim": 1,
+    "object_flags": "0x45",
+    "element_size": 1,
+    "size_of_outer": 2928,
+    "bitfield": true,
+    "set_bit_fn": "0x1407fd0d0",
+    "offset": null
+  },
+  "property": {
+    "index": 8,
+    "name": "OnButtonDoubleClicked",
+    "kind": "InlineMulticastDelegate",
+    "kind_raw": "0x1b",
+    "property_flags": "0x40000010080000",
+    "replicated": false,
+    "rep_notify": null,
+    "array_dim": 1,
+    "object_flags": "0x45",
+    "offset": 760,
+    "type_refs": {
+      "signature": "0x140809810"
+    }
+  },
+  "member": "FCommonButtonClicked OnButtonDoubleClicked;",
+  "bit_member": "uint8 bStopDoubleClickPropagation : 1;",
+  "exec": {
+    "exec_addr": "0x14080d970",
+    "flags": "0x4080401",
+    "params": [],
+    "create_func": "0x140807610",
+    "source": "lea"
+  }
+}

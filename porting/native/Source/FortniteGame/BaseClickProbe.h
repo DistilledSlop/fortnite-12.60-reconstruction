@@ -14,9 +14,12 @@ public:
     bool bAnalytics = false;
     bool bReenter = false;
     bool bInside = false;
+    bool bStopDouble = false;
+    bool bReenterSelection = false;
     virtual UWorld* GetWorld() const override;
     virtual void ProcessEvent(UFunction* Function, void* Parameters) override;
 protected:
+    virtual void NativeOnCurrentTextStyleChanged() override;
     virtual bool NativeGetClickAnalytics(FString& A, FString& B, FString& C) override;
 };
 
@@ -27,6 +30,8 @@ class UBaseClickProbeReceiver : public UObject
 public:
     UBaseClickProbeButton* Button = nullptr; // fixture roots Button separately
     UFUNCTION() void OnDynamic(UCommonButton* Clicked);
+    UFUNCTION() void OnDoubleDynamic(UCommonButton* Clicked);
+    UFUNCTION() void OnSelectionDynamic(UCommonButton* SelectedButton, bool Selected);
     void OnNative();
 };
 

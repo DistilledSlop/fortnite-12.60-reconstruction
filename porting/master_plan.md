@@ -10,6 +10,11 @@ credentials in Git, and the orchestrator reviews and commits.
 
 ## Current baseline
 
+Active callback batch: double-click receiver/stop setter and base selected/deselected
+notifications are integrated with strict generator gates; client/runtime validation
+is pending. New settings/platform source proofs are in9198ef90. This is prerequisite
+work toward Initialize/SetStyle, with no new milestone credit. See HANDOFF.md.
+
 Native `d08549a5` / Engine `87acab901` passes both builds, 14 base-click checks,
 retained 93 style-rebuild checks and other focused diagnostics, and both joins.
 Actual game-instance subsystem lookup is observed; source and runtime receipts

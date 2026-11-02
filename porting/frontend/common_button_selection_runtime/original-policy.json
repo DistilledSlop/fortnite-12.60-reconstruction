@@ -1,0 +1,120 @@
+{
+  "identity": {
+    "block_va": "0x145a01210",
+    "name": null,
+    "name_status": "unresolved",
+    "config_name": null,
+    "class_flags": "0xb010a1",
+    "dependency_fns": [
+      "0x140816d40",
+      "0x140812ee0"
+    ],
+    "package_fn": "0x140816d40",
+    "base_fn": "0x140812ee0",
+    "class_noregister_fn": "0x140807cd0",
+    "interface_count": 0,
+    "dependency0_fn": "0x140816d40"
+  },
+  "property": {
+    "index": 10,
+    "name": "OnSelectedChanged",
+    "kind": "InlineMulticastDelegate",
+    "kind_raw": "0x1b",
+    "property_flags": "0x40000010080000",
+    "replicated": false,
+    "rep_notify": null,
+    "array_dim": 1,
+    "object_flags": "0x45",
+    "offset": 728,
+    "type_refs": {
+      "signature": "0x140809840"
+    }
+  },
+  "events": [
+    {
+      "name": "BP_OnDeselected",
+      "create_func": "0x140806770",
+      "flags": [
+        "0x8080800"
+      ],
+      "replicated_function": false,
+      "net_roles": [],
+      "outer_fn": "0x140805cb0",
+      "params": []
+    },
+    {
+      "name": "BP_OnSelected",
+      "create_func": "0x140806860",
+      "flags": [
+        "0x8080800"
+      ],
+      "replicated_function": false,
+      "net_roles": [],
+      "outer_fn": "0x140805cb0",
+      "params": []
+    },
+    {
+      "name": "OnCurrentTextStyleChanged",
+      "create_func": "0x140806ea0",
+      "flags": [
+        "0x8080800"
+      ],
+      "replicated_function": false,
+      "net_roles": [],
+      "outer_fn": "0x140805cb0",
+      "params": []
+    }
+  ],
+  "member": "FCommonSelectedStateChanged OnSelectedChanged;",
+  "delegate_header": "UDELEGATE()\nDECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FCommonSelectedStateChanged, UCommonButton*, Button, bool, Selected);",
+  "delegate": {
+    "block_va": "0x147831e90",
+    "name": "CommonSelectedStateChanged__DelegateSignature",
+    "owning_class": null,
+    "delegate_name": null,
+    "construct_fns": [
+      "0x140809840"
+    ],
+    "package": "/Script/CommonUI",
+    "outer_fn": "0x140812ee0",
+    "function_flags": "0x130000",
+    "function_flag_names": [
+      "Delegate",
+      "MulticastDelegate"
+    ],
+    "params": [
+      {
+        "index": 0,
+        "name": "Selected",
+        "kind": "Bool",
+        "kind_raw": "0x2c",
+        "property_flags": "0x10000000000080",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "element_size": 1,
+        "size_of_outer": 16,
+        "bitfield": true,
+        "offset": null
+      },
+      {
+        "index": 1,
+        "name": "Button",
+        "kind": "Object",
+        "kind_raw": "0x12",
+        "property_flags": "0x10000000080080",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 0,
+        "type_refs": {
+          "class": "0x140807800"
+        }
+      }
+    ],
+    "multicast": true,
+    "type_name": "FCommonSelectedStateChanged"
+  }
+}

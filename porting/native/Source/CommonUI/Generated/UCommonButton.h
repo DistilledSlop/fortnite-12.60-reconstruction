@@ -10,6 +10,7 @@
 #include "Engine/DataTable.h"
 #include "FCommonButtonClicked.h"
 #include "FCommonSelectedStateChanged.h"
+#include "Input/Reply.h"
 #include "Sound/SlateSound.h"
 #include "Styling/SlateTypes.h"
 
@@ -150,7 +151,17 @@ public:
 
 protected:
 	UFUNCTION(BlueprintImplementableEvent)
+	void BP_OnDeselected();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
 	void BP_OnDisabled();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_OnDoubleClicked();
 public:
 
 protected:
@@ -193,6 +204,9 @@ protected:
 	void OnTriggeredInputActionChanged(const FDataTableRowHandle& NewTriggeredAction);
 public:
 
+	UFUNCTION(BlueprintCallable)
+	void StopDoubleClickPropagation();
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsInteractionEnabled() const;
 
@@ -232,5 +246,21 @@ protected:
     virtual void NativeOnClicked();
     virtual bool NativeGetClickAnalytics(FString& OutName, FString& OutType, FString& OutContext);
     friend struct FCommonButtonBaseClickProbeAccess;
+public:
+    // Shared native multicast for original slot +0xaf0.
+    FSimpleMulticastDelegate NativeDoubleClicked;
+protected:
+    // Source alias for original virtual slot +0x4d8.
+    virtual void NativeOnDoubleClicked();
+    // Source alias for the native FReply delegate receiver at 0x1407c6b10.
+    FReply NativeHandleDoubleClicked();
+public:
+    // Shared multicast at original native slot +0xb50; callbacks receive selected state.
+    DECLARE_MULTICAST_DELEGATE_OneParam(FNativeSelectedChanged, bool);
+    FNativeSelectedChanged NativeSelectedChanged;
+protected:
+    // Source aliases for original virtual slots +0x4b0 and +0x4b8.
+    virtual void NativeOnSelected(bool bBroadcast);
+    virtual void NativeOnDeselected(bool bBroadcast);
 };
 
