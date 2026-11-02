@@ -4,7 +4,7 @@ void NativeRemoveWidget145174fa0(UUserWidget* Widget)
 {
     if (!Widget)
         return;
-    UE_LOG(LogFortUI, Verbose, TEXT("UI Director is trashing widget [%s]"), *Widget->GetFName().ToString());
+    NativeLogWidgetTrashed145174fae(Widget);
     if (UWorld* World = Widget->GetWorld())
     {
         if (UGameInstance* Instance = World->GetGameInstance())

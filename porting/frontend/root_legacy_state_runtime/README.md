@@ -22,10 +22,24 @@ getter1453113f0 names FortUIDirector at literal14700ed32. The removal fragment
 is a lifetime candidate: its native weak array declaration, processing tick,
 lifetime and ownership must be joined before promotion. The removal
 log literal146e46290 is UI Director is trashing widget [%s], verbosity6.
+Both diagnostic fragments retain unresolved log bindings until the actual
+category identity is established; no guessed category is emitted. Transition
+verbosity is4, with the exact literal above. Logger providers must preserve
+their original verbosity guards before evaluating name conversions.
 No generic RemoveFromParent shortcut is appropriate.
 
-Remaining concrete requirements: root virtual480 and NUI virtual510/518 bodies,
-byte constructors, exact native field order/guards, config singleton/selection,
+Additional bounded joins: root ctor1452c69a0:b0 installs vtable146fc7bf0 and
+zeroes both selector bytes in one word store at1452c69f2. Base slot480 points
+to1406801c0 (ret0); Athena vtable146fc80c8 overrides it with14514ace0, which
+can replace selector3 with4 after real controller/party/game-instance operations.
+That override is not supplied. NUI ctor145143d00:68 installs146e386e0; its
+510/518 entries are145160ac0/145160ec0, forwarding to Blueprint ProcessEvent
+wrappers1453181c0/145318200. Deactivation receives the newly selected byte in
+DL (loaded14516f3da); activation receives the previous state. Both exact reflected
+event identities must be joined before implementing those wrappers.
+
+Remaining concrete requirements: Athena virtual480 and NUI virtual510/518 bodies,
+exact native field order/guards, config singleton/selection,
 layer cleanup and queue operations, deferred-removal producer/consumer/lifetime.
 Do not emit unresolved virtuals or invent defaults. Includes for the transition:
 UFortUIDataConfiguration, UFortUIStateWidget_NUI, notification/Toast types, SBox,

@@ -10,6 +10,13 @@ credentials in Git, and the orchestrator reviews and commits.
 
 ## Current baseline
 
+Native77e0bbb3 / Engineb96f01a60: animated queue/container client PASS131.301s,
+Root exits0 and attaches with zero Blueprint errors,9 imports still unresolved,
+strict gate FAIL. Actual Slate construction/release, transition/deferred lifetime
+and ClearWidgets are integrated. Acquisition/removal source is recovered but
+awaits promotion and a real connected queue flow. Normal frontend startup and
+all4 milestones remain open. Server stage stays at the prior shared checkpoint.
+
 Native10d2e923 / Engineb96f01a60: combined routing/loading/input client build
 PASS368.420s. Root creation/attachment completes, exits0, zero Blueprint errors,
 9 unresolved imports (previous10); strict gate remains FAIL. Configured input

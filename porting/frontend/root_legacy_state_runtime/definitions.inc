@@ -8,7 +8,7 @@ void UFortRootViewportLayout::NativeSetLegacyState14516f380(uint8 Selector)
     NativePendingLegacyState2a9 = Selector;
     if (PreviousWidget)
     {
-        PreviousWidget->NativeDeactivateLegacyState518();
+        PreviousWidget->NativeDeactivateLegacyState518(Selector);
         NativeClearLayers498();
     }
 
@@ -20,10 +20,7 @@ void UFortRootViewportLayout::NativeSetLegacyState14516f380(uint8 Selector)
     NativeLegacyState2a8 = NativePendingLegacyState2a9;
     CurrentLegacyStateWidget = NewWidget;
     NativePendingLegacyState2a9 = 0;
-    UE_LOG(LogFortUI, Display,
-        TEXT("[UFortRootViewportLayout::SetLegacyUIState] Switching states from: %s to %s"),
-        *NativeLegacyStateName14514e200(PreviousState),
-        *NativeLegacyStateName14514e200(NativeLegacyState2a8));
+    NativeLogLegacyStateChange14516f4d1(PreviousState, NativeLegacyState2a8);
     NativeAttachState145174c00(CurrentLegacyStateWidget);
     // Re-read the member after attachment, as the original does.
     if (CurrentLegacyStateWidget)
@@ -36,6 +33,11 @@ void UFortRootViewportLayout::NativeSetLegacyState14516f380(uint8 Selector)
         }
     }
     NativeRemoveWidget145174fa0(PreviousWidget);
+}
+
+// Base slot480 is 1406801c0 (ret0). Athena overrides it at14514ace0.
+void UFortRootViewportLayout::NativeChooseLegacyState480(uint8& Selector, UClass*& StateClass)
+{
 }
 
 // 145174c00 accepts either legacy or new state widgets through their common base.

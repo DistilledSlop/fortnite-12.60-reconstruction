@@ -1,6 +1,6 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
-## Animated queue batch: generated, client validation pending (2026-11-02)
+## Animated queue checkpoint: client build and root attachment complete (2026-11-02)
 
 common_animated_switcher_runtime is integrated through the generator: actual
 SCommonAnimatedSwitcher, container constructor/rebuild/release, weak animation
@@ -8,12 +8,28 @@ target/timer/reentry, original visual transforms/opacity/logs, displayed widget
 callback, deferred Slate-reference ticker and reflected ClearWidgets. The queue
 transition reuses NativeWidgetDeactivated; no duplicate delegate was added.
 Generation/source/type gates PASS,2 Native files changed and3 support files
-added,12761 unchanged mtimes restored. This UI-only batch has no build/runtime
-PASS yet; checkpoint10d2e923 below remains the latest built baseline.
-Next commands /tmp/build_frontend_routing_9.py then
-/tmp/run_frontend_routing_root_9.py; no unchanged server/join repetition needed.
-Queue AddWidget/RemoveWidget acquisition and complete normal startup remain
-unimplemented. Root owns Native/generator/Engine/build/stage. All4 gates open.
+added,12761 unchanged mtimes restored. Source77e0bbb3 client PASS131.301s,
+Native source unchanged; Root exits0, creation/attachment complete, zero Blueprint
+errors and9 unresolved imports, strict gate still FAIL. No missing configured
+input asset/unloaded-settings warnings. Client stage is phase9, server phase8;
+the unchanged Engine is b96f01a60. This UI-only batch did not repeat server/join.
+Commands /tmp/promote_frontend_routing_9.py,
+/tmp/build_frontend_routing_9.py, /tmp/run_frontend_routing_root_9.py;
+receipts generated/frontend-routing-batch-9/. Root attachment does not exercise
+all animation/reentry/deferred-GC branches. Production acquisition/removal must
+be integrated before claiming a connected modal flow or normal startup.
+Root owns Native/generator/Engine/build/stage. All4 gates open.
+
+Next ready bounded component: common_queue_widget_lifecycle_runtime supplies
+real pool acquisition, synchronous initializer, unique registration, queue
+slot insertion/transition and removal, with generator hooks depending on the
+integrated switcher policy. It is NOT promoted/built. Review its README/policy,
+integrate into one client/actual queue-flow batch; avoid unchanged button/server
+suites. Fresh worker source ui_config_singleton_runtime preserves weak cache,
+platform/cook selector, rooted class/CDO and rooted transient fallback; original
+config filename global1482476f8 and log category remain unresolved. Its helper
+140738030/140692260 is ordinary FString construction/destruction, not a missing
+profiler dependency. Source getter is not registered yet.
 
 Bounded workers also delivered executable source candidates, intentionally
 unregistered: routing_keyboard_entry_runtime/FortKeyboardBindingHelpers handles
@@ -26,6 +42,10 @@ ordered cleanup and modal transition; MCP/confirmation/error providers remain.
 root_legacy_state_runtime supplies actual selector/class mutation, legacy state
 replacement, content attachment and weak deferred removal candidate; virtual480,
 NUI510/518, native constructors and director deferred-removal consumer remain.
+Additional root joins establish both selector bytes initialized0; base480 is
+the actual empty function, while Athena480=14514ace0 has substantive controller/
+party/game-instance effects. Legacy deactivation518 receives the NEXT selector
+byte; activation510 receives the PREVIOUS byte. Preserve both arguments.
 These source candidates are not substitutes for normal startup. Rotate workers
 at these completed component boundaries and preserve bounded reads throughout.
 
