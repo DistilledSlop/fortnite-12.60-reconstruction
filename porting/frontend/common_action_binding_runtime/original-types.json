@@ -1,0 +1,538 @@
+{
+  "0x140818010": {
+    "block_va": "0x14783b210",
+    "name": "CommonInputActionData",
+    "construct_fns": [
+      "0x140818010"
+    ],
+    "package_fn": "0x140812ee0",
+    "package": "/Script/CommonUI",
+    "super_fn": "0x1446f29a0",
+    "struct_ops_fn": "0x140816760",
+    "size": 1064,
+    "align": 8,
+    "struct_flags": "0x201",
+    "struct_flag_names": [
+      "Native",
+      "RequiredAPI"
+    ],
+    "object_flags": "0x45",
+    "struct_ops": {
+      "vtable_va": "0x145a0cb50",
+      "ops_size": 1064,
+      "ops_align": 8,
+      "size_matches": true,
+      "align_matches": true,
+      "traits": {
+        "HasNoopConstructor": false,
+        "HasZeroConstructor": false,
+        "HasDestructor": true,
+        "HasSerializer": false,
+        "HasStructuredSerializer": false,
+        "HasPostSerialize": false,
+        "HasNetSerializer": false,
+        "HasNetSharedSerialization": false,
+        "HasNetDeltaSerializer": false,
+        "HasPostScriptConstruct": false,
+        "IsPlainOldData": false,
+        "HasCopy": true,
+        "HasIdentical": false,
+        "HasExportTextItem": false,
+        "HasImportTextItem": false,
+        "HasAddStructReferencedObjects": false,
+        "HasSerializeFromMismatchedTag": false,
+        "HasStructuredSerializeFromMismatchedTag": false,
+        "HasGetTypeHash": false
+      },
+      "unclassified_slots": []
+    },
+    "properties": [
+      {
+        "index": 0,
+        "name": "TouchInputTypeInfo",
+        "kind": "Struct",
+        "kind_raw": "0x19",
+        "property_flags": "0x20080000000001",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 896,
+        "type_refs": {
+          "struct": "0x140818040"
+        }
+      },
+      {
+        "index": 1,
+        "name": "GamepadInputTypeInfos",
+        "kind": "Struct",
+        "kind_raw": "0x19",
+        "property_flags": "0x20080000000001",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 4,
+        "object_flags": "0x45",
+        "offset": 224,
+        "type_refs": {
+          "struct": "0x140818040"
+        }
+      },
+      {
+        "index": 2,
+        "name": "KeyboardInputTypeInfo",
+        "kind": "Struct",
+        "kind_raw": "0x19",
+        "property_flags": "0x20080000000001",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 56,
+        "type_refs": {
+          "struct": "0x140818040"
+        }
+      },
+      {
+        "index": 3,
+        "name": "HoldDisplayName",
+        "kind": "Text",
+        "kind_raw": "0x1d",
+        "property_flags": "0x10000000000015",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 32
+      },
+      {
+        "index": 4,
+        "name": "DisplayName",
+        "kind": "Text",
+        "kind_raw": "0x1d",
+        "property_flags": "0x10000000000015",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 8
+      }
+    ],
+    "num_properties": 5
+  },
+  "0x140818040": {
+    "block_va": "0x14783b380",
+    "name": "CommonInputTypeInfo",
+    "construct_fns": [
+      "0x140818040"
+    ],
+    "package_fn": "0x140812ee0",
+    "package": "/Script/CommonUI",
+    "super_fn": null,
+    "struct_ops_fn": "0x1408167a0",
+    "size": 168,
+    "align": 8,
+    "struct_flags": "0x201",
+    "struct_flag_names": [
+      "Native",
+      "RequiredAPI"
+    ],
+    "object_flags": "0x45",
+    "struct_ops": {
+      "vtable_va": "0x145a0cc80",
+      "ops_size": 168,
+      "ops_align": 8,
+      "size_matches": true,
+      "align_matches": true,
+      "traits": {
+        "HasNoopConstructor": false,
+        "HasZeroConstructor": false,
+        "HasDestructor": true,
+        "HasSerializer": false,
+        "HasStructuredSerializer": false,
+        "HasPostSerialize": false,
+        "HasNetSerializer": false,
+        "HasNetSharedSerialization": false,
+        "HasNetDeltaSerializer": false,
+        "HasPostScriptConstruct": false,
+        "IsPlainOldData": false,
+        "HasCopy": true,
+        "HasIdentical": false,
+        "HasExportTextItem": false,
+        "HasImportTextItem": false,
+        "HasAddStructReferencedObjects": false,
+        "HasSerializeFromMismatchedTag": false,
+        "HasStructuredSerializeFromMismatchedTag": false,
+        "HasGetTypeHash": false
+      },
+      "unclassified_slots": []
+    },
+    "properties": [
+      {
+        "index": 0,
+        "name": "OverrideBrush",
+        "kind": "Struct",
+        "kind_raw": "0x19",
+        "property_flags": "0x10000000000001",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 32,
+        "type_refs": {
+          "struct": "0x142fdb590"
+        }
+      },
+      {
+        "index": 1,
+        "name": "HoldTime",
+        "kind": "Float",
+        "kind_raw": "0xa",
+        "property_flags": "0x10000000000001",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 28
+      },
+      {
+        "index": 2,
+        "name": "bActionRequiresHold",
+        "kind": "Bool",
+        "kind_raw": "0x2c",
+        "property_flags": "0x10000000000001",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "element_size": 1,
+        "size_of_outer": 168,
+        "bitfield": true,
+        "offset": null
+      },
+      {
+        "index": 3,
+        "name": "OverrrideState",
+        "kind": "Enum",
+        "kind_raw": "0x1e",
+        "property_flags": "0x10000000000001",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 24,
+        "type_refs": {
+          "enum": "0x140817fb0"
+        }
+      },
+      {
+        "index": 4,
+        "name": "UnderlyingType",
+        "kind": "Byte",
+        "kind_raw": "0x0",
+        "property_flags": "0x0",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 0,
+        "enum_underlying_of": "OverrrideState"
+      },
+      {
+        "index": 5,
+        "name": "Key",
+        "kind": "Struct",
+        "kind_raw": "0x19",
+        "property_flags": "0x40000000000001",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 0,
+        "type_refs": {
+          "struct": "0x142f1c310"
+        }
+      }
+    ],
+    "num_properties": 6
+  },
+  "0x140814ac0": {
+    "block_va": "0x14783a720",
+    "name": "UIActionKeyMapping",
+    "construct_fns": [
+      "0x140814ac0"
+    ],
+    "package_fn": "0x140812ee0",
+    "package": "/Script/CommonUI",
+    "super_fn": null,
+    "struct_ops_fn": "0x140812440",
+    "size": 32,
+    "align": 8,
+    "struct_flags": "0x1",
+    "struct_flag_names": [
+      "Native"
+    ],
+    "object_flags": "0x45",
+    "struct_ops": {
+      "vtable_va": "0x145a0af60",
+      "ops_size": 32,
+      "ops_align": 8,
+      "size_matches": true,
+      "align_matches": true,
+      "traits": {
+        "HasNoopConstructor": false,
+        "HasZeroConstructor": false,
+        "HasDestructor": true,
+        "HasSerializer": false,
+        "HasStructuredSerializer": false,
+        "HasPostSerialize": false,
+        "HasNetSerializer": false,
+        "HasNetSharedSerialization": false,
+        "HasNetDeltaSerializer": false,
+        "HasPostScriptConstruct": false,
+        "IsPlainOldData": false,
+        "HasCopy": true,
+        "HasIdentical": false,
+        "HasExportTextItem": false,
+        "HasImportTextItem": false,
+        "HasAddStructReferencedObjects": false,
+        "HasSerializeFromMismatchedTag": false,
+        "HasStructuredSerializeFromMismatchedTag": false,
+        "HasGetTypeHash": false
+      },
+      "unclassified_slots": []
+    },
+    "properties": [
+      {
+        "index": 0,
+        "name": "HoldTime",
+        "kind": "Float",
+        "kind_raw": "0xa",
+        "property_flags": "0x10000000004001",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 24
+      },
+      {
+        "index": 1,
+        "name": "Key",
+        "kind": "Struct",
+        "kind_raw": "0x19",
+        "property_flags": "0x10000000004001",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 0,
+        "type_refs": {
+          "struct": "0x142f1c310"
+        }
+      }
+    ],
+    "num_properties": 2
+  },
+  "0x140818070": {
+    "block_va": "0x14783ca40",
+    "name": "UIActionTag",
+    "construct_fns": [
+      "0x140818070"
+    ],
+    "package_fn": "0x140812ee0",
+    "package": "/Script/CommonUI",
+    "super_fn": "0x140817070",
+    "struct_ops_fn": "0x140816320",
+    "size": 8,
+    "align": 4,
+    "struct_flags": "0x1",
+    "struct_flag_names": [
+      "Native"
+    ],
+    "object_flags": "0x45",
+    "struct_ops": {
+      "vtable_va": "0x145a0d488",
+      "ops_size": 8,
+      "ops_align": 4,
+      "size_matches": true,
+      "align_matches": true,
+      "traits": {
+        "HasNoopConstructor": false,
+        "HasZeroConstructor": false,
+        "HasDestructor": true,
+        "HasSerializer": false,
+        "HasStructuredSerializer": false,
+        "HasPostSerialize": false,
+        "HasNetSerializer": false,
+        "HasNetSharedSerialization": false,
+        "HasNetDeltaSerializer": false,
+        "HasPostScriptConstruct": false,
+        "IsPlainOldData": false,
+        "HasCopy": true,
+        "HasIdentical": false,
+        "HasExportTextItem": true,
+        "HasImportTextItem": true,
+        "HasAddStructReferencedObjects": false,
+        "HasSerializeFromMismatchedTag": false,
+        "HasStructuredSerializeFromMismatchedTag": false,
+        "HasGetTypeHash": true
+      },
+      "unclassified_slots": []
+    },
+    "properties": [],
+    "num_properties": 0
+  },
+  "0x140814af0": {
+    "block_va": "0x14783a680",
+    "name": "UIInputAction",
+    "construct_fns": [
+      "0x140814af0"
+    ],
+    "package_fn": "0x140812ee0",
+    "package": "/Script/CommonUI",
+    "super_fn": null,
+    "struct_ops_fn": "0x140812340",
+    "size": 48,
+    "align": 8,
+    "struct_flags": "0x1",
+    "struct_flag_names": [
+      "Native"
+    ],
+    "object_flags": "0x45",
+    "struct_ops": {
+      "vtable_va": "0x145a0ae30",
+      "ops_size": 48,
+      "ops_align": 8,
+      "size_matches": true,
+      "align_matches": true,
+      "traits": {
+        "HasNoopConstructor": false,
+        "HasZeroConstructor": false,
+        "HasDestructor": true,
+        "HasSerializer": false,
+        "HasStructuredSerializer": false,
+        "HasPostSerialize": false,
+        "HasNetSerializer": false,
+        "HasNetSharedSerialization": false,
+        "HasNetDeltaSerializer": false,
+        "HasPostScriptConstruct": false,
+        "IsPlainOldData": false,
+        "HasCopy": true,
+        "HasIdentical": false,
+        "HasExportTextItem": false,
+        "HasImportTextItem": false,
+        "HasAddStructReferencedObjects": false,
+        "HasSerializeFromMismatchedTag": false,
+        "HasStructuredSerializeFromMismatchedTag": false,
+        "HasGetTypeHash": false
+      },
+      "unclassified_slots": []
+    },
+    "properties": [
+      {
+        "index": 0,
+        "name": "KeyMappings",
+        "kind": "Array",
+        "kind_raw": "0x16",
+        "property_flags": "0x10000000004001",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 32
+      },
+      {
+        "index": 1,
+        "name": "KeyMappings",
+        "kind": "Struct",
+        "kind_raw": "0x19",
+        "property_flags": "0x4000",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 0,
+        "type_refs": {
+          "struct": "0x140814ac0"
+        },
+        "array_inner_of": "KeyMappings"
+      },
+      {
+        "index": 2,
+        "name": "DefaultDisplayName",
+        "kind": "Text",
+        "kind_raw": "0x1d",
+        "property_flags": "0x10000000004001",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 8
+      },
+      {
+        "index": 3,
+        "name": "ActionTag",
+        "kind": "Struct",
+        "kind_raw": "0x19",
+        "property_flags": "0x10000000004001",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 0,
+        "type_refs": {
+          "struct": "0x140818070"
+        }
+      }
+    ],
+    "num_properties": 4
+  },
+  "0x140817070": {
+    "block_va": "0x14783ca90",
+    "name": "UITag",
+    "construct_fns": [
+      "0x140817070"
+    ],
+    "package_fn": "0x140812ee0",
+    "package": "/Script/CommonUI",
+    "super_fn": "0x143e9a2a0",
+    "struct_ops_fn": "0x140816320",
+    "size": 8,
+    "align": 4,
+    "struct_flags": "0x1",
+    "struct_flag_names": [
+      "Native"
+    ],
+    "object_flags": "0x45",
+    "struct_ops": {
+      "vtable_va": "0x145a0d488",
+      "ops_size": 8,
+      "ops_align": 4,
+      "size_matches": true,
+      "align_matches": true,
+      "traits": {
+        "HasNoopConstructor": false,
+        "HasZeroConstructor": false,
+        "HasDestructor": true,
+        "HasSerializer": false,
+        "HasStructuredSerializer": false,
+        "HasPostSerialize": false,
+        "HasNetSerializer": false,
+        "HasNetSharedSerialization": false,
+        "HasNetDeltaSerializer": false,
+        "HasPostScriptConstruct": false,
+        "IsPlainOldData": false,
+        "HasCopy": true,
+        "HasIdentical": false,
+        "HasExportTextItem": true,
+        "HasImportTextItem": true,
+        "HasAddStructReferencedObjects": false,
+        "HasSerializeFromMismatchedTag": false,
+        "HasStructuredSerializeFromMismatchedTag": false,
+        "HasGetTypeHash": true
+      },
+      "unclassified_slots": []
+    },
+    "properties": [],
+    "num_properties": 0
+  }
+}

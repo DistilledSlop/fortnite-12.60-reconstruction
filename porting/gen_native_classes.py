@@ -2174,6 +2174,10 @@ _current_input_type_spec = _common_activation_import.spec_from_file_location(
     "common_input_current_type_policy", os.path.join(os.path.dirname(__file__), "frontend", "common_input_current_type", "policy.py"))
 _current_input_type_policy = _common_activation_import.module_from_spec(_current_input_type_spec)
 _current_input_type_spec.loader.exec_module(_current_input_type_policy)
+_binding_data_spec = _common_activation_import.spec_from_file_location(
+    "common_action_binding_data_policy", os.path.join(os.path.dirname(__file__), "frontend", "common_action_binding_runtime", "policy.py"))
+_binding_data_policy = _common_activation_import.module_from_spec(_binding_data_spec)
+_binding_data_spec.loader.exec_module(_binding_data_policy)
 
 
 def build_class_promoted(block, name, resolver, parent_entry, owner_fns, snippets=(), splice_ctx=None, native_execs=None):
@@ -3400,6 +3404,8 @@ def promote(args):
         _common_activation_policy.validate_panel_outro_types(gate)
     if 'UCommonInputSubsystem' in listed:
         _current_input_type_policy.validate_types(gate)
+    if 'UCommonUIInputSettings' in listed:
+        _binding_data_policy.validate_types(gate)
     header_index = ModuleHeaderIndex(registry)
     source_label = os.path.relpath(args.reflection, REPO)
 
@@ -3617,6 +3623,7 @@ def promote(args):
         with open(os.path.join(out_dir, name + ".cpp"), "w", encoding="utf-8", newline="\n") as fh:
             fh.write(cpp)
     _common_activation_policy.emit_headers(args.source_root, generated_names)
+    _binding_data_policy.emit_runtime(args.source_root, generated_names)
     os.makedirs(args.report_dir, exist_ok=True)
     with open(os.path.join(args.report_dir, "behavior_splice.json"), "w", encoding="utf-8", newline="\n") as fh:
         json.dump({"enabled": splice_on, "manifest": os.path.join(args.behavior_dir, "MANIFEST.json"),

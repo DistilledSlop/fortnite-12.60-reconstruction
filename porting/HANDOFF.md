@@ -2,6 +2,18 @@
 
 ## Current resume point (2026-11-02)
 
+- Current data/storage candidate: frontend/common_action_binding_runtime/ implements actual
+  UE-owned binding records, FText/key/delegate copies, process TMap and modulo32 ID allocation.
+  Original signatures and ctor/storage/counter contracts are closed under work/action-binding-*
+  and common-action-binding-record-types-1. NaN classification preserves distinct tag/legacy
+  branches and ordered comparisons respect DAZ; dead weak-bound delegate instances are cloned.
+  Normal generation adds only CommonUI/Generated/CommonActionBindingData.h/.cpp and preserves
+  12710other mtimes. New ActionBindingDataProbe exercises26 engine cases (UE validation pending).
+  This is DATA/storage only: explicit resolver interface, no fabricated default provider,
+  no original UFUNCTION registration or completed production router/lifecycle/UI claim.
+  Portable fast-math/DAZ/ownership tests2 and runner/verifier41tests pass; generator141checks pass.
+  Root owns Native/generation/build/stage; no other worker may mutate them during validation.
+
 - Claude's effort review is implemented at dashboard commit3d62edb: 132leaves,
   2019relative points, UI199/CommonUI44. Original +78 UI proposal was not applied.
   Duplicate Wine/join, mesh/general-package and voice-route credit is separated; seven

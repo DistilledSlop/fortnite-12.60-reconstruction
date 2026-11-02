@@ -39,6 +39,7 @@ void RegisterConfirmationDescriptionProbeDriver();
 void RegisterRootWidgetInstanceProbeDriver();
 void RegisterCommonInputActionRowProbeDriver();
 void RegisterCommonInputCurrentTypeProbeDriver();
+void RegisterActionBindingDataProbeDriver();
 void RunOriginalVulkanShaderProbe();
 void RunLegacyMaterialShaderMapProbe();
 void RegisterLegacyOriginalMaterialProvider();
@@ -184,6 +185,7 @@ public:
         RegisterButtonInternalProbeDriver();
         RegisterMainButtonStateProbeDriver();
         RegisterCommonInputCurrentTypeProbeDriver();
+        RegisterActionBindingDataProbeDriver();
         RegisterPanelIntroProbeDriver();
         RegisterPanelOutroProbeDriver();
         RegisterConfirmationDescriptionProbeDriver();
