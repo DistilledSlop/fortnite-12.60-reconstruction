@@ -14,7 +14,9 @@
 #include "Styling/SlateTypes.h"
 
 class UCommonActionWidget;
+class UCommonButtonInternal;
 class UCommonButtonStyle;
+class UCommonTextStyle;
 class UMaterialInstanceDynamic;
 
 #include "UCommonButton.generated.h"
@@ -194,6 +196,12 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsInteractionEnabled() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetSelected() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	TSubclassOf<UCommonTextStyle> GetCurrentTextStyleClass() const;
+
 public:
     UCommonButton(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
     bool NativeIsInteractionEnabled() const;
@@ -201,5 +209,12 @@ protected:
     // The original constructor sets both native state bits. These are not UPROPERTYs.
     bool bNativeButtonEnabled = true;
     bool bNativeInteractionEnabled = true;
+public:
+    virtual bool IsHovered() const override;
+protected:
+    // Original constructor clears selected and initializes the weak internal button.
+    bool bNativeSelected = false;
+    TWeakObjectPtr<UCommonButtonInternal> NativeInternalButton;
+    friend struct FCommonButtonTextStyleProbeAccess;
 };
 

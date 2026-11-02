@@ -19,6 +19,7 @@ import current_input_type_verifier
 import binding_data_verifier
 import binding_provider_verifier
 import binding_creation_verifier
+import button_text_style_verifier
 
 ENVIRONMENT = ('DISPLAY', 'VK_ICD_FILENAMES', 'SDL_AUDIODRIVER', 'LP_NUM_THREADS')
 BASE_ARGS = ('-stdout', 'FortniteLinux', '/Engine/Maps/Entry', '-vulkan', '-windowed',
@@ -70,7 +71,8 @@ def command(binary, case):
                  'common-input-current-type': ('-CommonInputCurrentTypeProbe',),
                  'action-binding-data': ('-ActionBindingDataProbe',),
                  'action-binding-provider': ('-ActionBindingProviderProbe',),
-                 'action-binding-creation': ('-ActionBindingCreationProbe',)}[case]
+                 'action-binding-creation': ('-ActionBindingCreationProbe',),
+                 'button-text-style': ('-CommonButtonTextStyleProbe',)}[case]
     return [str(binary), *flags, *BASE_ARGS]
 
 
@@ -120,8 +122,8 @@ def run(args):
     runtime_file = getattr(args, 'runtime_args', None)
     runtime_record = None
     if runtime_file is not None:
-        if args.case != 'common-input-row':
-            raise ValueError('runtime args are only supported for common-input-row')
+        if args.case not in ('common-input-row', 'button-text-style'):
+            raise ValueError('runtime args are only supported for original asset diagnostics')
         runtime_file = runtime_file.resolve(strict=True)
         values, runtime_hash = runtime_args(runtime_file)
         runtime_record = {'path': str(runtime_file), 'sha256': runtime_hash, 'values': values}
@@ -191,7 +193,7 @@ def run(args):
     except OSError as exc:
         receipt['error'] = (receipt['error'] or '') + ' binary recheck failed: ' + str(exc)
     receipt['log'] = {'path': str(log), 'sha256': digest(log)}
-    if args.case in ('button', 'main-button', 'panel-intro', 'panel-outro', 'confirmation-description', 'common-input-row', 'common-input-current-type', 'action-binding-data', 'action-binding-provider', 'action-binding-creation'):
+    if args.case in ('button', 'main-button', 'panel-intro', 'panel-outro', 'confirmation-description', 'common-input-row', 'common-input-current-type', 'action-binding-data', 'action-binding-provider', 'action-binding-creation', 'button-text-style'):
         try:
             transcript_verifier = {'button': verifier, 'main-button': main_button_verifier,
                                    'panel-intro': panel_intro_verifier,
@@ -201,7 +203,8 @@ def run(args):
                                    'common-input-current-type': current_input_type_verifier,
                                    'action-binding-data': binding_data_verifier,
                                    'action-binding-provider': binding_provider_verifier,
-                                   'action-binding-creation': binding_creation_verifier}[args.case]
+                                   'action-binding-creation': binding_creation_verifier,
+                                   'button-text-style': button_text_style_verifier}[args.case]
             result = transcript_verifier.verify(log.read_text(errors='replace'))
         except (ValueError, OSError) as exc:
             result = {'passed': False, 'error': str(exc)[:300]}
@@ -210,7 +213,7 @@ def run(args):
     receipt['passed'] = (receipt['returncode'] == 0 and not receipt['timed_out'] and
                          receipt['proc_exe_inode_verified'] and receipt['binary_after_verified'] and
                          receipt['error'] is None and
-                         (args.case not in ('button', 'main-button', 'panel-intro', 'panel-outro', 'confirmation-description', 'common-input-row', 'common-input-current-type', 'action-binding-data', 'action-binding-provider', 'action-binding-creation') or receipt['transcript']['passed']))
+                         (args.case not in ('button', 'main-button', 'panel-intro', 'panel-outro', 'confirmation-description', 'common-input-row', 'common-input-current-type', 'action-binding-data', 'action-binding-provider', 'action-binding-creation', 'button-text-style') or receipt['transcript']['passed']))
     write_json(receipt_path, receipt)
     return receipt['passed']
 
@@ -221,8 +224,8 @@ def main():
     parser.add_argument('--binary', type=Path, required=True)
     parser.add_argument('--cwd', type=Path, required=True)
     parser.add_argument('--out', type=Path, required=True)
-    parser.add_argument('--case', choices=('button', 'main-button', 'panel-intro', 'panel-outro', 'confirmation-description', 'common-input-row', 'common-input-current-type', 'action-binding-data', 'action-binding-provider', 'action-binding-creation', 'activation', 'registry', 'lifecycle'), required=True)
-    parser.add_argument('--runtime-args', type=Path, help='JSON array of material ingress and manifest flags (common-input-row only)')
+    parser.add_argument('--case', choices=('button', 'main-button', 'panel-intro', 'panel-outro', 'confirmation-description', 'common-input-row', 'common-input-current-type', 'action-binding-data', 'action-binding-provider', 'action-binding-creation', 'button-text-style', 'activation', 'registry', 'lifecycle'), required=True)
+    parser.add_argument('--runtime-args', type=Path, help='JSON array of material ingress and manifest flags (common-input-row or button-text-style)')
     parser.add_argument('--timeout', type=float, default=240)
     args = parser.parse_args()
     try:

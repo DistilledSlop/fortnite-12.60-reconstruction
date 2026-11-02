@@ -152,3 +152,21 @@ def emit_headers(source_root,generated_names):
     _outro.emit_headers(source_root,generated_names)
 def validate_panel_outro_types(gate):return _outro.validate_types(gate)
 def struct_declarations(model):return _outro.struct_declarations(model)
+
+# Original two-accessor/state extension, independent of activation header emission.
+_text_spec=_intro_import.spec_from_file_location('button_text_style_policy',HERE/'button_text_style_policy.py')
+_text=_intro_import.module_from_spec(_text_spec);_text_spec.loader.exec_module(_text)
+_text_prior_apply=apply
+_text_prior_header=header_prelude
+_text_prior_declarations=declarations
+_text_prior_definitions=definitions
+_text_prior_emit=emit_headers
+def apply(model,block,owner_fns,native_execs=None):
+    return _text.apply(_text_prior_apply(model,block,owner_fns,native_execs),block,owner_fns,native_execs)
+def header_prelude(model): return _text.header_prelude(_text_prior_header(model))
+def declarations(model): return _text_prior_declarations(model)+_text.declarations(model)
+def definitions(model): return _text_prior_definitions(model)+_text.definitions(model)
+def emit_headers(source_root,generated_names):
+    _text_prior_emit(source_root,generated_names)
+    _text.emit_headers(source_root,generated_names)
+def validate_button_text_style_classes(blocks,name_to_block): return _text.validate_classes(blocks,name_to_block)

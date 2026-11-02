@@ -12,13 +12,13 @@ spec.loader.exec_module(p)
 
 class MainButtonQuery(unittest.TestCase):
     def model(self):
-        return {'name':'UCommonButton', 'package':'/Script/CommonUI', 'functions':[]}
+        return {'name':'UCommonButton', 'package':'/Script/CommonUI', 'functions':[], 'members_decl_order':[{'name':'Style','decl':'TSubclassOf<UCommonButtonStyle> Style;'}]}
     def block(self):
-        return {'block_va':'0x145a01210', 'functions':[copy.deepcopy(p.MAIN_BUTTON_QUERY_EXPECTED)],
-                'properties':copy.deepcopy(list(p.MAIN_BUTTON_DEFAULTS_EXPECTED.values()))}
+        return {'block_va':'0x145a01210', 'functions':[copy.deepcopy(p.MAIN_BUTTON_QUERY_EXPECTED)] + copy.deepcopy(p._text.CONTRACT['UCommonButton']['functions']),
+                'properties':copy.deepcopy(list(p.MAIN_BUTTON_DEFAULTS_EXPECTED.values()) + p._text.CONTRACT['UCommonButton']['properties'])}
     def run_it(self, m=None, b=None, owner=None):
         return p.apply(self.model() if m is None else m, self.block() if b is None else b,
-                       {'0x140805cb0'} if owner is None else owner)
+                       {'0x140805cb0'} if owner is None else owner, copy.deepcopy(p._text.CONTRACT['exec']))
     def test_signature(self):
         m = self.run_it()
         f = m['functions'][0]
@@ -41,7 +41,7 @@ class MainButtonQuery(unittest.TestCase):
     def test_collisions(self):
         for group in ('functions','members_table_order','members_decl_order','fields','helpers','static_helpers'):
             for name in ('IsInteractionEnabled','NativeIsInteractionEnabled','bNativeButtonEnabled','bNativeInteractionEnabled'):
-                m=self.model(); m[group]=[{'name':name}]
+                m=self.model(); m.setdefault(group, []).append({'name':name})
                 with self.subTest(group=group,name=name), self.assertRaises(ValueError): self.run_it(m=m)
         m=self.model();m['common_button_query_runtime']=True
         with self.assertRaises(ValueError): self.run_it(m=m)

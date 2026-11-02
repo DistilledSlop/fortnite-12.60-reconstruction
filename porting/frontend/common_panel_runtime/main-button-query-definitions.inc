@@ -1,5 +1,5 @@
 // Original constructor 140796950: bounded reflected/default initialization.
-// Unreflected selection/delegate/lifecycle storage is not reconstructed here.
+// Delegate and lifecycle storage remain outside this bounded constructor.
 UCommonButton::UCommonButton(const FObjectInitializer& ObjectInitializer)
     : Super(ObjectInitializer)
 {

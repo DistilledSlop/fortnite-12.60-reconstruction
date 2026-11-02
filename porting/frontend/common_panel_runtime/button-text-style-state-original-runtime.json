@@ -1,0 +1,37 @@
+{
+  "image_base": "0x140000000",
+  "image_sha256": "338c83a2314ccac1040a2c0bb520b893013cc7b58eda58e550da67f5d84de680",
+  "scope": "Native selected=false and weak internal button defaults plus CommonButton virtual hover override; no production initialization/transition/lifecycle claim.",
+  "spans": [
+    {
+      "name": "constructor",
+      "start": "0x140796950",
+      "end": "0x140796b69",
+      "sha256": "6991da4a3b091dc9bc3b0b6ccddde5a0f1b25ceab6067c26d2bd600809a20aea"
+    },
+    {
+      "name": "common_button_hover",
+      "start": "0x1407cf590",
+      "end": "0x1407cf5d1",
+      "sha256": "c7be14aded7d3904565d2bee38d9fa03fc3b42f39ccc2996e98d9803434430cd"
+    },
+    {
+      "name": "hover_exec_virtual_dispatch",
+      "start": "0x143896f40",
+      "end": "0x143896f6f",
+      "sha256": "f6b516d2f21dcb4c2e7a388ccad7463c8dac9d4551dfa6faa188df7b13941bfd"
+    },
+    {
+      "name": "button_hover_vtable",
+      "start": "0x1459f0bb8",
+      "end": "0x1459f0bc0",
+      "sha256": "ded0d11dbd96aaa7cf01dd432a33f3e20f686a3d2f8aae65942620b6e50f3d93"
+    },
+    {
+      "name": "parent_hover_vtable",
+      "start": "0x1459ed178",
+      "end": "0x1459ed180",
+      "sha256": "64d765c97638edb891dd65fbfa0fe20cf1ed06c60bb669d10d63eb0009fff82a"
+    }
+  ]
+}

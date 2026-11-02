@@ -1,0 +1,298 @@
+{
+  "UCommonButton": {
+    "identity": {
+      "block_va": "0x145a01210",
+      "name": null,
+      "name_status": "unresolved",
+      "config_name": null,
+      "class_flags": "0xb010a1",
+      "dependency_fns": [
+        "0x140816d40",
+        "0x140812ee0"
+      ],
+      "package_fn": "0x140816d40",
+      "base_fn": "0x140812ee0",
+      "class_noregister_fn": "0x140807cd0",
+      "interface_count": 0,
+      "dependency0_fn": "0x140816d40"
+    },
+    "properties": [
+      {
+        "index": 30,
+        "name": "Style",
+        "kind": "Class",
+        "kind_raw": "0x11",
+        "property_flags": "0x25080000000015",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 608,
+        "type_refs": {
+          "meta_class": "0x1408064b0",
+          "class": "0x142e497d0"
+        }
+      }
+    ],
+    "functions": [
+      {
+        "name": "GetCurrentTextStyleClass",
+        "create_func": "0x1408069d0",
+        "flags": [
+          "0x54020401"
+        ],
+        "replicated_function": false,
+        "net_roles": [],
+        "outer_fn": "0x140805cb0",
+        "params": [
+          {
+            "index": 0,
+            "name": "ReturnValue",
+            "kind": "Class",
+            "kind_raw": "0x11",
+            "property_flags": "0x14000000000580",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 0,
+            "type_refs": {
+              "meta_class": "0x1408131c0",
+              "class": "0x142e497d0"
+            }
+          }
+        ]
+      },
+      {
+        "name": "GetSelected",
+        "create_func": "0x140806a40",
+        "flags": [
+          "0x54020401"
+        ],
+        "replicated_function": false,
+        "net_roles": [],
+        "params_note": "ambiguous: candidates disagree on parameter table",
+        "candidates": [
+          {
+            "owning_class": null,
+            "outer_fn": "0x140805cb0",
+            "flags": "0x54020401",
+            "nprop": 1,
+            "params": [
+              {
+                "index": 0,
+                "name": "ReturnValue",
+                "kind": "Bool",
+                "kind_raw": "0x2c",
+                "property_flags": "0x10000000000580",
+                "replicated": false,
+                "rep_notify": null,
+                "array_dim": 1,
+                "object_flags": "0x45",
+                "element_size": 1,
+                "size_of_outer": 1,
+                "bitfield": true,
+                "set_bit_fn": "0x1406966a0",
+                "offset": null
+              }
+            ]
+          },
+          {
+            "owning_class": null,
+            "outer_fn": "0x145201110",
+            "flags": "0x54020401",
+            "nprop": 1,
+            "params": [
+              {
+                "index": 0,
+                "name": "ReturnValue",
+                "kind": "Bool",
+                "kind_raw": "0x2c",
+                "property_flags": "0x10000000000580",
+                "replicated": false,
+                "rep_notify": null,
+                "array_dim": 1,
+                "object_flags": "0x45",
+                "element_size": 1,
+                "size_of_outer": 1,
+                "bitfield": true,
+                "set_bit_fn": "0x1406966a0",
+                "offset": null
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "UCommonButtonStyle": {
+    "identity": {
+      "block_va": "0x145a007f0",
+      "name": null,
+      "name_status": "unresolved",
+      "config_name": null,
+      "class_flags": "0x1000a1",
+      "dependency_fns": [
+        "0x142eea530",
+        "0x140812ee0"
+      ],
+      "package_fn": "0x142eea530",
+      "base_fn": "0x140812ee0",
+      "class_noregister_fn": "0x1408079e0",
+      "interface_count": 0,
+      "dependency0_fn": "0x142eea530"
+    },
+    "properties": [
+      {
+        "index": 6,
+        "name": "DisabledTextStyle",
+        "kind": "Class",
+        "kind_raw": "0x11",
+        "property_flags": "0x14000000010015",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 1208,
+        "type_refs": {
+          "meta_class": "0x1408131c0",
+          "class": "0x142e497d0"
+        }
+      },
+      {
+        "index": 7,
+        "name": "SelectedHoveredTextStyle",
+        "kind": "Class",
+        "kind_raw": "0x11",
+        "property_flags": "0x14000000010015",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 1200,
+        "type_refs": {
+          "meta_class": "0x1408131c0",
+          "class": "0x142e497d0"
+        }
+      },
+      {
+        "index": 8,
+        "name": "SelectedTextStyle",
+        "kind": "Class",
+        "kind_raw": "0x11",
+        "property_flags": "0x14000000010015",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 1192,
+        "type_refs": {
+          "meta_class": "0x1408131c0",
+          "class": "0x142e497d0"
+        }
+      },
+      {
+        "index": 9,
+        "name": "NormalHoveredTextStyle",
+        "kind": "Class",
+        "kind_raw": "0x11",
+        "property_flags": "0x14000000010015",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 1184,
+        "type_refs": {
+          "meta_class": "0x1408131c0",
+          "class": "0x142e497d0"
+        }
+      },
+      {
+        "index": 10,
+        "name": "NormalTextStyle",
+        "kind": "Class",
+        "kind_raw": "0x11",
+        "property_flags": "0x14000000010015",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 1176,
+        "type_refs": {
+          "meta_class": "0x1408131c0",
+          "class": "0x142e497d0"
+        }
+      }
+    ],
+    "functions": []
+  },
+  "UCommonTextStyle": {
+    "identity": {
+      "block_va": "0x145a088c0",
+      "name": null,
+      "name_status": "unresolved",
+      "config_name": null,
+      "class_flags": "0x1000a1",
+      "dependency_fns": [
+        "0x142eea530",
+        "0x140812ee0"
+      ],
+      "package_fn": "0x142eea530",
+      "base_fn": "0x140812ee0",
+      "class_noregister_fn": "0x140811a40",
+      "interface_count": 0,
+      "dependency0_fn": "0x142eea530"
+    },
+    "properties": [],
+    "functions": []
+  },
+  "exec": {
+    "GetSelected": {
+      "exec_addr": "0x14080b350",
+      "flags": "0x54020401",
+      "params": [
+        {
+          "index": 0,
+          "name": "ReturnValue",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x10000000000580",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 1,
+          "bitfield": true,
+          "offset": null
+        }
+      ],
+      "create_func": "0x140806a40",
+      "source": "lea"
+    },
+    "GetCurrentTextStyleClass": {
+      "exec_addr": "0x14080a6c0",
+      "flags": "0x54020401",
+      "params": [
+        {
+          "index": 0,
+          "name": "ReturnValue",
+          "kind": "Class",
+          "kind_raw": "0x11",
+          "property_flags": "0x14000000000580",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "meta_class": "0x1408131c0",
+            "class": "0x142e497d0"
+          }
+        }
+      ],
+      "create_func": "0x1408069d0",
+      "source": "lea"
+    }
+  }
+}
