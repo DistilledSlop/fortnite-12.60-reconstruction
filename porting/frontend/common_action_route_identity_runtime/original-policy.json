@@ -1,0 +1,118 @@
+{
+  "scope": "Original concrete runtime route identity only; no source-name or lifecycle completeness claim.",
+  "windows": [
+    {
+      "label": "base-node-constructor",
+      "address": "0x1407909b0",
+      "size": 185,
+      "sha256": "c5c2053f7c5994346ba4313f2c4183ae4a016b38caeee9a4f40ddf55630e4804"
+    },
+    {
+      "label": "router-inline-base-owner",
+      "address": "0x140797b40",
+      "size": 319,
+      "sha256": "efd626bf4c00b23b482dc3686a94cde67c57cae6f120a1348fe515c341c43e4c"
+    },
+    {
+      "label": "router-class-getter",
+      "address": "0x1408132b0",
+      "size": 178,
+      "sha256": "e04b6f625d9283ae1d15215a3ef18524197a0869e5fa7009366193e220e69f89"
+    },
+    {
+      "label": "router-constructor-thunk",
+      "address": "0x1408135e0",
+      "size": 13,
+      "sha256": "5156edf0d7f4f40654d909111fae1a4066e47ed26468fdf9036820968927e325"
+    },
+    {
+      "label": "child-owner-copy",
+      "address": "0x1407a9424",
+      "size": 33,
+      "sha256": "94bb339c3fd1223b2e65a07719863d87eed691898645ede26228486420b73053"
+    },
+    {
+      "label": "root-constructor",
+      "address": "0x1407b4ac0",
+      "size": 313,
+      "sha256": "b05afa0b762d63b222bb11606d9914c89d584a692ce517627b70743063f528b7"
+    },
+    {
+      "label": "root-owner-forwarding",
+      "address": "0x1407e4a70",
+      "size": 23,
+      "sha256": "c26c3416343a8cdd385500dad7d9a2fb6b1c2fb474d4da9c4e98f56d47fd7dda"
+    },
+    {
+      "label": "root-producer-this",
+      "address": "0x1407e45c0",
+      "size": 112,
+      "sha256": "b3328777769c66f5bc02f3e3a3c11d6c9e82095602256af531b2470441f15a72"
+    },
+    {
+      "label": "node-predicate",
+      "address": "0x1407cff20",
+      "size": 63,
+      "sha256": "2f2102fce622931dab8bd60c9b5f5540baa73603c560714ce097da7001b58b90"
+    },
+    {
+      "label": "base-predicate",
+      "address": "0x1406801d0",
+      "size": 3,
+      "sha256": "e18aacce29affcdddaa5f641ac1ec12552e0fe9d066e6408941b1792818b8619"
+    },
+    {
+      "label": "active-property-setter",
+      "address": "0x140777600",
+      "size": 8,
+      "sha256": "52b133355fa673df9b3e1d0158e9f091ec49188d0c22fe02068cb9123cd0191a"
+    },
+    {
+      "label": "activated-exec",
+      "address": "0x14080bae0",
+      "size": 32,
+      "sha256": "08e5dda39f98ff346c14091849e403d2e453c1dff57e5137f6b873287f66c59a"
+    },
+    {
+      "label": "node-activation-producer",
+      "address": "0x1407f5d50",
+      "size": 366,
+      "sha256": "c3f4f5ec2814f298749d7ba399703b193baa7e128b143e922fd5d52bc4d418f9"
+    },
+    {
+      "label": "node-destructor",
+      "address": "0x140799860",
+      "size": 222,
+      "sha256": "2abcde50a73d26aab74061255a233557e7cf361ad920d941a9ec0c4d64b1d7c3"
+    },
+    {
+      "label": "base-node-root-vtables",
+      "address": "0x1459ecdd0",
+      "size": 152,
+      "sha256": "9331381cdfcbcde2e35080d193b7768ecf3e01fa7dcbc3044c8b112cd938ae94"
+    },
+    {
+      "label": "association-notification",
+      "address": "0x1407a91aa",
+      "size": 34,
+      "sha256": "341d662e394fc8acfcde6b87fd71db0749ffdad1688c0c73ac699ec274263633"
+    }
+  ],
+  "vtable_slots": [
+    {
+      "vtable": "0x1459ecdd0",
+      "offset": 24,
+      "target": "0x1406801d0"
+    },
+    {
+      "vtable": "0x1459ecdf8",
+      "offset": 24,
+      "target": "0x1407cff20"
+    },
+    {
+      "vtable": "0x1459ece30",
+      "offset": 24,
+      "target": "0x1407cff20"
+    }
+  ]
+}

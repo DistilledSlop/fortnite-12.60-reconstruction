@@ -1,5 +1,60 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Current checkpoint: original Root attaches; strict gate remains open (2026-11-02)
+
+Native 2b2993fe / Engine c945a157c client build PASS 125.753s, Native source
+unchanged. The corrected real-widget border/delegate/mobile diagnostic passes
+all 12 rows with a viewport-interface context. The actual original Root now exits
+0, completes creation and viewport attachment across frames 2/3/4, observes all
+four startup classes and seven widget instances, and reports zero Blueprint
+errors. Its strict gate remains FAIL because 14 native imports remain unresolved.
+This is viewport membership/cached-widget evidence, not interactive menu, pixels,
+audio or complete UI parity. All four product milestones remain open.
+
+Production fb67f3a0 integrated CommonBorder constructor/style/safe-zone behavior,
+the original mutable-out CommonActionCommited delegate, and the full reflected
+FortKismetLibrary.IsMobileGame context signature with its source-proven false
+return. Its first client build passed 147.164s; Root improved from 18 to 15 skipped
+imports but still crashed. The first 12-row fixture failed because it constructed
+abstract UUserWidget; 2b2993fe corrects the owner to concrete UCommonUserWidget.
+The debugger then proved the remaining null call in ErrorWindow Initialize Close
+Button took byte argument 5. 2b2993fe restores GetInputPriority(EInputPriority)
+const with its exact unsigned-byte-to-int return, eliminating that crash and
+reducing skipped imports to 14. Generation changed only its two class files,
+restoring unchanged mtimes; two policy tests pass. No blanket button/server/join
+repeat was needed for this UI-only change. Their prior passing baseline below
+still applies to unchanged code; no new server result is claimed.
+
+Commands: python3 /tmp/promote_frontend_imports_2.py (reports in
+/tmp/frontend-import-promotion-2b), /tmp/build_frontend_imports_2.py,
+/tmp/run_frontend_imports_2.py, /tmp/run_frontend_imports_root_2.py. Build/runtime
+receipts and exact logs: porting/generated/frontend-import-batch-2/. Prior failing
+Root/debug evidence: frontend-import-batch-1/. No new debugger run was necessary
+after the successful process/attachment. All build/runtime handles are terminal.
+
+NEXT: resolve real missing imports and connected producer graphs, then exercise
+the actual frontend. CommonActivatablePanel.HasInputActionHandler searches two
+panel-owned maps; their real router/legacy registration lifecycles must exist
+before promotion. Read frontend/activatable_input_handler_runtime/HANDOFF.md.
+SetTriggeringInputAction remains unresolved for the same registration graph.
+Source-only commit daef08d7 recovers route association/disassociation/reentrant
+unregister but is NOT integrated. New common_action_route_identity_runtime
+evidence identifies route owner as UCommonUIActionRouter and predicate dependence
+on node activity/widget activation; finish real lifecycle, not fake hooks/maps.
+CommonLazyImage.SetBrushFromLazyDisplayAsset uses existing UImage async loading,
+but requires its real setter overrides, Slate load-guard lifecycle and precise
+null-path brush restoration; see lazy_display_asset_runtime/RECOVERY.md. No
+placeholder candidates are promoted. Other unresolved imports are listed in the
+phase2 Root receipt. Root owns generation/Native/Engine/staging/builds; preserve
+the five pre-existing Engine dirty paths listed in earlier notes.
+
+Preserve user preference: planner/orchestrator/reviewer with direct difficult
+work when useful; bounded agents, rotate at endpoints, max three; Luna medium
+small read-only, Terra medium/high regular, Sol medium complex, fork_turns none.
+Use economical reads and concise matched output. Current user question was
+curiosity, not a stop: UI is unfinished; Python extracts original evidence and
+drives C++ generation/build/run automation. Keep checks tied to changed risk.
+
 ## Current checkpoint: production buttons + MID ABI correction PASS (2026-11-02)
 
 Previous goal turn made progress. Native build sourcee43947d0 (production code

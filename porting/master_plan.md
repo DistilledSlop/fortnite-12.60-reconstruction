@@ -10,15 +10,18 @@ credentials in Git, and the orchestrator reviews and commits.
 
 ## Current baseline
 
-Nativee43947d0 (production7a66a401) / Enginec945a157c passes both builds, GUI
-production24, retained style93/click21/widget18/input40 and both fresh joins.
-The native material-creation ABI correction advances the original Root past
-ErrorLlama; it now stops at a null native function in ErrorWindow Initialize Close
-Button. Still18 skipped imports and no successful attachment/menu. Next is the
-exact missing call: IsMobileGame is source-proven but remains an unregistered
-candidate, followed by actual row/router producers and remaining Root dependencies.
-All4 gates/full faithful client/server/visual/audio parity remain open. See latest
-HANDOFF for current receipts versus older snapshots.
+Native 2b2993fe / Engine c945a157c client build passes (125.753s), as does the
+affected border/delegate/mobile GUI flow (12 rows). Source-based border styling,
+CommonActionCommited, IsMobileGame and GetInputPriority are integrated. The actual
+original Root now exits normally, completes creation and viewport attachment,
+and has zero Blueprint errors. Its strict gate still fails on 14 unresolved
+native imports. This proves attachment, not an interactive menu or pixels/audio.
+Prior production button and retained GUI checks, server build and both direct
+joins remain the unchanged baseline; this UI batch did not repeat those suites.
+Next: real input-router/legacy registration, lazy-image streaming/load guard and
+remaining frontend imports. All four milestones and full faithful client/server/
+visual/audio parity remain open. See HANDOFF for current receipts and source-only
+candidates versus older snapshots.
 
 
 Native7a66a401 / Engine87acab901 passes both builds, production button GUI24,
