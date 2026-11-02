@@ -25,7 +25,7 @@ import text_transform_verifier
 import erebus_verifier
 import button_size_verifier
 import style_rebuild_verifier
-import base_click_verifier
+import base_click_verifier_v2
 
 ENVIRONMENT = ('DISPLAY', 'VK_ICD_FILENAMES', 'SDL_AUDIODRIVER', 'LP_NUM_THREADS')
 BASE_ARGS = ('-stdout', 'FortniteLinux', '/Engine/Maps/Entry', '-vulkan', '-windowed',
@@ -222,7 +222,7 @@ def run(args):
                                    'erebus': erebus_verifier,
                                    'button-size': button_size_verifier,
                                    'style-rebuild': style_rebuild_verifier,
-                                   'base-click': base_click_verifier}[args.case]
+                                   'base-click': base_click_verifier_v2}[args.case]
             result = transcript_verifier.verify(log.read_text(errors='replace'))
         except (ValueError, OSError) as exc:
             result = {'passed': False, 'error': str(exc)[:300]}
