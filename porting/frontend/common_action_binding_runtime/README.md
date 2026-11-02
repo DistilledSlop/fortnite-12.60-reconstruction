@@ -1,7 +1,7 @@
 # Common action binding data and storage
 
 These templates provide owned binding data/storage and original engine-backed
-data resolvers. The source-backed creation candidate validates and inserts records; router association,
+data resolvers. The source-backed creation entry validates and inserts records; router association,
 lifecycle registration and input routing remain unfinished. The normal generator
 must validate `policy.validate_types(gate)` and copy the data and provider templates into CommonUI's
 Generated directory before building them. The adapter supplies a resolver whose tag
@@ -66,5 +66,8 @@ sentinel avoidance. `LogUIActionRouter` is one exported shared category (default
 Log, compile All); original Error diagnostics and event labels are retained.
 `original-creation.json` pins the full entry, category construction and diagnostic
 literals. This does not implement the router's signed-ID acceptance, association,
-notification or teardown. The 23-row CreationProbe and exact log verifier are new
-and not yet engine-validated; prior checkpoints remain historical baselines.
+notification or teardown. At Native `d97565d`, both builds, all 23 CreationProbe cases and exact log diagnostics,
+retained diagnostics and both joins pass. The creation checkpoint/release hashes are
+in HANDOFF. Build1 failed on a diagnostic include typo; its evidence is preserved
+separately from the successful corrected build2. Original router association,
+production lifecycle/selection/input dispatch and interactive UI remain unfinished.

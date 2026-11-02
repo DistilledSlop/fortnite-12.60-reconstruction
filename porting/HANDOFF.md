@@ -2,7 +2,52 @@
 
 ## Current resume point (2026-11-02)
 
-- Latest Native342d083 implements engine-backed binding data providers: settings CDO
+- Latest Native d97565d restores original binding Create140800e60: source-ordered
+  prevalidation, independent tag/row checks, weak-owner/name/event duplicates and
+  allocated-record-ID insertion. Shared exported LogUIActionRouter retains original
+  defaultLog/compileAll and Error diagnostics. Both builds PASS110.551/120.560s,
+  source/config stable. All23creation rows + exact9Error/1DataTable-warning transcript
+  PASS, including stale weak handler, no ID advance on rejection, combined-tag/row
+  semantics, removal/recreate and callback ownership/no creation callback execution.
+  Retained26data/20provider/13getter/30table(421rows),8diagnostics and both joins
+  21.615/21.585s PASS. Root still7widgets/20imports, all4startupclasses; no new viewport
+  attempt, selection/input dispatch or interactive-menu parity is claimed.
+- Creation checkpoint: generated/frontend-native-evidence/action-binding-creation-runtime-1/checkpoint.json
+  SHA256 dd5dfad4e0ab50a3a5a3289cfa81db50711e48ee75c7533063c2f8325affc061;
+  archive /mnt/vibrato/fortnite-evidence/frozen-runtime/action-binding-creation-runtime-1
+  binds28source pairs,123artifact pairs,18binary rows. Release SHA256
+  e05e804d9c4921373a02e0f935b19af5bb7fef941c690c5387442e05c5ba85fd.
+  TERMINAL promotion93383/build1failed95097/build2passed87493/stage68579/create7679/
+  retained+freeze33784. No Native/build/stage owner remains. NativeSource12716;
+  promotion changed4generated files and preserved12712other mtimes. Component2/runner42/
+  generator141/progress67 checks PASS; original creation15spans replay PASS.
+  Build1 at30dc1a4 failed exit6/53.870s due probe template include typo, preserved;
+  corrected handwritten probe include atd97565d, no manual Generated edits. Stage was
+  untouched on failure. Scripts /mnt/vibrato/fortnite-work/{promote_,build_,stage_,run_,
+  freeze_,validate_}action_binding_creation*1.py plus build_action_binding_creation_native_2.py.
+  Stage hashes recorded allbinarycontents; no independently repeated giant-debug rehash claim.
+- NEXT IMPLEMENTATION: /mnt/vibrato/fortnite-work/button-text-style-accessor-candidate-1/
+  {candidate.patch,HANDOFF.md}. NOT applied/generated/UE-built. Bounded two-accessor
+  candidate GetSelected/GetCurrentTextStyleClass with real mutable protected selected=false
+  slot, typed lazy Style/text-style CDO resolution, exact source/class/property/function/exec
+  guards and independent core-header gate. Portable/model/adapter tests and apply-check pass.
+  Root must review/apply, validate generated output, add actual UObject/metadata/direct+reflected
+  branch cases using diagnostic-only state mutation, build/stage/retain/join/freeze. Then rerun
+  original viewport attachment as separate diagnostic, retaining queue ensure/new failures.
+- IMPORTANT getter-boundary correction: source call graph does NOT require full selection
+  producers/Initialize/NativeConstruct/routing before registering this reader. One mutable
+  native state slot + source-proved false constructor default and diagnostic mutation is an
+  authentic staged accessor, analogous current-input-type; it is not a constant-false getter.
+  NO fake/drop-callback selection setter is allowed. Future real producers must use same slot.
+  Production selected transitions/callbacks/input refresh/lifecycle remain unfinished and earn
+  no completion claim from an accessor probe. Actionable reasoning/source locations:
+  /mnt/vibrato/fortnite-work/button-text-style-integration-plan-1/HANDOFF.md.
+- Route-node proofs advanced in action-binding-route-node-{construction,initialize}-1:
+  separate0xb8child/0xd8root +0x18control, non-thread-safe weak-from-this; router weak+28
+  confirmed. Both bind widget activation/deactivation before owner-array insertion, may call
+  activation synchronously; root additionally binds CommonInput. Actual callback/destructor/
+  pending migration/dispatch behavior stays open; do not fabricate route behavior.
+- Previous Native342d083 implements engine-backed binding data providers: settings CDO
   first-tag match, actual typed row lookup, widget->local player->router->router Outer
   ->CommonInput unsigned gamepad byte. Both builds PASS113.319/111.031s, source/config
   stable. All20provider rows PASS with real subsystem collection, controlled settings
@@ -25,8 +70,8 @@
   Live README differs only by the later validated-status wording; pinned archived copy
   matches342d083. Giant binary contents were not independently rehashed. Creation
   control's20import failures remain visible; no full original menu success is claimed.
-- Next bounded implementation candidate: action-binding-create-entry-candidate-1/{candidate.patch,HANDOFF.md}
-  under /mnt/vibrato/fortnite-work. Four-file scratch candidate based on342d083, NOT applied/built.
+- Historical create entry candidate: action-binding-create-entry-candidate-1/{candidate.patch,HANDOFF.md}
+  under /mnt/vibrato/fortnite-work. Applied/validated atd97565d, with shared category correction.
   It implements original create140800e60 prevalidation/duplicate scan/id-as-key insertion,
   concrete nullable FindTag/FindRow; original LogUIActionRouter Error messages and IsBound guard.
   Root must review/log-category ownership, adapt portable tests, add real UE creation cases,

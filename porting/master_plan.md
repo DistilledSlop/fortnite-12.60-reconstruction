@@ -10,7 +10,7 @@ credentials in Git, and the orchestrator reviews and commits.
 
 ## Current baseline
 
-At Native `342d083`, both builds, both joins, eight retained diagnostics and the30-row input-table
+At Native `d97565d`, both builds, both joins, eight retained diagnostics and the30-row input-table
 diagnostic pass. The original table loads421rows. Source and staged config now match; startup
 actually uses FortGameInstance, FortLocalPlayer, FortGameViewportClient and FortPlayerControllerAthena.
 The controller constructor assignment is source-proved; the full original game mode hierarchy and
@@ -21,25 +21,29 @@ during IconTextButton's UpdateTextStyle because CommonButton.GetCurrentTextStyle
 the current source still lacks that method, and no new attachment attempt is claimed.
 A separate queue widget also lacks its original RebuildWidget override. No attachment or interactive
 UI is established. Material compatibility remains129/142.
-Next, restore the text-style getter's actual selection/style state dependencies, then its reflected
-method. Source proofs identify the selected transition/event graph and the remaining metadata/lifecycle
-bindings. Queue rendering requires the original animated switcher and callback/resource contracts.
-Portable selection/style/notification, text-style fallback and action-key lookup cores now
-exist in frontend/common_panel_runtime with original-image evidence and compiled tests.
-They remain unregistered: actual state/lifecycle, input-action/brush and delegate adapters
-must be implemented before runtime UI claims. Initialize and direct-parent lifecycle
-proofs identify real containment, callback binding and NativeConstruct dispatch; nested
-context registration and action-widget adapters remain unfinished (see HANDOFF.md).
-The engine-backed binding data/storage component now passes 26 controlled runtime cases,
-with real weak/delegate/value ownership and map/ID behavior. Its engine-backed settings, row
-and widget/local-player/router/CommonInput data resolvers now pass 20 additional cases;
-production creation/registration and routing remain unfinished. The current-input-type accessor is generator-integrated and UE-validated. Next, integrate the source-backed create entry for the
-shared action-binding registry and button selection/style lifecycle, then register the recovered
-text-style/display-text helpers and restore the original queue Slate graph. The shared record
-FText/array/delegate ownership contract is now implemented and engine-tested; do not substitute empty routing.
-Confirmation async-action factories, Activate/interface dispatch and queued presentation remain
-unfinished. Interactive startup, Blueprint execution and original pixels remain unverified; all four
-product milestones are open. Exact receipts and source release are in HANDOFF.md.
+The engine-backed binding data/storage component passes 26 controlled runtime cases
+with real weak/delegate/value ownership and map/ID behavior. Its settings, row and
+widget/local-player/router/CommonInput resolvers pass 20 cases. The original creation
+entry passes 23 more cases with exact rejection diagnostics, duplicate rules and
+owned ID-as-key insertion. Router association, lifecycle registration and input
+dispatch remain unfinished; do not substitute empty routing.
+
+Next, restore GetSelected/GetCurrentTextStyleClass with one source-proved mutable
+selected-state slot and typed Style/text-style CDO lookup. The two getters do not
+call production selection setters, Initialize, NativeConstruct or routing, so those
+unfinished producers need not block a faithful accessor checkpoint. Controlled
+mutation will test the reader; no fake setter or omitted transition callback is
+allowed. All future producers must use the same selected-state slot. The reviewed
+scratch candidate and exact validation requirements are in HANDOFF.md.
+
+Portable selection/notification, text-style fallback and action-key lookup cores
+have original-image evidence and compiled tests. Full selection transitions,
+action-widget/brush adapters and lifecycle integration remain unfinished. Queue
+rendering still requires the original Slate graph, animation and callback/resource
+contracts. Confirmation async factories, Activate/interface dispatch and queued
+presentation also remain unfinished. Interactive startup, original pixels and all
+four product milestones remain unverified. See HANDOFF.md for source releases,
+receipts and the next bounded implementation.
 
 ## Earlier checkpoints (historical)
 
