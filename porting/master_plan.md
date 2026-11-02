@@ -10,6 +10,13 @@ credentials in Git, and the orchestrator reviews and commits.
 
 ## Current baseline
 
+Native05c342ce / Engine87acab901: client build and36 CommonInput observations pass
+in the client ELF using server/NullRHI mode, including original421-row table and
+platform/settings constructors/controller brush selection. Module factory/name,
+transient outer and log category are now source-proven; production module/cache/
+GetIcon integration remains next. GUI UDEV EPERM persists; no milestone credit.
+See the latest HANDOFF.md snapshot for candidates and exact commands.
+
 Native6fea4772: double-click receiver/stop setter and base selected/deselected
 notifications pass the client build and21 controlled callback observations using
 the client ELF in server/NullRHI mode. Normal GUI startup fails before diagnostics:

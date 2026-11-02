@@ -1,23 +1,67 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
-## Active CommonInput implementation batch (2026-11-02, build pending)
+## Active CommonInput implementation batch (2026-11-02, client/headless PASS)
 
 Previous goal turn made progress: callbacks were committed/built and21 controlled
 headless observations passed. Current batch integrates the real platform struct
 constructor, settings constructor (all seven pre-config platform defaults and
 thrashing values), and ordered controller selection/single-key/key-set brush
-lookup. Settings cache preparation, module factory-name linkage and action-widget
-refresh/SetInputAction remain unfinished; full client/server goal and0/4 gates stay.
+lookup. Native05c342ce / Engine87acab901 client build PASS142.985s, Native source
+unchanged;36 headless diagnostic observations PASS (exit0,1.588s), original table
+421rows. All seven observed settings scalar records/empty arrays and thrashing
+values1/30/3.0/1.0 match original constructor values in this configuration. The
+normal config/template-copy lifecycle is preserved. Independent bounded original
+Bool setter reads confirm byte offsets0,2,3,5,6. Settings cache preparation,
+module production lifecycle and action-widget refresh/SetInputAction remain
+unfinished; full client/server goal and0/4 gates stay.
 
 Generation `/tmp/promote_common_input_batch_1.py` failed before writes because root
 called a platform-only model validator for every struct; `_2.py` corrects that
 hook and PASS:3 changed/2 added/0 removed,12732 mtimes restored. Reports under
-`/tmp/common-input-batch-promotion-{1,2}`; generator self-test141 PASS. The existing
-input-row diagnostic now has six bounded integration checks; not built/run yet.
-No GUI rerun: last turn confirmed sandbox UDEV monitor EPERM. Root owns Native,
-promotion/stage/build. Bounded Terra tasks supplied constructors, controller
-selection and fixture; Luna provided a small API map. Delegation/input rules below
-remain in force. Next: one client build and affected headless input diagnostic.
+`/tmp/common-input-batch-promotion-{1,2}`; generator self-test141 PASS. Six bounded
+integration checks extend the existing input-row diagnostic; verifier_v2 retains
+the unchanged original verifier for historical receipts. No GUI rerun: last turn
+confirmed sandbox UDEV monitor EPERM. Server/joins/broad unchanged suites and full
+archival/audit were not repeated for this UI batch. Root owns Native, promotion,
+stage/build. Models remain Luna medium read-only, Terra medium/high regular and
+Sol medium complex, fork_turns none; at most3 bounded workers, rotated at endpoints.
+
+Exact commands: `python3 /tmp/build_common_input_batch_1.py` and
+`python3 /tmp/run_common_input_batch_headless_1.py`. Results/logs/receipts under
+`porting/generated/common-input-batch-1/`: `results.json`, `FortniteLinux.log`,
+`input-headless/{runtime.log,receipt.json}` and `constructor-observation.json`.
+Receipt links exact build source/report hash and unchanged client ELF hash after
+run. Client ELF only was staged; no new symbol/archive/debugger claims. Handles
+32112/47709 are terminal; all current bounded agents finished.
+
+Source closures after build (no Native changes): frontend/common_input_module_identity_evidence proves
+CommonInput name -> pending registered delegate -> clone -> factory14081bef0;
+execute slot+48 loads factory+10. Pending-array append is traced directly; final
+map transfer matches Engine source, not separately traced machine code. It also
+proves outer142e80820 = GetTransientPackage through the named /Engine/Transient
+Package creation/global/root/unroot chain, and LogCommonInput category1480d3208
+(literal1459eb748, defaultLog5/compileAll7). These supersede older conditional
+identity statements. Bounded replay PASS; no full image hash repeated here.
+
+Next connected candidates: common_input_settings_cache_candidate has authentic
+validation/LoadSynchronous/rooting/copy order with the shared cache state and real
+LogCommonInput category, but is unintegrated/unbuilt and needs one module-owned log
+definition. common_action_widget_icon_candidate proves exec14080a9f0 -> actual
+GetIcon receiver1407c2ee0 -> registry-owned-player/subsystem ->1407c2f50. It retains
+typed row diagnostics, FSlateNoResource, per-row getter order, final gamepad/type/
+settings-preparation order and unchecked missing-subsystem dereference. Bounded
+replay PASS; its whole-image hash is historical, not rerun by default. Existing
+CommonActionBindingData::Find/Owner APIs are available; widget-specific key/owner
+lifecycle and production adapters are still needed, not another registry rewrite.
+
+NEXT: integrate real CommonInput module startup/shutdown, cache preparation and
+platform-copy access; expose source-proven current gamepad getter; connect actual
+CommonActionWidget GetIcon/SetInputAction/refresh and receiver lifecycle. Then
+complete CommonButton selection/focus/hover/Initialize/SetStyle. Preserve all
+callbacks, weak ownership, reentry and getter ordering; no no-op receivers or CDO
+substitutes for module-owned settings. Batch integration before next build. The
+dashboard rationale is updated, weights/measures/credit unchanged. Full client,
+server, lobby, matchmaking, gameplay, rendering/audio and all four gates stay open.
 
 ## Active resume: connected callback batch (2026-11-02, client build/headless PASS)
 
