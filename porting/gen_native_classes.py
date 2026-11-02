@@ -2182,6 +2182,10 @@ _button_style_spec = _common_activation_import.spec_from_file_location(
     "common_button_style_runtime_policy", os.path.join(os.path.dirname(__file__), "frontend", "common_button_style_runtime", "policy.py"))
 _button_style_policy = _common_activation_import.module_from_spec(_button_style_spec)
 _button_style_spec.loader.exec_module(_button_style_policy)
+_button_click_spec = _common_activation_import.spec_from_file_location(
+    "common_button_click_runtime_policy", os.path.join(os.path.dirname(__file__), "frontend", "common_button_click_runtime", "policy.py"))
+_button_click_policy = _common_activation_import.module_from_spec(_button_click_spec)
+_button_click_spec.loader.exec_module(_button_click_policy)
 _binding_data_spec = _common_activation_import.spec_from_file_location(
     "common_action_binding_data_policy", os.path.join(os.path.dirname(__file__), "frontend", "common_action_binding_runtime", "policy.py"))
 _binding_data_policy = _common_activation_import.module_from_spec(_binding_data_spec)
@@ -2238,6 +2242,7 @@ def build_class_promoted(block, name, resolver, parent_entry, owner_fns, snippet
     model = _current_input_type_policy.apply(model, block, owner_fns, native_execs)
     model = _fort_globals_policy.apply(model, block, owner_fns, native_execs)
     model = _button_style_policy.apply(model, block, owner_fns)
+    model = _button_click_policy.apply(model, block, owner_fns)
     return apply_blueprint_context_runtime_policy(model, block, name, resolver, parent_entry, owner_fns, snippets, splice_ctx)
 
 # ---------------------------------------------------------------- behaviour snippets (porting/behavior)
@@ -2996,6 +3001,7 @@ def render_promoted_header(model, api, parent_include, source_label):
         lines.extend(BLUEPRINT_CONTEXT_PHASE_DECLS.rstrip("\n").split("\n"))
     lines.extend(_common_activation_policy.declarations(model).splitlines())
     lines.extend(_button_style_policy.declarations(model).splitlines())
+    lines.extend(_button_click_policy.declarations(model).splitlines())
     lines.append("};")
     lines.append("")
     return "\n".join(lines) + "\n"
@@ -3139,7 +3145,7 @@ def render_promoted_cpp(model, source_label):
     result = "\n".join(lines) + "\n"
     if model.get("source_context_phases"):
         result += BLUEPRINT_CONTEXT_PHASE_BODIES
-    return result + _common_activation_policy.definitions(model) + _current_input_type_policy.definitions(model) + _fort_globals_policy.definitions(model) + _button_style_policy.definitions(model)
+    return result + _common_activation_policy.definitions(model) + _current_input_type_policy.definitions(model) + _fort_globals_policy.definitions(model) + _button_style_policy.definitions(model) + _button_click_policy.definitions(model)
 
 
 def build_engine_header_index(root):
@@ -3419,6 +3425,8 @@ def promote(args):
         if optional_sound is None:
             raise ValueError('original optional sound type unavailable')
         _button_style_policy.validate_classes(blocks_by_va, name_to_block, optional_sound.rec)
+        _button_click_policy.validate_classes(blocks_by_va, name_to_block,
+            load_json(os.path.join(args.types_dir or os.path.dirname(args.reflection), 'delegate_blocks.json'))['delegates'])
     if 'UCommonActivatablePanel' in listed:
         _common_activation_policy.validate_panel_outro_types(gate)
     if 'UCommonInputSubsystem' in listed:
@@ -3634,6 +3642,14 @@ def promote(args):
                 splice_rejects.append({"entry": "%s::%s" % (cls, e["function"]), "kind": e["kind"],
                                        "reason": "class is not generated (not in the native class set, or an interface)"})
     outputs = {n: (h, c) for n, _module, h, c in class_outputs}
+    if 'UCommonButton' in listed:
+        click_delegate = gate.info('0x140809810')
+        if click_delegate is None or click_delegate.header_name not in texts:
+            raise ValueError('original CommonButton click delegate output unavailable')
+        _button_click_policy.validate_output(
+            next(m for m in class_models if m['name'] == 'UCommonButton'),
+            outputs['UCommonButton'][0], texts[click_delegate.header_name],
+            outputs['UCommonUISubsystem'][0])
     for model in class_models:
         if model["splice"]["accepted"]:
             verify_spliced(model, *outputs[model["name"]])
