@@ -58,7 +58,17 @@ void Run(APlayerController* PC)
     Record(TEXT("repeat_false"), W->SyncCount == N+1 && W->TextTransformPolicy == ETextTransformPolicy::None);
     W->SetTextCase(true); W->TakeWidget();
     const FVector2D USize = W->SlateSize(); N = W->SyncCount; W->SetTextCase(false); const FVector2D USize2 = W->SlateSize();
-    Record(TEXT("live_widget"), W->HasSlate() && W->SyncCount == N+1 && W->Text.IdenticalTo(Raw) && W->SlateText().IdenticalTo(Raw) && W->bDisplayAllCaps && USize.X > 0 && USize.Y > 0 && USize2.X > 0 && USize2.Y > 0 && !FMath::IsNearlyEqual(USize.X, USize2.X, .01f));
+    const bool DefaultState = W->HasSlate() && W->SyncCount == N+1 && W->Text.IdenticalTo(Raw) && W->SlateText().IdenticalTo(Raw) && W->bDisplayAllCaps && USize.X > 0 && USize.Y > 0 && USize2.X > 0 && USize2.Y > 0;
+    UE_LOG(LogTemp, Display, TEXT("TEXT_TRANSFORM_UMG default_upper=(%g,%g) default_none=(%g,%g) state=%d font_size=%d"), USize.X, USize.Y, USize2.X, USize2.Y, int32(DefaultState), W->Font.Size);
+    UClass* Asset = LoadClass<UCommonTextStyle>(nullptr, TEXT("/Game/UI/Foundation/Buttons/TextStyles/TextStyle-Button-Primary-M.TextStyle-Button-Primary-M_C"));
+    UCommonTextStyle* AssetCDO = Asset ? Cast<UCommonTextStyle>(Asset->GetDefaultObject()) : nullptr;
+    // Case-dependent width is font/size dependent (hinting can round distinct advances equally).
+    // Require geometry changes using the same recovered font as the real layout checks below.
+    if (AssetCDO) W->SetFont(AssetCDO->Font);
+    W->SetTextCase(true); const FVector2D GameUpper = W->SlateSize(); N = W->SyncCount;
+    W->SetTextCase(false); const FVector2D GameNone = W->SlateSize();
+    UE_LOG(LogTemp, Display, TEXT("TEXT_TRANSFORM_UMG original_upper=(%g,%g) original_none=(%g,%g)"), GameUpper.X, GameUpper.Y, GameNone.X, GameNone.Y);
+    Record(TEXT("live_widget"), DefaultState && AssetCDO && W->Font == AssetCDO->Font && W->SyncCount == N+1 && W->Text.IdenticalTo(Raw) && W->SlateText().IdenticalTo(Raw) && W->bDisplayAllCaps && GameUpper.X > 0 && GameUpper.Y > 0 && GameNone.X > 0 && GameNone.Y > 0 && !FMath::IsNearlyEqual(GameUpper.X, GameNone.X, .01f));
 
     // The widget's cache is private. This second real cache uses the same widget args and
     // marshaller, with a factory that only retains the actual FSlateTextLayout it creates.
@@ -72,8 +82,7 @@ void Run(APlayerController* PC)
     Record(TEXT("bound_policy_volatile"), PolicyOnly->IsVolatile());
     TSharedPtr<FSlateTextLayout> Captured;
     auto Factory = FCreateSlateTextLayout::CreateLambda([&Captured](SWidget* Owner, const FTextBlockStyle& Style) { auto L = FSlateTextLayout::Create(Owner, Style); Captured = L; return L; });
-    UClass* Asset = LoadClass<UCommonTextStyle>(nullptr, TEXT("/Game/UI/Foundation/Buttons/TextStyles/TextStyle-Button-Primary-M.TextStyle-Button-Primary-M_C"));
-    UCommonTextStyle* AssetCDO = Asset ? Cast<UCommonTextStyle>(Asset->GetDefaultObject()) : nullptr;
+
     FTextBlockStyle Style = FTextBlockStyle::GetDefault(); if (AssetCDO) Style.SetFont(AssetCDO->Font);
     if (AssetCDO) UE_LOG(LogTemp, Display, TEXT("TEXT_TRANSFORM_ASSET style=%s"), *Asset->GetPathName());
     Record(TEXT("original_font"), Asset && Asset->HasAnyFlags(RF_WasLoaded) && AssetCDO && Style.Font == AssetCDO->Font);
