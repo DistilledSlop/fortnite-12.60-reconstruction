@@ -50,5 +50,8 @@ public:
 	UPROPERTY()
 	UFortProgressWidget* ProgressWidget_Main;
 
+protected:
+    UFUNCTION(BlueprintCallable)
+    void InitializeModal();
 };
 

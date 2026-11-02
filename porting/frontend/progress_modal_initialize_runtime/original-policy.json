@@ -1,0 +1,155 @@
+{
+  "modal_identity": {
+    "block_va": "0x146fabb90",
+    "package_fn": "0x1451eb010",
+    "base_fn": "0x145299720",
+    "class_noregister_fn": "0x1452ad620"
+  },
+  "widget_identity": {
+    "block_va": "0x146fabd90",
+    "package_fn": "0x140816d40",
+    "base_fn": "0x145299720",
+    "class_noregister_fn": "0x1452ada40"
+  },
+  "modal_properties": [
+    {
+      "index": 0,
+      "name": "ProgressWidget_Main",
+      "kind": "Object",
+      "kind_raw": "0x12",
+      "property_flags": "0x4000000008001c",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 1288,
+      "type_refs": {
+        "class": "0x1452add30"
+      }
+    },
+    {
+      "index": 5,
+      "name": "Icon",
+      "kind": "Struct",
+      "kind_raw": "0x19",
+      "property_flags": "0x11000000000005",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 1144,
+      "type_refs": {
+        "struct": "0x142fdb590"
+      }
+    },
+    {
+      "index": 6,
+      "name": "Description",
+      "kind": "Text",
+      "kind_raw": "0x1d",
+      "property_flags": "0x11000000000005",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 1120
+    },
+    {
+      "index": 7,
+      "name": "Title",
+      "kind": "Text",
+      "kind_raw": "0x1d",
+      "property_flags": "0x11000000000005",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 1096
+    }
+  ],
+  "widget_properties": [
+    {
+      "index": 0,
+      "name": "Image_MainIcon",
+      "kind": "Object",
+      "kind_raw": "0x12",
+      "property_flags": "0x4000000008001c",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 616,
+      "type_refs": {
+        "class": "0x143daaa70"
+      }
+    },
+    {
+      "index": 1,
+      "name": "Text_Description",
+      "kind": "Object",
+      "kind_raw": "0x12",
+      "property_flags": "0x4000000008001c",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 608,
+      "type_refs": {
+        "class": "0x1408132a0"
+      }
+    },
+    {
+      "index": 2,
+      "name": "Text_Title",
+      "kind": "Object",
+      "kind_raw": "0x12",
+      "property_flags": "0x4000000008001c",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 600,
+      "type_refs": {
+        "class": "0x1408132a0"
+      }
+    }
+  ],
+  "function": {
+    "name": "InitializeModal",
+    "create_func": "0x1452ad7f0",
+    "flags": [
+      "0x4080401"
+    ],
+    "replicated_function": false,
+    "net_roles": [],
+    "outer_fn": "0x1452ad6f0",
+    "params": []
+  },
+  "exec": {
+    "exec_addr": "0x1452b1900",
+    "flags": "0x4080401",
+    "params": [],
+    "create_func": "0x1452ad7f0",
+    "source": "lea"
+  },
+  "windows": [
+    {
+      "label": "exec",
+      "start": "0x1452b1900",
+      "end": "0x1452b191a",
+      "sha256": "dca7a37753001350c0b91cb9597cc1396e5d0e73782c51cc2a98534186689e3a"
+    },
+    {
+      "label": "initialize",
+      "start": "0x144f651e0",
+      "end": "0x144f65275",
+      "sha256": "9b21a7244dcc9525b32dcf43fcadd7dec00c8bbabc8ebdaf799f4cb752591087"
+    },
+    {
+      "label": "widget_initialize",
+      "start": "0x144e0d2b0",
+      "end": "0x144e0d4d5",
+      "sha256": "46cfc1ed8d43d27fd0134ffeac6dd41268e064d3993fb42e490834a6366cae65"
+    }
+  ]
+}
