@@ -14,7 +14,8 @@ class MainButtonQuery(unittest.TestCase):
     def model(self):
         return {'name':'UCommonButton', 'package':'/Script/CommonUI', 'functions':[]}
     def block(self):
-        return {'block_va':'0x145a01210', 'functions':[copy.deepcopy(p.MAIN_BUTTON_QUERY_EXPECTED)]}
+        return {'block_va':'0x145a01210', 'functions':[copy.deepcopy(p.MAIN_BUTTON_QUERY_EXPECTED)],
+                'properties':copy.deepcopy(list(p.MAIN_BUTTON_DEFAULTS_EXPECTED.values()))}
     def run_it(self, m=None, b=None, owner=None):
         return p.apply(self.model() if m is None else m, self.block() if b is None else b,
                        {'0x140805cb0'} if owner is None else owner)
@@ -44,6 +45,16 @@ class MainButtonQuery(unittest.TestCase):
                 with self.subTest(group=group,name=name), self.assertRaises(ValueError): self.run_it(m=m)
         m=self.model();m['common_button_query_runtime']=True
         with self.assertRaises(ValueError): self.run_it(m=m)
+    def test_constructor_property_guards(self):
+        for name in p.MAIN_BUTTON_DEFAULTS_EXPECTED:
+            for change in ('missing', 'duplicate', 'setter', 'flags'):
+                b=self.block()
+                row=next(x for x in b['properties'] if x['name']==name)
+                if change=='missing': b['properties'].remove(row)
+                elif change=='duplicate': b['properties'].append(copy.deepcopy(row))
+                elif change=='setter': row['set_bit_fn']='0x0'
+                else: row['property_flags']='0x0'
+                with self.subTest(name=name,change=change), self.assertRaises(ValueError): self.run_it(b=b)
     def test_exact_cpp_bodies(self):
         decl=(HERE/'main-button-query-declarations.inc').read_text()
         defs=(HERE/'main-button-query-definitions.inc').read_text()
@@ -51,7 +62,13 @@ class MainButtonQuery(unittest.TestCase):
 #include <cassert>
 #include <vector>
 enum class ESlateVisibility { Visible, Collapsed, Hidden, HitTestInvisible, SelfHitTestInvisible };
-struct UCommonButton {
+struct FObjectInitializer { static const FObjectInitializer& Get() { static FObjectInitializer Value; return Value; } };
+struct Parent { explicit Parent(const FObjectInitializer&) {} bool bIsFocusable=false; };
+struct UCommonButton : Parent {
+ using Super=Parent;
+ bool bApplyAlphaOnDisable=false, bSelectable=true, bShouldSelectUponReceivingFocus=true;
+ bool bToggleable=true, bDisplayInputActionWhenNotInteractable=false, bShouldUseFallbackDefaultInputAction=false;
+ bool bInteractableWhenSelected=true, bHideInputActionWithKeyboard=true;
  mutable std::vector<int> calls;
  ESlateVisibility visibility=ESlateVisibility::Visible;
  bool widgetEnabled=true, bIsEnabled=false, bInteractionEnabled=false;
@@ -65,6 +82,10 @@ struct UCommonButton {
 ''' + defs + r'''
 int main() {
  UCommonButton defaults; assert(defaults.IsInteractionEnabled());
+ assert(defaults.bApplyAlphaOnDisable && !defaults.bSelectable && !defaults.bShouldSelectUponReceivingFocus);
+ assert(!defaults.bToggleable && defaults.bDisplayInputActionWhenNotInteractable);
+ assert(defaults.bShouldUseFallbackDefaultInputAction && defaults.bIsFocusable);
+ assert(defaults.bInteractableWhenSelected && defaults.bHideInputActionWithKeyboard);
  for (int v=0;v<5;++v) for (int w=0;w<2;++w) for (int a=0;a<2;++a) for (int b=0;b<2;++b)
  for (int reflected=0;reflected<4;++reflected) {
    UCommonButton x; x.visibility=static_cast<ESlateVisibility>(v); x.widgetEnabled=w;

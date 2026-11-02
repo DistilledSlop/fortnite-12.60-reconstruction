@@ -5,6 +5,7 @@ HERE = Path(__file__).resolve().parent
 EXPECTED = json.loads((HERE / 'base-original-policy.json').read_text())
 BUTTON_EXPECTED = json.loads((HERE / 'button-original-policy.json').read_text())
 MAIN_BUTTON_QUERY_EXPECTED = json.loads((HERE / 'main-button-query-original-policy.json').read_text())
+MAIN_BUTTON_DEFAULTS_EXPECTED = json.loads((HERE / 'main-button-defaults-original-policy.json').read_text())
 MANAGER_EXPECTED = json.loads((HERE / 'manager-original-policy.json').read_text())
 
 def apply(model, block, owner_fns):
@@ -42,6 +43,9 @@ def apply_main_button_query(model, block, owner_fns):
     found = [f for f in block.get('functions', []) if f.get('name') == 'IsInteractionEnabled']
     if found != [MAIN_BUTTON_QUERY_EXPECTED]:
         raise ValueError('original IsInteractionEnabled signature mismatch')
+    for name, expected in MAIN_BUTTON_DEFAULTS_EXPECTED.items():
+        if [p for p in block.get('properties', []) if p.get('name') == name] != [expected]:
+            raise ValueError('original CommonButton constructor property mismatch: ' + name)
     names = {'IsInteractionEnabled', 'NativeIsInteractionEnabled',
              'bNativeButtonEnabled', 'bNativeInteractionEnabled'}
     for group in ('functions', 'members_table_order', 'members_decl_order', 'fields', 'helpers', 'static_helpers'):

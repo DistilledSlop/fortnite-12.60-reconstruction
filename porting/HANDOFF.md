@@ -2,6 +2,12 @@
 
 ## Current resume point (2026-11-02)
 
+- Candidate default fix: maintained CommonButton constructor restores six explicit
+  reflected flag values plus inherited focus. MainButtonStateProbe now checks them
+  on CDO and new widget. Portable query/default tests5pass; UE build/runtime pending.
+  Evidence/policy: frontend/common_panel_runtime/main-button-defaults-*.
+  Full unreflected constructor state and lifecycle remain incomplete; this is an
+  independent default fix, not registration of the unintegrated cores below.
 - New source work: common_panel_runtime/{CommonButtonSelectionCore.h,
   CommonButtonTextStyleCore.h,CommonActionKeyLookupCore.h} implements portable recovered
   selection/style/notification order, text-style fallback and ordered controller/key lookup.

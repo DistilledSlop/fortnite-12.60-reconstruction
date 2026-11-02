@@ -9,7 +9,13 @@ class UMainButtonStateProbeWidget : public UCommonButton
 {
     GENERATED_BODY()
 public:
-    bool NativeDefaults() const { return bNativeButtonEnabled && bNativeInteractionEnabled; }
+    bool NativeDefaults() const
+    {
+        return bNativeButtonEnabled && bNativeInteractionEnabled && bApplyAlphaOnDisable
+            && !bSelectable && !bShouldSelectUponReceivingFocus && !bToggleable
+            && bDisplayInputActionWhenNotInteractable && bShouldUseFallbackDefaultInputAction
+            && bIsFocusable;
+    }
     void Configure(ESlateVisibility Visibility, bool WidgetEnabled, bool NativeEnabled, bool InteractionEnabled)
     {
         UWidget::SetIsEnabled(WidgetEnabled);

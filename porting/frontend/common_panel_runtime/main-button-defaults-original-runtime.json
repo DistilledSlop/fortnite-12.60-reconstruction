@@ -1,0 +1,73 @@
+{
+  "image_base": "0x140000000",
+  "image_sha256": "338c83a2314ccac1040a2c0bb520b893013cc7b58eda58e550da67f5d84de680",
+  "scope": "Explicit reflected constructor defaults and inherited focus flag only. Unreflected native storage and full class lifecycle remain incomplete.",
+  "spans": [
+    {
+      "name": "constructor",
+      "start": "0x140796950",
+      "end": "0x140796b69",
+      "sha256": "6991da4a3b091dc9bc3b0b6ccddde5a0f1b25ceab6067c26d2bd600809a20aea"
+    },
+    {
+      "name": "registration",
+      "start": "0x140807cd0",
+      "end": "0x140807d82",
+      "sha256": "c21e0c377a6bc3a4566c02879b9ab4df4cbda83901802b7494a9fdbd338680a0"
+    },
+    {
+      "name": "wrapper",
+      "start": "0x140808120",
+      "end": "0x140808134",
+      "sha256": "b97b88a23e9c40df968600bfb411b3807da9ca0a68f787d2473cf41fea34b31b"
+    },
+    {
+      "name": "focusable_property",
+      "start": "0x147cb60b0",
+      "end": "0x147cb60e8",
+      "sha256": "d08bb134911cf488d580916cbf282cc3cc310afb9bb16f4d1a8a6d77563fd72e"
+    },
+    {
+      "name": "focusable_setter",
+      "start": "0x143dbe1d0",
+      "end": "0x143dbe1d8",
+      "sha256": "f434a99cd2af01ed23f80df117addfb9ccdc16ce803b6568c436184d51d9bdbc"
+    },
+    {
+      "name": "bShouldUseFallbackDefaultInputAction_setter",
+      "start": "0x140809000",
+      "end": "0x140809008",
+      "sha256": "dc64b8796528797ac2899ac55956901365baf0eac18587b3e4de0c3229143f36"
+    },
+    {
+      "name": "bDisplayInputActionWhenNotInteractable_setter",
+      "start": "0x140808f10",
+      "end": "0x140808f18",
+      "sha256": "c307874b1e7185c1ca02096f6669a45b7c2d223428177d70f9a082cca062c0ce"
+    },
+    {
+      "name": "bToggleable_setter",
+      "start": "0x140809020",
+      "end": "0x140809028",
+      "sha256": "a091aa7889093caec89fc0080eedd272c4a78feb3f7d93ef833f0f69726d8d83"
+    },
+    {
+      "name": "bShouldSelectUponReceivingFocus_setter",
+      "start": "0x140808ff0",
+      "end": "0x140808ff8",
+      "sha256": "9ba4c31f577cde03bb0bc53ce2f98e6ca89c8c3dd2b1ea304c61a3c8369d9676"
+    },
+    {
+      "name": "bSelectable_setter",
+      "start": "0x140808fb0",
+      "end": "0x140808fb8",
+      "sha256": "2f2b41dd032c346835f33dff58d7bc80699a935163979f028091cc5f22f382b5"
+    },
+    {
+      "name": "bApplyAlphaOnDisable_setter",
+      "start": "0x140808ec0",
+      "end": "0x140808ec8",
+      "sha256": "43c63338a721cd5e3c073b78e3ef93c7975d7850152e8734349ca3c986f867e2"
+    }
+  ]
+}
