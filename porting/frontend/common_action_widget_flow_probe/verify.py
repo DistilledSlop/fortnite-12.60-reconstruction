@@ -13,8 +13,9 @@ LINE = re.compile(r"ACTIONWIDGETFLOW v=1 seq=(\d+) event=([a-z_]+) ok=([01])(?:\
 def verify(text):
     rows = LINE.findall(text)
     expected = [(str(i), event, "1") for i, event in enumerate(EVENTS, 1)]
-    if rows != expected:
+    if rows != expected or text.count("ACTIONWIDGETFLOW") != len(expected):
         raise ValueError(f"diagnostic transcript mismatch: {rows!r}")
+    return {"passed": True, "rows": len(EVENTS), "scope": "controlled UObject/Slate action-widget flow; no authentic frontend, pixels, audio or full input routing claim"}
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
