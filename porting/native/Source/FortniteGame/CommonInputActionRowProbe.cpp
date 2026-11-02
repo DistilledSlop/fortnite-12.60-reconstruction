@@ -2,6 +2,7 @@
 #include "FCommonInputActionData.h"
 #include "FCommonInputPlatformData.h"
 #include "UCommonInputSettings.h"
+#include "CommonInputModuleRuntime.h"
 #include "CommonInputControllerBrushLookup.h"
 #include "Engine/Texture2D.h"
 #include "Engine/DataTable.h"
@@ -138,6 +139,29 @@ void CheckBatch()
     Second->InputBrushDataMap.Empty();
 }
 
+void CheckCacheLifecycle()
+{
+    UCommonInputSettings* ModuleSettings = GetCommonInputSettings();
+    Record(TEXT("cache_module_instance"), ModuleSettings && ModuleSettings != GetDefault<UCommonInputSettings>() &&
+        ModuleSettings->GetOuter() == GetTransientPackage() && ModuleSettings->IsRooted() &&
+        GetCommonInputSettings() == ModuleSettings);
+    UCommonInputSettings* Settings = NewObject<UCommonInputSettings>();
+    Settings->InputData.Reset();
+    Settings->CommonInputPlatformData[0].ControllerData.Empty();
+    Settings->CommonInputPlatformData[0].ControllerDataClasses.Empty();
+    Settings->CommonInputPlatformData[0].ControllerData.Add(UCommonInputProbeControllerFirst::StaticClass());
+    FCommonInputPlatformData Copy = Settings->NativeGetCurrentPlatformData();
+    Record(TEXT("cache_resolve_and_copy"), Copy.ControllerDataClasses.Num() == 1 &&
+        Copy.ControllerDataClasses[0] == UCommonInputProbeControllerFirst::StaticClass() &&
+        Settings->CurrentPlatform.ControllerDataClasses.Num() == 1 && !Settings->InputDataClass);
+    Copy.ControllerDataClasses.Empty();
+    Record(TEXT("cache_return_by_value"), Settings->CurrentPlatform.ControllerDataClasses.Num() == 1);
+    Settings->CurrentPlatform.ControllerDataClasses.Empty();
+    Copy = Settings->NativeGetCurrentPlatformData();
+    Record(TEXT("cache_membership_invalidation"), Copy.ControllerDataClasses.Num() == 1 &&
+        Copy.ControllerDataClasses[0] == UCommonInputProbeControllerFirst::StaticClass());
+}
+
 void Run()
 {
     FCommonInputActionData Row;
@@ -204,6 +228,7 @@ void Tick()
     FCoreDelegates::OnEndFrame.Remove(FrameHandle);
     Run();
     CheckBatch();
+    CheckCacheLifecycle();
     Record(TEXT("complete"), !Failed);
     FPlatformMisc::RequestExitWithStatus(false, Failed ? 1 : 0);
 }

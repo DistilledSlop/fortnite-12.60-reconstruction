@@ -1,0 +1,79 @@
+{
+  "windows": [
+    {
+      "va": "0x1401c7e20",
+      "size": 66,
+      "sha256": "dd2fc6cac0bd3d00abb1189265c7c840d5343ed2e5de85e24f3a323997e4abd8"
+    },
+    {
+      "va": "0x1401c7e90",
+      "size": 299,
+      "sha256": "aaa2961600ca2d6549832d2f29c2ea2ecffd28037c800d8cb075ce1e9af1194f"
+    },
+    {
+      "va": "0x1407c4fc0",
+      "size": 148,
+      "sha256": "122c5932cfe205855f58ae63a45c9e9123e7e5e3a178842c8cabd88be6bf0065"
+    },
+    {
+      "va": "0x14081bef0",
+      "size": 47,
+      "sha256": "05f4fa7822f13f8c3a823fd1890d7a40d1cc0c2d8f64780dc3b71d4c53ee1775"
+    },
+    {
+      "va": "0x14081d150",
+      "size": 224,
+      "sha256": "a7abcaed3e383962bd2f8e0dedc4324e8ba47889169cedc76f5766b0634061d3"
+    },
+    {
+      "va": "0x1407fb490",
+      "size": 107,
+      "sha256": "db5cba21e696201f0efbf02f52c50b0c20eb04555defb50bd19062ca2f9f05e3"
+    },
+    {
+      "va": "0x140680310",
+      "size": 5,
+      "sha256": "fc46ea8acdf166d47f2230b3d3975fbd0a4a0f5c898b7c2b2ec854359cb94b85"
+    },
+    {
+      "va": "0x145a0db48",
+      "size": 72,
+      "sha256": "fab186f60ff1b07c5fcb5491834707d58fc6a350d3205c19c895084d205d369a"
+    },
+    {
+      "va": "0x142e80820",
+      "size": 8,
+      "sha256": "e92d71f6dbc5ebda340fc196ab9c61bf60dd8901544591346e00e7340fad4efd"
+    },
+    {
+      "va": "0x142e839b6",
+      "size": 186,
+      "sha256": "ec30643bbb05eeefe3459beb3dd0c182879cf4a1cd520df7df5230ac125ed340"
+    },
+    {
+      "va": "0x142e8dca0",
+      "size": 122,
+      "sha256": "237b3ac7fc821e01becb5bbcadeebc8026d557cf3da5bc19aeb029eba0cd7d9b"
+    },
+    {
+      "va": "0x142e8de60",
+      "size": 24,
+      "sha256": "871b44b58c46985f100571e392fb5fedfbef6d8272ab6010dec0c4460157a996"
+    },
+    {
+      "va": "0x145a0d5b8",
+      "size": 24,
+      "sha256": "bddd9d6c014789f002ec98238e3293c11cf2e538bf7c299f6b204e38a073a07f"
+    },
+    {
+      "va": "0x1459eb748",
+      "size": 30,
+      "sha256": "17d0e45b14746d73507aee9763b97b2656fae33c218fef9e3ed51a215e0cb274"
+    },
+    {
+      "va": "0x146619cc8",
+      "size": 36,
+      "sha256": "400cb59f1b7b43f715562fc3080bfacce80b99af24954ebd6c7b93cb0c4dac3a"
+    }
+  ]
+}

@@ -14,7 +14,7 @@ import main_button_verifier
 import panel_intro_verifier
 import panel_outro_verifier
 import confirmation_description_verifier
-import common_input_action_row_verifier
+import common_input_action_row_verifier_v3 as common_input_action_row_verifier
 import current_input_type_verifier
 import binding_data_verifier
 import binding_provider_verifier

@@ -5,3 +5,7 @@ ECommonInputType UCommonInputSubsystem::GetCurrentInputType() const
 {
     return CurrentInputType;
 }
+ECommonGamepadType UCommonInputSubsystem::NativeGetGamepadInputType() const
+{
+    return GamepadInputType;
+}

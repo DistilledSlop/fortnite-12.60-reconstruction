@@ -1,0 +1,62 @@
+{
+  "gamepad_properties": [
+    {
+      "index": 5,
+      "name": "GamepadInputType",
+      "kind": "Enum",
+      "kind_raw": "0x1e",
+      "property_flags": "0x40000000002000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 122,
+      "type_refs": {
+        "enum": "0x14081edf0"
+      }
+    },
+    {
+      "index": 6,
+      "name": "UnderlyingType",
+      "kind": "Byte",
+      "kind_raw": "0x0",
+      "property_flags": "0x0",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "enum_underlying_of": "GamepadInputType"
+    }
+  ],
+  "input_actions": [
+    {
+      "index": 1,
+      "name": "InputActions",
+      "kind": "Array",
+      "kind_raw": "0x16",
+      "property_flags": "0x20080000000015",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 560
+    },
+    {
+      "index": 2,
+      "name": "InputActions",
+      "kind": "Struct",
+      "kind_raw": "0x19",
+      "property_flags": "0x0",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "type_refs": {
+        "struct": "0x1446f2880"
+      },
+      "array_inner_of": "InputActions"
+    }
+  ]
+}

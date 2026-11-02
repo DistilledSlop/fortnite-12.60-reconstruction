@@ -2184,6 +2184,18 @@ _input_settings_spec = _common_activation_import.spec_from_file_location(
     "common_input_settings_policy", os.path.join(os.path.dirname(__file__), "frontend", "common_input_settings_runtime", "policy.py"))
 _input_settings_policy = _common_activation_import.module_from_spec(_input_settings_spec)
 _input_settings_spec.loader.exec_module(_input_settings_policy)
+_input_module_spec = _common_activation_import.spec_from_file_location(
+    "common_input_module_runtime_policy", os.path.join(os.path.dirname(__file__), "frontend", "common_input_module_runtime", "policy.py"))
+_input_module_policy = _common_activation_import.module_from_spec(_input_module_spec)
+_input_module_spec.loader.exec_module(_input_module_policy)
+_input_cache_spec = _common_activation_import.spec_from_file_location(
+    "common_input_settings_cache_runtime_policy", os.path.join(os.path.dirname(__file__), "frontend", "common_input_settings_cache_runtime", "policy.py"))
+_input_cache_policy = _common_activation_import.module_from_spec(_input_cache_spec)
+_input_cache_spec.loader.exec_module(_input_cache_policy)
+_action_widget_spec = _common_activation_import.spec_from_file_location(
+    "common_action_widget_runtime_policy", os.path.join(os.path.dirname(__file__), "frontend", "common_action_widget_runtime_candidate", "policy.py"))
+_action_widget_policy = _common_activation_import.module_from_spec(_action_widget_spec)
+_action_widget_spec.loader.exec_module(_action_widget_policy)
 _current_input_type_spec = _common_activation_import.spec_from_file_location(
     "common_input_current_type_policy", os.path.join(os.path.dirname(__file__), "frontend", "common_input_current_type", "policy.py"))
 _current_input_type_policy = _common_activation_import.module_from_spec(_current_input_type_spec)
@@ -2262,12 +2274,14 @@ def build_class_promoted(block, name, resolver, parent_entry, owner_fns, snippet
     }
     model = _common_activation_policy.apply(model, block, owner_fns, native_execs)
     model = _current_input_type_policy.apply(model, block, owner_fns, native_execs)
+    model = _action_widget_policy.apply_gamepad(model, block, owner_fns)
     model = _fort_globals_policy.apply(model, block, owner_fns, native_execs)
     model = _button_style_policy.apply(model, block, owner_fns)
     model = _button_click_policy.apply(model, block, owner_fns)
     model = _button_double_click_policy.apply(model, block, owner_fns, native_execs)
     model = _button_selection_policy.apply(model, block, owner_fns)
     model = _input_settings_policy.apply(model, block, owner_fns)
+    model = _input_cache_policy.apply(model, block, owner_fns)
     return apply_blueprint_context_runtime_policy(model, block, name, resolver, parent_entry, owner_fns, snippets, splice_ctx)
 
 # ---------------------------------------------------------------- behaviour snippets (porting/behavior)
@@ -3030,6 +3044,8 @@ def render_promoted_header(model, api, parent_include, source_label):
     lines.extend(_button_double_click_policy.declarations(model).splitlines())
     lines.extend(_button_selection_policy.declarations(model).splitlines())
     lines.extend(_input_settings_policy.declarations(model).splitlines())
+    lines.extend(_input_cache_policy.declarations(model).splitlines())
+    lines.extend(_action_widget_policy.gamepad_declarations(model).splitlines())
     lines.append("};")
     lines.append("")
     return "\n".join(lines) + "\n"
@@ -3173,7 +3189,7 @@ def render_promoted_cpp(model, source_label):
     result = "\n".join(lines) + "\n"
     if model.get("source_context_phases"):
         result += BLUEPRINT_CONTEXT_PHASE_BODIES
-    return result + _common_activation_policy.definitions(model) + _current_input_type_policy.definitions(model) + _fort_globals_policy.definitions(model) + _button_style_policy.definitions(model) + _button_click_policy.definitions(model) + _button_double_click_policy.definitions(model) + _button_selection_policy.definitions(model) + _input_settings_policy.definitions(model)
+    return result + _common_activation_policy.definitions(model) + _current_input_type_policy.definitions(model) + _fort_globals_policy.definitions(model) + _button_style_policy.definitions(model) + _button_click_policy.definitions(model) + _button_double_click_policy.definitions(model) + _button_selection_policy.definitions(model) + _input_settings_policy.definitions(model) + _input_cache_policy.definitions(model) + _action_widget_policy.gamepad_definitions(model)
 
 
 def build_engine_header_index(root):
@@ -3463,6 +3479,7 @@ def promote(args):
         _common_activation_policy.validate_panel_outro_types(gate)
     if 'UCommonInputSubsystem' in listed:
         _current_input_type_policy.validate_types(gate)
+        _action_widget_policy.validate_types(gate)
     if 'UCommonUIInputSettings' in listed:
         _binding_data_policy.validate_types(gate)
     if 'UCommonInputControllerData' in listed:
@@ -3472,6 +3489,11 @@ def promote(args):
         _input_platform_policy.validate(gate)
     if 'UCommonInputSettings' in listed:
         _input_settings_policy.validate_classes(blocks_by_va, name_to_block)
+        _input_cache_policy.validate_classes(blocks_by_va, name_to_block)
+        _input_cache_policy.validate_types(gate)
+        _input_module_policy.validate_classes(blocks_by_va, name_to_block)
+    input_module_sources = (_input_module_policy.sources('CommonInput', blocks_by_va, name_to_block)
+                            if 'UCommonInputSettings' in listed else None)
     header_index = ModuleHeaderIndex(registry)
     source_label = os.path.relpath(args.reflection, REPO)
 
@@ -3529,6 +3551,8 @@ def promote(args):
                                    | set(model["splice"].get("header_includes", set())))
         if name == 'UCommonInputControllerData':
             _controller_brush_policy.validate_model(model)
+        if model.get('common_input_settings_cache_runtime'):
+            model['cpp_includes'] = sorted(set(model['cpp_includes']) | {'UObject/UObjectArray.h'})
         if model.get('common_button_double_click_runtime'):
             model["includes"] = sorted(set(model["includes"]) | {'Input/Reply.h'})
         interface_modules = include_interface_headers(model, iface_packages)
@@ -3568,6 +3592,7 @@ def promote(args):
         api = "%s_API" % module.upper()
         header = render_promoted_header(model, api, parent_include, source_label)
         cpp = render_promoted_cpp(model, source_label)
+        _input_cache_policy.validate_rendered(model, header, cpp)
         if re.search(r"TODO_", header + cpp):
             raise SystemExit("%s: unresolved TODO token reached the output" % name)
         class_outputs.append((name, module, header, cpp))
@@ -3740,7 +3765,11 @@ def promote(args):
         with open(os.path.join(module_dir, module + ".Build.cs"), "w", encoding="utf-8", newline="\n") as fh:
             fh.write(render_module_build_cs(module, own, source_label))
         with open(os.path.join(module_dir, "Private", module + ".cpp"), "w", encoding="utf-8", newline="\n") as fh:
-            fh.write(render_module_cpp(module, source_label))
+            fh.write(input_module_sources["CommonInput.cpp"] if module == "CommonInput" and input_module_sources
+                     else render_module_cpp(module, source_label))
+        if module == "CommonInput" and input_module_sources:
+            with open(os.path.join(module_dir, "Generated", "CommonInputModuleRuntime.h"), "w", encoding="utf-8", newline="\n") as fh:
+                fh.write(input_module_sources["CommonInputModuleRuntime.h"])
 
     type_files = []
     for fn, model in sorted(models.items(), key=lambda kv: (kv[1]["kind"], kv[1]["cpp_name"])):
@@ -4259,6 +4288,7 @@ class TypeGate:
             model = _input_platform_policy.apply_struct(info, model)
             if info.cpp_name == 'FCommonInputPlatformData':
                 _controller_brush_policy.validate_platform_model(info, model)
+                _input_cache_policy.validate_platform_model(info, model)
             return model, None
         finally:
             self.current_package = saved
