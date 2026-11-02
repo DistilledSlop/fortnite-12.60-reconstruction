@@ -1,0 +1,113 @@
+{
+  "identity": {
+    "block_va": "0x146f34ea0",
+    "class_noregister_fn": "0x14523f270",
+    "base_fn": "0x145299720",
+    "package_fn": "0x14298ac70",
+    "class_flags": "0x8800a0"
+  },
+  "owner_fn": "0x145241240",
+  "function": {
+    "name": "IsInZone",
+    "create_func": "0x14523fcb0",
+    "flags": [
+      "0x54020401"
+    ],
+    "replicated_function": false,
+    "net_roles": [],
+    "outer_fn": "0x145241240",
+    "params": [
+      {
+        "index": 0,
+        "name": "ReturnValue",
+        "kind": "Bool",
+        "kind_raw": "0x2c",
+        "property_flags": "0x10000000000580",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "element_size": 1,
+        "size_of_outer": 1,
+        "bitfield": true,
+        "set_bit_fn": "0x1406966a0",
+        "offset": null
+      }
+    ]
+  },
+  "native": {
+    "exec_addr": "0x14524a360",
+    "flags": "0x54020401",
+    "params": [
+      {
+        "index": 0,
+        "name": "ReturnValue",
+        "kind": "Bool",
+        "kind_raw": "0x2c",
+        "property_flags": "0x10000000000580",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "element_size": 1,
+        "size_of_outer": 1,
+        "bitfield": true,
+        "offset": null
+      }
+    ],
+    "create_func": "0x14523fcb0",
+    "source": "lea"
+  },
+  "windows": [
+    {
+      "va": "0x14524a360",
+      "length": 43,
+      "sha256": "343d9876880801bb0c4bd56d4b96ef202ce8bbba2c01bc726e0dcebd26dbb412"
+    },
+    {
+      "va": "0x144cd7a20",
+      "length": 201,
+      "sha256": "59be2c79be583795f8ec4dc08890e171f0cfd8e5f61d36cbd39f89d0021e9bdb"
+    },
+    {
+      "va": "0x144cb7e90",
+      "length": 215,
+      "sha256": "703882ef7b64dfb1ddd3fe2ab1e8308b7e8f686e4ab9cc7250e7d18ca89f1717"
+    },
+    {
+      "va": "0x14447f220",
+      "length": 204,
+      "sha256": "42bf00f421b595c07af5dba2f05af6baf42d055753bf60e0903be07179fe46a4"
+    },
+    {
+      "va": "0x144786700",
+      "length": 176,
+      "sha256": "098e6b95c85c8d02fc931c0c458defd1dd97b74ed6430a476e23b8b7d1dae5c5"
+    },
+    {
+      "va": "0x142a6ee20",
+      "length": 176,
+      "sha256": "253b067743eaa675fdefa04e1ca92ace1e30562a789cf8428007f92d924773aa"
+    },
+    {
+      "va": "0x142a69680",
+      "length": 176,
+      "sha256": "7d276301702dfd3b3c7e2ee5a506ba518c596c5a46d58d9aee034cd82780a4a3"
+    },
+    {
+      "va": "0x146bd60a2",
+      "length": 24,
+      "sha256": "21d59043963926375ec7aea9707de009e68cf43cc0fa8d0512dd3be74d5864fb"
+    },
+    {
+      "va": "0x1464bf99a",
+      "length": 50,
+      "sha256": "c454f3f19fd7e9edce123e533e5d4d6d5b710c57ed9ae55bbc92b9a9c95e5d18"
+    },
+    {
+      "va": "0x1464ba8d2",
+      "length": 62,
+      "sha256": "011d39dc039618a1a53cb24569a7dd73115aaaf221ba9a20281e9d4a019c9807"
+    }
+  ]
+}

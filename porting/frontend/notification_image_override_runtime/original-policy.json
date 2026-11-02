@@ -1,0 +1,74 @@
+{
+  "function": {
+    "name": "GetImageOverride",
+    "create_func": "0x142b26b40",
+    "flags": [
+      "0x4020401"
+    ],
+    "replicated_function": false,
+    "net_roles": [],
+    "outer_fn": "0x142b26590",
+    "params": [
+      {
+        "index": 0,
+        "name": "ReturnValue",
+        "kind": "SoftObject",
+        "kind_raw": "0x10",
+        "property_flags": "0x14000000000580",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 0,
+        "type_refs": {
+          "class": "0x142eea520"
+        }
+      }
+    ]
+  },
+  "property": {
+    "index": 0,
+    "name": "DisplayAsset",
+    "kind": "SoftObject",
+    "kind_raw": "0x10",
+    "property_flags": "0x24080000010001",
+    "replicated": false,
+    "rep_notify": null,
+    "array_dim": 1,
+    "object_flags": "0x45",
+    "offset": 160,
+    "type_refs": {
+      "class": "0x142eea520"
+    }
+  },
+  "exec": {
+    "exec_addr": "0x142b292a0",
+    "flags": "0x4020401",
+    "params": [
+      {
+        "index": 0,
+        "name": "ReturnValue",
+        "kind": "SoftObject",
+        "kind_raw": "0x10",
+        "property_flags": "0x14000000000580",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 0,
+        "type_refs": {
+          "class": "0x142eea520"
+        }
+      }
+    ],
+    "create_func": "0x142b26b40",
+    "source": "lea"
+  },
+  "class_ref": {
+    "package": "/Script/CoreUObject",
+    "name": "Object",
+    "block_va": "0x146627970",
+    "helper": "0x142d698b0",
+    "call_site": "0x142eeac07"
+  }
+}

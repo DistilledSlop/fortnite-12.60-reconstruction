@@ -46,5 +46,8 @@ public:
 	UPROPERTY()
 	TSoftObjectPtr<UObject> DisplayAsset;
 
+	UFUNCTION(BlueprintCallable)
+	TSoftObjectPtr<UObject> GetImageOverride();
+
 };
 

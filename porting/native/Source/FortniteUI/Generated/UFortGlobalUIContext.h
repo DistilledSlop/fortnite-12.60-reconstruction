@@ -159,5 +159,8 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetInputPriority(EInputPriority Priority) const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsInZone() const;
+
 };
 

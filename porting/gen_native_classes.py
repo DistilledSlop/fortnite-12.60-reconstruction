@@ -2262,6 +2262,14 @@ _global_ui_priority_spec = _common_activation_import.spec_from_file_location(
     "global_ui_input_priority_runtime_policy", os.path.join(os.path.dirname(__file__), "frontend", "global_ui_input_priority_runtime", "policy.py"))
 _global_ui_priority_policy = _common_activation_import.module_from_spec(_global_ui_priority_spec)
 _global_ui_priority_spec.loader.exec_module(_global_ui_priority_policy)
+_global_ui_zone_spec = _common_activation_import.spec_from_file_location(
+    "global_ui_is_in_zone_runtime_policy", os.path.join(os.path.dirname(__file__), "frontend", "global_ui_is_in_zone_runtime", "policy.py"))
+_global_ui_zone_policy = _common_activation_import.module_from_spec(_global_ui_zone_spec)
+_global_ui_zone_spec.loader.exec_module(_global_ui_zone_policy)
+_notification_image_spec = _common_activation_import.spec_from_file_location(
+    "notification_image_override_runtime_policy", os.path.join(os.path.dirname(__file__), "frontend", "notification_image_override_runtime", "policy.py"))
+_notification_image_policy = _common_activation_import.module_from_spec(_notification_image_spec)
+_notification_image_spec.loader.exec_module(_notification_image_policy)
 _binding_data_spec = _common_activation_import.spec_from_file_location(
     "common_action_binding_data_policy", os.path.join(os.path.dirname(__file__), "frontend", "common_action_binding_runtime", "policy.py"))
 _binding_data_policy = _common_activation_import.module_from_spec(_binding_data_spec)
@@ -2335,6 +2343,8 @@ def build_class_promoted(block, name, resolver, parent_entry, owner_fns, snippet
     model = _button_set_style_policy.apply(model, block, owner_fns)
     model = _border_style_policy.apply(model, block, owner_fns)
     model = _global_ui_priority_policy.apply(model, block, owner_fns, native_execs)
+    model = _global_ui_zone_policy.apply(model, block, owner_fns, native_execs)
+    model = _notification_image_policy.apply(model, block, owner_fns, native_execs)
     model = _input_settings_policy.apply(model, block, owner_fns)
     model = _input_cache_policy.apply(model, block, owner_fns)
     return apply_blueprint_context_runtime_policy(model, block, name, resolver, parent_entry, owner_fns, snippets, splice_ctx)
@@ -3253,7 +3263,7 @@ def render_promoted_cpp(model, source_label):
     result = "\n".join(lines) + "\n"
     if model.get("source_context_phases"):
         result += BLUEPRINT_CONTEXT_PHASE_BODIES
-    return result + _common_activation_policy.definitions(model) + _current_input_type_policy.definitions(model) + _fort_globals_policy.definitions(model) + _button_style_policy.definitions(model) + _button_click_policy.definitions(model) + _button_double_click_policy.definitions(model) + _button_selection_policy.definitions(model) + _input_settings_policy.definitions(model) + _input_cache_policy.definitions(model) + _action_widget_policy.gamepad_definitions(model) + _action_widget_policy.icon_definitions(model) + _action_receivers_policy.definitions(model) + _action_slate_policy.definitions(model) + _button_focus_policy.definitions(model) + _button_initialize_policy.definitions(model) + _button_producers_policy.definitions(model) + _button_set_style_policy.definitions(model) + _border_style_policy.definitions(model) + _global_ui_priority_policy.definitions(model)
+    return result + _common_activation_policy.definitions(model) + _current_input_type_policy.definitions(model) + _fort_globals_policy.definitions(model) + _button_style_policy.definitions(model) + _button_click_policy.definitions(model) + _button_double_click_policy.definitions(model) + _button_selection_policy.definitions(model) + _input_settings_policy.definitions(model) + _input_cache_policy.definitions(model) + _action_widget_policy.gamepad_definitions(model) + _action_widget_policy.icon_definitions(model) + _action_receivers_policy.definitions(model) + _action_slate_policy.definitions(model) + _button_focus_policy.definitions(model) + _button_initialize_policy.definitions(model) + _button_producers_policy.definitions(model) + _button_set_style_policy.definitions(model) + _border_style_policy.definitions(model) + _global_ui_priority_policy.definitions(model) + _global_ui_zone_policy.definitions(model) + _notification_image_policy.definitions(model)
 
 
 def build_engine_header_index(root):
@@ -3523,7 +3533,7 @@ def promote(args):
     gate.name_clashes = engine_macro_names(args.engine_root)
     resolver.gate = gate
     guarded_native_execs = {}
-    if {'UCommonActivatablePanel', 'UCommonInputSubsystem', 'UCommonActionWidget', 'UCommonBorder', 'UCommonButton', 'UCommonTextBlock', 'UFortGlobals', 'UFortGlobalUIContext'} & set(listed):
+    if {'UCommonActivatablePanel', 'UCommonInputSubsystem', 'UCommonActionWidget', 'UCommonBorder', 'UCommonButton', 'UCommonTextBlock', 'UFortGlobals', 'UFortGlobalUIContext', 'UFortUINotification'} & set(listed):
         guarded_native_execs = load_json(os.path.join(os.path.dirname(args.reflection), 'native_funcs.json'))
     if 'UFortGlobalUIContext' in listed:
         _global_ui_priority_policy.validate_classes(blocks_by_va, name_to_block, guarded_native_execs,
@@ -3623,7 +3633,7 @@ def promote(args):
         model = build_class_promoted(blocks_by_va[block], name, resolver, parents[block], owner_fns,
                                      snippets_by_class.get(name, []), splice_ctx,
                                      native_execs=guarded_native_execs.get(name) if name in
-                                 ("UCommonActivatablePanel", "UCommonInputSubsystem", "UCommonActionWidget", "UCommonButton", "UCommonTextBlock", "UFortGlobals", "UFortGlobalUIContext") else None)
+                                 ("UCommonActivatablePanel", "UCommonInputSubsystem", "UCommonActionWidget", "UCommonButton", "UCommonTextBlock", "UFortGlobals", "UFortGlobalUIContext", "UFortUINotification") else None)
         model["includes"] = sorted(set(own_includes(gate, model["used"], package))
                                    | set(model["splice"].get("header_includes", set())))
         if name == 'UCommonInputControllerData':
@@ -3836,6 +3846,11 @@ def promote(args):
     if 'UFortGlobalUIContext' in listed:
         _global_ui_priority_policy.validate_output(next(m for m in class_models if m['name']=='UFortGlobalUIContext'),
             *outputs['UFortGlobalUIContext'], texts[gate.info('0x1451ecbb0').header_name])
+        _global_ui_zone_policy.validate_output(next(m for m in class_models if m['name']=='UFortGlobalUIContext'),
+            *outputs['UFortGlobalUIContext'])
+    if 'UFortUINotification' in listed:
+        _notification_image_policy.validate_output(next(m for m in class_models if m['name']=='UFortUINotification'),
+            *outputs['UFortUINotification'])
     for model in class_models:
         if model["splice"]["accepted"]:
             verify_spliced(model, *outputs[model["name"]])
