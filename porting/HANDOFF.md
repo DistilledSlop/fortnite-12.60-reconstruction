@@ -2,7 +2,63 @@
 
 ## Current resume point (2026-11-02)
 
-- Latest Native d97565d restores original binding Create140800e60: source-ordered
+- Latest Native cd06aa1 restores GetSelected/GetCurrentTextStyleClass and the ACTUAL
+  CommonButton.IsHovered override. Constructor-backed selected=false and weak internal
+  button storage are mutable native members; all future real producers must use them.
+  Hover checks valid weak internal then calls its virtual hover, not inherited outer
+  Widget hover (new5span proof; initial candidate missed this class override).
+  Both builds PASS219.801/156.769s, source/config stable. All26new actual UObject/CDO/
+  metadata/direct+ProcessEvent/selected/weak-hover/fallback/invalid-class/GC rows PASS,
+  including original IconTextButton's serialized ButtonStyle-Primary-M and text CDO.
+  Controlled selected/inner-hover values are diagnostic fixtures, not hardware input
+  or production transitions. No fake setter/omitted callbacks were added.
+- Retained26data/20provider/23creation/13inputtype/30table(421rows),8diagnostics and
+  joins21.583/21.567s PASS. Original Root creation stays7widgets/all4startup classes/
+  20skipped import occurrences (17distinct); those warnings do NOT list these two
+  getters, so no warning-count reduction is claimed. An initial wrapper wrongly
+  expected fewer than20; corrected and revalidated the SAME terminal root receipt,
+  not a repeated game launch. Failure note is frozen with the phase.
+- Text-style checkpoint: generated/frontend-native-evidence/button-text-style-runtime-1/checkpoint.json
+  SHA256 c02f417cd1802d6ef2945ff704e234a29cebae4b08a6d68f5036cc2102d5e46b;
+  archive /mnt/vibrato/fortnite-evidence/frozen-runtime/button-text-style-runtime-1
+  binds53source pairs,142artifact pairs,18binary rows. Release SHA256
+  3a7ea891ce2be636c27c902b8ce9782a1fc07bcfc022a28b2aca67e315ec7d11.
+  TERMINAL promotion1(46143)/promotion2(81933)/build17915/stage48258/style40222/
+  firstwrapper5106/correctedretained+freeze52538. No Native/gen/build/stage owner active.
+  NativeSource12719; promotion1changes2/adds1core, promotion2changes2/preserves12717mtimes.
+  CommonUI45/runner44/generator141/source-state5spans PASS. Scripts
+  /mnt/vibrato/fortnite-work/{promote_,build_,stage_,run_,freeze_,validate_}button_text_style*{1,2}.py.
+  Stage producer hashed allbinaries; no independent giant-debug rehash claim.
+- Independent Luna receipt audit PASS: all53archived sources match pinnedcd06aa1 Git,
+  all142artifact pairs hash-match; pinned26style/26data/20provider/23creation/13input/
+  30table(421rows) verifiers replay. Bothbuilds/eightretained/twojoins/process/inode
+  provenance pass. Cross-checks18recordedbinary triplets, not independently rehashed
+  giantbinaries. Reproducible audit.py/audit.json/HANDOFF.md under
+  /mnt/vibrato/fortnite-work/button-text-style-receipt-audit-1/.
+- Original viewport retry still SIGSEGV(-11) afterbefore_attach, noafter_attach.
+  It still reports queue's missing RebuildWidget ensure; NOattachment/menu/parity claim.
+  POST-FREEZE GDB proof terminal at /mnt/vibrato/fortnite-work/post-text-style-viewport-crash-1/:
+  GetCurrentTextStyleClass exec was REACHED; same IconTextButton.UpdateTextStyle now
+  advances to NULL CommonTextBlock.SetStyle. Original.uexp11423 EX_FinalFunction bytes
+  1c c9 ff ff ff -> import-55 /Script/CommonUI.CommonTextBlock.SetStyle, runtimeopcode42/
+  Code51. Source/binary/config/checkpoint hashes unchanged; debug symbols stat-only.
+- NEXT IMPLEMENTATION: faithful CommonTextBlock.SetStyle + existing virtual
+  SynchronizeProperties override, not a new style-changed hook. SourceSetter always
+  assigns class and dispatches that virtual, even null/repeated. Apply helper directly
+  writes typed CDO Font,StrikeBrush,Margin,LineHeight,SlateColor,shadow fields in order;
+  then raw Text.IsEmpty drives conditional real visibility, then actual parent sync.
+  Proof /mnt/vibrato/fortnite-work/common-text-block-set-style-contract-1/ and independent
+  common-text-block-style-binding-1/ close original field/mask bindings, parent vtable
+  target143d9a100 and localUE4.25 direct-field accessibility. Constructor defaults are
+  autoCollapsefalse/mobileMultiplier1; serialized overrides remain authoritative.
+  Bounded candidate worker common_text_block_style_candidate writing only scratch
+  /mnt/vibrato/fortnite-work/common-text-block-style-candidate-1; NOT applied/generated/
+  UE-built. Root must review its patch, add actual UObject/Slate/metadata/virtual-dispatch/
+  repeated/null/invalid/shadow/visibility/restoration cases, promote/build/stage and
+  rerun viewport. No setter-only assignment/drop-callback/per-property setter substitute.
+- Queue renderer, actual selected/hover producers/Initialize/NativeConstruct/input-action
+  refresh/router lifecycle, async confirmation and fullUI remain product work.
+- Previous Native d97565d restores original binding Create140800e60: source-ordered
   prevalidation, independent tag/row checks, weak-owner/name/event duplicates and
   allocated-record-ID insertion. Shared exported LogUIActionRouter retains original
   defaultLog/compileAll and Error diagnostics. Both builds PASS110.551/120.560s,
@@ -32,14 +88,10 @@
   30dc1a4 build remains separately validated. Cross-checks18recordedbinary rows;
   no independently rehashed giantbinaries. Reproducible audit.py/audit.json/HANDOFF.md
   at /mnt/vibrato/fortnite-work/action-binding-creation-receipt-audit-1/.
-- NEXT IMPLEMENTATION: /mnt/vibrato/fortnite-work/button-text-style-accessor-candidate-1/
-  {candidate.patch,HANDOFF.md}. NOT applied/generated/UE-built. Bounded two-accessor
-  candidate GetSelected/GetCurrentTextStyleClass with real mutable protected selected=false
-  slot, typed lazy Style/text-style CDO resolution, exact source/class/property/function/exec
-  guards and independent core-header gate. Portable/model/adapter tests and apply-check pass.
-  Root must review/apply, validate generated output, add actual UObject/metadata/direct+reflected
-  branch cases using diagnostic-only state mutation, build/stage/retain/join/freeze. Then rerun
-  original viewport attachment as separate diagnostic, retaining queue ensure/new failures.
+- Historical accessor candidate /mnt/vibrato/fortnite-work/button-text-style-accessor-candidate-1/
+  was applied/validated atcd06aa1, with Root's required internal-hover override/storage
+  correction. Its initial use of inherited outer hover was incomplete; use current
+  maintained templates and new state/hover source proof, not the old scratch patch.
 - IMPORTANT getter-boundary correction: source call graph does NOT require full selection
   producers/Initialize/NativeConstruct/routing before registering this reader. One mutable
   native state slot + source-proved false constructor default and diagnostic mutation is an

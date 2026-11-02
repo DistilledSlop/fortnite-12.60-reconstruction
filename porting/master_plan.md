@@ -10,40 +10,33 @@ credentials in Git, and the orchestrator reviews and commits.
 
 ## Current baseline
 
-At Native `d97565d`, both builds, both joins, eight retained diagnostics and the30-row input-table
-diagnostic pass. The original table loads421rows. Source and staged config now match; startup
-actually uses FortGameInstance, FortLocalPlayer, FortGameViewportClient and FortPlayerControllerAthena.
-The controller constructor assignment is source-proved; the full original game mode hierarchy and
-remaining constructor are unported. Root CreateWidget returns with a populated7-widget tree, but
-20 native import occurrences (17 distinct) remain unresolved. The original current-input-type accessor now passes a 13-row real subsystem diagnostic; input detection/routing remains open. Seven explicit CommonButton flag/focus defaults are restored
-and checked on its CDO and a fresh widget. The last AddToViewport attempt at `a93a1c0` crashed
-during IconTextButton's UpdateTextStyle because CommonButton.GetCurrentTextStyleClass is missing;
-the current source still lacks that method, and no new attachment attempt is claimed.
-A separate queue widget also lacks its original RebuildWidget override. No attachment or interactive
-UI is established. Material compatibility remains129/142.
-The engine-backed binding data/storage component passes 26 controlled runtime cases
-with real weak/delegate/value ownership and map/ID behavior. Its settings, row and
-widget/local-player/router/CommonInput resolvers pass 20 cases. The original creation
-entry passes 23 more cases with exact rejection diagnostics, duplicate rules and
-owned ID-as-key insertion. Router association, lifecycle registration and input
-dispatch remain unfinished; do not substitute empty routing.
+At Native `cd06aa1`, both builds, both joins and eight retained diagnostics pass.
+The original input table loads421rows/30checks; mutable input-type13, bindingdata26,
+engineprovider20, creation23 and new CommonButton state/text-style/weak-hover26
+cases pass. The new getters use the original serialized IconTextButton style and
+actual CDOs. Source and staged config match. Startup uses FortGameInstance,
+FortLocalPlayer, FortGameViewportClient and FortPlayerControllerAthena; Root
+creation returns seven widgets. Twenty skipped imports remain (17distinct),
+unchanged: that warning list did not include the restored getters.
 
-Next, restore GetSelected/GetCurrentTextStyleClass with one source-proved mutable
-selected-state slot and typed Style/text-style CDO lookup. The two getters do not
-call production selection setters, Initialize, NativeConstruct or routing, so those
-unfinished producers need not block a faithful accessor checkpoint. Controlled
-mutation will test the reader; no fake setter or omitted transition callback is
-allowed. All future producers must use the same selected-state slot. The reviewed
-scratch candidate and exact validation requirements are in HANDOFF.md.
+The original viewport retry remains failed. GDB proves execution passed the old
+GetCurrentTextStyleClass call and now hits missing CommonTextBlock.SetStyle later
+in the same IconTextButton.UpdateTextStyle Blueprint function. Next restore that
+setter's actual apply-style behavior, guided by the bounded source contract in
+HANDOFF.md. A queue still lacks its original RebuildWidget override. Interactive
+startup, original pixels and all four product milestones remain unverified.
+Material compatibility remains129/142.
 
-Portable selection/notification, text-style fallback and action-key lookup cores
-have original-image evidence and compiled tests. Full selection transitions,
-action-widget/brush adapters and lifecycle integration remain unfinished. Queue
-rendering still requires the original Slate graph, animation and callback/resource
-contracts. Confirmation async factories, Activate/interface dispatch and queued
-presentation also remain unfinished. Interactive startup, original pixels and all
-four product milestones remain unverified. See HANDOFF.md for source releases,
-receipts and the next bounded implementation.
+Selected and weak-internal-button storage now match constructor/read behavior;
+controlled diagnostic mutations test the real accessors and weak expiry. Actual
+selection transitions, hover/internal-button initialization, callbacks, input-action
+refresh and lifecycle/routing remain unfinished and must use the same state slots.
+No fake or incomplete selection setter was added. Shared action-binding data,
+engine providers and creation are real, while route association/dispatch/cleanup
+still require integration. Queue rendering needs the original Slate graph and
+animation/callback/resource contracts. Confirmation async factories and queued
+presentation remain unfinished. See HANDOFF.md for frozen sources, runtime and
+separate post-freeze crash evidence.
 
 ## Earlier checkpoints (historical)
 

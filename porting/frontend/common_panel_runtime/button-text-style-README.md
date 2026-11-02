@@ -26,5 +26,8 @@ fallback order, actual weak internal hover and GC expiry, invalid class values,
 and restoration. It additionally requires a serialized Style and normal text CDO
 from the original IconTextButton class; unavailable data fails the diagnostic.
 The runner supports the existing source-pinned material manifest arguments for
-this original asset lookup. Actual UE validation is pending; earlier green
-binding-creation receipts remain historical baselines.
+this original asset lookup. At Native `cd06aa1`, both builds, all26rows including the original serialized style,
+all retained diagnostics and both joins pass. The new viewport attempt remains
+failed; GDB proves execution passed this getter and next calls missing
+CommonTextBlock.SetStyle. No attachment, production selection or UI parity is
+claimed. The frozen checkpoint/release and post-freeze trace are in HANDOFF.md.
