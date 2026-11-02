@@ -39,7 +39,9 @@ class HistoryChartTests(unittest.TestCase):
                         subject="<commit>", overall_pct=i / 100,
                         measured_pct=i / 200, categories={}) for i in range(391)]
         page = progress.history_html(entries, dict(tree=[], definition="test"))
-        self.assertEqual(page.count('<tr><td>2026-01-01'), 391)
+        self.assertEqual(page.count('\"subject\": \"\\u003ccommit>\"'), 391)
+        self.assertIn('rows.slice(page * 50, page * 50 + 50)', page)
+        self.assertIn('Only commits that changed the score', page)
         self.assertIn('0000000', page)
         self.assertIn('0000186', page)
         self.assertIn('\\u003ccommit>', page)
@@ -53,6 +55,29 @@ class HistoryChartTests(unittest.TestCase):
         page = progress.history_html(entries, dict(tree=[], definition="test"))
         self.assertIn('>15%</text>', page)
         self.assertIn('abc', page)
+
+    def test_older_missing_fields_and_revision_metadata(self):
+        entries = [dict(short="a", date="2026-01-01", subject="old", overall_pct=1),
+                   dict(short="b", date="2026-01-02", subject="new", overall_pct=2,
+                        leaves={"leaf": 5}, leaf_weights={"leaf": 3}, total_weight=3)]
+        page = progress.history_html(entries, dict(tree=[], definition="test"))
+        self.assertIn('"leaves": null', page)
+        self.assertIn('"weights": {"leaf": 3}', page)
+        self.assertIn('Model revision', page)
+        self.assertIn('history-scale-toggle', page)
+        self.assertIn('ArrowLeft', page)
+
+    def test_date_spacing_preserves_timestamps_and_falls_back_for_legacy_dates(self):
+        entries = [dict(short="a", date="2026-01-01T12:34:56+00:00", subject="a", overall_pct=1),
+                   dict(short="b", date="invalid", subject="b", overall_pct=2)]
+        page = progress.history_html(entries, dict(tree=[dict(id="ui", name="UI")], definition="test"))
+        self.assertIn('2026-01-01T12:34:56+00:00', page)
+        self.assertIn('validTimes.length === count && maxTime > minTime', page)
+        self.assertIn('return nearest(', page)
+        self.assertIn('Latest recorded day', page)
+        self.assertIn('Since last known model revision', page)
+        self.assertIn('touch-action:pan-y', page)
+        self.assertIn('history-category', page)
 
     def test_empty_history_renders(self):
         page = progress.history_html([], dict(tree=[], definition="test"))
@@ -84,7 +109,7 @@ class ProgressModelTests(unittest.TestCase):
         ledger = json.loads((folder / 'evidence.json').read_text())['checks']
         leaves = {leaf['id']: leaf for leaf in progress.walk_spec(model['tree'])}
         events = leaves['ui.frontend_event_registrations']
-        self.assertEqual(events['weight'] + leaves['ui.lifecycle']['weight'] + leaves['ui.context_source_stage']['weight'] + leaves['ui.context_runtime_stage']['weight'], 15)
+        self.assertEqual(events['weight'] + leaves['ui.lifecycle']['weight'] + leaves['ui.context_source_stage']['weight'] + leaves['ui.context_runtime_stage']['weight'] + leaves['ui.startup_selection_runtime']['weight'], 15)
         self.assertEqual(leaves['ui.lifecycle']['measure'], dict(kind='manual', pct=0))
         self.assertEqual(len(targets['targets']), 41)
         self.assertEqual(len({row['path'] for row in targets['targets']}), 41)
@@ -115,8 +140,8 @@ class ProgressModelTests(unittest.TestCase):
         leaves = list(progress.walk_spec(model['tree']))
         material = [leaf for leaf in leaves if leaf['id'].startswith('ui.material_')]
         self.assertEqual(sum(leaf['weight'] for leaf in material), 20)
-        self.assertEqual(len(leaves), 117)
-        self.assertEqual(sum(leaf['weight'] for leaf in leaves), 1855)
+        self.assertEqual(len(leaves), 132)
+        self.assertEqual(sum(leaf['weight'] for leaf in leaves), 2019)
         self.assertEqual(sum(leaf['weight'] for leaf in material if leaf['measure']['kind'] == 'ledger'), 20)
         by_id = {leaf['id']: leaf for leaf in material}
         self.assertEqual({key: by_id[key]['weight'] for key in (
@@ -159,7 +184,7 @@ class ProgressModelTests(unittest.TestCase):
         button = leaves['ui.commonui_button_internal_runtime']
         panel = leaves['ui.commonui_panel_intro_runtime']
         outro = leaves['ui.commonui_panel_outro_runtime']
-        self.assertEqual(remaining['weight'] + runtime['weight'] + button['weight'] + panel['weight'] + outro['weight'], 22)
+        self.assertEqual(remaining['weight'] + runtime['weight'] + button['weight'] + panel['weight'] + outro['weight'] + leaves['ui.commonui_button_foundation_runtime']['weight'] + leaves['ui.commonui_input_foundation_runtime']['weight'], 36)
         self.assertEqual(remaining['measure'], dict(kind='manual', pct=0))
         self.assertEqual(runtime['measure'], dict(kind='ledger', checks=['frontend_commonui_base_activation_runtime']))
         self.assertEqual(button['measure'], dict(kind='ledger', checks=['frontend_commonui_internal_button_runtime']))

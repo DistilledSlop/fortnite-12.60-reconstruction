@@ -1,0 +1,462 @@
+[
+  {
+    "id": "EFF-001",
+    "affected_ids": [
+      "platform.wine_launch",
+      "net.original_join"
+    ],
+    "problem": "Two ledger checks (wine_entitlement_passed, wine_lobby_reached) are listed in both leaves, so one recorded result credits 25 + 40 points. net.original_join measures a join to the reconstructed server, but its checks are Wine entitlement and lobby-map log stages; Hello/Login/Welcome/Join have no check.",
+    "evidence": [
+      "porting/progress/components.json:72-73 platform.wine_launch checks include wine_entitlement_passed and wine_lobby_reached",
+      "porting/progress/components.json:816-817 net.original_join checks are exactly the same two IDs",
+      "porting/progress/components.json:810 net.original_join rationale: the ledger measures entitlement/lobby stages, not a server join; Hello, Login, Welcome and Join are unverified",
+      "commit 5871766 removed the earlier wine_starts duplicate (platform.eac_removal now owns it); the two IDs above remain shared at HEAD dcc14c3"
+    ],
+    "proposed_before_after": "Weights unchanged (wine_launch 25, original_join 40). Keep the two Wine stage checks only in platform.wine_launch. Give net.original_join its own checks for original-client Hello, Login, Welcome and Join against the reconstructed server (to be recorded, earning 0 until observed).",
+    "model_impact": "Total weight 0. Progress: latent today (history point dcc14c3 shows both leaves at 0%), but once the Wine stages are recorded as passed the overall would overstate by up to the original_join share (40 x fraction credited). Series comparability: history points computed with the shared IDs overstated original_join; keep them as recorded and annotate the change; do not rewrite.",
+    "confidence": "high",
+    "fix_scope": "Edit two leaves in components.json plus record_evidence.py check names; add new ledger IDs. One small task; no weight edits.",
+    "validation": "Check that no ledger ID appears in more than one leaf (script: group ledger checks by ID across all leaves, as in effort_review research notes). Run test_history.py and regenerate; confirm net.original_join reads 0 before new checks exist.",
+    "unknowns": [
+      "Whether the new original-client join checks can be recorded without a working AppES gate bypass."
+    ]
+  },
+  {
+    "id": "EFF-002",
+    "affected_ids": [
+      "ui.commonui_umg.implementation"
+    ],
+    "problem": "18 points is low for reconstructing CommonUI (plugin absent from the engine tree), but the proposed 48 (+30, 2.7x) has no decomposition and overlaps the lifecycle queue (EFF-003). Recent work shows real unfinished cost not in the 18.",
+    "evidence": [
+      "porting/progress/components.json:1283 rationale scope: Panel and operation queue, input dispatch/held actions, main CommonButton, other widgets, integration, parity",
+      "porting/ui_audio_census.md:51 CommonUI plugin enabled in the uproject but absent from the engine tree (2026-10-31)",
+      "porting/progress/totals.json uht_classes_named_by_package: CommonUI 58, CommonInput 4, UMG 110 named classes; generated CommonUI headers 103 (UFUNCTION 25)",
+      "porting/HANDOFF.md:26-30 and commit 04822b2: seven CommonButton defaults verified on CDO and fresh widget; commit a93a1c0 / HANDOFF: Root attach crashed in IconTextButton.UpdateTextStyle; CommonButton.GetCurrentTextStyleClass and CommonActivatableWidgetQueue.RebuildWidget still missing; 22 skipped imports",
+      "porting/HANDOFF.md:12-17 and commit dcc14c3: GetCurrentInputType is a candidate; UE build/runtime pending, so no credit and no scope reduction"
+    ],
+    "proposed_before_after": "Current 18; proposed 48; recommended 32 (plausible range 22-44; central 32). Assumption: about 8 CommonUI clusters (activatable stack, Panel, button, action widget, input subsystem/manager, tab/rotator/list widgets, text styles, held-action routing) at 3-5 engineer-weeks each, completed work included, native-body transcription excluded. 48 sits above the top of this range.",
+    "model_impact": "UI +14; total 1,855 -> 1,869 (+0.75%). With unchanged evidence the overall estimate falls by about 0.16 points (new weight earns no credit). Estimates under the new model are not comparable to earlier history points.",
+    "confidence": "low",
+    "fix_scope": "One weight edit plus rationale text stating the queue ownership decision from EFF-003.",
+    "validation": "Re-add the node weights from the final model and check sum; confirm dashboard totals and the README basis table; independent second estimate of the eight clusters before applying 32 rather than 48.",
+    "unknowns": [
+      "U-02: share of CommonUI/CommonInput native functions already inside native_behavior.",
+      "Whether UMG engine classes need any reconstruction (UMG is in the engine tree)."
+    ]
+  },
+  {
+    "id": "EFF-003",
+    "affected_ids": [
+      "ui.lifecycle",
+      "ui.commonui_umg.implementation"
+    ],
+    "problem": "Both leaves claim the operation/Panel queue. The proposal raises lifecycle 12 -> 20 and CommonUI 18 -> 48 at once, which can fund the same queue twice.",
+    "evidence": [
+      "porting/progress/components.json:1283 commonui_umg.implementation includes \"Panel and operation queue\"",
+      "porting/progress/components.json:1717 ui.lifecycle includes \"operation queue and native helpers\"",
+      "porting/progress/README.md:120-127 states a single-owner rule: the same work must have one effort allocation",
+      "porting/frontend/common_input_manager_operation_queue.md exists as the queue recovery note; HANDOFF lists CommonActivatableWidgetQueue.RebuildWidget as missing"
+    ],
+    "proposed_before_after": "Assign the queue to ui.commonui_umg.implementation (it is a CommonUI widget/manager class). Lifecycle keeps game-instance init, activation handlers, input policy selection, concrete contexts and root attach. Lifecycle stays at 12 (range 10-18); the +8 is not supported until the queue is removed from lifecycle text and the remaining lifecycle scope is listed.",
+    "model_impact": "UI +0 from this item. Prevents about 5-10 points of double allocation inside the 78-point proposal. No historical effect.",
+    "confidence": "medium",
+    "fix_scope": "Text-only rationale edit on two leaves; no weight edit.",
+    "validation": "grep the final rationales for \"queue\" and confirm one owner; README boundary paragraph updated to match.",
+    "unknowns": [
+      "Which of the 12 lifecycle points already represent completed context-runtime work (ui.context_*_stage take 2 pts from it)."
+    ]
+  },
+  {
+    "id": "EFF-004",
+    "affected_ids": [
+      "ui.fortniteui_classes.implementation",
+      "ui.fortniteui_classes"
+    ],
+    "problem": "The proposal raises FortniteUI behavior from 29 to 44, about equal to FortniteGame reflection implementation (45), while FortniteUI is function-light and its behavior is mostly Blueprint widgets and native bodies funded elsewhere.",
+    "evidence": [
+      "porting/progress/components.json:1744 ui.fortniteui_classes.implementation; :679 gameplay.reflection_exact.implementation (45)",
+      "ls/grep over native/Source/*/Generated: FortniteUI 2,259 headers, 37 UFUNCTION, 7,602 UPROPERTY; FortniteGame 5,535 headers, 1,780 UFUNCTION, 26,839 UPROPERTY",
+      "porting/progress/components.json:689 gameplay.native_behavior (150) funds native function-body recovery across all modules; porting/behavior/COUNTS.txt:1 ported 251 of 20,574",
+      "ui.confirmation_runtime rationale: one point already split from the 30-point FortniteUI behavior budget"
+    ],
+    "proposed_before_after": "Current 29; proposed 44; recommended hold at 29 (plausible range 24-38). Raise only after a per-cluster list (confirmation, settings widgets, item cards, etc.) shows module behavior that is neither a Blueprint widget (frontend/HUD) nor a native body (native_behavior).",
+    "model_impact": "UI +0; avoids +15 (0.8% of total). Declaration tile (10) unchanged.",
+    "confidence": "low",
+    "fix_scope": "No change now; one follow-up decomposition task if the owner disagrees.",
+    "validation": "Per-module native-function split (needs native_funcs.json) to show how many FortniteUI native functions exist.",
+    "unknowns": [
+      "U-02 and U-05: UFUNCTION grep is a proxy; non-reflected native functions in FortniteUI are not visible."
+    ]
+  },
+  {
+    "id": "EFF-005",
+    "affected_ids": [
+      "ui.hud"
+    ],
+    "problem": "The proposal raises HUD 40 -> 50 (+10) with unchanged rationale; no recent evidence bears on HUD scope. Scope may well be larger than 40, but the raise is not backed by an observation or a decomposition.",
+    "evidence": [
+      "porting/progress/components.json:1720 ui.hud rationale: \"No HUD is reproduced\"; no HUD widget has been built or captured",
+      "recent UI commits 04822b2, cf7eb1e, a93a1c0, dcc14c3 all concern CommonButton, input and startup, not in-match widgets",
+      "porting/ui_audio_census.md scope bullets: 2,175 WidgetBlueprints, 20 recovered widget classes"
+    ],
+    "proposed_before_after": "Current 40; proposed 50; recommended hold at 40 pending a component list (health/shield, build bar, quickbar, minimap/compass, storm timer, elimination feed, emote wheel, map, spectate). Plausible range 30-65, so 50 is not contradicted, just not supported.",
+    "model_impact": "UI +0 now; if later set to 50 the total rises 10 with no credit.",
+    "confidence": "low",
+    "fix_scope": "None now; a decomposition task if the owner wants to change it.",
+    "validation": "Component list with per-widget sizing against the 12.60 HUD widget packages.",
+    "unknowns": [
+      "U-04: how many HUD widget Blueprints need logic beyond layout.",
+      "Overlap with gameplay.blueprint_logic (35)."
+    ]
+  },
+  {
+    "id": "EFF-006",
+    "affected_ids": [
+      "ui.frontend_lobby",
+      "gameplay.blueprint_logic",
+      "assets.blueprint_load"
+    ],
+    "problem": "The 25 -> 40 raise is plausible (menus, lobby, party, locker, shop, settings entry points, matchmaking UI) but the leaf boundary against Blueprint behavior and Blueprint loading is undefined, so some of its work may already sit in gameplay.blueprint_logic (35) and assets.blueprint_load (30).",
+    "evidence": [
+      "porting/progress/components.json:1642 ui.frontend_lobby: no menu or lobby widget reproduced, widget Blueprints not mapped to menus",
+      "gameplay.blueprint_logic rationale: no original Blueprint behavior reproduced (35 pts)",
+      "assets.blueprint_load rationale: 4 Apollo Blueprints replaced by authored ones; 22,211 Blueprint assets in the registry"
+    ],
+    "proposed_before_after": "Current 25; proposed 40; recommended 40 (plausible 30-60), conditional on a boundary sentence: this leaf covers widget-graph logic and menu flow; gameplay.blueprint_logic covers non-widget Blueprints; assets.blueprint_load covers loading only.",
+    "model_impact": "UI +15; total +15. Overlap risk with blueprint_logic up to roughly 5-10 points if not clarified.",
+    "confidence": "low",
+    "fix_scope": "One weight edit and three rationale edits.",
+    "validation": "List the frontend widget Blueprints (from the 721-package frontend closure) and assign each to exactly one of the three leaves.",
+    "unknowns": [
+      "U-04."
+    ]
+  },
+  {
+    "id": "EFF-007",
+    "affected_ids": [
+      "gameplay.framework",
+      "gameplay.building",
+      "gameplay.inventory",
+      "gameplay.abilities",
+      "gameplay.ai_nav",
+      "gameplay.world_volumes",
+      "gameplay.other"
+    ],
+    "problem": "Seven census leaves (265 points, 14% of the model) have an empty rationale. Their measure counts class-stub presence at 0.2 credit, and their effort scope relative to native_behavior and the other implementation leaves is not written down.",
+    "evidence": [
+      "porting/progress/components.json:455 gameplay.framework rationale empty; :490 gameplay.building rationale empty (census match regexes only)",
+      "porting/progress/progress.py m_census: first-match assignment of map-imported FortniteGame classes, stub_credit 0.2",
+      "porting/progress/README.md:120-127 states native bodies belong to gameplay.native_behavior and feature budgets cover adapters and integration, but the census leaves do not say so"
+    ],
+    "proposed_before_after": "No numeric change now. Add a rationale to each leaf stating its deliverable (behavior assembled from recovered bodies, plus adapters, integration and verification for those classes) and the exclusion of body transcription.",
+    "model_impact": "Total 0. Reduces the chance that a later reweight counts body transcription twice.",
+    "confidence": "high",
+    "fix_scope": "Text-only edit on seven leaves.",
+    "validation": "Each of the seven leaves carries the same boundary sentence used by the UI leaves; no weight differences.",
+    "unknowns": [
+      "Whether the intended scope is class completeness or only classes imported by maps (the match regex covers only the latter)."
+    ]
+  },
+  {
+    "id": "EFF-008",
+    "affected_ids": [
+      "gameplay.native_behavior",
+      "gameplay.reflection_exact.implementation",
+      "gameplay.weapons.implementation",
+      "gameplay.storm.implementation",
+      "gameplay.battle_bus.implementation"
+    ],
+    "problem": "Function-body, runtime-check and integration effort is named in five leaves (150, 45, 48, 12, 20) with overlapping text; only the UI leaves state the boundary. Possible overlap is anywhere from a few points to tens of points, and cannot be sized without the function-level split.",
+    "evidence": [
+      "porting/progress/components.json:689 native_behavior (150, 20,574 functions; 251 ported at porting/behavior/COUNTS.txt:1)",
+      "porting/progress/components.json:679 reflection_exact.implementation rationale: \"Function bodies and runtime checks have separate evidence\"",
+      "weapons/storm/battle_bus .implementation rationale: \"Remaining implementation, integration and parity are not established by the coverage count\""
+    ],
+    "proposed_before_after": "No numeric change. Define: native_behavior = recovery and transcription of function bodies; reflection_exact.implementation = reflection/runtime-check integration of the 2,842 FortniteGame classes; weapons/storm/bus.implementation = feature assembly, adapters and parity. Then estimate whether 150 is the right size by sampling (e.g. 40 functions, effort per function, scaled to 20,574 with a triviality discount).",
+    "model_impact": "Potentially a downward adjustment of up to tens of points or an upward one, depending on the sample. Unknown now; treat as a model-change question, not a correction.",
+    "confidence": "low",
+    "fix_scope": "Text edit now; a bounded sampling task later (read-only analysis, then a separate weight task).",
+    "validation": "Sample-based effort per function with a stated sampling frame and a confidence interval.",
+    "unknowns": [
+      "U-02",
+      "Triviality distribution of native functions (the manifest says two shared bodies serve 123 trivial functions)."
+    ]
+  },
+  {
+    "id": "EFF-009",
+    "affected_ids": [
+      "platform.settings",
+      "platform.localization",
+      "platform.accessibility_options",
+      "platform.accessibility"
+    ],
+    "problem": "Four platform leaves total 5 points and carry placeholder text. Each stands for a feature area (settings menus and storage, localization tables and fonts, accessibility options, full input mapping) larger than one or two engineer-weeks.",
+    "evidence": [
+      "porting/progress/components.json:121 platform.settings (1), :131 platform.localization (1), :141 platform.accessibility_options (1), :111 platform.accessibility (2) with the generic \"Inventory, implement and verify\" rationale",
+      "porting/progress/totals.json: SubtitlesWidgets 4 and EngineSettings 7 named classes show the module surface exists"
+    ],
+    "proposed_before_after": "settings 1 -> 6 (3-10); localization 1 -> 5 (2-8); accessibility_options 1 -> 4 (2-6); accessibility (input) 2 -> 5 (3-8). Total +14. Sizing is judgment from typical feature size; no source work has started on these areas.",
+    "model_impact": "Platform 85 -> 99; total +14 (0.75%). New weight has no credit, so the overall falls by about 0.16 points. Not comparable with earlier history points.",
+    "confidence": "medium",
+    "fix_scope": "Four weight edits and rationale text.",
+    "validation": "Inventory each area once (settings categories, locale count, accessibility options) and re-check the ranges.",
+    "unknowns": [
+      "Whether settings widgets are also counted in ui.frontend_lobby (they appear in the frontend UI) — boundary needed."
+    ]
+  },
+  {
+    "id": "EFF-010",
+    "affected_ids": [
+      "assets.package_coverage",
+      "assets.static_meshes",
+      "assets.skeletal_anim"
+    ],
+    "problem": "The same .uasset files count in three leaves: package_coverage counts all .uasset under native/Content, while static_meshes and skeletal_anim count SM_/SK_ .uasset under the same root, and package_coverage uses a denominator that includes those mesh types. Effort scope also overlaps (meshes inside \"all types\").",
+    "evidence": [
+      "porting/progress/components.json:181 package_coverage roots generated/extracted + native/Content, suffix .uasset, total cooked_uasset_entries 450,951",
+      "porting/progress/components.json:209 static_meshes sources include native/Content .uasset name_regex ^SM_",
+      "porting/progress/components.json:243 skeletal_anim counts native/Content .uasset name_regex ^SK_",
+      "porting/progress/README.md:201-209 already lists package coverage vs static meshes as a potential overlap"
+    ],
+    "proposed_before_after": "No weight change. Either exclude SM_/SK_ names from the package_coverage numerator and denominator, or state that package_coverage excludes mesh effort (meshes are funded by their two leaves). Recommended: exclude by name regex in the measure.",
+    "model_impact": "Total 0. Progress changes only where native/Content already holds SM_/SK_ packages (currently small). Comparability: re-measuring changes history point values only going forward.",
+    "confidence": "medium",
+    "fix_scope": "One measure edit in components.json (name filter) and a README note; weights untouched.",
+    "validation": "Compute numerator before/after on the current tree; assert no file is counted by two local_glob leaves.",
+    "unknowns": [
+      "Whether textures, materials and sounds under package_coverage are enough to represent their conversion effort (see EFF-012)."
+    ]
+  },
+  {
+    "id": "EFF-011",
+    "affected_ids": [
+      "ui.commonui_umg.implementation",
+      "ui.material_frontend_closure",
+      "ui.lifecycle"
+    ],
+    "problem": "Verified native-body and diagnostic work from 04822b2 and nearby commits (CommonButton flag defaults and focus, 421-row input action table, original startup classes, Athena controller default) is not represented by any ledger leaf, so the broad manual leaves stay at 0% while verified work exists.",
+    "evidence": [
+      "commit 04822b2 and porting/HANDOFF.md:26-30: seven CommonButton defaults verified on CDO and fresh widget, 44-row MainButtonStateProbe, 188.045s/147.589s builds",
+      "commits 29a2c24 and 428a402: 421 input rows restored; commits ea68ee4 and 78c5b61: original startup classes and Athena controller default",
+      "porting/progress/components.json:1276 commonui_umg.implementation (manual, pct 0) and :1710 ui.lifecycle (manual, pct 0) have no leaf for these results"
+    ],
+    "proposed_before_after": "Carve three small ledger leaves out of existing budgets (not on top): main CommonButton defaults/focus (1-2 pts, from commonui impl), input action table + startup class restoration (1-2 pts, from lifecycle), Athena controller default (1 pt, from lifecycle). Do not carve GetCurrentInputType until UE-validated.",
+    "model_impact": "Total 0 if carved from existing budgets. Overall rises by about 0.1-0.2 points for work that was actually verified. History: later points reflect verified work earlier models did not credit; do not backfill.",
+    "confidence": "medium",
+    "fix_scope": "Three ledger entries via record_*.py in the existing pattern (e.g. record_frontend_button_runtime.py).",
+    "validation": "Each new leaf must name pinned receipts; test files in porting/progress must pass; no receipt reused by two leaves.",
+    "unknowns": [
+      "Whether the frozen archives under /mnt/vibrato are still available for re-verification (U-06)."
+    ]
+  },
+  {
+    "id": "EFF-012",
+    "affected_ids": [
+      "visuals.vfx",
+      "assets.other_content",
+      "platform.rendering"
+    ],
+    "problem": "visuals.vfx counts Niagara (173 NS_ names) and excludes Cascade particles, and no leaf is sized for the 3D-world material, shader and texture pipeline (24,995 material names, 30,554 textures). The only homes are assets.other_content (3), platform.rendering (20) and package_coverage (50).",
+    "evidence": [
+      "porting/progress/components.json:1231 visuals.vfx rationale: Cascade assets are not counted",
+      "porting/progress/components.json:308 assets.other_content weight 3; :101 platform.rendering weight 20, pct 30",
+      "porting/progress/totals.json cooked_name_prefix_counts: material 24,995, texture 30,554, niagara 173",
+      "frontend material work already needed 44 DXBC shaders and 142 owners for 20 points (ui.material_* leaves)"
+    ],
+    "proposed_before_after": "Low-confidence question only; no number proposed. If 3D-world materials, shader translation and texture conversion are in scope, an additional allocation in the range 20-60 points is plausible; Cascade VFX would raise visuals.vfx by an unknown amount. Do not apply without a scope decision.",
+    "model_impact": "Possible total +20-60 (1-3%), unknown. Progress would fall by the same dilution.",
+    "confidence": "low",
+    "fix_scope": "Scope decision first (owner), then a decomposition task.",
+    "validation": "Count unique materials/shaders/textures required by the Apollo island and by all maps separately.",
+    "unknowns": [
+      "Whether materials for the island are already inside maps.* and visuals.* allocations.",
+      "Cascade asset count."
+    ]
+  },
+  {
+    "id": "EFF-013",
+    "affected_ids": [
+      "assets.landscape",
+      "maps.apollo_terrain",
+      "maps.apollo_terrain.implementation",
+      "maps.streamed_levels",
+      "gameplay.world_volumes",
+      "maps.pois"
+    ],
+    "problem": "Terrain, landscape and level assembly are funded in up to five leaves with overlapping text, and gameplay.world_volumes (a class census, 30 pts) matches Landscape, Tile, Water, Poi and Manager classes, i.e. the same subject as maps.pois (30) and the landscape/terrain leaves.",
+    "evidence": [
+      "porting/progress/components.json:233 assets.landscape (25): 221 landscape components decoded; streaming levels, parent level and landscape parity unresolved",
+      "porting/progress/components.json:365/376 maps.apollo_terrain 15.75 + .implementation 29.25: collision/visual proxies, original materials, fidelity, streamed levels",
+      "porting/progress/components.json:417 maps.streamed_levels (28): none of 87 streamed levels load",
+      "porting/progress/components.json:580-585 gameplay.world_volumes census match \"Water|Volume|Poi|POI|Manager|WorldTile|Landscape|Tile\"",
+      "porting/progress/components.json:439 maps.pois (30): POI Blueprints fail while cooked scripts load; POI manager is an empty native class"
+    ],
+    "proposed_before_after": "No immediate weight change. Fix owners: assets.landscape = decoding/export/conversion of landscape data; apollo_terrain(.implementation) = in-engine assembly, materials and fidelity of the island; streamed_levels = streaming/loading of the 87 levels; maps.pois = POI content; world_volumes census should drop Landscape|Tile|Poi|POI from its regex (class presence only) or its rationale must say it holds only volume/manager classes. Estimated overlap 10-30 points of the 158 across the five leaves, unsized.",
+    "model_impact": "Possible total -10 to -30 if overlap is removed (not recommended until boundaries exist); census reassignment shifts credit between world_volumes and the maps leaves because first-match assignment is exclusive. Historical points keep their model.",
+    "confidence": "medium",
+    "fix_scope": "Rationale edits on six leaves and one census regex edit; weight decision after a boundary table.",
+    "validation": "List the deliverables of each leaf in one table; check that the census regex and map leaves no longer name the same classes.",
+    "unknowns": [
+      "Whether the 87 streamed levels contain the POIs (then pois and streamed_levels overlap more)."
+    ]
+  },
+  {
+    "id": "EFF-014",
+    "affected_ids": [
+      "assets.reflection_recovery",
+      "gameplay.reflection_exact",
+      "gameplay.reflection_exact.implementation",
+      "net.checksum_parity",
+      "net.replication_layout",
+      "net.serializers"
+    ],
+    "problem": "The recovered reflection data (class, property, offset and function tables) feeds six leaves (15, 15+45, 20, 30, 12). net.replication_layout (30) still says native property sets are not recovered, while the generated headers carry 26,839 UPROPERTY lines in FortniteGame and the checksum leaf reports 4,617 of 4,617 classes matching, so its text may be stale and its scope overlaps reflection_exact.",
+    "evidence": [
+      "porting/progress/components.json:823 net.replication_layout: \"Only the native stubs exist, and their property sets are not recovered\"",
+      "porting/progress/components.json:853 net.checksum_parity: 4,617 of 4,617 generated classes match the offline model",
+      "porting/progress/components.json:650/679 gameplay.reflection_exact(+implementation) and :330 assets.reflection_recovery",
+      "commit e3a8fce generates parameters in binary offset order; grep over native/Source/FortniteGame/Generated: 26,839 UPROPERTY"
+    ],
+    "proposed_before_after": "No weight change yet. Refresh net.replication_layout rationale to say what is still missing beyond reflection_exact (e.g. replicated-property conditions, RPC index parity, struct net serialization) and re-size from that residual. Plausible downward move of 10-20 points if layout parity is mostly delivered by reflection_exact; plausible no change if conditions and RPC indexing are substantial.",
+    "model_impact": "Possible total -10 to -20; unsized.",
+    "confidence": "low",
+    "fix_scope": "Rationale rewrite plus a sizing note.",
+    "validation": "Compare original per-property replication conditions against generated lifetime-property output for a small class sample (e.g. 10 classes).",
+    "unknowns": [
+      "Whether lifetime-property and RPC-index data are in the generated output."
+    ]
+  },
+  {
+    "id": "EFF-015",
+    "affected_ids": [
+      "backend.game_profile",
+      "audio.voice"
+    ],
+    "problem": "The two /api/game/v2/voice routes are counted in both backend.game_profile (include /api/game/v2/, excluding only matchmaking) and audio.voice. Also audio.voice measures server routes while its deliverable is voice audio.",
+    "evidence": [
+      "Replay of the measure over porting/generated/routes.json (59 templates): 2 of 59 selected by two leaves: /api/game/v2/voice/{accountId}/createJoinToken and createLoginToken",
+      "porting/progress/components.json:961 backend.game_profile lists voice among its routes; :1182 audio.voice measure include /api/game/v2/voice"
+    ],
+    "proposed_before_after": "Weights unchanged. Exclude /api/game/v2/voice from game_profile (or from audio.voice) and state which leaf owns the voice service versus the voice client/audio path.",
+    "model_impact": "Total 0; tiny progress change (two routes). Comparable going forward.",
+    "confidence": "high",
+    "fix_scope": "One measure edit.",
+    "validation": "Re-run the replay and assert every route is selected once.",
+    "unknowns": [
+      "Whether voice chat is in scope as a real service or only as stubbed tokens."
+    ]
+  },
+  {
+    "id": "EFF-016",
+    "affected_ids": [
+      "audio.original_comparison",
+      "visuals.original_comparison",
+      "gameplay.end_to_end_parity",
+      "platform.rendering"
+    ],
+    "problem": "Four leaves each fund original-versus-rebuilt comparison (capture set, comparison method, representative scenes) and none states that the harness is shared. The first reported comparison tool will be paid for in whichever leaf is done first.",
+    "evidence": [
+      "porting/progress/components.json:1162 audio.original_comparison (5); :1221 visuals.original_comparison (8)",
+      "porting/progress/components.json:101 platform.rendering: no capture set is compared against the original frames",
+      "porting/progress/components.json:610 gameplay.end_to_end_parity (6): compare recovered modes against the original"
+    ],
+    "proposed_before_after": "No weight change. State that a shared capture/compare harness is allocated once (suggest in visuals.original_comparison) and the other leaves cover only their content-specific comparisons.",
+    "model_impact": "Total 0; avoids a later double allocation.",
+    "confidence": "low",
+    "fix_scope": "Rationale edits.",
+    "validation": "One owner named for the harness.",
+    "unknowns": [
+      "Whether a harness exists yet."
+    ]
+  },
+  {
+    "id": "EFF-017",
+    "affected_ids": [
+      "platform.launch_security",
+      "platform.eac_removal",
+      "platform.wine_launch",
+      "net.encryption_token",
+      "net.original_join",
+      "backend.oauth_account.behavior",
+      "backend.version_lightswitch.behavior"
+    ],
+    "problem": "The entitlement / anti-cheat / AppES gate is described in seven leaves (10, 5, 25, 12, 40, 12.5, 7.5). Their deliverables overlap in text (client entitlement, session tokens, original-client acceptance) and the evidence for several is the same Wine run.",
+    "evidence": [
+      "porting/progress/components.json:91 platform.launch_security: startup, anti-cheat and entitlement interactions",
+      "porting/progress/components.json:774 net.encryption_token; :928 backend.oauth_account.behavior; :810 net.original_join (AppES gate)"
+    ],
+    "proposed_before_after": "No weight change. Write one boundary table: launcher/anti-cheat behavior (platform), session crypto (net), account/token services (backend), original-client acceptance (net.original_join).",
+    "model_impact": "Total 0; prevents double allocation when the gate is next worked on.",
+    "confidence": "low",
+    "fix_scope": "Rationale edits.",
+    "validation": "Each of the seven leaves names what it excludes.",
+    "unknowns": [
+      "Whether the AppES gate bypass is in scope as work or as an assumption."
+    ]
+  },
+  {
+    "id": "EFF-018",
+    "affected_ids": [
+      "assets.skeletal_anim",
+      "gameplay.inventory",
+      "ui.frontend_lobby"
+    ],
+    "problem": "Missing scope: character animation and cosmetics. The registry lists 2,379 AnimBlueprints, 3,691 CustomCharacterParts, 952 character and 694 backpack item definitions, but assets.skeletal_anim counts SK_ packages only and dismisses animation (an \"A_\" name heuristic finds 7). No leaf sizes animation sequences, montages, animation Blueprints, emotes or character customization/assembly.",
+    "evidence": [
+      "porting/progress/components.json:243-260 assets.skeletal_anim measure ^SK_ only; rationale: \"Animation sequences (A_, 7 names) are too few to matter\"",
+      "porting/progress/totals.json asset_registry_counts: AnimBlueprint 2,379; CustomCharacterPart 3,691; AthenaCharacterItemDefinition 952; AthenaBackpackItemDefinition 694",
+      "Keyword search of components.json: animation appears only in the skeletal_anim leaf (lines 244, 260)"
+    ],
+    "proposed_before_after": "Add a leaf (name e.g. assets.animation_cosmetics) of 25-60 points; central 40. Basis: AnimBlueprint-driven characters need skeleton, anim graph, montage and notify support, plus customization assembly for the lobby and match. Not applied; requires owner scope decision and a measure (e.g. AnimBP loads / total).",
+    "model_impact": "Total +25-60 (1.3-3.2%); overall percentage falls by the dilution (about 0.3-0.7 points if credit is zero).",
+    "confidence": "low",
+    "fix_scope": "New leaf with rationale and a measure; boundary vs skeletal_anim and frontend_lobby.",
+    "validation": "Count of AnimBlueprint/AnimSequence packages needed by one character and by all 12.60 characters; owner decision on cosmetics scope.",
+    "unknowns": [
+      "Whether animation is intended to live inside assets.skeletal_anim (35) despite its SK_-only measure."
+    ]
+  },
+  {
+    "id": "EFF-019",
+    "affected_ids": [
+      "gameplay.shipped_features",
+      "gameplay.world_volumes",
+      "visuals.vfx",
+      "maps.other_worlds"
+    ],
+    "problem": "Missing or unlabeled engine-adjacent systems: Chaos destruction and geometry collections, field systems, foliage, water and vehicle physics have no stated owner (named classes: Chaos/GeometryCollection/FieldSystem about 45, Foliage 13, Water 17, PhysXVehicles 7). Keyword search finds no destruction, physics or foliage mention in the model; water appears only in a census regex and vehicles only in shipped_features (15).",
+    "evidence": [
+      "Keyword search of components.json: no matches for Chaos, destruct, physics, Foliage; Water only in the census match at line 585; vehicles only at lines 631, 637",
+      "porting/progress/totals.json uht_classes_named_by_package: ChaosSolverEngine 8, GeometryCollectionEngine 10, FieldSystemEngine 25, Foliage 13, Water 17, PhysXVehicles 7"
+    ],
+    "proposed_before_after": "Probably 10-30 points in total if they are in scope, mostly engine-provided behaviors that need cooked-asset compatibility rather than new code; low confidence. Not applied.",
+    "model_impact": "Total +10-30 (0.5-1.6%); unsized.",
+    "confidence": "low",
+    "fix_scope": "Scope decision, then either assign to existing leaves in their rationale or add one leaf.",
+    "validation": "Check which of these systems the Apollo island and a match actually use.",
+    "unknowns": [
+      "U-03 scope."
+    ]
+  },
+  {
+    "id": "EFF-020",
+    "affected_ids": [
+      "net.relevancy",
+      "net.replication_graph",
+      "gameplay.end_to_end_parity"
+    ],
+    "problem": "Missing or buried scope: full-lobby (100-player) scale and stability, and replay/spectating. net.relevancy (8) and replication_graph (10) cover mechanisms but no leaf owns performance and soak of a full match, and nothing mentions replays or spectating (ReplicationGraph 15 classes exist).",
+    "evidence": [
+      "porting/progress/components.json:843 net.relevancy: stable performance in representative multi-client sessions (8 pts)",
+      "Keyword search: no replay/spectate mention in the model"
+    ],
+    "proposed_before_after": "Possible 10-30 points for scale/stability testing and spectating, low confidence, not applied.",
+    "model_impact": "Total +10-30; unsized.",
+    "confidence": "low",
+    "fix_scope": "Scope decision.",
+    "validation": "A defined target (player count, tick rate, soak time).",
+    "unknowns": [
+      "Whether the deliverable includes a 100-player match or a smaller lobby."
+    ]
+  }
+]

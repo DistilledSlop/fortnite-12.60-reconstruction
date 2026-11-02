@@ -223,6 +223,11 @@ def build():
         "pak files in the full extraction (extract-full-summary.json pakCount; 31)")
     prefix = {key: counts["prefix"][key] for key in PREFIX_RULES}
     rules_text = "; ".join(f"{k} = basename matches {v}" for k, v in PREFIX_RULES.items())
+    totals["cooked_non_mesh_distinct_names"] = entry(
+        counts["distinct_basenames"] - prefix["static_mesh"] - prefix["skeletal_mesh"],
+        counts_path,
+        "distinct cooked .uasset basenames excluding case-sensitive SM_ and SK_ prefixes; "
+        "derived from the full-tree distinct basename and disjoint prefix counts")
     totals["sound_class_mix_packages"] = entry(
         counts["sound_class_mix_paths"], counts_path,
         "NAMING-CONVENTION HEURISTIC: distinct cooked .uasset paths whose full path (folder or name) "

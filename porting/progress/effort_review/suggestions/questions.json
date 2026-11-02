@@ -1,0 +1,72 @@
+[
+  {
+    "id": "Q-01",
+    "affected_ids": [
+      "maps.other_worlds",
+      "gameplay.shipped_features",
+      "maps.enter_play"
+    ],
+    "question": "Is Save the World, Creative/Playground and the remaining 3,694-world set in the deliverable? The model definition says \"the entire game\", but other_worlds (12) and shipped_features (15) are sized as if modest.",
+    "evidence": [
+      "porting/progress/components.json:429 maps.other_worlds; :630 gameplay.shipped_features",
+      "totals.json: FortMissionInfo 592, FortQuestItemDefinition 4,020, FortSchematicItemDefinition 3,748, World 3,694"
+    ],
+    "impact": "If in scope, tens to hundreds of points could be missing; if out of scope, the definition text should say so.",
+    "confidence": "low"
+  },
+  {
+    "id": "Q-02",
+    "affected_ids": [
+      "gameplay.authority",
+      "gameplay.end_to_end_parity",
+      "gameplay.unknown_inventory",
+      "backend.progression"
+    ],
+    "question": "Are 10, 6, 4 and 4 points intended as integration/verification-only residuals? If so, add the boundary text; as stated, \"implement server-authoritative match flow ... persistence and multiplayer behavior\" reads like a large scope.",
+    "evidence": [
+      "porting/progress/components.json:640 gameplay.authority; :987 backend.progression"
+    ],
+    "impact": "Possible small upward changes (10-40 points total) after a boundary decision.",
+    "confidence": "low"
+  },
+  {
+    "id": "Q-03",
+    "affected_ids": [
+      "backend.session_beacon.implementation",
+      "net.native_join",
+      "net.replication_layout"
+    ],
+    "question": "Do UE beacon hosts in backend.session_beacon.implementation (24) overlap net.* (replication layout 30, native join 20)?",
+    "evidence": [
+      "porting/progress/components.json backend.session_beacon.implementation rationale: UE beacon hosts, integration and protocol behavior"
+    ],
+    "impact": "Possible overlap of a few points; unsized.",
+    "confidence": "low"
+  },
+  {
+    "id": "Q-05",
+    "affected_ids": [
+      "assets.other_content",
+      "assets.package_coverage",
+      "assets.pak_extraction"
+    ],
+    "question": "Is the Linux cook/convert step for the ~450,951 cooked entries sized anywhere? assets.other_content (3) mentions Linux cooking, and package_coverage counts recovered files, but no leaf sizes cooking or runtime loading of textures and materials at scale.",
+    "evidence": [
+      "porting/progress/components.json:308 assets.other_content weight 3"
+    ],
+    "impact": "If a conversion pipeline is required, 20-60 points could be missing (see EFF-012).",
+    "confidence": "low"
+  },
+  {
+    "id": "Q-04",
+    "affected_ids": [
+      "(all)"
+    ],
+    "question": "Should the unit \"roughly engineer-weeks\" be redefined, given agent-driven throughput (409 commits in four days) and no hour calibration? A written unit definition would make future ranges comparable.",
+    "evidence": [
+      "porting/progress/components.json _about; git log date counts"
+    ],
+    "impact": "No immediate numeric effect; affects every future estimate.",
+    "confidence": "low"
+  }
+]

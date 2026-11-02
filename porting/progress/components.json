@@ -6,7 +6,7 @@
       "id": "m1",
       "text": "The rebuilt client reaches the main menu with feature parity to the 12.60 original",
       "done": false,
-      "evidence": "Native 04822b2 / Engine d7e04d4b6 passes both builds, eight retained diagnostics, the 30-row input-table diagnostic and both joins. Seven explicit CommonButton flag/focus defaults are now checked on the CDO and a fresh widget. All four original startup class paths are measured; Root creation returns seven widgets and the input table loads 421 rows. The last AddToViewport attempt at a93a1c0 crashed during IconTextButton.UpdateTextStyle; the original callee CommonButton.GetCurrentTextStyleClass remains missing. A separate CommonActivatableWidgetQueue also lacks RebuildWidget. No attachment, frame, input or interactive-menu success is claimed. There are still 22 skipped-import messages covering 18 distinct imports. Portable selection, text-style and action-key lookup cores have compiled tests and pinned source evidence but remain unregistered. Authentic lifecycle/runtime adapters, queue rendering, confirmation presentation, full game-mode hierarchy and visual parity remain unfinished. Material owners remain 129/142 and bounded event signatures 41/41; all four product gates remain open (HANDOFF.md)."
+      "evidence": "Native dcc14c3 / Engine d7e04d4b6 passes both builds, eight retained diagnostics, the 30-row input-table and 13-row current-type getter diagnostics, and both joins. Seven button defaults are verified on the CDO and a fresh widget; the original input table loads 421 rows. Root creation uses all four original startup classes and returns seven widgets. Skipped imports fall from 22 to 20 occurrences (17 distinct). Last viewport attachment at a93a1c0 failed during IconTextButton.UpdateTextStyle; GetCurrentTextStyleClass, action registry adapters and the queue renderer remain unfinished. No viewport, interactive-menu or visual-parity success is claimed. Three bounded foundations now have ledger credit; broad UI and all four product gates remain open. Material owners remain 129/142 and bounded event signatures 41/41; source/receipt details are in HANDOFF.md."
     },
     {
       "id": "m2",
@@ -73,7 +73,7 @@
               "wine_lobby_reached"
             ]
           },
-          "rationale": "Five post-start Wine oracle stages: pak mount, Frontend map, login screen, AppES entitlement and lobby map. Engine startup effort and its wine_starts check belong exclusively to platform.eac_removal. Wine analysis supports reconstruction; it is not rebuilt-client acceptance. The observed run stopped at the AppES access gate."
+          "rationale": "Five post-start Wine oracle stages: pak mount, Frontend map, login screen, AppES entitlement and lobby map. Engine startup effort and its wine_starts check belong exclusively to platform.eac_removal. Wine analysis supports reconstruction; it is not rebuilt-client acceptance. The observed run stopped at the AppES access gate. EFF-017 ownership: original Wine downstream oracle stages only. Shared observations can support these distinct deliverables, but their implementation effort is allocated once; entitlement/anti-cheat compatibility remains in scope."
         },
         {
           "id": "platform.eac_removal",
@@ -85,7 +85,7 @@
               "wine_starts"
             ]
           },
-          "rationale": "The ledger records whether the original client under Wine initializes its engine using the existing launch script. This does not establish access beyond the observed AppES gate or native client functionality. The shared engine-start check and its startup effort are allocated here only; downstream Wine analysis is allocated to wine_launch."
+          "rationale": "The ledger records whether the original client under Wine initializes its engine using the existing launch script. This does not establish access beyond the observed AppES gate or native client functionality. The shared engine-start check and its startup effort are allocated here only; downstream Wine analysis is allocated to wine_launch. EFF-017 ownership: original Wine engine-start analysis only. Shared observations can support these distinct deliverables, but their implementation effort is allocated once; entitlement/anti-cheat compatibility remains in scope."
         },
         {
           "id": "platform.launch_security",
@@ -95,7 +95,7 @@
             "kind": "manual",
             "pct": 0
           },
-          "rationale": "Recover and verify the shipped startup, anti-cheat and entitlement interactions for the rebuilt client; Wine engine startup alone is not this deliverable."
+          "rationale": "Recover and verify the shipped startup, anti-cheat and entitlement interactions for the rebuilt client; Wine engine startup alone is not this deliverable. EFF-017 ownership: rebuilt launcher/anti-cheat/entitlement compatibility behavior. Shared observations can support these distinct deliverables, but their implementation effort is allocated once; entitlement/anti-cheat compatibility remains in scope."
         },
         {
           "id": "platform.rendering",
@@ -105,47 +105,47 @@
             "kind": "manual",
             "pct": 30
           },
-          "rationale": "Software Vulkan (Lavapipe) runs with swapchain and visual captures of terrain, sky and background, but only software rendering has been tested and Fortnite shaders and materials are mostly absent. No objective metric yet: no capture set is compared against the original client's frames."
+          "rationale": "Software Vulkan (Lavapipe) runs with swapchain and visual captures of terrain, sky and background, but only software rendering has been tested and Fortnite shaders and materials are mostly absent. No objective metric yet: no capture set is compared against the original client's frames. EFF-016: shared capture/compare harness effort belongs to visuals.original_comparison once. This leaf covers its own content/runtime acceptance cases, not a second harness allocation."
         },
         {
           "id": "platform.accessibility",
           "name": "Input and control parity",
-          "weight": 2,
+          "weight": 5,
           "measure": {
             "kind": "manual",
             "pct": 0
           },
-          "rationale": "Only basic movement, look and jump input are bound; original controls and device behavior remain unverified."
+          "rationale": "Gameplay device/control integration and original input bindings/rebinding, distinct from reusable CommonUI routing and accessibility option UI; estimate 5 (3–8). Scope-based judgment includes completed plus remaining work; no new completion evidence is asserted."
         },
         {
           "id": "platform.settings",
           "name": "Settings parity",
-          "weight": 1,
+          "weight": 6,
           "measure": {
             "kind": "manual",
             "pct": 0
           },
-          "rationale": "Inventory, implement and verify original client functionality in this area."
+          "rationale": "Settings inventory, persistent configuration and original control/display/audio option behavior; estimate 6 (range 3–10). Scope-based judgment includes completed plus remaining work; no new completion evidence is asserted."
         },
         {
           "id": "platform.localization",
           "name": "Localization parity",
-          "weight": 1,
+          "weight": 5,
           "measure": {
             "kind": "manual",
             "pct": 0
           },
-          "rationale": "Inventory, implement and verify original client functionality in this area."
+          "rationale": "Localization text/culture/font coverage and runtime switching, beyond generic FText construction; estimate 5 (2–8). Scope-based judgment includes completed plus remaining work; no new completion evidence is asserted."
         },
         {
           "id": "platform.accessibility_options",
           "name": "Accessibility parity",
-          "weight": 1,
+          "weight": 4,
           "measure": {
             "kind": "manual",
             "pct": 0
           },
-          "rationale": "Inventory, implement and verify original client functionality in this area."
+          "rationale": "Original accessibility options and their behavior/presentation, distinct from basic device input; estimate 4 (2–6). Scope-based judgment includes completed plus remaining work; no new completion evidence is asserted."
         }
       ]
     },
@@ -179,19 +179,27 @@
         },
         {
           "id": "assets.package_coverage",
-          "name": "Recovered or converted package files (local count)",
+          "name": "Recovered or converted non-mesh package names (local count)",
           "weight": 50,
           "measure": {
             "kind": "local_glob",
-            "roots": [
-              "porting/generated/extracted",
-              "porting/native/Content"
+            "sources": [
+              {
+                "root": "porting/generated/extracted",
+                "suffix": ".uasset",
+                "name_regex": "^(?!(?:SM|SK)_)"
+              },
+              {
+                "root": "porting/native/Content",
+                "suffix": ".uasset",
+                "name_regex": "^(?!(?:SM|SK)_)"
+              }
             ],
-            "suffix": ".uasset",
-            "total_key": "cooked_uasset_entries",
-            "what": "recovered or converted .uasset files"
+            "distinct": true,
+            "total_key": "cooked_non_mesh_distinct_names",
+            "what": "non-SM_/SK_ .uasset distinct names"
           },
-          "rationale": "Counts local recovered or converted .uasset files against cooked assets. Recovery and filename coverage do not establish successful conversion, cooking, or runtime usability. Raw extraction is separately measured."
+          "rationale": "Counts distinct non-SM_/SK_ .uasset basenames recovered or converted locally against distinct non-SM_/SK_ cooked basenames. This naming heuristic excludes mesh-named packages from both sides; it does not identify asset classes. Raw recovery is also represented by pak extraction and does not establish conversion, cooking, or runtime usability."
         },
         {
           "id": "assets.pak_extraction",
@@ -237,11 +245,11 @@
             "kind": "manual",
             "pct": 15
           },
-          "rationale": "221 landscape components were decoded across the 61-tile grid export. Streaming levels, parent level and complete landscape parity remain unresolved. The 15% figure is a manual estimate; no full component denominator is available."
+          "rationale": "221 landscape components were decoded across the 61-tile grid export. Streaming levels, parent level and complete landscape parity remain unresolved. The 15% figure is a manual estimate; no full component denominator is available. EFF-013: Owns landscape geometry/height/layer decoding and conversion, not level assembly, streamed-level loading or manager class declarations."
         },
         {
           "id": "assets.skeletal_anim",
-          "name": "Skeletal meshes, animation and character",
+          "name": "Skeletal mesh package conversion (name coverage)",
           "weight": 35,
           "measure": {
             "kind": "local_glob",
@@ -257,7 +265,7 @@
             "total_sub": "skeletal_mesh",
             "what": "skeletal mesh packages (SK_, distinct names)"
           },
-          "rationale": "Counted: SK_ skeletal mesh packages converted in native/Content (none). Denominator: 1,719 distinct SK_-named cooked packages (naming heuristic, totals.json). No skeletal mesh or animation package has loaded in any probe. Animation sequences (A_, 7 names) are too few to matter and are not counted separately."
+          "rationale": "Counted: SK_ skeletal mesh packages converted in native/Content (none). Denominator: 1,719 distinct SK_-named cooked packages (naming heuristic, totals.json). No skeletal mesh or animation package has loaded in any probe. Animation sequences (A_, 7 names) are too few to matter and are not counted separately. Conversion/name coverage only: animation/cosmetic behavior and world particle runtime are separately allocated; package presence does not establish those features."
         },
         {
           "id": "assets.blueprint_load",
@@ -270,7 +278,7 @@
             "total_sub": "Blueprint",
             "source": "documented"
           },
-          "rationale": "Four Apollo Blueprint packages were replaced by authored Blueprints that load (typed count, documented). The denominator is the 22,211 Blueprint assets in the asset registry (totals.json). The original cooked gameplay Blueprints still crash on load."
+          "rationale": "Four Apollo Blueprint packages were replaced by authored Blueprints that load (typed count, documented). The denominator is the 22,211 Blueprint assets in the asset registry (totals.json). The original cooked gameplay Blueprints still crash on load. EFF-006 boundary: frontend_lobby owns widget-graph logic and menu/lobby flows; gameplay.blueprint_logic owns non-widget gameplay graphs; assets.blueprint_load owns package loading only. Shared native transcription and class declarations are not charged again. Frontend flow effort is a coarse 40-point estimate (30–60 range), not evidence of completion."
         },
         {
           "id": "assets.cinematics",
@@ -312,7 +320,7 @@
             "kind": "manual",
             "pct": 0
           },
-          "rationale": "Inventory all remaining asset types and complete decoding, conversion, dependencies, Linux cooking and runtime loading."
+          "rationale": "Inventory all remaining asset types and complete decoding, conversion, dependencies, Linux cooking and runtime loading. Remaining scope includes all originally shipped modes/worlds. The explicit world-material, animation/cosmetic, engine-system and replay/scale allocations are excluded here to avoid duplication. No mode is removed from the original-feature goal."
         },
         {
           "id": "assets.frontend_bundle",
@@ -336,7 +344,17 @@
             "count_key": "",
             "total_key": "uht_class_blocks"
           },
-          "rationale": "Class names recovered for 6,957 of the 6,967 UHT class blocks (class_name_map.json over the block total in totals.json). Measures recovery of the names, not rebuilt behaviour. Structs (4,512), enums (2,056) and delegates (1,515) are recovered too but not counted here. Parents are verified at 99.76% against UE 4.25 headers (binary_analysis.md). Ten blocks remain unnamed."
+          "rationale": "Class names recovered for 6,957 of the 6,967 UHT class blocks (class_name_map.json over the block total in totals.json). Measures recovery of the names, not rebuilt behaviour. Structs (4,512), enums (2,056) and delegates (1,515) are recovered too but not counted here. Parents are verified at 99.76% against UE 4.25 headers (binary_analysis.md). Ten blocks remain unnamed. EFF-014 boundary: recovered reflection tables/identities, generated declarations and offline checksums are distinct from runtime replication layout/conditions/RPC behavior and struct wire encoding; shared recovery is allocated once."
+        },
+        {
+          "id": "assets.animation_cosmetics",
+          "name": "Animation graphs, emotes and character assembly",
+          "weight": 40,
+          "measure": {
+            "kind": "manual",
+            "pct": 0
+          },
+          "rationale": "EFF-018: required by the full original-feature parity goal. Animation sequences, skeleton/retarget integration, montages/notifies, animation Blueprints, emotes and modular character/cosmetic assembly. Skeletal mesh package conversion remains in skeletal_anim; menu navigation remains in frontend_lobby; shared native body recovery is separate. Coarse total-effort estimate 40 (review range 25–60, low confidence); refine after component inventory. No implementation or completion inferred from inventory counts."
         }
       ]
     },
@@ -370,7 +388,7 @@
             "count_file": "porting/generated/converted/apollo-landscape-grid.json",
             "total": 61
           },
-          "rationale": "All 61 nonempty exported terrain tiles have collision and visual proxy atlases. This leaf counts exported tiles only; original materials, fidelity, missing tiles and streamed levels are represented by the separate unfinished work."
+          "rationale": "All 61 nonempty exported terrain tiles have collision and visual proxy atlases. This leaf counts exported tiles only; original materials, fidelity, missing tiles and streamed levels are represented by the separate unfinished work. EFF-013: Owns Apollo terrain asset coverage/assembly, not the separately budgeted generic landscape decoder."
         },
         {
           "id": "maps.apollo_terrain.implementation",
@@ -380,7 +398,7 @@
             "kind": "manual",
             "pct": 0
           },
-          "rationale": "Remaining implementation, integration and parity are not established by the coverage count. Progress here requires separate evidence."
+          "rationale": "Remaining implementation, integration and parity are not established by the coverage count. Progress here requires separate evidence. EFF-013: Owns Apollo-specific terrain materials, tile integration and original terrain behavior/visual verification; shared material infrastructure is allocated once."
         },
         {
           "id": "maps.background",
@@ -423,7 +441,7 @@
             "total_key": "apollo_streaming_levels",
             "source": "documented"
           },
-          "rationale": "None of the 87 streamed levels load (typed count, documented). The denominator is the figure in the tracked map_compatibility.md report (totals.json)."
+          "rationale": "None of the 87 streamed levels load (typed count, documented). The denominator is the figure in the tracked map_compatibility.md report (totals.json). EFF-013: Owns original sublevel hierarchy, dependency loading, streaming transitions and runtime verification; neither landscape export nor declaration coverage establishes this."
         },
         {
           "id": "maps.other_worlds",
@@ -433,7 +451,7 @@
             "kind": "manual",
             "pct": 0
           },
-          "rationale": "Inventory all original worlds and modes beyond Apollo and restore their content, streaming, collision and runtime behavior."
+          "rationale": "Inventory all original worlds and modes beyond Apollo and restore their content, streaming, collision and runtime behavior. Remaining scope includes all originally shipped modes/worlds. The explicit world-material, animation/cosmetic, engine-system and replay/scale allocations are excluded here to avoid duplication. No mode is removed from the original-feature goal."
         },
         {
           "id": "maps.pois",
@@ -443,7 +461,7 @@
             "kind": "manual",
             "pct": 1
           },
-          "rationale": "The POI Blueprints fail while their cooked scripts load. The POI manager is an empty native class. No objective metric yet: no POI map enters play, so there is nothing to count."
+          "rationale": "The POI Blueprints fail while their cooked scripts load. The POI manager is an empty native class. No objective metric yet: no POI map enters play, so there is nothing to count. EFF-013: Owns POI map content/assembly and gameplay placement, not generic volume/manager declarations or landscape decoder work."
         }
       ]
     },
@@ -453,13 +471,24 @@
       "children": [
         {
           "id": "gameplay.framework",
-          "name": "Athena framework (GameMode, State, Controllers, Pawn) (declared-class coverage, partial credit)",
-          "weight": 60,
+          "name": "Athena framework — class declaration coverage",
+          "weight": 12.0,
           "measure": {
             "kind": "census",
             "match": "GameMode|GameState|PlayerController|PlayerState|PlayerPawn|GameInstance|LocalPlayer|WorldSettings|LevelScript|MapInfo|PlayerStart|Character|Athena",
-            "stub_credit": 0.2
-          }
+            "stub_credit": 1
+          },
+          "rationale": "EFF-007: named original class-header coverage only, using the documented census name heuristic; no behavior is established by a declaration. This is the former 20% declaration share, explicitly separated from the remaining 80% feature assembly/integration/verification. Cross-module body transcription belongs to native_behavior."
+        },
+        {
+          "id": "gameplay.framework.implementation",
+          "name": "Athena framework — feature integration and parity",
+          "weight": 48.0,
+          "measure": {
+            "kind": "manual",
+            "pct": 0
+          },
+          "rationale": "Remaining feature adapters, state/authority behavior, asset/Blueprint integration and end-to-end verification after declarations and separately budgeted native-body transcription. No completion inferred from class-header counts. No feature parity is established yet."
         },
         {
           "id": "gameplay.weapons",
@@ -488,23 +517,45 @@
         },
         {
           "id": "gameplay.building",
-          "name": "Building and edit mode (declared-class coverage, partial credit)",
-          "weight": 50,
+          "name": "Building and edit mode — class declaration coverage",
+          "weight": 10.0,
           "measure": {
             "kind": "census",
             "match": "Building|Foundation|Wall|Floor|Roof|Stair|Ramp|Cone|Pillar|Edit",
-            "stub_credit": 0.2
-          }
+            "stub_credit": 1
+          },
+          "rationale": "EFF-007: named original class-header coverage only, using the documented census name heuristic; no behavior is established by a declaration. This is the former 20% declaration share, explicitly separated from the remaining 80% feature assembly/integration/verification. Cross-module body transcription belongs to native_behavior."
+        },
+        {
+          "id": "gameplay.building.implementation",
+          "name": "Building and edit mode — feature integration and parity",
+          "weight": 40.0,
+          "measure": {
+            "kind": "manual",
+            "pct": 0
+          },
+          "rationale": "Remaining feature adapters, state/authority behavior, asset/Blueprint integration and end-to-end verification after declarations and separately budgeted native-body transcription. No completion inferred from class-header counts. No feature parity is established yet."
         },
         {
           "id": "gameplay.inventory",
-          "name": "Inventory, items and loot (declared-class coverage, partial credit)",
-          "weight": 45,
+          "name": "Inventory, items and loot — class declaration coverage",
+          "weight": 9.0,
           "measure": {
             "kind": "census",
             "match": "Inventory|Item|Pickup|Quickbar|Slot|Loot|Container|Chest|Resource|Harvest",
-            "stub_credit": 0.2
-          }
+            "stub_credit": 1
+          },
+          "rationale": "EFF-007: named original class-header coverage only, using the documented census name heuristic; no behavior is established by a declaration. This is the former 20% declaration share, explicitly separated from the remaining 80% feature assembly/integration/verification. Cross-module body transcription belongs to native_behavior."
+        },
+        {
+          "id": "gameplay.inventory.implementation",
+          "name": "Inventory, items and loot — feature integration and parity",
+          "weight": 36.0,
+          "measure": {
+            "kind": "manual",
+            "pct": 0
+          },
+          "rationale": "Remaining feature adapters, state/authority behavior, asset/Blueprint integration and end-to-end verification after declarations and separately budgeted native-body transcription. No completion inferred from class-header counts. No feature parity is established yet."
         },
         {
           "id": "gameplay.storm",
@@ -558,43 +609,87 @@
         },
         {
           "id": "gameplay.abilities",
-          "name": "Abilities and effects (declared-class coverage, partial credit)",
-          "weight": 30,
+          "name": "Abilities and effects — class declaration coverage",
+          "weight": 6.0,
           "measure": {
             "kind": "census",
             "match": "Abilit|Effect|Attribute",
-            "stub_credit": 0.2
-          }
+            "stub_credit": 1
+          },
+          "rationale": "EFF-007: named original class-header coverage only, using the documented census name heuristic; no behavior is established by a declaration. This is the former 20% declaration share, explicitly separated from the remaining 80% feature assembly/integration/verification. Cross-module body transcription belongs to native_behavior."
+        },
+        {
+          "id": "gameplay.abilities.implementation",
+          "name": "Abilities and effects — feature integration and parity",
+          "weight": 24.0,
+          "measure": {
+            "kind": "manual",
+            "pct": 0
+          },
+          "rationale": "Remaining feature adapters, state/authority behavior, asset/Blueprint integration and end-to-end verification after declarations and separately budgeted native-body transcription. No completion inferred from class-header counts. No feature parity is established yet."
         },
         {
           "id": "gameplay.ai_nav",
-          "name": "AI, spawns and navigation (declared-class coverage, partial credit)",
-          "weight": 30,
+          "name": "AI, spawns and navigation — class declaration coverage",
+          "weight": 6.0,
           "measure": {
             "kind": "census",
             "match": "Nav|Enem|Spawn|Patrol|AI|HotSpot|Pathing|Meta",
-            "stub_credit": 0.2
-          }
+            "stub_credit": 1
+          },
+          "rationale": "EFF-007: named original class-header coverage only, using the documented census name heuristic; no behavior is established by a declaration. This is the former 20% declaration share, explicitly separated from the remaining 80% feature assembly/integration/verification. Cross-module body transcription belongs to native_behavior."
+        },
+        {
+          "id": "gameplay.ai_nav.implementation",
+          "name": "AI, spawns and navigation — feature integration and parity",
+          "weight": 24.0,
+          "measure": {
+            "kind": "manual",
+            "pct": 0
+          },
+          "rationale": "Remaining feature adapters, state/authority behavior, asset/Blueprint integration and end-to-end verification after declarations and separately budgeted native-body transcription. No completion inferred from class-header counts. No feature parity is established yet."
         },
         {
           "id": "gameplay.world_volumes",
-          "name": "World managers, POIs and volumes (declared-class coverage, partial credit)",
-          "weight": 30,
+          "name": "World managers, POIs and volumes — class declaration coverage",
+          "weight": 6.0,
           "measure": {
             "kind": "census",
-            "match": "Water|Volume|Poi|POI|Manager|WorldTile|Landscape|Tile",
-            "stub_credit": 0.2
-          }
+            "match": "Water|Volume|Poi|POI|Manager",
+            "stub_credit": 1
+          },
+          "rationale": "EFF-007: named original class-header coverage only, using the documented census name heuristic; no behavior is established by a declaration. This is the former 20% declaration share, explicitly separated from the remaining 80% feature assembly/integration/verification. Cross-module body transcription belongs to native_behavior. EFF-013: Owns only volume/manager class interface declarations, with Landscape/WorldTile/Tile removed from the name heuristic. Runtime manager behavior is separately unfinished."
+        },
+        {
+          "id": "gameplay.world_volumes.implementation",
+          "name": "World managers, POIs and volumes — feature integration and parity",
+          "weight": 24.0,
+          "measure": {
+            "kind": "manual",
+            "pct": 0
+          },
+          "rationale": "Remaining feature adapters, state/authority behavior, asset/Blueprint integration and end-to-end verification after declarations and separately budgeted native-body transcription. No completion inferred from class-header counts. Owns world volume/manager orchestration only; excludes landscape geometry, map assembly, streaming and POI content."
         },
         {
           "id": "gameplay.other",
-          "name": "Other classes (declared-class coverage, partial credit)",
-          "weight": 20,
+          "name": "Other classes — class declaration coverage",
+          "weight": 4.0,
           "measure": {
             "kind": "census",
             "match": "*remainder*",
-            "stub_credit": 0.2
-          }
+            "stub_credit": 1
+          },
+          "rationale": "EFF-007: named original class-header coverage only, using the documented census name heuristic; no behavior is established by a declaration. This is the former 20% declaration share, explicitly separated from the remaining 80% feature assembly/integration/verification. Cross-module body transcription belongs to native_behavior."
+        },
+        {
+          "id": "gameplay.other.implementation",
+          "name": "Other classes — feature integration and parity",
+          "weight": 16.0,
+          "measure": {
+            "kind": "manual",
+            "pct": 0
+          },
+          "rationale": "Remaining feature adapters, state/authority behavior, asset/Blueprint integration and end-to-end verification after declarations and separately budgeted native-body transcription. No completion inferred from class-header counts. No feature parity is established yet."
         },
         {
           "id": "gameplay.unknown_inventory",
@@ -604,7 +699,7 @@
             "kind": "manual",
             "pct": 0
           },
-          "rationale": "Inventory the supplied original comprehensively. Unclassified original client and dedicated-server features remain in scope until reconstructed and verified."
+          "rationale": "Inventory the supplied original comprehensively. Unclassified original client and dedicated-server features remain in scope until reconstructed and verified. Q-02: residual integration/inventory/acceptance scope after declarations and separately funded body recovery; do not allocate the same native reconstruction twice."
         },
         {
           "id": "gameplay.end_to_end_parity",
@@ -614,7 +709,7 @@
             "kind": "manual",
             "pct": 0
           },
-          "rationale": "Compare all recovered modes and gameplay against the supplied original, including complete multiplayer matches through match end. Current direct joins do not establish this."
+          "rationale": "Compare all recovered modes and gameplay against the supplied original, including complete multiplayer matches through match end. Current direct joins do not establish this. EFF-016: shared capture/compare harness effort belongs to visuals.original_comparison once. This leaf covers its own content/runtime acceptance cases, not a second harness allocation. Q-02: residual integration/inventory/acceptance scope after declarations and separately funded body recovery; do not allocate the same native reconstruction twice."
         },
         {
           "id": "gameplay.blueprint_logic",
@@ -624,7 +719,7 @@
             "kind": "manual",
             "pct": 1
           },
-          "rationale": "No original Blueprint behaviour has been reproduced. cue4inspect pseudocode is partial and unresolved. No objective metric yet: no Blueprint behaviour is reproduced, and no metric counts it."
+          "rationale": "No original Blueprint behaviour has been reproduced. cue4inspect pseudocode is partial and unresolved. No objective metric yet: no Blueprint behaviour is reproduced, and no metric counts it. EFF-006 boundary: frontend_lobby owns widget-graph logic and menu/lobby flows; gameplay.blueprint_logic owns non-widget gameplay graphs; assets.blueprint_load owns package loading only. Shared native transcription and class declarations are not charged again. Frontend flow effort is a coarse 40-point estimate (30–60 range), not evidence of completion."
         },
         {
           "id": "gameplay.shipped_features",
@@ -634,7 +729,7 @@
             "kind": "manual",
             "pct": 0
           },
-          "rationale": "Inventory and reconstruct vehicles, other modes, features and their authoritative behavior against original evidence."
+          "rationale": "Inventory and reconstruct vehicles, other modes, features and their authoritative behavior against original evidence. Remaining scope includes all originally shipped modes/worlds. The explicit world-material, animation/cosmetic, engine-system and replay/scale allocations are excluded here to avoid duplication. No mode is removed from the original-feature goal."
         },
         {
           "id": "gameplay.authority",
@@ -644,7 +739,7 @@
             "kind": "manual",
             "pct": 0
           },
-          "rationale": "Attribute and implement server-authoritative match flow, combat, inventory, building, loot, storm, bus, AI, eliminations and match end; verify persistence and multiplayer behavior."
+          "rationale": "Attribute and implement server-authoritative match flow, combat, inventory, building, loot, storm, bus, AI, eliminations and match end; verify persistence and multiplayer behavior. Q-02: residual integration/inventory/acceptance scope after declarations and separately funded body recovery; do not allocate the same native reconstruction twice."
         },
         {
           "id": "gameplay.reflection_exact",
@@ -673,7 +768,7 @@
               }
             ]
           },
-          "rationale": "Done: tracked class headers under Source/FortniteGame/Generated over named FortniteGame classes (totals.json). Header counts measure declarations, not implemented behavior or runtime wire compatibility."
+          "rationale": "Done: tracked class headers under Source/FortniteGame/Generated over named FortniteGame classes (totals.json). Header counts measure declarations, not implemented behavior or runtime wire compatibility. EFF-014 boundary: recovered reflection tables/identities, generated declarations and offline checksums are distinct from runtime replication layout/conditions/RPC behavior and struct wire encoding; shared recovery is allocated once."
         },
         {
           "id": "gameplay.reflection_exact.implementation",
@@ -683,7 +778,7 @@
             "kind": "manual",
             "pct": 0
           },
-          "rationale": "Generated reflection declarations do not establish module behavior, integration or runtime parity. Function bodies and runtime checks have separate evidence; complete module behavior remains unverified."
+          "rationale": "Generated reflection declarations do not establish module behavior, integration or runtime parity. Function bodies and runtime checks have separate evidence; complete module behavior remains unverified. EFF-014 boundary: recovered reflection tables/identities, generated declarations and offline checksums are distinct from runtime replication layout/conditions/RPC behavior and struct wire encoding; shared recovery is allocated once."
         },
         {
           "id": "gameplay.native_behavior",
@@ -696,7 +791,27 @@
             "group": 1,
             "total_key": "native_functions_with_exec"
           },
-          "rationale": "Done: committed .inc function bodies under porting/behavior, one per ported function. Total: native functions with an execution address in the decompiled image (native_funcs.json, totals.json). Only committed bodies count. An honest small percentage is expected while the port is at the reflection stage. Counts ported FUNCTIONS (manifest entries with status 'ported', written by porting/behavior/check_behavior.py to COUNTS.txt), not snippet files: two shared bodies serve 123 trivial validate/empty-implementation functions. Trivial bodies count the same as large ones here; the breakdown by kind is in porting/behavior/MANIFEST.json. Effort boundary: this allocation is the cross-module recovery and transcription of native function bodies, including UI bodies, through the ported manifest; feature and UI implementation allocations cover their additional assembly, adapters, integration and verification, not the same body-recovery effort again. Equal function counts are only a coarse progress proxy, not equal effort."
+          "rationale": "Done: committed .inc function bodies under porting/behavior, one per ported function. Total: native functions with an execution address in the decompiled image (native_funcs.json, totals.json). Only committed bodies count. An honest small percentage is expected while the port is at the reflection stage. Counts ported FUNCTIONS (manifest entries with status 'ported', written by porting/behavior/check_behavior.py to COUNTS.txt), not snippet files: two shared bodies serve 123 trivial validate/empty-implementation functions. Trivial bodies count the same as large ones here; the breakdown by kind is in porting/behavior/MANIFEST.json. Effort boundary: this allocation is the cross-module recovery and transcription of native function bodies, including UI bodies, through the ported manifest; feature and UI implementation allocations cover their additional assembly, adapters, integration and verification, not the same body-recovery effort again. Equal function counts are only a coarse progress proxy, not equal effort. EFF-008: manifest-indexed body recovery/transcription across modules only. The manifest is not an inventory of all maintained generator-policy bodies; absence there does not mean source is absent. Feature leaves own additional assembly/integration/runtime verification. A 12-case purposive sample supports this boundary, not a numeric effort extrapolation."
+        },
+        {
+          "id": "gameplay.engine_system_integration",
+          "name": "Physics, destruction and world-system integration",
+          "weight": 20,
+          "measure": {
+            "kind": "manual",
+            "pct": 0
+          },
+          "rationale": "EFF-019: required by the full original-feature parity goal. Original cooked-asset/runtime compatibility for Chaos/geometry collections, field systems, foliage, water and vehicle physics. Engine-provided mechanisms are not reimplementation credit; vehicle gameplay authority stays in shipped_features and rendering in world materials. Coarse total-effort estimate 20 (review range 10–30, low confidence); refine after component inventory. No implementation or completion inferred from inventory counts."
+        },
+        {
+          "id": "gameplay.replay_spectating",
+          "name": "Replay and spectating behavior",
+          "weight": 8,
+          "measure": {
+            "kind": "manual",
+            "pct": 0
+          },
+          "rationale": "EFF-020: required by the full original-feature parity goal. Original replay capture/playback and spectating state, camera/control transitions and multiplayer verification. Existing HUD supplies shared presentation; this owns the replay/spectator feature behavior and its integration. Coarse total-effort estimate 8 (review range 4–12, low confidence); refine after component inventory. No implementation or completion inferred from inventory counts."
         }
       ]
     },
@@ -790,7 +905,7 @@
               }
             ]
           },
-          "rationale": "Hooks are declared. Key validity is not tested against the client."
+          "rationale": "Hooks are declared. Key validity is not tested against the client. EFF-017 ownership: session crypto/token wire behavior. Shared observations can support these distinct deliverables, but their implementation effort is allocated once; entitlement/anti-cheat compatibility remains in scope."
         },
         {
           "id": "net.native_join",
@@ -804,7 +919,7 @@
               "net_version_checksum"
             ]
           },
-          "rationale": "Ledger: a native client joins the native dedicated server on the default and Athena maps (porting/server/smoke_join.sh) and the server log shows the network version checksum 683914758. Recorded with record_evidence.py; the latest result per check counts. Says nothing about the original client (see net.original_join)."
+          "rationale": "Ledger: a native client joins the native dedicated server on the default and Athena maps (porting/server/smoke_join.sh) and the server log shows the network version checksum 683914758. Recorded with record_evidence.py; the latest result per check counts. Says nothing about the original client (see net.original_join). Q-03: owns rebuilt UE client/server connection acceptance; does not establish original-client wire parity, beacon service behavior or full replication layout."
         },
         {
           "id": "net.original_join",
@@ -813,11 +928,13 @@
           "measure": {
             "kind": "ledger",
             "checks": [
-              "wine_entitlement_passed",
-              "wine_lobby_reached"
+              "original_client_hello",
+              "original_client_login",
+              "original_client_welcome",
+              "original_client_join"
             ]
           },
-          "rationale": "The ledger currently measures original-client entitlement and lobby log stages, not a server join. The observed Wine run stopped at the AppES access gate; Hello, Login, Welcome and Join have not been verified against the original client."
+          "rationale": "Acceptance stages against the reconstructed server require original-client Hello, Login, Welcome and Join evidence. The observed Wine run stopped at the AppES access gate; none of these stages has been verified. Wine oracle entitlement and lobby stages belong to platform.wine_launch. EFF-017 ownership: original-client protocol acceptance, not Wine entitlement/lobby staging. Shared observations can support these distinct deliverables, but their implementation effort is allocated once; entitlement/anti-cheat compatibility remains in scope."
         },
         {
           "id": "net.replication_layout",
@@ -827,7 +944,7 @@
             "kind": "manual",
             "pct": 1
           },
-          "rationale": "Property order, RPC index and struct layouts must match the original. Only the native stubs exist, and their property sets are not recovered. No objective metric yet: layout parity needs the original's per-property offsets, and the checksum leaf covers only the hash."
+          "rationale": "EFF-014: original reflection names/flags and offline class checksums are recovered in separate leaves, but they do not prove live replication command order, conditions, RPC indices, struct serialization or original wire compatibility. This scope covers the additional runtime layout construction and original-protocol verification; the existing 1% is a historical manual estimate, not runtime parity."
         },
         {
           "id": "net.serializers",
@@ -837,7 +954,7 @@
             "kind": "manual",
             "pct": 0
           },
-          "rationale": "Recover custom serializers and verify actual client/server wire behavior against original evidence."
+          "rationale": "Recover custom serializers and verify actual client/server wire behavior against original evidence. EFF-014 boundary: recovered reflection tables/identities, generated declarations and offline checksums are distinct from runtime replication layout/conditions/RPC behavior and struct wire encoding; shared recovery is allocated once."
         },
         {
           "id": "net.relevancy",
@@ -860,7 +977,7 @@
             "group": 2,
             "total_key": "uht_classes_named"
           },
-          "rationale": "The tracked class checksum report measures an offline comparison of generated headers against recovered reflection tables over named native classes. The last full regression reported 4,617 of 4,617 generated classes matching; this is not a live wire compatibility test."
+          "rationale": "The tracked class checksum report measures an offline comparison of generated headers against recovered reflection tables over named native classes. The last full regression reported 4,617 of 4,617 generated classes matching; this is not a live wire compatibility test. EFF-014 boundary: recovered reflection tables/identities, generated declarations and offline checksums are distinct from runtime replication layout/conditions/RPC behavior and struct wire encoding; shared recovery is allocated once."
         },
         {
           "id": "net.replication_graph",
@@ -871,6 +988,16 @@
             "pct": 0
           },
           "rationale": "The original server replication graph is server-only and not started. No objective metric yet: nothing about the server replication graph is reproduced or measured."
+        },
+        {
+          "id": "net.full_match_scale",
+          "name": "Full-match scale, performance and stability",
+          "weight": 12,
+          "measure": {
+            "kind": "manual",
+            "pct": 0
+          },
+          "rationale": "EFF-020: required by the full original-feature parity goal. Original full-lobby capacity, server/client load, network-loss and stability verification. Relevancy/ReplicationGraph implementation is separately funded; a two-client join does not complete full-match scale. Coarse total-effort estimate 12 (review range 6–18, low confidence); refine after component inventory. No implementation or completion inferred from inventory counts."
         }
       ]
     },
@@ -908,7 +1035,7 @@
             "kind": "manual",
             "pct": 0
           },
-          "rationale": "Reference presence does not establish behavior or protocol parity. Local backend tests cover portions of the implementation; original-client integration and complete behavior remain unverified. See porting/server/EVIDENCE.md."
+          "rationale": "Reference presence does not establish behavior or protocol parity. Local backend tests cover portions of the implementation; original-client integration and complete behavior remain unverified. See porting/server/EVIDENCE.md. EFF-017 ownership: local version/availability service behavior. Shared observations can support these distinct deliverables, but their implementation effort is allocated once; entitlement/anti-cheat compatibility remains in scope."
         },
         {
           "id": "backend.oauth_account",
@@ -932,7 +1059,7 @@
             "kind": "manual",
             "pct": 0
           },
-          "rationale": "Reference presence does not establish behavior or protocol parity. Local backend tests cover portions of the implementation; original-client integration and complete behavior remain unverified. See porting/server/EVIDENCE.md."
+          "rationale": "Reference presence does not establish behavior or protocol parity. Local backend tests cover portions of the implementation; original-client integration and complete behavior remain unverified. See porting/server/EVIDENCE.md. EFF-017 ownership: local account and authentication/token service behavior. Shared observations can support these distinct deliverables, but their implementation effort is allocated once; entitlement/anti-cheat compatibility remains in scope."
         },
         {
           "id": "backend.matchmaking",
@@ -959,7 +1086,7 @@
         },
         {
           "id": "backend.game_profile",
-          "name": "Game v2 profile, world, chat and voice routes — source references",
+          "name": "Game v2 profile, world and chat routes — source references",
           "weight": 15.0,
           "measure": {
             "kind": "routes",
@@ -967,11 +1094,12 @@
               "/api/game/v2/"
             ],
             "exclude": [
-              "matchmaking"
+              "matchmaking",
+              "/api/game/v2/voice"
             ],
             "stub_credit": 1.0
           },
-          "rationale": "Profile, world, enabled features, chat, voice and twitch routes. Only the stub answers exist."
+          "rationale": "Profile, world, enabled features, chat and twitch routes. Voice service routes belong to audio.voice. Only stub answers exist."
         },
         {
           "id": "backend.game_profile.behavior",
@@ -991,7 +1119,7 @@
             "kind": "manual",
             "pct": 0
           },
-          "rationale": "Reconstruct and verify original account progression, profile persistence and related gameplay integration."
+          "rationale": "Reconstruct and verify original account progression, profile persistence and related gameplay integration. Q-02: residual integration/inventory/acceptance scope after declarations and separately funded body recovery; do not allocate the same native reconstruction twice."
         },
         {
           "id": "backend.local_tests",
@@ -1093,7 +1221,7 @@
             "kind": "manual",
             "pct": 0
           },
-          "rationale": "Remaining implementation, integration and parity are not established by the coverage count. Progress here requires separate evidence."
+          "rationale": "Remaining implementation, integration and parity are not established by the coverage count. Progress here requires separate evidence. Q-03: owns backend session/beacon service behavior and its integration, not UE handshake framing or replicated-property layout."
         },
         {
           "id": "backend.stats_cloud",
@@ -1166,7 +1294,7 @@
             "kind": "manual",
             "pct": 0
           },
-          "rationale": "Verify original audio behavior, mixing and representative sound output in the rebuilt client."
+          "rationale": "Verify original audio behavior, mixing and representative sound output in the rebuilt client. EFF-016: shared capture/compare harness effort belongs to visuals.original_comparison once. This leaf covers its own content/runtime acceptance cases, not a second harness allocation."
         },
         {
           "id": "audio.cues_music",
@@ -1189,7 +1317,7 @@
             ],
             "stub_credit": 0.5
           },
-          "rationale": "Voice routes from the static client scan (routes.json) whose literal path appears in committed server code, credited at 50%. None of the voice routes is implemented."
+          "rationale": "Voice service route literals in committed server code receive 50% credit. This measures source references only, not working voice tokens, client voice chat, audio transport, or parity; those remain unverified."
         }
       ]
     },
@@ -1225,11 +1353,11 @@
             "kind": "manual",
             "pct": 0
           },
-          "rationale": "Compare rebuilt material rendering, lighting, effects and presentation with original output across representative scenes."
+          "rationale": "Compare rebuilt material rendering, lighting, effects and presentation with original output across representative scenes. EFF-016: shared capture/compare harness effort belongs to visuals.original_comparison once. This leaf covers that harness and visual-specific comparison cases."
         },
         {
           "id": "visuals.vfx",
-          "name": "VFX, particles and Niagara",
+          "name": "Niagara package conversion (name coverage)",
           "weight": 20,
           "measure": {
             "kind": "local_glob",
@@ -1250,7 +1378,17 @@
             "total_sub": "niagara",
             "what": "Niagara packages (NS_, distinct names)"
           },
-          "rationale": "Counted: NS_ Niagara packages converted in native/Content or generated/converted (none). Denominator: 173 distinct NS_-named cooked packages (naming heuristic, totals.json, full 31-pak tree). Particle (Cascade) assets are not counted. No Niagara or particle asset has loaded."
+          "rationale": "Counted: NS_ Niagara packages converted in native/Content or generated/converted (none). Denominator: 173 distinct NS_-named cooked packages (naming heuristic, totals.json, full 31-pak tree). Particle (Cascade) assets are not counted. No Niagara or particle asset has loaded. Conversion/name coverage only: animation/cosmetic behavior and world particle runtime are separately allocated; package presence does not establish those features."
+        },
+        {
+          "id": "visuals.world_materials_particles",
+          "name": "World materials, textures and particle integration",
+          "weight": 40,
+          "measure": {
+            "kind": "manual",
+            "pct": 0
+          },
+          "rationale": "EFF-012: required by the full original-feature parity goal. Incremental non-UI/non-terrain/background material/shader/texture conversion and runtime compatibility; Cascade asset/effect support and Niagara runtime effects. Excludes UI shared shader infrastructure, terrain/background allocations, platform RHI/presentation and Niagara package-count work. Coarse total-effort estimate 40 (review range 20–60, low confidence); refine after component inventory. No implementation or completion inferred from inventory counts."
         }
       ]
     },
@@ -1275,12 +1413,12 @@
         {
           "id": "ui.commonui_umg.implementation",
           "name": "CommonUI and UMG behavior and widgets",
-          "weight": 18.0,
+          "weight": 30,
           "measure": {
             "kind": "manual",
             "pct": 0
           },
-          "rationale": "Remaining CommonUI and UMG behavior includes Panel and operation queue, input dispatch and held actions, the main CommonButton and other widgets, their integration, and behavior parity. Header coverage, source candidates, the bounded base activation, Panel intro and internal button diagnostics are separately allocated; none establishes this remainder. Weight includes completed and remaining effort; exclude native-body recovery/transcription allocated to gameplay.native_behavior and separately measured diagnostics, declarations and material work. See README effort review for boundaries and uncertainty."
+          "rationale": "Remaining CommonUI and UMG behavior includes Panel and operation queue, input dispatch and held actions, the main CommonButton and other widgets, their integration, and behavior parity. Header coverage, source candidates, the bounded base activation, Panel intro and internal button diagnostics are separately allocated; none establishes this remainder. Weight includes completed and remaining effort; exclude native-body recovery/transcription allocated to gameplay.native_behavior and separately measured diagnostics, declarations and material work. See README effort review for boundaries and uncertainty. EFF-002/003: total CommonUI behavior allocation uses the reviewed 32-point residual estimate (22–44 range), including reusable activatable stacks/queues, Panel, buttons/styles, action widgets, input/routing and list/tab/rotator integration. The operation queue belongs here, not lifecycle. Two independently verified one-point foundations are split out below; this residual is therefore 30. Excludes declarations, body transcription, existing source/runtime diagnostics and Fortnite-specific flows."
         },
         {
           "id": "ui.commonui_panel_outro_runtime",
@@ -1641,12 +1779,12 @@
         {
           "id": "ui.frontend_lobby",
           "name": "Frontend menus and lobby flow",
-          "weight": 25,
+          "weight": 40,
           "measure": {
             "kind": "manual",
             "pct": 0
           },
-          "rationale": "No main menu, lobby or matchmaking UI is reproduced. No objective metric yet: no menu or lobby widget is reproduced, and the widget Blueprints are not mapped to menus. Weight includes completed and remaining effort; exclude native-body recovery/transcription allocated to gameplay.native_behavior and separately measured diagnostics, declarations and material work. See README effort review for boundaries and uncertainty."
+          "rationale": "No main menu, lobby or matchmaking UI is reproduced. No objective metric yet: no menu or lobby widget is reproduced, and the widget Blueprints are not mapped to menus. Weight includes completed and remaining effort; exclude native-body recovery/transcription allocated to gameplay.native_behavior and separately measured diagnostics, declarations and material work. See README effort review for boundaries and uncertainty. EFF-006 boundary: frontend_lobby owns widget-graph logic and menu/lobby flows; gameplay.blueprint_logic owns non-widget gameplay graphs; assets.blueprint_load owns package loading only. Shared native transcription and class declarations are not charged again. Frontend flow effort is a coarse 40-point estimate (30–60 range), not evidence of completion."
         },
         {
           "id": "ui.frontend_event_registrations",
@@ -1709,12 +1847,12 @@
         {
           "id": "ui.lifecycle",
           "name": "Frontend lifecycle and native helpers",
-          "weight": 12,
+          "weight": 11,
           "measure": {
             "kind": "manual",
             "pct": 0
           },
-          "rationale": "Recover actual game-instance initialization, activation handlers, source-selected input policy, operation queue and native helpers, then verify interactive UI roots. Bounded event-registration metadata is measured separately. Weight includes completed and remaining effort; exclude native-body recovery/transcription allocated to gameplay.native_behavior and separately measured diagnostics, declarations and material work. See README effort review for boundaries and uncertainty."
+          "rationale": "Startup, context ownership and cross-widget orchestration after reusable CommonUI facilities exist; the operation queue and widget state machines belong to CommonUI behavior. Excludes body recovery, event declarations, generic context diagnostics and the separately measured startup class-selection foundation. Authentic startup and interaction remain unfinished."
         },
         {
           "id": "ui.hud",
@@ -1816,6 +1954,43 @@
             ]
           },
           "rationale": "One CommonUI implementation point for bounded input/device/lifecycle and delegate source, tests, UHT and syntax. Action dispatch, cursor, shared build and runtime remain unfinished."
+        },
+        {
+          "id": "ui.commonui_button_foundation_runtime",
+          "name": "CommonButton defaults and query — verified foundation",
+          "weight": 1,
+          "measure": {
+            "kind": "ledger",
+            "checks": [
+              "frontend_foundation_button_defaults_query"
+            ]
+          },
+          "rationale": "One point split from ui.commonui_umg.implementation; no additive budget or double allocation. 44-row controlled CDO/fresh-widget defaults and native/reflected interaction query only; selected/style/producer/lifecycle parity remains open."
+        },
+        {
+          "id": "ui.commonui_input_foundation_runtime",
+          "name": "CommonUI input types and accessor — verified foundation",
+          "weight": 1,
+          "measure": {
+            "kind": "ledger",
+            "checks": [
+              "frontend_foundation_input_action_row",
+              "frontend_foundation_current_input_type"
+            ]
+          },
+          "rationale": "One point split from ui.commonui_umg.implementation; no additive budget or double allocation. Original input-row types/defaults and 421-row table with 30 checks, plus 13-row mutable current-input-type getter diagnostic; input producers/routing remain open."
+        },
+        {
+          "id": "ui.startup_selection_runtime",
+          "name": "Original startup class selections — verified foundation",
+          "weight": 1,
+          "measure": {
+            "kind": "ledger",
+            "checks": [
+              "frontend_foundation_startup_selection"
+            ]
+          },
+          "rationale": "One point split from ui.lifecycle; no additive budget or double allocation. Four actual startup classes and bounded Athena controller default observed during seven-widget Root creation. Twenty unresolved imports remain; no viewport, full startup or interactive UI parity claim."
         }
       ]
     }

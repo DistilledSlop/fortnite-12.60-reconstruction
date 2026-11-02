@@ -1,0 +1,206 @@
+{
+  "source_review_revision": "dcc14c3",
+  "reviewed_native_revision": "dcc14c3",
+  "model": {
+    "leaves": 132,
+    "total_weight": 2019,
+    "ui_weight": 199,
+    "commonui_weight": 44,
+    "effort_only": true,
+    "new_scope_estimates_are_low_confidence": true,
+    "product_milestones_completed": 0
+  },
+  "findings": [
+    {
+      "id": "EFF-001",
+      "status": "implemented",
+      "decision": "Original-client Hello/Login/Welcome/Join checks now have separate pending ledger IDs; Wine oracle stages cannot complete them.",
+      "confidence_in_review": "high"
+    },
+    {
+      "id": "EFF-002",
+      "status": "implemented",
+      "decision": "Reviewed CommonUI behavior32 instead of proposed48; after two one-point foundation splits residual30, total CommonUI44.",
+      "confidence_in_review": "low"
+    },
+    {
+      "id": "EFF-003",
+      "status": "implemented",
+      "decision": "CommonUI owns the operation queue and reusable widget state; lifecycle owns startup/context orchestration.",
+      "confidence_in_review": "medium"
+    },
+    {
+      "id": "EFF-004",
+      "status": "accepted_no_change",
+      "decision": "Accepted recommendation to retain FortniteUI29 residual and10 declarations; no unsupported increase.",
+      "confidence_in_review": "low"
+    },
+    {
+      "id": "EFF-005",
+      "status": "accepted_no_change",
+      "decision": "Accepted recommendation to retain HUD40 until a decomposition supports resizing.",
+      "confidence_in_review": "low"
+    },
+    {
+      "id": "EFF-006",
+      "status": "implemented",
+      "decision": "Frontend40 accepted with widget-graph/non-widget Blueprint/loading boundaries stated.",
+      "confidence_in_review": "low"
+    },
+    {
+      "id": "EFF-007",
+      "status": "implemented",
+      "decision": "Seven census scopes explicitly split into20% declarations and80% unfinished feature integration; combined265 preserved.",
+      "confidence_in_review": "high"
+    },
+    {
+      "id": "EFF-008",
+      "status": "implemented_with_inventory_followup",
+      "decision": "Body/feature boundaries clarified; 12-case sample supports separation but no numeric extrapolation. Maintained source outside manifest remains a future inventory task. Current getter is now UE-validated despite stale pending notes in the sample.",
+      "confidence_in_review": "low"
+    },
+    {
+      "id": "EFF-009",
+      "status": "implemented",
+      "decision": "Settings/localization/accessibility/input become6/5/4/5. Actual increase is15, correcting report arithmetic14.",
+      "confidence_in_review": "medium"
+    },
+    {
+      "id": "EFF-010",
+      "status": "implemented",
+      "decision": "General non-SM_/SK_ package coverage uses distinct names and same-scope334005 denominator; heuristic/raw recovery limitations explicit.",
+      "confidence_in_review": "medium"
+    },
+    {
+      "id": "EFF-011",
+      "status": "implemented",
+      "decision": "Three one-point foundations carved from existing residuals; four ledger checks replay actual immutable runtime/source receipts.",
+      "confidence_in_review": "medium"
+    },
+    {
+      "id": "EFF-012",
+      "status": "scope_explicit_not_feature_complete",
+      "decision": "Full-original-feature goal confirms world materials/textures and Cascade/runtime particle scope. Explicit40-point low-confidence estimate at0%, excluding separately allocated shared/terrain/UI work.",
+      "confidence_in_review": "low"
+    },
+    {
+      "id": "EFF-013",
+      "status": "implemented",
+      "decision": "Geometry, level assembly/streaming, POI content and manager interfaces assigned separately; Landscape/WorldTile/Tile removed from manager census.",
+      "confidence_in_review": "medium"
+    },
+    {
+      "id": "EFF-014",
+      "status": "implemented",
+      "decision": "Reflection/offline checksums distinguished from runtime replication conditions, RPC order and wire serialization. No new completion or speculative weight reduction.",
+      "confidence_in_review": "low"
+    },
+    {
+      "id": "EFF-015",
+      "status": "implemented",
+      "decision": "Voice routes excluded from game-profile route coverage. Voice route presence does not complete voice audio/client behavior.",
+      "confidence_in_review": "high"
+    },
+    {
+      "id": "EFF-016",
+      "status": "implemented",
+      "decision": "Shared comparison harness allocated once to visual comparisons; other leaves own their distinct acceptance cases.",
+      "confidence_in_review": "low"
+    },
+    {
+      "id": "EFF-017",
+      "status": "implemented",
+      "decision": "Launcher compatibility, Wine stages, session crypto, account/version services and original-client acceptance have separate owners; entitlement/anti-cheat work remains in scope.",
+      "confidence_in_review": "low"
+    },
+    {
+      "id": "EFF-018",
+      "status": "scope_explicit_not_feature_complete",
+      "decision": "Full scope confirmed: animation/emotes/cosmetic assembly explicit40-point low-confidence allocation at0%, distinct from skeletal package conversion and menu flow.",
+      "confidence_in_review": "low"
+    },
+    {
+      "id": "EFF-019",
+      "status": "scope_explicit_not_feature_complete",
+      "decision": "Engine-adjacent physics/destruction/foliage/water/vehicle compatibility explicit20 at0%; stock engine availability is not original compatibility proof.",
+      "confidence_in_review": "low"
+    },
+    {
+      "id": "EFF-020",
+      "status": "scope_explicit_not_feature_complete",
+      "decision": "Full-match scale12 and replay/spectating8 explicit low-confidence scopes at0%, distinct from replication mechanisms and shared HUD.",
+      "confidence_in_review": "low"
+    }
+  ],
+  "history": [
+    {
+      "id": "HIST-01",
+      "status": "implemented",
+      "validation": "Python render/regression tests; actual generated JS compiles in V8 and17 minimal-DOM interactions pass. Browser/visual rendering unverified. Old weight-only revisions cannot be inferred where historical weights were not recorded; no remote exists for commit links."
+    },
+    {
+      "id": "HIST-02",
+      "status": "implemented",
+      "validation": "Python render/regression tests; actual generated JS compiles in V8 and17 minimal-DOM interactions pass. Browser/visual rendering unverified. Old weight-only revisions cannot be inferred where historical weights were not recorded; no remote exists for commit links."
+    },
+    {
+      "id": "HIST-03",
+      "status": "implemented",
+      "validation": "Python render/regression tests; actual generated JS compiles in V8 and17 minimal-DOM interactions pass. Browser/visual rendering unverified. Old weight-only revisions cannot be inferred where historical weights were not recorded; no remote exists for commit links."
+    },
+    {
+      "id": "HIST-04",
+      "status": "implemented",
+      "validation": "Python render/regression tests; actual generated JS compiles in V8 and17 minimal-DOM interactions pass. Browser/visual rendering unverified. Old weight-only revisions cannot be inferred where historical weights were not recorded; no remote exists for commit links."
+    },
+    {
+      "id": "HIST-05",
+      "status": "implemented",
+      "validation": "Python render/regression tests; actual generated JS compiles in V8 and17 minimal-DOM interactions pass. Browser/visual rendering unverified. Old weight-only revisions cannot be inferred where historical weights were not recorded; no remote exists for commit links."
+    },
+    {
+      "id": "HIST-06",
+      "status": "implemented",
+      "validation": "Python render/regression tests; actual generated JS compiles in V8 and17 minimal-DOM interactions pass. Browser/visual rendering unverified. Old weight-only revisions cannot be inferred where historical weights were not recorded; no remote exists for commit links."
+    },
+    {
+      "id": "HIST-07",
+      "status": "implemented",
+      "validation": "Python render/regression tests; actual generated JS compiles in V8 and17 minimal-DOM interactions pass. Browser/visual rendering unverified. Old weight-only revisions cannot be inferred where historical weights were not recorded; no remote exists for commit links."
+    },
+    {
+      "id": "HIST-08",
+      "status": "implemented",
+      "validation": "Python render/regression tests; actual generated JS compiles in V8 and17 minimal-DOM interactions pass. Browser/visual rendering unverified. Old weight-only revisions cannot be inferred where historical weights were not recorded; no remote exists for commit links."
+    },
+    {
+      "id": "HIST-09",
+      "status": "implemented",
+      "validation": "Python render/regression tests; actual generated JS compiles in V8 and17 minimal-DOM interactions pass. Browser/visual rendering unverified. Old weight-only revisions cannot be inferred where historical weights were not recorded; no remote exists for commit links."
+    },
+    {
+      "id": "HIST-10",
+      "status": "implemented",
+      "validation": "Python render/regression tests; actual generated JS compiles in V8 and17 minimal-DOM interactions pass. Browser/visual rendering unverified. Old weight-only revisions cannot be inferred where historical weights were not recorded; no remote exists for commit links."
+    }
+  ],
+  "scope_questions": {
+    "Q-01": "All originally shipped modes/worlds remain included by the existing full parity objective.",
+    "Q-02": "Residual leaf rationale specifies integration/inventory/acceptance after separately funded declarations/body recovery.",
+    "Q-03": "Backend beacon/service behavior, native connection acceptance and replication layout separated.",
+    "Q-04": "Weights are uncertain relative effort; rough engineer-weeks are not measured agent hours.",
+    "Q-05": "Recovery, conversion and runtime use are distinct; remaining asset types exclude newly explicit scopes."
+  },
+  "followups": [
+    "Inventory maintained native bodies outside the behavior manifest before resizing recovery vs integration budgets.",
+    "Refine low-confidence world/animation/physics/scale/replay effort through component inventories.",
+    "Perform browser/visual validation of history interactions."
+  ],
+  "evidence": {
+    "native_checkpoint": "porting/generated/frontend-native-evidence/common-input-current-type-runtime-1/checkpoint.json",
+    "native_checkpoint_sha256": "bad3def28dc6c5a3f72e39f9f1ab720c39675b78c718df5e6b39f5d387772192",
+    "foundation_recorder": "porting/progress/record_frontend_foundation_runtime.py",
+    "body_sample": "/mnt/vibrato/fortnite-work/native-feature-effort-sample-1/HANDOFF.json",
+    "history_smoke": "/mnt/vibrato/fortnite-work/history-v8-smoke-1.json"
+  }
+}

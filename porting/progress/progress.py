@@ -1925,8 +1925,12 @@ def history_html(history, model):
 
     # Embed the original values; the client only changes the visible index range.
     chart_data = json.dumps([
-        {"short": e["short"], "date": e["date"][:10], "subject": e["subject"],
-         "overall": e["overall_pct"], "measured": e.get("measured_pct")}
+        {"short": e["short"], "date": e["date"], "subject": e["subject"],
+         "overall": e["overall_pct"], "measured": e.get("measured_pct"),
+         "objective": e.get("objective_pct"), "commit": e.get("commit", ""),
+         "categories": e.get("categories", {}), "leaves": e.get("leaves"),
+         "weights": e.get("leaf_weights"), "totalWeight": e.get("total_weight"),
+         "seeded": e.get("seeded", False)}
         for e in entries
     ], ensure_ascii=True).replace("<", "\\u003c")
     chart_script = r'''<script>
@@ -1942,7 +1946,73 @@ def history_html(history, model):
   inspector.hidden = false;
   const ns = 'http://www.w3.org/2000/svg';
   let start = Math.max(0, data.length - 50), end = data.length - 1;
-  let selected = end, marker;
+  let selected = end, marker, trueScale = false, page = 0, positionForIndex;
+  const spacing = document.getElementById('history-spacing');
+  const category = document.getElementById('history-category');
+  const rangeSummary = document.getElementById('history-summary');
+  const timestamp = p => { const t = Date.parse(p.date); return Number.isFinite(t) ? t : null; };
+  Object.entries(CAT_NAMES_PLACEHOLDER).forEach(([id, name]) => {
+    const option = document.createElement('option'); option.value = id; option.textContent = name; category.appendChild(option);
+  });
+  spacing.addEventListener('change', () => render());
+  category.addEventListener('change', () => render());
+  const search = document.getElementById('history-search');
+  const changedOnly = document.getElementById('history-changed');
+  const tableBody = document.getElementById('history-rows');
+  const pageStatus = document.getElementById('history-page');
+  const categoryNames = CAT_NAMES_PLACEHOLDER;
+  const delta = (a, b) => a == null || b == null ? null : a - b;
+  const fmt = n => n == null ? 'unavailable' : `${n >= 0 ? '+' : ''}${n.toFixed(3)} pp`;
+  const moved = i => {
+    const a = data[i].leaves, b = data[i-1]?.leaves;
+    if (!a || !b) return null;
+    return Object.keys(a).filter(k => Object.hasOwn(b, k) && a[k] !== b[k])
+      .map(k => [k, a[k] - b[k]]).sort ( (a,b) => Math.abs(b[1])-Math.abs(a[1]) );
+  };
+  const modelChange = i => {
+    const a = data[i], b = data[i-1];
+    if (!b) return false;
+    const keys = o => Object.keys(o).sort().join('\n');
+    return !!((a.leaves && b.leaves && keys(a.leaves) !== keys(b.leaves)) ||
+      (a.weights && b.weights && JSON.stringify(Object.entries(a.weights).sort()) !== JSON.stringify(Object.entries(b.weights).sort())) ||
+      (a.totalWeight != null && b.totalWeight != null && a.totalWeight !== b.totalWeight));
+  };
+  function textNode(tag, value, parent) { const n = document.createElement(tag); n.textContent = value; parent.appendChild(n); return n; }
+  function renderTable(reveal = false) {
+    const query = search.value.toLowerCase();
+    let rows = data.map((p, i) => i).reverse().filter(i =>
+      (!changedOnly.checked || (i > 0 && data[i].overall !== data[i-1].overall)) &&
+      `${data[i].subject} ${data[i].short}`.toLowerCase().includes(query));
+    if (reveal && !rows.includes(selected)) { search.value = ''; changedOnly.checked = false; rows = data.map((p, i) => i).reverse(); }
+    if (reveal) page = Math.floor(rows.indexOf(selected) / 50);
+    page = Math.max(0, Math.min(page, Math.max(0, Math.ceil(rows.length / 50) - 1)));
+    tableBody.replaceChildren();
+    rows.slice(page * 50, page * 50 + 50).forEach(i => {
+      const p = data[i], tr = document.createElement('tr');
+      tr.tabIndex = 0; tr.className = i === selected ? 'selected' : '';
+      textNode('td', p.date, tr); textNode('td', p.short, tr); textNode('td', p.subject, tr);
+      textNode('td', `${p.overall.toFixed(2)}%`, tr);
+      textNode('td', fmt(delta(p.overall, data[i-1]?.overall)), tr);
+      const changes = moved(i);
+      textNode('td', changes === null ? 'Unavailable' : changes.length ? changes.slice(0,3).map(([k,v]) => `${k} ${fmt(v)}`).join(', ') : 'No leaf changes', tr);
+      const source = textNode('td', p.seeded ? '○' : '●', tr);
+      source.title = p.seeded ? 'Replayed using current estimates and local outputs' : 'Recorded at commit time';
+      tr.addEventListener('click', () => selectRow(i));
+      tr.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selectRow(i); } });
+      tableBody.appendChild(tr);
+    });
+    pageStatus.textContent = `${rows.length ? page * 50 + 1 : 0}–${Math.min(rows.length, (page + 1) * 50)} of ${rows.length}`;
+    document.getElementById('history-prev').disabled = page === 0;
+    document.getElementById('history-next').disabled = (page + 1) * 50 >= rows.length;
+  }
+  function selectRow(i) { if (i < start || i > end) { const count = end-start+1; setRange(i-Math.floor(count/2), count); } inspect(i, true); }
+  search.addEventListener('input', () => { page = 0; renderTable(); });
+  changedOnly.addEventListener('change', () => { page = 0; renderTable(); });
+  document.getElementById('history-prev').addEventListener('click', () => { page--; renderTable(); });
+  document.getElementById('history-next').addEventListener('click', () => { page++; renderTable(); });
+  document.getElementById('history-scale-toggle').addEventListener('click', () => { trueScale = !trueScale; render(); });
+  svg.setAttribute('tabindex', '0');
+  svg.addEventListener('keydown', e => { if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') { e.preventDefault(); inspect(selected + (e.key === 'ArrowLeft' ? -1 : 1), true); } });
   function element(name, attrs, parent, content) {
     const node = document.createElementNS(ns, name);
     for (const [key, value] of Object.entries(attrs)) node.setAttribute(key, value);
@@ -1960,12 +2030,13 @@ def history_html(history, model):
     if (!data.length) { status.textContent = 'No recorded commits'; buttons.forEach(button => button.disabled = true); selection.disabled = true; detail.textContent = 'No commit to inspect.'; return; }
     const visible = data.slice(start, end + 1);
     let ymin = 0, ymax, step;
-    if (count === data.length) {
+    if (count === data.length || trueScale) {
       ymax = visible.reduce((max, p) => Math.max(max, Math.ceil(p.overall / 5) * 5,
-        p.measured == null ? 0 : Math.ceil(p.measured / 5) * 5), 10);
+        p.measured == null ? 0 : Math.ceil(p.measured / 5) * 5,
+        category.value && p.categories[category.value] != null ? Math.ceil(p.categories[category.value] / 5) * 5 : 0), 10);
       step = ymax > 10 ? 5 : 2;
     } else {
-      const values = visible.flatMap(p => p.measured == null ? [p.overall] : [p.overall, p.measured]);
+      const values = visible.flatMap(p => [p.overall, p.measured, category.value ? p.categories[category.value] : null].filter(v => v != null));
       const min = values.reduce((a, b) => Math.min(a, b));
       const max = values.reduce((a, b) => Math.max(a, b));
       const padding = Math.max((max - min) * 0.1, 0.001);
@@ -1976,7 +2047,21 @@ def history_html(history, model):
       ymin = Math.floor((min - padding) / step) * step;
       ymax = Math.ceil((max + padding) / step) * step;
     }
-    const x = i => left + (count > 1 ? inner * i / (count - 1) : inner / 2);
+    const times = visible.map(timestamp);
+    const validTimes = times.filter(t => t != null);
+    const minTime = validTimes.length ? Math.min(...validTimes) : null;
+    const maxTime = validTimes.length ? Math.max(...validTimes) : null;
+    // Missing or identical timestamps cannot provide meaningful time spacing.
+    const timeSpacing = spacing.value === 'date' && validTimes.length === count && maxTime > minTime;
+    const x = i => left + (timeSpacing ? inner * (times[i] - minTime) / (maxTime - minTime) : count > 1 ? inner * i / (count - 1) : inner / 2);
+    positionForIndex = i => x(i - start);
+    const nearest = position => {
+      let best = 0, distance = Infinity;
+      visible.forEach((p, i) => { const d = Math.abs(x(i) - position);
+        if (d < distance || (d === distance && Math.abs(start+i-selected) < Math.abs(start+best-selected))) { best = i; distance = d; }
+      });
+      return start + best;
+    };
     const y = v => top + plotHeight * (ymax - v) / (ymax - ymin);
     const decimals = Math.max(0, Math.min(12, -Math.floor(Math.log10(step))));
     const tickCount = Math.round((ymax - ymin) / step);
@@ -1989,48 +2074,82 @@ def history_html(history, model):
       const points = visible.map((p, i) => p[field] == null ? null : `${x(i)},${y(p[field])}`).filter(Boolean);
       if (points.length > 1) element('polyline', {points:points.join(' '), fill:'none', ...attrs}, svg);
     };
+    visible.forEach((p, i) => { if (modelChange(start+i)) {
+      element('line', {x1:x(i), x2:x(i), y1:top, y2:height-bottom, stroke:'var(--ink2)', 'stroke-dasharray':'2 3'}, svg);
+      const label = element('text', {x:x(i)+2, y:top+11, 'font-size':10, fill:'var(--ink2)'}, svg, 'Model revision');
+      element('title', {}, label, 'Leaf set or recorded weights changed');
+    }});
     line('measured', {stroke:'var(--ink2)', 'stroke-width':1.5, 'stroke-dasharray':'5 4'});
     line('overall', {stroke:'var(--accent)', 'stroke-width':2});
+    if (category.value) {
+      const points = visible.map((p,i) => p.categories[category.value] == null ? null : `${x(i)},${y(p.categories[category.value])}`).filter(Boolean);
+      if (points.length > 1) element('polyline', {points:points.join(' '), fill:'none', stroke:'var(--warn)', 'stroke-width':2, 'stroke-dasharray':'1 4'}, svg);
+      visible.forEach((p,i) => { if (p.categories[category.value] != null && (count < 51 || i === selected-start))
+        element('rect', {x:x(i)-2, y:y(p.categories[category.value])-2, width:4, height:4, fill:'var(--warn)'}, svg); });
+    }
+    // Measured points use diamonds so the series remains identifiable without color.
+    visible.forEach((p, i) => { if (p.measured != null && (count < 51 || i === selected-start)) {
+      const cx = x(i), cy = y(p.measured);
+      element('polygon', {points:`${cx},${cy-4} ${cx+4},${cy} ${cx},${cy+4} ${cx-4},${cy}`, fill:'var(--ink2)'}, svg);
+    }});
     // Dense series retain every line vertex; only the decorative dots are hidden.
-    if (count === 1 || inner / (count - 1) >= 9) visible.forEach((p, i) => {
-      const dot = element('circle', {cx:x(i), cy:y(p.overall), r:3, fill:'var(--accent)'}, svg);
+    visible.forEach((p, i) => {
+      if (!p.seeded && count !== 1 && inner / (count - 1) < 9) return;
+      const dot = element('circle', {cx:x(i), cy:y(p.overall), r:3, fill:p.seeded ? 'var(--surface)' : 'var(--accent)', stroke:'var(--accent)'}, svg);
       element('title', {}, dot, `${p.short} ${p.date}: ${p.overall.toFixed(2)}% | ${p.subject}`);
     });
     const labelCount = Math.min(count, Math.max(2, Math.floor(inner / 95) + 1));
     const indexes = new Set();
     for (let i = 0; i < labelCount; i++) indexes.add(labelCount === 1 ? 0 : Math.round(i * (count - 1) / (labelCount - 1)));
-    indexes.forEach(i => element('text', {x:x(i), y:height-10, 'text-anchor':i === 0 ? 'start' : i === count-1 ? 'end' : 'middle', 'font-size':11, fill:'var(--ink2)'}, svg, visible[i].short));
+    indexes.forEach(i => element('text', {x:x(i), y:height-10, 'text-anchor':i === 0 ? 'start' : i === count-1 ? 'end' : 'middle', 'font-size':11, fill:'var(--ink2)'}, svg, spacing.value === 'date' ? (visible[i].date || '').slice(0,10) : visible[i].short));
     marker = element('line', {y1:top, y2:height-bottom, stroke:'var(--ink2)', 'stroke-width':1, 'stroke-dasharray':'3 3', 'pointer-events':'none'}, svg);
     const overlay = element('rect', {x:left, y:top, width:inner, height:plotHeight, fill:'transparent', 'pointer-events':'all'}, svg);
-    overlay.addEventListener('pointermove', event => {
+    const pointerIndex = event => {
       const rect = svg.getBoundingClientRect();
-      const position = (event.clientX - rect.left) * width / rect.width;
-      const index = count === 1 ? 0 : Math.max(0, Math.min(count - 1, Math.round((position - left) / inner * (count - 1))));
-      inspect(start + index);
+      return nearest((event.clientX - rect.left) * width / rect.width);
+    };
+    overlay.addEventListener('pointerdown', event => {
+      if (overlay.setPointerCapture) overlay.setPointerCapture(event.pointerId);
+      inspect(pointerIndex(event), true);
     });
+    overlay.addEventListener('pointermove', event => {
+      if (event.pointerType === 'mouse' || event.buttons) inspect(pointerIndex(event));
+    });
+    overlay.addEventListener('click', event => inspect(pointerIndex(event), true));
     selection.min = start;
     selection.max = end;
     inspect(selected);
-    status.textContent = `Showing commits ${start + 1}–${end + 1} of ${data.length} (${count === data.length ? 'zero-baseline' : 'fitted'} scale)`;
+    document.getElementById('history-scale').textContent = `${count === data.length || trueScale ? 'Zero baseline' : 'Fitted scale'}: ${ymin.toFixed(decimals)}–${ymax.toFixed(decimals)}%`;
+    document.getElementById('history-scale-toggle').textContent = trueScale ? 'Use fitted scale' : 'Use zero baseline';
+    rangeSummary.textContent = `Visible range: ${visible[0].date || 'unknown date'} to ${visible[count-1].date || 'unknown date'}, ${count} commits. Overall ${visible[0].overall.toFixed(2)}% to ${visible[count-1].overall.toFixed(2)}%. ${spacing.value === 'date' && !timeSpacing ? 'Date spacing unavailable for this range; using commit spacing.' : ''}`;
+    status.textContent = `Showing commits ${start + 1}–${end + 1} of ${data.length} (${count === data.length || trueScale ? 'zero-baseline' : 'fitted'} scale)`;
     buttons.forEach(button => {
       const action = button.dataset.historyAction;
       button.disabled = action === 'older' ? start === 0 : action === 'newer' ? end === data.length - 1 :
-        action === 'in' ? count <= 2 : action === 'out' || action === 'all' ? count === data.length : data.length <= 50;
+        action === 'in' ? count <= 2 : action === 'out' || action === 'all' ? count === data.length : action === 'recent' ? data.length <= 50 : false;
     });
   }
-  function inspect(index) {
+  function inspect(index, reveal = false) {
     selected = Math.max(start, Math.min(end, index));
     const p = data[selected];
     selection.value = selected;
-    const width = Math.max(220, Math.round(svg.parentElement.clientWidth));
-    const position = 52 + (end > start ? (width - 68) * (selected - start) / (end - start) : (width - 68) / 2);
+    const position = positionForIndex(selected);
     marker.setAttribute('x1', position);
     marker.setAttribute('x2', position);
     selection.setAttribute('aria-valuetext', `Commit ${selected + 1} of ${data.length}: ${p.short}, ${p.date}`);
-    const measured = p.measured == null ? '' : `; evidence-based ${p.measured.toFixed(2)}%`;
-    detail.textContent = `${p.short} ${p.date}: overall ${p.overall.toFixed(2)}%${measured} | ${p.subject}`;
+    detail.replaceChildren();
+    textNode('strong', `${p.short} · ${p.date} · ${p.subject}`, detail);
+    const values = textNode('p', '', detail);
+    values.textContent = `Overall ${p.overall.toFixed(2)}% (${fmt(delta(p.overall, data[selected-1]?.overall))}); evidence-based ${p.measured == null ? 'unavailable' : p.measured.toFixed(2)+'%'}; objective ${p.objective == null ? 'unavailable' : p.objective.toFixed(2)+'%'}.`;
+    const prev = data[selected-1];
+    const cats = Object.keys(p.categories || {}).filter(k => prev?.categories && Object.hasOwn(prev.categories,k) && p.categories[k] !== prev.categories[k]);
+    textNode('p', `Category changes: ${cats.length ? cats.map(k => `${categoryNames[k] || k} ${fmt(p.categories[k]-prev.categories[k])}`).join(', ') : prev ? 'none recorded' : 'unavailable'}.`, detail);
+    const changes = moved(selected);
+    textNode('p', `Leaf changes: ${changes === null ? 'unavailable' : changes.length ? changes.slice(0,3).map(([k,v]) => `${k} ${fmt(v)}`).join(', ') : 'none'}. ${p.seeded ? 'Replayed using current estimates and local outputs.' : 'Recorded at commit time.'} ${modelChange(selected) ? 'Model revision: leaf set or recorded weights changed.' : ''}`, detail);
+    renderTable(reveal);
+    if (reveal) tableBody.querySelector('.selected')?.scrollIntoView({block:'nearest'});
   }
-  selection.addEventListener('input', () => inspect(Number(selection.value)));
+  selection.addEventListener('input', () => inspect(Number(selection.value), true));
   function setRange(first, count) {
     count = Math.max(1, Math.min(data.length, count));
     start = Math.max(0, Math.min(data.length - count, first));
@@ -2042,6 +2161,21 @@ def history_html(history, model):
     const count = end - start + 1, action = button.dataset.historyAction;
     if (action === 'all') setRange(0, data.length);
     if (action === 'recent') setRange(data.length - 50, 50);
+    if (action === 'day' || action === 'week') {
+      const valid = data.map(timestamp).filter(t => t != null);
+      if (valid.length) {
+        const latest = valid[valid.length - 1];
+        const day = Math.floor(latest / 86400000) * 86400000;
+        const cutoff = day - (action === 'week' ? 6 * 86400000 : 0);
+        const first = data.findIndex(p => timestamp(p) != null && timestamp(p) >= cutoff);
+        if (first >= 0) setRange(first, data.length - first);
+      }
+    }
+    if (action === 'revision') {
+      let first = 0;
+      for (let i = data.length - 1; i > 0; i--) if (modelChange(i)) { first = i; break; }
+      setRange(first, data.length - first);
+    }
     if (action === 'older') setRange(start - Math.max(1, Math.floor(count / 2)), count);
     if (action === 'newer') setRange(start + Math.max(1, Math.floor(count / 2)), count);
     if (action === 'in' || action === 'out') {
@@ -2053,30 +2187,24 @@ def history_html(history, model):
   else window.addEventListener('resize', render);
   render();
 })();
-</script>'''.replace('DATA_PLACEHOLDER', chart_data)
+</script>'''.replace('DATA_PLACEHOLDER', chart_data).replace('CAT_NAMES_PLACEHOLDER', json.dumps({g['id']: g['name'] for g in model['tree']}).replace('<', '\\u003c'))
 
-    cat_ids = [g["id"] for g in model["tree"]]
-    cat_names = {g["id"]: g["name"] for g in model["tree"]}
-    head_cells = "".join(f'<th>{esc(cat_names[c])}</th>' for c in cat_ids)
-    rows = []
-    for e in reversed(entries):
-        cells = "".join(f'<td class="num">{e["categories"].get(c, 0):.1f}%</td>' for c in cat_ids)
-        flag = ("replayed: manual estimates and local outputs as of now" if e.get("seeded")
-                else "recorded at commit time")
-        rows.append(f'<tr><td>{esc(e["date"][:16].replace("T", " "))}</td><td><code>{esc(e["short"])}</code></td>'
-                    f'<td>{esc(e["subject"])}</td><td class="num"><strong>{e["overall_pct"]:.2f}%</strong></td>{cells}'
-                    f'<td class="ev">{esc(flag)}</td></tr>')
     return f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Port progress history</title>
 <style>{PAGE_CSS}
 svg text{{font-family:system-ui,-apple-system,Segoe UI,sans-serif}}
-#history-chart svg{{min-width:0}}
+#history-chart svg{{min-width:0;touch-action:pan-y}}
 .history-controls:not([hidden]){{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:.5rem 0}}
 .history-controls button{{font:inherit;padding:5px 9px}}
 #history-inspector input{{width:min(100%, 35rem);vertical-align:middle}}
-#history-detail{{min-height:1.5em}}
+#history-detail{{border:1px solid var(--line);padding:.8rem;margin:.5rem 0}}
+#history-detail p{{margin:.35rem 0}}
+#history-scale{{border:1px solid var(--line);border-radius:1rem;padding:.2rem .6rem}}
+#history-rows tr{{cursor:pointer}} #history-rows tr.selected{{outline:2px solid var(--accent);outline-offset:-2px}}
+#history-table thead th{{position:sticky;top:0;background:var(--surface);z-index:1}}
+#history-chart svg:focus-visible, #history-rows tr:focus-visible{{outline:2px solid var(--accent)}}
 </style></head>
 <body><main>
 <header>
@@ -2085,27 +2213,38 @@ svg text{{font-family:system-ui,-apple-system,Segoe UI,sans-serif}}
 </header>
 <p class="warn">{esc(model["definition"])} Overall values here estimate reconstruction effort; the four milestones require end-to-end evidence.</p>
 <h2>Overall progress per commit</h2>
+<p>This is the overall estimate after each commit. Flat lines mean work did not yet change a measured leaf. Changes in the recorded leaf set or weights are marked as model revisions where available.</p>
 <div class="history-controls" aria-label="History range controls" hidden>
 <button type="button" data-history-action="all">All commits</button>
 <button type="button" data-history-action="recent">Recent 50</button>
+<button type="button" data-history-action="day">Latest recorded day</button>
+<button type="button" data-history-action="week">Latest 7 recorded-day window</button>
+<button type="button" data-history-action="revision">Since last known model revision</button>
 <button type="button" data-history-action="older">← Older</button>
 <button type="button" data-history-action="newer">Newer →</button>
 <button type="button" data-history-action="in">Zoom in</button>
 <button type="button" data-history-action="out">Zoom out</button>
-<span id="history-range" class="meta"></span>
+<span id="history-range" class="meta"></span> <span id="history-scale"></span> <button type="button" id="history-scale-toggle">Use zero baseline</button>
 </div>
+<p class="meta">Legend: solid line = overall; dashed line = evidence-based; ○ replayed, ● recorded; vertical dotted rule = model revision; diamonds = evidence-based; dotted line with square markers = selected category.</p>
+<div class="history-controls"><label>Horizontal spacing <select id="history-spacing"><option value="commit">Commits</option><option value="date">Date and time</option></select></label>
+<label>Category trace <select id="history-category"><option value="">None</option></select></label></div>
+<p class="meta" id="history-summary" aria-live="polite"></p>
 <div class="chart-scroll" id="history-chart">{chart}</div>
 <div id="history-inspector" hidden>
 <label for="history-selection">Inspect commit in shown range</label>
 <input id="history-selection" type="range" step="1">
-<p class="meta" id="history-detail" aria-live="polite"></p>
+<div id="history-detail" aria-live="polite"></div>
 </div>
-<p class="meta">The chart opens on the most recent 50 commits when there are more than 50. Use the range controls to browse or show all history, and the slider or pointer to inspect a commit. Selected ranges use a fitted vertical scale; all commits use a zero baseline. Solid line: overall including manual estimates. Dashed line: evidence-based progress only (basis <em>git</em>, <em>local</em> or <em>documented</em>), which includes documented counts. Estimates use the model in effect at each recording; model revisions can cause discontinuities. Points marked replay used the current components.json manual estimates and current ignored local outputs, so they are indicative. Hook-recorded points measure HEAD at commit time.</p>
+<p class="meta">The chart opens on the most recent 50 commits when there are more than 50. Use the range controls to browse or show all history, and the slider or pointer to inspect a commit. Selected ranges use a fitted vertical scale; all commits use a zero baseline. Objective progress counts git and local evidence; evidence-based progress also counts documented evidence. Solid line: overall including manual estimates. Dashed line: evidence-based progress only (basis <em>git</em>, <em>local</em> or <em>documented</em>), which includes documented counts. Estimates use the model in effect at each recording; model revisions can cause discontinuities. Points marked replay used the current components.json manual estimates and current ignored local outputs, so they are indicative. Hook-recorded points measure HEAD at commit time.</p>
 <h2>Commits</h2>
-<div class="tablewrap"><table>
-<thead><tr><th>Date (UTC)</th><th>Commit</th><th>Subject</th><th>Overall</th>{head_cells}<th>Source</th></tr></thead>
-<tbody>{''.join(rows)}</tbody>
-</table></div>
+<div class="history-controls"><label>Search commits <input id="history-search" type="search"></label>
+<label><input id="history-changed" type="checkbox" checked> Only commits that changed the score</label></div>
+<div class="tablewrap"><table id="history-table">
+<thead><tr><th>Date (UTC)</th><th>Commit</th><th>Subject</th><th>Overall</th><th>Delta</th><th>What moved</th><th>Source</th></tr></thead>
+<tbody id="history-rows"></tbody></table></div>
+<div class="history-controls"><button type="button" id="history-prev">Previous</button> <span id="history-page"></span> <button type="button" id="history-next">Next</button></div>
+<noscript>Enable JavaScript to search and inspect the commit table.</noscript>
 <footer>Generated offline by porting/progress/progress.py.</footer>
 {chart_script}
 </main></body></html>
@@ -2125,6 +2264,8 @@ def entry_from(res, sha, subject, date, seeded):
         "objective_pct": res["objective_pct"],
         "categories": {g["id"]: round(g["pct"], 3) for g in res["groups"]},
         "leaves": {leaf["id"]: leaf["pct"] for leaf in res["leaves"]},
+        "leaf_weights": {leaf["id"]: leaf["weight"] for leaf in res["leaves"]},
+        "total_weight": res["total_weight"],
         "carried": sorted(leaf["id"] for leaf in res["leaves"] if leaf.get("carried")),
         "milestones_done": res["milestones_done"],
         "seeded": seeded,

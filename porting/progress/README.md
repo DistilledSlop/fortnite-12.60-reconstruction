@@ -100,42 +100,55 @@ Measures, from most objective to least:
   takes `sources` (`root`, `suffix`, `name_regex`) and `distinct` (count distinct names).
 - `manual`: `pct`, your estimate (basis `manual`).
 
-### UI effort review (2026-11-02)
+### Applied Claude effort review (2026-11-02)
 
-The current 1,855-point model assigns 170 points to UI overall, including 30
-to CommonUI/UMG. The 10-point FortniteUI tile measures declarations only; the
-module also has separately allocated behavior and confirmation work. These
-allocations need comparison against the full implementation scope, rather than
-against the declaration tile or recent elapsed time alone.
+Claude's report and research are retained in [effort_review](effort_review/README.md).
+The original +78 UI proposal is not applied. The reviewed model has **2,019 relative
+points and 132 leaves**: UI is 199 (formerly 170), with CommonUI/UMG 44 (formerly
+30). CommonUI's behavior estimate rises from 18 to 32 before splitting out two
+one-point foundations; frontend/menu flow rises from 25 to 40. FortniteUI and HUD
+budgets retain their previous values. The original units are rough relative effort,
+not measured hours or a conversion from agent runtime. Importance, urgency and a
+desired score play no part in the revision.
 
-The separate [Claude review workspace](effort_review/README.md) inventories all
-117 leaves, their evidence and accounting boundaries. Its saved proposal raises
-UI from 170 to 248 points, including CommonUI from 30 to 60, and the total from
-1,855 to 1,933. **These numeric changes are proposals and have not been applied.**
-The proposal's coarse estimate bands and rationale require independent review;
-there is no measured engineer-hour calibration. With unchanged evidence the
-proposed model would move the overall estimate from 21.458% to about 20.592%.
-That would be a model change, not lost work or a runtime result.
+Three one-point foundations are carved from residual budgets: actual CommonButton
+query/defaults; original input-row/table and current-type accessor runtime; and
+observed startup class selections. Their ledger entries replay pinned source and
+runtime receipts. They do not complete selection/routing, interactive startup or
+any product milestone. This recognizes verified work without calling an entire
+manual UI leaf complete.
 
-One confirmed accounting fix is applied: `wine_starts` and startup effort belong
-only to `platform.eac_removal`; `platform.wine_launch` measures the five downstream
-Wine stages. Cross-module native-body recovery/transcription belongs to
-`gameplay.native_behavior`; feature/UI budgets cover additional adapters, assembly,
-integration and verification. CommonUI owns reusable widgets, FortniteUI owns
-module-specific behavior, lifecycle owns startup/context orchestration, and
-frontend/HUD own their respective flows and presentation. Separately measured
-source, declarations, diagnostics, events and materials must not be allocated
-again to those residual budgets. A shared proof may support different deliverables,
-but the same work must have one effort allocation.
+Seven census allocations retain their combined 265 points but now expose their
+former 20% declaration share and 80% unfinished feature integration separately.
+The declaration share can reach 100% of its own scope; header presence cannot
+complete feature behavior. Existing contributions are preserved for the same
+coverage, aside from the intentionally narrowed world-manager name heuristic.
+Native-body recovery/transcription remains a separate cross-module allocation;
+its manifest misses some maintained generator bodies and is not an inventory of
+all recovered code. A twelve-case sample supports the ownership distinction, not
+a new numeric extrapolation.
 
-At Native `04822b2`, seven button defaults are checked on the CDO and a fresh
-widget; main-button, internal-button, activation, and Panel intro/outro diagnostics
-pass. Authentic selection/action adapters, interactive root attachment, menus,
-lobby, HUD, original behavior and presentation remain unfinished. Portable source
-cores are not integrated UI. Claude's review must assess both the relative effort
-weights and whether broad manual leaves hide verified work, without inventing
-completion or reshaping historical models. Older allocation notes below describe
-their checkpoint's model and denominator.
+Settings, localization, accessibility options and input/control effort become
+6, 5, 4 and 5 points. This is **+15**, correcting the review's +14 arithmetic.
+Additional scopes required by the existing full-original-feature goal are now
+explicit: world materials/textures/particle runtime 40 (range 20–60), animation
+and character/cosmetic assembly 40 (25–60), physics/world-system integration 20
+(10–30), full-match scale 12 (6–18), and replay/spectating 8 (4–12). These are
+low-confidence scope estimates, all at 0% pending actual evidence; inventory
+counts do not establish implementation. All original modes remain in scope.
+Refine these estimates through component inventories rather than treating them
+as calibrated engineer-weeks.
+
+Accounting fixes separate Wine staging from original-client protocol acceptance,
+remove SM_/SK_ names from general package coverage with a matching distinct-name
+denominator, and exclude voice service routes from general game-profile route
+coverage. Raw package recovery, conversion, loading and runtime parity remain
+distinct. The implementation log records ownership for geometry/levels/managers,
+reflection/replication, comparison infrastructure and launcher/network/backend
+security. Shared effort is allocated once; a common receipt may support distinct
+deliverables. Historical snapshots retain their original model. Changes caused
+by revised weights or scope are model changes, not runtime work or lost work.
+Older allocation notes below describe their checkpoint's model and denominator.
 
 ### Material pipeline accounting
 
@@ -201,9 +214,9 @@ not the number of hours recently spent or a target percentage.
 A bounded metadata audit on 2026-11-02 screened all 117 leaves (1,855 weight
 units). It found no explicit importance-based weight rationale, but did not
 establish that relative estimates are calibrated to effort. Potential accounting
-overlaps need review: package coverage (50) and static-mesh conversion (30), native
-function bodies (150) and feature implementation, and the shared `wine_starts`
-check in the two Wine leaves (25 and 5). A shared result can support distinct
+overlaps need review, including native function bodies (150) and feature implementation.
+Package coverage now excludes SM_/SK_ basenames from both its count and denominator,
+and Wine oracle stages and original-client join acceptance use separate ledger checks. A shared result can support distinct
 deliverables; the associated effort must be allocated only once. No numeric
 changes were justified by this metadata review. Before reweighting these scopes,
 define their distinct deliverables and estimate their relative total effort.
@@ -216,9 +229,14 @@ define their distinct deliverables and estimate their relative total effort.
   `pak_full_distinct_paths` in `totals.json` (963,427, the summary's `uniquePaths`). The count is
   read from that small summary, so the hook walks no files. Regenerate the summary with the
   extraction's verify mode, then run `refresh_totals.py`.
-- `assets.package_coverage` (basis `local`) is about the converted/usable closure. Its total
-  `cooked_uasset_entries` is now the distinct `.uasset` count of the full extraction (450,951),
-  read from the same summary (`byExtension['.uasset'].files`), not the older 28-pak index.
+- `assets.package_coverage` (basis `local`) counts distinct recovered or converted `.uasset`
+  basenames excluding SM_ and SK_. Its denominator applies the same naming rule to the full
+  cooked inventory, using distinct basename counts rather than paths. Naming is a heuristic;
+  raw recovery also contributes to pak extraction and does not prove conversion or usability.
+  The measurement change applies going forward; recorded history is not rewritten.
+- `backend.game_profile` excludes voice routes, which are assigned to `audio.voice`. The latter
+  measures voice service route references only; client voice, audio transport and parity remain
+  unverified.
 
 Denominators (`total_key` and optional `total_sub`) are read from `porting/progress/totals.json`.
 If a key is missing the leaf shows 0 and says why. Current leaves use explicit weighted work breakdowns instead of percentage ceilings: narrow coverage and the remaining implementation are separate leaves. Historical model versions may still use `ceiling`; the generator retains support for them. Stub credit for source references and generated declarations is partial because these do not establish behavior. Groups take the weight-averaged value of their children. Set `"done": true` on a milestone only when its end-to-end acceptance evidence is recorded. Route literal matches can include tests and documentation, so they do not establish served-route coverage (see `../server/EVIDENCE.md`).
@@ -286,6 +304,7 @@ only when the orchestrator says so.
 | `wine_login_ui` | as `wine_starts`, `--grep 'LoginScreen_C_'` | the login screen appears |
 | `wine_entitlement_passed` | as `wine_starts`, `--grep 'LogAppES: .*([Ee]ntitlement).*(passed|granted|success)'` | no passing record; the observed run stopped at the AppES access gate |
 | `wine_lobby_reached` | as `wine_starts`, `--grep 'LogLoad: LoadMap: .*Lobby'` | no passing record; the observed run stopped before this stage |
+| `original_client_hello`, `original_client_login`, `original_client_welcome`, `original_client_join` | record stage-specific evidence from an original-client connection to the reconstructed server | each stage is pending; the observed run stopped at AppES |
 | `checksum_tool_selftest` | `python3 -I porting/class_checksum.py --self-test` | exit 0 |
 
 The client log for the Wine checks is

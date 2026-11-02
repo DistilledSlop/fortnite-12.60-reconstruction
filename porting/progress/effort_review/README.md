@@ -23,3 +23,7 @@ Preserve historical models and their interpretation: do not retroactively reshap
 - `suggestions/`: machine-readable recommendations conforming to `recommendation.schema.json` and companion prose if useful. Include low-confidence questions separately from actionable corrections. Give each recommendation stable IDs and include affected leaf IDs.
 
 Source index: `../components.json` (model, rationales, measures), `../evidence.json` (ledger), `../totals.json` (denominators), `../progress.py` (measurement semantics), `../README.md` (dashboard methodology), `../../HANDOFF.md` and relevant `../../frontend/` handoffs (recent UI work). Git history and cited checkpoint receipts are source references; generated artifacts may be local or unavailable. Never copy large generated outputs, private game assets, or keys into this workspace.
+
+## Applied decisions
+
+Claude’s original findings are preserved in reports, research and suggestions. The primary agent’s [implementation status](implementation_status.json) records every EFF and HIST decision, arithmetic corrections, explicit full-scope ownership, validation and remaining uncertainty. The live model now has 132 leaves and 2,019 relative points; the captured 117-leaf inventory remains historical evidence. The original 1,933-point UI proposal was not applied as written. New scope estimates do not claim feature completion. The current-type accessor has since passed actual UE validation at `dcc14c3`; consult the latest project HANDOFF for receipts rather than the old pending-at-capture note.

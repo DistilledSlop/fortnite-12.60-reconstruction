@@ -51,6 +51,12 @@
    "texture": 30554
   }
  },
+ "cooked_non_mesh_distinct_names": {
+  "generated_utc": "2026-10-31T21:53:57Z",
+  "method": "distinct cooked .uasset basenames excluding case-sensitive SM_ and SK_ prefixes; derived from the full-tree distinct basename and disjoint prefix counts",
+  "source": "porting/generated/cooked-name-counts-full.json",
+  "value": 334005
+ },
  "cooked_uasset_distinct_names": {
   "generated_utc": "2026-10-31T21:53:57Z",
   "method": "distinct .uasset basenames over all 31 paks (full tree walk, --count-tree)",

@@ -11215,6 +11215,54 @@
    "release_sha256": "c7a9541c6ff5b9c7bb313f55d2813349ca1bc8cba0d3ff7c8fac72a20f86ed74",
    "scope": "Actual UE description constructor, layout and typed delegate copy/destruction diagnostic, Root class loading, eight retained processes and two joins. No confirmation action, interactive UI, Blueprint execution or parity claim. Stage binary size and hash fields are cross-checked; binary contents are not rehashed.",
    "provenance_note": "Pinned source pairs and frozen artifacts must remain available for re-verification."
+  },
+  "frontend_foundation_button_defaults_query": {
+   "id": "frontend_foundation_button_defaults_query",
+   "result": "pass",
+   "exit_code": 0,
+   "command": "python3 -I porting/progress/record_frontend_foundation_runtime.py",
+   "checkpoint": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-native-evidence/common-input-current-type-runtime-1/checkpoint.json",
+   "checkpoint_sha256": "bad3def28dc6c5a3f72e39f9f1ab720c39675b78c718df5e6b39f5d387772192",
+   "release": "/mnt/vibrato/fortnite-evidence/frozen-runtime/common-input-current-type-runtime-1/source-release.json",
+   "release_sha256": "86103596459b8329ea54f862979f7e4412aa17b5c67c44723429251b81245b2b",
+   "scope": "CommonButton reflected defaults and controlled 44-row CDO/new-widget query diagnostic; not full lifecycle or interactive UI.",
+   "provenance_note": "Historical Git source and frozen source pairs and artifacts are required. Stage binary hashes are cross-checked, not rehashed."
+  },
+  "frontend_foundation_input_action_row": {
+   "id": "frontend_foundation_input_action_row",
+   "result": "pass",
+   "exit_code": 0,
+   "command": "python3 -I porting/progress/record_frontend_foundation_runtime.py",
+   "checkpoint": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-native-evidence/common-input-current-type-runtime-1/checkpoint.json",
+   "checkpoint_sha256": "bad3def28dc6c5a3f72e39f9f1ab720c39675b78c718df5e6b39f5d387772192",
+   "release": "/mnt/vibrato/fortnite-evidence/frozen-runtime/common-input-current-type-runtime-1/source-release.json",
+   "release_sha256": "86103596459b8329ea54f862979f7e4412aa17b5c67c44723429251b81245b2b",
+   "scope": "C++ and reflected input row construction/layout and original InputActionDataTable row-struct identity, 30 checks and 421 rows; not input routing or table contents.",
+   "provenance_note": "Historical Git source and frozen source pairs and artifacts are required. Stage binary hashes are cross-checked, not rehashed."
+  },
+  "frontend_foundation_current_input_type": {
+   "id": "frontend_foundation_current_input_type",
+   "result": "pass",
+   "exit_code": 0,
+   "command": "python3 -I porting/progress/record_frontend_foundation_runtime.py",
+   "checkpoint": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-native-evidence/common-input-current-type-runtime-1/checkpoint.json",
+   "checkpoint_sha256": "bad3def28dc6c5a3f72e39f9f1ab720c39675b78c718df5e6b39f5d387772192",
+   "release": "/mnt/vibrato/fortnite-evidence/frozen-runtime/common-input-current-type-runtime-1/source-release.json",
+   "release_sha256": "86103596459b8329ea54f862979f7e4412aa17b5c67c44723429251b81245b2b",
+   "scope": "Controlled current input type LocalPlayerSubsystem metadata and direct/reflected getter diagnostic, 13 rows; not input producers or routing.",
+   "provenance_note": "Historical Git source and frozen source pairs and artifacts are required. Stage binary hashes are cross-checked, not rehashed."
+  },
+  "frontend_foundation_startup_selection": {
+   "id": "frontend_foundation_startup_selection",
+   "result": "pass",
+   "exit_code": 0,
+   "command": "python3 -I porting/progress/record_frontend_foundation_runtime.py",
+   "checkpoint": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-native-evidence/common-input-current-type-runtime-1/checkpoint.json",
+   "checkpoint_sha256": "bad3def28dc6c5a3f72e39f9f1ab720c39675b78c718df5e6b39f5d387772192",
+   "release": "/mnt/vibrato/fortnite-evidence/frozen-runtime/common-input-current-type-runtime-1/source-release.json",
+   "release_sha256": "86103596459b8329ea54f862979f7e4412aa17b5c67c44723429251b81245b2b",
+   "scope": "Four observed startup class selections and controller constructor source; Root CreateWidget produced seven widgets while 20 unresolved imports remain. Not full startup UI or parity.",
+   "provenance_note": "Historical Git source and frozen source pairs and artifacts are required. Stage binary hashes are cross-checked, not rehashed."
   }
  }
 }
