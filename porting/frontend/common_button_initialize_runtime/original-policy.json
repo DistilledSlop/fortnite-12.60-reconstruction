@@ -1,0 +1,225 @@
+{
+  "identity": {
+    "block_va": "0x145a01210",
+    "name": null,
+    "name_status": "unresolved",
+    "config_name": null,
+    "class_flags": "0xb010a1",
+    "dependency_fns": [
+      "0x140816d40",
+      "0x140812ee0"
+    ],
+    "package_fn": "0x140816d40",
+    "base_fn": "0x140812ee0",
+    "class_noregister_fn": "0x140807cd0",
+    "interface_count": 0,
+    "dependency0_fn": "0x140816d40"
+  },
+  "windows": [
+    {
+      "start": "0x1407cd7d0",
+      "end": "0x1407cddc5",
+      "label": "CommonButton.Initialize",
+      "sha256": "49c4c95a9eb7070e007aa3c9c2db5a97b5725aa51a3c5128b40a5dc2fcdeb700"
+    },
+    {
+      "start": "0x143d64300",
+      "end": "0x143d6447d",
+      "label": "UUserWidget.Initialize",
+      "sha256": "2e52f9a65be35d1ecdfd73f46c94ca180588395e6bce2ecbb5c618959fc4882d"
+    },
+    {
+      "start": "0x143d801e0",
+      "end": "0x143d80397",
+      "label": "UUserWidget.RebuildWidget.entry/root",
+      "sha256": "362f14988f93f9d7493e1776645cef28463e89d49531368a956d3b6a26237a97"
+    },
+    {
+      "start": "0x143d83b50",
+      "end": "0x143d83b70",
+      "label": "UUserWidget.ReleaseSlateResources",
+      "sha256": "d722b584336734d0646bb2f3b8a8349461c85b132bab91a8d1abd22c69724cf2"
+    },
+    {
+      "start": "0x143d46330",
+      "end": "0x143d463c6",
+      "label": "UUserWidget.BeginDestroy",
+      "sha256": "3bf1fa46b5c6834980bc77cce994aacd914e471349c5b9b7dc775377ae8681e0"
+    },
+    {
+      "start": "0x143d70ab0",
+      "end": "0x143d70b23",
+      "label": "UUserWidget.OnWidgetRebuilt",
+      "sha256": "3518ef4370b277a3ec61c671d9e5fcf6604b0e269def404f88068778d67ab220"
+    },
+    {
+      "start": "0x140796950",
+      "end": "0x140796b69",
+      "label": "CommonButton.constructor",
+      "sha256": "6991da4a3b091dc9bc3b0b6ccddde5a0f1b25ceab6067c26d2bd600809a20aea"
+    },
+    {
+      "start": "0x1407a5c64",
+      "end": "0x1407a5c6d",
+      "label": "focus-thunk",
+      "sha256": "27801e1c7e2fb72041b9e94f2b9300c148bd759e30f833cf13e9e3df9650bac1"
+    }
+  ],
+  "vtables": [
+    {
+      "table": "0x1459f0940",
+      "slot": "0x80",
+      "target": "0x143d46330"
+    },
+    {
+      "table": "0x1459f0940",
+      "slot": "0x260",
+      "target": "0x143d83b50"
+    },
+    {
+      "table": "0x1459f0940",
+      "slot": "0x2a8",
+      "target": "0x143d801e0"
+    },
+    {
+      "table": "0x1459f0940",
+      "slot": "0x2b0",
+      "target": "0x1407e0140"
+    },
+    {
+      "table": "0x1459f0940",
+      "slot": "0x2c0",
+      "target": "0x1407cd7d0"
+    },
+    {
+      "table": "0x1459f0940",
+      "slot": "0x318",
+      "target": "0x1407d1740"
+    },
+    {
+      "table": "0x1459f0940",
+      "slot": "0x320",
+      "target": "0x1407d1c60"
+    },
+    {
+      "table": "0x1459ecf00",
+      "slot": "0x80",
+      "target": "0x143d46330"
+    },
+    {
+      "table": "0x1459ecf00",
+      "slot": "0x260",
+      "target": "0x143d83b50"
+    },
+    {
+      "table": "0x1459ecf00",
+      "slot": "0x2a8",
+      "target": "0x143d801e0"
+    },
+    {
+      "table": "0x1459ecf00",
+      "slot": "0x2b0",
+      "target": "0x1407e03f0"
+    },
+    {
+      "table": "0x1459ecf00",
+      "slot": "0x2c0",
+      "target": "0x143d64300"
+    },
+    {
+      "table": "0x1459ecf00",
+      "slot": "0x318",
+      "target": "0x143d67d60"
+    },
+    {
+      "table": "0x1459ecf00",
+      "slot": "0x320",
+      "target": "0x1407d1e90"
+    },
+    {
+      "table": "0x146825170",
+      "slot": "0x80",
+      "target": "0x143d46330"
+    },
+    {
+      "table": "0x146825170",
+      "slot": "0x260",
+      "target": "0x143d83b50"
+    },
+    {
+      "table": "0x146825170",
+      "slot": "0x2a8",
+      "target": "0x143d801e0"
+    },
+    {
+      "table": "0x146825170",
+      "slot": "0x2b0",
+      "target": "0x143d70ab0"
+    },
+    {
+      "table": "0x146825170",
+      "slot": "0x2c0",
+      "target": "0x143d64300"
+    },
+    {
+      "table": "0x146825170",
+      "slot": "0x318",
+      "target": "0x143d67d60"
+    },
+    {
+      "table": "0x146825170",
+      "slot": "0x320",
+      "target": "0x143d67d80"
+    }
+  ],
+  "strings": [
+    {
+      "address": "0x1459f18c0",
+      "text": "InternalRootButton"
+    },
+    {
+      "address": "0x1459f18f0",
+      "text": "&UCommonButton::HandleButtonClicked"
+    },
+    {
+      "address": "0x1459f1940",
+      "text": "&UCommonButton::HandleButtonPressed"
+    },
+    {
+      "address": "0x1459f1990",
+      "text": "&UCommonButton::HandleButtonReleased"
+    }
+  ],
+  "callbacks": {
+    "HandleButtonClicked": {
+      "create_func": "0x140806b00",
+      "signature": {
+        "owning_class": null,
+        "outer_fn": "0x140805cb0",
+        "flags": "0x80401",
+        "nprop": 0,
+        "params": []
+      }
+    },
+    "HandleButtonPressed": {
+      "create_func": "0x140806b30",
+      "signature": {
+        "outer_fn": "0x140805cb0",
+        "flags": [
+          "0x80401"
+        ],
+        "params": []
+      }
+    },
+    "HandleButtonReleased": {
+      "create_func": "0x140806c20",
+      "signature": {
+        "outer_fn": "0x140805cb0",
+        "flags": [
+          "0x80401"
+        ],
+        "params": []
+      }
+    }
+  }
+}

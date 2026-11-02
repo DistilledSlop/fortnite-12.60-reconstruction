@@ -1,0 +1,548 @@
+{
+  "identity": {
+    "block_va": "0x145a01210",
+    "name": null,
+    "name_status": "unresolved",
+    "config_name": null,
+    "class_flags": "0xb010a1",
+    "dependency_fns": [
+      "0x140816d40",
+      "0x140812ee0"
+    ],
+    "package_fn": "0x140816d40",
+    "base_fn": "0x140812ee0",
+    "class_noregister_fn": "0x140807cd0",
+    "interface_count": 0,
+    "dependency0_fn": "0x140816d40"
+  },
+  "properties": [
+    {
+      "index": 0,
+      "name": "InputActionWidget",
+      "kind": "Object",
+      "kind_raw": "0x12",
+      "property_flags": "0x2008000008001c",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 2920,
+      "type_refs": {
+        "class": "0x140807970"
+      }
+    },
+    {
+      "index": 6,
+      "name": "OnButtonUnhovered",
+      "kind": "InlineMulticastDelegate",
+      "kind_raw": "0x1b",
+      "property_flags": "0x40000010080000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 792,
+      "type_refs": {
+        "signature": "0x140809810"
+      }
+    },
+    {
+      "index": 7,
+      "name": "OnButtonHovered",
+      "kind": "InlineMulticastDelegate",
+      "kind_raw": "0x1b",
+      "property_flags": "0x40000010080000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 776,
+      "type_refs": {
+        "signature": "0x140809810"
+      }
+    },
+    {
+      "index": 14,
+      "name": "TriggeringInputAction",
+      "kind": "Struct",
+      "kind_raw": "0x19",
+      "property_flags": "0x11000000000015",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 688,
+      "type_refs": {
+        "struct": "0x1446f2880"
+      }
+    },
+    {
+      "index": 19,
+      "name": "bShouldUseFallbackDefaultInputAction",
+      "kind": "Bool",
+      "kind_raw": "0xc",
+      "property_flags": "0x21080000000015",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "element_size": 1,
+      "size_of_outer": 2928,
+      "bitfield": true,
+      "set_bit_fn": "0x140809000",
+      "offset": null
+    },
+    {
+      "index": 20,
+      "name": "bHideInputActionWithKeyboard",
+      "kind": "Bool",
+      "kind_raw": "0xc",
+      "property_flags": "0x21080000000015",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "element_size": 1,
+      "size_of_outer": 2928,
+      "bitfield": true,
+      "set_bit_fn": "0x140808f40",
+      "offset": null
+    },
+    {
+      "index": 21,
+      "name": "bDisplayInputActionWhenNotInteractable",
+      "kind": "Bool",
+      "kind_raw": "0xc",
+      "property_flags": "0x21080000000015",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "element_size": 1,
+      "size_of_outer": 2928,
+      "bitfield": true,
+      "set_bit_fn": "0x140808f10",
+      "offset": null
+    },
+    {
+      "index": 22,
+      "name": "bToggleable",
+      "kind": "Bool",
+      "kind_raw": "0xc",
+      "property_flags": "0x21080000000015",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "element_size": 1,
+      "size_of_outer": 2928,
+      "bitfield": true,
+      "set_bit_fn": "0x140809020",
+      "offset": null
+    },
+    {
+      "index": 23,
+      "name": "bInteractableWhenSelected",
+      "kind": "Bool",
+      "kind_raw": "0xc",
+      "property_flags": "0x21080000000015",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "element_size": 1,
+      "size_of_outer": 2928,
+      "bitfield": true,
+      "set_bit_fn": "0x140808f60",
+      "offset": null
+    },
+    {
+      "index": 24,
+      "name": "bShouldSelectUponReceivingFocus",
+      "kind": "Bool",
+      "kind_raw": "0xc",
+      "property_flags": "0x21080000000015",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "element_size": 1,
+      "size_of_outer": 2928,
+      "bitfield": true,
+      "set_bit_fn": "0x140808ff0",
+      "offset": null
+    },
+    {
+      "index": 25,
+      "name": "bSelectable",
+      "kind": "Bool",
+      "kind_raw": "0xc",
+      "property_flags": "0x21080000000015",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "element_size": 1,
+      "size_of_outer": 2928,
+      "bitfield": true,
+      "set_bit_fn": "0x140808fb0",
+      "offset": null
+    },
+    {
+      "index": 29,
+      "name": "bHideInputAction",
+      "kind": "Bool",
+      "kind_raw": "0x2c",
+      "property_flags": "0x20080000000015",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "element_size": 1,
+      "size_of_outer": 2928,
+      "bitfield": true,
+      "set_bit_fn": "0x140808f50",
+      "offset": null
+    }
+  ],
+  "functions": [
+    {
+      "name": "BP_OnHovered",
+      "create_func": "0x140806830",
+      "flags": [
+        "0x8080800"
+      ],
+      "replicated_function": false,
+      "net_roles": [],
+      "outer_fn": "0x140805cb0",
+      "params": []
+    },
+    {
+      "name": "BP_OnUnhovered",
+      "create_func": "0x140806890",
+      "flags": [
+        "0x8080800"
+      ],
+      "replicated_function": false,
+      "net_roles": [],
+      "outer_fn": "0x140805cb0",
+      "params": []
+    },
+    {
+      "name": "HandleButtonClicked",
+      "create_func": "0x140806b00",
+      "flags": [
+        "0x40401",
+        "0x80401",
+        "0x4080401",
+        "0x8080800"
+      ],
+      "replicated_function": null,
+      "note": "ambiguous: several FFunctionParams share this name pointer",
+      "params_note": "ambiguous: candidates disagree on parameter table",
+      "candidates": [
+        {
+          "owning_class": null,
+          "outer_fn": "0x140805cb0",
+          "flags": "0x80401",
+          "nprop": 0,
+          "params": []
+        },
+        {
+          "owning_class": null,
+          "outer_fn": "0x140816430",
+          "flags": "0x80401",
+          "nprop": 2,
+          "params": [
+            {
+              "index": 0,
+              "name": "ButtonIndex",
+              "kind": "Int",
+              "kind_raw": "0x3",
+              "property_flags": "0x10000000000080",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 8
+            },
+            {
+              "index": 1,
+              "name": "AssociatedButton",
+              "kind": "Object",
+              "kind_raw": "0x12",
+              "property_flags": "0x10000000080080",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 0,
+              "type_refs": {
+                "class": "0x140807800"
+              }
+            }
+          ]
+        },
+        {
+          "owning_class": null,
+          "outer_fn": "0x1452a5d30",
+          "flags": "0x8080800",
+          "nprop": 1,
+          "params": [
+            {
+              "index": 0,
+              "name": "ButtonIndex",
+              "kind": "Int",
+              "kind_raw": "0x3",
+              "property_flags": "0x10000000000080",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 0
+            }
+          ]
+        },
+        {
+          "owning_class": null,
+          "outer_fn": "0x1452a6050",
+          "flags": "0x8080800",
+          "nprop": 1,
+          "params": [
+            {
+              "index": 0,
+              "name": "ButtonIndex",
+              "kind": "Int",
+              "kind_raw": "0x3",
+              "property_flags": "0x10000000000080",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 0
+            }
+          ]
+        },
+        {
+          "owning_class": null,
+          "outer_fn": "0x1452bfd00",
+          "flags": "0x4080401",
+          "nprop": 0,
+          "params": []
+        },
+        {
+          "owning_class": null,
+          "outer_fn": "0x1452e9d70",
+          "flags": "0x40401",
+          "nprop": 2,
+          "params": [
+            {
+              "index": 0,
+              "name": "ButtonIndex",
+              "kind": "Int",
+              "kind_raw": "0x3",
+              "property_flags": "0x10000000000080",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 8
+            },
+            {
+              "index": 1,
+              "name": "CommittedButton",
+              "kind": "Object",
+              "kind_raw": "0x12",
+              "property_flags": "0x10000000080080",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 0,
+              "type_refs": {
+                "class": "0x140807800"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "HandleButtonPressed",
+      "create_func": "0x140806b30",
+      "flags": [
+        "0x80401"
+      ],
+      "replicated_function": false,
+      "net_roles": [],
+      "outer_fn": "0x140805cb0",
+      "params": []
+    },
+    {
+      "name": "HandleButtonReleased",
+      "create_func": "0x140806c20",
+      "flags": [
+        "0x80401"
+      ],
+      "replicated_function": false,
+      "net_roles": [],
+      "outer_fn": "0x140805cb0",
+      "params": []
+    }
+  ],
+  "native_functions": {
+    "HandleButtonClicked": {
+      "exec_addr": "0x14080b8f0",
+      "flags": "0x80401",
+      "params": [],
+      "create_func": "0x140806b00",
+      "source": "lea"
+    },
+    "HandleButtonPressed": {
+      "exec_addr": "0x14080b910",
+      "flags": "0x80401",
+      "params": [],
+      "create_func": "0x140806b30",
+      "source": "lea"
+    },
+    "HandleButtonReleased": {
+      "exec_addr": "0x14080b930",
+      "flags": "0x80401",
+      "params": [],
+      "create_func": "0x140806c20",
+      "source": "lea"
+    },
+    "BP_OnHovered": {
+      "exec_addr": null,
+      "flags": "0x8080800",
+      "params": [],
+      "create_func": "0x140806830"
+    },
+    "BP_OnUnhovered": {
+      "exec_addr": null,
+      "flags": "0x8080800",
+      "params": [],
+      "create_func": "0x140806890"
+    }
+  },
+  "windows": [
+    {
+      "va": "0x1407c6960",
+      "length": 113,
+      "sha256": "ea598477ee5328e80039a9677d3c6f9e5c4886aba35546030c46199bfb97dccd"
+    },
+    {
+      "va": "0x1407c6ed0",
+      "length": 67,
+      "sha256": "beddd4405b3026ab7b8bf019e115b705a8abebfe48e449737fbd59850a8d3327"
+    },
+    {
+      "va": "0x1407c6f20",
+      "length": 67,
+      "sha256": "fd5119006815ebe8588910d59126ea526b1e13fed7db26e266fb3119794a1a1e"
+    },
+    {
+      "va": "0x1407c83d0",
+      "length": 157,
+      "sha256": "ed3d6f0c13c07a7453f0bba1e2eea57994497baa73c0eb17135ebf7670f84345"
+    },
+    {
+      "va": "0x1406801e0",
+      "length": 3,
+      "sha256": "01cb47d078b4841b8408ec4fe278efa83115c6f6e101972987507d2b2b57dcf0"
+    },
+    {
+      "va": "0x1407f9880",
+      "length": 208,
+      "sha256": "2366d38f5f4439a634b974e0eab4f88fe96a9c1363f2006d1cc7c32fbca5f2a7"
+    },
+    {
+      "va": "0x1407f7e90",
+      "length": 173,
+      "sha256": "c664d5d7a35789467da838d5a43f2a8c3f881f45d96d09e1a7ae85295ba99b14"
+    },
+    {
+      "va": "0x1407d2cd0",
+      "length": 91,
+      "sha256": "e4f583e3ac4778b0fb5cc0a1e35c3c2284a7a45817482c55ca75448173aaed94"
+    },
+    {
+      "va": "0x1407d4290",
+      "length": 91,
+      "sha256": "1822286c165d7b0beb56a965c6325bb23866d14c53fe743886b10371813c3d7b"
+    },
+    {
+      "va": "0x140802f60",
+      "length": 398,
+      "sha256": "2ff6adbc2937872fc09c70bcc0d25db0d0c5148c11276924b21daaca89d566e9"
+    },
+    {
+      "va": "0x1407bd360",
+      "length": 319,
+      "sha256": "a879e0895dd12c11635bad3b7c79f0d05c2d4ceaac1dd955f6bacfc458569310"
+    },
+    {
+      "va": "0x143022250",
+      "length": 13,
+      "sha256": "ac1d560ffc2da91bf418b79fae0c7bd630b2fc25a317aad3f409ee8142912bef"
+    },
+    {
+      "va": "0x14081b6f0",
+      "length": 160,
+      "sha256": "c5b39b2c10ee72ada0b815a3f591839498c9356fb6455ef6c93721a015b77875"
+    },
+    {
+      "va": "0x1407bc8a0",
+      "length": 144,
+      "sha256": "b796773fc62e71891e4e33329bb538573228e5f20b342e071f3817cc3fb54c9c"
+    },
+    {
+      "va": "0x1407f78f0",
+      "length": 32,
+      "sha256": "a3a1e0868b146d8ce7a99345aa2cfcd39fa3087c48197b450837381f0e5b40c0"
+    }
+  ],
+  "external_properties": {
+    "UCommonInputSettings": {
+      "block_va": "0x145a0e320",
+      "property": {
+        "index": 1,
+        "name": "InputDataClass",
+        "kind": "Class",
+        "kind_raw": "0x11",
+        "property_flags": "0x44000000002000",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 392,
+        "type_refs": {
+          "meta_class": "0x14081dce0",
+          "class": "0x142e497d0"
+        }
+      },
+      "class_noregister_fn": "0x14081df50",
+      "package_fn": "0x142eea530"
+    },
+    "UCommonUIInputData": {
+      "block_va": "0x145a0e1d0",
+      "property": {
+        "index": 1,
+        "name": "DefaultClickAction",
+        "kind": "Struct",
+        "kind_raw": "0x19",
+        "property_flags": "0x10000000010001",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 40,
+        "type_refs": {
+          "struct": "0x1446f2880"
+        }
+      },
+      "class_noregister_fn": "0x14081dd00",
+      "package_fn": "0x142eea530"
+    }
+  }
+}

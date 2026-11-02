@@ -10,6 +10,17 @@ credentials in Git, and the orchestrator reviews and commits.
 
 ## Current baseline
 
+Native1e1fa34c / Engine87acab901: client build PASS119.000s; full connected
+CommonActionWidget controlled GUI flow PASS18; retained CommonInput40 PASS.
+Original Root creates seven widgets/four startup classes, exits0 with no Blueprint
+initialization errors, but still19 unresolved imports and FAILS its strict gate.
+Production widget constructor/Slate/material/key/setter/refresh/release APIs are
+integrated; full frontend and original pixel/audio parity remain open. Next is the
+coherent production CommonButton Initialize/receiver/SetStyle batch. Unregistered
+source candidates and exact remaining sound/producer/raw-bool dependencies are in
+the latest HANDOFF. All4 product gates remain open.
+
+
 Native899dc12c / Engine87acab901: client build PASS117.816s and normal Vulkan/Xvfb
 GUI diagnostic PASS40 observations, including module-owned/rooted settings, cache
 resolution/copy/invalidation and original421-row input table. UDEV fix is verified;

@@ -1,5 +1,72 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## CommonActionWidget connected batch (2026-11-02, client + GUI flow PASS)
+
+Previous goal turn made progress. Source06085fbb integrates authentic widget
+constructor, dynamic progress-material setup, centered box/overlay/rim/icon/progress
+Slate graph, rebuild/release hooks, borrowed key/subscription handling, BOTH action
+setters, GetIcon/GetDisplayText/IsHeldAction/SetIconRimBrush, refresh and live
+CommonInput.ShowKeys. Normal shared-member destruction and original release order
+are preserved; constructor and GetIcon share the lazy no-resource brush. Module
+settings stay actual rooted instances, with original cache preparation and copy.
+External CommonButton producers/Initialize remain unfinished; no source-based
+button methods have been registered using diagnostic-only internal state.
+
+Native1e1fa34c / Engine87acab901 client build PASS119.000s, Native source unchanged.
+GUI opt-in widget flow PASS18 ordered observations: real world/player/WidgetTree,
+original421-row table/handle, controlled brush/hold selection, actual Slate child
+order, native subscription, both setter final states, live ShowKeys and callback
+refresh-before-reflected-broadcast, release removing subscription while borrowed
+registry record/key survive, and fixture cleanup. Runtime uses actual Slate APIs,
+but it does not establish authentic frontend, pixel/audio parity, transient setter
+reentry or weak-owner GC. Retained CommonInput40 observations PASS in GUI.
+Original Root CreateWidget exits0, creation complete, seven widgets/four startup
+classes, no Blueprint initialization errors, but the same19 unresolved imports
+remain (including CommonButton.SetStyle/SetTriggeringInputAction). Root receipt
+correctly FAILS; no attach/menu retry or product milestone is claimed. All4 gates
+and faithful full client/server/gameplay/rendering/audio decompilation stay open.
+
+First build06085fbb failed solely on the new diagnostic's TSharedRef/null ternary
+(exit6,73.955s); correction1e1fa34c fixes the fixture, with no production change.
+Exact commands: `python3 /tmp/promote_action_widget_1.py` (4changed/0added/0removed,
+12736 unchanged mtimes restored), `python3 /tmp/build_action_widget_batch_1.py`,
+`python3 /tmp/build_action_widget_batch_2.py`,
+`python3 /tmp/run_action_widget_batch_2.py`,
+`python3 /tmp/run_action_widget_retained_2.py`.
+Five bounded source policies and ShowKeys11-window/original-PE replay PASS before
+promotion; generator self-test141, existing icon policy3 and receipt-runner10 PASS.
+Reports `/tmp/action-widget-promotion-1/`; artifacts
+`porting/generated/action-widget-batch-{1,2}/` contain build logs/results and phase2
+`stage.json`, `action-widget-gui/`, `retained-input/`, `root-instance/` receipts/logs
+and their launch commands. Runner pins source/build report, actual client process
+and unchanged staged ELF. Client ELF only staged; no symbol/archive claims. Build/
+run handles85900,13431,13451,13788,84836 are terminal. Server/joins/full unchanged
+regressions not repeated for this UI batch. Old broad baseline remainsd08549a5.
+
+NEXT coherent batch: production CommonButton Initialize, required real click/
+focus/press/release/selection/hover/action-widget receivers, then SetStyle. Bounded
+source candidates are in `frontend/common_button_initialize_runtime/`,
+`common_button_focus_selection_runtime/`, `common_button_set_style_runtime/`.
+Initialize8source windows/21lifecycle slots/4strings and callback metadata PASS;
+focus/selection15windows/exact metadata and mutations PASS. These are unregistered,
+unbuilt source candidates, NOT the current Native baseline. Review exact aliases,
+source guards and called-body closure before promotion. Selection-feedback sound
+(global148271318 -> helper143022250) still needs singleton identity proof;
+NativeCommit's raw sparse-slot byte must not be normalized before native callback,
+and future reflected adapter must explicitly normalize at its proven boundary.
+Complete actual action-row/selection producers; no fake internal button retention,
+no partial/no-op callbacks. Original null-root branch intentionally weak-only.
+Some older scratch range.py tools read the whole image despite bounded output;
+use the seek/read decoder from common-action-widget-refresh-identity-1 or pread
+for future source windows. Current source-policy checks already use bounded reads.
+
+Dashboard and master plan reflect the GUI batch and unresolved Root dependencies;
+no extra credit/weights/gate changes. All bounded workers are finished.
+Root owns Native/generation/stage/build.
+Maintain bounded rotated delegates, Luna medium read-only, Terra medium/high
+regular, Sol medium complex, fork_turns none, at most3workers. Preserve economical
+reads and proportionate coherent-batch validation.
+
 ## CommonInput module/cache integration (2026-11-02, client + GUI diagnostic PASS)
 
 Previous goal turn made progress. User reports UDEV fixed; normal Vulkan/Xvfb
