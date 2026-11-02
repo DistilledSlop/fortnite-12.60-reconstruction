@@ -1,5 +1,6 @@
 #include "FortniteAthenaGameplay.h"
 #include "AFortPlayerPawnAthena.h"
+#include "AFortPlayerControllerAthena.h"
 
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
@@ -57,6 +58,8 @@ void AApolloSunLight::BeginPlay()
 AFortGameModeAthena::AFortGameModeAthena()
 {
     DefaultPawnClass = AFortPlayerPawnAthena::StaticClass();
+    // Original Athena constructor stores this class at PlayerControllerClass (+0x238).
+    PlayerControllerClass = AFortPlayerControllerAthena::StaticClass();
 }
 
 void AFortGameModeAthena::StartPlay()

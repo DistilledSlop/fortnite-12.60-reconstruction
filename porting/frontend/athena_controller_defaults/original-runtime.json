@@ -1,0 +1,24 @@
+{
+  "image_sha256": "338c83a2314ccac1040a2c0bb520b893013cc7b58eda58e550da67f5d84de680",
+  "image_base": "0x140000000",
+  "spans": [
+    {
+      "name": "controller_class_store",
+      "start": "0x14192e50f",
+      "end": "0x14192e51b",
+      "sha256": "4326b7f121d034b9ba96c71c40f1180542f5a2471964a9492e3e51a98f1c1a33"
+    },
+    {
+      "name": "controller_class_literal",
+      "start": "0x1464ad4fa",
+      "end": "0x1464ad530",
+      "sha256": "8bf4cb710e64e786dd67512e29f09de15c6f7933d959c02ee2d02d34103c0c4d"
+    },
+    {
+      "name": "package_literal",
+      "start": "0x146232ea8",
+      "end": "0x146232ed2",
+      "sha256": "2cf9167d4db5eb352b7c11bed0b71d7c7b09162c17a0d93b21c7f3fef27f8b8a"
+    }
+  ]
+}

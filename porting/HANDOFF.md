@@ -2,6 +2,21 @@
 
 ## Current resume point (2026-11-02)
 
+- Config/runtime checkpoint is frozen at Nativeea68ee4 / tools926330e. Both builds PASS95.270/91.291s,
+  Native and config trees stable. Paired runs prove generic Engine GI/player/viewport become the
+  original FortGameInstance/FortLocalPlayer/FortGameViewportClient after byte-exact config staging.
+  Root has7widgets;22 Native imports remain. Both joins21.602/21.565s, input table421rows/30checks
+  and8retained diagnostics pass. Controller is measured as Engine.PlayerController in both runs.
+  Checkpoint SHA256 9feb58b5f000ca54012d493e13b94743a66e7ddde95033f456179db24b1b5bf1;
+  release SHA256 0fad26fbbed3af2056a0930a1452277dbd1a3cca42d794c7c0ac42f0bdccef99 at
+  /mnt/vibrato/fortnite-evidence/frozen-runtime/startup-owner-config-runtime-1. All handles TERMINAL:
+  build29189/stage15447/before57766+53458/after27243/controls81089/joins25191/row4938.
+- Current unvalidated controller edit restores one original Athena constructor assignment:
+  PlayerControllerClass=AFortPlayerControllerAthena::StaticClass() in maintained FortniteAthenaGameplay.cpp.
+  Original proof athena-controller-default-proof-1/HANDOFF.md; scratch candidate tests4 and actual
+  C++ syntax pass (athena-controller-default-ue-preflight-1). It preserves the manual game mode's
+  parent and behavior; the original full hierarchy/constructor and later CDO changes remain unproved.
+  Full builds, actual spawned-class observation and both joins remain pending; root owns Native.
 - Startup-owner config source now restores original FortGameViewportClient and FortLocalPlayer,
   alongside the existing FortGameInstance. Byte-exact committed-config staging utility and3 tests
   pass. Root v2 records actual class paths, root-widget identity and widget count;8 verifier/runner
