@@ -170,3 +170,15 @@ def emit_headers(source_root,generated_names):
     _text_prior_emit(source_root,generated_names)
     _text.emit_headers(source_root,generated_names)
 def validate_button_text_style_classes(blocks,name_to_block): return _text.validate_classes(blocks,name_to_block)
+
+# Original CommonTextBlock SetStyle and SynchronizeProperties extension.
+_block_spec=_intro_import.spec_from_file_location('text_block_style_policy',HERE/'text_block_style_policy.py')
+_block=_intro_import.module_from_spec(_block_spec);_block_spec.loader.exec_module(_block)
+_block_prior_apply=apply
+_block_prior_declarations=declarations
+_block_prior_definitions=definitions
+def apply(model,block,owner_fns,native_execs=None):
+    return _block.apply(_block_prior_apply(model,block,owner_fns,native_execs),block,owner_fns,native_execs)
+def declarations(model): return _block_prior_declarations(model)+_block.declarations(model)
+def definitions(model): return _block_prior_definitions(model)+_block.definitions(model)
+def validate_text_block_style_classes(blocks,name_to_block): return _block.validate_classes(blocks,name_to_block)

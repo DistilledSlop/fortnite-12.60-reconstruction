@@ -3398,8 +3398,10 @@ def promote(args):
     gate.name_clashes = engine_macro_names(args.engine_root)
     resolver.gate = gate
     guarded_native_execs = {}
-    if {'UCommonActivatablePanel', 'UCommonInputSubsystem', 'UCommonButton'} & set(listed):
+    if {'UCommonActivatablePanel', 'UCommonInputSubsystem', 'UCommonButton', 'UCommonTextBlock'} & set(listed):
         guarded_native_execs = load_json(os.path.join(os.path.dirname(args.reflection), 'native_funcs.json'))
+    if 'UCommonTextBlock' in listed:
+        _common_activation_policy.validate_text_block_style_classes(blocks_by_va, name_to_block)
     if 'UCommonButton' in listed:
         _common_activation_policy.validate_button_text_style_classes(blocks_by_va, name_to_block)
     if 'UCommonActivatablePanel' in listed:
@@ -3460,7 +3462,7 @@ def promote(args):
         model = build_class_promoted(blocks_by_va[block], name, resolver, parents[block], owner_fns,
                                      snippets_by_class.get(name, []), splice_ctx,
                                      native_execs=guarded_native_execs.get(name) if name in
-                                     ("UCommonActivatablePanel", "UCommonInputSubsystem", "UCommonButton") else None)
+                                     ("UCommonActivatablePanel", "UCommonInputSubsystem", "UCommonButton", "UCommonTextBlock") else None)
         model["includes"] = sorted(set(own_includes(gate, model["used"], package))
                                    | set(model["splice"].get("header_includes", set())))
         interface_modules = include_interface_headers(model, iface_packages)

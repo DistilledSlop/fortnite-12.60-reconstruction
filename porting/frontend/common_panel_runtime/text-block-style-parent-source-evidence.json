@@ -1,0 +1,72 @@
+{
+  "image_base": "0x140000000",
+  "image_sha256": "338c83a2314ccac1040a2c0bb520b893013cc7b58eda58e550da67f5d84de680",
+  "spans": [
+    {
+      "name": "CommonTextBlock_display_text_slot",
+      "start": "0x1459f0618",
+      "end": "0x1459f0620",
+      "sha256": "7245ddf6128266a2af5a5c5c1dc84c19beefa2d9424f2d1687ee32e6195fc2e6"
+    },
+    {
+      "name": "TextBlock_display_text_slot",
+      "start": "0x146832b58",
+      "end": "0x146832b60",
+      "sha256": "7245ddf6128266a2af5a5c5c1dc84c19beefa2d9424f2d1687ee32e6195fc2e6"
+    },
+    {
+      "name": "TextIsEmpty_exec_call",
+      "start": "0x144780b90",
+      "end": "0x144780c13",
+      "sha256": "b05ec8103fcf4c6d941a4da086877108f0410f7f8ffcaeea6416f9b01d0891f8"
+    },
+    {
+      "name": "TextIsEmpty_wrapper",
+      "start": "0x1442cc890",
+      "end": "0x1442cc895",
+      "sha256": "4029c842ed07ca3f54b8e66e29b1ea4b967243a5d4cd460a2d3b574c4d274e18"
+    },
+    {
+      "name": "FText_IsEmpty",
+      "start": "0x142c2e440",
+      "end": "0x142c2e459",
+      "sha256": "9f889a7746ddc89ae3ec5cf8b1ca5989c9feb0a3bbabdd8fc12fa78809cec0c6"
+    }
+  ],
+  "scope": "Parent SynchronizeProperties GetDisplayText virtual uses the same inherited target in CommonTextBlock; no invented display-text hook. Reflected Kismet TextIsEmpty reaches the same FText emptiness helper used by CommonTextBlock.",
+  "TextIsEmpty_native_record": {
+    "exec_addr": "0x144780b90",
+    "flags": "0x14422401",
+    "params": [
+      {
+        "index": 0,
+        "name": "ReturnValue",
+        "kind": "Bool",
+        "kind_raw": "0x2c",
+        "property_flags": "0x10000000000580",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "element_size": 1,
+        "size_of_outer": 32,
+        "bitfield": true,
+        "offset": null
+      },
+      {
+        "index": 1,
+        "name": "InText",
+        "kind": "Text",
+        "kind_raw": "0x1d",
+        "property_flags": "0x10000008000182",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 0
+      }
+    ],
+    "create_func": "0x14477c4c0",
+    "source": "lea"
+  }
+}

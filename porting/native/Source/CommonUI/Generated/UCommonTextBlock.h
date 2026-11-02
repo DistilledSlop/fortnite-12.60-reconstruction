@@ -37,5 +37,11 @@ public:
 	UPROPERTY()
 	float MobileFontSizeMultiplier;
 
+	UFUNCTION(BlueprintCallable)
+	void SetStyle(TSubclassOf<UCommonTextStyle> InStyle);
+
+public:
+    UCommonTextBlock(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+    virtual void SynchronizeProperties() override;
 };
 

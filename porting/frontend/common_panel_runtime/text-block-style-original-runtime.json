@@ -1,0 +1,132 @@
+{
+  "image_base": "0x140000000",
+  "image_sha256": "338c83a2314ccac1040a2c0bb520b893013cc7b58eda58e550da67f5d84de680",
+  "spans": [
+    {
+      "name": "CommonTextBlock_display_text_slot",
+      "start": "0x1459f0618",
+      "end": "0x1459f0620",
+      "sha256": "7245ddf6128266a2af5a5c5c1dc84c19beefa2d9424f2d1687ee32e6195fc2e6"
+    },
+    {
+      "name": "TextBlock_display_text_slot",
+      "start": "0x146832b58",
+      "end": "0x146832b60",
+      "sha256": "7245ddf6128266a2af5a5c5c1dc84c19beefa2d9424f2d1687ee32e6195fc2e6"
+    },
+    {
+      "name": "TextIsEmpty_exec_call",
+      "start": "0x144780b90",
+      "end": "0x144780c13",
+      "sha256": "b05ec8103fcf4c6d941a4da086877108f0410f7f8ffcaeea6416f9b01d0891f8"
+    },
+    {
+      "name": "TextIsEmpty_wrapper",
+      "start": "0x1442cc890",
+      "end": "0x1442cc895",
+      "sha256": "4029c842ed07ca3f54b8e66e29b1ea4b967243a5d4cd460a2d3b574c4d274e18"
+    },
+    {
+      "name": "FText_IsEmpty",
+      "start": "0x142c2e440",
+      "end": "0x142c2e459",
+      "sha256": "9f889a7746ddc89ae3ec5cf8b1ca5989c9feb0a3bbabdd8fc12fa78809cec0c6"
+    },
+    {
+      "name": "exec",
+      "start": "0x140815e30",
+      "end": "0x140815eb0",
+      "sha256": "9cbed12ba8e031737fbe5dfa281ca7d80432bfb148a5a88405e252dfcc4f2d5f"
+    },
+    {
+      "name": "setter",
+      "start": "0x1407f9d50",
+      "end": "0x1407f9d61",
+      "sha256": "639fc7709f5ae6c10d3ab1638ef944afbd9bcc3919c696df94cdf8ad9791f4f7"
+    },
+    {
+      "name": "constructor",
+      "start": "0x140797950",
+      "end": "0x1407979a9",
+      "sha256": "65eaeb00e9862faab105258cd1dc8f3169d6bb99c2a4372355c76d6a4b74eff8"
+    },
+    {
+      "name": "callback",
+      "start": "0x1407fe3f0",
+      "end": "0x1407fe445",
+      "sha256": "721a8bec0fc0e1b89c1d9cfe263ca5a2eaf4c86d2f6fafb46f5a2245169f974f"
+    },
+    {
+      "name": "apply",
+      "start": "0x140802830",
+      "end": "0x140802a03",
+      "sha256": "d01b64a84e4cdfa2d85b46837e70dd221a2ca2a19bfbc157bb207d9721a181b9"
+    },
+    {
+      "name": "visibility",
+      "start": "0x143d91830",
+      "end": "0x143d918f0",
+      "sha256": "64fec0c8a22bca64eeec0a9662559e33ef436df7ec6206ff490240edf46eff79"
+    },
+    {
+      "name": "visibility_exec",
+      "start": "0x143dc5f40",
+      "end": "0x143dc5fba",
+      "sha256": "497b41e7ba78ee74cb923b400b650a5f777cf37e270c3a17c3075189c60b6e64"
+    },
+    {
+      "name": "parent_sync_entry",
+      "start": "0x143d9a100",
+      "end": "0x143d9a180",
+      "sha256": "b7557577186ed3bebfde82be892ba396d5f1bbffa7c1ba42dea14cd0a702c5b9"
+    },
+    {
+      "name": "class_registration",
+      "start": "0x1408140b0",
+      "end": "0x140814162",
+      "sha256": "ef5155e9b34f6c2aacf835fbfd8acd4a10bdd2b0e46ebf6e810ac0ced944336a"
+    },
+    {
+      "name": "construct_thunk",
+      "start": "0x140813540",
+      "end": "0x140813553",
+      "sha256": "db7db48ad964f6c92780104c25e5fd7572c6c8765328ac1c23df84a8e3d7083c"
+    }
+  ],
+  "scope": "Original SetStyle, CommonTextBlock SynchronizeProperties, parent dispatch, typed style application, raw FText emptiness and constructor defaults. Bounded source windows; not dynamic rendering or full widget parity.",
+  "TextIsEmpty_native_record": {
+    "exec_addr": "0x144780b90",
+    "flags": "0x14422401",
+    "params": [
+      {
+        "index": 0,
+        "name": "ReturnValue",
+        "kind": "Bool",
+        "kind_raw": "0x2c",
+        "property_flags": "0x10000000000580",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "element_size": 1,
+        "size_of_outer": 32,
+        "bitfield": true,
+        "offset": null
+      },
+      {
+        "index": 1,
+        "name": "InText",
+        "kind": "Text",
+        "kind_raw": "0x1d",
+        "property_flags": "0x10000008000182",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 0
+      }
+    ],
+    "create_func": "0x14477c4c0",
+    "source": "lea"
+  }
+}
