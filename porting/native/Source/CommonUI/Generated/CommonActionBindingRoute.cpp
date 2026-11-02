@@ -399,8 +399,8 @@ void FCommonActionRouteNode::CollectRoutedWidgets(TArray<UWidget*>& OutWidgets)
         return;
     for (int32 Index = 0; Index < RoutedWidgets.Num(); ++Index)
     {
-        if (UWidget* Widget = RoutedWidgets[Index].Get())
-            OutWidgets.Add(Widget);
+        if (UWidget* RoutedWidget = RoutedWidgets[Index].Get())
+            OutWidgets.Add(RoutedWidget);
         else
             RoutedWidgets.RemoveAt(Index--);
     }

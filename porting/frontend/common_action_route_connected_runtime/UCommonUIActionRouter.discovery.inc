@@ -168,7 +168,7 @@ void UCommonUIActionRouter::NativeHandleActivatableWidgetRebuilt(UCommonActivata
 }
 void UCommonUIActionRouter::NativeInitializeActionRouteDiscovery(FSubsystemCollectionBase& Collection)
 {
-    Collection.InitializeDependency<UCommonInputSubsystem>();
+    Collection.InitializeDependency(UCommonInputSubsystem::StaticClass());
     GetCommonActivatableWidgetRebuilt().AddUObject(this, &UCommonUIActionRouter::NativeHandleActivatableWidgetRebuilt);
 }
 void UCommonUIActionRouter::NativeTickActionRouteDiscovery()

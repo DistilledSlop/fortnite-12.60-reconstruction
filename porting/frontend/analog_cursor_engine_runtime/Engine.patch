@@ -1,3 +1,16 @@
+diff --git a/Engine/Source/Runtime/Engine/Classes/Engine/GameViewportClient.h b/Engine/Source/Runtime/Engine/Classes/Engine/GameViewportClient.h
+index 1c462db23..94a2ebcb1 100644
+--- a/Engine/Source/Runtime/Engine/Classes/Engine/GameViewportClient.h
++++ b/Engine/Source/Runtime/Engine/Classes/Engine/GameViewportClient.h
+@@ -617,0 +618,2 @@ public:
++	bool GetUseMouseForTouch() const;
++
+@@ -620 +621,0 @@ protected:
+-	bool GetUseMouseForTouch() const;
+@@ -1024 +1025 @@ private:
+-};
+\ No newline at end of file
++};
 diff --git a/Engine/Source/Runtime/Slate/Private/Framework/Application/AnalogCursor.cpp b/Engine/Source/Runtime/Slate/Private/Framework/Application/AnalogCursor.cpp
 index 1ebb55065..8366b36ed 100644
 --- a/Engine/Source/Runtime/Slate/Private/Framework/Application/AnalogCursor.cpp

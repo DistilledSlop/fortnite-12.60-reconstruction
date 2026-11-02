@@ -12,4 +12,8 @@ subclass-only helper cannot reproduce that virtual dispatch inside base handlers
 No unrelated Engine files are included. Build/runtime results belong to the
 connected routing integration batch; source correspondence alone is not a result.
 
+The patch also exposes the existing UGameViewportClient::GetUseMouseForTouch
+query publicly, matching UE4.26. The recovered platform cursor policy calls this
+query directly. Its implementation is unchanged.
+
 The tracked zero-context patch replays with `git apply --unidiff-zero Engine.patch`.
