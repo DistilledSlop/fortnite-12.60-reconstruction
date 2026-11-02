@@ -2,6 +2,47 @@
 
 ## Current resume point (2026-11-02)
 
+- Latest validated Native is78c5b61. Original config restores FortGameInstance,
+  FortLocalPlayer and FortGameViewportClient; the maintained Athena constructor restores
+  PlayerControllerClass=FortPlayerControllerAthena. All4 class paths are now measured in startup.
+  The original full game mode hierarchy/constructor and later original CDO overrides are unproved.
+- Both builds PASS138.078/112.174s with Native/config inputs stable. Root CreateWidget returns with
+  a populated7-widget tree and correct ownership. Its overall check remains failed because22 Native
+  imports are unresolved. Actual table421rows/30checks,8retained diagnostics, default/Athena joins
+  21.629/21.611s all pass. No Slate attachment, interactive menu, full Blueprint VM or pixel parity claim.
+- Controller checkpoint generated/frontend-native-evidence/athena-controller-default-runtime-1/
+  checkpoint.json SHA256 a86f92e378125af3271f11a0e613a50242125a784d41a0309c0bb8e015474064.
+  Archive /mnt/vibrato/fortnite-evidence/frozen-runtime/athena-controller-default-runtime-1 binds
+  3committed sources,81artifact pairs,18binary rows. Release SHA256
+  481dcdb0210adef749d7d0344bd91d65b075dfd03c7bce6684c4830ab59ef2a8. All handles TERMINAL:
+  builds61218/stage42135/Root26217/controls17992/joins68381/row81034/freeze18988.
+  Native/build/stage ownership is released; no live process awaits observation.
+- Configuration checkpoint Nativeea68ee4/tools926330e proves generic Engine classes become the3
+  original Fort classes with the SAME binary after source/staged config synchronization. It retains
+  old config and both runs. Checkpoint SHA2569feb58b5f000ca54012d493e13b94743a66e7ddde95033f456179db24b1b5bf1;
+  release0fad26fbbed3af2056a0930a1452277dbd1a3cca42d794c7c0ac42f0bdccef99. Source and stage
+  DefaultEngine.ini now match, SHA256e31d783a09241b3da294ecd7d9a7829bc030d7392b713a90fecb2b00571b26c4.
+- Reproduce from /mnt/vibrato/fortnite-work/{build_,stage_,run_,freeze_}athena_controller_default*1.py;
+  build receipts athena-controller-default-native-build-1, preflight athena-controller-default-ue-preflight-1.
+  Config staging tool porting/frontend/stage_native_config.py checks committed bytes and original3
+  class settings, preserves prior staged bytes and writes a fresh receipt. Root runner --config binds
+  each launch to unchanged ini bytes. Root v2 reports classes and widget count; its parser accepts
+  spaces in original widget names (Master Overlay). The first failed parser receipt is preserved.
+- Original source proof: athena-controller-default-proof-1/HANDOFF.md and tracked
+  frontend/athena_controller_defaults/original-runtime.json. Source image and3hash-only store/literal
+  spans verify;4scratch candidate checks, actual C++ syntax,9Root tests,3config tests and47progress
+  tests pass. No generated Native source was hand-edited; controller fix is in maintained gameplay cpp.
+- Next runtime work: observe actual Slate/viewport construction using the original Root and resolve
+  the resulting dependencies. Root is currently CREATED, not attached. The22missing imports include
+  authentic confirmation factories and UI/native helpers. Preserve the full4milestone/parity goal;
+  all4 remain open. Original config and controller defaults are partial startup progress, not full startup.
+- Independent audit athena-controller-runtime-audit-1 verifies3 pinned Git/archive sources and81
+  artifact pairs, while explicitly excluding independent18binary-content rehashing. Audit SHA256
+  58da5b444409d0196576c8c02d2cad393dc91f24ace79d31219c8f9b9d115df1; copied into archive's
+  independent-audit-1. The root freezer itself rehashed all18binary rows before release.
+
+## Previous configuration and row checkpoints (2026-11-02)
+
 - Config/runtime checkpoint is frozen at Nativeea68ee4 / tools926330e. Both builds PASS95.270/91.291s,
   Native and config trees stable. Paired runs prove generic Engine GI/player/viewport become the
   original FortGameInstance/FortLocalPlayer/FortGameViewportClient after byte-exact config staging.

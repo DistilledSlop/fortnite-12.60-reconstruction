@@ -10,14 +10,14 @@ credentials in Git, and the orchestrator reviews and commits.
 
 ## Current baseline
 
-At Native `29a2c24`, both builds, both joins, eight retained diagnostics and the30-row input-table
-diagnostic pass. The original table loads421rows with the recovered row type and defaults. Original
-Root CreateWidget returns with startup ownership and a non-null tree; missing-row errors are gone,
-but22 native imports remain unresolved. Creation is distinct from a populated tree, successful
-initialization or interactive UI. Material compatibility remains129/142.
-Next, synchronize and record source/staged engine config: stage omits source's GameInstanceClass,
-and original config proves the FortGameViewportClient/FortLocalPlayer settings. Measure effective
-runtime classes before further UI integration; do not guess Athena's controller-class default.
+At Native `78c5b61`, both builds, both joins, eight retained diagnostics and the30-row input-table
+diagnostic pass. The original table loads421rows. Source and staged config now match; startup
+actually uses FortGameInstance, FortLocalPlayer, FortGameViewportClient and FortPlayerControllerAthena.
+The controller constructor assignment is source-proved; the full original game mode hierarchy and
+remaining constructor are unported. Root CreateWidget returns with a populated7-widget tree, but
+22 native imports remain unresolved. It is not attached to the viewport and no interactive UI is
+established. Material compatibility remains129/142.
+Next, observe original Root Slate/viewport construction and resolve its actual dependencies.
 Confirmation async-action factories, Activate/interface dispatch and queued presentation remain
 unfinished. Interactive startup, Blueprint execution and original pixels remain unverified; all four
 product milestones are open. Exact receipts and source release are in HANDOFF.md.
