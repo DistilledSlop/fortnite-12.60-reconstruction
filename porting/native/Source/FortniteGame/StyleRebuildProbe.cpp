@@ -79,27 +79,29 @@ namespace
         }
     };
 
+    struct FReleaseState { bool Result = false; };
     struct FReleaseMutation
     {
-        UCommonButtonStyle* Style;
-        UCommonButton* Button;
-        bool* Released;
+        TWeakObjectPtr<UCommonButtonStyle> Style;
+        TWeakObjectPtr<UCommonButton> Button;
+        TSharedRef<FReleaseState> State;
         void operator()(FLinearColor* Color) const
         {
-            *Released = true;
-            Style->bSingleMaterial = true;
-            Button->PressedSlateSoundOverride = FSlateSound();
+            State->Result = true;
+            if (UCommonButtonStyle* Live = Style.Get()) Live->bSingleMaterial = true;
+            if (UCommonButton* Live = Button.Get()) Live->PressedSlateSoundOverride = FSlateSound();
             delete Color;
         }
     };
 
     struct FReleaseObservation
     {
-        UCommonButtonInternal* Internal;
-        bool* AfterDimensions;
+        TWeakObjectPtr<UCommonButtonInternal> Internal;
+        TSharedRef<FReleaseState> State;
         void operator()(FLinearColor* Color) const
         {
-            *AfterDimensions = Internal->MinWidth == 2551 && Internal->MinHeight == 2601;
+            UCommonButtonInternal* Live = Internal.Get();
+            State->Result = Live && Live->MinWidth == 2551 && Live->MinHeight == 2601;
             delete Color;
         }
     };
@@ -295,26 +297,26 @@ bool RunStyleRebuildProbe(TFunctionRef<void(const TCHAR*, bool)> Record)
     A->SingleMaterialBrush.SetResourceObject(NewObject<UTexture2D>(Button));
     FCommonButtonStyleRebuildProbeAccess::Rebuild(*Button);
     Check(TEXT("single_nonmaterial_no_mid"), !Button->SingleMaterialStyleMID && BrushEqual(Button->NormalStyle.Normal, A->SingleMaterialBrush));
-    bool ReleasedAfterDimensions = false;
+    TSharedRef<FReleaseState> ReleasedAfterDimensions = MakeShared<FReleaseState>();
     {
-        TSharedRef<FLinearColor> Linked = MakeShareable(new FLinearColor(FLinearColor::White), FReleaseObservation{I, &ReleasedAfterDimensions});
+        TSharedRef<FLinearColor> Linked = MakeShareable(new FLinearColor(FLinearColor::White), FReleaseObservation{TWeakObjectPtr<UCommonButtonInternal>(I), ReleasedAfterDimensions});
         A->SingleMaterialBrush.TintColor = FSlateColor(Linked);
     }
     Button->bClearBrushColorsAtEvent = true;
     FCommonButtonStyleRebuildProbeAccess::Rebuild(*Button);
-    Check(TEXT("temporary_brush_destruction_after_event_and_dimensions"), ReleasedAfterDimensions);
+    Check(TEXT("temporary_brush_destruction_after_event_and_dimensions"), ReleasedAfterDimensions->Result);
     Button->MinWidth = 551;
     Button->MinHeight = 501;
     A->bSingleMaterial = false;
-    bool Released = false;
+    TSharedRef<FReleaseState> Released = MakeShared<FReleaseState>();
     {
-        TSharedRef<FLinearColor> Linked = MakeShareable(new FLinearColor(FLinearColor::White), FReleaseMutation{A, Button, &Released});
+        TSharedRef<FLinearColor> Linked = MakeShareable(new FLinearColor(FLinearColor::White), FReleaseMutation{TWeakObjectPtr<UCommonButtonStyle>(A), TWeakObjectPtr<UCommonButton>(Button), Released});
         Button->NormalStyle.Normal.TintColor = FSlateColor(Linked);
     }
     Button->PressedSlateSoundOverride = Sounds[6];
     Button->HoveredSlateSoundOverride = FSlateSound();
     FCommonButtonStyleRebuildProbeAccess::Rebuild(*Button);
-    Check(TEXT("real_shared_release_rereads_single"), Released && BrushEqual(Button->NormalStyle.Normal, A->NormalBase)
+    Check(TEXT("real_shared_release_rereads_single"), Released->Result && BrushEqual(Button->NormalStyle.Normal, A->NormalBase)
         && BrushEqual(Button->NormalStyle.Hovered, FSlateBrush()) && BrushEqual(Button->SelectedStyle.Normal, FSlateBrush()));
     Check(TEXT("override_presence_cached_before_brush_release"), !FSoundSnapshot::HasRawResource(Button->NormalStyle.PressedSlateSound)
         && SoundEqual(Button->NormalStyle.PressedSlateSound, Button->PressedSlateSoundOverride)
