@@ -93,7 +93,7 @@ void Run(ULocalPlayer* Player, APlayerController* PC)
     TSharedPtr<SBox> Box = Widget->Box();
     TSharedPtr<SImage> Rim = Widget->Rim(), Icon = Widget->Icon(), Progress = Widget->Progress();
     FChildren* BoxChildren = Box.IsValid() ? Box->GetChildren() : nullptr;
-    TSharedPtr<SWidget> Overlay = BoxChildren && BoxChildren->Num() == 1 ? BoxChildren->GetChildAt(0) : nullptr;
+    TSharedPtr<SWidget> Overlay = BoxChildren && BoxChildren->Num() == 1 ? TSharedPtr<SWidget>(BoxChildren->GetChildAt(0)) : TSharedPtr<SWidget>();
     FChildren* Children = Overlay.IsValid() ? Overlay->GetChildren() : nullptr;
     Record(TEXT("slate_order"), Box.IsValid() && Rim.IsValid() && Icon.IsValid() && Progress.IsValid() && Children && Children->Num() == 3
         && &Children->GetChildAt(0).Get() == Rim.Get() && &Children->GetChildAt(1).Get() == Icon.Get()
