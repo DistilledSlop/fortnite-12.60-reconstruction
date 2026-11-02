@@ -26,12 +26,15 @@ void Run()
     UFortGlobals* CDO = GetMutableDefault<UFortGlobals>();
     UFunction* Fn = UFortGlobals::StaticClass()->FindFunctionByName(TEXT("IsErebus"));
     FBoolProperty* Return = Fn ? CastField<FBoolProperty>(Fn->GetReturnProperty()) : nullptr;
+    // The original metadata is declaration flags; FBoolProperty adds these traits.
+    const EPropertyFlags ReturnFlags = EPropertyFlags(0x10000000000580ULL)
+        | CPF_IsPlainOldData | CPF_NoDestructor | CPF_ZeroConstructor | CPF_HasGetValueTypeHash;
     const bool Meta = Fn && Fn->GetOuterUClass() == UFortGlobals::StaticClass()
         && uint32(Fn->FunctionFlags) == 0x14022401 && Fn->GetNativeFunc()
         && Fn->NumParms == 1 && Fn->ParmsSize == sizeof(bool) && Fn->ReturnValueOffset == 0
         && Return && Return->GetFName() == FName(TEXT("ReturnValue"))
         && Return->GetOffset_ForInternal() == 0 && Return->IsNativeBool()
-        && uint64(Return->GetPropertyFlags()) == 0x10000000000580ULL;
+        && Return->GetPropertyFlags() == ReturnFlags;
     Record(TEXT("metadata"), Meta);
     Record(TEXT("cdo"), CDO && CDO->HasAnyFlags(RF_ClassDefaultObject));
     Record(TEXT("direct"), !UFortGlobals::IsErebus());
