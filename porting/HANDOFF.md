@@ -2,12 +2,26 @@
 
 ## Current resume point (2026-11-02)
 
-- Candidate default fix: maintained CommonButton constructor restores six explicit
-  reflected flag values plus inherited focus. MainButtonStateProbe now checks them
-  on CDO and new widget. Portable query/default tests5pass; UE build/runtime pending.
-  Evidence/policy: frontend/common_panel_runtime/main-button-defaults-*.
-  Full unreflected constructor state and lifecycle remain incomplete; this is an
-  independent default fix, not registration of the unintegrated cores below.
+- Latest Native04822b2 restores six explicit CommonButton reflected flag defaults
+  plus inherited focus. Both builds PASS188.045/147.589s with source/config stable;
+  actual MainButtonStateProbe44rows checks all7defaults on CDO and fresh widget.
+  All8retained diagnostics, original table421rows/30checks and both joins21.565/21.569s
+  PASS. Root creation remains7widgets, all4startup classes,22unresolved imports.
+  No new viewport attachment was attempted; previous a93a1c0 failure below remains
+  unresolved. Full unreflected constructor state/lifecycle and all4milestones remain open.
+- Defaults checkpoint: generated/frontend-native-evidence/main-button-defaults-runtime-1/checkpoint.json
+  SHA256 fc8a03edc6e938e455229bbf7ab552a58899bede6ffbe9b5021389f2f178a8ca;
+  archive /mnt/vibrato/fortnite-evidence/frozen-runtime/main-button-defaults-runtime-1
+  binds10source files,82artifact pairs,18binary rows. Release SHA256
+  f2ed9e2c6a82fdc887bc5dfa095e4d952e9588c6a75f0095d59d03fcc23facd1.
+  TERMINAL promotion45360/build8269/stage25815/runtime14378. Scripts in
+  /mnt/vibrato/fortnite-work/*main_button_defaults*1.py. Normal regeneration changed
+  only generated UCommonButton.h/.cpp, preserving12705other mtimes. Tests: defaults/query5,
+  new portable cores6, dashboard47; source evidence11+6spans verified. Engine edits preserved.
+  Policy/evidence: frontend/common_panel_runtime/main-button-defaults-*.
+  Independent Luna audit PASS rehashes all82artifact pairs and10source pairs and inspects
+  the CDO/instance checks: /mnt/vibrato/fortnite-work/main-button-defaults-receipt-audit-1/HANDOFF.md.
+  Giant debug binaries were not independently rehashed; the stage producer recorded their hashes.
 - New source work: common_panel_runtime/{CommonButtonSelectionCore.h,
   CommonButtonTextStyleCore.h,CommonActionKeyLookupCore.h} implements portable recovered
   selection/style/notification order, text-style fallback and ordered controller/key lookup.
@@ -20,13 +34,19 @@
   Action identity/brush proofs are common-action-widget-{refresh-identity,brush-contract}-1.
   InputActionWidget is +b68; its refresh uses real multi-row brush lookup and visibility,
   including repeated Collapsed calls. Global gate14081d130 ignores its subsystem argument.
-  Constructor defaults and construct context/delegate closures are the next bounded work.
+  Construct binding proof common-button-construct-bindings-1 closes +470 input-subsystem
+  listener/+478 removal; +488 nested action registration and cleanup remain unclosed.
+- Next isolated candidate: frontend/common_input_current_type/ restores the real mutable
+  CurrentInputType accessor (not a constant). Original replay and compiled candidate tests
+  pass; not generator-integrated or UE-validated. Integrate validate_types plus exact owner
+  native_funcs entry before registration, then normal regeneration/build/runtime validation.
+  Keep input detection/routing/producer parity separate from the bounded getter proof.
 - Dashboard effort audit: Luna medium screened all117leaves/1855weight units. User requires
   total effort only, excluding importance; persisted in AGENTS.md and progress/README.md.
   No numeric changes justified by metadata alone. Review overlapping package/static-mesh,
   native-body/feature, and shared Wine startup allocations before reweighting. Scratch audit:
   /mnt/vibrato/fortnite-work/dashboard-effort-weight-audit-1/{audit.json,HANDOFF.md}.
-- Latest Native sourcea93a1c0 adds an opt-in original Root viewport lifecycle probe. Both builds
+- Previous viewport probe sourcea93a1c0 adds an opt-in original Root viewport lifecycle probe. Both builds
   PASS101.407/93.457s with Native/config inputs stable. Creation control still returns7widgets,
   all4original startup classes and22unresolved imports. Actual table421rows/30checks,8retained
   diagnostics and default/Athena joins21.762/21.637s pass. All4product milestones remain open.
@@ -57,8 +77,9 @@
   click/group paths also produce changes; do not substitute permanentfalse. Transition proof is
   common-button-selected-transition-contract-1. Style refresh proof common-button-style-refresh-contract-1
   closes events OnCurrentTextStyleChanged/BP_OnSelected/BP_OnDeselected and UButton::SetStyle order.
-  Next bounded work: bind three embedded FButtonStyle offsets and weak internal-button lifecycle
-  to existing metadata/policy, then close remaining reachable transition/input/delegate operations.
+  Embedded FButtonStyle metadata and Initialize containment/binding are now proved above;
+  next close native construct registration, action-widget/brush adapters and remaining
+  reachable transition/input/delegate operations before registering the getter.
 - Parallel queue renderer proof activatable-queue-rebuild-contract-1 identifies original SOverlay,
   SCommonAnimatedSwitcher and SSpacer, shared ownership and boundcallbacks. SCommonAnimatedSwitcher
   behavior, callback signatures, initialslotidentity and releasepolicy remain unported/unproved.

@@ -10,13 +10,15 @@ credentials in Git, and the orchestrator reviews and commits.
 
 ## Current baseline
 
-At Native `a93a1c0`, both builds, both joins, eight retained diagnostics and the30-row input-table
+At Native `04822b2`, both builds, both joins, eight retained diagnostics and the30-row input-table
 diagnostic pass. The original table loads421rows. Source and staged config now match; startup
 actually uses FortGameInstance, FortLocalPlayer, FortGameViewportClient and FortPlayerControllerAthena.
 The controller constructor assignment is source-proved; the full original game mode hierarchy and
 remaining constructor are unported. Root CreateWidget returns with a populated7-widget tree, but
-22 native imports remain unresolved. Actual AddToViewport now crashes during IconTextButton's
-UpdateTextStyle because its original CommonButton.GetCurrentTextStyleClass callee is missing.
+22 native imports remain unresolved. Seven explicit CommonButton flag/focus defaults are restored
+and checked on its CDO and a fresh widget. The last AddToViewport attempt at `a93a1c0` crashed
+during IconTextButton's UpdateTextStyle because CommonButton.GetCurrentTextStyleClass is missing;
+the current source still lacks that method, and no new attachment attempt is claimed.
 A separate queue widget also lacks its original RebuildWidget override. No attachment or interactive
 UI is established. Material compatibility remains129/142.
 Next, restore the text-style getter's actual selection/style state dependencies, then its reflected
@@ -26,8 +28,10 @@ Portable selection/style/notification, text-style fallback and action-key lookup
 exist in frontend/common_panel_runtime with original-image evidence and compiled tests.
 They remain unregistered: actual state/lifecycle, input-action/brush and delegate adapters
 must be implemented before runtime UI claims. Initialize and direct-parent lifecycle
-proofs identify real containment, callback binding and NativeConstruct dispatch; constructor
-defaults and context registration are the next bounded closures (see HANDOFF.md).
+proofs identify real containment, callback binding and NativeConstruct dispatch; nested
+context registration and action-widget adapters remain unfinished (see HANDOFF.md).
+An independent original GetCurrentInputType accessor candidate is source-verified and tested;
+generator integration and actual runtime validation are the next bounded implementation step.
 Confirmation async-action factories, Activate/interface dispatch and queued presentation remain
 unfinished. Interactive startup, Blueprint execution and original pixels remain unverified; all four
 product milestones are open. Exact receipts and source release are in HANDOFF.md.

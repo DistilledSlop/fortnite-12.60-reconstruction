@@ -1,0 +1,138 @@
+{
+  "function": {
+    "name": "GetCurrentInputType",
+    "create_func": "0x14081e070",
+    "flags": [
+      "0x54020401"
+    ],
+    "replicated_function": false,
+    "net_roles": [],
+    "outer_fn": "0x14081e010",
+    "params": [
+      {
+        "index": 0,
+        "name": "ReturnValue",
+        "kind": "Enum",
+        "kind_raw": "0x1e",
+        "property_flags": "0x10000000000580",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 0,
+        "type_refs": {
+          "enum": "0x14081ee20"
+        }
+      },
+      {
+        "index": 1,
+        "name": "UnderlyingType",
+        "kind": "Byte",
+        "kind_raw": "0x0",
+        "property_flags": "0x0",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 0,
+        "enum_underlying_of": "ReturnValue"
+      }
+    ]
+  },
+  "properties": [
+    {
+      "index": 7,
+      "name": "CurrentInputType",
+      "kind": "Enum",
+      "kind_raw": "0x1e",
+      "property_flags": "0x40000000002000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 121,
+      "type_refs": {
+        "enum": "0x14081ee20"
+      }
+    },
+    {
+      "index": 8,
+      "name": "UnderlyingType",
+      "kind": "Byte",
+      "kind_raw": "0x0",
+      "property_flags": "0x0",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "enum_underlying_of": "CurrentInputType"
+    }
+  ],
+  "exec": {
+    "exec_addr": "0x14081ef40",
+    "flags": "0x54020401",
+    "params": [
+      {
+        "index": 0,
+        "name": "ReturnValue",
+        "kind": "Enum",
+        "kind_raw": "0x1e",
+        "property_flags": "0x10000000000580",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 0,
+        "type_refs": {
+          "enum": "0x14081ee20"
+        }
+      },
+      {
+        "index": 1,
+        "name": "UnderlyingType",
+        "kind": "Byte",
+        "kind_raw": "0x0",
+        "property_flags": "0x0",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 0,
+        "enum_underlying_of": "ReturnValue"
+      }
+    ],
+    "create_func": "0x14081e070",
+    "source": "lea"
+  },
+  "enum": {
+    "block_va": "0x14783dce0",
+    "name": "ECommonInputType",
+    "cpp_type": "ECommonInputType",
+    "construct_fns": [
+      "0x14081ee20"
+    ],
+    "package_fn": "0x14081de60",
+    "package": "/Script/CommonInput",
+    "cpp_form": "EnumClass",
+    "dynamic_type": "NotDynamic",
+    "enumerators": [
+      {
+        "name": "ECommonInputType::MouseAndKeyboard",
+        "value": 0
+      },
+      {
+        "name": "ECommonInputType::Gamepad",
+        "value": 1
+      },
+      {
+        "name": "ECommonInputType::Touch",
+        "value": 2
+      },
+      {
+        "name": "ECommonInputType::Count",
+        "value": 3
+      }
+    ]
+  }
+}
