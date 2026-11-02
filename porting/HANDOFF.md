@@ -15,6 +15,20 @@ Next commands /tmp/build_frontend_routing_9.py then
 Queue AddWidget/RemoveWidget acquisition and complete normal startup remain
 unimplemented. Root owns Native/generator/Engine/build/stage. All4 gates open.
 
+Bounded workers also delivered executable source candidates, intentionally
+unregistered: routing_keyboard_entry_runtime/FortKeyboardBindingHelpers handles
+real settings/key aliases/FInputActionBinding match and execution; full custom
+KBM/preset resolution and HUD native-state producers remain. The startup_class_
+providers_runtime loaders preserve real synchronous loading and optional timing,
+plus config selector/HUD virtuals; actual config singleton and FortAssetManager
+native game-mode byte6cc still require closure. root_layer_clear_runtime wires
+ordered cleanup and modal transition; MCP/confirmation/error providers remain.
+root_legacy_state_runtime supplies actual selector/class mutation, legacy state
+replacement, content attachment and weak deferred removal candidate; virtual480,
+NUI510/518, native constructors and director deferred-removal consumer remain.
+These source candidates are not substitutes for normal startup. Rotate workers
+at these completed component boundaries and preserve bounded reads throughout.
+
 ## Connected routing/loading checkpoint: both builds and default join pass (2026-11-02)
 
 Previous work made progress; user explicitly requests larger related integration

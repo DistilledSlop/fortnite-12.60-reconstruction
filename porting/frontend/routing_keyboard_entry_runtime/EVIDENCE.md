@@ -16,3 +16,11 @@ Relevant bounded decoder windows: `1407cffa0:110`, `145156590:80`, `14515660f:20
 Viewport vtable `146124648` is the FViewportClient secondary vtable (+28 this adjustment): key +48=`14235efe0`, axis +50=`14235ea10`, touch +60=`14235f5a0`. Key remaps controller id for gamepad, runs fullscreen check and an additional CommonInput helper, then invokes +370 with `(ControllerId, Key, Event, Reply)`. A handled reply returns true; an unhandled reply invokes Super::InputKey with adjusted arguments. Touch invokes +390 with `(ControllerId, Handle, Type, TouchLocation, Reply)` first, returns true for handled and otherwise calls Super::InputTouch. Axis invokes +380 with `(ControllerId, Key, Delta, Reply)` after its original platform/input restrictions; the manager callback assigns handled when the router exists and NativeShouldBlockActionInput is false. These are actual invocation orders, not an assertion that the keyboard prefix can be replaced with direct Super.
 
 The result-1 keyboard continuation uses root GetOwningPlayer cast AFortPlayerController, calls `14238ead0` (controller +2a8 cast AFortUIZone, then native byte +5d0), and if true invokes `14236ad20` with Key, Event, a controller +540 pointer-present bool and a second bool. The second bool is false unless controller is AFortPlayerControllerAthena and `1419dd310` succeeds; that function checks the same HUD byte and HUD FName +5d4 against two globals. `14236ad20` iterates native 0x48-byte input records and uses `14236b4d0`/`1423812b0` to resolve and execute key/action bindings; other branches involve controller state and HUD. Its source, native fields, named state values and helpers remain necessary and are not reproduced by a no-op or default.
+
+The subsequent bounded helper pass identifies those 0x48-byte records as real
+Engine FInputActionBinding and supplies executable settings/match phases in
+FortKeyboardBindingHelpers.{h,cpp}. Settings collection/alias lookup, desired
+profile getters, current-input classification, Engine fallback and cloud-state
+eligibility are closed as described in HANDOFF.md. The complete controller
+resolver and HUD state producers remain outside this promotion boundary; the
+physical key callback is still not replaced by a default pass-through.

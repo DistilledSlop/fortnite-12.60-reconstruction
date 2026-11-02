@@ -1,0 +1,102 @@
+{
+  "image": "/mnt/vibrato/fortnite-evidence/original-late-capture-1/image-125.runtime.bin",
+  "base": "0x140000000",
+  "windows": [
+    {
+      "name": "binding_match",
+      "start": "0x14236b4d0",
+      "size": "0x1f7",
+      "sha256": "fe043ee29c9b96cae75e4366ae875779fb46f4fa7f4dada4576347577936b995"
+    },
+    {
+      "name": "action_key_resolver_prefix",
+      "start": "0x1423812b0",
+      "size": "0x61",
+      "sha256": "28c62e6880cf0f0f665aa82ee1e0031d00a8333df895d31802f32509204080ef"
+    },
+    {
+      "name": "keyboard_profile_mapping",
+      "start": "0x1423813c0",
+      "size": "0x57",
+      "sha256": "6f83ecb0d39ff37d7051710329e343167ba6fa7631e4c4f30241635dd5c0b4b9"
+    },
+    {
+      "name": "gamepad_profile_mapping",
+      "start": "0x142381468",
+      "size": "0x8d",
+      "sha256": "61a5b837f2dd649337670666d1aaa380e6d33204b4549124e41736f4ea6b888c"
+    },
+    {
+      "name": "engine_mapping_fallback",
+      "start": "0x1423815cd",
+      "size": "0xf4",
+      "sha256": "3d2748c1dd0e6060e17e0c53c517e00f6b7af3cbfc67c4ac221b88d158741ec4"
+    },
+    {
+      "name": "settings_mapping_collector",
+      "start": "0x14200e000",
+      "size": "0xbb",
+      "sha256": "b3dd4ec23faba3661d9949c87dce23a8dbc7d8060f10848133ba7977c8f5ea4a"
+    },
+    {
+      "name": "mapping_equality",
+      "start": "0x1420060a0",
+      "size": "0xb0",
+      "sha256": "b5d56d9cdddbad7e206afe0d0a8937100373917320f71fb9c4551f8714bce6d0"
+    },
+    {
+      "name": "settings_key_alias",
+      "start": "0x14200df90",
+      "size": "0x65",
+      "sha256": "6e46d51de4c119a3b3dcc4022850726890d32951c2089f3370bdbd07b661beb4"
+    },
+    {
+      "name": "keyboard_profile_getter",
+      "start": "0x141fe7d30",
+      "size": "0x8",
+      "sha256": "67a2af7a66a4494eeab7b99d62f8fd72352252e14ccd8f42015fe80be5faef74"
+    },
+    {
+      "name": "gamepad_profile_getter",
+      "start": "0x141fe7d00",
+      "size": "0x8",
+      "sha256": "6df06185204d7fcb3e862da4ec1dbf1ddea3d8662c7b10384f9dad8f9ab3ad1c"
+    },
+    {
+      "name": "client_settings_cloud_gate",
+      "start": "0x141e32a40",
+      "size": "0xf",
+      "sha256": "523ff44d63ef9313d0c2bc2b3629bb2dbbeb90890d84c7f2d3e97e09981db80d"
+    },
+    {
+      "name": "current_input_gamepad",
+      "start": "0x142390950",
+      "size": "0x2d",
+      "sha256": "32e3e0d682ee1807da3d79faa08bb6345809cfb2a52073a990967708c4bc26dc"
+    },
+    {
+      "name": "hud_input_predicate",
+      "start": "0x14238ead0",
+      "size": "0x4a",
+      "sha256": "749d92741346c7ee2d8e285a0358f11b8fbe4aab36c386c11824b49ed92bd091"
+    },
+    {
+      "name": "athena_hud_state_predicate",
+      "start": "0x1419dd310",
+      "size": "0x8f",
+      "sha256": "70f35b0775cfcb54f7612c1cc7fd5652c1d3d53a77e9c6e1d4f8858d875bf62f"
+    },
+    {
+      "name": "gamepad_key_predicate",
+      "start": "0x142f1b780",
+      "size": "0x2b",
+      "sha256": "fee2c4b202137c429b9cc2ebb3c90398fcf8319c2adada5b28638dca0e2c3629"
+    },
+    {
+      "name": "touch_key_predicate",
+      "start": "0x142f1b810",
+      "size": "0x2c",
+      "sha256": "38d2b816a9ee5cc1b6768500de208d5e1956640151307868ea6efdf88938cc87"
+    }
+  ]
+}
