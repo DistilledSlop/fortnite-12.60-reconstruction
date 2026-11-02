@@ -2,6 +2,11 @@
 
 ## Current resume point (2026-11-02)
 
+- Dashboard effort audit: Luna medium screened all117leaves/1855weight units. User requires
+  total effort only, excluding importance; persisted in AGENTS.md and progress/README.md.
+  No numeric changes justified by metadata alone. Review overlapping package/static-mesh,
+  native-body/feature, and shared Wine startup allocations before reweighting. Scratch audit:
+  /mnt/vibrato/fortnite-work/dashboard-effort-weight-audit-1/{audit.json,HANDOFF.md}.
 - Latest Native sourcea93a1c0 adds an opt-in original Root viewport lifecycle probe. Both builds
   PASS101.407/93.457s with Native/config inputs stable. Creation control still returns7widgets,
   all4original startup classes and22unresolved imports. Actual table421rows/30checks,8retained

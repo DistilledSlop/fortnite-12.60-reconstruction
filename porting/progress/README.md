@@ -70,7 +70,11 @@ post-commit hook finishes this refresh before returning; failures are logged in
 ## Editing estimates
 
 Open `components.json`. Each leaf has a `weight` (its treemap area and its share of
-the overall figure) and a `measure`. Measures, from most objective to least:
+the overall figure) and a `measure`. Weight estimates total implementation and
+verification effort, completed plus remaining. Importance, urgency, and milestone
+criticality do not affect weight. Define exclusive effort allocations before
+reweighting overlapping scopes, and state uncertainty when estimates lack evidence.
+Measures, from most objective to least:
 
 - `tracked_count`: done = tracked files at the commit matching `globs` (and `name_regex`,
   searched in the file name without extension); total from `totals.json` (`total_key`,
@@ -154,8 +158,18 @@ The 142-owner material closure has two points because the shader/map decoding,
 uniforms, detached draw, named ingress and remaining integration/parity are
 already separately allocated within the same 20-point material budget. Its small
 per-owner increment should not be interpreted as the total value of the material
-pipeline. Further weight changes require a scope/remaining-effort comparison,
+pipeline. Further weight changes require a total-scope effort comparison,
 not the number of hours recently spent or a target percentage.
+
+A bounded metadata audit on 2026-11-02 screened all 117 leaves (1,855 weight
+units). It found no explicit importance-based weight rationale, but did not
+establish that relative estimates are calibrated to effort. Potential accounting
+overlaps need review: package coverage (50) and static-mesh conversion (30), native
+function bodies (150) and feature implementation, and the shared `wine_starts`
+check in the two Wine leaves (25 and 5). A shared result can support distinct
+deliverables; the associated effort must be allocated only once. No numeric
+changes were justified by this metadata review. Before reweighting these scopes,
+define their distinct deliverables and estimate their relative total effort.
 
 ### Raw pak extraction and package coverage
 

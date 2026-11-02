@@ -2,6 +2,8 @@
 
 Read `porting/README.md` for the goal, then the latest snapshot at the top of `porting/HANDOFF.md` and `porting/master_plan.md` before resuming work. The four dashboard milestones are the acceptance gates; the weighted progress percentage is an effort estimate.
 
+Dashboard task weights estimate total implementation and verification effort, completed plus remaining. Importance, urgency, milestone criticality, and a desired progress percentage must not affect weights. Define accounting boundaries and avoid allocating the same effort to multiple leaves; report uncertain estimates explicitly.
+
 The primary agent plans, orchestrates, and reviews, and works directly when useful. Use `gpt-6-luna` medium for small read-only tasks, `gpt-6.1-terra` medium or high for regular delegated work, and `gpt-6.1-sol` medium for really complex delegated tasks. Always set `fork_turns: "none"`. At most three subagents work at once. Assign one owner to `porting/native/`, promotion, staging, and UE builds; avoid concurrent generation/build operations.
 
 Preserve existing edits. Stage specific paths, review and commit completed validated changes, and never force push. No remote is currently configured. Keep credentials, recovered game data, and generated runtime artifacts out of Git. Never print or log key material. Do not hand-edit generated native code; change generator inputs and regenerate.
