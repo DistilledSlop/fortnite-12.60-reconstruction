@@ -2178,6 +2178,10 @@ _fort_globals_spec = _common_activation_import.spec_from_file_location(
     "fort_globals_runtime_policy", os.path.join(os.path.dirname(__file__), "frontend", "fort_globals_runtime", "policy.py"))
 _fort_globals_policy = _common_activation_import.module_from_spec(_fort_globals_spec)
 _fort_globals_spec.loader.exec_module(_fort_globals_policy)
+_button_style_spec = _common_activation_import.spec_from_file_location(
+    "common_button_style_runtime_policy", os.path.join(os.path.dirname(__file__), "frontend", "common_button_style_runtime", "policy.py"))
+_button_style_policy = _common_activation_import.module_from_spec(_button_style_spec)
+_button_style_spec.loader.exec_module(_button_style_policy)
 _binding_data_spec = _common_activation_import.spec_from_file_location(
     "common_action_binding_data_policy", os.path.join(os.path.dirname(__file__), "frontend", "common_action_binding_runtime", "policy.py"))
 _binding_data_policy = _common_activation_import.module_from_spec(_binding_data_spec)
@@ -2233,6 +2237,7 @@ def build_class_promoted(block, name, resolver, parent_entry, owner_fns, snippet
     model = _common_activation_policy.apply(model, block, owner_fns, native_execs)
     model = _current_input_type_policy.apply(model, block, owner_fns, native_execs)
     model = _fort_globals_policy.apply(model, block, owner_fns, native_execs)
+    model = _button_style_policy.apply(model, block, owner_fns)
     return apply_blueprint_context_runtime_policy(model, block, name, resolver, parent_entry, owner_fns, snippets, splice_ctx)
 
 # ---------------------------------------------------------------- behaviour snippets (porting/behavior)
@@ -2990,6 +2995,7 @@ def render_promoted_header(model, api, parent_include, source_label):
     if model.get("source_context_phases"):
         lines.extend(BLUEPRINT_CONTEXT_PHASE_DECLS.rstrip("\n").split("\n"))
     lines.extend(_common_activation_policy.declarations(model).splitlines())
+    lines.extend(_button_style_policy.declarations(model).splitlines())
     lines.append("};")
     lines.append("")
     return "\n".join(lines) + "\n"
@@ -3133,7 +3139,7 @@ def render_promoted_cpp(model, source_label):
     result = "\n".join(lines) + "\n"
     if model.get("source_context_phases"):
         result += BLUEPRINT_CONTEXT_PHASE_BODIES
-    return result + _common_activation_policy.definitions(model) + _current_input_type_policy.definitions(model) + _fort_globals_policy.definitions(model)
+    return result + _common_activation_policy.definitions(model) + _current_input_type_policy.definitions(model) + _fort_globals_policy.definitions(model) + _button_style_policy.definitions(model)
 
 
 def build_engine_header_index(root):
@@ -3409,6 +3415,10 @@ def promote(args):
         _common_activation_policy.validate_text_block_style_classes(blocks_by_va, name_to_block)
     if 'UCommonButton' in listed:
         _common_activation_policy.validate_button_text_style_classes(blocks_by_va, name_to_block)
+        optional_sound = gate.info('0x1408098d0')
+        if optional_sound is None:
+            raise ValueError('original optional sound type unavailable')
+        _button_style_policy.validate_classes(blocks_by_va, name_to_block, optional_sound.rec)
     if 'UCommonActivatablePanel' in listed:
         _common_activation_policy.validate_panel_outro_types(gate)
     if 'UCommonInputSubsystem' in listed:
@@ -3548,6 +3558,11 @@ def promote(args):
         native_structs[info.cpp_name] = model
         if (model.get("net") or {}).get("kind") == "native":
             verify_struct_net(model, texts[info.header_name])
+    if 'UCommonButton' in listed:
+        by_name = {m['name']:m for m in class_models}
+        _button_style_policy.validate_models(by_name,
+            native_structs['FCommonButtonStyleOptionalSlateSound'],
+            _common_activation_policy.declarations(by_name['UCommonButtonInternal']))
     for entry in struct_entries:
         cls = entry["class"]
         tag = "%s::NetSerialize" % cls

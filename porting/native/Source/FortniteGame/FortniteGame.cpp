@@ -47,6 +47,7 @@ void RegisterCommonTextBlockStyleProbeDriver();
 void RegisterCommonTextTransformProbeDriver();
 void RegisterFortGlobalsErebusProbeDriver();
 void RegisterButtonSizeProbeDriver();
+void RegisterStyleRebuildProbeDriver();
 void RunOriginalVulkanShaderProbe();
 void RunLegacyMaterialShaderMapProbe();
 void RegisterLegacyOriginalMaterialProvider();
@@ -200,6 +201,7 @@ public:
         RegisterCommonTextTransformProbeDriver();
         RegisterFortGlobalsErebusProbeDriver();
         RegisterButtonSizeProbeDriver();
+        RegisterStyleRebuildProbeDriver();
         RegisterPanelIntroProbeDriver();
         RegisterPanelOutroProbeDriver();
         RegisterConfirmationDescriptionProbeDriver();

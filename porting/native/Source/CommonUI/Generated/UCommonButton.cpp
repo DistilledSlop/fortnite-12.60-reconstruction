@@ -69,3 +69,108 @@ TSubclassOf<UCommonTextStyle> UCommonButton::GetCurrentTextStyleClass() const
             return Object->GetClass();
         });
 }
+#include "UCommonButtonStyle.h"
+#include "UCommonButtonInternal.h"
+#include "Materials/MaterialInterface.h"
+#include "Materials/MaterialInstanceDynamic.h"
+
+UCommonButtonStyle* UCommonButton::NativeGetStyleCDO() const
+{
+    UClass* Class = Style.Get();
+    if (!Class || !Class->IsChildOf(UCommonButtonStyle::StaticClass())) return nullptr;
+    // Original 1407c5240 reads ClassDefaultObject; it does not construct a CDO.
+    return Cast<UCommonButtonStyle>(Class->GetDefaultObject(false));
+}
+
+void UCommonButton::NativeOnCurrentTextStyleChanged()
+{
+    OnCurrentTextStyleChanged();
+}
+
+void UCommonButton::NativeRefreshCurrentStyle()
+{
+    UCommonButtonInternal* Internal = NativeInternalButton.Get();
+    if (!Internal) return;
+    // Selection is read after weak resolution. Selected takes precedence.
+    Internal->SetStyle(bNativeSelected ? SelectedStyle :
+        (bNativeButtonEnabled ? NormalStyle : DisabledStyle));
+    NativeOnCurrentTextStyleChanged();
+}
+
+void UCommonButton::NativeRefreshDimensions()
+{
+    UCommonButtonStyle* StyleCDO = NativeGetStyleCDO();
+    const int32 Width = FMath::Max(MinWidth, StyleCDO ? StyleCDO->MinWidth : 0);
+    // Original 1407ec1c0 dereferences the result unconditionally. The actual
+    // lifecycle producer must bind NativeInternalButton before this operation.
+    NativeInternalButton.Get()->NativeSetMinimumWidth(Width);
+    const int32 Height = FMath::Max(MinHeight, StyleCDO ? StyleCDO->MinHeight : 0);
+    NativeInternalButton.Get()->NativeSetMinimumHeight(Height);
+}
+
+void UCommonButton::NativeRebuildStyle()
+{
+    UCommonButtonStyle* StyleCDO = NativeGetStyleCDO();
+    if (!StyleCDO) return;
+
+    // Keep this temporary alive through both refresh operations. Assignment is
+    // actual FSlateBrush assignment (shared ownership and release callbacks).
+    FSlateBrush SingleBrush;
+    UMaterialInstanceDynamic* NewMID = nullptr;
+    if (StyleCDO->bSingleMaterial)
+    {
+        SingleBrush = StyleCDO->SingleMaterialBrush;
+        if (UMaterialInterface* Material = Cast<UMaterialInterface>(SingleBrush.GetResourceObject()))
+        {
+            NewMID = UMaterialInstanceDynamic::Create(Material, this);
+        }
+        SingleMaterialStyleMID = NewMID;
+        if (NewMID) SingleBrush.SetResourceObject(NewMID);
+    }
+    else
+    {
+        SingleMaterialStyleMID = nullptr;
+    }
+
+    const bool HasPressedOverride = PressedSlateSoundOverride.GetResourceObject() != nullptr;
+    const bool HasHoveredOverride = HoveredSlateSoundOverride.GetResourceObject() != nullptr;
+
+    // Each expression rereads bSingleMaterial. A prior brush assignment may
+    // release its old shared objects and synchronously mutate the style CDO.
+    NormalStyle.Normal = StyleCDO->bSingleMaterial ? SingleBrush : StyleCDO->NormalBase;
+    NormalStyle.Hovered = StyleCDO->bSingleMaterial ? SingleBrush : StyleCDO->NormalHovered;
+    NormalStyle.Pressed = StyleCDO->bSingleMaterial ? SingleBrush : StyleCDO->NormalPressed;
+    NormalStyle.Disabled = StyleCDO->bSingleMaterial ? SingleBrush : StyleCDO->Disabled;
+    NormalStyle.NormalPadding = StyleCDO->ButtonPadding;
+    NormalStyle.PressedPadding = StyleCDO->ButtonPadding;
+    NormalStyle.PressedSlateSound = HasPressedOverride ? PressedSlateSoundOverride : StyleCDO->PressedSlateSound;
+    NormalStyle.HoveredSlateSound = HasHoveredOverride ? HoveredSlateSoundOverride : StyleCDO->HoveredSlateSound;
+
+    SelectedStyle.Normal = StyleCDO->bSingleMaterial ? SingleBrush : StyleCDO->SelectedBase;
+    SelectedStyle.Hovered = StyleCDO->bSingleMaterial ? SingleBrush : StyleCDO->SelectedHovered;
+    SelectedStyle.Pressed = StyleCDO->bSingleMaterial ? SingleBrush : StyleCDO->SelectedPressed;
+    SelectedStyle.Disabled = StyleCDO->bSingleMaterial ? SingleBrush : StyleCDO->Disabled;
+    SelectedStyle.NormalPadding = StyleCDO->ButtonPadding;
+    SelectedStyle.PressedPadding = StyleCDO->ButtonPadding;
+    SelectedStyle.PressedSlateSound = !HasPressedOverride && StyleCDO->SelectedPressedSlateSound.bHasSound
+        ? StyleCDO->SelectedPressedSlateSound.Sound : NormalStyle.PressedSlateSound;
+    SelectedStyle.HoveredSlateSound = !HasHoveredOverride && StyleCDO->SelectedHoveredSlateSound.bHasSound
+        ? StyleCDO->SelectedHoveredSlateSound.Sound : NormalStyle.HoveredSlateSound;
+
+    DisabledStyle.Normal = NormalStyle.Normal;
+    DisabledStyle.Hovered = NormalStyle.Hovered;
+    DisabledStyle.Pressed = NormalStyle.Pressed;
+    DisabledStyle.Disabled = NormalStyle.Disabled;
+    DisabledStyle.NormalPadding = NormalStyle.NormalPadding;
+    DisabledStyle.PressedPadding = NormalStyle.PressedPadding;
+    DisabledStyle.PressedSlateSound = NormalStyle.PressedSlateSound;
+    DisabledStyle.HoveredSlateSound = NormalStyle.HoveredSlateSound;
+    if (!HasPressedOverride && StyleCDO->DisabledPressedSlateSound.bHasSound)
+        DisabledStyle.PressedSlateSound = StyleCDO->DisabledPressedSlateSound.Sound;
+    if (!HasHoveredOverride && StyleCDO->DisabledHoveredSlateSound.bHasSound)
+        DisabledStyle.HoveredSlateSound = StyleCDO->DisabledHoveredSlateSound.Sound;
+
+    NativeRefreshCurrentStyle();
+    // The synchronous event above can change Style, dimensions and weak owner.
+    NativeRefreshDimensions();
+}

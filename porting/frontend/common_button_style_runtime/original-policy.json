@@ -1,0 +1,737 @@
+{
+  "classes": {
+    "UCommonButton": {
+      "identity": {
+        "block_va": "0x145a01210",
+        "name": null,
+        "name_status": "unresolved",
+        "config_name": null,
+        "class_flags": "0xb010a1",
+        "dependency_fns": [
+          "0x140816d40",
+          "0x140812ee0"
+        ],
+        "package_fn": "0x140816d40",
+        "base_fn": "0x140812ee0",
+        "class_noregister_fn": "0x140807cd0",
+        "interface_count": 0,
+        "dependency0_fn": "0x140816d40"
+      },
+      "properties": [
+        {
+          "index": 2,
+          "name": "DisabledStyle",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x40000000000000",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 2128,
+          "type_refs": {
+            "struct": "0x142fdb020"
+          }
+        },
+        {
+          "index": 3,
+          "name": "SelectedStyle",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x40000000000000",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 1496,
+          "type_refs": {
+            "struct": "0x142fdb020"
+          }
+        },
+        {
+          "index": 4,
+          "name": "NormalStyle",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x40000000000000",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 864,
+          "type_refs": {
+            "struct": "0x142fdb020"
+          }
+        },
+        {
+          "index": 5,
+          "name": "SingleMaterialStyleMID",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x40000000002000",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 856,
+          "type_refs": {
+            "class": "0x1447960d0"
+          }
+        },
+        {
+          "index": 27,
+          "name": "HoveredSlateSoundOverride",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x20080000000015",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 648,
+          "type_refs": {
+            "struct": "0x142fdb620"
+          }
+        },
+        {
+          "index": 28,
+          "name": "PressedSlateSoundOverride",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x20080000000015",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 624,
+          "type_refs": {
+            "struct": "0x142fdb620"
+          }
+        },
+        {
+          "index": 30,
+          "name": "Style",
+          "kind": "Class",
+          "kind_raw": "0x11",
+          "property_flags": "0x25080000000015",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 608,
+          "type_refs": {
+            "meta_class": "0x1408064b0",
+            "class": "0x142e497d0"
+          }
+        },
+        {
+          "index": 31,
+          "name": "MinHeight",
+          "kind": "Int",
+          "kind_raw": "0x3",
+          "property_flags": "0x20080000000015",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 604
+        },
+        {
+          "index": 32,
+          "name": "MinWidth",
+          "kind": "Int",
+          "kind_raw": "0x3",
+          "property_flags": "0x20080000000015",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 600
+        }
+      ],
+      "members": {
+        "DisabledStyle": "FButtonStyle DisabledStyle;",
+        "SelectedStyle": "FButtonStyle SelectedStyle;",
+        "NormalStyle": "FButtonStyle NormalStyle;",
+        "SingleMaterialStyleMID": "UMaterialInstanceDynamic* SingleMaterialStyleMID;",
+        "HoveredSlateSoundOverride": "FSlateSound HoveredSlateSoundOverride;",
+        "PressedSlateSoundOverride": "FSlateSound PressedSlateSoundOverride;",
+        "Style": "TSubclassOf<UCommonButtonStyle> Style;",
+        "MinHeight": "int32 MinHeight;",
+        "MinWidth": "int32 MinWidth;"
+      }
+    },
+    "UCommonButtonStyle": {
+      "identity": {
+        "block_va": "0x145a007f0",
+        "name": null,
+        "name_status": "unresolved",
+        "config_name": null,
+        "class_flags": "0x1000a1",
+        "dependency_fns": [
+          "0x142eea530",
+          "0x140812ee0"
+        ],
+        "package_fn": "0x142eea530",
+        "base_fn": "0x140812ee0",
+        "class_noregister_fn": "0x1408079e0",
+        "interface_count": 0,
+        "dependency0_fn": "0x142eea530"
+      },
+      "properties": [
+        {
+          "index": 0,
+          "name": "DisabledHoveredSlateSound",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000000010015",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 1360,
+          "type_refs": {
+            "struct": "0x1408098d0"
+          }
+        },
+        {
+          "index": 1,
+          "name": "SelectedHoveredSlateSound",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000000010015",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 1328,
+          "type_refs": {
+            "struct": "0x1408098d0"
+          }
+        },
+        {
+          "index": 2,
+          "name": "HoveredSlateSound",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000000010015",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 1304,
+          "type_refs": {
+            "struct": "0x142fdb620"
+          }
+        },
+        {
+          "index": 3,
+          "name": "DisabledPressedSlateSound",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000000010015",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 1272,
+          "type_refs": {
+            "struct": "0x1408098d0"
+          }
+        },
+        {
+          "index": 4,
+          "name": "SelectedPressedSlateSound",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000000010015",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 1240,
+          "type_refs": {
+            "struct": "0x1408098d0"
+          }
+        },
+        {
+          "index": 5,
+          "name": "PressedSlateSound",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000000010015",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 1216,
+          "type_refs": {
+            "struct": "0x142fdb620"
+          }
+        },
+        {
+          "index": 6,
+          "name": "DisabledTextStyle",
+          "kind": "Class",
+          "kind_raw": "0x11",
+          "property_flags": "0x14000000010015",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 1208,
+          "type_refs": {
+            "meta_class": "0x1408131c0",
+            "class": "0x142e497d0"
+          }
+        },
+        {
+          "index": 7,
+          "name": "SelectedHoveredTextStyle",
+          "kind": "Class",
+          "kind_raw": "0x11",
+          "property_flags": "0x14000000010015",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 1200,
+          "type_refs": {
+            "meta_class": "0x1408131c0",
+            "class": "0x142e497d0"
+          }
+        },
+        {
+          "index": 8,
+          "name": "SelectedTextStyle",
+          "kind": "Class",
+          "kind_raw": "0x11",
+          "property_flags": "0x14000000010015",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 1192,
+          "type_refs": {
+            "meta_class": "0x1408131c0",
+            "class": "0x142e497d0"
+          }
+        },
+        {
+          "index": 9,
+          "name": "NormalHoveredTextStyle",
+          "kind": "Class",
+          "kind_raw": "0x11",
+          "property_flags": "0x14000000010015",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 1184,
+          "type_refs": {
+            "meta_class": "0x1408131c0",
+            "class": "0x142e497d0"
+          }
+        },
+        {
+          "index": 10,
+          "name": "NormalTextStyle",
+          "kind": "Class",
+          "kind_raw": "0x11",
+          "property_flags": "0x14000000010015",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 1176,
+          "type_refs": {
+            "meta_class": "0x1408131c0",
+            "class": "0x142e497d0"
+          }
+        },
+        {
+          "index": 11,
+          "name": "MinHeight",
+          "kind": "Int",
+          "kind_raw": "0x3",
+          "property_flags": "0x10000000010015",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 1172
+        },
+        {
+          "index": 12,
+          "name": "MinWidth",
+          "kind": "Int",
+          "kind_raw": "0x3",
+          "property_flags": "0x10000000010015",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 1168
+        },
+        {
+          "index": 13,
+          "name": "CustomPadding",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000000010015",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 1152,
+          "type_refs": {
+            "struct": "0x142fdb3e0"
+          }
+        },
+        {
+          "index": 14,
+          "name": "ButtonPadding",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000000010015",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 1136,
+          "type_refs": {
+            "struct": "0x142fdb3e0"
+          }
+        },
+        {
+          "index": 15,
+          "name": "Disabled",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000000010015",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 1000,
+          "type_refs": {
+            "struct": "0x142fdb590"
+          }
+        },
+        {
+          "index": 16,
+          "name": "SelectedPressed",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000000010015",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 864,
+          "type_refs": {
+            "struct": "0x142fdb590"
+          }
+        },
+        {
+          "index": 17,
+          "name": "SelectedHovered",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000000010015",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 728,
+          "type_refs": {
+            "struct": "0x142fdb590"
+          }
+        },
+        {
+          "index": 18,
+          "name": "SelectedBase",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000000010015",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 592,
+          "type_refs": {
+            "struct": "0x142fdb590"
+          }
+        },
+        {
+          "index": 19,
+          "name": "NormalPressed",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000000010015",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 456,
+          "type_refs": {
+            "struct": "0x142fdb590"
+          }
+        },
+        {
+          "index": 20,
+          "name": "NormalHovered",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000000010015",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 320,
+          "type_refs": {
+            "struct": "0x142fdb590"
+          }
+        },
+        {
+          "index": 21,
+          "name": "NormalBase",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000000010015",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 184,
+          "type_refs": {
+            "struct": "0x142fdb590"
+          }
+        },
+        {
+          "index": 22,
+          "name": "SingleMaterialBrush",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000000010015",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 48,
+          "type_refs": {
+            "struct": "0x142fdb590"
+          }
+        },
+        {
+          "index": 23,
+          "name": "bSingleMaterial",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x10000000010015",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 1392,
+          "bitfield": true,
+          "set_bit_fn": "0x1407627c0",
+          "offset": null
+        }
+      ],
+      "members": {
+        "DisabledHoveredSlateSound": "FCommonButtonStyleOptionalSlateSound DisabledHoveredSlateSound;",
+        "SelectedHoveredSlateSound": "FCommonButtonStyleOptionalSlateSound SelectedHoveredSlateSound;",
+        "HoveredSlateSound": "FSlateSound HoveredSlateSound;",
+        "DisabledPressedSlateSound": "FCommonButtonStyleOptionalSlateSound DisabledPressedSlateSound;",
+        "SelectedPressedSlateSound": "FCommonButtonStyleOptionalSlateSound SelectedPressedSlateSound;",
+        "PressedSlateSound": "FSlateSound PressedSlateSound;",
+        "DisabledTextStyle": "TSubclassOf<UCommonTextStyle> DisabledTextStyle;",
+        "SelectedHoveredTextStyle": "TSubclassOf<UCommonTextStyle> SelectedHoveredTextStyle;",
+        "SelectedTextStyle": "TSubclassOf<UCommonTextStyle> SelectedTextStyle;",
+        "NormalHoveredTextStyle": "TSubclassOf<UCommonTextStyle> NormalHoveredTextStyle;",
+        "NormalTextStyle": "TSubclassOf<UCommonTextStyle> NormalTextStyle;",
+        "MinHeight": "int32 MinHeight;",
+        "MinWidth": "int32 MinWidth;",
+        "CustomPadding": "FMargin CustomPadding;",
+        "ButtonPadding": "FMargin ButtonPadding;",
+        "Disabled": "FSlateBrush Disabled;",
+        "SelectedPressed": "FSlateBrush SelectedPressed;",
+        "SelectedHovered": "FSlateBrush SelectedHovered;",
+        "SelectedBase": "FSlateBrush SelectedBase;",
+        "NormalPressed": "FSlateBrush NormalPressed;",
+        "NormalHovered": "FSlateBrush NormalHovered;",
+        "NormalBase": "FSlateBrush NormalBase;",
+        "SingleMaterialBrush": "FSlateBrush SingleMaterialBrush;",
+        "bSingleMaterial": "bool bSingleMaterial;"
+      }
+    },
+    "UCommonButtonInternal": {
+      "identity": {
+        "block_va": "0x145a00850",
+        "name": null,
+        "name_status": "unresolved",
+        "config_name": null,
+        "class_flags": "0xa000a0",
+        "dependency_fns": [
+          "0x143da38f0",
+          "0x140812ee0"
+        ],
+        "package_fn": "0x143da38f0",
+        "base_fn": "0x140812ee0",
+        "class_noregister_fn": "0x140807a90",
+        "interface_count": 0,
+        "dependency0_fn": "0x143da38f0"
+      },
+      "properties": [
+        {
+          "index": 2,
+          "name": "MinHeight",
+          "kind": "Int",
+          "kind_raw": "0x3",
+          "property_flags": "0x20080000000000",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 1116
+        },
+        {
+          "index": 3,
+          "name": "MinWidth",
+          "kind": "Int",
+          "kind_raw": "0x3",
+          "property_flags": "0x20080000000000",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 1112
+        }
+      ],
+      "members": {
+        "MinHeight": "int32 MinHeight;",
+        "MinWidth": "int32 MinWidth;"
+      }
+    }
+  },
+  "event": {
+    "name": "OnCurrentTextStyleChanged",
+    "create_func": "0x140806ea0",
+    "flags": [
+      "0x8080800"
+    ],
+    "replicated_function": false,
+    "net_roles": [],
+    "outer_fn": "0x140805cb0",
+    "params": []
+  },
+  "optional_sound": {
+    "block_va": "0x147831f40",
+    "name": "CommonButtonStyleOptionalSlateSound",
+    "construct_fns": [
+      "0x1408098d0"
+    ],
+    "package_fn": "0x140812ee0",
+    "package": "/Script/CommonUI",
+    "super_fn": null,
+    "struct_ops_fn": "0x140805e20",
+    "size": 32,
+    "align": 8,
+    "struct_flags": "0x1",
+    "struct_flag_names": [
+      "Native"
+    ],
+    "object_flags": "0x45",
+    "struct_ops": {
+      "vtable_va": "0x145a04e08",
+      "ops_size": 32,
+      "ops_align": 8,
+      "size_matches": true,
+      "align_matches": true,
+      "traits": {
+        "HasNoopConstructor": false,
+        "HasZeroConstructor": false,
+        "HasDestructor": true,
+        "HasSerializer": false,
+        "HasStructuredSerializer": false,
+        "HasPostSerialize": false,
+        "HasNetSerializer": false,
+        "HasNetSharedSerialization": false,
+        "HasNetDeltaSerializer": false,
+        "HasPostScriptConstruct": false,
+        "IsPlainOldData": false,
+        "HasCopy": true,
+        "HasIdentical": false,
+        "HasExportTextItem": false,
+        "HasImportTextItem": false,
+        "HasAddStructReferencedObjects": false,
+        "HasSerializeFromMismatchedTag": false,
+        "HasStructuredSerializeFromMismatchedTag": false,
+        "HasGetTypeHash": false
+      },
+      "unclassified_slots": []
+    },
+    "properties": [
+      {
+        "index": 0,
+        "name": "Sound",
+        "kind": "Struct",
+        "kind_raw": "0x19",
+        "property_flags": "0x10000000000005",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 8,
+        "type_refs": {
+          "struct": "0x142fdb620"
+        }
+      },
+      {
+        "index": 1,
+        "name": "bHasSound",
+        "kind": "Bool",
+        "kind_raw": "0x2c",
+        "property_flags": "0x10000000000005",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "element_size": 1,
+        "size_of_outer": 32,
+        "bitfield": true,
+        "offset": null
+      }
+    ],
+    "num_properties": 2
+  },
+  "optional_sound_members": {
+    "bHasSound": "bool bHasSound;",
+    "Sound": "FSlateSound Sound;"
+  },
+  "source": {
+    "rebuild": {
+      "folder": "button-style-rebuild-dependencies-1",
+      "hashes": {
+        "replay.py": "b6e6d24ab4ae3e65128895321adfdf7b3d651f96a69f747696b787feb1afea03",
+        "fragments.json": "c929a28d210e4f0dd7be719afcf3d76f9f5db12ff23141680981430d26a8c9cc"
+      }
+    },
+    "setter": {
+      "folder": "common-button-set-style-contract-1",
+      "hashes": {
+        "replay.py": "03fda72e0c7f964a7c79d8b09e73cb192f3cf221b15759807865956403e63aee",
+        "fragments.json": "8b70a910922069bf09a7834e4d84cd264f182afe926392a193e204e0a8079b4a"
+      }
+    },
+    "refresh": {
+      "folder": "common-button-style-refresh-contract-1",
+      "hashes": {
+        "replay.py": "10a9643923d24e22ae05d4e1bb269999f0973df4f81bee3ae4859e35482a8224",
+        "windows.json": "40219dc5db559bb414be0eb550a69d464821fd01a61345af30e78025f320fdbb"
+      }
+    }
+  }
+}
