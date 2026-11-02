@@ -38,6 +38,11 @@ _button_production_spec = importlib.util.spec_from_file_location(
 button_production_verifier = importlib.util.module_from_spec(_button_production_spec)
 _button_production_spec.loader.exec_module(button_production_verifier)
 
+_border_delegate_spec = importlib.util.spec_from_file_location(
+    'border_delegate_flow_verifier', Path(__file__).resolve().parents[1] / 'border_delegate_flow_probe' / 'verify.py')
+border_delegate_verifier = importlib.util.module_from_spec(_border_delegate_spec)
+_border_delegate_spec.loader.exec_module(border_delegate_verifier)
+
 ENVIRONMENT = ('DISPLAY', 'VK_ICD_FILENAMES', 'SDL_AUDIODRIVER', 'LP_NUM_THREADS')
 BASE_ARGS = ('-stdout', 'FortniteLinux', '/Engine/Maps/Entry', '-vulkan', '-windowed',
              '-ResX=1280', '-ResY=720', '-nosound', '-unattended', '-log',
@@ -84,6 +89,7 @@ def command(binary, case):
                  'panel-intro': ('-PanelIntroProbe',),
                  'panel-outro': ('-PanelOutroProbe',),
                  'confirmation-description': ('-ConfirmationDescriptionProbe',),
+                 'border-delegate': ('-BorderDelegateFlowProbe',),
                  'button-production': ('-CommonButtonProductionFlowProbe',),
                  'action-widget': ('-CommonActionWidgetFlowProbe',),
                  'common-input-row': ('-CommonInputActionRowProbe',),
@@ -218,12 +224,13 @@ def run(args):
     except OSError as exc:
         receipt['error'] = (receipt['error'] or '') + ' binary recheck failed: ' + str(exc)
     receipt['log'] = {'path': str(log), 'sha256': digest(log)}
-    if args.case in ('button', 'main-button', 'panel-intro', 'panel-outro', 'confirmation-description', 'button-production', 'action-widget', 'common-input-row', 'common-input-current-type', 'action-binding-data', 'action-binding-provider', 'action-binding-creation', 'button-text-style', 'text-block-style', 'text-transform', 'erebus', 'button-size', 'style-rebuild', 'base-click'):
+    if args.case in ('button', 'main-button', 'panel-intro', 'panel-outro', 'confirmation-description', 'border-delegate', 'button-production', 'action-widget', 'common-input-row', 'common-input-current-type', 'action-binding-data', 'action-binding-provider', 'action-binding-creation', 'button-text-style', 'text-block-style', 'text-transform', 'erebus', 'button-size', 'style-rebuild', 'base-click'):
         try:
             transcript_verifier = {'button': verifier, 'main-button': main_button_verifier,
                                    'panel-intro': panel_intro_verifier,
                                    'panel-outro': panel_outro_verifier,
                                    'confirmation-description': confirmation_description_verifier,
+                                   'border-delegate': border_delegate_verifier,
                                    'button-production': button_production_verifier,
                                    'action-widget': action_widget_verifier,
                                    'common-input-row': common_input_action_row_verifier,
@@ -246,7 +253,7 @@ def run(args):
     receipt['passed'] = (receipt['returncode'] == 0 and not receipt['timed_out'] and
                          receipt['proc_exe_inode_verified'] and receipt['binary_after_verified'] and
                          receipt['error'] is None and
-                         (args.case not in ('button', 'main-button', 'panel-intro', 'panel-outro', 'confirmation-description', 'button-production', 'action-widget', 'common-input-row', 'common-input-current-type', 'action-binding-data', 'action-binding-provider', 'action-binding-creation', 'button-text-style', 'text-block-style', 'text-transform', 'erebus', 'button-size', 'style-rebuild', 'base-click') or receipt['transcript']['passed']))
+                         (args.case not in ('button', 'main-button', 'panel-intro', 'panel-outro', 'confirmation-description', 'border-delegate', 'button-production', 'action-widget', 'common-input-row', 'common-input-current-type', 'action-binding-data', 'action-binding-provider', 'action-binding-creation', 'button-text-style', 'text-block-style', 'text-transform', 'erebus', 'button-size', 'style-rebuild', 'base-click') or receipt['transcript']['passed']))
     write_json(receipt_path, receipt)
     return receipt['passed']
 
@@ -257,7 +264,7 @@ def main():
     parser.add_argument('--binary', type=Path, required=True)
     parser.add_argument('--cwd', type=Path, required=True)
     parser.add_argument('--out', type=Path, required=True)
-    parser.add_argument('--case', choices=('button', 'main-button', 'panel-intro', 'panel-outro', 'confirmation-description', 'button-production', 'action-widget', 'common-input-row', 'common-input-current-type', 'action-binding-data', 'action-binding-provider', 'action-binding-creation', 'button-text-style', 'text-block-style', 'text-transform', 'erebus', 'button-size', 'style-rebuild', 'base-click', 'activation', 'registry', 'lifecycle'), required=True)
+    parser.add_argument('--case', choices=('button', 'main-button', 'panel-intro', 'panel-outro', 'confirmation-description', 'border-delegate', 'button-production', 'action-widget', 'common-input-row', 'common-input-current-type', 'action-binding-data', 'action-binding-provider', 'action-binding-creation', 'button-text-style', 'text-block-style', 'text-transform', 'erebus', 'button-size', 'style-rebuild', 'base-click', 'activation', 'registry', 'lifecycle'), required=True)
     parser.add_argument('--runtime-args', type=Path, help='JSON array of material ingress and manifest flags for original asset diagnostics')
     parser.add_argument('--timeout', type=float, default=240)
     args = parser.parse_args()

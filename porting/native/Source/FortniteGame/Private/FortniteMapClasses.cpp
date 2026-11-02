@@ -17,3 +17,8 @@ bool UFortKismetLibrary::IsMobilePlatform()
     return false;
 #endif
 }
+
+bool UFortKismetLibrary::IsMobileGame(const UObject* WorldContextObject)
+{
+    return false;
+}

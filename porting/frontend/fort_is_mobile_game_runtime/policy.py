@@ -22,3 +22,9 @@ def validate(block, native_execs, image_path):
                 raise ValueError('IsMobileGame original instruction mismatch at ' + address)
     finally:
         os.close(fd)
+
+
+def validate_rendered(header, source):
+    for output, name in ((header, 'declarations.inc'), (source, 'definitions.inc')):
+        if output.count((HERE / name).read_text().strip()) != 1:
+            raise ValueError('IsMobileGame source declaration/body missing or duplicated')

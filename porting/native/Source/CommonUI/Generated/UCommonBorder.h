@@ -30,5 +30,14 @@ public:
 	UPROPERTY()
 	FMargin MinimumPadding;
 
+	UFUNCTION(BlueprintCallable)
+	void SetStyle(TSubclassOf<UCommonBorderStyle> InStyle);
+
+	UCommonBorder(const FObjectInitializer& ObjectInitializer);
+	virtual void SynchronizeProperties() override;
+
+private:
+	void NativeUpdateSafeZonePadding();
+public:
 };
 

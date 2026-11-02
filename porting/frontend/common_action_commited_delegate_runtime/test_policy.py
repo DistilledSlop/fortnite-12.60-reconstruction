@@ -3,6 +3,7 @@ import importlib.util
 from pathlib import Path
 import sys
 import unittest
+from unittest import mock
 
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[2]
@@ -18,7 +19,8 @@ class Tests(unittest.TestCase):
         self.info = self.gate.info(p.ROOT)
 
     def test_real_metadata_gate_and_seeded_render(self):
-        self.assertEqual(self.gate.reason(self.info), 'return, out or non-const reference parameter')
+        with mock.patch.object(g._action_commited_policy, 'build_delegate', return_value=None):
+            self.assertEqual(self.gate.reason(self.info), 'return, out or non-const reference parameter')
         self.gate.models.clear(); self.gate.reasons.clear()
         original = self.gate.build_delegate
         self.gate.build_delegate = lambda info: p.build_delegate(info) or original(info)
@@ -36,7 +38,8 @@ class Tests(unittest.TestCase):
                 info.rec[field] = None
                 with self.assertRaises(ValueError): p.build_delegate(info)
         seeds = {}
-        with self.assertRaises(ValueError): p.add_roots(self.gate, seeds)
+        with mock.patch.object(g._action_commited_policy, 'build_delegate', return_value=None):
+            with self.assertRaises(ValueError): p.add_roots(self.gate, seeds)
         self.assertEqual(seeds, {})
 
 if __name__ == '__main__': unittest.main()

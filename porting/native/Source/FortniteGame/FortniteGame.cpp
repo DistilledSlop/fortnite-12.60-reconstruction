@@ -40,6 +40,7 @@ void RegisterRootWidgetInstanceProbeDriver();
 void RegisterCommonInputActionRowProbeDriver();
 void RegisterCommonActionWidgetFlowProbeDriver();
 void RegisterCommonButtonProductionFlowProbeDriver();
+void RegisterBorderDelegateFlowProbeDriver();
 void RegisterCommonInputCurrentTypeProbeDriver();
 void RegisterActionBindingDataProbeDriver();
 void RegisterActionBindingProviderProbeDriver();
@@ -213,6 +214,7 @@ public:
         RegisterCommonInputActionRowProbeDriver();
         RegisterCommonActionWidgetFlowProbeDriver();
         RegisterCommonButtonProductionFlowProbeDriver();
+        RegisterBorderDelegateFlowProbeDriver();
         RegisterLegacyOriginalMaterialProvider();
         FNetworkVersion::GetLocalNetworkVersionOverride.BindStatic(&GetFortniteNetworkVersion);
         FNetworkVersion::IsNetworkCompatibleOverride.BindStatic(&IsFortniteNetworkCompatible);

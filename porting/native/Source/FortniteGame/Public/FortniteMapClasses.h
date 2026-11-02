@@ -61,4 +61,8 @@ class FORTNITEGAME_API UFortKismetLibrary : public UBlueprintFunctionLibrary
 public:
     UFUNCTION(BlueprintPure, Category="Fortnite|Platform")
     static bool IsMobilePlatform();
+
+    // Original Win64 shipping contract: context is marshaled but not inspected.
+    UFUNCTION(BlueprintPure, Category="Fortnite|Platform", meta=(WorldContext="WorldContextObject"))
+    static bool IsMobileGame(const UObject* WorldContextObject);
 };

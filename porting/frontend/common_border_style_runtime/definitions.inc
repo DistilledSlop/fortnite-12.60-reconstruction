@@ -1,4 +1,7 @@
-// Candidate: requires the declarations and Slate includes in HANDOFF.md.
+#include "UCommonBorderStyle.h"
+#include "Framework/Application/SlateApplication.h"
+#include "Widgets/SViewport.h"
+#include "Widgets/Layout/SBorder.h"
 // Receiver 0x1407f9c50; synchronization 0x1407fdf60.
 UCommonBorder::UCommonBorder(const FObjectInitializer& ObjectInitializer)
     : Super(ObjectInitializer)
@@ -6,7 +9,7 @@ UCommonBorder::UCommonBorder(const FObjectInitializer& ObjectInitializer)
     Style = nullptr;
     bReducePaddingBySafezone = false;
     MinimumPadding = FMargin(0.0f);
-    bShowEffectWhenDisabled = false;
+    Background.DrawAs = ESlateBrushDrawType::NoDrawType;
     Visibility = ESlateVisibility::SelfHitTestInvisible;
 }
 

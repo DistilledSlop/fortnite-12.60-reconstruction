@@ -2250,6 +2250,14 @@ _button_sound_spec = _common_activation_import.spec_from_file_location(
     "common_button_sound_identity_evidence_policy", os.path.join(os.path.dirname(__file__), "frontend", "common_button_sound_identity_evidence", "policy.py"))
 _button_sound_policy = _common_activation_import.module_from_spec(_button_sound_spec)
 _button_sound_spec.loader.exec_module(_button_sound_policy)
+_border_style_spec = _common_activation_import.spec_from_file_location(
+    "common_border_style_runtime_policy", os.path.join(os.path.dirname(__file__), "frontend", "common_border_style_runtime", "policy.py"))
+_border_style_policy = _common_activation_import.module_from_spec(_border_style_spec)
+_border_style_spec.loader.exec_module(_border_style_policy)
+_action_commited_spec = _common_activation_import.spec_from_file_location(
+    "common_action_commited_delegate_runtime_policy", os.path.join(os.path.dirname(__file__), "frontend", "common_action_commited_delegate_runtime", "policy.py"))
+_action_commited_policy = _common_activation_import.module_from_spec(_action_commited_spec)
+_action_commited_spec.loader.exec_module(_action_commited_policy)
 _binding_data_spec = _common_activation_import.spec_from_file_location(
     "common_action_binding_data_policy", os.path.join(os.path.dirname(__file__), "frontend", "common_action_binding_runtime", "policy.py"))
 _binding_data_policy = _common_activation_import.module_from_spec(_binding_data_spec)
@@ -2321,6 +2329,7 @@ def build_class_promoted(block, name, resolver, parent_entry, owner_fns, snippet
     model = _button_initialize_policy.apply(model, block, owner_fns)
     model = _button_producers_policy.apply(model, block, owner_fns)
     model = _button_set_style_policy.apply(model, block, owner_fns)
+    model = _border_style_policy.apply(model, block, owner_fns)
     model = _input_settings_policy.apply(model, block, owner_fns)
     model = _input_cache_policy.apply(model, block, owner_fns)
     return apply_blueprint_context_runtime_policy(model, block, name, resolver, parent_entry, owner_fns, snippets, splice_ctx)
@@ -3087,6 +3096,7 @@ def render_promoted_header(model, api, parent_include, source_label):
     lines.extend(_button_focus_policy.declarations(model).splitlines())
     lines.extend(_button_initialize_policy.declarations(model).splitlines())
     lines.extend(_button_producers_policy.declarations(model).splitlines())
+    lines.extend(_border_style_policy.declarations(model).splitlines())
     if model['name'] == 'UCommonActivatablePanel':
         lines.append('    friend class UCommonButton;')
     lines.extend(_input_settings_policy.declarations(model).splitlines())
@@ -3238,7 +3248,7 @@ def render_promoted_cpp(model, source_label):
     result = "\n".join(lines) + "\n"
     if model.get("source_context_phases"):
         result += BLUEPRINT_CONTEXT_PHASE_BODIES
-    return result + _common_activation_policy.definitions(model) + _current_input_type_policy.definitions(model) + _fort_globals_policy.definitions(model) + _button_style_policy.definitions(model) + _button_click_policy.definitions(model) + _button_double_click_policy.definitions(model) + _button_selection_policy.definitions(model) + _input_settings_policy.definitions(model) + _input_cache_policy.definitions(model) + _action_widget_policy.gamepad_definitions(model) + _action_widget_policy.icon_definitions(model) + _action_receivers_policy.definitions(model) + _action_slate_policy.definitions(model) + _button_focus_policy.definitions(model) + _button_initialize_policy.definitions(model) + _button_producers_policy.definitions(model) + _button_set_style_policy.definitions(model)
+    return result + _common_activation_policy.definitions(model) + _current_input_type_policy.definitions(model) + _fort_globals_policy.definitions(model) + _button_style_policy.definitions(model) + _button_click_policy.definitions(model) + _button_double_click_policy.definitions(model) + _button_selection_policy.definitions(model) + _input_settings_policy.definitions(model) + _input_cache_policy.definitions(model) + _action_widget_policy.gamepad_definitions(model) + _action_widget_policy.icon_definitions(model) + _action_receivers_policy.definitions(model) + _action_slate_policy.definitions(model) + _button_focus_policy.definitions(model) + _button_initialize_policy.definitions(model) + _button_producers_policy.definitions(model) + _button_set_style_policy.definitions(model) + _border_style_policy.definitions(model)
 
 
 def build_engine_header_index(root):
@@ -3508,7 +3518,7 @@ def promote(args):
     gate.name_clashes = engine_macro_names(args.engine_root)
     resolver.gate = gate
     guarded_native_execs = {}
-    if {'UCommonActivatablePanel', 'UCommonInputSubsystem', 'UCommonActionWidget', 'UCommonButton', 'UCommonTextBlock', 'UFortGlobals'} & set(listed):
+    if {'UCommonActivatablePanel', 'UCommonInputSubsystem', 'UCommonActionWidget', 'UCommonBorder', 'UCommonButton', 'UCommonTextBlock', 'UFortGlobals'} & set(listed):
         guarded_native_execs = load_json(os.path.join(os.path.dirname(args.reflection), 'native_funcs.json'))
     if 'UCommonTextBlock' in listed:
         _common_activation_policy.validate_text_block_style_classes(blocks_by_va, name_to_block)
@@ -3530,6 +3540,9 @@ def promote(args):
         _button_producers_policy.validate_classes(blocks_by_va, name_to_block, guarded_native_execs)
         _button_set_style_policy.validate_classes(blocks_by_va, name_to_block, guarded_native_execs)
         _button_sound_policy.validate_source(os.path.dirname(os.path.abspath(args.engine_root)))
+    if 'UCommonBorder' in listed:
+        _border_style_policy.validate_classes(blocks_by_va, name_to_block, guarded_native_execs)
+        _border_style_policy.validate_types(gate)
     if 'UCommonActivatablePanel' in listed:
         _common_activation_policy.validate_panel_outro_types(gate)
     if 'UCommonInputSubsystem' in listed:
@@ -3700,6 +3713,8 @@ def promote(args):
         for fn, kinds in model["used"].items():
             seeds.setdefault(fn, set()).update(kinds)
     _common_input_policy.add_roots(gate, seeds)
+    if 'CommonUI' in module_deps:
+        _action_commited_policy.add_roots(gate, seeds)
     models, texts, all_used = emit_types(gate, seeds, source_label, class_models)
     # struct_net (behaviour kind): each native NetSerialize is checked as text in its header, and every entry is reported
     # as spliced or rejected with its reason. Nothing is written before this check.
@@ -3807,6 +3822,9 @@ def promote(args):
         _button_initialize_policy.validate_output(button_model, *outputs['UCommonButton'])
         _button_producers_policy.validate_output(button_model, *outputs['UCommonButton'])
         _button_set_style_policy.validate_output(button_model, *outputs['UCommonButton'])
+    if 'UCommonBorder' in listed:
+        _border_style_policy.validate_output(next(m for m in class_models if m['name']=='UCommonBorder'),
+            *outputs['UCommonBorder'], next(m for m in class_models if m['name']=='UCommonBorderStyle'), outputs['UCommonBorderStyle'][0])
     for model in class_models:
         if model["splice"]["accepted"]:
             verify_spliced(model, *outputs[model["name"]])
@@ -4477,6 +4495,9 @@ class TypeGate:
         return model, None
 
     def build_delegate(self, info):
+        candidate = _action_commited_policy.build_delegate(info)
+        if candidate is not None:
+            return candidate
         saved = self.current_package
         self.current_package = info.package
         try:

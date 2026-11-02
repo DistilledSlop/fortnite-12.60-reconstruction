@@ -35,6 +35,30 @@
       "start": "0x1407f24b0",
       "end": "0x1407f2722",
       "sha256": "c9c11b1717ae09f53795b985878412615e5b9ff03444c7e273a3abc489b5129f"
+    },
+    {
+      "label": "border_show_effect_setbit",
+      "start": "0x143c98170",
+      "end": "0x143c98178",
+      "sha256": "9fc9dc05d1b75f0fbad5a0625b0d4bcc1275a50feab12d193927623111c46f73"
+    },
+    {
+      "label": "safezone_setbit",
+      "start": "0x140808fa0",
+      "end": "0x140808fa8",
+      "sha256": "15decc102508e0fc8790abb15ac01e6c2a3e8a1150a1af398a789c2ac88d9950"
+    },
+    {
+      "label": "style_accessor",
+      "start": "0x140807530",
+      "end": "0x140807550",
+      "sha256": "617e17a7dff282eb1499a2168682f711ddfaf367340886c2030ab01be40db933"
+    },
+    {
+      "label": "border_accessor",
+      "start": "0x140807640",
+      "end": "0x140807660",
+      "sha256": "81a7edc8a481804a62444b02fb3a9d749f00cc5044bcfd2995ba291ee7bfb2db"
     }
   ],
   "vtable": {
@@ -44,5 +68,458 @@
   },
   "native_array": "0x145a043b0",
   "native_exec": "0x14080d670",
-  "name": "0x145a03128"
+  "name": "0x145a03128",
+  "classes": {
+    "UCommonBorder": {
+      "identity": {
+        "block_va": "0x145a01330",
+        "class_noregister_fn": "0x140807640",
+        "package_fn": "0x143da2e60",
+        "base_fn": "0x140812ee0",
+        "class_flags": "0xb000a2"
+      },
+      "properties": [
+        {
+          "index": 0,
+          "name": "MinimumPadding",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000000000015",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 636,
+          "type_refs": {
+            "struct": "0x142fdb3e0"
+          }
+        },
+        {
+          "index": 1,
+          "name": "bReducePaddingBySafezone",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x10000000000015",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 656,
+          "bitfield": true,
+          "set_bit_fn": "0x140808fa0",
+          "offset": null
+        },
+        {
+          "index": 2,
+          "name": "Style",
+          "kind": "Class",
+          "kind_raw": "0x11",
+          "property_flags": "0x15000000000015",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 624,
+          "type_refs": {
+            "meta_class": "0x1408077f0",
+            "class": "0x142e497d0"
+          }
+        }
+      ]
+    },
+    "UCommonBorderStyle": {
+      "identity": {
+        "block_va": "0x145a01290",
+        "class_noregister_fn": "0x140807530",
+        "package_fn": "0x142eea530",
+        "base_fn": "0x140812ee0",
+        "class_flags": "0x1000a1"
+      },
+      "properties": [
+        {
+          "index": 0,
+          "name": "Background",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000000010015",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 40,
+          "type_refs": {
+            "struct": "0x142fdb590"
+          }
+        }
+      ]
+    },
+    "UBorder": {
+      "identity": {
+        "block_va": "0x1468395b0",
+        "class_noregister_fn": "0x1408092c0",
+        "package_fn": "0x143da77c0",
+        "base_fn": "0x143db9560",
+        "class_flags": "0xb000a0"
+      },
+      "properties": [
+        {
+          "index": 9,
+          "name": "Background",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000000000015",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 344,
+          "type_refs": {
+            "struct": "0x142fdb590"
+          }
+        },
+        {
+          "index": 10,
+          "name": "Padding",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000000000015",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 324,
+          "type_refs": {
+            "struct": "0x142fdb3e0"
+          }
+        },
+        {
+          "index": 13,
+          "name": "bShowEffectWhenDisabled",
+          "kind": "Bool",
+          "kind_raw": "0xc",
+          "property_flags": "0x10040000000015",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 624,
+          "bitfield": true,
+          "set_bit_fn": "0x143c98170",
+          "offset": null
+        }
+      ]
+    },
+    "UWidget": {
+      "identity": {
+        "block_va": "0x146849840",
+        "class_noregister_fn": "0x140809310",
+        "package_fn": "0x143dc3e90",
+        "base_fn": "0x143db9560",
+        "class_flags": "0xb000a1"
+      },
+      "properties": [
+        {
+          "index": 6,
+          "name": "Visibility",
+          "kind": "Enum",
+          "kind_raw": "0x1e",
+          "property_flags": "0x10000000000001",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 195,
+          "type_refs": {
+            "enum": "0x143dbad80"
+          }
+        },
+        {
+          "index": 7,
+          "name": "UnderlyingType",
+          "kind": "Byte",
+          "kind_raw": "0x0",
+          "property_flags": "0x0",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "enum_underlying_of": "Visibility"
+        }
+      ]
+    }
+  },
+  "function": {
+    "name": "SetStyle",
+    "create_func": "0x140807810",
+    "flags": [
+      "0x4020401",
+      "0x4420401"
+    ],
+    "replicated_function": null,
+    "note": "ambiguous: several FFunctionParams share this name pointer",
+    "params_note": "ambiguous: candidates disagree on parameter table",
+    "candidates": [
+      {
+        "owning_class": null,
+        "outer_fn": "0x140807730",
+        "flags": "0x4020401",
+        "nprop": 1,
+        "params": [
+          {
+            "index": 0,
+            "name": "InStyle",
+            "kind": "Class",
+            "kind_raw": "0x11",
+            "property_flags": "0x14000000000080",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 0,
+            "type_refs": {
+              "meta_class": "0x1408077f0",
+              "class": "0x142e497d0"
+            }
+          }
+        ]
+      },
+      {
+        "owning_class": null,
+        "outer_fn": "0x140805cb0",
+        "flags": "0x4020401",
+        "nprop": 1,
+        "params": [
+          {
+            "index": 0,
+            "name": "InStyle",
+            "kind": "Class",
+            "kind_raw": "0x11",
+            "property_flags": "0x14000000000080",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 0,
+            "type_refs": {
+              "meta_class": "0x1408064b0",
+              "class": "0x142e497d0"
+            }
+          }
+        ]
+      },
+      {
+        "owning_class": null,
+        "outer_fn": "0x140812e80",
+        "flags": "0x4020401",
+        "nprop": 1,
+        "params": [
+          {
+            "index": 0,
+            "name": "InStyle",
+            "kind": "Class",
+            "kind_raw": "0x11",
+            "property_flags": "0x14000000000080",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 0,
+            "type_refs": {
+              "meta_class": "0x1408131c0",
+              "class": "0x142e497d0"
+            }
+          }
+        ]
+      },
+      {
+        "owning_class": null,
+        "outer_fn": "0x143da38f0",
+        "flags": "0x4420401",
+        "nprop": 1,
+        "params": [
+          {
+            "index": 0,
+            "name": "InStyle",
+            "kind": "Struct",
+            "kind_raw": "0x19",
+            "property_flags": "0x10000008000182",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 0,
+            "type_refs": {
+              "struct": "0x142fdb020"
+            }
+          }
+        ]
+      },
+      {
+        "owning_class": null,
+        "outer_fn": "0x145201110",
+        "flags": "0x4020401",
+        "nprop": 1,
+        "params": [
+          {
+            "index": 0,
+            "name": "InStyle",
+            "kind": "Class",
+            "kind_raw": "0x11",
+            "property_flags": "0x14000000000080",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 0,
+            "type_refs": {
+              "meta_class": "0x1452012a0",
+              "class": "0x142e497d0"
+            }
+          }
+        ]
+      },
+      {
+        "owning_class": null,
+        "outer_fn": "0x145286470",
+        "flags": "0x4020401",
+        "nprop": 1,
+        "params": [
+          {
+            "index": 0,
+            "name": "BarStyle",
+            "kind": "Class",
+            "kind_raw": "0x11",
+            "property_flags": "0x14000000000080",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 0,
+            "type_refs": {
+              "meta_class": "0x145286b50",
+              "class": "0x142e497d0"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "native": {
+    "exec_addr": "0x14080d670",
+    "flags": "0x4020401",
+    "params": [
+      {
+        "index": 0,
+        "name": "InStyle",
+        "kind": "Class",
+        "kind_raw": "0x11",
+        "property_flags": "0x14000000000080",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 0,
+        "type_refs": {
+          "meta_class": "0x1408077f0",
+          "class": "0x142e497d0"
+        }
+      }
+    ],
+    "create_func": "0x140807810",
+    "source": "lea"
+  },
+  "brush_identity": {
+    "block_va": "0x147c53d60",
+    "name": "SlateBrush",
+    "construct_fns": [
+      "0x142fdb590"
+    ],
+    "package": "/Script/SlateCore",
+    "size": 136,
+    "align": 8
+  },
+  "brush_drawas": {
+    "index": 5,
+    "name": "DrawAs",
+    "kind": "Byte",
+    "kind_raw": "0x0",
+    "property_flags": "0x10000000000005",
+    "replicated": false,
+    "rep_notify": null,
+    "array_dim": 1,
+    "object_flags": "0x45",
+    "offset": 108,
+    "type_refs": {
+      "enum": "0x142fdac90"
+    }
+  },
+  "enums": {
+    "ESlateBrushDrawType::Type": {
+      "block_va": "0x147c56b78",
+      "name": "ESlateBrushDrawType::Type",
+      "cpp_type": "ESlateBrushDrawType::Type",
+      "construct_fns": [
+        "0x142fdac90"
+      ],
+      "package_fn": "0x142fd53c0",
+      "package": "/Script/SlateCore",
+      "cpp_form": "Namespaced",
+      "dynamic_type": "NotDynamic",
+      "enumerators": [
+        {
+          "name": "ESlateBrushDrawType::NoDrawType",
+          "value": 0
+        },
+        {
+          "name": "ESlateBrushDrawType::Box",
+          "value": 1
+        },
+        {
+          "name": "ESlateBrushDrawType::Border",
+          "value": 2
+        },
+        {
+          "name": "ESlateBrushDrawType::Image",
+          "value": 3
+        }
+      ]
+    },
+    "ESlateVisibility": {
+      "block_va": "0x147cb1eb8",
+      "name": "ESlateVisibility",
+      "cpp_type": "ESlateVisibility",
+      "construct_fns": [
+        "0x143dbad80"
+      ],
+      "package_fn": "0x143db9560",
+      "package": "/Script/UMG",
+      "cpp_form": "EnumClass",
+      "dynamic_type": "NotDynamic",
+      "enumerators": [
+        {
+          "name": "ESlateVisibility::Visible",
+          "value": 0
+        },
+        {
+          "name": "ESlateVisibility::Collapsed",
+          "value": 1
+        },
+        {
+          "name": "ESlateVisibility::Hidden",
+          "value": 2
+        },
+        {
+          "name": "ESlateVisibility::HitTestInvisible",
+          "value": 3
+        },
+        {
+          "name": "ESlateVisibility::SelfHitTestInvisible",
+          "value": 4
+        }
+      ]
+    }
+  }
 }

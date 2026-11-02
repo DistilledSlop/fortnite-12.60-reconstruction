@@ -1,4 +1,42 @@
-# CommonBorder SetStyle candidate (2026-11-02)
+# CommonBorder setter graph integration candidate (2026-11-02, corrected)
+
+Generator hooks are ready but are not registered, generated, compiled, or run.
+`policy.py` supplies `validate_original(image)`, `validate_classes(blocks,
+name_to_block, native_funcs)`, `validate_types(type_gate)`, `apply(model, block,
+owner_fns)`, `declarations(model)`, `definitions(model)`, and
+`validate_output(border_model, border_header, border_source, style_model,
+style_header)`. Register all of these together. `validate_output` requires the
+style model/output too; omission must fail integration. Definitions include the
+required Slate and style headers. CommonUI already depends on Slate and SlateCore.
+No generated or Engine files were changed in this task.
+
+**Constructor correction:** 0x14079686f clears inherited `Background.DrawAs`,
+not `bShowEffectWhenDisabled`. UBorder Background reflection offset 0x158 plus
+SlateBrush.DrawAs offset 0x6c equals 0x1c4; original enum NoDrawType is zero.
+The reflected bShowEffectWhenDisabled setter thunk 0x143c98170 writes bit 1 at
+0x122, so no derived-constructor write to that field is present. Preserve the
+UBorder constructor default. UWidget Visibility reflection offset 0xc3 and
+ESlateVisibility enum value 4 establish SelfHitTestInvisible. Both enum records,
+brush member, inherited field metadata, setters, class accessors and original
+code windows are now pinned. `bReducePaddingBySafezone` thunk writes byte 0x278.
+The UE 4.25 headers expose DrawAs, GetDefaultObject(false), GetGameViewport,
+SViewport::GetViewportInterface, ISlateViewport and GetSafeZoneSize as used;
+actual compilation is still required.
+
+The bounded original replay and exact class/function/native/type gates passed on
+`/mnt/vibrato/fortnite-evidence/original-late-capture-1/image-125.runtime.bin`
+and current `porting/generated/reflection` inputs. A changed reflected offset
+and duplicate model application were rejected. Commands: `python3 -m py_compile
+porting/frontend/common_border_style_runtime/policy.py`; Python import of the
+policy, `gen_native_classes.TypeTables`, and invocation of the four original,
+class, type and model hooks (2 Nov 2026). The image was read only at bounded
+windows and pointer locations; no whole-image hash. Real GUI/runtime validation
+of repeated and null setters, existing versus missing CDO, brush copy, virtual
+reentry, and safe-zone behavior remains for the integrating owner. This graph is
+not full CommonBorder lifecycle parity: rebuilding/releasing widgets and safe-zone
+change notifications remain separate work.
+
+# Earlier candidate notes (superseded where the corrected section differs)
 
 Unregistered and unbuilt candidate. `definitions.inc` covers the setter, widget
 constructor, virtual synchronization and immediate safe-zone padding helper.
@@ -11,8 +49,8 @@ Widgets/Layout/SBorder.h and the ISlateViewport declaration. The standard
 FSlateBrush constructor matches the observed 0x140796890 style constructor's
 32x32, zero margin, white tint and Image draw default; no invented CDO is used.
 The widget constructor 0x140796840 calls UBorder, zeroes Style, safe-zone flag
-and minimum padding, sets bShowEffectWhenDisabled false and Visibility to
-SelfHitTestInvisible. Confirm inherited property offsets in the integration batch.
+and minimum padding, sets Background.DrawAs to NoDrawType and Visibility to
+SelfHitTestInvisible. The earlier bShowEffectWhenDisabled attribution was wrong; see the correction above.
 
 Original class records 0x145a01330 (CommonBorder) and 0x145a01290 (style),
 class accessors 0x140807640 and 0x140807530. Function block 0x147831b20,
