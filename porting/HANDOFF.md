@@ -1,6 +1,91 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
-## Current resume point (2026-11-02)
+## Current resume point (2026-11-02, text transform verified)
+
+- Native `a8e1cce` / Engine `87acab901` restores CommonTextBlock.SetTextCase through
+  a real ten-file UMG/Slate/text-layout backport from local UE4.26 reference
+  `2bf1a5b83a7076a0fd275887b373f8ec9e99d431`. Setter writes inherited None/ToUpper
+  and always virtual-synchronizes; raw FText and bDisplayAllCaps remain distinct.
+  Reproducible patch/provenance: `patches/ue425-text-transform-policy.{patch,md}`.
+  Existing five Engine edits are unchanged; all fifteen Engine inputs are pinned.
+- Both final builds PASS113.871/114.802s with Native/config/Engine inputs stable;
+  12,727 Native source files. Initial Native047c5b9 builds also passed324.128/296.385s,
+  but its runtime diagnostic failed. Failure receipts remain frozen separately.
+  Promotion1 failed missing Slate dependency, promotion2 passed after adding the
+  real module dependency: three changed declaration/definition files and four newly reachable HUD
+  declaration files. No generated source was hand-edited.
+- All22 actual text-transform rows PASS: engine enum ownership/byte storage,
+  metadata/CDO/direct/reflected/repeat/no-Slate/virtual sync, real live UMG policy,
+  bound policy volatility, separate genuine layout None/Lower/Upper/None restoration,
+  bound raw FText identity, accented Unicode and EXERCISED unequal-length refusal.
+  Default-font measurements were113x39 for both cases (state checks pass), so the
+  original width-inequality fixture was invalid there. Original style font gives
+  Upper93x34 versus None97x34. The diagnostic uses that recovered font for required
+  geometry changes; no assertion was replaced by a fake widget or state shortcut.
+- Initial run exposed25 missing original raw .ufont payloads (51,450,773bytes).
+  Staged original bytes; all .uasset/.uexp companions and payloads match source.
+  Maintained `frontend/stage_font_faces.py` refuses mismatched cooked packages or
+  payload conflicts, checks copied hashes and supports read-only --check. Four tests
+  and real25-face check PASS. Helper commit0710511; dashboard rationale correction8bb45f2.
+- Retained22text-block/26button/26bindingdata/20provider/23creation/13input-type,
+  input table421rows/30checks, eight diagnostics, and joins21.606/21.589s PASS.
+  OriginalRoot still creates7widgets with4startup classes and20skipped-import
+  occurrences. Separate viewport retry remains SIGSEGV(-11), before_attach.
+  No interactive menu, pixels, input or complete lifecycle parity follows.
+- Frozen checkpoint: generated/frontend-native-evidence/text-transform-runtime-2/checkpoint.json
+  SHA256 `9c00040bb97255da704af88166159078f62b1ad47d9a86c55d7439fae22bc8fc`.
+  Archive `/mnt/vibrato/fortnite-evidence/frozen-runtime/text-transform-runtime-2`:
+  76 project source pairs,15 Engine input pairs,338 artifact pairs,18 binary rows,
+  25 original font payloads. Release SHA256
+  `9a93adac8c70db8d184a0e8db724c3627bad15f4d69a83b34211f5d94c8ae67a`.
+  TERMINAL build1:88837/stage1:94986/failedruns:68948,2902/debug:72399,
+  finalbuild:9801/stage:98777/probe:23802/retained+joins+freeze:95889.
+  Scripts `/mnt/vibrato/fortnite-work/{build_,stage_,run_,validate_,freeze_}text_transform*{1,2}.py`.
+  CommonUI49/runner48/generator141/progress67/font-staging4 checks PASS.
+- Independent Luna audit PASS: all76 project source copies match pinned Git,
+  ten Engine feature copies match Engine commit and five preserved-local hashes,
+  all338 artifact copies and25 font payloads match; both pinned22-row verifiers replay.
+  Recorded18 binary triplets/sizes checked; giant binaries/debug/symbols were not
+  independently rehashed. Reproducible audit.py/audit.json/HANDOFF.md under
+  `/mnt/vibrato/fortnite-work/text-transform-receipt-audit-1/`.
+  Prior text-block phase independently audited too:64sources/158artifacts/22rows,
+  same binary-content limitation, at `text-block-style-receipt-audit-1/`.
+- Original model proof `original-text-transform-model-1/` closes policy dispatch,
+  shared-string mutation, unequal-length refusal and order before run-model assembly.
+  Static `original-simple-text-mode-contract-1/` closes reflected flag propagation
+  through both rebuild branches into the measurement bypass (13 chained fragments).
+  Converter callback/locale identity, original paint, specific asset flag values,
+  all shaping/wrapping/pixels and release/rebuild/invalidation-panel parity remain open.
+- Post-freeze GDB reaches SetTextCase exec AND native body, then missing static
+  `/Script/FortniteGame.FortGlobals.IsErebus` in IconTextButton_C.UpdateStyle:
+  Code19 / opcode10, NULL Function at ScriptCore.cpp848. Original export16 serial25444,
+  size485, header16318; unique opcode68 import-64 at .uexp9355. Exact import chain and
+  original/runtime association in `post-text-transform-viewport-crash-2/decode.json`.
+  First trace1 only handled CallFunction frames; corrected trace2 captures CallMathFunction.
+  Both source/config/binary/checkpoint hashes unchanged, debug symbols stat-only, no core.
+  TERMINAL GDB44800/GDB45798/CUEexport66655. These are separate post-freeze diagnostics.
+- NEXT bounded integration: restore FortGlobals.IsErebus from fully pinned source
+  contract `/mnt/vibrato/fortnite-work/fort-globals-erebus-contract-1/` (replay PASS).
+  Complete original native exec1409aca00 is24-byte leaf: normal Code advance and false
+  result, no calls/globals/state dependencies. Flags14022401, static pure bool, sole
+  ReturnValue flags10000000000580. This constant is authenticated to the supplied Win64
+  baseline, not a placeholder or claim about other platforms. Check exact reflection,
+  named native registration and collision guards; use normal generated UFUNCTION thunk,
+  then both builds and actual reflected/bytecode coverage before retrying viewport.
+- Future bounded candidate `/mnt/vibrato/fortnite-work/action-widget-display-text-candidate-1/`
+  uses actual shared registry, constructor-backed mutable key=-1, weak-owner fallback,
+  typed subsystem, row0 GetRow with original LogDataTable warning, current-input/gamepad
+  selection and full-byte hold flag, direct FText copying. Two source-policy tests and
+  original replay pass; no live integration/build/runtime yet. Luna source review notes
+  CastChecked widget-owner precondition is supported by Create's UWidget* API, while
+  low-level fixture APIs accept UObject*. Need review that invariant and complete
+  actual fallback/expired weak/row/metadata runtime cases before promotion.
+- Root owns all live Native/Engine/generation/build/stage. Follow AGENTS.md: bounded
+  workers (Luna medium small read-only, Terra medium/high ordinary, Sol medium complex),
+  fork_turns none, rotate at checkpoints, economical bounded reads/output. All four
+  product milestones stay open; preserve the full project/server/100% parity goal.
+
+## Prior checkpoint before text-transform integration (2026-11-02)
 
 - Latest Native d23cd34 restores CommonTextBlock.SetStyle and its existing virtual
   SynchronizeProperties override, direct source-ordered style writes, actual conditional

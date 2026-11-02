@@ -10,38 +10,26 @@ credentials in Git, and the orchestrator reviews and commits.
 
 ## Current baseline
 
-At Native `d23cd34`, both builds, both joins and eight retained diagnostics pass.
-The original input table loads421rows/30checks; mutable input-type13, bindingdata26,
-engineprovider20, creation23 and new CommonButton state/text-style/weak-hover26
-cases and CommonTextBlock style/synchronization22 cases pass. The new getters use the original serialized IconTextButton style and
-actual CDOs. Source and staged config match. Startup uses FortGameInstance,
-FortLocalPlayer, FortGameViewportClient and FortPlayerControllerAthena; Root
-creation returns seven widgets. Twenty skipped imports remain (17distinct),
-unchanged: that warning list did not include the restored getters.
+Native `a8e1cce` / Engine `87acab901` passes both builds and22 real text-transform
+cases through the inherited UMG policy, Slate attribute/cache and text-layout model.
+All retained text style/button/binding/input diagnostics and both direct joins pass.
+Original recovered font payloads are now staged and reproducibly checked alongside
+matching cooked packages. The frozen phase and independent audit are in HANDOFF.md.
 
-The original viewport retry remains failed. The text-style getter and text-block
-SetStyle are restored. GDB reached SetStyle's exec and native body before the next
-fatal: missing CommonTextBlock.SetTextCase in IconTextButton ExecuteUbergraph.
-The source contract proves it writes inherited TextTransformPolicy and always
-synchronizes; UE4.25 lacks the real Slate/layout feature. Next review and port
-the focused feature from local UnrealEngine4260, verify original/reference behavior
-and raw/bound/localized text semantics, then restore SetTextCase. Do not rewrite
-raw text or alias bDisplayAllCaps to evade the engine gap. A queue still lacks its
-original RebuildWidget override. Its real singleton-slot, construction arguments
-and animated switcher request/timer contracts are now traced, but full renderer
-and lifecycle implementation remain required. Interactive startup, original pixels
-and all four product milestones remain unverified. Material compatibility129/142.
+Root creation still returns7widgets/4startup classes/20skipped imports; viewport
+attachment still fails. The separate crash trace reaches restored SetTextCase then
+fails at missing FortGlobals.IsErebus in IconTextButton.UpdateStyle. Its complete
+original24-byte Win64 exec returns false; the pinned contract is ready for guarded
+integration and real invocation checks. The future
+CommonActionWidget.GetDisplayText candidate is source-backed but still needs review,
+integration and real runtime coverage. Queue rendering, production selection/input,
+routing, scrolling, text lifecycle and original visual parity remain unfinished.
+All four acceptance gates stay open. Material compatibility remains129/142.
 
-Selected and weak-internal-button storage now match constructor/read behavior;
-controlled diagnostic mutations test the real accessors and weak expiry. Actual
-selection transitions, hover/internal-button initialization, callbacks, input-action
-refresh and lifecycle/routing remain unfinished and must use the same state slots.
-No fake or incomplete selection setter was added. Shared action-binding data,
-engine providers and creation are real, while route association/dispatch/cleanup
-still require integration. Queue rendering needs the original Slate graph and
-animation/callback/resource contracts. Confirmation async factories and queued
-presentation remain unfinished. See HANDOFF.md for frozen sources, runtime and
-separate post-freeze crash evidence.
+The text port preserves raw FText and the independent bDisplayAllCaps flag, remarshal
+on policy changes and original equal-length refusal. Original constructor-to-Slate
+simple-mode measurement bypass is statically traced. Full locale/converter callback,
+paint/shaping/wrapping and release/rebuild equivalence remain unverified.
 
 ## Earlier checkpoints (historical)
 
