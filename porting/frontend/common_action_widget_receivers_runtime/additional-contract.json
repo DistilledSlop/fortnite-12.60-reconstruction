@@ -1,0 +1,151 @@
+{
+  "functions": [
+    {
+      "name": "GetDisplayText",
+      "create_func": "0x140807840",
+      "flags": [
+        "0x54020401"
+      ],
+      "replicated_function": false,
+      "net_roles": [],
+      "outer_fn": "0x140807790",
+      "params": [
+        {
+          "index": 0,
+          "name": "ReturnValue",
+          "kind": "Text",
+          "kind_raw": "0x1d",
+          "property_flags": "0x10000000000580",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0
+        }
+      ]
+    },
+    {
+      "name": "IsHeldAction",
+      "create_func": "0x1408078b0",
+      "flags": [
+        "0x54020401"
+      ],
+      "replicated_function": false,
+      "net_roles": [],
+      "outer_fn": "0x140807790",
+      "params": [
+        {
+          "index": 0,
+          "name": "ReturnValue",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x10000000000580",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 1,
+          "bitfield": true,
+          "set_bit_fn": "0x1406966a0",
+          "offset": null
+        }
+      ]
+    },
+    {
+      "name": "SetIconRimBrush",
+      "create_func": "0x1408078e0",
+      "flags": [
+        "0x4020401"
+      ],
+      "replicated_function": false,
+      "net_roles": [],
+      "outer_fn": "0x140807790",
+      "params": [
+        {
+          "index": 0,
+          "name": "InIconRimBrush",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "struct": "0x142fdb590"
+          }
+        }
+      ]
+    }
+  ],
+  "native": {
+    "GetDisplayText": {
+      "exec_addr": "0x14080a950",
+      "flags": "0x54020401",
+      "params": [
+        {
+          "index": 0,
+          "name": "ReturnValue",
+          "kind": "Text",
+          "kind_raw": "0x1d",
+          "property_flags": "0x10000000000580",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0
+        }
+      ],
+      "create_func": "0x140807840",
+      "source": "lea"
+    },
+    "IsHeldAction": {
+      "exec_addr": "0x14080bb00",
+      "flags": "0x54020401",
+      "params": [
+        {
+          "index": 0,
+          "name": "ReturnValue",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x10000000000580",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 1,
+          "bitfield": true,
+          "offset": null
+        }
+      ],
+      "create_func": "0x1408078b0",
+      "source": "lea"
+    },
+    "SetIconRimBrush": {
+      "exec_addr": "0x14080c510",
+      "flags": "0x4020401",
+      "params": [
+        {
+          "index": 0,
+          "name": "InIconRimBrush",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "struct": "0x142fdb590"
+          }
+        }
+      ],
+      "create_func": "0x1408078e0",
+      "source": "lea"
+    }
+  }
+}

@@ -14,6 +14,11 @@ FSlateBrush UCommonActionWidget::GetIcon() const
     ULocalPlayer* Player = Owner ? Owner->GetOwningLocalPlayer() : GetOwningLocalPlayer();
     UCommonInputSubsystem* Input = Player ? Player->GetSubsystem<UCommonInputSubsystem>() : nullptr;
 
+    return NativeGetIconForSubsystem(Input);
+}
+
+FSlateBrush UCommonActionWidget::NativeGetIconForSubsystem(UCommonInputSubsystem* Input) const
+{
     TArray<FKey> Keys;
     for (const FDataTableRowHandle& Handle : InputActions)
     {

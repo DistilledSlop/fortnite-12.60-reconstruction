@@ -1,0 +1,145 @@
+{
+  "image": "/mnt/vibrato/fortnite-evidence/original-late-capture-1/image-125.runtime.bin",
+  "class_block": "0x145a01470",
+  "class_noregister_fn": "0x1408072e0",
+  "windows": [
+    {
+      "name": "constructor",
+      "va": "0x140796260",
+      "size": 657,
+      "sha256": "6226b3a3b90e377921d4f90e8bffb191d6ff8e85c764c1e2322300b96c77d11c"
+    },
+    {
+      "name": "rebuild",
+      "va": "0x1407e6fc0",
+      "size": 3280,
+      "sha256": "305e8b8ec7c2af831ac8154c21104d5b850727675f9135f68cf9aec8faf8da65"
+    },
+    {
+      "name": "rebuilt",
+      "va": "0x1407dff40",
+      "size": 64,
+      "sha256": "f89d48a69b1423211b06ea99d099aa7243863921a58c1cc25df06509283f6698"
+    },
+    {
+      "name": "release",
+      "va": "0x1407ee5e0",
+      "size": 340,
+      "sha256": "feeb3b5077d4f576cd0bca7edf2416f9141c2a3fa875ff6a826567cfa6ce4ae5"
+    },
+    {
+      "name": "dynamic_material_create",
+      "va": "0x144324750",
+      "size": 128,
+      "sha256": "20c3f443c3e00e4027a1400fe4224f3f46fef49e15def4fbe58f5546cdb24d34"
+    },
+    {
+      "name": "set_resource",
+      "va": "0x142fd1200",
+      "size": 96,
+      "sha256": "20331aa8468dd2bf454bfa739a5970356409c6ba404ee24df1c9204b809f11f1"
+    }
+  ],
+  "properties": [
+    {
+      "index": 0,
+      "name": "ProgressDynamicMaterial",
+      "kind": "Object",
+      "kind_raw": "0x12",
+      "property_flags": "0x20080000002000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 584,
+      "type_refs": {
+        "class": "0x1447960d0"
+      }
+    },
+    {
+      "index": 1,
+      "name": "InputActions",
+      "kind": "Array",
+      "kind_raw": "0x16",
+      "property_flags": "0x20080000000015",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 560
+    },
+    {
+      "index": 2,
+      "name": "InputActions",
+      "kind": "Struct",
+      "kind_raw": "0x19",
+      "property_flags": "0x0",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "type_refs": {
+        "struct": "0x1446f2880"
+      },
+      "array_inner_of": "InputActions"
+    },
+    {
+      "index": 3,
+      "name": "IconRimBrush",
+      "kind": "Struct",
+      "kind_raw": "0x19",
+      "property_flags": "0x10000000000015",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 424,
+      "type_refs": {
+        "struct": "0x142fdb590"
+      }
+    },
+    {
+      "index": 4,
+      "name": "ProgressMaterialParam",
+      "kind": "Name",
+      "kind_raw": "0x14",
+      "property_flags": "0x10000000000015",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 416
+    },
+    {
+      "index": 5,
+      "name": "ProgressMaterialBrush",
+      "kind": "Struct",
+      "kind_raw": "0x19",
+      "property_flags": "0x10000000000015",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 280,
+      "type_refs": {
+        "struct": "0x142fdb590"
+      }
+    },
+    {
+      "index": 6,
+      "name": "OnInputMethodChanged",
+      "kind": "InlineMulticastDelegate",
+      "kind_raw": "0x1b",
+      "property_flags": "0x10000010080000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 264,
+      "type_refs": {
+        "signature": "0x140807760"
+      }
+    }
+  ]
+}

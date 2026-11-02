@@ -6,10 +6,14 @@
 #include "CoreMinimal.h"
 #include "Components/Widget.h"
 
+#include "ECommonInputType.h"
 #include "Engine/DataTable.h"
 #include "FOnInputMethodChanged.h"
 #include "Styling/SlateBrush.h"
+#include "UCommonInputSubsystem.h"
 
+class SBox;
+class SImage;
 class UMaterialInstanceDynamic;
 
 #include "UCommonActionWidget.generated.h"
@@ -44,5 +48,48 @@ public:
 	UPROPERTY(Transient)
 	UMaterialInstanceDynamic* ProgressDynamicMaterial;
 
+	UFUNCTION(BlueprintCallable)
+	void SetInputAction(FDataTableRowHandle InputActionRow);
+
+	UFUNCTION(BlueprintCallable)
+	void SetInputActions(TArray<FDataTableRowHandle> NewInputActions);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FText GetDisplayText() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsHeldAction() const;
+
+	UFUNCTION(BlueprintCallable)
+	void SetIconRimBrush(FSlateBrush InIconRimBrush);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FSlateBrush GetIcon() const;
+
+public:
+    void NativeSetBindingKey(int32 NewKey);
+    void NativeRefreshInputAction();
+    void NativeBindInputMethodChanged(bool bEnable);
+protected:
+    UCommonInputSubsystem* NativeResolveInputSubsystem() const;
+    void NativeHandleInputMethodChanged(ECommonInputType InputType);
+public:
+    int32 NativeBindingKey;
+    bool NativeHidden;
+protected:
+    FSlateBrush NativeGetIconForSubsystem(UCommonInputSubsystem* Input) const;
+public:
+    UCommonActionWidget(const FObjectInitializer& ObjectInitializer);
+    virtual void ReleaseSlateResources(bool bReleaseChildren) override;
+
+protected:
+    virtual TSharedRef<SWidget> RebuildWidget() override;
+    virtual void OnWidgetRebuilt() override;
+
+    TSharedPtr<SBox> NativeBox;
+    TSharedPtr<SImage> NativeIcon;
+    TSharedPtr<SImage> NativeProgress;
+    TSharedPtr<SImage> NativeRim;
+    FSlateBrush NativeCachedBrush;
 };
 

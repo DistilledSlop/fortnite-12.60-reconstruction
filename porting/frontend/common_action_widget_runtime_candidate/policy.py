@@ -76,3 +76,10 @@ def gamepad_definitions(model):
 
 def icon_definitions(model):
     return (HERE / 'icon-definitions.inc').read_text() if model.get('common_action_widget_icon_runtime') else ''
+
+
+def icon_declarations(model):
+    if not model.get('common_action_widget_icon_runtime'):
+        return ''
+    return ('protected:\n'
+            '    FSlateBrush NativeGetIconForSubsystem(UCommonInputSubsystem* Input) const;\n')
