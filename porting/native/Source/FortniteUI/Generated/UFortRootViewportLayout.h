@@ -9,6 +9,8 @@
 #include "FFortDialogDescription_NUI.h"
 #include "UCommonActivatableWidgetQueue.h"
 
+class SBox;
+class SScaleBox;
 class UFortConfirmationWindow;
 class UFortErrorWindow;
 class UFortLetoLayoutBorder;
@@ -47,6 +49,26 @@ public:
 	UPROPERTY()
 	TSubclassOf<UFortLetoLayoutBorder> LetoLayoutBorderClass;
 
+protected:
+	// Non-reflected field (behaviour kind "member_field", offset 0x2b8): not a UPROPERTY, not replicated.
+	TSharedPtr<SBox> NativePresentationBox2b8;
+public:
+
+protected:
+	// Non-reflected field (behaviour kind "member_field", offset 0x2c8): not a UPROPERTY, not replicated.
+	TSharedPtr<SScaleBox> NativePresentationScale2c8;
+public:
+
+protected:
+	// Non-reflected field (behaviour kind "member_field", offset 0x2d8): not a UPROPERTY, not replicated.
+	TSharedPtr<SWidget> NativePresentationWidget2d8;
+public:
+
+protected:
+	// Non-reflected field (behaviour kind "member_field", offset 0x2e8): not a UPROPERTY, not replicated.
+	TSharedPtr<SBox> NativeRootBox2e8;
+public:
+
 	// table index 5, flags 0x20080000080008
 	UPROPERTY()
 	UCommonActivatableWidgetQueue* WidgetQueue_ModalContent;
@@ -71,5 +93,10 @@ public:
 	UPROPERTY()
 	UFortToastDisplayArea* ToastDisplayArea_ToastHandler;
 
+public:
+    virtual void ReleaseSlateResources(bool bReleaseChildren) override;
+protected:
+    virtual TSharedRef<SWidget> RebuildWidget() override;
+public:
 };
 

@@ -1,0 +1,252 @@
+{
+  "identity": {
+    "block_va": "0x146fc4ea0",
+    "class_noregister_fn": "0x1452c5f60",
+    "base_fn": "0x145299720",
+    "package_fn": "0x140816d40",
+    "class_flags": "0xb010a1"
+  },
+  "properties": [
+    {
+      "index": 0,
+      "name": "ToastDisplayArea_ToastHandler",
+      "kind": "Object",
+      "kind_raw": "0x12",
+      "property_flags": "0x20080000080008",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 824,
+      "type_refs": {
+        "class": "0x145300e60"
+      }
+    },
+    {
+      "index": 1,
+      "name": "RestartModal",
+      "kind": "Object",
+      "kind_raw": "0x12",
+      "property_flags": "0x20080000080008",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 816,
+      "type_refs": {
+        "class": "0x1452bfdf0"
+      }
+    },
+    {
+      "index": 2,
+      "name": "ProgressModal_ControllerDisconnected",
+      "kind": "Object",
+      "kind_raw": "0x12",
+      "property_flags": "0x20080000080008",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 808,
+      "type_refs": {
+        "class": "0x1452ad970"
+      }
+    },
+    {
+      "index": 3,
+      "name": "ErrorWindow_Errors",
+      "kind": "Object",
+      "kind_raw": "0x12",
+      "property_flags": "0x2008000008001c",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 800,
+      "type_refs": {
+        "class": "0x14522c410"
+      }
+    },
+    {
+      "index": 4,
+      "name": "ConfirmationWindow_ConfirmationWidget",
+      "kind": "Object",
+      "kind_raw": "0x12",
+      "property_flags": "0x2008000008001c",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 792,
+      "type_refs": {
+        "class": "0x145215f40"
+      }
+    },
+    {
+      "index": 5,
+      "name": "WidgetQueue_ModalContent",
+      "kind": "Object",
+      "kind_raw": "0x12",
+      "property_flags": "0x20080000080008",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 784,
+      "type_refs": {
+        "class": "0x140806a00"
+      }
+    },
+    {
+      "index": 6,
+      "name": "LetoLayoutBorderClass",
+      "kind": "Class",
+      "kind_raw": "0x11",
+      "property_flags": "0x44000000000001",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 688,
+      "type_refs": {
+        "meta_class": "0x1452c3ed0",
+        "class": "0x142e497d0"
+      }
+    },
+    {
+      "index": 7,
+      "name": "CurrentLegacyStateWidget",
+      "kind": "Object",
+      "kind_raw": "0x12",
+      "property_flags": "0x40000000082008",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 672,
+      "type_refs": {
+        "class": "0x145317130"
+      }
+    },
+    {
+      "index": 8,
+      "name": "ConfirmationQueue",
+      "kind": "Array",
+      "kind_raw": "0x16",
+      "property_flags": "0x40008000002000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 640
+    },
+    {
+      "index": 9,
+      "name": "ConfirmationQueue",
+      "kind": "Struct",
+      "kind_raw": "0x19",
+      "property_flags": "0x8000000000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "type_refs": {
+        "struct": "0x142b25370"
+      },
+      "array_inner_of": "ConfirmationQueue"
+    },
+    {
+      "index": 10,
+      "name": "NotificationManager",
+      "kind": "Object",
+      "kind_raw": "0x12",
+      "property_flags": "0x40000000002000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 632,
+      "type_refs": {
+        "class": "0x145316910"
+      }
+    },
+    {
+      "index": 11,
+      "name": "CurrentStateWidget",
+      "kind": "Object",
+      "kind_raw": "0x12",
+      "property_flags": "0x40000000082008",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 624,
+      "type_refs": {
+        "class": "0x145317410"
+      }
+    }
+  ],
+  "windows": [
+    {
+      "va": "0x145169f10",
+      "size": 2816,
+      "sha256": "4b76345a8afb1814499928818b35c57254f74c22674e4ed0bb19b9e4bcfebcc1"
+    },
+    {
+      "va": "0x14516c7c0",
+      "size": 352,
+      "sha256": "d822924726e2ba397f2ca4a06f458f4e227f5e1a75e233e048a9fe0becc2abb8"
+    },
+    {
+      "va": "0x146fc7e50",
+      "size": 80,
+      "sha256": "20938d6c606f9d87195e709fae2fb7b13dd2a5d0f0e608d6bbaec0f7256bca04"
+    },
+    {
+      "va": "0x146fc8328",
+      "size": 80,
+      "sha256": "20938d6c606f9d87195e709fae2fb7b13dd2a5d0f0e608d6bbaec0f7256bca04"
+    },
+    {
+      "va": "0x1405ffbc0",
+      "size": 176,
+      "sha256": "9d744402423a70c36a39becb812e306a140f17d08aa46e4c7599c65d0045f03c"
+    },
+    {
+      "va": "0x1405ffd10",
+      "size": 112,
+      "sha256": "43ae7fa0b52d3ab7f149cc7cabdc8b5d4d0b3d74b15366a5470ff266e3052351"
+    },
+    {
+      "va": "0x1405ffd80",
+      "size": 112,
+      "sha256": "e92ce039c53d84f0f90657712eb4e3ae2fd027259b7132b5e4446f1677e1500d"
+    },
+    {
+      "va": "0x140792000",
+      "size": 128,
+      "sha256": "c5d48c6bfcedb93717dcf8013d4653223662b63a2f39f21a8bf6232f62aabee9"
+    },
+    {
+      "va": "0x140793690",
+      "size": 176,
+      "sha256": "856f34c2fd2fba40f287fd968d1118ba9765ddc6a6e96cd54895a18b796d9e2a"
+    },
+    {
+      "va": "0x146e430e8",
+      "size": 46,
+      "sha256": "0bc213f73167a0c5d00753686c8d800e3c9c5d05cf10201f8221b0106ea72f84"
+    },
+    {
+      "va": "0x146e43118",
+      "size": 44,
+      "sha256": "168da79db43e55e2148c877c5db5d34f3e2db1c72d4c9605c943aff0149c5560"
+    },
+    {
+      "va": "0x146e43150",
+      "size": 62,
+      "sha256": "ebf852ecce0eeafdfbffb3915a7097d9595e30943d4c2d9db3b96592fe08a6ad"
+    }
+  ]
+}
