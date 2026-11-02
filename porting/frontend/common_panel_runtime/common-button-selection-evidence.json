@@ -1,0 +1,158 @@
+{
+  "image_base": "0x140000000",
+  "image_sha256": "338c83a2314ccac1040a2c0bb520b893013cc7b58eda58e550da67f5d84de680",
+  "scope": "Portable selection, clear, style refresh and base notification order; no UObject adapter or registration.",
+  "spans": [
+    {
+      "name": "public_setter",
+      "start": "0x1407f7e90",
+      "end": "0x1407f7f3d",
+      "sha256": "c664d5d7a35789467da838d5a43f2a8c3f881f45d96d09e1a7ae85295ba99b14"
+    },
+    {
+      "name": "internal",
+      "start": "0x1407f9880",
+      "end": "0x1407f9954",
+      "sha256": "936eb42f09eac9e3c97fbcf8b8ce1eaa43981de5a5fe83680cbb2d72eec54ecb"
+    },
+    {
+      "name": "clear",
+      "start": "0x1407ae7e0",
+      "end": "0x1407ae7ed",
+      "sha256": "765bd488ba4a1753f828706ee28694589da9885560a7d3dface1ed79425a33d7"
+    },
+    {
+      "name": "selected_callback",
+      "start": "0x1407d39f0",
+      "end": "0x1407d3a49",
+      "sha256": "5eb69198b47526740357789fab3c621d30f5725d6079cb596082ea87659da554"
+    },
+    {
+      "name": "deselected_callback",
+      "start": "0x1407d2b10",
+      "end": "0x1407d2b69",
+      "sha256": "4931bfd45217f552c02b643fbdd6fca81c799e3f446f02c0da133fd0d8e47015"
+    },
+    {
+      "name": "style_refresh",
+      "start": "0x1407f5ce0",
+      "end": "0x1407f5d41",
+      "sha256": "d959c042d6884918b529472609da619d58a23ac8ed3bd078832e3e5708b9be7c"
+    }
+  ],
+  "reflected_functions": {
+    "SetIsSelected": {
+      "exec_addr": "0x14080d110",
+      "create_func": "0x140807220",
+      "flags": "0x4020401",
+      "params": [
+        {
+          "index": 0,
+          "name": "bGiveClickFeedback",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 2,
+          "bitfield": true,
+          "offset": null
+        },
+        {
+          "index": 1,
+          "name": "InSelected",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 2,
+          "bitfield": true,
+          "offset": null
+        }
+      ]
+    },
+    "SetSelectedInternal": {
+      "exec_addr": "0x14080d430",
+      "create_func": "0x140807410",
+      "flags": "0x4080401",
+      "params": [
+        {
+          "index": 0,
+          "name": "bBroadcast",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 3,
+          "bitfield": true,
+          "offset": null
+        },
+        {
+          "index": 1,
+          "name": "bAllowSound",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 3,
+          "bitfield": true,
+          "offset": null
+        },
+        {
+          "index": 2,
+          "name": "bInSelected",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 3,
+          "bitfield": true,
+          "offset": null
+        }
+      ]
+    },
+    "ClearSelection": {
+      "exec_addr": "0x14080a190",
+      "create_func": "0x1408068d0",
+      "flags": "0x4020401",
+      "params": []
+    },
+    "BP_OnSelected": {
+      "exec_addr": null,
+      "create_func": "0x140806860",
+      "flags": "0x8080800",
+      "params": []
+    },
+    "BP_OnDeselected": {
+      "exec_addr": null,
+      "create_func": "0x140806770",
+      "flags": "0x8080800",
+      "params": []
+    },
+    "OnCurrentTextStyleChanged": {
+      "exec_addr": null,
+      "create_func": "0x140806ea0",
+      "flags": "0x8080800",
+      "params": []
+    }
+  }
+}

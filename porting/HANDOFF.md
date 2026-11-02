@@ -2,6 +2,19 @@
 
 ## Current resume point (2026-11-02)
 
+- New source work: common_panel_runtime/{CommonButtonSelectionCore.h,
+  CommonButtonTextStyleCore.h,CommonActionKeyLookupCore.h} implements portable recovered
+  selection/style/notification order, text-style fallback and ordered controller/key lookup.
+  Companion evidence/tests pin original spans/signatures; these are NOT registered or wired
+  into Native yet. Do not treat portable tests as UI/runtime parity or add completion credit.
+  Actual Root runtime below is unchanged. Main state/lifecycle and action-widget adapters remain.
+- Lifecycle proofs now close Initialize containment and binding, direct-parent virtual slots,
+  rebuild->NativeConstruct dispatch and FCommonButtonMetaData weak-this ownership. Scratch:
+  common-button-{initialize-closure,lifecycle-slots}-1 under /mnt/vibrato/fortnite-work/.
+  Action identity/brush proofs are common-action-widget-{refresh-identity,brush-contract}-1.
+  InputActionWidget is +b68; its refresh uses real multi-row brush lookup and visibility,
+  including repeated Collapsed calls. Global gate14081d130 ignores its subsystem argument.
+  Constructor defaults and construct context/delegate closures are the next bounded work.
 - Dashboard effort audit: Luna medium screened all117leaves/1855weight units. User requires
   total effort only, excluding importance; persisted in AGENTS.md and progress/README.md.
   No numeric changes justified by metadata alone. Review overlapping package/static-mesh,

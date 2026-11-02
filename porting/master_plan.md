@@ -22,6 +22,12 @@ UI is established. Material compatibility remains129/142.
 Next, restore the text-style getter's actual selection/style state dependencies, then its reflected
 method. Source proofs identify the selected transition/event graph and the remaining metadata/lifecycle
 bindings. Queue rendering requires the original animated switcher and callback/resource contracts.
+Portable selection/style/notification, text-style fallback and action-key lookup cores now
+exist in frontend/common_panel_runtime with original-image evidence and compiled tests.
+They remain unregistered: actual state/lifecycle, input-action/brush and delegate adapters
+must be implemented before runtime UI claims. Initialize and direct-parent lifecycle
+proofs identify real containment, callback binding and NativeConstruct dispatch; constructor
+defaults and context registration are the next bounded closures (see HANDOFF.md).
 Confirmation async-action factories, Activate/interface dispatch and queued presentation remain
 unfinished. Interactive startup, Blueprint execution and original pixels remain unverified; all four
 product milestones are open. Exact receipts and source release are in HANDOFF.md.

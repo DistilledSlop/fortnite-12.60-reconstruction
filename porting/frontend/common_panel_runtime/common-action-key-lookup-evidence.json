@@ -1,0 +1,9 @@
+{
+  "image_sha256": "338c83a2314ccac1040a2c0bb520b893013cc7b58eda58e550da67f5d84de680",
+  "image_base": "0x140000000",
+  "windows": {
+    "controller_lookup": {"va": "0x14081d340", "size": 235, "sha256": "d670508a33cd9a040e02b0bfc006e2a4055f766d2adeab9d90abde8b2f9beeb8"},
+    "single_key": {"va": "0x14081d550", "size": 103, "sha256": "42b4e963d70e05144269c4e73b09f949d816a53bebe4c1966764f91b50eb96e8"},
+    "key_sets": {"va": "0x1408190e0", "size": 208, "sha256": "40135f0d36c3c811b8822eecd5bda35478bb0d88cc403499fc216fa585d3eb2c"}
+  }
+}
