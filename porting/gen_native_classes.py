@@ -3552,7 +3552,8 @@ def promote(args):
         if name == 'UCommonInputControllerData':
             _controller_brush_policy.validate_model(model)
         if model.get('common_input_settings_cache_runtime'):
-            model['cpp_includes'] = sorted(set(model['cpp_includes']) | {'UObject/UObjectArray.h'})
+            model['cpp_includes'] = sorted(set(model['cpp_includes']) | {
+                'UObject/UObjectArray.h', 'UCommonInputControllerData.h', 'UCommonUIInputData.h'})
         if model.get('common_button_double_click_runtime'):
             model["includes"] = sorted(set(model["includes"]) | {'Input/Reply.h'})
         interface_modules = include_interface_headers(model, iface_packages)

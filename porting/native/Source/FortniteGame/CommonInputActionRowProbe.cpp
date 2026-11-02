@@ -2,6 +2,7 @@
 #include "FCommonInputActionData.h"
 #include "FCommonInputPlatformData.h"
 #include "UCommonInputSettings.h"
+#include "UCommonUIInputData.h"
 #include "CommonInputModuleRuntime.h"
 #include "CommonInputControllerBrushLookup.h"
 #include "Engine/Texture2D.h"

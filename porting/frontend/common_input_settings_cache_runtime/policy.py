@@ -106,5 +106,6 @@ def validate_rendered(model, header, source):
     for name in NAMES:
         if header.count(name + '(') != 1 or source.count('UCommonInputSettings::' + name + '(') != 1:
             raise ValueError('rendered settings cache method missing or duplicated: ' + name)
-    if '#include "UObject/UObjectArray.h"' not in source:
-        raise ValueError('rendered settings cache lacks UObjectArray include')
+    for include in ("UObject/UObjectArray.h", "UCommonInputControllerData.h", "UCommonUIInputData.h"):
+        if '#include "' + include + '"' not in source:
+            raise ValueError("rendered settings cache lacks include: " + include)

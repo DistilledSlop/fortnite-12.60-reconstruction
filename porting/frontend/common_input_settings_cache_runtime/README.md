@@ -24,7 +24,7 @@ original image and `validate_classes(blocks, name_to_block)` and
 after applying the platform constructor policy; run `apply(model, block,
 owner_fns)` after the settings constructor policy. Append `declarations(model)`
 and `definitions(model)` to the generated class and source, add
-`UObject/UObjectArray.h` to the source includes, and call
+`UObject/UObjectArray.h`, `UCommonInputControllerData.h` and `UCommonUIInputData.h` to the source includes, and call
 `validate_rendered(model, header, source)` on the final strings before either
 file is written. These checks cover the bounded original code and loading
 windows, exact reflected metadata and relevant generated types/members, shared
