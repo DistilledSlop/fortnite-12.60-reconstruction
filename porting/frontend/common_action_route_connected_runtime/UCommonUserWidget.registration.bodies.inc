@@ -1,0 +1,32 @@
+int32 UCommonUserWidget::NativeRegisterActionBinding(const FCommonActionBindingDescriptor& Descriptor)
+{
+    if (auto* Player = GetOwningLocalPlayer())
+        if (auto* Router = Player->GetSubsystem<UCommonUIActionRouter>())
+        {
+            const int32 Handle = Router->NativeRegisterActionBinding(this, Descriptor);
+            NativeRegisteredActionBindingHandles.Add(Handle); // Includes INDEX_NONE.
+            return Handle;
+        }
+    return INDEX_NONE;
+}
+
+void UCommonUserWidget::OnWidgetRebuilt()
+{
+    for (int32 Index = NativeRegisteredActionBindingHandles.Num() - 1; Index >= 0; --Index)
+    {
+        const int32 Handle = NativeRegisteredActionBindingHandles[Index];
+        if (Handle < 0 || !CommonActionBindingData::Find(Handle)) NativeRegisteredActionBindingHandles.RemoveAt(Index, 1, true);
+    }
+    if (NativeRegisteredActionBindingHandles.Num() > 0)
+        if (auto* Player = GetOwningLocalPlayer())
+            if (auto* Router = Player->GetSubsystem<UCommonUIActionRouter>()) Router->NativeReassociateWidgetActionBindings(this);
+    UUserWidget::OnWidgetRebuilt();
+}
+
+void UCommonUserWidget::NativeDestruct()
+{
+    if (NativeRegisteredActionBindingHandles.Num() > 0)
+        if (auto* Player = GetOwningLocalPlayer())
+            if (auto* Router = Player->GetSubsystem<UCommonUIActionRouter>()) Router->NativeRemoveWidgetActionBindings(this);
+    UUserWidget::NativeDestruct();
+}

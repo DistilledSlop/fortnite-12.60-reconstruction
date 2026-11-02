@@ -2198,6 +2198,30 @@ _root_slate_spec = _common_activation_import.spec_from_file_location(
     "root_layout_slate_runtime_policy", os.path.join(os.path.dirname(__file__), "frontend", "root_layout_slate_runtime", "policy.py"))
 _root_slate_policy = _common_activation_import.module_from_spec(_root_slate_spec)
 _root_slate_spec.loader.exec_module(_root_slate_policy)
+_lazy_image_spec = _common_activation_import.spec_from_file_location(
+    "common_lazy_image_connected_runtime_policy", os.path.join(os.path.dirname(__file__), "frontend", "common_lazy_image_connected_runtime", "policy.py"))
+_lazy_image_policy = _common_activation_import.module_from_spec(_lazy_image_spec)
+_lazy_image_spec.loader.exec_module(_lazy_image_policy)
+_route_spec = _common_activation_import.spec_from_file_location(
+    "common_action_route_connected_runtime_policy", os.path.join(os.path.dirname(__file__), "frontend", "common_action_route_connected_runtime", "policy.py"))
+_route_policy = _common_activation_import.module_from_spec(_route_spec)
+_route_spec.loader.exec_module(_route_policy)
+_widget_route_spec = _common_activation_import.spec_from_file_location(
+    "activatable_route_bridge_runtime_policy", os.path.join(os.path.dirname(__file__), "frontend", "activatable_route_bridge_runtime", "policy.py"))
+_widget_route_policy = _common_activation_import.module_from_spec(_widget_route_spec)
+_widget_route_spec.loader.exec_module(_widget_route_policy)
+_metadata_spec = _common_activation_import.spec_from_file_location(
+    "common_button_metadata_runtime_policy", os.path.join(os.path.dirname(__file__), "frontend", "common_button_metadata_runtime", "policy.py"))
+_metadata_policy = _common_activation_import.module_from_spec(_metadata_spec)
+_metadata_spec.loader.exec_module(_metadata_policy)
+_modality_spec = _common_activation_import.spec_from_file_location(
+    "common_input_modality_runtime_policy", os.path.join(os.path.dirname(__file__), "frontend", "common_input_modality_runtime", "policy.py"))
+_modality_policy = _common_activation_import.module_from_spec(_modality_spec)
+_modality_spec.loader.exec_module(_modality_policy)
+_cursor_settings_spec = _common_activation_import.spec_from_file_location(
+    "common_analog_cursor_settings_policy", os.path.join(os.path.dirname(__file__), "frontend", "common_analog_cursor_runtime", "settings_policy.py"))
+_cursor_settings_policy = _common_activation_import.module_from_spec(_cursor_settings_spec)
+_cursor_settings_spec.loader.exec_module(_cursor_settings_policy)
 _input_cache_spec = _common_activation_import.spec_from_file_location(
     "common_input_settings_cache_runtime_policy", os.path.join(os.path.dirname(__file__), "frontend", "common_input_settings_cache_runtime", "policy.py"))
 _input_cache_policy = _common_activation_import.module_from_spec(_input_cache_spec)
@@ -2360,6 +2384,12 @@ def build_class_promoted(block, name, resolver, parent_entry, owner_fns, snippet
     model = _progress_modal_policy.apply(model, block, owner_fns)
     model = _commonui_module_policy.apply(model, block, owner_fns)
     model = _root_slate_policy.apply(model, block, owner_fns)
+    model = _lazy_image_policy.apply(model, block, owner_fns, native_execs)
+    model = _widget_route_policy.apply(model, block, owner_fns)
+    model = _route_policy.apply(model, block, owner_fns)
+    model = _metadata_policy.apply(model, block, owner_fns)
+    model = _modality_policy.apply(model, block, owner_fns, native_execs)
+    model = _cursor_settings_policy.apply(model, block, owner_fns)
     model = _input_settings_policy.apply(model, block, owner_fns)
     model = _input_cache_policy.apply(model, block, owner_fns)
     return apply_blueprint_context_runtime_policy(model, block, name, resolver, parent_entry, owner_fns, snippets, splice_ctx)
@@ -3130,6 +3160,12 @@ def render_promoted_header(model, api, parent_include, source_label):
     lines.extend(_progress_modal_policy.declarations(model).splitlines())
     lines.extend(_commonui_module_policy.declarations(model).splitlines())
     lines.extend(_root_slate_policy.declarations(model).splitlines())
+    lines.extend(_lazy_image_policy.declarations(model).splitlines())
+    lines.extend(_widget_route_policy.declarations(model).splitlines())
+    lines.extend(_route_policy.declarations(model).splitlines())
+    lines.extend(_metadata_policy.declarations(model).splitlines())
+    lines.extend(_modality_policy.declarations(model).splitlines())
+    lines.extend(_cursor_settings_policy.declarations(model).splitlines())
     if model['name'] == 'UCommonActivatablePanel':
         lines.append('    friend class UCommonButton;')
     lines.extend(_input_settings_policy.declarations(model).splitlines())
@@ -3281,7 +3317,7 @@ def render_promoted_cpp(model, source_label):
     result = "\n".join(lines) + "\n"
     if model.get("source_context_phases"):
         result += BLUEPRINT_CONTEXT_PHASE_BODIES
-    return result + _common_activation_policy.definitions(model) + _current_input_type_policy.definitions(model) + _fort_globals_policy.definitions(model) + _button_style_policy.definitions(model) + _button_click_policy.definitions(model) + _button_double_click_policy.definitions(model) + _button_selection_policy.definitions(model) + _input_settings_policy.definitions(model) + _input_cache_policy.definitions(model) + _action_widget_policy.gamepad_definitions(model) + _action_widget_policy.icon_definitions(model) + _action_receivers_policy.definitions(model) + _action_slate_policy.definitions(model) + _button_focus_policy.definitions(model) + _button_initialize_policy.definitions(model) + _button_producers_policy.definitions(model) + _button_set_style_policy.definitions(model) + _border_style_policy.definitions(model) + _global_ui_priority_policy.definitions(model) + _global_ui_zone_policy.definitions(model) + _notification_image_policy.definitions(model) + _progress_modal_policy.definitions(model) + _commonui_module_policy.definitions(model) + _root_slate_policy.definitions(model)
+    return result + _common_activation_policy.definitions(model) + _current_input_type_policy.definitions(model) + _fort_globals_policy.definitions(model) + _button_style_policy.definitions(model) + _button_click_policy.definitions(model) + _button_double_click_policy.definitions(model) + _button_selection_policy.definitions(model) + _input_settings_policy.definitions(model) + _input_cache_policy.definitions(model) + _action_widget_policy.gamepad_definitions(model) + _action_widget_policy.icon_definitions(model) + _action_receivers_policy.definitions(model) + _action_slate_policy.definitions(model) + _button_focus_policy.definitions(model) + _button_initialize_policy.definitions(model) + _button_producers_policy.definitions(model) + _button_set_style_policy.definitions(model) + _border_style_policy.definitions(model) + _global_ui_priority_policy.definitions(model) + _global_ui_zone_policy.definitions(model) + _notification_image_policy.definitions(model) + _progress_modal_policy.definitions(model) + _commonui_module_policy.definitions(model) + _root_slate_policy.definitions(model) + _lazy_image_policy.definitions(model) + _widget_route_policy.definitions(model) + _route_policy.definitions(model) + _metadata_policy.definitions(model) + _modality_policy.definitions(model) + _cursor_settings_policy.definitions(model)
 
 
 def build_engine_header_index(root):
@@ -3551,8 +3587,19 @@ def promote(args):
     gate.name_clashes = engine_macro_names(args.engine_root)
     resolver.gate = gate
     guarded_native_execs = {}
-    if {'UCommonActivatablePanel', 'UCommonInputSubsystem', 'UCommonActionWidget', 'UCommonBorder', 'UCommonButton', 'UCommonTextBlock', 'UFortGlobals', 'UFortGlobalUIContext', 'UFortUINotification', 'UFortProgressModal'} & set(listed):
+    if {'UCommonActivatablePanel', 'UCommonInputSubsystem', 'UCommonActionWidget', 'UCommonBorder', 'UCommonButton', 'UCommonTextBlock', 'UFortGlobals', 'UFortGlobalUIContext', 'UFortUINotification', 'UFortProgressModal', 'UCommonLazyImage'} & set(listed):
         guarded_native_execs = load_json(os.path.join(os.path.dirname(args.reflection), 'native_funcs.json'))
+    if 'UCommonLazyImage' in listed:
+        _lazy_image_policy.validate_classes(blocks_by_va, name_to_block, guarded_native_execs)
+    lazy_image_sources = (_lazy_image_policy.sources(blocks_by_va, name_to_block)
+                          if 'UCommonLazyImage' in listed else None)
+    if 'UCommonInputSubsystem' in listed:
+        _modality_policy.validate_classes(blocks_by_va, name_to_block)
+        _modality_policy.validate_types(gate)
+    modality_sources = (_modality_policy.sources('CommonInput', blocks_by_va, name_to_block)
+                        if 'UCommonInputSubsystem' in listed else None)
+    if 'UCommonUIInputSettings' in listed:
+        _cursor_settings_policy.validate_types(gate)
     if 'UFortProgressModal' in listed:
         _progress_modal_policy.validate_classes(blocks_by_va, name_to_block, guarded_native_execs)
     if 'UFortGlobalUIContext' in listed:
@@ -3657,9 +3704,12 @@ def promote(args):
         model = build_class_promoted(blocks_by_va[block], name, resolver, parents[block], owner_fns,
                                      snippets_by_class.get(name, []), splice_ctx,
                                      native_execs=guarded_native_execs.get(name) if name in
-                                 ("UCommonActivatablePanel", "UCommonInputSubsystem", "UCommonActionWidget", "UCommonButton", "UCommonTextBlock", "UFortGlobals", "UFortGlobalUIContext", "UFortUINotification") else None)
+                                 ("UCommonActivatablePanel", "UCommonInputSubsystem", "UCommonActionWidget", "UCommonButton", "UCommonTextBlock", "UFortGlobals", "UFortGlobalUIContext", "UFortUINotification", "UCommonLazyImage") else None)
         model["includes"] = sorted(set(own_includes(gate, model["used"], package))
                                    | set(model["splice"].get("header_includes", set())))
+        _route_policy.configure_model(model)
+        _widget_route_policy.configure_model(model)
+        _modality_policy.configure_model(model)
         if name == 'UCommonInputControllerData':
             _controller_brush_policy.validate_model(model)
         if model.get('common_input_settings_cache_runtime'):
@@ -3884,7 +3934,17 @@ def promote(args):
     if 'UFortRootViewportLayout' in listed:
         _root_slate_policy.validate_output(next(m for m in class_models if m['name']=='UFortRootViewportLayout'),
             *outputs['UFortRootViewportLayout'])
+    if 'UCommonLazyImage' in listed:
+        _lazy_image_policy.validate_output(next(m for m in class_models if m['name']=='UCommonLazyImage'),
+            *outputs['UCommonLazyImage'])
     for model in class_models:
+        _route_policy.validate_output(model, *outputs[model['name']])
+        _modality_policy.validate_rendered(model, *outputs[model['name']])
+        _cursor_settings_policy.validate_output(model, *outputs[model['name']])
+        if model.get('activatable_route_bridge_runtime'):
+            _widget_route_policy.validate_output(model, *outputs[model['name']])
+        if model.get('common_button_metadata_runtime'):
+            _metadata_policy.validate_output(model, *outputs[model['name']])
         if model["splice"]["accepted"]:
             verify_spliced(model, *outputs[model["name"]])
 
@@ -3897,6 +3957,24 @@ def promote(args):
         with open(os.path.join(out_dir, name + ".cpp"), "w", encoding="utf-8", newline="\n") as fh:
             fh.write(cpp)
     _common_activation_policy.emit_headers(args.source_root, generated_names)
+    if lazy_image_sources:
+        for filename, text in lazy_image_sources.items():
+            with open(os.path.join(args.source_root, 'CommonUI', 'Generated', filename), 'w', encoding='utf-8', newline='\n') as fh:
+                fh.write(text)
+    routing_sources = {}
+    if 'UCommonUIActionRouter' in generated_names:
+        routing_sources.update(_route_policy.merged_sources())
+    if 'UCommonActivatableWidget' in generated_names:
+        routing_sources.update(_widget_route_policy.sources())
+    if 'UCommonButton' in generated_names:
+        routing_sources.update(_metadata_policy.sources())
+    for filename, text in routing_sources.items():
+        with open(os.path.join(args.source_root, 'CommonUI', 'Generated', filename), 'w', encoding='utf-8', newline='\n') as fh:
+            fh.write(text)
+    if modality_sources:
+        for filename, text in modality_sources.items():
+            with open(os.path.join(args.source_root, 'CommonInput', 'Generated', filename), 'w', encoding='utf-8', newline='\n') as fh:
+                fh.write(text)
     if 'UFortRootViewportLayout' in generated_names:
         for filename, text in _root_slate_policy.extra_headers().items():
             with open(os.path.join(args.source_root, 'FortniteUI', 'Generated', filename), 'w', encoding='utf-8', newline='\n') as fh:
@@ -4746,6 +4824,7 @@ def render_struct_header(model, source_label):
         lines.append("\t%s" % m["decl"])
         lines.append("")
     lines.extend(_common_activation_policy.struct_declarations(model))
+    lines.extend(_cursor_settings_policy.struct_declarations(model))
     lines.extend(_confirmation_policy.declarations(model))
     lines.extend(_common_input_policy.declarations(model))
     lines.extend(_input_platform_policy.declarations(model))

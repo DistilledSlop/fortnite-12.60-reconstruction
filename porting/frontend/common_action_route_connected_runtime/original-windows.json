@@ -1,0 +1,204 @@
+{
+  "image": "/mnt/vibrato/fortnite-evidence/original-late-capture-1/image-125.runtime.bin",
+  "base": "0x140000000",
+  "windows": [
+    {
+      "name": "node_shared_delegate",
+      "start": "0x1407899c0",
+      "size": "0x120",
+      "sha256": "a343893a75e0ac952249e1dfd7c31ea8dc16a4c14dc4d060be89e14e13cb47af"
+    },
+    {
+      "name": "root_input_delegate",
+      "start": "0x140789b20",
+      "size": "0x120",
+      "sha256": "7994580bcbb6bfd8b1ce15d5a2a68a086baa898b7e822ab2d3f1bef8d6b52ff3"
+    },
+    {
+      "name": "owner_record_identity",
+      "start": "0x14078b810",
+      "size": "0x6b",
+      "sha256": "0aefaa5ca2cfd3ad39baa63e2503f1595e584da19b85ae8f6e4081ef07c122c3"
+    },
+    {
+      "name": "node_init",
+      "start": "0x1407cd2e0",
+      "size": "0x166",
+      "sha256": "bb5a6b753033fc2739f8b6b4c1f4030cdbbe8ddaa4f5ee99ecc4c2d6215c75de"
+    },
+    {
+      "name": "root_init",
+      "start": "0x1407cd450",
+      "size": "0x1fa",
+      "sha256": "479ef00eab43ac47bb9ceba4650240dada30715c7d839c51d95b7787dfd014f8"
+    },
+    {
+      "name": "focus_support_chain",
+      "start": "0x1407b94e0",
+      "size": "0x172",
+      "sha256": "4fceab9d4e7bc38046938a57606a180370166f6b6f5394ab7422941e54da2ea4"
+    },
+    {
+      "name": "child_release",
+      "start": "0x1407c70c0",
+      "size": "0xa6",
+      "sha256": "2d6e844aa4e662e7a56ad845726526b8e05faa2689ebcdf8af8e90c541837a55"
+    },
+    {
+      "name": "root_activated",
+      "start": "0x1407cb5b0",
+      "size": "0x115",
+      "sha256": "4590ea5aeda02608427663c997900b6ac246e624c974a853aa0e4f758721f591"
+    },
+    {
+      "name": "root_deactivated",
+      "start": "0x1407cb6d0",
+      "size": "0xf8",
+      "sha256": "ac4ac97d328fa0f8ac83b33108ba71f54b72ee5342ee5e9e99ae69fac036fd0d"
+    },
+    {
+      "name": "root_release",
+      "start": "0x1407cb7d0",
+      "size": "0x12e",
+      "sha256": "00d1eda6e22aaa19f38065265d431ee61d3c6ce041f0b67d102bbb3cc63c8473"
+    },
+    {
+      "name": "rebuilt_queue",
+      "start": "0x1407c6180",
+      "size": "0x63",
+      "sha256": "2cbe741c078f1723af7a4503717b09a0026452c9fad08d38f51fa1f06893a54c"
+    },
+    {
+      "name": "owner_initialization",
+      "start": "0x1407cdf50",
+      "size": "0x531",
+      "sha256": "7cd87a337e99dccbef659aab2679234f80c7e7920811c14c37f0c2bf5f492d9f"
+    },
+    {
+      "name": "owner_topology",
+      "start": "0x1407e45c0",
+      "size": "0x1200",
+      "sha256": "f0142636df35699446c0683125c2bc93759f5c9168fa140d180ff75e4fb12077"
+    },
+    {
+      "name": "widget_registration",
+      "start": "0x1407ed3f0",
+      "size": "0xa8",
+      "sha256": "0e257761753c7aac0d78683fa1f82e3428eba60e70448e4e48bc831e93cd13b8"
+    },
+    {
+      "name": "remove_widget_bindings",
+      "start": "0x1407d4650",
+      "size": "0x177",
+      "sha256": "f3c0d41d6bf61f53e901c5b01ead2ffeb7866fe8a9c0a37b701ede5c297de964"
+    },
+    {
+      "name": "append_routed_widget",
+      "start": "0x1407aa190",
+      "size": "0xa3",
+      "sha256": "3a6a832494f94924179385664a0bbe1617c0ea1b6d6afe4c72448ffd91df541e"
+    },
+    {
+      "name": "processor_registration",
+      "start": "0x1407ecc70",
+      "size": "0x1b0",
+      "sha256": "2e8a98d47aad4122e9a17f326377f0a6e38e639f2a1f585ca7ad4d7a5965e9ca"
+    },
+    {
+      "name": "routed_widget_registration",
+      "start": "0x1407ece30",
+      "size": "0x74",
+      "sha256": "319cd7adebac19544f58ecbdfd21f7d205177ef5d12a700c577f1ff2083add15"
+    },
+    {
+      "name": "world_provider",
+      "start": "0x1410cf280",
+      "size": "0x16",
+      "sha256": "bcbbff6de3c71fe42335c43be99574d28da9f43dd30b3c98026fb3cb6dd8cc0c"
+    },
+    {
+      "name": "slate_user_getter",
+      "start": "0x1442f5e70",
+      "size": "0x103",
+      "sha256": "b840e73ccf577ac4297148990a037a8fb879517da6fa873774c1a11a59e18bc1"
+    },
+    {
+      "name": "input_method_getter",
+      "start": "0x14081b540",
+      "size": "0x5",
+      "sha256": "7dd4bcd0c0875d123531a7167440445584aad2a9c32f6b486f29e7c6c1ced7c2"
+    },
+    {
+      "name": "owner_deinitialization",
+      "start": "0x1407b8580",
+      "size": "0x8d",
+      "sha256": "cb5cf5996ef2f9cb3a4716e186734fcab3f512f23fd5439fa701329a9ed18fca"
+    },
+    {
+      "name": "owner_legacy_gate",
+      "start": "0x1407c9570",
+      "size": "0x1d9",
+      "sha256": "74b46feedacd315e77827f387ab9dabd23114fd9bbdfbc377d618e494fd01e1a"
+    },
+    {
+      "name": "owner_focus_changing",
+      "start": "0x1407cbad0",
+      "size": "0x107",
+      "sha256": "f11f44e143076685331dd14fed4aace0be0ca5e421cbbc676b5f46bf4f721597"
+    },
+    {
+      "name": "registry_post_gc_cleanup",
+      "start": "0x1407ae040",
+      "size": "0x279",
+      "sha256": "04e6589589a49edaaee5f5da5ebff482e93821e8431a66b49b78c670258e1d8b"
+    },
+    {
+      "name": "settings_class_getter",
+      "start": "0x140811ec0",
+      "size": "0xa8",
+      "sha256": "8a31f8b201dc6c653277ae63f0b023bcbcbb9e08eb0fe8bfbee61f3902ba60df"
+    },
+    {
+      "name": "user_widget_rebuild",
+      "start": "0x1407e03f0",
+      "size": "0x20b",
+      "sha256": "497b6427729e630d66ee54e96ec71aada414fae955d5275fa9c56eb085c9a260"
+    },
+    {
+      "name": "user_widget_destruct",
+      "start": "0x1407d1e90",
+      "size": "0x45",
+      "sha256": "a471e5bd41abf0a169927d3df53bc7ecdf54e46b98486aa0f70db8ea4db22213"
+    },
+    {
+      "name": "activatable_widget_destruct",
+      "start": "0x1407d1c00",
+      "size": "0x5a",
+      "sha256": "849f99ac0cbfa320d4b4d2eb0fb50a53ece1781cd4ddba2b1e28cd52f48abf17"
+    },
+    {
+      "name": "user_widget_constructor",
+      "start": "0x140798270",
+      "size": "0x53",
+      "sha256": "50a663e01afb7c19c691dc8bc3fb23b8c934a7598c61dbb1cfbb7421976ce76d"
+    },
+    {
+      "name": "user_widget_rebuild_vtable_slot",
+      "start": "0x1459ed1b0",
+      "size": "0x8",
+      "sha256": "5089789b271be2ed1c6775247f1acc1556e23728b2e8c8d299054a8c6fedfee6"
+    },
+    {
+      "name": "user_widget_destruct_vtable_slot",
+      "start": "0x1459ed220",
+      "size": "0x8",
+      "sha256": "0d4449e497367d1c0a1984c560092b09fd61bb3bc006fdb87d3894f74d4cacbc"
+    },
+    {
+      "name": "user_widget_pointer_input_bool_setter",
+      "start": "0x1408179d0",
+      "size": "0x8",
+      "sha256": "d77988a931080f9228e3de5ee6af4f90dfeefe8269560357a385f9dc4a576739"
+    }
+  ]
+}

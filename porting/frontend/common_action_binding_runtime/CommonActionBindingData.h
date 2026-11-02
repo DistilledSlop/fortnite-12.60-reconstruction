@@ -14,7 +14,7 @@ DECLARE_MULTICAST_DELEGATE_OneParam(FCommonActionBindingProgressMulticast, float
 COMMONUI_API DECLARE_LOG_CATEGORY_EXTERN(LogUIActionRouter, Log, All);
 
 class UWidget;
-class FCommonActionBindingRoute; // Identity and behavior remain unresolved.
+class FCommonActionBindingRoute; // Recovered route hierarchy is in CommonActionBindingRoute.h.
 
 struct FCommonActionBindingDescriptor
 {
@@ -79,4 +79,7 @@ namespace CommonActionBindingData
     COMMONUI_API FCommonActionBindingRecord& Add(int32 Key, const FCommonActionBindingRecord& Record);
     COMMONUI_API int32 Remove(int32 Key);
     // A structural map mutation can invalidate returned pointers or references.
+// Add inside the existing namespace in CommonActionBindingData.h.
+COMMONUI_API void CompactInvalidBindings(); // 1407ae040
+
 }

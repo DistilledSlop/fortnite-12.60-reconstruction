@@ -1,0 +1,28 @@
+diff --git a/Engine/Source/Runtime/Slate/Private/Framework/Application/AnalogCursor.cpp b/Engine/Source/Runtime/Slate/Private/Framework/Application/AnalogCursor.cpp
+index 1ebb55065..8366b36ed 100644
+--- a/Engine/Source/Runtime/Slate/Private/Framework/Application/AnalogCursor.cpp
++++ b/Engine/Source/Runtime/Slate/Private/Framework/Application/AnalogCursor.cpp
+@@ -279,0 +280,15 @@ bool FAnalogCursor::IsRelevantInput(const FInputEvent& InputEvent) const
++bool FAnalogCursor::IsRelevantInput(const FKeyEvent& KeyEvent) const
++{
++	return IsRelevantInput(static_cast<FInputEvent>(KeyEvent));
++}
++
++bool FAnalogCursor::IsRelevantInput(const FAnalogInputEvent& AnalogInputEvent) const
++{
++	return IsRelevantInput(static_cast<FInputEvent>(AnalogInputEvent));
++}
++
++bool FAnalogCursor::IsRelevantInput(const FPointerEvent& MouseEvent) const
++{
++	return IsRelevantInput(static_cast<FInputEvent>(MouseEvent));
++}
++
+diff --git a/Engine/Source/Runtime/Slate/Public/Framework/Application/AnalogCursor.h b/Engine/Source/Runtime/Slate/Public/Framework/Application/AnalogCursor.h
+index 45e4bc873..7cb4ebb93 100644
+--- a/Engine/Source/Runtime/Slate/Public/Framework/Application/AnalogCursor.h
++++ b/Engine/Source/Runtime/Slate/Public/Framework/Application/AnalogCursor.h
+@@ -61,0 +62,3 @@ protected:
++	virtual bool IsRelevantInput(const FKeyEvent& KeyEvent) const;
++	virtual bool IsRelevantInput(const FAnalogInputEvent& AnalogInputEvent) const;
++	virtual bool IsRelevantInput(const FPointerEvent& MouseEvent) const;

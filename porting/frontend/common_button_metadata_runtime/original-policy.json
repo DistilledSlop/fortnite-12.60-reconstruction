@@ -1,0 +1,36 @@
+{
+  "identity": {
+    "block_va": "0x145a01210",
+    "class_noregister_fn": "0x140807cd0",
+    "base_fn": "0x140812ee0",
+    "package_fn": "0x140816d40",
+    "class_flags": "0xb010a1"
+  },
+  "windows": [
+    {
+      "va": "0x1407e0140",
+      "size": 388,
+      "sha256": "21c88e30c870612bafdbceec87131748b002d844ab235158ed1d20bd421aa5ee"
+    },
+    {
+      "va": "0x1459f0bf0",
+      "size": 8,
+      "sha256": "11a598b1a0ddd636f57bb5032a6b5c3d14375fb4b87d88d9bc904afdcc4feb4d"
+    },
+    {
+      "va": "0x1459f0620",
+      "size": 16,
+      "sha256": "34504c94162f282bb473f3b72bb328469279131860d21aec10f719c0f78a73e4"
+    },
+    {
+      "va": "0x1459f0630",
+      "size": 42,
+      "sha256": "b22077ab06208ec2edffabb9aa40767ad9afe185bb4e0716855074f0f5c85297"
+    },
+    {
+      "va": "0x1407c5680",
+      "size": 128,
+      "sha256": "92e159acae96628795fd71d6267c0a30899af9ee461122162a1d95d77ab32a26"
+    }
+  ]
+}

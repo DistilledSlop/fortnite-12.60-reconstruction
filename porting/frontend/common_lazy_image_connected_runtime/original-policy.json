@@ -1,0 +1,294 @@
+{
+  "identity": {
+    "block_va": "0x145a05430",
+    "class_noregister_fn": "0x14080f0d0",
+    "base_fn": "0x140812ee0",
+    "package_fn": "0x143dac040",
+    "class_flags": "0xb000a0"
+  },
+  "properties": [
+    {
+      "index": 0,
+      "name": "BP_OnLoadingStateChanged",
+      "kind": "InlineMulticastDelegate",
+      "kind_raw": "0x1b",
+      "property_flags": "0x40000010080000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 672,
+      "type_refs": {
+        "signature": "0x14080fa90"
+      }
+    },
+    {
+      "index": 1,
+      "name": "MaterialTextureParamName",
+      "kind": "Name",
+      "kind_raw": "0x14",
+      "property_flags": "0x40040000000001",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 664
+    },
+    {
+      "index": 2,
+      "name": "LoadingBackgroundBrush",
+      "kind": "Struct",
+      "kind_raw": "0x19",
+      "property_flags": "0x40000000000001",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 528,
+      "type_refs": {
+        "struct": "0x142fdb590"
+      }
+    }
+  ],
+  "functions": {
+    "IsLoading": {
+      "exec_addr": "0x140810300",
+      "flags": "0x54020401",
+      "params": [
+        {
+          "index": 0,
+          "name": "ReturnValue",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x10000000000580",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 1,
+          "bitfield": true,
+          "offset": null
+        }
+      ],
+      "create_func": "0x14080da20",
+      "source": "lea"
+    },
+    "SetBrushFromLazyDisplayAsset": {
+      "exec_addr": "0x140810ab0",
+      "flags": "0x4420401",
+      "params": [
+        {
+          "index": 0,
+          "name": "bMatchTextureSize",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 48,
+          "bitfield": true,
+          "offset": null
+        },
+        {
+          "index": 1,
+          "name": "LazyObject",
+          "kind": "SoftObject",
+          "kind_raw": "0x10",
+          "property_flags": "0x14000008000182",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "class": "0x142eea520"
+          }
+        }
+      ],
+      "create_func": "0x14080da50",
+      "source": "lea"
+    },
+    "SetBrushFromLazyMaterial": {
+      "exec_addr": "0x140810bc0",
+      "flags": "0x4420401",
+      "params": [
+        {
+          "index": 0,
+          "name": "LazyMaterial",
+          "kind": "SoftObject",
+          "kind_raw": "0x10",
+          "property_flags": "0x14000008000182",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "class": "0x144796250"
+          }
+        }
+      ],
+      "create_func": "0x14080da90",
+      "source": "lea"
+    },
+    "SetBrushFromLazyTexture": {
+      "exec_addr": "0x140810c80",
+      "flags": "0x4420401",
+      "params": [
+        {
+          "index": 0,
+          "name": "bMatchSize",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 48,
+          "bitfield": true,
+          "offset": null
+        },
+        {
+          "index": 1,
+          "name": "LazyTexture",
+          "kind": "SoftObject",
+          "kind_raw": "0x10",
+          "property_flags": "0x14000008000182",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "class": "0x144803bd0"
+          }
+        }
+      ],
+      "create_func": "0x14080dac0",
+      "source": "lea"
+    },
+    "SetMaterialTextureParamName": {
+      "exec_addr": "0x140811400",
+      "flags": "0x4020401",
+      "params": [
+        {
+          "index": 0,
+          "name": "TextureParamName",
+          "kind": "Name",
+          "kind_raw": "0x14",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0
+        }
+      ],
+      "create_func": "0x14080dbb0",
+      "source": "lea"
+    }
+  },
+  "windows": [
+    {
+      "va": "0x1407971d0",
+      "size": 286,
+      "sha256": "7fa09210671ee150972ebeb46e00f1c2ef57fc410de8e6d606d431c70b62c83e"
+    },
+    {
+      "va": "0x1407b2af0",
+      "size": 4624,
+      "sha256": "4af2618248836e4bdcdea0a3b21270a0b8c00e0b660b1f044908fdd1ee9ebf65"
+    },
+    {
+      "va": "0x1407c5c00",
+      "size": 1376,
+      "sha256": "db9b453a2fa9cbff69d84795615ffedad21a5ba18f09a1d0ea57964dd835d231"
+    },
+    {
+      "va": "0x14079e8e0",
+      "size": 528,
+      "sha256": "31b73a0672617beeb15ef1df5edea01b805cd9b4799e14d3d3417e954458e9a8"
+    },
+    {
+      "va": "0x1408033f0",
+      "size": 260,
+      "sha256": "275d77500318b59416bd321a2c94aa36010d39916c257ba0343130e8471f6daf"
+    },
+    {
+      "va": "0x1407f5850",
+      "size": 320,
+      "sha256": "af37edf8630cde379c0bb888c9285fa813a97fe2a3ab81233bc0950ef96acc02"
+    },
+    {
+      "va": "0x14079e640",
+      "size": 384,
+      "sha256": "bf3297b18b65e92dd609dc802e11a2fea05a903426f9466eeca851fb23537b22"
+    },
+    {
+      "va": "0x1407f5ae0",
+      "size": 512,
+      "sha256": "073b2cb1a1a9decc53cbb13f76e85c6acf68d392b241d0c581b9ef807a2d3313"
+    },
+    {
+      "va": "0x1407fb3e0",
+      "size": 168,
+      "sha256": "3bece2f62e064a125cab0017733f61720174808978ad02f7e26e9acf099983bd"
+    },
+    {
+      "va": "0x1407ea310",
+      "size": 368,
+      "sha256": "b4f662437d623e8f3e50e155300b9654584311eae7cbae9100480c35608b720b"
+    },
+    {
+      "va": "0x1407eec10",
+      "size": 95,
+      "sha256": "60d7d7a7c751aea3bd0d772ce53e6a1d06567cc957f045c37c020d124e4c2685"
+    },
+    {
+      "va": "0x1407e02d0",
+      "size": 78,
+      "sha256": "c5220c0a7fd434e2b5a4935f6780a65493ba78251d98e57456fcba5aadba5584"
+    },
+    {
+      "va": "0x1407d6840",
+      "size": 304,
+      "sha256": "6ce90db92f124b325714965a312277db39f874b08c45ec08bfc2902f0160151f"
+    },
+    {
+      "va": "0x1407ade90",
+      "size": 49,
+      "sha256": "2a8bd0752d99d84a2bc256e822a62774e62aca2ffbb5843ee857cb44885d430a"
+    },
+    {
+      "va": "0x1407f57f0",
+      "size": 82,
+      "sha256": "687ccdcb8981da8ea3b9824558511f66c65c6b44ff24dd7d157d81d8182aabe5"
+    },
+    {
+      "va": "0x1407f8f00",
+      "size": 91,
+      "sha256": "01be2c4f2cef542409bcb4c225643d162589fe767aee185e964cc1e6dbf8368a"
+    },
+    {
+      "va": "0x1407c9d50",
+      "size": 30,
+      "sha256": "55c69b201898a6826467b1bc7e09c2a7f8433e47c4ebaeb14ccb0f2e5e9a6cd8"
+    },
+    {
+      "va": "0x1407cfb50",
+      "size": 27,
+      "sha256": "e4fd498170da6424965ce8dbbb5cf24bf53661ef05a853fe91fb4bcad03cc5cf"
+    },
+    {
+      "va": "0x147c522f0",
+      "size": 8,
+      "sha256": "a6e47ad3ec3524e1e7173840b8ea3d1ea889d69485b0ec12f681f65dbcc8c1b0"
+    }
+  ]
+}

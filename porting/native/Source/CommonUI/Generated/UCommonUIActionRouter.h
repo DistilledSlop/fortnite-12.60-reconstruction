@@ -6,6 +6,9 @@
 #include "CoreMinimal.h"
 #include "Subsystems/LocalPlayerSubsystem.h"
 
+#include "CommonActionBindingRoute.h"
+#include "CommonActionRouteTypes.h"
+
 #include "UCommonUIActionRouter.generated.h"
 
 UCLASS()
@@ -14,5 +17,60 @@ class COMMONUI_API UCommonUIActionRouter : public ULocalPlayerSubsystem
 	GENERATED_BODY()
 
 public:
+// Include CommonActionRouteTypes.h and CommonActionBindingRoute.h in the router
+// header before its generated.h. Insert these native members in the real class.
+// Descriptive names map to the listed original offsets, not reflected names.
+private:
+    TArray<FCommonActionRouteOwnerRecord> NativePendingActionOwners; // +30
+    TArray<TWeakObjectPtr<UCommonActivatableWidget>> NativePendingActionWidgets; // +40
+    TArray<TSharedPtr<FCommonActionRouteRoot>> NativeActionRouteRoots; // +50
+    TSharedPtr<FCommonActionRouteRoot> NativeActiveRouteRoot; // +60
+    TSharedPtr<FCommonActionBindingRoute> NativeStandaloneActionRoute; // +70
+    TOptional<FCommonActionRouteInputConfig> NativeActionInputConfig; // +80
+    TSharedPtr<IInputProcessor> NativeActionInputPreProcessor; // +88
+    // Original constructor defaults. The actual legacy-manager callback writes +98.
+    bool bNativeActionRoutingBlocked = false; // +98
+    bool bNativeActionRoutingEnabled = true; // +99
+    FDelegateHandle NativeActionRouteTicker; // +a0
+public:
+    FSimpleMulticastDelegate NativeActionBindingsChanged; // +a8, 1407c9c40
+    FCommonActionRouteModeChanged NativeActionInputModeChanged; // +c0
+    FCommonActionRouteOverrideChanged NativeActionRouteOverrideChanged; // +d8
+private:
+    TArray<FKey> NativeQueuedActionKeys; // +f0
+    friend class FCommonAnalogCursor;
+public:
+    UCommonUIActionRouter(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+    virtual void Initialize(FSubsystemCollectionBase& Collection) override; // 1407cdf50
+    virtual void Deinitialize() override; // 1407b8580
+    virtual TSharedRef<IInputProcessor> NativeCreateActionInputPreProcessor(); // +278, 1407d12a0
+    void NativeApplyActionRouteInputConfig(const FCommonActionRouteInputConfig& Config); // 1407f4770
+    void NativeSetActiveActionRouteRoot(const TSharedPtr<FCommonActionRouteRoot>& Root); // 1407f4510
+    int32 NativeRegisterActionBinding(UWidget* BindingOwner, const FCommonActionBindingDescriptor& Descriptor); // 1407ed1c0
+    void NativeRemoveActionBindingFromRoute(int32 Handle); // 1407f0b40
+    void NativeRemoveWidgetActionBindings(UCommonUserWidget* Widget); // 1407d4650
+    void NativeReassociateWidgetActionBindings(UCommonUserWidget* Widget); // middle of 1407e03f0
+    bool NativeRegisterInputPreProcessor(UWidget* BindingOwner, const TSharedPtr<IInputProcessor>& Processor, int32 Index); // 1407ecc70
+    void NativeRegisterRoutedWidget(UWidget* Widget); // 1407ece30
+    TSharedPtr<FCommonActionRouteNode> NativeFindActionRoute(UCommonActivatableWidget* Widget) const; // 1407be460
+    TSharedPtr<FCommonActionRouteNode> NativeAcquireActionRoute(UWidget* Widget) const; // 1407beb40
+    void NativeHandleActivatableWidgetRebuilt(UCommonActivatableWidget* Widget); // 1407c6180
+    void NativeProcessRebuiltActionWidgets(); // 1407e45c0
+    void NativeTickActionRouteDiscovery(); // first portion of 1407ffd30
+    void NativeInitializeActionRouteDiscovery(FSubsystemCollectionBase& Collection); // first portion of 1407cdf50
+    uint8 NativeProcessActionInput(FKey Key, EInputEvent Event); // 1407e3b40
+    bool NativeDispatchNormalActionInput(uint8 InputMode, FKey Key, EInputEvent Event);
+    bool NativeShouldBlockActionInput() const; // 1407ada10
+    bool NativeTickActionRoutes(float DeltaTime); // 1407ffd30
+private:
+    void NativeHandleActionRouteSelectionChanged(); // 1407c9c40
+    void NativeHandleActionRootActivated(TWeakPtr<FCommonActionRouteRoot> Root); // 1407cb5b0
+    void NativeHandleActionRootDeactivated(TWeakPtr<FCommonActionRouteRoot> Root); // 1407cb6d0
+    void NativeHandleActionRootReleased(UCommonActivatableWidget* Widget); // 1407cb7d0
+    FCommonActionRouteOwnerRecord& NativeFindOrAddActionOwner(UWidget* Widget); // 1407c4240
+    void NativeHandleLegacyInputManagerChanged(bool bHasLegacyManager); // 1407c9570
+    void NativeHandleActionBindingGarbageCollection(); // 1407ca7c0 -> 1407ae040
+    void NativeHandleActionFocusChanging(const FFocusEvent& Event, const FWeakWidgetPath& OldPath,
+        const TSharedPtr<SWidget>& OldFocus, const FWidgetPath& NewPath, const TSharedPtr<SWidget>& NewFocus); // 1407cbad0
 };
 

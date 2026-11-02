@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 
+#include "CommonActionBindingData.h"
+
 #include "UCommonUserWidget.generated.h"
 
 UCLASS()
@@ -14,9 +16,20 @@ class COMMONUI_API UCommonUserWidget : public UUserWidget
 	GENERATED_BODY()
 
 public:
+private:
+	// Non-reflected field (behaviour kind "member_field", offset 0x230): not a UPROPERTY, not replicated.
+	TArray<int32> NativeRegisteredActionBindingHandles;
+public:
+
 	// table index 0, flags 0x40000000000015
 	UPROPERTY()
 	bool bConsumePointerInput;
 
+public:
+    int32 NativeRegisterActionBinding(const FCommonActionBindingDescriptor& Descriptor); // 1407ed3f0
+    const TArray<int32>& NativeGetRegisteredActionBindingHandles() const { return NativeRegisteredActionBindingHandles; }
+protected:
+    virtual void OnWidgetRebuilt() override; // original +2b0 = 1407e03f0
+    virtual void NativeDestruct() override; // original +320 = 1407d1e90
 };
 

@@ -37,5 +37,6 @@ public:
 	UPROPERTY(Config)
 	FCommonAnalogCursorSettings AnalogCursorSettings;
 
+UCommonUIInputSettings(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
 };
 

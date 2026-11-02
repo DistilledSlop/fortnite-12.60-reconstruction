@@ -1,5 +1,33 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Larger connected routing/loading batch: generated, validation pending (2026-11-02)
+
+Previous work made progress; user explicitly requests larger related integration
+batches and dynamic allocation. Current unbuilt batch restores route hierarchy,
+registration/discovery, hold/normal dispatch, analog cursor, modality producers
+and recognition, widget release/rebuild/back handling, button Slate metadata,
+settings defaults and async lazy-image/load-guard behavior. Nineteen Native
+files changed and fifteen support files added through generation. Original
+CommonInput Game config and CommonUI Input config entries are restored. Engine
+978fb5195 backports actual typed FAnalogCursor relevance overloads from local4.26.
+The five pre-existing Engine dirty paths remain untouched. No runtime/build PASS
+is claimed for this batch yet. Baseline e56c37ac below remains the last built UI.
+
+User read rule: bounded reads throughout, no larger-assembly exception. Read
+additional bounded ranges when more material is needed; do not limit necessary
+implementation. Pass this to agents. Keep the configured bounded components,
+Luna medium small reads, Terra medium/high normal work, Sol medium complex work,
+fork_turns none and at most three workers; Root owns generation/build/staging.
+
+Known boundaries retained: normal GI/director/manager startup still missing;
+keyboard manager/viewport delegate path is recovered partially in
+routing_keyboard_entry_runtime, but controller continuation is not ready.
+Do not replace it with generic pass-through. Widget470 transports an opaque
+nested optional byte until its enum/derived producers are identified. Actual
+source defaults are unset; no made-up enum or derived override is supplied.
+All four milestones remain open. Next action: build the combined batch, fix
+only concrete compile/runtime failures, then update receipts/dashboard.
+
 ## Current checkpoint: CommonUI lifecycle and real root Slate integrated (2026-11-02)
 
 This goal turn made concrete progress. Native27d5e909 / Enginec945a157c restores

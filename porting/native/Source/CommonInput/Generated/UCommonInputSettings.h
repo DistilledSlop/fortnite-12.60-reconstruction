@@ -63,6 +63,7 @@ public:
 protected:
     // Source aliases for original native entry points 14081d830 and 14081c1e0.
     void ValidateNativeInputDataCache();
+public:
     void InitializeNativeInputDataCache();
 };
 

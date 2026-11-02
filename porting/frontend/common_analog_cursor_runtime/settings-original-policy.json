@@ -1,0 +1,295 @@
+{
+  "class": {
+    "block_va": "0x145a08040",
+    "name": null,
+    "name_status": "unresolved",
+    "config_name": "Input",
+    "class_flags": "0x800a6",
+    "dependency_fns": [
+      "0x142eea530",
+      "0x140812ee0"
+    ],
+    "package_fn": "0x142eea530",
+    "base_fn": "0x140812ee0",
+    "class_noregister_fn": "0x140811ec0",
+    "interface_count": 0,
+    "properties": [
+      {
+        "index": 0,
+        "name": "AnalogCursorSettings",
+        "kind": "Struct",
+        "kind_raw": "0x19",
+        "property_flags": "0x40000000004001",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 80,
+        "type_refs": {
+          "struct": "0x140814a30"
+        }
+      },
+      {
+        "index": 1,
+        "name": "ActionOverrides",
+        "kind": "Array",
+        "kind_raw": "0x16",
+        "property_flags": "0x40000000004000",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 64
+      },
+      {
+        "index": 2,
+        "name": "ActionOverrides",
+        "kind": "Struct",
+        "kind_raw": "0x19",
+        "property_flags": "0x4000",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 0,
+        "type_refs": {
+          "struct": "0x140814af0"
+        },
+        "array_inner_of": "ActionOverrides"
+      },
+      {
+        "index": 3,
+        "name": "InputActions",
+        "kind": "Array",
+        "kind_raw": "0x16",
+        "property_flags": "0x40000000004001",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 48
+      },
+      {
+        "index": 4,
+        "name": "InputActions",
+        "kind": "Struct",
+        "kind_raw": "0x19",
+        "property_flags": "0x4000",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 0,
+        "type_refs": {
+          "struct": "0x140814af0"
+        },
+        "array_inner_of": "InputActions"
+      },
+      {
+        "index": 5,
+        "name": "UIActionProcessingPriority",
+        "kind": "Int",
+        "kind_raw": "0x3",
+        "property_flags": "0x40000000004001",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 44
+      },
+      {
+        "index": 6,
+        "name": "bLinkCursorToGamepadFocus",
+        "kind": "Bool",
+        "kind_raw": "0x2c",
+        "property_flags": "0x40000000004001",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "element_size": 1,
+        "size_of_outer": 120,
+        "bitfield": true,
+        "set_bit_fn": "0x1407627c0",
+        "offset": null
+      }
+    ],
+    "replicated_properties": [],
+    "functions": [],
+    "replicated_functions": [],
+    "dependency0_fn": "0x142eea530"
+  },
+  "struct": {
+    "block_va": "0x14783a580",
+    "name": "CommonAnalogCursorSettings",
+    "construct_fns": [
+      "0x140814a30"
+    ],
+    "package_fn": "0x140812ee0",
+    "package": "/Script/CommonUI",
+    "super_fn": null,
+    "struct_ops_fn": "0x140812240",
+    "size": 36,
+    "align": 4,
+    "struct_flags": "0x1",
+    "struct_flag_names": [
+      "Native"
+    ],
+    "object_flags": "0x45",
+    "struct_ops": {
+      "vtable_va": "0x145a0ad00",
+      "ops_size": 36,
+      "ops_align": 4,
+      "size_matches": true,
+      "align_matches": true,
+      "traits": {
+        "HasNoopConstructor": false,
+        "HasZeroConstructor": false,
+        "HasDestructor": true,
+        "HasSerializer": false,
+        "HasStructuredSerializer": false,
+        "HasPostSerialize": false,
+        "HasNetSerializer": false,
+        "HasNetSharedSerialization": false,
+        "HasNetDeltaSerializer": false,
+        "HasPostScriptConstruct": false,
+        "IsPlainOldData": false,
+        "HasCopy": true,
+        "HasIdentical": false,
+        "HasExportTextItem": false,
+        "HasImportTextItem": false,
+        "HasAddStructReferencedObjects": false,
+        "HasSerializeFromMismatchedTag": false,
+        "HasStructuredSerializeFromMismatchedTag": false,
+        "HasGetTypeHash": false
+      },
+      "unclassified_slots": []
+    },
+    "properties": [
+      {
+        "index": 0,
+        "name": "ScrollMultiplier",
+        "kind": "Float",
+        "kind_raw": "0xa",
+        "property_flags": "0x10000000010001",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 32
+      },
+      {
+        "index": 1,
+        "name": "ScrollUpdatePeriod",
+        "kind": "Float",
+        "kind_raw": "0xa",
+        "property_flags": "0x10000000010001",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 28
+      },
+      {
+        "index": 2,
+        "name": "ScrollDeadZone",
+        "kind": "Float",
+        "kind_raw": "0xa",
+        "property_flags": "0x10000000010001",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 24
+      },
+      {
+        "index": 3,
+        "name": "HoverSlowdownFactor",
+        "kind": "Float",
+        "kind_raw": "0xa",
+        "property_flags": "0x10000000010001",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 20
+      },
+      {
+        "index": 4,
+        "name": "CursorDeadZone",
+        "kind": "Float",
+        "kind_raw": "0xa",
+        "property_flags": "0x10000000010001",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 16
+      },
+      {
+        "index": 5,
+        "name": "CursorMaxSpeed",
+        "kind": "Float",
+        "kind_raw": "0xa",
+        "property_flags": "0x10000000010001",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 12
+      },
+      {
+        "index": 6,
+        "name": "CursorAcceleration",
+        "kind": "Float",
+        "kind_raw": "0xa",
+        "property_flags": "0x10000000010001",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 8
+      },
+      {
+        "index": 7,
+        "name": "bEnableCursorAcceleration",
+        "kind": "Bool",
+        "kind_raw": "0x2c",
+        "property_flags": "0x10000000010001",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "element_size": 1,
+        "size_of_outer": 36,
+        "bitfield": true,
+        "offset": null
+      },
+      {
+        "index": 8,
+        "name": "PreprocessorPriority",
+        "kind": "Int",
+        "kind_raw": "0x3",
+        "property_flags": "0x10000000004001",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 0
+      }
+    ],
+    "num_properties": 9
+  },
+  "windows": [
+    {
+      "va": "0x140813610",
+      "size": 224,
+      "sha256": "a2d0b26744b4ea22726d77f0d01f0eb48767c352f80be53f57f7352b0dcbcb9c"
+    },
+    {
+      "va": "0x140813b50",
+      "size": 112,
+      "sha256": "3494ad0b6d00de8555cdf29a25892b0ce4baeaeab966fb206c9ad086fccbea14"
+    }
+  ]
+}

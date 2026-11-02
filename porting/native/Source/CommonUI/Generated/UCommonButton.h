@@ -308,5 +308,8 @@ public:
 protected:
     UFUNCTION(BlueprintCallable)
     void SetSelectedInternal(bool bInSelected, bool bAllowSound, bool bBroadcast);
+protected:
+    virtual void OnWidgetRebuilt() override;
+public:
 };
 

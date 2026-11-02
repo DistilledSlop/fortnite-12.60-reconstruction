@@ -1,0 +1,46 @@
+{
+  "source": "/mnt/vibrato/fortnite-extracted-full/FortniteGame/Config/DefaultInput.ini",
+  "section": "[/Script/CommonUI.CommonUIInputSettings]",
+  "entries": [
+    {
+      "line": 4429,
+      "text": "bLinkCursorToGamepadFocus=True"
+    },
+    {
+      "line": 4430,
+      "text": "UIActionProcessingPriority=10000"
+    },
+    {
+      "line": 4431,
+      "text": "+InputActions=(ActionTag=UI.Action.Cancel,DefaultDisplayName=\"\",KeyMappings=((Key=Escape),(Key=Gamepad_FaceButton_Right),(Key=Android_Back)))"
+    },
+    {
+      "line": 4432,
+      "text": "+InputActions=(ActionTag=UI.Action.PreviousTab,DefaultDisplayName=\"\",KeyMappings=((Key=Gamepad_LeftShoulder)))"
+    },
+    {
+      "line": 4433,
+      "text": "+InputActions=(ActionTag=UI.Action.NextTab,DefaultDisplayName=\"\",KeyMappings=((Key=Gamepad_RightShoulder)))"
+    },
+    {
+      "line": 4434,
+      "text": "+InputActions=(ActionTag=UI.Action.FocusChat,DefaultDisplayName=\"\",KeyMappings=((Key=Gamepad_Special_Left,HoldTime=1.000000),(Key=Enter)))"
+    },
+    {
+      "line": 4435,
+      "text": "+InputActions=(ActionTag=UI.Action.OpenSocial,DefaultDisplayName=NSLOCTEXT(\"[/Script/CommonUI]\", \"F24F341641A4FA3F48ABCB8574D8C08C\", \"Social\"),KeyMappings=((Key=Gamepad_Special_Left)))"
+    },
+    {
+      "line": 4436,
+      "text": "+InputActions=(ActionTag=UI.Action.MainMenu,DefaultDisplayName=NSLOCTEXT(\"[/Script/CommonUI]\", \"299611F34A25E91C690A2C92C252B793\", \"Menu\"),KeyMappings=((Key=Escape),(Key=Gamepad_Special_Right)))"
+    },
+    {
+      "line": 4437,
+      "text": "+InputActions=(ActionTag=UI.Action.SwitchProfile,DefaultDisplayName=NSLOCTEXT(\"[/Script/CommonUI]\", \"E928E3A54C017ABB67564BB0EE06B190\", \"Switch Profile\"),KeyMappings=((Key=Gamepad_RightThumbstick)))"
+    },
+    {
+      "line": 4438,
+      "text": "AnalogCursorSettings=(PreprocessorPriority=2,bEnableCursorAcceleration=True,CursorAcceleration=1500.000000,CursorMaxSpeed=2200.000000,CursorDeadZone=0.250000,HoverSlowdownFactor=0.400000,ScrollDeadZone=0.200000,ScrollUpdatePeriod=0.100000,ScrollMultiplier=2.500000)"
+    }
+  ]
+}

@@ -1,0 +1,141 @@
+// Requires CommonInputModuleRuntime.h, UCommonInputSettings.h and HAL/PlatformTime.h.
+void UCommonInputSubsystem::NativeSetInputLock(FName Reason, ECommonInputType InputType, bool bEnable)
+{
+    if (bEnable)
+        CurrentInputLocks.Add(Reason, InputType);
+    else
+        CurrentInputLocks.Remove(Reason);
+
+    int32 Highest = -1;
+    for (const auto& Lock : CurrentInputLocks)
+        Highest = FMath::Max(Highest, static_cast<int32>(Lock.Value));
+    if (Highest < 0)
+        NativeInputTypeOverride.Reset();
+    else
+        NativeInputTypeOverride = static_cast<ECommonInputType>(Highest);
+
+    CurrentInputType = NativeInputTypeOverride.IsSet() ? NativeInputTypeOverride.GetValue() : LastInputType;
+    // The original compares to LastInputType, including when removing a lock.
+    if (CurrentInputType != LastInputType)
+        NativeBroadcastInputMethodChanged();
+}
+
+void UCommonInputSubsystem::SetCurrentInputType(ECommonInputType NewInputType)
+{
+    if (LastInputType == NewInputType)
+        return;
+    UCommonInputSettings* Settings = GetCommonInputSettings();
+    const FCommonInputPlatformData Platform = Settings->NativeGetCurrentPlatformData();
+    bool bSupported = false;
+    switch (NewInputType)
+    {
+    case ECommonInputType::MouseAndKeyboard: bSupported = Platform.bSupportsMouseAndKeyboard; break;
+    case ECommonInputType::Gamepad: bSupported = Platform.bSupportsGamepad; break;
+    case ECommonInputType::Touch: bSupported = Platform.bSupportsTouch; break;
+    default: break;
+    }
+    if (!bSupported)
+        return;
+
+    if (Settings->bEnableInputMethodThrashingProtection)
+    {
+        const double Now = FPlatformTime::Seconds();
+        if (LastTimeInputMethodThrashingBegan + Settings->InputMethodThrashingCooldownInSeconds <= Now)
+        {
+            static const FName ThrashingReason(TEXT("InputMethodThrashing"));
+            if (CurrentInputLocks.Contains(ThrashingReason))
+                NativeSetInputLock(ThrashingReason, ECommonInputType::MouseAndKeyboard, false);
+            if (NewInputType == ECommonInputType::MouseAndKeyboard || NewInputType == ECommonInputType::Gamepad)
+            {
+                if (Now - LastInputMethodChangeTime < Settings->InputMethodThrashingWindowInSeconds)
+                {
+                    if (++NumberOfInputMethodChangesRecently > Settings->InputMethodThrashingLimit)
+                    {
+                        LastTimeInputMethodThrashingBegan = Now;
+                        NativeSetInputLock(ThrashingReason, ECommonInputType::MouseAndKeyboard, true);
+                        NumberOfInputMethodChangesRecently = 0;
+                    }
+                }
+                else
+                    NumberOfInputMethodChangesRecently = 0;
+            }
+            else
+                NumberOfInputMethodChangesRecently = 0;
+        }
+    }
+    if (CurrentInputLocks.Num() != 0)
+        return;
+    LastInputType = NewInputType;
+    const ECommonInputType Effective = NativeInputTypeOverride.IsSet() ? NativeInputTypeOverride.GetValue() : NewInputType;
+    if (Effective != CurrentInputType)
+    {
+        CurrentInputType = Effective;
+        NativeBroadcastInputMethodChanged();
+    }
+}
+
+void UCommonInputSubsystem::SetGamepadInputType(ECommonGamepadType InGamepadInputType)
+{
+    const FCommonInputPlatformData Platform = GetCommonInputSettings()->NativeGetCurrentPlatformData();
+    if (Platform.bCanChangeGamepadType)
+    {
+        GamepadInputType = InGamepadInputType;
+        NativeBroadcastInputMethodChanged();
+    }
+}
+
+void UCommonInputSubsystem::NativeBroadcastInputMethodChanged()
+{
+    UWorld* World = GetWorld();
+    if (World && !World->bIsTearingDown)
+    {
+        NativeInputMethodChanged.Broadcast(CurrentInputType);
+        OnInputMethodChanged.Broadcast(CurrentInputType);
+        LastInputMethodChangeTime = FPlatformTime::Seconds();
+    }
+}
+
+void UCommonInputSubsystem::Initialize(FSubsystemCollectionBase& Collection)
+{
+    UCommonInputSettings* Settings = GetCommonInputSettings();
+    Settings->InitializeNativeInputDataCache();
+    GamepadInputType = Settings->NativeGetCurrentPlatformData().DefaultGamepadType;
+    LastInputType = CurrentInputType = Settings->NativeGetCurrentPlatformData().DefaultInputType;
+    NativeInputPreprocessor = MakeShared<FCommonInputPreprocessor>(*this);
+    FSlateApplication::Get().RegisterInputPreProcessor(NativeInputPreprocessor, 0);
+    NativePreprocessorTicker = FTicker::GetCoreTicker().AddTicker(
+        FTickerDelegate::CreateUObject(this, &UCommonInputSubsystem::NativeTickPreprocessorOrder), 0.1f);
+    IConsoleManager::Get().FindConsoleVariable(TEXT("CommonInput.ShowKeys"))->SetOnChangedCallback(
+        FConsoleVariableDelegate::CreateUObject(this, &UCommonInputSubsystem::NativeHandleShowKeysChanged));
+}
+
+void UCommonInputSubsystem::Deinitialize()
+{
+    FSlateApplication::Get().UnregisterInputPreProcessor(NativeInputPreprocessor);
+    NativeInputPreprocessor.Reset();
+    FTicker::GetCoreTicker().RemoveTicker(NativePreprocessorTicker);
+}
+
+bool UCommonInputSubsystem::NativeTickPreprocessorOrder(float DeltaTime)
+{
+    if (NativeInputPreprocessor && FSlateApplication::IsInitialized())
+    {
+        FSlateApplication& Slate = FSlateApplication::Get();
+        if (Slate.FindInputPreProcessor(NativeInputPreprocessor) != 0)
+        {
+            Slate.UnregisterInputPreProcessor(NativeInputPreprocessor);
+            Slate.RegisterInputPreProcessor(NativeInputPreprocessor, 0);
+        }
+    }
+    return true;
+}
+
+void UCommonInputSubsystem::NativeHandleShowKeysChanged(IConsoleVariable* Variable)
+{
+    NativeBroadcastInputMethodChanged();
+}
+
+void UCommonInputSubsystem::NativeSetInputTypeFilter(ECommonInputType InputType, FName Reason, bool bBlock)
+{
+    NativeInputPreprocessor->SetBlocked(InputType, Reason, bBlock);
+}
