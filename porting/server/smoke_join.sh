@@ -6,7 +6,7 @@ porting_dir=$(cd -- "$script_dir/.." && pwd)
 stage_dir="$porting_dir/generated/linux-stage/LinuxNoEditor"
 game_dir="$stage_dir/FortniteLinux"
 server="$game_dir/Binaries/Linux/FortniteLinuxServer"
-client="$stage_dir/FortniteLinux.sh"
+client="$game_dir/Binaries/Linux/FortniteLinux"
 server_log="$porting_dir/generated/dedicated-server-client-test.log"
 client_log="$porting_dir/generated/local-client-join-test.log"
 map=${1:-/Game/Maps/FortniteEmptyDedicated}
@@ -20,7 +20,7 @@ if [[ ! -x "$server" || ! -x "$client" ]]; then
     exit 2
 fi
 
-timeout 30s "$server" "$map" "${server_extra[@]}" \
+timeout --kill-after=5s 30s "$server" "$map" "${server_extra[@]}" \
     -nullrhi -nosound -unattended -port=7777 -log > "$server_log" 2>&1 &
 server_pid=$!
 trap 'kill "$server_pid" 2>/dev/null || true; wait "$server_pid" 2>/dev/null || true' EXIT
@@ -37,7 +37,7 @@ if ! rg -a -q 'IpNetDriver listening on port 7777' "$server_log"; then
 fi
 
 set +e
-timeout 20s "$client" 127.0.0.1:7777 -nullrhi -nosound -unattended -log > "$client_log" 2>&1
+timeout --kill-after=5s 20s "$client" FortniteLinux 127.0.0.1:7777 -nullrhi -nosound -unattended -log > "$client_log" 2>&1
 client_status=$?
 set -e
 if [[ $client_status -ne 0 && $client_status -ne 124 ]]; then
