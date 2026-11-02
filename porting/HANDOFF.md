@@ -1,6 +1,85 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
-## Current resume point (2026-11-02, sizing and CDO reads verified)
+## Current resume point (2026-11-02, style reconstruction verified)
+
+- Native `31aeea07` (implementation463a9b95) / Engine `87acab901` restores real
+  CommonButton style rebuild, current-style refresh, dimensions and native-to-BP
+  virtual event adapters. Strict class/property/event/optional-sound/model gates run
+  before native output. SetStyle and production initialization are still unregistered.
+  Both builds PASS157.072/168.782s with source/config/15Engine inputs stable;
+  12,732 Native source files. Generation90658 changed2/preserved12730 mtimes.
+- All93 actual-engine observations PASS: 64 sound combinations, three brush/padding
+  caches, live style precedence and SBox sizes, real MID parent/outer/all brush use,
+  legacy sound name/weak-cache copies without comparison-induced resolution, shared
+  color release/rereads/cached override decisions, temporary destruction after event
+  and dimensions, native+ProcessEvent dispatch/font observation, synchronous reentry,
+  fresh CDO/weak target after callback and non-creating missing-CDO behavior.
+  Probe objects/sounds are rooted; delayed release observations own their state and
+  use weak UObject targets. No cooked BP override, audio playback, original pixels
+  or private rendering-handle shared-control/refcount parity is established.
+- Retained11size/9IsErebus/22transform/32buttonstyle/23textblock/26bindingdata/
+  20provider/23creation/13inputtype/table421rows/30checks/eightdiagnostics PASS.
+  Root creation stays7widgets/4startup classes/19unresolved imports. Viewport remains
+  SIGSEGV(-11) before_attach. Both corrected direct-ELF joins PASS21.573/21.635s.
+- Initial joins passed but freeze58759 FAILED before copying: default client log
+  gained13,290 shutdown bytes after the wrapper's terminal receipt (283ms later).
+  Its initial SHA exactly matches an append-only prefix; original receipt/logs/script
+  and reconstructed prefix are retained in button-style-rebuild-join-race-1/.
+  No runtime process remained live when inspected; this was a launcher-shell race.
+  Maintained server/smoke_join.sh commit8c3a6353 now supervises the actual ELF with
+  preserved FortniteLinux project argument and timeout kill-after bound. Fresh joins2
+  verify every log mtime precedes end_ns; no Native rebuild or other probe rerun.
+- Frozen generated/frontend-native-evidence/button-style-rebuild-runtime-1/checkpoint.json
+  SHA256 `616c74cf7a2675467983bbcaac79a9a3c7ecfa554a64ba3a2ae4edf987595305`;
+  archive `/mnt/vibrato/fortnite-evidence/frozen-runtime/button-style-rebuild-runtime-1`:
+  105 project source pairs,15 Engine inputs,533 artifacts,18 binary rows,25 fonts.
+  Release SHA256 `adc3ddd0dd1a00bac67dec1aa04706689b9df93ba3405f07b535423738c9844d`.
+  Independent Luna audit PASS105Git/source+15Engine+533artifacts+25fonts, pinned
+  93/11/32/23/22/9 verifiers, builds/eightdiagnostics/joins/process-inodes and race
+  prefix/timing/source hashes. Binary triplets/sizes checked; giant binary/debug/
+  symbol payloads not independently rehashed. `button-style-rebuild-receipt-audit-1/`.
+- TERMINAL: build9314/stage52384/primary54571/retained+initialfreeze58759;
+  correctedjoins24190/freeze91631. Policy3/CommonUI50/runner54/generator141 and
+  original replay/84negative guards PASS. Scripts `/mnt/vibrato/fortnite-work/`
+  `{build_,stage_,run_,validate_,freeze_}button_style_rebuild*1.py` plusjoins_2.py.
+  Wrapper print labels still contain old22/26; receipts strictly require23/32.
+- POST-FREEZE GDB95152 on current31aeea07 reaches getter exec/body then same missing
+  CommonButton.SetStyle in IconTextButton.UpdateStyle Code105/opcode96, import-54.
+  Exact original branch9521/9561 not distinguished; samecallee. Source/config/binary/
+  checkpoint hashes unchanged, symbols stat-only, no core. Decode replay:
+  post-button-style-rebuild-viewport-crash-1/. No viewport or menu success.
+- NEXT complete lifecycle/callback work: button-initialize-dependency-map-1/ pins
+  five required receivers; do not bind partial no-op handlers. Base accepted click
+  selects, then fresh virtual+4d0 and+498. Base+4d0 calls BP_OnClicked, actual native
+  multicast+ad8 (NOT singlecast), dynamic OnButtonClicked(this), then virtual+508
+  analytics outputs and context lookup. Native multicast iterates reverse with lock/
+  compaction behavior; dynamic IsBound isNum>0, so dead-only lists still broadcast.
+- Important source correction: accessor143d5c530 is UWidget::GetGameInstance,
+  not owning local player. Lookup14078c7b0 maps to GI->GetSubsystem<UCommonUISubsystem>();
+  keep it even when discarded because collection fallback can cache class arrays.
+  Full replay/identity evidence: button-click-context-resolver-1/. Default+508 fills
+  GetName (FName.ToString with numeric suffix) and None/None, returns true; output
+  FString buffers are destroyed in reverse order. Base click proof: button-base-click-contract-1/.
+- Scratch button-base-click-candidate-1/ implements the two native virtual aliases,
+  real shared native multicast and GI lookup, with source/delegate-signature guards
+  and draft engine probe. It is UNINTEGRATED/unbuilt and explicitly not ready: refine
+  strictness and real world/subsystem-cache/string cleanup observations, then review.
+  It does not implement accepted-click selection, Initialize or routing virtual+498.
+- Reconciled +498 with existing panel infrastructure: CommonUISubsystem+50 is
+  CommonInputManager; manager+b8 is ActivatablePanelStack; panel+360 is the same
+  NativeActionRecords map traced by original outro1407ae640, lookup1407bdba0,
+  stride98. entry+10 is float NativeProgress; entry+28/+30 is NativeCommit instance/
+  count, matching existing CommonPanelActionNative.h. RDX stack slot atcall is the
+  reused map index, not a full FReply hidden return (would overlap saved registers).
+  Existing bool& declaration matches reflected HandleTriggeringActionCommited but
+  concrete commit delegate producer/instance link remains unproved. Do not invent
+  a signature or new separate routing state. Next bounded trace is that producer.
+- Full SetStyle body remains pending its valid weak internal lifecycle precondition;
+  no assignment-only or missing-target no-op is acceptable. All four product gates
+  remain open. Root sole Native/Engine/gen/build/stage owner; none active. Preserve
+  AGENTS.md model choices/fork_turns none/bounded rotation/economical reads and full goal.
+
+## Previous sizing and CDO checkpoint
 
 - Native `3fa4c77` / Engine `87acab901` restores source-backed internal button
   minimum width/height updates to the real SBox, preserving signed integer fields,

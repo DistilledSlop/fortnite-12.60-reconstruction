@@ -10,23 +10,23 @@ credentials in Git, and the orchestrator reviews and commits.
 
 ## Current baseline
 
-Native `3fa4c77` / Engine `87acab901` passes both builds, 11 live SBox minimum-size
-checks, 32 button-style and 23 text-block cases including seven absent-CDO paths,
-retained diagnostics and both local joins. The sizing adapters preserve real fields
-and rebuild state; style lookup now matches original non-creating CDO semantics.
-See HANDOFF.md for frozen receipts, independent audits and exact scope.
+Native `31aeea07` / Engine `87acab901` passes both builds and 93 real style-rebuild
+observations: brush/sound caches, material ownership, SBox sizing, event reentry and
+fresh post-callback reads. Retained UI/input/binding diagnostics and both joins pass.
+The join harness now waits for the actual client ELF; its earlier shell-exit log race
+is preserved separately. See HANDOFF.md for frozen receipts and independent audit.
 
-Root creation still returns seven widgets and four startup classes with 19 unresolved
-imports. Viewport attachment still crashes at CommonButton.SetStyle in
-IconTextButton.UpdateStyle. The complete style-rebuild helper candidate is ready for
-guarded integration and real-engine testing: brushes, MID, sounds, event reentry and
-fresh dimension reads. It does not register SetStyle. The original setter's complete
-chain and valid internal-button lifecycle must be available first.
+Root creation remains seven widgets/four startup classes/19 unresolved imports.
+Viewport attachment still crashes at missing CommonButton.SetStyle. Its style helpers
+are complete and verified, while internal-button initialization/click/focus/selection
+and legacy action routing remain necessary for the full setter call chain.
+The next bounded base-click candidate has source guards but still needs refinement
+and real engine validation. Use the corrected game-instance context identity.
 
-Queue rendering, production selection/input/routing, text lifecycle, original pixels,
-backend end-to-end integration and gameplay remain unfinished. All four acceptance
-gates stay open. Material compatibility remains 129/142. The separate future
-CommonActionWidget.GetDisplayText candidate remains unintegrated.
+Queue rendering, remaining input/routing and text lifecycle, original pixels, backend
+end-to-end integration and gameplay remain unfinished. All four acceptance gates stay
+open; material compatibility remains 129/142. The separate CommonActionWidget display
+text candidate remains unintegrated. Preserve the full source-client/server parity goal.
 
 ## Earlier checkpoints (historical)
 
