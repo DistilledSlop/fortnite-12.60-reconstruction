@@ -1,0 +1,248 @@
+{
+  "identity": {
+    "block_va": "0x145a0e280",
+    "class_flags": "0x1000a1",
+    "dependency_fns": [
+      "0x142eea530",
+      "0x14081de60"
+    ],
+    "package_fn": "0x142eea530",
+    "base_fn": "0x14081de60",
+    "class_noregister_fn": "0x14081ddb0"
+  },
+  "properties": [
+    {
+      "index": 0,
+      "name": "InputBrushKeySets",
+      "kind": "Array",
+      "kind_raw": "0x16",
+      "property_flags": "0x10000000010001",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 144
+    },
+    {
+      "index": 1,
+      "name": "InputBrushKeySets",
+      "kind": "Struct",
+      "kind_raw": "0x19",
+      "property_flags": "0x0",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "type_refs": {
+        "struct": "0x14081eeb0"
+      },
+      "array_inner_of": "InputBrushKeySets"
+    },
+    {
+      "index": 2,
+      "name": "InputBrushDataMap",
+      "kind": "Array",
+      "kind_raw": "0x16",
+      "property_flags": "0x10000000010001",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 128
+    },
+    {
+      "index": 3,
+      "name": "InputBrushDataMap",
+      "kind": "Struct",
+      "kind_raw": "0x19",
+      "property_flags": "0x0",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "type_refs": {
+        "struct": "0x14081ee80"
+      },
+      "array_inner_of": "InputBrushDataMap"
+    }
+  ],
+  "structs": {
+    "0x14081ee80": {
+      "block_va": "0x14783da30",
+      "name": "CommonInputKeyBrushConfiguration",
+      "construct_fns": [
+        "0x14081ee80"
+      ],
+      "package_fn": "0x14081de60",
+      "package": "/Script/CommonInput",
+      "super_fn": null,
+      "struct_ops_fn": "0x14081dca0",
+      "size": 160,
+      "align": 8,
+      "struct_flags": "0x201",
+      "struct_flag_names": [
+        "Native",
+        "RequiredAPI"
+      ],
+      "object_flags": "0x45",
+      "struct_ops": {
+        "vtable_va": "0x145a0f640",
+        "ops_size": 160,
+        "ops_align": 8,
+        "size_matches": true,
+        "align_matches": true,
+        "traits": {
+          "HasNoopConstructor": false,
+          "HasZeroConstructor": false,
+          "HasDestructor": true,
+          "HasSerializer": false,
+          "HasStructuredSerializer": false,
+          "HasPostSerialize": false,
+          "HasNetSerializer": false,
+          "HasNetSharedSerialization": false,
+          "HasNetDeltaSerializer": false,
+          "HasPostScriptConstruct": false,
+          "IsPlainOldData": false,
+          "HasCopy": true,
+          "HasIdentical": false,
+          "HasExportTextItem": false,
+          "HasImportTextItem": false,
+          "HasAddStructReferencedObjects": false,
+          "HasSerializeFromMismatchedTag": false,
+          "HasStructuredSerializeFromMismatchedTag": false,
+          "HasGetTypeHash": false
+        },
+        "unclassified_slots": []
+      },
+      "properties": [
+        {
+          "index": 0,
+          "name": "KeyBrush",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000000000001",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 24,
+          "type_refs": {
+            "struct": "0x142fdb590"
+          }
+        },
+        {
+          "index": 1,
+          "name": "Key",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000000000001",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "struct": "0x142f1c310"
+          }
+        }
+      ],
+      "num_properties": 2
+    },
+    "0x14081eeb0": {
+      "block_va": "0x14783d960",
+      "name": "CommonInputKeySetBrushConfiguration",
+      "construct_fns": [
+        "0x14081eeb0"
+      ],
+      "package_fn": "0x14081de60",
+      "package": "/Script/CommonInput",
+      "super_fn": null,
+      "struct_ops_fn": "0x14081dc60",
+      "size": 152,
+      "align": 8,
+      "struct_flags": "0x201",
+      "struct_flag_names": [
+        "Native",
+        "RequiredAPI"
+      ],
+      "object_flags": "0x45",
+      "struct_ops": {
+        "vtable_va": "0x145a0f510",
+        "ops_size": 152,
+        "ops_align": 8,
+        "size_matches": true,
+        "align_matches": true,
+        "traits": {
+          "HasNoopConstructor": false,
+          "HasZeroConstructor": false,
+          "HasDestructor": true,
+          "HasSerializer": false,
+          "HasStructuredSerializer": false,
+          "HasPostSerialize": false,
+          "HasNetSerializer": false,
+          "HasNetSharedSerialization": false,
+          "HasNetDeltaSerializer": false,
+          "HasPostScriptConstruct": false,
+          "IsPlainOldData": false,
+          "HasCopy": true,
+          "HasIdentical": false,
+          "HasExportTextItem": false,
+          "HasImportTextItem": false,
+          "HasAddStructReferencedObjects": false,
+          "HasSerializeFromMismatchedTag": false,
+          "HasStructuredSerializeFromMismatchedTag": false,
+          "HasGetTypeHash": false
+        },
+        "unclassified_slots": []
+      },
+      "properties": [
+        {
+          "index": 0,
+          "name": "KeyBrush",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000000000001",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 16,
+          "type_refs": {
+            "struct": "0x142fdb590"
+          }
+        },
+        {
+          "index": 1,
+          "name": "Keys",
+          "kind": "Array",
+          "kind_raw": "0x16",
+          "property_flags": "0x10000000000001",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0
+        },
+        {
+          "index": 2,
+          "name": "Keys",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x0",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "struct": "0x142f1c310"
+          },
+          "array_inner_of": "Keys"
+        }
+      ],
+      "num_properties": 3
+    }
+  }
+}
