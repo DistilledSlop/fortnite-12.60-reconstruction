@@ -1,5 +1,20 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Animated queue batch: generated, client validation pending (2026-11-02)
+
+common_animated_switcher_runtime is integrated through the generator: actual
+SCommonAnimatedSwitcher, container constructor/rebuild/release, weak animation
+target/timer/reentry, original visual transforms/opacity/logs, displayed widget
+callback, deferred Slate-reference ticker and reflected ClearWidgets. The queue
+transition reuses NativeWidgetDeactivated; no duplicate delegate was added.
+Generation/source/type gates PASS,2 Native files changed and3 support files
+added,12761 unchanged mtimes restored. This UI-only batch has no build/runtime
+PASS yet; checkpoint10d2e923 below remains the latest built baseline.
+Next commands /tmp/build_frontend_routing_9.py then
+/tmp/run_frontend_routing_root_9.py; no unchanged server/join repetition needed.
+Queue AddWidget/RemoveWidget acquisition and complete normal startup remain
+unimplemented. Root owns Native/generator/Engine/build/stage. All4 gates open.
+
 ## Connected routing/loading checkpoint: both builds and default join pass (2026-11-02)
 
 Previous work made progress; user explicitly requests larger related integration

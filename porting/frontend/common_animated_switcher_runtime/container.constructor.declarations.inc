@@ -1,0 +1,1 @@
+UCommonActivatableWidgetContainerBase(const FObjectInitializer& ObjectInitializer);

@@ -1,0 +1,132 @@
+// Called by the real container RebuildWidget after creating NativeTransitionSpacer1b8.
+// Its caller owns constructing the overlay, adding its switcher/spacer slots,
+// and then appending the initial SNullWidget slot to NativeAnimatedSwitcher1c8.
+void UCommonActivatableWidgetContainerBase::NativeCreateAnimatedSwitcher1407e7d70()
+{
+    SAssignNew(NativeAnimatedSwitcher1c8, SCommonAnimatedSwitcher)
+        .WidgetIndex(0)
+        .TransitionType(TransitionType)
+        .TransitionCurve(TransitionCurveType)
+        .TransitionDuration(TransitionDuration)
+        .OnActiveIndexChanged(FCommonSwitcherIndexChanged::CreateUObject(
+            this, &UCommonActivatableWidgetContainerBase::NativeSwitcherIndexChanged1407c61f0))
+        .OnTransitioningChanged(FCommonSwitcherTransitioningChanged::CreateUObject(
+            this, &UCommonActivatableWidgetContainerBase::NativeSwitcherTransitioningChanged1407cbc30));
+}
+
+bool UCommonActivatableWidgetContainerBase::NativeHasSwitcher1c8() const
+{
+    return NativeAnimatedSwitcher1c8.IsValid();
+}
+
+int32 UCommonActivatableWidgetContainerBase::NativeSwitcherIndex1407c19a0() const
+{
+    return NativeAnimatedSwitcher1c8->GetActiveWidgetIndex();
+}
+
+void UCommonActivatableWidgetContainerBase::NativeSwitcherTransition140800440(int32 Index, bool bInstantTransition)
+{
+    NativeAnimatedSwitcher1c8->TransitionToIndex(Index, bInstantTransition);
+}
+
+void UCommonActivatableWidgetContainerBase::NativeSwitcherTransitioningChanged1407cbc30(bool bTransitioning)
+{
+    NativeTransitionSpacer1b8->SetVisibility(bTransitioning ? EVisibility::Visible : EVisibility::Collapsed);
+}
+
+TSharedRef<SWidget> UCommonActivatableWidgetContainerBase::RebuildWidget()
+{
+    SAssignNew(NativeTransitionSpacer1b8, SSpacer)
+        .Visibility(EVisibility::Collapsed);
+    NativeCreateAnimatedSwitcher1407e7d70();
+    SAssignNew(NativeContainerOverlay1a8, SOverlay)
+        + SOverlay::Slot()[NativeAnimatedSwitcher1c8.ToSharedRef()]
+        + SOverlay::Slot()[NativeTransitionSpacer1b8.ToSharedRef()];
+    NativeAnimatedSwitcher1c8->AddSlot()[SNullWidget::NullWidget];
+    return NativeContainerOverlay1a8.ToSharedRef();
+}
+
+void UCommonActivatableWidgetContainerBase::ReleaseSlateResources(bool bReleaseChildren)
+{
+    Super::ReleaseSlateResources(bReleaseChildren);
+    NativeContainerOverlay1a8.Reset();
+    NativeTransitionSpacer1b8.Reset();
+    NativeAnimatedSwitcher1c8.Reset();
+    GeneratedWidgetsPool.ReleaseAllSlateResources();
+}
+
+namespace
+{
+UCommonActivatableWidget* NativeGetActivatableFromSlate1407a8ae0(const TSharedPtr<SWidget>& Widget)
+{
+    if (!Widget.IsValid() || Widget == SNullWidget::NullWidget || Widget->GetType() != FName(TEXT("SObjectWidget")))
+        return nullptr;
+    return Cast<UCommonActivatableWidget>(StaticCastSharedPtr<SObjectWidget>(Widget)->GetWidgetObject());
+}
+}
+
+void UCommonActivatableWidgetContainerBase::NativeRemoveSlateWidget1407eefa0(TSharedRef<SWidget> Widget)
+{
+    if (UCommonActivatableWidget* Object = NativeGetActivatableFromSlate1407a8ae0(Widget))
+    {
+        GeneratedWidgetsPool.Release(Object, true);
+        WidgetList.Remove(Object);
+    }
+    if (NativeAnimatedSwitcher1c8->RemoveSlot(Widget) != INDEX_NONE)
+    {
+        NativeDeferredSlateWidgets1d8.Add(Widget);
+        if (NativeDeferredSlateWidgets1d8.Num() == 1)
+        {
+            FTicker::GetCoreTicker().AddTicker(FTickerDelegate::CreateWeakLambda(this,
+                [this](float DeltaTime) { return NativeReleaseDeferredSlate1407bc5a0(DeltaTime); }), 0.0f);
+        }
+    }
+}
+
+bool UCommonActivatableWidgetContainerBase::NativeReleaseDeferredSlate1407bc5a0(float DeltaTime)
+{
+    NativeDeferredSlateWidgets1d8.Reset();
+    return false;
+}
+
+void UCommonActivatableWidgetContainerBase::NativeDisplayedWidgetDeactivated1407c65f0(UCommonActivatableWidget* Widget)
+{
+    if (Widget == DisplayedWidget && NativeAnimatedSwitcher1c8.IsValid()
+        && NativeAnimatedSwitcher1c8->GetActiveWidgetIndex() > 0)
+    {
+        DisplayedWidget->NativeWidgetDeactivated.RemoveAll(this);
+        NativeAnimatedSwitcher1c8->TransitionToIndex(NativeAnimatedSwitcher1c8->GetActiveWidgetIndex() - 1, false);
+    }
+}
+
+void UCommonActivatableWidgetContainerBase::NativeSwitcherIndexChanged1407c61f0(int32 Index)
+{
+    while (NativeAnimatedSwitcher1c8->GetNumWidgets() - 1 > Index)
+    {
+        TSharedPtr<SWidget> Last = NativeAnimatedSwitcher1c8->GetWidget(NativeAnimatedSwitcher1c8->GetNumWidgets() - 1);
+        if (Last.IsValid())
+            NativeRemoveSlateWidget1407eefa0(Last.ToSharedRef());
+    }
+    if (DisplayedWidget && NativePendingDeactivation1e8)
+    {
+        TSharedPtr<SWidget> SlateWidget = DisplayedWidget->GetCachedWidget();
+        if (SlateWidget.IsValid())
+            NativeRemoveSlateWidget1407eefa0(SlateWidget.ToSharedRef());
+    }
+    NativePendingDeactivation1e8 = false;
+    DisplayedWidget = NativeGetActivatableFromSlate1407a8ae0(NativeAnimatedSwitcher1c8->GetActiveWidget());
+    if (DisplayedWidget)
+    {
+        SetVisibility(ESlateVisibility::SelfHitTestInvisible);
+        UCommonActivatableWidget* CapturedWidget = DisplayedWidget;
+        DisplayedWidget->NativeWidgetDeactivated.AddWeakLambda(this, [this, CapturedWidget]() {
+            NativeDisplayedWidgetDeactivated1407c65f0(CapturedWidget);
+        });
+        DisplayedWidget->ActivateWidget();
+    }
+    else
+    {
+        SetVisibility(ESlateVisibility::Collapsed);
+    }
+    NativeDisplayedWidgetChanged1f0.Broadcast(DisplayedWidget);
+}

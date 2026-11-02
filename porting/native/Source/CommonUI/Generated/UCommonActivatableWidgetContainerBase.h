@@ -7,9 +7,13 @@
 #include "Components/Widget.h"
 
 #include "Blueprint/UserWidgetPool.h"
+#include "CommonAnimatedSwitcherNative.h"
 #include "ECommonSwitcherTransition.h"
 #include "ETransitionCurve.h"
 
+class SCommonAnimatedSwitcher;
+class SOverlay;
+class SSpacer;
 class UCommonActivatableWidget;
 
 #include "UCommonActivatableWidgetContainerBase.generated.h"
@@ -44,5 +48,42 @@ public:
 	UPROPERTY(Transient)
 	FUserWidgetPool GeneratedWidgetsPool;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x1a8): not a UPROPERTY, not replicated.
+	TSharedPtr<SOverlay> NativeContainerOverlay1a8;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x1b8): not a UPROPERTY, not replicated.
+	TSharedPtr<SSpacer> NativeTransitionSpacer1b8;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x1c8): not a UPROPERTY, not replicated.
+	TSharedPtr<SCommonAnimatedSwitcher> NativeAnimatedSwitcher1c8;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x1d8): not a UPROPERTY, not replicated.
+	TArray<TSharedPtr<SWidget>> NativeDeferredSlateWidgets1d8;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x1e8): not a UPROPERTY, not replicated.
+	bool NativePendingDeactivation1e8 = false;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x1f0): not a UPROPERTY, not replicated.
+	FNativeDisplayedWidgetChanged NativeDisplayedWidgetChanged1f0;
+
+	UFUNCTION(BlueprintCallable)
+	void ClearWidgets();
+
+UCommonActivatableWidgetContainerBase(const FObjectInitializer& ObjectInitializer);
+public:
+void NativeCreateAnimatedSwitcher1407e7d70();
+bool NativeHasSwitcher1c8() const;
+int32 NativeSwitcherIndex1407c19a0() const;
+void NativeSwitcherTransition140800440(int32 Index, bool bInstantTransition);
+void NativeSwitcherIndexChanged1407c61f0(int32 Index);
+void NativeSwitcherTransitioningChanged1407cbc30(bool bTransitioning);
+void NativeSetActiveIndex1407f9d70(int32 Index, bool bInstantTransition);
+void NativeRemoveSlateWidget1407eefa0(TSharedRef<SWidget> Widget);
+bool NativeReleaseDeferredSlate1407bc5a0(float DeltaTime);
+void NativeDisplayedWidgetDeactivated1407c65f0(UCommonActivatableWidget* Widget);
+virtual void ReleaseSlateResources(bool bReleaseChildren) override;
+protected:
+virtual TSharedRef<SWidget> RebuildWidget() override;
+public:
 };
 

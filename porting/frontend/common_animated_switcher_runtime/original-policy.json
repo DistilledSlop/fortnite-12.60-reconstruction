@@ -1,0 +1,480 @@
+{
+  "classes": {
+    "UCommonActivatableWidgetContainerBase": {
+      "identity": {
+        "block_va": "0x145a00960",
+        "class_flags": "0xb000a1",
+        "dependency_fns": [
+          "0x143dc2990",
+          "0x140812ee0"
+        ],
+        "package_fn": "0x143dc2990",
+        "base_fn": "0x140812ee0",
+        "class_noregister_fn": "0x140806210"
+      },
+      "properties": [
+        {
+          "index": 0,
+          "name": "GeneratedWidgetsPool",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x20088000002000",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 296,
+          "type_refs": {
+            "struct": "0x143dc4540"
+          }
+        },
+        {
+          "index": 1,
+          "name": "DisplayedWidget",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x20080000082008",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 288,
+          "type_refs": {
+            "class": "0x1408060a0"
+          }
+        },
+        {
+          "index": 2,
+          "name": "WidgetList",
+          "kind": "Array",
+          "kind_raw": "0x16",
+          "property_flags": "0x20088000002008",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 272
+        },
+        {
+          "index": 3,
+          "name": "WidgetList",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x80008",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "class": "0x1408060a0"
+          },
+          "array_inner_of": "WidgetList"
+        },
+        {
+          "index": 4,
+          "name": "TransitionDuration",
+          "kind": "Float",
+          "kind_raw": "0xa",
+          "property_flags": "0x20080000000001",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 268
+        },
+        {
+          "index": 5,
+          "name": "TransitionCurveType",
+          "kind": "Enum",
+          "kind_raw": "0x1e",
+          "property_flags": "0x20080000000001",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 265,
+          "type_refs": {
+            "enum": "0x140817fe0"
+          }
+        },
+        {
+          "index": 6,
+          "name": "UnderlyingType",
+          "kind": "Byte",
+          "kind_raw": "0x0",
+          "property_flags": "0x0",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "enum_underlying_of": "TransitionCurveType"
+        },
+        {
+          "index": 7,
+          "name": "TransitionType",
+          "kind": "Enum",
+          "kind_raw": "0x1e",
+          "property_flags": "0x20080000000001",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 264,
+          "type_refs": {
+            "enum": "0x140817f80"
+          }
+        },
+        {
+          "index": 8,
+          "name": "UnderlyingType",
+          "kind": "Byte",
+          "kind_raw": "0x0",
+          "property_flags": "0x0",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "enum_underlying_of": "TransitionType"
+        }
+      ],
+      "clear_function": {
+        "name": "ClearWidgets",
+        "create_func": "0x1408066b0",
+        "flags": [
+          "0x4020401"
+        ],
+        "replicated_function": false,
+        "net_roles": [],
+        "outer_fn": "0x140806650",
+        "params": []
+      },
+      "clear_exec": {
+        "exec_addr": "0x14080a1b0",
+        "flags": "0x4020401",
+        "params": [],
+        "create_func": "0x1408066b0",
+        "source": "lea"
+      }
+    },
+    "UCommonActivatableWidgetQueue": {
+      "identity": {
+        "block_va": "0x145a00a50",
+        "class_flags": "0xb000a0",
+        "dependency_fns": [
+          "0x140806650",
+          "0x140812ee0"
+        ],
+        "package_fn": "0x140806650",
+        "base_fn": "0x140812ee0",
+        "class_noregister_fn": "0x140806590"
+      },
+      "properties": []
+    },
+    "UCommonActivatableWidget": {
+      "identity": {
+        "block_va": "0x145a004e0",
+        "class_flags": "0xb010a0",
+        "dependency_fns": [
+          "0x140816d40",
+          "0x140812ee0"
+        ],
+        "package_fn": "0x140816d40",
+        "base_fn": "0x140812ee0",
+        "class_noregister_fn": "0x140805ec0"
+      },
+      "properties": [
+        {
+          "index": 0,
+          "name": "bIsActive",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x40000000000014",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 728,
+          "bitfield": true,
+          "set_bit_fn": "0x140777600",
+          "offset": null
+        },
+        {
+          "index": 1,
+          "name": "BP_OnWidgetDeactivated",
+          "kind": "InlineMulticastDelegate",
+          "kind_raw": "0x1b",
+          "property_flags": "0x40000010080000",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 632,
+          "type_refs": {
+            "signature": "0x1408098a0"
+          }
+        },
+        {
+          "index": 2,
+          "name": "BP_OnWidgetActivated",
+          "kind": "InlineMulticastDelegate",
+          "kind_raw": "0x1b",
+          "property_flags": "0x40000010080000",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 616,
+          "type_refs": {
+            "signature": "0x1408098a0"
+          }
+        },
+        {
+          "index": 3,
+          "name": "DeactivatedVisibility",
+          "kind": "Enum",
+          "kind_raw": "0x1e",
+          "property_flags": "0x40000000000001",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 608,
+          "type_refs": {
+            "enum": "0x143dbad80"
+          }
+        },
+        {
+          "index": 4,
+          "name": "UnderlyingType",
+          "kind": "Byte",
+          "kind_raw": "0x0",
+          "property_flags": "0x0",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "enum_underlying_of": "DeactivatedVisibility"
+        },
+        {
+          "index": 5,
+          "name": "bSetVisibilityOnDeactivated",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x40000000000001",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 728,
+          "bitfield": true,
+          "set_bit_fn": "0x140808fd0",
+          "offset": null
+        },
+        {
+          "index": 6,
+          "name": "ActivatedVisibility",
+          "kind": "Enum",
+          "kind_raw": "0x1e",
+          "property_flags": "0x40000000000001",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 606,
+          "type_refs": {
+            "enum": "0x143dbad80"
+          }
+        },
+        {
+          "index": 7,
+          "name": "UnderlyingType",
+          "kind": "Byte",
+          "kind_raw": "0x0",
+          "property_flags": "0x0",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "enum_underlying_of": "ActivatedVisibility"
+        },
+        {
+          "index": 8,
+          "name": "bSetVisibilityOnActivated",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x40000000000001",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 728,
+          "bitfield": true,
+          "set_bit_fn": "0x140808fc0",
+          "offset": null
+        },
+        {
+          "index": 9,
+          "name": "bAutoRestoreFocus",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x20080000000001",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 728,
+          "bitfield": true,
+          "set_bit_fn": "0x140808ee0",
+          "offset": null
+        },
+        {
+          "index": 10,
+          "name": "bIsModal",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x20080000000001",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 728,
+          "bitfield": true,
+          "set_bit_fn": "0x140808f90",
+          "offset": null
+        },
+        {
+          "index": 11,
+          "name": "bSupportsActivationFocus",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x20080000000001",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 728,
+          "bitfield": true,
+          "set_bit_fn": "0x140809010",
+          "offset": null
+        },
+        {
+          "index": 12,
+          "name": "bIsBackHandler",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x20080000000001",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 728,
+          "bitfield": true,
+          "set_bit_fn": "0x140808f80",
+          "offset": null
+        },
+        {
+          "index": 13,
+          "name": "bAutoActivate",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x20080000000001",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 728,
+          "bitfield": true,
+          "set_bit_fn": "0x140808ed0",
+          "offset": null
+        }
+      ]
+    }
+  },
+  "enums": {
+    "ECommonSwitcherTransition": {
+      "block_va": "0x14783cb48",
+      "name": "ECommonSwitcherTransition",
+      "cpp_type": "ECommonSwitcherTransition",
+      "construct_fns": [
+        "0x140817f80"
+      ],
+      "package_fn": "0x140812ee0",
+      "package": "/Script/CommonUI",
+      "cpp_form": "EnumClass",
+      "dynamic_type": "NotDynamic",
+      "enumerators": [
+        {
+          "name": "ECommonSwitcherTransition::FadeOnly",
+          "value": 0
+        },
+        {
+          "name": "ECommonSwitcherTransition::Horizontal",
+          "value": 1
+        },
+        {
+          "name": "ECommonSwitcherTransition::Vertical",
+          "value": 2
+        },
+        {
+          "name": "ECommonSwitcherTransition::Zoom",
+          "value": 3
+        }
+      ]
+    },
+    "ETransitionCurve": {
+      "block_va": "0x14783cb10",
+      "name": "ETransitionCurve",
+      "cpp_type": "ETransitionCurve",
+      "construct_fns": [
+        "0x140817fe0"
+      ],
+      "package_fn": "0x140812ee0",
+      "package": "/Script/CommonUI",
+      "cpp_form": "EnumClass",
+      "dynamic_type": "NotDynamic",
+      "enumerators": [
+        {
+          "name": "ETransitionCurve::Linear",
+          "value": 0
+        },
+        {
+          "name": "ETransitionCurve::QuadIn",
+          "value": 1
+        },
+        {
+          "name": "ETransitionCurve::QuadOut",
+          "value": 2
+        },
+        {
+          "name": "ETransitionCurve::QuadInOut",
+          "value": 3
+        },
+        {
+          "name": "ETransitionCurve::CubicIn",
+          "value": 4
+        },
+        {
+          "name": "ETransitionCurve::CubicOut",
+          "value": 5
+        },
+        {
+          "name": "ETransitionCurve::CubicInOut",
+          "value": 6
+        }
+      ]
+    }
+  }
+}

@@ -2202,6 +2202,10 @@ _lazy_image_spec = _common_activation_import.spec_from_file_location(
     "common_lazy_image_connected_runtime_policy", os.path.join(os.path.dirname(__file__), "frontend", "common_lazy_image_connected_runtime", "policy.py"))
 _lazy_image_policy = _common_activation_import.module_from_spec(_lazy_image_spec)
 _lazy_image_spec.loader.exec_module(_lazy_image_policy)
+_animated_switcher_spec = _common_activation_import.spec_from_file_location(
+    "common_animated_switcher_runtime_policy", os.path.join(os.path.dirname(__file__), "frontend", "common_animated_switcher_runtime", "policy.py"))
+_animated_switcher_policy = _common_activation_import.module_from_spec(_animated_switcher_spec)
+_animated_switcher_spec.loader.exec_module(_animated_switcher_policy)
 _route_spec = _common_activation_import.spec_from_file_location(
     "common_action_route_connected_runtime_policy", os.path.join(os.path.dirname(__file__), "frontend", "common_action_route_connected_runtime", "policy.py"))
 _route_policy = _common_activation_import.module_from_spec(_route_spec)
@@ -2385,6 +2389,8 @@ def build_class_promoted(block, name, resolver, parent_entry, owner_fns, snippet
     model = _commonui_module_policy.apply(model, block, owner_fns)
     model = _root_slate_policy.apply(model, block, owner_fns)
     model = _lazy_image_policy.apply(model, block, owner_fns, native_execs)
+    model = _animated_switcher_policy.apply(model, block, owner_fns, native_execs,
+        proven_dependencies=(splice_ctx or {}).get('animated_switcher_dependencies'))
     model = _widget_route_policy.apply(model, block, owner_fns)
     model = _route_policy.apply(model, block, owner_fns)
     model = _metadata_policy.apply(model, block, owner_fns)
@@ -3161,6 +3167,7 @@ def render_promoted_header(model, api, parent_include, source_label):
     lines.extend(_commonui_module_policy.declarations(model).splitlines())
     lines.extend(_root_slate_policy.declarations(model).splitlines())
     lines.extend(_lazy_image_policy.declarations(model).splitlines())
+    lines.extend(_animated_switcher_policy.declarations(model).splitlines())
     lines.extend(_widget_route_policy.declarations(model).splitlines())
     lines.extend(_route_policy.declarations(model).splitlines())
     lines.extend(_metadata_policy.declarations(model).splitlines())
@@ -3317,6 +3324,7 @@ def render_promoted_cpp(model, source_label):
     result = "\n".join(lines) + "\n"
     if model.get("source_context_phases"):
         result += BLUEPRINT_CONTEXT_PHASE_BODIES
+    result += _animated_switcher_policy.definitions(model)
     return result + _common_activation_policy.definitions(model) + _current_input_type_policy.definitions(model) + _fort_globals_policy.definitions(model) + _button_style_policy.definitions(model) + _button_click_policy.definitions(model) + _button_double_click_policy.definitions(model) + _button_selection_policy.definitions(model) + _input_settings_policy.definitions(model) + _input_cache_policy.definitions(model) + _action_widget_policy.gamepad_definitions(model) + _action_widget_policy.icon_definitions(model) + _action_receivers_policy.definitions(model) + _action_slate_policy.definitions(model) + _button_focus_policy.definitions(model) + _button_initialize_policy.definitions(model) + _button_producers_policy.definitions(model) + _button_set_style_policy.definitions(model) + _border_style_policy.definitions(model) + _global_ui_priority_policy.definitions(model) + _global_ui_zone_policy.definitions(model) + _notification_image_policy.definitions(model) + _progress_modal_policy.definitions(model) + _commonui_module_policy.definitions(model) + _root_slate_policy.definitions(model) + _lazy_image_policy.definitions(model) + _widget_route_policy.definitions(model) + _route_policy.definitions(model) + _metadata_policy.definitions(model) + _modality_policy.definitions(model) + _cursor_settings_policy.definitions(model)
 
 
@@ -3587,12 +3595,18 @@ def promote(args):
     gate.name_clashes = engine_macro_names(args.engine_root)
     resolver.gate = gate
     guarded_native_execs = {}
+    if 'UCommonActivatableWidgetContainerBase' in listed:
+        guarded_native_execs = load_json(os.path.join(os.path.dirname(args.reflection), 'native_funcs.json'))
     if {'UCommonActivatablePanel', 'UCommonInputSubsystem', 'UCommonActionWidget', 'UCommonBorder', 'UCommonButton', 'UCommonTextBlock', 'UFortGlobals', 'UFortGlobalUIContext', 'UFortUINotification', 'UFortProgressModal', 'UCommonLazyImage'} & set(listed):
         guarded_native_execs = load_json(os.path.join(os.path.dirname(args.reflection), 'native_funcs.json'))
     if 'UCommonLazyImage' in listed:
         _lazy_image_policy.validate_classes(blocks_by_va, name_to_block, guarded_native_execs)
     lazy_image_sources = (_lazy_image_policy.sources(blocks_by_va, name_to_block)
                           if 'UCommonLazyImage' in listed else None)
+    animated_switcher_sources = None
+    if 'UCommonActivatableWidgetContainerBase' in listed:
+        _animated_switcher_policy.validate_types(gate)
+        animated_switcher_sources = _animated_switcher_policy.sources(blocks_by_va, name_to_block, guarded_native_execs)
     if 'UCommonInputSubsystem' in listed:
         _modality_policy.validate_classes(blocks_by_va, name_to_block)
         _modality_policy.validate_types(gate)
@@ -3681,6 +3695,10 @@ def promote(args):
                            if n not in listed and (parents.get(b) or {}).get("package") in PROMOTE_PACKAGES},
     }
     splice_done, splice_rejects = [], []
+    if animated_switcher_sources:
+        if 'UCommonActivatableWidget' not in listed:
+            raise ValueError('animated switcher requires generated activatable widget lifecycle')
+        splice_ctx['animated_switcher_dependencies'] = _animated_switcher_policy.REQUIRED_DEPENDENCIES
     # struct_net entries reach the gate before pass 1 builds any struct. A second entry for one struct is refused (below).
     gate.struct_ctx = splice_ctx
     for entry in struct_entries:
@@ -3704,12 +3722,13 @@ def promote(args):
         model = build_class_promoted(blocks_by_va[block], name, resolver, parents[block], owner_fns,
                                      snippets_by_class.get(name, []), splice_ctx,
                                      native_execs=guarded_native_execs.get(name) if name in
-                                 ("UCommonActivatablePanel", "UCommonInputSubsystem", "UCommonActionWidget", "UCommonButton", "UCommonTextBlock", "UFortGlobals", "UFortGlobalUIContext", "UFortUINotification", "UCommonLazyImage") else None)
+                                 ("UCommonActivatablePanel", "UCommonInputSubsystem", "UCommonActionWidget", "UCommonButton", "UCommonTextBlock", "UFortGlobals", "UFortGlobalUIContext", "UFortUINotification", "UCommonLazyImage", "UCommonActivatableWidgetContainerBase") else None)
         model["includes"] = sorted(set(own_includes(gate, model["used"], package))
                                    | set(model["splice"].get("header_includes", set())))
         _route_policy.configure_model(model)
         _widget_route_policy.configure_model(model)
         _modality_policy.configure_model(model)
+        _animated_switcher_policy.configure_model(model)
         if name == 'UCommonInputControllerData':
             _controller_brush_policy.validate_model(model)
         if model.get('common_input_settings_cache_runtime'):
@@ -3892,6 +3911,14 @@ def promote(args):
                 splice_rejects.append({"entry": "%s::%s" % (cls, e["function"]), "kind": e["kind"],
                                        "reason": "class is not generated (not in the native class set, or an interface)"})
     outputs = {n: (h, c) for n, _module, h, c in class_outputs}
+    if animated_switcher_sources:
+        activation_model = next(m for m in class_models if m['name'] == 'UCommonActivatableWidget')
+        if not activation_model.get('common_activation_runtime'):
+            raise ValueError('animated switcher activation/deactivation runtime missing')
+        activation_header, activation_cpp = outputs['UCommonActivatableWidget']
+        if ('FCommonWidgetActivationNative NativeWidgetDeactivated;' not in activation_header
+                or 'NativeWidgetDeactivated.Broadcast();' not in activation_cpp):
+            raise ValueError('animated switcher actual deactivation delegate missing')
     if 'UCommonButton' in listed:
         click_delegate = gate.info('0x140809810')
         if click_delegate is None or click_delegate.header_name not in texts:
@@ -3939,6 +3966,7 @@ def promote(args):
             *outputs['UCommonLazyImage'])
     for model in class_models:
         _route_policy.validate_output(model, *outputs[model['name']])
+        _animated_switcher_policy.validate_output(model, *outputs[model['name']])
         _modality_policy.validate_rendered(model, *outputs[model['name']])
         _cursor_settings_policy.validate_output(model, *outputs[model['name']])
         if model.get('activatable_route_bridge_runtime'):
@@ -3962,6 +3990,8 @@ def promote(args):
             with open(os.path.join(args.source_root, 'CommonUI', 'Generated', filename), 'w', encoding='utf-8', newline='\n') as fh:
                 fh.write(text)
     routing_sources = {}
+    if animated_switcher_sources:
+        routing_sources.update(animated_switcher_sources)
     if 'UCommonUIActionRouter' in generated_names:
         routing_sources.update(_route_policy.merged_sources())
     if 'UCommonActivatableWidget' in generated_names:
