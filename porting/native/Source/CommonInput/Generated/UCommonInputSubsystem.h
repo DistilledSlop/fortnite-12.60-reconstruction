@@ -55,6 +55,9 @@ public:
 	UPROPERTY(Transient)
 	bool bIsGamepadSimulatedClick;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	ECommonInputType GetCurrentInputType() const;
+
 public:
     FCommonInputNativeMethodChanged NativeInputMethodChanged;
 };
