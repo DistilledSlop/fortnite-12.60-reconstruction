@@ -1,0 +1,138 @@
+{
+  "owner_block": "0x14641a2c0",
+  "owner_noregister": "0x14295ff10",
+  "function": {
+    "name": "IsMobileGame",
+    "create_func": "0x14295ed90",
+    "flags": [
+      "0x14022401",
+      "0x14022403"
+    ],
+    "replicated_function": null,
+    "note": "ambiguous: several FFunctionParams share this name pointer",
+    "params_note": "ambiguous: candidates disagree on parameter table",
+    "candidates": [
+      {
+        "owning_class": null,
+        "outer_fn": "0x142931bc0",
+        "flags": "0x14022401",
+        "nprop": 2,
+        "params": [
+          {
+            "index": 0,
+            "name": "ReturnValue",
+            "kind": "Bool",
+            "kind_raw": "0x2c",
+            "property_flags": "0x10000000000580",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "element_size": 1,
+            "size_of_outer": 16,
+            "bitfield": true,
+            "set_bit_fn": "0x14070aae0",
+            "offset": null
+          },
+          {
+            "index": 1,
+            "name": "WorldContextObject",
+            "kind": "Object",
+            "kind_raw": "0x12",
+            "property_flags": "0x10000000000082",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 0,
+            "type_refs": {
+              "class": "0x142eea520"
+            }
+          }
+        ]
+      },
+      {
+        "owning_class": null,
+        "outer_fn": "0x142960a00",
+        "flags": "0x14022403",
+        "nprop": 2,
+        "params": [
+          {
+            "index": 0,
+            "name": "ReturnValue",
+            "kind": "Bool",
+            "kind_raw": "0x2c",
+            "property_flags": "0x10000000000580",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "element_size": 1,
+            "size_of_outer": 16,
+            "bitfield": true,
+            "set_bit_fn": "0x14070aae0",
+            "offset": null
+          },
+          {
+            "index": 1,
+            "name": "WorldContextObject",
+            "kind": "Object",
+            "kind_raw": "0x12",
+            "property_flags": "0x10000000000082",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 0,
+            "type_refs": {
+              "class": "0x142eea520"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "exec": {
+    "exec_addr": "0x1429729a0",
+    "flags": "0x14022403",
+    "params": [
+      {
+        "index": 0,
+        "name": "ReturnValue",
+        "kind": "Bool",
+        "kind_raw": "0x2c",
+        "property_flags": "0x10000000000580",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "element_size": 1,
+        "size_of_outer": 16,
+        "bitfield": true,
+        "offset": null
+      },
+      {
+        "index": 1,
+        "name": "WorldContextObject",
+        "kind": "Object",
+        "kind_raw": "0x12",
+        "property_flags": "0x10000000000082",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 0,
+        "type_refs": {
+          "class": "0x142eea520"
+        }
+      }
+    ],
+    "create_func": "0x14295ed90",
+    "source": "lea"
+  },
+  "image_base": "0x140000000",
+  "spans": {
+    "0x1429729a0": "48895c24084889742418574883ec2033ff498bf0488bda48897c2438488bca48397a207410488b52184c8d442438e81d735600eb1c4c8b8280000000498b402048898280000000488d542438e82f735600488b4320488b4c24384885c0400f95c74803f848897b20e8d3d7d0fd488b5c24308806488b7424404883c4205fc3",
+    "0x1406801e0": "32c0c3"
+  }
+}

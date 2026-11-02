@@ -24,8 +24,17 @@ normal null-parent return and original MID factory/flag setting. Existing caller
 use the None default. Native function declaration and implementation change
 coherently; VM pointer reads and cooked scripts are unchanged.
 
-At this checkpoint Engine c945a157c is committed but unbuilt. The previous
-client/server/joins baseline uses Engine87acab901. Build the client and retry
-actual Root attachment, then the affected integration checks/server build/joins
-before accepting the new Engine baseline. This does not establish pixel/audio
-or full feature parity.
+Engine c945a157c now passes the client build (113.047s), server build (112.162s),
+production GUI24 and retained style93/base-click21/widget18/input40 checks. Both
+native joins pass (21.642/21.591s). The actual Root retry advances past ErrorLlama
+to ErrorWindow_C.Initialize Close Button, where a different missing imported native
+function remains null. Root still has18 unresolved imports and no successful
+attachment or interactive menu. Artifacts: generated/button-production-batch-2/
+and generated/button-production-server-2/. The previous Engine87acab901 build
+and all failed diagnostic/harness attempts remain available in phase1.
+
+inspect_frame.py is a reusable GDB source helper for this 64-bit non-editor target.
+It reads the stopped frame/name pool directly, avoiding target function calls.
+The phase1 root-debug-6 result supplies the ABI diagnosis; phase2 root-debug/gdb.log
+supplies the later missing-function failure. This does not establish original
+pixels/audio or complete feature parity.

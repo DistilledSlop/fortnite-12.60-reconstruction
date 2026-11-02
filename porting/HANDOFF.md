@@ -1,5 +1,57 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Current checkpoint: production buttons + MID ABI correction PASS (2026-11-02)
+
+Previous goal turn made progress. Native build sourcee43947d0 (production code
+7a66a401 unchanged) / Enginec945a157c now passes client113.047s and server112.162s,
+with Native source unchanged. GUI production24 and retained style93/base-click21/
+action-widget18/CommonInput40 PASS. Fresh default/Athena joins PASS21.642/21.591s.
+The unchanged Native headers retain phase1 offline checksum4617/4617 and31 passing
+self-tests. Source-based initialization, five bindings, hover/focus/selection and
+SetStyle remain integrated with real serialized Click/Touch/Press fields and
+original weak-only null-root behavior. No extra credit/weights or gates changed.
+
+The actual original Root retry improves to a later failure: ErrorLlama now passes
+the formerly mismatched CreateDynamicMaterialInstance call. Enginec945a157c adds
+the real4.26 CreationFlags enum/parameter and flag-dependent MID outer behavior,
+with None default; VM/cooked script operands were not bypassed. Client/server
+ELFs are staged and both builds/joins are green. Root still exitsSIGSEGV
+before_attach with18 skipped imports. Debugger confirms a null UFunction in
+ErrorWindow_C.Initialize Close Button (phase2 root-debug/gdb.log). This is a new
+missing-native-call barrier, not the old ErrorLlama argument misalignment. Menu,
+lobby, matchmaking, full match, original pixels/audio and all4 gates remain open.
+
+Exact commands: python3 /tmp/build_button_production_2.py,
+/tmp/build_button_production_server_2.py, /tmp/run_button_production_2.py,
+/tmp/run_button_production_retained_2.py, /tmp/run_button_production_joins_4.py,
+/tmp/debug_button_production_root_7.py (all python3). Artifacts under
+porting/generated/button-production-batch-2/ and button-production-server-2/:
+results.json, build logs, button-production-gui/, four retained-case receipts,
+root-attach/, root-debug/, joins/, stage.json/server-stage.json and launch records.
+Build results pin Enginec945a157c; no Native changes during builds. Client/server
+ELFs only; no archive/full provenance audit claim. Handles32138/23959/9213/18504/
+32153 and all prior handles are terminal. Engine’s five pre-existing dirty paths
+remain untouched. Root owns generation/Native/Engine/staging/builds.
+
+NEXT: identify/integrate the missing ErrorWindow call. Bounded source recovery
+frontend/fort_is_mobile_game_runtime proves FortKismetLibrary.IsMobileGame consumes
+one WorldContextObject then calls the shared 3-byte false-return thunk1406801e0;
+no global/override branch. Exact class/function/exec/source gates PASS. It is an
+unregistered, unbuilt candidate and a likely next call, not yet proven to be that
+null UFunction. Integrate its full reflected contract, retry the actual Root flow,
+and continue real SetTriggeringInputAction router/legacy registration dependencies.
+Source candidates for Border style and CommonActionCommited standalone delegate
+are also frozen, unintegrated/unbuilt; consult their bounded handoffs. No row-only
+setter, fake router/receiver or diagnostic internal-button substitute is allowed.
+
+The phase1 snapshot below retains detailed source checks, fixture corrections and
+commands. Engine patch and debugger memory helper are tracked in
+frontend/kismet_mid_creation_flags_runtime/; helper targets this 64-bit non-editor
+layout and now falls back to Stack.Object when the current frame lacks Context.
+All bounded workers finished. Keep delegation bounded/rotated: Luna medium
+read-only, Terra medium/high regular, Sol medium complex, fork_turns none, max3.
+Preserve economical reads, targeted logs and risk-based coherent-batch validation.
+
 ## Production CommonButton verified; ErrorLlama ABI fix pending (2026-11-02)
 
 Previous goal turn made progress. Native7a66a401 / Engine87acab901 client build

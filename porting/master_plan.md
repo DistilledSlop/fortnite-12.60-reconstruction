@@ -10,6 +10,17 @@ credentials in Git, and the orchestrator reviews and commits.
 
 ## Current baseline
 
+Nativee43947d0 (production7a66a401) / Enginec945a157c passes both builds, GUI
+production24, retained style93/click21/widget18/input40 and both fresh joins.
+The native material-creation ABI correction advances the original Root past
+ErrorLlama; it now stops at a null native function in ErrorWindow Initialize Close
+Button. Still18 skipped imports and no successful attachment/menu. Next is the
+exact missing call: IsMobileGame is source-proven but remains an unregistered
+candidate, followed by actual row/router producers and remaining Root dependencies.
+All4 gates/full faithful client/server/visual/audio parity remain open. See latest
+HANDOFF for current receipts versus older snapshots.
+
+
 Native7a66a401 / Engine87acab901 passes both builds, production button GUI24,
 retained style93/base-click21/widget18/input40, checksum4617/4617, and both joins.
 Production Initialize/selection/SetStyle are integrated. Root skips18imports and
