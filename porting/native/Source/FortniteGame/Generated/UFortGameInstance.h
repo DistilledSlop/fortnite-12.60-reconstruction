@@ -7,6 +7,9 @@
 #include "Engine/GameInstance.h"
 
 #include "EFortGameFeature.h"
+#include "ESubGame.h"
+#include "Engine/Engine.h"
+#include "Engine/World.h"
 #include "FAthenaDataTableSet.h"
 #include "FAudioDynamicSoundData.h"
 #include "FFortClientEventName.h"
@@ -215,6 +218,9 @@ public:
 	UPROPERTY(Transient)
 	UFortMissionGenerator* CurrentMissionGenerator;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x828): not a UPROPERTY, not replicated.
+	ESubGame NativeSubGame828 = ESubGame::Invalid;
+
 	// table index 17, flags 0x40000010082000
 	UPROPERTY(Transient)
 	FFortOnSubGameChangedBP OnSubGameChangedBP;
@@ -357,6 +363,11 @@ public:
 	UFUNCTION(ServiceResponse(JSBridge, ResponseId=1))
 	bool UninstallFortniteBROnNextBoot(bool bRestartApp, bool bPromptForRestart);
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	uint8 NativeGetSubGame141e5f160() const;
+	static uint8 NativeGetGameMode141ed4e30(const UObject* ContextObject);
 public:
     void NativeCollectClientEventFunctions141e60900(UObject* Object, TSet<FName>& Functions) const;
     void NativeRegisterClientEventObject141e78cb0(UObject* Object);

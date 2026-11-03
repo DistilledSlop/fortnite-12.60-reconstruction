@@ -1,8 +1,12 @@
 # Diagnostic asset key readers
 
-The two `.inc` bodies and manifest entries assign static `UFortAssetManager` helper names to the original read behavior. They take the actual maps as borrowed const references: `MapAt10` and `MapAt60` identify members of the original diagnostic owner at those offsets, not separate indexes or snapshots. The destination is a borrowed mutable array. Neither helper owns, clears, locks, or installs anything. The original obtains the owner internally; the explicit parameters are an integration contract, not a claim about its original signature or a replacement singleton.
-
-`FortAssetDiagnosticMap.h` proposes one shared `FFortAssetDiagnosticMap` alias for both owner members and these helpers. The shape is `TMap<FSoftObjectPath, int32>`, established by the original read and diagnostic consumers in `../asset_diagnostic_maps_runtime/HANDOFF.md`. The header's default key policy is provisional: when original insertion/equality/hash policy is recovered, the eventual owner and both helpers must share the resulting actual alias and caller maps must use that original policy. These readers iterate and copy, and do not hash or look up a key. Do not instantiate parallel storage to satisfy this contract. The owner must remain alive and the maps stable for the duration of the call; synchronization and mutation behavior are not established here.
+Source batch41 replaces the earlier explicit borrowed-map binding with the actual
+shared FFortAssets owner, as in the original. Both static UFortAssetManager helpers
+take only the borrowed output array; their former map parameters are removed.
+Singleton calls remain at the original count/iteration points. The owner friends
+UFortAssetManager solely to read its actual maps; there is no parallel index.
+Map hash/mutation writers remain open, and no hashing/mutation is introduced.
+The SAME FFortAssetDiagnosticMap alias is used by owner and helpers.
 
 At 0x141df6860, the original computes the sum of the two live entry counts, compares it to destination capacity, and reserves that count only if greater. It then appends keys in sparse map iteration order from +0x10 followed by +0x60. At 0x141dfb390 the equivalent count and traversal use +0x10 only. The capacity comparison is against map count, not existing destination length plus count: subsequent `Add` operations may grow the array. Existing contents remain, and duplicate keys across maps remain duplicated. Each append copies the complete path, including the deep-copied FString; the int32 values are not copied. No sorting or deduplication is justified.
 

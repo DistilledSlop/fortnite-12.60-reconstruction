@@ -1,5 +1,26 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Native source batch 41 (2026-11-03)
+
+Canonical source:1,925 bodies +171 fields =2,096 entries. Two bodies close the
+context-aware subgame lookup141ed4e30 and GI raw-byte accessor141e5f160. Actual
+GI+828 has one shared ESubGame NativeSubGame828 field, constructor defaultInvalid2;
+full writers/transition remain open. Reconciled the older unregistered frontend
+candidate to remove duplicate field/getter and use the canonical context helper.
+Non-null context preserves original unguarded GEngine lookup; fallback uses checked
+asset-manager mode getter. Diagnostic key appenders now obtain the actual shared
+FFortAssets internally, with original singleton-call/count/iteration placement;
+former explicit map parameters removed, no new body credit. Hash/writers stillopen.
+Generation41 accepts2,096/rejects0 after integration script/default-schema corrections.
+No tests/build/runtime. Last tested1,040;885 pending; next2,040 requires115 bodies.
+Previous turn/source40 fa7e5aef pushed. Full game/server/four product gates open.
+
+Ready bounded proposals: Gadget142008520 exactammooverride, and trackedTimeOfDay
+resolver plus base/Athena930virtuals. Root reviewing raw empty-path tracking,
+raw returned subclass storage and native float-to-int cost predicate. All workers
+finished; Ghidra free. Root sole canonicalowner; Terra medium/low fork none and
+bounded reads/output remain required. Preserve unrelated porting/graphics/.
+
 ## Native source batch 40 (2026-11-03)
 
 Canonical source:1,923 bodies +170 supporting fields =2,093 entries.

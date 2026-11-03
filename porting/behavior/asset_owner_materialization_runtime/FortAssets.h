@@ -24,6 +24,7 @@ public:
     static void SetStartupWindowClosedForAlwaysLoadedAssets(bool bClosed);
 
 private:
+    friend class UFortAssetManager; // Original diagnostic readers borrow these actual maps.
     FFortAssets();
     FFortAssets(const FFortAssets&) = delete;
     FFortAssets& operator=(const FFortAssets&) = delete;

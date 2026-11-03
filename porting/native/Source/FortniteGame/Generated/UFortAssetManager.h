@@ -11,6 +11,7 @@
 #include "Engine/World.h"
 #include "FortAssetDiagnosticMap.h"
 #include "FortAssetLoadDiagnosticState.h"
+#include "FortAssets.h"
 #include "FortPlayerLoadingScreenState.h"
 #include "GenericPlatform/GenericPlatformStricmp.h"
 #include "HAL/PlatformTime.h"
@@ -116,8 +117,8 @@ public:
 	uint8 NativeGetStartupPhase() const;
 	static uint8 NativeGetFortStartupPhase();
 	static bool NativeShouldSuppressLoadDiagnostic();
-	static void AppendBothDiagnosticAssetKeys(TArray<FSoftObjectPath>& Out, const FFortAssetDiagnosticMap& MapAt10, const FFortAssetDiagnosticMap& MapAt60);
-	static void AppendFirstDiagnosticAssetKeys(TArray<FSoftObjectPath>& Out, const FFortAssetDiagnosticMap& MapAt10);
+	static void AppendBothDiagnosticAssetKeys(TArray<FSoftObjectPath>& Out);
+	static void AppendFirstDiagnosticAssetKeys(TArray<FSoftObjectPath>& Out);
 	static uint8 NativeGetGameSubMode();
 	static void NativeHandleLoadDiagnostic(FFortAssetLoadDiagnosticState& State, const FString& Path, bool bSynchronous);
 };

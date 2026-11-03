@@ -3,7 +3,7 @@
     "class": "UFortAssetManager",
     "function": "AppendBothDiagnosticAssetKeys",
     "kind": "helper",
-    "signature": "void AppendBothDiagnosticAssetKeys(TArray<FSoftObjectPath>& Out, const FFortAssetDiagnosticMap& MapAt10, const FFortAssetDiagnosticMap& MapAt60)",
+    "signature": "void AppendBothDiagnosticAssetKeys(TArray<FSoftObjectPath>& Out)",
     "signature_status": "proposed",
     "access": "public",
     "inc_path": "porting/behavior/asset_diagnostic_reads_source_runtime/AppendBothDiagnosticAssetKeys.inc",
@@ -11,16 +11,17 @@
     "confidence": "high",
     "status": "ported",
     "includes": [
-      "FortAssetDiagnosticMap.h"
+      "FortAssetDiagnosticMap.h",
+      "FortAssets.h"
     ],
-    "notes": "Assigned helper and explicit borrowed maps; original obtains its owner internally. Integrate the shared support alias and original map key policy with the eventual owner; see HANDOFF.md.",
+    "notes": "Original shared owner now wired internally. Preserve singleton call placement, reserve condition, sparse iteration order and output append semantics; map mutation/hash writers remain open.",
     "static": true
   },
   {
     "class": "UFortAssetManager",
     "function": "AppendFirstDiagnosticAssetKeys",
     "kind": "helper",
-    "signature": "void AppendFirstDiagnosticAssetKeys(TArray<FSoftObjectPath>& Out, const FFortAssetDiagnosticMap& MapAt10)",
+    "signature": "void AppendFirstDiagnosticAssetKeys(TArray<FSoftObjectPath>& Out)",
     "signature_status": "proposed",
     "access": "public",
     "inc_path": "porting/behavior/asset_diagnostic_reads_source_runtime/AppendFirstDiagnosticAssetKeys.inc",
@@ -28,9 +29,10 @@
     "confidence": "high",
     "status": "ported",
     "includes": [
-      "FortAssetDiagnosticMap.h"
+      "FortAssetDiagnosticMap.h",
+      "FortAssets.h"
     ],
-    "notes": "Assigned helper and explicit borrowed map; original obtains its owner internally. Integrate the shared support alias and original map key policy with the eventual owner; see HANDOFF.md.",
+    "notes": "Original shared owner now wired internally. Preserve singleton call placement, reserve condition, sparse iteration order and output append semantics; map mutation/hash writers remain open.",
     "static": true
   }
 ]

@@ -8,11 +8,6 @@
 // real GI operation, not a stub. The log category below aliases the actual
 // category at 1481348e4; its source declaration/definition must be joined.
 
-uint8 UFortGameInstance::NativeGetSubGame141e5f160() const
-{
-    return static_cast<uint8>(NativeSubGame828);
-}
-
 bool UFortGameInstance::NativeIsUIManagerChangeBlocked7bb() const
 {
     return NativeUIManagerChangeBlocked7bb;

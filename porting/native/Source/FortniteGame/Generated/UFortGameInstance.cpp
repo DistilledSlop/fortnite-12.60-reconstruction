@@ -3,6 +3,7 @@
 #include "Engine/Engine.h"
 #include "Engine/World.h"
 #include "SharedFortGameLog.h"
+#include "UFortAssetManager.h"
 #include "UFortClientEventInterface.h"
 #include "UFortGameInstance.h"
 #include "UObject/UnrealType.h"
@@ -143,6 +144,31 @@ bool UFortGameInstance::UninstallFortniteBROnNextBoot(bool bRestartApp, bool bPr
 {
 	// Body not recovered: reflection-derived stub.
 	return {};
+}
+
+uint8 UFortGameInstance::NativeGetSubGame141e5f160() const
+{
+	// CONFIDENCE: HIGH
+	// 0x141e5f160: UFortGameInstance+0x828.
+	return static_cast<uint8>(NativeSubGame828);
+}
+
+uint8 UFortGameInstance::NativeGetGameMode141ed4e30(const UObject* ContextObject)
+{
+	// CONFIDENCE: HIGH
+	// 0x141ed4e30. The original only checks GEngine on the fallback path.
+	if (ContextObject)
+	{
+	    UWorld* World = GEngine->GetWorldFromContextObject(ContextObject, EGetWorldErrorMode::ReturnNull);
+	    if (World)
+	    {
+	        if (UFortGameInstance* GameInstance = Cast<UFortGameInstance>(World->GetGameInstance()))
+	        {
+	            return GameInstance->NativeGetSubGame141e5f160();
+	        }
+	    }
+	}
+	return UFortAssetManager::NativeGetGameSubMode();
 }
 
 // 141e60900: ordinary field iteration includes superclasses and deprecated fields.
