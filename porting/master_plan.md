@@ -10,12 +10,12 @@ credentials in Git, and the orchestrator reviews and commits.
 
 ## Current baseline
 
-Native source recovery has reached 2,067 complete bodies plus 176 supporting
-fields (batch66, 2026-11-03). The tested baseline is2,040 bodies at785be98d:
+Native source recovery has reached 2,070 complete bodies plus 176 supporting
+fields (batch67, 2026-11-03). The tested baseline is2,040 bodies at785be98d:
 Linux client/server builds and Apollo headless join passed; tracked receipts in
-progress/native-checkpoint-2040.json. Twenty-seven subsequent canonical bodies and four manual Kismet math bodies are build pending.
+progress/native-checkpoint-2040.json. Thirty subsequent canonical bodies and four manual Kismet math bodies are build pending.
 Next build/runtime/test batch at3,040 bodies. Fail-closed generation accepts
-2,243 ported entries with no rejected splices. All four product gates remain
+2,246 ported entries with no rejected splices. All four product gates remain
 open. Latest source restores day-phase callback/virtual boundaries, the live
 UFortGlobals accessor, native volume accessor interface and three implementing
 classes, plus live volume bounds-to-box conversion and client post-process component updates. Larger actor volume lookup,

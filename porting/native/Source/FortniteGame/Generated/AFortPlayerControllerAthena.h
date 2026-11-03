@@ -1045,9 +1045,10 @@ public:
 	void SendClientPhysicsBallStateToServer(APhysicsObject* PhysicsObject, float ClientPing, const FTimeStampedPhysicsPawnState& ClientBallState);
 	void SendClientPhysicsBallStateToServer_Implementation(APhysicsObject* PhysicsObject, float ClientPing, const FTimeStampedPhysicsPawnState& ClientBallState);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void SendPhysicsBallHitToServer(APhysicsObject* PhysicsObject, float ClientPing, APawn* HittingPawn, const FVector& VelocityOfHitter, const FVector& HitNormal, const FTimeStampedPhysicsPawnState& ClientBallState);
 	void SendPhysicsBallHitToServer_Implementation(APhysicsObject* PhysicsObject, float ClientPing, APawn* HittingPawn, const FVector& VelocityOfHitter, const FVector& HitNormal, const FTimeStampedPhysicsPawnState& ClientBallState);
+	bool SendPhysicsBallHitToServer_Validate(APhysicsObject* PhysicsObject, float ClientPing, APawn* HittingPawn, const FVector& VelocityOfHitter, const FVector& HitNormal, const FTimeStampedPhysicsPawnState& ClientBallState);
 
 	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerAddSimulatedXp(float XpAmmount, const FText& Source, const FGameplayTag& MetaData);

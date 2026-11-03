@@ -1,5 +1,27 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Native broad source/rough batch67 (2026-11-03)
+
+Canonical2,070 bodies+176fields=2,246 accepted/rejected0. Three bodies added:
+FortGameStateAthena current-high-score notification, and original physics-ball
+hit RPC constant-true validator plus empty base implementation. Restored the
+six-argument reflected signature and WithValidation. The empty implementation is
+original behavior, not a fabricated physics handler. Promotion67 changed three
+generated files. Source batch66 commit688f22c9 pushed. Since last tested2,040,
+30 canonical and4 manual bodies remain build pending; next tests at3,040.
+
+Broad uncounted source drafts now also cover six pawn damage/death/sentence/cue
+paths, creative publish/update/marker/island/minigame paths, and five additional
+match-state callbacks. They preserve unresolved effects explicitly; GamePhase
+wrapper leads to still-unprobed14199ac00 and is not counted as recovered behavior.
+All bounded workers finished; Ghidra lease free. Previous turn PROGRESS. All4
+product gates OPEN; full faithful client/server/UI/audio/parity remains unproven.
+Root sole canonical/generation/build/commit owner; medium/low Terra fork-none
+bounded workers, economical reads and rotation persist. Preserve graphics.
+No UE builds/runtime tests. One earlier batch66 worker ran syntax-only compiler
+checks on three incomplete drafts despite the no-testing assignment; no further
+checks were run, and those drafts are still explicitly uncounted.
+
 ## Native broad source batch66 (2026-11-03)
 
 Canonical2,067 bodies+176fields=2,243 accepted/rejected0. Added16 bodies:

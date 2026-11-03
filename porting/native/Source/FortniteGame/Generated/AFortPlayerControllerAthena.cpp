@@ -575,7 +575,14 @@ void AFortPlayerControllerAthena::SendClientPhysicsBallStateToServer_Implementat
 
 void AFortPlayerControllerAthena::SendPhysicsBallHitToServer_Implementation(APhysicsObject* PhysicsObject, float ClientPing, APawn* HittingPawn, const FVector& VelocityOfHitter, const FVector& HitNormal, const FTimeStampedPhysicsPawnState& ClientBallState)
 {
-	// Body not recovered: reflection-derived stub.
+	// CONFIDENCE: HIGH
+	// Original folded return-only implementation has no side effects.
+}
+
+bool AFortPlayerControllerAthena::SendPhysicsBallHitToServer_Validate(APhysicsObject* PhysicsObject, float ClientPing, APawn* HittingPawn, const FVector& VelocityOfHitter, const FVector& HitNormal, const FTimeStampedPhysicsPawnState& ClientBallState)
+{
+	// CONFIDENCE: HIGH
+	return true;
 }
 
 void AFortPlayerControllerAthena::ServerAddSimulatedXp_Implementation(float XpAmmount, const FText& Source, const FGameplayTag& MetaData)

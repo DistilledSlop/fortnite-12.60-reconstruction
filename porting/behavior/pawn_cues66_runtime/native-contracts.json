@@ -1003,6 +1003,103 @@
         "create_func": "0x14074f8a0",
         "source": "lea"
       }
+    },
+    "AFortPlayerControllerAthena": {
+      "SendPhysicsBallHitToServer": {
+        "exec_addr": "0x142a5a430",
+        "flags": "0x80a20cc0",
+        "params": [
+          {
+            "index": 0,
+            "name": "ClientBallState",
+            "kind": "Struct",
+            "kind_raw": "0x19",
+            "property_flags": "0x10000000000082",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 48,
+            "type_refs": {
+              "struct": "0x142b83940"
+            }
+          },
+          {
+            "index": 1,
+            "name": "HitNormal",
+            "kind": "Struct",
+            "kind_raw": "0x19",
+            "property_flags": "0x10000000000082",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 36,
+            "type_refs": {
+              "struct": "0x142eea590"
+            }
+          },
+          {
+            "index": 2,
+            "name": "VelocityOfHitter",
+            "kind": "Struct",
+            "kind_raw": "0x19",
+            "property_flags": "0x10000000000082",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 24,
+            "type_refs": {
+              "struct": "0x142eea590"
+            }
+          },
+          {
+            "index": 3,
+            "name": "HittingPawn",
+            "kind": "Object",
+            "kind_raw": "0x12",
+            "property_flags": "0x10000000000080",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 16,
+            "type_refs": {
+              "class": "0x1447ada70"
+            }
+          },
+          {
+            "index": 4,
+            "name": "ClientPing",
+            "kind": "Float",
+            "kind_raw": "0xa",
+            "property_flags": "0x10000000000082",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 8
+          },
+          {
+            "index": 5,
+            "name": "PhysicsObject",
+            "kind": "Object",
+            "kind_raw": "0x12",
+            "property_flags": "0x10000000000080",
+            "replicated": false,
+            "rep_notify": null,
+            "array_dim": 1,
+            "object_flags": "0x45",
+            "offset": 0,
+            "type_refs": {
+              "class": "0x142b80460"
+            }
+          }
+        ],
+        "create_func": "0x142a50f70",
+        "source": "lea"
+      }
     }
   },
   "asc_virtual_slots": {

@@ -1,0 +1,17 @@
+[
+  {
+    "function": "OnRep_CurrentHighScore",
+    "kind": "exec",
+    "signature": "void OnRep_CurrentHighScore()",
+    "signature_status": "verified",
+    "access": "public",
+    "virtual": false,
+    "inc_path": "porting/behavior/gamestate_callbacks67_runtime/AFortGameStateAthena_OnRep_CurrentHighScore.inc",
+    "address": "0x1429203d0",
+    "confidence": "high",
+    "status": "ported",
+    "class": "AFortGameStateAthena",
+    "reflection_flags": "0x20401",
+    "notes": "Inline parameterless multicast broadcast."
+  }
+]

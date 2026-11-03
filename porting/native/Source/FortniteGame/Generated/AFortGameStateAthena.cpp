@@ -413,7 +413,10 @@ void AFortGameStateAthena::OnRep_CosmeticUsage()
 
 void AFortGameStateAthena::OnRep_CurrentHighScore()
 {
-	// Body not recovered: reflection-derived stub.
+	// CONFIDENCE: HIGH
+	// Exec 0x1429203d0 inlines parameterless multicast dispatch at this+0x1088.
+	// Snapshot iteration, ProcessEvent, and expired-binding removal are delegate semantics.
+	CurrentHighScoreUpdated.Broadcast();
 }
 
 void AFortGameStateAthena::OnRep_CurrentPlaylistId()
