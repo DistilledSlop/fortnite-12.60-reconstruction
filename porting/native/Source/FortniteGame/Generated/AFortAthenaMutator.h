@@ -6,8 +6,11 @@
 #include "CoreMinimal.h"
 #include "AFortGameplayMutator.h"
 
+#include "UObject/Object.h"
+
 class AFortGameModeAthena;
 class AFortGameStateAthena;
+class UFortWeaponItemDefinition;
 
 #include "AFortAthenaMutator.generated.h"
 
@@ -33,5 +36,10 @@ public:
 	UPROPERTY(Transient)
 	AFortGameStateAthena* CachedGameState;
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	virtual void NativeSetMutatorContext(UObject* Context);
+	virtual uint8 NativeQueryInfiniteAmmo(bool& OutInfiniteAmmo, UFortWeaponItemDefinition* WeaponDefinition);
 };
 

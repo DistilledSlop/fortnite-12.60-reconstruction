@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UMcpItemDefinitionBase.h"
 
+#include "AbilitySystemComponent.h"
 #include "AttributeSet.h"
 #include "EFortInventoryFilter.h"
 #include "EFortItemTier.h"
@@ -14,10 +15,14 @@
 #include "EFortTemplateAccess.h"
 #include "Engine/CurveTable.h"
 #include "FFortOnItemDefinitionCountChangedDelegate.h"
+#include "GameplayEffect.h"
+#include "GameplayEffectAggregator.h"
+#include "GameplayTagAssetInterface.h"
 #include "GameplayTagContainer.h"
 #include "Math/Rotator.h"
 #include "Math/Vector.h"
 #include "UObject/NoExportTypes.h"
+#include "UObject/UnrealType.h"
 
 class UFortItemSeriesDefinition;
 class UFortTooltip;
@@ -29,7 +34,7 @@ class UTexture2D;
 #include "UFortItemDefinition.generated.h"
 
 UCLASS(abstract)
-class FORTNITEGAME_API UFortItemDefinition : public UMcpItemDefinitionBase
+class FORTNITEGAME_API UFortItemDefinition : public UMcpItemDefinitionBase, public IGameplayTagAssetInterface
 {
 	GENERATED_BODY()
 
@@ -197,5 +202,7 @@ public:
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	virtual FString NativeGetProfileKey() const;
+	virtual int32 NativeGetMaxStackSize(UAbilitySystemComponent* AbilityComp) const;
+	virtual void GetOwnedGameplayTags(FGameplayTagContainer& TagContainer) const;
 };
 

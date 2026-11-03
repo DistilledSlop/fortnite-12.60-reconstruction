@@ -1,0 +1,6 @@
+{
+  "manifest-entries.json": "d843ba88e464274f5a5e1b9f1a56acd714c87d567f6fa0ea6e1ca96c7c7ca974",
+  "UFortItem_GetMaxStackSize.inc": "19f4f572302b10015006deb8a4934528da454814e52d10e5cc36f0fefef10583",
+  "UFortItem_IsTemporaryItem.inc": "91670cd115262bfde6c3e6746d49212dd57147c5847387a31a9b30ef1c93237c",
+  "UFortItemDefinition_NativeGetMaxStackSize.inc": "55a9eb560b380a865658ddc95450c658d0bf39e13ef189d4b14a5a804894aacb"
+}

@@ -10,11 +10,11 @@ credentials in Git, and the orchestrator reviews and commits.
 
 ## Current baseline
 
-Native source recovery has reached 1,837 complete bodies plus 164 supporting
-fields (batch 25, 2026-11-03). The tested baseline remains 1,040 bodies;
-797 subsequent bodies are build pending. Per user instruction, run the next
+Native source recovery has reached 1,844 complete bodies plus 164 supporting
+fields (batch 26, 2026-11-03). The tested baseline remains 1,040 bodies;
+804 subsequent bodies are build pending. Per user instruction, run the next
 build/runtime/test batch at approximately 2,040 bodies. Fail-closed generation
-accepts 2,001 ported entries with no rejected splices. This source coverage does
+accepts 2,008 ported entries with no rejected splices. This source coverage does
 not establish gameplay, normal frontend startup, or milestone parity; all four
 product gates remain open. See the latest HANDOFF for exact evidence paths.
 

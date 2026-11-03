@@ -2318,6 +2318,10 @@ _aircraft_events_spec = _common_activation_import.spec_from_file_location(
     "aircraft_events_policy", os.path.join(os.path.dirname(__file__), "behavior", "aircraft_events_runtime", "source_policy.py"))
 _aircraft_events_policy = _common_activation_import.module_from_spec(_aircraft_events_spec)
 _aircraft_events_spec.loader.exec_module(_aircraft_events_policy)
+_item_tag_interface_spec = _common_activation_import.spec_from_file_location(
+    "item_tag_interface_policy", os.path.join(os.path.dirname(__file__), "behavior", "item_tag_interface_runtime", "source_policy.py"))
+_item_tag_interface_policy = _common_activation_import.module_from_spec(_item_tag_interface_spec)
+_item_tag_interface_spec.loader.exec_module(_item_tag_interface_policy)
 _athena_mode_spec = _common_activation_import.spec_from_file_location(
     "athena_mode_policy", os.path.join(os.path.dirname(__file__), "behavior", "athena_mode_reconstruction_runtime", "source_policy.py"))
 _athena_mode_policy = _common_activation_import.module_from_spec(_athena_mode_spec)
@@ -2517,6 +2521,7 @@ def build_class_promoted(block, name, resolver, parent_entry, owner_fns, snippet
     model = _panel_queue_policy.apply(model, block, owner_fns, native_execs)
     model = _restart_modal_policy.apply(model, block, owner_fns, native_execs)
     model = _client_event_policy.apply(model, block, native_execs)
+    model = _item_tag_interface_policy.apply(model, block, owner_fns)
     model = _athena_mode_policy.apply(model, block, owner_fns)
     _athena_mode_policy.validate_emitted_properties(model, split_properties)
     model = _widget_route_policy.apply(model, block, owner_fns)

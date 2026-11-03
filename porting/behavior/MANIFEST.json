@@ -32569,5 +32569,110 @@
     "confidence": "high",
     "status": "ported",
     "virtual": true
+  },
+  {
+    "function": "GetMaxStackSize",
+    "kind": "exec",
+    "signature": "int32 GetMaxStackSize(UAbilitySystemComponent* AbilityComp) const",
+    "signature_status": "verified",
+    "access": "public",
+    "virtual": true,
+    "inc_path": "porting/behavior/item_stack_runtime/UFortItem_GetMaxStackSize.inc",
+    "address": "0x1429593f0",
+    "confidence": "high",
+    "status": "ported",
+    "class": "UFortItem",
+    "reflection_flags": "0x54020400"
+  },
+  {
+    "function": "NativeGetMaxStackSize",
+    "kind": "helper",
+    "signature": "int32 NativeGetMaxStackSize(UAbilitySystemComponent* AbilityComp) const",
+    "signature_status": "verified",
+    "access": "public",
+    "virtual": true,
+    "inc_path": "porting/behavior/item_stack_runtime/UFortItemDefinition_NativeGetMaxStackSize.inc",
+    "address": "0x14202fe70",
+    "confidence": "high",
+    "status": "ported",
+    "class": "UFortItemDefinition",
+    "includes": [
+      "AbilitySystemComponent.h",
+      "GameplayEffect.h",
+      "GameplayEffectAggregator.h",
+      "UObject/UnrealType.h"
+    ]
+  },
+  {
+    "function": "IsTemporaryItem",
+    "kind": "exec",
+    "signature": "bool IsTemporaryItem() const",
+    "signature_status": "verified",
+    "access": "public",
+    "virtual": true,
+    "inc_path": "porting/behavior/item_stack_runtime/UFortItem_IsTemporaryItem.inc",
+    "address": "0x14295a4b0",
+    "confidence": "high",
+    "status": "ported",
+    "class": "UFortItem",
+    "reflection_flags": "0x54020400"
+  },
+  {
+    "class": "UFortItemDefinition",
+    "function": "GetOwnedGameplayTags",
+    "kind": "helper",
+    "signature": "void GetOwnedGameplayTags(FGameplayTagContainer& TagContainer) const",
+    "signature_status": "verified",
+    "access": "public",
+    "inc_path": "porting/behavior/item_tag_interface_runtime/UFortItemDefinition_GetOwnedGameplayTags.inc",
+    "address": "0x1420302f0",
+    "confidence": "high",
+    "status": "ported",
+    "virtual": true
+  },
+  {
+    "function": "NativeSetMutatorContext",
+    "kind": "helper",
+    "signature": "void NativeSetMutatorContext(UObject* Context)",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": true,
+    "inc_path": "porting/behavior/infinite_ammo_iterator_runtime/BaseSetMutatorContext.inc",
+    "address": "0x1406801c0",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Assigned native name; virtual dispatch is required. See infinite_ammo_iterator_runtime/README.md.",
+    "class": "AFortAthenaMutator",
+    "includes": [
+      "UObject/Object.h"
+    ]
+  },
+  {
+    "function": "NativeQueryInfiniteAmmo",
+    "kind": "helper",
+    "signature": "uint8 NativeQueryInfiniteAmmo(bool& OutInfiniteAmmo, UFortWeaponItemDefinition* WeaponDefinition)",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": true,
+    "inc_path": "porting/behavior/infinite_ammo_iterator_runtime/BaseQueryInfiniteAmmo.inc",
+    "address": "0x1406801e0",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Assigned native name; virtual dispatch is required. See infinite_ammo_iterator_runtime/README.md.",
+    "class": "AFortAthenaMutator"
+  },
+  {
+    "function": "NativeQueryInfiniteAmmo",
+    "kind": "helper",
+    "signature": "uint8 NativeQueryInfiniteAmmo(bool& OutInfiniteAmmo, UFortWeaponItemDefinition* WeaponDefinition)",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": true,
+    "inc_path": "porting/behavior/infinite_ammo_iterator_runtime/InfiniteAmmoQuery.inc",
+    "address": "0x141aa75e0",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Assigned native name; virtual dispatch is required. See infinite_ammo_iterator_runtime/README.md.",
+    "class": "AFortAthenaMutator_InfiniteAmmo"
   }
 ]

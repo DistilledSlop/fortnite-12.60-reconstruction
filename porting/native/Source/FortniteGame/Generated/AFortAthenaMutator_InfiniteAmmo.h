@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "AFortAthenaMutator.h"
 
+class UFortWeaponItemDefinition;
+
 #include "AFortAthenaMutator_InfiniteAmmo.generated.h"
 
 UCLASS(config=Engine)
@@ -18,5 +20,9 @@ public:
 	UPROPERTY()
 	bool bInfiniteAmmo;
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	virtual uint8 NativeQueryInfiniteAmmo(bool& OutInfiniteAmmo, UFortWeaponItemDefinition* WeaponDefinition);
 };
 

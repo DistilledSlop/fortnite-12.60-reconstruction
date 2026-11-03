@@ -1,0 +1,15 @@
+[
+  {
+    "class": "UFortItemDefinition",
+    "function": "GetOwnedGameplayTags",
+    "kind": "helper",
+    "signature": "void GetOwnedGameplayTags(FGameplayTagContainer& TagContainer) const",
+    "signature_status": "verified",
+    "access": "public",
+    "inc_path": "porting/behavior/item_tag_interface_runtime/UFortItemDefinition_GetOwnedGameplayTags.inc",
+    "address": "0x1420302f0",
+    "confidence": "high",
+    "status": "ported",
+    "virtual": true
+  }
+]

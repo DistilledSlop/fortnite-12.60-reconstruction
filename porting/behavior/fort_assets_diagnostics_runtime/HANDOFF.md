@@ -1,5 +1,7 @@
 # FFortAssets load diagnostic callback: incomplete; do not integrate a stub
 
+**Layout correction (batch26):** the old final paragraph's eight-byte-key/FString-value interpretation is superseded by `../asset_diagnostic_maps_runtime/HANDOFF.md`: key is a 24-byte FSoftObjectPath and payload is int32 at +0x18. The FString copy is part of the path key. Mutation remains unresolved.
+
 Image `/mnt/vibrato/fortnite-evidence/original-late-capture-1/image-125.runtime.bin`, base 0x140000000, SHA-256 338c83a2314ccac1040a2c0bb520b893013cc7b58eda58e550da67f5d84de680. Addresses are runtime virtual addresses. No tests or build were run. Probes use rolled-back Ghidra transaction; see generated/callee_probe/fort_assets_diagnostics{,2,3}.
 
 The actual callback 0x141e09a30 receives `(const FString& Path, bool bSync)`; constructor binds true to OnSyncLoadPackage. It does not access +0x10 or +0x60. An accurate implementation remains blocked by the typed loading-screen predicate and analytics provider helpers, not by the control flow:

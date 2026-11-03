@@ -11,6 +11,7 @@
 #include "UObject/WeakObjectPtr.h"
 
 class AFortPlayerController;
+class UAbilitySystemComponent;
 class UFortItemDefinition;
 
 #include "UFortItem.generated.h"
@@ -67,6 +68,9 @@ public:
 	virtual int32 GetLoadedAmmo() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual int32 GetMaxStackSize(UAbilitySystemComponent* AbilityComp) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual float GetNormalizedDurability() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
@@ -113,6 +117,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual bool IsSlotted() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool IsTemporaryItem() const;
 
 	UFUNCTION(BlueprintCallable)
 	void SetOwningControllerForTemporaryItem(AFortPlayerController* InController);

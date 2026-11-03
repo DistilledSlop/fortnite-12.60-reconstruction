@@ -1,5 +1,42 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Native source batch 26 (2026-11-03)
+
+Canonical source: 1,844 bodies +164 supporting fields =2,008 ported entries.
+Seven connected bodies: item/definition stack limits with ability attribute
+capture, definition owned gameplay tags, item temporary ownership predicate,
+Athena mutator context base/query base and InfiniteAmmo callback override.
+Definition now inherits its actual engine IGameplayTagAssetInterface through
+item_tag_interface_runtime/source_policy.py. Preserve dynamic dispatch and
+source-tag-conditioned attribute evaluation, unsigned early stack-limit clamp,
+float truncation semantics, and unchanged output in the base mutator query.
+
+Read-only original evidence gates passed. Promotion26 accepts2,008/rejects0;
+eight Native files changed overall. Initial signature/header input rejections
+were fixed; final pass changed4files, restored12,799 unchanged mtimes. No
+build/runtime/tests. Tested baseline1,040;804 bodies pending; next2,040 needs196.
+
+IMPORTANT correction to older tracker notes: +10/+60 entries contain a 24-byte
+FSoftObjectPath key and int32 count at+18, rather than an eight-byte key and
+FString value. Path appenders preserve map order/duplicates and take no lock.
+Insertion/removal remains untraced; see asset_diagnostic_maps_runtime. Do not
+implement the superseded FString-value interpretation.
+
+Profile backend installation and both virtual lookup implementations are now
+recovered. Derived cache recomputation copies non-atomic shared entries, applies
+case-sensitive entry-ID overlays, skips nonpositive replacements, caches even
+empty results when any overlay matched and otherwise borrows base. Definition
+map/dirty keys use ASCII-insensitive comparison. Support proposal remains
+unintegrated pending actual update/dirty/GC paths and canonical entry ownership.
+See profile_backend_installation_runtime/HANDOFF.md and proposal.
+
+Finite Terra medium mutator_ammo_overrides worker is recovering GG and
+LoadoutSwap query/context overrides in its owned dir; Ghidra lease theirs.
+Other workers complete. Root sole manifest/gen/Native owner. Keep bounded
+reads, specific frequent commits/pushes, manual dashboard refresh, no tiny
+getter scans or tests before2,040, preserve unrelated graphics. All product
+milestones and full parity remain open.
+
 ## Native source batch 25 (2026-11-03)
 
 Canonical source: 1,837 function bodies + 164 supporting fields = 2,001 ported
