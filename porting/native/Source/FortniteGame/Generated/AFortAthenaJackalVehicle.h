@@ -108,6 +108,9 @@ public:
 	UPROPERTY()
 	TSubclassOf<UAnimInstance> BoostingAnimClass;
 
+	UFUNCTION(BlueprintCallable)
+	void CacheFX(UParticleSystemComponent* InBoostFX, UParticleSystemComponent* InLoopingFX);
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsDriveModeOnly() const;
 

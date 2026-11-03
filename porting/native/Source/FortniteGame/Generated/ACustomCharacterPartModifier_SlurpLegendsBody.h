@@ -64,5 +64,8 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetCurrentShieldPercentage() const;
 
+	UFUNCTION(BlueprintCallable)
+	void SetComponentPointers(UParticleSystemComponent* xFormBurst, UNiagaraComponent* DripLoop);
+
 };
 

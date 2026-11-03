@@ -20,5 +20,11 @@ public:
 	UPROPERTY()
 	TMap<FName, FHudLayoutToolProxyPropertyData> ProxyProperties;
 
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	int32 BP_GetNumOfProperties() const;
+	virtual int32 BP_GetNumOfProperties_Implementation() const;
+public:
+
 };
 

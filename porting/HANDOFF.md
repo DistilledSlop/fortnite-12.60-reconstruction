@@ -1,5 +1,35 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Native source batch 18 (2026-11-03)
+
+Canonical source: 1,788 function bodies + 163 supporting fields = 1,951
+ported entries. Added two complete two-object setters:
+ACustomCharacterPartModifier_SlurpLegendsBody::SetComponentPointers and
+AFortAthenaJackalVehicle::CacheFX, plus the exact zero-return native event
+UHUDLayoutToolProxy::BP_GetNumOfProperties_Implementation. Full FFrame extraction
+branches, stack/register layout, reflected field identities and original
+constructor/vtable dispatch were reviewed. The setters preserve both pointer
+stores and argument order; no callbacks or additional effects were inferred.
+
+Commands: scanners in `bulk_two_scalar_runtime` and
+`bulk_event_scalar_return_runtime` wrote `/tmp/gameplay-bulk-two-scalar/` and
+`/tmp/gameplay-bulk-event-scalar-return/` manifest/evidence files. Root appended
+three bodies then ran `python3 /tmp/promote-native-batch18.py`: accepts 1,951,
+rejects 0; six Native files changed and 12,797 unchanged mtimes restored.
+Receipts: `porting/generated/gameplay-bulk-integration-18/`. No builds, runtime
+runs or tests. Tested baseline stays 1,040; 748 new bodies are build pending.
+Next checkpoint is approximately 2,040 bodies (252 more). All four product
+milestones remain open; this is source coverage, not feature parity.
+
+Bounded Terra medium workers own `item_queries_runtime` (six UFortItem base
+virtual proposals, root requested SHA/immutable-float-storage proof hardening)
+and `bulk_two_bool_runtime` (two reflected Boolean setter/OR sightings).
+`bulk_two_native_byte_runtime` found no new native storage: its sightings are
+reflected Boolean fields, and receive no native-storage/body credit. Root owns
+Native/promotion/builds and commits/pushes. Preserve unrelated graphics edits,
+skip visual work, keep reads/output bounded, rotate workers at completion.
+Use Terra low/medium with fork_turns none and user 1,000-body test batches.
+
 ## Native source batch 17 (2026-11-03)
 
 Canonical Native1948 ported entries =1785 function bodies +163fields. Added

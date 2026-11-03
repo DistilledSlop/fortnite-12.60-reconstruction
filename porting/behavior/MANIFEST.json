@@ -31774,5 +31774,51 @@
     "static": false,
     "access": "protected",
     "notes": "Original inline class getter at 0x142b4f750, reflected AFortTracerBase field TracerTemplate offset 0xb98; source recovery only."
+  },
+  {
+    "class": "ACustomCharacterPartModifier_SlurpLegendsBody",
+    "function": "SetComponentPointers",
+    "kind": "exec",
+    "signature": "void SetComponentPointers(UParticleSystemComponent* xFormBurst, UNiagaraComponent* DripLoop)",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/bulk_two_scalar_runtime/142779760_ACustomCharacterPartModifier_SlurpLegendsBody_SetComponentPointers.inc",
+    "confidence": "high",
+    "address": "0x142779760",
+    "status": "ported",
+    "reflection_flags": "0x4020401",
+    "static": false,
+    "access": "public",
+    "notes": "Complete two-object FFrame thunk and two reflected pointer stores at 0x141db8dc0; source recovery only."
+  },
+  {
+    "class": "AFortAthenaJackalVehicle",
+    "function": "CacheFX",
+    "kind": "exec",
+    "signature": "void CacheFX(UParticleSystemComponent* InBoostFX, UParticleSystemComponent* InLoopingFX)",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/bulk_two_scalar_runtime/1427dab10_AFortAthenaJackalVehicle_CacheFX.inc",
+    "confidence": "high",
+    "address": "0x1427dab10",
+    "status": "ported",
+    "reflection_flags": "0x4020401",
+    "static": false,
+    "access": "public",
+    "notes": "Complete two-object FFrame thunk and two reflected pointer stores at 0x1426f7500; source recovery only."
+  },
+  {
+    "class": "UHUDLayoutToolProxy",
+    "function": "BP_GetNumOfProperties_Implementation",
+    "kind": "native_event_impl",
+    "signature": "int32 BP_GetNumOfProperties_Implementation() const",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/bulk_event_scalar_return_runtime/140680300_Int.inc",
+    "confidence": "high",
+    "address": "0x14532fc40",
+    "status": "ported",
+    "reflection_flags": "0x48080c00",
+    "static": false,
+    "access": "protected",
+    "native_body_address": "0x140680300",
+    "notes": "Exact parameterless exec virtual slot 0x4f0; constructor 0x144c170a0 stores unique vtable 0x146d30e20, whose slot targets exact stub 0x140680300. See bulk_event_scalar_return_runtime/README.md."
   }
 ]
