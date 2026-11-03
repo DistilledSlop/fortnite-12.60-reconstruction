@@ -4,6 +4,8 @@
 
 **A from-scratch reconstruction of Fortnite 12.60 (CL 13477524) as a buildable Unreal Engine 4.25 project, with a reimplemented dedicated server and local backend.**
 
+![water used](docs/water_badge.svg)
+
 [Dashboard](#progress-dashboard) ·
 [Treemap SVG](docs/progress.svg) ·
 [Data](docs/progress.json) ·
