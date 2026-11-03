@@ -29,6 +29,8 @@ def main():
     ap.add_argument("--out", default="")
     ap.add_argument("--all-access", action="store_true")
     ap.add_argument("--mem", default="8G")
+    ap.add_argument("--call-prefix", default="", help="only report hits followed by a CALL to an address starting with this hex prefix (e.g. 0x142ee)")
+    ap.add_argument("--call-within", type=int, default=6)
     args = ap.parse_args()
     import pyghidra
     from pyghidra.launcher import HeadlessPyGhidraLauncher
@@ -60,6 +62,15 @@ def main():
                         continue
                     first = text.split(",")[0]
                     is_store = "[" in first and m.start() < len(first) + 1 and text.find(m.group(0)) <= len(first)
+                    if args.call_prefix:
+                        nxt, hit, n = ins.getNext(), False, 0
+                        while nxt is not None and n < args.call_within:
+                            if str(nxt).startswith("CALL") and ("0x" + format(nxt.getFlows()[0].getOffset(), "x") if nxt.getFlows() else "").startswith(args.call_prefix):
+                                hit = True
+                                break
+                            nxt, n = nxt.getNext(), n + 1
+                        if not hit:
+                            break
                     if args.all_access or is_store:
                         fn = fm.getFunctionContaining(ins.getAddress())
                         rows.append({"addr": hex(a), "function": hex(fn.getEntryPoint().getOffset()) if fn else None,

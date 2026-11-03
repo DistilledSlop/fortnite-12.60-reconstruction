@@ -36,3 +36,11 @@ read with objdump -D -b binary and byte scans. Decompiles are not used as eviden
 1. Runtime class of the object at toast this+0x290: no setter found. The toast's SetToast decompile (decomp-imports/Imports/SetToast__144d97670.c) is the friend toast, has no +0x290 store, and is not the power-rating toast. Native bodies of ShowToast (create func 0x1452a13d0) and SetToast (0x1452a1370) are not recorded in the reflection, so their +0x290 stores were not scanned. A scan of the 596 `mov r64,[reg+0x290]` encodings is not attributed to the toast.
 2. Whether the object at +0x290 is constructed by 0x142af85c0 (Campaign) at runtime: UNKNOWN. HANDOFF.md's claim that 0x142af85c0 initializes the weak object at +0x90 is not verified here.
 3. Wrapper 0x142292260 calls slot 0x268 on TeamMember; which vtable that object carries at runtime is UNKNOWN, so the slot-0x268 implementation for this object is UNKNOWN beyond the static mapping above.
+
+## VERIFIED: setter of the weak team member (toast +0x290) and its class
+Evidence: porting/ghidra/find_field_refs.py (LEA of [reg+0x290] followed by a weak-pointer helper call, window 0x300000 around HideToast) found the only candidates; the reflected exec of UFortPlayerPowerRatingToast::SetToast is 0x1452a5350 (native_funcs.json), which calls the body 0x144e1cd20(this, notification).
+- 0x144e1cd20 assigns the weak pointer with `FUN_142ee3b30(this+0x290, object)` (LEA at 0x144e1ceea) only when the object passes a class check against `FUN_142aef8a0()`: object->Class->inheritance array [depth at class+0x38] == class+0x30, the fast IsA pattern.
+- 0x142aef8a0 is the UFortTeamMemberCampaign no-register (class-getter) function (verified earlier in this file: its string is the class name).
+- Therefore the weak slot at toast+0x290 holds a UFortTeamMemberCampaign (assigned only after IsA(UFortTeamMemberCampaign)). The same body also stores the object into the sub-widget at this+0x270 via 0x144e1c1a0 before assigning.
+- The object is obtained from the notification payload: 0x142195490(world-derived object, notification+0x60) then the IsA check (the first stage 0x141f5dd20/0x141e63650 chain is not decoded).
+Still UNKNOWN: the three multicast delegate types (the listener-adding calls are in 0x144e22b70, the function called last by 0x144e1cd20; not yet decoded).
