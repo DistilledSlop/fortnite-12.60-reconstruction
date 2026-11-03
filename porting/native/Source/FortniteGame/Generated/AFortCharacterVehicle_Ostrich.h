@@ -530,6 +530,15 @@ public:
 	void ServerSetJumpCharging(bool bNewCharging);
 	void ServerSetJumpCharging_Implementation(bool bNewCharging);
 
+	UFUNCTION(BlueprintCallable)
+	void SetLinearAudioComp(UFortVehicleAudioVoice* LinearAudio);
+
+	UFUNCTION(BlueprintCallable)
+	void SetRotationalAudioComp(UFortVehicleAudioVoice* RotAudio);
+
+	UFUNCTION(BlueprintCallable)
+	void SetTargetingLaserAudioComp(UAudioComponent* TargetingLaserAudio);
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

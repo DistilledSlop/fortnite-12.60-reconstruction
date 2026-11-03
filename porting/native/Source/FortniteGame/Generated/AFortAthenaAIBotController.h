@@ -340,6 +340,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UAthenaMarkerComponent* GetMarkerComponent() const;
 
+	UFUNCTION(BlueprintCallable)
+	void SetBotOwner(AActor* InBotOwner);
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

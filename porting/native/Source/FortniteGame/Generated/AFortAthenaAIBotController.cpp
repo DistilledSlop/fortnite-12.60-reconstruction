@@ -18,6 +18,12 @@ UAthenaMarkerComponent* AFortAthenaAIBotController::GetMarkerComponent() const
 	return MarkerComponent;
 }
 
+void AFortAthenaAIBotController::SetBotOwner(AActor* InBotOwner)
+{
+	// CONFIDENCE: high; recovered native body and reflected field mapping.
+	BotOwner = InBotOwner;
+}
+
 void AFortAthenaAIBotController::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

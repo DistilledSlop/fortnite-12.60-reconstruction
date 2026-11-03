@@ -53,6 +53,24 @@ void AFortCharacterVehicle_Ostrich::ServerSetJumpCharging_Implementation(bool bN
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortCharacterVehicle_Ostrich::SetLinearAudioComp(UFortVehicleAudioVoice* LinearAudio)
+{
+	// CONFIDENCE: high; recovered native body and reflected field mapping.
+	NativeLinearMovementAudio = LinearAudio;
+}
+
+void AFortCharacterVehicle_Ostrich::SetRotationalAudioComp(UFortVehicleAudioVoice* RotAudio)
+{
+	// CONFIDENCE: high; recovered native body and reflected field mapping.
+	NativeRotationalMovementAudio = RotAudio;
+}
+
+void AFortCharacterVehicle_Ostrich::SetTargetingLaserAudioComp(UAudioComponent* TargetingLaserAudio)
+{
+	// CONFIDENCE: high; recovered native body and reflected field mapping.
+	NativeTargetingLaserAudio = TargetingLaserAudio;
+}
+
 void AFortCharacterVehicle_Ostrich::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

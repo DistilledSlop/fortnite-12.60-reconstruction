@@ -2,12 +2,26 @@
 #include "AFortAthenaCreativePortal.h"
 #include "Net/UnrealNetwork.h"
 
+FText AFortAthenaCreativePortal::GetCreatorName() const
+{
+	// CONFIDENCE: high
+	// Native implementation 0x1418c3320.
+	return SanitizedCreatorName;
+}
+
 FVector AFortAthenaCreativePortal::GetHUDPointerOrigin()
 {
 	// Original address: 0x1427d38a0.
 	// CONFIDENCE: HIGH
 	// Mechanically matched complete 12-byte FVector field copy; see bulk_struct_copy_runtime/README.md.
 	return MarkerDetailsPointerOrigin;
+}
+
+FString AFortAthenaCreativePortal::GetImageURL() const
+{
+	// CONFIDENCE: high
+	// Native implementation 0x1418c41f0.
+	return IslandInfo.ImageUrl;
 }
 
 bool AFortAthenaCreativePortal::GetIsPublishedPortal() const
@@ -26,12 +40,40 @@ AFortVolume* AFortAthenaCreativePortal::GetLinkedVolume() const
 	return LinkedVolume;
 }
 
+FString AFortAthenaCreativePortal::GetMnemonic() const
+{
+	// CONFIDENCE: high
+	// Native implementation 0x1418c6b50.
+	return IslandInfo.Mnemonic;
+}
+
 uint8 AFortAthenaCreativePortal::GetPopulation() const
 {
 	// Original address: 0x1427d3c50.
 	// CONFIDENCE: HIGH
 	// Mechanically matched complete scalar read; see bulk_scalar_runtime/README.md.
 	return CurrentPopulation;
+}
+
+FText AFortAthenaCreativePortal::GetTagline() const
+{
+	// CONFIDENCE: high
+	// Native implementation 0x1418c7c00.
+	return SanitizedTagline;
+}
+
+FString AFortAthenaCreativePortal::GetVideoID() const
+{
+	// CONFIDENCE: high
+	// Native implementation 0x1418c7d90.
+	return IslandInfo.LinkYoutubeId;
+}
+
+FText AFortAthenaCreativePortal::GetVolumeDisplayName() const
+{
+	// CONFIDENCE: high
+	// Native implementation 0x1418c7e40; empty-text helper 0x142c2e440.
+	return VolumeStatus.IsEmpty() ? SanitizedTitle : VolumeStatus;
 }
 
 void AFortAthenaCreativePortal::OnRep_ErrorState()

@@ -81,7 +81,11 @@ void AFortAIPawn::OnRep_CanInteract(bool bOldCanInteract)
 
 void AFortAIPawn::OnRep_CurrentAIRotationRate()
 {
-	// Body not recovered: reflection-derived stub.
+	// CONFIDENCE: high; recovered native body and reflected field mapping.
+	if (GetCharacterMovement())
+	{
+	    GetCharacterMovement()->RotationRate = CurrentAIRotationRate;
+	}
 }
 
 void AFortAIPawn::OnRep_CurrentFortAILODLevel()

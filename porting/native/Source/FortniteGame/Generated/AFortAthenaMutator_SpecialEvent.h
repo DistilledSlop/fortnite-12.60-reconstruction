@@ -147,6 +147,12 @@ public:
 	UFUNCTION()
 	void OnRep_GameResumed();
 
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void SetAdditionalViewpoint(FVector WorldLocation);
+
+	UFUNCTION(BlueprintCallable)
+	void SetNamedWeightForContainerLootRoll(FName WeightName);
+
 	UFUNCTION(BlueprintCallable)
 	void SetWeightForContainerLootRoll(float Weight);
 

@@ -154,8 +154,18 @@ public:
 	UPROPERTY()
 	uint8 bForceUpdateInteraction : 1;
 
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FText GetCreatorName() const;
+public:
+
 	UFUNCTION(BlueprintCallable)
 	FVector GetHUDPointerOrigin();
+
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FString GetImageURL() const;
+public:
 
 protected:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
@@ -165,8 +175,28 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	AFortVolume* GetLinkedVolume() const;
 
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FString GetMnemonic() const;
+public:
+
 	UFUNCTION()
 	uint8 GetPopulation() const;
+
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FText GetTagline() const;
+public:
+
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FString GetVideoID() const;
+public:
+
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FText GetVolumeDisplayName() const;
+public:
 
 	UFUNCTION()
 	void OnRep_ErrorState();

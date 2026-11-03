@@ -825,8 +825,10 @@ public:
 	UFUNCTION()
 	void OnRep_CanInteract(bool bOldCanInteract);
 
+protected:
 	UFUNCTION()
 	void OnRep_CurrentAIRotationRate();
+public:
 
 	UFUNCTION()
 	void OnRep_CurrentFortAILODLevel();

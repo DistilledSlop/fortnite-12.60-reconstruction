@@ -37,6 +37,18 @@ void AFortAthenaMutator_SpecialEvent::OnRep_GameResumed()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortAthenaMutator_SpecialEvent::SetAdditionalViewpoint(FVector WorldLocation)
+{
+	// CONFIDENCE: high; recovered native body and reflected field mapping.
+	AdditionalViewpoint = WorldLocation;
+}
+
+void AFortAthenaMutator_SpecialEvent::SetNamedWeightForContainerLootRoll(FName WeightName)
+{
+	// CONFIDENCE: high; recovered native body and reflected field mapping.
+	NamedWeightForContainerLootRoll = WeightName;
+}
+
 void AFortAthenaMutator_SpecialEvent::SetWeightForContainerLootRoll(float Weight)
 {
 	// Original exec 0x142820450; inline store.

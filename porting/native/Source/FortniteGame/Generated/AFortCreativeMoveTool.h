@@ -399,6 +399,9 @@ public:
 	bool GetAllowGravityOnPlace() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetAverageScaleModifier() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool GetClientNeedsToProcessNewlyPlacedActors() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
@@ -415,6 +418,11 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool GetShouldUsePrecisionGridSnapping() const;
+
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsMultiSelecting();
+public:
 
 protected:
 	UFUNCTION(BlueprintCallable, BlueprintPure)

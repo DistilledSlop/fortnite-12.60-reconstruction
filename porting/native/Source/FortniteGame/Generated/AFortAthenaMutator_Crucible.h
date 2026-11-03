@@ -7,11 +7,13 @@
 #include "AFortAthenaMutator.h"
 
 #include "EFortCrucibleControlType.h"
+#include "EFortCrucibleStatId.h"
 #include "FCrucibleCourseData.h"
 #include "FCrucibleCourseResults.h"
 #include "FCrucibleLatestCourseResultsUpdated.h"
 #include "FCrucibleLeaderboardUpdated.h"
 #include "FCrucibleParticipantBestTimesUpdated.h"
+#include "FCrucibleSegmentData.h"
 #include "FCrucibleStatValue.h"
 
 #include "AFortAthenaMutator_Crucible.generated.h"
@@ -58,10 +60,19 @@ public:
 	float NativeRecoveredFloat_0x52c;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FCrucibleCourseData GetCourseData() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetCourseSegmentData(int32 SegmentId, FCrucibleSegmentData& OutSegmentData) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetLatestServerTime() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetLatestServerTimeReceivedOnClientTime() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetParticipantBestTime(EFortCrucibleStatId StatId, FCrucibleStatValue& OutStatValue) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsLeaderboardFilterTextDisabled() const;

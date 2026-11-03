@@ -3,6 +3,23 @@
 #include "UFortRuntimeOptions.h"
 #include "Net/UnrealNetwork.h"
 
+FCrucibleCourseData AFortAthenaMutator_Crucible::GetCourseData() const
+{
+	// CONFIDENCE: high; recovered native body and reflected field mapping.
+	return CourseData;
+}
+
+bool AFortAthenaMutator_Crucible::GetCourseSegmentData(int32 SegmentId, FCrucibleSegmentData& OutSegmentData) const
+{
+	// CONFIDENCE: high; recovered native body and reflected field mapping.
+	if (!CourseData.SegmentsData.IsValidIndex(SegmentId))
+	{
+	    return false;
+	}
+	OutSegmentData = CourseData.SegmentsData[SegmentId];
+	return true;
+}
+
 float AFortAthenaMutator_Crucible::GetLatestServerTime() const
 {
 	// Original address: 0x1427fa580.
@@ -17,6 +34,18 @@ float AFortAthenaMutator_Crucible::GetLatestServerTimeReceivedOnClientTime() con
 	// CONFIDENCE: HIGH
 	// Mechanically matched complete native storage read; see bulk_sized_scalar_runtime/README.md.
 	return NativeRecoveredFloat_0x52c;
+}
+
+bool AFortAthenaMutator_Crucible::GetParticipantBestTime(EFortCrucibleStatId StatId, FCrucibleStatValue& OutStatValue) const
+{
+	// CONFIDENCE: high; recovered native body and reflected field mapping.
+	const uint8 Index = static_cast<uint8>(StatId);
+	if (!ParticipantBestTimes.IsValidIndex(Index))
+	{
+	    return false;
+	}
+	OutStatValue = ParticipantBestTimes[Index];
+	return true;
 }
 
 bool AFortAthenaMutator_Crucible::IsLeaderboardFilterTextDisabled() const
