@@ -54,6 +54,7 @@
 class AActor;
 class ABuildingRift;
 class AFortAIDirector;
+class AFortAIDirectorDataManager;
 class AFortGameplayMutator_AIEncounterModifierTags;
 class AFortGameplayMutator_AILevelVariance;
 class UCurveFloat;
@@ -658,6 +659,9 @@ public:
 	// table index 0, flags 0x20080000002000
 	UPROPERTY(Transient)
 	TArray<AFortGameplayMutator_AIEncounterModifierTags*> EncounterModifierTagsMutators;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure, BlueprintAuthorityOnly)
+	AFortAIDirectorDataManager* GetEncounterDataManager();
 
 	UFUNCTION(BlueprintCallable)
 	float GetEncounterTimeSeconds();

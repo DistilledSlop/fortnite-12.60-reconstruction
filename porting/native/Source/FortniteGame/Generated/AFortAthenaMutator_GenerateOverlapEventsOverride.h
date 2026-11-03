@@ -29,6 +29,9 @@ public:
 	FVector CenterLocation;
 
 	UFUNCTION(BlueprintCallable)
+	void SetCenterLocation(FVector NewCenterLocation);
+
+	UFUNCTION(BlueprintCallable)
 	void SetRadius(float NewRadius);
 
 };

@@ -32,6 +32,9 @@ public:
 	UFUNCTION()
 	void OnRep_BigHealth();
 
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void SetBigHealthMax(int64 NewHealth);
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

@@ -140,6 +140,9 @@ public:
 	UPROPERTY(Replicated)
 	uint8 bIsSearching : 1;
 
+	UFUNCTION(BlueprintCallable)
+	void ConsumeAmmo();
+
 	UFUNCTION()
 	AFortPawn* GetTarget();
 

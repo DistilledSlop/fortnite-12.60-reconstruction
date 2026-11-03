@@ -14,6 +14,14 @@ void ABuildingPropBigHealth::OnRep_BigHealth()
 	// Body not recovered: reflection-derived stub.
 }
 
+void ABuildingPropBigHealth::SetBigHealthMax(int64 NewHealth)
+{
+	// CONFIDENCE: high; reflected fields and complete native exec captured.
+	{
+	    BigHealthMax = NewHealth;
+	}
+}
+
 void ABuildingPropBigHealth::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

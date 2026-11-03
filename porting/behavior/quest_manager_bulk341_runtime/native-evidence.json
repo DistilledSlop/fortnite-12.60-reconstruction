@@ -1,0 +1,62 @@
+{
+  "batch": "quest_manager_bulk341_runtime",
+  "rows": [
+    {
+      "function": "GetQuestWithDefinition",
+      "wrapper": "porting/generated/native235-fresh-bulk/0x142ab8dd0.c",
+      "body": "porting/generated/native105-impl/0x142441bf0.c",
+      "native_body": "0x142441bf0",
+      "status": "ported"
+    },
+    {
+      "function": "GetNumCompletedObjectives",
+      "wrapper": "porting/generated/native235-fresh-bulk/0x142ab89f0.c",
+      "body": "porting/generated/native240-fresh-callees/0x142440ad0.c",
+      "native_body": "0x142440ad0",
+      "status": "ported"
+    },
+    {
+      "function": "HasCompletedQuest",
+      "wrapper": "porting/generated/native235-fresh-bulk/0x142ab97a0.c",
+      "body": "porting/generated/native240-fresh-callees/0x142444380.c",
+      "native_body": "0x142444380",
+      "status": "ported"
+    },
+    {
+      "function": "IsQuestInProgress",
+      "wrapper": "porting/generated/native235-fresh-bulk/0x142ab9ca0.c",
+      "body": "porting/generated/native240-fresh-callees/0x1424472c0.c",
+      "native_body": "0x1424472c0",
+      "status": "ported"
+    },
+    {
+      "function": "HasCompletedObjectiveWithName",
+      "wrapper": "porting/generated/native235-fresh-bulk/0x142ab96e0.c",
+      "body": "porting/generated/native240-fresh-callees/0x1424442e0.c",
+      "native_body": "0x1424442e0",
+      "status": "ported"
+    },
+    {
+      "function": "IsObjectiveWithNameInProgress",
+      "wrapper": "porting/generated/native235-fresh-bulk/0x142ab9bb0.c",
+      "body": "porting/generated/native240-fresh-callees/0x142447260.c",
+      "native_body": "0x142447260",
+      "status": "ported"
+    },
+    {
+      "function": "IsQuestObjectiveActive",
+      "wrapper": "porting/generated/native235-fresh-bulk/0x142ab9d30.c",
+      "body": "porting/generated/native240-fresh-callees/0x142447300.c",
+      "native_body": "0x142447300",
+      "status": "ported"
+    },
+    {
+      "function": "GetCompletedQuests",
+      "wrapper": "porting/generated/native235-fresh-bulk/0x142ab85d0.c",
+      "body": "porting/generated/native240-fresh-callees/0x14243f700.c",
+      "sort_helper": "porting/generated/native343-callees/0x142431be0.c",
+      "native_body": "0x14243f700",
+      "status": "ported"
+    }
+  ]
+}

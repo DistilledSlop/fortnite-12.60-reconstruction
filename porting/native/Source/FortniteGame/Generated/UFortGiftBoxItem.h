@@ -20,5 +20,8 @@ public:
 	UPROPERTY()
 	FGiftBoxInfo GiftBoxInfo;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool HasAccountID() const;
+
 };
 

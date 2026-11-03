@@ -2,6 +2,14 @@
 #include "ABuildingTrapFloor_Turret.h"
 #include "Net/UnrealNetwork.h"
 
+void ABuildingTrapFloor_Turret::ConsumeAmmo()
+{
+	// CONFIDENCE: high; reflected fields and complete native exec captured.
+	{
+	    CurrentAmmoCount = CurrentAmmoCount == MIN_int32 ? MAX_int32 : FMath::Max(CurrentAmmoCount - 1, 0);
+	}
+}
+
 AFortPawn* ABuildingTrapFloor_Turret::GetTarget()
 {
 	// Original address: 0x1427622d0.

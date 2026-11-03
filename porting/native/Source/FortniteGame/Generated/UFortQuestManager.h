@@ -33,6 +33,7 @@ class UFortHardcoreModifierItem;
 class UFortMcpProfileSubgame;
 class UFortQuestCategory;
 class UFortQuestItem;
+class UFortQuestItemDefinition;
 class UFortQuestObjectiveInfo;
 
 #include "UFortQuestManager.generated.h"
@@ -217,13 +218,28 @@ private:
 	void EnableQuestStateLogging();
 public:
 
+	UFUNCTION(BlueprintCallable)
+	void GetCompletedQuests(TArray<UFortQuestItem*>& OutCompletedQuests);
+
+	UFUNCTION(BlueprintCallable)
+	int32 GetNumCompletedObjectives(UFortQuestItemDefinition* Definition);
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	EQuestMapScreenMode GetQuestMapMode() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortQuestItem* GetQuestWithDefinition(UFortQuestItemDefinition* Definition) const;
 
 private:
 	UFUNCTION(Exec)
 	void GiveAthenaXp(float XpAmount);
 public:
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool HasCompletedObjectiveWithName(UFortQuestItemDefinition* Definition, FName BackendName) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool HasCompletedQuest(UFortQuestItemDefinition* Definition) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool HasUnsavedPrimaryMissionProgress() const;
@@ -232,6 +248,15 @@ protected:
 	UFUNCTION()
 	void InitializeQuestAbilities(APawn* PlayerPawn);
 public:
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsObjectiveWithNameInProgress(UFortQuestItemDefinition* Definition, FName BackendName) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsQuestInProgress(UFortQuestItemDefinition* Definition) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsQuestObjectiveActive(FName ObjectiveName) const;
 
 	UFUNCTION()
 	void SetQuestMapMode(EQuestMapScreenMode NewQuestMapMode);

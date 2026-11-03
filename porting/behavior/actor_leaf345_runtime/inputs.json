@@ -1,0 +1,70 @@
+[
+  {
+    "class": "ABuildingPropBigHealth",
+    "function": "SetBigHealthMax",
+    "reflection": {
+      "exec_addr": "0x142750a60",
+      "flags": "0x4020405",
+      "params": [
+        {
+          "index": 0,
+          "name": "NewHealth",
+          "kind": "Int64",
+          "kind_raw": "0x4",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0
+        }
+      ],
+      "create_func": "0x14274cbb0",
+      "source": "lea"
+    },
+    "wrapper_capture": "porting/generated/native107-broad/0x142750a60.c",
+    "header": "porting/native/Source/FortniteGame/Generated/ABuildingPropBigHealth.h"
+  },
+  {
+    "class": "ABuildingTrapFloor_Turret",
+    "function": "ConsumeAmmo",
+    "reflection": {
+      "exec_addr": "0x142762180",
+      "flags": "0x4020401",
+      "params": [],
+      "create_func": "0x14275ff60",
+      "source": "lea"
+    },
+    "wrapper_capture": "porting/generated/native107-broad/0x142762180.c",
+    "header": "porting/native/Source/FortniteGame/Generated/ABuildingTrapFloor_Turret.h"
+  },
+  {
+    "class": "AFortAthenaMutator_GenerateOverlapEventsOverride",
+    "function": "SetCenterLocation",
+    "reflection": {
+      "exec_addr": "0x1428029b0",
+      "flags": "0x4820401",
+      "params": [
+        {
+          "index": 0,
+          "name": "NewCenterLocation",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "struct": "0x142eea590"
+          }
+        }
+      ],
+      "create_func": "0x1428001e0",
+      "source": "lea"
+    },
+    "wrapper_capture": "porting/generated/native107-broad/0x1428029b0.c",
+    "header": "porting/native/Source/FortniteGame/Generated/AFortAthenaMutator_GenerateOverlapEventsOverride.h"
+  }
+]

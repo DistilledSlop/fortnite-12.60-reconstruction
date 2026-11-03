@@ -1,0 +1,32 @@
+[
+  {
+    "class": "UFortAIEncounterInfo",
+    "function": "GetEncounterDataManager",
+    "kind": "exec",
+    "signature": "AFortAIDirectorDataManager* GetEncounterDataManager()",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/object_leaf346_runtime/GetEncounterDataManager.inc",
+    "address": "0x1427982b0",
+    "native_body_address": "0x14165abd0",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Returns the first DataManagers pair's EncounterDataManager when the array is nonempty, otherwise null.",
+    "includes": []
+  },
+  {
+    "class": "UFortGiftBoxItem",
+    "function": "HasAccountID",
+    "kind": "exec",
+    "signature": "bool HasAccountID() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/object_leaf346_runtime/HasAccountID.inc",
+    "address": "0x14292f370",
+    "native_body_address": "0x142014bd0",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Checks whether GiftBoxInfo.FromAccountId contains characters; the native test is FString's stored array count greater than one.",
+    "includes": []
+  }
+]
