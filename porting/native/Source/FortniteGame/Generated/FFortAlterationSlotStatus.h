@@ -10,7 +10,7 @@ class UFortAlterationItemDefinition;
 
 #include "FFortAlterationSlotStatus.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FFortAlterationSlotStatus
 {
 	GENERATED_BODY()

@@ -8,7 +8,7 @@
 
 #include "FFortItemQuantityPair.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FORTNITEGAME_API FFortItemQuantityPair
 {
 	GENERATED_BODY()

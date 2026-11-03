@@ -8,7 +8,7 @@
 
 #include "FCrucibleSegmentData.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FCrucibleSegmentData
 {
 	GENERATED_BODY()

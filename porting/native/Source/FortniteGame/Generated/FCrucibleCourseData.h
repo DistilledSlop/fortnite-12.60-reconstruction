@@ -8,7 +8,7 @@
 
 #include "FCrucibleCourseData.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FCrucibleCourseData
 {
 	GENERATED_BODY()

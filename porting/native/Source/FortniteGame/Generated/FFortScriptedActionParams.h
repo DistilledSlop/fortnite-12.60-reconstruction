@@ -12,7 +12,7 @@ class UFortItem;
 
 #include "FFortScriptedActionParams.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FFortScriptedActionParams
 {
 	GENERATED_BODY()

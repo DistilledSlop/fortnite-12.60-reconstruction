@@ -9,7 +9,7 @@
 
 #include "FReplicatedSpawnInfo.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FReplicatedSpawnInfo
 {
 	GENERATED_BODY()

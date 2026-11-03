@@ -7,7 +7,7 @@
 
 #include "FContentPushState.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FContentPushState
 {
 	GENERATED_BODY()

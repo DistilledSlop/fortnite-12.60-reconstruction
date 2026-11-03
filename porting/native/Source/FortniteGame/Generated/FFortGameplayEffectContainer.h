@@ -11,7 +11,7 @@ class UGameplayEffect;
 
 #include "FFortGameplayEffectContainer.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FFortGameplayEffectContainer
 {
 	GENERATED_BODY()

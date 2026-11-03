@@ -8,7 +8,7 @@
 
 #include "FFireModeData.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FFireModeData
 {
 	GENERATED_BODY()

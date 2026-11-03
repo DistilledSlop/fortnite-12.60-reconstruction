@@ -7,7 +7,7 @@
 
 #include "FGroundSplineSpeedData.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FGroundSplineSpeedData
 {
 	GENERATED_BODY()

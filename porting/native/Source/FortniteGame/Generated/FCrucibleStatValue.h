@@ -8,7 +8,7 @@
 
 #include "FCrucibleStatValue.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FCrucibleStatValue
 {
 	GENERATED_BODY()

@@ -2337,6 +2337,10 @@ _native_checkpoint2040_spec = _common_activation_import.spec_from_file_location(
     "native_checkpoint2040_policy", os.path.join(os.path.dirname(__file__), "behavior", "native_checkpoint2040_runtime", "source_policy.py"))
 _native_checkpoint2040_policy = _common_activation_import.module_from_spec(_native_checkpoint2040_spec)
 _native_checkpoint2040_spec.loader.exec_module(_native_checkpoint2040_policy)
+_native_checkpoint3058_spec = _common_activation_import.spec_from_file_location(
+    "native_checkpoint3058_policy", os.path.join(os.path.dirname(__file__), "behavior", "native_checkpoint3058_runtime", "source_policy.py"))
+_native_checkpoint3058_policy = _common_activation_import.module_from_spec(_native_checkpoint3058_spec)
+_native_checkpoint3058_spec.loader.exec_module(_native_checkpoint3058_policy)
 _dayphase_callback_spec = _common_activation_import.spec_from_file_location(
     "dayphase_callback60_policy", os.path.join(os.path.dirname(__file__), "behavior", "dayphase_callback60_runtime", "source_policy.py"))
 _dayphase_callback_policy = _common_activation_import.module_from_spec(_dayphase_callback_spec)
@@ -4207,6 +4211,7 @@ def promote(args):
     for model in class_models:
         for fn, kinds in model["used"].items():
             seeds.setdefault(fn, set()).update(kinds)
+    _native_checkpoint3058_policy.add_roots(gate, seeds)
     _common_input_policy.add_roots(gate, seeds)
     if 'CommonUI' in module_deps:
         _action_commited_policy.add_roots(gate, seeds)
@@ -5009,6 +5014,7 @@ class TypeGate:
                 for member in model["members"]:
                     member["runtime_property_specifiers"] = ["BlueprintReadOnly", "Transient"]
             model = _native_checkpoint2040_policy.apply_struct(info, model)
+            model = _native_checkpoint3058_policy.apply_struct(info, model)
             model = _confirmation_policy.apply_struct(self, info, model)
             model = _common_input_policy.apply_struct(info, model)
             model = _input_platform_policy.apply_struct(info, model)

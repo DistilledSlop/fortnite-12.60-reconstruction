@@ -11,7 +11,7 @@ class UFortMinigameStatFilter;
 
 #include "FFortMinigameStatQuery.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FFortMinigameStatQuery
 {
 	GENERATED_BODY()

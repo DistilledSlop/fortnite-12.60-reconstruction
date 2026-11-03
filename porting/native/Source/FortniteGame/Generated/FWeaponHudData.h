@@ -7,7 +7,7 @@
 
 #include "FWeaponHudData.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FWeaponHudData
 {
 	GENERATED_BODY()

@@ -9,7 +9,7 @@ class UFortWeaponItemDefinition;
 
 #include "FWeaponSeatDefinition.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FWeaponSeatDefinition
 {
 	GENERATED_BODY()
