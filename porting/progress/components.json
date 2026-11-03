@@ -235,6 +235,11 @@
                 "name_regex": "^SM_"
               },
               {
+                "root": "porting/generated/asset_pipeline_skeletal/glb",
+                "suffix": ".glb",
+                "name_regex": "^SM_"
+              },
+              {
                 "root": "porting/native/Content",
                 "suffix": ".uasset",
                 "name_regex": "^SM_"
