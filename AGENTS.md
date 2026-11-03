@@ -35,6 +35,12 @@ helper, or commit. Documentation/status commits need no build or runtime suite.
 Keep source/reflection/generation invariants fail-closed, but batch their checks
 with the implementation they protect. Do not add tests that merely mirror code.
 
+Carry forward prior passing results when new work cannot invalidate them. Do not
+recheck each previously recovered body after adding another independent body.
+Repeat only checks affected by changed dependencies or shared contracts; checks
+that are effectively instant may still run when convenient. Apply this rule to
+gameplay and frontend work, and preserve it in handoffs and compaction summaries.
+
 For a frontend batch, default to a client build and the real affected frontend
 flow. Use existing focused checks for new ownership/GC, delegate mutation/reentry,
 bitfield, serialization, or other difficult reconstructed contracts. Simple

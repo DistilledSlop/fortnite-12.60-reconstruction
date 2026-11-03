@@ -2,6 +2,12 @@
 
 ## Gameplay source batch (2026-11-02): playlist capacity and aircraft lookup
 
+Latest user validation preference: reuse prior passing results unless subsequent
+work could invalidate them. Do not recheck every earlier body when adding an
+independent body; repeat affected checks at coherent batch boundaries. Effectively
+instant checks are acceptable. This is also recorded in AGENTS.md; retain it in
+handoffs/compaction summaries.
+
 User reconfirmed scope: Codex continues gameplay, Claude owns UI. Preserve all
 frontend edits and the unowned weapon_selection_evidence.md candidate. This
 batch changes canonical gameplay inputs and the snippet support-header gate;
