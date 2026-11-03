@@ -1413,12 +1413,12 @@
         {
           "id": "ui.commonui_umg.implementation",
           "name": "CommonUI and UMG behavior and widgets",
-          "weight": 29,
+          "weight": 26,
           "measure": {
             "kind": "manual",
             "pct": 0
           },
-          "rationale": "Remaining CommonUI and UMG behavior includes Panel and operation queue, input dispatch and held actions, the main CommonButton and other widgets, their integration, and behavior parity. Header coverage, source candidates, the bounded base activation, Panel intro and internal button diagnostics are separately allocated; none establishes this remainder. Weight includes completed and remaining effort; exclude native-body recovery/transcription allocated to gameplay.native_behavior and separately measured diagnostics, declarations and material work. See README effort review for boundaries and uncertainty. EFF-002/003: total CommonUI behavior allocation uses the reviewed 32-point residual estimate (22–44 range), including reusable activatable stacks/queues, Panel, buttons/styles, action widgets, input/routing and list/tab/rotator integration. The operation queue belongs here, not lifecycle. Three independently verified one-point foundations (button query, input and binding data) are split out below; this residual is therefore 29. Excludes declarations, body transcription, existing source/runtime diagnostics and Fortnite-specific flows. Latest bounded integration: Native e56c37ac / Engine c945a157c passes client build and original Root diagnostic creation/viewport attachment with zero Blueprint errors;10 imports remain, strict gate fails. Real root Slate hierarchy/release and shared border cvars are integrated. Native27d5e909 restores actual CommonUI settings lifecycle/configured resources with both builds and fresh default native join PASS. Secondary-player runtime, real startup/state/input effects, routing/legacy registration and lazy-image load guard remain unfinished. No interactive menu, pixels/audio or full UI parity claim; no credit/effort weights added."
+          "rationale": "Remaining CommonUI and UMG behavior includes Panel and operation queue, input dispatch and held actions, the main CommonButton and other widgets, their integration, and behavior parity. Header coverage, source candidates, the bounded base activation, Panel intro and internal button diagnostics are separately allocated; none establishes this remainder. Weight includes completed and remaining effort; exclude native-body recovery/transcription allocated to gameplay.native_behavior and separately measured diagnostics, declarations and material work. See README effort review for boundaries and uncertainty. EFF-002/003: total CommonUI behavior allocation uses the reviewed 32-point residual estimate (22–44 range), including reusable activatable stacks/queues, Panel, buttons/styles, action widgets, input/routing and list/tab/rotator integration. The operation queue belongs here, not lifecycle. Three independently verified one-point foundations (button query, input and binding data) and then three more verified points (two for CommonButton style/text/layout/sizing, one for the base click callbacks) are split out below; this residual is therefore 26. Excludes declarations, body transcription, existing source/runtime diagnostics and Fortnite-specific flows. Latest bounded integration: Native e56c37ac / Engine c945a157c passes client build and original Root diagnostic creation/viewport attachment with zero Blueprint errors;10 imports remain, strict gate fails. Real root Slate hierarchy/release and shared border cvars are integrated. Native27d5e909 restores actual CommonUI settings lifecycle/configured resources with both builds and fresh default native join PASS. Secondary-player runtime, real startup/state/input effects, routing/legacy registration and lazy-image load guard remain unfinished. No interactive menu, pixels/audio or full UI parity claim; no credit/effort weights added."
         },
         {
           "id": "ui.commonui_panel_outro_runtime",
@@ -2003,6 +2003,30 @@
             ]
           },
           "rationale": "One point split from CommonUI residual behavior for engine-owned record/value construction, FText/key arrays, cloned weak delegates, process registry replacement/removal and modulo ID semantics, verified by 26 controlled engine cases. Explicit fixture resolvers were used; original UFUNCTION registration, production provider adapters, routing, widget lifecycle and interactive UI remain in the residual budget. No original pixels or full UI parity is claimed."
+        },
+        {
+          "id": "ui.commonui_button_style_runtime",
+          "name": "CommonButton style, text and sizing — verified runtime",
+          "weight": 2,
+          "measure": {
+            "kind": "ledger",
+            "checks": [
+              "frontend_commonui_button_style_runtime"
+            ]
+          },
+          "rationale": "Two points split from ui.commonui_umg.implementation; no additive budget or double allocation. Credits only the frozen, hash-pinned button-base-click-runtime-3 checkpoint: 190 controlled rows across text and text-block style, text-case layout, IsErebus, internal sizing and style rebuild on the staged client, plus two builds, two joins and eight retained diagnostics. SetStyle registration, production producers, selection/focus lifecycle, interactive UI and pixels remain in the residual. Later unfrozen batches (CommonInput lifecycle, action widget, root Slate, routing, queue) get no credit until they have a frozen checkpoint."
+        },
+        {
+          "id": "ui.commonui_button_click_runtime",
+          "name": "CommonButton base click callbacks — verified runtime",
+          "weight": 1,
+          "measure": {
+            "kind": "ledger",
+            "checks": [
+              "frontend_commonui_button_click_runtime"
+            ]
+          },
+          "rationale": "One point split from ui.commonui_umg.implementation; no additive budget or double allocation. Actual BP/native/dynamic click callback ordering, weak receivers, reentry and conditional analytics lookup: 14 controlled rows plus a GDB lookup observation, from the frozen button-base-click-runtime-3 checkpoint. Accepted-click routing, selection, focus and interactive UI remain in the residual."
         }
       ]
     }

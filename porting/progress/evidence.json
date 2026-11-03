@@ -11275,6 +11275,41 @@
    "release_sha256": "fb2b0a6af2416ba6f9b68c0d4c27e02d31fb4a9e388ab816a9f90155ce4cd93a",
    "scope": "Engine-owned binding record, data and storage component with controlled resolvers; no original UFUNCTION registration, production providers, routing or interactive UI.",
    "provenance_note": "Pinned Git sources and frozen source and artifact pairs are rehashed; stage binary hashes are cross-checked, not independently rehashed."
+  },
+  "frontend_commonui_button_style_runtime": {
+   "id": "frontend_commonui_button_style_runtime",
+   "result": "pass",
+   "exit_code": 0,
+   "command": "python3 -I porting/progress/record_frontend_button_style_click_runtime.py",
+   "checkpoint": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-native-evidence/button-base-click-runtime-3/checkpoint.json",
+   "checkpoint_sha256": "5c6df6fce0c9264664caa4c842d120a32facb8446d40c306b10f58e1d9892b2f",
+   "release": "/mnt/vibrato/fortnite-evidence/frozen-runtime/button-base-click-runtime-3/source-release.json",
+   "release_sha256": "34652ba0de81bb9944a28ad7171e012f86c1a84c60942314f29e983c32214d28",
+   "verified_cases": {
+    "button_text_style": 32,
+    "text_block_style": 23,
+    "text_transform": 22,
+    "erebus": 9,
+    "button_size": 11,
+    "style_rebuild": 93
+   },
+   "scope": "Source-authenticated CommonButton text/text-block style, text-case layout, IsErebus, internal sizing and style rebuild diagnostics (190 controlled rows) on the staged client; no SetStyle registration, production producers, interactive UI or pixels.",
+   "provenance_note": "Pinned Git sources and frozen source and artifact pairs are rehashed; stage binary hashes are cross-checked, not independently rehashed."
+  },
+  "frontend_commonui_button_click_runtime": {
+   "id": "frontend_commonui_button_click_runtime",
+   "result": "pass",
+   "exit_code": 0,
+   "command": "python3 -I porting/progress/record_frontend_button_style_click_runtime.py",
+   "checkpoint": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/frontend-native-evidence/button-base-click-runtime-3/checkpoint.json",
+   "checkpoint_sha256": "5c6df6fce0c9264664caa4c842d120a32facb8446d40c306b10f58e1d9892b2f",
+   "release": "/mnt/vibrato/fortnite-evidence/frozen-runtime/button-base-click-runtime-3/source-release.json",
+   "release_sha256": "34652ba0de81bb9944a28ad7171e012f86c1a84c60942314f29e983c32214d28",
+   "verified_cases": {
+    "base_click": 14
+   },
+   "scope": "Actual CommonButton base click BP/native/dynamic callback ordering, weak receivers, reentry and conditional analytics lookup (14 rows plus a GDB lookup observation); no accepted-click routing, selection, focus or interactive UI.",
+   "provenance_note": "Pinned Git sources and frozen source and artifact pairs are rehashed; stage binary hashes are cross-checked, not independently rehashed."
   }
  }
 }

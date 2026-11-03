@@ -140,7 +140,7 @@ class ProgressModelTests(unittest.TestCase):
         leaves = list(progress.walk_spec(model['tree']))
         material = [leaf for leaf in leaves if leaf['id'].startswith('ui.material_')]
         self.assertEqual(sum(leaf['weight'] for leaf in material), 20)
-        self.assertEqual(len(leaves), 133)
+        self.assertEqual(len(leaves), 135)
         self.assertEqual(sum(leaf['weight'] for leaf in leaves), 2019)
         self.assertEqual(sum(leaf['weight'] for leaf in material if leaf['measure']['kind'] == 'ledger'), 20)
         by_id = {leaf['id']: leaf for leaf in material}
@@ -184,7 +184,7 @@ class ProgressModelTests(unittest.TestCase):
         button = leaves['ui.commonui_button_internal_runtime']
         panel = leaves['ui.commonui_panel_intro_runtime']
         outro = leaves['ui.commonui_panel_outro_runtime']
-        self.assertEqual(remaining['weight'] + runtime['weight'] + button['weight'] + panel['weight'] + outro['weight'] + leaves['ui.commonui_button_foundation_runtime']['weight'] + leaves['ui.commonui_input_foundation_runtime']['weight'] + leaves['ui.commonui_binding_data_runtime']['weight'], 36)
+        self.assertEqual(remaining['weight'] + runtime['weight'] + button['weight'] + panel['weight'] + outro['weight'] + leaves['ui.commonui_button_foundation_runtime']['weight'] + leaves['ui.commonui_input_foundation_runtime']['weight'] + leaves['ui.commonui_binding_data_runtime']['weight'] + leaves['ui.commonui_button_style_runtime']['weight'] + leaves['ui.commonui_button_click_runtime']['weight'], 36)
         self.assertEqual(remaining['measure'], dict(kind='manual', pct=0))
         self.assertEqual(runtime['measure'], dict(kind='ledger', checks=['frontend_commonui_base_activation_runtime']))
         self.assertEqual(button['measure'], dict(kind='ledger', checks=['frontend_commonui_internal_button_runtime']))

@@ -56,7 +56,7 @@ class SourceStageTests(unittest.TestCase):
             self.assertEqual(leaf['weight'], 1)
             self.assertEqual(leaf['measure']['checks'], [check])
         self.assertEqual(leaves['ui.lifecycle']['weight'] + leaves['ui.context_source_stage']['weight'] + leaves['ui.context_runtime_stage']['weight'] + leaves['ui.startup_selection_runtime']['weight'], 14)
-        self.assertEqual(leaves['ui.commonui_umg.implementation']['weight'] + leaves['ui.commonui_activation_runtime']['weight'] + leaves['ui.commonui_button_internal_runtime']['weight'] + leaves['ui.commonui_panel_intro_runtime']['weight'] + leaves['ui.commonui_panel_outro_runtime']['weight'] + leaves['ui.panel_source_stage']['weight'] + leaves['ui.input_source_stage']['weight'] + leaves['ui.commonui_button_foundation_runtime']['weight'] + leaves['ui.commonui_input_foundation_runtime']['weight'] + leaves['ui.commonui_binding_data_runtime']['weight'], 38)
+        self.assertEqual(leaves['ui.commonui_umg.implementation']['weight'] + leaves['ui.commonui_activation_runtime']['weight'] + leaves['ui.commonui_button_internal_runtime']['weight'] + leaves['ui.commonui_panel_intro_runtime']['weight'] + leaves['ui.commonui_panel_outro_runtime']['weight'] + leaves['ui.panel_source_stage']['weight'] + leaves['ui.input_source_stage']['weight'] + leaves['ui.commonui_button_foundation_runtime']['weight'] + leaves['ui.commonui_input_foundation_runtime']['weight'] + leaves['ui.commonui_binding_data_runtime']['weight'] + leaves['ui.commonui_button_style_runtime']['weight'] + leaves['ui.commonui_button_click_runtime']['weight'], 38)
         self.assertTrue(all(not gate['done'] for gate in model['milestones']))
 
 if __name__ == '__main__':
