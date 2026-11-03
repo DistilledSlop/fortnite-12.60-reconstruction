@@ -394,6 +394,16 @@ void AFortPawn::StartSpinning(float Value, bool bFallingOnly, bool bAdjustForInp
 	}
 }
 
+void AFortPawn::StopSpinning()
+{
+	// CONFIDENCE: high; native 0x142353a10 resets both spin fields on authority.
+	if (GetLocalRole() == ROLE_Authority)
+	{
+	    LocalSpin = 0.0f;
+	    NativeRecoveredBool_0x63c = false;
+	}
+}
+
 bool AFortPawn::WasDBNOOnDeath() const
 {
 	// Behaviour snippet: AFortPawn::WasDBNOOnDeath (body only; spliced into the generated member function).

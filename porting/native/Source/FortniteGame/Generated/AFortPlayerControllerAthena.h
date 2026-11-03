@@ -945,13 +945,15 @@ public:
 	void ClientStopWaitLTMLoading();
 	void ClientStopWaitLTMLoading_Implementation();
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void DestroyCreativePlot(const FString& IslandId);
 	void DestroyCreativePlot_Implementation(const FString& IslandId);
+	bool DestroyCreativePlot_Validate(const FString& IslandId);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void DuplicateCreativePlot(const FString& IslandId, const FString& Locale, const FString& Title);
 	void DuplicateCreativePlot_Implementation(const FString& IslandId, const FString& Locale, const FString& Title);
+	bool DuplicateCreativePlot_Validate(const FString& IslandId, const FString& Locale, const FString& Title);
 
 private:
 	UFUNCTION()
@@ -988,13 +990,15 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsClientNotifiedOfWin() const;
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void MakeNewCreativePlot(UFortCreativeRealEstatePlotItemDefinition* PlotType, const FString& Locale, const FString& Title);
 	void MakeNewCreativePlot_Implementation(UFortCreativeRealEstatePlotItemDefinition* PlotType, const FString& Locale, const FString& Title);
+	bool MakeNewCreativePlot_Validate(UFortCreativeRealEstatePlotItemDefinition* PlotType, const FString& Locale, const FString& Title);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void MakeNewCreativePlotFromLinkCode(const FString& LinkCode, const FString& Locale, const FString& Title);
 	void MakeNewCreativePlotFromLinkCode_Implementation(const FString& LinkCode, const FString& Locale, const FString& Title);
+	bool MakeNewCreativePlotFromLinkCode_Validate(const FString& LinkCode, const FString& Locale, const FString& Title);
 
 	UFUNCTION(Server, Reliable, WithValidation)
 	void OnPostGameForced();
@@ -1037,9 +1041,10 @@ public:
 	void ResetMyCurrentCreativePlot_Implementation();
 	bool ResetMyCurrentCreativePlot_Validate();
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void RestoreCreativePlot(const FString& IslandId);
 	void RestoreCreativePlot_Implementation(const FString& IslandId);
+	bool RestoreCreativePlot_Validate(const FString& IslandId);
 
 	UFUNCTION(Server, Reliable)
 	void SendClientPhysicsBallStateToServer(APhysicsObject* PhysicsObject, float ClientPing, const FTimeStampedPhysicsPawnState& ClientBallState);
@@ -1146,9 +1151,10 @@ public:
 	void ServerInsertExtraStreamingTestSkydiveStates();
 	void ServerInsertExtraStreamingTestSkydiveStates_Implementation();
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerLoadIslandCheckpoint(AFortAthenaCreativePortal* Portal);
 	void ServerLoadIslandCheckpoint_Implementation(AFortAthenaCreativePortal* Portal);
+	bool ServerLoadIslandCheckpoint_Validate(AFortAthenaCreativePortal* Portal);
 
 	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerLoadPlotForPortal(AFortAthenaCreativePortal* Portal, const FString& PlotItemId);
@@ -1220,9 +1226,10 @@ public:
 	void ServerRestartMinigame_Implementation();
 	bool ServerRestartMinigame_Validate();
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerSaveIslandCheckpoint(AFortAthenaCreativePortal* Portal);
 	void ServerSaveIslandCheckpoint_Implementation(AFortAthenaCreativePortal* Portal);
+	bool ServerSaveIslandCheckpoint_Validate(AFortAthenaCreativePortal* Portal);
 
 	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerSelectMutatorItem(AFortGameplayMutator* Mutator, int32 ItemIndex);
@@ -1359,17 +1366,19 @@ public:
 	void TellServer_ClientReceivedPlaysetDataForVolume_Implementation(const FFortPlaysetStreamingData& PlaysetData, AFortVolume* Volume);
 	bool TellServer_ClientReceivedPlaysetDataForVolume_Validate(const FFortPlaysetStreamingData& PlaysetData, AFortVolume* Volume);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void UpdateCreativeIslandDescriptionTags(const FString& IslandId, const FString& Locale, const TArray<FString>& DescriptionTags);
 	void UpdateCreativeIslandDescriptionTags_Implementation(const FString& IslandId, const FString& Locale, const TArray<FString>& DescriptionTags);
+	bool UpdateCreativeIslandDescriptionTags_Validate(const FString& IslandId, const FString& Locale, const TArray<FString>& DescriptionTags);
 
 	UFUNCTION(Server, Reliable)
 	void UpdateCreativePlotData(AFortVolume* VolumeToPublish, const FCreativeIslandInfo& MyInfo);
 	void UpdateCreativePlotData_Implementation(AFortVolume* VolumeToPublish, const FCreativeIslandInfo& MyInfo);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void UpdateCreativePlotName(const FString& IslandId, const FString& Locale, const FString& Title);
 	void UpdateCreativePlotName_Implementation(const FString& IslandId, const FString& Locale, const FString& Title);
+	bool UpdateCreativePlotName_Validate(const FString& IslandId, const FString& Locale, const FString& Title);
 
 	UFUNCTION(Server, Reliable, WithValidation)
 	void UpdateUGCRestrictedForVolume(AFortVolume* Volume, bool bRestricted);

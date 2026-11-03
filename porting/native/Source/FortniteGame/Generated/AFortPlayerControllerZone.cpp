@@ -81,6 +81,12 @@ void AFortPlayerControllerZone::OnRep_VoiceChatChannel()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerControllerZone::ResetExecuteJetpackToggle()
+{
+	// CONFIDENCE: high; complete native exec body at 0x142a70770.
+	bJetpackExecuteToggle = false;
+}
+
 void AFortPlayerControllerZone::ServerActivateMission_Implementation()
 {
 	// Body not recovered: reflection-derived stub.

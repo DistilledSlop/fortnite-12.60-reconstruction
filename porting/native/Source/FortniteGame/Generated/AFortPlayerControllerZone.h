@@ -210,6 +210,9 @@ public:
 	UFUNCTION()
 	void OnRep_VoiceChatChannel();
 
+	UFUNCTION(BlueprintCallable)
+	void ResetExecuteJetpackToggle();
+
 	UFUNCTION(Server, Reliable)
 	void ServerActivateMission();
 	void ServerActivateMission_Implementation();

@@ -933,6 +933,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void StartSpinning(float Value, bool bFallingOnly, bool bAdjustForInputYawScale);
 
+	UFUNCTION(BlueprintCallable)
+	void StopSpinning();
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool WasDBNOOnDeath() const;
 

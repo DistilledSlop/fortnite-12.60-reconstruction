@@ -635,6 +635,9 @@ public:
 	UPROPERTY()
 	FMarkedActorDisplayInfo MarkerDisplay;
 
+	UFUNCTION(BlueprintCallable)
+	void ClearPlayedDying();
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual int32 GetCurrentBuildingLevel() const;
 

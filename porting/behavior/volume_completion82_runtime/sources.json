@@ -1,0 +1,24 @@
+[
+  {
+    "function": "ServerEndLoadingVolume_Implementation",
+    "source": "porting/generated/decomp_improved/AFortPlayerControllerAthena/ServerEndLoadingVolume_Implementation.c",
+    "sha256": "c48fe8e24b644314e9e05a5838776a2f044f45d6400a3dbd17dcc4ec9d3a4da1"
+  },
+  {
+    "function": "ServerEndUnloadingVolume_Implementation",
+    "source": "porting/generated/decomp_improved/AFortPlayerControllerAthena/ServerEndUnloadingVolume_Implementation.c",
+    "sha256": "b7b362c2e51bde87ae6332ccfd11eb02562582db53fe4e0e8cdd1f9afbe27919"
+  },
+  {
+    "source": "porting/generated/volume-integration82/0x140726fc0.c",
+    "sha256": "a79ea8ab24313ba8695c7f4d5aef3fa190d4ef53959b2fb0393576727fc6ba78"
+  },
+  {
+    "source": "porting/generated/volume-integration82/0x1419f19c0.c",
+    "sha256": "1ea7885ae9c22200642e9f83c0660e1cea807a81ba116dd42999f16b8e690585"
+  },
+  {
+    "source": "porting/generated/volume-integration82/0x1419f1b80.c",
+    "sha256": "e2a88a13d1ed3773a87693d42000fb8760608bb4e74f34a326a74875753ccacd"
+  }
+]

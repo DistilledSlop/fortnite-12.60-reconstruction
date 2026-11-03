@@ -1,0 +1,28 @@
+{
+  "image": "/mnt/vibrato/fortnite-evidence/original-late-capture-1/image-125.runtime.bin",
+  "image_sha256": "338c83a2314ccac1040a2c0bb520b893013cc7b58eda58e550da67f5d84de680",
+  "scanner_report": "/tmp/gameplay-bulk-mutation-storage/report.json",
+  "bodies": [
+    {
+      "class": "ABuildingActor",
+      "function": "ClearPlayedDying",
+      "address": "0x142736670",
+      "bytes": "488b42204533c04885c0410f95c04c03c04c89422080a1e0030000f7c3",
+      "sha256": "1cf68dad5b8ca0e3c7801c17bab588888cbcec32ad639b49cafa3148d356f77f"
+    },
+    {
+      "class": "AFortPlayerControllerZone",
+      "function": "ResetExecuteJetpackToggle",
+      "address": "0x142a70770",
+      "bytes": "488b42204533c04885c0410f95c04c03c04c894220c681902a000000c3",
+      "sha256": "a31924916b1f617c8cac5eb888317ab74349d5c363bd86884d0dd30abba24010"
+    },
+    {
+      "class": "UFortWorldItem",
+      "function": "MarkItemAsSeenInFrontend",
+      "address": "0x142b5d450",
+      "bytes": "488b42204533c04885c0410f95c04c03c04c894220c6814a02000001c3",
+      "sha256": "45d91540be187381e1c0107b7182e6aae6fadddfabf2be4c27c89fbd91484512"
+    }
+  ]
+}

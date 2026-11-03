@@ -10,6 +10,12 @@
 #include "UFortBuildingActorSet.h"
 #include "Net/UnrealNetwork.h"
 
+void ABuildingActor::ClearPlayedDying()
+{
+	// CONFIDENCE: high; complete native exec body at 0x142736670.
+	bPlayedDying = false;
+}
+
 int32 ABuildingActor::GetCurrentBuildingLevel() const
 {
 	// Original address: 0x141b9d290.

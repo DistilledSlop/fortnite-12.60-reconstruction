@@ -1648,17 +1648,20 @@ public:
 	void ServerChooseGender_Implementation(EFortCustomGender::Type Gender);
 	bool ServerChooseGender_Validate(EFortCustomGender::Type Gender);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerChoosePart(EFortCustomPartType::Type Part, UCustomCharacterPart* ChosenCharacterPart);
 	void ServerChoosePart_Implementation(EFortCustomPartType::Type Part, UCustomCharacterPart* ChosenCharacterPart);
+	bool ServerChoosePart_Validate(EFortCustomPartType::Type Part, UCustomCharacterPart* ChosenCharacterPart);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerCycleAccessoryColorSwatch(EFortCustomPartType::Type Part, bool bNext);
 	void ServerCycleAccessoryColorSwatch_Implementation(EFortCustomPartType::Type Part, bool bNext);
+	bool ServerCycleAccessoryColorSwatch_Validate(EFortCustomPartType::Type Part, bool bNext);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerCycleColorSwatch(EColorSwatchType SwatchType, bool bNext);
 	void ServerCycleColorSwatch_Implementation(EColorSwatchType SwatchType, bool bNext);
+	bool ServerCycleColorSwatch_Validate(EColorSwatchType SwatchType, bool bNext);
 
 	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerCyclePart(EFortCustomPartType::Type Part, bool bNextPart);
@@ -1721,9 +1724,10 @@ public:
 	void ServerRootMotionInterruptNotifyStopMontage_Implementation(UAnimMontage* MontageToStop);
 	bool ServerRootMotionInterruptNotifyStopMontage_Validate(UAnimMontage* MontageToStop);
 
-	UFUNCTION(Server, Unreliable)
+	UFUNCTION(Server, Unreliable, WithValidation)
 	void ServerSendAimbotDetectionStatus(const TArray<uint8>& Payload);
 	void ServerSendAimbotDetectionStatus_Implementation(const TArray<uint8>& Payload);
+	bool ServerSendAimbotDetectionStatus_Validate(const TArray<uint8>& Payload);
 
 	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerSendZiplineState(const FZiplinePawnState& InZiplineState);

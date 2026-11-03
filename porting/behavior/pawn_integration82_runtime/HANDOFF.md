@@ -1,0 +1,17 @@
+# Pawn integration proposal 82
+
+One proposal: `ServerSendAimbotDetectionStatus_Validate` at 0x14234a9d0 compares the signed 32-bit word at the payload reference +8 with 100. The original RPC exec `porting/generated/decomp_improved/AFortPlayerPawn/ServerSendAimbotDetectionStatus.c` passes a TArray by address. UE TArray's +8 int32 is ArrayNum; `Payload.Num() < 100` preserves signed comparison. The current generated RPC declaration takes `const TArray<uint8>& Payload`; the generator's validate splice (`porting/gen_native_classes.py`, validate branch) adds WithValidation and the matching declaration. Manifest entry is a proposal only; root owns promotion and verification.
+
+Three cosmetic validator proposals are blocked: original exec thunks in `porting/generated/decomp_improved/AFortPlayerPawn/ServerChoosePart.c`, `ServerCycleAccessoryColorSwatch.c`, and `ServerCycleColorSwatch.c` step the pointer/bool first and enum second, whereas the generated declarations place enum first. The validator bodies read the first argument register after `this`, so assuming the generated enum argument is unsafe. Resolve original native argument/parameter ordering and RPC generation before promotion; see also `porting/decompilation_notes.md` uncertain validators. `ClientAcknowledgeVehicleInputState_Implementation` stores to pawn +0x121c, but no corresponding reflected field mapping was located; do not invent a field.
+
+Read-only source inspection and proposal creation only; no canonical changes, generation, builds or tests. Last tested 2,040 bodies; next checkpoint approximately 3,040. Root retains integration ownership.
+
+## Follow-up: cosmetic argument order resolved
+
+The earlier blocker above was an artifact of decompiler parameter labels, which follow reflection list index rather than parameter layout. Three additional proposals are in `manifest-additions.json`. Reflection `porting/generated/reflection/fortnite_game_reflection.json` gives the first enum offset 0, and for ChoosePart gives ChosenCharacterPart offset 8; the cycle RPCs have two-byte parameter storage. Original thunk stack layouts and call registers agree with the generated declaration order:
+
+- ChoosePart: 0x142a7e8da initializes byte at rsp+0x30; 0x142a7e915 initializes qword at rsp+0x38. Both validation 0x142a7e96e and implementation 0x142a7e9a4 receive that first byte in EDX and qword in R8. The byte is Part, the qword ChosenCharacterPart.
+- Accessory: 0x142a7e9d7 initializes byte at rsp+0x40, 0x142a7ea12 initializes the second bool's integer scratch at rsp+0x48. Validate 0x142a7ea71 and implementation 0x142a7eaa3 receive the byte in EDX and normalized bool in R8D. The byte is Part.
+- Color: 0x142a7ead7 and 0x142a7eb12 initialize equivalent scratch slots; validation 0x142a7eb71 and implementation 0x142a7eba3 pass the byte in EDX and normalized bool in R8D. The byte is SwatchType.
+
+Original 0x14234a270 is `cmp edx,5; setbe al; ret`; 0x14234a280 is `cmp edx,1; setbe al; ret`. Proposals use unsigned 32-bit enum comparisons to preserve the original predicate. Both byte arguments are zero-extended in each exec before each call. Source is the same captured image identified in `native_rpc81_runtime/evidence.json`; command: extract image windows by file offset VA minus 0x140000000 and run `objdump -D -b binary -m i386:x86-64 --adjust-vma=<VA> <window>` for 0x142a7e8c0, 0x142a7e9c0, 0x142a7eac0 (0x100 bytes each) and 0x14234a270 (0x20 bytes). No generation/build/tests. Earlier aimbot proposal has already been integrated by root; these three remain proposals.

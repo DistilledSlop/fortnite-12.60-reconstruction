@@ -1,0 +1,36 @@
+[
+  {
+    "class": "AFortPlayerControllerAthena",
+    "function": "ServerEndLoadingVolume_Implementation",
+    "kind": "impl",
+    "signature": "void ServerEndLoadingVolume_Implementation(AFortVolume* VolumeToLoad)",
+    "signature_status": "declared",
+    "inc_path": "porting/behavior/volume_completion82_runtime/ServerEndLoadingVolume_Implementation.inc",
+    "confidence": "high",
+    "address": "0x1419f19c0",
+    "status": "ported",
+    "proxy_score": 28.0,
+    "decompile_source": "porting/generated/decomp_improved/AFortPlayerControllerAthena/ServerEndLoadingVolume_Implementation.c",
+    "notes": "Stable pointer remove-all helper140726fc0; retains allocation. Missing entry logs LogFort Warning with object FName or None; see volume_completion82_runtime/README.md.",
+    "includes": [
+      "SharedFortGameLog.h"
+    ]
+  },
+  {
+    "class": "AFortPlayerControllerAthena",
+    "function": "ServerEndUnloadingVolume_Implementation",
+    "kind": "impl",
+    "signature": "void ServerEndUnloadingVolume_Implementation(AFortVolume* VolumeToUnload)",
+    "signature_status": "declared",
+    "inc_path": "porting/behavior/volume_completion82_runtime/ServerEndUnloadingVolume_Implementation.inc",
+    "confidence": "high",
+    "address": "0x1419f1b80",
+    "status": "ported",
+    "proxy_score": 27.8,
+    "decompile_source": "porting/generated/decomp_improved/AFortPlayerControllerAthena/ServerEndUnloadingVolume_Implementation.c",
+    "notes": "Stable pointer remove-all helper140726fc0; retains allocation. Missing entry logs LogFort Warning with object FName or None; see volume_completion82_runtime/README.md.",
+    "includes": [
+      "SharedFortGameLog.h"
+    ]
+  }
+]

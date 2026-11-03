@@ -786,6 +786,13 @@ void AFortPlayerPawn::ServerChoosePart_Implementation(EFortCustomPartType::Type 
 	// Body not recovered: reflection-derived stub.
 }
 
+bool AFortPlayerPawn::ServerChoosePart_Validate(EFortCustomPartType::Type Part, UCustomCharacterPart* ChosenCharacterPart)
+{
+	// CONFIDENCE: high; native unsigned enum bound.
+	// AFortPlayerPawn::ServerChoosePart_Validate, original 0x14234a270.
+	return static_cast<uint32>(Part) < 6u;
+}
+
 void AFortPlayerPawn::ServerCycleAccessoryColorSwatch_Implementation(EFortCustomPartType::Type Part, bool bNext)
 {
 	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
@@ -797,6 +804,13 @@ void AFortPlayerPawn::ServerCycleAccessoryColorSwatch_Implementation(EFortCustom
 	// CONFIDENCE: HIGH
 }
 
+bool AFortPlayerPawn::ServerCycleAccessoryColorSwatch_Validate(EFortCustomPartType::Type Part, bool bNext)
+{
+	// CONFIDENCE: high; native unsigned enum bound.
+	// AFortPlayerPawn::ServerCycleAccessoryColorSwatch_Validate, original 0x14234a270.
+	return static_cast<uint32>(Part) < 6u;
+}
+
 void AFortPlayerPawn::ServerCycleColorSwatch_Implementation(EColorSwatchType SwatchType, bool bNext)
 {
 	// Shared body for every _Implementation function whose native body is the folded empty stub at 0x1406801c0.
@@ -806,6 +820,13 @@ void AFortPlayerPawn::ServerCycleColorSwatch_Implementation(EColorSwatchType Swa
 	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
 	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
 	// CONFIDENCE: HIGH
+}
+
+bool AFortPlayerPawn::ServerCycleColorSwatch_Validate(EColorSwatchType SwatchType, bool bNext)
+{
+	// CONFIDENCE: high; native unsigned enum bound.
+	// AFortPlayerPawn::ServerCycleColorSwatch_Validate, original 0x14234a280.
+	return static_cast<uint32>(SwatchType) < 2u;
 }
 
 void AFortPlayerPawn::ServerCyclePart_Implementation(EFortCustomPartType::Type Part, bool bNextPart)
@@ -1026,6 +1047,14 @@ void AFortPlayerPawn::ServerSendAimbotDetectionStatus_Implementation(const TArra
 	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
 	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
 	// CONFIDENCE: HIGH
+}
+
+bool AFortPlayerPawn::ServerSendAimbotDetectionStatus_Validate(const TArray<uint8>& Payload)
+{
+	// CONFIDENCE: high; signed reflected array/string count comparison.
+	// AFortPlayerPawn::ServerSendAimbotDetectionStatus_Validate, original 0x14234a9d0.
+	// The original compares the signed int32 at Payload + 8 (TArray::ArrayNum) with 100.
+	return Payload.Num() < 100;
 }
 
 void AFortPlayerPawn::ServerSendZiplineState_Implementation(const FZiplinePawnState& InZiplineState)

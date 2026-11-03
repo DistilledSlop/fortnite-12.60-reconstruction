@@ -1,5 +1,56 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Broader native integrations batch82 (2026-11-03)
+
+Integrated19 native function bodies: two controller volume-completion RPCs;
+four mutation execs (pawn StopSpinning, building ClearPlayedDying, zone controller
+ResetExecuteJetpackToggle, world-item MarkItemAsSeenInFrontend); four pawn
+validators (payload length and three cosmetic enums); nine creative validators
+(first-string lengths, plot-definition nonnull, and owned checkpoint portal).
+These are actual canonical/native integrations, not additional rough drafts.
+Two volume RPCs retain stable remove-all behavior without shrinking allocation,
+original LogFort warning formats and object-name conversion. Spin reset remains
+authority-only. Validators retain original narrow predicates, unsigned enum
+bounds and signed array/string count checks, with WithValidation generated.
+Cosmetic exec assembly resolved misleading decompiler argument labels.
+
+Canonical generation82:2,276 accepted entries =2,096 bodies+180fields, rejected0.
+Cumulative change is12 generated implementation/header files across six classes.
+No compiler/build/runtime/tests ran. Last tested2,040;56 canonical+4 manual bodies
+build pending; next tests3,040. All four product gates OPEN; objective ACTIVE.
+Previous goal turn PROGRESS: source89e49a41/dashboard98ec162c committed/pushed.
+
+Evidence/snippets: volume_completion82_runtime, pawn_integration82_runtime,
+controller_integration82_runtime, creative_validation82_runtime and
+fresh_native82_runtime. Root reviewed and integrated all19. Three bounded
+Terra6.1 medium fork-none workers prepared proposals; follow-ups stayed bounded
+and ownership-separated. Root retained sole MANIFEST/native/generation/staging/
+build ownership. Native calls with unresolved virtual name construction were
+left uncounted instead of substituted with field reads. Profile transaction and
+PSO drafts from81 remain incomplete and uncounted.
+
+bulk_known_mutation82_runtime/scan.py now resolves already-known fields for the
+existing constant inline exec mutation patterns; its bounded inventory scan
+found0 remaining matches after canonical and batch82 exclusions. This exhausts
+only those supported patterns, not quick native functions generally. It uses
+mmap and the previously pinned image identity, without rehashing the whole image.
+Next automation should target other instruction shapes (authority guards,
+wrapper leaves and multi-field mutations) or resolve remaining engine contracts.
+Preserve economical reads, bounded worker rotation, Luna6 medium read-only,
+Terra6.1 low/medium bulk and Sol6.1 medium complex delegation, unrelated graphics/
+and Engine edits, and deferred visual work.
+
+Commands (repository cwd):
+`porting/.venv/bin/python -I porting/ghidra/probe_callees.py --input porting/generated/volume-integration82/targets.json --out porting/generated/volume-integration82 --timeout 60 --mem 12G > /tmp/volume-integration82.log 2>&1`
+Exit0,4ok,10.7s; transaction rolled back; usual index/prp metadata changes only.
+`python3 -I /tmp/promote-native-batch82.py > /tmp/promote-native-batch82.log 2>&1`
+Final exit0,2,276accepted/0rejected; final pass changed10files, earlier passes
+account for the other2. An initial include-index rejection was corrected by
+letting body class references infer the generated AFortVolume header; the shared
+LogFort support include remains explicit. Reports and command under
+porting/generated/gameplay-bulk-integration-82/. No generation failure was
+accepted as a baseline. Worker scanner command and result in its README/report.
+
 ## Batch81 integration and recovery scope correction (2026-11-03)
 
 Accepted two native RPC bodies: controller ServerSetPlayset_Implementation

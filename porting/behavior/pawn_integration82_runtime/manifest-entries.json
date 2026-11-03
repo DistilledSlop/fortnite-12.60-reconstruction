@@ -1,0 +1,16 @@
+[
+  {
+    "class": "AFortPlayerPawn",
+    "function": "ServerSendAimbotDetectionStatus_Validate",
+    "kind": "validate",
+    "signature": "bool ServerSendAimbotDetectionStatus_Validate(const TArray<uint8>& Payload)",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/pawn_integration82_runtime/ServerSendAimbotDetectionStatus_Validate.inc",
+    "confidence": "high",
+    "address": "0x14234a9d0",
+    "status": "ported",
+    "proxy_score": 73.2,
+    "decompile_source": "porting/generated/decomp_improved/AFortPlayerPawn/ServerSendAimbotDetectionStatus_Validate.c",
+    "notes": "Original signed int32 Payload+8 comparison is the TArray ArrayNum < 100; original RPC exec passes the TArray by address. Generator validate splice adds WithValidation and declaration."
+  }
+]

@@ -1,0 +1,44 @@
+[
+  {
+    "function": "DestroyCreativePlot_Validate",
+    "address": "0x140f6b550",
+    "source": "porting/generated/decomp_improved/AFortPlayerControllerAthena/DestroyCreativePlot_Validate.c",
+    "sha256": "df6c43cc732d76c245ed6cac054ca6ab45dce2109e6c74ff32885c9031b2e389"
+  },
+  {
+    "function": "DuplicateCreativePlot_Validate",
+    "address": "0x140f6b550",
+    "source": "porting/generated/decomp_improved/AFortPlayerControllerAthena/DuplicateCreativePlot_Validate.c",
+    "sha256": "d63a6c1ec726261a648c8b18568ceb313340e283b6b049dcc3f909df558e92b8"
+  },
+  {
+    "function": "MakeNewCreativePlot_Validate",
+    "address": "0x14097cd20",
+    "source": "porting/generated/decomp_improved/AFortPlayerControllerAthena/MakeNewCreativePlot_Validate.c",
+    "sha256": "c51863caf0d03334cdb8a8004104cc48888620a042b03c249cb00c489d33cd68"
+  },
+  {
+    "function": "RestoreCreativePlot_Validate",
+    "address": "0x140f6b550",
+    "source": "porting/generated/decomp_improved/AFortPlayerControllerAthena/RestoreCreativePlot_Validate.c",
+    "sha256": "26b9085c9077834f09dad18359056d60b7207c59f02ae922e05d2a76de8b31d5"
+  },
+  {
+    "function": "UpdateCreativePlotName_Validate",
+    "address": "0x140f6b550",
+    "source": "porting/generated/decomp_improved/AFortPlayerControllerAthena/UpdateCreativePlotName_Validate.c",
+    "sha256": "387adbe9940bf6f6e0ced7a6171036eeb1f910fa49c6a6220100385e7e7c4591"
+  },
+  {
+    "function": "ServerLoadIslandCheckpoint_Validate",
+    "address": "0x1419f1db0",
+    "source": "porting/generated/decomp_improved/AFortPlayerControllerAthena/ServerLoadIslandCheckpoint_Validate.c",
+    "sha256": "a3e0292003786e2c6743a6434b72ca09597116d3bec4c10cab0491e81785d5ff"
+  },
+  {
+    "function": "ServerSaveIslandCheckpoint_Validate",
+    "address": "0x1419f1db0",
+    "source": "porting/generated/decomp_improved/AFortPlayerControllerAthena/ServerSaveIslandCheckpoint_Validate.c",
+    "sha256": "1c1db42bbbfb87639c7ad70215db7002a874cea9bf1d324597203cdcc943c5cd"
+  }
+]

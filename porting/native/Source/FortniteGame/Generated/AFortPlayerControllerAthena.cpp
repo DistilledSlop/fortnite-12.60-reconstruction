@@ -2,7 +2,9 @@
 #include "AFortPlayerControllerAthena.h"
 #include "AFortGameStateAthena.h"
 #include "AFortPlayerStateAthena.h"
+#include "AFortVolume.h"
 #include "Engine/World.h"
+#include "SharedFortGameLog.h"
 #include "UFortPlaysetItemDefinition.h"
 #include "Net/UnrealNetwork.h"
 
@@ -306,9 +308,21 @@ void AFortPlayerControllerAthena::DestroyCreativePlot_Implementation(const FStri
 	// Body not recovered: reflection-derived stub.
 }
 
+bool AFortPlayerControllerAthena::DestroyCreativePlot_Validate(const FString& IslandId)
+{
+	// CONFIDENCE: high; Folded140f6b550 checks first FString signed ArrayNum >1 including terminator; no content/locale/title validation.
+	return IslandId.GetCharArray().Num() > 1;
+}
+
 void AFortPlayerControllerAthena::DuplicateCreativePlot_Implementation(const FString& IslandId, const FString& Locale, const FString& Title)
 {
 	// Body not recovered: reflection-derived stub.
+}
+
+bool AFortPlayerControllerAthena::DuplicateCreativePlot_Validate(const FString& IslandId, const FString& Locale, const FString& Title)
+{
+	// CONFIDENCE: high; Folded140f6b550 checks first FString signed ArrayNum >1 including terminator; no content/locale/title validation.
+	return IslandId.GetCharArray().Num() > 1;
 }
 
 void AFortPlayerControllerAthena::EnableCreativeContentManagerBasedOnPlaylist()
@@ -439,9 +453,22 @@ void AFortPlayerControllerAthena::MakeNewCreativePlot_Implementation(UFortCreati
 	// Body not recovered: reflection-derived stub.
 }
 
+bool AFortPlayerControllerAthena::MakeNewCreativePlot_Validate(UFortCreativeRealEstatePlotItemDefinition* PlotType, const FString& Locale, const FString& Title)
+{
+	// CONFIDENCE: high; Original checks first plot-definition pointer for nonnull.
+	return PlotType != nullptr;
+}
+
 void AFortPlayerControllerAthena::MakeNewCreativePlotFromLinkCode_Implementation(const FString& LinkCode, const FString& Locale, const FString& Title)
 {
 	// Body not recovered: reflection-derived stub.
+}
+
+bool AFortPlayerControllerAthena::MakeNewCreativePlotFromLinkCode_Validate(const FString& LinkCode, const FString& Locale, const FString& Title)
+{
+	// CONFIDENCE: high; signed reflected array/string count comparison.
+	// 0x140f6b550 tests the first FString's stored character count against 1.
+	return LinkCode.GetCharArray().Num() > 1;
 }
 
 void AFortPlayerControllerAthena::OnPostGameForced_Implementation()
@@ -566,6 +593,12 @@ bool AFortPlayerControllerAthena::ResetMyCurrentCreativePlot_Validate()
 void AFortPlayerControllerAthena::RestoreCreativePlot_Implementation(const FString& IslandId)
 {
 	// Body not recovered: reflection-derived stub.
+}
+
+bool AFortPlayerControllerAthena::RestoreCreativePlot_Validate(const FString& IslandId)
+{
+	// CONFIDENCE: high; Folded140f6b550 checks first FString signed ArrayNum >1 including terminator; no content/locale/title validation.
+	return IslandId.GetCharArray().Num() > 1;
 }
 
 void AFortPlayerControllerAthena::SendClientPhysicsBallStateToServer_Implementation(APhysicsObject* PhysicsObject, float ClientPing, const FTimeStampedPhysicsPawnState& ClientBallState)
@@ -831,7 +864,15 @@ bool AFortPlayerControllerAthena::ServerEnableAnonymousMode_Validate()
 
 void AFortPlayerControllerAthena::ServerEndLoadingVolume_Implementation(AFortVolume* VolumeToLoad)
 {
-	// Body not recovered: reflection-derived stub.
+	// CONFIDENCE: high; native stable remove-all helper140726fc0 preserves allocation.
+	if (VolumesLoading.Contains(VolumeToLoad))
+	{
+	    VolumesLoading.Remove(VolumeToLoad);
+	    return;
+	}
+	AFortVolume* const MissingVolume = VolumeToLoad;
+	UE_LOG(LogFort, Warning, TEXT("Server End Loading volume called for volume not currently loading %s"),
+	    MissingVolume ? *MissingVolume->GetName() : TEXT("None"));
 }
 
 bool AFortPlayerControllerAthena::ServerEndLoadingVolume_Validate(AFortVolume* VolumeToLoad)
@@ -865,7 +906,15 @@ bool AFortPlayerControllerAthena::ServerEndMinigame_Validate(bool bAbandon)
 
 void AFortPlayerControllerAthena::ServerEndUnloadingVolume_Implementation(AFortVolume* VolumeToUnload)
 {
-	// Body not recovered: reflection-derived stub.
+	// CONFIDENCE: high; native stable remove-all helper140726fc0 preserves allocation.
+	if (VolumesUnloading.Contains(VolumeToUnload))
+	{
+	    VolumesUnloading.Remove(VolumeToUnload);
+	    return;
+	}
+	AFortVolume* const MissingVolume = VolumeToUnload;
+	UE_LOG(LogFort, Warning, TEXT("Server End Unloading volume called for volume not currently loading %s"),
+	    MissingVolume ? *MissingVolume->GetName() : TEXT("None"));
 }
 
 bool AFortPlayerControllerAthena::ServerEndUnloadingVolume_Validate(AFortVolume* VolumeToUnload)
@@ -934,6 +983,12 @@ void AFortPlayerControllerAthena::ServerLoadIslandCheckpoint_Implementation(AFor
 	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
 	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
 	// CONFIDENCE: HIGH
+}
+
+bool AFortPlayerControllerAthena::ServerLoadIslandCheckpoint_Validate(AFortAthenaCreativePortal* Portal)
+{
+	// CONFIDENCE: high; Original compares nonnull first portal pointer to reflected OwnedPortal at +0x3528.
+	return Portal != nullptr && Portal == OwnedPortal;
 }
 
 void AFortPlayerControllerAthena::ServerLoadPlotForPortal_Implementation(AFortAthenaCreativePortal* Portal, const FString& PlotItemId)
@@ -1192,6 +1247,12 @@ void AFortPlayerControllerAthena::ServerSaveIslandCheckpoint_Implementation(AFor
 	// Inferred: disassembly is `ret 0` (no statements). The native body is empty; the RPC thunk stays generated.
 	// Declared in generated header: yes for the functions listed in MANIFEST.json (signature copied from the header)
 	// CONFIDENCE: HIGH
+}
+
+bool AFortPlayerControllerAthena::ServerSaveIslandCheckpoint_Validate(AFortAthenaCreativePortal* Portal)
+{
+	// CONFIDENCE: high; Original compares nonnull first portal pointer to reflected OwnedPortal at +0x3528.
+	return Portal != nullptr && Portal == OwnedPortal;
 }
 
 void AFortPlayerControllerAthena::ServerSelectMutatorItem_Implementation(AFortGameplayMutator* Mutator, int32 ItemIndex)
@@ -1671,6 +1732,13 @@ void AFortPlayerControllerAthena::UpdateCreativeIslandDescriptionTags_Implementa
 	// Body not recovered: reflection-derived stub.
 }
 
+bool AFortPlayerControllerAthena::UpdateCreativeIslandDescriptionTags_Validate(const FString& IslandId, const FString& Locale, const TArray<FString>& DescriptionTags)
+{
+	// CONFIDENCE: high; signed reflected array/string count comparison.
+	// 0x140f6b550 tests the first FString's stored character count against 1.
+	return IslandId.GetCharArray().Num() > 1;
+}
+
 void AFortPlayerControllerAthena::UpdateCreativePlotData_Implementation(AFortVolume* VolumeToPublish, const FCreativeIslandInfo& MyInfo)
 {
 	// Body not recovered: reflection-derived stub.
@@ -1679,6 +1747,12 @@ void AFortPlayerControllerAthena::UpdateCreativePlotData_Implementation(AFortVol
 void AFortPlayerControllerAthena::UpdateCreativePlotName_Implementation(const FString& IslandId, const FString& Locale, const FString& Title)
 {
 	// Body not recovered: reflection-derived stub.
+}
+
+bool AFortPlayerControllerAthena::UpdateCreativePlotName_Validate(const FString& IslandId, const FString& Locale, const FString& Title)
+{
+	// CONFIDENCE: high; Folded140f6b550 checks first FString signed ArrayNum >1 including terminator; no content/locale/title validation.
+	return IslandId.GetCharArray().Num() > 1;
 }
 
 void AFortPlayerControllerAthena::UpdateUGCRestrictedForVolume_Implementation(AFortVolume* Volume, bool bRestricted)
