@@ -639,6 +639,9 @@ protected:
 	FBuildingDuplicationData GetDuplicationData();
 public:
 
+	UFUNCTION(BlueprintCallable)
+	UMaterialInstanceDynamic* GetOrCreateMIDOnDefaultMesh(int32 ElementIndex);
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool HasDestructionLoot() const;
 

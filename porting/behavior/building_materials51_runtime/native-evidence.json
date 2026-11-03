@@ -1,0 +1,106 @@
+{
+  "image": "/mnt/vibrato/fortnite-evidence/original-late-capture-1/image-125.runtime.bin",
+  "image_base": "0x140000000",
+  "windows": [
+    {
+      "begin": "0x141c0a630",
+      "length": 438,
+      "sha256": "679399ebe3296a3168c6503e3c852551c3b1e8227aeb5d83edf66d49c9c9e4f7",
+      "label": "MID native shared tail and entry"
+    },
+    {
+      "begin": "0x142756550",
+      "length": 208,
+      "sha256": "cfaac921c67f20cfefcca592117486e25aaf5b040f7ddae8d05eda150297a9c7",
+      "label": "MID wrapper"
+    },
+    {
+      "begin": "0x141c1cb30",
+      "length": 238,
+      "sha256": "e4ce97f71ee3508880825c67c770589abaca9fadfa900aaaf16f55a8df9aa0a4",
+      "label": "texture native"
+    },
+    {
+      "begin": "0x142758160",
+      "length": 176,
+      "sha256": "fb1d8ef15073db0d80c5d9f3a59b8ea4ef4687be63671f787f69d16524cf9b1d",
+      "label": "texture wrapper"
+    },
+    {
+      "begin": "0x141bf8e30",
+      "length": 59,
+      "sha256": "d43c045d43926f384e11984638cf210e3ebd3769d7d07140d31a7a8165dcd180",
+      "label": "SMActor constructor vtable assignment"
+    },
+    {
+      "begin": "0x145f26ec0",
+      "length": 8,
+      "sha256": "6e9a4511c0f977aece31c706d6e04190ec56c893084f8167a2d1faa51228a03d",
+      "label": "SMActor vtable +0xb20"
+    },
+    {
+      "begin": "0x141c058a0",
+      "length": 180,
+      "sha256": "a425f8920c29aa2dabe1f261cf55d996c9cb2e42676d9bb0be26c48b8071d214",
+      "label": "0x141c058a0 dependency"
+    },
+    {
+      "begin": "0x144324750",
+      "length": 138,
+      "sha256": "20ced1b4456b6b34a597cc879a87e3d31a7fa326c6fbabf4ebd3a4f67fd2202a",
+      "label": "0x144324750 dependency"
+    },
+    {
+      "begin": "0x1443242c0",
+      "length": 422,
+      "sha256": "9cd20baf24a6e501ccd20b59583dd99282cf2e4d08a1f64e452667cf9b8206b8",
+      "label": "0x1443242c0 dependency"
+    },
+    {
+      "begin": "0x1427592a0",
+      "length": 178,
+      "sha256": "833ca3f6a712f2af1902f647d3c05bad0ba8e3595171472be8dc6628d7e6299f",
+      "label": "0x1427592a0 dependency"
+    },
+    {
+      "begin": "0x142ec0440",
+      "length": 135,
+      "sha256": "1de769a190664b210aa1fc02084a946d2826c9f543434846a2a10627aed5bb50",
+      "label": "0x142ec0440 dependency"
+    },
+    {
+      "begin": "0x142ed7360",
+      "length": 858,
+      "sha256": "c18cbc0402ef56ba7851265bee624248e80d53af964f071585293e411c33931f",
+      "label": "0x142ed7360 dependency"
+    },
+    {
+      "begin": "0x14433a9d0",
+      "length": 643,
+      "sha256": "f34ce921919278f94a5642e20c530e0e46b36cecab5456a4faa766783845bfd1",
+      "label": "0x14433a9d0 dependency"
+    },
+    {
+      "begin": "0x144322fb0",
+      "length": 409,
+      "sha256": "a3f1200716b09d38b884126e2bd607523edbee7e9855db67335f8e5b0efd8aa5",
+      "label": "0x144322fb0 dependency"
+    },
+    {
+      "begin": "0x144330e90",
+      "length": 485,
+      "sha256": "91392ba11b62a5121d2c7f05a2790aa5ce86f684d47562748569e427d4b22c53",
+      "label": "0x144330e90 dependency"
+    },
+    {
+      "begin": "0x141bfcb30",
+      "length": 1026,
+      "sha256": "e7a6d53f98094e868be85aefa28bfcb622cf464dff906851dfd85d4e66602150",
+      "label": "0x141bfcb30 dependency"
+    }
+  ],
+  "dependency_proof": {
+    "material": "Reflection binds 0x998/0x9a8 to AnimatingMaterialMappings/DamagedButNotAnimatingMaterialMappings and 0x9db to DamageVisualsState; FAnimatingMaterialPair has Original and Override. 0x141c058a0 selects with virtual +0x278. MaterialInstance::InitResources source calls Parent->IsDependent(this), matching 0x144330e90 call via +0x278. UMaterialInstanceDynamic::Create source matches 0x144324750 and 0x14433a9d0. CopyParameterOverrides source matches 0x1443242c0: ClearParameterValues, four array copies, InitResources. Engine source: UnrealEngine/Engine/Source/Runtime/Engine/Private/Materials/MaterialInstanceDynamic.cpp:22,373 and MaterialInstance.cpp:574,1578.",
+    "texture": "class getter 0x1427592a0 identifies UBuildingTextureData. Constructor 0x141bf8e30 sets vtable 0x145f263a0; vtable +0xb20 at 0x145f26ec0 contains 0x141bfcb30. This virtual has multiple dependencies and unnamed dispatch; source identity/override-preserving integration not established."
+  }
+}

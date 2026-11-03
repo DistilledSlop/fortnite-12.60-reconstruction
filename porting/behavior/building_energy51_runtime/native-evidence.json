@@ -1,0 +1,45 @@
+{
+  "image": "/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/generated/dump/FortniteClient-Win64-Shipping.runtime.bin",
+  "windows": [
+    {
+      "begin": "0x141c529c0",
+      "length": 352,
+      "sha256": "9d1cfc431139793d0df6827f7d6fbdee9fce16ed3a93b65775684da340810971"
+    },
+    {
+      "begin": "0x141c52c70",
+      "length": 352,
+      "sha256": "92a21dc5f0c82845da79e5a217f6857e2c5f7b0f7214699a9cfab1abf0143247"
+    },
+    {
+      "begin": "0x141c52de0",
+      "length": 352,
+      "sha256": "665fdd806708fcbdfff4534576f0a8d8536bac906fb8d01737ba0be3d5f1b650"
+    },
+    {
+      "begin": "0x141c52f50",
+      "length": 352,
+      "sha256": "844584fd6af060cdff07f425b6dc73bb50f3b03cff653c43603fcb66937950a0"
+    },
+    {
+      "begin": "0x141c53940",
+      "length": 352,
+      "sha256": "4375f1e2eee5e752cbc762afc5dd3bd15cd32e6440ac71353711c7097025a2bd"
+    },
+    {
+      "begin": "0x141b86f60",
+      "length": 217,
+      "sha256": "9d1e64e5455c839a7a0b744a528f5b039a42cc9db9ea301a27ac271b6c192efb"
+    },
+    {
+      "begin": "0x145efc048",
+      "length": 24,
+      "sha256": "6f9b7790f902fd3fccf4de0af4eba7e5b9a73937bb45e2b02775dd91b94a2057"
+    },
+    {
+      "begin": "0x141b9af20",
+      "length": 130,
+      "sha256": "b14d0b66b9b2aaaedd91574633d62e165493abd1d0a058d98b9616c568908dc4"
+    }
+  ]
+}

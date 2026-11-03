@@ -35088,5 +35088,22 @@
       "GameplayEffectAggregator.h",
       "UObject/UnrealType.h"
     ]
+  },
+  {
+    "class": "ABuildingSMActor",
+    "function": "GetOrCreateMIDOnDefaultMesh",
+    "kind": "exec",
+    "signature": "UMaterialInstanceDynamic* GetOrCreateMIDOnDefaultMesh(int32 ElementIndex)",
+    "signature_status": "proposed",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x142756550",
+    "native_body_address": "0x141c0a7d0",
+    "inc_path": "porting/behavior/building_materials51_runtime/141c0a7d0_ABuildingSMActor_GetOrCreateMIDOnDefaultMesh.inc",
+    "includes": [
+      "Materials/MaterialInstanceDynamic.h",
+      "Components/StaticMeshComponent.h"
+    ],
+    "notes": "Native shared body 0x141c0a630; mapping resolver 0x141c058a0 inlined. MID creation and override copying match engine APIs."
   }
 ]
