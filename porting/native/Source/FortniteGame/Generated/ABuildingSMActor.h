@@ -20,6 +20,7 @@
 #include "Engine/NetSerialization.h"
 #include "FAnimatingMaterialPair.h"
 #include "FBuildingActorMinimalReplicationProxy.h"
+#include "FBuildingDuplicationData.h"
 #include "FBuildingNavObstacle.h"
 #include "FBuildingReplacementDestruction.h"
 #include "FChosenQuotaInfo.h"
@@ -55,6 +56,7 @@ class UParticleSystem;
 class USoundBase;
 class UStaticMesh;
 class UStaticMeshComponent;
+class UTexture2D;
 
 #include "ABuildingSMActor.generated.h"
 
@@ -624,10 +626,21 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UStaticMeshComponent* GetBuildingMeshComponent() const;
 
+	UFUNCTION(BlueprintCallable)
+	void GetBuildingTextureData(TArray<UBuildingTextureData*>& OutTextureDataArray) const;
+
 protected:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UParticleSystem* GetDeathParticles() const;
 public:
+
+protected:
+	UFUNCTION(BlueprintCallable)
+	FBuildingDuplicationData GetDuplicationData();
+public:
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool HasDestructionLoot() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsUnderConstruction() const;
@@ -717,7 +730,22 @@ public:
 
 protected:
 	UFUNCTION(BlueprintCallable)
+	TArray<UTexture2D*> ReadTextureData();
+public:
+
+protected:
+	UFUNCTION(BlueprintCallable)
 	void SetParentActorToAttachTo(ABuildingSMActor* InParentActorToAttachTo);
+public:
+
+protected:
+	UFUNCTION(BlueprintCallable)
+	void TransferBuildingData(ABuildingSMActor* SourceDataActor);
+public:
+
+protected:
+	UFUNCTION(BlueprintCallable)
+	void TransferFromDuplicationData(FBuildingDuplicationData SourceData);
 public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
