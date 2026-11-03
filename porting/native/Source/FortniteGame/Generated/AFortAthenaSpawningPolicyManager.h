@@ -7,6 +7,7 @@
 #include "GameFramework/Actor.h"
 
 class AFortAthenaMutator_SpawningPolicyBase;
+class AFortGameModeAthena;
 class AFortGameStateAthena;
 
 #include "AFortAthenaSpawningPolicyManager.generated.h"
@@ -20,6 +21,10 @@ public:
 	// table index 2, flags 0x40000000000000
 	UPROPERTY()
 	TArray<AFortAthenaMutator_SpawningPolicyBase*> SpawningPolicyMutatorList;
+
+	// table index 1, flags 0x40000000000000
+	UPROPERTY()
+	AFortGameModeAthena* GameModeAthena;
 
 	// table index 0, flags 0x40000000000000
 	UPROPERTY()

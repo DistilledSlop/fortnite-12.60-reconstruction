@@ -22,6 +22,7 @@
 class ABuildingFoundation;
 class ABuildingProp;
 class AFortAthenaMutator_Bots;
+class AFortGameModeAthena;
 class AFortGameStateAthena;
 class AFortPickup;
 class AFortPlayerStartWarmup;
@@ -55,6 +56,10 @@ public:
 	// table index 61, flags 0x40000000002000
 	UPROPERTY(Transient)
 	TArray<FFortServerBotInfo> NoneAthenaParticipantBots;
+
+	// table index 60, flags 0x40000000002000
+	UPROPERTY(Transient)
+	AFortGameModeAthena* CachedGameMode;
 
 	// table index 59, flags 0x40000000002000
 	UPROPERTY(Transient)

@@ -4,6 +4,7 @@
 #include "GameFramework/Actor.h"
 #include "GameFramework/GameModeBase.h"
 #include "Engine/StaticMeshActor.h"
+#include "AFortGameModeAthena.h"
 #include "FortniteAthenaGameplay.generated.h"
 
 class UCameraComponent;
@@ -41,21 +42,6 @@ private:
 
 // AFortPlayerPawn and AFortPlayerPawnAthena are generated (Generated/). The hand-written placeholder
 // pawn with camera and input bindings was removed when the reflection-derived class replaced it.
-
-UCLASS()
-class FORTNITEGAME_API AFortGameModeAthena : public AGameModeBase
-{
-    GENERATED_BODY()
-
-public:
-    AFortGameModeAthena();
-    virtual void StartPlay() override;
-    virtual void RestartPlayer(AController* NewPlayer) override;
-
-private:
-    void PositionPawnOnTerrain(AController* Player);
-    void SpawnApolloBackground();
-};
 
 // Linux cooked geometry reconstructed from Apollo's landscape components.
 UCLASS()

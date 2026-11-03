@@ -8,6 +8,7 @@
 
 #include "AttributeSet.h"
 
+class AFortGameModeAthena;
 class AFortPlayerPawnAthena;
 class UDataTable;
 class UFortAthenaAIBotCosmeticData;
@@ -41,6 +42,10 @@ public:
 	// table index 9, flags 0x42000000090009
 	UPROPERTY()
 	UFortAthenaAIBotInventoryItems* StartupInventory;
+
+	// table index 8, flags 0x40000000002000
+	UPROPERTY(Transient)
+	AFortGameModeAthena* CachedGameMode;
 
 	// table index 7, flags 0x40000000010001
 	UPROPERTY()

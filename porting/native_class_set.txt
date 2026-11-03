@@ -482,7 +482,7 @@ AFortTrack
 ABuildingProp_CreaturePlacer
 ABuildingProp_DeimosSpawner
 # Round 3, batch 2: 300 more classes, same rule as batch 1 (usable-module ancestry, depth order). Classes that
-# are hand-written in porting/native/Source (AFortGameModeAthena, AFortLevelScriptActor, AFortStaticMeshActor,
+# are hand-written in porting/native/Source (AFortLevelScriptActor, AFortStaticMeshActor,
 # AFortSkydivingShadowProxy, UFortKismetLibrary, UFortMetaNavArea_Obstacles) are not generated and are blocklisted.
 AAthenaBismuthSpawner
 ABattleMapEdge
@@ -4664,3 +4664,6 @@ UKairosCaptureStatics
 UKairosConfig
 USocialUserListView
 USocialUserTreeView
+
+# Original Athena class; existing runtime support retained.
+AFortGameModeAthena

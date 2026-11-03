@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortAthenaMutator_SpawningPolicyData.h"
 
+class AFortGameModeAthena;
 class UFortAthenaMutator_PlayerBotSpawningPolicyData;
 
 #include "UBotELOSpawningInfo.generated.h"
@@ -19,6 +20,10 @@ public:
 	// table index 1, flags 0x10000000002000
 	UPROPERTY(Transient)
 	UFortAthenaMutator_PlayerBotSpawningPolicyData* BotSpawningDataInfo;
+
+	// table index 0, flags 0x10000000002000
+	UPROPERTY(Transient)
+	AFortGameModeAthena* CachedGameMode;
 
 };
 

@@ -23,6 +23,7 @@
 
 class AActor;
 class AFortAthenaMutator_Bots;
+class AFortGameModeAthena;
 class AFortInventory;
 class AFortPawn;
 class AFortPlayerPawnAthena;
@@ -88,6 +89,10 @@ public:
 	// table index 69, flags 0x40000000002000
 	UPROPERTY(Transient)
 	UFortServerBotManagerAthena* CachedBotManager;
+
+	// table index 68, flags 0x40000000002000
+	UPROPERTY(Transient)
+	AFortGameModeAthena* CachedGameMode;
 
 	// table index 67, flags 0x40000000002000
 	UPROPERTY(Transient)

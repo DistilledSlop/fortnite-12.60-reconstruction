@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "AFortGameplayMutator.h"
 
+class AFortGameModeAthena;
 class AFortGameStateAthena;
 
 #include "AFortAthenaMutator.generated.h"
@@ -23,6 +24,10 @@ public:
 	// table index 2, flags 0x10000000000001
 	UPROPERTY()
 	bool bMutatesGameState;
+
+	// table index 1, flags 0x20080000002000
+	UPROPERTY(Transient)
+	AFortGameModeAthena* CachedGameMode;
 
 	// table index 0, flags 0x20080000002000
 	UPROPERTY(Transient)

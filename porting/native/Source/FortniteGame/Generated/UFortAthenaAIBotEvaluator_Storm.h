@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortAthenaAIBotEvaluator_Movement.h"
 
+class AFortGameModeAthena;
 class UBehaviorTreeComponent;
 
 #include "UFortAthenaAIBotEvaluator_Storm.generated.h"
@@ -19,6 +20,10 @@ public:
 	// table index 2, flags 0x40040000000001
 	UPROPERTY()
 	FName StormDestinationName;
+
+	// table index 1, flags 0x40000000002000
+	UPROPERTY(Transient)
+	AFortGameModeAthena* CacheAthenaGameMode;
 
 	// table index 0, flags 0x40000000082008
 	UPROPERTY(Transient)

@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortAthenaAIBotEvaluator_Movement.h"
 
+class AFortGameModeAthena;
 class UFortAthenaAIBotMovementDigestedSkillSet;
 
 #include "UFortAthenaAIBotEvaluator_PatrolAround.generated.h"
@@ -19,6 +20,10 @@ public:
 	// table index 2, flags 0x40040000000001
 	UPROPERTY()
 	FName PatrolDestinationName;
+
+	// table index 1, flags 0x40000000002000
+	UPROPERTY(Transient)
+	AFortGameModeAthena* CacheAthenaGameMode;
 
 	// table index 0, flags 0x40000000002000
 	UPROPERTY(Transient)

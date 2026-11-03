@@ -117,7 +117,7 @@ public:
 	UPROPERTY(Transient)
 	UFortMiniMapIndicator* TeamIndicator;
 
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable)
 	void OnRep_ReplicatedFlightTimestamp();
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;

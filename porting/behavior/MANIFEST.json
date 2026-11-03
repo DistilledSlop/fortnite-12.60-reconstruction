@@ -6721,5 +6721,29 @@
     "status": "ported",
     "notes": "Reconstructed name; full-byte field, initialized to zero in native constructor. Promotion depends on recovering its producer and event wiring; see aircraft_dropzone_runtime/README.md. Canonical source body/storage only; full source producers and connected event integration remain pending, no runtime completion claim.",
     "default": "0"
+  },
+  {
+    "class": "AFortGameModeAthena",
+    "function": "OnAircraftEnteredDropZone",
+    "kind": "exec",
+    "signature": "void OnAircraftEnteredDropZone(AFortAthenaAircraft* FortAthenaAircraft)",
+    "inc_path": "porting/behavior/aircraft_dropzone_runtime/OnAircraftEnteredDropZone.inc",
+    "address": "0x1428f0440",
+    "signature_status": "proposed",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Original callback body with reconstructed native byte, original Athena parent/interfaces and all original reflected fields restored. Aircraft tick/event wiring and complete constructor remain pending; no runtime-feature claim."
+  },
+  {
+    "class": "AFortAthenaAircraft",
+    "function": "OnRep_ReplicatedFlightTimestamp",
+    "kind": "exec",
+    "inc_path": "porting/behavior/aircraft_tick_runtime/OnRep_ReplicatedFlightTimestamp.inc",
+    "address": "0x1427cfe60",
+    "signature": "void OnRep_ReplicatedFlightTimestamp()",
+    "signature_status": "proposed",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Exact original RepNotify timestamp drift correction; full tick/cosmetic/event wiring remain tracked separately."
   }
 ]

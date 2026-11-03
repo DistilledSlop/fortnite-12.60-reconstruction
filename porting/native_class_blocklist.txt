@@ -1,6 +1,5 @@
 # Classes that are not generated, with the reason. Read by porting/gen_native_classes.py --promote.
 # Format: ClassName<TAB>reason. Regenerated from the ancestry check (porting/native_classes_status.md, Round 3).
-AFortGameModeAthena	hand-written in porting/native/Source (not generated)
 AFortLevelScriptActor	hand-written in porting/native/Source (not generated)
 AFortSkydivingShadowProxy	hand-written in porting/native/Source (not generated)
 AFortStaticMeshActor	hand-written in porting/native/Source (not generated)
