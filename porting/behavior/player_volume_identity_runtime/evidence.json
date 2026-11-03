@@ -1,0 +1,15 @@
+{
+  "windows": [
+    {"address": "0x141c7d270", "length": 428, "sha256": "bbb762fc62e0a4745be7aa5b7eb3cb9539130a2bfc83e740bb0ebff1e32a8105"},
+    {"address": "0x141c7d420", "length": 171, "sha256": "cc6ffac99707c14bc8f714f1bb5f658bd60ce4eff112d41200689a17ce76eb21"},
+    {"address": "0x148218630", "length": 12, "sha256": "15ec7bf0b50732b49f8228e07d24365338f9e3ab994b00af08e5a3bffe55fd8b"}
+  ],
+  "field_bindings": {
+    "AFortVolumeManager.VolumeActivePlayers": "0x288",
+    "FFortVolumeActiveUsers.Items": "0x108",
+    "FVolumePlayerStateInfo.UniquePlayerId": "0x10",
+    "FVolumePlayerStateInfo.Volume": "0x38",
+    "APlayerState.UniqueId": "0x248",
+    "APlayerState.PawnPrivate": "0x278"
+  }
+}

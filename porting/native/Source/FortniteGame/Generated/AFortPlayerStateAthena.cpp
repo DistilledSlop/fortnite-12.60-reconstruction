@@ -5,6 +5,8 @@
 #include "AFortPlayerControllerZone.h"
 #include "AFortTeamInfo.h"
 #include "AFortTeamInfoAthena.h"
+#include "AFortVolume.h"
+#include "AFortVolumeManager.h"
 #include "EAthenaScoringEvent.h"
 #include "EAthenaWinCondition.h"
 #include "Engine/World.h"
@@ -670,6 +672,21 @@ void AFortPlayerStateAthena::UpdateTotalPlayerScore()
 	if (GetLocalRole() != ROLE_Authority)
 	{
 		TotalPlayerScoreNative.Broadcast(this, NewTotal);
+	}
+}
+
+void AFortPlayerStateAthena::NativeAppendContextOwners(TArray<UObject*>& OutOwners)
+{
+	// CONFIDENCE: HIGH
+	AFortVolumeManager* Manager = AFortVolumeManager::NativeResolveVolumeManager(this);
+	if (Manager)
+	{
+	    AFortVolume* Volume = Manager->NativeFindPlayerVolume(this);
+	    if (Volume)
+	    {
+	        AFortVolume::NativeAppendMinigameOwner(Volume, OutOwners);
+	        OutOwners.AddUnique(Volume);
+	    }
 	}
 }
 

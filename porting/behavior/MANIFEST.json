@@ -32891,5 +32891,72 @@
       "UObject/Object.h"
     ],
     "notes": "Assigned static source binding of shared native resolver. Rejects null context, resolves world using LogAndReturnNull, casts Athena state, reads manager, rejects pending kill. Capture pinned in mutator_context_runtime/evidence.json."
+  },
+  {
+    "class": "AFortVolumeManager",
+    "function": "NativeFindPlayerVolume",
+    "kind": "helper",
+    "signature": "AFortVolume* NativeFindPlayerVolume(APlayerState* PlayerState) const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/player_volume_identity_runtime/FindPlayerVolume.inc",
+    "address": "0x141c7d420",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "GameFramework/PlayerState.h",
+      "Stats/Stats.h"
+    ],
+    "notes": "Assigned binding; requires NativeFindPlayerVolumeInActiveUsers. See README."
+  },
+  {
+    "class": "AFortVolumeManager",
+    "function": "NativeFindPlayerVolumeInActiveUsers",
+    "kind": "helper",
+    "signature": "AFortVolume* NativeFindPlayerVolumeInActiveUsers(APlayerState* PlayerState) const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/player_volume_identity_runtime/FindPlayerVolumeInActiveUsers.inc",
+    "address": "0x141c7d270",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "GameFramework/PlayerState.h"
+    ],
+    "notes": "Assigned manager binding for original FFortVolumeActiveUsers helper; requires NativeResolveVolumeManager and NativeFindVolumeAtLocation. See README."
+  },
+  {
+    "class": "AFortPlayerStateAthena",
+    "function": "NativeAppendContextOwners",
+    "kind": "helper",
+    "signature": "void NativeAppendContextOwners(TArray<UObject*>& OutOwners)",
+    "signature_status": "proposed",
+    "virtual": true,
+    "access": "public",
+    "inc_path": "porting/behavior/player_volume_identity_runtime/AppendContextOwners.inc",
+    "address": "0x141a45030",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "UObject/Object.h"
+    ],
+    "notes": "Assigned context interface binding. Resolves manager/player volume, appends minigame owner then volume uniquely without resetting output. Original interface registration and body pinned in mutator_provider_bindings_runtime/verify.py."
+  },
+  {
+    "class": "UMcpProfile",
+    "function": "NotifyProfileItemUpdated",
+    "kind": "helper",
+    "signature": "void NotifyProfileItemUpdated(FMcpProfileItem& Item)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/profile_update_notification_runtime/NotifyProfileItemUpdated.inc",
+    "address": "0x1406801c0",
+    "confidence": "high",
+    "status": "ported",
+    "virtual": true,
+    "notes": "Assigned name and reference spelling. Base vtable slot +0x2a8 is empty; call through the virtual slot. ABI establishes item address but not pointer/reference spelling or const qualification. See HANDOFF.",
+    "includes": [
+      "McpProfileItem.h"
+    ]
   }
 ]

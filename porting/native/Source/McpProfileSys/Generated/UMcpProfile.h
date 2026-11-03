@@ -9,6 +9,7 @@
 #include "FBaseUrlContext.h"
 #include "FClientUrlContext.h"
 #include "FDedicatedServerUrlContext.h"
+#include "McpProfileItem.h"
 #include "Misc/DateTime.h"
 #include "UObject/Class.h"
 #include "UObject/Object.h"
@@ -90,5 +91,6 @@ public:
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	virtual UObject* CreateItemObject(UClass* ItemClass, FString ItemId, FString TemplateId);
+	virtual void NotifyProfileItemUpdated(FMcpProfileItem& Item);
 };
 

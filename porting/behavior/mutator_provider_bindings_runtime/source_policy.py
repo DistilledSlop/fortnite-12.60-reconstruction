@@ -1,23 +1,29 @@
-"""Restore the native owner contract and its two recovered implementations."""
-BLOCKS = {'AFortGameModeAthena': '0x1463cf250', 'AFortGameStateAthena': '0x1463ea150'}
+"""Restore original owner/context interfaces with recovered concrete callbacks."""
+BLOCKS = {
+    'AFortGameModeAthena': ('0x1463cf250', 'IFortMutatorOwner'),
+    'AFortGameStateAthena': ('0x1463ea150', 'IFortMutatorOwner'),
+    'AFortPlayerStateAthena': ('0x1464d3e50', 'IFortMutatorContext'),
+}
 
 
 def apply(model, block, owner_fns):
-    expected = BLOCKS.get(model['name'])
-    if expected is None:
+    binding = BLOCKS.get(model['name'])
+    if binding is None:
         return model
+    expected, interface = binding
     if model.get('block_va') != expected or block.get('block_va') != expected:
-        raise ValueError('mutator owner original class identity changed')
+        raise ValueError('mutator provider original class identity changed')
     bases = model.setdefault('native_interface_bases', [])
-    if 'IFortMutatorOwner' not in bases:
-        bases.append('IFortMutatorOwner')
-    model['splice'].setdefault('header_includes', set()).add('UFortMutatorOwner.h')
+    if interface not in bases:
+        bases.append(interface)
+    model['splice'].setdefault('header_includes', set()).add('U' + interface[1:] + '.h')
     return model
 
 
 def interface_declarations(name):
-    if name != 'UFortMutatorOwner':
-        return []
-    # Assigned source contract for the observed +0x20 callback. No artificial
-    # implementation is supplied; recovered concrete owners provide the body.
-    return ['public:', '    virtual void NativeAppendOwnerMutators(TArray<class AFortGameplayMutator*>& OutMutators, UObject* Context) = 0;']
+    # Assigned native contracts. Concrete original providers supply the bodies.
+    if name == 'UFortMutatorOwner':
+        return ['public:', '    virtual void NativeAppendOwnerMutators(TArray<class AFortGameplayMutator*>& OutMutators, UObject* Context) = 0;']
+    if name == 'UFortMutatorContext':
+        return ['public:', '    virtual void NativeAppendContextOwners(TArray<UObject*>& OutOwners) = 0;']
+    return []

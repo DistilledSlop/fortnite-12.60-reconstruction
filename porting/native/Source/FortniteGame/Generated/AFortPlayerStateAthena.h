@@ -25,6 +25,8 @@
 #include "FOnTeamScoreChanged.h"
 #include "FSimpleMetricInformation.h"
 #include "GameFramework/OnlineReplStructs.h"
+#include "UFortMutatorContext.h"
+#include "UObject/Object.h"
 
 class AFortGameStateAthena;
 class UAthenaGadgetItemDefinition;
@@ -35,7 +37,7 @@ class UTexture2D;
 #include "AFortPlayerStateAthena.generated.h"
 
 UCLASS(config=Engine)
-class FORTNITEGAME_API AFortPlayerStateAthena : public AFortPlayerStateZone
+class FORTNITEGAME_API AFortPlayerStateAthena : public AFortPlayerStateZone, public IFortMutatorContext
 {
 	GENERATED_BODY()
 
@@ -497,6 +499,7 @@ public:
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	int32 UpdateScoreForEvent(EAthenaScoringEvent Event, int32 Count, int32 PreviousPoints, const UFortPlaylistAthena* Playlist);
 	void UpdateTotalPlayerScore();
+	virtual void NativeAppendContextOwners(TArray<UObject*>& OutOwners);
 protected:
 	void OnRep_AIKills();
 };

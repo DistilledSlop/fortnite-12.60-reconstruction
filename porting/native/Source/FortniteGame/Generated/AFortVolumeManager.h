@@ -14,6 +14,7 @@
 #include "FOnClientVolumeRestrictionStateChanged.h"
 #include "FOnVolumeStateChanged.h"
 #include "FVolumePlayerStateInfo.h"
+#include "GameFramework/PlayerState.h"
 #include "Math/BoxSphereBounds.h"
 #include "Math/Vector.h"
 #include "Stats/Stats.h"
@@ -113,5 +114,7 @@ public:
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	AFortVolume* NativeFindVolumeAtLocation(const FVector& Location) const;
 	static AFortVolumeManager* NativeResolveVolumeManager(UObject* Context);
+	AFortVolume* NativeFindPlayerVolume(APlayerState* PlayerState) const;
+	AFortVolume* NativeFindPlayerVolumeInActiveUsers(APlayerState* PlayerState) const;
 };
 

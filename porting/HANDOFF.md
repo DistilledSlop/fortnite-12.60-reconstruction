@@ -1,5 +1,36 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Native source batch 31 (2026-11-03)
+
+Canonical source:1,860 bodies +165 supporting fields =2,025 ported entries.
+Integrated player identity-to-volume lookup and null/pending-kill guarded wrapper;
+valid IDs search reflected active-user entries with actual FUniqueNetIdRepl
+comparison; unmatched valid ID returns null, invalid ID uses raw pawn, resolves
+its manager and location selector. GetPawn and GetActorLocation match raw pointer
+and missing-root zero fallback. PlayerState native context interface inheritance
+and callback now append minigame owner then volume uniquely, never reset output.
+
+UMcpProfile base NotifyProfileItemUpdated is empty virtual, parameter is existing
+native item address. Reference/const spelling assigned; derived UFortMcpProfile
+has real override1421e3570, currently unported. Updater must use virtual dispatch.
+McpProfileItem support header supplies native type to generated declaration.
+Promotion31 accepts2,025/rejects0;7 Native files changed. Source/registration and
+bounded original capture review only; no builds/runtime/tests. Last tested1,040;
+820 bodies pending; next2,040 needs180.
+
+World item generic attribute conversion matched actual engine public
+FJsonObjectConverter::JsonAttributesToUStruct (not JsonObjectToUStruct wrapper).
+worlditem_attribute_runtime proposal preserves fresh object/shared value copy,
+zero flags and partial destination writes on failure. Full parser still needs
+Fort asset manager lookup/log bindings; bounded worker continues that exact task.
+Root original probe profile_json_closure31 recovered intern/update/prefix/derived
+notification. Root integrating profile JSON methods next; native updater and
+singleton interning remain proposals until canonical source is emitted.
+
+Root canonical/Native/generator owner; Terra medium finite tasks, fork_turns none,
+economical reads, frequent commits/pushes/dashboard. No tests before2,040. Preserve
+unrelated graphics. All4 product gates and full parity remain open.
+
 ## Native source batch 30 (2026-11-03)
 
 Canonical source:1,856 bodies +165 supporting fields =2,021 ported entries.
