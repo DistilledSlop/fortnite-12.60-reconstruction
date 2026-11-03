@@ -65,6 +65,9 @@ public:
 	UPROPERTY(Replicated)
 	int32 MaxItems;
 
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	FName GetContainerNameAndLevelKey();
+
 	UFUNCTION()
 	void OnRep_HostUpgradeLevel();
 

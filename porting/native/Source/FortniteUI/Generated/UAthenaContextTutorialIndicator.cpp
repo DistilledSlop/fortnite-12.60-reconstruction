@@ -10,6 +10,14 @@ float UAthenaContextTutorialIndicator::GetMaxOffscreenTreshold() const
 	return OffscreenMaxTreshold;
 }
 
+float UAthenaContextTutorialIndicator::GetMaxTreshold() const
+{
+	// Original address: 0x145190680.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete constant return; see bulk_scalar_expansion_runtime/README.md.
+	return -1.0f;
+}
+
 float UAthenaContextTutorialIndicator::GetMinTreshold() const
 {
 	// Original address: 0x1451906b0.

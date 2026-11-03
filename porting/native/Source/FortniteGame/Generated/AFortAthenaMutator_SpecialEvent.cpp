@@ -37,6 +37,13 @@ void AFortAthenaMutator_SpecialEvent::OnRep_GameResumed()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortAthenaMutator_SpecialEvent::SetWeightForContainerLootRoll(float Weight)
+{
+	// Original exec 0x142820450; inline store.
+	// CONFIDENCE: HIGH
+	this->WeightForContainerLootRoll = Weight;
+}
+
 void AFortAthenaMutator_SpecialEvent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

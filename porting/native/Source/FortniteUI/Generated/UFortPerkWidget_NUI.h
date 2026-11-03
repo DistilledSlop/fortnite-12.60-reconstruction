@@ -29,5 +29,8 @@ public:
 	UPROPERTY()
 	bool bShouldUseSummaryTooltip;
 
+	UFUNCTION(BlueprintCallable)
+	void SetTooltipContext(UFortTooltipContext* InTooltipContext);
+
 };
 

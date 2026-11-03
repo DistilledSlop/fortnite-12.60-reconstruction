@@ -37,5 +37,10 @@ public:
 	UPROPERTY(Transient)
 	float TimerForOnAllPlayersLoadedIn;
 
+protected:
+	UFUNCTION(BlueprintCallable)
+	void SetTimerForOnAllPlayersLoadedIn(float Timer);
+public:
+
 };
 

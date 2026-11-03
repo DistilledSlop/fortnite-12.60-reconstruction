@@ -9,3 +9,10 @@ TEnumAsByte<EFortBrushSize::Type> UFortKeybindWidget::GetBrushSize() const
 	return BrushSize;
 }
 
+void UFortKeybindWidget::SetAxisScale(float NewValue)
+{
+	// Original exec 0x145280b10; inline store.
+	// CONFIDENCE: HIGH
+	this->AxisScale = NewValue;
+}
+

@@ -27,6 +27,20 @@ void AFortThreatVisualsManager::OnRep_ThreatLocations()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortThreatVisualsManager::ResetMinimumCloudAltitude()
+{
+	// Original address: 0x142b0f830. Complete constant field write.
+	// CONFIDENCE: HIGH
+	CloudMinimumAltitude = -23040.0f;
+}
+
+void AFortThreatVisualsManager::SetMinimumCloudAltitude(float NewMinimumAltitude)
+{
+	// Original exec 0x142b0fbf0; inline store.
+	// CONFIDENCE: HIGH
+	this->CloudMinimumAltitude = NewMinimumAltitude;
+}
+
 void AFortThreatVisualsManager::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

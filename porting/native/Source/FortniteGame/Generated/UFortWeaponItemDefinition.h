@@ -210,6 +210,9 @@ public:
 	bool AlwaysChargeUpToMin() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetDegradedPercentage() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetHitNotifyDuration() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

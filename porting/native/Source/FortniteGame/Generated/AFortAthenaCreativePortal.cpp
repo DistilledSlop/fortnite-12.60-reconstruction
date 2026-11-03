@@ -66,6 +66,13 @@ void AFortAthenaCreativePortal::OnRep_VolumeStatus()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortAthenaCreativePortal::SetInteractionInteractComponent(UPrimitiveComponent* PrimitiveComponent)
+{
+	// Original exec 0x1427d4530; pure writer 0x1418d3790.
+	// CONFIDENCE: HIGH
+	this->InteractComponent = PrimitiveComponent;
+}
+
 void AFortAthenaCreativePortal::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

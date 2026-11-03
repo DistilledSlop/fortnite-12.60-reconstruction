@@ -31,5 +31,8 @@ public:
 	UPROPERTY(Transient)
 	USplineComponent* Spline;
 
+	UFUNCTION(BlueprintCallable)
+	void SetSpline(USplineComponent* NewSpline);
+
 };
 

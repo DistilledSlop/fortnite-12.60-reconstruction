@@ -10,6 +10,13 @@ int32 AFortGameStateEndless::GetWaveNumber()
 	return WaveNumber;
 }
 
+void AFortGameStateEndless::SetWaveNumber(int32 NewWaveNumber)
+{
+	// Original exec 0x14292d4c0; pure writer 0x1424f3f10.
+	// CONFIDENCE: HIGH
+	this->WaveNumber = NewWaveNumber;
+}
+
 void AFortGameStateEndless::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

@@ -147,6 +147,9 @@ public:
 	UFUNCTION()
 	void OnRep_GameResumed();
 
+	UFUNCTION(BlueprintCallable)
+	void SetWeightForContainerLootRoll(float Weight);
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

@@ -29,5 +29,8 @@ public:
 	UPROPERTY(Transient)
 	UStaticMeshComponent* TrackMeshComp;
 
+	UFUNCTION(BlueprintCallable)
+	void InitializeTrackPreview(UStaticMeshComponent* InTrackMeshComp);
+
 };
 

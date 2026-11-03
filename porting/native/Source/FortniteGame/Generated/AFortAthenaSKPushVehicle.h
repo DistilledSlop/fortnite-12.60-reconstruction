@@ -122,5 +122,10 @@ public:
 	UPROPERTY(Transient)
 	UParticleSystemComponent* CacheWheelDustFX;
 
+private:
+	UFUNCTION(BlueprintCallable)
+	void CacheFX(UParticleSystemComponent* InWheelDustFX);
+public:
+
 };
 

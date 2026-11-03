@@ -57,3 +57,59 @@ int32 UFortCreativeCreatureManagerInfoComponent::GetScorePoints() const
 	return ScorePoints;
 }
 
+void UFortCreativeCreatureManagerInfoComponent::ResetEnvironmentalDamageOverride()
+{
+	// Original address: 0x1428ba200. Complete constant field write.
+	// CONFIDENCE: HIGH
+	EnvironmentalDamageOverride = -1.0f;
+}
+
+void UFortCreativeCreatureManagerInfoComponent::ResetMaxHealth()
+{
+	// Original address: 0x1428ba250. Complete constant field write.
+	// CONFIDENCE: HIGH
+	MaxHealth = -1;
+}
+
+void UFortCreativeCreatureManagerInfoComponent::ResetOverrideDamage()
+{
+	// Original address: 0x1428ba2a0. Complete constant field write.
+	// CONFIDENCE: HIGH
+	DamageCaused = -1.0f;
+}
+
+void UFortCreativeCreatureManagerInfoComponent::ResetScorePoints()
+{
+	// Original address: 0x1428ba2e0. Complete constant field write.
+	// CONFIDENCE: HIGH
+	ScorePoints = -1;
+}
+
+void UFortCreativeCreatureManagerInfoComponent::SetEnvironmentalDamageOverride(float InOverrideDamage)
+{
+	// Original exec 0x1428ba6e0; inline store.
+	// CONFIDENCE: HIGH
+	this->EnvironmentalDamageOverride = InOverrideDamage;
+}
+
+void UFortCreativeCreatureManagerInfoComponent::SetHearingAggroRange(float InHearingAggroRange)
+{
+	// Original exec 0x1428ba7e0; inline store.
+	// CONFIDENCE: HIGH
+	this->HearingAggroRange = InHearingAggroRange;
+}
+
+void UFortCreativeCreatureManagerInfoComponent::SetMovementSpeedMultiplier(float InOverrideMovementSpeedMultiplier)
+{
+	// Original exec 0x1428baa20; inline store.
+	// CONFIDENCE: HIGH
+	this->MovementSpeedMultiplier = InOverrideMovementSpeedMultiplier;
+}
+
+void UFortCreativeCreatureManagerInfoComponent::SetOverrideDamage(float InOverrideDamage)
+{
+	// Original exec 0x1428bab20; inline store.
+	// CONFIDENCE: HIGH
+	this->DamageCaused = InOverrideDamage;
+}
+

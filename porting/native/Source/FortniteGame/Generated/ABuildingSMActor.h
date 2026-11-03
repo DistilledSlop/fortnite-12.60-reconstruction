@@ -706,6 +706,11 @@ public:
 	UFUNCTION()
 	void OnRep_ResourceType(EFortResourceType::Type OldType);
 
+protected:
+	UFUNCTION(BlueprintCallable)
+	void SetParentActorToAttachTo(ABuildingSMActor* InParentActorToAttachTo);
+public:
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

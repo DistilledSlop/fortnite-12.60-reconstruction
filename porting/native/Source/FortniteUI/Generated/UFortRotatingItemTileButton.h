@@ -28,5 +28,8 @@ public:
 	UPROPERTY()
 	TArray<UFortItem*> ItemsToRotate;
 
+	UFUNCTION(BlueprintCallable)
+	void SetTimeBeweenRotations(float InTimeBetweenRotations);
+
 };
 

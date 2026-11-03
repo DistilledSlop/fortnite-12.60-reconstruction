@@ -104,6 +104,20 @@ void AFortAIPawn::OnRep_UpgradeUIData()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortAIPawn::SetCurrentAimTarget(AActor* AimTarget)
+{
+	// Original exec 0x1427a5c80; pure writer 0x1422ec2c0.
+	// CONFIDENCE: HIGH
+	this->CurrentAimTarget = AimTarget;
+}
+
+void AFortAIPawn::SetEncounterInfo(UFortAIEncounterInfo* InEncounterInfo)
+{
+	// Original exec 0x1427a5e50; pure writer 0x1422ec430.
+	// CONFIDENCE: HIGH
+	this->EncounterInfo = InEncounterInfo;
+}
+
 void AFortAIPawn::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

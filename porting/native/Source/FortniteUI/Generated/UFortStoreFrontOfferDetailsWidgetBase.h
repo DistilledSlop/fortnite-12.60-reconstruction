@@ -107,5 +107,10 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UFortStoreFrontOfferInfo* GetOfferInfo() const;
 
+protected:
+	UFUNCTION(BlueprintCallable)
+	void SetSecondaryItem(UFortItem* Item);
+public:
+
 };
 

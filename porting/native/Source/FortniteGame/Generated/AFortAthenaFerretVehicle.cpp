@@ -2,6 +2,13 @@
 #include "AFortAthenaFerretVehicle.h"
 #include "Net/UnrealNetwork.h"
 
+void AFortAthenaFerretVehicle::CachePlaneFX(UParticleSystemComponent* InPlaneSpeedFX)
+{
+	// Original exec 0x1427d7ba0; pure writer 0x1418e4580.
+	// CONFIDENCE: HIGH
+	this->PlaneSpeedFX = InPlaneSpeedFX;
+}
+
 bool AFortAthenaFerretVehicle::IsLocalPlayerRiding() const
 {
 	// Original address: 0x1427d8000.

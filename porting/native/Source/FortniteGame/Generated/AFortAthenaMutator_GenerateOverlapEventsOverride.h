@@ -28,5 +28,8 @@ public:
 	UPROPERTY()
 	FVector CenterLocation;
 
+	UFUNCTION(BlueprintCallable)
+	void SetRadius(float NewRadius);
+
 };
 

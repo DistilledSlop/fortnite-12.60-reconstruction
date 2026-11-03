@@ -163,6 +163,11 @@ public:
 	UPROPERTY(Replicated, Transient)
 	float MaxHealthToDestroyProp;
 
+private:
+	UFUNCTION(BlueprintCallable)
+	void CachePlaneFX(UParticleSystemComponent* InPlaneSpeedFX);
+public:
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsLocalPlayerRiding() const;
 

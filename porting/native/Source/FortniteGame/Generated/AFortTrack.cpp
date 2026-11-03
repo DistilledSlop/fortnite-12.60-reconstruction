@@ -2,6 +2,13 @@
 #include "AFortTrack.h"
 #include "Net/UnrealNetwork.h"
 
+void AFortTrack::InitializeTrack(UPrimitiveComponent* InSwitchComp)
+{
+	// Original exec 0x142b197f0; pure writer 0x1425cd530.
+	// CONFIDENCE: HIGH
+	this->SwitchComp = InSwitchComp;
+}
+
 void AFortTrack::OnRep_ConfigurationIdx()
 {
 	// Body not recovered: reflection-derived stub.

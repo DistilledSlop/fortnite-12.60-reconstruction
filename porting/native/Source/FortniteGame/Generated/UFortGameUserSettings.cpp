@@ -49,3 +49,10 @@ float UFortGameUserSettings::GetUserInterfaceContrast() const
 	return UserInterfaceContrast;
 }
 
+void UFortGameUserSettings::SetSafeZone(float Value)
+{
+	// Original exec 0x14292fba0; inline store.
+	// CONFIDENCE: HIGH
+	this->SafeZone = Value;
+}
+

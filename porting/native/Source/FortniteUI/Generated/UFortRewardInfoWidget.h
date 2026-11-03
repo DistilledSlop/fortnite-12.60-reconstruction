@@ -61,5 +61,8 @@ public:
 	UPROPERTY()
 	UCommonButtonGroup* ButtonGroup;
 
+	UFUNCTION(BlueprintCallable)
+	void SetButtonGroup(UCommonButtonGroup* InButtonGroup);
+
 };
 

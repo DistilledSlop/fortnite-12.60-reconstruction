@@ -146,6 +146,9 @@ public:
 	UFUNCTION()
 	void OnRep_CurrentlyActive();
 
+	UFUNCTION(BlueprintCallable)
+	void SetTarget(AFortPawn* NewTarget);
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

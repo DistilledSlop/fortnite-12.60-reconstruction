@@ -52,6 +52,13 @@ void ABuildingActor::OnRep_Team()
 	// Body not recovered: reflection-derived stub.
 }
 
+void ABuildingActor::SetHealthBarIndicatorDifficultyRating(int32 InDisplayLevel)
+{
+	// Original exec 0x142738310; pure writer 0x141bc4b10.
+	// CONFIDENCE: HIGH
+	this->HealthBarIndicatorDifficultyRating = InDisplayLevel;
+}
+
 void ABuildingActor::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

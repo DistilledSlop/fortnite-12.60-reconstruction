@@ -1,5 +1,24 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Native source batch 4 (2026-11-03)
+
+Canonical Native now has 1150 ported entries = 1090 function bodies + 60
+fields. Added 41 complete bodies: 2 int setters, 13 float setters, 18 object
+pointer setters, 5 constant mutations, 2 float-literal getters, and 1 inherited
+FName getter. Source review and fail-closed promotion accepted all 1150 with
+zero rejections; receipts: porting/generated/gameplay-bulk-integration-4/
+{promotion.command.json,promotion.result.json,reports/behavior_splice.json}.
+Unchanged generated mtimes restored. No builds/runtime/tests run. Fifty bodies
+since tested baseline1040 are build pending; next checkpoint about2040.
+Commit and push each completed source batch promptly (explicit user preference).
+
+Root owns canonical promotion and UE builds. Terra medium bounded workers own
+new scalar/setter/bool/event proposal directories only, fork_turns none. Keep
+reads and outputs bounded, rotate workers at task completion, preserve existing
+graphics edits, skip visual work. Building vitals and generator virtual/native
+event support remain pending integration; do not count drafts. All four product
+milestones remain open. Dashboard refresh follows source batch integration.
+
 ## Native source continuation (2026-11-03)
 
 Current canonical/shared Native: 1109 ported entries =1049 bodies +60 fields.

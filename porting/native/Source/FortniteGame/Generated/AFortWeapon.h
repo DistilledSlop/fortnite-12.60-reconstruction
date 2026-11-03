@@ -788,6 +788,11 @@ public:
 	void ServerSetChargeState(uint8 NewState);
 	void ServerSetChargeState_Implementation(uint8 NewState);
 
+protected:
+	UFUNCTION(BlueprintCallable)
+	void SetWeaponPawnAnimsetOverride(UFortWeaponAnimSet* WeaponPawnAnimsetOverride);
+public:
+
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	bool TryReloadAmmoFromAbility();
 

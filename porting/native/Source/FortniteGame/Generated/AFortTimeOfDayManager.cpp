@@ -40,6 +40,13 @@ void AFortTimeOfDayManager::RemoveLightAndFogPhaseSettingOverrideMulticast_Imple
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortTimeOfDayManager::SetStormStrength(float NewStormStrength)
+{
+	// Original exec 0x142b0fdc0; pure writer 0x141f6e6a0.
+	// CONFIDENCE: HIGH
+	this->StormStrength = NewStormStrength;
+}
+
 void AFortTimeOfDayManager::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

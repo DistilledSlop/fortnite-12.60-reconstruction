@@ -105,6 +105,9 @@ public:
 	UPROPERTY(Transient)
 	UPrimitiveComponent* SwitchComp;
 
+	UFUNCTION(BlueprintCallable)
+	void InitializeTrack(UPrimitiveComponent* InSwitchComp);
+
 	UFUNCTION()
 	void OnRep_ConfigurationIdx();
 

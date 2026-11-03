@@ -20,5 +20,8 @@ public:
 	UPROPERTY()
 	UAthenaPlayerViewModel* PlayerVM;
 
+	UFUNCTION(BlueprintCallable)
+	void SetDataSource(UAthenaPlayerViewModel* PlayerViewModel);
+
 };
 

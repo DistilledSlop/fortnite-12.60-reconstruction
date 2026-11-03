@@ -1,0 +1,5 @@
+# Parameter setter recovery
+
+`prepare.py` scans pinned original image and current reflection metadata and writes proposals and evidence to `/tmp/gameplay-bulk-parameter-setter/`. It does not update canonical sources. The implemented family is an exact one-`int32` argument FFrame extraction with both branch destinations checked, a P_FINISH advance, and a direct call to a complete single `int32` store leaf. The scanner checks flags, field identity, class selection, generated declarations, and inherited access. It does not infer behavior from function names.
+
+This bounded pass found two candidates. It does not yet classify float, bool, object, name, inline stores, alternate thunk layouts, or nontrivial callees. Among eligible integer thunks, 187 matched the extraction and call shape but did not call a pure single-store leaf; these require separate complete-body analysis. Counts in the report are sequential rejection counts, not independent family totals. No build or runtime validation was performed.

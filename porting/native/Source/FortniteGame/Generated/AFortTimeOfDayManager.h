@@ -385,6 +385,9 @@ public:
 	void RemoveLightAndFogPhaseSettingOverrideMulticast(EFortDayPhase::Type DayPhase, float BlendOutLength);
 	void RemoveLightAndFogPhaseSettingOverrideMulticast_Implementation(EFortDayPhase::Type DayPhase, float BlendOutLength);
 
+	UFUNCTION(BlueprintCallable, BlueprintCosmetic)
+	void SetStormStrength(float NewStormStrength);
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

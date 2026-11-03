@@ -23,6 +23,11 @@ private:
 	int32 GetWaveNumber();
 public:
 
+private:
+	UFUNCTION(BlueprintCallable)
+	void SetWaveNumber(int32 NewWaveNumber);
+public:
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

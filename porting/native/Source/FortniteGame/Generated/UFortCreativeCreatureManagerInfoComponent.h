@@ -89,5 +89,29 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetScorePoints() const;
 
+	UFUNCTION(BlueprintCallable)
+	void ResetEnvironmentalDamageOverride();
+
+	UFUNCTION(BlueprintCallable)
+	void ResetMaxHealth();
+
+	UFUNCTION(BlueprintCallable)
+	void ResetOverrideDamage();
+
+	UFUNCTION(BlueprintCallable)
+	void ResetScorePoints();
+
+	UFUNCTION(BlueprintCallable)
+	void SetEnvironmentalDamageOverride(float InOverrideDamage);
+
+	UFUNCTION(BlueprintCallable)
+	void SetHearingAggroRange(float InHearingAggroRange);
+
+	UFUNCTION(BlueprintCallable)
+	void SetMovementSpeedMultiplier(float InOverrideMovementSpeedMultiplier);
+
+	UFUNCTION(BlueprintCallable)
+	void SetOverrideDamage(float InOverrideDamage);
+
 };
 

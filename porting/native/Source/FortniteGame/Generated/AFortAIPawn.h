@@ -841,6 +841,12 @@ public:
 	UFUNCTION()
 	void OnRep_UpgradeUIData();
 
+	UFUNCTION(BlueprintCallable)
+	void SetCurrentAimTarget(AActor* AimTarget);
+
+	UFUNCTION(BlueprintCallable)
+	void SetEncounterInfo(UFortAIEncounterInfo* InEncounterInfo);
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

@@ -112,6 +112,9 @@ public:
 	UFUNCTION()
 	void OnRep_ReplicatedVelocity();
 
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void SetHomingLaserTargetDistance(float NewDistance);
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

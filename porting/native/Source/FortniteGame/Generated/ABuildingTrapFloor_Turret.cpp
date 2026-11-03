@@ -15,6 +15,13 @@ void ABuildingTrapFloor_Turret::OnRep_CurrentlyActive()
 	// Body not recovered: reflection-derived stub.
 }
 
+void ABuildingTrapFloor_Turret::SetTarget(AFortPawn* NewTarget)
+{
+	// Original exec 0x142762e90; pure writer 0x141c4cbb0.
+	// CONFIDENCE: HIGH
+	this->Target = NewTarget;
+}
+
 void ABuildingTrapFloor_Turret::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

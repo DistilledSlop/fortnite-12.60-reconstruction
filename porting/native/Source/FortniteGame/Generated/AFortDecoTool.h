@@ -75,6 +75,9 @@ public:
 	void ServerSpawnDeco(const FVector& Location, const FRotator& Rotation, ABuildingSMActor* AttachedActor, EBuildingAttachmentType InBuildingAttachmentType);
 	void ServerSpawnDeco_Implementation(const FVector& Location, const FRotator& Rotation, ABuildingSMActor* AttachedActor, EBuildingAttachmentType InBuildingAttachmentType);
 
+	UFUNCTION(BlueprintCallable)
+	void SetHelper(AFortDecoHelper* InHelper);
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

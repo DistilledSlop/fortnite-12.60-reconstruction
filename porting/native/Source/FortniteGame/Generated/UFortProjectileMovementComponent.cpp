@@ -22,6 +22,13 @@ void UFortProjectileMovementComponent::OnRep_ReplicatedVelocity()
 	// Body not recovered: reflection-derived stub.
 }
 
+void UFortProjectileMovementComponent::SetHomingLaserTargetDistance(float NewDistance)
+{
+	// Original exec 0x142aa6af0; pure writer 0x141d15d50.
+	// CONFIDENCE: HIGH
+	this->HomingLaserTargetDistance = NewDistance;
+}
+
 void UFortProjectileMovementComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

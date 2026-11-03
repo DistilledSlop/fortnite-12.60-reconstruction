@@ -151,6 +151,13 @@ void ABuildingSMActor::OnRep_ResourceType(EFortResourceType::Type OldType)
 	// Body not recovered: reflection-derived stub.
 }
 
+void ABuildingSMActor::SetParentActorToAttachTo(ABuildingSMActor* InParentActorToAttachTo)
+{
+	// Original exec 0x1427580e0; pure writer 0x141c1c340.
+	// CONFIDENCE: HIGH
+	this->ParentActorToAttachTo = InParentActorToAttachTo;
+}
+
 void ABuildingSMActor::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

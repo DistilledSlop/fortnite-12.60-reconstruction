@@ -187,6 +187,11 @@ public:
 	UFUNCTION()
 	void OnRep_VolumeStatus();
 
+protected:
+	UFUNCTION(BlueprintCallable)
+	void SetInteractionInteractComponent(UPrimitiveComponent* PrimitiveComponent);
+public:
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

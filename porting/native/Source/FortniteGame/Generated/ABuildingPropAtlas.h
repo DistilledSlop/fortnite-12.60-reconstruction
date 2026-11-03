@@ -38,5 +38,8 @@ public:
 	UPROPERTY(Transient)
 	UAudioComponent* PortalAudioComp;
 
+	UFUNCTION(BlueprintCallable, BlueprintCosmetic)
+	void InitializeAudio(UAudioComponent* InPortalLoopingComp);
+
 };
 

@@ -63,5 +63,8 @@ public:
 	UPROPERTY()
 	FOnHeavySoundTriggered OnHeavySoundTriggered;
 
+	UFUNCTION(BlueprintCallable)
+	void SetSkeletalMesh(USkeletalMeshComponent* NewSkeletalMesh);
+
 };
 

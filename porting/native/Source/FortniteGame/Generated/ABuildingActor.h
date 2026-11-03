@@ -662,6 +662,9 @@ public:
 	UFUNCTION()
 	void OnRep_Team();
 
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void SetHealthBarIndicatorDifficultyRating(int32 InDisplayLevel);
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

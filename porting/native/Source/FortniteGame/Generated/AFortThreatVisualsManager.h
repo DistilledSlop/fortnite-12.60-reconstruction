@@ -124,6 +124,12 @@ public:
 	UFUNCTION()
 	void OnRep_ThreatLocations();
 
+	UFUNCTION(BlueprintCallable)
+	void ResetMinimumCloudAltitude();
+
+	UFUNCTION(BlueprintCallable)
+	void SetMinimumCloudAltitude(float NewMinimumAltitude);
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

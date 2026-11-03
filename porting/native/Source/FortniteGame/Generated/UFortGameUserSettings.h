@@ -545,5 +545,8 @@ public:
 	UFUNCTION()
 	float GetUserInterfaceContrast() const;
 
+	UFUNCTION()
+	void SetSafeZone(float Value);
+
 };
 
