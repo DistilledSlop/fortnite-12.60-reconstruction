@@ -1,5 +1,44 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Registration-backed getter integrations batch85 (2026-11-03)
+
+Integrated20 whole getters plus20 evidenced fields: remote-player/squad spectator
+data, spectator PIP mode, HUD scale bit representation and content-control state.
+Registration-call analysis established24 class mappings, removing missing class/
+parent bounds for33 safe candidates in the pre-scanned58-getter inventory. This
+bounded proposal selected20; a fresh bounded worker prepared14 remaining body/
+field pairs (13 capped candidates plus vehicle steering), not yet integrated.
+Zone teleport getter remains rejected by occupied/uncertain delegate extent.
+
+Generation85 accepted2,340 entries =2,133 bodies+207fields, rejected0;10 expected
+native implementation/header files changed across5 classes. No builds/runtime/
+tests. Last tested2,040;93 canonical+4 manual bodies build pending; next3,040.
+All four product gates OPEN; objective ACTIVE. Committed/pushed84 sourcece7e780f/
+dashboard27be0fc7; previous goal turn PROGRESS across82/83 remains recorded below.
+
+registered_getters85_runtime contains complete wrapper/leaf bytes inherited from
+84, registration-builder bytes and class literal/call-argument proofs, field
+occupancy/struct bounds, and source-input pins. Root checked all input pins match
+before merge. Direct 32-bit float-result bitcopy uses uint32 backing and
+FMemory::Memcpy, without asserting actual storage type. Plain native Bool reads
+retain prior valid0/1 representation policy; no arbitrary/corrupt-byte claim.
+Fields assert no constructor/default/writer/lifetime behavior. This is source
+integration, not functioning lifecycle or runtime parity evidence.
+
+One fresh bounded Terra6.1 medium fork-none worker prepared85; root reviewed and
+retained sole canonical/native/generation/staging/build ownership. A fresh
+registered getter remainder worker owns only registered_getter_remainder86_runtime;
+14 pending proposals are uncounted. Preserve economical reads, bounded rotation,
+configured Luna/Terra/Sol models, untouched graphics/Engine edits and deferred
+visual work. Four product gates remain open; profile/PSO drafts still uncounted.
+
+Worker source inventory command: `python3 porting/behavior/registered_getters85_runtime/prepare.py`
+Outcome58assessed,33candidates,20proposals,24 registration mappings. Source pins
+all matched at root review; no full-image hash repeated. Root command:
+`python3 -I /tmp/promote-native-batch85.py > /tmp/promote-native-batch85.log 2>&1`
+Exit0,2,340accepted/0rejected; command/reports under
+porting/generated/gameplay-bulk-integration-85/. No tests/builds were run.
+
 ## Controller broadcasts and getter storage batch84 (2026-11-03)
 
 Integrated5 bodies and5 evidenced fields. Controller ClientNotifyLost1419c57a0

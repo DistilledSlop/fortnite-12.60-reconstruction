@@ -16,9 +16,69 @@ class FORTNITEGAME_API UFortContentControlsManager : public UObject
 	GENERATED_BODY()
 
 public:
+	// Non-reflected field (behaviour kind "member_field", offset 0xd1): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0xd1;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0xd2): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0xd2;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0xd3): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0xd3;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0xd4): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0xd4;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0xd5): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0xd5;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0xd6): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0xd6;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0xd7): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0xd7;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0xd8): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0xd8;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0xd9): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0xd9;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0xf1): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0xf1;
+
 	// table index 0, flags 0x40000000002000
 	UPROPERTY(Transient)
 	UFortLocalPlayer* OwningPlayer;
+
+	UFUNCTION()
+	bool GetAllowedToAcquire() const;
+
+	UFUNCTION()
+	bool GetAllowedToMakePurchases() const;
+
+	UFUNCTION()
+	bool GetCanAcceptFriendRequest() const;
+
+	UFUNCTION()
+	bool GetCanDisplayMyUserName() const;
+
+	UFUNCTION()
+	bool GetCanReceiveInGameItems() const;
+
+	UFUNCTION()
+	bool GetCanSeeMatureLanguage() const;
+
+	UFUNCTION()
+	bool GetCanSeeOtherPlayersNames() const;
+
+	UFUNCTION()
+	bool GetCanSeeThirdPartyNames() const;
+
+	UFUNCTION()
+	bool GetCanUseTextChat() const;
+
+	UFUNCTION()
+	bool GetCanUseVoiceChat() const;
 
 };
 

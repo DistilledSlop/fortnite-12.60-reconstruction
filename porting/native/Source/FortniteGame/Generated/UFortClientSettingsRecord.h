@@ -46,6 +46,9 @@ public:
 	UPROPERTY()
 	float HUDScale;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x27c): not a UPROPERTY, not replicated.
+	uint32 NativeRecoveredFloat_0x27c;
+
 	// table index 272, flags 0x20080000000000
 	UPROPERTY()
 	float InitialHUDScale;
@@ -1065,6 +1068,9 @@ public:
 
 	UFUNCTION()
 	bool GetHideOtherPlayerNames() const;
+
+	UFUNCTION()
+	float GetHUDScaleMultiplier() const;
 
 	UFUNCTION()
 	float GetHUDScaleRaw() const;

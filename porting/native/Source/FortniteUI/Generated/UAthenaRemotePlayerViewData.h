@@ -131,9 +131,33 @@ public:
 	UPROPERTY()
 	AFortPlayerStateAthena* PlayerState;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x208): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt_0x208;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x21d): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x21d;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x21e): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x21e;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x21f): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x21f;
+
 	// table index 0, flags 0x40000000000000
 	UPROPERTY()
 	AFortPlayerPawn* CachedPlayerPawn;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetIsFollowedPlayer() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetIsInRelevancy() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetIsReplayRelevancyPlayer() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetMaterialCount() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	AFortPlayerStateAthena* GetPlayerState() const;

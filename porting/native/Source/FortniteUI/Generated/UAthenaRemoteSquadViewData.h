@@ -50,5 +50,29 @@ public:
 	UPROPERTY()
 	TArray<UAthenaRemotePlayerViewData*> PlayerDataArray;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x98): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt_0x98;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x9c): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt_0x9c;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0xa0): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt_0xa0;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0xb4): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0xb4;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetIsEliminated() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetKillScore() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetPlace() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetSquadId() const;
+
 };
 

@@ -40,5 +40,11 @@ public:
 	UPROPERTY()
 	FUniqueNetIdRepl ReplayRelevancyPlayerUID;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x129): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x129;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetPipMode() const;
+
 };
 

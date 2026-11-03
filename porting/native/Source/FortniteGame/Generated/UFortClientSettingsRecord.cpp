@@ -294,6 +294,12 @@ bool UFortClientSettingsRecord::GetHideOtherPlayerNames() const
 	return UFortClientSettingsRecord::bHideOtherPlayerNames;
 }
 
+float UFortClientSettingsRecord::GetHUDScaleMultiplier() const
+{
+	// CONFIDENCE: high; complete getter, storage evidence in report.json.
+	float Result; FMemory::Memcpy(&Result, &NativeRecoveredFloat_0x27c, sizeof(Result)); return Result;
+}
+
 float UFortClientSettingsRecord::GetHUDScaleRaw() const
 {
 	// Original address: 0x14287dc40.
