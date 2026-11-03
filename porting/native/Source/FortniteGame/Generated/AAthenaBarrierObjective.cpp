@@ -2,6 +2,22 @@
 #include "AAthenaBarrierObjective.h"
 #include "Net/UnrealNetwork.h"
 
+EBarrierFoodTeam AAthenaBarrierObjective::GetFoodTeam() const
+{
+	// Original address: 0x1427162e0.
+	// CONFIDENCE: HIGH
+	// Exact enum byte-field getter; see bulk_enum_getter_runtime/README.md.
+	return FoodTeam;
+}
+
+EBarrierObjectiveDamageState AAthenaBarrierObjective::GetObjectiveDamageState() const
+{
+	// Original address: 0x142716440.
+	// CONFIDENCE: HIGH
+	// Exact enum byte-field getter; see bulk_enum_getter_runtime/README.md.
+	return ObjectiveDamageState;
+}
+
 void AAthenaBarrierObjective::OnRep_FoodTeam()
 {
 	// Body not recovered: reflection-derived stub.

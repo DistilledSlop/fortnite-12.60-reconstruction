@@ -140,5 +140,8 @@ public:
 	UPROPERTY(Transient)
 	uint8 StateTransition_KnockedbackUpToKnockedbackDown : 1;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	EFortHuskAnimType GetHuskAnimType() const;
+
 };
 

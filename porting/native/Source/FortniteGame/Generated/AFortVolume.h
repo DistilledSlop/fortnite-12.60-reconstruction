@@ -23,6 +23,7 @@ class AAthenaNavInvokerBox;
 class AFortAthenaCreativePortal;
 class AFortCreativeTimerObjective;
 class AFortMissionStormShield;
+class AFortPlayerController;
 class UAsyncTaskQueue;
 class UFortPlaysetItemDefinition;
 class UFortVolumeObjectTrackingComponent;
@@ -178,6 +179,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool GetUserGeneratedContentRestricted() const;
+
+	UFUNCTION(BlueprintCallable)
+	bool IsPlayerAllowedInVolume(AFortPlayerController* NewUser);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsReady() const;

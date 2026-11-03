@@ -213,6 +213,9 @@ public:
 	float GetDegradedPercentage() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	EFortDisplayTier GetDisplayTier() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetHitNotifyDuration() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

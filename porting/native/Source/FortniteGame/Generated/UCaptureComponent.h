@@ -112,6 +112,9 @@ public:
 	void ForceCaptureProgress(float NewCaptureProgress);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	ECaptureState GetCaptureState() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	uint8 GetCaptureStateOwner() const;
 
 	UFUNCTION()

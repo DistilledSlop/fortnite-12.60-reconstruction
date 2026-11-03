@@ -33,6 +33,14 @@ float UAIHotSpotSlot::GetSlotRadius() const
 	return Radius;
 }
 
+EAIHotSpotSlot UAIHotSpotSlot::GetSlotState() const
+{
+	// Original address: 0x142710fb0.
+	// CONFIDENCE: HIGH
+	// Exact enum byte-field getter; see bulk_enum_getter_runtime/README.md.
+	return SlotState;
+}
+
 int32 UAIHotSpotSlot::GetSlotUserId() const
 {
 	// Original address: 0x142711100.

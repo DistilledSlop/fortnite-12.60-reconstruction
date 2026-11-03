@@ -463,6 +463,11 @@ public:
 	UPROPERTY(Transient)
 	bool bCheatDrawRespawnLocations;
 
+protected:
+	UFUNCTION()
+	void HandleRoundPhase(EUraniumRoundPhase NewRoundPhase);
+public:
+
 private:
 	UFUNCTION()
 	void HandleTeleportComplete();

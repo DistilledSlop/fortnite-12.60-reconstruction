@@ -56,6 +56,13 @@ void AFortAthenaMutator_Zinc::PreRoundEndDelayComplete()
 	return;
 }
 
+bool AFortAthenaMutator_Zinc::TryToExtractPlayer(AFortPawn* Pawn)
+{
+	// Original exec 0x14282ea80, complete constant leaf 0x1406801e0.
+	// CONFIDENCE: HIGH
+	return false;
+}
+
 void AFortAthenaMutator_Zinc::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

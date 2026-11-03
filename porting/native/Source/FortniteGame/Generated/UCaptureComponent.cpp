@@ -8,6 +8,14 @@ void UCaptureComponent::ForceCaptureProgress(float NewCaptureProgress)
 	// CONFIDENCE: HIGH
 }
 
+ECaptureState UCaptureComponent::GetCaptureState() const
+{
+	// Original address: 0x142765f20.
+	// CONFIDENCE: HIGH
+	// Exact enum byte-field getter; see bulk_enum_getter_runtime/README.md.
+	return CaptureState;
+}
+
 uint8 UCaptureComponent::GetCaptureStateOwner() const
 {
 	// Original address: 0x142765f40.

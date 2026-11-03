@@ -1,5 +1,31 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Native source batch 15 (2026-11-03)
+
+Canonical Native1939 ported entries =1780 function bodies +159fields. Added51
+bodies:31reflected enum getters,7ignored enum-parameter empty implementations,
+6Bool/Int native-event implementations,1ordinary virtual int-parameter empty
+implementation,6constantBoolean returns with ignored object/int arguments.
+Terra medium source reviews tightened maintained/inline/generated-body exclusions,
+event restrictions and existing signature/static declarations. Exact full wrappers,
+leafs, enumuint8 identities and original constructor-vtable proofs retained.
+
+Commands: scanners in `bulk_enum_getter_runtime`, `bulk_ignored_enum_runtime`,
+`bulk_parameter_event_extra_runtime`, `bulk_parameter_virtual_extra_runtime`,
+`bulk_parameter_constant_runtime` write `/tmp/gameplay-bulk-<family>/` manifests
+and evidence. Root appends proposals then `python3 /tmp/promote-native-batch15.py`.
+Receipts `porting/generated/gameplay-bulk-integration-15/`. No builds/runtime/tests;
+740bodies since tested1040 build pending,next about2040. Sourcebatch14 pushed
+5deffa10; dashboard1729 publishedfd1f8aed. All4productgates remainopen.
+
+Fresh bounded Terra medium/fork_turns none workers own inherited object getters,
+inherited array counts and native enum getter proposal directories only. Root
+owns canonical/promotion/Native/builds and reviews/commits/pushes each batch.
+NativeFName copysetter probe found no qualifying leaves, no bodycredit; POD
+parameter setters remain unscanned. Preserve graphics and READMEcollaborators,
+skipvisualwork, boundedreads/output, rotate workers at completion. Follow user
+Terra low/medium and1000newbody testing cadence. Sourcecoverage is notparity.
+
 ## Native source batch 14 (2026-11-03)
 
 Canonical Native1888 ported entries =1729 function bodies +159fields. Added23

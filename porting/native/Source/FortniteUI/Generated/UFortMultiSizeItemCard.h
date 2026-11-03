@@ -58,5 +58,8 @@ public:
 	UPROPERTY()
 	bool ShouldAutoHideDurability;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	EFortItemCardSize GetCardSize() const;
+
 };
 

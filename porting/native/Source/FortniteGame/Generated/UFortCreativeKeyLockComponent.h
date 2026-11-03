@@ -70,6 +70,9 @@ public:
 	TSoftObjectPtr<UFortItemDefinition> UnlockKeyDefinitionSoftPointer;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	ECreativeKeyLockState GetCurrentState() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsLocked() const;
 
 	UFUNCTION()

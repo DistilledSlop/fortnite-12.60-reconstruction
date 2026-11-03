@@ -109,6 +109,12 @@ bool AFortMinigame::IsWaitingForCameras() const
 	return static_cast<uint8>(CurrentState) == 3;
 }
 
+void AFortMinigame::OnGamePhaseChanged(EAthenaGamePhase GamePhase)
+{
+	// Original exec 0x1427e1180; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
 void AFortMinigame::OnRep_ClassSlotArray()
 {
 	// Body not recovered: reflection-derived stub.

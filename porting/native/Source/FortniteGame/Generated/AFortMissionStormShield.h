@@ -151,6 +151,11 @@ public:
 	UFUNCTION()
 	void OnRep_ReplicatedRadius();
 
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	bool RemoveAndDestroySafeArea(AFortMissionStormSafeZone* AreaToRemove);
+public:
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

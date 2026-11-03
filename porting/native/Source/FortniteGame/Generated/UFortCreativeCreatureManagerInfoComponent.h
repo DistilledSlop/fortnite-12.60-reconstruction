@@ -87,6 +87,9 @@ public:
 	float GetOverrideDamage() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	EScoreDistributionType GetScoreDistribution() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetScorePoints() const;
 
 	UFUNCTION(BlueprintCallable)

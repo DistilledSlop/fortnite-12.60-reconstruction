@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Info.h"
 
+#include "EAthenaGamePhase.h"
 #include "EFortMinigameClassResetType.h"
 #include "EFortMinigamePlayerSpawnLocationSetting.h"
 #include "EFortMinigamePostGameSpawnLocationSetting.h"
@@ -571,6 +572,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsWaitingForCameras() const;
+
+	UFUNCTION()
+	void OnGamePhaseChanged(EAthenaGamePhase GamePhase);
 
 	UFUNCTION()
 	void OnRep_ClassSlotArray();

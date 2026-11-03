@@ -25,6 +25,14 @@ float UFortWeaponItemDefinition::GetDegradedPercentage() const
 	return 0.100000001f;
 }
 
+EFortDisplayTier UFortWeaponItemDefinition::GetDisplayTier() const
+{
+	// Original address: 0x142b4b590.
+	// CONFIDENCE: HIGH
+	// Exact enum byte-field getter; see bulk_enum_getter_runtime/README.md.
+	return DisplayTier;
+}
+
 float UFortWeaponItemDefinition::GetHitNotifyDuration() const
 {
 	// Original address: 0x142b4b710.

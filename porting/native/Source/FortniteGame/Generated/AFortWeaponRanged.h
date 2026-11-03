@@ -354,6 +354,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetCurrentOverheatValue() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	EFortWeaponOverheatState GetOverheatState() const;
+
 protected:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetShellReloadCounter() const;

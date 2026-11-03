@@ -364,6 +364,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	AFortThreatParticleActor* GetThreatParticleActor() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	EFortCompletionResult GetZoneCompletionResult() const;
+
 	UFUNCTION(BlueprintCallable, BlueprintPure, BlueprintAuthorityOnly)
 	bool IsBuildingAtLayoutRequirementsAllowed() const;
 

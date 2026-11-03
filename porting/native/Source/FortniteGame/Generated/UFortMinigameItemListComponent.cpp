@@ -15,6 +15,13 @@ void UFortMinigameItemListComponent::OnRep_ItemListData()
 	// Body not recovered: reflection-derived stub.
 }
 
+bool UFortMinigameItemListComponent::RemoveItem(int32 ItemIndex)
+{
+	// Original exec 0x1429d2dc0, complete constant leaf 0x1406801e0.
+	// CONFIDENCE: HIGH
+	return false;
+}
+
 void UFortMinigameItemListComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

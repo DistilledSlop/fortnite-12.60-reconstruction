@@ -59,5 +59,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsTouched() const;
 
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void SetMovementLockStatus(bool MovementIsLocked);
+	virtual void SetMovementLockStatus_Implementation(bool MovementIsLocked);
+
 };
 

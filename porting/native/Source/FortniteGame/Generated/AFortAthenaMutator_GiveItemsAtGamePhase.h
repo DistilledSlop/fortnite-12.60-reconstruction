@@ -25,5 +25,10 @@ public:
 	UPROPERTY()
 	TArray<FItemsToGiveAtPhase> ItemsToGive;
 
+protected:
+	UFUNCTION()
+	void OnGamePhaseChanged(EAthenaGamePhase GamePhase);
+public:
+
 };
 

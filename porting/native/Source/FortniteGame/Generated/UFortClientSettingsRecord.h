@@ -959,6 +959,9 @@ public:
 	double NextCloudSaveTime;
 
 	UFUNCTION()
+	EFortAllowBackgroundAudioSetting GetAllowAudioInBackgroundSetting() const;
+
+	UFUNCTION()
 	bool GetAllowFriendSubscriptionNudges() const;
 
 	UFUNCTION()
@@ -993,6 +996,9 @@ public:
 
 	UFUNCTION()
 	float GetCinematicsVolume() const;
+
+	UFUNCTION()
+	EColorBlindMode GetColorBlindMode() const;
 
 	UFUNCTION()
 	int32 GetColorBlindStrength() const;
@@ -1082,6 +1088,9 @@ public:
 	bool GetLargeTeamReplayRecordingEnabled() const;
 
 	UFUNCTION()
+	ELicensedAudioTreatment GetLicensedAudioTreatment() const;
+
+	UFUNCTION()
 	bool GetLocalNotificationsEnabled() const;
 
 	UFUNCTION()
@@ -1098,6 +1107,9 @@ public:
 
 	UFUNCTION()
 	float GetMotionTargetingMultiplier() const;
+
+	UFUNCTION()
+	EFortMotionYawAxis GetMotionYawAxisSetting() const;
 
 	UFUNCTION()
 	float GetMouseSensitivityMultiplierForAircraft() const;
@@ -1151,6 +1163,9 @@ public:
 	bool GetShowHeroHeadAccessories() const;
 
 	UFUNCTION()
+	EFortRarity GetShowPickupDotsOnMapByRarity() const;
+
+	UFUNCTION()
 	bool GetShowTemperature() const;
 
 	UFUNCTION()
@@ -1185,6 +1200,9 @@ public:
 
 	UFUNCTION()
 	float GetTouchEditModeMultiplier() const;
+
+	UFUNCTION()
+	ETouchInteractMode GetTouchInteractionMode() const;
 
 	UFUNCTION()
 	float GetTouchLookAccelerationMultiplier() const;

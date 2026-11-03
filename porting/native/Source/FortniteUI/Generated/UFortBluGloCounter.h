@@ -14,5 +14,9 @@ class FORTNITEUI_API UFortBluGloCounter : public UFortUserWidget
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(BlueprintNativeEvent)
+	void OnBluGloQuantityChanged(int32 Quantity);
+	virtual void OnBluGloQuantityChanged_Implementation(int32 Quantity);
+
 };
 

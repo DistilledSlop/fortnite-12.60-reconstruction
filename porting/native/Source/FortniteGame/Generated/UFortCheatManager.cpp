@@ -553,6 +553,12 @@ void UFortCheatManager::FakeXPEvents()
 	return;
 }
 
+void UFortCheatManager::ForceAILODs(EFortAILODLevel inForcedAILODValue)
+{
+	// Original exec 0x1427e1180; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
 void UFortCheatManager::ForceByPassNavMeshForAISpawning(bool bInValue)
 {
 	// Original exec 0x1411a8f70; complete empty leaf 0x1406801c0.
@@ -625,6 +631,12 @@ void UFortCheatManager::GetPoiVolumeData()
 	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
 	// CONFIDENCE: HIGH
 	return;
+}
+
+void UFortCheatManager::GetReplStat(EFortReplicatedStat::Type Stat)
+{
+	// Original exec 0x1427e1180; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
 }
 
 void UFortCheatManager::GetWTFRotations()
@@ -1596,6 +1608,12 @@ void UFortCheatManager::SetRandomAircraftFlightPath()
 void UFortCheatManager::SetRespawnTimerOverride(float TimeUntilRespawn)
 {
 	// Original exec 0x142765ea0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
+void UFortCheatManager::SetRiftCosmeticState(ERiftCosmeticState NewValue)
+{
+	// Original exec 0x1427e1180; complete empty leaf 0x1406801c0.
 	// CONFIDENCE: HIGH
 }
 

@@ -7,6 +7,8 @@
 #include "GameFramework/CheatManager.h"
 
 #include "EFortAILODLevel.h"
+#include "EFortReplicatedStat.h"
+#include "ERiftCosmeticState.h"
 
 class UBuildingTextureData;
 class UChildCheatManager;
@@ -473,6 +475,11 @@ public:
 
 protected:
 	UFUNCTION(Exec)
+	void ForceAILODs(EFortAILODLevel inForcedAILODValue);
+public:
+
+protected:
+	UFUNCTION(Exec)
 	void ForceByPassNavMeshForAISpawning(bool bInValue);
 public:
 
@@ -519,6 +526,11 @@ public:
 protected:
 	UFUNCTION(Exec)
 	void GetPoiVolumeData();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void GetReplStat(EFortReplicatedStat::Type Stat);
 public:
 
 protected:
@@ -1184,6 +1196,11 @@ public:
 
 	UFUNCTION(Exec)
 	void SetRespawnTimerOverride(float TimeUntilRespawn);
+
+protected:
+	UFUNCTION(Exec)
+	void SetRiftCosmeticState(ERiftCosmeticState NewValue);
+public:
 
 protected:
 	UFUNCTION(Exec, BlueprintAuthorityOnly)

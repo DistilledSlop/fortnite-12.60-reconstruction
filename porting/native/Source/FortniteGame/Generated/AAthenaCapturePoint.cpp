@@ -2,6 +2,28 @@
 #include "AAthenaCapturePoint.h"
 #include "Net/UnrealNetwork.h"
 
+ECapturePointState AAthenaCapturePoint::GetCaptureState() const
+{
+	// Original address: 0x14271a250.
+	// CONFIDENCE: HIGH
+	// Exact enum byte-field getter; see bulk_enum_getter_runtime/README.md.
+	return CaptureState;
+}
+
+void AAthenaCapturePoint::OnCapturePointActiveStateChange_Implementation(bool bInActive)
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
+void AAthenaCapturePoint::OnCapturePointLockStateChange_Implementation(bool bInLocked)
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
 void AAthenaCapturePoint::OnRep_bActivated()
 {
 	// Body not recovered: reflection-derived stub.

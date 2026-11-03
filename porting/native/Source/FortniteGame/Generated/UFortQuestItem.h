@@ -98,6 +98,9 @@ public:
 	int32 PlayerLevel;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	EFortQuestState GetQuestState() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsQuestInProgress() const;
 
 };

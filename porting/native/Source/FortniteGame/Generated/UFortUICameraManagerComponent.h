@@ -35,5 +35,8 @@ public:
 	UPROPERTY(Transient)
 	TMap<EFrontEndCamera, AFortCameraBase*> CameraMapping;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	EFrontEndCamera GetCamera() const;
+
 };
 

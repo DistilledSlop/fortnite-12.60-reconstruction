@@ -9,6 +9,14 @@ FRotator UAthenaCosmeticItemDefinition::GetPreviewPawnRotationOffset() const
 	return PreviewPawnRotationOffset;
 }
 
+EVariantUnlockType UAthenaCosmeticItemDefinition::GetVariantUnlockType() const
+{
+	// Original address: 0x14271ec20.
+	// CONFIDENCE: HIGH
+	// Exact enum byte-field getter; see bulk_enum_getter_runtime/README.md.
+	return VariantUnlockType;
+}
+
 bool UAthenaCosmeticItemDefinition::IsOwnedByCampaignHero() const
 {
 	// Original address: 0x14271ed30.

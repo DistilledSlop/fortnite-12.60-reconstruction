@@ -50,5 +50,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool GetShowAllTimeTime() const;
 
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void SetFiringState(bool IsFiring);
+	virtual void SetFiringState_Implementation(bool IsFiring);
+
 };
 

@@ -12,6 +12,13 @@ void AFortMissionStormShield::OnRep_ReplicatedRadius()
 	// Body not recovered: reflection-derived stub.
 }
 
+bool AFortMissionStormShield::RemoveAndDestroySafeArea(AFortMissionStormSafeZone* AreaToRemove)
+{
+	// Original exec 0x14282ea80, complete constant leaf 0x1406801e0.
+	// CONFIDENCE: HIGH
+	return false;
+}
+
 void AFortMissionStormShield::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

@@ -9,6 +9,14 @@ void UFortQuestManager::CheckObjectiveStatUsage()
 	return;
 }
 
+EQuestMapScreenMode UFortQuestManager::GetQuestMapMode() const
+{
+	// Original address: 0x142ab8da0.
+	// CONFIDENCE: HIGH
+	// Exact enum byte-field getter; see bulk_enum_getter_runtime/README.md.
+	return QuestMapMode;
+}
+
 void UFortQuestManager::GiveAthenaXp(float XpAmount)
 {
 	// Original exec 0x142765ea0; complete empty leaf 0x1406801c0.

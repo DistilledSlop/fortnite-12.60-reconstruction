@@ -2,6 +2,12 @@
 #include "AFortAthenaMutator_Uranium.h"
 #include "Net/UnrealNetwork.h"
 
+void AFortAthenaMutator_Uranium::HandleRoundPhase(EUraniumRoundPhase NewRoundPhase)
+{
+	// Original exec 0x1427e1180; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
 void AFortAthenaMutator_Uranium::HandleTeleportComplete()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).

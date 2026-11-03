@@ -43,6 +43,12 @@ public:
 	UPROPERTY()
 	FScalableFloat DamageFromSword;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	EBarrierFoodTeam GetFoodTeam() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	EBarrierObjectiveDamageState GetObjectiveDamageState() const;
+
 	UFUNCTION()
 	void OnRep_FoodTeam();
 

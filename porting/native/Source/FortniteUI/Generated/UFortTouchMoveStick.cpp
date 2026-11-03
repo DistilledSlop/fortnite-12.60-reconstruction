@@ -17,3 +17,10 @@ bool UFortTouchMoveStick::IsTouched() const
 	return UFortTouchMoveStick::bIsTouched;
 }
 
+void UFortTouchMoveStick::SetMovementLockStatus_Implementation(bool MovementIsLocked)
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+

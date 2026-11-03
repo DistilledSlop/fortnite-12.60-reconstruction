@@ -113,6 +113,12 @@ bool UFortGameUserSettings::IsHeadphoneModeEnabled() const
 	return UFortGameUserSettings::bUseHeadphoneMode;
 }
 
+void UFortGameUserSettings::SetMobileFPSMode(EFortMobileFPSMode Mode)
+{
+	// Original exec 0x1427e1180; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
 void UFortGameUserSettings::SetSafeZone(float Value)
 {
 	// Original exec 0x14292fba0; inline store.

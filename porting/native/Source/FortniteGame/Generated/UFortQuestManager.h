@@ -199,6 +199,9 @@ private:
 	void CheckObjectiveStatUsage();
 public:
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	EQuestMapScreenMode GetQuestMapMode() const;
+
 private:
 	UFUNCTION(Exec)
 	void GiveAthenaXp(float XpAmount);

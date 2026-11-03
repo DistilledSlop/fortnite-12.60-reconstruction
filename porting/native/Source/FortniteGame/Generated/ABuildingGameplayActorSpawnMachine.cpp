@@ -2,6 +2,14 @@
 #include "ABuildingGameplayActorSpawnMachine.h"
 #include "Net/UnrealNetwork.h"
 
+ESpawnMachineState ABuildingGameplayActorSpawnMachine::GetSpawnMachineState() const
+{
+	// Original address: 0x142743f60.
+	// CONFIDENCE: HIGH
+	// Exact enum byte-field getter; see bulk_enum_getter_runtime/README.md.
+	return SpawnMachineState;
+}
+
 void ABuildingGameplayActorSpawnMachine::OnBeginLongUse_Implementation(AFortPlayerControllerAthena* AthenaPC)
 {
 	// Exact original shared stub 0x1406801c0.

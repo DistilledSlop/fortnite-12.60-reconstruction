@@ -258,6 +258,17 @@ public:
 	UPROPERTY()
 	FOnCaptureLockBroken OnCaptureLockBrokenEvent;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	ECapturePointState GetCaptureState() const;
+
+	UFUNCTION(BlueprintNativeEvent)
+	void OnCapturePointActiveStateChange(bool bInActive);
+	virtual void OnCapturePointActiveStateChange_Implementation(bool bInActive);
+
+	UFUNCTION(BlueprintNativeEvent)
+	void OnCapturePointLockStateChange(bool bInLocked);
+	virtual void OnCapturePointLockStateChange_Implementation(bool bInLocked);
+
 	UFUNCTION()
 	void OnRep_bActivated();
 

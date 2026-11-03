@@ -126,6 +126,9 @@ public:
 	UPROPERTY(Transient)
 	TArray<FUniqueNetIdRepl> PlayersPendingPlotReset;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	EDeployableBaseUseType GetDeployableBaseUseType() const;
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

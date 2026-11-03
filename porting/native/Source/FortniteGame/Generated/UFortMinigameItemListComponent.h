@@ -39,6 +39,9 @@ public:
 	UFUNCTION()
 	void OnRep_ItemListData();
 
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	bool RemoveItem(int32 ItemIndex);
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

@@ -9,11 +9,27 @@ float UFortAccoladeItemDefinition::GetAccoladeLevel() const
 	return AccoladeLevel;
 }
 
+EFortAccoladeType UFortAccoladeItemDefinition::GetAccoladeType() const
+{
+	// Original address: 0x14278e290.
+	// CONFIDENCE: HIGH
+	// Exact enum byte-field getter; see bulk_enum_getter_runtime/README.md.
+	return AccoladeType;
+}
+
 USoundCue* UFortAccoladeItemDefinition::GetAwardedSound() const
 {
 	// Original address: 0x14278e370.
 	// CONFIDENCE: HIGH
 	// Mechanically matched complete object pointer read; see bulk_object_runtime/README.md.
 	return AwardedSoundCue;
+}
+
+EXPEventPriorityType UFortAccoladeItemDefinition::GetPriority() const
+{
+	// Original address: 0x14278e660.
+	// CONFIDENCE: HIGH
+	// Exact enum byte-field getter; see bulk_enum_getter_runtime/README.md.
+	return Priority;
 }
 

@@ -18,6 +18,7 @@ class ABuildingActor;
 class AFortAthenaMutator_CustomStormMovement;
 class AFortAthenaMutator_InventoryOverride;
 class AFortAthenaMutator_SynchronizedTeleport;
+class AFortPawn;
 class AFortPlayerStateAthena;
 class APawn;
 class UFortGameplayAbility;
@@ -187,6 +188,9 @@ private:
 	UFUNCTION()
 	void PreRoundEndDelayComplete();
 public:
+
+	UFUNCTION(BlueprintCallable)
+	bool TryToExtractPlayer(AFortPawn* Pawn);
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

@@ -88,6 +88,9 @@ public:
 	float GetSlotRadius() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	EAIHotSpotSlot GetSlotState() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetSlotUserId() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

@@ -18,6 +18,11 @@ class FORTNITEGAME_API UFortWeaponComponent : public UGameFrameworkComponent
 public:
 protected:
 	UFUNCTION()
+	virtual void OnConsumeAmmo(int32 Quantity);
+public:
+
+protected:
+	UFUNCTION()
 	virtual void OnEquip(AFortWeapon* Weapon);
 public:
 

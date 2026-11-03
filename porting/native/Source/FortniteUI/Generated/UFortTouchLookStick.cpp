@@ -9,3 +9,10 @@ bool UFortTouchLookStick::GetShowAllTimeTime() const
 	return NativeRecoveredBool_0x4f8;
 }
 
+void UFortTouchLookStick::SetFiringState_Implementation(bool IsFiring)
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+

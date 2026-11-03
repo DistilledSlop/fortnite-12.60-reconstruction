@@ -100,6 +100,9 @@ public:
 	UPROPERTY()
 	FOnProjectileVelocityReplicated OnProjectileVelocityReplicated;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	EFortHomingStyle GetInitalHomingStyle() const;
+
 	UFUNCTION()
 	void OnRep_FortStopSimulatingRepData();
 

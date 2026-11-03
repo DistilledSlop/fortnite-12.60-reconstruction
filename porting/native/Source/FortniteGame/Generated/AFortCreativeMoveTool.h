@@ -411,6 +411,9 @@ public:
 	uint8 GetRotationAxisIndex() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	EScaleAxis GetSelectedScaleAxis() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool GetShouldUsePrecisionGridSnapping() const;
 
 protected:

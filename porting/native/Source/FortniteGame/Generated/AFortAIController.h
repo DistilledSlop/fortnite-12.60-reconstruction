@@ -71,5 +71,8 @@ public:
 	UFUNCTION(BlueprintCallable)
 	virtual void IgnoreProximityForDuration(float DurationToIgnore);
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static bool IsIgnoringProximity(AFortAIController* FortAIController);
+
 };
 

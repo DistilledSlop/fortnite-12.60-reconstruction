@@ -44,5 +44,8 @@ public:
 	UPROPERTY()
 	UFortMovieWidget* MovieWidget;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	EFireModeType GetFireModeType() const;
+
 };
 

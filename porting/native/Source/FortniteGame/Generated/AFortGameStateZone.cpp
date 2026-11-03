@@ -50,6 +50,14 @@ AFortThreatParticleActor* AFortGameStateZone::GetThreatParticleActor() const
 	return ThreatParticleActor;
 }
 
+EFortCompletionResult AFortGameStateZone::GetZoneCompletionResult() const
+{
+	// Original address: 0x14292b880.
+	// CONFIDENCE: HIGH
+	// Exact enum byte-field getter; see bulk_enum_getter_runtime/README.md.
+	return CompletionResult;
+}
+
 bool AFortGameStateZone::IsBuildingAtLayoutRequirementsAllowed() const
 {
 	// Original address: 0x14292bab0.

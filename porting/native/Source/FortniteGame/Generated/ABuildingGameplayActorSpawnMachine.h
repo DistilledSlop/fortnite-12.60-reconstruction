@@ -85,6 +85,9 @@ public:
 	UPROPERTY(Transient)
 	int32 HandleIntoGameState;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	ESpawnMachineState GetSpawnMachineState() const;
+
 protected:
 	UFUNCTION(BlueprintNativeEvent)
 	void OnBeginLongUse(AFortPlayerControllerAthena* AthenaPC);

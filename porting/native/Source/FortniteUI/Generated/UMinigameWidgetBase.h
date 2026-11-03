@@ -39,5 +39,11 @@ public:
 	UPROPERTY()
 	AFortVolume* CurrentVolume;
 
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void OnDisplayMinigameInProgressUI(bool bDisplay);
+	virtual void OnDisplayMinigameInProgressUI_Implementation(bool bDisplay);
+public:
+
 };
 

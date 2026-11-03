@@ -224,6 +224,9 @@ public:
 	int32 GetPartialObjectiveCompletionCount() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	EFortQuestType GetQuestType() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetWeight() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

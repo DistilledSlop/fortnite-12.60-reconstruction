@@ -18,6 +18,13 @@ bool AFortVolume::GetUserGeneratedContentRestricted() const
 	return AFortVolume::bUserGeneratedContentRestricted;
 }
 
+bool AFortVolume::IsPlayerAllowedInVolume(AFortPlayerController* NewUser)
+{
+	// Original exec 0x142b379a0, complete constant leaf 0x1406801d0.
+	// CONFIDENCE: HIGH
+	return true;
+}
+
 bool AFortVolume::IsReady() const
 {
 	// Original address: 0x142b37a70.

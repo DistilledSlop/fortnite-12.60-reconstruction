@@ -2,6 +2,14 @@
 #include "UFortProjectileMovementComponent.h"
 #include "Net/UnrealNetwork.h"
 
+EFortHomingStyle UFortProjectileMovementComponent::GetInitalHomingStyle() const
+{
+	// Original address: 0x142aa5e00.
+	// CONFIDENCE: HIGH
+	// Exact enum byte-field getter; see bulk_enum_getter_runtime/README.md.
+	return InitialHomingStyle;
+}
+
 void UFortProjectileMovementComponent::OnRep_FortStopSimulatingRepData()
 {
 	// Body not recovered: reflection-derived stub.

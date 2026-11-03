@@ -569,6 +569,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsHeadphoneModeEnabled() const;
 
+	UFUNCTION(BlueprintCallable)
+	void SetMobileFPSMode(EFortMobileFPSMode Mode);
+
 	UFUNCTION()
 	void SetSafeZone(float Value);
 

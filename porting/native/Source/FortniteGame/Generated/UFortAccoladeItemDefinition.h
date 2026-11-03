@@ -74,7 +74,13 @@ public:
 	float GetAccoladeLevel() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	EFortAccoladeType GetAccoladeType() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	USoundCue* GetAwardedSound() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	EXPEventPriorityType GetPriority() const;
 
 };
 

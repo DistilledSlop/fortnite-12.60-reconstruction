@@ -20,6 +20,7 @@
 #include "FFortUINavigationRequest.h"
 #include "FFortVaultItemNavigateRequest.h"
 #include "FFortVaultTabNavigateRequest.h"
+#include "UFortCampaignHeroLoadoutItem.h"
 
 class UUserWidget;
 
@@ -94,6 +95,9 @@ public:
 	// table index 0, flags 0x40000000082008
 	UPROPERTY(Transient)
 	UUserWidget* VirtualCursorWidget;
+
+	UFUNCTION(BlueprintCallable)
+	bool CanAccessHeroLoadoutScreen(UFortCampaignHeroLoadoutItem* HeroLoadout);
 
 };
 

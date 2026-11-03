@@ -37,5 +37,8 @@ public:
 	UPROPERTY()
 	TArray<FFortCollectionBookSectionState> SectionStates;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	EFortCollectionBookState GetPageState() const;
+
 };
 
