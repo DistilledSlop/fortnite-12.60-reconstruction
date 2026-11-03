@@ -19,6 +19,12 @@ void UPlayspaceControllerComponent_PlayerSpawning::ServerMarkReadyForSpawning_Im
 	// Body not recovered: reflection-derived stub.
 }
 
+bool UPlayspaceControllerComponent_PlayerSpawning::ServerMarkReadyForSpawning_Validate()
+{
+	// CONFIDENCE: high
+	return true;
+}
+
 void UPlayspaceControllerComponent_PlayerSpawning::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

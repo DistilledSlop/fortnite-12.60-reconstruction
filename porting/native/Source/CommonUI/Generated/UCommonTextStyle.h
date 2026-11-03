@@ -52,5 +52,8 @@ public:
 	UPROPERTY()
 	float LineHeightPercentage;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	void GetColor(FLinearColor& OutColor) const;
+
 };
 

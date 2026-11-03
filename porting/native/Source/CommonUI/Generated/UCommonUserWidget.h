@@ -25,6 +25,9 @@ public:
 	UPROPERTY()
 	bool bConsumePointerInput;
 
+	UFUNCTION(BlueprintCallable)
+	void SetConsumePointerInput(bool bInConsumePointerInput);
+
 public:
     int32 NativeRegisterActionBinding(const FCommonActionBindingDescriptor& Descriptor); // 1407ed3f0
     const TArray<int32>& NativeGetRegisteredActionBindingHandles() const { return NativeRegisteredActionBindingHandles; }

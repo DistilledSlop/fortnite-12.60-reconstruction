@@ -117,5 +117,8 @@ public:
 	UPROPERTY()
 	FCommonButtonStyleOptionalSlateSound DisabledHoveredSlateSound;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	void GetButtonPadding(FMargin& OutButtonPadding) const;
+
 };
 

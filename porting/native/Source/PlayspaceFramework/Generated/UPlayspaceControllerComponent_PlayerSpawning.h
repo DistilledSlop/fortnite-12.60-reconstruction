@@ -41,9 +41,10 @@ public:
 	UFUNCTION()
 	void OnRep_ReplicatedSpawnInfo();
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerMarkReadyForSpawning();
 	void ServerMarkReadyForSpawning_Implementation();
+	bool ServerMarkReadyForSpawning_Validate();
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

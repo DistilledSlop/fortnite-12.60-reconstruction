@@ -3,6 +3,13 @@
 #include "Engine/LocalPlayer.h"
 #include "UCommonUIActionRouter.h"
 
+void UCommonUserWidget::SetConsumePointerInput(bool bInConsumePointerInput)
+{
+	// CONFIDENCE: high
+	// Native helper 0x1407f60a0 assigns bConsumePointerInput (offset 0x250).
+	bConsumePointerInput = bInConsumePointerInput;
+}
+
 int32 UCommonUserWidget::NativeRegisterActionBinding(const FCommonActionBindingDescriptor& Descriptor)
 {
     if (auto* Player = GetOwningLocalPlayer())

@@ -13,6 +13,7 @@
 #include "FOnTabSelected.h"
 
 class UCommonAnimatedSwitcher;
+class UCommonButton;
 class UCommonButtonGroup;
 
 #include "UCommonTabListWidget.generated.h"
@@ -58,6 +59,18 @@ public:
 	// table index 0, flags 0x40000000002000
 	UPROPERTY(Transient)
 	UCommonButtonGroup* TabButtonGroup;
+
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void HandleTabCreated(FName TabNameID, UCommonButton* TabButton);
+	virtual void HandleTabCreated_Implementation(FName TabNameID, UCommonButton* TabButton);
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void HandleTabRemoved(FName TabNameID, UCommonButton* TabButton);
+	virtual void HandleTabRemoved_Implementation(FName TabNameID, UCommonButton* TabButton);
+public:
 
 };
 
