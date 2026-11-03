@@ -384,6 +384,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsResurrectingNow() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsResurrectionChipAvailable() const;
+
 	UFUNCTION()
 	void OnRep_ChangeTeamInfo();
 

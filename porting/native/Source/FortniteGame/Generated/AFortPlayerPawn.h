@@ -1401,10 +1401,22 @@ public:
 	AFortPlayerPawn* GetDBNOHoistee() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	AFortPlayerPawn* GetDBNOHoister() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetExtraLives() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetIsHoldingObject() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool GetIsSlopeSliding() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	void GetLastWaterSurfaceInfo(FVector& OutWaterSurfacePosition, FVector& OutWaterSurfaceNormal);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetMaxStamina() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetNumActiveBalloons() const;
@@ -1426,6 +1438,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	FVector GetPreviousVelocity();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetStamina() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	EFortPawnStasisMode GetStasisMode() const;
@@ -1481,10 +1496,16 @@ public:
 	bool IsSkydivingFromLaunchPad() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsSurfaceSwimming() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual bool IsUsingUmbrella() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsWaterSprintBoosting() const;
+
+	UFUNCTION(BlueprintCallable)
+	bool IsZiplining() const;
 
 	UFUNCTION(NetMulticast, Reliable)
 	void MulticastUpdateVehicleInputStateReliable(const FFortAthenaVehicleInputStateReliable& ReliableInput);

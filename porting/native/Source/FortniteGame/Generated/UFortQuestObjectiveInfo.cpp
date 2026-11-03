@@ -17,6 +17,12 @@ bool UFortQuestObjectiveInfo::IsActive() const
 	return UFortQuestObjectiveInfo::bActive;
 }
 
+bool UFortQuestObjectiveInfo::IsInProgress() const
+{
+	// CONFIDENCE: HIGH
+	return bActive && AchievedCount < RequiredCount;
+}
+
 bool UFortQuestObjectiveInfo::IsVisibleToUser() const
 {
 	// Original address: 0x142abf1e0.

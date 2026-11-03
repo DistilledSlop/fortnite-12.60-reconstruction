@@ -92,6 +92,9 @@ public:
 	bool IsActive() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsInProgress() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsVisibleToUser() const;
 
 };

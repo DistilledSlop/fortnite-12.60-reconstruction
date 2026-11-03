@@ -1,0 +1,50 @@
+[
+  {
+    "function": "GetNumObjectivesComplete",
+    "kind": "exec",
+    "signature": "int32 GetNumObjectivesComplete() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "address": "0x142ab3a10",
+    "reflection_flags": "0x54020401",
+    "static": false,
+    "inc_path": "porting/behavior/data_queries55_runtime/UFortQuestItem_GetNumObjectivesComplete.inc",
+    "notes": "Counts objectives with bVisible and AchievedCount >= RequiredCount; no null-objective guard.",
+    "native_body_address": "0x142440b90",
+    "class": "UFortQuestItem"
+  },
+  {
+    "function": "IsInProgress",
+    "kind": "exec",
+    "signature": "bool IsInProgress() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "address": "0x142abf1b0",
+    "reflection_flags": "0x54020401",
+    "static": false,
+    "inc_path": "porting/behavior/data_queries55_runtime/UFortQuestObjectiveInfo_IsInProgress.inc",
+    "notes": "Returns true only when bActive and AchievedCount < RequiredCount.",
+    "native_body_address": "0x142447090",
+    "class": "UFortQuestObjectiveInfo"
+  },
+  {
+    "function": "HasBeenSeenLocally",
+    "kind": "exec",
+    "signature": "bool HasBeenSeenLocally() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "address": "0x14278e9d0",
+    "reflection_flags": "0x54020401",
+    "static": false,
+    "inc_path": "porting/behavior/data_queries55_runtime/UFortAccountItem_HasBeenSeenLocally.inc",
+    "notes": "Returns true if pending being marked seen or item_seen is nonzero.",
+    "native_body_address": "0x142014be0",
+    "class": "UFortAccountItem"
+  }
+]

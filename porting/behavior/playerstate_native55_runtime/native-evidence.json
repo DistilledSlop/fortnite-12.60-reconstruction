@@ -1,0 +1,90 @@
+{
+  "image": "/mnt/vibrato/fortnite-evidence/original-late-capture-1/image-125.runtime.bin",
+  "windows": [
+    {
+      "begin": "0x142a8d910",
+      "length": 43,
+      "sha256": "e535278f42fb48e5d0021e0d82fc98ac2879569b4aa5dd2b9daf49cfb04f859b"
+    },
+    {
+      "begin": "0x142a7d5d0",
+      "length": 43,
+      "sha256": "920403f8f0bb0d718d086e47eb77e1b4226664900423dc4c002842f9d23f1245"
+    },
+    {
+      "begin": "0x142a7c0c0",
+      "length": 32,
+      "sha256": "ea315daa21407bf570a619cb40aed3d68aa313a38cd08652821b7965fd0be30a"
+    },
+    {
+      "begin": "0x142a7d510",
+      "length": 43,
+      "sha256": "8ed635458564152355a4932269cea2912d527f86073fa3337be0cd4782b5ff25"
+    },
+    {
+      "begin": "0x142a7c350",
+      "length": 43,
+      "sha256": "21c2aa5e6e6580b69d0a23da4b4e2ed1c393dd79fd760497254025ea7d8aec09"
+    },
+    {
+      "begin": "0x142a7ca10",
+      "length": 45,
+      "sha256": "67ebd4f9eef2d18e963303af5cd5f144fd659a982fbd74616d535971e26d9a3a"
+    },
+    {
+      "begin": "0x142a7c490",
+      "length": 45,
+      "sha256": "21ec7c96ce6e14b4cc4a2131716960f997b4e42f884e0c33517bf21149a22384"
+    },
+    {
+      "begin": "0x142a7c0e0",
+      "length": 43,
+      "sha256": "11048215d34688ad86560fadf9266bc2ae6221ccf37edc8c06f3c20aa65c445d"
+    },
+    {
+      "begin": "0x141a4b2e0",
+      "length": 8,
+      "sha256": "64276cf7fc3a7f71ab985a1f2f3bfca4f30b01a7e0d3c996a72e1527e654cb8f"
+    },
+    {
+      "begin": "0x142332270",
+      "length": 8,
+      "sha256": "35fbee8658612c4e77d35de5f09ab785a8e2441036120dbdee2c27b6036c841d"
+    },
+    {
+      "begin": "0x1423320c0",
+      "length": 31,
+      "sha256": "8527b5bedc220749825964f6eac3ed827f382830675c2113bba56aa600d84d77"
+    },
+    {
+      "begin": "0x14231e6e0",
+      "length": 76,
+      "sha256": "38032fd26c72807b2df6a3417b67d84c3f72ec5a214a3296388100fd91a649e1"
+    },
+    {
+      "begin": "0x142324c10",
+      "length": 88,
+      "sha256": "01923eb685063c35d7bc3d24c98e3dd619686441574f326a8aaeb9584ef3201f"
+    },
+    {
+      "begin": "0x142321e10",
+      "length": 91,
+      "sha256": "bf6c60fe6038127c60f31df1736061468942ed90c0c249a5837173163b7cfc69"
+    },
+    {
+      "begin": "0x14231b600",
+      "length": 100,
+      "sha256": "add409d079385951225404cfd31feae0c1bb9da386c78c367ea161a505442f15"
+    },
+    {
+      "begin": "0x14070cc00",
+      "length": 6,
+      "sha256": "3d0bed09db865d3f03d0b69f2849f8731c92db84dfe42b53340260a10103158f"
+    },
+    {
+      "begin": "0x142a3dee0",
+      "length": 8,
+      "sha256": "6348b734c1166e1ffe207de0f85295da64daaf074026dbbe4b6bc076381110d7"
+    }
+  ]
+}

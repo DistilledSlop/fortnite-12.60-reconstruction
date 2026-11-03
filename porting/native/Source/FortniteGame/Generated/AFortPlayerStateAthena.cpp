@@ -98,6 +98,13 @@ bool AFortPlayerStateAthena::IsResurrectingNow() const
 	return AFortPlayerStateAthena::bResurrectingNow;
 }
 
+bool AFortPlayerStateAthena::IsResurrectionChipAvailable() const
+{
+	// CONFIDENCE: HIGH
+	// Reflected exec 0x142a8d910; native 0x141a4b2e0.
+	return ResurrectionChipAvailable.bResurrectionChipAvailable;
+}
+
 void AFortPlayerStateAthena::OnRep_ChangeTeamInfo()
 {
 	// Body not recovered: reflection-derived stub.

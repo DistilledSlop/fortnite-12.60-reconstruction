@@ -1,5 +1,35 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Native source batch 57 (2026-11-03)
+
+Canonical source:2,025 bodies +171 fields =2,196 accepted entries, zero rejected.
+Sources49-57 are committed in regular progress batches. Latest11 bodies cover
+pawn stamina/max-stamina/extra-lives from real attribute sets, holding-object,
+surface swimming, ziplining, DBNO hoister, Athena resurrection-chip availability,
+quest visible-completed objective count, active/incomplete objective predicate and
+local/persisted item-seen predicate. No null guards or callbacks were invented.
+Generated complete type includes are inferred; all17 player-query evidence windows
+also match canonical image125 late capture. Raw proposal kind/include mismatches
+and missing evidence were corrected before final acceptance; failed generation
+receipts remain under integration56/57, final57 is accepted2196/rejected0.
+
+No builds/tests/runtime. Last tested1,040;985 bodies are build pending; next2,040
+needs15 bodies. Generation/byte hashing are evidence, not build/runtime proof.
+All four product gates and full client/server parity remain open. Prior status-only
+turn was no progress; this turn revalidated source and committed concrete progress.
+Do not mark goal complete by coverage count. At next testing checkpoint use the
+proven client/server commands from generated/gameplay-bulk-integration-2/*.build.json,
+then restage matching binaries/symbols and run the saved Apollo smoke-join command
+from apollo.join.json. Keep last passing tested baseline explicit until then.
+
+All bounded workers are finished; Ghidra lease is free. Root owns canonical
+manifest/generator/native output, review, integration and commits. Continue Terra6.1
+medium/low bounded proposal batches with fork none; rotate after completion and
+keep reads/output economical. Preserve unrelated porting/graphics/. Building ASC
+and energy setter proposals remain conditional; SetTextureData refresh virtual
+also remains open. Consult their handoffs rather than redoing closed evidence.
+
+
 ## Native source batch 55 (2026-11-03)
 
 Canonical generation: 2,014 bodies +171 supporting fields =2,185 accepted entries,

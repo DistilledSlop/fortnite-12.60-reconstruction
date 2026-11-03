@@ -47,6 +47,9 @@ public:
 	bool bNeedsResolveMarkedAsSeen;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool HasBeenSeenLocally() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual bool IsRefundable() const;
 
 };
