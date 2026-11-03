@@ -9,6 +9,7 @@ from out/progress.json. Stdlib only, offline, deterministic for a given out/.
     python3 porting/progress/publish.py                # then publish
     python3 porting/progress/publish.py --check        # exit 1 if docs/README are stale
 """
+import colorsys
 import json
 import re
 import shutil
@@ -72,13 +73,29 @@ def human(n):
     return f"{n / 1000:.1f}k" if n >= 10000 else f"{n:,}"
 
 
+class Badge(str):
+    """Badge markup that remembers its color so the grid can be sorted by hue."""
+    color = "000000"
+
+
+def hue_key(b):
+    r, g, bl = (int(b.color[i:i + 2], 16) / 255 for i in (0, 2, 4))
+    h, sat, val = colorsys.rgb_to_hsv(r, g, bl)
+    if sat < 0.15 or val < 0.25:  # greys and near-blacks go last, light to dark
+        return (1, 0.0, -val)
+    # Shift 20 degrees so crimson/wine reds sort with the reds, then 12-degree bands, lighter first.
+    return (0, round(((h * 360 + 20) % 360) / 12), -val)
+
+
 def badge(label, message, color, logo=None):
     """Default shields.io flat badge as an <img>, so it can sit in an HTML table cell."""
     q = {"label": label, "message": str(message), "color": color}
     if logo:
         q["logo"] = logo
     url = "https://img.shields.io/static/v1?" + urllib.parse.urlencode(q, quote_via=urllib.parse.quote)
-    return f'<img alt="{label}: {message}" src="{url.replace("&", "&amp;")}">'
+    out = Badge(f'<img alt="{label}: {message}" src="{url.replace("&", "&amp;")}">')
+    out.color = color
+    return out
 
 
 def badges(d):
@@ -200,7 +217,10 @@ def badges(d):
             badge("checks", "batched", "dfb317"),
         ],
     ]
-    return "\n".join([BSTART, *(f'<p align="center">{" ".join(r)}</p>' for r in rows), BEND])
+    flat = sorted((b for r in rows for b in r), key=hue_key)  # stable, so ties keep their topic order
+    per = max(len(r) for r in rows)
+    grid = [flat[i:i + per] for i in range(0, len(flat), per)]
+    return "\n".join([BSTART, *(f'<p align="center">{" ".join(r)}</p>' for r in grid), BEND])
 
 
 def block(d):
