@@ -1,0 +1,32 @@
+[
+  {
+    "address": "0x141d507d0",
+    "path": "porting/generated/native-broad80/0x141d507d0.c",
+    "sha256": "be8167c95a71220eb7a4b6caf69793ad0d3e83c0ad79df27728327f2d60d42c6"
+  },
+  {
+    "address": "0x141e5f200",
+    "path": "porting/generated/native-broad80/0x141e5f200.c",
+    "sha256": "6665295786dddb893fb3ec832bd4c0eb14b1f85633c7a7b44aa55d497142eeb3"
+  },
+  {
+    "address": "0x142040900",
+    "path": "porting/generated/native-broad80/0x142040900.c",
+    "sha256": "a3caddf2750a06b30fc82c59b53ae2b03815a00e98438d6d85d3943168889fc1"
+  },
+  {
+    "address": "0x141ed2350",
+    "path": "porting/generated/native-broad80/0x141ed2350.c",
+    "sha256": "165ef4763b663690bfe1c000aa90e0433a4396772d93acac8077c6a9561dda71"
+  },
+  {
+    "address": "0x142706020",
+    "path": "porting/generated/native-broad80/0x142706020.c",
+    "sha256": "c1df3d3a96ed2a68f7654df60c9a8fd9c7c84fe1868b3e72abb288b31b87fd80"
+  },
+  {
+    "address": "0x142040900",
+    "path": "porting/generated/native-broad80/0x142040900.asm",
+    "sha256": "98bbd24a6eb4cf23f2a90a7eb5f27a5eb67c58d41d0797071aec452fe7c73376"
+  }
+]

@@ -10,6 +10,13 @@ credentials in Git, and the orchestrator reviews and commits.
 
 ## Current baseline
 
+Batch80 adds10 uncounted native drafts, including larger inventory reconciliation,
+ordered classification and minigame transition bodies, round-winner evaluation,
+configured text filtering and supporting creation/lookup/context helpers. Source
+review corrected output frames, persistent stack words, alias load order,
+callback ordering and temporary reuse. No canonical promotion/build/tests;
+unknown ABI/lifetime/engine effects remain explicit and accepted counts unchanged.
+
 Batch79 adds16 uncounted independent native helper drafts for safe-zone checks,
 player-state messages, creative publish/tag/text operations and pawn wrap/material
 selection/events. This includes small predicates/accessors and one forwarding

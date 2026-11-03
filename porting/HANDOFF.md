@@ -1,5 +1,54 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Larger independent native recovery batch80 (2026-11-03)
+
+Added10 uncounted native-body drafts: inventory_reconcile80_runtime (1),
+large_predicate80_runtime (1), large_interaction80_runtime (1),
+round_winner80_runtime (1), inventory_create80_runtime (1),
+broad_dependencies80_runtime (5). The three main selected source bodies are
+21KB inventory reconciliation14201f180,30KB ordered classification141a5f1c0,
+and11KB minigame transition14208b4f0. Additional round-winner14208c5c0 and
+configured text-filter142706020 bodies recover connected behavior; supporting
+helpers include variant lookup, conditional classification forwarding, fallback
+item creation and engine-context selection. These are distinct existing native
+callees rather than duplicates of already drafted named callbacks. The embedded
+142025400 copy expansion is not counted as an additional recovered body.
+
+Root reviewed source and lifts. Corrections preserve map allocation output frame
+and persistent64-bit insertion stack word (including a log literal changing its
+upper half), explicit logging atomic cleanup,32-byte copy temporaries and alias
+load order, native group-controller stores, timer2 allocation/manager/clone
+ordering, exact observed timer stack slots, reused round-winner record/stack
+inputs, and native literal addresses. Item creation retains captured vtable and
+no fallback retry after selected-class allocator failure. Classification tables
+preserve all ordered offsets/results and the nested+a80/+638 decision. A bounded
+fallback-item assembly read confirms allocator RAX survives through RET despite
+a void Ghidra prototype. ABI/layout/call effects, unknown stack inputs, ownership,
+allocators and text/container contracts remain explicit unresolved adapters.
+These are uncounted source drafts, not accepted engine integration or parity.
+No compiler/build/runtime/tests/canonical generation/promotion ran.
+
+Previous goal turn PROGRESS: source7b9db94e/dashboardb1326693 committed/pushed.
+Canonical2,075 bodies+180fields=2,255 accepted, rejected0 unchanged. Last tested
+2,040;35 canonical+4 manual bodies build pending; next tests3,040. All four
+product gates OPEN; full objective ACTIVE. Three bounded Terra6.1 medium
+fork-none workers completed the three larger bodies, then a fresh Terra6.1 medium
+fork-none worker recovered the bounded round-winner body. Root performed direct
+recovery, integration review and corrections, and retains sole canonical/native/
+promotion/build/staging/commit ownership. Preserve economical reads, bounded
+worker rotation, Luna6 medium small read-only tasks, Terra6.1 low/medium bulk work
+and Sol6.1 medium complex delegation. Preserve unrelated porting/graphics/ and
+Engine edits; visual work stays deferred.
+
+Root command (repository cwd):
+`porting/.venv/bin/python -I porting/ghidra/probe_callees.py --input porting/generated/native-broad80/targets.json --out porting/generated/native-broad80 --timeout 60 --mem 12G > /tmp/native-broad80.log 2>&1`
+Exit0,6ok,11.2s; transaction rolled back, usual project index/prp metadata changes,
+no deliberate save. Other inputs reuse existing callee_probe/blocking/,
+inventory_guid_index/ and inventory_entry_updates/ sources. Inventories pin
+source hashes; fallback-item inventory also pins its assembly. No live probe
+handle or Ghidra lease remains. Continue substantial recovery and engine contract
+closure; broad rough/native integration remains incomplete, not a finished game.
+
 ## Broad independent native dependencies batch79 (2026-11-03)
 
 Added16 uncounted native-body drafts across broad_mode79_runtime (2),
