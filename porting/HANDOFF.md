@@ -1,5 +1,45 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Claude large-function recovery and external SDK assessment (2026-11-03)
+
+Claude Sonnet medium completed bounded large minigame batch, exit0 in511.56s;
+CLI sonnet alias resolved claude-sonnet-5-5. Runner PTY4920 is terminal; no active
+workers/probes/generators/builds. Deliverables minigame_large94_runtime include
+full team end-condition control flow, player-registration source and concrete
+field/delegate/identity bindings. Root reviewed branch/append structure and
+localized join message. Important corrections: native+348 broadcasts pawn join,
+PlayerBuckets replaces guessed team array, team assignment uses TeamIdAtRoundStart,
+and class-slot/persistence fields now have reflected names. Remaining helpers,
+packed bool/layout/engine assumptions are explicit; neither large body counts.
+Separate bounded Terra item_alteration94_runtime lifts snapshot slot filtering,
+negative-level virtual dispatch, repeated rarity lookup before null pointer test,
+and display-name/slot wrappers. Virtual bindings still block integration.
+Source bodies remain2,203+238 fields,2,441 accepted; no new generation or tests.
+Last tested2,040;163 canonical+4 manual bodies pending; next3,040; all gates OPEN.
+Last pushed source8a219f1a/dashboard4567cb09. Full objective ACTIVE.
+
+User-provided external SDK reviewed with GitHub plugin and raw source:
+https://github.com/FarmEquipment69/Fortnite-23.20-CL-23659353-SDK-Dump
+Sampled FFortItemEntry.h(blob03b6357a87261a60d3b1406a8091c32a958a0642),
+UFortWeaponItemDefinition.h(blobbdbbca15a08c15bf32f5f8694b0843b0fcf4245a),
+FMinigamePlayer.h(blob3b8f190b615c42025b4c10d9e318cb37ea93cb4f),
+AFortMinigame.h and AFortHoagieVehicle.h. Useful secondary naming/schema and
+cross-version family matching reference, not target ABI authority. Weapon sample
+contains signatures/addresses, not function implementations; bit masks are absent,
+soft references are rendered as28-byte TWeakObjectPtr, and vectors/rotators are24
+bytes in sampled minigame player vs12 in12.60. FFortItemEntry still leaves50-byte
+region after generic attributes opaque (23.20 offset148 vs12.60 offset100), so
+it does not identify the current native container value type. Prefer automated
+name/type-family comparisons as leads, then prove against original12.60 data;
+do not import23.20 offsets, native addresses or layouts. No external code imported.
+Git tree plugin request transport failed; file reads succeeded; no broad clone
+or extra repository audit needed for this assessment.
+
+Retain bounded fork-none Luna medium small reads/Terra6.1 medium bulk/Sol6.1
+medium complex tasks, user-authorized bounded Claude large-function batches,
+economical reads, source/dash pushes, visual pause and unrelated graphics edits.
+Root owns review/canonical/generation/build/staging; testing remains3,040 only.
+
 ## Vehicle bulk source and HoagieRuntime promotion batch95 (2026-11-03)
 
 Integrated15 complete bodies:11 Hoagie getters/config accessors/rotor clamp,
