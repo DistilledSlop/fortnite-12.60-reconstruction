@@ -68,3 +68,26 @@ python3 -I porting/asset_pipeline/niagara_probe.py /mnt/vibrato/fortnite-work/ni
 Outputs: `<work>/results.json` (per system: class, rc, first error, root
 cause, closure size), `<work>/logs/{closure,probe}/`. Do not run it with a work
 dir under `porting/native`.
+
+## Update: shader-map skip build (2026-11-03)
+
+The engine now has a probe-only switch, `-FortniteSkipUnconvertedLegacyShaderMaps`
+(`patches/ue425-skip-unconverted-legacy-shader-maps.patch`, `FMaterial::SerializeInlineShaderMap`).
+It seeks past a Windows-cooked inline shader map using the resource range from the 4.25
+material resource table and leaves the resource without a shader map. A material loaded this
+way has no shader map and would render with the engine default material, so a system that
+loads this way is **loaded, not render-verified**.
+
+Rerun on the rebuilt client (`python3 -I porting/asset_pipeline/niagara_probe.py <work>
+--skip-closure --probe-arg=-FortniteSkipUnconvertedLegacyShaderMaps`; the stage needs the
+rebuilt `FortniteLinux` binary and `Engine/Binaries/ThirdParty/CEF3/Linux`):
+
+| Result | Count | Cause |
+| --- | --- | --- |
+| Loaded as `NiagaraSystem`, no errors | 51 (was 1) | |
+| `FArray` element-size / `SerializeNum` assertion | 62 | Windows-cooked static mesh render data (needs imported meshes) |
+| "Corrupt data found" / handled ensure | 19 | not yet classified |
+| Unmounted `/PapayaGameplay`, `/Hoagie`, `/NiagaraFN` | 22 | game-feature plugins not mounted in the stage |
+
+Water-plugin CDO messages (`/Water/...` missing in the stage) appear in every launch and are
+ignored by the classifier. Only systems that load are copied to `generated/converted`.

@@ -129,7 +129,7 @@ def run_probe(work, pkg, timeout):
 
 
 # Per-launch messages unrelated to the probed asset: the stage lacks the Water plugin content.
-BENIGN = ("CDO Constructor (WaterSubsystem)", "GameUserSettings.ini")
+BENIGN = ("CDO Constructor (WaterSubsystem)", "GameUserSettings.ini", "/Water/", "/Water.")
 
 
 def classify(pkg, log, rc):
