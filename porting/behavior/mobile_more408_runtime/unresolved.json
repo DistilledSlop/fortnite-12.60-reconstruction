@@ -1,0 +1,32 @@
+[
+  {
+    "class": "UFortMobileInteractionComponent",
+    "function": "SetIcon",
+    "address": "0x1429f5670",
+    "reason": "Native loads the selected soft texture through 0x141c56510, including delay-load logging and 0x141de9e00 synchronized retention bookkeeping; ordinary LoadSynchronous does not establish equivalent side effects. Texture setter 0x14433ae10 also updates texture remapping before the parameter write."
+  },
+  {
+    "class": "UFortMobileInteractionComponent",
+    "function": "SetUpdateLocationOnTick",
+    "address": "0x1429f58f0",
+    "reason": "Body 0x141f49750 writes unreflected byte at offset 0x488 and invokes virtual slot 0x340; field and target semantics are not established."
+  },
+  {
+    "class": "UFortMobileInteractionComponent",
+    "function": "StartRadialTimer",
+    "address": "0x1429f5a60",
+    "reason": "Exact native wrapper capture is unavailable."
+  },
+  {
+    "class": "UFortMobileInteractionComponent",
+    "function": "StopRadialTimer",
+    "address": "0x1429f5ae0",
+    "reason": "Exact native wrapper capture is unavailable."
+  },
+  {
+    "class": "UFortMobileInteractionComponent",
+    "function": "TickLocation",
+    "address": "0x1429f5b00",
+    "reason": "Exact native wrapper capture is unavailable."
+  }
+]

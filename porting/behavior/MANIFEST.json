@@ -57772,5 +57772,96 @@
       "Engine/Engine.h",
       "Engine/GameViewportClient.h"
     ]
+  },
+  {
+    "function": "SetRarityColor",
+    "kind": "exec",
+    "signature": "void SetRarityColor(FLinearColor InColor)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/mobile_more408_runtime/UFortMobileInteractionComponent_SetRarityColor.inc",
+    "address": "0x1429f5870",
+    "native_body_address": "0x141f49240",
+    "reflection_flags": "0x4820401",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Materials/MaterialInstanceDynamic.h"
+    ],
+    "notes": "The wrapper passes FLinearColor by value; the native body constructs FName 'Color' and writes the vector parameter to IconMID at offset 0x478 if non-null.",
+    "class": "UFortMobileInteractionComponent"
+  },
+  {
+    "function": "SetExtents",
+    "kind": "exec",
+    "signature": "void SetExtents(FVector Extents)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/mobile_more408_runtime/UFortMobileInteractionComponent_SetExtents.inc",
+    "address": "0x1429f55e0",
+    "native_body_address": "0x141f48200",
+    "reflection_flags": "0x4820401",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Materials/MaterialInstanceDynamic.h"
+    ],
+    "notes": "The native body converts Extents to a linear color with alpha 1 and writes vector parameter 'Interact Extents' on IconMID if non-null.",
+    "class": "UFortMobileInteractionComponent"
+  },
+  {
+    "function": "SetVisibleStartTime",
+    "kind": "exec",
+    "signature": "void SetVisibleStartTime()",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/mobile_more408_runtime/UFortMobileInteractionComponent_SetVisibleStartTime.inc",
+    "address": "0x1429f5980",
+    "native_body_address": "0x1429f5980",
+    "reflection_flags": "0x4020401",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Engine/World.h",
+      "Materials/MaterialInstanceDynamic.h"
+    ],
+    "notes": "The native body initializes 'PulseStartTime', then when IconMID and component world exist writes that world's TimeSeconds as a scalar.",
+    "class": "UFortMobileInteractionComponent"
+  },
+  {
+    "function": "SetBackgroundColor",
+    "kind": "exec",
+    "signature": "void SetBackgroundColor(FLinearColor Color)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/material_batch413_runtime/UFortMaterialProgressBar_SetBackgroundColor.inc",
+    "address": "0x14528aef0",
+    "native_body_address": "0x144cab000",
+    "reflection_flags": "0x4820401",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Materials/MaterialInstanceDynamic.h"
+    ],
+    "notes": "Stores BackgroundColor only if ProgressBarMID exists; then sets the vector when BackgroundColorParamName is non-None.",
+    "class": "UFortMaterialProgressBar"
+  },
+  {
+    "function": "SetProgressBarSectionColor",
+    "kind": "exec",
+    "signature": "void SetProgressBarSectionColor(EFortMaterialProgressBarSection::Type BarSection, FLinearColor Color, EFortMaterialProgressBarSectionColorNumber ColorNumber)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/material_batch413_runtime/UFortMaterialProgressBar_SetProgressBarSectionColor.inc",
+    "address": "0x14528b210",
+    "native_body_address": "0x144cace80",
+    "reflection_flags": "0x4820401",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Materials/MaterialInstanceDynamic.h"
+    ],
+    "notes": "Validates section index 0..3; selects first color for zero or second only for gradient bars; stores color and sets the non-None parameter if MID exists.",
+    "class": "UFortMaterialProgressBar"
   }
 ]

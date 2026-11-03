@@ -1,0 +1,36 @@
+[
+  {
+    "function": "SetRarityColor",
+    "class": "UFortMobileInteractionComponent",
+    "disposition": "ported",
+    "wrapper_capture": "porting/generated/native228-fresh-callees/0x1429f5870.c",
+    "direct_callees": [
+      "0x141f49240",
+      "0x14433b290"
+    ],
+    "review": "Wrapper copies four floats; 0x141f49240 initializes FName 'Color' before checking IconMID and passes the color unchanged to the vector material setter. 0x14433b290 forms global FMaterialParameterInfo; reflection identifies the parameter struct as LinearColor."
+  },
+  {
+    "function": "SetExtents",
+    "class": "UFortMobileInteractionComponent",
+    "disposition": "ported",
+    "wrapper_capture": "porting/generated/native228-fresh-callees/0x1429f55e0.c",
+    "direct_callees": [
+      "0x141f48200",
+      "0x142c47190",
+      "0x14433b290"
+    ],
+    "review": "Wrapper copies the FVector argument; 0x141f48200 initializes 'Interact Extents' and checks IconMID. 0x142c47190 copies XYZ and supplies alpha 1.0; 0x14433b290 forms global FMaterialParameterInfo for the vector setter."
+  },
+  {
+    "function": "SetVisibleStartTime",
+    "class": "UFortMobileInteractionComponent",
+    "disposition": "ported",
+    "wrapper_capture": "porting/generated/native105-broad/0x1429f5980.c",
+    "direct_callees": [
+      "0x1440b3260",
+      "0x14433acd0"
+    ],
+    "review": "The native exec initializes 'PulseStartTime' before testing IconMID, resolves its component world via cached world or 0x1440b3260, then reads world+0x540 TimeSeconds and passes it to scalar setter 0x14433acd0."
+  }
+]

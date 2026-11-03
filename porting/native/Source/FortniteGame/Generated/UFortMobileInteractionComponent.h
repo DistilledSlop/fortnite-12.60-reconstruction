@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "Components/StaticMeshComponent.h"
 
+#include "Math/Color.h"
+#include "Math/Vector.h"
 #include "UObject/WeakObjectPtr.h"
 
 class UMaterialInstanceDynamic;
@@ -33,6 +35,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetCameraPush(float Offset);
 
+	UFUNCTION(BlueprintCallable)
+	void SetExtents(FVector Extents);
+
 protected:
 	UFUNCTION(BlueprintCallable)
 	void SetRadialDuration(float Duration);
@@ -47,6 +52,12 @@ protected:
 	UFUNCTION(BlueprintCallable)
 	void SetRadialStartTime(float StartTime);
 public:
+
+	UFUNCTION(BlueprintCallable)
+	void SetRarityColor(FLinearColor InColor);
+
+	UFUNCTION(BlueprintCallable)
+	void SetVisibleStartTime();
 
 };
 

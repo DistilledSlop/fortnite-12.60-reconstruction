@@ -1,0 +1,38 @@
+[
+  {
+    "function": "SetBackgroundColor",
+    "kind": "exec",
+    "signature": "void SetBackgroundColor(FLinearColor Color)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/material_batch413_runtime/UFortMaterialProgressBar_SetBackgroundColor.inc",
+    "address": "0x14528aef0",
+    "native_body_address": "0x144cab000",
+    "reflection_flags": "0x4820401",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Materials/MaterialInstanceDynamic.h"
+    ],
+    "notes": "Stores BackgroundColor only if ProgressBarMID exists; then sets the vector when BackgroundColorParamName is non-None.",
+    "class": "UFortMaterialProgressBar"
+  },
+  {
+    "function": "SetProgressBarSectionColor",
+    "kind": "exec",
+    "signature": "void SetProgressBarSectionColor(EFortMaterialProgressBarSection::Type BarSection, FLinearColor Color, EFortMaterialProgressBarSectionColorNumber ColorNumber)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/material_batch413_runtime/UFortMaterialProgressBar_SetProgressBarSectionColor.inc",
+    "address": "0x14528b210",
+    "native_body_address": "0x144cace80",
+    "reflection_flags": "0x4820401",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Materials/MaterialInstanceDynamic.h"
+    ],
+    "notes": "Validates section index 0..3; selects first color for zero or second only for gradient bars; stores color and sets the non-None parameter if MID exists.",
+    "class": "UFortMaterialProgressBar"
+  }
+]

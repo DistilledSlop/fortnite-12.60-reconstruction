@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "EFortMaterialProgressBarSection.h"
+#include "EFortMaterialProgressBarSectionColorNumber.h"
 #include "EFortMaterialProgressBarSectionOverflowBehavior.h"
 #include "FFortMaterialProgressBarSectionInfo.h"
 #include "Math/Color.h"
@@ -49,6 +51,12 @@ public:
 	// table index 0, flags 0x20080000002000
 	UPROPERTY(Transient)
 	UMaterialInstanceDynamic* ProgressBarMID;
+
+	UFUNCTION(BlueprintCallable)
+	void SetBackgroundColor(FLinearColor Color);
+
+	UFUNCTION(BlueprintCallable)
+	void SetProgressBarSectionColor(EFortMaterialProgressBarSection::Type BarSection, FLinearColor Color, EFortMaterialProgressBarSectionColorNumber ColorNumber);
 
 };
 
