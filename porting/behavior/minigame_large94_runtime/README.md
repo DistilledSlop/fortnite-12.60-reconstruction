@@ -1,16 +1,14 @@
 # minigame_large94_runtime (source-only, build pending, nothing built/tested)
 
-Manifest: `MANIFEST.empty` (empty) — neither body is closed.
+Manifest: `MANIFEST.empty` (empty) — player registration remains unclosed; team end conditions moved to the complete batch96 implementation.
 
-## AFortMinigame::AddOrOverrideEndConditionForTeam (impl 0x142082df0)
-`AFortMinigame_AddOrOverrideEndConditionForTeam.inc` is a full-control-flow lift (frame: StatQuery +8, TeamIndex +0).
-Array +0x678, element 0x30 = FMinigameEndCondition {StatQuery 0x18, TeamListType +0x18, TeamList +0x20}.
-Per element: match = validated Stat class equal && Scope equal. Blacklist(0): query-equal -> empty list, record index A;
-else AddUnique(team). Whitelist(1): query-equal -> AddUnique(team), record index B; else empty list. Other type: nothing.
-Return only if A and B both set; otherwise append new entry with query copy, TeamListType=1 (Whitelist), TeamList={team}.
-(Differs from the older 0x142082c90 `.inc` which appends Blacklist.) Bound: ValidatedStatClass (Minigame94EndConditionBindings.inc).
-Unresolved: `0x1420802c0` (query match vs existing condition) and `0x1420a1cb0` (empty/reset TeamList).
-Array growth helpers 0x14072b840 / 0x14069e940 are plain TArray::Add growth.
+## Team end-condition recovery superseded
+
+The original team draft and bindings were retired after dependency recovery96.
+Native1420a1cb0 removes the specified team, rather than clearing the list; its
+second argument is explicit in assembly. Complete corrected implementation and
+proof now live in `../minigame_end96_runtime/`. Earlier comments describing
+empty/reset behavior are obsolete. The player-registration draft remains below.
 
 ## AddMinigamePlayer (impl 0x142081fa0)
 `AddMinigamePlayer.bindings.inc` + `AddMinigamePlayer.recovered.cpp`. Newly bound from reflection/engine:
@@ -32,6 +30,6 @@ AddMinigamePlayer: 0x1420898c0 FindOrCreateRecord, 0x1420935b0 IsRegistered, vtb
 Player+0x318 vtbl+0x28, 0x141a3d510, Pawn vtbl+0xa80 (+0x141ed1800), 0x142a6e250, 0x142083810, 0x1420a5820, 0x142083e10,
 0x142089b10, Controller +0x2e78, scheduling (delegate vtbls 0x1459cb3b8/0x1459cb410, 0x142bad740, 0x144627d90),
 ctrl vtbl+0x1be0, 0x1420a7410, log category 0x14813df34 + string helpers 0x142ce9f90/0x1444ac7a0.
-EndCondition: 0x1420802c0, 0x1420a1cb0 (0x1429d45e0 assumed UFortMinigameStatFilter::StaticClass, body not decompiled here).
+EndCondition dependencies were recovered and integrated in batch96; see minigame_end96_runtime.
 
 Root review: native localized join text confirms namespace/key/source exactly; team-list branch and append cases checked against native142082df0. EMinigamePlayerPersistence is None=0, PartyLeaderOnly=1, AllPlayers=2. Bool packing, native-record tail, assumed class getter and inferred engine bindings remain provisional. No layout assertions have been compiled. The cached text touch models copy/release but requires final ownership review. This is source recovery progress, not an integrated player-registration implementation. Claude runner finished exit0,511.56s, model claude-sonnet-5-5 (CLI sonnet alias), no tests/builds.

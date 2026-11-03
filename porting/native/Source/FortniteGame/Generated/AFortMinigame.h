@@ -533,6 +533,16 @@ public:
 	UPROPERTY()
 	FGameplayTagContainer OldUIExtensionTags;
 
+protected:
+	UFUNCTION(BlueprintCallable)
+	void AddOrOverrideEndCondition(FFortMinigameStatQuery& StatQuery);
+public:
+
+protected:
+	UFUNCTION(BlueprintCallable)
+	void AddOrOverrideEndConditionForTeam(uint8 TeamIndex, FFortMinigameStatQuery& StatQuery);
+public:
+
 	UFUNCTION()
 	bool AreEnoughPlayersLeftToContinueMatch();
 

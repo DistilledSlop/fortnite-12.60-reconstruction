@@ -1,5 +1,66 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Shared minigame dependency closure and bulk player recovery96 (2026-11-03)
+
+Previous goal turn PROGRESS:29 canonical bodies, HoagieRuntime module and large
+minigame/item source pushed through0f48d839. This pass integrates3 complete
+bodies: global/team AddOrOverrideEndCondition and item restriction localized
+text. Fresh native1420a1cb0 proves stable removal of matching team bytes, NOT
+empty/reset; RDX carries TeamIndex. Query matching compares integer Value and
+both bool bits. Root retired the incorrect uncounted team draft/bindings.
+Restriction text default constructor matches UE empty localized FString/TextData
+and flags0. Seven source/key pairs unchanged. Reflected parameter order/constness
+corrected after initial generator rejection; final source generation96 accepts
+2,444 entries=2,206 bodies+238fields,0 rejected. Final rerun changed2 files; initial
+partial generation emitted UFortItem as well, so batch totals4 tracked Native
+header/source changes (Minigame andItem), no added/removed Native files.
+Command `python3 -I /tmp/promote-native-batch96.py`; log/tmp/promote-native-batch96.log;
+reports gameplay-bulk-integration-96/. Tests/build/runtime deferred: last2,040;
+166 canonical+4 manual pending; next3,040. All four gates OPEN, objective ACTIVE.
+
+Claude Sonnet medium completed4 large minigame lifts: bucket selection, delayed
+teleport/setup, team assignment and countdown (476 source lines before root
+correction). Source is UNCOUNTED and uncompiled; raw fields, globals, logs and
+helpers remain explicit. Root removed inferred countdown callback body and
+retained an unresolved weak callback factory. New Claude bounded task runs on
+869-line death cause,569-line ghost replication and355-line streaming handshake
+bodies in player_large97_runtime, CLI task/tmp/claude-native-player97, PTY69521.
+Keep Claude on fresh bounded large-function batches while usage remains; user
+explicitly reiterated this preference. CLI Sonnet medium runner is authorized;
+report usage errors rather than silently retrying/replacing.
+
+Root serial probes native96-deps18, native96-broad176 andnative96-impl197 completed
+successfully, Ghidra metadata rolled back. Selection/fullinput clarified at
+/tmp/native96-full-selection.json (179 records,3 duplicate address aliases); old
+/tmp/native96-broad.json now94 records, do not rerun it as the complete set.
+Use index.json as authoritative176-probe inventory. Logs/tmp/native96-<name>.log;
+commands `porting/.venv/bin/python -I porting/ghidra/probe_callees.py --input
+/tmp/<name>.json --out porting/generated/<name> --timeout 60 --mem 12G`.
+Native97-deps20 shared helper batch is running serially, same convention.
+Terra pawn_bulk96_runtime and controller_bulk96_runtime proposals are pending
+root review/integration, not counted. Root alone owns Native/gen/build/staging.
+
+User cloned23.20 reference at/opt/fortnite/Fortnite-23.20-CL-23659353-SDK-Dump,
+HEAD4534af8f331acf76d7f74198acc8b3d1a85bc9dc. Bounded local comparison finds
+no proven names for12.60 item/player native tails. Use only secondary names/leads.
+Dumper-7 README/generator source reviewed on user request: can provide live
+reflection/SDK metadata, generated wrappers call original ProcessEvent; no native
+function decompilation. Existing12.60 extraction has2,849 classes/23,758 native
+function records plus struct/enum/bool/type data. No broad redump warranted now;
+retain as targeted metadata fallback. Sources https://github.com/Encryqed/Dumper-7
+and Dumper/Generator/Private/Generators/CppGenerator.cpp wrapper generation.
+No Dumper-7 build/injection/runtime performed; test cadence remains3,040.
+Preserve fork-none Luna medium small reads/Terra6.1 medium bulk/Sol6.1 medium
+complex, bounded rotation and economical reads, visual pause, graphics/Engine
+edits, root serial Ghidra/generation/build and frequent source/dashboard pushes.
+
+## Claude minigame_large96_runtime batch (source-only, no build/tests)
+Claude Sonnet 5.5 lifted 0x142083810 (AssignPlayerToAvailableBucket), 0x142089b10 (DelayedTeleportPlayer), 0x1420a5820 (SetTeamForPlayer),
+0x1420a7410 (StartMinigameCountdown) into `porting/behavior/minigame_large96_runtime/` (+ Minigame96Bindings.inc, README with offsets/unresolved list).
+MANIFEST.empty is empty; nothing counted. Blockers: unresolved native helpers/globals listed in its README, countdown lambda body 0x14608f9c0, decompiler-dropped
+Logf varargs (inferred), SetTeamForPlayer param roles inferred. Did not touch canonical MANIFEST/generated/native/minigame_end96_runtime; no Ghidra/builds/tests.
+
+
 ## Claude large-function recovery and external SDK assessment (2026-11-03)
 
 Claude Sonnet medium completed bounded large minigame batch, exit0 in511.56s;

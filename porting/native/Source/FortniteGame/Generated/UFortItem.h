@@ -8,6 +8,7 @@
 
 #include "Delegates/Delegate.h"
 #include "EFortItemType.h"
+#include "EItemEvolutionRestrictionReason.h"
 #include "FFortOnItemChangedDelegate.h"
 #include "FFortOnItemDestroyedDelegate.h"
 #include "McpProfileItem.h"
@@ -62,6 +63,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual float GetDurability() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static FText GetEvolveRestrictionReasonText(EItemEvolutionRestrictionReason Reason);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual UFortItemDefinition* GetItemDefinitionBP() const;

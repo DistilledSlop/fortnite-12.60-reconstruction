@@ -4,6 +4,7 @@
 #include "AFortPlayerController.h"
 #include "Delegates/Delegate.h"
 #include "EFortItemType.h"
+#include "EItemEvolutionRestrictionReason.h"
 #include "McpProfileItem.h"
 #include "Misc/Guid.h"
 #include "SharedFortGameLog.h"
@@ -35,6 +36,30 @@ float UFortItem::GetDurability() const
 	// Exact UFortItem base implementation at 0x14084bee0.
 	// CONFIDENCE: HIGH
 	return -1.0f;
+}
+
+FText UFortItem::GetEvolveRestrictionReasonText(EItemEvolutionRestrictionReason Reason)
+{
+	// CONFIDENCE: high; original localized text dispatch and empty-text constructor recovered.
+	switch (Reason)
+	{
+	case EItemEvolutionRestrictionReason::NoEvolutions:
+	    return NSLOCTEXT("FortItem", "ItemEvolutionRestrictionReason_NoEvolutions", "Item does not have evolutions.");
+	case EItemEvolutionRestrictionReason::BelowMaximumLevel:
+	    return NSLOCTEXT("FortItem", "ItemEvolutionRestrictionReason_BelowMaximumLevel", "Item must attain its maximum level before evolving.");
+	case EItemEvolutionRestrictionReason::VaultOverflow:
+	    return NSLOCTEXT("FortItem", "ItemEvolutionRestrictionReason_VaultOverflow", "Items in the vault overflow temporarily can not be evolved.");
+	case EItemEvolutionRestrictionReason::MissingCatalyst:
+	    return NSLOCTEXT("FortItem", "ItemEvolutionRestrictionReason_MissingCatalyst", "Not yet possible.");
+	case EItemEvolutionRestrictionReason::MissingCosts:
+	    return NSLOCTEXT("FortItem", "ItemEvolutionRestrictionReason_MissingCosts", "Required ingredient cost is not met.");
+	case EItemEvolutionRestrictionReason::NoRarityUpgrade:
+	    return NSLOCTEXT("FortItem", "ItemEvolutionRestrictionReason_NoRarityUpgrade", "Item does not have a rarity upgrade.");
+	case EItemEvolutionRestrictionReason::InUseByCrafting:
+	    return NSLOCTEXT("FortItem", "ItemEvolutionRestrictionReason_InUseByCrafting", "Item is currently in use by crafting.");
+	default:
+	    return FText::GetEmpty();
+	}
 }
 
 UFortItemDefinition* UFortItem::GetItemDefinitionBP() const

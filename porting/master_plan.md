@@ -10,6 +10,12 @@ credentials in Git, and the orchestrator reviews and commits.
 
 ## Current baseline
 
+Batch96 integrates3 shared-dependency closures: global/team end conditions and
+localized evolution restriction text;2,206 bodies+238 fields=2,444 accepted,
+0 rejected. Four large minigame lifts remain uncounted; Claude assigned3 larger
+player/death/streaming functions, Terra broad player/controller work continues.
+No builds/tests;166 canonical+4 manual pending; next3,040; all gates OPEN.
+
 Batch95 integrates15 vehicle predicates/getters and original HoagieRuntime
 module/config/vehicle selection;2,203 bodies+238 fields=2,441 accepted,0 rejected.
 Additional13 source lifts remain uncounted; Claude handles large minigame source.

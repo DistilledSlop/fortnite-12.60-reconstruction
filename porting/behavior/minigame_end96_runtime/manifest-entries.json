@@ -1,0 +1,32 @@
+[
+  {
+    "function": "AddOrOverrideEndCondition",
+    "kind": "exec",
+    "signature": "void AddOrOverrideEndCondition(FFortMinigameStatQuery& StatQuery)",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/minigame_end96_runtime/1429bed00_AFortMinigame_AddOrOverrideEndCondition.inc",
+    "confidence": "high",
+    "address": "0x1429bed00",
+    "status": "ported",
+    "reflection_flags": "0x4480401",
+    "static": false,
+    "access": "public",
+    "notes": "Native implementation and helper contracts documented in minigame_end96_runtime/README.md; build pending.",
+    "class": "AFortMinigame"
+  },
+  {
+    "function": "AddOrOverrideEndConditionForTeam",
+    "kind": "exec",
+    "signature": "void AddOrOverrideEndConditionForTeam(uint8 TeamIndex, FFortMinigameStatQuery& StatQuery)",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/minigame_end96_runtime/1429bedb0_AFortMinigame_AddOrOverrideEndConditionForTeam.inc",
+    "confidence": "high",
+    "address": "0x1429bedb0",
+    "status": "ported",
+    "reflection_flags": "0x4480401",
+    "static": false,
+    "access": "public",
+    "notes": "Native implementation and helper contracts documented in minigame_end96_runtime/README.md; build pending.",
+    "class": "AFortMinigame"
+  }
+]
