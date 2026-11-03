@@ -26,6 +26,12 @@ public:
 	float MaxGammaValue;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	TArray<FText> GetColorBlindModeNames() const;
+
+	UFUNCTION(BlueprintCallable)
+	TArray<FText> GetMotionAxisNames();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetSettingValueInRange(float Value, ESettingType InSettingType, ESettingTab InSettingTab);
 
 };

@@ -803,6 +803,9 @@ public:
 	EFortControlRecoveryBehavior GetControlRecoveryBehavior() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetControlResistance() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual TEnumAsByte<EFortDamageZone::Type> GetDamageZone(FHitResult& InHitResult) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
@@ -818,7 +821,16 @@ public:
 	virtual float GetHealthPercent() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetKnockbackMultiplier() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetKnockbackThreshold() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetLocalSpin() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetMaxControlResistance() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual float GetMaxHealth() const;
@@ -828,6 +840,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual float GetMaxSignalInStorm() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetMeleeComboCounter() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual float GetShield() const;

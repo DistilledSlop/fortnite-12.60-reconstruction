@@ -7,11 +7,14 @@
 #include "EFortControlRecoveryBehavior.h"
 #include "EFortDamageZone.h"
 #include "Engine/World.h"
+#include "FFortActiveMontageDecisionWindow.h"
 #include "GameplayTagContainer.h"
 #include "Kismet/GameplayStatics.h"
 #include "Math/Rotator.h"
 #include "Math/Vector.h"
 #include "UFortAbilitySystemComponent.h"
+#include "UFortAnimNotifyState_AbilityDecisionWindow.h"
+#include "UFortControlResistanceSet.h"
 #include "UFortHealthSet.h"
 #include "Net/UnrealNetwork.h"
 
@@ -86,6 +89,14 @@ EFortControlRecoveryBehavior AFortPawn::GetControlRecoveryBehavior() const
 	return ControlRecoveryBehavior;
 }
 
+float AFortPawn::GetControlResistance() const
+{
+	// CONFIDENCE: high
+	// Native 0x14231a530; wrapper 0x142a1bf00.
+	UFortControlResistanceSet* ResistanceSet = ControlResistanceSet;
+	return ResistanceSet ? ResistanceSet->ControlResistance.GetCurrentValue() : 0.0f;
+}
+
 TEnumAsByte<EFortDamageZone::Type> AFortPawn::GetDamageZone(FHitResult& InHitResult) const
 {
 	// CONFIDENCE: high. Native target 0x14231aa10.
@@ -143,6 +154,22 @@ float AFortPawn::GetHealthPercent() const
 	return Health / Maximum;
 }
 
+float AFortPawn::GetKnockbackMultiplier() const
+{
+	// CONFIDENCE: high
+	// Native 0x14231f1f0; wrapper 0x142a1c2a0.
+	UFortControlResistanceSet* ResistanceSet = ControlResistanceSet;
+	return ResistanceSet ? ResistanceSet->KnockbackMultiplier.GetCurrentValue() : 0.0f;
+}
+
+float AFortPawn::GetKnockbackThreshold() const
+{
+	// CONFIDENCE: high
+	// Native 0x14231f210; wrapper 0x142a1c2d0.
+	UFortControlResistanceSet* ResistanceSet = ControlResistanceSet;
+	return ResistanceSet ? ResistanceSet->KnockbackThreshold.GetCurrentValue() : 0.0f;
+}
+
 float AFortPawn::GetLocalSpin() const
 {
 	// Behaviour snippet: AFortPawn::GetLocalSpin (body only; spliced into the generated member function).
@@ -153,6 +180,14 @@ float AFortPawn::GetLocalSpin() const
 	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	return LocalSpin;
+}
+
+float AFortPawn::GetMaxControlResistance() const
+{
+	// CONFIDENCE: high
+	// Native 0x142321b10; wrapper 0x142a1c350.
+	UFortControlResistanceSet* ResistanceSet = ControlResistanceSet;
+	return ResistanceSet ? ResistanceSet->MaxControlResistance.GetCurrentValue() : 0.0f;
 }
 
 float AFortPawn::GetMaxHealth() const
@@ -189,6 +224,21 @@ float AFortPawn::GetMaxSignalInStorm() const
 	    return 0.0f;
 	}
 	return FortHealthSet->MaxSignalInStorm.GetCurrentValue();
+}
+
+int32 AFortPawn::GetMeleeComboCounter() const
+{
+	// CONFIDENCE: high
+	// Native 0x142321e70; wrapper 0x142a1c470.
+	for (const FFortActiveMontageDecisionWindow& Window : DecisionWindowStack)
+	{
+	    if (Window.DecisionWindow)
+	    {
+	        UFortAnimNotifyState_AbilityDecisionWindow* DecisionWindow = Window.DecisionWindow;
+	        return DecisionWindow->ComboCounter;
+	    }
+	}
+	return 0;
 }
 
 float AFortPawn::GetShield() const

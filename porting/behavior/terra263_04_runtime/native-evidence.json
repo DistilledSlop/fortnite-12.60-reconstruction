@@ -1,0 +1,51 @@
+[
+  {
+    "class_": "AFortPawn",
+    "function": "GetControlResistance",
+    "wrapper": "porting/generated/native210-fresh-bulk/0x142a1bf00.c",
+    "native": "porting/generated/callee_probe/blocking/0x14231a530.c",
+    "contract": "Native reads ControlResistanceSet at 0xb80 and returns ControlResistance.GetCurrentValue(), or zero for a null set. Helper 0x14070cc00 is GetCurrentValue."
+  },
+  {
+    "class_": "AFortPawn",
+    "function": "GetKnockbackMultiplier",
+    "wrapper": "porting/generated/native210-fresh-bulk/0x142a1c2a0.c",
+    "native": "porting/generated/callee_probe/blocking/0x14231f1f0.c",
+    "contract": "Native reads ControlResistanceSet at 0xb80 and returns KnockbackMultiplier.GetCurrentValue(), or zero for a null set. Helper 0x14070cc00 is GetCurrentValue."
+  },
+  {
+    "class_": "AFortPawn",
+    "function": "GetKnockbackThreshold",
+    "wrapper": "porting/generated/native210-fresh-bulk/0x142a1c2d0.c",
+    "native": "porting/generated/callee_probe/blocking/0x14231f210.c",
+    "contract": "Native reads ControlResistanceSet at 0xb80 and returns KnockbackThreshold.GetCurrentValue(), or zero for a null set. Helper 0x14070cc00 is GetCurrentValue."
+  },
+  {
+    "class_": "AFortPawn",
+    "function": "GetMaxControlResistance",
+    "wrapper": "porting/generated/native210-fresh-bulk/0x142a1c350.c",
+    "native": "porting/generated/callee_probe/blocking/0x142321b10.c",
+    "contract": "Native reads ControlResistanceSet at 0xb80 and returns MaxControlResistance.GetCurrentValue(), or zero for a null set. Helper 0x14070cc00 is GetCurrentValue."
+  },
+  {
+    "class_": "AFortPawn",
+    "function": "GetMeleeComboCounter",
+    "wrapper": "porting/generated/native194-fresh-bulk/0x142a1c470.c",
+    "native": "porting/generated/callee_probe/blocking/0x142321e70.c",
+    "contract": "Iterates DecisionWindowStack at 0xbc0 in 0x18-byte records, returning ComboCounter at offset 0x68 of the first non-null DecisionWindow, or zero."
+  },
+  {
+    "class_": "UFortGlobalUIContext",
+    "function": "SetContextHelpItem",
+    "wrapper": "porting/generated/native228-fresh-callees/0x14524b260.c",
+    "native": "porting/generated/native228-fresh-callees/0x144ce67b0.c",
+    "contract": "Stores the argument in ActiveContextSpecificHelpItem at 0x368 and broadcasts the no-argument OnContextHelpChanged delegate at 0x108 unconditionally."
+  },
+  {
+    "class_": "UFortGlobalUIContext",
+    "function": "GetTopLevelHelpItems",
+    "wrapper": "porting/generated/native235-fresh-bulk/0x1452497f0.c",
+    "native": "porting/generated/native240-fresh-callees/0x144cd2f50.c",
+    "contract": "Clears the out array and adds ActiveContextSpecificHelpItem at 0x368 if non-null."
+  }
+]

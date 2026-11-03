@@ -165,6 +165,9 @@ public:
 	FText GetFeedbackTitle() const;
 
 	UFUNCTION(BlueprintCallable)
+	void GetTopLevelHelpItems(TArray<UFortHelpItem*>& ActiveHelpEntries);
+
+	UFUNCTION(BlueprintCallable)
 	bool IsBluGloEnabled();
 
 	UFUNCTION(BlueprintCallable)
@@ -178,6 +181,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsUIVisible() const;
+
+	UFUNCTION(BlueprintCallable)
+	void SetContextHelpItem(UFortHelpItem* ContextSpecificHelpItem);
 
 	UFUNCTION(BlueprintCallable)
 	void SetRatingWidgetFeedbackTitle(FText& Title);

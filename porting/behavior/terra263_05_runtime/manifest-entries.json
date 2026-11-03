@@ -1,0 +1,32 @@
+[
+  {
+    "function": "GetColorBlindModeNames",
+    "kind": "exec",
+    "signature": "TArray<FText> GetColorBlindModeNames() const",
+    "signature_status": "proposed",
+    "static": false,
+    "access": "public",
+    "inc_path": "porting/behavior/terra263_05_runtime/UFortSettingsContext_GetColorBlindModeNames.inc",
+    "address": "0x1452cdc70",
+    "native_body_address": "0x144d019b0",
+    "reflection_flags": "0x54020401",
+    "confidence": "high",
+    "status": "ported",
+    "class": "UFortSettingsContext"
+  },
+  {
+    "function": "GetMotionAxisNames",
+    "kind": "exec",
+    "signature": "TArray<FText> GetMotionAxisNames()",
+    "signature_status": "proposed",
+    "static": false,
+    "access": "public",
+    "inc_path": "porting/behavior/terra263_05_runtime/UFortSettingsContext_GetMotionAxisNames.inc",
+    "address": "0x1452ce670",
+    "native_body_address": "0x144d06300",
+    "reflection_flags": "0x4020401",
+    "confidence": "high",
+    "status": "ported",
+    "class": "UFortSettingsContext"
+  }
+]

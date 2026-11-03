@@ -22,6 +22,17 @@ FText UFortGlobalUIContext::GetFeedbackTitle() const
 	return FeedbackTitle;
 }
 
+void UFortGlobalUIContext::GetTopLevelHelpItems(TArray<UFortHelpItem*>& ActiveHelpEntries)
+{
+	// CONFIDENCE: high
+	// Native 0x144cd2f50; wrapper 0x1452497f0.
+	ActiveHelpEntries.Reset();
+	if (ActiveContextSpecificHelpItem)
+	{
+	    ActiveHelpEntries.Add(ActiveContextSpecificHelpItem);
+	}
+}
+
 bool UFortGlobalUIContext::IsBluGloEnabled()
 {
 	// Original address: 0x1412d9d60.
@@ -60,6 +71,14 @@ bool UFortGlobalUIContext::IsUIVisible() const
 	// CONFIDENCE: HIGH
 	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
 	return UFortGlobalUIContext::bIsUIVisible;
+}
+
+void UFortGlobalUIContext::SetContextHelpItem(UFortHelpItem* ContextSpecificHelpItem)
+{
+	// CONFIDENCE: high
+	// Native 0x144ce67b0; wrapper 0x14524b260.
+	ActiveContextSpecificHelpItem = ContextSpecificHelpItem;
+	OnContextHelpChanged.Broadcast();
 }
 
 void UFortGlobalUIContext::SetRatingWidgetFeedbackTitle(FText& Title)
