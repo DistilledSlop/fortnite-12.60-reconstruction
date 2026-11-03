@@ -2,10 +2,6 @@
 
 # Fortnite 12.60 → Linux
 
-<!-- badges:start -->
-![overall](https://img.shields.io/badge/overall-20.6%25-2a78d6) ![milestones](https://img.shields.io/badge/milestones-0%2F4-d6a02a) ![snapshot](https://img.shields.io/badge/snapshot-8aaf1784-52514e)
-<!-- badges:end -->
-
 **A from-scratch reconstruction of Fortnite 12.60 (CL 13477524) as a buildable Unreal Engine 4.25 project, with a reimplemented dedicated server and local backend.**
 
 [Dashboard](#progress-dashboard) ·
@@ -13,6 +9,10 @@
 [Data](docs/progress.json) ·
 [Handoff](porting/HANDOFF.md) ·
 [Master plan](porting/master_plan.md)
+
+<!-- badges:start -->
+![overall](https://img.shields.io/badge/overall-20.6%25-2a78d6) ![milestones](https://img.shields.io/badge/milestones-0%2F4-d6a02a) ![snapshot](https://img.shields.io/badge/snapshot-075b790d-52514e)
+<!-- badges:end -->
 
 </div>
 
@@ -32,7 +32,7 @@ or run `porting/progress/serve.sh`); GitHub only shows HTML as source unless Pag
 
 <!-- progress:start -->
 
-**Overall: 20.6%** · evidence-based 19.7% · objective 19.7% · milestones 0/4 · snapshot `8aaf1784` (2026-11-03)
+**Overall: 20.6%** · evidence-based 19.7% · objective 19.7% · milestones 0/4 · snapshot `075b790d` (2026-11-03)
 
 | Milestone | Status |
 |---|---|
