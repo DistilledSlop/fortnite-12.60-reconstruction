@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 
+#include "Engine/CollisionProfile.h"
+
 #include "UCreativeBlueprintLibrary.generated.h"
 
 UCLASS()
@@ -14,5 +16,10 @@ class FORTNITEGAME_API UCreativeBlueprintLibrary : public UBlueprintFunctionLibr
 	GENERATED_BODY()
 
 public:
+private:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static FName GetNameFromCollisionProfile(FCollisionProfileName InCollisionProfile);
+public:
+
 };
 
