@@ -51,8 +51,8 @@ CPP_KEYWORDS = {
 # GetWorld() is the inherited UObject virtual, declared outside the generated class chain.
 # FMath (UnrealMathUtility.h, FMath::Abs) is used by the struct_net body of FCreateBuildingActorData.
 ENGINE_NAMES = {"UClass", "UObject", "AActor", "FWeakObjectPtr", "TWeakObjectPtr", "FName", "FString", "FText",
-                "FVector", "TArray", "static_cast", "Cast", "UWorld", "AGameStateBase", "GetLocalRole", "ROLE_Authority",
-                "GetOwner", "GetWorld", "FMath", "FApp", "FEngineVersion", "ESearchCase", "ESearchDir", "INDEX_NONE"}
+                "FVector", "TArray", "static_cast", "Cast", "UWorld", "FConstPlayerControllerIterator", "AGameStateBase", "GetLocalRole", "ROLE_Authority",
+                "FGameplayTag", "FFortNativeGameplayTagsRuntime", "GetOwner", "GetWorld", "FMath", "FApp", "FEngineVersion", "ESearchCase", "ESearchDir", "INDEX_NONE"}
 # UE_LOG is the Engine logging macro; LogFort is declared by SharedFortGameLog.h.
 ENGINE_NAMES.update({"UE_LOG", "LogFort", "Verbose", "Warning"})
 # The NetSerialize signature of kind struct_net (gen_native_classes.py NATIVE_NET_SIGNATURE, the same text).
@@ -259,6 +259,8 @@ def check_kind(e, problems):
     if kind not in KNOWN_KINDS:
         problems.append(("FAIL", tag, "unknown kind %r" % (kind,)))
         return
+    if "virtual" in e and (kind != "helper" or not isinstance(e["virtual"], bool)):
+        problems.append(("FAIL", tag, "virtual must be a boolean on a member helper only"))
     sig = e.get("signature") or ""
     if kind == STRUCT_NET_KIND:
         # The struct is the class; the function, signature and linkage are fixed (gen_native_classes.py, struct_net).
@@ -416,7 +418,8 @@ def check_generated(e, rejected, problems, counts):
         check_static_helper(e, tag, ret, sfn, args, hdr, cpp, problems, counts)
         return
     hl = [squash(line) for line in hdr.splitlines()]
-    decl_key = squash("%s%s %s(%s)%s;" % ("static " if e.get("static") else "", ret, sfn, args, const))
+    linkage = "virtual " if e.get("virtual") else ("static " if e.get("static") else "")
+    decl_key = squash("%s%s %s(%s)%s;" % (linkage, ret, sfn, args, const))
     if hl.count(decl_key) != 1:
         problems.append(("FAIL", tag, "declaration %r found %d times in header" % (decl_key, hl.count(decl_key))))
         return
@@ -546,10 +549,14 @@ def main():
     if verbose:
         for p in pending:
             print("  PENDING %s: %s" % (p[1], p[2]))
+    function_count = sum(e.get("status") == "ported" and e.get("kind") != FIELD_KIND for e in manifest)
+    field_count = sum(e.get("status") == "ported" and e.get("kind") == FIELD_KIND for e in manifest)
+    print("native function bodies: %d; supporting member fields: %d" % (function_count, field_count))
     # Tracked, deterministic counts for the progress dashboard (porting/progress/components.json reads this).
     with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "COUNTS.txt"), "w", encoding="utf-8") as fh:
         fh.write("ported: %d\nskipped: %d\ndeclared_in_header: %d\npending_declaration: %d\nfail: %d\n"
                  % (counts["ported"], counts["skipped"], decl_ok, len(pending), len(fails)))
+        fh.write("ported_functions: %d\nmember_fields: %d\n" % (function_count, field_count))
     sys.exit(1 if fails else 0)
 
 

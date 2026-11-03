@@ -210,6 +210,7 @@ Manifest fields, in addition to the usual ones (`class`, `function`, `signature`
 - `signature`: the C++ declaration without `;`, and without `static`, `virtual` or `inline` (the kind sets the linkage).
   The return type is spelled as it is written (`UFortPlaylistAthena* GetCurrentPlaylistAthena() const`), then the name,
   then the parameter list. Every parameter has a type and a name. `const` is allowed only on `helper`.
+- `virtual` (`helper` only, optional boolean): emit a native C++ virtual member when original vtable evidence establishes dispatch. The signature still omits `virtual`; generation and the checker reject loss of the keyword. This does not make the helper a Blueprint event.
 - `access` (`helper` only, required): `public` or `protected`. A `static_helper` takes no access. A helper that another
   class calls must be `public` (a `protected` member is not visible to that class).
 - `includes` (optional): a list of header spellings (for example `Engine/World.h`) for types that the signature or the
@@ -375,3 +376,5 @@ Limits: the token check is textual. It does not check types or the decompile-to-
 
 Counts are for the screen rule in `skips.py`, applied to the 1,130 records. The verdicts were recomputed
 only for the ported and skipped entries.
+
+Dashboard function coverage uses `COUNTS.txt`'s `ported_functions` value: ported manifest entries excluding `member_field` storage declarations. The legacy `ported` total remains an entry count for checker reporting; `member_fields` records supporting storage separately. Neither declaration nor source-body coverage establishes runtime parity.
