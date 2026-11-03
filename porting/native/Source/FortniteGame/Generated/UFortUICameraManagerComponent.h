@@ -35,8 +35,14 @@ public:
 	UPROPERTY(Transient)
 	TMap<EFrontEndCamera, AFortCameraBase*> CameraMapping;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x1ac): not a UPROPERTY, not replicated.
+	float NativeRecoveredFloat_0x1ac;
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	EFrontEndCamera GetCamera() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetZoomLevel() const;
 
 };
 

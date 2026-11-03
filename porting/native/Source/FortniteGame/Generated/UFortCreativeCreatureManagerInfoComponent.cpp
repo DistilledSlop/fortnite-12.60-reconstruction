@@ -93,6 +93,12 @@ void UFortCreativeCreatureManagerInfoComponent::ResetScorePoints()
 	ScorePoints = -1;
 }
 
+void UFortCreativeCreatureManagerInfoComponent::SetDamageOverrideEffect(TSubclassOf<UGameplayEffect> Effect)
+{
+	// CONFIDENCE: high; complete body from reflected exec and field offsets.
+	DamageOverrideEffect = Effect;
+}
+
 void UFortCreativeCreatureManagerInfoComponent::SetEnvironmentalDamageOverride(float InOverrideDamage)
 {
 	// Original exec 0x1428ba6e0; inline store.
@@ -107,6 +113,12 @@ void UFortCreativeCreatureManagerInfoComponent::SetHearingAggroRange(float InHea
 	this->HearingAggroRange = InHearingAggroRange;
 }
 
+void UFortCreativeCreatureManagerInfoComponent::SetMaxHealth(int32 InMaxHealth)
+{
+	// CONFIDENCE: high; complete body from reflected exec and field offsets.
+	MaxHealth = InMaxHealth;
+}
+
 void UFortCreativeCreatureManagerInfoComponent::SetMovementSpeedMultiplier(float InOverrideMovementSpeedMultiplier)
 {
 	// Original exec 0x1428baa20; inline store.
@@ -119,5 +131,11 @@ void UFortCreativeCreatureManagerInfoComponent::SetOverrideDamage(float InOverri
 	// Original exec 0x1428bab20; inline store.
 	// CONFIDENCE: HIGH
 	this->DamageCaused = InOverrideDamage;
+}
+
+void UFortCreativeCreatureManagerInfoComponent::SetScorePoints(int32 InScorePoints)
+{
+	// CONFIDENCE: high; complete body from reflected exec and field offsets.
+	ScorePoints = InScorePoints;
 }
 

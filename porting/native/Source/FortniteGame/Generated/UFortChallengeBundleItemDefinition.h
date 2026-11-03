@@ -90,6 +90,9 @@ public:
 	bool bHideRewardFromMapChallenges;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FString GetEventName() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetNumQuests() const;
 
 };

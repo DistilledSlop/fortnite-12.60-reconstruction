@@ -45,5 +45,8 @@ public:
 	UPROPERTY()
 	FGalileoComponentOnPatrollingStop OnPatrollingStop;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	TArray<FVector> GetPatrolPath() const;
+
 };
 

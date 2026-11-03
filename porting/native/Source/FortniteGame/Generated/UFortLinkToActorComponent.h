@@ -56,5 +56,8 @@ public:
 	UPROPERTY(Transient)
 	TWeakObjectPtr<AActor> ActorLinkedTo;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure, BlueprintAuthorityOnly)
+	AActor* GetActorLinkedTo() const;
+
 };
 

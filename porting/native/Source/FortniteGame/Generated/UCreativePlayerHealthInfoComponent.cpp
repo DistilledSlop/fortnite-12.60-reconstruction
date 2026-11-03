@@ -4,7 +4,8 @@
 
 void UCreativePlayerHealthInfoComponent::OnRep_BossPlayerState()
 {
-	// Body not recovered: reflection-derived stub.
+	// CONFIDENCE: high; complete body from reflected exec and field offsets.
+	OnBossPlayerChanged.Broadcast(BossPlayerState, this);
 }
 
 void UCreativePlayerHealthInfoComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

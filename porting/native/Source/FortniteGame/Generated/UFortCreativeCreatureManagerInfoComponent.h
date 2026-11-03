@@ -105,16 +105,25 @@ public:
 	void ResetScorePoints();
 
 	UFUNCTION(BlueprintCallable)
+	void SetDamageOverrideEffect(TSubclassOf<UGameplayEffect> Effect);
+
+	UFUNCTION(BlueprintCallable)
 	void SetEnvironmentalDamageOverride(float InOverrideDamage);
 
 	UFUNCTION(BlueprintCallable)
 	void SetHearingAggroRange(float InHearingAggroRange);
 
 	UFUNCTION(BlueprintCallable)
+	void SetMaxHealth(int32 InMaxHealth);
+
+	UFUNCTION(BlueprintCallable)
 	void SetMovementSpeedMultiplier(float InOverrideMovementSpeedMultiplier);
 
 	UFUNCTION(BlueprintCallable)
 	void SetOverrideDamage(float InOverrideDamage);
+
+	UFUNCTION(BlueprintCallable)
+	void SetScorePoints(int32 InScorePoints);
 
 };
 

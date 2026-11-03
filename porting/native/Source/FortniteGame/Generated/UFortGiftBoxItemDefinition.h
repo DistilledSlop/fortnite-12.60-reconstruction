@@ -64,5 +64,8 @@ public:
 	UPROPERTY()
 	TSoftClassPtr<UUserWidget> GiftBoxHeaderSubWidgetRef;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool HasHeaderSubWidget() const;
+
 };
 

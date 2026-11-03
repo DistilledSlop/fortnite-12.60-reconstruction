@@ -9,6 +9,12 @@ int32 UFortFrontEndContext::GetCurrentLockerSubslotIndex()
 	return NativeRecoveredInt_0x2e0;
 }
 
+FString UFortFrontEndContext::GetOfferIdToFocusInItemShop() const
+{
+	// CONFIDENCE: high; complete implementation and storage offset verified.
+	return OfferIdToFocusInItemShop;
+}
+
 bool UFortFrontEndContext::IsViewingPhoenixTheater() const
 {
 	// Original address: 0x14523c8b0.
@@ -23,5 +29,17 @@ void UFortFrontEndContext::SendFrontendEnteredEvent()
 	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
 	// CONFIDENCE: HIGH
 	return;
+}
+
+void UFortFrontEndContext::SetCurrentLockerSubslotIndex(int32 NewIndex)
+{
+	// CONFIDENCE: high; complete implementation and storage offset verified.
+	NativeRecoveredInt_0x2e0 = NewIndex;
+}
+
+void UFortFrontEndContext::SetOfferIdToFocusInItemShop(FString OfferId)
+{
+	// CONFIDENCE: high; complete implementation and storage offset verified.
+	OfferIdToFocusInItemShop = OfferId;
 }
 

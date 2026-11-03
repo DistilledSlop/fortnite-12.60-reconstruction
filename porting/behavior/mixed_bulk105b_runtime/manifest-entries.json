@@ -1,0 +1,62 @@
+[
+  {
+    "function": "GetPatrolPath",
+    "kind": "getter",
+    "signature": "TArray<FVector> GetPatrolPath() const",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/mixed_bulk105b_runtime/142831220_UFortAthenaNpcGalileoComponent_GetPatrolPath.inc",
+    "address": "0x142831220",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Wrapper copies the reflected PatrolPath array at +0xc0.",
+    "class": "UFortAthenaNpcGalileoComponent"
+  },
+  {
+    "function": "GetActorLinkedTo",
+    "kind": "getter",
+    "signature": "AActor* GetActorLinkedTo() const",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/mixed_bulk105b_runtime/14297e550_UFortLinkToActorComponent_GetActorLinkedTo.inc",
+    "address": "0x14297e550",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Wrapper resolves the reflected weak actor pointer at +0xd8.",
+    "class": "UFortLinkToActorComponent"
+  },
+  {
+    "function": "HasHeaderSubWidget",
+    "kind": "getter",
+    "signature": "bool HasHeaderSubWidget() const",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/mixed_bulk105b_runtime/1429344b0_UFortGiftBoxItemDefinition_HasHeaderSubWidget.inc",
+    "address": "0x1429344b0",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Wrapper checks both words of the FName asset path at +0x458.",
+    "class": "UFortGiftBoxItemDefinition"
+  },
+  {
+    "function": "GetEventName",
+    "kind": "getter",
+    "signature": "FString GetEventName() const",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/mixed_bulk105b_runtime/14285c540_UFortChallengeBundleItemDefinition_GetEventName.inc",
+    "address": "0x14285c540",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Wrapper copies CalendarEventTag at +0x3a8.",
+    "class": "UFortChallengeBundleItemDefinition"
+  },
+  {
+    "function": "GetEventName",
+    "kind": "getter",
+    "signature": "FString GetEventName() const",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/mixed_bulk105b_runtime/14285c570_UFortChallengeBundleScheduleDefinition_GetEventName.inc",
+    "address": "0x14285c570",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Helper 0x141ca8580 copies CalendarEventTag at +0x398.",
+    "class": "UFortChallengeBundleScheduleDefinition"
+  }
+]

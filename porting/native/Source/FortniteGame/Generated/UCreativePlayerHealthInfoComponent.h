@@ -31,8 +31,10 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_BossPlayerState, Transient)
 	AFortPlayerStateAthena* BossPlayerState;
 
+private:
 	UFUNCTION()
 	void OnRep_BossPlayerState();
+public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

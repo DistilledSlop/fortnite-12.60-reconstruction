@@ -2,6 +2,12 @@
 #include "UFortMinigameProgressComponent.h"
 #include "Net/UnrealNetwork.h"
 
+bool UFortMinigameProgressComponent::HasActivationTime() const
+{
+	// CONFIDENCE: high; complete body from reflected exec and field offsets.
+	return ActivationTime > 0.0f;
+}
+
 void UFortMinigameProgressComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

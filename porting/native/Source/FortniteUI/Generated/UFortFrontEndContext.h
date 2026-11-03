@@ -167,10 +167,19 @@ public:
 	int32 GetCurrentLockerSubslotIndex();
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FString GetOfferIdToFocusInItemShop() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsViewingPhoenixTheater() const;
 
 	UFUNCTION(BlueprintCallable)
 	void SendFrontendEnteredEvent();
+
+	UFUNCTION(BlueprintCallable)
+	void SetCurrentLockerSubslotIndex(int32 NewIndex);
+
+	UFUNCTION(BlueprintCallable)
+	void SetOfferIdToFocusInItemShop(FString OfferId);
 
 };
 

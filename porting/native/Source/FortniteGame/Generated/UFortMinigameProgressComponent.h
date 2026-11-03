@@ -36,6 +36,9 @@ public:
 	UPROPERTY(Replicated)
 	float ActivationTime;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool HasActivationTime() const;
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 
