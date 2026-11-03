@@ -10,7 +10,11 @@
 #include "Engine/Engine.h"
 #include "Engine/World.h"
 #include "FortAssetDiagnosticMap.h"
+#include "FortAssetLoadDiagnosticState.h"
 #include "FortPlayerLoadingScreenState.h"
+#include "GenericPlatform/GenericPlatformStricmp.h"
+#include "HAL/PlatformTime.h"
+#include "SharedFortCsv.h"
 #include "SharedFortGameLog.h"
 #include "UObject/NoExportTypes.h"
 #include "UObject/Object.h"
@@ -98,6 +102,9 @@ public:
 	UPROPERTY(Config)
 	float InstallBundleDelay;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x6cc): not a UPROPERTY, not replicated.
+	uint8 NativeCurrentGameSubMode;
+
 	// Non-reflected field (behaviour kind "member_field", offset 0x6cd): not a UPROPERTY, not replicated.
 	uint8 NativeStartupPhase;
 
@@ -111,5 +118,7 @@ public:
 	static bool NativeShouldSuppressLoadDiagnostic();
 	static void AppendBothDiagnosticAssetKeys(TArray<FSoftObjectPath>& Out, const FFortAssetDiagnosticMap& MapAt10, const FFortAssetDiagnosticMap& MapAt60);
 	static void AppendFirstDiagnosticAssetKeys(TArray<FSoftObjectPath>& Out, const FFortAssetDiagnosticMap& MapAt10);
+	static uint8 NativeGetGameSubMode();
+	static void NativeHandleLoadDiagnostic(FFortAssetLoadDiagnosticState& State, const FString& Path, bool bSynchronous);
 };
 

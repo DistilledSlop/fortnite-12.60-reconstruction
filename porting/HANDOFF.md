@@ -1,5 +1,29 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Native source batch 39 (2026-11-03)
+
+Canonical source:1,920 bodies +170 supporting fields =2,090 entries.
+Four bodies: full synchronous/asynchronous asset-load diagnostic callback,
+raw game-submode accessor, BuildingActor owning-controller and owning-player-state
+lookups. Submode byte+6cc is one credited field; writers/full transition remain open.
+Callback preserves early returns, unordered time comparison, original shipping caps,
+wrapping counters, two controller getter calls, exact CSV and LogFort text/order,
+and final state writes. Same logical FFortAssets substate; full owner hookup pending.
+Building lookups preserve authority/weak iterator behavior, ID snapshots, active
+then inactive search, and second game-mode load/cast. Original wrappers/bodies and
+helper bytes pinned. Generation39 accepts2,090/rejects0, no tests/build/runtime.
+Last tested1,040;880 pending; next2,040 requires120 bodies.
+
+Previous goal turn was progress: source38 f18331c8 and dashboard901bb549 pushed.
+Broader bounded scouts found obvious aircraft candidates already canonical; no
+fabricated credit. Building health creator still open; 143f72040 now identified as
+AActor::FlushNetDormancy. Owner support materialized but root found two additional
+real FGCObject virtuals in vtable145fdbdf0: GetReferencerName141dfad80 (FFortAssets)
+and GetReferencerPropertyName141dfade0. Dedicated Terra medium worker has exclusive
+Ghidra lease for these two; do not emit default base diagnostic overrides. Root
+owns canonical manifest/generator/native. Other workers done; full game/server and
+all four product gates open. No tests before2,040. Preserve porting/graphics/.
+
 ## Native source batch 38 (2026-11-03)
 
 Canonical source:1,916 bodies +169 supporting fields =2,085 ported entries.

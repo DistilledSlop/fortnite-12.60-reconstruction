@@ -12,7 +12,7 @@ def sources():
     policy = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(policy)
     result.update(policy.sources())
-    for dirname in ('asset_diagnostic_reads_source_runtime', 'asset_diagnostic_support_runtime', 'asset_load_analytics_source_runtime'):
+    for dirname in ('asset_diagnostic_reads_source_runtime', 'asset_diagnostic_support_runtime', 'asset_load_analytics_source_runtime', 'asset_load_callback_runtime', 'independent_native_recovery_runtime'):
         folder = HERE.parent / dirname
         evidence = json.loads((folder / 'native-evidence.json').read_text())
         with Path(evidence['image']).open('rb') as stream:
@@ -28,4 +28,7 @@ def sources():
     result['FortNativeAnalyticsProvider.h'] = (provider / 'FortNativeAnalyticsProvider.h').read_text()
     for name in ('SharedFortCsv.h', 'SharedFortCsv.cpp'):
         result[name] = (HERE / name).read_text()
+    callback = HERE.parent / 'asset_load_callback_runtime'
+    for name in ('FortAssetLoadDiagnosticState.h', 'FortAssetLoadDiagnosticState.cpp'):
+        result[name] = (callback / name).read_text()
     return result

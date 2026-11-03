@@ -1,0 +1,37 @@
+[
+  {
+    "function": "GetOwningController",
+    "kind": "getter",
+    "signature": "AController* GetOwningController() const",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/independent_native_recovery_runtime/GetOwningController.inc",
+    "confidence": "high",
+    "address": "0x1427371c0",
+    "native_body_address": "0x141ba8530",
+    "status": "ported",
+    "access": "public",
+    "includes": [
+      "Engine/World.h"
+    ],
+    "notes": "Direct reflected exec callee; 211 native bytes SHA-256 05fa2b6799f745dea0bb6d46365d6eb5d77b116b38b03fc0d485a5a0bf0b981e.",
+    "class": "ABuildingActor"
+  },
+  {
+    "function": "GetOwningPlayerState",
+    "kind": "getter",
+    "signature": "AFortPlayerState* GetOwningPlayerState() const",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/independent_native_recovery_runtime/GetOwningPlayerState.inc",
+    "confidence": "high",
+    "address": "0x1427371f0",
+    "native_body_address": "0x141ba8b20",
+    "status": "ported",
+    "access": "public",
+    "includes": [
+      "Engine/World.h",
+      "GameFramework/GameStateBase.h"
+    ],
+    "notes": "Direct reflected exec callee; 412 native bytes SHA-256 8806527fe313175ae2fdceed4e2904cd3ffa9c6a35a696d6aeba911bb3269b54.",
+    "class": "ABuildingActor"
+  }
+]

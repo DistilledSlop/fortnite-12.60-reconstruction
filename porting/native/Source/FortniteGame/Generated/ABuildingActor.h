@@ -30,6 +30,7 @@ class AController;
 class AFortAthenaVehicle;
 class AFortMission;
 class AFortPlacementActor;
+class AFortPlayerState;
 class UActorComponent;
 class UBuildingActorHotSpotConfig;
 class UFortAbilitySystemComponent;
@@ -638,6 +639,12 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual float GetMaxShield() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure, BlueprintAuthorityOnly)
+	AController* GetOwningController() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	AFortPlayerState* GetOwningPlayerState() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual float GetShield() const;
