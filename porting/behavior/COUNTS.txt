@@ -1,5 +1,5 @@
-ported: 261
+ported: 265
 skipped: 182
 declared_in_header: 247
-pending_declaration: 12
-fail: 1
+pending_declaration: 16
+fail: 3

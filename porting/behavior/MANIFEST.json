@@ -6283,5 +6283,61 @@
       "SharedFortGameLog.h"
     ],
     "notes": "Exec calls 0x141990d90. Setup/Warmup return a signed-bounds-checked Aircrafts entry silently. Other phases log invalid indices at Verbose; missing aircraft checks GetWorld/IsPlayingReplay even with logging disabled and warns only outside replay. Reuses original LogFort category, emitted once by existing policy. Exact native-body/category/predicate/literal evidence in aircraft_state_evidence.md and aircraft_lookup_evidence.md."
+  },
+  {
+    "function": "GetCurrentPlaylistName",
+    "kind": "getter",
+    "signature": "FName GetCurrentPlaylistName()",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/AFortGameStateAthena/GetCurrentPlaylistName.inc",
+    "confidence": "high",
+    "address": "0x14291e8b0",
+    "status": "ported",
+    "proxy_score": null,
+    "decompile_source": "porting/generated/decomp/AFortGameStateAthena/GetCurrentPlaylistName.c",
+    "notes": "Returns override/base PlaylistName (+0x34), or NAME_None when both playlists are absent. Athena-owned reflection candidate is non-const; different-class Text/const candidate must not be selected.",
+    "class": "AFortGameStateAthena"
+  },
+  {
+    "function": "GetPlayersLeft",
+    "kind": "getter",
+    "signature": "FPlayersLeft GetPlayersLeft() const",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/AFortGameStateAthena/GetPlayersLeft.inc",
+    "confidence": "high",
+    "address": "0x14291f1d0",
+    "status": "ported",
+    "proxy_score": null,
+    "decompile_source": "porting/generated/decomp/AFortGameStateAthena/GetPlayersLeft.c",
+    "notes": "Returns reflected FPlayersLeft with Humans at0, Bots at4, Total at8 from PlayersLeft +0x12f0 and PlayerBotsLeft +0x1ecc.",
+    "class": "AFortGameStateAthena"
+  },
+  {
+    "function": "GetTotalPlayers",
+    "kind": "getter",
+    "signature": "FTotalPlayers GetTotalPlayers() const",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/AFortGameStateAthena/GetTotalPlayers.inc",
+    "confidence": "high",
+    "address": "0x14291f680",
+    "status": "ported",
+    "proxy_score": null,
+    "decompile_source": "porting/generated/decomp/AFortGameStateAthena/GetTotalPlayers.c",
+    "notes": "Returns reflected FTotalPlayers with Humans at0, Bots at4, Total at8 from TotalPlayers +0x12ec and TotalPlayersBots +0x1ec8.",
+    "class": "AFortGameStateAthena"
+  },
+  {
+    "function": "SetFocalPointActor",
+    "kind": "exec",
+    "signature": "void SetFocalPointActor(AActor* InFocalPointActor, FVector InFocalPointOffset, float InFocalPointFOV, float InDuration)",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/AFortGameStateAthena/SetFocalPointActor.inc",
+    "confidence": "high",
+    "address": "0x142920d00",
+    "status": "ported",
+    "proxy_score": null,
+    "decompile_source": "porting/generated/decomp/AFortGameStateAthena/SetFocalPointActor.c",
+    "notes": "Authority-only write to FocalPointOffset (+0x1328), RemainingFocalPointActorDuration (+0x1318), FocalPointFOV (+0x1334), FocalPointActor (+0x1320). No OnRep call or other side effect in native body.",
+    "class": "AFortGameStateAthena"
   }
 ]

@@ -1,5 +1,76 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Gameplay source batch (2026-11-02): counts, playlist name and focal point
+
+Codex owns gameplay; Claude owns UI/shared Native build. Previous goal turn made
+source progress (cd9caec0 recovered two bodies and f8bd001a recorded validation
+reuse). User noticed dashboard251 was stale:9941759b refreshed it to261. This
+batch adds four source bodies and refreshes committed COUNTS to265 alongside them.
+Do not repeat prior body checks when independent new work cannot invalidate them;
+effectively instant checks are fine. Preserve bounded reads and Luna medium /
+Terra medium-high / Sol medium with fork_turns none and bounded task rotation.
+
+New canonical AFortGameStateAthena bodies: GetCurrentPlaylistName,
+GetPlayersLeft, GetTotalPlayers and SetFocalPointActor. Player counts preserve the
+separate human/bot values and total sum in the original twelve-byte structs;
+playlist name returns NAME_None when absent; focal writes are authority-only,
+with no invented OnRep/event calls. Exact original mappings/hashes and the
+Athena-owned name-returning non-const reflection candidate are in
+behavior/game_state_queries_evidence.md. The count return structs were not
+previously emitted. Generator now validates exact original identity,layout and
+field flags before enabling their BlueprintType and BlueprintReadOnly/Transient
+representation; other struct property output remains unchanged.
+
+Current batch source generation PASS265 splices,0 rejections; focused new-body
+checker PASS4/4. Generator self-test PASS145. Fresh full UHT succeeds with all
+output directed to scratch; Engine export is disabled, no shared Native/Engine
+files written. Both actual AFortGameStateAthena.cpp and its fresh UHT-generated
+AFortGameStateAthena.gen.cpp pass UE clang9 syntax compilation. Commands are
+JSON argv in /tmp/gameplay-state-query-validation-2/: command.json (scratch
+promotion from project root), batch-uht.command.json (fresh reflection),
+AFortGameStateAthena.current.command.json and AFortGameStateAthena.gen.command.json
+(the two compiles from /opt/fortnite/UnrealEngine/Engine/Source; core dumps off).
+Final logs generation.corrected.log,batch-uht.corrected.log,
+AFortGameStateAthena.current.syntax.log,AFortGameStateAthena.gen.syntax.log,
+gameplay-check.log,generator-self-test.log. No client/server linking,joins or
+actual gameplay runtime yet; no new runtime/milestone credit.
+
+Intermediate failures retained: validation-1 hit /tmp inode exhaustion; removed
+only our incomplete/superseded scratch Source trees, retaining logs. Initial
+validation-2 syntax used stale UHT macros after new includes moved class lines;
+struct-only UHT passed but was insufficient for the class. Full UHT identified
+missing BlueprintType on the two new count structs; terminated that known-failed
+run and corrected generator inputs, then repeated only affected reflection and
+compiles. The final corrected full UHT and both compiles pass. Previous gameplay
+bodies were not individually retested. COUNTS refresh is the fast canonical
+`python3 -I porting/behavior/check_behavior.py`, counts-refresh.log:265 ported,
+182 skipped,247 declared,16 pending,3 failures. These are the single-module
+UCommonButton header lookup plus the two count struct names absent from shared
+Native (unpromoted); scratch checks have no waived/rejected bodies. Counts are
+canonical source recovery, not a passing shared-Native runtime claim. Commit hook
+refreshes dashboard from committed count; keep doing this with body batches.
+
+Parallel bounded recovery is committed as evidence, without body-count credit:
+* aircraft_dropzone_evidence.md: exact lock/unlock setter and callback, native
+  aircraft byte producer still missing; team-count default is TeamMembers.Num().
+* playlist_mode_evidence.md: five exact native tag strings and HasTag semantics;
+  producer is AddNativeGameplayTag, shared singleton initialization ownership is
+  still needed (a concrete earlier caller exists, so query-local registration
+  changes the finalization contract).
+* weapon_equip_evidence.md and weapon_event_names_evidence.md: forced equip graph,
+  controller/inventory dependencies and exact RPC names ClientInternalEquipWeapon
+  /ServerInternalEquipWeapon. Actual equip, inventory and Athena override bodies
+  remain unrecovered; preserve their real virtual/event effects.
+* combat_notification_evidence.md: DBNO/Kill RPCs require controller timer/counter
+  helper1419eded0; Kill also needs predicate14241bc10 and option-controlled thunk.
+No empty/fallback implementation was introduced. Existing untracked
+weapon_selection_evidence.md and all frontend edits are unowned; preserve them.
+
+Next: coordinate shared gameplay promotion/build with Claude's Native owner;
+canonical source includes pawn/squad22008320, aircraft/playlistcd9caec0 and this
+batch. Continue actual native body recovery in parallel at the concrete dependency
+boundaries above. No active build/UHT sessions or workers remain at this checkpoint.
+
 ## Gameplay source batch (2026-11-02): playlist capacity and aircraft lookup
 
 Dashboard bookkeeping corrected after user pointed out the stale251 count:

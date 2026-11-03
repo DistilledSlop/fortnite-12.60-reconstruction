@@ -4524,6 +4524,27 @@ def observed_confirmation_action(info):
     return True
 
 
+def observed_player_count_struct(info):
+    """Original Blueprint-returned count structs, including their read-only fields."""
+    expected = {'FPlayersLeft': ('0x14291e040', 'PlayersLeft'),
+                'FTotalPlayers': ('0x14291e100', 'TotalPlayers')}
+    if info.cpp_name not in expected:
+        return False
+    fn, name = expected[info.cpp_name]
+    rec = info.rec
+    if (info.kind != 'struct' or info.fn != fn or info.package != '/Script/FortniteGame' or
+            rec.get('name') != name or rec.get('size') != 12 or rec.get('align') != 4 or
+            rec.get('super_fn') is not None or len(rec.get('properties', [])) != 3):
+        raise ValueError('original player-count struct identity or layout differs: ' + info.cpp_name)
+    for index, (prop, (field, offset)) in enumerate(zip(rec['properties'], [('Total', 8), ('Bots', 4), ('Humans', 0)])):
+        if (prop.get('index') != index or prop.get('name') != field or prop.get('offset') != offset or
+                prop.get('kind') != 'Int' or prop.get('kind_raw') != '0x3' or prop.get('array_dim') != 1 or
+                hx(prop.get('property_flags')) != 0x10000000002014 or prop.get('type_refs') is not None or
+                prop.get('object_flags') != '0x45' or prop.get('replicated') is not False):
+            raise ValueError('original player-count field metadata differs: ' + info.cpp_name + '.' + field)
+    return True
+
+
 class TypeGate:
     """Decides whether a struct, enum or delegate type reference can be emitted, and builds its model.
 
@@ -4655,6 +4676,10 @@ class TypeGate:
                 model["blueprint_type"] = True
                 for member in model["members"]:
                     member["blueprint_read_write"] = True
+            if observed_player_count_struct(info):
+                model["blueprint_type"] = True
+                for member in model["members"]:
+                    member["runtime_property_specifiers"] = ["BlueprintReadOnly", "Transient"]
             model = _confirmation_policy.apply_struct(self, info, model)
             model = _common_input_policy.apply_struct(info, model)
             model = _input_platform_policy.apply_struct(info, model)
@@ -4946,7 +4971,8 @@ def render_struct_header(model, source_label):
     lines.append("")
     for m in model["members"]:
         lines.append("\t// table index %s, offset %s, flags %s" % (m["table_index"], m["offset"], m["property_flags"]))
-        lines.append("\tUPROPERTY(BlueprintReadWrite)" if m.get("blueprint_read_write") else "\tUPROPERTY()")
+        specifiers = m.get("runtime_property_specifiers", ["BlueprintReadWrite"] if m.get("blueprint_read_write") else [])
+        lines.append("\tUPROPERTY(%s)" % ", ".join(specifiers))
         lines.append("\t%s" % m["decl"])
         lines.append("")
     lines.extend(_common_activation_policy.struct_declarations(model))
