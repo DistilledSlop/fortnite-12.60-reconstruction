@@ -240,6 +240,8 @@ def main():
             info = tables.by_fn.get(ref.lower()) if isinstance(ref, str) else None
             if not info or info.kind != 'enum' or not info.cpp_name or info.package not in ('/Script/FortniteGame', '/Script/FortniteUI'):
                 rejects['unresolved_enum_type'] += 1; continue
+            if info.package != parent['package'] and (parent['package'], info.package) != ('/Script/FortniteUI', '/Script/FortniteGame'):
+                rejects['enum_module_dependency'] += 1; continue
             eh = enum_headers.get(info.header_name, [])
             if len(eh) != 1 or eh[0].parents[1].name != info.package.rsplit('/', 1)[-1] or not re.search(r'\benum\s+class\s+' + re.escape(info.cpp_name) + r'\s*:\s*uint8\b', eh[0].read_text()):
                 rejects['enum_header_underlying_mismatch'] += 1; continue
@@ -247,7 +249,7 @@ def main():
             ret, arguments = generator.decode_params(ps, ret_resolver)
             if ret_resolver.todos or arguments or ret != info.cpp_name:
                 rejects['return_generator_type_mismatch'] += 1; continue
-            taken = {x.get('name') for x in block['properties']} | set(funcs) | {e.get('function') for e in manifest if e.get('class') == cls}
+            taken = {x.get('name') for x in block['properties']} | set(funcs) | {e.get('function') for e in manifest if e.get('class') == cls and not (args.revalidate_own and e.get('recovery_source') == 'bulk_native_enum_getter_runtime')}
             if not canonical and prop in taken:
                 rejects['field_name_collision'] += 1; continue
             header = headers[cls][0].read_text()

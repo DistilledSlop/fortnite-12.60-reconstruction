@@ -31641,21 +31641,6 @@
     "notes": "Complete single-parameter extraction wrapper calls exact constant Boolean leaf 0x1406801d0; source recovery only."
   },
   {
-    "class": "UAthenaHUDContext",
-    "function": "NativeRecoveredByte_0x260",
-    "kind": "member_field",
-    "signature": "uint8 NativeRecoveredByte_0x260",
-    "signature_status": "proposed",
-    "access": "public",
-    "offset": "0x260",
-    "inc_path": null,
-    "confidence": "high",
-    "address": null,
-    "status": "ported",
-    "recovery_source": "bulk_native_enum_getter_runtime",
-    "notes": "Original byte read identifies storage; initialization and writers remain unported. Source recovery only."
-  },
-  {
     "class": "UFortCreativeItemListTabPanel",
     "function": "NativeRecoveredByte_0x601",
     "kind": "member_field",
@@ -31714,21 +31699,6 @@
     "status": "ported",
     "recovery_source": "bulk_native_enum_getter_runtime",
     "notes": "Original byte read identifies storage; initialization and writers remain unported. Source recovery only."
-  },
-  {
-    "class": "UAthenaHUDContext",
-    "function": "GetPTTState",
-    "kind": "exec",
-    "signature": "EPTTState GetPTTState() const",
-    "signature_status": "proposed",
-    "inc_path": "porting/behavior/bulk_native_enum_getter_runtime/14519dce0_UAthenaHUDContext_GetPTTState.inc",
-    "confidence": "high",
-    "address": "0x14519dce0",
-    "status": "ported",
-    "reflection_flags": "0x54020401",
-    "static": false,
-    "access": "public",
-    "notes": "Original wrapper enum byte getter at 0x14519dce0, native same-class field NativeRecoveredByte_0x260 offset 0x260; initialization and writers unported."
   },
   {
     "class": "UFortCreativeItemListTabPanel",

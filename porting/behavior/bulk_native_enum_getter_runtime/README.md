@@ -16,4 +16,6 @@ byte value survives. Initialization, mutation and ownership are not inferred.
 These are source proposals, not runtime or build validation. The latest scan
 found five getters and five new fields; promotion is owned separately.
 
-Integrated in native source batch 16: five bodies and five uint8 backing fields. Builds and runtime checks remain pending at approximately 2,040 bodies.
+Integrated in native source batch 16: four bodies and four uint8 backing fields. Builds and runtime checks remain pending at approximately 2,040 bodies.
+
+Promotion rejected UAthenaHUDContext::GetPTTState because EPTTState belongs to a module outside its allowed dependencies. That body and field are excluded without credit. The scanner now enforces the existing module dependency rule.
