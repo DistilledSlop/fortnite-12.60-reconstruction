@@ -171,6 +171,9 @@ public:
 	// Non-reflected field (behaviour kind "member_field", offset 0x1284): not a UPROPERTY, not replicated.
 	float NativeRecoveredFloat_0x1284;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x12a1): not a UPROPERTY, not replicated.
+	uint8 NativeRecoveredByte_0x12a1;
+
 	// Non-reflected field (behaviour kind "member_field", offset 0x14d0): not a UPROPERTY, not replicated.
 	float NativeRecoveredFloat_0x14d0;
 
@@ -195,6 +198,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsFlying() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool IsFreelooking() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsStandingInPlace() const;

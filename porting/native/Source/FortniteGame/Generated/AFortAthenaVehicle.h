@@ -139,6 +139,9 @@ public:
 	// Non-reflected field (behaviour kind "member_field", offset 0x40e): not a UPROPERTY, not replicated.
 	uint8 NativeRecoveredBits_0x40e;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x40f): not a UPROPERTY, not replicated.
+	uint8 NativeRecoveredBits_0x40f;
+
 	// Non-reflected field (behaviour kind "member_field", offset 0x410): not a UPROPERTY, not replicated.
 	uint8 NativeRecoveredBits_0x410;
 
@@ -238,6 +241,12 @@ public:
 
 	// Non-reflected field (behaviour kind "member_field", offset 0x554): not a UPROPERTY, not replicated.
 	float NativeRecoveredFloat_0x554;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x578): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt_0x578;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x610): not a UPROPERTY, not replicated.
+	float NativeRecoveredFloat_0x610;
 
 	// table index 107, flags 0x10000000000015
 	UPROPERTY()
@@ -571,6 +580,9 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_DisabledCollisionShapes, Transient)
 	TArray<int32> DisabledCollisionShapes;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0xbd8): not a UPROPERTY, not replicated.
+	float NativeRecoveredFloat_0xbd8;
+
 	// table index 12, flags 0x40000100002020
 	UPROPERTY(ReplicatedUsing=OnRep_CorrectTargetOrientation, Transient)
 	FVehicleTargetOrientation CorrectTargetOrientation;
@@ -647,6 +659,9 @@ public:
 	void DebugDrawImpactBucket_Implementation(const FVector& Location, const FVector& ImpactVector, const FColor& Color);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual float GetBrakingDelta() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual float GetCurrentFOV() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
@@ -667,15 +682,30 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual bool IsBraking() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool IsCorrectingOrientation() const;
+
 protected:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsFuelBelowThreshold() const;
 public:
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool IsInReverseGear() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool IsInWaterBody() const;
+
 protected:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsOutOfFuel() const;
 public:
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool IsOverlappingWaterBody() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool IsScrapingSidesOrTop() const;
 
 private:
 	UFUNCTION()
@@ -733,6 +763,9 @@ public:
 	UFUNCTION(NetMulticast, Reliable)
 	void UpdateClientWithVehicleTestInput(const FVector& LinearVelocity, const FVector& AngularVelocity);
 	void UpdateClientWithVehicleTestInput_Implementation(const FVector& LinearVelocity, const FVector& AngularVelocity);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool WheelsOnGround() const;
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

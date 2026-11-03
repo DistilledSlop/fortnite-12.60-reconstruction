@@ -48,6 +48,12 @@ bool AFortAthenaDoghouseVehicle::IsFlying() const
 	return static_cast<uint8>(NativePredicateStorage_0x1242) != 0;
 }
 
+bool AFortAthenaDoghouseVehicle::IsFreelooking() const
+{
+	// Native target 0x1418f1320; CONFIDENCE: high.
+	return NativeRecoveredByte_0x12a1 != 0;
+}
+
 bool AFortAthenaDoghouseVehicle::IsStandingInPlace() const
 {
 	// Original address: 0x1427d8120.

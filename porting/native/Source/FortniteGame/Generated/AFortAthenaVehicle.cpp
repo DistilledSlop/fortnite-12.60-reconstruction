@@ -35,6 +35,12 @@ void AFortAthenaVehicle::DebugDrawImpactBucket_Implementation(const FVector& Loc
 	// Body not recovered: reflection-derived stub.
 }
 
+float AFortAthenaVehicle::GetBrakingDelta() const
+{
+	// Native target 0x141914ff0; CONFIDENCE: high.
+	return bIsBraking ? NativeRecoveredFloat_0x610 : 0.0f;
+}
+
 float AFortAthenaVehicle::GetCurrentFOV() const
 {
 	// Original virtual target: 0x14084bcf0.
@@ -87,6 +93,12 @@ bool AFortAthenaVehicle::IsBraking() const
 	return false;
 }
 
+bool AFortAthenaVehicle::IsCorrectingOrientation() const
+{
+	// Native target 0x14191bbd0; CONFIDENCE: high.
+	return NativeRecoveredFloat_0xbd8 > 0.0f;
+}
+
 bool AFortAthenaVehicle::IsFuelBelowThreshold() const
 {
 	// CONFIDENCE: high; recovered native body and reflected field mapping.
@@ -95,11 +107,35 @@ bool AFortAthenaVehicle::IsFuelBelowThreshold() const
 	return !(FuelCharge.Charge >= FuelCharge.ChargeThreshold);
 }
 
+bool AFortAthenaVehicle::IsInReverseGear() const
+{
+	// Native target 0x14191bcf0; CONFIDENCE: high.
+	return (uint32(NativeRecoveredInt_0x578) - uint32(ReverseGears.Num())) >> 31;
+}
+
+bool AFortAthenaVehicle::IsInWaterBody() const
+{
+	// Native target 0x14191bd50; CONFIDENCE: high.
+	return (NativeRecoveredBits_0x40e & 0x04) != 0;
+}
+
 bool AFortAthenaVehicle::IsOutOfFuel() const
 {
 	// CONFIDENCE: high; recovered native body and reflected field mapping.
 	// 0x14283c0d0 -> 0x141b6a180; COMISS/SETBE also returns true for NaN.
 	return !(FMath::Abs(FuelCharge.Charge) > 1.0e-8f);
+}
+
+bool AFortAthenaVehicle::IsOverlappingWaterBody() const
+{
+	// Native target 0x14191bdd0; CONFIDENCE: high.
+	return (NativeRecoveredBits_0x40e & 0x02) != 0;
+}
+
+bool AFortAthenaVehicle::IsScrapingSidesOrTop() const
+{
+	// Native target 0x14084cd00; CONFIDENCE: high.
+	return (NativeRecoveredBits_0x40f & 0x04) != 0;
 }
 
 void AFortAthenaVehicle::OnRep_AbilitySystemComponent()
@@ -189,6 +225,12 @@ void AFortAthenaVehicle::ServerUsingRiftPortal_Implementation(AActor* RiftPortal
 void AFortAthenaVehicle::UpdateClientWithVehicleTestInput_Implementation(const FVector& LinearVelocity, const FVector& AngularVelocity)
 {
 	// Body not recovered: reflection-derived stub.
+}
+
+bool AFortAthenaVehicle::WheelsOnGround() const
+{
+	// Native target 0x140850620; CONFIDENCE: high.
+	return (NativeRecoveredBits_0x410 & 0x04) != 0;
 }
 
 void AFortAthenaVehicle::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
