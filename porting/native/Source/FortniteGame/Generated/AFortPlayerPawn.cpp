@@ -204,6 +204,13 @@ int32 AFortPlayerPawn::GetExtraLives() const
 	return 0;
 }
 
+AActor* AFortPlayerPawn::GetHomeActor() const
+{
+	// CONFIDENCE: high; recovered native control flow, see native-evidence.json.
+	const AFortPlayerState* FortPlayerState = GetPlayerState<AFortPlayerState>();
+	return FortPlayerState ? FortPlayerState->HomeActor : nullptr;
+}
+
 bool AFortPlayerPawn::GetIsHoldingObject() const
 {
 	// CONFIDENCE: HIGH

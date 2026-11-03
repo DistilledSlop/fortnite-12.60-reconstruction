@@ -8,6 +8,7 @@
 
 #include "EAthenaGamePhase.h"
 #include "EFortMinigameClassResetType.h"
+#include "EFortMinigameEnd.h"
 #include "EFortMinigamePlayerSpawnLocationSetting.h"
 #include "EFortMinigamePostGameSpawnLocationSetting.h"
 #include "EFortMinigameState.h"
@@ -45,6 +46,7 @@
 #include "FSolarisPrototype.h"
 #include "GameFramework/OnlineReplStructs.h"
 #include "GameplayTagContainer.h"
+#include "Math/UnrealMathSSE.h"
 #include "UFortMutatorOwner.h"
 #include "UFortVolumeAccessor.h"
 #include "UObject/Object.h"
@@ -593,6 +595,9 @@ public:
 	int32 GetPlayerCount(bool bIncludeSpectators) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetPostGameResetDelay(EFortMinigameEnd EndMethod) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetPostGameTimeRemaining() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
@@ -600,6 +605,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetRuntime() const;
+
+	UFUNCTION(BlueprintCallable)
+	void GetScoreboardStateTimes(TArray<float>& outStateTimes);
 
 	UFUNCTION(BlueprintNativeEvent)
 	FGameplayTagQuery GetStartQueryForPlayer(APlayerState* Player);
@@ -632,6 +640,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetWarmupTimeRemaining() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	uint8 GetWinningTeamIndexFromTeamIndex(uint8 InTeamIndex) const;
+
 protected:
 	UFUNCTION(BlueprintNativeEvent)
 	void HandleMinigameComponentInPlayChanged(UFortMinigameLogicComponent* MinigameComponent);
@@ -656,6 +667,9 @@ public:
 	bool IsInWarmup() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsLastRound() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsMinigameActor(AActor* Actor) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
@@ -666,6 +680,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsPlayerInMinigameByNetId(FUniqueNetIdRepl& UniqueNetId, bool bCheckSpectatingPlayers) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsPlayerPersistenceRequired(AFortPlayerState* PlayerState) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsPlayerSpectatingMinigame(AFortPlayerState* PlayerState) const;
@@ -780,5 +797,6 @@ public:
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	virtual void NativeAppendOwnerMutators(TArray<AFortGameplayMutator*>& OutMutators, UObject* Context);
 	virtual AFortVolume* NativeGetVolume();
+	bool NativeIsMatchPointDecided293() const;
 };
 

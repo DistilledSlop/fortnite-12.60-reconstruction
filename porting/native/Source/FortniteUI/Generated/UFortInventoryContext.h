@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UBlueprintContextBase.h"
 
+#include "EVaultItemLimitStatus.h"
 #include "FItemListChangedDelegate.h"
 #include "FItemsChanged.h"
 #include "FOnCraftItemFailed.h"
@@ -118,6 +119,11 @@ public:
 	// Non-reflected field (behaviour kind "member_field", offset 0x1fc): not a UPROPERTY, not replicated.
 	int32 CachedVaultItemLimit;
 
+private:
+	// Non-reflected field (behaviour kind "member_field", offset 0x200): not a UPROPERTY, not replicated.
+	EVaultItemLimitStatus CachedVaultItemLimitStatus;
+public:
+
 	// Non-reflected field (behaviour kind "member_field", offset 0x204): not a UPROPERTY, not replicated.
 	int32 CachedHeroItemCount;
 
@@ -132,6 +138,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetVaultItemLimit() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	EVaultItemLimitStatus GetVaultItemLimitStatus() const;
 
 };
 

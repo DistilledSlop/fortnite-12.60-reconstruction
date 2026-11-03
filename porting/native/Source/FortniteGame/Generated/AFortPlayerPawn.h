@@ -1439,6 +1439,9 @@ public:
 	int32 GetExtraLives() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	AActor* GetHomeActor() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool GetIsHoldingObject() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
