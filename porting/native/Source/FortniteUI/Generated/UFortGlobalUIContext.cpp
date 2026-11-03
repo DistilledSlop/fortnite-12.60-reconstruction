@@ -4,6 +4,12 @@
 #include "AFortPlayerControllerZone.h"
 #include "Engine/LocalPlayer.h"
 
+void UFortGlobalUIContext::ClearRatingWidgetInfo()
+{
+	// CONFIDENCE: high; complete native exec at 0x145244900.
+	bShowRateWidget = false;
+}
+
 bool UFortGlobalUIContext::IsBluGloEnabled()
 {
 	// Original address: 0x1412d9d60.

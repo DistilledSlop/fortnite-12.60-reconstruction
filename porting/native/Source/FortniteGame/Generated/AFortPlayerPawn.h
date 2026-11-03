@@ -459,6 +459,9 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_IsInsideSafeZone)
 	uint8 bIsInsideSafeZone : 1;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x121c): not a UPROPERTY, not replicated.
+	float NativeRecoveredFloat_0x121c;
+
 	// table index 235, flags 0x14000000000000
 	UPROPERTY()
 	TSubclassOf<UGameplayEffect> SafeZoneAppliedGE;
@@ -1379,6 +1382,9 @@ public:
 	UFUNCTION(Exec)
 	void DebugDestroyVehicle();
 
+	UFUNCTION()
+	void DriverToPassengerAnimationStopped();
+
 protected:
 	UFUNCTION(BlueprintCallable)
 	void EndedInteractSearch();
@@ -1636,6 +1642,12 @@ public:
 
 	UFUNCTION()
 	void OnRep_WaitingForEmoteInteraction();
+
+	UFUNCTION()
+	void PassengerToDriverAnimationStopped();
+
+	UFUNCTION()
+	void PassengerToPassengerAnimationStopped();
 
 	UFUNCTION()
 	virtual void PerformSupplementalKillVolumeSweep();

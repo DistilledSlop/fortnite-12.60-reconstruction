@@ -298,6 +298,9 @@ public:
 	UFUNCTION(ServiceResponse(JSBridge, ResponseId=1))
 	void CheckLatestClient(const FWebJSResponse& Response);
 
+	UFUNCTION(BlueprintCallable)
+	void ClearOverrideCurrentMusicFFT();
+
 	UFUNCTION(Exec)
 	void DebugCreateBackgroundPlayer(int32 ControllerId);
 

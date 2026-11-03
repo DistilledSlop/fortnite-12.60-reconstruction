@@ -871,6 +871,12 @@ void AFortPlayerController::ServerUpgradeBuildingActor_Implementation(ABuildingA
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerController::StartZeroingCameraRoll()
+{
+	// CONFIDENCE: high; complete native exec at 0x142a4fa10.
+	bZeroingCameraRoll = true;
+}
+
 void AFortPlayerController::ToggleClientBot()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).

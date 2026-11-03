@@ -1,5 +1,55 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Native leaf integrations batch83 (2026-11-03)
+
+Integrated12 more function bodies and2 evidenced storage fields. Ten complete
+constant-write leaves cover antelope boost reset, controller camera roll,
+three driver/passenger animation flags, clock-backpack cuckoo request, emote
+music FFT override reset, rating-widget flag clear and quest logging toggles.
+The execs contain only common FFrame advancement and a direct jump; the target
+leaves contain one exact write/mask and RET. Existing field type/access and
+packed bool masks were checked. Native-source state operations include UI
+context flags; no visual reconstruction work was attempted.
+
+Vehicle ClientAcknowledgeVehicleInputState14230e450 stores XMM1 with MOVSS at
+pawn+0x121c. A neutral float member is backed by the complete native9-byte body.
+The preceding reflected struct has proven size40, ending11e8; next property
+starts1230, so121c..1220 is a gap, not a struct alias. The MFA animation callback
+also gets a raw uint8 field44b, with safe immediate-parent/class occupancy.
+Neither new field claims constructor/default/lifetime behavior. Other11 unmatched
+leaf-storage candidates remain blocked by occupied or unknown layout ranges.
+
+Final generation83:2,290 accepted entries =2,108 bodies+182fields, rejected0.
+Cumulative change is16 native implementation/header files across8 classes.
+No compiler/build/runtime/tests ran. Last tested2,040;68 canonical+4 manual bodies
+build pending; next tests3,040. All four product gates OPEN; objective ACTIVE.
+This continuation integrated31 bodies and2 fields across82/83. Previous goal turn
+was PROGRESS (89e49a41/98ec162c); committed/pushed82 is eff28977/40e79356.
+
+One fresh bounded Terra6.1 medium fork-none worker implemented the leaf scanner
+and a bounded storage-assessment follow-up, owning only its new directories.
+Root reviewed bytes/mappings, recovered vehicle storage and retained sole
+MANIFEST/native/promotion/build/staging ownership. Preserve economical reads,
+bounded worker rotation and configured Luna/Terra/Sol choices, deferred visual
+work and unrelated graphics/Engine edits. Profile/PSO drafts81 remain incomplete.
+
+Sources/tools: bulk_leaf_mutation83_runtime (22 matched leaves/10 proposals,
+mmap of previously pinned image), leaf_storage83_runtime (12 unresolved leaves
+assessed/1 safe field+body), vehicle_ack83_runtime (complete bytes, struct-size
+and gap evidence). These narrow patterns do not establish exhaustion of all
+quick native functions. Next useful scanner shapes include guarded multi-field
+leaves and other exec wrappers; unknown aggregates need layout recovery first.
+
+Commands: `python3 porting/behavior/bulk_leaf_mutation83_runtime/scan.py` and
+`python3 porting/behavior/leaf_storage83_runtime/prepare.py` (worker source
+inventory/proposals only, not builds/tests). Root extracted32bytes at image
+file offset0x230e450 and ran `objdump -D -b binary -m i386:x86-64 --adjust-vma=0x14230e450 /tmp/vehicle-ack83.bin`.
+`python3 -I /tmp/promote-native-batch83.py > /tmp/promote-native-batch83.log 2>&1`
+Final exit0,2,290accepted/0rejected; reports/command under
+porting/generated/gameplay-bulk-integration-83/. Initial missing CONFIDENCE tag
+on the new raw-byte snippet was rejected, then corrected in snippet and producer;
+final pass changed2files after earlier successful entries changed the other14.
+
 ## Broader native integrations batch82 (2026-11-03)
 
 Integrated19 native function bodies: two controller volume-completion RPCs;

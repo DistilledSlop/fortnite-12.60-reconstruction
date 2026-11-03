@@ -142,5 +142,8 @@ public:
 	UPROPERTY()
 	float CuckooOutLlamaScaleInterpSpeed;
 
+	UFUNCTION(BlueprintCallable)
+	void PopOutCuckooOnKill();
+
 };
 

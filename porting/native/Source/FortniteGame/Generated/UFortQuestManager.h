@@ -199,6 +199,16 @@ private:
 	void CheckObjectiveStatUsage();
 public:
 
+private:
+	UFUNCTION(Exec)
+	void DisableQuestStateLogging();
+public:
+
+private:
+	UFUNCTION(Exec)
+	void EnableQuestStateLogging();
+public:
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	EQuestMapScreenMode GetQuestMapMode() const;
 

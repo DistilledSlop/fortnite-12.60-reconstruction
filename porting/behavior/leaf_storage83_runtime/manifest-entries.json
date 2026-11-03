@@ -1,0 +1,32 @@
+[
+  {
+    "class": "UEnableMultiFactorModal",
+    "function": "NativeRecoveredByte_0x44b",
+    "kind": "member_field",
+    "signature": "uint8 NativeRecoveredByte_0x44b",
+    "signature_status": "proposed",
+    "access": "public",
+    "offset": "0x44b",
+    "inc_path": null,
+    "confidence": "high",
+    "address": null,
+    "status": "ported",
+    "recovery_source": "leaf_storage83_runtime",
+    "notes": "Complete leaf proves raw width and operation only; no initialization or other writer claims."
+  },
+  {
+    "class": "UEnableMultiFactorModal",
+    "function": "AnimationsComplete",
+    "kind": "exec",
+    "signature": "void AnimationsComplete()",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/leaf_storage83_runtime/1451e9b50_UEnableMultiFactorModal_AnimationsComplete.inc",
+    "confidence": "high",
+    "address": "0x1451e9b50",
+    "status": "ported",
+    "reflection_flags": "0x4080401",
+    "static": false,
+    "access": "protected",
+    "notes": "Complete tail-call raw storage operation; see leaf_storage83_runtime/report.json."
+  }
+]

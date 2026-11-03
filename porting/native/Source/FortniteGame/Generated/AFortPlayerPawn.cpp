@@ -23,7 +23,8 @@ void AFortPlayerPawn::AttemptInstantInteractSearch()
 
 void AFortPlayerPawn::ClientAcknowledgeVehicleInputState_Implementation(float Timestamp)
 {
-	// Body not recovered: reflection-derived stub.
+	// CONFIDENCE: high; original14230e450 MOVSS stores XMM1 at pawn+0x121c.
+	NativeRecoveredFloat_0x121c = Timestamp;
 }
 
 void AFortPlayerPawn::ClientNotifyAbilityFailed_Implementation(UGameplayAbility* FailedAbility, const FGameplayTagContainer& FailedReason)
@@ -52,6 +53,12 @@ void AFortPlayerPawn::DebugDestroyVehicle()
 	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	// Empty body: the native function does nothing (see Inferred).
+}
+
+void AFortPlayerPawn::DriverToPassengerAnimationStopped()
+{
+	// CONFIDENCE: high; complete native exec at 0x142a7b570.
+	bPlayingDriverToPassengerAnimation = false;
 }
 
 void AFortPlayerPawn::EndedInteractSearch()
@@ -749,6 +756,18 @@ void AFortPlayerPawn::OnRep_VehicleInputStateUnreliable()
 void AFortPlayerPawn::OnRep_WaitingForEmoteInteraction()
 {
 	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerPawn::PassengerToDriverAnimationStopped()
+{
+	// CONFIDENCE: high; complete native exec at 0x142a7e260.
+	bPlayingPassengerToDriverAnimation = false;
+}
+
+void AFortPlayerPawn::PassengerToPassengerAnimationStopped()
+{
+	// CONFIDENCE: high; complete native exec at 0x142a7e280.
+	bPlayingPassengerToPassengerAnimation = false;
 }
 
 void AFortPlayerPawn::PerformSupplementalKillVolumeSweep()

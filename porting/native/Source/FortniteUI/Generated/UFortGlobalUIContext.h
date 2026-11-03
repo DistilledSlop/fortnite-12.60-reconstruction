@@ -153,6 +153,9 @@ public:
 	FUniqueNetIdRepl CurrentLocalPlayerUniqueNetId;
 
 	UFUNCTION(BlueprintCallable)
+	void ClearRatingWidgetInfo();
+
+	UFUNCTION(BlueprintCallable)
 	bool IsBluGloEnabled();
 
 	UFUNCTION(BlueprintCallable)

@@ -1836,6 +1836,9 @@ public:
 	void ServerUpgradeBuildingActor(ABuildingActor* BuildingActorToUpgrade, int32 NewUpgradeLevel);
 	void ServerUpgradeBuildingActor_Implementation(ABuildingActor* BuildingActorToUpgrade, int32 NewUpgradeLevel);
 
+	UFUNCTION()
+	void StartZeroingCameraRoll();
+
 	UFUNCTION(Exec)
 	void ToggleClientBot();
 

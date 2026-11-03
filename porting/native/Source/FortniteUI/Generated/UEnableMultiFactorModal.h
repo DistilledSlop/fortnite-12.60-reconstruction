@@ -25,6 +25,9 @@ public:
 	UPROPERTY()
 	bool bShouldShowConsoleVersion;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x44b): not a UPROPERTY, not replicated.
+	uint8 NativeRecoveredByte_0x44b;
+
 	// table index 4, flags 0x4000000008001c
 	UPROPERTY()
 	UCommonButton* Button_EnableMFA;
@@ -44,6 +47,11 @@ public:
 	// table index 0, flags 0x4000000008001c
 	UPROPERTY()
 	UCommonTextBlock* CT_MFA_Description;
+
+protected:
+	UFUNCTION(BlueprintCallable)
+	void AnimationsComplete();
+public:
 
 };
 

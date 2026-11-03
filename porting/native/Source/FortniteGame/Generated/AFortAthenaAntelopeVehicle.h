@@ -268,6 +268,9 @@ public:
 	UPROPERTY(Transient)
 	UFortAntelopeVehicleConfigs* FortAntelopeVehicleConfigs;
 
+	UFUNCTION(BlueprintCallable)
+	void ClearBoostAccumulated();
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetBoostAccumulated() const;
 

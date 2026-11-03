@@ -9,6 +9,18 @@ void UFortQuestManager::CheckObjectiveStatUsage()
 	return;
 }
 
+void UFortQuestManager::DisableQuestStateLogging()
+{
+	// CONFIDENCE: high; complete native exec at 0x142ab80f0.
+	bDoQuestStateLogging = false;
+}
+
+void UFortQuestManager::EnableQuestStateLogging()
+{
+	// CONFIDENCE: high; complete native exec at 0x142ab8110.
+	bDoQuestStateLogging = true;
+}
+
 EQuestMapScreenMode UFortQuestManager::GetQuestMapMode() const
 {
 	// Original address: 0x142ab8da0.
