@@ -392,3 +392,5 @@ previous declarations.
 ### Blueprint native event implementations
 
 Use `native_event_impl` only for an opted-in reflected native event with a recovered virtual implementation. The `function` and reflection-derived `signature` name the `_Implementation` method; `reflection_flags` is required and pins the original mask. The generator rejects mismatched flags, signatures, RPCs, static functions, delegates, and RepNotify targets. It emits the reflected `BlueprintNativeEvent` declaration with the original callable, pure, cosmetic, authority, exec, const and access metadata, followed by a virtual `_Implementation` declaration. Only the implementation receives the snippet; UHT generates the event dispatcher. An ordinary `getter` or `exec` cannot opt an event in.
+
+Member helpers may set `"static": true` with an ordinary signature (without the static keyword). The generator emits a static class declaration and ordinary qualified definition. Static and virtual are mutually exclusive; static helpers cannot be const. This differs from kind `static_helper`, which remains a private translation-unit free function.

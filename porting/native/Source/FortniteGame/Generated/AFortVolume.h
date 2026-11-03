@@ -9,7 +9,9 @@
 #include "AttributeSet.h"
 #include "EVolumeShape.h"
 #include "EVolumeState.h"
+#include "Engine/Engine.h"
 #include "Engine/EngineTypes.h"
+#include "Engine/World.h"
 #include "FAsyncTaskCallbackDelegate.h"
 #include "FOnActorEnterExitVolume.h"
 #include "FOnRestrictionEnabledChanged.h"
@@ -17,6 +19,7 @@
 #include "FOnShowPublishWatermarkChanged.h"
 #include "FOnVolumePerformanceMetricsUpdated.h"
 #include "FVolumeActorStats.h"
+#include "UObject/Object.h"
 
 class AActor;
 class AAthenaNavInvokerBox;
@@ -209,5 +212,9 @@ public:
 	void ServerClearVolume_Implementation();
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static void NativeAppendMinigameOwner(AFortVolume* Volume, TArray<UObject*>& OutOwners);
 };
 

@@ -2783,8 +2783,13 @@ def check_helper_entry(e, name, package, ctx, by_name, all_names, taken):
     kind, fname = e["kind"], e.get("function") or ""
     if e.get("body") is None:
         return None, e.get("reject") or "no body"
+    member_static = e.get("static", False)
+    if not isinstance(member_static, bool) or ("static" in e and kind != "helper"):
+        return None, "static must be a boolean on a member helper only"
+    if member_static and e.get("virtual"):
+        return None, "a member helper cannot be both static and virtual"
     try:
-        ret, sname, params, const = parse_helper_signature(e.get("signature"), kind == "static_helper")
+        ret, sname, params, const = parse_helper_signature(e.get("signature"), kind == "static_helper" or member_static)
     except ValueError as exc:
         return None, str(exc)
     if sname != fname:
@@ -2812,7 +2817,7 @@ def check_helper_entry(e, name, package, ctx, by_name, all_names, taken):
         return None, "; ".join(problems)
     refs = (set(re.findall(r"[A-Za-z_]\w*", strip_comments(e["body"]))) & all_names) - {fname}
     return {"name": fname, "kind": kind, "tag": "%s::%s" % (name, fname), "ret": ret, "args": params,
-            "const": const, "virtual": virtual, "access": access, "body": e["body"], "refs": refs,
+            "const": const, "virtual": virtual, "static": member_static, "access": access, "body": e["body"], "refs": refs,
             "includes": inc_body | inc_sig | set(explicit), "header_includes": inc_sig | set(explicit),
             "forward": fwd}, None
 
@@ -3200,7 +3205,7 @@ def verify_spliced(model, header, cpp):
         ret, args = h["ret"], ", ".join(h["args"])
         const = " const" if h["const"] else ""
         tag = "%s::%s" % (name, h["name"])
-        decl = squash("%s%s %s(%s)%s;" % ("virtual " if h.get("virtual") else "", ret, h["name"], args, const))
+        decl = squash("%s%s %s(%s)%s;" % ("static " if h.get("static") else "virtual " if h.get("virtual") else "", ret, h["name"], args, const))
         if count(hsq, decl) != 1:
             problems.append("%s: declaration found %d times in header" % (tag, count(hsq, decl)))
         else:
@@ -3263,7 +3268,7 @@ def render_helper_declarations(model):
         if h["access"] != current:
             lines.append("%s:" % h["access"])
             current = h["access"]
-        lines.append("\t%s%s %s(%s)%s;" % ("virtual " if h.get("virtual") else "", h["ret"], h["name"],
+        lines.append("\t%s%s %s(%s)%s;" % ("static " if h.get("static") else "virtual " if h.get("virtual") else "", h["ret"], h["name"],
                                             ", ".join(h["args"]), " const" if h["const"] else ""))
     return lines
 

@@ -1,5 +1,29 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Native source batch 29 (2026-11-03)
+
+Canonical source:1,852 bodies +165 supporting fields =2,017 ported entries.
+Added connected AFortVolume NativeAppendMinigameOwner and GameState manager
+getter. Helper preserves world-context resolution (LogAndReturnNull), Athena
+state cast and manager pending-kill rejection; virtual FindComponentByClass;
+CurrentMinigame raw pointer; byte state1..5; AddUnique without output reset.
+Manager getter is included as its connected dependency, not a separate scan.
+Generator now supports explicit static:true on member helpers; header emits
+static, definition qualified, rejects static+virtual or const. Namespace-local
+static_helper retains its existing meaning. Native field/slot evidence and
+read-only capture gate are under mutator_context_runtime. Promotion29 accepts
+2,017/rejects0;4 Native files changed. No build/runtime/tests. Last tested1,040;
+812 bodies pending; next2,040 needs188. Source batch28 acd6126d pushed.
+
+Root found full registry UClass collector traversal in existing profile_backing_
+dispatch/0x1410f1290.c after backend entry traversal; profile_registry_runtime
+receipt/handoff updated. Registry writer and full backend integration remain open.
+PlayerState context still needs identity-to-volume map and location fallback;
+minigame component helper is now closed. All workers finished; use fresh bounded
+Terra medium with fork_turns none for next source task. Root canonical/Native/
+generator owner. Preserve economical reads, frequent commits/pushes/dashboard,
+no tests before2,040, unrelated graphics. Full parity and all4 gates remain open.
+
 ## Native source batch 28 (2026-11-03)
 
 Canonical source: 1,850 bodies +165 supporting fields =2,015 ported entries.

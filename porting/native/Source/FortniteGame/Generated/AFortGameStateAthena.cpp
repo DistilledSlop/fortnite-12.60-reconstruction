@@ -687,6 +687,12 @@ void AFortGameStateAthena::NativeAppendOwnerMutators(TArray<AFortGameplayMutator
 	}
 }
 
+AFortVolumeManager* AFortGameStateAthena::NativeGetVolumeManager() const
+{
+	// CONFIDENCE: HIGH. 0x141999ba0 reads AFortGameStateAthena +0x2108.
+	return VolumeManager;
+}
+
 void AFortGameStateAthena::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

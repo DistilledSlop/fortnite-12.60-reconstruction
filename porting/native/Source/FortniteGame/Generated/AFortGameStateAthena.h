@@ -1099,5 +1099,6 @@ public:
 	UFortPlaylistAthena* GetCurrentPlaylistAthena() const;
 	void SetAircraftLocked(bool bLocked);
 	virtual void NativeAppendOwnerMutators(TArray<AFortGameplayMutator*>& OutMutators, UObject* Context);
+	AFortVolumeManager* NativeGetVolumeManager() const;
 };
 
