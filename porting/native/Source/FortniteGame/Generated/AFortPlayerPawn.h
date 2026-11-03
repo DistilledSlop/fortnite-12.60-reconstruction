@@ -1415,6 +1415,9 @@ public:
 	bool HasControlledRCPawn() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool HasRespawnedInAir() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsInFrontEndHologram() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
@@ -1428,6 +1431,12 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsParachuteForcedOpen() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsParachuteLockedOpen() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsParachuteOpen() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsSkydiving() const;

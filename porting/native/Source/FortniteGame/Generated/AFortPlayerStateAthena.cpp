@@ -71,7 +71,13 @@ void AFortPlayerStateAthena::ClientReportKill_Implementation(AFortPlayerStateAth
 
 void AFortPlayerStateAthena::ClientReportTeamKill_Implementation(int32 TeamKills)
 {
-	// Body not recovered: reflection-derived stub.
+	// Original address: 0x141a3d8f0; evidence: porting/behavior/pawn_state_evidence.md.
+	// CONFIDENCE: MEDIUM
+	AFortPlayerControllerAthena* Controller = Cast<AFortPlayerControllerAthena>(GetOwner());
+	if (Controller != nullptr)
+	{
+		Controller->TeamKillsReportedNative.Broadcast(TeamKills);
+	}
 }
 
 void AFortPlayerStateAthena::OnRep_ChangeTeamInfo()
@@ -543,7 +549,10 @@ bool AFortPlayerStateAthena::Server_SetCanEditCreativeIsland_Validate(bool bCanE
 
 void AFortPlayerStateAthena::Server_TogglePreserveSquad_Implementation()
 {
-	// Body not recovered: reflection-derived stub.
+	// Original AFortPlayerStateAthena::Server_TogglePreserveSquad_Implementation; evidence: porting/behavior/pawn_state_evidence.md.
+	// Original address: 0x141a59530
+	// CONFIDENCE: HIGH
+	bPreserveSquad = !bPreserveSquad;
 }
 
 bool AFortPlayerStateAthena::Server_TogglePreserveSquad_Validate()

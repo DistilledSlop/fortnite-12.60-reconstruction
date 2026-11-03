@@ -210,6 +210,14 @@ bool AFortPlayerPawn::HasControlledRCPawn() const
 	return ControlledRCPawn.IsValid();
 }
 
+bool AFortPlayerPawn::HasRespawnedInAir() const
+{
+	// Original AFortPlayerPawn::HasRespawnedInAir; evidence: porting/behavior/pawn_state_evidence.md.
+	// Original address: 0x142a7cce0
+	// CONFIDENCE: HIGH
+	return bIsRespawning && bIsRespawningInAir;
+}
+
 bool AFortPlayerPawn::IsInFrontEndHologram() const
 {
 	// Behaviour snippet: AFortPlayerPawn::IsInFrontEndHologram (body only; spliced into the generated member function).
@@ -268,6 +276,22 @@ bool AFortPlayerPawn::IsParachuteForcedOpen() const
 	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	return bIsParachuteForcedOpen;
+}
+
+bool AFortPlayerPawn::IsParachuteLockedOpen() const
+{
+	// Original AFortPlayerPawn::IsParachuteLockedOpen; evidence: porting/behavior/pawn_state_evidence.md.
+	// Original address: 0x142a7d3b0
+	// CONFIDENCE: HIGH
+	return bLocalParachuteLockedOpen;
+}
+
+bool AFortPlayerPawn::IsParachuteOpen() const
+{
+	// Original AFortPlayerPawn::IsParachuteOpen; evidence: porting/behavior/pawn_state_evidence.md.
+	// Original address: 0x142a7d3d0
+	// CONFIDENCE: HIGH
+	return bIsParachuteOpen;
 }
 
 bool AFortPlayerPawn::IsSkydiving() const

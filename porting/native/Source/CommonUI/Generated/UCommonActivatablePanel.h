@@ -74,6 +74,16 @@ protected:
 public:
 
 protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnAddedToActivationStack();
+public:
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnRemovedFromActivationStack();
+public:
+
+protected:
     virtual void OnBeginIntro_Implementation();
     virtual void NativeActivateRequest() override;
     virtual void NativeHandleActivated() override;
@@ -150,6 +160,12 @@ private:
     bool NativeIsHoldingInputAction(const FDataTableRowHandle& Row) const;
     void NativeNotifyInputActionsChanged();
     void NativeRemoveRoutedInputActionHandlers();
+protected:
+    virtual void NativeAddedToActivationStack(); // original +4E8
+    virtual void NativeRemovedFromActivationStack(); // original +4F0
+private:
+    bool bNativeInActivationStack = false; // original +304
+    void NativeResetPanelOperations(); // original 1407f1b20
     friend class UCommonButton;
 };
 

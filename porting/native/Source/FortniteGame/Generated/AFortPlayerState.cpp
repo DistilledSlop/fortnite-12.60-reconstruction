@@ -127,6 +127,14 @@ void AFortPlayerState::ServerSetShowHeroHeadAccessories_Implementation(bool bSho
 	// Body not recovered: reflection-derived stub.
 }
 
+AFortTeamInfo* AFortPlayerState::GetPlayerTeam()
+{
+	// Original address: 0x1424192a0.
+	// CONFIDENCE: MEDIUM
+	// Evidence: porting/behavior/aircraft_unlock_runtime/README.md
+	return PlayerTeam;
+}
+
 void AFortPlayerState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

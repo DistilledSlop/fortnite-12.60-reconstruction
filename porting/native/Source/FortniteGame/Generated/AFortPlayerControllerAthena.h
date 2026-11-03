@@ -572,6 +572,9 @@ public:
 	UPROPERTY(Transient, Config)
 	bool bUseTrapPicker;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x31f8): not a UPROPERTY, not replicated.
+	TMulticastDelegate<void, int32> TeamKillsReportedNative;
+
 	// Non-reflected field (behaviour kind "member_field", offset 0x3210): not a UPROPERTY, not replicated.
 	TMulticastDelegate<void> TeamKillScoreChangedNative;
 

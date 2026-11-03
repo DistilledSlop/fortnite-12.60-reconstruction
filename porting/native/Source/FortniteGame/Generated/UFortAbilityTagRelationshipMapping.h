@@ -7,6 +7,7 @@
 #include "Engine/DataAsset.h"
 
 #include "FFortAbilityTagRelationship.h"
+#include "GameplayTagContainer.h"
 
 #include "UFortAbilityTagRelationshipMapping.generated.h"
 
@@ -20,5 +21,9 @@ public:
 	UPROPERTY()
 	TArray<FFortAbilityTagRelationship> AbilityTagRelationships;
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	void ExpandAbilityTagRelationships(const FGameplayTagContainer& AbilityTags, FGameplayTagContainer* BlockTags, FGameplayTagContainer* CancelTags);
 };
 

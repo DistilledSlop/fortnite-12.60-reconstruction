@@ -35,5 +35,16 @@ struct FOperation
 	UPROPERTY()
 	bool bOutroPanelBelow;
 
+	// Unreflected original +14..23 operation identifier.
+	FGuid NativeOperationId;
+
 };
+
+static_assert(STRUCT_OFFSET(FOperation, Operation) == 0x00, "Operation kind ABI");
+static_assert(STRUCT_OFFSET(FOperation, Panel) == 0x08, "Operation panel ABI");
+static_assert(STRUCT_OFFSET(FOperation, bIntroPanel) == 0x10, "Operation intro ABI");
+static_assert(STRUCT_OFFSET(FOperation, bActivatePanel) == 0x11, "Operation activate ABI");
+static_assert(STRUCT_OFFSET(FOperation, bOutroPanelBelow) == 0x12, "Operation outro ABI");
+static_assert(STRUCT_OFFSET(FOperation, NativeOperationId) == 0x14, "Operation ID ABI");
+static_assert(sizeof(FOperation) == 0x28 && alignof(FOperation) == 8, "Operation ABI");
 

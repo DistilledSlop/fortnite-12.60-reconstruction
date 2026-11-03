@@ -9,6 +9,7 @@
 #include "FGameplayAbilityRepSharedAnim.h"
 #include "FPersonalVehicleBlockingChanged.h"
 #include "FReplicatedMontagePair.h"
+#include "GameplayTagContainer.h"
 
 #include "UFortAbilitySystemComponent.generated.h"
 
@@ -21,6 +22,9 @@ public:
 	// table index 2, flags 0x10000010080000
 	UPROPERTY()
 	FPersonalVehicleBlockingChanged OnClientVehicleBlockingChanged;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x1350): not a UPROPERTY, not replicated.
+	FGameplayTagContainer NativeActiveActionTags;
 
 	// table index 1, flags 0x20080000000020
 	UPROPERTY(Replicated)
@@ -38,5 +42,9 @@ public:
 	void OnRep_SharedAnim();
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	bool HasNativeAction(const FGameplayTag& ActionTag);
 };
 

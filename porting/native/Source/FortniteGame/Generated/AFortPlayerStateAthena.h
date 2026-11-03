@@ -301,6 +301,9 @@ public:
 	UPROPERTY(Replicated, Transient)
 	bool bIsDisconnected;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x1298): not a UPROPERTY, not replicated.
+	int32 AircraftUnlockTeamCount;
+
 	// table index 12, flags 0x40000000000000
 	UPROPERTY()
 	UTexture2D* GameModeIcon;

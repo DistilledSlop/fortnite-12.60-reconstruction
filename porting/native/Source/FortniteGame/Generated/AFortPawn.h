@@ -802,6 +802,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsSpinning() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsStaggered() const;
+
 	UFUNCTION(BlueprintCallable)
 	void LogChugSplashEvent();
 
@@ -924,5 +927,9 @@ public:
 	bool WasDBNOOnDeath() const;
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	virtual bool HasNativeAction(const FGameplayTag& ActionTag);
 };
 

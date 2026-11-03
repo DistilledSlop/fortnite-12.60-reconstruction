@@ -15,6 +15,7 @@
 #include "EFriendlyFireType.h"
 #include "ESafeZoneStartUp.h"
 #include "Engine/NetSerialization.h"
+#include "Engine/World.h"
 #include "FAircraftFlightInfo.h"
 #include "FAthenaStreamIdOverride.h"
 #include "FCosmeticUsageReport.h"
@@ -60,14 +61,17 @@
 #include "FOnWinningTeamAnnounced.h"
 #include "FPickupOnDestroy.h"
 #include "FPickupOnSpawnReady.h"
+#include "FPlayersLeft.h"
 #include "FPlaylistPropertyArray.h"
 #include "FRepositionGameModeMessage.h"
 #include "FSetDefaultGameModeMessage.h"
 #include "FShowGameModeMessage.h"
 #include "FSpawnMachineRepDataArray.h"
 #include "FStormCapDamageThresholdInfo.h"
+#include "FTotalPlayers.h"
 #include "FUpdateNamedPoiColorDelegate.h"
 #include "GameplayTagContainer.h"
+#include "Math/Vector.h"
 #include "Math/Vector2D.h"
 #include "Misc/DateTime.h"
 #include "Styling/SlateBrush.h"
@@ -464,6 +468,9 @@ public:
 	// table index 124, flags 0x10000100000034
 	UPROPERTY(ReplicatedUsing=OnRep_WinningPlayerState)
 	APlayerState* WinningPlayerState;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x1418): not a UPROPERTY, not replicated.
+	int32 AircraftUnlockPlayerCount;
 
 	// table index 123, flags 0x10000100000034
 	UPROPERTY(ReplicatedUsing=OnRep_WinningTeam)
@@ -898,16 +905,58 @@ public:
 	TArray<FAthenaStreamIdOverride> ReticulatedSplineIds;
 
 	UFUNCTION(BlueprintCallable)
+	bool CanChangeGameplayOptions();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool CanRespawnOnStarterIsland() const;
+
+	UFUNCTION(BlueprintCallable)
 	void ConditionalStopAutoPerfCapture();
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	AFortAthenaAircraft* GetAircraft(int32 AircraftIndex) const;
+
+	UFUNCTION(BlueprintCallable)
+	FName GetCurrentPlaylistName();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetMaxPlaylistPlayers() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FPlayersLeft GetPlayersLeft() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	AFortSafeZoneIndicator* GetSafeZoneIndicator() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FTotalPlayers GetTotalPlayers() const;
 
 	UFUNCTION(BlueprintCallable)
 	void HandleGameModeMessageDefaultPosition();
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool HasValidFocalPointActor() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsBattleLabModePlaylist() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsCreativeLTMPlaylist() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsCreativeMMPlaylist() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsCreativeModePlaylist() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsCreativeOrBattleLabModePlaylist() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsCreativeOrPlaygroundModePlaylist() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsCreativeUtilitySpawningAllowedPlaylist() const;
 
 	UFUNCTION()
 	void OnRep_Aircraft();
@@ -1031,6 +1080,9 @@ public:
 	void RunPerfMemCheatScript_Client_Replicated_Implementation(bool bStartStatFiles);
 
 	UFUNCTION(BlueprintCallable)
+	void SetFocalPointActor(AActor* InFocalPointActor, FVector InFocalPointOffset, float InFocalPointFOV, float InDuration);
+
+	UFUNCTION(BlueprintCallable)
 	void StopAutoPerfCaptureTimer();
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
@@ -1038,5 +1090,6 @@ public:
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	UFortPlaylistAthena* GetCurrentPlaylistAthena() const;
+	void SetAircraftLocked(bool bLocked);
 };
 

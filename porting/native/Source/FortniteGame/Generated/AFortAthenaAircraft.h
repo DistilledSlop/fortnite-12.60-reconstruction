@@ -74,6 +74,9 @@ public:
 	UPROPERTY(Transient)
 	float ClientFlightTimerDrift;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x2f0): not a UPROPERTY, not replicated.
+	uint8 NativeInDropZone = 0;
+
 	// table index 9, flags 0x20080000000015
 	UPROPERTY()
 	float MiniMapIconScale;
