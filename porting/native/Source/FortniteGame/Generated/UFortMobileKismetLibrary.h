@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 
+class UObject;
+
 #include "UFortMobileKismetLibrary.generated.h"
 
 UCLASS()
@@ -14,5 +16,17 @@ class FORTNITEGAME_API UFortMobileKismetLibrary : public UBlueprintFunctionLibra
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static bool Get3DTouchEnabled(UObject* WorldContextObject);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static bool GetAutoFireEnabled(UObject* WorldContextObject);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static bool GetDedicatedButtonEnabled(UObject* WorldContextObject);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static bool GetTapToFireEnabled(UObject* WorldContextObject);
+
 };
 

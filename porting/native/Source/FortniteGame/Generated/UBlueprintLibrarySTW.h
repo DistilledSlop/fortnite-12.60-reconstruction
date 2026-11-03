@@ -14,5 +14,8 @@ class FORTNITEGAME_API UBlueprintLibrarySTW : public UBlueprintFunctionLibrary
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static float GetGameDifficulty();
+
 };
 

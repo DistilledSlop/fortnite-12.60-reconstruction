@@ -21,6 +21,10 @@
 #include "EQuestMapScreenMode.h"
 #include "ESpectatorSquadIdMode.h"
 #include "ESubGame.h"
+#include "ESubtitleDisplayBackgroundOpacity.h"
+#include "ESubtitleDisplayTextBorder.h"
+#include "ESubtitleDisplayTextColor.h"
+#include "ESubtitleDisplayTextSize.h"
 #include "EThirdPersonAutoFollowMode.h"
 #include "ETouchInteractMode.h"
 #include "FFortActionKeyMapping.h"
@@ -473,6 +477,22 @@ public:
 	// table index 153, flags 0x20080000000000
 	UPROPERTY()
 	bool bEnableSubtitles;
+
+	// table index 151, flags 0x20080000000000
+	UPROPERTY()
+	ESubtitleDisplayTextSize SubtitleTextSize = static_cast<ESubtitleDisplayTextSize>(2);
+
+	// table index 149, flags 0x20080000000000
+	UPROPERTY()
+	ESubtitleDisplayTextColor SubtitleTextColor = static_cast<ESubtitleDisplayTextColor>(0);
+
+	// table index 147, flags 0x20080000000000
+	UPROPERTY()
+	ESubtitleDisplayTextBorder SubtitleTextBorder = static_cast<ESubtitleDisplayTextBorder>(0);
+
+	// table index 145, flags 0x20080000000000
+	UPROPERTY()
+	ESubtitleDisplayBackgroundOpacity SubtitleBackgroundOpacity = static_cast<ESubtitleDisplayBackgroundOpacity>(2);
 
 	// table index 144, flags 0x20080000000000
 	UPROPERTY()
@@ -1219,7 +1239,19 @@ public:
 	bool GetSprintCancelsReload() const;
 
 	UFUNCTION()
+	ESubtitleDisplayBackgroundOpacity GetSubtitlesBackgroundOpacity() const;
+
+	UFUNCTION()
 	bool GetSubtitlesEnabled() const;
+
+	UFUNCTION()
+	ESubtitleDisplayTextBorder GetSubtitlesTextBorder() const;
+
+	UFUNCTION()
+	ESubtitleDisplayTextColor GetSubtitlesTextColor() const;
+
+	UFUNCTION()
+	ESubtitleDisplayTextSize GetSubtitlesTextSize() const;
 
 	UFUNCTION()
 	bool GetTapInteract() const;

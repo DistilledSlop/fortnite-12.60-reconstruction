@@ -1,0 +1,79 @@
+[
+  {
+    "function": "ActivateAllMarkerComponents",
+    "kind": "exec",
+    "signature": "void ActivateAllMarkerComponents(UObject* WorldContextObject)",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": true,
+    "inc_path": "porting/behavior/library_close380_runtime/ActivateAllMarkerComponents.inc",
+    "address": "0x142725710",
+    "native_body_address": "0x141a6d8f0",
+    "reflection_flags": "0x4022401",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Engine/Engine.h",
+      "Engine/World.h"
+    ],
+    "class": "UAthenaMarkerComponentLibrary"
+  },
+  {
+    "function": "DeactivateAllMarkerComponents",
+    "kind": "exec",
+    "signature": "void DeactivateAllMarkerComponents(UObject* WorldContextObject)",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": true,
+    "inc_path": "porting/behavior/library_close380_runtime/DeactivateAllMarkerComponents.inc",
+    "address": "0x1427257a0",
+    "native_body_address": "0x141a74a60",
+    "reflection_flags": "0x4022401",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Engine/Engine.h",
+      "Engine/World.h"
+    ],
+    "class": "UAthenaMarkerComponentLibrary"
+  },
+  {
+    "function": "SaveIronCityEarlyPlayerInfos",
+    "kind": "exec",
+    "signature": "void SaveIronCityEarlyPlayerInfos(UObject* WorldContextObject)",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": true,
+    "inc_path": "porting/behavior/library_close380_runtime/SaveIronCityEarlyPlayerInfos.inc",
+    "address": "0x142a0f920",
+    "native_body_address": "0x142555180",
+    "reflection_flags": "0x4022405",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Engine/Engine.h",
+      "Engine/World.h"
+    ],
+    "class": "UFortOutpostFunctionLibrary"
+  },
+  {
+    "class": "UBlueprintLibrarySTW",
+    "function": "GetGameDifficulty",
+    "kind": "exec",
+    "signature": "float GetGameDifficulty()",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": true,
+    "inc_path": "porting/behavior/library_close380_runtime/GetGameDifficulty.inc",
+    "address": "0x142736e30",
+    "native_body_address": "0x1424ab2a0",
+    "reflection_flags": "0x14022401",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Engine/Engine.h",
+      "Engine/World.h",
+      "UObject/UObjectHash.h"
+    ]
+  }
+]

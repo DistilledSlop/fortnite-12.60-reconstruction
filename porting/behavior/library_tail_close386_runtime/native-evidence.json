@@ -1,0 +1,81 @@
+{
+  "functions": [
+    {
+      "function": "Get3DTouchEnabled",
+      "kind": "exec",
+      "signature": "bool Get3DTouchEnabled(UObject* WorldContextObject)",
+      "signature_status": "proposed",
+      "access": "public",
+      "static": true,
+      "inc_path": "porting/behavior/library_tail_close386_runtime/UFortMobileKismetLibrary_Get3DTouchEnabled.inc",
+      "address": "0x1429f4ca0",
+      "native_body_address": "0x141f2a8c0",
+      "reflection_flags": "0x14022401",
+      "confidence": "high",
+      "status": "ported",
+      "includes": [],
+      "notes": "The wrapper passes WorldContextObject to the native body; each body immediately returns false when 0x1406801e0 returns false. Its captured body returns zero unconditionally.",
+      "class": "UFortMobileKismetLibrary"
+    },
+    {
+      "function": "GetAutoFireEnabled",
+      "kind": "exec",
+      "signature": "bool GetAutoFireEnabled(UObject* WorldContextObject)",
+      "signature_status": "proposed",
+      "access": "public",
+      "static": true,
+      "inc_path": "porting/behavior/library_tail_close386_runtime/UFortMobileKismetLibrary_GetAutoFireEnabled.inc",
+      "address": "0x1429f4f60",
+      "native_body_address": "0x141f2b230",
+      "reflection_flags": "0x14022401",
+      "confidence": "high",
+      "status": "ported",
+      "includes": [],
+      "notes": "The wrapper passes WorldContextObject to the native body; each body immediately returns false when 0x1406801e0 returns false. Its captured body returns zero unconditionally.",
+      "class": "UFortMobileKismetLibrary"
+    },
+    {
+      "function": "GetDedicatedButtonEnabled",
+      "kind": "exec",
+      "signature": "bool GetDedicatedButtonEnabled(UObject* WorldContextObject)",
+      "signature_status": "proposed",
+      "access": "public",
+      "static": true,
+      "inc_path": "porting/behavior/library_tail_close386_runtime/UFortMobileKismetLibrary_GetDedicatedButtonEnabled.inc",
+      "address": "0x1429f4fe0",
+      "native_body_address": "0x141f2b760",
+      "reflection_flags": "0x14022401",
+      "confidence": "high",
+      "status": "ported",
+      "includes": [],
+      "notes": "The wrapper passes WorldContextObject to the native body; each body immediately returns false when 0x1406801e0 returns false. Its captured body returns zero unconditionally.",
+      "class": "UFortMobileKismetLibrary"
+    },
+    {
+      "function": "GetTapToFireEnabled",
+      "kind": "exec",
+      "signature": "bool GetTapToFireEnabled(UObject* WorldContextObject)",
+      "signature_status": "proposed",
+      "access": "public",
+      "static": true,
+      "inc_path": "porting/behavior/library_tail_close386_runtime/UFortMobileKismetLibrary_GetTapToFireEnabled.inc",
+      "address": "0x1429f5270",
+      "native_body_address": "0x141f35e10",
+      "reflection_flags": "0x14022401",
+      "confidence": "high",
+      "status": "ported",
+      "includes": [],
+      "notes": "The wrapper passes WorldContextObject to the native body; each body immediately returns false when 0x1406801e0 returns false. Its captured body returns zero unconditionally.",
+      "class": "UFortMobileKismetLibrary"
+    }
+  ],
+  "notes": [
+    "Root reviewed wrapper and native calls against the engine APIs."
+  ],
+  "image": "/mnt/vibrato/fortnite-evidence/original-late-capture-1/image-125.runtime.bin",
+  "native_false_predicate": {
+    "address": "0x1406801e0",
+    "bytes": "32c0c3",
+    "meaning": "xor al, al; ret; Boolean false before any unreachable runtime path."
+  }
+}

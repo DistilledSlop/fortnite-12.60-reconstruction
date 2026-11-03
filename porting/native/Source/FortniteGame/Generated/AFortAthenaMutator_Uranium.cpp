@@ -2,6 +2,22 @@
 #include "AFortAthenaMutator_Uranium.h"
 #include "Net/UnrealNetwork.h"
 
+int32 AFortAthenaMutator_Uranium::GetCurrentRoundCheckPoint() const
+{
+	// CONFIDENCE: high; native signed-byte load and constructor initialization are captured.
+	{
+		return static_cast<int32>(NativeRecoveredSignedByte_0x7a1);
+	}
+}
+
+int32 AFortAthenaMutator_Uranium::GetCurrentRoundNumber() const
+{
+	// CONFIDENCE: high; native signed-byte load and constructor initialization are captured.
+	{
+		return static_cast<int32>(NativeRecoveredSignedByte_0x7a0);
+	}
+}
+
 void AFortAthenaMutator_Uranium::HandleRoundPhase(EUraniumRoundPhase NewRoundPhase)
 {
 	// Original exec 0x1427e1180; complete empty leaf 0x1406801c0.

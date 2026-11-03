@@ -1,0 +1,49 @@
+{
+  "functions": [
+    {
+      "class": "UFortPrototypingContext",
+      "function": "GetPrototypingStatus",
+      "wrapper": "porting/generated/native368-callees/0x142731d10.c",
+      "reflection": "porting/generated/reflection/native_funcs.json",
+      "enum": "porting/generated/reflection/enum_blocks.json",
+      "layout": "Byte at +0x40; non-reflected storage; constructor explicitly writes zero at +0x40.",
+      "constructor": "porting/generated/native383-callees/0x142aa99d0.c"
+    },
+    {
+      "class": "UFortClientSettingsRecord",
+      "function": "GetSubtitlesBackgroundOpacity",
+      "wrapper": "porting/generated/native368-callees/0x14287e3a0.c",
+      "reflection": "porting/generated/reflection/native_funcs.json",
+      "enum": "porting/generated/reflection/enum_blocks.json",
+      "layout": "Byte at +0x554; reflected property SubtitleBackgroundOpacity at this offset (fortnite_game_reflection.json); currently skipped because enum was unavailable. Constructor packed writes initialize this byte to Medium (2).",
+      "constructor": "porting/generated/native129-constructors/0x141e1a020.c"
+    },
+    {
+      "class": "UFortClientSettingsRecord",
+      "function": "GetSubtitlesTextBorder",
+      "wrapper": "porting/generated/native368-callees/0x14287e3e0.c",
+      "reflection": "porting/generated/reflection/native_funcs.json",
+      "enum": "porting/generated/reflection/enum_blocks.json",
+      "layout": "Byte at +0x553; reflected property SubtitleTextBorder at this offset (fortnite_game_reflection.json); currently skipped because enum was unavailable. Constructor packed writes initialize this byte to None (0).",
+      "constructor": "porting/generated/native129-constructors/0x141e1a020.c"
+    },
+    {
+      "class": "UFortClientSettingsRecord",
+      "function": "GetSubtitlesTextColor",
+      "wrapper": "porting/generated/native368-callees/0x14287e400.c",
+      "reflection": "porting/generated/reflection/native_funcs.json",
+      "enum": "porting/generated/reflection/enum_blocks.json",
+      "layout": "Byte at +0x552; reflected property SubtitleTextColor at this offset (fortnite_game_reflection.json); currently skipped because enum was unavailable. Constructor packed writes initialize this byte to White (0).",
+      "constructor": "porting/generated/native129-constructors/0x141e1a020.c"
+    },
+    {
+      "class": "UFortClientSettingsRecord",
+      "function": "GetSubtitlesTextSize",
+      "wrapper": "porting/generated/native368-callees/0x14287e420.c",
+      "reflection": "porting/generated/reflection/native_funcs.json",
+      "enum": "porting/generated/reflection/enum_blocks.json",
+      "layout": "Byte at +0x551; reflected property SubtitleTextSize at this offset (fortnite_game_reflection.json); currently skipped because enum was unavailable. Constructor packed writes initialize this byte to Medium (2).",
+      "constructor": "porting/generated/native129-constructors/0x141e1a020.c"
+    }
+  ]
+}

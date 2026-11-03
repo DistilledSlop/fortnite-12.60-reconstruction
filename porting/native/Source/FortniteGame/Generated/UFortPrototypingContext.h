@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UBlueprintContextBase.h"
 
+#include "EFortPrototypingStatus.h"
 #include "FOnPrototypingStatusChanged.h"
 
 #include "UFortPrototypingContext.generated.h"
@@ -19,6 +20,14 @@ public:
 	// table index 0, flags 0x10000010080000
 	UPROPERTY()
 	FOnPrototypingStatusChanged OnPrototypingStatusChangedEvent;
+
+private:
+	// Non-reflected field (behaviour kind "member_field", offset 0x40): not a UPROPERTY, not replicated.
+	EFortPrototypingStatus NativeRecoveredPrototypingStatus_0x40 = EFortPrototypingStatus::Unknown;
+public:
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	EFortPrototypingStatus GetPrototypingStatus() const;
 
 };
 

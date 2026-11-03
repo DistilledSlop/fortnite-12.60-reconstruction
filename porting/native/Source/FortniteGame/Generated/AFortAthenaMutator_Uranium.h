@@ -259,6 +259,12 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_RoundData)
 	FUraniumRoundData RoundData;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x7a0): not a UPROPERTY, not replicated.
+	int8 NativeRecoveredSignedByte_0x7a0 = 0;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x7a1): not a UPROPERTY, not replicated.
+	int8 NativeRecoveredSignedByte_0x7a1 = 0;
+
 	// table index 58, flags 0x20080000010001
 	UPROPERTY()
 	FScalableFloat EarlyEndGame_BlowOutRoundNumberMin;
@@ -462,6 +468,12 @@ public:
 	// table index 0, flags 0x40000000002000
 	UPROPERTY(Transient)
 	bool bCheatDrawRespawnLocations;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetCurrentRoundCheckPoint() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetCurrentRoundNumber() const;
 
 protected:
 	UFUNCTION()

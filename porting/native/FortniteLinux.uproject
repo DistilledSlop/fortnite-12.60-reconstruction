@@ -68,6 +68,11 @@
       "Name": "HoagieRuntime",
       "Type": "Runtime",
       "LoadingPhase": "Default"
+    },
+    {
+      "Name": "SubtitlesWidgets",
+      "Type": "Runtime",
+      "LoadingPhase": "Default"
     }
   ],
   "Plugins": [

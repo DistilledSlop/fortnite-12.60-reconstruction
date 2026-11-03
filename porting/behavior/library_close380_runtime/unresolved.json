@@ -1,0 +1,22 @@
+[
+  {
+    "class": "UFortniteAutomationBlueprintLibrary",
+    "function": "ResetFPSChartsData",
+    "reason": "Native 0x1425991a0 resolves UFortGameInstance, then 0x141e60580 and casts its result to AFortGameState. It requires non-null state +0x670 and resets that object via 0x141d5b8a0. The +0x670 field/type and reset API remain unidentified."
+  },
+  {
+    "class": "UFortniteAutomationBlueprintLibrary",
+    "function": "ResetForcedAthenaCosmetics",
+    "reason": "Native 0x142599240 resolves UFortGameInstance, calls 0x144214db0(instance, 0), casts the result to AFortPlayerController, and invokes 0x142a3b850, a FindFunctionChecked/ProcessEvent wrapper. The event name stored at 0x1481aeee0 must be resolved before calling it."
+  },
+  {
+    "class": "UFortOutpostFunctionLibrary",
+    "function": "FlushTransferRequests",
+    "reason": "Native 0x14253f3b0 checks Player +0x598 interface virtual slot +0x20, obtains the object at MyPlayerInfo +0xf0 via 0x1423881a0, and calls 0x14253f0e0. That helper implements a transfer queue flush, including +0x2e8 count, +0xd0 time and asynchronous request construction; identify the interface predicate, queue object and flush API or lift its dependencies before implementation."
+  },
+  {
+    "class": "UFortNiagaraGameplayLibrary",
+    "function": "EndLegacyAnimTrails",
+    "reason": "Native 0x141dca290 calls UNiagaraComponent virtual slot +0x270; for UParticleSystemComponent calls 0x14439eed0, which invokes virtual slot +0x200 on every non-null element of array +0x5e0 and then 0x14439d490 (identified by its log as DeactivateSystem). Confirm the element type and virtual +0x200 and whether 0x14439eed0 is exposed as EndTrails before porting."
+  }
+]

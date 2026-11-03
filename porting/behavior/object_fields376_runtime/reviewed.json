@@ -1,0 +1,22 @@
+[
+  [
+    "UFortPrototypingContext",
+    "GetPrototypingStatus"
+  ],
+  [
+    "UFortClientSettingsRecord",
+    "GetSubtitlesBackgroundOpacity"
+  ],
+  [
+    "UFortClientSettingsRecord",
+    "GetSubtitlesTextBorder"
+  ],
+  [
+    "UFortClientSettingsRecord",
+    "GetSubtitlesTextColor"
+  ],
+  [
+    "UFortClientSettingsRecord",
+    "GetSubtitlesTextSize"
+  ]
+]

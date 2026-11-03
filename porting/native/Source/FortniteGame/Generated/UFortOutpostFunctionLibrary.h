@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 
+class UObject;
+
 #include "UFortOutpostFunctionLibrary.generated.h"
 
 UCLASS()
@@ -14,5 +16,8 @@ class FORTNITEGAME_API UFortOutpostFunctionLibrary : public UBlueprintFunctionLi
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	static void SaveIronCityEarlyPlayerInfos(UObject* WorldContextObject);
+
 };
 

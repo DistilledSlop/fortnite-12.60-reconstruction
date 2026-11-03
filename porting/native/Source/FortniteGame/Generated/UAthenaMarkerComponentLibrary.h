@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 
+class UObject;
+
 #include "UAthenaMarkerComponentLibrary.generated.h"
 
 UCLASS()
@@ -14,5 +16,11 @@ class FORTNITEGAME_API UAthenaMarkerComponentLibrary : public UBlueprintFunction
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(BlueprintCallable)
+	static void ActivateAllMarkerComponents(UObject* WorldContextObject);
+
+	UFUNCTION(BlueprintCallable)
+	static void DeactivateAllMarkerComponents(UObject* WorldContextObject);
+
 };
 

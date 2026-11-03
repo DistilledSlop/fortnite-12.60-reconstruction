@@ -681,12 +681,36 @@ bool UFortClientSettingsRecord::GetSprintCancelsReload() const
 	return UFortClientSettingsRecord::bSprintCancelsReload;
 }
 
+ESubtitleDisplayBackgroundOpacity UFortClientSettingsRecord::GetSubtitlesBackgroundOpacity() const
+{
+	// CONFIDENCE: high; captured wrapper and reflected return type identify the field.
+	return SubtitleBackgroundOpacity;
+}
+
 bool UFortClientSettingsRecord::GetSubtitlesEnabled() const
 {
 	// Original address: 0x14287e3c0.
 	// CONFIDENCE: HIGH
 	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
 	return UFortClientSettingsRecord::bEnableSubtitles;
+}
+
+ESubtitleDisplayTextBorder UFortClientSettingsRecord::GetSubtitlesTextBorder() const
+{
+	// CONFIDENCE: high; captured wrapper and reflected return type identify the field.
+	return SubtitleTextBorder;
+}
+
+ESubtitleDisplayTextColor UFortClientSettingsRecord::GetSubtitlesTextColor() const
+{
+	// CONFIDENCE: high; captured wrapper and reflected return type identify the field.
+	return SubtitleTextColor;
+}
+
+ESubtitleDisplayTextSize UFortClientSettingsRecord::GetSubtitlesTextSize() const
+{
+	// CONFIDENCE: high; captured wrapper and reflected return type identify the field.
+	return SubtitleTextSize;
 }
 
 bool UFortClientSettingsRecord::GetTapInteract() const

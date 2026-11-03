@@ -1451,6 +1451,7 @@ def self_test():
 RUNTIME_MODULE_PACKAGES = (
     "/Script/BlueprintContext", "/Script/MeshNetwork", "/Script/CommonUI", "/Script/AmbientAudio", "/Script/Account",
     "/Script/ModularGameplay", "/Script/McpProfileSys", "/Script/CommonInput", "/Script/FortniteUI",
+    "/Script/SubtitlesWidgets",  # Reflected subtitle display enums used by client settings.
     "/Script/SocialUMG", "/Script/KairosSceneCapture", "/Script/HoagieRuntime",   # stage 2 (coverage cause C1); see native_classes_status.md
 )
 HAND_WRITTEN_MODULES = ("FortniteGame", "PlayspaceFramework")   # Build.cs and IMPLEMENT_* files are not generated
@@ -3439,7 +3440,15 @@ def render_promoted_header(model, api, parent_include, source_label):
             lines.extend(field_lines(pending.pop(0)))
         lines.append("\t// table index %s, flags %s" % (m["table_index"], m["property_flags"]))
         lines.append("\t%s" % uproperty_line(m["specifiers"]))
-        lines.append("\t%s" % m["decl"])
+        decl = m["decl"]
+        # Native constructor 0x141e1a020 (native129-constructors) stores 0x201
+        # at +0x550 and 0x1010102 at +0x554: defaults of the subtitle enums.
+        subtitle_defaults = {"SubtitleTextSize": 2, "SubtitleTextColor": 0,
+                             "SubtitleTextBorder": 0, "SubtitleBackgroundOpacity": 2}
+        if name == "UFortClientSettingsRecord" and m["name"] in subtitle_defaults:
+            typ = decl.rsplit(" ", 1)[0]
+            decl = decl.rstrip(";") + " = static_cast<%s>(%d);" % (typ, subtitle_defaults[m["name"]])
+        lines.append("\t%s" % decl)
         lines.append("")
     for fd in pending:
         lines.extend(field_lines(fd))
