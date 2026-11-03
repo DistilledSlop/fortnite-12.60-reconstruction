@@ -20,5 +20,9 @@ public:
 	UPROPERTY()
 	UNativeWidgetHost* NativeHost;
 
+	UFUNCTION(BlueprintNativeEvent)
+	void OnNativeHostContentChanged();
+	virtual void OnNativeHostContentChanged_Implementation();
+
 };
 

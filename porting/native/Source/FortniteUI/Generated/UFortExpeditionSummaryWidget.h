@@ -76,5 +76,11 @@ public:
 	UPROPERTY()
 	TArray<UFortExpeditionItem*> InProgressExpeditions;
 
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void OnRefreshSummaryWidget();
+	virtual void OnRefreshSummaryWidget_Implementation();
+public:
+
 };
 

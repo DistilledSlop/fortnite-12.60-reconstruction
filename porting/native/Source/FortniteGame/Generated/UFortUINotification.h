@@ -46,6 +46,10 @@ public:
 	UPROPERTY()
 	TSoftObjectPtr<UObject> DisplayAsset;
 
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, BlueprintCosmetic)
+	void NotificationShown();
+	virtual void NotificationShown_Implementation();
+
 	UFUNCTION(BlueprintCallable)
 	TSoftObjectPtr<UObject> GetImageOverride();
 

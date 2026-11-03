@@ -91,6 +91,16 @@ public:
 	UPROPERTY(Transient)
 	bool bIsKeyboardLookPressed;
 
+	UFUNCTION(BlueprintNativeEvent, BlueprintCosmetic)
+	void OnClientSetupRemoteControlPawn();
+	virtual void OnClientSetupRemoteControlPawn_Implementation();
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintAuthorityOnly)
+	void OnDoKill();
+	virtual void OnDoKill_Implementation();
+public:
+
 	UFUNCTION()
 	void OnRep_ControllingPlayerPawn();
 

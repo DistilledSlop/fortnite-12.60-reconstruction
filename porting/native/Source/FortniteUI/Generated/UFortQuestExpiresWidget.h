@@ -20,5 +20,11 @@ public:
 	UPROPERTY()
 	TWeakObjectPtr<UFortQuestItem> Item;
 
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void OnQuestExpirationUpdated();
+	virtual void OnQuestExpirationUpdated_Implementation();
+public:
+
 };
 

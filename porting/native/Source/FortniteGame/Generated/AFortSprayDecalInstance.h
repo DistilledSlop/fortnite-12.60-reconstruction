@@ -41,6 +41,10 @@ public:
 	UFUNCTION()
 	void OnRep_SprayInfo();
 
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void StartSprayFadeOutDueToNewPlacement();
+	virtual void StartSprayFadeOutDueToNewPlacement_Implementation();
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

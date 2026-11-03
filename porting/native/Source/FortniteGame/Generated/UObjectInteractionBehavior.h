@@ -84,5 +84,13 @@ public:
 	UPROPERTY()
 	int32 Priority;
 
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void HandleDuplicateActor();
+	virtual void HandleDuplicateActor_Implementation();
+
+	UFUNCTION(BlueprintNativeEvent)
+	void TickMovementMode();
+	virtual void TickMovementMode_Implementation();
+
 };
 

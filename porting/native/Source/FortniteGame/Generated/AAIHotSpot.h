@@ -93,5 +93,13 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsSlotlessAssignmentAllowed() const;
 
+	UFUNCTION(BlueprintNativeEvent, BlueprintAuthorityOnly)
+	void OnHotSpotDisabled();
+	virtual void OnHotSpotDisabled_Implementation();
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintAuthorityOnly)
+	void OnHotSpotEnabled();
+	virtual void OnHotSpotEnabled_Implementation();
+
 };
 

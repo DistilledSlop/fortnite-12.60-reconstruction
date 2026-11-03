@@ -98,8 +98,14 @@ public:
 	// Non-reflected field (behaviour kind "member_field", offset 0x2e7): not a UPROPERTY, not replicated.
 	bool NativeRecoveredBool_0x2e7;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x7f8): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x7f8;
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool GetSelected() const;
+
+	UFUNCTION(BlueprintCallable)
+	void SetBangVisibility(bool bVisible);
 
 };
 

@@ -2,6 +2,27 @@
 #include "UFortGameplayAbility_MedicPack.h"
 #include "Net/UnrealNetwork.h"
 
+void UFortGameplayAbility_MedicPack::OnAbilityCanceled_Implementation()
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
+void UFortGameplayAbility_MedicPack::OnFuelIsEmpty_Implementation()
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
+void UFortGameplayAbility_MedicPack::OnFuelIsFull_Implementation()
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
 void UFortGameplayAbility_MedicPack::OnRep_bAbilityMarkedForPendingKill()
 {
 	// Body not recovered: reflection-derived stub.

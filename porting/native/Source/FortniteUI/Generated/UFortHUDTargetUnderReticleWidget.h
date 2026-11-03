@@ -29,5 +29,17 @@ public:
 	UPROPERTY()
 	FGameplayTagContainer TargetRequiredTags;
 
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void OnTargetChanged();
+	virtual void OnTargetChanged_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void OnTargetHealthChanged();
+	virtual void OnTargetHealthChanged_Implementation();
+public:
+
 };
 

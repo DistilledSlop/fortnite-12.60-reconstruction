@@ -25,5 +25,9 @@ public:
 	UPROPERTY()
 	TSoftObjectPtr<UFortVehicleItemDefinition> FortVehicleItemDef;
 
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void SpawnVehicle();
+	virtual void SpawnVehicle_Implementation();
+
 };
 

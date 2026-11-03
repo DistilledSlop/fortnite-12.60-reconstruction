@@ -72,6 +72,12 @@ public:
 	UPROPERTY(Replicated, Transient)
 	uint8 SquadId;
 
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void OnDestroyPickup();
+	virtual void OnDestroyPickup_Implementation();
+public:
+
 	UFUNCTION()
 	void OnRep_RebootCardReplicatedState();
 

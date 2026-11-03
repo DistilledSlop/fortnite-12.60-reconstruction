@@ -32,6 +32,18 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_bAbilityMarkedForPendingKill)
 	bool bAbilityMarkedForPendingKill;
 
+	UFUNCTION(BlueprintNativeEvent)
+	void OnAbilityCanceled();
+	virtual void OnAbilityCanceled_Implementation();
+
+	UFUNCTION(BlueprintNativeEvent)
+	void OnFuelIsEmpty();
+	virtual void OnFuelIsEmpty_Implementation();
+
+	UFUNCTION(BlueprintNativeEvent)
+	void OnFuelIsFull();
+	virtual void OnFuelIsFull_Implementation();
+
 	UFUNCTION()
 	void OnRep_bAbilityMarkedForPendingKill();
 

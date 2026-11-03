@@ -42,5 +42,13 @@ public:
 	UPROPERTY()
 	float SpawnDelay;
 
+	UFUNCTION(BlueprintNativeEvent)
+	void OnCarriedObjectAttachedEvent();
+	virtual void OnCarriedObjectAttachedEvent_Implementation();
+
+	UFUNCTION(BlueprintNativeEvent)
+	void OnCarriedObjectDetachedEvent();
+	virtual void OnCarriedObjectDetachedEvent_Implementation();
+
 };
 

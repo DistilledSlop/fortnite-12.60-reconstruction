@@ -100,6 +100,13 @@ void ABuildingActor::OnRep_Team()
 	// Body not recovered: reflection-derived stub.
 }
 
+void ABuildingActor::PlacedByPlacementTool_Implementation()
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
 void ABuildingActor::SetHealthBarIndicatorDifficultyRating(int32 InDisplayLevel)
 {
 	// Original exec 0x142738310; pure writer 0x141bc4b10.

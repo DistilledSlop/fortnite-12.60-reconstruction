@@ -17,3 +17,17 @@ bool AAIHotSpot::IsSlotlessAssignmentAllowed() const
 	return bAllowSlotlessAssignment;
 }
 
+void AAIHotSpot::OnHotSpotDisabled_Implementation()
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
+void AAIHotSpot::OnHotSpotEnabled_Implementation()
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+

@@ -20,5 +20,11 @@ public:
 	UPROPERTY()
 	TWeakObjectPtr<UFortExpeditionItem> Item;
 
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void OnExpeditionInProgressUpdated();
+	virtual void OnExpeditionInProgressUpdated_Implementation();
+public:
+
 };
 

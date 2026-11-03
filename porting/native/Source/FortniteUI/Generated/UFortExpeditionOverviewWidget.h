@@ -36,5 +36,11 @@ public:
 	UPROPERTY()
 	UFortExpeditionListViewWidget* ExpeditionListView;
 
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void OnExpeditionOverviewRefresh();
+	virtual void OnExpeditionOverviewRefresh_Implementation();
+public:
+
 };
 

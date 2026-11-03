@@ -59,6 +59,18 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_RespawnServerEndTime, Transient)
 	float RespawnServerEndTime;
 
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void OnCloneMachineActivationBegins();
+	virtual void OnCloneMachineActivationBegins_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void OnCloneMachineRespawningBegins();
+	virtual void OnCloneMachineRespawningBegins_Implementation();
+public:
+
 	UFUNCTION()
 	void OnRep_ActivationServerEndTime();
 

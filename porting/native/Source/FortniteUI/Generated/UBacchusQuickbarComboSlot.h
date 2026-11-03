@@ -67,5 +67,9 @@ public:
 	UPROPERTY()
 	FGameplayTag SlotNumberPropertyTag;
 
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void Refresh();
+	virtual void Refresh_Implementation();
+
 };
 

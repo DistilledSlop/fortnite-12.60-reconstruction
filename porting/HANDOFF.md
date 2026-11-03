@@ -1,5 +1,27 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Native source batch 6 (2026-11-03)
+
+Canonical Native now1215 entries =1153 function bodies +62 fields. Added46
+complete bodies:43 exact parameterless BlueprintNativeEvent defaults, two native
+scalar setters and one float-to-int query. Constructor/vtable event provenance
+was independently source-reviewed; partial-register clobbers and control-flow
+ambiguities are rejected, --revalidate-own reproduces43 proposals. Two native
+fields use strict authoritative own/parent bounds and conservative occupancy.
+No class-feature or product milestone credit. Promotion accepts1215, rejects0:
+porting/generated/gameplay-bulk-integration-6/{promotion.command.json,
+promotion.result.json,reports/behavior_splice.json}. No builds/runtime/tests:
+113 bodies since tested1040 are build pending; next about2040. Batch5 and its
+1107-body dashboard snapshot were pushed. Commit/push finished source promptly.
+
+Reusable zero-yield scans in bulk_byte_setter_runtime, bulk_forward_runtime and
+bulk_mutation_storage_runtime are source tooling only and earn no body credit.
+Root owns promotion/builds; active bounded Terra medium workers (fork_turns none)
+are handling dirty float setters, parameter-bearing event defaults, and POD-copy
+setters in separate new directories. Preserve unrelated graphics edits. Keep
+reads/output bounded, rotate workers at completed tasks, skip visuals. All4
+milestones stay open; source dashboard updates independently of test cadence.
+
 ## Native source batch 5 (2026-11-03)
 
 Canonical Native: 1167 ported entries = 1107 bodies + 60 fields. This batch

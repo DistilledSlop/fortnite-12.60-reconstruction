@@ -850,6 +850,10 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetEncounterInfo(UFortAIEncounterInfo* InEncounterInfo);
 
+	UFUNCTION(BlueprintNativeEvent)
+	bool ShouldUseFiringCapsuleCollision();
+	virtual bool ShouldUseFiringCapsuleCollision_Implementation();
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

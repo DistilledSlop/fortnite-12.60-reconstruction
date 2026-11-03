@@ -44,5 +44,9 @@ public:
 	UPROPERTY()
 	UCommonTreeView* PageTreeViewWidget;
 
+	UFUNCTION(BlueprintNativeEvent)
+	void OnDeactivated();
+	virtual void OnDeactivated_Implementation();
+
 };
 

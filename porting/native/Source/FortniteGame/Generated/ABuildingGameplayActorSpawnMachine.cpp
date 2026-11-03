@@ -7,6 +7,27 @@ void ABuildingGameplayActorSpawnMachine::OnRep_SpawnMachineState()
 	// Body not recovered: reflection-derived stub.
 }
 
+void ABuildingGameplayActorSpawnMachine::OnResurrectionCompleted_Implementation()
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
+void ABuildingGameplayActorSpawnMachine::OnResurrectionStarted_Implementation()
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
+void ABuildingGameplayActorSpawnMachine::OnSpawnMachineStateChanged_Implementation()
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
 void ABuildingGameplayActorSpawnMachine::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

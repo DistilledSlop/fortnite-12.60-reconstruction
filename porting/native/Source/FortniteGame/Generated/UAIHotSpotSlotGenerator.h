@@ -14,5 +14,9 @@ class FORTNITEGAME_API UAIHotSpotSlotGenerator : public UObject
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(BlueprintNativeEvent)
+	void GenerateSlots();
+	virtual void GenerateSlots_Implementation();
+
 };
 

@@ -2,6 +2,20 @@
 #include "AFortRemoteControlledPawnAthena.h"
 #include "Net/UnrealNetwork.h"
 
+void AFortRemoteControlledPawnAthena::OnClientSetupRemoteControlPawn_Implementation()
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
+void AFortRemoteControlledPawnAthena::OnDoKill_Implementation()
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
 void AFortRemoteControlledPawnAthena::OnRep_ControllingPlayerPawn()
 {
 	// Body not recovered: reflection-derived stub.

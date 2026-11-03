@@ -965,6 +965,9 @@ public:
 	float GetCinematicsVolume() const;
 
 	UFUNCTION()
+	int32 GetColorBlindStrength() const;
+
+	UFUNCTION()
 	float GetDialogueVolume() const;
 
 	UFUNCTION()

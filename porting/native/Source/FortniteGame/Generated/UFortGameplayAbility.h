@@ -261,5 +261,9 @@ public:
 	UPROPERTY()
 	FGameplayTagContainer AnalyticsTags;
 
+	UFUNCTION(BlueprintNativeEvent)
+	bool SetupPreviewImageOverride();
+	virtual bool SetupPreviewImageOverride_Implementation();
+
 };
 

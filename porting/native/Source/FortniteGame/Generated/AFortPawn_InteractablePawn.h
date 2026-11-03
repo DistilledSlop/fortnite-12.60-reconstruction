@@ -20,5 +20,9 @@ public:
 	UPROPERTY(SaveGame)
 	FGuid MyGuid;
 
+	UFUNCTION(BlueprintNativeEvent, BlueprintCosmetic)
+	void BlueprintOnBeginInteract();
+	virtual void BlueprintOnBeginInteract_Implementation();
+
 };
 

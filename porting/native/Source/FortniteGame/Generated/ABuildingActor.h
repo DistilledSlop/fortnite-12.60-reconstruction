@@ -678,6 +678,10 @@ public:
 	UFUNCTION()
 	void OnRep_Team();
 
+	UFUNCTION(BlueprintNativeEvent)
+	void PlacedByPlacementTool();
+	virtual void PlacedByPlacementTool_Implementation();
+
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void SetHealthBarIndicatorDifficultyRating(int32 InDisplayLevel);
 

@@ -87,6 +87,24 @@ public:
 	UFUNCTION()
 	void OnRep_SpawnMachineState();
 
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void OnResurrectionCompleted();
+	virtual void OnResurrectionCompleted_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void OnResurrectionStarted();
+	virtual void OnResurrectionStarted_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void OnSpawnMachineStateChanged();
+	virtual void OnSpawnMachineStateChanged_Implementation();
+public:
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

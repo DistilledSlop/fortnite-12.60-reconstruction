@@ -64,5 +64,11 @@ public:
 	UPROPERTY()
 	TArray<TSubclassOf<ABuildingContainer>> BuildingContainersThatRequireSearching;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0xab0): not a UPROPERTY, not replicated.
+	float NativeRecoveredFloat_0xab0;
+
+	UFUNCTION(BlueprintCallable)
+	void SetIdleDetectionPenaltyTime(float InPenaltyTime);
+
 };
 

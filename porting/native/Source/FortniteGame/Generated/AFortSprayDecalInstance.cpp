@@ -7,6 +7,13 @@ void AFortSprayDecalInstance::OnRep_SprayInfo()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortSprayDecalInstance::StartSprayFadeOutDueToNewPlacement_Implementation()
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
 void AFortSprayDecalInstance::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

@@ -118,5 +118,9 @@ public:
 	UPROPERTY(Config)
 	bool bEnableCreativeCreatureSpawners;
 
+	UFUNCTION(BlueprintNativeEvent)
+	void MinigameStarted();
+	virtual void MinigameStarted_Implementation();
+
 };
 

@@ -57,5 +57,11 @@ public:
 	UPROPERTY()
 	UCommonButton* Button_EditIcon;
 
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void RefreshBannerEditor();
+	virtual void RefreshBannerEditor_Implementation();
+public:
+
 };
 

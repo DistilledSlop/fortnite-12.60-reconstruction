@@ -126,6 +126,13 @@ void AFortAIPawn::SetEncounterInfo(UFortAIEncounterInfo* InEncounterInfo)
 	this->EncounterInfo = InEncounterInfo;
 }
 
+bool AFortAIPawn::ShouldUseFiringCapsuleCollision_Implementation()
+{
+	// Exact original shared stub 0x1406801e0.
+	// CONFIDENCE: HIGH
+	return false;
+}
+
 void AFortAIPawn::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

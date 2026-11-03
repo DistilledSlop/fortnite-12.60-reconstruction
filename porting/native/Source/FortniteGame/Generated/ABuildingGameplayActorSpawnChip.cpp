@@ -2,6 +2,13 @@
 #include "ABuildingGameplayActorSpawnChip.h"
 #include "Net/UnrealNetwork.h"
 
+void ABuildingGameplayActorSpawnChip::OnDestroyPickup_Implementation()
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
 void ABuildingGameplayActorSpawnChip::OnRep_RebootCardReplicatedState()
 {
 	// Body not recovered: reflection-derived stub.

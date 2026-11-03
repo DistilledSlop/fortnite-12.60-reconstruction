@@ -40,5 +40,9 @@ public:
 	UPROPERTY()
 	TScriptInterface<IFortItemViewContextInterface> ItemViewContext;
 
+	UFUNCTION(BlueprintNativeEvent)
+	void SquadSlotWidgetUpdated();
+	virtual void SquadSlotWidgetUpdated_Implementation();
+
 };
 

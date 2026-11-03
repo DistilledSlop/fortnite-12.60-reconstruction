@@ -2,6 +2,20 @@
 #include "ABuildingGameplayActorCloneMachine.h"
 #include "Net/UnrealNetwork.h"
 
+void ABuildingGameplayActorCloneMachine::OnCloneMachineActivationBegins_Implementation()
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
+void ABuildingGameplayActorCloneMachine::OnCloneMachineRespawningBegins_Implementation()
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
 void ABuildingGameplayActorCloneMachine::OnRep_ActivationServerEndTime()
 {
 	// Body not recovered: reflection-derived stub.

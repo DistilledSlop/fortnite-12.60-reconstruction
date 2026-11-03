@@ -99,5 +99,9 @@ public:
 	UPROPERTY()
 	FGameplayTagContainer AnalyticsTags;
 
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, BlueprintPure)
+	bool AcceptsEmoteSprays() const;
+	virtual bool AcceptsEmoteSprays_Implementation() const;
+
 };
 

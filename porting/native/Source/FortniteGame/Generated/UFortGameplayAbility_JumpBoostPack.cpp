@@ -2,6 +2,27 @@
 #include "UFortGameplayAbility_JumpBoostPack.h"
 #include "Net/UnrealNetwork.h"
 
+void UFortGameplayAbility_JumpBoostPack::OnAbilityCanceled_Implementation()
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
+void UFortGameplayAbility_JumpBoostPack::OnFuelIsEmpty_Implementation()
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
+void UFortGameplayAbility_JumpBoostPack::OnFuelIsFull_Implementation()
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
 void UFortGameplayAbility_JumpBoostPack::OnRep_bAbilityMarkedForPendingKill()
 {
 	// Body not recovered: reflection-derived stub.

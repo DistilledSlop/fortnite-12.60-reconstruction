@@ -24,5 +24,9 @@ public:
 	UPROPERTY()
 	bool bNotificationCleared;
 
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, BlueprintCosmetic)
+	void NotificationShown();
+	virtual void NotificationShown_Implementation();
+
 };
 
