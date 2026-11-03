@@ -1,5 +1,43 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Weapon/sky/streaming dependency rough batch78 (2026-11-03)
+
+Added eight uncounted native-body drafts in weapon_state78_runtime (3),
+weapon_final78_runtime (2), sky_stream78_runtime (3). These expand weapon owner
+selection, ability/effect cleanup, montage delegate binding, primary virtual+798,
+sky component effects and streaming handshake start/timer. The+798 body completes
+an earlier partial recovery note, not a newly discovered behavior. All preserve
+local control flow and effects with explicit unresolved per-call ABI/layout
+contracts. Root reviewed all eight against complete native source. No canonical
+promotion; callbacks, hidden arguments, allocator/container contracts and engine
+effects remain open. No compiler/build/runtime/tests/generation this batch.
+
+A bounded Luna6 medium read-only worker investigated inherited pickup RPC slots.
+Root directly read original runtime-image table145e2cfd0 slots485..490: all three
+validators1406801d0, implementations1406801c0. This confirms manifest true/empty
+body targets for Athena rather than relying on base-class inference. Evidence in
+pickup_inherited_slots78_runtime pins the48-byte window/hash/offset and slot names.
+No added body count or pickup parity claim follows. Trajectory getter/setter
+sources were inspected but not counted or drafted; no guessed FHitResult ABI.
+
+Previous goal turn PROGRESS: sourcefdc978ab/dashboard1ae274aa pushed. Canonical
+remains2,075 bodies+180fields=2,255 accepted/rejected0 (promotion71). Last tested
+2,040;35 canonical+4 manual bodies pending; next tests3,040. All four product
+gates OPEN, full objective ACTIVE. Large native recovery and engine integration
+remain incomplete. Three bounded Terra6.1 medium fork-none implementation workers
+and one small Luna6 medium fork-none read-only task finished; rotate thereafter.
+Root retains planning, integration, review and sole canonical/native/promotion/
+build/staging/commit ownership, and direct work as useful. Preserve economical
+reads, unrelated porting/graphics/ and Engine edits; skip visual work until resumed.
+
+Root command (repository cwd):
+`porting/.venv/bin/python -I porting/ghidra/probe_callees.py --input porting/generated/native-behavior78/targets.json --out porting/generated/native-behavior78 --timeout 60 --mem 12G > /tmp/native-behavior78.log 2>&1`
+Exit0,8ok,11.0s, transaction rolled back; usual project index/prp metadata changes,
+no deliberate save. Slot check used Python seek/read48 at table-base+485*8 in the
+original capture, followed by little-endian QWORD decoding; no execution/tests.
+Ghidra lease free; no live worker/process held. Continue actual substantial native
+behavior recovery and closure, not getter/wrapper counts or placeholder promotion.
+
 ## Native dependencies and controller rough batch77 (2026-11-03)
 
 Added twelve distinct uncounted native-body drafts: plot rename callback (1),

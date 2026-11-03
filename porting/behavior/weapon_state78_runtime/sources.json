@@ -1,0 +1,17 @@
+[
+  {
+    "address": "0x1426a07c0",
+    "path": "porting/generated/native-behavior78/0x1426a07c0.c",
+    "sha256": "39d1098d2731c9ecf0faaff1a07aaa58df314c21350b83bb74a0962fe5505b52"
+  },
+  {
+    "address": "0x1426aeed0",
+    "path": "porting/generated/native-behavior78/0x1426aeed0.c",
+    "sha256": "16c360f97c8f54bdba9023c305a90d013f91170134a497f310eb7116c154f139"
+  },
+  {
+    "address": "0x142694dd0",
+    "path": "porting/generated/native-behavior78/0x142694dd0.c",
+    "sha256": "c1bfe5f5684ffd08f6f76e1c96c6f0ea4a5630915f43d09ff66461ccab873fed"
+  }
+]

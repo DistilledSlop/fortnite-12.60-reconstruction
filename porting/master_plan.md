@@ -44,6 +44,10 @@ Batch77 adds twelve uncounted native-body drafts: eight actual dependencies
 behind recent creative/pawn/sky paths plus four controller operations. Source
 review corrected owner-frame writes, register provenance and destructor argument
 variants. Engine contracts remain open; accepted counts are unchanged.
+Batch78 adds eight uncounted weapon, sky and streaming dependency drafts,
+including full source for the previously partial weapon primary virtual+798.
+Original-image reads confirm Athena's inherited pickup RPC slots use the already
+canonical true/empty shared targets. Accepted counts remain unchanged.
 Next build/runtime/test batch at3,040 bodies. Fail-closed generation accepts
 2,255 ported entries with no rejected splices. All four product gates remain
 open. Latest source restores day-phase callback/virtual boundaries, the live

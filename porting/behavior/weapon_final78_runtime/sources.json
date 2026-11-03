@@ -1,0 +1,14 @@
+[
+  {
+    "address": "0x142694ec0",
+    "label": "Native142694ec0",
+    "path": "porting/generated/native-behavior78/0x142694ec0.c",
+    "sha256": "2c02f2b89cda898d9b69719422e0f46216cbac96c02f4856191fe13814bc41d0"
+  },
+  {
+    "address": "0x1426b4ce0",
+    "label": "WeaponVirtual798",
+    "path": "porting/generated/native-behavior78/0x1426b4ce0.c",
+    "sha256": "bd2236b46df9dd788cb61792e25d0e60003392bea98ca961382b29cc7b349cf8"
+  }
+]
