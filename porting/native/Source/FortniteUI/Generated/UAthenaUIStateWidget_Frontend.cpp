@@ -9,3 +9,14 @@ UFortPlayerSurveyDispatcher* UAthenaUIStateWidget_Frontend::GetPlayerSurveyDispa
 	return PlayerSurveyDispatcher;
 }
 
+void UAthenaUIStateWidget_Frontend::SetVideoActive(bool bActive)
+{
+	// CONFIDENCE: high
+	// Reflected native wrapper 0x1451cbcf0.
+	bVideoActive = bActive;
+	if (bActive)
+	{
+	    NativeVideoStateByte_0x55a = 1;
+	}
+}
+

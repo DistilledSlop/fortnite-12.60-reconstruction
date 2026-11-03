@@ -41,5 +41,8 @@ public:
 	UPROPERTY()
 	TSoftClassPtr<ABattleBusCosmeticInstanceBase> BusPrefabClass;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	TSoftClassPtr<ABattleBusCosmeticInstanceBase> GetBusPrefabClass() const;
+
 };
 

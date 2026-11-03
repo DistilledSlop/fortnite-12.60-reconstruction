@@ -38,6 +38,12 @@ public:
 	UPROPERTY()
 	FGameplayTag RequiredSlotGameplayTag;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0xba0): not a UPROPERTY, not replicated.
+	uint8 NativeStateByte_0xba0;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0xba1): not a UPROPERTY, not replicated.
+	uint8 NativeStateByte_0xba1;
+
 	// table index 3, flags 0x40000000000000
 	UPROPERTY()
 	UFortItem* LocalCampaignHeroPartItem;
@@ -56,6 +62,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UFortItem* GetCampaignHeroPartItem() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	void GetCustomizationSlotActiveState(bool& bOutAttachableCosmeticAvailable, bool& bOutActive) const;
 
 };
 

@@ -9,3 +9,11 @@ UFortItem* UAthenaCustomizationSlotSelectorButton::GetCampaignHeroPartItem() con
 	return LocalCampaignHeroPartItem;
 }
 
+void UAthenaCustomizationSlotSelectorButton::GetCustomizationSlotActiveState(bool& bOutAttachableCosmeticAvailable, bool& bOutActive) const
+{
+	// CONFIDENCE: high
+	// Reflected native wrapper 0x145194b20.
+	*reinterpret_cast<uint8*>(&bOutAttachableCosmeticAvailable) = NativeStateByte_0xba0;
+	*reinterpret_cast<uint8*>(&bOutActive) = NativeStateByte_0xba1;
+}
+

@@ -16,12 +16,24 @@ class FORTNITEUI_API UFortStoreFrontOfferInfo : public UObject
 	GENERATED_BODY()
 
 public:
+	// Non-reflected field (behaviour kind "member_field", offset 0x38): not a UPROPERTY, not replicated.
+	FName NativeStorefrontName;
+
 	// table index 0, flags 0x40000000000000
 	UPROPERTY()
 	UFortMtxOfferData* OfferDisplayAsset;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x48): not a UPROPERTY, not replicated.
+	FString NativeDisplayAssetPath;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FString GetDisplayAssetPath() const;
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UFortMtxOfferData* GetOfferDisplayAsset() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FName GetStorefrontName() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual bool HasDisplayAsset() const;

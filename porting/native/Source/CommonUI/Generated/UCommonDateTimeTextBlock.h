@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonTextBlock.h"
 
+#include "Misc/DateTime.h"
+
 #include "UCommonDateTimeTextBlock.generated.h"
 
 UCLASS(defaultconfig)
@@ -14,5 +16,11 @@ class COMMONUI_API UCommonDateTimeTextBlock : public UCommonTextBlock
 	GENERATED_BODY()
 
 public:
+	// Non-reflected field (behaviour kind "member_field", offset 0x2d8): not a UPROPERTY, not replicated.
+	FDateTime NativeDateTimeStorage_0x2d8;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FDateTime GetDateTime() const;
+
 };
 

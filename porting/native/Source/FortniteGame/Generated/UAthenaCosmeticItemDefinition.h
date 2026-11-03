@@ -132,6 +132,9 @@ public:
 	FRotator GetPreviewPawnRotationOffset() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortCosmeticVariant* GetVariantChannel(FGameplayTag InVariantChannelTag) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	EVariantUnlockType GetVariantUnlockType() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

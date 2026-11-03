@@ -45,5 +45,14 @@ public:
 	UPROPERTY()
 	TArray<FCharmSoundAssetEntry> CharmSounds;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	TSoftClassPtr<UAnimInstance> GetOverrideAnimSetPtr() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	TSoftObjectPtr<USkeletalMesh> GetOverrideSkelMeshPtr() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	TSoftClassPtr<UAnimInstance> GetOverrideWeaponAnimSetPtr() const;
+
 };
 

@@ -91,5 +91,14 @@ public:
 	UPROPERTY()
 	TSoftObjectPtr<USoundBase> CloseSound;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	TSoftClassPtr<UAnimInstance> GetOverrideAnimSetPtr() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	TSoftObjectPtr<USkeletalMesh> GetOverrideSkelMeshPtr() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	TSoftObjectPtr<UFortPlayerGliderAnimSet> GetPlayerAnimSetPtr() const;
+
 };
 

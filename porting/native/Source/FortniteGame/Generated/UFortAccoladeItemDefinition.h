@@ -86,6 +86,9 @@ public:
 	USoundCue* GetAwardedSound() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	TSoftObjectPtr<UTexture2D> GetPreviousAccoladeSmallPreviewImage() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	EXPEventPriorityType GetPriority() const;
 
 };

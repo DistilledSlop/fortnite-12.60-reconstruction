@@ -67,6 +67,9 @@ public:
 	FLinearColor GetPackColor() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	TSoftObjectPtr<UTexture2D> GetXRayImage() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsChoicePack() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

@@ -18,7 +18,9 @@
 #include "GameplayTagContainer.h"
 #include "Math/Vector.h"
 
+class AFortPawn;
 class AFortProjectileBase;
+class UFortAbilitySystemComponent;
 class UFortCameraMode;
 class UFortTooltip;
 class UFortTooltipDisplayStatsList;
@@ -263,6 +265,12 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	virtual void AddDynamicGameplayEffectContainer(FGameplayTag& ApplicationTag, FFortGameplayEffectContainer& Container);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortAbilitySystemComponent* GetActivatingAbilityComponent() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	AFortPawn* GetActivatingPawn() const;
 
 	UFUNCTION(BlueprintNativeEvent)
 	void OnGenericNotifyFromAnimation(FGameplayTag NotifyTag);

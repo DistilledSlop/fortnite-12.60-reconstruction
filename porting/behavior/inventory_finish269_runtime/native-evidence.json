@@ -1,0 +1,225 @@
+[
+  {
+    "class": "UAthenaBattleBusItemDefinition",
+    "function": "GetBusPrefabClass",
+    "exec_addr": "0x142716210",
+    "native_body_address": "0x141d46bc0",
+    "wrapper_capture": "porting/generated/native108-broad/0x142716210.c",
+    "capture_paths": {
+      "0x142716210": "porting/generated/native108-broad/0x142716210.c",
+      "0x141d46bc0": "porting/generated/native108-impl/0x141d46bc0.c",
+      "0x140682ce0": "porting/generated/callee_probe/fort_assets_diagnostics4/0x140682ce0.c",
+      "0x142ebd9e0": "porting/generated/native96-impl/0x142ebd9e0.c"
+    },
+    "helper_evidence": [
+      "0x140682ce0 FSoftObjectPath copy",
+      "0x142ebd9e0 move-assign"
+    ],
+    "member": "BusPrefabClass",
+    "offset": 1608,
+    "type": "TSoftClassPtr<ABattleBusCosmeticInstanceBase>"
+  },
+  {
+    "class": "UAthenaCharmItemDefinition",
+    "function": "GetOverrideAnimSetPtr",
+    "exec_addr": "0x14271a510",
+    "native_body_address": "0x14271a510",
+    "wrapper_capture": "porting/generated/native108-broad/0x14271a510.c",
+    "capture_paths": {
+      "0x14271a510": "porting/generated/native108-broad/0x14271a510.c",
+      "0x140682ce0": "porting/generated/callee_probe/fort_assets_diagnostics4/0x140682ce0.c",
+      "0x142ebd9e0": "porting/generated/native96-impl/0x142ebd9e0.c",
+      "0x140690ac0": "porting/generated/native98-impl/0x140690ac0.c"
+    },
+    "helper_evidence": [
+      "0x140682ce0 path copy",
+      "0x142ebd9e0 move",
+      "0x140690ac0 buffer alloc"
+    ],
+    "member": "AnimClass",
+    "offset": 1528,
+    "type": "TSoftClassPtr<UAnimInstance>"
+  },
+  {
+    "class": "UAthenaCharmItemDefinition",
+    "function": "GetOverrideSkelMeshPtr",
+    "exec_addr": "0x14271a700",
+    "native_body_address": "0x14271a700",
+    "wrapper_capture": "porting/generated/native245-fresh-bulk/0x14271a700.c",
+    "capture_paths": {
+      "0x14271a700": "porting/generated/native245-fresh-bulk/0x14271a700.c",
+      "0x140682ce0": "porting/generated/callee_probe/fort_assets_diagnostics4/0x140682ce0.c",
+      "0x142ebd9e0": "porting/generated/native96-impl/0x142ebd9e0.c",
+      "0x140690ac0": "porting/generated/native98-impl/0x140690ac0.c"
+    },
+    "helper_evidence": [
+      "0x140682ce0",
+      "0x142ebd9e0",
+      "0x140690ac0"
+    ],
+    "member": "SkeletalMesh",
+    "offset": 1488,
+    "type": "TSoftObjectPtr<USkeletalMesh>"
+  },
+  {
+    "class": "UAthenaCharmItemDefinition",
+    "function": "GetOverrideWeaponAnimSetPtr",
+    "exec_addr": "0x14271a810",
+    "native_body_address": "0x14271a810",
+    "wrapper_capture": "porting/generated/native245-fresh-bulk/0x14271a810.c",
+    "capture_paths": {
+      "0x14271a810": "porting/generated/native245-fresh-bulk/0x14271a810.c",
+      "0x140682ce0": "porting/generated/callee_probe/fort_assets_diagnostics4/0x140682ce0.c",
+      "0x142ebd9e0": "porting/generated/native96-impl/0x142ebd9e0.c",
+      "0x140690ac0": "porting/generated/native98-impl/0x140690ac0.c"
+    },
+    "helper_evidence": [
+      "0x140682ce0",
+      "0x142ebd9e0",
+      "0x140690ac0"
+    ],
+    "member": "WeaponAnimClass",
+    "offset": 1568,
+    "type": "TSoftClassPtr<UAnimInstance>"
+  },
+  {
+    "class": "UAthenaCosmeticItemDefinition",
+    "function": "GetVariantChannel",
+    "exec_addr": "0x14271eb90",
+    "native_body_address": "0x141d507d0",
+    "wrapper_capture": "porting/generated/native235-fresh-bulk/0x14271eb90.c",
+    "capture_paths": {
+      "0x14271eb90": "porting/generated/native235-fresh-bulk/0x14271eb90.c",
+      "0x141d507d0": "porting/generated/native-broad80/0x141d507d0.c"
+    },
+    "helper_evidence": [
+      "0x141d507d0 linear scan, FName equality"
+    ],
+    "member": "ItemVariants",
+    "offset": 1048,
+    "type": "TArray<UFortCosmeticVariant*>"
+  },
+  {
+    "class": "UAthenaGliderItemDefinition",
+    "function": "GetOverrideAnimSetPtr",
+    "exec_addr": "0x142725a20",
+    "native_body_address": "0x142725a20",
+    "wrapper_capture": "porting/generated/native108-broad/0x142725a20.c",
+    "capture_paths": {
+      "0x142725a20": "porting/generated/native108-broad/0x142725a20.c",
+      "0x140682ce0": "porting/generated/callee_probe/fort_assets_diagnostics4/0x140682ce0.c",
+      "0x142ebd9e0": "porting/generated/native96-impl/0x142ebd9e0.c",
+      "0x140690ac0": "porting/generated/native98-impl/0x140690ac0.c"
+    },
+    "helper_evidence": [
+      "0x140682ce0",
+      "0x142ebd9e0",
+      "0x140690ac0"
+    ],
+    "member": "AnimClass",
+    "offset": 1632,
+    "type": "TSoftClassPtr<UAnimInstance>"
+  },
+  {
+    "class": "UAthenaGliderItemDefinition",
+    "function": "GetOverrideSkelMeshPtr",
+    "exec_addr": "0x142725b30",
+    "native_body_address": "0x142725b30",
+    "wrapper_capture": "porting/generated/native245-fresh-bulk/0x142725b30.c",
+    "capture_paths": {
+      "0x142725b30": "porting/generated/native245-fresh-bulk/0x142725b30.c",
+      "0x140682ce0": "porting/generated/callee_probe/fort_assets_diagnostics4/0x140682ce0.c",
+      "0x142ebd9e0": "porting/generated/native96-impl/0x142ebd9e0.c",
+      "0x140690ac0": "porting/generated/native98-impl/0x140690ac0.c"
+    },
+    "helper_evidence": [
+      "0x140682ce0",
+      "0x142ebd9e0",
+      "0x140690ac0"
+    ],
+    "member": "SkeletalMesh",
+    "offset": 1592,
+    "type": "TSoftObjectPtr<USkeletalMesh>"
+  },
+  {
+    "class": "UAthenaGliderItemDefinition",
+    "function": "GetPlayerAnimSetPtr",
+    "exec_addr": "0x142725c80",
+    "native_body_address": "0x142725c80",
+    "wrapper_capture": "porting/generated/native105-broad/0x142725c80.c",
+    "capture_paths": {
+      "0x142725c80": "porting/generated/native105-broad/0x142725c80.c",
+      "0x140682ce0": "porting/generated/callee_probe/fort_assets_diagnostics4/0x140682ce0.c",
+      "0x142ebd9e0": "porting/generated/native96-impl/0x142ebd9e0.c",
+      "0x140690ac0": "porting/generated/native98-impl/0x140690ac0.c"
+    },
+    "helper_evidence": [
+      "0x140682ce0",
+      "0x142ebd9e0",
+      "0x140690ac0"
+    ],
+    "member": "PlayerAnimSet",
+    "offset": 1712,
+    "type": "TSoftObjectPtr<UFortPlayerGliderAnimSet>"
+  },
+  {
+    "class": "UAthenaSprayItemDefinition",
+    "function": "GetDecalTexture",
+    "exec_addr": "0x14272eab0",
+    "native_body_address": "0x141d7d430",
+    "wrapper_capture": "porting/generated/native105-broad/0x14272eab0.c",
+    "capture_paths": {
+      "0x14272eab0": "porting/generated/native105-broad/0x14272eab0.c",
+      "0x141d7d430": "porting/generated/native105-impl/0x141d7d430.c",
+      "0x140682ce0": "porting/generated/callee_probe/fort_assets_diagnostics4/0x140682ce0.c",
+      "0x142ebd9e0": "porting/generated/native96-impl/0x142ebd9e0.c",
+      "0x140696cf0": "porting/generated/native103-impl/0x140696cf0.c"
+    },
+    "helper_evidence": [
+      "0x140696cf0 soft-object copy"
+    ],
+    "member": "DecalTexture",
+    "offset": 1856,
+    "type": "TSoftObjectPtr<UTexture2D>"
+  },
+  {
+    "class": "UFortAccoladeItemDefinition",
+    "function": "GetPreviousAccoladeSmallPreviewImage",
+    "exec_addr": "0x14278e5f0",
+    "native_body_address": "0x142010800",
+    "wrapper_capture": "porting/generated/native210-fresh-bulk/0x14278e5f0.c",
+    "capture_paths": {
+      "0x14278e5f0": "porting/generated/native210-fresh-bulk/0x14278e5f0.c",
+      "0x142010800": "porting/generated/native213-fresh-callees/0x142010800.c",
+      "0x140682ce0": "porting/generated/callee_probe/fort_assets_diagnostics4/0x140682ce0.c",
+      "0x142ebd9e0": "porting/generated/native96-impl/0x142ebd9e0.c",
+      "0x140696cf0": "porting/generated/native103-impl/0x140696cf0.c"
+    },
+    "helper_evidence": [
+      "0x140696cf0 soft-object copy"
+    ],
+    "member": "PreviouseAccoladeSmallPreviewImage",
+    "offset": 808,
+    "type": "TSoftObjectPtr<UTexture2D>"
+  },
+  {
+    "class": "UFortCardPackItemDefinition",
+    "function": "GetXRayImage",
+    "exec_addr": "0x14285cc50",
+    "native_body_address": "0x14254a110",
+    "wrapper_capture": "porting/generated/native210-fresh-bulk/0x14285cc50.c",
+    "capture_paths": {
+      "0x14285cc50": "porting/generated/native210-fresh-bulk/0x14285cc50.c",
+      "0x14254a110": "porting/generated/native213-fresh-callees/0x14254a110.c",
+      "0x140682ce0": "porting/generated/callee_probe/fort_assets_diagnostics4/0x140682ce0.c",
+      "0x142ebd9e0": "porting/generated/native96-impl/0x142ebd9e0.c",
+      "0x140696cf0": "porting/generated/native103-impl/0x140696cf0.c"
+    },
+    "helper_evidence": [
+      "0x140696cf0 soft-object copy"
+    ],
+    "member": "XRayTexture",
+    "offset": 976,
+    "type": "TSoftObjectPtr<UTexture2D>"
+  }
+]

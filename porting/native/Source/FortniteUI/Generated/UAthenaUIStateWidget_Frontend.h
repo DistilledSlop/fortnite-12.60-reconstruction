@@ -115,6 +115,9 @@ public:
 	UPROPERTY()
 	bool bVideoActive;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x55a): not a UPROPERTY, not replicated.
+	uint8 NativeVideoStateByte_0x55a;
+
 	// table index 15, flags 0x4000000008001c
 	UPROPERTY()
 	UAthenaTopBar* TopBar_Widget;
@@ -178,6 +181,11 @@ public:
 protected:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UFortPlayerSurveyDispatcher* GetPlayerSurveyDispatcher() const;
+public:
+
+protected:
+	UFUNCTION(BlueprintCallable)
+	void SetVideoActive(bool bActive);
 public:
 
 };

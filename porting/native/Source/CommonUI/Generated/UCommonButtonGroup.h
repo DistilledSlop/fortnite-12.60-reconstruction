@@ -53,6 +53,9 @@ public:
 	// Non-reflected field (behaviour kind "member_field", offset 0xc4): not a UPROPERTY, not replicated.
 	int32 NativeHoveredButtonIndex;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 FindButtonIndex(UCommonButton* ButtonToFind) const;
+
 protected:
 	UFUNCTION()
 	virtual void OnButtonHovered(UCommonButton* BaseButton);

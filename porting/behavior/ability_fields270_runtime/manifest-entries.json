@@ -1,0 +1,50 @@
+[
+  {
+    "function": "GetActivatingAbilityComponent",
+    "kind": "exec",
+    "signature": "UFortAbilitySystemComponent* GetActivatingAbilityComponent() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/ability_fields270_runtime/GetActivatingAbilityComponent.inc",
+    "address": "0x1428f8280",
+    "native_body_address": "0x1415f7d70",
+    "reflection_flags": "0x54020401",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Null-check CurrentActorInfo, resolve its weak pointer and cast to the reflected return type.",
+    "class": "UFortGameplayAbility"
+  },
+  {
+    "function": "GetActivatingPawn",
+    "kind": "exec",
+    "signature": "AFortPawn* GetActivatingPawn() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/ability_fields270_runtime/GetActivatingPawn.inc",
+    "address": "0x1428f82b0",
+    "native_body_address": "0x1415f7dd0",
+    "reflection_flags": "0x54020401",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Null-check CurrentActorInfo, resolve its weak pointer and cast to the reflected return type.",
+    "class": "UFortGameplayAbility"
+  },
+  {
+    "class": "UFortAbilitySystemComponentTooltipContext",
+    "function": "SpawnAbilitySystemTooltipContext",
+    "kind": "exec",
+    "signature": "UFortAbilitySystemComponentTooltipContext* SpawnAbilitySystemTooltipContext()",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": true,
+    "inc_path": "porting/behavior/ability_fields270_runtime/SpawnAbilitySystemTooltipContext.inc",
+    "address": "0x142781ae0",
+    "native_body_address": "0x1425d5b90",
+    "reflection_flags": "0x4022409",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "NewObject with default transient outer, class, name, flags and template as in native."
+  }
+]

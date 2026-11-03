@@ -25,5 +25,8 @@ public:
 	UPROPERTY()
 	FActiveGameplayEffectHandle ActiveGEHandle;
 
+	UFUNCTION(BlueprintCallable, BlueprintCosmetic)
+	static UFortAbilitySystemComponentTooltipContext* SpawnAbilitySystemTooltipContext();
+
 };
 

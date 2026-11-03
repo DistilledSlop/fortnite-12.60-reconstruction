@@ -69,5 +69,14 @@ public:
 	UPROPERTY()
 	bool IsPercentage;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x334): not a UPROPERTY, not replicated.
+	int32 NativeNumericState_0x334;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x34c): not a UPROPERTY, not replicated.
+	float NativeNumericValue_0x34c;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetTargetValue() const;
+
 };
 

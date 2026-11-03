@@ -1,0 +1,47 @@
+[
+  {
+    "class": "UCommonDateTimeTextBlock",
+    "function": "GetDateTime",
+    "captures": {
+      "0x14080ffa0": "porting/generated/native108-broad/0x14080ffa0.c",
+      "0x1407c25a0": "porting/generated/native108-impl/0x1407c25a0.c"
+    },
+    "proof": "FUN_1407c25a0 copies the whole 8-byte DateTime value to the return slot."
+  },
+  {
+    "class": "UCommonNumericTextBlock",
+    "function": "GetTargetValue",
+    "captures": {
+      "0x1408100a0": "porting/generated/native108-broad/0x1408100a0.c",
+      "0x1407c55e0": "porting/generated/native108-impl/0x1407c55e0.c"
+    },
+    "proof": "FUN_1407c55e0 selects the 0x34c float only when the 0x334 int32 equals one; otherwise reads reflected CurrentNumericValue at 0x308."
+  },
+  {
+    "class": "UAthenaCustomizationSlotSelectorButton",
+    "function": "GetCustomizationSlotActiveState",
+    "captures": {
+      "0x145194b20": "porting/generated/native108-broad/0x145194b20.c",
+      "0x144af9c30": "porting/generated/native108-impl/0x144af9c30.c"
+    },
+    "proof": "FUN_144af9c30 performs raw byte copies in argument order, including if outputs alias."
+  },
+  {
+    "class": "UAthenaUIStateWidget_Frontend",
+    "function": "SetVideoActive",
+    "captures": {
+      "0x1451cbcf0": "porting/generated/native108-broad/0x1451cbcf0.c",
+      "0x144c75f40": "porting/generated/native108-impl/0x144c75f40.c"
+    },
+    "proof": "FUN_144c75f40 assigns the normalized input byte to reflected bVideoActive and sets the separate byte only on true."
+  },
+  {
+    "class": "UCommonButtonGroup",
+    "function": "FindButtonIndex",
+    "captures": {
+      "0x14080fd90": "porting/generated/native108-broad/0x14080fd90.c",
+      "0x1407bd7d0": "porting/generated/native108-impl/0x1407bd7d0.c"
+    },
+    "proof": "FUN_1407bd7d0 walks the existing canonical NativeButtonGroupWidgets weak pointer array at 0xb0, returning the first matching resolved pointer index or -1."
+  }
+]

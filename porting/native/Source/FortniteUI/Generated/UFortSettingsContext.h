@@ -6,8 +6,12 @@
 #include "CoreMinimal.h"
 #include "UBlueprintContextBase.h"
 
+#include "EFortAllowBackgroundAudioSetting.h"
 #include "ESettingTab.h"
 #include "ESettingType.h"
+#include "Engine/LocalPlayer.h"
+#include "GameFramework/PlayerController.h"
+#include "UFortClientSettingsRecord.h"
 
 #include "UFortSettingsContext.generated.h"
 
@@ -26,13 +30,155 @@ public:
 	float MaxGammaValue;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetAimAssistState() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	EFortAllowBackgroundAudioSetting GetAllowGameVolumeWhenMinimized() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetAutoChangeMaterial() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetAutoEquipState() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetAutoOpenDoors() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetBuildingPossessionShown() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	TArray<FText> GetColorBlindModeNames() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetContextTutorialState() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetEditConfirmOnReleaseState() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetEditModeAimAssistState() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetFirstPersonCameraState() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetFocusOnFirstBuildingPieceWhenQuickbarSwappedState() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetFocusOnFirstBuildingPieceWhenQuickbarSwappedStateAthena() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetForceFeedbackState() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetGamepadAutoRunState() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetGamepadBuildingMultiplierValue() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetGamepadEditModeMultiplierValue() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetGamepadLookStickDeadZone() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetGamepadMoveStickDeadZone() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetGamepadScopedMultiplierValue() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetGamepadTargetingMultiplierValue() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetGammaSettings() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetGyroSensitivityValue() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetHoldToSwapPickupState() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetHUDScaleRaw() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetInWorldInteractState() const;
 
 	UFUNCTION(BlueprintCallable)
 	TArray<FText> GetMotionAxisNames();
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetMotionAxisValue() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetMotionControlsEnabledValue() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetMouseSensitivityMultiplierForAircraft() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetNotifyUsersWhenPlaying() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetPitchInversionState() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetPowerSaverMode() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetQuickEditState() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetScopedMultiplierValue() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetSettingValueInRange(float Value, ESettingType InSettingType, ESettingTab InSettingTab);
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetSprintByDefaultState() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetSprintCancelsReloadState() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetSprintToggleState() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetSubtitlesEnabled() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetTapInteractState() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetTargetingMultiplierValue() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetTargetingToggleState() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetTouchBuildingMultiplierValue() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetTouchDragScopedSensitivityValue() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetTouchEditModeMultiplierValue() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetTouchEditState() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetTouchLookAccelerationMultiplier() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetTouchLookSensitivityValue() const;
+
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	UFortClientSettingsRecord* NativeGetSettingsRecord144d03d50() const;
 };
 
