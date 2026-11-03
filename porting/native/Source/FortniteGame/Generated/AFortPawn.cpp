@@ -8,6 +8,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Math/Rotator.h"
 #include "UFortAbilitySystemComponent.h"
+#include "UFortHealthSet.h"
 #include "Net/UnrealNetwork.h"
 
 void AFortPawn::AddNonReplicatedTagToPawn(FGameplayTag& Tag)
@@ -59,6 +60,35 @@ USkeletalMeshComponent* AFortPawn::GetEmotePropAttachMesh()
 	return GetMesh();
 }
 
+float AFortPawn::GetHealth() const
+{
+	// CONFIDENCE: high
+	// Native target 0x14231c4c0.
+	if (bTearOff)
+	{
+	    return 0.0f;
+	}
+	if (!bHealthSynced || !HealthSet)
+	{
+	    return 1.0f;
+	}
+	const UFortHealthSet* FortHealthSet = HealthSet;
+	const float HealthValue = FortHealthSet->Health.GetCurrentValue();
+	return (HealthValue <= 0.0f) ? 0.0f : HealthValue;
+}
+
+float AFortPawn::GetHealthPercent() const
+{
+	// CONFIDENCE: high; native queries health before maximum health.
+	if (IsDead())
+	{
+	    return 0.0f;
+	}
+	const float Health = GetHealth();
+	const float Maximum = GetMaxHealth();
+	return Health / Maximum;
+}
+
 float AFortPawn::GetLocalSpin() const
 {
 	// Behaviour snippet: AFortPawn::GetLocalSpin (body only; spliced into the generated member function).
@@ -69,6 +99,82 @@ float AFortPawn::GetLocalSpin() const
 	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	return LocalSpin;
+}
+
+float AFortPawn::GetMaxHealth() const
+{
+	// CONFIDENCE: high
+	// Native target 0x141948150.
+	const UFortHealthSet* FortHealthSet = HealthSet;
+	if (!FortHealthSet)
+	{
+	    return 0.0f;
+	}
+	return FortHealthSet->MaxHealth.GetCurrentValue();
+}
+
+float AFortPawn::GetMaxShield() const
+{
+	// CONFIDENCE: high
+	// Native target 0x142321d00.
+	const UFortHealthSet* FortHealthSet = HealthSet;
+	if (!FortHealthSet)
+	{
+	    return 0.0f;
+	}
+	return FortHealthSet->Shield.GetCurrentValue();
+}
+
+float AFortPawn::GetMaxSignalInStorm() const
+{
+	// CONFIDENCE: high
+	// Native target 0x142321d20.
+	const UFortHealthSet* FortHealthSet = HealthSet;
+	if (!FortHealthSet)
+	{
+	    return 0.0f;
+	}
+	return FortHealthSet->MaxSignalInStorm.GetCurrentValue();
+}
+
+float AFortPawn::GetShield() const
+{
+	// CONFIDENCE: high
+	// Native target 0x142323a70.
+	const UFortHealthSet* FortHealthSet = HealthSet;
+	if (!FortHealthSet)
+	{
+	    return 0.0f;
+	}
+	return FortHealthSet->CurrentShield.GetCurrentValue();
+}
+
+float AFortPawn::GetShieldPercent() const
+{
+	// CONFIDENCE: high; preserve the repeated maximum-shield virtual query.
+	if (IsDead())
+	{
+	    return 0.0f;
+	}
+	if (GetMaxShield() > 0.0f)
+	{
+	    const float Shield = GetShield();
+	    const float Maximum = GetMaxShield();
+	    return Shield / Maximum;
+	}
+	return 0.0f;
+}
+
+float AFortPawn::GetSignalInStorm() const
+{
+	// CONFIDENCE: high
+	// Native target 0x142323de0.
+	const UFortHealthSet* FortHealthSet = HealthSet;
+	if (!FortHealthSet)
+	{
+	    return 0.0f;
+	}
+	return FortHealthSet->SignalInStorm.GetCurrentValue();
 }
 
 void AFortPawn::HandleIsDying()
@@ -478,6 +584,12 @@ bool AFortPawn::NativeIsLocalPlayer() const
 {
 	// CONFIDENCE: HIGH
 	return false;
+}
+
+bool AFortPawn::IsDead() const
+{
+	// CONFIDENCE: high; native returns dead unless health is strictly positive (including NaN).
+	return !(GetHealth() > 0.0f) || bIsDying || IsPendingKill();
 }
 
 void AFortPawn::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

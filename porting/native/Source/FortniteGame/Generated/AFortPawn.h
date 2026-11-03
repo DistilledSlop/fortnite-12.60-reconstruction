@@ -798,7 +798,31 @@ public:
 	virtual USkeletalMeshComponent* GetEmotePropAttachMesh();
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual float GetHealth() const;
+
+	UFUNCTION()
+	virtual float GetHealthPercent() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetLocalSpin() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual float GetMaxHealth() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual float GetMaxShield() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual float GetMaxSignalInStorm() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual float GetShield() const;
+
+	UFUNCTION()
+	virtual float GetShieldPercent() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual float GetSignalInStorm() const;
 
 	UFUNCTION()
 	void HandleIsDying();
@@ -961,5 +985,6 @@ public:
 	virtual bool HasNativeAction(const FGameplayTag& ActionTag);
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const;
 	virtual bool NativeIsLocalPlayer() const;
+	bool IsDead() const;
 };
 

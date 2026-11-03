@@ -1,0 +1,322 @@
+{
+  "selection": "/tmp/native111-pawn-closure.json",
+  "selection_count": 9,
+  "ported_count": 8,
+  "unresolved_count": 1,
+  "missing_captures": [],
+  "rows": [
+    {
+      "index": 27,
+      "proof": {
+        "function": "EquipBestWeapon",
+        "address": "0x142a1b6a0",
+        "slot": "0xbc0",
+        "kind": "Bool",
+        "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; mov rax, qword ptr [rcx]; call qword ptr [rax + 0xbc0]; mov byte ptr [rbx], al; add rsp, 0x20; pop rbx; ret",
+        "class": "AFortPawn",
+        "vtable": "0x146115880",
+        "target": "0x142314d40",
+        "constructor_proof": {
+          "gpsc": "0x142a174f0",
+          "helper": "0x142a16b90",
+          "constructor": "0x1422fce30",
+          "source": "porting/generated/native111-constructors/0x1422fce30.c",
+          "object_expression": "param_1",
+          "primary_store": "*param_1 = &DAT_146115880",
+          "vtable": "0x146115880"
+        }
+      },
+      "captured_source": "porting/generated/callee_probe/weapon_selection2/0x142314d40.c",
+      "status": "unresolved",
+      "reason": "EquipBestWeapon call unresolved (ignored per task instructions)."
+    },
+    {
+      "index": 29,
+      "proof": {
+        "function": "GetHealth",
+        "address": "0x142a1c1e0",
+        "slot": "0xb28",
+        "kind": "Float",
+        "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; mov rax, qword ptr [rcx]; call qword ptr [rax + 0xb28]; movss dword ptr [rbx], xmm0; add rsp, 0x20; pop rbx; ret",
+        "class": "AFortPawn",
+        "vtable": "0x146115880",
+        "target": "0x14231c4c0",
+        "constructor_proof": {
+          "gpsc": "0x142a174f0",
+          "helper": "0x142a16b90",
+          "constructor": "0x1422fce30",
+          "source": "porting/generated/native111-constructors/0x1422fce30.c",
+          "object_expression": "param_1",
+          "primary_store": "*param_1 = &DAT_146115880",
+          "vtable": "0x146115880"
+        }
+      },
+      "captured_source": "porting/generated/native111-virtual-expanded/0x14231c4c0.c",
+      "status": "ported",
+      "reflection_flags": "0x54020402",
+      "explanation": "AFortPawn native body at 0x14231c4c0: checks bTearOff (AActor offset 0x58 bit 0x40) returning 0.0f; checks bHealthSynced (AFortPawn offset 0x539 bit 0x8) and HealthSet (AFortPawn offset 0xb78), returning 1.0f if either is false/null; otherwise calls FUN_14070cc00 on HealthSet->Health (offset 0x30) to get CurrentValue (offset 0xc in FGameplayAttributeData), clamping values <= 0.0f to 0.0f.",
+      "dependencies": {
+        "bTearOff": "AActor reflected bitfield (offset 0x58, bit 0x40)",
+        "bHealthSynced": "AFortPawn reflected bitfield (offset 0x539, bit 0x8)",
+        "HealthSet": "AFortPawn reflected property (offset 0xb78, UFortHealthSet*)",
+        "Health": "UFortHealthSet reflected property (offset 0x30, FFortGameplayAttributeData)",
+        "GetCurrentValue": "FUN_14070cc00 reads CurrentValue at offset 0xc of FGameplayAttributeData"
+      }
+    },
+    {
+      "index": 30,
+      "proof": {
+        "function": "GetHealthPercent",
+        "address": "0x142a1c220",
+        "slot": "0xd50",
+        "kind": "Float",
+        "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; mov rax, qword ptr [rcx]; call qword ptr [rax + 0xd50]; movss dword ptr [rbx], xmm0; add rsp, 0x20; pop rbx; ret",
+        "class": "AFortPawn",
+        "vtable": "0x146115880",
+        "target": "0x14231e1d0",
+        "constructor_proof": {
+          "gpsc": "0x142a174f0",
+          "helper": "0x142a16b90",
+          "constructor": "0x1422fce30",
+          "source": "porting/generated/native111-constructors/0x1422fce30.c",
+          "object_expression": "param_1",
+          "primary_store": "*param_1 = &DAT_146115880",
+          "vtable": "0x146115880"
+        }
+      },
+      "captured_source": "porting/generated/native111-virtual-expanded/0x14231e1d0.c",
+      "status": "ported",
+      "reflection_flags": "0x40020400",
+      "explanation": "AFortPawn native body at 0x14231e1d0: calls death predicate FUN_142331080 (IsDead); if non-zero (dead), returns 0.0f; otherwise calls vtable slot 0xb28 (GetHealth) and vtable slot 0xb20 (GetMaxHealth) and divides GetHealth() / GetMaxHealth().",
+      "dependencies": {
+        "FUN_142331080": "AFortPawn death predicate (IsDead)",
+        "slot_0xb28": "AFortPawn::GetHealth()",
+        "slot_0xb20": "AFortPawn::GetMaxHealth()"
+      }
+    },
+    {
+      "index": 31,
+      "proof": {
+        "function": "GetMaxHealth",
+        "address": "0x142a1c3b0",
+        "slot": "0xb20",
+        "kind": "Float",
+        "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; mov rax, qword ptr [rcx]; call qword ptr [rax + 0xb20]; movss dword ptr [rbx], xmm0; add rsp, 0x20; pop rbx; ret",
+        "class": "AFortPawn",
+        "vtable": "0x146115880",
+        "target": "0x141948150",
+        "constructor_proof": {
+          "gpsc": "0x142a174f0",
+          "helper": "0x142a16b90",
+          "constructor": "0x1422fce30",
+          "source": "porting/generated/native111-constructors/0x1422fce30.c",
+          "object_expression": "param_1",
+          "primary_store": "*param_1 = &DAT_146115880",
+          "vtable": "0x146115880"
+        }
+      },
+      "captured_source": "porting/generated/native111-virtual-expanded/0x141948150.c",
+      "status": "ported",
+      "reflection_flags": "0x54020400",
+      "explanation": "AFortPawn native body at 0x141948150: checks HealthSet (AFortPawn offset 0xb78); if null, returns 0.0f; otherwise tail-calls FUN_14070cc00 on HealthSet->MaxHealth (offset 0x58), returning CurrentValue.",
+      "dependencies": {
+        "HealthSet": "AFortPawn reflected property (offset 0xb78, UFortHealthSet*)",
+        "MaxHealth": "UFortHealthSet reflected property (offset 0x58, FFortGameplayAttributeData)"
+      }
+    },
+    {
+      "index": 32,
+      "proof": {
+        "function": "GetMaxShield",
+        "address": "0x142a1c3f0",
+        "slot": "0xb30",
+        "kind": "Float",
+        "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; mov rax, qword ptr [rcx]; call qword ptr [rax + 0xb30]; movss dword ptr [rbx], xmm0; add rsp, 0x20; pop rbx; ret",
+        "class": "AFortPawn",
+        "vtable": "0x146115880",
+        "target": "0x142321d00",
+        "constructor_proof": {
+          "gpsc": "0x142a174f0",
+          "helper": "0x142a16b90",
+          "constructor": "0x1422fce30",
+          "source": "porting/generated/native111-constructors/0x1422fce30.c",
+          "object_expression": "param_1",
+          "primary_store": "*param_1 = &DAT_146115880",
+          "vtable": "0x146115880"
+        }
+      },
+      "captured_source": "porting/generated/native111-virtual-expanded/0x142321d00.c",
+      "status": "ported",
+      "reflection_flags": "0x54020402",
+      "explanation": "AFortPawn native body at 0x142321d00: checks HealthSet (AFortPawn offset 0xb78); if null, returns 0.0f; otherwise tail-calls FUN_14070cc00 on HealthSet->Shield (offset 0xa8), returning CurrentValue (max shield).",
+      "dependencies": {
+        "HealthSet": "AFortPawn reflected property (offset 0xb78, UFortHealthSet*)",
+        "Shield": "UFortHealthSet reflected property (offset 0xa8, FFortGameplayAttributeData)"
+      }
+    },
+    {
+      "index": 33,
+      "proof": {
+        "function": "GetMaxSignalInStorm",
+        "address": "0x142a1c430",
+        "slot": "0xb40",
+        "kind": "Float",
+        "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; mov rax, qword ptr [rcx]; call qword ptr [rax + 0xb40]; movss dword ptr [rbx], xmm0; add rsp, 0x20; pop rbx; ret",
+        "class": "AFortPawn",
+        "vtable": "0x146115880",
+        "target": "0x142321d20",
+        "constructor_proof": {
+          "gpsc": "0x142a174f0",
+          "helper": "0x142a16b90",
+          "constructor": "0x1422fce30",
+          "source": "porting/generated/native111-constructors/0x1422fce30.c",
+          "object_expression": "param_1",
+          "primary_store": "*param_1 = &DAT_146115880",
+          "vtable": "0x146115880"
+        }
+      },
+      "captured_source": "porting/generated/native111-virtual-expanded/0x142321d20.c",
+      "status": "ported",
+      "reflection_flags": "0x54020402",
+      "explanation": "AFortPawn native body at 0x142321d20: checks HealthSet (AFortPawn offset 0xb78); if null, returns 0.0f; otherwise tail-calls FUN_14070cc00 on HealthSet->MaxSignalInStorm (offset 0xf8, CurrentValue at 0x104).",
+      "dependencies": {
+        "HealthSet": "AFortPawn reflected property (offset 0xb78, UFortHealthSet*)",
+        "MaxSignalInStorm": "UFortHealthSet reflected property (offset 0xf8, FFortGameplayAttributeData)"
+      }
+    },
+    {
+      "index": 34,
+      "proof": {
+        "function": "GetShield",
+        "address": "0x142a1c7a0",
+        "slot": "0xb38",
+        "kind": "Float",
+        "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; mov rax, qword ptr [rcx]; call qword ptr [rax + 0xb38]; movss dword ptr [rbx], xmm0; add rsp, 0x20; pop rbx; ret",
+        "class": "AFortPawn",
+        "vtable": "0x146115880",
+        "target": "0x142323a70",
+        "constructor_proof": {
+          "gpsc": "0x142a174f0",
+          "helper": "0x142a16b90",
+          "constructor": "0x1422fce30",
+          "source": "porting/generated/native111-constructors/0x1422fce30.c",
+          "object_expression": "param_1",
+          "primary_store": "*param_1 = &DAT_146115880",
+          "vtable": "0x146115880"
+        }
+      },
+      "captured_source": "porting/generated/native111-virtual-expanded/0x142323a70.c",
+      "status": "ported",
+      "reflection_flags": "0x54020402",
+      "explanation": "AFortPawn native body at 0x142323a70: checks HealthSet (AFortPawn offset 0xb78); if null, returns 0.0f; otherwise tail-calls FUN_14070cc00 on HealthSet->CurrentShield (offset 0x80), returning CurrentValue (current shield).",
+      "dependencies": {
+        "HealthSet": "AFortPawn reflected property (offset 0xb78, UFortHealthSet*)",
+        "CurrentShield": "UFortHealthSet reflected property (offset 0x80, FFortGameplayAttributeData)"
+      }
+    },
+    {
+      "index": 35,
+      "proof": {
+        "function": "GetShieldPercent",
+        "address": "0x142a1c810",
+        "slot": "0xd58",
+        "kind": "Float",
+        "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; mov rax, qword ptr [rcx]; call qword ptr [rax + 0xd58]; movss dword ptr [rbx], xmm0; add rsp, 0x20; pop rbx; ret",
+        "class": "AFortPawn",
+        "vtable": "0x146115880",
+        "target": "0x142323b10",
+        "constructor_proof": {
+          "gpsc": "0x142a174f0",
+          "helper": "0x142a16b90",
+          "constructor": "0x1422fce30",
+          "source": "porting/generated/native111-constructors/0x1422fce30.c",
+          "object_expression": "param_1",
+          "primary_store": "*param_1 = &DAT_146115880",
+          "vtable": "0x146115880"
+        }
+      },
+      "captured_source": "porting/generated/native111-virtual-expanded/0x142323b10.c",
+      "status": "ported",
+      "reflection_flags": "0x40020400",
+      "explanation": "AFortPawn native body at 0x142323b10: calls death predicate FUN_142331080 (IsDead); if non-zero (dead), returns 0.0f; calls vtable slot 0xb30 (GetMaxShield); if > 0.0f, calls vtable slot 0xb38 (GetShield) and divides GetShield() / GetMaxShield(); otherwise returns 0.0f.",
+      "dependencies": {
+        "FUN_142331080": "AFortPawn death predicate (IsDead)",
+        "slot_0xb30": "AFortPawn::GetMaxShield()",
+        "slot_0xb38": "AFortPawn::GetShield()"
+      }
+    },
+    {
+      "index": 36,
+      "proof": {
+        "function": "GetSignalInStorm",
+        "address": "0x142a1c850",
+        "slot": "0xb48",
+        "kind": "Float",
+        "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; mov rax, qword ptr [rcx]; call qword ptr [rax + 0xb48]; movss dword ptr [rbx], xmm0; add rsp, 0x20; pop rbx; ret",
+        "class": "AFortPawn",
+        "vtable": "0x146115880",
+        "target": "0x142323de0",
+        "constructor_proof": {
+          "gpsc": "0x142a174f0",
+          "helper": "0x142a16b90",
+          "constructor": "0x1422fce30",
+          "source": "porting/generated/native111-constructors/0x1422fce30.c",
+          "object_expression": "param_1",
+          "primary_store": "*param_1 = &DAT_146115880",
+          "vtable": "0x146115880"
+        }
+      },
+      "captured_source": "porting/generated/native111-virtual-expanded/0x142323de0.c",
+      "status": "ported",
+      "reflection_flags": "0x54020402",
+      "explanation": "AFortPawn native body at 0x142323de0: checks HealthSet (AFortPawn offset 0xb78); if null, returns 0.0f; otherwise tail-calls FUN_14070cc00 on HealthSet->SignalInStorm (offset 0xd0, CurrentValue at 0xdc).",
+      "dependencies": {
+        "HealthSet": "AFortPawn reflected property (offset 0xb78, UFortHealthSet*)",
+        "SignalInStorm": "UFortHealthSet reflected property (offset 0xd0, FFortGameplayAttributeData)"
+      }
+    }
+  ],
+  "resolved_helpers": [
+    {
+      "function": "IsDead",
+      "class": "AFortPawn",
+      "kind": "helper",
+      "address": "0x142331080",
+      "status": "ported",
+      "captured_source": "porting/generated/callee_probe/blocking/0x142331080.c",
+      "assembly_source": "porting/generated/callee_probe/blocking/0x142331080.asm",
+      "explanation": "AFortPawn death predicate (0x142331080): calls GetHealth() (slot 0xb28) and returns true (1) if <= 0.0f; tests bIsDying (offset 0x520 bit 0x8) and returns true (1) if non-zero; tests FUObjectItem::Flags bit 29 (0x20000000 / RF_BeginDestroyed / PendingKill) via GUObjectArray.IndexToObject(InternalIndex) and returns true (1) if set; returns false (0) otherwise.",
+      "dependencies": {
+        "GetHealth": "slot 0xb28 in primary vtable 0x146115880",
+        "bIsDying": "AFortPawn reflected bitfield (offset 0x520, bit 0x8)",
+        "IsPendingKill": "UObjectBaseUtility / FUObjectItem::IsPendingKill()"
+      }
+    },
+    {
+      "function": "FUN_14070cc00",
+      "class": "FGameplayAttributeData",
+      "kind": "helper",
+      "address": "0x14070cc00",
+      "status": "ported",
+      "captured_source": "porting/generated/native103-impl/0x14070cc00.c",
+      "assembly_source": "porting/generated/native103-impl/0x14070cc00.asm",
+      "explanation": "Returns *(float*)(param_1 + 0xc), which is FGameplayAttributeData::GetCurrentValue().",
+      "dependencies": {
+        "GetCurrentValue": "FGameplayAttributeData::GetCurrentValue() at offset 0xc"
+      }
+    }
+  ],
+  "unresolved_dependencies": [
+    {
+      "function": "EquipBestWeapon",
+      "address": "0x142a1b6a0",
+      "target": "0x142314d40",
+      "reason": "Ignored per task instructions (EquipBestWeapon requires complex weapon inventory selection callee tree)."
+    }
+  ],
+  "integration_corrections": [
+    "GetShieldPercent: preserve both GetMaxShield calls and evaluate GetShield before the second call, as native142323b10.",
+    "IsDead142331080: !(health > 0), not health <= 0; NaN follows dead branch.",
+    "GetHealthPercent: explicit temporaries retain native health/max-health call order."
+  ]
+}
