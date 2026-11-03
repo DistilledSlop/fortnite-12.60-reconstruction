@@ -2249,6 +2249,10 @@ _strict_panel_spec = _common_activation_import.spec_from_file_location(
     "strict_commonui_panel_policy", os.path.join(os.path.dirname(__file__), "frontend", "strict_commonui_imports_runtime", "policy.py"))
 _strict_panel_policy = _common_activation_import.module_from_spec(_strict_panel_spec)
 _strict_panel_spec.loader.exec_module(_strict_panel_policy)
+_panel_queue_spec = _common_activation_import.spec_from_file_location(
+    "legacy_panel_operation_queue_policy", os.path.join(os.path.dirname(__file__), "frontend", "legacy_panel_operation_queue_runtime", "policy.py"))
+_panel_queue_policy = _common_activation_import.module_from_spec(_panel_queue_spec)
+_panel_queue_spec.loader.exec_module(_panel_queue_policy)
 _client_event_spec = _common_activation_import.spec_from_file_location(
     "client_event_dispatch_policy", os.path.join(os.path.dirname(__file__), "frontend", "client_event_dispatch_runtime", "policy.py"))
 _client_event_policy = _common_activation_import.module_from_spec(_client_event_spec)
@@ -2446,6 +2450,7 @@ def build_class_promoted(block, name, resolver, parent_entry, owner_fns, snippet
     model = _ui_config_policy.apply(model, block)
     model = _legacy_state_policy.apply(model, block, owner_fns)
     model = _strict_panel_policy.apply(model, block, owner_fns)
+    model = _panel_queue_policy.apply(model, block, owner_fns, native_execs)
     model = _client_event_policy.apply(model, block, native_execs)
     model = _widget_route_policy.apply(model, block, owner_fns)
     model = _route_policy.apply(model, block, owner_fns)
@@ -3235,6 +3240,7 @@ def render_promoted_header(model, api, parent_include, source_label):
     lines.extend(_ui_config_policy.declarations(model).splitlines())
     lines.extend(_legacy_state_policy.declarations(model).splitlines())
     lines.extend(_strict_panel_policy.declarations(model).splitlines())
+    lines.extend(_panel_queue_policy.declarations(model).splitlines())
     lines.extend(_client_event_policy.declarations(model).splitlines())
     lines.extend(_widget_route_policy.declarations(model).splitlines())
     lines.extend(_route_policy.declarations(model).splitlines())
@@ -3397,6 +3403,7 @@ def render_promoted_cpp(model, source_label):
     result += _ui_config_policy.definitions(model)
     result += _legacy_state_policy.definitions(model)
     result += _strict_panel_policy.definitions(model)
+    result += _panel_queue_policy.definitions(model)
     result += _client_event_policy.definitions(model)
     return result + _common_activation_policy.definitions(model) + _current_input_type_policy.definitions(model) + _fort_globals_policy.definitions(model) + _button_style_policy.definitions(model) + _button_click_policy.definitions(model) + _button_double_click_policy.definitions(model) + _button_selection_policy.definitions(model) + _input_settings_policy.definitions(model) + _input_cache_policy.definitions(model) + _action_widget_policy.gamepad_definitions(model) + _action_widget_policy.icon_definitions(model) + _action_receivers_policy.definitions(model) + _action_slate_policy.definitions(model) + _button_focus_policy.definitions(model) + _button_initialize_policy.definitions(model) + _button_producers_policy.definitions(model) + _button_set_style_policy.definitions(model) + _border_style_policy.definitions(model) + _global_ui_priority_policy.definitions(model) + _global_ui_zone_policy.definitions(model) + _notification_image_policy.definitions(model) + _progress_modal_policy.definitions(model) + _commonui_module_policy.definitions(model) + _root_slate_policy.definitions(model) + _lazy_image_policy.definitions(model) + _widget_route_policy.definitions(model) + _route_policy.definitions(model) + _metadata_policy.definitions(model) + _modality_policy.definitions(model) + _cursor_settings_policy.definitions(model)
 
@@ -3739,6 +3746,8 @@ def promote(args):
         _border_style_policy.validate_types(gate)
     if 'UCommonActivatablePanel' in listed:
         _common_activation_policy.validate_panel_outro_types(gate)
+    if 'UCommonInputManager' in listed and 'UCommonActivatablePanel' in listed:
+        _panel_queue_policy.validate_types(gate)
     if 'UCommonInputSubsystem' in listed:
         _current_input_type_policy.validate_types(gate)
         _action_widget_policy.validate_types(gate)
@@ -3824,7 +3833,7 @@ def promote(args):
         model = build_class_promoted(blocks_by_va[block], name, resolver, parents[block], owner_fns,
                                      snippets_by_class.get(name, []), splice_ctx,
                                      native_execs=guarded_native_execs.get(name) if name in
-                                 ("UCommonActivatablePanel", "UCommonInputSubsystem", "UCommonActionWidget", "UCommonButton", "UCommonTextBlock", "UFortGlobals", "UFortGlobalUIContext", "UFortUINotification", "UCommonLazyImage", "UCommonActivatableWidgetContainerBase", "UFortKismetLibrary") else None)
+                                 ("UCommonActivatablePanel", "UCommonInputManager", "UCommonInputSubsystem", "UCommonActionWidget", "UCommonButton", "UCommonTextBlock", "UFortGlobals", "UFortGlobalUIContext", "UFortUINotification", "UCommonLazyImage", "UCommonActivatableWidgetContainerBase", "UFortKismetLibrary") else None)
         model["includes"] = sorted(set(own_includes(gate, model["used"], package))
                                    | set(model["splice"].get("header_includes", set())))
         _route_policy.configure_model(model)
@@ -3834,6 +3843,7 @@ def promote(args):
         _queue_lifecycle_policy.configure_model(model)
         _legacy_state_policy.configure_model(model)
         model = _strict_panel_policy.header_prelude(model)
+        model = _panel_queue_policy.header_prelude(model)
         _client_event_policy.configure_model(model)
         if name == 'UCommonInputControllerData':
             _controller_brush_policy.validate_model(model)
@@ -4101,6 +4111,7 @@ def promote(args):
         with open(os.path.join(out_dir, name + ".cpp"), "w", encoding="utf-8", newline="\n") as fh:
             fh.write(cpp)
     _common_activation_policy.emit_headers(args.source_root, generated_names)
+    _panel_queue_policy.emit_headers(args.source_root, generated_names)
     if lazy_image_sources:
         for filename, text in lazy_image_sources.items():
             with open(os.path.join(args.source_root, 'CommonUI', 'Generated', filename), 'w', encoding='utf-8', newline='\n') as fh:
@@ -5011,6 +5022,7 @@ def render_struct_header(model, source_label):
         lines.append("")
     lines.extend(_common_activation_policy.struct_declarations(model))
     lines.extend(_cursor_settings_policy.struct_declarations(model))
+    lines.extend(_panel_queue_policy.struct_declarations(model))
     lines.extend(_confirmation_policy.declarations(model))
     lines.extend(_common_input_policy.declarations(model))
     lines.extend(_input_platform_policy.declarations(model))
@@ -5038,6 +5050,9 @@ def render_struct_header(model, source_label):
         lines.append("")
     lines.append("};")
     lines.append("")
+    postlude = _panel_queue_policy.struct_postlude(model)
+    if postlude:
+        lines.append(postlude)
     lines.extend(_confirmation_policy.footer(model))
     if delta:
         lines.append("template<>")

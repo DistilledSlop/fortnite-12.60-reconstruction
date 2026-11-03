@@ -34,7 +34,7 @@ def apply(model, block, owner_fns, native_execs=None):
     for n, signature in ORIGINAL[va]['functions'].items():
         if [f for f in block.get('functions', []) if f.get('name') == n] != [signature]:
             raise ValueError('original legacy queue signature mismatch: ' + n)
-        if manager and (not isinstance(native_execs, dict) or native_execs.get(n) != ORIGINAL['native_execs'][n]):
+        if manager and (not isinstance(native_execs, dict) or (native_execs.get(n) or {}).get('exec_addr') != ORIGINAL['native_execs'][n]):
             raise ValueError('original legacy queue exec mismatch: ' + n)
     # Reject collisions for every native declaration, not just reflected methods.
     import re
