@@ -1,0 +1,72 @@
+[
+  {
+    "class": "AFortWeapon",
+    "function": "GetMuzzleLocation_Implementation",
+    "kind": "native_event_impl",
+    "signature": "FVector GetMuzzleLocation_Implementation(int32 PatternIndex) const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/virtual_bulk102_runtime/AFortWeapon_GetMuzzleLocation_Implementation.inc",
+    "address": "0x142b46300",
+    "native_body_address": "0x14269dbb0",
+    "confidence": "high",
+    "status": "ported",
+    "reflection_flags": "0x5c820c00",
+    "static": false,
+    "notes": "Primary vtable 0x14620a008 slot 0x668. Native event implementation dispatches through transform virtual slot 0x928 and extracts translation."
+  },
+  {
+    "class": "AFortWeapon",
+    "function": "GetMuzzleSocketTransform",
+    "kind": "exec",
+    "signature": "FTransform GetMuzzleSocketTransform(int32 PatternIndex) const",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": true,
+    "inc_path": "porting/behavior/virtual_bulk102_runtime/AFortWeapon_GetMuzzleSocketTransform.inc",
+    "address": "0x142b46440",
+    "native_body_address": "0x14269dc10",
+    "confidence": "high",
+    "status": "ported",
+    "reflection_flags": "0x54820400",
+    "static": false,
+    "notes": "Primary vtable 0x14620a008 slot 0x928. WeaponMesh +0x798; its SkeletalMesh +0x410; scene component socket transform virtual slot 0x408 and actor root transform fallback.",
+    "includes": [
+      "SkeletalMeshComponentBudgeted.h"
+    ]
+  },
+  {
+    "class": "UFortItemDefinition",
+    "function": "GetShortDescription",
+    "kind": "exec",
+    "signature": "FText GetShortDescription() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": true,
+    "inc_path": "porting/behavior/virtual_bulk102_runtime/UFortItemDefinition_GetShortDescription.inc",
+    "address": "0x14295d960",
+    "native_body_address": "0x142032fc0",
+    "confidence": "high",
+    "status": "ported",
+    "reflection_flags": "0x54020400",
+    "static": false,
+    "notes": "Primary vtable 0x14606bf00 slot 0x2e8. Helper 0x142c2e460 inspects the FText display string for all whitespace; virtual fallback slot 0x2f8."
+  },
+  {
+    "class": "UFortItemDefinition",
+    "function": "IsStackable",
+    "kind": "exec",
+    "signature": "bool IsStackable() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": true,
+    "inc_path": "porting/behavior/virtual_bulk102_runtime/UFortItemDefinition_IsStackable.inc",
+    "address": "0x14295dcb0",
+    "native_body_address": "0x142034ff0",
+    "confidence": "high",
+    "status": "ported",
+    "reflection_flags": "0x54020400",
+    "static": false,
+    "notes": "Primary vtable 0x14606bf00 slot 0x3a8. Helper 0x1406f73b0 evaluates FScalableFloat as integer at level zero."
+  }
+]

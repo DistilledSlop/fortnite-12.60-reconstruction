@@ -317,6 +317,9 @@ public:
 	bool IsCreativeModeEnabled() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsCreativePhoneAndHarvestHoldSwapped() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsCreativeQuickbarEnabled() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
@@ -324,6 +327,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsCreativeThermometerNewUIEnabled() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsInGhostMode() const;
 
 	UFUNCTION()
 	void OnRep_CreativeQuickbarComponent();

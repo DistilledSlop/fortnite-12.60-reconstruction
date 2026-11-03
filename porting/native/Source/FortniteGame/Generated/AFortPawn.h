@@ -778,6 +778,14 @@ public:
 	UPROPERTY(Transient)
 	TMap<uint32, FRecordedGunshot> RecordedGunshots;
 
+protected:
+	UFUNCTION(BlueprintCallable)
+	void AddNonReplicatedTagToPawn(FGameplayTag& Tag);
+public:
+
+	UFUNCTION(BlueprintCallable)
+	void AlignRotationToHitDirection(FVector& HitDirection);
+
 	UFUNCTION(Client, Reliable)
 	void ClientInternalEquipWeapon(AFortWeapon* Weap);
 	void ClientInternalEquipWeapon_Implementation(AFortWeapon* Weap);

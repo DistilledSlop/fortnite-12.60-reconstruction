@@ -32,6 +32,7 @@
 #include "GameplayEffect.h"
 #include "GameplayEffectAggregator.h"
 #include "Math/Color.h"
+#include "Math/TransformNonVectorized.h"
 #include "Math/Vector.h"
 #include "Misc/Guid.h"
 #include "UObject/UnrealType.h"
@@ -777,10 +778,17 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual int32 GetMagazineAmmoCount() const;
 
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, BlueprintPure)
+	FVector GetMuzzleLocation(int32 PatternIndex) const;
+	virtual FVector GetMuzzleLocation_Implementation(int32 PatternIndex) const;
+
 protected:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual FName GetMuzzleSocketName(int32 PatternIndex) const;
 public:
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual FTransform GetMuzzleSocketTransform(int32 PatternIndex) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetProjectilePitchOffset() const;

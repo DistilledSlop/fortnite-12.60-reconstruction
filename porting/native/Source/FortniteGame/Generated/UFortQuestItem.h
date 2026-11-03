@@ -98,6 +98,9 @@ public:
 	int32 PlayerLevel;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool DoesQuestExpire() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetNumObjectivesComplete() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

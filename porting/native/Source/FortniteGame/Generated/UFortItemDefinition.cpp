@@ -54,6 +54,12 @@ FText UFortItemDefinition::GetRichDescription() const
 	return GetSingleLineDescription();
 }
 
+FText UFortItemDefinition::GetShortDescription() const
+{
+	// Native target 0x142032fc0; confidence: high.
+	return ShortDescription.IsEmptyOrWhitespace() ? GetSingleLineDescription() : ShortDescription;
+}
+
 FText UFortItemDefinition::GetSingleLineDescription() const
 {
 	// Native target 0x142033050; confidence: high.
@@ -78,6 +84,12 @@ bool UFortItemDefinition::IsInventorySizeLimited() const
 	// CONFIDENCE: HIGH
 	// Mechanically matched complete scalar read; see bulk_scalar_runtime/README.md.
 	return bInventorySizeLimited;
+}
+
+bool UFortItemDefinition::IsStackable() const
+{
+	// Native target 0x142034ff0; confidence: high.
+	return MaxStackSize.AsInteger(0.0f, nullptr) != 1;
 }
 
 FString UFortItemDefinition::NativeGetProfileKey() const

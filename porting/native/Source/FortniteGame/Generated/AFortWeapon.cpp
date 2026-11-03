@@ -12,6 +12,7 @@
 #include "GameplayEffectTypes.h"
 #include "GameplayTagContainer.h"
 #include "SharedFortGameLog.h"
+#include "SkeletalMeshComponentBudgeted.h"
 #include "UFortWeaponAttrSet.h"
 #include "UFortWeaponItemDefinition.h"
 #include "UObject/UnrealType.h"
@@ -142,10 +143,26 @@ int32 AFortWeapon::GetMagazineAmmoCount() const
 	return AmmoCount;
 }
 
+FVector AFortWeapon::GetMuzzleLocation_Implementation(int32 PatternIndex) const
+{
+	// Native target 0x14269dbb0; confidence: high.
+	return GetMuzzleSocketTransform(PatternIndex).GetLocation();
+}
+
 FName AFortWeapon::GetMuzzleSocketName(int32 PatternIndex) const
 {
 	// Native target 0x140696520; confidence: high.
 	return MuzzleSocketName;
+}
+
+FTransform AFortWeapon::GetMuzzleSocketTransform(int32 PatternIndex) const
+{
+	// Native target 0x14269dc10; confidence: high.
+	if (WeaponMesh && WeaponMesh->SkeletalMesh)
+	{
+	    return WeaponMesh->GetSocketTransform(GetMuzzleSocketName(PatternIndex), RTS_World);
+	}
+	return GetActorTransform();
 }
 
 float AFortWeapon::GetProjectilePitchOffset() const

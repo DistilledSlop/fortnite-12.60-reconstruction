@@ -849,6 +849,9 @@ public:
 	UFUNCTION()
 	void OnRep_UpgradeUIData();
 
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void ResetAIRotationRateToDefault();
+
 	UFUNCTION(BlueprintCallable)
 	void SetCurrentAimTarget(AActor* AimTarget);
 

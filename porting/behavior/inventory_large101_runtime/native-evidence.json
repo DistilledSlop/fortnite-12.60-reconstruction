@@ -1,0 +1,22 @@
+{
+ "status": "UNCOUNTED_UNCOMPILED_NOT_CLOSED",
+ "image": "image-125.runtime.bin base 0x140000000 (bounded seeks only)",
+ "functions": {
+  "CanItemBeMulched": {"wrapper": "0x14525e140", "helper": "0x144cfad30"},
+  "DropItemOnQuickBar": {"wrapper": "0x14525ed90", "helper": "0x144cfe010"}
+ },
+ "decoded_strings_namespace_key_text": {
+  "ItemRecyclingRestrictionReasons": {"InnatelyUnrecyclable": "This item is permanent.", "IsSlottedGroundOperative": "Cannot retire while assigned to a Hero Loadout.", "MissingCatalyst": "Required nodes in the skill tree have not been purchased.", "ItemOutOnExpedition": "Cannot retire while on an Expedition.", "InUseByCrafting": "Item is in use by crafting.", "ModeDoesNotAllowRecycling": "The game mode you are playing does not allow recycling.", "IsSlottedAttributeWorker": "Cannot retire while assigned to a Survivor Squad."},
+  "join_delimiter_0x1459ac134": "\\r\\n"
+ },
+ "proven_bindings": {
+  "142bedc40": "NSLOCTEXT (text,ns,key) creation", "1407c2c80": "FText::GetEmpty", "142c165b0": "TArray<FText>::Add copy",
+  "142c40560": "Num==1 -> element copy else FText::Join(FromString(CRLF), array)",
+  "14447f220": "ULocalPlayer::GetPlayerController(UWorld*) body shape", "144cf0e90": "typed outer UFortHomebaseUIContext (0x1452518e0) via 140822780",
+  "14204e530": "WorldItemDefinition+0x710 DataTableRowHandle DisassembleRecipe valid && row resolves (141ff8510)",
+  "142074570": "AFortQuickBars slot placement check (QuickBar +0x10 Slots, +0x20 DataDefinition)", "142057010": "find item guid across quickbars 0..2 via 1420570e0",
+  "1423881a0": "PC+0x19e8 MyPlayerInfo -> +0xf0", "WorldItem vtbl 0x448": "0x142074560 = byte [this+0x145]", "ItemDef vtbl 0x390": "0x14202fe70 reads MaxStackSize +0x168",
+  "Ctx vtbl 0x150": "0x140822890 (GetWorld shape)", "DropItem return": "R12B per asm"
+ },
+ "requested_target_addresses": ["0x144cfb480 (+ its 17 callees)", "UFortAccountItem constructor/vtable (slot 0x4f0)", "AFortPlayerController vtable (slots 0x15f0, 0x1a80)", "PC+0x598 object class/vtable (slots 0x50, 0x20)", "AFortQuickBars vtable (slots 0x628, 0x648)", "0x142070440 deps (569 lines)", "0x1420570e0", "0x140822780", "0x142ee3b30", "0x141656200", "0x141ff8510", "FNamePool for FName idx 0x4fcbb,0x48ad9,0x8e1", "0x1423bd380 callees 0x143f7a920/0x142a3ca80/0x1424e1120/0x144230ed0", "0x141ed1800+0x6c0 object"]
+}

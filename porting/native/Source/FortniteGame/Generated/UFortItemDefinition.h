@@ -217,6 +217,9 @@ public:
 	virtual FText GetRichDescription() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual FText GetShortDescription() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual FText GetSingleLineDescription() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
@@ -227,6 +230,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsInventorySizeLimited() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool IsStackable() const;
 
 
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member

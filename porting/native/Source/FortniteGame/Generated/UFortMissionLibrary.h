@@ -6,6 +6,9 @@
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 
+class ABuildingActor;
+class AFortPlacementActor;
+
 #include "UFortMissionLibrary.generated.h"
 
 UCLASS()
@@ -14,5 +17,8 @@ class FORTNITEGAME_API UFortMissionLibrary : public UBlueprintFunctionLibrary
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	static AFortPlacementActor* FindOriginatingPlacementActor(ABuildingActor* BuildingActor);
+
 };
 

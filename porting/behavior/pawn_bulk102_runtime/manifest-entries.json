@@ -1,0 +1,46 @@
+[
+  {
+    "class": "AFortAIPawn",
+    "function": "ResetAIRotationRateToDefault",
+    "kind": "exec",
+    "signature": "void ResetAIRotationRateToDefault()",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/pawn_bulk102_runtime/ResetAIRotationRateToDefault.inc",
+    "address": "0x1427a57e0",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "On authority, copy the class default character movement rotation rate into CurrentAIRotationRate and the live movement component when present.",
+    "includes": [
+      "GameFramework/CharacterMovementComponent.h"
+    ]
+  },
+  {
+    "class": "AFortPawn",
+    "function": "AddNonReplicatedTagToPawn",
+    "kind": "exec",
+    "signature": "void AddNonReplicatedTagToPawn(FGameplayTag& Tag)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/pawn_bulk102_runtime/AddNonReplicatedTagToPawn.inc",
+    "address": "0x142a1aea0",
+    "native_body_address": "0x142302420",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Adds a loose gameplay tag through the ability system component if one exists."
+  },
+  {
+    "class": "AFortPawn",
+    "function": "AlignRotationToHitDirection",
+    "kind": "exec",
+    "signature": "void AlignRotationToHitDirection(FVector& HitDirection)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/pawn_bulk102_runtime/AlignRotationToHitDirection.inc",
+    "address": "0x142a1afb0",
+    "native_body_address": "0x142303f70",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Normalizes the horizontal hit direction and rotates the pawn and AI controller, leaving player-controlled pawns unchanged."
+  }
+]

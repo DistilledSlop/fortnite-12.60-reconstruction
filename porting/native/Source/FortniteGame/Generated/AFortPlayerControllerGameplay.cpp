@@ -55,6 +55,12 @@ bool AFortPlayerControllerGameplay::IsCreativeModeEnabled() const
 	return bIsCreativeModeEnabled;
 }
 
+bool AFortPlayerControllerGameplay::IsCreativePhoneAndHarvestHoldSwapped() const
+{
+	// CONFIDENCE: high
+	return WantsToSwapPhoneAndHarvestHold.Value > 0;
+}
+
 bool AFortPlayerControllerGameplay::IsCreativeQuickbarEnabled() const
 {
 	// Original address: 0x142a65690.
@@ -77,6 +83,12 @@ bool AFortPlayerControllerGameplay::IsCreativeThermometerNewUIEnabled() const
 	// CONFIDENCE: HIGH
 	// Mechanically matched complete scalar read; see bulk_scalar_runtime/README.md.
 	return bIsCreativeThermometerNewUIEnabled;
+}
+
+bool AFortPlayerControllerGameplay::IsInGhostMode() const
+{
+	// CONFIDENCE: high
+	return GhostModeRepData.bInGhostMode;
 }
 
 void AFortPlayerControllerGameplay::OnRep_CreativeQuickbarComponent()
