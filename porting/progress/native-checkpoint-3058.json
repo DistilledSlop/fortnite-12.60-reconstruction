@@ -1,0 +1,115 @@
+{
+  "bodies": 3058,
+  "fields": 311,
+  "accepted_entries": 3369,
+  "source_head": "161d01afdd3e05edf88c7a03dee700b31e721d05",
+  "next_test_at_bodies": 4058,
+  "scope": "Linux Development client/server builds and headless nullrhi/nosound Apollo terrain join; not gameplay/visual/audio parity",
+  "attempts": {
+    "client.build.1": {
+      "command": [
+        "/opt/fortnite/UnrealEngine/Engine/Build/BatchFiles/Linux/Build.sh",
+        "FortniteLinux",
+        "Linux",
+        "Development",
+        "-project=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/native/FortniteLinux.uproject",
+        "-NoHotReload"
+      ],
+      "source_head": "89d2ccf1ebe1f0e9e9097910a36f4ab25d63a325",
+      "bodies": 3058,
+      "exit": 6,
+      "elapsed_seconds": 17.581981171970256,
+      "log": "porting/generated/gameplay-native-checkpoint-3058/client.build.1.log",
+      "log_sha256": "501ba60e0f2ff3d6fb362680943fc7316bf1649ae73a80fdffad49c5eac5d856"
+    },
+    "client.build.2": {
+      "command": [
+        "/opt/fortnite/UnrealEngine/Engine/Build/BatchFiles/Linux/Build.sh",
+        "FortniteLinux",
+        "Linux",
+        "Development",
+        "-project=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/native/FortniteLinux.uproject",
+        "-NoHotReload"
+      ],
+      "source_head": "ed136ff225b62f067d8a562a2ddf9c902546b154",
+      "bodies": 3058,
+      "exit": 6,
+      "elapsed_seconds": 130.53107355500106,
+      "log": "porting/generated/gameplay-native-checkpoint-3058/client.build.2.log",
+      "log_sha256": "090616bb05744d3b149b41ebd8a36438b3501fb089d8ddb8ac98bca211b316c9"
+    },
+    "client.build.3": {
+      "command": [
+        "/opt/fortnite/UnrealEngine/Engine/Build/BatchFiles/Linux/Build.sh",
+        "FortniteLinux",
+        "Linux",
+        "Development",
+        "-project=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/native/FortniteLinux.uproject",
+        "-NoHotReload"
+      ],
+      "source_head": "161d01afdd3e05edf88c7a03dee700b31e721d05",
+      "bodies": 3058,
+      "exit": 0,
+      "elapsed_seconds": 173.05955988599453,
+      "log": "porting/generated/gameplay-native-checkpoint-3058/client.build.3.log",
+      "log_sha256": "be883f7d4d1106081e2dd54f61930ef6843a9c85cac8280dd72f775be73f2ed2"
+    },
+    "server.build.1": {
+      "command": [
+        "/opt/fortnite/UnrealEngine/Engine/Build/BatchFiles/Linux/Build.sh",
+        "FortniteLinuxServer",
+        "Linux",
+        "Development",
+        "-project=/opt/fortnite/FortniteClient-12.60-CL-13477524/porting/native/FortniteLinux.uproject",
+        "-NoHotReload"
+      ],
+      "source_head": "161d01afdd3e05edf88c7a03dee700b31e721d05",
+      "bodies": 3058,
+      "exit": 0,
+      "elapsed_seconds": 245.4719613129273,
+      "log": "porting/generated/gameplay-native-checkpoint-3058/server.build.1.log",
+      "log_sha256": "92a1a59090c59644172df7a85a98be72c98313bb8a504df1e84db1ce6e59b40c"
+    },
+    "apollo.join.1": {
+      "command": [
+        "bash",
+        "porting/server/smoke_join.sh",
+        "/Game/Athena/Apollo/Maps/Apollo_Terrain?game=/Script/FortniteGame.FortGameModeAthena"
+      ],
+      "source_head": "161d01afdd3e05edf88c7a03dee700b31e721d05",
+      "bodies": 3058,
+      "exit": 0,
+      "elapsed_seconds": 26.17474836995825,
+      "log": "porting/generated/gameplay-native-checkpoint-3058/apollo.join.1.log",
+      "log_sha256": "b94b3e19a41a9f85712d73e9f64fc6f8280f26de584eacacf891aab1fac77499"
+    }
+  },
+  "stage": {
+    "source_head": "161d01afdd3e05edf88c7a03dee700b31e721d05",
+    "bodies": 3058,
+    "files": {
+      "FortniteLinux": {
+        "size": 174224960
+      },
+      "FortniteLinux.debug": {
+        "size": 2103764760
+      },
+      "FortniteLinuxServer": {
+        "size": 164341968
+      },
+      "FortniteLinuxServer.debug": {
+        "size": 2040707376
+      }
+    }
+  },
+  "runtime_logs": {
+    "dedicated-server-client-test.log": {
+      "path": "porting/generated/gameplay-native-checkpoint-3058/dedicated-server-client-test.log",
+      "sha256": "e49603fd2c81b78a5dab7f68bdf236e55ce094418babe3c4cab4fb3de9d21117"
+    },
+    "local-client-join-test.log": {
+      "path": "porting/generated/gameplay-native-checkpoint-3058/local-client-join-test.log",
+      "sha256": "4187c43dbd057592fbc864a44cf32f933d4200260626f1ee28847f6e11f521bf"
+    }
+  }
+}

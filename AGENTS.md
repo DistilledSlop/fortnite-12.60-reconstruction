@@ -81,10 +81,13 @@ give it bounded independent source batches with clear file ownership. Keep one
 Native promotion/build stream and skip visual work until the user resumes it.
 
 User checkpoint cadence: run builds/runtime/tests only after roughly 1,000 new
-native function bodies. Last tested baseline: 2,040 bodies; next about 3,040.
+native function bodies. Last tested baseline: 3,058 bodies; next about 4,058.
 Keep source generation fail-closed, commit and push completed source immediately,
 and explicitly label bodies added since the tested baseline as build pending.
 
 # External model workers
+
+Current user instruction: keep Claude workers stopped and its usage free until the user asks to resume.
+Use Terra 6.1 low workers for the current bulk recovery and rotation.
 
 Antigravity CLI (`agy`) is available. Use Gemini 3.8 Flash for narrow, explicit bulk tasks with complete implementation standards and evidence review; reject stubs, omitted behavior, and unsupported defaults. Reserve Claude Opus 5.5 for short, tightly scoped hard problems: it consumes Antigravity Claude quota very quickly. Use Terra, Flash, and Sonnet for bulk implementation and long source-recovery runs. Keep authorized Claude work moving while its provider has usage. Do not interrupt an existing useful Sonnet run merely to change models.
