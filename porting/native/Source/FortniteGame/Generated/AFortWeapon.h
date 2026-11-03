@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 
+#include "AbilitySystemComponent.h"
 #include "EFortItemType.h"
 #include "EFortRarity.h"
 #include "EFortWeaponCoreAnimation.h"
@@ -28,9 +29,12 @@
 #include "FWeaponEventDelegate.h"
 #include "FWeaponHudData.h"
 #include "GameplayAbilitySpec.h"
+#include "GameplayEffect.h"
+#include "GameplayEffectAggregator.h"
 #include "Math/Color.h"
 #include "Math/Vector.h"
 #include "Misc/Guid.h"
+#include "UObject/UnrealType.h"
 
 class ACustomItemWrapModifier;
 class AFortFXManager;
@@ -733,13 +737,22 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool DoesHaveOverrideWrap() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetChargePercent() const;
+
 protected:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetChargeTime() const;
 public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetChargeToMinPercent() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	TEnumAsByte<EFortWeaponCoreAnimation::Type> GetCoreAnimation() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetCurrentMaxChargePercent() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	FGuid GetInventoryGUID() const;
@@ -846,5 +859,6 @@ public:
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	virtual FFortBaseWeaponStats* NativeGetWeaponStats() const;
+	void NativeGetChargeRange(float& OutMin, float& OutMax) const;
 };
 
