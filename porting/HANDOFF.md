@@ -1,5 +1,43 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Native source batch 34 (2026-11-03)
+
+Canonical source:1,876 bodies +165 supporting fields =2,041 ported entries.
+Added actual controller inventory-owner infinite-ammo query: base controller
+returns bInfiniteAmmo; Athena gets virtual world, raw GameState/PlayerState casts,
+calls recovered rule first when GameState matches, then combines its flag.
+Restored IFortInventoryOwnerInterface inheritance only for AFortPlayerController
+(class block14649da30, interface offset598); generated interface has assigned
+NativeHasInfiniteAmmo contract, both concrete methods virtual. Replay spectator
+inherits the base flag behavior through its sibling controller hierarchy.
+ADeployableBasePlot, AFortAIPawn, AFortAthenaAIBotController directly implement
+the original interface but remain unbound; do not claim exhaustive owner closure.
+
+Promotion34 accepts2,041/rejects0;5 generated Native files changed. Controller
+receipt windows re-read/match. No builds/runtime/tests. Last tested1,040;
+836 bodies pending, next2,040 needs164. Source33 e51dc715 pushed. Commit/push this
+source, publish dashboard. Batch33 changed8 Native files overall (prior note10
+was a counting mistake). Five source bodies from33 +two from34 this goal turn.
+
+Registry follow-up resolved false platform-width blocker: this target UnixPlatform
+explicitly uses char16_t TCHAR (PLATFORM_UNIX_USE_CHAR16=1), independently of
+four-byte wchar_t. All256 original CRC table entries at147c34cf0 match local UE
+FCrc::CRCTable_DEPRECATED byte-for-byte; receipt in profile_registry_support_runtime.
+Group PlayerName and FUniqueNetIdWrapper AccountId state identified; group support
+object first pointer is IOnlineSubsystem*. Full support-object lifetime and group
+setup still need integration. Existing initializer handoff has the correction.
+
+Typed base backend source proposal in typed_profile_backend_runtime now uses
+real FMcpProfileItem, shared ID/group ownership, base borrowed lookup, sorted
+insertion/deduplication. It is not yet emitted or connected to the live profile;
+no extra body credit. Whole owner storage/GC, derived overlays and complete update
+transactions still open. Other WorldItem and generic iterator dependencies in33
+remain open. All bounded workers finished; Ghidra lease free.
+
+Root canonical/generator/Native owner; fresh bounded Terra medium fork_turns none,
+economical reads, frequent commits/pushes/dashboard. Preserve unrelated graphics.
+No tests until2,040 bodies. All4 product milestones and full parity remain open.
+
 ## Native source batch 33 (2026-11-03)
 
 Canonical source:1,874 bodies +165 supporting fields =2,039 ported entries.

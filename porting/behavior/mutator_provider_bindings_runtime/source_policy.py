@@ -1,5 +1,6 @@
 """Restore original owner/context interfaces with recovered concrete callbacks."""
 BLOCKS = {
+    'AFortPlayerController': ('0x14649da30', 'IFortInventoryOwnerInterface'),
     'AFortVolume': ('0x1465647c0', 'IFortMutatorOwner'),
     'AFortMinigame': ('0x146446ef0', 'IFortMutatorOwner'),
     'AFortGameModeAthena': ('0x1463cf250', 'IFortMutatorOwner'),
@@ -28,4 +29,6 @@ def interface_declarations(name):
         return ['public:', '    virtual void NativeAppendOwnerMutators(TArray<class AFortGameplayMutator*>& OutMutators, UObject* Context) = 0;']
     if name == 'UFortMutatorContext':
         return ['public:', '    virtual void NativeAppendContextOwners(TArray<UObject*>& OutOwners) = 0;']
+    if name == 'UFortInventoryOwnerInterface':
+        return ['public:', '    virtual bool NativeHasInfiniteAmmo(class UFortWeaponItemDefinition* WeaponDefinition) = 0;']
     return []

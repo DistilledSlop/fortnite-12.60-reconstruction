@@ -33202,5 +33202,36 @@
       "GameFramework/Actor.h"
     ],
     "notes": "Assigned static binding; original rule plus local iterator specialized to concrete PlayerState context. Generic UObject context fallback remains unported. See README and native-evidence."
+  },
+  {
+    "class": "AFortPlayerController",
+    "function": "NativeHasInfiniteAmmo",
+    "kind": "helper",
+    "signature": "bool NativeHasInfiniteAmmo(UFortWeaponItemDefinition* WeaponDefinition)",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": true,
+    "inc_path": "porting/behavior/controller_infinite_ammo_runtime/FlagOnly.inc",
+    "address": "0x141a49670",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Assigned inventory-owner interface contract; argument unused. See README."
+  },
+  {
+    "class": "AFortPlayerControllerAthena",
+    "function": "NativeHasInfiniteAmmo",
+    "kind": "helper",
+    "signature": "bool NativeHasInfiniteAmmo(UFortWeaponItemDefinition* WeaponDefinition)",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": true,
+    "inc_path": "porting/behavior/controller_infinite_ammo_runtime/Athena.inc",
+    "address": "0x1419db850",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Assigned interface override; rule executes before flag check. See README.",
+    "includes": [
+      "Engine/World.h"
+    ]
   }
 ]

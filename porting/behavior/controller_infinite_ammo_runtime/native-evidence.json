@@ -1,0 +1,47 @@
+{
+  "image": "/mnt/vibrato/fortnite-evidence/original-late-capture-1/image-125.runtime.bin",
+  "image_base": "0x140000000",
+  "image_sha256": "338c83a2314ccac1040a2c0bb520b893013cc7b58eda58e550da67f5d84de680",
+  "windows": [
+    {
+      "begin": "0x1419db850",
+      "end_exclusive": "0x1419db91f",
+      "sha256": "6ece9e19b16ea5561cf6d194fbfb599705b8bcec6bd2e129a298bb78ffe8abb8"
+    },
+    {
+      "begin": "0x141a49670",
+      "end_exclusive": "0x141a49680",
+      "sha256": "028b4e44dcc9453660081476a48338ae097c3bf5ca972767faed22043f09f365"
+    },
+    {
+      "begin": "0x14649da30",
+      "end_exclusive": "0x14649da80",
+      "sha256": "2b1e0389020ffa7fe3cf3a9ab3bb5593c185b0afd7997844e83a98dc8175e048"
+    },
+    {
+      "begin": "0x14649d9f0",
+      "end_exclusive": "0x14649da30",
+      "sha256": "654dd4eaed38a6b5436021090699da37044578aeb0c32a948c7e4af3bf7a9cb0"
+    },
+    {
+      "begin": "0x1464ad0a0",
+      "end_exclusive": "0x1464ad0f0",
+      "sha256": "6432c70befe3ea0be2c27417b5a1008b6b32cc0a43f729e636252e373e2b4f70"
+    },
+    {
+      "begin": "0x14650ae30",
+      "end_exclusive": "0x14650ae80",
+      "sha256": "5b8deff4007110be9f290635fa80148b021f37534fb96fc258ec65e503cd6adf"
+    },
+    {
+      "begin": "0x145e1d478",
+      "end_exclusive": "0x145e1d4e0",
+      "sha256": "83d8163bc5d1f826faf6ea28c83f1b024d454811501b701f3e7d418b5086f773"
+    },
+    {
+      "begin": "0x145e3f510",
+      "end_exclusive": "0x145e3f578",
+      "sha256": "b2db171b2037a955024d67e6675055af57ff50077f7a47b43bbc1594df2593a1"
+    }
+  ]
+}

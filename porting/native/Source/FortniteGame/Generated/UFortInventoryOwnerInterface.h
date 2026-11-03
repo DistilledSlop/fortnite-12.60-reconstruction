@@ -16,5 +16,7 @@ class FORTNITEGAME_API UFortInventoryOwnerInterface : public UInterface
 class FORTNITEGAME_API IFortInventoryOwnerInterface
 {
 	GENERATED_IINTERFACE_BODY()
+public:
+    virtual bool NativeHasInfiniteAmmo(class UFortWeaponItemDefinition* WeaponDefinition) = 0;
 };
 

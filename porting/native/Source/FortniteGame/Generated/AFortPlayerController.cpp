@@ -878,6 +878,12 @@ void AFortPlayerController::TogglePersonalVehicle_Implementation(bool bOn)
 	// Body not recovered: reflection-derived stub.
 }
 
+bool AFortPlayerController::NativeHasInfiniteAmmo(UFortWeaponItemDefinition* WeaponDefinition)
+{
+	// CONFIDENCE: HIGH
+	return bInfiniteAmmo;
+}
+
 void AFortPlayerController::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

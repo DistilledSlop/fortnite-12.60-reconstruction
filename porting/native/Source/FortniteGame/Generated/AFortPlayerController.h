@@ -68,6 +68,7 @@
 #include "Math/Rotator.h"
 #include "Math/Vector.h"
 #include "Misc/Guid.h"
+#include "UFortInventoryOwnerInterface.h"
 #include "UMcpProfileGroup.h"
 #include "UObject/CoreOnline.h"
 
@@ -115,6 +116,7 @@ class UFortMinigameItemContainerComponent;
 class UFortMontageItemDefinitionBase;
 class UFortRegisteredPlayerInfo;
 class UFortStatEventManager;
+class UFortWeaponItemDefinition;
 class UHeartbeatManager;
 class UInputComponent;
 class UMaterialInstanceDynamic;
@@ -132,7 +134,7 @@ class UUserWidget;
 #include "AFortPlayerController.generated.h"
 
 UCLASS(config=Game)
-class FORTNITEGAME_API AFortPlayerController : public APlayspacePlayerController
+class FORTNITEGAME_API AFortPlayerController : public APlayspacePlayerController, public IFortInventoryOwnerInterface
 {
 	GENERATED_BODY()
 
@@ -1838,5 +1840,9 @@ public:
 	void TogglePersonalVehicle_Implementation(bool bOn);
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	virtual bool NativeHasInfiniteAmmo(UFortWeaponItemDefinition* WeaponDefinition);
 };
 
