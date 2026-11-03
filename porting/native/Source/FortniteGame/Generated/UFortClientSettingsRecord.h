@@ -1264,7 +1264,37 @@ public:
 	void SetAllowFriendSubscriptionNudges(bool bAllow);
 
 	UFUNCTION()
+	void SetAnonymousCharacterModeEnabled(bool bEnable);
+
+	UFUNCTION()
+	void SetAnonymousModeEnabled(bool bEnable);
+
+	UFUNCTION()
+	void SetAutoJoinGameVoiceChannel(bool bNewValue);
+
+	UFUNCTION()
+	void SetAutoPickupWeapons(bool bNewValue);
+
+	UFUNCTION()
+	void SetAutoPickupWeaponsConsolePC(bool bNewValue);
+
+	UFUNCTION()
+	void SetAutoSortConsumablesToRight(bool bNewValue);
+
+	UFUNCTION()
 	void SetColorBlindMode(EColorBlindMode InMode);
+
+	UFUNCTION()
+	void SetCreativeModeReplayRecordingEnabled(bool bEnabled);
+
+	UFUNCTION()
+	void SetCreativeTurboDelete(bool bNewValue);
+
+	UFUNCTION()
+	void SetEnableRudderControl(bool bEnable);
+
+	UFUNCTION()
+	void SetEnableTryBuildOnFocus(bool bNewValue);
 
 	UFUNCTION()
 	void SetGamepadBuildingMultiplier(float InMultiplier);
@@ -1282,6 +1312,12 @@ public:
 	void SetGyroLookSensitivitySetting(float InSetting);
 
 	UFUNCTION()
+	void SetHideOtherPlayerNames(bool bEnable);
+
+	UFUNCTION()
+	void SetIgnoreGamepadInput(bool bIgnore);
+
+	UFUNCTION()
 	void SetInvertedPitchForAircraftPrimary(bool bInvert);
 
 	UFUNCTION()
@@ -1294,10 +1330,16 @@ public:
 	void SetInvertedYawForMotion(bool bInvert);
 
 	UFUNCTION()
+	void SetLargeTeamReplayRecordingEnabled(bool bEnable);
+
+	UFUNCTION()
 	void SetLicensedAudioTreatment(ELicensedAudioTreatment InLicensedAudioTreatment);
 
 	UFUNCTION()
 	void SetLocalNotificationsEnabled(bool bEnabled);
+
+	UFUNCTION()
+	void SetLockPrimaryInputMethodToMouse(bool bLock);
 
 	UFUNCTION()
 	void SetLookInputCurve(EFortGamepadLookInputCurve NewValue);
@@ -1318,7 +1360,37 @@ public:
 	void SetMotionTargetingMultiplier(float InMultiplier);
 
 	UFUNCTION()
+	void SetPeripheralLightingEnabled(bool bEnable);
+
+	UFUNCTION()
+	void SetPlaceDangerMarkerWhenTargeting(bool bEnable);
+
+	UFUNCTION()
+	void SetPlayerSurveysAllowed(bool Value);
+
+	UFUNCTION()
+	void SetReplayRecordingEnabled(bool bEnable);
+
+	UFUNCTION()
 	void SetScopedMultiplier(float InMultiplier);
+
+	UFUNCTION()
+	void SetShadowPlayHighlightsEnabled(bool bEnable);
+
+	UFUNCTION()
+	void SetShowGlobalChatEnabled(bool bEnable);
+
+	UFUNCTION()
+	void SetShowHeroBackpack(bool bShow);
+
+	UFUNCTION()
+	void SetShowHeroHeadAccessories(bool bShow);
+
+	UFUNCTION()
+	void SetShowTemperature(bool bNewValue);
+
+	UFUNCTION()
+	void SetShowVoiceIndicators(bool bNewValue);
 
 	UFUNCTION()
 	void SetTargetingMultiplier(float InMultiplier);
@@ -1343,6 +1415,9 @@ public:
 
 	UFUNCTION()
 	void SetTouchVerticalMultiplier(float InMultiplier);
+
+	UFUNCTION()
+	void SetVisualizeAudioSources(bool bEnable);
 
 };
 
