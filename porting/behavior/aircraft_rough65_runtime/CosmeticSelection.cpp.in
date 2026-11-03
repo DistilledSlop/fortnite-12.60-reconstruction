@@ -1,0 +1,30 @@
+// Rough native lift of 0x1419918d0. These are semantic interfaces, not ABI declarations.
+struct GameState;
+struct Controller;
+struct AircraftCosmetic;
+struct PlayerCosmeticInterface;
+struct PlayerCosmeticData;
+struct DefaultCosmeticProvider;
+
+AircraftCosmetic* StateCosmeticAt13a8(GameState*);
+bool StateAllowsPlayerCosmeticAt13b0(GameState*);
+PlayerCosmeticInterface* EmbeddedInterfaceAt5a8(Controller*);
+bool InterfaceVirtual10(PlayerCosmeticInterface*);
+PlayerCosmeticData* InterfaceVirtual18(PlayerCosmeticInterface*);
+AircraftCosmetic* DataCosmeticAt78(PlayerCosmeticData*);
+DefaultCosmeticProvider* Native_141d46180();
+AircraftCosmetic* ProviderCosmeticAt218(DefaultCosmeticProvider*);
+
+AircraftCosmetic* SelectAircraftCosmetic_1419918d0(GameState* state,
+                                                    Controller* controller) {
+  AircraftCosmetic* selected = StateCosmeticAt13a8(state);
+  if (StateAllowsPlayerCosmeticAt13b0(state) && controller) {
+    PlayerCosmeticInterface* iface = EmbeddedInterfaceAt5a8(controller);
+    if (InterfaceVirtual10(iface) && DataCosmeticAt78(InterfaceVirtual18(iface))) {
+      // The virtual is invoked again in the binary; it can return a new value.
+      selected = DataCosmeticAt78(InterfaceVirtual18(iface));
+    }
+  }
+  if (!selected) return ProviderCosmeticAt218(Native_141d46180());
+  return selected;
+}

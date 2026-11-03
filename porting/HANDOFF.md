@@ -2,6 +2,11 @@
 
 ## Native rough/source batch65 (2026-11-03)
 
+Source commit44536d04 pushed. Follow-on aircraft_rough65_runtime contains the
+new uncounted cosmetic-selection control flow, preserving the repeated virtual
+call and default provider. The pre-existing aircraft Tick draft is linked rather
+than copied or counted again. All workers finished; Ghidra lease free.
+
 Four reviewed math bodies now integrated in manually owned FortniteMapClasses:
 GetAngleDegrees, K2_GetClosestAxisXY, NormalizedAngleInDegreesToVector and
 VectorToNormalizedAngleInDegrees. Original x86 UE math operations, comparison
