@@ -1,0 +1,26 @@
+[
+  {
+    "address": "0x1423249d0",
+    "label": "GetSphericalHitDirection"
+  },
+  {
+    "address": "0x142305f70",
+    "label": "AttachAssetToSocket"
+  },
+  {
+    "address": "0x1423055b0",
+    "label": "ApplyKnockback"
+  },
+  {
+    "address": "0x142356fc0",
+    "label": "TriggerFeedbackEvent"
+  },
+  {
+    "address": "0x14232f830",
+    "label": "InitializeDeathHitSocket"
+  },
+  {
+    "address": "0x142304420",
+    "label": "AnimMontage_LocalSetNextSectionName"
+  }
+]

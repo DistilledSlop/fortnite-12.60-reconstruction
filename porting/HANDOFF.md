@@ -1,5 +1,45 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Broad native source draft batch73 (2026-11-03)
+
+Added21 uncounted source drafts in four proposal directories:15 reflected bodies
+(controller5, pawn5, game-state5) plus6 distinct actual native bodies root probed
+behind other pawn wrappers. Of the15 reflected drafts,6 are forwarding wrappers
+only (controller Setup/Start, pawn AITargetDied, game-state tutorial/message/text);
+their called native helpers remain unrecovered. Do not mistake21 drafts for21
+implemented/accepted native behaviors. Remaining reflected drafts include glider
+asset collection, facial shared-reference teardown, vehicle state replication,
+highlight timers, respawn preparation, ready-check cancellation, golden POI
+iteration and spectator callbacks. Actual native6 cover spherical hit direction,
+knockback, socket attachment, death socket initialization, feedback payload and
+montage section dispatch. Raw layouts, effects, callbacks, logging/string cleanup,
+float settings, class metadata and ABI are still explicitly unresolved.
+
+Root reviewed all four rough.cpp files against relevant decompiler output and
+renamed opaque death-socket parameters Raw12 to avoid asserting name semantics.
+No canonical promotion, generation, compiler, build, runtime or tests this batch.
+Canonical remains2,075 bodies+180fields=2,255 accepted/rejected0 from promotion71;
+35 canonical+4 manual bodies pending since tested2,040; next tests3,040. All4
+product gates OPEN, full objective active. Previous goal turn PROGRESS: source
+7afcfab1 and dashboard92e0ae91 pushed. This turn starts from that authoritative
+clean source state, preserving unrelated untracked porting/graphics/ and Engine
+edits. All bounded Terra6.1 medium fork-none workers finished, no live process;
+root retains sole native/promotion/build/staging/commit ownership and primary
+planner/orchestrator/reviewer role, with direct difficult work as useful. Keep
+bounded worker rotation, economical reads, broad actual native recovery and no
+visual work until resumed. Do not spend the pass closing getter dependencies.
+
+Serial probe command: porting/.venv/bin/python -I porting/ghidra/probe_callees.py
+--input porting/generated/pawn-broad73/targets.json --out
+porting/generated/pawn-broad73 --timeout60 --mem12G (actual shell flags contain
+spaces, see pawn_actions73_runtime/HANDOFF.md exact command); log
+/tmp/pawn-broad73.log, exit0,6ok,11.1s. Transaction rolled back; usual Ghidra
+index/prp metadata changes reported, no deliberate save. Lease free. Sources,
+contracts and inventories are under porting/behavior/controller_broad73_runtime,
+pawn_broad73_runtime,gamestate_broad73_runtime,pawn_actions73_runtime.
+Next substantial called targets from these wrappers include1419f5920,1419fb550,
+142301790,14199a400,14199a760,1419aeb90; these are not recovered by this batch.
+
 ## Broad substantial native rough batch72 (2026-11-03)
 
 Added eight full recovered-body rough lifts and one connected partial death-info
