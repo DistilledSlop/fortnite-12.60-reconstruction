@@ -2253,6 +2253,10 @@ _panel_queue_spec = _common_activation_import.spec_from_file_location(
     "legacy_panel_operation_queue_policy", os.path.join(os.path.dirname(__file__), "frontend", "legacy_panel_operation_queue_runtime", "policy.py"))
 _panel_queue_policy = _common_activation_import.module_from_spec(_panel_queue_spec)
 _panel_queue_spec.loader.exec_module(_panel_queue_policy)
+_restart_modal_spec = _common_activation_import.spec_from_file_location(
+    "restart_modal_click_policy", os.path.join(os.path.dirname(__file__), "frontend", "restart_modal_click_runtime", "policy.py"))
+_restart_modal_policy = _common_activation_import.module_from_spec(_restart_modal_spec)
+_restart_modal_spec.loader.exec_module(_restart_modal_policy)
 _client_event_spec = _common_activation_import.spec_from_file_location(
     "client_event_dispatch_policy", os.path.join(os.path.dirname(__file__), "frontend", "client_event_dispatch_runtime", "policy.py"))
 _client_event_policy = _common_activation_import.module_from_spec(_client_event_spec)
@@ -2261,6 +2265,10 @@ _native_gameplay_tags_spec = _common_activation_import.spec_from_file_location(
     "native_gameplay_tags_policy", os.path.join(os.path.dirname(__file__), "behavior", "native_gameplay_tags_runtime", "source_policy.py"))
 _native_gameplay_tags_policy = _common_activation_import.module_from_spec(_native_gameplay_tags_spec)
 _native_gameplay_tags_spec.loader.exec_module(_native_gameplay_tags_policy)
+_athena_mode_spec = _common_activation_import.spec_from_file_location(
+    "athena_mode_policy", os.path.join(os.path.dirname(__file__), "behavior", "athena_mode_reconstruction_runtime", "source_policy.py"))
+_athena_mode_policy = _common_activation_import.module_from_spec(_athena_mode_spec)
+_athena_mode_spec.loader.exec_module(_athena_mode_policy)
 _route_spec = _common_activation_import.spec_from_file_location(
     "common_action_route_connected_runtime_policy", os.path.join(os.path.dirname(__file__), "frontend", "common_action_route_connected_runtime", "policy.py"))
 _route_policy = _common_activation_import.module_from_spec(_route_spec)
@@ -2451,7 +2459,10 @@ def build_class_promoted(block, name, resolver, parent_entry, owner_fns, snippet
     model = _legacy_state_policy.apply(model, block, owner_fns)
     model = _strict_panel_policy.apply(model, block, owner_fns)
     model = _panel_queue_policy.apply(model, block, owner_fns, native_execs)
+    model = _restart_modal_policy.apply(model, block, owner_fns, native_execs)
     model = _client_event_policy.apply(model, block, native_execs)
+    model = _athena_mode_policy.apply(model, block, owner_fns)
+    _athena_mode_policy.validate_emitted_properties(model, split_properties)
     model = _widget_route_policy.apply(model, block, owner_fns)
     model = _route_policy.apply(model, block, owner_fns)
     model = _metadata_policy.apply(model, block, owner_fns)
@@ -3241,6 +3252,7 @@ def render_promoted_header(model, api, parent_include, source_label):
     lines.extend(_legacy_state_policy.declarations(model).splitlines())
     lines.extend(_strict_panel_policy.declarations(model).splitlines())
     lines.extend(_panel_queue_policy.declarations(model).splitlines())
+    lines.extend(_restart_modal_policy.declarations(model).splitlines())
     lines.extend(_client_event_policy.declarations(model).splitlines())
     lines.extend(_widget_route_policy.declarations(model).splitlines())
     lines.extend(_route_policy.declarations(model).splitlines())
@@ -3255,6 +3267,7 @@ def render_promoted_header(model, api, parent_include, source_label):
     lines.extend(_action_receivers_policy.declarations(model).splitlines())
     lines.extend(_action_widget_policy.icon_declarations(model).splitlines())
     lines.extend(_action_slate_policy.declarations(model).splitlines())
+    lines.extend(_athena_mode_policy.declarations(model).splitlines())
     lines.append("};")
     lines.append("")
     return "\n".join(lines) + "\n"
@@ -3404,6 +3417,7 @@ def render_promoted_cpp(model, source_label):
     result += _legacy_state_policy.definitions(model)
     result += _strict_panel_policy.definitions(model)
     result += _panel_queue_policy.definitions(model)
+    result += _restart_modal_policy.definitions(model)
     result += _client_event_policy.definitions(model)
     return result + _common_activation_policy.definitions(model) + _current_input_type_policy.definitions(model) + _fort_globals_policy.definitions(model) + _button_style_policy.definitions(model) + _button_click_policy.definitions(model) + _button_double_click_policy.definitions(model) + _button_selection_policy.definitions(model) + _input_settings_policy.definitions(model) + _input_cache_policy.definitions(model) + _action_widget_policy.gamepad_definitions(model) + _action_widget_policy.icon_definitions(model) + _action_receivers_policy.definitions(model) + _action_slate_policy.definitions(model) + _button_focus_policy.definitions(model) + _button_initialize_policy.definitions(model) + _button_producers_policy.definitions(model) + _button_set_style_policy.definitions(model) + _border_style_policy.definitions(model) + _global_ui_priority_policy.definitions(model) + _global_ui_zone_policy.definitions(model) + _notification_image_policy.definitions(model) + _progress_modal_policy.definitions(model) + _commonui_module_policy.definitions(model) + _root_slate_policy.definitions(model) + _lazy_image_policy.definitions(model) + _widget_route_policy.definitions(model) + _route_policy.definitions(model) + _metadata_policy.definitions(model) + _modality_policy.definitions(model) + _cursor_settings_policy.definitions(model)
 
@@ -3688,6 +3702,8 @@ def promote(args):
     animated_switcher_sources = None
     ui_config_sources = (_ui_config_policy.sources(blocks_by_va, name_to_block)
                          if 'UFortUIDataConfiguration' in listed else None)
+    if 'AFortGameModeAthena' in listed:
+        _athena_mode_policy.validate_classes(blocks_by_va, name_to_block, parents)
     native_gameplay_tags_sources = (_native_gameplay_tags_policy.sources()
                                     if 'AFortGameStateAthena' in listed else None)
     client_event_sources = None
@@ -3833,7 +3849,7 @@ def promote(args):
         model = build_class_promoted(blocks_by_va[block], name, resolver, parents[block], owner_fns,
                                      snippets_by_class.get(name, []), splice_ctx,
                                      native_execs=guarded_native_execs.get(name) if name in
-                                 ("UCommonActivatablePanel", "UCommonInputManager", "UCommonInputSubsystem", "UCommonActionWidget", "UCommonButton", "UCommonTextBlock", "UFortGlobals", "UFortGlobalUIContext", "UFortUINotification", "UCommonLazyImage", "UCommonActivatableWidgetContainerBase", "UFortKismetLibrary") else None)
+                                 ("UCommonActivatablePanel", "UCommonInputManager", "UFortRestartClientModal", "UCommonInputSubsystem", "UCommonActionWidget", "UCommonButton", "UCommonTextBlock", "UFortGlobals", "UFortGlobalUIContext", "UFortUINotification", "UCommonLazyImage", "UCommonActivatableWidgetContainerBase", "UFortKismetLibrary") else None)
         model["includes"] = sorted(set(own_includes(gate, model["used"], package))
                                    | set(model["splice"].get("header_includes", set())))
         _route_policy.configure_model(model)

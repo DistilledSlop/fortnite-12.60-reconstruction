@@ -1,0 +1,27 @@
+void UFortRestartClientModal::NativeRestartApplicationOrExit141ed81a0(uint8 bExitIfNotRestarted)
+{
+    if (FPlatformMisc::RestartApplication())
+    {
+        return;
+    }
+    if (bExitIfNotRestarted != 0)
+    {
+        FPlatformMisc::RequestExit(false);
+    }
+}
+
+// Original body 0x144f5f9f0 (exec 0x1452c2a80).
+void UFortRestartClientModal::HandleButtonClicked()
+{
+    NativeRestartApplicationOrExit141ed81a0(bNativeRestartExitFlag448);
+    if (!NativeIsInActivationStack304())
+    {
+        // Original fallback 0x1407b7ed0: byte +288 (bIsActive) gates the +4A8 deactivate request.
+        if (bIsActive)
+        {
+            NativeDeactivateRequest();
+        }
+        return;
+    }
+    NativePopSelfFromInputManager1407e1130();
+}

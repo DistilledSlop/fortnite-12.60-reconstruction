@@ -15,3 +15,13 @@ void UCommonActivatablePanel::NativeResetPanelOperations()
     BP_OnWidgetDeactivated.Clear();
     NativePostDeactivation.Unbind();
 }
+
+// Original +4C0 (0x1407e1130): validity check of the weak manager at +3B0, then the manager's
+// PopActivatablePanel body (0x1407e0c80, the same body behind the reflected exec 0x140810760).
+void UCommonActivatablePanel::NativePopSelfFromInputManager1407e1130()
+{
+    if (NativeInputManager.IsValid())
+    {
+        NativeInputManager.Get()->PopActivatablePanel(this);
+    }
+}
