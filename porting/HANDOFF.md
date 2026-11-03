@@ -1,5 +1,45 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Native helper rough batch74 (2026-11-03)
+
+Added8 distinct actual native target drafts under controller_native74_runtime,
+gamestate_native74_runtime,pawn_poi_native74_runtime,native_extra74_runtime.
+Six now cover the native bodies behind batch73 forwarding wrappers: respawn
+timing/location, matchmaking readiness, tutorial/game-mode message scheduling,
+AI-target removal/delegate unbinding, POI location-text iteration. Two extra
+bodies cover loot-removal state/timer/delegate cleanup and the respawn-data
+ProcessEvent bridge; that last body is still an RPC forwarding bridge, not the
+ultimate reflected recipient's gameplay behavior. No accepted canonical bodies
+were added. Every adapter contract, raw layout, hidden argument, callback and
+lifetime uncertainty remains explicit; no parity/runtime claim follows.
+
+Root reviewed all four proposal files. Rejected an initial raw Ghidra copy from
+the message worker and had it rewritten as connected C++ with explicit timer
+construction, callback writes and atomic refcount cleanup. Corrected respawn
+location-Z capture ordering relative to rotation writes for aliasing, and timer
+temporary initialization. Specific assembly evidence1419f5a53 MOV dword
+[RSP+40],0;1419f5a72 MOVSS XMM9,[RSP+40];1419f5acd MOVAPS XMM3,XMM9 proves
+full32-bit output despite decompiler byte annotation. AI callback actual arg2
+is an object, contrary to reflected exec Momentum label; the conflict stays open.
+
+Previous goal turn PROGRESS: source049ac3ad/dashboard19c1aa1d pushed. Current
+source counts remain2,075 bodies+180fields=2,255 accepted/rejected0 (promotion71).
+Last tested2,040;35 canonical+4 manual bodies build pending; next tests3,040.
+No compiler/build/runtime/tests/generation this turn. All4 product gates OPEN,
+full objective ACTIVE. Root sole canonical/native/promotion/build/staging/commit
+owner, primarily planner/orchestrator/reviewer with direct work as useful. Bounded
+Terra6.1 medium fork-none workers all finished; retain rotation and economical
+reads. Preserve unrelated porting/graphics/ and Engine edits; skip visual work.
+Continue actual substantial native behavior, not getter closure or wrapper counts.
+
+Root serial commands (repository cwd):
+`porting/.venv/bin/python -I porting/ghidra/probe_callees.py --input porting/generated/native-broad74/targets.json --out porting/generated/native-broad74 --timeout 60 --mem 12G > /tmp/native-broad74.log 2>&1`
+then
+`porting/.venv/bin/python -I porting/ghidra/probe_callees.py --input porting/generated/native-extra74/targets.json --out porting/generated/native-extra74 --timeout 60 --mem 12G > /tmp/native-extra74.log 2>&1`.
+Both exit0,6ok/11.2s and2ok/10.6s. Both transactions rolled back with usual
+project index/prp metadata changes; no deliberate project save. Ghidra lease free,
+no live process. Worker handoffs pin ignored inputs and unresolved contracts.
+
 ## Broad native source draft batch73 (2026-11-03)
 
 Added21 uncounted source drafts in four proposal directories:15 reflected bodies
@@ -31,8 +71,7 @@ visual work until resumed. Do not spend the pass closing getter dependencies.
 
 Serial probe command: porting/.venv/bin/python -I porting/ghidra/probe_callees.py
 --input porting/generated/pawn-broad73/targets.json --out
-porting/generated/pawn-broad73 --timeout60 --mem12G (actual shell flags contain
-spaces, see pawn_actions73_runtime/HANDOFF.md exact command); log
+porting/generated/pawn-broad73 --timeout 60 --mem 12G; log
 /tmp/pawn-broad73.log, exit0,6ok,11.1s. Transaction rolled back; usual Ghidra
 index/prp metadata changes reported, no deliberate save. Lease free. Sources,
 contracts and inventories are under porting/behavior/controller_broad73_runtime,

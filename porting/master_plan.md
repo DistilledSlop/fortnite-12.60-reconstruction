@@ -28,6 +28,10 @@ Batch73 adds21 uncounted source drafts:15 reflected bodies (six forwarding
 wrappers only) plus6 actual native pawn targets. Native helper behavior behind
 those six forwarding wrappers remains unrecovered. No canonical promotion or
 build/tests; ABI, callback and ownership contracts stay explicit.
+Batch74 adds8 uncounted actual native target drafts, including the six helper
+bodies behind batch73 wrappers plus loot-removal and a respawn-data ProcessEvent
+bridge. Source review corrected alias ordering and partial-initialization
+assumptions; ABI, lifetime and callback adapters remain unresolved.
 Next build/runtime/test batch at3,040 bodies. Fail-closed generation accepts
 2,255 ported entries with no rejected splices. All four product gates remain
 open. Latest source restores day-phase callback/virtual boundaries, the live
