@@ -253,6 +253,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	USkeletalMeshComponent* GetEmoteMesh() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	USkeletalMeshComponent* GetMechMesh() const;
+
 	UFUNCTION()
 	void OnRep_OverrideAbilitySystemComponent();
 

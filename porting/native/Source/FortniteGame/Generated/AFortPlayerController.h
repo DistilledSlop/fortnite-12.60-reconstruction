@@ -1463,6 +1463,9 @@ public:
 	bool GetRevertPlayerListenerChangeFlag() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool GetRotatePawnToCamera() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool GetUseHoldToSwapPickupSetting() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)

@@ -48289,5 +48289,38 @@
     "confidence": "high",
     "status": "ported",
     "includes": []
+  },
+  {
+    "class": "AFortCharacterVehicle",
+    "function": "GetMechMesh",
+    "kind": "getter",
+    "signature": "USkeletalMeshComponent* GetMechMesh() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/native_bulk186_runtime/AFortCharacterVehicle_GetMechMesh.inc",
+    "address": "0x142861850",
+    "reflection_flags": "0x54020401",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Exec directly returns inherited ACharacter Mesh; GetMesh() exposes that member."
+  },
+  {
+    "class": "AFortPlayerController",
+    "function": "GetRotatePawnToCamera",
+    "kind": "getter",
+    "signature": "bool GetRotatePawnToCamera() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/native_bulk186_runtime/AFortPlayerController_GetRotatePawnToCamera.inc",
+    "address": "0x142a479d0",
+    "native_body_address": "0x142385770",
+    "reflection_flags": "0x54020400",
+    "confidence": "high",
+    "status": "ported",
+    "virtual": true,
+    "notes": "Returns false if MyFortPawn or its movement component is null; otherwise returns bUseControllerDesiredRotation.",
+    "includes": [
+      "GameFramework/CharacterMovementComponent.h"
+    ]
   }
 ]

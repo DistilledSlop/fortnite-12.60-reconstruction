@@ -10,6 +10,12 @@ USkeletalMeshComponent* AFortCharacterVehicle::GetEmoteMesh() const
 	return EmoteMesh;
 }
 
+USkeletalMeshComponent* AFortCharacterVehicle::GetMechMesh() const
+{
+	// Native exec 0x142861850 returns ACharacter::Mesh at +0x278. CONFIDENCE: high
+	return GetMesh();
+}
+
 void AFortCharacterVehicle::OnRep_OverrideAbilitySystemComponent()
 {
 	// Body not recovered: reflection-derived stub.
