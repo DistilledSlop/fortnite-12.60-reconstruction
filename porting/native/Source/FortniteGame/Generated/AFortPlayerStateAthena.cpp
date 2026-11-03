@@ -18,6 +18,7 @@
 #include "FortDelayedObjectLoader.h"
 #include "FortNativeGameplayTagsRuntime.h"
 #include "GameFramework/GameStateBase.h"
+#include "GameFramework/OnlineReplStructs.h"
 #include "TimerManager.h"
 #include "UFortAssetManager.h"
 #include "UFortDeathCauseFromTagMapping.h"
@@ -860,6 +861,20 @@ void AFortPlayerStateAthena::NativeExpireTeamMemberState()
 	    TeamMemberState = ETeamMemberState::None;
 	    TeamMemberStateChangedNative.Broadcast(TeamMemberState);
 	}
+}
+
+bool AFortPlayerStateAthena::NativeMatchesSpectatedUniqueId216(const FUniqueNetIdRepl& Id) const
+{
+	// CONFIDENCE: high
+	// 0x141a4b0a0; original captures and storage proof in native-evidence.json.
+	return (IsABot() ? BotUniqueId : GetUniqueId()) == Id;
+}
+
+bool AFortPlayerStateAthena::NativeAllowsReplaySpectating216() const
+{
+	// CONFIDENCE: high
+	// 0x141a4a2d0; original captures and storage proof in native-evidence.json.
+	return !IsABot() || (bIsAnAthenaGameParticipant && TeamIndex != 2);
 }
 
 void AFortPlayerStateAthena::OnRep_AIKills()

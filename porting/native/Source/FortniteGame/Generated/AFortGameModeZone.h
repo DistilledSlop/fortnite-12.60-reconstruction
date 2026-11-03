@@ -216,5 +216,10 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetActiveSpawnPad(ABuildingSMActor* InActiveSpawnPad);
 
+protected:
+	UFUNCTION(BlueprintCallable)
+	void SetSpawnWithinStormShield(bool bSpawnInStormShield);
+public:
+
 };
 

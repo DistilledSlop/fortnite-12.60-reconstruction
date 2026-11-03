@@ -163,6 +163,12 @@ void AFortGameState::RunPerfMemCheatScript_Implementation(bool bStartStatFiles)
 	// Native target 0x1406801c0.
 }
 
+void AFortGameState::SetPlayerRespawningBlocked_Temporarily(bool bBlock)
+{
+	// Native 0x141eb0660. CONFIDENCE: high
+	bPlayerRespawningBlocked_Temporarily = bBlock;
+}
+
 void AFortGameState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

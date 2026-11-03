@@ -9,3 +9,9 @@ float UFortAIEncounterInfo::GetEncounterTimeSeconds()
 	return EncounterTimeSeconds;
 }
 
+void UFortAIEncounterInfo::SetNukeWavesAtEncounterEnd(bool bNuke)
+{
+	// Native 0x1416701c0. CONFIDENCE: high
+	bNukeWavesAtEncounterEnd = bNuke;
+}
+

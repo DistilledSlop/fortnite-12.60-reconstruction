@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UBlueprintContextBase.h"
 
+#include "EFireModeType.h"
 #include "FOnCloseLayoutTool.h"
 #include "FOnFireModeChange.h"
 #include "FOnHUDLayoutModeChange.h"
@@ -81,6 +82,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool CloudHUDLayoutEnabled() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsFireModeAvailable(EFireModeType NewFireMode) const;
 
 };
 

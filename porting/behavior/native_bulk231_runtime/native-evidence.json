@@ -1,0 +1,116 @@
+{
+  "entries": [
+    {
+      "function": "SetNukeWavesAtEncounterEnd",
+      "wrapper": "porting/generated/native228-fresh-callees/0x142798e80.c",
+      "native": "porting/generated/native228-fresh-callees/0x1416701c0.c",
+      "note": "Complete store; reflection bool_bits maps offset 0x999, mask 0x1 to bNukeWavesAtEncounterEnd.",
+      "class": "UFortAIEncounterInfo"
+    },
+    {
+      "function": "SetIdleKickEnabled",
+      "wrapper": "porting/generated/native228-fresh-callees/0x1428f3930.c",
+      "native": "porting/generated/native228-fresh-callees/0x1424f3370.c",
+      "note": "Complete store; reflection bool_bits maps offset 0xa01, mask 0x1 to bIdleKickEnabledByBlueprint.",
+      "class": "AFortGameModePvE"
+    },
+    {
+      "function": "SetSpawnWithinStormShield",
+      "wrapper": "porting/generated/native228-fresh-callees/0x1428f3b70.c",
+      "native": "porting/generated/native228-fresh-callees/0x141eb0870.c",
+      "note": "Complete store; reflection bool_bits maps offset 0x968, mask 0x1 to bTryToSpawnWithinStormShield.",
+      "class": "AFortGameModeZone"
+    },
+    {
+      "function": "SetPlayerRespawningBlocked_Temporarily",
+      "wrapper": "porting/generated/native228-fresh-callees/0x14290dc80.c",
+      "native": "porting/generated/native228-fresh-callees/0x141eb0660.c",
+      "note": "Complete store; reflection bool_bits maps offset 0x348, mask 0x1 to bPlayerRespawningBlocked_Temporarily.",
+      "class": "AFortGameState"
+    },
+    {
+      "function": "SetLastSelectedFillOption",
+      "wrapper": "porting/generated/native228-fresh-callees/0x14292fa90.c",
+      "native": "porting/generated/native108-impl/0x1412a5bb0.c",
+      "note": "Complete store; reflection bool_bits maps offset 0x390, mask 0x1 to LastSelectedFillOption.",
+      "class": "UFortGameUserSettings"
+    },
+    {
+      "function": "SetTimerDisplayFormat",
+      "wrapper": "porting/generated/native228-fresh-callees/0x1429f0a20.c",
+      "native": "porting/generated/native228-fresh-callees/0x141f49370.c",
+      "note": "Complete store; reflection bool_bits maps offset 0x130, mask 0x1 to bDisplayInTimeFormat.",
+      "class": "UFortMissionTimerComponent"
+    },
+    {
+      "function": "SetIsPatrolling",
+      "wrapper": "porting/generated/native228-fresh-callees/0x142a32d70.c",
+      "native": "porting/generated/native228-fresh-callees/0x14184bc30.c",
+      "note": "Complete store; reflection bool_bits maps offset 0x1cea, mask 0x40 to bIsPatrolling.",
+      "class": "UFortPlayerAnimInstance"
+    },
+    {
+      "function": "SetPickerEnabled",
+      "wrapper": "porting/generated/native228-fresh-callees/0x142a4f470.c",
+      "native": "porting/generated/native228-fresh-callees/0x1423b08f0.c",
+      "note": "Complete store; reflection bool_bits maps offset 0x1cb5, mask 0x1 to bPickerEnabled.",
+      "class": "AFortPlayerController"
+    },
+    {
+      "function": "SetShouldDrawNativeReticle",
+      "wrapper": "porting/generated/native228-fresh-callees/0x142b48710.c",
+      "native": "porting/generated/native228-fresh-callees/0x1426b3720.c",
+      "note": "Complete store; reflection bool_bits maps offset 0x409, mask 0x1 to bShouldDrawNativeReticle.",
+      "class": "AFortWeapon"
+    },
+    {
+      "function": "SetLocalPlayerWonMatch",
+      "wrapper": "porting/generated/native228-fresh-callees/0x14519fa40.c",
+      "native": "porting/generated/native228-fresh-callees/0x144cacbc0.c",
+      "note": "Complete store; reflection bool_bits maps offset 0x24a, mask 0x1 to bLocalPlayerWonMatch.",
+      "class": "UAthenaHUDContext"
+    },
+    {
+      "function": "SetShowProgressCountDown",
+      "wrapper": "porting/generated/native228-fresh-callees/0x145281460.c",
+      "native": "porting/generated/native228-fresh-callees/0x144de1560.c",
+      "note": "Complete store; reflection bool_bits maps offset 0x298, mask 0x1 to bShowTimeCountDown.",
+      "class": "UFortKeybindWidget"
+    },
+    {
+      "function": "SetNeedsItemRotateAnimation",
+      "wrapper": "porting/generated/native228-fresh-callees/0x1452c9010.c",
+      "native": "porting/generated/native228-fresh-callees/0x144f7b060.c",
+      "note": "Complete store; reflection bool_bits maps offset 0xbac, mask 0x1 to bNeedsItemRotateAnimation.",
+      "class": "UFortRotatingItemTileButton"
+    },
+    {
+      "function": "SetSummaryView",
+      "wrapper": "porting/generated/native228-fresh-callees/0x145300510.c",
+      "native": "porting/generated/native228-fresh-callees/0x1424bb4d0.c",
+      "note": "Complete store; reflection bool_bits maps offset 0x290, mask 0x1 to bSummaryView.",
+      "class": "UFortSurvivorSquadStatMatchesBase"
+    },
+    {
+      "class": "UFortGameUserSettings",
+      "function": "SetShowTemperature",
+      "wrapper": "porting/generated/native228-fresh-callees/0x14292fca0.c",
+      "native": "porting/generated/native228-fresh-callees/0x141eb0860.c",
+      "note": "Offset 0x8a8 maps to bShowTemperature via bool_bits; conditional store."
+    },
+    {
+      "class": "UFortGlobalUIContext",
+      "function": "GetInputPriority",
+      "wrapper": "porting/generated/native228-fresh-callees/0x145247cf0.c",
+      "native": "porting/generated/native228-fresh-callees/0x141bf2c40.c",
+      "note": "Native returns the unsigned byte argument; wrapper widens it to int32. Enum type follows reflection."
+    },
+    {
+      "class": "UHUDLayoutToolContext",
+      "function": "IsFireModeAvailable",
+      "wrapper": "porting/generated/native228-fresh-callees/0x14532b420.c",
+      "native": "porting/generated/native228-fresh-callees/0x144d4c1a0.c",
+      "note": "Native checks byte enum values 1, 2, and 3. Enum type follows reflection."
+    }
+  ]
+}

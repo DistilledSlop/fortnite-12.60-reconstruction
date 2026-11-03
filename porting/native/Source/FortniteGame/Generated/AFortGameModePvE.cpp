@@ -8,3 +8,9 @@ void AFortGameModePvE::SetIdleDetectionPenaltyTime(float InPenaltyTime)
 	this->NativeRecoveredFloat_0xab0 = InPenaltyTime;
 }
 
+void AFortGameModePvE::SetIdleKickEnabled(bool bEnabled)
+{
+	// Native 0x1424f3370. CONFIDENCE: high
+	bIdleKickEnabledByBlueprint = bEnabled;
+}
+

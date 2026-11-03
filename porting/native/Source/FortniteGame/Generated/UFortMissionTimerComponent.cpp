@@ -24,6 +24,12 @@ void UFortMissionTimerComponent::OnRep_TimerVisibilityOverride()
 	// Body not recovered: reflection-derived stub.
 }
 
+void UFortMissionTimerComponent::SetTimerDisplayFormat(bool bNewDisplayInTimeFormat)
+{
+	// Native 0x141f49370. CONFIDENCE: high
+	bDisplayInTimeFormat = bNewDisplayInTimeFormat;
+}
+
 void UFortMissionTimerComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

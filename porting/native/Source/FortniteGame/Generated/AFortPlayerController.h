@@ -1881,6 +1881,9 @@ public:
 	void ServerUpgradeBuildingActor_Implementation(ABuildingActor* BuildingActorToUpgrade, int32 NewUpgradeLevel);
 
 	UFUNCTION(BlueprintCallable)
+	void SetPickerEnabled(bool bEnabled);
+
+	UFUNCTION(BlueprintCallable)
 	virtual void SetRotatePawnToCamera(bool bNewRotatePawnToCamera);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

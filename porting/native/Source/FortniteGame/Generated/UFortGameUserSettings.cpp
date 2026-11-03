@@ -120,6 +120,12 @@ bool UFortGameUserSettings::IsHeadphoneModeEnabled() const
 	return UFortGameUserSettings::bUseHeadphoneMode;
 }
 
+void UFortGameUserSettings::SetLastSelectedFillOption(bool FillOption)
+{
+	// Native 0x1412a5bb0. CONFIDENCE: high
+	LastSelectedFillOption = FillOption;
+}
+
 void UFortGameUserSettings::SetMobileFPSMode(EFortMobileFPSMode Mode)
 {
 	// Original exec 0x1427e1180; complete empty leaf 0x1406801c0.
@@ -131,5 +137,14 @@ void UFortGameUserSettings::SetSafeZone(float Value)
 	// Original exec 0x14292fba0; inline store.
 	// CONFIDENCE: HIGH
 	this->SafeZone = Value;
+}
+
+void UFortGameUserSettings::SetShowTemperature(bool bNewValue)
+{
+	// Native 0x141eb0860. CONFIDENCE: high
+	if (bShowTemperature != bNewValue)
+	{
+	    bShowTemperature = bNewValue;
+	}
 }
 

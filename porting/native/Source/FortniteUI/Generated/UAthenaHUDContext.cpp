@@ -55,3 +55,9 @@ bool UAthenaHUDContext::IsInSelectWidgetToMoveMode() const
 	return UAthenaHUDContext::bMoveButtonMode;
 }
 
+void UAthenaHUDContext::SetLocalPlayerWonMatch(bool bLocalPlayerWon)
+{
+	// Native 0x144cacbc0. CONFIDENCE: high
+	bLocalPlayerWonMatch = bLocalPlayerWon;
+}
+

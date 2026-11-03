@@ -29,6 +29,9 @@ public:
 	TArray<UFortItem*> ItemsToRotate;
 
 	UFUNCTION(BlueprintCallable)
+	void SetNeedsItemRotateAnimation(bool InNeedsItemRotationAnimation);
+
+	UFUNCTION(BlueprintCallable)
 	void SetTimeBeweenRotations(float InTimeBetweenRotations);
 
 };

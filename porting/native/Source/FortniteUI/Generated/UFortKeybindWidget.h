@@ -135,5 +135,8 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetAxisScale(float NewValue);
 
+	UFUNCTION(BlueprintCallable)
+	void SetShowProgressCountDown(bool bShow);
+
 };
 

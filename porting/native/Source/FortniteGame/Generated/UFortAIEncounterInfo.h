@@ -662,5 +662,8 @@ public:
 	UFUNCTION(BlueprintCallable)
 	float GetEncounterTimeSeconds();
 
+	UFUNCTION(BlueprintCallable)
+	void SetNukeWavesAtEncounterEnd(bool bNuke);
+
 };
 

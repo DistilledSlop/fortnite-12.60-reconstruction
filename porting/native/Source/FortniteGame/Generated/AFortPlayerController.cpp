@@ -1035,6 +1035,12 @@ void AFortPlayerController::ServerUpgradeBuildingActor_Implementation(ABuildingA
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerController::SetPickerEnabled(bool bEnabled)
+{
+	// Native 0x1423b08f0. CONFIDENCE: high
+	bPickerEnabled = bEnabled;
+}
+
 void AFortPlayerController::SetRotatePawnToCamera(bool bNewRotatePawnToCamera)
 {
 	// Native 0x1423b0960. CONFIDENCE: high

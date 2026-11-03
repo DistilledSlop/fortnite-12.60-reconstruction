@@ -72,6 +72,9 @@ public:
 	UFUNCTION()
 	void OnRep_TimerVisibilityOverride();
 
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void SetTimerDisplayFormat(bool bNewDisplayInTimeFormat);
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

@@ -1,0 +1,212 @@
+{
+  "entries": [
+    {
+      "class": "UFortClientSettingsRecord",
+      "function": "SetChatVolume",
+      "wrapper": "porting/generated/native225-fresh-bulk/0x14287f800.c",
+      "native": "porting/generated/native228-fresh-callees/0x141e3aa60.c",
+      "assembly": "porting/generated/native228-fresh-callees/0x141e3aa60.asm",
+      "note": "Full leaf and reflected input; existing reflected fields and dirty storage. Ordered comparison preserves UCOMISS/JZ unordered behavior."
+    },
+    {
+      "class": "UFortClientSettingsRecord",
+      "function": "SetCinematicsVolume",
+      "wrapper": "porting/generated/native225-fresh-bulk/0x14287f880.c",
+      "native": "porting/generated/native228-fresh-callees/0x141e3aa80.c",
+      "assembly": "porting/generated/native228-fresh-callees/0x141e3aa80.asm",
+      "note": "Full leaf and reflected input; existing reflected fields and dirty storage. Ordered comparison preserves UCOMISS/JZ unordered behavior."
+    },
+    {
+      "class": "UFortClientSettingsRecord",
+      "function": "SetDialogueVolume",
+      "wrapper": "porting/generated/native225-fresh-bulk/0x14287fde0.c",
+      "native": "porting/generated/native228-fresh-callees/0x141e3b240.c",
+      "assembly": "porting/generated/native228-fresh-callees/0x141e3b240.asm",
+      "note": "Full leaf and reflected input; existing reflected fields and dirty storage. Ordered comparison preserves UCOMISS/JZ unordered behavior."
+    },
+    {
+      "class": "UFortClientSettingsRecord",
+      "function": "SetEditButtonHoldTime",
+      "wrapper": "porting/generated/native225-fresh-bulk/0x14287fef0.c",
+      "native": "porting/generated/native228-fresh-callees/0x141e3b290.c",
+      "assembly": "porting/generated/native228-fresh-callees/0x141e3b290.asm",
+      "note": "Full leaf and reflected input; existing reflected fields and dirty storage. Ordered comparison preserves UCOMISS/JZ unordered behavior."
+    },
+    {
+      "class": "UFortClientSettingsRecord",
+      "function": "SetHUDScale",
+      "wrapper": "porting/generated/native225-fresh-bulk/0x1428808e0.c",
+      "native": "porting/generated/native228-fresh-callees/0x141e3b750.c",
+      "assembly": "porting/generated/native228-fresh-callees/0x141e3b750.asm",
+      "note": "Full leaf and reflected input; existing reflected fields and dirty storage. Ordered comparison preserves UCOMISS/JZ unordered behavior."
+    },
+    {
+      "class": "UFortClientSettingsRecord",
+      "function": "SetMusicVolume",
+      "wrapper": "porting/generated/native225-fresh-bulk/0x142882260.c",
+      "native": "porting/generated/native228-fresh-callees/0x141e3c210.c",
+      "assembly": "porting/generated/native228-fresh-callees/0x141e3c210.asm",
+      "note": "Full leaf and reflected input; existing reflected fields and dirty storage. Ordered comparison preserves UCOMISS/JZ unordered behavior."
+    },
+    {
+      "class": "UFortClientSettingsRecord",
+      "function": "SetRudderDeadZone",
+      "wrapper": "porting/generated/native225-fresh-bulk/0x1428827f0.c",
+      "native": "porting/generated/native228-fresh-callees/0x141e3c550.c",
+      "assembly": "porting/generated/native228-fresh-callees/0x141e3c550.asm",
+      "note": "Full leaf and reflected input; existing reflected fields and dirty storage. Ordered comparison preserves UCOMISS/JZ unordered behavior."
+    },
+    {
+      "class": "UFortClientSettingsRecord",
+      "function": "SetRudderMaxThrottle",
+      "wrapper": "porting/generated/native225-fresh-bulk/0x142882870.c",
+      "native": "porting/generated/native228-fresh-callees/0x141e3c570.c",
+      "assembly": "porting/generated/native228-fresh-callees/0x141e3c570.asm",
+      "note": "Full leaf and reflected input; existing reflected fields and dirty storage. Ordered comparison preserves UCOMISS/JZ unordered behavior."
+    },
+    {
+      "class": "UFortClientSettingsRecord",
+      "function": "SetSoundFXVolume",
+      "wrapper": "porting/generated/native225-fresh-bulk/0x142883140.c",
+      "native": "porting/generated/native228-fresh-callees/0x141e3c9a0.c",
+      "assembly": "porting/generated/native228-fresh-callees/0x141e3c9a0.asm",
+      "note": "Full leaf and reflected input; existing reflected fields and dirty storage. Ordered comparison preserves UCOMISS/JZ unordered behavior."
+    },
+    {
+      "class": "UFortClientSettingsRecord",
+      "function": "SetGamepadLookStickDeadZone",
+      "wrapper": "porting/generated/native225-fresh-bulk/0x142880630.c",
+      "native": "porting/generated/native228-fresh-callees/0x141e3b680.c",
+      "assembly": "porting/generated/native228-fresh-callees/0x141e3b680.asm",
+      "note": "Full leaf and reflected input; existing reflected fields and dirty storage. Ordered comparison preserves UCOMISS/JZ unordered behavior."
+    },
+    {
+      "class": "UFortClientSettingsRecord",
+      "function": "SetGamepadMoveStickDeadZone",
+      "wrapper": "porting/generated/native225-fresh-bulk/0x1428806b0.c",
+      "native": "porting/generated/native228-fresh-callees/0x141e3b6b0.c",
+      "assembly": "porting/generated/native228-fresh-callees/0x141e3b6b0.asm",
+      "note": "Full leaf and reflected input; existing reflected fields and dirty storage. Ordered comparison preserves UCOMISS/JZ unordered behavior."
+    },
+    {
+      "class": "UFortClientSettingsRecord",
+      "function": "SetHiddenMatchmakingDelayMax",
+      "wrapper": "porting/generated/native225-fresh-bulk/0x1428809e0.c",
+      "native": "porting/generated/native228-fresh-callees/0x141e3b9b0.c",
+      "assembly": "porting/generated/native228-fresh-callees/0x141e3b9b0.asm",
+      "note": "Full leaf and reflected input; existing reflected fields and dirty storage. Ordered comparison preserves UCOMISS/JZ unordered behavior."
+    },
+    {
+      "class": "UFortClientSettingsRecord",
+      "function": "SetLookBoostAccelerationTime",
+      "wrapper": "porting/generated/native225-fresh-bulk/0x142881330.c",
+      "native": "porting/generated/native228-fresh-callees/0x141e3bee0.c",
+      "assembly": "porting/generated/native228-fresh-callees/0x141e3bee0.asm",
+      "note": "Full leaf; nested options offsets and existing native dirty byte 0x13c."
+    },
+    {
+      "class": "UFortClientSettingsRecord",
+      "function": "SetLookBoostAccelerationTimeAds",
+      "wrapper": "porting/generated/native225-fresh-bulk/0x1428813b0.c",
+      "native": "porting/generated/native228-fresh-callees/0x141e3bef0.c",
+      "assembly": "porting/generated/native228-fresh-callees/0x141e3bef0.asm",
+      "note": "Full leaf; nested options offsets and existing native dirty byte 0x13c."
+    },
+    {
+      "class": "UFortClientSettingsRecord",
+      "function": "SetLookBuildModeMultiplier",
+      "wrapper": "porting/generated/native225-fresh-bulk/0x142881430.c",
+      "native": "porting/generated/native228-fresh-callees/0x141e3bf00.c",
+      "assembly": "porting/generated/native228-fresh-callees/0x141e3bf00.asm",
+      "note": "Full leaf; nested options offsets and existing native dirty byte 0x13c."
+    },
+    {
+      "class": "UFortClientSettingsRecord",
+      "function": "SetLookEaseTime",
+      "wrapper": "porting/generated/native225-fresh-bulk/0x1428814b0.c",
+      "native": "porting/generated/native228-fresh-callees/0x141e3bf10.c",
+      "assembly": "porting/generated/native228-fresh-callees/0x141e3bf10.asm",
+      "note": "Full leaf; nested options offsets and existing native dirty byte 0x13c."
+    },
+    {
+      "class": "UFortClientSettingsRecord",
+      "function": "SetLookEditModeMultiplier",
+      "wrapper": "porting/generated/native225-fresh-bulk/0x142881530.c",
+      "native": "porting/generated/native228-fresh-callees/0x141e3bf20.c",
+      "assembly": "porting/generated/native228-fresh-callees/0x141e3bf20.asm",
+      "note": "Full leaf; nested options offsets and existing native dirty byte 0x13c."
+    },
+    {
+      "class": "UFortClientSettingsRecord",
+      "function": "SetAimAssistStrength",
+      "wrapper": "porting/generated/native225-fresh-bulk/0x14287e990.c",
+      "native": "porting/generated/native228-fresh-callees/0x141e39ab0.c",
+      "assembly": "porting/generated/native228-fresh-callees/0x141e39ab0.asm",
+      "note": "Full leaf; nested options offsets and existing native dirty byte 0x13c."
+    },
+    {
+      "class": "UFortClientSettingsRecord",
+      "function": "SetLookHorizontalBoostSpeed",
+      "wrapper": "porting/generated/native225-fresh-bulk/0x1428815b0.c",
+      "native": "porting/generated/native228-fresh-callees/0x141e3bf30.c",
+      "assembly": "porting/generated/native228-fresh-callees/0x141e3bf30.asm",
+      "note": "Full leaf; nested options offsets and existing native dirty byte 0x13c."
+    },
+    {
+      "class": "UFortClientSettingsRecord",
+      "function": "SetLookHorizontalBoostSpeedAds",
+      "wrapper": "porting/generated/native225-fresh-bulk/0x142881630.c",
+      "native": "porting/generated/native228-fresh-callees/0x141e3bf40.c",
+      "assembly": "porting/generated/native228-fresh-callees/0x141e3bf40.asm",
+      "note": "Full leaf; nested options offsets and existing native dirty byte 0x13c."
+    },
+    {
+      "class": "UFortClientSettingsRecord",
+      "function": "SetLookHorizontalSpeed",
+      "wrapper": "porting/generated/native225-fresh-bulk/0x1428816b0.c",
+      "native": "porting/generated/native228-fresh-callees/0x141e3bf50.c",
+      "assembly": "porting/generated/native228-fresh-callees/0x141e3bf50.asm",
+      "note": "Full leaf; nested options offsets and existing native dirty byte 0x13c."
+    },
+    {
+      "class": "UFortClientSettingsRecord",
+      "function": "SetLookHorizontalSpeedAds",
+      "wrapper": "porting/generated/native225-fresh-bulk/0x142881730.c",
+      "native": "porting/generated/native228-fresh-callees/0x141e3bf60.c",
+      "assembly": "porting/generated/native228-fresh-callees/0x141e3bf60.asm",
+      "note": "Full leaf; nested options offsets and existing native dirty byte 0x13c."
+    },
+    {
+      "class": "UFortClientSettingsRecord",
+      "function": "SetLookVerticalBoostSpeed",
+      "wrapper": "porting/generated/native225-fresh-bulk/0x142881930.c",
+      "native": "porting/generated/native228-fresh-callees/0x141e3bfa0.c",
+      "assembly": "porting/generated/native228-fresh-callees/0x141e3bfa0.asm",
+      "note": "Full leaf; nested options offsets and existing native dirty byte 0x13c."
+    },
+    {
+      "class": "UFortClientSettingsRecord",
+      "function": "SetLookVerticalBoostSpeedAds",
+      "wrapper": "porting/generated/native225-fresh-bulk/0x1428819b0.c",
+      "native": "porting/generated/native228-fresh-callees/0x141e3bfb0.c",
+      "assembly": "porting/generated/native228-fresh-callees/0x141e3bfb0.asm",
+      "note": "Full leaf; nested options offsets and existing native dirty byte 0x13c."
+    },
+    {
+      "class": "UFortClientSettingsRecord",
+      "function": "SetLookVerticalSpeed",
+      "wrapper": "porting/generated/native225-fresh-bulk/0x142881a30.c",
+      "native": "porting/generated/native228-fresh-callees/0x141e3bfc0.c",
+      "assembly": "porting/generated/native228-fresh-callees/0x141e3bfc0.asm",
+      "note": "Full leaf; nested options offsets and existing native dirty byte 0x13c."
+    },
+    {
+      "class": "UFortClientSettingsRecord",
+      "function": "SetLookVerticalSpeedAds",
+      "wrapper": "porting/generated/native225-fresh-bulk/0x142881ab0.c",
+      "native": "porting/generated/native228-fresh-callees/0x141e3bfd0.c",
+      "assembly": "porting/generated/native228-fresh-callees/0x141e3bfd0.asm",
+      "note": "Full leaf; nested options offsets and existing native dirty byte 0x13c."
+    }
+  ]
+}

@@ -8,3 +8,9 @@ UAnimMontage* UFortPlayerAnimInstance::FindEmoteToPlay(AFortPlayerController* Fo
 	return nullptr;
 }
 
+void UFortPlayerAnimInstance::SetIsPatrolling(bool NewValue)
+{
+	// Native 0x14184bc30. CONFIDENCE: high
+	bIsPatrolling = NewValue;
+}
+

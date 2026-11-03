@@ -28,5 +28,8 @@ public:
 	UPROPERTY()
 	TArray<UFortSurvivorSquadStatMatchBase*> StatMatches;
 
+	UFUNCTION(BlueprintCallable)
+	void SetSummaryView(bool bInSummaryView);
+
 };
 

@@ -339,6 +339,9 @@ public:
 	void RunPerfMemCheatScript(bool bStartStatFiles);
 	void RunPerfMemCheatScript_Implementation(bool bStartStatFiles);
 
+	UFUNCTION(BlueprintCallable)
+	void SetPlayerRespawningBlocked_Temporarily(bool bBlock);
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

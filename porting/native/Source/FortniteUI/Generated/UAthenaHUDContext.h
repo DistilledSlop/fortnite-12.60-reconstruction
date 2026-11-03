@@ -223,5 +223,8 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsInSelectWidgetToMoveMode() const;
 
+	UFUNCTION(BlueprintCallable)
+	void SetLocalPlayerWonMatch(bool bLocalPlayerWon);
+
 };
 

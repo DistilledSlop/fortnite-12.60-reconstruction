@@ -1258,6 +1258,9 @@ public:
 	bool IsUsingHoldToSwapPickup() const;
 
 	UFUNCTION()
+	void SetAimAssistStrength(uint32 NewValue);
+
+	UFUNCTION()
 	void SetAllowAudioInBackgroundSetting(EFortAllowBackgroundAudioSetting Value);
 
 	UFUNCTION()
@@ -1282,6 +1285,12 @@ public:
 	void SetAutoSortConsumablesToRight(bool bNewValue);
 
 	UFUNCTION()
+	void SetChatVolume(float InVolume);
+
+	UFUNCTION()
+	void SetCinematicsVolume(float InVolume);
+
+	UFUNCTION()
 	void SetColorBlindMode(EColorBlindMode InMode);
 
 	UFUNCTION()
@@ -1289,6 +1298,12 @@ public:
 
 	UFUNCTION()
 	void SetCreativeTurboDelete(bool bNewValue);
+
+	UFUNCTION()
+	void SetDialogueVolume(float InVolume);
+
+	UFUNCTION()
+	void SetEditButtonHoldTime(float NewValue);
 
 	UFUNCTION()
 	void SetEnableRudderControl(bool bEnable);
@@ -1303,6 +1318,12 @@ public:
 	void SetGamepadEditModeMultiplier(float InMultiplier);
 
 	UFUNCTION()
+	void SetGamepadLookStickDeadZone(float NewValue);
+
+	UFUNCTION()
+	void SetGamepadMoveStickDeadZone(float NewValue);
+
+	UFUNCTION()
 	void SetGamepadScopedMultiplier(float InMultiplier);
 
 	UFUNCTION()
@@ -1312,7 +1333,13 @@ public:
 	void SetGyroLookSensitivitySetting(float InSetting);
 
 	UFUNCTION()
+	void SetHiddenMatchmakingDelayMax(int32 Value);
+
+	UFUNCTION()
 	void SetHideOtherPlayerNames(bool bEnable);
+
+	UFUNCTION()
+	void SetHUDScale(float InScale);
 
 	UFUNCTION()
 	void SetIgnoreGamepadInput(bool bIgnore);
@@ -1342,6 +1369,33 @@ public:
 	void SetLockPrimaryInputMethodToMouse(bool bLock);
 
 	UFUNCTION()
+	void SetLookBoostAccelerationTime(float NewValue);
+
+	UFUNCTION()
+	void SetLookBoostAccelerationTimeAds(float NewValue);
+
+	UFUNCTION()
+	void SetLookBuildModeMultiplier(float NewValue);
+
+	UFUNCTION()
+	void SetLookEaseTime(float NewValue);
+
+	UFUNCTION()
+	void SetLookEditModeMultiplier(float NewValue);
+
+	UFUNCTION()
+	void SetLookHorizontalBoostSpeed(uint32 NewValue);
+
+	UFUNCTION()
+	void SetLookHorizontalBoostSpeedAds(uint32 NewValue);
+
+	UFUNCTION()
+	void SetLookHorizontalSpeed(uint32 NewValue);
+
+	UFUNCTION()
+	void SetLookHorizontalSpeedAds(uint32 NewValue);
+
+	UFUNCTION()
 	void SetLookInputCurve(EFortGamepadLookInputCurve NewValue);
 
 	UFUNCTION()
@@ -1351,6 +1405,18 @@ public:
 	void SetLookSensitivityPresetAds(EFortGamepadSensitivity NewPreset);
 
 	UFUNCTION()
+	void SetLookVerticalBoostSpeed(uint32 NewValue);
+
+	UFUNCTION()
+	void SetLookVerticalBoostSpeedAds(uint32 NewValue);
+
+	UFUNCTION()
+	void SetLookVerticalSpeed(uint32 NewValue);
+
+	UFUNCTION()
+	void SetLookVerticalSpeedAds(uint32 NewValue);
+
+	UFUNCTION()
 	void SetMotionHarvestingToolMultiplier(float InMultiplier);
 
 	UFUNCTION()
@@ -1358,6 +1424,9 @@ public:
 
 	UFUNCTION()
 	void SetMotionTargetingMultiplier(float InMultiplier);
+
+	UFUNCTION()
+	void SetMusicVolume(float InVolume);
 
 	UFUNCTION()
 	void SetPeripheralLightingEnabled(bool bEnable);
@@ -1370,6 +1439,12 @@ public:
 
 	UFUNCTION()
 	void SetReplayRecordingEnabled(bool bEnable);
+
+	UFUNCTION()
+	void SetRudderDeadZone(float NewValue);
+
+	UFUNCTION()
+	void SetRudderMaxThrottle(float NewValue);
 
 	UFUNCTION()
 	void SetScopedMultiplier(float InMultiplier);
@@ -1391,6 +1466,9 @@ public:
 
 	UFUNCTION()
 	void SetShowVoiceIndicators(bool bNewValue);
+
+	UFUNCTION()
+	void SetSoundFXVolume(float InVolume);
 
 	UFUNCTION()
 	void SetTargetingMultiplier(float InMultiplier);

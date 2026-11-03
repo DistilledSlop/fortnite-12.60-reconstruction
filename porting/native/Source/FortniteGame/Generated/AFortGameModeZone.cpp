@@ -34,3 +34,9 @@ void AFortGameModeZone::SetActiveSpawnPad(ABuildingSMActor* InActiveSpawnPad)
 	ActiveSpawnPad = InActiveSpawnPad;
 }
 
+void AFortGameModeZone::SetSpawnWithinStormShield(bool bSpawnInStormShield)
+{
+	// Native 0x141eb0870. CONFIDENCE: high
+	bTryToSpawnWithinStormShield = bSpawnInStormShield;
+}
+

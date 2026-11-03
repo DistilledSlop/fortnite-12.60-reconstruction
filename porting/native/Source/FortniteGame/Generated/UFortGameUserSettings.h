@@ -572,11 +572,17 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsHeadphoneModeEnabled() const;
 
+	UFUNCTION()
+	void SetLastSelectedFillOption(bool FillOption);
+
 	UFUNCTION(BlueprintCallable)
 	void SetMobileFPSMode(EFortMobileFPSMode Mode);
 
 	UFUNCTION()
 	void SetSafeZone(float Value);
+
+	UFUNCTION()
+	void SetShowTemperature(bool bNewValue);
 
 };
 

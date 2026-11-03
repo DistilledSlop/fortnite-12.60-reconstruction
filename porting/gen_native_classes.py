@@ -2385,6 +2385,10 @@ _pending_save_spec = _common_activation_import.spec_from_file_location(
     "pending_save_policy", os.path.join(os.path.dirname(__file__), "behavior", "pending_save_membership_runtime", "source_policy.py"))
 _pending_save_policy = _common_activation_import.module_from_spec(_pending_save_spec)
 _pending_save_spec.loader.exec_module(_pending_save_policy)
+_replay_spectator216_spec = _common_activation_import.spec_from_file_location(
+    "replay_spectator216_policy", os.path.join(os.path.dirname(__file__), "behavior", "replay_spectator216_runtime", "source_policy.py"))
+_replay_spectator216_policy = _common_activation_import.module_from_spec(_replay_spectator216_spec)
+_replay_spectator216_spec.loader.exec_module(_replay_spectator216_policy)
 _target_volume_cvar_spec = _common_activation_import.spec_from_file_location(
     "target_volume_cvar_policy", os.path.join(os.path.dirname(__file__), "behavior", "target_volume_cvar175_runtime", "source_policy.py"))
 _target_volume_cvar_policy = _common_activation_import.module_from_spec(_target_volume_cvar_spec)
@@ -2609,6 +2613,7 @@ def build_class_promoted(block, name, resolver, parent_entry, owner_fns, snippet
     model = _playerstate68_policy.apply(model, block, owner_fns)
     model = _athena_mode_policy.apply(model, block, owner_fns)
     model = _mutator_owner_policy.apply(model, block, owner_fns)
+    model = _replay_spectator216_policy.apply(model, block, owner_fns)
     model = _controller_analytics_policy.apply(model, block, owner_fns)
     _athena_mode_policy.validate_emitted_properties(model, split_properties)
     model = _widget_route_policy.apply(model, block, owner_fns)

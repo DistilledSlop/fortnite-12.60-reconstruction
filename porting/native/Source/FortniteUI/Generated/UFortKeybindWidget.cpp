@@ -24,3 +24,9 @@ void UFortKeybindWidget::SetAxisScale(float NewValue)
 	this->AxisScale = NewValue;
 }
 
+void UFortKeybindWidget::SetShowProgressCountDown(bool bShow)
+{
+	// Native 0x144de1560. CONFIDENCE: high
+	bShowTimeCountDown = bShow;
+}
+

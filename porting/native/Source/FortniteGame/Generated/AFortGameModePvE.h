@@ -70,5 +70,8 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetIdleDetectionPenaltyTime(float InPenaltyTime);
 
+	UFUNCTION(BlueprintCallable)
+	void SetIdleKickEnabled(bool bEnabled);
+
 };
 

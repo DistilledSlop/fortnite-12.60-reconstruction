@@ -904,6 +904,11 @@ public:
 
 protected:
 	UFUNCTION(BlueprintCallable)
+	void SetShouldDrawNativeReticle(bool bInShouldDrawReticle);
+public:
+
+protected:
+	UFUNCTION(BlueprintCallable)
 	void SetWeaponPawnAnimsetOverride(UPARAM(meta=(OverrideNativeName="WeaponPawnAnimsetOverride")) UFortWeaponAnimSet* InWeaponPawnAnimsetOverride);
 public:
 

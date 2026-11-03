@@ -1515,5 +1515,8 @@ public:
 	UFUNCTION(BlueprintCallable)
 	UAnimMontage* FindEmoteToPlay(AFortPlayerController* FortPlayerController, EFortCustomBodyType::Type InBodyType, EFortCustomGender::Type InGender);
 
+	UFUNCTION(BlueprintCallable)
+	void SetIsPatrolling(bool NewValue);
+
 };
 

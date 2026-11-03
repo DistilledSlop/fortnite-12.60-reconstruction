@@ -274,5 +274,9 @@ public:
 	virtual void UpdateReplayEvents(EPlayEventType Type);
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	AFortPlayerState* NativeResolveSpectatedPlayerState216(const FUniqueNetIdRepl& Id);
 };
 

@@ -783,6 +783,13 @@ bool UFortClientSettingsRecord::IsUsingHoldToSwapPickup() const
 	return UFortClientSettingsRecord::bUseHoldToSwapPickup;
 }
 
+void UFortClientSettingsRecord::SetAimAssistStrength(uint32 NewValue)
+{
+	// CONFIDENCE: HIGH. Native 0x141e39ab0; wrapper 0x14287e990.
+	LocalGamepadUserOptions.Advanced.AimAssistStrength = NewValue;
+	bNativeGamepadOptionsDirty = true;
+}
+
 void UFortClientSettingsRecord::SetAllowAudioInBackgroundSetting(EFortAllowBackgroundAudioSetting Value)
 {
 	// Native 0x141e3a2a0. CONFIDENCE: high
@@ -865,6 +872,26 @@ void UFortClientSettingsRecord::SetAutoSortConsumablesToRight(bool bNewValue)
 	}
 }
 
+void UFortClientSettingsRecord::SetChatVolume(float InVolume)
+{
+	// CONFIDENCE: HIGH. Native 0x141e3aa60; wrapper 0x14287f800.
+	if (InVolume < ChatVolume || InVolume > ChatVolume)
+	{
+	    ChatVolume = InVolume;
+	    bDirty = true;
+	}
+}
+
+void UFortClientSettingsRecord::SetCinematicsVolume(float InVolume)
+{
+	// CONFIDENCE: HIGH. Native 0x141e3aa80; wrapper 0x14287f880.
+	if (InVolume < CinematicsVolume || InVolume > CinematicsVolume)
+	{
+	    CinematicsVolume = InVolume;
+	    bDirty = true;
+	}
+}
+
 void UFortClientSettingsRecord::SetColorBlindMode(EColorBlindMode InMode)
 {
 	// Native 0x141e3aaa0. CONFIDENCE: high
@@ -894,6 +921,26 @@ void UFortClientSettingsRecord::SetCreativeTurboDelete(bool bNewValue)
 	if (bCreativeTurboDelete != bNewValue)
 	{
 	    bCreativeTurboDelete = bNewValue;
+	    bDirty = true;
+	}
+}
+
+void UFortClientSettingsRecord::SetDialogueVolume(float InVolume)
+{
+	// CONFIDENCE: HIGH. Native 0x141e3b240; wrapper 0x14287fde0.
+	if (InVolume < DialogVolume || InVolume > DialogVolume)
+	{
+	    DialogVolume = InVolume;
+	    bDirty = true;
+	}
+}
+
+void UFortClientSettingsRecord::SetEditButtonHoldTime(float NewValue)
+{
+	// CONFIDENCE: HIGH. Native 0x141e3b290; wrapper 0x14287fef0.
+	if (NewValue < EditButtonHoldTime || NewValue > EditButtonHoldTime)
+	{
+	    EditButtonHoldTime = NewValue;
 	    bDirty = true;
 	}
 }
@@ -942,6 +989,26 @@ void UFortClientSettingsRecord::SetGamepadEditModeMultiplier(float InMultiplier)
 	}
 }
 
+void UFortClientSettingsRecord::SetGamepadLookStickDeadZone(float NewValue)
+{
+	// CONFIDENCE: HIGH. Native 0x141e3b680; wrapper 0x142880630.
+	if (FMath::Abs(NewValue - GamepadLookStickDeadZone) > 1.e-8f)
+	{
+	    GamepadLookStickDeadZone = NewValue;
+	    bDirty = true;
+	}
+}
+
+void UFortClientSettingsRecord::SetGamepadMoveStickDeadZone(float NewValue)
+{
+	// CONFIDENCE: HIGH. Native 0x141e3b6b0; wrapper 0x1428806b0.
+	if (FMath::Abs(NewValue - GamepadMoveStickDeadZone) > 1.e-8f)
+	{
+	    GamepadMoveStickDeadZone = NewValue;
+	    bDirty = true;
+	}
+}
+
 void UFortClientSettingsRecord::SetGamepadScopedMultiplier(float InMultiplier)
 {
 	// Original exec 0x142880730; ordered unequal float compare and conditional dirty-byte store.
@@ -978,12 +1045,32 @@ void UFortClientSettingsRecord::SetGyroLookSensitivitySetting(float InSetting)
 	}
 }
 
+void UFortClientSettingsRecord::SetHiddenMatchmakingDelayMax(int32 Value)
+{
+	// CONFIDENCE: HIGH. Native 0x141e3b9b0; wrapper 0x1428809e0.
+	if (Value != HiddenMatchmakingDelayMaxSeconds)
+	{
+	    HiddenMatchmakingDelayMaxSeconds = Value;
+	    bDirty = true;
+	}
+}
+
 void UFortClientSettingsRecord::SetHideOtherPlayerNames(bool bEnable)
 {
 	// Native 0x141e3b9d0. CONFIDENCE: high
 	if (bHideOtherPlayerNames != bEnable)
 	{
 	    bHideOtherPlayerNames = bEnable;
+	    bDirty = true;
+	}
+}
+
+void UFortClientSettingsRecord::SetHUDScale(float InScale)
+{
+	// CONFIDENCE: HIGH. Native 0x141e3b750; wrapper 0x1428808e0.
+	if (InScale < HUDScale || InScale > HUDScale)
+	{
+	    HUDScale = InScale;
 	    bDirty = true;
 	}
 }
@@ -1083,6 +1170,69 @@ void UFortClientSettingsRecord::SetLockPrimaryInputMethodToMouse(bool bLock)
 	}
 }
 
+void UFortClientSettingsRecord::SetLookBoostAccelerationTime(float NewValue)
+{
+	// CONFIDENCE: HIGH. Native 0x141e3bee0; wrapper 0x142881330.
+	LocalGamepadUserOptions.Advanced.LookBoostAccelerationTime = NewValue;
+	bNativeGamepadOptionsDirty = true;
+}
+
+void UFortClientSettingsRecord::SetLookBoostAccelerationTimeAds(float NewValue)
+{
+	// CONFIDENCE: HIGH. Native 0x141e3bef0; wrapper 0x1428813b0.
+	LocalGamepadUserOptions.Advanced.LookBoostAccelerationTimeAds = NewValue;
+	bNativeGamepadOptionsDirty = true;
+}
+
+void UFortClientSettingsRecord::SetLookBuildModeMultiplier(float NewValue)
+{
+	// CONFIDENCE: HIGH. Native 0x141e3bf00; wrapper 0x142881430.
+	LocalGamepadUserOptions.Basic.LookBuildModeMultiplier = NewValue;
+	bNativeGamepadOptionsDirty = true;
+}
+
+void UFortClientSettingsRecord::SetLookEaseTime(float NewValue)
+{
+	// CONFIDENCE: HIGH. Native 0x141e3bf10; wrapper 0x1428814b0.
+	LocalGamepadUserOptions.Advanced.LookEaseTime = NewValue;
+	bNativeGamepadOptionsDirty = true;
+}
+
+void UFortClientSettingsRecord::SetLookEditModeMultiplier(float NewValue)
+{
+	// CONFIDENCE: HIGH. Native 0x141e3bf20; wrapper 0x142881530.
+	LocalGamepadUserOptions.Basic.LookEditModeMultiplier = NewValue;
+	bNativeGamepadOptionsDirty = true;
+}
+
+void UFortClientSettingsRecord::SetLookHorizontalBoostSpeed(uint32 NewValue)
+{
+	// CONFIDENCE: HIGH. Native 0x141e3bf30; wrapper 0x1428815b0.
+	LocalGamepadUserOptions.Advanced.LookHorizontalBoostSpeed = NewValue;
+	bNativeGamepadOptionsDirty = true;
+}
+
+void UFortClientSettingsRecord::SetLookHorizontalBoostSpeedAds(uint32 NewValue)
+{
+	// CONFIDENCE: HIGH. Native 0x141e3bf40; wrapper 0x142881630.
+	LocalGamepadUserOptions.Advanced.LookHorizontalBoostSpeedAds = NewValue;
+	bNativeGamepadOptionsDirty = true;
+}
+
+void UFortClientSettingsRecord::SetLookHorizontalSpeed(uint32 NewValue)
+{
+	// CONFIDENCE: HIGH. Native 0x141e3bf50; wrapper 0x1428816b0.
+	LocalGamepadUserOptions.Advanced.LookHorizontalSpeed = NewValue;
+	bNativeGamepadOptionsDirty = true;
+}
+
+void UFortClientSettingsRecord::SetLookHorizontalSpeedAds(uint32 NewValue)
+{
+	// CONFIDENCE: HIGH. Native 0x141e3bf60; wrapper 0x142881730.
+	LocalGamepadUserOptions.Advanced.LookHorizontalSpeedAds = NewValue;
+	bNativeGamepadOptionsDirty = true;
+}
+
 void UFortClientSettingsRecord::SetLookInputCurve(EFortGamepadLookInputCurve NewValue)
 {
 	// Native 0x141e3bf70. CONFIDENCE: high
@@ -1101,6 +1251,34 @@ void UFortClientSettingsRecord::SetLookSensitivityPresetAds(EFortGamepadSensitiv
 {
 	// Native 0x141e3bf90. CONFIDENCE: high
 	LocalGamepadUserOptions.Basic.LookSensitivityPresetAds = NewPreset;
+	bNativeGamepadOptionsDirty = true;
+}
+
+void UFortClientSettingsRecord::SetLookVerticalBoostSpeed(uint32 NewValue)
+{
+	// CONFIDENCE: HIGH. Native 0x141e3bfa0; wrapper 0x142881930.
+	LocalGamepadUserOptions.Advanced.LookVerticalBoostSpeed = NewValue;
+	bNativeGamepadOptionsDirty = true;
+}
+
+void UFortClientSettingsRecord::SetLookVerticalBoostSpeedAds(uint32 NewValue)
+{
+	// CONFIDENCE: HIGH. Native 0x141e3bfb0; wrapper 0x1428819b0.
+	LocalGamepadUserOptions.Advanced.LookVerticalBoostSpeedAds = NewValue;
+	bNativeGamepadOptionsDirty = true;
+}
+
+void UFortClientSettingsRecord::SetLookVerticalSpeed(uint32 NewValue)
+{
+	// CONFIDENCE: HIGH. Native 0x141e3bfc0; wrapper 0x142881a30.
+	LocalGamepadUserOptions.Advanced.LookVerticalSpeed = NewValue;
+	bNativeGamepadOptionsDirty = true;
+}
+
+void UFortClientSettingsRecord::SetLookVerticalSpeedAds(uint32 NewValue)
+{
+	// CONFIDENCE: HIGH. Native 0x141e3bfd0; wrapper 0x142881ab0.
+	LocalGamepadUserOptions.Advanced.LookVerticalSpeedAds = NewValue;
 	bNativeGamepadOptionsDirty = true;
 }
 
@@ -1140,6 +1318,16 @@ void UFortClientSettingsRecord::SetMotionTargetingMultiplier(float InMultiplier)
 	}
 }
 
+void UFortClientSettingsRecord::SetMusicVolume(float InVolume)
+{
+	// CONFIDENCE: HIGH. Native 0x141e3c210; wrapper 0x142882260.
+	if (InVolume < MusicVolume || InVolume > MusicVolume)
+	{
+	    MusicVolume = InVolume;
+	    bDirty = true;
+	}
+}
+
 void UFortClientSettingsRecord::SetPeripheralLightingEnabled(bool bEnable)
 {
 	// Native 0x141e3c2c0. CONFIDENCE: high
@@ -1176,6 +1364,26 @@ void UFortClientSettingsRecord::SetReplayRecordingEnabled(bool bEnable)
 	if (bReplayRecordingEnabled != bEnable)
 	{
 	    bReplayRecordingEnabled = bEnable;
+	    bDirty = true;
+	}
+}
+
+void UFortClientSettingsRecord::SetRudderDeadZone(float NewValue)
+{
+	// CONFIDENCE: HIGH. Native 0x141e3c550; wrapper 0x1428827f0.
+	if (NewValue < RudderDeadZone || NewValue > RudderDeadZone)
+	{
+	    RudderDeadZone = NewValue;
+	    bDirty = true;
+	}
+}
+
+void UFortClientSettingsRecord::SetRudderMaxThrottle(float NewValue)
+{
+	// CONFIDENCE: HIGH. Native 0x141e3c570; wrapper 0x142882870.
+	if (NewValue < RudderMaxThrottle || NewValue > RudderMaxThrottle)
+	{
+	    RudderMaxThrottle = NewValue;
 	    bDirty = true;
 	}
 }
@@ -1248,6 +1456,16 @@ void UFortClientSettingsRecord::SetShowVoiceIndicators(bool bNewValue)
 	if (bShowVoiceIndicatorsNotifications != bNewValue)
 	{
 	    bShowVoiceIndicatorsNotifications = bNewValue;
+	    bDirty = true;
+	}
+}
+
+void UFortClientSettingsRecord::SetSoundFXVolume(float InVolume)
+{
+	// CONFIDENCE: HIGH. Native 0x141e3c9a0; wrapper 0x142883140.
+	if (InVolume < SoundFXVolume || InVolume > SoundFXVolume)
+	{
+	    SoundFXVolume = InVolume;
 	    bDirty = true;
 	}
 }

@@ -528,6 +528,8 @@ public:
 	void UpdateTotalPlayerScore();
 	virtual void NativeAppendContextOwners(TArray<UObject*>& OutOwners);
 	void NativeExpireTeamMemberState();
+	virtual bool NativeMatchesSpectatedUniqueId216(const FUniqueNetIdRepl& Id) const;
+	bool NativeAllowsReplaySpectating216() const;
 protected:
 	void OnRep_AIKills();
 };
