@@ -190,6 +190,11 @@
                 "name_regex": "^(?!(?:SM|SK)_)"
               },
               {
+                "root": "porting/generated/extracted-full",
+                "suffix": ".uasset",
+                "name_regex": "^(?!(?:SM|SK)_)"
+              },
+              {
                 "root": "porting/native/Content",
                 "suffix": ".uasset",
                 "name_regex": "^(?!(?:SM|SK)_)"
@@ -199,7 +204,7 @@
             "total_key": "cooked_non_mesh_distinct_names",
             "what": "non-SM_/SK_ .uasset distinct names"
           },
-          "rationale": "Counts distinct non-SM_/SK_ .uasset basenames recovered or converted locally against distinct non-SM_/SK_ cooked basenames. This naming heuristic excludes mesh-named packages from both sides; it does not identify asset classes. Raw recovery is also represented by pak extraction and does not establish conversion, cooking, or runtime usability."
+          "rationale": "Counts distinct non-SM_/SK_ .uasset basenames recovered or converted locally against distinct non-SM_/SK_ cooked basenames. This naming heuristic excludes mesh-named packages from both sides; it does not identify asset classes. Raw recovery is also represented by pak extraction and does not establish conversion, cooking, or runtime usability. The full 31-pak extraction (porting/generated/extracted-full -> /mnt/vibrato/fortnite-extracted-full, 963,427 files) is counted as a source, so this leaf now measures recovery coverage only."
         },
         {
           "id": "assets.pak_extraction",
@@ -223,6 +228,11 @@
               {
                 "root": "porting/generated/converted",
                 "suffix": ".glb"
+              },
+              {
+                "root": "porting/generated/asset_pipeline/glb",
+                "suffix": ".glb",
+                "name_regex": "^SM_"
               },
               {
                 "root": "porting/native/Content",
@@ -254,6 +264,11 @@
           "measure": {
             "kind": "local_glob",
             "sources": [
+              {
+                "root": "porting/generated/asset_pipeline_skeletal/glb",
+                "suffix": ".glb",
+                "name_regex": "^SK_"
+              },
               {
                 "root": "porting/native/Content",
                 "suffix": ".uasset",
