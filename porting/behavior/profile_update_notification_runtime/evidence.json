@@ -37,6 +37,26 @@
       "begin": "0x1421e3570",
       "end_exclusive": "0x1421e359a",
       "sha256": "ae7b945e6d729b8834690bdca949f9dfbc625ab76b6cda00d42589b0c4496984"
+    },
+    {
+      "begin": "0x1421e3570",
+      "end_exclusive": "0x1421e3964",
+      "sha256": "70036b547397a1c5aeb13f93f6dc2d705d13dab409135e6473899b1670791508"
+    },
+    {
+      "begin": "0x1403093e0",
+      "end_exclusive": "0x14030942e",
+      "sha256": "3f8ca1343c585ceb15ae53acc528b1d452aef7ed00c5ba2d000d7e96d1c7c39a"
+    },
+    {
+      "begin": "0x145a95870",
+      "end_exclusive": "0x145a95874",
+      "sha256": "4d70f4a881c72812c075e9727da84e0cb9b771859100d10815cc6f9a502818e2"
+    },
+    {
+      "begin": "0x14401f4c0",
+      "end_exclusive": "0x14401f5b7",
+      "sha256": "cfb9d0ccadab2ea50c28418b0d4f2867ee21482a13d5d12c0caa3ec7a7900e66"
     }
   ],
   "vtable_slots": [
@@ -49,6 +69,11 @@
       "vtable": "0x1460d3390",
       "slot_offset": "0x2a8",
       "target": "0x1421e3570"
+    },
+    {
+      "vtable": "0x145fdd7d0",
+      "slot_offset": "0x3d0",
+      "target": "0x14401f4c0"
     }
   ]
 }

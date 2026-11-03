@@ -2621,8 +2621,10 @@ def body_refs(body, name, package, ctx):
         if tok == name:
             continue
         if tok in ctx["class_pkg"]:
-            if (ctx["class_pkg"][tok] != package and not
-                    (package == "/Script/FortniteUI" and ctx["class_pkg"][tok] == "/Script/FortniteGame")):
+            # These two recovered dependency edges are present in module rules.
+            allowed_edges = {('/Script/FortniteUI', '/Script/FortniteGame'),
+                             ('/Script/FortniteGame', '/Script/McpProfileSys')}
+            if ctx["class_pkg"][tok] != package and (package, ctx["class_pkg"][tok]) not in allowed_edges:
                 problems.append("body uses %s, a class of another module" % tok)
             else:
                 includes.add("%s.h" % tok)

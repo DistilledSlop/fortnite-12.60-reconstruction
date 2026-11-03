@@ -2,8 +2,14 @@
 #include "UFortWorldItem.h"
 #include "AFortInventory.h"
 #include "AFortPlayerController.h"
+#include "Dom/JsonValue.h"
 #include "Engine/World.h"
+#include "FFortItemEntry.h"
+#include "SharedFortGameLog.h"
+#include "UFortAlterationItemDefinition.h"
+#include "UFortAssetManager.h"
 #include "UFortWorldItemDefinition.h"
+#include "UMcpProfile.h"
 
 bool UFortWorldItem::SeenInFrontend() const
 {
@@ -120,5 +126,29 @@ int32 UFortWorldItem::GetLoadedAmmo() const
 	// WorldItem virtual override 0x14205a600.
 	// CONFIDENCE: HIGH
 	return ItemEntry.LoadedAmmo;
+}
+
+bool UFortWorldItem::NativePopulateItemAttributes(FFortItemEntry& Entry, const TMap<FString, TSharedPtr<FJsonValue>>& Attributes)
+{
+	// CONFIDENCE: HIGH
+	// 0x142035080. Conversion may partially mutate Entry before returning false.
+	if (!UMcpProfile::NativeDeserializeAttributes(Attributes, &Entry, FFortItemEntry::StaticStruct()))
+	{
+	    return false;
+	}
+	Entry.AlterationInstances.Reset(Entry.AlterationDefinitions.Num());
+	for (const FString& Definition : Entry.AlterationDefinitions)
+	{
+	    UObject* Asset = UFortAssetManager::NativeGetFortAssetManager().NativeFindAssetByPrimaryId(Definition);
+	    if (UFortAlterationItemDefinition* Alteration = Cast<UFortAlterationItemDefinition>(Asset))
+	    {
+	        Entry.AlterationInstances.Add(Alteration);
+	    }
+	    else
+	    {
+	        UE_LOG(LogFort, Warning, TEXT("Failed to find asset for alteration %s"), *Definition);
+	    }
+	}
+	return true;
 }
 

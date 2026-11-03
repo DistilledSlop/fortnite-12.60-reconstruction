@@ -15,5 +15,25 @@
     "includes": [
       "McpProfileItem.h"
     ]
+  },
+  {
+    "class": "UFortMcpProfile",
+    "function": "NotifyProfileItemUpdated",
+    "kind": "helper",
+    "signature": "void NotifyProfileItemUpdated(FMcpProfileItem& Item)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/profile_update_notification_runtime/FortNotifyProfileItemUpdated.inc",
+    "address": "0x1421e3570",
+    "confidence": "high",
+    "status": "ported",
+    "virtual": true,
+    "includes": [
+      "McpProfileItem.h",
+      "Engine/Engine.h",
+      "UFortAssetManager.h",
+      "SharedFortGameLog.h"
+    ],
+    "notes": "Assigned override name and source signature. Slot +0x2a8; redirects TemplateId, then derives key using colon only. See HANDOFF."
   }
 ]

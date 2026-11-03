@@ -6,10 +6,13 @@
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
 
+#include "Dom/JsonObject.h"
 #include "FBaseUrlContext.h"
 #include "FClientUrlContext.h"
 #include "FDedicatedServerUrlContext.h"
+#include "JsonObjectConverter.h"
 #include "McpProfileItem.h"
+#include "McpProfileJsonIntern.h"
 #include "Misc/DateTime.h"
 #include "UObject/Class.h"
 #include "UObject/Object.h"
@@ -92,5 +95,10 @@ public:
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	virtual UObject* CreateItemObject(UClass* ItemClass, FString ItemId, FString TemplateId);
 	virtual void NotifyProfileItemUpdated(FMcpProfileItem& Item);
+	static const TSharedPtr<FJsonValue>& NativeInternProfileJsonValue(const TSharedPtr<FJsonValue>& Value);
+	static void NativeUpdateItemTemplateKey(FMcpProfileItem& Item);
+	static void NativeCopyProfileAttributes(TMap<FString, TSharedPtr<FJsonValue>>& OutAttributes, const FJsonObject& Object);
+	static void NativeUpdateProfileItemFromJson(FMcpProfileItem& Item, const FJsonObject& Json, const int32& UpdateValue, UMcpProfile* Profile);
+	static bool NativeDeserializeAttributes(const TMap<FString, TSharedPtr<FJsonValue>>& Attributes, void* OutStruct, const UStruct* StructDefinition);
 };
 

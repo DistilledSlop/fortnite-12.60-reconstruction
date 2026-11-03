@@ -6,8 +6,10 @@
 #include "CoreMinimal.h"
 #include "UFortItem.h"
 
+#include "Dom/JsonValue.h"
 #include "Engine/World.h"
 #include "FFortItemEntry.h"
+#include "SharedFortGameLog.h"
 
 class AFortInventory;
 class AFortPlayerController;
@@ -66,5 +68,6 @@ public:
 	virtual UWorld* GetWorld() const;
 	virtual bool NativeWasGifted() const;
 	virtual int32 GetLoadedAmmo() const;
+	static bool NativePopulateItemAttributes(FFortItemEntry& Entry, const TMap<FString, TSharedPtr<FJsonValue>>& Attributes);
 };
 

@@ -1,5 +1,49 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Native source batch 32 (2026-11-03)
+
+Canonical source:1,869 bodies +165 supporting fields =2,034 ported entries.
+Nine connected bodies added: profile JSON interning, attribute copy, template
+key derivation, entry JSON update, generic struct deserialization; checked Fort
+asset-manager acquisition, primary-ID object/path/TryLoad lookup, world-item
+attribute parser; actual derived UFortMcpProfile item-update notification.
+
+Updater writes integer first, obtains templateId/quantity/attributes through real
+JSON getters, preserves x64 int32 conversion including NaN/range ->INT32_MIN,
+interns empty strings,0/1,booleans,emptyarrays/objects to process-shared values,
+releases temporary attribute ownership before weak profile/key update and virtual
+notification. Other JSON values retain identity. NativeCopier resets destination,
+reserves and inserts in source order. Common key prefers first period over colon;
+derived notification redirects valid unequal primary IDs then recomputes using
+colon ONLY, as original. Original updater callback is now concrete virtual call,
+not proposal callback parameter. Process pool emitted as guarded support source.
+
+Generic conversion uses FJsonObjectConverter::JsonAttributesToUStruct, fresh JSON
+object/shared values, zero flags, preserves partial writes on failure. World-item
+parser returns immediately on converter failure; otherwise resets alteration
+instances, resolves definitions in order via actual asset manager, appends valid
+alterations with duplicates, logs warning and continues for missing/wrong class.
+Manager singleton retains LogFort/Fatal and original fallback construction. Lookup
+uses virtual GetPrimaryAssetObject, GetPrimaryAssetPath, FSoftObjectPath::TryLoad.
+FortniteGame ->McpProfileSys body dependency explicitly allowed, matching existing
+module rules. Json/JsonUtilities dependencies retained by support policy.
+
+Promotion32 accepts2,034/rejects0;8 existing Native files changed +2 support files
+added overall. Initial confidence/header/dependency rejection inputs were fixed;
+final pass3files/restored12,804 mtimes. No builds/runtime/tests. Last tested1,040;
+829 bodies pending; next2,040 needs171. Bounded original Ghidra/capture review only.
+Source31 1591bfaf pushed; commit/push this batch and refresh dashboard.
+
+Full WorldItem PopulateFromMcpItem142060e40 still unported: native item-aware
+interface binding, weak owner/controller, inventory/definition and change notify
+must be integrated. Registry writer, backend ownership/population/GC and full
+inventory ammo path remain open. Typed entry support is not full owner integration.
+All workers finished. Next bounded workers should close those connected remaining
+operations or mutator iterator fallback141c7c5c0 now PlayerState context works.
+Root canonical/Native/generator owner; Terra medium fork_turns none, finite tasks,
+economical reads, frequent commits/pushes/dashboard, no tests until2,040. Preserve
+unrelated graphics. All4 product milestones and full parity remain open.
+
 ## Native source batch 31 (2026-11-03)
 
 Canonical source:1,860 bodies +165 supporting fields =2,025 ported entries.

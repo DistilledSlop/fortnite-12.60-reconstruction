@@ -5,7 +5,7 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 MODULE = 'McpProfileSys'
-DEPENDENCIES = ('Core', 'CoreUObject', 'Json')
+DEPENDENCIES = ('Core', 'CoreUObject', 'Json', 'JsonUtilities')
 
 
 def sources():
@@ -22,5 +22,13 @@ def sources():
             stream.seek(start - 0x140000000)
             if hashlib.sha256(stream.read(end - start)).hexdigest() != item['sha256']:
                 raise ValueError('profile entry original capture changed: ' + item['target'])
+    json_dir = HERE.parent / 'profile_entry_json_runtime'
+    with image.open('rb') as stream:
+        for item in json.loads((json_dir / 'native-evidence.json').read_text())['windows']:
+            stream.seek(int(item['begin'], 16) - 0x140000000)
+            if hashlib.sha256(stream.read(item['length'])).hexdigest() != item['sha256']:
+                raise ValueError('profile JSON original capture changed: ' + item['begin'])
     banner = '// Generated from profile_entry_lifecycle_runtime; do not edit by hand.\n'
-    return {name: banner + (HERE / name).read_text() for name in ('McpProfileItem.h', 'McpProfileItem.cpp')}
+    result = {name: banner + (HERE / name).read_text() for name in ('McpProfileItem.h', 'McpProfileItem.cpp')}
+    result.update({name: banner + (json_dir / name).read_text() for name in ('McpProfileJsonIntern.h', 'McpProfileJsonIntern.cpp')})
+    return result

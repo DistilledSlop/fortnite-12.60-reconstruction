@@ -6,6 +6,11 @@
 #include "CoreMinimal.h"
 #include "Engine/AssetManager.h"
 
+#include "Engine/Engine.h"
+#include "SharedFortGameLog.h"
+#include "UObject/Object.h"
+#include "UObject/UObjectGlobals.h"
+
 class UFortGameData;
 class UGameDataBR;
 class UGameDataCosmetics;
@@ -88,5 +93,10 @@ public:
 	UPROPERTY(Config)
 	float InstallBundleDelay;
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static UFortAssetManager& NativeGetFortAssetManager();
+	UObject* NativeFindAssetByPrimaryId(const FString& IdString) const;
 };
 

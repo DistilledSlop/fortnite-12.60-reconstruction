@@ -6,7 +6,10 @@
 #include "CoreMinimal.h"
 #include "UMcpProfile.h"
 
+#include "Engine/Engine.h"
 #include "FClientUrlContext.h"
+#include "McpProfileItem.h"
+#include "SharedFortGameLog.h"
 
 #include "UFortMcpProfile.generated.h"
 
@@ -22,5 +25,9 @@ public:
 	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
 	void RemoveGiftBox(const TArray<FString>& GiftBoxItemIds, UPARAM(NotReplicated) FClientUrlContext& Context);
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	virtual void NotifyProfileItemUpdated(FMcpProfileItem& Item);
 };
 

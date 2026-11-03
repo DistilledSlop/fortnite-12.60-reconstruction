@@ -32958,5 +32958,166 @@
     "includes": [
       "McpProfileItem.h"
     ]
+  },
+  {
+    "class": "UMcpProfile",
+    "function": "NativeInternProfileJsonValue",
+    "kind": "helper",
+    "signature": "const TSharedPtr<FJsonValue>& NativeInternProfileJsonValue(const TSharedPtr<FJsonValue>& Value)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/profile_entry_json_runtime/NativeInternProfileJsonValue.inc",
+    "address": "0x1411100d0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "McpProfileJsonIntern.h",
+      "Dom/JsonObject.h"
+    ],
+    "notes": "Assigned static source binding of original native operation; original evidence and integration limits in profile_entry_json_runtime/HANDOFF.md."
+  },
+  {
+    "class": "UMcpProfile",
+    "function": "NativeUpdateItemTemplateKey",
+    "kind": "helper",
+    "signature": "void NativeUpdateItemTemplateKey(FMcpProfileItem& Item)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/profile_entry_json_runtime/NativeUpdateItemTemplateKey.inc",
+    "address": "0x141104120",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "McpProfileItem.h"
+    ],
+    "notes": "Assigned static source binding of original native operation; original evidence and integration limits in profile_entry_json_runtime/HANDOFF.md."
+  },
+  {
+    "class": "UMcpProfile",
+    "function": "NativeCopyProfileAttributes",
+    "kind": "helper",
+    "signature": "void NativeCopyProfileAttributes(TMap<FString, TSharedPtr<FJsonValue>>& OutAttributes, const FJsonObject& Object)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/profile_entry_json_runtime/NativeCopyProfileAttributes.inc",
+    "address": "0x14110d9e0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Dom/JsonObject.h"
+    ],
+    "notes": "Assigned static source binding of original native operation; original evidence and integration limits in profile_entry_json_runtime/HANDOFF.md."
+  },
+  {
+    "class": "UMcpProfile",
+    "function": "NativeUpdateProfileItemFromJson",
+    "kind": "helper",
+    "signature": "void NativeUpdateProfileItemFromJson(FMcpProfileItem& Item, const FJsonObject& Json, const int32& UpdateValue, UMcpProfile* Profile)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/profile_entry_json_runtime/NativeUpdateProfileItemFromJson.inc",
+    "address": "0x1411042a0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "McpProfileItem.h",
+      "Dom/JsonObject.h"
+    ],
+    "notes": "Assigned static source binding of original native operation; original evidence and integration limits in profile_entry_json_runtime/HANDOFF.md."
+  },
+  {
+    "class": "UMcpProfile",
+    "function": "NativeDeserializeAttributes",
+    "kind": "helper",
+    "signature": "bool NativeDeserializeAttributes(const TMap<FString, TSharedPtr<FJsonValue>>& Attributes, void* OutStruct, const UStruct* StructDefinition)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/profile_entry_json_runtime/NativeDeserializeAttributes.inc",
+    "address": "0x1410f59b0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Dom/JsonObject.h",
+      "JsonObjectConverter.h",
+      "UObject/Class.h"
+    ],
+    "notes": "Assigned static source binding of original native operation; original evidence and integration limits in profile_entry_json_runtime/HANDOFF.md."
+  },
+  {
+    "class": "UFortAssetManager",
+    "function": "NativeGetFortAssetManager",
+    "kind": "helper",
+    "signature": "UFortAssetManager& NativeGetFortAssetManager()",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": true,
+    "inc_path": "porting/behavior/worlditem_attribute_runtime/NativeGetFortAssetManager.inc",
+    "address": "0x141df62a0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Engine/Engine.h",
+      "SharedFortGameLog.h",
+      "UObject/UObjectGlobals.h"
+    ],
+    "notes": "Assigned static name. LogFort fatal and fallback allocation preserve native failure path. See HANDOFF and evidence.json."
+  },
+  {
+    "class": "UFortAssetManager",
+    "function": "NativeFindAssetByPrimaryId",
+    "kind": "helper",
+    "signature": "UObject* NativeFindAssetByPrimaryId(const FString& IdString) const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/worlditem_attribute_runtime/NativeFindAssetByPrimaryId.inc",
+    "address": "0x141df6530",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Assigned name and const qualifier; ABI cannot establish const. Calls const engine APIs on manager. See HANDOFF and evidence.json.",
+    "includes": [
+      "UObject/Object.h"
+    ]
+  },
+  {
+    "class": "UFortWorldItem",
+    "function": "NativePopulateItemAttributes",
+    "kind": "helper",
+    "signature": "bool NativePopulateItemAttributes(FFortItemEntry& Entry, const TMap<FString, TSharedPtr<FJsonValue>>& Attributes)",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": true,
+    "inc_path": "porting/behavior/worlditem_attribute_runtime/NativePopulateItemAttributes.inc",
+    "address": "0x142035080",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "SharedFortGameLog.h",
+      "Dom/JsonValue.h"
+    ],
+    "notes": "Assigned static binding and name; requires UMcpProfile::NativeDeserializeAttributes and both UFortAssetManager helpers. See HANDOFF and evidence.json."
+  },
+  {
+    "class": "UFortMcpProfile",
+    "function": "NotifyProfileItemUpdated",
+    "kind": "helper",
+    "signature": "void NotifyProfileItemUpdated(FMcpProfileItem& Item)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/profile_update_notification_runtime/FortNotifyProfileItemUpdated.inc",
+    "address": "0x1421e3570",
+    "confidence": "high",
+    "status": "ported",
+    "virtual": true,
+    "includes": [
+      "McpProfileItem.h",
+      "Engine/Engine.h",
+      "SharedFortGameLog.h"
+    ],
+    "notes": "Assigned override name and source signature. Slot +0x2a8; redirects TemplateId, then derives key using colon only. See HANDOFF."
   }
 ]
