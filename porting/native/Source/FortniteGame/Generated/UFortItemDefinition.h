@@ -205,5 +205,6 @@ public:
 	virtual int32 NativeGetMaxStackSize(UAbilitySystemComponent* AbilityComp) const;
 	virtual void GetOwnedGameplayTags(FGameplayTagContainer& TagContainer) const;
 	virtual EFortItemType NativeGetItemType() const;
+	virtual EFortRarity NativeGetRarity() const;
 };
 

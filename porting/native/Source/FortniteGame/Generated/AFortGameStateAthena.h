@@ -912,6 +912,9 @@ public:
 	UPROPERTY(Replicated, Transient)
 	TArray<FAthenaStreamIdOverride> ReticulatedSplineIds;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool AreSkyTubesEnabled() const;
+
 	UFUNCTION(BlueprintCallable)
 	bool CanChangeGameplayOptions();
 

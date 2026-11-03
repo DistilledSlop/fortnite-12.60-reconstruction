@@ -3,6 +3,7 @@
 #include "AbilitySystemComponent.h"
 #include "AttributeSet.h"
 #include "EFortItemType.h"
+#include "EFortRarity.h"
 #include "GameplayEffect.h"
 #include "GameplayEffectAggregator.h"
 #include "GameplayEffectTypes.h"
@@ -208,5 +209,11 @@ EFortItemType UFortItemDefinition::NativeGetItemType() const
 {
 	// CONFIDENCE: HIGH
 	return ItemType;
+}
+
+EFortRarity UFortItemDefinition::NativeGetRarity() const
+{
+	// Native virtual target 0x1409dd610; CONFIDENCE: HIGH.
+	return Rarity;
 }
 

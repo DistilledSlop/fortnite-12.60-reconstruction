@@ -7,8 +7,10 @@
 #include "GameFramework/Actor.h"
 
 #include "EFortItemType.h"
+#include "EFortRarity.h"
 #include "EFortWeaponCoreAnimation.h"
 #include "EFortWeaponReduceMeshWorkSetting.h"
+#include "EFortWeaponTriggerType.h"
 #include "FCosmeticVariantCache.h"
 #include "FFortAbilitySetHandle.h"
 #include "FFortEffectDistanceQuality.h"
@@ -781,6 +783,12 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	EFortItemType GetWeaponDataItemType() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	EFortRarity GetWeaponDataRarity() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	TEnumAsByte<EFortWeaponTriggerType::Type> GetWeaponDataTriggerType() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	USkeletalMeshComponentBudgeted* GetWeaponMesh() const;

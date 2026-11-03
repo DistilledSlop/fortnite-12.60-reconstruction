@@ -1,0 +1,16 @@
+[
+  {
+    "class": "AFortGameStateAthena",
+    "function": "AreSkyTubesEnabled",
+    "kind": "getter",
+    "signature": "bool AreSkyTubesEnabled() const",
+    "access": "public",
+    "signature_status": "proposed",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x14291e190",
+    "inc_path": "porting/behavior/athena_cvar_queries49_runtime/AFortGameStateAthena_AreSkyTubesEnabled.inc",
+    "includes": ["FortAthenaCVarQueriesRuntime.h"],
+    "notes": "Requires the supplied shared cvar owner .h/.cpp in the native module. All code using the original 0x1478df4c8 must share this backing, including console changes."
+  }
+]

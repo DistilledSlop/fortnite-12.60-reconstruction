@@ -10,6 +10,7 @@
 #include "Engine/World.h"
 #include "FPlayersLeft.h"
 #include "FTotalPlayers.h"
+#include "FortAthenaCVarQueriesRuntime.h"
 #include "FortNativeGameplayTagsRuntime.h"
 #include "GameFramework/Actor.h"
 #include "GameplayTagContainer.h"
@@ -116,6 +117,13 @@ static bool PlaylistIsPlayground(const UFortPlaylistAthena* Playlist)
 }
 
 }  // namespace
+
+bool AFortGameStateAthena::AreSkyTubesEnabled() const
+{
+	// Original native 0x141989c50 and cvar predicate 0x1426f5f90.
+	// CONFIDENCE: HIGH
+	return !bSkyTubesDisabled && FortSkyTubesEnabled != 0;
+}
 
 bool AFortGameStateAthena::CanChangeGameplayOptions()
 {

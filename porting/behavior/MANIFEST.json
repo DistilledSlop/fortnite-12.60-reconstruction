@@ -34767,5 +34767,84 @@
       "FortNativeGameplayTagsRuntime.h"
     ],
     "notes": "Copies current playlist tags, then either removes all five team-size tags or adds the tag for MaxTeamSize. Preserve singleton calls and RemoveTag parent updates in sequence."
+  },
+  {
+    "function": "NativeGetRarity",
+    "kind": "helper",
+    "signature": "EFortRarity NativeGetRarity() const",
+    "address": "0x1409dd610",
+    "virtual": true,
+    "notes": "Assigned name; base vtable slot +0x2a8, reflected Rarity +0x50. Overrides remain dispatchable.",
+    "class": "UFortItemDefinition",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "inc_path": "porting/behavior/definition_queries49_runtime/UFortItemDefinition_NativeGetRarity.inc"
+  },
+  {
+    "function": "NativeGetTriggerType",
+    "kind": "helper",
+    "signature": "TEnumAsByte<EFortWeaponTriggerType::Type> NativeGetTriggerType() const",
+    "address": "0x142671d20",
+    "notes": "Assigned name; copies reflected TriggerType at +0x9a4.",
+    "class": "UFortWeaponItemDefinition",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "inc_path": "porting/behavior/definition_queries49_runtime/UFortWeaponItemDefinition_NativeGetTriggerType.inc"
+  },
+  {
+    "function": "GetWeaponDataRarity",
+    "kind": "exec",
+    "signature": "EFortRarity GetWeaponDataRarity() const",
+    "address": "0x142b46fe0",
+    "reflection_flags": "0x54020401",
+    "static": false,
+    "includes": [
+      "SharedFortGameLog.h"
+    ],
+    "notes": "Native callee 0x1426a0c40; definition virtual dispatch retained.",
+    "class": "AFortWeapon",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "inc_path": "porting/behavior/definition_queries49_runtime/GetWeaponDataRarity.inc"
+  },
+  {
+    "function": "GetWeaponDataTriggerType",
+    "kind": "exec",
+    "signature": "TEnumAsByte<EFortWeaponTriggerType::Type> GetWeaponDataTriggerType() const",
+    "address": "0x142b47110",
+    "reflection_flags": "0x54020401",
+    "static": false,
+    "includes": [
+      "SharedFortGameLog.h"
+    ],
+    "notes": "Native callee 0x1426a0ec0; calls definition helper 0x142671d20.",
+    "class": "AFortWeapon",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "inc_path": "porting/behavior/definition_queries49_runtime/GetWeaponDataTriggerType.inc"
+  },
+  {
+    "class": "AFortGameStateAthena",
+    "function": "AreSkyTubesEnabled",
+    "kind": "getter",
+    "signature": "bool AreSkyTubesEnabled() const",
+    "access": "public",
+    "signature_status": "proposed",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x14291e190",
+    "inc_path": "porting/behavior/athena_cvar_queries49_runtime/AFortGameStateAthena_AreSkyTubesEnabled.inc",
+    "includes": [
+      "FortAthenaCVarQueriesRuntime.h"
+    ],
+    "notes": "Requires the supplied shared cvar owner .h/.cpp in the native module. All code using the original 0x1478df4c8 must share this backing, including console changes."
   }
 ]
