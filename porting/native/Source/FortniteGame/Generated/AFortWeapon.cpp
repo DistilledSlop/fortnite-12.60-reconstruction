@@ -313,6 +313,13 @@ UFortWeaponAnimSet* AFortWeapon::GetWeaponPawnAnimSet() const
 	return WeaponPawnAnimsetOverride ? WeaponPawnAnimsetOverride : WeaponPawnAnimSet;
 }
 
+bool AFortWeapon::IsEquipped() const
+{
+	// CONFIDENCE: high; preserve owner cast, current-weapon identity, and virtual equip-state query.
+	const AFortPawn* OwningPawn = Cast<AFortPawn>(GetOwner());
+	return OwningPawn && OwningPawn->CurrentWeapon == this && !NativeIsEquippingWeapon();
+}
+
 bool AFortWeapon::IsProjectileWeapon() const
 {
 	// Native target 0x1406801e0; CONFIDENCE: high.
@@ -436,6 +443,12 @@ void AFortWeapon::NativeGetChargeRange(float& OutMin, float& OutMax) const
 	    OutMin = Stats->MinChargeTime / ChargeRate;
 	    OutMax = Stats->MaxChargeTime / ChargeRate;
 	}
+}
+
+bool AFortWeapon::NativeIsEquippingWeapon() const
+{
+	// CONFIDENCE: high; native 0x140696680 reads the reflected bool at 0x288.
+	return bIsEquippingWeapon;
 }
 
 void AFortWeapon::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

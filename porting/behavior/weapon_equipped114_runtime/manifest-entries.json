@@ -1,0 +1,33 @@
+[
+  {
+    "function": "NativeIsEquippingWeapon",
+    "kind": "helper",
+    "signature": "bool NativeIsEquippingWeapon() const",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/weapon_equipped114_runtime/NativeIsEquippingWeapon.inc",
+    "confidence": "high",
+    "address": "0x140696680",
+    "status": "ported",
+    "access": "public",
+    "virtual": true,
+    "notes": "Source-assigned name. Proven AFortWeapon primary vtable 0x14620a008 slot0x788 targets byte getter140696680. Reflected bIsEquippingWeapon setter maps to0x288 mask1 mov8. Initialization remains owned by original field lifecycle.",
+    "class": "AFortWeapon"
+  },
+  {
+    "function": "IsEquipped",
+    "kind": "exec",
+    "signature": "bool IsEquipped() const",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/weapon_equipped114_runtime/IsEquipped.inc",
+    "confidence": "high",
+    "address": "0x142b47400",
+    "native_body_address": "0x1426a5b50",
+    "status": "ported",
+    "reflection_flags": "0x54020400",
+    "static": false,
+    "access": "public",
+    "virtual": true,
+    "notes": "Whole captured native body. Owner getter141125940 reads Actor.Owner0x118; native cast FortPawn; compare CurrentWeapon0x588; invoke virtual0x788 after both checks. Constructor/vtable evidence in native-evidence.json.",
+    "class": "AFortWeapon"
+  }
+]

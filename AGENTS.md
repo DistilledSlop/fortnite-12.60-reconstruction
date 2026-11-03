@@ -1,6 +1,6 @@
 # Project instructions
 
-Read `porting/README.md` for the goal, then the latest snapshot at the top of `porting/HANDOFF.md` and `porting/master_plan.md` before resuming work. The four dashboard milestones are the acceptance gates; the weighted progress percentage is an effort estimate.
+Read `porting/README.md` for the goal, then inspect current Git state and the relevant existing manifests/evidence before resuming work. Historical handoff and plan Markdown are reference material when needed, not routine batch status. The four dashboard milestones are the acceptance gates; the weighted progress percentage is an effort estimate.
 
 Dashboard task weights estimate total implementation and verification effort, completed plus remaining. Importance, urgency, milestone criticality, and a desired progress percentage must not affect weights. Define accounting boundaries and avoid allocating the same effort to multiple leaves; report uncertain estimates explicitly.
 
@@ -84,3 +84,7 @@ User checkpoint cadence: run builds/runtime/tests only after roughly 1,000 new
 native function bodies. Last tested baseline: 2,040 bodies; next about 3,040.
 Keep source generation fail-closed, commit and push completed source immediately,
 and explicitly label bodies added since the tested baseline as build pending.
+
+# External model workers
+
+Antigravity CLI (`agy`) is available. Use Gemini 3.8 Flash for narrow, explicit bulk tasks with complete implementation standards and evidence review; reject stubs, omitted behavior, and unsupported defaults. Use Claude Opus 5.5 for difficult reconstruction and deep dependency work, with sufficient context and a substantial bounded task. Keep authorized Claude work moving while its provider has usage. Do not interrupt an existing useful Sonnet run merely to change models.

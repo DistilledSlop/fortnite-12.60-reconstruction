@@ -854,6 +854,9 @@ public:
 	UFortWeaponAnimSet* GetWeaponPawnAnimSet() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool IsEquipped() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual bool IsProjectileWeapon() const;
 
 	UFUNCTION()
@@ -906,5 +909,6 @@ public:
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	virtual FFortBaseWeaponStats* NativeGetWeaponStats() const;
 	void NativeGetChargeRange(float& OutMin, float& OutMax) const;
+	virtual bool NativeIsEquippingWeapon() const;
 };
 
