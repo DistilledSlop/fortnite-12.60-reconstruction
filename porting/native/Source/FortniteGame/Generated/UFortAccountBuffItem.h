@@ -20,5 +20,8 @@ public:
 	UPROPERTY()
 	FDateTime expiration_date;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsActive() const;
+
 };
 

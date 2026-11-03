@@ -9,3 +9,10 @@ AFortPlayerStateAthena* UAthenaSpectatorPlayerListRowData::GetPlayerState()
 	return PlayerState;
 }
 
+void UAthenaSpectatorPlayerListRowData::SetKills(AFortPlayerStateAthena* PS, int32 InKills)
+{
+	// CONFIDENCE: high
+	Kills = InKills;
+	OnKillsChanged.Broadcast();
+}
+

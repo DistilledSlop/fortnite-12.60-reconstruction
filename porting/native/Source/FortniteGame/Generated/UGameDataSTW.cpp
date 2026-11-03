@@ -5,6 +5,12 @@
 #include "UFortAssetManager.h"
 #include "UFortTimeOfDayData.h"
 
+float UGameDataSTW::GetPersonalXpBoost()
+{
+	// CONFIDENCE: high
+	return UGameDataSTW::NativeGetGameDataSTW()->PersonalBoost_XpBonusPercent;
+}
+
 UFortTimeOfDayData* UGameDataSTW::ResolveTimeOfDayDataNative()
 {
 	// CONFIDENCE: HIGH

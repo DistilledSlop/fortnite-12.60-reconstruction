@@ -68,5 +68,8 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	AFortPlayerStateAthena* GetPlayerState();
 
+	UFUNCTION()
+	void SetKills(AFortPlayerStateAthena* PS, int32 InKills);
+
 };
 

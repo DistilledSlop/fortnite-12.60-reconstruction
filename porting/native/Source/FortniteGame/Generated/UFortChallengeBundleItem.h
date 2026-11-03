@@ -34,5 +34,8 @@ public:
 	UPROPERTY(Transient)
 	FString challenge_bundle_schedule_id;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool CanLevelUpBundle() const;
+
 };
 

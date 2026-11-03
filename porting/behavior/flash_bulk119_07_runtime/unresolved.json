@@ -1,0 +1,626 @@
+[
+  {
+    "index": 0,
+    "class": "AFortPlayerPawn",
+    "function": "AddAbilityAITarget",
+    "address": "0x142a7aba0",
+    "captured_source": "porting/generated/native108-broad/0x142a7aba0.c",
+    "reason": "AFortPlayerPawn::AddAbilityAITarget: Helper 0x142301b90 calls unresolved helpers ['FUN_140690dd0', 'FUN_1406bd0b0', 'FUN_14085a990', 'FUN_142301b90', 'FUN_142cd4ab0', 'FUN_142cd8ed0', 'FUN_142ec7720', 'FUN_142ee3b30', 'FUN_142ee5dd0', 'FUN_142ee6180']"
+  },
+  {
+    "index": 1,
+    "class": "AFortWeapon",
+    "function": "HasInfiniteAmmo",
+    "address": "0x142b472e0",
+    "captured_source": "porting/generated/native108-broad/0x142b472e0.c",
+    "reason": "AFortWeapon::HasInfiniteAmmo: Helper 0x1426a24a0 calls unresolved helpers ['FUN_14269c8f0', 'FUN_1426a24a0']"
+  },
+  {
+    "index": 2,
+    "class": "UFortPlayerAttrSet",
+    "function": "OnRep_CraftItemLevelBonusMax",
+    "address": "0x142a48e80",
+    "captured_source": "porting/generated/native108-broad/0x142a48e80.c",
+    "reason": "UFortPlayerAttrSet::OnRep_CraftItemLevelBonusMax: Helper 0x142a365f0 calls unresolved helpers ['FUN_140680300', 'FUN_142a365f0', 'FUN_142a40190']; Helper 0x1406ebb90 calls unresolved helpers ['FUN_1406800e0', 'FUN_140680160', 'FUN_1406ebb90', 'FUN_140762ba0', 'FUN_142cea230', 'FUN_142d67f50', 'FUN_142e5d3b0', 'FUN_142e722c0', 'FUN_142e8c400']; Helper 0x141b7bd90 calls unresolved helpers ['FUN_1406aade0', 'FUN_14070c8f0', 'FUN_14072f650', 'FUN_141b7bd90']; Helper 0x14070f1a0 calls unresolved helpers ['FUN_14070f1a0', 'FUN_140756aa0', 'FUN_142ec9900']; Helper 0x142cd4ab0 calls unresolved helpers ['FUN_142cd4630', 'FUN_142cd4ab0', 'FUN_142ce4890']; Helper 0x145803a44 calls unresolved helpers ['FUN_145803a44', 'FUN_145803af0']; Helper 0x1458039e4 calls unresolved helpers ['FUN_1458039e4', 'FUN_145803aac']; Helper 0x1406a8e40 calls unresolved helpers ['FUN_1406a8e40', 'FUN_1406cee40', 'FUN_142c7b670', 'FUN_142ce9f90', 'FUN_142d696a0', 'FUN_142e8c400', 'FUN_142ec9730']"
+  },
+  {
+    "index": 3,
+    "class": "UFortContentControlsManager",
+    "function": "GetPlaytimeReportingFrequency",
+    "address": "0x1428903d0",
+    "captured_source": "porting/generated/native108-broad/0x1428903d0.c",
+    "reason": "Native reads pointer and length at 0xe0/0xe8, but capture does not prove a complete 16-byte FString member or non-overlap of its last four bytes with other fields."
+  },
+  {
+    "index": 4,
+    "class": "UCommonActivatablePanel",
+    "function": "AddInputActionHandler",
+    "address": "0x140809a70",
+    "captured_source": "porting/generated/native108-broad/0x140809a70.c",
+    "reason": "UCommonActivatablePanel::AddInputActionHandler: Helper 0x142ee3b30 calls unresolved helpers ['FUN_142ec00d0', 'FUN_142ee3b30']; Helper 0x1407a9a80 calls unresolved helpers ['FUN_1407a9a80', 'FUN_1407f6930', 'FUN_142bad740', 'FUN_142ee3b30']"
+  },
+  {
+    "index": 5,
+    "class": "UFortMissionActivationInfo",
+    "function": "CanRequestVote",
+    "address": "0x145289420",
+    "captured_source": "porting/generated/native108-broad/0x145289420.c",
+    "reason": "UFortMissionActivationInfo::CanRequestVote: Helper 0x144f54e60 calls unresolved helpers ['FUN_141ea2470', 'FUN_144f54e60']"
+  },
+  {
+    "index": 6,
+    "class": "UFortItemManagementScreen",
+    "function": "CanEquipItem",
+    "address": "0x145273af0",
+    "captured_source": "porting/generated/native108-broad/0x145273af0.c",
+    "reason": "UFortItemManagementScreen::CanEquipItem: Helper 0x144f547f0 calls unresolved helpers ['FUN_1406800e0', 'FUN_140680160', 'FUN_14202a600', 'FUN_142a3d9f0', 'FUN_142bc7780', 'FUN_144ade110', 'FUN_144cd7a20', 'FUN_144f547f0']"
+  },
+  {
+    "index": 7,
+    "class": "AFortPlayerControllerOutpost",
+    "function": "CanUpgradeBuilding",
+    "address": "0x142a6a8b0",
+    "captured_source": "porting/generated/native108-broad/0x142a6a8b0.c",
+    "reason": "AFortPlayerControllerOutpost::CanUpgradeBuilding: Helper 0x142538ce0 calls unresolved helpers ['FUN_142538ce0', 'FUN_142538e00', 'FUN_142546320']"
+  },
+  {
+    "index": 8,
+    "class": "AFortTeamMemberPedestal",
+    "function": "InitializePlaceholderMesh",
+    "address": "0x142b45600",
+    "captured_source": "porting/generated/native108-broad/0x142b45600.c",
+    "reason": "AFortTeamMemberPedestal::InitializePlaceholderMesh wrapper calls unresolved helper(s) ['FUN_142b45600']"
+  },
+  {
+    "index": 9,
+    "class": "UFortMissionLibrary",
+    "function": "AddCompletionTagToMission",
+    "address": "0x1429e83d0",
+    "captured_source": "porting/generated/native108-broad/0x1429e83d0.c",
+    "reason": "UFortMissionLibrary::AddCompletionTagToMission: Helper 0x1420afc40 calls unresolved helpers ['FUN_1420afc40', 'FUN_1420b7a40', 'FUN_1420b9a60', 'FUN_143e8b3b0', 'FUN_144640410']"
+  },
+  {
+    "index": 10,
+    "class": "AFortPlayerPawnAthena",
+    "function": "CanPlayerCreateInCurrentVolume",
+    "address": "0x142a83170",
+    "captured_source": "porting/generated/native108-broad/0x142a83170.c",
+    "reason": "AFortPlayerPawnAthena::CanPlayerCreateInCurrentVolume: Helper 0x141a0d850 calls unresolved helpers ['FUN_141a0d850', 'FUN_141c74820', 'FUN_141c7c5c0', 'FUN_141c7d420', 'FUN_141eeab20', 'FUN_14237f3d0', 'FUN_14297b320', 'FUN_142a62c80', 'FUN_142a8ae70', 'FUN_145a95888']"
+  },
+  {
+    "index": 11,
+    "class": "UFortStoreFrontOfferDetailsWidgetBase",
+    "function": "GetOfferInfoById",
+    "address": "0x1452f1f30",
+    "captured_source": "porting/generated/native108-broad/0x1452f1f30.c",
+    "reason": "UFortStoreFrontOfferDetailsWidgetBase::GetOfferInfoById: Helper 0x1450b0ab0 calls unresolved helpers ['FUN_140690ac0', 'FUN_142bcf780', 'FUN_1450b0ab0']"
+  },
+  {
+    "index": 12,
+    "class": "UFortAttributeListItem_NUI",
+    "function": "ClearPreview",
+    "address": "0x145204230",
+    "captured_source": "porting/generated/native108-broad/0x145204230.c",
+    "reason": "UFortAttributeListItem_NUI::ClearPreview: Helper 0x145203bf0 calls unresolved helpers ['FUN_145203bf0']; Helper 0x1407c2c80 calls unresolved helpers ['FUN_1407c2c80', 'FUN_142c0c150', 'FUN_1458038a4', 'FUN_1458039e4', 'FUN_145803a44', 'FUN_1458224e0']; Helper 0x14079d060 calls unresolved helpers ['FUN_14079d060', 'FUN_145803c70']; Helper 0x142c2e460 calls unresolved helpers ['FUN_142bfa540', 'FUN_142c2e460']"
+  },
+  {
+    "index": 13,
+    "class": "UFortPickerContext",
+    "function": "GetAdjacentPickerWheelInformation",
+    "address": "0x1452a4780",
+    "captured_source": "porting/generated/native108-broad/0x1452a4780.c",
+    "reason": "UFortPickerContext::GetAdjacentPickerWheelInformation: Helper 0x142c0c240 calls unresolved helpers ['FUN_1407c2c80', 'FUN_142c0c240']; Helper 0x144d00a90 calls unresolved helpers ['FUN_14079d060', 'FUN_1407c2c80', 'FUN_144d00a90']"
+  },
+  {
+    "index": 14,
+    "class": "AFortReplaySpectator",
+    "function": "HasPermissionToViewHighlights",
+    "address": "0x142ac65f0",
+    "captured_source": "porting/generated/native108-broad/0x142ac65f0.c",
+    "reason": "AFortReplaySpectator::HasPermissionToViewHighlights: Helper 0x1424773a0 calls unresolved helpers ['FUN_141e613c0', 'FUN_1421df4c0', 'FUN_1424773a0', 'FUN_1428ea7f0', 'FUN_143f76130']"
+  },
+  {
+    "index": 15,
+    "class": "UFortAttributeListItem",
+    "function": "ClearPreview",
+    "address": "0x1451ffdb0",
+    "captured_source": "porting/generated/native108-broad/0x1451ffdb0.c",
+    "reason": "UFortAttributeListItem::ClearPreview: Helper 0x1451ff3e0 calls unresolved helpers ['FUN_1451ff3e0']; Helper 0x1407c2c80 calls unresolved helpers ['FUN_1407c2c80', 'FUN_142c0c150', 'FUN_1458038a4', 'FUN_1458039e4', 'FUN_145803a44', 'FUN_1458224e0']; Helper 0x14079d060 calls unresolved helpers ['FUN_14079d060', 'FUN_145803c70']; Helper 0x142c2e460 calls unresolved helpers ['FUN_142bfa540', 'FUN_142c2e460']"
+  },
+  {
+    "index": 17,
+    "class": "UFortUICameraManagerComponent",
+    "function": "GetCameraActor",
+    "address": "0x142b29250",
+    "captured_source": "porting/generated/native108-broad/0x142b29250.c",
+    "reason": "UFortUICameraManagerComponent::GetCameraActor: Helper 0x141ca62f0 calls unresolved helpers ['FUN_141ca62f0']"
+  },
+  {
+    "index": 18,
+    "class": "UAthenaHUDBase",
+    "function": "ClearUIExtensions",
+    "address": "0x14519d310",
+    "captured_source": "porting/generated/native108-broad/0x14519d310.c",
+    "reason": "UAthenaHUDBase::ClearUIExtensions: Helper 0x1445e0230 calls unresolved helpers ['FUN_140690a50', 'FUN_1406f0010', 'FUN_1407bb0e0', 'FUN_140bbc340', 'FUN_1445d3a50', 'FUN_1445e0230', 'FUN_1445e8730', 'FUN_1445ea170', 'FUN_1445f0570', 'FUN_1445f0f80', 'FUN_1445f80a0', 'FUN_1445f8c70']; Helper 0x1406d9a30 calls unresolved helpers ['FUN_1406d9a30', 'FUN_142bfce10', 'FUN_142bfd200']; Helper 0x141339233 calls unresolved helpers ['FUN_141339233']; Helper 0x1406911b0 calls unresolved helpers ['FUN_1406911b0']"
+  },
+  {
+    "index": 19,
+    "class": "UFortCreativeIslandLinkScreen",
+    "function": "AddIslandToFavorites",
+    "address": "0x14521c820",
+    "captured_source": "porting/generated/native108-broad/0x14521c820.c",
+    "reason": "UFortCreativeIslandLinkScreen::AddIslandToFavorites: Helper 0x144d2b900 calls unresolved helpers ['FUN_140690a50', 'FUN_140690ac0', 'FUN_1407f2000', 'FUN_142209750', 'FUN_142bad740', 'FUN_142bafb80', 'FUN_142bcf780', 'FUN_142ca95c0', 'FUN_144d27010', 'FUN_144d2b900', 'FUN_144d38280']"
+  },
+  {
+    "index": 20,
+    "class": "UFortSchematicItemDefinition",
+    "function": "GetCraftingSuccessSound",
+    "address": "0x142ad1f40",
+    "captured_source": "porting/generated/native108-broad/0x142ad1f40.c",
+    "reason": "UFortSchematicItemDefinition::GetCraftingSuccessSound: Helper 0x1425414e0 calls unresolved helpers ['FUN_1419b68c0', 'FUN_1424e1120', 'FUN_1425414e0']"
+  },
+  {
+    "index": 21,
+    "class": "AFortMusicManager",
+    "function": "GetEventHeatPercent",
+    "address": "0x1429fb9c0",
+    "captured_source": "porting/generated/native108-broad/0x1429fb9c0.c",
+    "reason": "AFortMusicManager::GetEventHeatPercent wrapper calls unresolved helper(s) ['FUN_1429fb9c0']"
+  },
+  {
+    "index": 22,
+    "class": "UCommonDateTimeTextBlock",
+    "function": "GetDateTime",
+    "address": "0x14080ffa0",
+    "captured_source": "porting/generated/native108-broad/0x14080ffa0.c",
+    "reason": "UCommonDateTimeTextBlock::GetDateTime: Helper 0x1407c25a0 calls unresolved helpers ['FUN_1407c25a0']"
+  },
+  {
+    "index": 24,
+    "class": "UFortItemBaseWidget",
+    "function": "GetItemDefinition",
+    "address": "0x1452675d0",
+    "captured_source": "porting/generated/native108-broad/0x1452675d0.c",
+    "reason": "UFortItemBaseWidget::GetItemDefinition: Helper 0x144ebd560 calls unresolved helpers ['FUN_141f88f00', 'FUN_144ebd560']"
+  },
+  {
+    "index": 25,
+    "class": "UFortMobileKismetLibrary",
+    "function": "Get3DTouchEnabled",
+    "address": "0x1429f4ca0",
+    "captured_source": "porting/generated/native108-broad/0x1429f4ca0.c",
+    "reason": "UFortMobileKismetLibrary::Get3DTouchEnabled: Helper 0x141f2a8c0 calls unresolved helpers ['FUN_141e9b620', 'FUN_141f2a8c0', 'FUN_14263c570', 'FUN_14263ded0', 'FUN_14292dd70', 'FUN_14463f970']"
+  },
+  {
+    "index": 26,
+    "class": "UFortSquadSlotItemDetailElementWidget",
+    "function": "GetIdOfSquadSlotToManageBP",
+    "address": "0x1452ebb50",
+    "captured_source": "porting/generated/native108-broad/0x1452ebb50.c",
+    "reason": "UFortSquadSlotItemDetailElementWidget::GetIdOfSquadSlotToManageBP: Helper 0x145119d70 calls unresolved helpers ['FUN_145119d70']"
+  },
+  {
+    "index": 27,
+    "class": "UFortWeaponItemDefinition",
+    "function": "GetWeaponMeshOverride",
+    "address": "0x142b4bb90",
+    "captured_source": "porting/generated/native108-broad/0x142b4bb90.c",
+    "reason": "UFortWeaponItemDefinition::GetWeaponMeshOverride: Helper 0x142672cb0 calls unresolved helpers ['FUN_141d26fd0', 'FUN_142672cb0']"
+  },
+  {
+    "index": 28,
+    "class": "AFortPlayerControllerZone",
+    "function": "IsUsingAnonymousCharacterMode",
+    "address": "0x142a70610",
+    "captured_source": "porting/generated/native108-broad/0x142a70610.c",
+    "reason": "AFortPlayerControllerZone::IsUsingAnonymousCharacterMode: Helper 0x1423d9700 calls unresolved helpers ['FUN_141e261a0', 'FUN_14237e580', 'FUN_1423d9700']"
+  },
+  {
+    "index": 29,
+    "class": "UAthenaChallengeDisplayLibrary",
+    "function": "ApplyChallengeSetStyleColorsToImageMaterial",
+    "address": "0x145188ef0",
+    "captured_source": "porting/generated/native108-broad/0x145188ef0.c",
+    "reason": "UAthenaChallengeDisplayLibrary::ApplyChallengeSetStyleColorsToImageMaterial: Helper 0x141c998e0 calls unresolved helpers ['FUN_140680160', 'FUN_141c998e0']; Helper 0x144b681d0 calls unresolved helpers ['FUN_141c9fa10', 'FUN_143d5b4c0', 'FUN_144b681d0']"
+  },
+  {
+    "index": 30,
+    "class": "UBulletWhipTrackerComponentBase",
+    "function": "Disable",
+    "address": "0x142765e80",
+    "captured_source": "porting/generated/native108-broad/0x142765e80.c",
+    "reason": "UBulletWhipTrackerComponentBase::Disable wrapper calls unresolved helper(s) ['FUN_142765e80']"
+  },
+  {
+    "index": 31,
+    "class": "UFortActorCanvasSlot",
+    "function": "SetCanAutoRemove",
+    "address": "0x1451f3390",
+    "captured_source": "porting/generated/native108-broad/0x1451f3390.c",
+    "reason": "UFortActorCanvasSlot::SetCanAutoRemove: Helper 0x144d62320 calls unresolved helpers ['FUN_144d62320']"
+  },
+  {
+    "index": 32,
+    "class": "UFortChallengeBundleScheduleItem",
+    "function": "GetAchievedCount",
+    "address": "0x142861560",
+    "captured_source": "porting/generated/native108-broad/0x142861560.c",
+    "reason": "UFortChallengeBundleScheduleItem::GetAchievedCount: Helper 0x141ca4880 calls unresolved helpers ['FUN_1406d9a30', 'FUN_1410fe3b0', 'FUN_141c96420', 'FUN_141ca4880', 'FUN_142030920', 'FUN_142858da0', 'FUN_142859030', 'FUN_142859950']"
+  },
+  {
+    "index": 33,
+    "class": "UFortGadgetItemDefinition",
+    "function": "GetGameplayAbility",
+    "address": "0x1428ea4a0",
+    "captured_source": "porting/generated/native108-broad/0x1428ea4a0.c",
+    "reason": "UFortGadgetItemDefinition::GetGameplayAbility: Helper 0x14200b7e0 calls unresolved helpers ['FUN_141680900', 'FUN_14200b7e0']"
+  },
+  {
+    "index": 34,
+    "class": "UFortItemManagementCustomFilterModalWidget",
+    "function": "DisableAllFilters",
+    "address": "0x14526ed90",
+    "captured_source": "porting/generated/native108-broad/0x14526ed90.c",
+    "reason": "UFortItemManagementCustomFilterModalWidget::DisableAllFilters: Helper 0x14526e4d0 calls unresolved helpers ['FUN_14526e4d0']; Helper 0x142378b50 calls unresolved helpers ['FUN_140690310', 'FUN_140694750', 'FUN_142374730', 'FUN_142378b50']"
+  },
+  {
+    "index": 35,
+    "class": "UFortLocalPlayer",
+    "function": "GetClientSettings",
+    "address": "0x14298b000",
+    "captured_source": "porting/generated/native108-broad/0x14298b000.c",
+    "reason": "UFortLocalPlayer::GetClientSettings: Helper 0x14237e5e0 calls unresolved helpers ['FUN_141e32a40', 'FUN_14237e5e0']"
+  },
+  {
+    "index": 36,
+    "class": "UFortPlayerSurveyFreeFormTextAnswerWidgetBase",
+    "function": "GetCurrentAnswer",
+    "address": "0x1452ac200",
+    "captured_source": "porting/generated/native108-broad/0x1452ac200.c",
+    "reason": "UFortPlayerSurveyFreeFormTextAnswerWidgetBase::GetCurrentAnswer: Helper 0x144f9fca0 calls unresolved helpers ['FUN_140683960', 'FUN_1424265c0', 'FUN_144f9f990', 'FUN_144f9fca0', 'FUN_145803c70']"
+  },
+  {
+    "index": 37,
+    "class": "UFortSkyTubePhysicsComponent",
+    "function": "IsSkyTubeForceEnabled",
+    "address": "0x142ada7d0",
+    "captured_source": "porting/generated/native108-broad/0x142ada7d0.c",
+    "reason": "UFortSkyTubePhysicsComponent::IsSkyTubeForceEnabled: Helper 0x1427036e0 calls unresolved helpers ['FUN_1427036e0']"
+  },
+  {
+    "index": 39,
+    "class": "AFortMissionManager",
+    "function": "OnRep_EarnedBadgesArray",
+    "address": "0x1429f0440",
+    "captured_source": "porting/generated/native108-broad/0x1429f0440.c",
+    "reason": "AFortMissionManager::OnRep_EarnedBadgesArray wrapper calls unresolved helper(s) ['FUN_1429f0440']"
+  },
+  {
+    "index": 40,
+    "class": "AFortWeaponPickaxeAthena",
+    "function": "GetIdleVFXComponent",
+    "address": "0x142b4f770",
+    "captured_source": "porting/generated/native108-broad/0x142b4f770.c",
+    "reason": "AFortWeaponPickaxeAthena::GetIdleVFXComponent wrapper calls unresolved helper(s) ['FUN_142b4f770']"
+  },
+  {
+    "index": 41,
+    "class": "UAthenaHUDMenu",
+    "function": "ClearGameOverScreen",
+    "address": "0x1451a37e0",
+    "captured_source": "porting/generated/native108-broad/0x1451a37e0.c",
+    "reason": "UAthenaHUDMenu::ClearGameOverScreen: Helper 0x1452c5f60 calls unresolved helpers ['FUN_140680300', 'FUN_1452c5f60', 'FUN_1452c7e70']; Helper 0x14514e820 calls unresolved helpers ['FUN_142989f60', 'FUN_14514e760', 'FUN_14514e820']; Helper 0x1407b7ed0 calls unresolved helpers ['FUN_1407b7ed0']"
+  },
+  {
+    "index": 42,
+    "class": "UAthenaStatsScreenBase",
+    "function": "SetAccountIdToQueryFromString",
+    "address": "0x1451c7130",
+    "captured_source": "porting/generated/native108-broad/0x1451c7130.c",
+    "reason": "UAthenaStatsScreenBase::SetAccountIdToQueryFromString: Helper 0x144b4d510 calls unresolved helpers ['FUN_140d7c4c0', 'FUN_141e63650', 'FUN_142285670', 'FUN_1428ea7f0', 'FUN_143d5c530', 'FUN_144b4a080', 'FUN_144b4d510', 'FUN_145a95888']"
+  },
+  {
+    "index": 43,
+    "class": "UCreativeBlueprintLibrary",
+    "function": "GetMinigameManager",
+    "address": "0x14276b110",
+    "captured_source": "porting/generated/native108-broad/0x14276b110.c",
+    "reason": "UCreativeBlueprintLibrary::GetMinigameManager: Helper 0x141d80b40 calls unresolved helpers ['FUN_141d80b40', 'FUN_142a3d9f0']"
+  },
+  {
+    "index": 44,
+    "class": "UFortAlterationFunctionLibrary",
+    "function": "GetAlterationImpactNiagaraPhysicalSurfaceEffects",
+    "address": "0x1427ae710",
+    "captured_source": "porting/generated/native108-broad/0x1427ae710.c",
+    "reason": "UFortAlterationFunctionLibrary::GetAlterationImpactNiagaraPhysicalSurfaceEffects: Helper 0x145803c70 calls unresolved helpers ['FUN_145803c70', 'FUN_14580403c']; Helper 0x14250dc60 calls unresolved helpers ['FUN_1424fae90', 'FUN_14250dc60']; Helper 0x1424fc760 calls unresolved helpers ['FUN_140680160', 'FUN_1424fc760', 'FUN_142cd49c0']; Helper 0x141c2b810 calls unresolved helpers ['FUN_14069a550', 'FUN_141c2b810']"
+  },
+  {
+    "index": 45,
+    "class": "UFortChallengeBundleScheduleDefinition",
+    "function": "GetBundleDefinitions",
+    "address": "0x14285bed0",
+    "captured_source": "porting/generated/native108-broad/0x14285bed0.c",
+    "reason": "UFortChallengeBundleScheduleDefinition::GetBundleDefinitions: Helper 0x141ca5e80 calls unresolved helpers ['FUN_1406800e0', 'FUN_140680160', 'FUN_141c96420', 'FUN_141ca5e80', 'FUN_141df62a0', 'FUN_142bc7780', 'FUN_142ce9f90', 'FUN_142ec9d30']"
+  },
+  {
+    "index": 46,
+    "class": "UFortCreativeMiniGameInfo",
+    "function": "GetIslandDescriptionTags",
+    "address": "0x1452252d0",
+    "captured_source": "porting/generated/native108-broad/0x1452252d0.c",
+    "reason": "UFortCreativeMiniGameInfo::GetIslandDescriptionTags: Helper 0x144d7a040 calls unresolved helpers ['FUN_1419d3790', 'FUN_141d7e7a0', 'FUN_14297b320', 'FUN_144d7a040']; Helper 0x141d6c670 calls unresolved helpers ['FUN_141d6c670']; Helper 0x1452238d0 calls unresolved helpers ['FUN_1452238d0']"
+  },
+  {
+    "index": 47,
+    "class": "UFortGameplayAbility_MedicPack",
+    "function": "OnRep_ServerCurrentState",
+    "address": "0x1428fe820",
+    "captured_source": "porting/generated/native108-broad/0x1428fe820.c",
+    "reason": "UFortGameplayAbility_MedicPack::OnRep_ServerCurrentState: Helper 0x141631800 calls unresolved helpers ['FUN_141631800', 'FUN_1428fc780']"
+  },
+  {
+    "index": 48,
+    "class": "UFortJumpBoostSet",
+    "function": "OnRep_Fuel",
+    "address": "0x142975680",
+    "captured_source": "porting/generated/native108-broad/0x142975680.c",
+    "reason": "UFortJumpBoostSet::OnRep_Fuel: Helper 0x1406ebb90 calls unresolved helpers ['FUN_1406800e0', 'FUN_140680160', 'FUN_1406ebb90', 'FUN_140762ba0', 'FUN_142cea230', 'FUN_142d67f50', 'FUN_142e5d3b0', 'FUN_142e722c0', 'FUN_142e8c400']; Helper 0x145803c70 calls unresolved helpers ['FUN_145803c70', 'FUN_14580403c']; Helper 0x141b7bd90 calls unresolved helpers ['FUN_1406aade0', 'FUN_14070c8f0', 'FUN_14072f650', 'FUN_141b7bd90']; Helper 0x14070f1a0 calls unresolved helpers ['FUN_14070f1a0', 'FUN_140756aa0', 'FUN_142ec9900']; Helper 0x142cd4ab0 calls unresolved helpers ['FUN_142cd4630', 'FUN_142cd4ab0', 'FUN_142ce4890']; Helper 0x145803a44 calls unresolved helpers ['FUN_145803a44', 'FUN_145803af0']; Helper 0x1458039e4 calls unresolved helpers ['FUN_1458039e4', 'FUN_145803aac']; Helper 0x142ee3b30 calls unresolved helpers ['FUN_142ec00d0', 'FUN_142ee3b30']; Helper 0x1406a8e40 calls unresolved helpers ['FUN_1406a8e40', 'FUN_1406cee40', 'FUN_142c7b670', 'FUN_142ce9f90', 'FUN_142d696a0', 'FUN_142e8c400', 'FUN_142ec9730']; Helper 0x142bad740 calls unresolved helpers ['FUN_142bad740']; Helper 0x1446278d0 calls unresolved helpers ['FUN_142cd3770', 'FUN_142ee3b30', 'FUN_144217e60', 'FUN_144616360', 'FUN_14461b600', 'FUN_1446278d0', 'FUN_14468e190', 'FUN_145803c70']; Helper 0x14295ebe0 calls unresolved helpers ['FUN_140680300', 'FUN_14295ebe0', 'FUN_1429647a0']"
+  },
+  {
+    "index": 49,
+    "class": "UFortMinigamePlayerStartComponent",
+    "function": "GetPlayerCheckpointLastUsedTime",
+    "address": "0x1429d2080",
+    "captured_source": "porting/generated/native108-broad/0x1429d2080.c",
+    "reason": "UFortMinigamePlayerStartComponent::GetPlayerCheckpointLastUsedTime: Helper 0x142093060 calls unresolved helpers ['FUN_140f8cb10', 'FUN_142093060']"
+  },
+  {
+    "index": 50,
+    "class": "UFortPlayerSurveyButtonGroupMultipleChoiceAnswerWidgetBase",
+    "function": "SetChoiceButtons",
+    "address": "0x1452a89a0",
+    "captured_source": "porting/generated/native108-broad/0x1452a89a0.c",
+    "reason": "UFortPlayerSurveyButtonGroupMultipleChoiceAnswerWidgetBase::SetChoiceButtons: Helper 0x1406d93e0 calls unresolved helpers ['FUN_1406d93e0']; Helper 0x144fb5af0 calls unresolved helpers ['FUN_144fb5af0', 'FUN_144fb7ff0', 'FUN_144fbb020']"
+  },
+  {
+    "index": 51,
+    "class": "UFortRewardInfoButton",
+    "function": "SetItemInstanceQuantityPair",
+    "address": "0x1452c3930",
+    "captured_source": "porting/generated/native108-broad/0x1452c3930.c",
+    "reason": "UFortRewardInfoButton::SetItemInstanceQuantityPair: Helper 0x144feef20 calls unresolved helpers ['FUN_142ec0440', 'FUN_142ed7360', 'FUN_143d42a40', 'FUN_143d8ab50', 'FUN_143d91c00', 'FUN_143db48e0', 'FUN_144cab050', 'FUN_144cabb70', 'FUN_144ddfbd0', 'FUN_144f22a00', 'FUN_144f25fb0', 'FUN_144f3be60', 'FUN_144f3f960', 'FUN_144f3fc60', 'FUN_144feef20', 'FUN_14527fb00', 'FUN_145294690', 'FUN_1452c1790']"
+  },
+  {
+    "index": 52,
+    "class": "UFortSurvivorSquadStatMatchesBase",
+    "function": "GetIdOfSquadToManageBP",
+    "address": "0x1452ebff0",
+    "captured_source": "porting/generated/native108-broad/0x1452ebff0.c",
+    "reason": "UFortSurvivorSquadStatMatchesBase::GetIdOfSquadToManageBP: Helper 0x145119e20 calls unresolved helpers ['FUN_145119e20']"
+  },
+  {
+    "index": 53,
+    "class": "UFortVoiceChannelHeaderButton",
+    "function": "CanJoinChannel",
+    "address": "0x1452e1c70",
+    "captured_source": "porting/generated/native108-broad/0x1452e1c70.c",
+    "reason": "UFortVoiceChannelHeaderButton::CanJoinChannel: Helper 0x144e2b7b0 calls unresolved helpers ['FUN_140e576d0', 'FUN_140fa8c00', 'FUN_142bcf780', 'FUN_144e2b7b0']"
+  },
+  {
+    "index": 54,
+    "class": "USocialInteractionButton",
+    "function": "GetInteractionName",
+    "address": "0x1412d9f00",
+    "captured_source": "porting/generated/native108-broad/0x1412d9f00.c",
+    "reason": "USocialInteractionButton::GetInteractionName: Helper 0x1412c6820 calls unresolved helpers ['FUN_140f91980', 'FUN_1412c6820']"
+  },
+  {
+    "index": 55,
+    "class": "AFortItemPreviewSceneChanger",
+    "function": "IsSoundEnabled",
+    "address": "0x145278590",
+    "captured_source": "porting/generated/native108-broad/0x145278590.c",
+    "reason": "AFortItemPreviewSceneChanger::IsSoundEnabled: Helper 0x144e0d830 calls unresolved helpers ['FUN_144e0d830']"
+  },
+  {
+    "index": 56,
+    "class": "AFortOctopusTowhookAttachableProjectile",
+    "function": "GetRopeAttachLocation",
+    "address": "0x142a08ab0",
+    "captured_source": "porting/generated/native108-broad/0x142a08ab0.c",
+    "reason": "AFortOctopusTowhookAttachableProjectile::GetRopeAttachLocation: Helper 0x1426cf940 calls unresolved helpers ['FUN_1426cf940', 'FUN_1448013f0']"
+  },
+  {
+    "index": 57,
+    "class": "AFortProtoActorBase",
+    "function": "SetStreamingPriority",
+    "address": "0x142aac7f0",
+    "captured_source": "porting/generated/native108-broad/0x142aac7f0.c",
+    "reason": "AFortProtoActorBase::SetStreamingPriority: Helper 0x141d5c430 calls unresolved helpers ['FUN_141d5c430', 'FUN_142103a70', 'FUN_142a3d9f0', 'FUN_142c55770', 'FUN_142c5ce70', 'FUN_14468f1a0', 'FUN_1458039e4', 'FUN_145803a44']"
+  },
+  {
+    "index": 58,
+    "class": "AFortWeaponRangedForVehicle",
+    "function": "OnRep_MountedWeaponInfoRepped",
+    "address": "0x142b51cf0",
+    "captured_source": "porting/generated/native108-broad/0x142b51cf0.c",
+    "reason": "AFortWeaponRangedForVehicle::OnRep_MountedWeaponInfoRepped: Helper 0x1423318f0 calls unresolved helpers ['FUN_1423318f0']; Helper 0x1426ae820 calls unresolved helpers ['FUN_1423318f0', 'FUN_1426ae820']; Helper 0x142699df0 calls unresolved helpers ['FUN_142699df0', 'FUN_142b2ca60', 'FUN_142ec9900']; Helper 0x141125940 calls unresolved helpers ['FUN_141125940']; Helper 0x142a75f10 calls unresolved helpers ['FUN_140680300', 'FUN_142a75f10', 'FUN_142a77820', 'FUN_143f68ab0']"
+  },
+  {
+    "index": 59,
+    "class": "AWrapPreviewGridActor",
+    "function": "SetWrap",
+    "address": "0x142b99c80",
+    "captured_source": "porting/generated/native108-broad/0x142b99c80.c",
+    "reason": "AWrapPreviewGridActor::SetWrap: Helper 0x141dda950 calls unresolved helpers ['FUN_141dd3770', 'FUN_141dda950']"
+  },
+  {
+    "index": 60,
+    "class": "UAthenaChallengeListEntry_Challenge",
+    "function": "GetChallengeWeight",
+    "address": "0x1451891e0",
+    "captured_source": "porting/generated/native108-broad/0x1451891e0.c",
+    "reason": "UAthenaChallengeListEntry_Challenge::GetChallengeWeight: Helper 0x144b75140 calls unresolved helpers ['FUN_141c96590', 'FUN_1424431b0', 'FUN_144b75140']"
+  },
+  {
+    "index": 61,
+    "class": "UAthenaLayoutRequirementData",
+    "function": "FindMatchingLayoutRequirementClass",
+    "address": "0x1427258e0",
+    "captured_source": "porting/generated/native108-broad/0x1427258e0.c",
+    "reason": "UAthenaLayoutRequirementData::FindMatchingLayoutRequirementClass: Helper 0x141b98be0 calls unresolved helpers ['FUN_141b98be0', 'FUN_142752f80']"
+  },
+  {
+    "index": 62,
+    "class": "UAthenaQuickbarEditorBase",
+    "function": "GetFirstEquipSlotButton",
+    "address": "0x1451b5060",
+    "captured_source": "porting/generated/native108-broad/0x1451b5060.c",
+    "reason": "UAthenaQuickbarEditorBase::GetFirstEquipSlotButton: Helper 0x144b2fe50 calls unresolved helpers ['FUN_1407c1f20', 'FUN_144b2fe50']"
+  },
+  {
+    "index": 64,
+    "class": "UAthenaWinConditionMsgBase",
+    "function": "GetTextFillColor",
+    "address": "0x1451cae70",
+    "captured_source": "porting/generated/native108-broad/0x1451cae70.c",
+    "reason": "UAthenaWinConditionMsgBase::GetTextFillColor: Helper 0x14079cf10 calls unresolved helpers ['FUN_14079cf10']; Helper 0x142f8ca30 calls unresolved helpers ['FUN_142f440c0', 'FUN_142f8ca30', 'FUN_1459eb9f8']; Helper 0x14079a850 calls unresolved helpers ['FUN_14079a760', 'FUN_14079a850']; Helper 0x144b30c70 calls unresolved helpers ['FUN_144b30c70']"
+  },
+  {
+    "index": 65,
+    "class": "UCommonAnimatedSwitcher",
+    "function": "SetDisableTransitionAnimation",
+    "address": "0x14080c370",
+    "captured_source": "porting/generated/native108-broad/0x14080c370.c",
+    "reason": "UCommonAnimatedSwitcher::SetDisableTransitionAnimation: Helper 0x1407f65e0 calls unresolved helpers ['FUN_1407f65e0']"
+  },
+  {
+    "index": 66,
+    "class": "UConsolidatedQuestComponent",
+    "function": "UpdateCompletedForPlayer",
+    "address": "0x14276c290",
+    "captured_source": "porting/generated/native108-broad/0x14276c290.c",
+    "reason": "UConsolidatedQuestComponent::UpdateCompletedForPlayer: Helper 0x141cf5ce0 calls unresolved helpers ['FUN_1406a7e80', 'FUN_141cf5ce0']"
+  },
+  {
+    "index": 67,
+    "class": "UFortAIEncounterRiftManager",
+    "function": "GetAssociatedMission",
+    "address": "0x14279c320",
+    "captured_source": "porting/generated/native108-broad/0x14279c320.c",
+    "reason": "UFortAIEncounterRiftManager::GetAssociatedMission: Helper 0x141695d20 calls unresolved helpers ['FUN_141695d20', 'FUN_1420b7ab0', 'FUN_1420b99b0']"
+  },
+  {
+    "index": 69,
+    "class": "UFortAnimInputBlueprintLibrary",
+    "function": "UpdateFortAnimInput_SpeedWarping",
+    "address": "0x1427b1be0",
+    "captured_source": "porting/generated/native108-broad/0x1427b1be0.c",
+    "reason": "UFortAnimInputBlueprintLibrary::UpdateFortAnimInput_SpeedWarping: Helper 0x14182c5a0 calls unresolved helpers ['FUN_14181ccf0', 'FUN_14182c5a0']"
+  },
+  {
+    "index": 70,
+    "class": "UFortAttributeSet_VehicleFuel",
+    "function": "OnRep_Fuel",
+    "address": "0x1428420e0",
+    "captured_source": "porting/generated/native108-broad/0x1428420e0.c",
+    "reason": "UFortAttributeSet_VehicleFuel::OnRep_Fuel: Helper 0x1406ebb90 calls unresolved helpers ['FUN_1406800e0', 'FUN_140680160', 'FUN_1406ebb90', 'FUN_140762ba0', 'FUN_142cea230', 'FUN_142d67f50', 'FUN_142e5d3b0', 'FUN_142e722c0', 'FUN_142e8c400']; Helper 0x145803c70 calls unresolved helpers ['FUN_145803c70', 'FUN_14580403c']; Helper 0x141b7bd90 calls unresolved helpers ['FUN_1406aade0', 'FUN_14070c8f0', 'FUN_14072f650', 'FUN_141b7bd90']; Helper 0x14070f1a0 calls unresolved helpers ['FUN_14070f1a0', 'FUN_140756aa0', 'FUN_142ec9900']; Helper 0x14283e5f0 calls unresolved helpers ['FUN_140680300', 'FUN_14283e5f0', 'FUN_142840f90']; Helper 0x145803a44 calls unresolved helpers ['FUN_145803a44', 'FUN_145803af0']; Helper 0x142cd4ab0 calls unresolved helpers ['FUN_142cd4630', 'FUN_142cd4ab0', 'FUN_142ce4890']; Helper 0x1458039e4 calls unresolved helpers ['FUN_1458039e4', 'FUN_145803aac']; Helper 0x142ee3b30 calls unresolved helpers ['FUN_142ec00d0', 'FUN_142ee3b30']; Helper 0x1406a8e40 calls unresolved helpers ['FUN_1406a8e40', 'FUN_1406cee40', 'FUN_142c7b670', 'FUN_142ce9f90', 'FUN_142d696a0', 'FUN_142e8c400', 'FUN_142ec9730']; Helper 0x142bad740 calls unresolved helpers ['FUN_142bad740']; Helper 0x1446278d0 calls unresolved helpers ['FUN_142cd3770', 'FUN_142ee3b30', 'FUN_144217e60', 'FUN_144616360', 'FUN_14461b600', 'FUN_1446278d0', 'FUN_14468e190', 'FUN_145803c70']"
+  },
+  {
+    "index": 71,
+    "class": "UFortChargingSet_AirbagSuit",
+    "function": "OnRep_Charge",
+    "address": "0x14286cb40",
+    "captured_source": "porting/generated/native108-broad/0x14286cb40.c",
+    "reason": "UFortChargingSet_AirbagSuit::OnRep_Charge: Helper 0x1406ebb90 calls unresolved helpers ['FUN_1406800e0', 'FUN_140680160', 'FUN_1406ebb90', 'FUN_140762ba0', 'FUN_142cea230', 'FUN_142d67f50', 'FUN_142e5d3b0', 'FUN_142e722c0', 'FUN_142e8c400']; Helper 0x145803c70 calls unresolved helpers ['FUN_145803c70', 'FUN_14580403c']; Helper 0x141b7bd90 calls unresolved helpers ['FUN_1406aade0', 'FUN_14070c8f0', 'FUN_14072f650', 'FUN_141b7bd90']; Helper 0x14070f1a0 calls unresolved helpers ['FUN_14070f1a0', 'FUN_140756aa0', 'FUN_142ec9900']; Helper 0x142cd4ab0 calls unresolved helpers ['FUN_142cd4630', 'FUN_142cd4ab0', 'FUN_142ce4890']; Helper 0x145803a44 calls unresolved helpers ['FUN_145803a44', 'FUN_145803af0']; Helper 0x1458039e4 calls unresolved helpers ['FUN_1458039e4', 'FUN_145803aac']; Helper 0x142ee3b30 calls unresolved helpers ['FUN_142ec00d0', 'FUN_142ee3b30']; Helper 0x142866e80 calls unresolved helpers ['FUN_140680300', 'FUN_142866be0', 'FUN_142866e80', 'FUN_14286a500']; Helper 0x1406a8e40 calls unresolved helpers ['FUN_1406a8e40', 'FUN_1406cee40', 'FUN_142c7b670', 'FUN_142ce9f90', 'FUN_142d696a0', 'FUN_142e8c400', 'FUN_142ec9730']; Helper 0x142bad740 calls unresolved helpers ['FUN_142bad740']; Helper 0x1446278d0 calls unresolved helpers ['FUN_142cd3770', 'FUN_142ee3b30', 'FUN_144217e60', 'FUN_144616360', 'FUN_14461b600', 'FUN_1446278d0', 'FUN_14468e190', 'FUN_145803c70']"
+  },
+  {
+    "index": 72,
+    "class": "UFortChatWidget",
+    "function": "SetControllerActionBrush",
+    "address": "0x14520d890",
+    "captured_source": "porting/generated/native108-broad/0x14520d890.c",
+    "reason": "UFortChatWidget::SetControllerActionBrush: Helper 0x144d94e90 calls unresolved helpers ['FUN_140795480', 'FUN_14079a760', 'FUN_144d94e90', 'FUN_14509d2f0']"
+  },
+  {
+    "index": 73,
+    "class": "UFortCommunityVotingAvailableVotesWidget",
+    "function": "ApplyCurrentVoteNumber",
+    "address": "0x145214170",
+    "captured_source": "porting/generated/native108-broad/0x145214170.c",
+    "reason": "UFortCommunityVotingAvailableVotesWidget::ApplyCurrentVoteNumber: Helper 0x143d5fba0 calls unresolved helpers ['FUN_140deaac0', 'FUN_143d5fba0']"
+  },
+  {
+    "index": 74,
+    "class": "UFortCosmeticItemCard",
+    "function": "SetItemToRepresent",
+    "address": "0x145219150",
+    "captured_source": "porting/generated/native108-broad/0x145219150.c",
+    "reason": "UFortCosmeticItemCard::SetItemToRepresent: Helper 0x144ee2eb0 calls unresolved helpers ['FUN_141865660', 'FUN_141881fa0', 'FUN_144ee2eb0', 'FUN_144ee5e10', 'FUN_144eea220', 'FUN_144eea4e0', 'FUN_145217c60']"
+  },
+  {
+    "index": 75,
+    "class": "UFortCreativeTagsManager",
+    "function": "GetCreativeTagsForItem",
+    "address": "0x1428c8f10",
+    "captured_source": "porting/generated/native108-broad/0x1428c8f10.c",
+    "reason": "UFortCreativeTagsManager::GetCreativeTagsForItem: Helper 0x141d7cf50 calls unresolved helpers ['FUN_140690c30', 'FUN_140690ee0', 'FUN_141d7cd90', 'FUN_141d7cf50', 'FUN_141d88580', 'FUN_1428c7010', 'FUN_142ec9900']; Helper 0x140798e40 calls unresolved helpers ['FUN_140798e40']"
+  },
+  {
+    "index": 77,
+    "class": "UFortFootstepSurfaceData",
+    "function": "GetSurfaceInfo",
+    "address": "0x1428e87f0",
+    "captured_source": "porting/generated/native108-broad/0x1428e87f0.c",
+    "reason": "UFortFootstepSurfaceData::GetSurfaceInfo: Helper 0x1424aec80 calls unresolved helpers ['FUN_1424aec80']"
+  },
+  {
+    "index": 78,
+    "class": "UFortHeroLoadoutGadgetPicker",
+    "function": "SetTargetLoadoutSlot",
+    "address": "0x14524fec0",
+    "captured_source": "porting/generated/native108-broad/0x14524fec0.c",
+    "reason": "UFortHeroLoadoutGadgetPicker::SetTargetLoadoutSlot: Helper 0x1450ff0b0 calls unresolved helpers ['FUN_1406d9a30', 'FUN_1425116b0', 'FUN_142ee3b30', 'FUN_143129c20', 'FUN_143d45e50', 'FUN_143d8f8e0', 'FUN_144ade370', 'FUN_144f81790', 'FUN_1450b2db0', 'FUN_1450ff0b0', 'FUN_14524ebf0']"
+  },
+  {
+    "index": 79,
+    "class": "UFortItemDefinition",
+    "function": "ShouldShowPreviewOnCurrentHero",
+    "address": "0x14295dce0",
+    "captured_source": "porting/generated/native108-broad/0x14295dce0.c",
+    "reason": "UFortItemDefinition::ShouldShowPreviewOnCurrentHero wrapper calls unresolved helper(s) ['FUN_14295dce0']"
+  },
+  {
+    "index": 80,
+    "class": "UFortLeaveDialog",
+    "function": "SetupLeaveDialog",
+    "address": "0x145281510",
+    "captured_source": "porting/generated/native108-broad/0x145281510.c",
+    "reason": "UFortLeaveDialog::SetupLeaveDialog: Helper 0x142c0c240 calls unresolved helpers ['FUN_1407c2c80', 'FUN_142c0c240']; Helper 0x144f7bea0 calls unresolved helpers ['FUN_14079d060', 'FUN_1407c3bb0', 'FUN_1407f39f0', 'FUN_1407f9ae0', 'FUN_14081b540', 'FUN_142703550', 'FUN_144e19a00', 'FUN_144f7bea0']"
+  },
+  {
+    "index": 81,
+    "class": "UFortMissionObjectiveProgressBase",
+    "function": "Update",
+    "address": "0x14528f180",
+    "captured_source": "porting/generated/native108-broad/0x14528f180.c",
+    "reason": "UFortMissionObjectiveProgressBase::Update: Helper 0x144f86690 calls unresolved helpers ['FUN_143d8a390', 'FUN_143d8ea80', 'FUN_144f86690']"
+  },
+  {
+    "index": 82,
+    "class": "UFortPartySuggestionButton",
+    "function": "UpdateDisplayInfo",
+    "address": "0x1452a0c80",
+    "captured_source": "porting/generated/native108-broad/0x1452a0c80.c",
+    "reason": "UFortPartySuggestionButton::UpdateDisplayInfo: Helper 0x14219f720 calls unresolved helpers ['FUN_140fa2a90', 'FUN_14219f720']; Helper 0x14529f4a0 calls unresolved helpers ['FUN_14529f4a0']; Helper 0x142bedc40 calls unresolved helpers ['FUN_142bedc40', 'FUN_142c244c0', 'FUN_142c274f0']; Helper 0x144e1b7e0 calls unresolved helpers ['FUN_1406800e0', 'FUN_140680160', 'FUN_140690310', 'FUN_1407901a0', 'FUN_140799530', 'FUN_1407babb0', 'FUN_1407c2c80', 'FUN_1407f1e50', 'FUN_141b9d5f0', 'FUN_141cc2010', 'FUN_142198e90', 'FUN_14219f720', 'FUN_1421a3090', 'FUN_142261760', 'FUN_1427034f0', 'FUN_142bc7780', 'FUN_142bedc40', 'FUN_142c0c460', 'FUN_142c18a00', 'FUN_142c25440', 'FUN_142cbd480', 'FUN_142cc0600', 'FUN_14407cf10', 'FUN_144e1b7e0', 'FUN_145803c70']; Helper 0x14529f460 calls unresolved helpers ['FUN_14529f460']; Helper 0x1412d5d00 calls unresolved helpers ['FUN_1412bcf20', 'FUN_1412d5d00']; Helper 0x145803a44 calls unresolved helpers ['FUN_145803a44', 'FUN_145803af0']; Helper 0x1458038a4 calls unresolved helpers ['FUN_145803868', 'FUN_1458038a4']; Helper 0x1458039e4 calls unresolved helpers ['FUN_1458039e4', 'FUN_145803aac']; Helper 0x1421a3090 calls unresolved helpers ['FUN_140f90e20', 'FUN_1421a3090']; Helper 0x1427034f0 calls unresolved helpers ['FUN_141ed2350', 'FUN_141ed2b30', 'FUN_1427034f0']"
+  },
+  {
+    "index": 83,
+    "class": "UFortPlayerSurveyDispatcher",
+    "function": "SetOwningPlayer",
+    "address": "0x1452acd50",
+    "captured_source": "porting/generated/native108-broad/0x1452acd50.c",
+    "reason": "UFortPlayerSurveyDispatcher::SetOwningPlayer: Helper 0x144fb69d0 calls unresolved helpers ['FUN_141cd3900', 'FUN_14447ee40', 'FUN_144f8c700', 'FUN_144fb6170', 'FUN_144fb69d0']"
+  }
+]

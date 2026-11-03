@@ -29,5 +29,8 @@ public:
 	UPROPERTY()
 	float DamageAmount;
 
+	UFUNCTION(BlueprintCallable)
+	void SetParams(AFortPawn* _DamagedPawn, AFortPlayerController* _DamagedBy, float _DamageAmount, UFortEnemyDamagedParams*& ThisParam);
+
 };
 

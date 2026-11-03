@@ -40,5 +40,8 @@ public:
 	UPROPERTY()
 	TArray<UFortItemDefinition*> FortItemDefinitions;
 
+	UFUNCTION(BlueprintCallable)
+	TArray<UFortItemDefinition*> GetItemDefinitions();
+
 };
 

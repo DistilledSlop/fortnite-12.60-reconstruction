@@ -11,6 +11,8 @@
 #include "Engine/EngineTypes.h"
 #include "Engine/World.h"
 #include "FQuickBar.h"
+#include "QuickBarSwapNative.h"
+#include "SharedFortGameLog.h"
 #include "TimerManager.h"
 
 class UFortItem;
@@ -39,6 +41,9 @@ public:
 	// Non-reflected field (behaviour kind "member_field", offset 0x3d0): not a UPROPERTY, not replicated.
 	TMulticastDelegate<void, EFortQuickBars, const TArray<int32>&> QuickBarDirtySlotsNative;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x400): not a UPROPERTY, not replicated.
+	TMulticastDelegate<void, uint8, int32> QuickBarFocusChangedNative;
+
 	// table index 6, flags 0x20080000002000
 	UPROPERTY(Transient)
 	TArray<UFortWorldItem*> AllCachedTraps;
@@ -65,5 +70,6 @@ public:
 	bool NativeFindItemSlot(UFortItem* Item, FQuickBar& Bar, int32 StartSlot, bool bReverse, const TArray<FGuid>& MoveGuids, bool bAllowOwnGuid, int32& FoundSlot);
 	void NativeScheduleQuickBarUpdate(uint8 Bar);
 	void NativeFlushQuickBarUpdate(uint8 Bar);
+	bool SwapItems(uint8 BarA, int32 SlotA, uint8 BarB, int32 SlotB);
 };
 

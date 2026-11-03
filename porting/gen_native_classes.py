@@ -2366,6 +2366,10 @@ _quickbar_refresh_spec = _common_activation_import.spec_from_file_location(
     "quickbar_refresh_policy", os.path.join(os.path.dirname(__file__), "behavior", "quickbar_refresh110_runtime", "source_policy.py"))
 _quickbar_refresh_policy = _common_activation_import.module_from_spec(_quickbar_refresh_spec)
 _quickbar_refresh_spec.loader.exec_module(_quickbar_refresh_policy)
+_quickbar_swap_spec = _common_activation_import.spec_from_file_location(
+    "quickbar_swap_policy", os.path.join(os.path.dirname(__file__), "behavior", "quickbar_swap129_runtime", "source_policy.py"))
+_quickbar_swap_policy = _common_activation_import.module_from_spec(_quickbar_swap_spec)
+_quickbar_swap_spec.loader.exec_module(_quickbar_swap_policy)
 _profile_entry_spec = _common_activation_import.spec_from_file_location(
     "profile_entry_policy", os.path.join(os.path.dirname(__file__), "behavior", "profile_entry_lifecycle_runtime", "source_policy.py"))
 _profile_entry_policy = _common_activation_import.module_from_spec(_profile_entry_spec)
@@ -3925,6 +3929,9 @@ def promote(args):
     if 'UFortAssetManager' in listed:
         asset_diagnostic_sources = asset_diagnostic_sources or {}
         asset_diagnostic_sources.update(_quickbar_refresh_policy.sources())
+    if 'AFortQuickBars' in listed:
+        asset_diagnostic_sources = asset_diagnostic_sources or {}
+        asset_diagnostic_sources.update(_quickbar_swap_policy.sources())
     if 'AFortVolume' in listed:
         asset_diagnostic_sources = asset_diagnostic_sources or {}
         asset_diagnostic_sources.update(_volume_client_policy.sources())
