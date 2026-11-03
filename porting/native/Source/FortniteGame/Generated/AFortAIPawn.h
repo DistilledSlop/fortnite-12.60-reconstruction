@@ -804,6 +804,12 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	AFortWaterBodyActor* GetCurrentWaterBody() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static TEnumAsByte<EFortMovementUrgency::Type> GetMovementUrgency(AFortAIPawn* FortAIPawn);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	EScoreDistributionType GetScoreDistribution() const;
+
 	UFUNCTION(BlueprintCallable, BlueprintPure, BlueprintAuthorityOnly)
 	FVector GetSpawnLocation() const;
 

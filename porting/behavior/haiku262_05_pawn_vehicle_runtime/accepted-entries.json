@@ -1,0 +1,33 @@
+[
+  {
+    "class": "AFortAIPawn",
+    "function": "GetMovementUrgency",
+    "kind": "exec",
+    "signature": "TEnumAsByte<EFortMovementUrgency::Type> GetMovementUrgency(AFortAIPawn* FortAIPawn)",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": true,
+    "inc_path": "porting/behavior/haiku262_05_pawn_vehicle_runtime/AFortAIPawn_GetMovementUrgency.inc",
+    "address": "0x1427a4c40",
+    "native_body_address": "0x1422d4430",
+    "reflection_flags": "0x14022401",
+    "confidence": "high",
+    "status": "ported"
+  },
+  {
+    "class": "AFortAIPawn",
+    "function": "GetScoreDistribution",
+    "kind": "exec",
+    "signature": "EScoreDistributionType GetScoreDistribution() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/haiku262_05_pawn_vehicle_runtime/AFortAIPawn_GetScoreDistribution.inc",
+    "address": "0x1427a4cc0",
+    "native_body_address": "0x1422d72d0",
+    "reflection_flags": "0x54020401",
+    "confidence": "high",
+    "status": "ported",
+    "virtual": false
+  }
+]

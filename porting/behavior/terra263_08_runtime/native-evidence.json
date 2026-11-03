@@ -1,0 +1,49 @@
+{
+  "selection": "porting/behavior/terra263_08_runtime/inputs.json",
+  "selection_count": 100,
+  "ported_count": 1,
+  "unresolved_count": 99,
+  "build_pending": true,
+  "rows": [
+    {
+      "index": 0,
+      "class": "AFortMinigame",
+      "function": "SetWinningTeamIndex",
+      "wrapper": "0x1429c6540",
+      "native_body": "0x1429c6540",
+      "wrapper_capture": "porting/generated/native210-fresh-bulk/0x1429c6540.c",
+      "body_capture": "porting/generated/native210-fresh-bulk/0x1429c6540.c",
+      "member": {
+        "name": "NativeRecoveredWinningTeamIndex",
+        "offset": "0xc08",
+        "type": "uint8",
+        "evidence": "Direct single-byte store from reflected byte parameter; no other operations."
+      },
+      "status": "ported",
+      "build_pending": true
+    },
+    {
+      "index": 80,
+      "class": "AFortPawn",
+      "function": "SetIsKnockedBack",
+      "wrapper": "0x142a20030",
+      "native_body": "0x14234dac0",
+      "wrapper_capture": "porting/generated/native225-fresh-bulk/0x142a20030.c",
+      "body_capture": "porting/generated/callee_probe/blocking/0x14234dac0.c",
+      "member": {
+        "name": "bIsKnockedback",
+        "offset": "0x520",
+        "mask": "0x40",
+        "evidence": "Reflected bool layout and native masked write."
+      },
+      "callback": {
+        "name": "OnRep_IsKnockedBack",
+        "virtual_slot": "0x9f0",
+        "evidence": "porting/generated/decomp_improved/AFortPawn/OnRep_IsKnockedBack.c dispatches the same virtual slot.",
+        "missing_contract": "Recover AFortPawn vtable slot 0x9f0 target and its complete native implementation, including effects and virtual overrides; wrapper at 0x142a1ebc0 only dispatches that slot. No canonical OnRep_IsKnockedBack implementation found."
+      },
+      "status": "held",
+      "build_pending": true
+    }
+  ]
+}

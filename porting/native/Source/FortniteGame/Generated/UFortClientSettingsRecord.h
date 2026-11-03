@@ -967,6 +967,9 @@ public:
 	double NextCloudSaveTime;
 
 	UFUNCTION()
+	bool GetAimAssistEnabled() const;
+
+	UFUNCTION()
 	EFortAllowBackgroundAudioSetting GetAllowAudioInBackgroundSetting() const;
 
 	UFUNCTION()
@@ -979,6 +982,9 @@ public:
 	bool GetAnonymousModeEnabled() const;
 
 	UFUNCTION()
+	bool GetAutoChangeMaterial() const;
+
+	UFUNCTION()
 	bool GetAutoEquipBetterItems() const;
 
 	UFUNCTION()
@@ -986,6 +992,9 @@ public:
 
 	UFUNCTION()
 	bool GetAutoJoinGameVoiceChannel() const;
+
+	UFUNCTION()
+	bool GetAutoOpenDoors() const;
 
 	UFUNCTION()
 	bool GetAutoPickupWeapons() const;
@@ -1048,6 +1057,9 @@ public:
 	bool GetFocusOnFirstBuildingPieceWhenQuickbarSwappedAthena() const;
 
 	UFUNCTION()
+	bool GetForceFeedbackEnabled() const;
+
+	UFUNCTION()
 	float GetGamepadBuildingMultiplier() const;
 
 	UFUNCTION()
@@ -1084,6 +1096,9 @@ public:
 	bool GetIgnoreGamepadInput() const;
 
 	UFUNCTION()
+	bool GetInvertedPitch() const;
+
+	UFUNCTION()
 	bool GetInvertedPitchForAircraftPrimary() const;
 
 	UFUNCTION()
@@ -1091,6 +1106,9 @@ public:
 
 	UFUNCTION()
 	bool GetInvertedPitchForMotion() const;
+
+	UFUNCTION()
+	bool GetInvertedYaw() const;
 
 	UFUNCTION()
 	bool GetInvertedYawForMotion() const;
@@ -1165,6 +1183,9 @@ public:
 	bool GetShouldShowBothQuickbars() const;
 
 	UFUNCTION()
+	bool GetShouldSprintByDefault() const;
+
+	UFUNCTION()
 	bool GetShowGlobalChatEnabled() const;
 
 	UFUNCTION()
@@ -1201,6 +1222,9 @@ public:
 	float GetTargetingMultiplier() const;
 
 	UFUNCTION()
+	bool GetTargetingToggleable() const;
+
+	UFUNCTION()
 	bool GetToggleSprint() const;
 
 	UFUNCTION()
@@ -1231,6 +1255,9 @@ public:
 	float GetTouchVerticalMultiplier() const;
 
 	UFUNCTION()
+	bool GetTurboBuild() const;
+
+	UFUNCTION()
 	bool GetUseFirstPersonCamera() const;
 
 	UFUNCTION()
@@ -1258,6 +1285,9 @@ public:
 	bool IsUsingHoldToSwapPickup() const;
 
 	UFUNCTION()
+	void SetAimAssistEnabled(bool bNewValue);
+
+	UFUNCTION()
 	void SetAimAssistStrength(uint32 NewValue);
 
 	UFUNCTION()
@@ -1273,10 +1303,16 @@ public:
 	void SetAnonymousModeEnabled(bool bEnable);
 
 	UFUNCTION()
+	void SetAutoChangeMaterial(bool bNewValue);
+
+	UFUNCTION()
 	void SetAutoEquipBetterItems(bool bAutoEquip);
 
 	UFUNCTION()
 	void SetAutoJoinGameVoiceChannel(bool bNewValue);
+
+	UFUNCTION()
+	void SetAutoOpenDoors(bool bNewValue);
 
 	UFUNCTION()
 	void SetAutoPickupWeapons(bool bNewValue);
@@ -1378,6 +1414,9 @@ public:
 	void SetIgnoreGamepadInput(bool bIgnore);
 
 	UFUNCTION()
+	void SetInvertedPitch(bool bInvert);
+
+	UFUNCTION()
 	void SetInvertedPitchForAircraftPrimary(bool bInvert);
 
 	UFUNCTION()
@@ -1385,6 +1424,9 @@ public:
 
 	UFUNCTION()
 	void SetInvertedPitchForMotion(bool bInvert);
+
+	UFUNCTION()
+	void SetInvertedYaw(bool bInvert);
 
 	UFUNCTION()
 	void SetInvertedYawForMotion(bool bInvert);
@@ -1462,6 +1504,9 @@ public:
 	void SetMotionTargetingMultiplier(float InMultiplier);
 
 	UFUNCTION()
+	void SetMotionYawAxisSetting(EFortMotionYawAxis InSetting);
+
+	UFUNCTION()
 	void SetMouseSensitivityMultiplierForAircraft(float InSensitivityMultiplier);
 
 	UFUNCTION()
@@ -1501,6 +1546,9 @@ public:
 	void SetShadowPlayHighlightsEnabled(bool bEnable);
 
 	UFUNCTION()
+	void SetShouldSprintByDefault(bool bShouldSprintByDefault);
+
+	UFUNCTION()
 	void SetShowGlobalChatEnabled(bool bEnable);
 
 	UFUNCTION()
@@ -1531,6 +1579,9 @@ public:
 	void SetTargetingMultiplier(float InMultiplier);
 
 	UFUNCTION()
+	void SetTargetingToggleable(bool bToggle);
+
+	UFUNCTION()
 	void SetToggleSprint(bool bToggle);
 
 	UFUNCTION()
@@ -1541,6 +1592,9 @@ public:
 
 	UFUNCTION()
 	void SetTouchEditModeMultiplier(float InMultiplier);
+
+	UFUNCTION()
+	void SetTouchInteractMode(ETouchInteractMode bNewMode);
 
 	UFUNCTION()
 	void SetTouchLookAccelerationMultiplier(float InSetting);
@@ -1556,6 +1610,9 @@ public:
 
 	UFUNCTION()
 	void SetTouchVerticalMultiplier(float InMultiplier);
+
+	UFUNCTION()
+	void SetTurboBuild(bool bNewValue);
 
 	UFUNCTION()
 	void SetUseFirstPersonCamera(bool bUseFirstPerson);

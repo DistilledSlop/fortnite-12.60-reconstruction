@@ -21,6 +21,7 @@
 #include "FOnVaultItemLimitStateChanged.h"
 #include "FQuickbarFocusChangedDelegate.h"
 #include "FSetWorldResourceWidgetVisibility.h"
+#include "GameplayTagContainer.h"
 #include "UFortSchematicItemDefinition.h"
 
 #include "UFortInventoryContext.generated.h"
@@ -110,6 +111,27 @@ public:
 	// table index 0, flags 0x40000000002000
 	UPROPERTY(Transient)
 	TMap<UFortSchematicItemDefinition*, bool> SchematicLockedStates;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x1f8): not a UPROPERTY, not replicated.
+	int32 CachedVaultLimitedItemCount;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x1fc): not a UPROPERTY, not replicated.
+	int32 CachedVaultItemLimit;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x204): not a UPROPERTY, not replicated.
+	int32 CachedHeroItemCount;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetCountOfHeroItems() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetCountOfVaultLimitedItems() const;
+
+	UFUNCTION(BlueprintCallable)
+	bool GetGameplayTagByIndex(FGameplayTagContainer GameplayTagContainer, int32 Index, FGameplayTag& Result);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetVaultItemLimit() const;
 
 };
 

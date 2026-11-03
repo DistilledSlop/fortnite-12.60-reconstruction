@@ -116,6 +116,45 @@ void AFortMinigame::DoRep_UIExtensionTags()
 	// Body not recovered: reflection-derived stub.
 }
 
+bool AFortMinigame::GetBucketWinCount(int32& WinCount, int32 BucketIndex) const
+{
+	// CONFIDENCE: high
+	// Native 0x14208efc0; wrapper 0x1429bfd70.
+	{
+	    WinCount = 0;
+	    if (!PlayerBuckets.IsValidIndex(BucketIndex))
+	    {
+	        return false;
+	    }
+	    for (int32 Winner : RoundWinHistory)
+	    {
+	        if (Winner == BucketIndex)
+	        {
+	            ++WinCount;
+	        }
+	    }
+	    return true;
+	}
+}
+
+int32 AFortMinigame::GetCurrentRoundWinner() const
+{
+	// CONFIDENCE: high
+	// Native 0x142094190; wrapper 0x1429c0100.
+	{
+	    return GetRoundWinner(CurrentRound);
+	}
+}
+
+int32 AFortMinigame::GetPlayerCount(bool bIncludeSpectators) const
+{
+	// CONFIDENCE: high
+	// Native 0x1420930f0; wrapper 0x1429c0a40.
+	{
+	    return PlayerArray.Players.Num() + (bIncludeSpectators ? SpectatingPlayerArray.Players.Num() : 0);
+	}
+}
+
 float AFortMinigame::GetPostGameTimeRemaining() const
 {
 	// CONFIDENCE: high
@@ -130,6 +169,15 @@ float AFortMinigame::GetPostGameTimeRemaining() const
 	    }
 	}
 	return 0.0f;
+}
+
+int32 AFortMinigame::GetRoundWinner(int32 Round) const
+{
+	// CONFIDENCE: high
+	// Native 0x142094190; wrapper 0x1429c0f90.
+	{
+	    return Round > 0 && Round <= RoundWinHistory.Num() ? RoundWinHistory[Round - 1] : -1;
+	}
 }
 
 float AFortMinigame::GetRuntime() const
@@ -260,6 +308,34 @@ bool AFortMinigame::IsInWarmup() const
 	// CONFIDENCE: HIGH
 	// Mechanically matched complete enum byte immediate comparison; see bulk_enum_predicate_runtime/README.md.
 	return static_cast<uint8>(CurrentState) == 4;
+}
+
+bool AFortMinigame::IsMinigameActor(AActor* Actor) const
+{
+	// CONFIDENCE: high
+	// Native 0x14209a290; wrapper 0x1429c3170.
+	{
+	    if (Actor)
+	    {
+	        for (const UFortMinigameLogicComponent* Component : MinigameComponents)
+	        {
+	            if (Component && Component->GetOwner() == Actor)
+	            {
+	                return true;
+	            }
+	        }
+	    }
+	    return false;
+	}
+}
+
+bool AFortMinigame::IsMinigameComponent(UFortMinigameLogicComponent* MinigameComponent) const
+{
+	// CONFIDENCE: high
+	// Native 0x14209a2d0; wrapper 0x1429c3200.
+	{
+	    return MinigameComponent && MinigameComponents.Contains(MinigameComponent);
+	}
 }
 
 bool AFortMinigame::IsMinigameStarting() const
@@ -403,6 +479,12 @@ void AFortMinigame::RefreshVoiceForPlayers()
 	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
 	// CONFIDENCE: HIGH
 	return;
+}
+
+void AFortMinigame::SetWinningTeamIndex(uint8 InWinningTeamIndex)
+{
+	// Native 0x1429c6540 CONFIDENCE: high
+	NativeRecoveredWinningTeamIndex = InWinningTeamIndex;
 }
 
 bool AFortMinigame::ShouldDropOrDestroyItem_Implementation(bool& bShouldDrop, bool& bShouldDestroy, AFortPlayerController* PC, UFortWorldItemDefinition* ItemDef) const

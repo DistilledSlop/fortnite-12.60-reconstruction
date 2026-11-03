@@ -19,6 +19,7 @@
 #include "EFortFacialAnimTypes.h"
 #include "EFortPawnStasisMode.h"
 #include "Engine/CurveTable.h"
+#include "Engine/EngineTypes.h"
 #include "Engine/SpringInterpolator.h"
 #include "FAbilitySystemInitializedDelegate.h"
 #include "FCharacterPartChanged.h"
@@ -69,6 +70,7 @@ class ABuildingGameplayActorPlayerPropAttachment;
 class AController;
 class ACustomCharacterPartModifier;
 class AFortAIPawn;
+class AFortAthenaVehicle;
 class AFortPickup;
 class AFortPlayerCharm;
 class AFortPlayerParachute;
@@ -1279,6 +1281,9 @@ public:
 	UPROPERTY(Transient)
 	float GhostModeExitDuration;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x272c): not a UPROPERTY, not replicated.
+	FHitResult NativeRecoveredThrownItemTrajectoryHitResult;
+
 	// table index 22, flags 0x1000000009001d
 	UPROPERTY()
 	UParticleSystemComponent* PSC_PlayerInWater;
@@ -1477,6 +1482,12 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	EFortPawnStasisMode GetStasisMode() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FHitResult GetThrownItemTrajectoryHitResult() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	AFortAthenaVehicle* GetVehicle() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	AActor* GetVehicleActor() const;

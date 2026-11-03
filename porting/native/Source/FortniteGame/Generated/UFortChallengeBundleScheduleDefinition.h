@@ -77,6 +77,12 @@ public:
 	bool bHideCountdownFromMapChallenges;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool DoesChallengeBundleScheduleExpire() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FString GetCalendarEventName() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	FString GetEventName() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

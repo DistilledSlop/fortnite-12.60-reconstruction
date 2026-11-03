@@ -90,6 +90,9 @@ public:
 	bool bHideRewardFromMapChallenges;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FFortChallengeSetStyle GetDisplayStyle() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	FString GetEventName() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

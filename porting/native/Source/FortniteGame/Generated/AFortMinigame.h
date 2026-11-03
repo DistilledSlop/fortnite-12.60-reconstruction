@@ -48,6 +48,7 @@
 #include "UFortVolumeAccessor.h"
 #include "UObject/Object.h"
 
+class AActor;
 class AFortGameplayMutator;
 class AFortPlayerController;
 class AFortPlayerControllerAthena;
@@ -507,6 +508,9 @@ public:
 	UPROPERTY()
 	TMap<FGameplayTag, FPlaylistUIExtension> AllowedUIExtensions;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0xc08): not a UPROPERTY, not replicated.
+	uint8 NativeRecoveredWinningTeamIndex;
+
 	// table index 8, flags 0x20080000010015
 	UPROPERTY()
 	TSet<EFortMinigameState> MinigameEditModeStates;
@@ -560,7 +564,19 @@ public:
 	void DoRep_UIExtensionTags();
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetBucketWinCount(int32& WinCount, int32 BucketIndex) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetCurrentRoundWinner() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetPlayerCount(bool bIncludeSpectators) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetPostGameTimeRemaining() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetRoundWinner(int32 Round) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetRuntime() const;
@@ -603,6 +619,12 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsInWarmup() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsMinigameActor(AActor* Actor) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsMinigameComponent(UFortMinigameLogicComponent* MinigameComponent) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsMinigameStarting() const;
@@ -681,6 +703,9 @@ protected:
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void RefreshVoiceForPlayers();
 public:
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void SetWinningTeamIndex(uint8 InWinningTeamIndex);
 
 	UFUNCTION(BlueprintNativeEvent)
 	bool ShouldDropOrDestroyItem(bool& bShouldDrop, bool& bShouldDestroy, AFortPlayerController* PC, UFortWorldItemDefinition* ItemDef) const;
