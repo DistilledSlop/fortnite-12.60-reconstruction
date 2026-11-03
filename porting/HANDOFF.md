@@ -1,5 +1,43 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Creative, pawn replication and state callback rough batch76 (2026-11-03)
+
+Added nine distinct uncounted source drafts in creative_supply76_runtime (2),
+controller_plot76_runtime (3), pawn_interact76_runtime (2), and
+ gamestate_sky76_runtime (2). Supply spawning/validation, island renaming,
+team-stat/death-report callbacks, pawn interaction/shared replication, sky-tube
+shutdown and metric notifications now have connected rough C++ bodies. Source
+hash/address inventories pin the existing improved decompilation inputs. Four
+other game-state callback candidates were already canonical and were excluded.
+No new Ghidra transaction or compiler/build/runtime/tests/generation this batch.
+
+Root reviewed all worker drafts and directly lifted sky/metric callbacks. Supply
+worker expanded broad transform, fallback frame and logging/refcount adapters on
+review. Root preserved missing native argument lists separately, replaced a
+preexisting flag-byte read with an explicit unresolved stack producer, and fixed
+fallback toss to receive the observed independent12-byte temporary. Sky iterator
+filtering is shared only between identical native loops, preserving live-count
+reloads, signed object indexing and cleanup. Metric memcpy lengths are missing
+from the source and remain explicit unresolved arguments. Pawn interaction's
+native machine argument use contradicts the generated declaration; do not promote
+without resolving that ABI. These are drafts, not accepted implementations.
+
+Previous goal turn PROGRESS: source97fbc576/dashboard5b12ad39 pushed. Canonical
+remains2,075 bodies+180fields=2,255 accepted/rejected0 (promotion71). Last tested
+2,040;35 canonical+4 manual bodies pending; next tests3,040. All four product
+gates OPEN and full objective ACTIVE. Native rough queue remains incomplete.
+Bounded Terra6.1 medium fork-none workers finished; rotate for the next tasks.
+Root primarily planner/orchestrator/reviewer, performs useful direct work, and
+retains sole canonical/native/promotion/build/staging/commit ownership. Preserve
+economical bounded reads, unrelated porting/graphics/ and Engine edits; skip
+visual work until resumed. No live worker/process or Ghidra lease held.
+
+Commands: bounded rg/head/sed/cat inspected instructions, candidate source and
+review windows; Python scripts selected unlifted candidates, checked canonical
+MANIFEST statuses and wrote SHA-256 source inventories. No tests were run.
+Continue substantial native behavior recovery and close engine contracts as
+supported; do not substitute getter/wrapper counts for full implementation.
+
 ## Large weapon and native rough batch75 (2026-11-03)
 
 Added six distinct actual native body drafts: weapon primary virtuals+778 and

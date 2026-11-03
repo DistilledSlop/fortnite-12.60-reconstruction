@@ -1,0 +1,16 @@
+[
+  {
+    "class_name": "AFortGameStateAthena",
+    "function": "OnRep_SkyTubesShuttingDown",
+    "address": "0x1429206d0",
+    "path": "porting/generated/decomp_improved/AFortGameStateAthena/OnRep_SkyTubesShuttingDown.c",
+    "sha256": "8a5190faf7576d093a682bf32e5813c705e3093216fccc3d6a39f391a31df865"
+  },
+  {
+    "class_name": "AFortPlayerStateAthena",
+    "function": "OnRep_MetricInformation",
+    "address": "0x142a8dab0",
+    "path": "porting/generated/decomp_improved/AFortPlayerStateAthena/OnRep_MetricInformation.c",
+    "sha256": "2012db6970fcf0f7bc3bb18a51834b5b4e0c99a47aab08661601b1ade9c7af81"
+  }
+]

@@ -1,0 +1,4 @@
+[
+  {"function":"ServerSetInteractingItem_Implementation","address":"0x141a231e0","source":"porting/generated/decomp_improved/AFortPlayerPawnAthena/ServerSetInteractingItem_Implementation.c","sha256":"f85e2366f559c3bf06fe9dc705dc275971b803c7a1ea52634977437da9abe199"},
+  {"function":"FastSharedReplication_Implementation","address":"0x141a113f0","source":"porting/generated/decomp_improved/AFortPlayerPawnAthena/FastSharedReplication_Implementation.c","sha256":"0b852d8d74ee6741e0bc080138c945b02d5acdbb364b50b8e24d4ce13815112d"}
+]

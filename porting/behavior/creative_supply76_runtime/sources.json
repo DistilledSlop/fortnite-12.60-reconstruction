@@ -1,0 +1,7 @@
+{
+  "sources": [
+    {"path": "porting/generated/decomp_improved/AFortPlayerControllerAthena/ServerSpawnCreativeSupplyDrop_Implementation.c", "address": "0x1419f2910", "sha256": "1dd1479b0b9521e25d9df43a8fb8d191e2fa52047b708c0a3ca8b5e47064fd62"},
+    {"path": "porting/generated/decomp_improved/AFortPlayerControllerAthena/ServerSpawnCreativeSupplyDrop_Validate.c", "address": "0x1419f31f0", "sha256": "f3c3a5c0114c2565f04295f8b8fd094863f3bf09f0a380355de8a21a215e31fe"}
+  ],
+  "status": "uncounted rough drafts; not validated or promoted"
+}

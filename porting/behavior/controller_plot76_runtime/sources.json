@@ -1,0 +1,7 @@
+{
+  "sources": [
+    {"path": "porting/generated/decomp_improved/AFortPlayerControllerAthena/UpdateCreativePlotName_Implementation.c", "address": "0x141a00e70", "sha256": "28fd7ecca00245cccb33dd6493f9c5ab5b34b5436ee56e03c32c26f33f62ff4c"},
+    {"path": "porting/generated/decomp_improved/AFortPlayerControllerAthena/ClientSendTeamStatsForPlayer_Implementation.c", "address": "0x1419c7d90", "sha256": "2ab52a14c5620501e388f7222b6fa5901725c2ddd4c64a1adc7797e69e4db3f8"},
+    {"path": "porting/generated/decomp_improved/AFortPlayerControllerAthena/ClientSetDeathReport_Implementation.c", "address": "0x1419c7db0", "sha256": "4026a39630591655cc20483e5435e0b3681efedbb9ce7e515e4639fa40443652"}
+  ]
+}
