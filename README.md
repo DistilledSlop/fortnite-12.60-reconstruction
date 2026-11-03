@@ -2,6 +2,10 @@
 
 # Fortnite 12.60 → Linux
 
+<!-- badges:start -->
+![overall](https://img.shields.io/badge/overall-20.6%25-2a78d6) ![milestones](https://img.shields.io/badge/milestones-0%2F4-d6a02a) ![snapshot](https://img.shields.io/badge/snapshot-8aaf1784-52514e)
+<!-- badges:end -->
+
 **A from-scratch reconstruction of Fortnite 12.60 (CL 13477524) as a buildable Unreal Engine 4.25 project, with a reimplemented dedicated server and local backend.**
 
 [Dashboard](#progress-dashboard) ·
@@ -28,9 +32,7 @@ or run `porting/progress/serve.sh`); GitHub only shows HTML as source unless Pag
 
 <!-- progress:start -->
 
-![overall](https://img.shields.io/badge/overall-20.6%25-2a78d6) ![milestones](https://img.shields.io/badge/milestones-0%2F4-d6a02a) ![snapshot](https://img.shields.io/badge/snapshot-628fd1b7-52514e)
-
-**Overall: 20.6%** · evidence-based 19.7% · objective 19.7% · milestones 0/4 · snapshot `628fd1b7` (2026-11-03)
+**Overall: 20.6%** · evidence-based 19.7% · objective 19.7% · milestones 0/4 · snapshot `8aaf1784` (2026-11-03)
 
 | Milestone | Status |
 |---|---|
@@ -44,7 +46,7 @@ or run `porting/progress/serve.sh`); GitHub only shows HTML as source unless Pag
 | Platform and Linux runtime | `█████░░░░░░░░░░░░░░░` | 26.0% | 5% |
 | Asset pipeline | `█████░░░░░░░░░░░░░░░` | 26.0% | 14% |
 | Maps and world (Apollo island) | `███░░░░░░░░░░░░░░░░░` | 13.9% | 9% |
-| Gameplay classes (/Script/FortniteGame) | `███░░░░░░░░░░░░░░░░░` | 12.7% | 33% |
+| Gameplay classes (/Script/FortniteGame) | `███░░░░░░░░░░░░░░░░░` | 12.8% | 33% |
 | Network protocol and replication | `█████░░░░░░░░░░░░░░░` | 27.1% | 10% |
 | Backend services (reconstructed server) | `█████████░░░░░░░░░░░` | 46.3% | 11% |
 | Audio | `█░░░░░░░░░░░░░░░░░░░` | 7.4% | 4% |

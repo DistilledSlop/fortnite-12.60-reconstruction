@@ -19,6 +19,7 @@ OUT = ROOT / "porting" / "progress" / "out"
 DOCS = ROOT / "docs"
 README = ROOT / "README.md"
 START, END = "<!-- progress:start -->", "<!-- progress:end -->"
+BSTART, BEND = "<!-- badges:start -->", "<!-- badges:end -->"
 PAGES = ["index.html", "history.html", "progress.svg", "progress.json"]
 
 
@@ -27,17 +28,21 @@ def bar(pct, width=20):
     return "█" * filled + "░" * (width - filled)
 
 
+def badges(d):
+    pct = f"{d['overall_pct']:.1f}%25"
+    return "\n".join([
+        BSTART,
+        f"![overall](https://img.shields.io/badge/overall-{pct}-2a78d6) "
+        f"![milestones](https://img.shields.io/badge/milestones-{d['milestones_done']}%2F{d['milestones_total']}-d6a02a) "
+        f"![snapshot](https://img.shields.io/badge/snapshot-{d['head'][:8]}-52514e)",
+        BEND,
+    ])
+
+
 def block(d):
     short = d["head"][:8]
     date = d["date"][:10]
     lines = [START, ""]
-    pct = f"{d['overall_pct']:.1f}%25"
-    lines.append(
-        f"![overall](https://img.shields.io/badge/overall-{pct}-2a78d6) "
-        f"![milestones](https://img.shields.io/badge/milestones-{d['milestones_done']}%2F{d['milestones_total']}-d6a02a) "
-        f"![snapshot](https://img.shields.io/badge/snapshot-{d['head'][:8]}-52514e)"
-    )
-    lines.append("")
     lines.append(
         f"**Overall: {d['overall_pct']:.1f}%** · evidence-based {d['measured_pct']:.1f}% · "
         f"objective {d['objective_pct']:.1f}% · milestones {d['milestones_done']}/{d['milestones_total']} · "
@@ -67,8 +72,10 @@ def block(d):
 
 def render_readme(d):
     text = README.read_text()
-    s, e = text.index(START), text.index(END) + len(END)
-    return text[:s] + block(d) + text[e:]
+    for (a, b), make in (((BSTART, BEND), badges), ((START, END), block)):
+        s, e = text.index(a), text.index(b) + len(b)
+        text = text[:s] + make(d) + text[e:]
+    return text
 
 
 def main():
