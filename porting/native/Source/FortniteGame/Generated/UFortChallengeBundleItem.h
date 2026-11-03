@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortAccountItem.h"
 
+class UFortChallengeBundleItemDefinition;
+
 #include "UFortChallengeBundleItem.generated.h"
 
 UCLASS()
@@ -36,6 +38,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool CanLevelUpBundle() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortChallengeBundleItemDefinition* GetChallengeDefinitionBP() const;
 
 };
 

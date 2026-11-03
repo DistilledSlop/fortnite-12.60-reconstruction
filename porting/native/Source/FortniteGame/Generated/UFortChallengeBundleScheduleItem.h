@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortAccountItem.h"
 
+class UFortChallengeBundleScheduleDefinition;
+
 #include "UFortChallengeBundleScheduleItem.generated.h"
 
 UCLASS(transient)
@@ -17,6 +19,9 @@ public:
 	// table index 0, flags 0x40000000000000
 	UPROPERTY()
 	TArray<FString> Granted_Bundles;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortChallengeBundleScheduleDefinition* GetScheduleDefinitionBP() const;
 
 };
 

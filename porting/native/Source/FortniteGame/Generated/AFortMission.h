@@ -9,6 +9,7 @@
 #include "EFortCompletionResult.h"
 #include "EFortMissionAudibility.h"
 #include "EFortMissionStatus.h"
+#include "EFortObjectiveStatus.h"
 #include "EMissionGenerationCategory.h"
 #include "FFortBadgeCountArray.h"
 #include "FFortGeneratedDifficultyOptions.h"
@@ -243,6 +244,9 @@ public:
 	virtual void AddOrRemoveTimerTime_Implementation(float TimeToAdd);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	TArray<AFortObjectiveBase*> GetAllObjectives() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	TSubclassOf<AFortClientAnnouncement_Basic> GetAnnouncementClassOverride() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
@@ -261,6 +265,12 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual FText GetMissionName() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	AFortObjectiveBase* GetObjectiveByHandle(FGameplayTagContainer& ObjectiveHandle) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	EFortObjectiveStatus GetObjectiveStatusByHandle(FGameplayTagContainer& ObjectiveHandle) const;
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	FText GetRespawnTextOverride() const;
@@ -299,6 +309,9 @@ protected:
 	UFUNCTION()
 	virtual void OnRep_UIIndex();
 public:
+
+	UFUNCTION(BlueprintCallable)
+	void SetRespawnTextOverride(FText& NewText);
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 

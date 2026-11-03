@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 
+#include "GameplayTagContainer.h"
+
 class ABuildingActor;
 class AFortPlacementActor;
 
@@ -19,6 +21,9 @@ class FORTNITEGAME_API UFortMissionLibrary : public UBlueprintFunctionLibrary
 public:
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	static AFortPlacementActor* FindOriginatingPlacementActor(ABuildingActor* BuildingActor);
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	static bool HasTags(FGameplayTagContainer& ContainerToCheck, FGameplayTagContainer& TagsToCheck, bool bRequireAll, bool bCountEmptyAsMatch);
 
 };
 

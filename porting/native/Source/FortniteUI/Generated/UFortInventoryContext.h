@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UBlueprintContextBase.h"
 
+#include "EItemEvolutionRestrictionReason.h"
 #include "EVaultItemLimitStatus.h"
 #include "FItemListChangedDelegate.h"
 #include "FItemsChanged.h"
@@ -23,6 +24,7 @@
 #include "FQuickbarFocusChangedDelegate.h"
 #include "FSetWorldResourceWidgetVisibility.h"
 #include "GameplayTagContainer.h"
+#include "UFortItem.h"
 #include "UFortSchematicItemDefinition.h"
 
 #include "UFortInventoryContext.generated.h"
@@ -128,10 +130,19 @@ public:
 	int32 CachedHeroItemCount;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool CanEvolve(UFortItem* Item, TArray<EItemEvolutionRestrictionReason>& OutRestrictionReasons) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool CanUpgradeItemRarity(UFortItem* Item, TArray<EItemEvolutionRestrictionReason>& OutRestrictionReasons);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetCountOfHeroItems() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetCountOfVaultLimitedItems() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static FText GetEvolveRestrictionReasonText(EItemEvolutionRestrictionReason Reason);
 
 	UFUNCTION(BlueprintCallable)
 	bool GetGameplayTagByIndex(FGameplayTagContainer GameplayTagContainer, int32 Index, FGameplayTag& Result);
@@ -141,6 +152,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	EVaultItemLimitStatus GetVaultItemLimitStatus() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool HasEvolutions(UFortItem* Item) const;
 
 };
 
