@@ -8,18 +8,19 @@ in OnEndGameKickPlayers must be recovered from assembly or better decompilation;
 the JumpToSafeZonePhase nested iterator/destructor ABI and player fields also
 remain unresolved. These drafts are not build inputs.
 
-`SafeZoneInsideChecks.rough.cpp` is a verbatim improved-decompiler control-flow
-transcription, retained as a source window for a future lift, not a completed C++
-lift. Its null/cast path, object iteration, local layouts, global overlap and
-helper effects require resolution; do not infer safety or invent defaults from it.
+`SafeZoneInsideChecks.rough.cpp` lifts both phase branches, shared iterator
+filtering/cleanup and volume checks. Its null/cast path, object iteration, local
+layouts, global overlap and helper effects remain unresolved; it is not a
+source-complete implementation. It replaces the initial raw transcription.
 All four source windows are under
 `porting/generated/decomp_improved/AFortGameModeAthena/` with matching filenames;
 the raw equivalents are under `porting/generated/decomp/AFortGameModeAthena/`.
 The per-function exec addresses appear in the drafts. The inlined bodies may be
 at different native addresses than the exec addresses.
 
-Other class entries are wrappers, not substantial recovered gameplay bodies.
-Fresh body recovery targets: RemoveAllLootFromWorld -> 0x14195e060;
+Other class entries are wrappers. Root probed these actual body targets and
+`native_bodies.rough.cpp` now lifts all eight, still uncounted:
+RemoveAllLootFromWorld -> 0x14195e060;
 StopRemovingAllLoot -> 0x141972f90; OnGamePhaseStepChanged -> 0x141953840;
 OnCheckForOrphanedServer -> 0x141952900; EnableGameplayMutator ->
 0x14193dc90; GetGameplayMutator -> 0x141946800; GetVehicleClassOverride ->
