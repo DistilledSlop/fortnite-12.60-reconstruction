@@ -1,0 +1,1 @@
+    UFortFriendSubscriptionToastWidget(const FObjectInitializer& ObjectInitializer);

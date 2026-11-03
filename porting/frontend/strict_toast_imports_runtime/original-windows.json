@@ -1,0 +1,191 @@
+{
+  "image_base": "0x140000000",
+  "windows": [
+    {
+      "va": "0x14523d570",
+      "size": 128,
+      "sha256": "79ef4862f8f562e3275003e8178af21acab026de59295219b30a21c3004e85d5",
+      "label": "friend exec SetToast"
+    },
+    {
+      "va": "0x144d97670",
+      "size": 1243,
+      "sha256": "636ac4c5ea0e5361a6ea6138d8ecc6a22e385cce8b3d5a5889baa9980caad41d",
+      "label": "friend SetToast"
+    },
+    {
+      "va": "0x14523c6f0",
+      "size": 26,
+      "sha256": "0ec319f333eeb05d8d17aff9eb464238184653a68d075a832d3ff6051878698e",
+      "label": "friend animation finished exec"
+    },
+    {
+      "va": "0x144d7e4b0",
+      "size": 31,
+      "sha256": "53a46025a7705769f868d45035184c7e2ed71106cfd05a1398ad35b477c8ce75",
+      "label": "friend animation finished"
+    },
+    {
+      "va": "0x1452a50b0",
+      "size": 26,
+      "sha256": "b3cb917088d1311e27dffa879d51c013c441c229386d439971af4665e670a253",
+      "label": "power exec HideToast"
+    },
+    {
+      "va": "0x144e0c9c0",
+      "size": 204,
+      "sha256": "d4110238c4a45f28575bea1b868aed72c9550b75ffb092a94d9e3f4a37abb5af",
+      "label": "power HideToast"
+    },
+    {
+      "va": "0x142b26c60",
+      "size": 5,
+      "sha256": "0fd9818608f0979592ece9188d4487d1eb0953dd7acdbc90eba0e704693eb7b9",
+      "label": "notification type thunk"
+    },
+    {
+      "va": "0x1429f3fc0",
+      "size": 5,
+      "sha256": "5e2b9cbc2bf3a777348a434affec813dd0e2ad75ebc93e029ec78e174ef969d7",
+      "label": "notification type thunk 2"
+    },
+    {
+      "va": "0x142b28690",
+      "size": 164,
+      "sha256": "bc0cceeb887601619f8a4b943053df335520d6dea584f9a01f9d7950a1c44a39",
+      "label": "notification type constructor"
+    },
+    {
+      "va": "0x14655b26a",
+      "size": 38,
+      "sha256": "48e1d21918b9769e6c886de0a0e31c67a7ac3e7592fcb0b3f2eb97809bc33af0",
+      "label": "notification class name"
+    },
+    {
+      "va": "0x141e62c80",
+      "size": 203,
+      "sha256": "299c6f0fc572e96f66aef7a03e9148f8e807abaee49c817074d5ce79a759d219",
+      "label": "registered player lookup"
+    },
+    {
+      "va": "0x142292160",
+      "size": 231,
+      "sha256": "0d13ed7a376378791143c5ecd8400857a08ba3d9bdb722b096bf6c8db8d7411b",
+      "label": "campaign team member ID"
+    },
+    {
+      "va": "0x142afa270",
+      "size": 112,
+      "sha256": "43dd297ba6436d71b9032ce679f987264a31100c3222d62bcf7db45e488574ac",
+      "label": "team member constructor"
+    },
+    {
+      "va": "0x142af85c0",
+      "size": 83,
+      "sha256": "ac3b52a366035e61a797079ed994a700a7ae852e6be121d003c2c7c7d4082f29",
+      "label": "campaign team member constructor"
+    },
+    {
+      "va": "0x144e1cd20",
+      "size": 501,
+      "sha256": "f4890284952395e5470ff6867d888f3a07c58a4899a78fccda4f1a4c75f503c2",
+      "label": "power SetToast"
+    },
+    {
+      "va": "0x144e22b70",
+      "size": 964,
+      "sha256": "301d1bbbcd5eb723f605670922b496418871ce1083e79c0dbe9437eea31ef4cc",
+      "label": "power setup subscriptions"
+    },
+    {
+      "va": "0x144e00850",
+      "size": 37,
+      "sha256": "41f86f99ad3d26a2a4980ec59f87f15f07c6094865b02b5ccfb02c94a4f463f2",
+      "label": "registered player callback"
+    },
+    {
+      "va": "0x144e07780",
+      "size": 37,
+      "sha256": "80a0686fef4203eeabd2a1b71b85682ac6a902761005d7c110d7c236c2b897a0",
+      "label": "profile callback"
+    },
+    {
+      "va": "0x144d6f540",
+      "size": 134,
+      "sha256": "d2953d2b8eb79e0e72729e6f71e86f36c11fcf48e22e333b7dfaa34a995738d7",
+      "label": "friend widget constructor"
+    },
+    {
+      "va": "0x1452a27a0",
+      "size": 87,
+      "sha256": "a9a1e9c8df16f21a601c51ea929bb92b52c9426932c006c606eebba59c9405db",
+      "label": "power widget constructor"
+    },
+    {
+      "va": "0x144d7fd10",
+      "size": 254,
+      "sha256": "15517c4d5d07cf4be350bd64c402bfec0227210d285f5a3c8325e56fa7223839",
+      "label": "friend display timer callback"
+    },
+    {
+      "va": "0x144d74030",
+      "size": 122,
+      "sha256": "d2527de53c8395d10c598048364ec24775a1bf301cf361f53a8c6fd301d6ed26",
+      "label": "friend close helper"
+    },
+    {
+      "va": "0x144d80480",
+      "size": 554,
+      "sha256": "d93203eac45867671cd19cd3b5afdaa0f6da5490a0b1f7316a67454b8332bf6a",
+      "label": "friend hold pressed"
+    },
+    {
+      "va": "0x144d806b0",
+      "size": 396,
+      "sha256": "4eb82a1a25fa1ac17d67d891a7760d8912ecda41cba096cc339d3ce7b76f5c95",
+      "label": "friend hold released"
+    },
+    {
+      "va": "0x144d7c410",
+      "size": 151,
+      "sha256": "bfa91c91bb8e6c14e8d7455ca86e079615eb0749d38d16354a97c20f1da797d3",
+      "label": "friend action activation"
+    },
+    {
+      "va": "0x144d32260",
+      "size": 90,
+      "sha256": "3088e5a9b4630a2c159a5f53355174710772ebd5467de62bcea1dab479f2b84f",
+      "label": "power profile delegate invoke"
+    },
+    {
+      "va": "0x144d33a90",
+      "size": 115,
+      "sha256": "643877b22a38ca1df76576c8d3e4f70e099170f7186664ec181fa6fd47cb7d04",
+      "label": "power profile delegate execute-if-safe"
+    },
+    {
+      "va": "0x141104100",
+      "size": 19,
+      "sha256": "697213fa13bfff84bd4cdca72f63c2c2089177abcd1bf5790f02433b559ccb3a",
+      "label": "power profile loaded query"
+    },
+    {
+      "va": "0x141f5d880",
+      "size": 184,
+      "sha256": "281753f24cd4a46fd0713152125e70058c9d4e294cd505c9054cfa18c138fc23",
+      "label": "power registered-player actor query"
+    },
+    {
+      "va": "0x140cd1e80",
+      "size": 362,
+      "sha256": "1b1b8cf9f035738506cee541846c7b86217b78cdf4156798a297f9cb72cc16ed",
+      "label": "MCP friend subscription operation entry"
+    },
+    {
+      "va": "0x1417ef620",
+      "size": 230,
+      "sha256": "d0d284493dc42bbd9dc73e5d6318d480be5c43b7b91f77eeb0bab1e17efef33e",
+      "label": "toast analytics entry"
+    }
+  ]
+}

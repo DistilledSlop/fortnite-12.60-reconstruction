@@ -1,0 +1,182 @@
+{
+  "UFortFriendSubscriptionToastWidget": {
+    "HandleCursorModeChanged": {
+      "exec_addr": "0x14523c550",
+      "flags": "0x40401",
+      "params": [
+        {
+          "index": 0,
+          "name": "CustomWidget",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x10000000080080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 16,
+          "type_refs": {
+            "class": "0x143dbd0a0"
+          }
+        },
+        {
+          "index": 1,
+          "name": "ActionName",
+          "kind": "Name",
+          "kind_raw": "0x14",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 4
+        },
+        {
+          "index": 2,
+          "name": "bCursorModeEnabled",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 24,
+          "bitfield": true,
+          "offset": null
+        }
+      ],
+      "create_func": "0x1452355c0",
+      "source": "lea"
+    },
+    "HandleGamePhaseChanged": {
+      "exec_addr": "0x14523c670",
+      "flags": "0x40401",
+      "params": [
+        {
+          "index": 0,
+          "name": "NewPhase",
+          "kind": "Enum",
+          "kind_raw": "0x1e",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "enum": "0x142b23e10"
+          }
+        },
+        {
+          "index": 1,
+          "name": "UnderlyingType",
+          "kind": "Byte",
+          "kind_raw": "0x0",
+          "property_flags": "0x0",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "enum_underlying_of": "NewPhase"
+        }
+      ],
+      "create_func": "0x1452355f0",
+      "source": "lea"
+    },
+    "HandleOpenCloseAnimationFinished": {
+      "exec_addr": "0x14523c6f0",
+      "flags": "0x40401",
+      "params": [],
+      "create_func": "0x145235620",
+      "source": "lea"
+    },
+    "OnPlayCloseAnimation": {
+      "exec_addr": null,
+      "flags": "0x8080800",
+      "params": [],
+      "create_func": "0x145235650"
+    },
+    "OnPlayOpenAnimation": {
+      "exec_addr": null,
+      "flags": "0x8080800",
+      "params": [],
+      "create_func": "0x145235680"
+    },
+    "OnToastFinished__DelegateSignature": {
+      "exec_addr": null,
+      "flags": null,
+      "params": null,
+      "create_func": "0x145235540"
+    },
+    "SetToast": {
+      "exec_addr": "0x14523d570",
+      "flags": "0x4020401",
+      "params": [
+        {
+          "index": 0,
+          "name": "ToastNotification",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "class": "0x142b26c60"
+          }
+        }
+      ],
+      "create_func": "0x1452356b0",
+      "source": "lea"
+    }
+  },
+  "UFortPlayerPowerRatingToast": {
+    "HideToast": {
+      "exec_addr": "0x1452a50b0",
+      "flags": "0x4080401",
+      "params": [],
+      "create_func": "0x1452a1310",
+      "source": "lea"
+    },
+    "OnToastFinished__DelegateSignature": {
+      "exec_addr": null,
+      "flags": null,
+      "params": null,
+      "create_func": "0x1452a1280"
+    },
+    "SetToast": {
+      "exec_addr": "0x1452a5350",
+      "flags": "0x4020401",
+      "params": [
+        {
+          "index": 0,
+          "name": "Notification",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "class": "0x142b26c60"
+          }
+        }
+      ],
+      "create_func": "0x1452a1370",
+      "source": "lea"
+    },
+    "ShowToast": {
+      "exec_addr": null,
+      "flags": "0x8080800",
+      "params": [],
+      "create_func": "0x1452a13d0"
+    }
+  }
+}
