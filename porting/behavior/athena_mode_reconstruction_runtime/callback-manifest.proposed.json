@@ -1,0 +1,15 @@
+[
+  {
+    "class": "AFortGameModeAthena",
+    "function": "OnAircraftEnteredDropZone",
+    "kind": "exec",
+    "signature": "void OnAircraftEnteredDropZone(AFortAthenaAircraft* FortAthenaAircraft)",
+    "inc_path": "porting/behavior/aircraft_dropzone_runtime/OnAircraftEnteredDropZone.inc",
+    "address": "0x1428f0440",
+    "includes": ["AFortAthenaAircraft.h", "AFortGameStateAthena.h"],
+    "signature_status": "proposed",
+    "confidence": "high",
+    "status": "proposed",
+    "notes": "Complete original body 0x1419520f0; reflected parameter unused. Awaiting original-class migration/promotion. Existing fixture StartPlay/constructor are not recovered original bodies. Aircraft tick producer/delegate wiring remain open."
+  }
+]

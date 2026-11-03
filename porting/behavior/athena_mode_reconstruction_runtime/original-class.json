@@ -1,0 +1,4744 @@
+{
+  "block_va": "0x1463cf250",
+  "name": null,
+  "name_status": "unresolved",
+  "config_name": "Game",
+  "class_flags": "0x8802ac",
+  "dependency_fns": [
+    "0x14290c570",
+    "0x142a02c30"
+  ],
+  "package_fn": "0x14290c570",
+  "base_fn": "0x142a02c30",
+  "class_noregister_fn": "0x1428ee970",
+  "interface_count": 2,
+  "properties": [
+    {
+      "index": 0,
+      "name": "GameFeatureLootPackageData",
+      "kind": "Array",
+      "kind_raw": "0x16",
+      "property_flags": "0x44000000002000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 5624
+    },
+    {
+      "index": 1,
+      "name": "GameFeatureLootPackageData",
+      "kind": "SoftObject",
+      "kind_raw": "0x10",
+      "property_flags": "0x4000000000000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "type_refs": {
+        "class": "0x1446f0190"
+      },
+      "array_inner_of": "GameFeatureLootPackageData"
+    },
+    {
+      "index": 2,
+      "name": "GameFeatureLootTierData",
+      "kind": "Array",
+      "kind_raw": "0x16",
+      "property_flags": "0x44000000002000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 5608
+    },
+    {
+      "index": 3,
+      "name": "GameFeatureLootTierData",
+      "kind": "SoftObject",
+      "kind_raw": "0x10",
+      "property_flags": "0x4000000000000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "type_refs": {
+        "class": "0x1446f0190"
+      },
+      "array_inner_of": "GameFeatureLootTierData"
+    },
+    {
+      "index": 4,
+      "name": "ReticulatedSplineIds",
+      "kind": "Array",
+      "kind_raw": "0x16",
+      "property_flags": "0x10000000004000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 5592
+    },
+    {
+      "index": 5,
+      "name": "ReticulatedSplineIds",
+      "kind": "Struct",
+      "kind_raw": "0x19",
+      "property_flags": "0x4000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "type_refs": {
+        "struct": "0x14291de60"
+      },
+      "array_inner_of": "ReticulatedSplineIds"
+    },
+    {
+      "index": 6,
+      "name": "bReticulateSplineKeysOnStart",
+      "kind": "Bool",
+      "kind_raw": "0x2c",
+      "property_flags": "0x10000000004000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "element_size": 1,
+      "size_of_outer": 5656,
+      "bitfield": true,
+      "set_bit_fn": "0x1428ef7f0",
+      "offset": null
+    },
+    {
+      "index": 7,
+      "name": "ReticulatedSplineDefinitions",
+      "kind": "Array",
+      "kind_raw": "0x16",
+      "property_flags": "0x10000000004000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 5568
+    },
+    {
+      "index": 8,
+      "name": "ReticulatedSplineDefinitions",
+      "kind": "Str",
+      "kind_raw": "0x15",
+      "property_flags": "0x4000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "array_inner_of": "ReticulatedSplineDefinitions"
+    },
+    {
+      "index": 9,
+      "name": "DDoSDetectionMatchInvalidationEvalDurationSeconds",
+      "kind": "Float",
+      "kind_raw": "0xa",
+      "property_flags": "0x10000000004000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 5532
+    },
+    {
+      "index": 10,
+      "name": "DDoSDetectionMatchInvalidationCount",
+      "kind": "Int",
+      "kind_raw": "0x3",
+      "property_flags": "0x10000000004000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 5528
+    },
+    {
+      "index": 11,
+      "name": "DDoSDetectionMatchInvalidationSeverity",
+      "kind": "Str",
+      "kind_raw": "0x15",
+      "property_flags": "0x10000000004000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 5512
+    },
+    {
+      "index": 12,
+      "name": "bEnableCompetitiveDDoSDetectionMatchInvalidation",
+      "kind": "Bool",
+      "kind_raw": "0x2c",
+      "property_flags": "0x10000000004000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "element_size": 1,
+      "size_of_outer": 5656,
+      "bitfield": true,
+      "set_bit_fn": "0x1428ef770",
+      "offset": null
+    },
+    {
+      "index": 13,
+      "name": "EndAircraftPhaseRequiredAlivePlayersPercent",
+      "kind": "Float",
+      "kind_raw": "0xa",
+      "property_flags": "0x10000000004000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 5504
+    },
+    {
+      "index": 14,
+      "name": "StartAircraftPhaseRequiredAlivePlayersPercent",
+      "kind": "Float",
+      "kind_raw": "0xa",
+      "property_flags": "0x10000000004000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 5500
+    },
+    {
+      "index": 15,
+      "name": "bEnableCompetitiveMissingPlayerMatchInvalidation",
+      "kind": "Bool",
+      "kind_raw": "0x2c",
+      "property_flags": "0x10000000004000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "element_size": 1,
+      "size_of_outer": 5656,
+      "bitfield": true,
+      "set_bit_fn": "0x1428ef780",
+      "offset": null
+    },
+    {
+      "index": 16,
+      "name": "StormCampingDamageMultiplier",
+      "kind": "Struct",
+      "kind_raw": "0x19",
+      "property_flags": "0x20080000010001",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 5440,
+      "type_refs": {
+        "struct": "0x140762fe0"
+      }
+    },
+    {
+      "index": 17,
+      "name": "StormCampingIncrementTimeAfterDelay",
+      "kind": "Struct",
+      "kind_raw": "0x19",
+      "property_flags": "0x20080000010001",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 5408,
+      "type_refs": {
+        "struct": "0x140762fe0"
+      }
+    },
+    {
+      "index": 18,
+      "name": "StormCampingInitialDelayTime",
+      "kind": "Struct",
+      "kind_raw": "0x19",
+      "property_flags": "0x20080000010001",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 5376,
+      "type_refs": {
+        "struct": "0x140762fe0"
+      }
+    },
+    {
+      "index": 19,
+      "name": "RedirectAthenaLootTierGroups",
+      "kind": "Map",
+      "kind_raw": "0x17",
+      "property_flags": "0x20080000004000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 5264
+    },
+    {
+      "index": 20,
+      "name": "RedirectAthenaLootTierGroups_Key",
+      "kind": "Name",
+      "kind_raw": "0x14",
+      "property_flags": "0x4000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0
+    },
+    {
+      "index": 21,
+      "name": "RedirectAthenaLootTierGroups",
+      "kind": "Name",
+      "kind_raw": "0x14",
+      "property_flags": "0x4000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 1
+    },
+    {
+      "index": 22,
+      "name": "SupportedAthenaLootTierGroups",
+      "kind": "Array",
+      "kind_raw": "0x16",
+      "property_flags": "0x20080000004000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 5248
+    },
+    {
+      "index": 23,
+      "name": "SupportedAthenaLootTierGroups",
+      "kind": "Name",
+      "kind_raw": "0x14",
+      "property_flags": "0x4000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "array_inner_of": "SupportedAthenaLootTierGroups"
+    },
+    {
+      "index": 24,
+      "name": "CoreGameModeModifiers",
+      "kind": "Array",
+      "kind_raw": "0x16",
+      "property_flags": "0x20080000010015",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 5040
+    },
+    {
+      "index": 25,
+      "name": "CoreGameModeModifiers",
+      "kind": "Object",
+      "kind_raw": "0x12",
+      "property_flags": "0x0",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "type_refs": {
+        "class": "0x1429094d0"
+      },
+      "array_inner_of": "CoreGameModeModifiers"
+    },
+    {
+      "index": 26,
+      "name": "MutatorListComponent",
+      "kind": "Object",
+      "kind_raw": "0x12",
+      "property_flags": "0x2008000008001d",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 5032,
+      "type_refs": {
+        "class": "0x1429f9220"
+      }
+    },
+    {
+      "index": 27,
+      "name": "AthenaGameDataTable",
+      "kind": "Object",
+      "kind_raw": "0x12",
+      "property_flags": "0x10000000002000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 5000,
+      "type_refs": {
+        "class": "0x1446f0b60"
+      }
+    },
+    {
+      "index": 28,
+      "name": "SpawnActorDataList",
+      "kind": "Array",
+      "kind_raw": "0x16",
+      "property_flags": "0x10000000002000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 4984
+    },
+    {
+      "index": 29,
+      "name": "SpawnActorDataList",
+      "kind": "Struct",
+      "kind_raw": "0x19",
+      "property_flags": "0x0",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "type_refs": {
+        "struct": "0x1428efed0"
+      },
+      "array_inner_of": "SpawnActorDataList"
+    },
+    {
+      "index": 30,
+      "name": "TimeOfDayManagerGameplayOverride",
+      "kind": "Class",
+      "kind_raw": "0x11",
+      "property_flags": "0x14000000002014",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 4976,
+      "type_refs": {
+        "meta_class": "0x142b05100",
+        "class": "0x142e497d0"
+      }
+    },
+    {
+      "index": 31,
+      "name": "CharmCosmetics",
+      "kind": "Array",
+      "kind_raw": "0x16",
+      "property_flags": "0x40000000002000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 4960
+    },
+    {
+      "index": 32,
+      "name": "CharmCosmetics",
+      "kind": "Object",
+      "kind_raw": "0x12",
+      "property_flags": "0x0",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "type_refs": {
+        "class": "0x14271b4f0"
+      },
+      "array_inner_of": "CharmCosmetics"
+    },
+    {
+      "index": 33,
+      "name": "MusicPacks",
+      "kind": "Array",
+      "kind_raw": "0x16",
+      "property_flags": "0x40000000002000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 4944
+    },
+    {
+      "index": 34,
+      "name": "MusicPacks",
+      "kind": "Object",
+      "kind_raw": "0x12",
+      "property_flags": "0x0",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "type_refs": {
+        "class": "0x14271b4f0"
+      },
+      "array_inner_of": "MusicPacks"
+    },
+    {
+      "index": 35,
+      "name": "ItemWrapCosmetics",
+      "kind": "Array",
+      "kind_raw": "0x16",
+      "property_flags": "0x40000000002000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 4928
+    },
+    {
+      "index": 36,
+      "name": "ItemWrapCosmetics",
+      "kind": "Object",
+      "kind_raw": "0x12",
+      "property_flags": "0x0",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "type_refs": {
+        "class": "0x14271b4f0"
+      },
+      "array_inner_of": "ItemWrapCosmetics"
+    },
+    {
+      "index": 37,
+      "name": "AthenaVehicleOverrides",
+      "kind": "Array",
+      "kind_raw": "0x16",
+      "property_flags": "0x40000000002000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 4912
+    },
+    {
+      "index": 38,
+      "name": "AthenaVehicleOverrides",
+      "kind": "Struct",
+      "kind_raw": "0x19",
+      "property_flags": "0x0",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "type_refs": {
+        "struct": "0x1428efe10"
+      },
+      "array_inner_of": "AthenaVehicleOverrides"
+    },
+    {
+      "index": 39,
+      "name": "ServerBotManager",
+      "kind": "Object",
+      "kind_raw": "0x12",
+      "property_flags": "0x40000000002000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 4904,
+      "type_refs": {
+        "class": "0x142ad3490"
+      }
+    },
+    {
+      "index": 40,
+      "name": "SpawningPolicyManager",
+      "kind": "Object",
+      "kind_raw": "0x12",
+      "property_flags": "0x40000000002000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 4896,
+      "type_refs": {
+        "class": "0x142833290"
+      }
+    },
+    {
+      "index": 41,
+      "name": "LastSpawnedSupplyDropType",
+      "kind": "Int",
+      "kind_raw": "0x3",
+      "property_flags": "0x40000000002000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 4888
+    },
+    {
+      "index": 42,
+      "name": "ExitCraftSpawnData",
+      "kind": "Struct",
+      "kind_raw": "0x19",
+      "property_flags": "0x40000000002000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 4880,
+      "type_refs": {
+        "struct": "0x1428efea0"
+      }
+    },
+    {
+      "index": 43,
+      "name": "BuildingGameplayActorSpawnData",
+      "kind": "Array",
+      "kind_raw": "0x16",
+      "property_flags": "0x40000000002000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 4864
+    },
+    {
+      "index": 44,
+      "name": "BuildingGameplayActorSpawnData",
+      "kind": "Struct",
+      "kind_raw": "0x19",
+      "property_flags": "0x0",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "type_refs": {
+        "struct": "0x1428efe40"
+      },
+      "array_inner_of": "BuildingGameplayActorSpawnData"
+    },
+    {
+      "index": 45,
+      "name": "SupplyDropSpawnDataList",
+      "kind": "Array",
+      "kind_raw": "0x16",
+      "property_flags": "0x40000000002000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 4848
+    },
+    {
+      "index": 46,
+      "name": "SupplyDropSpawnDataList",
+      "kind": "Struct",
+      "kind_raw": "0x19",
+      "property_flags": "0x0",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "type_refs": {
+        "struct": "0x1428eff90"
+      },
+      "array_inner_of": "SupplyDropSpawnDataList"
+    },
+    {
+      "index": 47,
+      "name": "BattleBusCosmetics",
+      "kind": "Array",
+      "kind_raw": "0x16",
+      "property_flags": "0x40000000002000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 4832
+    },
+    {
+      "index": 48,
+      "name": "BattleBusCosmetics",
+      "kind": "Object",
+      "kind_raw": "0x12",
+      "property_flags": "0x0",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "type_refs": {
+        "class": "0x14271b4f0"
+      },
+      "array_inner_of": "BattleBusCosmetics"
+    },
+    {
+      "index": 49,
+      "name": "LoadingScreenCosmetics",
+      "kind": "Array",
+      "kind_raw": "0x16",
+      "property_flags": "0x40000000002000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 4816
+    },
+    {
+      "index": 50,
+      "name": "LoadingScreenCosmetics",
+      "kind": "Object",
+      "kind_raw": "0x12",
+      "property_flags": "0x0",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "type_refs": {
+        "class": "0x14271b4f0"
+      },
+      "array_inner_of": "LoadingScreenCosmetics"
+    },
+    {
+      "index": 51,
+      "name": "ConsumableEmoteCosmetics",
+      "kind": "Array",
+      "kind_raw": "0x16",
+      "property_flags": "0x40000000002000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 4800
+    },
+    {
+      "index": 52,
+      "name": "ConsumableEmoteCosmetics",
+      "kind": "Object",
+      "kind_raw": "0x12",
+      "property_flags": "0x0",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "type_refs": {
+        "class": "0x14271b4f0"
+      },
+      "array_inner_of": "ConsumableEmoteCosmetics"
+    },
+    {
+      "index": 53,
+      "name": "PetLoadTestIndex",
+      "kind": "Int",
+      "kind_raw": "0x3",
+      "property_flags": "0x40000000002000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 4796
+    },
+    {
+      "index": 54,
+      "name": "MapMarkerLoadTestIndex",
+      "kind": "Int",
+      "kind_raw": "0x3",
+      "property_flags": "0x40000000002000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 4792
+    },
+    {
+      "index": 55,
+      "name": "MapMarkerCosmetics",
+      "kind": "Array",
+      "kind_raw": "0x16",
+      "property_flags": "0x40000000002000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 4776
+    },
+    {
+      "index": 56,
+      "name": "MapMarkerCosmetics",
+      "kind": "Object",
+      "kind_raw": "0x12",
+      "property_flags": "0x0",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "type_refs": {
+        "class": "0x14271b4f0"
+      },
+      "array_inner_of": "MapMarkerCosmetics"
+    },
+    {
+      "index": 57,
+      "name": "VictoryPoseLoadTestIndex",
+      "kind": "Int",
+      "kind_raw": "0x3",
+      "property_flags": "0x40000000002000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 4768
+    },
+    {
+      "index": 58,
+      "name": "VictoryPoseCosmetics",
+      "kind": "Array",
+      "kind_raw": "0x16",
+      "property_flags": "0x40000000002000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 4752
+    },
+    {
+      "index": 59,
+      "name": "VictoryPoseCosmetics",
+      "kind": "Object",
+      "kind_raw": "0x12",
+      "property_flags": "0x0",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "type_refs": {
+        "class": "0x14271b4f0"
+      },
+      "array_inner_of": "VictoryPoseCosmetics"
+    },
+    {
+      "index": 60,
+      "name": "DanceLoadTestIndex",
+      "kind": "Int",
+      "kind_raw": "0x3",
+      "property_flags": "0x40000000002000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 4744
+    },
+    {
+      "index": 61,
+      "name": "DanceCosmetics",
+      "kind": "Array",
+      "kind_raw": "0x16",
+      "property_flags": "0x40000000002000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 4728
+    },
+    {
+      "index": 62,
+      "name": "DanceCosmetics",
+      "kind": "Object",
+      "kind_raw": "0x12",
+      "property_flags": "0x0",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "type_refs": {
+        "class": "0x14271b4f0"
+      },
+      "array_inner_of": "DanceCosmetics"
+    },
+    {
+      "index": 63,
+      "name": "BackpackLoadTestIndex",
+      "kind": "Int",
+      "kind_raw": "0x3",
+      "property_flags": "0x40000000002000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 4720
+    },
+    {
+      "index": 64,
+      "name": "BackpackCosmetics",
+      "kind": "Array",
+      "kind_raw": "0x16",
+      "property_flags": "0x40000000002000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 4704
+    },
+    {
+      "index": 65,
+      "name": "BackpackCosmetics",
+      "kind": "Object",
+      "kind_raw": "0x12",
+      "property_flags": "0x0",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "type_refs": {
+        "class": "0x14271b4f0"
+      },
+      "array_inner_of": "BackpackCosmetics"
+    },
+    {
+      "index": 66,
+      "name": "HatLoadTestIndex",
+      "kind": "Int",
+      "kind_raw": "0x3",
+      "property_flags": "0x40000000002000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 4696
+    },
+    {
+      "index": 67,
+      "name": "HatCosmetics",
+      "kind": "Array",
+      "kind_raw": "0x16",
+      "property_flags": "0x40000000002000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 4680
+    },
+    {
+      "index": 68,
+      "name": "HatCosmetics",
+      "kind": "Object",
+      "kind_raw": "0x12",
+      "property_flags": "0x0",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "type_refs": {
+        "class": "0x14271b4f0"
+      },
+      "array_inner_of": "HatCosmetics"
+    },
+    {
+      "index": 69,
+      "name": "CharacterLoadTestIndex",
+      "kind": "Int",
+      "kind_raw": "0x3",
+      "property_flags": "0x40000000002000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 4672
+    },
+    {
+      "index": 70,
+      "name": "CharacterCosmetics",
+      "kind": "Array",
+      "kind_raw": "0x16",
+      "property_flags": "0x40000000002000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 4656
+    },
+    {
+      "index": 71,
+      "name": "CharacterCosmetics",
+      "kind": "Object",
+      "kind_raw": "0x12",
+      "property_flags": "0x0",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "type_refs": {
+        "class": "0x14271b4f0"
+      },
+      "array_inner_of": "CharacterCosmetics"
+    },
+    {
+      "index": 72,
+      "name": "PickaxeLoadTestIndex",
+      "kind": "Int",
+      "kind_raw": "0x3",
+      "property_flags": "0x40000000002000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 4648
+    },
+    {
+      "index": 73,
+      "name": "PickaxeCosmetics",
+      "kind": "Array",
+      "kind_raw": "0x16",
+      "property_flags": "0x40000000002000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 4632
+    },
+    {
+      "index": 74,
+      "name": "PickaxeCosmetics",
+      "kind": "Object",
+      "kind_raw": "0x12",
+      "property_flags": "0x0",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "type_refs": {
+        "class": "0x14271b4f0"
+      },
+      "array_inner_of": "PickaxeCosmetics"
+    },
+    {
+      "index": 75,
+      "name": "GliderLoadTestIndex",
+      "kind": "Int",
+      "kind_raw": "0x3",
+      "property_flags": "0x40000000002000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 4624
+    },
+    {
+      "index": 76,
+      "name": "GliderCosmetics",
+      "kind": "Array",
+      "kind_raw": "0x16",
+      "property_flags": "0x40000000002000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 4608
+    },
+    {
+      "index": 77,
+      "name": "GliderCosmetics",
+      "kind": "Object",
+      "kind_raw": "0x12",
+      "property_flags": "0x0",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "type_refs": {
+        "class": "0x14271b4f0"
+      },
+      "array_inner_of": "GliderCosmetics"
+    },
+    {
+      "index": 78,
+      "name": "SkyDiveContrailLoadTestIndex",
+      "kind": "Int",
+      "kind_raw": "0x3",
+      "property_flags": "0x40000000002000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 4600
+    },
+    {
+      "index": 79,
+      "name": "SkyDiveContrailCosmetics",
+      "kind": "Array",
+      "kind_raw": "0x16",
+      "property_flags": "0x40000000002000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 4584
+    },
+    {
+      "index": 80,
+      "name": "SkyDiveContrailCosmetics",
+      "kind": "Object",
+      "kind_raw": "0x12",
+      "property_flags": "0x0",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "type_refs": {
+        "class": "0x14271b4f0"
+      },
+      "array_inner_of": "SkyDiveContrailCosmetics"
+    },
+    {
+      "index": 81,
+      "name": "bAllCosmeticsLoaded",
+      "kind": "Bool",
+      "kind_raw": "0x2c",
+      "property_flags": "0x40000000002000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "element_size": 1,
+      "size_of_outer": 5656,
+      "bitfield": true,
+      "set_bit_fn": "0x1428ef700",
+      "offset": null
+    },
+    {
+      "index": 82,
+      "name": "bLockMobilePlayersToTouchInSwitchPool",
+      "kind": "Bool",
+      "kind_raw": "0x2c",
+      "property_flags": "0x20080000004000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "element_size": 1,
+      "size_of_outer": 5656,
+      "bitfield": true,
+      "set_bit_fn": "0x1428ef7c0",
+      "offset": null
+    },
+    {
+      "index": 83,
+      "name": "MaxActiveAIActors",
+      "kind": "Int",
+      "kind_raw": "0x3",
+      "property_flags": "0x20080000014001",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 4564
+    },
+    {
+      "index": 84,
+      "name": "ScoreMultiplier",
+      "kind": "Float",
+      "kind_raw": "0xa",
+      "property_flags": "0x20080000014001",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 4560
+    },
+    {
+      "index": 85,
+      "name": "ScorePlacementTables",
+      "kind": "Struct",
+      "kind_raw": "0x19",
+      "property_flags": "0x20080000014001",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 4336,
+      "type_refs": {
+        "struct": "0x1428eff30"
+      }
+    },
+    {
+      "index": 86,
+      "name": "MaxAdditionalRevivesToScore",
+      "kind": "Int",
+      "kind_raw": "0x3",
+      "property_flags": "0x20080000014001",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 4328
+    },
+    {
+      "index": 87,
+      "name": "ScoreForSubsequentRevives",
+      "kind": "Float",
+      "kind_raw": "0xa",
+      "property_flags": "0x20080000014001",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 4324
+    },
+    {
+      "index": 88,
+      "name": "ScoreForFirstRevive",
+      "kind": "Float",
+      "kind_raw": "0xa",
+      "property_flags": "0x20080000014001",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 4320
+    },
+    {
+      "index": 89,
+      "name": "ScorePerScaledTeamKill",
+      "kind": "Float",
+      "kind_raw": "0xa",
+      "property_flags": "0x20080000014001",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 4316
+    },
+    {
+      "index": 90,
+      "name": "ScoreForGettingAtLeastOneKill",
+      "kind": "Float",
+      "kind_raw": "0xa",
+      "property_flags": "0x20080000014001",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 4312
+    },
+    {
+      "index": 91,
+      "name": "ScoreMaxMinutesAliveCounted",
+      "kind": "Float",
+      "kind_raw": "0xa",
+      "property_flags": "0x20080000014001",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 4308
+    },
+    {
+      "index": 92,
+      "name": "ScorePerMinuteAlive",
+      "kind": "Float",
+      "kind_raw": "0xa",
+      "property_flags": "0x20080000014001",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 4304
+    },
+    {
+      "index": 93,
+      "name": "bFlightPathInitialized",
+      "kind": "Bool",
+      "kind_raw": "0x2c",
+      "property_flags": "0x20080000000000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "element_size": 1,
+      "size_of_outer": 5656,
+      "bitfield": true,
+      "set_bit_fn": "0x1428ef7a0",
+      "offset": null
+    },
+    {
+      "index": 94,
+      "name": "bEnableMatchmakingRatingUpdateV2",
+      "kind": "Bool",
+      "kind_raw": "0x2c",
+      "property_flags": "0x20080000014001",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "element_size": 1,
+      "size_of_outer": 5656,
+      "bitfield": true,
+      "set_bit_fn": "0x1428ef790",
+      "offset": null
+    },
+    {
+      "index": 95,
+      "name": "PlaylistsToRemoveSquadMappingOnLogout",
+      "kind": "Array",
+      "kind_raw": "0x16",
+      "property_flags": "0x20080000004000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 4280
+    },
+    {
+      "index": 96,
+      "name": "PlaylistsToRemoveSquadMappingOnLogout",
+      "kind": "Name",
+      "kind_raw": "0x14",
+      "property_flags": "0x4000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "array_inner_of": "PlaylistsToRemoveSquadMappingOnLogout"
+    },
+    {
+      "index": 97,
+      "name": "BlacklistedMatchmakingBackfillPlaylists",
+      "kind": "Array",
+      "kind_raw": "0x16",
+      "property_flags": "0x20080000004000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 4264
+    },
+    {
+      "index": 98,
+      "name": "BlacklistedMatchmakingBackfillPlaylists",
+      "kind": "Name",
+      "kind_raw": "0x14",
+      "property_flags": "0x4000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "array_inner_of": "BlacklistedMatchmakingBackfillPlaylists"
+    },
+    {
+      "index": 99,
+      "name": "PlatformOSSNamesToUploadStatsV2",
+      "kind": "Array",
+      "kind_raw": "0x16",
+      "property_flags": "0x20080000004000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 4216
+    },
+    {
+      "index": 100,
+      "name": "PlatformOSSNamesToUploadStatsV2",
+      "kind": "Name",
+      "kind_raw": "0x14",
+      "property_flags": "0x4000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "array_inner_of": "PlatformOSSNamesToUploadStatsV2"
+    },
+    {
+      "index": 101,
+      "name": "LiveBroadcastPlayerControllerClass",
+      "kind": "Class",
+      "kind_raw": "0x11",
+      "property_flags": "0x24080002000015",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 4192,
+      "type_refs": {
+        "meta_class": "0x142a67980",
+        "class": "0x142e497d0"
+      }
+    },
+    {
+      "index": 102,
+      "name": "SpectateAFriendPlayerControllerClass",
+      "kind": "Class",
+      "kind_raw": "0x11",
+      "property_flags": "0x24080002000015",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 4184,
+      "type_refs": {
+        "meta_class": "0x142a67980",
+        "class": "0x142e497d0"
+      }
+    },
+    {
+      "index": 103,
+      "name": "LiveSpectators",
+      "kind": "Array",
+      "kind_raw": "0x16",
+      "property_flags": "0x20080000000000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 4168
+    },
+    {
+      "index": 104,
+      "name": "LiveSpectators",
+      "kind": "Object",
+      "kind_raw": "0x12",
+      "property_flags": "0x0",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "type_refs": {
+        "class": "0x142a67980"
+      },
+      "array_inner_of": "LiveSpectators"
+    },
+    {
+      "index": 105,
+      "name": "ServerBotManagerClass",
+      "kind": "Class",
+      "kind_raw": "0x11",
+      "property_flags": "0x24080000000001",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 4160,
+      "type_refs": {
+        "meta_class": "0x142ad3490",
+        "class": "0x142e497d0"
+      }
+    },
+    {
+      "index": 106,
+      "name": "AISettings",
+      "kind": "Object",
+      "kind_raw": "0x12",
+      "property_flags": "0x2208000008001d",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 4152,
+      "type_refs": {
+        "class": "0x142712e20"
+      }
+    },
+    {
+      "index": 107,
+      "name": "bUseRandomTimeOfDay",
+      "kind": "Bool",
+      "kind_raw": "0x2c",
+      "property_flags": "0x20080000004000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "element_size": 1,
+      "size_of_outer": 5656,
+      "bitfield": true,
+      "set_bit_fn": "0x1428ef830",
+      "offset": null
+    },
+    {
+      "index": 108,
+      "name": "VoiceChatChannelPositional",
+      "kind": "Str",
+      "kind_raw": "0x15",
+      "property_flags": "0x20080000000000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 4128
+    },
+    {
+      "index": 109,
+      "name": "MegaStormManager",
+      "kind": "Object",
+      "kind_raw": "0x12",
+      "property_flags": "0x20080000002000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 4120,
+      "type_refs": {
+        "class": "0x1429b5480"
+      }
+    },
+    {
+      "index": 110,
+      "name": "EventStatSubmitAttempts",
+      "kind": "Int",
+      "kind_raw": "0x3",
+      "property_flags": "0x20080000004000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 4108
+    },
+    {
+      "index": 111,
+      "name": "EndGameKickPlayersDelay_IGMM",
+      "kind": "Float",
+      "kind_raw": "0xa",
+      "property_flags": "0x20080000004014",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 4104
+    },
+    {
+      "index": 112,
+      "name": "EndGameKickPlayersDelay_NoIGMM",
+      "kind": "Float",
+      "kind_raw": "0xa",
+      "property_flags": "0x20080000004014",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 4100
+    },
+    {
+      "index": 113,
+      "name": "bSafeZoneLocationsInitialized",
+      "kind": "Bool",
+      "kind_raw": "0x2c",
+      "property_flags": "0x20080000000000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "element_size": 1,
+      "size_of_outer": 5656,
+      "bitfield": true,
+      "set_bit_fn": "0x1428ef810",
+      "offset": null
+    },
+    {
+      "index": 114,
+      "name": "SafeZoneLocations",
+      "kind": "Array",
+      "kind_raw": "0x16",
+      "property_flags": "0x20080000000000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 4080
+    },
+    {
+      "index": 115,
+      "name": "SafeZoneLocations",
+      "kind": "Struct",
+      "kind_raw": "0x19",
+      "property_flags": "0x0",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "type_refs": {
+        "struct": "0x142eea590"
+      },
+      "array_inner_of": "SafeZoneLocations"
+    },
+    {
+      "index": 116,
+      "name": "SafeZoneIndicator",
+      "kind": "Object",
+      "kind_raw": "0x12",
+      "property_flags": "0x20080000000000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 4072,
+      "type_refs": {
+        "class": "0x142aced20"
+      }
+    },
+    {
+      "index": 117,
+      "name": "SafeZonePhase",
+      "kind": "Int",
+      "kind_raw": "0x3",
+      "property_flags": "0x20080000000014",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 4064
+    },
+    {
+      "index": 118,
+      "name": "SkyTubeDisablePhase",
+      "kind": "Struct",
+      "kind_raw": "0x19",
+      "property_flags": "0x20080000010001",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 4032,
+      "type_refs": {
+        "struct": "0x140762fe0"
+      }
+    },
+    {
+      "index": 119,
+      "name": "MegaStormManagerClass",
+      "kind": "Class",
+      "kind_raw": "0x11",
+      "property_flags": "0x24080000010001",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 4024,
+      "type_refs": {
+        "meta_class": "0x1429b5480",
+        "class": "0x142e497d0"
+      }
+    },
+    {
+      "index": 120,
+      "name": "SafeZoneIndicatorClass",
+      "kind": "Class",
+      "kind_raw": "0x11",
+      "property_flags": "0x24080000010001",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 4016,
+      "type_refs": {
+        "meta_class": "0x142aced20",
+        "class": "0x142e497d0"
+      }
+    },
+    {
+      "index": 121,
+      "name": "GE_OutsideSafeZoneCN",
+      "kind": "Class",
+      "kind_raw": "0x11",
+      "property_flags": "0x24080000010001",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 4008,
+      "type_refs": {
+        "meta_class": "0x140773c50",
+        "class": "0x142e497d0"
+      }
+    },
+    {
+      "index": 122,
+      "name": "GE_OutsideSafeZone",
+      "kind": "Class",
+      "kind_raw": "0x11",
+      "property_flags": "0x24080000010001",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 4000,
+      "type_refs": {
+        "meta_class": "0x140773c50",
+        "class": "0x142e497d0"
+      }
+    },
+    {
+      "index": 123,
+      "name": "TimeRemainingWhenPhasePaused",
+      "kind": "Float",
+      "kind_raw": "0xa",
+      "property_flags": "0x20080000000014",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 3992
+    },
+    {
+      "index": 124,
+      "name": "bSafeZonePaused",
+      "kind": "Bool",
+      "kind_raw": "0x2c",
+      "property_flags": "0x20080000000014",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "element_size": 1,
+      "size_of_outer": 5656,
+      "bitfield": true,
+      "set_bit_fn": "0x1428ef820",
+      "offset": null
+    },
+    {
+      "index": 125,
+      "name": "bSafeZoneActive",
+      "kind": "Bool",
+      "kind_raw": "0x2c",
+      "property_flags": "0x20080000000014",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "element_size": 1,
+      "size_of_outer": 5656,
+      "bitfield": true,
+      "set_bit_fn": "0x1428ef800",
+      "offset": null
+    },
+    {
+      "index": 126,
+      "name": "WarmupEarlyCountdownDuration",
+      "kind": "Float",
+      "kind_raw": "0xa",
+      "property_flags": "0x20080000014001",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 3984
+    },
+    {
+      "index": 127,
+      "name": "WarmupCountdownDuration",
+      "kind": "Float",
+      "kind_raw": "0xa",
+      "property_flags": "0x20080000014001",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 3976
+    },
+    {
+      "index": 128,
+      "name": "WarmupRequiredPlayerCount",
+      "kind": "Int",
+      "kind_raw": "0x3",
+      "property_flags": "0x20080000010001",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 3972
+    },
+    {
+      "index": 129,
+      "name": "TeamAlivePlayers",
+      "kind": "Int",
+      "kind_raw": "0x3",
+      "property_flags": "0x20080000000000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 100,
+      "object_flags": "0x45",
+      "offset": 3568
+    },
+    {
+      "index": 130,
+      "name": "AliveBots",
+      "kind": "Array",
+      "kind_raw": "0x16",
+      "property_flags": "0x20080000000000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 3552
+    },
+    {
+      "index": 131,
+      "name": "AliveBots",
+      "kind": "Object",
+      "kind_raw": "0x12",
+      "property_flags": "0x0",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "type_refs": {
+        "class": "0x1427bead0"
+      },
+      "array_inner_of": "AliveBots"
+    },
+    {
+      "index": 132,
+      "name": "AlivePlayers",
+      "kind": "Array",
+      "kind_raw": "0x16",
+      "property_flags": "0x20080000000000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 3536
+    },
+    {
+      "index": 133,
+      "name": "AlivePlayers",
+      "kind": "Object",
+      "kind_raw": "0x12",
+      "property_flags": "0x0",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "type_refs": {
+        "class": "0x142a50000"
+      },
+      "array_inner_of": "AlivePlayers"
+    },
+    {
+      "index": 134,
+      "name": "MaxPlayerCount",
+      "kind": "Int",
+      "kind_raw": "0x3",
+      "property_flags": "0x20080000010001",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 3528
+    },
+    {
+      "index": 135,
+      "name": "Aircrafts",
+      "kind": "Array",
+      "kind_raw": "0x16",
+      "property_flags": "0x20080000000000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 3456
+    },
+    {
+      "index": 136,
+      "name": "Aircrafts",
+      "kind": "Object",
+      "kind_raw": "0x12",
+      "property_flags": "0x0",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "type_refs": {
+        "class": "0x1427ccf90"
+      },
+      "array_inner_of": "Aircrafts"
+    },
+    {
+      "index": 137,
+      "name": "HotfixUndergroundVolumes",
+      "kind": "Array",
+      "kind_raw": "0x16",
+      "property_flags": "0x20080000004000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 3432
+    },
+    {
+      "index": 138,
+      "name": "HotfixUndergroundVolumes",
+      "kind": "Struct",
+      "kind_raw": "0x19",
+      "property_flags": "0x4000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "type_refs": {
+        "struct": "0x142b259a0"
+      },
+      "array_inner_of": "HotfixUndergroundVolumes"
+    },
+    {
+      "index": 139,
+      "name": "HotfixBlockingVolumes",
+      "kind": "Array",
+      "kind_raw": "0x16",
+      "property_flags": "0x20080000004000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 3416
+    },
+    {
+      "index": 140,
+      "name": "HotfixBlockingVolumes",
+      "kind": "Struct",
+      "kind_raw": "0x19",
+      "property_flags": "0x4000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "type_refs": {
+        "struct": "0x142b259a0"
+      },
+      "array_inner_of": "HotfixBlockingVolumes"
+    },
+    {
+      "index": 141,
+      "name": "HotfixKillVolumes",
+      "kind": "Array",
+      "kind_raw": "0x16",
+      "property_flags": "0x20080000004000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 3400
+    },
+    {
+      "index": 142,
+      "name": "HotfixKillVolumes",
+      "kind": "Struct",
+      "kind_raw": "0x19",
+      "property_flags": "0x4000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "type_refs": {
+        "struct": "0x142b259a0"
+      },
+      "array_inner_of": "HotfixKillVolumes"
+    },
+    {
+      "index": 143,
+      "name": "CreativeModeGracefulShutdownTime",
+      "kind": "Int",
+      "kind_raw": "0x3",
+      "property_flags": "0x20080000004000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 3392
+    },
+    {
+      "index": 144,
+      "name": "ForceKickAfterDeathTime",
+      "kind": "Float",
+      "kind_raw": "0xa",
+      "property_flags": "0x20080000004000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 3388
+    },
+    {
+      "index": 145,
+      "name": "ForceKickAfterDeathMode",
+      "kind": "Enum",
+      "kind_raw": "0x1e",
+      "property_flags": "0x20080000004000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 3384,
+      "type_refs": {
+        "enum": "0x142a97c50"
+      }
+    },
+    {
+      "index": 146,
+      "name": "UnderlyingType",
+      "kind": "Byte",
+      "kind_raw": "0x0",
+      "property_flags": "0x0",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "enum_underlying_of": "ForceKickAfterDeathMode"
+    },
+    {
+      "index": 147,
+      "name": "bIncludeDisconnectedTeammatesFromAircraftPhase",
+      "kind": "Bool",
+      "kind_raw": "0x2c",
+      "property_flags": "0x20080000004000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "element_size": 1,
+      "size_of_outer": 5656,
+      "bitfield": true,
+      "set_bit_fn": "0x1428ef7b0",
+      "offset": null
+    },
+    {
+      "index": 148,
+      "name": "bAlwaysIncludeDisconnectedTeammates",
+      "kind": "Bool",
+      "kind_raw": "0x2c",
+      "property_flags": "0x20080000004000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "element_size": 1,
+      "size_of_outer": 5656,
+      "bitfield": true,
+      "set_bit_fn": "0x1428ef740",
+      "offset": null
+    },
+    {
+      "index": 149,
+      "name": "BattleLabTeleporterManager",
+      "kind": "Object",
+      "kind_raw": "0x12",
+      "property_flags": "0x20080000000000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 3176,
+      "type_refs": {
+        "class": "0x1446ab9e0"
+      }
+    },
+    {
+      "index": 150,
+      "name": "BattleLabTeleporterManagerClass",
+      "kind": "SoftClass",
+      "kind_raw": "0xd",
+      "property_flags": "0x24080000010001",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 3136,
+      "type_refs": {
+        "meta_class": "0x1446ab9e0"
+      }
+    },
+    {
+      "index": 151,
+      "name": "PlaylistEnableBotDynamicELO",
+      "kind": "Struct",
+      "kind_raw": "0x19",
+      "property_flags": "0x20080000010001",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 3104,
+      "type_refs": {
+        "struct": "0x140762fe0"
+      }
+    },
+    {
+      "index": 152,
+      "name": "PlaylistEnableBotSpectate",
+      "kind": "Struct",
+      "kind_raw": "0x19",
+      "property_flags": "0x20080000010001",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 3072,
+      "type_refs": {
+        "struct": "0x140762fe0"
+      }
+    },
+    {
+      "index": 153,
+      "name": "PlaylistEnableBots",
+      "kind": "Struct",
+      "kind_raw": "0x19",
+      "property_flags": "0x20080000010001",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 3040,
+      "type_refs": {
+        "struct": "0x140762fe0"
+      }
+    },
+    {
+      "index": 154,
+      "name": "bStormCapSystemEnabled",
+      "kind": "Bool",
+      "kind_raw": "0x2c",
+      "property_flags": "0x20080000002000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "element_size": 1,
+      "size_of_outer": 5656,
+      "bitfield": true,
+      "set_bit_fn": "0x1428d46d0",
+      "offset": null
+    },
+    {
+      "index": 155,
+      "name": "PlaylistSupportsStormCapSystem",
+      "kind": "Struct",
+      "kind_raw": "0x19",
+      "property_flags": "0x20080000010001",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 3000,
+      "type_refs": {
+        "struct": "0x140762fe0"
+      }
+    },
+    {
+      "index": 156,
+      "name": "bDisableStormCapSystem",
+      "kind": "Bool",
+      "kind_raw": "0x2c",
+      "property_flags": "0x20080000004000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "element_size": 1,
+      "size_of_outer": 5656,
+      "bitfield": true,
+      "set_bit_fn": "0x14102bed0",
+      "offset": null
+    },
+    {
+      "index": 157,
+      "name": "DefaultWarmupEarlyRequiredPlayerPercent",
+      "kind": "Float",
+      "kind_raw": "0xa",
+      "property_flags": "0x20080000004000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 2988
+    },
+    {
+      "index": 158,
+      "name": "bEnableRecentPlayersUpdates",
+      "kind": "Bool",
+      "kind_raw": "0x2c",
+      "property_flags": "0x20080000004000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "element_size": 1,
+      "size_of_outer": 5656,
+      "bitfield": true,
+      "set_bit_fn": "0x14274f030",
+      "offset": null
+    },
+    {
+      "index": 159,
+      "name": "OrphanedServerCheckTime",
+      "kind": "Float",
+      "kind_raw": "0xa",
+      "property_flags": "0x20080000004000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 2968
+    },
+    {
+      "index": 160,
+      "name": "FailedToStartMatchTimeout",
+      "kind": "Float",
+      "kind_raw": "0xa",
+      "property_flags": "0x20080000004000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 2952
+    },
+    {
+      "index": 161,
+      "name": "OverloadedInitialConnectTimeout",
+      "kind": "Float",
+      "kind_raw": "0xa",
+      "property_flags": "0x20080000004000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 2948
+    },
+    {
+      "index": 162,
+      "name": "bUseSkydiveLeaderInSplitScreen",
+      "kind": "Bool",
+      "kind_raw": "0x2c",
+      "property_flags": "0x20080000004000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "element_size": 1,
+      "size_of_outer": 5656,
+      "bitfield": true,
+      "set_bit_fn": "0x1428ef840",
+      "offset": null
+    },
+    {
+      "index": 163,
+      "name": "bUseSkydiveLeader",
+      "kind": "Bool",
+      "kind_raw": "0x2c",
+      "property_flags": "0x20080000004000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "element_size": 1,
+      "size_of_outer": 5656,
+      "bitfield": true,
+      "set_bit_fn": "0x1428ef850",
+      "offset": null
+    },
+    {
+      "index": 164,
+      "name": "PlaylistHotfixOriginalGCFrequency",
+      "kind": "Float",
+      "kind_raw": "0xa",
+      "property_flags": "0x20080000002000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 2940
+    },
+    {
+      "index": 165,
+      "name": "bPlaylistHotfixChangedGCDisabling",
+      "kind": "Bool",
+      "kind_raw": "0x2c",
+      "property_flags": "0x20080000002000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "element_size": 1,
+      "size_of_outer": 5656,
+      "bitfield": true,
+      "set_bit_fn": "0x1428ef7e0",
+      "offset": null
+    },
+    {
+      "index": 166,
+      "name": "GCSettingsOverrideList",
+      "kind": "Array",
+      "kind_raw": "0x16",
+      "property_flags": "0x20080000004000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 2920
+    },
+    {
+      "index": 167,
+      "name": "GCSettingsOverrideList",
+      "kind": "Struct",
+      "kind_raw": "0x19",
+      "property_flags": "0x4000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "type_refs": {
+        "struct": "0x1428eff00"
+      },
+      "array_inner_of": "GCSettingsOverrideList"
+    },
+    {
+      "index": 168,
+      "name": "bDisableGCOnServerDuringMatch",
+      "kind": "Bool",
+      "kind_raw": "0x2c",
+      "property_flags": "0x20080000004000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "element_size": 1,
+      "size_of_outer": 5656,
+      "bitfield": true,
+      "set_bit_fn": "0x1428ef760",
+      "offset": null
+    },
+    {
+      "index": 169,
+      "name": "TimeOfDayOverrideList",
+      "kind": "Array",
+      "kind_raw": "0x16",
+      "property_flags": "0x20080000004000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 2896
+    },
+    {
+      "index": 170,
+      "name": "TimeOfDayOverrideList",
+      "kind": "Struct",
+      "kind_raw": "0x19",
+      "property_flags": "0x4000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "type_refs": {
+        "struct": "0x1428efff0"
+      },
+      "array_inner_of": "TimeOfDayOverrideList"
+    },
+    {
+      "index": 171,
+      "name": "ExcludedLTMSpawnActors",
+      "kind": "Array",
+      "kind_raw": "0x16",
+      "property_flags": "0x20080000004000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 2880
+    },
+    {
+      "index": 172,
+      "name": "ExcludedLTMSpawnActors",
+      "kind": "Name",
+      "kind_raw": "0x14",
+      "property_flags": "0x4000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "array_inner_of": "ExcludedLTMSpawnActors"
+    },
+    {
+      "index": 173,
+      "name": "ExcludedLTMSupplyDrops",
+      "kind": "Array",
+      "kind_raw": "0x16",
+      "property_flags": "0x20080000004000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 2864
+    },
+    {
+      "index": 174,
+      "name": "ExcludedLTMSupplyDrops",
+      "kind": "Name",
+      "kind_raw": "0x14",
+      "property_flags": "0x4000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "array_inner_of": "ExcludedLTMSupplyDrops"
+    },
+    {
+      "index": 175,
+      "name": "ExcludedDefaultSupplyDrops",
+      "kind": "Array",
+      "kind_raw": "0x16",
+      "property_flags": "0x20080000004000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 2848
+    },
+    {
+      "index": 176,
+      "name": "ExcludedDefaultSupplyDrops",
+      "kind": "Name",
+      "kind_raw": "0x14",
+      "property_flags": "0x4000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "array_inner_of": "ExcludedDefaultSupplyDrops"
+    },
+    {
+      "index": 177,
+      "name": "bAllowDamageInWarmup",
+      "kind": "Bool",
+      "kind_raw": "0xc",
+      "property_flags": "0x20080000004000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "element_size": 1,
+      "size_of_outer": 5656,
+      "bitfield": true,
+      "set_bit_fn": "0x1428ef720",
+      "offset": null
+    },
+    {
+      "index": 178,
+      "name": "bDisable3DVoiceChat",
+      "kind": "Bool",
+      "kind_raw": "0xc",
+      "property_flags": "0x20080000004000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "element_size": 1,
+      "size_of_outer": 5656,
+      "bitfield": true,
+      "set_bit_fn": "0x1428ef750",
+      "offset": null
+    },
+    {
+      "index": 179,
+      "name": "bLoadTestCosmetics",
+      "kind": "Bool",
+      "kind_raw": "0x2c",
+      "property_flags": "0x10000000004000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "element_size": 1,
+      "size_of_outer": 5656,
+      "bitfield": true,
+      "set_bit_fn": "0x1427f42a0",
+      "offset": null
+    },
+    {
+      "index": 180,
+      "name": "bNeverSpawnPickupsOnPawnDeath",
+      "kind": "Bool",
+      "kind_raw": "0x2c",
+      "property_flags": "0x10000000010001",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "element_size": 1,
+      "size_of_outer": 5656,
+      "bitfield": true,
+      "set_bit_fn": "0x1428ef7d0",
+      "offset": null
+    },
+    {
+      "index": 181,
+      "name": "ClearAreaIgnoreActors",
+      "kind": "Array",
+      "kind_raw": "0x16",
+      "property_flags": "0x20080000000000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 2816
+    },
+    {
+      "index": 182,
+      "name": "ClearAreaIgnoreActors",
+      "kind": "Object",
+      "kind_raw": "0x12",
+      "property_flags": "0x0",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "type_refs": {
+        "class": "0x1446ab9e0"
+      },
+      "array_inner_of": "ClearAreaIgnoreActors"
+    },
+    {
+      "index": 183,
+      "name": "ActorsToClear",
+      "kind": "Array",
+      "kind_raw": "0x16",
+      "property_flags": "0x20080000000000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 2800
+    },
+    {
+      "index": 184,
+      "name": "ActorsToClear",
+      "kind": "Object",
+      "kind_raw": "0x12",
+      "property_flags": "0x0",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "type_refs": {
+        "class": "0x1427337e0"
+      },
+      "array_inner_of": "ActorsToClear"
+    },
+    {
+      "index": 185,
+      "name": "KillStreakTime",
+      "kind": "Struct",
+      "kind_raw": "0x19",
+      "property_flags": "0x10000000010001",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 2760,
+      "type_refs": {
+        "struct": "0x140762fe0"
+      }
+    },
+    {
+      "index": 186,
+      "name": "bAlwaysDBNO",
+      "kind": "Bool",
+      "kind_raw": "0x2c",
+      "property_flags": "0x10000000000000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "element_size": 1,
+      "size_of_outer": 5656,
+      "bitfield": true,
+      "set_bit_fn": "0x1428ef730",
+      "offset": null
+    },
+    {
+      "index": 187,
+      "name": "bAllGameplayModifiersRegistered",
+      "kind": "Bool",
+      "kind_raw": "0x2c",
+      "property_flags": "0x20080000002000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "element_size": 1,
+      "size_of_outer": 5656,
+      "bitfield": true,
+      "set_bit_fn": "0x1428ef710",
+      "offset": null
+    },
+    {
+      "index": 188,
+      "name": "OnSafeZoneUpdated",
+      "kind": "InlineMulticastDelegate",
+      "kind_raw": "0x1b",
+      "property_flags": "0x10000010080000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 2720,
+      "type_refs": {
+        "signature": "0x1428efd80"
+      }
+    },
+    {
+      "index": 189,
+      "name": "bMapInfoInitialized",
+      "kind": "Bool",
+      "kind_raw": "0x2c",
+      "property_flags": "0x20080000002000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "element_size": 1,
+      "size_of_outer": 5656,
+      "bitfield": true,
+      "set_bit_fn": "0x14243cd20",
+      "offset": null
+    },
+    {
+      "index": 190,
+      "name": "OnMapInfoInitialized",
+      "kind": "InlineMulticastDelegate",
+      "kind_raw": "0x1b",
+      "property_flags": "0x20080010080000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 2696,
+      "type_refs": {
+        "signature": "0x1428ee6c0"
+      }
+    },
+    {
+      "index": 191,
+      "name": "StormCapDamagePerTick",
+      "kind": "Struct",
+      "kind_raw": "0x19",
+      "property_flags": "0x20080000010001",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 2664,
+      "type_refs": {
+        "struct": "0x140762fe0"
+      }
+    },
+    {
+      "index": 192,
+      "name": "TimeBetweenStormCapDamage",
+      "kind": "Struct",
+      "kind_raw": "0x19",
+      "property_flags": "0x20080000010001",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 2624,
+      "type_refs": {
+        "struct": "0x140762fe0"
+      }
+    },
+    {
+      "index": 193,
+      "name": "DelayForStormCapDamage",
+      "kind": "Float",
+      "kind_raw": "0xa",
+      "property_flags": "0x20080000004000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 2612
+    },
+    {
+      "index": 194,
+      "name": "DelayForStormCapWarning",
+      "kind": "Float",
+      "kind_raw": "0xa",
+      "property_flags": "0x20080000004000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 2608
+    },
+    {
+      "index": 195,
+      "name": "SortedStormCapPrivateTeams",
+      "kind": "Array",
+      "kind_raw": "0x16",
+      "property_flags": "0x20080000002000",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 2592
+    },
+    {
+      "index": 196,
+      "name": "SortedStormCapPrivateTeams",
+      "kind": "Object",
+      "kind_raw": "0x12",
+      "property_flags": "0x0",
+      "replicated": false,
+      "rep_notify": null,
+      "array_dim": 1,
+      "object_flags": "0x45",
+      "offset": 0,
+      "type_refs": {
+        "class": "0x142aef890"
+      },
+      "array_inner_of": "SortedStormCapPrivateTeams"
+    }
+  ],
+  "replicated_properties": [],
+  "functions": [
+    {
+      "name": "AddAIClassToReplicationGraph",
+      "create_func": "0x1428eeb30",
+      "flags": [
+        "0x44020401"
+      ],
+      "replicated_function": false,
+      "net_roles": [],
+      "outer_fn": "0x1428ee6f0",
+      "params": [
+        {
+          "index": 0,
+          "name": "NewAIClass",
+          "kind": "Class",
+          "kind_raw": "0x11",
+          "property_flags": "0x14000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "meta_class": "0x142a16b50",
+            "class": "0x142e497d0"
+          }
+        }
+      ]
+    },
+    {
+      "name": "AddContentKeysToGameState",
+      "create_func": "0x1428eeb60",
+      "flags": [
+        "0x4020405"
+      ],
+      "replicated_function": false,
+      "net_roles": [],
+      "outer_fn": "0x1428ee6f0",
+      "params": []
+    },
+    {
+      "name": "EnableGameplayMutator",
+      "create_func": "0x1428ee290",
+      "flags": [
+        "0x4020401"
+      ],
+      "replicated_function": false,
+      "net_roles": [],
+      "outer_fn": "0x1428ee6f0",
+      "params": [
+        {
+          "index": 0,
+          "name": "bEnable",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 12,
+          "bitfield": true,
+          "set_bit_fn": "0x14070aae0",
+          "offset": null
+        },
+        {
+          "index": 1,
+          "name": "MutatorTag",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "struct": "0x143e9a2a0"
+          }
+        }
+      ]
+    },
+    {
+      "name": "EndGamePhaseStarted",
+      "create_func": "0x1428ee2c0",
+      "flags": [
+        "0x8020800"
+      ],
+      "replicated_function": false,
+      "net_roles": [],
+      "outer_fn": "0x1428ee6f0",
+      "params": []
+    },
+    {
+      "name": "FireServerPerformanceEvent",
+      "create_func": "0x1428ee2f0",
+      "flags": [
+        "0x80401"
+      ],
+      "replicated_function": false,
+      "net_roles": [],
+      "outer_fn": "0x1428ee6f0",
+      "params": []
+    },
+    {
+      "name": "GetBattleLabTeleporterManager",
+      "create_func": "0x1428ee320",
+      "flags": [
+        "0x14020405"
+      ],
+      "replicated_function": false,
+      "net_roles": [],
+      "outer_fn": "0x1428ee6f0",
+      "params": [
+        {
+          "index": 0,
+          "name": "ReturnValue",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x10000000000580",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "class": "0x1446ab9e0"
+          }
+        }
+      ]
+    },
+    {
+      "name": "GetGameplayMutator",
+      "create_func": "0x1428ee350",
+      "flags": [
+        "0x4020401"
+      ],
+      "replicated_function": false,
+      "net_roles": [],
+      "outer_fn": "0x1428ee6f0",
+      "params": [
+        {
+          "index": 0,
+          "name": "ReturnValue",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x10000000000580",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 8,
+          "type_refs": {
+            "class": "0x142909780"
+          }
+        },
+        {
+          "index": 1,
+          "name": "MutatorTag",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "struct": "0x143e9a2a0"
+          }
+        }
+      ]
+    },
+    {
+      "name": "GetMutatorByClass",
+      "create_func": "0x1428ee380",
+      "flags": [
+        "0x8020c00",
+        "0x8020c02",
+        "0x54020401"
+      ],
+      "replicated_function": null,
+      "note": "ambiguous: several FFunctionParams share this name pointer",
+      "params_note": "ambiguous: candidates disagree on parameter table",
+      "candidates": [
+        {
+          "owning_class": null,
+          "outer_fn": "0x1428ee6f0",
+          "flags": "0x8020c00",
+          "nprop": 3,
+          "params": [
+            {
+              "index": 0,
+              "name": "ReturnValue",
+              "kind": "Object",
+              "kind_raw": "0x12",
+              "property_flags": "0x10000000000580",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 16,
+              "type_refs": {
+                "class": "0x142909780"
+              }
+            },
+            {
+              "index": 1,
+              "name": "MutatorClass",
+              "kind": "Class",
+              "kind_raw": "0x11",
+              "property_flags": "0x14000000000080",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 8,
+              "type_refs": {
+                "meta_class": "0x142909780",
+                "class": "0x142e497d0"
+              }
+            },
+            {
+              "index": 2,
+              "name": "ContextActor",
+              "kind": "Object",
+              "kind_raw": "0x12",
+              "property_flags": "0x10000000000082",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 0,
+              "type_refs": {
+                "class": "0x1446ab9e0"
+              }
+            }
+          ]
+        },
+        {
+          "owning_class": null,
+          "outer_fn": "0x14290e020",
+          "flags": "0x8020c02",
+          "nprop": 3,
+          "params": [
+            {
+              "index": 0,
+              "name": "ReturnValue",
+              "kind": "Object",
+              "kind_raw": "0x12",
+              "property_flags": "0x10000000000580",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 16,
+              "type_refs": {
+                "class": "0x142909780"
+              }
+            },
+            {
+              "index": 1,
+              "name": "MutatorClass",
+              "kind": "Class",
+              "kind_raw": "0x11",
+              "property_flags": "0x14000000000080",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 8,
+              "type_refs": {
+                "meta_class": "0x142909780",
+                "class": "0x142e497d0"
+              }
+            },
+            {
+              "index": 2,
+              "name": "ContextActor",
+              "kind": "Object",
+              "kind_raw": "0x12",
+              "property_flags": "0x10000000000082",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 0,
+              "type_refs": {
+                "class": "0x1446ab9e0"
+              }
+            }
+          ]
+        },
+        {
+          "owning_class": null,
+          "outer_fn": "0x1429f8e40",
+          "flags": "0x54020401",
+          "nprop": 2,
+          "params": [
+            {
+              "index": 0,
+              "name": "ReturnValue",
+              "kind": "Object",
+              "kind_raw": "0x12",
+              "property_flags": "0x10000000000580",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 8,
+              "type_refs": {
+                "class": "0x142909780"
+              }
+            },
+            {
+              "index": 1,
+              "name": "MutatorClass",
+              "kind": "Class",
+              "kind_raw": "0x11",
+              "property_flags": "0x14000000000080",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 0,
+              "type_refs": {
+                "meta_class": "0x142909780",
+                "class": "0x142e497d0"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "GetPlaylistEnableBots",
+      "create_func": "0x1428ee3b0",
+      "flags": [
+        "0x54020401"
+      ],
+      "replicated_function": false,
+      "net_roles": [],
+      "outer_fn": "0x1428ee6f0",
+      "params": [
+        {
+          "index": 0,
+          "name": "ReturnValue",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x10000000000580",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 1,
+          "bitfield": true,
+          "set_bit_fn": "0x1406966a0",
+          "offset": null
+        }
+      ]
+    },
+    {
+      "name": "GetServerBotManager",
+      "create_func": "0x1428ee3e0",
+      "flags": [
+        "0x54020401"
+      ],
+      "replicated_function": false,
+      "net_roles": [],
+      "outer_fn": "0x1428ee6f0",
+      "params": [
+        {
+          "index": 0,
+          "name": "ReturnValue",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x10000000000580",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "class": "0x142ad3490"
+          }
+        }
+      ]
+    },
+    {
+      "name": "GetVehicleClassOverride",
+      "create_func": "0x1428ee410",
+      "flags": [
+        "0x54020401"
+      ],
+      "replicated_function": false,
+      "net_roles": [],
+      "outer_fn": "0x1428ee6f0",
+      "params": [
+        {
+          "index": 0,
+          "name": "ReturnValue",
+          "kind": "Class",
+          "kind_raw": "0x11",
+          "property_flags": "0x14000000000580",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 8,
+          "type_refs": {
+            "meta_class": "0x1446ab9e0",
+            "class": "0x142e497d0"
+          }
+        },
+        {
+          "index": 1,
+          "name": "DefaultVehicleClass",
+          "kind": "Class",
+          "kind_raw": "0x11",
+          "property_flags": "0x14000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "meta_class": "0x1446ab9e0",
+            "class": "0x142e497d0"
+          }
+        }
+      ]
+    },
+    {
+      "name": "HandleAllPlaylistLevelsVisible",
+      "create_func": "0x1428ee440",
+      "flags": [
+        "0x20401",
+        "0x80401"
+      ],
+      "replicated_function": null,
+      "note": "ambiguous: several FFunctionParams share this name pointer",
+      "params_note": "ambiguous: candidates disagree on parameter table",
+      "candidates": [
+        {
+          "owning_class": null,
+          "outer_fn": "0x1428ee6f0",
+          "flags": "0x20401",
+          "nprop": 0,
+          "params": []
+        },
+        {
+          "owning_class": null,
+          "outer_fn": "0x1429095b0",
+          "flags": "0x80401",
+          "nprop": 0,
+          "params": []
+        }
+      ]
+    },
+    {
+      "name": "IsMapInfoInitialized",
+      "create_func": "0x1428ee470",
+      "flags": [
+        "0x54020401"
+      ],
+      "replicated_function": false,
+      "net_roles": [],
+      "outer_fn": "0x1428ee6f0",
+      "params": [
+        {
+          "index": 0,
+          "name": "ReturnValue",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x10000000000580",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 1,
+          "bitfield": true,
+          "set_bit_fn": "0x1406966a0",
+          "offset": null
+        }
+      ]
+    },
+    {
+      "name": "JumpToSafeZonePhase",
+      "create_func": "0x1428ee4a0",
+      "flags": [
+        "0x4020403",
+        "0x4820401"
+      ],
+      "replicated_function": null,
+      "note": "ambiguous: several FFunctionParams share this name pointer",
+      "params_note": "ambiguous: candidates disagree on parameter table",
+      "candidates": [
+        {
+          "owning_class": null,
+          "outer_fn": "0x14281ca50",
+          "flags": "0x4820401",
+          "nprop": 3,
+          "params": [
+            {
+              "index": 0,
+              "name": "PawnSpawnMaxDistance",
+              "kind": "Float",
+              "kind_raw": "0xa",
+              "property_flags": "0x10000000000080",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 16
+            },
+            {
+              "index": 1,
+              "name": "PawnSpawnMinDistance",
+              "kind": "Float",
+              "kind_raw": "0xa",
+              "property_flags": "0x10000000000080",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 12
+            },
+            {
+              "index": 2,
+              "name": "PawnSpawnCenterLocation",
+              "kind": "Struct",
+              "kind_raw": "0x19",
+              "property_flags": "0x10000000000080",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 0,
+              "type_refs": {
+                "struct": "0x142eea590"
+              }
+            }
+          ]
+        },
+        {
+          "owning_class": null,
+          "outer_fn": "0x1428ee6f0",
+          "flags": "0x4020403",
+          "nprop": 0,
+          "params": []
+        }
+      ]
+    },
+    {
+      "name": "OnAircraftEnteredDropZone",
+      "create_func": "0x1428ee4d0",
+      "flags": [
+        "0x80401"
+      ],
+      "replicated_function": false,
+      "net_roles": [],
+      "params_note": "ambiguous: candidates disagree on parameter table",
+      "candidates": [
+        {
+          "owning_class": null,
+          "outer_fn": "0x14281ca50",
+          "flags": "0x80401",
+          "nprop": 1,
+          "params": [
+            {
+              "index": 0,
+              "name": "FortAthenaAircraft",
+              "kind": "Object",
+              "kind_raw": "0x12",
+              "property_flags": "0x10000000000080",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 0,
+              "type_refs": {
+                "class": "0x1427ccf90"
+              }
+            }
+          ]
+        },
+        {
+          "owning_class": null,
+          "outer_fn": "0x1428ee6f0",
+          "flags": "0x80401",
+          "nprop": 1,
+          "params": [
+            {
+              "index": 0,
+              "name": "FortAthenaAircraft",
+              "kind": "Object",
+              "kind_raw": "0x12",
+              "property_flags": "0x10000000000080",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 0,
+              "type_refs": {
+                "class": "0x1427ccf90"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "OnAircraftExitedDropZone",
+      "create_func": "0x1428ee500",
+      "flags": [
+        "0x80401"
+      ],
+      "replicated_function": false,
+      "net_roles": [],
+      "params_note": "ambiguous: candidates disagree on parameter table",
+      "candidates": [
+        {
+          "owning_class": null,
+          "outer_fn": "0x14281ca50",
+          "flags": "0x80401",
+          "nprop": 1,
+          "params": [
+            {
+              "index": 0,
+              "name": "FortAthenaAircraft",
+              "kind": "Object",
+              "kind_raw": "0x12",
+              "property_flags": "0x10000000000080",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 0,
+              "type_refs": {
+                "class": "0x1427ccf90"
+              }
+            }
+          ]
+        },
+        {
+          "owning_class": null,
+          "outer_fn": "0x1428ee6f0",
+          "flags": "0x80401",
+          "nprop": 1,
+          "params": [
+            {
+              "index": 0,
+              "name": "FortAthenaAircraft",
+              "kind": "Object",
+              "kind_raw": "0x12",
+              "property_flags": "0x10000000000080",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 0,
+              "type_refs": {
+                "class": "0x1427ccf90"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "OnAircraftFlightEnded",
+      "create_func": "0x1428ee530",
+      "flags": [
+        "0x80401"
+      ],
+      "replicated_function": false,
+      "net_roles": [],
+      "params_note": "ambiguous: candidates disagree on parameter table",
+      "candidates": [
+        {
+          "owning_class": null,
+          "outer_fn": "0x14281ca50",
+          "flags": "0x80401",
+          "nprop": 1,
+          "params": [
+            {
+              "index": 0,
+              "name": "FortAthenaAircraft",
+              "kind": "Object",
+              "kind_raw": "0x12",
+              "property_flags": "0x10000000000080",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 0,
+              "type_refs": {
+                "class": "0x1427ccf90"
+              }
+            }
+          ]
+        },
+        {
+          "owning_class": null,
+          "outer_fn": "0x1428ee6f0",
+          "flags": "0x80401",
+          "nprop": 1,
+          "params": [
+            {
+              "index": 0,
+              "name": "FortAthenaAircraft",
+              "kind": "Object",
+              "kind_raw": "0x12",
+              "property_flags": "0x10000000000080",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 0,
+              "type_refs": {
+                "class": "0x1427ccf90"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "OnCheckForOrphanedServer",
+      "create_func": "0x1428ee560",
+      "flags": [
+        "0x80401"
+      ],
+      "replicated_function": false,
+      "net_roles": [],
+      "outer_fn": "0x1428ee6f0",
+      "params": [
+        {
+          "index": 0,
+          "name": "bFromPlayerLogout",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 1,
+          "bitfield": true,
+          "set_bit_fn": "0x1406966a0",
+          "offset": null
+        }
+      ]
+    },
+    {
+      "name": "OnEndGameKickPlayers",
+      "create_func": "0x1428ee590",
+      "flags": [
+        "0x80401"
+      ],
+      "replicated_function": false,
+      "net_roles": [],
+      "outer_fn": "0x1428ee6f0",
+      "params": []
+    },
+    {
+      "name": "OnGamePhaseStepChanged",
+      "create_func": "0x1428ee5c0",
+      "flags": [
+        "0x420401",
+        "0x440401",
+        "0x480400",
+        "0x480401",
+        "0x4080401",
+        "0x8080800"
+      ],
+      "replicated_function": null,
+      "note": "ambiguous: several FFunctionParams share this name pointer",
+      "params_note": "ambiguous: candidates disagree on parameter table",
+      "candidates": [
+        {
+          "owning_class": null,
+          "outer_fn": "0x1427bdc70",
+          "flags": "0x420401",
+          "nprop": 3,
+          "params": [
+            {
+              "index": 0,
+              "name": "GamePhaseStep",
+              "kind": "Enum",
+              "kind_raw": "0x1e",
+              "property_flags": "0x10000000000082",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 16,
+              "type_refs": {
+                "enum": "0x142924000"
+              }
+            },
+            {
+              "index": 1,
+              "name": "UnderlyingType",
+              "kind": "Byte",
+              "kind_raw": "0x0",
+              "property_flags": "0x0",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 0,
+              "enum_underlying_of": "GamePhaseStep"
+            },
+            {
+              "index": 2,
+              "name": "SafeZoneInterface",
+              "kind": "Interface",
+              "kind_raw": "0x13",
+              "property_flags": "0x14000008000182",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 0,
+              "type_refs": {
+                "interface_class": "0x142aceec0"
+              }
+            }
+          ]
+        },
+        {
+          "owning_class": null,
+          "outer_fn": "0x1427dc910",
+          "flags": "0x480401",
+          "nprop": 3,
+          "params": [
+            {
+              "index": 0,
+              "name": "GamePhaseStep",
+              "kind": "Enum",
+              "kind_raw": "0x1e",
+              "property_flags": "0x10000000000082",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 16,
+              "type_refs": {
+                "enum": "0x142924000"
+              }
+            },
+            {
+              "index": 1,
+              "name": "UnderlyingType",
+              "kind": "Byte",
+              "kind_raw": "0x0",
+              "property_flags": "0x0",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 0,
+              "enum_underlying_of": "GamePhaseStep"
+            },
+            {
+              "index": 2,
+              "name": "SafeZoneInterface",
+              "kind": "Interface",
+              "kind_raw": "0x13",
+              "property_flags": "0x14000008000182",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 0,
+              "type_refs": {
+                "interface_class": "0x142aceec0"
+              }
+            }
+          ]
+        },
+        {
+          "owning_class": null,
+          "outer_fn": "0x1427e2310",
+          "flags": "0x480401",
+          "nprop": 3,
+          "params": [
+            {
+              "index": 0,
+              "name": "GamePhaseStep",
+              "kind": "Enum",
+              "kind_raw": "0x1e",
+              "property_flags": "0x10000000000082",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 16,
+              "type_refs": {
+                "enum": "0x142924000"
+              }
+            },
+            {
+              "index": 1,
+              "name": "UnderlyingType",
+              "kind": "Byte",
+              "kind_raw": "0x0",
+              "property_flags": "0x0",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 0,
+              "enum_underlying_of": "GamePhaseStep"
+            },
+            {
+              "index": 2,
+              "name": "SafeZoneInterface",
+              "kind": "Interface",
+              "kind_raw": "0x13",
+              "property_flags": "0x14000008000182",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 0,
+              "type_refs": {
+                "interface_class": "0x142aceec0"
+              }
+            }
+          ]
+        },
+        {
+          "owning_class": null,
+          "outer_fn": "0x1427e2860",
+          "flags": "0x480401",
+          "nprop": 3,
+          "params": [
+            {
+              "index": 0,
+              "name": "GamePhaseStep",
+              "kind": "Enum",
+              "kind_raw": "0x1e",
+              "property_flags": "0x10000000000082",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 16,
+              "type_refs": {
+                "enum": "0x142924000"
+              }
+            },
+            {
+              "index": 1,
+              "name": "UnderlyingType",
+              "kind": "Byte",
+              "kind_raw": "0x0",
+              "property_flags": "0x0",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 0,
+              "enum_underlying_of": "GamePhaseStep"
+            },
+            {
+              "index": 2,
+              "name": "SafeZoneInterface",
+              "kind": "Interface",
+              "kind_raw": "0x13",
+              "property_flags": "0x14000008000182",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 0,
+              "type_refs": {
+                "interface_class": "0x142aceec0"
+              }
+            }
+          ]
+        },
+        {
+          "owning_class": null,
+          "outer_fn": "0x1427fbf80",
+          "flags": "0x480400",
+          "nprop": 3,
+          "params": [
+            {
+              "index": 0,
+              "name": "GamePhaseStep",
+              "kind": "Enum",
+              "kind_raw": "0x1e",
+              "property_flags": "0x10000000000082",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 16,
+              "type_refs": {
+                "enum": "0x142924000"
+              }
+            },
+            {
+              "index": 1,
+              "name": "UnderlyingType",
+              "kind": "Byte",
+              "kind_raw": "0x0",
+              "property_flags": "0x0",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 0,
+              "enum_underlying_of": "GamePhaseStep"
+            },
+            {
+              "index": 2,
+              "name": "SafeZoneInterface",
+              "kind": "Interface",
+              "kind_raw": "0x13",
+              "property_flags": "0x14000008000182",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 0,
+              "type_refs": {
+                "interface_class": "0x142aceec0"
+              }
+            }
+          ]
+        },
+        {
+          "owning_class": null,
+          "outer_fn": "0x1427fbdd0",
+          "flags": "0x480401",
+          "nprop": 3,
+          "params": [
+            {
+              "index": 0,
+              "name": "GamePhaseStep",
+              "kind": "Enum",
+              "kind_raw": "0x1e",
+              "property_flags": "0x10000000000082",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 16,
+              "type_refs": {
+                "enum": "0x142924000"
+              }
+            },
+            {
+              "index": 1,
+              "name": "UnderlyingType",
+              "kind": "Byte",
+              "kind_raw": "0x0",
+              "property_flags": "0x0",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 0,
+              "enum_underlying_of": "GamePhaseStep"
+            },
+            {
+              "index": 2,
+              "name": "SafeZoneInterface",
+              "kind": "Interface",
+              "kind_raw": "0x13",
+              "property_flags": "0x14000008000182",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 0,
+              "type_refs": {
+                "interface_class": "0x142aceec0"
+              }
+            }
+          ]
+        },
+        {
+          "owning_class": null,
+          "outer_fn": "0x142802fa0",
+          "flags": "0x480401",
+          "nprop": 3,
+          "params": [
+            {
+              "index": 0,
+              "name": "GamePhaseStep",
+              "kind": "Enum",
+              "kind_raw": "0x1e",
+              "property_flags": "0x10000000000082",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 16,
+              "type_refs": {
+                "enum": "0x142924000"
+              }
+            },
+            {
+              "index": 1,
+              "name": "UnderlyingType",
+              "kind": "Byte",
+              "kind_raw": "0x0",
+              "property_flags": "0x0",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 0,
+              "enum_underlying_of": "GamePhaseStep"
+            },
+            {
+              "index": 2,
+              "name": "SafeZoneInterface",
+              "kind": "Interface",
+              "kind_raw": "0x13",
+              "property_flags": "0x14000008000182",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 0,
+              "type_refs": {
+                "interface_class": "0x142aceec0"
+              }
+            }
+          ]
+        },
+        {
+          "owning_class": null,
+          "outer_fn": "0x142802d00",
+          "flags": "0x480401",
+          "nprop": 3,
+          "params": [
+            {
+              "index": 0,
+              "name": "GamePhaseStep",
+              "kind": "Enum",
+              "kind_raw": "0x1e",
+              "property_flags": "0x10000000000082",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 16,
+              "type_refs": {
+                "enum": "0x142924000"
+              }
+            },
+            {
+              "index": 1,
+              "name": "UnderlyingType",
+              "kind": "Byte",
+              "kind_raw": "0x0",
+              "property_flags": "0x0",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 0,
+              "enum_underlying_of": "GamePhaseStep"
+            },
+            {
+              "index": 2,
+              "name": "SafeZoneInterface",
+              "kind": "Interface",
+              "kind_raw": "0x13",
+              "property_flags": "0x14000008000182",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 0,
+              "type_refs": {
+                "interface_class": "0x142aceec0"
+              }
+            }
+          ]
+        },
+        {
+          "owning_class": null,
+          "outer_fn": "0x142803700",
+          "flags": "0x480401",
+          "nprop": 3,
+          "params": [
+            {
+              "index": 0,
+              "name": "GamePhaseStep",
+              "kind": "Enum",
+              "kind_raw": "0x1e",
+              "property_flags": "0x10000000000082",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 16,
+              "type_refs": {
+                "enum": "0x142924000"
+              }
+            },
+            {
+              "index": 1,
+              "name": "UnderlyingType",
+              "kind": "Byte",
+              "kind_raw": "0x0",
+              "property_flags": "0x0",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 0,
+              "enum_underlying_of": "GamePhaseStep"
+            },
+            {
+              "index": 2,
+              "name": "SafeZoneInterface",
+              "kind": "Interface",
+              "kind_raw": "0x13",
+              "property_flags": "0x14000008000182",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 0,
+              "type_refs": {
+                "interface_class": "0x142aceec0"
+              }
+            }
+          ]
+        },
+        {
+          "owning_class": null,
+          "outer_fn": "0x14280e060",
+          "flags": "0x480401",
+          "nprop": 3,
+          "params": [
+            {
+              "index": 0,
+              "name": "GamePhaseStep",
+              "kind": "Enum",
+              "kind_raw": "0x1e",
+              "property_flags": "0x10000000000082",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 16,
+              "type_refs": {
+                "enum": "0x142924000"
+              }
+            },
+            {
+              "index": 1,
+              "name": "UnderlyingType",
+              "kind": "Byte",
+              "kind_raw": "0x0",
+              "property_flags": "0x0",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 0,
+              "enum_underlying_of": "GamePhaseStep"
+            },
+            {
+              "index": 2,
+              "name": "SafeZoneInterface",
+              "kind": "Interface",
+              "kind_raw": "0x13",
+              "property_flags": "0x14000008000182",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 0,
+              "type_refs": {
+                "interface_class": "0x142aceec0"
+              }
+            }
+          ]
+        },
+        {
+          "owning_class": null,
+          "outer_fn": "0x142815e90",
+          "flags": "0x480401",
+          "nprop": 3,
+          "params": [
+            {
+              "index": 0,
+              "name": "GamePhaseStep",
+              "kind": "Enum",
+              "kind_raw": "0x1e",
+              "property_flags": "0x10000000000082",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 16,
+              "type_refs": {
+                "enum": "0x142924000"
+              }
+            },
+            {
+              "index": 1,
+              "name": "UnderlyingType",
+              "kind": "Byte",
+              "kind_raw": "0x0",
+              "property_flags": "0x0",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 0,
+              "enum_underlying_of": "GamePhaseStep"
+            },
+            {
+              "index": 2,
+              "name": "SafeZoneInterface",
+              "kind": "Interface",
+              "kind_raw": "0x13",
+              "property_flags": "0x14000008000182",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 0,
+              "type_refs": {
+                "interface_class": "0x142aceec0"
+              }
+            }
+          ]
+        },
+        {
+          "owning_class": null,
+          "outer_fn": "0x14281ca50",
+          "flags": "0x480401",
+          "nprop": 3,
+          "params": [
+            {
+              "index": 0,
+              "name": "GamePhaseStep",
+              "kind": "Enum",
+              "kind_raw": "0x1e",
+              "property_flags": "0x10000000000082",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 16,
+              "type_refs": {
+                "enum": "0x142924000"
+              }
+            },
+            {
+              "index": 1,
+              "name": "UnderlyingType",
+              "kind": "Byte",
+              "kind_raw": "0x0",
+              "property_flags": "0x0",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 0,
+              "enum_underlying_of": "GamePhaseStep"
+            },
+            {
+              "index": 2,
+              "name": "SafeZoneInterface",
+              "kind": "Interface",
+              "kind_raw": "0x13",
+              "property_flags": "0x14000008000182",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 0,
+              "type_refs": {
+                "interface_class": "0x142aceec0"
+              }
+            }
+          ]
+        },
+        {
+          "owning_class": null,
+          "outer_fn": "0x142820d70",
+          "flags": "0x480401",
+          "nprop": 3,
+          "params": [
+            {
+              "index": 0,
+              "name": "GamePhaseStep",
+              "kind": "Enum",
+              "kind_raw": "0x1e",
+              "property_flags": "0x10000000000082",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 16,
+              "type_refs": {
+                "enum": "0x142924000"
+              }
+            },
+            {
+              "index": 1,
+              "name": "UnderlyingType",
+              "kind": "Byte",
+              "kind_raw": "0x0",
+              "property_flags": "0x0",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 0,
+              "enum_underlying_of": "GamePhaseStep"
+            },
+            {
+              "index": 2,
+              "name": "SafeZoneInterface",
+              "kind": "Interface",
+              "kind_raw": "0x13",
+              "property_flags": "0x14000008000182",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 0,
+              "type_refs": {
+                "interface_class": "0x142aceec0"
+              }
+            }
+          ]
+        },
+        {
+          "owning_class": null,
+          "outer_fn": "0x142822230",
+          "flags": "0x480401",
+          "nprop": 3,
+          "params": [
+            {
+              "index": 0,
+              "name": "GamePhaseStep",
+              "kind": "Enum",
+              "kind_raw": "0x1e",
+              "property_flags": "0x10000000000082",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 16,
+              "type_refs": {
+                "enum": "0x142924000"
+              }
+            },
+            {
+              "index": 1,
+              "name": "UnderlyingType",
+              "kind": "Byte",
+              "kind_raw": "0x0",
+              "property_flags": "0x0",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 0,
+              "enum_underlying_of": "GamePhaseStep"
+            },
+            {
+              "index": 2,
+              "name": "SafeZoneInterface",
+              "kind": "Interface",
+              "kind_raw": "0x13",
+              "property_flags": "0x14000008000182",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 0,
+              "type_refs": {
+                "interface_class": "0x142aceec0"
+              }
+            }
+          ]
+        },
+        {
+          "owning_class": null,
+          "outer_fn": "0x1428c6850",
+          "flags": "0x4080401",
+          "nprop": 0,
+          "params": []
+        },
+        {
+          "owning_class": null,
+          "outer_fn": "0x1428ee6f0",
+          "flags": "0x420401",
+          "nprop": 3,
+          "params": [
+            {
+              "index": 0,
+              "name": "GamePhaseStep",
+              "kind": "Enum",
+              "kind_raw": "0x1e",
+              "property_flags": "0x10000000000082",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 16,
+              "type_refs": {
+                "enum": "0x142924000"
+              }
+            },
+            {
+              "index": 1,
+              "name": "UnderlyingType",
+              "kind": "Byte",
+              "kind_raw": "0x0",
+              "property_flags": "0x0",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 0,
+              "enum_underlying_of": "GamePhaseStep"
+            },
+            {
+              "index": 2,
+              "name": "SafeZoneInterface",
+              "kind": "Interface",
+              "kind_raw": "0x13",
+              "property_flags": "0x14000008000182",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 0,
+              "type_refs": {
+                "interface_class": "0x142aceec0"
+              }
+            }
+          ]
+        },
+        {
+          "owning_class": null,
+          "outer_fn": "0x142ad3b70",
+          "flags": "0x440401",
+          "nprop": 3,
+          "params": [
+            {
+              "index": 0,
+              "name": "GamePhaseStep",
+              "kind": "Enum",
+              "kind_raw": "0x1e",
+              "property_flags": "0x10000000000082",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 16,
+              "type_refs": {
+                "enum": "0x142924000"
+              }
+            },
+            {
+              "index": 1,
+              "name": "UnderlyingType",
+              "kind": "Byte",
+              "kind_raw": "0x0",
+              "property_flags": "0x0",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 0,
+              "enum_underlying_of": "GamePhaseStep"
+            },
+            {
+              "index": 2,
+              "name": "SafeZoneInterface",
+              "kind": "Interface",
+              "kind_raw": "0x13",
+              "property_flags": "0x14000008000182",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 0,
+              "type_refs": {
+                "interface_class": "0x142aceec0"
+              }
+            }
+          ]
+        },
+        {
+          "owning_class": null,
+          "outer_fn": "0x145197020",
+          "flags": "0x8080800",
+          "nprop": 2,
+          "params": [
+            {
+              "index": 0,
+              "name": "GamePhaseStep",
+              "kind": "Enum",
+              "kind_raw": "0x1e",
+              "property_flags": "0x10000000000080",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 0,
+              "type_refs": {
+                "enum": "0x142924000"
+              }
+            },
+            {
+              "index": 1,
+              "name": "UnderlyingType",
+              "kind": "Byte",
+              "kind_raw": "0x0",
+              "property_flags": "0x0",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 0,
+              "enum_underlying_of": "GamePhaseStep"
+            }
+          ]
+        },
+        {
+          "owning_class": null,
+          "outer_fn": "0x1451c7f00",
+          "flags": "0x480401",
+          "nprop": 3,
+          "params": [
+            {
+              "index": 0,
+              "name": "GamePhaseStep",
+              "kind": "Enum",
+              "kind_raw": "0x1e",
+              "property_flags": "0x10000000000082",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 16,
+              "type_refs": {
+                "enum": "0x142924000"
+              }
+            },
+            {
+              "index": 1,
+              "name": "UnderlyingType",
+              "kind": "Byte",
+              "kind_raw": "0x0",
+              "property_flags": "0x0",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 0,
+              "enum_underlying_of": "GamePhaseStep"
+            },
+            {
+              "index": 2,
+              "name": "SafeZoneInterface",
+              "kind": "Interface",
+              "kind_raw": "0x13",
+              "property_flags": "0x14000008000182",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 0,
+              "type_refs": {
+                "interface_class": "0x142aceec0"
+              }
+            }
+          ]
+        },
+        {
+          "owning_class": null,
+          "outer_fn": "0x1451cd690",
+          "flags": "0x8080800",
+          "nprop": 2,
+          "params": [
+            {
+              "index": 0,
+              "name": "GamePhaseStep",
+              "kind": "Enum",
+              "kind_raw": "0x1e",
+              "property_flags": "0x10000000000080",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 0,
+              "type_refs": {
+                "enum": "0x142924000"
+              }
+            },
+            {
+              "index": 1,
+              "name": "UnderlyingType",
+              "kind": "Byte",
+              "kind_raw": "0x0",
+              "property_flags": "0x0",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 0,
+              "enum_underlying_of": "GamePhaseStep"
+            }
+          ]
+        },
+        {
+          "owning_class": null,
+          "outer_fn": "0x1451dd730",
+          "flags": "0x8080800",
+          "nprop": 2,
+          "params": [
+            {
+              "index": 0,
+              "name": "GamePhaseStep",
+              "kind": "Enum",
+              "kind_raw": "0x1e",
+              "property_flags": "0x10000000000080",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 0,
+              "type_refs": {
+                "enum": "0x142924000"
+              }
+            },
+            {
+              "index": 1,
+              "name": "UnderlyingType",
+              "kind": "Byte",
+              "kind_raw": "0x0",
+              "property_flags": "0x0",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 0,
+              "enum_underlying_of": "GamePhaseStep"
+            }
+          ]
+        },
+        {
+          "owning_class": null,
+          "outer_fn": "0x14534b550",
+          "flags": "0x480401",
+          "nprop": 3,
+          "params": [
+            {
+              "index": 0,
+              "name": "GamePhaseStep",
+              "kind": "Enum",
+              "kind_raw": "0x1e",
+              "property_flags": "0x10000000000082",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 16,
+              "type_refs": {
+                "enum": "0x142924000"
+              }
+            },
+            {
+              "index": 1,
+              "name": "UnderlyingType",
+              "kind": "Byte",
+              "kind_raw": "0x0",
+              "property_flags": "0x0",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 0,
+              "enum_underlying_of": "GamePhaseStep"
+            },
+            {
+              "index": 2,
+              "name": "SafeZoneInterface",
+              "kind": "Interface",
+              "kind_raw": "0x13",
+              "property_flags": "0x14000008000182",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 0,
+              "type_refs": {
+                "interface_class": "0x142aceec0"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "OnMapInfoInitialized__DelegateSignature",
+      "create_func": "0x1428ee6c0",
+      "flags": [
+        "0x130000"
+      ],
+      "replicated_function": false,
+      "net_roles": [],
+      "outer_fn": "0x1428ee6f0",
+      "params": []
+    },
+    {
+      "name": "RemoveAllLootFromWorld",
+      "create_func": "0x1428ee5f0",
+      "flags": [
+        "0x4022405"
+      ],
+      "replicated_function": false,
+      "net_roles": [],
+      "outer_fn": "0x1428ee6f0",
+      "params": [
+        {
+          "index": 0,
+          "name": "bProcessContainersAndPickupsConcurrently",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 24,
+          "bitfield": true,
+          "set_bit_fn": "0x140845480",
+          "offset": null
+        },
+        {
+          "index": 1,
+          "name": "TimeBetweenIterations",
+          "kind": "Float",
+          "kind_raw": "0xa",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 16
+        },
+        {
+          "index": 2,
+          "name": "PickupsPerIteration",
+          "kind": "Int",
+          "kind_raw": "0x3",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 12
+        },
+        {
+          "index": 3,
+          "name": "ContainersPerIteration",
+          "kind": "Int",
+          "kind_raw": "0x3",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 8
+        },
+        {
+          "index": 4,
+          "name": "WorldContext",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "class": "0x142eea520"
+          }
+        }
+      ]
+    },
+    {
+      "name": "SafeZoneInsideChecks",
+      "create_func": "0x1428ee620",
+      "flags": [
+        "0x80401"
+      ],
+      "replicated_function": false,
+      "net_roles": [],
+      "outer_fn": "0x1428ee6f0",
+      "params": []
+    },
+    {
+      "name": "SetTimeOfDayManagerGameplayOverride",
+      "create_func": "0x1428ee650",
+      "flags": [
+        "0x4020401"
+      ],
+      "replicated_function": false,
+      "net_roles": [],
+      "outer_fn": "0x1428ee6f0",
+      "params": [
+        {
+          "index": 0,
+          "name": "TimeOfDayManagerClass",
+          "kind": "Class",
+          "kind_raw": "0x11",
+          "property_flags": "0x14000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "meta_class": "0x142b05100",
+            "class": "0x142e497d0"
+          }
+        }
+      ]
+    },
+    {
+      "name": "StopRemovingAllLoot",
+      "create_func": "0x1428ee680",
+      "flags": [
+        "0x4022405"
+      ],
+      "replicated_function": false,
+      "net_roles": [],
+      "outer_fn": "0x1428ee6f0",
+      "params": [
+        {
+          "index": 0,
+          "name": "bImmediateCleanup",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 16,
+          "bitfield": true,
+          "set_bit_fn": "0x14070aae0",
+          "offset": null
+        },
+        {
+          "index": 1,
+          "name": "WorldContext",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "class": "0x142eea520"
+          }
+        }
+      ]
+    }
+  ],
+  "replicated_functions": [],
+  "dependency0_fn": "0x14290c570"
+}

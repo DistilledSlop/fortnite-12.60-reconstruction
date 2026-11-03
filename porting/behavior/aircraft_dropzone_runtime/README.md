@@ -62,3 +62,5 @@ Disassembly used `build_vtable_slots.Image.disasm` and the image's unwind
 function extents; tick has split unwind fragments and was read as the full
 contiguous range rather than truncating at the first fragment. See also
 `aircraft_dropzone_evidence.md` and `aircraft_lookup_evidence.md`.
+
+The native byte declaration is now proposed for canonical storage independently of the callback. The callback's body is closed, but AFortGameModeAthena remains a hand-written AGameModeBase fixture blocked from generation; it was deliberately excluded from the canonical ported manifest rather than accepting a generation rejection. Original-class migration is being implemented in athena_mode_reconstruction_runtime so the Native owner can replace the fixture class declaration while preserving its current terrain/spawn support. No callback/body coverage credit until that integration gate closes.

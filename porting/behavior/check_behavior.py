@@ -155,6 +155,9 @@ def local_names(code):
     # reference). Template arguments are not matched: a local of a template type is not counted (none is used).
     for m in re.finditer(r"(?:^|[;{}\n(])\s*(?:const\s+)?[A-Za-z_][\w:]*\s*[*&]*\s*[*&]*\s*(\w+)\s*(?:=|;)", code):
         names.add(m.group(1))
+    # Range-for bindings end in ':' instead of '=' or ';'.
+    for m in re.finditer(r"\bfor\s*\(\s*(?:const\s+)?[A-Za-z_][\w:]*\s*[*&]*\s*(\w+)\s*:", code):
+        names.add(m.group(1))
     return names
 
 

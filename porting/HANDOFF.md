@@ -1,5 +1,59 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Gameplay checkpoint (2026-11-02): action queries and original-mode migration
+
+Progress: three closed bodies added (ASC HasNativeAction, pawn forwarding virtual,
+relationship mapping expansion), plus native action/drop-zone storage. Canonical
+manifest is291 entries /267 functions /24 member fields,0 generation rejects.
+The callback was removed from the ported manifest: current shared Athena mode is
+manual/blocked, so accepting its rejection would give false coverage. Blocker/body
+and exact producer remain in aircraft_dropzone_runtime; source-only storage does
+not implement the aircraft tick or event wiring. No omitted-effect fallback added.
+
+Validation /tmp/gameplay-action-dropzone-validation/: command.json →
+generation.corrected.log PASS291/0; check_new.py → new-body-check.corrected.log
+PASS5/5 new entries (the checker now recognizes typed range-for bindings).
+Fresh scratch UHT batch-uht.command.json/batch-uht.log PASS was needed because
+new helper headers shifted GENERATED_BODY lines. Three actual generated TUs pass
+UE clang9: {AFortPawn,UFortAbilitySystemComponent,UFortAbilityTagRelationshipMapping}
+.current.command.json/.current.syntax.log. Commands run from Engine/Source with
+core dumps disabled. Initial .syntax.log files used stale UHT macros; final
+.current logs pass. No unrelated body checks repeated. Counter refresh log records
+267 functions,24 storage fields,5 pending,one existing CommonUI header lookup
+limitation. No full client/server linking or new runtime baseline claimed.
+
+User clarified speed/quality: source-first dependency recovery, concise reusable
+blocker notes, coherent build checks. Do not finish at a blocker note if a closed
+callee can be implemented. Still record exact unresolved effects and next targets;
+notes alone never count as bodies. Reuse passing checks unless invalidated.
+
+Real class blocker now has concrete implementation inputs in
+behavior/athena_mode_reconstruction_runtime/: original ancestry,150 properties,
+25 function records,two native interfaces, strict declaration policy and guarded
+manual-header transition preserving existing terrain/spawn fixture definitions.
+Generator hooks are wired but inactive while mode remains blocked. Source/defaults
+recovery also closes all ten direct class writes and original GameStateClass;
+complete original ctor and other interface/tick behavior remain open. Sol worker
+hit model capacity after writing files; primary finished checking the bundle.
+Actual selected-class scratch generation PASS, including callback (292/0), in
+/tmp/gameplay-athena-mode/generation/{callback.command.json,callback-generation.log}.
+Guarded copied-project transition with original GameStateClass PASS in
+constructor-transition.command.json/.log. No migrated-class UHT/compile/link or
+runtime yet; keep callback outside canonical count until Native owner integration.
+
+Claude retains UI/shared Native/build ownership. Shared session committed much of
+the action source and generator hooks during work; preserve those commits/edits.
+Owner integration recipe is the mode bundle README: apply guarded transition with
+--restore-original-game-state-class, enable original class/remove manual block,
+add callback entry, promote, then coherent client/server builds and Athena/default
+joins plus Apollo behavior checks (ancestry changes). Verify real aircraft event
+producer/wiring before feature credit. No shared Native/Engine mutations by this
+batch. All four project milestones remain open. Future native dependencies are
+in pawn_equipment_tags_runtime/recovery.md and weapon_equip_virtuals_runtime/
+recovery.md (ASC native action transitions; weapon equip/unequip and replay predicate).
+Keep bounded tasks/reads and Luna medium / Terra medium-high / Sol medium,
+fork_turns none; rotate at useful boundaries, primary integrates/reviews.
+
 ## Gameplay source batch (2026-11-02): native tag singleton and aircraft unlock
 
 Previous goal turn was progress:698a0af0 recovered four bodies and refreshed the
