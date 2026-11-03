@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonActivatableWidget.h"
 
+#include "EFortCreativeItemType.h"
+#include "EFortItemCardSize.h"
 #include "FFortItemEntry.h"
 #include "FOnItemCountChangedDelegate.h"
 #include "FOnSelectionChangedDelegate.h"
@@ -60,11 +62,23 @@ public:
 	UPROPERTY()
 	TArray<FName> LastFilters;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x600): not a UPROPERTY, not replicated.
+	uint8 NativeRecoveredByte_0x600;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x601): not a UPROPERTY, not replicated.
+	uint8 NativeRecoveredByte_0x601;
+
 	// Non-reflected field (behaviour kind "member_field", offset 0x602): not a UPROPERTY, not replicated.
 	bool NativeRecoveredBool_0x602;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	EFortItemCardSize GetCardSizeForCategory() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool GetCollapseBorderPadFlagForCategory() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	EFortCreativeItemType GetItemType();
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsEmpty();

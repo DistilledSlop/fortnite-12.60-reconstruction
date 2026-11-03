@@ -1,5 +1,28 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Native source batch 16 (2026-11-03)
+
+Canonical Native1949 ported entries =1785function bodies +164fields. Added5native
+byte-backed enum getters with5uint8 backing fields. Full original wrapper/leaf
+copies, enumuint8 identity, strict GPSCclass/parent size and conservative reflected/
+canonical occupancy reviewed. static_cast preserves all original byte values;
+initialization and writers remain unported. Sourcecoverage is notfeatureparity.
+
+Command: `python3 -I porting/behavior/bulk_native_enum_getter_runtime/prepare.py`
+produces `/tmp/gameplay-bulk-native-enum-getter/{manifest-entries,report}.json`;
+root appends proposals then `python3 /tmp/promote-native-batch16.py`. Receipts:
+`porting/generated/gameplay-bulk-integration-16/`. No builds/runtime/tests run;
+745bodies since tested1040 buildpending,next about2040 (255more bodies).
+Previoussourcebatch15 pusheda12e673b; dashboard refreshed aftersourcecommits.
+All4product milestones remainopen.
+
+Inherited array/object scans found no proven newbodies; retained finite scanners/
+blockers withno bodycredit. Freshbounded Terra medium/fork_turns none worker owns
+class/TSubclassOf getter proposal directory only. Root owns canonical Native,
+promotion/builds, reviews and commits/pushes. Preserve unrelated graphics/README
+collaborators, skipvisuals, boundedreads/output, rotateworkers atcompletion.
+Keep userTerra low/medium preference and1000body testcadence in futurehandoffs.
+
 ## Native source batch 15 (2026-11-03)
 
 Canonical Native1939 ported entries =1780 function bodies +159fields. Added51

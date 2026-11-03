@@ -7,6 +7,7 @@
 #include "UBlueprintContextBase.h"
 
 #include "EFortRarity.h"
+#include "EFortStoreState.h"
 #include "FCard.h"
 #include "FOpenedCardPack.h"
 #include "FStoreCardPackOffersChanged.h"
@@ -63,6 +64,12 @@ public:
 	UPROPERTY(Transient)
 	TArray<UFortCardPackItem*> PurchasedCardPacks;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0xf8): not a UPROPERTY, not replicated.
+	uint8 NativeRecoveredByte_0xf8;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0xf9): not a UPROPERTY, not replicated.
+	uint8 NativeRecoveredByte_0xf9;
+
 	// Non-reflected field (behaviour kind "member_field", offset 0xfc): not a UPROPERTY, not replicated.
 	bool NativeRecoveredBool_0xfc;
 
@@ -71,6 +78,12 @@ public:
 
 	// Non-reflected field (behaviour kind "member_field", offset 0x103): not a UPROPERTY, not replicated.
 	bool NativeRecoveredBool_0x103;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	EFortStoreState GetPreviousState() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	EFortStoreState GetStoreState() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsOpeningDirectPack() const;

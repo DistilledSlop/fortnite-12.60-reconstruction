@@ -193,6 +193,9 @@ public:
 	UPROPERTY()
 	UAthenaPlayerViewModel* PlayerViewModel;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x260): not a UPROPERTY, not replicated.
+	uint8 NativeRecoveredByte_0x260;
+
 	// Non-reflected field (behaviour kind "member_field", offset 0x264): not a UPROPERTY, not replicated.
 	int32 NativeRecoveredInt_0x264;
 
