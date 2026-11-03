@@ -28,6 +28,8 @@ import math
 import os
 import re
 import subprocess
+from datetime import datetime
+from zoneinfo import ZoneInfo
 import sys
 import tarfile
 import time
@@ -50,6 +52,14 @@ STANDALONE_W, STANDALONE_H = 1000, 720
 
 
 # ---------------------------------------------------------------- git / snapshots
+
+def _et_date(iso):
+    """UTC ISO commit date -> 'YYYY-MM-DD' in US Eastern time (dashboard display only)."""
+    try:
+        return datetime.fromisoformat(iso.replace("Z", "+00:00")).astimezone(ZoneInfo("America/New_York")).strftime("%Y-%m-%d")
+    except (ValueError, AttributeError):
+        return (iso or "")[:10]
+
 
 def git(*args):
     return subprocess.run(["git", "-C", REPO, *args], capture_output=True,
@@ -1910,7 +1920,7 @@ def history_html(history, model):
         if "measured_pct" in e:
             mx, my = xy(i, e["measured_pct"])
             meas_pts.append(f"{mx:.1f},{my:.1f}")
-        tip = esc(f'{e["short"]} {e["date"][:10]}: {e["overall_pct"]:.2f}% | {e["subject"]}')
+        tip = esc(f'{e["short"]} {_et_date(e["date"])}: {e["overall_pct"]:.2f}% | {e["subject"]}')
         dots.append(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="4" fill="var(--accent)"><title>{tip}</title></circle>')
     line = f'<polyline points="{" ".join(pts)}" fill="none" stroke="var(--accent)" stroke-width="2"/>' if n > 1 else ""
     meas_line = (f'<polyline points="{" ".join(meas_pts)}" fill="none" stroke="var(--ink2)" '
@@ -1951,6 +1961,13 @@ def history_html(history, model):
   const category = document.getElementById('history-category');
   const rangeSummary = document.getElementById('history-summary');
   const timestamp = p => { const t = Date.parse(p.date); return Number.isFinite(t) ? t : null; };
+  // Stored dates stay UTC ISO strings; they are displayed in US Eastern time (EST/EDT).
+  const etFormat = new Intl.DateTimeFormat('en-CA', {timeZone:'America/New_York', year:'numeric', month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit', hourCycle:'h23', timeZoneName:'short'});
+  const etDate = s => {
+    const t = Date.parse(s); if (!Number.isFinite(t)) return s || '';
+    const o = {}; etFormat.formatToParts(new Date(t)).forEach(x => { o[x.type] = x.value; });
+    return `${o.year}-${o.month}-${o.day} ${o.hour}:${o.minute} ${o.timeZoneName}`;
+  };
   Object.entries(CAT_NAMES_PLACEHOLDER).forEach(([id, name]) => {
     const option = document.createElement('option'); option.value = id; option.textContent = name; category.appendChild(option);
   });
@@ -1990,7 +2007,7 @@ def history_html(history, model):
     rows.slice(page * 50, page * 50 + 50).forEach(i => {
       const p = data[i], tr = document.createElement('tr');
       tr.tabIndex = 0; tr.className = i === selected ? 'selected' : '';
-      textNode('td', p.date, tr); textNode('td', p.short, tr); textNode('td', p.subject, tr);
+      textNode('td', etDate(p.date), tr); textNode('td', p.short, tr); textNode('td', p.subject, tr);
       textNode('td', `${p.overall.toFixed(2)}%`, tr);
       textNode('td', fmt(delta(p.overall, data[i-1]?.overall)), tr);
       const changes = moved(i);
@@ -2096,12 +2113,12 @@ def history_html(history, model):
     visible.forEach((p, i) => {
       if (!p.seeded && count !== 1 && inner / (count - 1) < 9) return;
       const dot = element('circle', {cx:x(i), cy:y(p.overall), r:3, fill:p.seeded ? 'var(--surface)' : 'var(--accent)', stroke:'var(--accent)'}, svg);
-      element('title', {}, dot, `${p.short} ${p.date}: ${p.overall.toFixed(2)}% | ${p.subject}`);
+      element('title', {}, dot, `${p.short} ${etDate(p.date)}: ${p.overall.toFixed(2)}% | ${p.subject}`);
     });
     const labelCount = Math.min(count, Math.max(2, Math.floor(inner / 95) + 1));
     const indexes = new Set();
     for (let i = 0; i < labelCount; i++) indexes.add(labelCount === 1 ? 0 : Math.round(i * (count - 1) / (labelCount - 1)));
-    indexes.forEach(i => element('text', {x:x(i), y:height-10, 'text-anchor':i === 0 ? 'start' : i === count-1 ? 'end' : 'middle', 'font-size':11, fill:'var(--ink2)'}, svg, spacing.value === 'date' ? (visible[i].date || '').slice(0,10) : visible[i].short));
+    indexes.forEach(i => element('text', {x:x(i), y:height-10, 'text-anchor':i === 0 ? 'start' : i === count-1 ? 'end' : 'middle', 'font-size':11, fill:'var(--ink2)'}, svg, spacing.value === 'date' ? etDate(visible[i].date).slice(0,10) : visible[i].short));
     marker = element('line', {y1:top, y2:height-bottom, stroke:'var(--ink2)', 'stroke-width':1, 'stroke-dasharray':'3 3', 'pointer-events':'none'}, svg);
     const overlay = element('rect', {x:left, y:top, width:inner, height:plotHeight, fill:'transparent', 'pointer-events':'all'}, svg);
     const pointerIndex = event => {
@@ -2121,7 +2138,7 @@ def history_html(history, model):
     inspect(selected);
     document.getElementById('history-scale').textContent = `${count === data.length || trueScale ? 'Zero baseline' : 'Fitted scale'}: ${ymin.toFixed(decimals)}–${ymax.toFixed(decimals)}%`;
     document.getElementById('history-scale-toggle').textContent = trueScale ? 'Use fitted scale' : 'Use zero baseline';
-    rangeSummary.textContent = `Visible range: ${visible[0].date || 'unknown date'} to ${visible[count-1].date || 'unknown date'}, ${count} commits. Overall ${visible[0].overall.toFixed(2)}% to ${visible[count-1].overall.toFixed(2)}%. ${spacing.value === 'date' && !timeSpacing ? 'Date spacing unavailable for this range; using commit spacing.' : ''}`;
+    rangeSummary.textContent = `Visible range: ${etDate(visible[0].date) || 'unknown date'} to ${etDate(visible[count-1].date) || 'unknown date'}, ${count} commits. Overall ${visible[0].overall.toFixed(2)}% to ${visible[count-1].overall.toFixed(2)}%. ${spacing.value === 'date' && !timeSpacing ? 'Date spacing unavailable for this range; using commit spacing.' : ''}`;
     status.textContent = `Showing commits ${start + 1}–${end + 1} of ${data.length} (${count === data.length || trueScale ? 'zero-baseline' : 'fitted'} scale)`;
     buttons.forEach(button => {
       const action = button.dataset.historyAction;
@@ -2136,9 +2153,9 @@ def history_html(history, model):
     const position = positionForIndex(selected);
     marker.setAttribute('x1', position);
     marker.setAttribute('x2', position);
-    selection.setAttribute('aria-valuetext', `Commit ${selected + 1} of ${data.length}: ${p.short}, ${p.date}`);
+    selection.setAttribute('aria-valuetext', `Commit ${selected + 1} of ${data.length}: ${p.short}, ${etDate(p.date)}`);
     detail.replaceChildren();
-    textNode('strong', `${p.short} · ${p.date} · ${p.subject}`, detail);
+    textNode('strong', `${p.short} · ${etDate(p.date)} · ${p.subject}`, detail);
     const values = textNode('p', '', detail);
     values.textContent = `Overall ${p.overall.toFixed(2)}% (${fmt(delta(p.overall, data[selected-1]?.overall))}); evidence-based ${p.measured == null ? 'unavailable' : p.measured.toFixed(2)+'%'}; objective ${p.objective == null ? 'unavailable' : p.objective.toFixed(2)+'%'}.`;
     const prev = data[selected-1];
@@ -2241,7 +2258,7 @@ svg text{{font-family:system-ui,-apple-system,Segoe UI,sans-serif}}
 <div class="history-controls"><label>Search commits <input id="history-search" type="search"></label>
 <label><input id="history-changed" type="checkbox" checked> Only commits that changed the score</label></div>
 <div class="tablewrap"><table id="history-table">
-<thead><tr><th>Date (UTC)</th><th>Commit</th><th>Subject</th><th>Overall</th><th>Delta</th><th>What moved</th><th>Source</th></tr></thead>
+<thead><tr><th>Date (ET)</th><th>Commit</th><th>Subject</th><th>Overall</th><th>Delta</th><th>What moved</th><th>Source</th></tr></thead>
 <tbody id="history-rows"></tbody></table></div>
 <div class="history-controls"><button type="button" id="history-prev">Previous</button> <span id="history-page"></span> <button type="button" id="history-next">Next</button></div>
 <noscript>Enable JavaScript to search and inspect the commit table.</noscript>
