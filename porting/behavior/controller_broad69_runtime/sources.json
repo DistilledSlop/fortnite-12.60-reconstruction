@@ -1,0 +1,51 @@
+[
+  {
+    "class": "AFortPlayerControllerAthena",
+    "function": "OnRep_PartyAssistedMemberData",
+    "source": "porting/generated/decomp_improved/AFortPlayerControllerAthena/OnRep_PartyAssistedMemberData.c",
+    "sha256": "29bd78306381d51fd55913ee6d1c95d5d7dbafba7f9091ad1219f49d4b3829c7",
+    "status": "rough_uncounted"
+  },
+  {
+    "class": "AFortPlayerControllerAthena",
+    "function": "OnRep_SkydiveLeader",
+    "source": "porting/generated/decomp_improved/AFortPlayerControllerAthena/OnRep_SkydiveLeader.c",
+    "sha256": "9f9d666e8ce6e150b1fff575d9f7a040a7c67809f2bff5d17760ae5bd268f1ec",
+    "status": "rough_uncounted"
+  },
+  {
+    "class": "AFortPlayerControllerAthena",
+    "function": "MultiKillExpired",
+    "source": "porting/generated/decomp_improved/AFortPlayerControllerAthena/MultiKillExpired.c",
+    "sha256": "cd76649e597e7a78dd9bcf9560c4cccc34951eaa7a8f14a634bd2e9670b41db5",
+    "status": "rough_uncounted"
+  },
+  {
+    "class": "AFortPlayerControllerAthena",
+    "function": "RecordMatchStats",
+    "source": "porting/generated/decomp_improved/AFortPlayerControllerAthena/RecordMatchStats.c",
+    "sha256": "8cdcf73bafbd079123ed24d9edcd59a57e4f3d0e019fc079168cc8847ab37fda",
+    "status": "rough_uncounted"
+  },
+  {
+    "class": "AFortPlayerControllerAthena",
+    "function": "RecordTeamStats",
+    "source": "porting/generated/decomp_improved/AFortPlayerControllerAthena/RecordTeamStats.c",
+    "sha256": "8fa54b2e1041e8d146a2fa09427e398b3fdb2a8f259f81495f6128434521171c",
+    "status": "rough_uncounted"
+  },
+  {
+    "class": "AFortPlayerControllerAthena",
+    "function": "OnMatchmakingPartyReady",
+    "source": "porting/generated/decomp_improved/AFortPlayerControllerAthena/OnMatchmakingPartyReady.c",
+    "sha256": "fbc8f5d3bf2c9193d44042bb190b0ea871dc2ddc7d32e5f07d2c7b63583f498e",
+    "status": "rough_uncounted"
+  },
+  {
+    "class": "AFortPlayerControllerAthena",
+    "function": "WriteCreateBuildingAnalytics",
+    "source": "porting/generated/decomp_improved/AFortPlayerControllerAthena/WriteCreateBuildingAnalytics.c",
+    "sha256": "7412ec7b8f36392cbee8290f9816b2532214b0e39af320ee30d8a1cadce107da",
+    "status": "rough_uncounted"
+  }
+]

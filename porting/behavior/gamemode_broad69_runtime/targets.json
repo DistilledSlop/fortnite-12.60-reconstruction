@@ -1,0 +1,34 @@
+[
+  {
+    "address": "0x14195e060",
+    "label": "RemoveAllLootFromWorld"
+  },
+  {
+    "address": "0x141972f90",
+    "label": "StopRemovingAllLoot"
+  },
+  {
+    "address": "0x141953840",
+    "label": "OnGamePhaseStepChanged"
+  },
+  {
+    "address": "0x141952900",
+    "label": "OnCheckForOrphanedServer"
+  },
+  {
+    "address": "0x14193dc90",
+    "label": "EnableGameplayMutator"
+  },
+  {
+    "address": "0x141946800",
+    "label": "GetGameplayMutator"
+  },
+  {
+    "address": "0x141949f60",
+    "label": "GetVehicleClassOverride"
+  },
+  {
+    "address": "0x1419331a0",
+    "label": "AddAIClassToReplicationGraph"
+  }
+]

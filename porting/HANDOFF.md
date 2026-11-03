@@ -1,5 +1,35 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Broad native rough batch69 (2026-11-03)
+
+Added31 new uncounted control-flow lifts across game-mode12, controller7,
+pawn8 and player-state messages4. These are concrete C++ drafts with unresolved
+calls/types/effects, not canonical implementations. Source inventories preserve
+paths and decompiler hashes, not original-byte or runtime-parity claims. Root
+review removed a duplicate loading draft, corrected report call arguments and
+split mutator void/value returns. Large safe-zone iterator/volume behavior,
+phase-step handling, orphan-server timers, vehicle override cache, stats and
+highlight reporting, momentum/holstering/storm/prop callbacks, bus-driver/reboot
+and new-level text formatting now have rough source. All remain uncounted.
+
+Root serial probe: `porting/.venv/bin/python -I porting/ghidra/probe_callees.py
+--input porting/behavior/gamemode_broad69_runtime/targets.json --out
+porting/generated/gamemode-broad69 --timeout 60 --mem 12G` completed8 addresses
+in11.4s; log /tmp/gamemode-broad69.log, worker handoff records project metadata
+warning despite rolled-back transaction. No deliberate project save. Lease free;
+all workers finished. No tests/compiler/build/generation ran this batch.
+
+Canonical remains2,074 bodies+180fields, last tested2,040; 34 canonical and4
+manual bodies pending build, next tests3,040. Source68 commit30db5ca4 pushed.
+Previous goal turn was status-only/no-progress; current state revalidated and
+broader work completed. All4 product gates OPEN; full goal remains active.
+Root sole canonical/generation/build/commit owner; bounded Terra6.1 medium/low,
+fork-none rotation, economical reads and planner/orchestrator/reviewer preference
+persist. Preserve unrelated graphics and Engine edits. Worker draft directories:
+gamemode_broad69_runtime, controller_broad69_runtime, pawn_broad69_runtime,
+playerstate_messages69_runtime. Next work should keep breadth across actual
+native bodies, parking unresolved dependencies instead of getter/helper closure.
+
 ## Native broad source/rough batch68 (2026-11-03)
 
 Canonical2,074 bodies+180fields=2,254 accepted/rejected0. Four bodies and four

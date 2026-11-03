@@ -1,0 +1,58 @@
+[
+  {
+    "class": "AFortPawn",
+    "function": "OnRep_PushMomentum",
+    "source": "porting/generated/decomp_improved/AFortPawn/OnRep_PushMomentum.c",
+    "sha256": "5bb985126ef69ab28f5cb9df7cdb184648186d7db90552b17f67e2cc4ff05b5b",
+    "status": "rough_uncounted"
+  },
+  {
+    "class": "AFortPawn",
+    "function": "OnRep_bWeaponHolstered",
+    "source": "porting/generated/decomp_improved/AFortPawn/OnRep_bWeaponHolstered.c",
+    "sha256": "0a111dacd8daf78f00d279c7a992ae39d023098a376b855f237541783e52c6ed",
+    "status": "rough_uncounted"
+  },
+  {
+    "class": "AFortPawn",
+    "function": "KillDisconnectedPawn",
+    "source": "porting/generated/decomp_improved/AFortPawn/KillDisconnectedPawn.c",
+    "sha256": "2992ef5eb40379c5425a3b2eef55868d3c1b56e995dbf93457b1f6660f6b140a",
+    "status": "rough_uncounted"
+  },
+  {
+    "class": "AFortPlayerPawn",
+    "function": "OnRep_FacialTypeOverride",
+    "source": "porting/generated/decomp_improved/AFortPlayerPawn/OnRep_FacialTypeOverride.c",
+    "sha256": "779e70a11e6e29af4a22865383ce7a7c000b2fd6b0263f2ec9aebf2bc6da2969",
+    "status": "rough_uncounted"
+  },
+  {
+    "class": "AFortPlayerPawn",
+    "function": "OnRep_IsInsideSafeZone",
+    "source": "porting/generated/decomp_improved/AFortPlayerPawn/OnRep_IsInsideSafeZone.c",
+    "sha256": "d54821b10b8f346a3241ad2635f2319207c65a97fa1d4cb3b4bb270e02208279",
+    "status": "rough_uncounted"
+  },
+  {
+    "class": "AFortPlayerPawn",
+    "function": "OnRep_IsInAnyStorm",
+    "source": "porting/generated/decomp_improved/AFortPlayerPawn/OnRep_IsInAnyStorm.c",
+    "sha256": "40dd1c79020b8955fc8d8aef331daee60793054d3b39887562ed5649003aa712",
+    "status": "rough_uncounted"
+  },
+  {
+    "class": "AFortPlayerPawn",
+    "function": "OnRep_IsParachuteForcedOpen",
+    "source": "porting/generated/decomp_improved/AFortPlayerPawn/OnRep_IsParachuteForcedOpen.c",
+    "sha256": "46123ff21632af2ca0fec8dd2e474b18d88a292aa07bead081fffbf45b085e4f",
+    "status": "rough_uncounted"
+  },
+  {
+    "class": "AFortPlayerPawn",
+    "function": "OnRep_PossessedProp",
+    "source": "porting/generated/decomp_improved/AFortPlayerPawn/OnRep_PossessedProp.c",
+    "sha256": "8622aeac68a953d8fbc26341aee088347e4b99e68fbab5db0369bbf53dfa7b77",
+    "status": "rough_uncounted"
+  }
+]

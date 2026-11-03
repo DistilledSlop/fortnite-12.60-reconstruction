@@ -1,0 +1,26 @@
+[
+  {
+    "function": "OnRep_ThankedBusDriver",
+    "source_path": "porting/generated/decomp_improved/AFortPlayerStateAthena/OnRep_ThankedBusDriver.c",
+    "sha256": "c02de22a0f7b45f586905045e1e68d670c1bd407f7900438b2c2cd69390373ae",
+    "status": "rough_uncounted"
+  },
+  {
+    "function": "OnRep_DidNotThankBusDriver",
+    "source_path": "porting/generated/decomp_improved/AFortPlayerStateAthena/OnRep_DidNotThankBusDriver.c",
+    "sha256": "1d5561bc8677a1c0b6977bfee9c96992e482c8cf1aec1ddee4cca82eef0cf9f6",
+    "status": "rough_uncounted"
+  },
+  {
+    "function": "OnRep_RebootCounter",
+    "source_path": "porting/generated/decomp_improved/AFortPlayerStateAthena/OnRep_RebootCounter.c",
+    "sha256": "16de9b63390f62984f799d7818b04d7b964ded5cdadad9b274a68d12c04fee9c",
+    "status": "rough_uncounted"
+  },
+  {
+    "function": "Client_OnNewLevel_Implementation",
+    "source_path": "porting/generated/decomp_improved/AFortPlayerStateAthena/Client_OnNewLevel_Implementation.c",
+    "sha256": "e7a903f3fd51636770c23dd880b42a4b8596826745a2c66391489a1dac98df28",
+    "status": "rough_uncounted"
+  }
+]
