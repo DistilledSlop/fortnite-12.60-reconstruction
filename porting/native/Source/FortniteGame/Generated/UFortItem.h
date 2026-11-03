@@ -54,6 +54,9 @@ public:
 	virtual int32 GetLevel() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual int32 GetLevelRelativeCostForRarityUpgrade() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual int32 GetLoadedAmmo() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

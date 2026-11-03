@@ -9,6 +9,7 @@
 #include "FFortItemEntry.h"
 
 class AFortInventory;
+class UFortItemDefinition;
 
 #include "UFortWorldItem.generated.h"
 
@@ -48,5 +49,13 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool SeenInFrontend() const;
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	virtual float GetDurability() const;
+	virtual bool HasDurability() const;
+	virtual int32 GetNumInStack() const;
+	virtual uint8 GetNumberOfSlotsTaken() const;
+	virtual UFortItemDefinition* GetItemDefinitionBP() const;
 };
 

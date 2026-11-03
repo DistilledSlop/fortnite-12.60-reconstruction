@@ -2,6 +2,20 @@
 #include "AFortTeamInfo.h"
 #include "Net/UnrealNetwork.h"
 
+int32 AFortTeamInfo::GetTeamExperience() const
+{
+	// Exact original literal stub 0x140693f70 (b8ffffffffc3).
+	// CONFIDENCE: HIGH
+	return -1;
+}
+
+int32 AFortTeamInfo::GetTeamLevel() const
+{
+	// Exact original literal stub 0x140693f70 (b8ffffffffc3).
+	// CONFIDENCE: HIGH
+	return -1;
+}
+
 int32 AFortTeamInfo::GetNativeTeamMemberCount()
 {
 	// Original address: 0x141f60e80.

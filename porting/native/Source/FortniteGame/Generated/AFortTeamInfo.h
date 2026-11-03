@@ -42,6 +42,12 @@ public:
 	// Non-reflected field (behaviour kind "member_field", offset 0x370): not a UPROPERTY, not replicated.
 	int32 AccumulatedPlayerScore;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual int32 GetTeamExperience() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual int32 GetTeamLevel() const;
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member

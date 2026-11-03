@@ -1,5 +1,34 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Native source batch 20 (2026-11-03)
+
+Canonical source: 1,804 function bodies + 163 supporting fields = 1,967 ported
+entries. Added five UFortWorldItem overrides as one dependency-closed group:
+GetDurability, HasDurability, GetNumInStack, GetNumberOfSlotsTaken, and
+GetItemDefinitionBP. Exact constructor/vtable targets, full native bytes,
+reflected ItemEntry members, class ancestry cast and fallback leaf are pinned.
+Added three exact base virtual -1 returns (AFortTeamInfo team experience/level,
+UFortItem rarity-upgrade relative cost). These are base behavior, not derived parity.
+
+Generation via `/tmp/promote-native-batch20.py` accepts 1,967, rejects 0.
+Initial generation rejected explicit generated-header includes; those were
+removed from proposals because body_refs already resolves generated same-module
+classes. The dependency closure now emits all five overrides and the definition
+include. Six Native files differ from the preceding commit; successful final
+pass changed two after the initial partial output. Receipts are under
+`porting/generated/gameplay-bulk-integration-20/`. No builds/runtime/tests;
+last tested 1,040, 764 bodies pending, next 2,040 (236 more).
+
+Runtime-options constructor evidence is saved without body/default credit in
+runtime_options_constructor_runtime: 6,458 instructions, 1,073 calls, 24 distinct
+direct callees. Typed fields/helper effects/order remain unresolved; partial
+initial stores must not be treated as final defaults. Its Ghidra session ended.
+Fresh Terra medium finite workers own bulk_struct_scalar_runtime (embedded
+struct field queries) and world_item_normalized_runtime (one derived query and
+its dependencies; sole Ghidra owner). Root owns canonical/Native/promotion.
+Preserve untracked graphics; no visuals; no builds/tests before 2,040 bodies.
+Commit/push progress and publish dashboard. All four product milestones open.
+
 ## Native source batch 19 (2026-11-03)
 
 Canonical source: 1,796 function bodies + 163 supporting fields = 1,959 ported

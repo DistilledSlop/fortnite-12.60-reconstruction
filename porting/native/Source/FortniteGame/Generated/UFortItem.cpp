@@ -43,6 +43,13 @@ int32 UFortItem::GetLevel() const
 	return 0;
 }
 
+int32 UFortItem::GetLevelRelativeCostForRarityUpgrade() const
+{
+	// Exact original literal stub 0x140693f70 (b8ffffffffc3).
+	// CONFIDENCE: HIGH
+	return -1;
+}
+
 int32 UFortItem::GetLoadedAmmo() const
 {
 	// Exact original shared stub 0x140680300.
