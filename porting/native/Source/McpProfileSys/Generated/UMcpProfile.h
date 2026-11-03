@@ -10,6 +10,9 @@
 #include "FClientUrlContext.h"
 #include "FDedicatedServerUrlContext.h"
 #include "Misc/DateTime.h"
+#include "UObject/Class.h"
+#include "UObject/Object.h"
+#include "UObject/UObjectGlobals.h"
 
 class UMcpProfileGroup;
 
@@ -83,5 +86,9 @@ public:
 	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
 	void UnlockProfileForWrite(const FString& Code, UPARAM(NotReplicated) FDedicatedServerUrlContext& Context);
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	virtual UObject* CreateItemObject(UClass* ItemClass, FString ItemId, FString TemplateId);
 };
 

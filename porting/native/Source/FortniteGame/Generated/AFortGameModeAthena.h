@@ -23,12 +23,14 @@
 #include "Math/Vector.h"
 #include "UFortMutatorOwner.h"
 #include "UGameplayMutatorObserverInterface.h"
+#include "UObject/Object.h"
 
 class AActor;
 class ABuildingActor;
 class AFortAthenaAIBotController;
 class AFortAthenaAircraft;
 class AFortAthenaSpawningPolicyManager;
+class AFortGameplayMutator;
 class AFortPlayerControllerAthena;
 class AFortPlayerControllerSpectating;
 class AFortSafeZoneIndicator;
@@ -679,6 +681,10 @@ protected:
 	void OnAircraftFlightEnded(AFortAthenaAircraft* FortAthenaAircraft);
 public:
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	virtual void NativeAppendOwnerMutators(TArray<AFortGameplayMutator*>& OutMutators, UObject* Context);
 public:
     // Existing Linux fixture/runtime support; original native bodies remain open.
     // Definitions stay in Private/FortniteAthenaGameplay.cpp.

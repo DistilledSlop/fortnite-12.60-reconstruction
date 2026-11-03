@@ -2,6 +2,8 @@
 #include "AFortGameModeAthena.h"
 #include "AFortAthenaAircraft.h"
 #include "AFortGameStateAthena.h"
+#include "UFortMutatorListComponent.h"
+#include "UObject/Object.h"
 
 void AFortGameModeAthena::AddContentKeysToGameState()
 {
@@ -80,6 +82,17 @@ void AFortGameModeAthena::OnAircraftFlightEnded(AFortAthenaAircraft* FortAthenaA
 	    FortAthenaAircraft->NativeAircraftExitedDropZone.Remove(this, FName(TEXT("OnAircraftExitedDropZone")));
 	    FortAthenaAircraft->NativeAircraftFlightEnded.Remove(this, FName(TEXT("OnAircraftFlightEnded")));
 	    FortAthenaAircraft->Destroy(false, true);
+	}
+}
+
+void AFortGameModeAthena::NativeAppendOwnerMutators(TArray<AFortGameplayMutator*>& OutMutators, UObject* Context)
+{
+	// CONFIDENCE: HIGH
+	OutMutators.Reset();
+	UFortMutatorListComponent* Component = MutatorListComponent;
+	if (Component)
+	{
+	    OutMutators.Append(Component->Mutators);
 	}
 }
 

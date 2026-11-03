@@ -75,6 +75,8 @@
 #include "Math/Vector2D.h"
 #include "Misc/DateTime.h"
 #include "Styling/SlateBrush.h"
+#include "UFortMutatorOwner.h"
+#include "UObject/Object.h"
 
 class AActor;
 class ABuildingActor;
@@ -82,6 +84,7 @@ class AFortAthenaAircraft;
 class AFortAthenaMapInfo;
 class AFortAthenaMutator_AI;
 class AFortBroadcastSpectatorInfo;
+class AFortGameplayMutator;
 class AFortLocalizationService;
 class AFortPlayerState;
 class AFortProjectileBase;
@@ -108,7 +111,7 @@ class USoundMix;
 #include "AFortGameStateAthena.generated.h"
 
 UCLASS(config=Game)
-class FORTNITEGAME_API AFortGameStateAthena : public AFortGameStateZone
+class FORTNITEGAME_API AFortGameStateAthena : public AFortGameStateZone, public IFortMutatorOwner
 {
 	GENERATED_BODY()
 
@@ -1095,5 +1098,6 @@ public:
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	UFortPlaylistAthena* GetCurrentPlaylistAthena() const;
 	void SetAircraftLocked(bool bLocked);
+	virtual void NativeAppendOwnerMutators(TArray<AFortGameplayMutator*>& OutMutators, UObject* Context);
 };
 

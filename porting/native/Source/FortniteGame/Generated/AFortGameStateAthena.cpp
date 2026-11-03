@@ -11,7 +11,9 @@
 #include "FortNativeGameplayTagsRuntime.h"
 #include "GameplayTagContainer.h"
 #include "SharedFortGameLog.h"
+#include "UFortMutatorListComponent.h"
 #include "UFortPlaylistAthena.h"
+#include "UObject/Object.h"
 #include "Net/UnrealNetwork.h"
 
 namespace
@@ -672,6 +674,17 @@ void AFortGameStateAthena::SetAircraftLocked(bool bLocked)
 	    }
 	}
 	bAircraftIsLocked = bLocked;
+}
+
+void AFortGameStateAthena::NativeAppendOwnerMutators(TArray<AFortGameplayMutator*>& OutMutators, UObject* Context)
+{
+	// CONFIDENCE: HIGH
+	OutMutators.Reset();
+	UFortMutatorListComponent* Component = MutatorListComponent;
+	if (Component)
+	{
+	    OutMutators.Append(Component->Mutators);
+	}
 }
 
 void AFortGameStateAthena::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

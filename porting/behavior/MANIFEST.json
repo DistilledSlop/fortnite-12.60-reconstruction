@@ -32736,5 +32736,58 @@
     "status": "ported",
     "notes": "Assigned name for unreflected state; constructor initializes zero; preserve identity with all other writers when recovered.",
     "default": "0"
+  },
+  {
+    "class": "AFortGameModeAthena",
+    "function": "NativeAppendOwnerMutators",
+    "kind": "helper",
+    "signature": "void NativeAppendOwnerMutators(TArray<AFortGameplayMutator*>& OutMutators, UObject* Context)",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": true,
+    "inc_path": "porting/behavior/mutator_provider_bindings_runtime/OwnerAppend.inc",
+    "address": "0x141948340",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Assigned native owner callback; original class registration and constructor/interface tables pinned in verify.py. Resets output retaining allocation, appends component mutators preserving order and duplicates; context unused.",
+    "includes": [
+      "UObject/Object.h"
+    ]
+  },
+  {
+    "class": "AFortGameStateAthena",
+    "function": "NativeAppendOwnerMutators",
+    "kind": "helper",
+    "signature": "void NativeAppendOwnerMutators(TArray<AFortGameplayMutator*>& OutMutators, UObject* Context)",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": true,
+    "inc_path": "porting/behavior/mutator_provider_bindings_runtime/OwnerAppend.inc",
+    "address": "0x141995780",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Assigned native owner callback; original class registration and constructor/interface tables pinned in verify.py. Resets output retaining allocation, appends component mutators preserving order and duplicates; context unused.",
+    "includes": [
+      "UObject/Object.h"
+    ]
+  },
+  {
+    "class": "UMcpProfile",
+    "function": "CreateItemObject",
+    "kind": "helper",
+    "signature": "UObject* CreateItemObject(UClass* ItemClass, FString ItemId, FString TemplateId)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/profile_registry_runtime/CreateItemObject.inc",
+    "address": "0x1410f65e0",
+    "confidence": "high",
+    "status": "ported",
+    "virtual": true,
+    "notes": "Assigned name and proposed signature; base virtual slot +0x2a0. See HANDOFF for integration and evidence gate.",
+    "includes": [
+      "UObject/Object.h",
+      "UObject/Class.h",
+      "UObject/UObjectGlobals.h"
+    ]
   }
 ]

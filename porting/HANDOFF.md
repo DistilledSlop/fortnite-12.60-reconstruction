@@ -1,5 +1,35 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Native source batch 28 (2026-11-03)
+
+Canonical source: 1,850 bodies +165 supporting fields =2,015 ported entries.
+Added GameMode/State Athena native owner callbacks: Reset output retaining
+allocation, append component Mutators in order including duplicates, context
+unused. Generator restores GameState's original IFortMutatorOwner inheritance
+and emits the assigned native owner contract; GameMode retains its existing
+original interfaces. Added UMcpProfile virtual CreateItemObject: NewObject with
+profile outer and two unused FString arguments retained by value for overrides.
+Names/signatures are assigned source bindings, not recovered symbol names.
+
+Provider capture gate verified12 windows; factory evidence gate verified original
+image,4windows and constructor-installed virtual slot. Promotion28 accepts2,015,
+rejects0;7 Native files changed overall. Initial UObject include rejection fixed;
+explicit typed component local supplies generated component dependency. No build,
+runtime or behavior tests. Last tested1,040;810 bodies pending; next2,040 needs190.
+
+Unintegrated profile_object_bridge_runtime and profile_backend_mutation_runtime
+preserve new recovered algorithms: bridge weak shared entry assignment/populate,
+base ID plus sorted group insertion, overlay dirty-key updates. They are proposals
+and receive no canonical body credit. Registry writer/GC and base removal/group
+key mutation still require recovery; do not invent defaults or claim full bridge.
+mutator_context_runtime documents PlayerState manager/identity/location path.
+Fresh bounded Terra worker continues volume minigame provider helper only;
+its standalone getter proposal remains unintegrated. Root owns integration.
+
+Use Terra medium with fork_turns none, bounded tasks and economical excerpts;
+root reviews and commits/pushes meaningful source, refreshes dashboard. No tests
+until2,040; preserve unrelated graphics. All four product gates remain open.
+
 ## Native source batch 27 (2026-11-03)
 
 Canonical source:1,847 bodies +165 supporting fields =2,012 ported entries.

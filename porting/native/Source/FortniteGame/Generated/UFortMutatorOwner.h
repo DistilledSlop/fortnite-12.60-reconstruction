@@ -16,5 +16,7 @@ class FORTNITEGAME_API UFortMutatorOwner : public UInterface
 class FORTNITEGAME_API IFortMutatorOwner
 {
 	GENERATED_IINTERFACE_BODY()
+public:
+    virtual void NativeAppendOwnerMutators(TArray<class AFortGameplayMutator*>& OutMutators, UObject* Context) = 0;
 };
 
