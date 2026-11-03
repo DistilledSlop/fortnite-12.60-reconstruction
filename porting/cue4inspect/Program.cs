@@ -1015,8 +1015,19 @@ try
         if (skinned is not null)
         {
             using var skeletalDto = new SkeletalMeshDto(skinned, EMeshQuality.Highest, exportMorphTarget: false);
-            var skeletalOptions = new ExportOptions(meshFormat: EMeshFormat.Gltf2, exportMaterials: false);
-            var skeletalFiles = new GltfMeshFormat().BuildSkeletalMesh(skinned.Name, assetPath!, skeletalOptions, skeletalDto);
+            IReadOnlyList<CUE4Parse_Conversion.ExportFile> skeletalFiles;
+            try
+            {
+                var skeletalOptions = new ExportOptions(meshFormat: EMeshFormat.Gltf2, exportMaterials: false);
+                skeletalFiles = new GltfMeshFormat().BuildSkeletalMesh(skinned.Name, assetPath!, skeletalOptions, skeletalDto);
+            }
+            catch (NotFiniteNumberException)
+            {
+                // Some morph targets carry non-finite deltas; export the skinned geometry without them.
+                Console.WriteLine("Non-finite morph target data; retrying without morph targets");
+                var fallbackOptions = new ExportOptions(meshFormat: EMeshFormat.Gltf2, exportMaterials: false, exportMorphTargets: false);
+                skeletalFiles = new GltfMeshFormat().BuildSkeletalMesh(skinned.Name, assetPath!, fallbackOptions, skeletalDto);
+            }
             var skeletalDestination = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "../../../../generated/converted"));
             var skeletalRelative = assetPath!.Replace('\\', '/').TrimStart('/');
             if (skeletalRelative.Split('/').Any(part => part is ".." or "."))

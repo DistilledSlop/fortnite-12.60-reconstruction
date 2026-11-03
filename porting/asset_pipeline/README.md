@@ -33,3 +33,9 @@ python3 -I porting/asset_pipeline/import_manifest.py --selection porting/asset_p
 ```
 
 The saved full import-chain reports in `generated/asset_pipeline/frontend-evidence/` establish why each package was selected. They and the snapshot are local, ignored artifacts; recreate a matching snapshot and re-export if the tool changes.
+
+## Skeletal meshes and non-mesh packages
+
+`--prefix SK_` (with a skeletal-capable `--tool-dir` and a separate `--output`, e.g. `generated/asset_pipeline_skeletal`) exports skeletal meshes as skinned GLBs. `Program.cs` pins `FAnimObjectVersion` and disables skeletal ray-tracing data for 12.60, and retries without morph targets when a mesh carries non-finite morph deltas.
+
+Many `SM_`/`SK_`-named packages are not meshes (Blueprints, physics assets, skeletons, animations, control rigs). `classify_nonmesh.py` reads both checkpoints and their logs and writes `nonmesh_packages.json`; `progress/refresh_totals.py` subtracts those from the mesh denominators (`cooked_mesh_exportable`). Rerun it after any bulk export, then `refresh_totals.py`.

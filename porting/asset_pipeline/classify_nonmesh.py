@@ -15,6 +15,9 @@ from pathlib import Path
 PORTING = Path(__file__).resolve().parents[1]
 OUTPUTS = ('asset_pipeline', 'asset_pipeline_skeletal')
 NO_MESH = 'Package has no static mesh export'
+# The converter also parses non-mesh primary exports before looking for a mesh; these
+# packages are animations or control rigs that merely carry an SK_ name.
+NON_MESH_PRIMARY = (NO_MESH, 'Could not read AnimSequence', 'Could not read ControlRigBlueprintGeneratedClass')
 
 
 def classify(states):
@@ -27,8 +30,10 @@ def classify(states):
                 ok.add(base)
                 continue
             log = out / 'logs' / name / 'latest.log'
-            text = log.read_text(errors='replace') if log.is_file() else ''
-            (nomesh if NO_MESH in text else other).add(base)
+            if not log.is_file():
+                continue  # never attempted by the converter (e.g. a stale test record)
+            text = log.read_text(errors='replace')
+            (nomesh if any(m in text for m in NON_MESH_PRIMARY) else other).add(base)
     nonmesh = nomesh - ok - other
     genuine = (other - ok)
     return sorted(nonmesh), sorted(genuine)
