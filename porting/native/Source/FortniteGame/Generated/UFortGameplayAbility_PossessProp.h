@@ -29,5 +29,10 @@ public:
 	UPROPERTY(Transient)
 	TArray<TSoftClassPtr<ABuildingActor>> AllowedPropClasses;
 
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure, BlueprintAuthorityOnly)
+	TSubclassOf<ABuildingActor> GetAllowedPropClassByIndex(int32 AllowedPropIndex) const;
+public:
+
 };
 

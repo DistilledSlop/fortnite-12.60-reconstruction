@@ -17,6 +17,30 @@ class FORTNITEGAME_API UFortPlaylistAthenaHelper : public UBlueprintFunctionLibr
 
 public:
 	UFUNCTION(BlueprintCallable)
+	static bool HasCreativeTag(UFortPlaylistAthena* Playlist);
+
+	UFUNCTION(BlueprintCallable)
+	static bool IsBattleLabModePlaylist(UFortPlaylistAthena* Playlist);
+
+	UFUNCTION(BlueprintCallable)
+	static bool IsCreativeLTMPlaylist(UFortPlaylistAthena* Playlist);
+
+	UFUNCTION(BlueprintCallable)
+	static bool IsCreativeMMPlaylist(UFortPlaylistAthena* Playlist);
+
+	UFUNCTION(BlueprintCallable)
+	static bool IsCreativeModePlaylist(UFortPlaylistAthena* Playlist);
+
+	UFUNCTION(BlueprintCallable)
+	static bool IsCreativeUtilitySpawningAllowedPlaylist(UFortPlaylistAthena* Playlist);
+
+	UFUNCTION(BlueprintCallable)
+	static bool IsLargePreviewDisabledOnMobile(UFortPlaylistAthena* Playlist);
+
+	UFUNCTION(BlueprintCallable)
+	static bool IsPlaygroundModePlaylist(UFortPlaylistAthena* Playlist);
+
+	UFUNCTION(BlueprintCallable)
 	static bool ShouldEnterSpawningStartup(UFortPlaylistAthena* Playlist);
 
 };

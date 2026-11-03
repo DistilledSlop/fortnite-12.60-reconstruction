@@ -1,0 +1,8 @@
+// Original native body: 0x141a49590.
+// CONFIDENCE: HIGH
+if (Playlist == nullptr)
+{
+    return false;
+}
+const FGameplayTag& Tag = FFortNativeGameplayTagsRuntime::Get().AthenaCreative();
+return Playlist->GameplayTagContainer.HasTag(Tag);

@@ -1,0 +1,16 @@
+[
+  {
+    "class": "UFortGameplayAbility_PossessProp",
+    "function": "GetAllowedPropClassByIndex",
+    "kind": "exec",
+    "signature": "TSubclassOf<ABuildingActor> GetAllowedPropClassByIndex(int32 AllowedPropIndex) const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/ability_data58_runtime/GetAllowedPropClassByIndex.inc",
+    "address": "0x1428fd500",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Out-of-range returns null; soft class Get performs both UClass and subclass checks. Wrapper 0x1428fd500. See HANDOFF.",
+    "native_body_address": "0x141626d10"
+  }
+]
