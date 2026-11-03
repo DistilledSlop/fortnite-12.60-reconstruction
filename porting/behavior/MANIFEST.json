@@ -6248,5 +6248,40 @@
     "proxy_score": null,
     "decompile_source": "porting/generated/callee_probe/blocking/0x1419e8cd0.c",
     "notes": "Native multicast delegate, reconstructed name; accessor 0x1419e8cd0 returns +0x31f8 and 0x140f2c470 broadcasts int32. Distinct from the no-argument delegate at +0x3210. See pawn_state_evidence.md."
+  },
+  {
+    "class": "AFortGameStateAthena",
+    "function": "GetMaxPlaylistPlayers",
+    "kind": "getter",
+    "signature": "int32 GetMaxPlaylistPlayers() const",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/AFortGameStateAthena/GetMaxPlaylistPlayers.inc",
+    "confidence": "high",
+    "address": "0x14291e920",
+    "status": "ported",
+    "proxy_score": null,
+    "decompile_source": "porting/generated/decomp/AFortGameStateAthena/GetMaxPlaylistPlayers.c",
+    "includes": [
+      "Engine/World.h"
+    ],
+    "notes": "Exec calls 0x141995550. Uses virtual GetWorld and that world's AFortGameStateAthena, then the override/base playlist selection implemented by GetCurrentPlaylistAthena. Returns UFortPlaylist.MaxPlayers (+0x44), or -1 when world/state/type/playlist is absent. Body and exec verified against authoritative image-125; hashes and mapping in behavior/aircraft_state_evidence.md."
+  },
+  {
+    "class": "AFortGameStateAthena",
+    "function": "GetAircraft",
+    "kind": "getter",
+    "signature": "AFortAthenaAircraft* GetAircraft(int32 AircraftIndex) const",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/AFortGameStateAthena/GetAircraft.inc",
+    "confidence": "high",
+    "address": "0x14291e730",
+    "status": "ported",
+    "proxy_score": null,
+    "decompile_source": "porting/generated/decomp/AFortGameStateAthena/GetAircraft.c",
+    "includes": [
+      "Engine/World.h",
+      "SharedFortGameLog.h"
+    ],
+    "notes": "Exec calls 0x141990d90. Setup/Warmup return a signed-bounds-checked Aircrafts entry silently. Other phases log invalid indices at Verbose; missing aircraft checks GetWorld/IsPlayingReplay even with logging disabled and warns only outside replay. Reuses original LogFort category, emitted once by existing policy. Exact native-body/category/predicate/literal evidence in aircraft_state_evidence.md and aircraft_lookup_evidence.md."
   }
 ]

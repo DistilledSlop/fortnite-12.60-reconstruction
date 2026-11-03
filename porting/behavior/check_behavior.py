@@ -48,10 +48,13 @@ CPP_KEYWORDS = {
 # GetLocalRole() is the public AActor accessor of Role (TEnumAsByte<ENetRole>, private in UE 4.25; Actor.h:484) and
 # ROLE_Authority its enumerator (Engine/Classes/Engine/EngineTypes.h). GetOwner() is the public AActor accessor of Owner
 # (Actor.h:2119, returns Owner: Actor.h:3554), used by the tenth pass OnRep bodies (the Owner pointer at +0xe0).
+# GetWorld() is the inherited UObject virtual, declared outside the generated class chain.
 # FMath (UnrealMathUtility.h, FMath::Abs) is used by the struct_net body of FCreateBuildingActorData.
 ENGINE_NAMES = {"UClass", "UObject", "AActor", "FWeakObjectPtr", "TWeakObjectPtr", "FName", "FString", "FText",
                 "FVector", "TArray", "static_cast", "Cast", "UWorld", "AGameStateBase", "GetLocalRole", "ROLE_Authority",
-                "GetOwner", "FMath", "FApp", "FEngineVersion", "ESearchCase", "ESearchDir", "INDEX_NONE"}
+                "GetOwner", "GetWorld", "FMath", "FApp", "FEngineVersion", "ESearchCase", "ESearchDir", "INDEX_NONE"}
+# UE_LOG is the Engine logging macro; LogFort is declared by SharedFortGameLog.h.
+ENGINE_NAMES.update({"UE_LOG", "LogFort", "Verbose", "Warning"})
 # The NetSerialize signature of kind struct_net (gen_native_classes.py NATIVE_NET_SIGNATURE, the same text).
 NATIVE_NET_SIGNATURE = "bool NetSerialize(FArchive& Ar, class UPackageMap* Map, bool& bOutSuccess)"
 STRUCT_NET_KIND = "struct_net"

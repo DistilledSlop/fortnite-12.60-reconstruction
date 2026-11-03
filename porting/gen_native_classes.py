@@ -1269,6 +1269,15 @@ def static_reflected_self_test(check):
     res = attach_snippets("ASelfTest", [dict(fn2, body=None)], [dict(entry, includes=["Missing.h"])], ctx,
                           "/Script/FortniteGame")
     check("unknown snippet include rejected", bool(res["rejected"]))
+    support_entry = dict(entry, includes=["SharedFortGameLog.h"])
+    res = attach_snippets("ASelfTest", [dict(fn2, body=None)], [support_entry], ctx, "/Script/FortniteGame")
+    check("unemitted support header rejected", bool(res["rejected"]))
+    support_ctx = dict(ctx, generated_support_headers={"SharedFortGameLog.h"})
+    res = attach_snippets("ASelfTest", [dict(fn2, body=None)], [support_entry], support_ctx, "/Script/FortniteGame")
+    check("emitted support header accepted", not res["rejected"] and res["includes"] == {"SharedFortGameLog.h"})
+    res = attach_snippets("ASelfTest", [dict(fn2, body=None)], [dict(entry, includes=["Missing.h"])], support_ctx,
+                         "/Script/FortniteGame")
+    check("support authorization does not allow other headers", bool(res["rejected"]))
 
 
 def self_test():
@@ -2605,8 +2614,10 @@ def helper_type_names(ret, params):
 
 
 def usable_include(inc, ctx):
-    """True for an include spelling the engine header index knows (headers of usable modules)."""
-    return isinstance(inc, str) and inc.endswith(".h") and inc in ctx["gate"].engine.module_of_inc
+    """Accept indexed engine headers or support headers emitted by a validated policy."""
+    return (isinstance(inc, str) and inc.endswith(".h") and
+            (inc in ctx["gate"].engine.module_of_inc or
+             inc in ctx.get("generated_support_headers", set())))
 
 
 def type_include(tok, package, ctx):
@@ -3747,6 +3758,10 @@ def promote(args):
         struct_index.setdefault(info.cpp_name.split("::")[0], info)
     splice_ctx = {
         "class_pkg": package_of, "struct_index": struct_index, "gate": gate,
+        # Only headers actually scheduled for emission qualify; arbitrary source-tree
+        # files (including stale Native output) must not authorize snippet includes.
+        "generated_support_headers": {filename for filename in (client_event_sources or {})
+                                      if filename.endswith(".h")},
         "button_feedback_sound_identity_proven": 'UCommonButton' in listed,
         "other_promoted": {n for b, n in names.items()
                            if n not in listed and (parents.get(b) or {}).get("package") in PROMOTE_PACKAGES},

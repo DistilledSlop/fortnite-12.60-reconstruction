@@ -155,6 +155,8 @@ loading or display.
   Tenth pass: `GetOwner` (the public accessor of `AActor::Owner`, which is not declared in any generated header).
   Eleventh pass: `FMath` (`FMath::Abs` in the struct_net body of `FCreateBuildingActorData`). The C library call
   `::nearbyintf` is `::`-qualified, so the checker does not see it.
+  `GetWorld` is the inherited `UObject` virtual, also declared outside the generated class chain.
+  Aircraft lookup also uses `UE_LOG`, the shared `LogFort` category, and its `Verbose`/`Warning` levels.
   The name is accepted by the checker only; the header is still needed. A getter or exec can declare validated engine
   `includes` in the manifest; the generator emits those in the corresponding `.cpp`.
 - Each file starts with a `//` header comment: original address, decompile source, proxy score, what was

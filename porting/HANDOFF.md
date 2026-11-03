@@ -1,5 +1,64 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Gameplay source batch (2026-11-02): playlist capacity and aircraft lookup
+
+User reconfirmed scope: Codex continues gameplay, Claude owns UI. Preserve all
+frontend edits and the unowned weapon_selection_evidence.md candidate. This
+batch changes canonical gameplay inputs and the snippet support-header gate;
+no shared Native, Engine, build, staging, server or dashboard changes were made.
+
+Recovered AFortGameStateAthena.GetMaxPlaylistPlayers and GetAircraft. Capacity
+follows the object's world game state rather than reading this directly, selects
+its override/base playlist and returns MaxPlayers or -1. Aircraft lookup preserves
+Setup/Warmup silent bounds checks, other-phase Verbose invalid-index logs, the
+missing-aircraft world/replay query even when logs are disabled, and Warning logs
+outside replay. Both original log messages and the LogFort category are preserved.
+Predicate144693a30 and callee14419d510 match UE UWorld::IsPlayingReplay and
+UDemoNetDriver::IsPlaying, including checkpoint loading. Authoritative image-125
+windows and literal contents were independently checked; mappings/hashes are in
+behavior/aircraft_state_evidence.md and behavior/aircraft_lookup_evidence.md.
+
+The snippet include gate now accepts support headers only when a validated policy
+schedules their emission; it does not inspect stale Native headers or accept
+arbitrary includes. This permits reuse of SharedFortGameLog.h emitted once by the
+existing client-event policy. Existing self-tests add reject/accept/reject cases
+for missing authorization, actual emitted-header authorization and unrelated
+headers. The behavior token checker recognizes inherited GetWorld and Engine
+logging names. No behavior requirements or source/reflection gates were waived.
+
+Validation: /tmp/gameplay-aircraft-validation-2/command.json is the exact scratch
+promotion argv (python3 -I porting/gen_native_classes.py --promote, canonical
+reflection/maps/class-list, --source-root .../Source, --report-dir .../reports).
+Run that JSON argv from the project root to regenerate. generation.log records
+PASS261 splices,0 rejections. Focused command
+`python3 -I /tmp/gameplay-aircraft-validation-2/check_gameplay.py` records
+PASS17/17 in gameplay-check.log, no rejected-body allowances used. Compile argv
+AFortGameStateAthena.command.json, run from
+/opt/fortnite/UnrealEngine/Engine/Source with core dumps disabled, records PASS
+in AFortGameStateAthena.syntax.log. It compiles the actual scratch-generated TU
+with UE clang9 and existing UHT headers. `python3 -I porting/gen_native_classes.py
+--self-test` PASS145 checks, generator-self-test.log. Independent source review
+found no material issues. Fresh UHT, linking, client/server builds, joins and
+actual gameplay runtime remain pending, so no new runtime/milestone credit.
+
+Preserve intermediate receipts: playlist-validation-1 initially caught required
+snippet metadata/GetWorld token recognition; final query-only scratch had
+PASS260 splices and syntax. aircraft-validation-1 caught the shared-header include
+rejection (260 accepted,1 rejected) and is NOT an accepted batch; validation-2
+closes it with261/0. COUNTS.txt predates this batch and is dirty/unowned; it was
+not staged or used as evidence. Do not mistake scratch outputs for Native builds.
+
+Next gameplay integration: coordinate with Claude's Native/build owner to promote
+both this batch and committed pawn/squad batch22008320, then client/server build
+and actual gameplay checks as a coherent shared-runtime batch. Continue aircraft
+and storm dependency recovery without placeholders: OnAircraftEnteredDropZone
+still needs the aircraft +0x2f0 flag and full setter1419adfe0 (substantive world
+iteration/state effects); GetBattleBusForPlayer still needs real interfaces and
+default provider. Never substitute omitted log paths or empty equipment effects.
+Keep Luna medium read-only, Terra medium/high bounded implementation and Sol medium
+complex delegation, fork_turns none; primary reviews/integrates. Preserve bounded
+reads, task rotation, one Native/build owner and risk-based validation cadence.
+
 ## Gameplay source batch (2026-11-02): pawn state and squad notifications
 
 User redirected Codex to gameplay classes; Claude owns the ongoing UI work.
