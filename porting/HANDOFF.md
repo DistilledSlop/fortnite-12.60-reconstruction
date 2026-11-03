@@ -1,5 +1,38 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Native source batch 17 (2026-11-03)
+
+Canonical Native1948 ported entries =1785 function bodies +163fields. Added
+AFortWeaponRanged::GetTracerTemplate, a complete inline qword copy returning the
+identical reflected TSubclassOf<AFortTracerBase> field type. Local UE4.25
+same-type implicit copy preserves the stored class pointer without Get/IsChildOf.
+One-body finite proposal reviewed and promoted; no runtime/build claim.
+
+Commands: `python3 porting/behavior/bulk_class_getter_runtime/prepare.py` produced
+`/tmp/gameplay-bulk-class-getter/{manifest-entries,report}.json`; root appended
+one body then `python3 /tmp/promote-native-batch17.py`. Generation accepts1948,
+rejects0;2Native fileschanged,12801unchanged mtimesrestored. Receipts at
+`porting/generated/gameplay-bulk-integration-17/`. No builds/runtime/tests run.
+Tested baseline remains1040;745newbodies buildpending, next2040 (255more).
+All4productmilestones remainopen. Sourcecoverage is notfeatureparity.
+
+Batch16 corrected in e1c14c69: UAthenaHUDContext::GetPTTState and its field are
+excluded. Enums obey the generator's same-module TYPE rule; the existing
+FortniteUI->FortniteGame CLASS allowance does not apply to enum body references.
+`python3 -I porting/behavior/bulk_native_enum_getter_runtime/prepare.py --revalidate-own`
+now reproduces4candidates and1moduledependencyrejection; summary at
+`/tmp/native-enum-revalidate-summary.json`. Do not weaken generator dependency
+rules to promote the blocked getter. Sourcebatch15 pusheda12e673b.
+
+All bounded Terra workers finished. Root owns promotion/Native/builds; delegate
+finite tasks to fresh Terra low/medium workers with fork_turns none, review their
+outputs and commit/push each meaningfulbatch. Saturated inherited object/array
+and native copysetter scans retain no-credit blockers; avoid repeating them.
+Next recovery should expand exact wrapper/leaf patterns or larger typed gameplay
+bodies rather than rerun unchanged scans. Preserve graphics/README collaborators,
+skipvisualwork, boundedreads/output. Follow user1000body testingcadence; no tests
+before about2040. Dashboard publication follows this sourcecommit.
+
 ## Native source batch 16 (2026-11-03)
 
 Canonical Native1947 ported entries =1784function bodies +163fields. Added4native

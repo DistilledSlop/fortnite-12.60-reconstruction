@@ -31759,5 +31759,20 @@
     "static": false,
     "access": "public",
     "notes": "Original inline enum byte getter at 0x14289d4f0, native same-class field NativeRecoveredByte_0xf8 offset 0xf8; initialization and writers unported."
+  },
+  {
+    "class": "AFortWeaponRanged",
+    "function": "GetTracerTemplate",
+    "kind": "exec",
+    "signature": "TSubclassOf<AFortTracerBase> GetTracerTemplate() const",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/bulk_class_getter_runtime/142b4f750_AFortWeaponRanged_GetTracerTemplate.inc",
+    "confidence": "high",
+    "address": "0x142b4f750",
+    "status": "ported",
+    "reflection_flags": "0x54080401",
+    "static": false,
+    "access": "protected",
+    "notes": "Original inline class getter at 0x142b4f750, reflected AFortTracerBase field TracerTemplate offset 0xb98; source recovery only."
   }
 ]

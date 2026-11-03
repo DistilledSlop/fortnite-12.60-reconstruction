@@ -240,7 +240,7 @@ def main():
             info = tables.by_fn.get(ref.lower()) if isinstance(ref, str) else None
             if not info or info.kind != 'enum' or not info.cpp_name or info.package not in ('/Script/FortniteGame', '/Script/FortniteUI'):
                 rejects['unresolved_enum_type'] += 1; continue
-            if info.package != parent['package'] and (parent['package'], info.package) != ('/Script/FortniteUI', '/Script/FortniteGame'):
+            if info.package != parent['package']:
                 rejects['enum_module_dependency'] += 1; continue
             eh = enum_headers.get(info.header_name, [])
             if len(eh) != 1 or eh[0].parents[1].name != info.package.rsplit('/', 1)[-1] or not re.search(r'\benum\s+class\s+' + re.escape(info.cpp_name) + r'\s*:\s*uint8\b', eh[0].read_text()):

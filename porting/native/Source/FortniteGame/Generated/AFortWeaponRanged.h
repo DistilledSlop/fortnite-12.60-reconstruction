@@ -364,6 +364,11 @@ public:
 
 protected:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	TSubclassOf<AFortTracerBase> GetTracerTemplate() const;
+public:
+
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool GetUseBeamParticles() const;
 public:
 
