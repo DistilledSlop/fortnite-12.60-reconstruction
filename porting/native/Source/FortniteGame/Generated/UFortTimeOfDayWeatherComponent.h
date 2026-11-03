@@ -109,6 +109,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetCurrentWindStrength() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsWeatherEventActive() const;
+
 	UFUNCTION()
 	void OnRep_CurrentWeatherEventIntensity();
 

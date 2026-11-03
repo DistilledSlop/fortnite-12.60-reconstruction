@@ -18,6 +18,46 @@ UMeshComponent* UFortHeldObjectComponent::GetMeshComponent() const
 	return ReferenceMeshComponent;
 }
 
+bool UFortHeldObjectComponent::IsDropped() const
+{
+	// Original address: 0x142937b10.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete enum byte immediate comparison; see bulk_enum_predicate_runtime/README.md.
+	return static_cast<uint8>(HeldObjectState) == 4;
+}
+
+bool UFortHeldObjectComponent::IsHeld() const
+{
+	// Original address: 0x142937b40.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete enum byte immediate comparison; see bulk_enum_predicate_runtime/README.md.
+	return static_cast<uint8>(HeldObjectState) == 1;
+}
+
+bool UFortHeldObjectComponent::IsPlaced() const
+{
+	// Original address: 0x142937b70.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete enum byte immediate comparison; see bulk_enum_predicate_runtime/README.md.
+	return static_cast<uint8>(HeldObjectState) == 3;
+}
+
+bool UFortHeldObjectComponent::IsThrown() const
+{
+	// Original address: 0x142937ba0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete enum byte immediate comparison; see bulk_enum_predicate_runtime/README.md.
+	return static_cast<uint8>(HeldObjectState) == 2;
+}
+
+bool UFortHeldObjectComponent::IsUnheld() const
+{
+	// Original address: 0x142937bd0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete enum byte immediate comparison; see bulk_enum_predicate_runtime/README.md.
+	return static_cast<uint8>(HeldObjectState) == 0;
+}
+
 void UFortHeldObjectComponent::OnRep_bCollisionBlockedByPawns()
 {
 	// Body not recovered: reflection-derived stub.

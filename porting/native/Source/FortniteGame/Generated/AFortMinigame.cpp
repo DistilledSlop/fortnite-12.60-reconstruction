@@ -31,12 +31,76 @@ UFortCreativeTeleporterManagerComponent* AFortMinigame::GetTeleporterManagerComp
 	return TeleporterManagerComponent;
 }
 
+bool AFortMinigame::HasStarted() const
+{
+	// Original address: 0x1429c29e0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete enum byte immediate comparison; see bulk_enum_predicate_runtime/README.md.
+	return static_cast<uint8>(CurrentState) != 0;
+}
+
+bool AFortMinigame::IsInSetup() const
+{
+	// Original address: 0x1429c2dc0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete enum byte immediate comparison; see bulk_enum_predicate_runtime/README.md.
+	return static_cast<uint8>(CurrentState) == 1;
+}
+
+bool AFortMinigame::IsInWarmup() const
+{
+	// Original address: 0x1429c2df0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete enum byte immediate comparison; see bulk_enum_predicate_runtime/README.md.
+	return static_cast<uint8>(CurrentState) == 4;
+}
+
+bool AFortMinigame::IsMinigameStarting() const
+{
+	// Original address: 0x1429c3320.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete enum byte immediate comparison; see bulk_enum_predicate_runtime/README.md.
+	return static_cast<uint8>(CurrentState) < 5;
+}
+
+bool AFortMinigame::IsPostGame() const
+{
+	// Original address: 0x1429c3aa0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete enum byte immediate comparison; see bulk_enum_predicate_runtime/README.md.
+	return static_cast<uint8>(CurrentState) > 5;
+}
+
+bool AFortMinigame::IsPregame() const
+{
+	// Original address: 0x1429c3ad0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete enum byte immediate comparison; see bulk_enum_predicate_runtime/README.md.
+	return static_cast<uint8>(CurrentState) == 0;
+}
+
 bool AFortMinigame::IsTeamMinigame() const
 {
 	// Original address: 0x1429c3b00.
 	// CONFIDENCE: HIGH
 	// Mechanically matched complete integer immediate comparison; see bulk_integer_predicate_runtime/README.md.
 	return NumTeams != 0;
+}
+
+bool AFortMinigame::IsTransitioning() const
+{
+	// Original address: 0x1429c3b30.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete enum byte immediate comparison; see bulk_enum_predicate_runtime/README.md.
+	return static_cast<uint8>(CurrentState) == 2;
+}
+
+bool AFortMinigame::IsWaitingForCameras() const
+{
+	// Original address: 0x1429c3b60.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete enum byte immediate comparison; see bulk_enum_predicate_runtime/README.md.
+	return static_cast<uint8>(CurrentState) == 3;
 }
 
 void AFortMinigame::OnRep_ClassSlotArray()

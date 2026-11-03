@@ -413,6 +413,11 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool GetShouldUsePrecisionGridSnapping() const;
 
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsMultiselectingMoveOnGrid();
+public:
+
 	UFUNCTION(NetMulticast, Reliable)
 	void MulticastForceMoveActor(AActor* ActorToMove, const FTransform& NewTransform);
 	void MulticastForceMoveActor_Implementation(AActor* ActorToMove, const FTransform& NewTransform);

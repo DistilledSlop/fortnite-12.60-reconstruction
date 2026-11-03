@@ -1,5 +1,27 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Native source batch 9 (2026-11-03)
+
+Canonical Native1462 entries =1400 function bodies +62 fields. Added18 complete
+byte-backed enum predicates with exact signed/unsigned comparison semantics,
+resolved enum underlying storage, verified inheritance/access and generated types.
+Promotion accepts1462, rejects0; receipts:
+porting/generated/gameplay-bulk-integration-9/. No builds/runtime/tests run;
+360 bodies since tested1040 remain build pending, next about2040. Batch8 pushed
+cf3c54ba. Commit/push finished source immediately; dashboard docs refresh follows.
+No original feature/milestone parity claimed; all four product gates remain open.
+
+Claude vitals pass5 found no closed new bodies; exact blockers retained in its
+README. Batch6 typed C under callee_probe/building_vitals_dependencies_6/ now
+provides ten more creator/initialization dependencies plus0x1426fdde0, confirmed
+UFortRuntimeOptions_GetDefault (live ClassDefaultObject with lazy creation).
+New Terra medium bounded source worker owns bulk_runtime_option_runtime to
+recover37 repeated live-CDO queries; a separate native_class_size_evidence_runtime
+worker is investigating authoritative GPSC size arguments to unblock native
+storage. Both fork_turns none, source only, no builds/tests. Root owns promotion,
+Native and builds. Preserve other graphics/README edits, skip visual work,
+keep reads/output bounded and rotate workers at task completion.
+
 ## Native source batch 8 (2026-11-03)
 
 Canonical Native1444 entries =1382 function bodies +62 fields. Added203

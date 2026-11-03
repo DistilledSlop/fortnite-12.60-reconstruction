@@ -156,6 +156,21 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UMeshComponent* GetMeshComponent() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsDropped() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsHeld() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsPlaced() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsThrown() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsUnheld() const;
+
 	UFUNCTION()
 	void OnRep_bCollisionBlockedByPawns();
 

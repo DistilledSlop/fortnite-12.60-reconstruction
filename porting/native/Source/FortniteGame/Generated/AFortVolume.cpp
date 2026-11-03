@@ -18,6 +18,14 @@ bool AFortVolume::GetUserGeneratedContentRestricted() const
 	return AFortVolume::bUserGeneratedContentRestricted;
 }
 
+bool AFortVolume::IsReady() const
+{
+	// Original address: 0x142b37a70.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete enum byte immediate comparison; see bulk_enum_predicate_runtime/README.md.
+	return static_cast<uint8>(VolumeState) == 3;
+}
+
 void AFortVolume::OnRep_BoundsCollisionSetting()
 {
 	// Body not recovered: reflection-derived stub.

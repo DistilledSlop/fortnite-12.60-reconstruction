@@ -26,6 +26,14 @@ float UFortTimeOfDayWeatherComponent::GetCurrentWindStrength() const
 	return NativeRecoveredFloat_0xbc;
 }
 
+bool UFortTimeOfDayWeatherComponent::IsWeatherEventActive() const
+{
+	// Original address: 0x142b14f70.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete enum byte immediate comparison; see bulk_enum_predicate_runtime/README.md.
+	return static_cast<uint8>(WeatherState) != 0;
+}
+
 void UFortTimeOfDayWeatherComponent::OnRep_CurrentWeatherEventIntensity()
 {
 	// Body not recovered: reflection-derived stub.

@@ -1,12 +1,12 @@
 [
-{"address":"0x141b9b480","label":"ABuildingActor vslot 0x778 target: float level used by GetMaxHealth"},
-{"address":"0x141b8f710","label":"ABuildingActor vslot 0x798 target called at end of 0x141b94070"},
-{"address":"0x14277e480","label":"0x141b94070: class getter for ASC NewObject (identify class)"},
-{"address":"0x1440c2bb0","label":"0x141b94070: ASC post-create init (arg = new ASC)"},
-{"address":"0x1440cb120","label":"0x141b94070 non-register path: ASC call"},
-{"address":"0x14072fb70","label":"0x141b94070 non-register path: attribute set call"},
-{"address":"0x1406ccde0","label":"0x141b94070: global TArray accessor (register ASC)"},
-{"address":"0x142851150","label":"0x141b94070: class getter for cast of +0x310 (param_1[0x62]); attribute-set class identity"},
-{"address":"0x141bc8220","label":"GetAttributeInitializationKey: key-to-string used in log"},
-{"address":"0x1429365d0","label":"class getter used by Health/MaxHealth attribute accessors"}
+{"address":"0x1440c2ce0","label":"0x1440c2bb0 callee (comp, world): confirm UActorComponent::RegisterComponentWithWorld"},
+{"address":"0x143f72040","label":"0x141b94070 when policy==1 and arg set: (this) call before ASC creation"},
+{"address":"0x1416413a0","label":"0x141b9b480 level source: (world-or-ctx) cast/lookup used for sources 0 and 1"},
+{"address":"0x141e9b630","label":"0x141b9b480 level source 0 result (float)"},
+{"address":"0x141641350","label":"0x141b9b480 level source 2: lookup before GetCurrentPlaylistAthena"},
+{"address":"0x141ea8c00","label":"0x141b8f710: (lVar4, building actor) registration"},
+{"address":"0x141bc5470","label":"ABuildingActor vslot 0x758 target called in 0x141b8f710"},
+{"address":"0x141bc57c0","label":"ABuildingActor vslot 0x760 target"},
+{"address":"0x141baf010","label":"ABuildingActor vslot 0x770 target"},
+{"address":"0x141bc4620","label":"ABuildingActor vslot 0x780 target (this, bool)"}
 ]

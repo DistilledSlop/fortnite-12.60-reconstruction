@@ -2,6 +2,14 @@
 #include "UFortCreativeKeyLockComponent.h"
 #include "Net/UnrealNetwork.h"
 
+bool UFortCreativeKeyLockComponent::IsLocked() const
+{
+	// Original address: 0x1428c3060.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete enum byte immediate comparison; see bulk_enum_predicate_runtime/README.md.
+	return static_cast<uint8>(CurrentState) == 0;
+}
+
 void UFortCreativeKeyLockComponent::OnRep_CurrentState()
 {
 	// Body not recovered: reflection-derived stub.

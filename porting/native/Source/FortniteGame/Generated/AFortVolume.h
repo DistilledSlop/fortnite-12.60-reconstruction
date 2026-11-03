@@ -179,6 +179,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool GetUserGeneratedContentRestricted() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsReady() const;
+
 	UFUNCTION()
 	void OnRep_BoundsCollisionSetting();
 

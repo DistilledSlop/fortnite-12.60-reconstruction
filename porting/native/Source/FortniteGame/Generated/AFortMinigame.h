@@ -540,7 +540,31 @@ public:
 	UFortCreativeTeleporterManagerComponent* GetTeleporterManagerComponent();
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool HasStarted() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsInSetup() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsInWarmup() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsMinigameStarting() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsPostGame() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsPregame() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsTeamMinigame() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsTransitioning() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsWaitingForCameras() const;
 
 	UFUNCTION()
 	void OnRep_ClassSlotArray();

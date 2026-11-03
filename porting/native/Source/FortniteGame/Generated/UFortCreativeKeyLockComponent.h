@@ -66,6 +66,9 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_KeyItemDefinition, SaveGame)
 	TSoftObjectPtr<UFortItemDefinition> UnlockKeyDefinitionSoftPointer;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsLocked() const;
+
 	UFUNCTION()
 	void OnRep_CurrentState();
 

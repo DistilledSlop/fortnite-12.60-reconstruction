@@ -97,5 +97,8 @@ public:
 	UPROPERTY(Transient)
 	int32 PlayerLevel;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsQuestInProgress() const;
+
 };
 
