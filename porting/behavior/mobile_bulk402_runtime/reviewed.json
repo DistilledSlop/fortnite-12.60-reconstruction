@@ -1,0 +1,46 @@
+[
+  {
+    "function": "SetCameraPush",
+    "disposition": "ported",
+    "wrapper_capture": "porting/generated/native228-fresh-callees/0x1429f5560.c",
+    "direct_callees": [
+      "0x141f48130",
+      "0x14433acd0"
+    ],
+    "review": "Wrapper steps the float argument; 0x141f48130 initializes the 'Camera Push' FName before the null check and passes the value to the scalar material setter on IconMID. 0x14433acd0 forms a global FMaterialParameterInfo.",
+    "class": "UFortMobileInteractionComponent"
+  },
+  {
+    "function": "SetRadialDuration",
+    "disposition": "ported",
+    "wrapper_capture": "porting/generated/native228-fresh-callees/0x1429f56f0.c",
+    "direct_callees": [
+      "0x141f49060",
+      "0x14433acd0"
+    ],
+    "review": "Wrapper steps the float argument; 0x141f49060 initializes the 'TimerDuration' FName before the null check and passes the value to the scalar material setter on IconMID. 0x14433acd0 forms a global FMaterialParameterInfo.",
+    "class": "UFortMobileInteractionComponent"
+  },
+  {
+    "function": "SetRadialOpacity",
+    "disposition": "ported",
+    "wrapper_capture": "porting/generated/native228-fresh-callees/0x1429f5770.c",
+    "direct_callees": [
+      "0x141f49100",
+      "0x14433acd0"
+    ],
+    "review": "Wrapper steps the float argument; 0x141f49100 initializes the 'TimerOpacity' FName before the null check and passes the value to the scalar material setter on IconMID. 0x14433acd0 forms a global FMaterialParameterInfo.",
+    "class": "UFortMobileInteractionComponent"
+  },
+  {
+    "function": "SetRadialStartTime",
+    "disposition": "ported",
+    "wrapper_capture": "porting/generated/native228-fresh-callees/0x1429f57f0.c",
+    "direct_callees": [
+      "0x141f491a0",
+      "0x14433acd0"
+    ],
+    "review": "Wrapper steps the float argument; 0x141f491a0 initializes the 'TimerStartTime' FName before the null check and passes the value to the scalar material setter on IconMID. 0x14433acd0 forms a global FMaterialParameterInfo.",
+    "class": "UFortMobileInteractionComponent"
+  }
+]

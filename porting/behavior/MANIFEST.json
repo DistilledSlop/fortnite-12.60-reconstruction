@@ -57634,5 +57634,77 @@
     "status": "ported",
     "includes": [],
     "notes": "Native wrapper copies the eight-byte FName at 0x5d4; constructor initializes it to NAME_None."
+  },
+  {
+    "function": "SetCameraPush",
+    "kind": "exec",
+    "signature": "void SetCameraPush(float Offset)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/mobile_bulk402_runtime/UFortMobileInteractionComponent_SetCameraPush.inc",
+    "address": "0x1429f5560",
+    "native_body_address": "0x141f48130",
+    "reflection_flags": "0x4020401",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Materials/MaterialInstanceDynamic.h"
+    ],
+    "notes": "The native body constructs FName 'Camera Push', then writes the scalar to the IconMID at offset 0x478 when non-null.",
+    "class": "UFortMobileInteractionComponent"
+  },
+  {
+    "function": "SetRadialDuration",
+    "kind": "exec",
+    "signature": "void SetRadialDuration(float Duration)",
+    "signature_status": "proposed",
+    "access": "protected",
+    "inc_path": "porting/behavior/mobile_bulk402_runtime/UFortMobileInteractionComponent_SetRadialDuration.inc",
+    "address": "0x1429f56f0",
+    "native_body_address": "0x141f49060",
+    "reflection_flags": "0x4080401",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Materials/MaterialInstanceDynamic.h"
+    ],
+    "notes": "The native body constructs FName 'TimerDuration', then writes the scalar to the IconMID at offset 0x478 when non-null.",
+    "class": "UFortMobileInteractionComponent"
+  },
+  {
+    "function": "SetRadialOpacity",
+    "kind": "exec",
+    "signature": "void SetRadialOpacity(float Opacity)",
+    "signature_status": "proposed",
+    "access": "protected",
+    "inc_path": "porting/behavior/mobile_bulk402_runtime/UFortMobileInteractionComponent_SetRadialOpacity.inc",
+    "address": "0x1429f5770",
+    "native_body_address": "0x141f49100",
+    "reflection_flags": "0x4080401",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Materials/MaterialInstanceDynamic.h"
+    ],
+    "notes": "The native body constructs FName 'TimerOpacity', then writes the scalar to the IconMID at offset 0x478 when non-null.",
+    "class": "UFortMobileInteractionComponent"
+  },
+  {
+    "function": "SetRadialStartTime",
+    "kind": "exec",
+    "signature": "void SetRadialStartTime(float StartTime)",
+    "signature_status": "proposed",
+    "access": "protected",
+    "inc_path": "porting/behavior/mobile_bulk402_runtime/UFortMobileInteractionComponent_SetRadialStartTime.inc",
+    "address": "0x1429f57f0",
+    "native_body_address": "0x141f491a0",
+    "reflection_flags": "0x4080401",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Materials/MaterialInstanceDynamic.h"
+    ],
+    "notes": "The native body constructs FName 'TimerStartTime', then writes the scalar to the IconMID at offset 0x478 when non-null.",
+    "class": "UFortMobileInteractionComponent"
   }
 ]

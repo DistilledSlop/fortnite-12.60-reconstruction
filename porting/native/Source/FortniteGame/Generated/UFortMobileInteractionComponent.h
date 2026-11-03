@@ -30,5 +30,23 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsAvailable() const;
 
+	UFUNCTION(BlueprintCallable)
+	void SetCameraPush(float Offset);
+
+protected:
+	UFUNCTION(BlueprintCallable)
+	void SetRadialDuration(float Duration);
+public:
+
+protected:
+	UFUNCTION(BlueprintCallable)
+	void SetRadialOpacity(float Opacity);
+public:
+
+protected:
+	UFUNCTION(BlueprintCallable)
+	void SetRadialStartTime(float StartTime);
+public:
+
 };
 
