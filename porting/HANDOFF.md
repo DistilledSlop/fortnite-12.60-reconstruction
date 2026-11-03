@@ -1,5 +1,33 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Bulk pawn/controller integration97 (2026-11-03)
+
+Source96/dashboard pushed through941aef6f. Reviewed and integrated16 bodies:
+7 pawn state/capsule/interface functions,8 reflected controller/game-state
+functions and1 shared volume-type helper. Generation97 accepts2,460 entries =
+2,222 bodies+238 fields,0 rejected;8 Native files changed,0 added/removed by
+this generation. Also tracking the restriction-reason enum header generated
+in96 and omitted from its source commit. Command `python3 -I
+/tmp/promote-native-batch97.py`, log `/tmp/promote-native-batch97.log`, reports
+`porting/generated/gameplay-bulk-integration-97/`. No tests/build/runtime;
+182 canonical+4 manual bodies pending since2,040; next checkpoint3,040.
+All four product gates remain OPEN; objective ACTIVE.
+
+Pawn CreativeToggleGhost and StopConsumableUseAudio remain drafts. Controller
+GetDeathInfo is explicitly uncounted: copy helper141a33710 copies a native
+byte at+0x48 absent from generated FDeathInfo. Other rough.cpp transcriptions
+are raw decompiler work, uncompiled and uncounted. Reviewed six volume/creative
+lookups preserve existing manager helpers and repeated component calls.
+Native97-deps20-helper probe is terminal and successful; no generator/Ghidra
+stream active. Claude player-large97 task remains active, PTY69521 (observe
+same handle), source uncounted pending review. Keep Claude on bounded large
+functions while usage permits; do not replace with metadata redumps.
+
+Dumper-7 assessment: official SDK generator uses injected live reflection and
+emits ProcessEvent wrappers; useful targeted metadata fallback, not function
+logic recovery. Existing12.60 corpus already has23,758 native-function records
+across2,849 classes plus property/enum/bool metadata. No new dumper run needed.
+
 ## Shared minigame dependency closure and bulk player recovery96 (2026-11-03)
 
 Previous goal turn PROGRESS:29 canonical bodies, HoagieRuntime module and large

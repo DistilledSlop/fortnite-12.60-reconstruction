@@ -384,6 +384,12 @@ bool AFortGameStateAthena::IsCreativeUtilitySpawningAllowedPlaylist() const
 	return PlaylistAllowsCreativeUtilitySpawning(GetCurrentPlaylistAthena());
 }
 
+bool AFortGameStateAthena::IsTeleportToCreativeHubAllowed(AFortPlayerState* PlayerState) const
+{
+	// CONFIDENCE: high; 0x14199e430 applies the same creative-tag then playground-tag query, re-reading the playlist on the second path. The player parameter is unused.
+	return IsCreativeOrPlaygroundModePlaylist();
+}
+
 void AFortGameStateAthena::OnRep_Aircraft()
 {
 	// Body not recovered: reflection-derived stub.
@@ -654,6 +660,12 @@ void AFortGameStateAthena::OnRep_WinningTeamsCN()
 void AFortGameStateAthena::RunPerfMemCheatScript_Client_Replicated_Implementation(bool bStartStatFiles)
 {
 	// Body not recovered: reflection-derived stub.
+}
+
+void AFortGameStateAthena::SetFloatingIslandInformation(FVector WorldPosition, bool bActivated)
+{
+	// CONFIDENCE: high; exec 0x142920c20 extracts both arguments and calls an empty stub.
+	return;
 }
 
 void AFortGameStateAthena::SetFocalPointActor(AActor* InFocalPointActor, FVector InFocalPointOffset, float InFocalPointFOV, float InDuration)

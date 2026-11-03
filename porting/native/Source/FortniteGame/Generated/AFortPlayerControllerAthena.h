@@ -10,6 +10,7 @@
 #include "Delegates/Delegate.h"
 #include "EDeathCause.h"
 #include "EEndOfMatchReason.h"
+#include "EFortItemType.h"
 #include "Engine/NetSerialization.h"
 #include "Engine/World.h"
 #include "FAsyncTaskResult.h"
@@ -70,6 +71,7 @@ class ACameraActor;
 class AFortAthenaCreativePortal;
 class AFortBroadcastRemoteClientInfo;
 class AFortGameplayMutator;
+class AFortMinigame;
 class AFortPlayerController;
 class AFortPlayerMarkerBase;
 class AFortPlayerPawn;
@@ -977,16 +979,25 @@ public:
 	UCreativeUserContentManager* GetCreativeUserContentManager() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	AFortVolume* GetCurrentVolumeOrCreativePlotLinkedVolume() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetInventorySpace() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UAthenaMarkerComponent* GetMarkerComponent() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	AFortMinigame* GetMinigame() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UFortPlaysetItemDefinition* GetPlayset() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	void GetPlaysetSize(int32& SizeX, int32& SizeY, int32& SizeZ) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool HasItems(TArray<EFortItemType>& ExcludedItemTypes) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsClientNotifiedOfLoss() const;
@@ -996,6 +1007,15 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsClientNotifiedOfWin() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsPlayerInFeaturedVolume() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsPlayerInPublishedVolume() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsPlayerInReadOnlyVolume() const;
 
 	UFUNCTION(Server, Reliable, WithValidation)
 	void MakeNewCreativePlot(UFortCreativeRealEstatePlotItemDefinition* PlotType, const FString& Locale, const FString& Title);

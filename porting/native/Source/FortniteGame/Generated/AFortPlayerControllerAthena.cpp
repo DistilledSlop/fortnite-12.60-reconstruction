@@ -3,13 +3,46 @@
 #include "AFortGameStateAthena.h"
 #include "AFortPlayerStateAthena.h"
 #include "AFortVolume.h"
+#include "AFortVolumeManager.h"
 #include "Delegates/Delegate.h"
+#include "EVolumeState.h"
 #include "Engine/World.h"
 #include "SharedFortGameLog.h"
 #include "UFortGameInstance.h"
+#include "UFortLevelSaveComponent.h"
+#include "UFortMinigameVolumeComponent.h"
 #include "UFortPlaysetItemDefinition.h"
 #include "UFortRegisteredPlayerInfo.h"
+#include "ULevelSaveComponent.h"
 #include "Net/UnrealNetwork.h"
+
+namespace
+{
+static uint8 NativeGetVolumeType96(AFortVolume* Volume)
+{
+	// CONFIDENCE: high; 0x141c77c90. Component lookup is virtual and remains so through FindComponentByClass.
+	if (!Volume->bNeverAllowSaving)
+	{
+	    return 1;
+	}
+	UActorComponent* Component = Volume->FindComponentByClass(ULevelSaveComponent::StaticClass());
+	if (!Component)
+	{
+	    return 5;
+	}
+	UFortLevelSaveComponent* FortComponent = Cast<UFortLevelSaveComponent>(Component);
+	if (!FortComponent)
+	{
+	    return 4;
+	}
+	if (FortComponent->bCuratedHub)
+	{
+	    return 5;
+	}
+	return FortComponent->bCurated ? 3 : 2;
+}
+
+}  // namespace
 
 void AFortPlayerControllerAthena::ClearDroppableItems()
 {
@@ -375,6 +408,13 @@ UCreativeUserContentManager* AFortPlayerControllerAthena::GetCreativeUserContent
 	return CreativeUserContentManager;
 }
 
+AFortVolume* AFortPlayerControllerAthena::GetCurrentVolumeOrCreativePlotLinkedVolume() const
+{
+	// CONFIDENCE: high; 0x1419d3790 resolves the manager from this controller, then performs the player-state lookup.
+	AFortVolumeManager* Manager = AFortVolumeManager::NativeResolveVolumeManager(const_cast<AFortPlayerControllerAthena*>(this));
+	return Manager ? Manager->NativeFindPlayerVolume(PlayerState) : nullptr;
+}
+
 int32 AFortPlayerControllerAthena::GetInventorySpace() const
 {
 	// Original address: 0x1411a8460.
@@ -393,6 +433,20 @@ UAthenaMarkerComponent* AFortPlayerControllerAthena::GetMarkerComponent() const
 	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	return MarkerComponent;
+}
+
+AFortMinigame* AFortPlayerControllerAthena::GetMinigame() const
+{
+	// CONFIDENCE: high; 0x141c794e0 resolves world, Athena game state, its volume manager and the player's volume, then finds its minigame component.
+	if (!PlayerState)
+	{
+	    return nullptr;
+	}
+	UWorld* World = PlayerState->GetWorld();
+	AFortGameStateAthena* GameState = World ? Cast<AFortGameStateAthena>(World->GetGameState()) : nullptr;
+	AFortVolumeManager* Manager = GameState ? GameState->NativeGetVolumeManager() : nullptr;
+	AFortVolume* Volume = Manager ? Manager->NativeFindPlayerVolume(PlayerState) : nullptr;
+	return UFortMinigameVolumeComponent::NativeResolveMinigameFromVolume(Volume);
 }
 
 UFortPlaysetItemDefinition* AFortPlayerControllerAthena::GetPlayset() const
@@ -416,6 +470,12 @@ void AFortPlayerControllerAthena::GetPlaysetSize(int32& SizeX, int32& SizeY, int
 	SizeX = Playset->SizeX;
 	SizeY = Playset->SizeY;
 	SizeZ = FMath::Max(Playset->SizeZ, 1);
+}
+
+bool AFortPlayerControllerAthena::HasItems(TArray<EFortItemType>& ExcludedItemTypes) const
+{
+	// CONFIDENCE: high; exec 0x14273fe60 extracts the array, calls the false stub, and returns its result.
+	return false;
 }
 
 bool AFortPlayerControllerAthena::IsClientNotifiedOfLoss() const
@@ -452,6 +512,36 @@ bool AFortPlayerControllerAthena::IsClientNotifiedOfWin() const
 	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 	// CONFIDENCE: MEDIUM
 	return bClientNotifiedOfWin;
+}
+
+bool AFortPlayerControllerAthena::IsPlayerInFeaturedVolume() const
+{
+	// CONFIDENCE: high; 0x1419dd990 uses the volume type helper once and tests value 3.
+	AFortVolumeManager* Manager = AFortVolumeManager::NativeResolveVolumeManager(const_cast<AFortPlayerControllerAthena*>(this));
+	AFortVolume* Volume = Manager ? Manager->NativeFindPlayerVolume(PlayerState) : nullptr;
+	return Volume && NativeGetVolumeType96(Volume) == 3;
+}
+
+bool AFortPlayerControllerAthena::IsPlayerInPublishedVolume() const
+{
+	// CONFIDENCE: high; 0x1419dd9e0 calls the volume type helper twice before comparing either result.
+	AFortVolumeManager* Manager = AFortVolumeManager::NativeResolveVolumeManager(const_cast<AFortPlayerControllerAthena*>(this));
+	AFortVolume* Volume = Manager ? Manager->NativeFindPlayerVolume(PlayerState) : nullptr;
+	if (!Volume)
+	{
+	    return false;
+	}
+	const uint8 First = NativeGetVolumeType96(Volume);
+	const uint8 Second = NativeGetVolumeType96(Volume);
+	return First == 3 || Second == 2;
+}
+
+bool AFortPlayerControllerAthena::IsPlayerInReadOnlyVolume() const
+{
+	// CONFIDENCE: high; 0x1419dda50 looks up the player volume and tests state byte 1 or bit +0x2d8 mask 1.
+	AFortVolumeManager* Manager = AFortVolumeManager::NativeResolveVolumeManager(const_cast<AFortPlayerControllerAthena*>(this));
+	AFortVolume* Volume = Manager ? Manager->NativeFindPlayerVolume(PlayerState) : nullptr;
+	return Volume && (Volume->VolumeState == EVolumeState::ReadOnly || Volume->bNeverAllowSaving);
 }
 
 void AFortPlayerControllerAthena::MakeNewCreativePlot_Implementation(UFortCreativeRealEstatePlotItemDefinition* PlotType, const FString& Locale, const FString& Title)

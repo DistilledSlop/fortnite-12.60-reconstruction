@@ -1463,6 +1463,9 @@ public:
 	bool GetVehicleOverrideExit();
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	uint8 GetVehicleSeatIndex() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetWaterImmersionDepth() const;
 
 	UFUNCTION()
@@ -1482,6 +1485,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsInSlipperyMovement() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsInVehicle() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsInVortex() const;
@@ -1789,6 +1795,9 @@ public:
 	void SetClientObservedStatsFromAnotherPawn(AFortPlayerPawn* OtherPawn);
 
 	UFUNCTION(BlueprintCallable)
+	void SetEquippedArmoredInterface(TScriptInterface<IFortArmoredInterface> InInterface);
+
+	UFUNCTION(BlueprintCallable)
 	void SetInSlipperyMovement(bool bIsSlippery);
 
 	UFUNCTION(BlueprintCallable)
@@ -1802,6 +1811,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void SetPreviousVelocity(FVector OldVelocity);
+
+	UFUNCTION(BlueprintCallable)
+	void SetVehicleOverrideExit(bool bIgnoreLaunch);
 
 protected:
 	UFUNCTION(BlueprintCallable)

@@ -974,6 +974,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsCreativeUtilitySpawningAllowedPlaylist() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsTeleportToCreativeHubAllowed(AFortPlayerState* PlayerState) const;
+
 	UFUNCTION()
 	void OnRep_Aircraft();
 
@@ -1098,6 +1101,9 @@ public:
 	UFUNCTION(Client, Reliable)
 	void RunPerfMemCheatScript_Client_Replicated(bool bStartStatFiles);
 	void RunPerfMemCheatScript_Client_Replicated_Implementation(bool bStartStatFiles);
+
+	UFUNCTION(BlueprintCallable)
+	void SetFloatingIslandInformation(FVector WorldPosition, bool bActivated);
 
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void SetFocalPointActor(AActor* InFocalPointActor, FVector InFocalPointOffset, float InFocalPointFOV, float InDuration);

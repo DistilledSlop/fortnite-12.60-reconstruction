@@ -327,6 +327,12 @@ bool AFortPlayerPawn::GetVehicleOverrideExit()
 	return VehicleStateLocal.bOverrideVehicleExit;
 }
 
+uint8 AFortPlayerPawn::GetVehicleSeatIndex() const
+{
+	// CONFIDENCE: high; native 0x142325700 returns the byte at VehicleStateLocal + 12.
+	return VehicleStateLocal.SeatIndex;
+}
+
 float AFortPlayerPawn::GetWaterImmersionDepth() const
 {
 	// CONFIDENCE: HIGH
@@ -397,6 +403,12 @@ bool AFortPlayerPawn::IsInSlipperyMovement() const
 	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	return bIsInSlipperyMovement;
+}
+
+bool AFortPlayerPawn::IsInVehicle() const
+{
+	// CONFIDENCE: high; native 0x1423318f0 tests VehicleStateLocal.Vehicle.
+	return VehicleStateLocal.Vehicle != nullptr;
 }
 
 bool AFortPlayerPawn::IsInVortex() const
@@ -1249,6 +1261,16 @@ void AFortPlayerPawn::SetClientObservedStatsFromAnotherPawn(AFortPlayerPawn* Oth
 	// CONFIDENCE: HIGH
 }
 
+void AFortPlayerPawn::SetEquippedArmoredInterface(TScriptInterface<IFortArmoredInterface> InInterface)
+{
+	// CONFIDENCE: high; exec 0x142a7ff50 normalizes a null object before the two-word assignment.
+	ArmoredInterface = InInterface;
+	if (!InInterface.GetObject())
+	{
+	    ArmoredInterface.SetInterface(nullptr);
+	}
+}
+
 void AFortPlayerPawn::SetInSlipperyMovement(bool bIsSlippery)
 {
 	// CONFIDENCE: HIGH
@@ -1297,6 +1319,12 @@ void AFortPlayerPawn::SetPreviousVelocity(FVector OldVelocity)
 	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	PreviousVelocity = OldVelocity;
+}
+
+void AFortPlayerPawn::SetVehicleOverrideExit(bool bIgnoreLaunch)
+{
+	// CONFIDENCE: high; native 0x14234f070 stores the normalized byte at VehicleStateLocal + 14.
+	VehicleStateLocal.bOverrideVehicleExit = bIgnoreLaunch;
 }
 
 void AFortPlayerPawn::StartedInteractSearch()

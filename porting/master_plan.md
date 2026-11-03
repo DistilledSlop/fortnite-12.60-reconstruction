@@ -10,6 +10,13 @@ credentials in Git, and the orchestrator reviews and commits.
 
 ## Current baseline
 
+Batch97 integrates16 reviewed pawn/controller/creative-volume bodies, including
+one shared helper:2,222 bodies+238 fields=2,460 accepted,0 rejected. Eight Native
+files changed; restriction-reason enum header from96 also tracked. GetDeathInfo
+remains draft due missing native structure tail. No tests/build/runtime;
+182 canonical+4 manual pending; next3,040. Claude large player lifts active;
+all product gates OPEN. Dumper-7 offers metadata fallback, not native logic.
+
 Batch96 integrates3 shared-dependency closures: global/team end conditions and
 localized evolution restriction text;2,206 bodies+238 fields=2,444 accepted,
 0 rejected. Four large minigame lifts remain uncounted; Claude assigned3 larger

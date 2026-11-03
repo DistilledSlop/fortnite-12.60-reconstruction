@@ -442,6 +442,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void ForceReviveFromDBNO();
 
+	UFUNCTION(BlueprintCallable)
+	float GetDefaultReviveFromDBNOTime();
+
 	UFUNCTION(NetMulticast, Unreliable)
 	void NetMulticast_SuccessfulBuildingEdit();
 	void NetMulticast_SuccessfulBuildingEdit_Implementation();
@@ -481,6 +484,12 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void SetBushEnabled(bool bEnableBush);
+
+	UFUNCTION(BlueprintCallable)
+	void SetCapsuleHalfHeightAthena(float HalfHeight);
+
+	UFUNCTION(BlueprintCallable)
+	void SetCapsuleRadiusAthena(float Radius);
 
 protected:
 	UFUNCTION(BlueprintCallable)

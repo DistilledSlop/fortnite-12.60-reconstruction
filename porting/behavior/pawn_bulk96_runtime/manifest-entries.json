@@ -1,0 +1,132 @@
+[
+  {
+    "class": "AFortPlayerPawnAthena",
+    "function": "CreativeToggleGhost",
+    "kind": "exec",
+    "signature": "void CreativeToggleGhost(bool bEnableOnly)",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/pawn_bulk96_runtime/AFortPlayerPawnAthena_CreativeToggleGhost.inc",
+    "confidence": "high",
+    "address": "0x142a83230",
+    "status": "draft",
+    "notes": "Original exec calls ServerCreativeToggleGhost_Implementation directly with normalized bool. The target implementation must be recovered before counting this forwarder."
+  },
+  {
+    "class": "AFortPlayerPawnAthena",
+    "function": "SetCapsuleRadiusAthena",
+    "kind": "exec",
+    "signature": "void SetCapsuleRadiusAthena(float Radius)",
+    "access": "public",
+    "signature_status": "proposed",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x142a83c10",
+    "inc_path": "porting/behavior/pawn_bulk96_runtime/AFortPlayerPawnAthena_SetCapsuleRadiusAthena.inc",
+    "includes": [
+      "Components/CapsuleComponent.h"
+    ],
+    "notes": "Original exec and complete helper 0x141a23e40 captured in native96-broad and native96-impl."
+  },
+  {
+    "class": "AFortPlayerPawnAthena",
+    "function": "SetCapsuleHalfHeightAthena",
+    "kind": "exec",
+    "signature": "void SetCapsuleHalfHeightAthena(float HalfHeight)",
+    "access": "public",
+    "signature_status": "proposed",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x142a83b90",
+    "inc_path": "porting/behavior/pawn_bulk96_runtime/AFortPlayerPawnAthena_SetCapsuleHalfHeightAthena.inc",
+    "includes": [
+      "Components/CapsuleComponent.h"
+    ],
+    "notes": "Original exec and complete helper 0x141a23e00 captured in native96-broad and native96-impl."
+  },
+  {
+    "class": "AFortPlayerPawnAthena",
+    "function": "GetDefaultReviveFromDBNOTime",
+    "kind": "exec",
+    "signature": "float GetDefaultReviveFromDBNOTime()",
+    "access": "public",
+    "signature_status": "proposed",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x142a83670",
+    "inc_path": "porting/behavior/pawn_bulk96_runtime/AFortPlayerPawnAthena_GetDefaultReviveFromDBNOTime.inc",
+    "includes": [],
+    "notes": "Original exec and complete helper 0x141a132b0 captured in native96-broad and native96-impl."
+  },
+  {
+    "class": "AFortPlayerPawn",
+    "function": "IsInVehicle",
+    "kind": "getter",
+    "signature": "bool IsInVehicle() const",
+    "access": "public",
+    "signature_status": "proposed",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x142a7d290",
+    "inc_path": "porting/behavior/pawn_bulk96_runtime/AFortPlayerPawn_IsInVehicle.inc",
+    "includes": [],
+    "notes": "Native helper 0x1423318f0 uses reflected VehicleStateLocal, at target offset 0x1578."
+  },
+  {
+    "class": "AFortPlayerPawn",
+    "function": "GetVehicleSeatIndex",
+    "kind": "getter",
+    "signature": "uint8 GetVehicleSeatIndex() const",
+    "access": "public",
+    "signature_status": "proposed",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x142a7cbb0",
+    "inc_path": "porting/behavior/pawn_bulk96_runtime/AFortPlayerPawn_GetVehicleSeatIndex.inc",
+    "includes": [],
+    "notes": "Native helper 0x142325700 uses reflected VehicleStateLocal, at target offset 0x1578."
+  },
+  {
+    "class": "AFortPlayerPawn",
+    "function": "SetVehicleOverrideExit",
+    "kind": "exec",
+    "signature": "void SetVehicleOverrideExit(bool bIgnoreLaunch)",
+    "access": "public",
+    "signature_status": "proposed",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x142a80a70",
+    "inc_path": "porting/behavior/pawn_bulk96_runtime/AFortPlayerPawn_SetVehicleOverrideExit.inc",
+    "includes": [],
+    "notes": "Native helper 0x14234f070 uses reflected VehicleStateLocal, at target offset 0x1578."
+  },
+  {
+    "class": "AFortPlayerPawn",
+    "function": "SetEquippedArmoredInterface",
+    "kind": "exec",
+    "signature": "void SetEquippedArmoredInterface(TScriptInterface<IFortArmoredInterface> InInterface)",
+    "access": "public",
+    "signature_status": "proposed",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x142a7ff50",
+    "inc_path": "porting/behavior/pawn_bulk96_runtime/AFortPlayerPawn_SetEquippedArmoredInterface.inc",
+    "includes": [],
+    "notes": "The wrapper clears the interface pointer when object is null; helper 0x14234c790 copies the pair to reflected ArmoredInterface."
+  },
+  {
+    "class": "AFortPlayerPawnAthena",
+    "function": "StopConsumableUseAudio",
+    "kind": "exec",
+    "signature": "void StopConsumableUseAudio()",
+    "access": "public",
+    "signature_status": "proposed",
+    "status": "draft",
+    "confidence": "high",
+    "address": "0x142a840c0",
+    "inc_path": "porting/behavior/pawn_bulk96_runtime/AFortPlayerPawnAthena_StopConsumableUseAudio.inc",
+    "includes": [
+      "Components/AudioComponent.h"
+    ],
+    "notes": "Native 0x141a26520 calls virtual slot 0x528 with 0.5, 0, and curve 0; UAudioComponent virtual order is FadeIn, FadeOut, Play, Stop and companion 0x141a25830 calls 0x538 with no arguments. Vtable slot identification remains to be independently proven; do not count."
+  }
+]
