@@ -10,8 +10,11 @@ from out/progress.json. Stdlib only, offline, deterministic for a given out/.
     python3 porting/progress/publish.py --check        # exit 1 if docs/README are stale
 """
 import json
+import re
 import shutil
+import subprocess
 import sys
+import urllib.parse
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -20,6 +23,7 @@ DOCS = ROOT / "docs"
 README = ROOT / "README.md"
 START, END = "<!-- progress:start -->", "<!-- progress:end -->"
 BSTART, BEND = "<!-- badges:start -->", "<!-- badges:end -->"
+CODE_EXTS = (".h", ".cpp", ".inc", ".py", ".cs", ".sh")
 PAGES = ["index.html", "history.html", "progress.svg", "progress.json"]
 
 
@@ -28,15 +32,93 @@ def bar(pct, width=20):
     return "█" * filled + "░" * (width - filled)
 
 
+def git(*args):
+    return subprocess.run(["git", "-C", str(ROOT), *args], capture_output=True, text=True, check=True).stdout
+
+
+def repo_stats():
+    files = git("ls-files", "-z").split("\0")
+    files = [f for f in files if f]
+    lines = 0
+    for f in files:
+        if f.endswith(CODE_EXTS):
+            try:
+                lines += (ROOT / f).read_bytes().count(b"\n")
+            except OSError:
+                pass
+    by_ext = lambda *e: sum(1 for f in files if f.endswith(e))
+    return {
+        "commits": int(git("rev-list", "--count", "HEAD")),
+        "files": len(files),
+        "loc": lines,
+        "cpp": by_ext(".cpp", ".h", ".inc"),
+        "py": by_ext(".py"),
+        "cs": by_ext(".cs"),
+        "sh": by_ext(".sh"),
+        "first": git("log", "--reverse", "--format=%ad", "--date=short").split("\n")[0],
+    }
+
+
+def human(n):
+    if n >= 1_000_000:
+        return f"{n / 1_000_000:.2f}M"
+    return f"{n / 1000:.1f}k" if n >= 10000 else f"{n:,}"
+
+
+def badge(label, message, color, logo=None):
+    q = {"label": label, "message": str(message), "color": color, "style": "flat-square", "labelColor": "1f2328"}
+    if logo:
+        q["logo"] = logo
+        q["logoColor"] = "white"
+    return f"![{label}: {message}](https://img.shields.io/static/v1?{urllib.parse.urlencode(q, quote_via=urllib.parse.quote)})"
+
+
 def badges(d):
-    pct = f"{d['overall_pct']:.1f}%25"
-    return "\n".join([
-        BSTART,
-        f"![overall](https://img.shields.io/badge/overall-{pct}-2a78d6) "
-        f"![milestones](https://img.shields.io/badge/milestones-{d['milestones_done']}%2F{d['milestones_total']}-d6a02a) "
-        f"![snapshot](https://img.shields.io/badge/snapshot-{d['head'][:8]}-52514e)",
-        BEND,
-    ])
+    st = repo_stats()
+    leaves = d["leaves"]
+    checks = sum(l.get("total") or 0 for l in leaves)
+    passed = sum(l.get("done") or 0 for l in leaves)
+    parity = re.search(r"([\d,]+) of ([\d,]+) generated classes", " ".join(m.get("evidence", "") for m in d["milestones"]))
+    rows = [
+        [  # progress
+            badge("overall", f"{d['overall_pct']:.1f}%", "2a78d6"),
+            badge("evidence-based", f"{d['measured_pct']:.1f}%", "3987e5"),
+            badge("objective", f"{d['objective_pct']:.1f}%", "5a9cec"),
+            badge("milestones", f"{d['milestones_done']}/{d['milestones_total']}", "d6a02a"),
+            badge("snapshot", d["head"][:8], "52514e", "git"),
+        ],
+        [  # target
+            badge("Fortnite", "12.60", "7d4cdb", "epicgames"),
+            badge("build", "CL 13477524", "6a3fc4"),
+            badge("Unreal Engine", "4.25.0", "0e1128", "unrealengine"),
+            badge("platform", "Linux x86_64", "e8a317", "linux"),
+            badge("renderer", "Vulkan", "a41e22", "vulkan"),
+            badge("paks", "31 · v10", "52514e"),
+            badge("oracle", "Wine", "722f37", "wine"),
+        ],
+        [  # stack
+            badge("C++", f"{human(st['cpp'])} files", "00599c", "cplusplus"),
+            badge("Python", f"{st['py']} scripts", "3776ab", "python"),
+            badge("C#", f"{st['cs']} files", "512bd4"),
+            badge("shell", f"{st['sh']} scripts", "4eaa25", "gnubash"),
+            badge("code", f"{human(st['loc'])} lines", "2f6f4f"),
+        ],
+        [  # scale and evidence
+            badge("commits", human(st["commits"]), "1f6feb", "git"),
+            badge("tracked files", human(st["files"]), "1f6feb"),
+            badge("areas", len(d["groups"]), "0e7490"),
+            badge("components", len(leaves), "0e7490"),
+            badge("work units done", f"{human(passed)}/{human(checks)}", "0e7490"),
+            *([badge("class parity", f"{parity.group(1)}/{parity.group(2)}", "2e8540")] if parity else []),
+            badge("since", st["first"], "52514e"),
+        ],
+        [  # process
+            badge("status", "work in progress", "d6a02a"),
+            badge("authored by", "Codex", "10a37f"),
+            badge("co-authored by", "Claude", "d97757", "anthropic"),
+        ],
+    ]
+    return "\n".join([BSTART, *("\n" + " ".join(r) for r in rows), "", BEND])
 
 
 def block(d):

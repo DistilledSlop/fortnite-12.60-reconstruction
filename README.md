@@ -11,7 +11,17 @@
 [Master plan](porting/master_plan.md)
 
 <!-- badges:start -->
-![overall](https://img.shields.io/badge/overall-20.6%25-2a78d6) ![milestones](https://img.shields.io/badge/milestones-0%2F4-d6a02a) ![snapshot](https://img.shields.io/badge/snapshot-075b790d-52514e)
+
+![overall: 20.7%](https://img.shields.io/static/v1?label=overall&message=20.7%25&color=2a78d6&style=flat-square&labelColor=1f2328) ![evidence-based: 19.8%](https://img.shields.io/static/v1?label=evidence-based&message=19.8%25&color=3987e5&style=flat-square&labelColor=1f2328) ![objective: 19.8%](https://img.shields.io/static/v1?label=objective&message=19.8%25&color=5a9cec&style=flat-square&labelColor=1f2328) ![milestones: 0/4](https://img.shields.io/static/v1?label=milestones&message=0%2F4&color=d6a02a&style=flat-square&labelColor=1f2328) ![snapshot: cf3c54ba](https://img.shields.io/static/v1?label=snapshot&message=cf3c54ba&color=52514e&style=flat-square&labelColor=1f2328&logo=git&logoColor=white)
+
+![Fortnite: 12.60](https://img.shields.io/static/v1?label=Fortnite&message=12.60&color=7d4cdb&style=flat-square&labelColor=1f2328&logo=epicgames&logoColor=white) ![build: CL 13477524](https://img.shields.io/static/v1?label=build&message=CL%2013477524&color=6a3fc4&style=flat-square&labelColor=1f2328) ![Unreal Engine: 4.25.0](https://img.shields.io/static/v1?label=Unreal%20Engine&message=4.25.0&color=0e1128&style=flat-square&labelColor=1f2328&logo=unrealengine&logoColor=white) ![platform: Linux x86_64](https://img.shields.io/static/v1?label=platform&message=Linux%20x86_64&color=e8a317&style=flat-square&labelColor=1f2328&logo=linux&logoColor=white) ![renderer: Vulkan](https://img.shields.io/static/v1?label=renderer&message=Vulkan&color=a41e22&style=flat-square&labelColor=1f2328&logo=vulkan&logoColor=white) ![paks: 31 · v10](https://img.shields.io/static/v1?label=paks&message=31%20%C2%B7%20v10&color=52514e&style=flat-square&labelColor=1f2328) ![oracle: Wine](https://img.shields.io/static/v1?label=oracle&message=Wine&color=722f37&style=flat-square&labelColor=1f2328&logo=wine&logoColor=white)
+
+![C++: 13.9k files](https://img.shields.io/static/v1?label=C%2B%2B&message=13.9k%20files&color=00599c&style=flat-square&labelColor=1f2328&logo=cplusplus&logoColor=white) ![Python: 439 scripts](https://img.shields.io/static/v1?label=Python&message=439%20scripts&color=3776ab&style=flat-square&labelColor=1f2328&logo=python&logoColor=white) ![C#: 22 files](https://img.shields.io/static/v1?label=C%23&message=22%20files&color=512bd4&style=flat-square&labelColor=1f2328) ![shell: 16 scripts](https://img.shields.io/static/v1?label=shell&message=16%20scripts&color=4eaa25&style=flat-square&labelColor=1f2328&logo=gnubash&logoColor=white) ![code: 453.7k lines](https://img.shields.io/static/v1?label=code&message=453.7k%20lines&color=2f6f4f&style=flat-square&labelColor=1f2328)
+
+![commits: 568](https://img.shields.io/static/v1?label=commits&message=568&color=1f6feb&style=flat-square&labelColor=1f2328&logo=git&logoColor=white) ![tracked files: 14.9k](https://img.shields.io/static/v1?label=tracked%20files&message=14.9k&color=1f6feb&style=flat-square&labelColor=1f2328) ![areas: 9](https://img.shields.io/static/v1?label=areas&message=9&color=0e7490&style=flat-square&labelColor=1f2328) ![components: 135](https://img.shields.io/static/v1?label=components&message=135&color=0e7490&style=flat-square&labelColor=1f2328) ![work units done: 1.09M/1.37M](https://img.shields.io/static/v1?label=work%20units%20done&message=1.09M%2F1.37M&color=0e7490&style=flat-square&labelColor=1f2328) ![class parity: 4,617/4,617](https://img.shields.io/static/v1?label=class%20parity&message=4%2C617%2F4%2C617&color=2e8540&style=flat-square&labelColor=1f2328) ![since: 2026-10-30](https://img.shields.io/static/v1?label=since&message=2026-10-30&color=52514e&style=flat-square&labelColor=1f2328)
+
+![status: work in progress](https://img.shields.io/static/v1?label=status&message=work%20in%20progress&color=d6a02a&style=flat-square&labelColor=1f2328) ![authored by: Codex](https://img.shields.io/static/v1?label=authored%20by&message=Codex&color=10a37f&style=flat-square&labelColor=1f2328) ![co-authored by: Claude](https://img.shields.io/static/v1?label=co-authored%20by&message=Claude&color=d97757&style=flat-square&labelColor=1f2328&logo=anthropic&logoColor=white)
+
 <!-- badges:end -->
 
 </div>
@@ -32,7 +42,7 @@ or run `porting/progress/serve.sh`); GitHub only shows HTML as source unless Pag
 
 <!-- progress:start -->
 
-**Overall: 20.6%** · evidence-based 19.7% · objective 19.7% · milestones 0/4 · snapshot `075b790d` (2026-11-03)
+**Overall: 20.7%** · evidence-based 19.8% · objective 19.8% · milestones 0/4 · snapshot `cf3c54ba` (2026-11-03)
 
 | Milestone | Status |
 |---|---|
@@ -46,7 +56,7 @@ or run `porting/progress/serve.sh`); GitHub only shows HTML as source unless Pag
 | Platform and Linux runtime | `█████░░░░░░░░░░░░░░░` | 26.0% | 5% |
 | Asset pipeline | `█████░░░░░░░░░░░░░░░` | 26.0% | 14% |
 | Maps and world (Apollo island) | `███░░░░░░░░░░░░░░░░░` | 13.9% | 9% |
-| Gameplay classes (/Script/FortniteGame) | `███░░░░░░░░░░░░░░░░░` | 12.8% | 33% |
+| Gameplay classes (/Script/FortniteGame) | `███░░░░░░░░░░░░░░░░░` | 13.0% | 33% |
 | Network protocol and replication | `█████░░░░░░░░░░░░░░░` | 27.1% | 10% |
 | Backend services (reconstructed server) | `█████████░░░░░░░░░░░` | 46.3% | 11% |
 | Audio | `█░░░░░░░░░░░░░░░░░░░` | 7.4% | 4% |
