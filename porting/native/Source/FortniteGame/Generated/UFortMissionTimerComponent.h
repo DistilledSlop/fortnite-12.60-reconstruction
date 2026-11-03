@@ -60,6 +60,9 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_TimerVisibilityOverride)
 	float TimerVisibilityShowAtEndTime;
 
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void AddOrRemoveTime(float TimeToAdd);
+
 	UFUNCTION()
 	void OnRep_TimerData();
 

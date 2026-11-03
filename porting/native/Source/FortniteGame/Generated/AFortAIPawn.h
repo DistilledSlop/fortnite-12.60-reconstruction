@@ -804,6 +804,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool GetUsesDBNO() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void GiveAmmo(int32 AmmoQuantity);
+
 	UFUNCTION(NetMulticast, Unreliable)
 	void NetMulticast_BatchedDamageCues(const FFortAIBatchedDamageCues& Data);
 	void NetMulticast_BatchedDamageCues_Implementation(const FFortAIBatchedDamageCues& Data);

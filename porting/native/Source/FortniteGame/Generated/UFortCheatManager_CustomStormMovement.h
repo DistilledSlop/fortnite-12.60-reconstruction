@@ -14,5 +14,8 @@ class FORTNITEGAME_API UFortCheatManager_CustomStormMovement : public UFortCheat
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(Exec)
+	void CustomStormMovementDebug(float TextScale);
+
 };
 

@@ -2,6 +2,12 @@
 #include "ABuildingFillFloor.h"
 #include "Net/UnrealNetwork.h"
 
+void ABuildingFillFloor::OnLavaOverlap(AFortPlayerPawn* Pawn)
+{
+	// Original exec 0x1406969b0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
 void ABuildingFillFloor::OnRep_FloorZ()
 {
 	// Body not recovered: reflection-derived stub.

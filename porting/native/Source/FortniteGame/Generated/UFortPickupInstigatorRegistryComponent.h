@@ -9,6 +9,8 @@
 #include "FPickupInstigatorArray.h"
 #include "FPickupInstigatorDataUpdated.h"
 
+class UObject;
+
 #include "UFortPickupInstigatorRegistryComponent.generated.h"
 
 UCLASS(config=Engine)
@@ -34,6 +36,9 @@ public:
 
 	UFUNCTION()
 	void OnRep_InstigatorRegistry();
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void RemoveAllItemsForPickupInstigator(UObject* PickupInstigator);
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

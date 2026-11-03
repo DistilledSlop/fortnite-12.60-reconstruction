@@ -15,6 +15,15 @@ class FORTNITEGAME_API UFortCheatManager_Arsenic : public UFortCheatManager_Coup
 
 public:
 	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void SetInfectedDamageToBuildingPercent(float DamagePercent);
+
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void SetInfectedDamageToStructuralBuildingPercent(float DamagePercent);
+
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void SetMatchTime(float NewTime);
+
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
 	void ToggleDBNOEnabled();
 
 	UFUNCTION(Exec, BlueprintAuthorityOnly)

@@ -2,6 +2,12 @@
 #include "UFortControllerComponent_IndicatedActorManagement.h"
 #include "Net/UnrealNetwork.h"
 
+void UFortControllerComponent_IndicatedActorManagement::OnHardCoreBeaconPlayerPawnPossessed(APawn* PossessedPawn)
+{
+	// Original exec 0x1406969b0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
 void UFortControllerComponent_IndicatedActorManagement::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

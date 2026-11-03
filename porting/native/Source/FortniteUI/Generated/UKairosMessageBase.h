@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 
+#include "UCommonButton.h"
+
 #include "UKairosMessageBase.generated.h"
 
 UCLASS()
@@ -14,5 +16,8 @@ class FORTNITEUI_API UKairosMessageBase : public UUserWidget
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(BlueprintCallable)
+	void ForceClickCommonButton(UCommonButton* Button);
+
 };
 

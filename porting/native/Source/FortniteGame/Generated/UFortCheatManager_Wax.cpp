@@ -17,3 +17,21 @@ void UFortCheatManager_Wax::EnableWaxRespawningLogic()
 	return;
 }
 
+void UFortCheatManager_Wax::SetGameScore(int32 CurrentScoreAt)
+{
+	// Original exec 0x142766a90; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
+void UFortCheatManager_Wax::SetRespawnsRemaining(int32 NumberOfRespawnsRemaining)
+{
+	// Original exec 0x142766a90; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
+void UFortCheatManager_Wax::SetTargetGoalScore(int32 TargetGoalScore)
+{
+	// Original exec 0x142766a90; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+

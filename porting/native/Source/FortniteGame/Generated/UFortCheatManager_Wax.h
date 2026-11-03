@@ -20,5 +20,14 @@ public:
 	UFUNCTION(Exec, BlueprintAuthorityOnly)
 	void EnableWaxRespawningLogic();
 
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void SetGameScore(int32 CurrentScoreAt);
+
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void SetRespawnsRemaining(int32 NumberOfRespawnsRemaining);
+
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void SetTargetGoalScore(int32 TargetGoalScore);
+
 };
 

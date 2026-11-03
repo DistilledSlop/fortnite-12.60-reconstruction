@@ -19,6 +19,7 @@ class AFortAthenaMutator_CustomStormMovement;
 class AFortAthenaMutator_InventoryOverride;
 class AFortAthenaMutator_SynchronizedTeleport;
 class AFortPlayerStateAthena;
+class APawn;
 class UFortGameplayAbility;
 
 #include "AFortAthenaMutator_Zinc.generated.h"
@@ -166,11 +167,21 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void OnEndOfRoundUIComplete();
 
+private:
+	UFUNCTION()
+	void OnPlayerPawnPossessed(APawn* Pawn);
+public:
+
 	UFUNCTION()
 	void OnRep_CurrentRound();
 
 	UFUNCTION()
 	void OnRep_ZincPhase();
+
+private:
+	UFUNCTION()
+	void OnSingleTeleportComplete(AFortPlayerStateAthena* PlayerState);
+public:
 
 private:
 	UFUNCTION()

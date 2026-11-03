@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "ABuildingPropMusicPlayer.h"
 
+class AController;
 class UFortGameplayReceiverMessageComponent;
 class UFortMinigameLogicComponent;
 
@@ -56,7 +57,17 @@ public:
 
 protected:
 	UFUNCTION()
+	void PlayReceiver(AController* TriggerInstigator);
+public:
+
+protected:
+	UFUNCTION()
 	void Stop();
+public:
+
+protected:
+	UFUNCTION()
+	void StopReceiver(AController* TriggerInstigator);
 public:
 
 };

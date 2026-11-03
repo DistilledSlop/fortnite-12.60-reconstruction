@@ -1229,6 +1229,9 @@ public:
 	bool IsUsingHoldToSwapPickup() const;
 
 	UFUNCTION()
+	void SetAllowFriendSubscriptionNudges(bool bAllow);
+
+	UFUNCTION()
 	void SetGamepadBuildingMultiplier(float InMultiplier);
 
 	UFUNCTION()
@@ -1242,6 +1245,21 @@ public:
 
 	UFUNCTION()
 	void SetGyroLookSensitivitySetting(float InSetting);
+
+	UFUNCTION()
+	void SetInvertedPitchForAircraftPrimary(bool bInvert);
+
+	UFUNCTION()
+	void SetInvertedPitchForAircraftSecondary(bool bInvert);
+
+	UFUNCTION()
+	void SetInvertedPitchForMotion(bool bInvert);
+
+	UFUNCTION()
+	void SetInvertedYawForMotion(bool bInvert);
+
+	UFUNCTION()
+	void SetLocalNotificationsEnabled(bool bEnabled);
 
 	UFUNCTION()
 	void SetMotionHarvestingToolMultiplier(float InMultiplier);

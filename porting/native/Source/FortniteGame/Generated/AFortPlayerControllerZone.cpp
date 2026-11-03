@@ -161,6 +161,12 @@ void AFortPlayerControllerZone::ServerVoiceChatRequestJoinToken_Implementation(c
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerControllerZone::SetVehicleHealth(float NewHealth)
+{
+	// Original exec 0x142765ea0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
 void AFortPlayerControllerZone::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

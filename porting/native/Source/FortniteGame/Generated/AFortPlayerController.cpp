@@ -264,6 +264,12 @@ void AFortPlayerController::ClientUpdateServerOnPlayerChangedBuildMode_Implement
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerController::DropSpecificItem(UFortItemDefinition* DropItemDef)
+{
+	// Original exec 0x1406969b0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
 void AFortPlayerController::DumpHomebaseRatingInfo() const
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
@@ -341,6 +347,12 @@ bool AFortPlayerController::GetUseHoldToSwapPickupSetting() const
 	// CONFIDENCE: HIGH
 	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
 	return AFortPlayerController::bUseHoldToSwapPickup;
+}
+
+void AFortPlayerController::GivePlayerAmmo(int32 AmmoCount)
+{
+	// Original exec 0x142766a90; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
 }
 
 void AFortPlayerController::HandleOutpostInventoryLocalUpdate()

@@ -9,6 +9,8 @@
 #include "FIndicatedActorInfoArray.h"
 #include "FStenciledActorInfoArray.h"
 
+class APawn;
+
 #include "UFortControllerComponent_IndicatedActorManagement.generated.h"
 
 UCLASS(config=Game)
@@ -24,6 +26,11 @@ public:
 	// table index 0, flags 0x40000000000020
 	UPROPERTY(Replicated)
 	FStenciledActorInfoArray StenciledActorList;
+
+private:
+	UFUNCTION()
+	void OnHardCoreBeaconPlayerPawnPossessed(APawn* PossessedPawn);
+public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

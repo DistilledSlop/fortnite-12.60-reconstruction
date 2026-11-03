@@ -10,6 +10,12 @@ void AFortAthenaMutator_Cobalt::ClientCobaltRoundTimerComplete()
 	return;
 }
 
+void AFortAthenaMutator_Cobalt::HandlePlayerStateTeleportComplete(AFortPlayerStateAthena* FortPlayerState)
+{
+	// Original exec 0x1406969b0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
 void AFortAthenaMutator_Cobalt::HandleTeleportComplete()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
@@ -56,6 +62,12 @@ void AFortAthenaMutator_Cobalt::OnRep_TeleportComplete()
 void AFortAthenaMutator_Cobalt::OnRep_WidgetRoundData()
 {
 	// Body not recovered: reflection-derived stub.
+}
+
+void AFortAthenaMutator_Cobalt::TeleportPlayerLoadComplete(AFortPlayerPawn* FortPlayerPawn)
+{
+	// Original exec 0x1406969b0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
 }
 
 void AFortAthenaMutator_Cobalt::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

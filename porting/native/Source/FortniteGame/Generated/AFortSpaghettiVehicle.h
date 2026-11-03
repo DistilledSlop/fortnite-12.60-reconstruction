@@ -15,6 +15,7 @@
 #include "FTowhookActionDelegate.h"
 #include "FTowhookParams.h"
 #include "FTowhookYankDelegate.h"
+#include "Math/Vector.h"
 
 class UCameraShake;
 class UFortSpaghettiVehicleConfigs;
@@ -141,6 +142,21 @@ public:
 	UPROPERTY(Transient)
 	UFortSpaghettiVehicleConfigs* FortSpaghettiVehicleConfigs;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x12cc): not a UPROPERTY, not replicated.
+	FVector NativeRecoveredFVector_0x12cc;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x12d8): not a UPROPERTY, not replicated.
+	FVector NativeRecoveredFVector_0x12d8;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x12e4): not a UPROPERTY, not replicated.
+	FVector NativeRecoveredFVector_0x12e4;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x1308): not a UPROPERTY, not replicated.
+	FVector NativeRecoveredFVector_0x1308;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x1314): not a UPROPERTY, not replicated.
+	FVector NativeRecoveredFVector_0x1314;
+
 	// Non-reflected field (behaviour kind "member_field", offset 0x1330): not a UPROPERTY, not replicated.
 	float NativeRecoveredFloat_0x1330;
 
@@ -195,6 +211,21 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetAccelerationPercent() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FVector GetSeatForwardDir() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FVector GetSeatRotationTorque() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FVector GetSeatRotationVelocity() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FVector GetSeatUpDir() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FVector GetTargetHeading() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsTowhookHolstered() const;

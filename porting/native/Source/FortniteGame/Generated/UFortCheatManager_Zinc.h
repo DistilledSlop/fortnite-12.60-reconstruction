@@ -14,5 +14,14 @@ class FORTNITEGAME_API UFortCheatManager_Zinc : public UFortCheatManager_Coupled
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(Exec)
+	void ZincDebug(float TextScale);
+
+	UFUNCTION(Exec)
+	void ZincSetNumRounds(int32 NumRounds);
+
+	UFUNCTION(Exec)
+	void ZincSetRespawnAllowed(bool bAllowed);
+
 };
 

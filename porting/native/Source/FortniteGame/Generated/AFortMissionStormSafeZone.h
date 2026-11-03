@@ -57,6 +57,9 @@ public:
 	UFUNCTION()
 	void OnRep_ZoneRadius();
 
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void SetSafeZoneRadius(float InRadius);
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

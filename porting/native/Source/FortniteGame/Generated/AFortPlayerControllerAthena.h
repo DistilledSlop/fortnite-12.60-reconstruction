@@ -1013,11 +1013,17 @@ public:
 	void OnRep_SkydiveLeader();
 
 	UFUNCTION()
+	void PostLobbyIslandTeleport(AFortPlayerPawn* PlayerPawn);
+
+	UFUNCTION()
 	void PreLobbyIslandTeleport();
 
 	UFUNCTION(Server, Reliable)
 	void PublishCreativePlot(AFortVolume* VolumeToPublish, const FCreativePublishOptions& MyPublishOptions);
 	void PublishCreativePlot_Implementation(AFortVolume* VolumeToPublish, const FCreativePublishOptions& MyPublishOptions);
+
+	UFUNCTION(BlueprintCallable)
+	void ReduceDroppableResources(float ReductionPercentage);
 
 	UFUNCTION(BlueprintCallable)
 	void RemoveDroppableItems();

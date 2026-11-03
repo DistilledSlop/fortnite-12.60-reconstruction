@@ -61,6 +61,12 @@ void AFortAthenaMutator_Uranium::OnRep_TeleportComplete()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortAthenaMutator_Uranium::TeleportPlayerLoadComplete(AFortPlayerStateAthena* PlayerState)
+{
+	// Original exec 0x1406969b0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
 void AFortAthenaMutator_Uranium::TickUraniumEvents()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).

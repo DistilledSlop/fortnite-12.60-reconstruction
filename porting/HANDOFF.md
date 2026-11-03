@@ -1,5 +1,30 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Native source batch 13 (2026-11-03)
+
+Canonical Native1865 ported entries = 1706 function bodies +159 fields.
+Added201 bodies:175 ordinary ignored-parameter empty implementations,20 native
+POD/FName copy getters with20fields,6conditional dirty-Boolean setters. Bounded
+Terra medium source review found no concrete blockers in the empty/copy families;
+root reviewed dirty setters and generated signatures. Exact complete wrappers,
+leaf instructions, original class-size/occupancy evidence retained. Native storage
+initializers/writers remain unported. Source coverage is not feature parity.
+
+Commands: `python3 /tmp/promote-native-batch13.py` regenerates from the appended
+`/tmp/gameplay-bulk-{native-copy,dirty-scalar,ignored-parameter}/manifest-entries.json`.
+Generation accepts1865,rejects0; changed114Native files, unchanged12689 mtimes
+restored. Receipts: `porting/generated/gameplay-bulk-integration-13/` promotion
+command/log/result and reports. No builds/runtime/tests run;666bodies since tested
+1040 remain build pending; next checkpoint about2040. All4milestones remain open.
+
+Root owns canonical Native/promotion/builds and commits/pushes completed batches.
+Terra medium/fork_turns none bounded workers investigate extra ignored-parameter
+and constant-return forms; multi-parameter probe found no proven additions and
+retains explicit blockers, no credit. Preserve unrelated graphics/README edits,
+skip visual work, use bounded reads/output, rotate workers at task completion.
+User requested Terra low/medium and tests only in1000body batches. Prior source
+batch12 pushed1d24c5be. Dashboard publication follows this source commit.
+
 ## Native source batch 12 (2026-11-03)
 
 Canonical Native1644 entries =1505 function bodies +139 fields. Added12 bodies:

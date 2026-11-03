@@ -198,6 +198,12 @@ void AFortGameStateZone::ServerFireAIDirectorEventBatch_Implementation(const TAr
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortGameStateZone::SetWorldLootLevel(int32 NewLootLevel)
+{
+	// Original exec 0x142766a90; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
 void AFortGameStateZone::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

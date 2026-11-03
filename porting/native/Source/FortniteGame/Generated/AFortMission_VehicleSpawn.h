@@ -8,6 +8,7 @@
 
 #include "FMissionVehicleSpawnSet.h"
 
+class AActor;
 class UEnvQuery;
 
 #include "AFortMission_VehicleSpawn.generated.h"
@@ -25,6 +26,11 @@ public:
 	// table index 0, flags 0x20080000010015
 	UPROPERTY()
 	UEnvQuery* SpawnLocationQuery;
+
+protected:
+	UFUNCTION()
+	void VehicleDestroyed(AActor* InVehicle);
+public:
 
 };
 

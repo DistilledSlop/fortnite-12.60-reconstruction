@@ -17,6 +17,12 @@ void AFortPlayerControllerGameplay::ClientCreativeStopFly_Implementation()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerControllerGameplay::DisplayNPCNumbers(bool bDisplay)
+{
+	// Original exec 0x1411a8f70; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
 UFortAmbientAudioController* AFortPlayerControllerGameplay::GetAmbientAudioController()
 {
 	// Original address: 0x142a65020.

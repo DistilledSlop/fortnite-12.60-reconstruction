@@ -191,6 +191,9 @@ public:
 	UFUNCTION()
 	void OnRep_ServerStreamedInLevel();
 
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void SetDynamicFoundationEnabled(bool bEnabled);
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

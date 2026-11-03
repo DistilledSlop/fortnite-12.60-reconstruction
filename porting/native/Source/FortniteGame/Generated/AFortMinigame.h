@@ -44,6 +44,7 @@
 #include "GameFramework/OnlineReplStructs.h"
 #include "GameplayTagContainer.h"
 
+class AFortPlayerControllerAthena;
 class AFortPlayerState;
 class AFortVolume;
 class ASOLFortGame;
@@ -530,6 +531,11 @@ public:
 	UFUNCTION()
 	bool AreEnoughPlayersLeftToContinueMatch();
 
+protected:
+	UFUNCTION()
+	void ClearPlayerInventory(AFortPlayerControllerAthena* PlayerController);
+public:
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool DoesTimerCountDown() const;
 
@@ -600,6 +606,11 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void RefreshGameRulesPreview();
+
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void RefreshVoiceForPlayer(AFortPlayerState* PlayerState);
+public:
 
 protected:
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)

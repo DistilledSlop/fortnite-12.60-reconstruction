@@ -9,12 +9,36 @@ void UFortCheatManager::AcceptEULA()
 	return;
 }
 
+void UFortCheatManager::AddAllScores(int32 Amount)
+{
+	// Original exec 0x142766a90; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
+void UFortCheatManager::AddBuildingScore(int32 Amount)
+{
+	// Original exec 0x142766a90; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
+void UFortCheatManager::AddCombatScore(int32 Amount)
+{
+	// Original exec 0x142766a90; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
 void UFortCheatManager::AddKillFeedMessage()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
 	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
 	// CONFIDENCE: HIGH
 	return;
+}
+
+void UFortCheatManager::AddUtilityScore(int32 Amount)
+{
+	// Original exec 0x142766a90; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
 }
 
 void UFortCheatManager::AllowRespawn()
@@ -31,6 +55,18 @@ void UFortCheatManager::AthenaEndlessGame()
 	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
 	// CONFIDENCE: HIGH
 	return;
+}
+
+void UFortCheatManager::AthenaForceVictory(bool bVictory)
+{
+	// Original exec 0x1411a8f70; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
+void UFortCheatManager::BackpackSetSize(int32 Size)
+{
+	// Original exec 0x142766a90; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
 }
 
 void UFortCheatManager::Badass()
@@ -57,12 +93,24 @@ void UFortCheatManager::BattleLabResetSave()
 	return;
 }
 
+void UFortCheatManager::BattleLabSetInstanceLimiting(bool bEnable)
+{
+	// Original exec 0x1411a8f70; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
 void UFortCheatManager::BeautyMode()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
 	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
 	// CONFIDENCE: HIGH
 	return;
+}
+
+void UFortCheatManager::BotFillUp(int32 Amount)
+{
+	// Original exec 0x142766a90; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
 }
 
 void UFortCheatManager::BotStartDogpile()
@@ -103,6 +151,12 @@ void UFortCheatManager::BuildFree()
 	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
 	// CONFIDENCE: HIGH
 	return;
+}
+
+void UFortCheatManager::CanExitWorld(bool bValue)
+{
+	// Original exec 0x1411a8f70; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
 }
 
 void UFortCheatManager::CaptureTeamToggleInput()
@@ -289,6 +343,12 @@ void UFortCheatManager::DebugKickPlayerDueToInactivity()
 	return;
 }
 
+void UFortCheatManager::DebugUseDedicatedServer(bool bUse)
+{
+	// Original exec 0x1411a8f70; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
 void UFortCheatManager::DestroyAllPickups()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
@@ -361,6 +421,24 @@ void UFortCheatManager::DumpMatchAnalytics()
 	return;
 }
 
+void UFortCheatManager::EnableFixedTimeStep(int32 AsIfItWasFPS)
+{
+	// Original exec 0x142766a90; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
+void UFortCheatManager::EnableNewCustomizationPanel(bool bEnable)
+{
+	// Original exec 0x1411a8f70; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
+void UFortCheatManager::EnableSubtitles(bool bEnable)
+{
+	// Original exec 0x1411a8f70; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
 void UFortCheatManager::EncounterCurrentUtilities()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
@@ -375,6 +453,12 @@ void UFortCheatManager::EncounterInitialUtilities()
 	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
 	// CONFIDENCE: HIGH
 	return;
+}
+
+void UFortCheatManager::EncounterSetDifficultyLevel(float NewDifficulty)
+{
+	// Original exec 0x142765ea0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
 }
 
 void UFortCheatManager::EncounterSpawnProbabilities()
@@ -401,12 +485,30 @@ void UFortCheatManager::EndLiveStreamingWindow()
 	return;
 }
 
+void UFortCheatManager::EnduranceDebug(bool Value)
+{
+	// Original exec 0x1411a8f70; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
+void UFortCheatManager::EnvPain(float Amount)
+{
+	// Original exec 0x142765ea0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
 void UFortCheatManager::EventsRefreshPlayer()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
 	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
 	// CONFIDENCE: HIGH
 	return;
+}
+
+void UFortCheatManager::ExtAuthReset(bool bWipeDeviceAccountInfo)
+{
+	// Original exec 0x1411a8f70; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
 }
 
 void UFortCheatManager::FakeDownHighlight()
@@ -433,12 +535,24 @@ void UFortCheatManager::FakeXPEvents()
 	return;
 }
 
+void UFortCheatManager::ForceByPassNavMeshForAISpawning(bool bInValue)
+{
+	// Original exec 0x1411a8f70; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
 void UFortCheatManager::ForceExternalRichPresenceUpdate()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
 	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
 	// CONFIDENCE: HIGH
 	return;
+}
+
+void UFortCheatManager::FortniteForceCharLOD(int32 LOD)
+{
+	// Original exec 0x142766a90; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
 }
 
 void UFortCheatManager::FortVolumeAsyncTest()
@@ -463,6 +577,12 @@ void UFortCheatManager::GenerateMockMatchReport()
 	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
 	// CONFIDENCE: HIGH
 	return;
+}
+
+void UFortCheatManager::GenerateTravelLogEntries(int32 Count)
+{
+	// Original exec 0x142766a90; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
 }
 
 void UFortCheatManager::GetAllReplStats()
@@ -497,6 +617,18 @@ void UFortCheatManager::GetWTFRotations()
 	return;
 }
 
+void UFortCheatManager::GiveAllConsumables(int32 NumItems)
+{
+	// Original exec 0x142766a90; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
+void UFortCheatManager::GiveAllIngredients(int32 NumIngredients)
+{
+	// Original exec 0x142766a90; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
 void UFortCheatManager::GiveAllMelee()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
@@ -527,6 +659,12 @@ void UFortCheatManager::GiveAllShotguns()
 	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
 	// CONFIDENCE: HIGH
 	return;
+}
+
+void UFortCheatManager::GiveAllTraps(int32 NumItems)
+{
+	// Original exec 0x142766a90; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
 }
 
 void UFortCheatManager::GiveAllWeapons()
@@ -601,12 +739,72 @@ void UFortCheatManager::GiveAthenaWeapons()
 	return;
 }
 
+void UFortCheatManager::GiveGold(int32 Amount)
+{
+	// Original exec 0x142766a90; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
 void UFortCheatManager::GiveGoodWeapons()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
 	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
 	// CONFIDENCE: HIGH
 	return;
+}
+
+void UFortCheatManager::GiveLTMPlaneBoostGE(int32 Index)
+{
+	// Original exec 0x142766a90; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
+void UFortCheatManager::GiveLTMPlaneHealthGE(int32 Index)
+{
+	// Original exec 0x142766a90; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
+void UFortCheatManager::GiveMetal(int32 Amount)
+{
+	// Original exec 0x142766a90; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
+void UFortCheatManager::GivePerkRerolls(int32 NumOfRolls)
+{
+	// Original exec 0x142766a90; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
+void UFortCheatManager::GivePlaneEffect(int32 Index)
+{
+	// Original exec 0x142766a90; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
+void UFortCheatManager::GiveResources(int32 Amount)
+{
+	// Original exec 0x142766a90; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
+void UFortCheatManager::GiveStone(int32 Amount)
+{
+	// Original exec 0x142766a90; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
+void UFortCheatManager::GiveWood(int32 Amount)
+{
+	// Original exec 0x142766a90; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
+void UFortCheatManager::GoFast(float NewSpeed)
+{
+	// Original exec 0x142765ea0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
 }
 
 void UFortCheatManager::GPadV2_ToggleDebugDraw()
@@ -833,6 +1031,18 @@ void UFortCheatManager::McpCheatCampaign() const
 	return;
 }
 
+void UFortCheatManager::McpEarnScore(int32 ScoreAmount)
+{
+	// Original exec 0x142766a90; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
+void UFortCheatManager::McpForceHttpFailRate(float Factor)
+{
+	// Original exec 0x142765ea0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
 void UFortCheatManager::McpGetCurrencyAmount()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
@@ -881,6 +1091,12 @@ void UFortCheatManager::McpLogout()
 	return;
 }
 
+void UFortCheatManager::McpPrintPartyInviteToken(bool OnlyPrintIfJoinable)
+{
+	// Original exec 0x1411a8f70; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
 void UFortCheatManager::McpRedeemPurchases()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
@@ -921,6 +1137,12 @@ void UFortCheatManager::McpTestVerifyProfileToken()
 	return;
 }
 
+void UFortCheatManager::ModItemDurability(float InValue)
+{
+	// Original exec 0x142765ea0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
 void UFortCheatManager::OpenAllContainersAndWriteLootEconomy()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
@@ -929,12 +1151,24 @@ void UFortCheatManager::OpenAllContainersAndWriteLootEconomy()
 	return;
 }
 
+void UFortCheatManager::Pain(float Amount)
+{
+	// Original exec 0x142765ea0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
 void UFortCheatManager::PauseWarmup()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
 	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
 	// CONFIDENCE: HIGH
 	return;
+}
+
+void UFortCheatManager::PreviewSkinWeightProfile(int32 State)
+{
+	// Original exec 0x142766a90; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
 }
 
 void UFortCheatManager::PrintScriptedActionManagerState()
@@ -975,6 +1209,12 @@ void UFortCheatManager::ReadLevelSaveComponentsFromDisk()
 	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
 	// CONFIDENCE: HIGH
 	return;
+}
+
+void UFortCheatManager::RedoHuskSpecialEventModifiers(float TargetRate)
+{
+	// Original exec 0x142765ea0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
 }
 
 void UFortCheatManager::RefreshAllCalendars()
@@ -1137,6 +1377,12 @@ void UFortCheatManager::RetestFailedBanhammerActions()
 	return;
 }
 
+void UFortCheatManager::RunPerfMemCheatScript(bool bStartStatFiles)
+{
+	// Original exec 0x1411a8f70; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
 void UFortCheatManager::ServerStartProfiling()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
@@ -1153,6 +1399,138 @@ void UFortCheatManager::ServerStopProfiling()
 	return;
 }
 
+void UFortCheatManager::SetBuildFree(bool bNewValue)
+{
+	// Original exec 0x1411a8f70; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
+void UFortCheatManager::SetCameraFOVMultiplier(float Multiplier)
+{
+	// Original exec 0x142765ea0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
+void UFortCheatManager::SetCanMeleeOneHitBuildings(bool bEnabled)
+{
+	// Original exec 0x1411a8f70; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
+void UFortCheatManager::SetCapturePercentage(float NewCapturePercentage)
+{
+	// Original exec 0x142765ea0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
+void UFortCheatManager::SetCloudAltitude(float CloudAltitude)
+{
+	// Original exec 0x142765ea0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
+void UFortCheatManager::SetConsole60FPSMode(bool bEnabled)
+{
+	// Original exec 0x1411a8f70; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
+void UFortCheatManager::SetCrossplayPreference(int32 NewPreference)
+{
+	// Original exec 0x142766a90; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
+void UFortCheatManager::SetCurrentEncounterToDebug(int32 EncounterIndex)
+{
+	// Original exec 0x142766a90; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
+void UFortCheatManager::SetDifficultyIncreaseRewardTier(int32 RewardTier)
+{
+	// Original exec 0x142766a90; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
+void UFortCheatManager::SetEncounterSimulatedNumberOfPlayers(int32 NumPlayers)
+{
+	// Original exec 0x142766a90; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
+void UFortCheatManager::SetEncounterSpawnPointsCap(int32 SpawnPointsCap)
+{
+	// Original exec 0x142766a90; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
+void UFortCheatManager::SetFrameSyncMode(int32 Mode)
+{
+	// Original exec 0x142766a90; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
+void UFortCheatManager::SetGameDifficultyOverride(float GameDifficultyOverrideValue)
+{
+	// Original exec 0x142765ea0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
+void UFortCheatManager::SetHeadHealthPercent(float HealthPercent)
+{
+	// Original exec 0x142765ea0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
+void UFortCheatManager::SetHealthPercent(float Percent)
+{
+	// Original exec 0x142765ea0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
+void UFortCheatManager::SetInfiniteAmmo(bool bInValue)
+{
+	// Original exec 0x1411a8f70; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
+void UFortCheatManager::SetInteractExtent(float Extent)
+{
+	// Original exec 0x142765ea0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
+void UFortCheatManager::SetLFG(bool bLFG)
+{
+	// Original exec 0x1411a8f70; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
+void UFortCheatManager::SetMaxClouds(int32 MaxClouds)
+{
+	// Original exec 0x142766a90; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
+void UFortCheatManager::SetMinigameClassSlot(int32 ClassSlotIndex)
+{
+	// Original exec 0x142766a90; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
+void UFortCheatManager::SetPlaneHealthPercent(float Percent)
+{
+	// Original exec 0x142765ea0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
+void UFortCheatManager::SetPlaneLives(int32 NewLives)
+{
+	// Original exec 0x142766a90; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
 void UFortCheatManager::SetRandomAircraftFlightPath()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
@@ -1161,12 +1539,60 @@ void UFortCheatManager::SetRandomAircraftFlightPath()
 	return;
 }
 
+void UFortCheatManager::SetRespawnTimerOverride(float TimeUntilRespawn)
+{
+	// Original exec 0x142765ea0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
 void UFortCheatManager::SetSafeZoneLocationToPlayer()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
 	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
 	// CONFIDENCE: HIGH
 	return;
+}
+
+void UFortCheatManager::SetSafeZoneRadius(float NewRadius)
+{
+	// Original exec 0x142765ea0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
+void UFortCheatManager::SetShieldPercent(float Percent)
+{
+	// Original exec 0x142765ea0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
+void UFortCheatManager::SetSignalInStormPercent(float Percent)
+{
+	// Original exec 0x142765ea0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
+void UFortCheatManager::SetTeam(int32 TeamIndex)
+{
+	// Original exec 0x142766a90; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
+void UFortCheatManager::SetUnlimitedHealth(bool bInValue)
+{
+	// Original exec 0x1411a8f70; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
+void UFortCheatManager::SetWallTimer(float Seconds)
+{
+	// Original exec 0x142765ea0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
+void UFortCheatManager::SetWorldDaysElapsed(float days)
+{
+	// Original exec 0x142765ea0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
 }
 
 void UFortCheatManager::ShowActiveGameplayModifiers()
@@ -1183,6 +1609,12 @@ void UFortCheatManager::ShowAllMinimapIcons()
 	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
 	// CONFIDENCE: HIGH
 	return;
+}
+
+void UFortCheatManager::ShowEventsDebugInfo(bool bShowDebugInfo)
+{
+	// Original exec 0x1411a8f70; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
 }
 
 void UFortCheatManager::ShowGameplayCaptureUI()
@@ -1265,6 +1697,12 @@ void UFortCheatManager::StartLavaMovement()
 	return;
 }
 
+void UFortCheatManager::StartLiveStreamingWindow(float Seconds)
+{
+	// Original exec 0x142765ea0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
 void UFortCheatManager::StartMinigame()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
@@ -1343,6 +1781,12 @@ void UFortCheatManager::TestCancelLobby()
 	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
 	// CONFIDENCE: HIGH
 	return;
+}
+
+void UFortCheatManager::TestChangePartySize(int32 NewSize)
+{
+	// Original exec 0x142766a90; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
 }
 
 void UFortCheatManager::TestCheckBansAtMatchStart()
@@ -1753,6 +2197,12 @@ void UFortCheatManager::ToggleWindDebugDeltaBoundsDisplay()
 	return;
 }
 
+void UFortCheatManager::ToggleWindDebugDisplay(float NewRefreshRate)
+{
+	// Original exec 0x142765ea0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
 void UFortCheatManager::ToggleWindDebugVolumeDisplay()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
@@ -1817,6 +2267,24 @@ void UFortCheatManager::UnlockDebugCamera()
 	return;
 }
 
+void UFortCheatManager::UnlockPerk(int32 Count)
+{
+	// Original exec 0x142766a90; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
+void UFortCheatManager::UpgradePlaneGuns(int32 Index)
+{
+	// Original exec 0x142766a90; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
+void UFortCheatManager::UseSolarisInCreative(bool bShouldUse)
+{
+	// Original exec 0x1411a8f70; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
 void UFortCheatManager::ViewStuck()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
@@ -1831,6 +2299,12 @@ void UFortCheatManager::WannaGun()
 	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
 	// CONFIDENCE: HIGH
 	return;
+}
+
+void UFortCheatManager::WargameDebug(bool Value)
+{
+	// Original exec 0x1411a8f70; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
 }
 
 void UFortCheatManager::WriteLevelSaveComponentsToDisk()

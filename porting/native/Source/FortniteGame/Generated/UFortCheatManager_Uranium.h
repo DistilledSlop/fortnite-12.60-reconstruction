@@ -14,5 +14,14 @@ class FORTNITEGAME_API UFortCheatManager_Uranium : public UFortCheatManager_Coup
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(Exec)
+	void DrawUraniumRespawnLocations(bool bDraw);
+
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void SetCartBaseSpeed(float NewBaseSpeed);
+
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void SetCartPushAreaSizeScalar(float PushAreaSizeScalar);
+
 };
 

@@ -21,7 +21,17 @@ public:
 
 protected:
 	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void ChangeWinCondition(float NewGoalScore);
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
 	void CloseParachutes();
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void PauseWinCondition(bool bLockScores);
 public:
 
 protected:
@@ -52,6 +62,21 @@ public:
 protected:
 	UFUNCTION(Exec, BlueprintAuthorityOnly)
 	void ResumeWinCondition();
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void SetMatchTime(int32 NewMatchTime);
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void TeleportAllPlayers(int32 SafezoneIndex);
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void ToggleDisableParachutes(bool bIsDisabled);
 public:
 
 };

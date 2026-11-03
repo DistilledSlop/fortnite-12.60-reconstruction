@@ -10,6 +10,7 @@
 #include "EFortRarity.h"
 #include "EKeepContainerType.h"
 
+class AFortPlayerController;
 class AFortPlayerState;
 class UDataTable;
 
@@ -73,6 +74,9 @@ public:
 
 	UFUNCTION()
 	void OnRep_SearchedBy();
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void ResetContainer(AFortPlayerController* FortPC);
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

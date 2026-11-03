@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UChildCheatManager.h"
 
+#include "UFortPlayerSurveyBase.h"
+
 #include "UFortPlayerSurveyCheatManager.generated.h"
 
 UCLASS()
@@ -16,6 +18,11 @@ class FORTNITEUI_API UFortPlayerSurveyCheatManager : public UChildCheatManager
 public:
 	UFUNCTION(Exec)
 	void ListCMSPlayerSurveys();
+
+protected:
+	UFUNCTION()
+	void TestPlayerSurvey(UFortPlayerSurveyBase* Survey);
+public:
 
 };
 

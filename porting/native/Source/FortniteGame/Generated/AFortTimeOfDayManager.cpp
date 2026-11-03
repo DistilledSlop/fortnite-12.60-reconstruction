@@ -54,11 +54,23 @@ void AFortTimeOfDayManager::SetFogDirectionalInscatteringMultiplier(float NewFog
 	this->NativeRecoveredFloat_0xde8 = NewFogDirectionalInscatteringMultiplier;
 }
 
+void AFortTimeOfDayManager::SetSpecificTimeOfDayInEditor(float NewTimeOfDayInEditor)
+{
+	// Original exec 0x142765ea0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
 void AFortTimeOfDayManager::SetStormStrength(float NewStormStrength)
 {
 	// Original exec 0x142b0fdc0; pure writer 0x141f6e6a0.
 	// CONFIDENCE: HIGH
 	this->StormStrength = NewStormStrength;
+}
+
+void AFortTimeOfDayManager::SetUseSpecificTimeOfDayEditing(bool bShouldUseSpecificTimeOfDay)
+{
+	// Original exec 0x1411a8f70; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
 }
 
 void AFortTimeOfDayManager::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

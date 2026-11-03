@@ -21,6 +21,7 @@
 #include "FOnXpDeltasUpdated.h"
 #include "GameplayTagContainer.h"
 
+class APawn;
 class UDataTable;
 class UFortAccoladeItem;
 class UFortFeatItemDefinition;
@@ -196,6 +197,16 @@ public:
 private:
 	UFUNCTION(Exec)
 	void CheckObjectiveStatUsage();
+public:
+
+private:
+	UFUNCTION(Exec)
+	void GiveAthenaXp(float XpAmount);
+public:
+
+protected:
+	UFUNCTION()
+	void InitializeQuestAbilities(APawn* PlayerPawn);
 public:
 
 };

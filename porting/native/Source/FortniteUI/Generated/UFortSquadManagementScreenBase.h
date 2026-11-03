@@ -28,6 +28,9 @@ public:
 	UPROPERTY()
 	bool bReadOnlyModeWIFE;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x450): not a UPROPERTY, not replicated.
+	FName NativeRecoveredFName_0x450;
+
 	// table index 18, flags 0x2008000008001c
 	UPROPERTY()
 	UFortSquadStatsWidgetBase* SquadStatsWidget;
@@ -103,6 +106,9 @@ public:
 	// table index 0, flags 0x42000000080008
 	UPROPERTY()
 	UFortItemViewContext_SquadSlotItemPicker* ItemViewContext_SquadSlotItemPicker;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FName GetIdOfSquadToManageBP() const;
 
 };
 

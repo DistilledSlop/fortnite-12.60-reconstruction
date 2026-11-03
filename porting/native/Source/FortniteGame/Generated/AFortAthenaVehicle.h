@@ -589,6 +589,12 @@ public:
 	UPROPERTY()
 	UFortVehicleAnimSet* AnimSet;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0xc40): not a UPROPERTY, not replicated.
+	FVector NativeRecoveredFVector_0xc40;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0xc58): not a UPROPERTY, not replicated.
+	FVector NativeRecoveredFVector_0xc58;
+
 	// table index 6, flags 0x40000000010001
 	UPROPERTY()
 	FFortAttributeInitializationKey AttributeInitKey;
@@ -636,6 +642,12 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetCurrentSignificance() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FVector GetPreviousLinearAcceleration() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FVector GetPreviousLinearVelocity() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual bool IsBraking() const;

@@ -9,12 +9,24 @@ void UFortCheatManager_SpecialEvent::AutobalanceTargetScore()
 	return;
 }
 
+void UFortCheatManager_SpecialEvent::ChangeWinCondition(float NewGoalScore)
+{
+	// Original exec 0x142765ea0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
 void UFortCheatManager_SpecialEvent::CloseParachutes()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
 	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
 	// CONFIDENCE: HIGH
 	return;
+}
+
+void UFortCheatManager_SpecialEvent::PauseWinCondition(bool bLockScores)
+{
+	// Original exec 0x1411a8f70; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
 }
 
 void UFortCheatManager_SpecialEvent::PlacePlayersInAircraft()
@@ -63,5 +75,23 @@ void UFortCheatManager_SpecialEvent::ResumeWinCondition()
 	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
 	// CONFIDENCE: HIGH
 	return;
+}
+
+void UFortCheatManager_SpecialEvent::SetMatchTime(int32 NewMatchTime)
+{
+	// Original exec 0x142766a90; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
+void UFortCheatManager_SpecialEvent::TeleportAllPlayers(int32 SafezoneIndex)
+{
+	// Original exec 0x142766a90; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
+void UFortCheatManager_SpecialEvent::ToggleDisableParachutes(bool bIsDisabled)
+{
+	// Original exec 0x1411a8f70; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
 }
 

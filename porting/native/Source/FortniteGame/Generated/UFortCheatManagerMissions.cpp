@@ -25,6 +25,12 @@ void UFortCheatManagerMissions::EndDeimosSpawning()
 	return;
 }
 
+void UFortCheatManagerMissions::ForceCompleteDisplayedObjective(int32 ObjectiveIndex)
+{
+	// Original exec 0x142766a90; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
 void UFortCheatManagerMissions::ListMissionGenerators()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
@@ -49,12 +55,24 @@ void UFortCheatManagerMissions::MissionForcePrimaryFailure()
 	return;
 }
 
+void UFortCheatManagerMissions::MissionForcePrimarySuccess(float FractionCompleted)
+{
+	// Original exec 0x142765ea0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
 void UFortCheatManagerMissions::RegenerateZoneMissions()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
 	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
 	// CONFIDENCE: HIGH
 	return;
+}
+
+void UFortCheatManagerMissions::RegenerateZoneMissionsWithDifficultyLevel(float DifficultyLevelOverride)
+{
+	// Original exec 0x142765ea0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
 }
 
 void UFortCheatManagerMissions::TeleportToMissionActor()

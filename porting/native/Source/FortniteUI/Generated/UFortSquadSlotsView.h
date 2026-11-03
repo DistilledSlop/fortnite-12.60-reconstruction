@@ -23,6 +23,9 @@ class FORTNITEUI_API UFortSquadSlotsView : public UCommonUserWidget
 	GENERATED_BODY()
 
 public:
+	// Non-reflected field (behaviour kind "member_field", offset 0x260): not a UPROPERTY, not replicated.
+	FName NativeRecoveredFName_0x260;
+
 	// table index 13, flags 0x10000010080000
 	UPROPERTY()
 	FOnDifferentSquadSlotSelected OnDifferentSquadSlotSelectedEvent;
@@ -66,6 +69,9 @@ public:
 	// table index 0, flags 0x44000000000000
 	UPROPERTY()
 	TScriptInterface<IFortItemViewContextInterface> ItemViewContext;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FName GetIdOfSquadToManageBP() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetIndexOfSelectedSquadSlot() const;

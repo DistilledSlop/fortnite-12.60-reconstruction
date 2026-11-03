@@ -20,6 +20,7 @@
 #include "Math/Rotator.h"
 #include "Math/Vector.h"
 
+class AActor;
 class AFortDecoPreview;
 class AFortPlayerPawn;
 class AFortWeapon;
@@ -156,6 +157,11 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UMeshComponent* GetMeshComponent() const;
 
+private:
+	UFUNCTION()
+	void HandleOwnerDestroyed(AActor* DestroyedActor);
+public:
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsDropped() const;
 
@@ -187,6 +193,9 @@ protected:
 	UFUNCTION()
 	void OnWeaponUnequipped();
 public:
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void PickupHeldObject(AFortPlayerPawn* PlayerPawn);
 
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void PlaceHeldObject();

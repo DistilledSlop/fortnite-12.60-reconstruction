@@ -2,6 +2,12 @@
 #include "UCaptureComponent.h"
 #include "Net/UnrealNetwork.h"
 
+void UCaptureComponent::ForceCaptureProgress(float NewCaptureProgress)
+{
+	// Original exec 0x142765ea0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
 uint8 UCaptureComponent::GetCaptureStateOwner() const
 {
 	// Original address: 0x142765f40.
@@ -23,6 +29,36 @@ void UCaptureComponent::OnRep_CaptureState(ECaptureState OldCaptureState)
 void UCaptureComponent::OnRep_SmoothProgressState()
 {
 	// Body not recovered: reflection-derived stub.
+}
+
+void UCaptureComponent::SetCaptureSpeedBoost(float NewCaptureSpeedBoost)
+{
+	// Original exec 0x142765ea0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
+void UCaptureComponent::SetCaptureSpeedBoostEmoting(float NewCaptureSpeedBoostEmoting)
+{
+	// Original exec 0x142765ea0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
+void UCaptureComponent::SetCaptureTime(float NewCaptureTime)
+{
+	// Original exec 0x142765ea0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
+void UCaptureComponent::SetNeutralizingTime(int32 NewNeutralizingSpeed)
+{
+	// Original exec 0x142766a90; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
+void UCaptureComponent::SetProgressDecaySpeed(float NewProgressDecaySpeed)
+{
+	// Original exec 0x142765ea0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
 }
 
 void UCaptureComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

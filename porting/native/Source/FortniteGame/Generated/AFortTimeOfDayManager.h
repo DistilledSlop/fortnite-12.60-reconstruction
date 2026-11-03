@@ -397,8 +397,14 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintCosmetic)
 	void SetFogDirectionalInscatteringMultiplier(float NewFogDirectionalInscatteringMultiplier);
 
+	UFUNCTION(BlueprintCallable)
+	void SetSpecificTimeOfDayInEditor(float NewTimeOfDayInEditor);
+
 	UFUNCTION(BlueprintCallable, BlueprintCosmetic)
 	void SetStormStrength(float NewStormStrength);
+
+	UFUNCTION(BlueprintCallable)
+	void SetUseSpecificTimeOfDayEditing(bool bShouldUseSpecificTimeOfDay);
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

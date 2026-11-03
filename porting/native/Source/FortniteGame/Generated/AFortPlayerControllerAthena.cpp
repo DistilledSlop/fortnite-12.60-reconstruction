@@ -480,6 +480,12 @@ void AFortPlayerControllerAthena::OnRep_SkydiveLeader()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerControllerAthena::PostLobbyIslandTeleport(AFortPlayerPawn* PlayerPawn)
+{
+	// Original exec 0x1406969b0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
 void AFortPlayerControllerAthena::PreLobbyIslandTeleport()
 {
 	// Behaviour snippet: AFortPlayerControllerAthena::PreLobbyIslandTeleport (body only; spliced into the generated member function).
@@ -495,6 +501,12 @@ void AFortPlayerControllerAthena::PreLobbyIslandTeleport()
 void AFortPlayerControllerAthena::PublishCreativePlot_Implementation(AFortVolume* VolumeToPublish, const FCreativePublishOptions& MyPublishOptions)
 {
 	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerControllerAthena::ReduceDroppableResources(float ReductionPercentage)
+{
+	// Original exec 0x142765ea0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
 }
 
 void AFortPlayerControllerAthena::RemoveDroppableItems()

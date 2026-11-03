@@ -216,6 +216,18 @@ public:
 	// Non-reflected field (behaviour kind "member_field", offset 0x1d08): not a UPROPERTY, not replicated.
 	float NativeRecoveredFloat_0x1d08;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x1d24): not a UPROPERTY, not replicated.
+	FVector NativeRecoveredFVector_0x1d24;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x1d30): not a UPROPERTY, not replicated.
+	FVector NativeRecoveredFVector_0x1d30;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x1d3c): not a UPROPERTY, not replicated.
+	FVector NativeRecoveredFVector_0x1d3c;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x1d48): not a UPROPERTY, not replicated.
+	FVector NativeRecoveredFVector_0x1d48;
+
 	// table index 4, flags 0x20080000002000
 	UPROPERTY(Transient)
 	FVector CustomFallingAcceleration;
@@ -240,7 +252,19 @@ public:
 	float GetFallingStartedZ() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FVector GetPlayerRelativeVelocityToWater() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetWaterImmersionDepth() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FVector GetWaterSurfaceLocation() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FVector GetWaterSurfaceNormal() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FVector GetWaterVelocity() const;
 
 };
 

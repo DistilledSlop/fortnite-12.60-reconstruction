@@ -15,6 +15,7 @@
 #include "Math/Vector.h"
 #include "Styling/SlateBrush.h"
 
+class AActor;
 class ABuildingSMActor;
 class AFortAIDirector;
 class AFortAIGoalManager;
@@ -202,6 +203,11 @@ public:
 
 	UFUNCTION()
 	virtual bool IsGameReadyToSelectLoot() const;
+
+protected:
+	UFUNCTION()
+	void OnPlayerExit(AActor* Controller);
+public:
 
 };
 

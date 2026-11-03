@@ -44,6 +44,22 @@ float AFortAthenaVehicle::GetCurrentSignificance() const
 	return NativeRecoveredFloat_0x44c;
 }
 
+FVector AFortAthenaVehicle::GetPreviousLinearAcceleration() const
+{
+	// Original address: 0x14283b850.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete 12-byte FVector field copy; see bulk_native_copy_runtime/README.md.
+	return NativeRecoveredFVector_0xc58;
+}
+
+FVector AFortAthenaVehicle::GetPreviousLinearVelocity() const
+{
+	// Original address: 0x14283b880.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete 12-byte FVector field copy; see bulk_native_copy_runtime/README.md.
+	return NativeRecoveredFVector_0xc40;
+}
+
 bool AFortAthenaVehicle::IsBraking() const
 {
 	// Exact original shared stub 0x1406801e0.

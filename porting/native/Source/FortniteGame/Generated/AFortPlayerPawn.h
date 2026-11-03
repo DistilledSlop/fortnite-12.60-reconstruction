@@ -93,6 +93,7 @@ class UFortCustomizationAssetLoader;
 class UFortFootstepAudioBank;
 class UFortHero;
 class UFortHeroType;
+class UFortMontageItemDefinitionBase;
 class UFortPawnScriptedBehavior;
 class UFortUnderwaterDamageComponent;
 class UFortVisibilityComponent;
@@ -1593,6 +1594,9 @@ public:
 	UFUNCTION()
 	virtual void PerformSupplementalKillVolumeSweep();
 
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void PlayGroupEmote(UFortMontageItemDefinitionBase* EmoteAsset);
+
 	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerChooseGender(EFortCustomGender::Type Gender);
 	void ServerChooseGender_Implementation(EFortCustomGender::Type Gender);
@@ -1719,6 +1723,9 @@ public:
 	void ServerUpdateVehicleInputStateUnreliable_Implementation(const FFortAthenaVehicleInputStateUnreliable& ReliableInput, float Timestamp);
 	bool ServerUpdateVehicleInputStateUnreliable_Validate(const FFortAthenaVehicleInputStateUnreliable& ReliableInput, float Timestamp);
 
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void SetClientObservedStatsFromAnotherPawn(AFortPlayerPawn* OtherPawn);
+
 	UFUNCTION(BlueprintCallable)
 	void SetIsInFrontEndHologram(bool bInFrontEndHologram);
 
@@ -1733,6 +1740,9 @@ public:
 
 	UFUNCTION(Exec)
 	void ToggleGender();
+
+	UFUNCTION(BlueprintCallable)
+	void UpdateGameStateModifiedGravity(float GravityMultiplier);
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

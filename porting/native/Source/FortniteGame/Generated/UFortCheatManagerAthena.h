@@ -14,5 +14,8 @@ class FORTNITEGAME_API UFortCheatManagerAthena : public UChildCheatManager
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(Exec)
+	void SetAlwaysShowContrails(bool bEnabled);
+
 };
 

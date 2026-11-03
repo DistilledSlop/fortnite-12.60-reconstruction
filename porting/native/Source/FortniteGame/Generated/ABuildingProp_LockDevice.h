@@ -11,6 +11,7 @@
 #include "FLockableObjectChangeEvent.h"
 
 class AActor;
+class AController;
 class UBoxComponent;
 
 #include "ABuildingProp_LockDevice.generated.h"
@@ -45,11 +46,26 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_CurrentLockState)
 	ELockState CurrentLockState;
 
+protected:
+	UFUNCTION()
+	void HandleLockableObjectDestruction(AActor* ActorDestroyed);
+public:
+
 	UFUNCTION()
 	void OnRep_CurrentLockState();
 
 	UFUNCTION()
 	void OnRep_LockableObject();
+
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void ToggleLockedState(AController* ControllerInstigator);
+public:
+
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void ToggleOpenState(AController* ControllerInstigator);
+public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

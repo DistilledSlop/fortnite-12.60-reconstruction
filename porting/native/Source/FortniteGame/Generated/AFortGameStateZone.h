@@ -453,6 +453,9 @@ public:
 	void ServerFireAIDirectorEventBatch(const TArray<FFortAIDirectorEvent>& Payload);
 	void ServerFireAIDirectorEventBatch_Implementation(const TArray<FFortAIDirectorEvent>& Payload);
 
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void SetWorldLootLevel(int32 NewLootLevel);
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

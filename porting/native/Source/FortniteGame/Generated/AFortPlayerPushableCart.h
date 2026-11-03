@@ -17,6 +17,7 @@
 #include "FTeamRoles.h"
 
 class AFortAthenaMutator_Uranium;
+class AFortPlayerPawn;
 class UFortMovementComp_GroundSpline;
 class USplineComponent;
 
@@ -116,6 +117,9 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_bIsNearCheckpoint)
 	bool bIsNearCheckpoint;
 
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void AddPlayerToPushArea(AFortPlayerPawn* PlayerToAdd);
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool GetIsPlayerPushable() const;
 
@@ -148,6 +152,12 @@ public:
 
 	UFUNCTION()
 	void OnRep_TotalActivePushers();
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void RemovePlayerFromPushArea(AFortPlayerPawn* PlayerToRemove);
+
+	UFUNCTION()
+	void SetNearCheckpoint(bool bNear);
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

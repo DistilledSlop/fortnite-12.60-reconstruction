@@ -614,6 +614,12 @@ void AFortPlayerPawn::PerformSupplementalKillVolumeSweep()
 	return;
 }
 
+void AFortPlayerPawn::PlayGroupEmote(UFortMontageItemDefinitionBase* EmoteAsset)
+{
+	// Original exec 0x1406969b0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
 void AFortPlayerPawn::ServerChooseGender_Implementation(EFortCustomGender::Type Gender)
 {
 	// Body not recovered: reflection-derived stub.
@@ -1043,6 +1049,12 @@ bool AFortPlayerPawn::ServerUpdateVehicleInputStateUnreliable_Validate(const FFo
 	return true;
 }
 
+void AFortPlayerPawn::SetClientObservedStatsFromAnotherPawn(AFortPlayerPawn* OtherPawn)
+{
+	// Original exec 0x1406969b0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
 void AFortPlayerPawn::SetIsInFrontEndHologram(bool bInFrontEndHologram)
 {
 	// Behaviour snippet: AFortPlayerPawn::SetIsInFrontEndHologram (body only; spliced into the generated member function).
@@ -1101,6 +1113,12 @@ void AFortPlayerPawn::ToggleGender()
 	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	// Empty body: the native function does nothing (see Inferred).
+}
+
+void AFortPlayerPawn::UpdateGameStateModifiedGravity(float GravityMultiplier)
+{
+	// Original exec 0x142765ea0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
 }
 
 void AFortPlayerPawn::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

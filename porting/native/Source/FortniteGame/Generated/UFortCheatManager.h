@@ -114,7 +114,27 @@ public:
 
 protected:
 	UFUNCTION(Exec)
+	void AddAllScores(int32 Amount);
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void AddBuildingScore(int32 Amount);
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void AddCombatScore(int32 Amount);
+public:
+
+protected:
+	UFUNCTION(Exec)
 	void AddKillFeedMessage();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void AddUtilityScore(int32 Amount);
 public:
 
 protected:
@@ -128,6 +148,16 @@ protected:
 public:
 
 protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void AthenaForceVictory(bool bVictory);
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void BackpackSetSize(int32 Size);
+public:
+
+protected:
 	UFUNCTION(Exec)
 	void Badass();
 public:
@@ -138,9 +168,17 @@ public:
 	UFUNCTION(Exec)
 	void BattleLabResetSave();
 
+	UFUNCTION(Exec)
+	void BattleLabSetInstanceLimiting(bool bEnable);
+
 protected:
 	UFUNCTION(Exec)
 	void BeautyMode();
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void BotFillUp(int32 Amount);
 public:
 
 protected:
@@ -166,6 +204,11 @@ public:
 protected:
 	UFUNCTION(Exec)
 	void BuildFree();
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void CanExitWorld(bool bValue);
 public:
 
 protected:
@@ -284,6 +327,11 @@ protected:
 public:
 
 protected:
+	UFUNCTION(Exec)
+	void DebugUseDedicatedServer(bool bUse);
+public:
+
+protected:
 	UFUNCTION(Exec, BlueprintAuthorityOnly)
 	void DestroyAllPickups();
 public:
@@ -329,6 +377,21 @@ protected:
 public:
 
 protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void EnableFixedTimeStep(int32 AsIfItWasFPS);
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void EnableNewCustomizationPanel(bool bEnable);
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void EnableSubtitles(bool bEnable);
+public:
+
+protected:
 	UFUNCTION(Exec)
 	void EncounterCurrentUtilities();
 public:
@@ -336,6 +399,11 @@ public:
 protected:
 	UFUNCTION(Exec)
 	void EncounterInitialUtilities();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void EncounterSetDifficultyLevel(float NewDifficulty);
 public:
 
 protected:
@@ -355,7 +423,22 @@ public:
 
 protected:
 	UFUNCTION(Exec)
+	void EnduranceDebug(bool Value);
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void EnvPain(float Amount);
+public:
+
+protected:
+	UFUNCTION(Exec)
 	void EventsRefreshPlayer();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ExtAuthReset(bool bWipeDeviceAccountInfo);
 public:
 
 protected:
@@ -375,7 +458,17 @@ public:
 
 protected:
 	UFUNCTION(Exec)
+	void ForceByPassNavMeshForAISpawning(bool bInValue);
+public:
+
+protected:
+	UFUNCTION(Exec)
 	void ForceExternalRichPresenceUpdate();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void FortniteForceCharLOD(int32 LOD);
 public:
 
 protected:
@@ -391,6 +484,11 @@ public:
 protected:
 	UFUNCTION(Exec)
 	void GenerateMockMatchReport();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void GenerateTravelLogEntries(int32 Count);
 public:
 
 protected:
@@ -414,6 +512,16 @@ protected:
 public:
 
 protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void GiveAllConsumables(int32 NumItems);
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void GiveAllIngredients(int32 NumIngredients);
+public:
+
+protected:
 	UFUNCTION(Exec)
 	void GiveAllMelee();
 public:
@@ -431,6 +539,11 @@ public:
 protected:
 	UFUNCTION(Exec)
 	void GiveAllShotguns();
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void GiveAllTraps(int32 NumItems);
 public:
 
 protected:
@@ -479,9 +592,55 @@ protected:
 public:
 
 protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void GiveGold(int32 Amount);
+public:
+
+protected:
 	UFUNCTION(Exec)
 	void GiveGoodWeapons();
 public:
+
+protected:
+	UFUNCTION(Exec)
+	void GiveLTMPlaneBoostGE(int32 Index);
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void GiveLTMPlaneHealthGE(int32 Index);
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void GiveMetal(int32 Amount);
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void GivePerkRerolls(int32 NumOfRolls);
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void GivePlaneEffect(int32 Index);
+public:
+
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void GiveResources(int32 Amount);
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void GiveStone(int32 Amount);
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void GiveWood(int32 Amount);
+public:
+
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void GoFast(float NewSpeed);
 
 protected:
 	UFUNCTION(Exec)
@@ -625,6 +784,16 @@ public:
 
 protected:
 	UFUNCTION(Exec)
+	void McpEarnScore(int32 ScoreAmount);
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void McpForceHttpFailRate(float Factor);
+public:
+
+protected:
+	UFUNCTION(Exec)
 	void McpGetCurrencyAmount();
 public:
 
@@ -655,6 +824,11 @@ public:
 
 protected:
 	UFUNCTION(Exec)
+	void McpPrintPartyInviteToken(bool OnlyPrintIfJoinable);
+public:
+
+protected:
+	UFUNCTION(Exec)
 	void McpRedeemPurchases();
 public:
 
@@ -679,13 +853,28 @@ protected:
 public:
 
 protected:
+	UFUNCTION(Exec)
+	void ModItemDurability(float InValue);
+public:
+
+protected:
 	UFUNCTION(Exec, BlueprintAuthorityOnly)
 	void OpenAllContainersAndWriteLootEconomy();
 public:
 
 protected:
+	UFUNCTION(Exec)
+	void Pain(float Amount);
+public:
+
+protected:
 	UFUNCTION(Exec, BlueprintAuthorityOnly)
 	void PauseWarmup();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void PreviewSkinWeightProfile(int32 State);
 public:
 
 protected:
@@ -711,6 +900,11 @@ public:
 protected:
 	UFUNCTION(Exec)
 	void ReadLevelSaveComponentsFromDisk();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void RedoHuskSpecialEventModifiers(float TargetRate);
 public:
 
 protected:
@@ -814,6 +1008,11 @@ protected:
 public:
 
 protected:
+	UFUNCTION(Exec)
+	void RunPerfMemCheatScript(bool bStartStatFiles);
+public:
+
+protected:
 	UFUNCTION(Exec, BlueprintAuthorityOnly)
 	void ServerStartProfiling();
 public:
@@ -824,13 +1023,161 @@ protected:
 public:
 
 protected:
-	UFUNCTION(Exec, BlueprintAuthorityOnly)
-	void SetRandomAircraftFlightPath();
+	UFUNCTION(Exec)
+	void SetBuildFree(bool bNewValue);
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void SetCameraFOVMultiplier(float Multiplier);
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void SetCanMeleeOneHitBuildings(bool bEnabled);
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void SetCapturePercentage(float NewCapturePercentage);
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void SetCloudAltitude(float CloudAltitude);
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void SetConsole60FPSMode(bool bEnabled);
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void SetCrossplayPreference(int32 NewPreference);
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void SetCurrentEncounterToDebug(int32 EncounterIndex);
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void SetDifficultyIncreaseRewardTier(int32 RewardTier);
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void SetEncounterSimulatedNumberOfPlayers(int32 NumPlayers);
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void SetEncounterSpawnPointsCap(int32 SpawnPointsCap);
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void SetFrameSyncMode(int32 Mode);
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void SetGameDifficultyOverride(float GameDifficultyOverrideValue);
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void SetHeadHealthPercent(float HealthPercent);
 public:
 
 protected:
 	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void SetHealthPercent(float Percent);
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void SetInfiniteAmmo(bool bInValue);
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void SetInteractExtent(float Extent);
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void SetLFG(bool bLFG);
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void SetMaxClouds(int32 MaxClouds);
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void SetMinigameClassSlot(int32 ClassSlotIndex);
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void SetPlaneHealthPercent(float Percent);
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void SetPlaneLives(int32 NewLives);
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void SetRandomAircraftFlightPath();
+public:
+
+	UFUNCTION(Exec)
+	void SetRespawnTimerOverride(float TimeUntilRespawn);
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
 	void SetSafeZoneLocationToPlayer();
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void SetSafeZoneRadius(float NewRadius);
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void SetShieldPercent(float Percent);
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void SetSignalInStormPercent(float Percent);
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void SetTeam(int32 TeamIndex);
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void SetUnlimitedHealth(bool bInValue);
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void SetWallTimer(float Seconds);
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void SetWorldDaysElapsed(float days);
 public:
 
 protected:
@@ -841,6 +1188,11 @@ public:
 protected:
 	UFUNCTION(Exec)
 	void ShowAllMinimapIcons();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ShowEventsDebugInfo(bool bShowDebugInfo);
 public:
 
 protected:
@@ -895,6 +1247,11 @@ public:
 
 protected:
 	UFUNCTION(Exec)
+	void StartLiveStreamingWindow(float Seconds);
+public:
+
+protected:
+	UFUNCTION(Exec)
 	void StartMinigame();
 public:
 
@@ -941,6 +1298,11 @@ public:
 protected:
 	UFUNCTION(Exec)
 	void TestCancelLobby();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void TestChangePartySize(int32 NewSize);
 public:
 
 protected:
@@ -1200,6 +1562,11 @@ public:
 
 protected:
 	UFUNCTION(Exec)
+	void ToggleWindDebugDisplay(float NewRefreshRate);
+public:
+
+protected:
+	UFUNCTION(Exec)
 	void ToggleWindDebugVolumeDisplay();
 public:
 
@@ -1240,12 +1607,32 @@ public:
 
 protected:
 	UFUNCTION(Exec)
+	void UnlockPerk(int32 Count);
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void UpgradePlaneGuns(int32 Index);
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void UseSolarisInCreative(bool bShouldUse);
+public:
+
+protected:
+	UFUNCTION(Exec)
 	void ViewStuck();
 public:
 
 protected:
 	UFUNCTION(Exec)
 	void WannaGun();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void WargameDebug(bool Value);
 public:
 
 protected:

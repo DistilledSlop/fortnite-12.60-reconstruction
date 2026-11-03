@@ -20,7 +20,8 @@ bool UFortSkyTubePhysicsComponent::IsMagnetized() const
 
 void UFortSkyTubePhysicsComponent::OnRep_Magnetized(bool bPreviousMagnetized)
 {
-	// Body not recovered: reflection-derived stub.
+	// Original exec 0x1411a8f70; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
 }
 
 void UFortSkyTubePhysicsComponent::OnRep_SkyTube(AFortSkyTube* PreviousSkyTube)

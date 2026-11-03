@@ -47,6 +47,12 @@ bool AFortAIPawn::GetUsesDBNO() const
 	return bUsesDBNO;
 }
 
+void AFortAIPawn::GiveAmmo(int32 AmmoQuantity)
+{
+	// Original exec 0x142766a90; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
 void AFortAIPawn::NetMulticast_BatchedDamageCues_Implementation(const FFortAIBatchedDamageCues& Data)
 {
 	// Body not recovered: reflection-derived stub.

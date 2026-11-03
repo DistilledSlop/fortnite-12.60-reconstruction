@@ -18,6 +18,12 @@ UMeshComponent* UFortHeldObjectComponent::GetMeshComponent() const
 	return ReferenceMeshComponent;
 }
 
+void UFortHeldObjectComponent::HandleOwnerDestroyed(AActor* DestroyedActor)
+{
+	// Original exec 0x1406969b0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
 bool UFortHeldObjectComponent::IsDropped() const
 {
 	// Original address: 0x142937b10.
@@ -87,6 +93,12 @@ void UFortHeldObjectComponent::OnWeaponUnequipped()
 	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
 	// CONFIDENCE: HIGH
 	return;
+}
+
+void UFortHeldObjectComponent::PickupHeldObject(AFortPlayerPawn* PlayerPawn)
+{
+	// Original exec 0x1406969b0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
 }
 
 void UFortHeldObjectComponent::PlaceHeldObject()

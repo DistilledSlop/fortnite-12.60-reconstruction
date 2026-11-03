@@ -1411,6 +1411,9 @@ public:
 	void ClientUpdateServerOnPlayerChangedBuildMode();
 	void ClientUpdateServerOnPlayerChangedBuildMode_Implementation();
 
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void DropSpecificItem(UFortItemDefinition* DropItemDef);
+
 	UFUNCTION(Exec)
 	void DumpHomebaseRatingInfo() const;
 
@@ -1446,6 +1449,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool GetUseHoldToSwapPickupSetting() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void GivePlayerAmmo(int32 AmmoCount);
 
 	UFUNCTION()
 	void HandleOutpostInventoryLocalUpdate();

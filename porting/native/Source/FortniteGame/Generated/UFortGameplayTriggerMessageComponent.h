@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortGameplayMessageComponentBase.h"
 
+class AController;
+
 #include "UFortGameplayTriggerMessageComponent.generated.h"
 
 UCLASS(config=Creative)
@@ -14,5 +16,8 @@ class FORTNITEGAME_API UFortGameplayTriggerMessageComponent : public UFortGamepl
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(BlueprintCallable)
+	void SendTriggerMessage(AController* TriggerInstigator);
+
 };
 

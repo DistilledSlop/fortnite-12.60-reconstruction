@@ -2,6 +2,12 @@
 #include "ABuildingProp_LockDevice.h"
 #include "Net/UnrealNetwork.h"
 
+void ABuildingProp_LockDevice::HandleLockableObjectDestruction(AActor* ActorDestroyed)
+{
+	// Original exec 0x1406969b0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
 void ABuildingProp_LockDevice::OnRep_CurrentLockState()
 {
 	// Body not recovered: reflection-derived stub.
@@ -10,6 +16,18 @@ void ABuildingProp_LockDevice::OnRep_CurrentLockState()
 void ABuildingProp_LockDevice::OnRep_LockableObject()
 {
 	// Body not recovered: reflection-derived stub.
+}
+
+void ABuildingProp_LockDevice::ToggleLockedState(AController* ControllerInstigator)
+{
+	// Original exec 0x1406969b0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
+void ABuildingProp_LockDevice::ToggleOpenState(AController* ControllerInstigator)
+{
+	// Original exec 0x1406969b0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
 }
 
 void ABuildingProp_LockDevice::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

@@ -108,6 +108,9 @@ public:
 	UPROPERTY()
 	FTimerHandle SnapCaptureProgressTimerHandle;
 
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void ForceCaptureProgress(float NewCaptureProgress);
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	uint8 GetCaptureStateOwner() const;
 
@@ -119,6 +122,21 @@ public:
 
 	UFUNCTION()
 	void OnRep_SmoothProgressState();
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void SetCaptureSpeedBoost(float NewCaptureSpeedBoost);
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void SetCaptureSpeedBoostEmoting(float NewCaptureSpeedBoostEmoting);
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void SetCaptureTime(float NewCaptureTime);
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void SetNeutralizingTime(int32 NewNeutralizingSpeed);
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void SetProgressDecaySpeed(float NewProgressDecaySpeed);
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

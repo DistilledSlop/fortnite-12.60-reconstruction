@@ -16,9 +16,15 @@ class FORTNITEUI_API UFortSquadSelectorButton : public UCommonButton
 	GENERATED_BODY()
 
 public:
+	// Non-reflected field (behaviour kind "member_field", offset 0xb78): not a UPROPERTY, not replicated.
+	FName NativeRecoveredFName_0xb78;
+
 	// table index 0, flags 0x14000000000015
 	UPROPERTY()
 	TSubclassOf<UFortSquadManagementScreenBase> SquadManagementScreenType;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FName GetIdOfSquadToManageBP() const;
 
 };
 

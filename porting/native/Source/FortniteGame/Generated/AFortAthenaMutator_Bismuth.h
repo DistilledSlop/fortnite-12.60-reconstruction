@@ -76,5 +76,10 @@ public:
 	UPROPERTY()
 	TArray<AFortPlayerPawnAthena*> BismuthAIBots;
 
+private:
+	UFUNCTION()
+	void ReflectEliminatePlayer(AFortPlayerPawnAthena* PlayerPawn);
+public:
+
 };
 

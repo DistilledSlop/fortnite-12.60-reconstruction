@@ -287,6 +287,9 @@ public:
 	UFUNCTION(ServiceResponse(JSBridge, ResponseId=1))
 	void CheckLatestClient(const FWebJSResponse& Response);
 
+	UFUNCTION(Exec)
+	void DebugCreateBackgroundPlayer(int32 ControllerId);
+
 	UFUNCTION(ServiceResponse(JSBridge, ResponseId=1))
 	void GetAnalyticsSessionDetails(const FWebJSResponse& Response);
 

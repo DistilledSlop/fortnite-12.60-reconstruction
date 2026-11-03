@@ -9,6 +9,8 @@
 #include "AttributeSet.h"
 #include "FFillFloorPositionData.h"
 
+class AFortPlayerPawn;
+
 #include "ABuildingFillFloor.generated.h"
 
 UCLASS(config=Game)
@@ -60,6 +62,11 @@ public:
 	// table index 0, flags 0x20080100000020
 	UPROPERTY(ReplicatedUsing=OnRep_IsMoving)
 	bool bIsMoving;
+
+protected:
+	UFUNCTION(BlueprintCallable)
+	void OnLavaOverlap(AFortPlayerPawn* Pawn);
+public:
 
 	UFUNCTION()
 	void OnRep_FloorZ();

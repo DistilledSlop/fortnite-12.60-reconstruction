@@ -60,8 +60,10 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsMagnetized() const;
 
+private:
 	UFUNCTION()
 	void OnRep_Magnetized(bool bPreviousMagnetized);
+public:
 
 	UFUNCTION()
 	void OnRep_SkyTube(AFortSkyTube* PreviousSkyTube);

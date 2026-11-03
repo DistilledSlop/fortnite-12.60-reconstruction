@@ -29,6 +29,12 @@ void UFortGameInstance::CheckLatestClient(const FWebJSResponse& Response)
 	// Body not recovered: reflection-derived stub.
 }
 
+void UFortGameInstance::DebugCreateBackgroundPlayer(int32 ControllerId)
+{
+	// Original exec 0x142766a90; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
 void UFortGameInstance::GetAnalyticsSessionDetails(const FWebJSResponse& Response)
 {
 	// Body not recovered: reflection-derived stub.

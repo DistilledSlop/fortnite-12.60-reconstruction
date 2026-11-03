@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "AFortAthenaMutator_OverrideInventoryOnce.h"
 
+class AFortPlayerState;
 class UGameplayEffect;
 
 #include "AFortAthenaMutator_GalileoEquipment.generated.h"
@@ -27,6 +28,9 @@ public:
 	// table index 0, flags 0x20080000010005
 	UPROPERTY()
 	int32 SlotToSwapToAfterGrant;
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void ApplyPlayerLoadout(AFortPlayerState* State);
 
 };
 

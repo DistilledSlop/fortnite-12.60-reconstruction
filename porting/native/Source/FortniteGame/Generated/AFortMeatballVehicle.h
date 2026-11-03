@@ -10,6 +10,7 @@
 #include "FFortRechargingActionTimer.h"
 #include "GameplayEffectTypes.h"
 #include "GameplayTagContainer.h"
+#include "Math/Vector.h"
 
 class AFortAthenaVehicle;
 class APlayerController;
@@ -185,6 +186,12 @@ public:
 	// table index 0, flags 0x20080000002000
 	UPROPERTY(Transient)
 	bool bBoostFailed;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x11e0): not a UPROPERTY, not replicated.
+	FVector NativeRecoveredFVector_0x11e0;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FVector GetSeatOffset() const;
 
 };
 

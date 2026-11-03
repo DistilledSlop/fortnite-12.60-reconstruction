@@ -2,6 +2,12 @@
 #include "AFortPlayerPushableCart.h"
 #include "Net/UnrealNetwork.h"
 
+void AFortPlayerPushableCart::AddPlayerToPushArea(AFortPlayerPawn* PlayerToAdd)
+{
+	// Original exec 0x1406969b0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
 bool AFortPlayerPushableCart::GetIsPlayerPushable() const
 {
 	// Original address: 0x142a88b20.
@@ -73,6 +79,18 @@ void AFortPlayerPushableCart::OnRep_TotalActiveDefenders()
 void AFortPlayerPushableCart::OnRep_TotalActivePushers()
 {
 	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerPushableCart::RemovePlayerFromPushArea(AFortPlayerPawn* PlayerToRemove)
+{
+	// Original exec 0x1406969b0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
+void AFortPlayerPushableCart::SetNearCheckpoint(bool bNear)
+{
+	// Original exec 0x1411a8f70; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
 }
 
 void AFortPlayerPushableCart::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

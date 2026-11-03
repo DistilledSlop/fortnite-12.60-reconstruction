@@ -20,6 +20,12 @@ void AFortMissionStormSafeZone::OnRep_ZoneRadius()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortMissionStormSafeZone::SetSafeZoneRadius(float InRadius)
+{
+	// Original exec 0x142765ea0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
 void AFortMissionStormSafeZone::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

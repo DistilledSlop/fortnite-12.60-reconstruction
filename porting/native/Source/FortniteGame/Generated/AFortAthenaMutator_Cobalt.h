@@ -28,6 +28,7 @@
 class AAthenaCobaltStormShield;
 class AFortAthenaMutator_InventoryOverride;
 class AFortAthenaMutator_SynchronizedTeleport;
+class AFortPlayerPawn;
 class AFortPlayerStateAthena;
 class UAudioComponent;
 class UCurveFloat;
@@ -379,6 +380,11 @@ public:
 
 private:
 	UFUNCTION()
+	void HandlePlayerStateTeleportComplete(AFortPlayerStateAthena* FortPlayerState);
+public:
+
+private:
+	UFUNCTION()
 	void HandleTeleportComplete();
 public:
 
@@ -405,6 +411,11 @@ public:
 
 	UFUNCTION()
 	void OnRep_WidgetRoundData();
+
+private:
+	UFUNCTION()
+	void TeleportPlayerLoadComplete(AFortPlayerPawn* FortPlayerPawn);
+public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

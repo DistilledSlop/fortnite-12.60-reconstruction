@@ -9,3 +9,15 @@ void UFortQuestManager::CheckObjectiveStatUsage()
 	return;
 }
 
+void UFortQuestManager::GiveAthenaXp(float XpAmount)
+{
+	// Original exec 0x142765ea0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
+void UFortQuestManager::InitializeQuestAbilities(APawn* PlayerPawn)
+{
+	// Original exec 0x1406969b0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+

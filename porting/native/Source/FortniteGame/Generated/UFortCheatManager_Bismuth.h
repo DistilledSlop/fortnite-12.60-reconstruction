@@ -14,5 +14,17 @@ class FORTNITEGAME_API UFortCheatManager_Bismuth : public UFortCheatManager_Coup
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void BismuthSetAIBotsHostileToEachOther(bool bHostile);
+
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void BismuthSetMinimumDistanceBetweenSpawners2D(float Distance);
+
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void BismuthSetNumOfBotsToSpawn(int32 Num);
+
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void BismuthSetReflectKillDelay(float Delay);
+
 };
 

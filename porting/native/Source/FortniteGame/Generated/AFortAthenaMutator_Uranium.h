@@ -33,6 +33,7 @@ class AFortAthenaMutator_SynchronizedTeleport;
 class AFortCheckPointCosmeticActor;
 class AFortMissionStormShield;
 class AFortPlayerPushableCart;
+class AFortPlayerStateAthena;
 class UCurveFloat;
 class UFortAthenaCustomTimeDilationManager;
 class UMaterialParameterCollection;
@@ -498,6 +499,11 @@ public:
 
 	UFUNCTION()
 	void OnRep_TeleportComplete();
+
+private:
+	UFUNCTION()
+	void TeleportPlayerLoadComplete(AFortPlayerStateAthena* PlayerState);
+public:
 
 protected:
 	UFUNCTION()

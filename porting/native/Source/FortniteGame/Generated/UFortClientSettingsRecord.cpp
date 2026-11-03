@@ -726,6 +726,17 @@ bool UFortClientSettingsRecord::IsUsingHoldToSwapPickup() const
 	return UFortClientSettingsRecord::bUseHoldToSwapPickup;
 }
 
+void UFortClientSettingsRecord::SetAllowFriendSubscriptionNudges(bool bAllow)
+{
+	// Original exec 0x14287ea90, leaf 0x141e3a2d0; conditional Boolean and dirty-byte stores.
+	// CONFIDENCE: HIGH
+	if (this->bAllowFriendSubscriptionNudges != bAllow)
+	{
+	    this->bAllowFriendSubscriptionNudges = bAllow;
+	    this->bDirty = true;
+	}
+}
+
 void UFortClientSettingsRecord::SetGamepadBuildingMultiplier(float InMultiplier)
 {
 	// Original exec 0x1428803d0; ordered unequal float compare and conditional dirty-byte store.
@@ -783,6 +794,61 @@ void UFortClientSettingsRecord::SetGyroLookSensitivitySetting(float InSetting)
 	if (PreviousValue < InSetting || PreviousValue > InSetting)
 	{
 	    this->bDirty = 1;
+	}
+}
+
+void UFortClientSettingsRecord::SetInvertedPitchForAircraftPrimary(bool bInvert)
+{
+	// Original exec 0x142880e30, leaf 0x141e3bbc0; conditional Boolean and dirty-byte stores.
+	// CONFIDENCE: HIGH
+	if (this->bInvertedPitchForAircraftPrimary != bInvert)
+	{
+	    this->bInvertedPitchForAircraftPrimary = bInvert;
+	    this->bDirty = true;
+	}
+}
+
+void UFortClientSettingsRecord::SetInvertedPitchForAircraftSecondary(bool bInvert)
+{
+	// Original exec 0x142880ec0, leaf 0x141e3bbe0; conditional Boolean and dirty-byte stores.
+	// CONFIDENCE: HIGH
+	if (this->bInvertedPitchForAircraftSecondary != bInvert)
+	{
+	    this->bInvertedPitchForAircraftSecondary = bInvert;
+	    this->bDirty = true;
+	}
+}
+
+void UFortClientSettingsRecord::SetInvertedPitchForMotion(bool bInvert)
+{
+	// Original exec 0x142880f50, leaf 0x141e3bc00; conditional Boolean and dirty-byte stores.
+	// CONFIDENCE: HIGH
+	if (this->bInvertedPitchForMotion != bInvert)
+	{
+	    this->bInvertedPitchForMotion = bInvert;
+	    this->bDirty = true;
+	}
+}
+
+void UFortClientSettingsRecord::SetInvertedYawForMotion(bool bInvert)
+{
+	// Original exec 0x142881070, leaf 0x141e3bc70; conditional Boolean and dirty-byte stores.
+	// CONFIDENCE: HIGH
+	if (this->bInvertedYawForMotion != bInvert)
+	{
+	    this->bInvertedYawForMotion = bInvert;
+	    this->bDirty = true;
+	}
+}
+
+void UFortClientSettingsRecord::SetLocalNotificationsEnabled(bool bEnabled)
+{
+	// Original exec 0x142881210, leaf 0x141e3bea0; conditional Boolean and dirty-byte stores.
+	// CONFIDENCE: HIGH
+	if (this->bLocalNotificationsEnabled != bEnabled)
+	{
+	    this->bLocalNotificationsEnabled = bEnabled;
+	    this->bDirty = true;
 	}
 }
 

@@ -18,6 +18,46 @@ float AFortOctopusVehicle::GetAccelerationPercent() const
 	return NativeRecoveredFloat_0x1330;
 }
 
+FVector AFortOctopusVehicle::GetSeatForwardDir() const
+{
+	// Original address: 0x142a08af0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete 12-byte FVector field copy; see bulk_native_copy_runtime/README.md.
+	return NativeRecoveredFVector_0x12e4;
+}
+
+FVector AFortOctopusVehicle::GetSeatRotationTorque() const
+{
+	// Original address: 0x142a08b70.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete 12-byte FVector field copy; see bulk_native_copy_runtime/README.md.
+	return NativeRecoveredFVector_0x1314;
+}
+
+FVector AFortOctopusVehicle::GetSeatRotationVelocity() const
+{
+	// Original address: 0x142a08bb0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete 12-byte FVector field copy; see bulk_native_copy_runtime/README.md.
+	return NativeRecoveredFVector_0x1308;
+}
+
+FVector AFortOctopusVehicle::GetSeatUpDir() const
+{
+	// Original address: 0x142a08d60.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete 12-byte FVector field copy; see bulk_native_copy_runtime/README.md.
+	return NativeRecoveredFVector_0x12d8;
+}
+
+FVector AFortOctopusVehicle::GetTargetHeading() const
+{
+	// Original address: 0x142a08de0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete 12-byte FVector field copy; see bulk_native_copy_runtime/README.md.
+	return NativeRecoveredFVector_0x12cc;
+}
+
 bool AFortOctopusVehicle::IsTowhookHolstered() const
 {
 	// Original address: 0x142a09190.

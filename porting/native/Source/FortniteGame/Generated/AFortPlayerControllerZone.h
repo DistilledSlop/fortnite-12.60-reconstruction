@@ -274,6 +274,9 @@ public:
 	void ServerVoiceChatRequestJoinToken(const FString& ChannelName);
 	void ServerVoiceChatRequestJoinToken_Implementation(const FString& ChannelName);
 
+	UFUNCTION(Exec)
+	void SetVehicleHealth(float NewHealth);
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

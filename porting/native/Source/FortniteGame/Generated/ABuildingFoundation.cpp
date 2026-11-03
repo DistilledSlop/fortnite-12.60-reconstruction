@@ -25,6 +25,12 @@ void ABuildingFoundation::OnRep_ServerStreamedInLevel()
 	// Body not recovered: reflection-derived stub.
 }
 
+void ABuildingFoundation::SetDynamicFoundationEnabled(bool bEnabled)
+{
+	// Original exec 0x1411a8f70; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
 void ABuildingFoundation::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

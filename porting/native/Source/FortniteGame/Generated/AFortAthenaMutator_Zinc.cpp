@@ -26,6 +26,12 @@ void AFortAthenaMutator_Zinc::OnEndOfRoundUIComplete()
 	return;
 }
 
+void AFortAthenaMutator_Zinc::OnPlayerPawnPossessed(APawn* Pawn)
+{
+	// Original exec 0x1406969b0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
 void AFortAthenaMutator_Zinc::OnRep_CurrentRound()
 {
 	// Body not recovered: reflection-derived stub.
@@ -34,6 +40,12 @@ void AFortAthenaMutator_Zinc::OnRep_CurrentRound()
 void AFortAthenaMutator_Zinc::OnRep_ZincPhase()
 {
 	// Body not recovered: reflection-derived stub.
+}
+
+void AFortAthenaMutator_Zinc::OnSingleTeleportComplete(AFortPlayerStateAthena* PlayerState)
+{
+	// Original exec 0x1406969b0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
 }
 
 void AFortAthenaMutator_Zinc::PreRoundEndDelayComplete()

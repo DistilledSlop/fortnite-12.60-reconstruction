@@ -33,12 +33,24 @@ public:
 	TMap<AFortPlayerController*, FCaptureHandle> InventoryChangedHandlesMap;
 
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void BindToControllerInventoryChangedEvent(AFortPlayerController* PlayerController);
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void RegisterPlayerInsideArea(AFortPlayerController* PlayerInside);
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void UnbindAllControllersToInventoryChangedEvent();
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void UnbindToControllerInventoryChangedEvent(AFortPlayerController* PlayerController);
 
 protected:
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void UnregisterAllRegisteredPlayerInsideArea();
 public:
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void UnregisterPlayerInsideArea(AFortPlayerController* OldPlayerInside);
 
 };
 

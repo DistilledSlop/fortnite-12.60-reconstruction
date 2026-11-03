@@ -17,5 +17,8 @@ public:
 	UFUNCTION(Exec, BlueprintAuthorityOnly)
 	void EndCobaltRound();
 
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void SimulateFullCobaltMatch(bool bSimulate);
+
 };
 

@@ -21,6 +21,12 @@ void AKeepItemContainer::OnRep_SearchedBy()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AKeepItemContainer::ResetContainer(AFortPlayerController* FortPC)
+{
+	// Original exec 0x1406969b0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
 void AKeepItemContainer::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

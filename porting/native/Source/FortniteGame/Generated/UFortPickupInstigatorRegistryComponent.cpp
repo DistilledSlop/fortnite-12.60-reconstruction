@@ -15,6 +15,12 @@ void UFortPickupInstigatorRegistryComponent::OnRep_InstigatorRegistry()
 	// Body not recovered: reflection-derived stub.
 }
 
+void UFortPickupInstigatorRegistryComponent::RemoveAllItemsForPickupInstigator(UObject* PickupInstigator)
+{
+	// Original exec 0x1406969b0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
 void UFortPickupInstigatorRegistryComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

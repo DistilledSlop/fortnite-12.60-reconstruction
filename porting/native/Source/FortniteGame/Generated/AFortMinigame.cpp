@@ -10,6 +10,12 @@ bool AFortMinigame::AreEnoughPlayersLeftToContinueMatch()
 	return true;
 }
 
+void AFortMinigame::ClearPlayerInventory(AFortPlayerControllerAthena* PlayerController)
+{
+	// Original exec 0x1406969b0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
 bool AFortMinigame::DoesTimerCountDown() const
 {
 	// Original address: 0x1429bf5e0.
@@ -162,6 +168,12 @@ void AFortMinigame::RefreshGameRulesPreview()
 	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
 	// CONFIDENCE: HIGH
 	return;
+}
+
+void AFortMinigame::RefreshVoiceForPlayer(AFortPlayerState* PlayerState)
+{
+	// Original exec 0x1406969b0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
 }
 
 void AFortMinigame::RefreshVoiceForPlayers()

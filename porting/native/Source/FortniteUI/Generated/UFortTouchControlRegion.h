@@ -94,5 +94,10 @@ public:
 	UPROPERTY()
 	FVector2D LockOnStickCurrentPos;
 
+protected:
+	UFUNCTION()
+	void OnBuildModeChanged(bool bBuildModeEnabled);
+public:
+
 };
 

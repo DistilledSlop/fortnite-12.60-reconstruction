@@ -299,6 +299,9 @@ public:
 	void ClientCreativeStopFly();
 	void ClientCreativeStopFly_Implementation();
 
+	UFUNCTION(Exec)
+	void DisplayNPCNumbers(bool bDisplay);
+
 	UFUNCTION()
 	UFortAmbientAudioController* GetAmbientAudioController();
 

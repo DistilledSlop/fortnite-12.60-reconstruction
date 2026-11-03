@@ -9,11 +9,43 @@ float UFortMovementComp_Character::GetFallingStartedZ() const
 	return FallingStartedZ;
 }
 
+FVector UFortMovementComp_Character::GetPlayerRelativeVelocityToWater() const
+{
+	// Original address: 0x1429f7b30.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete 12-byte FVector field copy; see bulk_native_copy_runtime/README.md.
+	return NativeRecoveredFVector_0x1d30;
+}
+
 float UFortMovementComp_Character::GetWaterImmersionDepth() const
 {
 	// Original address: 0x1429f7cf0.
 	// CONFIDENCE: HIGH
 	// Mechanically matched complete native storage read; see bulk_native_scalar_runtime/README.md.
 	return NativeRecoveredFloat_0x1d08;
+}
+
+FVector UFortMovementComp_Character::GetWaterSurfaceLocation() const
+{
+	// Original address: 0x1429f7d10.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete 12-byte FVector field copy; see bulk_native_copy_runtime/README.md.
+	return NativeRecoveredFVector_0x1d3c;
+}
+
+FVector UFortMovementComp_Character::GetWaterSurfaceNormal() const
+{
+	// Original address: 0x1429f7d40.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete 12-byte FVector field copy; see bulk_native_copy_runtime/README.md.
+	return NativeRecoveredFVector_0x1d48;
+}
+
+FVector UFortMovementComp_Character::GetWaterVelocity() const
+{
+	// Original address: 0x1429f7d70.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete 12-byte FVector field copy; see bulk_native_copy_runtime/README.md.
+	return NativeRecoveredFVector_0x1d24;
 }
 

@@ -15,6 +15,9 @@ class FORTNITEGAME_API UFortCheatManagerSTW : public UChildCheatManager
 
 public:
 	UFUNCTION(Exec)
+	void ChangeHeroClass(int32 Index);
+
+	UFUNCTION(Exec)
 	void ClearKeepSave();
 
 	UFUNCTION(Exec)
@@ -24,19 +27,37 @@ public:
 	void EvolveHero();
 
 	UFUNCTION(Exec)
+	void ForceUnlockHordeTiers(int32 MaxTierNumber);
+
+	UFUNCTION(Exec)
 	void GetWorldDifficulty();
 
 	UFUNCTION(Exec)
 	void GetWorldLevel();
 
 	UFUNCTION(Exec)
+	void GiveBluGlo(int32 Amount);
+
+	UFUNCTION(Exec)
 	void GiveCheatInventory();
+
+	UFUNCTION(Exec)
+	void GiveDeployablePlotAllIngredients(int32 NumIngredients);
+
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void GiveUsefulThings(int32 NumOfUsefulThings);
+
+	UFUNCTION(Exec)
+	void IronCityAutoAmplifierPlacement(int32 Value);
 
 	UFUNCTION(Exec)
 	void McpAddTestStatsMock();
 
 	UFUNCTION(Exec)
 	void McpClaimAllAvailableCollectionBookRewards();
+
+	UFUNCTION(Exec)
+	void McpClaimAllResourceCollectors(bool bDebugPrint);
 
 	UFUNCTION(Exec)
 	void McpCompleteHexMission();
@@ -63,7 +84,16 @@ public:
 	void McpResetPersistence();
 
 	UFUNCTION(Exec)
+	void SetHeroLevel(int32 Level);
+
+	UFUNCTION(Exec)
+	void SetWorldLevel(float level);
+
+	UFUNCTION(Exec)
 	void TestOutpostUI();
+
+	UFUNCTION(Exec)
+	void TestSetOutpostDefenseActive(bool bActive);
 
 	UFUNCTION(Exec)
 	void ToggleCharacterBackpack();
