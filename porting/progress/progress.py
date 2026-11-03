@@ -735,7 +735,10 @@ def _load_dir_stems(rel):
 def _load_local_stems():
     """Converted (generated/converted) and native (native/Content) package stems —
     the done signals of the asset-type leaves."""
+    # asset_pipeline/glb is a symlink to bulk storage on /mnt; os.walk does not
+    # follow it, so walk its resolved target.
     return {"local": _load_dir_stems("porting/generated/converted")
+            | _load_dir_stems(os.path.realpath(os.path.join(REPO, "porting/generated/asset_pipeline/glb")))
             | _load_dir_stems("porting/native/Content"),
             "native": _load_dir_stems("porting/native/Content")}
 
