@@ -45,5 +45,10 @@ public:
 	UPROPERTY(Transient)
 	AFortItemPreviewSceneChanger* PreviewSceneChanger;
 
+protected:
+	UFUNCTION(BlueprintCallable)
+	void SetBackgroundMaterialDynamic(UMaterialInstanceDynamic* InBackgroundMaterialDynamic);
+public:
+
 };
 

@@ -20,6 +20,9 @@ public:
 	UPROPERTY(Replicated, Transient)
 	UFortContextTrapItemDefinition* ContextTrapItemDefinition;
 
+	UFUNCTION(BlueprintCallable)
+	void SetContextTrapItemDefinition(UFortContextTrapItemDefinition* InContextTrapItemDefinition);
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

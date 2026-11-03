@@ -33,6 +33,12 @@ void UFortMovementComp_GroundSpline::OnRep_TargetSpeeds()
 	// Body not recovered: reflection-derived stub.
 }
 
+void UFortMovementComp_GroundSpline::SetAbilitySystemComponent(UAbilitySystemComponent* NewAbilitySystemComponent)
+{
+	// CONFIDENCE: high; complete native wrapper and reflected field verified.
+	AbilitySystemComponent = NewAbilitySystemComponent;
+}
+
 void UFortMovementComp_GroundSpline::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

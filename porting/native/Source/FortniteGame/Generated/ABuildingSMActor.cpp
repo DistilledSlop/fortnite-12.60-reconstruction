@@ -300,6 +300,12 @@ TArray<UTexture2D*> ABuildingSMActor::ReadTextureData()
 	return Result;
 }
 
+void ABuildingSMActor::SetDeathParticles(UParticleSystem* InPS)
+{
+	// CONFIDENCE: high; complete native wrapper and reflected field verified.
+	DeathParticlesInst = InPS;
+}
+
 void ABuildingSMActor::SetParentActorToAttachTo(ABuildingSMActor* InParentActorToAttachTo)
 {
 	// Original exec 0x1427580e0; pure writer 0x141c1c340.

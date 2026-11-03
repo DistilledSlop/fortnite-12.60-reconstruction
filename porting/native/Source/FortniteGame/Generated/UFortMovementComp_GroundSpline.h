@@ -160,6 +160,9 @@ public:
 	UFUNCTION()
 	void OnRep_TargetSpeeds();
 
+	UFUNCTION(BlueprintCallable)
+	void SetAbilitySystemComponent(UAbilitySystemComponent* NewAbilitySystemComponent);
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

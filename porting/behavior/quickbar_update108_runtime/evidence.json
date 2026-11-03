@@ -1,0 +1,68 @@
+{
+  "target": "0x14205c5e0",
+  "callback": "0x14205c7f0",
+  "status": "draft_unresolved",
+  "captures": [
+    "porting/generated/native98-deps/0x14205c5e0.c",
+    "porting/generated/native108-quickbar-tail/0x14205c7f0.c",
+    "porting/generated/native108-quickbar-tail/0x142040380.c",
+    "porting/generated/native98-deps/0x142a3d9f0.c",
+    "porting/generated/native98-impl/0x144627d90.c",
+    "porting/generated/native108-quickbar-tail2/0x141b31980.c",
+    "porting/generated/native108-quickbar-tail2/0x142063590.c",
+    "porting/generated/native94-deps/0x14202b8d0.c",
+    "porting/generated/native96-impl/0x142b5be40.c"
+  ],
+  "evidence": [
+    "Owner at this+0xe0 is checked against AFortPlayerController::StaticClass before handle lookup and scheduling.",
+    "0x142040380 finds the byte key in the map at this+0x480, returning its 8-byte value at element+8; 0x141b31980 inserts a missing key with zero value, supporting FindOrAdd.",
+    "The existing handle must be zero; a valid world is also required before scheduling.",
+    "The scheduled delegate holds a weak UObject reference to this, callback 0x14205c7f0, and the bar byte. 0x144627d90 is STAT_SetTimerForNextTick and returns the handle stored in the selected slot.",
+    "The callback first selects the same keyed handle and writes zero. Bar 1 selects Secondary, 2 selects Creative, all other values select Primary.",
+    "It scans slots in ascending order, collects indices whose bIsDirty bit is set, and clears that bit. If there are no dirty indices it returns without further action.",
+    "With dirty indices, the callback calls 0x142063590 on the selected bar if the current owner is an AFortPlayerController, then dispatches the native multicast at this+0x3d0 with bar byte and dirty indices. The native multicast iterates its invocation list backwards with lock count and compaction.",
+    "0x142063590 is FQuickBar::RefreshEquippedItemDefinitions. It accepts the bar and owner as separate arguments. It removes null from the old EquippedItemDefinitions set, builds a new set from item definitions and active alterations, optionally incorporates the held weapon definition, processes set differences with 0x142050360, then replaces the old set. Exact helper semantics and gates still require recovery.",
+    "For each nonempty item array it uses the first GUID, calls the owner interface at +0x598 virtual +0xb0, checks item virtual +0x3e8 as FortWorldItemDefinition, and gathers 0x14202b8d0 active alterations. Its unusual negative-array-count fallback uses UsedByItemGuid when bIsOccupied; the zero-count path skips the slot."
+  ],
+  "missing": [
+    {
+      "address": "0x142063590",
+      "reason": "Captured refresh body depends on additional gameplay and collection operations; no implementation is claimed."
+    },
+    {
+      "address": "this+0x3d0",
+      "reason": "Native multicast declaration and exact source-level signature are not established."
+    }
+  ],
+  "limitations": [
+    "Map FindOrAdd and weak UObject next-tick delegate follow the captured layout and operations.",
+    "Callback refresh and multicast remain unresolved; no manifest entry."
+  ],
+  "refresh_dependencies": {
+    "identified": [
+      "0x142b5be40: FortWorldItemDefinition::StaticClass",
+      "0x14202b8d0: UFortItem active alterations",
+      "0x1426a0960: weapon data getter",
+      "0x1420065a0: inventory find item by definition",
+      "0x141ed4e30: get game mode from context",
+      "0x140742690: pointer set removal"
+    ],
+    "unresolved_behavior": [
+      "0x142050360: processes derived array with boolean true/false",
+      "0x1410f6c10: operates on two definition sets",
+      "0x1415c07f0: converts resulting collection to array",
+      "0x140769940: final set replacement/operation",
+      "0x141ed2350: global/context helper involved in game mode gating",
+      "owner interface vtable +0x48 and +0x38: weapon/inventory accessors",
+      "global values 0x14813c4e8 and 0x14813c4ec: refresh notification gates"
+    ],
+    "container_or_log_support": [
+      "0x1406e0f10",
+      "0x142ca88a0",
+      "0x142bb82f0",
+      "0x140695b20",
+      "0x1406911b0",
+      "0x140690310"
+    ]
+  }
+}

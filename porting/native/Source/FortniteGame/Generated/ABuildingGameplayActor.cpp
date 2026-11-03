@@ -8,3 +8,9 @@ bool ABuildingGameplayActor::AcceptsEmoteSprays_Implementation() const
 	return true;
 }
 
+void ABuildingGameplayActor::SetAbilitySourceLevel(int32 NewAbilitySourceLevel)
+{
+	// CONFIDENCE: high; complete native wrapper and reflected field verified.
+	AbilitySourceLevel = NewAbilitySourceLevel;
+}
+

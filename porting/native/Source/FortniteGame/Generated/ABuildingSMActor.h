@@ -750,6 +750,11 @@ public:
 
 protected:
 	UFUNCTION(BlueprintCallable)
+	void SetDeathParticles(UParticleSystem* InPS);
+public:
+
+protected:
+	UFUNCTION(BlueprintCallable)
 	void SetParentActorToAttachTo(ABuildingSMActor* InParentActorToAttachTo);
 public:
 

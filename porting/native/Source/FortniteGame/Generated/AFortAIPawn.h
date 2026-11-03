@@ -873,6 +873,9 @@ public:
 	void SetMinSignificanceForAnimationCurves(float MinSignificance);
 
 	UFUNCTION(BlueprintCallable)
+	void SetOverridenScore(int32 InOverriddenScore);
+
+	UFUNCTION(BlueprintCallable)
 	void SetShouldStartSleeping(bool bHintStartSleeping);
 
 	UFUNCTION(BlueprintCallable)

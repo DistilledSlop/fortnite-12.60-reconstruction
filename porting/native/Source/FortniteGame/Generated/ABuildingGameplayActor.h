@@ -103,5 +103,8 @@ public:
 	bool AcceptsEmoteSprays() const;
 	virtual bool AcceptsEmoteSprays_Implementation() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void SetAbilitySourceLevel(int32 NewAbilitySourceLevel);
+
 };
 

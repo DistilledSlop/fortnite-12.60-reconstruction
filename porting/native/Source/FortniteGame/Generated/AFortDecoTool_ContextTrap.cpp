@@ -2,6 +2,12 @@
 #include "AFortDecoTool_ContextTrap.h"
 #include "Net/UnrealNetwork.h"
 
+void AFortDecoTool_ContextTrap::SetContextTrapItemDefinition(UFortContextTrapItemDefinition* InContextTrapItemDefinition)
+{
+	// CONFIDENCE: high; complete native wrapper and reflected field verified.
+	ContextTrapItemDefinition = InContextTrapItemDefinition;
+}
+
 void AFortDecoTool_ContextTrap::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

@@ -168,6 +168,12 @@ void AFortAIPawn::SetMinSignificanceForAnimationCurves(float MinSignificance)
 	NativeRecoveredFloat_0x1e94 = MinSignificance;
 }
 
+void AFortAIPawn::SetOverridenScore(int32 InOverriddenScore)
+{
+	// CONFIDENCE: high; complete native wrapper and reflected field verified.
+	OverriddenScore = InOverriddenScore;
+}
+
 void AFortAIPawn::SetShouldStartSleeping(bool bHintStartSleeping)
 {
 	// CONFIDENCE: high; reflected wrapper and native helper verified.
