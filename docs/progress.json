@@ -1,8 +1,8 @@
 {
  "definition": "100% = the entire game can be launched into the menu, joined into a game and matchmade on the reconstructed server, and played with sound/audio and visuals 100% working. In other words: the client \u2014 the exact same client as the 12.60 original, feature-complete and unstripped, rebuilt as a UE project \u2014 reaches the lobby, matchmakes to the reconstructed UE dedicated server (which carries every structure and feature the original dedicated server would have) and plays a match with all visuals and audio. The supplied 12.60 build is the completeness reference; the original binary under Wine is an analysis oracle, not the deliverable.",
- "head": "6ba4433736f10a6dfbc53e7b51ca1aa24868bf30",
- "subject": "Reconcile game-mode handoff with completed rough lifts",
- "date": "2026-11-03T07:28:08-05:00",
+ "head": "c02283ee47d926815f0180a34f8290e7bb7959f5",
+ "subject": "Lift full vehicle replication flow and reconcile native batch70 handoff",
+ "date": "2026-11-03T07:36:17-05:00",
  "overall_pct": 20.903,
  "measured_pct": 20.033,
  "objective_pct": 20.03,
