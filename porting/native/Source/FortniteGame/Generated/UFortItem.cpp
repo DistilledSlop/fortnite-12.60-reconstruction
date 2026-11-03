@@ -22,6 +22,20 @@ bool UFortItem::CanBeUnslotted() const
 	return false;
 }
 
+float UFortItem::GetDurability() const
+{
+	// Exact UFortItem base implementation at 0x14084bee0.
+	// CONFIDENCE: HIGH
+	return -1.0f;
+}
+
+UFortItemDefinition* UFortItem::GetItemDefinitionBP() const
+{
+	// Exact UFortItem base implementation at 0x140680300.
+	// CONFIDENCE: HIGH
+	return nullptr;
+}
+
 int32 UFortItem::GetLevel() const
 {
 	// Exact original shared stub 0x140680300.
@@ -36,11 +50,39 @@ int32 UFortItem::GetLoadedAmmo() const
 	return 0;
 }
 
+float UFortItem::GetNormalizedDurability() const
+{
+	// Exact UFortItem base implementation at 0x1407c46d0.
+	// CONFIDENCE: HIGH
+	return 1.0f;
+}
+
+uint8 UFortItem::GetNumberOfSlotsTaken() const
+{
+	// Exact UFortItem base implementation at 0x1406801d0.
+	// CONFIDENCE: HIGH
+	return 1;
+}
+
+int32 UFortItem::GetNumInStack() const
+{
+	// Exact UFortItem base implementation at 0x140833bf0.
+	// CONFIDENCE: HIGH
+	return 1;
+}
+
 int32 UFortItem::GetRecycleValue() const
 {
 	// Exact original shared stub 0x140680300.
 	// CONFIDENCE: HIGH
 	return 0;
+}
+
+int32 UFortItem::GetRemainingAmmo() const
+{
+	// Exact UFortItem base implementation at 0x140693f70.
+	// CONFIDENCE: HIGH
+	return -1;
 }
 
 int32 UFortItem::GetUpgradeCost() const

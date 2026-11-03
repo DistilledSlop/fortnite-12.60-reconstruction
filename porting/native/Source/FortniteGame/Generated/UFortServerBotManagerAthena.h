@@ -241,5 +241,8 @@ public:
 	UPROPERTY(Transient)
 	TArray<UFortAthenaBeaconComponent*> BeaconList;
 
+	UFUNCTION(BlueprintCallable)
+	void DirtyBotFactions(bool bDirtyPlayers, bool bDirtyNoneParticipants);
+
 };
 

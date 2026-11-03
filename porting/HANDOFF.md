@@ -1,5 +1,37 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Native source batch 19 (2026-11-03)
+
+Canonical source: 1,796 function bodies + 163 supporting fields = 1,959 ported
+entries. Added six UFortItem base virtual query implementations and two complete
+Boolean leaves: AFortGameStateZone::SetBuildingAllowed and
+UFortServerBotManagerAthena::DirtyBotFactions. Base item query results follow the
+exact original vtable targets, not inferred inventory behavior; subclass
+implementations remain separate work. Float constants are proved inside readable,
+initialized, non-writable original PE sections. The Boolean wrapper normalizes
+both arguments; original parameter SetBitFuncs establish their order. The OR
+lift follows the existing valid-C++-Boolean representation assumption.
+
+Commands: `python3 -I porting/behavior/item_queries_runtime/prepare.py` and
+`python3 -I porting/behavior/bulk_two_bool_runtime/prepare.py` generated reviewed
+proposals; root appended eight entries then `python3 /tmp/promote-native-batch19.py`.
+Generation accepts 1,959, rejects 0; six Native files changed, 12,797 unchanged
+mtimes restored. Receipts: `porting/generated/gameplay-bulk-integration-19/`.
+No builds/runtime/tests; baseline remains 1,040 bodies, with 756 new bodies
+build pending. Next checkpoint about 2,040 bodies (244 more). All four product
+milestones remain open. Source coverage is not inventory/gameplay parity.
+
+Terra medium workers own `world_item_queries_runtime` (six actual derived item
+query targets) and `runtime_options_constructor_runtime` (one original options
+constructor/defaults). The options worker owns Ghidra extraction first; they
+coordinate serial access. Root owns Native/promotion/builds. A finite virtual
+literal family has three additional source-ready proposals, not yet promoted;
+constant POD and direct literal scans found no additions and retain no credit.
+Source batch18 pushed 88d3fe2c. Commit/push completed batches and refresh dashboard.
+Preserve unrelated graphics edits, skip visuals, bounded reads/output, fresh
+finite Terra low/medium tasks with fork_turns none. Tests only at user 1,000-body
+checkpoints; next 2,040. Do not repeat saturated unchanged scans.
+
 ## Native source batch 18 (2026-11-03)
 
 Canonical source: 1,788 function bodies + 163 supporting fields = 1,951

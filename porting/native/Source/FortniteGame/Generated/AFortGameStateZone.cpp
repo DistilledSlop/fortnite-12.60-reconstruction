@@ -206,6 +206,14 @@ void AFortGameStateZone::ServerFireAIDirectorEventBatch_Implementation(const TAr
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortGameStateZone::SetBuildingAllowed(bool bBuildingAtLayoutRequirementsAllowed, bool bBuildingWithoutLayoutRequirementsAllowed)
+{
+	// Original exec 0x14292d0d0, complete reflected-Boolean leaf 0x141eae8c0.
+	// CONFIDENCE: HIGH
+	this->bAllowBuildingAtLayoutRequirements = bBuildingAtLayoutRequirementsAllowed;
+	this->bAllowBuildingWithoutLayoutRequirements = bBuildingWithoutLayoutRequirementsAllowed;
+}
+
 void AFortGameStateZone::SetWorldLootLevel(int32 NewLootLevel)
 {
 	// Original exec 0x142766a90; complete empty leaf 0x1406801c0.

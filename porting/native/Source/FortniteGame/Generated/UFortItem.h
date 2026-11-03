@@ -9,6 +9,8 @@
 #include "FFortOnItemChangedDelegate.h"
 #include "FFortOnItemDestroyedDelegate.h"
 
+class UFortItemDefinition;
+
 #include "UFortItem.generated.h"
 
 UCLASS(abstract)
@@ -43,13 +45,31 @@ public:
 	virtual bool CanBeUnslotted() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual float GetDurability() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual UFortItemDefinition* GetItemDefinitionBP() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual int32 GetLevel() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual int32 GetLoadedAmmo() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual float GetNormalizedDurability() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual uint8 GetNumberOfSlotsTaken() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual int32 GetNumInStack() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual int32 GetRecycleValue() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual int32 GetRemainingAmmo() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual int32 GetUpgradeCost() const;
