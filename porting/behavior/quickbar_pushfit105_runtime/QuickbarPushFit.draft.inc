@@ -1,0 +1,172 @@
+// UNCOUNTED, UNCOMPILED native lift: 0x14204f2a0 and 0x14204e850.
+// External operations below are declarations of unresolved native dependencies, not implementations.
+// The pending collection is represented by the native TMap shape indicated by its 0x28-byte
+// entries, GUID hashing and bit-array iterator. Merge replacement semantics remain unverified.
+struct FQuickbarMovePair { UFortItem* Item; int32 Slot; };
+struct FQuickbarPendingValue { UFortItem* Item; int32 FromSlot; int32 ToSlot; };
+using FQuickbarPending = TMap<FGuid, FQuickbarPendingValue>;
+
+FGuid NativeItemGuid_468(UFortItem* Item);
+uint8 NativeItemSize_2e8(UFortItem* Item);
+uint8 NativeItemType_318(UFortItem* Item);
+void Native_142065b00(FQuickBar& Bar, const FGuid& Guid, int32 Slot);
+void Native_142049220(FQuickBar& Bar, UFortItem* Item, int32 Slot);
+// The owner inventory lookup adapter remains to be bound to the native interface.
+bool Native_14204f0f0(AFortQuickBars* Owner, UFortItem* Item, FQuickBar& Bar,
+                      int32 StartSlot, bool bReverse, const TArray<FGuid>& MoveGuids,
+                      bool NativeFlag, int32& FoundSlot);
+UFortItem* NativeOwnerInventoryLookup_598_b0(AFortQuickBars* Owner, const FGuid& Guid);
+void Native_14203f030(FQuickbarPending& Destination, const FQuickbarPending& Source);
+
+
+// 0x14204e850. The owner argument is present in the native ABI but unused here.
+bool Native_14204e850(AFortQuickBars* Owner, UFortItem* Item, const FQuickBar& Bar,
+                      int32 StartSlot, const TArray<FGuid>& MoveGuids, bool bIgnoreOccupants)
+{
+    if (!Item) return false;
+    const FGuid UnusedGuid = NativeItemGuid_468(Item); // native still invokes this virtual
+    const uint8 Size = NativeItemSize_2e8(Item);
+    for (int32 Index = StartSlot; Index < StartSlot + int32(Size); ++Index)
+    {
+        if (!Bar.Slots.IsValidIndex(Index) || !Bar.Slots[Index].bEnabled ||
+            !Bar.DataDefinition.QuickbarSlots.IsValidIndex(Index)) return false;
+        const auto Type = NativeItemType_318(Item); // native invokes once per slot
+        bool bAccepts = false;
+        for (const auto Accepted : Bar.DataDefinition.QuickbarSlots[Index].AcceptedItemTypes)
+            if (uint8(Accepted) == Type) { bAccepts = true; break; }
+        if (!bAccepts) return false;
+        const FQuickBarSlot& Slot = Bar.Slots[Index];
+        if (Slot.bIsReserved) return false;
+        FGuid Occupant;
+        if (Slot.Items.Num() > 0) Occupant = Slot.Items[0];
+        else if (Slot.bIsOccupied) Occupant = Slot.UsedByItemGuid;
+        if (!bIgnoreOccupants && (Slot.Items.Num() != 0 || Slot.bIsOccupied) &&
+            !MoveGuids.Contains(Occupant)) return false;
+    }
+    return true;
+}
+
+// 0x14204f0f0. Native probes the starting slot once even when it is outside
+// the normal search range, then bounds-checks after each step.
+bool Native_14204f0f0(AFortQuickBars* Owner, UFortItem* Item, FQuickBar& Bar,
+                      int32 StartSlot, bool bReverse, const TArray<FGuid>& MoveGuids,
+                      bool NativeFlag, int32& FoundSlot)
+{
+    if (!Item) return false;
+    const int32 Step = bReverse ? -1 : 1;
+    const uint8 Size = NativeItemSize_2e8(Item);
+    TArray<FGuid> Allowed = MoveGuids;
+    if (NativeFlag) Allowed.Add(NativeItemGuid_468(Item));
+    int32 Index = StartSlot;
+    do
+    {
+        if (Native_14204e850(Owner, Item, Bar, Index, Allowed, false))
+        {
+            FoundSlot = Index;
+            return true;
+        }
+        Index += Step;
+    } while (Index >= 0 && Index <= Bar.Slots.Num() - int32(Size));
+    return false;
+}
+
+// 0x14204ec80: validate the target span and plan pushes for its occupants.
+// Native obtains an AFortPlayerController from Owner->Owner, then calls its +0x598
+// inventory interface virtual +0xb0. If that item lookup returns null it skips it.
+bool Native_14204ec80(AFortQuickBars* Owner, UFortItem* Item, FQuickBar& Bar,
+                      int32 Slot, bool bPush, const TArray<FGuid>& MoveGuids,
+                      bool NativeFlag, FQuickbarPending& LocalPending)
+{
+    if (!Item) return false;
+    const uint8 Size = NativeItemSize_2e8(Item);
+    int32 LeftSearch = Slot - 1;
+    int32 RightSearch = Slot + int32(Size);
+    for (int32 Offset = 0; Offset < int32(Size); ++Offset)
+    {
+        int32 Index = Slot + Offset;
+        if (!Bar.Slots.IsValidIndex(Index) || !Bar.Slots[Index].bEnabled ||
+            !Bar.DataDefinition.QuickbarSlots.IsValidIndex(Index))
+        {
+            LocalPending.Empty(0);
+            return false;
+        }
+        const uint8 Type = NativeItemType_318(Item);
+        bool bAccepts = false;
+        for (const auto Accepted : Bar.DataDefinition.QuickbarSlots[Index].AcceptedItemTypes)
+            if (uint8(Accepted) == Type) { bAccepts = true; break; }
+        if (!bAccepts) { LocalPending.Empty(0); return false; }
+        const FQuickBarSlot& SlotData = Bar.Slots[Index];
+        if (SlotData.Items.Num() == 0 && !SlotData.bIsOccupied) continue;
+        if (SlotData.bIsOccupied) Index = SlotData.UsedBySlotIndex;
+        // Native assumes UsedBySlotIndex is valid and accesses it without a bounds check.
+        const FQuickBarSlot& Head = Bar.Slots[Index];
+        FGuid Guid(0, 0, 0, 0);
+        if (Head.Items.Num() > 0) Guid = Head.Items[0];
+        else if (Head.bIsOccupied) Guid = Head.UsedByItemGuid;
+        if (MoveGuids.Contains(Guid) || LocalPending.Contains(Guid)) continue;
+        UFortItem* Occupant = NativeOwnerInventoryLookup_598_b0(Owner, Guid);
+        if (!Occupant) continue;
+        int32 RightFound = MAX_int32, LeftFound = MAX_int32;
+        const bool bRight = Native_14204f0f0(Owner, Occupant, Bar, RightSearch,
+                                             false, MoveGuids, NativeFlag, RightFound);
+        const bool bLeft = Native_14204f0f0(Owner, Occupant, Bar, LeftSearch,
+                                            true, MoveGuids, NativeFlag, LeftFound);
+        if (!bRight && !bLeft) { LocalPending.Empty(0); return false; }
+        // Native compares distances even when only one search succeeds; its initial
+        // sentinel is INT_MAX and the search helper may update the out-parameters.
+        const int32 RightDistance = int32(uint32(RightFound) - uint32(RightSearch));
+        const int32 LeftDistance = int32(uint32(LeftFound) - uint32(LeftSearch));
+        const bool bChooseRight = (RightDistance < LeftDistance) ||
+            (RightDistance == LeftDistance && !bPush);
+        const int32 Destination = bChooseRight ? RightFound : LeftFound;
+        if (bChooseRight) RightSearch = Destination + 1;
+        else LeftSearch = Destination - 1;
+        LocalPending.Add(Guid, {Occupant, Index, Destination});
+    }
+    return true;
+}
+
+// 0x14204f2a0. FQuickBar's copy is deep (native copy helpers 14203f720,
+// 14203f840 and 140769940); mutations below affect only this working copy.
+bool Native_14204f2a0(AFortQuickBars* Owner, const TArray<FQuickbarMovePair>& Moves,
+                      const FQuickBar& Bar, bool bPush, const TArray<FGuid>& MoveGuids,
+                      FQuickbarPending& Pending)
+{
+    FQuickBar Working = Bar;
+    for (const FQuickbarMovePair& Move : Moves)
+    {
+        const FGuid Guid = NativeItemGuid_468(Move.Item);
+        if (Guid.IsValid())
+            for (int32 Index = 0; Index < Working.Slots.Num(); ++Index)
+                if (Working.Slots[Index].Items.Contains(Guid))
+                {
+                    if (Working.Slots[Index].bEnabled)
+                        Native_142065b00(Working, Guid, Index);
+                    break;
+                }
+        const uint8 Size = NativeItemSize_2e8(Move.Item);
+        for (int32 Index = Move.Slot; Index < Move.Slot + int32(Size); ++Index)
+        {
+            if (!Working.Slots.IsValidIndex(Index) || !Working.Slots[Index].bEnabled)
+                return false;
+            Working.Slots[Index].bIsReserved = true;
+        }
+    }
+    for (const FQuickbarMovePair& Move : Moves)
+    {
+        FQuickbarPending LocalPending;
+        if (!Native_14204ec80(Owner, Move.Item, Working, Move.Slot, bPush,
+                              MoveGuids, true, LocalPending))
+        {
+            Pending.Empty(0);
+            return false;
+        }
+        Native_14203f030(Pending, LocalPending);
+        for (const auto& Entry : LocalPending)
+        {
+            Native_142065b00(Working, Entry.Key, Entry.Value.FromSlot);
+            Native_142049220(Working, Entry.Value.Item, Entry.Value.ToSlot);
+        }
+    }
+    return true;
+}

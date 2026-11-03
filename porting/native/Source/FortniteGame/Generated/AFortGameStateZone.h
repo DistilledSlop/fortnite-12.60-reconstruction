@@ -8,6 +8,7 @@
 
 #include "EFortAIDirectorEvent.h"
 #include "EFortCompletionResult.h"
+#include "EFortVoteArbitratorType.h"
 #include "EFortVoteType.h"
 #include "EServerStability.h"
 #include "Engine/DataTable.h"
@@ -348,6 +349,9 @@ public:
 	bool bUseMaxBackpackSize;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetFailedVoteLockOutDuration(EFortVoteType VoteType) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetGameDifficulty() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
@@ -364,6 +368,18 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	AFortThreatParticleActor* GetThreatParticleActor() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetVoteArbitratorType(EFortVoteType VoteType, EFortVoteArbitratorType& ArbitratorType) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetVoteDuration(EFortVoteType VoteType) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetVoteEndTime(EFortVoteType VoteType, float& VoteEndTime) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetVoteStartTime(EFortVoteType VoteType, float& VoteStartTime) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	EFortCompletionResult GetZoneCompletionResult() const;

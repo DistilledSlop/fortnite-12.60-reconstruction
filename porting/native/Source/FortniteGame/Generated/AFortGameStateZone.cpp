@@ -2,9 +2,27 @@
 #include "AFortGameStateZone.h"
 #include "AFortMission.h"
 #include "AFortMissionManager.h"
+#include "EFortVoteArbitratorType.h"
+#include "EFortVoteType.h"
+#include "FVoteData.h"
 #include "GameFramework/PlayerState.h"
+#include "SharedFortGameLog.h"
 #include "UFortZoneTheme.h"
 #include "Net/UnrealNetwork.h"
+
+float AFortGameStateZone::GetFailedVoteLockOutDuration(EFortVoteType VoteType) const
+{
+	// CONFIDENCE: high
+	for (const FVoteData& Vote : GameplayVotesArray)
+	{
+	    if (Vote.VoteType == VoteType)
+	    {
+	        return Vote.VoteConfig.FailedVoteLockOutDuration;
+	    }
+	}
+	UE_LOG(LogFort, Warning, TEXT("A vote for %s is not in progress"), *StaticEnum<EFortVoteType>()->GetNameStringByValue(static_cast<int64>(VoteType)));
+	return -1.0f;
+}
 
 float AFortGameStateZone::GetGameDifficulty() const
 {
@@ -52,6 +70,70 @@ AFortThreatParticleActor* AFortGameStateZone::GetThreatParticleActor() const
 	// CONFIDENCE: HIGH
 	// Mechanically matched complete object pointer read; see bulk_object_runtime/README.md.
 	return ThreatParticleActor;
+}
+
+bool AFortGameStateZone::GetVoteArbitratorType(EFortVoteType VoteType, EFortVoteArbitratorType& ArbitratorType) const
+{
+	// CONFIDENCE: high
+	for (const FVoteData& Vote : GameplayVotesArray)
+	{
+	    if (Vote.VoteType == VoteType)
+	    {
+	        ArbitratorType = Vote.VoteConfig.VoteArbitratorType;
+	        return true;
+	    }
+	}
+	UE_LOG(LogFort, Warning, TEXT("A vote for %s is not in progress"), *StaticEnum<EFortVoteType>()->GetNameStringByValue(static_cast<int64>(VoteType)));
+	ArbitratorType = static_cast<EFortVoteArbitratorType>(0);
+	return false;
+}
+
+float AFortGameStateZone::GetVoteDuration(EFortVoteType VoteType) const
+{
+	// CONFIDENCE: high
+	for (const FVoteData& Vote : GameplayVotesArray)
+	{
+	    if (Vote.VoteType == VoteType)
+	    {
+	        return Vote.VoteConfig.VoteDuration;
+	    }
+	}
+	UE_LOG(LogFort, Warning, TEXT("A vote for %s is not in progress"), *StaticEnum<EFortVoteType>()->GetNameStringByValue(static_cast<int64>(VoteType)));
+	return -1.0f;
+}
+
+bool AFortGameStateZone::GetVoteEndTime(EFortVoteType VoteType, float& VoteEndTime) const
+{
+	// CONFIDENCE: high
+	for (const FVoteData& Vote : GameplayVotesArray)
+	{
+	    if (Vote.VoteType == VoteType)
+	    {
+	        if (static_cast<uint8>(Vote.VoteStatus) > 1)
+	        {
+	            VoteEndTime = Vote.VoteEndTime;
+	            return true;
+	        }
+	        break;
+	    }
+	}
+	UE_LOG(LogFort, Warning, TEXT("A vote for %s is not in progress or hasn't ended yet"), *StaticEnum<EFortVoteType>()->GetNameStringByValue(static_cast<int64>(VoteType)));
+	return false;
+}
+
+bool AFortGameStateZone::GetVoteStartTime(EFortVoteType VoteType, float& VoteStartTime) const
+{
+	// CONFIDENCE: high
+	for (const FVoteData& Vote : GameplayVotesArray)
+	{
+	    if (Vote.VoteType == VoteType)
+	    {
+	        VoteStartTime = Vote.VoteStartTime;
+	        return true;
+	    }
+	}
+	UE_LOG(LogFort, Warning, TEXT("A vote for %s is not in progress"), *StaticEnum<EFortVoteType>()->GetNameStringByValue(static_cast<int64>(VoteType)));
+	return false;
 }
 
 EFortCompletionResult AFortGameStateZone::GetZoneCompletionResult() const

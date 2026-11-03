@@ -1,0 +1,11 @@
+// CONFIDENCE: high
+for (const FVoteData& Vote : GameplayVotesArray)
+{
+    if (Vote.VoteType == VoteType)
+    {
+        VoteStartTime = Vote.VoteStartTime;
+        return true;
+    }
+}
+UE_LOG(LogFort, Warning, TEXT("A vote for %s is not in progress"), *StaticEnum<EFortVoteType>()->GetNameStringByValue(static_cast<int64>(VoteType)));
+return false;
