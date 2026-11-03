@@ -926,6 +926,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	AFortAthenaAircraft* GetAircraft(int32 AircraftIndex) const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FGameplayTagContainer GetAthenaPlaylistContextTags() const;
+
 	UFUNCTION(BlueprintCallable)
 	FName GetCurrentPlaylistName();
 

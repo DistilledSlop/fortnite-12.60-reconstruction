@@ -670,6 +670,9 @@ public:
 	AActor* GetBattleLabTeleporterManager();
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetPlaylistEnableBots() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UFortServerBotManagerAthena* GetServerBotManager() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

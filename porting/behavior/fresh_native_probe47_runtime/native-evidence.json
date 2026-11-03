@@ -1,0 +1,130 @@
+{
+  "image": "/mnt/vibrato/fortnite-evidence/original-late-capture-1/image-125.runtime.bin",
+  "windows": [
+    {
+      "begin": "0x1426985f0",
+      "length": 24,
+      "sha256": "369b3d4b512765afb18f3c25a75be751f402fe58c3292e69552c6e39216c0487"
+    },
+    {
+      "begin": "0x14269b000",
+      "length": 1189,
+      "sha256": "824d66a74ff33ba9074b83fd7d97d80dcff79f3b249b64f0711b28498e5385ff"
+    },
+    {
+      "begin": "0x14269b900",
+      "length": 158,
+      "sha256": "f0327f1028adf08c5c02fe7dd78a85d65c0ab8708b50b45a1995eb84e6b2ea0d"
+    },
+    {
+      "begin": "0x14269b9a0",
+      "length": 162,
+      "sha256": "103004250a9d1a0441000542a39ef673977924e9aa299d54981b0393e0cabbdc"
+    },
+    {
+      "begin": "0x14269ba60",
+      "length": 13,
+      "sha256": "86b5ddfec24cb50dd31b04eafd9f4ec46964c87db6bcf8cba9c18a87dbb9306c"
+    },
+    {
+      "begin": "0x14269ba70",
+      "length": 93,
+      "sha256": "74918834400fbe472aced1ec76033078457456fb64749c277ead78749efa689e"
+    },
+    {
+      "begin": "0x14269d6c0",
+      "length": 1003,
+      "sha256": "ead03d9ef1438fdb7e4daac544b869f96b6ddaa11bfc6aee24a48fab3d58af0a"
+    },
+    {
+      "begin": "0x1426a0960",
+      "length": 128,
+      "sha256": "aa710718390affdba6944cd5023867c9e4b9e385c09a67fbb30487ae4d9c46b3"
+    },
+    {
+      "begin": "0x1426a09e0",
+      "length": 140,
+      "sha256": "37d813c2f9bfabb96f07d4ade5767fb1325426f7901598aa3b1f9b41461eaefe"
+    },
+    {
+      "begin": "0x1426a0b10",
+      "length": 145,
+      "sha256": "c96b01f3f1f04e421b58ecd479c0fc5e676482a7beaefd140f3ce983b5f23882"
+    },
+    {
+      "begin": "0x1426a0c40",
+      "length": 145,
+      "sha256": "7354f0b804c9525e61629ec5fe8b2757f226c637636521697ff74143f791eba8"
+    },
+    {
+      "begin": "0x1426a0ec0",
+      "length": 155,
+      "sha256": "24c2597476ce592a2c08ca578dfd0382adc8997e40b9f8de27d9e63aa5d5c294"
+    },
+    {
+      "begin": "0x1426a1690",
+      "length": 20,
+      "sha256": "7d3851f5f2a9117346786206de825ad4faf40ec86b2e4ccdd774057377013010"
+    },
+    {
+      "begin": "0x1426a16b0",
+      "length": 13,
+      "sha256": "9da384ffd54836512fed8631ec405f9f8958dc2f8476f304dbaac24583802016"
+    },
+    {
+      "begin": "0x1426a24a0",
+      "length": 93,
+      "sha256": "633189c444503fcb1a4348ff1d58b6600a6a195b0df22a8f3579cc1ff4705eea"
+    },
+    {
+      "begin": "0x1426a58f0",
+      "length": 47,
+      "sha256": "48a4689169d0a1f02098af2c1be5aca5911f08ba461e19b6f5a20da1b8739f28"
+    },
+    {
+      "begin": "0x1426a5db0",
+      "length": 289,
+      "sha256": "84d2f6780ab7c11b54a2a2c00f567dfa683bd5bc1ed96dcdfbc581e348cf90e3"
+    },
+    {
+      "begin": "0x1426c8610",
+      "length": 23,
+      "sha256": "c6bf95382be24c13e0df5b82125644b47102ef484fa113233bf67f4c01d968a1"
+    },
+    {
+      "begin": "0x1426c9f70",
+      "length": 202,
+      "sha256": "41618aa8717d59b1b13ea3b36e0ff25d6528693822e0add86f6afcb526578c95"
+    },
+    {
+      "begin": "0x1426ca040",
+      "length": 202,
+      "sha256": "4491270deadb23b13e0455b89c0b7e2aa450a917c0652e6ed2ceae1611f7b092"
+    },
+    {
+      "begin": "0x1426ced60",
+      "length": 432,
+      "sha256": "124ea2c2ce028853e214e1c6d9f54c25a36a6d92dd5b1fe4a3ddb7bea2d239ad"
+    },
+    {
+      "begin": "0x1426d2560",
+      "length": 158,
+      "sha256": "f081c45a959dd37fe8a924d78269e14c3ecc37c7448acb23eea4a6ce486154d7"
+    },
+    {
+      "begin": "0x1426d28d0",
+      "length": 95,
+      "sha256": "b9d6162a40c069c67c9bd8804e86029187ea15d59c1ead98a7d3942f40dc8ca2"
+    },
+    {
+      "begin": "0x1426d2930",
+      "length": 125,
+      "sha256": "13b9ddc08e42a16f7624afe3501ce7bd564e42d61493859fc9c6ef02c46bce4c"
+    },
+    {
+      "begin": "0x1426d29b0",
+      "length": 181,
+      "sha256": "9b85d38547d482764b5ea9e45f52a07d2aaf3a27c66e1343b21880ca026b01ff"
+    }
+  ]
+}

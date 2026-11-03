@@ -34638,5 +34638,134 @@
     "status": "ported",
     "includes": [],
     "notes": "Reflected int return; exec calls native 0x142323330, which zero-extends the reflected byte BalloonActiveCount at +0x10e3."
+  },
+  {
+    "function": "DoesHaveOverrideWrap",
+    "kind": "exec",
+    "signature": "bool DoesHaveOverrideWrap() const",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/fresh_native_probe47_runtime/DoesHaveOverrideWrap.inc",
+    "confidence": "high",
+    "address": "0x142b456d0",
+    "status": "ported",
+    "reflection_flags": "0x54020401",
+    "static": false,
+    "access": "public",
+    "notes": "OverrideItemWrapSoftPtr is the reflected soft pointer at +0x3e0; its asset path FName is at +0x3f0. Native callee 0x1426985f0.",
+    "class": "AFortWeapon"
+  },
+  {
+    "function": "GetCoreAnimation",
+    "kind": "exec",
+    "signature": "TEnumAsByte<EFortWeaponCoreAnimation::Type> GetCoreAnimation() const",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/fresh_native_probe47_runtime/GetCoreAnimation.inc",
+    "confidence": "high",
+    "address": "0x142b45c80",
+    "status": "ported",
+    "reflection_flags": "0x54020401",
+    "static": false,
+    "access": "public",
+    "notes": "Reflected WeaponCoreAnimation at +0xab0. Native callee 0x14269ba60.",
+    "class": "AFortWeapon"
+  },
+  {
+    "function": "GetWeaponPawnAnimSet",
+    "kind": "exec",
+    "signature": "UFortWeaponAnimSet* GetWeaponPawnAnimSet() const",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/fresh_native_probe47_runtime/GetWeaponPawnAnimSet.inc",
+    "confidence": "high",
+    "address": "0x142b47260",
+    "status": "ported",
+    "reflection_flags": "0x54020401",
+    "static": false,
+    "access": "public",
+    "notes": "Reflected override at +0xac8 and default at +0xab8. Native callee 0x1426a1690.",
+    "class": "AFortWeapon"
+  },
+  {
+    "class": "AFortWeapon",
+    "function": "GetWeaponData",
+    "kind": "exec",
+    "signature": "UFortWeaponItemDefinition* GetWeaponData() const",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/fresh_native_probe47_runtime/GetWeaponData.inc",
+    "confidence": "high",
+    "address": "0x142b46dd0",
+    "status": "ported",
+    "reflection_flags": "0x54020401",
+    "static": false,
+    "access": "public",
+    "includes": [
+      "SharedFortGameLog.h"
+    ],
+    "notes": "Native callee 0x1426a0960; reflected WeaponData +0x350; native warning and virtual dispatch retained."
+  },
+  {
+    "class": "AFortWeapon",
+    "function": "GetWeaponDataAmmoWorldItemDefinition",
+    "kind": "exec",
+    "signature": "UFortWorldItemDefinition* GetWeaponDataAmmoWorldItemDefinition() const",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/fresh_native_probe47_runtime/GetWeaponDataAmmoWorldItemDefinition.inc",
+    "confidence": "high",
+    "address": "0x142b46e00",
+    "status": "ported",
+    "reflection_flags": "0x54020401",
+    "static": false,
+    "access": "public",
+    "includes": [
+      "SharedFortGameLog.h"
+    ],
+    "notes": "Native callee 0x1426a09e0; reflected WeaponData +0x350; native warning and virtual dispatch retained."
+  },
+  {
+    "class": "AFortWeapon",
+    "function": "GetWeaponDataItemType",
+    "kind": "exec",
+    "signature": "EFortItemType GetWeaponDataItemType() const",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/fresh_native_probe47_runtime/GetWeaponDataItemType.inc",
+    "confidence": "high",
+    "address": "0x142b46ef0",
+    "status": "ported",
+    "reflection_flags": "0x54020401",
+    "static": false,
+    "access": "public",
+    "includes": [
+      "SharedFortGameLog.h"
+    ],
+    "notes": "Native callee 0x1426a0b10; reflected WeaponData +0x350; native warning and virtual dispatch retained."
+  },
+  {
+    "class": "AFortGameModeAthena",
+    "function": "GetPlaylistEnableBots",
+    "kind": "getter",
+    "signature": "bool GetPlaylistEnableBots() const",
+    "access": "public",
+    "signature_status": "proposed",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x1428f02f0",
+    "inc_path": "porting/behavior/athena_quick_native48_runtime/AFortGameModeAthena_GetPlaylistEnableBots.inc",
+    "includes": [],
+    "notes": "Reflected original calls level-zero FScalableFloat predicate; strictly greater than zero."
+  },
+  {
+    "class": "AFortGameStateAthena",
+    "function": "GetAthenaPlaylistContextTags",
+    "kind": "getter",
+    "signature": "FGameplayTagContainer GetAthenaPlaylistContextTags() const",
+    "access": "public",
+    "signature_status": "proposed",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x14291e7c0",
+    "inc_path": "porting/behavior/athena_quick_native48_runtime/AFortGameStateAthena_GetAthenaPlaylistContextTags.inc",
+    "includes": [
+      "FortNativeGameplayTagsRuntime.h"
+    ],
+    "notes": "Copies current playlist tags, then either removes all five team-size tags or adds the tag for MaxTeamSize. Preserve singleton calls and RemoveTag parent updates in sequence."
   }
 ]

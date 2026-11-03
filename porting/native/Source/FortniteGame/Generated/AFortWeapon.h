@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 
+#include "EFortItemType.h"
 #include "EFortWeaponCoreAnimation.h"
 #include "EFortWeaponReduceMeshWorkSetting.h"
 #include "FCosmeticVariantCache.h"
@@ -45,6 +46,7 @@ class UFortGameplayAbility;
 class UFortSignificanceManager;
 class UFortWeaponAnimSet;
 class UFortWeaponItemDefinition;
+class UFortWorldItemDefinition;
 class UMaterialInterface;
 class UNiagaraSystem;
 class UParticleSystem;
@@ -725,10 +727,16 @@ public:
 	void ClientReportShotFlags(uint32 ShotFlags, int32 ShotIndex);
 	void ClientReportShotFlags_Implementation(uint32 ShotFlags, int32 ShotIndex);
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool DoesHaveOverrideWrap() const;
+
 protected:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetChargeTime() const;
 public:
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	TEnumAsByte<EFortWeaponCoreAnimation::Type> GetCoreAnimation() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	FGuid GetInventoryGUID() const;
@@ -766,7 +774,19 @@ public:
 	int32 GetTraceThroughPawnsLimit() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortWeaponItemDefinition* GetWeaponData() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortWorldItemDefinition* GetWeaponDataAmmoWorldItemDefinition() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	EFortItemType GetWeaponDataItemType() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	USkeletalMeshComponentBudgeted* GetWeaponMesh() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortWeaponAnimSet* GetWeaponPawnAnimSet() const;
 
 	UFUNCTION()
 	void OnRep_AmmoCount(int32 OldAmmoCount);
