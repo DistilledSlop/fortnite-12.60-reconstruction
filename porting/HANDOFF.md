@@ -1,5 +1,26 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Death-cause dependency checkpoint99 (2026-11-03)
+
+Integrated source/dashboard pushed through0fc3d52d; counts unchanged at
+2,235 bodies+238 fields=2,473. Death-cause typed candidate now binds shared
+native tag singleton, Engine HasTag, ordered override table, delayed loader
+and asset tracker. Its sole explicit unresolved boundary is common GameData
+provider141e5b2a0 and cache-miss141df76b0; retained uncounted/empty manifest.
+New5-helper native99-death-deps capture terminal success12.4s. New20-helper
+native99-ability-deps capture terminal success13.9s. No Ghidra/generation active.
+
+Claude ability99 initial turn completed222.43s without usage error, but stopped
+at comment sketches and incorrectly doubted ASC owner identity. Root corrected
+using generated UFortAbilitySystemComponent RepSharedAnimInfo/OnRep_SharedAnim
+and resumed SAME bounded task to deliver actual C++ for both functions with
+fresh helpers. ACTIVE PTY77774; original35251 terminal. Directory
+/tmp/claude-native-ability99; resume log/tmp/claude-native-ability99-resume-runner.log;
+source ability_large99_runtime currently UNTRACKED and worker-owned, do not stage
+until terminal/review. Keep Claude assigned while usage remains. Terra bounded
+workers all terminal. No tests/build/runtime;195 canonical+4 manual pending;
+next3,040. All four product gates OPEN and goal ACTIVE.
+
 ## Projectile/pickup bulk and large player drafts98 (2026-11-03)
 
 Previous source/dashboard pushed through e00f7b1a. Reviewed13 new bodies:

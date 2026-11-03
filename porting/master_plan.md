@@ -10,6 +10,10 @@ credentials in Git, and the orchestrator reviews and commits.
 
 ## Current baseline
 
+Dependency99 closes death-cause tags/override/loader to one common GameData
+provider blocker; candidate remains uncounted. Claude ability99 resumed with
+fresh20-helper captures to expand sketches into full drafts. Counts unchanged.
+
 Batch98 integrates13 pickup/projectile/visibility functions:2,235 bodies+
 238 fields=2,473 accepted,0 rejected after exact-reference signature fixes.
 Ten tracked Native files changed; four Claude large player drafts remain
