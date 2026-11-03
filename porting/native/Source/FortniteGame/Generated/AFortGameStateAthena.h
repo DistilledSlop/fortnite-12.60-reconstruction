@@ -72,6 +72,7 @@
 #include "FUpdateNamedPoiColorDelegate.h"
 #include "GameFramework/Actor.h"
 #include "GameplayTagContainer.h"
+#include "HAL/Platform.h"
 #include "Math/Vector.h"
 #include "Math/Vector2D.h"
 #include "Misc/DateTime.h"
@@ -1105,5 +1106,7 @@ public:
 	virtual void NativeAppendOwnerMutators(TArray<AFortGameplayMutator*>& OutMutators, UObject* Context);
 	AFortVolumeManager* NativeGetVolumeManager() const;
 	static bool NativeQueryInfiniteAmmoRule(AFortGameStateAthena* GameState, AFortPlayerStateAthena* PlayerState, UFortWeaponItemDefinition* WeaponDefinition);
+	static const TCHAR* NativeGetAthenaPhaseName(uint8 Phase);
+	virtual float NativeMatchTime780() const;
 };
 

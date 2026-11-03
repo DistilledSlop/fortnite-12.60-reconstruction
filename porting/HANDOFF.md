@@ -1,5 +1,46 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Native source batch 38 (2026-11-03)
+
+Canonical source:1,916 bodies +169 supporting fields =2,085 ported entries.
+17 bodies: suppression predicate, two startup-phase reads, two diagnostic map key
+appenders, phase-to-static-text conversion, primary mission lookup, mission FText
+and Athena match-time virtuals, controller provider getter, zone analytics values,
+Athena/Core attribute appenders and all four sync/async load analytics emitters.
+Two credited fields: raw startup phase and actual GI loading-screen shared member.
+Two uncredited provider shared fields and shared Fort CSV category emitted.
+
+Preserve virtual engine initialization and match-time/mission dispatch; checkpoint
+getter is exact nonvirtual access to the original private flag. Temporary weak ref
+is destroyed before inspecting the pinned loading-screen object. Actual controller
+partial logical state must be extended for original GI init/show/hide lifecycle;
+these writers remain open. Startup-phase writers also open. Diagnostic map readers
+accept actual borrowed maps, preserve existing output, iteration order, cross-map
+duplicates and original reserve condition; owner/hash writers not claimed closed.
+Provider interface+5a0 is real IFortAnalyticsControllerInterface, returns mutable
+reference to local-player or fallback owned non-thread-safe shared slot. Athena
+captures raw provider before attributes; Core reloads same shared slot after them.
+Native pointee is an assigned partial FFortNativeAnalyticsProvider abstract event
+contract; stock IAnalyticsProvider was rejected because its virtual slot differs.
+Concrete native provider implementation/assignment stays open. Attribute reserves
+and field/order/value conversions recovered; no fake provider.
+
+Promotion38 accepts2,085/rejects0. Full analytics instruction spans include chained
+unwind fragments rather than only first .pdata range; original bytes checked. No
+build/tests/runtime. Last tested1,040;876 pending;next2,040 needs124 bodies. Source
+ready to commit/push, then dashboard publish. Full game/server/four product gates
+remain open. Previous goal turn was progress (source37 + committed release evidence).
+
+Next: connect full141e09a30 callback using these closed helpers and real Fort CSV,
+cap20 CVars and actual submode byte (141ed2b30), then materialize reviewed single
+FFortAssets owner from recovered lifecycle/GC/diagnostic maps. Do not repeat provider,
+world map-name, mission/time or playlist predicate identification. Whole submode
+transition can remain separately unported while independent owner methods close;
+no invented release trigger. All workers done/Ghidra free. Root owns canonical
+manifest/generator/native. Terra medium bounded runners, fork none; economical
+reads and rotation. Preserve unrelated untracked porting/graphics/.
+
+
 ## Native source batch 37 (2026-11-03)
 
 Canonical source: 1,899 bodies +167 supporting fields =2,066 ported entries.

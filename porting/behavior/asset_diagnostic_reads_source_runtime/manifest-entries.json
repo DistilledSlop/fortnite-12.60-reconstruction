@@ -1,0 +1,36 @@
+[
+  {
+    "class": "UFortAssetManager",
+    "function": "AppendBothDiagnosticAssetKeys",
+    "kind": "helper",
+    "signature": "void AppendBothDiagnosticAssetKeys(TArray<FSoftObjectPath>& Out, const FFortAssetDiagnosticMap& MapAt10, const FFortAssetDiagnosticMap& MapAt60)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/asset_diagnostic_reads_source_runtime/AppendBothDiagnosticAssetKeys.inc",
+    "address": "0x141df6860",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "FortAssetDiagnosticMap.h"
+    ],
+    "notes": "Assigned helper and explicit borrowed maps; original obtains its owner internally. Integrate the shared support alias and original map key policy with the eventual owner; see HANDOFF.md.",
+    "static": true
+  },
+  {
+    "class": "UFortAssetManager",
+    "function": "AppendFirstDiagnosticAssetKeys",
+    "kind": "helper",
+    "signature": "void AppendFirstDiagnosticAssetKeys(TArray<FSoftObjectPath>& Out, const FFortAssetDiagnosticMap& MapAt10)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/asset_diagnostic_reads_source_runtime/AppendFirstDiagnosticAssetKeys.inc",
+    "address": "0x141dfb390",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "FortAssetDiagnosticMap.h"
+    ],
+    "notes": "Assigned helper and explicit borrowed map; original obtains its owner internally. Integrate the shared support alias and original map key policy with the eventual owner; see HANDOFF.md.",
+    "static": true
+  }
+]

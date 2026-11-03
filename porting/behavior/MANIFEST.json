@@ -33613,5 +33613,309 @@
       "FortPendingSaveRequest.h"
     ],
     "notes": "Assigned source name and constness. Checks the first request's original +0x48 set, then +0x98 on a miss; FString is passed by value. Writers and complete request lifecycle remain open."
+  },
+  {
+    "class": "UFortGameInstance",
+    "function": "NativePlayerLoadingScreen",
+    "kind": "member_field",
+    "signature": "TSharedPtr<FFortPlayerLoadingScreenState> NativePlayerLoadingScreen",
+    "signature_status": "proposed",
+    "access": "public",
+    "offset": "0x650",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "FortPlayerLoadingScreenState.h"
+    ],
+    "notes": "Actual shared controller, partially represented by the support type. GI initialization and full controller lifecycle remain open; extend this same object."
+  },
+  {
+    "class": "UFortAssetManager",
+    "function": "NativeStartupPhase",
+    "kind": "member_field",
+    "signature": "uint8 NativeStartupPhase",
+    "signature_status": "proposed",
+    "access": "public",
+    "offset": "0x6cd",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Raw phase byte. Original initialization and writers remain open."
+  },
+  {
+    "class": "UFortAssetManager",
+    "function": "NativeGetStartupPhase",
+    "kind": "helper",
+    "signature": "uint8 NativeGetStartupPhase() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/asset_loading_predicate_source_runtime/GetStartupPhase.inc",
+    "address": "0x141dfb870",
+    "confidence": "high",
+    "status": "ported"
+  },
+  {
+    "class": "UFortAssetManager",
+    "function": "NativeGetFortStartupPhase",
+    "kind": "helper",
+    "signature": "uint8 NativeGetFortStartupPhase()",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/asset_loading_predicate_source_runtime/GetFortStartupPhase.inc",
+    "address": "0x141ed7750",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Engine/Engine.h"
+    ],
+    "static": true
+  },
+  {
+    "class": "UFortAssetManager",
+    "function": "NativeShouldSuppressLoadDiagnostic",
+    "kind": "helper",
+    "signature": "bool NativeShouldSuppressLoadDiagnostic()",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/asset_loading_predicate_source_runtime/ShouldSuppressLoadDiagnostic.inc",
+    "address": "0x141e04570",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Engine/Engine.h",
+      "Engine/World.h",
+      "Engine/DemoNetDriver.h",
+      "FortPlayerLoadingScreenState.h"
+    ],
+    "notes": "Assigned owner and name. Requires original GI controller initialization and phase writers; see handoff.",
+    "static": true
+  },
+  {
+    "class": "UFortAssetManager",
+    "function": "AppendBothDiagnosticAssetKeys",
+    "kind": "helper",
+    "signature": "void AppendBothDiagnosticAssetKeys(TArray<FSoftObjectPath>& Out, const FFortAssetDiagnosticMap& MapAt10, const FFortAssetDiagnosticMap& MapAt60)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/asset_diagnostic_reads_source_runtime/AppendBothDiagnosticAssetKeys.inc",
+    "address": "0x141df6860",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "FortAssetDiagnosticMap.h"
+    ],
+    "notes": "Assigned helper and explicit borrowed maps; original obtains its owner internally. Integrate the shared support alias and original map key policy with the eventual owner; see HANDOFF.md.",
+    "static": true
+  },
+  {
+    "class": "UFortAssetManager",
+    "function": "AppendFirstDiagnosticAssetKeys",
+    "kind": "helper",
+    "signature": "void AppendFirstDiagnosticAssetKeys(TArray<FSoftObjectPath>& Out, const FFortAssetDiagnosticMap& MapAt10)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/asset_diagnostic_reads_source_runtime/AppendFirstDiagnosticAssetKeys.inc",
+    "address": "0x141dfb390",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "FortAssetDiagnosticMap.h"
+    ],
+    "notes": "Assigned helper and explicit borrowed map; original obtains its owner internally. Integrate the shared support alias and original map key policy with the eventual owner; see HANDOFF.md.",
+    "static": true
+  },
+  {
+    "class": "AFortMissionManager",
+    "function": "NativeFindPrimaryMission",
+    "kind": "helper",
+    "signature": "AFortMission* NativeFindPrimaryMission() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/asset_load_analytics_source_runtime/FindPrimaryMission.inc",
+    "address": "0x1420bc640",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Assigned name. First nonnull mission with nonnull MissionInfo and Primary mission type, else null. See HANDOFF."
+  },
+  {
+    "class": "AFortGameStateAthena",
+    "function": "NativeGetAthenaPhaseName",
+    "kind": "helper",
+    "signature": "const TCHAR* NativeGetAthenaPhaseName(uint8 Phase)",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": true,
+    "inc_path": "porting/behavior/asset_diagnostic_support_runtime/NativeGetAthenaPhaseName.inc",
+    "address": "0x141f90650",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Assigned static helper for borrowed static phase text; unknown values preserved as Unknown.",
+    "includes": [
+      "HAL/Platform.h"
+    ]
+  },
+  {
+    "class": "AFortPlayerController",
+    "function": "NativeGetAnalyticsProvider",
+    "kind": "helper",
+    "signature": "TSharedPtr<FFortNativeAnalyticsProvider, ESPMode::NotThreadSafe>& NativeGetAnalyticsProvider()",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": true,
+    "inc_path": "porting/behavior/controller_analytics_provider_binding_runtime/NativeGetAnalyticsProvider.inc",
+    "address": "0x14237cff0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "FortNativeAnalyticsProvider.h"
+    ],
+    "notes": "Assigned interface method and member names. Returns the owned shared-pointer slot by reference, selecting FortLocalPlayer when Player casts successfully. Exact const qualification is not observable in machine code. Requires source_policy class and interface hooks."
+  },
+  {
+    "class": "AFortMission",
+    "function": "NativeMissionText690",
+    "kind": "helper",
+    "signature": "FText NativeMissionText690() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/analytics_mission_time_virtuals_runtime/MissionText.inc",
+    "address": "0x1420ba150",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Assigned name; base implementation of primary vtable +0x690. Virtual declaration and slot integration required. See HANDOFF.",
+    "virtual": true,
+    "includes": []
+  },
+  {
+    "class": "AFortGameStateAthena",
+    "function": "NativeMatchTime780",
+    "kind": "helper",
+    "signature": "float NativeMatchTime780() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/analytics_mission_time_virtuals_runtime/AthenaMatchTime.inc",
+    "address": "0x141995500",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Assigned name; base implementation of primary vtable +0x780. Virtual declaration and slot integration required. See HANDOFF.",
+    "virtual": true,
+    "includes": []
+  },
+  {
+    "class": "AFortPlayerController",
+    "function": "NativeAppendAthenaLoadAttributes",
+    "kind": "helper",
+    "signature": "TArray<FAnalyticsEventAttribute> NativeAppendAthenaLoadAttributes(TArray<FAnalyticsEventAttribute> Attributes, const UWorld* World)",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": true,
+    "inc_path": "porting/behavior/asset_load_analytics_source_runtime/NativeAppendAthenaLoadAttributes.inc",
+    "address": "0x141769500",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "AnalyticsEventAttribute.h",
+      "Engine/World.h"
+    ]
+  },
+  {
+    "class": "AFortGameStateZone",
+    "function": "NativeGetLoadAnalyticsValues",
+    "kind": "helper",
+    "signature": "void NativeGetLoadAnalyticsValues(int32& NumberPlayers, float& Difficulty, FString& ZoneName, FString& MissionName) const",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/asset_load_analytics_source_runtime/NativeGetLoadAnalyticsValues.inc",
+    "address": "0x141e9a800",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "GameFramework/PlayerState.h"
+    ]
+  },
+  {
+    "class": "AFortPlayerController",
+    "function": "NativeAppendCoreLoadAttributes",
+    "kind": "helper",
+    "signature": "void NativeAppendCoreLoadAttributes(TArray<FAnalyticsEventAttribute>& Attributes, const UWorld* World)",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": true,
+    "inc_path": "porting/behavior/asset_load_analytics_source_runtime/NativeAppendCoreLoadAttributes.inc",
+    "address": "0x141763b40",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "AnalyticsEventAttribute.h",
+      "Engine/World.h"
+    ]
+  },
+  {
+    "class": "AFortPlayerController",
+    "function": "NativeRecordAthenaSynchronousLoad",
+    "kind": "helper",
+    "signature": "void NativeRecordAthenaSynchronousLoad(AFortPlayerController* Controller, const FString& Path)",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": true,
+    "inc_path": "porting/behavior/asset_load_analytics_source_runtime/NativeRecordAthenaSynchronousLoad.inc",
+    "address": "0x14178a860",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "FortNativeAnalyticsProvider.h",
+      "AnalyticsEventAttribute.h"
+    ]
+  },
+  {
+    "class": "AFortPlayerController",
+    "function": "NativeRecordCoreSynchronousLoad",
+    "kind": "helper",
+    "signature": "void NativeRecordCoreSynchronousLoad(AFortPlayerController* Controller, const FString& Path)",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": true,
+    "inc_path": "porting/behavior/asset_load_analytics_source_runtime/NativeRecordCoreSynchronousLoad.inc",
+    "address": "0x14178bba0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "FortNativeAnalyticsProvider.h",
+      "AnalyticsEventAttribute.h"
+    ]
+  },
+  {
+    "class": "AFortPlayerController",
+    "function": "NativeRecordAthenaAsynchronousLoad",
+    "kind": "helper",
+    "signature": "void NativeRecordAthenaAsynchronousLoad(AFortPlayerController* Controller, const FString& Path)",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": true,
+    "inc_path": "porting/behavior/asset_load_analytics_source_runtime/NativeRecordAthenaAsynchronousLoad.inc",
+    "address": "0x14178a4d0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "FortNativeAnalyticsProvider.h",
+      "AnalyticsEventAttribute.h"
+    ]
+  },
+  {
+    "class": "AFortPlayerController",
+    "function": "NativeRecordCoreAsynchronousLoad",
+    "kind": "helper",
+    "signature": "void NativeRecordCoreAsynchronousLoad(AFortPlayerController* Controller, const FString& Path)",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": true,
+    "inc_path": "porting/behavior/asset_load_analytics_source_runtime/NativeRecordCoreAsynchronousLoad.inc",
+    "address": "0x14178b860",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "FortNativeAnalyticsProvider.h",
+      "AnalyticsEventAttribute.h"
+    ]
   }
 ]

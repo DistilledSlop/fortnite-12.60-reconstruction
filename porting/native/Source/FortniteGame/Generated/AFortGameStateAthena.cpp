@@ -13,6 +13,7 @@
 #include "FortNativeGameplayTagsRuntime.h"
 #include "GameFramework/Actor.h"
 #include "GameplayTagContainer.h"
+#include "HAL/Platform.h"
 #include "SharedFortGameLog.h"
 #include "Stats/Stats.h"
 #include "UFortMutatorListComponent.h"
@@ -814,6 +815,28 @@ bool AFortGameStateAthena::NativeQueryInfiniteAmmoRule(AFortGameStateAthena* Gam
 	    Iterator.SelectCandidate(Iterator.CandidateIndex + 1);
 	}
 	return Result;
+}
+
+const TCHAR* AFortGameStateAthena::NativeGetAthenaPhaseName(uint8 Phase)
+{
+	// CONFIDENCE: HIGH
+	switch (Phase)
+	{
+	case 0: return TEXT("None");
+	case 1: return TEXT("Setup");
+	case 2: return TEXT("Warmup");
+	case 3: return TEXT("Aircraft");
+	case 4: return TEXT("SafeZones");
+	case 5: return TEXT("EndGame");
+	default: return TEXT("Unknown");
+	}
+}
+
+float AFortGameStateAthena::NativeMatchTime780() const
+{
+	// CONFIDENCE: HIGH
+	return static_cast<uint8>(GamePhase) >= static_cast<uint8>(EAthenaGamePhase::Aircraft)
+	        ? GetServerWorldTimeSeconds() - AircraftStartTime : 0.0f;
 }
 
 void AFortGameStateAthena::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

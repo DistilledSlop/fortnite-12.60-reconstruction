@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "APlayspacePlayerController.h"
 
+#include "AnalyticsEventAttribute.h"
 #include "AttributeSet.h"
 #include "EAthenaCustomizationCategory.h"
 #include "EFortBuildPreviewMarkerOptionalAdjustment.h"
@@ -26,6 +27,7 @@
 #include "EStatMod.h"
 #include "Engine/EngineTypes.h"
 #include "Engine/NetSerialization.h"
+#include "Engine/World.h"
 #include "FAIDirectorDebugInfo.h"
 #include "FAttributeModifierInfo.h"
 #include "FBuildingWeakSpotData.h"
@@ -62,12 +64,14 @@
 #include "FOnWeakSpotReset.h"
 #include "FProfileUpdateSingle.h"
 #include "FRecentlyRemovedQuickbarInfo.h"
+#include "FortNativeAnalyticsProvider.h"
 #include "GameFramework/OnlineReplStructs.h"
 #include "GameplayTagContainer.h"
 #include "Math/Color.h"
 #include "Math/Rotator.h"
 #include "Math/Vector.h"
 #include "Misc/Guid.h"
+#include "UFortAnalyticsControllerInterface.h"
 #include "UFortInventoryOwnerInterface.h"
 #include "UMcpProfileGroup.h"
 #include "UObject/CoreOnline.h"
@@ -134,7 +138,7 @@ class UUserWidget;
 #include "AFortPlayerController.generated.h"
 
 UCLASS(config=Game)
-class FORTNITEGAME_API AFortPlayerController : public APlayspacePlayerController, public IFortInventoryOwnerInterface
+class FORTNITEGAME_API AFortPlayerController : public APlayspacePlayerController, public IFortInventoryOwnerInterface, public IFortAnalyticsControllerInterface
 {
 	GENERATED_BODY()
 
@@ -1844,5 +1848,14 @@ public:
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	virtual bool NativeHasInfiniteAmmo(UFortWeaponItemDefinition* WeaponDefinition);
+	virtual TSharedPtr<FFortNativeAnalyticsProvider, ESPMode::NotThreadSafe>& NativeGetAnalyticsProvider();
+	static TArray<FAnalyticsEventAttribute> NativeAppendAthenaLoadAttributes(TArray<FAnalyticsEventAttribute> Attributes, const UWorld* World);
+	static void NativeAppendCoreLoadAttributes(TArray<FAnalyticsEventAttribute>& Attributes, const UWorld* World);
+	static void NativeRecordAthenaSynchronousLoad(AFortPlayerController* Controller, const FString& Path);
+	static void NativeRecordCoreSynchronousLoad(AFortPlayerController* Controller, const FString& Path);
+	static void NativeRecordAthenaAsynchronousLoad(AFortPlayerController* Controller, const FString& Path);
+	static void NativeRecordCoreAsynchronousLoad(AFortPlayerController* Controller, const FString& Path);
+public:
+    TSharedPtr<class FFortNativeAnalyticsProvider, ESPMode::NotThreadSafe> NativeAnalyticsProvider;
 };
 

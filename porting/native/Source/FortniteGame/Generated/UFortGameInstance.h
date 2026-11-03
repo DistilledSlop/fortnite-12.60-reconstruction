@@ -15,6 +15,7 @@
 #include "FPlaylistFrontEndSettings.h"
 #include "FPlaylistOverrideData.h"
 #include "FWebEnvUrl.h"
+#include "FortPlayerLoadingScreenState.h"
 #include "Misc/Guid.h"
 #include "UGameFrameworkComponentManager.h"
 #include "UMcpProfileManager.h"
@@ -153,6 +154,9 @@ public:
 	// table index 34, flags 0x40000000002000
 	UPROPERTY(Transient)
 	UFortPartySpectateAnalytics* PartySpectateAnalytics;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x650): not a UPROPERTY, not replicated.
+	TSharedPtr<FFortPlayerLoadingScreenState> NativePlayerLoadingScreen;
 
 	// table index 32, flags 0x40000000002000
 	UPROPERTY(Transient)

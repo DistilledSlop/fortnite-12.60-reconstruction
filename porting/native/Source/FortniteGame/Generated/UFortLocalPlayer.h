@@ -60,5 +60,7 @@ public:
 	UPROPERTY(Transient)
 	UFortPoiTracker* PoiTracker;
 
+public:
+    TSharedPtr<class FFortNativeAnalyticsProvider, ESPMode::NotThreadSafe> NativeAnalyticsProvider;
 };
 

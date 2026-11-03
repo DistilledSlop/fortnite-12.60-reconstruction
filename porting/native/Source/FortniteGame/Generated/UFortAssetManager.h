@@ -6,8 +6,13 @@
 #include "CoreMinimal.h"
 #include "Engine/AssetManager.h"
 
+#include "Engine/DemoNetDriver.h"
 #include "Engine/Engine.h"
+#include "Engine/World.h"
+#include "FortAssetDiagnosticMap.h"
+#include "FortPlayerLoadingScreenState.h"
 #include "SharedFortGameLog.h"
+#include "UObject/NoExportTypes.h"
 #include "UObject/Object.h"
 #include "UObject/UObjectGlobals.h"
 
@@ -93,10 +98,18 @@ public:
 	UPROPERTY(Config)
 	float InstallBundleDelay;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x6cd): not a UPROPERTY, not replicated.
+	uint8 NativeStartupPhase;
+
 
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	static UFortAssetManager& NativeGetFortAssetManager();
 	UObject* NativeFindAssetByPrimaryId(const FString& IdString) const;
+	uint8 NativeGetStartupPhase() const;
+	static uint8 NativeGetFortStartupPhase();
+	static bool NativeShouldSuppressLoadDiagnostic();
+	static void AppendBothDiagnosticAssetKeys(TArray<FSoftObjectPath>& Out, const FFortAssetDiagnosticMap& MapAt10, const FFortAssetDiagnosticMap& MapAt60);
+	static void AppendFirstDiagnosticAssetKeys(TArray<FSoftObjectPath>& Out, const FFortAssetDiagnosticMap& MapAt10);
 };
 

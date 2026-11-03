@@ -1,0 +1,19 @@
+[
+  {
+    "class": "AFortPlayerController",
+    "function": "NativeGetAnalyticsProvider",
+    "kind": "helper",
+    "signature": "TSharedPtr<FFortNativeAnalyticsProvider, ESPMode::NotThreadSafe>& NativeGetAnalyticsProvider()",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": true,
+    "inc_path": "porting/behavior/controller_analytics_provider_binding_runtime/NativeGetAnalyticsProvider.inc",
+    "address": "0x14237cff0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "FortNativeAnalyticsProvider.h"
+    ],
+    "notes": "Assigned interface method and member names. Returns the owned shared-pointer slot by reference, selecting FortLocalPlayer when Player casts successfully. Exact const qualification is not observable in machine code. Requires source_policy class and interface hooks."
+  }
+]

@@ -16,5 +16,7 @@ class FORTNITEGAME_API UFortAnalyticsControllerInterface : public UInterface
 class FORTNITEGAME_API IFortAnalyticsControllerInterface
 {
 	GENERATED_IINTERFACE_BODY()
+public:
+    virtual TSharedPtr<class FFortNativeAnalyticsProvider, ESPMode::NotThreadSafe>& NativeGetAnalyticsProvider() = 0;
 };
 

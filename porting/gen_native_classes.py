@@ -2334,6 +2334,14 @@ _pending_save_spec = _common_activation_import.spec_from_file_location(
     "pending_save_policy", os.path.join(os.path.dirname(__file__), "behavior", "pending_save_membership_runtime", "source_policy.py"))
 _pending_save_policy = _common_activation_import.module_from_spec(_pending_save_spec)
 _pending_save_spec.loader.exec_module(_pending_save_policy)
+_asset_diagnostic_spec = _common_activation_import.spec_from_file_location(
+    "asset_diagnostic_policy", os.path.join(os.path.dirname(__file__), "behavior", "asset_diagnostic_support_runtime", "source_policy.py"))
+_asset_diagnostic_policy = _common_activation_import.module_from_spec(_asset_diagnostic_spec)
+_asset_diagnostic_spec.loader.exec_module(_asset_diagnostic_policy)
+_controller_analytics_spec = _common_activation_import.spec_from_file_location(
+    "controller_analytics_policy", os.path.join(os.path.dirname(__file__), "behavior", "controller_analytics_provider_binding_runtime", "source_policy.py"))
+_controller_analytics_policy = _common_activation_import.module_from_spec(_controller_analytics_spec)
+_controller_analytics_spec.loader.exec_module(_controller_analytics_policy)
 _mutator_owner_spec = _common_activation_import.spec_from_file_location(
     "mutator_owner_policy", os.path.join(os.path.dirname(__file__), "behavior", "mutator_provider_bindings_runtime", "source_policy.py"))
 _mutator_owner_policy = _common_activation_import.module_from_spec(_mutator_owner_spec)
@@ -2540,6 +2548,7 @@ def build_class_promoted(block, name, resolver, parent_entry, owner_fns, snippet
     model = _item_tag_interface_policy.apply(model, block, owner_fns)
     model = _athena_mode_policy.apply(model, block, owner_fns)
     model = _mutator_owner_policy.apply(model, block, owner_fns)
+    model = _controller_analytics_policy.apply(model, block, owner_fns)
     _athena_mode_policy.validate_emitted_properties(model, split_properties)
     model = _widget_route_policy.apply(model, block, owner_fns)
     model = _route_policy.apply(model, block, owner_fns)
@@ -3362,6 +3371,7 @@ def render_promoted_header(model, api, parent_include, source_label):
     if rep:
         lines.append("\tvirtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;")
     lines.extend(render_helper_declarations(model))
+    lines.extend(_controller_analytics_policy.class_declarations(model["name"]))
     if model.get("source_context_phases"):
         lines.extend(BLUEPRINT_CONTEXT_PHASE_DECLS.rstrip("\n").split("\n"))
     lines.extend(_common_activation_policy.declarations(model).splitlines())
@@ -3428,6 +3438,7 @@ def render_interface_header(name, source_label, api):
         "{",
         "\tGENERATED_IINTERFACE_BODY()",
         *_mutator_owner_policy.interface_declarations(name),
+        *_controller_analytics_policy.interface_declarations(name),
         "};",
         "",
     ]
@@ -3843,6 +3854,7 @@ def promote(args):
                                     if 'AFortGameStateAthena' in listed else None)
     profile_entry_sources = _profile_entry_policy.sources() if 'UMcpProfile' in listed else None
     pending_save_sources = _pending_save_policy.sources() if 'UFortMcpProfileWorld' in listed else None
+    asset_diagnostic_sources = _asset_diagnostic_policy.sources() if 'UFortAssetManager' in listed else None
     client_event_sources = None
     if {'UFortGameInstance', 'UFortUserWidget', 'UFortKismetLibrary'} & set(listed):
         required = {'UFortGameInstance', 'UFortUserWidget', 'UFortClientEventInterface'}
@@ -3950,7 +3962,7 @@ def promote(args):
         "interface_packages": iface_packages,
         # Only headers actually scheduled for emission qualify; arbitrary source-tree
         # files (including stale Native output) must not authorize snippet includes.
-        "generated_support_headers": {filename for bundle in (client_event_sources, native_gameplay_tags_sources, aircraft_timing_sources, profile_entry_sources, pending_save_sources)
+        "generated_support_headers": {filename for bundle in (client_event_sources, native_gameplay_tags_sources, aircraft_timing_sources, profile_entry_sources, pending_save_sources, asset_diagnostic_sources)
                                       for filename in (bundle or {}) if filename.endswith(".h")},
         "button_feedback_sound_identity_proven": 'UCommonButton' in listed,
         "other_promoted": {n for b, n in names.items()
@@ -4296,6 +4308,10 @@ def promote(args):
     if profile_entry_sources:
         for filename, text in profile_entry_sources.items():
             with open(os.path.join(args.source_root, 'McpProfileSys', 'Generated', filename), 'w', encoding='utf-8', newline='\n') as fh:
+                fh.write(text)
+    if asset_diagnostic_sources:
+        for filename, text in asset_diagnostic_sources.items():
+            with open(os.path.join(args.source_root, 'FortniteGame', 'Generated', filename), 'w', encoding='utf-8', newline='\n') as fh:
                 fh.write(text)
     if pending_save_sources:
         for filename, text in pending_save_sources.items():
