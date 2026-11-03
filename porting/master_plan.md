@@ -10,6 +10,14 @@ credentials in Git, and the orchestrator reviews and commits.
 
 ## Current baseline
 
+Batch81 integrates two mapped RPC bodies (current playset pointer assignment and
+respawn flag clearing), taking accepted entries to2,257 =2,077 bodies+180fields,
+rejected0. Generation changed only their two expected implementation files.
+The profile overlay/reset drafts and partial PSO asset-spawn recovery remain
+incomplete and uncounted; root review identified opaque inline-operation adapters.
+Prioritize broader integrations over prolonged work on these difficult drafts.
+No builds/tests; last tested2,040, next3,040;37 canonical+4 manual bodies pending.
+
 Batch80 adds10 uncounted native drafts, including larger inventory reconciliation,
 ordered classification and minigame transition bodies, round-winner evaluation,
 configured text filtering and supporting creation/lookup/context helpers. Source
@@ -25,10 +33,10 @@ and reuse; native ABI/lifetime/engine adapters remain open. No canonical promoti
 or builds/tests. Broader named callbacks already had drafts; uncovered actual
 callees were selected to avoid duplicate work and broaden beyond weapon chains.
 
-Native source recovery has reached 2,075 complete bodies plus 180 supporting
-fields (batch71, 2026-11-03). The tested baseline is2,040 bodies at785be98d:
+Native source integration has reached 2,077 bodies plus 180 supporting
+fields (batch81, 2026-11-03). The tested baseline is2,040 bodies at785be98d:
 Linux client/server builds and Apollo headless join passed; tracked receipts in
-progress/native-checkpoint-2040.json. Thirty-five subsequent canonical bodies and four manual Kismet math bodies are build pending.
+progress/native-checkpoint-2040.json. Thirty-seven subsequent canonical bodies and four manual Kismet math bodies are build pending.
 Broad batch69 adds31 uncounted C++ behavior drafts across game mode, controller,
 pawn and player-state message paths; unresolved calls/types/effects remain.
 Batch70 adds22 more uncounted drafts, including full vehicle/cosmetic callback

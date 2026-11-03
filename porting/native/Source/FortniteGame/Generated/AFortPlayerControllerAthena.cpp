@@ -1258,7 +1258,8 @@ void AFortPlayerControllerAthena::ServerSetOnCreativePortalLoadedDelegate_Implem
 
 void AFortPlayerControllerAthena::ServerSetPlayset_Implementation(UFortPlaysetItemDefinition* NewPlayset)
 {
-	// Body not recovered: reflection-derived stub.
+	// CONFIDENCE: high; native1419f2480 stores RDX at reflected CurrentPlayset+0x3588.
+	CurrentPlayset = NewPlayset;
 }
 
 bool AFortPlayerControllerAthena::ServerSetPlayset_Validate(UFortPlaysetItemDefinition* NewPlayset)

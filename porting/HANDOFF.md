@@ -1,5 +1,33 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Batch81 integration and recovery scope correction (2026-11-03)
+
+Accepted two native RPC bodies: controller ServerSetPlayset_Implementation
+1419f2480 and pawn ServerUnmarkRespawned_Implementation14234ad10. Original
+instruction windows through RET confirm mapped pointer assignment and two flag
+clears; evidence and source pins live in native_rpc81_runtime. Generation81
+accepted2,257 entries =2,077 bodies+180fields, rejected0; exactly two expected
+native implementation files changed. No builds/runtime/tests ran. Last tested
+2,040;37 canonical+4 manual bodies build pending; next tests3,040.
+
+Profile overlay1410f2740 and reset14110c030 drafts are incomplete and uncounted:
+root review found opaque adapters hiding inline initialization, construction,
+container and ownership work. Their REVIEW.md files list corrections required
+before complete-body claims. gifting_large81_runtime14259af20 is a partial PSO
+asset-spawn/testpass recovery, with most of the body still uncovered. None of
+these three drafts is accepted integration. All four product gates remain OPEN;
+full objective ACTIVE. Recent work spent too long on difficult drafts; prioritize
+broader integrations and bound further work on these transactions. Read-only
+inventory identifies volume loading/unloading completion RPCs as next candidates
+with mapped fields, while delegate bodies still need field/signature work.
+
+Root performed native integration and source review. Three bounded Terra6.1
+medium fork-none workers produced drafts; one fresh bounded Terra6.1 medium
+read-only scout identified next candidates. No worker staged, committed, tested
+or changed native/canonical files. Preserve economical reads and bounded rotating
+subagents, primary planning/integration/review ownership, and unrelated graphics
+and Engine edits. Previous source/dashboard commits: edd9b881/9e3c2468 (pushed).
+
 ## Larger independent native recovery batch80 (2026-11-03)
 
 Added10 uncounted native-body drafts: inventory_reconcile80_runtime (1),
