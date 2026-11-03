@@ -19,12 +19,26 @@ GUID reconciliation, second index/group ownership and inventory add remain open.
 Promotion37 accepts2,066/rejects0; original source windows checked. Generator now
 includes emitted UINTERFACE headers for native IInterface body references. No
 builds/tests/runtime. Last tested1,040;859 pending; next2,040 needs141 bodies.
-A fresh bounded larger-body task is tracing actual time-of-day manager replacement
-from 1419642e0 rather than rejecting unidentified dependencies. Root owns canonical
+Larger-body recovery traced actual time-of-day manager replacement from
+1419642e0. Playlist predicates14199e430/141a49590/141a4b0d0 are ALREADY canonical;
+do not recover or count again. Refresh141fd72d0 returns an actor pointer on both
+branches; null branch discards storage, nonnull destroys before replacement.
+Spawn141fbd1f0 selects an existing actor or mode/theme/fallback class and needs
+shared FFortAssets lifecycle plus theme rebuild. timeofday_spawn_selection_runtime
+records complete ordering/ABI. Root caller in timeofday_override_runtime remains
+unpromoted. asset_tracker_callbacks_runtime closes release parent identity: actual changed-mode
+UFortAssetManager::ChangeGameSubMode141deca00 clears post-startup and named refs
+under lock; same-mode early return skips it. Constructor/callback/GC/diagnostic
+proposals already exist across fort_assets_* directories. Next bounded work should
+materialize and review their single faithful FFortAssets owner rather than repeat
+identification. Do not require all callers or full ChangeGameSubMode implementation
+before independently closed owner functions; keep missing caller integration
+explicit, without inventing a differently timed release or permanent roots.
+All workers finished, Ghidra lease free. Avoid retrying spawn without these actual
+shared dependencies. Root owns canonical
 manifest/generator/native; workers only proposal dirs. Four product gates remain
 open. Preserve unrelated untracked porting/graphics/. Prior status-only goal turn
-was no progress; this turn changes authoritative source. Commit/push source then
-publish dashboard. Continue larger body recovery alongside integration.
+was no progress; this turn changes authoritative source. Source37 471d26e6 pushed; publish dashboard in this checkpoint. Continue larger body recovery alongside integration.
 
 
 ## Native source batch 36 (2026-11-03)

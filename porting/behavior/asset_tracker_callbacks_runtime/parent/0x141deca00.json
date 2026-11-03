@@ -1,0 +1,179 @@
+{
+ "address": "0x141deca00",
+ "label": "",
+ "name": "FUN_141deca00",
+ "status": "ok",
+ "body_bytes": 2269,
+ "instructions": 572,
+ "called": [
+  {
+   "address": "0x142c54b70",
+   "name": "FMsg_Logf_Internal"
+  },
+  {
+   "address": "0x141f90530",
+   "name": "FUN_141f90530"
+  },
+  {
+   "address": "0x142bee710",
+   "name": "FMemory_Free"
+  },
+  {
+   "address": "0x140685370",
+   "name": "FMulticastDelegateBase_CompactInvocationList"
+  },
+  {
+   "address": "0x141ed2350",
+   "name": "FUN_141ed2350"
+  },
+  {
+   "address": "0x141ecaec0",
+   "name": "FUN_141ecaec0"
+  },
+  {
+   "address": "0x14463f970",
+   "name": "FUN_14463f970"
+  },
+  {
+   "address": "0x141eb5c00",
+   "name": "FUN_141eb5c00"
+  },
+  {
+   "address": "0x141e0b3e0",
+   "name": "FUN_141e0b3e0"
+  },
+  {
+   "address": "0x141eef450",
+   "name": "FUN_141eef450"
+  },
+  {
+   "address": "0x1445fb140",
+   "name": "FUN_1445fb140"
+  },
+  {
+   "address": "0x1406d93e0",
+   "name": "FUN_1406d93e0"
+  },
+  {
+   "address": "0x1458092ed",
+   "name": "memcpy"
+  },
+  {
+   "address": "0x1458092f3",
+   "name": "memmove"
+  },
+  {
+   "address": "0x141debbc0",
+   "name": "FUN_141debbc0"
+  },
+  {
+   "address": "0x1406d9a30",
+   "name": "FUN_1406d9a30"
+  },
+  {
+   "address": "0x141e0dd50",
+   "name": "FUN_141e0dd50"
+  },
+  {
+   "address": "0x140690bb0",
+   "name": "TArray8_ResizeGrow"
+  },
+  {
+   "address": "0x14401ea80",
+   "name": "FUN_14401ea80"
+  },
+  {
+   "address": "0x141e05950",
+   "name": "FUN_141e05950"
+  },
+  {
+   "address": "0x142bfd200",
+   "name": "FMemory_Realloc"
+  },
+  {
+   "address": "0x142ee3b30",
+   "name": "FUN_142ee3b30"
+  },
+  {
+   "address": "0x142bad740",
+   "name": "FUN_142bad740"
+  },
+  {
+   "address": "0x141df61e0",
+   "name": "FUN_141df61e0"
+  },
+  {
+   "address": "0x1407bb180",
+   "name": "FUN_1407bb180"
+  },
+  {
+   "address": "0x140992250",
+   "name": "FUN_140992250"
+  },
+  {
+   "address": "0x14463f4b0",
+   "name": "FUN_14463f4b0"
+  }
+ ],
+ "indirect_calls": 18,
+ "strings": [
+  {
+   "text": "UFortAssetManager::ChangeGameSubMode - Changing to NewSubMode %d",
+   "address": "0x145fddf80"
+  },
+  {
+   "text": "---------------------",
+   "address": "0x145fde008"
+  },
+  {
+   "text": "UFortAssetManager::ChangeGameSubMode is changing mode from %s to %s",
+   "address": "0x145fde040"
+  },
+  {
+   "text": "ChangeGameSubMode took %.2f seconds to preload startup assets",
+   "address": "0x145fde0d0"
+  },
+  {
+   "text": "UFortAssetManager::ChangeGameSubMode() changing bundle state to (%s)",
+   "address": "0x145fde150"
+  }
+ ],
+ "callers": [
+  {
+   "address": "0x1485bebb4",
+   "name": null,
+   "ref": "data"
+  },
+  {
+   "address": "0x1474cbae0",
+   "name": null,
+   "ref": "data"
+  },
+  {
+   "address": "0x1474cbb60",
+   "name": null,
+   "ref": "data"
+  },
+  {
+   "address": "0x141e7ec30",
+   "name": "FUN_141e7ec30",
+   "ref": "call"
+  },
+  {
+   "address": "0x141e64830",
+   "name": "FUN_141e64830",
+   "ref": "call"
+  },
+  {
+   "address": "0x141e77680",
+   "name": "FUN_141e77680",
+   "ref": "call"
+  }
+ ],
+ "reference_counts": {
+  "data": 3,
+  "call": 3
+ },
+ "thunk": false,
+ "error": null
+}

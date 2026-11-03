@@ -1,0 +1,50 @@
+[
+  {
+    "class": "AFortGameStateAthena",
+    "function": "PlaylistHasCreativeTag",
+    "kind": "static_helper",
+    "signature": "bool PlaylistHasCreativeTag(const UFortPlaylistAthena* Playlist)",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/playlist_mode_predicates_runtime/PlaylistHasCreativeTag.inc",
+    "confidence": "high",
+    "address": "0x141a49590",
+    "status": "ported",
+    "proxy_score": null,
+    "includes": [
+      "FortNativeGameplayTagsRuntime.h"
+    ],
+    "decompile_source": "porting/behavior/playlist_mode_evidence.md",
+    "notes": "Original null-safe tag-membership helper. Creative tag-only helper deliberately does not inspect bEnableCreativeMode; both explicit and parent tags are considered by HasTag."
+  },
+  {
+    "class": "AFortGameStateAthena",
+    "function": "PlaylistIsPlayground",
+    "kind": "static_helper",
+    "signature": "bool PlaylistIsPlayground(const UFortPlaylistAthena* Playlist)",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/playlist_mode_predicates_runtime/PlaylistIsPlayground.inc",
+    "confidence": "high",
+    "address": "0x141a4b0d0",
+    "status": "ported",
+    "proxy_score": null,
+    "includes": [
+      "FortNativeGameplayTagsRuntime.h"
+    ],
+    "decompile_source": "porting/behavior/playlist_mode_evidence.md",
+    "notes": "Original null-safe tag-membership helper. Creative tag-only helper deliberately does not inspect bEnableCreativeMode; both explicit and parent tags are considered by HasTag."
+  },
+  {
+    "class": "AFortGameStateAthena",
+    "function": "IsCreativeOrPlaygroundModePlaylist",
+    "kind": "getter",
+    "signature": "bool IsCreativeOrPlaygroundModePlaylist() const",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/playlist_mode_predicates_runtime/IsCreativeOrPlaygroundModePlaylist.inc",
+    "confidence": "high",
+    "address": "0x14291fec0",
+    "status": "ported",
+    "proxy_score": null,
+    "decompile_source": "porting/generated/decomp/AFortGameStateAthena/IsCreativeOrPlaygroundModePlaylist.c",
+    "notes": "Preserves short-circuit evaluation and re-reads current playlist after first predicate, since initial shared tag construction can invoke registration/finalization delegates. CanRespawnOnStarterIsland additionally reads the originally captured playlist bUseCreativeStarterIsland after the Playground predicate."
+  }
+]
