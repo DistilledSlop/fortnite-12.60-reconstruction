@@ -475,6 +475,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetCurrentRoundNumber() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	AFortPlayerPushableCart* GetPushCart() const;
+
 protected:
 	UFUNCTION()
 	void HandleRoundPhase(EUraniumRoundPhase NewRoundPhase);

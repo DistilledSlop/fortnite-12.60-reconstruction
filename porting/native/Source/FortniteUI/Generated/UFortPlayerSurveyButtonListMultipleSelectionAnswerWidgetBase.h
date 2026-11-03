@@ -7,6 +7,7 @@
 #include "UFortPlayerSurveyMultipleSelectionAnswerWidgetBase.h"
 
 #include "FFortPlayerSurveyButtonListMultipleSelectionAnswerWidgetBaseInternalButtonData.h"
+#include "FFortPlayerSurveyButtonListMultipleSelectionAnswerWidgetFocusInfo.h"
 #include "UCommonButton.h"
 
 #include "UFortPlayerSurveyButtonListMultipleSelectionAnswerWidgetBase.generated.h"
@@ -21,9 +22,17 @@ public:
 	UPROPERTY(Transient)
 	TArray<FFortPlayerSurveyButtonListMultipleSelectionAnswerWidgetBaseInternalButtonData> ButtonWidgets;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x328): not a UPROPERTY, not replicated.
+	uint64 NativeRecoveredUInt64_0x328 = 0;
+
 protected:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UCommonButton* GetButtonAtIndex(int32 Index) const;
+public:
+
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FFortPlayerSurveyButtonListMultipleSelectionAnswerWidgetFocusInfo GetFocusInfo() const;
 public:
 
 };

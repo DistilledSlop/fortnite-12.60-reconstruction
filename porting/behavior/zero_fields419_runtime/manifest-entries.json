@@ -122,5 +122,36 @@
     "status": "ported",
     "includes": [],
     "notes": "Returns backing storage read by native wrapper."
+  },
+  {
+    "class": "UFortUISpecialEventSubsystem",
+    "function": "NativeRecoveredByte_0x50",
+    "kind": "member_field",
+    "signature": "uint8 NativeRecoveredByte_0x50",
+    "signature_status": "proposed",
+    "access": "public",
+    "offset": "0x50",
+    "default": "0",
+    "inc_path": null,
+    "confidence": "high",
+    "address": null,
+    "status": "ported",
+    "notes": "Unreflected event-state byte. Zero-filled allocation and constructor leave it zero."
+  },
+  {
+    "class": "UFortUISpecialEventSubsystem",
+    "function": "GetCurrentUIEventState",
+    "kind": "exec",
+    "signature": "TEnumAsByte<EFortUISpecialEvents> GetCurrentUIEventState()",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/zero_fields419_runtime/UFortUISpecialEventSubsystem_GetCurrentUIEventState.inc",
+    "address": "0x1438aa9d0",
+    "reflection_flags": "0x4020401",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [],
+    "notes": "Returns byte at 0x50 as reflected regular enum."
   }
 ]

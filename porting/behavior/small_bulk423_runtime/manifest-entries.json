@@ -1,0 +1,18 @@
+[
+  {
+    "class": "AFortAthenaMutator_Uranium",
+    "function": "GetPushCart",
+    "kind": "exec",
+    "signature": "AFortPlayerPushableCart* GetPushCart() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/small_bulk423_runtime/AFortAthenaMutator_Uranium_GetPushCart.inc",
+    "address": "0x1428278a0",
+    "reflection_flags": "0x54020401",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [],
+    "notes": "Resolves reflected weak PushCart field at native offset 0x478."
+  }
+]

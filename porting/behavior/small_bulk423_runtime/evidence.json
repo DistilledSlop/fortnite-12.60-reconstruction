@@ -1,0 +1,11 @@
+[
+  {
+    "class": "AFortAthenaMutator_Uranium",
+    "function": "GetPushCart",
+    "wrapper_capture": "porting/generated/native107-broad/0x1428278a0.c",
+    "reflection": "porting/generated/reflection/native_funcs.json: AFortAthenaMutator_Uranium::GetPushCart, object return class 0x142a85780, flags 0x54020401",
+    "field_reflection": "porting/generated/reflection/fortnite_game_reflection.json: PushCart is WeakObject at decimal offset 1144 (0x478), class 0x142a85780",
+    "generated_field": "porting/native/Source/FortniteGame/Generated/AFortAthenaMutator_Uranium.h: TWeakObjectPtr<AFortPlayerPushableCart> PushCart",
+    "semantics": "Wrapper invokes FWeakObjectPtr_Get on this + 0x478 and returns it; TWeakObjectPtr::Get resolves the weak object."
+  }
+]

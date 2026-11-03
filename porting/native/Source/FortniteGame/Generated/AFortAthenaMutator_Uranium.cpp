@@ -18,6 +18,14 @@ int32 AFortAthenaMutator_Uranium::GetCurrentRoundNumber() const
 	}
 }
 
+AFortPlayerPushableCart* AFortAthenaMutator_Uranium::GetPushCart() const
+{
+	// CONFIDENCE: high; native wrapper resolves the reflected weak PushCart pointer.
+	{
+		return PushCart.Get();
+	}
+}
+
 void AFortAthenaMutator_Uranium::HandleRoundPhase(EUraniumRoundPhase NewRoundPhase)
 {
 	// Original exec 0x1427e1180; complete empty leaf 0x1406801c0.

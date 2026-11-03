@@ -25,6 +25,9 @@ public:
 	UPROPERTY()
 	FText XPType;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x2b8): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt32_0x2b8 = 0;
+
 	// table index 1, flags 0x40000000080008
 	UPROPERTY()
 	UCommonNumericTextBlock* NumericText_XPValue;
@@ -32,6 +35,9 @@ public:
 	// table index 0, flags 0x40000000080008
 	UPROPERTY()
 	UCommonTextBlock* TextBlock_XPType;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetXPTarget();
 
 };
 

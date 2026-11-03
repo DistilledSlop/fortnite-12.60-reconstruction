@@ -45,5 +45,18 @@
     "constructor_evidence": "porting/generated/native129-constructors/0x144f901a0.c: writes 64-bit zero at 0x328 after parent constructor",
     "limitations": "Other native writers remain unrecovered.",
     "struct_evidence": "porting/generated/reflection/struct_blocks.json: 0x1452a7fa0 constructs FortPlayerSurveyButtonListMultipleSelectionAnswerWidgetFocusInfo, size 8 and plain old data. Wrapper copies all 8 bytes."
+  },
+  {
+    "class": "UFortUISpecialEventSubsystem",
+    "function": "GetCurrentUIEventState",
+    "wrapper_capture": "porting/generated/native108-broad/0x1438aa9d0.c",
+    "reflection": "porting/generated/reflection/native_funcs.json; enum_blocks.json 0x1453189a0 identifies regular enum EFortUISpecialEvents",
+    "field_offset": "0x50",
+    "field_type": "uint8",
+    "default": "0",
+    "allocation_evidence": "/opt/fortnite/UnrealEngine/Engine/Source/Runtime/CoreUObject/Private/UObject/UObjectGlobals.cpp:2344,2452: object allocation is zero-filled.",
+    "class_extent_evidence": "porting/generated/native422-callees/0x1453161e0.c registers size 0x58; porting/generated/native426-callees/0x14470a080.c registers parent UGameInstanceSubsystem size 0x30.",
+    "constructor_evidence": "porting/generated/native126-dispatch-bulk/0x1453175f0.c calls parent constructor then writes vtable and 0x30 through 0x4f; leaves byte 0x50 untouched.",
+    "limitations": "Other native writes remain unrecovered."
   }
 ]

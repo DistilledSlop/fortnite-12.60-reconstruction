@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "Subsystems/GameInstanceSubsystem.h"
 
+#include "EFortUISpecialEvents.h"
 #include "FSpecialUIEventDelegate.h"
 
 #include "UFortUISpecialEventSubsystem.generated.h"
@@ -23,6 +24,12 @@ public:
 	// table index 0, flags 0x10000010080000
 	UPROPERTY()
 	FSpecialUIEventDelegate OnTemporarySpecialUIEvent;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x50): not a UPROPERTY, not replicated.
+	uint8 NativeRecoveredByte_0x50 = 0;
+
+	UFUNCTION(BlueprintCallable)
+	TEnumAsByte<EFortUISpecialEvents> GetCurrentUIEventState();
 
 };
 

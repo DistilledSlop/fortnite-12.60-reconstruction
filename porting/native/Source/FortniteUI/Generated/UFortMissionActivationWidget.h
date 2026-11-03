@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UFortActivatablePanel.h"
 
+#include "EFortMissionActivationWidgetState.h"
 #include "GameplayTagContainer.h"
 
 class UCurveFloat;
@@ -30,6 +31,14 @@ public:
 	// table index 0, flags 0x40000000010001
 	UPROPERTY()
 	UCurveFloat* DifficultyIncreaseBluGloCurve;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x478): not a UPROPERTY, not replicated.
+	uint8 NativeRecoveredByte_0x478 = 0;
+
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	EFortMissionActivationWidgetState GetCurrentState() const;
+public:
 
 };
 
