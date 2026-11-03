@@ -199,6 +199,12 @@ void AFortPlayerControllerGameplay::ServerRPCSetDisplayNPCNumbers_Implementation
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPlayerControllerGameplay::SetLastUsedCreativePropetyFilter(int32 PropertyFilterIndex)
+{
+	// CONFIDENCE: high; exact native store and storage mapping verified.
+	NativeRecoveredInt_0x25c4 = PropertyFilterIndex;
+}
+
 void AFortPlayerControllerGameplay::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

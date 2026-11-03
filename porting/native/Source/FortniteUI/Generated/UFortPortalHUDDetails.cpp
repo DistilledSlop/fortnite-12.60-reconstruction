@@ -7,3 +7,9 @@ void UFortPortalHUDDetails::ClearCachedWorldPos()
 	NativeRecoveredByte_0x2e0 = 0;
 }
 
+void UFortPortalHUDDetails::SetActiveContextInfo(UFortInteractContextInfo* ActiveContextInfo)
+{
+	// CONFIDENCE: high; exact native store and storage mapping verified.
+	NativeRecoveredActiveContextInfo_0x2d0 = ActiveContextInfo;
+}
+

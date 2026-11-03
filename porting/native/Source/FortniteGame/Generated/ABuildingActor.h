@@ -705,6 +705,9 @@ public:
 	virtual void PlacedByPlacementTool_Implementation();
 
 	UFUNCTION(BlueprintCallable)
+	void SetCanBeSavedToCreativeVolume(bool bCanBeSaved);
+
+	UFUNCTION(BlueprintCallable)
 	void SetCanExportNavigationObstacle(bool InCanExportNavigationObstacle);
 
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)

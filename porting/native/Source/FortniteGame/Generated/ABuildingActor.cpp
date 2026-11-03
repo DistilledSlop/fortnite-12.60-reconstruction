@@ -210,6 +210,12 @@ void ABuildingActor::PlacedByPlacementTool_Implementation()
 	return;
 }
 
+void ABuildingActor::SetCanBeSavedToCreativeVolume(bool bCanBeSaved)
+{
+	// CONFIDENCE: high; exact native store and storage mapping verified.
+	bCanBeSavedInCreativeVolume = bCanBeSaved;
+}
+
 void ABuildingActor::SetCanExportNavigationObstacle(bool InCanExportNavigationObstacle)
 {
 	// CONFIDENCE: HIGH

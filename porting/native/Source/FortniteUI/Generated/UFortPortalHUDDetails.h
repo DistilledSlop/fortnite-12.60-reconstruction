@@ -7,6 +7,7 @@
 #include "UFortActorIndicatorWidget.h"
 
 #include "UCommonActivatableWidgetSwitcher.h"
+#include "UFortInteractContextInfo.h"
 
 class UAthenaMarkerPointer;
 
@@ -18,6 +19,9 @@ class FORTNITEUI_API UFortPortalHUDDetails : public UFortActorIndicatorWidget
 	GENERATED_BODY()
 
 public:
+	// Non-reflected field (behaviour kind "member_field", offset 0x2d0): not a UPROPERTY, not replicated.
+	UFortInteractContextInfo* NativeRecoveredActiveContextInfo_0x2d0;
+
 	// table index 1, flags 0x2008000008001c
 	UPROPERTY()
 	UAthenaMarkerPointer* MarkerPointer;
@@ -32,6 +36,11 @@ public:
 protected:
 	UFUNCTION(BlueprintCallable)
 	void ClearCachedWorldPos();
+public:
+
+protected:
+	UFUNCTION(BlueprintCallable)
+	void SetActiveContextInfo(UFortInteractContextInfo* ActiveContextInfo);
 public:
 
 };

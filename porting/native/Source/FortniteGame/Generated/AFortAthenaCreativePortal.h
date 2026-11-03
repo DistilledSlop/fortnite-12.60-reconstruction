@@ -7,6 +7,7 @@
 #include "ABuildingGameplayActor.h"
 
 #include "AttributeSet.h"
+#include "Blueprint/UserWidget.h"
 #include "FCreativeLoadedLinkData.h"
 #include "GameFramework/OnlineReplStructs.h"
 #include "Math/Vector.h"
@@ -17,6 +18,7 @@ class AFortVolume;
 class UCapsuleComponent;
 class UPrimitiveComponent;
 class UTexture2DDynamic;
+class UUserWidget;
 
 #include "AFortAthenaCreativePortal.generated.h"
 
@@ -97,6 +99,9 @@ public:
 	// table index 15, flags 0x20080000002000
 	UPROPERTY(Transient)
 	FText SanitizedCreatorName;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x9a8): not a UPROPERTY, not replicated.
+	UUserWidget* NativeRecoveredDisplayWidget_0x9a8;
 
 	// table index 14, flags 0x2008000008001c
 	UPROPERTY()
@@ -224,6 +229,11 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void SetHUDPointerOrigin(FVector NewPointerOrigin);
+
+protected:
+	UFUNCTION(BlueprintCallable)
+	void SetInteractionDisplayWidget(UUserWidget* DisplayWidget);
+public:
 
 protected:
 	UFUNCTION(BlueprintCallable)

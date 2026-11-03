@@ -8,7 +8,7 @@ The primary agent plans, orchestrates, and reviews, and works directly when usef
 
 Preserve existing edits. Stage specific paths, review and commit completed validated changes, and never force push. Private origin: https://github.com/DistilledSlop/fortnite-12.60-reconstruction. Use Codex <codex@openai.com> for new commits. The user-authorized identity-only history rewrite is complete; resume ordinary pushes. Keep credentials, recovered game data, and generated runtime artifacts out of Git. Never print or log key material. Do not hand-edit generated native code; change generator inputs and regenerate.
 
-Record exact commands, outcomes, and artifact paths in the handoff. Distinguish a previous green baseline from current unvalidated edits, offline checksum parity from runtime compatibility, and extracted assets from usable content. Update the handoff before stopping so the next session can resume without reconstructing the history.
+Use brief agent messages, Git commits, and existing evidence files to track routine progress. Do not create or update handoff Markdown for routine batches; create a handoff document only when necessary or requested. Distinguish a previous green baseline from current unvalidated edits, offline checksum parity from runtime compatibility, and extracted assets from usable content.
 
 Preserve the current Luna/Terra/Sol model configuration in compaction summaries and handoffs. It supersedes the earlier `gpt-6-sol` implementation default.
 

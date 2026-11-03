@@ -2815,9 +2815,15 @@ def helper_type_refs(names, texts, package, ctx, explicit):
         if tok in HELPER_TYPE_WORDS:
             continue
         if tok in ctx["class_pkg"]:
-            if ctx["class_pkg"][tok] != package:
+            # FortniteUI already depends on FortniteGame for reflected signatures.
+            # Preserve that same edge for recovered fields and helper signatures.
+            ui_game_edge = (package == "/Script/FortniteUI" and
+                            ctx["class_pkg"][tok] == "/Script/FortniteGame")
+            if ctx["class_pkg"][tok] != package and not ui_game_edge:
                 problems.append("signature uses %s, a class of another module" % tok)
             else:
+                if ui_game_edge:
+                    includes.add(tok + ".h")
                 # Class pointer wrappers do not store an instance of T.
                 # Check each occurrence so another pointer/wrapper occurrence
                 # cannot mask a separate invalid class-by-value parameter.

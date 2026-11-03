@@ -1,0 +1,44 @@
+{
+  "target": "0x142063590",
+  "name": "FQuickBar::RefreshEquippedItemDefinitions",
+  "status": "draft_unresolved",
+  "sources": [
+    "porting/generated/native108-quickbar-tail2/0x142063590.c",
+    "porting/generated/native108-quickbar-tail2/0x142063590.asm",
+    "porting/generated/native94-deps/0x14202b8d0.c",
+    "porting/generated/native105-impl/0x140769940.c",
+    "porting/generated/callee_probe/inventory_owner_helper/0x1420065a0.c",
+    "porting/generated/callee_probe/building_vitals_dependencies_2/0x141ed2350.c",
+    "porting/generated/callee_probe/building_vitals_dependencies_2/0x141ed4e30.c",
+    "porting/native/Source/FortniteGame/Generated/AFortWeapon.cpp",
+    "porting/generated/native110-refresh-deps/0x1410f6c10.c",
+    "porting/generated/native110-refresh-deps/0x1415c07f0.c",
+    "porting/generated/native110-refresh-deps/0x140742690.c",
+    "porting/generated/native110-refresh-deps/0x142050360.c",
+    "porting/generated/native111-refresh-deps/0x1420140e0.c",
+    "porting/generated/native111-refresh-deps/0x141c96700.c",
+    "porting/behavior/weapon_bulk94_runtime/HANDOFF.md",
+    "porting/behavior/building_lazy_setting61_runtime/UFortGlobals_NativeGetGlobals.inc",
+    "/opt/fortnite/UnrealEngine/Engine/Source/Runtime/Engine/Classes/Engine/AssetManager.h",
+    "porting/generated/native111-virtual-targets/0x141ff80b0.c"
+  ],
+  "facts": [
+    "Return without mutation for null owner; remove null from old reflected set before scanning.",
+    "Skip slots with zero item count; first GUID for positive count, occupied GUID or zero GUID for negative count. Owner interface +0xb0 resolves it. Failure or non-world-item definition emits warning only for nonzero GUID and enabled warning verbosity.",
+    "Insert world definition and each non-null active alteration. 0x14202b8d0 obtains level on negative argument, snapshots alteration slots, then tests required level, calls rarity virtual for each qualifying slot, tests rarity and nonnull alteration in that order.",
+    "Owner interface +0x48 returns held weapon; getter 0x1426a0960 returns its definition. Add that definition only when interface +0x38 inventory exists and 0x1420065a0 finds a matching, eligible instance. That helper searches reflected ItemInstances in order and calls item virtual +0x448 on a matching definition with false argument.",
+    "First collection operation receives new set then old set; its array is passed to 0x142050360 with true. A second operation receives old then new and passes its array with false only if (global 0x14813c4e8 and game-mode byte 0) or (global 0x14813c4ec and game-mode byte 1); mode retrieval is reexecuted for the second branch and preceded by 0x141ed2350 UFortGlobals singleton access each time. 0x141ed4e30 can return fallback mode 2.",
+    "0x140769940 copies the new set to the reflected old set after notifications.",
+    "0x1410f6c10 inserts each element from first set absent from third argument into a new set; 0x1415c07f0 materializes sparse-set iteration to array. 0x140742690 removes its pointer argument from a pointer set.",
+    "0x142050360 does nothing when input array is empty; otherwise obtains UFortAssetManager singleton 0x141df62a0, gathers unique FPrimaryAssetIds using definition virtual +0x190 GetPrimaryAssetId and traverses associated definitions and their dependencies, then calls UAssetManager::ChangeBundleStateForPrimaryAssets virtual +0x330 with identifiers and one-element array containing global 0x14812b6e0. The flag chooses which of two array arguments holds that global; metadata and helper bindings remain unresolved.",
+    "0x1428e9db0 is gadget class; 0x142b4a5d0 is weapon class. Gadget path gathers its +0x8f0 weapon, then +0x918 AdditionalItemsToLoadWhenEquipped; primary IDs are AddUnique, whereas weapons retain duplicates. Weapon +0x840 and +0x868 resolve BaseAlteration and BaseCosmeticAlteration using canonical getters.",
+    "The gadget additional-array helper 0x141c96700 is passed true: it skips null paths, resolves or loads and tracks each item, but only appends the pointer on its already-resolved path. This surprising behavior is retained as unresolved binding until the exact helper can be integrated.",
+    "Manager call uses singleton asset ID array, singleton bundle global in add argument if true or remove argument if false, false remove-all, empty delegate and priority 0.",
+    "0x141ff80b0 resolves gadget WeaponItemDefinition, loads on missing typed soft pointer, then tracks the typed result even on failure; empty path returns without tracking."
+  ],
+  "blockers": [
+    "FName global 0x14812b6e0 bundle identity is unknown (runtime index 0x17aae, number 0).",
+    "Owner interface virtuals +0x48 and +0x38, item alteration-slot and rarity virtual bindings, inventory virtual +0x448, and gate globals require integration; placeholders do not imply implementations.",
+    "Native log category identity is not established; draft LogFort is provisional."
+  ]
+}

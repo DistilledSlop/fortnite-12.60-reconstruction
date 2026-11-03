@@ -406,6 +406,9 @@ public:
 	void ServerRPCSetDisplayNPCNumbers(bool bEnable);
 	void ServerRPCSetDisplayNPCNumbers_Implementation(bool bEnable);
 
+	UFUNCTION(BlueprintCallable)
+	void SetLastUsedCreativePropetyFilter(int32 PropertyFilterIndex);
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 
