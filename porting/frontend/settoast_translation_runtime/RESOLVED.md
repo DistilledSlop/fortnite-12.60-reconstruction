@@ -1,13 +1,12 @@
 # SetToast: resolution pass
 
-## Target mismatch (read first)
+## Target (read first)
 
-- The user's target is `UFortPlayerPowerRatingToast::SetToast`, body `0x144e1cd20`
-  (`generated/decomp-imports/Imports/PowerToastSetToastBody__144e1cd20.c`, raw Ghidra, prototype unresolved).
-- The files in this folder (`declarations.inc`, `definitions.inc`, `NOTES.md`) translate
-  `UFortFriendSubscriptionToastWidget::SetToast`, body `0x144d97670`. That is a different function.
-- `strict_toast_imports_runtime/NOTES.md` says the power-toast SetToast is not translated. No translation of `0x144e1cd20` exists here.
-- Everything below applies to `0x144d97670` only. Nothing here resolves the power-toast body.
+- The strict gate import is `/Script/FortniteUI.FortFriendSubscriptionToastWidget:SetToast`
+  (batch-17 root-attach log, ToastDisplayArea). The files in this folder translate exactly that
+  function, body `0x144d97670`. The delegating prompt wrongly named the power-rating toast
+  (`0x144e1cd20`), which is not a gate import; nothing below concerns it.
+- Everything below applies to `0x144d97670`.
 - Lead for the power toast (not verified as a translation): its decompile reads `+0x270` as a widget
   (passed to `FUN_144e1c1a0`), `+0x268/+0x278/+0x280/+0x288` as widgets. HideToast notes cite reflection:
   `Banner_MemberBanner` 0x270, `Text_PowerRating` 0x278, `Text_Title` 0x280, `Text_Description` 0x288, `Text_PowerDifference` 0x268.
