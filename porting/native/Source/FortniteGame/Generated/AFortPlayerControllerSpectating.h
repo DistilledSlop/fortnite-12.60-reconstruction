@@ -223,6 +223,9 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_FollowedPlayerRemoteClientInfo)
 	AFortBroadcastRemoteClientInfo* FollowedPlayerRemoteClientInfo;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UAthenaMarkerComponent* GetMarkerComponent() const;
+
 	UFUNCTION()
 	void OnRep_FollowedPlayerRemoteClientInfo();
 

@@ -90,5 +90,8 @@ public:
 	UPROPERTY()
 	UFortUITeamInfo* LocalPlayerTeam;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortUITeamInfo* GetLocalPlayerTeam() const;
+
 };
 

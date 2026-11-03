@@ -293,6 +293,9 @@ public:
 	UFUNCTION(ServiceResponse(JSBridge, ResponseId=1))
 	void GetContentState(const EFortGameFeature& Feature, const FWebJSResponse& Response);
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortSeasonalEventManager* GetEventManager() const;
+
 	UFUNCTION(ServiceResponse(JSBridge, ResponseId=1))
 	void GetFeatureRequiredSizes(const EFortGameFeature& Feature, const FWebJSResponse& Response);
 

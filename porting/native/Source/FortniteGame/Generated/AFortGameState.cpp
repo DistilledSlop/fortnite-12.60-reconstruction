@@ -40,6 +40,14 @@ bool AFortGameState::DBNOEnabledForGameMode() const
 	return bDBNOEnabledForGameMode;
 }
 
+TEnumAsByte<EFortGameplayState::Type> AFortGameState::GetGameplayState() const
+{
+	// Original address: 0x14290d630.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete value read; see bulk_value_runtime/README.md.
+	return GameplayState;
+}
+
 int32 AFortGameState::GetWorldDaysElapsed() const
 {
 	// Original address: 0x14290d6b0.

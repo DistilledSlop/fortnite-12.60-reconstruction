@@ -130,21 +130,13 @@ public:
 	UPROPERTY()
 	UFortQuestManager* QuestManagers[2];
 
-	// table index 14, flags 0x0
+	// table index 11, flags 0x40000000000000
 	UPROPERTY()
-	UFortAwardManager* AwardManagers;
+	TMap<ESubGame, UFortAwardManager*> AwardManagers;
 
-	// table index 12, flags 0x0
+	// table index 7, flags 0x40000000000000
 	UPROPERTY()
-	ESubGame AwardManagers_Key;
-
-	// table index 10, flags 0x0
-	UPROPERTY()
-	UFortMinigameManager* MinigameManagers;
-
-	// table index 8, flags 0x0
-	UPROPERTY()
-	ESubGame MinigameManagers_Key;
+	TMap<ESubGame, UFortMinigameManager*> MinigameManagers;
 
 	// table index 6, flags 0x40000000000000
 	UPROPERTY()

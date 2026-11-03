@@ -125,6 +125,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	uint8 GetTotalActivePushers() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetTotalCheckPoints() const;
+
 	UFUNCTION()
 	void OnRep_bIsNearCheckpoint();
 

@@ -2,6 +2,14 @@
 #include "AFortAthenaMutator_Zinc.h"
 #include "Net/UnrealNetwork.h"
 
+int32 AFortAthenaMutator_Zinc::GetMaxWinnersForThisRound() const
+{
+	// Original address: 0x14282dfa0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete TArray count query; see bulk_array_query_runtime/README.md.
+	return SpawnedExtractionPoints.Num();
+}
+
 void AFortAthenaMutator_Zinc::OnAllTeleportComplete()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).

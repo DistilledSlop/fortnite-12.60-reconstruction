@@ -55,5 +55,8 @@ public:
 	UPROPERTY()
 	FOnHandFired OnHandFired;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	USkeletalMeshComponentBudgeted* GetLeftHandWeaponMesh() const;
+
 };
 

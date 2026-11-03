@@ -65,5 +65,8 @@ public:
 	UPROPERTY()
 	UAIGoalComponent* AIGoalComponent;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	AActor* GetGoalActor() const;
+
 };
 

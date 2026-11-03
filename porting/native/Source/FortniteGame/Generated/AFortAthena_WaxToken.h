@@ -36,13 +36,9 @@ public:
 	UPROPERTY()
 	USplineComponent* ReusedSpline;
 
-	// table index 11, flags 0x1
+	// table index 8, flags 0x40000000010041
 	UPROPERTY()
-	FScalableFloat TravelTimeAtState;
-
-	// table index 9, flags 0x1
-	UPROPERTY()
-	EWaxTokenState TravelTimeAtState_Key;
+	TMap<EWaxTokenState, FScalableFloat> TravelTimeAtState;
 
 	// table index 7, flags 0x40000000010001
 	UPROPERTY()

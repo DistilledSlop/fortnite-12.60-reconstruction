@@ -267,13 +267,9 @@ public:
 	UPROPERTY()
 	TSoftClassPtr<AFortItemPreviewActor> DefaultPreviewActorClass;
 
-	// table index 13, flags 0x4000000000001
+	// table index 10, flags 0x14000000000001
 	UPROPERTY()
-	TSoftClassPtr<AActor> CosmeticPreviewActionMap;
-
-	// table index 11, flags 0x1
-	UPROPERTY()
-	EAthenaCustomizationCategory CosmeticPreviewActionMap_Key;
+	TMap<EAthenaCustomizationCategory, TSoftClassPtr<AActor>> CosmeticPreviewActionMap;
 
 	// table index 9, flags 0x10000000000001
 	UPROPERTY()

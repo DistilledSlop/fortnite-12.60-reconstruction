@@ -82,5 +82,8 @@ public:
 	UPROPERTY()
 	AUnicornDriver* UnicornDriver;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortReplaySequenceComponent* GetSequencerComponent() const;
+
 };
 

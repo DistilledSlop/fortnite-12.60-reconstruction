@@ -2,6 +2,14 @@
 #include "AFortPlayerParachute.h"
 #include "Net/UnrealNetwork.h"
 
+AFortPlayerPawn* AFortPlayerParachute::GetFortPlayerPawn() const
+{
+	// Original address: 0x142a7c110.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete object pointer read; see bulk_object_runtime/README.md.
+	return PlayerPawn;
+}
+
 bool AFortPlayerParachute::IsGliderFullyDeployedAccordingToAnim() const
 {
 	// Original address: 0x142a7d170.

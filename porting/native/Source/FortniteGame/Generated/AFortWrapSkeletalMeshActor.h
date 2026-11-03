@@ -49,5 +49,8 @@ public:
 	UPROPERTY()
 	FOnWrapApplied OnWrapApplied;
 
+	UFUNCTION(BlueprintCallable)
+	ACustomItemWrapModifier* GetWrapModifier() const;
+
 };
 

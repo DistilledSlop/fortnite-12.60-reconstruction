@@ -269,6 +269,9 @@ public:
 	bool DBNOEnabledForGameMode() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	TEnumAsByte<EFortGameplayState::Type> GetGameplayState() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetWorldDaysElapsed() const;
 
 	UFUNCTION()

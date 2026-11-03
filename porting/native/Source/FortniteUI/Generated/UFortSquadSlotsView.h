@@ -51,13 +51,9 @@ public:
 	UPROPERTY(Transient)
 	bool bInPreviewMode;
 
-	// table index 6, flags 0x1
+	// table index 3, flags 0x20080000000015
 	UPROPERTY()
-	FSquadSlotSortTypes SquadSlotSortTypesMap;
-
-	// table index 4, flags 0x1
-	UPROPERTY()
-	ESquadSlotType SquadSlotSortTypesMap_Key;
+	TMap<ESquadSlotType, FSquadSlotSortTypes> SquadSlotSortTypesMap;
 
 	// table index 2, flags 0x24080000000001
 	UPROPERTY()

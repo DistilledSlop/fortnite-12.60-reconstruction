@@ -1,0 +1,5 @@
+# Integer immediate predicates
+
+`prepare.py` scans the SHA-256-pinned original runtime image for complete zero-argument Boolean native thunks. It accepts only the exact reflected-frame prefix followed by a complete byte/dword memory comparison against an immediate and a normalizing `setcc` return, or the exact frame wrapper calling a complete leaf of that form. It resolves the compared offset to a unique same-class reflected `Int`, `UInt32`, or untyped `Byte` field and checks the generated header type. Signed and unsigned condition codes are translated according to operand width, including sign-extended immediates. No arithmetic, other calls, enum bytes, container inner properties, static functions, RPCs, references, events, or partial bodies are accepted.
+
+Run `python3 porting/behavior/bulk_integer_predicate_runtime/prepare.py`; `--output-dir` changes the default `/tmp/gameplay-bulk-integer-predicate` report location. `--revalidate-own` includes canonical manifest entries owned by this directory. Existing differing include files cause an error. The generated manifest entries are proposals and do not modify the canonical manifest.

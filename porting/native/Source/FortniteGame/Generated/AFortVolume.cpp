@@ -2,6 +2,14 @@
 #include "AFortVolume.h"
 #include "Net/UnrealNetwork.h"
 
+UFortPlaysetItemDefinition* AFortVolume::GetCurrentPlayset() const
+{
+	// Original address: 0x142b37620.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete object pointer read; see bulk_object_runtime/README.md.
+	return CurrentPlayset;
+}
+
 void AFortVolume::OnRep_BoundsCollisionSetting()
 {
 	// Body not recovered: reflection-derived stub.

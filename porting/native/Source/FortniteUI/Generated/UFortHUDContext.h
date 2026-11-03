@@ -418,5 +418,8 @@ public:
 	UPROPERTY(Transient)
 	TWeakObjectPtr<UFortTouchControlRegion> TouchControlRegion;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	ABuildingActor* GetCurrentFocusedBuilding() const;
+
 };
 

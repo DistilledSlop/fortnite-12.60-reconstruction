@@ -28,5 +28,8 @@ public:
 	UPROPERTY()
 	TArray<UAthenaMatchStatView*> BestMatches;
 
+	UFUNCTION(BlueprintCallable)
+	UAthenaSeasonStats* GetOwningSeason();
+
 };
 

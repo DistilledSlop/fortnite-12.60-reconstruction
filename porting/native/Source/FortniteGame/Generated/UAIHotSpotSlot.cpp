@@ -17,6 +17,14 @@ int32 UAIHotSpotSlot::GetSlotIndex() const
 	return SlotIndex;
 }
 
+AAIController* UAIHotSpotSlot::GetSlotOwner() const
+{
+	// Original address: 0x142710de0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete object pointer read; see bulk_object_runtime/README.md.
+	return Owner;
+}
+
 float UAIHotSpotSlot::GetSlotRadius() const
 {
 	// Original address: 0x142710ea0.
@@ -31,5 +39,13 @@ int32 UAIHotSpotSlot::GetSlotUserId() const
 	// CONFIDENCE: HIGH
 	// Mechanically matched complete scalar read; see bulk_scalar_runtime/README.md.
 	return UserId;
+}
+
+bool UAIHotSpotSlot::HasUserId() const
+{
+	// Original address: 0x1427112b0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete integer immediate comparison; see bulk_integer_predicate_runtime/README.md.
+	return UserId != -1;
 }
 

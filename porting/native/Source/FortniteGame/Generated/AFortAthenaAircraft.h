@@ -9,6 +9,8 @@
 #include "FAircraftFlightInfo.h"
 #include "Math/Color.h"
 #include "Styling/SlateBrush.h"
+#include "UObject/ScriptDelegates.h"
+#include "UObject/WeakObjectPtr.h"
 
 class ABattleBusCosmeticInstanceBase;
 class UAthenaBattleBusItemDefinition;
@@ -29,6 +31,15 @@ public:
 	// table index 21, flags 0x10000000010001
 	UPROPERTY()
 	FLinearColor MinimapIconColorEnemy;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x260): not a UPROPERTY, not replicated.
+	FMulticastScriptDelegate NativeAircraftEnteredDropZone;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x270): not a UPROPERTY, not replicated.
+	FMulticastScriptDelegate NativeAircraftExitedDropZone;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x280): not a UPROPERTY, not replicated.
+	FMulticastScriptDelegate NativeAircraftFlightEnded;
 
 	// table index 20, flags 0x20080000000015
 	UPROPERTY()
@@ -76,6 +87,9 @@ public:
 
 	// Non-reflected field (behaviour kind "member_field", offset 0x2f0): not a UPROPERTY, not replicated.
 	uint8 NativeInDropZone = 0;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x2f1): not a UPROPERTY, not replicated.
+	uint8 NativeFlightFinished = 0;
 
 	// table index 9, flags 0x20080000000015
 	UPROPERTY()

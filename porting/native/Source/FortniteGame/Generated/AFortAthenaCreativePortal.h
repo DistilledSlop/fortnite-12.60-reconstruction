@@ -154,6 +154,9 @@ public:
 	UPROPERTY()
 	uint8 bForceUpdateInteraction : 1;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	AFortVolume* GetLinkedVolume() const;
+
 	UFUNCTION()
 	uint8 GetPopulation() const;
 

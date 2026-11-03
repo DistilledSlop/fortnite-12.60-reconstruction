@@ -240,5 +240,8 @@ public:
 	UPROPERTY(Transient)
 	TEnumAsByte<EFortCustomPartType::Type> PartType;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetOwnerZVelocity() const;
+
 };
 

@@ -112,13 +112,9 @@ public:
 	UPROPERTY(Transient)
 	TMap<FName, UFortUIMessageManager*> MessageManagersByName;
 
-	// table index 12, flags 0x8000000000
-	UPROPERTY()
-	FFortUIFeatureStruct Features;
-
-	// table index 10, flags 0x8000000000
-	UPROPERTY()
-	EFortUIFeature Features_Key;
+	// table index 9, flags 0x40008000002000
+	UPROPERTY(Transient)
+	TMap<EFortUIFeature, FFortUIFeatureStruct> Features;
 
 	// table index 8, flags 0x40000000082008
 	UPROPERTY(Transient)

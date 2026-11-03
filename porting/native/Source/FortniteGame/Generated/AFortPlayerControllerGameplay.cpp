@@ -17,6 +17,22 @@ void AFortPlayerControllerGameplay::ClientCreativeStopFly_Implementation()
 	// Body not recovered: reflection-derived stub.
 }
 
+UFortAmbientAudioController* AFortPlayerControllerGameplay::GetAmbientAudioController()
+{
+	// Original address: 0x142a65020.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete object pointer read; see bulk_object_runtime/README.md.
+	return FortAmbientAudioController;
+}
+
+int32 AFortPlayerControllerGameplay::GetLastUsedCreativePropetyFilter()
+{
+	// Original address: 0x142a65040.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete native storage read; see bulk_native_scalar_runtime/README.md.
+	return NativeRecoveredInt_0x25c4;
+}
+
 void AFortPlayerControllerGameplay::GrantCreativePhoneItemDefLoadedCallback()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).

@@ -341,6 +341,9 @@ public:
 	UPROPERTY(Replicated, Transient)
 	float LocalSpin;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x63c): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x63c;
+
 	// table index 130, flags 0x10000000010005
 	UPROPERTY()
 	FGameplayCueTag DeathCueTag;
@@ -609,13 +612,9 @@ public:
 	UPROPERTY()
 	FGameplayTagContainer SoundTrackingVisibilityTags;
 
-	// table index 55, flags 0x0
+	// table index 52, flags 0x10000000000014
 	UPROPERTY()
-	float PriorityModifiers;
-
-	// table index 53, flags 0x0
-	UPROPERTY()
-	EFortSoundIndicatorTypes PriorityModifiers_Key;
+	TMap<EFortSoundIndicatorTypes, float> PriorityModifiers;
 
 	// table index 50, flags 0x20088100002020
 	UPROPERTY(ReplicatedUsing=OnRep_VocalChords, Transient)
@@ -857,6 +856,9 @@ public:
 	UFUNCTION(NetMulticast, Unreliable)
 	void NetMulticast_InvokeGameplayCuesExecuted_WithParams(const FGameplayTagContainer& GameplayCueTags, const FPredictionKey& PredictionKey, const FGameplayCueParameters& GameplayCueParameters);
 	void NetMulticast_InvokeGameplayCuesExecuted_WithParams_Implementation(const FGameplayTagContainer& GameplayCueTags, const FPredictionKey& PredictionKey, const FGameplayCueParameters& GameplayCueParameters);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool OnlySpinWhenFalling() const;
 
 	UFUNCTION()
 	void OnRep_bWeaponHolstered();

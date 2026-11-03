@@ -51,21 +51,13 @@ public:
 	UPROPERTY()
 	USoundBase* HumanDeathSound;
 
-	// table index 12, flags 0x1
+	// table index 9, flags 0x20080000010001
 	UPROPERTY()
-	FAthenaGameMessageData GameMsgs_Infected;
+	TMap<EArsenicGameMsgId, FAthenaGameMessageData> GameMsgs_Infected;
 
-	// table index 10, flags 0x1
+	// table index 5, flags 0x20080000010001
 	UPROPERTY()
-	EArsenicGameMsgId GameMsgs_Infected_Key;
-
-	// table index 8, flags 0x1
-	UPROPERTY()
-	FAthenaGameMessageData GameMsgs_Human;
-
-	// table index 6, flags 0x1
-	UPROPERTY()
-	EArsenicGameMsgId GameMsgs_Human_Key;
+	TMap<EArsenicGameMsgId, FAthenaGameMessageData> GameMsgs_Human;
 
 	// table index 4, flags 0x40000000000000
 	UPROPERTY()

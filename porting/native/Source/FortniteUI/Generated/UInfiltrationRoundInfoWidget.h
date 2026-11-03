@@ -49,5 +49,10 @@ public:
 	UPROPERTY()
 	TScriptInterface<IInfiltrationRoundInfoMutatorInterface> CachedMutator;
 
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool HasWinningTeam() const;
+public:
+
 };
 

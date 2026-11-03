@@ -74,3 +74,8 @@ unresolved calls/effects and concise reusable blocker notes; do not count drafts
 or placeholders as verified bodies or claim their behavior is implemented.
 Integrate completed gameplay code for the UI collaborator to use rather than
 holding it back; the user authorized this shared Native integration.
+
+For bulk native recovery, use Terra 6.1 low/medium effort workers for brute-force
+work that automation cannot handle. Claude is also authorized as a workhorse;
+give it bounded independent source batches with clear file ownership. Keep one
+Native promotion/build stream and skip visual work until the user resumes it.

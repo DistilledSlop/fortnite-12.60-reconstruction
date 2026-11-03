@@ -25,6 +25,12 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_StormShield, Transient)
 	AFortMissionStormShield* StormShield;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	AFortMissionStormShield* GetStormShield();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure, BlueprintAuthorityOnly)
+	AFortTimeOfDayManager* GetTimeOfDayManager() const;
+
 	UFUNCTION()
 	void OnRep_StormShield();
 

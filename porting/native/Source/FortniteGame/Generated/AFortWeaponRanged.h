@@ -336,6 +336,21 @@ public:
 	void ClientFixupOverheatValue(float InOverheatValue);
 	void ClientFixupOverheatValue_Implementation(float InOverheatValue);
 
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UNiagaraSystem* GetBeamNiagaraSystem() const;
+public:
+
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UParticleSystem* GetBeamParticleSystem() const;
+public:
+
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UParticleSystemComponent* GetBeamPSC() const;
+public:
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetCurrentOverheatValue() const;
 

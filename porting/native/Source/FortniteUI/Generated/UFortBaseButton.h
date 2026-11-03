@@ -95,5 +95,11 @@ public:
 	UPROPERTY()
 	TEnumAsByte<EButtonClickMethod::Type> ClickMethod;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x2e7): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x2e7;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetSelected() const;
+
 };
 

@@ -390,21 +390,13 @@ public:
 	UPROPERTY(Replicated, Transient)
 	bool bIsSafeToTurnOnCameraAfterRespawn;
 
-	// table index 23, flags 0x1
+	// table index 20, flags 0x20080000010001
 	UPROPERTY()
-	FAthenaGameMessageData GameMessages_Pushers;
+	TMap<EUraniumEventId, FAthenaGameMessageData> GameMessages_Pushers;
 
-	// table index 21, flags 0x1
+	// table index 16, flags 0x20080000010001
 	UPROPERTY()
-	EUraniumEventId GameMessages_Pushers_Key;
-
-	// table index 19, flags 0x1
-	UPROPERTY()
-	FAthenaGameMessageData GameMessages_Defenders;
-
-	// table index 17, flags 0x1
-	UPROPERTY()
-	EUraniumEventId GameMessages_Defenders_Key;
+	TMap<EUraniumEventId, FAthenaGameMessageData> GameMessages_Defenders;
 
 	// table index 15, flags 0x20080000010001
 	UPROPERTY()

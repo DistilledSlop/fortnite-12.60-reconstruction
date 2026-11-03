@@ -30,6 +30,9 @@ public:
 	UPROPERTY()
 	UFortContextTrapItemDefinition* TrapDefinition;
 
+	UFUNCTION(BlueprintCallable)
+	UFortContextTrapItemDefinition* GetTrapDefinition();
+
 	UFUNCTION()
 	void OnRep_DecoTool();
 

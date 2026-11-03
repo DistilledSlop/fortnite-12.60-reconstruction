@@ -141,6 +141,9 @@ public:
 	uint8 bIsSearching : 1;
 
 	UFUNCTION()
+	AFortPawn* GetTarget();
+
+	UFUNCTION()
 	void OnRep_CurrentlyActive();
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;

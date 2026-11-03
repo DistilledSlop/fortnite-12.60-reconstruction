@@ -2,6 +2,14 @@
 #include "AFortAthenaCreativePortal.h"
 #include "Net/UnrealNetwork.h"
 
+AFortVolume* AFortAthenaCreativePortal::GetLinkedVolume() const
+{
+	// Original address: 0x1427d3b70.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete object pointer read; see bulk_object_runtime/README.md.
+	return LinkedVolume;
+}
+
 uint8 AFortAthenaCreativePortal::GetPopulation() const
 {
 	// Original address: 0x1427d3c50.

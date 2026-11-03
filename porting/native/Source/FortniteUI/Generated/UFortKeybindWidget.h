@@ -126,5 +126,8 @@ public:
 	UPROPERTY(Transient)
 	FSlateBrush CachedKeyBrush;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	TEnumAsByte<EFortBrushSize::Type> GetBrushSize() const;
+
 };
 

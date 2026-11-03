@@ -20,5 +20,8 @@ public:
 	UPROPERTY(Transient)
 	UFortUINavigationManager* NavigationManager;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortUINavigationManager* GetNavigationManager() const;
+
 };
 

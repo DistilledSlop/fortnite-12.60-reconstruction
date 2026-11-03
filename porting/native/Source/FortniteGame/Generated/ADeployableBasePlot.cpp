@@ -2,6 +2,14 @@
 #include "ADeployableBasePlot.h"
 #include "Net/UnrealNetwork.h"
 
+AFortPlayerStart* ADeployableBasePlot::GetPlayerStart()
+{
+	// Original address: 0x14277cc60.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete object pointer read; see bulk_object_runtime/README.md.
+	return PlayerStart;
+}
+
 void ADeployableBasePlot::HandleBuildingStateTransition_Implementation(const EDeployableBaseBuildingState& InPreviousState, const EDeployableBaseBuildingState& InCurrentState)
 {
 	// Body not recovered: reflection-derived stub.

@@ -32,13 +32,9 @@ public:
 	UPROPERTY()
 	TArray<UObjectMetric*> Metrics;
 
-	// table index 5, flags 0x0
+	// table index 2, flags 0x20080000000000
 	UPROPERTY()
-	UCategoryMetric* CategoryToMetric;
-
-	// table index 3, flags 0x0
-	UPROPERTY()
-	EFortBudgetCategory CategoryToMetric_Key;
+	TMap<EFortBudgetCategory, UCategoryMetric*> CategoryToMetric;
 
 	// table index 0, flags 0x20080000000000
 	UPROPERTY()

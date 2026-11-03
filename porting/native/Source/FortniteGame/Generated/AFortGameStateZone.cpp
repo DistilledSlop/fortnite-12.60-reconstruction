@@ -34,6 +34,14 @@ int32 AFortGameStateZone::GetNumSurvivorsSpawned() const
 	return NumSurvivorsSpawned;
 }
 
+AFortThreatParticleActor* AFortGameStateZone::GetThreatParticleActor() const
+{
+	// Original address: 0x14292b0d0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete object pointer read; see bulk_object_runtime/README.md.
+	return ThreatParticleActor;
+}
+
 void AFortGameStateZone::NotifyEndFailedGameplayVoteLockout_Implementation(const EFortVoteType& VoteType)
 {
 	// Body not recovered: reflection-derived stub.

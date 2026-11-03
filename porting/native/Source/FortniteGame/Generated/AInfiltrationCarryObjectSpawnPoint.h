@@ -45,6 +45,9 @@ public:
 	UPROPERTY()
 	FGameplayTagContainer GameplayTags;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	AActor* GetIntelActor() const;
+
 	UFUNCTION()
 	void OnRep_CurrentState(ESpawnPointState OldState);
 

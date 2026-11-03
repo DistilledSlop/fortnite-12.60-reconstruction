@@ -24,5 +24,8 @@ public:
 	UPROPERTY(Transient)
 	UFortAlterationInfo* AlterationInfo;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortAlterationInfo* GetAlterationInfo() const;
+
 };
 

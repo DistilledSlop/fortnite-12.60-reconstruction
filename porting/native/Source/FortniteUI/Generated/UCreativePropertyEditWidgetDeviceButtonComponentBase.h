@@ -20,5 +20,8 @@ public:
 	UPROPERTY()
 	UFortCreativeDeviceButtonComponent* DeviceButtonComponent;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortCreativeDeviceButtonComponent* GetDeviceButtonComponent() const;
+
 };
 

@@ -26,5 +26,8 @@ public:
 	UPROPERTY(Transient)
 	AFortPlayerCharm* MyCharmOwner;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	AFortPlayerCharm* GetCharmOwner() const;
+
 };
 

@@ -40,6 +40,9 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_Source)
 	UFortItemDefinition* ReplicatedSource;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortItemDefinition* GetSource() const;
+
 	UFUNCTION()
 	void OnRep_Source();
 

@@ -28,6 +28,14 @@ float AFortWeapon::GetProjectilePitchOffset() const
 	return ProjectilePitchOffset;
 }
 
+UAnimMontage* AFortWeapon::GetReloadAnimation() const
+{
+	// Original address: 0x142b46860.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete object pointer read; see bulk_object_runtime/README.md.
+	return ReloadAnimation;
+}
+
 int32 AFortWeapon::GetTraceThroughBuildingsLimit() const
 {
 	// Original address: 0x142b469e0.
@@ -42,6 +50,14 @@ int32 AFortWeapon::GetTraceThroughPawnsLimit() const
 	// CONFIDENCE: HIGH
 	// Mechanically matched complete scalar read; see bulk_scalar_runtime/README.md.
 	return TraceThroughPawnsLimit;
+}
+
+USkeletalMeshComponentBudgeted* AFortWeapon::GetWeaponMesh() const
+{
+	// Original address: 0x142b47190.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete object pointer read; see bulk_object_runtime/README.md.
+	return WeaponMesh;
 }
 
 void AFortWeapon::OnRep_AmmoCount(int32 OldAmmoCount)

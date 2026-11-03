@@ -7,6 +7,7 @@
 #include "Engine/DataAsset.h"
 
 #include "EFortPlayerSurveyQuestionType.h"
+#include "FFortPlayerSurveyAnswerWidgetDataTableEntry.h"
 
 #include "UFortPlayerSurveyAnswerWidgetDataTable.generated.h"
 
@@ -16,9 +17,9 @@ class FORTNITEUI_API UFortPlayerSurveyAnswerWidgetDataTable : public UPrimaryDat
 	GENERATED_BODY()
 
 public:
-	// table index 1, flags 0x1
+	// table index 0, flags 0x20080000000001
 	UPROPERTY()
-	EFortPlayerSurveyQuestionType Entries_Key;
+	TMap<EFortPlayerSurveyQuestionType, FFortPlayerSurveyAnswerWidgetDataTableEntry> Entries;
 
 };
 

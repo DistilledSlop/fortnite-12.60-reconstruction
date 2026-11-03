@@ -77,6 +77,9 @@ public:
 	bool bHideCountdownFromMapChallenges;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetNumBundles() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetSortPriority() const;
 
 };

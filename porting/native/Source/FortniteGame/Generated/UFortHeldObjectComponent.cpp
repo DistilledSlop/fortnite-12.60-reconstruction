@@ -10,6 +10,14 @@ void UFortHeldObjectComponent::DropHeldObject()
 	return;
 }
 
+UMeshComponent* UFortHeldObjectComponent::GetMeshComponent() const
+{
+	// Original address: 0x142937ac0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete object pointer read; see bulk_object_runtime/README.md.
+	return ReferenceMeshComponent;
+}
+
 void UFortHeldObjectComponent::OnRep_bCollisionBlockedByPawns()
 {
 	// Body not recovered: reflection-derived stub.

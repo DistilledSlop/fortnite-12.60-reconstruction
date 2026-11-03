@@ -735,11 +735,19 @@ public:
 
 protected:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UAnimMontage* GetReloadAnimation() const;
+public:
+
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetTraceThroughBuildingsLimit() const;
 public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetTraceThroughPawnsLimit() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	USkeletalMeshComponentBudgeted* GetWeaponMesh() const;
 
 	UFUNCTION()
 	void OnRep_AmmoCount(int32 OldAmmoCount);

@@ -29,5 +29,8 @@ public:
 	UPROPERTY(Transient)
 	UAthenaSeasonItemDefinition* SeasonDefinition;
 
+	UFUNCTION(BlueprintCallable)
+	UAthenaSeasonItemDefinition* GetSeasonDefintion();
+
 };
 

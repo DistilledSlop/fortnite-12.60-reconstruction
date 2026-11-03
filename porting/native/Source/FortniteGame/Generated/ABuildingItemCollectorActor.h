@@ -190,6 +190,9 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_TrackedInteractionData)
 	TArray<FCollectorTrackedData> TrackedInteractionData;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortWorldItemDefinition* GetCurrentActiveItem() const;
+
 	UFUNCTION()
 	void OnRep_ActiveInputItem();
 

@@ -613,6 +613,14 @@ public:
 	void ForceIntoStructuralGridDuringRuntime_Implementation();
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UStaticMeshComponent* GetBuildingMeshComponent() const;
+
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UParticleSystem* GetDeathParticles() const;
+public:
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsUnderConstruction() const;
 
 	UFUNCTION(NetMulticast, Unreliable)

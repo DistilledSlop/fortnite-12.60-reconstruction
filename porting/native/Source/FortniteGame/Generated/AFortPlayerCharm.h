@@ -43,5 +43,14 @@ public:
 	UPROPERTY(Transient)
 	ACustomCosmeticCharmModifier* CharmModifier;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	USceneComponent* GetCharmAttachedToComponent() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FName GetCharmAttachedToSocket() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	USkeletalMeshComponentBudgeted* GetCharmMeshComponent() const;
+
 };
 

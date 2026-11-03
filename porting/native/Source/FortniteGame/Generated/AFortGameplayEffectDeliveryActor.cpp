@@ -7,6 +7,14 @@ void AFortGameplayEffectDeliveryActor::BroadcastExplosion_Implementation(const T
 	// Body not recovered: reflection-derived stub.
 }
 
+UPrimitiveComponent* AFortGameplayEffectDeliveryActor::GetCollisionComponent() const
+{
+	// Original address: 0x142906940.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete object pointer read; see bulk_object_runtime/README.md.
+	return CollisionComponent;
+}
+
 void AFortGameplayEffectDeliveryActor::OnRep_HasExplodedReplay()
 {
 	// Body not recovered: reflection-derived stub.

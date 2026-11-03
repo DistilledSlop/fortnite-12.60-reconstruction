@@ -90,7 +90,37 @@ public:
 	TArray<TSoftObjectPtr<UNiagaraSystem>> OffhandImpactNiagaraPhysicalSurfaceEffectAssets;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FName GetAnimTrailsOffhandFirstSocketName() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UNiagaraSystem* GetAnimTrailsOffhandNiagaraAsset() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFXSystemComponent* GetAnimTrailsOffhandPSC() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UParticleSystem* GetAnimTrailsOffhandPSCTemplate() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FName GetAnimTrailsOffhandSecondSocketName() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetAnimTrailsOffhandWidth() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FName GetIdleFXOffhandSocketName() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UParticleSystemComponent* GetIdleOffhandPSC() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FName GetSwingFXOffhandSocketName() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UParticleSystemComponent* GetSwingOffhandPSC() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	USkeletalMeshComponentBudgeted* GetWeaponMeshOffhand() const;
 
 };
 

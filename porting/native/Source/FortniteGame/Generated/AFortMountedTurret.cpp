@@ -2,6 +2,14 @@
 #include "AFortMountedTurret.h"
 #include "Net/UnrealNetwork.h"
 
+bool AFortMountedTurret::IsLocalPlayerRiding() const
+{
+	// Original address: 0x1429f5380.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete object pointer null comparison; see bulk_predicate_runtime/README.md.
+	return LocalPlayerPawn != nullptr;
+}
+
 void AFortMountedTurret::OnRep_TeamIndex(uint8 OldVal)
 {
 	// Body not recovered: reflection-derived stub.

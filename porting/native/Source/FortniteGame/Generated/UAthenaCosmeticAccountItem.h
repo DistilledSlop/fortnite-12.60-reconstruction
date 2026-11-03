@@ -35,5 +35,8 @@ public:
 	UPROPERTY()
 	UFortHero* Hero;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortHero* GetHero() const;
+
 };
 

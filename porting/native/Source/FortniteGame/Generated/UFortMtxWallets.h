@@ -17,13 +17,9 @@ class FORTNITEGAME_API UFortMtxWallets : public UObject
 	GENERATED_BODY()
 
 public:
-	// table index 3, flags 0x4000
+	// table index 0, flags 0x20080000004000
 	UPROPERTY(Config)
-	FFortMtxPlatformList SharedWallets;
-
-	// table index 1, flags 0x4000
-	UPROPERTY(Config)
-	EFortMtxPlatform SharedWallets_Key;
+	TMap<EFortMtxPlatform, FFortMtxPlatformList> SharedWallets;
 
 };
 

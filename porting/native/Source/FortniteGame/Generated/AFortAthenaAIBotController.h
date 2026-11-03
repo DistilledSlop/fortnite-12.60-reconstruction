@@ -334,6 +334,12 @@ public:
 	UPROPERTY(Transient)
 	UFortAthenaAIBotCustomizationData* BotData;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	AActor* GetBotOwner() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UAthenaMarkerComponent* GetMarkerComponent() const;
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

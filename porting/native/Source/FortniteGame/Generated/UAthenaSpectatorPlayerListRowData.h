@@ -65,5 +65,8 @@ public:
 	UPROPERTY()
 	FUniqueNetIdRepl PlayerUniqueId;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	AFortPlayerStateAthena* GetPlayerState();
+
 };
 

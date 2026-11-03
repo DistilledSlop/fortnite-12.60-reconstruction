@@ -2,6 +2,14 @@
 #include "ABuildingTrapFloor_Turret.h"
 #include "Net/UnrealNetwork.h"
 
+AFortPawn* ABuildingTrapFloor_Turret::GetTarget()
+{
+	// Original address: 0x1427622d0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete object pointer read; see bulk_object_runtime/README.md.
+	return Target;
+}
+
 void ABuildingTrapFloor_Turret::OnRep_CurrentlyActive()
 {
 	// Body not recovered: reflection-derived stub.

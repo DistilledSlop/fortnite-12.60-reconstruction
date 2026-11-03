@@ -50,6 +50,12 @@ public:
 	bool bUnlockedByEvolution;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortAlterationItemDefinition* GetAlterationDefintion() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortItem* GetCorrespondingItem() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetRequiredLevel() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

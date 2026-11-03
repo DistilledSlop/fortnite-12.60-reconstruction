@@ -31,5 +31,8 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetMaxOffscreenTreshold() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetMinTreshold() const;
+
 };
 

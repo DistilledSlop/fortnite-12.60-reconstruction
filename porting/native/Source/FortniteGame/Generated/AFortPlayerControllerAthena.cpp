@@ -371,6 +371,14 @@ UAthenaMarkerComponent* AFortPlayerControllerAthena::GetMarkerComponent() const
 	return MarkerComponent;
 }
 
+UFortPlaysetItemDefinition* AFortPlayerControllerAthena::GetPlayset() const
+{
+	// Original address: 0x142a58800.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete object pointer read; see bulk_object_runtime/README.md.
+	return CurrentPlayset;
+}
+
 bool AFortPlayerControllerAthena::IsClientNotifiedOfLoss() const
 {
 	// Behaviour snippet: AFortPlayerControllerAthena::IsClientNotifiedOfLoss (body only; spliced into the generated member function).

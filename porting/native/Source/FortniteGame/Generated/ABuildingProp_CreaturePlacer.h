@@ -80,5 +80,8 @@ public:
 	UPROPERTY()
 	USkeletalMeshComponent* CreatureSkeletalMeshComponent;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	USkeletalMeshComponent* GetCreatureSkeletalMeshComponent() const;
+
 };
 

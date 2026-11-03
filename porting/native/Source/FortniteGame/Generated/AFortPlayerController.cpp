@@ -280,6 +280,30 @@ void AFortPlayerController::ForwardActiveVariantChangeRequest_Implementation(con
 	// Body not recovered: reflection-derived stub.
 }
 
+AFortAIDirectorDataManager* AFortPlayerController::GetAIDirectorDataManager()
+{
+	// Original address: 0x142a46e50.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete object pointer read; see bulk_object_runtime/README.md.
+	return AIDirectorDataManager;
+}
+
+UFortMcpProfileCampaign* AFortPlayerController::GetMcpCampaignProfile() const
+{
+	// Original address: 0x142a476c0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete object pointer read; see bulk_object_runtime/README.md.
+	return MainMcpProfile;
+}
+
+UFortRegisteredPlayerInfo* AFortPlayerController::GetRegisteredPlayerInfo() const
+{
+	// Original address: 0x142a47980.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete object pointer read; see bulk_object_runtime/README.md.
+	return MyPlayerInfo;
+}
+
 void AFortPlayerController::HandleOutpostInventoryLocalUpdate()
 {
 	// Body not recovered: reflection-derived stub.
@@ -301,6 +325,14 @@ bool AFortPlayerController::HasLockOnTarget() const
 	// CONFIDENCE: HIGH
 	// Mechanically matched complete constant return; see bulk_scalar_runtime/README.md.
 	return false;
+}
+
+bool AFortPlayerController::IsBuildToolOverridden() const
+{
+	// Original address: 0x142a47fd0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete native storage read; see bulk_native_scalar_runtime/README.md.
+	return NativeRecoveredBool_0x14b3;
 }
 
 void AFortPlayerController::MulticastClearWeakSpotData_Implementation(ABuildingSMActor* ParentBuilding)

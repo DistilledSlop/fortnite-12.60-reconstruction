@@ -48,5 +48,11 @@ public:
 	UPROPERTY()
 	float ShrinkTime;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x2ec): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x2ec;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsInterpolatingNumber() const;
+
 };
 

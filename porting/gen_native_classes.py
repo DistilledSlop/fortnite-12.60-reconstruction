@@ -269,6 +269,13 @@ def split_properties(props):
     (entry, children) tuples in table order, plus a list of notes for records that could not be paired."""
     result = []
     notes = []
+    def after_enum(index):
+        """Enum property records include a trailing underlying-type descriptor."""
+        end = index + 1
+        if (props[index].get("kind") == "Enum" and end < len(props)
+                and enum_underlying_record(props[end], props[index].get("name"))):
+            end += 1
+        return end
     i = 0
     while i < len(props):
         p = props[i]
@@ -286,16 +293,17 @@ def split_properties(props):
         nxt = props[i + 1] if i + 1 < len(props) else None
         if kind == "Array" and nxt and nxt.get("array_inner_of") == p.get("name"):
             children["elem"] = nxt
-            step = 2
+            step = after_enum(i + 1) - i
         elif kind == "Set" and nxt and nxt.get("name") == p.get("name") and not nxt.get("replicated"):
             children["elem"] = nxt
-            step = 2
+            step = after_enum(i + 1) - i
         elif kind == "Map":
-            after = props[i + 2] if i + 2 < len(props) else None
+            value_index = after_enum(i + 1) if nxt else len(props)
+            after = props[value_index] if value_index < len(props) else None
             if nxt and nxt.get("name") == p.get("name") + "_Key" and after and after.get("name") == p.get("name"):
                 children["key"] = nxt
                 children["value"] = after
-                step = 3
+                step = after_enum(value_index) - i
         elif kind == "Enum" and nxt and enum_underlying_record(nxt, p.get("name")):
             step = 2
         if kind in ("Array", "Set", "Map") and step == 1:
@@ -1008,6 +1016,28 @@ def types_self_test(check):
                      {"name": "M", "kind": "Int", "property_flags": "0x10000000000080", "offset": 0}]
         check("enum underlying Int record is not a member",
               [e["name"] for e, _c in split_properties(enum_rows)[0]] == ["E", "M"])
+        enum_key_map = [
+            {"name": "PriorityModifiers", "kind": "Map", "offset": 2728},
+            {"name": "PriorityModifiers_Key", "kind": "Enum", "type_refs": {"enum": "0x1"}},
+            {"name": "UnderlyingType", "kind": "Byte", "enum_underlying_of": "PriorityModifiers_Key"},
+            {"name": "PriorityModifiers", "kind": "Float", "offset": 1},
+            {"name": "Following", "kind": "Int", "offset": 2808},
+        ]
+        paired, pairing_notes = split_properties(enum_key_map)
+        check("enum-key map keeps its real outer field and following property",
+              not pairing_notes and [p["name"] for p, _ in paired] == ["PriorityModifiers", "Following"])
+        check("enum-key map resolves its key and value rather than emitting child fields",
+              Resolver({"0x1": "EDemo"}).ctype(*paired[0]) == "TMap<EDemo, float>")
+        for container in ("Array", "Set"):
+            element = {"name": "Items", "kind": "Enum", "type_refs": {"enum": "0x1"}}
+            if container == "Array":
+                element["array_inner_of"] = "Items"
+            rows = [{"name": "Items", "kind": container}, element,
+                    {"name": "UnderlyingType", "kind": "Byte", "enum_underlying_of": "Items"},
+                    {"name": "Following", "kind": "Int"}]
+            paired, pairing_notes = split_properties(rows)
+            check("enum %s element consumes its underlying descriptor" % container,
+                  not pairing_notes and [p["name"] for p, _ in paired] == ["Items", "Following"])
         # A delegate with a const reference parameter: const T& is emitted, the out flag alone is rejected.
         PARAM_ORDER = "offset"
         const_ref = [{"name": "Reason", "kind": "Text", "property_flags": "0x10000008000182", "offset": 8},
@@ -2274,6 +2304,10 @@ _native_gameplay_tags_spec = _common_activation_import.spec_from_file_location(
     "native_gameplay_tags_policy", os.path.join(os.path.dirname(__file__), "behavior", "native_gameplay_tags_runtime", "source_policy.py"))
 _native_gameplay_tags_policy = _common_activation_import.module_from_spec(_native_gameplay_tags_spec)
 _native_gameplay_tags_spec.loader.exec_module(_native_gameplay_tags_policy)
+_aircraft_events_spec = _common_activation_import.spec_from_file_location(
+    "aircraft_events_policy", os.path.join(os.path.dirname(__file__), "behavior", "aircraft_events_runtime", "source_policy.py"))
+_aircraft_events_policy = _common_activation_import.module_from_spec(_aircraft_events_spec)
+_aircraft_events_spec.loader.exec_module(_aircraft_events_policy)
 _athena_mode_spec = _common_activation_import.spec_from_file_location(
     "athena_mode_policy", os.path.join(os.path.dirname(__file__), "behavior", "athena_mode_reconstruction_runtime", "source_policy.py"))
 _athena_mode_policy = _common_activation_import.module_from_spec(_athena_mode_spec)
@@ -3722,6 +3756,8 @@ def promote(args):
                          if 'UFortUIDataConfiguration' in listed else None)
     if 'AFortGameModeAthena' in listed:
         _athena_mode_policy.validate_classes(blocks_by_va, name_to_block, parents)
+    aircraft_timing_sources = (_aircraft_events_policy.sources()
+                               if 'AFortAthenaAircraft' in listed else None)
     native_gameplay_tags_sources = (_native_gameplay_tags_policy.sources()
                                     if 'AFortGameStateAthena' in listed else None)
     client_event_sources = None
@@ -3830,7 +3866,7 @@ def promote(args):
         "class_pkg": package_of, "struct_index": struct_index, "gate": gate,
         # Only headers actually scheduled for emission qualify; arbitrary source-tree
         # files (including stale Native output) must not authorize snippet includes.
-        "generated_support_headers": {filename for bundle in (client_event_sources, native_gameplay_tags_sources)
+        "generated_support_headers": {filename for bundle in (client_event_sources, native_gameplay_tags_sources, aircraft_timing_sources)
                                       for filename in (bundle or {}) if filename.endswith(".h")},
         "button_feedback_sound_identity_proven": 'UCommonButton' in listed,
         "other_promoted": {n for b, n in names.items()
@@ -4170,6 +4206,10 @@ def promote(args):
     if ui_config_sources:
         for filename, text in ui_config_sources.items():
             with open(os.path.join(args.source_root, 'FortniteUI', 'Generated', filename), 'w', encoding='utf-8', newline='\n') as fh:
+                fh.write(text)
+    if aircraft_timing_sources:
+        for filename, text in aircraft_timing_sources.items():
+            with open(os.path.join(args.source_root, 'FortniteGame', 'Generated', filename), 'w', encoding='utf-8', newline='\n') as fh:
                 fh.write(text)
     if native_gameplay_tags_sources:
         for filename, text in native_gameplay_tags_sources.items():

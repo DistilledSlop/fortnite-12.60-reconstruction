@@ -55,5 +55,8 @@ public:
 	UPROPERTY()
 	UImage* Image_VideoTexture;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UMediaPlayer* GetMediaPlayer() const;
+
 };
 

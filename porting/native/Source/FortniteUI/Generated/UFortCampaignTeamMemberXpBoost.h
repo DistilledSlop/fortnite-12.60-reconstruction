@@ -60,5 +60,10 @@ public:
 	UPROPERTY()
 	UCommonButton* Button_ActivateBoost;
 
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UCommonButton* GetBoostActivationButton() const;
+public:
+
 };
 

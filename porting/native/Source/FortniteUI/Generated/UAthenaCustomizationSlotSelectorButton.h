@@ -54,5 +54,8 @@ public:
 	UPROPERTY()
 	TSoftObjectPtr<UTexture2D> DefaultEmptyTexture;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortItem* GetCampaignHeroPartItem() const;
+
 };
 

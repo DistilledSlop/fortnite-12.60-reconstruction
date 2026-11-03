@@ -789,6 +789,12 @@ public:
 	void FastSharedReplication(const FFortAISharedRepMovement& SharedRepMovement);
 	void FastSharedReplication_Implementation(const FFortAISharedRepMovement& SharedRepMovement);
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	AActor* GetCurrentAimTarget() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	AFortWaterBodyActor* GetCurrentWaterBody() const;
+
 	UFUNCTION(NetMulticast, Unreliable)
 	void NetMulticast_BatchedDamageCues(const FFortAIBatchedDamageCues& Data);
 	void NetMulticast_BatchedDamageCues_Implementation(const FFortAIBatchedDamageCues& Data);

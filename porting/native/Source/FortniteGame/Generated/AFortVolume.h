@@ -173,6 +173,9 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_UserGeneratedContentRestrictions)
 	bool bUserGeneratedContentRestricted;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortPlaysetItemDefinition* GetCurrentPlayset() const;
+
 	UFUNCTION()
 	void OnRep_BoundsCollisionSetting();
 

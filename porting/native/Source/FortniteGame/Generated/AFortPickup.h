@@ -227,6 +227,9 @@ public:
 	UPROPERTY(Transient)
 	float StartSimulatingTime;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	AFortPawn* GetPawnWhoDroppedPickup() const;
+
 	UFUNCTION()
 	void OnRep_bPickedUp();
 

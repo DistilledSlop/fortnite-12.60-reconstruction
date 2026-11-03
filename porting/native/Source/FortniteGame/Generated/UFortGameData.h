@@ -422,13 +422,9 @@ public:
 	UPROPERTY()
 	TSoftObjectPtr<UFortTouchInputSettings> TouchInputSettings;
 
-	// table index 63, flags 0x1
+	// table index 60, flags 0x40000000010001
 	UPROPERTY()
-	UTexture2D* InputTypeIcons;
-
-	// table index 61, flags 0x1
-	UPROPERTY()
-	ECommonInputType InputTypeIcons_Key;
+	TMap<ECommonInputType, UTexture2D*> InputTypeIcons;
 
 	// table index 59, flags 0x44000000000001
 	UPROPERTY()

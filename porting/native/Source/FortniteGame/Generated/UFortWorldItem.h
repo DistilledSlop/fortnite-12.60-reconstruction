@@ -42,5 +42,11 @@ public:
 	UPROPERTY()
 	float BaseRegenCooldown;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x24a): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x24a;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool SeenInFrontend() const;
+
 };
 

@@ -20,5 +20,8 @@ public:
 	UPROPERTY()
 	UFortCardPackItemDefinition* LlamaOfferDisplayAsset;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortCardPackItemDefinition* GetLlamaOfferDisplayAsset() const;
+
 };
 

@@ -214,13 +214,9 @@ public:
 	UPROPERTY()
 	TArray<FFortActionKeyMapping> UserActionBindings;
 
-	// table index 227, flags 0x0
+	// table index 224, flags 0x20080000000000
 	UPROPERTY()
-	FUserActionBindings UserBindingsPerSubGame;
-
-	// table index 225, flags 0x0
-	UPROPERTY()
-	ESubGame UserBindingsPerSubGame_Key;
+	TMap<ESubGame, FUserActionBindings> UserBindingsPerSubGame;
 
 	// table index 222, flags 0x20080000000000
 	UPROPERTY()
@@ -786,13 +782,9 @@ public:
 	UPROPERTY()
 	FString LastSeenStandaloneOfferId;
 
-	// table index 49, flags 0x0
+	// table index 46, flags 0x20080000000000
 	UPROPERTY()
-	EFortAutoMulchMode AutoMulchModeMap;
-
-	// table index 47, flags 0x0
-	UPROPERTY()
-	EFortAutoMulchCategory AutoMulchModeMap_Key;
+	TMap<EFortAutoMulchCategory, EFortAutoMulchMode> AutoMulchModeMap;
 
 	// table index 45, flags 0x20080000000000
 	UPROPERTY()

@@ -7,6 +7,22 @@ void AFortAIPawn::FastSharedReplication_Implementation(const FFortAISharedRepMov
 	// Body not recovered: reflection-derived stub.
 }
 
+AActor* AFortAIPawn::GetCurrentAimTarget() const
+{
+	// Original address: 0x1427a4810.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete object pointer read; see bulk_object_runtime/README.md.
+	return CurrentAimTarget;
+}
+
+AFortWaterBodyActor* AFortAIPawn::GetCurrentWaterBody() const
+{
+	// Original address: 0x1427a4830.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete object pointer read; see bulk_object_runtime/README.md.
+	return CurrentWaterBody;
+}
+
 void AFortAIPawn::NetMulticast_BatchedDamageCues_Implementation(const FFortAIBatchedDamageCues& Data)
 {
 	// Body not recovered: reflection-derived stub.

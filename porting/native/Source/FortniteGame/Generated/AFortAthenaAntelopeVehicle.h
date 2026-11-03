@@ -259,5 +259,8 @@ public:
 	UPROPERTY(Transient)
 	UFortAntelopeVehicleConfigs* FortAntelopeVehicleConfigs;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsLocalPlayerRiding() const;
+
 };
 

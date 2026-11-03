@@ -2,6 +2,22 @@
 #include "UFortMovementComp_GroundSpline.h"
 #include "Net/UnrealNetwork.h"
 
+USplineComponent* UFortMovementComp_GroundSpline::GetSpline() const
+{
+	// Original address: 0x1429f7b60.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete object pointer read; see bulk_object_runtime/README.md.
+	return TravelSpline;
+}
+
+float UFortMovementComp_GroundSpline::GetSplineDistance() const
+{
+	// Original address: 0x1429f7b80.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete native storage read; see bulk_native_scalar_runtime/README.md.
+	return NativeRecoveredFloat_0x1c8;
+}
+
 void UFortMovementComp_GroundSpline::MulticastTeleportToDistanceOnSpline_Implementation(USplineComponent* NewTravelSpline, float Distance)
 {
 	// Body not recovered: reflection-derived stub.

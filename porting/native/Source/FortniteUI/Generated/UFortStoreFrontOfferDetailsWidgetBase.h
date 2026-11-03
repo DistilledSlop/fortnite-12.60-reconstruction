@@ -104,5 +104,8 @@ public:
 	UPROPERTY(Config)
 	bool bShowRefundWarningWhileInZone;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortStoreFrontOfferInfo* GetOfferInfo() const;
+
 };
 

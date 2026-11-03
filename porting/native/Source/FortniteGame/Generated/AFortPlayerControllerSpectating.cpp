@@ -2,6 +2,14 @@
 #include "AFortPlayerControllerSpectating.h"
 #include "Net/UnrealNetwork.h"
 
+UAthenaMarkerComponent* AFortPlayerControllerSpectating::GetMarkerComponent() const
+{
+	// Original address: 0x142a6ba30.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete object pointer read; see bulk_object_runtime/README.md.
+	return MarkerComponent;
+}
+
 void AFortPlayerControllerSpectating::OnRep_FollowedPlayerRemoteClientInfo()
 {
 	// Body not recovered: reflection-derived stub.

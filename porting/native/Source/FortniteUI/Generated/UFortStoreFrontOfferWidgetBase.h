@@ -39,5 +39,8 @@ public:
 	UPROPERTY(Transient)
 	UFortItemThumbnailRenderer* ThumbnailRenderer;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortStoreFrontOfferInfo* GetOfferInfo() const;
+
 };
 

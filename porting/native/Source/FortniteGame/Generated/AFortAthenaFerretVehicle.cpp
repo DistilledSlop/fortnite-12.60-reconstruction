@@ -2,6 +2,14 @@
 #include "AFortAthenaFerretVehicle.h"
 #include "Net/UnrealNetwork.h"
 
+bool AFortAthenaFerretVehicle::IsLocalPlayerRiding() const
+{
+	// Original address: 0x1427d8000.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete object pointer null comparison; see bulk_predicate_runtime/README.md.
+	return LocalPlayerPawn != nullptr;
+}
+
 void AFortAthenaFerretVehicle::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

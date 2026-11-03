@@ -28,29 +28,17 @@ public:
 	UPROPERTY()
 	TArray<UInfiltrationIntelStatusWidget*> IntelStatusWidgets;
 
-	// table index 12, flags 0x1
+	// table index 9, flags 0x20080000000015
 	UPROPERTY()
-	USoundBase* AttackerAudioCues;
+	TMap<EIntelStateEnum, USoundBase*> AttackerAudioCues;
 
-	// table index 10, flags 0x1
+	// table index 5, flags 0x20080000000015
 	UPROPERTY()
-	EIntelStateEnum AttackerAudioCues_Key;
+	TMap<EIntelStateEnum, USoundBase*> DefenderAudioCues;
 
-	// table index 8, flags 0x1
+	// table index 1, flags 0x20080000000015
 	UPROPERTY()
-	USoundBase* DefenderAudioCues;
-
-	// table index 6, flags 0x1
-	UPROPERTY()
-	EIntelStateEnum DefenderAudioCues_Key;
-
-	// table index 4, flags 0x1
-	UPROPERTY()
-	USoundBase* SpamSounds;
-
-	// table index 2, flags 0x1
-	UPROPERTY()
-	EIntelStateEnum SpamSounds_Key;
+	TMap<EIntelStateEnum, USoundBase*> SpamSounds;
 
 	// table index 0, flags 0x20080000000001
 	UPROPERTY()

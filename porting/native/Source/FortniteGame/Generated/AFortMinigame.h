@@ -533,6 +533,12 @@ public:
 	UFUNCTION()
 	void DoRep_UIExtensionTags();
 
+	UFUNCTION(BlueprintCallable)
+	UFortCreativeTeleporterManagerComponent* GetTeleporterManagerComponent();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsTeamMinigame() const;
+
 	UFUNCTION()
 	void OnRep_ClassSlotArray();
 

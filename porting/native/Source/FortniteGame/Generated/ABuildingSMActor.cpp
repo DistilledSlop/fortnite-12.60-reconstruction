@@ -7,6 +7,22 @@ void ABuildingSMActor::ForceIntoStructuralGridDuringRuntime_Implementation()
 	// Body not recovered: reflection-derived stub.
 }
 
+UStaticMeshComponent* ABuildingSMActor::GetBuildingMeshComponent() const
+{
+	// Original address: 0x1427563d0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete object pointer read; see bulk_object_runtime/README.md.
+	return StaticMeshComponent;
+}
+
+UParticleSystem* ABuildingSMActor::GetDeathParticles() const
+{
+	// Original address: 0x1427564b0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete object pointer read; see bulk_object_runtime/README.md.
+	return DeathParticlesInst;
+}
+
 bool ABuildingSMActor::IsUnderConstruction() const
 {
 	// Original address: 0x142756750.

@@ -21,13 +21,9 @@ public:
 	UPROPERTY(Config)
 	TArray<FPrimaryAssetId> PrimaryAssetIds;
 
-	// table index 3, flags 0x4001
+	// table index 0, flags 0x10000000004001
 	UPROPERTY(Config)
-	int32 SpawnAmountMap;
-
-	// table index 1, flags 0x4001
-	UPROPERTY(Config)
-	EFortItemType SpawnAmountMap_Key;
+	TMap<EFortItemType, int32> SpawnAmountMap;
 
 };
 

@@ -117,6 +117,9 @@ public:
 	UPROPERTY()
 	TMap<FGameplayTag, int32> InteractionTagHistory;
 
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	UFortInteractContextInfo* K2_GetInteractResponse();
+
 	UFUNCTION(Server, Reliable)
 	void ServerAttemptInteract(AActor* ReceivingActor, UPrimitiveComponent* InteractComponent, TInteractionType InteractType, UObject* OptionalObjectData, EInteractionBeingAttempted InteractionBeingAttempted, int32 RequestId);
 	void ServerAttemptInteract_Implementation(AActor* ReceivingActor, UPrimitiveComponent* InteractComponent, TInteractionType InteractType, UObject* OptionalObjectData, EInteractionBeingAttempted InteractionBeingAttempted, int32 RequestId);

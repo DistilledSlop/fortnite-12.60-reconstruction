@@ -39,5 +39,11 @@ public:
 	UPROPERTY(Transient)
 	FName CurrentPlaylist;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UAthenaSeasonStats* GetCurrentStatSet() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 NumStatSets() const;
+
 };
 

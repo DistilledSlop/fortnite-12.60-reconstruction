@@ -34,6 +34,9 @@ public:
 	UPROPERTY()
 	TArray<UFortStoreFrontOfferInfo*> AcquisitionOfferData;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x490): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x490;
+
 	// table index 1, flags 0x40000000000001
 	UPROPERTY()
 	TArray<FString> StorefrontNames;
@@ -41,6 +44,9 @@ public:
 	// table index 0, flags 0x40000000080008
 	UPROPERTY()
 	UWidget* Container_AvailableAmount;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool AreOffersLoaded() const;
 
 	UFUNCTION()
 	void PushStoreSelection();

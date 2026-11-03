@@ -84,5 +84,20 @@ public:
 	UPROPERTY(Transient)
 	UFortItem* SlottedItemRepresentation;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x360): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x360;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x361): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x361;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortItem* GetSlottedItemRepresentation() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool HasItemsToSlot() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsItemSlotted() const;
+
 };
 

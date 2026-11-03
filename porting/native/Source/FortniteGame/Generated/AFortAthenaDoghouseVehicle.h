@@ -156,9 +156,39 @@ public:
 	UPROPERTY(Config)
 	float ShootAimAheadDistance;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x1240): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x1240;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x1245): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x1245;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x1249): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x1249;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x1284): not a UPROPERTY, not replicated.
+	float NativeRecoveredFloat_0x1284;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x14d0): not a UPROPERTY, not replicated.
+	float NativeRecoveredFloat_0x14d0;
+
 	// table index 0, flags 0x40000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_ControlState)
 	FReplicatedControlState ControlState;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetAltitudeZ() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetStandingInPlaceSteeringAngle() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsEngineAutoStartingInAir() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsEngineOn() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsStandingInPlace() const;
 
 	UFUNCTION(NetMulticast, Unreliable)
 	void MultiBeginAileronRoll(const EAileronRollDirection& Direction);

@@ -38,5 +38,10 @@ public:
 	UPROPERTY(Transient)
 	AFortAthenaAIBotController* InstigatorBotController;
 
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UStaticMeshComponent* GetPencilMeshComponent() const;
+public:
+
 };
 

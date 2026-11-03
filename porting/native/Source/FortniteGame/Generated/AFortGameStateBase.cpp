@@ -2,6 +2,22 @@
 #include "AFortGameStateBase.h"
 #include "Net/UnrealNetwork.h"
 
+AFortMissionStormShield* AFortGameStateBase::GetStormShield()
+{
+	// Original address: 0x142924490.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete object pointer read; see bulk_object_runtime/README.md.
+	return StormShield;
+}
+
+AFortTimeOfDayManager* AFortGameStateBase::GetTimeOfDayManager() const
+{
+	// Original address: 0x142924540.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete object pointer read; see bulk_object_runtime/README.md.
+	return FortTimeOfDayManager;
+}
+
 void AFortGameStateBase::OnRep_StormShield()
 {
 	// Body not recovered: reflection-derived stub.

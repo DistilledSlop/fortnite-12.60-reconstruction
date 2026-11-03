@@ -37,5 +37,10 @@ public:
 	UPROPERTY()
 	UFortLeaderboardViewTab* ActivatableContent_LeaderboardTab;
 
+protected:
+	UFUNCTION(BlueprintCallable)
+	UFortEventLeaderboardEntryData* GetMyLeaderboardEntry();
+public:
+
 };
 

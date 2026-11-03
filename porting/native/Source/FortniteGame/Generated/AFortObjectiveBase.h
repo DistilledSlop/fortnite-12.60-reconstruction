@@ -100,6 +100,9 @@ public:
 	UPROPERTY()
 	FOnObjectiveIsVisibilityOverrideChanged OnObjectiveVisibilityOverrideChanged;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortMissionTimerComponent* GetTimerComponent() const;
+
 	UFUNCTION()
 	void OnRep_bIsObjectiveVisible();
 

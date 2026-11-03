@@ -153,6 +153,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void DropHeldObject();
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UMeshComponent* GetMeshComponent() const;
+
 	UFUNCTION()
 	void OnRep_bCollisionBlockedByPawns();
 

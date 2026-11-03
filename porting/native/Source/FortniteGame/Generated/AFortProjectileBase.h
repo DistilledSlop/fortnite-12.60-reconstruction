@@ -212,6 +212,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetGravityScale() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	AFortSkyTube* GetSkyTube() const;
+
 	UFUNCTION()
 	void OnRep_CurrentSkyTube();
 

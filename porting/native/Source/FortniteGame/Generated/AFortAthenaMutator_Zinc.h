@@ -154,6 +154,11 @@ public:
 	FScalableFloat bRespawnAllowed;
 
 private:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetMaxWinnersForThisRound() const;
+public:
+
+private:
 	UFUNCTION()
 	void OnAllTeleportComplete();
 public:

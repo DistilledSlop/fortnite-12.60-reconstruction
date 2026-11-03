@@ -82,10 +82,16 @@ public:
 	int32 GetSlotIndex() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	AAIController* GetSlotOwner() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetSlotRadius() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetSlotUserId() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool HasUserId() const;
 
 };
 

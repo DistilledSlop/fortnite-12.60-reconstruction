@@ -162,6 +162,9 @@ public:
 	UPROPERTY(Replicated, Transient)
 	FBox BuildableAreasStructuralSupportBoxesArray[3];
 
+	UFUNCTION(BlueprintCallable)
+	AFortPlayerStart* GetPlayerStart();
+
 	UFUNCTION(NetMulticast, Reliable)
 	void HandleBuildingStateTransition(const EDeployableBaseBuildingState& InPreviousState, const EDeployableBaseBuildingState& InCurrentState);
 	void HandleBuildingStateTransition_Implementation(const EDeployableBaseBuildingState& InPreviousState, const EDeployableBaseBuildingState& InCurrentState);

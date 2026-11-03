@@ -250,6 +250,9 @@ public:
 	UPROPERTY()
 	FScalableFloat ReregisterSpecialActorIconDelay;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	USkeletalMeshComponent* GetEmoteMesh() const;
+
 	UFUNCTION()
 	void OnRep_OverrideAbilitySystemComponent();
 

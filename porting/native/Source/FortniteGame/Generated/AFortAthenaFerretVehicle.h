@@ -163,6 +163,9 @@ public:
 	UPROPERTY(Replicated, Transient)
 	float MaxHealthToDestroyProp;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsLocalPlayerRiding() const;
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

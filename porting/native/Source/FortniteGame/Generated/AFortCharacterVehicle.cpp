@@ -2,6 +2,14 @@
 #include "AFortCharacterVehicle.h"
 #include "Net/UnrealNetwork.h"
 
+USkeletalMeshComponent* AFortCharacterVehicle::GetEmoteMesh() const
+{
+	// Original address: 0x1428616e0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete object pointer read; see bulk_object_runtime/README.md.
+	return EmoteMesh;
+}
+
 void AFortCharacterVehicle::OnRep_OverrideAbilitySystemComponent()
 {
 	// Body not recovered: reflection-derived stub.

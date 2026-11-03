@@ -1,0 +1,4 @@
+// Original address: 0x142a89030.
+// CONFIDENCE: HIGH
+// Mechanically matched complete TArray count query; see bulk_array_query_runtime/README.md.
+return SplineCheckPointIndices.Num();

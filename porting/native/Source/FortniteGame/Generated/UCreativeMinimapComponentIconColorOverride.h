@@ -21,13 +21,9 @@ public:
 	UPROPERTY()
 	FName ParameterName;
 
-	// table index 3, flags 0x1
+	// table index 0, flags 0x10000000010015
 	UPROPERTY()
-	FLinearColor Colors;
-
-	// table index 1, flags 0x1
-	UPROPERTY()
-	ECreativeMinimapComponentIconColorType Colors_Key;
+	TMap<ECreativeMinimapComponentIconColorType, FLinearColor> Colors;
 
 };
 

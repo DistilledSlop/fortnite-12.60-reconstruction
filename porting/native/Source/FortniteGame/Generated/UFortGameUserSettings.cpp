@@ -17,6 +17,14 @@ float UFortGameUserSettings::GetDisplayGamma() const
 	return DisplayGamma;
 }
 
+bool UFortGameUserSettings::GetHasSeenPanningTip() const
+{
+	// Original address: 0x14292f1e0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete integer immediate comparison; see bulk_integer_predicate_runtime/README.md.
+	return NumTimesSeeingPanningTip >= 3;
+}
+
 int32 UFortGameUserSettings::GetRenderingAPI() const
 {
 	// Original address: 0x14292f270.

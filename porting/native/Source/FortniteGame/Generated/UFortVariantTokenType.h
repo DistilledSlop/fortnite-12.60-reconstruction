@@ -52,5 +52,8 @@ public:
 	UPROPERTY()
 	bool bCreateGiftbox;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortItemDefinition* GetCosmeticItem() const;
+
 };
 

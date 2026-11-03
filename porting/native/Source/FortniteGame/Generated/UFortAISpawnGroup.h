@@ -76,5 +76,8 @@ public:
 	UPROPERTY()
 	FGameplayTagQuery RequiredTagQuery;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetNumberOfEnemies() const;
+
 };
 

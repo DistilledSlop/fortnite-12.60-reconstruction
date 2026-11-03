@@ -101,7 +101,34 @@ public:
 	TArray<FMarshalledVFXRuntimeData> RuntimeMarshalledData;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FName GetAnimTrailsFirstSocketName() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UNiagaraSystem* GetAnimTrailsNiagaraAsset() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFXSystemComponent* GetAnimTrailsPSC() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UParticleSystem* GetAnimTrailsPSCTemplate() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FName GetAnimTrailsSecondSocketName() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetAnimTrailsWidth() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FName GetIdleFXSocketName() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UParticleSystemComponent* GetIdlePSC() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FName GetSwingFXSocketName() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UParticleSystemComponent* GetSwingPSC() const;
 
 };
 

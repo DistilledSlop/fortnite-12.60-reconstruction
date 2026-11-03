@@ -75,5 +75,8 @@ public:
 	UPROPERTY()
 	TSoftObjectPtr<UDataTable> RefundDescriptionsDataTable;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortItemInspectCycleWidget* GetCycleWidget();
+
 };
 

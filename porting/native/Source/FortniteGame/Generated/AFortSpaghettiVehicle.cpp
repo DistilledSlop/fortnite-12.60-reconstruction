@@ -2,6 +2,30 @@
 #include "AFortSpaghettiVehicle.h"
 #include "Net/UnrealNetwork.h"
 
+bool AFortSpaghettiVehicle::AimTraceHitsTarget() const
+{
+	// Original address: 0x142a085e0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete native storage read; see bulk_native_scalar_runtime/README.md.
+	return NativeRecoveredBool_0x15a8;
+}
+
+float AFortSpaghettiVehicle::GetAccelerationPercent() const
+{
+	// Original address: 0x142a08920.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete native storage read; see bulk_native_scalar_runtime/README.md.
+	return NativeRecoveredFloat_0x1330;
+}
+
+bool AFortSpaghettiVehicle::IsTowhookHolstered() const
+{
+	// Original address: 0x142a09190.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete native storage read; see bulk_native_scalar_runtime/README.md.
+	return NativeRecoveredBool_0x15d0;
+}
+
 void AFortSpaghettiVehicle::OnRep_NetTowhookAimDir()
 {
 	// Body not recovered: reflection-derived stub.

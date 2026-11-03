@@ -2,6 +2,22 @@
 #include "AFortAthenaAIBotController.h"
 #include "Net/UnrealNetwork.h"
 
+AActor* AFortAthenaAIBotController::GetBotOwner() const
+{
+	// Original address: 0x1427c2390.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete object pointer read; see bulk_object_runtime/README.md.
+	return BotOwner;
+}
+
+UAthenaMarkerComponent* AFortAthenaAIBotController::GetMarkerComponent() const
+{
+	// Original address: 0x1427c23b0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete object pointer read; see bulk_object_runtime/README.md.
+	return MarkerComponent;
+}
+
 void AFortAthenaAIBotController::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

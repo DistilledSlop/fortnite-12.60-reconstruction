@@ -73,9 +73,21 @@ public:
 	UPROPERTY(Transient)
 	UFortItemManagementCustomFilterModalWidget* CustomFilterModal;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x580): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x580;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x581): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x581;
+
 	// table index 0, flags 0x40000000002000
 	UPROPERTY(Transient)
 	UFortInventoryContext* InventoryContext;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetShouldShowCollectionBookIndicator() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetShouldShowRefundIndicator() const;
 
 };
 

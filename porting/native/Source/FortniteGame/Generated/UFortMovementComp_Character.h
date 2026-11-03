@@ -213,6 +213,9 @@ public:
 	UPROPERTY(Transient)
 	float FallingStartedZ;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x1d08): not a UPROPERTY, not replicated.
+	float NativeRecoveredFloat_0x1d08;
+
 	// table index 4, flags 0x20080000002000
 	UPROPERTY(Transient)
 	FVector CustomFallingAcceleration;
@@ -235,6 +238,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetFallingStartedZ() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetWaterImmersionDepth() const;
 
 };
 

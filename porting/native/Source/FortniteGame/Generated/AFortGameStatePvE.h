@@ -63,6 +63,9 @@ public:
 	UPROPERTY()
 	bool bWeaponSwappingEnabled;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	AFortAircraft* GetAircraft() const;
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

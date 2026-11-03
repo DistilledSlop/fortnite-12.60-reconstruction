@@ -32,13 +32,9 @@ public:
 	UPROPERTY()
 	UDataTable* QuestTagToIconDataTable;
 
-	// table index 6, flags 0x4000000000001
+	// table index 3, flags 0x24080000000015
 	UPROPERTY()
-	TSoftObjectPtr<UTexture2D> QuestOjectiveTypeToIconMap;
-
-	// table index 4, flags 0x1
-	UPROPERTY()
-	EFortQuestObjectiveStatEvent QuestOjectiveTypeToIconMap_Key;
+	TMap<EFortQuestObjectiveStatEvent, TSoftObjectPtr<UTexture2D>> QuestOjectiveTypeToIconMap;
 
 	// table index 2, flags 0x20080000000015
 	UPROPERTY()

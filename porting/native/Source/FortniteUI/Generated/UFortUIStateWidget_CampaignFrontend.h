@@ -41,5 +41,10 @@ protected:
 	bool AttemptToOpenBattlePassTabForNewSeason();
 public:
 
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortPlayerSurveyDispatcher* GetPlayerSurveyDispatcher() const;
+public:
+
 };
 

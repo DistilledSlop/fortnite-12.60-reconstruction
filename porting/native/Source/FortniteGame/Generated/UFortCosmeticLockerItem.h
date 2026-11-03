@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortProfileItem.h"
 
+#include "FFortCosmeticLockerSlotData.h"
+
 #include "UFortCosmeticLockerItem.generated.h"
 
 UCLASS()
@@ -29,6 +31,10 @@ public:
 	// table index 1, flags 0x20080000000000
 	UPROPERTY()
 	int32 use_count;
+
+	// table index 0, flags 0x20080000000000
+	UPROPERTY()
+	FFortCosmeticLockerSlotData locker_slots_data;
 
 };
 

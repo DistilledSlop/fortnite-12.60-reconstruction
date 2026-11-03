@@ -407,5 +407,8 @@ public:
 	UPROPERTY(Transient)
 	TArray<ABuildingProp_AISpawner*> RegisteredAISpawners;
 
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	int32 GetNumActiveEncounters();
+
 };
 

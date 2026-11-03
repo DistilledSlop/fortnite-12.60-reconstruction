@@ -26,6 +26,14 @@ uint8 AFortPlayerPushableCart::GetTotalActivePushers() const
 	return TotalActivePushers;
 }
 
+int32 AFortPlayerPushableCart::GetTotalCheckPoints() const
+{
+	// Original address: 0x142a89030.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete TArray count query; see bulk_array_query_runtime/README.md.
+	return SplineCheckPointIndices.Num();
+}
+
 void AFortPlayerPushableCart::OnRep_bIsNearCheckpoint()
 {
 	// Body not recovered: reflection-derived stub.

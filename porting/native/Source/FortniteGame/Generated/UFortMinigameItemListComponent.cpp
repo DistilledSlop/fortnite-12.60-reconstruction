@@ -2,6 +2,14 @@
 #include "UFortMinigameItemListComponent.h"
 #include "Net/UnrealNetwork.h"
 
+int32 UFortMinigameItemListComponent::GetNumItems() const
+{
+	// Original address: 0x1429d2050.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete TArray count query; see bulk_array_query_runtime/README.md.
+	return ItemListData.Num();
+}
+
 void UFortMinigameItemListComponent::OnRep_ItemListData()
 {
 	// Body not recovered: reflection-derived stub.

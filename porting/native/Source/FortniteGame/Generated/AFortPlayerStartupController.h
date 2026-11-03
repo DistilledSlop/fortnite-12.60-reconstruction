@@ -47,6 +47,9 @@ public:
 	UPROPERTY(Config)
 	bool DestroyImmediately;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x23c): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt_0x23c;
+
 	// table index 4, flags 0x10000010080000
 	UPROPERTY()
 	FPlayerStartupControllerCreated OnPlayerStartupControllerCreated;
@@ -72,6 +75,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	float GetContainmentTimeRemaining();
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	int32 GetNumPlayersCurrentlyReady();
 
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	int32 GetNumPlayersExpected();

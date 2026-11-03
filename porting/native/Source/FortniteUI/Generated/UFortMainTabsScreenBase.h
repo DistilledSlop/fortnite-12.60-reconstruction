@@ -19,13 +19,9 @@ class FORTNITEUI_API UFortMainTabsScreenBase : public UCommonActivatablePanel
 	GENERATED_BODY()
 
 public:
-	// table index 5, flags 0x1
+	// table index 2, flags 0x20080000000015
 	UPROPERTY()
-	FName FeaturesTabsMap;
-
-	// table index 3, flags 0x1
-	UPROPERTY()
-	EFortUIFeature FeaturesTabsMap_Key;
+	TMap<EFortUIFeature, FName> FeaturesTabsMap;
 
 	// table index 1, flags 0x2008000008001c
 	UPROPERTY()

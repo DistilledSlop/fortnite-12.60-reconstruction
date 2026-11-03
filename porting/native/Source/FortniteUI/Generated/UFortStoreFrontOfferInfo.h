@@ -20,5 +20,8 @@ public:
 	UPROPERTY()
 	UFortMtxOfferData* OfferDisplayAsset;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortMtxOfferData* GetOfferDisplayAsset() const;
+
 };
 

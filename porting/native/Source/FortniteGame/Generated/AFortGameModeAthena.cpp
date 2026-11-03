@@ -19,6 +19,22 @@ void AFortGameModeAthena::FireServerPerformanceEvent()
 	return;
 }
 
+AActor* AFortGameModeAthena::GetBattleLabTeleporterManager()
+{
+	// Original address: 0x1428f0170.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete object pointer read; see bulk_object_runtime/README.md.
+	return BattleLabTeleporterManager;
+}
+
+UFortServerBotManagerAthena* AFortGameModeAthena::GetServerBotManager() const
+{
+	// Original address: 0x1428f0330.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete object pointer read; see bulk_object_runtime/README.md.
+	return ServerBotManager;
+}
+
 void AFortGameModeAthena::OnAircraftEnteredDropZone(AFortAthenaAircraft* FortAthenaAircraft)
 {
 	// Original address: 0x1428f0440; native body 0x1419520f0.
@@ -38,6 +54,24 @@ void AFortGameModeAthena::OnAircraftEnteredDropZone(AFortAthenaAircraft* FortAth
 	if (bAllAircraftInDropZone)
 	{
 	    AthenaGameState->SetAircraftLocked(false);
+	}
+}
+
+void AFortGameModeAthena::OnAircraftFlightEnded(AFortAthenaAircraft* FortAthenaAircraft)
+{
+	// Original address: 0x1428f0540; native body 0x141952500.
+	// CONFIDENCE: HIGH
+	// The original attempts a GameState cast and retains the StaticClass call only.
+	if (GameState)
+	{
+	    AFortGameStateAthena::StaticClass();
+	}
+	if (FortAthenaAircraft)
+	{
+	    FortAthenaAircraft->NativeAircraftEnteredDropZone.Remove(this, FName(TEXT("OnAircraftEnteredDropZone")));
+	    FortAthenaAircraft->NativeAircraftExitedDropZone.Remove(this, FName(TEXT("OnAircraftExitedDropZone")));
+	    FortAthenaAircraft->NativeAircraftFlightEnded.Remove(this, FName(TEXT("OnAircraftFlightEnded")));
+	    FortAthenaAircraft->Destroy(false, true);
 	}
 }
 

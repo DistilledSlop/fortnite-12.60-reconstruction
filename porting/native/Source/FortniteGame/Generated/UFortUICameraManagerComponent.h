@@ -31,13 +31,9 @@ public:
 	UPROPERTY(Transient)
 	EFrontEndCamera CurrentCamera;
 
-	// table index 3, flags 0x0
-	UPROPERTY()
-	AFortCameraBase* CameraMapping;
-
-	// table index 1, flags 0x0
-	UPROPERTY()
-	EFrontEndCamera CameraMapping_Key;
+	// table index 0, flags 0x20080000002000
+	UPROPERTY(Transient)
+	TMap<EFrontEndCamera, AFortCameraBase*> CameraMapping;
 
 };
 

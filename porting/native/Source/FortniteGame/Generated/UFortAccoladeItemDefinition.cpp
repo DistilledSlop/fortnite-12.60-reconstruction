@@ -9,3 +9,11 @@ float UFortAccoladeItemDefinition::GetAccoladeLevel() const
 	return AccoladeLevel;
 }
 
+USoundCue* UFortAccoladeItemDefinition::GetAwardedSound() const
+{
+	// Original address: 0x14278e370.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete object pointer read; see bulk_object_runtime/README.md.
+	return AwardedSoundCue;
+}
+

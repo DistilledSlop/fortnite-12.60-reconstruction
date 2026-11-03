@@ -973,6 +973,9 @@ public:
 	UAthenaMarkerComponent* GetMarkerComponent() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortPlaysetItemDefinition* GetPlayset() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsClientNotifiedOfLoss() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

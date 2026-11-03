@@ -34,9 +34,20 @@ public:
 	UPROPERTY(Transient)
 	uint8 bWorldReadyCalled : 1;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x248): not a UPROPERTY, not replicated.
+	float NativeRecoveredFloat_0x248;
+
 	// table index 0, flags 0x20080000010001
 	UPROPERTY()
 	UFortMusicManagerBank* MusicBank;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortMusicManagerBank* GetMusicBank() const;
+
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetPrimaryMusicVolume() const;
+public:
 
 };
 

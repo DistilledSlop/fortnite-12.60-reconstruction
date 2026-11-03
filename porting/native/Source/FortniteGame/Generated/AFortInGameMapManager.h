@@ -173,6 +173,11 @@ public:
 	void BroadcastExplorationEvents(const TArray<FTeamMapExplorationEvent>& Events);
 	void BroadcastExplorationEvents_Implementation(const TArray<FTeamMapExplorationEvent>& Events);
 
+private:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UTexture2D* GetHeatmapMask() const;
+public:
+
 	UFUNCTION()
 	void OnRep_ClearAllFog();
 

@@ -19,13 +19,9 @@ class FORTNITEGAME_API UFortMarkerDetailsTable : public UPrimaryDataAsset
 	GENERATED_BODY()
 
 public:
-	// table index 6, flags 0x1
+	// table index 3, flags 0x10000000000015
 	UPROPERTY()
-	FMarkedActorDisplayInfo DefaultMarker;
-
-	// table index 4, flags 0x1
-	UPROPERTY()
-	EFortWorldMarkerType DefaultMarker_Key;
+	TMap<EFortWorldMarkerType, FMarkedActorDisplayInfo> DefaultMarker;
 
 	// table index 0, flags 0x10000000000015
 	UPROPERTY()

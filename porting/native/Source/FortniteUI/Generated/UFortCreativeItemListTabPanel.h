@@ -60,5 +60,8 @@ public:
 	UPROPERTY()
 	TArray<FName> LastFilters;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsEmpty();
+
 };
 

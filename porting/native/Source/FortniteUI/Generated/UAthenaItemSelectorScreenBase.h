@@ -31,13 +31,9 @@ public:
 	UPROPERTY()
 	TSubclassOf<UCommonButton> TabButtonType;
 
-	// table index 19, flags 0x1
+	// table index 16, flags 0x20080000000015
 	UPROPERTY()
-	FFortTabButtonLabelInfo ItemCategoryButtonLabelInfo;
-
-	// table index 17, flags 0x1
-	UPROPERTY()
-	EAthenaCustomizationCategory ItemCategoryButtonLabelInfo_Key;
+	TMap<EAthenaCustomizationCategory, FFortTabButtonLabelInfo> ItemCategoryButtonLabelInfo;
 
 	// table index 15, flags 0x20080000000015
 	UPROPERTY()
@@ -94,6 +90,9 @@ public:
 	// table index 0, flags 0x20080000000014
 	UPROPERTY()
 	int32 SubSlotIndex;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortItem* GetCurrentItem() const;
 
 };
 

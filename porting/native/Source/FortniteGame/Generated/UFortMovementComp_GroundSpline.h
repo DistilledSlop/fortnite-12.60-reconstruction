@@ -137,9 +137,18 @@ public:
 	UPROPERTY()
 	USplineComponent* TravelSpline;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x1c8): not a UPROPERTY, not replicated.
+	float NativeRecoveredFloat_0x1c8;
+
 	// table index 0, flags 0x20080000080008
 	UPROPERTY()
 	UAbilitySystemComponent* AbilitySystemComponent;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	USplineComponent* GetSpline() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetSplineDistance() const;
 
 	UFUNCTION(NetMulticast, Reliable)
 	void MulticastTeleportToDistanceOnSpline(USplineComponent* NewTravelSpline, float Distance);

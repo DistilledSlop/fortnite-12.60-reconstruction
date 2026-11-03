@@ -7,6 +7,30 @@ void AFortWeaponRanged::ClientFixupOverheatValue_Implementation(float InOverheat
 	// Body not recovered: reflection-derived stub.
 }
 
+UNiagaraSystem* AFortWeaponRanged::GetBeamNiagaraSystem() const
+{
+	// Original address: 0x142b4f660.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete object pointer read; see bulk_object_runtime/README.md.
+	return BeamNiagaraSystemInstance;
+}
+
+UParticleSystem* AFortWeaponRanged::GetBeamParticleSystem() const
+{
+	// Original address: 0x142b4f6a0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete object pointer read; see bulk_object_runtime/README.md.
+	return BeamParticleSystem;
+}
+
+UParticleSystemComponent* AFortWeaponRanged::GetBeamPSC() const
+{
+	// Original address: 0x142b4f680.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete object pointer read; see bulk_object_runtime/README.md.
+	return BeamPSC;
+}
+
 float AFortWeaponRanged::GetCurrentOverheatValue() const
 {
 	// Original address: 0x142b4f6c0.

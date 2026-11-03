@@ -36,5 +36,8 @@ public:
 	UPROPERTY(Transient)
 	UFortPlayerSurveyCMSScheduler* SurveyScheduler;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortPlayerSurveyManager* GetPlayerSurveyManager() const;
+
 };
 

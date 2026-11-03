@@ -63,5 +63,11 @@ public:
 	UPROPERTY()
 	UFortQuestMapDataAsset* CurrentQuestMapDataTable;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x471): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x471;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetBeyondCutoffQuest() const;
+
 };
 

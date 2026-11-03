@@ -358,6 +358,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetNumSurvivorsSpawned() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	AFortThreatParticleActor* GetThreatParticleActor() const;
+
 	UFUNCTION(NetMulticast, Reliable)
 	void NotifyEndFailedGameplayVoteLockout(const EFortVoteType& VoteType);
 	void NotifyEndFailedGameplayVoteLockout_Implementation(const EFortVoteType& VoteType);

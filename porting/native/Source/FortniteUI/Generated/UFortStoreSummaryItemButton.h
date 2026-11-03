@@ -34,5 +34,8 @@ public:
 	UPROPERTY(Transient)
 	UFortInventoryContext* InventoryContext;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UStoreCardObject* GetStoreCardObject() const;
+
 };
 

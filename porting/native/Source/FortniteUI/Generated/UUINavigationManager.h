@@ -25,5 +25,8 @@ public:
 	UPROPERTY(Transient)
 	TArray<FUINavigationEntry> NavigationStack;
 
+	UFUNCTION(BlueprintCallable)
+	int32 GetStackSize();
+
 };
 

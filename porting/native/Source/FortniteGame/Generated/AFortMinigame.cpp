@@ -15,6 +15,22 @@ void AFortMinigame::DoRep_UIExtensionTags()
 	// Body not recovered: reflection-derived stub.
 }
 
+UFortCreativeTeleporterManagerComponent* AFortMinigame::GetTeleporterManagerComponent()
+{
+	// Original address: 0x1429c2430.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete object pointer read; see bulk_object_runtime/README.md.
+	return TeleporterManagerComponent;
+}
+
+bool AFortMinigame::IsTeamMinigame() const
+{
+	// Original address: 0x1429c3b00.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete integer immediate comparison; see bulk_integer_predicate_runtime/README.md.
+	return NumTeams != 0;
+}
+
 void AFortMinigame::OnRep_ClassSlotArray()
 {
 	// Body not recovered: reflection-derived stub.

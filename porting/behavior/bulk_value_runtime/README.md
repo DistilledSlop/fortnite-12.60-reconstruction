@@ -1,0 +1,5 @@
+# Value getter proposals
+
+`prepare.py` scans the native function inventory against the pinned original image for complete zero-argument value-field getter thunks or wrappers calling complete leaf getters. It requires selected, unique FortniteGame/FortniteUI non-interface classes, matching reflected return and declared field kinds, offsets, enum references and access widths, and resolves C++ spellings through the native generator's type tables and resolver. It excludes already-ported functions. Only recognized full instruction sequences are accepted; no constants, inherited fields or object pointers are inferred. Enum properties without a proven storage width are excluded.
+
+The script writes guarded `.inc` source proposals here and a scratch report and proposed manifest entries to `/tmp/gameplay-bulk-value/` by default. `--output-dir` changes the report destination; `--revalidate-own` permits rechecking entries already ported from this directory. It does not change the canonical manifest or generated code.

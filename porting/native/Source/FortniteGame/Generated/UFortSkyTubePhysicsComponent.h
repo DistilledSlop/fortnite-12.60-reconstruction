@@ -54,6 +54,9 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_Magnetized, Transient)
 	bool bMagnetized;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsInSkyTube() const;
+
 	UFUNCTION()
 	void OnRep_Magnetized(bool bPreviousMagnetized);
 

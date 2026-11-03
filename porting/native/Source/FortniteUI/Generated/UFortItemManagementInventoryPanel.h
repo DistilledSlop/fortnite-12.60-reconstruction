@@ -105,6 +105,9 @@ public:
 	UPROPERTY()
 	bool bCanDragItems;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x3b8): not a UPROPERTY, not replicated.
+	uint8 NativeRecoveredBits_0x3b8;
+
 	// table index 1, flags 0x40000000002000
 	UPROPERTY(Transient)
 	UFortInventoryContext* InventoryContext;
@@ -112,6 +115,9 @@ public:
 	// table index 0, flags 0x40000000080008
 	UPROPERTY()
 	UWidget* WidgetToCenter;
+
+	UFUNCTION(BlueprintCallable)
+	bool GetShouldPrioritizeFavorites();
 
 };
 

@@ -18,6 +18,14 @@ float UFortTimeOfDayWeatherComponent::GetCurrentWeatherIntensity() const
 	return CurrentWeatherEventIntensity;
 }
 
+float UFortTimeOfDayWeatherComponent::GetCurrentWindStrength() const
+{
+	// Original address: 0x142b14700.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete native storage read; see bulk_native_scalar_runtime/README.md.
+	return NativeRecoveredFloat_0xbc;
+}
+
 void UFortTimeOfDayWeatherComponent::OnRep_CurrentWeatherEventIntensity()
 {
 	// Body not recovered: reflection-derived stub.

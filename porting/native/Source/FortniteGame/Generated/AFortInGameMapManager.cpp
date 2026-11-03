@@ -7,6 +7,14 @@ void AFortInGameMapManager::BroadcastExplorationEvents_Implementation(const TArr
 	// Body not recovered: reflection-derived stub.
 }
 
+UTexture2D* AFortInGameMapManager::GetHeatmapMask() const
+{
+	// Original address: 0x14294b580.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete object pointer read; see bulk_object_runtime/README.md.
+	return HeatmapMask;
+}
+
 void AFortInGameMapManager::OnRep_ClearAllFog()
 {
 	// Body not recovered: reflection-derived stub.

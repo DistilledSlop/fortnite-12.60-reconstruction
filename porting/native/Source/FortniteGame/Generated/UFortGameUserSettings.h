@@ -533,6 +533,9 @@ public:
 	UFUNCTION()
 	float GetDisplayGamma() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetHasSeenPanningTip() const;
+
 	UFUNCTION()
 	int32 GetRenderingAPI() const;
 

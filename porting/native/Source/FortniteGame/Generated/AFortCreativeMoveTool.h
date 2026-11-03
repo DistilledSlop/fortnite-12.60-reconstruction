@@ -390,6 +390,14 @@ public:
 	void ClientStopInteracting();
 	void ClientStopInteracting_Implementation();
 
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UObjectInteractionBehavior* GetActiveMovementMode() const;
+public:
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortObjectMoverInputComponent* GetCreativeMoveToolInputComponent() const;
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	uint8 GetGridSnapIndex() const;
 

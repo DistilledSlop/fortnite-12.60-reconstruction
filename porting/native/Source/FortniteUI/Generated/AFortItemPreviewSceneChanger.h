@@ -61,5 +61,20 @@ public:
 	UPROPERTY(Transient)
 	AItemPreviewScene* ActiveScene;
 
+protected:
+	UFUNCTION(BlueprintCallable)
+	AItemPreviewScene* GetActiveScene();
+public:
+
+protected:
+	UFUNCTION(BlueprintCallable)
+	AItemPreviewScene* GetPrimaryScene();
+public:
+
+protected:
+	UFUNCTION(BlueprintCallable)
+	AItemPreviewScene* GetSceneTransitioningTo();
+public:
+
 };
 

@@ -78,6 +78,9 @@ public:
 	UPROPERTY(Transient)
 	TArray<FActiveVehicleUI> ActiveUI;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsLocalPlayerRiding() const;
+
 	UFUNCTION()
 	void OnRep_TeamIndex(uint8 OldVal);
 

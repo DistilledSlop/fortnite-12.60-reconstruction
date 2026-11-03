@@ -40,5 +40,14 @@ public:
 	UPROPERTY(Transient)
 	UMediaSoundComponent* SoundComponent;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UMediaPlayer* GetMediaPlayer() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UMediaSoundComponent* GetMediaSoundComponent() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UMediaTexture* GetMediaTexture() const;
+
 };
 

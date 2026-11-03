@@ -31,9 +31,20 @@ public:
 	UPROPERTY()
 	bool bDisplayAsRewardCard;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0xb84): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt_0xb84;
+
 	// table index 0, flags 0x40000000002000
 	UPROPERTY(Transient)
 	UFortItem* ItemInstance;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortItem* GetItemInstance() const;
+
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetQuantity() const;
+public:
 
 };
 

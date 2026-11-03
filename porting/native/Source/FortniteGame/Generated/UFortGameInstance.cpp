@@ -39,6 +39,14 @@ void UFortGameInstance::GetContentState(const EFortGameFeature& Feature, const F
 	// Body not recovered: reflection-derived stub.
 }
 
+UFortSeasonalEventManager* UFortGameInstance::GetEventManager() const
+{
+	// Original address: 0x1428ed220.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete object pointer read; see bulk_object_runtime/README.md.
+	return SeasonalEventManager;
+}
+
 void UFortGameInstance::GetFeatureRequiredSizes(const EFortGameFeature& Feature, const FWebJSResponse& Response)
 {
 	// Body not recovered: reflection-derived stub.

@@ -70,7 +70,13 @@ public:
 	FFortEncounterSettings EncounterSettings;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure, BlueprintAuthorityOnly)
+	UFortAIEncounterInfo* GetCurrentEncounter() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure, BlueprintAuthorityOnly)
 	int32 GetEncounterIndexInSequence() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure, BlueprintAuthorityOnly)
+	bool HasEncounter() const;
 
 };
 

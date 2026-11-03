@@ -118,6 +118,9 @@ public:
 	uint8 bUsesDayPhaseChange : 1;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	AFortPlayerPawn* GetFortPlayerPawn() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsGliderFullyDeployedAccordingToAnim() const;
 
 	UFUNCTION()

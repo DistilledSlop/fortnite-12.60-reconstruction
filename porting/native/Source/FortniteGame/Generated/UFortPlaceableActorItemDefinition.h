@@ -30,5 +30,8 @@ public:
 	UPROPERTY()
 	FName ActorName;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FName GetActorName() const;
+
 };
 

@@ -73,5 +73,8 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetAccoladeLevel() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	USoundCue* GetAwardedSound() const;
+
 };
 

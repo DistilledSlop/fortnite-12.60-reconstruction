@@ -52,6 +52,9 @@ public:
 	UPROPERTY()
 	FName ClientLoadedPackageName;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortPlaysetItemDefinition* GetCurrentPlayset() const;
+
 	UFUNCTION()
 	void OnRep_ClientPlaysetData();
 

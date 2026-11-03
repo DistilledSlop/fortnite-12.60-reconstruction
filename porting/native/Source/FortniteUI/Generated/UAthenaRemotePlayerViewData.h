@@ -135,5 +135,8 @@ public:
 	UPROPERTY()
 	AFortPlayerPawn* CachedPlayerPawn;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	AFortPlayerStateAthena* GetPlayerState() const;
+
 };
 

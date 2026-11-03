@@ -660,9 +660,20 @@ protected:
 	void FireServerPerformanceEvent();
 public:
 
+	UFUNCTION(BlueprintCallable, BlueprintPure, BlueprintAuthorityOnly)
+	AActor* GetBattleLabTeleporterManager();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortServerBotManagerAthena* GetServerBotManager() const;
+
 protected:
 	UFUNCTION()
 	void OnAircraftEnteredDropZone(AFortAthenaAircraft* FortAthenaAircraft);
+public:
+
+protected:
+	UFUNCTION()
+	void OnAircraftFlightEnded(AFortAthenaAircraft* FortAthenaAircraft);
 public:
 
 public:

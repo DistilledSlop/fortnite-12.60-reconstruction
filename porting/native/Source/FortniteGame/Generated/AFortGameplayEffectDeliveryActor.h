@@ -127,6 +127,9 @@ public:
 	void BroadcastExplosion(const TArray<AActor*>& HitActors, const TArray<FHitResult>& HitResults);
 	void BroadcastExplosion_Implementation(const TArray<AActor*>& HitActors, const TArray<FHitResult>& HitResults);
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UPrimitiveComponent* GetCollisionComponent() const;
+
 	UFUNCTION()
 	void OnRep_HasExplodedReplay();
 

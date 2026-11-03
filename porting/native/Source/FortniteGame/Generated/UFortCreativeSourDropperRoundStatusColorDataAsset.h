@@ -6,6 +6,9 @@
 #include "CoreMinimal.h"
 #include "Engine/DataAsset.h"
 
+#include "EFortTeamAffiliation.h"
+#include "FFortSourDropperColorData.h"
+
 #include "UFortCreativeSourDropperRoundStatusColorDataAsset.generated.h"
 
 UCLASS()
@@ -14,5 +17,9 @@ class FORTNITEGAME_API UFortCreativeSourDropperRoundStatusColorDataAsset : publi
 	GENERATED_BODY()
 
 public:
+	// table index 0, flags 0x10000000000005
+	UPROPERTY()
+	TMap<TEnumAsByte<EFortTeamAffiliation::Type>, FFortSourDropperColorData> AffiliationColors;
+
 };
 

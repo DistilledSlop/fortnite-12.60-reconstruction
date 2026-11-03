@@ -2,6 +2,14 @@
 #include "AInfiltrationCarryObjectSpawnPoint.h"
 #include "Net/UnrealNetwork.h"
 
+AActor* AInfiltrationCarryObjectSpawnPoint::GetIntelActor() const
+{
+	// Original address: 0x142b674b0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete object pointer read; see bulk_object_runtime/README.md.
+	return CachedIntelActor;
+}
+
 void AInfiltrationCarryObjectSpawnPoint::OnRep_CurrentState(ESpawnPointState OldState)
 {
 	// Body not recovered: reflection-derived stub.

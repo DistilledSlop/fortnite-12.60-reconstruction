@@ -737,6 +737,9 @@ public:
 	UPROPERTY(Config)
 	bool bBuildingPlacementTraceSkipInitialPenetrationOfStaticMesh;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x14b3): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x14b3;
+
 	// table index 128, flags 0x20080000000000
 	UPROPERTY()
 	AFortQuickBars* ClientQuickBars;
@@ -1420,6 +1423,15 @@ public:
 	void ForwardActiveVariantChangeRequest(const FName& ItemTemplateToChange, const FGameplayTag& VariantChannelToChange, const FGameplayTag& DesiredActiveVariant, AFortPlayerPawn* PreviewPawn);
 	void ForwardActiveVariantChangeRequest_Implementation(const FName& ItemTemplateToChange, const FGameplayTag& VariantChannelToChange, const FGameplayTag& DesiredActiveVariant, AFortPlayerPawn* PreviewPawn);
 
+	UFUNCTION(BlueprintCallable, BlueprintPure, BlueprintAuthorityOnly)
+	AFortAIDirectorDataManager* GetAIDirectorDataManager();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortMcpProfileCampaign* GetMcpCampaignProfile() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortRegisteredPlayerInfo* GetRegisteredPlayerInfo() const;
+
 	UFUNCTION()
 	void HandleOutpostInventoryLocalUpdate();
 
@@ -1431,6 +1443,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool HasLockOnTarget() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsBuildToolOverridden() const;
 
 	UFUNCTION(NetMulticast, Reliable)
 	void MulticastClearWeakSpotData(ABuildingSMActor* ParentBuilding);

@@ -68,6 +68,9 @@ public:
 	UPROPERTY()
 	EScoreDistributionType ScoreDistribution;
 
+	UFUNCTION(BlueprintCallable)
+	UFortCreativeCreatureManagerComponent* GetCreatureManagerComponent();
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetEnvironmentalDamageOverride() const;
 

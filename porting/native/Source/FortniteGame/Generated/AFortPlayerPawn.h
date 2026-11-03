@@ -646,6 +646,12 @@ public:
 	UPROPERTY()
 	UAnimMontage* BluePrintEditAnimation;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x16c8): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt_0x16c8;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x16cc): not a UPROPERTY, not replicated.
+	float NativeRecoveredFloat_0x16cc;
+
 	// table index 187, flags 0x20080010080000
 	UPROPERTY()
 	FOnStartedInteractSearch OnStartedInteractSearch;
@@ -1395,6 +1401,12 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool GetIsSlopeSliding() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetPawnLOD() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetPawnSignificance() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool GetPendingSkydiveLaunch() const;

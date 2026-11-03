@@ -20,5 +20,8 @@ public:
 	UPROPERTY()
 	UFortSeasonPassLevelInfo* LevelInfo;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortSeasonPassLevelInfo* GetLevelInfo() const;
+
 };
 

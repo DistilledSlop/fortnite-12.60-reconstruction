@@ -30,5 +30,11 @@ public:
 	UPROPERTY()
 	FDateTime StopwatchStartTime;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortPlayerSurveyQuestionSelector* GetAnswerContainer() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortPlayerSurveyQuestion* GetQuestion() const;
+
 };
 

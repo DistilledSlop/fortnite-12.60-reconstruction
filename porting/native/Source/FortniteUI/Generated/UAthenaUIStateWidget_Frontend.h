@@ -175,5 +175,10 @@ public:
 	UPROPERTY()
 	TSoftClassPtr<UApolloIntroLoadingPanel> ApolloIntroFakeLoadingScreenClass;
 
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortPlayerSurveyDispatcher* GetPlayerSurveyDispatcher() const;
+public:
+
 };
 

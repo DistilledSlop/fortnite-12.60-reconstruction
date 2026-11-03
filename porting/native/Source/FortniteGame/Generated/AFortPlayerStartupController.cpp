@@ -18,6 +18,14 @@ float AFortPlayerStartupController::GetContainmentTimeRemaining()
 	return ContainmentTimer;
 }
 
+int32 AFortPlayerStartupController::GetNumPlayersCurrentlyReady()
+{
+	// Original address: 0x142a88ba0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete native storage read; see bulk_native_scalar_runtime/README.md.
+	return NativeRecoveredInt_0x23c;
+}
+
 int32 AFortPlayerStartupController::GetNumPlayersExpected()
 {
 	// Original address: 0x142a88bc0.

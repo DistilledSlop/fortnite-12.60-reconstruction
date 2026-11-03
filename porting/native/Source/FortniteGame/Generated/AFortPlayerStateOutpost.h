@@ -18,6 +18,9 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_HasPermissionToEditOutpost)
 	bool bHasPermissionToEditOutpost;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsOutpostOwner() const;
+
 	UFUNCTION()
 	void OnRep_HasPermissionToEditOutpost();
 

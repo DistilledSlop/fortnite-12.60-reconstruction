@@ -30,5 +30,8 @@ public:
 	UPROPERTY(Transient)
 	UAthenaBaseStatView* StatView;
 
+	UFUNCTION(BlueprintCallable)
+	UAthenaBaseStatView* GetBaseStatView();
+
 };
 

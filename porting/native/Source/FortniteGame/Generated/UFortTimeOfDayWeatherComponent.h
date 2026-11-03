@@ -21,6 +21,9 @@ class FORTNITEGAME_API UFortTimeOfDayWeatherComponent : public UActorComponent
 	GENERATED_BODY()
 
 public:
+	// Non-reflected field (behaviour kind "member_field", offset 0xbc): not a UPROPERTY, not replicated.
+	float NativeRecoveredFloat_0xbc;
+
 	// table index 20, flags 0x20080000000001
 	UPROPERTY()
 	TArray<FGlobalWeatherData> GlobalWeatherDataArray;
@@ -102,6 +105,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetCurrentWeatherIntensity() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetCurrentWindStrength() const;
 
 	UFUNCTION()
 	void OnRep_CurrentWeatherEventIntensity();

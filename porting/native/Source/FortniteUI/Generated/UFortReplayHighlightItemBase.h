@@ -32,13 +32,9 @@ public:
 	UPROPERTY()
 	UTextBlock* TextBlock_Duration;
 
-	// table index 4, flags 0x1
+	// table index 1, flags 0x20080000000015
 	UPROPERTY()
-	FSlateBrush IconMap;
-
-	// table index 2, flags 0x1
-	UPROPERTY()
-	EHighlightReelTypes IconMap_Key;
+	TMap<EHighlightReelTypes, FSlateBrush> IconMap;
 
 	// table index 0, flags 0x20080000000015
 	UPROPERTY()

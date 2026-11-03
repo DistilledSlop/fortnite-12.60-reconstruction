@@ -162,21 +162,13 @@ public:
 	UPROPERTY()
 	TArray<FWaxNoStormZone> NoStormZones;
 
-	// table index 59, flags 0x1
+	// table index 56, flags 0x20080000010055
 	UPROPERTY()
-	FWaxVisibilityModifiers VisibilityModifiers;
+	TMap<EWaxState, FWaxVisibilityModifiers> VisibilityModifiers;
 
-	// table index 57, flags 0x1
+	// table index 52, flags 0x20080000010055
 	UPROPERTY()
-	EWaxState VisibilityModifiers_Key;
-
-	// table index 55, flags 0x1
-	UPROPERTY()
-	FScalableFloat StateTokenCount;
-
-	// table index 53, flags 0x1
-	UPROPERTY()
-	EWaxState StateTokenCount_Key;
+	TMap<EWaxState, FScalableFloat> StateTokenCount;
 
 	// table index 51, flags 0x20080000010015
 	UPROPERTY()

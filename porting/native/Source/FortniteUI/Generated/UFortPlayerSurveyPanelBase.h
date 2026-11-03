@@ -31,5 +31,8 @@ public:
 	UPROPERTY()
 	UFortPlayerSurveyWidgetBase* PanelContents;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortPlayerSurveyBase* GetSurvey() const;
+
 };
 

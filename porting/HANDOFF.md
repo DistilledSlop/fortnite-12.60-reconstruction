@@ -1,5 +1,47 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Native source checkpoint (2026-11-02, next bulk batch)
+
+User wants native-only work now; skip visuals until resumed. Commit completed
+source immediately and record builds separately. Primary owns Native promotion,
+builds and integration; Claude continues UI separately in the same tree. Bulk
+native workers use Terra 6.1 low/medium; Claude is authorized as a workhorse.
+Claude CLI Sonnet medium recovered10 array-query bodies in84s; result/recipe in
+/tmp/claude-native-array-batch/. Large reads stay bounded and checks stay batched.
+
+This source batch adds189 functions and36 fields:120 object getters,2 enum
+getters,3 inherited scalar getters,7 pointer predicates,10 FName getters,
+4 integer predicates,10 array queries,31 native scalar storage getters and
+1 packed-byte getter, plus complete OnAircraftFlightEnded cleanup. Three actual
+script multicast fields, flight-end byte and shared timing/CVar source are
+integrated; native storage getters have no invented defaults. Constructors,
+writers and full aircraft Tick/binding owners remain unported where noted;
+source body coverage is not class-feature/runtime parity.
+
+Canonical and shared Native now1100 ported entries =1040 function bodies +60
+member fields, zero generation rejections. Newly recovered native fields have
+exact own/parent SizeOfOuter bounds and conservative reflected/native occupancy
+checks; replay reproduces31 scalar getter/field contracts. An actual generator
+bug was exposed and fixed: enum descriptors inside Map keys/values and Array/Set
+elements were not consumed, so AFortPawn.PriorityModifiers became separate fake
+fields instead of TMap<EFortSoundIndicatorTypes,float>. Container grouping now
+preserves the real field; generator self-test passes155 checks. This cross-cutting
+schema fix requires combined client/server build and headless join checkpoint.
+Current builds NOT YET RUN; previous green/staged baseline is bulk-integration-1.
+Commands/reports: generated/gameplay-bulk-integration-2/{promotion.command.json,
+promotion.result.json,counts.log,reports/behavior_splice.json}; scratch new-entry
+manifest /tmp/gameplay-bulk-integration-2/new-manifest.json. Do not claim build or
+runtime validation from generation alone.
+
+Claude source worker ACTIVE: exec session38923, /tmp/claude-native-building-vitals/
+{prompt.txt,session-id.txt,result.json,stderr.log}. Owns only new behavior/
+building_vitals_runtime/, health/shield query family; may request one typed-C
+probe batch rather than opening shared Ghidra. Poll exact process before restarting.
+No other native worker is active. Related zero-yield bit-predicate scan is kept
+as reusable automation/evidence, with no implementation credit. Previous baseline,
+remaining aircraft/GC dependencies and all four open product milestones below.
+
+
 ## Current gameplay bulk checkpoint (2026-11-02)
 
 User reverted the temporary server-only pivot: continue the full client/server

@@ -131,5 +131,8 @@ public:
 	UPROPERTY(Transient)
 	UFortGoatVehicleConfigs* FortGoatVehicleConfigs;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsLocalPlayerRiding() const;
+
 };
 

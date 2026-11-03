@@ -2,6 +2,14 @@
 #include "UFortSkyTubePhysicsComponent.h"
 #include "Net/UnrealNetwork.h"
 
+bool UFortSkyTubePhysicsComponent::IsInSkyTube() const
+{
+	// Original address: 0x142ada720.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete object pointer null comparison; see bulk_predicate_runtime/README.md.
+	return SkyTube != nullptr;
+}
+
 void UFortSkyTubePhysicsComponent::OnRep_Magnetized(bool bPreviousMagnetized)
 {
 	// Body not recovered: reflection-derived stub.

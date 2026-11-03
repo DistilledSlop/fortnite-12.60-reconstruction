@@ -141,6 +141,15 @@ public:
 	UPROPERTY(Transient)
 	UFortSpaghettiVehicleConfigs* FortSpaghettiVehicleConfigs;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x1330): not a UPROPERTY, not replicated.
+	float NativeRecoveredFloat_0x1330;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x15a8): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x15a8;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x15d0): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x15d0;
+
 	// table index 9, flags 0x40000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_NetTowhookAimDir)
 	FVector_NetQuantizeNormal NetTowhookAimDir;
@@ -180,6 +189,15 @@ public:
 	// table index 0, flags 0x40000000082008
 	UPROPERTY(Transient)
 	UFortVehicleAudioVoice* CacheAudioTowCable;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool AimTraceHitsTarget() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetAccelerationPercent() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsTowhookHolstered() const;
 
 	UFUNCTION()
 	void OnRep_NetTowhookAimDir();

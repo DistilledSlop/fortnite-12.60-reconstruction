@@ -22,6 +22,22 @@ void AFortCreativeMoveTool::ClientStopInteracting_Implementation()
 	// Body not recovered: reflection-derived stub.
 }
 
+UObjectInteractionBehavior* AFortCreativeMoveTool::GetActiveMovementMode() const
+{
+	// Original address: 0x1428c2480.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete object pointer read; see bulk_object_runtime/README.md.
+	return ActiveMovementMode;
+}
+
+UFortObjectMoverInputComponent* AFortCreativeMoveTool::GetCreativeMoveToolInputComponent() const
+{
+	// Original address: 0x1428c2510.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete object pointer read; see bulk_object_runtime/README.md.
+	return CreativeMoveToolInputComponent;
+}
+
 uint8 AFortCreativeMoveTool::GetGridSnapIndex() const
 {
 	// Original address: 0x1428c2710.

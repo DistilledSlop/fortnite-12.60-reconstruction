@@ -35,6 +35,9 @@ public:
 	UPROPERTY(SaveGame)
 	FPropertyOverrideData LinkedVolumeProperties;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	AFortVolume* GetLinkedVolume();
+
 	UFUNCTION()
 	void OnRep_LinkedVolume();
 

@@ -400,61 +400,33 @@ public:
 	UPROPERTY()
 	bool bQuestVOEnabled;
 
-	// table index 118, flags 0x1
+	// table index 115, flags 0x10000000010015
 	UPROPERTY()
-	FVector2D PersonnelAndSchematicCardSizes;
+	TMap<EFortItemCardSize, FVector2D> PersonnelAndSchematicCardSizes;
 
-	// table index 116, flags 0x1
+	// table index 111, flags 0x10000000010015
 	UPROPERTY()
-	EFortItemCardSize PersonnelAndSchematicCardSizes_Key;
+	TMap<EFortItemCardSize, FVector2D> OtherItemCardSizes;
 
-	// table index 114, flags 0x1
+	// table index 107, flags 0x14000000010001
 	UPROPERTY()
-	FVector2D OtherItemCardSizes;
+	TMap<EFortItemCardSize, TSoftObjectPtr<UMaterialInterface>> PersonnelAndSchematicItemCardMaterial;
 
-	// table index 112, flags 0x1
+	// table index 103, flags 0x14000000010001
 	UPROPERTY()
-	EFortItemCardSize OtherItemCardSizes_Key;
+	TMap<EFortItemCardSize, TSoftObjectPtr<UMaterialInterface>> CardPackItemCardMaterial;
 
-	// table index 110, flags 0x4000000000001
+	// table index 99, flags 0x14000000010001
 	UPROPERTY()
-	TSoftObjectPtr<UMaterialInterface> PersonnelAndSchematicItemCardMaterial;
+	TMap<EFortItemCardSize, TSoftObjectPtr<UMaterialInterface>> InstanceItemCardMaterial;
 
-	// table index 108, flags 0x1
+	// table index 95, flags 0x14000000010001
 	UPROPERTY()
-	EFortItemCardSize PersonnelAndSchematicItemCardMaterial_Key;
+	TMap<EFortItemCardSize, TSoftObjectPtr<UMaterialInterface>> TransformKeyItemCardMaterial;
 
-	// table index 106, flags 0x4000000000001
+	// table index 91, flags 0x14000000010001
 	UPROPERTY()
-	TSoftObjectPtr<UMaterialInterface> CardPackItemCardMaterial;
-
-	// table index 104, flags 0x1
-	UPROPERTY()
-	EFortItemCardSize CardPackItemCardMaterial_Key;
-
-	// table index 102, flags 0x4000000000001
-	UPROPERTY()
-	TSoftObjectPtr<UMaterialInterface> InstanceItemCardMaterial;
-
-	// table index 100, flags 0x1
-	UPROPERTY()
-	EFortItemCardSize InstanceItemCardMaterial_Key;
-
-	// table index 98, flags 0x4000000000001
-	UPROPERTY()
-	TSoftObjectPtr<UMaterialInterface> TransformKeyItemCardMaterial;
-
-	// table index 96, flags 0x1
-	UPROPERTY()
-	EFortItemCardSize TransformKeyItemCardMaterial_Key;
-
-	// table index 94, flags 0x4000000000001
-	UPROPERTY()
-	TSoftObjectPtr<UMaterialInterface> CosmeticItemCardMaterial;
-
-	// table index 92, flags 0x1
-	UPROPERTY()
-	EFortItemCardSize CosmeticItemCardMaterial_Key;
+	TMap<EFortItemCardSize, TSoftObjectPtr<UMaterialInterface>> CosmeticItemCardMaterial;
 
 	// table index 88, flags 0x10000000010001
 	UPROPERTY()
@@ -464,13 +436,9 @@ public:
 	UPROPERTY()
 	TSet<EFortItemType> ItemTypesToHideCountWhenCountEqualsOne;
 
-	// table index 84, flags 0x4000000000001
+	// table index 81, flags 0x14000000010001
 	UPROPERTY()
-	TSoftObjectPtr<UMaterialInterface> ItemCardDetailAreaMaterial;
-
-	// table index 82, flags 0x1
-	UPROPERTY()
-	EFortItemCardSize ItemCardDetailAreaMaterial_Key;
+	TMap<EFortItemCardSize, TSoftObjectPtr<UMaterialInterface>> ItemCardDetailAreaMaterial;
 
 	// table index 80, flags 0x14000000010001
 	UPROPERTY()
@@ -488,21 +456,13 @@ public:
 	UPROPERTY()
 	TMap<FGameplayTag, TSoftObjectPtr<UTexture2D>> DefenderSubtypeWeaponTextures;
 
-	// table index 74, flags 0x4000000000001
+	// table index 71, flags 0x14000000010041
 	UPROPERTY()
-	TSoftObjectPtr<UMaterialInterface> EnchantedCustomRatingBlockBackgroundMaterial;
+	TMap<EFortBuffState, TSoftObjectPtr<UMaterialInterface>> EnchantedCustomRatingBlockBackgroundMaterial;
 
-	// table index 72, flags 0x1
+	// table index 67, flags 0x14000000010041
 	UPROPERTY()
-	EFortBuffState EnchantedCustomRatingBlockBackgroundMaterial_Key;
-
-	// table index 70, flags 0x4000000000001
-	UPROPERTY()
-	TSoftObjectPtr<UMaterialInterface> NormalCustomRatingBlockBackgroundMaterial;
-
-	// table index 68, flags 0x1
-	UPROPERTY()
-	EFortBuffState NormalCustomRatingBlockBackgroundMaterial_Key;
+	TMap<EFortBuffState, TSoftObjectPtr<UMaterialInterface>> NormalCustomRatingBlockBackgroundMaterial;
 
 	// table index 66, flags 0x10000000010001
 	UPROPERTY()

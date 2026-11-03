@@ -35,5 +35,10 @@ public:
 	UPROPERTY(Transient)
 	UFortMulchConfirmationModalWidget* MulchConfirmationModal;
 
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortAccountItem* GetCurrentSlottedItem() const;
+public:
+
 };
 

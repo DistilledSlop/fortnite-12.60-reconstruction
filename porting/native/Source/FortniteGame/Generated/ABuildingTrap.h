@@ -168,6 +168,9 @@ public:
 	UPROPERTY()
 	FGameplayTagContainer AnalyticsTags;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	ABuildingSMActor* GetBuildingAttachedTo() const;
+
 	UFUNCTION()
 	void OnRep_AttachedTo();
 

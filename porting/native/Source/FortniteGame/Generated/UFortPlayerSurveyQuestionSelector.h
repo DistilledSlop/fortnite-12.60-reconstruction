@@ -20,5 +20,8 @@ public:
 	UPROPERTY(Transient)
 	UFortPlayerSurveyBase* Survey;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortPlayerSurveyBase* GetSurvey() const;
+
 };
 

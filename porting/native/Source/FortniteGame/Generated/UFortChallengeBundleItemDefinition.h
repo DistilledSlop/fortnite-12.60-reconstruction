@@ -89,5 +89,8 @@ public:
 	UPROPERTY()
 	bool bHideRewardFromMapChallenges;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetNumQuests() const;
+
 };
 

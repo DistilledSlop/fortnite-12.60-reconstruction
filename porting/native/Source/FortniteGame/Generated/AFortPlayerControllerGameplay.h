@@ -256,6 +256,9 @@ public:
 	UPROPERTY(Replicated, Transient)
 	uint8 bIsCreativeIslandExporterEnabled : 1;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x25c4): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt_0x25c4;
+
 	// table index 6, flags 0x44000000010001
 	UPROPERTY()
 	TArray<TSubclassOf<UCameraModifier>> DefaultCameraModifierClasses;
@@ -295,6 +298,12 @@ public:
 	UFUNCTION(Client, Reliable)
 	void ClientCreativeStopFly();
 	void ClientCreativeStopFly_Implementation();
+
+	UFUNCTION()
+	UFortAmbientAudioController* GetAmbientAudioController();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetLastUsedCreativePropetyFilter();
 
 protected:
 	UFUNCTION()

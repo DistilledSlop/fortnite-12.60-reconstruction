@@ -113,5 +113,8 @@ public:
 	UPROPERTY()
 	TSoftObjectPtr<UAnimMontage> ItemPreviewMontage_Female;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortHeroGameplayDefinition* GetHeroGameplayDefinition();
+
 };
 

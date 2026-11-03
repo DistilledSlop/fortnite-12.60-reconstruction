@@ -2,6 +2,46 @@
 #include "AFortAthenaDoghouseVehicle.h"
 #include "Net/UnrealNetwork.h"
 
+float AFortAthenaDoghouseVehicle::GetAltitudeZ() const
+{
+	// Original address: 0x1427d7dd0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete native storage read; see bulk_native_scalar_runtime/README.md.
+	return NativeRecoveredFloat_0x1284;
+}
+
+float AFortAthenaDoghouseVehicle::GetStandingInPlaceSteeringAngle() const
+{
+	// Original address: 0x1427d7f20.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete native storage read; see bulk_native_scalar_runtime/README.md.
+	return NativeRecoveredFloat_0x14d0;
+}
+
+bool AFortAthenaDoghouseVehicle::IsEngineAutoStartingInAir() const
+{
+	// Original address: 0x1427d7f90.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete native storage read; see bulk_native_scalar_runtime/README.md.
+	return NativeRecoveredBool_0x1249;
+}
+
+bool AFortAthenaDoghouseVehicle::IsEngineOn() const
+{
+	// Original address: 0x1427d7fb0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete native storage read; see bulk_native_scalar_runtime/README.md.
+	return NativeRecoveredBool_0x1245;
+}
+
+bool AFortAthenaDoghouseVehicle::IsStandingInPlace() const
+{
+	// Original address: 0x1427d8120.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete native storage read; see bulk_native_scalar_runtime/README.md.
+	return NativeRecoveredBool_0x1240;
+}
+
 void AFortAthenaDoghouseVehicle::MultiBeginAileronRoll_Implementation(const EAileronRollDirection& Direction)
 {
 	// Body not recovered: reflection-derived stub.

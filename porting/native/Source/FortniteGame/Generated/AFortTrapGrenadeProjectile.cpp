@@ -2,6 +2,14 @@
 #include "AFortTrapGrenadeProjectile.h"
 #include "Net/UnrealNetwork.h"
 
+UFortContextTrapItemDefinition* AFortTrapGrenadeProjectile::GetTrapDefinition()
+{
+	// Original address: 0x142b25fb0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete object pointer read; see bulk_object_runtime/README.md.
+	return TrapDefinition;
+}
+
 void AFortTrapGrenadeProjectile::OnRep_DecoTool()
 {
 	// Body not recovered: reflection-derived stub.

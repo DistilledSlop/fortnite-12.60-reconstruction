@@ -44,5 +44,8 @@ public:
 	UPROPERTY(Transient)
 	UFortPartyMember* CachedPartyMember;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsEmptySlot() const;
+
 };
 
