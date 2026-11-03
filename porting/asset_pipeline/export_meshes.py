@@ -15,6 +15,7 @@ import time
 
 PORTING = Path(__file__).resolve().parents[1]
 DEFAULT_INPUT = Path('/mnt/vibrato/fortnite-extracted-full')
+PREFIX = 'SM_'
 DEFAULT_TOOL = PORTING / 'cue4inspect/bin/Release/net10.0'
 DEFAULT_OUTPUT = PORTING / 'generated/asset_pipeline'
 
@@ -65,8 +66,8 @@ def package_path(value):
     p = PurePosixPath(value)
     if p.is_absolute() or not p.parts or any(x in ('.', '..') for x in p.parts):
         raise ValueError('unsafe package path')
-    if len(p.parts) < 4 or p.parts[:2] != ('FortniteGame', 'Content') or not p.name.startswith('SM_') or p.suffix:
-        raise ValueError('expected extensionless FortniteGame/Content/.../SM_ package')
+    if len(p.parts) < 4 or p.parts[:2] != ('FortniteGame', 'Content') or not p.name.startswith(PREFIX) or p.suffix:
+        raise ValueError('expected extensionless FortniteGame/Content/.../<prefix> package')
     return p.as_posix()
 
 
@@ -174,12 +175,15 @@ def main():
     parser.add_argument('--tool-dir', type=Path, default=DEFAULT_TOOL)
     parser.add_argument('--output', type=Path, default=DEFAULT_OUTPUT)
     parser.add_argument('--package', action='append', help='extensionless package path; repeat for a bounded selection')
+    parser.add_argument('--prefix', default='SM_', choices=('SM_', 'SK_'), help='SM_ static meshes, SK_ skeletal meshes (needs a skeletal-capable --tool-dir)')
     parser.add_argument('--batch', type=int, default=10, help='maximum attempts (1–100)')
     parser.add_argument('--workers', type=int, default=1, help='parallel converters (1–32)')
     parser.add_argument('--timeout', type=int, default=120)
     parser.add_argument('--retry-failed', action='store_true')
     parser.add_argument('--dry-run', action='store_true', help='do not write or run converter')
     args = parser.parse_args()
+    global PREFIX
+    PREFIX = args.prefix
     if not 1 <= args.batch <= 100 or not 1 <= args.workers <= 32 or not 1 <= args.timeout <= 3600:
         parser.error('batch must be 1–100, workers 1–32, timeout 1–3600 seconds')
     root, tool, output = args.input_root.resolve(), args.tool_dir.resolve(), args.output.resolve()
@@ -191,7 +195,7 @@ def main():
         parser.error('output must be outside the input tree')
     tool_id = tool_fingerprint(tool)
     names = sorted(set(package_path(p) for p in args.package)) if args.package else sorted(
-        p.relative_to(root).with_suffix('').as_posix() for p in (root / 'FortniteGame/Content').rglob('SM_*.uasset'))
+        p.relative_to(root).with_suffix('').as_posix() for p in (root / 'FortniteGame/Content').rglob(PREFIX + '*.uasset'))
     def run():
         state_path = output / 'state.json'
         state = json.loads(state_path.read_text()) if state_path.exists() else {'version':1, 'input_root':str(root), 'records':{}}

@@ -739,6 +739,7 @@ def _load_local_stems():
     # follow it, so walk its resolved target.
     return {"local": _load_dir_stems("porting/generated/converted")
             | _load_dir_stems(os.path.realpath(os.path.join(REPO, "porting/generated/asset_pipeline/glb")))
+            | _load_dir_stems(os.path.realpath(os.path.join(REPO, "porting/generated/asset_pipeline_skeletal/glb")))
             | _load_dir_stems("porting/native/Content"),
             "native": _load_dir_stems("porting/native/Content")}
 

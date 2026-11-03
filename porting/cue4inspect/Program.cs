@@ -11,6 +11,7 @@ using CUE4Parse.UE4.Assets.Readers;
 using CUE4Parse.UE4.Assets.Exports;
 using CUE4Parse.UE4.AssetRegistry;
 using CUE4Parse.UE4.Assets.Exports.StaticMesh;
+using CUE4Parse.UE4.Assets.Exports.SkeletalMesh;
 using CUE4Parse.UE4.Assets.Exports.Actor;
 using CUE4Parse.UE4.Assets.Exports.Component.Landscape;
 using CUE4Parse.UE4.Assets.Exports.Component;
@@ -166,12 +167,24 @@ if (closureOutputArgument is not null)
 
 try
 {
+    // Fortnite 12.60 cooked packages are unversioned, so CUE4Parse guesses custom
+    // versions from EGame. Its 4.25 guess for FAnimObjectVersion includes
+    // IncreaseBoneIndexLimitPerChunk/UnlimitedBoneInfluences, but 12.60 skin
+    // weight buffers still use the legacy layout (bExtraBoneInfluences, stride,
+    // NumVertices, bulk weights; no bUse16BitBoneIndex).
+    var customVersions = new CUE4Parse.UE4.Objects.Core.Serialization.FCustomVersionContainer(
+    [
+        new CUE4Parse.UE4.Objects.Core.Serialization.FCustomVersion(FAnimObjectVersion.GUID,
+            (int) FAnimObjectVersion.Type.SerializeRigVMRegisterArrayState)
+    ]);
     var versions = new VersionContainer(ue426 ? EGame.GAME_UE4_26 : EGame.GAME_UE4_25_Plus,
+        customVersions: customVersions,
         optionOverrides: new Dictionary<string, bool>
         {
             ["StaticMesh.Fortnite1260NoForceOpaque"] = true,
             ["RawIndexBuffer.HasShouldExpandTo32Bit"] = false,
-            ["StaticMesh.HasRayTracingGeometry"] = false
+            ["StaticMesh.HasRayTracingGeometry"] = false,
+            ["SkeletalMesh.HasRayTracingData"] = false
         });
     var provider = loose
         ? new DefaultFileProvider(new DirectoryInfo(Path.Combine(sourceDirectory, "FortniteGame")),
@@ -991,6 +1004,34 @@ try
     }
     if (exportGlb)
     {
+        // Resolve only SkeletalMesh exports so unrelated exports (anim sequences,
+        // physics assets) are not deserialized just to locate the mesh.
+        var skinned = packageData is Package skeletalPackage
+            ? skeletalPackage.ExportMap.Select((export, index) => (export, index))
+                .Where(entry => entry.export.ClassName == "SkeletalMesh")
+                .Select(entry => skeletalPackage.ExportsLazy[entry.index].Value)
+                .OfType<USkeletalMesh>().FirstOrDefault()
+            : packageData.GetExports().OfType<USkeletalMesh>().FirstOrDefault();
+        if (skinned is not null)
+        {
+            using var skeletalDto = new SkeletalMeshDto(skinned, EMeshQuality.Highest, exportMorphTarget: false);
+            var skeletalOptions = new ExportOptions(meshFormat: EMeshFormat.Gltf2, exportMaterials: false);
+            var skeletalFiles = new GltfMeshFormat().BuildSkeletalMesh(skinned.Name, assetPath!, skeletalOptions, skeletalDto);
+            var skeletalDestination = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "../../../../generated/converted"));
+            var skeletalRelative = assetPath!.Replace('\\', '/').TrimStart('/');
+            if (skeletalRelative.Split('/').Any(part => part is ".." or "."))
+                throw new InvalidDataException("Unsafe asset path");
+            foreach (var file in skeletalFiles)
+            {
+                var target = Path.GetFullPath(Path.Combine(skeletalDestination, skeletalRelative + file.NameSuffix + "." + file.Extension));
+                if (!target.StartsWith(skeletalDestination + Path.DirectorySeparatorChar, StringComparison.Ordinal))
+                    throw new InvalidDataException("Export path escapes output directory");
+                Directory.CreateDirectory(Path.GetDirectoryName(target)!);
+                File.WriteAllBytes(target, file.Data);
+                Console.WriteLine($"Exported {target} ({file.Data.Length} bytes)");
+            }
+            return 0;
+        }
         var mesh = packageData.GetExports().OfType<UStaticMesh>().FirstOrDefault()
             ?? throw new InvalidDataException("Package has no static mesh export");
         if (packageData is Package meshPackage)
