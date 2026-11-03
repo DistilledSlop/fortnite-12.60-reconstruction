@@ -1,0 +1,48 @@
+{
+  "functions": [
+    {
+      "function": "GetEncounterDirectionFromVector",
+      "wrapper": "porting/generated/native107-broad/0x142794000.c",
+      "native": "porting/generated/native107-impl/0x14165abf0.c",
+      "notes": "Normalizes the input, obtains its yaw, and rounds to one of eight 45-degree sectors."
+    },
+    {
+      "function": "GetVectorFromEncounterDirection",
+      "wrapper": "porting/generated/native107-broad/0x142794230.c",
+      "native": "porting/generated/native107-impl/0x141660150.c",
+      "notes": "Converts the direction ordinal to a 45-degree yaw and normalizes its forward vector."
+    },
+    {
+      "function": "IsAnyActiveEncounterRelevantToDefender",
+      "wrapper": "porting/generated/native107-broad/0x142794400.c",
+      "native": "porting/generated/native107-impl/0x141663310.c",
+      "direct_goal_lookup": "porting/generated/native93-final/0x140680300.c",
+      "direct_goal_lookup_asm": "porting/generated/native93-final/0x140680300.asm"
+    },
+    {
+      "function": "IsAnyActiveEncounterRelevantToPlayer",
+      "wrapper": "porting/generated/native107-broad/0x142794490.c",
+      "native": "porting/generated/native107-impl/0x1416633a0.c",
+      "direct_goal_lookup": "porting/generated/native93-final/0x140680300.c",
+      "direct_goal_lookup_asm": "porting/generated/native93-final/0x140680300.asm"
+    },
+    {
+      "function": "IsAnyEncounterGoalWithinDistanceOfPoint",
+      "wrapper": "porting/generated/native107-broad/0x142794520.c",
+      "native": "porting/generated/native107-impl/0x141663430.c",
+      "direct_goal_lookup": "porting/generated/native93-final/0x140680300.c",
+      "direct_goal_lookup_asm": "porting/generated/native93-final/0x140680300.asm"
+    },
+    {
+      "function": "GetRiftsFromClosestActiveEncounterTo",
+      "wrapper": "porting/generated/native107-broad/0x142794150.c",
+      "native": "porting/generated/native107-impl/0x14165eec0.c",
+      "closest_goal": "porting/generated/native326-callees/0x14165d0f0.c",
+      "goal_data_lookup": "porting/generated/native331-callees/0x14165e4e0.c",
+      "direct_null_helper": "porting/generated/native93-final/0x140680300.asm",
+      "rift_extraction": "porting/generated/native326-callees/0x141697420.c",
+      "typed_layout": "porting/native/Source/FortniteGame/Generated/FFortAIEncounterSpawnArea.h"
+    }
+  ],
+  "unresolved": "Three candidates depend on typed patrol ward or AI octree helpers."
+}

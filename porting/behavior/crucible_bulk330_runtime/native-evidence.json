@@ -1,0 +1,20 @@
+[
+  {
+    "function": "GetLatestCourseResults",
+    "wrapper_capture": "porting/generated/native103-broad/0x1427fa2e0.c",
+    "body_capture": "porting/generated/native103-impl/0x141ad7bc0.c",
+    "proof": "Reflected result fields/segment reverse search, preserving ordered comparisons including NaN, exact miss defaults; world clock uses World TimeSeconds and reflected LatestServerTime plus existing recovered 0x52c receipt time."
+  },
+  {
+    "function": "GetLatestSegmentResults",
+    "wrapper_capture": "porting/generated/native245-fresh-bulk/0x1427fa3e0.c",
+    "body_capture": "porting/generated/native247-fresh-callees/0x141ad7c10.c",
+    "proof": "Reflected result fields/segment reverse search, preserving ordered comparisons including NaN, exact miss defaults; world clock uses World TimeSeconds and reflected LatestServerTime plus existing recovered 0x52c receipt time."
+  },
+  {
+    "function": "GetServerTimeContinuous",
+    "wrapper_capture": "porting/generated/native103-broad/0x1427fa9d0.c",
+    "body_capture": "porting/generated/native103-impl/0x141ad9360.c",
+    "proof": "Reflected result fields/segment reverse search, preserving ordered comparisons including NaN, exact miss defaults; world clock uses World TimeSeconds and reflected LatestServerTime plus existing recovered 0x52c receipt time."
+  }
+]

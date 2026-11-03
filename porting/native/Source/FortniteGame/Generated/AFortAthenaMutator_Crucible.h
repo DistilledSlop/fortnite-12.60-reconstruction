@@ -14,6 +14,7 @@
 #include "FCrucibleLeaderboardUpdated.h"
 #include "FCrucibleParticipantBestTimesUpdated.h"
 #include "FCrucibleSegmentData.h"
+#include "FCrucibleSegmentResults.h"
 #include "FCrucibleStatValue.h"
 
 #include "AFortAthenaMutator_Crucible.generated.h"
@@ -66,6 +67,12 @@ public:
 	bool GetCourseSegmentData(int32 SegmentId, FCrucibleSegmentData& OutSegmentData) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FCrucibleCourseResults GetLatestCourseResults(bool& OutIsInProgress, bool& OutHasBeenCanceled) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetLatestSegmentResults(int32 SegmentId, FCrucibleSegmentResults& OutSegmentResults, bool& OutIsInProgress, bool& OutHasBeenCanceled) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetLatestServerTime() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
@@ -73,6 +80,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool GetParticipantBestTime(EFortCrucibleStatId StatId, FCrucibleStatValue& OutStatValue) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetServerTimeContinuous() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsLeaderboardFilterTextDisabled() const;

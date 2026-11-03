@@ -7,10 +7,13 @@
 #include "Components/ActorComponent.h"
 
 #include "ETimerOverrideSetting.h"
+#include "Engine/EngineTypes.h"
 #include "FMissionTimeDisplayData.h"
 #include "FMissionTimerData.h"
 #include "FOnMissionTimerComponentUpdated.h"
 #include "FOnMissionTimerTimeAddedOrRemoved.h"
+#include "TimerManager.h"
+#include "UObject/ScriptDelegates.h"
 
 #include "UFortMissionTimerComponent.generated.h"
 
@@ -44,6 +47,12 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_TimerData)
 	FMissionTimerData TimerData;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x100): not a UPROPERTY, not replicated.
+	FScriptDelegate NativeRecoveredTimerDelegate;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x110): not a UPROPERTY, not replicated.
+	FTimerHandle NativeRecoveredTimerHandle;
+
 	// table index 3, flags 0x20080000010021
 	UPROPERTY(Replicated)
 	FText TimerLabelText;
@@ -64,7 +73,22 @@ public:
 	void AddOrRemoveTime(float TimeToAdd);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FMissionTimeDisplayData GetCorrectTimeDisplayData() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetMissionTimerTimeElapsed() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetMissionTimerTimeRemaining() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetNormalizedTime() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsMissionTimerPaused() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsTimerVisible() const;
 
 	UFUNCTION()
 	void OnRep_TimerData();
@@ -74,6 +98,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void SetTimerDisplayFormat(bool bNewDisplayInTimeFormat);
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void SetTimerLabelText(FText NewLabelText);
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

@@ -28,9 +28,11 @@
 #include "FUtilityData.h"
 #include "FUtilityTypeFloatPair.h"
 #include "GameplayTagContainer.h"
+#include "Math/Vector.h"
 #include "UFortPatrolWardInterface.h"
 
 class ABuildingProp_AISpawner;
+class ABuildingRift;
 class AFortAIController;
 class AFortAIPawn;
 class AFortPawn;
@@ -407,8 +409,26 @@ public:
 	UPROPERTY(Transient)
 	TArray<ABuildingProp_AISpawner*> RegisteredAISpawners;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static TEnumAsByte<EFortEncounterDirection::Type> GetEncounterDirectionFromVector(FVector DirectionVector);
+
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	int32 GetNumActiveEncounters();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	TArray<ABuildingRift*> GetRiftsFromClosestActiveEncounterTo(AActor* Target) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static FVector GetVectorFromEncounterDirection(EFortEncounterDirection::Type Direction);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsAnyActiveEncounterRelevantToDefender(AFortAIPawn* Defender) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsAnyActiveEncounterRelevantToPlayer(AFortPlayerPawn* Player) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsAnyEncounterGoalWithinDistanceOfPoint(FVector& Point, float Distance, bool bOnlyActiveEncounters) const;
 
 };
 
