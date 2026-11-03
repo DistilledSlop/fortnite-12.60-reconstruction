@@ -66,11 +66,12 @@ def human(n):
 
 
 def badge(label, message, color, logo=None):
-    q = {"label": label, "message": str(message), "color": color, "style": "flat-square", "labelColor": "1f2328"}
+    """Default shields.io flat badge as an <img>, so it can sit in an HTML table cell."""
+    q = {"label": label, "message": str(message), "color": color}
     if logo:
         q["logo"] = logo
-        q["logoColor"] = "white"
-    return f"![{label}: {message}](https://img.shields.io/static/v1?{urllib.parse.urlencode(q, quote_via=urllib.parse.quote)})"
+    url = "https://img.shields.io/static/v1?" + urllib.parse.urlencode(q, quote_via=urllib.parse.quote)
+    return f'<img alt="{label}: {message}" src="{url.replace("&", "&amp;")}">'
 
 
 def badges(d):
@@ -79,46 +80,54 @@ def badges(d):
     checks = sum(l.get("total") or 0 for l in leaves)
     passed = sum(l.get("done") or 0 for l in leaves)
     parity = re.search(r"([\d,]+) of ([\d,]+) generated classes", " ".join(m.get("evidence", "") for m in d["milestones"]))
-    rows = [
-        [  # progress
+    cols = [
+        ("Progress", [
             badge("overall", f"{d['overall_pct']:.1f}%", "2a78d6"),
             badge("evidence-based", f"{d['measured_pct']:.1f}%", "3987e5"),
             badge("objective", f"{d['objective_pct']:.1f}%", "5a9cec"),
             badge("milestones", f"{d['milestones_done']}/{d['milestones_total']}", "d6a02a"),
-            badge("snapshot", d["head"][:8], "52514e", "git"),
-        ],
-        [  # target
+            badge("snapshot", d["head"][:8], "9f9f9f", "git"),
+        ]),
+        ("Target", [
             badge("Fortnite", "12.60", "7d4cdb", "epicgames"),
             badge("build", "CL 13477524", "6a3fc4"),
             badge("Unreal Engine", "4.25.0", "0e1128", "unrealengine"),
-            badge("platform", "Linux x86_64", "e8a317", "linux"),
+            badge("platform", "Linux x64", "e8a317", "linux"),
             badge("renderer", "Vulkan", "a41e22", "vulkan"),
-            badge("paks", "31 · v10", "52514e"),
+            badge("paks", "31 · v10", "9f9f9f"),
             badge("oracle", "Wine", "722f37", "wine"),
-        ],
-        [  # stack
+        ]),
+        ("Stack", [
             badge("C++", f"{human(st['cpp'])} files", "00599c", "cplusplus"),
             badge("Python", f"{st['py']} scripts", "3776ab", "python"),
             badge("C#", f"{st['cs']} files", "512bd4"),
             badge("shell", f"{st['sh']} scripts", "4eaa25", "gnubash"),
             badge("code", f"{human(st['loc'])} lines", "2f6f4f"),
-        ],
-        [  # scale and evidence
-            badge("commits", human(st["commits"]), "1f6feb", "git"),
-            badge("tracked files", human(st["files"]), "1f6feb"),
+        ]),
+        ("Evidence", [
             badge("areas", len(d["groups"]), "0e7490"),
             badge("components", len(leaves), "0e7490"),
-            badge("work units done", f"{human(passed)}/{human(checks)}", "0e7490"),
+            badge("units done", f"{human(passed)}/{human(checks)}", "0e7490"),
             *([badge("class parity", f"{parity.group(1)}/{parity.group(2)}", "2e8540")] if parity else []),
-            badge("since", st["first"], "52514e"),
-        ],
-        [  # process
+        ]),
+        ("History", [
+            badge("commits", human(st["commits"]), "1f6feb", "git"),
+            badge("tracked files", human(st["files"]), "1f6feb"),
+            badge("since", st["first"], "9f9f9f"),
             badge("status", "work in progress", "d6a02a"),
             badge("authored by", "Codex", "10a37f"),
             badge("co-authored by", "Claude", "d97757", "anthropic"),
-        ],
+        ]),
     ]
-    return "\n".join([BSTART, *("\n" + " ".join(r) for r in rows), "", BEND])
+    depth = max(len(c) for _, c in cols)
+    out = [BSTART, '<table align="center">', "<thead><tr>"]
+    out += [f'<th align="center">{title}</th>' for title, _ in cols]
+    out += ["</tr></thead>", "<tbody>"]
+    for i in range(depth):
+        cells = "".join(f'<td align="center" valign="middle">{c[i] if i < len(c) else ""}</td>' for _, c in cols)
+        out.append(f"<tr>{cells}</tr>")
+    out += ["</tbody>", "</table>", BEND]
+    return "\n".join(out)
 
 
 def block(d):
