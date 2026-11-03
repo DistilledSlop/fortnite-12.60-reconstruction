@@ -101,6 +101,9 @@ public:
 	EFortQuestState GetQuestState() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool HasCompletedQuest() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsQuestInProgress() const;
 
 };

@@ -7,6 +7,7 @@
 #include "UFortAccountItem.h"
 
 #include "Misc/DateTime.h"
+#include "Misc/Timespan.h"
 
 #include "UFortExpeditionItem.generated.h"
 
@@ -58,6 +59,21 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetExpeditionSuccessChance() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetMinTargetPowerLevelToBegin() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FTimespan GetRemainingExpeditionDuration(FDateTime UtcNow) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FTimespan GetRemainingExpeditionExpirationDuration(FDateTime UtcNow) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetTargetPowerLevel() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsExpeditionInProgress() const;
 
 };
 

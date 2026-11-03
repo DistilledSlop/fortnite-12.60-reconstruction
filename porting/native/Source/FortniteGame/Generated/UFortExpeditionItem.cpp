@@ -9,3 +9,38 @@ float UFortExpeditionItem::GetExpeditionSuccessChance() const
 	return expedition_success_chance;
 }
 
+float UFortExpeditionItem::GetMinTargetPowerLevelToBegin() const
+{
+	// CONFIDENCE: HIGH
+	// Signed integer at +0xec converted to float.
+	return static_cast<float>(expedition_min_target_power);
+}
+
+FTimespan UFortExpeditionItem::GetRemainingExpeditionDuration(FDateTime UtcNow) const
+{
+	// CONFIDENCE: HIGH
+	// Subtract input ticks from end time at +0xf8.
+	return expedition_end_time - UtcNow;
+}
+
+FTimespan UFortExpeditionItem::GetRemainingExpeditionExpirationDuration(FDateTime UtcNow) const
+{
+	// CONFIDENCE: HIGH
+	// Subtract input ticks from expiration end time at +0x108.
+	return expedition_expiration_end_time - UtcNow;
+}
+
+float UFortExpeditionItem::GetTargetPowerLevel() const
+{
+	// CONFIDENCE: HIGH
+	// Signed integer at +0xe8 converted to float.
+	return static_cast<float>(expedition_max_target_power);
+}
+
+bool UFortExpeditionItem::IsExpeditionInProgress() const
+{
+	// CONFIDENCE: HIGH
+	// Compare end ticks at +0xf8 greater than start ticks at +0xf0.
+	return expedition_end_time > expedition_start_time;
+}
+

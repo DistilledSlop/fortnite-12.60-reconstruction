@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 
+class UFortPlaylistAthena;
+
 #include "UFortPlaylistAthenaHelper.generated.h"
 
 UCLASS()
@@ -14,5 +16,8 @@ class FORTNITEGAME_API UFortPlaylistAthenaHelper : public UBlueprintFunctionLibr
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(BlueprintCallable)
+	static bool ShouldEnterSpawningStartup(UFortPlaylistAthena* Playlist);
+
 };
 

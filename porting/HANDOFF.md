@@ -1,5 +1,37 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Native source batch 55 (2026-11-03)
+
+Canonical generation: 2,014 bodies +171 supporting fields =2,185 accepted entries,
+zero rejections. Sources49-55 recover definition queries, building texture and
+class/texture duplication, conditional navigation refresh, real AFortPawn ability
+interface and AFortWeapon stat virtual, full charge-rate attribute capture/range
+and three charge percentages, damage-material mapping/MID creation and parameter
+copying, and broad definition/item/expedition/quest queries. Native row lookup's
+expected FFortBaseWeaponStats identity is proved by its actual StaticStruct
+registration. Reticle-corner const-reference return is preserved through a guarded
+signature policy rather than relaxed splice checks. Schematic query preserves its
+native cached-level write despite reflected const qualification.
+
+No tests/builds/runtime runs. Last tested1,040;974 bodies pending; next2,040 needs
+26 bodies. Generation and byte-evidence hashing are not build or parity proof.
+All four product milestones and full faithful client/server reconstruction remain
+open. Source count is coverage, not product completion. Previous status-only turn
+was no progress; this turn revalidated current source and committed real progress.
+
+Building energy five-setter proposals remain conditional and uncounted. Actual
+ABuildingActor ability getter lazily creates/configures ASC; its creator and
+initializer still need setting/flag identities, real attribute-set array API and
+virtual initializer recovery. See building_energy51_runtime and building_asc54_runtime
+handoffs. SetTextureData remains uncounted until virtual+b20 mesh/material refresh
+is completely restored; do not replace callbacks or invent default state.
+
+Root owns canonical MANIFEST, generator, native output, integration and commits.
+Terra6.1 medium/low bounded proposal workers, fork none; economical bounded reads,
+rotate finished tasks. Player-state and independent data-query workers are active
+in separately owned proposal directories. Preserve unrelated porting/graphics/.
+
+
 ## Native source batch 42 (2026-11-03)
 
 Source42 f5cfa43a committed/pushed; dashboard published in this checkpoint.

@@ -34,5 +34,8 @@ public:
 	UPROPERTY(Transient)
 	int32 RequiredTeamLevel;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetRequiredTeamLevelToCraft() const;
+
 };
 

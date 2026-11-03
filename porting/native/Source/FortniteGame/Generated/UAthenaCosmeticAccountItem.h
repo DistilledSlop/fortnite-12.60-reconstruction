@@ -38,5 +38,8 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UFortHero* GetHero() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool HasCosmeticVariance() const;
+
 };
 
