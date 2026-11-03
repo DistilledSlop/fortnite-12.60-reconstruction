@@ -196,6 +196,36 @@ public:
 	TSoftObjectPtr<USkeletalMesh> FrontendPreviewSkeletalMeshOverride;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual TArray<FText> GetDescription() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual FSoftObjectPath GetDisplayAssetPath() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual FSoftObjectPath GetHiResDisplayAssetPath() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual TSoftObjectPtr<UTexture2D> GetInactivePreviewImage() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	EFortItemType GetItemType() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	EFortRarity GetRarity() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual FText GetRichDescription() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual FText GetSingleLineDescription() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual TSoftObjectPtr<UTexture2D> GetSmallPreviewImage() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual TSoftObjectPtr<UTexture2D> GetWidePreviewImage() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsInventorySizeLimited() const;
 
 

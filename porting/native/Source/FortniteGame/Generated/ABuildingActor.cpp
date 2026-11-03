@@ -10,6 +10,12 @@
 #include "UFortBuildingActorSet.h"
 #include "Net/UnrealNetwork.h"
 
+void ABuildingActor::AddEditorOnlyInstanceGameplayTags(FGameplayTagContainer& NewTags)
+{
+	// CONFIDENCE: high; The shipping wrapper calls an empty native body.
+	(void)NewTags;
+}
+
 void ABuildingActor::ClearPlayedDying()
 {
 	// CONFIDENCE: high; complete native exec body at 0x142736670.

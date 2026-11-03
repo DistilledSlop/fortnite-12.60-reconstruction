@@ -738,6 +738,9 @@ public:
 	bool DoesHaveOverrideWrap() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual TArray<UFortAlterationItemDefinition*> GetAlterations() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetChargePercent() const;
 
 protected:
@@ -755,6 +758,12 @@ public:
 	float GetCurrentMaxChargePercent() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual float GetFiringRate() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual TArray<FWeaponHudData> GetHudKeyActionData() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	FGuid GetInventoryGUID() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
@@ -766,12 +775,32 @@ protected:
 public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual int32 GetMagazineAmmoCount() const;
+
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual FName GetMuzzleSocketName(int32 PatternIndex) const;
+public:
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetProjectilePitchOffset() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual float GetProjectileSpeed(float ChargePercent) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual float GetRange() const;
 
 protected:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UAnimMontage* GetReloadAnimation() const;
 public:
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual float GetReloadTime() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual FColor GetReticleColor() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool GetSupportsAutoFireAtReticleTargetMode() const;

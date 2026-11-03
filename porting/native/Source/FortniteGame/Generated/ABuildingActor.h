@@ -636,6 +636,9 @@ public:
 	FMarkedActorDisplayInfo MarkerDisplay;
 
 	UFUNCTION(BlueprintCallable)
+	void AddEditorOnlyInstanceGameplayTags(FGameplayTagContainer& NewTags);
+
+	UFUNCTION(BlueprintCallable)
 	void ClearPlayedDying();
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

@@ -34,6 +34,12 @@ bool AFortWeapon::DoesHaveOverrideWrap() const
 	return !OverrideItemWrapSoftPtr.IsNull();
 }
 
+TArray<UFortAlterationItemDefinition*> AFortWeapon::GetAlterations() const
+{
+	// Native target 0x14269ad30; confidence: high.
+	return AppliedAlterations;
+}
+
 float AFortWeapon::GetChargePercent() const
 {
 	// CONFIDENCE: HIGH; see HANDOFF.md.
@@ -94,6 +100,18 @@ float AFortWeapon::GetCurrentMaxChargePercent() const
 	return Value >= 0.0f ? (Value < 1.0f ? Value : 1.0f) : 0.0f;
 }
 
+float AFortWeapon::GetFiringRate() const
+{
+	// Native target 0x1406964e0; confidence: high.
+	return 0.0f;
+}
+
+TArray<FWeaponHudData> AFortWeapon::GetHudKeyActionData() const
+{
+	// Native target 0x140696510; confidence: high.
+	return HudKeyActionData;
+}
+
 FGuid AFortWeapon::GetInventoryGUID() const
 {
 	// Original address: 0x142b45f80.
@@ -118,6 +136,18 @@ bool AFortWeapon::GetIsTargeting() const
 	return AFortWeapon::bIsTargeting;
 }
 
+int32 AFortWeapon::GetMagazineAmmoCount() const
+{
+	// Native target 0x14269d6b0; confidence: high.
+	return AmmoCount;
+}
+
+FName AFortWeapon::GetMuzzleSocketName(int32 PatternIndex) const
+{
+	// Native target 0x140696520; confidence: high.
+	return MuzzleSocketName;
+}
+
 float AFortWeapon::GetProjectilePitchOffset() const
 {
 	// Original address: 0x142b46770.
@@ -126,12 +156,36 @@ float AFortWeapon::GetProjectilePitchOffset() const
 	return ProjectilePitchOffset;
 }
 
+float AFortWeapon::GetProjectileSpeed(float ChargePercent) const
+{
+	// Native target 0x1406964e0; confidence: high.
+	return 0.0f;
+}
+
+float AFortWeapon::GetRange() const
+{
+	// Native target 0x1406964e0; confidence: high.
+	return 0.0f;
+}
+
 UAnimMontage* AFortWeapon::GetReloadAnimation() const
 {
 	// Original address: 0x142b46860.
 	// CONFIDENCE: HIGH
 	// Mechanically matched complete object pointer read; see bulk_object_runtime/README.md.
 	return ReloadAnimation;
+}
+
+float AFortWeapon::GetReloadTime() const
+{
+	// Native target 0x14269e880; confidence: high.
+	return CurrentReloadDuration;
+}
+
+FColor AFortWeapon::GetReticleColor() const
+{
+	// Native target 0x14269ea90; confidence: high.
+	return CurrentReticleColor;
 }
 
 bool AFortWeapon::GetSupportsAutoFireAtReticleTargetMode() const

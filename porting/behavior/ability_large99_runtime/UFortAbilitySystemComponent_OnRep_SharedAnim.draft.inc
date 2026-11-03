@@ -22,9 +22,10 @@ namespace Ability99
 	FTimerDelegate MakeEmoteSoundStateDelegate(UFortAbilitySystemComponent* ASC, UObject* State, TWeakObjectPtr<USceneComponent> Mesh, float Duration);    // 0x145d20190
 	UObject* GetFeedbackLineTarget(AActor* Avatar);   // 0x1424ab210
 	void     PawnEmoteHook(UObject* PawnObject, float Arg, int32 A, int32 B); // vslot 0x528
+	bool     PawnEmoteQuery(UObject* PawnObject); // vslot 0x540
 }
 
-void UFortAbilitySystemComponent::OnRep_SharedAnim_Body(const FGameplayAbilityRepSharedAnim& NewInfo /* == RepSharedAnimInfo, this+0x14d8 */)
+void UFortAbilitySystemComponent::ScheduleSharedAnimNotifies(const FGameplayAbilityRepSharedAnim& NewInfo /* == RepSharedAnimInfo, this+0x14d8 */)
 {
 	// 0x1440b4920: component owner's NetMode; early out only when it equals 1 (NM_DedicatedServer)
 	if (GetNetMode() == NM_DedicatedServer)
@@ -126,6 +127,45 @@ void UFortAbilitySystemComponent::OnRep_SharedAnim_Body(const FGameplayAbilityRe
 					FTimerDelegate D = Ability99::MakeEmoteSoundStateDelegate(this, EmoteState, Cast<USceneComponent>(Mesh), Duration);
 					TimerManager.SetTimer(LocalHandle, D, Delay, false, -1.f);
 				}
+			}
+		}
+	}
+}
+
+// Reflected UFUNCTION wrapper 0x142781830 (this+0x14d8 == RepSharedAnimInfo). Wrapper-tail fully recovered.
+// +0x1340 on the owner is a non-reflected bitfield byte of AFortAIPawn (named bits unresolved); masks reproduced literally.
+// Owner = *(this+0xa0) (UActorComponent::GetOwner); class check 0x1427a1790 = AFortAIPawn; 0x140718890 = FGameplayAbilityActorInfo::IsLocallyControlled (weak PC @+0x18, vslot 0x6a8, else 0x140718920).
+void UFortAbilitySystemComponent::OnRep_SharedAnim()
+{
+	ScheduleSharedAnimNotifies(RepSharedAnimInfo);   // 0x14160c6f0
+
+	AActor* OwnerActor = GetOwner();
+	if (!AbilityActorInfo->IsLocallyControlled() && OwnerActor != nullptr)
+	{
+		if (AFortAIPawn* AIPawn = Cast<AFortAIPawn>(OwnerActor))
+		{
+			uint8& Bits = *(reinterpret_cast<uint8*>(AIPawn) + 0x1340);
+			if ((Bits & 0x10) != 0)
+			{
+				if (UObject* Hook = *reinterpret_cast<UObject**>(reinterpret_cast<uint8*>(AIPawn) + 0x7a8))
+				{
+					if (Ability99::PawnEmoteQuery(Hook))               // vslot 0x540 (UNRESOLVED effect)
+					{
+						Ability99::PawnEmoteHook(Hook, 0.5f, 0, 0);    // vslot 0x528 (UNRESOLVED effect)
+					}
+				}
+			}
+
+			switch (RepSharedAnimInfo.AnimState)
+			{
+			case EFortSharedAnimationState::Anim_Attack:       Bits = (Bits & 0xc3) | 0x01; return;
+			case EFortSharedAnimationState::Anim_Death:        Bits = (Bits & 0xef) | 0x02; return;
+			case EFortSharedAnimationState::Anim_Knockback:
+			case EFortSharedAnimationState::Anim_FullBodyHit:  Bits = (Bits & 0xca) | 0x08; return;
+			case EFortSharedAnimationState::Anim_Dance:        Bits = (Bits & 0xd2) | 0x10; return;
+			case EFortSharedAnimationState::Anim_RangedAttack: Bits = (Bits & 0xe2) | 0x20; return;
+			case EFortSharedAnimationState::Anim_MAX:          return;
+			default:                                           Bits = (Bits & 0xc2); return;
 			}
 		}
 	}

@@ -1,10 +1,11 @@
 // DRAFT - UNCOMPILED, UNCOUNTED. Native 0x1415ec3f0, wrapper/exec 0x1427807f0 (reflected, flags 0x4020401).
 // Reflected params in wrapper step order: GameplayEffectClass, TargetOfEffect, OptionalSourceObject, OptionalEffectCauser,
 //   OptionalDamageSource, Level, EffectContext(by value) -> FActiveGameplayEffectHandle.
-// Unresolved effect declarations (exact addresses):
-//   Ability99::FortContext_SetDamageSource(FGameplayEffectContext*, void* IFortDamageSourceInterfaceAddr)  0x14160d0f0
-//       (writes weak-object into ctx+0xc4 from iface->vslot 8 UObject cast to class 0x142eeab70, and ctx+0xcc <- r8; the r8 third argument is NOT visible in the decompile)
-//   IFortDamageSourceInterface class 0x1428cead0 (/Script/FortniteGame FortDamageSourceInterface); lookup helper 0x142ec9900 (GetInterfaceAddress-style, unverified)
+// Fort custom-context boundary (the ONLY open item): helper 0x14160d0f0 (asm-proven: rcx=Context data, rdx=IFortDamageSourceInterface*, xmm2=float):
+//   writes weak(UObject from iface vslot 0x8, cast to class 0x142eeab70) -> ctx+0xc4 (8B) and movss xmm2 -> ctx+0xcc.
+//   Original 0x1415ec60c..61a: cvttss2si eax,xmm6 ; cvtdq2ps -> SourceLevel = (float)(int32)Level. Continuation past first .pdata range (0x1415ec56f) is covered here.
+//   No FFortGameplayEffectContext type/layout is registered anywhere in porting/native or behavior; the call stays a typed declaration.
+//   0x142ec9900 = UObject::GetInterfaceAddress(UClass*) (proven: native-interface flag 0x4000 check, IsA, interface list walk).
 // Engine bindings proven by dep bodies: 0x1406dd8f0 = FGameplayEffectContextHandle::ToString ("NONE" if no data, else Data->ToString vslot 0x98);
 //   0x142ec9730 = UObject::GetFullName; 0x1406c6ef0 = IGameplayAbilitiesModule::Get().GetAbilitySystemGlobals(); globals vslot 0x270 = AllocGameplayEffectContext;
 //   0x1406ab0b0 = FGameplayEffectContextHandle(FGameplayEffectContext*); Context vslot 0x10 = AddInstigator, 0x48 = AddSourceObject (both vs Engine vtable order);
@@ -12,7 +13,8 @@
 
 namespace Ability99
 {
-	void FortContext_SetDamageSource(FGameplayEffectContext* Context, void* DamageSourceInterface); // 0x14160d0f0, DECLARATION ONLY
+	// 0x14160d0f0: FFortGameplayEffectContext::SetDamageSource(IFortDamageSourceInterface*, float SourceLevel). DECLARATION ONLY; Context must be the Fort context subclass returned by the Fort AbilitySystemGlobals AllocGameplayEffectContext override.
+	void FortContext_SetDamageSource(FGameplayEffectContext* Context, IFortDamageSourceInterface* DamageSource, float SourceLevel);
 }
 
 FActiveGameplayEffectHandle UFortAbilitySystemComponent::BP_FortApplyGameplayEffectToTarget(
@@ -58,9 +60,9 @@ FActiveGameplayEffectHandle UFortAbilitySystemComponent::BP_FortApplyGameplayEff
 			if (OptionalDamageSource != nullptr)
 			{
 				// 0x1428cead0 interface class, 0x142ec9900 lookup
-				if (void* Interface = OptionalDamageSource->GetInterfaceAddress(UFortDamageSourceInterface::StaticClass()))
+				if (IFortDamageSourceInterface* Interface = static_cast<IFortDamageSourceInterface*>(OptionalDamageSource->GetInterfaceAddress(UFortDamageSourceInterface::StaticClass())))
 				{
-					Ability99::FortContext_SetDamageSource(Data, Interface);   // 0x14160d0f0
+					Ability99::FortContext_SetDamageSource(Data, Interface, static_cast<float>(static_cast<int32>(Level)));   // 0x14160d0f0
 				}
 			}
 			if (OptionalSourceObject != nullptr)

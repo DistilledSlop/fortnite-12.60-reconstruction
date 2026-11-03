@@ -9,7 +9,68 @@
 #include "GameplayEffectTypes.h"
 #include "GameplayTagContainer.h"
 #include "UFortPlayerAttrSet.h"
+#include "UObject/NoExportTypes.h"
 #include "UObject/UnrealType.h"
+
+TArray<FText> UFortItemDefinition::GetDescription() const
+{
+	// Native target 0x14202c910; confidence: high.
+	return {Description};
+}
+
+FSoftObjectPath UFortItemDefinition::GetDisplayAssetPath() const
+{
+	// Native target 0x14202c970; confidence: high.
+	return DisplayAssetPath;
+}
+
+FSoftObjectPath UFortItemDefinition::GetHiResDisplayAssetPath() const
+{
+	// Native target 0x14202dd60; confidence: high.
+	return FSoftObjectPath();
+}
+
+TSoftObjectPtr<UTexture2D> UFortItemDefinition::GetInactivePreviewImage() const
+{
+	// Native target 0x14084bd00; confidence: high.
+	return TSoftObjectPtr<UTexture2D>();
+}
+
+EFortItemType UFortItemDefinition::GetItemType() const
+{
+	// Reflected wrapper dispatches to the existing virtual slot owner; confidence: high.
+	return NativeGetItemType();
+}
+
+EFortRarity UFortItemDefinition::GetRarity() const
+{
+	// Reflected wrapper dispatches to the existing virtual slot owner; confidence: high.
+	return NativeGetRarity();
+}
+
+FText UFortItemDefinition::GetRichDescription() const
+{
+	// Native target 0x142032cb0; confidence: high.
+	return GetSingleLineDescription();
+}
+
+FText UFortItemDefinition::GetSingleLineDescription() const
+{
+	// Native target 0x142033050; confidence: high.
+	return Description;
+}
+
+TSoftObjectPtr<UTexture2D> UFortItemDefinition::GetSmallPreviewImage() const
+{
+	// Native target 0x142033150; confidence: high.
+	return SmallPreviewImage;
+}
+
+TSoftObjectPtr<UTexture2D> UFortItemDefinition::GetWidePreviewImage() const
+{
+	// Native target 0x142033a10; confidence: high.
+	return WidePreviewImage.IsNull() ? GetSmallPreviewImage() : WidePreviewImage;
+}
 
 bool UFortItemDefinition::IsInventorySizeLimited() const
 {
