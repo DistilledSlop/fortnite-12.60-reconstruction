@@ -80,54 +80,63 @@ def badges(d):
     checks = sum(l.get("total") or 0 for l in leaves)
     passed = sum(l.get("done") or 0 for l in leaves)
     parity = re.search(r"([\d,]+) of ([\d,]+) generated classes", " ".join(m.get("evidence", "") for m in d["milestones"]))
-    cols = [
-        ("Progress", [
+    def tone(pct):
+        return "2e8540" if pct >= 50 else "97ca00" if pct >= 25 else "dfb317" if pct >= 10 else "fe7d37" if pct >= 5 else "e05d44"
+
+    short = {"platform": "platform", "assets": "assets", "maps": "maps", "gameplay": "gameplay",
+             "net": "network", "backend": "backend", "audio": "audio", "visuals": "visuals", "ui": "frontend UI"}
+    area = {g["id"]: badge(short.get(g["id"], g["id"]), f"{g['pct']:.1f}%", tone(g["pct"])) for g in d["groups"]}
+    areas = [area[k] for k in short if k in area]
+    rows = [
+        [  # progress
             badge("overall", f"{d['overall_pct']:.1f}%", "2a78d6"),
             badge("evidence-based", f"{d['measured_pct']:.1f}%", "3987e5"),
             badge("objective", f"{d['objective_pct']:.1f}%", "5a9cec"),
             badge("milestones", f"{d['milestones_done']}/{d['milestones_total']}", "d6a02a"),
+            badge("units done", f"{human(passed)}/{human(checks)}", "0e7490"),
             badge("snapshot", d["head"][:8], "9f9f9f", "git"),
-        ]),
-        ("Target", [
+        ],
+        [  # target
             badge("Fortnite", "12.60", "7d4cdb", "epicgames"),
             badge("build", "CL 13477524", "6a3fc4"),
             badge("Unreal Engine", "4.25.0", "0e1128", "unrealengine"),
             badge("platform", "Linux x64", "e8a317", "linux"),
             badge("renderer", "Vulkan", "a41e22", "vulkan"),
-            badge("paks", "31 · v10", "9f9f9f"),
             badge("oracle", "Wine", "722f37", "wine"),
-        ]),
-        ("Stack", [
+        ],
+        [  # stack
             badge("C++", f"{human(st['cpp'])} files", "00599c", "cplusplus"),
             badge("Python", f"{st['py']} scripts", "3776ab", "python"),
             badge("C#", f"{st['cs']} files", "512bd4"),
             badge("shell", f"{st['sh']} scripts", "4eaa25", "gnubash"),
             badge("code", f"{human(st['loc'])} lines", "2f6f4f"),
-        ]),
-        ("Evidence", [
-            badge("areas", len(d["groups"]), "0e7490"),
-            badge("components", len(leaves), "0e7490"),
-            badge("units done", f"{human(passed)}/{human(checks)}", "0e7490"),
-            *([badge("class parity", f"{parity.group(1)}/{parity.group(2)}", "2e8540")] if parity else []),
-        ]),
-        ("History", [
-            badge("commits", human(st["commits"]), "1f6feb", "git"),
             badge("tracked files", human(st["files"]), "1f6feb"),
+        ],
+        [  # game data (counts from porting/README.md "Current evidence")
+            badge("pak entries", "963,427", "5b4a8a"),
+            badge(".uasset", "450,951", "5b4a8a"),
+            badge("maps", "3,694", "5b4a8a"),
+            badge("plugins", "123", "5b4a8a"),
+            badge("modules", "6", "5b4a8a"),
+            badge("API routes", "59", "5b4a8a"),
+        ],
+        areas[:6],
+        [
+            *areas[6:],
+            badge("components", len(leaves), "0e7490"),
+            badge("areas", len(d["groups"]), "0e7490"),
+            *([badge("class parity", f"{parity.group(1)}/{parity.group(2)}", "2e8540")] if parity else []),
+        ],
+        [  # process
+            badge("commits", human(st["commits"]), "1f6feb", "git"),
             badge("since", st["first"], "9f9f9f"),
-            badge("status", "work in progress", "d6a02a"),
+            badge("status", "work in progress", "dfb317"),
             badge("authored by", "Codex", "10a37f"),
             badge("co-authored by", "Claude", "d97757", "anthropic"),
-        ]),
+            badge("decompiler", "Ghidra", "9f9f9f"),
+        ],
     ]
-    depth = max(len(c) for _, c in cols)
-    out = [BSTART, '<table align="center">', "<thead><tr>"]
-    out += [f'<th align="center">{title}</th>' for title, _ in cols]
-    out += ["</tr></thead>", "<tbody>"]
-    for i in range(depth):
-        cells = "".join(f'<td align="center" valign="middle">{c[i] if i < len(c) else ""}</td>' for _, c in cols)
-        out.append(f"<tr>{cells}</tr>")
-    out += ["</tbody>", "</table>", BEND]
-    return "\n".join(out)
+    return "\n".join([BSTART, *(f'<p align="center">{" ".join(r)}</p>' for r in rows), BEND])
 
 
 def block(d):
