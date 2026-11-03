@@ -149,5 +149,8 @@ public:
 	UPROPERTY()
 	AFortPlayerControllerSpectating* SpectatingPC;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetMaxMapZoomLevel() const;
+
 };
 

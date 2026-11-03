@@ -24,9 +24,15 @@ public:
 	UPROPERTY()
 	int32 CurrentIndexInStepperValue;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x274): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x274;
+
 	// table index 0, flags 0x4000000008001c
 	UPROPERTY()
 	UCommonButton* Button_Collapse;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetIsModified();
 
 };
 

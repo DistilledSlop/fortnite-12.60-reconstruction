@@ -118,6 +118,12 @@ public:
 	UPROPERTY()
 	TSubclassOf<UGameplayEffect> PlayerCollisionGameplayEffect;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x505): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x505;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x507): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x507;
+
 	// table index 20, flags 0x40000100002020
 	UPROPERTY(ReplicatedUsing=OnRep_CorrectTargetOrientation, Transient)
 	FVehicleTargetOrientation CorrectTargetOrientation;
@@ -203,6 +209,12 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool HasPermissionToAlterBuildings() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsAsleep() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsInWater() const;
 
 private:
 	UFUNCTION()

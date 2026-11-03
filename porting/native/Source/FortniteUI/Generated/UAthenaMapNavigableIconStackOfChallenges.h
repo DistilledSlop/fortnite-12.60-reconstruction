@@ -17,6 +17,12 @@ class FORTNITEUI_API UAthenaMapNavigableIconStackOfChallenges : public UAthenaMa
 	GENERATED_BODY()
 
 public:
+	// Non-reflected field (behaviour kind "member_field", offset 0x2d0): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt_0x2d0;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x2d8): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt_0x2d8;
+
 	// table index 1, flags 0x20080000080008
 	UPROPERTY()
 	UCommonActionWidget* CommonActionWidget_Cycle;
@@ -24,6 +30,12 @@ public:
 	// table index 0, flags 0x20080000000001
 	UPROPERTY()
 	FDataTableRowHandle CycleStackInputAction;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetSelectStackedDataIndex() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetStackedDataCount() const;
 
 };
 

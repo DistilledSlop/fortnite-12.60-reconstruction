@@ -9,3 +9,11 @@ int32 UInfiltrationStatusWidget::GetNumOfRounds() const
 	return 4;
 }
 
+bool UInfiltrationStatusWidget::IsCurrentlyADraw() const
+{
+	// Original address: 0x1453386b0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete native storage read; see bulk_sized_scalar_runtime/README.md.
+	return NativeRecoveredBool_0x42c;
+}
+

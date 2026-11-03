@@ -92,5 +92,23 @@ public:
 	UPROPERTY()
 	UFortQuestMapData* QuestMapData;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x568): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x568;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x569): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x569;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x578): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt_0x578;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetEventCount() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetIsExpanded() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetIsFaded() const;
+
 };
 

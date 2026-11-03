@@ -44,5 +44,17 @@ public:
 	UPROPERTY()
 	FName StatTeamCumulativeCurveName;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x278): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt_0x278;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x27c): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x27c;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetCurrentResearchLevel() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsAtMaxResearchLevel() const;
+
 };
 

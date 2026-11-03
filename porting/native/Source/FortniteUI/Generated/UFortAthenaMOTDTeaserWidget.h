@@ -26,9 +26,17 @@ public:
 	UPROPERTY()
 	TSubclassOf<UFortAthenaMOTDSimpleNewsWidget> MOTDSimpleNewsWidgetClass;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x468): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt_0x468;
+
 	// table index 0, flags 0x4000000008001c
 	UPROPERTY()
 	UFortAthenaMOTDTileListView* FortAthenaMOTDTileListView;
+
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetNewsCount() const;
+public:
 
 };
 

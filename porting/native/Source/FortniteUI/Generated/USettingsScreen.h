@@ -17,6 +17,9 @@ class FORTNITEUI_API USettingsScreen : public UFortActivatablePanel
 	GENERATED_BODY()
 
 public:
+	// Non-reflected field (behaviour kind "member_field", offset 0x448): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x448;
+
 	// table index 1, flags 0x4000000008001c
 	UPROPERTY()
 	UFortSettingsPanel* Settings_Panel;
@@ -24,6 +27,11 @@ public:
 	// table index 0, flags 0x40000000002000
 	UPROPERTY(Transient)
 	UFortSettingRegistry* Registry;
+
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool HaveSettingsBeenChanged() const;
+public:
 
 };
 

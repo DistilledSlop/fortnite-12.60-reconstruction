@@ -44,5 +44,11 @@ public:
 	UPROPERTY()
 	UBacchusActionButton* Button_DBNOCarryThrow;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x4f8): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x4f8;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetShowAllTimeTime() const;
+
 };
 

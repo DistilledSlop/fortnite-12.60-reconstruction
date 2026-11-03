@@ -109,5 +109,10 @@ public:
 	UPROPERTY(Transient)
 	float ScheduleTime;
 
+protected:
+	UFUNCTION(BlueprintCallable)
+	bool IsLiveSpectateButtonEnabled();
+public:
+
 };
 

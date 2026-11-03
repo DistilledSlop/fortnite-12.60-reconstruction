@@ -2601,14 +2601,14 @@ def body_lines(body):
 
 
 def body_refs(body, name, package, ctx):
-    """(includes, problems) for the names a snippet body uses. A class or type of another module cannot be included
-    from this module, so a body that uses one is rejected."""
+    """Resolve body includes, preserving the established FortniteUI -> FortniteGame dependency."""
     includes, problems = set(), []
     for tok in sorted(set(re.findall(r"[A-Za-z_]\w*", strip_comments(body)))):
         if tok == name:
             continue
         if tok in ctx["class_pkg"]:
-            if ctx["class_pkg"][tok] != package:
+            if (ctx["class_pkg"][tok] != package and not
+                    (package == "/Script/FortniteUI" and ctx["class_pkg"][tok] == "/Script/FortniteGame")):
                 problems.append("body uses %s, a class of another module" % tok)
             else:
                 includes.add("%s.h" % tok)

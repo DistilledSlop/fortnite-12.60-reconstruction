@@ -60,6 +60,12 @@ public:
 	UPROPERTY()
 	TArray<FName> LastFilters;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x602): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x602;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetCollapseBorderPadFlagForCategory() const;
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsEmpty();
 

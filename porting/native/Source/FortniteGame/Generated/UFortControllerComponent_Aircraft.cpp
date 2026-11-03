@@ -11,6 +11,14 @@ void UFortControllerComponent_Aircraft::ClientExitAircraft_Implementation()
 	// Body not recovered: reflection-derived stub.
 }
 
+bool UFortControllerComponent_Aircraft::IsInAircraft() const
+{
+	// Original address: 0x14289d4f0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete native storage read; see bulk_sized_scalar_runtime/README.md.
+	return NativeRecoveredBool_0xf8;
+}
+
 void UFortControllerComponent_Aircraft::ServerAttemptAircraftJump_Implementation(const FRotator& ClientRotation)
 {
 	// Body not recovered: reflection-derived stub.

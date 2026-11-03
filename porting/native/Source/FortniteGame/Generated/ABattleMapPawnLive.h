@@ -18,6 +18,9 @@ class FORTNITEGAME_API ABattleMapPawnLive : public AFortReplaySpectatorPawnBase
 	GENERATED_BODY()
 
 public:
+	// Non-reflected field (behaviour kind "member_field", offset 0x3ac): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x3ac;
+
 	// table index 7, flags 0x24080000010001
 	UPROPERTY()
 	TSubclassOf<ABattleMapNode> GroundMoveNodeClass;
@@ -49,6 +52,9 @@ public:
 	// table index 0, flags 0x20080000010001
 	UPROPERTY()
 	USoundBase* HoveredNodeSound;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool BP_IsOnTimelineMode() const;
 
 };
 

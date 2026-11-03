@@ -54,8 +54,20 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_LatestServerTime)
 	float LatestServerTime;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x52c): not a UPROPERTY, not replicated.
+	float NativeRecoveredFloat_0x52c;
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetLatestServerTime() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetLatestServerTimeReceivedOnClientTime() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsLeaderboardFilterTextDisabled() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsLeaderboardSwitchingDisabled() const;
 
 	UFUNCTION()
 	void OnRep_CurrentControlType();

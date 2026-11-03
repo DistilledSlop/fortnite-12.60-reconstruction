@@ -20,5 +20,13 @@ public:
 	UPROPERTY()
 	UDynamicEntryBox* EntryBox_Members;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x260): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt_0x260;
+
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetSquadId() const;
+public:
+
 };
 

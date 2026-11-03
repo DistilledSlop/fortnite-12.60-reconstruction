@@ -18,5 +18,11 @@ public:
 	UPROPERTY()
 	int32 Quantity;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x274): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x274;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsBeingPreviewed() const;
+
 };
 

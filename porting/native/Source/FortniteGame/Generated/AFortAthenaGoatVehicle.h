@@ -107,6 +107,9 @@ public:
 	UPROPERTY(Transient)
 	AFortPlayerPawn* LocalPlayerPawn;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x10a0): not a UPROPERTY, not replicated.
+	float NativeRecoveredFloat_0x10a0;
+
 	// table index 5, flags 0x40000000082008
 	UPROPERTY(Transient)
 	UParticleSystemComponent* PSC_WheelDust;
@@ -130,6 +133,9 @@ public:
 	// table index 0, flags 0x20080000002014
 	UPROPERTY(Transient)
 	UFortGoatVehicleConfigs* FortGoatVehicleConfigs;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetBoostAccumulated() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsLocalPlayerRiding() const;

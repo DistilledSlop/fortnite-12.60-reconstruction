@@ -149,6 +149,9 @@ public:
 	UPROPERTY(Transient)
 	FString OfferIdToFocusInItemShop;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x2e0): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt_0x2e0;
+
 	// table index 1, flags 0x40000000002000
 	UPROPERTY(Transient)
 	FUnlockableVariantPreviewInfo SeasonTabVariantPreviewInfo;
@@ -156,6 +159,15 @@ public:
 	// table index 0, flags 0x40000000000000
 	UPROPERTY()
 	UFortServerBrowserHelper* ServerBrowserHelper;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x408): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x408;
+
+	UFUNCTION(BlueprintCallable)
+	int32 GetCurrentLockerSubslotIndex();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsViewingPhoenixTheater() const;
 
 	UFUNCTION(BlueprintCallable)
 	void SendFrontendEnteredEvent();

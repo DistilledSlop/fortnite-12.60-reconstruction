@@ -20,5 +20,17 @@ public:
 	UPROPERTY()
 	UImage* Image_Icon;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x278): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x278;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x279): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x279;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsIconHovered() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsIconSelected() const;
+
 };
 

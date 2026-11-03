@@ -44,9 +44,17 @@ public:
 	UPROPERTY()
 	float SpamThrottle;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x42c): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x42c;
+
 protected:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetNumOfRounds() const;
+public:
+
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsCurrentlyADraw() const;
 public:
 
 };

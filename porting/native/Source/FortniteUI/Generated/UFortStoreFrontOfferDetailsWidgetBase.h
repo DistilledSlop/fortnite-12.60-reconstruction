@@ -112,5 +112,8 @@ protected:
 	void SetSecondaryItem(UFortItem* Item);
 public:
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool ShouldHavePurchaseConfirmation() const;
+
 };
 

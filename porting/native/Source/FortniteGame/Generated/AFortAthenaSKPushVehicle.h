@@ -94,6 +94,12 @@ public:
 	UPROPERTY(Transient)
 	UFortSKPushVehicleConfigs* SKPushVehicleConfigs;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0xf90): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0xf90;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0xf98): not a UPROPERTY, not replicated.
+	float NativeRecoveredFloat_0xf98;
+
 	// table index 6, flags 0x40000000082008
 	UPROPERTY(Transient)
 	UFortVehicleAudioVoice* CacheAudioMovement;
@@ -126,6 +132,12 @@ private:
 	UFUNCTION(BlueprintCallable)
 	void CacheFX(UParticleSystemComponent* InWheelDustFX);
 public:
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetStandingInPlaceSteeringAngle() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsStandingInPlace() const;
 
 };
 

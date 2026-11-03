@@ -25,5 +25,13 @@ public:
 	UPROPERTY()
 	USpatialFactionProgressScreen* Screen_FactionProgress;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x38c): not a UPROPERTY, not replicated.
+	uint8 NativeRecoveredUInt8_0x38c;
+
+protected:
+	UFUNCTION(BlueprintCallable)
+	void SetAboutScreenVisited();
+public:
+
 };
 

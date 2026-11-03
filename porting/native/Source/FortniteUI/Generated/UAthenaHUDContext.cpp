@@ -9,6 +9,22 @@ float UAthenaHUDContext::GetBatteryLevel() const
 	return 0.0f;
 }
 
+int32 UAthenaHUDContext::GetInteractPressedTouchIndex() const
+{
+	// Original address: 0x14519db70.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete native storage read; see bulk_sized_scalar_runtime/README.md.
+	return NativeRecoveredInt_0x280;
+}
+
+int32 UAthenaHUDContext::GetJumpPressedTouchIndex() const
+{
+	// Original address: 0x14519dba0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete native storage read; see bulk_sized_scalar_runtime/README.md.
+	return NativeRecoveredInt_0x264;
+}
+
 bool UAthenaHUDContext::GetLocalPlayerWonMatch() const
 {
 	// Original address: 0x14519dbd0.

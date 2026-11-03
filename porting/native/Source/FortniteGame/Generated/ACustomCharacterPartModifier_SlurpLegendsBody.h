@@ -58,5 +58,11 @@ public:
 	UPROPERTY()
 	UMaterialInstanceDynamic* BodyMID;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x3a0): not a UPROPERTY, not replicated.
+	float NativeRecoveredFloat_0x3a0;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetCurrentShieldPercentage() const;
+
 };
 

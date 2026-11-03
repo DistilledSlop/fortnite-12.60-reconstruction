@@ -63,5 +63,23 @@ public:
 	UPROPERTY(Transient)
 	TArray<UFortCardPackItem*> PurchasedCardPacks;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0xfc): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0xfc;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x100): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x100;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x103): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x103;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsOpeningDirectPack() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsOpeningOnePack() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsWaitingForMcp() const;
+
 };
 

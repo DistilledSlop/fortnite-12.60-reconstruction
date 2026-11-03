@@ -183,6 +183,12 @@ public:
 	UPROPERTY()
 	UInputComponent* FullScreenMapInputComponent;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x2ae5): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x2ae5;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x2ae7): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x2ae7;
+
 	// table index 10, flags 0x20080000000000
 	UPROPERTY()
 	FSavedSpectatorCameras HotkeyCameras;
@@ -225,6 +231,12 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UAthenaMarkerComponent* GetMarkerComponent() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetShowBusPathsOnMap() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetShowPlayersOnMap() const;
 
 protected:
 	UFUNCTION(BlueprintCallable)

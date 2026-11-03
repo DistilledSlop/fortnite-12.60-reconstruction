@@ -1,5 +1,31 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Native source batch 10 (2026-11-03)
+
+Canonical Native1609 entries =1481 function bodies +128 supporting fields.
+Added81 complete bodies:64 size-backed scalar getters,4 constant mutations,
+13 live UFortRuntimeOptions CDO queries. GPSC class sizes are extracted directly
+from exact original registration-call ABI with class/package/storage/branch
+identity;6219 classes proven,1318 agree with Boolsize evidence,0disagreements.
+New storage retains strict class-local bounds, reflected/canonical occupancy and
+cross-proposal interval checks (66new fields,0overlaps); source review found no
+concrete blocker. Original noncanonical bool bytes, constructors/writers and
+class-feature/runtime parity remain unverified. No defaults invented.
+
+Body references now permit FortniteUI->FortniteGame through the existing build
+module dependency, allowing typed live runtime-options queries; other crossmodule
+restrictions remain. Generation accepts1609, rejects0; receipts at
+porting/generated/gameplay-bulk-integration-10/. No builds/runtime/tests run;
+441 bodies since tested1040 are build pending; next checkpoint about2040.
+Source/binary staging baseline stays bulk-integration-2. All4 milestones open.
+
+Commit/push each finished batch immediately. Root owns promotion/Native/builds;
+Terra medium, fork_turns none bounded workers own new sized-bit getter and sized
+parameter-setter directories only. Source dashboard reads committed manifests;
+publish docs after commits. Preserve unrelated graphics and README collaborator
+edits. Keep reads/output bounded, rotate agents at task completion, skip visuals.
+VItals graph still explicitly blocked; see its README and typed probe batch6.
+
 ## Native source batch 9 (2026-11-03)
 
 Canonical Native1462 entries =1400 function bodies +62 fields. Added18 complete

@@ -51,5 +51,11 @@ public:
 	UPROPERTY()
 	USearchPanel* SearchPanel;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x2a8): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt_0x2a8;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetFilterCount() const;
+
 };
 

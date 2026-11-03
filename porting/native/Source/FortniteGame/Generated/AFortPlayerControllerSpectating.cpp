@@ -10,6 +10,22 @@ UAthenaMarkerComponent* AFortPlayerControllerSpectating::GetMarkerComponent() co
 	return MarkerComponent;
 }
 
+bool AFortPlayerControllerSpectating::GetShowBusPathsOnMap() const
+{
+	// Original address: 0x142a6ba80.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete native storage read; see bulk_sized_scalar_runtime/README.md.
+	return NativeRecoveredBool_0x2ae7;
+}
+
+bool AFortPlayerControllerSpectating::GetShowPlayersOnMap() const
+{
+	// Original address: 0x142a6bab0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete native storage read; see bulk_sized_scalar_runtime/README.md.
+	return NativeRecoveredBool_0x2ae5;
+}
+
 bool AFortPlayerControllerSpectating::IsAllowedChangeCamera()
 {
 	// Exact original shared stub 0x1406801d0.

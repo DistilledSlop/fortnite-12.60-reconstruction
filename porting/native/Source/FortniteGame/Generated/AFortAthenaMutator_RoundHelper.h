@@ -42,6 +42,12 @@ public:
 	UPROPERTY()
 	TArray<AFortPlayerStart*> UsedSpawnSlots;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x2e0): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt_0x2e0;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetCurrentRound() const;
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetNumOfRounds() const;
 

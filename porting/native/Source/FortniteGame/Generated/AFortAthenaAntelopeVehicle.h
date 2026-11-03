@@ -211,6 +211,15 @@ public:
 	UPROPERTY(Transient)
 	UStaticMeshComponent* WheelBlur_FR;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x1128): not a UPROPERTY, not replicated.
+	float NativeRecoveredFloat_0x1128;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x112d): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x112d;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x112e): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x112e;
+
 	// table index 11, flags 0x40000000082008
 	UPROPERTY(Transient)
 	UParticleSystemComponent* PSC_WheelDust;
@@ -260,7 +269,16 @@ public:
 	UFortAntelopeVehicleConfigs* FortAntelopeVehicleConfigs;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetBoostAccumulated() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsAccumulatingBoost() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsLocalPlayerRiding() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsPassivelyExpendingBoost() const;
 
 };
 

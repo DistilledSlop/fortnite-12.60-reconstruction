@@ -78,5 +78,23 @@ public:
 	UPROPERTY(Transient)
 	UMaterialInstanceDynamic* ARPostProcessMID;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x3c8): not a UPROPERTY, not replicated.
+	uint32 NativeRecoveredUInt32_0x3c8;
+
+protected:
+	UFUNCTION()
+	void ScaleIn();
+public:
+
+protected:
+	UFUNCTION()
+	void ScaleOut();
+public:
+
+protected:
+	UFUNCTION()
+	void StopScaling();
+public:
+
 };
 

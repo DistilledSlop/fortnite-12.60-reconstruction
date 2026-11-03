@@ -31,5 +31,11 @@ public:
 	UPROPERTY()
 	UWidget* CheckmarkImage;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x270): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt_0x270;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetXPRequired() const;
+
 };
 

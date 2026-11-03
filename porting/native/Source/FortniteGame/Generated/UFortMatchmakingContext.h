@@ -125,6 +125,9 @@ public:
 	FOnOutpostDiscoveryFailure OnOutpostDiscoveryFailure;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsInputBasedMatchmakingEnabled() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsMatchmakingFlowActive() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

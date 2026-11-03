@@ -79,5 +79,8 @@ public:
 	UPROPERTY()
 	int32 HudLayoutSnappingDistance;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool CloudHUDLayoutEnabled() const;
+
 };
 

@@ -38,6 +38,18 @@ public:
 	UPROPERTY(Transient)
 	UAudioComponent* PortalAudioComp;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0xbd4): not a UPROPERTY, not replicated.
+	float NativeRecoveredFloat_0xbd4;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0xbe0): not a UPROPERTY, not replicated.
+	float NativeRecoveredFloat_0xbe0;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetDefenseAnimSpeed() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetDefenseProgress() const;
+
 	UFUNCTION(BlueprintCallable, BlueprintCosmetic)
 	void InitializeAudio(UAudioComponent* InPortalLoopingComp);
 

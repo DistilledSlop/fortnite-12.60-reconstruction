@@ -24,9 +24,15 @@ public:
 	UPROPERTY()
 	UOverlay* Overlay_Icon_1;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x498): not a UPROPERTY, not replicated.
+	float NativeRecoveredFloat_0x498;
+
 	// table index 0, flags 0x40000000000001
 	UPROPERTY()
 	float ScreenEdgePaddingSizePercent;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetCurrentDotProduct() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetMaxOffscreenTreshold() const;

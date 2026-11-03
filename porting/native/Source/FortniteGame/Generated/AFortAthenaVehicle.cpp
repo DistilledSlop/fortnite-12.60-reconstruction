@@ -12,6 +12,14 @@ void AFortAthenaVehicle::DebugDrawImpactBucket_Implementation(const FVector& Loc
 	// Body not recovered: reflection-derived stub.
 }
 
+float AFortAthenaVehicle::GetCurrentSignificance() const
+{
+	// Original address: 0x14283b4a0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete native storage read; see bulk_sized_scalar_runtime/README.md.
+	return NativeRecoveredFloat_0x44c;
+}
+
 bool AFortAthenaVehicle::IsBraking() const
 {
 	// Exact original shared stub 0x1406801e0.
@@ -73,6 +81,14 @@ void AFortAthenaVehicle::OnRep_SurfaceTypeVehicleOn(EPhysicalSurface PreviousSur
 void AFortAthenaVehicle::OnRep_VehicleAttributes()
 {
 	// Body not recovered: reflection-derived stub.
+}
+
+bool AFortAthenaVehicle::RearLateralFrictionHasReachedMax() const
+{
+	// Original address: 0x14283ccc0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete native storage read; see bulk_sized_scalar_runtime/README.md.
+	return NativeRecoveredBool_0x449;
 }
 
 void AFortAthenaVehicle::ServerSetIgnoreAllFallingDamage_Implementation(bool InIgnoreAllFallingDamage)

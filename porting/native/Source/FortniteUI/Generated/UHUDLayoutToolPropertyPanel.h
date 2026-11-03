@@ -30,5 +30,13 @@ public:
 	UPROPERTY()
 	UCommonTextBlock* PanelTitle;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x280): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x280;
+
+protected:
+	UFUNCTION()
+	bool GetIsOpen() const;
+public:
+
 };
 

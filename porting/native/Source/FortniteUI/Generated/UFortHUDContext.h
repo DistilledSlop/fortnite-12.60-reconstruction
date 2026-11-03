@@ -406,6 +406,9 @@ public:
 	UPROPERTY(Transient)
 	AFortPlayerPawn* BoundPlayerPawn;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x55c): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x55c;
+
 	// table index 2, flags 0x40000000002000
 	UPROPERTY(Transient)
 	AFortWeapon* CachedCurrentWeapon;
@@ -420,6 +423,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	ABuildingActor* GetCurrentFocusedBuilding() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsPreparingMgmtMenu() const;
 
 };
 

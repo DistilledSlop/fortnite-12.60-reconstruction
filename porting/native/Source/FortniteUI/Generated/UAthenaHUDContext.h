@@ -193,8 +193,20 @@ public:
 	UPROPERTY()
 	UAthenaPlayerViewModel* PlayerViewModel;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x264): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt_0x264;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x280): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt_0x280;
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetBatteryLevel() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetInteractPressedTouchIndex() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetJumpPressedTouchIndex() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool GetLocalPlayerWonMatch() const;

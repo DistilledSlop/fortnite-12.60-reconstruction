@@ -39,8 +39,23 @@ public:
 	UPROPERTY()
 	TArray<FHordeDifficultyTierInfo> PrestigeTierDifficultyConfig;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetStormShieldBreatherRadiusOverride() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetStormShieldEndingRadiusOverride() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetStormShieldStartingRadiusOverride() const;
+
 	UFUNCTION()
 	void OnRep_DeployableBaseManager();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool ShouldRespawnAtLastPawnLocation() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool ShouldUseStormShield() const;
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

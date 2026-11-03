@@ -31,9 +31,15 @@ public:
 	UPROPERTY()
 	TSubclassOf<UFortMulchConfirmationModalWidget> MulchConfirmationModalClass;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x439): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x439;
+
 	// table index 0, flags 0x40000000082008
 	UPROPERTY(Transient)
 	UFortMulchConfirmationModalWidget* MulchConfirmationModal;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetIsInChoiceSelectionMode() const;
 
 };
 

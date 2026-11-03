@@ -27,6 +27,22 @@ bool APhysicsObject::HasPermissionToAlterBuildings() const
 	return true;
 }
 
+bool APhysicsObject::IsAsleep() const
+{
+	// Original address: 0x142b85400.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete native storage read; see bulk_sized_scalar_runtime/README.md.
+	return NativeRecoveredBool_0x505;
+}
+
+bool APhysicsObject::IsInWater() const
+{
+	// Original address: 0x142b85450.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete native storage read; see bulk_sized_scalar_runtime/README.md.
+	return NativeRecoveredBool_0x507;
+}
+
 void APhysicsObject::OnRep_AbilitySystemComponent()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).

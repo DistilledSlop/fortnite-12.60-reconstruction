@@ -16,6 +16,12 @@ class FORTNITEUI_API UFortPurchaseOverlayModal : public UFortStoreFrontOfferDeta
 	GENERATED_BODY()
 
 public:
+	// Non-reflected field (behaviour kind "member_field", offset 0x690): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt_0x690;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x6a8): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x6a8;
+
 	// table index 1, flags 0x40000000080008
 	UPROPERTY()
 	UHorizontalBox* HBox_SuccessfullyPurchased;
@@ -23,6 +29,16 @@ public:
 	// table index 0, flags 0x40000000080008
 	UPROPERTY()
 	UHorizontalBox* HBox_SuccessfullyRefunded;
+
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetQuantityPurchased() const;
+public:
+
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool ShouldShowAsRefund() const;
+public:
 
 };
 

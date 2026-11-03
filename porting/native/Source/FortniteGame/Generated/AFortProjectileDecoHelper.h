@@ -14,5 +14,11 @@ class FORTNITEGAME_API AFortProjectileDecoHelper : public AFortDecoHelper
 	GENERATED_BODY()
 
 public:
+	// Non-reflected field (behaviour kind "member_field", offset 0x42c): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x42c;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetInvalidThrowTrapPosition() const;
+
 };
 

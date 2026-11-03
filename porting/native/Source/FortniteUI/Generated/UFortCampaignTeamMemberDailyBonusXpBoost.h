@@ -18,6 +18,9 @@ class FORTNITEUI_API UFortCampaignTeamMemberDailyBonusXpBoost : public UFortCamp
 	GENERATED_BODY()
 
 public:
+	// Non-reflected field (behaviour kind "member_field", offset 0xbb0): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt_0xbb0;
+
 	// table index 1, flags 0x40000000080008
 	UPROPERTY()
 	UCommonTextBlock* Text_Boost;
@@ -25,6 +28,9 @@ public:
 	// table index 0, flags 0x40000000080008
 	UPROPERTY()
 	UImage* Image_BoostIcon;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetCurrentBoostAmount() const;
 
 };
 

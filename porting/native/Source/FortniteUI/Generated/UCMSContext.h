@@ -18,6 +18,9 @@ class FORTNITEUI_API UCMSContext : public UBlueprintContextBase
 	GENERATED_BODY()
 
 public:
+	// Non-reflected field (behaviour kind "member_field", offset 0xc8): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0xc8;
+
 	// table index 1, flags 0x40000000002000
 	UPROPERTY(Transient)
 	FCmsJsonMessages CachedCmsMessages;
@@ -25,6 +28,9 @@ public:
 	// table index 0, flags 0x40000000002000
 	UPROPERTY(Transient)
 	UFortPlayerSurveyCMSSurveyDataSource* CMSSurveyDataSource;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsNewPlaylistInformationAvailable() const;
 
 };
 

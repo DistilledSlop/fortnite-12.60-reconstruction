@@ -65,6 +65,9 @@ public:
 	UPROPERTY(Transient)
 	float JumpCooldownRemaining;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0xfe4): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0xfe4;
+
 	// table index 9, flags 0x10000000082008
 	UPROPERTY(Transient)
 	UParticleSystemComponent* CacheBoostFX;
@@ -104,6 +107,9 @@ public:
 	// table index 0, flags 0x44000000010015
 	UPROPERTY()
 	TSubclassOf<UAnimInstance> BoostingAnimClass;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsDriveModeOnly() const;
 
 };
 

@@ -172,6 +172,12 @@ public:
 	UPROPERTY(Transient)
 	uint8 bAllowInteractBetweenFortVolumes_Runtime : 1;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x449): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x449;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x44c): not a UPROPERTY, not replicated.
+	float NativeRecoveredFloat_0x44c;
+
 	// table index 125, flags 0x10000000002005
 	UPROPERTY(Transient)
 	float IndicatorAudibleDistance;
@@ -617,6 +623,9 @@ public:
 	void DebugDrawImpactBucket_Implementation(const FVector& Location, const FVector& ImpactVector, const FColor& Color);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetCurrentSignificance() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual bool IsBraking() const;
 
 private:
@@ -652,6 +661,9 @@ public:
 
 	UFUNCTION()
 	void OnRep_VehicleAttributes();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool RearLateralFrictionHasReachedMax() const;
 
 	UFUNCTION(Server, Reliable)
 	void ServerSetIgnoreAllFallingDamage(bool InIgnoreAllFallingDamage);

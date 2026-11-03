@@ -14,5 +14,11 @@ class FORTNITEUI_API UFortLlamaStoreOfferWidgetBase : public UFortStoreFrontOffe
 	GENERATED_BODY()
 
 public:
+	// Non-reflected field (behaviour kind "member_field", offset 0xc30): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt_0xc30;
+
+	UFUNCTION(BlueprintCallable)
+	int32 GetCurrentRarity();
+
 };
 

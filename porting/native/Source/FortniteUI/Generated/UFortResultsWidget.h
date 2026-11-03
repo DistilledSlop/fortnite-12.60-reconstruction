@@ -41,5 +41,10 @@ public:
 	UPROPERTY()
 	UCommonUserWidget* Radial_Picker;
 
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool AreEmotesAllowed() const;
+public:
+
 };
 

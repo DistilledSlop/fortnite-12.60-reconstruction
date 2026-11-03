@@ -78,8 +78,20 @@ public:
 	UPROPERTY(Transient)
 	float AudioWindParam;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0xf80): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0xf80;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0xf84): not a UPROPERTY, not replicated.
+	float NativeRecoveredFloat_0xf84;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetStandingInPlaceSteeringAngle() const;
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual bool HasTraction() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsStandingInPlace() const;
 
 };
 

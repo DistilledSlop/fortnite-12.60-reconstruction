@@ -91,6 +91,9 @@ public:
 	UPROPERTY()
 	TArray<FMutatorAddedWidgets> MutatorAddedWidgets;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x3a8): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x3a8;
+
 	// table index 2, flags 0x40000000010001
 	UPROPERTY()
 	TArray<FPlaylistUIExtension> TournamentUIExtensions;
@@ -98,6 +101,11 @@ public:
 	// table index 0, flags 0x40000000010001
 	UPROPERTY()
 	TArray<FPlaylistUIExtension> ArenaTournamentUIExtensions;
+
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetZoneCompleted() const;
+public:
 
 };
 

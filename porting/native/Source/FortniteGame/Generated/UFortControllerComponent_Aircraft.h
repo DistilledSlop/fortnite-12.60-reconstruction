@@ -27,6 +27,9 @@ public:
 	UPROPERTY()
 	AFortAircraft* CurrentAircraft;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0xf8): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0xf8;
+
 	UFUNCTION(Client, Reliable)
 	void ClientEnterAircraft(AFortAircraft* InAircraft);
 	void ClientEnterAircraft_Implementation(AFortAircraft* InAircraft);
@@ -34,6 +37,9 @@ public:
 	UFUNCTION(Client, Reliable)
 	void ClientExitAircraft();
 	void ClientExitAircraft_Implementation();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsInAircraft() const;
 
 	UFUNCTION(Server, Reliable)
 	void ServerAttemptAircraftJump(const FRotator& ClientRotation);

@@ -26,5 +26,29 @@ public:
 	UPROPERTY()
 	UCommonTileView* ItemTileView;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x268): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt_0x268;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x26c): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt_0x26c;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x270): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt_0x270;
+
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetChoiceItemCount() const;
+public:
+
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetNewItemCount() const;
+public:
+
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetNotInCollectionBookCount() const;
+public:
+
 };
 
