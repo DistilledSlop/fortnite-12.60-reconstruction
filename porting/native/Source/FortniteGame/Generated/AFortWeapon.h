@@ -848,7 +848,7 @@ public:
 
 protected:
 	UFUNCTION(BlueprintCallable)
-	void SetWeaponPawnAnimsetOverride(UFortWeaponAnimSet* WeaponPawnAnimsetOverride);
+	void SetWeaponPawnAnimsetOverride(UPARAM(meta=(OverrideNativeName="WeaponPawnAnimsetOverride")) UFortWeaponAnimSet* InWeaponPawnAnimsetOverride);
 public:
 
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)

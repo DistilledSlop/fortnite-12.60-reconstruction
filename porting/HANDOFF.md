@@ -1,5 +1,20 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Checkpoint declaration repair (2026-11-03)
+
+At 2,040 bodies the first authorized client build failed in UHT (attempt1,
+exit6): FBuildingDuplicationData lacked BlueprintType for two recovered callable
+signatures; AFortWeapon setter parameter shadowed its member. Source policy now
+guards original identities/layout/signature/body and emits BlueprintType plus
+UPARAM OverrideNativeName, preserving the original reflected parameter name
+while using a legal C++ alias. Promotion60 accepted2,216/rejected0, three generated
+files changed. No additional bodies. Second client attempt follows this commit;
+server/stage/join remain pending. Last passing tested baseline remains1,040.
+
+User asked whether large rough natives are finished: NO. Recent additions skew
+small queries/setters; large lifecycle/callback paths remain open. After this
+checkpoint, prioritize bounded larger native paths over maximizing body count.
+
 ## Native source batch 59 / 2,040-body checkpoint (2026-11-03)
 
 Canonical source:2,040 bodies +176 fields =2,216 accepted entries, zero rejected.

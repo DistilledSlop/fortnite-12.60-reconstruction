@@ -10,7 +10,7 @@ class UObject;
 
 #include "FBuildingDuplicationData.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FBuildingDuplicationData
 {
 	GENERATED_BODY()

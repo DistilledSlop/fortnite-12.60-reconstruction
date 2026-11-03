@@ -2326,6 +2326,10 @@ _pawn_ability_interface_spec = _common_activation_import.spec_from_file_location
     "pawn_ability_interface_policy", os.path.join(os.path.dirname(__file__), "behavior", "pawn_ability_native50_runtime", "source_policy.py"))
 _pawn_ability_interface_policy = _common_activation_import.module_from_spec(_pawn_ability_interface_spec)
 _pawn_ability_interface_spec.loader.exec_module(_pawn_ability_interface_policy)
+_native_checkpoint2040_spec = _common_activation_import.spec_from_file_location(
+    "native_checkpoint2040_policy", os.path.join(os.path.dirname(__file__), "behavior", "native_checkpoint2040_runtime", "source_policy.py"))
+_native_checkpoint2040_policy = _common_activation_import.module_from_spec(_native_checkpoint2040_spec)
+_native_checkpoint2040_spec.loader.exec_module(_native_checkpoint2040_policy)
 _definition_queries_spec = _common_activation_import.spec_from_file_location(
     "definition_queries_signature_policy", os.path.join(os.path.dirname(__file__), "behavior", "definition_broad53_runtime", "source_policy.py"))
 _definition_queries_policy = _common_activation_import.module_from_spec(_definition_queries_spec)
@@ -2556,6 +2560,7 @@ def build_class_promoted(block, name, resolver, parent_entry, owner_fns, snippet
     model = _client_event_policy.apply(model, block, native_execs)
     model = _item_tag_interface_policy.apply(model, block, owner_fns)
     model = _pawn_ability_interface_policy.apply(model, block, owner_fns)
+    model = _native_checkpoint2040_policy.apply(model)
     model = _athena_mode_policy.apply(model, block, owner_fns)
     model = _mutator_owner_policy.apply(model, block, owner_fns)
     model = _controller_analytics_policy.apply(model, block, owner_fns)
@@ -4928,6 +4933,7 @@ class TypeGate:
                 model["blueprint_type"] = True
                 for member in model["members"]:
                     member["runtime_property_specifiers"] = ["BlueprintReadOnly", "Transient"]
+            model = _native_checkpoint2040_policy.apply_struct(info, model)
             model = _confirmation_policy.apply_struct(self, info, model)
             model = _common_input_policy.apply_struct(info, model)
             model = _input_platform_policy.apply_struct(info, model)

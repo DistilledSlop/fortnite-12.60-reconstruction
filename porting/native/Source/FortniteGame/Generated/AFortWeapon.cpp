@@ -291,11 +291,11 @@ void AFortWeapon::ServerSetChargeState_Implementation(uint8 NewState)
 	// Body not recovered: reflection-derived stub.
 }
 
-void AFortWeapon::SetWeaponPawnAnimsetOverride(UFortWeaponAnimSet* WeaponPawnAnimsetOverride)
+void AFortWeapon::SetWeaponPawnAnimsetOverride(UPARAM(meta=(OverrideNativeName="WeaponPawnAnimsetOverride")) UFortWeaponAnimSet* InWeaponPawnAnimsetOverride)
 {
 	// Original exec 0x142b48be0; pure writer 0x1426b3b10.
 	// CONFIDENCE: HIGH
-	this->WeaponPawnAnimsetOverride = WeaponPawnAnimsetOverride;
+	this->WeaponPawnAnimsetOverride = InWeaponPawnAnimsetOverride;
 }
 
 bool AFortWeapon::TryReloadAmmoFromAbility()
