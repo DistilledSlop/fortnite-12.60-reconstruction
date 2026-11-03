@@ -20,8 +20,6 @@ DOCS = ROOT / "docs"
 README = ROOT / "README.md"
 START, END = "<!-- progress:start -->", "<!-- progress:end -->"
 PAGES = ["index.html", "history.html", "progress.svg", "progress.json"]
-REPO = "DistilledSlop/fortnite-12.60-reconstruction"
-SITE = "https://distilledslop.github.io/fortnite-12.60-reconstruction/"
 
 
 def bar(pct, width=20):

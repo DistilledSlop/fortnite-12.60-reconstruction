@@ -4,8 +4,9 @@
 
 **A from-scratch reconstruction of Fortnite 12.60 (CL 13477524) as a buildable Unreal Engine 4.25 project, with a reimplemented dedicated server and local backend.**
 
-[Live dashboard](https://distilledslop.github.io/fortnite-12.60-reconstruction/) ·
-[History](https://distilledslop.github.io/fortnite-12.60-reconstruction/history.html) ·
+[Dashboard](#progress-dashboard) ·
+[Treemap SVG](docs/progress.svg) ·
+[Data](docs/progress.json) ·
 [Handoff](porting/HANDOFF.md) ·
 [Master plan](porting/master_plan.md)
 
@@ -15,19 +16,21 @@
 
 ## Progress dashboard
 
-Area is estimated effort, fill is percent complete. Click the treemap for the interactive dashboard with per-component evidence.
+Area is estimated effort, fill is percent complete. Click the treemap for the full-size SVG. The interactive
+page with per-component evidence and the per-commit history chart is [`docs/index.html`](docs/index.html) (download it,
+or run `porting/progress/serve.sh`); GitHub only shows HTML as source unless Pages is enabled for the repo.
 
 <p align="center">
-  <a href="https://distilledslop.github.io/fortnite-12.60-reconstruction/">
+  <a href="docs/progress.svg">
     <img src="docs/progress.svg" alt="Treemap of port progress: area is effort weight, fill is percent complete" width="100%">
   </a>
 </p>
 
 <!-- progress:start -->
 
-![overall](https://img.shields.io/badge/overall-20.5%25-2a78d6) ![milestones](https://img.shields.io/badge/milestones-0%2F4-d6a02a) ![snapshot](https://img.shields.io/badge/snapshot-8654e768-52514e)
+![overall](https://img.shields.io/badge/overall-20.5%25-2a78d6) ![milestones](https://img.shields.io/badge/milestones-0%2F4-d6a02a) ![snapshot](https://img.shields.io/badge/snapshot-66986389-52514e)
 
-**Overall: 20.5%** · evidence-based 19.7% · objective 19.7% · milestones 0/4 · snapshot `8654e768` (2026-11-03)
+**Overall: 20.5%** · evidence-based 19.7% · objective 19.7% · milestones 0/4 · snapshot `66986389` (2026-11-03)
 
 | Milestone | Status |
 |---|---|
@@ -93,7 +96,7 @@ Done means: **login, lobby, matchmaking and a full match, with audio and visuals
 | [`porting/server/`](porting/server) | Reimplemented backend services and evidence |
 | [`porting/asset_pipeline/`](porting/asset_pipeline), [`material_pipeline/`](porting/material_pipeline) | Pak extraction, mesh/texture/material conversion |
 | [`porting/progress/`](porting/progress) | The dashboard generator, effort model, evidence ledger |
-| [`docs/`](docs) | Published dashboard snapshot (GitHub Pages) |
+| [`docs/`](docs) | Published dashboard snapshot (HTML, SVG, JSON, evidence), ready for GitHub Pages |
 | [`porting/README.md`](porting/README.md) | Detailed evidence log and the work still needed |
 | [`porting/HANDOFF.md`](porting/HANDOFF.md) | Current state, build recipe, next steps |
 
