@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UGameFrameworkComponent.h"
 
+class AFortWeapon;
+
 #include "UFortWeaponComponent.generated.h"
 
 UCLASS(config=Engine)
@@ -14,5 +16,35 @@ class FORTNITEGAME_API UFortWeaponComponent : public UGameFrameworkComponent
 	GENERATED_BODY()
 
 public:
+protected:
+	UFUNCTION()
+	virtual void OnEquip(AFortWeapon* Weapon);
+public:
+
+protected:
+	UFUNCTION()
+	virtual void OnPressSecondaryFire(AFortWeapon* Weapon);
+public:
+
+protected:
+	UFUNCTION()
+	virtual void OnPressTrigger(AFortWeapon* Weapon);
+public:
+
+protected:
+	UFUNCTION()
+	virtual void OnReleaseSecondaryFire(AFortWeapon* Weapon);
+public:
+
+protected:
+	UFUNCTION()
+	virtual void OnReleaseTrigger(AFortWeapon* Weapon);
+public:
+
+protected:
+	UFUNCTION()
+	virtual void OnUnEquip(AFortWeapon* Weapon);
+public:
+
 };
 

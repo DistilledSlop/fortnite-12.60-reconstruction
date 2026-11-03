@@ -28,6 +28,14 @@ void AFortAthenaVehicle::DebugDrawImpactBucket_Implementation(const FVector& Loc
 	// Body not recovered: reflection-derived stub.
 }
 
+float AFortAthenaVehicle::GetCurrentFOV() const
+{
+	// Original virtual target: 0x14084bcf0.
+	// CONFIDENCE: HIGH
+	// Complete scalar field read; see bulk_virtual_field_runtime/README.md.
+	return CurrentFOV;
+}
+
 float AFortAthenaVehicle::GetCurrentSignificance() const
 {
 	// Original address: 0x14283b4a0.

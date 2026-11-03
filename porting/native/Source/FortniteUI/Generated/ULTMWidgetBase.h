@@ -7,6 +7,7 @@
 #include "UFortHUDElementWidget.h"
 
 #include "AFortGameplayMutator.h"
+#include "AFortPlayerStateZone.h"
 #include "FFortPrioritizedWidgetData.h"
 
 #include "ULTMWidgetBase.generated.h"
@@ -24,6 +25,11 @@ public:
 	// table index 0, flags 0x20080000000001
 	UPROPERTY()
 	FFortPrioritizedWidgetData PrioritizationData;
+
+protected:
+	UFUNCTION()
+	virtual void OnHandleSpectatingChanged(AFortPlayerStateZone* SpectatingTarget);
+public:
 
 };
 

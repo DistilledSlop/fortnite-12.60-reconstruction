@@ -1,0 +1,7 @@
+# Parameterless virtual reflected-field getters
+
+Run `python3 -I porting/behavior/bulk_virtual_field_runtime/prepare.py` from the repository. It writes `/tmp/gameplay-bulk-virtual-field/{manifest-entries,report}.json` without changing the canonical manifest. `--revalidate-own` includes entries previously promoted from this directory. The scanner requires `/tmp/common-input-capstone`, objdump, and the original mapped image pinned by SHA-256. Generated class headers and sources must reflect the current generator inputs.
+
+The complete exec wrapper, function flags, constructor store to original `this`, vtable, and slot use the same conservative proof as `bulk_virtual_scalar_runtime`. It accepts only complete int32, float, bool-byte or normalized single-bit leaf reads. It requires a unique reflected field of the matching kind, offset and bool mask declared on the same class, a generated declaration, and no existing inline or out-of-line function definition. An existing declaration must match the reflected signature. Functions absent from generated source can be emitted when their manifest entries opt in. Proposals retain virtual dispatch, reflection access and const qualification. No unreflected storage or inherited field is inferred. Existing snippets are never overwritten if their contents differ.
+
+Source recovery does not establish runtime compatibility; promotion and the scheduled integration build remain separate.

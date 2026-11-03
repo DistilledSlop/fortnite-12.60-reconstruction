@@ -9,3 +9,10 @@ AActor* AFortAIController::GetGoalActor() const
 	return GoalActor;
 }
 
+void AFortAIController::IgnoreProximityForDuration(float DurationToIgnore)
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+

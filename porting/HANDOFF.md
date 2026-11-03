@@ -1,5 +1,22 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Native source batch 12 (2026-11-03)
+
+Canonical Native1644 entries =1505 function bodies +139 fields. Added12 bodies:
+9ordinary single-parameter virtual empty implementations,3virtual reflectedfield
+getters. Complete wrappers, original constructor-vtable dispatch and wholeleaf
+semantics preserved. Promotion accepts1644,rejects0 at
+porting/generated/gameplay-bulk-integration-12/. No builds/runtime/tests run;
+465 bodies since tested1040 build pending,next about2040. Batch11 pushed22db1af6.
+
+Blocked rawpointergetter tooling retained with blocked_native_storage_ownership
+status and no bodycredit. Source-ready26body proposals:20native POD/FNamecopy
+getters with20fields and6reflected dirtyboolsetters. A bounded Terra medium
+(fork_turns none) worker owns ignored singleparameter empty-leaf recovery.
+Root owns promotion/builds, commit/push eachfinishedbatch. Preserve external
+README/graphics edits and currentdashboardpublication; boundedreads/output,
+no visual work. All4productmilestones remainopen,sourcecoverage is notparity.
+
 ## Native source batch 11 (2026-11-03)
 
 Canonical Native1632 entries =1493 function bodies +139 fields. Added12 bodies

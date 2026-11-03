@@ -632,6 +632,9 @@ public:
 	void DebugDrawImpactBucket_Implementation(const FVector& Location, const FVector& ImpactVector, const FColor& Color);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual float GetCurrentFOV() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetCurrentSignificance() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

@@ -8,6 +8,7 @@
 
 #include "Components/SlateWrapperTypes.h"
 #include "ECollectionBookRewardStatus.h"
+#include "UFortItem.h"
 
 class UFortCollectionBookRewardCardWidget;
 
@@ -38,6 +39,11 @@ public:
 	// table index 0, flags 0x20080000002000
 	UPROPERTY(Transient)
 	ECollectionBookRewardStatus RewardStatus;
+
+protected:
+	UFUNCTION()
+	virtual void SetCurrentItemToDisplay(UFortItem* ItemToDisplay);
+public:
 
 };
 

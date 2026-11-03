@@ -130,6 +130,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UPrimitiveComponent* GetCollisionComponent() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool IsBeingKilled() const;
+
 	UFUNCTION()
 	void OnRep_HasExplodedReplay();
 

@@ -10,6 +10,14 @@ ABuildingSMActor* ABuildingTrap::GetBuildingAttachedTo() const
 	return AttachedTo;
 }
 
+int32 ABuildingTrap::GetTrapLevel() const
+{
+	// Original virtual target: 0x141c3cf20.
+	// CONFIDENCE: HIGH
+	// Complete scalar field read; see bulk_virtual_field_runtime/README.md.
+	return TrapLevel;
+}
+
 void ABuildingTrap::OnRep_AttachedTo()
 {
 	// Body not recovered: reflection-derived stub.

@@ -171,6 +171,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	ABuildingSMActor* GetBuildingAttachedTo() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual int32 GetTrapLevel() const;
+
 	UFUNCTION()
 	void OnRep_AttachedTo();
 

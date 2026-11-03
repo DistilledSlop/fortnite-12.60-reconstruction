@@ -68,5 +68,8 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	AActor* GetGoalActor() const;
 
+	UFUNCTION(BlueprintCallable)
+	virtual void IgnoreProximityForDuration(float DurationToIgnore);
+
 };
 
