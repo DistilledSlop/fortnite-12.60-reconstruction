@@ -4,6 +4,8 @@
 !/.gitattributes
 !/.githooks/
 !/AGENTS.md
+!/README.md
+!/docs/
 !/porting/
 
 # Generated output, build products, and temporary files.

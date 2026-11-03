@@ -1,0 +1,383 @@
+{
+  "schema": "fortnite.frontend-event-targets.v1",
+  "scope": "41 non-Native Blueprint function supers observed in the fixed 721-package closure; not all frontend methods or behavior.",
+  "inventory": {
+    "path": "porting/generated/frontend-probes/native-super-classification-8.json",
+    "sha256": "23a98642535864a24f5af845e96aa0efcd78852dd71765d7c9f2ff925ba4dcd1"
+  },
+  "excluded_native_behavior_targets": [
+    "/Script/CommonUI.CommonActivatablePanel:OnBeginIntro",
+    "/Script/CommonUI.CommonActivatablePanel:OnBeginOutro"
+  ],
+  "targets": [
+    {
+      "check_id": "frontend_event_signature_97a7a9a26cffc1ef",
+      "path": "/Script/CommonUI.CommonActivatableWidget:BP_OnActivated",
+      "cpp_class": "UCommonActivatableWidget",
+      "create_func": "0x140805d90",
+      "outer_func": "0x1408079b0",
+      "flags": "0x8080800",
+      "serialized_property_count": 0
+    },
+    {
+      "check_id": "frontend_event_signature_6c3745abe695e828",
+      "path": "/Script/CommonUI.CommonButton:BP_OnClicked",
+      "cpp_class": "UCommonButton",
+      "create_func": "0x140806710",
+      "outer_func": "0x140805cb0",
+      "flags": "0x8080800",
+      "serialized_property_count": 0
+    },
+    {
+      "check_id": "frontend_event_signature_cef8ed789ea4cca6",
+      "path": "/Script/CommonUI.CommonButton:BP_OnDisabled",
+      "cpp_class": "UCommonButton",
+      "create_func": "0x1408067a0",
+      "outer_func": "0x140805cb0",
+      "flags": "0x8080800",
+      "serialized_property_count": 0
+    },
+    {
+      "check_id": "frontend_event_signature_acdd5f250c07b3f5",
+      "path": "/Script/CommonUI.CommonButton:BP_OnEnabled",
+      "cpp_class": "UCommonButton",
+      "create_func": "0x140806800",
+      "outer_func": "0x140805cb0",
+      "flags": "0x8080800",
+      "serialized_property_count": 0
+    },
+    {
+      "check_id": "frontend_event_signature_86be4fd63c1f3750",
+      "path": "/Script/CommonUI.CommonButton:BP_OnHovered",
+      "cpp_class": "UCommonButton",
+      "create_func": "0x140806830",
+      "outer_func": "0x140805cb0",
+      "flags": "0x8080800",
+      "serialized_property_count": 0
+    },
+    {
+      "check_id": "frontend_event_signature_be009a77ba833c9e",
+      "path": "/Script/CommonUI.CommonButton:BP_OnUnhovered",
+      "cpp_class": "UCommonButton",
+      "create_func": "0x140806890",
+      "outer_func": "0x140805cb0",
+      "flags": "0x8080800",
+      "serialized_property_count": 0
+    },
+    {
+      "check_id": "frontend_event_signature_f0e8d7f839d603a6",
+      "path": "/Script/CommonUI.CommonButton:OnActionComplete",
+      "cpp_class": "UCommonButton",
+      "create_func": "0x140806e40",
+      "outer_func": "0x140805cb0",
+      "flags": "0x8080800",
+      "serialized_property_count": 0
+    },
+    {
+      "check_id": "frontend_event_signature_7f410db84053bf97",
+      "path": "/Script/CommonUI.CommonButton:OnActionProgress",
+      "cpp_class": "UCommonButton",
+      "create_func": "0x140806e70",
+      "outer_func": "0x140805cb0",
+      "flags": "0x8080800",
+      "serialized_property_count": 1
+    },
+    {
+      "check_id": "frontend_event_signature_cad49b19554f2294",
+      "path": "/Script/CommonUI.CommonButton:OnCurrentTextStyleChanged",
+      "cpp_class": "UCommonButton",
+      "create_func": "0x140806ea0",
+      "outer_func": "0x140805cb0",
+      "flags": "0x8080800",
+      "serialized_property_count": 0
+    },
+    {
+      "check_id": "frontend_event_signature_082e932ed60cc28a",
+      "path": "/Script/CommonUI.CommonButton:OnTriggeredInputActionChanged",
+      "cpp_class": "UCommonButton",
+      "create_func": "0x140806fc0",
+      "outer_func": "0x140805cb0",
+      "flags": "0x8480800",
+      "serialized_property_count": 1
+    },
+    {
+      "check_id": "frontend_event_signature_5974ea6157df96a1",
+      "path": "/Script/FortniteGame.FortEntryMusicController:StartMusic",
+      "cpp_class": "AFortEntryMusicController",
+      "create_func": "0x1428dc630",
+      "outer_func": "0x1428dc600",
+      "flags": "0x8020800",
+      "serialized_property_count": 0
+    },
+    {
+      "check_id": "frontend_event_signature_6472bb99ee9b5eae",
+      "path": "/Script/FortniteUI.EmergencyNoticeBase:HideNotice",
+      "cpp_class": "UEmergencyNoticeBase",
+      "create_func": "0x1451e7070",
+      "outer_func": "0x1451e6f80",
+      "flags": "0x8080800",
+      "serialized_property_count": 0
+    },
+    {
+      "check_id": "frontend_event_signature_d4680cda66578a74",
+      "path": "/Script/FortniteUI.EmergencyNoticeBase:ShowNotice",
+      "cpp_class": "UEmergencyNoticeBase",
+      "create_func": "0x1451e70a0",
+      "outer_func": "0x1451e6f80",
+      "flags": "0x8480800",
+      "serialized_property_count": 2
+    },
+    {
+      "check_id": "frontend_event_signature_b1669f5a7a25b463",
+      "path": "/Script/FortniteUI.FortConfirmationWindow:ConfigureConfirmationButton",
+      "cpp_class": "UFortConfirmationWindow",
+      "create_func": "0x145215d90",
+      "outer_func": "0x145215cf0",
+      "flags": "0x8480800",
+      "serialized_property_count": 3
+    },
+    {
+      "check_id": "frontend_event_signature_d948f4dfac455d84",
+      "path": "/Script/FortniteUI.FortConfirmationWindow:ConfigureDeclineButton",
+      "cpp_class": "UFortConfirmationWindow",
+      "create_func": "0x145215dc0",
+      "outer_func": "0x145215cf0",
+      "flags": "0x8080800",
+      "serialized_property_count": 1
+    },
+    {
+      "check_id": "frontend_event_signature_805e8ce2cd0b59d4",
+      "path": "/Script/FortniteUI.FortErrorWindow:OnOverrideCloseButtonText",
+      "cpp_class": "UFortErrorWindow",
+      "create_func": "0x14522c3b0",
+      "outer_func": "0x14522c380",
+      "flags": "0x8480800",
+      "serialized_property_count": 1
+    },
+    {
+      "check_id": "frontend_event_signature_6f584de16f39d26f",
+      "path": "/Script/FortniteUI.FortFriendSubscriptionToastWidget:OnPlayCloseAnimation",
+      "cpp_class": "UFortFriendSubscriptionToastWidget",
+      "create_func": "0x145235650",
+      "outer_func": "0x145235570",
+      "flags": "0x8080800",
+      "serialized_property_count": 0
+    },
+    {
+      "check_id": "frontend_event_signature_551e74e5bd2eca40",
+      "path": "/Script/FortniteUI.FortFriendSubscriptionToastWidget:OnPlayOpenAnimation",
+      "cpp_class": "UFortFriendSubscriptionToastWidget",
+      "create_func": "0x145235680",
+      "outer_func": "0x145235570",
+      "flags": "0x8080800",
+      "serialized_property_count": 0
+    },
+    {
+      "check_id": "frontend_event_signature_a7f746f057ea7969",
+      "path": "/Script/FortniteUI.FortLetoLayoutBorder:UpdateBorderWidth",
+      "cpp_class": "UFortLetoLayoutBorder",
+      "create_func": "0x1452c3ea0",
+      "outer_func": "0x1452c3e10",
+      "flags": "0x8080800",
+      "serialized_property_count": 1
+    },
+    {
+      "check_id": "frontend_event_signature_3b15a4585c645518",
+      "path": "/Script/FortniteUI.FortLoginStatus:SetContinueButtonText",
+      "cpp_class": "UFortLoginStatus",
+      "create_func": "0x1452825a0",
+      "outer_func": "0x145282560",
+      "flags": "0x8480800",
+      "serialized_property_count": 1
+    },
+    {
+      "check_id": "frontend_event_signature_f9d18a0bde72a1e9",
+      "path": "/Script/FortniteUI.FortPlayerPowerRatingToast:ShowToast",
+      "cpp_class": "UFortPlayerPowerRatingToast",
+      "create_func": "0x1452a13d0",
+      "outer_func": "0x1452a12b0",
+      "flags": "0x8080800",
+      "serialized_property_count": 0
+    },
+    {
+      "check_id": "frontend_event_signature_6519358e05e107dc",
+      "path": "/Script/FortniteUI.FortRestartClientModal:OnButtonSet",
+      "cpp_class": "UFortRestartClientModal",
+      "create_func": "0x1452bfd60",
+      "outer_func": "0x1452bfd00",
+      "flags": "0x8080800",
+      "serialized_property_count": 2
+    },
+    {
+      "check_id": "frontend_event_signature_aed5bb04f983aaea",
+      "path": "/Script/FortniteUI.FortSplashScreenWidget:OnInputMethodChanged",
+      "cpp_class": "UFortSplashScreenWidget",
+      "create_func": "0x1452e3e00",
+      "outer_func": "0x1452e3dd0",
+      "flags": "0x8080800",
+      "serialized_property_count": 2
+    },
+    {
+      "check_id": "frontend_event_signature_8273b2a360af95f0",
+      "path": "/Script/FortniteUI.FortToastDisplayArea:OnDisplayToast",
+      "cpp_class": "UFortToastDisplayArea",
+      "create_func": "0x145300da0",
+      "outer_func": "0x145300cb0",
+      "flags": "0x8020800",
+      "serialized_property_count": 1
+    },
+    {
+      "check_id": "frontend_event_signature_37a6db2b59f63e51",
+      "path": "/Script/FortniteUI.FortVoiceChannelChangePopup:OnInputModeChanged",
+      "cpp_class": "UFortVoiceChannelChangePopup",
+      "create_func": "0x145320240",
+      "outer_func": "0x14531fef0",
+      "flags": "0x8080800",
+      "serialized_property_count": 2
+    },
+    {
+      "check_id": "frontend_event_signature_f6471223d54183eb",
+      "path": "/Script/FortniteUI.FortVoiceChannelChangePopup:OnPlayCloseAnimation",
+      "cpp_class": "UFortVoiceChannelChangePopup",
+      "create_func": "0x1453202a0",
+      "outer_func": "0x14531fef0",
+      "flags": "0x8080800",
+      "serialized_property_count": 0
+    },
+    {
+      "check_id": "frontend_event_signature_6b477b21f58cfe66",
+      "path": "/Script/FortniteUI.FortVoiceChannelChangePopup:OnPlayOpenAnimation",
+      "cpp_class": "UFortVoiceChannelChangePopup",
+      "create_func": "0x145320310",
+      "outer_func": "0x14531fef0",
+      "flags": "0x8080800",
+      "serialized_property_count": 0
+    },
+    {
+      "check_id": "frontend_event_signature_08ac3c611a145c94",
+      "path": "/Script/FortniteUI.FortWebLoginWidget:DismissWidget",
+      "cpp_class": "UFortWebLoginWidget",
+      "create_func": "0x1453208d0",
+      "outer_func": "0x1453208a0",
+      "flags": "0xc020800",
+      "serialized_property_count": 0
+    },
+    {
+      "check_id": "frontend_event_signature_925ce33dae931e0b",
+      "path": "/Script/FortniteUI.FortWebLoginWidget:DisplayWidget",
+      "cpp_class": "UFortWebLoginWidget",
+      "create_func": "0x145320900",
+      "outer_func": "0x1453208a0",
+      "flags": "0xc020800",
+      "serialized_property_count": 1
+    },
+    {
+      "check_id": "frontend_event_signature_c927837cfa8d256e",
+      "path": "/Script/UMG.UserWidget:Construct",
+      "cpp_class": "UUserWidget",
+      "create_func": "0x143dbd280",
+      "outer_func": "0x143dbd0b0",
+      "flags": "0x8020808",
+      "serialized_property_count": 0
+    },
+    {
+      "check_id": "frontend_event_signature_e1cc754f9f891a6d",
+      "path": "/Script/UMG.UserWidget:Destruct",
+      "cpp_class": "UUserWidget",
+      "create_func": "0x143dbd2b0",
+      "outer_func": "0x143dbd0b0",
+      "flags": "0x8020808",
+      "serialized_property_count": 0
+    },
+    {
+      "check_id": "frontend_event_signature_3720cf4e31f354ee",
+      "path": "/Script/UMG.UserWidget:OnAnalogValueChanged",
+      "cpp_class": "UUserWidget",
+      "create_func": "0x143dbd760",
+      "outer_func": "0x143dbd0b0",
+      "flags": "0x8020800",
+      "serialized_property_count": 3
+    },
+    {
+      "check_id": "frontend_event_signature_46979d00c23e6599",
+      "path": "/Script/UMG.UserWidget:OnInitialized",
+      "cpp_class": "UUserWidget",
+      "create_func": "0x143dbd970",
+      "outer_func": "0x143dbd0b0",
+      "flags": "0x8020808",
+      "serialized_property_count": 0
+    },
+    {
+      "check_id": "frontend_event_signature_abcf6a4a1c87315b",
+      "path": "/Script/UMG.UserWidget:OnMouseButtonDown",
+      "cpp_class": "UUserWidget",
+      "create_func": "0x143dbda90",
+      "outer_func": "0x143dbd0b0",
+      "flags": "0x8420808",
+      "serialized_property_count": 3
+    },
+    {
+      "check_id": "frontend_event_signature_acc366dcab5dd9aa",
+      "path": "/Script/UMG.UserWidget:OnMouseButtonUp",
+      "cpp_class": "UUserWidget",
+      "create_func": "0x143dbdac0",
+      "outer_func": "0x143dbd0b0",
+      "flags": "0x8420808",
+      "serialized_property_count": 3
+    },
+    {
+      "check_id": "frontend_event_signature_725ac5635b4bd5ff",
+      "path": "/Script/UMG.UserWidget:OnMouseEnter",
+      "cpp_class": "UUserWidget",
+      "create_func": "0x143dbdb20",
+      "outer_func": "0x143dbd0b0",
+      "flags": "0x8420808",
+      "serialized_property_count": 2
+    },
+    {
+      "check_id": "frontend_event_signature_a18b8fa106e94b89",
+      "path": "/Script/UMG.UserWidget:OnMouseLeave",
+      "cpp_class": "UUserWidget",
+      "create_func": "0x143dbdb50",
+      "outer_func": "0x143dbd0b0",
+      "flags": "0x8420808",
+      "serialized_property_count": 1
+    },
+    {
+      "check_id": "frontend_event_signature_ea85d14aa60b13ef",
+      "path": "/Script/UMG.UserWidget:OnTouchEnded",
+      "cpp_class": "UUserWidget",
+      "create_func": "0x143dbdca0",
+      "outer_func": "0x143dbd0b0",
+      "flags": "0x8420808",
+      "serialized_property_count": 3
+    },
+    {
+      "check_id": "frontend_event_signature_a7a890054c988e28",
+      "path": "/Script/UMG.UserWidget:OnTouchStarted",
+      "cpp_class": "UUserWidget",
+      "create_func": "0x143dbdd60",
+      "outer_func": "0x143dbd0b0",
+      "flags": "0x8420808",
+      "serialized_property_count": 3
+    },
+    {
+      "check_id": "frontend_event_signature_a61d1d649bb8c042",
+      "path": "/Script/UMG.UserWidget:PreConstruct",
+      "cpp_class": "UUserWidget",
+      "create_func": "0x143dbcb90",
+      "outer_func": "0x143dbd0b0",
+      "flags": "0x8020808",
+      "serialized_property_count": 1
+    },
+    {
+      "check_id": "frontend_event_signature_da1eeac922dcfbda",
+      "path": "/Script/UMG.UserWidget:Tick",
+      "cpp_class": "UUserWidget",
+      "create_func": "0x143dbcf80",
+      "outer_func": "0x143dbd0b0",
+      "flags": "0x8020808",
+      "serialized_property_count": 2
+    }
+  ]
+}

@@ -5,7 +5,7 @@ import subprocess
 import sys
 
 
-allowed_exact = {".gitignore", ".gitattributes", ".githooks/pre-commit", ".githooks/post-commit", "AGENTS.md"}
+allowed_exact = {".gitignore", ".gitattributes", ".githooks/pre-commit", ".githooks/post-commit", "AGENTS.md", "README.md"}
 allowed_exact.add("porting/native/FortniteLinux.uproject")
 forbidden_directories = (
     "porting/generated/", "porting/build/", "porting/.venv/",
@@ -26,7 +26,7 @@ entries = subprocess.check_output(
 errors = []
 for raw in filter(None, entries):
     path = raw.decode("utf-8", "surrogateescape")
-    if path not in allowed_exact and not path.startswith("porting/"):
+    if path not in allowed_exact and not path.startswith(("porting/", "docs/")):
         errors.append(f"outside porting allowlist: {path}")
     if path.startswith(forbidden_directories):
         errors.append(f"generated or build output: {path}")
