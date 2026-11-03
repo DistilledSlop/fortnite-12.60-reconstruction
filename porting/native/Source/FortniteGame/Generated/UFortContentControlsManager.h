@@ -43,6 +43,12 @@ public:
 	// Non-reflected field (behaviour kind "member_field", offset 0xd9): not a UPROPERTY, not replicated.
 	bool NativeRecoveredBool_0xd9;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0xda): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0xda;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0xf0): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0xf0;
+
 	// Non-reflected field (behaviour kind "member_field", offset 0xf1): not a UPROPERTY, not replicated.
 	bool NativeRecoveredBool_0xf1;
 
@@ -79,6 +85,12 @@ public:
 
 	UFUNCTION()
 	bool GetCanUseVoiceChat() const;
+
+	UFUNCTION()
+	bool GetCanVoiceChatWithUnknowns() const;
+
+	UFUNCTION()
+	bool GetPurchaseReportingEnabled() const;
 
 };
 

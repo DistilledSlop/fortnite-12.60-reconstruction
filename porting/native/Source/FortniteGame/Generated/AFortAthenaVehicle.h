@@ -233,6 +233,9 @@ public:
 	UPROPERTY(Replicated)
 	FFortAthenaVehicleInputState EmptyDriverInputState;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x554): not a UPROPERTY, not replicated.
+	float NativeRecoveredFloat_0x554;
+
 	// table index 107, flags 0x10000000000015
 	UPROPERTY()
 	FFortRechargingActionTimer FuelCharge;
@@ -648,6 +651,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	FVector GetPreviousLinearVelocity() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetSteeringAngle() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual bool IsBraking() const;

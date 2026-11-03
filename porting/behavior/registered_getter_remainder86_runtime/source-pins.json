@@ -1,0 +1,10 @@
+{
+  "porting/behavior/MANIFEST.json": "a7dd14dcd71046195e1b91496170ebc7c8617bdb1bc5354c55cc1723c57e0fa7",
+  "porting/behavior/bulk_known_leaf_getters84_runtime/report.json": "90dcc8abe7009d1ae06f482627a4abd79281cab7ae8ad3cf27bb9591da2a80f9",
+  "porting/behavior/registered_getters85_runtime/report.json": "de3258624e5b1581c08e8cd9ccfa4f6b0f17c02fbb92b6570b5cb63d616273a4",
+  "porting/generated/reflection/class_name_map.json": "8a7babdd6ea32e831e883b97f56ba9bd92f8f24f966243c70804e358aff2b4ed",
+  "porting/generated/reflection/class_parent_map.json": "2947b7aab38c4a85df7df3bacdd3f14012408b53e1c1efc08e5aa2fdbb084056",
+  "porting/generated/reflection/bool_bits.json": "c65e8d4abc52683c7a4e646e846f22941d63a36aa493985fd6ac16c1f07b3e99",
+  "porting/generated/reflection/native_funcs.json": "502d85e9136e0aa9cd930ec4662320ba1fc453e035a25aac5c500a8d1856ba59",
+  "porting/generated/reflection/struct_blocks.json": "5fb33b2a9527d6e8dddd5d17934b0e47ba4b1f954757ff0fe8be262e929f1ad5"
+}

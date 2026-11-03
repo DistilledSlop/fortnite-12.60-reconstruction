@@ -1,5 +1,49 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Registered getter remainder batch86 (2026-11-03)
+
+Integrated14 getter bodies plus14 evidenced fields: vehicle steering angle,
+remaining voice/purchase content controls, leaderboard rank/qualification flags,
+creative-mode context, object-mover input activity, unsaved quest progress,
+season-pass level and upgrade affordability/unlock/preview state. This includes
+all13 candidates capped out of85 plus the vehicle float getter. Exact class
+registration bounds, immediate-parent occupancy, reflected/native fields and
+struct extents remain required. No alias, default, writer or lifecycle claims.
+Native Bool reads retain existing valid0/1 representation policy. Zone teleport
+getter remains rejected by uncertain reflected delegate occupancy at9d8..9ec.
+
+Generation86 accepted2,368 entries =2,147 bodies+221fields, rejected0;16 expected
+native implementation/header files changed across8 classes. No builds/runtime/
+tests. Last tested2,040;107 canonical+4 manual bodies build pending; next3,040.
+All four product gates OPEN; objective ACTIVE. This continuation integrated39
+bodies+39 fields across84/85/86. Previous goal turn PROGRESS across82/83 as below.
+Committed/pushed85 sourceefdf8798/dashboardf04795a5;84ce7e780f/27be0fc7.
+
+A fresh bounded Terra6.1 medium fork-none worker produced remainder proposals;
+root reviewed all14 snippets and matching input pins before merge, retained sole
+canonical/native/generation/staging/build ownership. registered_getter_remainder86_runtime
+contains manifest, complete native windows, registration/occupancy evidence,
+source pins, prepare script and handoff. No full-image rehash. All worker tasks
+are terminal; no generation/build process remains running after promotion.
+Preserve economical reads, bounded rotating worker tasks, configured Luna/Terra/
+Sol choices, unrelated graphics/Engine edits and deferred visual work. Incomplete
+profile/PSO drafts remain uncounted; functioning state writers/constructors and
+full runtime lifecycle remain open even for these integrated getters.
+
+Next broad recovery: registration bounds now unlock other instruction families.
+Extend typed leaf mapping to object/enum returns or normalized bit predicates,
+and inspect call/return wrappers with already-established contracts. Do not
+repeat unchanged empty scanner families. Some missing getter fields lie within
+unknown aggregate extents; resolve original property sizes before proposing an
+alias or new storage. The narrow58-getter inventory is substantially covered,
+not proof that broader quick native recovery is exhausted.
+
+Worker source command: `python3 porting/behavior/registered_getter_remainder86_runtime/prepare.py`
+Outcome14body/field pairs; zone getter rejected. Root source command:
+`python3 -I /tmp/promote-native-batch86.py > /tmp/promote-native-batch86.log 2>&1`
+Exit0,2,368accepted/0rejected; command/reports under
+porting/generated/gameplay-bulk-integration-86/. No compiler/build/tests ran.
+
 ## Registration-backed getter integrations batch85 (2026-11-03)
 
 Integrated20 whole getters plus20 evidenced fields: remote-player/squad spectator

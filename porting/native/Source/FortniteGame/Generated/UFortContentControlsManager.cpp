@@ -61,3 +61,15 @@ bool UFortContentControlsManager::GetCanUseVoiceChat() const
 	return NativeRecoveredBool_0xd9;
 }
 
+bool UFortContentControlsManager::GetCanVoiceChatWithUnknowns() const
+{
+	// CONFIDENCE: high; complete getter, storage evidence in report.json.
+	return NativeRecoveredBool_0xda;
+}
+
+bool UFortContentControlsManager::GetPurchaseReportingEnabled() const
+{
+	// CONFIDENCE: high; complete getter, storage evidence in report.json.
+	return NativeRecoveredBool_0xf0;
+}
+

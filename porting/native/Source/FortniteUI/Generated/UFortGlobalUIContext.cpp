@@ -10,6 +10,12 @@ void UFortGlobalUIContext::ClearRatingWidgetInfo()
 	bShowRateWidget = false;
 }
 
+bool UFortGlobalUIContext::GetCreativeMode() const
+{
+	// CONFIDENCE: high; complete getter, storage evidence in report.json.
+	return NativeRecoveredBool_0x3d4;
+}
+
 bool UFortGlobalUIContext::IsBluGloEnabled()
 {
 	// Original address: 0x1412d9d60.

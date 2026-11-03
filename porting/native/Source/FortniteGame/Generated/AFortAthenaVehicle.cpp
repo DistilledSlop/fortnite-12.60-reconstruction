@@ -60,6 +60,12 @@ FVector AFortAthenaVehicle::GetPreviousLinearVelocity() const
 	return NativeRecoveredFVector_0xc40;
 }
 
+float AFortAthenaVehicle::GetSteeringAngle() const
+{
+	// CONFIDENCE: high; complete getter, storage evidence in report.json.
+	return NativeRecoveredFloat_0x554;
+}
+
 bool AFortAthenaVehicle::IsBraking() const
 {
 	// Exact original shared stub 0x1406801e0.

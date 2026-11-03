@@ -35,6 +35,12 @@ void UFortQuestManager::GiveAthenaXp(float XpAmount)
 	// CONFIDENCE: HIGH
 }
 
+bool UFortQuestManager::HasUnsavedPrimaryMissionProgress() const
+{
+	// CONFIDENCE: high; complete getter, storage evidence in report.json.
+	return NativeRecoveredBool_0x9ee;
+}
+
 void UFortQuestManager::InitializeQuestAbilities(APawn* PlayerPawn)
 {
 	// Original exec 0x1406969b0; complete empty leaf 0x1406801c0.

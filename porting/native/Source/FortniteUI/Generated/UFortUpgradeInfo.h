@@ -20,5 +20,29 @@ public:
 	UPROPERTY()
 	UFortHomebaseNodeItemDefinition* NodeItemDef;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x50): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt_0x50;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x64): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x64;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x65): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x65;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x66): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x66;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool CanAffordUpgrade() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetUpgradeUnlockLevel() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsPreviewing() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsUpgradeUnlocked() const;
+
 };
 

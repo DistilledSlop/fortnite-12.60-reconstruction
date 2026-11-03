@@ -18,6 +18,9 @@ class FORTNITEUI_API UFortSeasonPassLevelInfo : public UObject
 	GENERATED_BODY()
 
 public:
+	// Non-reflected field (behaviour kind "member_field", offset 0x28): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt_0x28;
+
 	// table index 5, flags 0x40000000002000
 	UPROPERTY(Transient)
 	AFortPlayerController* FortPC;
@@ -33,6 +36,9 @@ public:
 	// table index 0, flags 0x40000000002000
 	UPROPERTY(Transient)
 	TArray<UFortItem*> PaidRewards;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetLevel() const;
 
 };
 

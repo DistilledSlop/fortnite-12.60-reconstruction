@@ -14,5 +14,23 @@ class FORTNITEUI_API UFortEventLeaderboardEntryData : public UObject
 	GENERATED_BODY()
 
 public:
+	// Non-reflected field (behaviour kind "member_field", offset 0x98): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt_0x98;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x9c): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x9c;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x9d): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x9d;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool DoesLeaderboardHaveQualifiedIcons() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetRank() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool ShouldShowQualifiedIcon() const;
+
 };
 

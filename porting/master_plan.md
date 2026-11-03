@@ -10,6 +10,14 @@ credentials in Git, and the orchestrator reviews and commits.
 
 ## Current baseline
 
+Batch86 integrates14 remaining getters+14 fields across steering, content
+controls, leaderboard, quest and upgrade state. Exact registration and occupancy
+checks remain intact; zone teleport getter stays blocked. Generation accepts
+2,368 entries=2,147 bodies+221fields, rejected0. No builds/tests;107 canonical+
+4 manual bodies pending since2,040; next3,040. All four product gates remain OPEN.
+The84/85/86 continuation integrated39 bodies and39 fields; wider native recovery,
+state writers/constructors and runtime lifecycle remain open.
+
 Batch85 integrates20 getters+20 fields using exact registration-derived class
 bounds, struct extents and conservative occupancy. Remote spectator, content
 control and client setting state reads retain complete native behavior; writer/
@@ -62,10 +70,10 @@ and reuse; native ABI/lifetime/engine adapters remain open. No canonical promoti
 or builds/tests. Broader named callbacks already had drafts; uncovered actual
 callees were selected to avoid duplicate work and broaden beyond weapon chains.
 
-Native source integration has reached 2,133 bodies plus 207 supporting
-fields (batch85, 2026-11-03). The tested baseline is2,040 bodies at785be98d:
+Native source integration has reached 2,147 bodies plus 221 supporting
+fields (batch86, 2026-11-03). The tested baseline is2,040 bodies at785be98d:
 Linux client/server builds and Apollo headless join passed; tracked receipts in
-progress/native-checkpoint-2040.json. Ninety-three subsequent canonical bodies and four manual Kismet math bodies are build pending.
+progress/native-checkpoint-2040.json. One hundred seven subsequent canonical bodies and four manual Kismet math bodies are build pending.
 Broad batch69 adds31 uncounted C++ behavior drafts across game mode, controller,
 pawn and player-state message paths; unresolved calls/types/effects remain.
 Batch70 adds22 more uncounted drafts, including full vehicle/cosmetic callback

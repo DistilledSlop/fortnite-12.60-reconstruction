@@ -152,8 +152,14 @@ public:
 	UPROPERTY(Transient)
 	FUniqueNetIdRepl CurrentLocalPlayerUniqueNetId;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x3d4): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x3d4;
+
 	UFUNCTION(BlueprintCallable)
 	void ClearRatingWidgetInfo();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetCreativeMode() const;
 
 	UFUNCTION(BlueprintCallable)
 	bool IsBluGloEnabled();

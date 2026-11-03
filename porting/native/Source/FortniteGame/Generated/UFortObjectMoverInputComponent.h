@@ -267,5 +267,11 @@ public:
 	UPROPERTY()
 	UInputComponent* PlaysetPreviewModeInputComponent;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x430): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x430;
+
+	UFUNCTION(BlueprintCallable)
+	bool IsEmptyInputComponentActive();
+
 };
 

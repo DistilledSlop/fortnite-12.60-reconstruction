@@ -126,6 +126,9 @@ public:
 	UPROPERTY(Transient)
 	TArray<FFortAbilitySetHandle> EquippedQuestAbilities;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x9ee): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x9ee;
+
 	// table index 20, flags 0x40000000000000
 	UPROPERTY()
 	TArray<UDataTable*> EventQuestDataTables;
@@ -216,6 +219,9 @@ private:
 	UFUNCTION(Exec)
 	void GiveAthenaXp(float XpAmount);
 public:
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool HasUnsavedPrimaryMissionProgress() const;
 
 protected:
 	UFUNCTION()
