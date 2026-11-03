@@ -53,6 +53,12 @@ EFortControlRecoveryBehavior AFortPawn::GetControlRecoveryBehavior() const
 	return ControlRecoveryBehavior;
 }
 
+USkeletalMeshComponent* AFortPawn::GetEmotePropAttachMesh()
+{
+	// Native target 0x141945fe0; CONFIDENCE: high.
+	return GetMesh();
+}
+
 float AFortPawn::GetLocalSpin() const
 {
 	// Behaviour snippet: AFortPawn::GetLocalSpin (body only; spliced into the generated member function).
@@ -73,6 +79,12 @@ void AFortPawn::HandleIsDying()
 void AFortPawn::HandleIsHiddenForDeath()
 {
 	// Body not recovered: reflection-derived stub.
+}
+
+bool AFortPawn::IsActionInputIgnored() const
+{
+	// Native target 0x1406801e0; CONFIDENCE: high.
+	return false;
 }
 
 bool AFortPawn::IsAllowChainStun() const

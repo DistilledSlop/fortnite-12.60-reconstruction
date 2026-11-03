@@ -2,6 +2,12 @@
 #include "AAthenaBarrierFlag.h"
 #include "Net/UnrealNetwork.h"
 
+AAthenaBarrierObjective* AAthenaBarrierFlag::GetObjectiveActor_Implementation() const
+{
+	// Native target 0x140680300; CONFIDENCE: high.
+	return nullptr;
+}
+
 void AAthenaBarrierFlag::OnRep_CurrentState()
 {
 	// Body not recovered: reflection-derived stub.

@@ -29,5 +29,8 @@ public:
 	UPROPERTY(Transient)
 	TArray<FMarshalledVFXRuntimeData> RuntimeParticleData;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual TEnumAsByte<EFortCustomPartType::Type> GetCharacterPartType() const;
+
 };
 

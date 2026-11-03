@@ -332,6 +332,12 @@ UFortMcpProfileCampaign* AFortPlayerController::GetMcpCampaignProfile() const
 	return MainMcpProfile;
 }
 
+AFortPlayerPawn* AFortPlayerController::GetPlayerPawn() const
+{
+	// Native target 0x1419d5f00; CONFIDENCE: high.
+	return MyFortPawn;
+}
+
 UFortRegisteredPlayerInfo* AFortPlayerController::GetRegisteredPlayerInfo() const
 {
 	// Original address: 0x142a47980.

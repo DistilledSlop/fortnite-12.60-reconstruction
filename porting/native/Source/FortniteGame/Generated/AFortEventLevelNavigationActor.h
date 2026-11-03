@@ -123,5 +123,9 @@ public:
 	UPROPERTY()
 	FOnMcpInventoryUpdated OnInventoryUpdated;
 
+	UFUNCTION(BlueprintNativeEvent)
+	bool CanCommitNavigationRequest() const;
+	virtual bool CanCommitNavigationRequest_Implementation() const;
+
 };
 

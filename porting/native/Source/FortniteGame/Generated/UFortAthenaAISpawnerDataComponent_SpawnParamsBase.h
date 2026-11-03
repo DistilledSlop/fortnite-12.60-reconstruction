@@ -14,5 +14,13 @@ class FORTNITEGAME_API UFortAthenaAISpawnerDataComponent_SpawnParamsBase : publi
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	float GetSpawnTracePadding();
+	virtual float GetSpawnTracePadding_Implementation();
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	bool ShouldCheckForOverlaps();
+	virtual bool ShouldCheckForOverlaps_Implementation();
+
 };
 

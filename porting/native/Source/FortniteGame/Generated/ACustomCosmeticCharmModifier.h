@@ -27,6 +27,9 @@ public:
 	AFortPlayerCharm* MyCharmOwner;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual TEnumAsByte<EFortCustomCharmType::Type> GetCharacterCharmType() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	AFortPlayerCharm* GetCharmOwner() const;
 
 };

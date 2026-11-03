@@ -261,6 +261,12 @@ bool ABuildingActor::ShouldDisplayDamageNumbers_Implementation() const
 	return true;
 }
 
+bool ABuildingActor::ShouldDisplayMobileInteractPrompt() const
+{
+	// Native target 0x141670b00; CONFIDENCE: high.
+	return bAllowInteract && bShowFirstInteractPrompt;
+}
+
 void ABuildingActor::SnapDmgVisualsToCurrentHealth()
 {
 	// Exact original shared stub 0x1406801c0.

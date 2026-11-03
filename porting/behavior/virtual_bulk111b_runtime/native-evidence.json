@@ -1,0 +1,1165 @@
+{
+  "selection": "first 46 rows of /tmp/native111b-selection.json",
+  "selection_count": 46,
+  "rows": [
+    {
+      "index": 0,
+      "proof": {
+        "function": "IsMagnetizedForSkyTubes",
+        "address": "0x14283c0a0",
+        "slot": "0x910",
+        "kind": "Bool",
+        "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; mov rax, qword ptr [rcx]; call qword ptr [rax + 0x910]; mov byte ptr [rbx], al; add rsp, 0x20; pop rbx; ret",
+        "class": "AFortAthenaVehicle",
+        "vtable": "0x145debe20",
+        "target": "0x14191bdb0",
+        "constructor_proof": {
+          "gpsc": "0x1428381e0",
+          "helper": "0x142837a90",
+          "constructor": "0x141908660",
+          "source": "porting/generated/native90-targets/0x141908660.c",
+          "object_expression": "param_1",
+          "primary_store": "*param_1 = &DAT_145debe20",
+          "vtable": "0x145debe20"
+        }
+      },
+      "captured_source": "porting/generated/native111-virtual-targets/0x14191bdb0.c",
+      "status": "unresolved",
+      "reason": "Nested object and member at 0xaf8/0x108 unresolved."
+    },
+    {
+      "index": 1,
+      "proof": {
+        "function": "IsOverlappingWaterBody",
+        "address": "0x14283c120",
+        "slot": "0xac0",
+        "kind": "Bool",
+        "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; mov rax, qword ptr [rcx]; call qword ptr [rax + 0xac0]; mov byte ptr [rbx], al; add rsp, 0x20; pop rbx; ret",
+        "class": "AFortAthenaVehicle",
+        "vtable": "0x145debe20",
+        "target": "0x14191bdd0",
+        "constructor_proof": {
+          "gpsc": "0x1428381e0",
+          "helper": "0x142837a90",
+          "constructor": "0x141908660",
+          "source": "porting/generated/native90-targets/0x141908660.c",
+          "object_expression": "param_1",
+          "primary_store": "*param_1 = &DAT_145debe20",
+          "vtable": "0x145debe20"
+        }
+      },
+      "captured_source": "porting/generated/native111-virtual-targets/0x14191bdd0.c",
+      "status": "unresolved",
+      "reason": "Inherited bit at 0x40e mask 0x02 has no proven reflected member."
+    },
+    {
+      "index": 2,
+      "proof": {
+        "function": "IsScrapingSidesOrTop",
+        "address": "0x14283c150",
+        "slot": "0x8e8",
+        "kind": "Bool",
+        "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; mov rax, qword ptr [rcx]; call qword ptr [rax + 0x8e8]; mov byte ptr [rbx], al; add rsp, 0x20; pop rbx; ret",
+        "class": "AFortAthenaVehicle",
+        "vtable": "0x145debe20",
+        "target": "0x14084cd00",
+        "constructor_proof": {
+          "gpsc": "0x1428381e0",
+          "helper": "0x142837a90",
+          "constructor": "0x141908660",
+          "source": "porting/generated/native90-targets/0x141908660.c",
+          "object_expression": "param_1",
+          "primary_store": "*param_1 = &DAT_145debe20",
+          "vtable": "0x145debe20"
+        }
+      },
+      "captured_source": "porting/generated/native111-virtual-targets/0x14084cd00.c",
+      "status": "unresolved",
+      "reason": "Inherited bit at 0x40f mask 0x04 has no proven reflected member."
+    },
+    {
+      "index": 3,
+      "proof": {
+        "function": "IsSlowEnoughToInteract",
+        "address": "0x14283c180",
+        "slot": "0x8f8",
+        "kind": "Bool",
+        "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; mov rax, qword ptr [rcx]; call qword ptr [rax + 0x8f8]; mov byte ptr [rbx], al; add rsp, 0x20; pop rbx; ret",
+        "class": "AFortAthenaVehicle",
+        "vtable": "0x145debe20",
+        "target": "0x14191be50",
+        "constructor_proof": {
+          "gpsc": "0x1428381e0",
+          "helper": "0x142837a90",
+          "constructor": "0x141908660",
+          "source": "porting/generated/native90-targets/0x141908660.c",
+          "object_expression": "param_1",
+          "primary_store": "*param_1 = &DAT_145debe20",
+          "vtable": "0x145debe20"
+        }
+      },
+      "captured_source": "porting/generated/native111-virtual-targets/0x14191be50.c",
+      "status": "unresolved",
+      "reason": "Virtual slot, velocity helper, and configuration object unresolved."
+    },
+    {
+      "index": 4,
+      "proof": {
+        "function": "IsSprinting",
+        "address": "0x14283c1b0",
+        "slot": "0x8d0",
+        "kind": "Bool",
+        "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; mov rax, qword ptr [rcx]; call qword ptr [rax + 0x8d0]; mov byte ptr [rbx], al; add rsp, 0x20; pop rbx; ret",
+        "class": "AFortAthenaVehicle",
+        "vtable": "0x145debe20",
+        "target": "0x14191bec0",
+        "constructor_proof": {
+          "gpsc": "0x1428381e0",
+          "helper": "0x142837a90",
+          "constructor": "0x141908660",
+          "source": "porting/generated/native90-targets/0x141908660.c",
+          "object_expression": "param_1",
+          "primary_store": "*param_1 = &DAT_145debe20",
+          "vtable": "0x145debe20"
+        }
+      },
+      "captured_source": "porting/generated/native111-virtual-targets/0x14191bec0.c",
+      "status": "unresolved",
+      "reason": "Input-state and movement virtual calls unresolved."
+    },
+    {
+      "index": 5,
+      "proof": {
+        "function": "PlayerIsTryingToMoveForward",
+        "address": "0x14283cc60",
+        "slot": "0xa60",
+        "kind": "Bool",
+        "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; mov rax, qword ptr [rcx]; call qword ptr [rax + 0xa60]; mov byte ptr [rbx], al; add rsp, 0x20; pop rbx; ret",
+        "class": "AFortAthenaVehicle",
+        "vtable": "0x145debe20",
+        "target": "0x14191e690",
+        "constructor_proof": {
+          "gpsc": "0x1428381e0",
+          "helper": "0x142837a90",
+          "constructor": "0x141908660",
+          "source": "porting/generated/native90-targets/0x141908660.c",
+          "object_expression": "param_1",
+          "primary_store": "*param_1 = &DAT_145debe20",
+          "vtable": "0x145debe20"
+        }
+      },
+      "captured_source": "porting/generated/native104-virtual/0x14191e690.c",
+      "status": "unresolved",
+      "reason": "Input-state and configuration virtual calls unresolved."
+    },
+    {
+      "index": 6,
+      "proof": {
+        "function": "PlayerIsTryingToReverse",
+        "address": "0x14283cc90",
+        "slot": "0xa58",
+        "kind": "Bool",
+        "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; mov rax, qword ptr [rcx]; call qword ptr [rax + 0xa58]; mov byte ptr [rbx], al; add rsp, 0x20; pop rbx; ret",
+        "class": "AFortAthenaVehicle",
+        "vtable": "0x145debe20",
+        "target": "0x14191e720",
+        "constructor_proof": {
+          "gpsc": "0x1428381e0",
+          "helper": "0x142837a90",
+          "constructor": "0x141908660",
+          "source": "porting/generated/native90-targets/0x141908660.c",
+          "object_expression": "param_1",
+          "primary_store": "*param_1 = &DAT_145debe20",
+          "vtable": "0x145debe20"
+        }
+      },
+      "captured_source": "porting/generated/native104-virtual/0x14191e720.c",
+      "status": "unresolved",
+      "reason": "Input-state and configuration virtual calls unresolved."
+    },
+    {
+      "index": 7,
+      "proof": {
+        "function": "ShouldShowSoundIndicator",
+        "address": "0x14283d9e0",
+        "slot": "0xdb8",
+        "kind": "Bool",
+        "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; mov rax, qword ptr [rcx]; call qword ptr [rax + 0xdb8]; mov byte ptr [rbx], al; add rsp, 0x20; pop rbx; ret",
+        "class": "AFortAthenaVehicle",
+        "vtable": "0x145debe20",
+        "target": "0x1408506b0",
+        "constructor_proof": {
+          "gpsc": "0x1428381e0",
+          "helper": "0x142837a90",
+          "constructor": "0x141908660",
+          "source": "porting/generated/native90-targets/0x141908660.c",
+          "object_expression": "param_1",
+          "primary_store": "*param_1 = &DAT_145debe20",
+          "vtable": "0x145debe20"
+        }
+      },
+      "captured_source": "porting/generated/native111-virtual-targets/0x1408506b0.c",
+      "status": "unresolved",
+      "reason": "Interface subobject virtual calls and inherited bit unresolved."
+    },
+    {
+      "index": 8,
+      "proof": {
+        "function": "WheelsOnGround",
+        "address": "0x14283ded0",
+        "slot": "0x940",
+        "kind": "Bool",
+        "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; mov rax, qword ptr [rcx]; call qword ptr [rax + 0x940]; mov byte ptr [rbx], al; add rsp, 0x20; pop rbx; ret",
+        "class": "AFortAthenaVehicle",
+        "vtable": "0x145debe20",
+        "target": "0x140850620",
+        "constructor_proof": {
+          "gpsc": "0x1428381e0",
+          "helper": "0x142837a90",
+          "constructor": "0x141908660",
+          "source": "porting/generated/native90-targets/0x141908660.c",
+          "object_expression": "param_1",
+          "primary_store": "*param_1 = &DAT_145debe20",
+          "vtable": "0x145debe20"
+        }
+      },
+      "captured_source": "porting/generated/native111-virtual-targets/0x140850620.c",
+      "status": "unresolved",
+      "reason": "Inherited bit at 0x410 mask 0x04 has no proven reflected member."
+    },
+    {
+      "index": 9,
+      "proof": {
+        "function": "ShouldShowSoundIndicator",
+        "address": "0x142862320",
+        "slot": "0x1468",
+        "kind": "Bool",
+        "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; mov rax, qword ptr [rcx]; call qword ptr [rax + 0x1468]; mov byte ptr [rbx], al; add rsp, 0x20; pop rbx; ret",
+        "class": "AFortCharacterVehicle",
+        "vtable": "0x145df69d8",
+        "target": "0x141966e80",
+        "constructor_proof": {
+          "gpsc": "0x14285d610",
+          "helper": "0x14285e9f0",
+          "constructor": "0x14192d0d0",
+          "source": "porting/generated/native111-constructors/0x14192d0d0.c",
+          "object_expression": "param_1",
+          "primary_store": "*param_1 = &DAT_145df69d8",
+          "vtable": "0x145df69d8"
+        }
+      },
+      "captured_source": "porting/generated/native111-virtual-expanded/0x141966e80.c",
+      "status": "unresolved",
+      "reason": "Interface subobject virtual calls unresolved."
+    },
+    {
+      "index": 10,
+      "proof": {
+        "function": "GetAnimPlayRate",
+        "address": "0x14288ba00",
+        "slot": "0x538",
+        "kind": "Float",
+        "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; mov rax, qword ptr [rcx]; call qword ptr [rax + 0x538]; movss dword ptr [rbx], xmm0; add rsp, 0x20; pop rbx; ret",
+        "class": "UFortConsumableItemDefinition",
+        "vtable": "0x14605df38",
+        "target": "0x1420088a0",
+        "constructor_proof": {
+          "gpsc": "0x142888cf0",
+          "helper": "0x1428896e0",
+          "constructor": "0x141ffb7c0",
+          "source": "porting/generated/native111-constructors/0x141ffb7c0.c",
+          "object_expression": "param_1",
+          "primary_store": "*param_1 = &DAT_14605df38",
+          "vtable": "0x14605df38"
+        }
+      },
+      "captured_source": "porting/generated/native111-virtual-expanded/0x1420088a0.c",
+      "status": "unresolved",
+      "reason": "Animation virtual call and duration member dependency unresolved."
+    },
+    {
+      "index": 11,
+      "proof": {
+        "function": "GetUseAnimation",
+        "address": "0x14288bd40",
+        "slot": "0x530",
+        "kind": "Object",
+        "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; mov rax, qword ptr [rcx]; call qword ptr [rax + 0x530]; mov qword ptr [rbx], rax; add rsp, 0x20; pop rbx; ret",
+        "class": "UFortConsumableItemDefinition",
+        "vtable": "0x14605df38",
+        "target": "0x142012d30",
+        "constructor_proof": {
+          "gpsc": "0x142888cf0",
+          "helper": "0x1428896e0",
+          "constructor": "0x141ffb7c0",
+          "source": "porting/generated/native111-constructors/0x141ffb7c0.c",
+          "object_expression": "param_1",
+          "primary_store": "*param_1 = &DAT_14605df38",
+          "vtable": "0x14605df38"
+        }
+      },
+      "captured_source": "porting/generated/native111-virtual-expanded/0x142012d30.c",
+      "status": "unresolved",
+      "reason": "Soft object resolution and asset registration dependencies unresolved."
+    },
+    {
+      "index": 12,
+      "proof": {
+        "function": "CanUtilizeMoveToolSpawningFunctionality",
+        "address": "0x1428c2170",
+        "slot": "0xe20",
+        "kind": "Bool",
+        "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; mov rax, qword ptr [rcx]; call qword ptr [rax + 0xe20]; mov byte ptr [rbx], al; add rsp, 0x20; pop rbx; ret",
+        "class": "AFortCreativeMoveTool",
+        "vtable": "0x146204508",
+        "target": "0x142663da0",
+        "constructor_proof": {
+          "gpsc": "0x1428bae30",
+          "helper": "0x1428bdaa0",
+          "constructor": "0x14265ac60",
+          "source": "porting/generated/native103-ctors2/0x14265ac60.c",
+          "object_expression": "param_1",
+          "primary_store": "*param_1 = &DAT_146204508",
+          "vtable": "0x146204508"
+        }
+      },
+      "captured_source": "porting/generated/native104-virtual/0x142663da0.c",
+      "status": "unresolved",
+      "reason": "Game-state and controller dependencies unresolved."
+    },
+    {
+      "index": 13,
+      "proof": {
+        "function": "CanInteract",
+        "address": "0x1428c2140",
+        "slot": "0x430",
+        "kind": "Bool",
+        "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; mov rax, qword ptr [rcx]; call qword ptr [rax + 0x430]; mov byte ptr [rbx], al; add rsp, 0x20; pop rbx; ret",
+        "class": "UPossessPropInteraction",
+        "vtable": "0x1463a3cf0",
+        "target": "0x1406801d0",
+        "constructor_proof": {
+          "gpsc": "0x1428bba20",
+          "helper": "0x1428bdc90",
+          "constructor": null,
+          "source": "porting/generated/native110-ctor-helpers/0x1428bdc90.c",
+          "object_expression": "puVar1",
+          "primary_store": "*puVar1 = &DAT_1463a3cf0",
+          "vtable": "0x1463a3cf0"
+        }
+      },
+      "captured_source": "porting/generated/callee_probe/stubs/0x1406801d0.c",
+      "status": "ported",
+      "reflection_flags": "0xc020c00",
+      "explanation": "Captured body returns true."
+    },
+    {
+      "index": 14,
+      "proof": {
+        "function": "CanCommitNavigationRequest",
+        "address": "0x14278f0f0",
+        "slot": "0x628",
+        "kind": "Bool",
+        "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; mov rax, qword ptr [rcx]; call qword ptr [rax + 0x628]; mov byte ptr [rbx], al; add rsp, 0x20; pop rbx; ret",
+        "class": "AFortEventLevelNavigationActor",
+        "vtable": "0x146229870",
+        "target": "0x1406801d0",
+        "constructor_proof": {
+          "gpsc": "0x1428e0b80",
+          "helper": "0x1428e1010",
+          "constructor": "0x1426e8850",
+          "source": "porting/generated/native111-constructors/0x1426e8850.c",
+          "object_expression": "param_1",
+          "primary_store": "*param_1 = &DAT_146229870",
+          "vtable": "0x146229870"
+        }
+      },
+      "captured_source": "porting/generated/callee_probe/stubs/0x1406801d0.c",
+      "status": "ported",
+      "reflection_flags": "0x48020c00",
+      "explanation": "Captured body returns true."
+    },
+    {
+      "index": 15,
+      "proof": {
+        "function": "IsSpectatingAllowedAfterDeath",
+        "address": "0x1428f3510",
+        "slot": "0xbd8",
+        "kind": "Bool",
+        "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; mov rax, qword ptr [rcx]; call qword ptr [rax + 0xbd8]; mov byte ptr [rbx], al; add rsp, 0x20; pop rbx; ret",
+        "class": "AFortGameModeZone",
+        "vtable": "0x145fff0f0",
+        "target": "0x141ea2510",
+        "constructor_proof": {
+          "gpsc": "0x1428f1e50",
+          "helper": "0x1428f22b0",
+          "constructor": "0x141e89e00",
+          "source": "porting/generated/native111-constructors/0x141e89e00.c",
+          "object_expression": "param_1",
+          "primary_store": "*param_1 = &DAT_145fff0f0",
+          "vtable": "0x145fff0f0"
+        }
+      },
+      "captured_source": "porting/generated/native111-virtual-expanded/0x141ea2510.c",
+      "status": "ported",
+      "reflection_flags": "0x5c020c00",
+      "explanation": "Reflected boolean bAllowSpectateAfterDeath is at 0x709, matching the byte read."
+    },
+    {
+      "index": 16,
+      "proof": {
+        "function": "GetAbilityTargetingLevel",
+        "address": "0x1428f8240",
+        "slot": "0x458",
+        "kind": "Float",
+        "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; mov rax, qword ptr [rcx]; call qword ptr [rax + 0x458]; movss dword ptr [rbx], xmm0; add rsp, 0x20; pop rbx; ret",
+        "class": "UFortGameplayAbility",
+        "vtable": "0x145d19620",
+        "target": "0x1415f7d10",
+        "constructor_proof": {
+          "gpsc": "0x1428f53b0",
+          "helper": "0x1428f4980",
+          "constructor": "0x1415e6470",
+          "source": "porting/generated/native111-constructors/0x1415e6470.c",
+          "object_expression": "param_1",
+          "primary_store": "*param_1 = &DAT_145d19620",
+          "vtable": "0x145d19620"
+        }
+      },
+      "captured_source": "porting/generated/native111-virtual-expanded/0x1415f7d10.c",
+      "status": "unresolved",
+      "reason": "Targeting-level helper unresolved."
+    },
+    {
+      "index": 17,
+      "proof": {
+        "function": "SetupPreviewImageOverride",
+        "address": "0x1428f9600",
+        "slot": "0x450",
+        "kind": "Bool",
+        "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; mov rax, qword ptr [rcx]; call qword ptr [rax + 0x450]; mov byte ptr [rbx], al; add rsp, 0x20; pop rbx; ret",
+        "class": "UFortGameplayAbility",
+        "vtable": "0x145d19620",
+        "target": "0x1406801e0",
+        "constructor_proof": {
+          "gpsc": "0x1428f53b0",
+          "helper": "0x1428f4980",
+          "constructor": "0x1415e6470",
+          "source": "porting/generated/native111-constructors/0x1415e6470.c",
+          "object_expression": "param_1",
+          "primary_store": "*param_1 = &DAT_145d19620",
+          "vtable": "0x145d19620"
+        }
+      },
+      "captured_source": "porting/generated/callee_probe/blocking/0x1406801e0.c",
+      "status": "already_ported",
+      "reason": "Already in canonical manifest."
+    },
+    {
+      "index": 18,
+      "proof": {
+        "function": "GetMatchTime",
+        "address": "0x14290d650",
+        "slot": "0x780",
+        "kind": "Float",
+        "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; mov rax, qword ptr [rcx]; call qword ptr [rax + 0x780]; movss dword ptr [rbx], xmm0; add rsp, 0x20; pop rbx; ret",
+        "class": "AFortGameState",
+        "vtable": "0x145fffdf8",
+        "target": "0x141e9da30",
+        "constructor_proof": {
+          "gpsc": "0x142908ec0",
+          "helper": "0x1429099c0",
+          "constructor": "0x141e8a600",
+          "source": "porting/generated/native111-constructors/0x141e8a600.c",
+          "object_expression": "param_1",
+          "primary_store": "*param_1 = &DAT_145fffdf8",
+          "vtable": "0x145fffdf8"
+        }
+      },
+      "captured_source": "porting/generated/native111-virtual-expanded/0x141e9da30.c",
+      "status": "unresolved",
+      "reason": "Virtual slot 0x630 unresolved."
+    },
+    {
+      "index": 19,
+      "proof": {
+        "function": "GetUIMapManager",
+        "address": "0x14292b3c0",
+        "slot": "0xaf0",
+        "kind": "Object",
+        "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; mov rax, qword ptr [rcx]; call qword ptr [rax + 0xaf0]; mov qword ptr [rbx], rax; add rsp, 0x20; pop rbx; ret",
+        "class": "AFortGameStateZone",
+        "vtable": "0x146000738",
+        "target": "0x141e9f310",
+        "constructor_proof": {
+          "gpsc": "0x142927a60",
+          "helper": "0x142926ca0",
+          "constructor": "0x141e8aa60",
+          "source": "porting/generated/native111-constructors/0x141e8aa60.c",
+          "object_expression": "param_1",
+          "primary_store": "*param_1 = &DAT_146000738",
+          "vtable": "0x146000738"
+        }
+      },
+      "captured_source": "porting/generated/native111-virtual-expanded/0x141e9f310.c",
+      "status": "ported",
+      "reflection_flags": "0x4020402",
+      "explanation": "Reflected UIMapManager at 0xd98 matches the pointer read."
+    },
+    {
+      "index": 20,
+      "proof": {
+        "function": "GetMaxLevel",
+        "address": "0x1429593c0",
+        "slot": "0x270",
+        "kind": "Int",
+        "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; mov rax, qword ptr [rcx]; call qword ptr [rax + 0x270]; mov dword ptr [rbx], eax; add rsp, 0x20; pop rbx; ret",
+        "class": "UFortItem",
+        "vtable": "0x14606c3f0",
+        "target": "0x14202fdd0",
+        "constructor_proof": {
+          "gpsc": "0x142951e90",
+          "helper": "0x1429551e0",
+          "constructor": "0x142024010",
+          "source": "porting/generated/native111-constructors/0x142024010.c",
+          "object_expression": "param_1",
+          "primary_store": "*param_1 = &DAT_14606c3f0",
+          "vtable": "0x14606c3f0"
+        }
+      },
+      "captured_source": "porting/generated/native111-virtual-expanded/0x14202fdd0.c",
+      "status": "unresolved",
+      "reason": "Definition virtual calls unresolved."
+    },
+    {
+      "index": 21,
+      "proof": {
+        "function": "GetRating",
+        "address": "0x142959820",
+        "slot": "0x278",
+        "kind": "Int",
+        "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; mov rax, qword ptr [rcx]; call qword ptr [rax + 0x278]; mov dword ptr [rbx], eax; add rsp, 0x20; pop rbx; ret",
+        "class": "UFortItem",
+        "vtable": "0x14606c3f0",
+        "target": "0x142032ad0",
+        "constructor_proof": {
+          "gpsc": "0x142951e90",
+          "helper": "0x1429551e0",
+          "constructor": "0x142024010",
+          "source": "porting/generated/native111-constructors/0x142024010.c",
+          "object_expression": "param_1",
+          "primary_store": "*param_1 = &DAT_14606c3f0",
+          "vtable": "0x14606c3f0"
+        }
+      },
+      "captured_source": "porting/generated/native111-virtual-expanded/0x142032ad0.c",
+      "status": "unresolved",
+      "reason": "Definition and rating virtual calls unresolved."
+    },
+    {
+      "index": 22,
+      "proof": {
+        "function": "GetSchematicCraftingResultBP",
+        "address": "0x1429598b0",
+        "slot": "0x310",
+        "kind": "Object",
+        "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; mov rax, qword ptr [rcx]; call qword ptr [rax + 0x310]; mov qword ptr [rbx], rax; add rsp, 0x20; pop rbx; ret",
+        "class": "UFortItem",
+        "vtable": "0x14606c3f0",
+        "target": "0x140680300",
+        "constructor_proof": {
+          "gpsc": "0x142951e90",
+          "helper": "0x1429551e0",
+          "constructor": "0x142024010",
+          "source": "porting/generated/native111-constructors/0x142024010.c",
+          "object_expression": "param_1",
+          "primary_store": "*param_1 = &DAT_14606c3f0",
+          "vtable": "0x14606c3f0"
+        }
+      },
+      "captured_source": "porting/generated/native100-ctors/0x140680300.c",
+      "status": "ported",
+      "reflection_flags": "0x54020401",
+      "explanation": "Captured body returns zero."
+    },
+    {
+      "index": 23,
+      "proof": {
+        "function": "GetUpgradeResourceItemDefinition",
+        "address": "0x142959f90",
+        "slot": "0x330",
+        "kind": "Object",
+        "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; mov rax, qword ptr [rcx]; call qword ptr [rax + 0x330]; mov qword ptr [rbx], rax; add rsp, 0x20; pop rbx; ret",
+        "class": "UFortItem",
+        "vtable": "0x14606c3f0",
+        "target": "0x140680300",
+        "constructor_proof": {
+          "gpsc": "0x142951e90",
+          "helper": "0x1429551e0",
+          "constructor": "0x142024010",
+          "source": "porting/generated/native111-constructors/0x142024010.c",
+          "object_expression": "param_1",
+          "primary_store": "*param_1 = &DAT_14606c3f0",
+          "vtable": "0x14606c3f0"
+        }
+      },
+      "captured_source": "porting/generated/native100-ctors/0x140680300.c",
+      "status": "ported",
+      "reflection_flags": "0x54020400",
+      "explanation": "Captured body returns zero."
+    },
+    {
+      "index": 24,
+      "proof": {
+        "function": "IsVisible",
+        "address": "0x14295a4e0",
+        "slot": "0x320",
+        "kind": "Bool",
+        "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; mov rax, qword ptr [rcx]; call qword ptr [rax + 0x320]; mov byte ptr [rbx], al; add rsp, 0x20; pop rbx; ret",
+        "class": "UFortItem",
+        "vtable": "0x14606c3f0",
+        "target": "0x142035050",
+        "constructor_proof": {
+          "gpsc": "0x142951e90",
+          "helper": "0x1429551e0",
+          "constructor": "0x142024010",
+          "source": "porting/generated/native111-constructors/0x142024010.c",
+          "object_expression": "param_1",
+          "primary_store": "*param_1 = &DAT_14606c3f0",
+          "vtable": "0x14606c3f0"
+        }
+      },
+      "captured_source": "porting/generated/native111-virtual-expanded/0x142035050.c",
+      "status": "unresolved",
+      "reason": "Definition visibility virtual call unresolved."
+    },
+    {
+      "index": 25,
+      "proof": {
+        "function": "GetCurrentBluGloRewards",
+        "address": "0x142794120",
+        "slot": "0x638",
+        "kind": "Int",
+        "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; mov rax, qword ptr [rcx]; call qword ptr [rax + 0x638]; mov dword ptr [rbx], eax; add rsp, 0x20; pop rbx; ret",
+        "class": "AFortMission",
+        "vtable": "0x146091330",
+        "target": "0x1420b7b00",
+        "constructor_proof": {
+          "gpsc": "0x1429da8e0",
+          "helper": "0x1429daaf0",
+          "constructor": "0x1420abbd0",
+          "source": "porting/generated/native111-constructors/0x1420abbd0.c",
+          "object_expression": "param_1",
+          "primary_store": "*param_1 = &DAT_146091330",
+          "vtable": "0x146091330"
+        }
+      },
+      "captured_source": "porting/generated/native111-virtual-expanded/0x1420b7b00.c",
+      "status": "unresolved",
+      "reason": "Game-state and mission configuration dependencies unresolved."
+    },
+    {
+      "index": 26,
+      "proof": {
+        "function": "GetExpectedCompletionTime",
+        "address": "0x1429ddb60",
+        "slot": "0x640",
+        "kind": "Float",
+        "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; mov rax, qword ptr [rcx]; call qword ptr [rax + 0x640]; movss dword ptr [rbx], xmm0; add rsp, 0x20; pop rbx; ret",
+        "class": "AFortMission",
+        "vtable": "0x146091330",
+        "target": "0x1420b8240",
+        "constructor_proof": {
+          "gpsc": "0x1429da8e0",
+          "helper": "0x1429daaf0",
+          "constructor": "0x1420abbd0",
+          "source": "porting/generated/native111-constructors/0x1420abbd0.c",
+          "object_expression": "param_1",
+          "primary_store": "*param_1 = &DAT_146091330",
+          "vtable": "0x146091330"
+        }
+      },
+      "captured_source": "porting/generated/native111-virtual-expanded/0x1420b8240.c",
+      "status": "unresolved",
+      "reason": "Mission configuration pointer and field unresolved."
+    },
+    {
+      "index": 27,
+      "proof": {
+        "function": "EquipBestWeapon",
+        "address": "0x142a1b6a0",
+        "slot": "0xbc0",
+        "kind": "Bool",
+        "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; mov rax, qword ptr [rcx]; call qword ptr [rax + 0xbc0]; mov byte ptr [rbx], al; add rsp, 0x20; pop rbx; ret",
+        "class": "AFortPawn",
+        "vtable": "0x146115880",
+        "target": "0x142314d40",
+        "constructor_proof": {
+          "gpsc": "0x142a174f0",
+          "helper": "0x142a16b90",
+          "constructor": "0x1422fce30",
+          "source": "porting/generated/native111-constructors/0x1422fce30.c",
+          "object_expression": "param_1",
+          "primary_store": "*param_1 = &DAT_146115880",
+          "vtable": "0x146115880"
+        }
+      },
+      "captured_source": "porting/generated/callee_probe/weapon_selection2/0x142314d40.c",
+      "status": "unresolved",
+      "reason": "Weapon selection call unresolved."
+    },
+    {
+      "index": 28,
+      "proof": {
+        "function": "GetEmotePropAttachMesh",
+        "address": "0x142a1c170",
+        "slot": "0xb10",
+        "kind": "Object",
+        "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; mov rax, qword ptr [rcx]; call qword ptr [rax + 0xb10]; mov qword ptr [rbx], rax; add rsp, 0x20; pop rbx; ret",
+        "class": "AFortPawn",
+        "vtable": "0x146115880",
+        "target": "0x141945fe0",
+        "constructor_proof": {
+          "gpsc": "0x142a174f0",
+          "helper": "0x142a16b90",
+          "constructor": "0x1422fce30",
+          "source": "porting/generated/native111-constructors/0x1422fce30.c",
+          "object_expression": "param_1",
+          "primary_store": "*param_1 = &DAT_146115880",
+          "vtable": "0x146115880"
+        }
+      },
+      "captured_source": "porting/generated/native111-virtual-expanded/0x141945fe0.c",
+      "status": "ported",
+      "reflection_flags": "0x4020400",
+      "explanation": "Inherited ACharacter Mesh is reflected at 0x278; GetMesh returns that member."
+    },
+    {
+      "index": 29,
+      "proof": {
+        "function": "GetHealth",
+        "address": "0x142a1c1e0",
+        "slot": "0xb28",
+        "kind": "Float",
+        "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; mov rax, qword ptr [rcx]; call qword ptr [rax + 0xb28]; movss dword ptr [rbx], xmm0; add rsp, 0x20; pop rbx; ret",
+        "class": "AFortPawn",
+        "vtable": "0x146115880",
+        "target": "0x14231c4c0",
+        "constructor_proof": {
+          "gpsc": "0x142a174f0",
+          "helper": "0x142a16b90",
+          "constructor": "0x1422fce30",
+          "source": "porting/generated/native111-constructors/0x1422fce30.c",
+          "object_expression": "param_1",
+          "primary_store": "*param_1 = &DAT_146115880",
+          "vtable": "0x146115880"
+        }
+      },
+      "captured_source": "porting/generated/native111-virtual-expanded/0x14231c4c0.c",
+      "status": "unresolved",
+      "reason": "Health attribute helpers and lifecycle flags unresolved."
+    },
+    {
+      "index": 30,
+      "proof": {
+        "function": "GetHealthPercent",
+        "address": "0x142a1c220",
+        "slot": "0xd50",
+        "kind": "Float",
+        "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; mov rax, qword ptr [rcx]; call qword ptr [rax + 0xd50]; movss dword ptr [rbx], xmm0; add rsp, 0x20; pop rbx; ret",
+        "class": "AFortPawn",
+        "vtable": "0x146115880",
+        "target": "0x14231e1d0",
+        "constructor_proof": {
+          "gpsc": "0x142a174f0",
+          "helper": "0x142a16b90",
+          "constructor": "0x1422fce30",
+          "source": "porting/generated/native111-constructors/0x1422fce30.c",
+          "object_expression": "param_1",
+          "primary_store": "*param_1 = &DAT_146115880",
+          "vtable": "0x146115880"
+        }
+      },
+      "captured_source": "porting/generated/native111-virtual-expanded/0x14231e1d0.c",
+      "status": "unresolved",
+      "reason": "Death predicate and health virtual slots unresolved."
+    },
+    {
+      "index": 31,
+      "proof": {
+        "function": "GetMaxHealth",
+        "address": "0x142a1c3b0",
+        "slot": "0xb20",
+        "kind": "Float",
+        "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; mov rax, qword ptr [rcx]; call qword ptr [rax + 0xb20]; movss dword ptr [rbx], xmm0; add rsp, 0x20; pop rbx; ret",
+        "class": "AFortPawn",
+        "vtable": "0x146115880",
+        "target": "0x141948150",
+        "constructor_proof": {
+          "gpsc": "0x142a174f0",
+          "helper": "0x142a16b90",
+          "constructor": "0x1422fce30",
+          "source": "porting/generated/native111-constructors/0x1422fce30.c",
+          "object_expression": "param_1",
+          "primary_store": "*param_1 = &DAT_146115880",
+          "vtable": "0x146115880"
+        }
+      },
+      "captured_source": "porting/generated/native111-virtual-expanded/0x141948150.c",
+      "status": "unresolved",
+      "reason": "Attribute helper and attribute-set storage unresolved."
+    },
+    {
+      "index": 32,
+      "proof": {
+        "function": "GetMaxShield",
+        "address": "0x142a1c3f0",
+        "slot": "0xb30",
+        "kind": "Float",
+        "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; mov rax, qword ptr [rcx]; call qword ptr [rax + 0xb30]; movss dword ptr [rbx], xmm0; add rsp, 0x20; pop rbx; ret",
+        "class": "AFortPawn",
+        "vtable": "0x146115880",
+        "target": "0x142321d00",
+        "constructor_proof": {
+          "gpsc": "0x142a174f0",
+          "helper": "0x142a16b90",
+          "constructor": "0x1422fce30",
+          "source": "porting/generated/native111-constructors/0x1422fce30.c",
+          "object_expression": "param_1",
+          "primary_store": "*param_1 = &DAT_146115880",
+          "vtable": "0x146115880"
+        }
+      },
+      "captured_source": "porting/generated/native111-virtual-expanded/0x142321d00.c",
+      "status": "unresolved",
+      "reason": "Attribute helper and attribute-set storage unresolved."
+    },
+    {
+      "index": 33,
+      "proof": {
+        "function": "GetMaxSignalInStorm",
+        "address": "0x142a1c430",
+        "slot": "0xb40",
+        "kind": "Float",
+        "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; mov rax, qword ptr [rcx]; call qword ptr [rax + 0xb40]; movss dword ptr [rbx], xmm0; add rsp, 0x20; pop rbx; ret",
+        "class": "AFortPawn",
+        "vtable": "0x146115880",
+        "target": "0x142321d20",
+        "constructor_proof": {
+          "gpsc": "0x142a174f0",
+          "helper": "0x142a16b90",
+          "constructor": "0x1422fce30",
+          "source": "porting/generated/native111-constructors/0x1422fce30.c",
+          "object_expression": "param_1",
+          "primary_store": "*param_1 = &DAT_146115880",
+          "vtable": "0x146115880"
+        }
+      },
+      "captured_source": "porting/generated/native111-virtual-expanded/0x142321d20.c",
+      "status": "unresolved",
+      "reason": "Attribute-set storage unresolved."
+    },
+    {
+      "index": 34,
+      "proof": {
+        "function": "GetShield",
+        "address": "0x142a1c7a0",
+        "slot": "0xb38",
+        "kind": "Float",
+        "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; mov rax, qword ptr [rcx]; call qword ptr [rax + 0xb38]; movss dword ptr [rbx], xmm0; add rsp, 0x20; pop rbx; ret",
+        "class": "AFortPawn",
+        "vtable": "0x146115880",
+        "target": "0x142323a70",
+        "constructor_proof": {
+          "gpsc": "0x142a174f0",
+          "helper": "0x142a16b90",
+          "constructor": "0x1422fce30",
+          "source": "porting/generated/native111-constructors/0x1422fce30.c",
+          "object_expression": "param_1",
+          "primary_store": "*param_1 = &DAT_146115880",
+          "vtable": "0x146115880"
+        }
+      },
+      "captured_source": "porting/generated/native111-virtual-expanded/0x142323a70.c",
+      "status": "unresolved",
+      "reason": "Attribute helper and attribute-set storage unresolved."
+    },
+    {
+      "index": 35,
+      "proof": {
+        "function": "GetShieldPercent",
+        "address": "0x142a1c810",
+        "slot": "0xd58",
+        "kind": "Float",
+        "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; mov rax, qword ptr [rcx]; call qword ptr [rax + 0xd58]; movss dword ptr [rbx], xmm0; add rsp, 0x20; pop rbx; ret",
+        "class": "AFortPawn",
+        "vtable": "0x146115880",
+        "target": "0x142323b10",
+        "constructor_proof": {
+          "gpsc": "0x142a174f0",
+          "helper": "0x142a16b90",
+          "constructor": "0x1422fce30",
+          "source": "porting/generated/native111-constructors/0x1422fce30.c",
+          "object_expression": "param_1",
+          "primary_store": "*param_1 = &DAT_146115880",
+          "vtable": "0x146115880"
+        }
+      },
+      "captured_source": "porting/generated/native111-virtual-expanded/0x142323b10.c",
+      "status": "unresolved",
+      "reason": "Death predicate and shield virtual slots unresolved."
+    },
+    {
+      "index": 36,
+      "proof": {
+        "function": "GetSignalInStorm",
+        "address": "0x142a1c850",
+        "slot": "0xb48",
+        "kind": "Float",
+        "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; mov rax, qword ptr [rcx]; call qword ptr [rax + 0xb48]; movss dword ptr [rbx], xmm0; add rsp, 0x20; pop rbx; ret",
+        "class": "AFortPawn",
+        "vtable": "0x146115880",
+        "target": "0x142323de0",
+        "constructor_proof": {
+          "gpsc": "0x142a174f0",
+          "helper": "0x142a16b90",
+          "constructor": "0x1422fce30",
+          "source": "porting/generated/native111-constructors/0x1422fce30.c",
+          "object_expression": "param_1",
+          "primary_store": "*param_1 = &DAT_146115880",
+          "vtable": "0x146115880"
+        }
+      },
+      "captured_source": "porting/generated/native111-virtual-expanded/0x142323de0.c",
+      "status": "unresolved",
+      "reason": "Attribute-set storage unresolved."
+    },
+    {
+      "index": 37,
+      "proof": {
+        "function": "IsActionInputIgnored",
+        "address": "0x142a1cc20",
+        "slot": "0xb60",
+        "kind": "Bool",
+        "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; mov rax, qword ptr [rcx]; call qword ptr [rax + 0xb60]; mov byte ptr [rbx], al; add rsp, 0x20; pop rbx; ret",
+        "class": "AFortPawn",
+        "vtable": "0x146115880",
+        "target": "0x1406801e0",
+        "constructor_proof": {
+          "gpsc": "0x142a174f0",
+          "helper": "0x142a16b90",
+          "constructor": "0x1422fce30",
+          "source": "porting/generated/native111-constructors/0x1422fce30.c",
+          "object_expression": "param_1",
+          "primary_store": "*param_1 = &DAT_146115880",
+          "vtable": "0x146115880"
+        }
+      },
+      "captured_source": "porting/generated/callee_probe/blocking/0x1406801e0.c",
+      "status": "ported",
+      "reflection_flags": "0x54020400",
+      "explanation": "Captured body returns false."
+    },
+    {
+      "index": 38,
+      "proof": {
+        "function": "GetPlayerPawn",
+        "address": "0x142a47800",
+        "slot": "0x14d8",
+        "kind": "Object",
+        "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; mov rax, qword ptr [rcx]; call qword ptr [rax + 0x14d8]; mov qword ptr [rbx], rax; add rsp, 0x20; pop rbx; ret",
+        "class": "AFortPlayerController",
+        "vtable": "0x146128208",
+        "target": "0x1419d5f00",
+        "constructor_proof": {
+          "gpsc": "0x142a3d9f0",
+          "helper": "0x142a3b0b0",
+          "constructor": "0x142364800",
+          "source": "porting/generated/native107-context-deps/0x142364800.c",
+          "object_expression": "param_1",
+          "primary_store": "*param_1 = &DAT_146128208",
+          "vtable": "0x146128208"
+        }
+      },
+      "captured_source": "porting/generated/native111-virtual-targets/0x1419d5f00.c",
+      "status": "ported",
+      "reflection_flags": "0x54020400",
+      "explanation": "Reflected MyFortPawn at 0x6e0 matches the pointer read."
+    },
+    {
+      "index": 39,
+      "proof": {
+        "function": "GetRotatePawnToCamera",
+        "address": "0x142a479d0",
+        "slot": "0x1670",
+        "kind": "Bool",
+        "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; mov rax, qword ptr [rcx]; call qword ptr [rax + 0x1670]; mov byte ptr [rbx], al; add rsp, 0x20; pop rbx; ret",
+        "class": "AFortPlayerController",
+        "vtable": "0x146128208",
+        "target": "0x142385770",
+        "constructor_proof": {
+          "gpsc": "0x142a3d9f0",
+          "helper": "0x142a3b0b0",
+          "constructor": "0x142364800",
+          "source": "porting/generated/native107-context-deps/0x142364800.c",
+          "object_expression": "param_1",
+          "primary_store": "*param_1 = &DAT_146128208",
+          "vtable": "0x146128208"
+        }
+      },
+      "captured_source": "porting/generated/native111-virtual-targets/0x142385770.c",
+      "status": "unresolved",
+      "reason": "Pawn movement-component member and flag unresolved."
+    },
+    {
+      "index": 40,
+      "proof": {
+        "function": "GetTimeRemainingForRespawnBP",
+        "address": "0x142a47af0",
+        "slot": "0x1538",
+        "kind": "Float",
+        "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; mov rax, qword ptr [rcx]; call qword ptr [rax + 0x1538]; movss dword ptr [rbx], xmm0; add rsp, 0x20; pop rbx; ret",
+        "class": "AFortPlayerController",
+        "vtable": "0x146128208",
+        "target": "0x1419d9650",
+        "constructor_proof": {
+          "gpsc": "0x142a3d9f0",
+          "helper": "0x142a3b0b0",
+          "constructor": "0x142364800",
+          "source": "porting/generated/native107-context-deps/0x142364800.c",
+          "object_expression": "param_1",
+          "primary_store": "*param_1 = &DAT_146128208",
+          "vtable": "0x146128208"
+        }
+      },
+      "captured_source": "porting/generated/native111-virtual-targets/0x1419d9650.c",
+      "status": "unresolved",
+      "reason": "Virtual slot 0x1530 unresolved."
+    },
+    {
+      "index": 41,
+      "proof": {
+        "function": "IsFullscreenMapVisible",
+        "address": "0x142a48080",
+        "slot": "0x1e78",
+        "kind": "Bool",
+        "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; mov rax, qword ptr [rcx]; call qword ptr [rax + 0x1e78]; mov byte ptr [rbx], al; add rsp, 0x20; pop rbx; ret",
+        "class": "AFortPlayerController",
+        "vtable": "0x146128208",
+        "target": "0x14238e840",
+        "constructor_proof": {
+          "gpsc": "0x142a3d9f0",
+          "helper": "0x142a3b0b0",
+          "constructor": "0x142364800",
+          "source": "porting/generated/native107-context-deps/0x142364800.c",
+          "object_expression": "param_1",
+          "primary_store": "*param_1 = &DAT_146128208",
+          "vtable": "0x146128208"
+        }
+      },
+      "captured_source": "porting/generated/native111-virtual-targets/0x14238e840.c",
+      "status": "unresolved",
+      "reason": "HUD cast and map visibility helper unresolved."
+    },
+    {
+      "index": 42,
+      "proof": {
+        "function": "IsInAircraft",
+        "address": "0x142a48140",
+        "slot": "0x14d0",
+        "kind": "Bool",
+        "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; mov rax, qword ptr [rcx]; call qword ptr [rax + 0x14d0]; mov byte ptr [rbx], al; add rsp, 0x20; pop rbx; ret",
+        "class": "AFortPlayerController",
+        "vtable": "0x146128208",
+        "target": "0x14238ea50",
+        "constructor_proof": {
+          "gpsc": "0x142a3d9f0",
+          "helper": "0x142a3b0b0",
+          "constructor": "0x142364800",
+          "source": "porting/generated/native107-context-deps/0x142364800.c",
+          "object_expression": "param_1",
+          "primary_store": "*param_1 = &DAT_146128208",
+          "vtable": "0x146128208"
+        }
+      },
+      "captured_source": "porting/generated/native111-virtual-targets/0x14238ea50.c",
+      "status": "unresolved",
+      "reason": "Player-state lookup and aircraft member unresolved."
+    },
+    {
+      "index": 43,
+      "proof": {
+        "function": "IsPartyLeader",
+        "address": "0x142a48200",
+        "slot": "0x1c60",
+        "kind": "Bool",
+        "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; mov rax, qword ptr [rcx]; call qword ptr [rax + 0x1c60]; mov byte ptr [rbx], al; add rsp, 0x20; pop rbx; ret",
+        "class": "AFortPlayerController",
+        "vtable": "0x146128208",
+        "target": "0x14238f360",
+        "constructor_proof": {
+          "gpsc": "0x142a3d9f0",
+          "helper": "0x142a3b0b0",
+          "constructor": "0x142364800",
+          "source": "porting/generated/native107-context-deps/0x142364800.c",
+          "object_expression": "param_1",
+          "primary_store": "*param_1 = &DAT_146128208",
+          "vtable": "0x146128208"
+        }
+      },
+      "captured_source": "porting/generated/native111-virtual-targets/0x14238f360.c",
+      "status": "unresolved",
+      "reason": "Party service and fallback helpers unresolved."
+    },
+    {
+      "index": 44,
+      "proof": {
+        "function": "IsPersonalVehicleActive",
+        "address": "0x142a48230",
+        "slot": "0x18f0",
+        "kind": "Bool",
+        "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; mov rax, qword ptr [rcx]; call qword ptr [rax + 0x18f0]; mov byte ptr [rbx], al; add rsp, 0x20; pop rbx; ret",
+        "class": "AFortPlayerController",
+        "vtable": "0x146128208",
+        "target": "0x14238f460",
+        "constructor_proof": {
+          "gpsc": "0x142a3d9f0",
+          "helper": "0x142a3b0b0",
+          "constructor": "0x142364800",
+          "source": "porting/generated/native107-context-deps/0x142364800.c",
+          "object_expression": "param_1",
+          "primary_store": "*param_1 = &DAT_146128208",
+          "vtable": "0x146128208"
+        }
+      },
+      "captured_source": "porting/generated/native111-virtual-targets/0x14238f460.c",
+      "status": "unresolved",
+      "reason": "Pawn cast and personal-vehicle helper unresolved."
+    },
+    {
+      "index": 45,
+      "proof": {
+        "function": "IsPersonalVehicleAvailable",
+        "address": "0x142a48260",
+        "slot": "0x18e8",
+        "kind": "Bool",
+        "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; mov rax, qword ptr [rcx]; call qword ptr [rax + 0x18e8]; mov byte ptr [rbx], al; add rsp, 0x20; pop rbx; ret",
+        "class": "AFortPlayerController",
+        "vtable": "0x146128208",
+        "target": "0x14238f4b0",
+        "constructor_proof": {
+          "gpsc": "0x142a3d9f0",
+          "helper": "0x142a3b0b0",
+          "constructor": "0x142364800",
+          "source": "porting/generated/native107-context-deps/0x142364800.c",
+          "object_expression": "param_1",
+          "primary_store": "*param_1 = &DAT_146128208",
+          "vtable": "0x146128208"
+        }
+      },
+      "captured_source": "porting/generated/native111-virtual-targets/0x14238f4b0.c",
+      "status": "unresolved",
+      "reason": "Inventory query and data dependencies unresolved."
+    }
+  ]
+}

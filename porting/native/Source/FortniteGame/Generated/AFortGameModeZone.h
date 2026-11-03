@@ -204,6 +204,10 @@ public:
 	UFUNCTION()
 	virtual bool IsGameReadyToSelectLoot() const;
 
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, BlueprintPure)
+	bool IsSpectatingAllowedAfterDeath() const;
+	virtual bool IsSpectatingAllowedAfterDeath_Implementation() const;
+
 protected:
 	UFUNCTION()
 	void OnPlayerExit(AActor* Controller);

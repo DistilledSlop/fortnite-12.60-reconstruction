@@ -145,11 +145,23 @@ int32 UFortItem::GetRemainingAmmo() const
 	return -1;
 }
 
+UFortItemDefinition* UFortItem::GetSchematicCraftingResultBP() const
+{
+	// Native target 0x140680300; CONFIDENCE: high.
+	return nullptr;
+}
+
 int32 UFortItem::GetUpgradeCost() const
 {
 	// Exact original shared stub 0x140680300.
 	// CONFIDENCE: HIGH
 	return 0;
+}
+
+UFortPersistentResourceItemDefinition* UFortItem::GetUpgradeResourceItemDefinition() const
+{
+	// Native target 0x140680300; CONFIDENCE: high.
+	return nullptr;
 }
 
 bool UFortItem::HasDurability() const

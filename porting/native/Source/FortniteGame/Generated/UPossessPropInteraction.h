@@ -14,5 +14,9 @@ class FORTNITEGAME_API UPossessPropInteraction : public UObjectInteractionBehavi
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	bool CanInteract();
+	virtual bool CanInteract_Implementation();
+
 };
 

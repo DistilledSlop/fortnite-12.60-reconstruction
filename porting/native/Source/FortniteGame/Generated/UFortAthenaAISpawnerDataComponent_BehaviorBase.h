@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortAthenaAISpawnerDataComponent.h"
 
+class UBehaviorTree;
+
 #include "UFortAthenaAISpawnerDataComponent_BehaviorBase.generated.h"
 
 UCLASS(abstract)
@@ -14,5 +16,9 @@ class FORTNITEGAME_API UFortAthenaAISpawnerDataComponent_BehaviorBase : public U
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	UBehaviorTree* GetBehaviorTree();
+	virtual UBehaviorTree* GetBehaviorTree_Implementation();
+
 };
 

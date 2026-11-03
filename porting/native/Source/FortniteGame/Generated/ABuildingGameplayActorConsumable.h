@@ -66,5 +66,11 @@ public:
 	UPROPERTY()
 	UAnimMontage* SearchAnim;
 
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	UAnimMontage* DetermineOnConsumeMontage() const;
+	virtual UAnimMontage* DetermineOnConsumeMontage_Implementation() const;
+public:
+
 };
 

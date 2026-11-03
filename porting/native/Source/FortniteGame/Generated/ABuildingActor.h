@@ -724,6 +724,9 @@ public:
 	bool ShouldDisplayDamageNumbers() const;
 	virtual bool ShouldDisplayDamageNumbers_Implementation() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool ShouldDisplayMobileInteractPrompt() const;
+
 protected:
 	UFUNCTION(BlueprintCallable)
 	virtual void SnapDmgVisualsToCurrentHealth();

@@ -72,6 +72,12 @@ AFortThreatParticleActor* AFortGameStateZone::GetThreatParticleActor() const
 	return ThreatParticleActor;
 }
 
+AFortInGameMapManager* AFortGameStateZone::GetUIMapManager()
+{
+	// Native target 0x141e9f310; CONFIDENCE: high.
+	return UIMapManager;
+}
+
 bool AFortGameStateZone::GetVoteArbitratorType(EFortVoteType VoteType, EFortVoteArbitratorType& ArbitratorType) const
 {
 	// CONFIDENCE: high

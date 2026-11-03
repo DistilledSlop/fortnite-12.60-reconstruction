@@ -2,6 +2,12 @@
 #include "UCustomCharacterPartAnimInstance.h"
 #include "UFortAnimInstance.h"
 
+TEnumAsByte<EFortCustomPartType::Type> UCustomCharacterPartAnimInstance::GetCharacterPartType() const
+{
+	// Native target 0x141d7c6e0; CONFIDENCE: high.
+	return PartType;
+}
+
 float UCustomCharacterPartAnimInstance::GetOwnerZVelocity() const
 {
 	// Original address: 0x142772930.

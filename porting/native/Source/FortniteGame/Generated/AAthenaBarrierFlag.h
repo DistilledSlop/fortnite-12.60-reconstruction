@@ -10,6 +10,8 @@
 #include "EBarrierFoodTeam.h"
 #include "FBarrierFlagDisplayData.h"
 
+class AAthenaBarrierObjective;
+
 #include "AAthenaBarrierFlag.generated.h"
 
 UCLASS(config=Game)
@@ -29,6 +31,10 @@ public:
 	// table index 0, flags 0x20080000000001
 	UPROPERTY()
 	FBarrierFlagDisplayData FoodDisplayData[2];
+
+	UFUNCTION(BlueprintNativeEvent)
+	AAthenaBarrierObjective* GetObjectiveActor() const;
+	virtual AAthenaBarrierObjective* GetObjectiveActor_Implementation() const;
 
 	UFUNCTION()
 	void OnRep_CurrentState();

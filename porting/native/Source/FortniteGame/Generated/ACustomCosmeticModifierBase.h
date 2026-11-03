@@ -86,5 +86,8 @@ public:
 	UPROPERTY(Transient)
 	uint8 bRegisteredOnHitPawn : 1;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual AFortPlayerPawn* GetAssociatedPlayerPawn() const;
+
 };
 

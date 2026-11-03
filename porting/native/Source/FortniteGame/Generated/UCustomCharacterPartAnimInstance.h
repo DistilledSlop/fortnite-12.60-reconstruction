@@ -241,6 +241,9 @@ public:
 	TEnumAsByte<EFortCustomPartType::Type> PartType;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual TEnumAsByte<EFortCustomPartType::Type> GetCharacterPartType() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetOwnerZVelocity() const;
 
 };

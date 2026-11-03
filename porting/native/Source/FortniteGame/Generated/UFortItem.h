@@ -19,6 +19,7 @@
 class AFortPlayerController;
 class UAbilitySystemComponent;
 class UFortItemDefinition;
+class UFortPersistentResourceItemDefinition;
 
 #include "UFortItem.generated.h"
 
@@ -101,7 +102,13 @@ public:
 	virtual int32 GetRemainingAmmo() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual UFortItemDefinition* GetSchematicCraftingResultBP() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual int32 GetUpgradeCost() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual UFortPersistentResourceItemDefinition* GetUpgradeResourceItemDefinition() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual bool HasDurability() const;

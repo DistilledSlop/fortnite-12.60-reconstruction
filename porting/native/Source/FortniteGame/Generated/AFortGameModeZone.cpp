@@ -16,6 +16,12 @@ bool AFortGameModeZone::IsGameReadyToSelectLoot() const
 	return true;
 }
 
+bool AFortGameModeZone::IsSpectatingAllowedAfterDeath_Implementation() const
+{
+	// Native target 0x141ea2510; CONFIDENCE: high.
+	return bAllowSpectateAfterDeath;
+}
+
 void AFortGameModeZone::OnPlayerExit(AActor* Controller)
 {
 	// Original exec 0x1406969b0; complete empty leaf 0x1406801c0.

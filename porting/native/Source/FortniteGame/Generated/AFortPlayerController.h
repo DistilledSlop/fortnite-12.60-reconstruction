@@ -1449,6 +1449,9 @@ public:
 	UFortMcpProfileCampaign* GetMcpCampaignProfile() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual AFortPlayerPawn* GetPlayerPawn() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UFortRegisteredPlayerInfo* GetRegisteredPlayerInfo() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

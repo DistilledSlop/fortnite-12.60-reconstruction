@@ -369,6 +369,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	AFortThreatParticleActor* GetThreatParticleActor() const;
 
+	UFUNCTION(BlueprintCallable)
+	virtual AFortInGameMapManager* GetUIMapManager();
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool GetVoteArbitratorType(EFortVoteType VoteType, EFortVoteArbitratorType& ArbitratorType) const;
 

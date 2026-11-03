@@ -76,6 +76,7 @@ class UMeshComponent;
 class UParticleSystemComponent;
 class UPegasusGameEventCollector;
 class UPrimitiveComponent;
+class USkeletalMeshComponent;
 class USkeletalMeshSocket;
 class USoundAttenuation;
 class USoundBase;
@@ -793,6 +794,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	EFortControlRecoveryBehavior GetControlRecoveryBehavior() const;
 
+	UFUNCTION(BlueprintCallable)
+	virtual USkeletalMeshComponent* GetEmotePropAttachMesh();
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetLocalSpin() const;
 
@@ -801,6 +805,9 @@ public:
 
 	UFUNCTION()
 	void HandleIsHiddenForDeath();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool IsActionInputIgnored() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsAllowChainStun() const;
