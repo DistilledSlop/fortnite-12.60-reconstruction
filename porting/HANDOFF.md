@@ -2,6 +2,15 @@
 
 ## Gameplay source batch (2026-11-02): playlist capacity and aircraft lookup
 
+Dashboard bookkeeping corrected after user pointed out the stale251 count:
+`python3 -I porting/behavior/check_behavior.py` refreshes COUNTS.txt to261 ported,
+182 skipped,247 declared,12 pending,1 failure. Exact output is
+/tmp/gameplay-behavior-counts-refresh.log. The existing failure is this checker's
+single-FortniteGame-directory lookup for UCommonButton.h (actually CommonUI);
+it is not a rejected gameplay splice or build failure. Shared Native still lacks
+the new source-only declarations, hence the pending count. The261 body count
+represents committed canonical recovery, not new runtime integration evidence.
+
 Latest user validation preference: reuse prior passing results unless subsequent
 work could invalidate them. Do not recheck every earlier body when adding an
 independent body; repeat affected checks at coherent batch boundaries. Effectively
