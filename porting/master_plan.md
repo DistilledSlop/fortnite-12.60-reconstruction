@@ -40,6 +40,10 @@ Batch76 adds nine uncounted source drafts across creative supply spawning,
 plot/team/death callbacks, pawn interaction and shared replication, sky-tube
 shutdown and metric notification. Review expanded stack writes and cleanup;
 missing arguments and native/reflected ABI conflicts remain explicit.
+Batch77 adds twelve uncounted native-body drafts: eight actual dependencies
+behind recent creative/pawn/sky paths plus four controller operations. Source
+review corrected owner-frame writes, register provenance and destructor argument
+variants. Engine contracts remain open; accepted counts are unchanged.
 Next build/runtime/test batch at3,040 bodies. Fail-closed generation accepts
 2,255 ported entries with no rejected splices. All four product gates remain
 open. Latest source restores day-phase callback/virtual boundaries, the live

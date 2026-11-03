@@ -1,5 +1,47 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Native dependencies and controller rough batch77 (2026-11-03)
+
+Added twelve distinct uncounted native-body drafts: plot rename callback (1),
+pickup spawning/creative spawn permission (2), sky/material/item/movement leaf
+dependencies (5), controller loss/streaming handshake/skydive/team operations (4).
+Dirs rename_callback77_runtime,pickup_spawn77_runtime,native_leaf77_runtime,
+controller_misc77_runtime contain connected C++ and pinned source inventories.
+All eight newly probed helper bodies are drafted; four controller inputs came
+from existing improved decompilation. No forwarding-only body is counted as
+recovery of its ultimate recipient. No canonical promotion occurred.
+
+Root reviewed worker drafts against source and directly lifted five smaller
+native dependencies because they close specific calls in substantial parents.
+Corrected pickup spawn owner-word placement after constructor storage; preserved
+clear-leader's empty helper argument list and class-derived upper register bits;
+made SetTeam selector's class-pointer provenance explicit. Rename callback now
+distinguishes the format-text destructor's missing flag from other delete calls.
+Shared movement comparison retains twelve exact ordered float comparisons and
+two flag bits, including NaN behavior. Material transition retains TLS epoch and
+lazy FName initialization. Types, hidden arguments, iterator/container layouts,
+constructor extent, callbacks and effect ABI remain unresolved. Drafts do not
+constitute accepted engine implementations or prove gameplay parity.
+
+Previous goal turn PROGRESS: sourceae42fa1e/dashboard8647b41f pushed. Canonical
+remains2,075 bodies+180fields=2,255 accepted/rejected0 (promotion71). Last tested
+2,040;35 canonical+4 manual bodies pending; next tests3,040. No compiler, build,
+runtime, tests or generation this batch. All four product gates OPEN and full
+objective ACTIVE. Large native queue and engine-contract integration remain open.
+Three bounded Terra6.1 medium fork-none workers finished; rotate for subsequent
+tasks. Root retains planning, integration, review and sole canonical/native/
+promotion/build/staging/commit ownership, performs direct work as useful. Preserve
+economical reads, unrelated porting/graphics/ and Engine edits; skip visual work.
+
+Root command (repository cwd):
+`porting/.venv/bin/python -I porting/ghidra/probe_callees.py --input porting/generated/native-dependencies77/targets.json --out porting/generated/native-dependencies77 --timeout 60 --mem 12G > /tmp/native-dependencies77.log 2>&1`
+Exit0,8ok,10.9s; transaction rolled back, usual project index/prp metadata changes,
+no deliberate project save. Ghidra lease free; no live worker/process held. Source
+selection checked manifest status and evidence inventories; address mentions in
+adapter declarations alone must not be mistaken for recovered helper bodies.
+Continue substantial native behavior recovery and contract closure; do not count
+rough drafts, getters or forwarding wrappers as full gameplay implementation.
+
 ## Creative, pawn replication and state callback rough batch76 (2026-11-03)
 
 Added nine distinct uncounted source drafts in creative_supply76_runtime (2),
