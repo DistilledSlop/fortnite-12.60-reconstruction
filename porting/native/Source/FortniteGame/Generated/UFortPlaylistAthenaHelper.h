@@ -6,6 +6,9 @@
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 
+#include "EAthenaGamePhaseStep.h"
+#include "EFortPlaylistType.h"
+
 class UFortPlaylistAthena;
 
 #include "UFortPlaylistAthenaHelper.generated.h"
@@ -16,6 +19,9 @@ class FORTNITEGAME_API UFortPlaylistAthenaHelper : public UBlueprintFunctionLibr
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(BlueprintCallable)
+	static EFortPlaylistType GetPlaylistType(UFortPlaylistAthena* Playlist);
+
 	UFUNCTION(BlueprintCallable)
 	static bool HasCreativeTag(UFortPlaylistAthena* Playlist);
 
@@ -33,6 +39,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	static bool IsCreativeUtilitySpawningAllowedPlaylist(UFortPlaylistAthena* Playlist);
+
+	UFUNCTION(BlueprintCallable)
+	static bool IsGamePhaseNotificationSkipped(UFortPlaylistAthena* Playlist, EAthenaGamePhaseStep GamePhaseToSkip);
 
 	UFUNCTION(BlueprintCallable)
 	static bool IsLargePreviewDisabledOnMobile(UFortPlaylistAthena* Playlist);

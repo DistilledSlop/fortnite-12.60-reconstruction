@@ -22,6 +22,18 @@ public:
 	UPROPERTY()
 	FVector PortalDirection;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0xa6c): not a UPROPERTY, not replicated.
+	FVector NativePortalPointA6C;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0xa78): not a UPROPERTY, not replicated.
+	FVector NativePortalPointA78;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0xa84): not a UPROPERTY, not replicated.
+	float NativePortalHeightA84;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0xa88): not a UPROPERTY, not replicated.
+	float NativePortalHeightOffsetA88;
+
 	// table index 2, flags 0x20080000000001
 	UPROPERTY()
 	float PortalLifespan;
@@ -29,6 +41,18 @@ public:
 	// table index 0, flags 0x20080000000014
 	UPROPERTY()
 	TArray<ABuildingSMActor*> NoCollisionBuildings;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0xaa0): not a UPROPERTY, not replicated.
+	uint32 NativePortalFlagsAA0;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure, BlueprintAuthorityOnly)
+	FVector GetPortalInPoint() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure, BlueprintAuthorityOnly)
+	FVector GetPortalOutPoint() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure, BlueprintAuthorityOnly)
+	bool HasPortalOutPoint() const;
 
 };
 

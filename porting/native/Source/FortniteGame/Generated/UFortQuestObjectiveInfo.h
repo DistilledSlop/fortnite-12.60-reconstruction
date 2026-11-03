@@ -11,6 +11,7 @@
 
 class AFortPlayerState;
 class UFortItemDefinition;
+class UFortQuestItem;
 class UTexture2D;
 
 #include "UFortQuestObjectiveInfo.generated.h"
@@ -84,6 +85,9 @@ public:
 	// table index 0, flags 0x40000000000000
 	UPROPERTY()
 	bool bActive;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortQuestItem* GetOwningQuest() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool HasCompleted() const;

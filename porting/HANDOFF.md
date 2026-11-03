@@ -1,5 +1,34 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Native source batch 59 / 2,040-body checkpoint (2026-11-03)
+
+Canonical source:2,040 bodies +176 fields =2,216 accepted entries, zero rejected.
+Source58 adds eight playlist tag/mode predicates and a bounds-checked soft prop
+class lookup. Source59 adds playlist precedence, phase-notification membership,
+direct outer-to-quest cast and three AI portal queries with five proven native
+storage fields. Portal fields have exact parent/own size bounds, nonoverlap,
+constructor and activation-writer evidence. Full activation lifecycle is still
+open. Playlist bodies name their complete parameter type so generation infers
+its include; prop-class lookup similarly infers ABuildingActor for soft-class Get.
+Day-phase setter remains uncounted: contextual manager lookup, native virtual,
+registration and immediate callback must be restored together. See its handoff.
+
+The next combined client/server build checkpoint is now due: exactly1,000 bodies
+since tested1,040. No build/runtime result yet for this source. Prepared runner:
+/tmp/run-native-checkpoint2040.py (asserts >=2,040 actual bodies, excluding
+member_field); phases client/server/stage/join. Immutable attempt receipts/logs
+under generated/gameplay-native-checkpoint-2040. Builds use previous known-good
+command recipes; stage verifies both latest build receipts match source HEAD.
+Preserve failures and repair faithfully; no relaxed assertions or callback stubs.
+
+Previous goal turn was progress. Full faithful UE client/server and all four
+product gates remain open; source counts or headless joins cannot prove parity.
+All bounded workers finished, Ghidra free. Root owns canonical sources/promotion,
+builds, review and commits; bounded Terra6.1 medium/low fork-none proposal workers,
+economical bounded reads/output and task rotation remain required. Preserve
+unrelated porting/graphics/. Commit/push progress and refresh dashboard regularly.
+
+
 ## Native source batch 57 (2026-11-03)
 
 Canonical source:2,025 bodies +171 fields =2,196 accepted entries, zero rejected.

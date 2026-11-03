@@ -1,8 +1,9 @@
 // Original native body: 0x141a4a6f0.
 // CONFIDENCE: HIGH
-if (Playlist == nullptr)
+const UFortPlaylistAthena* PlaylistData = Playlist;
+if (PlaylistData == nullptr)
 {
     return false;
 }
 const FGameplayTag& Tag = FFortNativeGameplayTagsRuntime::Get().AthenaCreative();
-return Playlist->GameplayTagContainer.HasTag(Tag) && Playlist->bEnableCreativeMode;
+return PlaylistData->GameplayTagContainer.HasTag(Tag) && PlaylistData->bEnableCreativeMode;
