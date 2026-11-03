@@ -213,25 +213,29 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void ResetExecuteJetpackToggle();
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerActivateMission();
 	void ServerActivateMission_Implementation();
+	bool ServerActivateMission_Validate();
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerAttemptExitVehicle();
 	void ServerAttemptExitVehicle_Implementation();
+	bool ServerAttemptExitVehicle_Validate();
 
 	UFUNCTION(Server, Reliable)
 	void ServerBeginGameplayVote(const EFortVoteType& VoteType, const FFortVoteConfig& VoteConfig);
 	void ServerBeginGameplayVote_Implementation(const EFortVoteType& VoteType, const FFortVoteConfig& VoteConfig);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerDestroyFromRemoteControlledPawn();
 	void ServerDestroyFromRemoteControlledPawn_Implementation();
+	bool ServerDestroyFromRemoteControlledPawn_Validate();
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerDetachFromRemoteControlledPawn();
 	void ServerDetachFromRemoteControlledPawn_Implementation();
+	bool ServerDetachFromRemoteControlledPawn_Validate();
 
 	UFUNCTION(Server, Reliable)
 	void ServerEndGameplayVote(const EFortVoteType& VoteType);
@@ -253,9 +257,10 @@ public:
 	void ServerSendPartyJoinInfoToPlayer(const FUniqueNetIdRepl& RecipientId, const FString& JoinInfoStr);
 	void ServerSendPartyJoinInfoToPlayer_Implementation(const FUniqueNetIdRepl& RecipientId, const FString& JoinInfoStr);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerSetShouldDisablePlayerTeleportingDuringMissionResults();
 	void ServerSetShouldDisablePlayerTeleportingDuringMissionResults_Implementation();
+	bool ServerSetShouldDisablePlayerTeleportingDuringMissionResults_Validate();
 
 	UFUNCTION(Server, Reliable)
 	void ServerSetVehicleHealth(float NewHealth);

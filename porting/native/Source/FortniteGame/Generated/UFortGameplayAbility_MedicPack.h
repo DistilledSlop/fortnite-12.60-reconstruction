@@ -37,6 +37,10 @@ public:
 	virtual void OnAbilityCanceled_Implementation();
 
 	UFUNCTION(BlueprintNativeEvent)
+	void OnCurrentStateChanged(EMedicPackState InPreviousState, EMedicPackState InCurrentState);
+	virtual void OnCurrentStateChanged_Implementation(EMedicPackState InPreviousState, EMedicPackState InCurrentState);
+
+	UFUNCTION(BlueprintNativeEvent)
 	void OnFuelIsEmpty();
 	virtual void OnFuelIsEmpty_Implementation();
 

@@ -9,3 +9,10 @@ void UAthenaToyItemDefinition::BakeLaunchPositions()
 	return;
 }
 
+TSoftClassPtr<AActor> UAthenaToyItemDefinition::GetToyActorClass() const
+{
+	// CONFIDENCE: high
+	// Native exec at 0x14272eb40.
+	return ToyActorClass;
+}
+

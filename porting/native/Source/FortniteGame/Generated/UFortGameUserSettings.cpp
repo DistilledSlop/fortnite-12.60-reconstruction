@@ -17,6 +17,13 @@ float UFortGameUserSettings::GetDisplayGamma() const
 	return DisplayGamma;
 }
 
+FFireModeData UFortGameUserSettings::GetFireModeData() const
+{
+	// CONFIDENCE: high
+	// Native helper at 0x141e9b620 returns FireModeData at offset 0x544.
+	return FireModeData;
+}
+
 bool UFortGameUserSettings::GetHasSeenCreativeHeatmapTutorial() const
 {
 	// Original address: 0x14292f180.

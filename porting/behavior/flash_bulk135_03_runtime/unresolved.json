@@ -1,0 +1,23 @@
+[
+  {
+    "class": "UFortWorldItemDefinition",
+    "function": "GetDamageAtLevel",
+    "wrapper": "0x142b5d1a0",
+    "target": "0x1406964e0",
+    "reason": "Target clears integer return register, but reflected return is float; wrapper reads floating return register. Need assembly/ABI proof before treating as constant."
+  },
+  {
+    "class": "AFortObjectiveBase",
+    "function": "GetObjectiveDisplayString",
+    "wrapper": "0x142a04a60",
+    "target": "0x14213abf0",
+    "reason": "Target delegates to 0x142a034c0; helper semantics and returned FText are not established."
+  },
+  {
+    "class": "AFortPlayerStateZone",
+    "function": "GetPlayerNameForStreaming",
+    "wrapper": "0x142a94e20",
+    "target": "0x142418510",
+    "reason": "Target delegates to 0x1444ac7a0; helper conditionally dispatches a virtual call or copies a field. Need exact field/dispatch mapping."
+  }
+]

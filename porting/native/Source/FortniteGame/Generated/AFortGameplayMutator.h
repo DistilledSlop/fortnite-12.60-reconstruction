@@ -32,6 +32,9 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_bMutatorActive)
 	uint8 bMutatorActiveInternal : 1;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsMutatorActive() const;
+
 protected:
 	UFUNCTION()
 	virtual void OnRep_bMutatorActive();

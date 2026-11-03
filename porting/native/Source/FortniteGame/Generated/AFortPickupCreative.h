@@ -47,6 +47,9 @@ public:
 	UPROPERTY()
 	FOnPickupReplicated OnAccentColorParamChanged;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetAccentColorParam() const;
+
 	UFUNCTION()
 	void OnRep_PickupInstigatorIndex();
 

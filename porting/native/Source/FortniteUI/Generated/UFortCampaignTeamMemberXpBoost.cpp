@@ -9,3 +9,10 @@ UCommonButton* UFortCampaignTeamMemberXpBoost::GetBoostActivationButton() const
 	return Button_ActivateBoost;
 }
 
+int32 UFortCampaignTeamMemberXpBoost::GetCurrentBoostAmount() const
+{
+	// CONFIDENCE: high
+	// Native wrapper 0x145209df0 reads int32 storage at offset 0xc28.
+	return NativeRecoveredInt32_0xc28;
+}
+

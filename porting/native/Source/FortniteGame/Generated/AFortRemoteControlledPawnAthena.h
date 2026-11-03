@@ -119,6 +119,12 @@ public:
 	UFUNCTION()
 	void OnRep_TriggeredHealthThreshold(float PreviousTriggeredHealthThreshold);
 
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void OnTriggeredHealthThreshold(float PreviousTriggeredHealthThreshold, float CurrentTriggeredHealthThreshold);
+	virtual void OnTriggeredHealthThreshold_Implementation(float PreviousTriggeredHealthThreshold, float CurrentTriggeredHealthThreshold);
+public:
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

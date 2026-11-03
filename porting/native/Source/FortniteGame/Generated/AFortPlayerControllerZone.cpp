@@ -12,7 +12,9 @@ void AFortPlayerControllerZone::AllowLoadoutRefresh()
 
 void AFortPlayerControllerZone::ClientAckLoadoutConfig_Implementation(int32 LoadoutSeed)
 {
-	// Body not recovered: reflection-derived stub.
+	// CONFIDENCE: high
+	// Native target 0x1406801c0.
+	// Original native body is empty.
 }
 
 void AFortPlayerControllerZone::ClientClearDeathNotification_Implementation()
@@ -42,7 +44,9 @@ void AFortPlayerControllerZone::ClientOnZoneEndScoreReports_Implementation(const
 
 void AFortPlayerControllerZone::ClientPresentGameplayVote_Implementation(uint32 Payload)
 {
-	// Body not recovered: reflection-derived stub.
+	// CONFIDENCE: high
+	// Native target 0x1406801c0.
+	// Original native body is empty.
 }
 
 void AFortPlayerControllerZone::ClientSendPartyJoinInfoToPlayer_Implementation(const FString& JoinInfoStr)
@@ -92,9 +96,23 @@ void AFortPlayerControllerZone::ServerActivateMission_Implementation()
 	// Body not recovered: reflection-derived stub.
 }
 
+bool AFortPlayerControllerZone::ServerActivateMission_Validate()
+{
+	// CONFIDENCE: high
+	// Native target 0x1406801d0.
+	return true;
+}
+
 void AFortPlayerControllerZone::ServerAttemptExitVehicle_Implementation()
 {
 	// Body not recovered: reflection-derived stub.
+}
+
+bool AFortPlayerControllerZone::ServerAttemptExitVehicle_Validate()
+{
+	// CONFIDENCE: high
+	// Native target 0x1406801d0.
+	return true;
 }
 
 void AFortPlayerControllerZone::ServerBeginGameplayVote_Implementation(const EFortVoteType& VoteType, const FFortVoteConfig& VoteConfig)
@@ -107,9 +125,23 @@ void AFortPlayerControllerZone::ServerDestroyFromRemoteControlledPawn_Implementa
 	// Body not recovered: reflection-derived stub.
 }
 
+bool AFortPlayerControllerZone::ServerDestroyFromRemoteControlledPawn_Validate()
+{
+	// CONFIDENCE: high
+	// Native target 0x1406801d0.
+	return true;
+}
+
 void AFortPlayerControllerZone::ServerDetachFromRemoteControlledPawn_Implementation()
 {
 	// Body not recovered: reflection-derived stub.
+}
+
+bool AFortPlayerControllerZone::ServerDetachFromRemoteControlledPawn_Validate()
+{
+	// CONFIDENCE: high
+	// Native target 0x1406801d0.
+	return true;
 }
 
 void AFortPlayerControllerZone::ServerEndGameplayVote_Implementation(const EFortVoteType& VoteType)
@@ -140,6 +172,13 @@ void AFortPlayerControllerZone::ServerSendPartyJoinInfoToPlayer_Implementation(c
 void AFortPlayerControllerZone::ServerSetShouldDisablePlayerTeleportingDuringMissionResults_Implementation()
 {
 	// Body not recovered: reflection-derived stub.
+}
+
+bool AFortPlayerControllerZone::ServerSetShouldDisablePlayerTeleportingDuringMissionResults_Validate()
+{
+	// CONFIDENCE: high
+	// Native target 0x1406801d0.
+	return true;
 }
 
 void AFortPlayerControllerZone::ServerSetVehicleHealth_Implementation(float NewHealth)

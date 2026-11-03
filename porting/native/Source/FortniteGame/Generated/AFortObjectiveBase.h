@@ -118,6 +118,11 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	virtual bool StartPlayingObjective();
 
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	virtual void StopObjective(EFortObjectiveStatus Status, FString Description, UFortBadgeItemDefinition* ExtraBadgeToGrant);
+public:
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

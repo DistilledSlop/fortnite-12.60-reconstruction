@@ -41,8 +41,10 @@
 #include "Math/TransformNonVectorized.h"
 #include "Math/Vector.h"
 
+class AFortPlayerController;
 class AFortPlayerPawn;
 class AFortPlayerPawnAthena;
+class UAnimMontage;
 class UAnimSequence;
 class UFortWeaponAnimSet;
 
@@ -1509,6 +1511,9 @@ public:
 	// table index 0, flags 0x10000000002004
 	UPROPERTY(Transient)
 	uint8 bSupressJogStartAdditiveForLiveEvent : 1;
+
+	UFUNCTION(BlueprintCallable)
+	UAnimMontage* FindEmoteToPlay(AFortPlayerController* FortPlayerController, EFortCustomBodyType::Type InBodyType, EFortCustomGender::Type InGender);
 
 };
 

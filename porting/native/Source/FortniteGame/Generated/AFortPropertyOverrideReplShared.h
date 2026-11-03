@@ -20,8 +20,10 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_ReplOverrides, Transient)
 	FPropertyOverrideDataRepl ReplOverrides;
 
+private:
 	UFUNCTION()
 	void OnRep_ReplOverrides();
+public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

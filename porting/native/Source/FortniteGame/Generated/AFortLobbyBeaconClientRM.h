@@ -30,9 +30,10 @@ public:
 	void ClientBroadcastLobbyPlayerPadTop(const FUniqueNetIdRepl& ReadiedPlayer, bool bIsReadiedUp) const;
 	void ClientBroadcastLobbyPlayerPadTop_Implementation(const FUniqueNetIdRepl& ReadiedPlayer, bool bIsReadiedUp) const;
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerUpdateNewlyJoinedPlayerInternal();
 	void ServerUpdateNewlyJoinedPlayerInternal_Implementation();
+	bool ServerUpdateNewlyJoinedPlayerInternal_Validate();
 
 	UFUNCTION(Server, Reliable)
 	void ServerUpdateReadyStatus(bool bIsReady);

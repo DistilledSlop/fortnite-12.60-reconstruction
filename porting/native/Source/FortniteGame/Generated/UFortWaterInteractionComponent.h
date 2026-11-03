@@ -9,6 +9,8 @@
 #include "FWaterInteractionOnEnterWater.h"
 #include "FWaterInteractionOnExitWater.h"
 
+class AFortWaterBodyActor;
+
 #include "UFortWaterInteractionComponent.generated.h"
 
 UCLASS(config=Game)
@@ -84,6 +86,12 @@ public:
 	// table index 0, flags 0x10000010080000
 	UPROPERTY()
 	FWaterInteractionOnExitWater OnExitWaterEvent;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x100): not a UPROPERTY, not replicated.
+	AFortWaterBodyActor* NativeRecoveredAFortWaterBodyActor_0x100;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	AFortWaterBodyActor* GetCurrentWaterBody() const;
 
 };
 

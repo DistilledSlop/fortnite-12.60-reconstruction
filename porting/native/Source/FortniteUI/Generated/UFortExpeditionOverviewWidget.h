@@ -42,5 +42,11 @@ protected:
 	virtual void OnExpeditionOverviewRefresh_Implementation();
 public:
 
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void OnExpeditionTabSelected(FName& TabNameId);
+	virtual void OnExpeditionTabSelected_Implementation(FName& TabNameId);
+public:
+
 };
 

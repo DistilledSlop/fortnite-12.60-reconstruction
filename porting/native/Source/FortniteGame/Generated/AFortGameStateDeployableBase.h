@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "AFortGameStatePvE.h"
 
+#include "EDeployableBaseUseType.h"
 #include "FHordeDifficultyTierInfo.h"
 #include "FOnDeployableBaseManagerCreated.h"
 
@@ -38,6 +39,9 @@ public:
 	// table index 0, flags 0x40000000010001
 	UPROPERTY()
 	TArray<FHordeDifficultyTierInfo> PrestigeTierDifficultyConfig;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	EDeployableBaseUseType GetDeployableBaseUseType() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetStormShieldBreatherRadiusOverride() const;

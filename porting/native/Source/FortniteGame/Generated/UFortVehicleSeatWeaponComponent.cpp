@@ -2,6 +2,12 @@
 #include "UFortVehicleSeatWeaponComponent.h"
 #include "Net/UnrealNetwork.h"
 
+void UFortVehicleSeatWeaponComponent::EquipVehicleWeapon(AFortPawn* FortPawn, FWeaponSeatDefinition& WeaponSeatDefinition, int32 ItemLevel)
+{
+	// CONFIDENCE: high
+	// Native 0x142b31ba0 is an empty stub in shipping 12.60.
+}
+
 float UFortVehicleSeatWeaponComponent::GetCurrentOverheatValue()
 {
 	// Original address: 0x142b31cc0.

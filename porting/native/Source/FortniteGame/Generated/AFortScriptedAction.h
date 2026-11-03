@@ -42,5 +42,9 @@ public:
 	UPROPERTY(Transient)
 	bool bIsActive;
 
+	UFUNCTION(BlueprintNativeEvent)
+	void Execute(FFortScriptedActionParams& Params);
+	virtual void Execute_Implementation(FFortScriptedActionParams& Params);
+
 };
 

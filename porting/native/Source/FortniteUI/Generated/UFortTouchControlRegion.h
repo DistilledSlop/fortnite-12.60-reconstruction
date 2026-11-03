@@ -7,6 +7,8 @@
 #include "UCommonUserWidget.h"
 
 #include "Engine/EngineTypes.h"
+#include "Input/Events.h"
+#include "Layout/Geometry.h"
 #include "Math/Vector2D.h"
 
 class UCurveFloat;
@@ -95,8 +97,20 @@ public:
 	FVector2D LockOnStickCurrentPos;
 
 protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void OnAdditionalTouchStarted(FGeometry& InGeometry, FPointerEvent& InGestureEvent);
+	virtual void OnAdditionalTouchStarted_Implementation(FGeometry& InGeometry, FPointerEvent& InGestureEvent);
+public:
+
+protected:
 	UFUNCTION()
 	void OnBuildModeChanged(bool bBuildModeEnabled);
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void SetFeedbackPosition(FGeometry& InGeometry, FPointerEvent& InGestureEvent);
+	virtual void SetFeedbackPosition_Implementation(FGeometry& InGeometry, FPointerEvent& InGestureEvent);
 public:
 
 };

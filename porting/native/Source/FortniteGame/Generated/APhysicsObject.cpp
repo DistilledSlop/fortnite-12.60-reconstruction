@@ -11,12 +11,14 @@ bool APhysicsObject::CanTeleport() const
 
 void APhysicsObject::DebugDrawImpactBucket_Implementation(const FVector& Location, const FVector& ImpactVector, const FColor& Color)
 {
-	// Body not recovered: reflection-derived stub.
+	// CONFIDENCE: high
+	// The original implementation returns without side effects.
 }
 
 void APhysicsObject::DrawServerAndClientBallPosition_Implementation(const FVector& ServerPosition)
 {
-	// Body not recovered: reflection-derived stub.
+	// CONFIDENCE: high
+	// The original implementation returns without side effects.
 }
 
 bool APhysicsObject::HasPermissionToAlterBuildings() const
@@ -119,7 +121,8 @@ void APhysicsObject::ServerBroadcastHitFromClient_Implementation(APlayerControll
 
 void APhysicsObject::UpdateClientWithPhysicsObjectTestInput_Implementation(const FVector& LinearVelocity, const FVector& AngularVelocity)
 {
-	// Body not recovered: reflection-derived stub.
+	// CONFIDENCE: high
+	// The original implementation returns without side effects.
 }
 
 void APhysicsObject::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "AFortPlayerControllerGameplay.h"
 
+#include "EPlayEventType.h"
 #include "ESpectatorCameraType.h"
 #include "FNoParamDelegate.h"
 #include "FOnCameraTypeChanged.h"
@@ -268,6 +269,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void SetShowVehiclesOnMap(bool bInShowVehiclesOnMap);
+
+	UFUNCTION()
+	virtual void UpdateReplayEvents(EPlayEventType Type);
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

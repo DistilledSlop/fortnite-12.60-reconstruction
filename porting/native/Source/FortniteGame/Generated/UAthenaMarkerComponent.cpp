@@ -4,12 +4,14 @@
 
 void UAthenaMarkerComponent::ServerAddMapMarker_Implementation(const FFortClientMarkerRequest& MarkerRequest)
 {
-	// Body not recovered: reflection-derived stub.
+	// CONFIDENCE: high
+	// The original implementation returns without side effects.
 }
 
 void UAthenaMarkerComponent::ServerRemoveMapMarker_Implementation(const FMarkerID& MarkerID, const ECancelMarkerReason& CancelReason)
 {
-	// Body not recovered: reflection-derived stub.
+	// CONFIDENCE: high
+	// The original implementation returns without side effects.
 }
 
 void UAthenaMarkerComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

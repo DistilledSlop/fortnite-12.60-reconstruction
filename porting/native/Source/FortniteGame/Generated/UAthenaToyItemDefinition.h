@@ -33,5 +33,8 @@ public:
 	UFUNCTION()
 	void BakeLaunchPositions();
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	TSoftClassPtr<AActor> GetToyActorClass() const;
+
 };
 

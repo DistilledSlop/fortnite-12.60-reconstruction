@@ -366,6 +366,20 @@ void AFortWeapon::OnRep_ReplicatedWeaponData()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortWeapon::OnWeaponMontageBlendingOut(UAnimMontage* WeaponMontage, bool bInterrupted)
+{
+	// CONFIDENCE: high
+	// Native target 0x1406801c0.
+	// Original native body is empty.
+}
+
+void AFortWeapon::OnWeaponMontageStarted(UAnimMontage* WeaponMontage)
+{
+	// CONFIDENCE: high
+	// Native target 0x1406801c0.
+	// Original native body is empty.
+}
+
 void AFortWeapon::ServerReleaseWeaponAbility_Implementation(const FGameplayAbilitySpecHandle& SpecHandle)
 {
 	// Body not recovered: reflection-derived stub.
@@ -374,6 +388,13 @@ void AFortWeapon::ServerReleaseWeaponAbility_Implementation(const FGameplayAbili
 void AFortWeapon::ServerResetShotReport_Implementation()
 {
 	// Body not recovered: reflection-derived stub.
+}
+
+bool AFortWeapon::ServerResetShotReport_Validate()
+{
+	// CONFIDENCE: high
+	// Native target 0x1406801d0.
+	return true;
 }
 
 void AFortWeapon::ServerSetChargeState_Implementation(uint8 NewState)

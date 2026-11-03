@@ -67,9 +67,10 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void RefreshHarvestingWeapon();
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerTriggerSetupTeleportCameraEvent();
 	void ServerTriggerSetupTeleportCameraEvent_Implementation();
+	bool ServerTriggerSetupTeleportCameraEvent_Validate();
 
 	UFUNCTION(Server, Reliable)
 	void ServerUpdateQuickBarRecordsCache(const FQuickBar& PrimaryQuickBarRecord, const FQuickBar& SecondaryQuickBarRecord);

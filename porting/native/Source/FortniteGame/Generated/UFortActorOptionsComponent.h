@@ -11,6 +11,7 @@
 #include "FPropertyOverrideData.h"
 #include "FRestoreDefaultsDelegate.h"
 
+class AFortPawn;
 class UFortItemDefinition;
 class UPlaylistUserOptionBase;
 class UPlaylistUserOptions;
@@ -74,6 +75,10 @@ public:
 	// table index 0, flags 0x10000000000001
 	UPROPERTY()
 	bool bRedirectInteractToParent;
+
+	UFUNCTION(BlueprintNativeEvent)
+	bool BlueprintGetInteractionTime(AFortPawn* InteractingPawn, float& OutInteractionTime) const;
+	virtual bool BlueprintGetInteractionTime_Implementation(AFortPawn* InteractingPawn, float& OutInteractionTime) const;
 
 	UFUNCTION()
 	void OnRep_PlayerOptionData();

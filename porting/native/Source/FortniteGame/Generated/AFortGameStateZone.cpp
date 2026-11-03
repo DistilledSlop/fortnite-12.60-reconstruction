@@ -150,6 +150,13 @@ EFortCompletionResult AFortGameStateZone::GetZoneCompletionResult() const
 	return CompletionResult;
 }
 
+bool AFortGameStateZone::HasActiveGameplayModifiers() const
+{
+	// CONFIDENCE: high
+	// Native target 0x141ea1260.
+	return ActiveGameplayModifiers.Items.Num() > 0;
+}
+
 bool AFortGameStateZone::IsBuildingAtLayoutRequirementsAllowed() const
 {
 	// Original address: 0x14292bab0.
@@ -164,6 +171,13 @@ bool AFortGameStateZone::IsBuildingWithoutLayoutRequirementsAllowed() const
 	// CONFIDENCE: HIGH
 	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
 	return AFortGameStateZone::bAllowBuildingWithoutLayoutRequirements;
+}
+
+bool AFortGameStateZone::IsRespawningAllowed(AFortPlayerState* PlayerState) const
+{
+	// CONFIDENCE: high
+	// Native target 0x1406801d0.
+	return true;
 }
 
 void AFortGameStateZone::NotifyEndFailedGameplayVoteLockout_Implementation(const EFortVoteType& VoteType)

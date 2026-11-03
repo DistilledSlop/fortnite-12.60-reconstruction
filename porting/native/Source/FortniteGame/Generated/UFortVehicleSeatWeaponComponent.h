@@ -12,6 +12,7 @@
 #include "FWeaponSeatDefinition.h"
 
 class AActor;
+class AFortPawn;
 class AFortWeaponRanged;
 class UFortWeaponRangedItemDefinition;
 
@@ -98,6 +99,9 @@ public:
 	// table index 0, flags 0x20080000000001
 	UPROPERTY()
 	bool bSaveAndRestoreWeaponData;
+
+	UFUNCTION(BlueprintCallable)
+	void EquipVehicleWeapon(AFortPawn* FortPawn, FWeaponSeatDefinition& WeaponSeatDefinition, int32 ItemLevel);
 
 	UFUNCTION(BlueprintCallable)
 	float GetCurrentOverheatValue();

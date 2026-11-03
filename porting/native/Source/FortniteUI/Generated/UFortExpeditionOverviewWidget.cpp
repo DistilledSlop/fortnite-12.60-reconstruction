@@ -8,3 +8,9 @@ void UFortExpeditionOverviewWidget::OnExpeditionOverviewRefresh_Implementation()
 	return;
 }
 
+void UFortExpeditionOverviewWidget::OnExpeditionTabSelected_Implementation(FName& TabNameId)
+{
+	// CONFIDENCE: high
+	// The original implementation returns without side effects.
+}
+

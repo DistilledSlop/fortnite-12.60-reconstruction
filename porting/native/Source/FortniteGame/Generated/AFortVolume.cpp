@@ -28,6 +28,13 @@ UFortPlaysetItemDefinition* AFortVolume::GetCurrentPlayset() const
 	return CurrentPlayset;
 }
 
+UStaticMeshComponent* AFortVolume::GetStaticMesh() const
+{
+	// CONFIDENCE: high
+	// Native target 0x1419953f0.
+	return BoundsComponent;
+}
+
 bool AFortVolume::GetUserGeneratedContentRestricted() const
 {
 	// Original address: 0x142b37970.
@@ -84,6 +91,12 @@ void AFortVolume::OnRep_VolumeState()
 void AFortVolume::ServerClearVolume_Implementation()
 {
 	// Body not recovered: reflection-derived stub.
+}
+
+bool AFortVolume::ServerClearVolume_Validate()
+{
+	// CONFIDENCE: high
+	return true;
 }
 
 void AFortVolume::NativeAppendMinigameOwner(AFortVolume* Volume, TArray<UObject*>& OutOwners)

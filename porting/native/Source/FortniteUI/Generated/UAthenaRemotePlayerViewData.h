@@ -157,6 +157,9 @@ public:
 	bool GetIsReplayRelevancyPlayer() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FString GetLocation() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetMaterialCount() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

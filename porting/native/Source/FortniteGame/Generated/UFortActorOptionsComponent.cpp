@@ -2,6 +2,12 @@
 #include "UFortActorOptionsComponent.h"
 #include "Net/UnrealNetwork.h"
 
+bool UFortActorOptionsComponent::BlueprintGetInteractionTime_Implementation(AFortPawn* InteractingPawn, float& OutInteractionTime) const
+{
+	// CONFIDENCE: high
+	return false;
+}
+
 void UFortActorOptionsComponent::OnRep_PlayerOptionData()
 {
 	// Body not recovered: reflection-derived stub.

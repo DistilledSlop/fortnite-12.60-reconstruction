@@ -25,6 +25,7 @@
 #include "ERichPresenceStateChange.h"
 #include "EStatCategory.h"
 #include "EStatMod.h"
+#include "EVolumeState.h"
 #include "Engine/EngineTypes.h"
 #include "Engine/NetSerialization.h"
 #include "Engine/World.h"
@@ -95,6 +96,7 @@ class AFortPawn;
 class AFortPlayerPawn;
 class AFortQuickBars;
 class AFortSprayDecalInstance;
+class AFortVolume;
 class AFortWeapon;
 class UAthenaCosmeticItemDefinition;
 class UAudioComponent;
@@ -1215,13 +1217,15 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual bool CanAlterHostileWalls() const;
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void Cheat_ClearForcedCosmeticItems();
 	void Cheat_ClearForcedCosmeticItems_Implementation();
+	bool Cheat_ClearForcedCosmeticItems_Validate();
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void Cheat_ClearForcedCosmeticVariantChannels();
 	void Cheat_ClearForcedCosmeticVariantChannels_Implementation();
+	bool Cheat_ClearForcedCosmeticVariantChannels_Validate();
 
 	UFUNCTION(Server, Reliable)
 	void Cheat_ForceAthenaCosmeticItemInSlot(UAthenaCosmeticItemDefinition* CosmeticItem, const EAthenaCustomizationCategory& Slot, int32 Index);
@@ -1464,6 +1468,11 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void GivePlayerAmmo(int32 AmmoCount);
 
+protected:
+	UFUNCTION()
+	virtual void HandleDifferentHeroLoadoutActivated(UFortMcpProfileCampaign* Profile);
+public:
+
 	UFUNCTION()
 	void HandleOutpostInventoryLocalUpdate();
 
@@ -1475,6 +1484,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool HasLockOnTarget() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool HasPermissionToEditWorld(ABuildingActor* Building, FVector& Location, FRotator& Rotation) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsBuildToolOverridden() const;
@@ -1491,6 +1503,9 @@ public:
 	UFUNCTION(NetMulticast, Reliable)
 	void MulticastClearWeakSpotData(ABuildingSMActor* ParentBuilding);
 	void MulticastClearWeakSpotData_Implementation(ABuildingSMActor* ParentBuilding);
+
+	UFUNCTION()
+	virtual void OnMinigameVolumeStateChanged(EVolumeState NewState, AFortVolume* Volume);
 
 	UFUNCTION()
 	void OnRep_bHasServerFinishedLoading();
@@ -1604,9 +1619,10 @@ public:
 	void ServerDropAllItems(UFortItemDefinition* IgnoreItemDef);
 	void ServerDropAllItems_Implementation(UFortItemDefinition* IgnoreItemDef);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerDropCarriedObject();
 	void ServerDropCarriedObject_Implementation();
+	bool ServerDropCarriedObject_Validate();
 
 	UFUNCTION(Server, Reliable)
 	void ServerEditBuildingActor(ABuildingSMActor* BuildingActorToEdit, TSubclassOf<ABuildingSMActor> NewBuildingClass, uint8 RotationIterations, bool bMirrored);
@@ -1632,9 +1648,10 @@ public:
 	void ServerGiftInventoryItemToOtherPlayer(const FGuid& ItemGuid, const FUniqueNetIdRepl& PlayerId, int32 Quantity);
 	void ServerGiftInventoryItemToOtherPlayer_Implementation(const FGuid& ItemGuid, const FUniqueNetIdRepl& PlayerId, int32 Quantity);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerHandleMissionEvent_StartLeavingZone();
 	void ServerHandleMissionEvent_StartLeavingZone_Implementation();
+	bool ServerHandleMissionEvent_StartLeavingZone_Validate();
 
 	UFUNCTION(Server, Reliable)
 	void ServerHandleMissionEvent_ToggledCursorMode(bool bOpened);
@@ -1652,13 +1669,15 @@ public:
 	void ServerKickPlayer(const FUniqueNetIdRepl& PlayerToKick, const FText& Reason);
 	void ServerKickPlayer_Implementation(const FUniqueNetIdRepl& PlayerToKick, const FText& Reason);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerKillAllAIPawnsAroundPlayer();
 	void ServerKillAllAIPawnsAroundPlayer_Implementation();
+	bool ServerKillAllAIPawnsAroundPlayer_Validate();
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerLoadingScreenDropped();
 	void ServerLoadingScreenDropped_Implementation();
+	bool ServerLoadingScreenDropped_Validate();
 
 	UFUNCTION(Server, Reliable)
 	void ServerModifyStat(const FName& StatName, int32 Amount, const EStatMod& ModType, bool bForceStatSave);
@@ -1680,9 +1699,10 @@ public:
 	void ServerPlayEmoteItem(UFortMontageItemDefinitionBase* EmoteAsset, float EmoteRandomNumber);
 	void ServerPlayEmoteItem_Implementation(UFortMontageItemDefinitionBase* EmoteAsset, float EmoteRandomNumber);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerReadyToStartMatch();
 	void ServerReadyToStartMatch_Implementation();
+	bool ServerReadyToStartMatch_Validate();
 
 	UFUNCTION(Server, Reliable)
 	void ServerReleaseInventoryItemKey(const FGuid& ItemGuid);
@@ -1712,9 +1732,10 @@ public:
 	void ServerReportClientFPS(float ClientAvgFPS, uint8 ClientAvgFrameScore, uint8 ClientMaxFrameScore);
 	void ServerReportClientFPS_Implementation(float ClientAvgFPS, uint8 ClientAvgFrameScore, uint8 ClientMaxFrameScore);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerRequestAIDebug();
 	void ServerRequestAIDebug_Implementation();
+	bool ServerRequestAIDebug_Validate();
 
 	UFUNCTION(Server, Reliable)
 	void ServerRequestAttributeSources(const FGameplayAttribute& Attribute, UFortAbilitySystemComponent* AbilitySystemComponent);
@@ -1724,9 +1745,10 @@ public:
 	void ServerRequestGameplayAction(EFortRequestedGameplayAction::Type RequestedAction);
 	void ServerRequestGameplayAction_Implementation(EFortRequestedGameplayAction::Type RequestedAction);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerReturnToMainMenu();
 	void ServerReturnToMainMenu_Implementation();
+	bool ServerReturnToMainMenu_Validate();
 
 	UFUNCTION(Server, Reliable)
 	void ServerSendClientProgressUpdate(int32 ClientProgressState, const TArray<uint64>& ClientProgressUpdate);
@@ -1780,21 +1802,25 @@ public:
 	void ServerSpotActor(AActor* NewlySpottedActor);
 	void ServerSpotActor_Implementation(AActor* NewlySpottedActor);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerStartIntensityGraphing();
 	void ServerStartIntensityGraphing_Implementation();
+	bool ServerStartIntensityGraphing_Validate();
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerStartPIDContributionsGraphing();
 	void ServerStartPIDContributionsGraphing_Implementation();
+	bool ServerStartPIDContributionsGraphing_Validate();
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerStartPIDValueGraphing();
 	void ServerStartPIDValueGraphing_Implementation();
+	bool ServerStartPIDValueGraphing_Validate();
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerSuicide();
 	void ServerSuicide_Implementation();
+	bool ServerSuicide_Validate();
 
 	UFUNCTION(Server, Reliable)
 	void ServerTeamChatRoomReady(const FString& ChatRoomId);
@@ -1804,9 +1830,10 @@ public:
 	void ServerTeleportToReticle(const FVector& TeleportLocation);
 	void ServerTeleportToReticle_Implementation(const FVector& TeleportLocation);
 
-	UFUNCTION(Server, Unreliable)
+	UFUNCTION(Server, Unreliable, WithValidation)
 	void ServerTouchActiveTime();
 	void ServerTouchActiveTime_Implementation();
+	bool ServerTouchActiveTime_Validate();
 
 	UFUNCTION(Server, Reliable)
 	void ServerTriggerGenericObjectiveEvent(AFortObjectiveBase* Objective);
@@ -1843,6 +1870,9 @@ public:
 	UFUNCTION(Server, Reliable)
 	void ServerUpgradeBuildingActor(ABuildingActor* BuildingActorToUpgrade, int32 NewUpgradeLevel);
 	void ServerUpgradeBuildingActor_Implementation(ABuildingActor* BuildingActorToUpgrade, int32 NewUpgradeLevel);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool ShouldShowInfoIndicator(AActor* TestActor) const;
 
 	UFUNCTION()
 	void StartZeroingCameraRoll();

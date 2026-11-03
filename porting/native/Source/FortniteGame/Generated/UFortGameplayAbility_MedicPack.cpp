@@ -9,6 +9,13 @@ void UFortGameplayAbility_MedicPack::OnAbilityCanceled_Implementation()
 	return;
 }
 
+void UFortGameplayAbility_MedicPack::OnCurrentStateChanged_Implementation(EMedicPackState InPreviousState, EMedicPackState InCurrentState)
+{
+	// CONFIDENCE: high
+	// Native target 0x1406801c0.
+	// Original native body is empty.
+}
+
 void UFortGameplayAbility_MedicPack::OnFuelIsEmpty_Implementation()
 {
 	// Exact original shared stub 0x1406801c0.

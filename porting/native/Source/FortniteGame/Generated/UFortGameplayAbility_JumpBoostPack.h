@@ -37,6 +37,10 @@ public:
 	virtual void OnAbilityCanceled_Implementation();
 
 	UFUNCTION(BlueprintNativeEvent)
+	void OnCurrentStateChanged(EJumpBoostPackState InPreviousState, EJumpBoostPackState InCurrentState);
+	virtual void OnCurrentStateChanged_Implementation(EJumpBoostPackState InPreviousState, EJumpBoostPackState InCurrentState);
+
+	UFUNCTION(BlueprintNativeEvent)
 	void OnFuelIsEmpty();
 	virtual void OnFuelIsEmpty_Implementation();
 

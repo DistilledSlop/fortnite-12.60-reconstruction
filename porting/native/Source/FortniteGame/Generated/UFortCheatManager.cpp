@@ -313,6 +313,12 @@ void UFortCheatManager::CycleTheaterDisplayed()
 	return;
 }
 
+void UFortCheatManager::DebugAttribute(FString& Attribute)
+{
+	// CONFIDENCE: high
+	// Native target 0x1406801c0.
+}
+
 void UFortCheatManager::DebugBuildingDetection()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
@@ -553,6 +559,12 @@ void UFortCheatManager::FakeXPEvents()
 	return;
 }
 
+void UFortCheatManager::FinishCurrentStormCircle(float TimeToShrink)
+{
+	// CONFIDENCE: high
+	// Native target 0x1406801c0.
+}
+
 void UFortCheatManager::ForceAILODs(EFortAILODLevel inForcedAILODValue)
 {
 	// Original exec 0x1427e1180; complete empty leaf 0x1406801c0.
@@ -571,6 +583,12 @@ void UFortCheatManager::ForceExternalRichPresenceUpdate()
 	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
 	// CONFIDENCE: HIGH
 	return;
+}
+
+void UFortCheatManager::ForceServerShutdown(int32 ExitCode)
+{
+	// CONFIDENCE: high
+	// Native target 0x1406801c0.
 }
 
 void UFortCheatManager::FortniteForceCharLOD(int32 LOD)
@@ -857,6 +875,12 @@ void UFortCheatManager::HideGameplayCaptureUI()
 	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
 	// CONFIDENCE: HIGH
 	return;
+}
+
+void UFortCheatManager::KillPawns(TSubclassOf<AFortPawn> aClass)
+{
+	// CONFIDENCE: high
+	// Native target 0x1406801c0.
 }
 
 void UFortCheatManager::KillPlaneSquad()
@@ -1431,6 +1455,12 @@ void UFortCheatManager::RunPerfMemCheatScript(bool bStartStatFiles)
 	// CONFIDENCE: HIGH
 }
 
+void UFortCheatManager::ScriptedPawnIntervalFiring(float TimeBetweenShots, int32 BurstAmount, float TimeBetweenBursts)
+{
+	// CONFIDENCE: high
+	// Native target 0x1406801c0.
+}
+
 void UFortCheatManager::ServerStartProfiling()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
@@ -1469,6 +1499,12 @@ void UFortCheatManager::SetCameraPrototype(FName ProtoName)
 {
 	// Original exec 0x1406969b0; complete empty leaf 0x1406801c0.
 	// CONFIDENCE: HIGH
+}
+
+void UFortCheatManager::SetCanBeDamagedOnTraceActor(bool bCanBeDamaged)
+{
+	// CONFIDENCE: high
+	// Native target 0x1406801c0.
 }
 
 void UFortCheatManager::SetCanMeleeOneHitBuildings(bool bEnabled)
@@ -1511,6 +1547,12 @@ void UFortCheatManager::SetDifficultyIncreaseRewardTier(int32 RewardTier)
 {
 	// Original exec 0x142766a90; complete empty leaf 0x1406801c0.
 	// CONFIDENCE: HIGH
+}
+
+void UFortCheatManager::SetEncounterGraphsHistoryLength(int32 Seconds)
+{
+	// CONFIDENCE: high
+	// Native target 0x1406801c0.
 }
 
 void UFortCheatManager::SetEncounterSimulatedNumberOfPlayers(int32 NumPlayers)
@@ -1631,6 +1673,24 @@ void UFortCheatManager::SetSafeZoneRadius(float NewRadius)
 	// CONFIDENCE: HIGH
 }
 
+void UFortCheatManager::SetScriptedPawnLocation(float X, float Y, float Z)
+{
+	// CONFIDENCE: high
+	// Native target 0x1406801c0.
+}
+
+void UFortCheatManager::SetScriptedPawnRotation(float Yaw)
+{
+	// CONFIDENCE: high
+	// Native target 0x1406801c0.
+}
+
+void UFortCheatManager::SetScriptedPawnTargeting(bool bIsTargeting)
+{
+	// CONFIDENCE: high
+	// Native target 0x1406801c0.
+}
+
 void UFortCheatManager::SetShieldPercent(float Percent)
 {
 	// Original exec 0x142765ea0; complete empty leaf 0x1406801c0.
@@ -1647,6 +1707,12 @@ void UFortCheatManager::SetTeam(int32 TeamIndex)
 {
 	// Original exec 0x142766a90; complete empty leaf 0x1406801c0.
 	// CONFIDENCE: HIGH
+}
+
+void UFortCheatManager::SetTeamOnScriptedPawn(int32 NewTeamIndex)
+{
+	// CONFIDENCE: high
+	// Native target 0x1406801c0.
 }
 
 void UFortCheatManager::SetUnlimitedHealth(bool bInValue)
@@ -1743,6 +1809,27 @@ void UFortCheatManager::SpawnFoodFightObjective()
 	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
 	// CONFIDENCE: HIGH
 	return;
+}
+
+AFortPawn* UFortCheatManager::SpawnPawn(FString PawnType)
+{
+	// CONFIDENCE: high
+	// Native target 0x140680300.
+	return nullptr;
+}
+
+AFortPlayerPawn* UFortCheatManager::SpawnScriptedPawn(FString ProfileName)
+{
+	// CONFIDENCE: high
+	// Native target 0x140680300.
+	return nullptr;
+}
+
+AFortPlayerPawn* UFortCheatManager::SpawnScriptedPawnAtLocation(FString ProfileName, float X, float Y, float Z, float Pitch, float Yaw, float Roll)
+{
+	// CONFIDENCE: high
+	// Native target 0x140680300.
+	return nullptr;
 }
 
 void UFortCheatManager::StartFillFloorMovement()

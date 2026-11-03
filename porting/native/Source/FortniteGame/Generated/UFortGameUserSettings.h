@@ -534,6 +534,9 @@ public:
 	float GetDisplayGamma() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FFireModeData GetFireModeData() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool GetHasSeenCreativeHeatmapTutorial() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

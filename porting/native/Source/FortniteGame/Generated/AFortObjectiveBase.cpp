@@ -40,6 +40,12 @@ bool AFortObjectiveBase::StartPlayingObjective()
 	return true;
 }
 
+void AFortObjectiveBase::StopObjective(EFortObjectiveStatus Status, FString Description, UFortBadgeItemDefinition* ExtraBadgeToGrant)
+{
+	// CONFIDENCE: high
+	// The original implementation returns without side effects.
+}
+
 void AFortObjectiveBase::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

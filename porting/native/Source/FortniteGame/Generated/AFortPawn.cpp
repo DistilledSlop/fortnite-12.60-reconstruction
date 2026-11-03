@@ -257,6 +257,12 @@ void AFortPawn::LogChugSplashEvent()
 	// Empty body: the native function does nothing (see Inferred).
 }
 
+void AFortPawn::MaxHealthStateChanged(bool bIsMaxHealth)
+{
+	// CONFIDENCE: high
+	// Native target 0x1406801c0.
+}
+
 void AFortPawn::MovingEmoteStopped()
 {
 	// Behaviour snippet: AFortPawn::MovingEmoteStopped (body only; spliced into the generated member function).
@@ -380,6 +386,12 @@ bool AFortPawn::OnlySpinWhenFalling() const
 	// CONFIDENCE: HIGH
 	// Mechanically matched complete native storage read; see bulk_native_scalar_runtime/README.md.
 	return NativeRecoveredBool_0x63c;
+}
+
+void AFortPawn::OnMontageBlendingOut(UAnimMontage* Montage, bool bInterrupted)
+{
+	// CONFIDENCE: high
+	// Native target 0x1406801c0.
 }
 
 void AFortPawn::OnRep_bWeaponHolstered()

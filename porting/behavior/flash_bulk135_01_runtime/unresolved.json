@@ -1,0 +1,8 @@
+[
+  {
+    "class": "AFortPawn",
+    "function": "GetDefaultTargetingRotation",
+    "target": "0x14231aaf0",
+    "reason": "Target invokes primary virtual slot 0x6d8; its method identity and signature are not established."
+  }
+]

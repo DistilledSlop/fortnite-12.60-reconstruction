@@ -883,13 +883,20 @@ public:
 	UFUNCTION()
 	void OnRep_ReplicatedWeaponData();
 
+	UFUNCTION()
+	virtual void OnWeaponMontageBlendingOut(UAnimMontage* WeaponMontage, bool bInterrupted);
+
+	UFUNCTION()
+	virtual void OnWeaponMontageStarted(UAnimMontage* WeaponMontage);
+
 	UFUNCTION(Server, Reliable)
 	void ServerReleaseWeaponAbility(const FGameplayAbilitySpecHandle& SpecHandle);
 	void ServerReleaseWeaponAbility_Implementation(const FGameplayAbilitySpecHandle& SpecHandle);
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerResetShotReport();
 	void ServerResetShotReport_Implementation();
+	bool ServerResetShotReport_Validate();
 
 	UFUNCTION(Server, Reliable)
 	void ServerSetChargeState(uint8 NewState);

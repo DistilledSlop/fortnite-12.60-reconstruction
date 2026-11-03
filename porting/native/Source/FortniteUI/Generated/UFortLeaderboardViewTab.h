@@ -10,6 +10,7 @@
 #include "UCommonWidgetSwitcher.h"
 
 class UFortLeaderboardListViewWrapper;
+class UListView;
 
 #include "UFortLeaderboardViewTab.generated.h"
 
@@ -30,6 +31,9 @@ public:
 	// table index 0, flags 0x20080000080008
 	UPROPERTY()
 	UCommonBorder* Content_NoLeaderboardEntries;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UListView* GetListView() const;
 
 };
 

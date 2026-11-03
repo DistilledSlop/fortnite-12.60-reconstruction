@@ -192,6 +192,9 @@ public:
 	UFortPlaysetItemDefinition* GetCurrentPlayset() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UStaticMeshComponent* GetStaticMesh() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool GetUserGeneratedContentRestricted() const;
 
 	UFUNCTION(BlueprintCallable)
@@ -218,9 +221,10 @@ public:
 	UFUNCTION()
 	void OnRep_VolumeState();
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerClearVolume();
 	void ServerClearVolume_Implementation();
+	bool ServerClearVolume_Validate();
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 

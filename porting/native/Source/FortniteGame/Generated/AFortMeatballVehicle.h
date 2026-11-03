@@ -191,6 +191,9 @@ public:
 	FVector NativeRecoveredFVector_0x11e0;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetBoostCharge() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	FVector GetSeatOffset() const;
 
 };

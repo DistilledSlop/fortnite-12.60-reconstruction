@@ -7,6 +7,7 @@
 #include "UFortTooltip.h"
 
 #include "GameplayAbilitySpec.h"
+#include "GameplayTagContainer.h"
 
 class UFortTooltipContext;
 class UGameplayAbility;
@@ -30,6 +31,24 @@ public:
 	// table index 0, flags 0x40000000002000
 	UPROPERTY(Transient)
 	UFortTooltipContext* CachedContext;
+
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	bool GetTextForTokenFromAbilityInstanceInternal(UGameplayAbility* AbilityInstance, FGameplayTag& Tag, UFortTooltipContext* Context, FGameplayTag& Token, FText& OutText) const;
+	virtual bool GetTextForTokenFromAbilityInstanceInternal_Implementation(UGameplayAbility* AbilityInstance, FGameplayTag& Tag, UFortTooltipContext* Context, FGameplayTag& Token, FText& OutText) const;
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	bool GetTextForTokenFromAbilitySpecInternal(FGameplayAbilitySpec& Spec, FGameplayTag& Tag, UFortTooltipContext* Context, FGameplayTag& Token, FText& OutText) const;
+	virtual bool GetTextForTokenFromAbilitySpecInternal_Implementation(FGameplayAbilitySpec& Spec, FGameplayTag& Tag, UFortTooltipContext* Context, FGameplayTag& Token, FText& OutText) const;
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void InitializeAbilityInstanceInternal(UGameplayAbility* AbilityInstance, UFortTooltipContext* Context) const;
+	virtual void InitializeAbilityInstanceInternal_Implementation(UGameplayAbility* AbilityInstance, UFortTooltipContext* Context) const;
+public:
 
 };
 

@@ -53,6 +53,12 @@ void AFortRemoteControlledPawnAthena::OnRep_TriggeredHealthThreshold(float Previ
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortRemoteControlledPawnAthena::OnTriggeredHealthThreshold_Implementation(float PreviousTriggeredHealthThreshold, float CurrentTriggeredHealthThreshold)
+{
+	// CONFIDENCE: high
+	// The original implementation returns without side effects.
+}
+
 void AFortRemoteControlledPawnAthena::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

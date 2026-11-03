@@ -29,6 +29,13 @@ void AFortPlayerControllerPvE::ServerTriggerSetupTeleportCameraEvent_Implementat
 	// Body not recovered: reflection-derived stub.
 }
 
+bool AFortPlayerControllerPvE::ServerTriggerSetupTeleportCameraEvent_Validate()
+{
+	// CONFIDENCE: high
+	// Native target 0x1406801d0.
+	return true;
+}
+
 void AFortPlayerControllerPvE::ServerUpdateQuickBarRecordsCache_Implementation(const FQuickBar& PrimaryQuickBarRecord, const FQuickBar& SecondaryQuickBarRecord)
 {
 	// Body not recovered: reflection-derived stub.

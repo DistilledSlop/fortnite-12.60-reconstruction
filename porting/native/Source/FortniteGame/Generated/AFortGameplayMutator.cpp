@@ -2,6 +2,13 @@
 #include "AFortGameplayMutator.h"
 #include "Net/UnrealNetwork.h"
 
+bool AFortGameplayMutator::IsMutatorActive() const
+{
+	// CONFIDENCE: high
+	// Native body at 0x1420e5530 checks bMutatorActive and bMutatorActiveInternal bitfields; returns true if either bit is set.
+	return (bMutatorActive != 0) || (bMutatorActiveInternal != 0);
+}
+
 void AFortGameplayMutator::OnRep_bMutatorActive()
 {
 	// Exact original shared stub 0x1406801c0.

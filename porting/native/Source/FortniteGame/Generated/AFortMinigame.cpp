@@ -119,6 +119,20 @@ UFortCreativeTeleporterManagerComponent* AFortMinigame::GetTeleporterManagerComp
 	return TeleporterManagerComponent;
 }
 
+void AFortMinigame::HandleMinigameComponentInPlayChanged_Implementation(UFortMinigameLogicComponent* MinigameComponent)
+{
+	// CONFIDENCE: high
+	// Native target 0x1406801c0.
+	// Original native body is empty.
+}
+
+bool AFortMinigame::HasPlayerStartPads_Implementation(AFortPlayerState* InPlayerState) const
+{
+	// CONFIDENCE: high
+	// Native target 0x1406801e0.
+	return false;
+}
+
 bool AFortMinigame::HasStarted() const
 {
 	// Original address: 0x1429c29e0.
@@ -189,6 +203,20 @@ bool AFortMinigame::IsWaitingForCameras() const
 	// CONFIDENCE: HIGH
 	// Mechanically matched complete enum byte immediate comparison; see bulk_enum_predicate_runtime/README.md.
 	return static_cast<uint8>(CurrentState) == 3;
+}
+
+void AFortMinigame::K2_EnteredVolumeEvent_Implementation(AFortPlayerState* PlayerState)
+{
+	// CONFIDENCE: high
+	// Native target 0x1406801c0.
+	// Original native body is empty.
+}
+
+void AFortMinigame::K2_ExitedVolumeEvent_Implementation(AFortPlayerState* LeftPlayerState)
+{
+	// CONFIDENCE: high
+	// Native target 0x1406801c0.
+	// Original native body is empty.
 }
 
 void AFortMinigame::OnGamePhaseChanged(EAthenaGamePhase GamePhase)
@@ -270,6 +298,13 @@ void AFortMinigame::RefreshVoiceForPlayers()
 	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
 	// CONFIDENCE: HIGH
 	return;
+}
+
+bool AFortMinigame::ShouldDropOrDestroyItem_Implementation(bool& bShouldDrop, bool& bShouldDestroy, AFortPlayerController* PC, UFortWorldItemDefinition* ItemDef) const
+{
+	// CONFIDENCE: high
+	// Native target 0x1414a4890.
+	return bShouldDrop;
 }
 
 void AFortMinigame::NativeAppendOwnerMutators(TArray<AFortGameplayMutator*>& OutMutators, UObject* Context)

@@ -99,7 +99,12 @@ bool AFortPlayerControllerGameplay::IsInGhostMode() const
 
 void AFortPlayerControllerGameplay::OnRep_CreativeQuickbarComponent()
 {
-	// Body not recovered: reflection-derived stub.
+	// CONFIDENCE: high
+	// Native wrapper 0x142a65bc0.
+	if (CreativeQuickbarComponent)
+	{
+	    OnCreativeQuickbarComponentLoaded.Broadcast();
+	}
 }
 
 void AFortPlayerControllerGameplay::OnRep_FlyingModifierIndex()
@@ -180,9 +185,23 @@ void AFortPlayerControllerGameplay::ServerCreativeStopFly_Implementation()
 	// Body not recovered: reflection-derived stub.
 }
 
+bool AFortPlayerControllerGameplay::ServerCreativeStopFly_Validate()
+{
+	// CONFIDENCE: high
+	// Native target 0x1406801d0.
+	return true;
+}
+
 void AFortPlayerControllerGameplay::ServerCreativeStopFlyDown_Implementation()
 {
 	// Body not recovered: reflection-derived stub.
+}
+
+bool AFortPlayerControllerGameplay::ServerCreativeStopFlyDown_Validate()
+{
+	// CONFIDENCE: high
+	// Native target 0x1406801d0.
+	return true;
 }
 
 void AFortPlayerControllerGameplay::ServerCreativeStopFlyUp_Implementation()
@@ -190,9 +209,23 @@ void AFortPlayerControllerGameplay::ServerCreativeStopFlyUp_Implementation()
 	// Body not recovered: reflection-derived stub.
 }
 
+bool AFortPlayerControllerGameplay::ServerCreativeStopFlyUp_Validate()
+{
+	// CONFIDENCE: high
+	// Native target 0x1406801d0.
+	return true;
+}
+
 void AFortPlayerControllerGameplay::ServerCreativeStopGhost_Implementation()
 {
 	// Body not recovered: reflection-derived stub.
+}
+
+bool AFortPlayerControllerGameplay::ServerCreativeStopGhost_Validate()
+{
+	// CONFIDENCE: high
+	// Native target 0x1406801d0.
+	return true;
 }
 
 void AFortPlayerControllerGameplay::ServerCreativeToggleFly_Implementation(bool bEnableOnly)

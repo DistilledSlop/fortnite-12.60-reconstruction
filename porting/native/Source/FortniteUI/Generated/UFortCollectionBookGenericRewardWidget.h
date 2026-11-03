@@ -44,6 +44,12 @@ public:
 	virtual ECollectionBookRewardStatus GetRewardStatus() const;
 
 protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void OnRewardStatusChanged(ECollectionBookRewardStatus NewStatus);
+	virtual void OnRewardStatusChanged_Implementation(ECollectionBookRewardStatus NewStatus);
+public:
+
+protected:
 	UFUNCTION()
 	virtual void SetCurrentItemToDisplay(UFortItem* ItemToDisplay);
 public:

@@ -40,6 +40,9 @@ public:
 	UPROPERTY()
 	FText RemotePlayerXpBoostConfirmationText;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0xc28): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt32_0xc28;
+
 	// table index 4, flags 0x40000000080008
 	UPROPERTY()
 	UFortPlayerBanner* Banner_MemberBanner;
@@ -64,6 +67,9 @@ protected:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UCommonButton* GetBoostActivationButton() const;
 public:
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetCurrentBoostAmount() const;
 
 };
 

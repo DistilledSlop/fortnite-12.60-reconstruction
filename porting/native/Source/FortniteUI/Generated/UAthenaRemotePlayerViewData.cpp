@@ -19,6 +19,13 @@ bool UAthenaRemotePlayerViewData::GetIsReplayRelevancyPlayer() const
 	return NativeRecoveredBool_0x21f;
 }
 
+FString UAthenaRemotePlayerViewData::GetLocation() const
+{
+	// CONFIDENCE: high
+	// Native body at 0x140693ec0 constructs and returns an empty FString.
+	return FString();
+}
+
 int32 UAthenaRemotePlayerViewData::GetMaterialCount() const
 {
 	// CONFIDENCE: high; complete getter, storage evidence in report.json.

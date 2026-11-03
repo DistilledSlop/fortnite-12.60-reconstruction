@@ -160,5 +160,8 @@ public:
 	UPROPERTY()
 	UFortCosmeticLoadoutSelector* LoadoutSelector;
 
+	UFUNCTION(BlueprintCallable)
+	FText GetCategoryDisplayName(EAthenaCustomizationCategory InCategory);
+
 };
 

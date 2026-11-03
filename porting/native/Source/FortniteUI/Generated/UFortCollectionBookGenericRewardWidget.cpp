@@ -8,6 +8,13 @@ ECollectionBookRewardStatus UFortCollectionBookGenericRewardWidget::GetRewardSta
 	return RewardStatus;
 }
 
+void UFortCollectionBookGenericRewardWidget::OnRewardStatusChanged_Implementation(ECollectionBookRewardStatus NewStatus)
+{
+	// CONFIDENCE: high
+	// Native target 0x1406801c0.
+	// Original native body is empty.
+}
+
 void UFortCollectionBookGenericRewardWidget::SetCurrentItemToDisplay(UFortItem* ItemToDisplay)
 {
 	// Exact original shared stub 0x1406801c0.

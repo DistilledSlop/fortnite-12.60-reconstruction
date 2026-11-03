@@ -22,6 +22,9 @@ public:
 	UPROPERTY(Replicated)
 	TArray<int32> ItemCosts;
 
+	UFUNCTION(BlueprintCallable)
+	void ClearCosts();
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

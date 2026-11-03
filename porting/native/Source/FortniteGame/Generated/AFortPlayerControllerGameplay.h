@@ -334,8 +334,10 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsInGhostMode() const;
 
+private:
 	UFUNCTION()
 	void OnRep_CreativeQuickbarComponent();
+public:
 
 	UFUNCTION()
 	void OnRep_FlyingModifierIndex();
@@ -385,21 +387,25 @@ public:
 	void ServerCreativeStartFlyUp();
 	void ServerCreativeStartFlyUp_Implementation();
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerCreativeStopFly();
 	void ServerCreativeStopFly_Implementation();
+	bool ServerCreativeStopFly_Validate();
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerCreativeStopFlyDown();
 	void ServerCreativeStopFlyDown_Implementation();
+	bool ServerCreativeStopFlyDown_Validate();
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerCreativeStopFlyUp();
 	void ServerCreativeStopFlyUp_Implementation();
+	bool ServerCreativeStopFlyUp_Validate();
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerCreativeStopGhost();
 	void ServerCreativeStopGhost_Implementation();
+	bool ServerCreativeStopGhost_Validate();
 
 	UFUNCTION(Server, Reliable)
 	void ServerCreativeToggleFly(bool bEnableOnly);

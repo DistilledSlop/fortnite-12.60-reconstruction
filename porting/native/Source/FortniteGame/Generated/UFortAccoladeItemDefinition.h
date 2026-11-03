@@ -80,6 +80,9 @@ public:
 	int32 GetAccoladeXpValue() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetAccoladeXpValueWithCountScalar(int32 Count) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	USoundCue* GetAwardedSound() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

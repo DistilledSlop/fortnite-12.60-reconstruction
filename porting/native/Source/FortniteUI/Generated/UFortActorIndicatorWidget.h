@@ -56,5 +56,8 @@ public:
 	UPROPERTY()
 	int32 ScreenPriority;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsIndicatingActor(AActor* OtherActor) const;
+
 };
 

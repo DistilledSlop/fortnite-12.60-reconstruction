@@ -20,5 +20,8 @@ public:
 	UPROPERTY()
 	TArray<UFortPlayerSurveyBase*> SurveyQueue;
 
+	UFUNCTION(BlueprintCallable)
+	void AddSurvey(UFortPlayerSurveyBase* Survey);
+
 };
 

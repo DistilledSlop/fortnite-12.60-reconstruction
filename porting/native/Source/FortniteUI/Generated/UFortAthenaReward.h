@@ -29,6 +29,11 @@ public:
 	// Non-reflected field (behaviour kind "member_field", offset 0xba0): not a UPROPERTY, not replicated.
 	bool NativeRecoveredBool_0xba0;
 
+protected:
+	UFUNCTION(BlueprintCallable)
+	void SetupQuantity(int32 Quantity);
+public:
+
 	UFUNCTION(BlueprintCallable)
 	void SetViewOnHovered(bool bShouldViewOnHovered);
 

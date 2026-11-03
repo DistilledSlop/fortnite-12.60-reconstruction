@@ -81,5 +81,8 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure, BlueprintAuthorityOnly)
 	bool HasEncounter() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure, BlueprintAuthorityOnly)
+	bool IsOnFinalIndexInSequence() const;
+
 };
 

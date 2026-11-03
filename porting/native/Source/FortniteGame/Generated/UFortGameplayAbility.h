@@ -262,6 +262,10 @@ public:
 	FGameplayTagContainer AnalyticsTags;
 
 	UFUNCTION(BlueprintNativeEvent)
+	void OnGenericNotifyFromAnimation(FGameplayTag NotifyTag);
+	virtual void OnGenericNotifyFromAnimation_Implementation(FGameplayTag NotifyTag);
+
+	UFUNCTION(BlueprintNativeEvent)
 	bool SetupPreviewImageOverride();
 	virtual bool SetupPreviewImageOverride_Implementation();
 

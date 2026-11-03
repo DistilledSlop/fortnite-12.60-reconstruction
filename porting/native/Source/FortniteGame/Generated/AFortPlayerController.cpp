@@ -26,9 +26,23 @@ void AFortPlayerController::Cheat_ClearForcedCosmeticItems_Implementation()
 	// Body not recovered: reflection-derived stub.
 }
 
+bool AFortPlayerController::Cheat_ClearForcedCosmeticItems_Validate()
+{
+	// CONFIDENCE: high
+	// Native target 0x1406801e0.
+	return false;
+}
+
 void AFortPlayerController::Cheat_ClearForcedCosmeticVariantChannels_Implementation()
 {
 	// Body not recovered: reflection-derived stub.
+}
+
+bool AFortPlayerController::Cheat_ClearForcedCosmeticVariantChannels_Validate()
+{
+	// CONFIDENCE: high
+	// Native target 0x1406801e0.
+	return false;
 }
 
 void AFortPlayerController::Cheat_ForceAthenaCosmeticItemInSlot_Implementation(UAthenaCosmeticItemDefinition* CosmeticItem, const EAthenaCustomizationCategory& Slot, int32 Index)
@@ -88,7 +102,8 @@ void AFortPlayerController::ClientCreateOrJoinChatRoom_Implementation(const FStr
 
 void AFortPlayerController::ClientDeveloper_GetConsoleVariable_Implementation(const FString& ConsoleVariable, const FString& Value)
 {
-	// Body not recovered: reflection-derived stub.
+	// CONFIDENCE: high
+	// Native target 0x1406801c0.
 }
 
 void AFortPlayerController::ClientEndGameKick_Implementation()
@@ -148,7 +163,8 @@ void AFortPlayerController::ClientJoinConsoleSession_Implementation(const FStrin
 
 void AFortPlayerController::ClientLogDebugString_Implementation(const FString& Msg)
 {
-	// Body not recovered: reflection-derived stub.
+	// CONFIDENCE: high
+	// Native target 0x1406801c0.
 }
 
 void AFortPlayerController::ClientOnGenericPlayerInitialization_Implementation()
@@ -373,6 +389,12 @@ void AFortPlayerController::GivePlayerAmmo(int32 AmmoCount)
 	// CONFIDENCE: HIGH
 }
 
+void AFortPlayerController::HandleDifferentHeroLoadoutActivated(UFortMcpProfileCampaign* Profile)
+{
+	// CONFIDENCE: high
+	// Native target 0x1406801c0.
+}
+
 void AFortPlayerController::HandleOutpostInventoryLocalUpdate()
 {
 	// Body not recovered: reflection-derived stub.
@@ -394,6 +416,13 @@ bool AFortPlayerController::HasLockOnTarget() const
 	// CONFIDENCE: HIGH
 	// Mechanically matched complete constant return; see bulk_scalar_runtime/README.md.
 	return false;
+}
+
+bool AFortPlayerController::HasPermissionToEditWorld(ABuildingActor* Building, FVector& Location, FRotator& Rotation) const
+{
+	// CONFIDENCE: high
+	// Native target 0x1406801d0.
+	return true;
 }
 
 bool AFortPlayerController::IsBuildToolOverridden() const
@@ -431,6 +460,12 @@ bool AFortPlayerController::IsNearActiveEncounters() const
 void AFortPlayerController::MulticastClearWeakSpotData_Implementation(ABuildingSMActor* ParentBuilding)
 {
 	// Body not recovered: reflection-derived stub.
+}
+
+void AFortPlayerController::OnMinigameVolumeStateChanged(EVolumeState NewState, AFortVolume* Volume)
+{
+	// CONFIDENCE: high
+	// Native target 0x1406801c0.
 }
 
 void AFortPlayerController::OnRep_bHasServerFinishedLoading()
@@ -578,7 +613,8 @@ void AFortPlayerController::ServerDeployDefender_Implementation(ABuildingTrapDef
 
 void AFortPlayerController::ServerDeveloper_GetConsoleVariable_Implementation(const FString& ConsoleVariable)
 {
-	// Body not recovered: reflection-derived stub.
+	// CONFIDENCE: high
+	// Native target 0x1406801c0.
 }
 
 void AFortPlayerController::ServerDisassembleInventoryItems_Implementation(const TArray<FGuid>& ItemGuids, const TArray<int32>& ItemCounts)
@@ -594,6 +630,13 @@ void AFortPlayerController::ServerDropAllItems_Implementation(UFortItemDefinitio
 void AFortPlayerController::ServerDropCarriedObject_Implementation()
 {
 	// Body not recovered: reflection-derived stub.
+}
+
+bool AFortPlayerController::ServerDropCarriedObject_Validate()
+{
+	// CONFIDENCE: high
+	// Native target 0x1406801d0.
+	return true;
 }
 
 void AFortPlayerController::ServerEditBuildingActor_Implementation(ABuildingSMActor* BuildingActorToEdit, TSubclassOf<ABuildingSMActor> NewBuildingClass, uint8 RotationIterations, bool bMirrored)
@@ -631,6 +674,13 @@ void AFortPlayerController::ServerHandleMissionEvent_StartLeavingZone_Implementa
 	// Body not recovered: reflection-derived stub.
 }
 
+bool AFortPlayerController::ServerHandleMissionEvent_StartLeavingZone_Validate()
+{
+	// CONFIDENCE: high
+	// Native target 0x1406801d0.
+	return true;
+}
+
 void AFortPlayerController::ServerHandleMissionEvent_ToggledCursorMode_Implementation(bool bOpened)
 {
 	// Body not recovered: reflection-derived stub.
@@ -656,9 +706,23 @@ void AFortPlayerController::ServerKillAllAIPawnsAroundPlayer_Implementation()
 	// Body not recovered: reflection-derived stub.
 }
 
+bool AFortPlayerController::ServerKillAllAIPawnsAroundPlayer_Validate()
+{
+	// CONFIDENCE: high
+	// Native target 0x1406801d0.
+	return true;
+}
+
 void AFortPlayerController::ServerLoadingScreenDropped_Implementation()
 {
 	// Body not recovered: reflection-derived stub.
+}
+
+bool AFortPlayerController::ServerLoadingScreenDropped_Validate()
+{
+	// CONFIDENCE: high
+	// Native target 0x1406801d0.
+	return true;
 }
 
 void AFortPlayerController::ServerModifyStat_Implementation(const FName& StatName, int32 Amount, const EStatMod& ModType, bool bForceStatSave)
@@ -689,6 +753,13 @@ void AFortPlayerController::ServerPlayEmoteItem_Implementation(UFortMontageItemD
 void AFortPlayerController::ServerReadyToStartMatch_Implementation()
 {
 	// Body not recovered: reflection-derived stub.
+}
+
+bool AFortPlayerController::ServerReadyToStartMatch_Validate()
+{
+	// CONFIDENCE: high
+	// Native target 0x1406801d0.
+	return true;
 }
 
 void AFortPlayerController::ServerReleaseInventoryItemKey_Implementation(const FGuid& ItemGuid)
@@ -731,6 +802,13 @@ void AFortPlayerController::ServerRequestAIDebug_Implementation()
 	// Body not recovered: reflection-derived stub.
 }
 
+bool AFortPlayerController::ServerRequestAIDebug_Validate()
+{
+	// CONFIDENCE: high
+	// Native target 0x1406801d0.
+	return true;
+}
+
 void AFortPlayerController::ServerRequestAttributeSources_Implementation(const FGameplayAttribute& Attribute, UFortAbilitySystemComponent* AbilitySystemComponent)
 {
 	// Body not recovered: reflection-derived stub.
@@ -744,6 +822,13 @@ void AFortPlayerController::ServerRequestGameplayAction_Implementation(EFortRequ
 void AFortPlayerController::ServerReturnToMainMenu_Implementation()
 {
 	// Body not recovered: reflection-derived stub.
+}
+
+bool AFortPlayerController::ServerReturnToMainMenu_Validate()
+{
+	// CONFIDENCE: high
+	// Native target 0x1406801d0.
+	return true;
 }
 
 void AFortPlayerController::ServerSendClientProgressUpdate_Implementation(int32 ClientProgressState, const TArray<uint64>& ClientProgressUpdate)
@@ -816,9 +901,23 @@ void AFortPlayerController::ServerStartIntensityGraphing_Implementation()
 	// Body not recovered: reflection-derived stub.
 }
 
+bool AFortPlayerController::ServerStartIntensityGraphing_Validate()
+{
+	// CONFIDENCE: high
+	// Native target 0x1406801d0.
+	return true;
+}
+
 void AFortPlayerController::ServerStartPIDContributionsGraphing_Implementation()
 {
 	// Body not recovered: reflection-derived stub.
+}
+
+bool AFortPlayerController::ServerStartPIDContributionsGraphing_Validate()
+{
+	// CONFIDENCE: high
+	// Native target 0x1406801d0.
+	return true;
 }
 
 void AFortPlayerController::ServerStartPIDValueGraphing_Implementation()
@@ -826,9 +925,23 @@ void AFortPlayerController::ServerStartPIDValueGraphing_Implementation()
 	// Body not recovered: reflection-derived stub.
 }
 
+bool AFortPlayerController::ServerStartPIDValueGraphing_Validate()
+{
+	// CONFIDENCE: high
+	// Native target 0x1406801d0.
+	return true;
+}
+
 void AFortPlayerController::ServerSuicide_Implementation()
 {
 	// Body not recovered: reflection-derived stub.
+}
+
+bool AFortPlayerController::ServerSuicide_Validate()
+{
+	// CONFIDENCE: high
+	// Native target 0x1406801d0.
+	return true;
 }
 
 void AFortPlayerController::ServerTeamChatRoomReady_Implementation(const FString& ChatRoomId)
@@ -844,6 +957,13 @@ void AFortPlayerController::ServerTeleportToReticle_Implementation(const FVector
 void AFortPlayerController::ServerTouchActiveTime_Implementation()
 {
 	// Body not recovered: reflection-derived stub.
+}
+
+bool AFortPlayerController::ServerTouchActiveTime_Validate()
+{
+	// CONFIDENCE: high
+	// Native target 0x1406801d0.
+	return true;
 }
 
 void AFortPlayerController::ServerTriggerGenericObjectiveEvent_Implementation(AFortObjectiveBase* Objective)
@@ -889,6 +1009,13 @@ void AFortPlayerController::ServerUpdatePlayerData_Implementation(const TArray<u
 void AFortPlayerController::ServerUpgradeBuildingActor_Implementation(ABuildingActor* BuildingActorToUpgrade, int32 NewUpgradeLevel)
 {
 	// Body not recovered: reflection-derived stub.
+}
+
+bool AFortPlayerController::ShouldShowInfoIndicator(AActor* TestActor) const
+{
+	// CONFIDENCE: high
+	// Native target 0x14097cd20.
+	return TestActor != nullptr;
 }
 
 void AFortPlayerController::StartZeroingCameraRoll()

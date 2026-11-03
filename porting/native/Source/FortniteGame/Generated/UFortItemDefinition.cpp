@@ -12,6 +12,12 @@
 #include "UObject/NoExportTypes.h"
 #include "UObject/UnrealType.h"
 
+void UFortItemDefinition::CustomizePreviewPrefab(AActor* PrefabInstance)
+{
+	// CONFIDENCE: high
+	// The original implementation returns without side effects.
+}
+
 TArray<FText> UFortItemDefinition::GetDescription() const
 {
 	// Native target 0x14202c910; confidence: high.

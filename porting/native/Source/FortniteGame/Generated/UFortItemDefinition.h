@@ -24,6 +24,7 @@
 #include "UObject/NoExportTypes.h"
 #include "UObject/UnrealType.h"
 
+class AActor;
 class UFortItemSeriesDefinition;
 class UFortTooltip;
 class UFortTooltipDisplayStatsList;
@@ -194,6 +195,9 @@ public:
 	// table index 0, flags 0x44000000010001
 	UPROPERTY()
 	TSoftObjectPtr<USkeletalMesh> FrontendPreviewSkeletalMeshOverride;
+
+	UFUNCTION(BlueprintCallable)
+	virtual void CustomizePreviewPrefab(AActor* PrefabInstance);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual TArray<FText> GetDescription() const;

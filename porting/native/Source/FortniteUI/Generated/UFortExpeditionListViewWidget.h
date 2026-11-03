@@ -39,5 +39,8 @@ public:
 	UPROPERTY(Transient)
 	EFortExpeditionListSort SortType;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FText GetExpeditionListSortName() const;
+
 };
 

@@ -25,5 +25,8 @@ public:
 	UPROPERTY()
 	AFortPlayerController* KilledBy;
 
+	UFUNCTION(BlueprintCallable)
+	void SetParams(AFortPawn* _KilledPawn, AFortPlayerController* _KilledBy, UFortEnemyKilledParams*& ThisParam);
+
 };
 

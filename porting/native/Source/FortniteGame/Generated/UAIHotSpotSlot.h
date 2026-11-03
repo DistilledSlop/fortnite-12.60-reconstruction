@@ -96,6 +96,10 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool HasUserId() const;
 
+	UFUNCTION(BlueprintNativeEvent, BlueprintAuthorityOnly)
+	bool IsAIAllowed(AAIController* AI) const;
+	virtual bool IsAIAllowed_Implementation(AAIController* AI) const;
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsEnabled() const;
 

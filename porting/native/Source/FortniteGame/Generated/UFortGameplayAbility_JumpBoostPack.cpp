@@ -9,6 +9,13 @@ void UFortGameplayAbility_JumpBoostPack::OnAbilityCanceled_Implementation()
 	return;
 }
 
+void UFortGameplayAbility_JumpBoostPack::OnCurrentStateChanged_Implementation(EJumpBoostPackState InPreviousState, EJumpBoostPackState InCurrentState)
+{
+	// CONFIDENCE: high
+	// Native target 0x1406801c0.
+	// Original native body is empty.
+}
+
 void UFortGameplayAbility_JumpBoostPack::OnFuelIsEmpty_Implementation()
 {
 	// Exact original shared stub 0x1406801c0.

@@ -44,5 +44,8 @@ public:
 	UPROPERTY(Transient)
 	TArray<uint8> GoalHasLocator;
 
+	UFUNCTION(BlueprintCallable)
+	void ClearAllLocated();
+
 };
 

@@ -57,6 +57,13 @@ bool UAIHotSpotSlot::HasUserId() const
 	return UserId != -1;
 }
 
+bool UAIHotSpotSlot::IsAIAllowed_Implementation(AAIController* AI) const
+{
+	// CONFIDENCE: high
+	// Native target 0x1406801d0.
+	return true;
+}
+
 bool UAIHotSpotSlot::IsEnabled() const
 {
 	// Original address: 0x142711450.

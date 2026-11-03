@@ -157,6 +157,11 @@ public:
 	UPROPERTY(Transient)
 	TArray<FFortMangSentryInfo> TurretInfos;
 
+private:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsTrackingPerPlayer() const;
+public:
+
 	UFUNCTION()
 	void OnRep_BotInfos();
 

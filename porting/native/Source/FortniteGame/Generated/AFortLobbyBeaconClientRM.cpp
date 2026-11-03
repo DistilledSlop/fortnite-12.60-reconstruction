@@ -11,6 +11,13 @@ void AFortLobbyBeaconClientRM::ServerUpdateNewlyJoinedPlayerInternal_Implementat
 	// Body not recovered: reflection-derived stub.
 }
 
+bool AFortLobbyBeaconClientRM::ServerUpdateNewlyJoinedPlayerInternal_Validate()
+{
+	// CONFIDENCE: high
+	// Native target 0x1406801d0.
+	return true;
+}
+
 void AFortLobbyBeaconClientRM::ServerUpdateReadyStatus_Implementation(bool bIsReady)
 {
 	// Body not recovered: reflection-derived stub.

@@ -91,5 +91,11 @@ protected:
 	virtual bool GetIsOverlapping_Implementation() const;
 public:
 
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void OnInsideGridStateChange(bool bInsideGrid);
+	virtual void OnInsideGridStateChange_Implementation(bool bInsideGrid);
+public:
+
 };
 

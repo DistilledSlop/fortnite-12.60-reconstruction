@@ -49,6 +49,7 @@
 #include "UObject/Object.h"
 
 class AFortGameplayMutator;
+class AFortPlayerController;
 class AFortPlayerControllerAthena;
 class AFortPlayerState;
 class AFortVolume;
@@ -560,6 +561,16 @@ public:
 	UFUNCTION(BlueprintCallable)
 	UFortCreativeTeleporterManagerComponent* GetTeleporterManagerComponent();
 
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void HandleMinigameComponentInPlayChanged(UFortMinigameLogicComponent* MinigameComponent);
+	virtual void HandleMinigameComponentInPlayChanged_Implementation(UFortMinigameLogicComponent* MinigameComponent);
+public:
+
+	UFUNCTION(BlueprintNativeEvent)
+	bool HasPlayerStartPads(AFortPlayerState* InPlayerState) const;
+	virtual bool HasPlayerStartPads_Implementation(AFortPlayerState* InPlayerState) const;
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool HasStarted() const;
 
@@ -586,6 +597,18 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsWaitingForCameras() const;
+
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void K2_EnteredVolumeEvent(AFortPlayerState* PlayerState);
+	virtual void K2_EnteredVolumeEvent_Implementation(AFortPlayerState* PlayerState);
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void K2_ExitedVolumeEvent(AFortPlayerState* LeftPlayerState);
+	virtual void K2_ExitedVolumeEvent_Implementation(AFortPlayerState* LeftPlayerState);
+public:
 
 	UFUNCTION()
 	void OnGamePhaseChanged(EAthenaGamePhase GamePhase);
@@ -634,6 +657,10 @@ protected:
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void RefreshVoiceForPlayers();
 public:
+
+	UFUNCTION(BlueprintNativeEvent)
+	bool ShouldDropOrDestroyItem(bool& bShouldDrop, bool& bShouldDestroy, AFortPlayerController* PC, UFortWorldItemDefinition* ItemDef) const;
+	virtual bool ShouldDropOrDestroyItem_Implementation(bool& bShouldDrop, bool& bShouldDestroy, AFortPlayerController* PC, UFortWorldItemDefinition* ItemDef) const;
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 

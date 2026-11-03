@@ -6,6 +6,10 @@
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
 
+#include "GameplayTagContainer.h"
+
+class UFortTooltipContext;
+
 #include "UFortTooltip.generated.h"
 
 UCLASS()
@@ -17,6 +21,12 @@ public:
 	// table index 0, flags 0x20080000010015
 	UPROPERTY()
 	FText Description;
+
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	bool BP_GetNumericValue(UObject* ObjectToDescribe, FGameplayTag& Tag, UFortTooltipContext* Context, FGameplayTag& Token, float& OutVal) const;
+	virtual bool BP_GetNumericValue_Implementation(UObject* ObjectToDescribe, FGameplayTag& Tag, UFortTooltipContext* Context, FGameplayTag& Token, float& OutVal) const;
+public:
 
 };
 

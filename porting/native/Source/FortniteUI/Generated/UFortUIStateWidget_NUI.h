@@ -9,6 +9,8 @@
 #include "EFortUIState.h"
 #include "FContentPushState.h"
 
+class UWidget;
+
 #include "UFortUIStateWidget_NUI.generated.h"
 
 UCLASS()
@@ -20,6 +22,18 @@ public:
 	// table index 0, flags 0x20080000002000
 	UPROPERTY(Transient)
 	TArray<FContentPushState> StackStates;
+
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	UWidget* PopContentWidgetInternal(FContentPushState State);
+	virtual UWidget* PopContentWidgetInternal_Implementation(FContentPushState State);
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void PushContentWidgetInternal(UWidget* Widget, FContentPushState State);
+	virtual void PushContentWidgetInternal_Implementation(UWidget* Widget, FContentPushState State);
+public:
 
 public:
 	UFUNCTION(BlueprintImplementableEvent)

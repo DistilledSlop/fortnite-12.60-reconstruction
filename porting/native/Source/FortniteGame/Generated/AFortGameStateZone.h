@@ -33,6 +33,7 @@ class AFortCreativePortalManager;
 class AFortCreativeRealEstatePlotManager;
 class AFortGlobalEnvironmentAbilityActor;
 class AFortInGameMapManager;
+class AFortPlayerState;
 class AFortThreatParticleActor;
 class AFortThreatVisualsManager;
 class UBuildingStructuralSupportSystem;
@@ -387,11 +388,17 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	EFortCompletionResult GetZoneCompletionResult() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool HasActiveGameplayModifiers() const;
+
 	UFUNCTION(BlueprintCallable, BlueprintPure, BlueprintAuthorityOnly)
 	bool IsBuildingAtLayoutRequirementsAllowed() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure, BlueprintAuthorityOnly)
 	bool IsBuildingWithoutLayoutRequirementsAllowed() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool IsRespawningAllowed(AFortPlayerState* PlayerState) const;
 
 	UFUNCTION(NetMulticast, Reliable)
 	void NotifyEndFailedGameplayVoteLockout(const EFortVoteType& VoteType);

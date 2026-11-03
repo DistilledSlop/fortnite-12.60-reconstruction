@@ -1,0 +1,977 @@
+{
+  "selection": "/tmp/flash-native119/batch-03.json",
+  "selection_count": 84,
+  "ported_count": 9,
+  "unresolved_count": 75,
+  "missing_captures": [],
+  "rows": [
+    {
+      "index": 0,
+      "proof": {
+        "function": "GetAllowGameVolumeWhenMinimized",
+        "address": "0x1452cd9d0",
+        "class": "UFortSettingsContext"
+      },
+      "captured_source": "porting/generated/native108-broad/0x1452cd9d0.c",
+      "status": "unresolved",
+      "reason": "GetAllowGameVolumeWhenMinimized: helper 0x144d00b10 calls uncaptured dependency FUN_144d03d50 and external subroutines."
+    },
+    {
+      "index": 1,
+      "proof": {
+        "function": "GetBestEventScore",
+        "address": "0x1452d8560",
+        "class": "UFortShowdownDetailView"
+      },
+      "captured_source": "porting/generated/native108-broad/0x1452d8560.c",
+      "status": "unresolved",
+      "reason": "GetBestEventScore: helper 0x14506a6e0 calls uncaptured dependency FUN_1422d3aa0 and external subroutines."
+    },
+    {
+      "index": 2,
+      "proof": {
+        "function": "GetLargePreviewImage",
+        "address": "0x1429592b0",
+        "class": "UFortItem"
+      },
+      "captured_source": "porting/generated/native108-broad/0x1429592b0.c",
+      "status": "unresolved",
+      "reason": "GetLargePreviewImage: helper 0x140682ce0 references unreflected storage layout or unresolved external subsystem state."
+    },
+    {
+      "index": 3,
+      "proof": {
+        "function": "ApplyGameplayModifier",
+        "address": "0x14075b890",
+        "class": "UFortCheatManager"
+      },
+      "captured_source": "porting/generated/native108-broad/0x14075b890.c",
+      "status": "unresolved",
+      "reason": "ApplyGameplayModifier: helper 0x140690ac0 references unreflected storage layout or unresolved external subsystem state."
+    },
+    {
+      "index": 4,
+      "proof": {
+        "function": "AddLightAndFogPhaseSettingOverride",
+        "address": "0x142b0e110",
+        "class": "AFortTimeOfDayManager"
+      },
+      "captured_source": "porting/generated/native108-broad/0x142b0e110.c",
+      "status": "unresolved",
+      "reason": "AddLightAndFogPhaseSettingOverride: helper 0x141f57840 calls uncaptured dependency FUN_141f5c190 and external subroutines."
+    },
+    {
+      "index": 5,
+      "proof": {
+        "function": "ClearHeroLoadout",
+        "address": "0x142940280",
+        "class": "UHomeBaseContext"
+      },
+      "captured_source": "porting/generated/native108-broad/0x142940280.c",
+      "status": "unresolved",
+      "reason": "ClearHeroLoadout: helper 0x142508bd0 calls uncaptured dependency FUN_1425129f0 and external subroutines."
+    },
+    {
+      "index": 6,
+      "proof": {
+        "function": "CopyGameSessionIdToClipboard",
+        "address": "0x14290ccc0",
+        "class": "AFortGameState"
+      },
+      "captured_source": "porting/generated/native108-broad/0x14290ccc0.c",
+      "status": "unresolved",
+      "reason": "CopyGameSessionIdToClipboard: helper 0x142f1d890 references unreflected storage layout or unresolved external subsystem state."
+    },
+    {
+      "index": 7,
+      "proof": {
+        "function": "CanPreview",
+        "address": "0x14531e4f0",
+        "class": "UFortUpgradeInfo"
+      },
+      "captured_source": "porting/generated/native108-broad/0x14531e4f0.c",
+      "status": "unresolved",
+      "reason": "CanPreview: helper 0x145110cf0 references unreflected storage layout or unresolved external subsystem state."
+    },
+    {
+      "index": 8,
+      "proof": {
+        "function": "GetIcon",
+        "address": "0x1452a0280",
+        "class": "UFortPerkWidget_NUI"
+      },
+      "captured_source": "porting/generated/native108-broad/0x1452a0280.c",
+      "status": "unresolved",
+      "reason": "GetIcon: helper 0x1450e84a0 calls uncaptured dependency FUN_140795550 and external subroutines."
+    },
+    {
+      "index": 9,
+      "proof": {
+        "function": "GetTileForObject",
+        "address": "0x14524f6e0",
+        "class": "UFortGridWidgetBase"
+      },
+      "captured_source": "porting/generated/native108-broad/0x14524f6e0.c",
+      "status": "unresolved",
+      "reason": "GetTileForObject: polymorphic exec wrapper dispatching to virtual vtable slot 0x2f0 without resolved virtual implementation."
+    },
+    {
+      "index": 10,
+      "proof": {
+        "function": "GetAttackingTeam",
+        "address": "0x1453344e0",
+        "class": "UInfiltrationBaseWidget"
+      },
+      "captured_source": "porting/generated/native108-broad/0x1453344e0.c",
+      "status": "unresolved",
+      "reason": "GetAttackingTeam: helper 0x144bea3b0 performs indirect virtual dispatch on unresolved object hierarchy."
+    },
+    {
+      "index": 11,
+      "proof": {
+        "function": "CanGotoQuest",
+        "address": "0x145280150",
+        "class": "UFortJournalQuestDetails"
+      },
+      "captured_source": "porting/generated/native108-broad/0x145280150.c",
+      "status": "unresolved",
+      "reason": "CanGotoQuest: helper 0x144fc7020 calls uncaptured dependency FUN_14514f130 and external subroutines."
+    },
+    {
+      "index": 12,
+      "proof": {
+        "function": "GetClockTickingAudioCurveValues",
+        "address": "0x142ad1e20",
+        "class": "AFortSafeZoneIndicator"
+      },
+      "captured_source": "porting/generated/native108-broad/0x142ad1e20.c",
+      "status": "unresolved",
+      "reason": "GetClockTickingAudioCurveValues: helper 0x141a41ae0 calls uncaptured dependency FUN_144167aa0 and external subroutines."
+    },
+    {
+      "index": 13,
+      "proof": {
+        "function": "GetItemQuantityOverride",
+        "address": "0x14526ef70",
+        "class": "UFortItemInspectionScreen"
+      },
+      "captured_source": "porting/generated/native108-broad/0x14526ef70.c",
+      "status": "unresolved",
+      "reason": "GetItemQuantityOverride: helper 0x144f260f0 references unreflected storage layout or unresolved external subsystem state."
+    },
+    {
+      "index": 14,
+      "proof": {
+        "function": "GetTouchStickRange",
+        "address": "0x145304170",
+        "class": "UFortTouchControlRegion"
+      },
+      "captured_source": "porting/generated/native108-broad/0x145304170.c",
+      "status": "unresolved",
+      "reason": "GetTouchStickRange: complex native implementation in helper 0x144dbdf20 (53 lines) requiring unrecovered gameplay/subsystem state."
+    },
+    {
+      "index": 15,
+      "proof": {
+        "function": "GetColor",
+        "class": "UCommonTextStyle",
+        "address": "0x140814d10",
+        "native_body_address": "0x1407c1f80",
+        "field": "Color",
+        "field_offset": "0x78",
+        "kind": "Struct"
+      },
+      "captured_source": "porting/generated/native108-impl/0x1407c1f80.c",
+      "status": "ported",
+      "reason": null,
+      "review": "Upper 8-byte load precedes lower 8-byte load and output writes, including overlapping output."
+    },
+    {
+      "index": 16,
+      "proof": {
+        "function": "CalculateExpeditionPercentageChanceForSuccess",
+        "address": "0x145232bd0",
+        "class": "UFortExpeditionUtilities"
+      },
+      "captured_source": "porting/generated/native108-broad/0x145232bd0.c",
+      "status": "unresolved",
+      "reason": "CalculateExpeditionPercentageChanceForSuccess: helper 0x1450de300 calls uncaptured dependency FUN_1424e6dc0 and external subroutines."
+    },
+    {
+      "index": 17,
+      "proof": {
+        "function": "DisableSharing",
+        "address": "0x142aea7d0",
+        "class": "UFortStreamMediaSource"
+      },
+      "captured_source": "porting/generated/native108-broad/0x142aea7d0.c",
+      "status": "unresolved",
+      "reason": "DisableSharing: helper 0x141f5d790 calls uncaptured dependency FUN_142ce0700 and external subroutines."
+    },
+    {
+      "index": 18,
+      "proof": {
+        "function": "GetHighScores",
+        "address": "0x1429d1f30",
+        "class": "AFortMinigameScoreRegistry"
+      },
+      "captured_source": "porting/generated/native108-broad/0x1429d1f30.c",
+      "status": "unresolved",
+      "reason": "GetHighScores: helper 0x14208fcb0 calls uncaptured dependency FUN_14208b230 and external subroutines."
+    },
+    {
+      "index": 19,
+      "proof": {
+        "function": "GetCurrentChapterAsText",
+        "address": "0x1451ece90",
+        "class": "UFortAccountWidgetBase"
+      },
+      "captured_source": "porting/generated/native108-broad/0x1451ece90.c",
+      "status": "unresolved",
+      "reason": "GetCurrentChapterAsText: helper 0x144dfe4e0 calls uncaptured dependency FUN_1447bb440 and external subroutines."
+    },
+    {
+      "index": 20,
+      "proof": {
+        "function": "SetBrushFromItemDefinition",
+        "address": "0x145280cf0",
+        "class": "UFortLazyImage"
+      },
+      "captured_source": "porting/generated/native108-broad/0x145280cf0.c",
+      "status": "unresolved",
+      "reason": "SetBrushFromItemDefinition: helper 0x144cab050 calls uncaptured dependency FUN_1407f5a40 and external subroutines."
+    },
+    {
+      "index": 21,
+      "proof": {
+        "function": "CanAccessCollectionBook",
+        "address": "0x145314410",
+        "class": "UFortUINavigationManager"
+      },
+      "captured_source": "porting/generated/native108-broad/0x145314410.c",
+      "status": "unresolved",
+      "reason": "CanAccessCollectionBook: helper 0x144db0c60 calls uncaptured dependency FUN_144da2a90 and external subroutines."
+    },
+    {
+      "index": 22,
+      "proof": {
+        "function": "GetCategoryDisplayName",
+        "class": "UAthenaCustomizationScreenBase",
+        "address": "0x145194a30",
+        "native_body_address": "0x144af9a80",
+        "field": "CategoryDisplayNames",
+        "field_offset": "0x6d0",
+        "kind": "Text"
+      },
+      "captured_source": "porting/generated/native108-impl/0x144af9a80.c",
+      "status": "ported",
+      "reason": null,
+      "review": "Byte-indexed inline text array; native helper performs no bounds check."
+    },
+    {
+      "index": 23,
+      "proof": {
+        "function": "Clear",
+        "address": "0x1451ffd90",
+        "class": "UFortAttributeList"
+      },
+      "captured_source": "porting/generated/native108-broad/0x1451ffd90.c",
+      "status": "unresolved",
+      "reason": "Clear: polymorphic exec wrapper dispatching to virtual vtable slot unknown without resolved virtual implementation."
+    },
+    {
+      "index": 24,
+      "proof": {
+        "function": "GetFireRotation",
+        "address": "0x1428f8500",
+        "class": "UFortGameplayAbility"
+      },
+      "captured_source": "porting/generated/native108-broad/0x1428f8500.c",
+      "status": "unresolved",
+      "reason": "GetFireRotation: helper 0x1415fa4b0 calls uncaptured dependency FUN_1415f96b0 and external subroutines."
+    },
+    {
+      "index": 25,
+      "proof": {
+        "function": "GetDisplayAssetIcon",
+        "address": "0x145285650",
+        "class": "UFortLlamaStoreOfferInfo"
+      },
+      "captured_source": "porting/generated/native108-broad/0x145285650.c",
+      "status": "unresolved",
+      "reason": "GetDisplayAssetIcon: helper 0x1450ad530 calls uncaptured dependency FUN_141d99020 and external subroutines."
+    },
+    {
+      "index": 26,
+      "proof": {
+        "function": "AddNamedFloatParamA",
+        "address": "0x142ab3430",
+        "class": "UFortQueryTwoPointSolver"
+      },
+      "captured_source": "porting/generated/native108-broad/0x142ab3430.c",
+      "status": "unresolved",
+      "reason": "AddNamedFloatParamA: helper 0x1416f42d0 references unreflected storage layout or unresolved external subsystem state."
+    },
+    {
+      "index": 27,
+      "proof": {
+        "function": "CancelLoginFlow",
+        "address": "0x14530e1a0",
+        "class": "UFortTwitchLogin"
+      },
+      "captured_source": "porting/generated/native108-broad/0x14530e1a0.c",
+      "status": "unresolved",
+      "reason": "CancelLoginFlow: complex native implementation in helper 0x141e611b0 (63 lines) requiring unrecovered gameplay/subsystem state."
+    },
+    {
+      "index": 28,
+      "proof": {
+        "function": "OnRep_BannerInfo",
+        "address": "0x140fd04c0",
+        "class": "AFortLobbyBeaconPlayerState"
+      },
+      "captured_source": "porting/generated/native108-broad/0x140fd04c0.c",
+      "status": "unresolved",
+      "reason": "OnRep_BannerInfo: polymorphic exec wrapper dispatching to virtual vtable slot 0x50 without resolved virtual implementation."
+    },
+    {
+      "index": 29,
+      "proof": {
+        "function": "IsEndingWaypoint",
+        "class": "AFortWaypointInfo",
+        "address": "0x142b47370",
+        "native_body_address": "0x141f8f0e0",
+        "field": "Waypoints",
+        "field_offset": "0x218",
+        "kind": "Array"
+      },
+      "captured_source": "porting/generated/native108-impl/0x141f8f0e0.c",
+      "status": "ported",
+      "reason": null,
+      "review": "Rejects null input and compares against the last non-null array entry."
+    },
+    {
+      "index": 30,
+      "proof": {
+        "function": "UpdatePunchCard",
+        "address": "0x1451b5ed0",
+        "class": "UAthenaPunchCard"
+      },
+      "captured_source": "porting/generated/native108-broad/0x1451b5ed0.c",
+      "status": "unresolved",
+      "reason": "UpdatePunchCard: helper 0x144b9b240 calls uncaptured dependency FUN_144b769a0 and external subroutines."
+    },
+    {
+      "index": 31,
+      "proof": {
+        "function": "GetClosestCapturePoint",
+        "address": "0x1451e57e0",
+        "class": "UDiscoCaptureWidgetBase"
+      },
+      "captured_source": "porting/generated/native108-broad/0x1451e57e0.c",
+      "status": "unresolved",
+      "reason": "GetClosestCapturePoint: helper 0x144beaa10 calls uncaptured dependency FUN_142717b20 and external subroutines."
+    },
+    {
+      "index": 32,
+      "proof": {
+        "function": "HasIllegalChars",
+        "address": "0x145205130",
+        "class": "UFortBannerSelectorBase"
+      },
+      "captured_source": "porting/generated/native108-broad/0x145205130.c",
+      "status": "unresolved",
+      "reason": "HasIllegalChars: helper 0x144e0c690 calls uncaptured dependency FUN_142214960 and external subroutines."
+    },
+    {
+      "index": 33,
+      "proof": {
+        "function": "SetCountDownCompletionText",
+        "address": "0x14522f1c0",
+        "class": "UFortEventDateTimeTextBlock"
+      },
+      "captured_source": "porting/generated/native108-broad/0x14522f1c0.c",
+      "status": "unresolved",
+      "reason": "SetCountDownCompletionText: helper 0x142c0c240 references unreflected storage layout or unresolved external subsystem state."
+    },
+    {
+      "index": 34,
+      "proof": {
+        "function": "AddActorsInRadiusToIndicatedList",
+        "address": "0x14294ab10",
+        "class": "UFortIndicatedActorManagementLibrary"
+      },
+      "captured_source": "porting/generated/native108-broad/0x14294ab10.c",
+      "status": "unresolved",
+      "reason": "AddActorsInRadiusToIndicatedList: helper 0x141ec8780 calls uncaptured dependency FUN_141ec77b0 and external subroutines."
+    },
+    {
+      "index": 35,
+      "proof": {
+        "function": "CanShowGlobalLeaderboards",
+        "address": "0x1452801e0",
+        "class": "UFortLeaderboardContext"
+      },
+      "captured_source": "porting/generated/native108-broad/0x1452801e0.c",
+      "status": "unresolved",
+      "reason": "CanShowGlobalLeaderboards: helper 0x144cfb850 references unreflected storage layout or unresolved external subsystem state."
+    },
+    {
+      "index": 36,
+      "proof": {
+        "function": "SetBrushSize",
+        "address": "0x145297a20",
+        "class": "UFortMultiSizeImage"
+      },
+      "captured_source": "porting/generated/native108-broad/0x145297a20.c",
+      "status": "unresolved",
+      "reason": "SetBrushSize: helper 0x144cab4c0 calls uncaptured dependency FUN_144cb29e0 and external subroutines."
+    },
+    {
+      "index": 37,
+      "proof": {
+        "function": "GetClaimableResearchPointEstimate",
+        "address": "0x1452bdc70",
+        "class": "UFortResearchMenuBase"
+      },
+      "captured_source": "porting/generated/native108-broad/0x1452bdc70.c",
+      "status": "unresolved",
+      "reason": "GetClaimableResearchPointEstimate: helper 0x1450e4ca0 calls uncaptured dependency FUN_144de7fb0 and external subroutines."
+    },
+    {
+      "index": 38,
+      "proof": {
+        "function": "SetLocalizationFloat",
+        "address": "0x142b150e0",
+        "class": "UFortTooltip"
+      },
+      "captured_source": "porting/generated/native108-broad/0x142b150e0.c",
+      "status": "unresolved",
+      "reason": "SetLocalizationFloat: helper 0x142611330 calls uncaptured dependency FUN_141fa2370 and external subroutines."
+    },
+    {
+      "index": 39,
+      "proof": {
+        "function": "OnRep_StormShield",
+        "address": "0x142924ab0",
+        "class": "AFortGameStateBase"
+      },
+      "captured_source": "porting/generated/native108-broad/0x142924ab0.c",
+      "status": "unresolved",
+      "reason": "OnRep_StormShield: complex native implementation in helper 0x1406a9dc0 (115 lines) requiring unrecovered gameplay/subsystem state."
+    },
+    {
+      "index": 40,
+      "proof": {
+        "function": "OnRep_SprayInfo",
+        "address": "0x142aeb0d0",
+        "class": "AFortSprayDecalInstance"
+      },
+      "captured_source": "porting/generated/native108-broad/0x142aeb0d0.c",
+      "status": "unresolved",
+      "reason": "OnRep_SprayInfo: helper 0x1407bda90 references unreflected storage layout or unresolved external subsystem state."
+    },
+    {
+      "index": 41,
+      "proof": {
+        "function": "OnRep_MatchStartTime",
+        "address": "0x1410aab30",
+        "class": "APlayspaceLogic"
+      },
+      "captured_source": "porting/generated/native108-broad/0x1410aab30.c",
+      "status": "unresolved",
+      "reason": "OnRep_MatchStartTime: polymorphic exec wrapper dispatching to virtual vtable slot 0x658 without resolved virtual implementation."
+    },
+    {
+      "index": 42,
+      "proof": {
+        "function": "SetAsStat",
+        "address": "0x1451b5a60",
+        "class": "UAthenaProfileStatWidgetBase"
+      },
+      "captured_source": "porting/generated/native108-broad/0x1451b5a60.c",
+      "status": "unresolved",
+      "reason": "SetAsStat: helper 0x144c42f00 calls uncaptured dependency FUN_1451b4450 and external subroutines."
+    },
+    {
+      "index": 43,
+      "proof": {
+        "function": "SetTargetingOverlapComponent",
+        "address": "0x14272b540",
+        "class": "UBuildingTurretComponent"
+      },
+      "captured_source": "porting/generated/native108-broad/0x14272b540.c",
+      "status": "unresolved",
+      "reason": "SetTargetingOverlapComponent: polymorphic exec wrapper dispatching to virtual vtable slot 1000 without resolved virtual implementation."
+    },
+    {
+      "index": 44,
+      "proof": {
+        "function": "GetEncounterInfo",
+        "address": "0x14279c3e0",
+        "class": "UFortAIGoalProvider"
+      },
+      "captured_source": "porting/generated/native108-broad/0x14279c3e0.c",
+      "status": "unresolved",
+      "reason": "GetEncounterInfo: polymorphic exec wrapper dispatching to virtual vtable slot unknown without resolved virtual implementation."
+    },
+    {
+      "index": 45,
+      "proof": {
+        "function": "Disable",
+        "address": "0x142841e60",
+        "class": "UFortAudioShapeComponent"
+      },
+      "captured_source": "porting/generated/native108-broad/0x142841e60.c",
+      "status": "unresolved",
+      "reason": "Disable: polymorphic exec wrapper dispatching to virtual vtable slot 0x3f0 without resolved virtual implementation."
+    },
+    {
+      "index": 46,
+      "proof": {
+        "function": "CancelPreview",
+        "address": "0x14521c8d0",
+        "class": "UFortCreativeCaptureScreenshotHUD"
+      },
+      "captured_source": "porting/generated/native108-broad/0x14521c8d0.c",
+      "status": "unresolved",
+      "reason": "CancelPreview: helper 0x142a53e30 performs indirect virtual dispatch on unresolved object hierarchy."
+    },
+    {
+      "index": 47,
+      "proof": {
+        "function": "GetExpeditionListSortName",
+        "class": "UFortExpeditionListViewWidget",
+        "address": "0x1452330d0",
+        "native_body_address": "0x1450e6340",
+        "field": "SortType",
+        "field_offset": "0x288",
+        "kind": "Enum"
+      },
+      "captured_source": "porting/generated/native108-impl/0x1450e6340.c",
+      "status": "ported",
+      "reason": null,
+      "review": "Three native localized text cases; default uses the captured empty-text singleton."
+    },
+    {
+      "index": 48,
+      "proof": {
+        "function": "SetItemToRepresent",
+        "address": "0x145258750",
+        "class": "UFortHeroSupportPerkIndicator"
+      },
+      "captured_source": "porting/generated/native108-broad/0x145258750.c",
+      "status": "unresolved",
+      "reason": "SetItemToRepresent: helper 0x144ee2f10 calls uncaptured dependency FUN_1406a7e80 and external subroutines."
+    },
+    {
+      "index": 49,
+      "proof": {
+        "function": "GetActiveMeshNetworkEvents",
+        "address": "0x1429bfa00",
+        "class": "UFortMeshNetworkEventsSubsystem"
+      },
+      "captured_source": "porting/generated/native108-broad/0x1429bfa00.c",
+      "status": "unresolved",
+      "reason": "GetActiveMeshNetworkEvents: helper 0x141a778e0 calls uncaptured dependency FUN_14460bc60 and external subroutines."
+    },
+    {
+      "index": 50,
+      "proof": {
+        "function": "SetHero",
+        "address": "0x1452a0a00",
+        "class": "UFortPerksWidget_NUI"
+      },
+      "captured_source": "porting/generated/native108-broad/0x1452a0a00.c",
+      "status": "unresolved",
+      "reason": "SetHero: helper 0x1450fce90 calls uncaptured dependency FUN_14529c920 and external subroutines."
+    },
+    {
+      "index": 51,
+      "proof": {
+        "function": "GetUnseenQuestCount",
+        "address": "0x142ab9520",
+        "class": "UFortQuestCategory"
+      },
+      "captured_source": "porting/generated/native108-broad/0x142ab9520.c",
+      "status": "unresolved",
+      "reason": "GetUnseenQuestCount: helper 0x142442f40 calls uncaptured dependency FUN_142030980 and external subroutines."
+    },
+    {
+      "index": 52,
+      "proof": {
+        "function": "ResetAllAnimations",
+        "address": "0x1452dd970",
+        "class": "UFortSimpleWidgetAnimationsPanel"
+      },
+      "captured_source": "porting/generated/native108-broad/0x1452dd970.c",
+      "status": "unresolved",
+      "reason": "ResetAllAnimations: helper 0x1450c9ec0 calls uncaptured dependency FUN_141eba550 and external subroutines."
+    },
+    {
+      "index": 53,
+      "proof": {
+        "function": "GetCurrentUIEventState",
+        "address": "0x1438aa9d0",
+        "class": "UFortUISpecialEventSubsystem"
+      },
+      "captured_source": "porting/generated/native108-broad/0x1438aa9d0.c",
+      "status": "unresolved",
+      "reason": "GetCurrentUIEventState: unrecovered wrapper logic reading unreflected raw offsets."
+    },
+    {
+      "index": 54,
+      "proof": {
+        "function": "AddLocalServiceMessage",
+        "address": "0x142b75830",
+        "class": "ULocalServiceMessageContext"
+      },
+      "captured_source": "porting/generated/native108-broad/0x142b75830.c",
+      "status": "unresolved",
+      "reason": "AddLocalServiceMessage: helper 0x142c0c240 references unreflected storage layout or unresolved external subsystem state."
+    },
+    {
+      "index": 55,
+      "proof": {
+        "function": "SetCreativeMapMaterial",
+        "address": "0x14294ce40",
+        "class": "AFortInGameMapManagerCreative"
+      },
+      "captured_source": "porting/generated/native108-broad/0x14294ce40.c",
+      "status": "unresolved",
+      "reason": "SetCreativeMapMaterial: helper 0x1419ae420 references unreflected storage layout or unresolved external subsystem state."
+    },
+    {
+      "index": 56,
+      "proof": {
+        "function": "GetMMSCodeForLocalPlayerParty",
+        "address": "0x14298e9c0",
+        "class": "AFortMatchmakingActor"
+      },
+      "captured_source": "porting/generated/native108-broad/0x14298e9c0.c",
+      "status": "unresolved",
+      "reason": "GetMMSCodeForLocalPlayerParty: helper 0x141f2fcc0 calls uncaptured dependency FUN_141e62340 and external subroutines."
+    },
+    {
+      "index": 57,
+      "proof": {
+        "function": "OnRep_PoiTagContainerTable",
+        "address": "0x142aa2680",
+        "class": "AFortPoiManager"
+      },
+      "captured_source": "porting/generated/native108-broad/0x142aa2680.c",
+      "status": "unresolved",
+      "reason": "OnRep_PoiTagContainerTable: polymorphic exec wrapper dispatching to virtual vtable slot 0x50 without resolved virtual implementation."
+    },
+    {
+      "index": 58,
+      "proof": {
+        "function": "OnRep_DefaultMetadata",
+        "address": "0x142b479e0",
+        "class": "AFortWeap_BuildingTool"
+      },
+      "captured_source": "porting/generated/native108-broad/0x142b479e0.c",
+      "status": "unresolved",
+      "reason": "OnRep_DefaultMetadata: helper 0x1426aa330 performs indirect virtual dispatch on unresolved object hierarchy."
+    },
+    {
+      "index": 59,
+      "proof": {
+        "function": "OnRep_CurrentState",
+        "address": "0x142b67b60",
+        "class": "AInfiltrationCarryObjectSpawnPoint"
+      },
+      "captured_source": "porting/generated/native108-broad/0x142b67b60.c",
+      "status": "unresolved",
+      "reason": "OnRep_CurrentState: helper 0x141a87570 calls uncaptured dependency FUN_142b66790 and external subroutines."
+    },
+    {
+      "index": 60,
+      "proof": {
+        "function": "GetStat",
+        "address": "0x1451b5270",
+        "class": "UAthenaBaseStatView"
+      },
+      "captured_source": "porting/generated/native108-broad/0x1451b5270.c",
+      "status": "unresolved",
+      "reason": "GetStat: helper 0x144c23c60 calls uncaptured dependency FUN_141b6bb40 and external subroutines."
+    },
+    {
+      "index": 61,
+      "proof": {
+        "function": "CalculateSourceTag",
+        "address": "0x145198ee0",
+        "class": "UAthenaFeatTimelineListEntry"
+      },
+      "captured_source": "porting/generated/native108-broad/0x145198ee0.c",
+      "status": "unresolved",
+      "reason": "CalculateSourceTag: complex native implementation in helper 0x144b69950 (47 lines) requiring unrecovered gameplay/subsystem state."
+    },
+    {
+      "index": 62,
+      "proof": {
+        "function": "IsInitialNavigationLockActive",
+        "address": "0x142725f50",
+        "class": "UAthenaNavSystem"
+      },
+      "captured_source": "porting/generated/native108-broad/0x142725f50.c",
+      "status": "unresolved",
+      "reason": "IsInitialNavigationLockActive: helper 0x141737a80 calls uncaptured dependency FUN_14492cc30 and external subroutines."
+    },
+    {
+      "index": 63,
+      "proof": {
+        "function": "AddSpatialScreenSessionCounter",
+        "address": "0x14534d990",
+        "class": "UAthenaSpatialScreen"
+      },
+      "captured_source": "porting/generated/native108-broad/0x14534d990.c",
+      "status": "unresolved",
+      "reason": "AddSpatialScreenSessionCounter: helper 0x140690ac0 references unreflected storage layout or unresolved external subsystem state."
+    },
+    {
+      "index": 64,
+      "proof": {
+        "function": "GetToyActorClass",
+        "class": "UAthenaToyItemDefinition",
+        "address": "0x14272eb40",
+        "native_body_address": "0x14272eb40",
+        "field": "ToyActorClass",
+        "field_offset": "0x730",
+        "kind": "SoftClass"
+      },
+      "captured_source": "porting/generated/native108-broad/0x14272eb40.c",
+      "status": "ported",
+      "reason": null,
+      "review": "Exec copies soft class property, including its path string."
+    },
+    {
+      "index": 65,
+      "proof": {
+        "function": "UpdateAlertUI",
+        "address": "0x1451e28f0",
+        "class": "UCobaltAlertWidgetBase"
+      },
+      "captured_source": "porting/generated/native108-broad/0x1451e28f0.c",
+      "status": "unresolved",
+      "reason": "UpdateAlertUI: complex native implementation in helper 0x144bb08d0 (47 lines) requiring unrecovered gameplay/subsystem state."
+    },
+    {
+      "index": 66,
+      "proof": {
+        "function": "SetConsumePointerInput",
+        "class": "UCommonUserWidget",
+        "address": "0x140818c00",
+        "native_body_address": "0x1407f60a0",
+        "field": "bConsumePointerInput",
+        "field_offset": "0x250",
+        "kind": "Bool"
+      },
+      "captured_source": "porting/generated/native108-impl/0x1407f60a0.c",
+      "status": "ported",
+      "reason": null,
+      "review": "Helper writes a full byte at the reflected bool field."
+    },
+    {
+      "index": 67,
+      "proof": {
+        "function": "UpdateFinalBossBattle",
+        "address": "0x1451e64d0",
+        "class": "UDadBroHealthWidget"
+      },
+      "captured_source": "porting/generated/native108-broad/0x1451e64d0.c",
+      "status": "unresolved",
+      "reason": "UpdateFinalBossBattle: helper 0x145803c70 calls uncaptured dependency FUN_14580403c and external subroutines."
+    },
+    {
+      "index": 68,
+      "proof": {
+        "function": "GetFortAbilitySystemComponent",
+        "address": "0x1427813d0",
+        "class": "UFortAbilitySystemBlueprintLibrary"
+      },
+      "captured_source": "porting/generated/native108-broad/0x1427813d0.c",
+      "status": "unresolved",
+      "reason": "GetFortAbilitySystemComponent: helper 0x141df7430 calls uncaptured dependency FUN_1415fa910 and external subroutines."
+    },
+    {
+      "index": 69,
+      "proof": {
+        "function": "IsValidAlterationSlot",
+        "class": "UFortAlterationOptionsBase",
+        "address": "0x1451f3180",
+        "native_body_address": "0x144f2d1e0",
+        "field": "Item / SlotIndex",
+        "field_offset": "0x298 / 0x2a0",
+        "kind": "Bool"
+      },
+      "captured_source": "porting/generated/native108-impl/0x144f2d1e0.c",
+      "status": "ported",
+      "reason": null,
+      "review": "Tests the pointer and 32-bit index against -1."
+    },
+    {
+      "index": 70,
+      "proof": {
+        "function": "GetNewsByIndex",
+        "address": "0x1451fb880",
+        "class": "UFortAthenaMOTDTeaserWidget"
+      },
+      "captured_source": "porting/generated/native108-broad/0x1451fb880.c",
+      "status": "unresolved",
+      "reason": "GetNewsByIndex: complex native implementation in helper 0x144cba080 (63 lines) requiring unrecovered gameplay/subsystem state."
+    },
+    {
+      "index": 71,
+      "proof": {
+        "function": "IsLocalPlayerParticipatingInParty",
+        "address": "0x14520a010",
+        "class": "UFortCampaignMatchmakingBase"
+      },
+      "captured_source": "porting/generated/native108-broad/0x14520a010.c",
+      "status": "unresolved",
+      "reason": "IsLocalPlayerParticipatingInParty: helper 0x1450f0440 calls uncaptured dependency FUN_141e62340 and external subroutines."
+    },
+    {
+      "index": 72,
+      "proof": {
+        "function": "OnRep_Charge",
+        "address": "0x14286cbc0",
+        "class": "UFortChargingSet_HealGun"
+      },
+      "captured_source": "porting/generated/native108-broad/0x14286cbc0.c",
+      "status": "unresolved",
+      "reason": "OnRep_Charge: helper 0x1406ebb90 calls uncaptured dependency FUN_142e5d3b0 and external subroutines."
+    },
+    {
+      "index": 73,
+      "proof": {
+        "function": "SetAssociatedLevel",
+        "address": "0x145210e00",
+        "class": "UFortCollectionBookProgressionRewardWidget"
+      },
+      "captured_source": "porting/generated/native108-broad/0x145210e00.c",
+      "status": "unresolved",
+      "reason": "SetAssociatedLevel: helper 0x1450cb6b0 calls uncaptured dependency FUN_1407f6320 and external subroutines."
+    },
+    {
+      "index": 74,
+      "proof": {
+        "function": "HasAnyAvailableBattleLabDevice",
+        "address": "0x14289d4c0",
+        "class": "UFortControllerComponent_BattleLabDeviceManager"
+      },
+      "captured_source": "porting/generated/native108-broad/0x14289d4c0.c",
+      "status": "unresolved",
+      "reason": "HasAnyAvailableBattleLabDevice: helper 0x141bad7f0 calls uncaptured dependency FUN_141bc88a0 and external subroutines."
+    },
+    {
+      "index": 75,
+      "proof": {
+        "function": "GetSupportCode",
+        "address": "0x14521c9b0",
+        "class": "UFortCreativeIslandPanel"
+      },
+      "captured_source": "porting/generated/native108-broad/0x14521c9b0.c",
+      "status": "unresolved",
+      "reason": "GetSupportCode: helper 0x144d7bb70 performs indirect virtual dispatch on unresolved object hierarchy."
+    },
+    {
+      "index": 76,
+      "proof": {
+        "function": "GetCurrencySeasonReward",
+        "address": "0x14522e8f0",
+        "class": "UFortDirectAcquisitionOfferWidget"
+      },
+      "captured_source": "porting/generated/native108-broad/0x14522e8f0.c",
+      "status": "unresolved",
+      "reason": "GetCurrencySeasonReward: helper 0x144d373b0 calls uncaptured dependency FUN_1450b0aa0 and external subroutines."
+    },
+    {
+      "index": 77,
+      "proof": {
+        "function": "UpdateExpeditionTabs",
+        "address": "0x145234520",
+        "class": "UFortExpeditionOverviewWidget"
+      },
+      "captured_source": "porting/generated/native108-broad/0x145234520.c",
+      "status": "unresolved",
+      "reason": "UpdateExpeditionTabs: helper 0x1407f04d0 calls uncaptured dependency FUN_1407bdf90 and external subroutines."
+    },
+    {
+      "index": 78,
+      "proof": {
+        "function": "SetOffer",
+        "address": "0x14524b7f0",
+        "class": "UFortGiftingScreen"
+      },
+      "captured_source": "porting/generated/native108-broad/0x14524b7f0.c",
+      "status": "unresolved",
+      "reason": "SetOffer: helper 0x144e1a9c0 calls uncaptured dependency FUN_1450b9a10 and external subroutines."
+    },
+    {
+      "index": 79,
+      "proof": {
+        "function": "SetPosition",
+        "address": "0x1452635b0",
+        "class": "UFortHudContextTutorialTipsBase"
+      },
+      "captured_source": "porting/generated/native108-broad/0x1452635b0.c",
+      "status": "unresolved",
+      "reason": "SetPosition: complex native implementation in helper 0x144d96e80 (54 lines) requiring unrecovered gameplay/subsystem state."
+    },
+    {
+      "index": 80,
+      "proof": {
+        "function": "GetTemplateType",
+        "class": "UFortItemTypeFunctionLibrary",
+        "address": "0x142a24d20",
+        "native_body_address": "0x141f36080",
+        "kind": "Enum"
+      },
+      "captured_source": "porting/generated/native108-impl/0x141f36080.c",
+      "status": "ported",
+      "reason": null,
+      "review": "Native numeric switch checked against generated EFortItemType values."
+    },
+    {
+      "index": 81,
+      "proof": {
+        "function": "GetCurrentState",
+        "address": "0x14287d8b0",
+        "class": "UFortMissionActivationWidget"
+      },
+      "captured_source": "porting/generated/native108-broad/0x14287d8b0.c",
+      "status": "unresolved",
+      "reason": "GetCurrentState: unrecovered wrapper logic reading unreflected raw offsets."
+    },
+    {
+      "index": 82,
+      "proof": {
+        "function": "IsNavmeshInRadiusInitialized",
+        "address": "0x142a005f0",
+        "class": "UFortNavSystem"
+      },
+      "captured_source": "porting/generated/native108-broad/0x142a005f0.c",
+      "status": "unresolved",
+      "reason": "IsNavmeshInRadiusInitialized: helper 0x141707c60 calls uncaptured dependency FUN_143f9f320 and external subroutines."
+    },
+    {
+      "index": 83,
+      "proof": {
+        "function": "SetParams",
+        "class": "UFortPlayerDiedParams",
+        "address": "0x142b77890",
+        "native_body_address": "0x1420ee700",
+        "field": "KilledPlayer / KilledPlayerController / KilledBy",
+        "field_offset": "0x28 / 0x30 / 0x38",
+        "kind": "Object"
+      },
+      "captured_source": "porting/generated/native108-impl/0x1420ee700.c",
+      "status": "ported",
+      "reason": null,
+      "review": "Stores three pointers in order, then writes the output reference."
+    }
+  ],
+  "review": "All nine proposals checked against native wrappers, captured bodies, reflected fields and parameter flags; unchecked category indexing and color copy order preserved."
+}

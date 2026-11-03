@@ -8,6 +8,8 @@
 
 #include "FFortCollisionAudioTriggerData.h"
 
+class USoundBase;
+
 #include "UFortCollisionAudioComponent.generated.h"
 
 UCLASS(config=Engine)
@@ -23,6 +25,9 @@ public:
 	// table index 0, flags 0x10000000010001
 	UPROPERTY()
 	float CheckCollisionLeashInterval;
+
+	UFUNCTION(BlueprintCallable)
+	void SetCollisionSoundAtIndex(int32 Index, USoundBase* SoundToUse);
 
 };
 

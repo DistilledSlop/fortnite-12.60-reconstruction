@@ -47,5 +47,8 @@ public:
 	UPROPERTY()
 	UFortPoiCollisionComponent* PoiCollisionComp;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool ContainsLocationTag(FGameplayTag& Tag) const;
+
 };
 

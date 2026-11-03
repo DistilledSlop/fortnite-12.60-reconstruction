@@ -24,5 +24,13 @@ public:
 	UPROPERTY(Transient)
 	UFortTwitchLoginModalWidget* ActiveLoginModal;
 
+	UFUNCTION(BlueprintNativeEvent)
+	void OnLoginFlowModalCreated(UFortTwitchLoginModalWidget* Modal);
+	virtual void OnLoginFlowModalCreated_Implementation(UFortTwitchLoginModalWidget* Modal);
+
+	UFUNCTION(BlueprintNativeEvent)
+	void OnLoginFlowModalDismissed(UFortTwitchLoginModalWidget* Modal);
+	virtual void OnLoginFlowModalDismissed_Implementation(UFortTwitchLoginModalWidget* Modal);
+
 };
 

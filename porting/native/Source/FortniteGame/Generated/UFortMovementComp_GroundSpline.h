@@ -133,6 +133,9 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_TargetSpeeds)
 	FGroundSplineSpeedData TargetSpeeds;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x1ac): not a UPROPERTY, not replicated.
+	FGroundSplineSpeedData NativeRecoveredFGroundSplineSpeedData_0x1ac;
+
 	// table index 1, flags 0x20080000080008
 	UPROPERTY()
 	USplineComponent* TravelSpline;
@@ -143,6 +146,9 @@ public:
 	// table index 0, flags 0x20080000080008
 	UPROPERTY()
 	UAbilitySystemComponent* AbilitySystemComponent;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FGroundSplineSpeedData GetCurrentSpeeds() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	USplineComponent* GetSpline() const;

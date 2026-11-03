@@ -32,6 +32,27 @@ bool UFortItem::CanBeUnslotted() const
 	return false;
 }
 
+bool UFortItem::CanBeUpgraded(TArray<EItemUpgradeRestrictionReason>& OutRestrictionReasons) const
+{
+	// CONFIDENCE: high
+	// Native target 0x1406801e0.
+	return false;
+}
+
+bool UFortItem::CanEvolve(TArray<EItemEvolutionRestrictionReason>& OutRestrictionReasons) const
+{
+	// CONFIDENCE: high
+	// Native target 0x1406801e0.
+	return false;
+}
+
+bool UFortItem::CanUpgradeItemRarity(TArray<EItemEvolutionRestrictionReason>& OutRestrictionReasons) const
+{
+	// CONFIDENCE: high
+	// Native target 0x1406801e0.
+	return false;
+}
+
 TArray<FFortAlterationSlotStatus> UFortItem::GetAlterationSlots() const
 {
 	// CONFIDENCE: high
@@ -173,6 +194,13 @@ UFortItemDefinition* UFortItem::GetSchematicCraftingResultBP() const
 	return nullptr;
 }
 
+EFortItemType UFortItem::GetSchematicResultType() const
+{
+	// CONFIDENCE: high
+	// Native target 0x142032d50.
+	return static_cast<EFortItemType>(0x70);
+}
+
 int32 UFortItem::GetUpgradeCost() const
 {
 	// Exact original shared stub 0x140680300.
@@ -211,6 +239,13 @@ bool UFortItem::IsDroppedItem() const
 {
 	// Exact original shared stub 0x1406801e0.
 	// CONFIDENCE: HIGH
+	return false;
+}
+
+bool UFortItem::IsEquipable(AFortPlayerController* EquippingPC, bool bGamepadSwitchingForHeroAbilities) const
+{
+	// CONFIDENCE: high
+	// Native target 0x1406801e0.
 	return false;
 }
 

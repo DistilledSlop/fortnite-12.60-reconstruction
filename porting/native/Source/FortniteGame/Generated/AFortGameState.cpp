@@ -159,7 +159,8 @@ void AFortGameState::OnRep_WorldManager()
 
 void AFortGameState::RunPerfMemCheatScript_Implementation(bool bStartStatFiles)
 {
-	// Body not recovered: reflection-derived stub.
+	// CONFIDENCE: high
+	// Native target 0x1406801c0.
 }
 
 void AFortGameState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

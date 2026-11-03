@@ -39,5 +39,8 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UFortPlayerSurveyManager* GetPlayerSurveyManager() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static bool IsPlayerSurveySystemEnabled();
+
 };
 

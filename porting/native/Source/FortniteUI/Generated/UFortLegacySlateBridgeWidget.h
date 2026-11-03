@@ -29,5 +29,8 @@ public:
 	UPROPERTY(Transient)
 	FOnCloseLegacyWidget OnClose;
 
+	UFUNCTION(BlueprintCallable)
+	void SetOnCloseHandler(FOnCloseLegacyWidget& OnCloseHandler);
+
 };
 

@@ -10,6 +10,8 @@
 #include "EFortReplicatedStat.h"
 #include "ERiftCosmeticState.h"
 
+class AFortPawn;
+class AFortPlayerPawn;
 class UBuildingTextureData;
 class UChildCheatManager;
 
@@ -315,6 +317,11 @@ public:
 
 protected:
 	UFUNCTION(Exec)
+	virtual void DebugAttribute(FString& Attribute);
+public:
+
+protected:
+	UFUNCTION(Exec)
 	void DebugBuildingDetection();
 public:
 
@@ -475,6 +482,11 @@ public:
 
 protected:
 	UFUNCTION(Exec)
+	virtual void FinishCurrentStormCircle(float TimeToShrink);
+public:
+
+protected:
+	UFUNCTION(Exec)
 	void ForceAILODs(EFortAILODLevel inForcedAILODValue);
 public:
 
@@ -486,6 +498,11 @@ public:
 protected:
 	UFUNCTION(Exec)
 	void ForceExternalRichPresenceUpdate();
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	virtual void ForceServerShutdown(int32 ExitCode);
 public:
 
 protected:
@@ -682,6 +699,11 @@ public:
 protected:
 	UFUNCTION(Exec)
 	void HideGameplayCaptureUI();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	virtual void KillPawns(TSubclassOf<AFortPawn> aClass);
 public:
 
 protected:
@@ -1056,6 +1078,11 @@ public:
 
 protected:
 	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	virtual void ScriptedPawnIntervalFiring(float TimeBetweenShots, int32 BurstAmount, float TimeBetweenBursts);
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
 	void ServerStartProfiling();
 public:
 
@@ -1082,6 +1109,11 @@ public:
 protected:
 	UFUNCTION(Exec)
 	void SetCameraPrototype(FName ProtoName);
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	virtual void SetCanBeDamagedOnTraceActor(bool bCanBeDamaged);
 public:
 
 protected:
@@ -1117,6 +1149,11 @@ public:
 protected:
 	UFUNCTION(Exec)
 	void SetDifficultyIncreaseRewardTier(int32 RewardTier);
+public:
+
+protected:
+	UFUNCTION(Exec)
+	virtual void SetEncounterGraphsHistoryLength(int32 Seconds);
 public:
 
 protected:
@@ -1214,6 +1251,21 @@ public:
 
 protected:
 	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	virtual void SetScriptedPawnLocation(float X, float Y, float Z);
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	virtual void SetScriptedPawnRotation(float Yaw);
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	virtual void SetScriptedPawnTargeting(bool bIsTargeting);
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
 	void SetShieldPercent(float Percent);
 public:
 
@@ -1225,6 +1277,11 @@ public:
 protected:
 	UFUNCTION(Exec)
 	void SetTeam(int32 TeamIndex);
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	virtual void SetTeamOnScriptedPawn(int32 NewTeamIndex);
 public:
 
 protected:
@@ -1291,6 +1348,19 @@ protected:
 	UFUNCTION(Exec)
 	void SpawnFoodFightObjective();
 public:
+
+protected:
+	UFUNCTION(Exec)
+	virtual AFortPawn* SpawnPawn(FString PawnType);
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	virtual AFortPlayerPawn* SpawnScriptedPawn(FString ProfileName);
+public:
+
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	virtual AFortPlayerPawn* SpawnScriptedPawnAtLocation(FString ProfileName, float X, float Y, float Z, float Pitch, float Yaw, float Roll);
 
 protected:
 	UFUNCTION(Exec)

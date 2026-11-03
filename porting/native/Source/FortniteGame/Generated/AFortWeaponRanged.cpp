@@ -4,7 +4,8 @@
 
 void AFortWeaponRanged::ClientFixupOverheatValue_Implementation(float InOverheatValue)
 {
-	// Body not recovered: reflection-derived stub.
+	// CONFIDENCE: high
+	OverheatValue = InOverheatValue;
 }
 
 UNiagaraSystem* AFortWeaponRanged::GetBeamNiagaraSystem() const

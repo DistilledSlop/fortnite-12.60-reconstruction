@@ -67,6 +67,13 @@ void AFortPlayerControllerSpectating::SetShowVehiclesOnMap(bool bInShowVehiclesO
 	this->NativeRecoveredBool_0x2ae6 = bInShowVehiclesOnMap;
 }
 
+void AFortPlayerControllerSpectating::UpdateReplayEvents(EPlayEventType Type)
+{
+	// CONFIDENCE: high
+	// Native target 0x1406801c0.
+	// Original native body is empty.
+}
+
 void AFortPlayerControllerSpectating::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

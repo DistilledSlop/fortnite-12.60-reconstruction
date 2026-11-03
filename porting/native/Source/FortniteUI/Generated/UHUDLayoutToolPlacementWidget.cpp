@@ -7,3 +7,10 @@ bool UHUDLayoutToolPlacementWidget::GetIsOverlapping_Implementation() const
 	return false;
 }
 
+void UHUDLayoutToolPlacementWidget::OnInsideGridStateChange_Implementation(bool bInsideGrid)
+{
+	// CONFIDENCE: high
+	// Native target 0x1406801c0.
+	// Original native body is empty.
+}
+

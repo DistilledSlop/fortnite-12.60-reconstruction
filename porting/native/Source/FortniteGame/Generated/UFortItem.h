@@ -10,6 +10,7 @@
 #include "EFortItemType.h"
 #include "EFortRarity.h"
 #include "EItemEvolutionRestrictionReason.h"
+#include "EItemUpgradeRestrictionReason.h"
 #include "FFortAlterationSlotStatus.h"
 #include "FFortOnItemChangedDelegate.h"
 #include "FFortOnItemDestroyedDelegate.h"
@@ -65,6 +66,15 @@ public:
 	virtual bool CanBeUnslotted() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool CanBeUpgraded(TArray<EItemUpgradeRestrictionReason>& OutRestrictionReasons) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool CanEvolve(TArray<EItemEvolutionRestrictionReason>& OutRestrictionReasons) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool CanUpgradeItemRarity(TArray<EItemEvolutionRestrictionReason>& OutRestrictionReasons) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual TArray<FFortAlterationSlotStatus> GetAlterationSlots() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
@@ -116,6 +126,9 @@ public:
 	virtual UFortItemDefinition* GetSchematicCraftingResultBP() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual EFortItemType GetSchematicResultType() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual int32 GetUpgradeCost() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
@@ -132,6 +145,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual bool IsDroppedItem() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool IsEquipable(AFortPlayerController* EquippingPC, bool bGamepadSwitchingForHeroAbilities) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual bool IsEquipped() const;

@@ -8,6 +8,7 @@
 
 #include "FPetStimuliRepData.h"
 
+class AFortPlayerPawn;
 class UAthenaPetItemDefinition;
 
 #include "AFortPlayerPetRepState.generated.h"
@@ -29,6 +30,9 @@ public:
 	// table index 0, flags 0x20080100000034
 	UPROPERTY(ReplicatedUsing=OnRep_StimuliTag)
 	FPetStimuliRepData StimuliTag;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	AFortPlayerPawn* GetFortPlayerPawn() const;
 
 	UFUNCTION()
 	void OnRep_LookAtTarget();

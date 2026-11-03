@@ -45,9 +45,10 @@ public:
 	void ClientHideBusButton();
 	void ClientHideBusButton_Implementation();
 
-	UFUNCTION(Server, Reliable)
+	UFUNCTION(Server, Reliable, WithValidation)
 	void ServerBeginBusPhase();
 	void ServerBeginBusPhase_Implementation();
+	bool ServerBeginBusPhase_Validate();
 
 	UFUNCTION(Server, Reliable)
 	void ServerOnSpectatorCameraTypeChanged(const ESpectatorCameraType& NewCameraMode, const FVector& SpectatorLocation, bool bValidPos);

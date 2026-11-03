@@ -25,5 +25,13 @@ public:
 	UPROPERTY()
 	EFortHomebaseRatingType PowerRatingType;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x270): not a UPROPERTY, not replicated.
+	int32 NativeRecoveredInt32_0x270;
+
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetTeamPowerRating() const;
+public:
+
 };
 

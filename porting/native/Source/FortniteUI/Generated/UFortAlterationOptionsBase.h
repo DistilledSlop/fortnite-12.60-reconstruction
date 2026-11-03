@@ -48,5 +48,8 @@ public:
 	UPROPERTY(Transient)
 	TArray<FAlterationOption> RespecOptions;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsValidAlterationSlot() const;
+
 };
 

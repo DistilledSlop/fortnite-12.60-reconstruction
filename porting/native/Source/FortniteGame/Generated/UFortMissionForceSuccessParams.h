@@ -18,5 +18,8 @@ public:
 	UPROPERTY()
 	float FractionCompleted;
 
+	UFUNCTION(BlueprintCallable)
+	void SetParams(float _FractionCompleted, UFortMissionForceSuccessParams*& ThisParam);
+
 };
 

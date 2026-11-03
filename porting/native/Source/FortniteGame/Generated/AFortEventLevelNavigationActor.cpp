@@ -7,3 +7,10 @@ bool AFortEventLevelNavigationActor::CanCommitNavigationRequest_Implementation()
 	return true;
 }
 
+void AFortEventLevelNavigationActor::HandleMCPInventoryChanged(TSet<FString>& TypesChanged, int64 ProfileRvn)
+{
+	// CONFIDENCE: high
+	// Native target 0x141462b70 broadcasts the reflected delegate at offset 0x438.
+	OnInventoryUpdated.Broadcast();
+}
+

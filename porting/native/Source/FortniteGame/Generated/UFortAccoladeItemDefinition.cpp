@@ -24,6 +24,15 @@ int32 UFortAccoladeItemDefinition::GetAccoladeXpValue() const
 	return FMath::TruncToInt(XpRewardAmount.GetValueAtLevel(AccoladeLevel, nullptr));
 }
 
+int32 UFortAccoladeItemDefinition::GetAccoladeXpValueWithCountScalar(int32 Count) const
+{
+	// CONFIDENCE: high
+	// Native body at 0x142008040 evaluates XpRewardAmount at AccoladeLevel and XpRewardScalarByCount at Count.
+	const float BaseAmount = XpRewardAmount.GetValueAtLevel(AccoladeLevel, nullptr);
+	const float CountScalar = XpRewardScalarByCount.GetValueAtLevel(static_cast<float>(Count), nullptr);
+	return static_cast<int32>(CountScalar * static_cast<float>(static_cast<int32>(BaseAmount)));
+}
+
 USoundCue* UFortAccoladeItemDefinition::GetAwardedSound() const
 {
 	// Original address: 0x14278e370.

@@ -58,6 +58,7 @@ class AFortEmitterCameraLensEffectDirectional;
 class AFortPickup;
 class AFortWeapon;
 class UAnimInstance;
+class UAnimMontage;
 class UAudioComponent;
 class UFortAbilitySystemComponent;
 class UFortAdvancedMovementSet;
@@ -851,6 +852,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void LogChugSplashEvent();
 
+	UFUNCTION()
+	virtual void MaxHealthStateChanged(bool bIsMaxHealth);
+
 	UFUNCTION(BlueprintCallable)
 	void MovingEmoteStopped();
 
@@ -900,6 +904,11 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool OnlySpinWhenFalling() const;
+
+protected:
+	UFUNCTION()
+	virtual void OnMontageBlendingOut(UAnimMontage* Montage, bool bInterrupted);
+public:
 
 	UFUNCTION()
 	void OnRep_bWeaponHolstered();

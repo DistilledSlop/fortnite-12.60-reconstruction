@@ -127,5 +127,10 @@ public:
 	bool CanCommitNavigationRequest() const;
 	virtual bool CanCommitNavigationRequest_Implementation() const;
 
+protected:
+	UFUNCTION()
+	virtual void HandleMCPInventoryChanged(TSet<FString>& TypesChanged, int64 ProfileRvn);
+public:
+
 };
 

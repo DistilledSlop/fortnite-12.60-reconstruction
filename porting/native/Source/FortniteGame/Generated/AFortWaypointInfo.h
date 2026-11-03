@@ -36,6 +36,9 @@ public:
 	UPROPERTY()
 	AFortProjectileTrajectory* Spline;
 
+	UFUNCTION(BlueprintCallable)
+	bool IsEndingWaypoint(ABuildingTrapFloor_Waypoint* Waypoint);
+
 	UFUNCTION()
 	void OnRep_SplineLocations();
 
