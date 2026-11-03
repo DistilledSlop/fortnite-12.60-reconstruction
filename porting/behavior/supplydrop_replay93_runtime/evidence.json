@@ -1,0 +1,18 @@
+{
+  "pins": {
+    "porting/generated/native92-broad/0x142834300.c": "b38a01ef2de347911d82c1df3026f107ecad9acac78bf792a2654f4c4630b37b",
+    "porting/generated/native92-query/0x14191bde0.c": "04a1795cb36ba7f4d46a5bbeb303bc604feb7365f5b1cedd88f3cd62718be8d4",
+    "porting/generated/native93-loot/0x144693a30.c": "30292837f4826410b76a6f1aaba757e223e78c203ddddd259f97d52554b1718b",
+    "porting/generated/native93-final/0x14419d510.c": "08270de3f1e1b308a2e6a381cc7cdb6e836b4016767fb009ecb40ab304d19612"
+  },
+  "engine_contracts": {
+    "/opt/fortnite/UnrealEngine/Engine/Source/Runtime/Engine/Private/World.cpp": {
+      "line": 5446,
+      "body": "return (DemoNetDriver && DemoNetDriver->IsPlaying());"
+    },
+    "/opt/fortnite/UnrealEngine/Engine/Source/Runtime/Engine/Private/DemoNetDriver.cpp": {
+      "line": 1486,
+      "body": "return IsLoadingCheckpoint() || (ServerConnection != nullptr && ServerConnection->State != USOCK_Closed);"
+    }
+  }
+}

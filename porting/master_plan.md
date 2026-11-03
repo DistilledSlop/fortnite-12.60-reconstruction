@@ -10,6 +10,11 @@ credentials in Git, and the orchestrator reviews and commits.
 
 ## Current baseline
 
+Batch93 integrates supply-drop replay predicate through equivalent UE engine
+methods;2,174 bodies+238fields,2,412 accepted,0 rejected. Additional uncounted
+spawn/speed table/mutator helper source expands the larger supply-drop path.
+No builds/tests;134 canonical+4 manual pending; next3,040; all gates OPEN.
+
 Batch92 integrates3 pickup count/constant bodies;2,173 bodies+238fields,
 2,411 accepted,0 rejected. New uncounted supply-drop storm/spawn, pickup state
 and mutator-query source drafts preserve explicit integration dependencies.

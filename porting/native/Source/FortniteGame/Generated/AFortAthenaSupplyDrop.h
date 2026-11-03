@@ -82,6 +82,9 @@ public:
 	UPROPERTY(Config)
 	bool bVisualizePlayerInteractionChanges;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsPlayingAReplay() const;
+
 	UFUNCTION()
 	void OnRep_NumPlayersInteracting();
 

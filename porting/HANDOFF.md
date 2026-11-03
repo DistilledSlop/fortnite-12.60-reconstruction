@@ -1,5 +1,40 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Supply-drop replay integration and data-helper recovery batch93 (2026-11-03)
+
+Integrated1 complete IsPlayingAReplay body: null GetWorld returnsfalse, otherwise
+uses UWorld::IsPlayingReplay. Original14191bde0 ->144693a30 ->14419d510 matches
+UE World.cpp5446 and DemoNetDriver.cpp1486: checkpoint loading OR nonnull
+connection with state not USOCK_Closed(1), checked NetConnection.h64. Complete
+body uses existing engine implementations, no hidden reconstructed helper.
+Generation93 accepts2,412 entries=2,174 bodies+238fields, rejected0; only
+AFortAthenaSupplyDrop.h/.cpp changed, no additions/removals;12,828 unchanged
+file mtimes restored. Command python3 -I /tmp/promote-native-batch93.py; log
+/tmp/promote-native-batch93.log; reports gameplay-bulk-integration-93/.
+No tests/build/runtime: last2,040;134 canonical+4 manual pending; next3,040.
+All four product gates OPEN, objective ACTIVE. Batch92 source98b69620 and
+dashboardfb4a1617 pushed before this commit; prior turn PROGRESS.
+
+New uncounted ModeSupplyDrop.cpp expands both game-mode data helpers with
+ordered mutator speed overrides, destructor/context clear before row fallback,
+int32-to-float table values and ordered output stores, preserving aliasing.
+Root resolves drop receiver+10 to UObject::GetClass/UClass*. Row selection,
+iterator integration and virtual bindings remain explicit gaps. Two further
+loot wrappers were examined: SpawnPickup native141922270 calls class getter
+142a292d0 then returnsnull; SpawnPickupFromItemEntry invokes140680300 returning
+null, but wrapper initialization/copy/destruction and Blueprint event dispatch
+must be respected. Neither is promoted merely from a null return.
+
+Root serial Ghidra native93-loot5 andnative93-final3 successful, metadata rolled
+back, all handles terminal. Commands probe_callees.py --input/tmp/<name>.json
+--out porting/generated/<name> --timeout60 --mem12G; logs/tmp/<name>.log.
+Three bounded Terra medium tasks finished this continuation; no active workers
+or generators. Root owns canonical/native/generation/staging/build. Preserve
+unrelated graphics/Engine edits and visual pause. Continue fresh grouped native
+recovery and promote genuinely complete source; rough drafts never count. Keep
+checks/content reads bounded, fork-none Terra medium (Luna medium small reads,
+Sol6.1 medium complex), and next testing at3,040 bodies.
+
 ## Supply-drop, pickup state and mutator query batch92 (2026-11-03)
 
 Integrated3 complete pickup bodies: capsule half-height60.0f, radius30.0f and
