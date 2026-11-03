@@ -73,3 +73,31 @@ Evidence method: image is /mnt/vibrato/fortnite-evidence/original-late-capture-1
 - Pseudo-C calls `thunk_FUN_143d853b0` at the EntryBox setter. The disassembly `call 0x143d852b0` at 0x144f5fc73 (rcx = [W+0x448], dl = 1) gives VA 0x143d852b0. The translation uses 0x143d852b0 (CALLEES.md matches). The pseudo-C thunk name is unexplained.
 - Call sites in 0x144f5fbc0..0x144f5fca7 (ConfirmClicked): 0x143d66ef0 (WeakPin), `cmp`/`call *0x268` on the button, 0x144ade110 (OuterWalk), 0x144ce33d0 (Dispatch), 0x143d852b0 (EntryBox setter), tail `jmp 0x1407f7e20` at 0x144f5fc8b, and 0x144f55c60 (Present) on the zero path.
 - BotClick's virtual call at 0x288 is on `this` (the window) per the pseudo-C pattern. Not separately disassembled.
+
+## VERIFIED (pass 3: 0x1408033f0, vtable 0x270 chain, W+0x490)
+
+Sources: porting/generated/decomp-imports/Imports/NativeHelper1408033f0__1408033f0.c (Ghidra pseudo-C), cross-checked by flat disassembly of image-125.runtime.bin (dd + objdump, VA-based).
+
+### 0x1408033f0 (tail target of 0x1407f7e20): body verified, meaning UNKNOWN
+- Entry: rcx = P. Called as `jmp 0x1408033f0` from 0x1407f7e20 with P = [obj+0x1f0] (see earlier VERIFIED block).
+- Fields read: A = byte [P+0x409], B = byte [P+0x408] (set by the caller from dl), C = qword [P+0x3f8].
+- Disassembly: `cmpb $0,0x409(%rcx)` at 0x1408033fa, `je 0x14080346b` at 0x140803404, `cmpq $0,0x3f8(%rcx)` at 0x140803406, `cmpb $0,0x408(%rcx)` at 0x140803414, `movb $0,0x409(%rcx)` at 0x140803421, `call 0x1407bc830` at 0x140803431.
+- Logic (pseudo-C, consistent with the disassembly):
+  - If A == 0: if C == 0 and B == 0, return. Otherwise set A = 1, call 0x1407bc830(P+0x3e8, 1), send payload with byte DAT_147c522f1 to FUN_142fd17e0([P+0x3b8]), then send payload with byte DAT_147c522f4 to FUN_142fd17e0([P+0x3c8]).
+  - If A != 0: if C != 0 return; if B != 0 return; set A = 0, call 0x1407bc830(P+0x3e8, 0), send payload with byte DAT_147c522f4 to [P+0x3b8], then payload with byte DAT_147c522f1 to [P+0x3c8].
+  - Payload: 16-byte local {byte b; byte 1; qword 0; dword 0}, passed by pointer.
+- So it is a guarded two-state toggle of byte [P+0x409] with two notifications per transition. Meaning of the state, of 0x1407bc830, of 0x142fd17e0, and of the DAT_147c522f1/f4 values: UNKNOWN. Types of [P+0x3b8], [P+0x3c8], [P+0x3e8]: UNKNOWN.
+
+### 0x1408033f0 is not 0x1407f7e20's only consumer
+- Imports/u1__1407f7e20.c line 21 calls FUN_1408033f0 (same callee). No other caller was checked.
+
+### Vtable slot 0x270: candidate vtables read, receivers still unresolved
+- Candidate vtable 0x1468284a8 (native_class_index "UImage", status unverified; also listed as candidate for UListView, UHorizontalBox, and others, so not class-specific): slot 0x270 = 0x143d91830.
+- Constructor 0x143d35365 (Imports/NativeCtor143d35365__143d35365.c): stores vptr 0x1468284a8 at obj+0 (line 20) and later vptr 0x146828780 at obj+0 (line 44). Its class is not identified. Direct e8/e9 call scan and rel32/abs64 scans for 0x143d35365 found no references.
+- Vtable 0x146828780: slot 0x270 = 0x143d91830 (same target). Class UNKNOWN.
+- Candidate vtable 0x145da35f0 (native_class_index "UFortConfirmationWindow", status unverified): slot 0x270 = 0x1406801e0. Stores of this address: 0x14185ae5f (`lea`, then `mov %rax,(%rcx)` at 0x14185ae69, so a vptr store into the object in rcx; the object class is not identified) and 0x14186ff72 (`mov %rax,0x10(%rbx)`, so NOT a vptr store).
+- UImage class-block attempt failed: StaticClass getter 0x143dac0a0 and its registration (Imports/NativeCtorImage143dac5b0__143dac5b0.c) resolve to L"ListViewBase", not Image. The UImage constructor is not found.
+- Result: slot 0x270 targets for the receiver at [W+0x480] (u2 at 0x144f7601e) and for the 0x144f5fcc0 helper remain UNKNOWN. The receiver's runtime class is not verified, so none of the three slot-0x270 addresses above is claimed as its target.
+
+### W+0x490 (no new facts)
+- Owner and type remain as in the earlier VERIFIED block (unreflected native member, type UNKNOWN). The window constructor was not identified in this pass.
