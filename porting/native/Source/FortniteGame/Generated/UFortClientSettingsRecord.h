@@ -1066,6 +1066,12 @@ public:
 	float GetGamepadEditModeMultiplier() const;
 
 	UFUNCTION()
+	float GetGamepadLookSensitivityX() const;
+
+	UFUNCTION()
+	float GetGamepadLookSensitivityY() const;
+
+	UFUNCTION()
 	float GetGamepadLookStickDeadZone() const;
 
 	UFUNCTION()

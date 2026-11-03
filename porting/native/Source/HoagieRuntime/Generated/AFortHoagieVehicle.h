@@ -310,6 +310,9 @@ public:
 	float CurrentHLODMaxDrawDistanceScale;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetAltitude() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetBoostCooldown() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
@@ -320,6 +323,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetBoostTimeLeft() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetDistanceToGround() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetMaxAltitude() const;

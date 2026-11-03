@@ -28,5 +28,8 @@ public:
 	UPROPERTY()
 	bool bActivateFirstSlotOnAdding;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetActiveWidgetIndex() const;
+
 };
 

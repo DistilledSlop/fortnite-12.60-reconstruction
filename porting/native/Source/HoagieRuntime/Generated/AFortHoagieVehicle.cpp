@@ -3,6 +3,15 @@
 #include "UFortHoagieVehicleConfigs.h"
 #include "Net/UnrealNetwork.h"
 
+float AFortHoagieVehicle::GetAltitude() const
+{
+	// CONFIDENCE: high; native assembly and reflected HitResult offsets reviewed.
+	// Native body reads the reflected FHitResult member.
+	{
+		return AltimeterTraceResult.TraceStart.Z;
+	}
+}
+
 float AFortHoagieVehicle::GetBoostCooldown() const
 {
 	// CONFIDENCE: high; recovered native body and reflected field mapping.
@@ -30,6 +39,15 @@ float AFortHoagieVehicle::GetBoostTimeLeft() const
 	// CONFIDENCE: high; recovered native body and reflected field mapping.
 	// Original exec 0x140859500; direct implementation in native95-impl.
 	return BoostTimeLeft;
+}
+
+float AFortHoagieVehicle::GetDistanceToGround() const
+{
+	// CONFIDENCE: high; native assembly and reflected HitResult offsets reviewed.
+	// Native body reads the reflected FHitResult member.
+	{
+		return AltimeterTraceResult.Distance;
+	}
 }
 
 float AFortHoagieVehicle::GetMaxAltitude() const

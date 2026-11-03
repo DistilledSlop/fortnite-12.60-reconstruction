@@ -1,0 +1,141 @@
+[
+  {
+    "class": "AFortHoagieVehicle",
+    "function": "GetAltitude",
+    "reflection": {
+      "exec_addr": "0x140859430",
+      "flags": "0x54020401",
+      "params": [
+        {
+          "index": 0,
+          "name": "ReturnValue",
+          "kind": "Float",
+          "kind_raw": "0xa",
+          "property_flags": "0x10000000000580",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0
+        }
+      ],
+      "create_func": "0x140857370",
+      "source": "lea"
+    },
+    "wrapper_capture": "porting/generated/native95-broad/0x140859430.c",
+    "native_body_capture": "porting/generated/native95-impl/0x14084baa0.c",
+    "native_assembly": "porting/generated/native95-impl/0x14084baa0.asm",
+    "owner_reflection": "porting/generated/reflection/fortnite_game_reflection.json: AltimeterTraceResult offset 4420 (0x1144), struct constructor 0x144704460",
+    "struct_reflection": "porting/generated/reflection/struct_blocks.json: /Script/Engine HitResult, TraceStart offset 64 and Distance offset 12",
+    "engine_declaration": "/opt/fortnite/UnrealEngine4260/Engine/Source/Runtime/Engine/Classes/Engine/EngineTypes.h: FHitResult",
+    "native_read": "0x118c",
+    "struct_relative_read": "0x48",
+    "member": "AltimeterTraceResult.TraceStart.Z",
+    "vector_reflection": "porting/generated/reflection/struct_blocks.json: Vector_NetQuantize super 0x142eea590 (Vector), Vector.Z float offset 8"
+  },
+  {
+    "class": "AFortHoagieVehicle",
+    "function": "GetDistanceToGround",
+    "reflection": {
+      "exec_addr": "0x140859530",
+      "flags": "0x54020401",
+      "params": [
+        {
+          "index": 0,
+          "name": "ReturnValue",
+          "kind": "Float",
+          "kind_raw": "0xa",
+          "property_flags": "0x10000000000580",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0
+        }
+      ],
+      "create_func": "0x140857460",
+      "source": "lea"
+    },
+    "wrapper_capture": "porting/generated/native95-broad/0x140859530.c",
+    "native_body_capture": "porting/generated/native95-impl/0x14084bdc0.c",
+    "native_assembly": "porting/generated/native95-impl/0x14084bdc0.asm",
+    "owner_reflection": "porting/generated/reflection/fortnite_game_reflection.json: AltimeterTraceResult offset 4420 (0x1144), struct constructor 0x144704460",
+    "struct_reflection": "porting/generated/reflection/struct_blocks.json: /Script/Engine HitResult, TraceStart offset 64 and Distance offset 12",
+    "engine_declaration": "/opt/fortnite/UnrealEngine4260/Engine/Source/Runtime/Engine/Classes/Engine/EngineTypes.h: FHitResult",
+    "native_read": "0x1150",
+    "struct_relative_read": "0xc",
+    "member": "AltimeterTraceResult.Distance"
+  },
+  {
+    "class": "AFortHoagieVehicle",
+    "function": "GetIsEngineOn",
+    "reflection": {
+      "exec_addr": "0x1408595c0",
+      "flags": "0x54020401",
+      "params": [
+        {
+          "index": 0,
+          "name": "ReturnValue",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x10000000000580",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 1,
+          "bitfield": true,
+          "offset": null
+        }
+      ],
+      "create_func": "0x1408574f0",
+      "source": "lea"
+    },
+    "wrapper_capture": "porting/generated/native95-broad/0x1408595c0.c",
+    "native_body_capture": "porting/generated/native95-impl/0x14084c070.c",
+    "native_assembly": "porting/generated/native95-impl/0x14084c070.asm",
+    "storage": "0x11dc: uint32 raw state; unsigned SETBE, dword operations",
+    "constructor_registration": "porting/generated/native204-filter-state/0x1408581f0.c",
+    "constructor_wrapper": "porting/generated/native372-callees/0x1408582e0.c",
+    "constructor_body": "porting/generated/native373-callees/0x1408495e0.c",
+    "constructor_assembly": "porting/generated/native373-callees/0x1408495e0.asm: MOV dword ptr [RDI + 0x11dc], 7",
+    "placement": "porting/generated/reflection/fortnite_game_reflection.json: HoagieStateRep 0x11d8; CurrentRotorSpeed 0x11e0"
+  },
+  {
+    "class": "AFortHoagieVehicle",
+    "function": "IsStartingUp",
+    "reflection": {
+      "exec_addr": "0x1408598e0",
+      "flags": "0x54020401",
+      "params": [
+        {
+          "index": 0,
+          "name": "ReturnValue",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x10000000000580",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 1,
+          "bitfield": true,
+          "offset": null
+        }
+      ],
+      "create_func": "0x1408577c0",
+      "source": "lea"
+    },
+    "wrapper_capture": "porting/generated/native95-broad/0x1408598e0.c",
+    "native_body_capture": "porting/generated/native95-impl/0x14084cd20.c",
+    "native_assembly": "porting/generated/native95-impl/0x14084cd20.asm",
+    "storage": "0x11dc: uint32 raw state; unsigned SETBE, dword operations",
+    "constructor_registration": "porting/generated/native204-filter-state/0x1408581f0.c",
+    "constructor_wrapper": "porting/generated/native372-callees/0x1408582e0.c",
+    "constructor_body": "porting/generated/native373-callees/0x1408495e0.c",
+    "constructor_assembly": "porting/generated/native373-callees/0x1408495e0.asm: MOV dword ptr [RDI + 0x11dc], 7",
+    "placement": "porting/generated/reflection/fortnite_game_reflection.json: HoagieStateRep 0x11d8; CurrentRotorSpeed 0x11e0"
+  }
+]

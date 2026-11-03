@@ -1,0 +1,60 @@
+{
+  "functions": [
+    {
+      "function": "GetInputManager",
+      "wrapper": "porting/generated/native368-callees/0x140818410.c",
+      "reflection": "porting/generated/reflection/native_funcs.json",
+      "layout": "Returns reflected CommonInputManager at +0x50.",
+      "class": "UCommonUISubsystem"
+    },
+    {
+      "function": "GetActiveWidgetIndex",
+      "wrapper": "porting/generated/native368-callees/0x140818200.c",
+      "reflection": "porting/generated/reflection/native_funcs.json",
+      "layout": "Returns reflected ActiveWidgetIndex at +0x134.",
+      "class": "UCommonVisibilitySwitcher"
+    },
+    {
+      "function": "GetGamepadLookSensitivityX",
+      "wrapper": "porting/generated/native368-callees/0x14287db10.c",
+      "reflection": "porting/generated/reflection/native_funcs.json",
+      "layout": "Returns X from reflected FVector2D at +0x2d4.",
+      "class": "UFortClientSettingsRecord"
+    },
+    {
+      "function": "GetGamepadLookSensitivityY",
+      "wrapper": "porting/generated/native368-callees/0x14287db30.c",
+      "reflection": "porting/generated/reflection/native_funcs.json",
+      "layout": "Returns Y from reflected FVector2D at +0x2d8.",
+      "class": "UFortClientSettingsRecord"
+    },
+    {
+      "function": "GetInteractionType",
+      "wrapper": "porting/generated/native368-callees/0x142959120.c",
+      "reflection": "porting/generated/reflection/native_funcs.json",
+      "layout": "Returns first byte of reflected FInteractionType at +0x28.",
+      "class": "UInteractionTypeContext"
+    },
+    {
+      "function": "GetActiveTab",
+      "wrapper": "porting/generated/native368-callees/0x140814cf0.c",
+      "reflection": "porting/generated/reflection/native_funcs.json",
+      "layout": "Returns non-reflected FName storage at +0x310.",
+      "class": "UCommonTabListWidget"
+    },
+    {
+      "function": "GetBasePowerRating",
+      "wrapper": "porting/generated/native368-callees/0x1452857c0.c",
+      "reflection": "porting/generated/reflection/native_funcs.json",
+      "layout": "Returns non-reflected int32 at +0x26c.",
+      "class": "UFortPlayerPowerRating"
+    },
+    {
+      "function": "GetDisplayNameVisibility",
+      "wrapper": "porting/generated/native368-callees/0x1452ce000.c",
+      "reflection": "porting/generated/reflection/native_funcs.json",
+      "layout": "Returns non-reflected ESlateVisibility at +0x90.",
+      "class": "UFortSetting"
+    }
+  ]
+}

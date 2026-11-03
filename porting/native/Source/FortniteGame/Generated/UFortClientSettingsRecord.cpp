@@ -276,6 +276,18 @@ float UFortClientSettingsRecord::GetGamepadEditModeMultiplier() const
 	return GamepadEditModeMultiplier;
 }
 
+float UFortClientSettingsRecord::GetGamepadLookSensitivityX() const
+{
+	// CONFIDENCE: high; wrapper and layout reviewed.
+	return GamepadLookSensitivity.X;
+}
+
+float UFortClientSettingsRecord::GetGamepadLookSensitivityY() const
+{
+	// CONFIDENCE: high; wrapper and layout reviewed.
+	return GamepadLookSensitivity.Y;
+}
+
 float UFortClientSettingsRecord::GetGamepadLookStickDeadZone() const
 {
 	// Original address: 0x14287db50.

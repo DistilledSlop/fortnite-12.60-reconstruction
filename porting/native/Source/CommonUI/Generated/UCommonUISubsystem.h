@@ -27,6 +27,9 @@ public:
 	UPROPERTY(Transient)
 	UCommonInputManager* CommonInputManager;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UCommonInputManager* GetInputManager() const;
+
 // Include CommonActionRouteTypes.h before UCommonUISubsystem.generated.h.
 public:
     // Actual native bool multicast+58. Producer1407f7b90 emits true after

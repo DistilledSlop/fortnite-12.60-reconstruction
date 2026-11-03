@@ -1,0 +1,17 @@
+{
+  "NativeRecoveredName_0x310": {
+    "default": "NAME_None",
+    "constructor": "porting/generated/native129-constructors/0x140797810.c",
+    "notes": "Constructor zeros the 8-byte FName at +0x310."
+  },
+  "NativeRecoveredInt32_0x26c": {
+    "default": "-1",
+    "constructor": "porting/generated/native129-constructors/0x144deb3d0.c",
+    "notes": "Constructor writes all ones to the 8 bytes at +0x26c; this getter reads the low int32."
+  },
+  "NativeRecoveredVisibility_0x90": {
+    "default": "ESlateVisibility::SelfHitTestInvisible",
+    "constructor": "porting/generated/native126-dispatch-bulk/0x1452ccad0.c",
+    "notes": "Constructor writes byte value 4 at +0x90; the getter reads one byte and reflected return is ESlateVisibility."
+  }
+}

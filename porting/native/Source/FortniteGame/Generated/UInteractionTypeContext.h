@@ -7,6 +7,7 @@
 #include "UObject/Object.h"
 
 #include "FInteractionType.h"
+#include "TInteractionType.h"
 
 #include "UInteractionTypeContext.generated.h"
 
@@ -19,6 +20,9 @@ public:
 	// table index 0, flags 0x40008000000000
 	UPROPERTY()
 	FInteractionType InteractionType;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	TEnumAsByte<TInteractionType> GetInteractionType() const;
 
 };
 
