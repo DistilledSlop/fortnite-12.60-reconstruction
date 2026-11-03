@@ -22,8 +22,9 @@ getter1453113f0 names FortUIDirector at literal14700ed32. The removal fragment
 is a lifetime candidate: its native weak array declaration, processing tick,
 lifetime and ownership must be joined before promotion. The removal
 log literal146e46290 is UI Director is trashing widget [%s], verbosity6.
-Both diagnostic fragments retain unresolved log bindings until the actual
-category identity is established; no guessed category is emitted. Transition
+Both diagnostic fragments now share the proven LogFortUI category from
+ui_config_singleton_runtime/SharedFortUILog.h; initializer1405dcde0 constructs
+it from literal146d716a0. No duplicate category is defined. Transition
 verbosity is4, with the exact literal above. Logger providers must preserve
 their original verbosity guards before evaluating name conversions.
 No generic RemoveFromParent shortcut is appropriate.

@@ -1,4 +1,5 @@
 #pragma once
 class UUserWidget;
-// Original category identity must be joined before emitting the logger body.
+#include "SharedFortUILog.h"
+// Original category identity is joined through1405dcde0.
 void NativeLogWidgetTrashed145174fae(UUserWidget* Widget);

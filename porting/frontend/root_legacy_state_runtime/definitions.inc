@@ -53,3 +53,10 @@ FString UFortRootViewportLayout::NativeLegacyStateName14514e200(uint8 State) con
     static UEnum* StateEnum = FindObject<UEnum>(ANY_PACKAGE, TEXT("EFortUIState"), true);
     return StateEnum ? StateEnum->GetNameStringByValue(State) : FString(TEXT("Unknown"));
 }
+
+void UFortRootViewportLayout::NativeLogLegacyStateChange14516f4d1(uint8 PreviousState, uint8 NewState) const
+{
+    UE_LOG(LogFortUI, Display,
+        TEXT("[UFortRootViewportLayout::SetLegacyUIState] Switching states from: %s to %s"),
+        *NativeLegacyStateName14514e200(PreviousState), *NativeLegacyStateName14514e200(NewState));
+}

@@ -1,0 +1,76 @@
+{
+  "windows": [
+    {
+      "label": "getter",
+      "va": "0x141e5f160",
+      "size": 8,
+      "sha256": "3fc30e32949388701e3ba733d4a0226e7f54ef1f8f55b12718f8f88dc56328ed"
+    },
+    {
+      "label": "setter",
+      "va": "0x141e7ec30",
+      "size": 418,
+      "sha256": "3532ab160f3473b4e65a7986a6b65c4b2a3d10c763992bc08ca9591a8dc53a1a"
+    },
+    {
+      "label": "native_zero_broadcast",
+      "va": "0x140684de0",
+      "size": 143,
+      "sha256": "54d18df03748302d0a0520f1de21eccf15fb4fc85ccf4e8ba2d2abae4aab4f1d"
+    },
+    {
+      "label": "second_writer_transition",
+      "va": "0x141e648aa",
+      "size": 459,
+      "sha256": "26648d6b1bcf115adf7766a6bbff0ef6b1c1b1e10aa85c560c814eeb86e5191a"
+    },
+    {
+      "label": "global_service_getter",
+      "va": "0x141df62a0",
+      "size": 128,
+      "sha256": "9ed0039569c9bfd0b75e70e492dd0dab10eec3ec2c0b08eda9d80f9cdb3478ff"
+    },
+    {
+      "label": "subsystem_getter",
+      "va": "0x141856620",
+      "size": 144,
+      "sha256": "43265d2ad35cc522b96dcea688bd6a16c8811f6bc29c01b7a4c2dd3d18bc90d7"
+    },
+    {
+      "label": "gi_refresh_entry",
+      "va": "0x141e78990",
+      "size": 160,
+      "sha256": "8040658c16f889f02601b3e189848f5bd510e4d2dcbf7945be18b344518f6666"
+    },
+    {
+      "label": "constructor_fields",
+      "va": "0x141e491c8",
+      "size": 176,
+      "sha256": "afa736138d2c87f492ee1ce49a22ec7e6dfc1b717976d7b55b595d12ad8930e5"
+    },
+    {
+      "label": "registered_player_refresh",
+      "va": "0x141e78990",
+      "size": 471,
+      "sha256": "1bf40018a663362d4b8a41a570b9e833c6b52d318ef923ffdf231137739a2b76"
+    },
+    {
+      "label": "registered_player_lookup_update",
+      "va": "0x141e79020",
+      "size": 389,
+      "sha256": "237e5ef7625bae5a227484cfd56e726bf1b06aff8b01af2a7525d98e164d547b"
+    },
+    {
+      "label": "director_subgame_slot",
+      "va": "0x14700fec8",
+      "size": 8,
+      "sha256": "529b2136288529a9911806caa42362f943469d02116a05924f84843b0dd643ca"
+    },
+    {
+      "label": "director_subgame_slot_body",
+      "va": "0x145165540",
+      "size": 5,
+      "sha256": "0a9032f2828dbc3cbd5c61194538ae60a547b062cde1a243a0ce249a7d1b191b"
+    }
+  ]
+}

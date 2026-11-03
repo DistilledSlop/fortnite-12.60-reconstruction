@@ -5,7 +5,7 @@ void NativeSetLegacyState14516f380(uint8 Selector);
 virtual void NativeChooseLegacyState480(uint8& Selector, UClass*& StateClass);
 void NativeAttachState145174c00(UUserWidget* StateWidget);
 FString NativeLegacyStateName14514e200(uint8 State) const;
-// Requires the original log-category identity; intentionally no fallback body.
+// Category identity is proven by1405dcde0; share SharedFortUILog.h.
 void NativeLogLegacyStateChange14516f4d1(uint8 PreviousState, uint8 NewState) const;
 
 // UFortUIStateWidget_NUI. These are real virtual contracts, not empty defaults.

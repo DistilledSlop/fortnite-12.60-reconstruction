@@ -1,0 +1,547 @@
+{
+  "0x145a00360": {
+    "functions": {
+      "OnAddedToActivationStack": {
+        "name": "OnAddedToActivationStack",
+        "create_func": "0x140805780",
+        "flags": [
+          "0x8080800"
+        ],
+        "replicated_function": false,
+        "net_roles": [],
+        "outer_fn": "0x140807980",
+        "params": []
+      },
+      "OnRemovedFromActivationStack": {
+        "name": "OnRemovedFromActivationStack",
+        "create_func": "0x140805840",
+        "flags": [
+          "0x8080800"
+        ],
+        "replicated_function": false,
+        "net_roles": [],
+        "outer_fn": "0x140807980",
+        "params": []
+      }
+    },
+    "properties": [
+      {
+        "index": 0,
+        "name": "bShouldBypassStack",
+        "kind": "Bool",
+        "kind_raw": "0x2c",
+        "property_flags": "0x20080000000015",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "element_size": 1,
+        "size_of_outer": 1040,
+        "bitfield": true,
+        "set_bit_fn": "0x140808fe0",
+        "offset": null
+      },
+      {
+        "index": 1,
+        "name": "bExposeActionsExternally",
+        "kind": "Bool",
+        "kind_raw": "0x2c",
+        "property_flags": "0x20080000000015",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "element_size": 1,
+        "size_of_outer": 1040,
+        "bitfield": true,
+        "set_bit_fn": "0x140808f30",
+        "offset": null
+      },
+      {
+        "index": 2,
+        "name": "bConsumeAllActions",
+        "kind": "Bool",
+        "kind_raw": "0x2c",
+        "property_flags": "0x20080000000015",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "element_size": 1,
+        "size_of_outer": 1040,
+        "bitfield": true,
+        "set_bit_fn": "0x140808f00",
+        "offset": null
+      },
+      {
+        "index": 3,
+        "name": "OnWidgetDeactivated",
+        "kind": "InlineMulticastDelegate",
+        "kind_raw": "0x1b",
+        "property_flags": "0x10000010080000",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 752,
+        "type_refs": {
+          "signature": "0x140809870"
+        }
+      },
+      {
+        "index": 4,
+        "name": "OnWidgetActivated",
+        "kind": "InlineMulticastDelegate",
+        "kind_raw": "0x1b",
+        "property_flags": "0x10000010080000",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 736,
+        "type_refs": {
+          "signature": "0x140809870"
+        }
+      }
+    ]
+  },
+  "0x145a05fd0": {
+    "functions": {
+      "PushActivatablePanel": {
+        "name": "PushActivatablePanel",
+        "create_func": "0x14080ee40",
+        "flags": [
+          "0x4020401",
+          "0x4022401"
+        ],
+        "replicated_function": null,
+        "note": "ambiguous: several FFunctionParams share this name pointer",
+        "params_note": "ambiguous: candidates disagree on parameter table",
+        "candidates": [
+          {
+            "owning_class": null,
+            "outer_fn": "0x14080e9a0",
+            "flags": "0x4020401",
+            "nprop": 3,
+            "params": [
+              {
+                "index": 0,
+                "name": "bOutroPanelBelow",
+                "kind": "Bool",
+                "kind_raw": "0x2c",
+                "property_flags": "0x10000000000080",
+                "replicated": false,
+                "rep_notify": null,
+                "array_dim": 1,
+                "object_flags": "0x45",
+                "element_size": 1,
+                "size_of_outer": 16,
+                "bitfield": true,
+                "set_bit_fn": "0x1407509a0",
+                "offset": null
+              },
+              {
+                "index": 1,
+                "name": "bIntroPanel",
+                "kind": "Bool",
+                "kind_raw": "0x2c",
+                "property_flags": "0x10000000000080",
+                "replicated": false,
+                "rep_notify": null,
+                "array_dim": 1,
+                "object_flags": "0x45",
+                "element_size": 1,
+                "size_of_outer": 16,
+                "bitfield": true,
+                "set_bit_fn": "0x14070aae0",
+                "offset": null
+              },
+              {
+                "index": 2,
+                "name": "ActivatablePanel",
+                "kind": "Object",
+                "kind_raw": "0x12",
+                "property_flags": "0x10000000080080",
+                "replicated": false,
+                "rep_notify": null,
+                "array_dim": 1,
+                "object_flags": "0x45",
+                "offset": 0,
+                "type_refs": {
+                  "class": "0x140805d20"
+                }
+              }
+            ]
+          },
+          {
+            "owning_class": null,
+            "outer_fn": "0x14530c0e0",
+            "flags": "0x4022401",
+            "nprop": 2,
+            "params": [
+              {
+                "index": 0,
+                "name": "Panel",
+                "kind": "Object",
+                "kind_raw": "0x12",
+                "property_flags": "0x10000000080080",
+                "replicated": false,
+                "rep_notify": null,
+                "array_dim": 1,
+                "object_flags": "0x45",
+                "offset": 8,
+                "type_refs": {
+                  "class": "0x140805d20"
+                }
+              },
+              {
+                "index": 1,
+                "name": "Context",
+                "kind": "Object",
+                "kind_raw": "0x12",
+                "property_flags": "0x10000000080080",
+                "replicated": false,
+                "rep_notify": null,
+                "array_dim": 1,
+                "object_flags": "0x45",
+                "offset": 0,
+                "type_refs": {
+                  "class": "0x143dbd0a0"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "PopActivatablePanel": {
+        "name": "PopActivatablePanel",
+        "create_func": "0x14080ede0",
+        "flags": [
+          "0x4020401",
+          "0x4022401"
+        ],
+        "replicated_function": null,
+        "note": "ambiguous: several FFunctionParams share this name pointer",
+        "params_note": "ambiguous: candidates disagree on parameter table",
+        "candidates": [
+          {
+            "owning_class": null,
+            "outer_fn": "0x14080e9a0",
+            "flags": "0x4020401",
+            "nprop": 1,
+            "params": [
+              {
+                "index": 0,
+                "name": "ActivatablePanel",
+                "kind": "Object",
+                "kind_raw": "0x12",
+                "property_flags": "0x10000000080080",
+                "replicated": false,
+                "rep_notify": null,
+                "array_dim": 1,
+                "object_flags": "0x45",
+                "offset": 0,
+                "type_refs": {
+                  "class": "0x140805d20"
+                }
+              }
+            ]
+          },
+          {
+            "owning_class": null,
+            "outer_fn": "0x14530c0e0",
+            "flags": "0x4022401",
+            "nprop": 2,
+            "params": [
+              {
+                "index": 0,
+                "name": "Panel",
+                "kind": "Object",
+                "kind_raw": "0x12",
+                "property_flags": "0x10000000080080",
+                "replicated": false,
+                "rep_notify": null,
+                "array_dim": 1,
+                "object_flags": "0x45",
+                "offset": 8,
+                "type_refs": {
+                  "class": "0x140805d20"
+                }
+              },
+              {
+                "index": 1,
+                "name": "Context",
+                "kind": "Object",
+                "kind_raw": "0x12",
+                "property_flags": "0x10000000080080",
+                "replicated": false,
+                "rep_notify": null,
+                "array_dim": 1,
+                "object_flags": "0x45",
+                "offset": 0,
+                "type_refs": {
+                  "class": "0x143dbd0a0"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "SuspendStartingOperationProcessing": {
+        "name": "SuspendStartingOperationProcessing",
+        "create_func": "0x14080efc0",
+        "flags": [
+          "0x4020401"
+        ],
+        "replicated_function": false,
+        "net_roles": [],
+        "outer_fn": "0x14080e9a0",
+        "params": []
+      },
+      "ResumeStartingOperationProcessing": {
+        "name": "ResumeStartingOperationProcessing",
+        "create_func": "0x14080ee70",
+        "flags": [
+          "0x4020401"
+        ],
+        "replicated_function": false,
+        "net_roles": [],
+        "outer_fn": "0x14080e9a0",
+        "params": []
+      }
+    },
+    "properties": [
+      {
+        "index": 0,
+        "name": "Operations",
+        "kind": "Array",
+        "kind_raw": "0x16",
+        "property_flags": "0x40008000000000",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 232
+      },
+      {
+        "index": 1,
+        "name": "Operations",
+        "kind": "Struct",
+        "kind_raw": "0x19",
+        "property_flags": "0x8000000000",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 0,
+        "type_refs": {
+          "struct": "0x14080fc10"
+        },
+        "array_inner_of": "Operations"
+      },
+      {
+        "index": 2,
+        "name": "GlobalInputHandler",
+        "kind": "Object",
+        "kind_raw": "0x12",
+        "property_flags": "0x40000000000000",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 200,
+        "type_refs": {
+          "class": "0x14080e430"
+        }
+      },
+      {
+        "index": 3,
+        "name": "ActivatablePanelStack",
+        "kind": "Array",
+        "kind_raw": "0x16",
+        "property_flags": "0x40008000000008",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 184
+      },
+      {
+        "index": 4,
+        "name": "ActivatablePanelStack",
+        "kind": "Object",
+        "kind_raw": "0x12",
+        "property_flags": "0x80008",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 0,
+        "type_refs": {
+          "class": "0x140805d20"
+        },
+        "array_inner_of": "ActivatablePanelStack"
+      },
+      {
+        "index": 5,
+        "name": "CurrentlyHeldActionInputHandler",
+        "kind": "Interface",
+        "kind_raw": "0x13",
+        "property_flags": "0x44000000000000",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 168,
+        "type_refs": {
+          "interface_class": "0x140806da0"
+        }
+      }
+    ]
+  },
+  "operation": {
+    "block_va": "0x147835bb0",
+    "name": "Operation",
+    "construct_fns": [
+      "0x14080fc10"
+    ],
+    "package_fn": "0x140812ee0",
+    "package": "/Script/CommonUI",
+    "super_fn": null,
+    "struct_ops_fn": "0x14080e9d0",
+    "size": 40,
+    "align": 8,
+    "struct_flags": "0x5",
+    "struct_flag_names": [
+      "Native",
+      "HasInstancedReference"
+    ],
+    "object_flags": "0x45",
+    "struct_ops": {
+      "vtable_va": "0x145a073d0",
+      "ops_size": 40,
+      "ops_align": 8,
+      "size_matches": true,
+      "align_matches": true,
+      "traits": {
+        "HasNoopConstructor": false,
+        "HasZeroConstructor": false,
+        "HasDestructor": true,
+        "HasSerializer": false,
+        "HasStructuredSerializer": false,
+        "HasPostSerialize": false,
+        "HasNetSerializer": false,
+        "HasNetSharedSerialization": false,
+        "HasNetDeltaSerializer": false,
+        "HasPostScriptConstruct": false,
+        "IsPlainOldData": false,
+        "HasCopy": true,
+        "HasIdentical": false,
+        "HasExportTextItem": false,
+        "HasImportTextItem": false,
+        "HasAddStructReferencedObjects": false,
+        "HasSerializeFromMismatchedTag": false,
+        "HasStructuredSerializeFromMismatchedTag": false,
+        "HasGetTypeHash": false
+      },
+      "unclassified_slots": []
+    },
+    "properties": [
+      {
+        "index": 0,
+        "name": "bOutroPanelBelow",
+        "kind": "Bool",
+        "kind_raw": "0x2c",
+        "property_flags": "0x10000000000000",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "element_size": 1,
+        "size_of_outer": 40,
+        "bitfield": true,
+        "offset": null
+      },
+      {
+        "index": 1,
+        "name": "bActivatePanel",
+        "kind": "Bool",
+        "kind_raw": "0x2c",
+        "property_flags": "0x10000000000000",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "element_size": 1,
+        "size_of_outer": 40,
+        "bitfield": true,
+        "offset": null
+      },
+      {
+        "index": 2,
+        "name": "bIntroPanel",
+        "kind": "Bool",
+        "kind_raw": "0x2c",
+        "property_flags": "0x10000000000000",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "element_size": 1,
+        "size_of_outer": 40,
+        "bitfield": true,
+        "offset": null
+      },
+      {
+        "index": 3,
+        "name": "Panel",
+        "kind": "Object",
+        "kind_raw": "0x12",
+        "property_flags": "0x10000000080008",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 8,
+        "type_refs": {
+          "class": "0x140805d20"
+        }
+      },
+      {
+        "index": 4,
+        "name": "Operation",
+        "kind": "Enum",
+        "kind_raw": "0x1e",
+        "property_flags": "0x10000000000000",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 0,
+        "type_refs": {
+          "enum": "0x14080fbb0"
+        }
+      },
+      {
+        "index": 5,
+        "name": "UnderlyingType",
+        "kind": "Byte",
+        "kind_raw": "0x0",
+        "property_flags": "0x0",
+        "replicated": false,
+        "rep_notify": null,
+        "array_dim": 1,
+        "object_flags": "0x45",
+        "offset": 0,
+        "enum_underlying_of": "Operation"
+      }
+    ],
+    "num_properties": 6
+  },
+  "native_execs": {
+    "PushActivatablePanel": "0x1408107e0",
+    "PopActivatablePanel": "0x140810760",
+    "SuspendStartingOperationProcessing": "0x140811a20",
+    "ResumeStartingOperationProcessing": "0x1408108f0"
+  }
+}

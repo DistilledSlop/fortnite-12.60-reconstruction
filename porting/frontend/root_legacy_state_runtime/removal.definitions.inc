@@ -1,3 +1,8 @@
+void NativeLogWidgetTrashed145174fae(UUserWidget* Widget)
+{
+    UE_LOG(LogFortUI, Verbose, TEXT("UI Director is trashing widget [%s]"), *Widget->GetFName().ToString());
+}
+
 // 145174fa0. The original queues a weak reference and marks pending kill.
 // It does not substitute UWidget::RemoveFromParent for that lifetime contract.
 void NativeRemoveWidget145174fa0(UUserWidget* Widget)
