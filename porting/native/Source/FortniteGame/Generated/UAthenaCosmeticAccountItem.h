@@ -39,6 +39,9 @@ public:
 	UFortHero* GetHero() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual FText GetLockerItemTypeText() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool HasCosmeticVariance() const;
 
 };

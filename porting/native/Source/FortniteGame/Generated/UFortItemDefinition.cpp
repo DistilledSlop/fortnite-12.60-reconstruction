@@ -2,6 +2,7 @@
 #include "UFortItemDefinition.h"
 #include "AbilitySystemComponent.h"
 #include "AttributeSet.h"
+#include "Components/MeshComponent.h"
 #include "EFortItemType.h"
 #include "EFortRarity.h"
 #include "GameplayEffect.h"
@@ -11,6 +12,13 @@
 #include "UFortPlayerAttrSet.h"
 #include "UObject/NoExportTypes.h"
 #include "UObject/UnrealType.h"
+
+void UFortItemDefinition::CustomizePreviewMesh(UMeshComponent* Mesh) const
+{
+	// CONFIDENCE: high
+	// Native target 0x14202a320.
+	Mesh->EmptyOverrideMaterials();
+}
 
 void UFortItemDefinition::CustomizePreviewPrefab(AActor* PrefabInstance)
 {
@@ -58,6 +66,13 @@ EFortItemType UFortItemDefinition::GetItemType() const
 {
 	// Reflected wrapper dispatches to the existing virtual slot owner; confidence: high.
 	return NativeGetItemType();
+}
+
+TSoftObjectPtr<UTexture2D> UFortItemDefinition::GetLargePreviewImage() const
+{
+	// CONFIDENCE: high
+	// Native target 0x14202f500.
+	return LargePreviewImage.IsNull() ? GetSmallPreviewImage() : LargePreviewImage;
 }
 
 EFortRarity UFortItemDefinition::GetRarity() const

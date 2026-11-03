@@ -71,5 +71,9 @@ public:
 	void Refresh();
 	virtual void Refresh_Implementation();
 
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void SetSize(float NewButtonSize);
+	virtual void SetSize_Implementation(float NewButtonSize);
+
 };
 

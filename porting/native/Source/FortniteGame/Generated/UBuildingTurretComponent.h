@@ -53,8 +53,10 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_CurrentTarget, Transient)
 	AActor* CurrentTarget;
 
+protected:
 	UFUNCTION()
-	void OnRep_CurrentTarget(AActor* OldTarget);
+	virtual void OnRep_CurrentTarget(AActor* OldTarget);
+public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

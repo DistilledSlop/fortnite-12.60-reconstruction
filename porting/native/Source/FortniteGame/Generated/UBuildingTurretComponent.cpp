@@ -4,7 +4,9 @@
 
 void UBuildingTurretComponent::OnRep_CurrentTarget(AActor* OldTarget)
 {
-	// Body not recovered: reflection-derived stub.
+	// CONFIDENCE: high
+	// Native target 0x141c44830.
+	OnTurretTargetChanged.Broadcast(CurrentTarget);
 }
 
 void UBuildingTurretComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

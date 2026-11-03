@@ -21,6 +21,12 @@ void APhysicsObject::DrawServerAndClientBallPosition_Implementation(const FVecto
 	// The original implementation returns without side effects.
 }
 
+FString APhysicsObject::GetDisplayName() const
+{
+	// CONFIDENCE: high. Native target 0x141b470f0.
+	return GetFName().GetPlainNameString();
+}
+
 bool APhysicsObject::HasPermissionToAlterBuildings() const
 {
 	// Original address: 0x1412d9d60.
@@ -117,6 +123,19 @@ void APhysicsObject::ServerBroadcastHit_Implementation(APawn* ImpulseInstigator,
 void APhysicsObject::ServerBroadcastHitFromClient_Implementation(APlayerController* HittingController, APawn* HittingPawn, const FVector& VelocityOfHitter, const FVector& HitNormal, const FTimeStampedPhysicsPawnState& ClientBallState)
 {
 	// Body not recovered: reflection-derived stub.
+}
+
+void APhysicsObject::SetPropDestructionParams(TArray<TSubclassOf<ABuildingActor>> InBuildingPropClassesPhysicsObjectCanDestroy, TArray<UBuildingEditModeMetadata*> InWallsPhysicsObjectCanDestroy)
+{
+	// CONFIDENCE: high. Native target 0x141b537c0.
+	if (InBuildingPropClassesPhysicsObjectCanDestroy.Num() > 0)
+	{
+	    BuildingPropClassesPhysicsObjectCanDestroy = MoveTemp(InBuildingPropClassesPhysicsObjectCanDestroy);
+	}
+	if (InWallsPhysicsObjectCanDestroy.Num() > 0)
+	{
+	    WallsPhysicsObjectCanDestroy = MoveTemp(InWallsPhysicsObjectCanDestroy);
+	}
 }
 
 void APhysicsObject::UpdateClientWithPhysicsObjectTestInput_Implementation(const FVector& LinearVelocity, const FVector& AngularVelocity)

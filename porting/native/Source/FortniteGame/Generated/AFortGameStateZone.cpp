@@ -64,6 +64,12 @@ int32 AFortGameStateZone::GetNumSurvivorsSpawned() const
 	return NumSurvivorsSpawned;
 }
 
+FText AFortGameStateZone::GetSupressedCraftingDisplayText_Implementation() const
+{
+	// CONFIDENCE: high. Native target 0x1411fe830.
+	return FText::GetEmpty();
+}
+
 AFortThreatParticleActor* AFortGameStateZone::GetThreatParticleActor() const
 {
 	// Original address: 0x14292b0d0.
@@ -294,12 +300,14 @@ void AFortGameStateZone::OnRepServerUnstableFramerate()
 
 void AFortGameStateZone::OnWaveBasedModifiersAppliedMulticast_Implementation(const TArray<UFortGameplayModifierItemDefinition*>& ModifiersApplied)
 {
-	// Body not recovered: reflection-derived stub.
+	// CONFIDENCE: high. Native target 0x141ea72d0.
+	NativeWaveModifiersApplied.Broadcast();
 }
 
 void AFortGameStateZone::OnWaveStart_Implementation(const FText& LevelText, int32 Level, const FText& WaveText, int32 WaveNum)
 {
-	// Body not recovered: reflection-derived stub.
+	// CONFIDENCE: high. Native target 0x141ea7310.
+	NativeWaveStart.Broadcast(LevelText, Level, WaveText, WaveNum);
 }
 
 void AFortGameStateZone::ServerFireAIDirectorEvent_Implementation(const EFortAIDirectorEvent& Event, UObject* EventSource, UObject* EventTarget, float EventMultiplier)

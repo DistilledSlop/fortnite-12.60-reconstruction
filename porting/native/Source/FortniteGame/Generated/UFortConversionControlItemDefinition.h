@@ -32,5 +32,8 @@ public:
 	UPROPERTY()
 	FText RewardName;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual FText GetRewardName() const;
+
 };
 

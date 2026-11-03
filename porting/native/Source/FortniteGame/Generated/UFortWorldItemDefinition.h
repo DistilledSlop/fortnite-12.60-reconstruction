@@ -264,6 +264,9 @@ public:
 	UFortWorldItemDefinition* GetAmmoWorldItemDefinition_BP() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual float GetDamageAtLevel(int32 ItemLevel) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual float GetMaxDurability(int32 ItemLevel) const;
 
 

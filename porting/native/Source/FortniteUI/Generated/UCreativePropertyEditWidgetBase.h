@@ -32,7 +32,16 @@ public:
 	UCommonButton* Button_Collapse;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual FText GetEntryDisplayName();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual FText GetEntryDisplayValue();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool GetIsModified();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual FText GetStepperLabelForIndex(int32 Index);
 
 };
 

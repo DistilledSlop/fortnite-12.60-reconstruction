@@ -53,6 +53,7 @@ class AFortPlayerController;
 class AFortPlayerControllerAthena;
 class AFortPlayerState;
 class AFortVolume;
+class APlayerState;
 class ASOLFortGame;
 class UCreativePlayerHealthInfoComponent;
 class UFortCreativeCreatureManagerComponent;
@@ -558,14 +559,37 @@ public:
 	UFUNCTION()
 	void DoRep_UIExtensionTags();
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetPostGameTimeRemaining() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetRuntime() const;
+
+	UFUNCTION(BlueprintNativeEvent)
+	FGameplayTagQuery GetStartQueryForPlayer(APlayerState* Player);
+	virtual FGameplayTagQuery GetStartQueryForPlayer_Implementation(APlayerState* Player);
+
 	UFUNCTION(BlueprintCallable)
 	UFortCreativeTeleporterManagerComponent* GetTeleporterManagerComponent();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetTimeRemaining() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetTimeRemainingUntilAutoStart() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetWarmupTimeRemaining() const;
 
 protected:
 	UFUNCTION(BlueprintNativeEvent)
 	void HandleMinigameComponentInPlayChanged(UFortMinigameLogicComponent* MinigameComponent);
 	virtual void HandleMinigameComponentInPlayChanged_Implementation(UFortMinigameLogicComponent* MinigameComponent);
 public:
+
+	UFUNCTION(BlueprintNativeEvent)
+	void HandleVolumeEditModeChange(bool bInEditMode);
+	virtual void HandleVolumeEditModeChange_Implementation(bool bInEditMode);
 
 	UFUNCTION(BlueprintNativeEvent)
 	bool HasPlayerStartPads(AFortPlayerState* InPlayerState) const;

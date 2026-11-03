@@ -153,6 +153,9 @@ public:
 	UPROPERTY(Transient)
 	UTexture2D* HeatmapMask;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x4b4): not a UPROPERTY, not replicated.
+	uint8 NativeExplorationTeam;
+
 	// table index 3, flags 0x20080000000000
 	UPROPERTY()
 	float MapWorldScale;

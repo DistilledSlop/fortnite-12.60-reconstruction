@@ -7,6 +7,13 @@ void UFortMinigameLogicComponent::HandleMinigameSet()
 	// Body not recovered: reflection-derived stub.
 }
 
+void UFortMinigameLogicComponent::HandlePlayspaceEditModeChange_Implementation(bool bInEditMode)
+{
+	// CONFIDENCE: high
+	// Native target 0x142098bb0.
+	OnPlayspaceEditModeChanged.Broadcast(bInEditMode);
+}
+
 void UFortMinigameLogicComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

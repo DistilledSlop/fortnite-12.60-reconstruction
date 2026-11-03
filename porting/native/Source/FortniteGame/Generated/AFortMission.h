@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "AFortMissionState.h"
 
+#include "EFortCompletionResult.h"
 #include "EFortMissionAudibility.h"
 #include "EFortMissionStatus.h"
 #include "EMissionGenerationCategory.h"
@@ -24,6 +25,7 @@
 class AFortClientAnnouncement_Basic;
 class AFortObjectiveBase;
 class UAudioComponent;
+class UFortAIEncounterInfo;
 class UFortBotMissionLogic;
 class UFortItemDefinition;
 class UFortMissionGenerator;
@@ -233,6 +235,10 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void AddCompletionTag(FGameplayTag NewCompletionTag);
 
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, BlueprintAuthorityOnly)
+	void AddOrRemoveTimerTime(float TimeToAdd);
+	virtual void AddOrRemoveTimerTime_Implementation(float TimeToAdd);
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetCurrentFocusPercentage() const;
 
@@ -240,8 +246,16 @@ public:
 	float GetExpectedCompletionTime() const;
 	virtual float GetExpectedCompletionTime_Implementation() const;
 
+	UFUNCTION(BlueprintNativeEvent)
+	FText GetMissionCompletionResultText(EFortCompletionResult Result);
+	virtual FText GetMissionCompletionResultText_Implementation(EFortCompletionResult Result);
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	FGuid GetMissionGuid() const;
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void GetSpawningDistanceMinMaxOverrideForAIEncounter(UFortAIEncounterInfo* Encounter, float& OutSpawningDistanceMin, float& OutSpawningDistanceMax) const;
+	virtual void GetSpawningDistanceMinMaxOverrideForAIEncounter_Implementation(UFortAIEncounterInfo* Encounter, float& OutSpawningDistanceMin, float& OutSpawningDistanceMax) const;
 
 	UFUNCTION()
 	void OnRep_ActiveObjectives();

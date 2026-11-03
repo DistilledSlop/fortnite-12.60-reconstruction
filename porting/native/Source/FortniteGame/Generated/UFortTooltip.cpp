@@ -7,3 +7,14 @@ bool UFortTooltip::BP_GetNumericValue_Implementation(UObject* ObjectToDescribe, 
 	return false;
 }
 
+bool UFortTooltip::BP_GetTokenizedDescriptionText_Implementation(UObject* ObjectToDescribe, FGameplayTag& Tag, UFortTooltipContext* Context, TArray<FText>& OutDescription) const
+{
+	// CONFIDENCE: high. Native target 0x1425e4ec0.
+	if (Description.IsEmpty())
+	{
+	    return false;
+	}
+	OutDescription.Add(Description);
+	return true;
+}
+

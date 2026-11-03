@@ -74,6 +74,10 @@ public:
 	UFUNCTION()
 	void HandleMinigameSet();
 
+	UFUNCTION(BlueprintNativeEvent)
+	void HandlePlayspaceEditModeChange(bool bInEditMode);
+	virtual void HandlePlayspaceEditModeChange_Implementation(bool bInEditMode);
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

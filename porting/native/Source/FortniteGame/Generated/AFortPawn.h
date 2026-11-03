@@ -9,6 +9,7 @@
 #include "AbilitySystemComponent.h"
 #include "AbilitySystemInterface.h"
 #include "EFortControlRecoveryBehavior.h"
+#include "EFortDamageZone.h"
 #include "EFortFootstepSurfaceType.h"
 #include "EFortMovementStyle.h"
 #include "EFortPawnPushSize.h"
@@ -792,8 +793,20 @@ public:
 	void ClientInternalEquipWeapon(AFortWeapon* Weap);
 	void ClientInternalEquipWeapon_Implementation(AFortWeapon* Weap);
 
+	UFUNCTION(BlueprintCallable)
+	virtual void EmoteStarted(UFortItemDefinition* MontageItemDef);
+
+	UFUNCTION(BlueprintCallable)
+	virtual void EmoteStopped(UFortItemDefinition* MontageItemDef);
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	EFortControlRecoveryBehavior GetControlRecoveryBehavior() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual TEnumAsByte<EFortDamageZone::Type> GetDamageZone(FHitResult& InHitResult) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual FVector GetDefaultTargetingOrigin() const;
 
 	UFUNCTION(BlueprintCallable)
 	virtual USkeletalMeshComponent* GetEmotePropAttachMesh();
@@ -977,6 +990,9 @@ public:
 	void ServerTeleportNearLocation(const FVector& ActorLocation);
 	void ServerTeleportNearLocation_Implementation(const FVector& ActorLocation);
 	bool ServerTeleportNearLocation_Validate(const FVector& ActorLocation);
+
+	UFUNCTION(BlueprintCallable)
+	virtual void SetSpawnSpot(AActor* InSpawnSpot);
 
 	UFUNCTION(BlueprintCallable)
 	void StartSpinning(float Value, bool bFallingOnly, bool bAdjustForInputYawScale);

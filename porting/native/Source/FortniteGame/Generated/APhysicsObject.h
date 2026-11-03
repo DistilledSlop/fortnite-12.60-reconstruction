@@ -217,6 +217,9 @@ public:
 	void DrawServerAndClientBallPosition_Implementation(const FVector& ServerPosition);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual FString GetDisplayName() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool HasPermissionToAlterBuildings() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
@@ -269,6 +272,11 @@ public:
 	UFUNCTION(NetMulticast, Reliable)
 	void ServerBroadcastHitFromClient(APlayerController* HittingController, APawn* HittingPawn, const FVector& VelocityOfHitter, const FVector& HitNormal, const FTimeStampedPhysicsPawnState& ClientBallState);
 	void ServerBroadcastHitFromClient_Implementation(APlayerController* HittingController, APawn* HittingPawn, const FVector& VelocityOfHitter, const FVector& HitNormal, const FTimeStampedPhysicsPawnState& ClientBallState);
+
+protected:
+	UFUNCTION(BlueprintCallable)
+	virtual void SetPropDestructionParams(TArray<TSubclassOf<ABuildingActor>> InBuildingPropClassesPhysicsObjectCanDestroy, TArray<UBuildingEditModeMetadata*> InWallsPhysicsObjectCanDestroy);
+public:
 
 	UFUNCTION(NetMulticast, Reliable)
 	void UpdateClientWithPhysicsObjectTestInput(const FVector& LinearVelocity, const FVector& AngularVelocity);

@@ -6,8 +6,11 @@
 #include "CoreMinimal.h"
 #include "UCommonWidgetGroupBase.h"
 
+#include "Delegates/Delegate.h"
 #include "FOnSelectionCleared.h"
 #include "FSimpleButtonGroupDelegate.h"
+
+class UCommonButton;
 
 #include "UCommonButtonGroup.generated.h"
 
@@ -29,6 +32,9 @@ public:
 	UPROPERTY()
 	FSimpleButtonGroupDelegate OnButtonClicked;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x70): not a UPROPERTY, not replicated.
+	TMulticastDelegate<void, UCommonButton*, int32> NativeButtonClicked;
+
 	// table index 2, flags 0x10000010080000
 	UPROPERTY()
 	FSimpleButtonGroupDelegate OnButtonDoubleClicked;
@@ -40,6 +46,32 @@ public:
 	// table index 0, flags 0x21080000000015
 	UPROPERTY()
 	bool bSelectionRequired;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0xb0): not a UPROPERTY, not replicated.
+	TArray<TWeakObjectPtr<UCommonButton>> NativeButtonGroupWidgets;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0xc4): not a UPROPERTY, not replicated.
+	int32 NativeHoveredButtonIndex;
+
+protected:
+	UFUNCTION()
+	virtual void OnButtonHovered(UCommonButton* BaseButton);
+public:
+
+protected:
+	UFUNCTION()
+	virtual void OnButtonUnhovered(UCommonButton* BaseButton);
+public:
+
+protected:
+	UFUNCTION()
+	virtual void OnHandleButtonClicked(UCommonButton* BaseButton);
+public:
+
+protected:
+	UFUNCTION()
+	virtual void OnHandleButtonDoubleClicked(UCommonButton* BaseButton);
+public:
 
 };
 

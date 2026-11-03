@@ -12,6 +12,7 @@
 #include "EColorSwatchType.h"
 #include "EFortBuildingState.h"
 #include "EFortCustomBodyType.h"
+#include "EFortCustomCharmType.h"
 #include "EFortCustomGender.h"
 #include "EFortCustomMovement.h"
 #include "EFortCustomPartType.h"
@@ -60,6 +61,7 @@
 #include "Misc/Guid.h"
 #include "Styling/SlateBrush.h"
 #include "UFortArmoredInterface.h"
+#include "UFortVehicleInterface.h"
 
 class AActor;
 class ABuildingGameplayActor;
@@ -87,6 +89,7 @@ class UCustomCharacterPart;
 class UCustomColorComponent;
 class UCustomColorSwatch;
 class UCustomPlayerComponent;
+class UFXSystemAsset;
 class UFXSystemComponent;
 class UFortAnimNotifyState_RootMotionInterrupt;
 class UFortCustomizationAssetLoader;
@@ -107,6 +110,7 @@ class UNiagaraSystem;
 class UParticleSystem;
 class UParticleSystemComponent;
 class UPostProcessComponent;
+class USkeletalMeshComponent;
 class USkeletalMeshComponentBudgeted;
 class USoundBase;
 class UTexture;
@@ -1406,6 +1410,12 @@ public:
 	UFXSystemComponent* GetActivePlayerWaterBoostComponent() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual AFortPlayerCharm* GetCharacterCharmActorForCharmType(EFortCustomCharmType::Type CharmType) const;
+
+	UFUNCTION(BlueprintCallable)
+	virtual TSoftObjectPtr<UFXSystemAsset> GetContrailParticleSystemSoftRef();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual AFortPlayerPawn* GetControllingPawn() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
@@ -1457,6 +1467,12 @@ public:
 	FVector GetPreviousVelocity();
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual USkeletalMeshComponent* GetSkeletalMeshForCharmType(EFortCustomCharmType::Type CharmType) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual USkeletalMeshComponent* GetSkeletalMeshForPartType(EFortCustomPartType::Type PartType) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetStamina() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
@@ -1470,6 +1486,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	uint8 GetVehicleSeatIndex() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual TScriptInterface<IFortVehicleInterface> GetVehicleUInterface() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetWaterImmersionDepth() const;

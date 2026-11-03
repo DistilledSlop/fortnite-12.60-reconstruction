@@ -9,6 +9,13 @@ UFortHero* UAthenaCosmeticAccountItem::GetHero() const
 	return Hero;
 }
 
+FText UAthenaCosmeticAccountItem::GetLockerItemTypeText() const
+{
+	// CONFIDENCE: high
+	// Native target 0x140dc3930.
+	return FText::GetEmpty();
+}
+
 bool UAthenaCosmeticAccountItem::HasCosmeticVariance() const
 {
 	// CONFIDENCE: HIGH

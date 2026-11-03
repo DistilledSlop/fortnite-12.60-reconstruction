@@ -28,5 +28,11 @@ protected:
 	virtual bool BP_GetNumericValue_Implementation(UObject* ObjectToDescribe, FGameplayTag& Tag, UFortTooltipContext* Context, FGameplayTag& Token, float& OutVal) const;
 public:
 
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	bool BP_GetTokenizedDescriptionText(UObject* ObjectToDescribe, FGameplayTag& Tag, UFortTooltipContext* Context, TArray<FText>& OutDescription) const;
+	virtual bool BP_GetTokenizedDescriptionText_Implementation(UObject* ObjectToDescribe, FGameplayTag& Tag, UFortTooltipContext* Context, TArray<FText>& OutDescription) const;
+public:
+
 };
 

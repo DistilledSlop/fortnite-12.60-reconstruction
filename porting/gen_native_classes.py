@@ -2838,7 +2838,7 @@ def helper_type_refs(names, texts, package, ctx, explicit):
                 occurrences = list(re.finditer(r"\b%s\b" % re.escape(tok), joined))
                 indirect = all(
                     re.match(r"\s*[*&]", joined[m.end():]) or
-                    re.search(r"\b(?:TSubclassOf|TSoftClassPtr)\s*<\s*(?:class\s+)?$", joined[:m.start()])
+                    re.search(r"\b(?:TSubclassOf|TSoftClassPtr|TWeakObjectPtr)\s*<\s*(?:class\s+)?$", joined[:m.start()])
                     for m in occurrences)
                 if indirect:
                     fwd.add(tok)

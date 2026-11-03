@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "AFortGameState_InGame.h"
 
+#include "Delegates/Delegate.h"
 #include "EFortAIDirectorEvent.h"
 #include "EFortCompletionResult.h"
 #include "EFortVoteArbitratorType.h"
@@ -132,6 +133,12 @@ public:
 	// table index 64, flags 0x20080000004000
 	UPROPERTY(Config)
 	bool bDisconnectOnServerGameplayTagIndexHashMismatch;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x990): not a UPROPERTY, not replicated.
+	TMulticastDelegate<void, const FText&, int32, const FText&, int32> NativeWaveStart;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x9a8): not a UPROPERTY, not replicated.
+	TMulticastDelegate<void> NativeWaveModifiersApplied;
 
 	// table index 63, flags 0x40000010080000
 	UPROPERTY()
@@ -366,6 +373,10 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetNumSurvivorsSpawned() const;
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	FText GetSupressedCraftingDisplayText() const;
+	virtual FText GetSupressedCraftingDisplayText_Implementation() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	AFortThreatParticleActor* GetThreatParticleActor() const;

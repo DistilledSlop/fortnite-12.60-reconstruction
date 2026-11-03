@@ -3,10 +3,14 @@
 #include "AFortAIController.h"
 #include "AFortPlayerController.h"
 #include "AbilitySystemComponent.h"
+#include "Components/SceneComponent.h"
 #include "EFortControlRecoveryBehavior.h"
+#include "EFortDamageZone.h"
+#include "Engine/World.h"
 #include "GameplayTagContainer.h"
 #include "Kismet/GameplayStatics.h"
 #include "Math/Rotator.h"
+#include "Math/Vector.h"
 #include "UFortAbilitySystemComponent.h"
 #include "UFortHealthSet.h"
 #include "Net/UnrealNetwork.h"
@@ -42,6 +46,34 @@ void AFortPawn::ClientInternalEquipWeapon_Implementation(AFortWeapon* Weap)
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortPawn::EmoteStarted(UFortItemDefinition* MontageItemDef)
+{
+	// CONFIDENCE: high. Native target 0x142312640.
+	++EmoteCount;
+	if (UWorld* World = GetWorld())
+	{
+	    LastEmoteTime = World->GetTimeSeconds();
+	}
+	LastEmoteItemDef = MontageItemDef;
+	OnPawnStartedEmote.Broadcast(MontageItemDef);
+}
+
+void AFortPawn::EmoteStopped(UFortItemDefinition* MontageItemDef)
+{
+	// CONFIDENCE: high. Native target 0x142312c40.
+	if (LastEmoteItemDef == MontageItemDef || LastEmoteItemDef == nullptr)
+	{
+	    LastEmoteTime = -1.0f;
+	    EmoteCount = 0;
+	    LastEmoteItemDef = nullptr;
+	}
+	if (UWorld* World = GetWorld())
+	{
+	    LastEmoteEndTime = World->GetTimeSeconds();
+	    bFireBlockedByEmoteCooldown = false;
+	}
+}
+
 EFortControlRecoveryBehavior AFortPawn::GetControlRecoveryBehavior() const
 {
 	// Behaviour snippet: AFortPawn::GetControlRecoveryBehavior (body only; spliced into the generated member function).
@@ -52,6 +84,28 @@ EFortControlRecoveryBehavior AFortPawn::GetControlRecoveryBehavior() const
 	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	return ControlRecoveryBehavior;
+}
+
+TEnumAsByte<EFortDamageZone::Type> AFortPawn::GetDamageZone(FHitResult& InHitResult) const
+{
+	// CONFIDENCE: high. Native target 0x14231aa10.
+	if (!InHitResult.BoneName.IsNone())
+	{
+	    for (int32 Index = 0; Index < 4; ++Index)
+	    {
+	        if (DamageZones[Index].bActive && DamageZones[Index].Bones.Contains(InHitResult.BoneName))
+	        {
+	            return static_cast<EFortDamageZone::Type>(Index);
+	        }
+	    }
+	}
+	return static_cast<EFortDamageZone::Type>(1);
+}
+
+FVector AFortPawn::GetDefaultTargetingOrigin() const
+{
+	// CONFIDENCE: high. Native target 0x14165fd90.
+	return GetRootComponent() ? GetRootComponent()->GetComponentLocation() : FVector::ZeroVector;
 }
 
 USkeletalMeshComponent* AFortPawn::GetEmotePropAttachMesh()
@@ -530,6 +584,12 @@ bool AFortPawn::ServerTeleportNearLocation_Validate(const FVector& ActorLocation
 	// Declared in generated header: no (the generator emits `bool <Name>_Validate(params)` with the WithValidation specifier when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	return true;
+}
+
+void AFortPawn::SetSpawnSpot(AActor* InSpawnSpot)
+{
+	// CONFIDENCE: high. Native target 0x14234efc0.
+	SpawnSpot = InSpawnSpot;
 }
 
 void AFortPawn::StartSpinning(float Value, bool bFallingOnly, bool bAdjustForInputYawScale)

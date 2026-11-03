@@ -614,5 +614,39 @@
     "static": false,
     "notes": "Wrapper 0x14102c4c0 directly dispatches vtable 0x146dcba48 slot 0x470 to 0x1406801c0, which returns without side effects. Parameters reconstructed from reflection offsets, flags, class_ref_map, class_name_map, and struct/enum blocks.",
     "vtable_slot": "0x470"
+  },
+  {
+    "class": "UFortWorldItemDefinition",
+    "function": "GetDamageAtLevel",
+    "kind": "exec",
+    "signature": "float GetDamageAtLevel(int32 ItemLevel) const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/flash_bulk135_03_runtime/UFortWorldItemDefinition_GetDamageAtLevel.inc",
+    "address": "0x142b5d1a0",
+    "native_body_address": "0x1406964e0",
+    "confidence": "high",
+    "status": "ported",
+    "reflection_flags": "0x54020400",
+    "static": false,
+    "virtual": true,
+    "notes": "Original image bytes 0f57c0c3 at 1406964e0 disassemble xorps xmm0,xmm0; ret. Ghidra return-type inference was incorrect; Win64 float result is XMM0."
+  },
+  {
+    "class": "AFortPlayerStateZone",
+    "function": "GetPlayerNameForStreaming",
+    "kind": "exec",
+    "signature": "FString GetPlayerNameForStreaming() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/flash_bulk135_03_runtime/AFortPlayerStateZone_GetPlayerNameForStreaming.inc",
+    "address": "0x142a94e20",
+    "native_body_address": "0x142418510",
+    "confidence": "high",
+    "status": "ported",
+    "reflection_flags": "0x54020400",
+    "static": false,
+    "virtual": true,
+    "notes": "Helper1444ac7a0 tests custom-player-name bit then calls custom name virtual or copies private FString; exact APlayerState::GetPlayerName behavior in UE4.25 PlayerState.cpp304. Preserve custom virtual dispatch and FString copy semantics."
   }
 ]

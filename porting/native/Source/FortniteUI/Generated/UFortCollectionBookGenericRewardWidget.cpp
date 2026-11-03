@@ -22,3 +22,13 @@ void UFortCollectionBookGenericRewardWidget::SetCurrentItemToDisplay(UFortItem* 
 	return;
 }
 
+void UFortCollectionBookGenericRewardWidget::SetRewardStatus(ECollectionBookRewardStatus Status)
+{
+	// CONFIDENCE: high. Native target 0x1450cce80.
+	if (RewardStatus != Status)
+	{
+	    RewardStatus = Status;
+	    OnRewardStatusChanged(Status);
+	}
+}
+

@@ -368,5 +368,25 @@
     "slot": "0x470",
     "proof": "porting/generated/native129-constructors/0x144f4e8d0.c",
     "notes": "Wrapper 0x14102c4c0 directly dispatches vtable 0x146dcba48 slot 0x470 to 0x1406801c0, which returns without side effects. Parameters reconstructed from reflection offsets, flags, class_ref_map, class_name_map, and struct/enum blocks."
+  },
+  {
+    "class": "UFortWorldItemDefinition",
+    "function": "GetDamageAtLevel",
+    "wrapper": "porting/generated/native134-virtual-bulk/0x142b5d1a0.c",
+    "target": "porting/generated/callee_probe/inventory_owner_ammo/0x1406964e0.c",
+    "constructor": "porting/generated/native129-constructors/0x142042090.c",
+    "vtable": "0x14606f8f8",
+    "slot": "0x4f8",
+    "association": "Original image bytes 0f57c0c3 at 1406964e0 disassemble xorps xmm0,xmm0; ret. Ghidra return-type inference was incorrect; Win64 float result is XMM0."
+  },
+  {
+    "class": "AFortPlayerStateZone",
+    "function": "GetPlayerNameForStreaming",
+    "wrapper": "porting/generated/native134-virtual-bulk/0x142a94e20.c",
+    "target": "porting/generated/native134-virtual-bulk/0x142418510.c",
+    "constructor": "porting/generated/native111-constructors/0x1423fa740.c",
+    "vtable": "0x14614bc20",
+    "slot": "0x830",
+    "association": "Helper1444ac7a0 tests custom-player-name bit then calls custom name virtual or copies private FString; exact APlayerState::GetPlayerName behavior in UE4.25 PlayerState.cpp304. Preserve custom virtual dispatch and FString copy semantics."
   }
 ]

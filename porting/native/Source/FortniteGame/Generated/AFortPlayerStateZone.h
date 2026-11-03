@@ -138,6 +138,9 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_QuickbarEquippedItems, Transient)
 	TArray<UFortItemDefinition*> QuickbarEquippedItems;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual FString GetPlayerNameForStreaming() const;
+
 	UFUNCTION(BlueprintCallable)
 	int32 GetSpectatorCount();
 

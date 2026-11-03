@@ -1,0 +1,2380 @@
+{
+  "selection": "/tmp/native142-batch-3.json",
+  "selection_count": 80,
+  "ported_count": 17,
+  "unresolved_count": 63,
+  "rows": [
+    {
+      "direct_helper_captures": {
+        "0x142c0c240": "porting/generated/callee_probe/extra/0x142c0c240.c"
+      },
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [],
+      "indirect_slots": [],
+      "index": 0,
+      "class": "UAthenaCosmeticAccountItem",
+      "function": "GetLockerItemTypeText",
+      "address": "0x14271a440",
+      "native_body_address": "0x140dc3930",
+      "status": "ported",
+      "confidence": "high",
+      "proof": {
+        "wrapper_capture": "porting/generated/native134-virtual-bulk/0x14271a440.c",
+        "target_capture": "porting/generated/native134-virtual-bulk/0x140dc3930.c",
+        "captured_direct_helpers": {
+          "0x142c0c240": "porting/generated/callee_probe/extra/0x142c0c240.c"
+        },
+        "header": "porting/native/Source/FortniteGame/Generated/UAthenaCosmeticAccountItem.h",
+        "vtable": "0x145f9b490",
+        "slot": "0x518"
+      },
+      "reason": "Target calls 0x142c0c240, which copies the shared empty FText."
+    },
+    {
+      "direct_helper_captures": {
+        "0x141d7b900": "porting/generated/native108-impl/0x141d7b900.c"
+      },
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [],
+      "indirect_slots": [],
+      "index": 1,
+      "class": "UFortMontageItemDefinitionBase",
+      "function": "GetFrontendPreviewAnimation",
+      "address": "0x1429f5060",
+      "native_body_address": "0x141d7e270",
+      "status": "ported",
+      "confidence": "high",
+      "proof": {
+        "wrapper_capture": "porting/generated/native134-virtual-bulk/0x1429f5060.c",
+        "target_capture": "porting/generated/native134-virtual-bulk/0x141d7e270.c",
+        "captured_direct_helpers": {
+          "0x141d7b900": "porting/generated/native108-impl/0x141d7b900.c"
+        },
+        "header": "porting/native/Source/FortniteGame/Generated/UFortMontageItemDefinitionBase.h",
+        "vtable": "0x145fa0e40",
+        "slot": "0x538"
+      },
+      "reason": "Target passes null pawn to helper 0x141d7b900; helper selects female override for gender 2 when its soft path is present, then applies every matching body/gender override in order."
+    },
+    {
+      "direct_helper_captures": {},
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [],
+      "indirect_slots": [],
+      "index": 2,
+      "class": "UFortMontageItemDefinitionBase",
+      "function": "PickCosmeticDrivenSectionByName",
+      "address": "0x1429f5430",
+      "native_body_address": "0x14069c6c0",
+      "status": "ported",
+      "confidence": "high",
+      "proof": {
+        "wrapper_capture": "porting/generated/native134-virtual-bulk/0x1429f5430.c",
+        "target_capture": "porting/generated/native134-virtual-bulk/0x14069c6c0.c",
+        "captured_direct_helpers": {},
+        "header": "porting/native/Source/FortniteGame/Generated/UFortMontageItemDefinitionBase.h",
+        "vtable": "0x145fa0e40",
+        "slot": "0x528"
+      },
+      "reason": "Target initializes both FName words to zero."
+    },
+    {
+      "direct_helper_captures": {},
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [],
+      "indirect_slots": [],
+      "index": 3,
+      "class": "UFortAccountItem",
+      "function": "GetRefundResults",
+      "address": "0x14278e850",
+      "native_body_address": "0x140693ec0",
+      "status": "ported",
+      "confidence": "high",
+      "proof": {
+        "wrapper_capture": "porting/generated/native134-virtual-bulk/0x14278e850.c",
+        "target_capture": "porting/generated/native108-impl/0x140693ec0.c",
+        "captured_direct_helpers": {},
+        "header": "porting/native/Source/FortniteGame/Generated/UFortAccountItem.h",
+        "vtable": "0x14605c260",
+        "slot": "0x500"
+      },
+      "reason": "Target initializes the return TArray to empty."
+    },
+    {
+      "direct_helper_captures": {},
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [],
+      "indirect_slots": [],
+      "index": 4,
+      "class": "UFortItem",
+      "function": "GetItemGuid",
+      "address": "0x142959170",
+      "native_body_address": "0x140693ec0",
+      "status": "ported",
+      "confidence": "high",
+      "proof": {
+        "wrapper_capture": "porting/generated/native94-broad/0x142959170.c",
+        "target_capture": "porting/generated/native108-impl/0x140693ec0.c",
+        "captured_direct_helpers": {},
+        "header": "porting/native/Source/FortniteGame/Generated/UFortItem.h",
+        "vtable": "0x14606c3f0",
+        "slot": "0x468"
+      },
+      "reason": "Target initializes all 16 return bytes to zero."
+    },
+    {
+      "direct_helper_captures": {},
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [],
+      "indirect_slots": [],
+      "index": 5,
+      "class": "AFortPlayerPawn",
+      "function": "GetCharacterCharmActorForCharmType",
+      "address": "0x142a7bd00",
+      "native_body_address": "0x142319fb0",
+      "status": "ported",
+      "confidence": "high",
+      "proof": {
+        "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142a7bd00.c",
+        "target_capture": "porting/generated/native134-virtual-bulk/0x142319fb0.c",
+        "captured_direct_helpers": {},
+        "header": "porting/native/Source/FortniteGame/Generated/AFortPlayerPawn.h",
+        "vtable": "0x146116ac8",
+        "slot": "0x1120"
+      },
+      "reason": "Target checks index against the array at 0x1900 and returns its element."
+    },
+    {
+      "direct_helper_captures": {},
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [],
+      "indirect_slots": [],
+      "index": 6,
+      "class": "AFortPlayerPawn",
+      "function": "GetSkeletalMeshForPartType",
+      "address": "0x142a7c860",
+      "native_body_address": "0x1423240c0",
+      "status": "ported",
+      "confidence": "high",
+      "proof": {
+        "wrapper_capture": "porting/generated/native96-broad/0x142a7c860.c",
+        "target_capture": "porting/generated/native134-virtual-bulk/0x1423240c0.c",
+        "captured_direct_helpers": {},
+        "header": "porting/native/Source/FortniteGame/Generated/AFortPlayerPawn.h",
+        "vtable": "0x146116ac8",
+        "slot": "0x1110"
+      },
+      "reason": "Target returns one of six reflected skeletal mesh components at 0x18d0."
+    },
+    {
+      "direct_helper_captures": {},
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [],
+      "indirect_slots": [
+        "0x4a0"
+      ],
+      "index": 7,
+      "class": "UCommonButton",
+      "function": "OnInputMethodChanged",
+      "address": "0x14080bcb0",
+      "native_body_address": "0x1407d6980",
+      "status": "unresolved",
+      "confidence": "none",
+      "proof": {
+        "wrapper_capture": "porting/generated/native134-virtual-bulk/0x14080bcb0.c",
+        "target_capture": "porting/generated/native134-virtual-bulk/0x1407d6980.c",
+        "captured_direct_helpers": {},
+        "header": "porting/native/Source/CommonUI/Generated/UCommonButton.h",
+        "vtable": "0x1459f0940",
+        "slot": "0x480"
+      },
+      "reason": "Target 0x1407d6980 requires exact reconstruction of 0x1407d6980 and associated state or side effects; capture does not by itself establish a complete compilable behavior."
+    },
+    {
+      "direct_helper_captures": {},
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [],
+      "indirect_slots": [],
+      "index": 8,
+      "class": "AFortPlayerControllerAthena",
+      "function": "ClientSendDebugPoiVolumeData",
+      "address": "0x142a57900",
+      "native_body_address": "0x1419c7920",
+      "status": "unresolved",
+      "confidence": "none",
+      "proof": {
+        "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142a57900.c",
+        "target_capture": "porting/generated/native134-virtual-bulk/0x1419c7920.c",
+        "captured_direct_helpers": {},
+        "header": "porting/native/Source/FortniteGame/Generated/AFortPlayerControllerAthena.h",
+        "vtable": "0x145e1aac0",
+        "slot": "0x2540"
+      },
+      "reason": "Target 0x1419c7920 requires exact reconstruction of indirect virtual dispatch / reflected state and associated state or side effects; capture does not by itself establish a complete compilable behavior."
+    },
+    {
+      "direct_helper_captures": {
+        "0x143d8ab50": "porting/generated/native144-virtual-helpers/0x143d8ab50.c",
+        "0x143d91c00": "porting/generated/native144-virtual-helpers/0x143d91c00.c",
+        "0x1451ce6d0": "porting/generated/native144-virtual-helpers/0x1451ce6d0.c"
+      },
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [
+        "0x1430ff590",
+        "0x143101210"
+      ],
+      "indirect_slots": [
+        "0x510",
+        "0x4b4",
+        "0x4b8"
+      ],
+      "index": 9,
+      "class": "UBacchusButton",
+      "function": "SetButtonSize",
+      "address": "0x1451cfde0",
+      "native_body_address": "0x144c43020",
+      "status": "unresolved",
+      "confidence": "none",
+      "proof": {
+        "wrapper_capture": "porting/generated/native134-virtual-bulk/0x1451cfde0.c",
+        "target_capture": "porting/generated/native134-virtual-bulk/0x144c43020.c",
+        "captured_direct_helpers": {},
+        "header": "porting/native/Source/FortniteUI/Generated/UBacchusButton.h",
+        "vtable": "0x146d291c0",
+        "slot": "0x4e8"
+      },
+      "reason": "Target 0x144c43020 requires exact reconstruction of 0x144c43020, 0x143d8ab50, 0x143d91c00, 0x1451ce6d0 and associated state or side effects; capture does not by itself establish a complete compilable behavior."
+    },
+    {
+      "direct_helper_captures": {
+        "0x143022250": "porting/generated/native144-virtual-helpers/0x143022250.c",
+        "0x1407c6960": "porting/generated/native144-virtual-helpers/0x1407c6960.c"
+      },
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [
+        "0x143d60da0",
+        "0x143d5cb70",
+        "0x1407f7e90"
+      ],
+      "indirect_slots": [],
+      "index": 10,
+      "class": "UCommonButton",
+      "function": "HandleTriggeringActionCommited",
+      "address": "0x14080b970",
+      "native_body_address": "0x1407cca60",
+      "status": "unresolved",
+      "confidence": "none",
+      "proof": {
+        "wrapper_capture": "porting/generated/native134-virtual-bulk/0x14080b970.c",
+        "target_capture": "porting/generated/native134-virtual-bulk/0x1407cca60.c",
+        "captured_direct_helpers": {},
+        "header": "porting/native/Source/CommonUI/Generated/UCommonButton.h",
+        "vtable": "0x1459f0940",
+        "slot": "0x490"
+      },
+      "reason": "Target 0x1407cca60 requires exact reconstruction of 0x1407cca60, 0x143022250, 0x1407c6960 and associated state or side effects; capture does not by itself establish a complete compilable behavior."
+    },
+    {
+      "direct_helper_captures": {
+        "0x142b02710": "porting/generated/native144-virtual-helpers/0x142b02710.c"
+      },
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [],
+      "indirect_slots": [
+        "0x638"
+      ],
+      "index": 11,
+      "class": "AFortTheaterMapTile",
+      "function": "OnDeselectWrapper",
+      "address": "0x142b03c70",
+      "native_body_address": "0x142571b60",
+      "status": "unresolved",
+      "confidence": "none",
+      "proof": {
+        "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142b03c70.c",
+        "target_capture": "porting/generated/native134-virtual-bulk/0x142571b60.c",
+        "captured_direct_helpers": {},
+        "header": "porting/native/Source/FortniteGame/Generated/AFortTheaterMapTile.h",
+        "vtable": "0x1461bf5c8",
+        "slot": "0x650"
+      },
+      "reason": "Target 0x142571b60 requires exact reconstruction of 0x142571b60, 0x142b02710 and associated state or side effects; capture does not by itself establish a complete compilable behavior."
+    },
+    {
+      "direct_helper_captures": {
+        "0x140696cf0": "porting/generated/native103-impl/0x140696cf0.c"
+      },
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [],
+      "indirect_slots": [
+        "0x318"
+      ],
+      "index": 12,
+      "class": "UFortItemDefinition",
+      "function": "GetLargePreviewImage",
+      "address": "0x14295d2a0",
+      "native_body_address": "0x14202f500",
+      "status": "ported",
+      "confidence": "high",
+      "proof": {
+        "wrapper_capture": "porting/generated/native100-broad/0x14295d2a0.c",
+        "target_capture": "porting/generated/native134-virtual-bulk/0x14202f500.c",
+        "captured_direct_helpers": {
+          "0x140696cf0": "porting/generated/native103-impl/0x140696cf0.c"
+        },
+        "header": "porting/native/Source/FortniteGame/Generated/UFortItemDefinition.h",
+        "vtable": "0x14606bf00",
+        "slot": "0x320"
+      },
+      "reason": "Target checks the soft path of LargePreviewImage at 0x260; if empty dispatches slot 0x318 GetSmallPreviewImage, otherwise copies it."
+    },
+    {
+      "direct_helper_captures": {},
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [],
+      "indirect_slots": [
+        "0x1120"
+      ],
+      "index": 13,
+      "class": "AFortPlayerPawn",
+      "function": "GetSkeletalMeshForCharmType",
+      "address": "0x142a7c7d0",
+      "native_body_address": "0x142324090",
+      "status": "ported",
+      "confidence": "high",
+      "proof": {
+        "wrapper_capture": "porting/generated/native96-broad/0x142a7c7d0.c",
+        "target_capture": "porting/generated/native134-virtual-bulk/0x142324090.c",
+        "captured_direct_helpers": {},
+        "header": "porting/native/Source/FortniteGame/Generated/AFortPlayerPawn.h",
+        "vtable": "0x146116ac8",
+        "slot": "0x1118"
+      },
+      "reason": "Target calls slot 0x1120 and reads the charm mesh at 0x220."
+    },
+    {
+      "direct_helper_captures": {},
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [],
+      "indirect_slots": [
+        "0x10e6",
+        "0x1208"
+      ],
+      "index": 14,
+      "class": "AFortPlayerPawn",
+      "function": "OnRep_IsParachuteOpen",
+      "address": "0x142a7de50",
+      "native_body_address": "0x14233c880",
+      "status": "unresolved",
+      "confidence": "none",
+      "proof": {
+        "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142a7de50.c",
+        "target_capture": "porting/generated/native134-virtual-bulk/0x14233c880.c",
+        "captured_direct_helpers": {},
+        "header": "porting/native/Source/FortniteGame/Generated/AFortPlayerPawn.h",
+        "vtable": "0x146116ac8",
+        "slot": "0x12d8"
+      },
+      "reason": "Target 0x14233c880 requires exact reconstruction of 0x14233c880 and associated state or side effects; capture does not by itself establish a complete compilable behavior."
+    },
+    {
+      "direct_helper_captures": {
+        "0x141e5b2a0": "porting/generated/native98-deps/0x141e5b2a0.c",
+        "0x141e629d0": "porting/generated/native144-virtual-helpers/0x141e629d0.c"
+      },
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [
+        "0x141e42090"
+      ],
+      "indirect_slots": [
+        "0x3f0"
+      ],
+      "index": 15,
+      "class": "UFortItem",
+      "function": "GetRarityColor",
+      "address": "0x1429597a0",
+      "native_body_address": "0x142032850",
+      "status": "unresolved",
+      "confidence": "none",
+      "proof": {
+        "wrapper_capture": "porting/generated/native134-virtual-bulk/0x1429597a0.c",
+        "target_capture": "porting/generated/native134-virtual-bulk/0x142032850.c",
+        "captured_direct_helpers": {
+          "0x141e5b2a0": "porting/generated/native98-deps/0x141e5b2a0.c"
+        },
+        "header": "porting/native/Source/FortniteGame/Generated/UFortItem.h",
+        "vtable": "0x14606c3f0",
+        "slot": "0x398"
+      },
+      "reason": "Target 0x142032850 requires exact reconstruction of 0x142032850, 0x141e5b2a0, 0x141e629d0 and associated state or side effects; capture does not by itself establish a complete compilable behavior."
+    },
+    {
+      "direct_helper_captures": {},
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [],
+      "indirect_slots": [],
+      "index": 16,
+      "class": "UFortCheatManager",
+      "function": "SetScriptedPawnVariantChannel",
+      "address": "0x14286de90",
+      "native_body_address": "0x141ec8790",
+      "status": "unresolved",
+      "confidence": "none",
+      "proof": {
+        "wrapper_capture": "porting/generated/native134-virtual-bulk/0x14286de90.c",
+        "target_capture": "porting/generated/native134-virtual-bulk/0x141ec8790.c",
+        "captured_direct_helpers": {},
+        "header": "porting/native/Source/FortniteGame/Generated/UFortCheatManager.h",
+        "vtable": "0x146122ed0",
+        "slot": "0x478"
+      },
+      "reason": "Target 0x141ec8790 requires exact reconstruction of 0x141ec8790 and associated state or side effects; capture does not by itself establish a complete compilable behavior."
+    },
+    {
+      "direct_helper_captures": {
+        "0x144added0": "porting/generated/native108-impl/0x144added0.c",
+        "0x144cb0620": "porting/generated/native144-virtual-helpers/0x144cb0620.c"
+      },
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [
+        "0x14519a3e0"
+      ],
+      "indirect_slots": [
+        "0x408"
+      ],
+      "index": 17,
+      "class": "UFortTouchControlRegion",
+      "function": "RotatePlayerRegionTick",
+      "address": "0x1453059c0",
+      "native_body_address": "0x144ddced0",
+      "status": "unresolved",
+      "confidence": "none",
+      "proof": {
+        "wrapper_capture": "porting/generated/native134-virtual-bulk/0x1453059c0.c",
+        "target_capture": "porting/generated/native134-virtual-bulk/0x144ddced0.c",
+        "captured_direct_helpers": {
+          "0x144added0": "porting/generated/native108-impl/0x144added0.c"
+        },
+        "header": "porting/native/Source/FortniteUI/Generated/UFortTouchControlRegion.h",
+        "vtable": "0x146d795f8",
+        "slot": "0x490"
+      },
+      "reason": "Target 0x144ddced0 requires exact reconstruction of 0x144ddced0, 0x144added0, 0x144cb0620 and associated state or side effects; capture does not by itself establish a complete compilable behavior."
+    },
+    {
+      "direct_helper_captures": {
+        "0x14433acd0": "porting/generated/native105-impl/0x14433acd0.c",
+        "0x140809070": "porting/generated/native144-virtual-helpers/0x140809070.c"
+      },
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [
+        "0x14433ad00"
+      ],
+      "indirect_slots": [],
+      "index": 18,
+      "class": "UCommonButton",
+      "function": "NativeOnActionProgress",
+      "address": "0x14080bbf0",
+      "native_body_address": "0x1407d1f50",
+      "status": "unresolved",
+      "confidence": "none",
+      "proof": {
+        "wrapper_capture": "porting/generated/native134-virtual-bulk/0x14080bbf0.c",
+        "target_capture": "porting/generated/native134-virtual-bulk/0x1407d1f50.c",
+        "captured_direct_helpers": {
+          "0x14433acd0": "porting/generated/native105-impl/0x14433acd0.c"
+        },
+        "header": "porting/native/Source/CommonUI/Generated/UCommonButton.h",
+        "vtable": "0x1459f0940",
+        "slot": "0x4f8"
+      },
+      "reason": "Target 0x1407d1f50 requires exact reconstruction of 0x1407d1f50, 0x14433acd0, 0x140809070 and associated state or side effects; capture does not by itself establish a complete compilable behavior."
+    },
+    {
+      "direct_helper_captures": {
+        "0x1406d9a30": "porting/generated/callee_probe/extra/0x1406d9a30.c",
+        "0x1440b73d0": "porting/generated/native144-virtual-helpers/0x1440b73d0.c"
+      },
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [
+        "0x140693f90",
+        "0x1440aa9e0",
+        "0x1442de3e0",
+        "0x140690780"
+      ],
+      "indirect_slots": [],
+      "index": 19,
+      "class": "UFortItemDefinition",
+      "function": "CustomizePreviewMesh",
+      "address": "0x14295cd80",
+      "native_body_address": "0x14202a320",
+      "status": "ported",
+      "confidence": "high",
+      "proof": {
+        "wrapper_capture": "porting/generated/native134-virtual-bulk/0x14295cd80.c",
+        "target_capture": "porting/generated/native134-virtual-bulk/0x14202a320.c",
+        "captured_direct_helpers": {
+          "0x1406d9a30": "porting/generated/callee_probe/extra/0x1406d9a30.c"
+        },
+        "header": "porting/native/Source/FortniteGame/Generated/UFortItemDefinition.h",
+        "vtable": "0x14606bf00",
+        "slot": "0x468"
+      },
+      "reason": "Target is equivalent to UMeshComponent::EmptyOverrideMaterials: if OverrideMaterials is nonempty, Reset and MarkRenderStateDirty."
+    },
+    {
+      "direct_helper_captures": {},
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [],
+      "indirect_slots": [
+        "0x40",
+        "0x48"
+      ],
+      "index": 20,
+      "class": "AFortMissionStormShield",
+      "function": "IsInStormShield",
+      "address": "0x1429f02f0",
+      "native_body_address": "0x1420e5350",
+      "status": "unresolved",
+      "confidence": "none",
+      "proof": {
+        "wrapper_capture": "porting/generated/native134-virtual-bulk/0x1429f02f0.c",
+        "target_capture": "porting/generated/native134-virtual-bulk/0x1420e5350.c",
+        "captured_direct_helpers": {},
+        "header": "porting/native/Source/FortniteGame/Generated/AFortMissionStormShield.h",
+        "vtable": "0x14609fac8",
+        "slot": "0x630"
+      },
+      "reason": "Target 0x1420e5350 requires exact reconstruction of 0x1420e5350 and associated state or side effects; capture does not by itself establish a complete compilable behavior."
+    },
+    {
+      "direct_helper_captures": {},
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [],
+      "indirect_slots": [
+        "0x5e8"
+      ],
+      "index": 21,
+      "class": "AFortPlayerPawn",
+      "function": "ExitSkyTube",
+      "address": "0x142a7b7a0",
+      "native_body_address": "0x142315b80",
+      "status": "unresolved",
+      "confidence": "none",
+      "proof": {
+        "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142a7b7a0.c",
+        "target_capture": "porting/generated/native134-virtual-bulk/0x142315b80.c",
+        "captured_direct_helpers": {},
+        "header": "porting/native/Source/FortniteGame/Generated/AFortPlayerPawn.h",
+        "vtable": "0x146116ac8",
+        "slot": "0x1358"
+      },
+      "reason": "Target 0x142315b80 requires exact reconstruction of 0x142315b80 and associated state or side effects; capture does not by itself establish a complete compilable behavior."
+    },
+    {
+      "direct_helper_captures": {},
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [],
+      "indirect_slots": [
+        "0x348"
+      ],
+      "index": 22,
+      "class": "UFortItem",
+      "function": "GetPrimaryCategory",
+      "address": "0x142959680",
+      "native_body_address": "0x142032690",
+      "status": "unresolved",
+      "confidence": "none",
+      "proof": {
+        "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142959680.c",
+        "target_capture": "porting/generated/native134-virtual-bulk/0x142032690.c",
+        "captured_direct_helpers": {},
+        "header": "porting/native/Source/FortniteGame/Generated/UFortItem.h",
+        "vtable": "0x14606c3f0",
+        "slot": "0x340"
+      },
+      "reason": "Target 0x142032690 requires exact reconstruction of 0x142032690 and associated state or side effects; capture does not by itself establish a complete compilable behavior."
+    },
+    {
+      "direct_helper_captures": {},
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [],
+      "indirect_slots": [
+        "0x370"
+      ],
+      "index": 23,
+      "class": "UFortItem",
+      "function": "GetFilterCategory",
+      "address": "0x142958ed0",
+      "native_body_address": "0x14202da80",
+      "status": "unresolved",
+      "confidence": "none",
+      "proof": {
+        "wrapper_capture": "porting/generated/native94-broad/0x142958ed0.c",
+        "target_capture": "porting/generated/native134-virtual-bulk/0x14202da80.c",
+        "captured_direct_helpers": {},
+        "header": "porting/native/Source/FortniteGame/Generated/UFortItem.h",
+        "vtable": "0x14606c3f0",
+        "slot": "0x390"
+      },
+      "reason": "Target 0x14202da80 requires exact reconstruction of 0x14202da80 and associated state or side effects; capture does not by itself establish a complete compilable behavior."
+    },
+    {
+      "direct_helper_captures": {},
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [],
+      "indirect_slots": [
+        "0x298"
+      ],
+      "index": 24,
+      "class": "UFortItem",
+      "function": "GetType",
+      "address": "0x142959f30",
+      "native_body_address": "0x1420337a0",
+      "status": "ported",
+      "confidence": "high",
+      "proof": {
+        "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142959f30.c",
+        "target_capture": "porting/generated/native134-virtual-bulk/0x1420337a0.c",
+        "captured_direct_helpers": {},
+        "header": "porting/native/Source/FortniteGame/Generated/UFortItem.h",
+        "vtable": "0x14606c3f0",
+        "slot": "0x318"
+      },
+      "reason": "Target 0x1420337a0 is the existing virtual NativeGetItemType implementation, with definition dispatch and Max_None fallback."
+    },
+    {
+      "direct_helper_captures": {},
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [],
+      "indirect_slots": [
+        "0x210"
+      ],
+      "index": 25,
+      "class": "UFortTouchControlRegion",
+      "function": "OnAdditionalTouchEnded",
+      "address": "0x145304990",
+      "native_body_address": "0x144dd2cd0",
+      "status": "unresolved",
+      "confidence": "none",
+      "proof": {
+        "wrapper_capture": "porting/generated/native134-virtual-bulk/0x145304990.c",
+        "target_capture": "porting/generated/native134-virtual-bulk/0x144dd2cd0.c",
+        "captured_direct_helpers": {},
+        "header": "porting/native/Source/FortniteUI/Generated/UFortTouchControlRegion.h",
+        "vtable": "0x146d795f8",
+        "slot": "0x480"
+      },
+      "reason": "Target 0x144dd2cd0 requires exact reconstruction of 0x144dd2cd0 and associated state or side effects; capture does not by itself establish a complete compilable behavior."
+    },
+    {
+      "direct_helper_captures": {
+        "0x1423355c0": "porting/generated/callee_probe/blocking/0x1423355c0.c"
+      },
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [
+        "0x142a75600"
+      ],
+      "indirect_slots": [],
+      "index": 26,
+      "class": "AFortPlayerPawn",
+      "function": "ClientNotifyAbilityFailed",
+      "address": "0x142a7b220",
+      "native_body_address": "0x14230e5a0",
+      "status": "unresolved",
+      "confidence": "none",
+      "proof": {
+        "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142a7b220.c",
+        "target_capture": "porting/generated/native134-virtual-bulk/0x14230e5a0.c",
+        "captured_direct_helpers": {
+          "0x1423355c0": "porting/generated/callee_probe/blocking/0x1423355c0.c"
+        },
+        "header": "porting/native/Source/FortniteGame/Generated/AFortPlayerPawn.h",
+        "vtable": "0x146116ac8",
+        "slot": "0xf98"
+      },
+      "reason": "Target 0x14230e5a0 requires exact reconstruction of 0x1423355c0 and associated state or side effects; capture does not by itself establish a complete compilable behavior."
+    },
+    {
+      "direct_helper_captures": {},
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [],
+      "indirect_slots": [],
+      "index": 27,
+      "class": "UFortCosmeticVariant",
+      "function": "GetVariantChannelText",
+      "address": "0x1428ac970",
+      "native_body_address": "0x1412015e0",
+      "status": "ported",
+      "confidence": "high",
+      "proof": {
+        "wrapper_capture": "porting/generated/native134-virtual-bulk/0x1428ac970.c",
+        "target_capture": "porting/generated/native134-virtual-bulk/0x1412015e0.c",
+        "captured_direct_helpers": {},
+        "header": "porting/native/Source/FortniteGame/Generated/UFortCosmeticVariant.h",
+        "vtable": "0x14605f0b0",
+        "slot": "0x328"
+      },
+      "reason": "Target copies the FText at offset 0x30, with reference count increment."
+    },
+    {
+      "direct_helper_captures": {
+        "0x1419c9fc0": "porting/generated/callee_probe/blocking/0x1419c9fc0.c"
+      },
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [
+        "0x143e97a10"
+      ],
+      "indirect_slots": [],
+      "index": 28,
+      "class": "AFortPlayerControllerAthena",
+      "function": "ClientSendDebugPoiLocationTags",
+      "address": "0x142a57850",
+      "native_body_address": "0x1419c78e0",
+      "status": "unresolved",
+      "confidence": "none",
+      "proof": {
+        "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142a57850.c",
+        "target_capture": "porting/generated/native134-virtual-bulk/0x1419c78e0.c",
+        "captured_direct_helpers": {
+          "0x1419c9fc0": "porting/generated/callee_probe/blocking/0x1419c9fc0.c"
+        },
+        "header": "porting/native/Source/FortniteGame/Generated/AFortPlayerControllerAthena.h",
+        "vtable": "0x145e1aac0",
+        "slot": "0x2548"
+      },
+      "reason": "Target 0x1419c78e0 requires exact reconstruction of 0x1419c9fc0 and associated state or side effects; capture does not by itself establish a complete compilable behavior."
+    },
+    {
+      "direct_helper_captures": {
+        "0x142764370": "porting/generated/native144-virtual-helpers/0x142764370.c"
+      },
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [],
+      "indirect_slots": [
+        "0x610",
+        "0x460"
+      ],
+      "index": 29,
+      "class": "AFortMusicManager",
+      "function": "GetEventHeatPercentTotal",
+      "address": "0x1429fba50",
+      "native_body_address": "0x1424aa770",
+      "status": "unresolved",
+      "confidence": "none",
+      "proof": {
+        "wrapper_capture": "porting/generated/native134-virtual-bulk/0x1429fba50.c",
+        "target_capture": "porting/generated/native134-virtual-bulk/0x1424aa770.c",
+        "captured_direct_helpers": {},
+        "header": "porting/native/Source/FortniteGame/Generated/AFortMusicManager.h",
+        "vtable": "0x1461738c8",
+        "slot": "0x640"
+      },
+      "reason": "Target 0x1424aa770 requires exact reconstruction of 0x1424aa770, 0x142764370 and associated state or side effects; capture does not by itself establish a complete compilable behavior."
+    },
+    {
+      "direct_helper_captures": {
+        "0x142877fd0": "porting/generated/native144-virtual-helpers/0x142877fd0.c",
+        "0x141cd9580": "porting/generated/native144-virtual-helpers/0x141cd9580.c"
+      },
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [
+        "0x141cebc60"
+      ],
+      "indirect_slots": [
+        "0x38",
+        "0x30"
+      ],
+      "index": 30,
+      "class": "AFortPlayerControllerAthena",
+      "function": "ClientSignalPortalLoadCompleteViaDelegate",
+      "address": "0x142a57ef0",
+      "native_body_address": "0x1419c8230",
+      "status": "unresolved",
+      "confidence": "none",
+      "proof": {
+        "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142a57ef0.c",
+        "target_capture": "porting/generated/native134-virtual-bulk/0x1419c8230.c",
+        "captured_direct_helpers": {},
+        "header": "porting/native/Source/FortniteGame/Generated/AFortPlayerControllerAthena.h",
+        "vtable": "0x145e1aac0",
+        "slot": "0x25d8"
+      },
+      "reason": "Target 0x1419c8230 requires exact reconstruction of 0x142877fd0, 0x141cd9580 and associated state or side effects; capture does not by itself establish a complete compilable behavior."
+    },
+    {
+      "direct_helper_captures": {
+        "0x1423e3060": "porting/generated/native144-virtual-helpers/0x1423e3060.c",
+        "0x140683960": "porting/generated/native105-impl/0x140683960.c"
+      },
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [
+        "0x140d6a2a0",
+        "0x1421d8470",
+        "0x141e63650",
+        "0x14228ea40",
+        "0x140f93110",
+        "0x140f92570",
+        "0x1423c2b50"
+      ],
+      "indirect_slots": [],
+      "index": 31,
+      "class": "AFortPlayerControllerZone",
+      "function": "ClientSendPartyJoinInfoToPlayer",
+      "address": "0x142a70330",
+      "native_body_address": "0x1423cdfd0",
+      "status": "unresolved",
+      "confidence": "none",
+      "proof": {
+        "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142a70330.c",
+        "target_capture": "porting/generated/native134-virtual-bulk/0x1423cdfd0.c",
+        "captured_direct_helpers": {
+          "0x140683960": "porting/generated/native105-impl/0x140683960.c"
+        },
+        "header": "porting/native/Source/FortniteGame/Generated/AFortPlayerControllerZone.h",
+        "vtable": "0x14613f330",
+        "slot": "0x20a8"
+      },
+      "reason": "Target 0x1423cdfd0 requires exact reconstruction of 0x1423cdfd0, 0x1423e3060, 0x140683960 and associated state or side effects; capture does not by itself establish a complete compilable behavior."
+    },
+    {
+      "direct_helper_captures": {
+        "0x140680160": "porting/generated/native103-impl/0x140680160.c"
+      },
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [],
+      "indirect_slots": [],
+      "index": 32,
+      "class": "AFortPlayerPawn",
+      "function": "GetContrailParticleSystemSoftRef",
+      "address": "0x142a7bfb0",
+      "native_body_address": "0x14231a4c0",
+      "status": "ported",
+      "confidence": "high",
+      "proof": {
+        "wrapper_capture": "porting/generated/native96-broad/0x142a7bfb0.c",
+        "target_capture": "porting/generated/native134-virtual-bulk/0x14231a4c0.c",
+        "captured_direct_helpers": {
+          "0x140680160": "porting/generated/native103-impl/0x140680160.c"
+        },
+        "header": "porting/native/Source/FortniteGame/Generated/AFortPlayerPawn.h",
+        "vtable": "0x146116ac8",
+        "slot": "0x1320"
+      },
+      "reason": "Target constructs an empty soft object pointer."
+    },
+    {
+      "direct_helper_captures": {
+        "0x142877fd0": "porting/generated/native144-virtual-helpers/0x142877fd0.c",
+        "0x141cd95e0": "porting/generated/native144-virtual-helpers/0x141cd95e0.c"
+      },
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [
+        "0x141cce3c0",
+        "0x1418c73f0",
+        "0x142a53360",
+        "0x141cebc60"
+      ],
+      "indirect_slots": [
+        "0x38",
+        "0x30"
+      ],
+      "index": 33,
+      "class": "AFortPlayerControllerAthena",
+      "function": "ClientBroadcastPlotItemID",
+      "address": "0x142a56e80",
+      "native_body_address": "0x1419c54d0",
+      "status": "unresolved",
+      "confidence": "none",
+      "proof": {
+        "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142a56e80.c",
+        "target_capture": "porting/generated/native134-virtual-bulk/0x1419c54d0.c",
+        "captured_direct_helpers": {},
+        "header": "porting/native/Source/FortniteGame/Generated/AFortPlayerControllerAthena.h",
+        "vtable": "0x145e1aac0",
+        "slot": "0x25d0"
+      },
+      "reason": "Target 0x1419c54d0 requires exact reconstruction of 0x142877fd0, 0x141cd95e0 and associated state or side effects; capture does not by itself establish a complete compilable behavior."
+    },
+    {
+      "direct_helper_captures": {
+        "0x142bee820": "porting/generated/native144-virtual-helpers/0x142bee820.c"
+      },
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [
+        "0x142ce0d60",
+        "0x142cda2d0",
+        "0x142bc1ba0",
+        "0x142bd7e70"
+      ],
+      "indirect_slots": [
+        "0x30"
+      ],
+      "index": 34,
+      "class": "UFortCheatManager",
+      "function": "GiveWeaponToScriptedPawn",
+      "address": "0x14286c530",
+      "native_body_address": "0x14072e780",
+      "status": "unresolved",
+      "confidence": "none",
+      "proof": {
+        "wrapper_capture": "porting/generated/native134-virtual-bulk/0x14286c530.c",
+        "target_capture": "porting/generated/native96-impl/0x14072e780.c",
+        "captured_direct_helpers": {},
+        "header": "porting/native/Source/FortniteGame/Generated/UFortCheatManager.h",
+        "vtable": "0x146122ed0",
+        "slot": "0x458"
+      },
+      "reason": "Target 0x14072e780 requires exact reconstruction of 0x14072e780, 0x142bee820 and associated state or side effects; capture does not by itself establish a complete compilable behavior."
+    },
+    {
+      "direct_helper_captures": {
+        "0x142bee820": "porting/generated/native144-virtual-helpers/0x142bee820.c"
+      },
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [
+        "0x142ce0d60",
+        "0x142cda2d0",
+        "0x142bc1ba0",
+        "0x142bd7e70"
+      ],
+      "indirect_slots": [
+        "0x30"
+      ],
+      "index": 35,
+      "class": "UFortCheatManager",
+      "function": "SetAthenaHeroOnScriptedPawn",
+      "address": "0x14286d4d0",
+      "native_body_address": "0x14072e780",
+      "status": "unresolved",
+      "confidence": "none",
+      "proof": {
+        "wrapper_capture": "porting/generated/native134-virtual-bulk/0x14286d4d0.c",
+        "target_capture": "porting/generated/native96-impl/0x14072e780.c",
+        "captured_direct_helpers": {},
+        "header": "porting/native/Source/FortniteGame/Generated/UFortCheatManager.h",
+        "vtable": "0x146122ed0",
+        "slot": "0x440"
+      },
+      "reason": "Target 0x14072e780 requires exact reconstruction of 0x14072e780, 0x142bee820 and associated state or side effects; capture does not by itself establish a complete compilable behavior."
+    },
+    {
+      "direct_helper_captures": {
+        "0x142bee820": "porting/generated/native144-virtual-helpers/0x142bee820.c"
+      },
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [
+        "0x142ce0d60",
+        "0x142cda2d0",
+        "0x142bc1ba0",
+        "0x142bd7e70"
+      ],
+      "indirect_slots": [
+        "0x30"
+      ],
+      "index": 36,
+      "class": "UFortCheatManager",
+      "function": "SetBackpackOnScriptedPawn",
+      "address": "0x14286d5c0",
+      "native_body_address": "0x14072e780",
+      "status": "unresolved",
+      "confidence": "none",
+      "proof": {
+        "wrapper_capture": "porting/generated/native134-virtual-bulk/0x14286d5c0.c",
+        "target_capture": "porting/generated/native96-impl/0x14072e780.c",
+        "captured_direct_helpers": {},
+        "header": "porting/native/Source/FortniteGame/Generated/UFortCheatManager.h",
+        "vtable": "0x146122ed0",
+        "slot": "0x450"
+      },
+      "reason": "Target 0x14072e780 requires exact reconstruction of 0x14072e780, 0x142bee820 and associated state or side effects; capture does not by itself establish a complete compilable behavior."
+    },
+    {
+      "direct_helper_captures": {
+        "0x142b2ca60": "porting/generated/native97-deps/0x142b2ca60.c",
+        "0x142ec9900": "porting/generated/callee_probe/world_item_ammo_1/0x142ec9900.c"
+      },
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [
+        "0x142e5fb70"
+      ],
+      "indirect_slots": [],
+      "index": 37,
+      "class": "AFortPlayerPawn",
+      "function": "GetVehicleUInterface",
+      "address": "0x142a7cbe0",
+      "native_body_address": "0x1423257c0",
+      "status": "ported",
+      "confidence": "high",
+      "proof": {
+        "wrapper_capture": "porting/generated/native96-broad/0x142a7cbe0.c",
+        "target_capture": "porting/generated/native134-virtual-bulk/0x1423257c0.c",
+        "captured_direct_helpers": {
+          "0x142b2ca60": "porting/generated/native97-deps/0x142b2ca60.c",
+          "0x142ec9900": "porting/generated/callee_probe/world_item_ammo_1/0x142ec9900.c"
+        },
+        "header": "porting/native/Source/FortniteGame/Generated/AFortPlayerPawn.h",
+        "vtable": "0x146116ac8",
+        "slot": "0x1080"
+      },
+      "reason": "Target queries native interface address on VehicleStateLocal.Vehicle at 0x1578 and sets both script interface words only if found."
+    },
+    {
+      "direct_helper_captures": {
+        "0x142a75f10": "porting/generated/native108-impl/0x142a75f10.c"
+      },
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [],
+      "indirect_slots": [
+        "0x38",
+        "0x30",
+        "0x1088",
+        "0x5d0"
+      ],
+      "index": 38,
+      "class": "AFortPlayerControllerAthena",
+      "function": "ServerApplyOverrideWrapToVehicle",
+      "address": "0x142a5aa80",
+      "native_body_address": "0x1419f1040",
+      "status": "unresolved",
+      "confidence": "none",
+      "proof": {
+        "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142a5aa80.c",
+        "target_capture": "porting/generated/native134-virtual-bulk/0x1419f1040.c",
+        "captured_direct_helpers": {
+          "0x142a75f10": "porting/generated/native108-impl/0x142a75f10.c"
+        },
+        "header": "porting/native/Source/FortniteGame/Generated/AFortPlayerControllerAthena.h",
+        "vtable": "0x145e1aac0",
+        "slot": "0x2588"
+      },
+      "reason": "Target 0x1419f1040 requires exact reconstruction of 0x142a75f10 and associated state or side effects; capture does not by itself establish a complete compilable behavior."
+    },
+    {
+      "direct_helper_captures": {
+        "0x142872f60": "porting/generated/native144-virtual-helpers/0x142872f60.c",
+        "0x14196c820": "porting/generated/native144-virtual-helpers/0x14196c820.c"
+      },
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [
+        "0x141cb1e80"
+      ],
+      "indirect_slots": [
+        "0x38",
+        "0x30"
+      ],
+      "index": 39,
+      "class": "AFortPlayerControllerAthena",
+      "function": "ClientBotStartDogpile",
+      "address": "0x142a56770",
+      "native_body_address": "0x1419c53a0",
+      "status": "unresolved",
+      "confidence": "none",
+      "proof": {
+        "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142a56770.c",
+        "target_capture": "porting/generated/native134-virtual-bulk/0x1419c53a0.c",
+        "captured_direct_helpers": {},
+        "header": "porting/native/Source/FortniteGame/Generated/AFortPlayerControllerAthena.h",
+        "vtable": "0x145e1aac0",
+        "slot": "0x25f8"
+      },
+      "reason": "Target 0x1419c53a0 requires exact reconstruction of 0x142872f60, 0x14196c820 and associated state or side effects; capture does not by itself establish a complete compilable behavior."
+    },
+    {
+      "direct_helper_captures": {
+        "0x14232d220": "porting/generated/callee_probe/blocking/0x14232d220.c"
+      },
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [],
+      "indirect_slots": [
+        "0x38",
+        "0x30"
+      ],
+      "index": 40,
+      "class": "AFortPlayerPawn",
+      "function": "ServerInterrogateDBNOPlayer",
+      "address": "0x142a7f380",
+      "native_body_address": "0x14234a380",
+      "status": "unresolved",
+      "confidence": "none",
+      "proof": {
+        "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142a7f380.c",
+        "target_capture": "porting/generated/native134-virtual-bulk/0x14234a380.c",
+        "captured_direct_helpers": {
+          "0x14232d220": "porting/generated/callee_probe/blocking/0x14232d220.c"
+        },
+        "header": "porting/native/Source/FortniteGame/Generated/AFortPlayerPawn.h",
+        "vtable": "0x146116ac8",
+        "slot": "0xea8"
+      },
+      "reason": "Target 0x14234a380 requires exact reconstruction of 0x14232d220 and associated state or side effects; capture does not by itself establish a complete compilable behavior."
+    },
+    {
+      "direct_helper_captures": {
+        "0x142c0c240": "porting/generated/callee_probe/extra/0x142c0c240.c"
+      },
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [],
+      "indirect_slots": [],
+      "index": 41,
+      "class": "UFortCosmeticVariant",
+      "function": "GetVariantText",
+      "address": "0x1428aca10",
+      "native_body_address": "0x142014020",
+      "status": "unresolved",
+      "confidence": "none",
+      "proof": {
+        "wrapper_capture": "porting/generated/native134-virtual-bulk/0x1428aca10.c",
+        "target_capture": "porting/generated/native134-virtual-bulk/0x142014020.c",
+        "captured_direct_helpers": {
+          "0x142c0c240": "porting/generated/callee_probe/extra/0x142c0c240.c"
+        },
+        "header": "porting/native/Source/FortniteGame/Generated/UFortCosmeticVariant.h",
+        "vtable": "0x14605f0b0",
+        "slot": "0x330"
+      },
+      "reason": "Target 0x142014020 requires exact reconstruction of 0x142014020, 0x142c0c240 and associated state or side effects; capture does not by itself establish a complete compilable behavior."
+    },
+    {
+      "direct_helper_captures": {
+        "0x142c0c240": "porting/generated/callee_probe/extra/0x142c0c240.c"
+      },
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [],
+      "indirect_slots": [],
+      "index": 42,
+      "class": "UFortCosmeticVariant",
+      "function": "GetVariantUnlockRequirement",
+      "address": "0x1428acb10",
+      "native_body_address": "0x142014080",
+      "status": "unresolved",
+      "confidence": "none",
+      "proof": {
+        "wrapper_capture": "porting/generated/native134-virtual-bulk/0x1428acb10.c",
+        "target_capture": "porting/generated/native134-virtual-bulk/0x142014080.c",
+        "captured_direct_helpers": {
+          "0x142c0c240": "porting/generated/callee_probe/extra/0x142c0c240.c"
+        },
+        "header": "porting/native/Source/FortniteGame/Generated/UFortCosmeticVariant.h",
+        "vtable": "0x14605f0b0",
+        "slot": "0x338"
+      },
+      "reason": "Target 0x142014080 requires exact reconstruction of 0x142014080, 0x142c0c240 and associated state or side effects; capture does not by itself establish a complete compilable behavior."
+    },
+    {
+      "direct_helper_captures": {
+        "0x140682ce0": "porting/generated/callee_probe/fort_assets_diagnostics4/0x140682ce0.c",
+        "0x142ebd9e0": "porting/generated/native96-impl/0x142ebd9e0.c"
+      },
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [],
+      "indirect_slots": [
+        "0x450"
+      ],
+      "index": 43,
+      "class": "UFortItemDefinition",
+      "function": "GetPreviewPrefabAsset",
+      "address": "0x14295d4b0",
+      "native_body_address": "0x1420320e0",
+      "status": "unresolved",
+      "confidence": "none",
+      "proof": {
+        "wrapper_capture": "porting/generated/native100-broad/0x14295d4b0.c",
+        "target_capture": "porting/generated/native101-virtual/0x1420320e0.c",
+        "captured_direct_helpers": {
+          "0x142ebd9e0": "porting/generated/native96-impl/0x142ebd9e0.c",
+          "0x140682ce0": "porting/generated/callee_probe/fort_assets_diagnostics4/0x140682ce0.c"
+        },
+        "header": "porting/native/Source/FortniteGame/Generated/UFortItemDefinition.h",
+        "vtable": "0x14606bf00",
+        "slot": "0x440"
+      },
+      "reason": "Target 0x1420320e0 requires exact reconstruction of 0x1420320e0, 0x140682ce0, 0x142ebd9e0 and associated state or side effects; capture does not by itself establish a complete compilable behavior."
+    },
+    {
+      "direct_helper_captures": {
+        "0x140682ce0": "porting/generated/callee_probe/fort_assets_diagnostics4/0x140682ce0.c",
+        "0x142ebd9e0": "porting/generated/native96-impl/0x142ebd9e0.c"
+      },
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [],
+      "indirect_slots": [
+        "0x420"
+      ],
+      "index": 44,
+      "class": "UFortItemDefinition",
+      "function": "GetPreviewSkeletalMeshAsset",
+      "address": "0x14295d690",
+      "native_body_address": "0x1420322d0",
+      "status": "unresolved",
+      "confidence": "none",
+      "proof": {
+        "wrapper_capture": "porting/generated/native100-broad/0x14295d690.c",
+        "target_capture": "porting/generated/native101-virtual/0x1420322d0.c",
+        "captured_direct_helpers": {
+          "0x140682ce0": "porting/generated/callee_probe/fort_assets_diagnostics4/0x140682ce0.c",
+          "0x142ebd9e0": "porting/generated/native96-impl/0x142ebd9e0.c"
+        },
+        "header": "porting/native/Source/FortniteGame/Generated/UFortItemDefinition.h",
+        "vtable": "0x14606bf00",
+        "slot": "0x428"
+      },
+      "reason": "Target 0x1420322d0 requires exact reconstruction of 0x1420322d0, 0x140682ce0, 0x142ebd9e0 and associated state or side effects; capture does not by itself establish a complete compilable behavior."
+    },
+    {
+      "direct_helper_captures": {
+        "0x140682ce0": "porting/generated/callee_probe/fort_assets_diagnostics4/0x140682ce0.c",
+        "0x142ebd9e0": "porting/generated/native96-impl/0x142ebd9e0.c"
+      },
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [],
+      "indirect_slots": [
+        "0x430"
+      ],
+      "index": 45,
+      "class": "UFortItemDefinition",
+      "function": "GetPreviewStaticMeshAsset",
+      "address": "0x14295d760",
+      "native_body_address": "0x142032510",
+      "status": "unresolved",
+      "confidence": "none",
+      "proof": {
+        "wrapper_capture": "porting/generated/native100-broad/0x14295d760.c",
+        "target_capture": "porting/generated/native101-virtual/0x142032510.c",
+        "captured_direct_helpers": {
+          "0x142ebd9e0": "porting/generated/native96-impl/0x142ebd9e0.c",
+          "0x140682ce0": "porting/generated/callee_probe/fort_assets_diagnostics4/0x140682ce0.c"
+        },
+        "header": "porting/native/Source/FortniteGame/Generated/UFortItemDefinition.h",
+        "vtable": "0x14606bf00",
+        "slot": "0x438"
+      },
+      "reason": "Target 0x142032510 requires exact reconstruction of 0x142032510, 0x140682ce0, 0x142ebd9e0 and associated state or side effects; capture does not by itself establish a complete compilable behavior."
+    },
+    {
+      "direct_helper_captures": {},
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [],
+      "indirect_slots": [],
+      "index": 46,
+      "class": "UFortTouchControlRegion",
+      "function": "OnRotatePlayerRegionTouchStarted",
+      "address": "0x1453057e0",
+      "native_body_address": "0x144dd4da0",
+      "status": "unresolved",
+      "confidence": "none",
+      "proof": {
+        "wrapper_capture": "porting/generated/native134-virtual-bulk/0x1453057e0.c",
+        "target_capture": "porting/generated/native134-virtual-bulk/0x144dd4da0.c",
+        "captured_direct_helpers": {},
+        "header": "porting/native/Source/FortniteUI/Generated/UFortTouchControlRegion.h",
+        "vtable": "0x146d795f8",
+        "slot": "0x4b0"
+      },
+      "reason": "Target 0x144dd4da0 requires exact reconstruction of 0x144dd4da0 and associated state or side effects; capture does not by itself establish a complete compilable behavior."
+    },
+    {
+      "direct_helper_captures": {
+        "0x144added0": "porting/generated/native108-impl/0x144added0.c",
+        "0x144c8c3d0": "porting/generated/native144-virtual-helpers/0x144c8c3d0.c"
+      },
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [
+        "0x14519a3e0",
+        "0x141a66970",
+        "0x144c7d330",
+        "0x1423dff00",
+        "0x1423b94e0"
+      ],
+      "indirect_slots": [],
+      "index": 47,
+      "class": "UFortTouchControlRegion",
+      "function": "OnAdditionalTouchLost",
+      "address": "0x145304b30",
+      "native_body_address": "0x144dd2ce0",
+      "status": "unresolved",
+      "confidence": "none",
+      "proof": {
+        "wrapper_capture": "porting/generated/native134-virtual-bulk/0x145304b30.c",
+        "target_capture": "porting/generated/native134-virtual-bulk/0x144dd2ce0.c",
+        "captured_direct_helpers": {
+          "0x144added0": "porting/generated/native108-impl/0x144added0.c"
+        },
+        "header": "porting/native/Source/FortniteUI/Generated/UFortTouchControlRegion.h",
+        "vtable": "0x146d795f8",
+        "slot": "0x478"
+      },
+      "reason": "Target 0x144dd2ce0 requires exact reconstruction of 0x144dd2ce0, 0x144added0, 0x144c8c3d0 and associated state or side effects; capture does not by itself establish a complete compilable behavior."
+    },
+    {
+      "direct_helper_captures": {
+        "0x142cbd480": "porting/generated/native108-impl/0x142cbd480.c",
+        "0x142cd4ab0": "porting/generated/callee_probe/extra/0x142cd4ab0.c",
+        "0x142cbd3c0": "porting/generated/native144-virtual-helpers/0x142cbd3c0.c",
+        "0x142af06a0": "porting/generated/native144-virtual-helpers/0x142af06a0.c"
+      },
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [
+        "0x142c88620",
+        "0x142cd4630",
+        "0x142ce4890",
+        "0x142cb9f50"
+      ],
+      "indirect_slots": [
+        "0x78"
+      ],
+      "index": 48,
+      "class": "AFortPlayerControllerAthena",
+      "function": "ClientSetStreamingTestStreamingLevels",
+      "address": "0x142a57e60",
+      "native_body_address": "0x1419c7f90",
+      "status": "unresolved",
+      "confidence": "none",
+      "proof": {
+        "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142a57e60.c",
+        "target_capture": "porting/generated/native134-virtual-bulk/0x1419c7f90.c",
+        "captured_direct_helpers": {
+          "0x142cbd480": "porting/generated/native108-impl/0x142cbd480.c",
+          "0x142cd4ab0": "porting/generated/callee_probe/extra/0x142cd4ab0.c"
+        },
+        "header": "porting/native/Source/FortniteGame/Generated/AFortPlayerControllerAthena.h",
+        "vtable": "0x145e1aac0",
+        "slot": "0x2580"
+      },
+      "reason": "Target 0x1419c7f90 requires exact reconstruction of 0x142cbd480, 0x142cd4ab0, 0x142cbd3c0, 0x142af06a0 and associated state or side effects; capture does not by itself establish a complete compilable behavior."
+    },
+    {
+      "direct_helper_captures": {
+        "0x141f87ec0": "porting/generated/native108-impl/0x141f87ec0.c",
+        "0x14079cdf0": "porting/generated/native100-impl/0x14079cdf0.c"
+      },
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [],
+      "indirect_slots": [
+        "0x4a0",
+        "0x350"
+      ],
+      "index": 49,
+      "class": "UFortItem",
+      "function": "GetSecondaryCategory",
+      "address": "0x1429599e0",
+      "native_body_address": "0x142032e70",
+      "status": "unresolved",
+      "confidence": "none",
+      "proof": {
+        "wrapper_capture": "porting/generated/native134-virtual-bulk/0x1429599e0.c",
+        "target_capture": "porting/generated/native134-virtual-bulk/0x142032e70.c",
+        "captured_direct_helpers": {
+          "0x14079cdf0": "porting/generated/native100-impl/0x14079cdf0.c",
+          "0x141f87ec0": "porting/generated/native108-impl/0x141f87ec0.c"
+        },
+        "header": "porting/native/Source/FortniteGame/Generated/UFortItem.h",
+        "vtable": "0x14606c3f0",
+        "slot": "0x348"
+      },
+      "reason": "Target 0x142032e70 requires exact reconstruction of 0x142032e70, 0x141f87ec0, 0x14079cdf0 and associated state or side effects; capture does not by itself establish a complete compilable behavior."
+    },
+    {
+      "direct_helper_captures": {
+        "0x141f87ec0": "porting/generated/native108-impl/0x141f87ec0.c",
+        "0x14079cdf0": "porting/generated/native100-impl/0x14079cdf0.c"
+      },
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [],
+      "indirect_slots": [
+        "0x4a0",
+        "0x358"
+      ],
+      "index": 50,
+      "class": "UFortItem",
+      "function": "GetTertiaryCategory",
+      "address": "0x142959cb0",
+      "native_body_address": "0x142033320",
+      "status": "unresolved",
+      "confidence": "none",
+      "proof": {
+        "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142959cb0.c",
+        "target_capture": "porting/generated/native134-virtual-bulk/0x142033320.c",
+        "captured_direct_helpers": {
+          "0x14079cdf0": "porting/generated/native100-impl/0x14079cdf0.c",
+          "0x141f87ec0": "porting/generated/native108-impl/0x141f87ec0.c"
+        },
+        "header": "porting/native/Source/FortniteGame/Generated/UFortItem.h",
+        "vtable": "0x14606c3f0",
+        "slot": "0x350"
+      },
+      "reason": "Target 0x142033320 requires exact reconstruction of 0x142033320, 0x141f87ec0, 0x14079cdf0 and associated state or side effects; capture does not by itself establish a complete compilable behavior."
+    },
+    {
+      "direct_helper_captures": {
+        "0x1423bd380": "porting/generated/native101-inventory-deps/0x1423bd380.c",
+        "0x141ef7100": "porting/generated/native144-virtual-helpers/0x141ef7100.c"
+      },
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [
+        "0x1423825e0",
+        "0x142af0810"
+      ],
+      "indirect_slots": [
+        "0x218"
+      ],
+      "index": 51,
+      "class": "AFortPlayerControllerAthena",
+      "function": "ClientReceiveKillNotification",
+      "address": "0x142a575a0",
+      "native_body_address": "0x1419c7370",
+      "status": "unresolved",
+      "confidence": "none",
+      "proof": {
+        "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142a575a0.c",
+        "target_capture": "porting/generated/native134-virtual-bulk/0x1419c7370.c",
+        "captured_direct_helpers": {
+          "0x1423bd380": "porting/generated/native101-inventory-deps/0x1423bd380.c"
+        },
+        "header": "porting/native/Source/FortniteGame/Generated/AFortPlayerControllerAthena.h",
+        "vtable": "0x145e1aac0",
+        "slot": "0x27f0"
+      },
+      "reason": "Target 0x1419c7370 requires exact reconstruction of 0x1423bd380, 0x141ef7100 and associated state or side effects; capture does not by itself establish a complete compilable behavior."
+    },
+    {
+      "direct_helper_captures": {
+        "0x1428381e0": "porting/generated/callee_probe/blocking/0x1428381e0.c",
+        "0x1419297f0": "porting/generated/callee_probe/blocking/0x1419297f0.c"
+      },
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [],
+      "indirect_slots": [
+        "0x38",
+        "0x30",
+        "0x850"
+      ],
+      "index": 52,
+      "class": "AFortPlayerPawn",
+      "function": "MulticastUpdateVehicleInputStateReliable",
+      "address": "0x142a7d770",
+      "native_body_address": "0x142334ea0",
+      "status": "unresolved",
+      "confidence": "none",
+      "proof": {
+        "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142a7d770.c",
+        "target_capture": "porting/generated/native134-virtual-bulk/0x142334ea0.c",
+        "captured_direct_helpers": {
+          "0x1428381e0": "porting/generated/callee_probe/blocking/0x1428381e0.c",
+          "0x1419297f0": "porting/generated/callee_probe/blocking/0x1419297f0.c"
+        },
+        "header": "porting/native/Source/FortniteGame/Generated/AFortPlayerPawn.h",
+        "vtable": "0x146116ac8",
+        "slot": "0xfb0"
+      },
+      "reason": "Target 0x142334ea0 requires exact reconstruction of 0x1428381e0, 0x1419297f0 and associated state or side effects; capture does not by itself establish a complete compilable behavior."
+    },
+    {
+      "direct_helper_captures": {
+        "0x140682ce0": "porting/generated/callee_probe/fort_assets_diagnostics4/0x140682ce0.c",
+        "0x142ebd9e0": "porting/generated/native96-impl/0x142ebd9e0.c"
+      },
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [],
+      "indirect_slots": [
+        "0x458",
+        "0x440"
+      ],
+      "index": 53,
+      "class": "UFortItemDefinition",
+      "function": "GetPreviewPrefabAssetAtSubSlot",
+      "address": "0x14295d580",
+      "native_body_address": "0x142032160",
+      "status": "unresolved",
+      "confidence": "none",
+      "proof": {
+        "wrapper_capture": "porting/generated/native100-broad/0x14295d580.c",
+        "target_capture": "porting/generated/native101-virtual/0x142032160.c",
+        "captured_direct_helpers": {
+          "0x142ebd9e0": "porting/generated/native96-impl/0x142ebd9e0.c",
+          "0x140682ce0": "porting/generated/callee_probe/fort_assets_diagnostics4/0x140682ce0.c"
+        },
+        "header": "porting/native/Source/FortniteGame/Generated/UFortItemDefinition.h",
+        "vtable": "0x14606bf00",
+        "slot": "0x448"
+      },
+      "reason": "Target 0x142032160 requires exact reconstruction of 0x142032160, 0x140682ce0, 0x142ebd9e0 and associated state or side effects; capture does not by itself establish a complete compilable behavior."
+    },
+    {
+      "direct_helper_captures": {
+        "0x14199e430": "porting/generated/callee_probe/blocking/0x14199e430.c",
+        "0x142a3c9a0": "porting/generated/native144-virtual-helpers/0x142a3c9a0.c",
+        "0x1423a1e80": "porting/generated/native144-virtual-helpers/0x1423a1e80.c",
+        "0x142392ff0": "porting/generated/native105-impl/0x142392ff0.c",
+        "0x142393980": "porting/generated/native144-virtual-helpers/0x142393980.c",
+        "0x1406a9dc0": "porting/generated/callee_probe/blocking/0x1406a9dc0.c",
+        "0x1423d1cb0": "porting/generated/native144-virtual-helpers/0x1423d1cb0.c"
+      },
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [
+        "0x14289eb90",
+        "0x141d1bdd0",
+        "0x142370330",
+        "0x1423bd2b0",
+        "0x141eb7910",
+        "0x1423909c0",
+        "0x14238e200",
+        "0x1423be250",
+        "0x1423930f0",
+        "0x1423927c0",
+        "0x141c1d230",
+        "0x141c1c400"
+      ],
+      "indirect_slots": [
+        "0x150",
+        "0x38"
+      ],
+      "index": 54,
+      "class": "AFortPlayerControllerAthena",
+      "function": "ClientPreviewScreenshotModeActivated",
+      "address": "0x142a573e0",
+      "native_body_address": "0x1419c6e00",
+      "status": "unresolved",
+      "confidence": "none",
+      "proof": {
+        "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142a573e0.c",
+        "target_capture": "porting/generated/native134-virtual-bulk/0x1419c6e00.c",
+        "captured_direct_helpers": {
+          "0x14199e430": "porting/generated/callee_probe/blocking/0x14199e430.c",
+          "0x142392ff0": "porting/generated/native105-impl/0x142392ff0.c",
+          "0x1406a9dc0": "porting/generated/callee_probe/blocking/0x1406a9dc0.c"
+        },
+        "header": "porting/native/Source/FortniteGame/Generated/AFortPlayerControllerAthena.h",
+        "vtable": "0x145e1aac0",
+        "slot": "0x2290"
+      },
+      "reason": "Target 0x1419c6e00 requires exact reconstruction of 0x14199e430, 0x142a3c9a0, 0x1423a1e80, 0x142392ff0, 0x142393980, 0x1406a9dc0, 0x1423d1cb0 and associated state or side effects; capture does not by itself establish a complete compilable behavior."
+    },
+    {
+      "direct_helper_captures": {
+        "0x142b02750": "porting/generated/native144-virtual-helpers/0x142b02750.c",
+        "0x14463f780": "porting/generated/callee_probe/world_item_ammo_1/0x14463f780.c",
+        "0x142a5f350": "porting/generated/callee_probe/world_item_ammo_1/0x142a5f350.c",
+        "0x141ca78b0": "porting/generated/frontend-native-evidence/get-frontend-camera-deps/0x141ca78b0.c",
+        "0x1412b1090": "porting/generated/frontend-native-evidence/get-frontend-camera-deps/0x1412b1090.c",
+        "0x141ca62f0": "porting/generated/native108-impl/0x141ca62f0.c",
+        "0x142b028d0": "porting/generated/native144-virtual-helpers/0x142b028d0.c"
+      },
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [],
+      "indirect_slots": [
+        "0x640",
+        "0x150",
+        "0x38",
+        "0x30"
+      ],
+      "index": 55,
+      "class": "AFortTheaterMapTile",
+      "function": "OnSelectWrapper",
+      "address": "0x142b03e00",
+      "native_body_address": "0x1425720a0",
+      "status": "unresolved",
+      "confidence": "none",
+      "proof": {
+        "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142b03e00.c",
+        "target_capture": "porting/generated/native134-virtual-bulk/0x1425720a0.c",
+        "captured_direct_helpers": {
+          "0x141ca78b0": "porting/generated/frontend-native-evidence/get-frontend-camera-deps/0x141ca78b0.c",
+          "0x142a5f350": "porting/generated/callee_probe/world_item_ammo_1/0x142a5f350.c",
+          "0x1412b1090": "porting/generated/frontend-native-evidence/get-frontend-camera-deps/0x1412b1090.c",
+          "0x14463f780": "porting/generated/callee_probe/world_item_ammo_1/0x14463f780.c",
+          "0x141ca62f0": "porting/generated/native108-impl/0x141ca62f0.c"
+        },
+        "header": "porting/native/Source/FortniteGame/Generated/AFortTheaterMapTile.h",
+        "vtable": "0x1461bf5c8",
+        "slot": "0x648"
+      },
+      "reason": "Target 0x1425720a0 requires exact reconstruction of 0x1425720a0, 0x142b02750, 0x14463f780, 0x142a5f350, 0x141ca78b0, 0x1412b1090, 0x141ca62f0, 0x142b028d0 and associated state or side effects; capture does not by itself establish a complete compilable behavior."
+    },
+    {
+      "direct_helper_captures": {
+        "0x144dc5980": "porting/generated/native144-virtual-helpers/0x144dc5980.c",
+        "0x145309850": "porting/generated/native144-virtual-helpers/0x145309850.c",
+        "0x142a3d9f0": "porting/generated/callee_probe/weapon_selection/0x142a3d9f0.c",
+        "0x142a6d3f0": "porting/generated/native144-virtual-helpers/0x142a6d3f0.c"
+      },
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [
+        "0x144c98870"
+      ],
+      "indirect_slots": [
+        "0x288",
+        "0x38",
+        "0x30"
+      ],
+      "index": 56,
+      "class": "UFortTouchControlRegion",
+      "function": "OnMovePlayerRegionTouchLost",
+      "address": "0x145305000",
+      "native_body_address": "0x144dd3c90",
+      "status": "unresolved",
+      "confidence": "none",
+      "proof": {
+        "wrapper_capture": "porting/generated/native134-virtual-bulk/0x145305000.c",
+        "target_capture": "porting/generated/native134-virtual-bulk/0x144dd3c90.c",
+        "captured_direct_helpers": {
+          "0x142a3d9f0": "porting/generated/callee_probe/weapon_selection/0x142a3d9f0.c"
+        },
+        "header": "porting/native/Source/FortniteUI/Generated/UFortTouchControlRegion.h",
+        "vtable": "0x146d795f8",
+        "slot": "0x4c0"
+      },
+      "reason": "Target 0x144dd3c90 requires exact reconstruction of 0x144dd3c90, 0x144dc5980, 0x145309850, 0x142a3d9f0, 0x142a6d3f0 and associated state or side effects; capture does not by itself establish a complete compilable behavior."
+    },
+    {
+      "direct_helper_captures": {
+        "0x14419d570": "porting/generated/native144-virtual-helpers/0x14419d570.c",
+        "0x145803a44": "porting/generated/native103-impl/0x145803a44.c",
+        "0x140680160": "porting/generated/native103-impl/0x140680160.c",
+        "0x1406800e0": "porting/generated/native103-impl/0x1406800e0.c",
+        "0x140789600": "porting/generated/native144-virtual-helpers/0x140789600.c",
+        "0x1458038a4": "porting/generated/native103-impl/0x1458038a4.c",
+        "0x1458039e4": "porting/generated/native103-impl/0x1458039e4.c",
+        "0x14418adb0": "porting/generated/native144-virtual-helpers/0x14418adb0.c"
+      },
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [
+        "0x145803af0",
+        "0x142bb98e0",
+        "0x145803868",
+        "0x145803aac"
+      ],
+      "indirect_slots": [
+        "0x150"
+      ],
+      "index": 57,
+      "class": "AFortPlayerControllerAthena",
+      "function": "ClientSendStateEncryptionKey",
+      "address": "0x142a57bd0",
+      "native_body_address": "0x1419c7c70",
+      "status": "unresolved",
+      "confidence": "none",
+      "proof": {
+        "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142a57bd0.c",
+        "target_capture": "porting/generated/native134-virtual-bulk/0x1419c7c70.c",
+        "captured_direct_helpers": {
+          "0x1458038a4": "porting/generated/native103-impl/0x1458038a4.c",
+          "0x145803a44": "porting/generated/native103-impl/0x145803a44.c",
+          "0x1458039e4": "porting/generated/native103-impl/0x1458039e4.c",
+          "0x140680160": "porting/generated/native103-impl/0x140680160.c",
+          "0x1406800e0": "porting/generated/native103-impl/0x1406800e0.c"
+        },
+        "header": "porting/native/Source/FortniteGame/Generated/AFortPlayerControllerAthena.h",
+        "vtable": "0x145e1aac0",
+        "slot": "0x2538"
+      },
+      "reason": "Target 0x1419c7c70 requires exact reconstruction of 0x14419d570, 0x145803a44, 0x140680160, 0x1406800e0, 0x140789600, 0x1458038a4, 0x1458039e4, 0x14418adb0 and associated state or side effects; capture does not by itself establish a complete compilable behavior."
+    },
+    {
+      "direct_helper_captures": {
+        "0x140694750": "porting/generated/native98-impl/0x140694750.c",
+        "0x142a3d9f0": "porting/generated/callee_probe/weapon_selection/0x142a3d9f0.c",
+        "0x142a6d3f0": "porting/generated/native144-virtual-helpers/0x142a6d3f0.c"
+      },
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [],
+      "indirect_slots": [
+        "0x288",
+        "0x38",
+        "0x30"
+      ],
+      "index": 58,
+      "class": "UFortTouchControlRegion",
+      "function": "OnRotatePlayerRegionTouchLost",
+      "address": "0x145305570",
+      "native_body_address": "0x144dd4b00",
+      "status": "unresolved",
+      "confidence": "none",
+      "proof": {
+        "wrapper_capture": "porting/generated/native134-virtual-bulk/0x145305570.c",
+        "target_capture": "porting/generated/native134-virtual-bulk/0x144dd4b00.c",
+        "captured_direct_helpers": {
+          "0x140694750": "porting/generated/native98-impl/0x140694750.c",
+          "0x142a3d9f0": "porting/generated/callee_probe/weapon_selection/0x142a3d9f0.c"
+        },
+        "header": "porting/native/Source/FortniteUI/Generated/UFortTouchControlRegion.h",
+        "vtable": "0x146d795f8",
+        "slot": "0x498"
+      },
+      "reason": "Target 0x144dd4b00 requires exact reconstruction of 0x144dd4b00, 0x140694750, 0x142a3d9f0, 0x142a6d3f0 and associated state or side effects; capture does not by itself establish a complete compilable behavior."
+    },
+    {
+      "direct_helper_captures": {
+        "0x140680160": "porting/generated/native103-impl/0x140680160.c"
+      },
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [],
+      "indirect_slots": [
+        "0x308"
+      ],
+      "index": 59,
+      "class": "UFortItem",
+      "function": "GetInactivePreviewImage",
+      "address": "0x1429590a0",
+      "native_body_address": "0x14202dd80",
+      "status": "ported",
+      "confidence": "high",
+      "proof": {
+        "wrapper_capture": "porting/generated/native94-broad/0x1429590a0.c",
+        "target_capture": "porting/generated/native134-virtual-bulk/0x14202dd80.c",
+        "captured_direct_helpers": {
+          "0x140680160": "porting/generated/native103-impl/0x140680160.c"
+        },
+        "header": "porting/native/Source/FortniteGame/Generated/UFortItem.h",
+        "vtable": "0x14606c3f0",
+        "slot": "0x3c0"
+      },
+      "reason": "Target calls GetItemDefinitionBP slot 0x3e8 and definition GetInactivePreviewImage slot 0x308; otherwise returns empty soft pointer."
+    },
+    {
+      "direct_helper_captures": {
+        "0x140680160": "porting/generated/native103-impl/0x140680160.c"
+      },
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [],
+      "indirect_slots": [
+        "0x318"
+      ],
+      "index": 60,
+      "class": "UFortItem",
+      "function": "GetSmallPreviewImage",
+      "address": "0x142959c30",
+      "native_body_address": "0x142033080",
+      "status": "ported",
+      "confidence": "high",
+      "proof": {
+        "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142959c30.c",
+        "target_capture": "porting/generated/native134-virtual-bulk/0x142033080.c",
+        "captured_direct_helpers": {
+          "0x140680160": "porting/generated/native103-impl/0x140680160.c"
+        },
+        "header": "porting/native/Source/FortniteGame/Generated/UFortItem.h",
+        "vtable": "0x14606c3f0",
+        "slot": "0x3d0"
+      },
+      "reason": "Target calls GetItemDefinitionBP slot 0x3e8 and definition GetSmallPreviewImage slot 0x318; otherwise returns empty soft pointer."
+    },
+    {
+      "direct_helper_captures": {
+        "0x140680160": "porting/generated/native103-impl/0x140680160.c"
+      },
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [],
+      "indirect_slots": [
+        "0x310"
+      ],
+      "index": 61,
+      "class": "UFortItem",
+      "function": "GetWidePreviewImage",
+      "address": "0x14295a0a0",
+      "native_body_address": "0x142033940",
+      "status": "ported",
+      "confidence": "high",
+      "proof": {
+        "wrapper_capture": "porting/generated/native134-virtual-bulk/0x14295a0a0.c",
+        "target_capture": "porting/generated/native134-virtual-bulk/0x142033940.c",
+        "captured_direct_helpers": {
+          "0x140680160": "porting/generated/native103-impl/0x140680160.c"
+        },
+        "header": "porting/native/Source/FortniteGame/Generated/UFortItem.h",
+        "vtable": "0x14606c3f0",
+        "slot": "0x3c8"
+      },
+      "reason": "Target calls GetItemDefinitionBP slot 0x3e8 and definition GetWidePreviewImage slot 0x310; otherwise returns empty soft pointer."
+    },
+    {
+      "direct_helper_captures": {
+        "0x141c56510": "porting/generated/native89-objective/0x141c56510.c",
+        "0x143d67ad0": "porting/generated/native102-deps/0x143d67ad0.c"
+      },
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [
+        "0x140795550"
+      ],
+      "indirect_slots": [
+        "0x318"
+      ],
+      "index": 62,
+      "class": "UFortItemDefinition",
+      "function": "GetSmallPreviewImageBrush",
+      "address": "0x14295daf0",
+      "native_body_address": "0x142033210",
+      "status": "unresolved",
+      "confidence": "none",
+      "proof": {
+        "wrapper_capture": "porting/generated/native100-broad/0x14295daf0.c",
+        "target_capture": "porting/generated/native101-virtual/0x142033210.c",
+        "captured_direct_helpers": {
+          "0x143d67ad0": "porting/generated/native102-deps/0x143d67ad0.c",
+          "0x141c56510": "porting/generated/native89-objective/0x141c56510.c"
+        },
+        "header": "porting/native/Source/FortniteGame/Generated/UFortItemDefinition.h",
+        "vtable": "0x14606bf00",
+        "slot": "0x328"
+      },
+      "reason": "Target 0x142033210 requires exact reconstruction of 0x142033210, 0x141c56510, 0x143d67ad0 and associated state or side effects; capture does not by itself establish a complete compilable behavior."
+    },
+    {
+      "direct_helper_captures": {
+        "0x1451ce710": "porting/generated/native144-virtual-helpers/0x1451ce710.c",
+        "0x1451ce6d0": "porting/generated/native144-virtual-helpers/0x1451ce6d0.c",
+        "0x1447eb940": "porting/generated/native144-virtual-helpers/0x1447eb940.c",
+        "0x142ec9900": "porting/generated/callee_probe/world_item_ammo_1/0x142ec9900.c"
+      },
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [
+        "0x142e5fb70"
+      ],
+      "indirect_slots": [
+        "0x4b4",
+        "0x4b8",
+        "0x2d8"
+      ],
+      "index": 63,
+      "class": "UBacchusButton",
+      "function": "SetButtonSprite",
+      "address": "0x1451cfe60",
+      "native_body_address": "0x144c430d0",
+      "status": "unresolved",
+      "confidence": "none",
+      "proof": {
+        "wrapper_capture": "porting/generated/native134-virtual-bulk/0x1451cfe60.c",
+        "target_capture": "porting/generated/native134-virtual-bulk/0x144c430d0.c",
+        "captured_direct_helpers": {
+          "0x142ec9900": "porting/generated/callee_probe/world_item_ammo_1/0x142ec9900.c"
+        },
+        "header": "porting/native/Source/FortniteUI/Generated/UBacchusButton.h",
+        "vtable": "0x146d291c0",
+        "slot": "0x4d0"
+      },
+      "reason": "Target 0x144c430d0 requires exact reconstruction of 0x144c430d0, 0x1451ce710, 0x1451ce6d0, 0x1447eb940, 0x142ec9900 and associated state or side effects; capture does not by itself establish a complete compilable behavior."
+    },
+    {
+      "direct_helper_captures": {
+        "0x1407c2c80": "porting/generated/native94-text/0x1407c2c80.c",
+        "0x142c2e440": "porting/generated/native103-ctors/0x142c2e440.c",
+        "0x141f4aa20": "porting/generated/native144-virtual-helpers/0x141f4aa20.c"
+      },
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [
+        "0x141982270"
+      ],
+      "indirect_slots": [],
+      "index": 64,
+      "class": "UFortItem",
+      "function": "GetItemTypeName",
+      "address": "0x1429591b0",
+      "native_body_address": "0x14202f2e0",
+      "status": "unresolved",
+      "confidence": "none",
+      "proof": {
+        "wrapper_capture": "porting/generated/native94-broad/0x1429591b0.c",
+        "target_capture": "porting/generated/native134-virtual-bulk/0x14202f2e0.c",
+        "captured_direct_helpers": {
+          "0x1407c2c80": "porting/generated/native94-text/0x1407c2c80.c",
+          "0x142c2e440": "porting/generated/native103-ctors/0x142c2e440.c"
+        },
+        "header": "porting/native/Source/FortniteGame/Generated/UFortItem.h",
+        "vtable": "0x14606c3f0",
+        "slot": "0x328"
+      },
+      "reason": "Target 0x14202f2e0 requires exact reconstruction of 0x14202f2e0, 0x1407c2c80, 0x142c2e440, 0x141f4aa20 and associated state or side effects; capture does not by itself establish a complete compilable behavior."
+    },
+    {
+      "direct_helper_captures": {
+        "0x14199e430": "porting/generated/callee_probe/blocking/0x14199e430.c",
+        "0x141c794e0": "porting/generated/native96-impl/0x141c794e0.c",
+        "0x142ee3b30": "porting/generated/callee_probe/mutator_iterator_fallback/0x142ee3b30.c",
+        "0x1416806f0": "porting/generated/native144-virtual-helpers/0x1416806f0.c"
+      },
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [],
+      "indirect_slots": [
+        "0x150",
+        "0x38",
+        "0x30",
+        "0x218"
+      ],
+      "index": 65,
+      "class": "AFortPlayerControllerAthena",
+      "function": "ServerSetMinigameClassSlot",
+      "address": "0x142a5c040",
+      "native_body_address": "0x1419f2390",
+      "status": "unresolved",
+      "confidence": "none",
+      "proof": {
+        "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142a5c040.c",
+        "target_capture": "porting/generated/native134-virtual-bulk/0x1419f2390.c",
+        "captured_direct_helpers": {
+          "0x142ee3b30": "porting/generated/callee_probe/mutator_iterator_fallback/0x142ee3b30.c",
+          "0x14199e430": "porting/generated/callee_probe/blocking/0x14199e430.c",
+          "0x141c794e0": "porting/generated/native96-impl/0x141c794e0.c"
+        },
+        "header": "porting/native/Source/FortniteGame/Generated/AFortPlayerControllerAthena.h",
+        "vtable": "0x145e1aac0",
+        "slot": "0x2470"
+      },
+      "reason": "Target 0x1419f2390 requires exact reconstruction of 0x14199e430, 0x141c794e0, 0x142ee3b30, 0x1416806f0 and associated state or side effects; capture does not by itself establish a complete compilable behavior."
+    },
+    {
+      "direct_helper_captures": {
+        "0x144added0": "porting/generated/native108-impl/0x144added0.c",
+        "0x144cb0770": "porting/generated/native144-virtual-helpers/0x144cb0770.c",
+        "0x144c9baa0": "porting/generated/native105-impl/0x144c9baa0.c",
+        "0x145309bd0": "porting/generated/native144-virtual-helpers/0x145309bd0.c",
+        "0x145309b90": "porting/generated/native144-virtual-helpers/0x145309b90.c"
+      },
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [
+        "0x14519a3e0"
+      ],
+      "indirect_slots": [
+        "0x3c8",
+        "0x4bc",
+        "0x4c0"
+      ],
+      "index": 66,
+      "class": "UFortTouchControlRegion",
+      "function": "MovePlayerRegionTick",
+      "address": "0x145304870",
+      "native_body_address": "0x144dc97e0",
+      "status": "unresolved",
+      "confidence": "none",
+      "proof": {
+        "wrapper_capture": "porting/generated/native134-virtual-bulk/0x145304870.c",
+        "target_capture": "porting/generated/native134-virtual-bulk/0x144dc97e0.c",
+        "captured_direct_helpers": {
+          "0x144added0": "porting/generated/native108-impl/0x144added0.c",
+          "0x144c9baa0": "porting/generated/native105-impl/0x144c9baa0.c"
+        },
+        "header": "porting/native/Source/FortniteUI/Generated/UFortTouchControlRegion.h",
+        "vtable": "0x146d795f8",
+        "slot": "0x4b8"
+      },
+      "reason": "Target 0x144dc97e0 requires exact reconstruction of 0x144dc97e0, 0x144added0, 0x144cb0770, 0x144c9baa0, 0x145309bd0, 0x145309b90 and associated state or side effects; capture does not by itself establish a complete compilable behavior."
+    },
+    {
+      "direct_helper_captures": {
+        "0x1419d5690": "porting/generated/callee_probe/extra/0x1419d5690.c",
+        "0x142bad740": "porting/generated/callee_probe/extra/0x142bad740.c",
+        "0x1419d5560": "porting/generated/callee_probe/extra/0x1419d5560.c"
+      },
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [],
+      "indirect_slots": [
+        "0x38"
+      ],
+      "index": 67,
+      "class": "AFortGameModeAthena",
+      "function": "GetMutatorByClass",
+      "address": "0x1428f0220",
+      "native_body_address": "0x141948190",
+      "status": "unresolved",
+      "confidence": "none",
+      "proof": {
+        "wrapper_capture": "porting/generated/native134-virtual-bulk/0x1428f0220.c",
+        "target_capture": "porting/generated/native134-virtual-bulk/0x141948190.c",
+        "captured_direct_helpers": {
+          "0x142bad740": "porting/generated/callee_probe/extra/0x142bad740.c",
+          "0x1419d5560": "porting/generated/callee_probe/extra/0x1419d5560.c",
+          "0x1419d5690": "porting/generated/callee_probe/extra/0x1419d5690.c"
+        },
+        "header": "porting/native/Source/FortniteGame/Generated/AFortGameModeAthena.h",
+        "vtable": "0x145dfb470",
+        "slot": "0xd08"
+      },
+      "reason": "Target 0x141948190 requires exact reconstruction of 0x141948190, 0x1419d5690, 0x142bad740, 0x1419d5560 and associated state or side effects; capture does not by itself establish a complete compilable behavior."
+    },
+    {
+      "direct_helper_captures": {
+        "0x14205b290": "porting/generated/native144-virtual-helpers/0x14205b290.c",
+        "0x1420746f0": "porting/generated/native144-virtual-helpers/0x1420746f0.c",
+        "0x142049220": "porting/generated/native98-deps/0x142049220.c"
+      },
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [],
+      "indirect_slots": [
+        "0x50",
+        "0x298",
+        "0xb0"
+      ],
+      "index": 68,
+      "class": "AFortPlayerControllerAthena",
+      "function": "ClientCycleQuickBarToCreativeItem",
+      "address": "0x142a56f20",
+      "native_body_address": "0x1419c5530",
+      "status": "unresolved",
+      "confidence": "none",
+      "proof": {
+        "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142a56f20.c",
+        "target_capture": "porting/generated/native134-virtual-bulk/0x1419c5530.c",
+        "captured_direct_helpers": {
+          "0x142049220": "porting/generated/native98-deps/0x142049220.c"
+        },
+        "header": "porting/native/Source/FortniteGame/Generated/AFortPlayerControllerAthena.h",
+        "vtable": "0x145e1aac0",
+        "slot": "0x2408"
+      },
+      "reason": "Target 0x1419c5530 requires exact reconstruction of 0x14205b290, 0x1420746f0, 0x142049220 and associated state or side effects; capture does not by itself establish a complete compilable behavior."
+    },
+    {
+      "direct_helper_captures": {
+        "0x141a5b110": "porting/generated/native144-virtual-helpers/0x141a5b110.c",
+        "0x1419dc350": "porting/generated/native144-virtual-helpers/0x1419dc350.c"
+      },
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [],
+      "indirect_slots": [
+        "0x150",
+        "0x38",
+        "0x30"
+      ],
+      "index": 69,
+      "class": "AFortPlayerControllerAthena",
+      "function": "ClientStartRespawnPreparation",
+      "address": "0x142a57fd0",
+      "native_body_address": "0x1419c8290",
+      "status": "unresolved",
+      "confidence": "none",
+      "proof": {
+        "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142a57fd0.c",
+        "target_capture": "porting/generated/native134-virtual-bulk/0x1419c8290.c",
+        "captured_direct_helpers": {},
+        "header": "porting/native/Source/FortniteGame/Generated/AFortPlayerControllerAthena.h",
+        "vtable": "0x145e1aac0",
+        "slot": "0x27b0"
+      },
+      "reason": "Target 0x1419c8290 requires exact reconstruction of 0x141a5b110, 0x1419dc350 and associated state or side effects; capture does not by itself establish a complete compilable behavior."
+    },
+    {
+      "direct_helper_captures": {},
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [],
+      "indirect_slots": [
+        "0x50"
+      ],
+      "index": 70,
+      "class": "AFortPlayerControllerZone",
+      "function": "ClientOnPawnRevived",
+      "address": "0x142a700d0",
+      "native_body_address": "0x1423cd6e0",
+      "status": "unresolved",
+      "confidence": "none",
+      "proof": {
+        "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142a700d0.c",
+        "target_capture": "porting/generated/native134-virtual-bulk/0x1423cd6e0.c",
+        "captured_direct_helpers": {},
+        "header": "porting/native/Source/FortniteGame/Generated/AFortPlayerControllerZone.h",
+        "vtable": "0x14613f330",
+        "slot": "0x2120"
+      },
+      "reason": "Target 0x1423cd6e0 requires exact reconstruction of 0x1423cd6e0 and associated state or side effects; capture does not by itself establish a complete compilable behavior."
+    },
+    {
+      "direct_helper_captures": {},
+      "uncaptured_direct_helpers": [
+        "0x14957fe20"
+      ],
+      "uncaptured_second_level_helpers": [],
+      "indirect_slots": [
+        "0x7a8",
+        "0x5b8"
+      ],
+      "index": 71,
+      "class": "AFortPhysicsPawn",
+      "function": "ClientBroadcastHitDetection",
+      "address": "0x142a26ee0",
+      "native_body_address": "0x14230e460",
+      "status": "unresolved",
+      "confidence": "none",
+      "proof": {
+        "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142a26ee0.c",
+        "target_capture": "porting/generated/native134-virtual-bulk/0x14230e460.c",
+        "captured_direct_helpers": {},
+        "header": "porting/native/Source/FortniteGame/Generated/AFortPhysicsPawn.h",
+        "vtable": "0x146118378",
+        "slot": "0x758"
+      },
+      "reason": "Target 0x14230e460 requires exact reconstruction of 0x14230e460, 0x14957fe20 and associated state or side effects; capture does not by itself establish a complete compilable behavior."
+    },
+    {
+      "direct_helper_captures": {
+        "0x142a76af0": "porting/generated/native144-virtual-helpers/0x142a76af0.c",
+        "0x141ed1800": "porting/generated/native97-deps/0x141ed1800.c",
+        "0x143e8b3b0": "porting/generated/native102-impl/0x143e8b3b0.c",
+        "0x1406fd020": "porting/generated/native102-impl/0x1406fd020.c"
+      },
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [
+        "0x141ebb310",
+        "0x1406a8440",
+        "0x143e91c00",
+        "0x141837200",
+        "0x140702700"
+      ],
+      "indirect_slots": [],
+      "index": 72,
+      "class": "AFortPlayerPawn",
+      "function": "StopItemInteractionAbility",
+      "address": "0x142a80d60",
+      "native_body_address": "0x142353880",
+      "status": "unresolved",
+      "confidence": "none",
+      "proof": {
+        "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142a80d60.c",
+        "target_capture": "porting/generated/native134-virtual-bulk/0x142353880.c",
+        "captured_direct_helpers": {
+          "0x1406fd020": "porting/generated/native102-impl/0x1406fd020.c",
+          "0x143e8b3b0": "porting/generated/native102-impl/0x143e8b3b0.c",
+          "0x141ed1800": "porting/generated/native97-deps/0x141ed1800.c"
+        },
+        "header": "porting/native/Source/FortniteGame/Generated/AFortPlayerPawn.h",
+        "vtable": "0x146116ac8",
+        "slot": "0x10e8"
+      },
+      "reason": "Target 0x142353880 requires exact reconstruction of 0x142353880, 0x142a76af0, 0x141ed1800, 0x143e8b3b0, 0x1406fd020 and associated state or side effects; capture does not by itself establish a complete compilable behavior."
+    },
+    {
+      "direct_helper_captures": {
+        "0x1419b6d20": "porting/generated/native104-context-deps/0x1419b6d20.c"
+      },
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [],
+      "indirect_slots": [],
+      "index": 73,
+      "class": "AFortPlayerControllerSpectating",
+      "function": "IsPlayerInRelevancy",
+      "address": "0x142a6bed0",
+      "native_body_address": "0x1423d9390",
+      "status": "unresolved",
+      "confidence": "none",
+      "proof": {
+        "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142a6bed0.c",
+        "target_capture": "porting/generated/native134-virtual-bulk/0x1423d9390.c",
+        "captured_direct_helpers": {
+          "0x1419b6d20": "porting/generated/native104-context-deps/0x1419b6d20.c"
+        },
+        "header": "porting/native/Source/FortniteGame/Generated/AFortPlayerControllerSpectating.h",
+        "vtable": "0x146141e40",
+        "slot": "0x2080"
+      },
+      "reason": "Target 0x1423d9390 requires exact reconstruction of 0x1423d9390, 0x1419b6d20 and associated state or side effects; capture does not by itself establish a complete compilable behavior."
+    },
+    {
+      "direct_helper_captures": {
+        "0x141ed2350": "porting/generated/callee_probe/building_vitals_dependencies_2/0x141ed2350.c",
+        "0x141ed1800": "porting/generated/native97-deps/0x141ed1800.c",
+        "0x14463f970": "porting/generated/native88-final/0x14463f970.c",
+        "0x141b6bb40": "porting/generated/native144-virtual-helpers/0x141b6bb40.c",
+        "0x141e8db50": "porting/generated/native144-virtual-helpers/0x141e8db50.c",
+        "0x141b5d450": "porting/generated/native144-virtual-helpers/0x141b5d450.c"
+      },
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [
+        "0x142930580",
+        "0x142e80820",
+        "0x141ebb310",
+        "0x14463cf30",
+        "0x1406c6690",
+        "0x141b6c250",
+        "0x141b5bd30"
+      ],
+      "indirect_slots": [
+        "0xe6c"
+      ],
+      "index": 74,
+      "class": "AFortPlayerControllerAthena",
+      "function": "ClientSendMatchStatsForPlayer",
+      "address": "0x142a57b10",
+      "native_body_address": "0x1419c7b40",
+      "status": "unresolved",
+      "confidence": "none",
+      "proof": {
+        "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142a57b10.c",
+        "target_capture": "porting/generated/native134-virtual-bulk/0x1419c7b40.c",
+        "captured_direct_helpers": {
+          "0x141ed2350": "porting/generated/callee_probe/building_vitals_dependencies_2/0x141ed2350.c",
+          "0x14463f970": "porting/generated/native88-final/0x14463f970.c",
+          "0x141ed1800": "porting/generated/native97-deps/0x141ed1800.c"
+        },
+        "header": "porting/native/Source/FortniteGame/Generated/AFortPlayerControllerAthena.h",
+        "vtable": "0x145e1aac0",
+        "slot": "0x2508"
+      },
+      "reason": "Target 0x1419c7b40 requires exact reconstruction of 0x141ed2350, 0x141ed1800, 0x14463f970, 0x141b6bb40, 0x141e8db50, 0x141b5d450 and associated state or side effects; capture does not by itself establish a complete compilable behavior."
+    },
+    {
+      "direct_helper_captures": {
+        "0x142a85850": "porting/generated/native96-impl/0x142a85850.c",
+        "0x1444ac7a0": "porting/generated/native107-impl/0x1444ac7a0.c",
+        "0x142443c60": "porting/generated/native88-quest-caller/0x142443c60.c",
+        "0x142443e60": "porting/generated/large-native87/0x142443e60.c"
+      },
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [
+        "0x142aafed0",
+        "0x1428df930"
+      ],
+      "indirect_slots": [
+        "0x1bd0",
+        "0x38",
+        "0x30"
+      ],
+      "index": 75,
+      "class": "AFortPlayerControllerAthena",
+      "function": "Client_DisplayQuestUpdate_Assist",
+      "address": "0x142a581f0",
+      "native_body_address": "0x1419c83d0",
+      "status": "unresolved",
+      "confidence": "none",
+      "proof": {
+        "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142a581f0.c",
+        "target_capture": "porting/generated/native134-virtual-bulk/0x1419c83d0.c",
+        "captured_direct_helpers": {
+          "0x142a85850": "porting/generated/native96-impl/0x142a85850.c",
+          "0x1444ac7a0": "porting/generated/native107-impl/0x1444ac7a0.c",
+          "0x142443e60": "porting/generated/large-native87/0x142443e60.c",
+          "0x142443c60": "porting/generated/native88-quest-caller/0x142443c60.c"
+        },
+        "header": "porting/native/Source/FortniteGame/Generated/AFortPlayerControllerAthena.h",
+        "vtable": "0x145e1aac0",
+        "slot": "0x2528"
+      },
+      "reason": "Target 0x1419c83d0 requires exact reconstruction of 0x142a85850, 0x1444ac7a0, 0x142443c60, 0x142443e60 and associated state or side effects; capture does not by itself establish a complete compilable behavior."
+    },
+    {
+      "direct_helper_captures": {
+        "0x140680160": "porting/generated/native103-impl/0x140680160.c",
+        "0x1406800e0": "porting/generated/native103-impl/0x1406800e0.c",
+        "0x142bc7780": "porting/generated/native103-impl/0x142bc7780.c",
+        "0x142ce9f90": "porting/generated/callee_probe/extra/0x142ce9f90.c"
+      },
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [],
+      "indirect_slots": [],
+      "index": 76,
+      "class": "UFortAIGoalProvider",
+      "function": "InitializeGoalProvider",
+      "address": "0x14279c480",
+      "native_body_address": "0x141706e50",
+      "status": "unresolved",
+      "confidence": "none",
+      "proof": {
+        "wrapper_capture": "porting/generated/native134-virtual-bulk/0x14279c480.c",
+        "target_capture": "porting/generated/native134-virtual-bulk/0x141706e50.c",
+        "captured_direct_helpers": {
+          "0x142ce9f90": "porting/generated/callee_probe/extra/0x142ce9f90.c",
+          "0x142bc7780": "porting/generated/native103-impl/0x142bc7780.c",
+          "0x140680160": "porting/generated/native103-impl/0x140680160.c",
+          "0x1406800e0": "porting/generated/native103-impl/0x1406800e0.c"
+        },
+        "header": "porting/native/Source/FortniteGame/Generated/UFortAIGoalProvider.h",
+        "vtable": "0x145d620f0",
+        "slot": "0x260"
+      },
+      "reason": "Target 0x141706e50 requires exact reconstruction of 0x141706e50, 0x140680160, 0x1406800e0, 0x142bc7780, 0x142ce9f90 and associated state or side effects; capture does not by itself establish a complete compilable behavior."
+    },
+    {
+      "direct_helper_captures": {
+        "0x142c0c240": "porting/generated/callee_probe/extra/0x142c0c240.c"
+      },
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [],
+      "indirect_slots": [
+        "0x300",
+        "0x310",
+        "0x360"
+      ],
+      "index": 77,
+      "class": "UFortItem",
+      "function": "GetSearchTags",
+      "address": "0x142959940",
+      "native_body_address": "0x142032d60",
+      "status": "unresolved",
+      "confidence": "none",
+      "proof": {
+        "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142959940.c",
+        "target_capture": "porting/generated/native134-virtual-bulk/0x142032d60.c",
+        "captured_direct_helpers": {
+          "0x142c0c240": "porting/generated/callee_probe/extra/0x142c0c240.c"
+        },
+        "header": "porting/native/Source/FortniteGame/Generated/UFortItem.h",
+        "vtable": "0x14606c3f0",
+        "slot": "0x3b8"
+      },
+      "reason": "Target 0x142032d60 requires exact reconstruction of 0x142032d60, 0x142c0c240 and associated state or side effects; capture does not by itself establish a complete compilable behavior."
+    },
+    {
+      "direct_helper_captures": {},
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [],
+      "indirect_slots": [
+        "0x40",
+        "0x38",
+        "0x28",
+        "0x50"
+      ],
+      "index": 78,
+      "class": "AFortPlayerControllerZone",
+      "function": "ClientVoiceChatSendJoinToken",
+      "address": "0x142a70470",
+      "native_body_address": "0x1423ce190",
+      "status": "unresolved",
+      "confidence": "none",
+      "proof": {
+        "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142a70470.c",
+        "target_capture": "porting/generated/native134-virtual-bulk/0x1423ce190.c",
+        "captured_direct_helpers": {},
+        "header": "porting/native/Source/FortniteGame/Generated/AFortPlayerControllerZone.h",
+        "vtable": "0x14613f330",
+        "slot": "0x2080"
+      },
+      "reason": "Target 0x1423ce190 requires exact reconstruction of 0x1423ce190 and associated state or side effects; capture does not by itself establish a complete compilable behavior."
+    },
+    {
+      "direct_helper_captures": {
+        "0x144dd4e20": "porting/generated/native144-virtual-helpers/0x144dd4e20.c",
+        "0x145309bd0": "porting/generated/native144-virtual-helpers/0x145309bd0.c",
+        "0x145309850": "porting/generated/native144-virtual-helpers/0x145309850.c",
+        "0x144dc5980": "porting/generated/native144-virtual-helpers/0x144dc5980.c"
+      },
+      "uncaptured_direct_helpers": [],
+      "uncaptured_second_level_helpers": [
+        "0x144db1760",
+        "0x143d60da0",
+        "0x143d5a0d0",
+        "0x142f63470",
+        "0x144ddd470",
+        "0x144c98870"
+      ],
+      "indirect_slots": [
+        "0x4bc",
+        "0x4c0",
+        "0x2c",
+        "0x30",
+        "0x150"
+      ],
+      "index": 79,
+      "class": "UFortTouchControlRegion",
+      "function": "OnMovePlayerRegionTouchEnded",
+      "address": "0x145304e60",
+      "native_body_address": "0x144dd3ad0",
+      "status": "unresolved",
+      "confidence": "none",
+      "proof": {
+        "wrapper_capture": "porting/generated/native134-virtual-bulk/0x145304e60.c",
+        "target_capture": "porting/generated/native134-virtual-bulk/0x144dd3ad0.c",
+        "captured_direct_helpers": {},
+        "header": "porting/native/Source/FortniteUI/Generated/UFortTouchControlRegion.h",
+        "vtable": "0x146d795f8",
+        "slot": "0x4c8"
+      },
+      "reason": "Target 0x144dd3ad0 requires exact reconstruction of 0x144dd3ad0, 0x144dd4e20, 0x145309bd0, 0x145309850, 0x144dc5980 and associated state or side effects; capture does not by itself establish a complete compilable behavior."
+    }
+  ]
+}

@@ -37,5 +37,8 @@ public:
 	UPROPERTY()
 	FFortHelpAdditionalContent AdditionalContent;
 
+	UFUNCTION(BlueprintCallable)
+	virtual TArray<UFortHelpItem*> GetSubItems();
+
 };
 

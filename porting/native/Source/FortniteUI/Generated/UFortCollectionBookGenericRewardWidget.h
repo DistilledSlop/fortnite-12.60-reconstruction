@@ -54,5 +54,8 @@ protected:
 	virtual void SetCurrentItemToDisplay(UFortItem* ItemToDisplay);
 public:
 
+	UFUNCTION(BlueprintCallable)
+	virtual void SetRewardStatus(ECollectionBookRewardStatus Status);
+
 };
 

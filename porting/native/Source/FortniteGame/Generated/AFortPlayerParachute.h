@@ -123,6 +123,12 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsGliderFullyDeployedAccordingToAnim() const;
 
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void OnParachuteTrailUpdated(float MovementLengthSquared, float ForwardDot, float RightDot, float RotationalMovementAcceleration);
+	virtual void OnParachuteTrailUpdated_Implementation(float MovementLengthSquared, float ForwardDot, float RightDot, float RotationalMovementAcceleration);
+public:
+
 	UFUNCTION()
 	void OnRep_ParachuteItemDef();
 

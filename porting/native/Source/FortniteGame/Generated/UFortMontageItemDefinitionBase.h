@@ -6,9 +6,12 @@
 #include "CoreMinimal.h"
 #include "UAthenaCosmeticItemDefinition.h"
 
+#include "EFortCustomBodyType.h"
+#include "EFortCustomGender.h"
 #include "FFortEmoteMapping.h"
 #include "FSectionNameAndWeight.h"
 
+class AFortPawn;
 class UAnimMontage;
 
 #include "UFortMontageItemDefinitionBase.generated.h"
@@ -72,7 +75,13 @@ public:
 	TSoftObjectPtr<UAthenaCosmeticItemDefinition> RequiredEmoteParent;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual TSoftObjectPtr<UAnimMontage> GetFrontendPreviewAnimation(EFortCustomBodyType::Type BodyType, EFortCustomGender::Type Gender) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual bool HasCosmeticDrivenMotageSection() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual FName PickCosmeticDrivenSectionByName(AFortPawn* PawnPlayingMotage) const;
 
 protected:
 	UFUNCTION()

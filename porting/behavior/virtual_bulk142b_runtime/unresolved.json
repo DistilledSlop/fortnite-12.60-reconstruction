@@ -1,0 +1,3005 @@
+[
+  {
+    "index": 3,
+    "class": "AFortWeapon",
+    "function": "ClientGivenTo",
+    "wrapper": "0x142b45600",
+    "target": "0x142695100",
+    "wrapper_capture": "porting/generated/native108-broad/0x142b45600.c",
+    "target_capture": "porting/generated/native134-virtual-bulk/0x142695100.c",
+    "header": "porting/native/Source/FortniteGame/Generated/AFortWeapon.h",
+    "reflection": {
+      "exec_addr": "0x142b45600",
+      "flags": "0x1080cc0",
+      "params": [
+        {
+          "index": 0,
+          "name": "P",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "class": "0x1447ada70"
+          }
+        }
+      ],
+      "create_func": "0x142b3dfe0",
+      "source": "lea"
+    },
+    "reason": "Target needs complete reconstruction of helper chain 0x1407247f0; no partial implementation has been promoted.",
+    "captured_helpers": {
+      "0x1407247f0": "porting/generated/native144-virtual-helpers/0x1407247f0.c"
+    }
+  },
+  {
+    "index": 5,
+    "class": "AFortPawn",
+    "function": "ClientInternalEquipWeapon",
+    "wrapper": "0x142a1b3f0",
+    "target": "0x14230e590",
+    "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142a1b3f0.c",
+    "target_capture": "porting/generated/callee_probe/stubs/0x14230e590.c",
+    "header": "porting/native/Source/FortniteGame/Generated/AFortPawn.h",
+    "reflection": {
+      "exec_addr": "0x142a1b3f0",
+      "flags": "0x1040cc1",
+      "params": [
+        {
+          "index": 0,
+          "name": "Weap",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "class": "0x142b3de80"
+          }
+        }
+      ],
+      "create_func": "0x142a16320",
+      "source": "lea"
+    },
+    "reason": "Target needs complete reconstruction of indirect vtable/event dispatch and associated fields; no partial implementation has been promoted.",
+    "captured_helpers": {}
+  },
+  {
+    "index": 6,
+    "class": "UAIHotSpotSlot",
+    "function": "SetSlotState",
+    "wrapper": "0x142712530",
+    "target": "0x1416706f0",
+    "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142712530.c",
+    "target_capture": "porting/generated/native134-virtual-bulk/0x1416706f0.c",
+    "header": "porting/native/Source/FortniteGame/Generated/UAIHotSpotSlot.h",
+    "reflection": {
+      "exec_addr": "0x142712530",
+      "flags": "0x4020400",
+      "params": [
+        {
+          "index": 0,
+          "name": "NewState",
+          "kind": "Enum",
+          "kind_raw": "0x1e",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "enum": "0x142710040"
+          }
+        },
+        {
+          "index": 1,
+          "name": "UnderlyingType",
+          "kind": "Byte",
+          "kind_raw": "0x0",
+          "property_flags": "0x0",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "enum_underlying_of": "NewState"
+        }
+      ],
+      "create_func": "0x14270e540",
+      "source": "lea"
+    },
+    "reason": "Target needs complete reconstruction of indirect vtable/event dispatch and associated fields; no partial implementation has been promoted.",
+    "captured_helpers": {}
+  },
+  {
+    "index": 8,
+    "class": "AFortPawn",
+    "function": "OnRep_CurrentWeapon",
+    "wrapper": "0x142a1ead0",
+    "target": "0x142339c80",
+    "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142a1ead0.c",
+    "target_capture": "porting/generated/native134-virtual-bulk/0x142339c80.c",
+    "header": "porting/native/Source/FortniteGame/Generated/AFortPawn.h",
+    "reflection": {
+      "exec_addr": "0x142a1ead0",
+      "flags": "0x20400",
+      "params": [
+        {
+          "index": 0,
+          "name": "OldWeapon",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "class": "0x142b3de80"
+          }
+        }
+      ],
+      "create_func": "0x142a152b0",
+      "source": "lea"
+    },
+    "reason": "Target needs complete reconstruction of indirect vtable/event dispatch and associated fields; no partial implementation has been promoted.",
+    "captured_helpers": {}
+  },
+  {
+    "index": 10,
+    "class": "UFortGameplayAbility",
+    "function": "BP_GetGameplayEffectContainer",
+    "wrapper": "0x1428f6670",
+    "target": "0x1415ec8b0",
+    "wrapper_capture": "porting/generated/native134-virtual-bulk/0x1428f6670.c",
+    "target_capture": "porting/generated/native134-virtual-bulk/0x1415ec8b0.c",
+    "header": "porting/native/Source/FortniteGame/Generated/UFortGameplayAbility.h",
+    "reflection": {
+      "exec_addr": "0x1428f6670",
+      "flags": "0x4020400",
+      "params": [
+        {
+          "index": 0,
+          "name": "ReturnValue",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000000000580",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 8,
+          "type_refs": {
+            "struct": "0x1428f5de0"
+          }
+        },
+        {
+          "index": 1,
+          "name": "ApplicationTag",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "struct": "0x143e9a2a0"
+          }
+        }
+      ],
+      "create_func": "0x1428f3e30",
+      "source": "lea"
+    },
+    "reason": "Target needs complete reconstruction of helper chain 0x1415facd0, 0x1415e5100; no partial implementation has been promoted.",
+    "captured_helpers": {
+      "0x1415facd0": "porting/generated/native144-virtual-helpers/0x1415facd0.c",
+      "0x1415e5100": "porting/generated/native144-virtual-helpers/0x1415e5100.c"
+    }
+  },
+  {
+    "index": 11,
+    "class": "UFortPlayerSurveyQuestion",
+    "function": "GetPresentationStyle",
+    "wrapper": "0x1427cff10",
+    "target": "0x142a92910",
+    "wrapper_capture": "porting/generated/native134-virtual-bulk/0x1427cff10.c",
+    "target_capture": "porting/generated/native134-virtual-bulk/0x142a92910.c",
+    "header": "porting/native/Source/FortniteGame/Generated/UFortPlayerSurveyQuestion.h",
+    "reflection": {
+      "exec_addr": "0x1427cff10",
+      "flags": "0x54020400",
+      "params": [
+        {
+          "index": 0,
+          "name": "ReturnValue",
+          "kind": "Enum",
+          "kind_raw": "0x1e",
+          "property_flags": "0x10000000000580",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "enum": "0x142a942b0"
+          }
+        },
+        {
+          "index": 1,
+          "name": "UnderlyingType",
+          "kind": "Byte",
+          "kind_raw": "0x0",
+          "property_flags": "0x0",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "enum_underlying_of": "ReturnValue"
+        }
+      ],
+      "create_func": "0x142a8e800",
+      "source": "lea"
+    },
+    "reason": "Target needs complete reconstruction of helper chain 0x142c78830, 0x142c7b670; no partial implementation has been promoted.",
+    "captured_helpers": {
+      "0x142c78830": "porting/generated/native112-dependencies/0x142c78830.c",
+      "0x142c7b670": "porting/generated/native103-impl/0x142c7b670.c"
+    }
+  },
+  {
+    "index": 12,
+    "class": "AFortWeapon",
+    "function": "GetDamageStartLocation",
+    "wrapper": "0x142b45d10",
+    "target": "0x14269bad0",
+    "wrapper_capture": "porting/generated/native100-broad/0x142b45d10.c",
+    "target_capture": "porting/generated/native101-virtual/0x14269bad0.c",
+    "header": "porting/native/Source/FortniteGame/Generated/AFortWeapon.h",
+    "reflection": {
+      "exec_addr": "0x142b45d10",
+      "flags": "0x54c20400",
+      "params": [
+        {
+          "index": 0,
+          "name": "ReturnValue",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000000000580",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 16,
+          "type_refs": {
+            "struct": "0x142eea590"
+          }
+        },
+        {
+          "index": 1,
+          "name": "PatternIndex",
+          "kind": "Int",
+          "kind_raw": "0x3",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 12
+        },
+        {
+          "index": 2,
+          "name": "AimDir",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000000000180",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "struct": "0x142eea590"
+          }
+        }
+      ],
+      "create_func": "0x142b3e380",
+      "source": "lea"
+    },
+    "reason": "Target needs complete reconstruction of helper chain 0x142119f50; no partial implementation has been promoted.",
+    "captured_helpers": {
+      "0x142119f50": "porting/generated/native102-deps/0x142119f50.c"
+    }
+  },
+  {
+    "index": 13,
+    "class": "UFortGameplayAbility",
+    "function": "MakeGameplayEffectContainerSpec",
+    "wrapper": "0x1428f8b20",
+    "target": "0x141604a20",
+    "wrapper_capture": "porting/generated/native134-virtual-bulk/0x1428f8b20.c",
+    "target_capture": "porting/generated/native134-virtual-bulk/0x141604a20.c",
+    "header": "porting/native/Source/FortniteGame/Generated/UFortGameplayAbility.h",
+    "reflection": {
+      "exec_addr": "0x1428f8b20",
+      "flags": "0x4020400",
+      "params": [
+        {
+          "index": 0,
+          "name": "ReturnValue",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000000000580",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 16,
+          "type_refs": {
+            "struct": "0x1428f5e10"
+          }
+        },
+        {
+          "index": 1,
+          "name": "GameplayEffectLevel",
+          "kind": "Int",
+          "kind_raw": "0x3",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 8
+        },
+        {
+          "index": 2,
+          "name": "ApplicationTag",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "struct": "0x143e9a2a0"
+          }
+        }
+      ],
+      "create_func": "0x1428f4520",
+      "source": "lea"
+    },
+    "reason": "Target needs complete reconstruction of helper chain 0x1415facd0, 0x1416050c0; no partial implementation has been promoted.",
+    "captured_helpers": {
+      "0x1415facd0": "porting/generated/native144-virtual-helpers/0x1415facd0.c",
+      "0x1416050c0": "porting/generated/native144-virtual-helpers/0x1416050c0.c"
+    }
+  },
+  {
+    "index": 14,
+    "class": "UFortCollectionBookGenericRewardWidget",
+    "function": "SetRewards",
+    "wrapper": "0x14520dbd0",
+    "target": "0x1450ccec0",
+    "wrapper_capture": "porting/generated/native134-virtual-bulk/0x14520dbd0.c",
+    "target_capture": "porting/generated/native134-virtual-bulk/0x1450ccec0.c",
+    "header": "porting/native/Source/FortniteUI/Generated/UFortCollectionBookGenericRewardWidget.h",
+    "reflection": {
+      "exec_addr": "0x14520dbd0",
+      "flags": "0x4420400",
+      "params": [
+        {
+          "index": 0,
+          "name": "Rewards",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000008000182",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "struct": "0x142b258b0"
+          }
+        }
+      ],
+      "create_func": "0x14520b4a0",
+      "source": "lea"
+    },
+    "reason": "Target needs complete reconstruction of indirect vtable/event dispatch and associated fields; no partial implementation has been promoted.",
+    "captured_helpers": {}
+  },
+  {
+    "index": 15,
+    "class": "UFortMiniMapComponent",
+    "function": "IsVisibleToPlayer",
+    "wrapper": "0x142761e40",
+    "target": "0x1425d1b60",
+    "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142761e40.c",
+    "target_capture": "porting/generated/native134-virtual-bulk/0x1425d1b60.c",
+    "header": "porting/native/Source/FortniteGame/Generated/UFortMiniMapComponent.h",
+    "reflection": {
+      "exec_addr": "0x142761e40",
+      "flags": "0x48080c00",
+      "params": [
+        {
+          "index": 0,
+          "name": "ReturnValue",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x10000000000580",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 16,
+          "bitfield": true,
+          "offset": null
+        },
+        {
+          "index": 1,
+          "name": "PC",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x10000000000082",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "class": "0x142a35ea0"
+          }
+        }
+      ],
+      "create_func": "0x1429da050",
+      "source": "lea"
+    },
+    "reason": "Target needs complete reconstruction of indirect vtable/event dispatch and associated fields; no partial implementation has been promoted.",
+    "captured_helpers": {}
+  },
+  {
+    "index": 16,
+    "class": "UAIHotSpotSlot",
+    "function": "SetSlotEnabled",
+    "wrapper": "0x1427123d0",
+    "target": "0x1416705c0",
+    "wrapper_capture": "porting/generated/native134-virtual-bulk/0x1427123d0.c",
+    "target_capture": "porting/generated/native134-virtual-bulk/0x1416705c0.c",
+    "header": "porting/native/Source/FortniteGame/Generated/UAIHotSpotSlot.h",
+    "reflection": {
+      "exec_addr": "0x1427123d0",
+      "flags": "0x4020400",
+      "params": [
+        {
+          "index": 0,
+          "name": "bNewEnabled",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 1,
+          "bitfield": true,
+          "offset": null
+        }
+      ],
+      "create_func": "0x14270e4d0",
+      "source": "lea"
+    },
+    "reason": "Target needs complete reconstruction of indirect vtable/event dispatch and associated fields; no partial implementation has been promoted.",
+    "captured_helpers": {}
+  },
+  {
+    "index": 17,
+    "class": "UFortExpeditionBuildSquadWidget",
+    "function": "SetData",
+    "wrapper": "0x14520cf80",
+    "target": "0x1450fc330",
+    "wrapper_capture": "porting/generated/native134-virtual-bulk/0x14520cf80.c",
+    "target_capture": "porting/generated/native134-virtual-bulk/0x1450fc330.c",
+    "header": "porting/native/Source/FortniteUI/Generated/UFortExpeditionBuildSquadWidget.h",
+    "reflection": {
+      "exec_addr": "0x14520cf80",
+      "flags": "0xc020c00",
+      "params": [
+        {
+          "index": 0,
+          "name": "InItem",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "class": "0x1428df9f0"
+          }
+        }
+      ],
+      "create_func": "0x1452308a0",
+      "source": "lea"
+    },
+    "reason": "Target needs complete reconstruction of helper chain 0x142ee3b30, 0x1450fa550; no partial implementation has been promoted.",
+    "captured_helpers": {
+      "0x142ee3b30": "porting/generated/callee_probe/mutator_iterator_fallback/0x142ee3b30.c",
+      "0x1450fa550": "porting/generated/native144-virtual-helpers/0x1450fa550.c"
+    }
+  },
+  {
+    "index": 20,
+    "class": "UFortTooltip",
+    "function": "GetTokenizedDescriptionText",
+    "wrapper": "0x142b14b40",
+    "target": "0x142601d10",
+    "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142b14b40.c",
+    "target_capture": "porting/generated/native134-virtual-bulk/0x142601d10.c",
+    "header": "porting/native/Source/FortniteGame/Generated/UFortTooltip.h",
+    "reflection": {
+      "exec_addr": "0x142b14b40",
+      "flags": "0x54420400",
+      "params": [
+        {
+          "index": 0,
+          "name": "ReturnValue",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x10000000000580",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 48,
+          "bitfield": true,
+          "offset": null
+        },
+        {
+          "index": 1,
+          "name": "OutDescription",
+          "kind": "Array",
+          "kind_raw": "0x16",
+          "property_flags": "0x10000000000180",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 24
+        },
+        {
+          "index": 2,
+          "name": "OutDescription",
+          "kind": "Text",
+          "kind_raw": "0x1d",
+          "property_flags": "0x0",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "array_inner_of": "OutDescription"
+        },
+        {
+          "index": 3,
+          "name": "Context",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x10000000000082",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 16,
+          "type_refs": {
+            "class": "0x142b10490"
+          }
+        },
+        {
+          "index": 4,
+          "name": "Tag",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000008000182",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 8,
+          "type_refs": {
+            "struct": "0x143e9a2a0"
+          }
+        },
+        {
+          "index": 5,
+          "name": "ObjectToDescribe",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x10000000000082",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "class": "0x142eea520"
+          }
+        }
+      ],
+      "create_func": "0x142b10c60",
+      "source": "lea"
+    },
+    "reason": "Target needs complete reconstruction of helper chain 0x142b12140; no partial implementation has been promoted.",
+    "captured_helpers": {
+      "0x142b12140": "porting/generated/native144-virtual-helpers/0x142b12140.c"
+    }
+  },
+  {
+    "index": 22,
+    "class": "AFortPlayerControllerOutpost",
+    "function": "ClientOnBuildingLevelChanged",
+    "wrapper": "0x142a6aa60",
+    "target": "0x142539f70",
+    "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142a6aa60.c",
+    "target_capture": "porting/generated/native134-virtual-bulk/0x142539f70.c",
+    "header": "porting/native/Source/FortniteGame/Generated/AFortPlayerControllerOutpost.h",
+    "reflection": {
+      "exec_addr": "0x142a6aa60",
+      "flags": "0x1080cc0",
+      "params": [
+        {
+          "index": 0,
+          "name": "InLevelBeforeUpgrade",
+          "kind": "Int",
+          "kind_raw": "0x3",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 8
+        },
+        {
+          "index": 1,
+          "name": "UpgradedBuilding",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "class": "0x142a0c720"
+          }
+        }
+      ],
+      "create_func": "0x142a67c00",
+      "source": "lea"
+    },
+    "reason": "Target needs complete reconstruction of helper chain 0x1423ba4a0, 0x14254d880; no partial implementation has been promoted.",
+    "captured_helpers": {
+      "0x1423ba4a0": "porting/generated/native144-virtual-helpers/0x1423ba4a0.c",
+      "0x14254d880": "porting/generated/native144-virtual-helpers/0x14254d880.c"
+    }
+  },
+  {
+    "index": 23,
+    "class": "APhysicsObject",
+    "function": "CanCorrectOrientation",
+    "wrapper": "0x142b83c80",
+    "target": "0x141b3b550",
+    "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142b83c80.c",
+    "target_capture": "porting/generated/native134-virtual-bulk/0x141b3b550.c",
+    "header": "porting/native/Source/FortniteGame/Generated/APhysicsObject.h",
+    "reflection": {
+      "exec_addr": "0x142b83c80",
+      "flags": "0x54020400",
+      "params": [
+        {
+          "index": 0,
+          "name": "ReturnValue",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x10000000000580",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 16,
+          "bitfield": true,
+          "offset": null
+        },
+        {
+          "index": 1,
+          "name": "FP",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "class": "0x142a16b50"
+          }
+        }
+      ],
+      "create_func": "0x142b7f6e0",
+      "source": "lea"
+    },
+    "reason": "Target needs complete reconstruction of helper chain 0x14442cb30; no partial implementation has been promoted.",
+    "captured_helpers": {
+      "0x14442cb30": "porting/generated/native144-virtual-helpers/0x14442cb30.c"
+    }
+  },
+  {
+    "index": 24,
+    "class": "UFortPlayerSurveyAnswerWidgetBase",
+    "function": "NativeHandleAnswerChanged",
+    "wrapper": "0x1452a8690",
+    "target": "0x144fad4f0",
+    "wrapper_capture": "porting/generated/native134-virtual-bulk/0x1452a8690.c",
+    "target_capture": "porting/generated/native134-virtual-bulk/0x144fad4f0.c",
+    "header": "porting/native/Source/FortniteUI/Generated/UFortPlayerSurveyAnswerWidgetBase.h",
+    "reflection": {
+      "exec_addr": "0x1452a8690",
+      "flags": "0x480400",
+      "params": [
+        {
+          "index": 0,
+          "name": "EventInfo",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000008000182",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 8,
+          "type_refs": {
+            "struct": "0x142a94490"
+          }
+        },
+        {
+          "index": 1,
+          "name": "Source",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "class": "0x142eea520"
+          }
+        }
+      ],
+      "create_func": "0x1452a5880",
+      "source": "lea"
+    },
+    "reason": "Target needs complete reconstruction of indirect vtable/event dispatch and associated fields; no partial implementation has been promoted.",
+    "captured_helpers": {}
+  },
+  {
+    "index": 25,
+    "class": "UFortQuestUpdateEntry",
+    "function": "SetQuestItem",
+    "wrapper": "0x1452ba2c0",
+    "target": "0x144ff0180",
+    "wrapper_capture": "porting/generated/native134-virtual-bulk/0x1452ba2c0.c",
+    "target_capture": "porting/generated/native134-virtual-bulk/0x144ff0180.c",
+    "header": "porting/native/Source/FortniteUI/Generated/UFortQuestUpdateEntry.h",
+    "reflection": {
+      "exec_addr": "0x1452ba2c0",
+      "flags": "0x4020400",
+      "params": [
+        {
+          "index": 0,
+          "name": "bIsAnnouncement",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 16,
+          "bitfield": true,
+          "offset": null
+        },
+        {
+          "index": 1,
+          "name": "ObjectiveInfo",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x10000000000082",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "class": "0x142abaca0"
+          }
+        }
+      ],
+      "create_func": "0x1452b80c0",
+      "source": "lea"
+    },
+    "reason": "Target needs complete reconstruction of helper chain 0x142441010; no partial implementation has been promoted.",
+    "captured_helpers": {
+      "0x142441010": "porting/generated/native144-virtual-helpers/0x142441010.c"
+    }
+  },
+  {
+    "index": 31,
+    "class": "AFortPawn",
+    "function": "PawnStopFire",
+    "wrapper": "0x142a1eda0",
+    "target": "0x14233f130",
+    "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142a1eda0.c",
+    "target_capture": "porting/generated/native134-virtual-bulk/0x14233f130.c",
+    "header": "porting/native/Source/FortniteGame/Generated/AFortPawn.h",
+    "reflection": {
+      "exec_addr": "0x142a1eda0",
+      "flags": "0x4020404",
+      "params": [
+        {
+          "index": 0,
+          "name": "FireModeNum",
+          "kind": "Byte",
+          "kind_raw": "0x0",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0
+        }
+      ],
+      "create_func": "0x142a156e0",
+      "source": "lea"
+    },
+    "reason": "Target needs complete reconstruction of indirect vtable/event dispatch and associated fields; no partial implementation has been promoted.",
+    "captured_helpers": {}
+  },
+  {
+    "index": 32,
+    "class": "AFortWeapon",
+    "function": "ClientReportShotFlags",
+    "wrapper": "0x142711df0",
+    "target": "0x142695130",
+    "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142711df0.c",
+    "target_capture": "porting/generated/native134-virtual-bulk/0x142695130.c",
+    "header": "porting/native/Source/FortniteGame/Generated/AFortWeapon.h",
+    "reflection": {
+      "exec_addr": "0x142711df0",
+      "flags": "0x1080cc0",
+      "params": [
+        {
+          "index": 0,
+          "name": "ShotIndex",
+          "kind": "Int",
+          "kind_raw": "0x3",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 4
+        },
+        {
+          "index": 1,
+          "name": "ShotFlags",
+          "kind": "UInt32",
+          "kind_raw": "0x6",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0
+        }
+      ],
+      "create_func": "0x142b3e010",
+      "source": "lea"
+    },
+    "reason": "Target needs complete reconstruction of helper chain 0x1426b6b40; no partial implementation has been promoted.",
+    "captured_helpers": {
+      "0x1426b6b40": "porting/generated/native144-virtual-helpers/0x1426b6b40.c"
+    }
+  },
+  {
+    "index": 34,
+    "class": "AFortPawn",
+    "function": "OnMontageEnded",
+    "wrapper": "0x142a1e970",
+    "target": "0x142338480",
+    "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142a1e970.c",
+    "target_capture": "porting/generated/native134-virtual-bulk/0x142338480.c",
+    "header": "porting/native/Source/FortniteGame/Generated/AFortPawn.h",
+    "reflection": {
+      "exec_addr": "0x142a1e970",
+      "flags": "0x80400",
+      "params": [
+        {
+          "index": 0,
+          "name": "bInterrupted",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 16,
+          "bitfield": true,
+          "offset": null
+        },
+        {
+          "index": 1,
+          "name": "Montage",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "class": "0x1446bdf40"
+          }
+        }
+      ],
+      "create_func": "0x142a151b0",
+      "source": "lea"
+    },
+    "reason": "Target needs complete reconstruction of helper chain 0x143f7a920; no partial implementation has been promoted.",
+    "captured_helpers": {
+      "0x143f7a920": "porting/generated/native96-impl/0x143f7a920.c"
+    }
+  },
+  {
+    "index": 35,
+    "class": "AFortPawn",
+    "function": "OnMontageStarted",
+    "wrapper": "0x142a1ea40",
+    "target": "0x142338480",
+    "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142a1ea40.c",
+    "target_capture": "porting/generated/native134-virtual-bulk/0x142338480.c",
+    "header": "porting/native/Source/FortniteGame/Generated/AFortPawn.h",
+    "reflection": {
+      "exec_addr": "0x142a1ea40",
+      "flags": "0x80400",
+      "params": [
+        {
+          "index": 0,
+          "name": "Montage",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "class": "0x1446bdf40"
+          }
+        }
+      ],
+      "create_func": "0x142a151e0",
+      "source": "lea"
+    },
+    "reason": "Target needs complete reconstruction of helper chain 0x143f7a920; no partial implementation has been promoted.",
+    "captured_helpers": {
+      "0x143f7a920": "porting/generated/native96-impl/0x143f7a920.c"
+    }
+  },
+  {
+    "index": 36,
+    "class": "AFortWeapon",
+    "function": "OnRep_AmmoCount",
+    "wrapper": "0x142b47930",
+    "target": "0x1426aa1a0",
+    "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142b47930.c",
+    "target_capture": "porting/generated/native134-virtual-bulk/0x1426aa1a0.c",
+    "header": "porting/native/Source/FortniteGame/Generated/AFortWeapon.h",
+    "reflection": {
+      "exec_addr": "0x142b47930",
+      "flags": "0x80400",
+      "params": [
+        {
+          "index": 0,
+          "name": "OldAmmoCount",
+          "kind": "Int",
+          "kind_raw": "0x3",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0
+        }
+      ],
+      "create_func": "0x142b3f7e0",
+      "source": "lea"
+    },
+    "reason": "Target needs complete reconstruction of helper chain 0x142b439d0, 0x142690db0; no partial implementation has been promoted.",
+    "captured_helpers": {
+      "0x142b439d0": "porting/generated/native144-virtual-helpers/0x142b439d0.c",
+      "0x142690db0": "porting/generated/native144-virtual-helpers/0x142690db0.c"
+    }
+  },
+  {
+    "index": 37,
+    "class": "AFortPawn",
+    "function": "GameplayCue",
+    "wrapper": "0x142a1b8b0",
+    "target": "0x142317f90",
+    "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142a1b8b0.c",
+    "target_capture": "porting/generated/native134-virtual-bulk/0x142317f90.c",
+    "header": "porting/native/Source/FortniteGame/Generated/AFortPawn.h",
+    "reflection": {
+      "exec_addr": "0x142a1b8b0",
+      "flags": "0x80400",
+      "params": [
+        {
+          "index": 0,
+          "name": "Parameters",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10008000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 8,
+          "type_refs": {
+            "struct": "0x14077df10"
+          }
+        },
+        {
+          "index": 1,
+          "name": "EventType",
+          "kind": "Byte",
+          "kind_raw": "0x0",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "enum": "0x14077ddc0"
+          }
+        }
+      ],
+      "create_func": "0x142a165a0",
+      "source": "lea"
+    },
+    "reason": "Target needs complete reconstruction of helper chain 0x14076f120, 0x142ec9900, 0x1406c6af0; no partial implementation has been promoted.",
+    "captured_helpers": {
+      "0x14076f120": "porting/generated/native144-virtual-helpers/0x14076f120.c",
+      "0x142ec9900": "porting/generated/callee_probe/world_item_ammo_1/0x142ec9900.c",
+      "0x1406c6af0": "porting/generated/native144-virtual-helpers/0x1406c6af0.c"
+    }
+  },
+  {
+    "index": 38,
+    "class": "UFortExpeditionBuildSquadWidget",
+    "function": "HandleDifferentSquadSlotSelected",
+    "wrapper": "0x145233b70",
+    "target": "0x1450ebf40",
+    "wrapper_capture": "porting/generated/native134-virtual-bulk/0x145233b70.c",
+    "target_capture": "porting/generated/native134-virtual-bulk/0x1450ebf40.c",
+    "header": "porting/native/Source/FortniteUI/Generated/UFortExpeditionBuildSquadWidget.h",
+    "reflection": {
+      "exec_addr": "0x145233b70",
+      "flags": "0x40401",
+      "params": [
+        {
+          "index": 0,
+          "name": "SquadSlotIndex",
+          "kind": "Int",
+          "kind_raw": "0x3",
+          "property_flags": "0x10000000000082",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0
+        }
+      ],
+      "create_func": "0x1452306b0",
+      "source": "lea"
+    },
+    "reason": "Target needs complete reconstruction of helper chain 0x1450e2360; no partial implementation has been promoted.",
+    "captured_helpers": {
+      "0x1450e2360": "porting/generated/native144-virtual-helpers/0x1450e2360.c"
+    }
+  },
+  {
+    "index": 42,
+    "class": "AFortWeapon",
+    "function": "PlayReloadFX",
+    "wrapper": "0x142b48000",
+    "target": "0x1426ac8c0",
+    "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142b48000.c",
+    "target_capture": "porting/generated/native134-virtual-bulk/0x1426ac8c0.c",
+    "header": "porting/native/Source/FortniteGame/Generated/AFortWeapon.h",
+    "reflection": {
+      "exec_addr": "0x142b48000",
+      "flags": "0x4020408",
+      "params": [
+        {
+          "index": 0,
+          "name": "ReloadStage",
+          "kind": "Byte",
+          "kind_raw": "0x0",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "enum": "0x14288b440"
+          }
+        }
+      ],
+      "create_func": "0x142b3fce0",
+      "source": "lea"
+    },
+    "reason": "Target needs complete reconstruction of helper chain 0x141907f60, 0x1426a2720, 0x1440cb990, 0x142b43e00; no partial implementation has been promoted.",
+    "captured_helpers": {
+      "0x141907f60": "porting/generated/native144-virtual-helpers/0x141907f60.c",
+      "0x1426a2720": "porting/generated/native144-virtual-helpers/0x1426a2720.c",
+      "0x1440cb990": "porting/generated/native107-impl/0x1440cb990.c",
+      "0x142b43e00": "porting/generated/native144-virtual-helpers/0x142b43e00.c"
+    }
+  },
+  {
+    "index": 43,
+    "class": "UHUDLayoutToolPlacementWidget",
+    "function": "BP_GetMobileVisualType",
+    "wrapper": "0x14532fb50",
+    "target": "0x144c1ac00",
+    "wrapper_capture": "porting/generated/native134-virtual-bulk/0x14532fb50.c",
+    "target_capture": "porting/generated/native134-virtual-bulk/0x144c1ac00.c",
+    "header": "porting/native/Source/FortniteUI/Generated/UHUDLayoutToolPlacementWidget.h",
+    "reflection": {
+      "exec_addr": "0x14532fb50",
+      "flags": "0x48080c00",
+      "params": [
+        {
+          "index": 0,
+          "name": "ReturnValue",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000000000580",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "struct": "0x143e9a2a0"
+          }
+        }
+      ],
+      "create_func": "0x14532d9c0",
+      "source": "lea"
+    },
+    "reason": "Target needs complete reconstruction of indirect vtable/event dispatch and associated fields; no partial implementation has been promoted.",
+    "captured_helpers": {}
+  },
+  {
+    "index": 44,
+    "class": "AFortPlayerControllerOutpost",
+    "function": "ServerCleanUpOnExit",
+    "wrapper": "0x142a6c290",
+    "target": "0x142555560",
+    "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142a6c290.c",
+    "target_capture": "porting/generated/native134-virtual-bulk/0x142555560.c",
+    "header": "porting/native/Source/FortniteGame/Generated/AFortPlayerControllerOutpost.h",
+    "reflection": {
+      "exec_addr": "0x142a6c290",
+      "flags": "0x80220cc2",
+      "params": [],
+      "create_func": "0x142a67f90",
+      "source": "lea"
+    },
+    "reason": "Target needs complete reconstruction of helper chain 0x14254c3f0, 0x142a8abf0, 0x1425702e0; no partial implementation has been promoted.",
+    "captured_helpers": {
+      "0x142a8abf0": "porting/generated/native144-virtual-helpers/0x142a8abf0.c",
+      "0x1425702e0": "porting/generated/native144-virtual-helpers/0x1425702e0.c"
+    }
+  },
+  {
+    "index": 45,
+    "class": "AFortPlayerControllerOutpost",
+    "function": "ServerLeaveOutpostAsParty",
+    "wrapper": "0x142a6c400",
+    "target": "0x142555560",
+    "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142a6c400.c",
+    "target_capture": "porting/generated/native134-virtual-bulk/0x142555560.c",
+    "header": "porting/native/Source/FortniteGame/Generated/AFortPlayerControllerOutpost.h",
+    "reflection": {
+      "exec_addr": "0x142a6c400",
+      "flags": "0x80220cc2",
+      "params": [],
+      "create_func": "0x142a67ff0",
+      "source": "lea"
+    },
+    "reason": "Target needs complete reconstruction of helper chain 0x14254c3f0, 0x142a8abf0, 0x1425702e0; no partial implementation has been promoted.",
+    "captured_helpers": {
+      "0x142a8abf0": "porting/generated/native144-virtual-helpers/0x142a8abf0.c",
+      "0x1425702e0": "porting/generated/native144-virtual-helpers/0x1425702e0.c"
+    }
+  },
+  {
+    "index": 46,
+    "class": "AFortPlayerControllerOutpost",
+    "function": "ServerUpgradePOST",
+    "wrapper": "0x142a6caa0",
+    "target": "0x142555560",
+    "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142a6caa0.c",
+    "target_capture": "porting/generated/native134-virtual-bulk/0x142555560.c",
+    "header": "porting/native/Source/FortniteGame/Generated/AFortPlayerControllerOutpost.h",
+    "reflection": {
+      "exec_addr": "0x142a6caa0",
+      "flags": "0x80220cc0",
+      "params": [],
+      "create_func": "0x142a680b0",
+      "source": "lea"
+    },
+    "reason": "Target needs complete reconstruction of helper chain 0x14254c3f0, 0x142a8abf0, 0x1425702e0; no partial implementation has been promoted.",
+    "captured_helpers": {
+      "0x142a8abf0": "porting/generated/native144-virtual-helpers/0x142a8abf0.c",
+      "0x1425702e0": "porting/generated/native144-virtual-helpers/0x1425702e0.c"
+    }
+  },
+  {
+    "index": 47,
+    "class": "UFortPlayerSurveyAnswerWidgetBase",
+    "function": "HandleAnswerChanged",
+    "wrapper": "0x1452a85d0",
+    "target": "0x144fa26c0",
+    "wrapper_capture": "porting/generated/native134-virtual-bulk/0x1452a85d0.c",
+    "target_capture": "porting/generated/native134-virtual-bulk/0x144fa26c0.c",
+    "header": "porting/native/Source/FortniteUI/Generated/UFortPlayerSurveyAnswerWidgetBase.h",
+    "reflection": {
+      "exec_addr": "0x1452a85d0",
+      "flags": "0xc480c00",
+      "params": [
+        {
+          "index": 0,
+          "name": "EventInfo",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000008000182",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "struct": "0x142a94490"
+          }
+        }
+      ],
+      "create_func": "0x1452a5750",
+      "source": "lea"
+    },
+    "reason": "Target needs complete reconstruction of helper chain 0x144f9f990, 0x142413fd0, 0x1424265c0, 0x142ca95c0, 0x145803c70; no partial implementation has been promoted.",
+    "captured_helpers": {
+      "0x144f9f990": "porting/generated/native144-virtual-helpers/0x144f9f990.c",
+      "0x142413fd0": "porting/generated/native108-impl/0x142413fd0.c",
+      "0x1424265c0": "porting/generated/native108-impl/0x1424265c0.c",
+      "0x142ca95c0": "porting/generated/native108-impl/0x142ca95c0.c",
+      "0x145803c70": "porting/generated/callee_probe/blocking/0x145803c70.c"
+    }
+  },
+  {
+    "index": 49,
+    "class": "AFortPawn",
+    "function": "OnDeathPlayEffects",
+    "wrapper": "0x142a1e570",
+    "target": "0x142337330",
+    "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142a1e570.c",
+    "target_capture": "porting/generated/native134-virtual-bulk/0x142337330.c",
+    "header": "porting/native/Source/FortniteGame/Generated/AFortPawn.h",
+    "reflection": {
+      "exec_addr": "0x142a1e570",
+      "flags": "0x8c20c08",
+      "params": [
+        {
+          "index": 0,
+          "name": "EffectContext",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 208,
+          "type_refs": {
+            "struct": "0x14077dfa0"
+          }
+        },
+        {
+          "index": 1,
+          "name": "DamageCauser",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 200,
+          "type_refs": {
+            "class": "0x1446ab9e0"
+          }
+        },
+        {
+          "index": 2,
+          "name": "InstigatedBy",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 192,
+          "type_refs": {
+            "class": "0x142a16b50"
+          }
+        },
+        {
+          "index": 3,
+          "name": "HitInfo",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10008008000182",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 52,
+          "type_refs": {
+            "struct": "0x144704460"
+          }
+        },
+        {
+          "index": 4,
+          "name": "Momentum",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 40,
+          "type_refs": {
+            "struct": "0x142eea590"
+          }
+        },
+        {
+          "index": 5,
+          "name": "DamageTags",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000008000182",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 8,
+          "type_refs": {
+            "struct": "0x143e9a300"
+          }
+        },
+        {
+          "index": 6,
+          "name": "Damage",
+          "kind": "Float",
+          "kind_raw": "0xa",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0
+        }
+      ],
+      "create_func": "0x142a15080",
+      "source": "lea"
+    },
+    "reason": "Target needs complete reconstruction of indirect vtable/event dispatch and associated fields; no partial implementation has been promoted.",
+    "captured_helpers": {}
+  },
+  {
+    "index": 50,
+    "class": "UFortTooltip",
+    "function": "GetNumericValue",
+    "wrapper": "0x142b14720",
+    "target": "0x1425f5ea0",
+    "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142b14720.c",
+    "target_capture": "porting/generated/native134-virtual-bulk/0x1425f5ea0.c",
+    "header": "porting/native/Source/FortniteGame/Generated/UFortTooltip.h",
+    "reflection": {
+      "exec_addr": "0x142b14720",
+      "flags": "0x54420400",
+      "params": [
+        {
+          "index": 0,
+          "name": "ReturnValue",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x10000000000580",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 40,
+          "bitfield": true,
+          "offset": null
+        },
+        {
+          "index": 1,
+          "name": "OutVal",
+          "kind": "Float",
+          "kind_raw": "0xa",
+          "property_flags": "0x10000000000180",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 32
+        },
+        {
+          "index": 2,
+          "name": "Token",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000008000182",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 24,
+          "type_refs": {
+            "struct": "0x143e9a2a0"
+          }
+        },
+        {
+          "index": 3,
+          "name": "Context",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x10000000000082",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 16,
+          "type_refs": {
+            "class": "0x142b10490"
+          }
+        },
+        {
+          "index": 4,
+          "name": "Tag",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000008000182",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 8,
+          "type_refs": {
+            "struct": "0x143e9a2a0"
+          }
+        },
+        {
+          "index": 5,
+          "name": "ObjectToDescribe",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x10000000000082",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "class": "0x142eea520"
+          }
+        }
+      ],
+      "create_func": "0x142b10c00",
+      "source": "lea"
+    },
+    "reason": "Target needs complete reconstruction of helper chain 0x142b11fa0; no partial implementation has been promoted.",
+    "captured_helpers": {}
+  },
+  {
+    "index": 51,
+    "class": "APhysicsObject",
+    "function": "ModifyIncomingDamage",
+    "wrapper": "0x142b85470",
+    "target": "0x141b4e020",
+    "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142b85470.c",
+    "target_capture": "porting/generated/native134-virtual-bulk/0x141b4e020.c",
+    "header": "porting/native/Source/FortniteGame/Generated/APhysicsObject.h",
+    "reflection": {
+      "exec_addr": "0x142b85470",
+      "flags": "0x420400",
+      "params": [
+        {
+          "index": 0,
+          "name": "ReturnValue",
+          "kind": "Float",
+          "kind_raw": "0xa",
+          "property_flags": "0x10000000000580",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 80
+        },
+        {
+          "index": 1,
+          "name": "DamageCauser",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 72,
+          "type_refs": {
+            "class": "0x1446ab9e0"
+          }
+        },
+        {
+          "index": 2,
+          "name": "EventInstigator",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 64,
+          "type_refs": {
+            "class": "0x1446f0340"
+          }
+        },
+        {
+          "index": 3,
+          "name": "EffectContext",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000008000182",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 40,
+          "type_refs": {
+            "struct": "0x14077dfa0"
+          }
+        },
+        {
+          "index": 4,
+          "name": "InTags",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000008000182",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 8,
+          "type_refs": {
+            "struct": "0x143e9a300"
+          }
+        },
+        {
+          "index": 5,
+          "name": "Damage",
+          "kind": "Float",
+          "kind_raw": "0xa",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0
+        }
+      ],
+      "create_func": "0x142b7fcd0",
+      "source": "lea"
+    },
+    "reason": "Target needs complete reconstruction of helper chain 0x14199e430, 0x141c74820, 0x141c7c5c0; no partial implementation has been promoted.",
+    "captured_helpers": {
+      "0x14199e430": "porting/generated/callee_probe/blocking/0x14199e430.c",
+      "0x141c74820": "porting/generated/callee_probe/infinite_ammo_rule/0x141c74820.c",
+      "0x141c7c5c0": "porting/generated/callee_probe/infinite_ammo_rule/0x141c7c5c0.c"
+    }
+  },
+  {
+    "index": 52,
+    "class": "APhysicsObject",
+    "function": "ServerBroadcastHitFromClient",
+    "wrapper": "0x142b859c0",
+    "target": "0x141b53200",
+    "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142b859c0.c",
+    "target_capture": "porting/generated/native134-virtual-bulk/0x141b53200.c",
+    "header": "porting/native/Source/FortniteGame/Generated/APhysicsObject.h",
+    "reflection": {
+      "exec_addr": "0x142b859c0",
+      "flags": "0x844cc1",
+      "params": [
+        {
+          "index": 0,
+          "name": "ClientBallState",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000008000082",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 48,
+          "type_refs": {
+            "struct": "0x142b83940"
+          }
+        },
+        {
+          "index": 1,
+          "name": "HitNormal",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000008000082",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 28,
+          "type_refs": {
+            "struct": "0x142eea590"
+          }
+        },
+        {
+          "index": 2,
+          "name": "VelocityOfHitter",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000008000082",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 16,
+          "type_refs": {
+            "struct": "0x142eea590"
+          }
+        },
+        {
+          "index": 3,
+          "name": "HittingPawn",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 8,
+          "type_refs": {
+            "class": "0x1447ada70"
+          }
+        },
+        {
+          "index": 4,
+          "name": "HittingController",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "class": "0x1447b9fc0"
+          }
+        }
+      ],
+      "create_func": "0x142b80250",
+      "source": "lea"
+    },
+    "reason": "Target needs complete reconstruction of helper chain 0x143f76130, 0x1428ea7f0, 0x144216350, 0x1447bb440, 0x141b38af0; no partial implementation has been promoted.",
+    "captured_helpers": {
+      "0x143f76130": "porting/generated/callee_probe/extra/0x143f76130.c",
+      "0x1428ea7f0": "porting/generated/frontend-native-evidence/event-registry/0x1428ea7f0.c",
+      "0x144216350": "porting/generated/native144-virtual-helpers/0x144216350.c",
+      "0x1447bb440": "porting/generated/native144-virtual-helpers/0x1447bb440.c",
+      "0x141b38af0": "porting/generated/native144-virtual-helpers/0x141b38af0.c"
+    }
+  },
+  {
+    "index": 53,
+    "class": "UFortGameplayAbility",
+    "function": "ApplyGameplayEffectContainer",
+    "wrapper": "0x1428f61d0",
+    "target": "0x1415ea920",
+    "wrapper_capture": "porting/generated/native100-broad/0x1428f61d0.c",
+    "target_capture": "porting/generated/native134-virtual-bulk/0x1415ea920.c",
+    "header": "porting/native/Source/FortniteGame/Generated/UFortGameplayAbility.h",
+    "reflection": {
+      "exec_addr": "0x1428f61d0",
+      "flags": "0x4020400",
+      "params": [
+        {
+          "index": 0,
+          "name": "ReturnValue",
+          "kind": "Array",
+          "kind_raw": "0x16",
+          "property_flags": "0x10000000000582",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 56
+        },
+        {
+          "index": 1,
+          "name": "ReturnValue",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x0",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "struct": "0x14077dee0"
+          },
+          "array_inner_of": "ReturnValue"
+        },
+        {
+          "index": 2,
+          "name": "GameplayEffectLevel",
+          "kind": "Int",
+          "kind_raw": "0x3",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 48
+        },
+        {
+          "index": 3,
+          "name": "ApplicationTag",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 40,
+          "type_refs": {
+            "struct": "0x143e9a2a0"
+          }
+        },
+        {
+          "index": 4,
+          "name": "TargetData",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "struct": "0x1407735d0"
+          }
+        }
+      ],
+      "create_func": "0x1428f3da0",
+      "source": "lea"
+    },
+    "reason": "Target needs complete reconstruction of helper chain 0x1415facd0, 0x1406ad840; no partial implementation has been promoted.",
+    "captured_helpers": {
+      "0x1415facd0": "porting/generated/native144-virtual-helpers/0x1415facd0.c",
+      "0x1406ad840": "porting/generated/native144-virtual-helpers/0x1406ad840.c"
+    }
+  },
+  {
+    "index": 55,
+    "class": "APhysicsObject",
+    "function": "ServerBroadcastHit",
+    "wrapper": "0x142b85890",
+    "target": "0x141b532d0",
+    "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142b85890.c",
+    "target_capture": "porting/generated/native134-virtual-bulk/0x141b532d0.c",
+    "header": "porting/native/Source/FortniteGame/Generated/APhysicsObject.h",
+    "reflection": {
+      "exec_addr": "0x142b85890",
+      "flags": "0x844cc1",
+      "params": [
+        {
+          "index": 0,
+          "name": "ImpulseValue",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000000000082",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 20,
+          "type_refs": {
+            "struct": "0x142eea590"
+          }
+        },
+        {
+          "index": 1,
+          "name": "ImpactPoint",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000000000082",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 8,
+          "type_refs": {
+            "struct": "0x142eea590"
+          }
+        },
+        {
+          "index": 2,
+          "name": "ImpulseInstigator",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "class": "0x1447ada70"
+          }
+        }
+      ],
+      "create_func": "0x142b80220",
+      "source": "lea"
+    },
+    "reason": "Target needs complete reconstruction of helper chain 0x140694640; no partial implementation has been promoted.",
+    "captured_helpers": {
+      "0x140694640": "porting/generated/native144-virtual-helpers/0x140694640.c"
+    }
+  },
+  {
+    "index": 56,
+    "class": "AFortPawn",
+    "function": "SetPawnVisibility",
+    "wrapper": "0x142a203d0",
+    "target": "0x14234e230",
+    "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142a203d0.c",
+    "target_capture": "porting/generated/native134-virtual-bulk/0x14234e230.c",
+    "header": "porting/native/Source/FortniteGame/Generated/AFortPawn.h",
+    "reflection": {
+      "exec_addr": "0x142a203d0",
+      "flags": "0x4020400",
+      "params": [
+        {
+          "index": 0,
+          "name": "bPropagateToWeapon",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x10000000000082",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 2,
+          "bitfield": true,
+          "offset": null
+        },
+        {
+          "index": 1,
+          "name": "bNewHidden",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x10000000000082",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 2,
+          "bitfield": true,
+          "offset": null
+        }
+      ],
+      "create_func": "0x142a15cf0",
+      "source": "lea"
+    },
+    "reason": "Target needs complete reconstruction of helper chain 0x142a3d9f0, 0x1426b3b20, 0x143f83280, 0x1442bcd20, 0x1440fcc20; no partial implementation has been promoted.",
+    "captured_helpers": {
+      "0x142a3d9f0": "porting/generated/callee_probe/weapon_selection/0x142a3d9f0.c",
+      "0x1426b3b20": "porting/generated/native144-virtual-helpers/0x1426b3b20.c",
+      "0x143f83280": "porting/generated/native144-virtual-helpers/0x143f83280.c",
+      "0x1442bcd20": "porting/generated/callee_probe/blocking/0x1442bcd20.c",
+      "0x1440fcc20": "porting/generated/native144-virtual-helpers/0x1440fcc20.c"
+    }
+  },
+  {
+    "index": 57,
+    "class": "AFortPawn",
+    "function": "PlayFootStepSound",
+    "wrapper": "0x142a1eef0",
+    "target": "0x1423406f0",
+    "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142a1eef0.c",
+    "target_capture": "porting/generated/native134-virtual-bulk/0x1423406f0.c",
+    "header": "porting/native/Source/FortniteGame/Generated/AFortPawn.h",
+    "reflection": {
+      "exec_addr": "0x142a1eef0",
+      "flags": "0x4020400",
+      "params": [
+        {
+          "index": 0,
+          "name": "FootDown",
+          "kind": "Int",
+          "kind_raw": "0x3",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0
+        }
+      ],
+      "create_func": "0x142a15770",
+      "source": "lea"
+    },
+    "reason": "Target needs complete reconstruction of helper chain 0x1442077a0; no partial implementation has been promoted.",
+    "captured_helpers": {
+      "0x1442077a0": "porting/generated/native144-virtual-helpers/0x1442077a0.c"
+    }
+  },
+  {
+    "index": 59,
+    "class": "AFortPawn",
+    "function": "SafeHolsterWeapon",
+    "wrapper": "0x142a1f560",
+    "target": "0x142349bb0",
+    "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142a1f560.c",
+    "target_capture": "porting/generated/native134-virtual-bulk/0x142349bb0.c",
+    "header": "porting/native/Source/FortniteGame/Generated/AFortPawn.h",
+    "reflection": {
+      "exec_addr": "0x142a1f560",
+      "flags": "0x4020400",
+      "params": [
+        {
+          "index": 0,
+          "name": "HolsterId",
+          "kind": "Name",
+          "kind_raw": "0x14",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 4
+        },
+        {
+          "index": 1,
+          "name": "bPlayEquipAnim",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 12,
+          "bitfield": true,
+          "offset": null
+        },
+        {
+          "index": 2,
+          "name": "bHolster",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 12,
+          "bitfield": true,
+          "offset": null
+        }
+      ],
+      "create_func": "0x142a15990",
+      "source": "lea"
+    },
+    "reason": "Target needs complete reconstruction of indirect vtable/event dispatch and associated fields; no partial implementation has been promoted.",
+    "captured_helpers": {}
+  },
+  {
+    "index": 60,
+    "class": "UAIHotSpotSlot",
+    "function": "SetSlotOwnerAndState",
+    "wrapper": "0x142712460",
+    "target": "0x1416705f0",
+    "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142712460.c",
+    "target_capture": "porting/generated/native134-virtual-bulk/0x1416705f0.c",
+    "header": "porting/native/Source/FortniteGame/Generated/UAIHotSpotSlot.h",
+    "reflection": {
+      "exec_addr": "0x142712460",
+      "flags": "0x4020400",
+      "params": [
+        {
+          "index": 0,
+          "name": "NewState",
+          "kind": "Enum",
+          "kind_raw": "0x1e",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 8,
+          "type_refs": {
+            "enum": "0x142710040"
+          }
+        },
+        {
+          "index": 1,
+          "name": "UnderlyingType",
+          "kind": "Byte",
+          "kind_raw": "0x0",
+          "property_flags": "0x0",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "enum_underlying_of": "NewState"
+        },
+        {
+          "index": 2,
+          "name": "NewOwner",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "class": "0x144a40e40"
+          }
+        }
+      ],
+      "create_func": "0x14270e510",
+      "source": "lea"
+    },
+    "reason": "Target needs complete reconstruction of helper chain 0x14270e1a0, 0x14163d540, 0x14167cf60, 0x14270fc20; no partial implementation has been promoted.",
+    "captured_helpers": {
+      "0x14270e1a0": "porting/generated/native144-virtual-helpers/0x14270e1a0.c",
+      "0x14163d540": "porting/generated/native144-virtual-helpers/0x14163d540.c",
+      "0x14167cf60": "porting/generated/native144-virtual-helpers/0x14167cf60.c",
+      "0x14270fc20": "porting/generated/native144-virtual-helpers/0x14270fc20.c"
+    }
+  },
+  {
+    "index": 62,
+    "class": "UFortAccountWidgetBase",
+    "function": "HandleCurrentlyViewedAccountInfoChanged",
+    "wrapper": "0x1451ed3a0",
+    "target": "0x144e01c70",
+    "wrapper_capture": "porting/generated/native134-virtual-bulk/0x1451ed3a0.c",
+    "target_capture": "porting/generated/native134-virtual-bulk/0x144e01c70.c",
+    "header": "porting/native/Source/FortniteUI/Generated/UFortAccountWidgetBase.h",
+    "reflection": {
+      "exec_addr": "0x1451ed3a0",
+      "flags": "0x80400",
+      "params": [
+        {
+          "index": 0,
+          "name": "NewInfo",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "struct": "0x142991170"
+          }
+        }
+      ],
+      "create_func": "0x1451eaa40",
+      "source": "lea"
+    },
+    "reason": "Target needs complete reconstruction of helper chain 0x1451ec6d0; no partial implementation has been promoted.",
+    "captured_helpers": {
+      "0x1451ec6d0": "porting/generated/native144-virtual-helpers/0x1451ec6d0.c"
+    }
+  },
+  {
+    "index": 64,
+    "class": "AFortWeapon",
+    "function": "ModAmmo",
+    "wrapper": "0x142b47600",
+    "target": "0x1426a71e0",
+    "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142b47600.c",
+    "target_capture": "porting/generated/native134-virtual-bulk/0x1426a71e0.c",
+    "header": "porting/native/Source/FortniteGame/Generated/AFortWeapon.h",
+    "reflection": {
+      "exec_addr": "0x142b47600",
+      "flags": "0x4020400",
+      "params": [
+        {
+          "index": 0,
+          "name": "AmountToUse",
+          "kind": "Int",
+          "kind_raw": "0x3",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0
+        }
+      ],
+      "create_func": "0x142b3f110",
+      "source": "lea"
+    },
+    "reason": "Target needs complete reconstruction of helper chain 0x14269b000, 0x142690db0, 0x14269c8f0; no partial implementation has been promoted.",
+    "captured_helpers": {
+      "0x14269b000": "porting/generated/native100-impl/0x14269b000.c",
+      "0x142690db0": "porting/generated/native144-virtual-helpers/0x142690db0.c",
+      "0x14269c8f0": "porting/generated/native144-virtual-helpers/0x14269c8f0.c"
+    }
+  },
+  {
+    "index": 65,
+    "class": "AFortLobbyBeaconClientRM",
+    "function": "ClientBroadcastLobbyPlayerPadTop",
+    "wrapper": "0x142983720",
+    "target": "0x142539e40",
+    "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142983720.c",
+    "target_capture": "porting/generated/native134-virtual-bulk/0x142539e40.c",
+    "header": "porting/native/Source/FortniteGame/Generated/AFortLobbyBeaconClientRM.h",
+    "reflection": {
+      "exec_addr": "0x142983720",
+      "flags": "0x41080cc0",
+      "params": [
+        {
+          "index": 0,
+          "name": "bIsReadiedUp",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 48,
+          "bitfield": true,
+          "offset": null
+        },
+        {
+          "index": 1,
+          "name": "ReadiedPlayer",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000008000082",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "struct": "0x1447a2020"
+          }
+        }
+      ],
+      "create_func": "0x142980d40",
+      "source": "lea"
+    },
+    "reason": "Target needs complete reconstruction of helper chain 0x145a95888, 0x14253e120; no partial implementation has been promoted.",
+    "captured_helpers": {
+      "0x14253e120": "porting/generated/native144-virtual-helpers/0x14253e120.c"
+    }
+  },
+  {
+    "index": 66,
+    "class": "AFortThreatVisualsManager",
+    "function": "BeginThreatVisualsPrecursor",
+    "wrapper": "0x142b0e3e0",
+    "target": "0x1416f4c40",
+    "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142b0e3e0.c",
+    "target_capture": "porting/generated/native134-virtual-bulk/0x1416f4c40.c",
+    "header": "porting/native/Source/FortniteGame/Generated/AFortThreatVisualsManager.h",
+    "reflection": {
+      "exec_addr": "0x142b0e3e0",
+      "flags": "0x824cc0",
+      "params": [
+        {
+          "index": 0,
+          "name": "ThreatLocation",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 8,
+          "type_refs": {
+            "struct": "0x142eea590"
+          }
+        },
+        {
+          "index": 1,
+          "name": "SourceActor",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "class": "0x1446ab9e0"
+          }
+        }
+      ],
+      "create_func": "0x142b054b0",
+      "source": "lea"
+    },
+    "reason": "Target needs complete reconstruction of helper chain 0x142bc0d80, 0x141c77490, 0x142b0c8e0; no partial implementation has been promoted.",
+    "captured_helpers": {
+      "0x142bc0d80": "porting/generated/native97-deps/0x142bc0d80.c",
+      "0x141c77490": "porting/generated/native107-impl/0x141c77490.c",
+      "0x142b0c8e0": "porting/generated/native144-virtual-helpers/0x142b0c8e0.c"
+    }
+  },
+  {
+    "index": 67,
+    "class": "UFortGameplayAbility",
+    "function": "BP_GetGameplayEffectContainers",
+    "wrapper": "0x1428f6870",
+    "target": "0x1415ec8e0",
+    "wrapper_capture": "porting/generated/native134-virtual-bulk/0x1428f6870.c",
+    "target_capture": "porting/generated/native134-virtual-bulk/0x1415ec8e0.c",
+    "header": "porting/native/Source/FortniteGame/Generated/UFortGameplayAbility.h",
+    "reflection": {
+      "exec_addr": "0x1428f6870",
+      "flags": "0x4420400",
+      "params": [
+        {
+          "index": 0,
+          "name": "OutContainers",
+          "kind": "Array",
+          "kind_raw": "0x16",
+          "property_flags": "0x10000000000180",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 8
+        },
+        {
+          "index": 1,
+          "name": "OutContainers",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x0",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "struct": "0x1428f5de0"
+          },
+          "array_inner_of": "OutContainers"
+        },
+        {
+          "index": 2,
+          "name": "ApplicationTag",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "struct": "0x143e9a2a0"
+          }
+        }
+      ],
+      "create_func": "0x1428f3e60",
+      "source": "lea"
+    },
+    "reason": "Target needs complete reconstruction of helper chain 0x1415fb2e0, 0x1415faea0, 0x140a671f0, 0x1415e5100; no partial implementation has been promoted.",
+    "captured_helpers": {
+      "0x1415faea0": "porting/generated/native144-virtual-helpers/0x1415faea0.c",
+      "0x140a671f0": "porting/generated/native144-virtual-helpers/0x140a671f0.c",
+      "0x1415e5100": "porting/generated/native144-virtual-helpers/0x1415e5100.c"
+    }
+  },
+  {
+    "index": 68,
+    "class": "AFortGameStateAthena",
+    "function": "GetMutatorByClass",
+    "wrapper": "0x14291e950",
+    "target": "0x141948190",
+    "wrapper_capture": "porting/generated/native100-broad/0x14291e950.c",
+    "target_capture": "porting/generated/native134-virtual-bulk/0x141948190.c",
+    "header": "porting/native/Source/FortniteGame/Generated/AFortGameStateAthena.h",
+    "reflection": {
+      "exec_addr": "0x14291e950",
+      "flags": "0x8020c02",
+      "params": [
+        {
+          "index": 0,
+          "name": "ReturnValue",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x10000000000580",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 16,
+          "type_refs": {
+            "class": "0x142909780"
+          }
+        },
+        {
+          "index": 1,
+          "name": "MutatorClass",
+          "kind": "Class",
+          "kind_raw": "0x11",
+          "property_flags": "0x14000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 8,
+          "type_refs": {
+            "meta_class": "0x142909780",
+            "class": "0x142e497d0"
+          }
+        },
+        {
+          "index": 2,
+          "name": "ContextActor",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x10000000000082",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "class": "0x1446ab9e0"
+          }
+        }
+      ],
+      "create_func": "0x14290dfc0",
+      "source": "lea"
+    },
+    "reason": "Target needs complete reconstruction of helper chain 0x1419d5690, 0x142bad740, 0x1419d5560; no partial implementation has been promoted.",
+    "captured_helpers": {
+      "0x1419d5690": "porting/generated/callee_probe/extra/0x1419d5690.c",
+      "0x142bad740": "porting/generated/callee_probe/extra/0x142bad740.c",
+      "0x1419d5560": "porting/generated/callee_probe/extra/0x1419d5560.c"
+    }
+  },
+  {
+    "index": 69,
+    "class": "AFortGameStateAthena",
+    "function": "GetMutatorByInterface",
+    "wrapper": "0x14291ea20",
+    "target": "0x141995600",
+    "wrapper_capture": "porting/generated/native92-broad/0x14291ea20.c",
+    "target_capture": "porting/generated/native134-virtual-bulk/0x141995600.c",
+    "header": "porting/native/Source/FortniteGame/Generated/AFortGameStateAthena.h",
+    "reflection": {
+      "exec_addr": "0x14291ea20",
+      "flags": "0x8020c02",
+      "params": [
+        {
+          "index": 0,
+          "name": "ReturnValue",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x10000000000580",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 16,
+          "type_refs": {
+            "class": "0x142909780"
+          }
+        },
+        {
+          "index": 1,
+          "name": "MutatorInterface",
+          "kind": "Class",
+          "kind_raw": "0x11",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 8,
+          "type_refs": {
+            "meta_class": "0x142eea520",
+            "class": "0x142e497d0"
+          }
+        },
+        {
+          "index": 2,
+          "name": "ContextActor",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x10000000000082",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "class": "0x1446ab9e0"
+          }
+        }
+      ],
+      "create_func": "0x14290e050",
+      "source": "lea"
+    },
+    "reason": "Target needs complete reconstruction of helper chain 0x1419d5690, 0x142bad740, 0x1419d5560; no partial implementation has been promoted.",
+    "captured_helpers": {
+      "0x1419d5690": "porting/generated/callee_probe/extra/0x1419d5690.c",
+      "0x142bad740": "porting/generated/callee_probe/extra/0x142bad740.c",
+      "0x1419d5560": "porting/generated/callee_probe/extra/0x1419d5560.c"
+    }
+  },
+  {
+    "index": 71,
+    "class": "UObjectInteractionBehavior",
+    "function": "ExitCreativeInteraction",
+    "wrapper": "0x14286d6b0",
+    "target": "0x142667980",
+    "wrapper_capture": "porting/generated/native134-virtual-bulk/0x14286d6b0.c",
+    "target_capture": "porting/generated/native134-virtual-bulk/0x142667980.c",
+    "header": "porting/native/Source/FortniteGame/Generated/UObjectInteractionBehavior.h",
+    "reflection": {
+      "exec_addr": "0x14286d6b0",
+      "flags": "0xc020c00",
+      "params": [
+        {
+          "index": 0,
+          "name": "bShouldClearActiveInteractionMode",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x10000000000082",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 1,
+          "bitfield": true,
+          "offset": null
+        }
+      ],
+      "create_func": "0x1428baf70",
+      "source": "lea"
+    },
+    "reason": "Target needs complete reconstruction of helper chain 0x1428bae30, 0x143f7a920, 0x14468f240, 0x143f76650, 0x1426661c0, 0x1428bfe20, 0x1428f53b0, 0x14267e910; no partial implementation has been promoted.",
+    "captured_helpers": {
+      "0x1428bae30": "porting/generated/native144-virtual-helpers/0x1428bae30.c",
+      "0x143f7a920": "porting/generated/native96-impl/0x143f7a920.c",
+      "0x14468f240": "porting/generated/native103-impl/0x14468f240.c",
+      "0x143f76650": "porting/generated/native103-impl/0x143f76650.c",
+      "0x1426661c0": "porting/generated/native104-deps2/0x1426661c0.c",
+      "0x1428bfe20": "porting/generated/native144-virtual-helpers/0x1428bfe20.c",
+      "0x1428f53b0": "porting/generated/callee_probe/gadget_ammo_override_batch_2/0x1428f53b0.c",
+      "0x14267e910": "porting/generated/native144-virtual-helpers/0x14267e910.c"
+    }
+  },
+  {
+    "index": 73,
+    "class": "AFortPawn",
+    "function": "PickUpActor",
+    "wrapper": "0x142a1ee20",
+    "target": "0x14233f230",
+    "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142a1ee20.c",
+    "target_capture": "porting/generated/native134-virtual-bulk/0x14233f230.c",
+    "header": "porting/native/Source/FortniteGame/Generated/AFortPawn.h",
+    "reflection": {
+      "exec_addr": "0x142a1ee20",
+      "flags": "0x4020404",
+      "params": [
+        {
+          "index": 0,
+          "name": "ReturnValue",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x10000000000580",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 24,
+          "bitfield": true,
+          "offset": null
+        },
+        {
+          "index": 1,
+          "name": "PlacementDecoItemDefinition",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x10000000000082",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 8,
+          "type_refs": {
+            "class": "0x1428cf830"
+          }
+        },
+        {
+          "index": 2,
+          "name": "PickupTarget",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "class": "0x1446ab9e0"
+          }
+        }
+      ],
+      "create_func": "0x142a15740",
+      "source": "lea"
+    },
+    "reason": "Target needs complete reconstruction of helper chain 0x142672c10, 0x142b43730, 0x1423150b0, 0x1428d44f0; no partial implementation has been promoted.",
+    "captured_helpers": {
+      "0x142672c10": "porting/generated/native94-impl/0x142672c10.c",
+      "0x142b43730": "porting/generated/native144-virtual-helpers/0x142b43730.c",
+      "0x1423150b0": "porting/generated/callee_probe/blocking/0x1423150b0.c",
+      "0x1428d44f0": "porting/generated/native144-virtual-helpers/0x1428d44f0.c"
+    }
+  },
+  {
+    "index": 74,
+    "class": "AFortWeapon",
+    "function": "OnPawnMontageBlendingOut",
+    "wrapper": "0x142b477d0",
+    "target": "0x1426a9c60",
+    "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142b477d0.c",
+    "target_capture": "porting/generated/native134-virtual-bulk/0x1426a9c60.c",
+    "header": "porting/native/Source/FortniteGame/Generated/AFortWeapon.h",
+    "reflection": {
+      "exec_addr": "0x142b477d0",
+      "flags": "0x20400",
+      "params": [
+        {
+          "index": 0,
+          "name": "bInterrupted",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 16,
+          "bitfield": true,
+          "offset": null
+        },
+        {
+          "index": 1,
+          "name": "PawnMontage",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "class": "0x1446bdf40"
+          }
+        }
+      ],
+      "create_func": "0x142b3f3e0",
+      "source": "lea"
+    },
+    "reason": "Target needs complete reconstruction of helper chain 0x143fd79c0; no partial implementation has been promoted.",
+    "captured_helpers": {
+      "0x143fd79c0": "porting/generated/native144-virtual-helpers/0x143fd79c0.c"
+    }
+  },
+  {
+    "index": 75,
+    "class": "AFortPlayerControllerPvE",
+    "function": "ClientUpdateQuickBarRecordsCache",
+    "wrapper": "0x142a6abd0",
+    "target": "0x14253a520",
+    "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142a6abd0.c",
+    "target_capture": "porting/generated/native134-virtual-bulk/0x14253a520.c",
+    "header": "porting/native/Source/FortniteGame/Generated/AFortPlayerControllerPvE.h",
+    "reflection": {
+      "exec_addr": "0x142a6abd0",
+      "flags": "0x1080cc0",
+      "params": [
+        {
+          "index": 0,
+          "name": "SecondaryQuickBarRecord",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000008000082",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 144,
+          "type_refs": {
+            "struct": "0x142abef80"
+          }
+        },
+        {
+          "index": 1,
+          "name": "PrimaryQuickBarRecord",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000008000082",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "struct": "0x142abef80"
+          }
+        }
+      ],
+      "create_func": "0x142a682e0",
+      "source": "lea"
+    },
+    "reason": "Target needs complete reconstruction of helper chain 0x1425317e0, 0x141a337f0, 0x14255ab10, 0x142927a60, 0x141ea2520; no partial implementation has been promoted.",
+    "captured_helpers": {
+      "0x1425317e0": "porting/generated/native144-virtual-helpers/0x1425317e0.c",
+      "0x141a337f0": "porting/generated/native144-virtual-helpers/0x141a337f0.c",
+      "0x14255ab10": "porting/generated/native144-virtual-helpers/0x14255ab10.c",
+      "0x142927a60": "porting/generated/callee_probe/asset_load_analytics/0x142927a60.c",
+      "0x141ea2520": "porting/generated/native144-virtual-helpers/0x141ea2520.c"
+    }
+  },
+  {
+    "index": 76,
+    "class": "AFortWeapon",
+    "function": "OnPawnMontageStarted",
+    "wrapper": "0x142b478a0",
+    "target": "0x1426a9d70",
+    "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142b478a0.c",
+    "target_capture": "porting/generated/native134-virtual-bulk/0x1426a9d70.c",
+    "header": "porting/native/Source/FortniteGame/Generated/AFortWeapon.h",
+    "reflection": {
+      "exec_addr": "0x142b478a0",
+      "flags": "0x20400",
+      "params": [
+        {
+          "index": 0,
+          "name": "PawnMontage",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "class": "0x1446bdf40"
+          }
+        }
+      ],
+      "create_func": "0x142b3f4d0",
+      "source": "lea"
+    },
+    "reason": "Target needs complete reconstruction of helper chain 0x1409f0710, 0x143fd6e10, 0x141125940, 0x142a174f0, 0x144114bd0, 0x143fca900, 0x143fd5ef0; no partial implementation has been promoted.",
+    "captured_helpers": {
+      "0x1409f0710": "porting/generated/native144-virtual-helpers/0x1409f0710.c",
+      "0x143fd6e10": "porting/generated/native144-virtual-helpers/0x143fd6e10.c",
+      "0x141125940": "porting/generated/native108-impl/0x141125940.c",
+      "0x142a174f0": "porting/generated/callee_probe/mutator_context_closure/0x142a174f0.c",
+      "0x144114bd0": "porting/generated/native144-virtual-helpers/0x144114bd0.c",
+      "0x143fca900": "porting/generated/native144-virtual-helpers/0x143fca900.c",
+      "0x143fd5ef0": "porting/generated/native144-virtual-helpers/0x143fd5ef0.c"
+    }
+  },
+  {
+    "index": 77,
+    "class": "UFortTooltip",
+    "function": "GetValueData",
+    "wrapper": "0x142b14db0",
+    "target": "0x1426049d0",
+    "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142b14db0.c",
+    "target_capture": "porting/generated/native134-virtual-bulk/0x1426049d0.c",
+    "header": "porting/native/Source/FortniteGame/Generated/UFortTooltip.h",
+    "reflection": {
+      "exec_addr": "0x142b14db0",
+      "flags": "0x54420400",
+      "params": [
+        {
+          "index": 0,
+          "name": "ReturnValue",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x10000000000580",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 144,
+          "bitfield": true,
+          "offset": null
+        },
+        {
+          "index": 1,
+          "name": "OutData",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000000000180",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 24,
+          "type_refs": {
+            "struct": "0x142b13ae0"
+          }
+        },
+        {
+          "index": 2,
+          "name": "Token",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000008000182",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 16,
+          "type_refs": {
+            "struct": "0x143e9a2a0"
+          }
+        },
+        {
+          "index": 3,
+          "name": "Context",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x10000000000082",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 8,
+          "type_refs": {
+            "class": "0x142b10490"
+          }
+        },
+        {
+          "index": 4,
+          "name": "ObjectToDescribe",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x10000000000082",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "class": "0x142eea520"
+          }
+        }
+      ],
+      "create_func": "0x142b10c90",
+      "source": "lea"
+    },
+    "reason": "Target needs complete reconstruction of helper chain 0x142b122b0, 0x142c0c240, 0x14079d060, 0x142b11be0; no partial implementation has been promoted.",
+    "captured_helpers": {
+      "0x142c0c240": "porting/generated/callee_probe/extra/0x142c0c240.c",
+      "0x14079d060": "porting/generated/callee_probe/blocking/0x14079d060.c",
+      "0x142b11be0": "porting/generated/native144-virtual-helpers/0x142b11be0.c"
+    }
+  },
+  {
+    "index": 78,
+    "class": "AFortMinigameScoreRegistry",
+    "function": "ScoreToText",
+    "wrapper": "0x1429d2f80",
+    "target": "0x1420a3a20",
+    "wrapper_capture": "porting/generated/native134-virtual-bulk/0x1429d2f80.c",
+    "target_capture": "porting/generated/native134-virtual-bulk/0x1420a3a20.c",
+    "header": "porting/native/Source/FortniteGame/Generated/AFortMinigameScoreRegistry.h",
+    "reflection": {
+      "exec_addr": "0x1429d2f80",
+      "flags": "0x5c020c00",
+      "params": [
+        {
+          "index": 0,
+          "name": "ReturnValue",
+          "kind": "Text",
+          "kind_raw": "0x1d",
+          "property_flags": "0x10000000000580",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 8
+        },
+        {
+          "index": 1,
+          "name": "Score",
+          "kind": "Float",
+          "kind_raw": "0xa",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0
+        }
+      ],
+      "create_func": "0x1429c7560",
+      "source": "lea"
+    },
+    "reason": "Target needs complete reconstruction of helper chain 0x1420a87d0, 0x1407c2c80, 0x142c18a40; no partial implementation has been promoted.",
+    "captured_helpers": {
+      "0x1420a87d0": "porting/generated/native144-virtual-helpers/0x1420a87d0.c",
+      "0x1407c2c80": "porting/generated/native94-text/0x1407c2c80.c",
+      "0x142c18a40": "porting/generated/native108-impl/0x142c18a40.c"
+    }
+  },
+  {
+    "index": 79,
+    "class": "AFortWeapon",
+    "function": "GameplayCue_Weapons_Activation",
+    "wrapper": "0x142b458e0",
+    "target": "0x14269aaa0",
+    "wrapper_capture": "porting/generated/native134-virtual-bulk/0x142b458e0.c",
+    "target_capture": "porting/generated/native134-virtual-bulk/0x14269aaa0.c",
+    "header": "porting/native/Source/FortniteGame/Generated/AFortWeapon.h",
+    "reflection": {
+      "exec_addr": "0x142b458e0",
+      "flags": "0x80400",
+      "params": [
+        {
+          "index": 0,
+          "name": "Parameters",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10008000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 8,
+          "type_refs": {
+            "struct": "0x14077df10"
+          }
+        },
+        {
+          "index": 1,
+          "name": "EventType",
+          "kind": "Byte",
+          "kind_raw": "0x0",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "enum": "0x14077ddc0"
+          }
+        }
+      ],
+      "create_func": "0x142b3e0e0",
+      "source": "lea"
+    },
+    "reason": "Target needs complete reconstruction of helper chain 0x141125940, 0x142a174f0, 0x141b7cff0, 0x1426af730, 0x14232c240, 0x143e98d10, 0x142ec9900; no partial implementation has been promoted.",
+    "captured_helpers": {
+      "0x141125940": "porting/generated/native108-impl/0x141125940.c",
+      "0x142a174f0": "porting/generated/callee_probe/mutator_context_closure/0x142a174f0.c",
+      "0x141b7cff0": "porting/generated/native144-virtual-helpers/0x141b7cff0.c",
+      "0x1426af730": "porting/generated/native144-virtual-helpers/0x1426af730.c",
+      "0x14232c240": "porting/generated/native144-virtual-helpers/0x14232c240.c",
+      "0x143e98d10": "porting/generated/native105-impl/0x143e98d10.c",
+      "0x142ec9900": "porting/generated/callee_probe/world_item_ammo_1/0x142ec9900.c"
+    }
+  }
+]

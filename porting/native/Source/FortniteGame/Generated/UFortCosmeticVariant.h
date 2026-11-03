@@ -28,5 +28,8 @@ public:
 	UPROPERTY(Transient)
 	FGameplayTag ActiveVariantTag;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual FText GetVariantChannelText() const;
+
 };
 

@@ -261,6 +261,9 @@ public:
 	UPROPERTY()
 	FGameplayTagContainer AnalyticsTags;
 
+	UFUNCTION(BlueprintCallable)
+	virtual void AddDynamicGameplayEffectContainer(FGameplayTag& ApplicationTag, FFortGameplayEffectContainer& Container);
+
 	UFUNCTION(BlueprintNativeEvent)
 	void OnGenericNotifyFromAnimation(FGameplayTag NotifyTag);
 	virtual void OnGenericNotifyFromAnimation_Implementation(FGameplayTag NotifyTag);

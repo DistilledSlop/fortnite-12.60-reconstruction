@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortPersistableItem.h"
 
+#include "FFortItemQuantityPair.h"
+
 #include "UFortAccountItem.generated.h"
 
 UCLASS()
@@ -45,6 +47,9 @@ public:
 	// table index 0, flags 0x20080000000000
 	UPROPERTY()
 	bool bNeedsResolveMarkedAsSeen;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual TArray<FFortItemQuantityPair> GetRefundResults() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool HasBeenSeenLocally() const;

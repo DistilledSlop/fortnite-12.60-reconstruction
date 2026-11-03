@@ -94,5 +94,8 @@ public:
 	UPROPERTY()
 	bool bReversed;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual TArray<UFortGridPickerTile*> GetTiles();
+
 };
 

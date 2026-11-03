@@ -15,6 +15,7 @@
 #include "FFortOnItemChangedDelegate.h"
 #include "FFortOnItemDestroyedDelegate.h"
 #include "McpProfileItem.h"
+#include "Misc/Guid.h"
 #include "SharedFortGameLog.h"
 #include "UMcpItemAware.h"
 #include "UObject/WeakObjectPtr.h"
@@ -23,6 +24,7 @@ class AFortPlayerController;
 class UAbilitySystemComponent;
 class UFortItemDefinition;
 class UFortPersistentResourceItemDefinition;
+class UTexture2D;
 
 #include "UFortItem.generated.h"
 
@@ -87,7 +89,13 @@ public:
 	static FText GetEvolveRestrictionReasonText(EItemEvolutionRestrictionReason Reason);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual TSoftObjectPtr<UTexture2D> GetInactivePreviewImage() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual UFortItemDefinition* GetItemDefinitionBP() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual FGuid GetItemGuid() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual int32 GetLevel() const;
@@ -129,10 +137,19 @@ public:
 	virtual EFortItemType GetSchematicResultType() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual TSoftObjectPtr<UTexture2D> GetSmallPreviewImage() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual EFortItemType GetType() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual int32 GetUpgradeCost() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual UFortPersistentResourceItemDefinition* GetUpgradeResourceItemDefinition() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual TSoftObjectPtr<UTexture2D> GetWidePreviewImage() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual bool HasDurability() const;

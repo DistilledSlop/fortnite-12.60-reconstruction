@@ -97,11 +97,26 @@ FText UFortItem::GetEvolveRestrictionReasonText(EItemEvolutionRestrictionReason 
 	}
 }
 
+TSoftObjectPtr<UTexture2D> UFortItem::GetInactivePreviewImage() const
+{
+	// CONFIDENCE: high
+	// Native target 0x14202dd80.
+	UFortItemDefinition* Definition = GetItemDefinitionBP();
+	return Definition ? Definition->GetInactivePreviewImage() : TSoftObjectPtr<UTexture2D>();
+}
+
 UFortItemDefinition* UFortItem::GetItemDefinitionBP() const
 {
 	// Exact UFortItem base implementation at 0x140680300.
 	// CONFIDENCE: HIGH
 	return nullptr;
+}
+
+FGuid UFortItem::GetItemGuid() const
+{
+	// CONFIDENCE: high
+	// Native target 0x140693ec0.
+	return FGuid();
 }
 
 int32 UFortItem::GetLevel() const
@@ -201,6 +216,21 @@ EFortItemType UFortItem::GetSchematicResultType() const
 	return static_cast<EFortItemType>(0x70);
 }
 
+TSoftObjectPtr<UTexture2D> UFortItem::GetSmallPreviewImage() const
+{
+	// CONFIDENCE: high
+	// Native target 0x142033080.
+	UFortItemDefinition* Definition = GetItemDefinitionBP();
+	return Definition ? Definition->GetSmallPreviewImage() : TSoftObjectPtr<UTexture2D>();
+}
+
+EFortItemType UFortItem::GetType() const
+{
+	// CONFIDENCE: high
+	// Native target 0x1420337a0.
+	return NativeGetItemType();
+}
+
 int32 UFortItem::GetUpgradeCost() const
 {
 	// Exact original shared stub 0x140680300.
@@ -212,6 +242,14 @@ UFortPersistentResourceItemDefinition* UFortItem::GetUpgradeResourceItemDefiniti
 {
 	// Native target 0x140680300; CONFIDENCE: high.
 	return nullptr;
+}
+
+TSoftObjectPtr<UTexture2D> UFortItem::GetWidePreviewImage() const
+{
+	// CONFIDENCE: high
+	// Native target 0x142033940.
+	UFortItemDefinition* Definition = GetItemDefinitionBP();
+	return Definition ? Definition->GetWidePreviewImage() : TSoftObjectPtr<UTexture2D>();
 }
 
 bool UFortItem::HasDurability() const

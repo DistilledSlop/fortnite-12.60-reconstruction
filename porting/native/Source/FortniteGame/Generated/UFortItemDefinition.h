@@ -28,6 +28,7 @@ class AActor;
 class UFortItemSeriesDefinition;
 class UFortTooltip;
 class UFortTooltipDisplayStatsList;
+class UMeshComponent;
 class USkeletalMesh;
 class UStaticMesh;
 class UTexture2D;
@@ -197,6 +198,9 @@ public:
 	TSoftObjectPtr<USkeletalMesh> FrontendPreviewSkeletalMeshOverride;
 
 	UFUNCTION(BlueprintCallable)
+	virtual void CustomizePreviewMesh(UMeshComponent* Mesh) const;
+
+	UFUNCTION(BlueprintCallable)
 	virtual void CustomizePreviewPrefab(AActor* PrefabInstance);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
@@ -216,6 +220,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	EFortItemType GetItemType() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual TSoftObjectPtr<UTexture2D> GetLargePreviewImage() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	EFortRarity GetRarity() const;

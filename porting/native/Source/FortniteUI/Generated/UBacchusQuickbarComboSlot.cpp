@@ -8,3 +8,10 @@ void UBacchusQuickbarComboSlot::Refresh_Implementation()
 	return;
 }
 
+void UBacchusQuickbarComboSlot::SetSize_Implementation(float NewButtonSize)
+{
+	// CONFIDENCE: high
+	// Native target 0x144c44f10.
+	SlotSize = NewButtonSize;
+}
+
