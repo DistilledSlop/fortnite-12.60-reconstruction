@@ -74,5 +74,8 @@ public:
 	UPROPERTY()
 	UCommonWidgetSwitcher* Switcher_Content;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetIsModified();
+
 };
 

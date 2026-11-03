@@ -4,6 +4,84 @@
 #include "SharedFortGameLog.h"
 #include "UObject/UObjectGlobals.h"
 
+EFortAccountLinkingUIConfig UFortGlobals::GetAccountLinkingUIConfig()
+{
+	// Native body 0x141ed2420. CONFIDENCE: high
+	return UFortGlobals::NativeGetGlobals()->AccountLinkingUIConfig;
+}
+
+bool UFortGlobals::GetForceBuildingActorRecordUpdatesEnabled()
+{
+	// Native body 0x141ed5000. CONFIDENCE: high
+	return UFortGlobals::NativeGetGlobals()->bEnableForceBuildingActorRecordUpdates;
+}
+
+bool UFortGlobals::GetIronCityEnabled()
+{
+	// Native body 0x141ed5ab0. CONFIDENCE: high
+	return UFortGlobals::NativeGetGlobals()->bEnableIronCity;
+}
+
+bool UFortGlobals::GetIronCityEndlessEnabled()
+{
+	// Native body 0x141ed5ad0. CONFIDENCE: high
+	return UFortGlobals::NativeGetGlobals()->bEnableIronCityCoast;
+}
+
+int32 UFortGlobals::GetMaxTheaterListRefreshDelay()
+{
+	// Native body 0x141ed6ae0. CONFIDENCE: high
+	return UFortGlobals::NativeGetGlobals()->MaxTheaterListRefreshDelay;
+}
+
+int32 UFortGlobals::GetMinTheaterListRefreshDelay()
+{
+	// Native body 0x141ed6b70. CONFIDENCE: high
+	return UFortGlobals::NativeGetGlobals()->MinTheaterListRefreshDelay;
+}
+
+bool UFortGlobals::GetPapayaSpeakersEnabled()
+{
+	// Native body 0x141ed70a0. CONFIDENCE: high
+	return UFortGlobals::NativeGetGlobals()->bPapayaSpeakersEnabled;
+}
+
+bool UFortGlobals::IsAccountLinkingEnabled()
+{
+	// Native body 0x141ed89a0. CONFIDENCE: high
+	return UFortGlobals::NativeGetGlobals()->bAccountLinkingEnabled;
+}
+
+bool UFortGlobals::IsAccountLinkingUIURLButtonEnabled()
+{
+	// Native body 0x141ed89c0. CONFIDENCE: high
+	return UFortGlobals::NativeGetGlobals()->bEnableAccountLinkingUIURLButton;
+}
+
+bool UFortGlobals::IsDisplayingTwitchViewerNamesAllowed()
+{
+	// Native body 0x141ed8c10. CONFIDENCE: high
+	return UFortGlobals::NativeGetGlobals()->bTwitchAllowDisplayViewernames;
+}
+
+bool UFortGlobals::IsFirstShotAccuracyDisabled()
+{
+	// Native body 0x141ed8c30. CONFIDENCE: high
+	return UFortGlobals::NativeGetGlobals()->bFirstShotAccuracyDisabled;
+}
+
+bool UFortGlobals::IsHestiaEnabled()
+{
+	// Native body 0x141ed8c50. CONFIDENCE: high
+	return UFortGlobals::NativeGetGlobals()->bEnableHestia;
+}
+
+bool UFortGlobals::IsTwitchEnabled()
+{
+	// Native body 0x141ed90f0. CONFIDENCE: high
+	return UFortGlobals::NativeGetGlobals()->bTwitchEnabled;
+}
+
 UFortGlobals* UFortGlobals::NativeGetGlobals()
 {
 	// CONFIDENCE: HIGH

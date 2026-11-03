@@ -604,6 +604,45 @@ public:
 	UFortGameFeaturePluginManager* GameFeaturePluginManager;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static EFortAccountLinkingUIConfig GetAccountLinkingUIConfig();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static bool GetForceBuildingActorRecordUpdatesEnabled();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static bool GetIronCityEnabled();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static bool GetIronCityEndlessEnabled();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static int32 GetMaxTheaterListRefreshDelay();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static int32 GetMinTheaterListRefreshDelay();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static bool GetPapayaSpeakersEnabled();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static bool IsAccountLinkingEnabled();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static bool IsAccountLinkingUIURLButtonEnabled();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static bool IsDisplayingTwitchViewerNamesAllowed();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static bool IsFirstShotAccuracyDisabled();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static bool IsHestiaEnabled();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static bool IsTwitchEnabled();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	static bool IsErebus();
 
 

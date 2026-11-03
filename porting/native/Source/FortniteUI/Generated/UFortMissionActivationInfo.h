@@ -8,6 +8,7 @@
 
 #include "AFortGameStateZone.h"
 #include "AFortPlayerController.h"
+#include "EFortVoteType.h"
 
 class UCurveFloat;
 
@@ -34,6 +35,9 @@ public:
 	// table index 0, flags 0x40000000002000
 	UPROPERTY(Transient)
 	UCurveFloat* DifficultyIncreaseBluGloCurve;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	EFortVoteType GetMissionVoteType() const;
 
 };
 

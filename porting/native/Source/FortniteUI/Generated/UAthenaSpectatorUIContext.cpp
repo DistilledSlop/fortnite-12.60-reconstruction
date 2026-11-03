@@ -7,3 +7,9 @@ bool UAthenaSpectatorUIContext::GetPipMode() const
 	return NativeRecoveredBool_0x129;
 }
 
+TMap<FUniqueNetIdRepl, UAthenaRemotePlayerViewData*> UAthenaSpectatorUIContext::GetPlayerDataMap() const
+{
+	// Native exec 0x1451c6250 copies PlayerDataMap at +0x30. CONFIDENCE: high
+	return PlayerDataMap;
+}
+

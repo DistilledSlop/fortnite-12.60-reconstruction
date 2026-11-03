@@ -63,6 +63,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void AddOrRemoveTime(float TimeToAdd);
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsMissionTimerPaused() const;
+
 	UFUNCTION()
 	void OnRep_TimerData();
 

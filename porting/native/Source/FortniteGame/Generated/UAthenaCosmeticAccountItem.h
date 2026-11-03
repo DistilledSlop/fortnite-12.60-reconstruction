@@ -44,5 +44,8 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool HasCosmeticVariance() const;
 
+	UFUNCTION(BlueprintCallable)
+	bool HasMultipleVariants();
+
 };
 

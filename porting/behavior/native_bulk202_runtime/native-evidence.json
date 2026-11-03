@@ -1,0 +1,25 @@
+{
+  "sources": [
+    "/tmp/native192-candidates.json",
+    "porting/generated/reflection/fortnite_game_reflection.json"
+  ],
+  "ported_count": 2,
+  "rows": [
+    {
+      "class": "AFortPlayerController",
+      "function": "GetActorUnderReticle",
+      "status": "ported",
+      "wrapper_capture": "porting/generated/native194-fresh-bulk/0x142a46fa0.c",
+      "target_capture": "porting/generated/native197-fresh-callees/0x14237cc80.c",
+      "proof": "Reflected weak ActorUnderReticle at 0x728; native checks validity and retrieves it."
+    },
+    {
+      "class": "AFortPlayerController",
+      "function": "GetBuildPreviewMarker",
+      "status": "ported",
+      "wrapper_capture": "porting/generated/native194-fresh-bulk/0x142a470b0.c",
+      "target_capture": "porting/generated/native197-fresh-callees/0x14237e3e0.c",
+      "proof": "Reflected BuildPreviewMarker at 0x1190; native reads the pointer. Its declared ABuildingPlayerPrimitivePreview type derives from ABuildingSMActor."
+    }
+  ]
+}

@@ -2,6 +2,12 @@
 #include "UFortGameplayMessageComponentBase.h"
 #include "Net/UnrealNetwork.h"
 
+bool UFortGameplayMessageComponentBase::IsChannelIdSet() const
+{
+	// Native body 0x141d88800. CONFIDENCE: high
+	return ChannelIds.Num() != 0;
+}
+
 void UFortGameplayMessageComponentBase::OnRep_ChannelIds()
 {
 	// Body not recovered: reflection-derived stub.

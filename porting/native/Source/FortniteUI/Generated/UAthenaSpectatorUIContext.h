@@ -46,5 +46,8 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool GetPipMode() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	TMap<FUniqueNetIdRepl, UAthenaRemotePlayerViewData*> GetPlayerDataMap() const;
+
 };
 

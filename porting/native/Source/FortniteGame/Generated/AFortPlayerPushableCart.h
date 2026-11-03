@@ -140,6 +140,15 @@ public:
 	virtual UShapeComponent* GetPushAreaShapeComponent_Implementation() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetPushingStrength() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetSplineIndexForCurrentCheckPoint() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetSplineIndexForNextCheckPoint() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	uint8 GetTotalActiveDefenders() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
@@ -147,6 +156,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetTotalCheckPoints() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsCartContested() const;
 
 	UFUNCTION()
 	bool IsNearCheckpoint();

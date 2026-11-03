@@ -1,0 +1,166 @@
+{
+  "ported_count": 23,
+  "rows": [
+    {
+      "class": "AFortPlayerPushableCart",
+      "function": "GetSplineIndexForCurrentCheckPoint",
+      "wrapper_capture": "porting/generated/native194-fresh-bulk/0x142a88f90.c",
+      "target_capture": "porting/generated/native107-impl/0x141a48980.c",
+      "proof": "Wrapper directly calls target; target checks byte +0x828 (CurrentCheckPoint) against array count +0x820 (SplineCheckPointIndices at +0x818). It returns -1 if out of range; otherwise reads current index. Reflection supplies property offsets and int32 return."
+    },
+    {
+      "class": "AFortPlayerPushableCart",
+      "function": "GetSplineIndexForNextCheckPoint",
+      "wrapper_capture": "porting/generated/native194-fresh-bulk/0x142a88fc0.c",
+      "target_capture": "porting/generated/native107-impl/0x141a489b0.c",
+      "proof": "Wrapper directly calls target; target checks byte +0x828 (CurrentCheckPoint) against array count +0x820 (SplineCheckPointIndices at +0x818). It returns -1 if out of range; otherwise reads min(current + 1, count - 1). Reflection supplies property offsets and int32 return."
+    },
+    {
+      "class": "UAthenaCosmeticAccountItem",
+      "function": "HasMultipleVariants",
+      "wrapper_capture": "porting/generated/native194-fresh-bulk/0x14271a9a0.c",
+      "target_capture": "porting/generated/native197-fresh-callees/0x141d53280.c",
+      "proof": "Wrapper calls target directly and copies result. Walks VariantChannels (+0xe8), returning true when OwnedVariantTags array count at element +0x18 exceeds 1. Reflection identifies field names, types and offsets."
+    },
+    {
+      "class": "AFortGameStateZone",
+      "function": "IsAnyGameplayVoteActive",
+      "wrapper_capture": "porting/generated/native194-fresh-bulk/0x14292ba80.c",
+      "target_capture": "porting/generated/native197-fresh-callees/0x141ea2160.c",
+      "proof": "Wrapper calls target directly and copies result. Iterates GameplayVotesArray (+0xea0), testing element VoteStatus byte +0x70 < 2. Reflection identifies field names, types and offsets."
+    },
+    {
+      "class": "UFortHero",
+      "function": "GetUnclampedLevel",
+      "wrapper_capture": "porting/generated/native194-fresh-bulk/0x14293c010.c",
+      "target_capture": "porting/generated/native197-fresh-callees/0x14251d350.c",
+      "proof": "Wrapper calls target directly and copies result. Returns inherited reflected level int32 at +0xb8. Reflection identifies field names, types and offsets."
+    },
+    {
+      "class": "UFortMissionTimerComponent",
+      "function": "IsMissionTimerPaused",
+      "wrapper_capture": "porting/generated/native194-fresh-bulk/0x1429f0390.c",
+      "target_capture": "porting/generated/native197-fresh-callees/0x14081b7d0.c",
+      "proof": "Wrapper calls target directly and copies result. Returns first byte of reflected TimerData at +0xe8, its bTimerIsPaused member. Reflection identifies field names, types and offsets."
+    },
+    {
+      "class": "AFortObjectiveBase",
+      "function": "IsObjectiveTimerPaused",
+      "wrapper_capture": "porting/generated/native194-fresh-bulk/0x142a05080.c",
+      "target_capture": "porting/generated/native197-fresh-callees/0x14213cff0.c",
+      "proof": "Wrapper calls target directly and copies result. Returns false for null TimerComponent at +0x2b0; otherwise first byte of its TimerData at +0xe8. Reflection identifies field names, types and offsets."
+    },
+    {
+      "class": "AFortPlayerPushableCart",
+      "function": "GetPushingStrength",
+      "wrapper_capture": "porting/generated/native194-fresh-bulk/0x142a88ea0.c",
+      "target_capture": "porting/generated/native197-fresh-callees/0x141a47620.c",
+      "proof": "Wrapper calls target directly and copies result. Returns zero if bIsPushable byte +0x852 is false or TotalActiveDefenders byte +0x851 is nonzero, else returns TotalActivePushers byte +0x850. Reflection identifies field names, types and offsets."
+    },
+    {
+      "class": "AFortPlayerPushableCart",
+      "function": "IsCartContested",
+      "wrapper_capture": "porting/generated/native194-fresh-bulk/0x142a892c0.c",
+      "target_capture": "porting/generated/native197-fresh-callees/0x141a4a4f0.c",
+      "proof": "Wrapper calls target directly and copies result. Checks bIsPushable byte +0x852, TotalActivePushers byte +0x850 and TotalActiveDefenders byte +0x851 all nonzero. Reflection identifies field names, types and offsets."
+    },
+    {
+      "class": "UFortGameplayMessageComponentBase",
+      "function": "IsChannelIdSet",
+      "wrapper_capture": "porting/generated/native194-fresh-bulk/0x142906c40.c",
+      "target_capture": "porting/generated/native197-fresh-callees/0x141d88800.c",
+      "proof": "Wrapper calls target directly; target returns whether count at +0x140 differs from zero. Reflection identifies ChannelIds FGameplayTagContainer at +0x138; count is the explicit GameplayTags TArray count at +8."
+    },
+    {
+      "class": "UFortGlobals",
+      "function": "GetAccountLinkingUIConfig",
+      "wrapper_capture": "porting/generated/native194-fresh-bulk/0x142933c60.c",
+      "target_capture": "porting/generated/native197-fresh-callees/0x141ed2420.c",
+      "proof": "Target calls checked singleton accessor 0x141ed2350 and returns AccountLinkingUIConfig at +0x1b8; reflection identifies the field offset and return type. The checked accessor NativeGetGlobals is already ported in building_lazy_setting61_runtime."
+    },
+    {
+      "class": "UFortGlobals",
+      "function": "GetForceBuildingActorRecordUpdatesEnabled",
+      "wrapper_capture": "porting/generated/native194-fresh-bulk/0x142933e20.c",
+      "target_capture": "porting/generated/native197-fresh-callees/0x141ed5000.c",
+      "proof": "Target calls checked singleton accessor 0x141ed2350 and returns bEnableForceBuildingActorRecordUpdates at +0x7e; reflection bool setter uses mov8 mask 1. The checked accessor NativeGetGlobals is already ported in building_lazy_setting61_runtime."
+    },
+    {
+      "class": "UFortGlobals",
+      "function": "GetIronCityEnabled",
+      "wrapper_capture": "porting/generated/native194-fresh-bulk/0x142933e80.c",
+      "target_capture": "porting/generated/native197-fresh-callees/0x141ed5ab0.c",
+      "proof": "Target calls checked singleton accessor 0x141ed2350 and returns bEnableIronCity at +0x7d; reflection bool setter uses mov8 mask 1. The checked accessor NativeGetGlobals is already ported in building_lazy_setting61_runtime."
+    },
+    {
+      "class": "UFortGlobals",
+      "function": "GetIronCityEndlessEnabled",
+      "wrapper_capture": "porting/generated/native194-fresh-bulk/0x142933eb0.c",
+      "target_capture": "porting/generated/native197-fresh-callees/0x141ed5ad0.c",
+      "proof": "Target calls checked singleton accessor 0x141ed2350 and returns bEnableIronCityCoast at +0x90; reflection bool setter uses mov8 mask 1. The checked accessor NativeGetGlobals is already ported in building_lazy_setting61_runtime."
+    },
+    {
+      "class": "UFortGlobals",
+      "function": "GetMaxTheaterListRefreshDelay",
+      "wrapper_capture": "porting/generated/native194-fresh-bulk/0x142934000.c",
+      "target_capture": "porting/generated/native197-fresh-callees/0x141ed6ae0.c",
+      "proof": "Target calls checked singleton accessor 0x141ed2350 and returns MaxTheaterListRefreshDelay at +0x5c; reflection identifies the field offset and return type. The checked accessor NativeGetGlobals is already ported in building_lazy_setting61_runtime."
+    },
+    {
+      "class": "UFortGlobals",
+      "function": "GetMinTheaterListRefreshDelay",
+      "wrapper_capture": "porting/generated/native194-fresh-bulk/0x142934060.c",
+      "target_capture": "porting/generated/native197-fresh-callees/0x141ed6b70.c",
+      "proof": "Target calls checked singleton accessor 0x141ed2350 and returns MinTheaterListRefreshDelay at +0x58; reflection identifies the field offset and return type. The checked accessor NativeGetGlobals is already ported in building_lazy_setting61_runtime."
+    },
+    {
+      "class": "UFortGlobals",
+      "function": "GetPapayaSpeakersEnabled",
+      "wrapper_capture": "porting/generated/native194-fresh-bulk/0x1429340c0.c",
+      "target_capture": "porting/generated/native197-fresh-callees/0x141ed70a0.c",
+      "proof": "Target calls checked singleton accessor 0x141ed2350 and returns bPapayaSpeakersEnabled at +0x20e; reflection bool setter uses mov8 mask 1. The checked accessor NativeGetGlobals is already ported in building_lazy_setting61_runtime."
+    },
+    {
+      "class": "UFortGlobals",
+      "function": "IsAccountLinkingEnabled",
+      "wrapper_capture": "porting/generated/native194-fresh-bulk/0x142934590.c",
+      "target_capture": "porting/generated/native197-fresh-callees/0x141ed89a0.c",
+      "proof": "Target calls checked singleton accessor 0x141ed2350 and returns bAccountLinkingEnabled at +0x1b7; reflection bool setter uses mov8 mask 1. The checked accessor NativeGetGlobals is already ported in building_lazy_setting61_runtime."
+    },
+    {
+      "class": "UFortGlobals",
+      "function": "IsAccountLinkingUIURLButtonEnabled",
+      "wrapper_capture": "porting/generated/native194-fresh-bulk/0x1429345c0.c",
+      "target_capture": "porting/generated/native197-fresh-callees/0x141ed89c0.c",
+      "proof": "Target calls checked singleton accessor 0x141ed2350 and returns bEnableAccountLinkingUIURLButton at +0x1d0; reflection bool setter uses mov8 mask 1. The checked accessor NativeGetGlobals is already ported in building_lazy_setting61_runtime."
+    },
+    {
+      "class": "UFortGlobals",
+      "function": "IsDisplayingTwitchViewerNamesAllowed",
+      "wrapper_capture": "porting/generated/native194-fresh-bulk/0x142934650.c",
+      "target_capture": "porting/generated/native197-fresh-callees/0x141ed8c10.c",
+      "proof": "Target calls checked singleton accessor 0x141ed2350 and returns bTwitchAllowDisplayViewernames at +0x1d8; reflection bool setter uses mov8 mask 1. The checked accessor NativeGetGlobals is already ported in building_lazy_setting61_runtime."
+    },
+    {
+      "class": "UFortGlobals",
+      "function": "IsFirstShotAccuracyDisabled",
+      "wrapper_capture": "porting/generated/native194-fresh-bulk/0x1429346b0.c",
+      "target_capture": "porting/generated/native197-fresh-callees/0x141ed8c30.c",
+      "proof": "Target calls checked singleton accessor 0x141ed2350 and returns bFirstShotAccuracyDisabled at +0x20c; reflection bool setter uses mov8 mask 1. The checked accessor NativeGetGlobals is already ported in building_lazy_setting61_runtime."
+    },
+    {
+      "class": "UFortGlobals",
+      "function": "IsHestiaEnabled",
+      "wrapper_capture": "porting/generated/native194-fresh-bulk/0x142934770.c",
+      "target_capture": "porting/generated/native197-fresh-callees/0x141ed8c50.c",
+      "proof": "Target calls checked singleton accessor 0x141ed2350 and returns bEnableHestia at +0xba; reflection bool setter uses mov8 mask 1. The checked accessor NativeGetGlobals is already ported in building_lazy_setting61_runtime."
+    },
+    {
+      "class": "UFortGlobals",
+      "function": "IsTwitchEnabled",
+      "wrapper_capture": "porting/generated/native194-fresh-bulk/0x142934a70.c",
+      "target_capture": "porting/generated/native197-fresh-callees/0x141ed90f0.c",
+      "proof": "Target calls checked singleton accessor 0x141ed2350 and returns bTwitchEnabled at +0x1b5; reflection bool setter uses mov8 mask 1. The checked accessor NativeGetGlobals is already ported in building_lazy_setting61_runtime."
+    }
+  ]
+}

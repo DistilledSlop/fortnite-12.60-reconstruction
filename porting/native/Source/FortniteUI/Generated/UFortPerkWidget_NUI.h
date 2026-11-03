@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "EFortItemTier.h"
+#include "EFortSupportBonusType.h"
 #include "FFortUIPerk.h"
 #include "UFortTooltipContext.h"
 
@@ -28,6 +30,12 @@ public:
 	// table index 0, flags 0x40000000000001
 	UPROPERTY()
 	bool bShouldUseSummaryTooltip;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	EFortItemTier GetPerkTier() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	EFortSupportBonusType GetSupportBonusType() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsTierPerk() const;

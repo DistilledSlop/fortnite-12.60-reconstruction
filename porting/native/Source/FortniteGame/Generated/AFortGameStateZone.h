@@ -402,6 +402,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool HasActiveGameplayModifiers() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsAnyGameplayVoteActive() const;
+
 	UFUNCTION(BlueprintCallable, BlueprintPure, BlueprintAuthorityOnly)
 	bool IsBuildingAtLayoutRequirementsAllowed() const;
 

@@ -1441,11 +1441,17 @@ public:
 	void ForwardActiveVariantChangeRequest(const FName& ItemTemplateToChange, const FGameplayTag& VariantChannelToChange, const FGameplayTag& DesiredActiveVariant, AFortPlayerPawn* PreviewPawn);
 	void ForwardActiveVariantChangeRequest_Implementation(const FName& ItemTemplateToChange, const FGameplayTag& VariantChannelToChange, const FGameplayTag& DesiredActiveVariant, AFortPlayerPawn* PreviewPawn);
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	AActor* GetActorUnderReticle() const;
+
 	UFUNCTION(BlueprintCallable, BlueprintPure, BlueprintAuthorityOnly)
 	AFortAIDirectorDataManager* GetAIDirectorDataManager();
 
 	UFUNCTION(BlueprintCallable)
 	bool GetAtNameHomeBaseScreen();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	ABuildingSMActor* GetBuildPreviewMarker() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool GetForceAllowCameraMode() const;

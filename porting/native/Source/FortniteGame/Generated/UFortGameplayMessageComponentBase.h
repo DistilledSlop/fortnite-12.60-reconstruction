@@ -47,6 +47,9 @@ public:
 	UPROPERTY()
 	TSubclassOf<UUserWidget> EditWidget;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsChannelIdSet() const;
+
 	UFUNCTION()
 	void OnRep_ChannelIds();
 

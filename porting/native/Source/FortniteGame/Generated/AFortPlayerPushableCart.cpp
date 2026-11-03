@@ -48,6 +48,28 @@ UShapeComponent* AFortPlayerPushableCart::GetPushAreaShapeComponent_Implementati
 	return nullptr;
 }
 
+int32 AFortPlayerPushableCart::GetPushingStrength() const
+{
+	// Native body 0x141a47620. CONFIDENCE: high
+	return bIsPushable && !TotalActiveDefenders ? TotalActivePushers : 0;
+}
+
+int32 AFortPlayerPushableCart::GetSplineIndexForCurrentCheckPoint() const
+{
+	// Native body 0x141a48980. CONFIDENCE: high
+	return CurrentCheckPoint < SplineCheckPointIndices.Num() ? SplineCheckPointIndices[CurrentCheckPoint] : -1;
+}
+
+int32 AFortPlayerPushableCart::GetSplineIndexForNextCheckPoint() const
+{
+	// Native body 0x141a489b0. CONFIDENCE: high
+	if (CurrentCheckPoint >= SplineCheckPointIndices.Num())
+	{
+	    return -1;
+	}
+	return SplineCheckPointIndices[FMath::Min(static_cast<int32>(CurrentCheckPoint) + 1, SplineCheckPointIndices.Num() - 1)];
+}
+
 uint8 AFortPlayerPushableCart::GetTotalActiveDefenders() const
 {
 	// Original address: 0x142a88ff0.
@@ -70,6 +92,12 @@ int32 AFortPlayerPushableCart::GetTotalCheckPoints() const
 	// CONFIDENCE: HIGH
 	// Mechanically matched complete TArray count query; see bulk_array_query_runtime/README.md.
 	return SplineCheckPointIndices.Num();
+}
+
+bool AFortPlayerPushableCart::IsCartContested() const
+{
+	// Native body 0x141a4a4f0. CONFIDENCE: high
+	return bIsPushable && TotalActivePushers != 0 && TotalActiveDefenders != 0;
 }
 
 bool AFortPlayerPushableCart::IsNearCheckpoint()

@@ -103,6 +103,11 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UFortMissionTimerComponent* GetTimerComponent() const;
 
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsObjectiveTimerPaused() const;
+public:
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsRelevantToASpecificTeam() const;
 

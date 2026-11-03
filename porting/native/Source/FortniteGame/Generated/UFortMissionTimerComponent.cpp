@@ -8,6 +8,12 @@ void UFortMissionTimerComponent::AddOrRemoveTime(float TimeToAdd)
 	// CONFIDENCE: HIGH
 }
 
+bool UFortMissionTimerComponent::IsMissionTimerPaused() const
+{
+	// Native body 0x14081b7d0. CONFIDENCE: high
+	return TimerData.bTimerIsPaused;
+}
+
 void UFortMissionTimerComponent::OnRep_TimerData()
 {
 	// Body not recovered: reflection-derived stub.

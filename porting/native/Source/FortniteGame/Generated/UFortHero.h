@@ -62,5 +62,8 @@ public:
 	UPROPERTY(Transient)
 	TArray<FMcpVariantChannelInfo> BackblingVariantChannels;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetUnclampedLevel() const;
+
 };
 

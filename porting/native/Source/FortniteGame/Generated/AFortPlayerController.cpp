@@ -322,6 +322,12 @@ void AFortPlayerController::ForwardActiveVariantChangeRequest_Implementation(con
 	// Body not recovered: reflection-derived stub.
 }
 
+AActor* AFortPlayerController::GetActorUnderReticle() const
+{
+	// Native 0x14237cc80. CONFIDENCE: high
+	return ActorUnderReticle.IsValid() ? ActorUnderReticle.Get() : nullptr;
+}
+
 AFortAIDirectorDataManager* AFortPlayerController::GetAIDirectorDataManager()
 {
 	// Original address: 0x142a46e50.
@@ -336,6 +342,12 @@ bool AFortPlayerController::GetAtNameHomeBaseScreen()
 	// CONFIDENCE: HIGH
 	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
 	return AFortPlayerController::bAtNameBaseScreen;
+}
+
+ABuildingSMActor* AFortPlayerController::GetBuildPreviewMarker() const
+{
+	// Native 0x14237e3e0. CONFIDENCE: high
+	return BuildPreviewMarker;
 }
 
 bool AFortPlayerController::GetForceAllowCameraMode() const

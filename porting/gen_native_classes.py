@@ -2713,7 +2713,7 @@ def body_refs(body, name, package, ctx):
         elif tok in ctx["struct_index"]:
             info = ctx["struct_index"][tok]
             if info.package in PROMOTE_PACKAGES:
-                if info.package != package:
+                if info.package != package and not cross_module_allowed(package, info.package):
                     problems.append("body uses %s, a type of another module" % tok)
                 else:
                     includes.add(info.header_name)
