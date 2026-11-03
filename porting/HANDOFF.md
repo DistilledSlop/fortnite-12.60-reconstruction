@@ -1,5 +1,37 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Broad vehicle/building implementation batch90 (2026-11-03)
+
+Committed source89 d040793d and dashboardb2d552a5, pushed origin/main.
+This continuation adds substantial UNCOUNTED native lifts instead of holding
+all effort on quest helpers. Vehicle lift covers DestroyVehicle, ResetTrick,
+EjectAllPlayers and EjectPlayerPawn including the component loops. It preserves
+authority checks, virtual calls, float ABI, reference cleanup, mutable seat
+array reads and fallback controllers. Building lift expands initialization
+and both foliage virtuals: six initialization args on both branches, component
+bounds union, world/controller lookups, foliage queue append/removal. Root
+review caught implicit receiver omitted by decompiler; corrected to this/Manager.
+
+These are explicit dependency-bearing source drafts, not compilable canonical
+implementations. No manifest entries or count changes:2,170 bodies+238fields,
+130 canonical+4 manual build-pending; last tested2,040,next3,040. All four product
+gates OPEN, objective ACTIVE. No tests/build/runtime in this batch.
+
+Evidence: native90-vehicle four original native bodies; native90-deps eight
+helpers, all serial probes successful/rolled back. Commands probe_callees.py
+--input /tmp/native90-vehicle.json or /tmp/native90-deps.json --out
+porting/generated/<matching-name> --timeout60 --mem12G; corresponding/tmp/*.log.
+All process handles terminal. Bounded Terra medium workers finished with
+HANDOFF.md in building90_runtime and vehicle_forward90_runtime. Root owns
+canonical/native/generation/staging; preserve graphical/Engine edits.
+
+Broader inventory now checks function names against tracked source CONTENTS,
+not just filenames/addresses, avoiding duplicate recovery. Large quick native
+work remains available outside prior improved-decomp classes; do fresh grouped
+probes when available source is already covered. Keep dependency chains bounded,
+rotate fork-none Terra medium (Luna medium read-only; Sol6.1 medium complex),
+economical reads and no visuals.
+
 ## Native predicates and quest selector batch89 (2026-11-03)
 
 Integrated14 complete bodies+9 fields:13 native comparisons across vehicles,

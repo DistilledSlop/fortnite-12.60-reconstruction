@@ -10,6 +10,11 @@ credentials in Git, and the orchestrator reviews and commits.
 
 ## Current baseline
 
+Batch90 adds uncounted substantive vehicle destruction/trick/ejection and
+building initialization/foliage source lifts. Dependency-bearing drafts remain
+outside the canonical manifest;2,170 bodies+238fields unchanged. No tests/build;
+next3,040. Fresh broad recovery continues; all product gates OPEN.
+
 Batch89 integrates14 complete bodies+9 fields:13 exact native predicates and
 controller quest selector. Generation accepts2,408 entries=2,170 bodies+238fields,
 rejected0. No builds/tests;130 canonical+4 manual bodies pending; next3,040.
