@@ -16,6 +16,13 @@ void ABuildingGameplayActorCloneMachine::OnCloneMachineRespawningBegins_Implemen
 	return;
 }
 
+void ABuildingGameplayActorCloneMachine::OnCloneMachineSpawnsPlayer_Implementation(AFortPlayerPawn* PlayerPawn)
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
 void ABuildingGameplayActorCloneMachine::OnRep_ActivationServerEndTime()
 {
 	// Body not recovered: reflection-derived stub.

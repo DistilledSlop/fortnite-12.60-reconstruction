@@ -9,6 +9,13 @@ bool UFortMtxStoreRootBase::AreOffersLoaded() const
 	return NativeRecoveredBool_0x490;
 }
 
+void UFortMtxStoreRootBase::GenerateOfferWidget_Implementation(UFortStoreFrontOfferInfo* OfferData)
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
 void UFortMtxStoreRootBase::PushStoreSelection()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).

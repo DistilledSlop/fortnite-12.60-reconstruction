@@ -13,6 +13,7 @@
 #include "Math/Color.h"
 
 class AFortPlayerControllerAthena;
+class AFortPlayerPawn;
 class AFortPlayerStart;
 class USoundCue;
 
@@ -83,6 +84,24 @@ public:
 	// table index 0, flags 0x20080000002000
 	UPROPERTY(Transient)
 	int32 HandleIntoGameState;
+
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void OnBeginLongUse(AFortPlayerControllerAthena* AthenaPC);
+	virtual void OnBeginLongUse_Implementation(AFortPlayerControllerAthena* AthenaPC);
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void OnInterruptLongUse(AFortPlayerControllerAthena* AthenaPC);
+	virtual void OnInterruptLongUse_Implementation(AFortPlayerControllerAthena* AthenaPC);
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void OnPlayerPawnResurrected(AFortPlayerPawn* PlayerPawn);
+	virtual void OnPlayerPawnResurrected_Implementation(AFortPlayerPawn* PlayerPawn);
+public:
 
 	UFUNCTION()
 	void OnRep_SpawnMachineState();

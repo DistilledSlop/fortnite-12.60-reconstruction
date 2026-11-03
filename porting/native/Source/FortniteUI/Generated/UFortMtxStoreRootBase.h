@@ -48,6 +48,10 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool AreOffersLoaded() const;
 
+	UFUNCTION(BlueprintNativeEvent)
+	void GenerateOfferWidget(UFortStoreFrontOfferInfo* OfferData);
+	virtual void GenerateOfferWidget_Implementation(UFortStoreFrontOfferInfo* OfferData);
+
 	UFUNCTION()
 	void PushStoreSelection();
 

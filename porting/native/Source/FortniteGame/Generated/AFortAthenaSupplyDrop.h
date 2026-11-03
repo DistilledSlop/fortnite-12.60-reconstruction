@@ -85,6 +85,11 @@ public:
 	UFUNCTION()
 	void OnRep_NumPlayersInteracting();
 
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void SetLootTableNameOverride(FName TableNameToUse);
+public:
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

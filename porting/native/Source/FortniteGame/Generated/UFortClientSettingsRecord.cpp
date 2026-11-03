@@ -270,3 +270,207 @@ float UFortClientSettingsRecord::GetTouchVerticalMultiplier() const
 	return TouchVerticalMultiplier;
 }
 
+void UFortClientSettingsRecord::SetGamepadBuildingMultiplier(float InMultiplier)
+{
+	// Original exec 0x1428803d0; ordered unequal float compare and conditional dirty-byte store.
+	// CONFIDENCE: HIGH
+	const float PreviousValue = this->GamepadBuildingMultiplier;
+	this->GamepadBuildingMultiplier = InMultiplier;
+	if (PreviousValue < InMultiplier || PreviousValue > InMultiplier)
+	{
+	    this->bDirty = 1;
+	}
+}
+
+void UFortClientSettingsRecord::SetGamepadEditModeMultiplier(float InMultiplier)
+{
+	// Original exec 0x142880460; ordered unequal float compare and conditional dirty-byte store.
+	// CONFIDENCE: HIGH
+	const float PreviousValue = this->GamepadEditModeMultiplier;
+	this->GamepadEditModeMultiplier = InMultiplier;
+	if (PreviousValue < InMultiplier || PreviousValue > InMultiplier)
+	{
+	    this->bDirty = 1;
+	}
+}
+
+void UFortClientSettingsRecord::SetGamepadScopedMultiplier(float InMultiplier)
+{
+	// Original exec 0x142880730; ordered unequal float compare and conditional dirty-byte store.
+	// CONFIDENCE: HIGH
+	const float PreviousValue = this->GamepadScopedSlow;
+	this->GamepadScopedSlow = InMultiplier;
+	if (PreviousValue < InMultiplier || PreviousValue > InMultiplier)
+	{
+	    this->bDirty = 1;
+	}
+}
+
+void UFortClientSettingsRecord::SetGamepadTargetingMultiplier(float InMultiplier)
+{
+	// Original exec 0x1428807c0; ordered unequal float compare and conditional dirty-byte store.
+	// CONFIDENCE: HIGH
+	const float PreviousValue = this->GamepadTargetingSlow;
+	this->GamepadTargetingSlow = InMultiplier;
+	if (PreviousValue < InMultiplier || PreviousValue > InMultiplier)
+	{
+	    this->bDirty = 1;
+	}
+}
+
+void UFortClientSettingsRecord::SetGyroLookSensitivitySetting(float InSetting)
+{
+	// Original exec 0x142880850; ordered unequal float compare and conditional dirty-byte store.
+	// CONFIDENCE: HIGH
+	const float PreviousValue = this->GyroSensitivity;
+	this->GyroSensitivity = InSetting;
+	if (PreviousValue < InSetting || PreviousValue > InSetting)
+	{
+	    this->bDirty = 1;
+	}
+}
+
+void UFortClientSettingsRecord::SetMotionHarvestingToolMultiplier(float InMultiplier)
+{
+	// Original exec 0x142881e40; ordered unequal float compare and conditional dirty-byte store.
+	// CONFIDENCE: HIGH
+	const float PreviousValue = this->MotionHarvestingToolSlow;
+	this->MotionHarvestingToolSlow = InMultiplier;
+	if (PreviousValue < InMultiplier || PreviousValue > InMultiplier)
+	{
+	    this->bDirty = 1;
+	}
+}
+
+void UFortClientSettingsRecord::SetMotionScopedMultiplier(float InMultiplier)
+{
+	// Original exec 0x142881ed0; ordered unequal float compare and conditional dirty-byte store.
+	// CONFIDENCE: HIGH
+	const float PreviousValue = this->MotionScopedSlow;
+	this->MotionScopedSlow = InMultiplier;
+	if (PreviousValue < InMultiplier || PreviousValue > InMultiplier)
+	{
+	    this->bDirty = 1;
+	}
+}
+
+void UFortClientSettingsRecord::SetMotionTargetingMultiplier(float InMultiplier)
+{
+	// Original exec 0x142881f60; ordered unequal float compare and conditional dirty-byte store.
+	// CONFIDENCE: HIGH
+	const float PreviousValue = this->MotionTargetingSlow;
+	this->MotionTargetingSlow = InMultiplier;
+	if (PreviousValue < InMultiplier || PreviousValue > InMultiplier)
+	{
+	    this->bDirty = 1;
+	}
+}
+
+void UFortClientSettingsRecord::SetScopedMultiplier(float InMultiplier)
+{
+	// Original exec 0x142882a00; ordered unequal float compare and conditional dirty-byte store.
+	// CONFIDENCE: HIGH
+	const float PreviousValue = this->ScopedSlow;
+	this->ScopedSlow = InMultiplier;
+	if (PreviousValue < InMultiplier || PreviousValue > InMultiplier)
+	{
+	    this->bDirty = 1;
+	}
+}
+
+void UFortClientSettingsRecord::SetTargetingMultiplier(float InMultiplier)
+{
+	// Original exec 0x1428836c0; ordered unequal float compare and conditional dirty-byte store.
+	// CONFIDENCE: HIGH
+	const float PreviousValue = this->TargetingSlow;
+	this->TargetingSlow = InMultiplier;
+	if (PreviousValue < InMultiplier || PreviousValue > InMultiplier)
+	{
+	    this->bDirty = 1;
+	}
+}
+
+void UFortClientSettingsRecord::SetTouchBuildingMultiplier(float InMultiplier)
+{
+	// Original exec 0x142883a00; ordered unequal float compare and conditional dirty-byte store.
+	// CONFIDENCE: HIGH
+	const float PreviousValue = this->TouchBuildingMultiplier;
+	this->TouchBuildingMultiplier = InMultiplier;
+	if (PreviousValue < InMultiplier || PreviousValue > InMultiplier)
+	{
+	    this->bDirty = 1;
+	}
+}
+
+void UFortClientSettingsRecord::SetTouchEditModeMultiplier(float InMultiplier)
+{
+	// Original exec 0x142883b20; ordered unequal float compare and conditional dirty-byte store.
+	// CONFIDENCE: HIGH
+	const float PreviousValue = this->TouchEditModeMultiplier;
+	this->TouchEditModeMultiplier = InMultiplier;
+	if (PreviousValue < InMultiplier || PreviousValue > InMultiplier)
+	{
+	    this->bDirty = 1;
+	}
+}
+
+void UFortClientSettingsRecord::SetTouchLookAccelerationMultiplier(float InSetting)
+{
+	// Original exec 0x142883c40; ordered unequal float compare and conditional dirty-byte store.
+	// CONFIDENCE: HIGH
+	const float PreviousValue = this->TouchLookAccelerationMultiplier;
+	this->TouchLookAccelerationMultiplier = InSetting;
+	if (PreviousValue < InSetting || PreviousValue > InSetting)
+	{
+	    this->bDirty = 1;
+	}
+}
+
+void UFortClientSettingsRecord::SetTouchLookSensitivitySetting(float InSetting)
+{
+	// Original exec 0x142883cd0; ordered unequal float compare and conditional dirty-byte store.
+	// CONFIDENCE: HIGH
+	const float PreviousValue = this->TouchLookSensitivitySetting;
+	this->TouchLookSensitivitySetting = InSetting;
+	if (PreviousValue < InSetting || PreviousValue > InSetting)
+	{
+	    this->bDirty = 1;
+	}
+}
+
+void UFortClientSettingsRecord::SetTouchScopedMultiplier(float InMultiplier)
+{
+	// Original exec 0x142883d60; ordered unequal float compare and conditional dirty-byte store.
+	// CONFIDENCE: HIGH
+	const float PreviousValue = this->TouchScopedSlow;
+	this->TouchScopedSlow = InMultiplier;
+	if (PreviousValue < InMultiplier || PreviousValue > InMultiplier)
+	{
+	    this->bDirty = 1;
+	}
+}
+
+void UFortClientSettingsRecord::SetTouchTargetingMultiplier(float InMultiplier)
+{
+	// Original exec 0x142883df0; ordered unequal float compare and conditional dirty-byte store.
+	// CONFIDENCE: HIGH
+	const float PreviousValue = this->TouchTargetingSlow;
+	this->TouchTargetingSlow = InMultiplier;
+	if (PreviousValue < InMultiplier || PreviousValue > InMultiplier)
+	{
+	    this->bDirty = 1;
+	}
+}
+
+void UFortClientSettingsRecord::SetTouchVerticalMultiplier(float InMultiplier)
+{
+	// Original exec 0x142883e80; ordered unequal float compare and conditional dirty-byte store.
+	// CONFIDENCE: HIGH
+	const float PreviousValue = this->TouchVerticalMultiplier;
+	this->TouchVerticalMultiplier = InMultiplier;
+	if (PreviousValue < InMultiplier || PreviousValue > InMultiplier)
+	{
+	    this->bDirty = 1;
+	}
+}
+

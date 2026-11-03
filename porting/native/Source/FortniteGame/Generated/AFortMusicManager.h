@@ -7,6 +7,7 @@
 #include "GameFramework/Actor.h"
 
 class AFortPlayerController;
+class UFortMusicAsset;
 class UFortMusicManagerBank;
 class UFortMusicVoice;
 
@@ -48,6 +49,10 @@ protected:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetPrimaryMusicVolume() const;
 public:
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void PlayStinger(UFortMusicAsset* NewMusicAsset);
+	virtual void PlayStinger_Implementation(UFortMusicAsset* NewMusicAsset);
 
 };
 

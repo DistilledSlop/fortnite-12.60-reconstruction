@@ -1,5 +1,33 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Native source batch 7 (2026-11-03)
+
+Canonical Native1241 entries =1179 bodies +62 fields. Added26 complete bodies:
+17 reflected settings float setters with dirty-byte writes, two single-float
+and six single-object native event defaults, one reflected FName copy setter.
+The ordered comparisons preserve original ucomiss/je NaN behavior. All1241
+accepted, zero rejected; promotion receipts under
+porting/generated/gameplay-bulk-integration-7/. No builds/runtime/tests run;
+139 bodies since tested1040 are build pending, next checkpoint about2040.
+Batch6 pushed as8aaf1784. Commit/push finished batches promptly.
+
+Claude Sonnet medium bounded pass4 read four typed callee probes, corrected
+building_vitals README provenance and recorded creator/get-max-health blockers;
+NEW_READY_MANIFEST is empty (no new implementation credit). Probe pass5 inputs:
+/tmp/claude-native-building-vitals/probe-request-4.json, typed C now available at
+porting/generated/callee_probe/building_vitals_dependencies_4/. Root resolved
+native_class_index gpsc targets:14277e480=UFortAbilitySystemComponent,
+142851150=UFortBuildingActorSet,1428ea7f0=UFortGameInstance,
+1429365d0=UFortHealthSet. World+188 is GameInstance here, not GameState.
+ABuildingActor+32c is reflected AttributeInitKeys[2], not unnamed native storage.
+Remaining unknown bytes/creator callbacks/custom initter prevent closure.
+
+Root owns promotion/builds. Terra medium bounded virtual scalar and bool-byte
+families are source proposals pending review; read-only Luna leaf-shape ranking
+reports /tmp/{rank-native-shapes,refined-direct-leaves} guide the next patterns.
+Use fork_turns none; economical reads/output; rotate workers at completion.
+Preserve graphics edits; skip visuals; all four milestones remain open.
+
 ## Native source batch 6 (2026-11-03)
 
 Canonical Native now1215 entries =1153 function bodies +62 fields. Added46

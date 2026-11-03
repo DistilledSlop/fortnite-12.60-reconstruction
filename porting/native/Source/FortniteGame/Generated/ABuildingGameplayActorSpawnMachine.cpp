@@ -2,6 +2,27 @@
 #include "ABuildingGameplayActorSpawnMachine.h"
 #include "Net/UnrealNetwork.h"
 
+void ABuildingGameplayActorSpawnMachine::OnBeginLongUse_Implementation(AFortPlayerControllerAthena* AthenaPC)
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
+void ABuildingGameplayActorSpawnMachine::OnInterruptLongUse_Implementation(AFortPlayerControllerAthena* AthenaPC)
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
+void ABuildingGameplayActorSpawnMachine::OnPlayerPawnResurrected_Implementation(AFortPlayerPawn* PlayerPawn)
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+
 void ABuildingGameplayActorSpawnMachine::OnRep_SpawnMachineState()
 {
 	// Body not recovered: reflection-derived stub.

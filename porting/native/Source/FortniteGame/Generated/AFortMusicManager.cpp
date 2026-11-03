@@ -17,3 +17,10 @@ float AFortMusicManager::GetPrimaryMusicVolume() const
 	return NativeRecoveredFloat_0x248;
 }
 
+void AFortMusicManager::PlayStinger_Implementation(UFortMusicAsset* NewMusicAsset)
+{
+	// Exact original shared stub 0x1406801c0.
+	// CONFIDENCE: HIGH
+	return;
+}
+

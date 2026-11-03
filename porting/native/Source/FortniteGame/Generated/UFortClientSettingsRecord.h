@@ -1057,5 +1057,56 @@ public:
 	UFUNCTION()
 	float GetTouchVerticalMultiplier() const;
 
+	UFUNCTION()
+	void SetGamepadBuildingMultiplier(float InMultiplier);
+
+	UFUNCTION()
+	void SetGamepadEditModeMultiplier(float InMultiplier);
+
+	UFUNCTION()
+	void SetGamepadScopedMultiplier(float InMultiplier);
+
+	UFUNCTION()
+	void SetGamepadTargetingMultiplier(float InMultiplier);
+
+	UFUNCTION()
+	void SetGyroLookSensitivitySetting(float InSetting);
+
+	UFUNCTION()
+	void SetMotionHarvestingToolMultiplier(float InMultiplier);
+
+	UFUNCTION()
+	void SetMotionScopedMultiplier(float InMultiplier);
+
+	UFUNCTION()
+	void SetMotionTargetingMultiplier(float InMultiplier);
+
+	UFUNCTION()
+	void SetScopedMultiplier(float InMultiplier);
+
+	UFUNCTION()
+	void SetTargetingMultiplier(float InMultiplier);
+
+	UFUNCTION()
+	void SetTouchBuildingMultiplier(float InMultiplier);
+
+	UFUNCTION()
+	void SetTouchEditModeMultiplier(float InMultiplier);
+
+	UFUNCTION()
+	void SetTouchLookAccelerationMultiplier(float InSetting);
+
+	UFUNCTION()
+	void SetTouchLookSensitivitySetting(float InSetting);
+
+	UFUNCTION()
+	void SetTouchScopedMultiplier(float InMultiplier);
+
+	UFUNCTION()
+	void SetTouchTargetingMultiplier(float InMultiplier);
+
+	UFUNCTION()
+	void SetTouchVerticalMultiplier(float InMultiplier);
+
 };
 

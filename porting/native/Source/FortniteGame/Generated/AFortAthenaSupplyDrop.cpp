@@ -7,6 +7,13 @@ void AFortAthenaSupplyDrop::OnRep_NumPlayersInteracting()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortAthenaSupplyDrop::SetLootTableNameOverride(FName TableNameToUse)
+{
+	// Original exec 0x142834bc0; pure writer 0x141920940.
+	// CONFIDENCE: HIGH
+	this->LootTableNameOverride = TableNameToUse;
+}
+
 void AFortAthenaSupplyDrop::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

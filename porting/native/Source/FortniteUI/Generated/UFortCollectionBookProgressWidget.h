@@ -58,5 +58,17 @@ public:
 	UPROPERTY(Transient)
 	UFortCollectionBookProgressionRewardsModalWidget* DetailsModalWidget;
 
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void OnCollectionBookLevelProgressionChanged(float NewCompletionPct);
+	virtual void OnCollectionBookLevelProgressionChanged_Implementation(float NewCompletionPct);
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void OnCollectionBookPreviewXPChange(float PreviewCompletionPct);
+	virtual void OnCollectionBookPreviewXPChange_Implementation(float PreviewCompletionPct);
+public:
+
 };
 

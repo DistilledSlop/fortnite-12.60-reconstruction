@@ -8,6 +8,7 @@
 
 #include "AttributeSet.h"
 
+class AFortPlayerPawn;
 class AFortPlayerStart;
 class USoundCue;
 
@@ -69,6 +70,12 @@ protected:
 	UFUNCTION(BlueprintNativeEvent)
 	void OnCloneMachineRespawningBegins();
 	virtual void OnCloneMachineRespawningBegins_Implementation();
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent)
+	void OnCloneMachineSpawnsPlayer(AFortPlayerPawn* PlayerPawn);
+	virtual void OnCloneMachineSpawnsPlayer_Implementation(AFortPlayerPawn* PlayerPawn);
 public:
 
 	UFUNCTION()
