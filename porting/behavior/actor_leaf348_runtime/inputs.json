@@ -1,0 +1,163 @@
+[
+  {
+    "class": "ABuildingWall",
+    "function": "IsDoorOpen",
+    "reflection": {
+      "exec_addr": "0x142766120",
+      "flags": "0x54020401",
+      "params": [
+        {
+          "index": 0,
+          "name": "ReturnValue",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x10000000000580",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 1,
+          "bitfield": true,
+          "offset": null
+        }
+      ],
+      "create_func": "0x142763330",
+      "source": "lea"
+    },
+    "wrapper_capture": "porting/generated/native107-broad/0x142766120.c",
+    "native_body_capture": "porting/generated/native107-impl/0x141c405f0.c",
+    "header": "porting/native/Source/FortniteGame/Generated/ABuildingWall.h"
+  },
+  {
+    "class": "AAthenaBarrierFlag",
+    "function": "GetHeadMesh",
+    "reflection": {
+      "exec_addr": "0x142716310",
+      "flags": "0x54020401",
+      "params": [
+        {
+          "index": 0,
+          "name": "ReturnValue",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x10000000000580",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "class": "0x1447fc570"
+          }
+        }
+      ],
+      "create_func": "0x1427134e0",
+      "source": "lea"
+    },
+    "wrapper_capture": "porting/generated/native107-broad/0x142716310.c",
+    "native_body_capture": "porting/generated/native107-impl/0x1418c3ff0.c",
+    "header": "porting/native/Source/FortniteGame/Generated/AAthenaBarrierFlag.h"
+  },
+  {
+    "class": "AAthenaBarrierFlag",
+    "function": "GetMeshScale",
+    "reflection": {
+      "exec_addr": "0x1427163d0",
+      "flags": "0x54820401",
+      "params": [
+        {
+          "index": 0,
+          "name": "ReturnValue",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000000000580",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "struct": "0x142eea590"
+          }
+        }
+      ],
+      "create_func": "0x142713510",
+      "source": "lea"
+    },
+    "wrapper_capture": "porting/generated/native107-broad/0x1427163d0.c",
+    "native_body_capture": "porting/generated/native107-impl/0x1418c6700.c",
+    "header": "porting/native/Source/FortniteGame/Generated/AAthenaBarrierFlag.h"
+  },
+  {
+    "class": "AFortAthenaMutator_Ashton",
+    "function": "GetStoneState",
+    "reflection": {
+      "exec_addr": "0x1427e12c0",
+      "flags": "0x4020401",
+      "params": [
+        {
+          "index": 0,
+          "name": "ReturnValue",
+          "kind": "Enum",
+          "kind_raw": "0x1e",
+          "property_flags": "0x10000000000580",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 1,
+          "type_refs": {
+            "enum": "0x1427e0fd0"
+          }
+        },
+        {
+          "index": 1,
+          "name": "UnderlyingType",
+          "kind": "Byte",
+          "kind_raw": "0x0",
+          "property_flags": "0x0",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "enum_underlying_of": "ReturnValue"
+        },
+        {
+          "index": 2,
+          "name": "StoneType",
+          "kind": "Enum",
+          "kind_raw": "0x1e",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "enum": "0x1427e1000"
+          }
+        },
+        {
+          "index": 3,
+          "name": "UnderlyingType",
+          "kind": "Byte",
+          "kind_raw": "0x0",
+          "property_flags": "0x0",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "enum_underlying_of": "StoneType"
+        }
+      ],
+      "create_func": "0x1427dbb10",
+      "source": "lea"
+    },
+    "wrapper_capture": "porting/generated/native107-broad/0x1427e12c0.c",
+    "native_body_capture": "porting/generated/native107-impl/0x141aaec40.c",
+    "header": "porting/native/Source/FortniteGame/Generated/AFortAthenaMutator_Ashton.h"
+  }
+]

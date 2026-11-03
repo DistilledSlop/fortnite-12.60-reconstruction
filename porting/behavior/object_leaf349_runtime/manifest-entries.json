@@ -1,0 +1,47 @@
+[
+  {
+    "function": "GetTotalBookXpEarned",
+    "kind": "exec",
+    "signature": "int32 GetTotalBookXpEarned() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/object_leaf349_runtime/GetTotalBookXpEarned.inc",
+    "address": "0x14272b710",
+    "native_body_address": "0x141b6c110",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Returns the book XP total when rewards are available, otherwise zero.",
+    "includes": [],
+    "class": "UAthenaPlayerMatchReport"
+  },
+  {
+    "function": "GetTotalSeasonalXpEarned",
+    "kind": "exec",
+    "signature": "int32 GetTotalSeasonalXpEarned() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/object_leaf349_runtime/GetTotalSeasonalXpEarned.inc",
+    "address": "0x14272b770",
+    "native_body_address": "0x141b6c180",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Returns the season XP total when rewards are available, otherwise zero.",
+    "includes": [],
+    "class": "UAthenaPlayerMatchReport"
+  },
+  {
+    "function": "GetTotalScoreEarned",
+    "kind": "exec",
+    "signature": "int32 GetTotalScoreEarned() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/object_leaf349_runtime/GetTotalScoreEarned.inc",
+    "address": "0x14272b740",
+    "native_body_address": "0x141b6c130",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Sums the score of each reward group when rewards are available, otherwise returns zero.",
+    "includes": [],
+    "class": "UAthenaPlayerMatchReport"
+  }
+]

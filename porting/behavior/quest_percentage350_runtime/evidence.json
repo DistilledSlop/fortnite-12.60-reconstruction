@@ -1,0 +1,14 @@
+{
+  "wrapper": "porting/generated/native235-fresh-bulk/0x142ab3ae0.c",
+  "body_assembly": "porting/generated/native240-fresh-callees/0x142441050.asm",
+  "body_decompilation": "porting/generated/native240-fresh-callees/0x142441050.c",
+  "image": "/mnt/vibrato/fortnite-evidence/original-late-capture-1/image-125.runtime.bin",
+  "image_base": "0x140000000",
+  "observations": [
+    "Wrapper passes KnownQuestDef and stores the float return. Native falls back to the item definition at +0x88, then returns zero if absent even for completed quests.",
+    "quest_state +0xfc: 2 returns 100, 1 evaluates objectives, other states return zero. ObjectiveCompletionCount is definition +0x390.",
+    "Objective array is at +0xe8, count +0xf0. Visible is byte +0xb9; its reflected setter 0x142932f00 writes that byte. AchievedCount and RequiredCount are +0x98 and +0x9c.",
+    "Nonnegative completion count sums one for each visible completed objective and divides by that count; negative count sums achieved/required for visible objectives and divides by the total objective count, including invisible objectives. Positive denominator required; division by zero in an individual visible objective is not guarded.",
+    "Image float constants at 0x1459a8728 and 0x1459a86f8 are 100.0 and 1.0 respectively. Sum is multiplied by 100 before division. No clamp or null objective checks."
+  ]
+}

@@ -1,0 +1,19 @@
+[
+  {
+    "class": "UFortQuestItem",
+    "function": "GetPercentageComplete",
+    "kind": "exec",
+    "signature": "float GetPercentageComplete(UFortQuestItemDefinition* KnownQuestDef) const",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/quest_percentage350_runtime/UFortQuestItem_GetPercentageComplete.inc",
+    "address": "0x142ab3ae0",
+    "native_body_address": "0x142441050",
+    "reflection_flags": "0x54020401",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [],
+    "notes": "Wrapper and full native assembly recovered, including scalar float operations; build pending."
+  }
+]

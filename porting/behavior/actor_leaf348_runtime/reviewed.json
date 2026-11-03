@@ -1,0 +1,112 @@
+[
+  {
+    "class": "AAthenaBarrierFlag",
+    "function": "GetHeadMesh",
+    "disposition": "Ported; wrapper and cached native body recovered."
+  },
+  {
+    "class": "AAthenaBarrierFlag",
+    "function": "GetMeshScale",
+    "disposition": "Ported; wrapper and cached native body recovered."
+  },
+  {
+    "class": "AFortAthenaMutator_Ashton",
+    "function": "GetStoneState",
+    "disposition": "Ported; wrapper and cached native body recovered."
+  },
+  {
+    "class": "ABuildingWall",
+    "function": "IsDoorOpen",
+    "disposition": "Ported; cached body tests two reflected bits."
+  },
+  {
+    "class": "AAIHotSpot",
+    "function": "GetAssignedAICount",
+    "disposition": "Native body invokes unresolved helpers."
+  },
+  {
+    "class": "AAIHotSpot",
+    "function": "GetSlotCount",
+    "disposition": "Native body invokes unresolved helper."
+  },
+  {
+    "class": "AAIHotSpot",
+    "function": "SetEnabled",
+    "disposition": "Virtual call target unresolved."
+  },
+  {
+    "class": "AAthenaCapturePoint",
+    "function": "SetActivatedState",
+    "disposition": "Native body contains additional calls."
+  },
+  {
+    "class": "AAthenaNavInvokerBox",
+    "function": "SetInvokerEnabled",
+    "disposition": "Native body invokes component virtual methods."
+  },
+  {
+    "class": "ABuildingFloor",
+    "function": "IsBalcony",
+    "disposition": "Tested storage is not reflected as an accessible member."
+  },
+  {
+    "class": "AAthenaWrapPreviewActor",
+    "function": "IsShowingVehicle",
+    "disposition": "Compared storage is not mapped to reflected members."
+  },
+  {
+    "class": "ADeployableBasePlot",
+    "function": "GetNumOfItemsInPlot",
+    "disposition": "Calls through unresolved virtual method and object."
+  },
+  {
+    "class": "ADeployableBasePlot",
+    "function": "IsOccupied",
+    "disposition": "Calls through unresolved virtual method."
+  },
+  {
+    "class": "AFortAthenaMutator_Arsenic",
+    "function": "IsPlaylistDBNOEnabled",
+    "disposition": "Calls playlist lookup."
+  },
+  {
+    "class": "AFortAthenaMutator_Arsenic",
+    "function": "GetTeamPlayerCount",
+    "disposition": "Array element storage not mapped."
+  },
+  {
+    "class": "AFortAthenaMutator_Arsenic",
+    "function": "GetTimeRemaining",
+    "disposition": "Body requires additional behavior."
+  },
+  {
+    "class": "AFortAthenaMutator_Disco",
+    "function": "IsRespawningAllowed",
+    "disposition": "Referenced game-state storage is not mapped."
+  },
+  {
+    "class": "AFortCreativeRoundSettings",
+    "function": "ClearResourcesGivenPerRound",
+    "disposition": "Inline array storage is not reflected."
+  },
+  {
+    "class": "AFortCreativeRoundSettings",
+    "function": "ClearResourcesGivenToWinnersPerRound",
+    "disposition": "Inline array storage is not reflected."
+  },
+  {
+    "class": "AFortCreativeRoundSettings",
+    "function": "GetResourceGivenPerRound",
+    "disposition": "Inline array storage is not reflected."
+  },
+  {
+    "class": "AFortCreativeRoundSettings",
+    "function": "SetResourceGivenPerRound",
+    "disposition": "Inline array storage is not reflected."
+  },
+  {
+    "class": "AFortClientAnnouncement_Basic",
+    "function": "SetDisplayTime",
+    "disposition": "Virtual call target unresolved."
+  }
+]

@@ -9,8 +9,10 @@
 #include "EBarrierFlagState.h"
 #include "EBarrierFoodTeam.h"
 #include "FBarrierFlagDisplayData.h"
+#include "Math/Vector.h"
 
 class AAthenaBarrierObjective;
+class UStaticMesh;
 
 #include "AAthenaBarrierFlag.generated.h"
 
@@ -31,6 +33,12 @@ public:
 	// table index 0, flags 0x20080000000001
 	UPROPERTY()
 	FBarrierFlagDisplayData FoodDisplayData[2];
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UStaticMesh* GetHeadMesh() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FVector GetMeshScale() const;
 
 	UFUNCTION(BlueprintNativeEvent)
 	AAthenaBarrierObjective* GetObjectiveActor() const;

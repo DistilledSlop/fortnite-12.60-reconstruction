@@ -197,6 +197,9 @@ public:
 	UPROPERTY()
 	uint8 bProhibitPassOverLowEndOfTriangleWall : 1;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsDoorOpen() const;
+
 	UFUNCTION()
 	void OnRep_bDoorCollisionDisabled();
 

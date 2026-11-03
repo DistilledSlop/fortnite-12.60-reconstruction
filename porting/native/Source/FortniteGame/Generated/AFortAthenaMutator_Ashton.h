@@ -7,6 +7,8 @@
 #include "AFortAthenaMutator.h"
 
 #include "AttributeSet.h"
+#include "EAshtonStoneStateType.h"
+#include "EAshtonStoneType.h"
 #include "FAshtonStoneData.h"
 #include "FAshtonStoneSpawnData.h"
 #include "FAshtonStoneState.h"
@@ -243,6 +245,9 @@ public:
 	// table index 0, flags 0x20080000010015
 	UPROPERTY()
 	FAthenaGameMessageData GameMsg_NoMoreRespawns;
+
+	UFUNCTION(BlueprintCallable)
+	EAshtonStoneStateType GetStoneState(EAshtonStoneType StoneType);
 
 	UFUNCTION()
 	void OnRep_NumVillainRespawnsRemaining();

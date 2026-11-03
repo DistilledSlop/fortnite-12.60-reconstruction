@@ -70,5 +70,14 @@ public:
 	UPROPERTY()
 	FOnTravelLogUpdated TravelLogUpdated;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetTotalBookXpEarned() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetTotalScoreEarned() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetTotalSeasonalXpEarned() const;
+
 };
 

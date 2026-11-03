@@ -11,6 +11,7 @@
 #include "FFortMissionInstancedConfigData.h"
 #include "Misc/DateTime.h"
 
+class UFortQuestItemDefinition;
 class UFortQuestObjectiveInfo;
 
 #include "UFortQuestItem.generated.h"
@@ -102,6 +103,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetNumObjectivesComplete() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetPercentageComplete(UFortQuestItemDefinition* KnownQuestDef) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	EFortQuestState GetQuestState() const;

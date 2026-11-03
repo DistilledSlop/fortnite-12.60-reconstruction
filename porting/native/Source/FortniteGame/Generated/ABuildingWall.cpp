@@ -2,6 +2,14 @@
 #include "ABuildingWall.h"
 #include "Net/UnrealNetwork.h"
 
+bool ABuildingWall::IsDoorOpen() const
+{
+	// CONFIDENCE: high; native capture and reflected fields reviewed.
+	{
+		return bDoorOpen || bLocalDoorOpen;
+	}
+}
+
 void ABuildingWall::OnRep_bDoorCollisionDisabled()
 {
 	// Body not recovered: reflection-derived stub.
