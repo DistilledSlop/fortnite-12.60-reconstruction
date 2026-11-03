@@ -95,6 +95,7 @@ class AFortPawn;
 class AFortPlayerPawn;
 class AFortQuickBars;
 class AFortSprayDecalInstance;
+class AFortWeapon;
 class UAthenaCosmeticItemDefinition;
 class UAudioComponent;
 class UFortAbilitySystemComponent;
@@ -1863,6 +1864,8 @@ public:
 	static void NativeRecordAthenaAsynchronousLoad(AFortPlayerController* Controller, const FString& Path);
 	static void NativeRecordCoreAsynchronousLoad(AFortPlayerController* Controller, const FString& Path);
 	virtual UFortItem* NativeFindItemByGuid(const FGuid& ItemGuid);
+	virtual AFortInventory* NativeQuickBarInventory();
+	virtual AFortWeapon* NativeQuickBarHeldWeapon();
 public:
     TSharedPtr<class FFortNativeAnalyticsProvider, ESPMode::NotThreadSafe> NativeAnalyticsProvider;
 };

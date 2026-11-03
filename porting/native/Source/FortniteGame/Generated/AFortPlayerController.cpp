@@ -2,6 +2,7 @@
 #include "AFortPlayerController.h"
 #include "AFortGameStateAthena.h"
 #include "AFortGameStateZone.h"
+#include "AFortPlayerPawn.h"
 #include "AnalyticsEventAttribute.h"
 #include "Engine/World.h"
 #include "FortNativeAnalyticsProvider.h"
@@ -1060,6 +1061,19 @@ UFortItem* AFortPlayerController::NativeFindItemByGuid(const FGuid& ItemGuid)
 	        return Item;
 	}
 	return ViewTargetInventory ? ViewTargetInventory->NativeFindItemByGuid(ItemGuid) : nullptr;
+}
+
+AFortInventory* AFortPlayerController::NativeQuickBarInventory()
+{
+	// CONFIDENCE: high
+	return WorldInventory;
+}
+
+AFortWeapon* AFortPlayerController::NativeQuickBarHeldWeapon()
+{
+	// CONFIDENCE: high
+	AFortPlayerPawn* Pawn = MyFortPawn;
+	return Pawn ? Pawn->CurrentWeapon : nullptr;
 }
 
 void AFortPlayerController::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

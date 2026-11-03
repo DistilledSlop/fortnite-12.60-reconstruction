@@ -199,6 +199,18 @@ bool AFortAIPawn::NativeHasInfiniteAmmo(UFortWeaponItemDefinition* WeaponDefinit
 	return false;
 }
 
+AFortInventory* AFortAIPawn::NativeQuickBarInventory()
+{
+	// CONFIDENCE: high
+	return Inventory;
+}
+
+AFortWeapon* AFortAIPawn::NativeQuickBarHeldWeapon()
+{
+	// CONFIDENCE: high
+	return CurrentWeapon;
+}
+
 void AFortAIPawn::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

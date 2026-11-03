@@ -49,6 +49,7 @@ class AFortInventory;
 class AFortPickup;
 class AFortPlayerStateZone;
 class AFortWaterBodyActor;
+class AFortWeapon;
 class UAIGoalComponent;
 class UBehaviorTree;
 class UFortAIAttributesSet;
@@ -890,5 +891,7 @@ public:
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	virtual bool NativeHasInfiniteAmmo(UFortWeaponItemDefinition* WeaponDefinition);
+	virtual AFortInventory* NativeQuickBarInventory();
+	virtual AFortWeapon* NativeQuickBarHeldWeapon();
 };
 

@@ -33,7 +33,7 @@ def interface_declarations(name):
     if name == 'UFortMutatorContext':
         return ['public:', '    virtual void NativeAppendContextOwners(TArray<UObject*>& OutOwners) = 0;']
     if name == 'UFortInventoryOwnerInterface':
-        return ['public:', '    virtual bool NativeHasInfiniteAmmo(class UFortWeaponItemDefinition* WeaponDefinition) = 0;']
+        return ['public:', '    virtual bool NativeHasInfiniteAmmo(class UFortWeaponItemDefinition* WeaponDefinition) = 0;', '    virtual class AFortInventory* NativeQuickBarInventory() = 0;', '    virtual class AFortWeapon* NativeQuickBarHeldWeapon() = 0;']
     if name == 'UMcpItemAware':
         return ['public:', '    TWeakPtr<FMcpProfileItem, ESPMode::NotThreadSafe> NativeMcpItem;', '    virtual bool NativePopulateFromMcpItem(FMcpProfileItem* Item) = 0;']
     return []

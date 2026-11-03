@@ -1,0 +1,76 @@
+{
+  "interface": "IFortInventoryOwnerInterface",
+  "slots": {
+    "NativeQuickBarInventory": "0x38",
+    "NativeQuickBarHeldWeapon": "0x48"
+  },
+  "classes": {
+    "AFortPlayerController": {
+      "constructor": "0x142364800",
+      "constructor_capture": "porting/generated/native107-context-deps/0x142364800.c",
+      "interface_offset": "0x598",
+      "vtable": "0x14612a110",
+      "inventory": {
+        "target": "0x142388170",
+        "capture": "porting/generated/native115-interface-deps/0x142388170.c",
+        "interface_offset": "0x11a0",
+        "actor_offset": "0x1738",
+        "field": "WorldInventory"
+      },
+      "held_weapon": {
+        "target": "0x1419d37c0",
+        "capture": "porting/generated/native115-interface-deps/0x1419d37c0.c",
+        "pawn_interface_offset": "0x148",
+        "pawn_actor_offset": "0x6e0",
+        "pawn_field": "MyFortPawn",
+        "weapon_pawn_offset": "0x588",
+        "weapon_field": "CurrentWeapon",
+        "null_checked": true
+      }
+    },
+    "AFortAIPawn": {
+      "constructor": "0x1422b6090",
+      "constructor_capture": "porting/generated/native103-ctors2/0x1422b6090.c",
+      "interface_offset": "0x1058",
+      "vtable": "0x1461088b8",
+      "inventory": {
+        "target": "0x1422d9b80",
+        "capture": "porting/generated/native117-contract-targets/0x1422d9b80.c",
+        "interface_offset": "0xa00",
+        "actor_offset": "0x1a58",
+        "field": "Inventory"
+      },
+      "held_weapon": {
+        "target": "0x1422c8740",
+        "capture": "porting/generated/native117-contract-targets/0x1422c8740.c",
+        "interface_offset": "-0xad0",
+        "actor_offset": "0x588",
+        "field": "CurrentWeapon"
+      }
+    },
+    "ADeployableBasePlot": {
+      "constructor": "0x141c29040",
+      "interface_offset": "0x790",
+      "vtable": "0x145f44288",
+      "inventory": {
+        "target": "0x141125710",
+        "capture": "porting/generated/native117-contract-targets/0x141125710.c",
+        "interface_offset": "0x120",
+        "actor_offset": "0x8b0",
+        "field": "PlotInventory"
+      },
+      "held_weapon": {
+        "target": "0x140680300",
+        "capture": "porting/generated/native100-ctors/0x140680300.c",
+        "body": "return 0;"
+      }
+    }
+  },
+  "field_declarations": [
+    "porting/native/Source/FortniteGame/Generated/AFortPlayerController.h",
+    "porting/native/Source/FortniteGame/Generated/AFortAIPawn.h",
+    "porting/native/Source/FortniteGame/Generated/AFortPawn.h",
+    "porting/native/Source/FortniteGame/Generated/ADeployableBasePlot.h"
+  ],
+  "note": "Vtable identity and slot targets supplied from native inspection; BasePlot constructor capture is not present in generated files."
+}

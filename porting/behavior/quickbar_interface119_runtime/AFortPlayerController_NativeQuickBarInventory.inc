@@ -1,0 +1,2 @@
+// CONFIDENCE: high
+return WorldInventory;

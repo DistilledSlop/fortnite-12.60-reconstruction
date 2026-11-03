@@ -8,6 +8,7 @@
 
 #include "Dom/JsonValue.h"
 #include "Engine/World.h"
+#include "FFortAlterationSlotStatus.h"
 #include "FFortGiftingInfo.h"
 #include "FFortItemEntry.h"
 #include "Misc/Guid.h"
@@ -83,5 +84,6 @@ public:
 	static void NativeSetEntryGiftingInfo(FFortItemEntry& Entry, FFortGiftingInfo Info);
 	void NativeDetachFromInventory();
 	virtual FGuid NativeGetItemGuid();
+	virtual TArray<FFortAlterationSlotStatus> GetAlterationSlots() const;
 };
 

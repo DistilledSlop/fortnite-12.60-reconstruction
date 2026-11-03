@@ -4,6 +4,7 @@
 #include "AFortPlayerController.h"
 #include "Delegates/Delegate.h"
 #include "EFortItemType.h"
+#include "EFortRarity.h"
 #include "EItemEvolutionRestrictionReason.h"
 #include "McpProfileItem.h"
 #include "Misc/Guid.h"
@@ -29,6 +30,13 @@ bool UFortItem::CanBeUnslotted() const
 	// Exact original shared stub 0x1406801e0.
 	// CONFIDENCE: HIGH
 	return false;
+}
+
+TArray<FFortAlterationSlotStatus> UFortItem::GetAlterationSlots() const
+{
+	// CONFIDENCE: high
+	// Native 0x140693ec0 initializes both words of the return array to zero.
+	return {};
 }
 
 float UFortItem::GetDurability() const
@@ -129,6 +137,14 @@ AFortPlayerController* UFortItem::GetOwningController() const
 	    Controller = static_cast<AFortPlayerController*>(NativeOwningController.Get());
 	}
 	return Controller;
+}
+
+EFortRarity UFortItem::GetRarity() const
+{
+	// CONFIDENCE: high
+	// Native 0x142032820: resolve the definition on every call.
+	const UFortItemDefinition* Definition = GetItemDefinitionBP();
+	return Definition ? Definition->NativeGetRarity() : EFortRarity::Uncommon;
 }
 
 int32 UFortItem::GetRecycleValue() const

@@ -42,6 +42,18 @@ bool ADeployableBasePlot::NativeHasInfiniteAmmo(UFortWeaponItemDefinition* Weapo
 	return false;
 }
 
+AFortInventory* ADeployableBasePlot::NativeQuickBarInventory()
+{
+	// CONFIDENCE: high
+	return PlotInventory;
+}
+
+AFortWeapon* ADeployableBasePlot::NativeQuickBarHeldWeapon()
+{
+	// CONFIDENCE: high
+	return nullptr;
+}
+
 void ADeployableBasePlot::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

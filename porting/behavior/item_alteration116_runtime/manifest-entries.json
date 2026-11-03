@@ -1,0 +1,50 @@
+[
+  {
+    "class": "UFortItem",
+    "kind": "exec",
+    "signature_status": "proposed",
+    "confidence": "high",
+    "status": "ported",
+    "reflection_flags": "0x54020400",
+    "static": false,
+    "virtual": true,
+    "access": "public",
+    "function": "GetRarity",
+    "signature": "EFortRarity GetRarity() const",
+    "address": "0x142959770",
+    "native_body_address": "0x142032820",
+    "inc_path": "porting/behavior/item_alteration116_runtime/GetRarity.inc",
+    "notes": "UFortItem primary table slot +0x3f0; known WorldItem tables inherit this target."
+  },
+  {
+    "class": "UFortItem",
+    "kind": "exec",
+    "signature_status": "proposed",
+    "confidence": "high",
+    "status": "ported",
+    "reflection_flags": "0x54020400",
+    "static": false,
+    "virtual": true,
+    "access": "public",
+    "function": "GetAlterationSlots",
+    "signature": "TArray<FFortAlterationSlotStatus> GetAlterationSlots() const",
+    "address": "0x1429588c0",
+    "native_body_address": "0x140693ec0",
+    "inc_path": "porting/behavior/item_alteration116_runtime/GetAlterationSlots.inc",
+    "notes": "UFortItem primary table slot +0x490; WorldItem override supplied separately."
+  },
+  {
+    "class": "UFortWorldItem",
+    "function": "GetAlterationSlots",
+    "kind": "helper",
+    "signature": "TArray<FFortAlterationSlotStatus> GetAlterationSlots() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": true,
+    "inc_path": "porting/behavior/item_alteration116_runtime/UFortWorldItem_GetAlterationSlots.inc",
+    "address": "0x1420587e0",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Override of reflected UFortItem virtual; snapshots ItemEntry.AlterationInstances and maps each to a level-zero, Common slot."
+  }
+]

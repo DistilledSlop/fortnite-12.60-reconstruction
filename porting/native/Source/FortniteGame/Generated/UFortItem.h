@@ -8,7 +8,9 @@
 
 #include "Delegates/Delegate.h"
 #include "EFortItemType.h"
+#include "EFortRarity.h"
 #include "EItemEvolutionRestrictionReason.h"
+#include "FFortAlterationSlotStatus.h"
 #include "FFortOnItemChangedDelegate.h"
 #include "FFortOnItemDestroyedDelegate.h"
 #include "McpProfileItem.h"
@@ -63,6 +65,9 @@ public:
 	virtual bool CanBeUnslotted() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual TArray<FFortAlterationSlotStatus> GetAlterationSlots() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual float GetDurability() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
@@ -94,6 +99,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual AFortPlayerController* GetOwningController() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual EFortRarity GetRarity() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual int32 GetRecycleValue() const;
