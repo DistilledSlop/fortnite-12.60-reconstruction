@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 
+class UObject;
+
 #include "UFortDeployableBaseLibrary.generated.h"
 
 UCLASS()
@@ -14,5 +16,14 @@ class FORTNITEGAME_API UFortDeployableBaseLibrary : public UBlueprintFunctionLib
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	static void ForceClearAllDefenders(UObject* WorldContextObject);
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	static void ForceDeployableBaseHordePlayersToResetAndRespawn(UObject* WorldContextObject);
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	static void ResetDeployableBaseHordePlayerInventories(UObject* WorldContextObject);
+
 };
 

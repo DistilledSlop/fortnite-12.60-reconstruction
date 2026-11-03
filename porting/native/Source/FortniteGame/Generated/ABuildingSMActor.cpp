@@ -2,6 +2,24 @@
 #include "ABuildingSMActor.h"
 #include "Net/UnrealNetwork.h"
 
+void ABuildingSMActor::EditorOnlyRemoveInstanceMaterialScalarParameter(FName ParamName)
+{
+	// Original exec 0x1406969b0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
+void ABuildingSMActor::EditorOnlyRemoveInstanceMaterialTextureParameter(FName ParamName)
+{
+	// Original exec 0x1406969b0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
+void ABuildingSMActor::EditorOnlyRemoveInstanceMaterialVectorParameter(FName ParamName)
+{
+	// Original exec 0x1406969b0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
 void ABuildingSMActor::ForceIntoStructuralGridDuringRuntime_Implementation()
 {
 	// Body not recovered: reflection-derived stub.

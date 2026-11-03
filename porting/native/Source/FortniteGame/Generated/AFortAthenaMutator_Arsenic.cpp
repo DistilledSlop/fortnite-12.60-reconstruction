@@ -2,6 +2,12 @@
 #include "AFortAthenaMutator_Arsenic.h"
 #include "Net/UnrealNetwork.h"
 
+void AFortAthenaMutator_Arsenic::EndGame(uint8 WinningTeam)
+{
+	// Original exec 0x1427e1180; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
 bool AFortAthenaMutator_Arsenic::IsGrowlEnabled() const
 {
 	// Original address: 0x1412d9d60.

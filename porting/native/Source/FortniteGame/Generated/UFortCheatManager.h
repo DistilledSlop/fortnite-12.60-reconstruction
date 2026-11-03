@@ -129,6 +129,16 @@ public:
 
 protected:
 	UFUNCTION(Exec)
+	void AddDebugEncounterTag(FName Tag);
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void AddDebugSpawnAIGroupTag(FName Tag);
+public:
+
+protected:
+	UFUNCTION(Exec)
 	void AddKillFeedMessage();
 public:
 
@@ -214,6 +224,11 @@ public:
 protected:
 	UFUNCTION(Exec)
 	void CaptureTeamToggleInput();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void ChangeTeam(uint8 NewTeamNum);
 public:
 
 protected:
@@ -636,6 +651,11 @@ public:
 
 protected:
 	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void GiveWeapons(FName Tag);
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
 	void GiveWood(int32 Amount);
 public:
 
@@ -954,6 +974,16 @@ public:
 
 protected:
 	UFUNCTION(Exec)
+	void RemoveDebugEncounterTag(FName Tag);
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void RemoveDebugSpawnAIGroupTag(FName Tag);
+public:
+
+protected:
+	UFUNCTION(Exec)
 	void RequestNextCarouselOffer();
 public:
 
@@ -1023,6 +1053,11 @@ protected:
 public:
 
 protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void SetAimMode(uint32 Mode);
+public:
+
+protected:
 	UFUNCTION(Exec)
 	void SetBuildFree(bool bNewValue);
 public:
@@ -1030,6 +1065,11 @@ public:
 protected:
 	UFUNCTION(Exec)
 	void SetCameraFOVMultiplier(float Multiplier);
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void SetCameraPrototype(FName ProtoName);
 public:
 
 protected:
@@ -1105,6 +1145,11 @@ public:
 protected:
 	UFUNCTION(Exec)
 	void SetInteractExtent(float Extent);
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void SetJumpStaminaCost(FName ModeName);
 public:
 
 protected:
@@ -1333,6 +1378,11 @@ public:
 protected:
 	UFUNCTION(Exec)
 	void TestRegenId();
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	void TestSuddenPortChange(uint32 NumConnections);
 public:
 
 protected:
@@ -1582,6 +1632,16 @@ public:
 
 protected:
 	UFUNCTION(Exec)
+	void TutorialAddHidden(FName Hidden);
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void TutorialAddHighlight(FName Highlight);
+public:
+
+protected:
+	UFUNCTION(Exec)
 	void TutorialListAll();
 public:
 
@@ -1593,6 +1653,16 @@ public:
 protected:
 	UFUNCTION(Exec)
 	void TutorialListHighlights();
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void TutorialRemoveHidden(FName Hidden);
+public:
+
+protected:
+	UFUNCTION(Exec)
+	void TutorialRemoveHighlight(FName Highlight);
 public:
 
 protected:

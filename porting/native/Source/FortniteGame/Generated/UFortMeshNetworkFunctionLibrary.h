@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 
+class UObject;
+
 #include "UFortMeshNetworkFunctionLibrary.generated.h"
 
 UCLASS()
@@ -14,5 +16,8 @@ class FORTNITEGAME_API UFortMeshNetworkFunctionLibrary : public UBlueprintFuncti
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(BlueprintCallable)
+	static void FireEvent_MeshHeartbeat(UObject* WorldContextObject);
+
 };
 

@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
 
+#include "UCommonUserWidget.h"
+
 #include "UFortCheatMenuFactory.generated.h"
 
 UCLASS()
@@ -14,5 +16,8 @@ class FORTNITEUI_API UFortCheatMenuFactory : public UObject
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(BlueprintCallable)
+	static void AddStoreCheatMenu(UCommonUserWidget* Widget);
+
 };
 

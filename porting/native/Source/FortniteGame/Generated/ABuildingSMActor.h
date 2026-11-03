@@ -608,6 +608,15 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_ProxyGameplayCueDamagePhysical)
 	FProxyGameplayCueDamagePhysical ProxyGameplayCueDamagePhysical;
 
+	UFUNCTION(BlueprintCallable)
+	void EditorOnlyRemoveInstanceMaterialScalarParameter(FName ParamName);
+
+	UFUNCTION(BlueprintCallable)
+	void EditorOnlyRemoveInstanceMaterialTextureParameter(FName ParamName);
+
+	UFUNCTION(BlueprintCallable)
+	void EditorOnlyRemoveInstanceMaterialVectorParameter(FName ParamName);
+
 	UFUNCTION(NetMulticast, Reliable)
 	void ForceIntoStructuralGridDuringRuntime();
 	void ForceIntoStructuralGridDuringRuntime_Implementation();

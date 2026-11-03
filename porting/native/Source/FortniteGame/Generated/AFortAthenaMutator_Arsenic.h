@@ -79,6 +79,11 @@ public:
 	UPROPERTY(Replicated, Transient)
 	bool bCheatHeartbeatEnabled;
 
+protected:
+	UFUNCTION(BlueprintCallable)
+	void EndGame(uint8 WinningTeam);
+public:
+
 	UFUNCTION(BlueprintCallable, BlueprintPure, BlueprintAuthorityOnly)
 	bool IsGrowlEnabled() const;
 

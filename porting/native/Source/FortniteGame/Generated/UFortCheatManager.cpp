@@ -27,6 +27,18 @@ void UFortCheatManager::AddCombatScore(int32 Amount)
 	// CONFIDENCE: HIGH
 }
 
+void UFortCheatManager::AddDebugEncounterTag(FName Tag)
+{
+	// Original exec 0x1406969b0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
+void UFortCheatManager::AddDebugSpawnAIGroupTag(FName Tag)
+{
+	// Original exec 0x1406969b0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
 void UFortCheatManager::AddKillFeedMessage()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
@@ -165,6 +177,12 @@ void UFortCheatManager::CaptureTeamToggleInput()
 	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
 	// CONFIDENCE: HIGH
 	return;
+}
+
+void UFortCheatManager::ChangeTeam(uint8 NewTeamNum)
+{
+	// Original exec 0x1427e1180; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
 }
 
 void UFortCheatManager::CheatMountExitVan()
@@ -795,6 +813,12 @@ void UFortCheatManager::GiveStone(int32 Amount)
 	// CONFIDENCE: HIGH
 }
 
+void UFortCheatManager::GiveWeapons(FName Tag)
+{
+	// Original exec 0x1406969b0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
 void UFortCheatManager::GiveWood(int32 Amount)
 {
 	// Original exec 0x142766a90; complete empty leaf 0x1406801c0.
@@ -1289,6 +1313,18 @@ void UFortCheatManager::ReloadUMG()
 	return;
 }
 
+void UFortCheatManager::RemoveDebugEncounterTag(FName Tag)
+{
+	// Original exec 0x1406969b0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
+void UFortCheatManager::RemoveDebugSpawnAIGroupTag(FName Tag)
+{
+	// Original exec 0x1406969b0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
 void UFortCheatManager::RequestNextCarouselOffer()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
@@ -1399,6 +1435,12 @@ void UFortCheatManager::ServerStopProfiling()
 	return;
 }
 
+void UFortCheatManager::SetAimMode(uint32 Mode)
+{
+	// Original exec 0x142766a90; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
 void UFortCheatManager::SetBuildFree(bool bNewValue)
 {
 	// Original exec 0x1411a8f70; complete empty leaf 0x1406801c0.
@@ -1408,6 +1450,12 @@ void UFortCheatManager::SetBuildFree(bool bNewValue)
 void UFortCheatManager::SetCameraFOVMultiplier(float Multiplier)
 {
 	// Original exec 0x142765ea0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
+void UFortCheatManager::SetCameraPrototype(FName ProtoName)
+{
+	// Original exec 0x1406969b0; complete empty leaf 0x1406801c0.
 	// CONFIDENCE: HIGH
 }
 
@@ -1498,6 +1546,12 @@ void UFortCheatManager::SetInfiniteAmmo(bool bInValue)
 void UFortCheatManager::SetInteractExtent(float Extent)
 {
 	// Original exec 0x142765ea0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
+void UFortCheatManager::SetJumpStaminaCost(FName ModeName)
+{
+	// Original exec 0x1406969b0; complete empty leaf 0x1406801c0.
 	// CONFIDENCE: HIGH
 }
 
@@ -1835,6 +1889,12 @@ void UFortCheatManager::TestRegenId()
 	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
 	// CONFIDENCE: HIGH
 	return;
+}
+
+void UFortCheatManager::TestSuddenPortChange(uint32 NumConnections)
+{
+	// Original exec 0x142766a90; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
 }
 
 void UFortCheatManager::TestTournamentOver()
@@ -2227,6 +2287,18 @@ void UFortCheatManager::TriggerOutOfStaminaFeedback()
 	return;
 }
 
+void UFortCheatManager::TutorialAddHidden(FName Hidden)
+{
+	// Original exec 0x1406969b0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
+void UFortCheatManager::TutorialAddHighlight(FName Highlight)
+{
+	// Original exec 0x1406969b0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
 void UFortCheatManager::TutorialListAll()
 {
 	// Original address: 0x14075b6b0 (shared parameterless exec thunk; tail target 0x1406801c0).
@@ -2249,6 +2321,18 @@ void UFortCheatManager::TutorialListHighlights()
 	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
 	// CONFIDENCE: HIGH
 	return;
+}
+
+void UFortCheatManager::TutorialRemoveHidden(FName Hidden)
+{
+	// Original exec 0x1406969b0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
+}
+
+void UFortCheatManager::TutorialRemoveHighlight(FName Highlight)
+{
+	// Original exec 0x1406969b0; complete empty leaf 0x1406801c0.
+	// CONFIDENCE: HIGH
 }
 
 void UFortCheatManager::UnforceAILODs()
