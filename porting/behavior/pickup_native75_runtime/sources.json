@@ -1,0 +1,14 @@
+[
+  {
+    "address": "0x14203cda0",
+    "label": "TossPickup",
+    "source": "porting/generated/pickup-native75/0x14203cda0.c",
+    "sha256": "a1c9da57ff167112c1a6266c80f1441d3a56f6aeabcf020409acb0068171d827"
+  },
+  {
+    "address": "0x1420279f0",
+    "label": "BlueprintSetPickupTarget",
+    "source": "porting/generated/pickup-native75/0x1420279f0.c",
+    "sha256": "3cbcb778e57d816a4e7c5aa1cc90f98c701ce3e971ab10afb31da67073a52977"
+  }
+]

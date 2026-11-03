@@ -1,5 +1,36 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Large weapon and native rough batch75 (2026-11-03)
+
+Added six distinct actual native body drafts: weapon primary virtuals+778 and
++780 (385 and762 decompiled lines), feedback dispatch, player build-volume
+permission, pickup toss and pickup targeting. Four proposal directories contain
+connected C++ with explicit unresolved effects, ABI and layout contracts. The
+pickup exec forwarding wrappers were probed but do not add to that six-body count.
+This is source recovery progress; no accepted canonical bodies were added.
+
+Root reviewed all six drafts. Corrected weapon+778 interface dispatch to use
+subobject addresses and preserved observed low-byte predicates. Replaced the
+unexplained stack98 cleanup read with an explicit unresolved native-value adapter.
+Weapon+780 retains all four ability-getter blocks and their distinct handles;
+frame aliases and hidden arguments remain unresolved. Pickup targeting preserves
+vtable capture before the intervening helper; its virtual recipient remains open.
+
+Previous goal turn PROGRESS: source8ae8588f/dashboard58c0b13e pushed. Canonical
+remains2,075 bodies+180fields=2,255 accepted/rejected0 (promotion71). Last tested
+2,040;35 canonical+4 manual bodies pending; next tests3,040. No compiler, build,
+runtime, tests or generation this batch. All four product gates OPEN; full
+objective ACTIVE. The large rough-native queue is not exhausted, and drafts are
+not closed implementations. Rotate bounded Terra6.1 medium fork-none workers;
+root retains planning, review, integration and sole staging/commit ownership.
+Preserve economical reads, unrelated porting/graphics/ and Engine edits.
+
+Root serial probes native-broad75 (8ok,12.2s) and pickup-native75 (2ok,10.9s)
+both exited0 and rolled back transactions, with usual project index/prp metadata
+changes and no deliberate project save. Ghidra lease free. Evidence inventories
+and unresolved contracts are in the proposal handoffs. Continue substantial
+native behavior recovery; do not substitute getter or wrapper counts for closure.
+
 ## Native helper rough batch74 (2026-11-03)
 
 Added8 distinct actual native target drafts under controller_native74_runtime,
