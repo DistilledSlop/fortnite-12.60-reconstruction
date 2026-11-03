@@ -1,0 +1,26 @@
+[
+  {
+    "class": "UFortInventoryContext",
+    "function": "GetVaultItemLimitStatus",
+    "exec_addr": "0x145262190",
+    "native_body_address": "0x144d0f360",
+    "wrapper_capture": "porting/generated/native105-broad/0x145262190.c",
+    "capture_paths": {
+      "0x145262190": "porting/generated/native105-broad/0x145262190.c",
+      "0x144d0f360": "porting/generated/native105-impl/0x144d0f360.c"
+    },
+    "notes": "Reflected enum EVaultItemLimitStatus; byte at 0x200, between cached int32 fields at 0x1fc and 0x204. Reflected map at 0x1a8, preceding 0x1f8 field."
+  },
+  {
+    "class": "UFortCampaignHeroLoadoutItemDefinition",
+    "function": "GetSlots",
+    "exec_addr": "0x142858600",
+    "native_body_address": "0x142858600",
+    "wrapper_capture": "porting/generated/native210-fresh-bulk/0x142858600.c",
+    "capture_paths": {
+      "0x142858600": "porting/generated/native210-fresh-bulk/0x142858600.c",
+      "0x14077d430": "porting/generated/native213-fresh-callees/0x14077d430.c"
+    },
+    "notes": "CrewSlots at 0x328, 0x48 stride, matching FFortCrewSlotInformation: FText 0x0, FName 0x18, tag container 0x20, float 0x40. Full value copy."
+  }
+]

@@ -18,6 +18,7 @@
 #include "FFortMinigameStatCollection.h"
 #include "FFortMinigameStatQuery.h"
 #include "FFortMinigameTimes.h"
+#include "FItemAndCount.h"
 #include "FMinigameClassSlot.h"
 #include "FMinigameEndCondition.h"
 #include "FMinigamePlayerBucket.h"
@@ -564,10 +565,29 @@ public:
 	void DoRep_UIExtensionTags();
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetBucketForPlayerId(FUniqueNetIdRepl& PlayerId) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetBucketForPlayerState(APlayerState* PlayerState) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool GetBucketWinCount(int32& WinCount, int32 BucketIndex) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetClassSlotInventory(uint8 ClassSlotIndex, TArray<FItemAndCount>& InventoryItems) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetCurrentRoundWinner() const;
+
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetInitTeamSizeWeight(uint8 TeamIndex) const;
+public:
+
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetMaxInitTeamSize(uint8 TeamIndex) const;
+public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetPlayerCount(bool bIncludeSpectators) const;
@@ -584,6 +604,21 @@ public:
 	UFUNCTION(BlueprintNativeEvent)
 	FGameplayTagQuery GetStartQueryForPlayer(APlayerState* Player);
 	virtual FGameplayTagQuery GetStartQueryForPlayer_Implementation(APlayerState* Player);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetStatForGroup(TSubclassOf<UFortMinigameStatFilter> InFilter, bool bGameTotal) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetStatForPlayer(AFortPlayerState* InPlayer, TSubclassOf<UFortMinigameStatFilter> InFilter, bool bGameTotal) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetStatForPlayerId(FUniqueNetIdRepl& PlayerId, TSubclassOf<UFortMinigameStatFilter> InFilter, bool bGameTotal) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetTeamColorIndex(uint8 TeamIndex) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	uint8 GetTeamIndexForCosmeticDetails(uint8 TeamIndex) const;
 
 	UFUNCTION(BlueprintCallable)
 	UFortCreativeTeleporterManagerComponent* GetTeleporterManagerComponent();
@@ -628,6 +663,12 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsMinigameStarting() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsPlayerInMinigameByNetId(FUniqueNetIdRepl& UniqueNetId, bool bCheckSpectatingPlayers) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsPlayerSpectatingMinigame(AFortPlayerState* PlayerState) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsPostGame() const;
@@ -703,6 +744,28 @@ protected:
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void RefreshVoiceForPlayers();
 public:
+
+	UFUNCTION(BlueprintCallable)
+	void SetClassSlotInventory(uint8 ClassSlotIndex, TArray<FItemAndCount>& InventoryItems);
+
+	UFUNCTION(BlueprintCallable)
+	void SetClassSlotName(uint8 ClassSlotIndex, FString ClassName);
+
+protected:
+	UFUNCTION(BlueprintCallable)
+	void SetInitTeamSizeWeightForTeam(uint8 TeamIndex, int32 TeamSizeWeight);
+public:
+
+protected:
+	UFUNCTION(BlueprintCallable)
+	void SetMaxInitTeamSizeForTeam(uint8 TeamIndex, int32 TeamSize);
+public:
+
+	UFUNCTION(BlueprintCallable)
+	void SetTeamColorIndexForTeam(uint8 TeamIndex, int32 TeamColorIndex);
+
+	UFUNCTION(BlueprintCallable)
+	void SetTeamNameForTeam(uint8 TeamIndex, FString TeamName);
 
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void SetWinningTeamIndex(uint8 InWinningTeamIndex);

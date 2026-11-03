@@ -1,0 +1,62 @@
+[
+  {
+    "function": "NativeLootSpawnWorldTransformOverride",
+    "kind": "member_field",
+    "signature": "FTransform NativeLootSpawnWorldTransformOverride",
+    "signature_status": "proposed",
+    "access": "private",
+    "offset": "0x8b0",
+    "inc_path": null,
+    "confidence": "high",
+    "address": null,
+    "status": "ported",
+    "notes": "Native setter 0x141bea9f0 and clear exec 0x142746ef0 establish storage; unreflected field.",
+    "class": "ABuildingItemCollectorActor"
+  },
+  {
+    "function": "bHasNativeLootSpawnWorldTransformOverride",
+    "kind": "member_field",
+    "signature": "bool bHasNativeLootSpawnWorldTransformOverride",
+    "signature_status": "proposed",
+    "access": "private",
+    "offset": "0x8e0",
+    "inc_path": null,
+    "confidence": "high",
+    "address": null,
+    "status": "ported",
+    "notes": "Native setter 0x141bea9f0 and clear exec 0x142746ef0 establish storage; unreflected field.",
+    "class": "ABuildingItemCollectorActor"
+  },
+  {
+    "function": "ClearLootSpawnWorldTransformOverride",
+    "kind": "exec",
+    "signature": "void ClearLootSpawnWorldTransformOverride()",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/inventory_helpers270_runtime/ABuildingItemCollectorActor/ClearLootSpawnWorldTransformOverride.inc",
+    "address": "0x142746ef0",
+    "native_body_address": "0x142746ef0",
+    "reflection_flags": "0x4020405",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Native writes establish FTransform at 0x8b0 and presence byte at 0x8e0; unreflected storage proposed separately. Build pending.",
+    "class": "ABuildingItemCollectorActor"
+  },
+  {
+    "function": "SetLootSpawnWorldTransformOverride",
+    "kind": "exec",
+    "signature": "void SetLootSpawnWorldTransformOverride(FTransform& Transform)",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/inventory_helpers270_runtime/ABuildingItemCollectorActor/SetLootSpawnWorldTransformOverride.inc",
+    "address": "0x142747d20",
+    "native_body_address": "0x141bea9f0",
+    "reflection_flags": "0x4c20405",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Native writes establish FTransform at 0x8b0 and presence byte at 0x8e0; unreflected storage proposed separately. Build pending.",
+    "class": "ABuildingItemCollectorActor"
+  }
+]

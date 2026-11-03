@@ -46,5 +46,8 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetSlotIndexByName(FName& SlotName) const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	TArray<FFortCrewSlotInformation> GetSlots() const;
+
 };
 

@@ -1,0 +1,82 @@
+[
+  {
+    "class": "AFortMinigame",
+    "function": "GetBucketForPlayerId",
+    "exec_addr": "0x1429bfbe0",
+    "native_body_address": "0x14208eee0",
+    "wrapper_capture": "porting/generated/native245-fresh-bulk/0x1429bfbe0.c",
+    "capture_paths": {
+      "0x1429bfbe0": "porting/generated/native245-fresh-bulk/0x1429bfbe0.c",
+      "0x14208eee0": "porting/generated/native247-fresh-callees/0x14208eee0.c",
+      "0x14207a350": "porting/generated/native284-callees/0x14207a350.c",
+      "0x14207a2e0": "porting/generated/native284-callees/0x14207a2e0.c",
+      "0x140d7c5a0": "porting/generated/native112-dependencies/0x140d7c5a0.c",
+      "0x141bcc0f0": "porting/generated/native284-callees/0x141bcc0f0.c"
+    },
+    "notes": "RoundStats 0x810, GameStats 0x840; player stats at +0x10 with 0x38 stride; group stats at +0. PlayerBuckets 0xc80 with 0x18 stride. Native helper 0x14207a350 validates filter subclasses before comparison; 0x140d7c5a0 and 0x141bcc0f0 implement FUniqueNetIdRepl validity/equality."
+  },
+  {
+    "class": "AFortMinigame",
+    "function": "GetBucketForPlayerState",
+    "exec_addr": "0x1429bfce0",
+    "native_body_address": "0x14208efa0",
+    "wrapper_capture": "porting/generated/native235-fresh-bulk/0x1429bfce0.c",
+    "capture_paths": {
+      "0x1429bfce0": "porting/generated/native235-fresh-bulk/0x1429bfce0.c",
+      "0x14208efa0": "porting/generated/native240-fresh-callees/0x14208efa0.c",
+      "0x14207a350": "porting/generated/native284-callees/0x14207a350.c",
+      "0x14207a2e0": "porting/generated/native284-callees/0x14207a2e0.c",
+      "0x140d7c5a0": "porting/generated/native112-dependencies/0x140d7c5a0.c",
+      "0x141bcc0f0": "porting/generated/native284-callees/0x141bcc0f0.c"
+    },
+    "notes": "RoundStats 0x810, GameStats 0x840; player stats at +0x10 with 0x38 stride; group stats at +0. PlayerBuckets 0xc80 with 0x18 stride. Native helper 0x14207a350 validates filter subclasses before comparison; 0x140d7c5a0 and 0x141bcc0f0 implement FUniqueNetIdRepl validity/equality."
+  },
+  {
+    "class": "AFortMinigame",
+    "function": "GetStatForGroup",
+    "exec_addr": "0x1429c1d40",
+    "native_body_address": "0x142096920",
+    "wrapper_capture": "porting/generated/native235-fresh-bulk/0x1429c1d40.c",
+    "capture_paths": {
+      "0x1429c1d40": "porting/generated/native235-fresh-bulk/0x1429c1d40.c",
+      "0x142096920": "porting/generated/native240-fresh-callees/0x142096920.c",
+      "0x14207a350": "porting/generated/native284-callees/0x14207a350.c",
+      "0x14207a2e0": "porting/generated/native284-callees/0x14207a2e0.c",
+      "0x140d7c5a0": "porting/generated/native112-dependencies/0x140d7c5a0.c",
+      "0x141bcc0f0": "porting/generated/native284-callees/0x141bcc0f0.c"
+    },
+    "notes": "RoundStats 0x810, GameStats 0x840; player stats at +0x10 with 0x38 stride; group stats at +0. PlayerBuckets 0xc80 with 0x18 stride. Native helper 0x14207a350 validates filter subclasses before comparison; 0x140d7c5a0 and 0x141bcc0f0 implement FUniqueNetIdRepl validity/equality."
+  },
+  {
+    "class": "AFortMinigame",
+    "function": "GetStatForPlayer",
+    "exec_addr": "0x1429c1e00",
+    "native_body_address": "0x142096960",
+    "wrapper_capture": "porting/generated/native245-fresh-bulk/0x1429c1e00.c",
+    "capture_paths": {
+      "0x1429c1e00": "porting/generated/native245-fresh-bulk/0x1429c1e00.c",
+      "0x142096960": "porting/generated/native247-fresh-callees/0x142096960.c",
+      "0x14207a350": "porting/generated/native284-callees/0x14207a350.c",
+      "0x14207a2e0": "porting/generated/native284-callees/0x14207a2e0.c",
+      "0x140d7c5a0": "porting/generated/native112-dependencies/0x140d7c5a0.c",
+      "0x141bcc0f0": "porting/generated/native284-callees/0x141bcc0f0.c"
+    },
+    "notes": "RoundStats 0x810, GameStats 0x840; player stats at +0x10 with 0x38 stride; group stats at +0. PlayerBuckets 0xc80 with 0x18 stride. Native helper 0x14207a350 validates filter subclasses before comparison; 0x140d7c5a0 and 0x141bcc0f0 implement FUniqueNetIdRepl validity/equality."
+  },
+  {
+    "class": "AFortMinigame",
+    "function": "GetStatForPlayerId",
+    "exec_addr": "0x1429c2000",
+    "native_body_address": "0x142096b50",
+    "wrapper_capture": "porting/generated/native245-fresh-bulk/0x1429c2000.c",
+    "capture_paths": {
+      "0x1429c2000": "porting/generated/native245-fresh-bulk/0x1429c2000.c",
+      "0x142096b50": "porting/generated/native247-fresh-callees/0x142096b50.c",
+      "0x14207a350": "porting/generated/native284-callees/0x14207a350.c",
+      "0x14207a2e0": "porting/generated/native284-callees/0x14207a2e0.c",
+      "0x140d7c5a0": "porting/generated/native112-dependencies/0x140d7c5a0.c",
+      "0x141bcc0f0": "porting/generated/native284-callees/0x141bcc0f0.c"
+    },
+    "notes": "RoundStats 0x810, GameStats 0x840; player stats at +0x10 with 0x38 stride; group stats at +0. PlayerBuckets 0xc80 with 0x18 stride. Native helper 0x14207a350 validates filter subclasses before comparison; 0x140d7c5a0 and 0x141bcc0f0 implement FUniqueNetIdRepl validity/equality."
+  }
+]

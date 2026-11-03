@@ -1,0 +1,222 @@
+[
+  {
+    "function": "GetOstrichBoostActionName",
+    "wrapper": "porting/generated/native235-fresh-bulk/0x145248c60.c",
+    "context_body": "porting/generated/native240-fresh-callees/0x144ccf360.c",
+    "action_helper": "porting/generated/native273-callees/0x141ed6da0.c",
+    "field_offsets": [
+      "0x560",
+      "0x568"
+    ]
+  },
+  {
+    "function": "GetOstrichJumpActionName",
+    "wrapper": "porting/generated/native235-fresh-bulk/0x145248cf0.c",
+    "context_body": "porting/generated/native240-fresh-callees/0x144ccf3b0.c",
+    "action_helper": "porting/generated/native273-callees/0x141ed6e20.c",
+    "field_offsets": [
+      "0x570",
+      "0x578"
+    ]
+  },
+  {
+    "function": "GetQuadCrasherBoostActionName",
+    "wrapper": "porting/generated/native235-fresh-bulk/0x1452492d0.c",
+    "context_body": "porting/generated/native240-fresh-callees/0x144cd0790.c",
+    "action_helper": "porting/generated/native273-callees/0x141ed7340.c",
+    "field_offsets": [
+      "0x418",
+      "0x420"
+    ]
+  },
+  {
+    "function": "GetShoppingCartCoastActionName",
+    "wrapper": "porting/generated/native210-fresh-bulk/0x1452495e0.c",
+    "context_body": "porting/generated/native213-fresh-callees/0x144cd0eb0.c",
+    "action_helper": "porting/generated/native273-callees/0x141eb9e80.c",
+    "field_offsets": [
+      "0x3a8"
+    ]
+  },
+  {
+    "function": "GetTargetActionName",
+    "wrapper": "porting/generated/native235-fresh-bulk/0x1452496e0.c",
+    "context_body": "porting/generated/native240-fresh-callees/0x144cd1630.c",
+    "action_helper": "porting/generated/native273-callees/0x141ed78a0.c",
+    "field_offsets": [
+      "0x310"
+    ]
+  },
+  {
+    "function": "GetAbility1ActionName",
+    "wrapper": "porting/generated/native235-fresh-bulk/0x145244e90.c",
+    "context_body": "porting/generated/native240-fresh-callees/0x144cc6c80.c",
+    "action_helper": "porting/generated/native273-callees/0x141eb9760.c",
+    "field_offsets": [
+      "0x1d0",
+      "0x80"
+    ]
+  },
+  {
+    "function": "GetAbility2ActionName",
+    "wrapper": "porting/generated/native235-fresh-bulk/0x145244f20.c",
+    "context_body": "porting/generated/native240-fresh-callees/0x144cc6cd0.c",
+    "action_helper": "porting/generated/native273-callees/0x141eb97f0.c",
+    "field_offsets": [
+      "0x1d8",
+      "0x88"
+    ]
+  },
+  {
+    "function": "GetAbility3ActionName",
+    "wrapper": "porting/generated/native210-fresh-bulk/0x145244fb0.c",
+    "context_body": "porting/generated/native213-fresh-callees/0x144cc6d20.c",
+    "action_helper": "porting/generated/native273-callees/0x141eb9880.c",
+    "field_offsets": [
+      "0x1e0"
+    ]
+  },
+  {
+    "function": "GetCannonCoastActionName",
+    "wrapper": "porting/generated/native235-fresh-bulk/0x1452462b0.c",
+    "context_body": "porting/generated/native240-fresh-callees/0x144cc8510.c",
+    "action_helper": "porting/generated/native273-callees/0x141ed4420.c",
+    "field_offsets": [
+      "0x3c0",
+      "0x3c8"
+    ]
+  },
+  {
+    "function": "GetCannonShootActionName",
+    "wrapper": "porting/generated/native235-fresh-bulk/0x145246340.c",
+    "context_body": "porting/generated/native240-fresh-callees/0x144cc8560.c",
+    "action_helper": "porting/generated/native273-callees/0x141ed44a0.c",
+    "field_offsets": [
+      "0x3b0",
+      "0x3b8"
+    ]
+  },
+  {
+    "function": "GetChangeMaterialActionName",
+    "wrapper": "porting/generated/native210-fresh-bulk/0x1452463d0.c",
+    "context_body": "porting/generated/native213-fresh-callees/0x144cc85b0.c",
+    "action_helper": "porting/generated/native273-callees/0x141eb9270.c",
+    "field_offsets": [
+      "0x298"
+    ]
+  },
+  {
+    "function": "GetCreativeFlyDownActionName",
+    "wrapper": "porting/generated/native210-fresh-bulk/0x1452467b0.c",
+    "context_body": "porting/generated/native213-fresh-callees/0x144cc8ef0.c",
+    "action_helper": "porting/generated/native273-callees/0x141ed4580.c",
+    "field_offsets": [
+      "0x6d0"
+    ]
+  },
+  {
+    "function": "GetCreativeFlyUpActionName",
+    "wrapper": "porting/generated/native210-fresh-bulk/0x1452467f0.c",
+    "context_body": "porting/generated/native213-fresh-callees/0x144cc8f30.c",
+    "action_helper": "porting/generated/native273-callees/0x141ed45b0.c",
+    "field_offsets": [
+      "0x6c8"
+    ]
+  },
+  {
+    "function": "GetFireActionName",
+    "wrapper": "porting/generated/native105-broad/0x1452474a0.c",
+    "context_body": "porting/generated/native105-impl/0x144ccbdd0.c",
+    "action_helper": "porting/generated/native273-callees/0x141eb92a0.c",
+    "field_offsets": [
+      "0x308"
+    ]
+  },
+  {
+    "function": "GetGadget1ActionName",
+    "wrapper": "porting/generated/native210-fresh-bulk/0x145247560.c",
+    "context_body": "porting/generated/native213-fresh-callees/0x144ccc720.c",
+    "action_helper": "porting/generated/native273-callees/0x141eb9700.c",
+    "field_offsets": [
+      "0x1c0"
+    ]
+  },
+  {
+    "function": "GetGadget2ActionName",
+    "wrapper": "porting/generated/native210-fresh-bulk/0x1452475a0.c",
+    "context_body": "porting/generated/native213-fresh-callees/0x144ccc760.c",
+    "action_helper": "porting/generated/native273-callees/0x141eb9730.c",
+    "field_offsets": [
+      "0x1c8"
+    ]
+  },
+  {
+    "function": "GetGamepadJackalExitActionName",
+    "wrapper": "porting/generated/native235-fresh-bulk/0x1452475e0.c",
+    "context_body": "porting/generated/native240-fresh-callees/0x144ccc7f0.c",
+    "action_helper": "porting/generated/native273-callees/0x141ed5170.c",
+    "field_offsets": [
+      "0x468"
+    ]
+  },
+  {
+    "function": "GetGolfCartEBrakeActionName",
+    "wrapper": "porting/generated/native235-fresh-bulk/0x145247670.c",
+    "context_body": "porting/generated/native240-fresh-callees/0x144ccc840.c",
+    "action_helper": "porting/generated/native273-callees/0x141eb9eb0.c",
+    "field_offsets": [
+      "0x3d0",
+      "0x3d8"
+    ]
+  },
+  {
+    "function": "GetHamsterballBoostActionName",
+    "wrapper": "porting/generated/native235-fresh-bulk/0x145247820.c",
+    "context_body": "porting/generated/native240-fresh-callees/0x144ccc930.c",
+    "action_helper": "porting/generated/native273-callees/0x141ed51a0.c",
+    "field_offsets": [
+      "0x478",
+      "0x490"
+    ]
+  },
+  {
+    "function": "GetHamsterballShootActionName",
+    "wrapper": "porting/generated/native235-fresh-bulk/0x145247940.c",
+    "context_body": "porting/generated/native240-fresh-callees/0x144ccc9d0.c",
+    "action_helper": "porting/generated/native273-callees/0x141ed5330.c",
+    "field_offsets": [
+      "0x480",
+      "0x4a0"
+    ]
+  },
+  {
+    "function": "GetJackalBoostActionName",
+    "wrapper": "porting/generated/native235-fresh-bulk/0x145247e10.c",
+    "context_body": "porting/generated/native240-fresh-callees/0x144cccf90.c",
+    "action_helper": "porting/generated/native273-callees/0x141ed5b10.c",
+    "field_offsets": [
+      "0x438",
+      "0x450"
+    ]
+  },
+  {
+    "function": "GetJackalJumpActionName",
+    "wrapper": "porting/generated/native235-fresh-bulk/0x145247ea0.c",
+    "context_body": "porting/generated/native240-fresh-callees/0x144cccfe0.c",
+    "action_helper": "porting/generated/native273-callees/0x141ed5b90.c",
+    "field_offsets": [
+      "0x440",
+      "0x448"
+    ]
+  },
+  {
+    "function": "GetJackalUseOrExitActionName",
+    "wrapper": "porting/generated/native235-fresh-bulk/0x145247f30.c",
+    "context_body": "porting/generated/native240-fresh-callees/0x144ccd030.c",
+    "action_helper": "porting/generated/native273-callees/0x141ed5c10.c",
+    "field_offsets": [
+      "0x460",
+      "0x470"
+    ]
+  }
+]

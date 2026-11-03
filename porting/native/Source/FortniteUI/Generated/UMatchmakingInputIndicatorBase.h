@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "ECommonInputType.h"
 #include "EMatchmakingInputSource.h"
 #include "GameFramework/OnlineReplStructs.h"
 
@@ -34,6 +35,10 @@ public:
 	// table index 3, flags 0x20080000002000
 	UPROPERTY(Transient)
 	FUniqueNetIdRepl RemotePlayerUniqueId;
+
+	// table index 1, flags 0x20080000002000
+	UPROPERTY(Transient)
+	ECommonInputType LastInputType;
 
 	// table index 0, flags 0x40000000080008
 	UPROPERTY()

@@ -47,5 +47,8 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsFilterActive() const;
 
+	UFUNCTION(BlueprintCallable)
+	void SetIsFilterActive(bool bInFilterActive);
+
 };
 

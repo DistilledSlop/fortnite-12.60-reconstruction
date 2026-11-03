@@ -3,9 +3,18 @@
 #include "EFortMinigameState.h"
 #include "EMinigameTeamListType.h"
 #include "Engine/World.h"
+#include "FFortMinigameGroupStats.h"
+#include "FFortMinigamePlayerStats.h"
+#include "FFortMinigameStat.h"
+#include "FFortMinigameStatCollection.h"
 #include "FFortMinigameStatQuery.h"
+#include "FMinigameClassSlot.h"
 #include "FMinigameEndCondition.h"
+#include "FMinigamePlayer.h"
+#include "FMinigamePlayerBucket.h"
+#include "FMinigameTeam.h"
 #include "GameFramework/GameStateBase.h"
+#include "GameFramework/OnlineReplStructs.h"
 #include "GameplayTagContainer.h"
 #include "UFortMinigameLogicComponent.h"
 #include "UFortMinigameStatFilter.h"
@@ -116,6 +125,27 @@ void AFortMinigame::DoRep_UIExtensionTags()
 	// Body not recovered: reflection-derived stub.
 }
 
+int32 AFortMinigame::GetBucketForPlayerId(FUniqueNetIdRepl& PlayerId) const
+{
+	// CONFIDENCE: high; see native-evidence.json for captured native control flow.
+	// Native 0x14208eee0; reflected wrapper 0x1429bfbe0.
+	if (!PlayerId.IsValid()) return INDEX_NONE;
+	for (int32 Index = 0; Index < PlayerBuckets.Num(); ++Index)
+	{
+	    if (PlayerBuckets[Index].PlayerIds.Contains(PlayerId)) return Index;
+	}
+	return INDEX_NONE;
+}
+
+int32 AFortMinigame::GetBucketForPlayerState(APlayerState* PlayerState) const
+{
+	// CONFIDENCE: high; see native-evidence.json for captured native control flow.
+	// Native 0x14208efa0; reflected wrapper 0x1429bfce0.
+	if (!PlayerState) return INDEX_NONE;
+	FUniqueNetIdRepl PlayerId = PlayerState->GetUniqueId();
+	return GetBucketForPlayerId(PlayerId);
+}
+
 bool AFortMinigame::GetBucketWinCount(int32& WinCount, int32 BucketIndex) const
 {
 	// CONFIDENCE: high
@@ -137,6 +167,23 @@ bool AFortMinigame::GetBucketWinCount(int32& WinCount, int32 BucketIndex) const
 	}
 }
 
+bool AFortMinigame::GetClassSlotInventory(uint8 ClassSlotIndex, TArray<FItemAndCount>& InventoryItems) const
+{
+	// Native 0x14208f120. CONFIDENCE: high
+	if (ClassSlotIndex != 0xff)
+	{
+	    for (const FMinigameClassSlot& Slot : ClassSlotArray)
+	    {
+	        if (Slot.ClassSlotIndex == ClassSlotIndex)
+	        {
+	            InventoryItems = Slot.InventoryItems;
+	            return true;
+	        }
+	    }
+	}
+	return false;
+}
+
 int32 AFortMinigame::GetCurrentRoundWinner() const
 {
 	// CONFIDENCE: high
@@ -144,6 +191,42 @@ int32 AFortMinigame::GetCurrentRoundWinner() const
 	{
 	    return GetRoundWinner(CurrentRound);
 	}
+}
+
+int32 AFortMinigame::GetInitTeamSizeWeight(uint8 TeamIndex) const
+{
+	// CONFIDENCE: high; native loops and reflected team records, see native-evidence.json.
+	// Native 0x14208fe00; reflected wrapper 0x1429c0540.
+	for (const FMinigameTeam& Team : TeamArray)
+	{
+	    if (Team.TeamIndex == TeamIndex) return Team.InitTeamSizeWeight;
+	}
+	if (TeamIndex != 255)
+	{
+	    for (const FMinigameTeam& Team : TeamArray)
+	    {
+	        if (Team.TeamIndex == 255) return Team.InitTeamSizeWeight;
+	    }
+	}
+	return 1;
+}
+
+int32 AFortMinigame::GetMaxInitTeamSize(uint8 TeamIndex) const
+{
+	// CONFIDENCE: high; native loops and reflected team records, see native-evidence.json.
+	// Native 0x142091e60; reflected wrapper 0x1429c05d0.
+	for (const FMinigameTeam& Team : TeamArray)
+	{
+	    if (Team.TeamIndex == TeamIndex) return Team.MaxInitTeamSize;
+	}
+	if (TeamIndex != 255)
+	{
+	    for (const FMinigameTeam& Team : TeamArray)
+	    {
+	        if (Team.TeamIndex == 255) return Team.MaxInitTeamSize;
+	    }
+	}
+	return -1;
 }
 
 int32 AFortMinigame::GetPlayerCount(bool bIncludeSpectators) const
@@ -201,6 +284,89 @@ FGameplayTagQuery AFortMinigame::GetStartQueryForPlayer_Implementation(APlayerSt
 	// CONFIDENCE: high
 	// Native target 0x142096900.
 	return FGameplayTagQuery();
+}
+
+int32 AFortMinigame::GetStatForGroup(TSubclassOf<UFortMinigameStatFilter> InFilter, bool bGameTotal) const
+{
+	// CONFIDENCE: high; see native-evidence.json for captured native control flow.
+	// Native 0x142096920; reflected wrapper 0x1429c1d40.
+	const FFortMinigameGroupStats& Stats = bGameTotal ? GameStats.GroupStats : RoundStats.GroupStats;
+	for (const FFortMinigameStat& Stat : Stats.Stats)
+	{
+	    if (Stat.Filter.Get() == InFilter.Get()) return Stat.Count;
+	}
+	return 0;
+}
+
+int32 AFortMinigame::GetStatForPlayer(AFortPlayerState* InPlayer, TSubclassOf<UFortMinigameStatFilter> InFilter, bool bGameTotal) const
+{
+	// CONFIDENCE: high; see native-evidence.json for captured native control flow.
+	// Native 0x142096960; reflected wrapper 0x1429c1e00.
+	const FFortMinigameStatCollection& Collection = bGameTotal ? GameStats : RoundStats;
+	for (const FFortMinigamePlayerStats& Stats : Collection.PlayerStats)
+	{
+	    if (Stats.Player == InPlayer->GetUniqueId())
+	    {
+	        for (const FFortMinigameStat& Stat : Stats.Stats)
+	        {
+	            if (Stat.Filter.Get() == InFilter.Get()) return Stat.Count;
+	        }
+	        return 0;
+	    }
+	}
+	return 0;
+}
+
+int32 AFortMinigame::GetStatForPlayerId(FUniqueNetIdRepl& PlayerId, TSubclassOf<UFortMinigameStatFilter> InFilter, bool bGameTotal) const
+{
+	// CONFIDENCE: high; see native-evidence.json for captured native control flow.
+	// Native 0x142096b50; reflected wrapper 0x1429c2000.
+	const FFortMinigameStatCollection& Collection = bGameTotal ? GameStats : RoundStats;
+	for (const FFortMinigamePlayerStats& Stats : Collection.PlayerStats)
+	{
+	    if (Stats.Player == PlayerId)
+	    {
+	        for (const FFortMinigameStat& Stat : Stats.Stats)
+	        {
+	            if (Stat.Filter.Get() == InFilter.Get()) return Stat.Count;
+	        }
+	        return 0;
+	    }
+	}
+	return 0;
+}
+
+int32 AFortMinigame::GetTeamColorIndex(uint8 TeamIndex) const
+{
+	// CONFIDENCE: high; native loops and reflected team records, see native-evidence.json.
+	// Native 0x142096ba0; reflected wrapper 0x1429c2190.
+	const uint8 CosmeticTeamIndex = GetTeamIndexForCosmeticDetails(TeamIndex);
+	for (const FMinigameTeam& Team : TeamArray)
+	{
+	    if (Team.TeamIndex == CosmeticTeamIndex) return Team.TeamColorIndex;
+	}
+	if (CosmeticTeamIndex != 255)
+	{
+	    for (const FMinigameTeam& Team : TeamArray)
+	    {
+	        if (Team.TeamIndex == 255) return Team.TeamColorIndex;
+	    }
+	}
+	return -1;
+}
+
+uint8 AFortMinigame::GetTeamIndexForCosmeticDetails(uint8 TeamIndex) const
+{
+	// CONFIDENCE: high; native loops and reflected team records, see native-evidence.json.
+	// Native 0x142096c20; reflected wrapper 0x1429c2220.
+	if (bStableTeamCosmetics)
+	{
+	    for (const FMinigamePlayerBucket& Bucket : PlayerBuckets)
+	    {
+	        if (Bucket.TeamIdAtRoundStart == TeamIndex) return Bucket.TeamIdAtGameStart;
+	    }
+	}
+	return TeamIndex;
 }
 
 UFortCreativeTeleporterManagerComponent* AFortMinigame::GetTeleporterManagerComponent()
@@ -346,6 +512,32 @@ bool AFortMinigame::IsMinigameStarting() const
 	return static_cast<uint8>(CurrentState) < 5;
 }
 
+bool AFortMinigame::IsPlayerInMinigameByNetId(FUniqueNetIdRepl& UniqueNetId, bool bCheckSpectatingPlayers) const
+{
+	// Native 0x14209a460. CONFIDENCE: high
+	if (!UniqueNetId.IsValid()) return false;
+	for (const FMinigamePlayer& Player : PlayerArray.Players)
+	    if (Player.UniquePlayerId.IsValid() && Player.UniquePlayerId == UniqueNetId) return true;
+	if (bCheckSpectatingPlayers)
+	    for (const FMinigamePlayer& Player : SpectatingPlayerArray.Players)
+	        if (Player.UniquePlayerId.IsValid() && Player.UniquePlayerId == UniqueNetId) return true;
+	return false;
+}
+
+bool AFortMinigame::IsPlayerSpectatingMinigame(AFortPlayerState* PlayerState) const
+{
+	// Native 0x14209aa00. CONFIDENCE: high
+	if (!PlayerState) return false;
+	const FUniqueNetIdRepl& Id = PlayerState->GetUniqueId();
+	for (const FMinigamePlayer& Player : SpectatingPlayerArray.Players)
+	{
+	    const bool bPlayerValid = Player.UniquePlayerId.IsValid();
+	    const bool bIdValid = Id.IsValid();
+	    if (bPlayerValid == bIdValid && (!bPlayerValid || Player.UniquePlayerId == Id)) return true;
+	}
+	return false;
+}
+
 bool AFortMinigame::IsPostGame() const
 {
 	// Original address: 0x1429c3aa0.
@@ -479,6 +671,88 @@ void AFortMinigame::RefreshVoiceForPlayers()
 	// Original thunk bytes: 488b42204533c04885c0410f95c04c03c04c894220e9f64af2ff; target bytes: c20000 (ret 0).
 	// CONFIDENCE: HIGH
 	return;
+}
+
+void AFortMinigame::SetClassSlotInventory(uint8 ClassSlotIndex, TArray<FItemAndCount>& InventoryItems)
+{
+	// Native 0x1420a3c70. CONFIDENCE: high
+	if (ClassSlotIndex == 0xff) return;
+	FMinigameClassSlot* Slot = ClassSlotArray.FindByPredicate([ClassSlotIndex](const FMinigameClassSlot& Entry) { return Entry.ClassSlotIndex == ClassSlotIndex; });
+	if (!Slot)
+	{
+	    Slot = &ClassSlotArray.AddDefaulted_GetRef();
+	    Slot->ClassSlotIndex = ClassSlotIndex;
+	}
+	Slot->InventoryItems = InventoryItems;
+}
+
+void AFortMinigame::SetClassSlotName(uint8 ClassSlotIndex, FString ClassName)
+{
+	// Native 0x1420a3d30. CONFIDENCE: high
+	if (ClassSlotIndex == 0xff) return;
+	FMinigameClassSlot* Slot = ClassSlotArray.FindByPredicate([ClassSlotIndex](const FMinigameClassSlot& Entry) { return Entry.ClassSlotIndex == ClassSlotIndex; });
+	if (!Slot)
+	{
+	    Slot = &ClassSlotArray.AddDefaulted_GetRef();
+	    Slot->ClassSlotIndex = ClassSlotIndex;
+	}
+	Slot->ClassName = ClassName;
+}
+
+void AFortMinigame::SetInitTeamSizeWeightForTeam(uint8 TeamIndex, int32 TeamSizeWeight)
+{
+	// CONFIDENCE: high; native loops and reflected team records, see native-evidence.json.
+	// Native 0x1420a3df0; reflected wrapper 0x1429c5ad0.
+	for (FMinigameTeam& Team : TeamArray)
+	{
+	    if (Team.TeamIndex == TeamIndex)
+	    {
+	        Team.InitTeamSizeWeight = TeamSizeWeight;
+	        return;
+	    }
+	}
+}
+
+void AFortMinigame::SetMaxInitTeamSizeForTeam(uint8 TeamIndex, int32 TeamSize)
+{
+	// CONFIDENCE: high; native loops and reflected team records, see native-evidence.json.
+	// Native 0x1420a3f60; reflected wrapper 0x1429c5b90.
+	for (FMinigameTeam& Team : TeamArray)
+	{
+	    if (Team.TeamIndex == TeamIndex)
+	    {
+	        if (Team.MaxInitTeamSize < 0) Team.MaxInitTeamSize = TeamSize;
+	        return;
+	    }
+	}
+}
+
+void AFortMinigame::SetTeamColorIndexForTeam(uint8 TeamIndex, int32 TeamColorIndex)
+{
+	// CONFIDENCE: high; native loops and reflected team records, see native-evidence.json.
+	// Native 0x1420a57e0; reflected wrapper 0x1429c6240.
+	for (FMinigameTeam& Team : TeamArray)
+	{
+	    if (Team.TeamIndex == TeamIndex)
+	    {
+	        Team.TeamColorIndex = TeamColorIndex;
+	        return;
+	    }
+	}
+}
+
+void AFortMinigame::SetTeamNameForTeam(uint8 TeamIndex, FString TeamName)
+{
+	// CONFIDENCE: high; native loops and reflected team records, see native-evidence.json.
+	// Native 0x1420a5cb0; reflected wrapper 0x1429c6460.
+	for (FMinigameTeam& Team : TeamArray)
+	{
+	    if (Team.TeamIndex == TeamIndex)
+	    {
+	        Team.TeamName = TeamName;
+	        return;
+	    }
+	}
 }
 
 void AFortMinigame::SetWinningTeamIndex(uint8 InWinningTeamIndex)

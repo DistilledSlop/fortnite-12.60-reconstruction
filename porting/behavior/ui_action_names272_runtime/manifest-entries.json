@@ -1,0 +1,19 @@
+[
+  {
+    "class": "UFortGlobalUIContext",
+    "function": "NativeGetContextPlayerController144cb7c20",
+    "kind": "helper",
+    "signature": "APlayerController* NativeGetContextPlayerController144cb7c20(bool bAllowNonFortController) const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/ui_action_names272_runtime/NativeGetContextPlayerController144cb7c20.inc",
+    "address": "0x144cb7c20",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Engine/LocalPlayer.h",
+      "GameFramework/PlayerController.h"
+    ],
+    "notes": "Outer class checks identify ULocalPlayer; slot 0x150 is GetWorld, 0x14447f220 is ULocalPlayer::GetPlayerController, and 0x142a3d9f0 identifies AFortPlayerController. The second parameter permits a non-Fort controller."
+  }
+]

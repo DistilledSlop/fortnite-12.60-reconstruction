@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 
+#include "FFortDisplayAttribute.h"
+
 #include "UFortAttributeListItem.generated.h"
 
 UCLASS(abstract)
@@ -17,6 +19,21 @@ public:
 	// table index 0, flags 0x10000000000005
 	UPROPERTY()
 	bool bHoverEnabled;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x238): not a UPROPERTY, not replicated.
+	FFortDisplayAttribute NativeRecoveredDisplayAttribute_0x238;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x2c0): not a UPROPERTY, not replicated.
+	FFortDisplayAttribute NativeRecoveredDisplayAttribute_0x2c0;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	void GetCurrentAttributeCopy(FFortDisplayAttribute& OutDisplayAttribute) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	void GetDisplayAttributeCopy(FFortDisplayAttribute& OutDisplayAttribute) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	void GetDisplayPreviewCopy(FFortDisplayAttribute& OutPreviewAttribute) const;
 
 };
 

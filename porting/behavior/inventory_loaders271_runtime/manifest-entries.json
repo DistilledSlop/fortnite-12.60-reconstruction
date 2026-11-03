@@ -1,0 +1,228 @@
+[
+  {
+    "class": "UAthenaBattleBusItemDefinition",
+    "function": "GetFlightLoopingMusic",
+    "kind": "exec",
+    "signature": "USoundBase* GetFlightLoopingMusic() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/inventory_loaders271_runtime/UAthenaBattleBusItemDefinition/GetFlightLoopingMusic.inc",
+    "address": "0x142716280",
+    "native_body_address": "0x141d49b60",
+    "reflection_flags": "0x54020401",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "FortAssets.h",
+      "FortDelayedObjectLoader.h",
+      "Sound/SoundBase.h"
+    ],
+    "notes": "Native 0x141d49b60 calls 0x1419b68c0; 0x141e12f10 delayed resolver and 0x141df61e0/0x141de9e00 asset tracker recovered. Field FlightLoopingMusic; build pending."
+  },
+  {
+    "class": "UAthenaBattleBusItemDefinition",
+    "function": "GetFlightLoopingSound",
+    "kind": "exec",
+    "signature": "USoundBase* GetFlightLoopingSound() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/inventory_loaders271_runtime/UAthenaBattleBusItemDefinition/GetFlightLoopingSound.inc",
+    "address": "0x1427162b0",
+    "native_body_address": "0x141d49b70",
+    "reflection_flags": "0x54020401",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "FortAssets.h",
+      "FortDelayedObjectLoader.h",
+      "Sound/SoundBase.h"
+    ],
+    "notes": "Native 0x141d49b70 calls 0x1419b68c0; 0x141e12f10 delayed resolver and 0x141df61e0/0x141de9e00 asset tracker recovered. Field FlightLoopingSound; build pending."
+  },
+  {
+    "class": "UAthenaBattleBusItemDefinition",
+    "function": "GetIgnitionSound",
+    "kind": "exec",
+    "signature": "USoundBase* GetIgnitionSound() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/inventory_loaders271_runtime/UAthenaBattleBusItemDefinition/GetIgnitionSound.inc",
+    "address": "0x142716340",
+    "native_body_address": "0x141d4a960",
+    "reflection_flags": "0x54020401",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "FortAssets.h",
+      "FortDelayedObjectLoader.h",
+      "Sound/SoundBase.h"
+    ],
+    "notes": "Native 0x141d4a960 calls 0x1419b68c0; 0x141e12f10 delayed resolver and 0x141df61e0/0x141de9e00 asset tracker recovered. Field IgnitionSound; build pending."
+  },
+  {
+    "class": "UAthenaBattleBusItemDefinition",
+    "function": "GetLobbyLoopingMusic",
+    "kind": "exec",
+    "signature": "USoundBase* GetLobbyLoopingMusic() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/inventory_loaders271_runtime/UAthenaBattleBusItemDefinition/GetLobbyLoopingMusic.inc",
+    "address": "0x142716370",
+    "native_body_address": "0x141d4bca0",
+    "reflection_flags": "0x54020401",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "FortAssets.h",
+      "FortDelayedObjectLoader.h",
+      "Sound/SoundBase.h"
+    ],
+    "notes": "Native 0x141d4bca0 calls 0x1419b68c0; 0x141e12f10 delayed resolver and 0x141df61e0/0x141de9e00 asset tracker recovered. Field LobbyLoopingMusic; build pending."
+  },
+  {
+    "class": "UAthenaBattleBusItemDefinition",
+    "function": "GetLobbyLoopingSound",
+    "kind": "exec",
+    "signature": "USoundBase* GetLobbyLoopingSound() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/inventory_loaders271_runtime/UAthenaBattleBusItemDefinition/GetLobbyLoopingSound.inc",
+    "address": "0x1427163a0",
+    "native_body_address": "0x141d4bcb0",
+    "reflection_flags": "0x54020401",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "FortAssets.h",
+      "FortDelayedObjectLoader.h",
+      "Sound/SoundBase.h"
+    ],
+    "notes": "Native 0x141d4bcb0 calls 0x1419b68c0; 0x141e12f10 delayed resolver and 0x141df61e0/0x141de9e00 asset tracker recovered. Field LobbyLoopingSound; build pending."
+  },
+  {
+    "class": "UFortCardPackItemDefinition",
+    "function": "GetPackImage",
+    "kind": "exec",
+    "signature": "UTexture* GetPackImage() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/inventory_loaders271_runtime/UFortCardPackItemDefinition/GetPackImage.inc",
+    "address": "0x14285c7a0",
+    "native_body_address": "0x142546d60",
+    "reflection_flags": "0x54020403",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "FortAssets.h",
+      "FortDelayedObjectLoader.h",
+      "Engine/Texture.h"
+    ],
+    "notes": "Native 0x142546d60 calls 0x141d99020; 0x141e12f10 delayed resolver and 0x141df61e0/0x141de9e00 asset tracker recovered. Field PackImage; build pending."
+  },
+  {
+    "class": "UFortCardPackItemDefinition",
+    "function": "GetPackPersonality",
+    "kind": "exec",
+    "signature": "UFortPackPersonality* GetPackPersonality() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/inventory_loaders271_runtime/UFortCardPackItemDefinition/GetPackPersonality.inc",
+    "address": "0x14285c7d0",
+    "native_body_address": "0x142546d70",
+    "reflection_flags": "0x54020403",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "FortAssets.h",
+      "FortDelayedObjectLoader.h"
+    ],
+    "notes": "Native 0x142546d70 calls 0x14252e040; 0x141e12f10 delayed resolver and 0x141df61e0/0x141de9e00 asset tracker recovered. Field PackPersonality; build pending."
+  },
+  {
+    "class": "UAthenaCharmItemDefinition",
+    "function": "GetCharmPrefabClass",
+    "kind": "exec",
+    "signature": "TSubclassOf<AFortPlayerCharm> GetCharmPrefabClass() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/inventory_loaders271_runtime/UAthenaCharmItemDefinition/GetCharmPrefabClass.inc",
+    "address": "0x14271a340",
+    "native_body_address": "0x141d47c50",
+    "reflection_flags": "0x54020401",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "FortAssets.h",
+      "FortDelayedObjectLoader.h"
+    ],
+    "notes": "Native 0x141d47c50 calls 0x141d27940; 0x141e12f10 delayed resolver and 0x141df61e0/0x141de9e00 asset tracker recovered. Field CharmPrefabClass; build pending."
+  },
+  {
+    "class": "UAthenaPetItemDefinition",
+    "function": "GetPetPrefabClass",
+    "kind": "exec",
+    "signature": "TSubclassOf<AFortPlayerPet> GetPetPrefabClass() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/inventory_loaders271_runtime/UAthenaPetItemDefinition/GetPetPrefabClass.inc",
+    "address": "0x14272b6a0",
+    "native_body_address": "0x141d81490",
+    "reflection_flags": "0x54020401",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "FortAssets.h",
+      "FortDelayedObjectLoader.h"
+    ],
+    "notes": "Native 0x141d81490 calls 0x141d67f40; 0x141e12f10 delayed resolver and 0x141df61e0/0x141de9e00 asset tracker recovered. Field PetPrefabClass; build pending."
+  },
+  {
+    "class": "UFortDecoItemDefinition",
+    "function": "GetBlueprintClass",
+    "kind": "exec",
+    "signature": "TSubclassOf<ABuildingActor> GetBlueprintClass() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/inventory_loaders271_runtime/UFortDecoItemDefinition/GetBlueprintClass.inc",
+    "address": "0x1428d1270",
+    "native_body_address": "0x142009ac0",
+    "reflection_flags": "0x54020401",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "FortAssets.h",
+      "FortDelayedObjectLoader.h"
+    ],
+    "notes": "Native 0x142009ac0 calls 0x141ff85e0; 0x141e12f10 delayed resolver and 0x141df61e0/0x141de9e00 asset tracker recovered. Field BlueprintClass; build pending."
+  },
+  {
+    "class": "UFortDecoItemDefinition",
+    "function": "GetPlacementPreviewClass",
+    "kind": "exec",
+    "signature": "TSubclassOf<AFortDecoPreview> GetPlacementPreviewClass() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/inventory_loaders271_runtime/UFortDecoItemDefinition/GetPlacementPreviewClass.inc",
+    "address": "0x1428d13f0",
+    "native_body_address": "0x14200fe40",
+    "reflection_flags": "0x54020401",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "FortAssets.h",
+      "FortDelayedObjectLoader.h"
+    ],
+    "notes": "Native 0x14200fe40 calls 0x141ff87f0; 0x141e12f10 delayed resolver and 0x141df61e0/0x141de9e00 asset tracker recovered. Field PlacementPreviewClass; build pending."
+  }
+]

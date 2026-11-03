@@ -2714,6 +2714,7 @@ def body_refs(body, name, package, ctx):
         if tok in ctx["class_pkg"]:
             # These recovered dependency edges are present in module rules.
             allowed_edges = {('/Script/FortniteUI', '/Script/FortniteGame'),
+                             ('/Script/FortniteUI', '/Script/CommonInput'),
                              ('/Script/HoagieRuntime', '/Script/FortniteGame'),
                              ('/Script/FortniteGame', '/Script/McpProfileSys')}
             if ctx["class_pkg"][tok] != package and (package, ctx["class_pkg"][tok]) not in allowed_edges:
@@ -3730,6 +3731,7 @@ def include_interface_headers(model, iface_packages):
 def cross_module_allowed(current_package, target_package):
     """Permit promoted types along existing acyclic module dependencies."""
     return ((current_package == "/Script/FortniteGame" and target_package in CROSS_MODULE_TARGETS)
+            or (current_package == "/Script/FortniteUI" and target_package == "/Script/CommonInput")
             or (current_package in ("/Script/FortniteUI", "/Script/HoagieRuntime")
                 and target_package == "/Script/FortniteGame"))
 

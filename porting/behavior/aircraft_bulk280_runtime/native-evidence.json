@@ -1,0 +1,14 @@
+[
+  {
+    "class": "AFortAthenaVehicle",
+    "function": "GetCurrentGear",
+    "exec_addr": "0x14283b470",
+    "native_body_address": "0x141915870",
+    "wrapper_capture": "porting/generated/native95-broad/0x14283b470.c",
+    "capture_paths": {
+      "0x14283b470": "porting/generated/native95-broad/0x14283b470.c",
+      "0x141915870": "porting/generated/native95-impl/0x141915870.c"
+    },
+    "notes": "0x578 is existing int32 NativeRecoveredInt_0x578; 0x7e8 is count of reflected ReverseGears array at 0x7e0. Subtraction uses 32-bit wrap."
+  }
+]

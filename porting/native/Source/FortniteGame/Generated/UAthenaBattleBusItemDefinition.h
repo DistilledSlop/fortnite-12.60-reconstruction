@@ -44,5 +44,20 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	TSoftClassPtr<ABattleBusCosmeticInstanceBase> GetBusPrefabClass() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	USoundBase* GetFlightLoopingMusic() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	USoundBase* GetFlightLoopingSound() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	USoundBase* GetIgnitionSound() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	USoundBase* GetLobbyLoopingMusic() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	USoundBase* GetLobbyLoopingSound() const;
+
 };
 

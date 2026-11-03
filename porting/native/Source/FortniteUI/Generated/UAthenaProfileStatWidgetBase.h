@@ -26,5 +26,8 @@ public:
 	UPROPERTY()
 	UAthenaProfileStatBox* ProfileStatBox;
 
+	UFUNCTION(BlueprintCallable)
+	void SetAsStat(FGameplayTag& InStat);
+
 };
 

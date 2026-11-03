@@ -1,0 +1,19 @@
+[
+  {
+    "class": "AFortAIController",
+    "function": "IsAllowedToSleep",
+    "captures": {
+      "0x142794340": "porting/generated/native107-broad/0x142794340.c",
+      "0x1416630f0": "porting/generated/native107-impl/0x1416630f0.c"
+    },
+    "proof": "Body checks GoalActor at 0x368, MyFortPawn at 0x410, and bit 11 of the 32-bit word at pawn+0x18dc. /opt/fortnite/local-model-package/runtime/haiku262/05-layouts.json identifies bit 0x08 at 0x18dd as bCanSleep; wrapper stores low return byte."
+  },
+  {
+    "class": "AFortAIController",
+    "function": "SetAlwaysGameplayRelevant",
+    "captures": {
+      "0x142794b60": "porting/generated/native107-broad/0x142794b60.c"
+    },
+    "proof": "Native writes a 32-bit constant at 0x3b0 and read-modify-writes a 32-bit word at 0x3b4, mask 4. Neutral uint32 fields preserve exact bits and width. /opt/fortnite/local-model-package/runtime/haiku262/06-layouts.json locates preceding GoalVisibilityPersistanceTime at 0x370 and next MyFortPawn at 0x410; no reflected controller property or bool bit occupies 0x3b0..0x3b7. The controller-specific region begins at 0x338, beyond inherited AAIController layout."
+  }
+]

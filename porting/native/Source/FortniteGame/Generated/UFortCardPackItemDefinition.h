@@ -67,6 +67,12 @@ public:
 	FLinearColor GetPackColor() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UTexture* GetPackImage() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortPackPersonality* GetPackPersonality() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	TSoftObjectPtr<UTexture2D> GetXRayImage() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

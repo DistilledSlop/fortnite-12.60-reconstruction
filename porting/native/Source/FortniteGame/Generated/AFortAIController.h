@@ -57,6 +57,12 @@ public:
 	UPROPERTY(Config)
 	float GoalVisibilityPersistanceTime;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x3b0): not a UPROPERTY, not replicated.
+	uint32 GameplayRelevanceState;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x3b4): not a UPROPERTY, not replicated.
+	uint32 GameplayRelevanceFlags;
+
 	// table index 1, flags 0x10000000002014
 	UPROPERTY(Transient)
 	AFortAIPawn* MyFortPawn;
@@ -71,8 +77,14 @@ public:
 	UFUNCTION(BlueprintCallable)
 	virtual void IgnoreProximityForDuration(float DurationToIgnore);
 
+	UFUNCTION(BlueprintCallable)
+	bool IsAllowedToSleep();
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	static bool IsIgnoringProximity(AFortAIController* FortAIController);
+
+	UFUNCTION(BlueprintCallable)
+	void SetAlwaysGameplayRelevant(bool bInAlwaysGameplayRelevant);
 
 };
 

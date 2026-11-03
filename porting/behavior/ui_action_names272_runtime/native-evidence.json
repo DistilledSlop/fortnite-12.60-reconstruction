@@ -1,0 +1,14 @@
+[
+  {
+    "class": "UFortGlobalUIContext",
+    "function": "NativeGetContextPlayerController144cb7c20",
+    "address": "0x144cb7c20",
+    "captures": [
+      "porting/generated/frontend-native-evidence/get-frontend-camera-deps/0x144cb7c20.c",
+      "porting/generated/native101-inventory-deps/0x14447f220.c",
+      "porting/generated/native102-impl/0x144786700.c",
+      "porting/generated/native98-deps/0x142a3d9f0.c"
+    ],
+    "notes": "ULocalPlayer outer; virtual GetWorld slot 0x150; ULocalPlayer::GetPlayerController; optional AFortPlayerController cast."
+  }
+]

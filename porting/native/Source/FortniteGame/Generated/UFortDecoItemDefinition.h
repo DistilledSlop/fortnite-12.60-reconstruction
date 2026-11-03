@@ -177,6 +177,9 @@ public:
 	bool bReplacesDecoOnAttachment;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	TSubclassOf<ABuildingActor> GetBlueprintClass() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetGridPlacementOffset() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
@@ -184,6 +187,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetMaxPlacementDistance() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	TSubclassOf<AFortDecoPreview> GetPlacementPreviewClass() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	TEnumAsByte<EPlacementType::Type> GetPlacementTypeOverride() const;

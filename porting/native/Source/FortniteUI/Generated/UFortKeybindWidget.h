@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "ECommonGamepadType.h"
+#include "ECommonInputType.h"
 #include "EFortBrushSize.h"
 #include "EFortKeybindForcedHoldStatus.h"
 #include "FFortMultiSizeBrush.h"
@@ -37,6 +39,14 @@ public:
 	// table index 27, flags 0x10000000000015
 	UPROPERTY()
 	FKey BoundKeyFallback;
+
+	// table index 25, flags 0x10000000000005
+	UPROPERTY()
+	ECommonInputType InputTypeOverride;
+
+	// table index 23, flags 0x10000000000005
+	UPROPERTY()
+	ECommonGamepadType GamepadTypeOverride;
 
 	// table index 22, flags 0x10000000000005
 	UPROPERTY()

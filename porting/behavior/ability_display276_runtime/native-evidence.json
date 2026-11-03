@@ -1,0 +1,42 @@
+[
+  {
+    "class": "UFortAttributeListItem",
+    "function": "GetDisplayAttributeCopy",
+    "captures": {
+      "0x1451fffe0": "porting/generated/native245-fresh-bulk/0x1451fffe0.c",
+      "0x1450ad6d0": "porting/generated/native247-fresh-callees/0x1450ad6d0.c",
+      "0x1450a4870": "porting/generated/native272-callees/0x1450a4870.c"
+    },
+    "proof": "Wrapper passes output by reference; helper copies the 0x88-byte FFortDisplayAttribute at object +0x238. The two proposed attributes in this class occupy adjacent, nonoverlapping ranges."
+  },
+  {
+    "class": "UFortAttributeListItem",
+    "function": "GetDisplayPreviewCopy",
+    "captures": {
+      "0x145200190": "porting/generated/native245-fresh-bulk/0x145200190.c",
+      "0x1450ad710": "porting/generated/native247-fresh-callees/0x1450ad710.c",
+      "0x1450a4870": "porting/generated/native272-callees/0x1450a4870.c"
+    },
+    "proof": "Wrapper passes output by reference; helper copies the 0x88-byte FFortDisplayAttribute at object +0x2c0. The two proposed attributes in this class occupy adjacent, nonoverlapping ranges."
+  },
+  {
+    "class": "UFortAttributeListItem_NUI",
+    "function": "GetDisplayAttributeCopy",
+    "captures": {
+      "0x145204910": "porting/generated/native245-fresh-bulk/0x145204910.c",
+      "0x1450ad6f0": "porting/generated/native247-fresh-callees/0x1450ad6f0.c",
+      "0x1450a4870": "porting/generated/native272-callees/0x1450a4870.c"
+    },
+    "proof": "Wrapper passes output by reference; helper copies the 0x88-byte FFortDisplayAttribute at object +0x270. The two proposed attributes in this class occupy adjacent, nonoverlapping ranges."
+  },
+  {
+    "class": "UFortAttributeListItem_NUI",
+    "function": "GetDisplayPreviewCopy",
+    "captures": {
+      "0x145204ac0": "porting/generated/native245-fresh-bulk/0x145204ac0.c",
+      "0x1450ad730": "porting/generated/native247-fresh-callees/0x1450ad730.c",
+      "0x1450a4870": "porting/generated/native272-callees/0x1450a4870.c"
+    },
+    "proof": "Wrapper passes output by reference; helper copies the 0x88-byte FFortDisplayAttribute at object +0x2f8. The two proposed attributes in this class occupy adjacent, nonoverlapping ranges."
+  }
+]

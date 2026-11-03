@@ -1,0 +1,152 @@
+[
+  {
+    "function": "GetMotionHarvestingToolMultiplierValue",
+    "captures": {
+      "0x1452ce720": "porting/generated/native210-fresh-bulk/0x1452ce720.c",
+      "0x144d064c0": "porting/generated/native213-fresh-callees/0x144d064c0.c"
+    },
+    "native_body": "0x144d064c0",
+    "proof": "Native lookup and reflected record float MotionHarvestingToolSlow at 0x304; null returns zero.",
+    "class": "UFortSettingsContext"
+  },
+  {
+    "function": "GetMotionScopedMultiplierValue",
+    "captures": {
+      "0x1452ce750": "porting/generated/native210-fresh-bulk/0x1452ce750.c",
+      "0x144d06570": "porting/generated/native213-fresh-callees/0x144d06570.c"
+    },
+    "native_body": "0x144d06570",
+    "proof": "Native lookup and reflected record float MotionScopedSlow at 0x300; null returns zero.",
+    "class": "UFortSettingsContext"
+  },
+  {
+    "function": "GetMotionTargetingMultiplierValue",
+    "captures": {
+      "0x1452ce780": "porting/generated/native210-fresh-bulk/0x1452ce780.c",
+      "0x144d06620": "porting/generated/native213-fresh-callees/0x144d06620.c"
+    },
+    "native_body": "0x144d06620",
+    "proof": "Native lookup and reflected record float MotionTargetingSlow at 0x2fc; null returns zero.",
+    "class": "UFortSettingsContext"
+  },
+  {
+    "function": "GetTouchTargetingMultiplierValue",
+    "captures": {
+      "0x1452cf200": "porting/generated/native210-fresh-bulk/0x1452cf200.c",
+      "0x144d0d600": "porting/generated/native213-fresh-callees/0x144d0d600.c"
+    },
+    "native_body": "0x144d0d600",
+    "proof": "Native lookup and reflected record float TouchTargetingSlow at 0x324; null returns zero.",
+    "class": "UFortSettingsContext"
+  },
+  {
+    "function": "GetTouchVerticalSensitivityValue",
+    "captures": {
+      "0x1452cf230": "porting/generated/native210-fresh-bulk/0x1452cf230.c",
+      "0x144d0d630": "porting/generated/native213-fresh-callees/0x144d0d630.c"
+    },
+    "native_body": "0x144d0d630",
+    "proof": "Native lookup and reflected record float TouchVerticalMultiplier at 0x334; null returns zero.",
+    "class": "UFortSettingsContext"
+  },
+  {
+    "function": "GetHUDScale",
+    "captures": {
+      "0x1452ce460": "porting/generated/native105-broad/0x1452ce460.c",
+      "0x144d040d0": "porting/generated/native105-impl/0x144d040d0.c"
+    },
+    "native_body": "0x144d040d0",
+    "proof": "Native multiplies record +0x278 and +0x27c; accepted record getters read those locations, with null default 1.",
+    "class": "UFortSettingsContext"
+  },
+  {
+    "function": "SetAllowGameVolumeWhenMinimized",
+    "captures": {
+      "0x1452d17c0": "porting/generated/native210-fresh-bulk/0x1452d17c0.c",
+      "0x144d1d8e0": "porting/generated/native213-fresh-callees/0x144d1d8e0.c"
+    },
+    "native_body": "0x144d1d8e0",
+    "proof": "Native delegates to accepted UFortClientSettingsRecord::SetAllowAudioInBackgroundSetting, preserving its side effects.",
+    "class": "UFortSettingsContext"
+  },
+  {
+    "function": "SetAutoJoinGameVoiceChannel",
+    "captures": {
+      "0x1452d1840": "porting/generated/native228-fresh-callees/0x1452d1840.c",
+      "0x144d1d910": "porting/generated/native228-fresh-callees/0x144d1d910.c"
+    },
+    "native_body": "0x144d1d910",
+    "proof": "Native delegates to accepted UFortClientSettingsRecord::SetAutoJoinGameVoiceChannel, preserving its side effects.",
+    "class": "UFortSettingsContext"
+  },
+  {
+    "function": "SetColorBlindMode",
+    "captures": {
+      "0x1452d18d0": "porting/generated/native105-broad/0x1452d18d0.c",
+      "0x144d1d940": "porting/generated/native105-impl/0x144d1d940.c"
+    },
+    "native_body": "0x144d1d940",
+    "proof": "Native delegates to accepted UFortClientSettingsRecord::SetColorBlindMode, preserving its side effects.",
+    "class": "UFortSettingsContext"
+  },
+  {
+    "function": "SetEnableRudderControl",
+    "captures": {
+      "0x1452d19d0": "porting/generated/native228-fresh-callees/0x1452d19d0.c",
+      "0x144d1d9a0": "porting/generated/native228-fresh-callees/0x144d1d9a0.c"
+    },
+    "native_body": "0x144d1d9a0",
+    "proof": "Native delegates to accepted UFortClientSettingsRecord::SetEnableRudderControl, preserving its side effects.",
+    "class": "UFortSettingsContext"
+  },
+  {
+    "function": "SetIgnoreGamepadInput",
+    "captures": {
+      "0x1452d1a60": "porting/generated/native228-fresh-callees/0x1452d1a60.c",
+      "0x144d1d9d0": "porting/generated/native228-fresh-callees/0x144d1d9d0.c"
+    },
+    "native_body": "0x144d1d9d0",
+    "proof": "Native delegates to accepted UFortClientSettingsRecord::SetIgnoreGamepadInput, preserving its side effects.",
+    "class": "UFortSettingsContext"
+  },
+  {
+    "function": "SetLockPrimaryInputMethodToMouse",
+    "captures": {
+      "0x1452d1af0": "porting/generated/native228-fresh-callees/0x1452d1af0.c",
+      "0x144d1da00": "porting/generated/native228-fresh-callees/0x144d1da00.c"
+    },
+    "native_body": "0x144d1da00",
+    "proof": "Native delegates to accepted UFortClientSettingsRecord::SetLockPrimaryInputMethodToMouse, preserving its side effects.",
+    "class": "UFortSettingsContext"
+  },
+  {
+    "function": "SetShowVoiceIndicators",
+    "captures": {
+      "0x1452d1c00": "porting/generated/native228-fresh-callees/0x1452d1c00.c",
+      "0x144d1dc10": "porting/generated/native228-fresh-callees/0x144d1dc10.c"
+    },
+    "native_body": "0x144d1dc10",
+    "proof": "Native delegates to accepted UFortClientSettingsRecord::SetShowVoiceIndicators, preserving its side effects.",
+    "class": "UFortSettingsContext"
+  },
+  {
+    "function": "SetSubtitlesEnabled",
+    "captures": {
+      "0x1452d1c90": "porting/generated/native228-fresh-callees/0x1452d1c90.c",
+      "0x144d1dc40": "porting/generated/native228-fresh-callees/0x144d1dc40.c"
+    },
+    "native_body": "0x144d1dc40",
+    "proof": "Native delegates to accepted UFortClientSettingsRecord::SetSubtitlesEnabled, preserving its side effects.",
+    "class": "UFortSettingsContext"
+  },
+  {
+    "function": "SetVisualizeAudioSources",
+    "captures": {
+      "0x1452d1d20": "porting/generated/native228-fresh-callees/0x1452d1d20.c",
+      "0x144d1df60": "porting/generated/native228-fresh-callees/0x144d1df60.c"
+    },
+    "native_body": "0x144d1df60",
+    "proof": "Native delegates to accepted UFortClientSettingsRecord::SetVisualizeAudioSources, preserving its side effects.",
+    "class": "UFortSettingsContext"
+  }
+]

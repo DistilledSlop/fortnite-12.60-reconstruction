@@ -30,5 +30,8 @@ public:
 	UPROPERTY()
 	TSoftObjectPtr<UFortTaggedSoundBank> PetSoundBank;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	TSubclassOf<AFortPlayerPet> GetPetPrefabClass() const;
+
 };
 

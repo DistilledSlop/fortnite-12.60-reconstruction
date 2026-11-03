@@ -16,10 +16,26 @@ void AFortAIController::IgnoreProximityForDuration(float DurationToIgnore)
 	return;
 }
 
+bool AFortAIController::IsAllowedToSleep()
+{
+	// CONFIDENCE: high
+	// The native low-byte return is true only when there is no goal and the pawn can sleep.
+	return GoalActor == nullptr && MyFortPawn != nullptr && MyFortPawn->bCanSleep;
+}
+
 bool AFortAIController::IsIgnoringProximity(AFortAIController* FortAIController)
 {
 	// Original exec 0x142794640, complete constant leaf 0x1406801d0.
 	// CONFIDENCE: HIGH
 	return true;
+}
+
+void AFortAIController::SetAlwaysGameplayRelevant(bool bInAlwaysGameplayRelevant)
+{
+	// CONFIDENCE: high
+	// Preserve the other flags while replacing bit 2 and resetting the adjacent word.
+	GameplayRelevanceFlags &= ~uint32(4);
+	GameplayRelevanceState = 0xbf800000u;
+	GameplayRelevanceFlags |= bInAlwaysGameplayRelevant ? uint32(4) : uint32(0);
 }
 

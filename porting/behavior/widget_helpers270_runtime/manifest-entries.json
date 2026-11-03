@@ -1,0 +1,38 @@
+[
+  {
+    "class": "UAthenaProfileStatWidgetBase",
+    "function": "SetAsStat",
+    "kind": "exec",
+    "signature": "void SetAsStat(FGameplayTag& InStat)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/widget_helpers270_runtime/1451b5a60_UAthenaProfileStatWidgetBase_SetAsStat.inc",
+    "address": "0x1451b5a60",
+    "native_body_address": "0x144c42f00",
+    "reflection_flags": "0x4420401",
+    "static": false,
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "GameplayTagContainer.h"
+    ],
+    "notes": "Copies reflected Stat then ProcessEvent dispatches OnStatChanged. Event FName global 0x1483a2d28 resolves from static-init literal 0x146e95820; see native272-callees/event-name-literals.json."
+  },
+  {
+    "class": "UContentBrowserFilterEntry",
+    "function": "SetIsFilterActive",
+    "kind": "exec",
+    "signature": "void SetIsFilterActive(bool bInFilterActive)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/widget_helpers270_runtime/1451e2860_UContentBrowserFilterEntry_SetIsFilterActive.inc",
+    "address": "0x1451e2860",
+    "native_body_address": "0x144cacab0",
+    "reflection_flags": "0x4020401",
+    "static": false,
+    "confidence": "high",
+    "status": "ported",
+    "includes": [],
+    "notes": "Stores bFilterActive, dispatches UpdateCheckMarkState with the input, then re-reads bFilterActive and Tag for OnFilterEnabled.Broadcast. Helper 0x1406a9dc0 implements dynamic multicast dispatch; FName global 0x1483a9108 resolves via static-init literal 0x146ec3df0."
+  }
+]

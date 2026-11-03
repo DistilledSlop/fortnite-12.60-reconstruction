@@ -665,6 +665,9 @@ public:
 	virtual float GetCurrentFOV() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetCurrentGear() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetCurrentSignificance() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

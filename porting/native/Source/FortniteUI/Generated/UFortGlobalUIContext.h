@@ -7,9 +7,12 @@
 #include "UFortLocalPlayerSubsystem.h"
 
 #include "Blueprint/DragDropOperation.h"
+#include "ECommonInputType.h"
+#include "EFortPickerMode.h"
 #include "EFortUIFeature.h"
 #include "EInputPriority.h"
 #include "Engine/EngineTypes.h"
+#include "Engine/LocalPlayer.h"
 #include "FFortGlobalUIContextGenericChange.h"
 #include "FFortUIFeatureStruct.h"
 #include "FOnContextHelpItemsChanged.h"
@@ -25,9 +28,13 @@
 #include "FOnQueryFortBackendVersionDelegate.h"
 #include "FOnScoreReportChanged.h"
 #include "FOnSubGameChanged.h"
+#include "FortAssets.h"
+#include "FortDelayedObjectLoader.h"
 #include "GameFramework/OnlineReplStructs.h"
+#include "GameFramework/PlayerController.h"
 #include "Misc/DateTime.h"
 #include "UFortHelpItem.h"
+#include "UFortInputData.h"
 
 class UAthenaMatchReadyDesktopPopup;
 class UFortUIMessageManager;
@@ -159,10 +166,91 @@ public:
 	void ClearRatingWidgetInfo();
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FName GetAbility1ActionName(ECommonInputType OverrideInputType) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FName GetAbility2ActionName(ECommonInputType OverrideInputType) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FName GetAbility3ActionName() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FName GetCannonCoastActionName(ECommonInputType OverrideInputType) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FName GetCannonShootActionName(ECommonInputType OverrideInputType) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FName GetChangeMaterialActionName() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FName GetCreativeFlyDownActionName() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FName GetCreativeFlyUpActionName() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool GetCreativeMode() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	FText GetFeedbackTitle() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FName GetFireActionName() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FName GetGadget1ActionName() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FName GetGadget2ActionName() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FName GetGamepadJackalExitActionName(ECommonInputType OverrideInputType) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FName GetGolfCartEBrakeActionName(ECommonInputType OverrideInputType) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FName GetGolfCartForwardActionName(ECommonInputType OverrideInputType) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FName GetGolfCartReverseActionName(ECommonInputType OverrideInputType) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FName GetHamsterballBoostActionName(ECommonInputType OverrideInputType) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FName GetHamsterballShootActionName(ECommonInputType OverrideInputType) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FName GetJackalBoostActionName(ECommonInputType OverrideInputType) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FName GetJackalJumpActionName(ECommonInputType OverrideInputType) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FName GetJackalUseOrExitActionName(ECommonInputType OverrideInputType) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FName GetJumpActionName() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FName GetOstrichBoostActionName(ECommonInputType OverrideInputType) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FName GetOstrichJumpActionName(ECommonInputType OverrideInputType) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FName GetPickerCancelActionName(EFortPickerMode PickerMode) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FName GetQuadCrasherBoostActionName(ECommonInputType OverrideInputType) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FName GetShoppingCartCoastActionName() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FName GetTargetActionName(ECommonInputType OverrideInputType) const;
 
 	UFUNCTION(BlueprintCallable)
 	void GetTopLevelHelpItems(TArray<UFortHelpItem*>& ActiveHelpEntries);
@@ -200,5 +288,11 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsInZone() const;
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	APlayerController* NativeGetContextPlayerController144cb7c20(bool bAllowNonFortController) const;
+	UFortInputData* NativeGetInputData141fc0b30() const;
+	bool NativeUsesGamepad142390950(APlayerController* Controller) const;
 };
 

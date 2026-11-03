@@ -1336,6 +1336,9 @@ public:
 	void SetColorBlindMode(EColorBlindMode InMode);
 
 	UFUNCTION()
+	void SetColorBlindStrength(int32 InColorBlindStrength);
+
+	UFUNCTION()
 	void SetConsoleFPSUnlocked(bool bNewValue);
 
 	UFUNCTION()

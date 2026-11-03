@@ -46,6 +46,9 @@ public:
 	TArray<FCharmSoundAssetEntry> CharmSounds;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	TSubclassOf<AFortPlayerCharm> GetCharmPrefabClass() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	TSoftClassPtr<UAnimInstance> GetOverrideAnimSetPtr() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

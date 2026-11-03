@@ -2,6 +2,7 @@
 #include "UFortSettingsContext.h"
 #include "AFortPlayerController.h"
 #include "ECloudFileState.h"
+#include "EColorBlindMode.h"
 #include "EFortAllowBackgroundAudioSetting.h"
 #include "Engine/LocalPlayer.h"
 #include "GameFramework/PlayerController.h"
@@ -204,6 +205,14 @@ bool UFortSettingsContext::GetHoldToSwapPickupState() const
 	return Record && Record->bUseHoldToSwapPickup;
 }
 
+float UFortSettingsContext::GetHUDScale() const
+{
+	// CONFIDENCE: high
+	// Native 0x144d040d0.
+	const UFortClientSettingsRecord* Record = NativeGetSettingsRecord144d03d50();
+	return Record ? Record->GetHUDScaleRaw() * Record->GetHUDScaleMultiplier() : 1.0f;
+}
+
 float UFortSettingsContext::GetHUDScaleRaw() const
 {
 	// CONFIDENCE: high
@@ -244,6 +253,30 @@ bool UFortSettingsContext::GetMotionControlsEnabledValue() const
 	// Native 0x144d064a0; reflected bool offset 0x338.
 	const UFortClientSettingsRecord* Record = NativeGetSettingsRecord144d03d50();
 	return Record && Record->bMotionControlsEnabled;
+}
+
+float UFortSettingsContext::GetMotionHarvestingToolMultiplierValue() const
+{
+	// CONFIDENCE: high
+	// Native 0x144d064c0.
+	const UFortClientSettingsRecord* Record = NativeGetSettingsRecord144d03d50();
+	return Record ? Record->MotionHarvestingToolSlow : 0.0f;
+}
+
+float UFortSettingsContext::GetMotionScopedMultiplierValue() const
+{
+	// CONFIDENCE: high
+	// Native 0x144d06570.
+	const UFortClientSettingsRecord* Record = NativeGetSettingsRecord144d03d50();
+	return Record ? Record->MotionScopedSlow : 0.0f;
+}
+
+float UFortSettingsContext::GetMotionTargetingMultiplierValue() const
+{
+	// CONFIDENCE: high
+	// Native 0x144d06620.
+	const UFortClientSettingsRecord* Record = NativeGetSettingsRecord144d03d50();
+	return Record ? Record->MotionTargetingSlow : 0.0f;
 }
 
 float UFortSettingsContext::GetMouseSensitivityMultiplierForAircraft() const
@@ -403,6 +436,121 @@ float UFortSettingsContext::GetTouchLookSensitivityValue() const
 	// Native 0x144d0d5d0; record offset 0x320.
 	const UFortClientSettingsRecord* Record = NativeGetSettingsRecord144d03d50();
 	return Record ? Record->TouchLookSensitivitySetting : 0.0f;
+}
+
+float UFortSettingsContext::GetTouchTargetingMultiplierValue() const
+{
+	// CONFIDENCE: high
+	// Native 0x144d0d600.
+	const UFortClientSettingsRecord* Record = NativeGetSettingsRecord144d03d50();
+	return Record ? Record->TouchTargetingSlow : 0.0f;
+}
+
+float UFortSettingsContext::GetTouchVerticalSensitivityValue() const
+{
+	// CONFIDENCE: high
+	// Native 0x144d0d630.
+	const UFortClientSettingsRecord* Record = NativeGetSettingsRecord144d03d50();
+	return Record ? Record->TouchVerticalMultiplier : 0.0f;
+}
+
+void UFortSettingsContext::SetAllowGameVolumeWhenMinimized(EFortAllowBackgroundAudioSetting NewValue)
+{
+	// CONFIDENCE: high
+	// Native 0x144d1d8e0.
+	if (UFortClientSettingsRecord* Record = NativeGetSettingsRecord144d03d50())
+	{
+	    Record->SetAllowAudioInBackgroundSetting(NewValue);
+	}
+}
+
+void UFortSettingsContext::SetAutoJoinGameVoiceChannel(bool bInChecked)
+{
+	// CONFIDENCE: high
+	// Native 0x144d1d910.
+	if (UFortClientSettingsRecord* Record = NativeGetSettingsRecord144d03d50())
+	{
+	    Record->SetAutoJoinGameVoiceChannel(bInChecked);
+	}
+}
+
+void UFortSettingsContext::SetColorBlindMode(int32 InMode)
+{
+	// CONFIDENCE: high
+	// Native 0x144d1d940.
+	if (UFortClientSettingsRecord* Record = NativeGetSettingsRecord144d03d50())
+	{
+	    Record->SetColorBlindMode(static_cast<EColorBlindMode>(static_cast<uint8>(InMode)));
+	}
+}
+
+void UFortSettingsContext::SetColorBlindStrength(int32 InColorBlindStrength)
+{
+	// Native 0x144d1d970. CONFIDENCE: high
+	if (UFortClientSettingsRecord* Record = NativeGetSettingsRecord144d03d50())
+	{
+	    Record->SetColorBlindStrength(InColorBlindStrength);
+	}
+}
+
+void UFortSettingsContext::SetEnableRudderControl(bool bEnable)
+{
+	// CONFIDENCE: high
+	// Native 0x144d1d9a0.
+	if (UFortClientSettingsRecord* Record = NativeGetSettingsRecord144d03d50())
+	{
+	    Record->SetEnableRudderControl(bEnable);
+	}
+}
+
+void UFortSettingsContext::SetIgnoreGamepadInput(bool bIgnore)
+{
+	// CONFIDENCE: high
+	// Native 0x144d1d9d0.
+	if (UFortClientSettingsRecord* Record = NativeGetSettingsRecord144d03d50())
+	{
+	    Record->SetIgnoreGamepadInput(bIgnore);
+	}
+}
+
+void UFortSettingsContext::SetLockPrimaryInputMethodToMouse(bool bLock)
+{
+	// CONFIDENCE: high
+	// Native 0x144d1da00.
+	if (UFortClientSettingsRecord* Record = NativeGetSettingsRecord144d03d50())
+	{
+	    Record->SetLockPrimaryInputMethodToMouse(bLock);
+	}
+}
+
+void UFortSettingsContext::SetShowVoiceIndicators(bool bInChecked)
+{
+	// CONFIDENCE: high
+	// Native 0x144d1dc10.
+	if (UFortClientSettingsRecord* Record = NativeGetSettingsRecord144d03d50())
+	{
+	    Record->SetShowVoiceIndicators(bInChecked);
+	}
+}
+
+void UFortSettingsContext::SetSubtitlesEnabled(bool bNewValue)
+{
+	// CONFIDENCE: high
+	// Native 0x144d1dc40.
+	if (UFortClientSettingsRecord* Record = NativeGetSettingsRecord144d03d50())
+	{
+	    Record->SetSubtitlesEnabled(bNewValue);
+	}
+}
+
+void UFortSettingsContext::SetVisualizeAudioSources(bool bEnable)
+{
+	// CONFIDENCE: high
+	// Native 0x144d1df60.
+	if (UFortClientSettingsRecord* Record = NativeGetSettingsRecord144d03d50())
+	{
+	    Record->SetVisualizeAudioSources(bEnable);
+	}
 }
 
 UFortClientSettingsRecord* UFortSettingsContext::NativeGetSettingsRecord144d03d50() const

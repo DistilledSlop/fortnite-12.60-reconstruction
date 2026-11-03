@@ -20,6 +20,7 @@
 #include "FItemCollectorVehicleSpawned.h"
 #include "GameplayTagContainer.h"
 #include "Math/Rotator.h"
+#include "Math/TransformNonVectorized.h"
 #include "Math/Vector.h"
 
 class AFortPlayerController;
@@ -146,6 +147,16 @@ public:
 	UPROPERTY()
 	FVector LootSpawnLocation;
 
+private:
+	// Non-reflected field (behaviour kind "member_field", offset 0x8b0): not a UPROPERTY, not replicated.
+	FTransform NativeLootSpawnWorldTransformOverride;
+public:
+
+private:
+	// Non-reflected field (behaviour kind "member_field", offset 0x8e0): not a UPROPERTY, not replicated.
+	bool bHasNativeLootSpawnWorldTransformOverride;
+public:
+
 	// table index 11, flags 0x20080000000005
 	UPROPERTY()
 	FRotator LootTossDirection;
@@ -190,6 +201,9 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_TrackedInteractionData)
 	TArray<FCollectorTrackedData> TrackedInteractionData;
 
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void ClearLootSpawnWorldTransformOverride();
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UFortWorldItemDefinition* GetCurrentActiveItem() const;
 
@@ -208,6 +222,9 @@ public:
 	UFUNCTION(Server, Reliable)
 	void ServerSpawnItem(const FFortItemEntry& OutputItem);
 	void ServerSpawnItem_Implementation(const FFortItemEntry& OutputItem);
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void SetLootSpawnWorldTransformOverride(FTransform& Transform);
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

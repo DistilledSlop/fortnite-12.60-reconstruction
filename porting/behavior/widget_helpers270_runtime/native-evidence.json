@@ -1,0 +1,33 @@
+[
+  {
+    "class": "USocialInteractionButton",
+    "function": "GetInteractionName",
+    "evidence": [
+      "porting/generated/native108-impl/0x1412c6820.c",
+      "porting/generated/native270-callees/0x140f91980.c",
+      "porting/generated/native270-callees/0x140f91980.asm"
+    ],
+    "blocker": "The eight-byte storage at +0xba8 is dereferenced as a native polymorphic object and slot +8 returns a name; the object type, slot name and lifetime contract remain unknown."
+  },
+  {
+    "class": "UAthenaProfileStatWidgetBase",
+    "function": "SetAsStat",
+    "evidence": [
+      "porting/generated/native108-impl/0x144c42f00.c",
+      "porting/generated/native270-callees/0x1451b4450.c",
+      "porting/generated/native272-callees/event-name-literals.json"
+    ],
+    "resolution": "Event FName resolved from static-init LEA and UTF-16 literal in porting/generated/native272-callees/event-name-literals.json."
+  },
+  {
+    "class": "UContentBrowserFilterEntry",
+    "function": "SetIsFilterActive",
+    "evidence": [
+      "porting/generated/native108-impl/0x144cacab0.c",
+      "porting/generated/native270-callees/0x1451e0ea0.c",
+      "porting/generated/native98-impl/0x1406a9dc0.c",
+      "porting/generated/native272-callees/event-name-literals.json"
+    ],
+    "resolution": "Event FName resolved from static-init LEA and UTF-16 literal in porting/generated/native272-callees/event-name-literals.json."
+  }
+]

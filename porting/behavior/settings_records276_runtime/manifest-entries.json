@@ -1,0 +1,32 @@
+[
+  {
+    "function": "SetColorBlindStrength",
+    "kind": "exec",
+    "signature": "void SetColorBlindStrength(int32 InColorBlindStrength)",
+    "signature_status": "proposed",
+    "static": false,
+    "access": "public",
+    "inc_path": "porting/behavior/settings_records276_runtime/UFortClientSettingsRecord_SetColorBlindStrength.inc",
+    "address": "0x14287f980",
+    "native_body_address": "0x141e3aaf0",
+    "reflection_flags": "0x20401",
+    "confidence": "high",
+    "status": "ported",
+    "class": "UFortClientSettingsRecord"
+  },
+  {
+    "function": "SetColorBlindStrength",
+    "kind": "exec",
+    "signature": "void SetColorBlindStrength(int32 InColorBlindStrength)",
+    "signature_status": "proposed",
+    "static": false,
+    "access": "public",
+    "inc_path": "porting/behavior/settings_records276_runtime/UFortSettingsContext_SetColorBlindStrength.inc",
+    "address": "0x1452d1950",
+    "native_body_address": "0x144d1d970",
+    "reflection_flags": "0x4020401",
+    "confidence": "high",
+    "status": "ported",
+    "class": "UFortSettingsContext"
+  }
+]

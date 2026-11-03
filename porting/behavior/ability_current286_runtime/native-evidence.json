@@ -1,0 +1,26 @@
+[
+  {
+    "class": "UFortAttributeListItem",
+    "function": "GetCurrentAttributeCopy",
+    "captures": {
+      "0x1451ffe30": "porting/generated/native245-fresh-bulk/0x1451ffe30.c",
+      "0x1450ad3d0": "porting/generated/native247-fresh-callees/0x1450ad3d0.c",
+      "0x142c2e460": "porting/generated/native102-deps/0x142c2e460.c",
+      "0x1450a4870": "porting/generated/native272-callees/0x1450a4870.c",
+      "0x142bfa540": "porting/generated/native286-callees/0x142bfa540.c"
+    },
+    "proof": "Helper tests FText at preview +0x38 (Label) and copies attribute at +0x238 when empty/whitespace or +0x2c0 otherwise. The display-string traversal matches FText::IsEmptyOrWhitespace in the local Unreal Engine Core Text.cpp; prior virtual_bulk102_runtime applies the same mapping to 0x142c2e460. Predicate 0x142bfa540 delegates to 0x14553ed50, whose implementation is not captured; character predicate mapping relies on the existing accepted mapping and local engine source."
+  },
+  {
+    "class": "UFortAttributeListItem_NUI",
+    "function": "GetCurrentAttributeCopy",
+    "captures": {
+      "0x145204550": "porting/generated/native245-fresh-bulk/0x145204550.c",
+      "0x1450ad410": "porting/generated/native247-fresh-callees/0x1450ad410.c",
+      "0x142c2e460": "porting/generated/native102-deps/0x142c2e460.c",
+      "0x1450a4870": "porting/generated/native272-callees/0x1450a4870.c",
+      "0x142bfa540": "porting/generated/native286-callees/0x142bfa540.c"
+    },
+    "proof": "Helper tests FText at preview +0x38 (Label) and copies attribute at +0x270 when empty/whitespace or +0x2f8 otherwise. The display-string traversal matches FText::IsEmptyOrWhitespace in the local Unreal Engine Core Text.cpp; prior virtual_bulk102_runtime applies the same mapping to 0x142c2e460. Predicate 0x142bfa540 delegates to 0x14553ed50, whose implementation is not captured; character predicate mapping relies on the existing accepted mapping and local engine source."
+  }
+]

@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UCommonUserWidget.h"
 
+#include "FFortDisplayAttribute.h"
 #include "GameplayTagContainer.h"
 
 #include "UFortAttributeListItem_NUI.generated.h"
@@ -23,6 +24,21 @@ public:
 	// table index 0, flags 0x10000000000015
 	UPROPERTY()
 	FGameplayTag StatTag;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x270): not a UPROPERTY, not replicated.
+	FFortDisplayAttribute NativeRecoveredDisplayAttribute_0x270;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x2f8): not a UPROPERTY, not replicated.
+	FFortDisplayAttribute NativeRecoveredDisplayAttribute_0x2f8;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	void GetCurrentAttributeCopy(FFortDisplayAttribute& OutDisplayAttribute) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	void GetDisplayAttributeCopy(FFortDisplayAttribute& OutDisplayAttribute) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	void GetDisplayPreviewCopy(FFortDisplayAttribute& OutPreviewAttribute) const;
 
 };
 

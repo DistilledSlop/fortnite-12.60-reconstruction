@@ -102,6 +102,9 @@ public:
 	bool GetHoldToSwapPickupState() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetHUDScale() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetHUDScaleRaw() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
@@ -115,6 +118,15 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool GetMotionControlsEnabledValue() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetMotionHarvestingToolMultiplierValue() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetMotionScopedMultiplierValue() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetMotionTargetingMultiplierValue() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetMouseSensitivityMultiplierForAircraft() const;
@@ -175,6 +187,42 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetTouchLookSensitivityValue() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetTouchTargetingMultiplierValue() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetTouchVerticalSensitivityValue() const;
+
+	UFUNCTION(BlueprintCallable)
+	void SetAllowGameVolumeWhenMinimized(EFortAllowBackgroundAudioSetting NewValue);
+
+	UFUNCTION(BlueprintCallable)
+	void SetAutoJoinGameVoiceChannel(bool bInChecked);
+
+	UFUNCTION(BlueprintCallable)
+	void SetColorBlindMode(int32 InMode);
+
+	UFUNCTION(BlueprintCallable)
+	void SetColorBlindStrength(int32 InColorBlindStrength);
+
+	UFUNCTION(BlueprintCallable)
+	void SetEnableRudderControl(bool bEnable);
+
+	UFUNCTION(BlueprintCallable)
+	void SetIgnoreGamepadInput(bool bIgnore);
+
+	UFUNCTION(BlueprintCallable)
+	void SetLockPrimaryInputMethodToMouse(bool bLock);
+
+	UFUNCTION(BlueprintCallable)
+	void SetShowVoiceIndicators(bool bInChecked);
+
+	UFUNCTION(BlueprintCallable)
+	void SetSubtitlesEnabled(bool bNewValue);
+
+	UFUNCTION(BlueprintCallable)
+	void SetVisualizeAudioSources(bool bEnable);
 
 
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member

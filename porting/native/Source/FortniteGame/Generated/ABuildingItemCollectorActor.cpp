@@ -2,6 +2,13 @@
 #include "ABuildingItemCollectorActor.h"
 #include "Net/UnrealNetwork.h"
 
+void ABuildingItemCollectorActor::ClearLootSpawnWorldTransformOverride()
+{
+	// CONFIDENCE: high; recovered native control flow and typed storage, see native-evidence.json.
+	// Native exec 0x142746ef0: clear the unreflected override-present byte.
+	bHasNativeLootSpawnWorldTransformOverride = false;
+}
+
 UFortWorldItemDefinition* ABuildingItemCollectorActor::GetCurrentActiveItem() const
 {
 	// Original address: 0x142747260.
@@ -33,6 +40,14 @@ void ABuildingItemCollectorActor::OnRep_TrackedInteractionData()
 void ABuildingItemCollectorActor::ServerSpawnItem_Implementation(const FFortItemEntry& OutputItem)
 {
 	// Body not recovered: reflection-derived stub.
+}
+
+void ABuildingItemCollectorActor::SetLootSpawnWorldTransformOverride(FTransform& Transform)
+{
+	// CONFIDENCE: high; recovered native control flow and typed storage, see native-evidence.json.
+	// Native exec 0x142747d20, body 0x141bea9f0: copy all 48 bytes, then set the presence byte.
+	NativeLootSpawnWorldTransformOverride = Transform;
+	bHasNativeLootSpawnWorldTransformOverride = true;
 }
 
 void ABuildingItemCollectorActor::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
