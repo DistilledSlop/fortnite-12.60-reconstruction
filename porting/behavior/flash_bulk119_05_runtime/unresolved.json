@@ -1,0 +1,520 @@
+[
+  {
+    "index": 0,
+    "class": "AFortPawn",
+    "function": "OnRep_TeleportCounter",
+    "address": "0x142737d30",
+    "reason": "Missing direct helper capture or requires complex uncaptured callee sequence."
+  },
+  {
+    "index": 1,
+    "class": "UCommonButton",
+    "function": "ClearSelection",
+    "address": "0x14080a190",
+    "reason": "Helper 0x1407f9880 calls unresolved helpers ['FUN_143022250', 'FUN_1407f7830', 'FUN_1407f9880']"
+  },
+  {
+    "index": 2,
+    "class": "APhysicsObject",
+    "function": "ApplyImpulse",
+    "address": "0x142b83970",
+    "reason": "Helper 0x141b38a90 calls unresolved helpers ['FUN_140694640', 'FUN_141b38a90']"
+  },
+  {
+    "index": 4,
+    "class": "AFortPlayerStateAthena",
+    "function": "IsInSquad",
+    "address": "0x142a8d880",
+    "reason": "Helper 0x141a4aa10 calls unresolved helpers ['FUN_141a4aa10', 'FUN_1419d3ff0', 'FUN_1419982c0']"
+  },
+  {
+    "index": 5,
+    "class": "UCommonTabListWidget",
+    "function": "DisableTabWithReason",
+    "address": "0x140814b20",
+    "reason": "Helper 0x142c0c240 calls unresolved helpers ['FUN_142c0c240', 'FUN_1407c2c80']; Helper 0x1407b91a0 calls unresolved helpers ['FUN_1407b91a0', 'FUN_14079d060', 'FUN_140687d00']"
+  },
+  {
+    "index": 6,
+    "class": "UFortBaseButton",
+    "function": "GetCurrentButtonPadding",
+    "address": "0x145204700",
+    "reason": "Helper 0x144d79380 calls unresolved helpers ['FUN_144d79380', 'FUN_141f894c0', 'FUN_144d7bab0']"
+  },
+  {
+    "index": 7,
+    "class": "UFortOutpostContext",
+    "function": "CanUpgradeBuilding",
+    "address": "0x142a0b140",
+    "reason": "Helper 0x142538d30 calls unresolved helpers ['FUN_142a679c0', 'FUN_144786700', 'FUN_142546320']"
+  },
+  {
+    "index": 8,
+    "class": "AFortPlayerControllerAthena",
+    "function": "CanPlayerCreateInCurrentVolume",
+    "address": "0x142a56360",
+    "reason": "Helper 0x1419c3880 calls unresolved helpers ['FUN_1419c3880', 'FUN_14290f690', 'FUN_14237f3d0']"
+  },
+  {
+    "index": 9,
+    "class": "UFortHomebaseManager",
+    "function": "GetHomebaseName",
+    "address": "0x142940610",
+    "reason": "Helper 0x1425128f0 calls unresolved helpers ['FUN_1425128f0', 'FUN_1421d8770']"
+  },
+  {
+    "index": 10,
+    "class": "AFortMissionStormShield",
+    "function": "GetSafeZones",
+    "address": "0x1429efd10",
+    "reason": "Helper 0x1406d93e0 calls unresolved helpers ['FUN_1406d93e0']"
+  },
+  {
+    "index": 11,
+    "class": "UFortMatchmakingKnobsModal",
+    "function": "ApplyChanges",
+    "address": "0x145289390",
+    "reason": "Indirect vtable dispatch at slot 0x518; target requires polymorphic/vtable resolution."
+  },
+  {
+    "index": 12,
+    "class": "UCMSContext",
+    "function": "GetLatestCreativeAds",
+    "address": "0x1451dcf20",
+    "reason": "Helper 0x144ccd8a0 calls unresolved helpers ['FUN_144ccd8a0', 'FUN_144cd6730', 'FUN_140680160']; Helper 0x144b64270 calls unresolved helpers ['FUN_144b64270']"
+  },
+  {
+    "index": 13,
+    "class": "UFortItemQuantityListEntryBase",
+    "function": "ClearPreviewData",
+    "address": "0x145277e90",
+    "reason": "Indirect vtable dispatch at slot 0x210; target requires polymorphic/vtable resolution."
+  },
+  {
+    "index": 14,
+    "class": "AFortGameplayEffectDeliveryActor",
+    "function": "OnRep_IsBeingKilled",
+    "address": "0x1407545b0",
+    "reason": "Indirect vtable dispatch at slot 0x6b0; target requires polymorphic/vtable resolution."
+  },
+  {
+    "index": 15,
+    "class": "UCustomCharacterPartAnimInstance",
+    "function": "FindChildCommponentFromAttachSocket",
+    "address": "0x142772760",
+    "reason": "Helper 0x141d7ab60 calls unresolved helpers ['FUN_141d7ab60', 'FUN_144114ee0', 'FUN_1447e2590']"
+  },
+  {
+    "index": 16,
+    "class": "UFortGamepadInputOptions",
+    "function": "GetControllerPlatform",
+    "address": "0x145246730",
+    "reason": "Helper 0x144e71f30 calls unresolved helpers ['FUN_140682ce0', 'FUN_142a3d9f0', 'FUN_1406800e0']"
+  },
+  {
+    "index": 17,
+    "class": "UFortThumbnailRenderer",
+    "function": "GetOrCreateAlphaMaskRenderTarget",
+    "address": "0x142b0eec0",
+    "reason": "Helper 0x14263ede0 calls unresolved helpers ['FUN_14261f4f0', 'FUN_144634550', 'FUN_142cd4ab0']"
+  },
+  {
+    "index": 18,
+    "class": "UAthenaChallengeSetDetails_Missions",
+    "function": "CanLevelBundle",
+    "address": "0x14518c860",
+    "reason": "Helper 0x144b69bb0 calls unresolved helpers ['FUN_144b69bb0', 'FUN_144b2b9f0']"
+  },
+  {
+    "index": 19,
+    "class": "UFortCharacterAttrSet",
+    "function": "OnRep_Fortitude",
+    "address": "0x142861dd0",
+    "reason": "Helper 0x1406ebb90 calls unresolved helpers ['FUN_142e8c400', 'FUN_142cea230', 'FUN_142e5d3b0']; Helper 0x141b7bd90 calls unresolved helpers ['FUN_14072f650', 'FUN_14070c8f0', 'FUN_1406aade0']; Helper 0x14070f1a0 calls unresolved helpers ['FUN_14070f1a0', 'FUN_142ec9900', 'FUN_140756aa0']; Helper 0x142cd4ab0 calls unresolved helpers ['FUN_142cd4630', 'FUN_142cd4ab0', 'FUN_142ce4890']; Helper 0x145803a44 calls unresolved helpers ['FUN_145803a44', 'FUN_145803af0']; Helper 0x1458039e4 calls unresolved helpers ['FUN_1458039e4', 'FUN_145803aac']; Helper 0x1406a8e40 calls unresolved helpers ['FUN_142ce9f90', 'FUN_142d696a0', 'FUN_142e8c400']; Helper 0x14285fa80 calls unresolved helpers ['FUN_140680300', 'FUN_1428603e0', 'FUN_14285fa80']"
+  },
+  {
+    "index": 20,
+    "class": "UFortResultsWidget",
+    "function": "GetRewardsByType",
+    "address": "0x1452c27a0",
+    "reason": "Helper 0x144dbbf70 calls unresolved helpers ['FUN_144dbbf70', 'FUN_1406af1d0']"
+  },
+  {
+    "index": 21,
+    "class": "AFortEventLevelNavigationActor",
+    "function": "GetDisplayDetails",
+    "address": "0x1428e37e0",
+    "reason": "Helper 0x1426ff020 calls unresolved helpers ['FUN_142c40540', 'FUN_140683960', 'FUN_1426ff020']"
+  },
+  {
+    "index": 22,
+    "class": "UAthenaSpatialHenchmenInspectionRoom",
+    "function": "GetAlterVariantToken",
+    "address": "0x1453494c0",
+    "reason": "Helper 0x144e719f0 calls unresolved helpers ['FUN_144e719f0', 'FUN_144e72020']"
+  },
+  {
+    "index": 23,
+    "class": "UFortCampaignHeroLoadoutItem",
+    "function": "GetTeamPerkItemDefinition",
+    "address": "0x142858a60",
+    "reason": "Helper 0x14251b500 calls unresolved helpers ['FUN_142af11c0', 'FUN_1425129f0', 'FUN_14251b500']"
+  },
+  {
+    "index": 25,
+    "class": "UFortMaterialProgressBar",
+    "function": "SetBackgroundColor",
+    "address": "0x14528aef0",
+    "reason": "Helper 0x144cab000 calls unresolved helpers ['FUN_144cab000', 'FUN_14433b290']"
+  },
+  {
+    "index": 26,
+    "class": "UFortRealMoneyOfferDetails",
+    "function": "ClearActionOnPurchaseButton",
+    "address": "0x1452bdc30",
+    "reason": "Helper 0x1407fa9e0 calls unresolved helpers ['FUN_140801750', 'FUN_14418a080', 'FUN_1407fa9e0']"
+  },
+  {
+    "index": 27,
+    "class": "UFortUpgradeScreenBase",
+    "function": "CanPreview",
+    "address": "0x14531e520",
+    "reason": "Helper 0x145110d10 calls unresolved helpers ['FUN_145110d10']"
+  },
+  {
+    "index": 29,
+    "class": "AFortWeaponPickaxeDualWieldAthena",
+    "function": "GetIdleOffhandVFXComponent",
+    "address": "0x142b4f720",
+    "reason": "Helper 0x141a79840 calls unresolved helpers ['FUN_141dcc1d0', 'FUN_143e90d10', 'FUN_141ed1800']"
+  },
+  {
+    "index": 30,
+    "class": "UAthenaSquadListBase",
+    "function": "UpdateIsTeamMiniGameOnGameStateChanged",
+    "address": "0x1451c7330",
+    "reason": "Helper 0x144b51fd0 calls unresolved helpers ['FUN_140789600', 'FUN_145803c70', 'FUN_144b4a3f0']"
+  },
+  {
+    "index": 31,
+    "class": "UFortAccountItem",
+    "function": "GetRecyclingRefunds",
+    "address": "0x14278e7d0",
+    "reason": "Helper 0x142010d10 calls unresolved helpers ['FUN_14278d2d0', 'FUN_142ebd0a0', 'FUN_1406d9800']"
+  },
+  {
+    "index": 32,
+    "class": "UFortCampaignHeroLoadoutItemDefinition",
+    "function": "GetCommanderSlot",
+    "address": "0x142858110",
+    "reason": "Helper 0x1425105c0 calls unresolved helpers ['FUN_142c0c240', 'FUN_1425105c0', 'FUN_1458039e4']; Helper 0x14079d060 calls unresolved helpers ['FUN_14079d060', 'FUN_145803c70']"
+  },
+  {
+    "index": 33,
+    "class": "UFortExperimentContext",
+    "function": "ShouldShowInGameStoreToast",
+    "address": "0x1428e42e0",
+    "reason": "Helper 0x141e10940 calls unresolved helpers ['FUN_141e108a0', 'FUN_141e10940']"
+  },
+  {
+    "index": 34,
+    "class": "UFortItemAutoMulchSettingRow",
+    "function": "GetAutoMulchCategoryText",
+    "address": "0x145267460",
+    "reason": "Helper 0x144ebc5c0 calls unresolved helpers ['FUN_142c0c240', 'FUN_142bedc40', 'FUN_144ebc5c0']"
+  },
+  {
+    "index": 37,
+    "class": "UFortSchematicItem",
+    "function": "GetSchematicQuantityProduced",
+    "address": "0x142ad2560",
+    "reason": "Helper 0x1425491b0 calls unresolved helpers ['FUN_142acf860', 'FUN_142548bf0', 'FUN_1425491b0']"
+  },
+  {
+    "index": 38,
+    "class": "UFortVehicleAudioVoice",
+    "function": "SetParam",
+    "address": "0x142b2b4c0",
+    "reason": "Helper 0x1424bc590 calls unresolved helpers ['FUN_144230ed0', 'FUN_14249d170', 'FUN_1406a9dc0']"
+  },
+  {
+    "index": 39,
+    "class": "AFortLobbyBeaconClientRM",
+    "function": "SetLocalReadyStatus",
+    "address": "0x142984af0",
+    "reason": "Helper 0x1425563d0 calls unresolved helpers ['FUN_1406a9dc0', 'FUN_142982a00', 'FUN_1429803d0']"
+  },
+  {
+    "index": 40,
+    "class": "AFortVehicleManager",
+    "function": "GetVehicleCountByTag",
+    "address": "0x142b2e8c0",
+    "reason": "Helper 0x141f8ab40 calls unresolved helpers ['FUN_142ce11c0', 'FUN_141f8ab40']"
+  },
+  {
+    "index": 41,
+    "class": "UAthenaCustomizationPicker",
+    "function": "GetQualifiedFilterDisplayName",
+    "address": "0x145190710",
+    "reason": "Helper 0x144afb0d0 calls unresolved helpers ['FUN_142c0c240', 'FUN_145803c70', 'FUN_140683490']"
+  },
+  {
+    "index": 42,
+    "class": "UAthenaSpectateMatchModalBase",
+    "function": "GetFriendNames",
+    "address": "0x1451bd290",
+    "reason": "Helper 0x144c5cbb0 calls unresolved helpers ['FUN_140a0ec60', 'FUN_144c5cbb0']"
+  },
+  {
+    "index": 43,
+    "class": "UCommonPopupMenu",
+    "function": "SetContextProvider",
+    "address": "0x140815ba0",
+    "reason": "Helper 0x1407f6250 calls unresolved helpers ['FUN_1407f6250', 'FUN_1408141c0', 'FUN_142ee3b30']"
+  },
+  {
+    "index": 45,
+    "class": "UFortBuildingActorSet",
+    "function": "OnRep_BuildTime",
+    "address": "0x142854e20",
+    "reason": "Indirect vtable dispatch at slot 0x40; target requires polymorphic/vtable resolution."
+  },
+  {
+    "index": 46,
+    "class": "UFortCreativeIslandGeneration",
+    "function": "GetShowTemplateIslands",
+    "address": "0x145220810",
+    "reason": "Helper 0x144d7b880 calls unresolved helpers ['FUN_144d7b880']"
+  },
+  {
+    "index": 47,
+    "class": "UFortGameStateComponent_EventLevel",
+    "function": "GetLastNavObject",
+    "address": "0x142924460",
+    "reason": "Helper 0x141a799c0 calls unresolved helpers ['FUN_141a799c0']"
+  },
+  {
+    "index": 48,
+    "class": "UFortItemWidget_NUI",
+    "function": "SetItemToRepresent",
+    "address": "0x14527d450",
+    "reason": "Helper 0x144ddfbd0 calls unresolved helpers ['FUN_144ddfbd0', 'FUN_142ee3b30', 'FUN_1406a7e80']"
+  },
+  {
+    "index": 49,
+    "class": "UFortMinigameLogicComponent",
+    "function": "AddMinigameTag",
+    "address": "0x1429d1cd0",
+    "reason": "Helper 0x142082c00 calls unresolved helpers ['FUN_143e8b3b0', 'FUN_142082c00']"
+  },
+  {
+    "index": 50,
+    "class": "UFortPlayerControllerAthenaXPComponent",
+    "function": "OnRep_HasBRMatchReportCompletedProfileVer",
+    "address": "0x142a65c20",
+    "reason": "Indirect vtable dispatch at slot 0x50; target requires polymorphic/vtable resolution."
+  },
+  {
+    "index": 51,
+    "class": "UFortRegisteredPlayerInfo",
+    "function": "GetAbilitySystemComponent",
+    "address": "0x142ac22d0",
+    "reason": "Helper 0x141f5d880 calls unresolved helpers ['FUN_141f5d880', 'FUN_142ec9900', 'FUN_140756aa0']"
+  },
+  {
+    "index": 52,
+    "class": "UFortStoreSummary",
+    "function": "SetCards",
+    "address": "0x1452fc0e0",
+    "reason": "Helper 0x144ee2220 calls unresolved helpers ['FUN_144e97b10', 'FUN_143d4b880', 'FUN_142e80820']"
+  },
+  {
+    "index": 53,
+    "class": "UFortVehicleAimingWeaponComp",
+    "function": "OnRep_TargetLocalAimOrientationCorrectedRepped",
+    "address": "0x142b2b480",
+    "reason": "Indirect vtable dispatch at slot 0x250; target requires polymorphic/vtable resolution."
+  },
+  {
+    "index": 55,
+    "class": "AFortItemPreviewOnPawnActor",
+    "function": "GetPawnLocation",
+    "address": "0x14296ede0",
+    "reason": "Helper 0x141fc1e00 calls unresolved helpers ['FUN_141fc1e00']"
+  },
+  {
+    "index": 56,
+    "class": "AFortMission_RiftSpawners",
+    "function": "SetCalendarAllowsActive",
+    "address": "0x1429e4e40",
+    "reason": "Helper 0x1420c9300 calls unresolved helpers ['FUN_143f6c200', 'FUN_1420af740', 'FUN_1428ee970']"
+  },
+  {
+    "index": 57,
+    "class": "AFortProjectileTrajectory",
+    "function": "SetTrajectorySpline",
+    "address": "0x142aac870",
+    "reason": "Indirect vtable dispatch at slot 0x628; target requires polymorphic/vtable resolution."
+  },
+  {
+    "index": 58,
+    "class": "AFortWeaponRangedDualFerret",
+    "function": "GetCachedFerretVehicle",
+    "address": "0x142b51ae0",
+    "reason": "Helper 0x1426cbbf0 calls unresolved helpers ['FUN_1427d4aa0', 'FUN_14269c820', 'FUN_1426cbbf0']"
+  },
+  {
+    "index": 59,
+    "class": "AWorkerBoardBase",
+    "function": "SetupWorkerPortraits",
+    "address": "0x142b99d00",
+    "reason": "Helper 0x1406d93e0 calls unresolved helpers ['FUN_1406d93e0']; Helper 0x141fd0710 calls unresolved helpers ['FUN_140682ce0', 'FUN_142ed4d40', 'FUN_145803c70']"
+  },
+  {
+    "index": 60,
+    "class": "UAthenaBattleMapTimelineWidget",
+    "function": "OnReplayLevelStreamingChanged",
+    "address": "0x145180400",
+    "reason": "Helper 0x144c729d0 calls unresolved helpers ['FUN_1407f7220', 'FUN_1407f7450', 'FUN_142730270']"
+  },
+  {
+    "index": 61,
+    "class": "UAthenaIGMPartyMemberWidget",
+    "function": "IsPlayingFortnite",
+    "address": "0x1451a4200",
+    "reason": "Helper 0x144bbb360 calls unresolved helpers ['FUN_140d91b30', 'FUN_144bbb360', 'FUN_1422618d0']"
+  },
+  {
+    "index": 62,
+    "class": "UAthenaPlayerInfoBase",
+    "function": "SetPlayerState",
+    "address": "0x1451b1620",
+    "reason": "Helper 0x144b4ec00 calls unresolved helpers ['FUN_14516f7a0', 'FUN_144b2d2f0', 'FUN_144bd0bf0']"
+  },
+  {
+    "index": 63,
+    "class": "UAthenaSpectatorHitPointBarBase",
+    "function": "SetPlayerData",
+    "address": "0x1451be100",
+    "reason": "Helper 0x144fefcb0 calls unresolved helpers ['FUN_1451bc1b0', 'FUN_144ff0d00', 'FUN_144fc7800']"
+  },
+  {
+    "index": 64,
+    "class": "UAthenaWatchers",
+    "function": "UpdateVisibilityBasedOnHUDSettings",
+    "address": "0x1451cbff0",
+    "reason": "Indirect vtable dispatch at slot 0x270; target requires polymorphic/vtable resolution."
+  },
+  {
+    "index": 65,
+    "class": "UCobaltTournamentBracketWidgetBase",
+    "function": "UpdateTournamentBracket",
+    "address": "0x1451e2950",
+    "reason": "Helper 0x144c0e450 calls unresolved helpers ['FUN_1451e1050', 'FUN_144c0e450', 'FUN_1451e0450']"
+  },
+  {
+    "index": 66,
+    "class": "UCommonWidgetGroupBase",
+    "function": "RemoveAll",
+    "address": "0x1408187b0",
+    "reason": "Indirect vtable dispatch at slot 0x278; target requires polymorphic/vtable resolution."
+  },
+  {
+    "index": 67,
+    "class": "UDiscoWidgetBase",
+    "function": "UpdateAllUI",
+    "address": "0x1451e6490",
+    "reason": "Helper 0x144c0c770 calls unresolved helpers ['FUN_142bad740', 'FUN_144bece30', 'FUN_142c253c0']; Helper 0x144c08f20 calls unresolved helpers ['FUN_144bece30', 'FUN_1451e4b70', 'FUN_1418dbdb0']"
+  },
+  {
+    "index": 68,
+    "class": "UFortAbilityTask_PlayMontageWaitTarget",
+    "function": "EnableScalingWithRateOfFire",
+    "address": "0x142788fe0",
+    "reason": "Indirect vtable dispatch at slot 0x30; target requires polymorphic/vtable resolution."
+  },
+  {
+    "index": 69,
+    "class": "UFortAmbientOneShotInstance",
+    "function": "Reset",
+    "address": "0x1427aec90",
+    "reason": "Indirect vtable dispatch at slot 0x40; target requires polymorphic/vtable resolution."
+  },
+  {
+    "index": 70,
+    "class": "UFortAthenaNpcPatrollingComponent",
+    "function": "SetPatrolPath",
+    "address": "0x142831bb0",
+    "reason": "Helper 0x1418d3810 calls unresolved helpers ['FUN_1418d3810']"
+  },
+  {
+    "index": 71,
+    "class": "UFortCampaignTeamMemberResult",
+    "function": "UpdateMemberWithUniqueNetID",
+    "address": "0x14520a4b0",
+    "reason": "Helper 0x14513d3d0 calls unresolved helpers ['FUN_141e63650', 'FUN_14513cdf0', 'FUN_143d5c530']"
+  },
+  {
+    "index": 72,
+    "class": "UFortChargingSet_Scanner",
+    "function": "OnRep_Charge",
+    "address": "0x14286cc00",
+    "reason": "Indirect vtable dispatch at slot 0x40; target requires polymorphic/vtable resolution."
+  },
+  {
+    "index": 73,
+    "class": "UFortCollectionBookSlotButton",
+    "function": "GetPopupMenu",
+    "address": "0x14520f8a0",
+    "reason": "Helper 0x1450b0d20 calls unresolved helpers ['FUN_143dbe060', 'FUN_1407f6250', 'FUN_1450b0d20']"
+  },
+  {
+    "index": 74,
+    "class": "UFortControllerComponent_MapDiscoverability",
+    "function": "SetDiscoverStatusByTag",
+    "address": "0x1428a65b0",
+    "reason": "Helper 0x1418d3310 calls unresolved helpers ['FUN_143e96810', 'FUN_143e92420', 'FUN_140690ac0']"
+  },
+  {
+    "index": 75,
+    "class": "UFortCreativePermissionOptions",
+    "function": "UpdatePermissions",
+    "address": "0x145225fd0",
+    "reason": "Helper 0x144d9ea50 calls unresolved helpers ['FUN_142a8b590', 'FUN_144d9ea50']; Helper 0x140690a50 calls unresolved helpers ['FUN_140690a50']; Helper 0x140690ac0 calls unresolved helpers ['FUN_140690ac0']"
+  },
+  {
+    "index": 76,
+    "class": "UFortDropdownDelegateRegistrar",
+    "function": "GetOrCreateDropdownMenu",
+    "address": "0x14522e960",
+    "reason": "Helper 0x144d7adb0 calls unresolved helpers ['FUN_143dbe060', 'FUN_140789600', 'FUN_144d7adb0']"
+  },
+  {
+    "index": 77,
+    "class": "UFortFXStaticMeshComponent",
+    "function": "SetSource",
+    "address": "0x1428ea740",
+    "reason": "Helper 0x141dd9e40 calls unresolved helpers ['FUN_141dd9e40', 'FUN_14410a300']"
+  },
+  {
+    "index": 78,
+    "class": "UFortGridPickerButton",
+    "function": "SetIsOpen",
+    "address": "0x14524fdb0",
+    "reason": "Helper 0x144ee2a10 calls unresolved helpers ['FUN_144ee2a10']"
+  },
+  {
+    "index": 80,
+    "class": "UFortLayeredAudioComponent",
+    "function": "SetFloatParameterExt",
+    "address": "0x14297f890",
+    "reason": "Helper 0x1424bbe70 calls unresolved helpers ['FUN_1440c9db0', 'FUN_1440b3260', 'FUN_1424bbe70']"
+  },
+  {
+    "index": 83,
+    "class": "UFortPlayerPowerRatingToast",
+    "function": "SetToast",
+    "address": "0x1452a5350",
+    "reason": "Helper 0x144e1cd20 calls unresolved helpers ['FUN_141e63650', 'FUN_144e1cd20', 'FUN_143d5c530']"
+  }
+]

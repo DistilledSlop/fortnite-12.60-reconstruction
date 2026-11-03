@@ -2,6 +2,13 @@
 #include "UFortHealthBarComponent.h"
 #include "Net/UnrealNetwork.h"
 
+FText UFortHealthBarComponent::GetHealthBarDisplayText() const
+{
+	// CONFIDENCE: high
+	// Native target 0x1429379b0.
+	return DisplayText;
+}
+
 void UFortHealthBarComponent::OnRep_DisplayText()
 {
 	// Body not recovered: reflection-derived stub.

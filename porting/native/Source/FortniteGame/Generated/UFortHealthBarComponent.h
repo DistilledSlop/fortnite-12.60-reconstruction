@@ -50,6 +50,9 @@ public:
 	UPROPERTY()
 	UCurveLinearColor* HealthBarColorCurve;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FText GetHealthBarDisplayText() const;
+
 	UFUNCTION()
 	void OnRep_DisplayText();
 

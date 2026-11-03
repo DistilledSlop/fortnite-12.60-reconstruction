@@ -2,6 +2,13 @@
 #include "AFortMissionStormSafeZone.h"
 #include "Net/UnrealNetwork.h"
 
+float AFortMissionStormSafeZone::GetConvertedSafeZoneRadius() const
+{
+	// CONFIDENCE: high
+	// Native target 0x1429ef9f0.
+	return NativeRecoveredFloat_0x258 * SafeZoneRadius;
+}
+
 float AFortMissionStormSafeZone::GetSafeZoneRadius() const
 {
 	// Original address: 0x1429efcf0.

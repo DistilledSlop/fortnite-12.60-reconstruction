@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "Engine/DataAsset.h"
 
+#include "EFortDayPhase.h"
+
 class UFortMusicAsset;
 
 #include "UFortMusicTimeOfDayBank.generated.h"
@@ -19,6 +21,9 @@ public:
 	// table index 0, flags 0x10000000010001
 	UPROPERTY()
 	UFortMusicAsset* Assets[4];
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortMusicAsset* GetAssetFromDayPhase(EFortDayPhase::Type DayPhase) const;
 
 };
 

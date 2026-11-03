@@ -59,5 +59,8 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure, BlueprintAuthorityOnly)
 	AActor* GetActorLinkedTo() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void SetPerformLinkingCheckOnBeginPlay(bool bCheckOnBeginPlay);
+
 };
 

@@ -35,6 +35,9 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_ReplicatedSpawnInfo, Transient)
 	FReplicatedSpawnInfo ReplicatedSpawnInfo;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FReplicatedSpawnInfo GetSpawnInfo() const;
+
 	UFUNCTION()
 	void OnRep_ReplicatedSpawnInfo();
 

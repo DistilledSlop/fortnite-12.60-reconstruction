@@ -29,5 +29,8 @@ public:
 	UPROPERTY()
 	int32 AmountCollected;
 
+	UFUNCTION(BlueprintCallable)
+	void SetParams(UFortWorldItemDefinition* _CollectedItemDefinition, AFortPlayerController* _CollectedBy, int32 _AmountCollected, UFortItemCollectedParams*& ThisParam);
+
 };
 

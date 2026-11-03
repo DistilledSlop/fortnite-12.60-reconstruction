@@ -91,6 +91,9 @@ public:
 	UPROPERTY(Transient)
 	bool bIsKeyboardLookPressed;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetFuseLength() const;
+
 	UFUNCTION(BlueprintCallable, BlueprintPure, BlueprintAuthorityOnly)
 	bool IsCurrentlyDelayingLaunch() const;
 

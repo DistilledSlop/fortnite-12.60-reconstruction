@@ -1483,6 +1483,9 @@ public:
 	bool IsClientTimingOut() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool IsInAircraft() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsNearActiveEncounters() const;
 
 	UFUNCTION(NetMulticast, Reliable)

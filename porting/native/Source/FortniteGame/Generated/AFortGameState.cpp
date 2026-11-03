@@ -48,6 +48,12 @@ TEnumAsByte<EFortGameplayState::Type> AFortGameState::GetGameplayState() const
 	return GameplayState;
 }
 
+float AFortGameState::GetMatchTime() const
+{
+	// CONFIDENCE: high. Native target 0x141e9da30 tail-dispatches slot 0x630.
+	return GetServerWorldTimeSeconds();
+}
+
 bool AFortGameState::GetPlayerRespawningBlocked_Temporarily() const
 {
 	// Original address: 0x14290d690.

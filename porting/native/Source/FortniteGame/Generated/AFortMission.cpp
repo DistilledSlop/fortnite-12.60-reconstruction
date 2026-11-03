@@ -3,11 +3,25 @@
 #include "UFortMissionInfo.h"
 #include "Net/UnrealNetwork.h"
 
+void AFortMission::AddCompletionTag(FGameplayTag NewCompletionTag)
+{
+	// CONFIDENCE: high
+	// Native body at 0x1420afc20 calls FGameplayTagContainer::AddTag (0x143e8b3b0) on MissionCompletionTags at offset 0x3a8.
+	MissionCompletionTags.AddTag(NewCompletionTag);
+}
+
 float AFortMission::GetCurrentFocusPercentage() const
 {
 	// Exact original embedded struct scalar leaf; see README.md.
 	// CONFIDENCE: HIGH
 	return CurrentFocusData.CurrentFocusPercentage;
+}
+
+float AFortMission::GetExpectedCompletionTime_Implementation() const
+{
+	// CONFIDENCE: high
+	// Native target 0x1420b8240.
+	return MissionInfo ? MissionInfo->ExpectedCompletionTime : -1.0f;
 }
 
 FGuid AFortMission::GetMissionGuid() const

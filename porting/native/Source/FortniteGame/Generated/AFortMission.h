@@ -230,8 +230,15 @@ public:
 	UPROPERTY(Transient)
 	FFortMissionInstancedConfigData ConfigData;
 
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void AddCompletionTag(FGameplayTag NewCompletionTag);
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetCurrentFocusPercentage() const;
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, BlueprintPure)
+	float GetExpectedCompletionTime() const;
+	virtual float GetExpectedCompletionTime_Implementation() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	FGuid GetMissionGuid() const;

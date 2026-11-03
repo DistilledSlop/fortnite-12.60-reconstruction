@@ -44,9 +44,15 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_ZoneRadius)
 	float SafeZoneRadius;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x258): not a UPROPERTY, not replicated.
+	float NativeRecoveredFloat_0x258;
+
 	// table index 0, flags 0x40000000080008
 	UPROPERTY()
 	UAbilitySystemComponent* AbilityComponent;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetConvertedSafeZoneRadius() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetSafeZoneRadius() const;

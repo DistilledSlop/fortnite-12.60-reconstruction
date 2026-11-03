@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UBlueprintContextBase.h"
 
+#include "ESpectatorCameraType.h"
 #include "FFortReplayFXState.h"
 #include "FFortReplayPlaybackState.h"
 #include "FHighlightReelPlayingDelegate.h"
@@ -148,6 +149,9 @@ public:
 	// table index 0, flags 0x40000000000000
 	UPROPERTY()
 	AFortPlayerControllerSpectating* SpectatingPC;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FText GetCameraNameFromType(ESpectatorCameraType CamType) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetMaxMapZoomLevel() const;

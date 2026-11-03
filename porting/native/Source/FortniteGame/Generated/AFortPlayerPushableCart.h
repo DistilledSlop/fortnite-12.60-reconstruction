@@ -127,6 +127,9 @@ public:
 	virtual AActor* GetCameraActor_Implementation();
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetCartDistanceAlongSpline() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool GetIsPlayerPushable() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

@@ -36,8 +36,10 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_CurrentMinigame, Transient)
 	AFortMinigame* CurrentMinigame;
 
+private:
 	UFUNCTION()
 	void OnRep_CurrentMinigame();
+public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 

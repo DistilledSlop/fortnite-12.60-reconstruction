@@ -1,0 +1,142 @@
+[
+  {
+    "class": "AFortPlayerPawn",
+    "function": "DontCrossArms",
+    "target": "0x142312230",
+    "capture": "porting/generated/native111-virtual-expanded/0x142312230.c",
+    "reason": "Cosmetic manager and pawn cosmetic fields, virtual interface query and gameplay tags lack mapped typed contracts."
+  },
+  {
+    "class": "AFortPlayerPawn",
+    "function": "DontHandsOnHips",
+    "target": "0x142312310",
+    "capture": "porting/generated/native111-virtual-expanded/0x142312310.c",
+    "reason": "Cosmetic manager and pawn cosmetic fields, virtual interface query and gameplay tags lack mapped typed contracts."
+  },
+  {
+    "class": "AFortPlayerPawn",
+    "function": "GetFrontendAnimMontageIdleOverride",
+    "target": "0x14231c000",
+    "capture": "porting/generated/native111-virtual-expanded/0x14231c000.c",
+    "reason": "Cosmetic manager, item selection, asset resolution and fallback helper contracts not yet established."
+  },
+  {
+    "class": "AFortPlayerPawn",
+    "function": "IsActivelySkydiving",
+    "target": "0x142330ff0",
+    "capture": "porting/generated/native111-virtual-expanded/0x142330ff0.c",
+    "reason": "Native movement fields, transform helper and velocity calculations lack complete typed mapping."
+  },
+  {
+    "class": "AFortPlayerPawn",
+    "function": "IsInInteractBlockingVehicle",
+    "target": "0x1423318a0",
+    "capture": "porting/generated/native111-virtual-expanded/0x1423318a0.c",
+    "reason": "Vehicle lookup, class cast and vehicle predicate virtual slot lack established typed mapping."
+  },
+  {
+    "class": "AFortWeapon",
+    "function": "GetLocalRemainingAmmo",
+    "target": "0x14269d660",
+    "capture": "porting/generated/native101-virtual/0x14269d660.c",
+    "reason": "Virtual slot 0x7d8 has no established typed declaration or target implementation."
+  },
+  {
+    "class": "AFortWeapon",
+    "function": "GetReloadProgress",
+    "target": "0x14269e7f0",
+    "capture": "porting/generated/native101-virtual/0x14269e7f0.c",
+    "reason": "World time and reload timestamp field mappings plus virtual IsReloading implementation incomplete."
+  },
+  {
+    "class": "AFortWeapon",
+    "function": "GetRemainingAmmo",
+    "target": "0x14269e890",
+    "capture": "porting/generated/native101-virtual/0x14269e890.c",
+    "reason": "Virtual slot 0x7d8 has no established typed declaration or target implementation."
+  },
+  {
+    "class": "AFortWeapon",
+    "function": "GetTimeToNextFire",
+    "target": "0x14269fbe0",
+    "capture": "porting/generated/native101-virtual/0x14269fbe0.c",
+    "reason": "Controller lookup, typed controller timing helpers, and runtime option mapping unresolved."
+  },
+  {
+    "class": "AFortWeapon",
+    "function": "IsReloading",
+    "target": "0x1426a5d60",
+    "capture": "porting/generated/native111-virtual-targets/0x1426a5d60.c",
+    "reason": "Timer-manager handle validity and timer-manager fields lack typed native contract."
+  },
+  {
+    "class": "AFortMission",
+    "function": "GetCurrentBluGloRewards",
+    "target": "0x1420b7b00",
+    "capture": "porting/generated/native111-virtual-expanded/0x1420b7b00.c",
+    "reason": "World game state/reward data traversal and float-to-int rounding require typed helper mappings."
+  },
+  {
+    "class": "AFortWeaponPickaxeAthena",
+    "function": "GetIdleVFXComponent",
+    "target": "0x141a798a0",
+    "capture": "porting/generated/native111-virtual-expanded/0x141a798a0.c",
+    "reason": "Gameplay-tag component lookup helper and fallback component field mapping incomplete."
+  },
+  {
+    "class": "AFortWeaponPickaxeAthena",
+    "function": "GetSwingVFXComponent",
+    "target": "0x141a7c6c0",
+    "capture": "porting/generated/native111-virtual-expanded/0x141a7c6c0.c",
+    "reason": "Gameplay-tag component lookup helper and fallback component field mapping incomplete."
+  },
+  {
+    "class": "UFortGameplayAbility",
+    "function": "GetAbilityTargetingLevel",
+    "target": "0x1415f7d10",
+    "capture": "porting/generated/native111-virtual-expanded/0x1415f7d10.c",
+    "reason": "Ability spec handle and target actor helper 0x1415f78b0 contract unresolved."
+  },
+  {
+    "class": "UFortGameplayAbility",
+    "function": "SetupPreviewImageOverride",
+    "target": "0x1406801e0",
+    "capture": "porting/generated/callee_probe/inventory_owner_ammo/0x1406801e0.c",
+    "reason": "Already present in canonical manifest as SetupPreviewImageOverride_Implementation."
+  },
+  {
+    "class": "AFortPawn",
+    "function": "EquipBestWeapon",
+    "target": "0x142314d40",
+    "capture": "porting/generated/callee_probe/weapon_selection2/0x142314d40.c",
+    "reason": "Inventory array native storage and equip helper 0x142314fe0 contract unresolved."
+  },
+  {
+    "class": "AFortPlayerStateZone",
+    "function": "IsPlayerDead",
+    "target": "0x14241bb60",
+    "capture": "porting/generated/native111-virtual-expanded/0x14241bb60.c",
+    "reason": "Player controller-to-pawn virtual and pawn death-state helper lack mapped typed contracts."
+  },
+  {
+    "class": "UAthenaCosmeticItemDefinition",
+    "function": "IsEnabledInSTW",
+    "target": "0x141d548b0",
+    "capture": "porting/generated/native111-virtual-expanded/0x141d548b0.c",
+    "reason": "Virtual item category 0x298 and runtime options byte 0x7fe lack mapped typed declarations."
+  },
+  {
+    "class": "UFortAccountItem",
+    "function": "IsFavorite",
+    "target": "0x142016160",
+    "capture": "porting/generated/native111-virtual-expanded/0x142016160.c",
+    "reason": "favorite is reflected at 0xc4, but native byte 0xe2 requires a proven nonoverlapping field."
+  },
+  {
+    "class": "UHUDLayoutToolPlacementWidget",
+    "function": "GetIsOverlapping",
+    "target": "0x1406801e0",
+    "capture": "porting/generated/callee_probe/inventory_owner_ammo/0x1406801e0.c",
+    "reason": "Already present in canonical manifest as GetIsOverlapping_Implementation."
+  }
+]

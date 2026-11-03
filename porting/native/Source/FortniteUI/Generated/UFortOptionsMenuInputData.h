@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "Engine/DataAsset.h"
 
+#include "EFortInputActionGroup.h"
 #include "FFortActionKeyMapping.h"
 #include "UCommonTextBlock.h"
 
@@ -44,6 +45,9 @@ public:
 	// table index 0, flags 0x10000000000000
 	UPROPERTY()
 	FFortActionKeyMapping ActionKeyMapping;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	EFortInputActionGroup GetInputActionGroup() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetInputScale() const;

@@ -14,6 +14,7 @@
 
 class UFortVideoPlayerWidget;
 class UImage;
+class UMediaPlayer;
 class USoundMix;
 
 #include "UFortActivatableVideoPanel.generated.h"
@@ -83,6 +84,9 @@ public:
 	// table index 0, flags 0x40000000000001
 	UPROPERTY()
 	USoundMix* ActiveSoundMix;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UMediaPlayer* GetMediaPlayer() const;
 
 };
 

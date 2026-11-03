@@ -1,0 +1,555 @@
+[
+  {
+    "index": 0,
+    "class": "UFortGlobalUIContext",
+    "function": "CanMatchmake",
+    "address": "0x145244490",
+    "reason": "CanMatchmake requires complex matchmaker client state validation FUN_144cc15f0 (208 lines)"
+  },
+  {
+    "index": 2,
+    "class": "UFortHomebaseSet",
+    "function": "OnRep_InventorySizeBonus",
+    "address": "0x142946e60",
+    "reason": "OnRep_InventorySizeBonus calls uncaptured inventory size bonus propagation FUN_141b7bd90 / FUN_1406ebb90"
+  },
+  {
+    "index": 3,
+    "class": "AFortOctopusVehicle",
+    "function": "GetIsExtendToggled",
+    "address": "0x142a08950",
+    "reason": "GetIsExtendToggled dispatches through unproven vtable slot 0xca8"
+  },
+  {
+    "index": 4,
+    "class": "UFortUIScoreReport",
+    "function": "GetBadgeScore",
+    "address": "0x145318c40",
+    "reason": "GetBadgeScore requires score report callee calculations FUN_1450e4a10 and FUN_1425186d0"
+  },
+  {
+    "index": 5,
+    "class": "UFortSpectatorCameraSettingsTab",
+    "function": "SetBattleMapAutomaticCameraPlacement",
+    "address": "0x1452e23f0",
+    "reason": "SetBattleMapAutomaticCameraPlacement calls uncaptured spectator camera tab setter FUN_144fcf460"
+  },
+  {
+    "index": 6,
+    "class": "UHUDLayoutToolContext",
+    "function": "ClearLayout",
+    "address": "0x14532ac90",
+    "reason": "ClearLayout calls uncaptured layout clearing helpers FUN_144d2f370"
+  },
+  {
+    "index": 7,
+    "class": "UFortMiniMapComponent",
+    "function": "SetMiniMapIcon",
+    "address": "0x1429dfc30",
+    "reason": "SetMiniMapIcon dispatches through unproven vtable slot 0x5e8 and calls FUN_1425d2340"
+  },
+  {
+    "index": 8,
+    "class": "UFortNiagaraGameplayLibrary",
+    "function": "GetEnabledSoftPtr",
+    "address": "0x142a00420",
+    "reason": "GetEnabledSoftPtr calls uncaptured soft pointer validation FUN_141dcb7f0"
+  },
+  {
+    "index": 9,
+    "class": "UFortChallengeBundleItemDefinition",
+    "function": "GetBundleLevelForQuest",
+    "address": "0x14285bf50",
+    "reason": "GetBundleLevelForQuest calls uncaptured quest level resolution FUN_141c96590"
+  },
+  {
+    "index": 10,
+    "class": "UFortTutorialContext",
+    "function": "ClearTutorialCallouts",
+    "address": "0x14530a270",
+    "reason": "ClearTutorialCallouts calls uncaptured tutorial context callout clearing FUN_144d1dc70"
+  },
+  {
+    "index": 11,
+    "class": "UFortCreativeSettingsFlow",
+    "function": "GetAvailableDescriptionTags",
+    "address": "0x145229c60",
+    "reason": "GetAvailableDescriptionTags requires runtime options description tags copy FUN_144d78740"
+  },
+  {
+    "index": 13,
+    "class": "UFortItemDetailsHostPanel",
+    "function": "SetInspectMode",
+    "address": "0x14526acf0",
+    "reason": "SetInspectMode calls uncaptured panel mode update FUN_144f1ead0"
+  },
+  {
+    "index": 14,
+    "class": "UFortStoreFrontOfferWidgetBase",
+    "function": "AddOffer",
+    "address": "0x1452f59c0",
+    "reason": "AddOffer calls uncaptured storefront offer manager FUN_143d5a140"
+  },
+  {
+    "index": 15,
+    "class": "UCommonActionWidget",
+    "function": "GetDisplayText",
+    "address": "0x14080a950",
+    "reason": "GetDisplayText requires CommonUI action widget text resolution FUN_1407c2b20 and table lookup"
+  },
+  {
+    "index": 16,
+    "class": "UFortDeployableBaseLibrary",
+    "function": "GetGameDifficultyInfo",
+    "address": "0x1428d5f00",
+    "reason": "GetGameDifficultyInfo requires difficulty row unpacking and uncaptured callee FUN_1424ab3b0"
+  },
+  {
+    "index": 17,
+    "class": "UFortPlayerSettingsComponentBase",
+    "function": "GetHUDVisibilityTags",
+    "address": "0x142814f00",
+    "reason": "GetHUDVisibilityTags dispatches through unproven vtable slot 1000"
+  },
+  {
+    "index": 18,
+    "class": "AFortHookGunRope",
+    "function": "OnRep_HookGunRopeRepData",
+    "address": "0x142946e40",
+    "reason": "OnRep_HookGunRopeRepData calls uncaptured rope mesh and component setup FUN_1419af3a0"
+  },
+  {
+    "index": 19,
+    "class": "UCreativePropertyEditWidgetBase",
+    "function": "GetEntryDescriptionText",
+    "address": "0x1452250a0",
+    "reason": "GetEntryDescriptionText dispatches through unproven vtable slot 0x490"
+  },
+  {
+    "index": 20,
+    "class": "UFortItemCraftingOptionsActivatablePanel",
+    "function": "SetBaseSchematicItem",
+    "address": "0x14526abf0",
+    "reason": "SetBaseSchematicItem calls uncaptured crafting options update FUN_144f3bd20"
+  },
+  {
+    "index": 21,
+    "class": "UFortUIDataConfigurationContext",
+    "function": "GetFrontEndFFSettings",
+    "address": "0x1453148f0",
+    "reason": "GetFrontEndFFSettings calls uncaptured data config context helper FUN_1414fad70 (612 lines)"
+  },
+  {
+    "index": 22,
+    "class": "UAthenaCustomizationScreen",
+    "function": "GetCategoryDisplayName",
+    "address": "0x145190380",
+    "reason": "Reflection metadata has ambiguous owners and parameter tables; exact signature and flags are not established. Native reads array without bounds check."
+  },
+  {
+    "index": 23,
+    "class": "UFortAthenaCreativeMatchmakingWidget",
+    "function": "DisableOwningPlayerForReadyCheckInput",
+    "address": "0x1451f60e0",
+    "reason": "DisableOwningPlayerForReadyCheckInput dispatches through unproven vtable slot 0xbe0"
+  },
+  {
+    "index": 24,
+    "class": "UFortExpeditionBuildSquadWidget",
+    "function": "ClearTemporaryExpeditionSquadState",
+    "address": "0x145232fa0",
+    "reason": "ClearTemporaryExpeditionSquadState calls uncaptured expedition squad state update FUN_1450df560"
+  },
+  {
+    "index": 25,
+    "class": "UFortLinkDataManager",
+    "function": "GetIslandDescriptionTags",
+    "address": "0x14297e590",
+    "reason": "GetIslandDescriptionTags calls uncaptured link data tag resolution FUN_1418b7400"
+  },
+  {
+    "index": 26,
+    "class": "UFortProgressModal",
+    "function": "InitializeModal",
+    "address": "0x1452b1900",
+    "reason": "InitializeModal requires progress modal initialization FUN_144e0d2b0 (146 lines)"
+  },
+  {
+    "index": 27,
+    "class": "UFortTouchMoveStick",
+    "function": "GetHalfHeight",
+    "address": "0x14530a720",
+    "reason": "GetHalfHeight calls uncaptured touch input subsystem helper FUN_143d5a0d0"
+  },
+  {
+    "index": 28,
+    "class": "URadialBacchusButtonBase",
+    "function": "GetListenedGameplayTag",
+    "address": "0x145341220",
+    "reason": "Native reads eight bytes at 0x2c8, but the proposed unreflected field lacks sufficient nonoverlap and storage proof."
+  },
+  {
+    "index": 29,
+    "class": "AFortThreatVisualsManager",
+    "function": "GetThreatCloud",
+    "address": "0x142b0eff0",
+    "reason": "GetThreatCloud requires threat manager visual cloud resolution FUN_142ee3b30"
+  },
+  {
+    "index": 31,
+    "class": "UCreativePropertyKnobEntryBase",
+    "function": "ClearModified",
+    "address": "0x145224b50",
+    "reason": "ClearModified calls uncaptured knob entry event dispatchers FUN_145223fd0 / FUN_145224010"
+  },
+  {
+    "index": 32,
+    "class": "UFortBangWrapper_NUI",
+    "function": "SetBangStateBP",
+    "address": "0x1452053d0",
+    "reason": "SetBangStateBP dispatches through unproven delegate slot at offset 600"
+  },
+  {
+    "index": 33,
+    "class": "UFortDropdownMenu",
+    "function": "ClearRegisteredButtons",
+    "address": "0x14522e810",
+    "reason": "ClearRegisteredButtons dispatches through unproven vtable slot 0x510"
+  },
+  {
+    "index": 34,
+    "class": "UFortHeroType",
+    "function": "GetFrontendAnimClass",
+    "address": "0x14293bb90",
+    "reason": "GetFrontendAnimClass calls uncaptured anim class resolver FUN_1424fbf60"
+  },
+  {
+    "index": 35,
+    "class": "UFortItemView",
+    "function": "GetSettings",
+    "address": "0x14527c9a0",
+    "reason": "GetSettings accesses non-reflected struct at offset 0x1c8 without proven type"
+  },
+  {
+    "index": 36,
+    "class": "UFortMtxWallets",
+    "function": "GetAvailableAppStores",
+    "address": "0x1429fb910",
+    "reason": "GetAvailableAppStores requires mtx wallet app store enum list FUN_141130550"
+  },
+  {
+    "index": 38,
+    "class": "UFortTeamMemberEntryBase",
+    "function": "GetCurrentMemberGameReadiness",
+    "address": "0x1452ffad0",
+    "reason": "GetCurrentMemberGameReadiness calls uncaptured team member readiness lookup FUN_140d91b30"
+  },
+  {
+    "index": 39,
+    "class": "AFortFeedbackManager",
+    "function": "GetAnnouncerPawn",
+    "address": "0x1428e35e0",
+    "reason": "GetAnnouncerPawn requires announcer pawn manager resolution FUN_1424a9590"
+  },
+  {
+    "index": 40,
+    "class": "AFortSkyTube",
+    "function": "GetDelayUntilDisabled",
+    "address": "0x142ada680",
+    "reason": "GetDelayUntilDisabled reads unproven global state _DAT_1478df4d0"
+  },
+  {
+    "index": 41,
+    "class": "APlayspace",
+    "function": "OnRep_PlayspaceLogic",
+    "address": "0x1411b5ce0",
+    "reason": "OnRep_PlayspaceLogic dispatches through unproven vtable slot 0x628 on APlayspaceLogic"
+  },
+  {
+    "index": 42,
+    "class": "UAthenaProfileStatBox",
+    "function": "GetStatStyle",
+    "address": "0x1451b1190",
+    "reason": "GetStatStyle calls uncaptured stat box style resolver FUN_144c23d40"
+  },
+  {
+    "index": 43,
+    "class": "UBattlePassScreen",
+    "function": "GetBattlePassPurchaseLevelOfferId",
+    "address": "0x1451d3cb0",
+    "reason": "GetBattlePassPurchaseLevelOfferId accesses non-reflected field at offset 0x710 without proven type"
+  },
+  {
+    "index": 44,
+    "class": "UEliminatedOverlay",
+    "function": "GetPlayerState",
+    "address": "0x1451e9cf0",
+    "reason": "GetPlayerState calls uncaptured player state resolver FUN_144baf4f0"
+  },
+  {
+    "index": 45,
+    "class": "UFortAthenaMatchmakingOptions",
+    "function": "CanceledPlaylist",
+    "address": "0x1451fb740",
+    "reason": "CanceledPlaylist calls uncaptured playlist cancelation callee FUN_14463cf30"
+  },
+  {
+    "index": 46,
+    "class": "UFortControllerComponent_IndicatedActorManagement",
+    "function": "AddActorsToIndicatedList",
+    "address": "0x14289cc60",
+    "reason": "AddActorsToIndicatedList requires indicated actor manager list insertion FUN_141ccaf30"
+  },
+  {
+    "index": 47,
+    "class": "UFortEventLeaderboardTeammateEntry",
+    "function": "SetPlayerFlag",
+    "address": "0x145219300",
+    "reason": "SetPlayerFlag requires teammate entry flag update FUN_144d64830"
+  },
+  {
+    "index": 48,
+    "class": "UFortHeroLoadoutScreenBase",
+    "function": "GetIsReadOnly",
+    "address": "0x14524f6b0",
+    "reason": "GetIsReadOnly calls uncaptured hero loadout read-only predicate FUN_1450e86d0"
+  },
+  {
+    "index": 49,
+    "class": "UFortMcpProfileCampaign",
+    "function": "GetCurrentHeroLoadoutItem",
+    "address": "0x1429a5810",
+    "reason": "GetCurrentHeroLoadoutItem calls uncaptured campaign loadout item lookup FUN_1425418b0"
+  },
+  {
+    "index": 50,
+    "class": "UFortPatrolAnimLayer",
+    "function": "GetPatrolAnimSetFromWeapon",
+    "address": "0x142a1c610",
+    "reason": "GetPatrolAnimSetFromWeapon calls uncaptured patrol anim set matcher FUN_1418705c0"
+  },
+  {
+    "index": 51,
+    "class": "UFortPurchaseOverlayModal",
+    "function": "GetPurchasedItems",
+    "address": "0x1452b60c0",
+    "reason": "GetPurchasedItems accesses offset 0x698 which conflicts with existing non-reflected field layout"
+  },
+  {
+    "index": 52,
+    "class": "UFortSignInConsole",
+    "function": "UpdateEmailStatus",
+    "address": "0x1452ddcf0",
+    "reason": "UpdateEmailStatus calls uncaptured sign-in console email status update FUN_144e920d0"
+  },
+  {
+    "index": 53,
+    "class": "UFortUIManagerWidget_NUI",
+    "function": "GetUINotificationQueue",
+    "address": "0x145314b50",
+    "reason": "GetUINotificationQueue requires UI notification queue lookup FUN_14514f3d0"
+  },
+  {
+    "index": 54,
+    "class": "UInfiltrationCarryObjectComponent",
+    "function": "GetAttackingTeam",
+    "address": "0x142b67390",
+    "reason": "GetAttackingTeam dispatches through unproven vtable slot 0x10 on mutator"
+  },
+  {
+    "index": 55,
+    "class": "AFortGameplayCueNotify_Looping",
+    "function": "GetTargetComponent",
+    "address": "0x142902da0",
+    "reason": "GetTargetComponent calls uncaptured target component helper FUN_1416299f0"
+  },
+  {
+    "index": 56,
+    "class": "AFortMarkActor",
+    "function": "OnRep_AttachedToActor",
+    "address": "0x14298b4f0",
+    "reason": "OnRep_AttachedToActor requires mark actor attach handler FUN_143f69390 (1391 lines)"
+  },
+  {
+    "index": 57,
+    "class": "AFortPlayerStartCreative",
+    "function": "IsClaimedByPlayer",
+    "address": "0x142a892f0",
+    "reason": "IsClaimedByPlayer calls uncaptured player start claim validator FUN_141f3a430 (81 lines)"
+  },
+  {
+    "index": 58,
+    "class": "AFortUIZone",
+    "function": "GetCurrentCursorModeAction",
+    "address": "0x142b29280",
+    "reason": "Native reads eight bytes at 0x5d4, but the proposed unreflected field lacks sufficient nonoverlap and storage proof."
+  },
+  {
+    "index": 59,
+    "class": "AInfiltrationCarryObjectCapturePoint",
+    "function": "OnRep_bCapturePointEnabled",
+    "address": "0x142b67be0",
+    "reason": "OnRep_bCapturePointEnabled calls uncaptured capture point mutator FUN_141a8dc70 (93 lines)"
+  },
+  {
+    "index": 60,
+    "class": "UAthenaAwardAlertBase",
+    "function": "SetDataSource",
+    "address": "0x145180730",
+    "reason": "SetDataSource calls uncaptured award alert data source setter FUN_144b19140 (44 lines)"
+  },
+  {
+    "index": 61,
+    "class": "UAthenaEventMatchPlayerWidgetBase",
+    "function": "SetPlayerData",
+    "address": "0x1451957c0",
+    "reason": "SetPlayerData calls uncaptured match player widget data setter FUN_144c75520"
+  },
+  {
+    "index": 62,
+    "class": "UAthenaMusicPackItemDefinition",
+    "function": "GetCoverArt",
+    "address": "0x1427259b0",
+    "reason": "GetCoverArt requires music pack cover art resolver FUN_141d7cbe0"
+  },
+  {
+    "index": 63,
+    "class": "UAthenaSpatialCustomizationCategories",
+    "function": "AddCategory",
+    "address": "0x145345640",
+    "reason": "AddCategory calls uncaptured spatial category list mutator FUN_144e64740 (42 lines)"
+  },
+  {
+    "index": 64,
+    "class": "UAthenaTeamMemberDBNOState",
+    "function": "SetPlayerState",
+    "address": "0x1451c72b0",
+    "reason": "SetPlayerState calls uncaptured team member DBNO state setter FUN_144bd0bf0 (39 lines)"
+  },
+  {
+    "index": 65,
+    "class": "UBuildingGroup",
+    "function": "GetAllMapNames",
+    "address": "0x142747190",
+    "reason": "GetAllMapNames calls uncaptured map name extractor FUN_141bdc930 (61 lines)"
+  },
+  {
+    "index": 66,
+    "class": "UCommonTagVisibilityWidget",
+    "function": "Initialize",
+    "address": "0x1451e24f0",
+    "reason": "Initialize calls uncaptured tag visibility widget initializer FUN_144c99050 (75 lines)"
+  },
+  {
+    "index": 67,
+    "class": "UCreativeQuickbarComponent",
+    "function": "SetIsQuickbarEquipped",
+    "address": "0x142770390",
+    "reason": "SetIsQuickbarEquipped calls uncaptured creative quickbar equip mutator FUN_141d90380 (317 lines)"
+  },
+  {
+    "index": 68,
+    "class": "UFortAbilityKit",
+    "function": "GetDescription",
+    "address": "0x142781260",
+    "reason": "GetDescription calls uncaptured ability kit description formatter FUN_1424e40e0 (51 lines)"
+  },
+  {
+    "index": 69,
+    "class": "UFortAlterationModOptinScreenBase",
+    "function": "SetupItem",
+    "address": "0x1451f37a0",
+    "reason": "SetupItem calls uncaptured alteration mod screen setup FUN_1451f1ec0"
+  },
+  {
+    "index": 70,
+    "class": "UFortAthenaAIBotCustomizationData",
+    "function": "SetCharacterCustomizationFromPlayerPawn",
+    "address": "0x1427c6190",
+    "reason": "SetCharacterCustomizationFromPlayerPawn calls uncaptured AI bot customization helper FUN_140a003b0"
+  },
+  {
+    "index": 71,
+    "class": "UFortBuildingTrapSet",
+    "function": "OnRep_Durability",
+    "address": "0x142854e60",
+    "reason": "OnRep_Durability dispatches through non-reflected delegates at offsets 0x510 and 0x528"
+  },
+  {
+    "index": 72,
+    "class": "UFortChargingSet_Disguise",
+    "function": "OnRep_Charge",
+    "address": "0x14286cba0",
+    "reason": "OnRep_Charge calls uncaptured charging set disguise delegates FUN_1446278d0 (242 lines)"
+  },
+  {
+    "index": 73,
+    "class": "UFortCollectionBookProgressionRewardDetailInspectWidget",
+    "function": "SetAssociatedLevel",
+    "address": "0x14520d810",
+    "reason": "SetAssociatedLevel calls uncaptured progression inspect widget helper FUN_1407f6320"
+  },
+  {
+    "index": 74,
+    "class": "UFortConfirmationWindow",
+    "function": "GetConfirmationDescription",
+    "address": "0x145218670",
+    "reason": "GetConfirmationDescription requires confirmation window description formatter FUN_142b1c6c0 (117 lines)"
+  },
+  {
+    "index": 75,
+    "class": "UFortCreativeDeviceButtonComponent",
+    "function": "SetButtonLabel",
+    "address": "0x1428ba300",
+    "reason": "SetButtonLabel accesses offset 0x1f0 which does not match reflected ButtonLabel offset 0x110"
+  },
+  {
+    "index": 76,
+    "class": "UFortDialogNotificationHandler",
+    "function": "SetDialogDescription",
+    "address": "0x1428dbab0",
+    "reason": "SetDialogDescription calls uncaptured dialog description parser FUN_1425ae560 (106 lines)"
+  },
+  {
+    "index": 77,
+    "class": "UFortExpeditionDetailsWidget",
+    "function": "SetCurrentSquadId",
+    "address": "0x145234150",
+    "reason": "SetCurrentSquadId calls uncaptured expedition details widget updater FUN_1450e2360"
+  },
+  {
+    "index": 78,
+    "class": "UFortGameplayAbility_PossessProp",
+    "function": "SetAllowedPropTable",
+    "address": "0x1428fe8e0",
+    "reason": "SetAllowedPropTable calls uncaptured data table row extractor FUN_141612450"
+  },
+  {
+    "index": 79,
+    "class": "UFortHeroLoadoutTeamPerkPicker",
+    "function": "SetTargetLoadout",
+    "address": "0x145258b90",
+    "reason": "SetTargetLoadout calls uncaptured perk picker target loadout updater FUN_1450fec60 (255 lines)"
+  },
+  {
+    "index": 80,
+    "class": "UFortItemReceivedHeaderBase",
+    "function": "SetHeaderInformation",
+    "address": "0x14527d1e0",
+    "reason": "SetHeaderInformation calls uncaptured item header information setter FUN_144f79ee0 (94 lines)"
+  },
+  {
+    "index": 83,
+    "class": "UFortPlayerDBNOEnterParams",
+    "function": "SetParams",
+    "address": "0x142b77780",
+    "reason": "SetParams parameter candidate table is ambiguous across 29 candidates in reflection"
+  },
+  {
+    "index": 84,
+    "class": "UFortPlaysetGrenadeItemDefinition",
+    "function": "GetPlaysetToSpawn",
+    "address": "0x142a9e0b0",
+    "reason": "GetPlaysetToSpawn requires creative playset volume resolution FUN_142031520 (63 lines)"
+  }
+]

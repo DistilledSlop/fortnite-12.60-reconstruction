@@ -20,5 +20,8 @@ public:
 	UPROPERTY()
 	AFortMission* FailedMission;
 
+	UFUNCTION(BlueprintCallable)
+	void SetParams(AFortMission* _FailedMission, UFortMissionFailedParams*& ThisParam);
+
 };
 

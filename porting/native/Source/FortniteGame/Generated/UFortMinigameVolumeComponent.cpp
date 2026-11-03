@@ -5,7 +5,12 @@
 
 void UFortMinigameVolumeComponent::OnRep_CurrentMinigame()
 {
-	// Body not recovered: reflection-derived stub.
+	// CONFIDENCE: high
+	// Native body at 0x1429df0c0 broadcasts OnMinigameSetup if CurrentMinigame is valid.
+	if (IsValid(CurrentMinigame))
+	{
+	    OnMinigameSetup.Broadcast(CurrentMinigame);
+	}
 }
 
 AFortMinigame* UFortMinigameVolumeComponent::NativeResolveMinigameFromVolume(AActor* Volume)

@@ -272,6 +272,9 @@ public:
 	TEnumAsByte<EFortGameplayState::Type> GetGameplayState() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual float GetMatchTime() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool GetPlayerRespawningBlocked_Temporarily() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

@@ -2,6 +2,13 @@
 #include "UPlayspaceControllerComponent_PlayerSpawning.h"
 #include "Net/UnrealNetwork.h"
 
+FReplicatedSpawnInfo UPlayspaceControllerComponent_PlayerSpawning::GetSpawnInfo() const
+{
+	// CONFIDENCE: high
+	// Native target 0x1411ac170.
+	return ReplicatedSpawnInfo;
+}
+
 void UPlayspaceControllerComponent_PlayerSpawning::OnRep_ReplicatedSpawnInfo()
 {
 	// Body not recovered: reflection-derived stub.

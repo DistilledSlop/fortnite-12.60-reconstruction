@@ -20,5 +20,8 @@ public:
 	UPROPERTY(Transient)
 	TArray<UAthenaMatchStatView*> RecentMatches;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	TArray<UAthenaMatchStatView*> GetRecentMatches() const;
+
 };
 

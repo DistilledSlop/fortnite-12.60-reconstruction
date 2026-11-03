@@ -34,5 +34,11 @@ public:
 	UPROPERTY()
 	bool bRequiresMissingHealth;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual float GetAnimPlayRate() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual UAnimMontage* GetUseAnimation() const;
+
 };
 

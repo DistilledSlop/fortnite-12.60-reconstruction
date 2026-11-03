@@ -8,3 +8,10 @@ AActor* UFortLinkToActorComponent::GetActorLinkedTo() const
 	return ActorLinkedTo.Get();
 }
 
+void UFortLinkToActorComponent::SetPerformLinkingCheckOnBeginPlay(bool bCheckOnBeginPlay)
+{
+	// CONFIDENCE: high
+	// Native target 0x14297f960.
+	bPerformLinkingCheckOnBeginPlay = bCheckOnBeginPlay;
+}
+

@@ -8,6 +8,7 @@
 #include "EFortQuickBars.h"
 #include "Engine/World.h"
 #include "FortNativeAnalyticsProvider.h"
+#include "UFortControllerComponent_Aircraft.h"
 #include "UFortItemDefinition.h"
 #include "UFortLocalPlayer.h"
 #include "UFortWorldItem.h"
@@ -409,6 +410,14 @@ bool AFortPlayerController::IsClientTimingOut() const
 	// CONFIDENCE: HIGH
 	// Mechanically matched complete reflected full-byte bool read; see bulk_bool_byte_runtime/README.md.
 	return AFortPlayerController::bIsClientTimingOut;
+}
+
+bool AFortPlayerController::IsInAircraft() const
+{
+	// CONFIDENCE: high. Native target 0x14238ea50.
+	const UFortControllerComponent_Aircraft* Component = static_cast<UFortControllerComponent_Aircraft*>(
+	    FindComponentByClass(UFortControllerComponent_Aircraft::StaticClass()));
+	return Component ? Component->NativeRecoveredBool_0xf8 : false;
 }
 
 bool AFortPlayerController::IsNearActiveEncounters() const
