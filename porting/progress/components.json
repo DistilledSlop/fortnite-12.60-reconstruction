@@ -246,11 +246,11 @@
               }
             ],
             "distinct": true,
-            "total_key": "cooked_name_prefix_counts",
+            "total_key": "cooked_mesh_exportable",
             "total_sub": "static_mesh",
             "what": "static mesh conversions (distinct names)"
           },
-          "rationale": "Counted: every .glb conversion under generated/converted (61 Apollo grid tiles, Background, skybox and cloud meshes) plus SM_ packages in native/Content, de-duplicated by name. Denominator: 4,727 distinct SM_-named cooked packages (full 31-pak tree, refresh_totals.py --count-tree). The SM_ rule is a naming heuristic, and the glb conversions are counted whatever their names, so this is a coverage ratio, not an exact asset count."
+          "rationale": "Counted: every .glb conversion under generated/converted (61 Apollo grid tiles, Background, skybox and cloud meshes), SM_-named GLBs from the bulk export (generated/asset_pipeline and asset_pipeline_skeletal), plus SM_ packages in native/Content, de-duplicated by name. Denominator: 4,727 distinct SM_-named cooked packages (full 31-pak tree, refresh_totals.py --count-tree) minus 466 verified to contain no mesh (Blueprints and similar; porting/asset_pipeline/nonmesh_packages.json, totals.json cooked_mesh_exportable). About 15 genuine converter failures remain, listed in that file. The SM_ rule is a naming heuristic, and the glb conversions are counted whatever their names, so this is a coverage ratio, not an exact asset count."
         },
         {
           "id": "assets.landscape",
@@ -281,11 +281,11 @@
               }
             ],
             "distinct": true,
-            "total_key": "cooked_name_prefix_counts",
+            "total_key": "cooked_mesh_exportable",
             "total_sub": "skeletal_mesh",
             "what": "skeletal mesh packages (SK_, distinct names)"
           },
-          "rationale": "Counted: SK_ skeletal mesh packages converted in native/Content (none). Denominator: 1,719 distinct SK_-named cooked packages (naming heuristic, totals.json). No skeletal mesh or animation package has loaded in any probe. Animation sequences (A_, 7 names) are too few to matter and are not counted separately. Conversion/name coverage only: animation/cosmetic behavior and world particle runtime are separately allocated; package presence does not establish those features."
+          "rationale": "Counted: SK_ skeletal mesh packages converted in native/Content (none). Counted: GLB conversions of SK_ skeletal meshes under generated/asset_pipeline_skeletal (bulk Cue4Inspect export, valid skinned GLBs; geometry only, no UE import). Denominator: distinct SK_-named cooked packages minus 949 verified to contain no mesh (skeletons, physics assets, animations; porting/asset_pipeline/nonmesh_packages.json, totals.json cooked_mesh_exportable). Packages that merely carry the name are not meshes. No skeletal mesh or animation package has loaded in any probe. Animation sequences (A_, 7 names) are too few to matter and are not counted separately. Conversion/name coverage only: animation/cosmetic behavior and world particle runtime are separately allocated; package presence does not establish those features."
         },
         {
           "id": "assets.blueprint_load",
