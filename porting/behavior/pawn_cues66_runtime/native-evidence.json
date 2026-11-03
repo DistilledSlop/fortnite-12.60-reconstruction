@@ -1,0 +1,245 @@
+{
+  "image": "/mnt/vibrato/fortnite-evidence/original-late-capture-1/image-125.runtime.bin",
+  "windows": [
+    {
+      "begin": "0x1422dea60",
+      "length": 137,
+      "sha256": "a16009b50f94fe49a0f58dd23576b257e69442065b0e905819970472e0e04844",
+      "label": "NetMulticast_InvokeGameplayCueAddedAndWhileActive_WithParams_Implementation"
+    },
+    {
+      "begin": "0x142a1d4e0",
+      "length": 64,
+      "sha256": "c50676de19cbfb0ab3001018ad36f97ceb7914c0d4ab015705f0354f174642cd",
+      "label": "NetMulticast_InvokeGameplayCueAddedAndWhileActive_WithParams exec prefix"
+    },
+    {
+      "begin": "0x140753520",
+      "length": 2048,
+      "sha256": "1afd69340af35515bbdba6b05b602c970d0ae5e38be12fe099ce27fe200a90ed",
+      "label": "NetMulticast_InvokeGameplayCueAddedAndWhileActive_WithParams ASC exec matching virtual slot (bounded window)"
+    },
+    {
+      "begin": "0x1422deba0",
+      "length": 137,
+      "sha256": "5e2f0a494ba3ebc38f7a806b406ba1cbf49513de5dedb2b3f80e2f1112bfc549",
+      "label": "NetMulticast_InvokeGameplayCueAdded_WithParams_Implementation"
+    },
+    {
+      "begin": "0x142a1d710",
+      "length": 64,
+      "sha256": "c50676de19cbfb0ab3001018ad36f97ceb7914c0d4ab015705f0354f174642cd",
+      "label": "NetMulticast_InvokeGameplayCueAdded_WithParams exec prefix"
+    },
+    {
+      "begin": "0x140753750",
+      "length": 2048,
+      "sha256": "79fb1295cca73c160d23b34bfe7fed12f5d1f0578d510c78d10d1aae164c6107",
+      "label": "NetMulticast_InvokeGameplayCueAdded_WithParams ASC exec matching virtual slot (bounded window)"
+    },
+    {
+      "begin": "0x1422dec30",
+      "length": 119,
+      "sha256": "27f709b575540559cd6c666f3094741488bafc3c64138995e6fe22ad05d29d74",
+      "label": "NetMulticast_InvokeGameplayCueExecuted_FromSpec_Implementation"
+    },
+    {
+      "begin": "0x142a1dac0",
+      "length": 64,
+      "sha256": "7b09fa81b9ec6ea7133fb7074c2cb9eb47f02487f1b40edf658e1c28608623ae",
+      "label": "NetMulticast_InvokeGameplayCueExecuted_FromSpec exec prefix"
+    },
+    {
+      "begin": "0x140753b00",
+      "length": 2048,
+      "sha256": "c8c8b6c24d2e92cdfa59d38be2d4ed346fc7473aa1d1a87ad035fae120a88fd7",
+      "label": "NetMulticast_InvokeGameplayCueExecuted_FromSpec ASC exec matching virtual slot (bounded window)"
+    },
+    {
+      "begin": "0x1422ded60",
+      "length": 137,
+      "sha256": "4a7485ac5a186ea2c11be32be5965f25d4f60d19235bddbd3a6b1c5f38407f71",
+      "label": "NetMulticast_InvokeGameplayCueExecuted_WithParams_Implementation"
+    },
+    {
+      "begin": "0x142a1dc50",
+      "length": 64,
+      "sha256": "c50676de19cbfb0ab3001018ad36f97ceb7914c0d4ab015705f0354f174642cd",
+      "label": "NetMulticast_InvokeGameplayCueExecuted_WithParams exec prefix"
+    },
+    {
+      "begin": "0x140753c90",
+      "length": 2048,
+      "sha256": "9ef607b4596966e6416ebc63228e69fdc59dcb94ac1a380fafd2e38d959a41cf",
+      "label": "NetMulticast_InvokeGameplayCueExecuted_WithParams ASC exec matching virtual slot (bounded window)"
+    },
+    {
+      "begin": "0x1422dedf0",
+      "length": 211,
+      "sha256": "c10240d5cd2b077c8b4f41d4de14ba95d64f22023595d6defd45ede871013dd2",
+      "label": "NetMulticast_InvokeGameplayCuesAddedAndWhileActive_WithParams_Implementation"
+    },
+    {
+      "begin": "0x142a1de80",
+      "length": 64,
+      "sha256": "8c0ba629fc925241008a368fd173ba317187517bf1213c35b739d3c7ee87a036",
+      "label": "NetMulticast_InvokeGameplayCuesAddedAndWhileActive_WithParams exec prefix"
+    },
+    {
+      "begin": "0x140753ec0",
+      "length": 2048,
+      "sha256": "c2a50f979f681315e95ed2e38d3d6d0d6f2848d428db2edd6e8861b750b1170f",
+      "label": "NetMulticast_InvokeGameplayCuesAddedAndWhileActive_WithParams ASC exec matching virtual slot (bounded window)"
+    },
+    {
+      "begin": "0x1422defe0",
+      "length": 211,
+      "sha256": "7d5adc28647a5b479df38b21197e5a304bac96b332133839ba8fa4a3ac68f92b",
+      "label": "NetMulticast_InvokeGameplayCuesExecuted_WithParams_Implementation"
+    },
+    {
+      "begin": "0x142a1e2d0",
+      "length": 64,
+      "sha256": "8c0ba629fc925241008a368fd173ba317187517bf1213c35b739d3c7ee87a036",
+      "label": "NetMulticast_InvokeGameplayCuesExecuted_WithParams exec prefix"
+    },
+    {
+      "begin": "0x140754310",
+      "length": 2048,
+      "sha256": "555e3961737e0c6f7c7000bb773c44809ecf56254907d613f12f9c3f6166f8ee",
+      "label": "NetMulticast_InvokeGameplayCuesExecuted_WithParams ASC exec matching virtual slot (bounded window)"
+    },
+    {
+      "begin": "0x1422dea20",
+      "length": 56,
+      "sha256": "099b8ffc95de387f5dc1db6673ef341eb054724539a3fdbf78a8a5420b40190e",
+      "label": "NetMulticast_InvokeGameplayCueAddedAndWhileActive_FromSpec_Implementation"
+    },
+    {
+      "begin": "0x142a1d360",
+      "length": 64,
+      "sha256": "29e17db1705d3335a532fe4e6b2b1a946010c1bf351db7a5c300902670c07285",
+      "label": "NetMulticast_InvokeGameplayCueAddedAndWhileActive_FromSpec exec prefix"
+    },
+    {
+      "begin": "0x1407533a0",
+      "length": 2048,
+      "sha256": "738d9ace4abff3a1c84d5d35b38bbb41c256489483664bed66b39b2d20882738",
+      "label": "NetMulticast_InvokeGameplayCueAddedAndWhileActive_FromSpec ASC exec matching virtual slot (bounded window)"
+    },
+    {
+      "begin": "0x1422deaf0",
+      "length": 170,
+      "sha256": "27db9e990d3b25d2375d213b5287e89beff33ad83d03e4a1087e39a71fc5bfb3",
+      "label": "NetMulticast_InvokeGameplayCueAdded_Implementation"
+    },
+    {
+      "begin": "0x142a1d1e0",
+      "length": 64,
+      "sha256": "07657e4da1fff73072dedd406e6e8111248ea8cba39a66558a20a2ded5bf6ad2",
+      "label": "NetMulticast_InvokeGameplayCueAdded exec prefix"
+    },
+    {
+      "begin": "0x140753220",
+      "length": 2048,
+      "sha256": "c5ef6fa25afa91692d733378b374ee8e321636e4678f16612ec742f0c2e3dcf5",
+      "label": "NetMulticast_InvokeGameplayCueAdded ASC exec matching virtual slot (bounded window)"
+    },
+    {
+      "begin": "0x1422decb0",
+      "length": 170,
+      "sha256": "0e781901b0be06acefd83b4d54f9223ba2adcd37f20a41f5011fa04be785b520",
+      "label": "NetMulticast_InvokeGameplayCueExecuted_Implementation"
+    },
+    {
+      "begin": "0x142a1d940",
+      "length": 64,
+      "sha256": "2e56996ecf174f97cc1fe8bbfc0bc27c6151362a7967b7d1ea9ceb94095566a2",
+      "label": "NetMulticast_InvokeGameplayCueExecuted exec prefix"
+    },
+    {
+      "begin": "0x140753980",
+      "length": 2048,
+      "sha256": "f8d655bf57a08e93eacd16af837af76ee1261ae8cc98d2b0b37cf7d14d1ca7a0",
+      "label": "NetMulticast_InvokeGameplayCueExecuted ASC exec matching virtual slot (bounded window)"
+    },
+    {
+      "begin": "0x1422deed0",
+      "length": 262,
+      "sha256": "1b7ff9a8af70f6821d24c3bd6ecf93c4530fffbc6b9b0f9fb2672079aa6cbf9b",
+      "label": "NetMulticast_InvokeGameplayCuesExecuted_Implementation"
+    },
+    {
+      "begin": "0x142a1e100",
+      "length": 64,
+      "sha256": "12573c788d205f270c0683e5b7a72dfec12bb7334770a8f6e33a4141df4dc894",
+      "label": "NetMulticast_InvokeGameplayCuesExecuted exec prefix"
+    },
+    {
+      "begin": "0x140754140",
+      "length": 2048,
+      "sha256": "c8c55c1149e6cef118e9043b89875ba921c106c47ce038e0af228c908fe030da",
+      "label": "NetMulticast_InvokeGameplayCuesExecuted ASC exec matching virtual slot (bounded window)"
+    },
+    {
+      "begin": "0x1461160f8",
+      "length": 8,
+      "sha256": "c476c171e4abee479a4411bd26f4d9459016fd47254a3c7e37dcf4dd6687f18c",
+      "label": "AFortPawn cue virtual 0x878"
+    },
+    {
+      "begin": "0x146116100",
+      "length": 8,
+      "sha256": "9ccee0306edd02d1d2f48b8d70ed47c28107590e6b8bb900766344d2080de24a",
+      "label": "AFortPawn cue virtual 0x880"
+    },
+    {
+      "begin": "0x146116108",
+      "length": 8,
+      "sha256": "72ef83d29ac386b69f2a48905c8cb5235eb71699b43c2d157aba89024dcf51a1",
+      "label": "AFortPawn cue virtual 0x888"
+    },
+    {
+      "begin": "0x146116110",
+      "length": 8,
+      "sha256": "d555f790e68bcb1d12d1c44c4e9ac78403fe7111779a353027a599eda52ea892",
+      "label": "AFortPawn cue virtual 0x890"
+    },
+    {
+      "begin": "0x146116118",
+      "length": 8,
+      "sha256": "4d881cb5dcf92333c89c3f48bf5a4a1fa78d3a1e7e1f32d68f011c29e16e8ede",
+      "label": "AFortPawn cue virtual 0x898"
+    },
+    {
+      "begin": "0x146116120",
+      "length": 8,
+      "sha256": "01dd8ff5a0e660411e4ece9f11e70107b7ccc26c10e820222df06c8188da8acc",
+      "label": "AFortPawn cue virtual 0x8a0"
+    },
+    {
+      "begin": "0x146116128",
+      "length": 8,
+      "sha256": "dc3b978a2b6c3e993bbc80b750e047e9489b8f6627f50e76f9eedf09ecab4b6a",
+      "label": "AFortPawn cue virtual 0x8a8"
+    },
+    {
+      "begin": "0x146116130",
+      "length": 8,
+      "sha256": "8fed262dca190654874a0a4edca025c92e67f2a45e5ac110442450cfafe402dc",
+      "label": "AFortPawn cue virtual 0x8b0"
+    },
+    {
+      "begin": "0x146116138",
+      "length": 8,
+      "sha256": "ec4c49730ed52adc86eb639aee137dc48372953eef8a36d1aca5df7664ed8e8b",
+      "label": "AFortPawn cue virtual 0x8b8"
+    },
+    {
+      "begin": "0x146116140",
+      "length": 8,
+      "sha256": "1572b049dd547cc2d4aaa6f48940571a65f13f7f0131b164a527885cb9db9c28",
+      "label": "AFortPawn cue virtual 0x8c0"
+    }
+  ]
+}

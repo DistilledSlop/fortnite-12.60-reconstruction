@@ -1379,6 +1379,11 @@ public:
 	UFUNCTION(Exec)
 	void DebugDestroyVehicle();
 
+protected:
+	UFUNCTION(BlueprintCallable)
+	void EndedInteractSearch();
+public:
+
 	UFUNCTION(BlueprintCallable, BlueprintCosmetic)
 	void EndGhostModeExit();
 
@@ -1613,8 +1618,10 @@ public:
 	UFUNCTION()
 	void OnRep_ReplicatedWaterBody();
 
+private:
 	UFUNCTION()
 	void OnRep_StartedInteractSearch();
+public:
 
 protected:
 	UFUNCTION()
@@ -1779,6 +1786,11 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void SetPreviousVelocity(FVector OldVelocity);
+
+protected:
+	UFUNCTION(BlueprintCallable)
+	void StartedInteractSearch();
+public:
 
 	UFUNCTION(Exec)
 	void ToggleBodyType();

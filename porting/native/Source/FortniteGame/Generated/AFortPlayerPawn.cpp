@@ -54,6 +54,13 @@ void AFortPlayerPawn::DebugDestroyVehicle()
 	// Empty body: the native function does nothing (see Inferred).
 }
 
+void AFortPlayerPawn::EndedInteractSearch()
+{
+	// CONFIDENCE: HIGH
+	bStartedInteractSearch = false;
+	OnEndedInteractSearch.Broadcast();
+}
+
 void AFortPlayerPawn::EndGhostModeExit()
 {
 	// Behaviour snippet: AFortPlayerPawn::EndGhostModeExit (body only; spliced into the generated member function).
@@ -711,7 +718,15 @@ void AFortPlayerPawn::OnRep_ReplicatedWaterBody()
 
 void AFortPlayerPawn::OnRep_StartedInteractSearch()
 {
-	// Body not recovered: reflection-derived stub.
+	// CONFIDENCE: HIGH
+	if (bStartedInteractSearch)
+	{
+	    OnStartedInteractSearch.Broadcast();
+	}
+	else
+	{
+	    OnEndedInteractSearch.Broadcast();
+	}
 }
 
 void AFortPlayerPawn::OnRep_StoredControlRotation()
@@ -1232,6 +1247,13 @@ void AFortPlayerPawn::SetPreviousVelocity(FVector OldVelocity)
 	// Declared in generated header: no (the generator emits this declaration when the behaviour splice is on)
 	// CONFIDENCE: HIGH
 	PreviousVelocity = OldVelocity;
+}
+
+void AFortPlayerPawn::StartedInteractSearch()
+{
+	// CONFIDENCE: HIGH
+	bStartedInteractSearch = true;
+	OnStartedInteractSearch.Broadcast();
 }
 
 void AFortPlayerPawn::ToggleBodyType()

@@ -1043,8 +1043,10 @@ public:
 	UFUNCTION()
 	void OnRep_ReticulatedSplineDefinitions();
 
+protected:
 	UFUNCTION()
 	void OnRep_SafeZoneIndicator();
+public:
 
 	UFUNCTION()
 	void OnRep_SafeZonePhase();
@@ -1073,8 +1075,10 @@ public:
 	UFUNCTION()
 	void OnRep_UtcTimeStartedMatch(FDateTime& OldUtcTimeStartedMatch);
 
+protected:
 	UFUNCTION()
 	void OnRep_VolumeManager();
+public:
 
 	UFUNCTION()
 	void OnRep_WinningPlayerList();

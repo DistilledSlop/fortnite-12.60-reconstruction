@@ -1,5 +1,25 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Native broad source batch66 (2026-11-03)
+
+Canonical2,067 bodies+176fields=2,243 accepted/rejected0. Added16 bodies:
+ten AFortPawn gameplay-cue RPC implementations forward to the live ability
+component's matching virtual local implementation (not a second RPC); three
+FortPlayerPawn search-interaction setters/OnRep and three FortGameStateAthena
+delegate callbacks. Original helper bodies/exec windows/vtable relationships and
+complete pawn/ASC RPC reflection contracts are pinned. Corrected prior skipped
+manifest parameter-order guesses using authoritative reflected declarations.
+Promotion66 changed five generated files, removed none. Last tested2,040;
+27 canonical plus4 manual bodies now build pending. Next test checkpoint3,040.
+
+Uncounted broad concrete lifts cover six respawn/camera/loading paths, pawn
+attachment/animation/ignored-actor timers and aircraft/playlist notifications.
+These preserve unresolved effects explicitly and do not count as complete.
+Fresh bounded medium Terra fork-none workers cover pawn damage/death, creative
+controller and additional match-state callbacks. Root sole canonical source/
+generator/promotion/build owner. Previous turn PROGRESS (seven integrated bodies
+and larger rough paths). All4 product gates OPEN; preserve unrelated graphics.
+
 ## Native rough/source batch65 (2026-11-03)
 
 Source commit44536d04 pushed. Follow-on aircraft_rough65_runtime contains the

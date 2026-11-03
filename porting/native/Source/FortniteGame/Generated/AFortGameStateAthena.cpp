@@ -550,7 +550,9 @@ void AFortGameStateAthena::OnRep_ReticulatedSplineDefinitions()
 
 void AFortGameStateAthena::OnRep_SafeZoneIndicator()
 {
-	// Body not recovered: reflection-derived stub.
+	// CONFIDENCE: HIGH. Exec 0x142920650; decompile OnRep_SafeZoneIndicator.c.
+	// Inline multicast dispatch at this+0x1198; reflected OnSafeZoneIndicatorChanged.
+	OnSafeZoneIndicatorChanged.Broadcast();
 }
 
 void AFortGameStateAthena::OnRep_SafeZonePhase()
@@ -607,12 +609,16 @@ void AFortGameStateAthena::OnRep_UtcTimeStartedMatch(FDateTime& OldUtcTimeStarte
 
 void AFortGameStateAthena::OnRep_VolumeManager()
 {
-	// Body not recovered: reflection-derived stub.
+	// CONFIDENCE: HIGH. Exec 0x142920800; decompile OnRep_VolumeManager.c.
+	// Inline multicast dispatch at this+0x20e0; reflected OnClientVolumeManagerReplicated.
+	OnClientVolumeManagerReplicated.Broadcast();
 }
 
 void AFortGameStateAthena::OnRep_WinningPlayerList()
 {
-	// Body not recovered: reflection-derived stub.
+	// CONFIDENCE: HIGH. Exec 0x142920820; decompile OnRep_WinningPlayerList.c.
+	// Inline multicast dispatch at this+0xff8; reflected AllWinnersAnnounced.
+	AllWinnersAnnounced.Broadcast();
 }
 
 void AFortGameStateAthena::OnRep_WinningPlayerState()

@@ -1,0 +1,50 @@
+[
+  {
+    "function": "OnRep_SafeZoneIndicator",
+    "kind": "exec",
+    "signature": "void OnRep_SafeZoneIndicator()",
+    "signature_status": "verified",
+    "access": "protected",
+    "virtual": false,
+    "inc_path": "porting/behavior/gamestate_broad66_runtime/AFortGameStateAthena_OnRep_SafeZoneIndicator.inc",
+    "address": "0x142920650",
+    "confidence": "high",
+    "status": "ported",
+    "class": "AFortGameStateAthena",
+    "reflection_flags": "0x80401",
+    "notes": "Inline parameterless multicast broadcast; no separate native call.",
+    "native_body_address": "0x1419a7440"
+  },
+  {
+    "function": "OnRep_VolumeManager",
+    "kind": "exec",
+    "signature": "void OnRep_VolumeManager()",
+    "signature_status": "verified",
+    "access": "protected",
+    "virtual": false,
+    "inc_path": "porting/behavior/gamestate_broad66_runtime/AFortGameStateAthena_OnRep_VolumeManager.inc",
+    "address": "0x142920800",
+    "confidence": "high",
+    "status": "ported",
+    "class": "AFortGameStateAthena",
+    "reflection_flags": "0x80401",
+    "notes": "Inline parameterless multicast broadcast; no separate native call.",
+    "native_body_address": "0x1419a8250"
+  },
+  {
+    "function": "OnRep_WinningPlayerList",
+    "kind": "exec",
+    "signature": "void OnRep_WinningPlayerList()",
+    "signature_status": "verified",
+    "access": "public",
+    "virtual": false,
+    "inc_path": "porting/behavior/gamestate_broad66_runtime/AFortGameStateAthena_OnRep_WinningPlayerList.inc",
+    "address": "0x142920820",
+    "confidence": "high",
+    "status": "ported",
+    "class": "AFortGameStateAthena",
+    "reflection_flags": "0x20401",
+    "notes": "Inline parameterless multicast broadcast; no separate native call.",
+    "native_body_address": "0x1419a8260"
+  }
+]

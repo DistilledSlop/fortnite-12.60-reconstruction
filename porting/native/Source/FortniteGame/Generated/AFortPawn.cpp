@@ -129,52 +129,102 @@ void AFortPawn::NetMulticast_Athena_BatchedDamageCues_Implementation(const FAthe
 
 void AFortPawn::NetMulticast_InvokeGameplayCueAdded_Implementation(const FGameplayTag& GameplayCueTag, const FPredictionKey& PredictionKey, const FGameplayEffectContextHandle& EffectContext)
 {
-	// Body not recovered: reflection-derived stub.
+	// CONFIDENCE: HIGH
+	// Native 0x1422deaf0: forward directly to the component implementation.
+	if (UFortAbilitySystemComponent* ASC = AbilitySystemComponent)
+	{
+	    ASC->NetMulticast_InvokeGameplayCueAdded_Implementation(GameplayCueTag, PredictionKey, EffectContext);
+	}
 }
 
 void AFortPawn::NetMulticast_InvokeGameplayCueAdded_WithParams_Implementation(const FGameplayTag& GameplayCueTag, const FPredictionKey& PredictionKey, const FGameplayCueParameters& Parameters)
 {
-	// Body not recovered: reflection-derived stub.
+	// CONFIDENCE: HIGH
+	// Native 0x1422deba0: forward directly to the component implementation.
+	if (UFortAbilitySystemComponent* ASC = AbilitySystemComponent)
+	{
+	    ASC->NetMulticast_InvokeGameplayCueAdded_WithParams_Implementation(GameplayCueTag, PredictionKey, Parameters);
+	}
 }
 
 void AFortPawn::NetMulticast_InvokeGameplayCueAddedAndWhileActive_FromSpec_Implementation(const FGameplayEffectSpecForRPC& Spec, const FPredictionKey& PredictionKey)
 {
-	// Body not recovered: reflection-derived stub.
+	// CONFIDENCE: HIGH
+	// Native 0x1422dea20: forward directly to the component implementation.
+	if (UFortAbilitySystemComponent* ASC = AbilitySystemComponent)
+	{
+	    ASC->NetMulticast_InvokeGameplayCueAddedAndWhileActive_FromSpec_Implementation(Spec, PredictionKey);
+	}
 }
 
 void AFortPawn::NetMulticast_InvokeGameplayCueAddedAndWhileActive_WithParams_Implementation(const FGameplayTag& GameplayCueTag, const FPredictionKey& PredictionKey, const FGameplayCueParameters& GameplayCueParameters)
 {
-	// Body not recovered: reflection-derived stub.
+	// CONFIDENCE: HIGH
+	// Native 0x1422dea60: forward directly to the component implementation.
+	if (UFortAbilitySystemComponent* ASC = AbilitySystemComponent)
+	{
+	    ASC->NetMulticast_InvokeGameplayCueAddedAndWhileActive_WithParams_Implementation(GameplayCueTag, PredictionKey, GameplayCueParameters);
+	}
 }
 
 void AFortPawn::NetMulticast_InvokeGameplayCueExecuted_Implementation(const FGameplayTag& GameplayCueTag, const FPredictionKey& PredictionKey, const FGameplayEffectContextHandle& EffectContext)
 {
-	// Body not recovered: reflection-derived stub.
+	// CONFIDENCE: HIGH
+	// Native 0x1422decb0: forward directly to the component implementation.
+	if (UFortAbilitySystemComponent* ASC = AbilitySystemComponent)
+	{
+	    ASC->NetMulticast_InvokeGameplayCueExecuted_Implementation(GameplayCueTag, PredictionKey, EffectContext);
+	}
 }
 
 void AFortPawn::NetMulticast_InvokeGameplayCueExecuted_FromSpec_Implementation(const FGameplayEffectSpecForRPC& Spec, const FPredictionKey& PredictionKey)
 {
-	// Body not recovered: reflection-derived stub.
+	// CONFIDENCE: HIGH
+	// Native 0x1422dec30: forward directly to the component implementation.
+	if (UFortAbilitySystemComponent* ASC = AbilitySystemComponent)
+	{
+	    ASC->NetMulticast_InvokeGameplayCueExecuted_FromSpec_Implementation(Spec, PredictionKey);
+	}
 }
 
 void AFortPawn::NetMulticast_InvokeGameplayCueExecuted_WithParams_Implementation(const FGameplayTag& GameplayCueTag, const FPredictionKey& PredictionKey, const FGameplayCueParameters& GameplayCueParameters)
 {
-	// Body not recovered: reflection-derived stub.
+	// CONFIDENCE: HIGH
+	// Native 0x1422ded60: forward directly to the component implementation.
+	if (UFortAbilitySystemComponent* ASC = AbilitySystemComponent)
+	{
+	    ASC->NetMulticast_InvokeGameplayCueExecuted_WithParams_Implementation(GameplayCueTag, PredictionKey, GameplayCueParameters);
+	}
 }
 
 void AFortPawn::NetMulticast_InvokeGameplayCuesAddedAndWhileActive_WithParams_Implementation(const FGameplayTagContainer& GameplayCueTags, const FPredictionKey& PredictionKey, const FGameplayCueParameters& GameplayCueParameters)
 {
-	// Body not recovered: reflection-derived stub.
+	// CONFIDENCE: HIGH
+	// Native 0x1422dedf0: forward directly to the component implementation.
+	if (UFortAbilitySystemComponent* ASC = AbilitySystemComponent)
+	{
+	    ASC->NetMulticast_InvokeGameplayCuesAddedAndWhileActive_WithParams_Implementation(GameplayCueTags, PredictionKey, GameplayCueParameters);
+	}
 }
 
 void AFortPawn::NetMulticast_InvokeGameplayCuesExecuted_Implementation(const FGameplayTagContainer& GameplayCueTags, const FPredictionKey& PredictionKey, const FGameplayEffectContextHandle& EffectContext)
 {
-	// Body not recovered: reflection-derived stub.
+	// CONFIDENCE: HIGH
+	// Native 0x1422deed0: forward directly to the component implementation.
+	if (UFortAbilitySystemComponent* ASC = AbilitySystemComponent)
+	{
+	    ASC->NetMulticast_InvokeGameplayCuesExecuted_Implementation(GameplayCueTags, PredictionKey, EffectContext);
+	}
 }
 
 void AFortPawn::NetMulticast_InvokeGameplayCuesExecuted_WithParams_Implementation(const FGameplayTagContainer& GameplayCueTags, const FPredictionKey& PredictionKey, const FGameplayCueParameters& GameplayCueParameters)
 {
-	// Body not recovered: reflection-derived stub.
+	// CONFIDENCE: HIGH
+	// Native 0x1422defe0: forward directly to the component implementation.
+	if (UFortAbilitySystemComponent* ASC = AbilitySystemComponent)
+	{
+	    ASC->NetMulticast_InvokeGameplayCuesExecuted_WithParams_Implementation(GameplayCueTags, PredictionKey, GameplayCueParameters);
+	}
 }
 
 bool AFortPawn::OnlySpinWhenFalling() const

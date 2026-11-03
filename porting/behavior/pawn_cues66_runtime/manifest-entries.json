@@ -1,0 +1,122 @@
+[
+  {
+    "function": "NetMulticast_InvokeGameplayCueAddedAndWhileActive_WithParams_Implementation",
+    "kind": "impl",
+    "signature": "void NetMulticast_InvokeGameplayCueAddedAndWhileActive_WithParams_Implementation(const FGameplayTag& GameplayCueTag, const FPredictionKey& PredictionKey, const FGameplayCueParameters& GameplayCueParameters)",
+    "signature_status": "declared",
+    "inc_path": "porting/behavior/pawn_cues66_runtime/NetMulticast_InvokeGameplayCueAddedAndWhileActive_WithParams_Implementation.inc",
+    "address": "0x1422dea60",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Direct virtual ASC implementation forwarding, preserving by-value UE argument copies; no second RPC dispatch. Native/reflected-slot contracts pinned.",
+    "class": "AFortPawn"
+  },
+  {
+    "function": "NetMulticast_InvokeGameplayCueAdded_WithParams_Implementation",
+    "kind": "impl",
+    "signature": "void NetMulticast_InvokeGameplayCueAdded_WithParams_Implementation(const FGameplayTag& GameplayCueTag, const FPredictionKey& PredictionKey, const FGameplayCueParameters& Parameters)",
+    "signature_status": "declared",
+    "inc_path": "porting/behavior/pawn_cues66_runtime/NetMulticast_InvokeGameplayCueAdded_WithParams_Implementation.inc",
+    "address": "0x1422deba0",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Direct virtual ASC implementation forwarding, preserving by-value UE argument copies; no second RPC dispatch. Native/reflected-slot contracts pinned.",
+    "class": "AFortPawn"
+  },
+  {
+    "function": "NetMulticast_InvokeGameplayCueExecuted_FromSpec_Implementation",
+    "kind": "impl",
+    "signature": "void NetMulticast_InvokeGameplayCueExecuted_FromSpec_Implementation(const FGameplayEffectSpecForRPC& Spec, const FPredictionKey& PredictionKey)",
+    "signature_status": "declared",
+    "inc_path": "porting/behavior/pawn_cues66_runtime/NetMulticast_InvokeGameplayCueExecuted_FromSpec_Implementation.inc",
+    "address": "0x1422dec30",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Direct virtual ASC implementation forwarding, preserving by-value UE argument copies; no second RPC dispatch. Native/reflected-slot contracts pinned.",
+    "class": "AFortPawn"
+  },
+  {
+    "function": "NetMulticast_InvokeGameplayCueExecuted_WithParams_Implementation",
+    "kind": "impl",
+    "signature": "void NetMulticast_InvokeGameplayCueExecuted_WithParams_Implementation(const FGameplayTag& GameplayCueTag, const FPredictionKey& PredictionKey, const FGameplayCueParameters& GameplayCueParameters)",
+    "signature_status": "declared",
+    "inc_path": "porting/behavior/pawn_cues66_runtime/NetMulticast_InvokeGameplayCueExecuted_WithParams_Implementation.inc",
+    "address": "0x1422ded60",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Direct virtual ASC implementation forwarding, preserving by-value UE argument copies; no second RPC dispatch. Native/reflected-slot contracts pinned.",
+    "class": "AFortPawn"
+  },
+  {
+    "function": "NetMulticast_InvokeGameplayCuesAddedAndWhileActive_WithParams_Implementation",
+    "kind": "impl",
+    "signature": "void NetMulticast_InvokeGameplayCuesAddedAndWhileActive_WithParams_Implementation(const FGameplayTagContainer& GameplayCueTags, const FPredictionKey& PredictionKey, const FGameplayCueParameters& GameplayCueParameters)",
+    "signature_status": "declared",
+    "inc_path": "porting/behavior/pawn_cues66_runtime/NetMulticast_InvokeGameplayCuesAddedAndWhileActive_WithParams_Implementation.inc",
+    "address": "0x1422dedf0",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Direct virtual ASC implementation forwarding, preserving by-value UE argument copies; no second RPC dispatch. Native/reflected-slot contracts pinned.",
+    "class": "AFortPawn"
+  },
+  {
+    "function": "NetMulticast_InvokeGameplayCuesExecuted_WithParams_Implementation",
+    "kind": "impl",
+    "signature": "void NetMulticast_InvokeGameplayCuesExecuted_WithParams_Implementation(const FGameplayTagContainer& GameplayCueTags, const FPredictionKey& PredictionKey, const FGameplayCueParameters& GameplayCueParameters)",
+    "signature_status": "declared",
+    "inc_path": "porting/behavior/pawn_cues66_runtime/NetMulticast_InvokeGameplayCuesExecuted_WithParams_Implementation.inc",
+    "address": "0x1422defe0",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Direct virtual ASC implementation forwarding, preserving by-value UE argument copies; no second RPC dispatch. Native/reflected-slot contracts pinned.",
+    "class": "AFortPawn"
+  },
+  {
+    "function": "NetMulticast_InvokeGameplayCueAddedAndWhileActive_FromSpec_Implementation",
+    "kind": "impl",
+    "signature": "void NetMulticast_InvokeGameplayCueAddedAndWhileActive_FromSpec_Implementation(const FGameplayEffectSpecForRPC& Spec, const FPredictionKey& PredictionKey)",
+    "signature_status": "declared",
+    "inc_path": "porting/behavior/pawn_cues66_runtime/NetMulticast_InvokeGameplayCueAddedAndWhileActive_FromSpec_Implementation.inc",
+    "address": "0x1422dea20",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Direct virtual ASC implementation forwarding, preserving by-value UE argument copies; no second RPC dispatch. Native/reflected-slot contracts pinned.",
+    "class": "AFortPawn"
+  },
+  {
+    "function": "NetMulticast_InvokeGameplayCueAdded_Implementation",
+    "kind": "impl",
+    "signature": "void NetMulticast_InvokeGameplayCueAdded_Implementation(const FGameplayTag& GameplayCueTag, const FPredictionKey& PredictionKey, const FGameplayEffectContextHandle& EffectContext)",
+    "signature_status": "declared",
+    "inc_path": "porting/behavior/pawn_cues66_runtime/NetMulticast_InvokeGameplayCueAdded_Implementation.inc",
+    "address": "0x1422deaf0",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Direct virtual ASC implementation forwarding, preserving by-value UE argument copies; no second RPC dispatch. Native/reflected-slot contracts pinned.",
+    "class": "AFortPawn"
+  },
+  {
+    "function": "NetMulticast_InvokeGameplayCueExecuted_Implementation",
+    "kind": "impl",
+    "signature": "void NetMulticast_InvokeGameplayCueExecuted_Implementation(const FGameplayTag& GameplayCueTag, const FPredictionKey& PredictionKey, const FGameplayEffectContextHandle& EffectContext)",
+    "signature_status": "declared",
+    "inc_path": "porting/behavior/pawn_cues66_runtime/NetMulticast_InvokeGameplayCueExecuted_Implementation.inc",
+    "address": "0x1422decb0",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Direct virtual ASC implementation forwarding, preserving by-value UE argument copies; no second RPC dispatch. Native/reflected-slot contracts pinned.",
+    "class": "AFortPawn"
+  },
+  {
+    "function": "NetMulticast_InvokeGameplayCuesExecuted_Implementation",
+    "kind": "impl",
+    "signature": "void NetMulticast_InvokeGameplayCuesExecuted_Implementation(const FGameplayTagContainer& GameplayCueTags, const FPredictionKey& PredictionKey, const FGameplayEffectContextHandle& EffectContext)",
+    "signature_status": "declared",
+    "inc_path": "porting/behavior/pawn_cues66_runtime/NetMulticast_InvokeGameplayCuesExecuted_Implementation.inc",
+    "address": "0x1422deed0",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Direct virtual ASC implementation forwarding, preserving by-value UE argument copies; no second RPC dispatch. Native/reflected-slot contracts pinned.",
+    "class": "AFortPawn"
+  }
+]
