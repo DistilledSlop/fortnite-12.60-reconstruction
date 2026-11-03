@@ -234,3 +234,19 @@ void UFortWorldItem::NativeSetEntryGiftingInfo(FFortItemEntry& Entry, FFortGifti
 	NativeMarkEntryDirty(Entry);
 }
 
+void UFortWorldItem::NativeDetachFromInventory()
+{
+	// CONFIDENCE: HIGH
+	{
+	    OwnerInventory = nullptr;
+	    NativeSetEntryParentInventory(ItemEntry, nullptr, false);
+	    bPendingPersistentDelete = true;
+	}
+}
+
+FGuid UFortWorldItem::NativeGetItemGuid()
+{
+	// CONFIDENCE: HIGH
+	return NativeGetOrCreateEntryGuid(ItemEntry);
+}
+

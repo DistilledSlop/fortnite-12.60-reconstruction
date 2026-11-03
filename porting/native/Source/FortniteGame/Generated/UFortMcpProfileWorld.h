@@ -16,6 +16,7 @@
 #include "FFortWorldProfileUpdateRequest.h"
 #include "FItemIdAndQuantityPair.h"
 #include "FItemTransferOperation.h"
+#include "FortPendingSaveRequest.h"
 
 class AFortInventory;
 class UFortWorldItem;
@@ -31,6 +32,9 @@ public:
 	// table index 5, flags 0x20080000000000
 	UPROPERTY()
 	TArray<FFortWorldProfileUpdateRequest> UpdateRequests;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x150): not a UPROPERTY, not replicated.
+	TArray<FFortPendingSaveRequest> NativePendingSaveRequests;
 
 	// table index 4, flags 0x20080000000000
 	UPROPERTY()
@@ -84,5 +88,9 @@ public:
 	UFUNCTION(ServiceRequest(UnrecoveredEndpoint))
 	void UnlockProfiles(const FString& Code, UPARAM(NotReplicated) FDedicatedServerUrlContext& Context);
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	bool NativePendingSaveContainsItemId(FString ItemId) const;
 };
 

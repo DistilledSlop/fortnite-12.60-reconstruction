@@ -33478,5 +33478,140 @@
       "Delegates/Delegate.h"
     ],
     "notes": "Native delegate first, reflected delegate second. Original LogFort diagnostics before each when bLog is true. See HANDOFF."
+  },
+  {
+    "class": "UMcpProfile",
+    "function": "NativeUpdateItemObject",
+    "kind": "helper",
+    "signature": "void NativeUpdateItemObject(const TMap<FString, UClass*>& Registry, UMcpProfile* Owner, FMcpProfileItemPtr Item, bool bForcePopulate)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/profile_registry_bridge_source_runtime/NativeUpdateItemObject.inc",
+    "address": "0x141104980",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "McpProfileBaseTypes.h",
+      "McpProfileItem.h",
+      "SharedProfileSysLog.h"
+    ],
+    "notes": "Assigned static bridge taking the actual registry explicitly; owner and registry lifetime/collection remain the caller's responsibility. Requires file-scope DEFINE_LOG_CATEGORY_STATIC(LogProfileSys, Log, All). See README."
+  },
+  {
+    "class": "UFortMcpProfile",
+    "function": "NativeFindOwningController",
+    "kind": "helper",
+    "signature": "AFortPlayerController* NativeFindOwningController() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/worlditem_population_source_runtime/GetOwningController.inc",
+    "address": "0x1421d8de0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Engine/World.h"
+    ],
+    "notes": "Assigned name; GetWorld and weak player-controller iterator, first controller with matching profile group. See HANDOFF."
+  },
+  {
+    "class": "UFortWorldItem",
+    "function": "NativeDetachFromInventory",
+    "kind": "helper",
+    "signature": "void NativeDetachFromInventory()",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/inventory_guid_index_runtime/DetachItem.inc",
+    "address": "0x142066bc0",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Assigned name; clears owner then entry parent and replicated-copy flag, then sets pending persistent deletion. Called from inventory reconciliation."
+  },
+  {
+    "class": "UFortItem",
+    "function": "NativeGetItemType",
+    "kind": "helper",
+    "signature": "EFortItemType NativeGetItemType() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": true,
+    "inc_path": "porting/behavior/worlditem_dispatch_contracts_runtime/UFortItem_NativeGetItemType.inc",
+    "address": "0x1420337a0",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Assigned source name; see HANDOFF.md for native virtual dispatch and signature limitations."
+  },
+  {
+    "class": "UFortItemDefinition",
+    "function": "NativeGetItemType",
+    "kind": "helper",
+    "signature": "EFortItemType NativeGetItemType() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": true,
+    "inc_path": "porting/behavior/worlditem_dispatch_contracts_runtime/UFortItemDefinition_NativeGetItemType.inc",
+    "address": "0x14202f190",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Assigned source name; see HANDOFF.md for native virtual dispatch and signature limitations."
+  },
+  {
+    "class": "UFortItem",
+    "function": "NativeGetItemGuid",
+    "kind": "helper",
+    "signature": "FGuid NativeGetItemGuid()",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": true,
+    "inc_path": "porting/behavior/worlditem_dispatch_contracts_runtime/UFortItem_NativeGetItemGuid.inc",
+    "address": "0x140693ec0",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Assigned source name; see HANDOFF.md for native virtual dispatch and signature limitations."
+  },
+  {
+    "class": "UFortWorldItem",
+    "function": "NativeGetItemGuid",
+    "kind": "helper",
+    "signature": "FGuid NativeGetItemGuid()",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": true,
+    "inc_path": "porting/behavior/worlditem_dispatch_contracts_runtime/UFortWorldItem_NativeGetItemGuid.inc",
+    "address": "0x14205a3d0",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Assigned source name; see HANDOFF.md for native virtual dispatch and signature limitations."
+  },
+  {
+    "class": "UFortMcpProfileWorld",
+    "function": "NativePendingSaveRequests",
+    "kind": "member_field",
+    "signature": "TArray<FFortPendingSaveRequest> NativePendingSaveRequests",
+    "signature_status": "proposed",
+    "access": "public",
+    "offset": "0x150",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "FortPendingSaveRequest.h"
+    ],
+    "notes": "Actual request array with partial logical element type; native stride is 0xe8. The callback, payload and remaining lifecycle are open and must extend this same type. Assigned source name."
+  },
+  {
+    "class": "UFortMcpProfileWorld",
+    "function": "NativePendingSaveContainsItemId",
+    "kind": "helper",
+    "signature": "bool NativePendingSaveContainsItemId(FString ItemId) const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/pending_save_membership_runtime/NativePendingSaveContainsItemId.inc",
+    "address": "0x14254c270",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "FortPendingSaveRequest.h"
+    ],
+    "notes": "Assigned source name and constness. Checks the first request's original +0x48 set, then +0x98 on a miss; FString is passed by value. Writers and complete request lifecycle remain open."
   }
 ]

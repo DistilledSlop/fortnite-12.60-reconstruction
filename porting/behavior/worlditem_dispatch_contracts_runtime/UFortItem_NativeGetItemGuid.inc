@@ -1,0 +1,2 @@
+// CONFIDENCE: HIGH
+return FGuid();

@@ -3,7 +3,9 @@
 #include "AFortInventory.h"
 #include "AFortPlayerController.h"
 #include "Delegates/Delegate.h"
+#include "EFortItemType.h"
 #include "McpProfileItem.h"
+#include "Misc/Guid.h"
 #include "SharedFortGameLog.h"
 #include "UFortItemDefinition.h"
 
@@ -234,5 +236,18 @@ void UFortItem::BroadcastOnItemChanged(bool bItemChanged, bool bAmmoChanged, boo
 	    }
 	    OnItemChanged.Broadcast(bItemChanged, bAmmoChanged, bIngredientsChanged);
 	}
+}
+
+EFortItemType UFortItem::NativeGetItemType() const
+{
+	// CONFIDENCE: HIGH
+	UFortItemDefinition* Definition = GetItemDefinitionBP();
+	return Definition ? Definition->NativeGetItemType() : EFortItemType::Max_None;
+}
+
+FGuid UFortItem::NativeGetItemGuid()
+{
+	// CONFIDENCE: HIGH
+	return FGuid();
 }
 

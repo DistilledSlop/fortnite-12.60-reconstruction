@@ -38,4 +38,11 @@ def sources():
             if hashlib.sha256(stream.read(item['length'])).hexdigest() != item['sha256']:
                 raise ValueError('profile base operation original capture changed: ' + item['begin'])
     result['McpProfileBaseTypes.h'] = banner + (base_dir / 'McpProfileBaseTypes.h').read_text()
+    bridge_dir = HERE.parent / 'profile_registry_bridge_source_runtime'
+    with image.open('rb') as stream:
+        for item in json.loads((bridge_dir / 'native-evidence.json').read_text())['windows']:
+            stream.seek(int(item['begin'], 16) - 0x140000000)
+            if hashlib.sha256(stream.read(item['length'])).hexdigest() != item['sha256']:
+                raise ValueError('profile bridge original capture changed: ' + item['begin'])
+    result['SharedProfileSysLog.h'] = banner + (bridge_dir / 'SharedProfileSysLog.h').read_text()
     return result

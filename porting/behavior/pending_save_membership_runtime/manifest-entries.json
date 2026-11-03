@@ -1,0 +1,29 @@
+[
+  {
+    "class": "UFortMcpProfileWorld",
+    "function": "NativePendingSaveRequests",
+    "kind": "member_field",
+    "signature": "TArray<FFortPendingSaveRequest> NativePendingSaveRequests",
+    "signature_status": "proposed",
+    "access": "public",
+    "offset": "0x150",
+    "confidence": "high",
+    "status": "ported",
+    "includes": ["FortPendingSaveRequest.h"],
+    "notes": "Actual request array with partial logical element type; native stride is 0xe8. The callback, payload and remaining lifecycle are open and must extend this same type. Assigned source name."
+  },
+  {
+    "class": "UFortMcpProfileWorld",
+    "function": "NativePendingSaveContainsItemId",
+    "kind": "helper",
+    "signature": "bool NativePendingSaveContainsItemId(FString ItemId) const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/pending_save_membership_runtime/NativePendingSaveContainsItemId.inc",
+    "address": "0x14254c270",
+    "confidence": "high",
+    "status": "ported",
+    "includes": ["FortPendingSaveRequest.h"],
+    "notes": "Assigned source name and constness. Checks the first request's original +0x48 set, then +0x98 on a miss; FString is passed by value. Writers and complete request lifecycle remain open."
+  }
+]

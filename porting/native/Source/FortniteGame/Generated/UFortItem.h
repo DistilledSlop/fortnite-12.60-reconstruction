@@ -7,6 +7,7 @@
 #include "UObject/Object.h"
 
 #include "Delegates/Delegate.h"
+#include "EFortItemType.h"
 #include "FFortOnItemChangedDelegate.h"
 #include "FFortOnItemDestroyedDelegate.h"
 #include "McpProfileItem.h"
@@ -137,5 +138,7 @@ public:
 	virtual bool NativeWasGifted() const;
 	virtual bool NativePopulateFromMcpItem(FMcpProfileItem* Item);
 	void BroadcastOnItemChanged(bool bItemChanged, bool bAmmoChanged, bool bIngredientsChanged, bool bLog);
+	virtual EFortItemType NativeGetItemType() const;
+	virtual FGuid NativeGetItemGuid();
 };
 

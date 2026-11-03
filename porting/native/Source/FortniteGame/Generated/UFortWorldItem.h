@@ -78,5 +78,7 @@ public:
 	static FFortItemEntry& NativeCopyEntry(FFortItemEntry& Destination, const FFortItemEntry& Source);
 	static void NativeMarkEntryDirty(FFortItemEntry& Entry);
 	static void NativeSetEntryGiftingInfo(FFortItemEntry& Entry, FFortGiftingInfo Info);
+	void NativeDetachFromInventory();
+	virtual FGuid NativeGetItemGuid();
 };
 

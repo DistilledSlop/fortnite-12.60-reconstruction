@@ -204,5 +204,6 @@ public:
 	virtual FString NativeGetProfileKey() const;
 	virtual int32 NativeGetMaxStackSize(UAbilitySystemComponent* AbilityComp) const;
 	virtual void GetOwnedGameplayTags(FGameplayTagContainer& TagContainer) const;
+	virtual EFortItemType NativeGetItemType() const;
 };
 

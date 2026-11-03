@@ -1,0 +1,10 @@
+# World item population dependency handoff
+
+`GetOwningController.inc` and its manifest entry recover 0x1421d8de0 as an assigned `UFortMcpProfile::NativeFindOwningController`. UObject slot +0x150 is `GetWorld` (see `vtable_slots.md`); the world weak iterator 0x14468fb70 is `GetPlayerControllerIterator` (see `aircraft_unlock_runtime/README.md`). The loop resolves each weak reference, casts to AFortPlayerController, and returns the first whose reflected `McpProfileGroup` equals profile `ProfileGroup`. Null groups compare equal. The iterator and body windows are pinned in `native-evidence.json`. No build, runtime test, canonical manifest edit or commit was made.
+
+The outer population function is not proposed as closed. Its specific outstanding dispatch operations are:
+
+* Item virtual +0x318 targets 0x1420337a0 in Item, WorldItem, CreativeWorldItem and PlaysetWorldItem primary tables. It calls item virtual +0x3e8 (`GetItemDefinitionBP`); when null returns byte 0x70, otherwise calls definition virtual +0x298. The WorldItemDefinition target 0x14202f190 returns definition byte +0x51, reflected `ItemType`; the virtual definition contract and overrides must remain dispatchable. The outer calls this operation twice, separately, comparing first to 1 and second to 9.
+* Inventory helper 0x142015840 reads inventory byte +0x3fc; if true it invokes item virtual +0x468. WorldItem target 0x14205a3d0 calls `NativeGetOrCreateEntryGuid(ItemEntry)`, so it can generate and write a GUID. If valid and the original GUID index has a non-null entry pointer it returns; otherwise it invokes inventory virtual +0x630 with the item. This virtual target and its behavior remain unclosed. An assigned flag and stub or omitted dispatch would not preserve the operation.
+
+Primary table targets were read from the original image at Item 0x14606c3f0, WorldItem 0x14607a630, CreativeWorldItem 0x1463af658, PlaysetWorldItem 0x1464e8cd8, and WorldItemDefinition 0x14606f8f8. No inference that the derived list is exhaustive for future source extensions substitutes for virtual dispatch.

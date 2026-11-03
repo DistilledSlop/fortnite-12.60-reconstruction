@@ -15,6 +15,7 @@
 #include "McpProfileItem.h"
 #include "McpProfileJsonIntern.h"
 #include "Misc/DateTime.h"
+#include "SharedProfileSysLog.h"
 #include "UObject/Class.h"
 #include "UObject/Object.h"
 #include "UObject/UObjectGlobals.h"
@@ -105,5 +106,6 @@ public:
 	static const FMcpProfileItemArray* NativeFindBaseProfileGroup(const FMcpProfileGroupMap& Groups, const FString& Key);
 	static void NativeInsertProfileGroup(FMcpProfileGroupMap& Groups, const FString& Key, FMcpProfileItemPtr Item);
 	static void NativeInsertProfileItem(FMcpProfileItemMap& ItemsById, FMcpProfileGroupMap& Groups, const FMcpProfileItemPtr& Item);
+	static void NativeUpdateItemObject(const TMap<FString, UClass*>& Registry, UMcpProfile* Owner, FMcpProfileItemPtr Item, bool bForcePopulate);
 };
 

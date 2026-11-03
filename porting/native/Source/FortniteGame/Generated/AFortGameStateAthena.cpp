@@ -16,6 +16,7 @@
 #include "SharedFortGameLog.h"
 #include "Stats/Stats.h"
 #include "UFortMutatorListComponent.h"
+#include "UFortMutatorOwner.h"
 #include "UFortPlaylistAthena.h"
 #include "UObject/Object.h"
 #include "Net/UnrealNetwork.h"

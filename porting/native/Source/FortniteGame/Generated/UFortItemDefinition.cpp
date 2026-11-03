@@ -2,6 +2,7 @@
 #include "UFortItemDefinition.h"
 #include "AbilitySystemComponent.h"
 #include "AttributeSet.h"
+#include "EFortItemType.h"
 #include "GameplayEffect.h"
 #include "GameplayEffectAggregator.h"
 #include "GameplayEffectTypes.h"
@@ -201,5 +202,11 @@ void UFortItemDefinition::GetOwnedGameplayTags(FGameplayTagContainer& TagContain
 	// CONFIDENCE: HIGH
 	// Original 0x1420302f0: copy GameplayTags to the caller's container.
 	TagContainer = GameplayTags;
+}
+
+EFortItemType UFortItemDefinition::NativeGetItemType() const
+{
+	// CONFIDENCE: HIGH
+	return ItemType;
 }
 

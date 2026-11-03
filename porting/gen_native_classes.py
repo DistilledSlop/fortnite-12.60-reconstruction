@@ -2330,6 +2330,10 @@ _profile_entry_spec = _common_activation_import.spec_from_file_location(
     "profile_entry_policy", os.path.join(os.path.dirname(__file__), "behavior", "profile_entry_lifecycle_runtime", "source_policy.py"))
 _profile_entry_policy = _common_activation_import.module_from_spec(_profile_entry_spec)
 _profile_entry_spec.loader.exec_module(_profile_entry_policy)
+_pending_save_spec = _common_activation_import.spec_from_file_location(
+    "pending_save_policy", os.path.join(os.path.dirname(__file__), "behavior", "pending_save_membership_runtime", "source_policy.py"))
+_pending_save_policy = _common_activation_import.module_from_spec(_pending_save_spec)
+_pending_save_spec.loader.exec_module(_pending_save_policy)
 _mutator_owner_spec = _common_activation_import.spec_from_file_location(
     "mutator_owner_policy", os.path.join(os.path.dirname(__file__), "behavior", "mutator_provider_bindings_runtime", "source_policy.py"))
 _mutator_owner_policy = _common_activation_import.module_from_spec(_mutator_owner_spec)
@@ -2624,6 +2628,9 @@ def body_refs(body, name, package, ctx):
     for tok in sorted(set(re.findall(r"[A-Za-z_]\w*", strip_comments(body)))):
         if tok == name:
             continue
+        # Native IInterface bodies need the emitted UINTERFACE header as well.
+        if tok in ctx.get("interface_packages", {}):
+            tok = "U" + tok[1:]
         if tok in ctx["class_pkg"]:
             # These two recovered dependency edges are present in module rules.
             allowed_edges = {('/Script/FortniteUI', '/Script/FortniteGame'),
@@ -3835,6 +3842,7 @@ def promote(args):
     native_gameplay_tags_sources = (_native_gameplay_tags_policy.sources()
                                     if 'AFortGameStateAthena' in listed else None)
     profile_entry_sources = _profile_entry_policy.sources() if 'UMcpProfile' in listed else None
+    pending_save_sources = _pending_save_policy.sources() if 'UFortMcpProfileWorld' in listed else None
     client_event_sources = None
     if {'UFortGameInstance', 'UFortUserWidget', 'UFortKismetLibrary'} & set(listed):
         required = {'UFortGameInstance', 'UFortUserWidget', 'UFortClientEventInterface'}
@@ -3939,9 +3947,10 @@ def promote(args):
         struct_index.setdefault(info.cpp_name.split("::")[0], info)
     splice_ctx = {
         "class_pkg": package_of, "struct_index": struct_index, "gate": gate,
+        "interface_packages": iface_packages,
         # Only headers actually scheduled for emission qualify; arbitrary source-tree
         # files (including stale Native output) must not authorize snippet includes.
-        "generated_support_headers": {filename for bundle in (client_event_sources, native_gameplay_tags_sources, aircraft_timing_sources, profile_entry_sources)
+        "generated_support_headers": {filename for bundle in (client_event_sources, native_gameplay_tags_sources, aircraft_timing_sources, profile_entry_sources, pending_save_sources)
                                       for filename in (bundle or {}) if filename.endswith(".h")},
         "button_feedback_sound_identity_proven": 'UCommonButton' in listed,
         "other_promoted": {n for b, n in names.items()
@@ -4287,6 +4296,10 @@ def promote(args):
     if profile_entry_sources:
         for filename, text in profile_entry_sources.items():
             with open(os.path.join(args.source_root, 'McpProfileSys', 'Generated', filename), 'w', encoding='utf-8', newline='\n') as fh:
+                fh.write(text)
+    if pending_save_sources:
+        for filename, text in pending_save_sources.items():
+            with open(os.path.join(args.source_root, 'FortniteGame', 'Generated', filename), 'w', encoding='utf-8', newline='\n') as fh:
                 fh.write(text)
     if aircraft_timing_sources:
         for filename, text in aircraft_timing_sources.items():

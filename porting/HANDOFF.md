@@ -1,5 +1,32 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Native source batch 37 (2026-11-03)
+
+Canonical source: 1,899 bodies +167 supporting fields =2,066 ported entries.
+Eight bodies added: profile item-object bridge, profile owning-controller lookup,
+WorldItem detach, base item and definition virtual item-type operations, base and
+WorldItem virtual GUID operations, first pending-save request membership read.
+Actual pending request array at +150 is one credited field. Its support element
+is partial; all future callback/payload/lifecycle recovery must extend this same
+request type rather than create a parallel index. Full request construction and
+save pipeline remain open. Bridge retains by-value shared ownership, original
+LogProfileSys category/default verbosity/error message, weak profile assignment,
+exact class reuse and interface population failure behavior. Registry owner/GC
+installation remains open. Definition and GUID calls remain virtual; WorldItem
+GUID access mutates the original entry via acquire-or-generate. Full population,
+GUID reconciliation, second index/group ownership and inventory add remain open.
+
+Promotion37 accepts2,066/rejects0; original source windows checked. Generator now
+includes emitted UINTERFACE headers for native IInterface body references. No
+builds/tests/runtime. Last tested1,040;859 pending; next2,040 needs141 bodies.
+A fresh bounded larger-body task is tracing actual time-of-day manager replacement
+from 1419642e0 rather than rejecting unidentified dependencies. Root owns canonical
+manifest/generator/native; workers only proposal dirs. Four product gates remain
+open. Preserve unrelated untracked porting/graphics/. Prior status-only goal turn
+was no progress; this turn changes authoritative source. Commit/push source then
+publish dashboard. Continue larger body recovery alongside integration.
+
+
 ## Native source batch 36 (2026-11-03)
 
 Canonical source:1,891 bodies +166 supporting fields =2,057 ported entries.
