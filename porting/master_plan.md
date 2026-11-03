@@ -10,6 +10,11 @@ credentials in Git, and the orchestrator reviews and commits.
 
 ## Current baseline
 
+Batch95 integrates15 vehicle predicates/getters and original HoagieRuntime
+module/config/vehicle selection;2,203 bodies+238 fields=2,441 accepted,0 rejected.
+Additional13 source lifts remain uncounted; Claude handles large minigame source.
+No builds/tests;163 canonical+4 manual pending; next3,040; all gates OPEN.
+
 Batch94 integrates14 complete weapon getters via shared typed resolver patterns;
 2,188 bodies+238 fields=2,426 accepted,0 rejected. Broader minigame/lifecycle/text
 source remains uncounted pending bindings. Fresh119 vehicle wrappers yield56

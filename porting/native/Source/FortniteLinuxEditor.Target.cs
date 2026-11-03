@@ -7,6 +7,7 @@ public class FortniteLinuxEditorTarget : TargetRules
         Type = TargetType.Editor;
         DefaultBuildSettings = BuildSettingsVersion.Latest;
         ExtraModuleNames.Add("FortniteGame");
+        ExtraModuleNames.Add("HoagieRuntime");
         ExtraModuleNames.Add("FortniteUI");
         ExtraModuleNames.Add("SocialUMG");
         ExtraModuleNames.Add("KairosSceneCapture");

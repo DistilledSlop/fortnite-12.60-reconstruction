@@ -656,7 +656,20 @@ public:
 	float GetSteeringAngle() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool HasConstraints() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual bool IsBraking() const;
+
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsFuelBelowThreshold() const;
+public:
+
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsOutOfFuel() const;
+public:
 
 private:
 	UFUNCTION()

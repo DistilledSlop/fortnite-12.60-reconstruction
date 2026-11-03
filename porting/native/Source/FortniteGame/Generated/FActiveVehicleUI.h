@@ -10,7 +10,7 @@ class UUserWidget;
 #include "FActiveVehicleUI.generated.h"
 
 USTRUCT()
-struct FActiveVehicleUI
+struct FORTNITEGAME_API FActiveVehicleUI
 {
 	GENERATED_BODY()
 

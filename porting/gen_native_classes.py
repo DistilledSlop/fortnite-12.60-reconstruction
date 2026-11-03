@@ -1451,13 +1451,13 @@ def self_test():
 RUNTIME_MODULE_PACKAGES = (
     "/Script/BlueprintContext", "/Script/MeshNetwork", "/Script/CommonUI", "/Script/AmbientAudio", "/Script/Account",
     "/Script/ModularGameplay", "/Script/McpProfileSys", "/Script/CommonInput", "/Script/FortniteUI",
-    "/Script/SocialUMG", "/Script/KairosSceneCapture",   # stage 2 (coverage cause C1); see native_classes_status.md
+    "/Script/SocialUMG", "/Script/KairosSceneCapture", "/Script/HoagieRuntime",   # stage 2 (coverage cause C1); see native_classes_status.md
 )
 HAND_WRITTEN_MODULES = ("FortniteGame", "PlayspaceFramework")   # Build.cs and IMPLEMENT_* files are not generated
 PROMOTE_PACKAGES = ("/Script/FortniteGame", "/Script/PlayspaceFramework") + RUNTIME_MODULE_PACKAGES
-# Runtime modules that a FortniteGame item may use the types of (TypeGate.cross_module_allowed). FortniteUI is not
-# one: it depends on FortniteGame (its parents), so the reverse edge would be a module cycle.
-CROSS_MODULE_TARGETS = tuple(p for p in RUNTIME_MODULE_PACKAGES if p != "/Script/FortniteUI")
+# Runtime modules that FortniteGame may reference. FortniteUI and HoagieRuntime
+# depend on FortniteGame parents, so reverse edges would form module cycles.
+CROSS_MODULE_TARGETS = tuple(p for p in RUNTIME_MODULE_PACKAGES if p not in ("/Script/FortniteUI", "/Script/HoagieRuntime"))
 # UHT needs an endpoint name on every ServiceRequest/ServiceResponse (HeaderParser.cpp). The binary's UFunction does
 # not carry it and no generated code reads it (the request body is not recovered), so this is a placeholder.
 NET_SERVICE_ENDPOINT = "UnrecoveredEndpoint"
@@ -2683,8 +2683,9 @@ def body_refs(body, name, package, ctx):
         if tok in ctx.get("interface_packages", {}):
             tok = "U" + tok[1:]
         if tok in ctx["class_pkg"]:
-            # These two recovered dependency edges are present in module rules.
+            # These recovered dependency edges are present in module rules.
             allowed_edges = {('/Script/FortniteUI', '/Script/FortniteGame'),
+                             ('/Script/HoagieRuntime', '/Script/FortniteGame'),
                              ('/Script/FortniteGame', '/Script/McpProfileSys')}
             if ctx["class_pkg"][tok] != package and (package, ctx["class_pkg"][tok]) not in allowed_edges:
                 problems.append("body uses %s, a class of another module" % tok)
@@ -3694,7 +3695,8 @@ def include_interface_headers(model, iface_packages):
 def cross_module_allowed(current_package, target_package):
     """Permit promoted types along existing acyclic module dependencies."""
     return ((current_package == "/Script/FortniteGame" and target_package in CROSS_MODULE_TARGETS)
-            or (current_package == "/Script/FortniteUI" and target_package == "/Script/FortniteGame"))
+            or (current_package in ("/Script/FortniteUI", "/Script/HoagieRuntime")
+                and target_package == "/Script/FortniteGame"))
 
 
 def own_includes(gate, used, package):

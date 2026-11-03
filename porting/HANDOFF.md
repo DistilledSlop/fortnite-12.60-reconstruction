@@ -1,5 +1,40 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Vehicle bulk source and HoagieRuntime promotion batch95 (2026-11-03)
+
+Integrated15 complete bodies:11 Hoagie getters/config accessors/rotor clamp,
+Doghouse roll direction and3 Athena predicates. Fuel comparisons preserve
+unordered/NaN behavior; root verified exact1.0e-8f bits77cc2b32. HasConstraints
+returnsfalse with provably unreachable diagnostic branch. Added13 uncounted
+rough source lifts for vehicle registration, camera, gear, auto-destruction,
+spring ratio, aim/shoot points, rotor position and thrust direction; unresolved
+fields/virtuals/helpers/cache effects remain explicit. Drafts never count.
+
+Added original /Script/HoagieRuntime generated module, vehicle/config classes,
+reflected support types and project/client/editor/server selection. Generator
+allows HoagieRuntime -> FortniteGame dependencies and excludes reverse edges;
+existing module cycle guard passes. Initial generation refused unsupported
+package before writes; extending the package policy closed that blocker.
+Final generation95 accepts2,441 entries=2,203 bodies+238 fields,rejected0;
+6 native files changed,13 added,0 removed,12,824 unchanged mtimes restored.
+Two existing shared UI structs gain generated FORTNITEGAME_API exports for the
+new module. Command `python3 -I /tmp/promote-native-batch95.py`, log
+`/tmp/promote-native-batch95.log`, reports gameplay-bulk-integration-95/.
+Build/runtime/tests deferred: last2,040;163 canonical+4 manual bodies pending;
+next3,040. New module/generator changes are source reviewed, build pending.
+All four product gates OPEN, objective ACTIVE. Batch94 source4ec0fdb5 and
+dashboard7751b870 pushed successfully before this commit.
+
+Root probes native95-broad119 wrappers and native95-impl56 underlying functions
+completed successfully, metadata rolled back, all probe/generation handles
+terminal. Commands follow batch94 convention, logs/tmp/native95-<name>.log.
+Two bounded fork-none Terra6.1 medium workers completed and rotated after this
+batch. Claude Sonnet medium large minigame task remains running under outer
+PTY session4920, task /tmp/claude-native-minigame94; it owns only new
+minigame_large94_runtime. Poll same runner; do not duplicate task. Root owns
+review/canonical/generation/build/staging. Preserve graphics/Engine edits,
+visual pause, bounded economical reads, and test checkpoint3,040.
+
 ## Bulk weapon getters and larger native recovery batch94 (2026-11-03)
 
 Integrated14 complete UFortWeaponItemDefinition getters as one shared-resolver

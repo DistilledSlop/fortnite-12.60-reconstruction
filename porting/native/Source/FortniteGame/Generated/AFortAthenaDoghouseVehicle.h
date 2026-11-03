@@ -179,6 +179,9 @@ public:
 	FReplicatedControlState ControlState;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	EAileronRollDirection GetAileronRollDirection() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetAltitudeZ() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

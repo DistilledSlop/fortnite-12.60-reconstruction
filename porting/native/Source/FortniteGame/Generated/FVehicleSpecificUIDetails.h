@@ -12,7 +12,7 @@ class UUserWidget;
 #include "FVehicleSpecificUIDetails.generated.h"
 
 USTRUCT()
-struct FVehicleSpecificUIDetails
+struct FORTNITEGAME_API FVehicleSpecificUIDetails
 {
 	GENERATED_BODY()
 

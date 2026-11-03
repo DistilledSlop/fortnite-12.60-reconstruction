@@ -66,11 +66,33 @@ float AFortAthenaVehicle::GetSteeringAngle() const
 	return NativeRecoveredFloat_0x554;
 }
 
+bool AFortAthenaVehicle::HasConstraints() const
+{
+	// CONFIDENCE: high; recovered native body and reflected field mapping.
+	// 0x14191ab70 returns false; its conditional diagnostic call is unreachable.
+	return false;
+}
+
 bool AFortAthenaVehicle::IsBraking() const
 {
 	// Exact original shared stub 0x1406801e0.
 	// CONFIDENCE: HIGH
 	return false;
+}
+
+bool AFortAthenaVehicle::IsFuelBelowThreshold() const
+{
+	// CONFIDENCE: high; recovered native body and reflected field mapping.
+	// 0x14283bf40 -> 0x141b6a180: Charge at FuelCharge+0xc4; threshold at +0xc0.
+	// COMISS/SETC treats unordered comparisons as true.
+	return !(FuelCharge.Charge >= FuelCharge.ChargeThreshold);
+}
+
+bool AFortAthenaVehicle::IsOutOfFuel() const
+{
+	// CONFIDENCE: high; recovered native body and reflected field mapping.
+	// 0x14283c0d0 -> 0x141b6a180; COMISS/SETBE also returns true for NaN.
+	return !(FMath::Abs(FuelCharge.Charge) > 1.0e-8f);
 }
 
 void AFortAthenaVehicle::OnRep_AbilitySystemComponent()
