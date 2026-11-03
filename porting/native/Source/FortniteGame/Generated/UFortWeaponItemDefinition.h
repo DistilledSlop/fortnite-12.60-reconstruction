@@ -11,6 +11,8 @@
 #include "EFortWeaponTriggerType.h"
 #include "Engine/DataTable.h"
 #include "FFortCreativeTagsHelper.h"
+#include "FortAssets.h"
+#include "FortDelayedObjectLoader.h"
 #include "GameplayTagContainer.h"
 #include "Math/Vector2D.h"
 
@@ -230,5 +232,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool TargetingPreventsReload() const;
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	virtual UFortWorldItemDefinition* GetAmmoWorldItemDefinitionNative() const;
 };
 

@@ -1,5 +1,7 @@
 # FFortAssets retention: incomplete; do not integrate
 
+Superseded integration status: see ../asset_owner_materialization_runtime/HANDOFF.md and source batch40 in ../../HANDOFF.md. Earlier blockers below are historical evidence; diagnostic map writers and changed-mode caller wiring remain open.
+
 Image `/mnt/vibrato/fortnite-evidence/original-late-capture-1/image-125.runtime.bin`, base 0x140000000, SHA-256 338c83a2314ccac1040a2c0bb520b893013cc7b58eda58e550da67f5d84de680. Addresses below are runtime virtual addresses. The weapon helper's tracker effect cannot be reproduced faithfully by a permanent root.
 
 * 0x141df61e0 returns a lazily initialized function-static singleton (storage 0x14812bba0); constructor 0x141de4b00, destructor registered with the runtime. Constructor establishes the FGCObject base and five empty UE set/map-shaped collections at offsets +0x10, +0x60, +0xb0, +0x100, +0x150, initializes critical section +0x1a0 and sets byte +0x1c8 to zero. It also allocates/registers callback/delegate objects; recovering their behavior and destruction is required, not optional.

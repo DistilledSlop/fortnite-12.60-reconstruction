@@ -261,7 +261,14 @@ public:
 	uint8 NumberOfSlotsToTake;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortWorldItemDefinition* GetAmmoWorldItemDefinition_BP() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual float GetMaxDurability(int32 ItemLevel) const;
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	virtual UFortWorldItemDefinition* GetAmmoWorldItemDefinitionNative() const;
 };
 

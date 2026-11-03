@@ -1,5 +1,7 @@
 # Shared asset retention release paths
 
+Superseded integration status: see ../asset_owner_materialization_runtime/HANDOFF.md and source batch40 in ../../HANDOFF.md. Earlier blockers below are historical evidence; diagnostic map writers and changed-mode caller wiring remain open.
+
 Image125 SHA-256 `338c83a2314ccac1040a2c0bb520b893013cc7b58eda58e550da67f5d84de680`, base `0x140000000`. `recover.py` extracts four complete `.pdata` ranges with bytes and instructions into `evidence.json`; extraction ran successfully. No tests/builds or canonical credit.
 
 `0x141e0de80` is an unlocked removal, not an insertion or membership query: it obtains the singleton and tail-jumps to `0x140742690` with collection `+0x100` and the original object value. The target pointer-hashes that value (shift right four), searches by pointer equality, unlinks the hash chain, pushes the sparse element into the free list, increments the free count, and clears its allocation bit. It returns one for removal, zero when absent. This is `TSet<UObject*>::Remove`, returning int32. Do not add a lock absent from the original helper.

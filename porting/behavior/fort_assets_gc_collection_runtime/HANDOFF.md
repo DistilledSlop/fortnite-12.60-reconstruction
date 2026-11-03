@@ -1,5 +1,7 @@
 # FFortAssets +0x150 collection proposal
 
+Superseded integration status: see ../asset_owner_materialization_runtime/HANDOFF.md and source batch40 in ../../HANDOFF.md. Earlier blockers below are historical evidence; diagnostic map writers and changed-mode caller wiring remain open.
+
 Image 125, base 0x140000000, SHA-256 338c83a2314ccac1040a2c0bb520b893013cc7b58eda58e550da67f5d84de680. This is a bounded proposal, not a complete FFortAssets implementation and not yet integration-ready: the enclosing owner lifecycle and complete consumer inventory remain unresolved.
 
 * 0x141de9f00 rejects null first input, then obtains the singleton and passes the address of its first input and the second input as a pair of addresses to 0x141de4030. No owner lock is taken there. The latter copies the two eight-byte values into offsets 0 and 8 of a 24-byte set element; offsets 0x10 and 0x14 are hash chain and bucket metadata. The key is pointer-hashed (pointer shifted right four and mixed).

@@ -11,27 +11,10 @@
 #include "Misc/Parse.h"
 #include "Stats/StatsMisc.h"
 
+#include "FortDelayedObjectLoader.h"
+
 namespace
 {
-// 141e12f10: the flag enables optional timing, not the load itself.
-UObject* LoadDelayedObject(const FSoftObjectPath& Path, bool bLogLoad)
-{
-    if (Path.IsNull())
-        return nullptr;
-
-    static const bool bShowDelayLoadTimes = FParse::Param(FCommandLine::Get(), TEXT("ShowDelayLoadTimes"));
-    TUniquePtr<FScopeLogTime> Timer;
-    if (bLogLoad && bShowDelayLoadTimes)
-    {
-        const FString Label = FString::Printf(TEXT("Loaded delay-load asset %s"), *Path.ToString());
-        Timer = MakeUnique<FScopeLogTime>(*Label, nullptr, FConditionalScopeLogTime::ScopeLog_Seconds);
-    }
-
-    return UAssetManager::IsValid()
-        ? UAssetManager::GetStreamableManager().LoadSynchronous(Path, false, nullptr)
-        : Path.TryLoad();
-}
-
 template <typename T>
 UClass* LoadTypedClass(const TSoftClassPtr<T>& Class, bool bLogLoad)
 {
@@ -40,7 +23,7 @@ UClass* LoadTypedClass(const TSoftClassPtr<T>& Class, bool bLogLoad)
 
     UClass* Result = Class.Get();
     if (!Result)
-        Result = Cast<UClass>(LoadDelayedObject(Class.ToSoftObjectPath(), bLogLoad));
+        Result = Cast<UClass>(FortLoadDelayedObject(Class.ToSoftObjectPath(), bLogLoad));
     return Result && Result->IsChildOf(T::StaticClass()) ? Result : nullptr;
 }
 }

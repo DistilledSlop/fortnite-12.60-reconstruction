@@ -1,5 +1,34 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Native source batch 40 (2026-11-03)
+
+Canonical source:1,923 bodies +170 supporting fields =2,093 entries.
+Three ammo bodies: WorldItemDefinition native virtual null base, reflected BP
+wrapper, WeaponItemDefinition override using actual AmmoData plus shared tracked
+load. Proven original declaring class is WorldItemDefinition, not ItemDefinition.
+Gadget override and remaining derived dispatch coverage remain open.
+
+Shared FFortAssets owner is now emitted, with original singleton, constructor/
+destructor delegates, actual synchronous callback, two retention sets, named refs,
+GC/lock scope, tracking/removal/preload/startup flag and BOTH recovered referencer
+virtuals. Diagnostic maps share the existing alias; their key hash/writers remain
+open, no map mutation introduced. Private clear is only called from PreLoadMap;
+changed-submode caller release block remains open, no invented release trigger.
+Owner support functions receive no duplicate manifest body credit. Weapon lookup
+is a real tracked-load caller and passes null to tracker for failed nonempty paths.
+Shared delay-loader replaces startup proposal's private copy; one command-line flag.
+
+Promotion40 accepts2,093/rejects0; original bytes/windows checked. No builds/tests/
+runtime. Last tested1,040;883 pending; next2,040 requires117 bodies. Source39
+fa81b2db pushed, dashboard docs included in this source checkpoint. Full game/server
+and all four product gates still open. Previous goal turn was progress.
+
+Active bounded worker building_init_mode_helpers owns only its proposal directory;
+Ghidra free. Root owns canonical manifest/generator/native and commits. Follow next
+with its context-mode helper if proven, then broaden further independent recoveries.
+Use Terra medium/low, fork none, bounded reads/output and rotating bounded tasks.
+Preserve unrelated porting/graphics/. No tests before2,040.
+
 ## Native source batch 39 (2026-11-03)
 
 Canonical source:1,920 bodies +170 supporting fields =2,090 entries.

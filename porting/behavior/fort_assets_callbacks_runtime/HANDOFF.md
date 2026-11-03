@@ -1,5 +1,7 @@
 # FFortAssets lifecycle: source proposal, incomplete owner
 
+Superseded integration status: see ../asset_owner_materialization_runtime/HANDOFF.md and source batch40 in ../../HANDOFF.md. Earlier blockers below are historical evidence; diagnostic map writers and changed-mode caller wiring remain open.
+
 Evidence image `/mnt/vibrato/fortnite-evidence/original-late-capture-1/image-125.runtime.bin`, base 0x140000000, SHA-256 338c83a2314ccac1040a2c0bb520b893013cc7b58eda58e550da67f5d84de680. `Lifecycle.cpp.in` is a typed fragment, not standalone production code: the diagnostic body, +0x150 member and surrounding complete owner must be integrated first. No build or tests were run.
 
 * Constructor 0x141de4b00 initializes flag +0x1c8 false and uses raw-object multicast delegate instances with `this`, not stored delegate handles. It binds 0x141dfc1e0 to 0x147c4e8b0, identified as `FCoreUObjectDelegates::PreLoadMap` by existing late-gi-init recovery, and binds 0x141e09a30 with payload `true` to 0x147c32318, `FCoreDelegates::OnSyncLoadPackage`. The latter identification follows its broadcast in the package load path at 0x142eccf1f and local engine `CoreUObject/Private/UObject/UObjectGlobals.cpp`; callback is `void(const FString&, bool)` and performs timing, counters, client/game-state calls and logging. Do not stub it out. `FCoreDelegates` declarations are in local `Core/Public/Misc/CoreDelegates.h`.
