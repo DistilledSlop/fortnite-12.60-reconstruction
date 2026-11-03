@@ -60,6 +60,14 @@ public:
 	UPROPERTY(Transient)
 	UCommonButtonGroup* TabButtonGroup;
 
+private:
+	// Non-reflected field (behaviour kind "member_field", offset 0x310): not a UPROPERTY, not replicated.
+	FName NativeRecoveredName_0x310 = NAME_None;
+public:
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FName GetActiveTab() const;
+
 protected:
 	UFUNCTION(BlueprintNativeEvent)
 	void HandleTabCreated(FName TabNameID, UCommonButton* TabButton);

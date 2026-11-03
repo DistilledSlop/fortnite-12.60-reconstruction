@@ -205,6 +205,9 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_HoagieState, Transient)
 	int32 HoagieStateRep;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x11dc): not a UPROPERTY, not replicated.
+	uint32 NativeRecoveredEngineState_0x11dc = 7;
+
 	// table index 28, flags 0x20080000002000
 	UPROPERTY(Transient)
 	float CurrentRotorSpeed;
@@ -328,6 +331,9 @@ public:
 	float GetDistanceToGround() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool GetIsEngineOn() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetMaxAltitude() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
@@ -347,6 +353,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsShuttingDown() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsStartingUp() const;
 
 	UFUNCTION(NetMulticast, Reliable)
 	void MulticastRotorImpulse(const FHitResult& RotorHit);

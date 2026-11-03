@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
 
+#include "Components/SlateWrapperTypes.h"
 #include "UFortLocalPlayer.h"
 
 #include "UFortSetting.generated.h"
@@ -23,6 +24,14 @@ public:
 	// table index 0, flags 0x20080000002000
 	UPROPERTY(Transient)
 	UFortSetting* SettingParent;
+
+private:
+	// Non-reflected field (behaviour kind "member_field", offset 0x90): not a UPROPERTY, not replicated.
+	ESlateVisibility NativeRecoveredVisibility_0x90 = ESlateVisibility::SelfHitTestInvisible;
+public:
+
+	UFUNCTION(BlueprintCallable)
+	ESlateVisibility GetDisplayNameVisibility();
 
 };
 

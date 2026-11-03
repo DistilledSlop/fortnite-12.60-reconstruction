@@ -50,6 +50,15 @@ float AFortHoagieVehicle::GetDistanceToGround() const
 	}
 }
 
+bool AFortHoagieVehicle::GetIsEngineOn() const
+{
+	// CONFIDENCE: high; native body and constructor state verified.
+	// Unsigned comparison mirrors the native 32-bit operation.
+	{
+		return (NativeRecoveredEngineState_0x11dc - 2u) <= 3u;
+	}
+}
+
 float AFortHoagieVehicle::GetMaxAltitude() const
 {
 	UFortHoagieVehicleConfigs* Configs = FortHoagieVehicleConfigs;
@@ -108,6 +117,15 @@ bool AFortHoagieVehicle::IsShuttingDown() const
 	// CONFIDENCE: high; recovered native body and reflected field mapping.
 	// Original exec 0x1408598b0; direct implementation in native95-impl.
 	return 0.0f < ShutdownTimer;
+}
+
+bool AFortHoagieVehicle::IsStartingUp() const
+{
+	// CONFIDENCE: high; native body and constructor state verified.
+	// Unsigned comparison mirrors the native 32-bit operation.
+	{
+		return NativeRecoveredEngineState_0x11dc <= 1u;
+	}
 }
 
 void AFortHoagieVehicle::MulticastRotorImpulse_Implementation(const FHitResult& RotorHit)
