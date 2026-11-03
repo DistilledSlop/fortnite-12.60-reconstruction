@@ -30,7 +30,7 @@ public:
 	FOnCloseLegacyWidget OnClose;
 
 	UFUNCTION(BlueprintCallable)
-	void SetOnCloseHandler(FOnCloseLegacyWidget& OnCloseHandler);
+	void SetOnCloseHandler(const FOnCloseLegacyWidget& OnCloseHandler);
 
 };
 

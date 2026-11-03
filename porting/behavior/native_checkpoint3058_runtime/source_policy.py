@@ -36,3 +36,26 @@ def add_roots(gate, seeds):
         if gate.reason(info) is not None:
             raise ValueError('unemittable native behavior struct: ' + name)
         seeds.setdefault(info.fn, set()).add('')
+
+def apply_signatures(name, block, functions, owner_fns, function_view):
+    if name != 'UFortLegacySlateBridgeWidget':
+        return
+    declared = [f for f in block.get('functions', []) if f.get('name') == 'SetOnCloseHandler']
+    if len(declared) != 1 or declared[0].get('create_func') != '0x14527dfa0':
+        raise ValueError('legacy close delegate function identity changed')
+    flags, params, problem = function_view(declared[0], owner_fns)
+    if problem or flags != 0x4420401 or len(params) != 1 or params[0].get('property_flags') != '0x10000008000182':
+        raise ValueError('legacy close delegate input contract changed')
+    for fn in functions:
+        if fn['name'] == 'SetOnCloseHandler':
+            if fn['args'] != ['FOnCloseLegacyWidget& OnCloseHandler']:
+                raise ValueError('legacy close delegate parameter changed')
+            # UHT passes a delegate wrapper temporary. The native body only copies
+            # the input into OnClose and never writes back through its reference.
+            fn['args'] = ['const FOnCloseLegacyWidget& OnCloseHandler']
+
+def configure_model(model):
+    if model['name'] == 'AFortQuickBars':
+        # Inline support dereferences AFortQuickBars and must follow its definition.
+        model['includes'] = [i for i in model['includes'] if i != 'QuickBarSwapNative.h']
+        model['cpp_includes'] = sorted(set(model['cpp_includes']) | {'QuickBarSwapNative.h'})

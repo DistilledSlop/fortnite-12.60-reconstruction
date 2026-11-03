@@ -11,7 +11,6 @@
 #include "Engine/EngineTypes.h"
 #include "Engine/World.h"
 #include "FQuickBar.h"
-#include "QuickBarSwapNative.h"
 #include "SharedFortGameLog.h"
 #include "TimerManager.h"
 

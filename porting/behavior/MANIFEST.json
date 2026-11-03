@@ -46495,7 +46495,7 @@
     "class": "UFortLegacySlateBridgeWidget",
     "function": "SetOnCloseHandler",
     "kind": "exec",
-    "signature": "void SetOnCloseHandler(FOnCloseLegacyWidget& OnCloseHandler)",
+    "signature": "void SetOnCloseHandler(const FOnCloseLegacyWidget& OnCloseHandler)",
     "signature_status": "proposed",
     "access": "public",
     "inc_path": "porting/behavior/flash_bulk119_08_runtime/UFortLegacySlateBridgeWidget_SetOnCloseHandler.inc",

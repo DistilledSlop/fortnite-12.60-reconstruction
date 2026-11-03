@@ -18,7 +18,7 @@ FQuickBar& QA = PickBar(BarA);
 FQuickBar& QB = PickBar(BarB);
 const auto InSlots = [](FQuickBar& Q, int32 I) { return I >= 0 && I < Q.Slots.Num(); };
 const auto InData  = [](FQuickBar& Q, int32 I) { return I >= 0 && I < Q.DataDefinition.QuickbarSlots.Num(); };
-const auto LogBad = [&](const TCHAR* Fmt, int32 SA, int32 SB, int32 N1, int32 N2)
+const auto LogBad = [&](const auto& Fmt, int32 SA, int32 SB, int32 N1, int32 N2)
 {
     // Native category constructor 0x1402cf420 names 0x1481348e0 LogFort; native verbosity 2 is Error.
     if (!LogFort.IsSuppressed(ELogVerbosity::Error))

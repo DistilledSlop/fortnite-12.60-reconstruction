@@ -2536,6 +2536,7 @@ def build_class_promoted(block, name, resolver, parent_entry, owner_fns, snippet
     functions = build_functions_promoted(block.get("functions") or [], resolver, notify_names, owner_fns,
                                          splice_names, UI_BLUEPRINT_EVENTS.get(name, frozenset()),
                                          UI_PARAMETERIZED_BLUEPRINT_EVENTS.get(name, {}), native_event_names)
+    _native_checkpoint3058_policy.apply_signatures(name, block, functions, owner_fns, function_view)
     _definition_queries_policy.apply_signatures(name, block, functions, owner_fns, function_view)
     _dayphase_callback_policy.apply_signatures(name, block, functions, owner_fns, function_view, snippets)
     splice = (attach_snippets(name, functions, snippets, splice_ctx, parent_entry.get("package"), resolver.skipped,
@@ -4107,6 +4108,7 @@ def promote(args):
                                  ("UCommonActivatablePanel", "UCommonInputManager", "UFortRestartClientModal", "UCommonInputSubsystem", "UCommonActionWidget", "UCommonButton", "UCommonTextBlock", "UFortGlobals", "UFortGlobalUIContext", "UFortUINotification", "UCommonLazyImage", "UCommonActivatableWidgetContainerBase", "UFortKismetLibrary") else None)
         model["includes"] = sorted(set(own_includes(gate, model["used"], package))
                                    | set(model["splice"].get("header_includes", set())))
+        _native_checkpoint3058_policy.configure_model(model)
         _route_policy.configure_model(model)
         _widget_route_policy.configure_model(model)
         _modality_policy.configure_model(model)

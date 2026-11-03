@@ -1,6 +1,6 @@
 // CONFIDENCE: high
 // Native target 0x14231c4c0.
-if (bTearOff)
+if (GetTearOff())
 {
     return 0.0f;
 }

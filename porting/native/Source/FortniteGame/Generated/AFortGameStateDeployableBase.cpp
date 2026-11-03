@@ -2,6 +2,7 @@
 #include "AFortGameStateDeployableBase.h"
 #include "EDeployableBaseUseType.h"
 #include "UFortRuntimeOptions.h"
+#include "UFortZoneTheme.h"
 #include "Net/UnrealNetwork.h"
 
 EDeployableBaseUseType AFortGameStateDeployableBase::GetDeployableBaseUseType() const
@@ -12,7 +13,8 @@ EDeployableBaseUseType AFortGameStateDeployableBase::GetDeployableBaseUseType() 
 	{
 	    return EDeployableBaseUseType::Neighborhood;
 	}
-	return ZoneTheme->DeployableBaseSettings.SupportedUseType;
+	UFortZoneTheme* CurrentTheme = ZoneTheme;
+	return CurrentTheme->DeployableBaseSettings.SupportedUseType;
 }
 
 float AFortGameStateDeployableBase::GetStormShieldBreatherRadiusOverride() const

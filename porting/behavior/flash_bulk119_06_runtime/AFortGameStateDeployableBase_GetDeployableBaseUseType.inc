@@ -4,4 +4,5 @@ if (!ZoneTheme)
 {
     return EDeployableBaseUseType::Neighborhood;
 }
-return ZoneTheme->DeployableBaseSettings.SupportedUseType;
+UFortZoneTheme* CurrentTheme = ZoneTheme;
+return CurrentTheme->DeployableBaseSettings.SupportedUseType;
