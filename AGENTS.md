@@ -6,7 +6,7 @@ Dashboard task weights estimate total implementation and verification effort, co
 
 The primary agent plans, orchestrates, and reviews, and works directly when useful. Use `gpt-6-luna` medium for small read-only tasks, `gpt-6.1-terra` medium or high for regular delegated work, and `gpt-6.1-sol` medium for really complex delegated tasks. Always set `fork_turns: "none"`. At most three subagents work at once. Assign one owner to `porting/native/`, promotion, staging, and UE builds; avoid concurrent generation/build operations.
 
-Preserve existing edits. Stage specific paths, review and commit completed validated changes, and never force push. No remote is currently configured. Keep credentials, recovered game data, and generated runtime artifacts out of Git. Never print or log key material. Do not hand-edit generated native code; change generator inputs and regenerate.
+Preserve existing edits. Stage specific paths, review and commit completed validated changes, and never force push. Private origin: https://github.com/DistilledSlop/fortnite-12.60-reconstruction. Use Codex <codex@openai.com> for new commits. The user-authorized identity-only history rewrite is complete; resume ordinary pushes. Keep credentials, recovered game data, and generated runtime artifacts out of Git. Never print or log key material. Do not hand-edit generated native code; change generator inputs and regenerate.
 
 Record exact commands, outcomes, and artifact paths in the handoff. Distinguish a previous green baseline from current unvalidated edits, offline checksum parity from runtime compatibility, and extracted assets from usable content. Update the handoff before stopping so the next session can resume without reconstructing the history.
 
@@ -79,3 +79,8 @@ For bulk native recovery, use Terra 6.1 low/medium effort workers for brute-forc
 work that automation cannot handle. Claude is also authorized as a workhorse;
 give it bounded independent source batches with clear file ownership. Keep one
 Native promotion/build stream and skip visual work until the user resumes it.
+
+User checkpoint cadence: run builds/runtime/tests only after roughly 1,000 new
+native function bodies. Last tested baseline: 1,040 bodies; next about 2,040.
+Keep source generation fail-closed, commit and push completed source immediately,
+and explicitly label bodies added since the tested baseline as build pending.

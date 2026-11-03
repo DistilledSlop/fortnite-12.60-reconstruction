@@ -115,5 +115,8 @@ public:
 	UPROPERTY()
 	FName PlaysetName;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FName GetPlaysetName() const;
+
 };
 

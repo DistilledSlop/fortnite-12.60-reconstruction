@@ -154,6 +154,9 @@ public:
 	UPROPERTY()
 	uint8 bForceUpdateInteraction : 1;
 
+	UFUNCTION(BlueprintCallable)
+	FVector GetHUDPointerOrigin();
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	AFortVolume* GetLinkedVolume() const;
 

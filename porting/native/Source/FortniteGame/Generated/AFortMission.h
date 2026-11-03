@@ -230,6 +230,9 @@ public:
 	UPROPERTY(Transient)
 	FFortMissionInstancedConfigData ConfigData;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FGuid GetMissionGuid() const;
+
 	UFUNCTION()
 	void OnRep_ActiveObjectives();
 

@@ -731,6 +731,9 @@ protected:
 public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FGuid GetInventoryGUID() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetProjectilePitchOffset() const;
 
 protected:

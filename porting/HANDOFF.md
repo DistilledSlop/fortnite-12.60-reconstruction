@@ -1,5 +1,38 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Native source continuation (2026-11-03)
+
+Current canonical/shared Native: 1109 ported entries =1049 bodies +60 fields.
+Nine new complete reflected POD/FName field getters are integrated from
+behavior/bulk_struct_copy_runtime and bulk_name_sret_runtime. Promotion:
+generated/gameplay-bulk-integration-3/promotion.command.json; reports/
+behavior_splice.json records1109 accepted,0 rejected. Unchanged mtimes restored.
+These nine bodies are build pending, with no tests run. User explicitly wants
+builds/runtime/tests only after roughly1000 new bodies: last tested1040,
+next about2040. Do not repeat unaffected baseline checks per body/commit.
+
+The prior189-body integration DID finish both builds and Apollo join:
+generated/gameplay-bulk-integration-2/client.build.json PASS344.33s,
+server.build.json PASS179.24s, apollo.join.json PASS22.438s; matching symbols/
+binaries staged (stage.json). These supersede the older pending-build note below.
+
+Private GitHub origin is DistilledSlop/fortnite-12.60-reconstruction. All557
+then-reachable commits were rewritten to Codex <codex@openai.com>, preserving
+every tree/date, and pushed with an explicit lease as authorized by the user.
+Subsequent commits/pushes are ordinary. Old-to-new hash map:
+history/codex-identity-2026-11-03.txt. External safety bundle:
+/opt/fortnite/git-backups/fortnite-pre-codex-identity-20261103T051523Z.bundle.
+Old source receipt hashes remain valid provenance via this map.
+
+Bounded workers: bulk_copy_expansion_runtime has one inherited getter proposal;
+Terra bulk_mutation_runtime and bulk_forward_runtime source scans are active.
+Claude Sonnet medium building_vitals_runtime session resumed from
+/tmp/claude-native-building-vitals/ with new typed dependencies at
+generated/callee_probe/building_vitals_dependencies_1/. Root owns promotion,
+virtual reflected function support and integration. No drafts counted. Skip all
+visual work. All four product milestones remain open.
+
+
 ## Native source checkpoint (2026-11-02, next bulk batch)
 
 User wants native-only work now; skip visuals until resumed. Commit completed

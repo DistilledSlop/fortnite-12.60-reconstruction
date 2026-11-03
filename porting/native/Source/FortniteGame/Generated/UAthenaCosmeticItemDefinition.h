@@ -129,6 +129,9 @@ public:
 	TArray<FName> ConfiguredDynamicInstallBundles;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FRotator GetPreviewPawnRotationOffset() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsOwnedByCampaignHero() const;
 
 };

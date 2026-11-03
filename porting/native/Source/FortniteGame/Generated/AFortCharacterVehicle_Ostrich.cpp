@@ -2,6 +2,14 @@
 #include "AFortCharacterVehicle_Ostrich.h"
 #include "Net/UnrealNetwork.h"
 
+FVector AFortCharacterVehicle_Ostrich::GetAimPoint() const
+{
+	// Original address: 0x142861640.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete 12-byte FVector field copy; see bulk_struct_copy_runtime/README.md.
+	return GunnerAimPoint;
+}
+
 void AFortCharacterVehicle_Ostrich::MulticastDriverInput_Implementation(bool bIsPrimaryFire)
 {
 	// Body not recovered: reflection-derived stub.

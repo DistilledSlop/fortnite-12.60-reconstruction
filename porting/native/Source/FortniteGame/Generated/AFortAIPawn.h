@@ -795,6 +795,12 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	AFortWaterBodyActor* GetCurrentWaterBody() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure, BlueprintAuthorityOnly)
+	FVector GetSpawnLocation() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure, BlueprintAuthorityOnly)
+	FRotator GetSpawnRotation() const;
+
 	UFUNCTION(NetMulticast, Unreliable)
 	void NetMulticast_BatchedDamageCues(const FFortAIBatchedDamageCues& Data);
 	void NetMulticast_BatchedDamageCues_Implementation(const FFortAIBatchedDamageCues& Data);

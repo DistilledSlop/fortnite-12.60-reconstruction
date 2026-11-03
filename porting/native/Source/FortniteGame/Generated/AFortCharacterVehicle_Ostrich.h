@@ -500,6 +500,9 @@ public:
 	UPROPERTY()
 	FScalableFloat SelfDestructInStormDelay;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FVector GetAimPoint() const;
+
 	UFUNCTION(NetMulticast, Reliable)
 	void MulticastDriverInput(bool bIsPrimaryFire);
 	void MulticastDriverInput_Implementation(bool bIsPrimaryFire);

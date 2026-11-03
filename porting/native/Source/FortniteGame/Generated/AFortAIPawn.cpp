@@ -23,6 +23,22 @@ AFortWaterBodyActor* AFortAIPawn::GetCurrentWaterBody() const
 	return CurrentWaterBody;
 }
 
+FVector AFortAIPawn::GetSpawnLocation() const
+{
+	// Original address: 0x1427a4d50.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete 12-byte FVector field copy; see bulk_struct_copy_runtime/README.md.
+	return SpawnLocation;
+}
+
+FRotator AFortAIPawn::GetSpawnRotation() const
+{
+	// Original address: 0x1427a4db0.
+	// CONFIDENCE: HIGH
+	// Mechanically matched complete 12-byte FRotator field copy; see bulk_struct_copy_runtime/README.md.
+	return SpawnRotation;
+}
+
 void AFortAIPawn::NetMulticast_BatchedDamageCues_Implementation(const FFortAIBatchedDamageCues& Data)
 {
 	// Body not recovered: reflection-derived stub.

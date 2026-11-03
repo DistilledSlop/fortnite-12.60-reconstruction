@@ -63,5 +63,8 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetDisplayRarityLevel() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FLinearColor GetPackColor() const;
+
 };
 
