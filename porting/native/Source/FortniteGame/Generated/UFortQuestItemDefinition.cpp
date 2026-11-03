@@ -40,6 +40,12 @@ FDataTableRowHandle UFortQuestItemDefinition::GetCategory() const
 	return Category;
 }
 
+FText UFortQuestItemDefinition::GetCompletionText() const
+{
+	// CONFIDENCE: high
+	return CompletionText;
+}
+
 int32 UFortQuestItemDefinition::GetObjectiveNeededToComplete() const
 {
 	// CONFIDENCE: HIGH
@@ -68,6 +74,18 @@ EFortQuestType UFortQuestItemDefinition::GetQuestType() const
 	// CONFIDENCE: HIGH
 	// Exact enum byte-field getter; see bulk_enum_getter_runtime/README.md.
 	return QuestType;
+}
+
+FText UFortQuestItemDefinition::GetRewardDescription() const
+{
+	// CONFIDENCE: high
+	return RewardDescription;
+}
+
+FText UFortQuestItemDefinition::GetRewardHeaderText() const
+{
+	// CONFIDENCE: high
+	return RewardHeaderText;
 }
 
 bool UFortQuestItemDefinition::GetUpdateObjectiveOncePerMatch() const

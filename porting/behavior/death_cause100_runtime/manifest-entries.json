@@ -1,0 +1,21 @@
+[
+  {
+    "function": "ToDeathCause",
+    "kind": "exec",
+    "signature": "EDeathCause ToDeathCause(FGameplayTagContainer& InTags, bool bWasDBNO)",
+    "signature_status": "proposed",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x142a8e240",
+    "native_body_address": "0x141a5f1c0",
+    "inc_path": "porting/behavior/death_cause100_runtime/ToDeathCause.inc",
+    "includes": [
+      "FortNativeGameplayTagsRuntime.h",
+      "FortAssets.h",
+      "FortDelayedObjectLoader.h"
+    ],
+    "notes": "Complete 44-row priority ladder plus gate, DBNO/sniper cases and ordered override mapping, using common GameData shared loader and asset tracker. Matching Unspecified stops override-table scan then enters ladder. Shared tag singleton fetched per attempted native row.",
+    "class": "AFortPlayerStateAthena",
+    "static": true
+  }
+]

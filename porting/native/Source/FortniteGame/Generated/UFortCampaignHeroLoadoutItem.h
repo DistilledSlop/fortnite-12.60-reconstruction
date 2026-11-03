@@ -40,5 +40,8 @@ public:
 	UPROPERTY()
 	TMap<FName, FString> CrewMembers;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetLoadoutOrdinal() const;
+
 };
 

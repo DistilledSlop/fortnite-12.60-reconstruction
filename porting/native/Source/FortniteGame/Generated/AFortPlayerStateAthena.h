@@ -8,6 +8,7 @@
 
 #include "Delegates/Delegate.h"
 #include "EAthenaScoringEvent.h"
+#include "EDeathCause.h"
 #include "EMatchAbandonState.h"
 #include "ETeamMemberState.h"
 #include "Engine/EngineTypes.h"
@@ -27,6 +28,7 @@
 #include "FOnTeamScoreChanged.h"
 #include "FSimpleMetricInformation.h"
 #include "GameFramework/OnlineReplStructs.h"
+#include "GameplayTagContainer.h"
 #include "TimerManager.h"
 #include "UFortMutatorContext.h"
 #include "UObject/Object.h"
@@ -514,6 +516,9 @@ public:
 	void Server_TogglePreserveSquad();
 	void Server_TogglePreserveSquad_Implementation();
 	bool Server_TogglePreserveSquad_Validate();
+
+	UFUNCTION(BlueprintCallable)
+	static EDeathCause ToDeathCause(FGameplayTagContainer& InTags, bool bWasDBNO);
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 

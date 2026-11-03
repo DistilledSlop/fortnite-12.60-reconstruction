@@ -1,0 +1,20 @@
+[
+  {
+    "class": "UFortAssetManager",
+    "function": "NativeGetCommonGameData",
+    "kind": "helper",
+    "signature": "UFortGameData* NativeGetCommonGameData()",
+    "access": "public",
+    "signature_status": "proposed",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x141df7530",
+    "inc_path": "porting/behavior/common_gamedata100_runtime/NativeGetCommonGameData.inc",
+    "includes": [
+      "Engine/DataAsset.h",
+      "Engine/StreamableManager.h",
+      "SharedFortGameLog.h"
+    ],
+    "notes": "Assigned helper name; native uses the reflected common data class and fields, and calls the same shared loader as NativeGetGameDataSTW on cache miss. The handle is released before fatal handling and caching; a failed typed cast is cached as null and retried on the next call."
+  }
+]

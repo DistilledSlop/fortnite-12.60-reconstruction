@@ -11,6 +11,8 @@
 #include "FReplicatedMontagePair.h"
 #include "GameplayTagContainer.h"
 
+class UAnimMontage;
+
 #include "UFortAbilitySystemComponent.generated.h"
 
 UCLASS(config=Engine)
@@ -34,12 +36,30 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_SharedAnim)
 	FGameplayAbilityRepSharedAnim RepSharedAnimInfo;
 
+	UFUNCTION(BlueprintCallable)
+	void BP_BlockAbilitiesWithTags(FGameplayTagContainer& Tags);
+
+	UFUNCTION(BlueprintCallable)
+	void BP_CancelAbilitiesWithTags(FGameplayTagContainer& Tags);
+
+	UFUNCTION(BlueprintCallable)
+	void BP_UnBlockAbilitiesWithTags(FGameplayTagContainer& Tags);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool CanActivateAbilityWithMatchingTag(FGameplayTagContainer GameplayAbilityTags) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool HasActiveAbilityWithAnyMatchingTag(FGameplayTagContainer Tags) const;
+
 	UFUNCTION(NetMulticast, Unreliable)
 	void NetMulticast_RefreshActiveGameplayEffectCueEvents();
 	void NetMulticast_RefreshActiveGameplayEffectCueEvents_Implementation();
 
 	UFUNCTION()
 	void OnRep_SharedAnim();
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void SetLandingMontageReplication(UAnimMontage* Montage1, FName Section1, UAnimMontage* Montage2, FName Section2);
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 

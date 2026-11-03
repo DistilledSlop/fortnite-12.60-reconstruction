@@ -1,0 +1,57 @@
+[
+  {
+    "class": "UFortCampaignHeroLoadoutItem",
+    "function": "GetLoadoutOrdinal",
+    "kind": "exec",
+    "signature": "int32 GetLoadoutOrdinal() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/data_bulk100_runtime/UFortCampaignHeroLoadoutItem_GetLoadoutOrdinal.inc",
+    "address": "0x1428584a0",
+    "confidence": "high",
+    "status": "ported",
+    "reflection_flags": "0x54020401"
+  },
+  {
+    "class": "UFortQuestItemDefinition",
+    "function": "GetCompletionText",
+    "kind": "exec",
+    "signature": "FText GetCompletionText() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/data_bulk100_runtime/UFortQuestItemDefinition_GetCompletionText.inc",
+    "address": "0x142ab8680",
+    "confidence": "high",
+    "status": "ported",
+    "reflection_flags": "0x54020403",
+    "native_body_address": "0x14243f910"
+  },
+  {
+    "class": "UFortQuestItemDefinition",
+    "function": "GetRewardDescription",
+    "kind": "exec",
+    "signature": "FText GetRewardDescription() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/data_bulk100_runtime/UFortQuestItemDefinition_GetRewardDescription.inc",
+    "address": "0x142ab9030",
+    "confidence": "high",
+    "status": "ported",
+    "reflection_flags": "0x54020401",
+    "native_body_address": "0x1424422f0"
+  },
+  {
+    "class": "UFortQuestItemDefinition",
+    "function": "GetRewardHeaderText",
+    "kind": "exec",
+    "signature": "FText GetRewardHeaderText() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/data_bulk100_runtime/UFortQuestItemDefinition_GetRewardHeaderText.inc",
+    "address": "0x142ab90d0",
+    "confidence": "high",
+    "status": "ported",
+    "reflection_flags": "0x54020401",
+    "native_body_address": "0x142442320"
+  }
+]

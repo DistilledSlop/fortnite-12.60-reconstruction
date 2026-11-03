@@ -224,6 +224,9 @@ public:
 	FDataTableRowHandle GetCategory() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FText GetCompletionText() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetObjectiveNeededToComplete() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
@@ -234,6 +237,12 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	EFortQuestType GetQuestType() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FText GetRewardDescription() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FText GetRewardHeaderText() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool GetUpdateObjectiveOncePerMatch() const;

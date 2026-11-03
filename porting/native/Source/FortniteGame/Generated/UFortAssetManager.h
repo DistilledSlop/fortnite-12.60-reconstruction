@@ -124,5 +124,6 @@ public:
 	static uint8 NativeGetGameSubMode();
 	static void NativeHandleLoadDiagnostic(FFortAssetLoadDiagnosticState& State, const FString& Path, bool bSynchronous);
 	UGameDataSTW* NativeGetGameDataSTW();
+	UFortGameData* NativeGetCommonGameData();
 };
 

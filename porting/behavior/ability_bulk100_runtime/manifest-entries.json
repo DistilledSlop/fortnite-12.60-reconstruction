@@ -1,0 +1,92 @@
+[
+  {
+    "class": "UFortAbilitySystemComponent",
+    "function": "BP_BlockAbilitiesWithTags",
+    "kind": "exec",
+    "signature": "void BP_BlockAbilitiesWithTags(FGameplayTagContainer& Tags)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/ability_bulk100_runtime/BP_BlockAbilitiesWithTags.inc",
+    "address": "0x142780430",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Delegates to the engine tag-count blocking operation.",
+    "native_body_address": "0x1406f8dc0"
+  },
+  {
+    "class": "UFortAbilitySystemComponent",
+    "function": "BP_CancelAbilitiesWithTags",
+    "kind": "exec",
+    "signature": "void BP_CancelAbilitiesWithTags(FGameplayTagContainer& Tags)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/ability_bulk100_runtime/BP_CancelAbilitiesWithTags.inc",
+    "address": "0x1427804f0",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Delegates to engine CancelAbilities with no exclusion tags or ignored ability.",
+    "native_body_address": "0x1415ec0e0"
+  },
+  {
+    "class": "UFortAbilitySystemComponent",
+    "function": "BP_UnBlockAbilitiesWithTags",
+    "kind": "exec",
+    "signature": "void BP_UnBlockAbilitiesWithTags(FGameplayTagContainer& Tags)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/ability_bulk100_runtime/BP_UnBlockAbilitiesWithTags.inc",
+    "address": "0x142780b20",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Delegates to the engine tag-count unblocking operation.",
+    "native_body_address": "0x140731a00"
+  },
+  {
+    "class": "UFortAbilitySystemComponent",
+    "function": "SetLandingMontageReplication",
+    "kind": "exec",
+    "signature": "void SetLandingMontageReplication(UAnimMontage* Montage1, FName Section1, UAnimMontage* Montage2, FName Section2)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/ability_bulk100_runtime/SetLandingMontageReplication.inc",
+    "address": "0x142781850",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Updates both montage/section pairs and wraps the byte replication index.",
+    "native_body_address": "0x14160d180"
+  },
+  {
+    "class": "UFortAbilitySystemComponent",
+    "function": "HasActiveAbilityWithAnyMatchingTag",
+    "kind": "exec",
+    "signature": "bool HasActiveAbilityWithAnyMatchingTag(FGameplayTagContainer Tags) const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/ability_bulk100_runtime/HasActiveAbilityWithAnyMatchingTag.inc",
+    "address": "0x142781560",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Checks active specs against the ability tag container using hierarchical HasAny matching.",
+    "native_body_address": "0x1416011b0",
+    "includes": [
+      "Abilities/GameplayAbility.h"
+    ]
+  },
+  {
+    "class": "UFortAbilitySystemComponent",
+    "function": "CanActivateAbilityWithMatchingTag",
+    "kind": "exec",
+    "signature": "bool CanActivateAbilityWithMatchingTag(FGameplayTagContainer GameplayAbilityTags) const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/ability_bulk100_runtime/CanActivateAbilityWithMatchingTag.inc",
+    "address": "0x142780be0",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Requires at least one matching spec and all primary instances to pass CanActivateAbility. Native calls GetPrimaryInstance without a null guard.",
+    "native_body_address": "0x1415ece70",
+    "includes": [
+      "Abilities/GameplayAbility.h"
+    ]
+  }
+]
