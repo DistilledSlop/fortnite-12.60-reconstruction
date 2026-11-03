@@ -73,7 +73,8 @@ class AuditMeasurementTests(unittest.TestCase):
                 path.parent.mkdir(parents=True, exist_ok=True)
                 path.touch()
             ctx = LocalContext(root, {package['total_key']: 2,
-                                      'cooked_name_prefix_counts': 2})
+                                      'cooked_name_prefix_counts': 2,
+                                      'cooked_mesh_exportable': 2})
             result = progress.m_local_glob(package, ctx)
             self.assertEqual((result['done'], result['total']), (2, 2))
             self.assertEqual(progress.m_local_glob(items['assets.static_meshes']['measure'], ctx)['done'], 1)
