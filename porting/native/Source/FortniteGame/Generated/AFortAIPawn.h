@@ -783,6 +783,12 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_CurrentFortAILODLevel)
 	EFortAILODLevel CurrentFortAILODLevel;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x1e93): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x1e93;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x1e94): not a UPROPERTY, not replicated.
+	float NativeRecoveredFloat_0x1e94;
+
 	// table index 0, flags 0x40000000002000
 	UPROPERTY(Transient)
 	UFortAccountItem* DefenderItem;
@@ -859,6 +865,18 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void SetEncounterInfo(UFortAIEncounterInfo* InEncounterInfo);
+
+	UFUNCTION(BlueprintCallable)
+	void SetForceBossSignificance(bool bEnabled);
+
+	UFUNCTION(BlueprintCallable)
+	void SetMinSignificanceForAnimationCurves(float MinSignificance);
+
+	UFUNCTION(BlueprintCallable)
+	void SetShouldStartSleeping(bool bHintStartSleeping);
+
+	UFUNCTION(BlueprintCallable)
+	void SetUsesDBNO(bool bInUsesDBNO);
 
 	UFUNCTION(BlueprintNativeEvent)
 	bool ShouldUseFiringCapsuleCollision();

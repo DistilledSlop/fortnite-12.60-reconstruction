@@ -26,6 +26,9 @@ public:
 	UPROPERTY()
 	bool bShowHealthBar;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetHealthValuePercent();
+
 	UFUNCTION()
 	void OnRep_BigHealth();
 

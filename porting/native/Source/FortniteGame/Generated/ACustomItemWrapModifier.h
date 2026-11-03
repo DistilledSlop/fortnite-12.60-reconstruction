@@ -30,5 +30,11 @@ public:
 	UPROPERTY(Transient)
 	TWeakObjectPtr<UMeshComponent> MeshPtr;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	AActor* GetVehicle() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	AFortWeapon* GetWeapon() const;
+
 };
 

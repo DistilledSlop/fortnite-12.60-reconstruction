@@ -97,8 +97,17 @@ public:
 	// Non-reflected field (behaviour kind "member_field", offset 0xf90): not a UPROPERTY, not replicated.
 	bool NativeRecoveredBool_0xf90;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0xf92): not a UPROPERTY, not replicated.
+	uint8 NativeRecoveredByte_0xf92;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0xf93): not a UPROPERTY, not replicated.
+	uint8 NativeRecoveredByte_0xf93;
+
 	// Non-reflected field (behaviour kind "member_field", offset 0xf95): not a UPROPERTY, not replicated.
 	uint8 NativePredicateStorage_0xf95;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0xf95): not a UPROPERTY, not replicated.
+	uint8 NativeRecoveredByte_0xf95;
 
 	// Non-reflected field (behaviour kind "member_field", offset 0xf98): not a UPROPERTY, not replicated.
 	float NativeRecoveredFloat_0xf98;
@@ -138,6 +147,12 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetStandingInPlaceSteeringAngle() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsApplyingPedalForce() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsCoasting() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsDismountingFromCoast() const;

@@ -116,6 +116,13 @@ void AFortAthenaCreativePortal::OnRep_VolumeStatus()
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortAthenaCreativePortal::SetHUDPointerOrigin(FVector NewPointerOrigin)
+{
+	// Original wrapper: 0x1427d4420.
+	// CONFIDENCE: high
+	MarkerDetailsPointerOrigin = NewPointerOrigin;
+}
+
 void AFortAthenaCreativePortal::SetInteractionInteractComponent(UPrimitiveComponent* PrimitiveComponent)
 {
 	// Original exec 0x1427d4530; pure writer 0x1418d3790.

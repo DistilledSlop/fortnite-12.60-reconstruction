@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "ABuildingGameplayActor.h"
 
+#include "Components/PrimitiveComponent.h"
 #include "EDeployableBaseBuildingState.h"
 #include "FDeferredActorData.h"
 #include "FFortCloudSaveInfo.h"
@@ -26,6 +27,7 @@ class UBoxComponent;
 class UFortDeployableBaseRecord;
 class UFortWeaponItemDefinition;
 class UGameplayEffect;
+class UPrimitiveComponent;
 class USceneComponent;
 
 #include "ADeployableBasePlot.generated.h"
@@ -164,6 +166,9 @@ public:
 	UPROPERTY(Replicated, Transient)
 	FBox BuildableAreasStructuralSupportBoxesArray[3];
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x9c8): not a UPROPERTY, not replicated.
+	UPrimitiveComponent* NativeRecoveredContext_0x9c8;
+
 	UFUNCTION(BlueprintCallable)
 	AFortPlayerStart* GetPlayerStart();
 
@@ -179,6 +184,9 @@ public:
 
 	UFUNCTION()
 	void OnRep_OccupantNetID();
+
+	UFUNCTION(BlueprintCallable)
+	void SetContextComponent(UPrimitiveComponent* ContextComponent);
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 

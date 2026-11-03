@@ -88,6 +88,9 @@ public:
 	UBillboardComponent* SpriteComponent;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UAIHotSpotSlot* GetSlotByIndex(int32 Index) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsEnabled() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

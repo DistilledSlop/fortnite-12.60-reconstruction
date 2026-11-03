@@ -6,6 +6,7 @@
 #include "Engine/World.h"
 #include "FortNativeAnalyticsProvider.h"
 #include "UFortLocalPlayer.h"
+#include "UFortWorldItem.h"
 #include "Net/UnrealNetwork.h"
 
 bool AFortPlayerController::CanAlterHostileWalls() const
@@ -1035,6 +1036,24 @@ void AFortPlayerController::NativeRecordCoreAsynchronousLoad(AFortPlayerControll
 	Provider = ProviderSlot.Get();
 	FString EventName(Event);
 	Provider->NativeRecordEvent(EventName, Attributes);
+}
+
+UFortItem* AFortPlayerController::NativeFindItemByGuid(const FGuid& ItemGuid)
+{
+	// CONFIDENCE: high
+	// 0x142380fd0 receives the interface at +0x598. Its +0x11a0/8/10
+	// match reflected WorldInventory/OutpostInventory/ViewTargetInventory.
+	if (WorldInventory)
+	{
+	    if (UFortWorldItem* Item = WorldInventory->NativeFindItemByGuid(ItemGuid))
+	        return Item;
+	}
+	if (OutpostInventory)
+	{
+	    if (UFortWorldItem* Item = OutpostInventory->NativeFindItemByGuid(ItemGuid))
+	        return Item;
+	}
+	return ViewTargetInventory ? ViewTargetInventory->NativeFindItemByGuid(ItemGuid) : nullptr;
 }
 
 void AFortPlayerController::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

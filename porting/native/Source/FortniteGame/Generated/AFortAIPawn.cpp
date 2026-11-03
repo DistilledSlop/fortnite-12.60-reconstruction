@@ -156,6 +156,30 @@ void AFortAIPawn::SetEncounterInfo(UFortAIEncounterInfo* InEncounterInfo)
 	this->EncounterInfo = InEncounterInfo;
 }
 
+void AFortAIPawn::SetForceBossSignificance(bool bEnabled)
+{
+	// CONFIDENCE: high; reflected wrapper and native helper verified.
+	NativeRecoveredBool_0x1e93 = bEnabled;
+}
+
+void AFortAIPawn::SetMinSignificanceForAnimationCurves(float MinSignificance)
+{
+	// CONFIDENCE: high; reflected wrapper and native helper verified.
+	NativeRecoveredFloat_0x1e94 = MinSignificance;
+}
+
+void AFortAIPawn::SetShouldStartSleeping(bool bHintStartSleeping)
+{
+	// CONFIDENCE: high; reflected wrapper and native helper verified.
+	bShouldStartSleeping = bHintStartSleeping;
+}
+
+void AFortAIPawn::SetUsesDBNO(bool bInUsesDBNO)
+{
+	// CONFIDENCE: high; reflected wrapper and native helper verified.
+	bUsesDBNO = bInUsesDBNO;
+}
+
 bool AFortAIPawn::ShouldUseFiringCapsuleCollision_Implementation()
 {
 	// Exact original shared stub 0x1406801e0.

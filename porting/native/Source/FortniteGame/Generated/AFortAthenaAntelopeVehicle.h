@@ -214,11 +214,17 @@ public:
 	// Non-reflected field (behaviour kind "member_field", offset 0x1128): not a UPROPERTY, not replicated.
 	float NativeRecoveredFloat_0x1128;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x112c): not a UPROPERTY, not replicated.
+	uint8 NativeRecoveredByte_0x112c;
+
 	// Non-reflected field (behaviour kind "member_field", offset 0x112d): not a UPROPERTY, not replicated.
 	bool NativeRecoveredBool_0x112d;
 
 	// Non-reflected field (behaviour kind "member_field", offset 0x112e): not a UPROPERTY, not replicated.
 	bool NativeRecoveredBool_0x112e;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x113c): not a UPROPERTY, not replicated.
+	float NativeRecoveredFloat_0x113c;
 
 	// Non-reflected field (behaviour kind "member_field", offset 0x1148): not a UPROPERTY, not replicated.
 	uint8 NativePredicateStorage_0x1148;
@@ -281,6 +287,9 @@ public:
 	bool IsAccumulatingBoost() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsInBoostSmashForgivenessPeriod() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsLocalPlayerRiding() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
@@ -288,6 +297,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsPassivelyExpendingBoost() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsSmashing() const;
 
 };
 

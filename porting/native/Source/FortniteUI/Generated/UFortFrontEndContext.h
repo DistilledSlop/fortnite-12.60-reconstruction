@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortLocalPlayerSubsystem.h"
 
+#include "AFortTheaterMapTile.h"
+#include "Engine/LocalPlayer.h"
 #include "FFortFrontEndFeatureStruct.h"
 #include "FLobbyEmptyPlayerClickedDelegate.h"
 #include "FLobbyPlayerGadgetsClickedDelegate.h"
@@ -163,8 +165,17 @@ public:
 	// Non-reflected field (behaviour kind "member_field", offset 0x408): not a UPROPERTY, not replicated.
 	bool NativeRecoveredBool_0x408;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	AFortTheaterMapTile* GetActiveTile() const;
+
 	UFUNCTION(BlueprintCallable)
 	int32 GetCurrentLockerSubslotIndex();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	AFortTheaterMapTile* GetFocusedOrActiveTile() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	AFortTheaterMapTile* GetFocusedTile() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	FString GetOfferIdToFocusInItemShop() const;
@@ -181,5 +192,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetOfferIdToFocusInItemShop(FString OfferId);
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	virtual UWorld* GetWorld() const;
 };
 

@@ -49,11 +49,11 @@ do
         const bool bHasA = !IsZeroGuid(GA);
         const bool bHasB = !IsZeroGuid(GB);
         // PC+0x598 object vtbl +0xb0(&Guid) -> UFortItem*
-        UFortItem* ItemA = bHasA ? PC598_Slot0xb0(PC, GA) : nullptr;
-        UFortItem* ItemB = bHasB ? PC598_Slot0xb0(PC, GB) : nullptr;
+        UFortItem* ItemA = bHasA ? PC->NativeFindItemByGuid(GA) : nullptr;
+        UFortItem* ItemB = bHasB ? PC->NativeFindItemByGuid(GB) : nullptr;
         // item vtbl +0x2e8 -> uint8 slot count (default 1 when no item)
-        const uint8 SizeA = ItemA ? Item_Slot0x2e8(ItemA) : 1;
-        const uint8 SizeB = ItemB ? Item_Slot0x2e8(ItemB) : 1;
+        const uint8 SizeA = ItemA ? ItemA->GetNumberOfSlotsTaken() : 1;
+        const uint8 SizeB = ItemB ? ItemB->GetNumberOfSlotsTaken() : 1;
         if (BarA != BarB && SizeA != SizeB && (SizeA != 0 || SizeB != 0))
         {
             LogBad(TEXT("Bad call to AFortQuickBars::SwapItems with index %d %d and item size %d %d (Invalid item size)!"), SlotA, SlotB, SizeA, SizeB);
@@ -80,13 +80,14 @@ do
         if (ItemB && !Accepts(QA, HeadA, ItemB)) break;
         if (ItemA && !Accepts(QB, HeadB, ItemA)) break;
 
-        // 6. working set: MoveGuids = {GA, GB}; Pending = TMap<FGuid, FSwapPendingMove{Item@+0x10, Slot@+0x18, Slot@+0x1c}> (empty)
+        // 6. The shared quickbar draft defines FQuickbarMovePair and FQuickbarPending.
+        // Pending values are {Item@+0x10, FromSlot@+0x18, ToSlot@+0x1c}.
         TArray<FGuid> MoveGuids; MoveGuids.Add(GA); MoveGuids.Add(GB);
-        TArray<FSwapPendingMoveRaw> Pending;                              // native: TSet w/ bit-array iterator (140687d00); element stride 0x28
+        FQuickbarPending Pending;                                       // native sparse bit-array iteration; stride 0x28
         bool bFits = false;
         if (BarA == BarB)
         {
-            TArray<FSwapItemSlotPair> Moves;                              // 16-byte {UFortItem*, int32 slot}
+            TArray<FQuickbarMovePair> Moves;                              // 16-byte {UFortItem*, int32 slot}
             if (ItemA) Moves.Add({ItemA, HeadB});
             if (ItemB) Moves.Add({ItemB, HeadA});
             const bool bPush = (HeadB < HeadA) ? (SizeA <= SizeB) : (SizeB < SizeA);
@@ -107,10 +108,10 @@ do
         // 7. COMMIT (LAB_142070aba)
         if (bHasA) Native_142065b00(QA, GA, SlotA);                       // clear occupancy by guid
         if (bHasB) Native_142065b00(QB, GB, SlotB);
-        for (const FSwapPendingMoveRaw& M : Pending)                      // bit-array order
+        for (const auto& M : Pending)                      // bit-array order
         {
-            Native_142065b00(QA, M.Key, M.Slot0x18);
-            AssignItemToSlot(QA, M.Item, M.Slot0x1c);                      // 142049220
+            Native_142065b00(QA, M.Key, M.Value.FromSlot);
+            AssignItemToSlot(QA, M.Value.Item, M.Value.ToSlot);                      // 142049220
         }
         if (bHasA)
         {

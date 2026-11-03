@@ -31,5 +31,10 @@ public:
 	UPROPERTY()
 	FFortOnCameraFrameTargetSettingsChangedDelegate OnSettingsChangedDelegate;
 
+protected:
+	UFUNCTION(BlueprintCallable)
+	void SetActiveCharmSlot(int32 CharmSlotIn);
+public:
+
 };
 

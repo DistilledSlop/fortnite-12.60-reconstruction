@@ -38,8 +38,26 @@ public:
 	UPROPERTY(Transient)
 	UAudioComponent* PortalAudioComp;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0xbc0): not a UPROPERTY, not replicated.
+	FName NativeRecoveredName_0xbc0;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0xbc8): not a UPROPERTY, not replicated.
+	float NativeRecoveredFloat_0xbc8;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0xbcc): not a UPROPERTY, not replicated.
+	float NativeRecoveredFloat_0xbcc;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0xbd0): not a UPROPERTY, not replicated.
+	float NativeRecoveredFloat_0xbd0;
+
 	// Non-reflected field (behaviour kind "member_field", offset 0xbd4): not a UPROPERTY, not replicated.
 	float NativeRecoveredFloat_0xbd4;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0xbd8): not a UPROPERTY, not replicated.
+	float NativeRecoveredFloat_0xbd8;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0xbdc): not a UPROPERTY, not replicated.
+	float NativeRecoveredFloat_0xbdc;
 
 	// Non-reflected field (behaviour kind "member_field", offset 0xbe0): not a UPROPERTY, not replicated.
 	float NativeRecoveredFloat_0xbe0;
@@ -52,6 +70,15 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintCosmetic)
 	void InitializeAudio(UAudioComponent* InPortalLoopingComp);
+
+	UFUNCTION(BlueprintCallable, BlueprintCosmetic)
+	void InitializeRings(UPrimitiveComponent* InRing1Comp, UPrimitiveComponent* InRing2Comp, UPrimitiveComponent* InRing3Comp);
+
+	UFUNCTION(BlueprintCallable)
+	void SetupAnimationSpeed(float InActivationTime, float InTotalDefenseTime, float InAnimSpeedStart, float InAnimSpeedEnd);
+
+	UFUNCTION(BlueprintCallable)
+	void SetupAnimationTransition(UMaterialInstanceDynamic* MID, FName ParamName, float InTransitionTime);
 
 };
 

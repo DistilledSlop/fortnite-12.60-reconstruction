@@ -109,6 +109,7 @@ class UFortCustomizationAssetLoader;
 class UFortGameplayAbility;
 class UFortGameplayMessageComponentBase;
 class UFortIndicatorManager;
+class UFortItem;
 class UFortItemDefinition;
 class UFortMcpProfileAthena;
 class UFortMcpProfileCampaign;
@@ -1858,6 +1859,7 @@ public:
 	static void NativeRecordCoreSynchronousLoad(AFortPlayerController* Controller, const FString& Path);
 	static void NativeRecordAthenaAsynchronousLoad(AFortPlayerController* Controller, const FString& Path);
 	static void NativeRecordCoreAsynchronousLoad(AFortPlayerController* Controller, const FString& Path);
+	virtual UFortItem* NativeFindItemByGuid(const FGuid& ItemGuid);
 public:
     TSharedPtr<class FFortNativeAnalyticsProvider, ESPMode::NotThreadSafe> NativeAnalyticsProvider;
 };

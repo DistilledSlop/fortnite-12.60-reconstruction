@@ -2,6 +2,13 @@
 #include "ABuildingPropBigHealth.h"
 #include "Net/UnrealNetwork.h"
 
+float ABuildingPropBigHealth::GetHealthValuePercent()
+{
+	// Original wrapper: 0x14274fe90.
+	// CONFIDENCE: high
+	return static_cast<float>(static_cast<double>(BigHealth) / static_cast<double>(BigHealthMax));
+}
+
 void ABuildingPropBigHealth::OnRep_BigHealth()
 {
 	// Body not recovered: reflection-derived stub.

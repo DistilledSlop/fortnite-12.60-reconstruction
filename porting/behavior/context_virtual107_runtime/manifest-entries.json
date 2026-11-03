@@ -1,0 +1,160 @@
+[
+  {
+    "function": "SetFortPickerData",
+    "kind": "exec",
+    "signature": "void SetFortPickerData(UFortPickerData* Data)",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/context_virtual107_runtime/SetFortPickerData.inc",
+    "confidence": "high",
+    "address": "0x1452a52d0",
+    "status": "ported",
+    "reflection_flags": "0x4020401",
+    "static": false,
+    "access": "public",
+    "notes": "Exec body directly stores the argument at this+0x120, matching reflected PickerData offset 288.",
+    "class": "UFortPickerContext"
+  },
+  {
+    "class": "UFortHUDContext",
+    "function": "GetMissionManager",
+    "kind": "exec",
+    "signature": "AFortMissionManager* GetMissionManager() const",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/context_virtual107_runtime/GetMissionManager.inc",
+    "confidence": "high",
+    "address": "0x1452568d0",
+    "status": "ported",
+    "reflection_flags": "0x54020401",
+    "static": false,
+    "access": "public",
+    "notes": "Wrapper calls 0x144cceab0; 0x1420b7ab0 casts World game state to AFortGameState and reads MissionManager at 0x3b0. Constructor-proven slot 0x150 is GetWorld; reflected mission manager fields match native offsets.",
+    "includes": [
+      "Engine/World.h"
+    ]
+  },
+  {
+    "class": "UFortHUDContext",
+    "function": "GetBluGloManager",
+    "kind": "exec",
+    "signature": "AFortBluGloManager* GetBluGloManager() const",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/context_virtual107_runtime/GetBluGloManager.inc",
+    "confidence": "high",
+    "address": "0x145255a70",
+    "status": "ported",
+    "reflection_flags": "0x54020401",
+    "static": false,
+    "access": "public",
+    "notes": "Wrapper calls 0x144cc8180; 0x1420b7ab0 casts World game state to AFortGameState and reads MissionManager at 0x3b0. Constructor-proven slot 0x150 is GetWorld; reflected mission manager fields match native offsets.",
+    "includes": [
+      "Engine/World.h"
+    ]
+  },
+  {
+    "class": "UFortHUDContext",
+    "function": "GetFocusedMission",
+    "kind": "exec",
+    "signature": "AFortMission* GetFocusedMission() const",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/context_virtual107_runtime/GetFocusedMission.inc",
+    "confidence": "high",
+    "address": "0x145256200",
+    "status": "ported",
+    "reflection_flags": "0x54020401",
+    "static": false,
+    "access": "public",
+    "notes": "Wrapper calls 0x144ccc530; 0x1420b7ab0 casts World game state to AFortGameState and reads MissionManager at 0x3b0. Constructor-proven slot 0x150 is GetWorld; reflected mission manager fields match native offsets.",
+    "includes": [
+      "Engine/World.h"
+    ]
+  },
+  {
+    "class": "UFortHUDContext",
+    "function": "GetGameStateZone",
+    "kind": "exec",
+    "signature": "AFortGameStateZone* GetGameStateZone() const",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/context_virtual107_runtime/GetGameStateZone.inc",
+    "confidence": "high",
+    "address": "0x145256230",
+    "status": "ported",
+    "reflection_flags": "0x54020401",
+    "static": false,
+    "access": "public",
+    "notes": "Wrapper calls 0x144ccc7a0, which dereferences GetWorld and casts its game state to AFortGameStateZone. Constructor-proven virtual slot 0x150 is GetWorld.",
+    "includes": [
+      "Engine/World.h"
+    ]
+  },
+  {
+    "class": "UFortFrontEndContext",
+    "function": "GetWorld",
+    "kind": "helper",
+    "signature": "UWorld* GetWorld() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": true,
+    "inc_path": "porting/behavior/context_virtual107_runtime/FrontEnd_GetWorld.inc",
+    "address": "0x144cd37c0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Engine/LocalPlayer.h"
+    ],
+    "notes": "Constructor 0x145236e60 installs vtable 0x146d4c470; slot 0x150. Calls local player GetWorld first, then 0x141baa780 equivalent to UBlueprintContextBase::GetWorld."
+  },
+  {
+    "class": "UFortFrontEndContext",
+    "function": "GetActiveTile",
+    "kind": "exec",
+    "signature": "AFortTheaterMapTile* GetActiveTile() const",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/context_virtual107_runtime/GetActiveTile.inc",
+    "confidence": "high",
+    "address": "0x1452395d0",
+    "status": "ported",
+    "reflection_flags": "0x54020401",
+    "static": false,
+    "access": "public",
+    "includes": [
+      "Engine/World.h"
+    ],
+    "notes": "0x142199280; 0x142568f80 casts World authority game mode and reads TheaterMapViewer +0x668. Accessors 0x14256c020 and 0x1419953f0 read reflected selected and focused tiles at +0x298 and +0x2a0. Constructor-proven GetWorld override included."
+  },
+  {
+    "class": "UFortFrontEndContext",
+    "function": "GetFocusedTile",
+    "kind": "exec",
+    "signature": "AFortTheaterMapTile* GetFocusedTile() const",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/context_virtual107_runtime/GetFocusedTile.inc",
+    "confidence": "high",
+    "address": "0x14523a720",
+    "status": "ported",
+    "reflection_flags": "0x54020401",
+    "static": false,
+    "access": "public",
+    "includes": [
+      "Engine/World.h"
+    ],
+    "notes": "0x144ccc660; 0x142568f80 casts World authority game mode and reads TheaterMapViewer +0x668. Accessors 0x14256c020 and 0x1419953f0 read reflected selected and focused tiles at +0x298 and +0x2a0. Constructor-proven GetWorld override included."
+  },
+  {
+    "class": "UFortFrontEndContext",
+    "function": "GetFocusedOrActiveTile",
+    "kind": "exec",
+    "signature": "AFortTheaterMapTile* GetFocusedOrActiveTile() const",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/context_virtual107_runtime/GetFocusedOrActiveTile.inc",
+    "confidence": "high",
+    "address": "0x14523a630",
+    "status": "ported",
+    "reflection_flags": "0x54020401",
+    "static": false,
+    "access": "public",
+    "includes": [
+      "Engine/World.h"
+    ],
+    "notes": "0x144ccc560; 0x142568f80 casts World authority game mode and reads TheaterMapViewer +0x668. Accessors 0x14256c020 and 0x1419953f0 read reflected selected and focused tiles at +0x298 and +0x2a0. Constructor-proven GetWorld override included."
+  }
+]

@@ -23,6 +23,9 @@ class FORTNITEUI_API ADynamicBackgroundDirector : public AActor
 	GENERATED_BODY()
 
 public:
+	// Non-reflected field (behaviour kind "member_field", offset 0x218): not a UPROPERTY, not replicated.
+	bool NativeRecoveredBool_0x218;
+
 	// table index 9, flags 0x10000010080000
 	UPROPERTY()
 	FOnDonutSequenceInitiated BP_OnDonutSequenceInitiated;
@@ -58,6 +61,9 @@ public:
 	// table index 0, flags 0x20080000000015
 	UPROPERTY()
 	EDynamicBackgroudKey DynamicBackgroundKey;
+
+	UFUNCTION(BlueprintCallable)
+	void SetIsInDonutSequence(bool bIsInSequence);
 
 };
 

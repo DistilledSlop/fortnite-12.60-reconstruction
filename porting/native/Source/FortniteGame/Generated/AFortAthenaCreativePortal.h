@@ -222,6 +222,9 @@ public:
 	UFUNCTION()
 	void OnRep_VolumeStatus();
 
+	UFUNCTION(BlueprintCallable)
+	void SetHUDPointerOrigin(FVector NewPointerOrigin);
+
 protected:
 	UFUNCTION(BlueprintCallable)
 	void SetInteractionInteractComponent(UPrimitiveComponent* PrimitiveComponent);

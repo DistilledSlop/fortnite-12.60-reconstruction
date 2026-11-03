@@ -24,3 +24,30 @@ void ABuildingPropAtlas::InitializeAudio(UAudioComponent* InPortalLoopingComp)
 	this->PortalAudioComp = InPortalLoopingComp;
 }
 
+void ABuildingPropAtlas::InitializeRings(UPrimitiveComponent* InRing1Comp, UPrimitiveComponent* InRing2Comp, UPrimitiveComponent* InRing3Comp)
+{
+	// CONFIDENCE: high; reflected wrapper and native helper verified.
+	Ring1Comp = InRing1Comp;
+	Ring2Comp = InRing2Comp;
+	Ring3Comp = InRing3Comp;
+}
+
+void ABuildingPropAtlas::SetupAnimationSpeed(float InActivationTime, float InTotalDefenseTime, float InAnimSpeedStart, float InAnimSpeedEnd)
+{
+	// CONFIDENCE: high; reflected wrapper and native helper verified.
+	NativeRecoveredFloat_0xbdc = InAnimSpeedEnd;
+	NativeRecoveredFloat_0xbcc = InActivationTime;
+	NativeRecoveredFloat_0xbd0 = InTotalDefenseTime;
+	NativeRecoveredFloat_0xbd8 = InAnimSpeedStart;
+	NativeRecoveredFloat_0xbe0 = InAnimSpeedStart;
+	NativeRecoveredFloat_0xbd4 = 0.0f;
+}
+
+void ABuildingPropAtlas::SetupAnimationTransition(UMaterialInstanceDynamic* MID, FName ParamName, float InTransitionTime)
+{
+	// CONFIDENCE: high; reflected wrapper and native helper verified.
+	NativeRecoveredFloat_0xbc8 = InTransitionTime;
+	RingTransitionMID = MID;
+	NativeRecoveredName_0xbc0 = ParamName;
+}
+

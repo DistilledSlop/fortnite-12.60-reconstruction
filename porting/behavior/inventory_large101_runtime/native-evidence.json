@@ -126,5 +126,17 @@
       "address": "0x142070ef0",
       "full_disassembly": "/tmp/native105-quickbar-swap-full.asm"
     }
+  },
+  "root_followup_107": {
+    "pending_map_hash": {
+      "insert": "0x14203fab0",
+      "hash": "0x142c9fd40",
+      "key_bytes": 16,
+      "source_policy": "porting/behavior/inventory_entry_copy_runtime/source_policy.py",
+      "engine_hash": "FCrc::MemCrc_DEPRECATED",
+      "duplicate_replacement": "0x142055070 replaces existing pair in place and frees temporary sparse slot"
+    },
+    "owner_inventory_lookup_evidence": "porting/behavior/quickbar_owner107_runtime/native-evidence.json",
+    "owner_lookup_null_semantics": "0x14204ec80 dereferences controller interface even if cast is null; draft preserves native assumption"
   }
 }

@@ -30,6 +30,12 @@ void ADeployableBasePlot::OnRep_OccupantNetID()
 	// Body not recovered: reflection-derived stub.
 }
 
+void ADeployableBasePlot::SetContextComponent(UPrimitiveComponent* ContextComponent)
+{
+	// CONFIDENCE: high; reflected wrapper and native helper verified.
+	NativeRecoveredContext_0x9c8 = ContextComponent;
+}
+
 bool ADeployableBasePlot::NativeHasInfiniteAmmo(UFortWeaponItemDefinition* WeaponDefinition)
 {
 	// CONFIDENCE: HIGH

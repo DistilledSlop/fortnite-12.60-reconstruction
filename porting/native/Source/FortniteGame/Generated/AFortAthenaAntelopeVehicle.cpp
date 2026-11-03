@@ -23,6 +23,12 @@ bool AFortAthenaAntelopeVehicle::IsAccumulatingBoost() const
 	return NativeRecoveredBool_0x112d;
 }
 
+bool AFortAthenaAntelopeVehicle::IsInBoostSmashForgivenessPeriod() const
+{
+	// CONFIDENCE: high; reflected wrapper and native helper verified.
+	return 0.0f < NativeRecoveredFloat_0x113c;
+}
+
 bool AFortAthenaAntelopeVehicle::IsLocalPlayerRiding() const
 {
 	// Original address: 0x1427cfdb0.
@@ -43,5 +49,11 @@ bool AFortAthenaAntelopeVehicle::IsPassivelyExpendingBoost() const
 	// CONFIDENCE: HIGH
 	// Mechanically matched complete native storage read; see bulk_sized_scalar_runtime/README.md.
 	return NativeRecoveredBool_0x112e;
+}
+
+bool AFortAthenaAntelopeVehicle::IsSmashing() const
+{
+	// CONFIDENCE: high; reflected wrapper and native helper verified.
+	return NativeRecoveredByte_0x112c != 0 || !(NativeRecoveredFloat_0x113c <= 0.0f);
 }
 

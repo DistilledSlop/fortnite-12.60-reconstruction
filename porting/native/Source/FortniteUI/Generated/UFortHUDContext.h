@@ -8,6 +8,10 @@
 
 #include "ABuildingActor.h"
 #include "ABuildingTrap.h"
+#include "AFortBluGloManager.h"
+#include "AFortGameStateZone.h"
+#include "AFortMission.h"
+#include "AFortMissionManager.h"
 #include "AFortPlayerPawn.h"
 #include "AFortPlayerState.h"
 #include "AFortWeapon.h"
@@ -422,7 +426,19 @@ public:
 	TWeakObjectPtr<UFortTouchControlRegion> TouchControlRegion;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	AFortBluGloManager* GetBluGloManager() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	ABuildingActor* GetCurrentFocusedBuilding() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	AFortMission* GetFocusedMission() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	AFortGameStateZone* GetGameStateZone() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	AFortMissionManager* GetMissionManager() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsPreparingMgmtMenu() const;

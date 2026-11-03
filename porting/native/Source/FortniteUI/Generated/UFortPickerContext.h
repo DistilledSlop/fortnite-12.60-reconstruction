@@ -87,5 +87,8 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetCurrentWheelIndex() const;
 
+	UFUNCTION(BlueprintCallable)
+	void SetFortPickerData(UFortPickerData* Data);
+
 };
 
