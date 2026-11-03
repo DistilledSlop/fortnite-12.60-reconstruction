@@ -76,6 +76,12 @@ public:
 	void ServerRemoveMapMarker(const FMarkerID& MarkerID, const ECancelMarkerReason& CancelReason);
 	void ServerRemoveMapMarker_Implementation(const FMarkerID& MarkerID, const ECancelMarkerReason& CancelReason);
 
+	UFUNCTION(BlueprintCallable)
+	void SetMarkerActorClass(TSubclassOf<AFortPlayerMarkerBase> InMarkerActorClass);
+
+	UFUNCTION(BlueprintCallable)
+	void SetMarkerWidgetClass(TSubclassOf<UUserWidget> InMarkerClass);
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

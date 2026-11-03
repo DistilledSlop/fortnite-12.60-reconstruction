@@ -4596,7 +4596,7 @@ ENGINE_ROOT_DEFAULT = os.environ.get("FN_ENGINE_ROOT", "/opt/fortnite/UnrealEngi
 # that the beacon RPCs use. Only that plugin is scanned: the rest of Plugins/Online would add headers of modules that
 # the project's Build.cs does not list (WebBrowser, LoginFlow). Only usable modules are indexed (ModuleRegistry).
 ENGINE_SCAN_DIRS = ("Source/Runtime", "Plugins/Runtime", "Plugins/Developer", "Source/Developer",
-                    "Plugins/Online/OnlineSubsystemUtils")
+                    "Plugins/Online/OnlineSubsystemUtils", "Plugins/FX/Niagara")
 # A namespaced enum (UE: `namespace ECollisionEnabled { enum Type {...}; }`) is named ECollisionEnabled::Type in C++.
 # TYPE_DECL_RE only sees `enum E...` at the start of a line, so the namespaced form is indexed by this pattern.
 _NAMESPACE_ENUM_GAP = r"(?:\s|/\*[\s\S]*?\*/|//[^\n]*)*"

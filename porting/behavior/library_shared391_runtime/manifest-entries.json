@@ -1,0 +1,18 @@
+[
+  {
+    "class": "UFortNiagaraGameplayLibrary",
+    "function": "EndLegacyAnimTrails",
+    "kind": "exec",
+    "signature": "void EndLegacyAnimTrails(UFXSystemComponent* Target)",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": true,
+    "inc_path": "porting/behavior/library_shared391_runtime/EndLegacyAnimTrails.inc",
+    "address": "0x142a003b0",
+    "native_body_address": "0x141dca290",
+    "reflection_flags": "0x4022401",
+    "confidence": "high",
+    "status": "ported",
+    "includes": ["NiagaraComponent.h", "Particles/ParticleSystemComponent.h"]
+  }
+]

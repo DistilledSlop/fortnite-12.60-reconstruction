@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 
+class UFXSystemComponent;
+
 #include "UFortNiagaraGameplayLibrary.generated.h"
 
 UCLASS()
@@ -14,5 +16,8 @@ class FORTNITEGAME_API UFortNiagaraGameplayLibrary : public UBlueprintFunctionLi
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(BlueprintCallable)
+	static void EndLegacyAnimTrails(UFXSystemComponent* Target);
+
 };
 

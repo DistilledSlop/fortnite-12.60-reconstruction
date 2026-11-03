@@ -14,6 +14,18 @@ void UAthenaMarkerComponent::ServerRemoveMapMarker_Implementation(const FMarkerI
 	// The original implementation returns without side effects.
 }
 
+void UAthenaMarkerComponent::SetMarkerActorClass(TSubclassOf<AFortPlayerMarkerBase> InMarkerActorClass)
+{
+	// Native 0x141a8c630; reflected property 0x130. CONFIDENCE: high
+	MarkerActorClass = InMarkerActorClass;
+}
+
+void UAthenaMarkerComponent::SetMarkerWidgetClass(TSubclassOf<UUserWidget> InMarkerClass)
+{
+	// Native 0x141a8c990; reflected property 0x128. CONFIDENCE: high
+	MarkerWidgetClass = InMarkerClass;
+}
+
 void UAthenaMarkerComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

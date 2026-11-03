@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "Components/StaticMeshComponent.h"
 
+#include "UObject/WeakObjectPtr.h"
+
 class UMaterialInstanceDynamic;
 
 #include "UFortMobileInteractionComponent.generated.h"
@@ -19,6 +21,14 @@ public:
 	// table index 0, flags 0x20080000000000
 	UPROPERTY()
 	UMaterialInstanceDynamic* IconMID;
+
+private:
+	// Non-reflected field (behaviour kind "member_field", offset 0x480): not a UPROPERTY, not replicated.
+	FWeakObjectPtr NativeAvailabilityWeakObject = FWeakObjectPtr();
+public:
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsAvailable() const;
 
 };
 

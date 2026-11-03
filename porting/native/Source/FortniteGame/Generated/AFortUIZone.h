@@ -59,9 +59,15 @@ public:
 	UPROPERTY(Transient)
 	TSoftObjectPtr<USlateBrushAsset> ActorCanvasArrowBrush;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x5d4): not a UPROPERTY, not replicated.
+	FName NativeRecoveredCursorModeAction_0x5d4 = NAME_None;
+
 	// table index 0, flags 0x20080000002000
 	UPROPERTY(Transient)
 	TArray<UFortSpottedActorIndicator*> SpottedActorIndicators;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FName GetCurrentCursorModeAction();
 
 };
 
