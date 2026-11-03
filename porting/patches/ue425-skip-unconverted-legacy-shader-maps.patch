@@ -1,0 +1,21 @@
+diff --git a/Engine/Source/Runtime/Engine/Private/Materials/MaterialShared.cpp b/Engine/Source/Runtime/Engine/Private/Materials/MaterialShared.cpp
+index b37568755..44ffd614c 100644
+--- a/Engine/Source/Runtime/Engine/Private/Materials/MaterialShared.cpp
++++ b/Engine/Source/Runtime/Engine/Private/Materials/MaterialShared.cpp
+@@ -990,6 +990,16 @@ void FMaterial::SerializeInlineShaderMap(FArchive& Ar, const FLegacyMaterialAsse
+                         return;
+                     }
+                 }
++                // Probe-only escape hatch: the stock reader cannot read Windows-cooked 12.60 shader maps
++                // (FShaderMapBase::Serialize is fatal). Skip the whole resource range and leave this
++                // resource without a shader map, so the owning asset can still deserialize. Rendering
++                // such a material falls back to the engine default material.
++                if (Ar.IsLoading() && LegacyContext && FParse::Param(FCommandLine::Get(), TEXT("FortniteSkipUnconvertedLegacyShaderMaps")))
++                {
++                    UE_LOG(LogMaterial, Display, TEXT("Skipping unconverted legacy shader map for %s"), *LegacyContext->OwnerPath);
++                    Ar.Seek(LegacyContext->ResourceEnd);
++                    return;
++                }
+                 TRefCountPtr<FMaterialShaderMap> LoadedShaderMap = new FMaterialShaderMap();
+ 				if (LoadedShaderMap->Serialize(Ar, true, bCooked && Ar.IsLoading()))
+ 				{

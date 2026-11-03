@@ -7,7 +7,7 @@
 
 #include "FFortDialogExternalLatentActionHandle.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FORTNITEGAME_API FFortDialogExternalLatentActionHandle
 {
 	GENERATED_BODY()

@@ -8,7 +8,7 @@
 
 #include "FFortPlayerSurveyButtonListMultipleSelectionAnswerWidgetFocusInfo.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FFortPlayerSurveyButtonListMultipleSelectionAnswerWidgetFocusInfo
 {
 	GENERATED_BODY()

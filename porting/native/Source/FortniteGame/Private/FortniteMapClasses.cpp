@@ -124,12 +124,6 @@ bool UFortKismetLibrary::IsAssetNull(TSoftObjectPtr<UObject> Asset)
 }
 
 
-// Native 0x141ef9370: the engine path null check tests the complete None name.
-bool UFortKismetLibrary::IsAssetNull(TSoftObjectPtr<UObject> Asset)
-{
-    return Asset.IsNull();
-}
-
 // CONFIDENCE: high; native exec 0x142934740 calls the verified constant true helper.
 bool UFortKismetLibrary::DeviceSupportsForceFeedback()
 {

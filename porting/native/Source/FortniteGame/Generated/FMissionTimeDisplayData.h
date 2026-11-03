@@ -8,7 +8,7 @@
 
 #include "FMissionTimeDisplayData.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FMissionTimeDisplayData
 {
 	GENERATED_BODY()

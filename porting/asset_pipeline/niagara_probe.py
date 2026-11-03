@@ -107,6 +107,9 @@ def closure_stats(work, pkgs):
 ERR = re.compile(r"(Error|Fatal|Failed|Can't find file|Failed to load|ensure|Assertion)", re.I)
 
 
+EXTRA_PROBE_ARGS = []
+
+
 def run_probe(work, pkg, timeout):
     n = pkg.rsplit("/", 1)[1]
     log = work / "logs/probe" / (n + ".log")
@@ -116,13 +119,17 @@ def run_probe(work, pkg, timeout):
     try:
         r = subprocess.run(
             ["./FortniteLinux.sh", "-nullrhi", "-nosound", "-unattended",
-             f"-FortniteProbeAsset={probe_path(pkg)}", "-ExecCmds=Quit", f"-abslog={log}"],
+             f"-FortniteProbeAsset={probe_path(pkg)}", "-ExecCmds=Quit", f"-abslog={log}", *EXTRA_PROBE_ARGS],
             cwd=work / "stage", stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
             timeout=timeout)
         rc = r.returncode
     except subprocess.TimeoutExpired:
         rc = "timeout"
     return classify(pkg, log, rc)
+
+
+# Per-launch messages unrelated to the probed asset: the stage lacks the Water plugin content.
+BENIGN = ("CDO Constructor (WaterSubsystem)", "GameUserSettings.ini")
 
 
 def classify(pkg, log, rc):
@@ -134,6 +141,7 @@ def classify(pkg, log, rc):
         if m:
             cls = m.group(1)
         if ("Fortnite asset probe" not in line and "LogInit: Command Line" not in line
+                and not any(b in line for b in BENIGN)
                 and re.search(r"\b(Error|Fatal)\b|Warning: Failed|Can't find file|Failed to load", line)):
             errors.append(re.sub(r"^\[[^\]]*\]\[\s*\d+\]", "", line).strip())
     ok = cls == "NiagaraSystem" and not errors and rc == 0
@@ -196,11 +204,13 @@ def main():
     ap.add_argument("--skip-probe", action="store_true")
     ap.add_argument("--no-promote", action="store_true")
     ap.add_argument("--limit", type=int)
+    ap.add_argument("--probe-arg", action="append", default=[], help="extra engine command-line argument, e.g. -FortniteSkipUnconvertedLegacyShaderMaps")
     ap.add_argument("--reclassify", action="store_true", help="re-read existing probe logs/results.json instead of rerunning")
     a = ap.parse_args()
     work = a.work.resolve()
     if str(work).startswith(str(PORTING / "native")):
         sys.exit("work dir must not be inside porting/native")
+    EXTRA_PROBE_ARGS.extend(a.probe_arg)
     jobs = min(a.jobs, 16)
     pkgs = list_systems()[: a.limit]
     print(f"{len(pkgs)} NS_ systems")

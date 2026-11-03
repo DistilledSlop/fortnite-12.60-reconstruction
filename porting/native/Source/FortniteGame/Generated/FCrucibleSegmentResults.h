@@ -7,7 +7,7 @@
 
 #include "FCrucibleSegmentResults.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FCrucibleSegmentResults
 {
 	GENERATED_BODY()

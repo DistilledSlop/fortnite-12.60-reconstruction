@@ -8,7 +8,7 @@
 
 #include "FFortCrewSlotInformation.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FFortCrewSlotInformation
 {
 	GENERATED_BODY()

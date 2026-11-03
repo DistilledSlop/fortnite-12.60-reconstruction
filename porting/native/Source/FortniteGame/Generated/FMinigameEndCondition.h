@@ -9,7 +9,7 @@
 
 #include "FMinigameEndCondition.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FMinigameEndCondition
 {
 	GENERATED_BODY()

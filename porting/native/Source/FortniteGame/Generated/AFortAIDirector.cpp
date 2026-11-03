@@ -71,7 +71,8 @@ bool AFortAIDirector::IsAnyActiveEncounterRelevantToDefender(AFortAIPawn* Defend
 	{
 	    return false;
 	}
-	return IsAnyEncounterGoalWithinDistanceOfPoint(Pawn->GetActorLocation(), EncounterRelevantDistanceToDefender, true);
+	FVector PawnLocation = Pawn->GetActorLocation();
+	return IsAnyEncounterGoalWithinDistanceOfPoint(PawnLocation, EncounterRelevantDistanceToDefender, true);
 }
 
 bool AFortAIDirector::IsAnyActiveEncounterRelevantToPlayer(AFortPlayerPawn* Player) const
@@ -82,7 +83,8 @@ bool AFortAIDirector::IsAnyActiveEncounterRelevantToPlayer(AFortPlayerPawn* Play
 	{
 	    return false;
 	}
-	return IsAnyEncounterGoalWithinDistanceOfPoint(Pawn->GetActorLocation(), EncounterRelevantDistanceToPlayer, true);
+	FVector PawnLocation = Pawn->GetActorLocation();
+	return IsAnyEncounterGoalWithinDistanceOfPoint(PawnLocation, EncounterRelevantDistanceToPlayer, true);
 }
 
 bool AFortAIDirector::IsAnyEncounterGoalWithinDistanceOfPoint(FVector& Point, float Distance, bool bOnlyActiveEncounters) const

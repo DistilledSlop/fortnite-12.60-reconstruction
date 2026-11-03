@@ -9,7 +9,7 @@ class UFortItemDefinition;
 
 #include "FItemAndCount.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FItemAndCount
 {
 	GENERATED_BODY()

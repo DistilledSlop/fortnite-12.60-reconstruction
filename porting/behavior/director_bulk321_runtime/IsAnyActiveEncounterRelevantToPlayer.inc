@@ -4,4 +4,5 @@ if (!Pawn)
 {
     return false;
 }
-return IsAnyEncounterGoalWithinDistanceOfPoint(Pawn->GetActorLocation(), EncounterRelevantDistanceToPlayer, true);
+FVector PawnLocation = Pawn->GetActorLocation();
+return IsAnyEncounterGoalWithinDistanceOfPoint(PawnLocation, EncounterRelevantDistanceToPlayer, true);

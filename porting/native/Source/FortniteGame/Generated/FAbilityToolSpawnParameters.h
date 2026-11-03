@@ -12,7 +12,7 @@ class ABuildingSMActor;
 
 #include "FAbilityToolSpawnParameters.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FAbilityToolSpawnParameters
 {
 	GENERATED_BODY()

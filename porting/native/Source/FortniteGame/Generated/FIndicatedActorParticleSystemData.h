@@ -10,7 +10,7 @@ class UParticleSystem;
 
 #include "FIndicatedActorParticleSystemData.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FIndicatedActorParticleSystemData
 {
 	GENERATED_BODY()

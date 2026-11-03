@@ -1,7 +1,7 @@
 // CONFIDENCE: high; native capture and reflected fields reviewed.
 {
-	if (SpawnLocation != nullptr)
+	if (InSpawnLocation != nullptr)
 	{
-		this->SpawnLocation = SpawnLocation;
+		this->SpawnLocation = InSpawnLocation;
 	}
 }

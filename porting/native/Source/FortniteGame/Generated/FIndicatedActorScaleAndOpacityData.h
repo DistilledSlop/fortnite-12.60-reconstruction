@@ -7,7 +7,7 @@
 
 #include "FIndicatedActorScaleAndOpacityData.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FIndicatedActorScaleAndOpacityData
 {
 	GENERATED_BODY()

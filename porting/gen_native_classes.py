@@ -1582,6 +1582,11 @@ def rpc_arg(decl, enum_args=()):
     return "const %s& %s" % (ctype, name)
 
 
+_HEADER_MEMBER_NAMES = frozenset()
+# Structs passed through Blueprint-callable UFUNCTIONs (FortniteMapClasses.h); UHT requires BlueprintType.
+UHT_BLUEPRINT_STRUCTS = frozenset({"FAbilityToolSpawnParameters", "FCrucibleCourseResults", "FCrucibleSegmentResults", "FFortCrewSlotInformation", "FFortDialogExternalLatentActionHandle", "FFortPlayerSurveyButtonListMultipleSelectionAnswerWidgetFocusInfo", "FIndicatedActorParticleSystemData", "FIndicatedActorScaleAndOpacityData", "FItemAndCount", "FMinigameEndCondition", "FMissionTimeDisplayData"})
+
+
 def header_arg(f, arg):
     """A service request's out parameter (`T& Context`, reflection: CPF_OutParm + CPF_RepSkip, no CPF_ReferenceParm)
     is a non-const reference on a net function, which UHT rejects ("Replicated ... cannot be passed by non-const
@@ -1590,6 +1595,17 @@ def header_arg(f, arg):
     ctype = arg.rsplit(" ", 1)[0]
     if f.get("service") == "Request" and ctype.endswith("&") and not ctype.startswith("const "):
         return "UPARAM(NotReplicated) " + arg
+    # UHT rejects a function parameter named like a property of the same class ("shadowing is not
+    # allowed"). Rename it in the declaration only; the C++ definition keeps its own parameter name.
+    return shadow_safe_arg(arg, _HEADER_MEMBER_NAMES)
+
+
+def shadow_safe_arg(arg, member_names):
+    """Parameter `T Name` that shadows a member `Name` becomes `T InName` (UHT forbids it in the header and
+    -Wshadow -Werror in the definition). Behaviour bodies use the `In` name."""
+    pname = arg.rsplit(" ", 1)[-1].lstrip("*&")
+    if pname in member_names:
+        return arg[:len(arg) - len(pname)] + "In" + pname
     return arg
 
 
@@ -3434,6 +3450,9 @@ def render_promoted_header(model, api, parent_include, source_label):
     lines.append("")
     lines.append("public:")
     pending = sorted(model.get("fields") or [], key=lambda f: (f.get("offset") is None, f.get("offset") or 0))
+    global _HEADER_MEMBER_NAMES
+    _HEADER_MEMBER_NAMES = frozenset([m["name"] for m in model["members_decl_order"]] +
+                                     [f["name"] for f in (model.get("fields") or []) if f.get("name")])
     for m in model["members_decl_order"]:
         while (pending and pending[0].get("offset") is not None and m.get("offset") is not None
                and pending[0]["offset"] < m["offset"]):
@@ -3631,7 +3650,9 @@ def render_promoted_cpp(model, source_label):
             continue
         # A net service response is the programmer's own body (UHT: CppImplName = the name), so it has no _Implementation.
         impl = "%s_Implementation" % f["name"] if (f["rpc"] and not f.get("service")) or f.get("native_event") else f["name"]
-        args = ", ".join(f["args"])
+        member_names = frozenset([m["name"] for m in model.get("members_decl_order", [])] +
+                                 [fd["name"] for fd in (model.get("fields") or []) if fd.get("name")])
+        args = ", ".join(shadow_safe_arg(a, member_names) for a in f["args"])
         lines.append("%s %s::%s(%s)%s" % (f.get("ret", "void"), name, impl, args, " const" if f.get("const") else ""))
         lines.append("{")
         body = body_lines(f.get("body"))
@@ -5037,6 +5058,8 @@ class TypeGate:
                 model["blueprint_type"] = True
                 for member in model["members"]:
                     member["runtime_property_specifiers"] = ["BlueprintReadOnly", "Transient"]
+            if info.cpp_name in UHT_BLUEPRINT_STRUCTS:
+                model["blueprint_type"] = True
             model = _native_checkpoint2040_policy.apply_struct(info, model)
             model = _native_checkpoint3058_policy.apply_struct(info, model)
             model = _confirmation_policy.apply_struct(self, info, model)
