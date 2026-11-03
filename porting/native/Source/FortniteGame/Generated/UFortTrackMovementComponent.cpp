@@ -2,6 +2,13 @@
 #include "UFortTrackMovementComponent.h"
 #include "Net/UnrealNetwork.h"
 
+float UFortTrackMovementComponent::GetDistanceAlongSpline() const
+{
+	// Exact original embedded struct scalar leaf; see README.md.
+	// CONFIDENCE: HIGH
+	return TrackMovement.DistanceAlongSpline;
+}
+
 void UFortTrackMovementComponent::OnRep_ReplicatedTrackMovement()
 {
 	// Body not recovered: reflection-derived stub.

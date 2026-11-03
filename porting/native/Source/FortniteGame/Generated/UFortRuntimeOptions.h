@@ -3363,6 +3363,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool GetDisablePurchaseHistoryScreen() const;
 
+	UFUNCTION(BlueprintCallable)
+	float GetEliminationMarkerTTL();
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool GetEnableLFG() const;
 

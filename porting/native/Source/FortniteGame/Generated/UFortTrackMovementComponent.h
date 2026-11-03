@@ -70,6 +70,9 @@ public:
 	UPROPERTY(Transient)
 	float ClientPredictionSpeedModifier;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetDistanceAlongSpline() const;
+
 	UFUNCTION()
 	void OnRep_ReplicatedTrackMovement();
 

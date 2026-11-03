@@ -231,6 +231,9 @@ public:
 	FFortMissionInstancedConfigData ConfigData;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetCurrentFocusPercentage() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	FGuid GetMissionGuid() const;
 
 	UFUNCTION()

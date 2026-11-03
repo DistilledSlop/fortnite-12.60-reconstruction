@@ -1,5 +1,31 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Native source batch 21 (2026-11-03)
+
+Canonical source: 1,813 function bodies + 163 supporting fields = 1,976 ported
+entries. Nine new bodies: six embedded-struct scalar getters, WorldItem
+GetLevel, alteration unlock eligibility and quest objective completion.
+Primitive return metadata, full wrappers/leaves, generated named member types,
+reflection offsets and dependency headers were checked. The input scale getter
+crosses UI to Game through its existing exported FFortActionKeyMapping property
+and generated public dependency. The two predicates use signed int32 comparisons.
+
+Root promoted via `/tmp/promote-native-batch21.py`; final generation accepts
+1,976 with zero rejections. Eighteen Native files differ from batch20; receipts
+are under `porting/generated/gameplay-bulk-integration-21/`. No builds/tests or
+runtime runs. Last tested 1,040; 773 bodies pending. Next checkpoint 2,040
+(227 more). Normalized durability remains blocked by an unidentified definition
+virtual and its derived behavior; only the independent GetLevel dependency is
+credited. SSE NaN/negative-zero evidence is retained in
+world_item_normalized_runtime/HANDOFF.md.
+
+Finite Terra medium workers completed three direct embedded-struct Boolean
+proposals (bulk_struct_bool_runtime, not yet promoted), and are finishing
+nested/inherited scalar and embedded object families. Root owns canonical,
+Native and generation. Source-only coverage is not gameplay parity; all four
+product milestones remain open. Preserve unrelated graphics, skip visuals,
+use bounded reads/output, no testing before 2,040. Commit/push and dashboard.
+
 ## Native source batch 20 (2026-11-03)
 
 Canonical source: 1,804 function bodies + 163 supporting fields = 1,967 ported

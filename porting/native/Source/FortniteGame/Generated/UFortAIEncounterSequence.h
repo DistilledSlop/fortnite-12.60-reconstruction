@@ -76,6 +76,9 @@ public:
 	int32 GetEncounterIndexInSequence() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure, BlueprintAuthorityOnly)
+	int32 GetNumEncountersInSequence() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure, BlueprintAuthorityOnly)
 	bool HasEncounter() const;
 
 };

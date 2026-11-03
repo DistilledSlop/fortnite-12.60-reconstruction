@@ -20,6 +20,13 @@ bool UFortRuntimeOptions::GetDisablePurchaseHistoryScreen() const
 	return UFortRuntimeOptions::bDisablePurchaseHistoryScreen;
 }
 
+float UFortRuntimeOptions::GetEliminationMarkerTTL()
+{
+	// Exact original embedded struct scalar leaf; see README.md.
+	// CONFIDENCE: HIGH
+	return PlayerMarkerConfig.EliminationMarkerTTL;
+}
+
 bool UFortRuntimeOptions::GetEnableLFG() const
 {
 	// Original address: 0x142acdc90.

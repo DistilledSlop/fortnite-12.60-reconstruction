@@ -33,6 +33,14 @@ int32 UFortAlterationInfo::GetSlotIndex() const
 	return SlotIndex;
 }
 
+bool UFortAlterationInfo::IsAlterationUnlocked() const
+{
+	// Original address: 0x1451f65f0.
+	// CONFIDENCE: HIGH
+	// Complete signed int32 field comparison; see bulk_two_field_predicate_runtime/README.md.
+	return RequiredMinLevel <= CurrentItemLevel;
+}
+
 bool UFortAlterationInfo::IsFreeAlterationChoice() const
 {
 	// Original address: 0x1451f6620.

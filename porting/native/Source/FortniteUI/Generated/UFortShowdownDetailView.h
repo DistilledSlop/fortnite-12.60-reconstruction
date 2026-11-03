@@ -58,5 +58,10 @@ public:
 	UPROPERTY()
 	FMargin TitlePaddingMobile;
 
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetTournamentPinUnlockScore() const;
+public:
+
 };
 

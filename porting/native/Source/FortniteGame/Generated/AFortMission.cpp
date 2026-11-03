@@ -2,6 +2,13 @@
 #include "AFortMission.h"
 #include "Net/UnrealNetwork.h"
 
+float AFortMission::GetCurrentFocusPercentage() const
+{
+	// Exact original embedded struct scalar leaf; see README.md.
+	// CONFIDENCE: HIGH
+	return CurrentFocusData.CurrentFocusPercentage;
+}
+
 FGuid AFortMission::GetMissionGuid() const
 {
 	// Original address: 0x1429ddc90.

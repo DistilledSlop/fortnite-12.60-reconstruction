@@ -86,6 +86,9 @@ public:
 	bool bActive;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool HasCompleted() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsActive() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

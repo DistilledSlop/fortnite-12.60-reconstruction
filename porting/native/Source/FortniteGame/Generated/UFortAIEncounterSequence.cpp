@@ -17,6 +17,13 @@ int32 UFortAIEncounterSequence::GetEncounterIndexInSequence() const
 	return CurrentEncounterIndexInSequence;
 }
 
+int32 UFortAIEncounterSequence::GetNumEncountersInSequence() const
+{
+	// Exact original embedded struct scalar leaf; see README.md.
+	// CONFIDENCE: HIGH
+	return GeneratedEncounterSequence.NumEncountersInSequence;
+}
+
 bool UFortAIEncounterSequence::HasEncounter() const
 {
 	// Original address: 0x14279c450.

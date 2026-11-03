@@ -45,5 +45,8 @@ public:
 	UPROPERTY()
 	FFortActionKeyMapping ActionKeyMapping;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetInputScale() const;
+
 };
 
