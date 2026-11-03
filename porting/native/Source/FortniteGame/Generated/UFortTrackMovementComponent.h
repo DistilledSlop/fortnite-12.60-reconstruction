@@ -13,6 +13,7 @@
 #include "Math/Vector.h"
 
 class AFortTrack;
+class USplineComponent;
 
 #include "UFortTrackMovementComponent.generated.h"
 
@@ -72,6 +73,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetDistanceAlongSpline() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	USplineComponent* GetSpline() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsReverseDirection() const;

@@ -55,5 +55,8 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UFortItemDefinition* GetCosmeticItem() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FGameplayTag GetVariantChannelTag() const;
+
 };
 

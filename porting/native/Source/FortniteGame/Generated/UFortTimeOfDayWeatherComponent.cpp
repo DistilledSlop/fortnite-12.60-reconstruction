@@ -2,6 +2,12 @@
 #include "UFortTimeOfDayWeatherComponent.h"
 #include "Net/UnrealNetwork.h"
 
+float UFortTimeOfDayWeatherComponent::GetBlendTimePercentage() const
+{
+	// CONFIDENCE: high; complete native wrapper and reflected fields verified.
+	return CurrentBlendTime / BlendTimeLength;
+}
+
 int32 UFortTimeOfDayWeatherComponent::GetCurrentWeatherEventIndex() const
 {
 	// Original address: 0x14292f0c0.

@@ -18,5 +18,8 @@ public:
 	UPROPERTY()
 	FText CommandName;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FText GetCommandName() const;
+
 };
 

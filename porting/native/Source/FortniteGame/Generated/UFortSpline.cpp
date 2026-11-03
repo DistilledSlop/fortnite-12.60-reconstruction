@@ -8,3 +8,9 @@ float UFortSpline::GetDuration() const
 	return Spline.Duration;
 }
 
+void UFortSpline::SetDuration(float InDuration)
+{
+	// CONFIDENCE: high; wrapper and field offsets verified against native and reflection.
+	Spline.Duration = InDuration;
+}
+

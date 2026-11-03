@@ -111,16 +111,16 @@ do
         for (const auto& M : Pending)                      // bit-array order
         {
             Native_142065b00(QA, M.Key, M.Value.FromSlot);
-            AssignItemToSlot(QA, M.Value.Item, M.Value.ToSlot);                      // 142049220
+            Native_142049220(QA, M.Value.Item, M.Value.ToSlot);                      // 142049220
         }
         if (bHasA)
         {
-            AssignItemToSlot(QB, ItemA, HeadB);
+            Native_142049220(QB, ItemA, HeadB);
             Native_1417cdda0(PC, ItemA, BarB, SlotA, SlotB, ItemB);       // callback; 6 args per asm (rcx=PC)
         }
         if (bHasB)
         {
-            AssignItemToSlot(QA, ItemB, HeadA);
+            Native_142049220(QA, ItemB, HeadA);
             Native_1417cdda0(PC, ItemB, BarA, SlotB, SlotA, ItemA);
         }
         if (BarA == BarB)
@@ -141,11 +141,4 @@ do
 // scope exit: Pending set, MoveGuids, Moves arrays freed (FMemory_Free); working containers reset.
 return bOk;
 
-// ---- 142049220 AssignItemToSlot (lifted; body proven) ----
-// void AssignItemToSlot(FQuickBar& Q, UFortItem* Item, int32 Slot):
-//   if (!Item || Slot<0 || Slot>=Q.Slots.Num() || !Q.Slots[Slot].bEnabled) return;
-//   FGuid G = Item->NativeGetItemGuid(); if (G is zero) return;      // vtbl +0x468
-//   FQuickBarSlot& S = Q.Slots[Slot];
-//   if (S.bEnabled && G nonzero) { if (S.Items.Num()==0) S.Items.SetNumUninitialized(1) (grow via 140690dd0); S.Items[0]=G; S.bIsDirty=true; }
-//   uint8 N = Item->vtbl+0x2e8();
-//   for (i=Slot+1; i < Slot+N; ++i) if (InRange && Q.Slots[i].bEnabled) { Slot_i.UsedByItemGuid=G; Slot_i.bIsDirty=true; Slot_i.bIsOccupied=true; Slot_i.UsedBySlotIndex=Slot; }
+// Free clear/assign bodies: quickbar_helpers108_runtime/QuickbarHelpers.draft.inc.

@@ -8,6 +8,7 @@
 
 #include "FQuickBar.h"
 
+class UFortItem;
 class UFortWorldItem;
 
 #include "AFortQuickBars.generated.h"
@@ -46,5 +47,10 @@ public:
 	UPROPERTY(Transient)
 	TArray<UFortWorldItem*> CachedCeilingTraps;
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	bool NativeCanFitItemInSlots(UFortItem* Item, const FQuickBar& Bar, int32 StartSlot, const TArray<FGuid>& MoveGuids, bool bIgnoreOccupants);
+	bool NativeFindItemSlot(UFortItem* Item, FQuickBar& Bar, int32 StartSlot, bool bReverse, const TArray<FGuid>& MoveGuids, bool bAllowOwnGuid, int32& FoundSlot);
 };
 

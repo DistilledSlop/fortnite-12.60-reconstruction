@@ -50,5 +50,10 @@ public:
 	UPROPERTY()
 	float LastToCurrentUpdateRate;
 
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetCurrentValuePercentage() const;
+public:
+
 };
 

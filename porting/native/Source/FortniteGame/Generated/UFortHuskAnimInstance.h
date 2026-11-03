@@ -143,5 +143,8 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	EFortHuskAnimType GetHuskAnimType() const;
 
+	UFUNCTION(BlueprintCallable)
+	void SetHuskAnimType(EFortHuskAnimType NewHuskAnimType);
+
 };
 

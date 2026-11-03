@@ -9,3 +9,9 @@ UFortItemDefinition* UFortVariantTokenType::GetCosmeticItem() const
 	return cosmetic_item;
 }
 
+FGameplayTag UFortVariantTokenType::GetVariantChannelTag() const
+{
+	// CONFIDENCE: high; complete native wrapper, helper, and reflected fields verified.
+	return VariantChanelTag;
+}
+

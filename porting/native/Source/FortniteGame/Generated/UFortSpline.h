@@ -32,5 +32,8 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetDuration() const;
 
+	UFUNCTION(BlueprintCallable)
+	void SetDuration(float InDuration);
+
 };
 

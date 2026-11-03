@@ -16,8 +16,8 @@ struct FQuickbarPendingGuidKeyFuncs : TDefaultMapHashableKeyFuncs<FGuid, FQuickb
 };
 using FQuickbarPending = TMap<FGuid, FQuickbarPendingValue, FDefaultSetAllocator, FQuickbarPendingGuidKeyFuncs>;
 
-void Native_142065b00(FQuickBar& Bar, const FGuid& Guid, int32 Slot);
-void Native_142049220(FQuickBar& Bar, UFortItem* Item, int32 Slot);
+// The exact free-function lifts are included once at file scope.
+#include "../quickbar_helpers108_runtime/QuickbarHelpers.draft.inc"
 bool Native_14204f0f0(AFortQuickBars* Owner, UFortItem* Item, FQuickBar& Bar,
                       int32 StartSlot, bool bReverse, const TArray<FGuid>& MoveGuids,
                       bool NativeFlag, int32& FoundSlot);
@@ -42,27 +42,7 @@ void Native_14203f030(FQuickbarPending& Destination, const FQuickbarPending& Sou
 bool Native_14204e850(AFortQuickBars* Owner, UFortItem* Item, const FQuickBar& Bar,
                       int32 StartSlot, const TArray<FGuid>& MoveGuids, bool bIgnoreOccupants)
 {
-    if (!Item) return false;
-    const FGuid UnusedGuid = Item->NativeGetItemGuid(); // native still invokes this virtual
-    const uint8 Size = Item->GetNumberOfSlotsTaken();
-    for (int32 Index = StartSlot; Index < StartSlot + int32(Size); ++Index)
-    {
-        if (!Bar.Slots.IsValidIndex(Index) || !Bar.Slots[Index].bEnabled ||
-            !Bar.DataDefinition.QuickbarSlots.IsValidIndex(Index)) return false;
-        const auto Type = uint8(Item->NativeGetItemType()); // native invokes once per slot
-        bool bAccepts = false;
-        for (const auto Accepted : Bar.DataDefinition.QuickbarSlots[Index].AcceptedItemTypes)
-            if (uint8(Accepted) == Type) { bAccepts = true; break; }
-        if (!bAccepts) return false;
-        const FQuickBarSlot& Slot = Bar.Slots[Index];
-        if (Slot.bIsReserved) return false;
-        FGuid Occupant;
-        if (Slot.Items.Num() > 0) Occupant = Slot.Items[0];
-        else if (Slot.bIsOccupied) Occupant = Slot.UsedByItemGuid;
-        if (!bIgnoreOccupants && (Slot.Items.Num() != 0 || Slot.bIsOccupied) &&
-            !MoveGuids.Contains(Occupant)) return false;
-    }
-    return true;
+    return Owner->NativeCanFitItemInSlots(Item, Bar, StartSlot, MoveGuids, bIgnoreOccupants);
 }
 
 // 0x14204f0f0. Native probes the starting slot once even when it is outside
@@ -71,22 +51,7 @@ bool Native_14204f0f0(AFortQuickBars* Owner, UFortItem* Item, FQuickBar& Bar,
                       int32 StartSlot, bool bReverse, const TArray<FGuid>& MoveGuids,
                       bool NativeFlag, int32& FoundSlot)
 {
-    if (!Item) return false;
-    const int32 Step = bReverse ? -1 : 1;
-    const uint8 Size = Item->GetNumberOfSlotsTaken();
-    TArray<FGuid> Allowed = MoveGuids;
-    if (NativeFlag) Allowed.Add(Item->NativeGetItemGuid());
-    int32 Index = StartSlot;
-    do
-    {
-        if (Native_14204e850(Owner, Item, Bar, Index, Allowed, false))
-        {
-            FoundSlot = Index;
-            return true;
-        }
-        Index += Step;
-    } while (Index >= 0 && Index <= Bar.Slots.Num() - int32(Size));
-    return false;
+    return Owner->NativeFindItemSlot(Item, Bar, StartSlot, bReverse, MoveGuids, NativeFlag, FoundSlot);
 }
 
 // 0x14204ec80: validate the target span and plan pushes for its occupants.

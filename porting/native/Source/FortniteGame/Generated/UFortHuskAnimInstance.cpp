@@ -9,3 +9,9 @@ EFortHuskAnimType UFortHuskAnimInstance::GetHuskAnimType() const
 	return HuskAnimType;
 }
 
+void UFortHuskAnimInstance::SetHuskAnimType(EFortHuskAnimType NewHuskAnimType)
+{
+	// CONFIDENCE: high; wrapper and field offsets verified against native and reflection.
+	HuskAnimType = NewHuskAnimType;
+}
+

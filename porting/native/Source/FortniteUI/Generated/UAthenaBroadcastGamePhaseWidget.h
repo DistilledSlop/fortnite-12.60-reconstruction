@@ -20,5 +20,8 @@ public:
 	UPROPERTY()
 	AFortMinigame* MinigameOverride;
 
+	UFUNCTION(BlueprintCallable)
+	void SetMinigameOverride(AFortMinigame* Minigame);
+
 };
 

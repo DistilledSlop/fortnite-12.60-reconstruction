@@ -29,5 +29,10 @@ public:
 	UPROPERTY()
 	FFortPrioritizedWidgetData PrioritizationData;
 
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool HasMoreXPEvents() const;
+public:
+
 };
 

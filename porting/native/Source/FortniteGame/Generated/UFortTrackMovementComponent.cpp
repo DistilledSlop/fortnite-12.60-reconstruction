@@ -9,6 +9,12 @@ float UFortTrackMovementComponent::GetDistanceAlongSpline() const
 	return TrackMovement.DistanceAlongSpline;
 }
 
+USplineComponent* UFortTrackMovementComponent::GetSpline() const
+{
+	// CONFIDENCE: high; complete native wrapper, helper, and reflected fields verified.
+	return TrackMovement.CurrentSpline;
+}
+
 bool UFortTrackMovementComponent::IsReverseDirection() const
 {
 	// Exact original embedded struct Boolean leaf; see README.md.

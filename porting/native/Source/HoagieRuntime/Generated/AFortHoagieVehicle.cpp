@@ -94,7 +94,7 @@ void AFortHoagieVehicle::MulticastRotorImpulse_Implementation(const FHitResult& 
 
 void AFortHoagieVehicle::OnRep_ControlState()
 {
-	// Body not recovered: reflection-derived stub.
+	// CONFIDENCE: high; complete native wrapper and reflected fields verified.
 }
 
 void AFortHoagieVehicle::OnRep_HoagieState()

@@ -96,6 +96,9 @@ public:
 	void ResetEnvironmentalDamageOverride();
 
 	UFUNCTION(BlueprintCallable)
+	void ResetHearingAggroRange();
+
+	UFUNCTION(BlueprintCallable)
 	void ResetMaxHealth();
 
 	UFUNCTION(BlueprintCallable)

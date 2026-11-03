@@ -346,8 +346,10 @@ public:
 	void MulticastRotorImpulse(const FHitResult& RotorHit);
 	void MulticastRotorImpulse_Implementation(const FHitResult& RotorHit);
 
+private:
 	UFUNCTION()
 	void OnRep_ControlState();
+public:
 
 	UFUNCTION()
 	void OnRep_HoagieState();

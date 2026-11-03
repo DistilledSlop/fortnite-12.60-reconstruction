@@ -58,6 +58,9 @@ public:
 	bool bIsGamepadSimulatedClick;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	ECommonGamepadType GetCurrentGamepadType() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	ECommonInputType GetCurrentInputType() const;
 
 	UFUNCTION(BlueprintCallable)

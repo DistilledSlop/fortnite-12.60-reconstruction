@@ -28,5 +28,8 @@ public:
 	UPROPERTY()
 	FText LongDescription;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FText GetLongDescription() const;
+
 };
 

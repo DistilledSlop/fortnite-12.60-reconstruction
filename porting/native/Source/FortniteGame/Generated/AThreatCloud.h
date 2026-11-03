@@ -73,5 +73,8 @@ public:
 	UPROPERTY(Transient)
 	TArray<FVector> GoalActorLocations;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FBox GetThreatVolume() const;
+
 };
 

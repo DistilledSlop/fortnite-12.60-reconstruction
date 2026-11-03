@@ -42,5 +42,8 @@ public:
 	UPROPERTY()
 	bool CanNavigateToWhenClaimed;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FGameplayTag GetNodeTag();
+
 };
 

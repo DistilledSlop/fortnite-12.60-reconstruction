@@ -101,6 +101,9 @@ public:
 	UPostProcessComponent* PostProcessComponent;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetBlendTimePercentage() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetCurrentWeatherEventIndex() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

@@ -72,6 +72,12 @@ void UFortCreativeCreatureManagerInfoComponent::ResetEnvironmentalDamageOverride
 	EnvironmentalDamageOverride = -1.0f;
 }
 
+void UFortCreativeCreatureManagerInfoComponent::ResetHearingAggroRange()
+{
+	// CONFIDENCE: high; complete native wrapper and reflected fields verified.
+	HearingAggroRange = -1.0f;
+}
+
 void UFortCreativeCreatureManagerInfoComponent::ResetMaxHealth()
 {
 	// Original address: 0x1428ba250. Complete constant field write.

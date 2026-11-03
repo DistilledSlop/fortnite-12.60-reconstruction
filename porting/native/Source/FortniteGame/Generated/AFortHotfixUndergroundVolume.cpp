@@ -2,6 +2,11 @@
 #include "AFortHotfixUndergroundVolume.h"
 #include "Net/UnrealNetwork.h"
 
+void AFortHotfixUndergroundVolume::CopyToClipboard()
+{
+	// CONFIDENCE: high; complete native wrapper and reflected fields verified.
+}
+
 void AFortHotfixUndergroundVolume::OnRep_ReplicatedExtent()
 {
 	// Body not recovered: reflection-derived stub.

@@ -92,5 +92,8 @@ public:
 	UPROPERTY()
 	FText ChatTriggerCommandName;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FText GetChatTriggerCommandName() const;
+
 };
 

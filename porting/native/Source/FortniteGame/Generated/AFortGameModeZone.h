@@ -209,5 +209,8 @@ protected:
 	void OnPlayerExit(AActor* Controller);
 public:
 
+	UFUNCTION(BlueprintCallable)
+	void SetActiveSpawnPad(ABuildingSMActor* InActiveSpawnPad);
+
 };
 

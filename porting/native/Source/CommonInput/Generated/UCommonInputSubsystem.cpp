@@ -9,6 +9,12 @@
 #include "HAL/PlatformTime.h"
 #include "UCommonInputSettings.h"
 
+ECommonGamepadType UCommonInputSubsystem::GetCurrentGamepadType() const
+{
+	// CONFIDENCE: high; complete native wrapper, helper, and reflected fields verified.
+	return GamepadInputType;
+}
+
 ECommonInputType UCommonInputSubsystem::GetCurrentInputType() const
 {
     return CurrentInputType;

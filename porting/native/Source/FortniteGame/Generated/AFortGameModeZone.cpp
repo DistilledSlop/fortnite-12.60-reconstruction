@@ -22,3 +22,9 @@ void AFortGameModeZone::OnPlayerExit(AActor* Controller)
 	// CONFIDENCE: HIGH
 }
 
+void AFortGameModeZone::SetActiveSpawnPad(ABuildingSMActor* InActiveSpawnPad)
+{
+	// CONFIDENCE: high; wrapper and field offsets verified against native and reflection.
+	ActiveSpawnPad = InActiveSpawnPad;
+}
+

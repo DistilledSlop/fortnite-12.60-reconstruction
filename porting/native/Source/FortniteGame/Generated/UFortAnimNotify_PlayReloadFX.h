@@ -20,5 +20,10 @@ public:
 	UPROPERTY()
 	TEnumAsByte<EFortReloadFXState::Type> ReloadStage;
 
+private:
+	UFUNCTION(BlueprintCallable)
+	void SetReloadStage(EFortReloadFXState::Type InReloadStage) const;
+public:
+
 };
 

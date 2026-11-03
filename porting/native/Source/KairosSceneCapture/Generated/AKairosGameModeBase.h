@@ -20,5 +20,8 @@ public:
 	UPROPERTY()
 	UKairosConfig* DefaultConfig;
 
+	UFUNCTION(BlueprintCallable)
+	UKairosConfig* GetDefaultConfig();
+
 };
 
