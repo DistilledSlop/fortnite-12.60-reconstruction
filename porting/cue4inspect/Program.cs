@@ -12,6 +12,7 @@ using CUE4Parse.UE4.Assets.Exports;
 using CUE4Parse.UE4.AssetRegistry;
 using CUE4Parse.UE4.Assets.Exports.StaticMesh;
 using CUE4Parse.UE4.Assets.Exports.SkeletalMesh;
+using CUE4Parse.UE4.Assets.Exports.Animation;
 using CUE4Parse.UE4.Assets.Exports.Actor;
 using CUE4Parse.UE4.Assets.Exports.Component.Landscape;
 using CUE4Parse.UE4.Assets.Exports.Component;
@@ -26,6 +27,8 @@ using CUE4Parse.UE4.Versions;
 using System.Text.Json;
 using CUE4Parse_Conversion.Dto;
 using CUE4Parse_Conversion.Formats.Meshes;
+using CUE4Parse_Conversion.Formats.Animations;
+using CUE4Parse_Conversion.Animations;
 using CUE4Parse_Conversion.Options;
 using CUE4Parse_Conversion.Textures;
 using SixLabors.ImageSharp;
@@ -49,6 +52,7 @@ bool saveList = args.Contains("--save-list");
 bool saveFolder = args.Contains("--save-folder");
 bool saveClosure = args.Contains("--save-closure");
 bool exportGlb = args.Contains("--export-glb");
+bool exportAnim = args.Contains("--export-anim");
 bool exportLandscape = args.Contains("--export-landscape");
 bool exportLandscapeGrid = args.Contains("--export-landscape-grid");
 bool exportLandscapeWeightmapGrid = args.Contains("--export-landscape-weightmap-grid");
@@ -78,7 +82,7 @@ string? extractSeedArgument = args.SingleOrDefault(arg => arg.StartsWith("--seed
 bool auditDuplicates = args.Contains("--audit-duplicates");
 bool repairDuplicates = args.Contains("--repair");
 string? duplicatesOutArgument = args.SingleOrDefault(arg => arg.StartsWith("--duplicates-out=", StringComparison.Ordinal));
-Globals.FatalObjectSerializationErrors = exportGlb || exportLandscape || exportLandscapeGrid || exportLandscapeWeightmapGrid || exportPng || exportLandscapeWeightmaps || materialReport || functionReport || landscapeReport || actorReport;
+Globals.FatalObjectSerializationErrors = exportGlb || exportAnim || exportLandscape || exportLandscapeGrid || exportLandscapeWeightmapGrid || exportPng || exportLandscapeWeightmaps || materialReport || functionReport || landscapeReport || actorReport;
 string? keyFileArgument = args.SingleOrDefault(arg => arg.StartsWith("--key-file=", StringComparison.Ordinal));
 string? keyFilePath = keyFileArgument is not null ? keyFileArgument["--key-file=".Length..] : Environment.GetEnvironmentVariable("FORTNITE_AES_KEY_FILE");
 string? maxArgument = args.SingleOrDefault(arg => arg.StartsWith("--max-packages=", StringComparison.Ordinal));
@@ -89,7 +93,7 @@ if (maxArgument is not null && (!int.TryParse(maxArgument[15..], out maxPackages
     Console.Error.WriteLine("--max-packages must be a positive integer");
     return 2;
 }
-string[] positional = args.Where(arg => arg != maxArgument && arg != closureOutputArgument && arg != keyFileArgument && arg != extractOutput && arg != extractWorkersArgument && arg != extractPlanArgument && arg != extractSummaryArgument && arg != extractSampleArgument && arg != extractSeedArgument && arg != duplicatesOutArgument && arg != textureOutputArgument && arg is not ("--all" or "--pseudo" or "--imports" or "--imports-json" or "--export-map-json" or "--registry" or "--pak-sources" or "--registry-paths" or "--seed-list" or "--follow-soft" or "--scan-maps" or "--scan-native" or "--all-keys" or "--save-package" or "--save-list" or "--sizes" or "--save-folder" or "--save-closure" or "--export-glb" or "--export-landscape" or "--export-landscape-grid" or "--export-landscape-weightmap-grid" or "--export-png" or "--export-landscape-weightmaps" or "--material-report" or "--legacy-material-start" or "--texture-report" or "--function-report" or "--landscape-report" or "--actor-report" or "--versions" or "--ue426" or "--loose" or "--extract-all" or "--dry-run" or "--verify" or "--audit-duplicates" or "--repair")).ToArray();
+string[] positional = args.Where(arg => arg != maxArgument && arg != closureOutputArgument && arg != keyFileArgument && arg != extractOutput && arg != extractWorkersArgument && arg != extractPlanArgument && arg != extractSummaryArgument && arg != extractSampleArgument && arg != extractSeedArgument && arg != duplicatesOutArgument && arg != textureOutputArgument && arg is not ("--all" or "--pseudo" or "--imports" or "--imports-json" or "--export-map-json" or "--registry" or "--pak-sources" or "--registry-paths" or "--seed-list" or "--follow-soft" or "--scan-maps" or "--scan-native" or "--all-keys" or "--save-package" or "--save-list" or "--sizes" or "--save-folder" or "--save-closure" or "--export-glb" or "--export-anim" or "--export-landscape" or "--export-landscape-grid" or "--export-landscape-weightmap-grid" or "--export-png" or "--export-landscape-weightmaps" or "--material-report" or "--legacy-material-start" or "--texture-report" or "--function-report" or "--landscape-report" or "--actor-report" or "--versions" or "--ue426" or "--loose" or "--extract-all" or "--dry-run" or "--verify" or "--audit-duplicates" or "--repair")).ToArray();
 bool packageLess = registryMode || pakSources || registryPaths || scanMaps || scanNative || exportLandscapeGrid || exportLandscapeWeightmapGrid || extractAll;
 if (new[] { registryMode, pakSources, registryPaths, scanMaps, scanNative, exportLandscapeGrid, exportLandscapeWeightmapGrid, extractAll }.Count(mode => mode) > 1 || (packageLess ? positional.Length > 1 : positional.Length is < 1 or > 2))
 {
@@ -101,6 +105,7 @@ if (new[] { registryMode, pakSources, registryPaths, scanMaps, scanNative, expor
     Console.Error.WriteLine("   or: Cue4Inspect <newline-list-file> [pak-directory] --sizes [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect <asset-path> [source-directory] --save-closure [--max-packages=250] [--closure-output=<new frontend-probes directory>] [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect <static-mesh-path> [pak-directory] --export-glb [--all-keys]");
+    Console.Error.WriteLine("   or: Cue4Inspect <anim-sequence-path> [source-directory] --export-anim [--loose]");
     Console.Error.WriteLine("   or: Cue4Inspect <landscape-map-path> [pak-directory] --export-landscape [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect --export-landscape-grid [pak-directory] [--max-packages=64] [--all-keys]");
     Console.Error.WriteLine("   or: Cue4Inspect --export-landscape-weightmap-grid [pak-directory] [--max-packages=64] [--all-keys]");
@@ -184,7 +189,11 @@ try
             ["StaticMesh.Fortnite1260NoForceOpaque"] = true,
             ["RawIndexBuffer.HasShouldExpandTo32Bit"] = false,
             ["StaticMesh.HasRayTracingGeometry"] = false,
-            ["SkeletalMesh.HasRayTracingData"] = false
+            ["SkeletalMesh.HasRayTracingData"] = false,
+            // 12.60 still cooks the 4.23/4.24 FCompressedAnimSequence layout
+            // (FUECompressedAnimData header before the byte stream, no bone codec
+            // DDC handle), although its custom versions otherwise match 4.25.
+            ["AnimSequence.UE424CompressedDataLayout"] = true
         });
     var provider = loose
         ? new DefaultFileProvider(new DirectoryInfo(Path.Combine(sourceDirectory, "FortniteGame")),
@@ -1002,6 +1011,36 @@ try
         }, new JsonSerializerOptions { WriteIndented = true }));
         return 0;
     }
+    if (exportAnim)
+    {
+        // Resolve only AnimSequence exports; the skeleton is loaded through the import.
+        var sequence = packageData is Package animPackage
+            ? animPackage.ExportMap.Select((export, index) => (export, index))
+                .Where(entry => entry.export.ClassName == "AnimSequence")
+                .Select(entry => animPackage.ExportsLazy[entry.index].Value)
+                .OfType<UAnimSequence>().FirstOrDefault()
+            : packageData.GetExports().OfType<UAnimSequence>().FirstOrDefault();
+        if (sequence is null)
+            throw new InvalidDataException("Package has no AnimSequence export");
+        var animSet = sequence.ConvertAnims();
+        var animFiles = new UEFormatAnimFormat().Build(sequence.Name, assetPath!, new ExportOptions(), animSet);
+        var animDestination = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "../../../../generated/converted"));
+        var animRelative = assetPath!.Replace('\\', '/').TrimStart('/');
+        if (animRelative.Split('/').Any(part => part is ".." or "."))
+            throw new InvalidDataException("Unsafe asset path");
+        Console.WriteLine($"Anim frames={sequence.NumFrames}, tracks={sequence.CompressedTrackToSkeletonMapTable?.Length ?? 0}, " +
+                          $"codec={sequence.CompressedDataStructure?.GetType().Name ?? "none"}, curves={sequence.CompressedCurveData?.FloatCurves?.Length ?? 0}/{sequence.CompressedCurveNames?.Length ?? 0}, sequences={animSet.Sequences.Count}");
+        foreach (var file in animFiles)
+        {
+            var target = Path.GetFullPath(Path.Combine(animDestination, animRelative + file.NameSuffix + "." + file.Extension));
+            if (!target.StartsWith(animDestination + Path.DirectorySeparatorChar, StringComparison.Ordinal))
+                throw new InvalidDataException("Export path escapes output directory");
+            Directory.CreateDirectory(Path.GetDirectoryName(target)!);
+            File.WriteAllBytes(target, file.Data);
+            Console.WriteLine($"Exported {target} ({file.Data.Length} bytes)");
+        }
+        return 0;
+    }
     if (exportGlb)
     {
         // Resolve only SkeletalMesh exports so unrelated exports (anim sequences,
@@ -1099,7 +1138,7 @@ try
 }
 catch (Exception error)
 {
-    Console.Error.WriteLine(exportGlb || exportPng || materialReport ? $"Inspection failed: {error}" : $"Inspection failed: {error.GetType().Name}: {error.Message}");
+    Console.Error.WriteLine(exportGlb || exportAnim || exportPng || materialReport ? $"Inspection failed: {error}" : $"Inspection failed: {error.GetType().Name}: {error.Message}");
     return 1;
 }
 
