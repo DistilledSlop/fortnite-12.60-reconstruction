@@ -1962,11 +1962,11 @@ def history_html(history, model):
   const rangeSummary = document.getElementById('history-summary');
   const timestamp = p => { const t = Date.parse(p.date); return Number.isFinite(t) ? t : null; };
   // Stored dates stay UTC ISO strings; they are displayed in US Eastern time (EST/EDT).
-  const etFormat = new Intl.DateTimeFormat('en-CA', {timeZone:'America/New_York', year:'numeric', month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit', hourCycle:'h23', timeZoneName:'short'});
+  const etFormat = new Intl.DateTimeFormat('en-US', {timeZone:'America/New_York', year:'numeric', month:'2-digit', day:'2-digit', hour:'numeric', minute:'2-digit', hour12:true, timeZoneName:'short'});
   const etDate = s => {
     const t = Date.parse(s); if (!Number.isFinite(t)) return s || '';
     const o = {}; etFormat.formatToParts(new Date(t)).forEach(x => { o[x.type] = x.value; });
-    return `${o.year}-${o.month}-${o.day} ${o.hour}:${o.minute} ${o.timeZoneName}`;
+    return `${o.year}-${o.month}-${o.day} ${o.hour}:${o.minute} ${String(o.dayPeriod).replace(/\./g, '').toUpperCase()} ${o.timeZoneName}`;
   };
   Object.entries(CAT_NAMES_PLACEHOLDER).forEach(([id, name]) => {
     const option = document.createElement('option'); option.value = id; option.textContent = name; category.appendChild(option);
