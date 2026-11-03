@@ -52,7 +52,7 @@ CPP_KEYWORDS = {
 # FMath (UnrealMathUtility.h, FMath::Abs) is used by the struct_net body of FCreateBuildingActorData.
 ENGINE_NAMES = {"UClass", "UObject", "AActor", "FWeakObjectPtr", "TWeakObjectPtr", "FName", "FString", "FText",
                 "FVector", "TArray", "static_cast", "Cast", "UWorld", "FConstPlayerControllerIterator", "AGameStateBase", "GetLocalRole", "ROLE_Authority",
-                "FGameplayTag", "FFortNativeGameplayTagsRuntime", "GetOwner", "GetWorld", "FMath", "FApp", "FEngineVersion", "ESearchCase", "ESearchDir", "INDEX_NONE"}
+                "FGameplayTag", "FFortNativeGameplayTagsRuntime", "GameState", "GetOwner", "GetWorld", "FMath", "FApp", "FEngineVersion", "ESearchCase", "ESearchDir", "INDEX_NONE"}
 # UE_LOG is the Engine logging macro; LogFort is declared by SharedFortGameLog.h.
 ENGINE_NAMES.update({"UE_LOG", "LogFort", "Verbose", "Warning"})
 # The NetSerialize signature of kind struct_net (gen_native_classes.py NATIVE_NET_SIGNATURE, the same text).
@@ -264,6 +264,9 @@ def check_kind(e, problems):
         return
     if "virtual" in e and (kind != "helper" or not isinstance(e["virtual"], bool)):
         problems.append(("FAIL", tag, "virtual must be a boolean on a member helper only"))
+    if "reflection_flags" in e and (kind not in ("getter", "exec") or
+            not re.fullmatch(r"0x[0-9a-fA-F]+", str(e["reflection_flags"]))):
+        problems.append(("FAIL", tag, "reflection_flags must be a hex string on getter/exec"))
     sig = e.get("signature") or ""
     if kind == STRUCT_NET_KIND:
         # The struct is the class; the function, signature and linkage are fixed (gen_native_classes.py, struct_net).
@@ -435,8 +438,17 @@ def check_generated(e, rejected, problems, counts):
                       None)
         if access != e.get("access", "") + ":":
             problems.append(("FAIL", tag, "helper declared under %r, not %s:" % (access, e.get("access"))))
-    if e["kind"] in ("getter", "exec") and "UFUNCTION(BlueprintCallable" not in ufunc:
-        problems.append(("FAIL", tag, "UFUNCTION before the declaration lacks BlueprintCallable: %r" % ufunc))
+    if e["kind"] in ("getter", "exec"):
+        flags = int(e["reflection_flags"], 0) if "reflection_flags" in e else None
+        callable_expected = bool(flags & 0x04000000) if flags is not None else True
+        if not ufunc.startswith("UFUNCTION(") or ("BlueprintCallable" in ufunc) != callable_expected:
+            problems.append(("FAIL", tag, "UFUNCTION BlueprintCallable differs from expected reflection flags: %r" % ufunc))
+        if flags is not None:
+            expected_access = "protected:" if flags & 0x80000 else ("private:" if flags & 0x40000 else "public:")
+            access = next((hl[j] for j in range(decl_index - 1, -1, -1)
+                           if hl[j] in ("public:", "protected:", "private:")), None)
+            if access != expected_access:
+                problems.append(("FAIL", tag, "function access differs from original reflection flags"))
     if e["kind"] == "validate":
         rpc = sfn[:-len("_Validate")]
         rpc_key = squash("void %s(%s);" % (rpc, args))

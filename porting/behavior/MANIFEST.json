@@ -6732,7 +6732,8 @@
     "signature_status": "proposed",
     "confidence": "high",
     "status": "ported",
-    "notes": "Original callback body with reconstructed native byte, original Athena parent/interfaces and all original reflected fields restored. Aircraft tick/event wiring and complete constructor remain pending; no runtime-feature claim."
+    "notes": "Original callback body with reconstructed native byte, original Athena parent/interfaces and all original reflected fields restored. Aircraft tick/event wiring and complete constructor remain pending; no runtime-feature claim.",
+    "reflection_flags": "0x80401"
   },
   {
     "class": "AFortAthenaAircraft",

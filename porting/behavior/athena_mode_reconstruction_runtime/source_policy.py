@@ -68,6 +68,12 @@ def apply(model, block, owner_fns):
     model['native_interface_bases'] = CONTRACT['interfaces'][:]
     model['splice'].setdefault('header_includes', set()).update({
         'UGameplayMutatorObserverInterface.h', 'UFortMutatorOwner.h'})
+    for function in model.get('functions', []):
+        if function['name'] == 'OnAircraftEnteredDropZone':
+            if function.get('original_flags') != 0x80401:
+                raise ValueError('original aircraft callback flags changed')
+            function['specifiers'] = [s for s in function['specifiers'] if s != 'BlueprintCallable']
+            function['access'] = 'protected'
     model[FLAG] = True
     return model
 

@@ -378,3 +378,5 @@ Counts are for the screen rule in `skips.py`, applied to the 1,130 records. The 
 only for the ported and skipped entries.
 
 Dashboard function coverage uses `COUNTS.txt`'s `ported_functions` value: ported manifest entries excluding `member_field` storage declarations. The legacy `ported` total remains an entry count for checker reporting; `member_fields` records supporting storage separately. Neither declaration nor source-body coverage establishes runtime parity.
+
+For a recovered internal reflected function, `reflection_flags` may pin the original numeric mask. Generation rejects a mismatch; the class policy must preserve original callable/access metadata, and the checker verifies it. This permits protected non-Blueprint-callable native callbacks without adding a new Blueprint API. `GameState` is the inherited AGameModeBase property used by the original Athena callback.

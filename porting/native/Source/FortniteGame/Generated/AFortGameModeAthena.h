@@ -652,8 +652,10 @@ public:
 	UPROPERTY(Transient)
 	TArray<TSoftObjectPtr<UDataTable>> GameFeatureLootPackageData;
 
-	UFUNCTION(BlueprintCallable)
+protected:
+	UFUNCTION()
 	void OnAircraftEnteredDropZone(AFortAthenaAircraft* FortAthenaAircraft);
+public:
 
 public:
     // Existing Linux fixture/runtime support; original native bodies remain open.

@@ -1295,6 +1295,12 @@ def static_reflected_self_test(check):
     res = attach_snippets("ASelfTest", [dict(fn2, body=None)], [dict(entry, includes=["Missing.h"])], support_ctx,
                          "/Script/FortniteGame")
     check("support authorization does not allow other headers", bool(res["rejected"]))
+    res = attach_snippets("ASelfTest", [dict(fn2, body=None)],
+                          [dict(entry, reflection_flags="0x14022401")], ctx, "/Script/FortniteGame")
+    check("original reflection flags accepted", not res["rejected"])
+    res = attach_snippets("ASelfTest", [dict(fn2, body=None)],
+                          [dict(entry, reflection_flags="0x401")], ctx, "/Script/FortniteGame")
+    check("different reflection flags rejected", any("flags differ" in r["reason"] for r in res["rejected"]))
 
 
 def self_test():
@@ -2074,7 +2080,7 @@ def build_functions_promoted(functions, resolver, notify_names, owner_fns, splic
                "static": bool(flags & FUNC_STATIC),
                "const": bool(flags & FUNC_CONST) and (is_rpc or is_splice),
                "notify": name in notify_names, "splice": is_splice,
-               "specifiers": specifiers, "args": args, "used": used}
+               "specifiers": specifiers, "args": args, "used": used, "original_flags": flags}
         if is_splice:
             # A snippet makes a non-RPC function a BlueprintCallable member; BlueprintPure follows the reflection flag.
             rec["specifiers"] = ["BlueprintCallable"] + (["BlueprintPure"] if flags & FUNC_BLUEPRINT_PURE else [])
@@ -2976,6 +2982,15 @@ def attach_snippets(name, functions, entries, ctx, package, skipped=(), member_n
         else:
             reject("unknown kind %r or name %r" % (kind, fname))
             continue
+        if "reflection_flags" in e:
+            try:
+                original_flags = int(e["reflection_flags"], 0)
+            except (TypeError, ValueError):
+                reject("reflection_flags must be a numeric string")
+                continue
+            if original_flags != target.get("original_flags"):
+                reject("manifest reflection_flags differ from original function metadata")
+                continue
         if squash(e.get("signature")) != squash(want):
             reject("manifest signature %r differs from the reflection-derived %r" % (e.get("signature"), want))
             continue
