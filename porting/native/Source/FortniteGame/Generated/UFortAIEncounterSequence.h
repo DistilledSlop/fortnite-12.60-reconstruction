@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
 
+#include "EFortEncounterSequenceResult.h"
 #include "FEncounterEnvironmentQueryInfo.h"
 #include "FFortEncounterSettings.h"
 #include "FFortGeneratedEncounterSequence.h"
@@ -83,6 +84,15 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure, BlueprintAuthorityOnly)
 	bool IsOnFinalIndexInSequence() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	EFortEncounterSequenceResult Last();
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	EFortEncounterSequenceResult Next();
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	EFortEncounterSequenceResult Previous();
 
 };
 

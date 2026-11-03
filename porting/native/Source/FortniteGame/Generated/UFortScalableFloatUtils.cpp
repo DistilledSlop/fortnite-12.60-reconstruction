@@ -8,9 +8,21 @@ float UFortScalableFloatUtils::GetValue(FScalableFloat& Input)
 	return Input.Value;
 }
 
+float UFortScalableFloatUtils::GetValueAtLevel(FScalableFloat& Input, float Level)
+{
+	// Native 0x141f614a0. CONFIDENCE: high
+	return Input.GetValueAtLevel(Level, nullptr);
+}
+
 bool UFortScalableFloatUtils::IsStatic(FScalableFloat& Input)
 {
 	// Native 0x141f62ed0. CONFIDENCE: high
 	return Input.Curve.RowName == NAME_None;
+}
+
+void UFortScalableFloatUtils::SetValue(FScalableFloat& Input, float NewValue)
+{
+	// Native 0x140730550. CONFIDENCE: high
+	Input.SetValue(NewValue);
 }
 

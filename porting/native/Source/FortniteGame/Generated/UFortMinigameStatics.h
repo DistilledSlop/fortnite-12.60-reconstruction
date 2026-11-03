@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 
+#include "Math/Vector.h"
+
 #include "UFortMinigameStatics.generated.h"
 
 UCLASS()
@@ -14,5 +16,8 @@ class FORTNITEGAME_API UFortMinigameStatics : public UBlueprintFunctionLibrary
 	GENERATED_BODY()
 
 public:
+	UFUNCTION()
+	static float GetDistanceBetweenTwoVectors(FVector Source, FVector Dest);
+
 };
 

@@ -9,6 +9,12 @@ float UFortSwimmingAudioBank::GetRequiredImmersionDepth()
 	return RequiredImmersionDepth;
 }
 
+USoundBase* UFortSwimmingAudioBank::GetSoundAsset(bool bIsLocal, EFortSwimmingAudioType::Type SwimType)
+{
+	// Native 0x1424aea70. CONFIDENCE: high
+	return bIsLocal ? SwimmingAssets1P[static_cast<uint8>(SwimType)] : SwimmingAssets3P[static_cast<uint8>(SwimType)];
+}
+
 float UFortSwimmingAudioBank::GetTeammateVolumeMultiplier()
 {
 	// Original address: 0x142aef5f0.

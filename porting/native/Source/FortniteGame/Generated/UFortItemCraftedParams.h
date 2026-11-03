@@ -33,5 +33,8 @@ public:
 	UPROPERTY()
 	bool bItemWasQuickCrafted;
 
+	UFUNCTION(BlueprintCallable)
+	void SetParams(UFortSchematicItemDefinition* _SchematicDefinition, AFortPlayerController* _CraftedBy, int32 _AmountCrafted, bool _bItemWasQuickCrafted, UFortItemCraftedParams*& ThisParam);
+
 };
 

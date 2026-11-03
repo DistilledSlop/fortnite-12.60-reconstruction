@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "Engine/DataAsset.h"
 
+#include "EFortSwimmingAudioType.h"
+
 class USoundBase;
 
 #include "UFortSwimmingAudioBank.generated.h"
@@ -38,6 +40,9 @@ public:
 
 	UFUNCTION()
 	float GetRequiredImmersionDepth();
+
+	UFUNCTION()
+	USoundBase* GetSoundAsset(bool bIsLocal, EFortSwimmingAudioType::Type SwimType);
 
 	UFUNCTION()
 	float GetTeammateVolumeMultiplier();

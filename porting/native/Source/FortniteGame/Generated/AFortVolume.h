@@ -21,6 +21,8 @@
 #include "FOnVolumePerformanceMetricsUpdated.h"
 #include "FVolumeActorStats.h"
 #include "FortVolumeClientPostProcess.h"
+#include "GameFramework/Actor.h"
+#include "GameFramework/Info.h"
 #include "GameFramework/PlayerController.h"
 #include "Math/Box.h"
 #include "Math/BoxSphereBounds.h"
@@ -107,6 +109,9 @@ public:
 	// table index 26, flags 0x40000100002020
 	UPROPERTY(ReplicatedUsing=OnRep_CurrentPlayset, Transient)
 	UFortPlaysetItemDefinition* CurrentPlayset;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x318): not a UPROPERTY, not replicated.
+	TSet<TWeakObjectPtr<AActor>> NativeActorMembership;
 
 	// table index 25, flags 0x40000000002000
 	UPROPERTY(Transient)
@@ -237,5 +242,6 @@ public:
 	virtual AFortVolume* NativeGetVolume();
 	FBox NativeGetBoundsBox() const;
 	void NativeUpdateClientPostProcess(AActor* Actor, bool bEntering);
+	bool NativeContainsActorBounds(AActor* Actor, const FBoxSphereBounds& Bounds, bool bUseBounds);
 };
 

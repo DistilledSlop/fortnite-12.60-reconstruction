@@ -1,0 +1,36 @@
+{
+  "native_owner": "UMcpProfile",
+  "native_member_offset_evidence": "0xd8",
+  "forwarder": "0x1410fe060",
+  "forwarder_source": "porting/generated/native180-interface-context/0x1410fe060.c",
+  "forwarder_contract": "FMcpProfileItemPtr FindItem(const FString& ItemId); hidden shared-pointer out parameter, native interface slot0x38. Native assumes initialized backing, no added null fallback.",
+  "installation_source": "porting/generated/callee_probe/profile_backend_installation/0x14110e120.c",
+  "base_constructor_source": "porting/generated/callee_probe/profile_backend_installation/0x1410ec490.c",
+  "base_vtable": "0x145bfcc38",
+  "base_lookup": "0x1410fdd30",
+  "base_lookup_source": "porting/generated/callee_probe/profile_backend_mutation/0x1410fdd30.c",
+  "base_semantics": "Copy shared pointer found in ItemsById (backing+8); return empty shared pointer when absent.",
+  "overlay_vtable": "0x145bfcca8",
+  "overlay_lookup": "0x1410fde50",
+  "overlay_lookup_source": "porting/generated/callee_probe/profile_backend_mutation/0x1410fde50.c",
+  "overlay_semantics": "Find exact case-sensitive item id in overlay backing+0x198 first; if found copy its stored shared pointer including null/deleted override; otherwise perform base ItemsById lookup. Do not filter quantity.",
+  "existing_support": [
+    "porting/behavior/typed_profile_backend_runtime/McpProfileBackend.h",
+    "porting/behavior/typed_profile_backend_runtime/McpProfileBackend.cpp",
+    "porting/native/Source/McpProfileSys/Generated/McpProfileBaseTypes.h",
+    "porting/native/Source/McpProfileSys/Generated/McpProfileItem.h"
+  ],
+  "remaining_source_work": "Canonical UMcpProfile lacks owner backing and backend installation/state mutation wiring. Existing typed_profile_backend_runtime is unintegrated logical support with private ItemsById and no FindItem. Add real base+overlay FindItem to the shared owner-maintained backend path and expose typed UMcpProfile forwarder, retaining item GC ownership. Do not substitute profile group lookup or raw map element pointer.",
+  "native_closure_status": "lookup and installation behavior already captured; no new Ghidra required for these lookup targets",
+  "required_semantic_storage": {
+    "UMcpProfile": "One owned polymorphic backing shared by every read/write path; native backing destructor invoked before replacement; owner flag at native0x92 selects base versus overlay. Exact flag reflected identity needs confirmation before source integration.",
+    "base_backing": "ItemsById: FMcpProfileItemMap, used by NativeInsertProfileItem and every removal/mutation; Groups: FMcpProfileGroupMap maintained by same updates. Native item UObject GC collection must visit ItemObject.",
+    "overlay_backing": "Per-entry overrides keyed by exact case-sensitive ItemId, storing FMcpProfileItemPtr even null override. Base ItemsById remains available; group dirty/cache state must share existing overlay mutation semantics.",
+    "lookup_forwarder": "FMcpProfileItemPtr UMcpProfile::NativeFindProfileItem(const FString& ItemId) const forwarding to active backing virtual; logical name assigned.",
+    "context_consumer": "Keep FMcpProfileItemPtr alive across Cast<UFortAccountItem>(Item->ItemObject); use MainMcpProfile typed UFortMcpProfileCampaign pointer; return null for missing profile or empty item."
+  },
+  "independent_allocator_promotion": {
+    "allowed": false,
+    "reason": "AllocGameplayEffectContext instantiates polymorphic FFortGameplayEffectContext with required NetSerialize override. That override must retain hero InstanceId lookup through real profile backing. Removing hero lookup, inheriting Engine-only serialization, or installing a partial context is not faithful. No dependency on an additional serializediteminfo type is evidenced by this serializer; actual blocker is profile storage/provider integration plus complete damage-source interface emission."
+  }
+}

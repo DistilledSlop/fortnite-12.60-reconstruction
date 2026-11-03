@@ -8,6 +8,8 @@ BLOCKS = {
 
 
 def apply(model, block, owner_fns):
+    if model['name'] == 'AFortVolumeManager':
+        model['cpp_includes'] = sorted(set(model.get('cpp_includes', [])) | {'UFortVolumeAccessor.h'})
     binding = BLOCKS.get(model['name'])
     if binding is None:
         return model

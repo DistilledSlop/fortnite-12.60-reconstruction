@@ -1,0 +1,130 @@
+[
+  {
+    "class_name": "ABuildingGameplayActor",
+    "interface_fn": "0x1428cf820",
+    "interface_block": null,
+    "offset": "0x610",
+    "script": 0,
+    "primary_candidate": null,
+    "gpsc": [
+      "0x14273ecc0"
+    ],
+    "interface_vtable": "0x145de1b88",
+    "get_uobject_target": "0x1418de874",
+    "owned_tags_target": "0x1406801c0",
+    "owned_tags_capture": "porting/generated/callee_probe/stubs/0x1406801c0.c",
+    "owned_tags_semantics": "proven native no-op"
+  },
+  {
+    "class_name": "ABuildingTrap",
+    "interface_fn": "0x1428cf820",
+    "interface_block": null,
+    "offset": "0xb40",
+    "script": 0,
+    "primary_candidate": null,
+    "gpsc": [
+      "0x1427595a0"
+    ],
+    "interface_vtable": "0x145f48200",
+    "get_uobject_target": "0x1419b5e4c",
+    "owned_tags_target": "0x141c384f0",
+    "owned_tags_capture": null,
+    "owned_tags_semantics": "concrete implementation required"
+  },
+  {
+    "class_name": "AFortConstructorBASE",
+    "interface_fn": "0x1428cf820",
+    "interface_block": null,
+    "offset": "0xb98",
+    "script": 0,
+    "primary_candidate": null,
+    "gpsc": [
+      "0x142889170"
+    ],
+    "interface_vtable": "0x14618adb8",
+    "get_uobject_target": "0x141c23334",
+    "owned_tags_target": "0x1406801c0",
+    "owned_tags_capture": "porting/generated/callee_probe/stubs/0x1406801c0.c",
+    "owned_tags_semantics": "proven native no-op"
+  },
+  {
+    "class_name": "UFortGadgetItemDefinition",
+    "interface_fn": "0x1428cf820",
+    "interface_block": null,
+    "offset": "0x738",
+    "script": 0,
+    "primary_candidate": null,
+    "gpsc": [
+      "0x1428e9db0"
+    ],
+    "interface_vtable": "0x146065e90",
+    "get_uobject_target": "0x141d98154",
+    "owned_tags_target": "0x1420080b0",
+    "owned_tags_capture": null,
+    "owned_tags_semantics": "concrete implementation required"
+  },
+  {
+    "class_name": "UFortGameplayAbility",
+    "interface_fn": "0x1428cf820",
+    "interface_block": null,
+    "offset": "0x400",
+    "script": 0,
+    "primary_candidate": "0x146054c20",
+    "gpsc": [
+      "0x1428f53b0"
+    ],
+    "interface_vtable": "0x145d19b38",
+    "get_uobject_target": "0x1409dac34",
+    "owned_tags_target": "0x1406801c0",
+    "owned_tags_capture": "porting/generated/callee_probe/stubs/0x1406801c0.c",
+    "owned_tags_semantics": "proven native no-op"
+  },
+  {
+    "class_name": "AFortUIProxyActor",
+    "interface_fn": "0x1428cf820",
+    "interface_block": null,
+    "offset": "0x220",
+    "script": 0,
+    "primary_candidate": null,
+    "gpsc": [
+      "0x142b26c70"
+    ],
+    "interface_vtable": "0x1461e3258",
+    "owned_tags_target": "0x1406801c0",
+    "owned_tags_capture": "porting/generated/callee_probe/stubs/0x1406801c0.c",
+    "constructor_capture": "porting/generated/native252-ui-proxy/0x1425ddb90.c",
+    "owned_tags_semantics": "proven native no-op"
+  },
+  {
+    "class_name": "AFortWeapon",
+    "interface_fn": "0x1428cf820",
+    "interface_block": null,
+    "offset": "0x228",
+    "script": 0,
+    "primary_candidate": null,
+    "gpsc": [
+      "0x142b43730"
+    ],
+    "interface_vtable": "0x1459ab938",
+    "get_uobject_target": "0x1406968f8",
+    "owned_tags_target": "0x14269ac60",
+    "owned_tags_capture": null,
+    "owned_tags_semantics": "concrete implementation required"
+  },
+  {
+    "class_name": "UFortWorldItem",
+    "interface_fn": "0x1428cf820",
+    "interface_block": null,
+    "offset": "0x88",
+    "script": 0,
+    "primary_candidate": null,
+    "gpsc": [
+      "0x142b5bd80"
+    ],
+    "interface_vtable": "0x14607ab90",
+    "get_uobject_target": "0x1420755ec",
+    "owned_tags_target": "0x1406801c0",
+    "owned_tags_capture": "porting/generated/callee_probe/stubs/0x1406801c0.c",
+    "owned_tags_semantics": "proven native no-op"
+  }
+]

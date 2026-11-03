@@ -20,7 +20,13 @@ public:
 	static float GetValue(FScalableFloat& Input);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static float GetValueAtLevel(FScalableFloat& Input, float Level);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	static bool IsStatic(FScalableFloat& Input);
+
+	UFUNCTION(BlueprintCallable)
+	static void SetValue(FScalableFloat& Input, float NewValue);
 
 };
 

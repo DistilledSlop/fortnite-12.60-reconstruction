@@ -8,6 +8,9 @@
 
 #include "FAthenaCarPlayerSlot.h"
 #include "FAthenaCarPlayerSlotUnreplicated.h"
+#include "GameFramework/Pawn.h"
+
+class AFortPlayerPawn;
 
 #include "UFortVehicleSeatComponent.generated.h"
 
@@ -45,5 +48,12 @@ public:
 	void OnRep_PlayerSlots();
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	virtual bool NativeContainsPlayers163();
+	virtual TArray<APawn*> NativeGetAllPassengers163();
+	AFortPlayerPawn* NativeGetDriverPawn163();
+	AFortPlayerPawn* NativeGetPawnAtSeat163(int32 Seat);
 };
 

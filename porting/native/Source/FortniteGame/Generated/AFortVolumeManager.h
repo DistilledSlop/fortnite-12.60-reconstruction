@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Info.h"
 
+#include "Components/StaticMeshComponent.h"
 #include "Engine/Engine.h"
 #include "Engine/World.h"
 #include "FFortVolumeActiveUsers.h"
@@ -14,6 +15,8 @@
 #include "FOnClientVolumeRestrictionStateChanged.h"
 #include "FOnVolumeStateChanged.h"
 #include "FVolumePlayerStateInfo.h"
+#include "GameFramework/Info.h"
+#include "GameFramework/Pawn.h"
 #include "GameFramework/PlayerState.h"
 #include "Math/BoxSphereBounds.h"
 #include "Math/Vector.h"
@@ -122,5 +125,6 @@ public:
 	static AFortVolumeManager* NativeResolveVolumeManager(UObject* Context);
 	AFortVolume* NativeFindPlayerVolume(APlayerState* PlayerState) const;
 	AFortVolume* NativeFindPlayerVolumeInActiveUsers(APlayerState* PlayerState) const;
+	AFortVolume* NativeFindActorVolume(AActor* Actor);
 };
 
