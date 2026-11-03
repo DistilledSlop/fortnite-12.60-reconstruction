@@ -1,0 +1,33 @@
+// Merge into the complete recovered FFortAssets owner. This file does not
+// define a second singleton or register an incomplete replacement owner.
+// TrackAsset/ReleaseAsset are assigned integration names, not recovered symbols.
+void FFortAssets::TrackAsset(UObject* Object)
+{
+    FScopeLock Lock(&CriticalSection);
+    if (!bStartupWindowClosedForAlwaysLoadedAssets)
+    {
+        AlwaysLoadedAssets.Add(Object);
+    }
+    else if (!AlwaysLoadedAssets.Contains(Object))
+    {
+        PostStartupAssets.Add(Object);
+    }
+}
+
+// 0x141e0de80 -> 0x140742690: the removal itself is deliberately unlocked.
+// Caller 0x141da4450 skips null elements before invoking this helper.
+int32 FFortAssets::ReleaseAsset(UObject* Object)
+{
+    return Get().PostStartupAssets.Remove(Object);
+}
+
+// 0x141de9e80: original lock ends before the named references are visited.
+void FFortAssets::AddReferencedObjects(FReferenceCollector& Collector)
+{
+    {
+        FScopeLock Lock(&CriticalSection);
+        Collector.AddReferencedObjects(AlwaysLoadedAssets);
+        Collector.AddReferencedObjects(PostStartupAssets);
+    }
+    Collector.AddReferencedObjects(TemporaryReferences);
+}

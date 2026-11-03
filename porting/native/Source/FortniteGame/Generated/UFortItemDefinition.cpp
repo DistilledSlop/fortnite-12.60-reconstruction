@@ -9,3 +9,147 @@ bool UFortItemDefinition::IsInventorySizeLimited() const
 	return bInventorySizeLimited;
 }
 
+FString UFortItemDefinition::NativeGetProfileKey() const
+{
+	// CONFIDENCE: HIGH
+	// Original 0x142030d00; assigned native helper name.
+	static const TCHAR* const TypeNames[] =
+	{
+		TEXT("WorldItem"), // 0
+		TEXT("Ammo"), // 1
+		TEXT("Badge"), // 2
+		TEXT("BackpackPickup"), // 3
+		TEXT("BuildingPiece"), // 4
+		TEXT("CharacterPart"), // 5
+		TEXT("Consumable"), // 6
+		TEXT("Deco"), // 7
+		TEXT("EditTool"), // 8
+		TEXT("Ingredient"), // 9
+		TEXT("ItemCache"), // 10
+		TEXT("Food"), // 11
+		TEXT("Gadget"), // 12
+		TEXT("AthenaGadget"), // 13
+		TEXT("HomebaseGadget"), // 14
+		TEXT("BattleLabDevice"), // 15
+		TEXT("SpyTechPerk"), // 16
+		TEXT("HeroAbility"), // 17
+		TEXT("MissionItem"), // 18
+		TEXT("Trap"), // 19
+		TEXT("Weapon"), // 20
+		TEXT("WeaponMelee"), // 21
+		TEXT("WeaponRanged"), // 22
+		TEXT("WeaponHarvest"), // 23
+		TEXT("WeaponCreativePhone"), // 24
+		TEXT("WorldResource"), // 25
+		TEXT("CreativeUserPrefab"), // 26
+		TEXT("CreativePlayset"), // 27
+		TEXT("Vehicle"), // 28
+		TEXT("AccountItem"), // 29
+		TEXT("AccountResource"), // 30
+		TEXT("CollectedResource"), // 31
+		TEXT("Alteration"), // 32
+		TEXT("CardPack"), // 33
+		TEXT("Currency"), // 34
+		TEXT("Hero"), // 35
+		TEXT("Schematic"), // 36
+		TEXT("Worker"), // 37
+		TEXT("TeamPerk"), // 38
+		TEXT("PlayerTech"), // 39
+		TEXT("Token"), // 40
+		TEXT("DailyRewardScheduleToken"), // 41
+		TEXT("CodeToken"), // 42
+		TEXT("Stat"), // 43
+		TEXT("Buff"), // 44
+		TEXT("BuffCredit"), // 45
+		TEXT("Quest"), // 46
+		TEXT("Accolades"), // 47
+		TEXT("MedalsPunchCard"), // 48
+		TEXT("ChallengeBundle"), // 49
+		TEXT("ChallengeBundleSchedule"), // 50
+		TEXT("ChallengeBundleCompletionToken"), // 51
+		TEXT("GameplayModifier"), // 52
+		TEXT("Outpost"), // 53
+		TEXT("HomebaseNode"), // 54
+		TEXT("Defender"), // 55
+		TEXT("ConversionControl"), // 56
+		TEXT("DeployableBaseCloudSave"), // 57
+		TEXT("ConsumableAccountItem"), // 58
+		TEXT("Quota"), // 59
+		TEXT("Expedition"), // 60
+		TEXT("HomebaseBannerIcon"), // 61
+		TEXT("HomebaseBannerColor"), // 62
+		TEXT("AthenaSkyDiveContrail"), // 63
+		TEXT("PersonalVehicle"), // 64
+		TEXT("AthenaGlider"), // 65
+		TEXT("AthenaPickaxe"), // 66
+		TEXT("AthenaHat"), // 67
+		TEXT("AthenaBackpack"), // 68
+		TEXT("AthenaCharacter"), // 69
+		TEXT("AthenaDance"), // 70
+		TEXT("AthenaConsumableEmote"), // 71
+		TEXT("AthenaLoadingScreen"), // 72
+		TEXT("AthenaBattleBus"), // 73
+		TEXT("AthenaVehicleCosmetic"), // 74
+		TEXT("AthenaItemWrap"), // 75
+		TEXT("AthenaCallingCard"), // 76
+		TEXT("AthenaMapMarker"), // 77
+		TEXT("AthenaMusicPack"), // 78
+		TEXT("AthenaPetCosmetic"), // 79
+		TEXT("AthenaCharmCosmetic"), // 80
+		TEXT("AthenaVictoryPose"), // 81
+		TEXT("AthenaSeasonTreasure"), // 82
+		TEXT("AthenaSeason"), // 83
+		TEXT("AthenaRewardGraph"), // 84
+		TEXT("EventDescription"), // 85
+		TEXT("BattleLabDeviceAccount"), // 86
+		TEXT("MatchAward"), // 87
+		TEXT("WorldItem"), // 88
+		TEXT("EventPurchaseTracker"), // 89
+		TEXT("CosmeticVariantToken"), // 90
+		TEXT("CampaignHeroLoadout"), // 91
+		TEXT("Playset"), // 92
+		TEXT("PrerollData"), // 93
+		TEXT("CreativePlot"), // 94
+		TEXT("PlayerSurveyToken"), // 95
+		TEXT("CosmeticLocker"), // 96
+		TEXT("BannerToken"), // 97
+		TEXT("RestedXpBoosterToken"), // 98
+		TEXT("RewardEventGraphPurchaseToken"), // 99
+		TEXT("HardcoreModifier"), // 100
+		TEXT("EventDependentItem"), // 101
+		TEXT("SpecialItem"), // 102
+		TEXT("Emote"), // 103
+		TEXT("Stack"), // 104
+		TEXT("CollectionBookPage"), // 105
+		TEXT("BGAConsumableWrapper"), // 106
+		TEXT("GiftBox"), // 107
+		TEXT("GiftBoxUnlock"), // 108
+		TEXT("PlaysetProp"), // 109
+		TEXT("WorldItem"), // 110
+		TEXT("Profile"), // 111
+	};
+
+	uint8 Type = static_cast<uint8>(ItemType);
+	switch (Type)
+	{
+	case 2: case 3: case 10: case 18: case 25: Type = 0; break;
+	case 4: case 8: case 21: case 22: case 23: case 24: Type = 20; break;
+	case 14: case 17: Type = 12; break;
+	case 104: Type = 112; break;
+	default: break;
+	}
+	if (Type == 112)
+	{
+	    return FString();
+	}
+	FString Result = Type < UE_ARRAY_COUNT(TypeNames) ? TypeNames[Type] : TEXT("");
+	Result += TEXT(":");
+	FString Name = GetFName().ToString();
+	if (Type != 34)
+	{
+	    Name.ToLowerInline();
+	}
+	Result += Name;
+	return Result;
+}
+

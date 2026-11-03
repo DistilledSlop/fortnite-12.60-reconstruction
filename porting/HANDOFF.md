@@ -1,5 +1,40 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Native source batch 25 (2026-11-03)
+
+Canonical source: 1,837 function bodies + 164 supporting fields = 2,001 ported
+entries. Added UFortItemDefinition's typed virtual NativeGetProfileKey (assigned
+name): complete enum remapping, exact 112-entry prefix table, colon separator,
+FName conversion and lowercase rule with Currency exception. Root reviewed
+original branch/table decoding and source, then pinned source/proposal hashes.
+Base and WorldItemDefinition constructor tables select this implementation;
+other derived overrides remain separate work and virtual dispatch is retained.
+
+Evidence extraction gate passed; promotion accepts 2,001 with zero rejections,
+changes two Native files and restores 12,801 unchanged mtimes. Receipts:
+`porting/generated/gameplay-bulk-integration-25/`. No builds/tests/runtime runs.
+Last tested 1,040; 797 bodies pending; next checkpoint 2,040 (203 more bodies).
+
+Tracker collection +150 is now proven TMap<UObject*, FName>, resolving the old
+opaque-payload blocker. Root recovered the unlocked post-startup set removal
+and its array-clearing caller; a separate locked clear occurs inside the
+asset-manager ChangeGameSubMode transition. Source proposals and exact byte
+receipts are in fort_assets_release_runtime. Full owner still needs diagnostic
+maps and callback integration, not a replacement permanent root.
+
+Loading predicate work identifies engine IsInitialized by header order, startup
+phase and DemoNetDriver checkpoint flag, plus shared loading-screen shown state
+and its show/hide writers. Full native loading-screen owner remains incomplete.
+Profile backing is UMcpProfile +d8; GC traverses entries and their UObject+88,
+but concrete backing installation/lookup/lifetime remains unresolved. Detailed
+finite handoffs in asset_loading_predicate_runtime and profile_backing_dispatch_runtime.
+All workers finished; start fresh bounded Terra medium tasks for new work.
+
+Root owns canonical manifest/generator/Native, workers own proposal dirs only.
+Keep economical reads, no tiny getter scans, no testing before 2,040 bodies,
+frequent specific commits/pushes and manual dashboard publication. Preserve
+unrelated porting/graphics. All four product gates and full parity remain open.
+
 ## Native source batch 24 (2026-11-03)
 
 Canonical source: 1,836 function bodies + 164 supporting fields = 2,000 ported

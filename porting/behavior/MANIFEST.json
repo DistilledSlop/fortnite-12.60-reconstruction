@@ -32556,5 +32556,18 @@
     "confidence": "high",
     "status": "ported",
     "notes": "WorldItem vtable slot 0x378 returns ItemEntry.LoadedAmmo; required by GetRemainingAmmo. See world_item_ammo_runtime/HANDOFF.md."
+  },
+  {
+    "class": "UFortItemDefinition",
+    "function": "NativeGetProfileKey",
+    "kind": "helper",
+    "signature": "FString NativeGetProfileKey() const",
+    "signature_status": "verified",
+    "access": "public",
+    "inc_path": "porting/behavior/item_definition_key_runtime/UFortItemDefinition_NativeGetProfileKey.inc",
+    "address": "0x142030d00",
+    "confidence": "high",
+    "status": "ported",
+    "virtual": true
   }
 ]
