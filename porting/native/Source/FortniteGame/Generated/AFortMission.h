@@ -243,6 +243,9 @@ public:
 	virtual void AddOrRemoveTimerTime_Implementation(float TimeToAdd);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	TSubclassOf<AFortClientAnnouncement_Basic> GetAnnouncementClassOverride() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetCurrentFocusPercentage() const;
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, BlueprintPure)

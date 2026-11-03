@@ -111,6 +111,11 @@ protected:
 	float GetOverheatingMaxValue() const;
 public:
 
+protected:
+	UFUNCTION(BlueprintCallable)
+	float GetOverheatScaler();
+public:
+
 	UFUNCTION()
 	void OnRep_OverheatValueRepped();
 

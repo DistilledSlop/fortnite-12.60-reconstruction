@@ -18,6 +18,12 @@ void AFortMission::AddOrRemoveTimerTime_Implementation(float TimeToAdd)
 	// The original target has no observable effects.
 }
 
+TSubclassOf<AFortClientAnnouncement_Basic> AFortMission::GetAnnouncementClassOverride() const
+{
+	// Native 0x1420b6e20. CONFIDENCE: high
+	return AnnouncementClassOverride;
+}
+
 float AFortMission::GetCurrentFocusPercentage() const
 {
 	// Exact original embedded struct scalar leaf; see README.md.

@@ -24,5 +24,8 @@ public:
 	UPROPERTY()
 	float Opacity;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FGameplayTag GetVisualType() const;
+
 };
 

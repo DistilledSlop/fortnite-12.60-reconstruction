@@ -992,6 +992,9 @@ public:
 	bool ServerTeleportNearLocation_Validate(const FVector& ActorLocation);
 
 	UFUNCTION(BlueprintCallable)
+	void SetControlRecoveryBehavior(EFortControlRecoveryBehavior NewBehavior);
+
+	UFUNCTION(BlueprintCallable)
 	virtual void SetSpawnSpot(AActor* InSpawnSpot);
 
 	UFUNCTION(BlueprintCallable)

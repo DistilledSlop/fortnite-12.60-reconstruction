@@ -1,0 +1,85 @@
+{
+  "entries": [
+    {
+      "class": "UFortClientSettingsRecord",
+      "function": "SetAllowAudioInBackgroundSetting",
+      "wrapper": "porting/generated/native210-fresh-bulk/0x14287ea10.c",
+      "native": "porting/generated/native213-fresh-callees/0x141e3a2a0.c",
+      "note": "Complete stores/conditional dirty changes; gamepad struct nested offsets map Basic+0 and Advanced+0x10, native dirty byte at0x13c. Color renderer virtual maps public SlateRenderer.SetColorVisionDeficiencyType."
+    },
+    {
+      "class": "UFortClientSettingsRecord",
+      "function": "SetLicensedAudioTreatment",
+      "wrapper": "porting/generated/native210-fresh-bulk/0x142881190.c",
+      "native": "porting/generated/native213-fresh-callees/0x141e3be80.c",
+      "note": "Complete stores/conditional dirty changes; gamepad struct nested offsets map Basic+0 and Advanced+0x10, native dirty byte at0x13c. Color renderer virtual maps public SlateRenderer.SetColorVisionDeficiencyType."
+    },
+    {
+      "class": "UFortClientSettingsRecord",
+      "function": "SetLookInputCurve",
+      "wrapper": "porting/generated/native210-fresh-bulk/0x1428817b0.c",
+      "native": "porting/generated/native213-fresh-callees/0x141e3bf70.c",
+      "note": "Complete stores/conditional dirty changes; gamepad struct nested offsets map Basic+0 and Advanced+0x10, native dirty byte at0x13c. Color renderer virtual maps public SlateRenderer.SetColorVisionDeficiencyType."
+    },
+    {
+      "class": "UFortClientSettingsRecord",
+      "function": "SetLookSensitivityPreset",
+      "wrapper": "porting/generated/native210-fresh-bulk/0x142881830.c",
+      "native": "porting/generated/native213-fresh-callees/0x141e3bf80.c",
+      "note": "Complete stores/conditional dirty changes; gamepad struct nested offsets map Basic+0 and Advanced+0x10, native dirty byte at0x13c. Color renderer virtual maps public SlateRenderer.SetColorVisionDeficiencyType."
+    },
+    {
+      "class": "UFortClientSettingsRecord",
+      "function": "SetLookSensitivityPresetAds",
+      "wrapper": "porting/generated/native210-fresh-bulk/0x1428818b0.c",
+      "native": "porting/generated/native213-fresh-callees/0x141e3bf90.c",
+      "note": "Complete stores/conditional dirty changes; gamepad struct nested offsets map Basic+0 and Advanced+0x10, native dirty byte at0x13c. Color renderer virtual maps public SlateRenderer.SetColorVisionDeficiencyType."
+    },
+    {
+      "class": "AFortGameStateZone",
+      "function": "SetZoneCompletionResult",
+      "wrapper": "porting/generated/native210-fresh-bulk/0x14292d540.c",
+      "native": "porting/generated/native213-fresh-callees/0x141eb1690.c",
+      "note": "Complete stores/conditional dirty changes; gamepad struct nested offsets map Basic+0 and Advanced+0x10, native dirty byte at0x13c. Color renderer virtual maps public SlateRenderer.SetColorVisionDeficiencyType."
+    },
+    {
+      "class": "AFortPawn",
+      "function": "SetControlRecoveryBehavior",
+      "wrapper": "porting/generated/native210-fresh-bulk/0x142a1f950.c",
+      "native": "porting/generated/callee_probe/blocking/0x14234beb0.c",
+      "note": "Complete stores/conditional dirty changes; gamepad struct nested offsets map Basic+0 and Advanced+0x10, native dirty byte at0x13c. Color renderer virtual maps public SlateRenderer.SetColorVisionDeficiencyType."
+    },
+    {
+      "class": "UFortQuestManager",
+      "function": "SetQuestMapMode",
+      "wrapper": "porting/generated/native210-fresh-bulk/0x142aba900.c",
+      "native": "porting/generated/native213-fresh-callees/0x14244fb30.c",
+      "note": "Complete stores/conditional dirty changes; gamepad struct nested offsets map Basic+0 and Advanced+0x10, native dirty byte at0x13c. Color renderer virtual maps public SlateRenderer.SetColorVisionDeficiencyType."
+    },
+    {
+      "class": "UFortClientSettingsRecord",
+      "function": "SetColorBlindMode",
+      "wrapper": "porting/generated/native210-fresh-bulk/0x14287f900.c",
+      "native": "porting/generated/native213-fresh-callees/0x141e3aaa0.c",
+      "note": "Complete stores/conditional dirty changes; gamepad struct nested offsets map Basic+0 and Advanced+0x10, native dirty byte at0x13c. Color renderer virtual maps public SlateRenderer.SetColorVisionDeficiencyType."
+    }
+  ],
+  "bool_layout": {
+    "bDirty": {
+      "offset": "0x87e",
+      "mask": 1
+    },
+    "bAllowAudioInBackground": {
+      "offset": "0x638",
+      "mask": 1
+    }
+  },
+  "gamepad_layout": {
+    "LocalGamepadUserOptions": "0xf0",
+    "Basic.LookSensitivityPreset": 0,
+    "Basic.LookSensitivityPresetAds": 1,
+    "Advanced": "0x10",
+    "Advanced.LookInputCurve": "0x30",
+    "native_dirty": "0x13c"
+  }
+}

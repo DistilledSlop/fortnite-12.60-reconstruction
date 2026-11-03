@@ -379,6 +379,16 @@ public:
 	void ServerSetMuzzleTraceNearWall(bool bIsNearWall);
 	void ServerSetMuzzleTraceNearWall_Implementation(bool bIsNearWall);
 
+protected:
+	UFUNCTION(BlueprintCallable)
+	void SetDecalColorEnd(FLinearColor InputDecalColorEnd);
+public:
+
+protected:
+	UFUNCTION(BlueprintCallable)
+	void SetDecalColorStart(FLinearColor InputDecalColorStart);
+public:
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool ShouldDisplayAmmoCounter() const;
 

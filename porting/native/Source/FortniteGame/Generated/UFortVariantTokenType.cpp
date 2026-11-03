@@ -15,3 +15,9 @@ FGameplayTag UFortVariantTokenType::GetVariantChannelTag() const
 	return VariantChanelTag;
 }
 
+FGameplayTag UFortVariantTokenType::GetVariantNameTag() const
+{
+	// Native 0x142013490. CONFIDENCE: high
+	return VariantNameTag;
+}
+

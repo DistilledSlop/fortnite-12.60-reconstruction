@@ -55,5 +55,10 @@ protected:
 	float GetCurrentValuePercentage() const;
 public:
 
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetLastValuePercentage() const;
+public:
+
 };
 

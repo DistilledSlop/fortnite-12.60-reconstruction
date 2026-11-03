@@ -586,6 +586,12 @@ bool AFortPawn::ServerTeleportNearLocation_Validate(const FVector& ActorLocation
 	return true;
 }
 
+void AFortPawn::SetControlRecoveryBehavior(EFortControlRecoveryBehavior NewBehavior)
+{
+	// Native 0x14234beb0. CONFIDENCE: high
+	ControlRecoveryBehavior = NewBehavior;
+}
+
 void AFortPawn::SetSpawnSpot(AActor* InSpawnSpot)
 {
 	// CONFIDENCE: high. Native target 0x14234efc0.

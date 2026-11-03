@@ -8,6 +8,12 @@ FText UFortPCBInfoPanel::GetPCBDescription() const
 	return PCB_Description;
 }
 
+FText UFortPCBInfoPanel::GetPCBHeader() const
+{
+	// Native 0x144e72490. CONFIDENCE: high
+	return PCB_Header;
+}
+
 bool UFortPCBInfoPanel::ShouldDisplayPCBData() const
 {
 	// Original address: 0x1452a0bc0.

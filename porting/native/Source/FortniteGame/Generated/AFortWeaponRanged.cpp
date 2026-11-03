@@ -82,6 +82,18 @@ void AFortWeaponRanged::ServerSetMuzzleTraceNearWall_Implementation(bool bIsNear
 	// Body not recovered: reflection-derived stub.
 }
 
+void AFortWeaponRanged::SetDecalColorEnd(FLinearColor InputDecalColorEnd)
+{
+	// Native 0x142b4ffd0. CONFIDENCE: high
+	DecalColorEnd = InputDecalColorEnd;
+}
+
+void AFortWeaponRanged::SetDecalColorStart(FLinearColor InputDecalColorStart)
+{
+	// Native 0x142b50040. CONFIDENCE: high
+	DecalColorStart = InputDecalColorStart;
+}
+
 bool AFortWeaponRanged::ShouldDisplayAmmoCounter() const
 {
 	// Original address: 0x142b501b0.

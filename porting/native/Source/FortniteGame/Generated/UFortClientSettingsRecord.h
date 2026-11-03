@@ -12,6 +12,8 @@
 #include "EFortAllowBackgroundAudioSetting.h"
 #include "EFortAutoMulchCategory.h"
 #include "EFortAutoMulchMode.h"
+#include "EFortGamepadLookInputCurve.h"
+#include "EFortGamepadSensitivity.h"
 #include "EFortInventoryCustomFilter.h"
 #include "EFortMotionYawAxis.h"
 #include "EFortRarity.h"
@@ -41,6 +43,9 @@ public:
 	// table index 274, flags 0x10000000002000
 	UPROPERTY(Transient)
 	FFortGamepadUserOptions LocalGamepadUserOptions;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x13c): not a UPROPERTY, not replicated.
+	bool bNativeGamepadOptionsDirty;
 
 	// table index 273, flags 0x20080000000000
 	UPROPERTY()
@@ -1253,7 +1258,13 @@ public:
 	bool IsUsingHoldToSwapPickup() const;
 
 	UFUNCTION()
+	void SetAllowAudioInBackgroundSetting(EFortAllowBackgroundAudioSetting Value);
+
+	UFUNCTION()
 	void SetAllowFriendSubscriptionNudges(bool bAllow);
+
+	UFUNCTION()
+	void SetColorBlindMode(EColorBlindMode InMode);
 
 	UFUNCTION()
 	void SetGamepadBuildingMultiplier(float InMultiplier);
@@ -1283,7 +1294,19 @@ public:
 	void SetInvertedYawForMotion(bool bInvert);
 
 	UFUNCTION()
+	void SetLicensedAudioTreatment(ELicensedAudioTreatment InLicensedAudioTreatment);
+
+	UFUNCTION()
 	void SetLocalNotificationsEnabled(bool bEnabled);
+
+	UFUNCTION()
+	void SetLookInputCurve(EFortGamepadLookInputCurve NewValue);
+
+	UFUNCTION()
+	void SetLookSensitivityPreset(EFortGamepadSensitivity NewPreset);
+
+	UFUNCTION()
+	void SetLookSensitivityPresetAds(EFortGamepadSensitivity NewPreset);
 
 	UFUNCTION()
 	void SetMotionHarvestingToolMultiplier(float InMultiplier);

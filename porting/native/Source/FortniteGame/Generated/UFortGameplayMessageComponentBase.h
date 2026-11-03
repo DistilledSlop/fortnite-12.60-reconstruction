@@ -48,6 +48,9 @@ public:
 	TSubclassOf<UUserWidget> EditWidget;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FText GetDisabledReason() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsChannelIdSet() const;
 
 	UFUNCTION()

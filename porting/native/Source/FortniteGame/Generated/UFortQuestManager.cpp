@@ -56,6 +56,12 @@ void UFortQuestManager::InitializeQuestAbilities(APawn* PlayerPawn)
 	// CONFIDENCE: HIGH
 }
 
+void UFortQuestManager::SetQuestMapMode(EQuestMapScreenMode NewQuestMapMode)
+{
+	// Native 0x14244fb30. CONFIDENCE: high
+	QuestMapMode = NewQuestMapMode;
+}
+
 bool UFortQuestManager::NativeShouldDisplayObjectiveStatus(const UFortQuestObjectiveInfo* Objective, const FFortMcpQuestObjectiveInfo* DefinitionObjective, const UFortQuestItem* Quest)
 {
 	// CONFIDENCE: high; complete native source binding; see HANDOFF.md.

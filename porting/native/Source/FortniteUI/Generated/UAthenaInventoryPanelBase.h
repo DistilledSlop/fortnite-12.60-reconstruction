@@ -17,6 +17,7 @@ class UFortItemTileView;
 class UFortTabListWidgetBase;
 class UPanelWidget;
 class UScaleBox;
+class UUserWidget;
 
 #include "UAthenaInventoryPanelBase.generated.h"
 
@@ -104,6 +105,16 @@ public:
 	// table index 0, flags 0x40000000082008
 	UPROPERTY(Transient)
 	UFortCreativeItemListMenu* CreativeInventoryWidget;
+
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UUserWidget* GetCreativeInventoryWidget();
+public:
+
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UUserWidget* GetMyIslandWidget();
+public:
 
 protected:
 	UFUNCTION(BlueprintCallable)

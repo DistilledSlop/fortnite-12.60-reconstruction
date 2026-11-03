@@ -30,6 +30,9 @@ public:
 	FText GetPCBDescription() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FText GetPCBHeader() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool ShouldDisplayPCBData() const;
 
 };

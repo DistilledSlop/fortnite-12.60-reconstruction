@@ -58,5 +58,8 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	FGameplayTag GetVariantChannelTag() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FGameplayTag GetVariantNameTag() const;
+
 };
 

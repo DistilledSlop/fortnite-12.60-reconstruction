@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "UFortPlayerSurveyAnswerWidgetBase.h"
 
+#include "UFortPlayerSurveyQuestionMultipleSelection.h"
+
 #include "UFortPlayerSurveyMultipleSelectionAnswerWidgetBase.generated.h"
 
 UCLASS(abstract)
@@ -14,5 +16,10 @@ class FORTNITEUI_API UFortPlayerSurveyMultipleSelectionAnswerWidgetBase : public
 	GENERATED_BODY()
 
 public:
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortPlayerSurveyQuestionMultipleSelection* GetCurrentQuestion() const;
+public:
+
 };
 

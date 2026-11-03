@@ -30,6 +30,9 @@ public:
 	UPROPERTY(Transient)
 	TArray<TWeakObjectPtr<UFortUIMessageItemWidget>> CurrentlyDisplayedMessages;
 
+	UFUNCTION(BlueprintCallable)
+	UFortUIMessageItemWidget* GetNextMessageInQueue();
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetNumDisplayedItems() const;
 

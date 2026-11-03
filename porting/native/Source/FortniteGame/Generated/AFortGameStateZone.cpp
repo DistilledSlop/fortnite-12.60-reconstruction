@@ -344,6 +344,12 @@ void AFortGameStateZone::SetWorldLootLevel(int32 NewLootLevel)
 	// CONFIDENCE: HIGH
 }
 
+void AFortGameStateZone::SetZoneCompletionResult(EFortCompletionResult NewCompletionResult)
+{
+	// Native 0x141eb1690. CONFIDENCE: high
+	CompletionResult = NewCompletionResult;
+}
+
 void AFortGameStateZone::NativeGetLoadAnalyticsValues(int32& NumberPlayers, float& Difficulty, FString& ZoneName, FString& MissionName) const
 {
 	// CONFIDENCE: HIGH

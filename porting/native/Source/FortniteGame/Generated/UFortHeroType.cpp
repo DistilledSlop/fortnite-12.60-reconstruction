@@ -9,3 +9,9 @@ UFortHeroGameplayDefinition* UFortHeroType::GetHeroGameplayDefinition()
 	return HeroGameplayDefinition;
 }
 
+FText UFortHeroType::GetSubType() const
+{
+	// Native 0x14251a680. CONFIDENCE: high
+	return SubType;
+}
+

@@ -7,6 +7,12 @@ void UFortPortalHUDDetails::ClearCachedWorldPos()
 	NativeRecoveredByte_0x2e0 = 0;
 }
 
+UFortInteractContextInfo* UFortPortalHUDDetails::GetActiveContextInfo()
+{
+	// CONFIDENCE: high; Callee reads +0x2d0, already recovered as NativeRecoveredActiveContextInfo_0x2d0 in canonical manifest.
+	return NativeRecoveredActiveContextInfo_0x2d0;
+}
+
 void UFortPortalHUDDetails::SetActiveContextInfo(UFortInteractContextInfo* ActiveContextInfo)
 {
 	// CONFIDENCE: high; exact native store and storage mapping verified.

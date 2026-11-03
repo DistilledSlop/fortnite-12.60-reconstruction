@@ -84,6 +84,9 @@ public:
 	UFortInventoryContext* InventoryContext;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortItem* GetItemToDetail() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool GetShouldShowCollectionBookIndicator() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

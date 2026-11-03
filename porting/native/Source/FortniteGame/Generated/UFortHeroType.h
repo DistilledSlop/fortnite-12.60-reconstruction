@@ -116,5 +116,8 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UFortHeroGameplayDefinition* GetHeroGameplayDefinition();
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FText GetSubType() const;
+
 };
 

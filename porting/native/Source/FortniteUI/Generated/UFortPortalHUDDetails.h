@@ -39,6 +39,11 @@ protected:
 public:
 
 protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortInteractContextInfo* GetActiveContextInfo();
+public:
+
+protected:
 	UFUNCTION(BlueprintCallable)
 	void SetActiveContextInfo(UFortInteractContextInfo* ActiveContextInfo);
 public:

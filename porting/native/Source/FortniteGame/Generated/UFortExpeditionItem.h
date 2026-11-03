@@ -58,6 +58,9 @@ public:
 	float expedition_success_chance;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FName GetExpeditionSquadId() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetExpeditionSuccessChance() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

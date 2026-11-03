@@ -2,6 +2,12 @@
 #include "UFortGameplayMessageComponentBase.h"
 #include "Net/UnrealNetwork.h"
 
+FText UFortGameplayMessageComponentBase::GetDisabledReason() const
+{
+	// Native 0x141d7d4f0. CONFIDENCE: high
+	return NSLOCTEXT("GameplayMessageComponentBase", "DisabledReasonUnknown", "Disabled for Unknown Reason.");
+}
+
 bool UFortGameplayMessageComponentBase::IsChannelIdSet() const
 {
 	// Native body 0x141d88800. CONFIDENCE: high
