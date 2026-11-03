@@ -14,7 +14,7 @@ Usage: python3 -I niagara_probe.py <work-dir> [--jobs 16] [--timeout 300]
            [--skip-closure] [--skip-probe] [--no-promote] [--limit N]
 Never touches porting/native or the original staged build.
 """
-import argparse, collections, json, os, re, shutil, subprocess, sys
+import resource, argparse, collections, json, os, re, shutil, subprocess, sys
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
@@ -120,7 +120,7 @@ def run_probe(work, pkg, timeout):
         r = subprocess.run(
             ["./FortniteLinux.sh", "-nullrhi", "-nosound", "-unattended",
              f"-FortniteProbeAsset={probe_path(pkg)}", "-ExecCmds=Quit", f"-abslog={log}", *EXTRA_PROBE_ARGS],
-            cwd=work / "stage", stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+            cwd=work / "stage", preexec_fn=lambda: resource.setrlimit(resource.RLIMIT_CORE, (0, 0)), stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
             timeout=timeout)
         rc = r.returncode
     except subprocess.TimeoutExpired:
