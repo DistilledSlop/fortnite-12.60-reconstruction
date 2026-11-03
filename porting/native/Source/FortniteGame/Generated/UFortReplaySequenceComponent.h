@@ -33,5 +33,8 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetCurrentShotIndex() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetNumberOfShotsInSequence() const;
+
 };
 

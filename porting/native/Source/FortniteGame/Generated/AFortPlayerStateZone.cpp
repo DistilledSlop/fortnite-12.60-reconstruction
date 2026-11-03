@@ -2,6 +2,13 @@
 #include "AFortPlayerStateZone.h"
 #include "Net/UnrealNetwork.h"
 
+int32 AFortPlayerStateZone::GetSpectatorCount()
+{
+	// Exact original embedded struct array count leaf; see README.md.
+	// CONFIDENCE: HIGH
+	return Spectators.SpectatorArray.Num();
+}
+
 void AFortPlayerStateZone::MulticastTriggerOnGadgetTrackedAttributeDestroyedFX_Implementation(UFortGadgetItemDefinition* GadgetItemDefinition)
 {
 	// Body not recovered: reflection-derived stub.

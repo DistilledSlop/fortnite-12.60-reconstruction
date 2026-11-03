@@ -260,5 +260,8 @@ public:
 	UPROPERTY()
 	uint8 NumberOfSlotsToTake;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual float GetMaxDurability(int32 ItemLevel) const;
+
 };
 

@@ -118,6 +118,18 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void SetHomingLaserTargetDistance(float NewDistance);
 
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void SetHomingLockTargetDistanceThreshold(float NewDistanceThreshold);
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void SetHomingTimeUntilMaxTurnSpeed(float NewTimeUntilMax);
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void SetHomingTurnSpeedMax(float NewHomingTurnSpeedMax);
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void SetHomingTurnSpeedMin(float NewHomingTurnSpeedMin);
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

@@ -9,3 +9,10 @@ int32 UFortReplaySequenceComponent::GetCurrentShotIndex() const
 	return CurrentShotIdx;
 }
 
+int32 UFortReplaySequenceComponent::GetNumberOfShotsInSequence() const
+{
+	// Exact original embedded struct array count leaf; see README.md.
+	// CONFIDENCE: HIGH
+	return SequenceShots.Shots.Num();
+}
+

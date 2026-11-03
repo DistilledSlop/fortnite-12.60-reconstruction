@@ -1,5 +1,43 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Native source batch 23 (2026-11-03)
+
+Canonical source: 1,827 function bodies + 163 supporting fields = 1,990 ported
+entries. Added WorldItem normalized durability and definition GetMaxDurability,
+four projectile HomingData float setters, and embedded-array spectator/sequence
+shot counts. Normalized durability now uses typed virtual GetMaxDurability;
+all three original native WorldItem classes share the same read-only intervening
+virtual implementations, closing the original saved-vptr concern for that set.
+Explicit NaN/negative handling preserves original signed-zero/clamp results;
+IEEE division/comparisons are required. Current Linux toolchain has no fast-math
+switch in LinuxToolChain; Windows MSVC defaults /fp:fast, so future Windows
+validation must preserve these semantics. Derived definition overrides remain
+unrecovered; virtual dispatch is retained rather than forcing base 1.0.
+
+Promotion `/tmp/promote-native-batch23.py` accepts 1,990 with zero rejections;
+10 Native files changed, 12,793 unchanged mtimes restored. Receipts:
+`porting/generated/gameplay-bulk-integration-23/`. No tests/builds/runtime runs.
+Last tested 1,040, 787 bodies pending; next checkpoint 2,040 (213 more).
+The same-class direct-leaf alias inventory found zero matches among 1,704
+eligible wrappers; no credit. Do not repeat exhausted small getter scans.
+
+USER STRATEGY STEERING: user asked whether easy native bulk is exhausted or too
+much time spent on these. Root acknowledged recent 24k-entry scans yield only
+0–6 functions each, stopped tiny getter expansion, and shifted to connected
+inventory behavior. Three fresh Terra medium finite tasks now own:
+world_item_ammo_runtime (GetRemainingAmmo complete branch integration),
+inventory_owner_ammo_runtime (IFortInventoryOwnerInterface60/a0 dispatch), and
+item_ammo_definition_runtime (definition4e8 ammo source/soft load/overrides).
+They coordinate serial Ghidra, main ammo worker schedules order. Root owns
+WorldItem4a0/460 owner fields and world->controller fallback14463f780 proof,
+plus all canonical/Native/promotion. Keep tasks bounded, rotate when finished.
+No inference of LoadedAmmo as remainingammo or omitted inventory/owner effects.
+
+Source batch22 committed5639fa90; dashboard currente1b5e140. Commit/push this
+batch and publish. All product gates remain open; source coverage is not parity.
+Preserve unrelated graphics, no visuals, economical reads/output, no tests
+before2,040. User delegation Terra low/medium with fork_turns none persists.
+
 ## Native source batch 22 (2026-11-03)
 
 Canonical source: 1,819 function bodies + 163 supporting fields = 1,982 ported

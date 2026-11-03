@@ -37,6 +37,34 @@ void UFortProjectileMovementComponent::SetHomingLaserTargetDistance(float NewDis
 	this->HomingLaserTargetDistance = NewDistance;
 }
 
+void UFortProjectileMovementComponent::SetHomingLockTargetDistanceThreshold(float NewDistanceThreshold)
+{
+	// Exact original embedded struct scalar setter; see README.md.
+	// CONFIDENCE: HIGH
+	this->HomingData.LockTargetDistanceThreshold = NewDistanceThreshold;
+}
+
+void UFortProjectileMovementComponent::SetHomingTimeUntilMaxTurnSpeed(float NewTimeUntilMax)
+{
+	// Exact original embedded struct scalar setter; see README.md.
+	// CONFIDENCE: HIGH
+	this->HomingData.RampTimeFromMinToMaxTurnSpeed = NewTimeUntilMax;
+}
+
+void UFortProjectileMovementComponent::SetHomingTurnSpeedMax(float NewHomingTurnSpeedMax)
+{
+	// Exact original embedded struct scalar setter; see README.md.
+	// CONFIDENCE: HIGH
+	this->HomingData.MaxTurnSpeed = NewHomingTurnSpeedMax;
+}
+
+void UFortProjectileMovementComponent::SetHomingTurnSpeedMin(float NewHomingTurnSpeedMin)
+{
+	// Exact original embedded struct scalar setter; see README.md.
+	// CONFIDENCE: HIGH
+	this->HomingData.MinTurnSpeed = NewHomingTurnSpeedMin;
+}
+
 void UFortProjectileMovementComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

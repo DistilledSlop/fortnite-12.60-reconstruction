@@ -58,5 +58,6 @@ public:
 	virtual uint8 GetNumberOfSlotsTaken() const;
 	virtual UFortItemDefinition* GetItemDefinitionBP() const;
 	virtual int32 GetLevel() const;
+	virtual float GetNormalizedDurability() const;
 };
 

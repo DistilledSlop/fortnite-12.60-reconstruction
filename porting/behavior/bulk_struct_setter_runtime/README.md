@@ -1,0 +1,9 @@
+# Embedded struct scalar setters
+
+`prepare.py` scans the native function inventory against the pinned original image SHA-256 `338c83a2314ccac1040a2c0bb520b893013cc7b58eda58e550da67f5d84de680` (base `0x140000000`). It writes proposed manifest entries and full disassembly to `/tmp/gameplay-bulk-struct-setter/`; `evidence.json` is the discovery snapshot. Run it against the current manifest to refresh exclusions before integration.
+
+The scanner recognizes only exact one-parameter int32 and float FFrame extraction forms from the existing scalar setter scanners, with both branch destinations, local stack slot, argument register, finish advance, full wrapper and direct writer checked. The float inline form is also recognized. The entire original writer must be a single matching scalar store and return. Metadata checks require the exact primitive input property flags, kind, raw kind, offset, non-array shape and identifier; eligible native function flags and reflected class identity; and absence from all manifest entries, generated declarations and native definitions.
+
+The target offset must uniquely resolve to a reflected embedded struct and scalar member with the correct raw kinds and reflected struct identity, and both must exist as named generated C++ members of matching type. Same-module package identity or explicit cross-module dependency and export checks apply. The four discovered functions are direct float writers for `UFortProjectileMovementComponent::HomingData` fields; the original writes do not call replication notification or perform other effects. The proposals do not change the manifest or generated declarations.
+
+This deliberately narrow scan does not claim completeness across other FFrame shapes, inherited embedded structs, boolean bit setters, virtual dispatch, or side-effecting setters. It is source recovery, not a build or runtime test.

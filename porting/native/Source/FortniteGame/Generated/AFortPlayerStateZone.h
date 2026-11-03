@@ -138,6 +138,9 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_QuickbarEquippedItems, Transient)
 	TArray<UFortItemDefinition*> QuickbarEquippedItems;
 
+	UFUNCTION(BlueprintCallable)
+	int32 GetSpectatorCount();
+
 	UFUNCTION(NetMulticast, Reliable)
 	void MulticastTriggerOnGadgetTrackedAttributeDestroyedFX(UFortGadgetItemDefinition* GadgetItemDefinition);
 	void MulticastTriggerOnGadgetTrackedAttributeDestroyedFX_Implementation(UFortGadgetItemDefinition* GadgetItemDefinition);
