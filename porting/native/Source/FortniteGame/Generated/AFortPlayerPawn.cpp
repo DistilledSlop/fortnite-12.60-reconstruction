@@ -150,7 +150,7 @@ int32 AFortPlayerPawn::GetExtraLives() const
 {
 	// CONFIDENCE: HIGH
 	// Reflected exec 0x142a7c0e0; native 0x14231b600.
-	const AFortPlayerState* FortState = Cast<AFortPlayerState>(PlayerState);
+	const AFortPlayerState* FortState = Cast<AFortPlayerState>(GetPlayerState());
 	if (FortState && FortState->AttributeSets.PlayerAttrSet)
 	{
 	    const UFortPlayerAttrSet* PlayerAttrSet = FortState->AttributeSets.PlayerAttrSet;
@@ -198,7 +198,7 @@ float AFortPlayerPawn::GetMaxStamina() const
 {
 	// CONFIDENCE: HIGH
 	// Reflected exec 0x142a7c490; native 0x142321e10.
-	const AFortPlayerState* FortState = Cast<AFortPlayerState>(PlayerState);
+	const AFortPlayerState* FortState = Cast<AFortPlayerState>(GetPlayerState());
 	if (FortState && FortState->AttributeSets.PlayerAttrSet)
 	{
 	    const UFortPlayerAttrSet* PlayerAttrSet = FortState->AttributeSets.PlayerAttrSet;
@@ -278,7 +278,7 @@ float AFortPlayerPawn::GetStamina() const
 {
 	// CONFIDENCE: HIGH
 	// Reflected exec 0x142a7ca10; native 0x142324c10.
-	const AFortPlayerState* FortState = Cast<AFortPlayerState>(PlayerState);
+	const AFortPlayerState* FortState = Cast<AFortPlayerState>(GetPlayerState());
 	if (FortState && FortState->AttributeSets.PlayerAttrSet)
 	{
 	    const UFortPlayerAttrSet* PlayerAttrSet = FortState->AttributeSets.PlayerAttrSet;

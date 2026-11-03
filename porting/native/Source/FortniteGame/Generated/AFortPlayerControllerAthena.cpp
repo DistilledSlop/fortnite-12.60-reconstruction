@@ -3,6 +3,7 @@
 #include "AFortGameStateAthena.h"
 #include "AFortPlayerStateAthena.h"
 #include "Engine/World.h"
+#include "UFortPlaysetItemDefinition.h"
 #include "Net/UnrealNetwork.h"
 
 void AFortPlayerControllerAthena::ClearDroppableItems()
@@ -386,14 +387,15 @@ void AFortPlayerControllerAthena::GetPlaysetSize(int32& SizeX, int32& SizeY, int
 {
 	// CONFIDENCE: HIGH
 	// Original exec 0x142a58830; native body 0x1419d5f80.
-	if (!CurrentPlayset)
+	const UFortPlaysetItemDefinition* Playset = CurrentPlayset;
+	if (!Playset)
 	{
 	    SizeX = SizeY = SizeZ = 1;
 	    return;
 	}
-	SizeX = CurrentPlayset->SizeX;
-	SizeY = CurrentPlayset->SizeY;
-	SizeZ = FMath::Max(CurrentPlayset->SizeZ, 1);
+	SizeX = Playset->SizeX;
+	SizeY = Playset->SizeY;
+	SizeZ = FMath::Max(Playset->SizeZ, 1);
 }
 
 bool AFortPlayerControllerAthena::IsClientNotifiedOfLoss() const

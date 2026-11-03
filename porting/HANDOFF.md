@@ -1,5 +1,22 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Checkpoint compile repair (2026-11-03)
+
+Client attempt2 passed UHT and compiled 235 actions before stopping on seven
+errors in three source files. Recovered snippets now name the playset and weapon
+definition types so the generator infers complete headers; three pawn attribute
+queries use APawn::GetPlayerState(), whose engine inline body returns exactly
+the same field. No behavior was dropped. Promotion61 accepted2,216/rejected0,
+three generated cpp files changed. Native body count remains2,040; client
+attempt3 follows commit. Original reflected weapon parameter name confirmed in
+UHT-produced FObjectPropertyParams despite its legal C++ alias.
+
+Larger-path workers own dayphase_context60_runtime (resolver),
+dayphase_callback60_runtime (callback and virtual predicates), and
+building_asc_flags60_runtime (component registration/flags). Root retains
+canonical source, promotion, builds and commits. Ghidra lease currently free
+following resolver probes; request root coordination before reuse.
+
 ## Checkpoint declaration repair (2026-11-03)
 
 At 2,040 bodies the first authorized client build failed in UHT (attempt1,
