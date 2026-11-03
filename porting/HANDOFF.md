@@ -1,5 +1,52 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Bulk weapon getters and larger native recovery batch94 (2026-11-03)
+
+Integrated14 complete UFortWeaponItemDefinition getters as one shared-resolver
+batch: analytic tags, display name,4 abilities,4 reticle textures,2 alterations,
+weapon actor class and equipped abilities. Typed soft-pointer resolution, delayed
+loading, empty-path tracking differences, checked subclass results and array
+order/duplicates follow the original helpers. Equipped classes are rechecked
+after tracking. Root independently decoded the5 class-name literals from the
+pinned original mapped image; inherited SHA pin was not recomputed.
+Generation94 accepts2,426 entries=2,188 bodies+238 fields, rejected0. Initial
+promotion rejected GetAnalyticTags reference return; corrected to reflected
+TArray<FName> value return. Final generation changed only weapon definition
+header/source, no additions/removals,12,828 unchanged mtimes restored. Command
+`python3 -I /tmp/promote-native-batch94.py`; log `/tmp/promote-native-batch94.log`;
+reports `porting/generated/gameplay-bulk-integration-94/`.
+No tests/build/runtime: last2,040;148 canonical+4 manual bodies build pending;
+next3,040. All four product gates OPEN; objective ACTIVE. Last pushed source
+ab88b418/dashboard85084768 before this batch. No product parity claim.
+
+New uncounted larger source: minigame actor/component registration, global end
+condition update and521-line player registration control flow. Item lifecycle
+recovery identifies sparse/hash container destruction and40-byte elements with
+FString/shared ownership; mapped value type remains unresolved. Removed duplicate
+assignment draft, referencing existing canonical helper instead. Restriction
+text has7 recovered localized source/key pairs and matching NSLOCTEXT cache
+contract; default singleton initializer still unresolved. Drafts never count.
+
+Root serial probes native94-broad45, native94-impl20, native94-deps10,
+native94-text3 and native95-broad119 completed successfully with project metadata
+rolled back. Commands `porting/.venv/bin/python -I porting/ghidra/probe_callees.py
+--input /tmp/<name>.json --out porting/generated/<name> --timeout 60 --mem 12G`;
+logs `/tmp/<name>.log`. Native95-impl combines56 deduplicated underlying vehicle
+bodies, currently running under the same command convention. Two bounded Terra
+medium source workers own vehicle95_runtime and hoagie95_runtime. Explicitly
+user-authorized Claude Sonnet medium works on large minigame player/team source
+in minigame_large94_runtime; runner `/tmp/claude-native-runner.py`, task directory
+`/tmp/claude-native-minigame94`, outer log `/tmp/claude-native-minigame94-runner.log`.
+Keep serial Ghidra/generation/build ownership with root. Do not overlap these
+streams. Bulk source generation completed before native95-impl started.
+
+Replacement goal read from attachment02990e3a-c901-4b0e-9bfe-1032bf77e4a2:
+finish faithfully, aggressively bulk recover, commit/push/update dashboard often,
+minimize unnecessary reads/checks. Preserve fork-none bounded Luna medium small
+reads/Terra6.1 medium bulk/Sol6.1 medium complex configuration, economical reads,
+visual pause, unrelated graphics/Engine edits and testing only at3,040 bodies.
+Root plans/reviews/integrates; rotate agents at bounded stopping points.
+
 ## Supply-drop replay integration and data-helper recovery batch93 (2026-11-03)
 
 Integrated1 complete IsPlayingAReplay body: null GetWorld returnsfalse, otherwise

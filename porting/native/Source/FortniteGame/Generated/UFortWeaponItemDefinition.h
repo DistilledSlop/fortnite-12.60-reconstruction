@@ -213,10 +213,22 @@ public:
 	bool AlwaysChargeUpToMin() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	TArray<FName> GetAnalyticTags() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortAlterationItemDefinition* GetBaseAlteration() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFortAlterationItemDefinition* GetBaseCosmeticAlteration() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetDegradedPercentage() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	EFortDisplayTier GetDisplayTier() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	TArray<TSubclassOf<UFortGameplayAbility>> GetEquippedAbilities() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetHitNotifyDuration() const;
@@ -225,19 +237,49 @@ public:
 	float GetLowAmmoPercentage() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	TSubclassOf<UFortGameplayAbility> GetOnHitAbility() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	TSubclassOf<UFortGameplayAbility> GetPrimaryFireAbility() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	TSubclassOf<UFortGameplayAbility> GetReloadAbility() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UTexture2D* GetReticleCenterImage() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	FVector2D GetReticleCenterImageOffset() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UTexture2D* GetReticleCenterPerfectAimImage() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	const TArray<float>& GetReticleCornerAngles() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UTexture2D* GetReticleImage() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UTexture2D* GetReticleInvalidTargetImage() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	TSubclassOf<UFortGameplayAbility> GetSecondaryFireAbility() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	TEnumAsByte<EFortWeaponTriggerType::Type> GetSecondaryTriggerType() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FText GetShortDisplayName() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	TEnumAsByte<EFortWeaponTriggerType::Type> GetTriggerType() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool GetUsesCustomAmmoType() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	TSubclassOf<AFortWeapon> GetWeaponActorClass() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	FDataTableRowHandle GetWeaponStatHandle() const;

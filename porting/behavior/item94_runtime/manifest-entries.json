@@ -1,0 +1,98 @@
+[
+  {
+    "function": "GetAnalyticTags",
+    "kind": "exec",
+    "signature": "TArray<FName> GetAnalyticTags() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "class": "UFortWeaponItemDefinition",
+    "inc_path": "porting/behavior/item94_runtime/UFortWeaponItemDefinition_GetAnalyticTags.inc",
+    "address": "0x142b4b4c0",
+    "confidence": "high",
+    "status": "ported",
+    "reflection_flags": "0x54020401",
+    "includes": []
+  },
+  {
+    "function": "GetShortDisplayName",
+    "kind": "exec",
+    "signature": "FText GetShortDisplayName() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "class": "UFortWeaponItemDefinition",
+    "inc_path": "porting/behavior/item94_runtime/UFortWeaponItemDefinition_GetShortDisplayName.inc",
+    "address": "0x142b4ba40",
+    "confidence": "high",
+    "status": "ported",
+    "reflection_flags": "0x54020401",
+    "includes": []
+  },
+  {
+    "function": "GetOnHitAbility",
+    "kind": "exec",
+    "signature": "TSubclassOf<UFortGameplayAbility> GetOnHitAbility() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "class": "UFortWeaponItemDefinition",
+    "inc_path": "porting/behavior/item94_runtime/UFortWeaponItemDefinition_GetOnHitAbility.inc",
+    "address": "0x142b4b770",
+    "confidence": "high",
+    "status": "ported",
+    "reflection_flags": "0x54020401",
+    "includes": [
+      "FortAssets.h",
+      "FortDelayedObjectLoader.h"
+    ]
+  },
+  {
+    "function": "GetPrimaryFireAbility",
+    "kind": "exec",
+    "signature": "TSubclassOf<UFortGameplayAbility> GetPrimaryFireAbility() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "class": "UFortWeaponItemDefinition",
+    "inc_path": "porting/behavior/item94_runtime/UFortWeaponItemDefinition_GetPrimaryFireAbility.inc",
+    "address": "0x142b4b7b0",
+    "confidence": "high",
+    "status": "ported",
+    "reflection_flags": "0x54020401",
+    "includes": [
+      "FortAssets.h",
+      "FortDelayedObjectLoader.h"
+    ]
+  },
+  {
+    "function": "GetReloadAbility",
+    "kind": "exec",
+    "signature": "TSubclassOf<UFortGameplayAbility> GetReloadAbility() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "class": "UFortWeaponItemDefinition",
+    "inc_path": "porting/behavior/item94_runtime/UFortWeaponItemDefinition_GetReloadAbility.inc",
+    "address": "0x142b4b7f0",
+    "confidence": "high",
+    "status": "ported",
+    "reflection_flags": "0x54020401",
+    "includes": [
+      "FortAssets.h",
+      "FortDelayedObjectLoader.h"
+    ]
+  },
+  {
+    "function": "GetSecondaryFireAbility",
+    "kind": "exec",
+    "signature": "TSubclassOf<UFortGameplayAbility> GetSecondaryFireAbility() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "class": "UFortWeaponItemDefinition",
+    "inc_path": "porting/behavior/item94_runtime/UFortWeaponItemDefinition_GetSecondaryFireAbility.inc",
+    "address": "0x142b4b9c0",
+    "confidence": "high",
+    "status": "ported",
+    "reflection_flags": "0x54020401",
+    "includes": [
+      "FortAssets.h",
+      "FortDelayedObjectLoader.h"
+    ]
+  }
+]

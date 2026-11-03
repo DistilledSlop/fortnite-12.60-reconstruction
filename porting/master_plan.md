@@ -10,6 +10,12 @@ credentials in Git, and the orchestrator reviews and commits.
 
 ## Current baseline
 
+Batch94 integrates14 complete weapon getters via shared typed resolver patterns;
+2,188 bodies+238 fields=2,426 accepted,0 rejected. Broader minigame/lifecycle/text
+source remains uncounted pending bindings. Fresh119 vehicle wrappers yield56
+underlying bulk probes; two Terra workers and Claude large-function task continue.
+No builds/tests;148 canonical+4 manual pending, next3,040; all gates OPEN.
+
 Batch93 integrates supply-drop replay predicate through equivalent UE engine
 methods;2,174 bodies+238fields,2,412 accepted,0 rejected. Additional uncounted
 spawn/speed table/mutator helper source expands the larger supply-drop path.
