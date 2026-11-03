@@ -6,14 +6,19 @@
 #include "CoreMinimal.h"
 #include "UCommonActivatableWidget.h"
 
+#include "CommonActionBindingData.h"
 #include "CommonPanelActionNative.h"
 #include "CommonPanelActivationNative.h"
+#include "Engine/DataTable.h"
+#include "FCommonActionCommited.h"
 #include "FCommonActionCompleteSingle.h"
 #include "FCommonActionProgressSingle.h"
 #include "FCommonInputActionHandlerData.h"
 #include "FOnWidgetActivationChangedDynamic.h"
 
 class UCommonInputManager;
+class UCommonPopupMenu;
+class UDataTable;
 
 #include "UCommonActivatablePanel.generated.h"
 
@@ -98,9 +103,53 @@ private:
     void NativeClearHeldAction();
     float NativeHeldActionDuration = 0.0f;
     FDataTableRowHandle NativeHeldAction;
+    // Original +310; +360 remains the existing NativeActionRecords map.
+    struct FNativeActionBindingKeyFuncs : BaseKeyFuncs<TPair<FDataTableRowHandle, int32>, FDataTableRowHandle, false>
+    {
+        using ElementInitType = TTypeTraits<TPair<FDataTableRowHandle, int32>>::ConstInitType;
+        using KeyInitType = TTypeTraits<FDataTableRowHandle>::ConstInitType;
+        static KeyInitType GetSetKey(ElementInitType Element) { return Element.Key; }
+        static bool Matches(KeyInitType A, KeyInitType B) { return A == B; }
+        static uint32 GetKeyHash(KeyInitType Key)
+        { return HashCombine(HashCombine(0, GetTypeHash(Key.RowName)), PointerHash(Key.DataTable)); }
+    };
+    TMap<FDataTableRowHandle, int32, FDefaultSetAllocator, FNativeActionBindingKeyFuncs> NativeActionBindingRows;
     FCommonPanelActionMap NativeActionRecords;
     FCommonPanelOperationCallback NativePreDeactivation;
     FCommonPanelOperationCallback NativePostDeactivation;
+public:
+    UFUNCTION(BlueprintCallable, BlueprintPure)
+    bool HasInputActionHandler(FDataTableRowHandle InputActionRow) const;
+    UFUNCTION(BlueprintCallable)
+    void SetInputActionHandler(FDataTableRowHandle InputActionRow, FCommonActionCommited CommitedEvent);
+    UFUNCTION(BlueprintCallable)
+    void SetInputActionHandlerWithPopupMenu(FDataTableRowHandle InputActionRow, FCommonActionCommited CommitedEvent, UCommonPopupMenu* PopupMenu);
+    UFUNCTION(BlueprintCallable)
+    void SetInputActionHandlerWithProgress(FDataTableRowHandle InputActionRow, FCommonActionCommited CommitedEvent, FCommonActionProgressSingle ProgressEvent);
+    UFUNCTION(BlueprintCallable)
+    void SetInputActionHandlerWithProgressPopupMenu(FDataTableRowHandle InputActionRow, FCommonActionCommited CommitedEvent, FCommonActionProgressSingle ProgressEvent, UCommonPopupMenu* PopupMenu);
+    UFUNCTION(BlueprintCallable)
+    void AddInputActionHandler(UDataTable* DataTable, FName RowName, FCommonActionCommited CommitedEvent);
+    UFUNCTION(BlueprintCallable)
+    void AddInputActionHandlerWithPopup(UDataTable* DataTable, FName RowName, FCommonActionCommited CommitedEvent, UCommonPopupMenu* PopupMenu);
+    UFUNCTION(BlueprintCallable)
+    void AddInputActionHandlerWithProgress(UDataTable* DataTable, FName RowName, FCommonActionCommited CommitedEvent, FCommonActionProgressSingle ProgressEvent);
+    UFUNCTION(BlueprintCallable)
+    void AddInputActionHandlerWithProgressPopup(UDataTable* DataTable, FName RowName, FCommonActionCommited CommitedEvent, FCommonActionProgressSingle ProgressEvent, UCommonPopupMenu* PopupMenu);
+    UFUNCTION(BlueprintCallable)
+    void AddInputActionNoHandler(UDataTable* DataTable, FName RowName);
+    UFUNCTION(BlueprintCallable)
+    void RemoveInputActionHandler(FDataTableRowHandle InputActionRow);
+    UFUNCTION(BlueprintCallable)
+    void RemoveAllInputActionHandlers();
+protected:
+    virtual void NativeDestruct() override; // 1407d1b50
+private:
+    void NativeSetInputActionHandler(FDataTableRowHandle Row, FCommonPanelCommitNative Commit,
+        FCommonActionBindingProgress Progress, UCommonPopupMenu* Popup);
+    bool NativeIsHoldingInputAction(const FDataTableRowHandle& Row) const;
+    void NativeNotifyInputActionsChanged();
+    void NativeRemoveRoutedInputActionHandlers();
     friend class UCommonButton;
 };
 

@@ -6,10 +6,12 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 
+#include "UFortClientEventInterface.h"
+
 #include "UFortUserWidget.generated.h"
 
 UCLASS()
-class FORTNITEUI_API UFortUserWidget : public UUserWidget
+class FORTNITEUI_API UFortUserWidget : public UUserWidget, public IFortClientEventInterface
 {
 	GENERATED_BODY()
 
@@ -18,5 +20,8 @@ public:
 	UPROPERTY()
 	bool bConsumePointerInput;
 
+public:
+    virtual void NativeConstruct() override;
+    virtual void NativeDestruct() override;
 };
 

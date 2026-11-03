@@ -1,5 +1,80 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Immediate priority: nine unresolved imports and strict Root gate
+
+User explicitly redirected work to these blockers, then requested handoff/stop
+and resumed. Defer unrelated startup work. Latest observed strict gate is FAIL:
+phase10 root exits0, creation/attachment complete, zero Blueprint errors,9
+unresolved imports. Do not count new source as resolved until the new binary
+runs the strict gate. All4 project milestones and normal interactive startup
+remain open.
+
+Authoritative built checkpoint: Nativef2968778 / Engineb96f01a60 client
+PASS130.828s, Native source unchanged. Connected queue flow PASS15 observations
+in11.682s, including real pool/initializer, activation, two queued widgets,
+removal, deferred Slate release, clear/reuse and teardown. Root strict still
+fails9. Commands /tmp/build_frontend_routing_10.py,
+/tmp/run_frontend_routing_root_10.py, /tmp/run_queue_connected_flow_10.py;
+receipts generated/frontend-routing-batch-10/. Client stage is phase10; server
+remains phase8 (prior shared build/join PASS). No unchanged button/server suites.
+
+Current UNCOMMITTED batch targets2 imports: CommonActivatablePanel.
+HasInputActionHandler with all12 real producers/query/removals/destructor paths,
+and FortKismetLibrary.ExecuteClientEvent with owned weak listener registry,
+registration/removal, source/fallback handler dispatch and FortUserWidget
+listener lifecycle/native client-event interface. Kismet remains in its existing
+hand-written FortniteMapClasses.{h,cpp}; keep the class blocklist, do not add a
+second generated class. New canonical client_event_dispatch_runtime policy
+validates the manual signature/body too. Original LogFort is independently
+proved by1402cf420, literal14601fb30; SharedFortGameLog is emitted once.
+Source/schema/type generation PASS via /tmp/promote_frontend_strict_14.py,
+report /tmp/frontend-strict-promotion-14/. Total current generated edits are7
+files plus2 new support files, and2 hand-written library files. Build and strict
+runtime have NOT run for these edits. Previous promotion12 refused the library
+blocklist;13 caught a missing Python import before writes;14 passes.
+
+Before building, review/stage only owned source and Native paths; other work
+updated dashboard dates/time formatting and verified style/click evidence.
+Latest observed HEAD1452e715 includes those external commits; preserve them and
+any unrelated progress edits. Do not broadly stage porting/progress. Primary
+owns Native/generator/Engine/build/stage. Never hand-edit Generated code; fix
+canonical fragments/policies, promote fresh report folder, preserve mtimes.
+
+Nine unresolved functions from phase10:
+* FortKismetLibrary.ExecuteClientEvent (current batch, unbuilt)
+* FortAsyncAction_ShowConfirmation_NUI.ShowSimpleConfirmationDialog_CustomInput
+* CommonActivatablePanel.HasInputActionHandler (current batch, unbuilt)
+* FortMcpContext.CancelEpicPurchasingDisplay
+* FortFriendSubscriptionToastWidget.SetToast
+* FortPlayerPowerRatingToast.HideToast
+* FortRestartClientModal.HandleButtonClicked
+* CommonButton.SetTriggeringInputAction
+* FortConfirmationWindow.BotClickButton
+
+Related source handoffs: strict_commonui_imports_runtime/HANDOFF.md has usable
+Panel policy; button/global handler/subsystem lifecycle remain disabled until
+actual legacy consumers/interfaces are closed. Setter correction: compare FULL
+row inequality, not old-row-null. confirmation_window_lifecycle_runtime and
+strict_confirmation_imports_runtime hold real window/async/queue fragments but
+need manager interface/pair initialization, client-bot flag producers, load guard
+and slot lifecycle, navigation/scroll dependencies. strict_toast_imports_runtime
+has partial real source/evidence, not closed exports; missing MCP social action,
+analytics, native notification action and profile delegate producer/calculation
+contracts must be reconstructed, never replaced with dummy APIs. Root owns
+Kismet and MCP cancellation; cancellation1421cb230 follows context+378 to
+1411ce2d0/1411d0c30. The latter uses real native delegates, FOnlineError and
+receipt generation140d0e7f0 (likely FPurchaseReceipt shape; confirm against
+OnlinePurchaseInterface.h before typing it). Frozen client-event evidence is
+porting/frontend/client-event-evidence.md and the referenced generated .c/.asm
+files; reuse it, don't rediscover the same registry repeatedly.
+
+All workers currently finished; no build/runtime sessions live. Preserve bounded
+reads for assembly too, expanding through additional targeted chunks as needed.
+Use fresh bounded workers at coherent component boundaries: Luna medium small
+read-only, Terra medium/high regular implementation, Sol medium complex work,
+fork_turns none, max3 workers. A reject-only policy/evidence handoff is not an
+implemented import. Focus concrete dependency closure and the actual strict run.
+
 ## Connected queue/startup provider batch: generated, validation pending (2026-11-02)
 
 Production pool acquisition, initializer/unique registration, queue insertion,

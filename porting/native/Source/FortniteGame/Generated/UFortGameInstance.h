@@ -9,6 +9,7 @@
 #include "EFortGameFeature.h"
 #include "FAthenaDataTableSet.h"
 #include "FAudioDynamicSoundData.h"
+#include "FFortClientEventName.h"
 #include "FFortKairosLoadElectraPlayerDelegate.h"
 #include "FFortOnSubGameChangedBP.h"
 #include "FPlaylistFrontEndSettings.h"
@@ -160,6 +161,11 @@ public:
 	// table index 31, flags 0x40000000002000
 	UPROPERTY(Transient)
 	UFortTooltipManager* TooltipManager;
+
+private:
+	// Non-reflected field (behaviour kind "member_field", offset 0x6c0): not a UPROPERTY, not replicated.
+	TMap<FName, TSet<TWeakObjectPtr<UObject>>> NativeClientEventListeners6c0;
+public:
 
 	// table index 29, flags 0x40000000000000
 	UPROPERTY()
@@ -341,5 +347,11 @@ public:
 	UFUNCTION(ServiceResponse(JSBridge, ResponseId=1))
 	bool UninstallFortniteBROnNextBoot(bool bRestartApp, bool bPromptForRestart);
 
+public:
+    void NativeCollectClientEventFunctions141e60900(UObject* Object, TSet<FName>& Functions) const;
+    void NativeRegisterClientEventObject141e78cb0(UObject* Object);
+    void NativeUnregisterClientEventObject141e84a70(UObject* Object);
+    void NativeCollectClientEventTargets141e62a90(FName Function, TSet<UObject*>& Targets);
+    void NativeExecuteClientEvent141e59c80(const FFortClientEventName& EventType, UObject* Source, UObject* Focus);
 };
 

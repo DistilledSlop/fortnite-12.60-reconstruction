@@ -1,0 +1,1431 @@
+{
+  "block_va": "0x145a00360",
+  "owner": "0x140807980",
+  "functions": {
+    "AddInputActionHandler": {
+      "name": "AddInputActionHandler",
+      "create_func": "0x140807b50",
+      "flags": [
+        "0x4020401",
+        "0x4080401"
+      ],
+      "replicated_function": null,
+      "note": "ambiguous: several FFunctionParams share this name pointer",
+      "params_note": "ambiguous: candidates disagree on parameter table",
+      "candidates": [
+        {
+          "owning_class": null,
+          "outer_fn": "0x140807980",
+          "flags": "0x4020401",
+          "nprop": 3,
+          "params": [
+            {
+              "index": 0,
+              "name": "CommitedEvent",
+              "kind": "Delegate",
+              "kind_raw": "0x1a",
+              "property_flags": "0x10000000000080",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 16,
+              "type_refs": {
+                "signature": "0x140809720"
+              }
+            },
+            {
+              "index": 1,
+              "name": "RowName",
+              "kind": "Name",
+              "kind_raw": "0x14",
+              "property_flags": "0x10000000000080",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 8
+            },
+            {
+              "index": 2,
+              "name": "DataTable",
+              "kind": "Object",
+              "kind_raw": "0x12",
+              "property_flags": "0x10000000000080",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 0,
+              "type_refs": {
+                "class": "0x1446f0190"
+              }
+            }
+          ]
+        },
+        {
+          "owning_class": null,
+          "outer_fn": "0x1452c1180",
+          "flags": "0x4080401",
+          "nprop": 3,
+          "params": [
+            {
+              "index": 0,
+              "name": "CommittedEvent",
+              "kind": "Delegate",
+              "kind_raw": "0x1a",
+              "property_flags": "0x10000000000080",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 16,
+              "type_refs": {
+                "signature": "0x140809720"
+              }
+            },
+            {
+              "index": 1,
+              "name": "RowName",
+              "kind": "Name",
+              "kind_raw": "0x14",
+              "property_flags": "0x10000000000080",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 8
+            },
+            {
+              "index": 2,
+              "name": "DataTable",
+              "kind": "Object",
+              "kind_raw": "0x12",
+              "property_flags": "0x10000000000080",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 0,
+              "type_refs": {
+                "class": "0x1446f0190"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "AddInputActionHandlerWithPopup": {
+      "name": "AddInputActionHandlerWithPopup",
+      "create_func": "0x140807b80",
+      "flags": [
+        "0x4020401"
+      ],
+      "replicated_function": false,
+      "net_roles": [],
+      "outer_fn": "0x140807980",
+      "params": [
+        {
+          "index": 0,
+          "name": "PopupMenu",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x10000000080080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 32,
+          "type_refs": {
+            "class": "0x1408121f0"
+          }
+        },
+        {
+          "index": 1,
+          "name": "CommitedEvent",
+          "kind": "Delegate",
+          "kind_raw": "0x1a",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 16,
+          "type_refs": {
+            "signature": "0x140809720"
+          }
+        },
+        {
+          "index": 2,
+          "name": "RowName",
+          "kind": "Name",
+          "kind_raw": "0x14",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 8
+        },
+        {
+          "index": 3,
+          "name": "DataTable",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "class": "0x1446f0190"
+          }
+        }
+      ]
+    },
+    "AddInputActionHandlerWithProgress": {
+      "name": "AddInputActionHandlerWithProgress",
+      "create_func": "0x140807bb0",
+      "flags": [
+        "0x4020401"
+      ],
+      "replicated_function": false,
+      "net_roles": [],
+      "outer_fn": "0x140807980",
+      "params": [
+        {
+          "index": 0,
+          "name": "ProgressEvent",
+          "kind": "Delegate",
+          "kind_raw": "0x1a",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 32,
+          "type_refs": {
+            "signature": "0x1408097b0"
+          }
+        },
+        {
+          "index": 1,
+          "name": "CommitedEvent",
+          "kind": "Delegate",
+          "kind_raw": "0x1a",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 16,
+          "type_refs": {
+            "signature": "0x140809720"
+          }
+        },
+        {
+          "index": 2,
+          "name": "RowName",
+          "kind": "Name",
+          "kind_raw": "0x14",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 8
+        },
+        {
+          "index": 3,
+          "name": "DataTable",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "class": "0x1446f0190"
+          }
+        }
+      ]
+    },
+    "AddInputActionHandlerWithProgressPopup": {
+      "name": "AddInputActionHandlerWithProgressPopup",
+      "create_func": "0x140807be0",
+      "flags": [
+        "0x4020401"
+      ],
+      "replicated_function": false,
+      "net_roles": [],
+      "outer_fn": "0x140807980",
+      "params": [
+        {
+          "index": 0,
+          "name": "PopupMenu",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x10000000080080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 48,
+          "type_refs": {
+            "class": "0x1408121f0"
+          }
+        },
+        {
+          "index": 1,
+          "name": "ProgressEvent",
+          "kind": "Delegate",
+          "kind_raw": "0x1a",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 32,
+          "type_refs": {
+            "signature": "0x1408097b0"
+          }
+        },
+        {
+          "index": 2,
+          "name": "CommitedEvent",
+          "kind": "Delegate",
+          "kind_raw": "0x1a",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 16,
+          "type_refs": {
+            "signature": "0x140809720"
+          }
+        },
+        {
+          "index": 3,
+          "name": "RowName",
+          "kind": "Name",
+          "kind_raw": "0x14",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 8
+        },
+        {
+          "index": 4,
+          "name": "DataTable",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "class": "0x1446f0190"
+          }
+        }
+      ]
+    },
+    "AddInputActionNoHandler": {
+      "name": "AddInputActionNoHandler",
+      "create_func": "0x140807c10",
+      "flags": [
+        "0x4020401"
+      ],
+      "replicated_function": false,
+      "net_roles": [],
+      "outer_fn": "0x140807980",
+      "params": [
+        {
+          "index": 0,
+          "name": "RowName",
+          "kind": "Name",
+          "kind_raw": "0x14",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 8
+        },
+        {
+          "index": 1,
+          "name": "DataTable",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "class": "0x1446f0190"
+          }
+        }
+      ]
+    },
+    "HasInputActionHandler": {
+      "name": "HasInputActionHandler",
+      "create_func": "0x1408056f0",
+      "flags": [
+        "0x54020401"
+      ],
+      "replicated_function": false,
+      "net_roles": [],
+      "outer_fn": "0x140807980",
+      "params": [
+        {
+          "index": 0,
+          "name": "ReturnValue",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x10000000000580",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 24,
+          "bitfield": true,
+          "set_bit_fn": "0x140746210",
+          "offset": null
+        },
+        {
+          "index": 1,
+          "name": "InputActionRow",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "struct": "0x1446f2880"
+          }
+        }
+      ]
+    },
+    "RemoveAllInputActionHandlers": {
+      "name": "RemoveAllInputActionHandlers",
+      "create_func": "0x1408058d0",
+      "flags": [
+        "0x4020401",
+        "0x4080401"
+      ],
+      "replicated_function": null,
+      "note": "ambiguous: several FFunctionParams share this name pointer",
+      "params_note": "ambiguous: candidates disagree on parameter table",
+      "candidates": [
+        {
+          "owning_class": null,
+          "outer_fn": "0x140807980",
+          "flags": "0x4020401",
+          "nprop": 0,
+          "params": []
+        },
+        {
+          "owning_class": null,
+          "outer_fn": "0x1452c1180",
+          "flags": "0x4080401",
+          "nprop": 0,
+          "params": []
+        }
+      ]
+    },
+    "RemoveInputActionHandler": {
+      "name": "RemoveInputActionHandler",
+      "create_func": "0x1408059c0",
+      "flags": [
+        "0x4020401",
+        "0x4080401"
+      ],
+      "replicated_function": null,
+      "note": "ambiguous: several FFunctionParams share this name pointer",
+      "params_note": "ambiguous: candidates disagree on parameter table",
+      "candidates": [
+        {
+          "owning_class": null,
+          "outer_fn": "0x140807980",
+          "flags": "0x4020401",
+          "nprop": 1,
+          "params": [
+            {
+              "index": 0,
+              "name": "InputActionRow",
+              "kind": "Struct",
+              "kind_raw": "0x19",
+              "property_flags": "0x10000000000080",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 0,
+              "type_refs": {
+                "struct": "0x1446f2880"
+              }
+            }
+          ]
+        },
+        {
+          "owning_class": null,
+          "outer_fn": "0x1452c1180",
+          "flags": "0x4080401",
+          "nprop": 1,
+          "params": [
+            {
+              "index": 0,
+              "name": "InputActionRow",
+              "kind": "Struct",
+              "kind_raw": "0x19",
+              "property_flags": "0x10000000000080",
+              "replicated": false,
+              "rep_notify": null,
+              "array_dim": 1,
+              "object_flags": "0x45",
+              "offset": 0,
+              "type_refs": {
+                "struct": "0x1446f2880"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "SetInputActionHandler": {
+      "name": "SetInputActionHandler",
+      "create_func": "0x140805ba0",
+      "flags": [
+        "0x4020401"
+      ],
+      "replicated_function": false,
+      "net_roles": [],
+      "outer_fn": "0x140807980",
+      "params": [
+        {
+          "index": 0,
+          "name": "CommitedEvent",
+          "kind": "Delegate",
+          "kind_raw": "0x1a",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 16,
+          "type_refs": {
+            "signature": "0x140809720"
+          }
+        },
+        {
+          "index": 1,
+          "name": "InputActionRow",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "struct": "0x1446f2880"
+          }
+        }
+      ]
+    },
+    "SetInputActionHandlerWithPopupMenu": {
+      "name": "SetInputActionHandlerWithPopupMenu",
+      "create_func": "0x140805c00",
+      "flags": [
+        "0x4020401"
+      ],
+      "replicated_function": false,
+      "net_roles": [],
+      "outer_fn": "0x140807980",
+      "params": [
+        {
+          "index": 0,
+          "name": "PopupMenu",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x10000000080080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 32,
+          "type_refs": {
+            "class": "0x1408121f0"
+          }
+        },
+        {
+          "index": 1,
+          "name": "CommitedEvent",
+          "kind": "Delegate",
+          "kind_raw": "0x1a",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 16,
+          "type_refs": {
+            "signature": "0x140809720"
+          }
+        },
+        {
+          "index": 2,
+          "name": "InputActionRow",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "struct": "0x1446f2880"
+          }
+        }
+      ]
+    },
+    "SetInputActionHandlerWithProgress": {
+      "name": "SetInputActionHandlerWithProgress",
+      "create_func": "0x140805c30",
+      "flags": [
+        "0x4020401"
+      ],
+      "replicated_function": false,
+      "net_roles": [],
+      "outer_fn": "0x140807980",
+      "params": [
+        {
+          "index": 0,
+          "name": "ProgressEvent",
+          "kind": "Delegate",
+          "kind_raw": "0x1a",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 32,
+          "type_refs": {
+            "signature": "0x1408097b0"
+          }
+        },
+        {
+          "index": 1,
+          "name": "CommitedEvent",
+          "kind": "Delegate",
+          "kind_raw": "0x1a",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 16,
+          "type_refs": {
+            "signature": "0x140809720"
+          }
+        },
+        {
+          "index": 2,
+          "name": "InputActionRow",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "struct": "0x1446f2880"
+          }
+        }
+      ]
+    },
+    "SetInputActionHandlerWithProgressPopupMenu": {
+      "name": "SetInputActionHandlerWithProgressPopupMenu",
+      "create_func": "0x140805c80",
+      "flags": [
+        "0x4020401"
+      ],
+      "replicated_function": false,
+      "net_roles": [],
+      "outer_fn": "0x140807980",
+      "params": [
+        {
+          "index": 0,
+          "name": "PopupMenu",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x10000000080080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 48,
+          "type_refs": {
+            "class": "0x1408121f0"
+          }
+        },
+        {
+          "index": 1,
+          "name": "ProgressEvent",
+          "kind": "Delegate",
+          "kind_raw": "0x1a",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 32,
+          "type_refs": {
+            "signature": "0x1408097b0"
+          }
+        },
+        {
+          "index": 2,
+          "name": "CommitedEvent",
+          "kind": "Delegate",
+          "kind_raw": "0x1a",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 16,
+          "type_refs": {
+            "signature": "0x140809720"
+          }
+        },
+        {
+          "index": 3,
+          "name": "InputActionRow",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "struct": "0x1446f2880"
+          }
+        }
+      ]
+    }
+  },
+  "native_execs": {
+    "HasInputActionHandler": {
+      "exec_addr": "0x14080ba10",
+      "flags": "0x54020401",
+      "params": [
+        {
+          "index": 0,
+          "name": "ReturnValue",
+          "kind": "Bool",
+          "kind_raw": "0x2c",
+          "property_flags": "0x10000000000580",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "element_size": 1,
+          "size_of_outer": 24,
+          "bitfield": true,
+          "offset": null
+        },
+        {
+          "index": 1,
+          "name": "InputActionRow",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "struct": "0x1446f2880"
+          }
+        }
+      ],
+      "create_func": "0x1408056f0",
+      "source": "lea"
+    },
+    "SetInputActionHandler": {
+      "exec_addr": "0x14080c7d0",
+      "flags": "0x4020401",
+      "params": [
+        {
+          "index": 0,
+          "name": "CommitedEvent",
+          "kind": "Delegate",
+          "kind_raw": "0x1a",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 16,
+          "type_refs": {
+            "signature": "0x140809720"
+          }
+        },
+        {
+          "index": 1,
+          "name": "InputActionRow",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "struct": "0x1446f2880"
+          }
+        }
+      ],
+      "create_func": "0x140805ba0",
+      "source": "lea"
+    },
+    "SetInputActionHandlerWithPopupMenu": {
+      "exec_addr": "0x14080c8c0",
+      "flags": "0x4020401",
+      "params": [
+        {
+          "index": 0,
+          "name": "PopupMenu",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x10000000080080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 32,
+          "type_refs": {
+            "class": "0x1408121f0"
+          }
+        },
+        {
+          "index": 1,
+          "name": "CommitedEvent",
+          "kind": "Delegate",
+          "kind_raw": "0x1a",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 16,
+          "type_refs": {
+            "signature": "0x140809720"
+          }
+        },
+        {
+          "index": 2,
+          "name": "InputActionRow",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "struct": "0x1446f2880"
+          }
+        }
+      ],
+      "create_func": "0x140805c00",
+      "source": "lea"
+    },
+    "SetInputActionHandlerWithProgress": {
+      "exec_addr": "0x14080c9f0",
+      "flags": "0x4020401",
+      "params": [
+        {
+          "index": 0,
+          "name": "ProgressEvent",
+          "kind": "Delegate",
+          "kind_raw": "0x1a",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 32,
+          "type_refs": {
+            "signature": "0x1408097b0"
+          }
+        },
+        {
+          "index": 1,
+          "name": "CommitedEvent",
+          "kind": "Delegate",
+          "kind_raw": "0x1a",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 16,
+          "type_refs": {
+            "signature": "0x140809720"
+          }
+        },
+        {
+          "index": 2,
+          "name": "InputActionRow",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "struct": "0x1446f2880"
+          }
+        }
+      ],
+      "create_func": "0x140805c30",
+      "source": "lea"
+    },
+    "SetInputActionHandlerWithProgressPopupMenu": {
+      "exec_addr": "0x14080cb30",
+      "flags": "0x4020401",
+      "params": [
+        {
+          "index": 0,
+          "name": "PopupMenu",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x10000000080080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 48,
+          "type_refs": {
+            "class": "0x1408121f0"
+          }
+        },
+        {
+          "index": 1,
+          "name": "ProgressEvent",
+          "kind": "Delegate",
+          "kind_raw": "0x1a",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 32,
+          "type_refs": {
+            "signature": "0x1408097b0"
+          }
+        },
+        {
+          "index": 2,
+          "name": "CommitedEvent",
+          "kind": "Delegate",
+          "kind_raw": "0x1a",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 16,
+          "type_refs": {
+            "signature": "0x140809720"
+          }
+        },
+        {
+          "index": 3,
+          "name": "InputActionRow",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "struct": "0x1446f2880"
+          }
+        }
+      ],
+      "create_func": "0x140805c80",
+      "source": "lea"
+    },
+    "AddInputActionHandler": {
+      "exec_addr": "0x140809a70",
+      "flags": "0x4020401",
+      "params": [
+        {
+          "index": 0,
+          "name": "CommitedEvent",
+          "kind": "Delegate",
+          "kind_raw": "0x1a",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 16,
+          "type_refs": {
+            "signature": "0x140809720"
+          }
+        },
+        {
+          "index": 1,
+          "name": "RowName",
+          "kind": "Name",
+          "kind_raw": "0x14",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 8
+        },
+        {
+          "index": 2,
+          "name": "DataTable",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "class": "0x1446f0190"
+          }
+        }
+      ],
+      "create_func": "0x140807b50",
+      "source": "lea"
+    },
+    "AddInputActionHandlerWithPopup": {
+      "exec_addr": "0x140809b90",
+      "flags": "0x4020401",
+      "params": [
+        {
+          "index": 0,
+          "name": "PopupMenu",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x10000000080080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 32,
+          "type_refs": {
+            "class": "0x1408121f0"
+          }
+        },
+        {
+          "index": 1,
+          "name": "CommitedEvent",
+          "kind": "Delegate",
+          "kind_raw": "0x1a",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 16,
+          "type_refs": {
+            "signature": "0x140809720"
+          }
+        },
+        {
+          "index": 2,
+          "name": "RowName",
+          "kind": "Name",
+          "kind_raw": "0x14",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 8
+        },
+        {
+          "index": 3,
+          "name": "DataTable",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "class": "0x1446f0190"
+          }
+        }
+      ],
+      "create_func": "0x140807b80",
+      "source": "lea"
+    },
+    "AddInputActionHandlerWithProgress": {
+      "exec_addr": "0x140809d00",
+      "flags": "0x4020401",
+      "params": [
+        {
+          "index": 0,
+          "name": "ProgressEvent",
+          "kind": "Delegate",
+          "kind_raw": "0x1a",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 32,
+          "type_refs": {
+            "signature": "0x1408097b0"
+          }
+        },
+        {
+          "index": 1,
+          "name": "CommitedEvent",
+          "kind": "Delegate",
+          "kind_raw": "0x1a",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 16,
+          "type_refs": {
+            "signature": "0x140809720"
+          }
+        },
+        {
+          "index": 2,
+          "name": "RowName",
+          "kind": "Name",
+          "kind_raw": "0x14",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 8
+        },
+        {
+          "index": 3,
+          "name": "DataTable",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "class": "0x1446f0190"
+          }
+        }
+      ],
+      "create_func": "0x140807bb0",
+      "source": "lea"
+    },
+    "AddInputActionHandlerWithProgressPopup": {
+      "exec_addr": "0x140809e60",
+      "flags": "0x4020401",
+      "params": [
+        {
+          "index": 0,
+          "name": "PopupMenu",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x10000000080080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 48,
+          "type_refs": {
+            "class": "0x1408121f0"
+          }
+        },
+        {
+          "index": 1,
+          "name": "ProgressEvent",
+          "kind": "Delegate",
+          "kind_raw": "0x1a",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 32,
+          "type_refs": {
+            "signature": "0x1408097b0"
+          }
+        },
+        {
+          "index": 2,
+          "name": "CommitedEvent",
+          "kind": "Delegate",
+          "kind_raw": "0x1a",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 16,
+          "type_refs": {
+            "signature": "0x140809720"
+          }
+        },
+        {
+          "index": 3,
+          "name": "RowName",
+          "kind": "Name",
+          "kind_raw": "0x14",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 8
+        },
+        {
+          "index": 4,
+          "name": "DataTable",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "class": "0x1446f0190"
+          }
+        }
+      ],
+      "create_func": "0x140807be0",
+      "source": "lea"
+    },
+    "AddInputActionNoHandler": {
+      "exec_addr": "0x14080a000",
+      "flags": "0x4020401",
+      "params": [
+        {
+          "index": 0,
+          "name": "RowName",
+          "kind": "Name",
+          "kind_raw": "0x14",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 8
+        },
+        {
+          "index": 1,
+          "name": "DataTable",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "class": "0x1446f0190"
+          }
+        }
+      ],
+      "create_func": "0x140807c10",
+      "source": "lea"
+    },
+    "RemoveInputActionHandler": {
+      "exec_addr": "0x14080bd70",
+      "flags": "0x4020401",
+      "params": [
+        {
+          "index": 0,
+          "name": "InputActionRow",
+          "kind": "Struct",
+          "kind_raw": "0x19",
+          "property_flags": "0x10000000000080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "struct": "0x1446f2880"
+          }
+        }
+      ],
+      "create_func": "0x1408059c0",
+      "source": "lea"
+    },
+    "RemoveAllInputActionHandlers": {
+      "exec_addr": "0x14080bd50",
+      "flags": "0x4020401",
+      "params": [],
+      "create_func": "0x1408058d0",
+      "source": "lea"
+    }
+  },
+  "windows": [
+    {
+      "va": "0x1407cd110",
+      "size": "0x11a",
+      "sha256": "bf52a7d61d7b11353fc7564b57180b8c5d014e8a630f0b6f8f8b36dd32f4000f"
+    },
+    {
+      "va": "0x1407f6930",
+      "size": "0x8e4",
+      "sha256": "bf5aaf90b0d9deffd06ec30b065378cd1849be8b9d6cbd36be0fb6eabe0146c6"
+    },
+    {
+      "va": "0x1407f0d10",
+      "size": "0x1fd",
+      "sha256": "b14927bb0b843e38e325075e4929fa65039e2a5991b3eeee8481dfebb448343d"
+    },
+    {
+      "va": "0x1407f0420",
+      "size": "0xa4",
+      "sha256": "262b44c01cf11b18ede82b4f8c99aaa4a41b5cfae938c3197508f8918b6c8335"
+    },
+    {
+      "va": "0x140801500",
+      "size": "0x201",
+      "sha256": "05b81de8d8b7e0238430c619c99f12ba6f6b39d9d9fd8b88b36d3b579bd1fed1"
+    },
+    {
+      "va": "0x1407cf0f0",
+      "size": "0x82",
+      "sha256": "01387e921e3d5599b6397c89f5bf3b0170a4f6321494a79731c515fc8cb289fd"
+    },
+    {
+      "va": "0x1407bc540",
+      "size": "0x55",
+      "sha256": "c01eaaa6b8f1a7d30f2fa26698f3f7110f9b2ea7e0f408c1efaccc2856ce94db"
+    },
+    {
+      "va": "0x1407bd2f0",
+      "size": "0x6d",
+      "sha256": "9b5cb6b749af526ee7ba23546bf775e73f42419ae9a551fae109cf83a58dccfc"
+    },
+    {
+      "va": "0x1407d1b50",
+      "size": "0xa7",
+      "sha256": "7881f078540227b018d2f0e5ae76e07686e399c1b31f7c5a00ffdbec3eccc199"
+    },
+    {
+      "va": "0x1407a9a80",
+      "size": "0x144",
+      "sha256": "8aab47caba09d841560f4a5a6f1f190c12cf95e85c962ca29d66955c0346e973"
+    },
+    {
+      "va": "0x1407a9bc0",
+      "size": "0x140",
+      "sha256": "7003b09a8faca937913d53c1d448c88563e48240e2ce55c7531b2ca6d5266f0e"
+    },
+    {
+      "va": "0x1407a9d00",
+      "size": "0x110",
+      "sha256": "fc5cbab1ea0b171ccaabbaf970df5ad7157800b6b96fa53a471f6dedb64b6600"
+    },
+    {
+      "va": "0x1407a9e10",
+      "size": "0x110",
+      "sha256": "b92c4a296a5316e9c1c94d4068bec954ad189b5d0d4575aaf82e89284127adda"
+    },
+    {
+      "va": "0x1407a9f20",
+      "size": "0x150",
+      "sha256": "a502bcd4949c68ed204bed3f220c1a54e7e6e1ec5bbfb30d287841e96a28199c"
+    },
+    {
+      "va": "0x1407f7220",
+      "size": "0x110",
+      "sha256": "2c7454c3d5d616beb59d28161890f202bba487396eeec644cbb0fdac56dc3ae9"
+    },
+    {
+      "va": "0x1407f7330",
+      "size": "0x110",
+      "sha256": "991c94ef31895fff9babcd9347779689e36291f60241e56df3b96432a4c74258"
+    },
+    {
+      "va": "0x1407f7440",
+      "size": "0x100",
+      "sha256": "4217d70f3d6aa38129ae412547f4c7a63ed80b50ac8d3463502109e4044d66b6"
+    },
+    {
+      "va": "0x1407f7540",
+      "size": "0xf6",
+      "sha256": "7b1696783a536d7c84ce69250ee9e6e0e76ca2fa1e1ef4c085db160fb1aa61c5"
+    },
+    {
+      "va": "0x1401c5610",
+      "size": "0x42",
+      "sha256": "a1006d3942d699192ea7b90dedf5c4d29cc0c810ff9bf018a77ce99c79861ae0"
+    },
+    {
+      "va": "0x1459ead68",
+      "size": "0x18",
+      "sha256": "f3258e47aa4494fe4a2e1f90a9773fa90d47812d1107e7f532fb9d22fa8c7788"
+    },
+    {
+      "va": "0x1459ef2c0",
+      "size": "0x58",
+      "sha256": "3fbee171515761576ae1c95b1d167d0379273bf7118f172390b49f75e7ed8bb8"
+    }
+  ],
+  "diagnostic": {
+    "category": "LogCommonUI",
+    "category_global": "0x1480d1df0",
+    "constructor": "0x1401c5610",
+    "default_verbosity": 5,
+    "compile_verbosity": 7,
+    "verbosity": 3,
+    "literal_va": "0x1459ef2c0",
+    "message": "Looking for an input action that is invalid!"
+  }
+}

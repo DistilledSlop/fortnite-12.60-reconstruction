@@ -31,6 +31,7 @@ Usage:
   python3 -I porting/gen_native_classes.py --self-test
 """
 import argparse
+from pathlib import Path
 import json
 import os
 import re
@@ -2218,6 +2219,14 @@ _legacy_state_spec = _common_activation_import.spec_from_file_location(
     "legacy_state_event_bridge_runtime_policy", os.path.join(os.path.dirname(__file__), "frontend", "legacy_state_event_bridge_runtime", "policy.py"))
 _legacy_state_policy = _common_activation_import.module_from_spec(_legacy_state_spec)
 _legacy_state_spec.loader.exec_module(_legacy_state_policy)
+_strict_panel_spec = _common_activation_import.spec_from_file_location(
+    "strict_commonui_panel_policy", os.path.join(os.path.dirname(__file__), "frontend", "strict_commonui_imports_runtime", "policy.py"))
+_strict_panel_policy = _common_activation_import.module_from_spec(_strict_panel_spec)
+_strict_panel_spec.loader.exec_module(_strict_panel_policy)
+_client_event_spec = _common_activation_import.spec_from_file_location(
+    "client_event_dispatch_policy", os.path.join(os.path.dirname(__file__), "frontend", "client_event_dispatch_runtime", "policy.py"))
+_client_event_policy = _common_activation_import.module_from_spec(_client_event_spec)
+_client_event_spec.loader.exec_module(_client_event_policy)
 _route_spec = _common_activation_import.spec_from_file_location(
     "common_action_route_connected_runtime_policy", os.path.join(os.path.dirname(__file__), "frontend", "common_action_route_connected_runtime", "policy.py"))
 _route_policy = _common_activation_import.module_from_spec(_route_spec)
@@ -2406,6 +2415,8 @@ def build_class_promoted(block, name, resolver, parent_entry, owner_fns, snippet
     model = _queue_lifecycle_policy.apply(model)
     model = _ui_config_policy.apply(model, block)
     model = _legacy_state_policy.apply(model, block, owner_fns)
+    model = _strict_panel_policy.apply(model, block, owner_fns)
+    model = _client_event_policy.apply(model, block, native_execs)
     model = _widget_route_policy.apply(model, block, owner_fns)
     model = _route_policy.apply(model, block, owner_fns)
     model = _metadata_policy.apply(model, block, owner_fns)
@@ -3133,7 +3144,8 @@ def render_promoted_header(model, api, parent_include, source_label):
     lines.append("#include \"%s.generated.h\"" % name)
     lines.append("")
     lines.append(model["uclass"])
-    lines.append("class %s %s : public %s" % (api, name, model["parent"]))
+    parent_expr = model["parent"] + ''.join(', public ' + base for base in model.get('native_interface_bases', []))
+    lines.append("class %s %s : public %s" % (api, name, parent_expr))
     lines.append("{")
     lines.append("\tGENERATED_BODY()")
     lines.append("")
@@ -3186,6 +3198,8 @@ def render_promoted_header(model, api, parent_include, source_label):
     lines.extend(_queue_lifecycle_policy.declarations(model).splitlines())
     lines.extend(_ui_config_policy.declarations(model).splitlines())
     lines.extend(_legacy_state_policy.declarations(model).splitlines())
+    lines.extend(_strict_panel_policy.declarations(model).splitlines())
+    lines.extend(_client_event_policy.declarations(model).splitlines())
     lines.extend(_widget_route_policy.declarations(model).splitlines())
     lines.extend(_route_policy.declarations(model).splitlines())
     lines.extend(_metadata_policy.declarations(model).splitlines())
@@ -3346,6 +3360,8 @@ def render_promoted_cpp(model, source_label):
     result += _queue_lifecycle_policy.definitions(model)
     result += _ui_config_policy.definitions(model)
     result += _legacy_state_policy.definitions(model)
+    result += _strict_panel_policy.definitions(model)
+    result += _client_event_policy.definitions(model)
     return result + _common_activation_policy.definitions(model) + _current_input_type_policy.definitions(model) + _fort_globals_policy.definitions(model) + _button_style_policy.definitions(model) + _button_click_policy.definitions(model) + _button_double_click_policy.definitions(model) + _button_selection_policy.definitions(model) + _input_settings_policy.definitions(model) + _input_cache_policy.definitions(model) + _action_widget_policy.gamepad_definitions(model) + _action_widget_policy.icon_definitions(model) + _action_receivers_policy.definitions(model) + _action_slate_policy.definitions(model) + _button_focus_policy.definitions(model) + _button_initialize_policy.definitions(model) + _button_producers_policy.definitions(model) + _button_set_style_policy.definitions(model) + _border_style_policy.definitions(model) + _global_ui_priority_policy.definitions(model) + _global_ui_zone_policy.definitions(model) + _notification_image_policy.definitions(model) + _progress_modal_policy.definitions(model) + _commonui_module_policy.definitions(model) + _root_slate_policy.definitions(model) + _lazy_image_policy.definitions(model) + _widget_route_policy.definitions(model) + _route_policy.definitions(model) + _metadata_policy.definitions(model) + _modality_policy.definitions(model) + _cursor_settings_policy.definitions(model)
 
 
@@ -3616,6 +3632,8 @@ def promote(args):
     gate.name_clashes = engine_macro_names(args.engine_root)
     resolver.gate = gate
     guarded_native_execs = {}
+    if 'UFortKismetLibrary' in listed:
+        guarded_native_execs = load_json(os.path.join(os.path.dirname(args.reflection), 'native_funcs.json'))
     if 'UCommonActivatableWidgetContainerBase' in listed:
         guarded_native_execs = load_json(os.path.join(os.path.dirname(args.reflection), 'native_funcs.json'))
     if {'UCommonActivatablePanel', 'UCommonInputSubsystem', 'UCommonActionWidget', 'UCommonBorder', 'UCommonButton', 'UCommonTextBlock', 'UFortGlobals', 'UFortGlobalUIContext', 'UFortUINotification', 'UFortProgressModal', 'UCommonLazyImage'} & set(listed):
@@ -3627,6 +3645,19 @@ def promote(args):
     animated_switcher_sources = None
     ui_config_sources = (_ui_config_policy.sources(blocks_by_va, name_to_block)
                          if 'UFortUIDataConfiguration' in listed else None)
+    client_event_sources = None
+    if {'UFortGameInstance', 'UFortUserWidget', 'UFortKismetLibrary'} & set(listed):
+        required = {'UFortGameInstance', 'UFortUserWidget', 'UFortClientEventInterface'}
+        if not required <= set(listed):
+            raise ValueError('client event owner/registry/widget interface dependencies missing')
+        _client_event_policy.validate_classes(blocks_by_va, name_to_block, guarded_native_execs)
+        _client_event_policy.validate_types(gate)
+        _client_event_policy.validate_manual(
+            Path(os.path.join(PROJECT_NATIVE_DIR, 'Source/FortniteGame/Public/FortniteMapClasses.h')).read_text(),
+            Path(os.path.join(PROJECT_NATIVE_DIR, 'Source/FortniteGame/Private/FortniteMapClasses.cpp')).read_text())
+        client_event_sources = _client_event_policy.sources()
+    if 'UCommonActivatablePanel' in listed:
+        _strict_panel_policy.validate_classes(blocks_by_va, name_to_block, guarded_native_execs)
     if 'UFortUIStateWidget_NUI' in listed:
         _legacy_state_policy.validate_classes(blocks_by_va, name_to_block)
         _legacy_state_policy.validate_types(gate)
@@ -3748,7 +3779,7 @@ def promote(args):
         model = build_class_promoted(blocks_by_va[block], name, resolver, parents[block], owner_fns,
                                      snippets_by_class.get(name, []), splice_ctx,
                                      native_execs=guarded_native_execs.get(name) if name in
-                                 ("UCommonActivatablePanel", "UCommonInputSubsystem", "UCommonActionWidget", "UCommonButton", "UCommonTextBlock", "UFortGlobals", "UFortGlobalUIContext", "UFortUINotification", "UCommonLazyImage", "UCommonActivatableWidgetContainerBase") else None)
+                                 ("UCommonActivatablePanel", "UCommonInputSubsystem", "UCommonActionWidget", "UCommonButton", "UCommonTextBlock", "UFortGlobals", "UFortGlobalUIContext", "UFortUINotification", "UCommonLazyImage", "UCommonActivatableWidgetContainerBase", "UFortKismetLibrary") else None)
         model["includes"] = sorted(set(own_includes(gate, model["used"], package))
                                    | set(model["splice"].get("header_includes", set())))
         _route_policy.configure_model(model)
@@ -3757,6 +3788,8 @@ def promote(args):
         _animated_switcher_policy.configure_model(model)
         _queue_lifecycle_policy.configure_model(model)
         _legacy_state_policy.configure_model(model)
+        model = _strict_panel_policy.header_prelude(model)
+        _client_event_policy.configure_model(model)
         if name == 'UCommonInputControllerData':
             _controller_brush_policy.validate_model(model)
         if model.get('common_input_settings_cache_runtime'):
@@ -3810,6 +3843,7 @@ def promote(args):
                           if (package_of.get(ref) or "") in PROMOTE_PACKAGES and package_of.get(ref) != package])
         api = "%s_API" % module.upper()
         header = render_promoted_header(model, api, parent_include, source_label)
+        header = _strict_panel_policy.finalize_header(model, header)
         cpp = render_promoted_cpp(model, source_label)
         _input_cache_policy.validate_rendered(model, header, cpp)
         _action_slate_policy.validate_rendered(model, header, cpp)
@@ -3939,6 +3973,8 @@ def promote(args):
                 splice_rejects.append({"entry": "%s::%s" % (cls, e["function"]), "kind": e["kind"],
                                        "reason": "class is not generated (not in the native class set, or an interface)"})
     outputs = {n: (h, c) for n, _module, h, c in class_outputs}
+    if 'UCommonActivatablePanel' in listed:
+        _strict_panel_policy.validate_dependencies({m['name']: m for m in class_models})
     if 'UFortUIStateWidget_NUI' in listed:
         _legacy_state_policy.validate_output(next(m for m in class_models if m['name']=='UFortUIStateWidget_NUI'),
             *outputs['UFortUIStateWidget_NUI'], texts[gate.info('0x14531e170').header_name])
@@ -4000,6 +4036,8 @@ def promote(args):
         _animated_switcher_policy.validate_output(model, *outputs[model['name']])
         _queue_lifecycle_policy.validate_output(model, *outputs[model['name']])
         _ui_config_policy.validate_output(model, *outputs[model['name']])
+        _strict_panel_policy.validate_output(model, *outputs[model['name']])
+        _client_event_policy.validate_output(model, *outputs[model['name']])
         _modality_policy.validate_rendered(model, *outputs[model['name']])
         _cursor_settings_policy.validate_output(model, *outputs[model['name']])
         if model.get('activatable_route_bridge_runtime'):
@@ -4042,6 +4080,10 @@ def promote(args):
     if ui_config_sources:
         for filename, text in ui_config_sources.items():
             with open(os.path.join(args.source_root, 'FortniteUI', 'Generated', filename), 'w', encoding='utf-8', newline='\n') as fh:
+                fh.write(text)
+    if client_event_sources:
+        for filename, text in client_event_sources.items():
+            with open(os.path.join(args.source_root, 'FortniteGame', 'Generated', filename), 'w', encoding='utf-8', newline='\n') as fh:
                 fh.write(text)
     if 'UFortRootViewportLayout' in generated_names:
         for filename, text in _root_slate_policy.extra_headers().items():

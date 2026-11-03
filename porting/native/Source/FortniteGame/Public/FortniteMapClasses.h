@@ -7,6 +7,7 @@
 #include "NavAreas/NavAreaMeta.h"
 #include "NavigationSystem.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
+#include "FFortClientEventName.h"
 #include "FortniteMapClasses.generated.h"
 
 // Classes that are not in the promoted native set (porting/native_class_set.txt) stay hand-written here.
@@ -65,4 +66,7 @@ public:
     // Original Win64 shipping contract: context is marshaled but not inspected.
     UFUNCTION(BlueprintPure, Category="Fortnite|Platform", meta=(WorldContext="WorldContextObject"))
     static bool IsMobileGame(const UObject* WorldContextObject);
+
+    UFUNCTION(BlueprintCallable, BlueprintCosmetic, meta=(WorldContext="WorldContextObject"))
+    static void ExecuteClientEvent(UObject* WorldContextObject, FFortClientEventName EventType, UObject* EventSource, UObject* EventFocus);
 };

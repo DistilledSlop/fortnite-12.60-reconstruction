@@ -1,0 +1,118 @@
+{
+  "image": "/mnt/vibrato/fortnite-evidence/original-late-capture-1/image-125.runtime.bin",
+  "base": "0x140000000",
+  "windows": [
+    {
+      "va": "0x1407fa9e0",
+      "size": "0x5f",
+      "sha256": "baee3a9e9acfd1e2ff5f429aa8ffbf958654b43182eee32d188f7341bf831be3"
+    },
+    {
+      "va": "0x14418a080",
+      "size": "0x26",
+      "sha256": "d640871eb5e0e46eb215f5594c2270a0b8b405bea57d28b6b2c0a788abba8c77"
+    },
+    {
+      "va": "0x1407abbc0",
+      "size": "0x755",
+      "sha256": "67fbc74076690db2b07529da5498e36f27668d40e26c8e70136a6b5d6c49dbc0"
+    },
+    {
+      "va": "0x140801750",
+      "size": "0xf0",
+      "sha256": "893352874586f0a015bba97c92850e1219f508816710d967f36fcdc5fd26b6b6"
+    },
+    {
+      "va": "0x140801950",
+      "size": "0x2dc",
+      "sha256": "b97b58f2c3b5c47491c49be67237108a5393627b67beeb7cc1063e073dcf8c0b"
+    },
+    {
+      "va": "0x1407ec2d0",
+      "size": "0x90b",
+      "sha256": "23ac0bfbcee681888b8b910fbd4e54e70cf3a7f8fb6800e3532eaf2fc2472dda"
+    },
+    {
+      "va": "0x1407bd580",
+      "size": "0xb5",
+      "sha256": "32c50717465847fa4dc0678d19b555c3a6a91701d1c86c8f9718086d17e23215"
+    },
+    {
+      "va": "0x14078fb70",
+      "size": "0x1be",
+      "sha256": "03a5016dfd06897f0820044ab43c4f1f0008b48ae7bb8c225e4b17f6877124b7"
+    },
+    {
+      "va": "0x14079e0b0",
+      "size": "0x9d",
+      "sha256": "aef8ab9a702a9d23fe44af710dfd37a9d70e59172f8b2c3c6429ed31914a1550"
+    },
+    {
+      "va": "0x1407d1740",
+      "size": "0x37",
+      "sha256": "e6bcd2504c91c44fd8e042ddee486be17690a31141dd7125dd4a31db3e145c6c"
+    },
+    {
+      "va": "0x1407d1c60",
+      "size": "0x5a",
+      "sha256": "efadc0d70738ec6a584eccb03da8b0f089921125f598ac74ef252ac5a1d85f75"
+    },
+    {
+      "va": "0x1407d1f00",
+      "size": "0xaf",
+      "sha256": "f945d83264e4d61b43b90928e1754209c5d94e7a5dc0db9539df7edd9146dce3"
+    },
+    {
+      "va": "0x1407cca60",
+      "size": "0x2c",
+      "sha256": "337ab92ff1899adf4e032a3a76e15a192d1c5f0da02aec729b0d5ded26a91f02"
+    },
+    {
+      "va": "0x1407f7b90",
+      "size": "0x261",
+      "sha256": "07456fa699518fc1ae866dd09ba604f444f704409bf87fe34d705055efd95a5e"
+    },
+    {
+      "va": "0x1407e1ed0",
+      "size": "0x68",
+      "sha256": "3627dbe2b29754cda5e4709e78e04dba85ef803f7a651f7d3e3028ee23100d80"
+    },
+    {
+      "va": "0x140802440",
+      "size": "0x3e9",
+      "sha256": "0fe14990a55fa979226c4853940d342b3c64f6605a599398f0c8e15419ab9b3b"
+    },
+    {
+      "va": "0x140796d50",
+      "size": "0x53",
+      "sha256": "df629f28245223b2d5d127af13b4e7cf175b09adc3ab39f48385fe7d58eb10a7"
+    },
+    {
+      "va": "0x14460bc60",
+      "size": "0x3f",
+      "sha256": "62e136ed80dbf12d66d2e58abda9e457625fd5797fe33705c0890229f62d097d"
+    },
+    {
+      "va": "0x144214d90",
+      "size": "0x11",
+      "sha256": "b071f7e4fda11f3b1590da0c310f2ff672a211fcfacd96a241cdd95e8d80844e"
+    }
+  ],
+  "vtables": [
+    {
+      "table": "0x1459f1338",
+      "slot": "0x28",
+      "target": "0x140802440"
+    },
+    {
+      "table": "0x1459f0940",
+      "slot": "0x4f8",
+      "target": "0x1407d1f50"
+    },
+    {
+      "table": "0x1459f0940",
+      "slot": "0x500",
+      "target": "0x1407d1f00"
+    }
+  ]
+}
