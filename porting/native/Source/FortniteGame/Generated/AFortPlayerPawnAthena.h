@@ -491,6 +491,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetCapsuleRadiusAthena(float Radius);
 
+	UFUNCTION(BlueprintCallable)
+	bool SetCharacterBodyVisibilityForPossession(bool bVisible);
+
 protected:
 	UFUNCTION(BlueprintCallable)
 	void SetDamageCameraShakeClass(TSubclassOf<UCameraShake> NewValue);

@@ -40,6 +40,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void RemoveAllItemsForPickupInstigator(UObject* PickupInstigator);
 
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void RemovePickupInstigator(UObject* PickupInstigator, int32 ItemIndex);
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

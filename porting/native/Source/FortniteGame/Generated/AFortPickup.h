@@ -266,6 +266,15 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool PickedUp() const;
 
+	UFUNCTION(BlueprintCallable)
+	void SetCombinePickupsWhenTossCompletes(bool CombinePickupsWhenTossCompletes);
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void SetOverrideInteractRadius(float NewRadius);
+
+	UFUNCTION(BlueprintCallable)
+	void SetPickedUp(bool bInPickedUp);
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };
 

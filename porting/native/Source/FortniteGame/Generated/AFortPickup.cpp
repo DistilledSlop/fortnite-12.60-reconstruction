@@ -76,6 +76,27 @@ bool AFortPickup::PickedUp() const
 	return AFortPickup::bPickedUp;
 }
 
+void AFortPickup::SetCombinePickupsWhenTossCompletes(bool CombinePickupsWhenTossCompletes)
+{
+	// CONFIDENCE: high
+	bCombinePickupsWhenTossCompletes = CombinePickupsWhenTossCompletes;
+}
+
+void AFortPickup::SetOverrideInteractRadius(float NewRadius)
+{
+	// CONFIDENCE: high
+	if (GetLocalRole() == ROLE_Authority)
+	{
+	    OverrideInteractAimRadius = NewRadius;
+	}
+}
+
+void AFortPickup::SetPickedUp(bool bInPickedUp)
+{
+	// CONFIDENCE: high
+	bPickedUp = bInPickedUp;
+}
+
 void AFortPickup::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

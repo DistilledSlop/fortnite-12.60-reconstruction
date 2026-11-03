@@ -21,6 +21,13 @@ void UFortPickupInstigatorRegistryComponent::RemoveAllItemsForPickupInstigator(U
 	// CONFIDENCE: HIGH
 }
 
+void UFortPickupInstigatorRegistryComponent::RemovePickupInstigator(UObject* PickupInstigator, int32 ItemIndex)
+{
+	// CONFIDENCE: high
+	// Native body is empty.
+	return;
+}
+
 void UFortPickupInstigatorRegistryComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

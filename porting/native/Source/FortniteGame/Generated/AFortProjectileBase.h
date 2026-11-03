@@ -209,6 +209,9 @@ public:
 	UPROPERTY()
 	UBulletWhipTrackerComponentBase* BulletWhipTrackerComponent;
 
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void AddTagToDefaultTags(FGameplayTag TagToAddToProjectileDefaultTags);
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetGravityScale() const;
 

@@ -116,10 +116,22 @@ public:
 	void OnRep_ReplicatedVelocity();
 
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void SetAccelerationMagnitude(float InAccelerationMagnitude);
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void SetDesiredDirection(FVector& Direction);
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void SetHomingLaserTargetDistance(float NewDistance);
 
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void SetHomingLockTargetDistanceThreshold(float NewDistanceThreshold);
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void SetHomingStyle(EFortHomingStyle NewHomingStyle, bool ResetHomingTurnSpeedTimer);
+
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	void SetHomingTargetOffset(FVector& NewHomingOffset);
 
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void SetHomingTimeUntilMaxTurnSpeed(float NewTimeUntilMax);
@@ -129,6 +141,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
 	void SetHomingTurnSpeedMin(float NewHomingTurnSpeedMin);
+
+	UFUNCTION(BlueprintCallable)
+	void SetWaterInteractionComponent(UFortWaterInteractionComponent* WaterComponent);
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 };

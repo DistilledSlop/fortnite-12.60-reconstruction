@@ -10,6 +10,13 @@ credentials in Git, and the orchestrator reviews and commits.
 
 ## Current baseline
 
+Batch98 integrates13 pickup/projectile/visibility functions:2,235 bodies+
+238 fields=2,473 accepted,0 rejected after exact-reference signature fixes.
+Ten tracked Native files changed; four Claude large player drafts remain
+uncounted. Claude now handles two large ASC functions; Terra closes death-cause
+mapping using existing shared tag support. No tests/build/runtime;195 canonical
++4 manual pending; next3,040. All four product gates OPEN, goal ACTIVE.
+
 Batch97 integrates16 reviewed pawn/controller/creative-volume bodies, including
 one shared helper:2,222 bodies+238 fields=2,460 accepted,0 rejected. Eight Native
 files changed; restriction-reason enum header from96 also tracked. GetDeathInfo

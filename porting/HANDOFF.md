@@ -1,5 +1,38 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Projectile/pickup bulk and large player drafts98 (2026-11-03)
+
+Previous source/dashboard pushed through e00f7b1a. Reviewed13 new bodies:
+8 projectile/movement,4 pickup/registry,1 character-body visibility. Visibility
+helper144124180 matches UE SetVisibility; propagation2=Propagate, NOT DirtyOnly.
+Generation98 final accepts2,473=2,235 bodies+238 fields,0 rejected. Initial
+signature gate rejected two const FVector& parameters; reflection requires
+FVector&. Corrected both. Added typed component locals so generated body-type
+inference supplies complete component headers; retained Engine Actor include.
+Total10 tracked Native files changed across runs,0 added/removed. Runner
+`python3 -I /tmp/promote-native-batch98.py`, log/tmp/promote-native-batch98.log,
+reports gameplay-bulk-integration-98/. No tests/build/runtime since2,040;
+195 canonical+4 manual pending; next3,040. All product gates OPEN, goal ACTIVE.
+
+Claude player97 completed four UNCOUNTED drafts: death-cause ordered44-row
+classifier, QuickBars swap, actual ghost-replication retry, streaming handshake.
+Corrected assignment identity:142070440 is QuickBars::SwapItems; real ghost
+body1423cbe80. Root fixed declaration spelling/enum syntax and preserved each
+singleton call instead of assuming safe hoisting. No new large draft is counted.
+New Claude task /tmp/claude-native-ability99, PTY35251 is ACTIVE on ASC shared
+animation421-line helper14160c6f0 and gameplay-effect215-line helper1415ec3f0;
+owns ability_large99_runtime. Continue bounded large tasks while usage permits.
+
+New94-wrapper bulk selection /tmp/native98-selection.json covers pickup,
+projectile,registry,containers,ASC; native98-broad successful12.9s.173 direct
+helpers native98-impl successful16.5s;21 large-player/visibility dependencies
+native98-deps successful14.4s. No test runs: these are static evidence captures.
+Terra death_cause_closure99 owns NEW death_cause99_runtime and binds existing
+FFortNativeGameplayTagsRuntime (all original tag offsets already supported),
+Engine HasTag and override mapping. Five deeper helpers probing serial to
+native99-death-deps, PTY20187; observe same handle, then notify worker. Root is
+only Ghidra/generator/build/canonical owner. Other Terra bulk tasks completed.
+
 ## Bulk pawn/controller integration97 (2026-11-03)
 
 Source96/dashboard pushed through941aef6f. Reviewed and integrated16 bodies:

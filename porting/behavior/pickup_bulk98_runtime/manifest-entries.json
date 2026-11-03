@@ -1,0 +1,55 @@
+[
+  {
+    "function": "SetPickedUp",
+    "kind": "exec",
+    "signature": "void SetPickedUp(bool bInPickedUp)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/pickup_bulk98_runtime/AFortPickup_SetPickedUp.inc",
+    "address": "0x142a2b990",
+    "confidence": "high",
+    "status": "ported",
+    "reflection_flags": "0x4020401",
+    "class": "AFortPickup"
+  },
+  {
+    "function": "SetCombinePickupsWhenTossCompletes",
+    "kind": "exec",
+    "signature": "void SetCombinePickupsWhenTossCompletes(bool CombinePickupsWhenTossCompletes)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/pickup_bulk98_runtime/AFortPickup_SetCombinePickupsWhenTossCompletes.inc",
+    "address": "0x142a2b7d0",
+    "confidence": "high",
+    "status": "ported",
+    "reflection_flags": "0x4020401",
+    "class": "AFortPickup"
+  },
+  {
+    "function": "RemovePickupInstigator",
+    "kind": "exec",
+    "signature": "void RemovePickupInstigator(UObject* PickupInstigator, int32 ItemIndex)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/pickup_bulk98_runtime/UFortPickupInstigatorRegistryComponent_RemovePickupInstigator.inc",
+    "address": "0x1427630e0",
+    "confidence": "high",
+    "status": "ported",
+    "reflection_flags": "0x4020405",
+    "class": "UFortPickupInstigatorRegistryComponent"
+  },
+  {
+    "class": "AFortPickup",
+    "function": "SetOverrideInteractRadius",
+    "kind": "exec",
+    "signature": "void SetOverrideInteractRadius(float NewRadius)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/pickup_bulk98_runtime/AFortPickup_SetOverrideInteractRadius.inc",
+    "address": "0x142a2b910",
+    "native_body_address": "0x142038a20",
+    "confidence": "high",
+    "status": "ported",
+    "reflection_flags": "0x4020405"
+  }
+]
