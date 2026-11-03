@@ -7,6 +7,14 @@ bool UFortTooltip::BP_GetNumericValue_Implementation(UObject* ObjectToDescribe, 
 	return false;
 }
 
+bool UFortTooltip::BP_GetTextForToken_Implementation(UObject* ObjectToDescribe, FGameplayTag& Tag, UFortTooltipContext* Context, FGameplayTag& Token, FText& OutText) const
+{
+	// CONFIDENCE: high
+	// Native 0x1425e4b40 formats the token into its localized bracketed token text.
+	OutText = FText::Format(NSLOCTEXT("Tooltip", "FormatString", "[{0}]"), FText::FromString(Token.ToString()));
+	return false;
+}
+
 bool UFortTooltip::BP_GetTokenizedDescriptionText_Implementation(UObject* ObjectToDescribe, FGameplayTag& Tag, UFortTooltipContext* Context, TArray<FText>& OutDescription) const
 {
 	// CONFIDENCE: high. Native target 0x1425e4ec0.

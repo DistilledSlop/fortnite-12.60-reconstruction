@@ -80,6 +80,9 @@ public:
 	virtual TArray<FFortAlterationSlotStatus> GetAlterationSlots() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual FText GetDescription() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual FText GetDisplayName() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

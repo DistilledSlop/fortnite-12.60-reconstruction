@@ -38,6 +38,9 @@ public:
 	virtual float GetAnimPlayRate() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual float GetHealthRestored(int32 ItemLevel) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual UAnimMontage* GetUseAnimation() const;
 
 };

@@ -1,0 +1,68 @@
+[
+  {
+    "class": "AFortMission",
+    "function": "GetMissionName",
+    "kind": "exec",
+    "signature": "FText GetMissionName() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": true,
+    "inc_path": "porting/behavior/large_bulk150b_runtime/AFortMission_GetMissionName.inc",
+    "address": "0x1429ddcd0",
+    "native_body_address": "0x1420ba150",
+    "reflection_flags": "0x54020400",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Returns MissionInfo->MissionName if present, otherwise the shared empty FText."
+  },
+  {
+    "class": "UFortItem",
+    "function": "GetDescription",
+    "kind": "exec",
+    "signature": "FText GetDescription() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": true,
+    "inc_path": "porting/behavior/large_bulk150b_runtime/UFortItem_GetDescription.inc",
+    "address": "0x142958bd0",
+    "native_body_address": "0x14202c760",
+    "reflection_flags": "0x54020400",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Calls GetItemDefinitionBP once and returns the first definition description or empty FText."
+  },
+  {
+    "class": "UFortTooltip",
+    "function": "BP_GetTextForToken_Implementation",
+    "kind": "native_event_impl",
+    "signature": "bool BP_GetTextForToken_Implementation(UObject* ObjectToDescribe, FGameplayTag& Tag, UFortTooltipContext* Context, FGameplayTag& Token, FText& OutText) const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/large_bulk150b_runtime/UFortTooltip_BP_GetTextForToken_Implementation.inc",
+    "address": "0x142b13e50",
+    "native_body_address": "0x1425e4b40",
+    "reflection_flags": "0x48480c00",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Formats the token as localized [{0}] text and returns false; XOR AL,AL at target epilogue."
+  },
+  {
+    "class": "AFortTrack",
+    "function": "GetSplineFromPositionAndOrientation",
+    "kind": "exec",
+    "signature": "void GetSplineFromPositionAndOrientation(FVector& InLocation, FRotator& InRotation, USplineComponent*& OutSpline, float& OutDistanceAlongSpline, bool& OutReverseDirection)",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": true,
+    "inc_path": "porting/behavior/large_bulk150b_runtime/AFortTrack_GetSplineFromPositionAndOrientation.inc",
+    "address": "0x142b194e0",
+    "native_body_address": "0x1425c3b80",
+    "reflection_flags": "0x4c20400",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Components/SplineComponent.h"
+    ],
+    "notes": "Samples nine positions per spline and compares planar spline direction with the input rotation; helper 0x14413e990 establishes world-space direction."
+  }
+]

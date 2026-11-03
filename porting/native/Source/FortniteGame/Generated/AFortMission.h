@@ -253,6 +253,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	FGuid GetMissionGuid() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual FText GetMissionName() const;
+
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void GetSpawningDistanceMinMaxOverrideForAIEncounter(UFortAIEncounterInfo* Encounter, float& OutSpawningDistanceMin, float& OutSpawningDistanceMax) const;
 	virtual void GetSpawningDistanceMinMaxOverrideForAIEncounter_Implementation(UFortAIEncounterInfo* Encounter, float& OutSpawningDistanceMin, float& OutSpawningDistanceMax) const;

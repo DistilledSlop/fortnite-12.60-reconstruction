@@ -14,7 +14,10 @@
 #include "EFortRarity.h"
 #include "EFortTemplateAccess.h"
 #include "Engine/CurveTable.h"
+#include "Engine/SkeletalMesh.h"
+#include "Engine/StaticMesh.h"
 #include "FFortOnItemDefinitionCountChangedDelegate.h"
+#include "GameFramework/Actor.h"
 #include "GameplayEffect.h"
 #include "GameplayEffectAggregator.h"
 #include "GameplayTagAssetInterface.h"
@@ -29,6 +32,7 @@ class UFortItemSeriesDefinition;
 class UFortTooltip;
 class UFortTooltipDisplayStatsList;
 class UMeshComponent;
+class UObject;
 class USkeletalMesh;
 class UStaticMesh;
 class UTexture2D;
@@ -225,6 +229,18 @@ public:
 	virtual TSoftObjectPtr<UTexture2D> GetLargePreviewImage() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual void GetPreviewAssets(TArray<TSoftObjectPtr<UObject>>& Assets) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool GetPreviewPrefabAsset(TSoftClassPtr<AActor>& Asset) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool GetPreviewSkeletalMeshAsset(TSoftObjectPtr<USkeletalMesh>& Asset) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool GetPreviewStaticMeshAsset(TSoftObjectPtr<UStaticMesh>& Asset) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	EFortRarity GetRarity() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
@@ -259,5 +275,8 @@ public:
 	virtual void GetOwnedGameplayTags(FGameplayTagContainer& TagContainer) const;
 	virtual EFortItemType NativeGetItemType() const;
 	virtual EFortRarity NativeGetRarity() const;
+	virtual TSoftObjectPtr<USkeletalMesh> GetPreviewSkeletalMeshNative() const;
+	virtual TSoftObjectPtr<UStaticMesh> GetPreviewStaticMeshNative() const;
+	virtual TSoftClassPtr<AActor> GetPreviewPrefabNative() const;
 };
 

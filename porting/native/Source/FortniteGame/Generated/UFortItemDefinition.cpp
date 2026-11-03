@@ -5,6 +5,10 @@
 #include "Components/MeshComponent.h"
 #include "EFortItemType.h"
 #include "EFortRarity.h"
+#include "Engine/SkeletalMesh.h"
+#include "Engine/StaticMesh.h"
+#include "Engine/Texture2D.h"
+#include "GameFramework/Actor.h"
 #include "GameplayEffect.h"
 #include "GameplayEffectAggregator.h"
 #include "GameplayEffectTypes.h"
@@ -73,6 +77,48 @@ TSoftObjectPtr<UTexture2D> UFortItemDefinition::GetLargePreviewImage() const
 	// CONFIDENCE: high
 	// Native target 0x14202f500.
 	return LargePreviewImage.IsNull() ? GetSmallPreviewImage() : LargePreviewImage;
+}
+
+void UFortItemDefinition::GetPreviewAssets(TArray<TSoftObjectPtr<UObject>>& Assets) const
+{
+	// CONFIDENCE: high
+	// 0x1420318c0, preserving the original virtual dispatch and append order.
+	TSoftObjectPtr<UStaticMesh> StaticMesh;
+	if (GetPreviewStaticMeshAsset(StaticMesh))
+	    Assets.Emplace(StaticMesh);
+	TSoftObjectPtr<USkeletalMesh> SkeletalMesh;
+	if (GetPreviewSkeletalMeshAsset(SkeletalMesh))
+	    Assets.Emplace(SkeletalMesh);
+	TSoftClassPtr<AActor> Prefab;
+	if (GetPreviewPrefabAsset(Prefab))
+	    Assets.Emplace(Prefab.ToSoftObjectPath());
+	const TSoftObjectPtr<UTexture2D> Image = GetLargePreviewImage();
+	if (!Image.IsNull())
+	    Assets.Emplace(Image);
+}
+
+bool UFortItemDefinition::GetPreviewPrefabAsset(TSoftClassPtr<AActor>& Asset) const
+{
+	// CONFIDENCE: high
+	// 0x1420320e0 forwards through virtual slot 0x450.
+	Asset = GetPreviewPrefabNative();
+	return !Asset.IsNull();
+}
+
+bool UFortItemDefinition::GetPreviewSkeletalMeshAsset(TSoftObjectPtr<USkeletalMesh>& Asset) const
+{
+	// CONFIDENCE: high
+	// 0x1420322d0 forwards through virtual slot 0x420.
+	Asset = GetPreviewSkeletalMeshNative();
+	return !Asset.IsNull();
+}
+
+bool UFortItemDefinition::GetPreviewStaticMeshAsset(TSoftObjectPtr<UStaticMesh>& Asset) const
+{
+	// CONFIDENCE: high
+	// 0x142032510 forwards through virtual slot 0x430.
+	Asset = GetPreviewStaticMeshNative();
+	return !Asset.IsNull();
 }
 
 EFortRarity UFortItemDefinition::GetRarity() const
@@ -328,5 +374,26 @@ EFortRarity UFortItemDefinition::NativeGetRarity() const
 {
 	// Native virtual target 0x1409dd610; CONFIDENCE: HIGH.
 	return Rarity;
+}
+
+TSoftObjectPtr<USkeletalMesh> UFortItemDefinition::GetPreviewSkeletalMeshNative() const
+{
+	// CONFIDENCE: high
+	// 0x142032210 reads the soft pointer at 0x2e8.
+	return FrontendPreviewSkeletalMeshOverride;
+}
+
+TSoftObjectPtr<UStaticMesh> UFortItemDefinition::GetPreviewStaticMeshNative() const
+{
+	// CONFIDENCE: high
+	// 0x142032450 reads the soft pointer at 0x2c0.
+	return FrontendPreviewMeshOverride;
+}
+
+TSoftClassPtr<AActor> UFortItemDefinition::GetPreviewPrefabNative() const
+{
+	// CONFIDENCE: high
+	// 0x14084bd00 constructs an empty soft class pointer.
+	return TSoftClassPtr<AActor>();
 }
 

@@ -9,6 +9,8 @@
 #include "Engine/EngineTypes.h"
 #include "FFortTrackGraphChanged.h"
 #include "FTrackConnectorMeshConfig.h"
+#include "Math/Rotator.h"
+#include "Math/Vector.h"
 
 class UBoxComponent;
 class UPrimitiveComponent;
@@ -104,6 +106,9 @@ public:
 	// table index 0, flags 0x20080000082008
 	UPROPERTY(Transient)
 	UPrimitiveComponent* SwitchComp;
+
+	UFUNCTION(BlueprintCallable)
+	virtual void GetSplineFromPositionAndOrientation(FVector& InLocation, FRotator& InRotation, USplineComponent*& OutSpline, float& OutDistanceAlongSpline, bool& OutReverseDirection);
 
 	UFUNCTION(BlueprintCallable)
 	void InitializeTrack(UPrimitiveComponent* InSwitchComp);

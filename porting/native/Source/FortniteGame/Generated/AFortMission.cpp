@@ -53,6 +53,13 @@ FGuid AFortMission::GetMissionGuid() const
 	return MissionGuid;
 }
 
+FText AFortMission::GetMissionName() const
+{
+	// CONFIDENCE: high
+	// Native 0x1420ba150 returns the mission info's text, or shared empty text.
+	return MissionInfo ? MissionInfo->MissionName : FText::GetEmpty();
+}
+
 void AFortMission::GetSpawningDistanceMinMaxOverrideForAIEncounter_Implementation(UFortAIEncounterInfo* Encounter, float& OutSpawningDistanceMin, float& OutSpawningDistanceMax) const
 {
 	// CONFIDENCE: high

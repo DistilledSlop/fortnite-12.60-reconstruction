@@ -1,0 +1,157 @@
+[
+  {
+    "class": "UFortConsumableItemDefinition",
+    "function": "GetHealthRestored",
+    "kind": "exec",
+    "signature": "float GetHealthRestored(int32 ItemLevel) const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/large_bulk150a_runtime/UFortConsumableItemDefinition_GetHealthRestored.inc",
+    "address": "0x14288bac0",
+    "native_body_address": "0x14200c400",
+    "confidence": "high",
+    "status": "ported",
+    "reflection_flags": "0x54020400",
+    "static": false,
+    "virtual": true,
+    "includes": [
+      "GameplayEffect.h",
+      "FortAssets.h",
+      "FortDelayedObjectLoader.h"
+    ],
+    "notes": "Instant gameplay effects contribute scalable level per UFortHealing execution. Soft class loading tracks the resolved class, including null after failed resolution, using shared FFortAssets; native loader 0x1415e2c30."
+  },
+  {
+    "class": "UFortItemDefinition",
+    "function": "GetPreviewSkeletalMeshNative",
+    "kind": "helper",
+    "signature": "TSoftObjectPtr<USkeletalMesh> GetPreviewSkeletalMeshNative() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/large_bulk150a_runtime/UFortItemDefinition_GetPreviewSkeletalMeshNative.inc",
+    "address": "0x142032210",
+    "confidence": "high",
+    "status": "ported",
+    "virtual": true,
+    "notes": "Virtual slot 0x420; copies reflected FrontendPreviewSkeletalMeshOverride at 0x2e8.",
+    "includes": [
+      "Engine/SkeletalMesh.h"
+    ]
+  },
+  {
+    "class": "UFortItemDefinition",
+    "function": "GetPreviewStaticMeshNative",
+    "kind": "helper",
+    "signature": "TSoftObjectPtr<UStaticMesh> GetPreviewStaticMeshNative() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/large_bulk150a_runtime/UFortItemDefinition_GetPreviewStaticMeshNative.inc",
+    "address": "0x142032450",
+    "confidence": "high",
+    "status": "ported",
+    "virtual": true,
+    "notes": "Virtual slot 0x430; copies reflected FrontendPreviewMeshOverride at 0x2c0.",
+    "includes": [
+      "Engine/StaticMesh.h"
+    ]
+  },
+  {
+    "class": "UFortItemDefinition",
+    "function": "GetPreviewPrefabNative",
+    "kind": "helper",
+    "signature": "TSoftClassPtr<AActor> GetPreviewPrefabNative() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/large_bulk150a_runtime/UFortItemDefinition_GetPreviewPrefabNative.inc",
+    "address": "0x14084bd00",
+    "confidence": "high",
+    "status": "ported",
+    "virtual": true,
+    "notes": "Virtual slot 0x450 constructs empty soft class pointer in the base class.",
+    "includes": [
+      "GameFramework/Actor.h"
+    ]
+  },
+  {
+    "class": "UFortItemDefinition",
+    "function": "GetPreviewSkeletalMeshAsset",
+    "kind": "exec",
+    "signature": "bool GetPreviewSkeletalMeshAsset(TSoftObjectPtr<USkeletalMesh>& Asset) const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/large_bulk150a_runtime/UFortItemDefinition_GetPreviewSkeletalMeshAsset.inc",
+    "address": "0x14295d690",
+    "confidence": "high",
+    "status": "ported",
+    "virtual": true,
+    "notes": "Virtual slot 0x428 forwards to virtual slot 0x420 and tests the resulting soft path.",
+    "native_body_address": "0x1420322d0",
+    "reflection_flags": "0x54420400"
+  },
+  {
+    "class": "UFortItemDefinition",
+    "function": "GetPreviewStaticMeshAsset",
+    "kind": "exec",
+    "signature": "bool GetPreviewStaticMeshAsset(TSoftObjectPtr<UStaticMesh>& Asset) const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/large_bulk150a_runtime/UFortItemDefinition_GetPreviewStaticMeshAsset.inc",
+    "address": "0x14295d760",
+    "confidence": "high",
+    "status": "ported",
+    "virtual": true,
+    "notes": "Virtual slot 0x438 forwards to virtual slot 0x430 and tests the resulting soft path.",
+    "native_body_address": "0x142032510",
+    "reflection_flags": "0x54420400"
+  },
+  {
+    "class": "UFortItemDefinition",
+    "function": "GetPreviewPrefabAsset",
+    "kind": "exec",
+    "signature": "bool GetPreviewPrefabAsset(TSoftClassPtr<AActor>& Asset) const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/large_bulk150a_runtime/UFortItemDefinition_GetPreviewPrefabAsset.inc",
+    "address": "0x14295d4b0",
+    "confidence": "high",
+    "status": "ported",
+    "virtual": true,
+    "notes": "Virtual slot 0x440 forwards to virtual slot 0x450 and tests the resulting soft path.",
+    "native_body_address": "0x1420320e0",
+    "reflection_flags": "0x54420400"
+  },
+  {
+    "class": "UFortItemDefinition",
+    "function": "GetPreviewAssets",
+    "kind": "exec",
+    "signature": "void GetPreviewAssets(TArray<TSoftObjectPtr<UObject>>& Assets) const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/large_bulk150a_runtime/UFortItemDefinition_GetPreviewAssets.inc",
+    "address": "0x14295d370",
+    "confidence": "high",
+    "status": "ported",
+    "virtual": true,
+    "notes": "Appends static, skeletal, prefab and large-image assets in order, retaining virtual dispatch for all getters.",
+    "native_body_address": "0x1420318c0",
+    "reflection_flags": "0x54420400",
+    "includes": [
+      "Engine/StaticMesh.h",
+      "Engine/SkeletalMesh.h",
+      "Engine/Texture2D.h"
+    ]
+  },
+  {
+    "class": "UAthenaCosmeticItemDefinition",
+    "function": "FindVariantByChannelNative",
+    "kind": "helper",
+    "signature": "UFortCosmeticVariant* FindVariantByChannelNative(FGameplayTag Channel) const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/large_bulk150a_runtime/UAthenaCosmeticItemDefinition_FindVariantByChannelNative.inc",
+    "address": "0x141d507d0",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Iterates ItemVariants and returns the first matching valid channel tag; used throughout GatherVariantAssets and its helpers."
+  }
+]

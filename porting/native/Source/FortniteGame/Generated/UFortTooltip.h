@@ -30,6 +30,12 @@ public:
 
 protected:
 	UFUNCTION(BlueprintNativeEvent)
+	bool BP_GetTextForToken(UObject* ObjectToDescribe, FGameplayTag& Tag, UFortTooltipContext* Context, FGameplayTag& Token, FText& OutText) const;
+	virtual bool BP_GetTextForToken_Implementation(UObject* ObjectToDescribe, FGameplayTag& Tag, UFortTooltipContext* Context, FGameplayTag& Token, FText& OutText) const;
+public:
+
+protected:
+	UFUNCTION(BlueprintNativeEvent)
 	bool BP_GetTokenizedDescriptionText(UObject* ObjectToDescribe, FGameplayTag& Tag, UFortTooltipContext* Context, TArray<FText>& OutDescription) const;
 	virtual bool BP_GetTokenizedDescriptionText_Implementation(UObject* ObjectToDescribe, FGameplayTag& Tag, UFortTooltipContext* Context, TArray<FText>& OutDescription) const;
 public:
