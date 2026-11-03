@@ -7,6 +7,7 @@
 #include "Components/ActorComponent.h"
 
 #include "FOnMinigameSetup.h"
+#include "GameFramework/Actor.h"
 
 class AFortMinigame;
 class AFortMinigameSettingsBuilding;
@@ -39,5 +40,9 @@ public:
 	void OnRep_CurrentMinigame();
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static AFortMinigame* NativeResolveMinigameFromVolume(AActor* Volume);
 };
 

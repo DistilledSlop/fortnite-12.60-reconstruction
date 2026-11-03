@@ -22,9 +22,17 @@ public:
 	UPROPERTY()
 	UAthenaMarkerPointer* MarkerPointer;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x2e0): not a UPROPERTY, not replicated.
+	uint8 NativeRecoveredByte_0x2e0;
+
 	// table index 0, flags 0x40000000080008
 	UPROPERTY()
 	UCommonActivatableWidgetSwitcher* MobileInfo_Matchmaking_Switcher;
+
+protected:
+	UFUNCTION(BlueprintCallable)
+	void ClearCachedWorldPos();
+public:
 
 };
 

@@ -7,8 +7,11 @@
 #include "UObject/Object.h"
 
 #include "EQuestMapScreenMode.h"
+#include "Engine/Engine.h"
 #include "FFortAbilitySetHandle.h"
+#include "FFortMcpQuestObjectiveInfo.h"
 #include "FFortQuestObjectiveCompletion.h"
+#include "FFortUpdatedObjectiveStat.h"
 #include "FOnDailyQuestRerolled.h"
 #include "FOnDisplayDynamicQuestUpdate.h"
 #include "FOnObjectiveStatXPGranted.h"
@@ -21,6 +24,7 @@
 #include "FOnXpDeltasUpdated.h"
 #include "GameplayTagContainer.h"
 
+class AFortPlayerState;
 class APawn;
 class UDataTable;
 class UFortAccoladeItem;
@@ -29,6 +33,7 @@ class UFortHardcoreModifierItem;
 class UFortMcpProfileSubgame;
 class UFortQuestCategory;
 class UFortQuestItem;
+class UFortQuestObjectiveInfo;
 
 #include "UFortQuestManager.generated.h"
 
@@ -228,5 +233,10 @@ protected:
 	void InitializeQuestAbilities(APawn* PlayerPawn);
 public:
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	static bool NativeShouldDisplayObjectiveStatus(const UFortQuestObjectiveInfo* Objective, const FFortMcpQuestObjectiveInfo* DefinitionObjective, const UFortQuestItem* Quest);
+	void NativeApplyAssistedObjectiveUpdate(const FFortUpdatedObjectiveStat& Update, AFortPlayerState* Owner, AFortPlayerState* Assisted);
 };
 

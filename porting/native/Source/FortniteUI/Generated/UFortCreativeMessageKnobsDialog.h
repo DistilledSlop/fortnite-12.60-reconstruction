@@ -19,6 +19,15 @@ class FORTNITEUI_API UFortCreativeMessageKnobsDialog : public UFortMatchmakingKn
 	GENERATED_BODY()
 
 public:
+	// Non-reflected field (behaviour kind "member_field", offset 0x578): not a UPROPERTY, not replicated.
+	uint8 NativeRecoveredByte_0x578;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x590): not a UPROPERTY, not replicated.
+	uint8 NativeRecoveredByte_0x590;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x592): not a UPROPERTY, not replicated.
+	uint8 NativeRecoveredByte_0x592;
+
 	// table index 4, flags 0x24080000010001
 	UPROPERTY()
 	TSubclassOf<UUserWidget> LegacyEntryWidgetClass;
@@ -34,6 +43,9 @@ public:
 	// table index 0, flags 0x20080010080000
 	UPROPERTY()
 	FOnFilterListCompleted OnFilterListCompleted;
+
+	UFUNCTION(BlueprintCallable)
+	void DisableFilters();
 
 };
 

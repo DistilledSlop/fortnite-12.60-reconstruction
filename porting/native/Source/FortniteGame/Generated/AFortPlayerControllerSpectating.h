@@ -183,6 +183,9 @@ public:
 	UPROPERTY()
 	UInputComponent* FullScreenMapInputComponent;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x2ad0): not a UPROPERTY, not replicated.
+	uint8 NativeRecoveredByte_0x2ad0;
+
 	// Non-reflected field (behaviour kind "member_field", offset 0x2ae5): not a UPROPERTY, not replicated.
 	bool NativeRecoveredBool_0x2ae5;
 
@@ -237,6 +240,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool AreNotificationsEnabled() const;
+
+	UFUNCTION(BlueprintCallable)
+	void FullScreenMapCursorStopDrag();
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UAthenaMarkerComponent* GetMarkerComponent() const;

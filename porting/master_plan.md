@@ -10,6 +10,12 @@ credentials in Git, and the orchestrator reviews and commits.
 
 ## Current baseline
 
+Batch88 integrates9 bodies+8 fields: quest update/status, volume minigame
+resolver and6 native mutations. Generation accepts2,385 entries=2,156 bodies+
+229fields, rejected0. Controller quest RPC dispatch remains unwired. Scoreboard
+weak callback source is typed but uncounted pending writer/task/lifecycle binding.
+No builds/tests;116 canonical+4 manual bodies pending; next3,040; gates OPEN.
+
 Batch87 broad source recovery adds quest-assist and scoreboard native drafts,
 resolves team-format and vehicle-call arguments, and expands hoverboard record
 copy/cleanup. All remain uncounted with explicit ABI dependencies. No duplicate

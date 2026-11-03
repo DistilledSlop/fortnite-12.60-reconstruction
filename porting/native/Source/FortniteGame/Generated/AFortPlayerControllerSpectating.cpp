@@ -10,6 +10,12 @@ bool AFortPlayerControllerSpectating::AreNotificationsEnabled() const
 	return (NativeRecoveredBits_0x2bf0 & 0x2) != 0;
 }
 
+void AFortPlayerControllerSpectating::FullScreenMapCursorStopDrag()
+{
+	// CONFIDENCE: high; complete tail-call raw storage operation.
+	NativeRecoveredByte_0x2ad0 = 0;
+}
+
 UAthenaMarkerComponent* AFortPlayerControllerSpectating::GetMarkerComponent() const
 {
 	// Original address: 0x142a6ba30.

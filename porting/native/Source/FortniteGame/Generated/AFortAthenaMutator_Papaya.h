@@ -14,5 +14,11 @@ class FORTNITEGAME_API AFortAthenaMutator_Papaya : public AFortAthenaMutator
 	GENERATED_BODY()
 
 public:
+	// Non-reflected field (behaviour kind "member_field", offset 0x272): not a UPROPERTY, not replicated.
+	uint8 NativeRecoveredByte_0x272;
+
+	UFUNCTION()
+	void OnForcedWaitAfterPawnIsFinished();
+
 };
 

@@ -1,5 +1,59 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Native dependency closure and mutations batch88 (2026-11-03)
+
+Integrated9 complete bodies+8 evidenced fields: quest objective update and its
+status predicate, volume-to-minigame resolver, and6 constant mutation bodies.
+Quest update now has concrete TSet insertion, feature-class identity, FName
+comparisons, game-settings lookup and bShowCareerTabBang write. Its status helper
+retains overall/per-objective modes, enum cases, wrapped32-bit interval product
+and signed bucket divisions. Controller RPC callers remain unwired; the helpers
+are accepted source bindings, not proof of complete quest-flow reachability.
+Volume resolver preserves virtual FindComponentByClass and direct CurrentMinigame
+read without extra state/validity filters. Mutation batch includes all3 writes
+in DisableFilters and5 remaining unoccupied native bytes, with exact class/parent
+bounds and occupancy. Six other mutations remain rejected by occupancy.
+
+Generation88 accepted2,385 entries=2,156 bodies+229fields, rejected0;16 expected
+native files changed across8 classes, no additions/removals. Command:
+python3 -I /tmp/promote-native-batch88.py; log/tmp/promote-native-batch88.log;
+reports porting/generated/gameplay-bulk-integration-88/. All24 mutation input
+pins matched before merge. Root reviewed code, reflected fields, existing actor
+virtual proof, source assembly and generated includes; no build/runtime/tests.
+Last tested2,040;116 canonical+4 manual bodies pending; next test3,040.
+All four product gates OPEN; full objective ACTIVE. Previous turn PROGRESS:
+sourceb2a5feaf/dashboard390a8d44 committed/pushed; this turn integrates9 bodies.
+
+Three bounded fork-none Terra6.1 medium workers covered quest dependencies,
+scoreboard ownership and mutation storage. Root retained canonical/native/
+generator/staging/build ownership, added minigame resolver and corrected helper
+confidence/include metadata before promotion. Scoreboard callback is now typed
+as non-thread-safe TWeakPtr::Pin()+Flush; caller identifies UFortGameInstance
+receiver. Concrete file writer, async task and lifecycle remain open, so callback
+is uncounted and not installed. No duplicate main-body draft was added.
+
+Root serial Ghidra probes: native88-dependencies(6), native88-volume(5),
+native88-close(5), native88-final(3), native88-quest-caller(2), all21ok and
+rolled back, usual project index/prp changes. Each ran
+porting/.venv/bin/python -I porting/ghidra/probe_callees.py --input
+/tmp/<matching-input>.json --out porting/generated/<name> --timeout 60 --mem 12G;
+logs /tmp/<name>.log. Exact input files: native88-dependencies.json,
+native88-volume.json,native88-close.json,native88-final.json,
+native88-quest-caller.json. Last probe resolves controller virtual+1bd0 through
+AFortPlayerControllerAthena table145e1aac0: slot145e1c690 ->1423850c0.
+It selects quest manager through controller+19e8 and a GameInstance mode helper;
+companion142443c60 handles local party-assist updates. These are ignored local
+evidence pending recovery, not accepted bodies. All processes terminal.
+
+Next bounded recovery: wire quest controller dispatch by closing1423850c0 and
+its local-player/game-instance storage/141e5f160 contract, implement companion
+142443c60 and its quest update helper, then exact Self/Assist logging. Do not
+count unresolved dispatch or repeat address-only discovery of existing drafts.
+Continue broad recovery elsewhere when a dependency becomes expensive. Preserve
+unrelated graphics/Engine edits, deferred visual work, economical bounded reads,
+rotating fork-none Terra medium (Luna medium small reads, Sol6.1 medium complex),
+root canonical/native/promotion/commit ownership and3,040 test checkpoint.
+
 ## Broad native source recovery batch87 (2026-11-03)
 
 Added two newly probed connected native drafts: quest-assist update142443e60
@@ -31,7 +85,7 @@ not additional accepted native bodies or parity claims.
 
 Root serial probe: porting/.venv/bin/python -I porting/ghidra/probe_callees.py
 --input /tmp/large-native87-probe.json --out porting/generated/large-native87
---timeout60 --mem12G;5/5 ok,10.8s, rolled back, usual project metadata changes,
+--timeout 60 --mem 12G;5/5 ok,10.8s, rolled back, usual project metadata changes,
 log/tmp/large-native87-probe.log. No live probe/generation/build remains.
 Additional probed helpers141a78050,14244f820,142f440c0 remain local evidence,
 not recovered bodies. New tracked folders quest_assist87_runtime,

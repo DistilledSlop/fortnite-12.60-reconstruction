@@ -42,3 +42,9 @@ bool UFortStoreContext::IsWaitingForMcp() const
 	return NativeRecoveredBool_0xfc;
 }
 
+void UFortStoreContext::RealMoneyPurchaseStart()
+{
+	// CONFIDENCE: high; complete tail-call raw storage operation.
+	NativeRecoveredByte_0xfd = 1;
+}
+

@@ -38,6 +38,9 @@ public:
 	UPROPERTY()
 	FDataTableRowHandle ButtonCloseInputAction;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x490): not a UPROPERTY, not replicated.
+	uint8 NativeRecoveredByte_0x490;
+
 	// table index 2, flags 0x40000000080008
 	UPROPERTY()
 	UCommonButton* Button_NextStep;
@@ -49,6 +52,11 @@ public:
 	// table index 0, flags 0x40000000080008
 	UPROPERTY()
 	UCommonWidgetSwitcher* Buttons_Switcher;
+
+protected:
+	UFUNCTION(BlueprintCallable)
+	void OnSlideAnimationFinished();
+public:
 
 };
 

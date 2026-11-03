@@ -1,0 +1,33 @@
+[
+  {
+    "class": "UFortQuestManager",
+    "kind": "helper",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "function": "NativeShouldDisplayObjectiveStatus",
+    "signature": "bool NativeShouldDisplayObjectiveStatus(const UFortQuestObjectiveInfo* Objective, const FFortMcpQuestObjectiveInfo* DefinitionObjective, const UFortQuestItem* Quest)",
+    "static": true,
+    "inc_path": "porting/behavior/quest_close88_runtime/NativeShouldDisplayObjectiveStatus.inc",
+    "address": "0x1424511c0",
+    "includes": [],
+    "notes": "Assigned static binding of complete native status predicate; see HANDOFF."
+  },
+  {
+    "class": "UFortQuestManager",
+    "kind": "helper",
+    "signature_status": "proposed",
+    "access": "public",
+    "confidence": "high",
+    "status": "ported",
+    "function": "NativeApplyAssistedObjectiveUpdate",
+    "signature": "void NativeApplyAssistedObjectiveUpdate(const FFortUpdatedObjectiveStat& Update, AFortPlayerState* Owner, AFortPlayerState* Assisted)",
+    "inc_path": "porting/behavior/quest_close88_runtime/NativeApplyAssistedObjectiveUpdate.inc",
+    "address": "0x142443e60",
+    "includes": [
+      "Engine/Engine.h"
+    ],
+    "notes": "Assigned member binding; depends on NativeShouldDisplayObjectiveStatus; controller callers not yet connected. See HANDOFF."
+  }
+]

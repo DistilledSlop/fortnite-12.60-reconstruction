@@ -1,0 +1,8 @@
+{
+  "porting/generated/native88-volume/0x141c795a0.c": "38947277a65d4e061898181537d24d103cf002e0e907d4e7d7ff466eefb1feea",
+  "porting/generated/native88-volume/0x141c795a0.asm": "2feb2eff9ccb2e8ae71530bde9fd9db2b45af7f6a2a9c764808528c8c2fd08c9",
+  "porting/generated/native88-volume/0x141c795a0.json": "6cb328bac3586b54e5edb4ffc4f6bd4253b07a99a0c064727fb0b8ff31cdce62",
+  "porting/generated/native88-close/0x1429da540.c": "004353d6633c4dbb290a90057350cf61fae9f7cd5eecfad56b1a29dff682d1f8",
+  "porting/behavior/mutator_context_runtime/README.md": "de7b63f0819ba27221e6f72c1f6de4b2b7fc9ad2d45e131bbdf53b900e2bad50",
+  "porting/behavior/mutator_context_runtime/AppendMinigameOwner.inc": "9a0c3e0f32a876039177a8fcec7b9dd208f8d892e52104dcd744901e87e094aa"
+}

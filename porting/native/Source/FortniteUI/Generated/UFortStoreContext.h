@@ -73,6 +73,9 @@ public:
 	// Non-reflected field (behaviour kind "member_field", offset 0xfc): not a UPROPERTY, not replicated.
 	bool NativeRecoveredBool_0xfc;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0xfd): not a UPROPERTY, not replicated.
+	uint8 NativeRecoveredByte_0xfd;
+
 	// Non-reflected field (behaviour kind "member_field", offset 0x100): not a UPROPERTY, not replicated.
 	bool NativeRecoveredBool_0x100;
 
@@ -93,6 +96,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsWaitingForMcp() const;
+
+	UFUNCTION(BlueprintCallable)
+	void RealMoneyPurchaseStart();
 
 };
 
