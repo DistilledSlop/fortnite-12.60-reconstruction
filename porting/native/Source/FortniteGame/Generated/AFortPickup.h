@@ -228,6 +228,15 @@ public:
 	float StartSimulatingTime;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	int32 GetItemEntryNum() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetMovementCapsuleHalfHeight() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetMovementCapsuleRadius() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	AFortPawn* GetPawnWhoDroppedPickup() const;
 
 	UFUNCTION()

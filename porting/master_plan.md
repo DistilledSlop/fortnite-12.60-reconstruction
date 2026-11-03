@@ -10,6 +10,11 @@ credentials in Git, and the orchestrator reviews and commits.
 
 ## Current baseline
 
+Batch92 integrates3 pickup count/constant bodies;2,173 bodies+238fields,
+2,411 accepted,0 rejected. New uncounted supply-drop storm/spawn, pickup state
+and mutator-query source drafts preserve explicit integration dependencies.
+No builds/tests;133 canonical+4 manual pending; next3,040; gates OPEN.
+
 Batch91 adds uncounted actor-spawn-policy and automatic-pickup source drafts,
 including the fresh626-line native pickup body. Review restores logs, snapshot
 scan and query order. Lifetime/ABI dependencies remain; canonical2,170 bodies+

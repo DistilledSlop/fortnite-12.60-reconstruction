@@ -38323,5 +38323,50 @@
     "address": "0x1423850c0",
     "includes": [],
     "notes": "Original Athena vtable slot +0x1bd0; typed selector through MyPlayerInfo, its UObject outer, and QuestManagers. Virtual declaration preserves derived dispatch. See HANDOFF."
+  },
+  {
+    "function": "GetMovementCapsuleHalfHeight",
+    "kind": "exec",
+    "signature": "float GetMovementCapsuleHalfHeight() const",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/pickup_constants92_runtime/GetMovementCapsuleHalfHeight.inc",
+    "confidence": "high",
+    "address": "0x142a2ac00",
+    "status": "ported",
+    "reflection_flags": "0x54020401",
+    "static": false,
+    "access": "public",
+    "notes": "Complete exec constant return; no instance storage read. See evidence.json.",
+    "class": "AFortPickup"
+  },
+  {
+    "function": "GetMovementCapsuleRadius",
+    "kind": "exec",
+    "signature": "float GetMovementCapsuleRadius() const",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/pickup_constants92_runtime/GetMovementCapsuleRadius.inc",
+    "confidence": "high",
+    "address": "0x142a2ac30",
+    "status": "ported",
+    "reflection_flags": "0x54020401",
+    "static": false,
+    "access": "public",
+    "notes": "Complete exec constant return; no instance storage read. See evidence.json.",
+    "class": "AFortPickup"
+  },
+  {
+    "function": "GetItemEntryNum",
+    "kind": "exec",
+    "signature": "int32 GetItemEntryNum() const",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/pickup_rep92_runtime/get_item_entry_num.inc",
+    "confidence": "high",
+    "address": "0x142a2abd0",
+    "status": "ported",
+    "reflection_flags": "0x54020401",
+    "static": false,
+    "access": "public",
+    "notes": "Complete native14202ed80: MultiItemPickupEntries count at0x3e8 when nonzero, else1. Reflected array starts0x3e0; see HANDOFF.",
+    "class": "AFortPickup"
   }
 ]

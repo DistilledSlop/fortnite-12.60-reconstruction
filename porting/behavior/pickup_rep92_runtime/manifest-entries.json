@@ -1,0 +1,17 @@
+[
+  {
+    "function": "GetItemEntryNum",
+    "kind": "exec",
+    "signature": "int32 GetItemEntryNum() const",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/pickup_rep92_runtime/get_item_entry_num.inc",
+    "confidence": "high",
+    "address": "0x142a2abd0",
+    "status": "ported",
+    "reflection_flags": "0x54020401",
+    "static": false,
+    "access": "public",
+    "notes": "Complete native14202ed80: MultiItemPickupEntries count at0x3e8 when nonzero, else1. Reflected array starts0x3e0; see HANDOFF.",
+    "class": "AFortPickup"
+  }
+]

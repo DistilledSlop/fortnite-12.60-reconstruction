@@ -2,6 +2,24 @@
 #include "AFortPickup.h"
 #include "Net/UnrealNetwork.h"
 
+int32 AFortPickup::GetItemEntryNum() const
+{
+	// CONFIDENCE: high; 0x142a2abd0 -> 0x14202ed80.
+	return MultiItemPickupEntries.Num() != 0 ? MultiItemPickupEntries.Num() : 1;
+}
+
+float AFortPickup::GetMovementCapsuleHalfHeight() const
+{
+	// CONFIDENCE: high; complete original exec returns a fixed float.
+	return 60.0f;
+}
+
+float AFortPickup::GetMovementCapsuleRadius() const
+{
+	// CONFIDENCE: high; complete original exec returns a fixed float.
+	return 30.0f;
+}
+
 AFortPawn* AFortPickup::GetPawnWhoDroppedPickup() const
 {
 	// Original address: 0x142a2ac60.

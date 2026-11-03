@@ -1,5 +1,41 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Supply-drop, pickup state and mutator query batch92 (2026-11-03)
+
+Integrated3 complete pickup bodies: capsule half-height60.0f, radius30.0f and
+GetItemEntryNum (multi-entry count when nonzero, otherwise1). Constants are
+original MOVSS loads with exact mapped float bytes; count helper reads reflected
+MultiItemPickupEntries.Num. Generation92 accepts2,411 entries=2,173 bodies+
+238fields, rejected0; only AFortPickup.h/.cpp changed, no additions/removals,
+12,828 unchanged mtimes restored. Command python3 -I /tmp/promote-native-batch92.py;
+log/tmp/promote-native-batch92.log; reports gameplay-bulk-integration-92/.
+No builds/tests/runtime; last2,040;133 canonical+4 manual pending; next3,040.
+All four gates OPEN; full objective ACTIVE. Previous turn PROGRESS (source
+ad297375/dashboard128da3d2 pushed); this batch adds3 source bodies and broader
+rough implementation coverage.
+
+Three bounded fork-none Terra6.1 medium tasks produced uncounted drafts:
+supplydrop92 ground/spawn/speed/loot plus storm timer/despawn/listener behavior;
+pickup_rep92 connected-actor destruction impulse and item-entry access;
+mutator_queries92 ordered health/gold/self-damage/trick-score queries. The latter
+reuses existing recovered iterator proposal, preserving per-callback context
+and zero-result writes; trick-score resets candidate each callback. ABI/virtual
+bindings, allocation and lifetime dependencies remain explicit. These are source
+drafts, not canonical implementations. Root corrected confidence tag and reviewed
+constant bytes, array field/signature, generated code, authority guards, world
+lookup, registry mutation order and cleanup.
+
+Root grouped Ghidra native92-broad36 exec targets across3 fresh classes,
+native92-impl13 actual bodies, native92-query5 queries. Successful, project
+metadata rolled back. Commands probe_callees.py --input/tmp/<name>.json
+--out porting/generated/<name> --timeout60 --mem12G; logs/tmp/<name>.log.
+Native93-loot5 further supply/engine targets are finalized; final closure probe
+native93-final examines null loot stub and replay engine helper. See next
+snapshot for its terminal outcome and any integration. All earlier handles terminal.
+Root owns canonical/native/gen/staging/build. Preserve graphics/Engine changes,
+visual pause and bounded economical reads. Rotate fork-none Terra medium tasks
+(Luna medium small reads; Sol6.1 medium complex); no build until3,040.
+
 ## Fresh spawn policy and pickup source batch91 (2026-11-03)
 
 Added UNCOUNTED source drafts for game-state actor-spawn policy and pawn pickup

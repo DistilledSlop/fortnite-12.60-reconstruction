@@ -1,0 +1,29 @@
+{
+  "image": "/mnt/vibrato/fortnite-evidence/original-late-capture-1/image-125.runtime.bin",
+  "base": "0x140000000",
+  "image_digest_inherited_not_rehashed": true,
+  "entries": [
+    {
+      "function": "GetMovementCapsuleHalfHeight",
+      "address": "0x142a2ac00",
+      "constant_address": "0x14606b48c",
+      "constant_bytes": "00007042",
+      "value": 60.0,
+      "pins": {
+        "porting/generated/native92-broad/0x142a2ac00.c": "9a3969f609fbeac8bb6b841ec0efbf877fca14edc950f0ae6ebfb2be8d27787b",
+        "porting/generated/native92-broad/0x142a2ac00.asm": "5e575ccc2fbc2c2f9329feb44e7b3e5fe4231a54f593070c5df184400fde602d"
+      }
+    },
+    {
+      "function": "GetMovementCapsuleRadius",
+      "address": "0x142a2ac30",
+      "constant_address": "0x14606b488",
+      "constant_bytes": "0000f041",
+      "value": 30.0,
+      "pins": {
+        "porting/generated/native92-broad/0x142a2ac30.c": "2a3b38c5c32056779ca7e7e68451e91df51986b2844489659be5f08f212505a8",
+        "porting/generated/native92-broad/0x142a2ac30.asm": "f42a4bcf89c4bedbe52f291e8bf016c8e0795a8a1176d1d3bfd92f9576afd6b8"
+      }
+    }
+  ]
+}
