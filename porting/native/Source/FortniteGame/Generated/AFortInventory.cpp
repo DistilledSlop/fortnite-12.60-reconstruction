@@ -27,6 +27,16 @@ UFortWorldItem* AFortInventory::NativeFindWorldItemByDefinition(UFortItemDefinit
 	return nullptr;
 }
 
+void AFortInventory::NativeNotifyInventoryChanged()
+{
+	// CONFIDENCE: HIGH
+	// 0x14201de90. Mark the array before publishing either local flag.
+	Inventory.MarkArrayDirty();
+	bRequiresLocalUpdate = true;
+	bRequiresSaving = true;
+	ForceNetUpdate();
+}
+
 void AFortInventory::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

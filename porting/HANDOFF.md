@@ -1,5 +1,33 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Native source batch 35 (2026-11-03)
+
+Canonical source:1,884 bodies +165 supporting fields =2,049 entries.
+Eight bodies added: two borrowed base profile group lookups, ID/group insertion,
+lower-bound folded group insertion; AFortInventory fast-array change notification;
+mutating entry GUID acquisition; false inventory-owner queries for AFortAIPawn
+and ADeployableBasePlot with their native interface inheritance restored.
+
+Typed profile map aliases emitted as McpProfileBaseTypes.h by original-byte guarded
+profile support policy. Ordered insertion owns its shared item by value across
+mutation; ID/group indexes retain independent references; folded-equal group IDs
+keep existing member. Does not install full owner backend/collector or overlays.
+Inventory notification marks array dirty, sets local-update/saving then virtual
+ForceNetUpdate. GUID acquisition uses engine NewGuid only if zero, returns stored
+copy with no retry or validity promise. Bot query remains open skill-set path.
+
+Promotion35 final accepts2,049/rejects0;10 Native files changed +one alias header
+added overall. No tests/builds/runtime. Last tested1,040;844 pending; next2,040
+needs156. Source34 41d21ea7/dashboard9fb10edd pushed; commit this source batch.
+Gifting copier uses controller-owned shared references independent of pointee.
+Root review confirms TSharedPtr<void,NotThreadSafe> can preserve copy semantics
+without inventing a payload; payload construction/writers remain unclosed. Next
+integrate native struct fields, field-by-field entry copy and actual inventory
+update/dirty ordering (not whole-struct assignment). Ghidra lease free; workers
+finished. Fresh bounded Terra medium fork_turns none, economical reads, root sole
+canonical/generator/Native owner, frequent commits/pushes/dashboard. Preserve
+unrelated graphics. No tests until2,040 bodies. All4 product gates/parity open.
+
 ## Native source batch 34 (2026-11-03)
 
 Canonical source:1,876 bodies +165 supporting fields =2,041 ported entries.

@@ -1,5 +1,7 @@
 """Restore original owner/context interfaces with recovered concrete callbacks."""
 BLOCKS = {
+    'ADeployableBasePlot': ('0x146292820', 'IFortInventoryOwnerInterface'),
+    'AFortAIPawn': ('0x1462afb30', 'IFortInventoryOwnerInterface'),
     'AFortPlayerController': ('0x14649da30', 'IFortInventoryOwnerInterface'),
     'AFortVolume': ('0x1465647c0', 'IFortMutatorOwner'),
     'AFortMinigame': ('0x146446ef0', 'IFortMutatorOwner'),

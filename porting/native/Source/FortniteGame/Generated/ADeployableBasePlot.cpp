@@ -30,6 +30,12 @@ void ADeployableBasePlot::OnRep_OccupantNetID()
 	// Body not recovered: reflection-derived stub.
 }
 
+bool ADeployableBasePlot::NativeHasInfiniteAmmo(UFortWeaponItemDefinition* WeaponDefinition)
+{
+	// CONFIDENCE: HIGH
+	return false;
+}
+
 void ADeployableBasePlot::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

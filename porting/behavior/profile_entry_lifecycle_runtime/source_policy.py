@@ -31,4 +31,11 @@ def sources():
     banner = '// Generated from profile_entry_lifecycle_runtime; do not edit by hand.\n'
     result = {name: banner + (HERE / name).read_text() for name in ('McpProfileItem.h', 'McpProfileItem.cpp')}
     result.update({name: banner + (json_dir / name).read_text() for name in ('McpProfileJsonIntern.h', 'McpProfileJsonIntern.cpp')})
+    base_dir = HERE.parent / 'profile_base_operations_runtime'
+    with image.open('rb') as stream:
+        for item in json.loads((base_dir / 'native-evidence.json').read_text())['windows']:
+            stream.seek(int(item['begin'], 16) - 0x140000000)
+            if hashlib.sha256(stream.read(item['length'])).hexdigest() != item['sha256']:
+                raise ValueError('profile base operation original capture changed: ' + item['begin'])
+    result['McpProfileBaseTypes.h'] = banner + (base_dir / 'McpProfileBaseTypes.h').read_text()
     return result

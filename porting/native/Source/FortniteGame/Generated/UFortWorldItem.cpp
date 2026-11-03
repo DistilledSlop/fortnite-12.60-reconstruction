@@ -168,3 +168,13 @@ void UFortWorldItem::NativeSetEntryParentInventory(FFortItemEntry& Entry, AFortI
 	Entry.bIsReplicatedCopy = bReplicatedCopy;
 }
 
+FGuid UFortWorldItem::NativeGetOrCreateEntryGuid(FFortItemEntry& Entry)
+{
+	// CONFIDENCE: HIGH
+	if (!Entry.ItemGuid.IsValid())
+	{
+	    Entry.ItemGuid = FGuid::NewGuid();
+	}
+	return Entry.ItemGuid;
+}
+

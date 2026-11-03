@@ -72,5 +72,6 @@ public:
 	static bool NativePopulateItemAttributes(FFortItemEntry& Entry, const TMap<FString, TSharedPtr<FJsonValue>>& Attributes);
 	static bool NativeSetItemGuidFromString(FFortItemEntry& Entry, FString ItemId);
 	static void NativeSetEntryParentInventory(FFortItemEntry& Entry, AFortInventory* Inventory, bool bReplicatedCopy);
+	static FGuid NativeGetOrCreateEntryGuid(FFortItemEntry& Entry);
 };
 

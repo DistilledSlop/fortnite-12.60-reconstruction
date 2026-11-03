@@ -1,0 +1,15 @@
+[
+  {
+    "class": "AFortInventory",
+    "function": "NativeNotifyInventoryChanged",
+    "kind": "helper",
+    "signature": "void NativeNotifyInventoryChanged()",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/inventory_entry_updates_runtime/NativeNotifyInventoryChanged.inc",
+    "address": "0x14201de90",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Assigned name. Marks the fast array dirty, sets both local-update and saving flags, then calls virtual ForceNetUpdate."
+  }
+]

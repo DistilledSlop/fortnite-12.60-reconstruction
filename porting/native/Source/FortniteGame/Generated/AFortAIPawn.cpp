@@ -139,6 +139,12 @@ bool AFortAIPawn::ShouldUseFiringCapsuleCollision_Implementation()
 	return false;
 }
 
+bool AFortAIPawn::NativeHasInfiniteAmmo(UFortWeaponItemDefinition* WeaponDefinition)
+{
+	// CONFIDENCE: HIGH
+	return false;
+}
+
 void AFortAIPawn::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

@@ -40,6 +40,7 @@
 #include "Misc/Guid.h"
 #include "Styling/SlateBrush.h"
 #include "TInteractionType.h"
+#include "UFortInventoryOwnerInterface.h"
 
 class AActor;
 class ABuildingActor;
@@ -60,6 +61,7 @@ class UFortGameplayModifierItemDefinition;
 class UFortNavObstacleComponent;
 class UFortSimpleMiniMapIndicator;
 class UFortWeaponAttrSet;
+class UFortWeaponItemDefinition;
 class UNavigationQueryFilter;
 class UParticleSystem;
 class UShapeComponent;
@@ -68,7 +70,7 @@ class USoundBase;
 #include "AFortAIPawn.generated.h"
 
 UCLASS(config=Game)
-class FORTNITEGAME_API AFortAIPawn : public AFortPawn
+class FORTNITEGAME_API AFortAIPawn : public AFortPawn, public IFortInventoryOwnerInterface
 {
 	GENERATED_BODY()
 
@@ -858,5 +860,9 @@ public:
 	virtual bool ShouldUseFiringCapsuleCollision_Implementation();
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	virtual bool NativeHasInfiniteAmmo(UFortWeaponItemDefinition* WeaponDefinition);
 };
 

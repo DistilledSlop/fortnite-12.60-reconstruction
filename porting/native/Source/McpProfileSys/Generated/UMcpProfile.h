@@ -11,6 +11,7 @@
 #include "FClientUrlContext.h"
 #include "FDedicatedServerUrlContext.h"
 #include "JsonObjectConverter.h"
+#include "McpProfileBaseTypes.h"
 #include "McpProfileItem.h"
 #include "McpProfileJsonIntern.h"
 #include "Misc/DateTime.h"
@@ -100,5 +101,9 @@ public:
 	static void NativeCopyProfileAttributes(TMap<FString, TSharedPtr<FJsonValue>>& OutAttributes, const FJsonObject& Object);
 	static void NativeUpdateProfileItemFromJson(FMcpProfileItem& Item, const FJsonObject& Json, const int32& UpdateValue, UMcpProfile* Profile);
 	static bool NativeDeserializeAttributes(const TMap<FString, TSharedPtr<FJsonValue>>& Attributes, void* OutStruct, const UStruct* StructDefinition);
+	static const FMcpProfileItemArray* NativeFindProfileGroup(const FMcpProfileGroupMap& Groups, const FString& Key);
+	static const FMcpProfileItemArray* NativeFindBaseProfileGroup(const FMcpProfileGroupMap& Groups, const FString& Key);
+	static void NativeInsertProfileGroup(FMcpProfileGroupMap& Groups, const FString& Key, FMcpProfileItemPtr Item);
+	static void NativeInsertProfileItem(FMcpProfileItemMap& ItemsById, FMcpProfileGroupMap& Groups, const FMcpProfileItemPtr& Item);
 };
 

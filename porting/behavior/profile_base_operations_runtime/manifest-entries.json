@@ -1,0 +1,70 @@
+[
+  {
+    "function": "NativeFindProfileGroup",
+    "kind": "helper",
+    "signature": "const FMcpProfileItemArray* NativeFindProfileGroup(const FMcpProfileGroupMap& Groups, const FString& Key)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/profile_base_operations_runtime/NativeFindProfileGroup.inc",
+    "address": "0x1410fe1c0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "McpProfileBaseTypes.h"
+    ],
+    "notes": "Assigned static source binding with explicit logical indexes; see HANDOFF for scope and evidence.",
+    "class": "UMcpProfile"
+  },
+  {
+    "function": "NativeFindBaseProfileGroup",
+    "kind": "helper",
+    "signature": "const FMcpProfileItemArray* NativeFindBaseProfileGroup(const FMcpProfileGroupMap& Groups, const FString& Key)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/profile_base_operations_runtime/NativeFindBaseProfileGroup.inc",
+    "address": "0x1410fe160",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "McpProfileBaseTypes.h"
+    ],
+    "notes": "Assigned static source binding with explicit logical indexes; see HANDOFF for scope and evidence.",
+    "class": "UMcpProfile"
+  },
+  {
+    "function": "NativeInsertProfileGroup",
+    "kind": "helper",
+    "signature": "void NativeInsertProfileGroup(FMcpProfileGroupMap& Groups, const FString& Key, FMcpProfileItemPtr Item)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/profile_base_operations_runtime/NativeInsertProfileGroup.inc",
+    "address": "0x1410f0690",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "McpProfileBaseTypes.h"
+    ],
+    "notes": "Assigned static source binding with explicit logical indexes; see HANDOFF for scope and evidence. Original callee consumes a by-value shared temporary; retain ownership across group mutation.",
+    "class": "UMcpProfile"
+  },
+  {
+    "function": "NativeInsertProfileItem",
+    "kind": "helper",
+    "signature": "void NativeInsertProfileItem(FMcpProfileItemMap& ItemsById, FMcpProfileGroupMap& Groups, const FMcpProfileItemPtr& Item)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/profile_base_operations_runtime/NativeInsertProfileItem.inc",
+    "address": "0x1410f0580",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "McpProfileBaseTypes.h"
+    ],
+    "notes": "Assigned static source binding with explicit logical indexes; see HANDOFF for scope and evidence.",
+    "class": "UMcpProfile"
+  }
+]

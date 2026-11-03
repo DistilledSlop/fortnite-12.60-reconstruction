@@ -1,0 +1,19 @@
+[
+  {
+    "class": "UFortWorldItem",
+    "function": "NativeGetOrCreateEntryGuid",
+    "kind": "helper",
+    "signature": "FGuid NativeGetOrCreateEntryGuid(FFortItemEntry& Entry)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/inventory_guid_runtime/GetOrCreateEntryGuid.inc",
+    "address": "0x14202eda0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Misc/Guid.h"
+    ],
+    "notes": "Assigned static binding; mutates zero GUID before returning a copy. Uses same engine FGuid::NewGuid zero-initialized platform operation."
+  }
+]

@@ -16,6 +16,7 @@
 #include "GameFramework/OnlineReplStructs.h"
 #include "Math/Box.h"
 #include "Math/IntVector.h"
+#include "UFortInventoryOwnerInterface.h"
 
 class ADeployableBaseCore;
 class AFortDeployableBasePickup;
@@ -23,13 +24,14 @@ class AFortInventory;
 class AFortPlayerStart;
 class UBoxComponent;
 class UFortDeployableBaseRecord;
+class UFortWeaponItemDefinition;
 class UGameplayEffect;
 class USceneComponent;
 
 #include "ADeployableBasePlot.generated.h"
 
 UCLASS(config=Game)
-class FORTNITEGAME_API ADeployableBasePlot : public ABuildingGameplayActor
+class FORTNITEGAME_API ADeployableBasePlot : public ABuildingGameplayActor, public IFortInventoryOwnerInterface
 {
 	GENERATED_BODY()
 
@@ -179,5 +181,9 @@ public:
 	void OnRep_OccupantNetID();
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	virtual bool NativeHasInfiniteAmmo(UFortWeaponItemDefinition* WeaponDefinition);
 };
 
