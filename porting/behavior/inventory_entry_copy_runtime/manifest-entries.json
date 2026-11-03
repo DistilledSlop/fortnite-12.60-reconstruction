@@ -1,0 +1,71 @@
+[
+  {
+    "class": "UFortWorldItem",
+    "function": "NativeCopyGiftingInfo",
+    "kind": "helper",
+    "signature": "FFortGiftingInfo& NativeCopyGiftingInfo(FFortGiftingInfo& Destination, const FFortGiftingInfo& Source)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/inventory_entry_copy_runtime/CopyGiftingInfo.inc",
+    "address": "0x142025370",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Assigned source contract; see README for original ordering, field ownership and scoped type erasure.",
+    "static": true
+  },
+  {
+    "class": "UFortWorldItem",
+    "function": "NativeCopyEntry",
+    "kind": "helper",
+    "signature": "FFortItemEntry& NativeCopyEntry(FFortItemEntry& Destination, const FFortItemEntry& Source)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/inventory_entry_copy_runtime/CopyEntry.inc",
+    "address": "0x142025400",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Assigned source contract; see README for original ordering, field ownership and scoped type erasure.",
+    "static": true
+  },
+  {
+    "class": "AFortInventory",
+    "function": "NativeUpdateEntry",
+    "kind": "helper",
+    "signature": "void NativeUpdateEntry(FFortItemEntry& Entry)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/inventory_entry_copy_runtime/UpdateEntry.inc",
+    "address": "0x14201d4c0",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Assigned source contract; see README for original ordering, field ownership and scoped type erasure."
+  },
+  {
+    "class": "UFortWorldItem",
+    "function": "NativeMarkEntryDirty",
+    "kind": "helper",
+    "signature": "void NativeMarkEntryDirty(FFortItemEntry& Entry)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/inventory_entry_copy_runtime/MarkEntryDirty.inc",
+    "address": "0x1420397e0",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Assigned source contract; see README for original ordering, field ownership and scoped type erasure.",
+    "static": true
+  },
+  {
+    "class": "UFortWorldItem",
+    "function": "NativeSetEntryGiftingInfo",
+    "kind": "helper",
+    "signature": "void NativeSetEntryGiftingInfo(FFortItemEntry& Entry, FFortGiftingInfo Info)",
+    "signature_status": "proposed",
+    "static": true,
+    "access": "public",
+    "inc_path": "porting/behavior/inventory_entry_copy_runtime/SetGiftingInfo.inc",
+    "address": "0x1420387b0",
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Assigned source contract. Copies gifting state, derives gifted flag from destination, updates parent then marks dirty; releases by-value input last."
+  }
+]

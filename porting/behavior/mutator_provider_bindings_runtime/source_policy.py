@@ -1,5 +1,6 @@
 """Restore original owner/context interfaces with recovered concrete callbacks."""
 BLOCKS = {
+    'UFortItem': ('0x1464134b0', 'IMcpItemAware'),
     'ADeployableBasePlot': ('0x146292820', 'IFortInventoryOwnerInterface'),
     'AFortAIPawn': ('0x1462afb30', 'IFortInventoryOwnerInterface'),
     'AFortPlayerController': ('0x14649da30', 'IFortInventoryOwnerInterface'),
@@ -33,4 +34,6 @@ def interface_declarations(name):
         return ['public:', '    virtual void NativeAppendContextOwners(TArray<UObject*>& OutOwners) = 0;']
     if name == 'UFortInventoryOwnerInterface':
         return ['public:', '    virtual bool NativeHasInfiniteAmmo(class UFortWeaponItemDefinition* WeaponDefinition) = 0;']
+    if name == 'UMcpItemAware':
+        return ['public:', '    TWeakPtr<FMcpProfileItem, ESPMode::NotThreadSafe> NativeMcpItem;', '    virtual bool NativePopulateFromMcpItem(FMcpProfileItem* Item) = 0;']
     return []

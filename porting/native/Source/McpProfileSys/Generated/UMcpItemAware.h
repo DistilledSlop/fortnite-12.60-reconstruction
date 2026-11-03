@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "UObject/Interface.h"
+#include "McpProfileItem.h"
 
 #include "UMcpItemAware.generated.h"
 
@@ -16,5 +17,8 @@ class MCPPROFILESYS_API UMcpItemAware : public UInterface
 class MCPPROFILESYS_API IMcpItemAware
 {
 	GENERATED_IINTERFACE_BODY()
+public:
+    TWeakPtr<FMcpProfileItem, ESPMode::NotThreadSafe> NativeMcpItem;
+    virtual bool NativePopulateFromMcpItem(FMcpProfileItem* Item) = 0;
 };
 

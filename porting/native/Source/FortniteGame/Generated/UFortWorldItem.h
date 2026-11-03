@@ -8,6 +8,7 @@
 
 #include "Dom/JsonValue.h"
 #include "Engine/World.h"
+#include "FFortGiftingInfo.h"
 #include "FFortItemEntry.h"
 #include "Misc/Guid.h"
 #include "SharedFortGameLog.h"
@@ -73,5 +74,9 @@ public:
 	static bool NativeSetItemGuidFromString(FFortItemEntry& Entry, FString ItemId);
 	static void NativeSetEntryParentInventory(FFortItemEntry& Entry, AFortInventory* Inventory, bool bReplicatedCopy);
 	static FGuid NativeGetOrCreateEntryGuid(FFortItemEntry& Entry);
+	static FFortGiftingInfo& NativeCopyGiftingInfo(FFortGiftingInfo& Destination, const FFortGiftingInfo& Source);
+	static FFortItemEntry& NativeCopyEntry(FFortItemEntry& Destination, const FFortItemEntry& Source);
+	static void NativeMarkEntryDirty(FFortItemEntry& Entry);
+	static void NativeSetEntryGiftingInfo(FFortItemEntry& Entry, FFortGiftingInfo Info);
 };
 

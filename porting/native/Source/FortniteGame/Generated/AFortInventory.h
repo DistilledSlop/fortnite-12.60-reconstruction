@@ -7,6 +7,7 @@
 #include "GameFramework/Actor.h"
 
 #include "EFortInventoryType.h"
+#include "FFortItemEntry.h"
 #include "FFortItemList.h"
 
 class AFortPawn;
@@ -71,5 +72,6 @@ public:
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	UFortWorldItem* NativeFindWorldItemByDefinition(UFortItemDefinition* ItemDefinition, bool bIncludeGifted) const;
 	void NativeNotifyInventoryChanged();
+	void NativeUpdateEntry(FFortItemEntry& Entry);
 };
 

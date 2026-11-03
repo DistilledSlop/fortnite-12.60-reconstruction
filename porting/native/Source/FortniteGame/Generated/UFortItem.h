@@ -6,8 +6,12 @@
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
 
+#include "Delegates/Delegate.h"
 #include "FFortOnItemChangedDelegate.h"
 #include "FFortOnItemDestroyedDelegate.h"
+#include "McpProfileItem.h"
+#include "SharedFortGameLog.h"
+#include "UMcpItemAware.h"
 #include "UObject/WeakObjectPtr.h"
 
 class AFortPlayerController;
@@ -17,7 +21,7 @@ class UFortItemDefinition;
 #include "UFortItem.generated.h"
 
 UCLASS(abstract)
-class FORTNITEGAME_API UFortItem : public UObject
+class FORTNITEGAME_API UFortItem : public UObject, public IMcpItemAware
 {
 	GENERATED_BODY()
 
@@ -25,6 +29,9 @@ public:
 	// table index 3, flags 0x10000010080000
 	UPROPERTY()
 	FFortOnItemChangedDelegate OnItemChanged;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x50): not a UPROPERTY, not replicated.
+	TMulticastDelegate<void, bool, bool, bool> OnItemChanged_Native;
 
 	// table index 2, flags 0x10000010080000
 	UPROPERTY()
@@ -128,5 +135,7 @@ public:
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	virtual bool NativeWasGifted() const;
+	virtual bool NativePopulateFromMcpItem(FMcpProfileItem* Item);
+	void BroadcastOnItemChanged(bool bItemChanged, bool bAmmoChanged, bool bIngredientsChanged, bool bLog);
 };
 

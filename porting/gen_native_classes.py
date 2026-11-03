@@ -2322,6 +2322,10 @@ _item_tag_interface_spec = _common_activation_import.spec_from_file_location(
     "item_tag_interface_policy", os.path.join(os.path.dirname(__file__), "behavior", "item_tag_interface_runtime", "source_policy.py"))
 _item_tag_interface_policy = _common_activation_import.module_from_spec(_item_tag_interface_spec)
 _item_tag_interface_spec.loader.exec_module(_item_tag_interface_policy)
+_inventory_entry_spec = _common_activation_import.spec_from_file_location(
+    "inventory_entry_policy", os.path.join(os.path.dirname(__file__), "behavior", "inventory_entry_copy_runtime", "source_policy.py"))
+_inventory_entry_policy = _common_activation_import.module_from_spec(_inventory_entry_spec)
+_inventory_entry_spec.loader.exec_module(_inventory_entry_policy)
 _profile_entry_spec = _common_activation_import.spec_from_file_location(
     "profile_entry_policy", os.path.join(os.path.dirname(__file__), "behavior", "profile_entry_lifecycle_runtime", "source_policy.py"))
 _profile_entry_policy = _common_activation_import.module_from_spec(_profile_entry_spec)
@@ -3403,6 +3407,7 @@ def render_interface_header(name, source_label, api):
         "",
         "#include \"CoreMinimal.h\"",
         "#include \"UObject/Interface.h\"",
+        *(['#include "McpProfileItem.h"'] if name == "UMcpItemAware" else []),
         "",
         "#include \"%s.generated.h\"" % name,
         "",
@@ -5136,6 +5141,8 @@ def render_struct_header(model, source_label):
         lines.append("#include \"%s\"" % model["parent_include"])
     native = net.get("kind") == "native"
     includes = list(model.get("includes", []))
+    if name == "FFortItemList":
+        includes.append("Misc/Crc.h")
     if delta and NET_SERIALIZATION_HEADER not in includes + [model.get("parent_include")]:
         includes.append(NET_SERIALIZATION_HEADER)
     if native and NATIVE_NET_SERIALIZATION_HEADER not in includes:
@@ -5158,6 +5165,7 @@ def render_struct_header(model, source_label):
         lines.append("// TODO: the native net serializer of %s is not recovered (ops vtable %s; %s). The default"
                      % (name, net.get("vtable"), ", ".join(net.get("traits", []))))
         lines.append("// serialization is used until it is ported.")
+    lines.extend(_inventory_entry_policy.preamble(model))
     lines.extend(_confirmation_policy.preamble(model))
     lines.append("USTRUCT(BlueprintType)" if model.get("blueprint_type") else "USTRUCT()")
     lines.append("struct %s%s%s" % (model.get("api", ""), name, " : public %s" % model["parent"] if model["parent"] else ""))
@@ -5170,6 +5178,7 @@ def render_struct_header(model, source_label):
         lines.append("\tUPROPERTY(%s)" % ", ".join(specifiers))
         lines.append("\t%s" % m["decl"])
         lines.append("")
+        lines.extend(_inventory_entry_policy.fields_after(model, m))
     lines.extend(_common_activation_policy.struct_declarations(model))
     lines.extend(_cursor_settings_policy.struct_declarations(model))
     lines.extend(_panel_queue_policy.struct_declarations(model))

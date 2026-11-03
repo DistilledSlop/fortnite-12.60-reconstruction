@@ -22,5 +22,8 @@ struct FFortGiftingInfo
 	UPROPERTY()
 	UFortHeroType* HeroType;
 
+	// Original native shared state at +0x18; dynamic controller retains payload destruction.
+	TSharedPtr<void, ESPMode::NotThreadSafe> NativeGiftPayload;
+
 };
 

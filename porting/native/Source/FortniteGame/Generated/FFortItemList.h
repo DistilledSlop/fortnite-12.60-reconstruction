@@ -6,10 +6,20 @@
 #include "CoreMinimal.h"
 #include "Engine/NetSerialization.h"
 #include "FFortItemEntry.h"
+#include "Misc/Crc.h"
 
 class UFortWorldItem;
 
 #include "FFortItemList.generated.h"
+
+// Original GUID index uses deprecated memory CRC, unlike current engine CityHash GUID keys.
+struct FFortEntryGuidKeyFuncs : TDefaultMapHashableKeyFuncs<FGuid, FFortItemEntry*, false>
+{
+    static uint32 GetKeyHash(KeyInitType Key)
+    {
+        return FCrc::MemCrc_DEPRECATED(&Key, sizeof(FGuid), 0);
+    }
+};
 
 USTRUCT()
 struct FFortItemList : public FFastArraySerializer
@@ -19,6 +29,9 @@ struct FFortItemList : public FFastArraySerializer
 	// table index 2, offset 264, flags 0x10000001000000
 	UPROPERTY()
 	TArray<FFortItemEntry> ReplicatedEntries;
+
+	// Original native GUID index at +0x118; values alias existing entries.
+	TMap<FGuid, FFortItemEntry*, FDefaultSetAllocator, FFortEntryGuidKeyFuncs> NativeEntriesByGuid;
 
 	// table index 0, offset 360, flags 0x10000000000000
 	UPROPERTY()

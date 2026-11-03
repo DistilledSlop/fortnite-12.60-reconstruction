@@ -1,5 +1,46 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Native source batch 36 (2026-11-03)
+
+Canonical source:1,891 bodies +166 supporting fields =2,057 ported entries.
+Seven bodies added: gifting-copy, field-by-field entry-copy, authority inventory
+update, parent-before-dirty wrapper, by-value gifting setter, base UFortItem
+item-aware dispatch, actual native+dynamic item-change notification. One credited
+native multicast field. Three further support fields emitted without manifest
+field credit: gifting shared payload, item-list GUID index, item-aware weak entry.
+
+Entry copy retains destination fast-array IDs/keys, weak parent, replication-copy
+and dirty flags; copies other fields in original order. TSharedPtr<void,NotThreadSafe>
+preserves original pointer/controller and dynamic lifetime without pointee access;
+payload creation/type/writers remain open. No raw void controller construction.
+Review confirmed type erasure and complete copy/update sequence. GUID map uses
+original deprecated memory CRC rather than current engine CityHash GUID hash;
+all2048 original slicing table entries match source (8192 bytes). Struct policy
+checks original windows and reflected identity. Native pointers alias entries;
+full GUID-index population/rebuild remains open. Successful inventory update marks
+an item/array then marks the array again in notification, retaining original order.
+
+UFortItem now implements IMcpItemAware with actual weak shared state and concrete
+false Populate result. Real WorldItem override142060e40 remains unported, inherited
+false is not claimed as original WorldItem behavior. Native item-change multicast
+runs before reflected multicast, retains optional original diagnostics and engine
+mutation/reentry/delegate lifetime. Native listener registration remains open.
+
+Promotion36 accepts2,057/rejects0;9 Native files changed overall. Original window
+receipts for copy/type erasure, binding and notifications match. No tests/builds/
+runtime. Last tested1,040;851 pending; next2,040 needs149 bodies. Source35 190d92cd
+pushed. Commit/push this source and refresh dashboard. This goal turn adds15 bodies.
+
+Fresh bounded profile lookups identified actual save-request array at WorldProfile
++150, stridee8, two sets in first request. Partial same-request logical source in
+pending_save_request_runtime, not emitted or credited; callback/payload wrapper
+and full owner wiring still open. world_profile_item_lookup_runtime corrects older
+FProfileEntry guesses. Other owner bot query still needs skill-set tag and item
+virtuals. Full WorldItem population/profile registry/backend/GC and4 product gates
+remain open. All workers finished/Ghidra free. Root sole canonical/generator/
+Native owner; fresh bounded Terra medium fork_turns none, economical reads,
+frequent commits/pushes/dashboard, no tests until2,040. Preserve graphics.
+
 ## Native source batch 35 (2026-11-03)
 
 Canonical source:1,884 bodies +165 supporting fields =2,049 entries.

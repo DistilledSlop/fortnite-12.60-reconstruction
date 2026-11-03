@@ -4,6 +4,7 @@
 #include "AFortPlayerController.h"
 #include "Dom/JsonValue.h"
 #include "Engine/World.h"
+#include "FFortGiftingInfo.h"
 #include "FFortItemEntry.h"
 #include "Misc/Guid.h"
 #include "SharedFortGameLog.h"
@@ -176,5 +177,60 @@ FGuid UFortWorldItem::NativeGetOrCreateEntryGuid(FFortItemEntry& Entry)
 	    Entry.ItemGuid = FGuid::NewGuid();
 	}
 	return Entry.ItemGuid;
+}
+
+FFortGiftingInfo& UFortWorldItem::NativeCopyGiftingInfo(FFortGiftingInfo& Destination, const FFortGiftingInfo& Source)
+{
+	// CONFIDENCE: HIGH
+	Destination.PlayerName = Source.PlayerName;
+	Destination.HeroType = Source.HeroType;
+	Destination.NativeGiftPayload = Source.NativeGiftPayload;
+	return Destination;
+}
+
+FFortItemEntry& UFortWorldItem::NativeCopyEntry(FFortItemEntry& Destination, const FFortItemEntry& Source)
+{
+	// CONFIDENCE: HIGH
+	Destination.Count = Source.Count;
+	Destination.PreviousCount = Source.PreviousCount;
+	Destination.ItemDefinition = Source.ItemDefinition;
+	Destination.OrderIndex = Source.OrderIndex;
+	Destination.Durability = Source.Durability;
+	Destination.Level = Source.Level;
+	Destination.LoadedAmmo = Source.LoadedAmmo;
+	Destination.AlterationDefinitions = Source.AlterationDefinitions;
+	Destination.AlterationInstances = Source.AlterationInstances;
+	Destination.ItemSource = Source.ItemSource;
+	Destination.ItemGuid = Source.ItemGuid;
+	Destination.ControlOverride = Source.ControlOverride;
+	Destination.inventory_overflow_date = Source.inventory_overflow_date;
+	NativeCopyGiftingInfo(Destination.GiftingInfo, Source.GiftingInfo);
+	Destination.bWasGifted = Source.bWasGifted;
+	Destination.StateValues = Source.StateValues;
+	Destination.GameplayAbilitySpecHandle = Source.GameplayAbilitySpecHandle;
+	Destination.GenericAttributeValues = Source.GenericAttributeValues;
+	Destination.bUpdateStatsOnCollection = Source.bUpdateStatsOnCollection;
+	Destination.WrapOverride = Source.WrapOverride;
+	// Fast-array base, ParentInventory, bIsReplicatedCopy, and bIsDirty untouched.
+	return Destination;
+}
+
+void UFortWorldItem::NativeMarkEntryDirty(FFortItemEntry& Entry)
+{
+	// CONFIDENCE: HIGH
+	if (Entry.ParentInventory.IsValid())
+	{
+	    AFortInventory* Parent = Entry.ParentInventory.Get();
+	    Parent->NativeUpdateEntry(Entry);
+	}
+	Entry.bIsDirty = true;
+}
+
+void UFortWorldItem::NativeSetEntryGiftingInfo(FFortItemEntry& Entry, FFortGiftingInfo Info)
+{
+	// CONFIDENCE: HIGH
+	NativeCopyGiftingInfo(Entry.GiftingInfo, Info);
+	Entry.bWasGifted = Entry.GiftingInfo.HeroType != nullptr && Entry.GiftingInfo.PlayerName.GetCharArray().Num() >= 2;
+	NativeMarkEntryDirty(Entry);
 }
 
