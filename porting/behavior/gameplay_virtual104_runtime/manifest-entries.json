@@ -1,0 +1,34 @@
+[
+  {
+    "class": "AFortAthenaVehicle",
+    "function": "NativeRecoveredBits_0x410",
+    "kind": "member_field",
+    "signature": "uint8 NativeRecoveredBits_0x410",
+    "signature_status": "proposed",
+    "access": "public",
+    "offset": "0x410",
+    "inc_path": null,
+    "confidence": "high",
+    "address": null,
+    "status": "ported",
+    "recovery_source": "gameplay_virtual104_runtime",
+    "notes": "Native getter establishes byte storage at 0x410; initialization and writers remain unported."
+  },
+  {
+    "class": "AFortAthenaVehicle",
+    "function": "AnyWheelsOnGround",
+    "kind": "exec",
+    "signature": "bool AnyWheelsOnGround() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": true,
+    "inc_path": "porting/behavior/gameplay_virtual104_runtime/AFortAthenaVehicle_AnyWheelsOnGround.inc",
+    "address": "0x14283a530",
+    "native_body_address": "0x14190ae20",
+    "confidence": "high",
+    "status": "ported",
+    "reflection_flags": "0x54020402",
+    "static": false,
+    "notes": "Primary vtable slot 0x948; native body reads bit 3 of object byte 0x410."
+  }
+]

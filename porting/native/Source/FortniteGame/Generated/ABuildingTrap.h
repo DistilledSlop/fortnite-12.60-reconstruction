@@ -169,6 +169,9 @@ public:
 	FGameplayTagContainer AnalyticsTags;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual TArray<UFortAlterationItemDefinition*> GetAlterations() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	ABuildingSMActor* GetBuildingAttachedTo() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

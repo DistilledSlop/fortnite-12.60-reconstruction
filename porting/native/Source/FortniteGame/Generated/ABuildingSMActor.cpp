@@ -8,6 +8,12 @@
 #include "UBuildingTextureData.h"
 #include "Net/UnrealNetwork.h"
 
+bool ABuildingSMActor::CanDoBuildingAnimations() const
+{
+	// Native target 0x141bffb80; CONFIDENCE: high.
+	return AnimatingMaterialMappings.Num() > 0;
+}
+
 void ABuildingSMActor::EditorOnlyRemoveInstanceMaterialScalarParameter(FName ParamName)
 {
 	// Original exec 0x1406969b0; complete empty leaf 0x1406801c0.
@@ -73,6 +79,12 @@ FBuildingDuplicationData ABuildingSMActor::GetDuplicationData()
 	return Result;
 }
 
+int32 ABuildingSMActor::GetLogicalBuildingIndex() const
+{
+	// Native target 0x141c098d0; CONFIDENCE: high.
+	return LogicalBuildingIdx;
+}
+
 UMaterialInstanceDynamic* ABuildingSMActor::GetOrCreateMIDOnDefaultMesh(int32 ElementIndex)
 {
 	// CONFIDENCE: HIGH
@@ -127,11 +139,23 @@ UMaterialInstanceDynamic* ABuildingSMActor::GetOrCreateMIDOnDefaultMesh(int32 El
 	return Result;
 }
 
+TEnumAsByte<EBuildingReplacementType> ABuildingSMActor::GetReplacementDestructionReason()
+{
+	// Native target 0x1418c7360; CONFIDENCE: high.
+	return ReplacementDestructionReason;
+}
+
 bool ABuildingSMActor::HasDestructionLoot() const
 {
 	// CONFIDENCE: HIGH
 	// Native 0x141c0cd00; reflected exec 0x1427566c0.
 	return !DestructionLootTierGroup.IsNone();
+}
+
+bool ABuildingSMActor::IsSupportedByWorld() const
+{
+	// Native target 0x141c0f7e0; CONFIDENCE: high.
+	return bForciblyStructurallySupported || bSupportedDirectly;
 }
 
 bool ABuildingSMActor::IsUnderConstruction() const

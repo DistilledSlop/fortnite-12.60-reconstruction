@@ -610,6 +610,9 @@ public:
 	UPROPERTY(ReplicatedUsing=OnRep_ProxyGameplayCueDamagePhysical)
 	FProxyGameplayCueDamagePhysical ProxyGameplayCueDamagePhysical;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool CanDoBuildingAnimations() const;
+
 	UFUNCTION(BlueprintCallable)
 	void EditorOnlyRemoveInstanceMaterialScalarParameter(FName ParamName);
 
@@ -639,11 +642,20 @@ protected:
 	FBuildingDuplicationData GetDuplicationData();
 public:
 
+	UFUNCTION(BlueprintCallable, BlueprintPure, BlueprintAuthorityOnly)
+	virtual int32 GetLogicalBuildingIndex() const;
+
 	UFUNCTION(BlueprintCallable)
 	UMaterialInstanceDynamic* GetOrCreateMIDOnDefaultMesh(int32 ElementIndex);
 
+	UFUNCTION(BlueprintCallable)
+	virtual TEnumAsByte<EBuildingReplacementType> GetReplacementDestructionReason();
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool HasDestructionLoot() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool IsSupportedByWorld() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsUnderConstruction() const;

@@ -2,6 +2,12 @@
 #include "ABuildingTrap.h"
 #include "Net/UnrealNetwork.h"
 
+TArray<UFortAlterationItemDefinition*> ABuildingTrap::GetAlterations() const
+{
+	// Native target 0x141c38690; CONFIDENCE: high.
+	return AppliedAlterations;
+}
+
 ABuildingSMActor* ABuildingTrap::GetBuildingAttachedTo() const
 {
 	// Original address: 0x14275c180.

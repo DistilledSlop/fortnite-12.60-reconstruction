@@ -139,6 +139,9 @@ public:
 	// Non-reflected field (behaviour kind "member_field", offset 0x40e): not a UPROPERTY, not replicated.
 	uint8 NativeRecoveredBits_0x40e;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x410): not a UPROPERTY, not replicated.
+	uint8 NativeRecoveredBits_0x410;
+
 	// table index 134, flags 0x20080000002000
 	UPROPERTY(Transient)
 	float CurrentFOV;
@@ -625,6 +628,9 @@ public:
 	// table index 0, flags 0x40008000000000
 	UPROPERTY()
 	FVehicleCosmeticInfo VehicleCosmeticInfo;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool AnyWheelsOnGround() const;
 
 	UFUNCTION(NetMulticast, Reliable)
 	void BroadcastResetWaterIdleTimeEmpty();
