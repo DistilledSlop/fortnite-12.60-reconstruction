@@ -1,0 +1,36 @@
+[
+  {
+    "function": "SetSpawnLocation",
+    "kind": "exec",
+    "signature": "void SetSpawnLocation(USceneComponent* SpawnLocation)",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/actor_leaf351_runtime/ABuildingProp_AISpawner_SetSpawnLocation.inc",
+    "address": "0x14274c030",
+    "native_body_address": "0x141c1c9e0",
+    "reflection_flags": "0x4020401",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [],
+    "notes": "The native body only replaces the reflected SpawnLocation at offset 3000 when the argument is non-null.",
+    "class": "ABuildingProp_AISpawner"
+  },
+  {
+    "function": "AddDamageComponent",
+    "kind": "exec",
+    "signature": "void AddDamageComponent(UPrimitiveComponent* DamageComponent)",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/actor_leaf351_runtime/ABuildingTrap_AddDamageComponent.inc",
+    "address": "0x14275b630",
+    "native_body_address": "0x141c2dce0",
+    "reflection_flags": "0x4020401",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [],
+    "notes": "The native body appends a non-null component to the reflected DamageComponents array at offset 3216, including duplicates.",
+    "class": "ABuildingTrap"
+  }
+]

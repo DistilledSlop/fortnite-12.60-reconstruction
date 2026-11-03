@@ -1,0 +1,64 @@
+[
+  {
+    "class": "ABuildingProp_AISpawner",
+    "function": "SetSpawnLocation",
+    "reflection": {
+      "exec_addr": "0x14274c030",
+      "flags": "0x4020401",
+      "params": [
+        {
+          "index": 0,
+          "name": "SpawnLocation",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x10000000080080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "class": "0x1447d7f30"
+          }
+        }
+      ],
+      "create_func": "0x142748850",
+      "source": "lea"
+    },
+    "reflection_capture": "porting/generated/reflection/fortnite_game_reflection.json",
+    "wrapper_capture": "porting/generated/native107-broad/0x14274c030.c",
+    "native_body_capture": "porting/generated/native107-impl/0x141c1c9e0.c",
+    "header": "porting/native/Source/FortniteGame/Generated/ABuildingProp_AISpawner.h"
+  },
+  {
+    "class": "ABuildingTrap",
+    "function": "AddDamageComponent",
+    "reflection": {
+      "exec_addr": "0x14275b630",
+      "flags": "0x4020401",
+      "params": [
+        {
+          "index": 0,
+          "name": "DamageComponent",
+          "kind": "Object",
+          "kind_raw": "0x12",
+          "property_flags": "0x10000000080080",
+          "replicated": false,
+          "rep_notify": null,
+          "array_dim": 1,
+          "object_flags": "0x45",
+          "offset": 0,
+          "type_refs": {
+            "class": "0x1447c55c0"
+          }
+        }
+      ],
+      "create_func": "0x142759790",
+      "source": "lea"
+    },
+    "reflection_capture": "porting/generated/reflection/fortnite_game_reflection.json",
+    "wrapper_capture": "porting/generated/native107-broad/0x14275b630.c",
+    "native_body_capture": "porting/generated/native107-impl/0x141c2dce0.c",
+    "header": "porting/native/Source/FortniteGame/Generated/ABuildingTrap.h"
+  }
+]

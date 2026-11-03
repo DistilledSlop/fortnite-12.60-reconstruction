@@ -168,6 +168,9 @@ public:
 	UPROPERTY()
 	FGameplayTagContainer AnalyticsTags;
 
+	UFUNCTION(BlueprintCallable)
+	void AddDamageComponent(UPrimitiveComponent* DamageComponent);
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual TArray<UFortAlterationItemDefinition*> GetAlterations() const;
 

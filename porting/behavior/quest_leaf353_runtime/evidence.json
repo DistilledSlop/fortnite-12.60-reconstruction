@@ -1,0 +1,14 @@
+[
+  {
+    "function": "GetAchievedCount",
+    "wrapper": "porting/generated/native108-broad/0x142ab3630.c",
+    "native_body": "porting/generated/native108-impl/0x14243ddf0.c",
+    "notes": "The definition completion threshold selects either sum of visible counts or count of visible completed objectives; output write ordering is preserved."
+  },
+  {
+    "function": "ShouldDisplayOverallQuestInformation",
+    "wrapper": "porting/generated/native102-broad/0x142ab45b0.c",
+    "native_body": "porting/generated/native102-impl/0x142451290.c",
+    "notes": "The native converts the object name to a temporary string and frees it without using it; the result is the definition flag with a null guard."
+  }
+]

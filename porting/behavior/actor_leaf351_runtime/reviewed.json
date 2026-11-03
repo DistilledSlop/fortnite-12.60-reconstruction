@@ -1,0 +1,47 @@
+[
+  {
+    "class": "ABuildingProp_AISpawner",
+    "function": "SetSpawnLocation",
+    "disposition": "Ported; cached wrapper and body match reflected member."
+  },
+  {
+    "class": "ABuildingTrap",
+    "function": "AddDamageComponent",
+    "disposition": "Ported; cached wrapper and body match reflected member."
+  },
+  {
+    "class": "AFortHoagieVehicle",
+    "function": "GetAltitude",
+    "disposition": "Read storage at 0x118c is not mapped to an accessible reflected field."
+  },
+  {
+    "class": "AFortHoagieVehicle",
+    "function": "GetDistanceToGround",
+    "disposition": "Read storage at 0x1150 is not mapped to an accessible reflected field."
+  },
+  {
+    "class": "AFortHoagieVehicle",
+    "function": "GetIsEngineOn",
+    "disposition": "State storage at 0x11dc is not mapped to an accessible reflected field."
+  },
+  {
+    "class": "AFortHoagieVehicle",
+    "function": "IsStartingUp",
+    "disposition": "State storage at 0x11dc is not mapped to an accessible reflected field."
+  },
+  {
+    "class": "AFortHoagieVehicle",
+    "function": "GetForwardAlpha",
+    "disposition": "Uses unresolved virtual call."
+  },
+  {
+    "class": "AFortHoagieVehicle",
+    "function": "GetLiftAlpha",
+    "disposition": "Uses unresolved virtual call."
+  },
+  {
+    "class": "AFortHoagieVehicle",
+    "function": "GetSteerAlpha",
+    "disposition": "Uses unresolved virtual call."
+  }
+]

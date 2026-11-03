@@ -102,6 +102,9 @@ public:
 	bool DoesQuestExpire() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	void GetAchievedCount(int32& OutTotalAchievedCount, int32& OutTotalRequiredCount, int32& OutLastKnownAchievedCount, bool UseLastKnownMcp) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetNumObjectivesComplete() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
@@ -124,6 +127,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsQuestInProgress() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool ShouldDisplayOverallQuestInformation() const;
 
 };
 

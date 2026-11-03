@@ -2,6 +2,17 @@
 #include "ABuildingTrap.h"
 #include "Net/UnrealNetwork.h"
 
+void ABuildingTrap::AddDamageComponent(UPrimitiveComponent* DamageComponent)
+{
+	// CONFIDENCE: high; native capture and reflected fields reviewed.
+	{
+		if (DamageComponent != nullptr)
+		{
+			DamageComponents.Add(DamageComponent);
+		}
+	}
+}
+
 TArray<UFortAlterationItemDefinition*> ABuildingTrap::GetAlterations() const
 {
 	// Native target 0x141c38690; CONFIDENCE: high.
