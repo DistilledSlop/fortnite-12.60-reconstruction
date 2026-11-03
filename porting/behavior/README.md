@@ -1,5 +1,13 @@
 # Behaviour snippets (porting/behavior)
 
+Gameplay source update (2026-11-02): six additional bodies and one native
+controller delegate restore stagger/respawn/parachute queries, squad preservation
+and team-kill notification. See `pawn_state_evidence.md` for original field/mask
+proofs and `../HANDOFF.md` for validation. Scratch generation accepts259 entries
+without rejects; the four affected gameplay classes verify224/224 entries and
+pass UE C++ syntax checks. Shared Native promotion, fresh UHT, linking and runtime
+validation remain pending. Historical counts/checkpoints below are unchanged.
+
 Hand-ported native function bodies, taken from the decompiled output of the shipping client
 (`porting/generated/decomp/` and `porting/generated/decomp_improved/`, both git-ignored). Each `.inc`
 is our own C++ re-expression of what the decompile does, not a copy of it.

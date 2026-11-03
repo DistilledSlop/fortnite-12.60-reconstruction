@@ -2635,29 +2635,29 @@
     "class": "AFortPawn",
     "function": "IsStaggered",
     "kind": "getter",
-    "signature": null,
-    "signature_status": "not_declared",
-    "inc_path": null,
-    "confidence": null,
+    "signature": "bool IsStaggered() const",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/AFortPawn/IsStaggered.inc",
+    "confidence": "high",
     "address": "0x142a1cdb0",
-    "status": "skipped",
+    "status": "ported",
     "proxy_score": 92.9,
     "decompile_source": "porting/generated/decomp_improved/AFortPawn/IsStaggered.c",
-    "notes": "whole_or_multibit_byte_read: byte +0x520 holds bool bits (bool_bits.json) but this body reads the whole byte, several bits, or a pointer chain"
+    "notes": "0x520 masks 0x80/0x40 map to bIsStaggered/bIsKnockedback; native bool bIsStunned is byte +0x618. See pawn_state_evidence.md."
   },
   {
     "class": "AFortPlayerPawn",
     "function": "HasRespawnedInAir",
     "kind": "getter",
-    "signature": null,
-    "signature_status": "not_declared",
-    "inc_path": null,
-    "confidence": null,
+    "signature": "bool HasRespawnedInAir() const",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/AFortPlayerPawn/HasRespawnedInAir.inc",
+    "confidence": "high",
     "address": "0x142a7cce0",
-    "status": "skipped",
+    "status": "ported",
     "proxy_score": 92.9,
     "decompile_source": "porting/generated/decomp_improved/AFortPlayerPawn/HasRespawnedInAir.c",
-    "notes": "whole_or_multibit_byte_read: byte +0x10e9 holds bool bits (bool_bits.json) but this body reads the whole byte, several bits, or a pointer chain"
+    "notes": "+0x10e9 mask 0x80 and +0x10ea mask 0x01 map to bIsRespawning and bIsRespawningInAir. See pawn_state_evidence.md."
   },
   {
     "class": "AFortPlayerControllerAthena",
@@ -2685,7 +2685,7 @@
     "status": "skipped",
     "proxy_score": 92.5,
     "decompile_source": "porting/generated/decomp_improved/AFortPlayerPawn/IsInCharacterCustomization.c",
-    "notes": "whole_or_multibit_byte_read: byte +0x2004 holds bool bits (bool_bits.json) but this body reads the whole byte, several bits, or a pointer chain"
+    "notes": "Binary tests +0x2004 mask 0x08; no named field for that bit is mapped in bool_bits.json. See pawn_state_evidence.md."
   },
   {
     "class": "AFortPawn",
@@ -2705,29 +2705,29 @@
     "class": "AFortPlayerPawn",
     "function": "IsParachuteLockedOpen",
     "kind": "getter",
-    "signature": null,
-    "signature_status": "not_declared",
-    "inc_path": null,
-    "confidence": null,
+    "signature": "bool IsParachuteLockedOpen() const",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/AFortPlayerPawn/IsParachuteLockedOpen.inc",
+    "confidence": "high",
     "address": "0x142a7d3b0",
-    "status": "skipped",
+    "status": "ported",
     "proxy_score": 92.2,
     "decompile_source": "porting/generated/decomp_improved/AFortPlayerPawn/IsParachuteLockedOpen.c",
-    "notes": "whole_or_multibit_byte_read: byte +0x2285 holds bool bits (bool_bits.json) but this body reads the whole byte, several bits, or a pointer chain"
+    "notes": "Whole byte +0x2285 is native bool bLocalParachuteLockedOpen (mov8 setter). See pawn_state_evidence.md."
   },
   {
     "class": "AFortPlayerPawn",
     "function": "IsParachuteOpen",
     "kind": "getter",
-    "signature": null,
-    "signature_status": "not_declared",
-    "inc_path": null,
-    "confidence": null,
+    "signature": "bool IsParachuteOpen() const",
+    "signature_status": "proposed",
+    "inc_path": "porting/behavior/AFortPlayerPawn/IsParachuteOpen.inc",
+    "confidence": "high",
     "address": "0x142a7d3d0",
-    "status": "skipped",
+    "status": "ported",
     "proxy_score": 92.2,
     "decompile_source": "porting/generated/decomp_improved/AFortPlayerPawn/IsParachuteOpen.c",
-    "notes": "whole_or_multibit_byte_read: byte +0x10e6 holds bool bits (bool_bits.json) but this body reads the whole byte, several bits, or a pointer chain"
+    "notes": "Whole byte +0x10e6 is native bool bIsParachuteOpen (mov8 setter). See pawn_state_evidence.md."
   },
   {
     "class": "AFortPlayerControllerAthena",
@@ -3295,13 +3295,13 @@
     "kind": "impl",
     "signature": "void Server_TogglePreserveSquad_Implementation()",
     "signature_status": "declared",
-    "inc_path": null,
-    "confidence": null,
+    "inc_path": "porting/behavior/AFortPlayerStateAthena/Server_TogglePreserveSquad_Implementation.inc",
+    "confidence": "high",
     "address": "0x141a59530",
-    "status": "skipped",
+    "status": "ported",
     "proxy_score": 73.0,
     "decompile_source": "porting/generated/decomp_improved/AFortPlayerStateAthena/Server_TogglePreserveSquad_Implementation.c",
-    "notes": "other: not clean"
+    "notes": "Whole byte +0x13e0 is native bool bPreserveSquad (mov8 setter); binary writes its logical inverse. See pawn_state_evidence.md."
   },
   {
     "class": "AFortPlayerPawn",
@@ -3673,13 +3673,13 @@
     "kind": "impl",
     "signature": "void ClientReportTeamKill_Implementation(int32 TeamKills)",
     "signature_status": "declared",
-    "inc_path": null,
-    "confidence": null,
+    "inc_path": "porting/behavior/AFortPlayerStateAthena/ClientReportTeamKill_Implementation.inc",
+    "confidence": "medium",
     "address": "0x141a3d8f0",
-    "status": "skipped",
+    "status": "ported",
     "proxy_score": 57.2,
     "decompile_source": "porting/generated/decomp_improved/AFortPlayerStateAthena/ClientReportTeamKill_Implementation.c",
-    "notes": "unnamed_call: calls an unidentified FUN_* helper"
+    "notes": "Owner cast to AFortPlayerControllerAthena, then native delegate at +0x31f8 broadcasts TeamKills. Reconstructed field name; see pawn_state_evidence.md."
   },
   {
     "class": "AFortPlayerControllerAthena",
@@ -6229,5 +6229,24 @@
     "address": "0x1407fd0d0",
     "status": "ported",
     "notes": "Original exec 0x14080d970 jumps to shared reflected stop bit setter; exact exec/create metadata gated by runtime policy."
+  },
+  {
+    "class": "AFortPlayerControllerAthena",
+    "function": "TeamKillsReportedNative",
+    "kind": "member_field",
+    "signature": "TMulticastDelegate<void, int32> TeamKillsReportedNative",
+    "signature_status": "proposed",
+    "access": "public",
+    "offset": "0x31f8",
+    "includes": [
+      "Delegates/Delegate.h"
+    ],
+    "inc_path": null,
+    "confidence": "medium",
+    "address": null,
+    "status": "ported",
+    "proxy_score": null,
+    "decompile_source": "porting/generated/callee_probe/blocking/0x1419e8cd0.c",
+    "notes": "Native multicast delegate, reconstructed name; accessor 0x1419e8cd0 returns +0x31f8 and 0x140f2c470 broadcasts int32. Distinct from the no-argument delegate at +0x3210. See pawn_state_evidence.md."
   }
 ]

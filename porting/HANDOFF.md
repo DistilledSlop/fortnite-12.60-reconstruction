@@ -1,5 +1,53 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Gameplay source batch (2026-11-02): pawn state and squad notifications
+
+User redirected Codex to gameplay classes; Claude owns the ongoing UI work.
+Preserve all frontend edits. This batch changes canonical behavior inputs only;
+it does not promote into the shared Native tree or alter builds/staging.
+
+Restored six original bodies: AFortPawn.IsStaggered; AFortPlayerPawn.
+HasRespawnedInAir, IsParachuteLockedOpen and IsParachuteOpen; and
+AFortPlayerStateAthena.Server_TogglePreserveSquad_Implementation and
+ClientReportTeamKill_Implementation. The latter broadcasts the actual int32
+argument through a newly reconstructed controller native delegate at original
++0x31f8, separately from the existing no-argument score delegate at +0x3210.
+The member name TeamKillsReportedNative is reconstructed (medium confidence).
+IsInCharacterCustomization remains skipped: +0x2004 bit0x08 has no named field.
+Body/setter windows match authoritative raw image-125; mappings and exact hashes
+are in behavior/pawn_state_evidence.md. No milestone/progress credit added.
+
+Scratch promotion2 PASS:259 splices, zero rejects. Gameplay checker PASS224/224
+across the four affected classes. Actual generated AFortPawn, AFortPlayerPawn,
+AFortPlayerStateAthena and AFortPlayerControllerAthena translation units pass
+UE clang9 syntax checks. These reuse existing UHT headers; fresh UHT, full client/
+server linking, joins and gameplay runtime remain pending. Native/staged binaries
+remain at their previous checkpoints, including the unbuilt strict UI batch below.
+
+Commands/receipts: generation argv in
+/tmp/gameplay-pawn-state-validation-2/command.json; focused checker command
+`python3 -I /tmp/gameplay-pawn-state-validation-2/check_gameplay.py`;
+gameplay-check.log; {AFortPawn,AFortPlayerPawn}.command.json and .syntax.log;
+{AFortPlayerStateAthena,AFortPlayerControllerAthena}.current.command.json and
+.current.syntax.log. Compile argv are JSON arrays, run from
+/opt/fortnite/UnrealEngine/Engine/Source. Generation1 rejected an explicit
+generated-class include; canonical manifest corrected to use automatic class
+dependency discovery, and generation2 has no rejects. Initial stale response
+files lacked current module include paths; final state/controller checks use the
+latest module response. The full legacy behavior checker still fails the unrelated
+UCommonButton.StopDoubleClickPropagation address-comment check (module-flattened
+scratch view); the gameplay subset has no waivers/rejections. Preserve failed logs.
+
+Next gameplay integration must be coordinated with Claude's Native/build owner:
+regenerate from canonical inputs, then validate client/server and actual behavior
+as a coherent shared-runtime batch. Aircraft/storm evidence is available in
+generated/callee_probe/blocking but is not closed implementation; inventory byte
+sizes are unreliable (e.g. OnGamePhaseStepChanged is substantive). Do not replace
+unknown dependencies with fallbacks. Continue bounded Luna medium read-only,
+Terra medium/high implementation, Sol medium complex tasks, fork_turns none;
+primary reviews/integrates and retains overall ownership. Keep reads bounded and
+rotate workers at component boundaries.
+
 ## Handoff / stopped: nine unresolved imports and strict Root gate
 
 User explicitly redirected work to these blockers and requested finishing the
