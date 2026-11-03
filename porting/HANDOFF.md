@@ -2,6 +2,7 @@
 
 ## Native source batch 42 (2026-11-03)
 
+Source42 f5cfa43a committed/pushed; dashboard published in this checkpoint.
 Canonical source:1,928 bodies +171 fields =2,099 entries. Three credited bodies:
 Gadget native ammo override, base game-mode930nullclass virtual and Athena930
 class selection override. Two additional shared support bodies close tracked
