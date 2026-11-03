@@ -4643,6 +4643,7 @@ class TypeGate:
             model = _confirmation_policy.apply_struct(self, info, model)
             model = _common_input_policy.apply_struct(info, model)
             model = _input_platform_policy.apply_struct(info, model)
+            model = _client_event_policy.apply_struct(info, model)
             if info.cpp_name == 'FCommonInputPlatformData':
                 _controller_brush_policy.validate_platform_model(info, model)
                 _input_cache_policy.validate_platform_model(info, model)

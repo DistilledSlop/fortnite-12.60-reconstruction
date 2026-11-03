@@ -43,6 +43,13 @@ def validate_types(gate):
         raise ValueError('original client event name type unavailable')
 
 
+def apply_struct(info, model):
+    # Kismet ExecuteClientEvent takes this struct by value as a Blueprint pin.
+    if info.fn == EVENT_FN and info.cpp_name == 'FFortClientEventName':
+        model['blueprint_type'] = True
+    return model
+
+
 def manual_declaration():
     return ('    UFUNCTION(BlueprintCallable, BlueprintCosmetic, meta=(WorldContext="WorldContextObject"))\n'
             '    static void ExecuteClientEvent(UObject* WorldContextObject, FFortClientEventName EventType, UObject* EventSource, UObject* EventFocus);')

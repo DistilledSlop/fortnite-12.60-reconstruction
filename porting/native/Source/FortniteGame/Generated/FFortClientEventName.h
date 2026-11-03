@@ -8,7 +8,7 @@
 
 #include "FFortClientEventName.generated.h"
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FFortClientEventName : public FFortEventName
 {
 	GENERATED_BODY()
