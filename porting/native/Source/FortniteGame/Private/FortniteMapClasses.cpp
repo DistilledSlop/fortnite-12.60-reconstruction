@@ -129,3 +129,39 @@ bool UFortKismetLibrary::IsAssetNull(TSoftObjectPtr<UObject> Asset)
 {
     return Asset.IsNull();
 }
+
+// CONFIDENCE: high; native exec 0x142934740 calls the verified constant true helper.
+bool UFortKismetLibrary::DeviceSupportsForceFeedback()
+{
+    return true;
+}
+
+// CONFIDENCE: high; native exec 0x142934740 calls the verified constant true helper.
+bool UFortKismetLibrary::IsUsingBattlEye()
+{
+    return true;
+}
+
+// CONFIDENCE: high; native exec 0x142934680 calls the verified constant false helper.
+bool UFortKismetLibrary::IsCellConnection()
+{
+    return false;
+}
+
+// CONFIDENCE: high; native exec 0x142934680 calls the verified constant false helper.
+bool UFortKismetLibrary::IsConsolePlatform()
+{
+    return false;
+}
+
+// CONFIDENCE: high; native exec 0x142934680 calls the verified constant false helper.
+bool UFortKismetLibrary::IsPhoneGame()
+{
+    return false;
+}
+
+// CONFIDENCE: high; native exec 0x142934680 calls the verified constant false helper.
+bool UFortKismetLibrary::IsTabletGame()
+{
+    return false;
+}

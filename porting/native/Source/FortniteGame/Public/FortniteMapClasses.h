@@ -75,6 +75,24 @@ public:
     static bool IsLatentActionHandleValid(const FFortDialogExternalLatentActionHandle& Handle);
 
     UFUNCTION(BlueprintPure, Category="Fortnite|Platform")
+    static bool DeviceSupportsForceFeedback();
+
+    UFUNCTION(BlueprintPure, Category="Fortnite|Platform")
+    static bool IsUsingBattlEye();
+
+    UFUNCTION(BlueprintPure, Category="Fortnite|Platform")
+    static bool IsCellConnection();
+
+    UFUNCTION(BlueprintPure, Category="Fortnite|Platform")
+    static bool IsConsolePlatform();
+
+    UFUNCTION(BlueprintPure, Category="Fortnite|Platform")
+    static bool IsPhoneGame();
+
+    UFUNCTION(BlueprintPure, Category="Fortnite|Platform")
+    static bool IsTabletGame();
+
+    UFUNCTION(BlueprintPure, Category="Fortnite|Platform")
     static bool IsMobilePlatform();
 
     UFUNCTION(BlueprintCallable, Category="Fortnite|Math")
