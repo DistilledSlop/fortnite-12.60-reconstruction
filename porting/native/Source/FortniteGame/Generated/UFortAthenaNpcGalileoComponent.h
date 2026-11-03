@@ -45,6 +45,9 @@ public:
 	UPROPERTY()
 	FGalileoComponentOnPatrollingStop OnPatrollingStop;
 
+	UFUNCTION(BlueprintCallable)
+	TArray<AFortAthenaAIBotController*> GetCommunicationGroup();
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	TArray<FVector> GetPatrolPath() const;
 

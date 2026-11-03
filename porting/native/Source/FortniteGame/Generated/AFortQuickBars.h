@@ -6,7 +6,12 @@
 #include "CoreMinimal.h"
 #include "AFortClientOnlyActor.h"
 
+#include "Delegates/Delegate.h"
+#include "EFortQuickBars.h"
+#include "Engine/EngineTypes.h"
+#include "Engine/World.h"
 #include "FQuickBar.h"
+#include "TimerManager.h"
 
 class UFortItem;
 class UFortWorldItem;
@@ -31,6 +36,9 @@ public:
 	UPROPERTY()
 	FQuickBar CreativeQuickBar;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x3d0): not a UPROPERTY, not replicated.
+	TMulticastDelegate<void, EFortQuickBars, const TArray<int32>&> QuickBarDirtySlotsNative;
+
 	// table index 6, flags 0x20080000002000
 	UPROPERTY(Transient)
 	TArray<UFortWorldItem*> AllCachedTraps;
@@ -47,10 +55,15 @@ public:
 	UPROPERTY(Transient)
 	TArray<UFortWorldItem*> CachedCeilingTraps;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x480): not a UPROPERTY, not replicated.
+	TMap<uint8, FTimerHandle> QuickBarUpdateTimersNative;
+
 
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	bool NativeCanFitItemInSlots(UFortItem* Item, const FQuickBar& Bar, int32 StartSlot, const TArray<FGuid>& MoveGuids, bool bIgnoreOccupants);
 	bool NativeFindItemSlot(UFortItem* Item, FQuickBar& Bar, int32 StartSlot, bool bReverse, const TArray<FGuid>& MoveGuids, bool bAllowOwnGuid, int32& FoundSlot);
+	void NativeScheduleQuickBarUpdate(uint8 Bar);
+	void NativeFlushQuickBarUpdate(uint8 Bar);
 };
 

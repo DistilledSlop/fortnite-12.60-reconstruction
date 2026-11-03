@@ -104,6 +104,13 @@ bool UFortItemDefinition::IsStackable() const
 	return MaxStackSize.AsInteger(0.0f, nullptr) != 1;
 }
 
+bool UFortItemDefinition::ShouldShowPreviewOnCurrentHero(int32 InSubSlot) const
+{
+	// CONFIDENCE: HIGH
+	// The original class implementation returns false for every InSubSlot.
+	return false;
+}
+
 FString UFortItemDefinition::NativeGetProfileKey() const
 {
 	// CONFIDENCE: HIGH

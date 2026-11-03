@@ -6,6 +6,8 @@
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 
+class AActor;
+
 #include "UFortAIFunctionLibrary.generated.h"
 
 UCLASS()
@@ -14,5 +16,8 @@ class FORTNITEGAME_API UFortAIFunctionLibrary : public UBlueprintFunctionLibrary
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(BlueprintCallable, BlueprintAuthorityOnly)
+	static void SetHearingRange(AActor* AIAgent, float Range);
+
 };
 

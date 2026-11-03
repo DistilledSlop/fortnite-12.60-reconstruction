@@ -26,5 +26,8 @@ public:
 	UPROPERTY()
 	TEnumAsByte<EFortDayPhase::Type> NewDayPhase;
 
+	UFUNCTION(BlueprintCallable)
+	void SetParams(AFortTimeOfDayManager* _LightingAndFogManager, EFortDayPhase::Type _NewDayPhase, UFortDayPhaseChangeParams*& ThisParam);
+
 };
 

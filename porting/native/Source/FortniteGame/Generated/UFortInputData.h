@@ -1114,5 +1114,8 @@ public:
 	UPROPERTY()
 	TArray<FFortActionKeyMapping> InputOptionsList;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FText GetAbility1Label() const;
+
 };
 

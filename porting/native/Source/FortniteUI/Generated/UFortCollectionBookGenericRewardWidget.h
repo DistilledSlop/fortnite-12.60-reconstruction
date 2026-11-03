@@ -40,6 +40,9 @@ public:
 	UPROPERTY(Transient)
 	ECollectionBookRewardStatus RewardStatus;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual ECollectionBookRewardStatus GetRewardStatus() const;
+
 protected:
 	UFUNCTION()
 	virtual void SetCurrentItemToDisplay(UFortItem* ItemToDisplay);

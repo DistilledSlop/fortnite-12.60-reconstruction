@@ -20,5 +20,8 @@ public:
 	UPROPERTY()
 	FGameplayTagContainer WeatherTags;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FGameplayTagContainer GetWeatherTags() const;
+
 };
 

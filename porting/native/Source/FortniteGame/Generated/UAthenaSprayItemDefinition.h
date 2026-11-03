@@ -34,6 +34,9 @@ public:
 	TSoftObjectPtr<UTexture2D> DecalTexture;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	TSoftObjectPtr<UMaterialInterface> GetDecalMaterial() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool ShouldUseBannerAsTexture() const;
 
 };

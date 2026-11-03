@@ -1,0 +1,45 @@
+{
+  "targets": [
+    "0x14205c5e0",
+    "0x14205c7f0"
+  ],
+  "status": "closed_pending_root_integration",
+  "build_tested": false,
+  "sources": [
+    "porting/generated/native98-deps/0x14205c5e0.c",
+    "porting/generated/native108-quickbar-tail/0x14205c7f0.c",
+    "porting/generated/native108-quickbar-tail/0x14205c7f0.asm",
+    "porting/generated/native108-quickbar-tail/0x142040380.c",
+    "porting/generated/native108-quickbar-tail2/0x141b31980.c",
+    "porting/generated/native98-impl/0x144627d90.c",
+    "porting/behavior/quickbar_refresh110_runtime/source_policy.py"
+  ],
+  "verified": [
+    "Reflected layout: Primary 0x220, Secondary 0x2b0, Creative 0x340 (each 0x90, end 0x3d0); AllCachedTraps 0x438, CachedFloorTraps 0x448, CachedWallTraps 0x458, CachedCeilingTraps 0x468 (end 0x478). Proposed multicast [0x3d0,0x3e8) and map [0x480,0x4d0) overlap no reflected member.",
+    "Callback asm: RCX+0x480 map, [RSI+0x14] lock at 0x3e4, [RSI+8] num at 0x3d8, 16-byte invocation entries; refresh call is RDX=owner, RCX=bar.",
+    "Slot stride 0x28 = FQuickBarSlot (Items 0x10, flag byte +0x10, UsedBySlotIndex +0x14, Guid +0x18); mask 2 on the flag byte is bIsDirty (bEnabled is bit 0).",
+    "Timer delegate object is 0x30 bytes: vtable, weak object, method, uint8 payload, delegate handle = TBaseUObjectMethodDelegateInstance<void,uint8>. World+0x188 GameInstance->+0xc0 TimerManager else World+0x320 is UWorld::GetTimerManager; engine FTimerManager::SetTimerForNextTick(FTimerDelegate const&) returns FTimerHandle.",
+    "Multicast signature: invocation vtable +0x50 called with (uint8, TArray<int32>*) returns bool; compaction when any entry empty/expired/false -> TMulticastDelegate<void, EFortQuickBars, const TArray<int32>&>::Broadcast. Raw bar byte passed unmapped."
+  ],
+  "not_proven": [
+    "No capture of the AFortQuickBars constructor/destructor or of any AddUObject/binder to +0x3d0, so delegate registration and exact owning-class field names are unproven (names are placeholders; param type EFortQuickBars is inferred from byte enum + ClientForceUpdateQuickbar usage, not from a binder).",
+    "Compiled layout: member_field offsets only order fields. Unknown bytes remain in [0x3e8,0x438) and [0x478,0x480); fields are not padded to exact offsets by the generator, so compiled offsets may differ unless root adds padding/offset checks.",
+    "Not compiled or run."
+  ],
+  "root_requests": [
+    "Capture AFortQuickBars constructor (writes 0x3d0..0x4d0 init), destructor (0x142abb670 -> 0x142040a80 appears to be a different destructor) and any binder of +0x3d0 delegate; list [0x3e8,0x438) and [0x478,0x480) users.",
+    "Root must wire scheduler call sites; callers of 0x14205c5e0 were not part of this task."
+  ],
+  "dependencies": {
+    "FQuickBar::RefreshEquippedItemDefinitions(AFortPlayerController*)": "canonical quickbar_refresh110_runtime"
+  },
+  "root_constructor_review": {
+    "helper": "0x142abb670",
+    "constructor": "0x142040a80",
+    "source": "porting/generated/native129-constructors/0x142040a80.c",
+    "primary_table": "0x146078b30",
+    "delegate_defaults": "3d0/3d8 zero, threshold3e0=2, lock3e4=0; matches UE multicast defaults",
+    "timer_map_defaults": "480pointer/488nummax zero,4acallocationbits128,4b0firstfree-1,4b4numfree0,4c0hash0,4c8hashsize0",
+    "source_layout": "Named field source reconstruction; original Windows byte offsets prove storage identity/nonoverlap, not a fixed Linux ABI requirement."
+  }
+}

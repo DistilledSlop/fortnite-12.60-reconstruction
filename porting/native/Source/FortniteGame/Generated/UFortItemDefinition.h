@@ -237,6 +237,9 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual bool IsStackable() const;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	virtual bool ShouldShowPreviewOnCurrentHero(int32 InSubSlot) const;
+
 
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.

@@ -93,5 +93,8 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	UFortUITeamInfo* GetLocalPlayerTeam() const;
 
+	UFUNCTION(BlueprintCallable)
+	static bool IsValidNetID(FUniqueNetIdRepl& UniqueNetID);
+
 };
 

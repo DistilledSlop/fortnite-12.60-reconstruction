@@ -1,0 +1,602 @@
+[
+  {
+    "index": 1,
+    "class": "AFortGameStateAthena",
+    "function": "OnRep_CurrentPlaylistInfo",
+    "address": "0x1429203f0",
+    "captured_source": "porting/generated/native108-broad/0x1429203f0.c",
+    "reason": "OnRep_CurrentPlaylistInfo: complex replication handler calling FUN_14199f770 (781 lines), playlist globals, and unrecovered UI notifications."
+  },
+  {
+    "index": 3,
+    "class": "UFortMissionTimerComponent",
+    "function": "ClearMissionTimer",
+    "address": "0x1429ef920",
+    "captured_source": "porting/generated/native108-broad/0x1429ef920.c",
+    "reason": "ClearMissionTimer: calls FTimerManager_InternalClearTimer, FUN_144621fb0, and multiple mission timer helpers requiring full timer component recovery."
+  },
+  {
+    "index": 4,
+    "class": "UFortEventLeaderboardEntryData",
+    "function": "GetAverageMatchScore",
+    "address": "0x145218610",
+    "captured_source": "porting/generated/native108-broad/0x145218610.c",
+    "reason": "GetAverageMatchScore: reads unreflected member pointers (+0x28) and raw offsets (+0x90, +0x108) with no reflected field layout."
+  },
+  {
+    "index": 5,
+    "function": "GetDisabledFrontendNavigationTabs",
+    "address": "0x142acdbe0",
+    "captured_source": "porting/generated/native108-broad/0x142acdbe0.c",
+    "reason": "Helper 0x1426ff000 selects array at +0x600 or +0x5f0 based on byte at +0x81; selector and field mapping require proof.",
+    "class": "UFortRuntimeOptions"
+  },
+  {
+    "index": 6,
+    "class": "UFortniteAutomationBlueprintLibrary",
+    "function": "ApplyItemWrapToActor",
+    "address": "0x142a03c50",
+    "captured_source": "porting/generated/native108-broad/0x142a03c50.c",
+    "reason": "ApplyItemWrapToActor: automation library function calling FUN_14257bd50 (325 lines) with extensive actor material/mesh manipulation."
+  },
+  {
+    "index": 7,
+    "class": "UFortCreativeItemListMenu",
+    "function": "AddSelectionToQuickBar",
+    "address": "0x145220020",
+    "captured_source": "porting/generated/native108-broad/0x145220020.c",
+    "reason": "AddSelectionToQuickBar: calls FUN_144d71c20 via raw pointer at +0x350 without resolved quickbar contract."
+  },
+  {
+    "index": 8,
+    "class": "UAIHotSpotSlot",
+    "function": "ClearSlot",
+    "address": "0x142710660",
+    "captured_source": "porting/generated/native108-broad/0x142710660.c",
+    "reason": "ClearSlot: virtual dispatch to slot 0x298; unverified vtable slot and abstract base slot without primary vtable proof."
+  },
+  {
+    "index": 9,
+    "class": "UFortMultiSizeItemCard",
+    "function": "SetCardSize",
+    "address": "0x145297aa0",
+    "captured_source": "porting/generated/native108-broad/0x145297aa0.c",
+    "reason": "SetCardSize: modifies unreflected layout state (+0x130) and calls FUN_144f3b9f0, FUN_144f30090."
+  },
+  {
+    "index": 10,
+    "class": "UBuildingStructuralSupportSystem",
+    "function": "GetCenterCellActor",
+    "address": "0x14275c1f0",
+    "captured_source": "porting/generated/native108-broad/0x14275c1f0.c",
+    "reason": "GetCenterCellActor: calls FUN_141c76e10 (46 lines) structural support grid spatial lookup with unrecovered coordinate hashing."
+  },
+  {
+    "index": 11,
+    "class": "UMeshNetworkSubsystem",
+    "function": "DisableMeshReplication",
+    "address": "0x141080310",
+    "captured_source": "porting/generated/native108-broad/0x141080310.c",
+    "reason": "DisableMeshReplication: calls FUN_1410787b0 (78 lines) mesh networking node traversal."
+  },
+  {
+    "index": 12,
+    "class": "UFortConversionControlItemDefinition",
+    "function": "GetFirstConversionTier",
+    "address": "0x1428ac5f0",
+    "captured_source": "porting/generated/native108-broad/0x1428ac5f0.c",
+    "reason": "GetFirstConversionTier: calls FUN_142543140 and FUN_14252e510 with unrecovered data table cost row resolution."
+  },
+  {
+    "index": 13,
+    "class": "UFortQuestMapEventCallout",
+    "function": "GetRequiredQuestForCurrentEvent",
+    "address": "0x1452b6230",
+    "captured_source": "porting/generated/native108-broad/0x1452b6230.c",
+    "reason": "GetRequiredQuestForCurrentEvent: calls FUN_1450e9d00 with deep unreflected pointer chains (+0x514, +0x578, +0x570, +0x508, +0x38, +0xe0)."
+  },
+  {
+    "index": 14,
+    "class": "AFortTrack",
+    "function": "GetOutgoingNeighborFromSpline",
+    "address": "0x142b19120",
+    "captured_source": "porting/generated/native108-broad/0x142b19120.c",
+    "reason": "GetOutgoingNeighborFromSpline: virtual call to slot 0xed0 without vtable proof."
+  },
+  {
+    "index": 15,
+    "class": "UFortCreativeItemListTabPanel",
+    "function": "AddItem",
+    "address": "0x14521fe80",
+    "captured_source": "porting/generated/native108-broad/0x14521fe80.c",
+    "reason": "AddItem: calls FUN_1419844f0 (66 lines), FUN_144d72260, and creative quickbar slotting routines."
+  },
+  {
+    "index": 16,
+    "class": "UFortMontageItemDefinitionBase",
+    "function": "GetAnimation",
+    "address": "0x1429f4d20",
+    "captured_source": "porting/generated/native108-broad/0x1429f4d20.c",
+    "reason": "GetAnimation: calls FUN_141d7b900 (75 lines) with gender/body-type override resolution logic."
+  },
+  {
+    "index": 17,
+    "class": "UInventoryManagementLibrary",
+    "function": "AddItem",
+    "address": "0x142b6baf0",
+    "captured_source": "porting/generated/native108-broad/0x142b6baf0.c",
+    "reason": "AddItem: calls FUN_142000d10 inventory management library helper."
+  },
+  {
+    "index": 18,
+    "class": "UAthenaPlayerMatchReport",
+    "function": "GetLootRewards",
+    "address": "0x14272b5d0",
+    "captured_source": "porting/generated/native108-broad/0x14272b5d0.c",
+    "reason": "GetLootRewards: calls FUN_141b6b5f0 (78 lines) loot reward container parsing."
+  },
+  {
+    "index": 19,
+    "class": "UFortHeroSupportPerkWidget",
+    "function": "IsPerkActive",
+    "address": "0x145257c70",
+    "captured_source": "porting/generated/native108-broad/0x145257c70.c",
+    "reason": "IsPerkActive: calls FUN_144ec5b30 checking unreflected weak pointer at +0x230."
+  },
+  {
+    "index": 20,
+    "class": "UFortSquadSlotDetailsPanel",
+    "function": "GetIdOfSquadSlotToManageBP",
+    "address": "0x1452eba70",
+    "captured_source": "porting/generated/native108-broad/0x1452eba70.c",
+    "reason": "GetIdOfSquadSlotToManageBP: reads unreflected raw fields at offsets 0x260 and 0x268 without nonoverlap proof."
+  },
+  {
+    "index": 21,
+    "class": "APartyDisplayManager",
+    "function": "GetCosmeticLoadoutForCurrentDisplayedItem",
+    "address": "0x142b7e270",
+    "captured_source": "porting/generated/native108-broad/0x142b7e270.c",
+    "reason": "GetCosmeticLoadoutForCurrentDisplayedItem: calls FUN_141984b70 (117 lines) and FUN_1409f4be0 display manager loadout queries."
+  },
+  {
+    "index": 22,
+    "class": "UCommonTextBlock",
+    "function": "ResetScrollState",
+    "address": "0x140815ac0",
+    "captured_source": "porting/generated/native108-broad/0x140815ac0.c",
+    "reason": "ResetScrollState: calls text block scroll helpers FUN_142f63520 and FUN_142f64b50."
+  },
+  {
+    "index": 23,
+    "class": "UFortCosmeticVariant",
+    "function": "GetAllVariantTags",
+    "address": "0x1428ac590",
+    "captured_source": "porting/generated/native108-broad/0x1428ac590.c",
+    "reason": "GetAllVariantTags: calls FUN_142008210 (22 lines) and FUN_142c64fe0 (28 lines) variant tag aggregation."
+  },
+  {
+    "index": 24,
+    "class": "UFortItemInspectCycleWidget",
+    "function": "GetItemWithOffset_BP",
+    "address": "0x14526efa0",
+    "captured_source": "porting/generated/native108-broad/0x14526efa0.c",
+    "reason": "GetItemWithOffset_BP: calls FUN_144f26220 (35 lines) cycle widget offset calculation."
+  },
+  {
+    "index": 25,
+    "class": "UFortPlayerSurveyAnswerWidgetBase",
+    "function": "GetStopwatchTime",
+    "address": "0x1452a8590",
+    "captured_source": "porting/generated/native108-broad/0x1452a8590.c",
+    "reason": "GetStopwatchTime: calls FUN_144fa1240 survey stopwatch formatting helper."
+  },
+  {
+    "index": 26,
+    "class": "UFortSquadSlotSelectorButton",
+    "function": "GetIdOfSquadSlotToManageBP",
+    "address": "0x1452ebdf0",
+    "captured_source": "porting/generated/native108-broad/0x1452ebdf0.c",
+    "reason": "GetIdOfSquadSlotToManageBP: reads unreflected raw fields at offsets 0xb78 and 0xb80 without nonoverlap proof."
+  },
+  {
+    "index": 27,
+    "class": "UHUDLayoutToolPropertyWidget",
+    "function": "GetCurrentValue",
+    "address": "0x145330180",
+    "captured_source": "porting/generated/native108-broad/0x145330180.c",
+    "reason": "GetCurrentValue: calls FUN_144c20ea0 (26 lines) HUD layout tool property widget virtual evaluation."
+  },
+  {
+    "index": 28,
+    "class": "AFortPlayerSpawnPad",
+    "function": "GetPossessedPlayerPawnsByID",
+    "address": "0x142a88dd0",
+    "captured_source": "porting/generated/native108-broad/0x142a88dd0.c",
+    "reason": "GetPossessedPlayerPawnsByID: calls FUN_1424adb70 (48 lines) player spawn pad controller iteration."
+  },
+  {
+    "index": 29,
+    "class": "UAthenaGliderItemDefinition",
+    "function": "GetOverrideAnimSetPtr",
+    "address": "0x142725a20",
+    "captured_source": "porting/generated/native108-broad/0x142725a20.c",
+    "reason": "GetOverrideAnimSetPtr: copies animation set struct via FUN_142ebd9e0 with unrecovered animset pointer layout."
+  },
+  {
+    "index": 30,
+    "class": "UCommonLoadGuard",
+    "function": "IsLoading",
+    "address": "0x140810360",
+    "captured_source": "porting/generated/native108-broad/0x140810360.c",
+    "reason": "IsLoading: calls FUN_1407cfb90 dereferencing raw pointer at +0x1f0 and state bit at +0x409."
+  },
+  {
+    "index": 32,
+    "class": "UFortConsumableItemDefinition",
+    "function": "ConsumeItem",
+    "address": "0x14288b820",
+    "captured_source": "porting/generated/native108-broad/0x14288b820.c",
+    "reason": "ConsumeItem: complex consumable logic (130 lines) calling inventory and gameplay effect volume helpers; primary vtable 0x1462bd890 slot 0x3e8."
+  },
+  {
+    "index": 33,
+    "class": "UFortGameplayAbilityTooltip",
+    "function": "GetApplicationTag",
+    "address": "0x1428fd590",
+    "captured_source": "porting/generated/native108-broad/0x1428fd590.c",
+    "reason": "GetApplicationTag: tooltip tag lookup calling unrecovered gameplay ability spec tag parser."
+  },
+  {
+    "index": 34,
+    "class": "UFortItemManagementMulchDetailsPanel",
+    "function": "GetItemCountsToMulch",
+    "address": "0x1452743a0",
+    "captured_source": "porting/generated/native108-broad/0x1452743a0.c",
+    "reason": "GetItemCountsToMulch: calls FUN_144f5d810 and FUN_144d04de0 mulch item counter."
+  },
+  {
+    "index": 35,
+    "class": "UFortMatchmakingKnobsSpinnerButton",
+    "function": "GetDescription",
+    "address": "0x1452898b0",
+    "captured_source": "porting/generated/native108-broad/0x1452898b0.c",
+    "reason": "GetDescription: 43 lines of matchmaking knobs spinner text construction."
+  },
+  {
+    "index": 36,
+    "class": "UFortProgressWidget",
+    "function": "SetDescription",
+    "address": "0x1452b1ca0",
+    "captured_source": "porting/generated/native108-broad/0x1452b1ca0.c",
+    "reason": "SetDescription: calls FUN_144e19c60 (41 lines) progress widget text updating and slate invalidation."
+  },
+  {
+    "index": 37,
+    "class": "UFortSquadSlotsView",
+    "function": "SetIdOfSquadToManageBP",
+    "address": "0x1452ed180",
+    "captured_source": "porting/generated/native108-broad/0x1452ed180.c",
+    "reason": "SetIdOfSquadToManageBP: calls FUN_145135bf0 and FUN_1450fd550 view refresh routines."
+  },
+  {
+    "index": 38,
+    "class": "ULoadGuardSlot",
+    "function": "SetHorizontalAlignment",
+    "address": "0x1408110f0",
+    "captured_source": "porting/generated/native108-broad/0x1408110f0.c",
+    "reason": "SetHorizontalAlignment: calls FUN_1407f66c0 (46 lines) Slate slot layout synchronization (FUN_1430ff560)."
+  },
+  {
+    "index": 39,
+    "class": "AFortPlayerCharm",
+    "function": "GetCharmSoundAssetByDescName",
+    "address": "0x142a47140",
+    "captured_source": "porting/generated/native108-broad/0x142a47140.c",
+    "reason": "GetCharmSoundAssetByDescName: calls FUN_1419d3020 (24 lines) sound bank descriptor search."
+  },
+  {
+    "index": 40,
+    "class": "AGameplayEffectVolume",
+    "function": "ApplyGameplayEffect",
+    "address": "0x142b672e0",
+    "captured_source": "porting/generated/native108-broad/0x142b672e0.c",
+    "reason": "ApplyGameplayEffect: calls FUN_14262a610 (193 lines) gameplay effect volume execution engine."
+  },
+  {
+    "index": 41,
+    "class": "UAthenaMapLayer",
+    "function": "ClearTouches",
+    "address": "0x1451ad2f0",
+    "captured_source": "porting/generated/native108-broad/0x1451ad2f0.c",
+    "reason": "ClearTouches: 36 lines manipulating map layer touch state arrays."
+  },
+  {
+    "index": 42,
+    "class": "UAthenaTravelLogFormatting",
+    "function": "IsTravelLogTextDisplayEnabled",
+    "address": "0x1451cb7c0",
+    "captured_source": "porting/generated/native108-broad/0x1451cb7c0.c",
+    "reason": "IsTravelLogTextDisplayEnabled: calls FUN_144b38cb0 formatting helper."
+  },
+  {
+    "index": 43,
+    "class": "UCreativePerformanceHUDHeatmapControlWidget",
+    "function": "GetCurrentVolumeBox",
+    "address": "0x1451e58a0",
+    "captured_source": "porting/generated/native108-broad/0x1451e58a0.c",
+    "reason": "GetCurrentVolumeBox: calls FUN_144b758b0 heatmap volume calculation helper."
+  },
+  {
+    "index": 45,
+    "class": "UFortConsumableAccountItem",
+    "function": "CanActivateOnOthers",
+    "address": "0x14288b7c0",
+    "captured_source": "porting/generated/native108-broad/0x14288b7c0.c",
+    "reason": "CanActivateOnOthers: calls FUN_142002290 checking item target viability."
+  },
+  {
+    "index": 46,
+    "class": "UFortCrossplayPromptContext",
+    "function": "IsCrossplayEnabled",
+    "address": "0x1428ce1c0",
+    "captured_source": "porting/generated/native108-broad/0x1428ce1c0.c",
+    "reason": "IsCrossplayEnabled: calls FUN_1421616b0 crossplay prompt context checking."
+  },
+  {
+    "index": 47,
+    "class": "UFortHUDCenterPopupMessageWidget",
+    "function": "GetCenterPopupMessageState",
+    "address": "0x145255aa0",
+    "captured_source": "porting/generated/native108-broad/0x145255aa0.c",
+    "reason": "GetCenterPopupMessageState: helper FUN_144d79260 reads unreflected byte at +0x2c0 without nonoverlap proof."
+  },
+  {
+    "index": 48,
+    "class": "UFortLlamaStoreOfferWidgetBase",
+    "function": "GetPriceIndexToShow",
+    "address": "0x145285850",
+    "captured_source": "porting/generated/native108-broad/0x145285850.c",
+    "reason": "GetPriceIndexToShow: calls FUN_1450b1150 (173 lines) llama store offer pricing engine."
+  },
+  {
+    "index": 49,
+    "class": "UFortMissionTrackerList",
+    "function": "UpdateVisibility",
+    "address": "0x14528f240",
+    "captured_source": "porting/generated/native108-broad/0x14528f240.c",
+    "reason": "UpdateVisibility: calls FUN_1406a9dc0 (114 lines) and FUN_143d66ef0 mission tracker list update."
+  },
+  {
+    "index": 50,
+    "class": "UFortPlaylistAthenaHelper",
+    "function": "GetEndGameReturnToMatchmakingOriginDelay",
+    "address": "0x142a9dd50",
+    "captured_source": "porting/generated/native108-broad/0x142a9dd50.c",
+    "reason": "GetEndGameReturnToMatchmakingOriginDelay: calls FUN_141a42830 playlist delay evaluation helper."
+  },
+  {
+    "index": 51,
+    "class": "UFortSeasonalEventManager",
+    "function": "GetBRXPBonusPoints",
+    "address": "0x142ad6d30",
+    "captured_source": "porting/generated/native108-broad/0x142ad6d30.c",
+    "reason": "GetBRXPBonusPoints: calls FUN_14224fe60 dereferencing raw offsets +0xc0, +0x38, +0x158 without reflection layout."
+  },
+  {
+    "index": 52,
+    "class": "UFortTaggedSoundBank",
+    "function": "GetSoundToPlay",
+    "address": "0x142aef3b0",
+    "captured_source": "porting/generated/native108-broad/0x142aef3b0.c",
+    "reason": "GetSoundToPlay: calls FUN_1418384d0 (160 lines) tagged sound bank sound selection engine."
+  },
+  {
+    "index": 53,
+    "class": "UFortWorldItemDefinition",
+    "function": "GetDPSAtLevel",
+    "address": "0x142b5d100",
+    "captured_source": "porting/generated/native108-broad/0x142b5d100.c",
+    "reason": "GetDPSAtLevel: virtual call to slot 0x4f0 without primary vtable proof."
+  },
+  {
+    "index": 54,
+    "class": "UWaxActiveTokenEventWidgetBase",
+    "function": "GetWaxTokensHighCrit",
+    "address": "0x14534de10",
+    "captured_source": "porting/generated/native108-broad/0x14534de10.c",
+    "reason": "GetWaxTokensHighCrit: calls FUN_144bed5b0 accessing unreflected token data at +0x2e8."
+  },
+  {
+    "index": 55,
+    "class": "AFortLauncherAthena",
+    "function": "OnRepLaunchServerInfo",
+    "address": "0x14297f140",
+    "captured_source": "porting/generated/native108-broad/0x14297f140.c",
+    "reason": "OnRepLaunchServerInfo: calls FUN_1419b1fe0 (43 lines) launcher network replication handler."
+  },
+  {
+    "index": 56,
+    "class": "AFortPickupEffect",
+    "function": "ApplyCosmeticOverridesToMaterial",
+    "address": "0x142a2a370",
+    "captured_source": "porting/generated/native108-broad/0x142a2a370.c",
+    "reason": "ApplyCosmeticOverridesToMaterial: calls FUN_142026a90 (230 lines) pickup material override engine."
+  },
+  {
+    "index": 57,
+    "class": "AFortSkyTubeAnchor",
+    "function": "IsEnabled",
+    "address": "0x142ada6b0",
+    "captured_source": "porting/generated/native108-broad/0x142ada6b0.c",
+    "reason": "IsEnabled: requires unresolved global _DAT_1478df4c8 and raw byte at +0xb98."
+  },
+  {
+    "index": 59,
+    "class": "UArsenicWidgetBase",
+    "function": "GetArsenicMutator",
+    "address": "0x14517f030",
+    "captured_source": "porting/generated/native108-broad/0x14517f030.c",
+    "reason": "GetArsenicMutator: calls FUN_144bae6a0 accessing unreflected mutator weak pointer at +0x2e8."
+  },
+  {
+    "index": 61,
+    "class": "UAthenaMatchReadyDesktopPopup",
+    "function": "UserDismissedDialog",
+    "address": "0x1451b1810",
+    "captured_source": "porting/generated/native108-broad/0x1451b1810.c",
+    "reason": "UserDismissedDialog: calls FUN_144b56360 (38 lines) match ready popup dismiss logic."
+  },
+  {
+    "index": 62,
+    "class": "UAthenaRespawnBase",
+    "function": "UpdateAllUI",
+    "address": "0x1451be180",
+    "captured_source": "porting/generated/native108-broad/0x1451be180.c",
+    "reason": "UpdateAllUI: calls FUN_1451bcd50, FUN_1451bcd90, FUN_14198ce00, FUN_1442f4d70 respawn UI engine."
+  },
+  {
+    "index": 64,
+    "class": "UBacchusKillFeed",
+    "function": "SetActiveNumberOfLines",
+    "address": "0x1451cfce0",
+    "captured_source": "porting/generated/native108-broad/0x1451cfce0.c",
+    "reason": "SetActiveNumberOfLines: calls FUN_144c42ef0 writing to unreflected raw offset +0x568."
+  },
+  {
+    "index": 65,
+    "class": "UCommonBorderStyle",
+    "function": "GetBackgroundBrush",
+    "address": "0x14080a330",
+    "captured_source": "porting/generated/native108-broad/0x14080a330.c",
+    "reason": "GetBackgroundBrush: calls FUN_1407c1b10 and FUN_14079cdf0 Slate brush copier."
+  },
+  {
+    "index": 66,
+    "class": "UCreativePerformanceHUDRunTimeStatsWidget",
+    "function": "UpdateRuntimeStats",
+    "address": "0x1451e64f0",
+    "captured_source": "porting/generated/native108-broad/0x1451e64f0.c",
+    "reason": "UpdateRuntimeStats: 1106 lines of creative runtime stats aggregation."
+  },
+  {
+    "index": 68,
+    "class": "UFortActorCanvas",
+    "function": "AddActorIndicator",
+    "address": "0x1451f2400",
+    "captured_source": "porting/generated/native108-broad/0x1451f2400.c",
+    "reason": "AddActorIndicator: calls FUN_144d2af60 actor canvas indicator creator."
+  },
+  {
+    "index": 69,
+    "class": "UFortAsyncAction_PartyDisplayManager_SetupPrefabVisuals",
+    "function": "SetupPrefabVisuals",
+    "address": "0x142b7ec50",
+    "captured_source": "porting/generated/native108-broad/0x142b7ec50.c",
+    "reason": "SetupPrefabVisuals: calls FUN_141fd0670 async action prefab visual setup."
+  },
+  {
+    "index": 70,
+    "class": "UFortBangWrapperOld",
+    "function": "SetBangVisibility",
+    "address": "0x145205510",
+    "captured_source": "porting/generated/native108-broad/0x145205510.c",
+    "reason": "SetBangVisibility: calls FUN_144d94680 writing unreflected raw byte at +0x141."
+  },
+  {
+    "index": 71,
+    "class": "UFortChargingSet_Arsenic_Sniff",
+    "function": "OnRep_CurrentCharge",
+    "address": "0x14286cc60",
+    "captured_source": "porting/generated/native108-broad/0x14286cc60.c",
+    "reason": "OnRep_CurrentCharge: 129 lines of Arsenic sniff charging set GameplayEffect attribute replication."
+  },
+  {
+    "index": 72,
+    "class": "UFortClientPilot_GameplayCreative",
+    "function": "IslandCreationCompleted",
+    "address": "0x14287e7e0",
+    "captured_source": "porting/generated/native108-broad/0x14287e7e0.c",
+    "reason": "IslandCreationCompleted: calls FUN_141cd9450 client pilot island creator."
+  },
+  {
+    "index": 73,
+    "class": "UFortCommunityVotingThanksPopup",
+    "function": "UpdateCountdown",
+    "address": "0x145219520",
+    "captured_source": "porting/generated/native108-broad/0x145219520.c",
+    "reason": "UpdateCountdown: calls FUN_145217c10 and timer manager countdown formatting."
+  },
+  {
+    "index": 74,
+    "class": "UFortCosmeticLockerItem",
+    "function": "IsValidLockerName",
+    "address": "0x1428acc10",
+    "captured_source": "porting/generated/native108-broad/0x1428acc10.c",
+    "reason": "IsValidLockerName: calls FUN_141d88fd0 (121 lines) locker name validation and text sanitizer."
+  },
+  {
+    "index": 76,
+    "class": "UFortEventLeaderboardEntry",
+    "function": "SetPlayerFlag",
+    "address": "0x1452191d0",
+    "captured_source": "porting/generated/native108-broad/0x1452191d0.c",
+    "reason": "SetPlayerFlag: calls FUN_144d647f0 (FUN_1407f5a40) leaderboard player flag update."
+  },
+  {
+    "index": 77,
+    "class": "UFortFriendSubscriptionToastWidget",
+    "function": "SetToast",
+    "address": "0x14523d570",
+    "captured_source": "porting/generated/native108-broad/0x14523d570.c",
+    "reason": "SetToast: calls FUN_144d97670 (217 lines) toast notification manager."
+  },
+  {
+    "index": 78,
+    "class": "UFortHeroLoadoutInGameScreenBase",
+    "function": "GetGadgetDefinitionBySlot",
+    "address": "0x14524f620",
+    "captured_source": "porting/generated/native108-broad/0x14524f620.c",
+    "reason": "GetGadgetDefinitionBySlot: calls FUN_1450e6eb0 (21 lines), FUN_1425418b0, FUN_1425116b0 hero loadout gadget lookup."
+  },
+  {
+    "index": 79,
+    "class": "UFortItemManagementItemDetailsPanel",
+    "function": "GetAmmoTypeItemDefinitions",
+    "address": "0x145274220",
+    "captured_source": "porting/generated/native108-broad/0x145274220.c",
+    "reason": "GetAmmoTypeItemDefinitions: calls FUN_144f5bd50 (40 lines) ammo type item definition aggregator."
+  },
+  {
+    "index": 80,
+    "class": "UFortMarkerDetailsTable",
+    "function": "GetDisplayInfoForMarkerData",
+    "address": "0x14298e550",
+    "captured_source": "porting/generated/native108-broad/0x14298e550.c",
+    "reason": "GetDisplayInfoForMarkerData: calls FUN_141a79100 (207 lines) marker details table display lookup."
+  },
+  {
+    "index": 81,
+    "class": "UFortMovementSet",
+    "function": "OnRep_SpeedMultiplier",
+    "address": "0x1429f7fd0",
+    "captured_source": "porting/generated/native108-broad/0x1429f7fd0.c",
+    "reason": "OnRep_SpeedMultiplier: 50 lines of movement set GameplayEffect attribute replication."
+  },
+  {
+    "index": 82,
+    "class": "UFortPhysicsObjectComponent",
+    "function": "InitializePhysicsObject",
+    "address": "0x142a27070",
+    "captured_source": "porting/generated/native108-broad/0x142a27070.c",
+    "reason": "InitializePhysicsObject: calls FUN_14235e340 (231 lines) physics object component initializer."
+  },
+  {
+    "index": 83,
+    "class": "UFortPlayerSurveyQuestion",
+    "function": "GetQuestionType",
+    "address": "0x1415a4f60",
+    "captured_source": "porting/generated/native108-broad/0x1415a4f60.c",
+    "reason": "GetQuestionType: virtual dispatch to slot 0x260; abstract base class without primary vtable proof."
+  }
+]

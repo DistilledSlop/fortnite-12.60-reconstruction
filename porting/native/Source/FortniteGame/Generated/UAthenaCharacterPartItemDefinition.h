@@ -20,5 +20,8 @@ public:
 	UPROPERTY()
 	TArray<UCustomCharacterPart*> CharacterParts;
 
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	TArray<UCustomCharacterPart*> GetCharacterParts() const;
+
 };
 

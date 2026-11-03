@@ -1,0 +1,38 @@
+[
+  {
+    "class": "UFortItemDefinition",
+    "function": "ShouldShowPreviewOnCurrentHero",
+    "kind": "exec",
+    "signature": "bool ShouldShowPreviewOnCurrentHero(int32 InSubSlot) const",
+    "access": "public",
+    "signature_status": "proposed",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x14295dce0",
+    "inc_path": "porting/behavior/dispatch_bulk126_runtime/UFortItemDefinition_ShouldShowPreviewOnCurrentHero.inc",
+    "includes": [],
+    "notes": "Constant false target 0x1406801e0. GPSC constructor primary-vtable association and target evidence in native-evidence.json.",
+    "virtual": true,
+    "static": false,
+    "reflection_flags": "0x54020400",
+    "native_body_address": "0x1406801e0"
+  },
+  {
+    "class": "UFortCollectionBookGenericRewardWidget",
+    "function": "GetRewardStatus",
+    "kind": "exec",
+    "signature": "ECollectionBookRewardStatus GetRewardStatus() const",
+    "access": "public",
+    "signature_status": "proposed",
+    "status": "ported",
+    "confidence": "high",
+    "address": "0x14520cc80",
+    "inc_path": "porting/behavior/dispatch_bulk126_runtime/UFortCollectionBookGenericRewardWidget_GetRewardStatus.inc",
+    "includes": [],
+    "notes": "Target 0x1450b1df0 loads this+0x268; class reflection identifies RewardStatus at 0x268. GPSC constructor primary-vtable association and target evidence in native-evidence.json.",
+    "virtual": true,
+    "static": false,
+    "reflection_flags": "0x54020400",
+    "native_body_address": "0x1450b1df0"
+  }
+]

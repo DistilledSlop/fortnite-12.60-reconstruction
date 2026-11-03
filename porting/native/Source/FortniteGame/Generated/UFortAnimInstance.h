@@ -7,6 +7,7 @@
 #include "UFortBaseAnimInstance.h"
 
 #include "EAnimRelaxedState.h"
+#include "EFortCardinalDirection.h"
 #include "Math/Rotator.h"
 #include "Math/Vector.h"
 
@@ -185,6 +186,9 @@ public:
 	// table index 0, flags 0x10000000000005
 	UPROPERTY()
 	uint8 bEnableAdditiveLayer : 1;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	EFortCardinalDirection GetCardinalDirectionFromAngle(float Angle, float DeadZoneAngle) const;
 
 };
 

@@ -9,3 +9,10 @@ UFortUITeamInfo* UFortPartyContext::GetLocalPlayerTeam() const
 	return LocalPlayerTeam;
 }
 
+bool UFortPartyContext::IsValidNetID(FUniqueNetIdRepl& UniqueNetID)
+{
+	// CONFIDENCE: high
+	// Native helper 0x140df1140.
+	return UniqueNetID.IsValid();
+}
+
