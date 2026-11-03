@@ -10,6 +10,8 @@
 #include "EAthenaScoringEvent.h"
 #include "EMatchAbandonState.h"
 #include "ETeamMemberState.h"
+#include "Engine/EngineTypes.h"
+#include "Engine/World.h"
 #include "FChangeTeamInfo.h"
 #include "FDeathInfo.h"
 #include "FDetailedMetricInformation.h"
@@ -25,6 +27,7 @@
 #include "FOnTeamScoreChanged.h"
 #include "FSimpleMetricInformation.h"
 #include "GameFramework/OnlineReplStructs.h"
+#include "TimerManager.h"
 #include "UFortMutatorContext.h"
 #include "UObject/Object.h"
 
@@ -62,6 +65,9 @@ public:
 	UPROPERTY()
 	float TeamMemberStateRepTime;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0xd70): not a UPROPERTY, not replicated.
+	FTimerHandle TeamMemberStateTimer;
+
 	// table index 67, flags 0x10000010080000
 	UPROPERTY()
 	FOnTeamIndexChangedDelegate OnTeamIndexChangedDelegate;
@@ -69,6 +75,9 @@ public:
 	// table index 66, flags 0x10000000000014
 	UPROPERTY()
 	bool bHasWonAGame;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0xda0): not a UPROPERTY, not replicated.
+	TMulticastDelegate<void, ETeamMemberState> TeamMemberStateChangedNative;
 
 	// table index 65, flags 0x40000100000034
 	UPROPERTY(ReplicatedUsing=OnRep_TeamKillScore)
@@ -322,6 +331,9 @@ public:
 	UPROPERTY(Transient)
 	bool bResurrectionChipDisabled;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x1340): not a UPROPERTY, not replicated.
+	TMulticastDelegate<void, AFortPlayerStateAthena*, bool> ResurrectionChipChangedNative;
+
 	// table index 8, flags 0x40000100002020
 	UPROPERTY(ReplicatedUsing=OnRep_ResurrectionChipReplicated, Transient)
 	FFortResurrectionData ResurrectionChipAvailable;
@@ -353,6 +365,9 @@ public:
 	// table index 0, flags 0x40000100000020
 	UPROPERTY(ReplicatedUsing=OnRep_PreserveSquad)
 	bool bPreserveSquad;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x13e8): not a UPROPERTY, not replicated.
+	TMulticastDelegate<void, bool> PreserveSquadChangedNative;
 
 	UFUNCTION(NetMulticast, Unreliable)
 	void Client_OnNewLevel(int32 NewLevel);
@@ -444,14 +459,18 @@ public:
 	UFUNCTION()
 	void OnRep_RebootCounter();
 
+protected:
 	UFUNCTION()
 	void OnRep_ReplicatedTeamMemberState();
+public:
 
 	UFUNCTION()
 	void OnRep_ResurrectingNow(bool bPreviousResurrectingNow);
 
+private:
 	UFUNCTION()
 	void OnRep_ResurrectionChipReplicated();
+public:
 
 	UFUNCTION()
 	void OnRep_SeasonLevelUIDisplay();
@@ -503,6 +522,7 @@ public:
 	int32 UpdateScoreForEvent(EAthenaScoringEvent Event, int32 Count, int32 PreviousPoints, const UFortPlaylistAthena* Playlist);
 	void UpdateTotalPlayerScore();
 	virtual void NativeAppendContextOwners(TArray<UObject*>& OutOwners);
+	void NativeExpireTeamMemberState();
 protected:
 	void OnRep_AIKills();
 };

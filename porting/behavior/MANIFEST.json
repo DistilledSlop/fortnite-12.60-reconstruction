@@ -36188,5 +36188,134 @@
     "class": "AFortGameStateAthena",
     "reflection_flags": "0x20401",
     "notes": "Inline parameterless multicast broadcast."
+  },
+  {
+    "function": "OnRep_PreserveSquad",
+    "kind": "exec",
+    "signature": "void OnRep_PreserveSquad()",
+    "signature_status": "reflected",
+    "inc_path": "porting/behavior/playerstate68_runtime/OnRep_PreserveSquad.inc",
+    "confidence": "high",
+    "address": "0x142a8dc10",
+    "native_body_address": "0x141a52350",
+    "status": "ported",
+    "access": "public",
+    "notes": "Broadcasts preserve flag on unreflected native multicast +0x13e8.",
+    "class": "AFortPlayerStateAthena",
+    "reflection_flags": "0x20401"
+  },
+  {
+    "function": "OnRep_ResurrectionChipReplicated",
+    "kind": "exec",
+    "signature": "void OnRep_ResurrectionChipReplicated()",
+    "signature_status": "reflected",
+    "inc_path": "porting/behavior/playerstate68_runtime/OnRep_ResurrectionChipReplicated.inc",
+    "confidence": "high",
+    "address": "0x142a8dd00",
+    "native_body_address": "0x141a52fc0",
+    "status": "ported",
+    "access": "private",
+    "notes": "Broadcasts (this, chip availability byte) on unreflected native multicast +0x1340.",
+    "class": "AFortPlayerStateAthena",
+    "reflection_flags": "0x40401"
+  },
+  {
+    "function": "OnRep_ReplicatedTeamMemberState",
+    "kind": "exec",
+    "signature": "void OnRep_ReplicatedTeamMemberState()",
+    "signature_status": "proposed",
+    "access": "protected",
+    "inc_path": "porting/behavior/playerstate68_runtime/OnRep_ReplicatedTeamMemberState.inc",
+    "address": "0x142a8dc50",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Engine/World.h",
+      "TimerManager.h"
+    ],
+    "notes": "Typed state-byte delegate and UObject-bound one-shot timer preserve original call order and authority/client split. Source names/types documented in handoff.",
+    "class": "AFortPlayerStateAthena",
+    "reflection_flags": "0x80401"
+  },
+  {
+    "function": "NativeExpireTeamMemberState",
+    "kind": "helper",
+    "signature": "void NativeExpireTeamMemberState()",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/playerstate68_runtime/NativeExpireTeamMemberState.inc",
+    "address": "0x141a58b00",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Engine/World.h",
+      "TimerManager.h"
+    ],
+    "notes": "Typed state-byte delegate and UObject-bound one-shot timer preserve original call order and authority/client split. Source names/types documented in handoff.",
+    "class": "AFortPlayerStateAthena"
+  },
+  {
+    "class": "AFortPlayerStateAthena",
+    "function": "PreserveSquadChangedNative",
+    "kind": "member_field",
+    "signature": "TMulticastDelegate<void, bool> PreserveSquadChangedNative",
+    "signature_status": "proposed",
+    "access": "public",
+    "offset": "0x13e8",
+    "includes": [
+      "Delegates/Delegate.h"
+    ],
+    "inc_path": null,
+    "confidence": "high",
+    "address": null,
+    "status": "ported",
+    "notes": "0x141a52350 loads byte +0x13e0 into EDX and passes delegate +0x13e8 to 0x1406934e0; decomp shows native multicast lock/iteration."
+  },
+  {
+    "class": "AFortPlayerStateAthena",
+    "function": "ResurrectionChipChangedNative",
+    "kind": "member_field",
+    "signature": "TMulticastDelegate<void, AFortPlayerStateAthena*, bool> ResurrectionChipChangedNative",
+    "signature_status": "proposed",
+    "access": "public",
+    "offset": "0x1340",
+    "includes": [
+      "Delegates/Delegate.h"
+    ],
+    "inc_path": null,
+    "confidence": "high",
+    "address": null,
+    "status": "ported",
+    "notes": "0x141a52fc0 puts this in RDX, availability byte +0x138c in R8D, and delegate +0x1340 in RCX; decomp shows native multicast lock/iteration."
+  },
+  {
+    "function": "TeamMemberStateTimer",
+    "kind": "member_field",
+    "signature": "FTimerHandle TeamMemberStateTimer",
+    "signature_status": "proposed",
+    "access": "public",
+    "offset": "0xd70",
+    "includes": [
+      "TimerManager.h"
+    ],
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Native timer/state multicast storage; enum-byte source type follows the reflected state and preserves all byte values. Name and source type are reconstruction choices.",
+    "class": "AFortPlayerStateAthena"
+  },
+  {
+    "function": "TeamMemberStateChangedNative",
+    "kind": "member_field",
+    "signature": "TMulticastDelegate<void, ETeamMemberState> TeamMemberStateChangedNative",
+    "signature_status": "proposed",
+    "access": "public",
+    "offset": "0xda0",
+    "includes": [
+      "Delegates/Delegate.h"
+    ],
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Native timer/state multicast storage; enum-byte source type follows the reflected state and preserves all byte values. Name and source type are reconstruction choices.",
+    "class": "AFortPlayerStateAthena"
   }
 ]

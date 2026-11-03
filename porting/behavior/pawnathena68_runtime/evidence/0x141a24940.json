@@ -1,0 +1,67 @@
+{
+ "address": "0x141a24940",
+ "label": "",
+ "name": "FUN_141a24940",
+ "status": "ok",
+ "body_bytes": 240,
+ "instructions": 61,
+ "called": [
+  {
+   "address": "0x143e8a690",
+   "name": "FGameplayTagContainer_CopyAssign"
+  },
+  {
+   "address": "0x142a3d9f0",
+   "name": "FUN_142a3d9f0"
+  },
+  {
+   "address": "0x142bee710",
+   "name": "FMemory_Free"
+  }
+ ],
+ "indirect_calls": 1,
+ "strings": [],
+ "callers": [
+  {
+   "address": "0x14857f218",
+   "name": null,
+   "ref": "data"
+  },
+  {
+   "address": "0x147482670",
+   "name": null,
+   "ref": "data"
+  },
+  {
+   "address": "0x1474826a8",
+   "name": null,
+   "ref": "data"
+  },
+  {
+   "address": "0x1474826b8",
+   "name": null,
+   "ref": "data"
+  },
+  {
+   "address": "0x14191a830",
+   "name": "FUN_14191a830",
+   "ref": "call"
+  },
+  {
+   "address": "0x141a7d9b0",
+   "name": "FUN_141a7d9b0",
+   "ref": "call"
+  },
+  {
+   "address": "0x142a83da0",
+   "name": "AFortPlayerPawnAthena_SetFallInstigator",
+   "ref": "call"
+  }
+ ],
+ "reference_counts": {
+  "data": 4,
+  "call": 3
+ },
+ "thunk": false,
+ "error": null
+}

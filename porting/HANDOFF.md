@@ -1,5 +1,29 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Native broad source/rough batch68 (2026-11-03)
+
+Canonical2,074 bodies+180fields=2,254 accepted/rejected0. Four bodies and four
+native storage fields added: preserve-squad/resurrection broadcasts, team-state
+OnRep and recovered expiry callback. Uses native object-bound one-shot 3-second
+timer, preserves repeated world lookups and authority/client split. State enum
+parameter is a source reconstruction choice preserving all native byte values,
+not a claim about original C++ spelling. Metrics payload drafts remain unaccepted.
+Original class/field/function metadata and body windows are guarded. Promotion68
+changed two generated files; initial two policy wiring failures were corrected
+and attempt logs retained. No UE builds/runtime/tests. Last tested2,040; 34
+canonical and4 manual bodies pending, next checkpoint3,040.
+
+New uncounted full control-flow drafts cover actual match-phase body14199ac00,
+six Athena-pawn callbacks and root's vortex/stasis state paths. Explicit iterator,
+callback, component, descriptor and material effects remain unresolved. These are
+not source-complete implementations. All workers finished; Ghidra lease free.
+Previous turn PROGRESS (19 accepted bodies plus broad rough source). All4 product
+gates OPEN, full client/server/visual/audio parity remains incomplete. Root sole
+canonical/generator/promotion/build/commit owner; bounded medium/low Terra
+fork-none delegation, worker rotation and economical reads/output persist.
+Preserve unrelated porting/graphics. Source batch67 commit117ced46 pushed;
+dashboard baseline1f598613. No tests until about3,040 bodies.
+
 ## Native broad source/rough batch67 (2026-11-03)
 
 Canonical2,070 bodies+176fields=2,246 accepted/rejected0. Three bodies added:

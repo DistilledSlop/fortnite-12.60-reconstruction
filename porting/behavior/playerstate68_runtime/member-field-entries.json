@@ -1,0 +1,66 @@
+[
+  {
+    "class": "AFortPlayerStateAthena",
+    "function": "PreserveSquadChangedNative",
+    "kind": "member_field",
+    "signature": "TMulticastDelegate<void, bool> PreserveSquadChangedNative",
+    "signature_status": "proposed",
+    "access": "public",
+    "offset": "0x13e8",
+    "includes": [
+      "Delegates/Delegate.h"
+    ],
+    "inc_path": null,
+    "confidence": "high",
+    "address": null,
+    "status": "ported",
+    "notes": "0x141a52350 loads byte +0x13e0 into EDX and passes delegate +0x13e8 to 0x1406934e0; decomp shows native multicast lock/iteration."
+  },
+  {
+    "class": "AFortPlayerStateAthena",
+    "function": "ResurrectionChipChangedNative",
+    "kind": "member_field",
+    "signature": "TMulticastDelegate<void, AFortPlayerStateAthena*, bool> ResurrectionChipChangedNative",
+    "signature_status": "proposed",
+    "access": "public",
+    "offset": "0x1340",
+    "includes": [
+      "Delegates/Delegate.h"
+    ],
+    "inc_path": null,
+    "confidence": "high",
+    "address": null,
+    "status": "ported",
+    "notes": "0x141a52fc0 puts this in RDX, availability byte +0x138c in R8D, and delegate +0x1340 in RCX; decomp shows native multicast lock/iteration."
+  },
+  {
+    "function": "TeamMemberStateTimer",
+    "kind": "member_field",
+    "signature": "FTimerHandle TeamMemberStateTimer",
+    "signature_status": "proposed",
+    "access": "public",
+    "offset": "0xd70",
+    "includes": [
+      "TimerManager.h"
+    ],
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Native timer/state multicast storage; enum-byte source type follows the reflected state and preserves all byte values. Name and source type are reconstruction choices.",
+    "class": "AFortPlayerStateAthena"
+  },
+  {
+    "function": "TeamMemberStateChangedNative",
+    "kind": "member_field",
+    "signature": "TMulticastDelegate<void, ETeamMemberState> TeamMemberStateChangedNative",
+    "signature_status": "proposed",
+    "access": "public",
+    "offset": "0xda0",
+    "includes": [
+      "Delegates/Delegate.h"
+    ],
+    "confidence": "high",
+    "status": "ported",
+    "notes": "Native timer/state multicast storage; enum-byte source type follows the reflected state and preserves all byte values. Name and source type are reconstruction choices.",
+    "class": "AFortPlayerStateAthena"
+  }
+]

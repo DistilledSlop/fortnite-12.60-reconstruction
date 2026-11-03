@@ -2350,6 +2350,10 @@ _pawn_cues_spec = _common_activation_import.spec_from_file_location(
     "pawn_cues66_policy", os.path.join(os.path.dirname(__file__), "behavior", "pawn_cues66_runtime", "source_policy.py"))
 _pawn_cues_policy = _common_activation_import.module_from_spec(_pawn_cues_spec)
 _pawn_cues_spec.loader.exec_module(_pawn_cues_policy)
+_playerstate68_spec = _common_activation_import.spec_from_file_location(
+    "playerstate68_policy", os.path.join(os.path.dirname(__file__), "behavior", "playerstate68_runtime", "source_policy.py"))
+_playerstate68_policy = _common_activation_import.module_from_spec(_playerstate68_spec)
+_playerstate68_spec.loader.exec_module(_playerstate68_policy)
 _definition_queries_spec = _common_activation_import.spec_from_file_location(
     "definition_queries_signature_policy", os.path.join(os.path.dirname(__file__), "behavior", "definition_broad53_runtime", "source_policy.py"))
 _definition_queries_policy = _common_activation_import.module_from_spec(_definition_queries_spec)
@@ -2583,6 +2587,7 @@ def build_class_promoted(block, name, resolver, parent_entry, owner_fns, snippet
     model = _pawn_ability_interface_policy.apply(model, block, owner_fns)
     model = _native_checkpoint2040_policy.apply(model)
     model = _volume_accessor_policy.apply(model, block, owner_fns)
+    model = _playerstate68_policy.apply(model, block, owner_fns)
     model = _athena_mode_policy.apply(model, block, owner_fns)
     model = _mutator_owner_policy.apply(model, block, owner_fns)
     model = _controller_analytics_policy.apply(model, block, owner_fns)

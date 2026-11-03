@@ -9,9 +9,11 @@
 #include "AFortVolumeManager.h"
 #include "EAthenaScoringEvent.h"
 #include "EAthenaWinCondition.h"
+#include "ETeamMemberState.h"
 #include "Engine/World.h"
 #include "FAthenaScoreData.h"
 #include "GameFramework/GameStateBase.h"
+#include "TimerManager.h"
 #include "UFortPlaylistAthena.h"
 #include "UObject/Object.h"
 #include "Net/UnrealNetwork.h"
@@ -428,7 +430,9 @@ void AFortPlayerStateAthena::OnRep_Place()
 
 void AFortPlayerStateAthena::OnRep_PreserveSquad()
 {
-	// Body not recovered: reflection-derived stub.
+	// CONFIDENCE: HIGH
+	// Native multicast at +0x13e8; integration must declare this non-reflected member.
+	PreserveSquadChangedNative.Broadcast(bPreserveSquad);
 }
 
 void AFortPlayerStateAthena::OnRep_RebootCounter()
@@ -438,7 +442,20 @@ void AFortPlayerStateAthena::OnRep_RebootCounter()
 
 void AFortPlayerStateAthena::OnRep_ReplicatedTeamMemberState()
 {
-	// Body not recovered: reflection-derived stub.
+	// CONFIDENCE: HIGH
+	if (ReplicatedTeamMemberState == ETeamMemberState::None)
+	{
+	    return;
+	}
+	TeamMemberState = ReplicatedTeamMemberState;
+	TeamMemberStateRepTime = GetWorld()->GetTimeSeconds();
+	FTimerManager& Timers = GetWorld()->GetTimerManager();
+	Timers.ClearTimer(TeamMemberStateTimer);
+	TeamMemberStateTimer.Invalidate();
+	Timers.SetTimer(TeamMemberStateTimer,
+	    FTimerDelegate::CreateUObject(this, &AFortPlayerStateAthena::NativeExpireTeamMemberState),
+	    3.0f, false);
+	TeamMemberStateChangedNative.Broadcast(TeamMemberState);
 }
 
 void AFortPlayerStateAthena::OnRep_ResurrectingNow(bool bPreviousResurrectingNow)
@@ -448,7 +465,9 @@ void AFortPlayerStateAthena::OnRep_ResurrectingNow(bool bPreviousResurrectingNow
 
 void AFortPlayerStateAthena::OnRep_ResurrectionChipReplicated()
 {
-	// Body not recovered: reflection-derived stub.
+	// CONFIDENCE: HIGH
+	// Native multicast at +0x1340; integration must declare this non-reflected member.
+	ResurrectionChipChangedNative.Broadcast(this, ResurrectionChipAvailable.bResurrectionChipAvailable);
 }
 
 void AFortPlayerStateAthena::OnRep_SeasonLevelUIDisplay()
@@ -694,6 +713,21 @@ void AFortPlayerStateAthena::NativeAppendContextOwners(TArray<UObject*>& OutOwne
 	        AFortVolume::NativeAppendMinigameOwner(Volume, OutOwners);
 	        OutOwners.AddUnique(Volume);
 	    }
+	}
+}
+
+void AFortPlayerStateAthena::NativeExpireTeamMemberState()
+{
+	// CONFIDENCE: HIGH
+	// Original 0x141a58b00: authority clears only the replicated state.
+	if (GetLocalRole() == ROLE_Authority)
+	{
+	    ReplicatedTeamMemberState = ETeamMemberState::None;
+	}
+	else if (TeamMemberState != ETeamMemberState::None)
+	{
+	    TeamMemberState = ETeamMemberState::None;
+	    TeamMemberStateChangedNative.Broadcast(TeamMemberState);
 	}
 }
 

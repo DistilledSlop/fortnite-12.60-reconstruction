@@ -1,0 +1,38 @@
+{
+ "address": "0x141a12300",
+ "label": "",
+ "name": "FUN_141a12300",
+ "status": "ok",
+ "body_bytes": 151,
+ "instructions": 44,
+ "called": [
+  {
+   "address": "0x14290f690",
+   "name": "AFortGameStateAthena_StaticClass"
+  },
+  {
+   "address": "0x141a0b170",
+   "name": "FUN_141a0b170"
+  }
+ ],
+ "indirect_calls": 0,
+ "strings": [],
+ "callers": [
+  {
+   "address": "0x14857dbec",
+   "name": null,
+   "ref": "data"
+  },
+  {
+   "address": "0x142a83350",
+   "name": "AFortPlayerPawnAthena_GamePhaseStepChanged",
+   "ref": "call"
+  }
+ ],
+ "reference_counts": {
+  "data": 1,
+  "call": 1
+ },
+ "thunk": false,
+ "error": null
+}
