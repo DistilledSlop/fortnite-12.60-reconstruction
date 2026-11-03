@@ -33,3 +33,36 @@ Reads used os.pread on single qwords and the bounded decoder (`decode.py VA:SIZE
 
 - No build, no run, no commit, no edits outside this folder.
 - `policy.py` is not updated. The fragments depend on blockers 1-4 above.
+
+## VERIFIED (decompile pass, 10 targets, Ghidra output in porting/generated/decomp-imports/Imports)
+
+Decompiled with decompile_targets.py (--create-missing --no-index): 0x140802440, 0x140802200,
+0x1407c8be0, 0x1407cab10, 0x1407cc2b0, 0x1407c87e0, 0x1407ca7f0, 0x1407cbf10, 0x140800b70, 0x140800860.
+All ten returned ok. Ghidra parameter IDs and prototypes are unresolved in this slim project, so
+no signature below is final. The callee lists are the verified closure work still open:
+
+- Global held tick 140802440 calls: 142bee710 (x6), 142bfd200 (x4), 142ee5dd0, 142ee7880, 1407ae750,
+  143d5a140, 142ee3b30, 142cd8ed0, 1407d0160, 1407c20f0, 1407bd580, 1407ac590, 14078c640, 140684de0.
+- Panel held tick 140802200 calls: 14081b540, 14081b530, 14081b480, 142ee5dd0, 142cd8ed0, 140811c70,
+  1407f17d0 (popup close, matches Panel+360 path), 1407bdba0, 1407ae640 (decompiled as Helper_ae640),
+  1407ac590, 14078c640, 140684de0.
+- Global dispatch A 1407c8be0, B 1407cab10, C 1407cc2b0: each builds a 16-byte payload from the
+  param, wraps it through 1407ae9d0 / 1407ae9a0, calls 1407c8d40 (the shared funnel), then releases
+  the refcount at param_3[2]. C additionally calls 1407cc3b0 and 1407ad780 (both undecompiled).
+- Panel dispatch A 1407c87e0, B 1407ca7f0, C 1407cbf10: each reads the held-action state at this-0x2d8
+  (the interface-owner adjustment), iterates the sparse bit array at param_1+0x88..0xb0, and resolves
+  each row via 14078c640 and 1407cf950. Mode arg 0 calls 1407ae640 and sets the held pair.
+  Mode arg 1 calls 1407cf0f0 and 1407c20f0. B and C call 1407f17d0 / 1407bc6e0 on a match.
+- Slot +30 global 140800b70 and panel 140800860: both call 142ee7880, 142ee5dd0, 14081b540/530,
+  and 1407cac50; global also calls 14080e600, panel also calls 14081b480. Semantics unresolved.
+
+Still BLOCKED after this pass (closure needs these helpers translated first, none of which is verified):
+- Held-tick bodies 140802440 and 140802200: need 142bee710, 142bfd200, 142ee5dd0, 142ee7880, 1407d0160,
+  1407ae750 (global); 14081b480/540/530, 140811c70, 1407f17d0, 1407bdba0 (panel).
+- Dispatch slots +10/+18/+20 (both implementations): need 1407c8d40, 1407cf950, 1407c5190, 1407cf0f0,
+  1407ae640 (translated only as Helper_ae640), 1407bc6e0, 1407cc3b0, 1407ad780.
+- Slot +30 (both): need 142ee7880, 14080e600, 1407cac50, 14081b480.
+- Operation record element type, manager registration (1407ffc50 caller chain), verbose-log text: unchanged.
+
+Side effect: the decompile run reported Ghidra project files changed on disk under
+/opt/fortnite/ghidra-projects/fortnite-slim.rep (idata/index and project.prp). Not reverted here.
