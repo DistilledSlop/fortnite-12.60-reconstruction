@@ -85,6 +85,9 @@ public:
 	float GetNormalizedTime() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FText GetTimeText() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsMissionTimerPaused() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)

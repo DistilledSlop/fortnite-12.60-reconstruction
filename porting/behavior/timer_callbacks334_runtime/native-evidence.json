@@ -1,0 +1,22 @@
+{
+  "GetTimeText": {
+    "wrapper": "porting/generated/native210-fresh-bulk/0x1429f0120.c",
+    "body": "porting/generated/native213-fresh-callees/0x141f36140.c",
+    "assembly": "porting/generated/native213-fresh-callees/0x141f36140.asm",
+    "formatter": "porting/generated/native103-impl/0x142bafb80.c",
+    "text_from_string": "porting/generated/native103-impl/0x142c26df0.c",
+    "format_literals_runtime_pe": {
+      "0x1460250a0": "%1d:%02d:%02d",
+      "0x1460250c0": "%1d:%02d"
+    },
+    "notes": "Formatting uses seconds/minutes modulo 60 and hours modulo 24; an hour or more displays hours. Input seconds are clamped then rounded by floor(float(seconds * 10000000 + 0.5)). SSE CVTTSD2SI returns INT64_MIN for out-of-range values. The elapsed branch is inlined because native clamps raw NaN to zero, whereas the existing elapsed helper maps NaN to MAX_flt."
+  },
+  "visibility_setters": {
+    "bodies": [
+      "porting/generated/native213-fresh-callees/0x141f49630.c",
+      "porting/generated/native228-fresh-callees/0x141f496b0.c"
+    ],
+    "interface_class": "porting/generated/native324-callees/0x1429f18a0.c",
+    "unresolved": "Native interface virtual at vtable byte offset 0x18; identity and concrete overrides not established. Both setters require direct native interface cast and call; no reflected Execute dispatch is shown."
+  }
+}

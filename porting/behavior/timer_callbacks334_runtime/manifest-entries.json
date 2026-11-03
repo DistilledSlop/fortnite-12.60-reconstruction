@@ -1,0 +1,23 @@
+[
+  {
+    "class": "UFortMissionTimerComponent",
+    "function": "GetTimeText",
+    "kind": "exec",
+    "signature": "FText GetTimeText() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/timer_callbacks334_runtime/UFortMissionTimerComponent_GetTimeText.inc",
+    "address": "0x1429f0120",
+    "native_body_address": "0x141f36140",
+    "reflection_flags": "0x54020401",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "GameFramework/Actor.h",
+      "Engine/World.h",
+      "TimerManager.h"
+    ],
+    "notes": "Preserves float tick rounding, original printf formats and FText::FromString construction, including x64 conversion overflow behavior. Inlines elapsed calculation to retain its NaN clamp and depends on the recovered remaining helper. Build pending."
+  }
+]

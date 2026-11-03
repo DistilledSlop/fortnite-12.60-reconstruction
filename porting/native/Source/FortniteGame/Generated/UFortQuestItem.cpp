@@ -32,11 +32,49 @@ EFortQuestState UFortQuestItem::GetQuestState() const
 	return quest_state;
 }
 
+bool UFortQuestItem::HasCompletedObjectiveWithName(FName BackendName) const
+{
+	// CONFIDENCE: high; captured native fields and complete branches.
+	// Native 0x142444280: first matching backend name controls the result.
+	for (const UFortQuestObjectiveInfo* Objective : Objectives)
+	{
+	    if (Objective->BackendName == BackendName)
+	    {
+	        return Objective->RequiredCount <= Objective->AchievedCount;
+	    }
+	}
+	return false;
+}
+
 bool UFortQuestItem::HasCompletedQuest() const
 {
 	// CONFIDENCE: HIGH
 	// Unsigned byte subtraction and range comparison accepts states 2 and 3.
 	return quest_state == EFortQuestState::Completed || quest_state == EFortQuestState::Claimed;
+}
+
+bool UFortQuestItem::HasQuestExpired(FDateTime UtcNow) const
+{
+	// CONFIDENCE: high; captured native fields and complete branches.
+	// Native 0x1424443d0 treats MaxValue as the no-expiry sentinel.
+	return expiry_time != FDateTime::MaxValue() && (expiry_time - UtcNow).GetTotalSeconds() <= 0.0;
+}
+
+bool UFortQuestItem::IsObjectiveWithNameInProgress(FName BackendName) const
+{
+	// CONFIDENCE: high; captured native fields and complete branches.
+	// Native 0x1424471e0: only active quests and the first matching objective qualify.
+	if (quest_state == EFortQuestState::Active)
+	{
+	    for (const UFortQuestObjectiveInfo* Objective : Objectives)
+	    {
+	        if (Objective->BackendName == BackendName)
+	        {
+	            return Objective->bActive && Objective->AchievedCount < Objective->RequiredCount;
+	        }
+	    }
+	}
+	return false;
 }
 
 bool UFortQuestItem::IsQuestInProgress() const

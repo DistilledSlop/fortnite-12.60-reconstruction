@@ -1,0 +1,26 @@
+{
+  "batch": "quest_item_bulk339_runtime",
+  "rows": [
+    {
+      "function": "HasCompletedObjectiveWithName",
+      "wrapper": "porting/generated/native235-fresh-bulk/0x142ab40e0.c",
+      "body": "porting/generated/native105-impl/0x142444280.c",
+      "native_body": "0x142444280",
+      "status": "ported"
+    },
+    {
+      "function": "IsObjectiveWithNameInProgress",
+      "wrapper": "porting/generated/native235-fresh-bulk/0x142ab4320.c",
+      "body": "porting/generated/native240-fresh-callees/0x1424471e0.c",
+      "native_body": "0x1424471e0",
+      "status": "ported"
+    },
+    {
+      "function": "HasQuestExpired",
+      "wrapper": "porting/generated/native225-fresh-bulk/0x142ab41a0.c",
+      "body": "porting/generated/native228-fresh-callees/0x1424443d0.c",
+      "native_body": "0x1424443d0",
+      "status": "ported"
+    }
+  ]
+}

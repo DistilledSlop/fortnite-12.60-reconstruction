@@ -107,7 +107,16 @@ public:
 	EFortQuestState GetQuestState() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool HasCompletedObjectiveWithName(FName BackendName) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool HasCompletedQuest() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool HasQuestExpired(FDateTime UtcNow) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsObjectiveWithNameInProgress(FName BackendName) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsQuestInProgress() const;

@@ -1,0 +1,114 @@
+[
+  {
+    "function": "GetDesiredSpeed",
+    "kind": "exec",
+    "signature": "float GetDesiredSpeed() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/cart_bulk338_runtime/AFortPlayerPushableCart_GetDesiredSpeed.inc",
+    "address": "0x142a88a90",
+    "native_body_address": "0x141a42700",
+    "reflection_flags": "0x54020401",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [],
+    "notes": "Native wrapper and body captured; spline distance helper maps to USplineComponent::GetDistanceAlongSplineAtSplinePoint.",
+    "class": "AFortPlayerPushableCart"
+  },
+  {
+    "function": "GetDistanceToNextCheckPoint",
+    "kind": "exec",
+    "signature": "float GetDistanceToNextCheckPoint() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/cart_bulk338_runtime/AFortPlayerPushableCart_GetDistanceToNextCheckPoint.inc",
+    "address": "0x142a88ac0",
+    "native_body_address": "0x141a42770",
+    "reflection_flags": "0x54020401",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Components/SplineComponent.h"
+    ],
+    "notes": "Native wrapper and body captured; spline distance helper maps to USplineComponent::GetDistanceAlongSplineAtSplinePoint.",
+    "class": "AFortPlayerPushableCart"
+  },
+  {
+    "function": "GetPercentProgressTowardsNextCheckPoint",
+    "kind": "exec",
+    "signature": "float GetPercentProgressTowardsNextCheckPoint() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/cart_bulk338_runtime/AFortPlayerPushableCart_GetPercentProgressTowardsNextCheckPoint.inc",
+    "address": "0x142a88bf0",
+    "native_body_address": "0x141a45ab0",
+    "reflection_flags": "0x54020401",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Components/SplineComponent.h"
+    ],
+    "notes": "Native wrapper and body captured; spline distance helper maps to USplineComponent::GetDistanceAlongSplineAtSplinePoint.",
+    "class": "AFortPlayerPushableCart"
+  },
+  {
+    "function": "GetSplineDistanceAtCheckPoint",
+    "kind": "exec",
+    "signature": "float GetSplineDistanceAtCheckPoint(int32 CheckPointIndex) const",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/cart_bulk338_runtime/AFortPlayerPushableCart_GetSplineDistanceAtCheckPoint.inc",
+    "address": "0x142a88f00",
+    "native_body_address": "0x141a488f0",
+    "reflection_flags": "0x54020401",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Components/SplineComponent.h"
+    ],
+    "notes": "Native wrapper and body captured; spline distance helper maps to USplineComponent::GetDistanceAlongSplineAtSplinePoint.",
+    "class": "AFortPlayerPushableCart"
+  },
+  {
+    "class": "AFortPlayerPushableCart",
+    "function": "GetCheckPointTransforms",
+    "kind": "exec",
+    "signature": "void GetCheckPointTransforms(TArray<FTransform>& OutTransforms) const",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/cart_bulk338_runtime/AFortPlayerPushableCart_GetCheckPointTransforms.inc",
+    "address": "0x142a88970",
+    "native_body_address": "0x141a41980",
+    "reflection_flags": "0x54420401",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Components/SplineComponent.h"
+    ],
+    "notes": "Native transform-at-point helper captured at 0x144146ff0; world coordinate space and bUseScale=false. Preserves no-op on invalid weak spline and unchecked checkpoint index in single-point call."
+  },
+  {
+    "class": "AFortPlayerPushableCart",
+    "function": "GetTransformAtCheckPoint",
+    "kind": "exec",
+    "signature": "void GetTransformAtCheckPoint(FTransform& OutTransform, int32 CheckPointIndex) const",
+    "signature_status": "proposed",
+    "access": "public",
+    "static": false,
+    "inc_path": "porting/behavior/cart_bulk338_runtime/AFortPlayerPushableCart_GetTransformAtCheckPoint.inc",
+    "address": "0x142a89050",
+    "native_body_address": "0x141a48fb0",
+    "reflection_flags": "0x54c20401",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "Components/SplineComponent.h"
+    ],
+    "notes": "Native transform-at-point helper captured at 0x144146ff0; world coordinate space and bUseScale=false. Preserves no-op on invalid weak spline and unchecked checkpoint index in single-point call."
+  }
+]

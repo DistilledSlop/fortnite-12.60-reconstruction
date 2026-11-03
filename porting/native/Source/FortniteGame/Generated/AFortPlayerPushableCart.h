@@ -15,6 +15,7 @@
 #include "FOnPushersOrDefendersChanged.h"
 #include "FPlayerPushableCartOnTeamsRolesChanged.h"
 #include "FTeamRoles.h"
+#include "Math/TransformNonVectorized.h"
 
 class AActor;
 class AFortAthenaMutator_Uranium;
@@ -130,10 +131,22 @@ public:
 	float GetCartDistanceAlongSpline() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
+	void GetCheckPointTransforms(TArray<FTransform>& OutTransforms) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetDesiredSpeed() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetDistanceToNextCheckPoint() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool GetIsPlayerPushable() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	uint8 GetLastReachedCheckPointIndex() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetPercentProgressTowardsNextCheckPoint() const;
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, BlueprintPure)
 	UShapeComponent* GetPushAreaShapeComponent() const;
@@ -141,6 +154,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetPushingStrength() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	float GetSplineDistanceAtCheckPoint(int32 CheckPointIndex) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetSplineIndexForCurrentCheckPoint() const;
@@ -156,6 +172,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetTotalCheckPoints() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	void GetTransformAtCheckPoint(FTransform& OutTransform, int32 CheckPointIndex) const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsCartContested() const;

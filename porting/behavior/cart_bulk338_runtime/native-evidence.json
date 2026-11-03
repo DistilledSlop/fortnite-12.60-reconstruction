@@ -1,0 +1,53 @@
+{
+  "rows": [
+    {
+      "function": "GetDesiredSpeed",
+      "wrapper_capture": "porting/generated/native210-fresh-bulk/0x142a88a90.c",
+      "body_capture": "porting/generated/native213-fresh-callees/0x141a42700.c",
+      "status": "ported",
+      "proof": "Native checks bIsPushable +0x852, TotalActiveDefenders +0x851, TotalActivePushers +0x850; evaluates PushSpeedPercentPerPusher +0x878 at pusher count and BasePushSpeed +0x858 at level 0. Helper 0x14070fdf0 is GetValueAtLevel(0)."
+    },
+    {
+      "function": "GetDistanceToNextCheckPoint",
+      "wrapper_capture": "porting/generated/native210-fresh-bulk/0x142a88ac0.c",
+      "body_capture": "porting/generated/native213-fresh-callees/0x141a42770.c",
+      "status": "ported",
+      "proof": "Requires valid spline, movement and current checkpoint within array; clamps next index to last, rejects negative spline index, subtracts movement spline distance, clamps only below zero."
+    },
+    {
+      "function": "GetPercentProgressTowardsNextCheckPoint",
+      "wrapper_capture": "porting/generated/native210-fresh-bulk/0x142a88bf0.c",
+      "body_capture": "porting/generated/native213-fresh-callees/0x141a45ab0.c",
+      "status": "ported",
+      "proof": "Requires valid spline and movement, selects current and clamped next indices, rejects negative indices, computes distance fraction and clamps only below zero; preserves zero denominator behavior."
+    },
+    {
+      "function": "GetSplineDistanceAtCheckPoint",
+      "wrapper_capture": "porting/generated/native235-fresh-bulk/0x142a88f00.c",
+      "body_capture": "porting/generated/native240-fresh-callees/0x141a488f0.c",
+      "status": "ported",
+      "proof": "Checks array index and weak pointer validity; returns -1 on failure, otherwise helper 0x14413ef40 distance for stored spline point."
+    },
+    {
+      "function": "GetCheckPointTransforms",
+      "wrapper_capture": "porting/generated/native235-fresh-bulk/0x142a88970.c",
+      "body_capture": "porting/generated/native240-fresh-callees/0x141a41980.c",
+      "status": "ported",
+      "proof": "Valid weak spline: GetTransformAtSplinePoint for each stored index, world space (1), scale false. Bulk resizes output to checkpoint count; single function directly indexes array without explicit bound check. Invalid spline leaves output untouched."
+    },
+    {
+      "function": "GetTransformAtCheckPoint",
+      "wrapper_capture": "porting/generated/native245-fresh-bulk/0x142a89050.c",
+      "body_capture": "porting/generated/native247-fresh-callees/0x141a48fb0.c",
+      "status": "ported",
+      "proof": "Valid weak spline: GetTransformAtSplinePoint for each stored index, world space (1), scale false. Bulk resizes output to checkpoint count; single function directly indexes array without explicit bound check. Invalid spline leaves output untouched."
+    }
+  ],
+  "helper_captures": {
+    "0x14070fdf0": "porting/generated/native103-impl/0x14070fdf0.c",
+    "0x1406dfbc0": "porting/generated/native104-context-deps/0x1406dfbc0.c",
+    "0x14413ef40": "porting/generated/native150-large-helpers/0x14413ef40.c",
+    "0x144146ff0": "porting/generated/native340-callees/0x144146ff0.c"
+  },
+  "helper_mapping": "0x14413ef40 checks point bounds including closed-loop endpoint and reads spline reparameterization table at point * reparam steps, matching USplineComponent::GetDistanceAlongSplineAtSplinePoint. MovementComponent +0x1c8 is GetSplineDistance as established in flash_bulk119_05_runtime."
+}
