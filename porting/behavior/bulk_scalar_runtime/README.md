@@ -45,5 +45,5 @@ generator, compilation, and integration validation; they do not establish an
 end-to-end feature or runtime parity.
 
 All 215 proposals are canonical and spliced. `--revalidate-own` reproduced exactly
-215 canonical entries with no body mismatch. The combined client build passes;
-server/runtime receipts are in `../../generated/gameplay-bulk-integration-1/`.
+215 canonical entries with no body mismatch. Combined client/server builds and the Apollo join pass;
+receipts are in `../../generated/gameplay-bulk-integration-1/`.

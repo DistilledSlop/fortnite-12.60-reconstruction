@@ -63,7 +63,7 @@ def main():
    asm=decode(addr); inner=None; target=None
    if asm.startswith(PREFIX): inner=asm[len(PREFIX):]; form='inline'
    elif asm.startswith('mov rax, qword ptr [rdx + 0x20]; xor ecx, ecx; test rax, rax; setne cl; add rcx, rax; mov qword ptr [rdx + 0x20], rcx; '):
-    inner=asm.split('mov qword ptr [rdx + 0x20], rcx; ',1)[1]; form='inline_constant' 
+    inner=asm.split('mov qword ptr [rdx + 0x20], rcx; ',1)[1]; form='inline_constant'
    elif asm.startswith(WRAP):
     m=re.fullmatch(r'call (0x[0-9a-f]+); (mov (?:byte|dword) ptr \[rbx\], (?:al|eax)|movss dword ptr \[rbx\], xmm0); add rsp, 0x20; pop rbx; ret',asm[len(WRAP):])
     if m:

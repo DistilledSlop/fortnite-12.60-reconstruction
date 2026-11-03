@@ -31,9 +31,16 @@ preserves original callable/access/Exec/authority/cosmetic flags. Checker resolv
 headers across Native modules without missing-header waivers. Generation875/0
 rejects and full generated splice check875/0 failures PASS; generator self-test
 151 PASS. Promotion restored12,521 unchanged file mtimes;274 files changed.
-Current client build PASS302.0s; server build RUNNING: session16996, receipts under
+Current client build PASS302.002s; server PASS254.690s; Apollo join PASS22.136s.
+All61 terrain tiles and exactly27 distinct background actors load on both peers;
+pawn grounding and replicated lighting pass. Matching binaries/symbols are staged.
+Previous default/Athena joins are retained instead of repeating overlapping runs.
+Receipts under
 `generated/gameplay-bulk-integration-1/{promotion.command.json,promotion.result.json,
-splice-check.log,client.build.log,server.build.log}`. Do not claim server/runtime validation until its build receipt and affected joins pass.
+splice-check.log,client.build.log,server.build.log}`. `apollo.join.json`, `apollo.*-test.log` and `stage.json` contain runtime/staging
+receipts. Source batch committed as c322c769; dashboard native body leaf is851/20574.
+No active build remains. This is a working reconstruction checkpoint, not full
+original behavior or any completed product milestone.
 
 Bulk automation sources:behavior/bulk_empty_exec_runtime and bulk_scalar_runtime;
 original image hash and complete accepted machine patterns are checked. Scratch
@@ -44,7 +51,11 @@ reproduced all215 canonical entries without a body mismatch. Unintegrated broad 
 asset_manager_rough_runtime; asset_gc_tracker_runtime documents exact unresolved
 five-container/delegate lifecycle. Batch enriched Ghidra C for15 callees took
 11.9s under generated/callee_probe/gameplay_rough_pass_1; do not rebuild a perfect
-bottom-up graph one method at a time. All four product milestones remain open.
+bottom-up graph one method at a time. All four product milestones remain open. Next use bulk matchers for further
+proven repeated forms and Terra medium workers for independent complete feature
+families; retain one promotion/build stream and reserve higher reasoning for
+ABI/ownership ambiguities. Do not extrapolate this trivial-body throughput to
+the unresolved complex functions.
 
 
 ## Gameplay checkpoint (2026-11-02): action queries and original-mode migration

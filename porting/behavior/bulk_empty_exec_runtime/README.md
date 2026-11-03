@@ -30,7 +30,6 @@ visibility are retained in each proposed entry.
 Detailed candidates, rejected entries and reasons: `/tmp/gameplay-bulk-empty/report.json`.
 Proposed entries: `/tmp/gameplay-bulk-empty/manifest-entries.json`. These are
 preparation artifacts, not canonical manifest edits. All 367 candidates are now canonical and spliced; later default reruns therefore
-exclude them as already ported. The combined client build passes. Server/runtime
-validation is recorded in `../../generated/gameplay-bulk-integration-1/`. The evidence
+exclude them as already ported. Combined client/server builds and the Apollo join pass. Validation is recorded in `../../generated/gameplay-bulk-integration-1/`. The evidence
 establishes the original shared empty native body, not completion of any larger
 feature or call path.
