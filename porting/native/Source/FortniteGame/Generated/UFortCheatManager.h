@@ -685,6 +685,11 @@ public:
 
 protected:
 	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	virtual void GiveWeaponToScriptedPawn(FString WeaponName);
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
 	void GiveWood(int32 Amount);
 public:
 
@@ -1097,6 +1102,16 @@ protected:
 public:
 
 protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	virtual void SetAthenaHeroOnScriptedPawn(FString NewHeroName);
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	virtual void SetBackpackOnScriptedPawn(FString NewBackpack);
+public:
+
+protected:
 	UFUNCTION(Exec)
 	void SetBuildFree(bool bNewValue);
 public:
@@ -1262,6 +1277,11 @@ public:
 protected:
 	UFUNCTION(Exec, BlueprintAuthorityOnly)
 	virtual void SetScriptedPawnTargeting(bool bIsTargeting);
+public:
+
+protected:
+	UFUNCTION(Exec, BlueprintAuthorityOnly)
+	virtual void SetScriptedPawnVariantChannel(FString ChannelTag, FString ActiveTag);
 public:
 
 protected:

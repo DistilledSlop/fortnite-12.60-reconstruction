@@ -849,6 +849,12 @@ void UFortCheatManager::GiveWeapons(FName Tag)
 	// CONFIDENCE: HIGH
 }
 
+void UFortCheatManager::GiveWeaponToScriptedPawn(FString WeaponName)
+{
+	// Native 0x14072e780; the shipping body only destroys its by-value FString parameters. CONFIDENCE: high
+	(void)WeaponName;
+}
+
 void UFortCheatManager::GiveWood(int32 Amount)
 {
 	// Original exec 0x142766a90; complete empty leaf 0x1406801c0.
@@ -1483,6 +1489,18 @@ void UFortCheatManager::SetAimMode(uint32 Mode)
 	// CONFIDENCE: HIGH
 }
 
+void UFortCheatManager::SetAthenaHeroOnScriptedPawn(FString NewHeroName)
+{
+	// Native 0x14072e780; the shipping body only destroys its by-value FString parameters. CONFIDENCE: high
+	(void)NewHeroName;
+}
+
+void UFortCheatManager::SetBackpackOnScriptedPawn(FString NewBackpack)
+{
+	// Native 0x14072e780; the shipping body only destroys its by-value FString parameters. CONFIDENCE: high
+	(void)NewBackpack;
+}
+
 void UFortCheatManager::SetBuildFree(bool bNewValue)
 {
 	// Original exec 0x1411a8f70; complete empty leaf 0x1406801c0.
@@ -1689,6 +1707,13 @@ void UFortCheatManager::SetScriptedPawnTargeting(bool bIsTargeting)
 {
 	// CONFIDENCE: high
 	// Native target 0x1406801c0.
+}
+
+void UFortCheatManager::SetScriptedPawnVariantChannel(FString ChannelTag, FString ActiveTag)
+{
+	// Native 0x141ec8790; the shipping body only destroys its by-value FString parameters. CONFIDENCE: high
+	(void)ChannelTag;
+	(void)ActiveTag;
 }
 
 void UFortCheatManager::SetShieldPercent(float Percent)
