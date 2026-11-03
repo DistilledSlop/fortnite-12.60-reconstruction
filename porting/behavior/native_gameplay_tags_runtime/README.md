@@ -116,3 +116,5 @@ three required sources. No per-tag/body tests, UE build, shared promotion or
 runtime run was performed; primary integration owns the combined compile and
 normal gameplay validation. Temporary bounded disassembly windows and recovery
 output are in `/tmp/gameplay-native-tags/`.
+
+Generator integration is now present: selecting AFortGameStateAthena emits this complete bundle, authorizes only its actual emitted support header, and adds Core/GameplayTags module dependencies. Native-tag source TU syntax, fresh UHT and affected game-state source/reflection syntax pass in `/tmp/gameplay-native-tags/validation/`; see the top HANDOFF snapshot. Shared Native promotion, linking and actual gameplay runtime remain pending. `AthenaPlayground()` additionally names the recovered+0x1768 tag for the combined/starter-island predicates.

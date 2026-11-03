@@ -1,5 +1,94 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Gameplay source batch (2026-11-02): native tag singleton and aircraft unlock
+
+Previous goal turn was progress:698a0af0 recovered four bodies and refreshed the
+old count. This turn adds19 actual native function bodies plus2 supporting native
+storage fields, and recovers the full shared native tag singleton. In the shared
+worktree these were committed by the other active session as513bc81e (sources),
+c3602cf4 (generator),8502656e (counter/dashboard), with unrelated UI commits
+preserved. Codex continues gameplay; Claude owns UI/shared Native/build/staging.
+No shared Native/Engine source, build or runtime state was altered by our work.
+
+The dashboard now measures actual manifest function entries using
+COUNTS.ported_functions=264, excluding22 member_field declarations. Legacy
+ported=286 is the total entry count. The old265 count included20 fields, hence
+245 actual functions at698a0af0; this batch adds19 functions to264. The decrease
+from the old mislabeled entry count is a measurement correction, not lost source.
+Counts:182 skipped,247 declared,30 pending,3 existing checker limitations against
+unpromoted Native. Those remain CommonUI header lookup plus the two absent count
+struct types; no new body has been waived/rejected. The leaf denominator and task
+weights are unchanged. Keep counters updated in body commits, do not inflate them
+with storage declarations or evidence-only recovery.
+
+Shared FFortNativeGameplayTagsRuntime reproduces constructor141ebb310,
+accessor141ed1800 and producer141ec98b0:1,136 tag registrations,37 map insertions,
+explicit DoneAddingNativeTags,7 post-finalization container additions, movement
+maps and GameplayCue set, all in original order. Uses one thread-safe local-static
+owner and correct reverse container destruction order. All recovered original
+consumers must use this same Get(); never add eager or separate query-local
+registration. Canonical support/source_policy and pinned event stream are under
+behavior/native_gameplay_tags_runtime/. Exact extraction/effect provenance is in
+its README. Source registration/lifecycle closure unlocks seven null-safe native
+playlist helpers and nine reflected game-state callers, including Creative/LTM/
+MM/BattleLab/utility, combined mode and starter-island predicates. The tag-only
+Creative predicate is distinct from enable-bit-gated CreativeMode. Playlist
+re-reads and captured initial playlist for starter-island flag preserve possible
+finalization delegate reentry. Original CanChangeGameplayOptions is non-const.
+
+Aircraft SetAircraftLocked recovers every unlock transition effect:32-bit wrapped
+human+bot count, player-controller weak iteration, virtual player-team and team-size
+queries, per-player native count, spectator human/team counts, then lock bit write.
+Both native field names and team-count name are reconstructed. Native virtual
+GetPlayerTeam and GetNativeTeamMemberCount are emitted/verified with the new
+boolean helper.virtual contract; static/non-boolean use is rejected and self-tests
+check loss of dispatch. Original UGameplayStatics.GetPlayerController exec14470f700
+calls144215e10, which uses14468fb70 in its world/player-index algorithm. This
+independently establishes the player-controller iterator/world+1c8 mapping. See
+behavior/aircraft_unlock_runtime/README.md for raw hashes and exact commands.
+Drop-zone callback itself still needs aircraft+2f0 producer; it was not stubbed.
+
+Combined validation under /tmp/gameplay-native-tags/validation:
+* command.json: scratch promotion argv; final generation.spectator-include.log
+  PASS286 accepted entries,0 rejections. Earlier generation.log rejected the
+  const CanChangeGameplayOptions signature; corrected canonical signature, no
+  waiver. generation.final.log already286/0 before the later include correction.
+* check_new.py/new-manifest.json: initial focused21 new entries PASS21/21,
+  no rejected allowances; new-body-check.log. After include correction only
+  corrected-setter-manifest.json/check_setter.py was rerun, PASS1/1 in
+  corrected-setter-check.log. Prior independent bodies were not retested.
+* batch-uht.command.json/batch.uhtmanifest: fresh full UHT PASS, batch-uht.log;
+  all outputs go to scratch, Engine exported-header writes disabled.
+* native-tags.command.json/native-tags.syntax.log: actual generated support TU
+  UE clang9 syntax PASS. AFortPlayerState.command.json and AFortTeamInfo.command.json
+  likewise PASS, matching .syntax.log. AFortGameStateAthena.gen.command.json and
+  .gen.syntax.log PASS for actual fresh UHT reflection TU. All compile argv run
+  from /opt/fortnite/UnrealEngine/Engine/Source with core dumps disabled.
+* AFortGameStateAthena.command.json first caught incomplete spectator type in
+  .syntax.log. Canonical setter now names a typed spectator pointer, enabling
+  normal automatic dependency discovery (no generated code hand-edit). Only
+  affected generation/source check/game-state compile repeated; final
+  AFortGameStateAthena.corrected.syntax.log PASS. UHT and other compiles remain
+  valid because only the function body and CPP include changed.
+* generator-self-test.log PASS149; independent bounded source review found no
+  material issues. counts-refresh.log has fast canonical counter refresh.
+No full client/server link,joins or actual gameplay runtime yet; no new runtime
+baseline or milestone credit. All4 product gates remain open. No processes or
+workers from this batch remain live.
+
+Next integration belongs with Claude's Native owner: promote current canonical
+inputs then validate client/server and real gameplay as one shared-runtime batch.
+Continue native recovery at actual remaining dependencies: base_weapon_equip_runtime/
+recovery.md now maps base equip ordering, actual event tag payload and pawn/weapon
+virtual targets; shared tag dependency is closed, virtual implementations and
+native global delegate still remain. Aircraft callback byte producer and combat
+notification controller timer/counter helper remain concrete next work. Preserve
+all unrelated frontend edits; small bounded reads, reusable checks and task
+rotation still apply. Luna medium read-only; Terra medium/high regular work;
+Sol medium complex work; fork_turns none; primary integrates/reviews and keeps
+one Native/build owner. Do not repeat passing earlier bodies unless new work
+could invalidate them; effectively instant checks are acceptable.
+
 ## Gameplay source batch (2026-11-02): counts, playlist name and focal point
 
 Codex owns gameplay; Claude owns UI/shared Native build. Previous goal turn made

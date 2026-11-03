@@ -20,10 +20,10 @@ if (bAircraftIsLocked && !bLocked)
             }
         }
     }
-    if (BroadcastSpectatorInfo)
+    if (AFortBroadcastSpectatorInfo* SpectatorInfo = BroadcastSpectatorInfo)
     {
-        BroadcastSpectatorInfo->TotalNumPlayers = PlayersLeft;
-        BroadcastSpectatorInfo->TotalNumTeams = TeamsLeft;
+        SpectatorInfo->TotalNumPlayers = PlayersLeft;
+        SpectatorInfo->TotalNumTeams = TeamsLeft;
     }
 }
 bAircraftIsLocked = bLocked;
