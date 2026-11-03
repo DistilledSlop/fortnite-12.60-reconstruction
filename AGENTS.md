@@ -87,4 +87,4 @@ and explicitly label bodies added since the tested baseline as build pending.
 
 # External model workers
 
-Antigravity CLI (`agy`) is available. Use Gemini 3.8 Flash for narrow, explicit bulk tasks with complete implementation standards and evidence review; reject stubs, omitted behavior, and unsupported defaults. Use Claude Opus 5.5 for difficult reconstruction and deep dependency work, with sufficient context and a substantial bounded task. Keep authorized Claude work moving while its provider has usage. Do not interrupt an existing useful Sonnet run merely to change models.
+Antigravity CLI (`agy`) is available. Use Gemini 3.8 Flash for narrow, explicit bulk tasks with complete implementation standards and evidence review; reject stubs, omitted behavior, and unsupported defaults. Reserve Claude Opus 5.5 for short, tightly scoped hard problems: it consumes Antigravity Claude quota very quickly. Use Terra, Flash, and Sonnet for bulk implementation and long source-recovery runs. Keep authorized Claude work moving while its provider has usage. Do not interrupt an existing useful Sonnet run merely to change models.
