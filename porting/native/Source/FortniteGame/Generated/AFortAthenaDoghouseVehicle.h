@@ -159,6 +159,9 @@ public:
 	// Non-reflected field (behaviour kind "member_field", offset 0x1240): not a UPROPERTY, not replicated.
 	bool NativeRecoveredBool_0x1240;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x1242): not a UPROPERTY, not replicated.
+	uint8 NativePredicateStorage_0x1242;
+
 	// Non-reflected field (behaviour kind "member_field", offset 0x1245): not a UPROPERTY, not replicated.
 	bool NativeRecoveredBool_0x1245;
 
@@ -186,6 +189,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsEngineOn() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsFlying() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsStandingInPlace() const;

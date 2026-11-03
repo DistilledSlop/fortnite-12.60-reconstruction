@@ -1,0 +1,1198 @@
+{
+  "expected_image_sha256": "338c83a2314ccac1040a2c0bb520b893013cc7b58eda58e550da67f5d84de680",
+  "digest_verified_this_run": false,
+  "source_report": "native_predicates89_runtime/scan-report.json",
+  "registrations": {
+    "0x14632acc0": {
+      "class": "AFortAthenaSKMotorVehicle",
+      "block": "0x14632acc0",
+      "noregister": "0x1427ced60",
+      "builder": "0x142830640",
+      "literal": "0x14632be42",
+      "call": "0x1428306de",
+      "size": 4032,
+      "align": 16,
+      "bytes": "4c8bdc4881ec88000000488b05d78795054885c00f859000000033c9488d057d60e6fd49894bf04c8d0d42030000884c24704c8d05af879505498943e0488d15beb7af03488d05d58602fe498943d8488d051a847301498943d0488d055ffce4fd498943c8488d05a4fdffff498943c0488d05a1451703498943b849894bb0488d0de227a003c744243004000010c744242810000000c7442420c00f0000e8cd915300"
+    },
+    "0x14632b4d0": {
+      "class": "AFortAthenaSKPushVehicle",
+      "block": "0x14632b4d0",
+      "noregister": "0x14282f840",
+      "builder": "0x14282f840",
+      "literal": "0x14632c6da",
+      "call": "0x14282f8de",
+      "size": 4128,
+      "align": 16,
+      "bytes": "4c8bdc4881ec88000000488b05bf9695054885c00f859000000033c9488d057d6ee6fd49894bf04c8d0da2110000884c24704c8d0597969505498943e0488d1556ceaf03488d05d59402fe498943d8488d051a927301498943d0488d055f0ae5fd498943c8488d05e40b0000498943c0488d05a1531703498943b849894bb0488d0de235a003c744243004000010c744242810000000c744242020100000e8cd9f5300"
+    },
+    "0x1463f1e00": {
+      "class": "AFortGameState_InGame",
+      "block": "0x1463f1e00",
+      "noregister": "0x142926770",
+      "builder": "0x142926770",
+      "literal": "0x1463f355a",
+      "call": "0x14292680e",
+      "size": 1720,
+      "align": 8,
+      "bytes": "4c8bdc4881ec88000000488b059f4d87054885c00f859000000033c9488d054dffd6fd49894bf04c8d0d229ad5fd884c24704c8d05774d8705498943e0488d15a6cdac03488d050527feff498943d8488d05ea226401498943d0488d052f9bd5fd498943c8488d05e4040000498943c0488d0571e40703498943b849894bb0488d0db2c69003c744243004000010c744242808000000c7442420b8060000e89d304400"
+    },
+    "0x146367ac0": {
+      "class": "AFortClientOnlyActor",
+      "block": "0x146367ac0",
+      "noregister": "0x142764f90",
+      "builder": "0x14287c5a0",
+      "literal": "0x14636c8ba",
+      "call": "0x14287c63e",
+      "size": 544,
+      "align": 8,
+      "bytes": "4c8bdc4881ec88000000488b05772a91054885c00f859000000033c9488d051da1e1fd49894bf04c8d0df23be0fd884c24704c8d054f2a9105498943e0488d15d602af03488d050501effd498943d8488d05bac46e01498943d0488d05ff3ce0fd498943c8488d0524f5ffff498943c0488d05f1851203498943b849894bb0488d0d82689b03c744243004000010c744242808000000c744242020020000e86dd24e00"
+    },
+    "0x146baf4b0": {
+      "class": "AInfo",
+      "block": "0x146baf4b0",
+      "noregister": "0x140fcf990",
+      "builder": "0x144720ae0",
+      "literal": "0x146bb0392",
+      "call": "0x144720b7e",
+      "size": 536,
+      "align": 8,
+      "bytes": "4c8bdc4881ec88000000488b05d79ec3034885c00f859000000033c9488d05dd5bf7fb49894bf04c8d0db2f6f5fb884c24704c8d05af9ec303498943e0488d156ef84802488d05c5bb04fc498943d8488d057a7f84ff498943d0488d05bff7f5fb498943c8488d0504eeffff498943c0488d05b1402801498943b849894bb0488d0d8a3ff001c744243005000010c744242808000000c744242018020000e82d8d64fe"
+    },
+    "0x146e51d10": {
+      "class": "UAthenaAccoladesWidget",
+      "block": "0x146e51d10",
+      "noregister": "0x14517cc30",
+      "builder": "0x14517cc30",
+      "literal": "0x146e52f4a",
+      "call": "0x14517ccce",
+      "size": 792,
+      "align": 8,
+      "bytes": "4c8bdc4881ec88000000488b0587f921034885c00f859000000033c9488d058d9a51fb49894bf04c8d0d82200000884c24704c8d055ff92103498943e0488d15d662cd01488d05d58d52fb498943d8488d053a3550fb498943d0488d056f3650fb498943c8488d0554120000498943c0488d05617f8200498943b849894bb0488d0d1a3aea00c744243000000010c744242808000000c744242018030000e8ddcbbefd"
+    },
+    "0x146f4b250": {
+      "class": "UFortHUDElementWidget",
+      "block": "0x146f4b250",
+      "noregister": "0x1406a5a50",
+      "builder": "0x14525c810",
+      "literal": "0x146f4d582",
+      "call": "0x14525c8ae",
+      "size": 664,
+      "align": 8,
+      "bytes": "4c8bdc4881ec88000000488b05876815034885c00f859000000033c9488d05ad9e43fb49894bf04c8d0d72060000884c24704c8d055f681503498943e0488d152e0dcf01488d0585ca5afb498943d8488d055a3942fb498943d0488d058f3a42fb498943c8488d0534f2ffff498943c0488d0581837400498943b849894bb0488d0d3a3edc00c744243001000010c744242808000000c744242098020000e8fdcfb0fd"
+    },
+    "0x145a0fe30": {
+      "class": "UBlueprintContextBase",
+      "block": "0x145a0fe30",
+      "noregister": "0x1408232c0",
+      "builder": "0x1408232c0",
+      "literal": "0x145a0ff22",
+      "call": "0x14082335e",
+      "size": 48,
+      "align": 8,
+      "bytes": "4c8bdc4881ec88000000488b050f018b074885c00f859000000033c9488d05dd10ffff49894bf04c8d0dd2cee5ff884c24704c8d05e7008b07498943e0488d151ecc1e05488d0505020000498943d8488d05aacee5ff498943d0488d05dfcfe5ff498943c8488d05a4010000498943c0488d05d1181805498943b849894bb0488d0d8aca1e05c744243009000010c744242808000000c744242030000000e84d655402"
+    },
+    "0x14629f030": {
+      "class": "UFortAccountItemDefinition",
+      "block": "0x14629f030",
+      "noregister": "0x14271d6a0",
+      "builder": "0x14278d2d0",
+      "literal": "0x14629ff7a",
+      "call": "0x14278d36e",
+      "size": 904,
+      "align": 8,
+      "bytes": "4c8bdc4881ec88000000488b051ff99e054885c00f859000000033c9488d05ed93f0fd49894bf04c8d0dc22eeffd884c24704c8d05f7f89e05498943e0488d15662cb103488d0505cef9ff498943d8488d059a2eeffd498943d0488d05cf2feffd498943c8488d05e4f9ffff498943c0488d05c1782103498943b849894bb0488d0d525baa03c744243000000010c744242808000000c744242088030000e83dc55d00"
+    },
+    "0x1463dfba0": {
+      "class": "UFortGameplayMessageComponentBase",
+      "block": "0x1463dfba0",
+      "noregister": "0x142903b00",
+      "builder": "0x142903b00",
+      "literal": "0x1463e0be2",
+      "call": "0x142903b9e",
+      "size": 360,
+      "align": 8,
+      "bytes": "4c8bdc4881ec88000000488b054f4389054885c00f859000000033c9488d05bd2bd9fd49894bf04c8d0d721a0000884c24704c8d0527438905498943e0488d159ed0ad03488d05650be8fd498943d8488d056ac6d7fd498943d0488d059fc7d7fd498943c8488d0504090000498943c0488d0591100a03498943b849894bb0488d0d22f39203c744243004000010c744242808000000c744242068010000e80d5d4600"
+    },
+    "0x1463f6310": {
+      "class": "UFortGiftBoxItem",
+      "block": "0x1463f6310",
+      "noregister": "0x14292de30",
+      "builder": "0x14292de30",
+      "literal": "0x1463f76a2",
+      "call": "0x14292dece",
+      "size": 304,
+      "align": 8,
+      "bytes": "4c8bdc4881ec88000000488b05d7de86054885c00f859000000033c9488d058d88d6fd49894bf04c8d0db20c0000884c24704c8d05afde8605498943e0488d152e98ac03488d0595b5deff498943d8488d053a23d5fd498943d0488d056f24d5fd498943c8488d0504060000498943c0488d05616d0703498943b849894bb0488d0df24f9003c744243000000010c744242808000000c744242030010000e8ddb94300"
+    },
+    "0x146fb2080": {
+      "class": "UFortPurchaseOverlayModal",
+      "block": "0x146fb2080",
+      "noregister": "0x1452b3f30",
+      "builder": "0x1452b3f30",
+      "literal": "0x146fb3212",
+      "call": "0x1452b3fce",
+      "size": 1728,
+      "align": 8,
+      "bytes": "4c8bdc4881ec88000000488b052f6410034885c00f859000000033c9488d058d273efb49894bf04c8d0d921a0000884c24704c8d0507641003498943e0488d159ef2cf01488d05c5a3f7ff498943d8488d053ac23cfb498943d0488d056fc33cfb498943c8488d0504050000498943c0488d05b10c6f00498943b849894bb0488d0d1ac7d600c744243005000010c744242808000000c7442420c0060000e8dd58abfd"
+    },
+    "0x146627970": {
+      "class": "UObject",
+      "block": "0x146627970",
+      "noregister": "0x1406966e0",
+      "builder": "0x142eeab70",
+      "literal": "0x146621caa",
+      "call": "0x142eeac07",
+      "size": 40,
+      "align": 8,
+      "bytes": "4c8bdc4881ec88000000488b058f9637054885c00f858900000033c9488d054dbb7afd49894bf04c8d0d225679fd884c24704c8d0567963705498943e0488d15f6707303498943d8488d05015679fd498943d0488d0546faffff498943c8488d051bfaffff498943c0488d0528a0ab02498943b849894bb0488d0da964b702c744243021010010c744242808000000c744242028000000e8a4ece7ff"
+    }
+  },
+  "attempted_registration_blocks": [
+    "0x145a0fe30",
+    "0x14629f030",
+    "0x14632acc0",
+    "0x14632b4d0",
+    "0x146367ac0",
+    "0x1463dfba0",
+    "0x1463f1e00",
+    "0x1463f6310",
+    "0x146627970",
+    "0x146baf4b0",
+    "0x146e51d10",
+    "0x146f4b250",
+    "0x146fb2080"
+  ],
+  "candidates": 13,
+  "proposals": 13,
+  "rows": [
+    {
+      "class": "AFortAthenaAntelopeVehicle",
+      "function": "IsNaturalSliding",
+      "address": "0x1427cfde0",
+      "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; call 0x1418c9fa0; mov byte ptr [rbx], al; add rsp, 0x20; pop rbx; ret",
+      "bytes": "40534883ec20488b42204533c94885c0498bd8410f95c14c03c84c894a20e89da10fff88034883c4205bc3",
+      "sha256": "e35b9ff363e4aa83297cde2e5a5692af7a9e1c3d4a86cefa1850e3515ac52f43",
+      "target": "0x1418c9fa0",
+      "leaf_assembly": "cmp byte ptr [rcx + 0x1148], 2; sete al; ret",
+      "leaf_bytes": "80b948110000020f94c0c3",
+      "leaf_sha256": "01316c2b57100268d670d305f6cd3b67a66029d39c285cf35a4c3fae6010aadb",
+      "reasons": [],
+      "offset": 4424,
+      "width": 1,
+      "value": 2,
+      "condition": "sete",
+      "bitcopy_float": false,
+      "own_size": 4544,
+      "parent_size": 4032,
+      "overlaps": [],
+      "nearby_spans": []
+    },
+    {
+      "class": "AFortAthenaDoghouseVehicle",
+      "function": "IsFlying",
+      "address": "0x1427d7fd0",
+      "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; call 0x1418f1310; mov byte ptr [rbx], al; add rsp, 0x20; pop rbx; ret",
+      "bytes": "40534883ec20488b42204533c94885c0498bd8410f95c14c03c84c894a20e81d9311ff88034883c4205bc3",
+      "sha256": "b03ae7ee973379e0e925727584cae690cf12cd268ef1cde107f386d1548cd0ee",
+      "target": "0x1418f1310",
+      "leaf_assembly": "cmp byte ptr [rcx + 0x1242], 0; setne al; ret",
+      "leaf_bytes": "80b942120000000f95c0c3",
+      "leaf_sha256": "ae92ea8e55d4dddb1425b7a2456cd22021cfe37f9a56848b56fc1eaad516b034",
+      "reasons": [],
+      "offset": 4674,
+      "width": 1,
+      "value": 0,
+      "condition": "setne",
+      "bitcopy_float": false,
+      "own_size": 5552,
+      "parent_size": 3904,
+      "overlaps": [],
+      "nearby_spans": [
+        [
+          4672,
+          4673,
+          "NativeRecoveredBool_0x1240",
+          "member_field"
+        ],
+        [
+          4677,
+          4678,
+          "NativeRecoveredBool_0x1245",
+          "member_field"
+        ],
+        [
+          4681,
+          4682,
+          "NativeRecoveredBool_0x1249",
+          "member_field"
+        ]
+      ]
+    },
+    {
+      "class": "AFortAthenaGoatVehicle",
+      "function": "IsPowerSliding",
+      "address": "0x1427db520",
+      "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; call 0x1418f19b0; mov byte ptr [rbx], al; add rsp, 0x20; pop rbx; ret",
+      "bytes": "40534883ec20488b42204533c94885c0498bd8410f95c14c03c84c894a20e86d6411ff88034883c4205bc3",
+      "sha256": "42ffb34c914523ac80abe44aef8623e968d8b1a78d0bbc30fc9fc8b187f65b93",
+      "target": "0x1418f19b0",
+      "leaf_assembly": "cmp byte ptr [rcx + 0x10b4], 2; sete al; ret",
+      "leaf_bytes": "80b9b4100000020f94c0c3",
+      "leaf_sha256": "dfeec4cda0832d3966bb2733b7e551f3c7040b7de5b543680c657cf75bd2dc55",
+      "reasons": [],
+      "offset": 4276,
+      "width": 1,
+      "value": 2,
+      "condition": "sete",
+      "bitcopy_float": false,
+      "own_size": 4384,
+      "parent_size": 4032,
+      "overlaps": [],
+      "nearby_spans": []
+    },
+    {
+      "class": "AFortAthenaSKPushVehicle",
+      "function": "IsDismountingFromCoast",
+      "address": "0x1428314c0",
+      "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; call 0x1418f12d0; mov byte ptr [rbx], al; add rsp, 0x20; pop rbx; ret",
+      "bytes": "40534883ec20488b42204533c94885c0498bd8410f95c14c03c84c894a20e8edfd0bff88034883c4205bc3",
+      "sha256": "1c180d20c2f6570773b14888a1d345a4b36fd91afebf004878486936e0fce630",
+      "target": "0x1418f12d0",
+      "leaf_assembly": "cmp byte ptr [rcx + 0xf95], 5; sete al; ret",
+      "leaf_bytes": "80b9950f0000050f94c0c3",
+      "leaf_sha256": "7c08df076191c7450dbc174b6e1b1efe7386b17b67615248b53b4089e5ddadbb",
+      "reasons": [],
+      "offset": 3989,
+      "width": 1,
+      "value": 5,
+      "condition": "sete",
+      "bitcopy_float": false,
+      "own_size": 4128,
+      "parent_size": 3904,
+      "overlaps": [],
+      "nearby_spans": [
+        [
+          3968,
+          3976,
+          "SKPushVehicleConfigsClass",
+          "Class"
+        ],
+        [
+          3976,
+          3984,
+          "SKPushVehicleConfigs",
+          "Object"
+        ],
+        [
+          3984,
+          3985,
+          "NativeRecoveredBool_0xf90",
+          "member_field"
+        ],
+        [
+          3992,
+          3996,
+          "NativeRecoveredFloat_0xf98",
+          "member_field"
+        ]
+      ]
+    },
+    {
+      "class": "AFortAthenaSKPushVehicle",
+      "function": "IsEndCoasting",
+      "address": "0x1428314f0",
+      "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; call 0x1418f1300; mov byte ptr [rbx], al; add rsp, 0x20; pop rbx; ret",
+      "bytes": "40534883ec20488b42204533c94885c0498bd8410f95c14c03c84c894a20e8edfd0bff88034883c4205bc3",
+      "sha256": "1c180d20c2f6570773b14888a1d345a4b36fd91afebf004878486936e0fce630",
+      "target": "0x1418f1300",
+      "leaf_assembly": "cmp byte ptr [rcx + 0xf95], 6; sete al; ret",
+      "leaf_bytes": "80b9950f0000060f94c0c3",
+      "leaf_sha256": "66dafae79f0de0d322a4134c6c1dc7fa0226a11e0454ad0115d53f1be465f2e8",
+      "reasons": [],
+      "offset": 3989,
+      "width": 1,
+      "value": 6,
+      "condition": "sete",
+      "bitcopy_float": false,
+      "own_size": 4128,
+      "parent_size": 3904,
+      "overlaps": [],
+      "nearby_spans": [
+        [
+          3968,
+          3976,
+          "SKPushVehicleConfigsClass",
+          "Class"
+        ],
+        [
+          3976,
+          3984,
+          "SKPushVehicleConfigs",
+          "Object"
+        ],
+        [
+          3984,
+          3985,
+          "NativeRecoveredBool_0xf90",
+          "member_field"
+        ],
+        [
+          3992,
+          3996,
+          "NativeRecoveredFloat_0xf98",
+          "member_field"
+        ]
+      ]
+    },
+    {
+      "class": "AFortAthenaSKPushVehicle",
+      "function": "IsMounting",
+      "address": "0x142831520",
+      "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; call 0x1418f18e0; mov byte ptr [rbx], al; add rsp, 0x20; pop rbx; ret",
+      "bytes": "40534883ec20488b42204533c94885c0498bd8410f95c14c03c84c894a20e89d030cff88034883c4205bc3",
+      "sha256": "b5a1abc1857409e98248bf3ce615d0cbd6c489c68b8bd8d6baa4fce4eeba7f01",
+      "target": "0x1418f18e0",
+      "leaf_assembly": "cmp byte ptr [rcx + 0xf95], 1; sete al; ret",
+      "leaf_bytes": "80b9950f0000010f94c0c3",
+      "leaf_sha256": "492ef45ec57b96ba4dc5cc28d306f01414cd58df6ad4b57fef003c4baf16c136",
+      "reasons": [],
+      "offset": 3989,
+      "width": 1,
+      "value": 1,
+      "condition": "sete",
+      "bitcopy_float": false,
+      "own_size": 4128,
+      "parent_size": 3904,
+      "overlaps": [],
+      "nearby_spans": [
+        [
+          3968,
+          3976,
+          "SKPushVehicleConfigsClass",
+          "Class"
+        ],
+        [
+          3976,
+          3984,
+          "SKPushVehicleConfigs",
+          "Object"
+        ],
+        [
+          3984,
+          3985,
+          "NativeRecoveredBool_0xf90",
+          "member_field"
+        ],
+        [
+          3992,
+          3996,
+          "NativeRecoveredFloat_0xf98",
+          "member_field"
+        ]
+      ]
+    },
+    {
+      "class": "AFortGameStateZone",
+      "function": "HasActiveGameplayModifiers",
+      "address": "0x14292ba50",
+      "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; call 0x141ea1260; mov byte ptr [rbx], al; add rsp, 0x20; pop rbx; ret",
+      "bytes": "40534883ec20488b42204533c94885c0498bd8410f95c14c03c84c894a20e8ed5757ff88034883c4205bc3",
+      "sha256": "6e336308681efe1e250601c14047087d779da9629b2b7ab2495b104febb6e173",
+      "target": "0x141ea1260",
+      "leaf_assembly": "cmp dword ptr [rcx + 0xb38], 0; setg al; ret",
+      "leaf_bytes": "83b9380b0000000f9fc0c3",
+      "leaf_sha256": "0f1548bc3ed7875b4ab14229ea964551d0f1b41ce188505dbcbaff23cfc76081",
+      "reasons": [
+        "occupied"
+      ],
+      "offset": 2872,
+      "width": 4,
+      "value": 0,
+      "condition": "setg",
+      "bitcopy_float": false,
+      "own_size": 3864,
+      "parent_size": 1720,
+      "overlaps": [
+        [
+          2600,
+          2904,
+          "ActiveGameplayModifiers",
+          "Struct"
+        ]
+      ],
+      "nearby_spans": [
+        [
+          2600,
+          2904,
+          "ActiveGameplayModifiers",
+          "Struct"
+        ]
+      ]
+    },
+    {
+      "class": "AFortOctopusVehicle",
+      "function": "IsTowhookContracting",
+      "address": "0x142a09130",
+      "assembly": "mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; cmp dword ptr [rcx + 0x13a0], 2; sete al; mov byte ptr [r8], al; ret",
+      "bytes": "488b42204533c94885c0410f95c14c03c84c894a2083b9a0130000020f94c0418800c3",
+      "sha256": "4ca36266c1a4b31c2baabf26f4d7e16b59a82a2f9a2a2864c2fee4d8ecc2146d",
+      "target": null,
+      "leaf_assembly": null,
+      "leaf_bytes": null,
+      "leaf_sha256": null,
+      "reasons": [],
+      "offset": 5024,
+      "width": 4,
+      "value": 2,
+      "condition": "sete",
+      "bitcopy_float": false,
+      "own_size": 5728,
+      "parent_size": 3904,
+      "overlaps": [],
+      "nearby_spans": []
+    },
+    {
+      "class": "AFortOctopusVehicle",
+      "function": "IsTowhookExtending",
+      "address": "0x142a09160",
+      "assembly": "mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; cmp dword ptr [rcx + 0x13a0], 1; sete al; mov byte ptr [r8], al; ret",
+      "bytes": "488b42204533c94885c0410f95c14c03c84c894a2083b9a0130000010f94c0418800c3",
+      "sha256": "d7352e2a8d4356cc773ea588abda8925aaeecb720c2f4f996f3965a8fc689e75",
+      "target": null,
+      "leaf_assembly": null,
+      "leaf_bytes": null,
+      "leaf_sha256": null,
+      "reasons": [],
+      "offset": 5024,
+      "width": 4,
+      "value": 1,
+      "condition": "sete",
+      "bitcopy_float": false,
+      "own_size": 5728,
+      "parent_size": 3904,
+      "overlaps": [],
+      "nearby_spans": []
+    },
+    {
+      "class": "AFortPlayerController",
+      "function": "IsActionInputIgnored",
+      "address": "0x142a47f70",
+      "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; call 0x14238e1f0; mov byte ptr [rbx], al; add rsp, 0x20; pop rbx; ret",
+      "bytes": "40534883ec20488b42204533c94885c0498bd8410f95c14c03c84c894a20e85d6294ff88034883c4205bc3",
+      "sha256": "85679cac8c2d5d16594bc810a8e0f1b59f9c4e1f6dbfab9d4f67c64c63930f8a",
+      "target": "0x14238e1f0",
+      "leaf_assembly": "cmp byte ptr [rcx + 0xad9], 0; setne al; ret",
+      "leaf_bytes": "80b9d90a0000000f95c0c3",
+      "leaf_sha256": "8ea759f7cd5292e100b33037fe11d18460613327042ee3cd93b757b66bfa39c3",
+      "reasons": [
+        "occupied"
+      ],
+      "offset": 2777,
+      "width": 1,
+      "value": 0,
+      "condition": "setne",
+      "bitcopy_float": false,
+      "own_size": 8384,
+      "parent_size": 1424,
+      "overlaps": [
+        [
+          2777,
+          2778,
+          "bIsClientTimingOut",
+          "Bool"
+        ]
+      ],
+      "nearby_spans": [
+        [
+          2761,
+          2762,
+          "bHoldingSprint",
+          "Bool"
+        ],
+        [
+          2762,
+          2763,
+          "bSprintToggleable",
+          "Bool"
+        ],
+        [
+          2763,
+          2764,
+          "bSprintByDefault",
+          "Bool"
+        ],
+        [
+          2764,
+          2765,
+          "bSprintCancelsReload",
+          "Bool"
+        ],
+        [
+          2765,
+          2766,
+          "bSprintWasCancelledByReload",
+          "Bool"
+        ],
+        [
+          2766,
+          2767,
+          "bAutoRunOn",
+          "Bool"
+        ],
+        [
+          2767,
+          2768,
+          "bUseHoldToSwapPickup",
+          "Bool"
+        ],
+        [
+          2768,
+          2769,
+          "bTargetingToggleable",
+          "Bool"
+        ],
+        [
+          2769,
+          2770,
+          "bMovementDisabledDueToCancellableAction",
+          "Bool"
+        ],
+        [
+          2770,
+          2771,
+          "bIsPlayerActivelyMoving",
+          "Bool"
+        ],
+        [
+          2771,
+          2772,
+          "bPlaceHeldObjectPressed",
+          "Bool"
+        ],
+        [
+          2772,
+          2776,
+          "InMovementCancellableAction",
+          "Int"
+        ],
+        [
+          2776,
+          2777,
+          "bAllowHoldForAmmoCrafting",
+          "Bool"
+        ],
+        [
+          2777,
+          2778,
+          "bIsClientTimingOut",
+          "Bool"
+        ],
+        [
+          2780,
+          2784,
+          "ClientTimeoutBlockInputTime",
+          "Float"
+        ],
+        [
+          2792,
+          2800,
+          "LastMoveInputFrame",
+          "UInt64"
+        ]
+      ]
+    },
+    {
+      "class": "AFortPlayerControllerGameplay",
+      "function": "IsCreativePhoneAndHarvestHoldSwapped",
+      "address": "0x142a655f0",
+      "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; call 0x1423d8f10; mov byte ptr [rbx], al; add rsp, 0x20; pop rbx; ret",
+      "bytes": "40534883ec20488b42204533c94885c0498bd8410f95c14c03c84c894a20e8fd3897ff88034883c4205bc3",
+      "sha256": "6bd490e7e4f9846939ebc6f3353198c8995442b8c2ccb31e8035f6521d9ae72f",
+      "target": "0x1423d8f10",
+      "leaf_assembly": "cmp dword ptr [rcx + 0x2660], 0; setg al; ret",
+      "leaf_bytes": "83b960260000000f9fc0c3",
+      "leaf_sha256": "c5a6a3aa46023530e62e4aa3f4878f9e4c3d44fd5f76c4afad5acbc977d9ff97",
+      "reasons": [
+        "occupied"
+      ],
+      "offset": 9824,
+      "width": 4,
+      "value": 0,
+      "condition": "setg",
+      "bitcopy_float": false,
+      "own_size": 9840,
+      "parent_size": 8384,
+      "overlaps": [
+        [
+          9816,
+          9828,
+          "WantsToSwapPhoneAndHarvestHold",
+          "Struct"
+        ]
+      ],
+      "nearby_spans": [
+        [
+          9804,
+          9816,
+          "WantedFlightSpeed",
+          "Struct"
+        ],
+        [
+          9816,
+          9828,
+          "WantsToSwapPhoneAndHarvestHold",
+          "Struct"
+        ],
+        [
+          9828,
+          9840,
+          "WantedUIMetricsDisplay",
+          "Struct"
+        ]
+      ]
+    },
+    {
+      "class": "AFortSpaghettiVehicle",
+      "function": "IsTowhookContracting",
+      "address": "0x142a09130",
+      "assembly": "mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; cmp dword ptr [rcx + 0x13a0], 2; sete al; mov byte ptr [r8], al; ret",
+      "bytes": "488b42204533c94885c0410f95c14c03c84c894a2083b9a0130000020f94c0418800c3",
+      "sha256": "4ca36266c1a4b31c2baabf26f4d7e16b59a82a2f9a2a2864c2fee4d8ecc2146d",
+      "target": null,
+      "leaf_assembly": null,
+      "leaf_bytes": null,
+      "leaf_sha256": null,
+      "reasons": [],
+      "offset": 5024,
+      "width": 4,
+      "value": 2,
+      "condition": "sete",
+      "bitcopy_float": false,
+      "own_size": 5728,
+      "parent_size": 3904,
+      "overlaps": [],
+      "nearby_spans": []
+    },
+    {
+      "class": "AFortSpaghettiVehicle",
+      "function": "IsTowhookExtending",
+      "address": "0x142a09160",
+      "assembly": "mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; cmp dword ptr [rcx + 0x13a0], 1; sete al; mov byte ptr [r8], al; ret",
+      "bytes": "488b42204533c94885c0410f95c14c03c84c894a2083b9a0130000010f94c0418800c3",
+      "sha256": "d7352e2a8d4356cc773ea588abda8925aaeecb720c2f4f996f3965a8fc689e75",
+      "target": null,
+      "leaf_assembly": null,
+      "leaf_bytes": null,
+      "leaf_sha256": null,
+      "reasons": [],
+      "offset": 5024,
+      "width": 4,
+      "value": 1,
+      "condition": "sete",
+      "bitcopy_float": false,
+      "own_size": 5728,
+      "parent_size": 3904,
+      "overlaps": [],
+      "nearby_spans": []
+    },
+    {
+      "class": "AFortTheaterMapTile",
+      "function": "HasValidMissionData",
+      "address": "0x142b03970",
+      "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; call 0x14256f7b0; mov byte ptr [rbx], al; add rsp, 0x20; pop rbx; ret",
+      "bytes": "40534883ec20488b42204533c94885c0498bd8410f95c14c03c84c894a20e81dbea6ff88034883c4205bc3",
+      "sha256": "7fd7c6ad787e88cee74c2d2c127b2d476731e1aa0a2561f80cfa8abca820c3d0",
+      "target": "0x14256f7b0",
+      "leaf_assembly": "cmp dword ptr [rcx + 0x2a8], 1; setg al; ret",
+      "leaf_bytes": "83b9a8020000010f9fc0c3",
+      "leaf_sha256": "8ef4c91727e05b291f452abc9f3c0d9ac9ff0127c1e1c6ca3c7f639c43ed64a1",
+      "reasons": [
+        "occupied"
+      ],
+      "offset": 680,
+      "width": 4,
+      "value": 1,
+      "condition": "setg",
+      "bitcopy_float": false,
+      "own_size": 1200,
+      "parent_size": 544,
+      "overlaps": [
+        [
+          672,
+          840,
+          "MissionData",
+          "Struct"
+        ]
+      ],
+      "nearby_spans": [
+        [
+          656,
+          672,
+          "InitialLocation",
+          "Struct"
+        ],
+        [
+          672,
+          840,
+          "MissionData",
+          "Struct"
+        ]
+      ]
+    },
+    {
+      "class": "AFortThreatVisualsManager",
+      "function": "StormsExist",
+      "address": "0x142b10250",
+      "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; call 0x1417169a0; mov byte ptr [rbx], al; add rsp, 0x20; pop rbx; ret",
+      "bytes": "40534883ec20488b42204533c94885c0498bd8410f95c14c03c84c894a20e82d67c0fe88034883c4205bc3",
+      "sha256": "4441fbf0c6818223b4cd9d96a82d2f86e8fb3ec4e377b23c7dc146ac9d8bfc65",
+      "target": "0x1417169a0",
+      "leaf_assembly": "cmp dword ptr [rcx + 0x380], 0; setg al; ret",
+      "leaf_bytes": "83b980030000000f9fc0c3",
+      "leaf_sha256": "9e9dcdd45c7cfd926941584e9784940ea8813040dfe9217885ce38944cb644ae",
+      "reasons": [
+        "occupied"
+      ],
+      "offset": 896,
+      "width": 4,
+      "value": 0,
+      "condition": "setg",
+      "bitcopy_float": false,
+      "own_size": 1232,
+      "parent_size": 536,
+      "overlaps": [
+        [
+          624,
+          904,
+          "ThreatLocations",
+          "Struct"
+        ]
+      ],
+      "nearby_spans": [
+        [
+          624,
+          904,
+          "ThreatLocations",
+          "Struct"
+        ],
+        [
+          904,
+          1184,
+          "StormWindArray",
+          "Struct"
+        ]
+      ]
+    },
+    {
+      "class": "AFortVolumeManager",
+      "function": "AreIslandsLoading",
+      "address": "0x142b3aff0",
+      "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; call 0x141c5fb10; mov byte ptr [rbx], al; add rsp, 0x20; pop rbx; ret",
+      "bytes": "40534883ec20488b42204533c94885c0498bd8410f95c14c03c84c894a20e8fd4a12ff88034883c4205bc3",
+      "sha256": "3b4803ffd93606bab2fdf753d2524620076f603d6d37f18467ffa327fa3e3cb9",
+      "target": "0x141c5fb10",
+      "leaf_assembly": "cmp dword ptr [rcx + 0x50c], 0; seta al; ret",
+      "leaf_bytes": "83b90c050000000f97c0c3",
+      "leaf_sha256": "74066c464de81e27caf01cefa5164a1aa99ab8de8ca94339703d99a47dc7ff6d",
+      "reasons": [],
+      "offset": 1292,
+      "width": 4,
+      "value": 0,
+      "condition": "seta",
+      "bitcopy_float": false,
+      "own_size": 1392,
+      "parent_size": 536,
+      "overlaps": [],
+      "nearby_spans": [
+        [
+          1272,
+          1288,
+          "HotfixedBlacklistClasses",
+          "Array"
+        ],
+        [
+          1288,
+          1289,
+          "bInSpawningStartup",
+          "Bool"
+        ],
+        [
+          1304,
+          1320,
+          "PendingPlayers",
+          "Array"
+        ]
+      ]
+    },
+    {
+      "class": "UAthenaAccoladesWidget",
+      "function": "HasMoreXPEvents",
+      "address": "0x145180270",
+      "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; call 0x144b045f0; mov byte ptr [rbx], al; add rsp, 0x20; pop rbx; ret",
+      "bytes": "40534883ec20488b42204533c94885c0498bd8410f95c14c03c84c894a20e85d4398ff88034883c4205bc3",
+      "sha256": "707671146a5ea2d98ed1c93b74c90d23f3d591151798b5bdbbec536f1f59d720",
+      "target": "0x144b045f0",
+      "leaf_assembly": "cmp dword ptr [rcx + 0x2e0], 0; setg al; ret",
+      "leaf_bytes": "83b9e0020000000f9fc0c3",
+      "leaf_sha256": "0dcaf59bad221b37e2603b8030c75ccf6c1b443998a55727622ad09a56b069e6",
+      "reasons": [
+        "occupied"
+      ],
+      "offset": 736,
+      "width": 4,
+      "value": 0,
+      "condition": "setg",
+      "bitcopy_float": false,
+      "own_size": 792,
+      "parent_size": 664,
+      "overlaps": [
+        [
+          728,
+          744,
+          "XPEvents",
+          "Array"
+        ]
+      ],
+      "nearby_spans": [
+        [
+          728,
+          744,
+          "XPEvents",
+          "Array"
+        ],
+        [
+          744,
+          784,
+          "CurrentEvent",
+          "Struct"
+        ]
+      ]
+    },
+    {
+      "class": "UAthenaHUDContext",
+      "function": "HasFiringTouch",
+      "address": "0x14519f1a0",
+      "assembly": "mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; cmp dword ptr [rcx + 0x278], 0; setg al; mov byte ptr [r8], al; ret",
+      "bytes": "488b42204533c94885c0410f95c14c03c84c894a2083b978020000000f9fc0418800c3",
+      "sha256": "7529ec1c8cd60aa4063f33459d24ba442bf7113254d64b018cf3a7f08bf443e9",
+      "target": null,
+      "leaf_assembly": null,
+      "leaf_bytes": null,
+      "leaf_sha256": null,
+      "reasons": [],
+      "offset": 632,
+      "width": 4,
+      "value": 0,
+      "condition": "setg",
+      "bitcopy_float": false,
+      "own_size": 648,
+      "parent_size": 48,
+      "overlaps": [],
+      "nearby_spans": [
+        [
+          640,
+          644,
+          "NativeRecoveredInt_0x280",
+          "member_field"
+        ]
+      ]
+    },
+    {
+      "class": "UFortChallengeBundleScheduleDefinition",
+      "function": "DoesChallengeBundleScheduleExpire",
+      "address": "0x14285bd20",
+      "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; call 0x141ca3990; mov byte ptr [rbx], al; add rsp, 0x20; pop rbx; ret",
+      "bytes": "40534883ec20488b42204533c94885c0498bd8410f95c14c03c84c894a20e84d7c44ff88034883c4205bc3",
+      "sha256": "f55e5cc4191871b415fafcce0fafad5187b71b2da9089ac9fddd6e96627cc080",
+      "target": "0x141ca3990",
+      "leaf_assembly": "cmp dword ptr [rcx + 0x3a0], 1; setg al; ret",
+      "leaf_bytes": "83b9a0030000010f9fc0c3",
+      "leaf_sha256": "d86df5191bc71dcd7d6d4eff3f7c532a9a19a31e520650a122c1f04c97133c8f",
+      "reasons": [
+        "occupied"
+      ],
+      "offset": 928,
+      "width": 4,
+      "value": 1,
+      "condition": "setg",
+      "bitcopy_float": false,
+      "own_size": 1104,
+      "parent_size": 904,
+      "overlaps": [
+        [
+          920,
+          936,
+          "CalendarEventTag",
+          "Str"
+        ]
+      ],
+      "nearby_spans": [
+        [
+          904,
+          920,
+          "ScheduleEntries",
+          "Array"
+        ],
+        [
+          920,
+          936,
+          "CalendarEventTag",
+          "Str"
+        ],
+        [
+          936,
+          952,
+          "CalendarEventName",
+          "Str"
+        ]
+      ]
+    },
+    {
+      "class": "UFortGameplayMessageComponentBase",
+      "function": "IsChannelIdSet",
+      "address": "0x142906c40",
+      "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; call 0x141d88800; mov byte ptr [rbx], al; add rsp, 0x20; pop rbx; ret",
+      "bytes": "40534883ec20488b42204533c94885c0498bd8410f95c14c03c84c894a20e89d1b48ff88034883c4205bc3",
+      "sha256": "d163fc72210db45130ac51bc253665170f4dfb1ed63502f46a629224c0cbdb5f",
+      "target": "0x141d88800",
+      "leaf_assembly": "cmp dword ptr [rcx + 0x140], 0; setne al; ret",
+      "leaf_bytes": "83b940010000000f95c0c3",
+      "leaf_sha256": "ec8738a89bcc2f89ca2dfd89c8eee34726e23e31ddfadd009252969c53fb8452",
+      "reasons": [
+        "occupied"
+      ],
+      "offset": 320,
+      "width": 4,
+      "value": 0,
+      "condition": "setne",
+      "bitcopy_float": false,
+      "own_size": 360,
+      "parent_size": 176,
+      "overlaps": [
+        [
+          312,
+          344,
+          "ChannelIds",
+          "Struct"
+        ]
+      ],
+      "nearby_spans": [
+        [
+          288,
+          312,
+          "MessageDescription",
+          "Text"
+        ],
+        [
+          312,
+          344,
+          "ChannelIds",
+          "Struct"
+        ]
+      ]
+    },
+    {
+      "class": "UFortGiftBoxItem",
+      "function": "HasAccountID",
+      "address": "0x14292f370",
+      "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; call 0x142014bd0; mov byte ptr [rbx], al; add rsp, 0x20; pop rbx; ret",
+      "bytes": "40534883ec20488b42204533c94885c0498bd8410f95c14c03c84c894a20e83d586eff88034883c4205bc3",
+      "sha256": "4cc81c970fff0e801bd3cc150c93bfe8106964e5cd6c44e8bf2bac792672c706",
+      "target": "0x142014bd0",
+      "leaf_assembly": "cmp dword ptr [rcx + 0xf8], 1; setg al; ret",
+      "leaf_bytes": "83b9f8000000010f9fc0c3",
+      "leaf_sha256": "a9cf4d100041404903ca63be847c628a8799e82e071771217ac31b46d9e0759e",
+      "reasons": [
+        "occupied"
+      ],
+      "offset": 248,
+      "width": 4,
+      "value": 1,
+      "condition": "setg",
+      "bitcopy_float": false,
+      "own_size": 304,
+      "parent_size": 232,
+      "overlaps": [
+        [
+          232,
+          304,
+          "GiftBoxInfo",
+          "Struct"
+        ]
+      ],
+      "nearby_spans": [
+        [
+          232,
+          304,
+          "GiftBoxInfo",
+          "Struct"
+        ]
+      ]
+    },
+    {
+      "class": "UFortMontageItemDefinitionBase",
+      "function": "ShouldPlayRandomSectionByName",
+      "address": "0x1429f5a30",
+      "assembly": "mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; cmp dword ptr [rcx + 0x5f8], 0; setg al; mov byte ptr [r8], al; ret",
+      "bytes": "488b42204533c94885c0410f95c14c03c84c894a2083b9f8050000000f9fc0418800c3",
+      "sha256": "a6c8e7ba6f77f34f7aa0f5081ae37462623466cb492f835c9c23e41efa2dbae0",
+      "target": null,
+      "leaf_assembly": null,
+      "leaf_bytes": null,
+      "leaf_sha256": null,
+      "reasons": [
+        "occupied"
+      ],
+      "offset": 1528,
+      "width": 4,
+      "value": 0,
+      "condition": "setg",
+      "bitcopy_float": false,
+      "own_size": 1584,
+      "parent_size": 1408,
+      "overlaps": [
+        [
+          1520,
+          1536,
+          "PlayRandomSectionByName",
+          "Array"
+        ]
+      ],
+      "nearby_spans": [
+        [
+          1512,
+          1516,
+          "EmoteCooldownSecs",
+          "Float"
+        ],
+        [
+          1516,
+          1517,
+          "bMontageContainsFacialAnimation",
+          "Bool"
+        ],
+        [
+          1517,
+          1518,
+          "bPlayRandomSection",
+          "Bool"
+        ],
+        [
+          1520,
+          1536,
+          "PlayRandomSectionByName",
+          "Array"
+        ],
+        [
+          1536,
+          1537,
+          "bSwitchToHarvestingToolOnUse",
+          "Bool"
+        ],
+        [
+          1537,
+          1538,
+          "bHolsterWeapon",
+          "Bool"
+        ],
+        [
+          1538,
+          1539,
+          "bHolsterWeaponIfDualWieldPickaxe",
+          "Bool"
+        ],
+        [
+          1544,
+          1584,
+          "RequiredEmoteParent",
+          "SoftObject"
+        ]
+      ]
+    },
+    {
+      "class": "UFortPurchaseOverlayModal",
+      "function": "HasMultipleItems",
+      "address": "0x1452b6550",
+      "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; call 0x1450b6cc0; mov byte ptr [rbx], al; add rsp, 0x20; pop rbx; ret",
+      "bytes": "40534883ec20488b42204533c94885c0498bd8410f95c14c03c84c894a20e84d07e0ff88034883c4205bc3",
+      "sha256": "72385540a6b8d44d05a4fdf0dce4b458b165fa29285defe986c72578498ffd4b",
+      "target": "0x1450b6cc0",
+      "leaf_assembly": "cmp dword ptr [rcx + 0x6a0], 1; setg al; ret",
+      "leaf_bytes": "83b9a0060000010f9fc0c3",
+      "leaf_sha256": "fc6903d432d7f066d5b01b141e52b0fbb08cc3d216bb4610e1d68479455912f6",
+      "reasons": [],
+      "offset": 1696,
+      "width": 4,
+      "value": 1,
+      "condition": "setg",
+      "bitcopy_float": false,
+      "own_size": 1728,
+      "parent_size": 1680,
+      "overlaps": [],
+      "nearby_spans": [
+        [
+          1680,
+          1684,
+          "NativeRecoveredInt_0x690",
+          "member_field"
+        ],
+        [
+          1704,
+          1705,
+          "NativeRecoveredBool_0x6a8",
+          "member_field"
+        ],
+        [
+          1712,
+          1720,
+          "HBox_SuccessfullyPurchased",
+          "Object"
+        ]
+      ]
+    },
+    {
+      "class": "UFortQuestManager",
+      "function": "IsPendingFeatureUnlockNotification",
+      "address": "0x142ab9c70",
+      "assembly": "push rbx; sub rsp, 0x20; mov rax, qword ptr [rdx + 0x20]; xor r9d, r9d; test rax, rax; mov rbx, r8; setne r9b; add r9, rax; mov qword ptr [rdx + 0x20], r9; call 0x1424472a0; mov byte ptr [rbx], al; add rsp, 0x20; pop rbx; ret",
+      "bytes": "40534883ec20488b42204533c94885c0498bd8410f95c14c03c84c894a20e80dd698ff88034883c4205bc3",
+      "sha256": "791bab02318f9b7626db2dbdfd64eb22b151c86c0d79cc1f037f8b1c55370278",
+      "target": "0x1424472a0",
+      "leaf_assembly": "cmp dword ptr [rcx + 0xad8], 0; setg al; ret",
+      "leaf_bytes": "83b9d80a0000000f9fc0c3",
+      "leaf_sha256": "20fb185b4d63825b70f89d97eca348c3bf18887888dcc494802aa1ef36602524",
+      "reasons": [
+        "occupied"
+      ],
+      "offset": 2776,
+      "width": 4,
+      "value": 0,
+      "condition": "setg",
+      "bitcopy_float": false,
+      "own_size": 2984,
+      "parent_size": 40,
+      "overlaps": [
+        [
+          2761,
+          2904,
+          "QuestMapMode",
+          "Enum"
+        ]
+      ],
+      "nearby_spans": [
+        [
+          2760,
+          2761,
+          "bAllowAthenaMCPNotifyOnComplete",
+          "Bool"
+        ],
+        [
+          2761,
+          2904,
+          "QuestMapMode",
+          "Enum"
+        ]
+      ]
+    }
+  ]
+}

@@ -6,7 +6,9 @@
 #include "Delegates/Delegate.h"
 #include "Engine/World.h"
 #include "SharedFortGameLog.h"
+#include "UFortGameInstance.h"
 #include "UFortPlaysetItemDefinition.h"
+#include "UFortRegisteredPlayerInfo.h"
 #include "Net/UnrealNetwork.h"
 
 void AFortPlayerControllerAthena::ClearDroppableItems()
@@ -1791,6 +1793,25 @@ bool AFortPlayerControllerAthena::NativeHasInfiniteAmmo(UFortWeaponItemDefinitio
 	    }
 	}
 	return bInfiniteAmmo || bRuleInfiniteAmmo;
+}
+
+UFortQuestManager* AFortPlayerControllerAthena::NativeGetQuestManager1423850c0(uint8 Mode)
+{
+	// CONFIDENCE: HIGH
+	// 0x1423850c0 tail-calls the registered player info's selector when present.
+	UFortRegisteredPlayerInfo* PlayerInfo = MyPlayerInfo;
+	if (!PlayerInfo)
+	{
+	    return nullptr;
+	}
+	if (Mode == 2)
+	{
+	    if (UFortGameInstance* GameInstance = Cast<UFortGameInstance>(PlayerInfo->GetOuter()))
+	    {
+	        Mode = GameInstance->NativeGetSubGame141e5f160();
+	    }
+	}
+	return PlayerInfo->QuestManagers[Mode == 1 ? 1 : 0];
 }
 
 void AFortPlayerControllerAthena::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

@@ -10,6 +10,12 @@ credentials in Git, and the orchestrator reviews and commits.
 
 ## Current baseline
 
+Batch89 integrates14 complete bodies+9 fields:13 exact native predicates and
+controller quest selector. Generation accepts2,408 entries=2,170 bodies+238fields,
+rejected0. No builds/tests;130 canonical+4 manual bodies pending; next3,040.
+Broader vehicle/building recovery now takes priority over deep quest dependencies.
+Controller RPC remains unwired; all four product gates OPEN, goal ACTIVE.
+
 Batch88 integrates9 bodies+8 fields: quest update/status, volume minigame
 resolver and6 native mutations. Generation accepts2,385 entries=2,156 bodies+
 229fields, rejected0. Controller quest RPC dispatch remains unwired. Scoreboard

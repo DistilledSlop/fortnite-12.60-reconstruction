@@ -19,6 +19,9 @@ public:
 	// Non-reflected field (behaviour kind "member_field", offset 0x690): not a UPROPERTY, not replicated.
 	int32 NativeRecoveredInt_0x690;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x6a0): not a UPROPERTY, not replicated.
+	uint32 NativePredicateStorage_0x6a0;
+
 	// Non-reflected field (behaviour kind "member_field", offset 0x6a8): not a UPROPERTY, not replicated.
 	bool NativeRecoveredBool_0x6a8;
 
@@ -33,6 +36,11 @@ public:
 protected:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	int32 GetQuantityPurchased() const;
+public:
+
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool HasMultipleItems() const;
 public:
 
 protected:

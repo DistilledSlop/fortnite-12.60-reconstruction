@@ -160,6 +160,9 @@ public:
 	// Non-reflected field (behaviour kind "member_field", offset 0x1330): not a UPROPERTY, not replicated.
 	float NativeRecoveredFloat_0x1330;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x13a0): not a UPROPERTY, not replicated.
+	uint32 NativePredicateStorage_0x13a0;
+
 	// Non-reflected field (behaviour kind "member_field", offset 0x15a8): not a UPROPERTY, not replicated.
 	bool NativeRecoveredBool_0x15a8;
 
@@ -226,6 +229,12 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	FVector GetTargetHeading() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsTowhookContracting() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsTowhookExtending() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsTowhookHolstered() const;

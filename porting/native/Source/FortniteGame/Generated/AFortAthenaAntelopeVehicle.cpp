@@ -31,6 +31,12 @@ bool AFortAthenaAntelopeVehicle::IsLocalPlayerRiding() const
 	return LocalPlayerPawn != nullptr;
 }
 
+bool AFortAthenaAntelopeVehicle::IsNaturalSliding() const
+{
+	// CONFIDENCE: high; complete predicate and storage evidence in report.json.
+	return static_cast<uint8>(NativePredicateStorage_0x1148) == 2;
+}
+
 bool AFortAthenaAntelopeVehicle::IsPassivelyExpendingBoost() const
 {
 	// Original address: 0x1427cfe10.

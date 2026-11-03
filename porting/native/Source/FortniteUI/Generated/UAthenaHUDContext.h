@@ -196,6 +196,9 @@ public:
 	// Non-reflected field (behaviour kind "member_field", offset 0x264): not a UPROPERTY, not replicated.
 	int32 NativeRecoveredInt_0x264;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x278): not a UPROPERTY, not replicated.
+	uint32 NativePredicateStorage_0x278;
+
 	// Non-reflected field (behaviour kind "member_field", offset 0x280): not a UPROPERTY, not replicated.
 	int32 NativeRecoveredInt_0x280;
 
@@ -210,6 +213,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool GetLocalPlayerWonMatch() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool HasFiringTouch() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool HasWifi() const;

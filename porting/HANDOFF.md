@@ -1,5 +1,39 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Native predicates and quest selector batch89 (2026-11-03)
+
+Integrated14 complete bodies+9 fields:13 native comparisons across vehicles,
+volume loading, HUD touch and purchase quantity, plus virtual controller quest
+manager selector1423850c0. Selector retains saved player info, outer class cast,
+mode2 GameInstance lookup and slots0/1. Controller quest RPC remains unwired.
+Predicate review matched21 source pins and all13 compare widths/conditions;
+class/parent registration bounds and unoccupied storage are retained. Image
+digest inherited from pinned evidence, not rehashed. No writer/default claims.
+
+Generation89 accepted2,408 entries=2,170 bodies+238fields, rejected0;20 expected
+native files changed across10 classes, no additions/removals;12,810 unchanged
+file mtimes preserved. Command python3 -I /tmp/promote-native-batch89.py; log
+/tmp/promote-native-batch89.log; reports porting/generated/gameplay-bulk-integration-89/.
+No builds/runtime/tests: last2,040;130 canonical+4 manual bodies pending; next3,040.
+All four product gates OPEN; full objective ACTIVE. Previous status-only turn
+was NO PROGRESS; this turn integrates14 complete source bodies. Last pushed
+source061a76ce/dashboardb7a34cdf.
+
+Broader large/quick native families are not exhausted. Shifted priority from
+quest dependency closure to fresh vehicle/building implementations. Two bounded
+fork-none Terra6.1 medium workers own vehicle_forward90_runtime and
+building90_runtime. Root owns canonical/native/generation/staging. Luna medium
+performed bounded predicate review. Quest party-assist89 findings are uncounted;
+probes of its three requested dependencies are available under native89-objective.
+
+Root serial Ghidra: native89-broad(9), native90-building(1), native90-targets(4),
+using probe_callees.py --input /tmp/<name>.json --out porting/generated/<name>
+--timeout60 --mem12G; logs/tmp/<name>.log. All successful; usual index/prp
+metadata rolled back. Native90 vehicle probe follows for concrete interface
+implementations. See bounded worker handoffs for current source/draft status.
+Preserve graphics/Engine edits; visuals deferred; economical reads; rotate
+bounded fork-none Terra medium (Luna medium small reads, Sol6.1 medium complex).
+
 ## Native dependency closure and mutations batch88 (2026-11-03)
 
 Integrated9 complete bodies+8 evidenced fields: quest objective update and its

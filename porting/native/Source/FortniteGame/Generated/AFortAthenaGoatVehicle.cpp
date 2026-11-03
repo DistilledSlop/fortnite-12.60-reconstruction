@@ -17,3 +17,9 @@ bool AFortAthenaGoatVehicle::IsLocalPlayerRiding() const
 	return LocalPlayerPawn != nullptr;
 }
 
+bool AFortAthenaGoatVehicle::IsPowerSliding() const
+{
+	// CONFIDENCE: high; complete predicate and storage evidence in report.json.
+	return static_cast<uint8>(NativePredicateStorage_0x10b4) == 2;
+}
+

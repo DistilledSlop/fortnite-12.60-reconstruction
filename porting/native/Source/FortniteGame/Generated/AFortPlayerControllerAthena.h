@@ -108,6 +108,7 @@ class UFortMiniMapChallengeIndicators;
 class UFortMiniMapTeamIndicators;
 class UFortPlayerControllerAthenaXPComponent;
 class UFortPlaysetItemDefinition;
+class UFortQuestManager;
 class UFortWeaponItemDefinition;
 class UFortWorldItemDefinition;
 class UInputComponent;
@@ -1396,5 +1397,6 @@ public:
 	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	virtual bool NativeHasInfiniteAmmo(UFortWeaponItemDefinition* WeaponDefinition);
+	virtual UFortQuestManager* NativeGetQuestManager1423850c0(uint8 Mode);
 };
 

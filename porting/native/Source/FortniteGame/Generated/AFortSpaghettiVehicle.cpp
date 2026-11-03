@@ -58,6 +58,18 @@ FVector AFortSpaghettiVehicle::GetTargetHeading() const
 	return NativeRecoveredFVector_0x12cc;
 }
 
+bool AFortSpaghettiVehicle::IsTowhookContracting() const
+{
+	// CONFIDENCE: high; complete predicate and storage evidence in report.json.
+	return static_cast<uint32>(NativePredicateStorage_0x13a0) == 2;
+}
+
+bool AFortSpaghettiVehicle::IsTowhookExtending() const
+{
+	// CONFIDENCE: high; complete predicate and storage evidence in report.json.
+	return static_cast<uint32>(NativePredicateStorage_0x13a0) == 1;
+}
+
 bool AFortSpaghettiVehicle::IsTowhookHolstered() const
 {
 	// Original address: 0x142a09190.

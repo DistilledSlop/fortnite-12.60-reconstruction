@@ -58,6 +58,18 @@ FVector AFortOctopusVehicle::GetTargetHeading() const
 	return NativeRecoveredFVector_0x12cc;
 }
 
+bool AFortOctopusVehicle::IsTowhookContracting() const
+{
+	// CONFIDENCE: high; complete predicate and storage evidence in report.json.
+	return static_cast<uint32>(NativePredicateStorage_0x13a0) == 2;
+}
+
+bool AFortOctopusVehicle::IsTowhookExtending() const
+{
+	// CONFIDENCE: high; complete predicate and storage evidence in report.json.
+	return static_cast<uint32>(NativePredicateStorage_0x13a0) == 1;
+}
+
 bool AFortOctopusVehicle::IsTowhookHolstered() const
 {
 	// Original address: 0x142a09190.

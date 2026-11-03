@@ -84,6 +84,9 @@ public:
 	UPROPERTY(Replicated)
 	uint8 bInSpawningStartup : 1;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x50c): not a UPROPERTY, not replicated.
+	uint32 NativePredicateStorage_0x50c;
+
 	// table index 5, flags 0x40000000002000
 	UPROPERTY(Transient)
 	TArray<FVolumePlayerStateInfo> PendingPlayers;
@@ -107,6 +110,9 @@ public:
 	// table index 0, flags 0x10000010080000
 	UPROPERTY()
 	FOnClientVolumeRestrictionStateChanged OnServerVolumeUGCViewableStateChanged;
+
+	UFUNCTION()
+	bool AreIslandsLoading() const;
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 

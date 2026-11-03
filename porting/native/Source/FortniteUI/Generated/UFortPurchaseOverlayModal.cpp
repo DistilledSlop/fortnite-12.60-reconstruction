@@ -9,6 +9,12 @@ int32 UFortPurchaseOverlayModal::GetQuantityPurchased() const
 	return NativeRecoveredInt_0x690;
 }
 
+bool UFortPurchaseOverlayModal::HasMultipleItems() const
+{
+	// CONFIDENCE: high; complete predicate and storage evidence in report.json.
+	return static_cast<int32>(NativePredicateStorage_0x6a0) > 1;
+}
+
 bool UFortPurchaseOverlayModal::ShouldShowAsRefund() const
 {
 	// Original address: 0x1452b6b60.

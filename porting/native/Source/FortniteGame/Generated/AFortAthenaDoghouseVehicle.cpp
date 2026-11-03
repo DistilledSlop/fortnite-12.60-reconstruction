@@ -34,6 +34,12 @@ bool AFortAthenaDoghouseVehicle::IsEngineOn() const
 	return NativeRecoveredBool_0x1245;
 }
 
+bool AFortAthenaDoghouseVehicle::IsFlying() const
+{
+	// CONFIDENCE: high; complete predicate and storage evidence in report.json.
+	return static_cast<uint8>(NativePredicateStorage_0x1242) != 0;
+}
+
 bool AFortAthenaDoghouseVehicle::IsStandingInPlace() const
 {
 	// Original address: 0x1427d8120.

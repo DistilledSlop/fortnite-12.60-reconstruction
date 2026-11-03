@@ -220,6 +220,9 @@ public:
 	// Non-reflected field (behaviour kind "member_field", offset 0x112e): not a UPROPERTY, not replicated.
 	bool NativeRecoveredBool_0x112e;
 
+	// Non-reflected field (behaviour kind "member_field", offset 0x1148): not a UPROPERTY, not replicated.
+	uint8 NativePredicateStorage_0x1148;
+
 	// table index 11, flags 0x40000000082008
 	UPROPERTY(Transient)
 	UParticleSystemComponent* PSC_WheelDust;
@@ -279,6 +282,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsLocalPlayerRiding() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	bool IsNaturalSliding() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	bool IsPassivelyExpendingBoost() const;

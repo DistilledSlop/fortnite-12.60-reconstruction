@@ -16,6 +16,24 @@ float AFortAthenaSKPushVehicle::GetStandingInPlaceSteeringAngle() const
 	return NativeRecoveredFloat_0xf98;
 }
 
+bool AFortAthenaSKPushVehicle::IsDismountingFromCoast() const
+{
+	// CONFIDENCE: high; complete predicate and storage evidence in report.json.
+	return static_cast<uint8>(NativePredicateStorage_0xf95) == 5;
+}
+
+bool AFortAthenaSKPushVehicle::IsEndCoasting() const
+{
+	// CONFIDENCE: high; complete predicate and storage evidence in report.json.
+	return static_cast<uint8>(NativePredicateStorage_0xf95) == 6;
+}
+
+bool AFortAthenaSKPushVehicle::IsMounting() const
+{
+	// CONFIDENCE: high; complete predicate and storage evidence in report.json.
+	return static_cast<uint8>(NativePredicateStorage_0xf95) == 1;
+}
+
 bool AFortAthenaSKPushVehicle::IsStandingInPlace() const
 {
 	// Original address: 0x1428315b0.
