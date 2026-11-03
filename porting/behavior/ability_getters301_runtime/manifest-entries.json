@@ -1,0 +1,138 @@
+[
+  {
+    "class": "AFortAIProxyActor",
+    "function": "GetAbilitySystemComponent",
+    "kind": "helper",
+    "signature": "UAbilitySystemComponent* GetAbilitySystemComponent() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": true,
+    "inc_path": "porting/behavior/ability_getters301_runtime/AFortAIProxyActor_GetAbilitySystemComponent.inc",
+    "address": "0x140d91ec0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "AbilitySystemComponent.h"
+    ],
+    "notes": "Interface virtual receives secondary subobject this. The reflected field is at owning object 0x248. Requires real interface inheritance."
+  },
+  {
+    "class": "AFortAthenaVehicle",
+    "function": "GetAbilitySystemComponent",
+    "kind": "helper",
+    "signature": "UAbilitySystemComponent* GetAbilitySystemComponent() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": true,
+    "inc_path": "porting/behavior/ability_getters301_runtime/AFortAthenaVehicle_GetAbilitySystemComponent.inc",
+    "address": "0x141914f10",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "AbilitySystemComponent.h"
+    ],
+    "notes": "Interface virtual receives secondary subobject this. The reflected field is at owning object 0xe28. Requires real interface inheritance."
+  },
+  {
+    "class": "AFortGlobalEnvironmentAbilityActor",
+    "function": "GetAbilitySystemComponent",
+    "kind": "helper",
+    "signature": "UAbilitySystemComponent* GetAbilitySystemComponent() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": true,
+    "inc_path": "porting/behavior/ability_getters301_runtime/AFortGlobalEnvironmentAbilityActor_GetAbilitySystemComponent.inc",
+    "address": "0x140680310",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "AbilitySystemComponent.h"
+    ],
+    "notes": "Interface virtual receives secondary subobject this. The reflected field is at owning object 0x220. Requires real interface inheritance."
+  },
+  {
+    "class": "AFortMissionStormSafeZone",
+    "function": "GetAbilitySystemComponent",
+    "kind": "helper",
+    "signature": "UAbilitySystemComponent* GetAbilitySystemComponent() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": true,
+    "inc_path": "porting/behavior/ability_getters301_runtime/AFortMissionStormSafeZone_GetAbilitySystemComponent.inc",
+    "address": "0x14139b4d0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "AbilitySystemComponent.h"
+    ],
+    "notes": "Interface virtual receives secondary subobject this. The reflected field is at owning object 0x260. Requires real interface inheritance."
+  },
+  {
+    "class": "AFortPlayerAttributesProxyActor",
+    "function": "GetAbilitySystemComponent",
+    "kind": "helper",
+    "signature": "UAbilitySystemComponent* GetAbilitySystemComponent() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": true,
+    "inc_path": "porting/behavior/ability_getters301_runtime/AFortPlayerAttributesProxyActor_GetAbilitySystemComponent.inc",
+    "address": "0x1425bba30",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "AbilitySystemComponent.h"
+    ],
+    "notes": "Interface virtual receives secondary subobject this. The reflected field is at owning object 0x270. Requires real interface inheritance."
+  },
+  {
+    "class": "AFortPlayerState",
+    "function": "GetAbilitySystemComponent",
+    "kind": "helper",
+    "signature": "UAbilitySystemComponent* GetAbilitySystemComponent() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": true,
+    "inc_path": "porting/behavior/ability_getters301_runtime/AFortPlayerState_GetAbilitySystemComponent.inc",
+    "address": "0x142413e90",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "AbilitySystemComponent.h"
+    ],
+    "notes": "Interface virtual receives secondary subobject this. The reflected field is at owning object 0x900. Requires real interface inheritance."
+  },
+  {
+    "class": "AFortUIProxyActor",
+    "function": "GetAbilitySystemComponent",
+    "kind": "helper",
+    "signature": "UAbilitySystemComponent* GetAbilitySystemComponent() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": true,
+    "inc_path": "porting/behavior/ability_getters301_runtime/AFortUIProxyActor_GetAbilitySystemComponent.inc",
+    "address": "0x1409f0710",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "AbilitySystemComponent.h"
+    ],
+    "notes": "Interface virtual receives secondary subobject this. The reflected field is at owning object 0x238. Requires real interface inheritance."
+  },
+  {
+    "class": "APhysicsObject",
+    "function": "GetAbilitySystemComponent",
+    "kind": "helper",
+    "signature": "UAbilitySystemComponent* GetAbilitySystemComponent() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": true,
+    "inc_path": "porting/behavior/ability_getters301_runtime/APhysicsObject_GetAbilitySystemComponent.inc",
+    "address": "0x141b46330",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "AbilitySystemComponent.h"
+    ],
+    "notes": "Interface virtual receives secondary subobject this. The reflected field is at owning object 0x700. Requires real interface inheritance."
+  }
+]

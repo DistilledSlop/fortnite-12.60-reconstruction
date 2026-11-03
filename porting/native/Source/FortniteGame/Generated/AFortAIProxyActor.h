@@ -6,8 +6,10 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 
+#include "AbilitySystemComponent.h"
 #include "EFortBaseWeaponDamage.h"
 #include "Engine/EngineTypes.h"
+#include "UFortAbilitySystemInterface.h"
 
 class UFortAbilitySystemComponent;
 class UFortDamageSet;
@@ -17,7 +19,7 @@ class UFortMovementSet;
 #include "AFortAIProxyActor.generated.h"
 
 UCLASS(config=Engine)
-class FORTNITEGAME_API AFortAIProxyActor : public AActor
+class FORTNITEGAME_API AFortAIProxyActor : public AActor, public IFortAbilitySystemInterface
 {
 	GENERATED_BODY()
 
@@ -46,5 +48,9 @@ public:
 	UPROPERTY()
 	TEnumAsByte<EFortBaseWeaponDamage::Type> BaseWeaponDamageResponseType;
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const;
 };
 

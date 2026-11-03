@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "AFortPhysicsPawn.h"
 
+#include "AbilitySystemComponent.h"
 #include "EFortBaseWeaponDamage.h"
 #include "Engine/EngineTypes.h"
 #include "FAthenaCarPlayerSlot.h"
@@ -32,6 +33,7 @@
 #include "GameplayTagContainer.h"
 #include "Math/Color.h"
 #include "Math/Vector.h"
+#include "UFortAbilitySystemInterface.h"
 
 class AActor;
 class ABuildingActor;
@@ -67,7 +69,7 @@ class UWeaponHitNotifyAudioBank;
 #include "AFortAthenaVehicle.generated.h"
 
 UCLASS(config=Game)
-class FORTNITEGAME_API AFortAthenaVehicle : public AFortPhysicsPawn
+class FORTNITEGAME_API AFortAthenaVehicle : public AFortPhysicsPawn, public IFortAbilitySystemInterface
 {
 	GENERATED_BODY()
 
@@ -771,5 +773,9 @@ public:
 	virtual bool WheelsOnGround() const;
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const;
 };
 

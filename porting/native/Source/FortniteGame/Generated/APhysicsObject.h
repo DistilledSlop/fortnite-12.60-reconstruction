@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "AFortPhysicsPawn.h"
 
+#include "AbilitySystemComponent.h"
 #include "EFortBaseWeaponDamage.h"
 #include "Engine/EngineTypes.h"
 #include "FFortAttributeInitializationKey.h"
@@ -18,6 +19,7 @@
 #include "GameplayTagContainer.h"
 #include "Math/Color.h"
 #include "Math/Vector.h"
+#include "UFortAbilitySystemInterface.h"
 
 class AActor;
 class ABuildingActor;
@@ -37,7 +39,7 @@ class UWeaponHitNotifyAudioBank;
 #include "APhysicsObject.generated.h"
 
 UCLASS(config=Game)
-class FORTNITEGAME_API APhysicsObject : public AFortPhysicsPawn
+class FORTNITEGAME_API APhysicsObject : public AFortPhysicsPawn, public IFortAbilitySystemInterface
 {
 	GENERATED_BODY()
 
@@ -283,5 +285,9 @@ public:
 	void UpdateClientWithPhysicsObjectTestInput_Implementation(const FVector& LinearVelocity, const FVector& AngularVelocity);
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const;
 };
 

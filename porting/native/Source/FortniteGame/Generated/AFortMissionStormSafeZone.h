@@ -6,7 +6,9 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 
+#include "AbilitySystemComponent.h"
 #include "FOnSafeZoneInStormStateChanged.h"
+#include "UFortAbilitySystemInterface.h"
 
 class UAbilitySystemComponent;
 class UFortGameplayAbility;
@@ -15,7 +17,7 @@ class UStaticMeshComponent;
 #include "AFortMissionStormSafeZone.generated.h"
 
 UCLASS(config=Engine)
-class FORTNITEGAME_API AFortMissionStormSafeZone : public AActor
+class FORTNITEGAME_API AFortMissionStormSafeZone : public AActor, public IFortAbilitySystemInterface
 {
 	GENERATED_BODY()
 
@@ -67,5 +69,9 @@ public:
 	void SetSafeZoneRadius(float InRadius);
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const;
 };
 

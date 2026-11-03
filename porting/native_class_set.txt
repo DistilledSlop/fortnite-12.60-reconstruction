@@ -4671,3 +4671,4 @@ AFortGameModeAthena
 AFortHoagieVehicle
 
 UFortHoagieVehicleConfigs
+UFortAbilitySystemInterface

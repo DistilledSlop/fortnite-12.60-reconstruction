@@ -6,13 +6,16 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Info.h"
 
+#include "AbilitySystemComponent.h"
+#include "UFortAbilitySystemInterface.h"
+
 class UFortAbilitySystemComponent;
 class UFortDamageSet;
 
 #include "AFortGlobalEnvironmentAbilityActor.generated.h"
 
 UCLASS(config=Engine)
-class FORTNITEGAME_API AFortGlobalEnvironmentAbilityActor : public AInfo
+class FORTNITEGAME_API AFortGlobalEnvironmentAbilityActor : public AInfo, public IFortAbilitySystemInterface
 {
 	GENERATED_BODY()
 
@@ -25,5 +28,9 @@ public:
 	UPROPERTY()
 	UFortDamageSet* DamageSet;
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const;
 };
 

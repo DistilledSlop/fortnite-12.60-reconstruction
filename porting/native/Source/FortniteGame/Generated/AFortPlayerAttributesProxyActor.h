@@ -6,14 +6,16 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 
+#include "AbilitySystemComponent.h"
 #include "FFortPlayerAttributeSets.h"
+#include "UFortAbilitySystemInterface.h"
 
 class UFortAbilitySystemComponent;
 
 #include "AFortPlayerAttributesProxyActor.generated.h"
 
 UCLASS(config=Engine)
-class FORTNITEGAME_API AFortPlayerAttributesProxyActor : public AActor
+class FORTNITEGAME_API AFortPlayerAttributesProxyActor : public AActor, public IFortAbilitySystemInterface
 {
 	GENERATED_BODY()
 
@@ -26,5 +28,9 @@ public:
 	UPROPERTY()
 	UFortAbilitySystemComponent* AbilitySystemComponent;
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const;
 };
 

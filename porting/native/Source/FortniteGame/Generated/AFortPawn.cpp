@@ -3,6 +3,8 @@
 #include "AFortAIController.h"
 #include "AFortPlayerController.h"
 #include "AbilitySystemComponent.h"
+#include "AbilitySystemInterface.h"
+#include "AttributeSet.h"
 #include "Components/SceneComponent.h"
 #include "EFortControlRecoveryBehavior.h"
 #include "EFortDamageZone.h"
@@ -16,6 +18,8 @@
 #include "UFortAnimNotifyState_AbilityDecisionWindow.h"
 #include "UFortControlResistanceSet.h"
 #include "UFortHealthSet.h"
+#include "UFortMovementSet.h"
+#include "UObject/UnrealType.h"
 #include "Net/UnrealNetwork.h"
 
 void AFortPawn::AddNonReplicatedTagToPawn(FGameplayTag& Tag)
@@ -97,6 +101,13 @@ float AFortPawn::GetControlResistance() const
 	return ResistanceSet ? ResistanceSet->ControlResistance.GetCurrentValue() : 0.0f;
 }
 
+FText AFortPawn::GetCurrentSentenceSpeechText() const
+{
+	// CONFIDENCE: high; captured native behavior and reflected types.
+	// Native 0x14231a990 copies the text from CurrentSentence.
+	return CurrentSentence.SpeechText;
+}
+
 TEnumAsByte<EFortDamageZone::Type> AFortPawn::GetDamageZone(FHitResult& InHitResult) const
 {
 	// CONFIDENCE: high. Native target 0x14231aa10.
@@ -152,6 +163,13 @@ float AFortPawn::GetHealthPercent() const
 	const float Health = GetHealth();
 	const float Maximum = GetMaxHealth();
 	return Health / Maximum;
+}
+
+FName AFortPawn::GetIgnoreFallDamageComponentTag() const
+{
+	// CONFIDENCE: high; captured native behavior and reflected types.
+	// Native global 0x1481589f8 is initialized from this name at 0x14031da20.
+	return FName(TEXT("NoFallDamage"));
 }
 
 float AFortPawn::GetKnockbackMultiplier() const
@@ -251,6 +269,22 @@ float AFortPawn::GetShield() const
 	    return 0.0f;
 	}
 	return FortHealthSet->CurrentShield.GetCurrentValue();
+}
+
+float AFortPawn::GetShieldOrHealthPercent()
+{
+	// CONFIDENCE: high; captured native behavior and reflected types.
+	// Native 0x142323a90: dead pawns return zero; positive shield takes priority.
+	if (IsDead())
+	{
+	    return 0.0f;
+	}
+	const float Shield = GetShield();
+	if (Shield > 0.0f)
+	{
+	    return Shield / GetMaxShield();
+	}
+	return GetHealth() / GetMaxHealth();
 }
 
 float AFortPawn::GetShieldPercent() const
@@ -636,10 +670,161 @@ bool AFortPawn::ServerTeleportNearLocation_Validate(const FVector& ActorLocation
 	return true;
 }
 
+void AFortPawn::SetAimAssistTargetOverride(USceneComponent* InOverride)
+{
+	// CONFIDENCE: high; captured native behavior and reflected types.
+	// Native 0x14234b110 stores a weak pointer constructed from InOverride.
+	NativeAimAssistTargetOverride = InOverride;
+}
+
 void AFortPawn::SetControlRecoveryBehavior(EFortControlRecoveryBehavior NewBehavior)
 {
 	// Native 0x14234beb0. CONFIDENCE: high
 	ControlRecoveryBehavior = NewBehavior;
+}
+
+void AFortPawn::SetGravityMultiplier(float NewGravityVal)
+{
+	// CONFIDENCE: high; captured native behavior and reflected types.
+	// Native 0x14234cde0 sets this attribute's base through the set owner's ability-system interface.
+	if (MovementSet)
+	{
+	    static FProperty* AttributeProperty = FindFProperty<FProperty>(UFortMovementSet::StaticClass(), FName(TEXT("GravityZScale")));
+	    const FGameplayAttribute Attribute(AttributeProperty);
+	    if (IAbilitySystemInterface* OwnerInterface = Cast<IAbilitySystemInterface>(MovementSet->GetOuter()))
+	    {
+	        if (UAbilitySystemComponent* AbilityComponent = OwnerInterface->GetAbilitySystemComponent())
+	        {
+	            AbilityComponent->SetNumericAttributeBase(Attribute, NewGravityVal);
+	        }
+	    }
+	}
+}
+
+void AFortPawn::SetHealth(float NewHealthVal)
+{
+	// CONFIDENCE: high; captured native behavior and reflected types.
+	// Native 0x14234ce40 sets this attribute's base through the set owner's ability-system interface.
+	if (HealthSet)
+	{
+	    static FProperty* AttributeProperty = FindFProperty<FProperty>(UFortHealthSet::StaticClass(), FName(TEXT("Health")));
+	    const FGameplayAttribute Attribute(AttributeProperty);
+	    if (IAbilitySystemInterface* OwnerInterface = Cast<IAbilitySystemInterface>(HealthSet->GetOuter()))
+	    {
+	        if (UAbilitySystemComponent* AbilityComponent = OwnerInterface->GetAbilitySystemComponent())
+	        {
+	            AbilityComponent->SetNumericAttributeBase(Attribute, NewHealthVal);
+	        }
+	    }
+	}
+}
+
+void AFortPawn::SetMaxHealth(float NewHealthVal)
+{
+	// CONFIDENCE: high; captured native behavior and reflected types.
+	// Native 0x14234db60 sets this attribute's base through the set owner's ability-system interface.
+	if (HealthSet)
+	{
+	    static FProperty* AttributeProperty = FindFProperty<FProperty>(UFortHealthSet::StaticClass(), FName(TEXT("MaxHealth")));
+	    const FGameplayAttribute Attribute(AttributeProperty);
+	    if (IAbilitySystemInterface* OwnerInterface = Cast<IAbilitySystemInterface>(HealthSet->GetOuter()))
+	    {
+	        if (UAbilitySystemComponent* AbilityComponent = OwnerInterface->GetAbilitySystemComponent())
+	        {
+	            AbilityComponent->SetNumericAttributeBase(Attribute, NewHealthVal);
+	        }
+	    }
+	}
+}
+
+void AFortPawn::SetMaxShield(float NewValue)
+{
+	// CONFIDENCE: high; captured native behavior and reflected types.
+	// Native 0x14234dbc0 sets this attribute's base through the set owner's ability-system interface.
+	if (HealthSet)
+	{
+	    static FProperty* AttributeProperty = FindFProperty<FProperty>(UFortHealthSet::StaticClass(), FName(TEXT("Shield")));
+	    const FGameplayAttribute Attribute(AttributeProperty);
+	    if (IAbilitySystemInterface* OwnerInterface = Cast<IAbilitySystemInterface>(HealthSet->GetOuter()))
+	    {
+	        if (UAbilitySystemComponent* AbilityComponent = OwnerInterface->GetAbilitySystemComponent())
+	        {
+	            AbilityComponent->SetNumericAttributeBase(Attribute, NewValue);
+	        }
+	    }
+	}
+}
+
+void AFortPawn::SetMaxSignalInStorm(float NewValue)
+{
+	// CONFIDENCE: high; captured native behavior and reflected types.
+	// Native 0x14234dc20 sets this attribute's base through the set owner's ability-system interface.
+	if (HealthSet)
+	{
+	    static FProperty* AttributeProperty = FindFProperty<FProperty>(UFortHealthSet::StaticClass(), FName(TEXT("MaxSignalInStorm")));
+	    const FGameplayAttribute Attribute(AttributeProperty);
+	    if (IAbilitySystemInterface* OwnerInterface = Cast<IAbilitySystemInterface>(HealthSet->GetOuter()))
+	    {
+	        if (UAbilitySystemComponent* AbilityComponent = OwnerInterface->GetAbilitySystemComponent())
+	        {
+	            AbilityComponent->SetNumericAttributeBase(Attribute, NewValue);
+	        }
+	    }
+	}
+}
+
+void AFortPawn::SetMovementSpeedMultiplier(float NewMovementSpeedVal)
+{
+	// CONFIDENCE: high; captured native behavior and reflected types.
+	// Native 0x14234df40 sets this attribute's base through the set owner's ability-system interface.
+	if (MovementSet)
+	{
+	    static FProperty* AttributeProperty = FindFProperty<FProperty>(UFortMovementSet::StaticClass(), FName(TEXT("SpeedMultiplier")));
+	    const FGameplayAttribute Attribute(AttributeProperty);
+	    if (IAbilitySystemInterface* OwnerInterface = Cast<IAbilitySystemInterface>(MovementSet->GetOuter()))
+	    {
+	        if (UAbilitySystemComponent* AbilityComponent = OwnerInterface->GetAbilitySystemComponent())
+	        {
+	            AbilityComponent->SetNumericAttributeBase(Attribute, NewMovementSpeedVal);
+	        }
+	    }
+	}
+}
+
+void AFortPawn::SetShield(float NewShieldValue)
+{
+	// CONFIDENCE: high; captured native behavior and reflected types.
+	// Native 0x14234eee0 sets this attribute's base through the set owner's ability-system interface.
+	if (HealthSet)
+	{
+	    static FProperty* AttributeProperty = FindFProperty<FProperty>(UFortHealthSet::StaticClass(), FName(TEXT("CurrentShield")));
+	    const FGameplayAttribute Attribute(AttributeProperty);
+	    if (IAbilitySystemInterface* OwnerInterface = Cast<IAbilitySystemInterface>(HealthSet->GetOuter()))
+	    {
+	        if (UAbilitySystemComponent* AbilityComponent = OwnerInterface->GetAbilitySystemComponent())
+	        {
+	            AbilityComponent->SetNumericAttributeBase(Attribute, NewShieldValue);
+	        }
+	    }
+	}
+}
+
+void AFortPawn::SetSignalInStorm(float NewSignalInStormValue)
+{
+	// CONFIDENCE: high; captured native behavior and reflected types.
+	// Native 0x14234ef40 sets this attribute's base through the set owner's ability-system interface.
+	if (HealthSet)
+	{
+	    static FProperty* AttributeProperty = FindFProperty<FProperty>(UFortHealthSet::StaticClass(), FName(TEXT("SignalInStorm")));
+	    const FGameplayAttribute Attribute(AttributeProperty);
+	    if (IAbilitySystemInterface* OwnerInterface = Cast<IAbilitySystemInterface>(HealthSet->GetOuter()))
+	    {
+	        if (UAbilitySystemComponent* AbilityComponent = OwnerInterface->GetAbilitySystemComponent())
+	        {
+	            AbilityComponent->SetNumericAttributeBase(Attribute, NewSignalInStormValue);
+	        }
+	    }
+	}
 }
 
 void AFortPawn::SetSpawnSpot(AActor* InSpawnSpot)

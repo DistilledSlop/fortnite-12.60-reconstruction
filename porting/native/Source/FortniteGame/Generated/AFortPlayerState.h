@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerState.h"
 
+#include "AbilitySystemComponent.h"
 #include "EFortCustomBodyType.h"
 #include "EFortCustomGender.h"
 #include "EFortPlayerRole.h"
@@ -19,6 +20,7 @@
 #include "GameFramework/OnlineReplStructs.h"
 #include "GameplayTagContainer.h"
 #include "Math/Vector.h"
+#include "UFortAbilitySystemInterface.h"
 
 class AActor;
 class AFortPickup;
@@ -36,7 +38,7 @@ class UFortHeroType;
 #include "AFortPlayerState.generated.h"
 
 UCLASS(config=Engine)
-class FORTNITEGAME_API AFortPlayerState : public APlayerState
+class FORTNITEGAME_API AFortPlayerState : public APlayerState, public IFortAbilitySystemInterface
 {
 	GENERATED_BODY()
 
@@ -356,5 +358,6 @@ public:
 	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
 	virtual AFortTeamInfo* GetPlayerTeam();
 	virtual bool NativeMatchesSpectatedUniqueId216(const FUniqueNetIdRepl& Id) const;
+	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const;
 };
 

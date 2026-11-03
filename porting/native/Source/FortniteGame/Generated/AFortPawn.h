@@ -8,6 +8,7 @@
 
 #include "AbilitySystemComponent.h"
 #include "AbilitySystemInterface.h"
+#include "Components/SceneComponent.h"
 #include "EFortControlRecoveryBehavior.h"
 #include "EFortDamageZone.h"
 #include "EFortFootstepSurfaceType.h"
@@ -53,6 +54,7 @@
 #include "Math/Color.h"
 #include "Math/Vector.h"
 #include "Styling/SlateBrush.h"
+#include "UFortAbilitySystemInterface.h"
 
 class AActor;
 class AFortEmitterCameraLensEffectDirectional;
@@ -78,6 +80,7 @@ class UMeshComponent;
 class UParticleSystemComponent;
 class UPegasusGameEventCollector;
 class UPrimitiveComponent;
+class USceneComponent;
 class USkeletalMeshComponent;
 class USkeletalMeshSocket;
 class USoundAttenuation;
@@ -89,7 +92,7 @@ class UWeaponHitNotifyAudioBank;
 #include "AFortPawn.generated.h"
 
 UCLASS(config=Game)
-class FORTNITEGAME_API AFortPawn : public ACharacter, public IAbilitySystemInterface
+class FORTNITEGAME_API AFortPawn : public ACharacter, public IFortAbilitySystemInterface
 {
 	GENERATED_BODY()
 
@@ -273,6 +276,9 @@ public:
 	// table index 152, flags 0x20080000000015
 	UPROPERTY()
 	EFortPawnPushSize PushSize;
+
+	// Non-reflected field (behaviour kind "member_field", offset 0x574): not a UPROPERTY, not replicated.
+	TWeakObjectPtr<USceneComponent> NativeAimAssistTargetOverride;
 
 	// table index 151, flags 0x10000100002025
 	UPROPERTY(ReplicatedUsing=OnRep_PawnUniqueID, Transient)
@@ -805,6 +811,11 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetControlResistance() const;
 
+protected:
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FText GetCurrentSentenceSpeechText() const;
+public:
+
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual TEnumAsByte<EFortDamageZone::Type> GetDamageZone(FHitResult& InHitResult) const;
 
@@ -819,6 +830,9 @@ public:
 
 	UFUNCTION()
 	virtual float GetHealthPercent() const;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	FName GetIgnoreFallDamageComponentTag() const;
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	float GetKnockbackMultiplier() const;
@@ -846,6 +860,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, BlueprintPure)
 	virtual float GetShield() const;
+
+	UFUNCTION()
+	float GetShieldOrHealthPercent();
 
 	UFUNCTION()
 	virtual float GetShieldPercent() const;
@@ -1006,8 +1023,37 @@ public:
 	void ServerTeleportNearLocation_Implementation(const FVector& ActorLocation);
 	bool ServerTeleportNearLocation_Validate(const FVector& ActorLocation);
 
+protected:
+	UFUNCTION(BlueprintCallable)
+	void SetAimAssistTargetOverride(USceneComponent* InOverride);
+public:
+
 	UFUNCTION(BlueprintCallable)
 	void SetControlRecoveryBehavior(EFortControlRecoveryBehavior NewBehavior);
+
+	UFUNCTION(BlueprintCallable)
+	void SetGravityMultiplier(float NewGravityVal);
+
+	UFUNCTION(BlueprintCallable)
+	void SetHealth(float NewHealthVal);
+
+	UFUNCTION(BlueprintCallable)
+	void SetMaxHealth(float NewHealthVal);
+
+	UFUNCTION(BlueprintCallable)
+	void SetMaxShield(float NewValue);
+
+	UFUNCTION(BlueprintCallable)
+	void SetMaxSignalInStorm(float NewValue);
+
+	UFUNCTION(BlueprintCallable)
+	void SetMovementSpeedMultiplier(float NewMovementSpeedVal);
+
+	UFUNCTION(BlueprintCallable)
+	void SetShield(float NewShieldValue);
+
+	UFUNCTION(BlueprintCallable)
+	void SetSignalInStorm(float NewSignalInStormValue);
 
 	UFUNCTION(BlueprintCallable)
 	virtual void SetSpawnSpot(AActor* InSpawnSpot);

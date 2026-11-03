@@ -55124,5 +55124,387 @@
     "confidence": "high",
     "status": "ported",
     "notes": "Cast the pawn PlayerState to AFortPlayerState and return its reflected HomeActor, or null."
+  },
+  {
+    "class": "AFortPawn",
+    "function": "GetCurrentSentenceSpeechText",
+    "kind": "exec",
+    "signature": "FText GetCurrentSentenceSpeechText() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/pawn_bulk295_runtime/AFortPawn_GetCurrentSentenceSpeechText.inc",
+    "address": "0x142a1bf60",
+    "native_body_address": "0x14231a990",
+    "confidence": "high",
+    "status": "ported",
+    "reflection_flags": "0x54080401",
+    "static": false
+  },
+  {
+    "class": "AFortPawn",
+    "function": "GetShieldOrHealthPercent",
+    "kind": "exec",
+    "signature": "float GetShieldOrHealthPercent()",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/pawn_bulk295_runtime/AFortPawn_GetShieldOrHealthPercent.inc",
+    "address": "0x142a1c7e0",
+    "native_body_address": "0x142323a90",
+    "confidence": "high",
+    "status": "ported",
+    "reflection_flags": "0x20401",
+    "static": false
+  },
+  {
+    "class": "AFortPawn",
+    "function": "GetIgnoreFallDamageComponentTag",
+    "kind": "exec",
+    "signature": "FName GetIgnoreFallDamageComponentTag() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/pawn_bulk295_runtime/AFortPawn_GetIgnoreFallDamageComponentTag.inc",
+    "address": "0x142a1c260",
+    "native_body_address": "0x14231e680",
+    "confidence": "high",
+    "status": "ported",
+    "reflection_flags": "0x54020401",
+    "static": false
+  },
+  {
+    "class": "AFortPawn",
+    "function": "SetAimAssistTargetOverride",
+    "kind": "exec",
+    "signature": "void SetAimAssistTargetOverride(USceneComponent* InOverride)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/pawn_bulk295_runtime/AFortPawn_SetAimAssistTargetOverride.inc",
+    "address": "0x142a1f800",
+    "native_body_address": "0x14234b110",
+    "confidence": "high",
+    "status": "ported",
+    "reflection_flags": "0x4080401",
+    "static": false
+  },
+  {
+    "class": "AFortPawn",
+    "function": "NativeAimAssistTargetOverride",
+    "kind": "member_field",
+    "signature": "TWeakObjectPtr<USceneComponent> NativeAimAssistTargetOverride",
+    "signature_status": "proposed",
+    "access": "public",
+    "offset": "0x574",
+    "inc_path": null,
+    "confidence": "high",
+    "address": null,
+    "status": "ported",
+    "decompile_source": "porting/generated/native294-callees/0x14234b110.c",
+    "notes": "8-byte weak pointer; immediately follows PushSize enum at 0x570 and ends before PawnUniqueID at 0x580.",
+    "includes": [
+      "Components/SceneComponent.h"
+    ]
+  },
+  {
+    "class": "AFortPawn",
+    "function": "SetGravityMultiplier",
+    "kind": "exec",
+    "signature": "void SetGravityMultiplier(float NewGravityVal)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/pawn_bulk295_runtime/AFortPawn_SetGravityMultiplier.inc",
+    "address": "0x142a1fdd0",
+    "native_body_address": "0x14234cde0",
+    "confidence": "high",
+    "status": "ported",
+    "reflection_flags": "0x4020403",
+    "static": false,
+    "includes": [
+      "UObject/UnrealType.h",
+      "AbilitySystemComponent.h",
+      "AbilitySystemInterface.h",
+      "AttributeSet.h"
+    ]
+  },
+  {
+    "class": "AFortPawn",
+    "function": "SetHealth",
+    "kind": "exec",
+    "signature": "void SetHealth(float NewHealthVal)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/pawn_bulk295_runtime/AFortPawn_SetHealth.inc",
+    "address": "0x142a1fe50",
+    "native_body_address": "0x14234ce40",
+    "confidence": "high",
+    "status": "ported",
+    "reflection_flags": "0x4020403",
+    "static": false,
+    "includes": [
+      "UObject/UnrealType.h",
+      "AbilitySystemComponent.h",
+      "AbilitySystemInterface.h",
+      "AttributeSet.h"
+    ]
+  },
+  {
+    "class": "AFortPawn",
+    "function": "SetMaxHealth",
+    "kind": "exec",
+    "signature": "void SetMaxHealth(float NewHealthVal)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/pawn_bulk295_runtime/AFortPawn_SetMaxHealth.inc",
+    "address": "0x142a200c0",
+    "native_body_address": "0x14234db60",
+    "confidence": "high",
+    "status": "ported",
+    "reflection_flags": "0x4020401",
+    "static": false,
+    "includes": [
+      "UObject/UnrealType.h",
+      "AbilitySystemComponent.h",
+      "AbilitySystemInterface.h",
+      "AttributeSet.h"
+    ]
+  },
+  {
+    "class": "AFortPawn",
+    "function": "SetMaxShield",
+    "kind": "exec",
+    "signature": "void SetMaxShield(float NewValue)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/pawn_bulk295_runtime/AFortPawn_SetMaxShield.inc",
+    "address": "0x142a20140",
+    "native_body_address": "0x14234dbc0",
+    "confidence": "high",
+    "status": "ported",
+    "reflection_flags": "0x4020403",
+    "static": false,
+    "includes": [
+      "UObject/UnrealType.h",
+      "AbilitySystemComponent.h",
+      "AbilitySystemInterface.h",
+      "AttributeSet.h"
+    ]
+  },
+  {
+    "class": "AFortPawn",
+    "function": "SetMaxSignalInStorm",
+    "kind": "exec",
+    "signature": "void SetMaxSignalInStorm(float NewValue)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/pawn_bulk295_runtime/AFortPawn_SetMaxSignalInStorm.inc",
+    "address": "0x142a201c0",
+    "native_body_address": "0x14234dc20",
+    "confidence": "high",
+    "status": "ported",
+    "reflection_flags": "0x4020403",
+    "static": false,
+    "includes": [
+      "UObject/UnrealType.h",
+      "AbilitySystemComponent.h",
+      "AbilitySystemInterface.h",
+      "AttributeSet.h"
+    ]
+  },
+  {
+    "class": "AFortPawn",
+    "function": "SetMovementSpeedMultiplier",
+    "kind": "exec",
+    "signature": "void SetMovementSpeedMultiplier(float NewMovementSpeedVal)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/pawn_bulk295_runtime/AFortPawn_SetMovementSpeedMultiplier.inc",
+    "address": "0x142a20240",
+    "native_body_address": "0x14234df40",
+    "confidence": "high",
+    "status": "ported",
+    "reflection_flags": "0x4020403",
+    "static": false,
+    "includes": [
+      "UObject/UnrealType.h",
+      "AbilitySystemComponent.h",
+      "AbilitySystemInterface.h",
+      "AttributeSet.h"
+    ]
+  },
+  {
+    "class": "AFortPawn",
+    "function": "SetShield",
+    "kind": "exec",
+    "signature": "void SetShield(float NewShieldValue)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/pawn_bulk295_runtime/AFortPawn_SetShield.inc",
+    "address": "0x142a20570",
+    "native_body_address": "0x14234eee0",
+    "confidence": "high",
+    "status": "ported",
+    "reflection_flags": "0x4020403",
+    "static": false,
+    "includes": [
+      "UObject/UnrealType.h",
+      "AbilitySystemComponent.h",
+      "AbilitySystemInterface.h",
+      "AttributeSet.h"
+    ]
+  },
+  {
+    "class": "AFortPawn",
+    "function": "SetSignalInStorm",
+    "kind": "exec",
+    "signature": "void SetSignalInStorm(float NewSignalInStormValue)",
+    "signature_status": "proposed",
+    "access": "public",
+    "inc_path": "porting/behavior/pawn_bulk295_runtime/AFortPawn_SetSignalInStorm.inc",
+    "address": "0x142a205f0",
+    "native_body_address": "0x14234ef40",
+    "confidence": "high",
+    "status": "ported",
+    "reflection_flags": "0x4020403",
+    "static": false,
+    "includes": [
+      "UObject/UnrealType.h",
+      "AbilitySystemComponent.h",
+      "AbilitySystemInterface.h",
+      "AttributeSet.h"
+    ]
+  },
+  {
+    "class": "AFortAIProxyActor",
+    "function": "GetAbilitySystemComponent",
+    "kind": "helper",
+    "signature": "UAbilitySystemComponent* GetAbilitySystemComponent() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": true,
+    "inc_path": "porting/behavior/ability_getters301_runtime/AFortAIProxyActor_GetAbilitySystemComponent.inc",
+    "address": "0x140d91ec0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "AbilitySystemComponent.h"
+    ],
+    "notes": "Interface virtual receives secondary subobject this. The reflected field is at owning object 0x248. Requires real interface inheritance."
+  },
+  {
+    "class": "AFortAthenaVehicle",
+    "function": "GetAbilitySystemComponent",
+    "kind": "helper",
+    "signature": "UAbilitySystemComponent* GetAbilitySystemComponent() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": true,
+    "inc_path": "porting/behavior/ability_getters301_runtime/AFortAthenaVehicle_GetAbilitySystemComponent.inc",
+    "address": "0x141914f10",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "AbilitySystemComponent.h"
+    ],
+    "notes": "Interface virtual receives secondary subobject this. The reflected field is at owning object 0xe28. Requires real interface inheritance."
+  },
+  {
+    "class": "AFortGlobalEnvironmentAbilityActor",
+    "function": "GetAbilitySystemComponent",
+    "kind": "helper",
+    "signature": "UAbilitySystemComponent* GetAbilitySystemComponent() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": true,
+    "inc_path": "porting/behavior/ability_getters301_runtime/AFortGlobalEnvironmentAbilityActor_GetAbilitySystemComponent.inc",
+    "address": "0x140680310",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "AbilitySystemComponent.h"
+    ],
+    "notes": "Interface virtual receives secondary subobject this. The reflected field is at owning object 0x220. Requires real interface inheritance."
+  },
+  {
+    "class": "AFortMissionStormSafeZone",
+    "function": "GetAbilitySystemComponent",
+    "kind": "helper",
+    "signature": "UAbilitySystemComponent* GetAbilitySystemComponent() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": true,
+    "inc_path": "porting/behavior/ability_getters301_runtime/AFortMissionStormSafeZone_GetAbilitySystemComponent.inc",
+    "address": "0x14139b4d0",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "AbilitySystemComponent.h"
+    ],
+    "notes": "Interface virtual receives secondary subobject this. The reflected field is at owning object 0x260. Requires real interface inheritance."
+  },
+  {
+    "class": "AFortPlayerAttributesProxyActor",
+    "function": "GetAbilitySystemComponent",
+    "kind": "helper",
+    "signature": "UAbilitySystemComponent* GetAbilitySystemComponent() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": true,
+    "inc_path": "porting/behavior/ability_getters301_runtime/AFortPlayerAttributesProxyActor_GetAbilitySystemComponent.inc",
+    "address": "0x1425bba30",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "AbilitySystemComponent.h"
+    ],
+    "notes": "Interface virtual receives secondary subobject this. The reflected field is at owning object 0x270. Requires real interface inheritance."
+  },
+  {
+    "class": "AFortPlayerState",
+    "function": "GetAbilitySystemComponent",
+    "kind": "helper",
+    "signature": "UAbilitySystemComponent* GetAbilitySystemComponent() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": true,
+    "inc_path": "porting/behavior/ability_getters301_runtime/AFortPlayerState_GetAbilitySystemComponent.inc",
+    "address": "0x142413e90",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "AbilitySystemComponent.h"
+    ],
+    "notes": "Interface virtual receives secondary subobject this. The reflected field is at owning object 0x900. Requires real interface inheritance."
+  },
+  {
+    "class": "AFortUIProxyActor",
+    "function": "GetAbilitySystemComponent",
+    "kind": "helper",
+    "signature": "UAbilitySystemComponent* GetAbilitySystemComponent() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": true,
+    "inc_path": "porting/behavior/ability_getters301_runtime/AFortUIProxyActor_GetAbilitySystemComponent.inc",
+    "address": "0x1409f0710",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "AbilitySystemComponent.h"
+    ],
+    "notes": "Interface virtual receives secondary subobject this. The reflected field is at owning object 0x238. Requires real interface inheritance."
+  },
+  {
+    "class": "APhysicsObject",
+    "function": "GetAbilitySystemComponent",
+    "kind": "helper",
+    "signature": "UAbilitySystemComponent* GetAbilitySystemComponent() const",
+    "signature_status": "proposed",
+    "access": "public",
+    "virtual": true,
+    "inc_path": "porting/behavior/ability_getters301_runtime/APhysicsObject_GetAbilitySystemComponent.inc",
+    "address": "0x141b46330",
+    "confidence": "high",
+    "status": "ported",
+    "includes": [
+      "AbilitySystemComponent.h"
+    ],
+    "notes": "Interface virtual receives secondary subobject this. The reflected field is at owning object 0x700. Requires real interface inheritance."
   }
 ]

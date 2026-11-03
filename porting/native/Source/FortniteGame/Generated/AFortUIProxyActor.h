@@ -6,7 +6,9 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 
+#include "AbilitySystemComponent.h"
 #include "FFortAttributeInitializationKey.h"
+#include "UFortAbilitySystemInterface.h"
 
 class UAttributeSet;
 class UFortAbilitySystemComponent;
@@ -15,7 +17,7 @@ class UFortItemDefinition;
 #include "AFortUIProxyActor.generated.h"
 
 UCLASS(config=Engine)
-class FORTNITEGAME_API AFortUIProxyActor : public AActor
+class FORTNITEGAME_API AFortUIProxyActor : public AActor, public IFortAbilitySystemInterface
 {
 	GENERATED_BODY()
 
@@ -36,5 +38,9 @@ public:
 	UPROPERTY()
 	FFortAttributeInitializationKey InitializerKey;
 
+
+	// Non-reflected helpers (behaviour kind "helper", porting/behavior/README.md): plain C++ member
+	// functions, not UFUNCTIONs and not part of any UFUNCTION declaration.
+	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const;
 };
 
