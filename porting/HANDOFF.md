@@ -1,5 +1,37 @@
 # Handoff: state of the Fortnite 12.60 Linux reconstruction
 
+## Broad native rough batch70 (2026-11-03)
+
+Added22 new uncounted full control-flow drafts: six creative plot/profile
+operations, eight actual pawn effects/weapon/montage/damage/text target bodies,
+four carry/drop/hoist/attachment paths, attachment setter/hoverboard wrap, and
+the two large vehicle/cosmetic replication callbacks. OnRep_InVehicle now connects
+all source103–1177 exit, entry, seat-change and shared-notification paths; its
+multiple fragments are one draft body. OnRep_CosmeticLoadout covers all request
+branches and final owner dispatch. These are concrete rough C++ with unresolved
+ABI/types/callback/lifetime/effects, not canonical code or completed gameplay.
+Source paths/hashes identify ignored decompiler inputs, not original-byte proof.
+
+Root review corrected hit-direction NaN comparison/output-buffer ABI, cosmetic
+handle base and output-temporary alias cleanup, and kept exact repeated lookups,
+byte/tag order and post-callback rereads in carry/drop paths. Source first group
+commitb5c316ab pushed. Final vehicle source/summary follows. No tests/compiler,
+build or generation ran. Canonical remains2,074 bodies+180fields, last tested
+2,040; 34 canonical+4 manual bodies pending build; next tests3,040. All4 product
+gates OPEN, full client/server/visual/audio parity incomplete; goal stays active.
+
+Root serial probe: `porting/.venv/bin/python -I porting/ghidra/probe_callees.py
+--input porting/behavior/pawn_effects70_runtime/targets.json --out
+porting/generated/pawn-effects70 --timeout 60 --mem 12G` completed8/8,11.5s.
+Log /tmp/pawn-effects70.log; same project metadata warning despite rolled-back
+transaction, no deliberate save. Process exited0, Ghidra lease free. All workers
+finished. Previous turn PROGRESS (31 rough lifts committed and dashboard pushed).
+Root sole canonical/generation/build/commit owner. Bounded Terra6.1 medium/low,
+fork-none task runners, rotation and economical reads remain preferred; root
+plans/orchestrates/reviews and implements directly. Preserve unrelated graphics
+and Engine edits. Next native work should keep moving through substantial actual
+bodies and close ready typed behavior without returning to getter rabbit holes.
+
 ## Broad native rough batch69 (2026-11-03)
 
 Added31 new uncounted control-flow lifts across game-mode12, controller7,

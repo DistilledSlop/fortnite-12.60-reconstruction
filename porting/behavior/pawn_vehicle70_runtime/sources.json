@@ -1,0 +1,30 @@
+[
+  {
+    "class": "AFortPlayerPawn",
+    "function": "ServerSetAttachment_Implementation",
+    "source": "porting/generated/decomp_improved/AFortPlayerPawn/ServerSetAttachment_Implementation.c",
+    "sha256": "a1dd6d80816dd1a6b20ef7b5b4a6f3f05204ededb96a31eacbf0b4297799ea1b",
+    "status": "rough_uncounted"
+  },
+  {
+    "class": "AFortPlayerPawn",
+    "function": "ApplyWrapToSaveTheWorldHoverboard",
+    "source": "porting/generated/decomp_improved/AFortPlayerPawn/ApplyWrapToSaveTheWorldHoverboard.c",
+    "sha256": "d0f861b76661b2e8fda758d5688a98a4e5dda6c44b338fd810070f58046aab1e",
+    "status": "rough_uncounted"
+  },
+  {
+    "class": "AFortPlayerPawn",
+    "function": "OnRep_InVehicle",
+    "source": "porting/generated/decomp_improved/AFortPlayerPawn/OnRep_InVehicle.c",
+    "sha256": "e06c8febbbbd16927cfe045ce7ddfc8d74eaccf4bce755f1a7849d57a29d7cd8",
+    "status": "rough_uncounted"
+  },
+  {
+    "class": "AFortPlayerPawn",
+    "function": "OnRep_CosmeticLoadout",
+    "source": "porting/generated/decomp_improved/AFortPlayerPawn/OnRep_CosmeticLoadout.c",
+    "sha256": "3bd02df28b1a4ec3ed6bf562bd452f59d59a9d27ab396a2c414266cb6bc76745",
+    "status": "rough_uncounted"
+  }
+]

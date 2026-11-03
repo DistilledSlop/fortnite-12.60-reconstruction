@@ -16,6 +16,8 @@ Linux client/server builds and Apollo headless join passed; tracked receipts in
 progress/native-checkpoint-2040.json. Thirty-four subsequent canonical bodies and four manual Kismet math bodies are build pending.
 Broad batch69 adds31 uncounted C++ behavior drafts across game mode, controller,
 pawn and player-state message paths; unresolved calls/types/effects remain.
+Batch70 adds22 more uncounted drafts, including full vehicle/cosmetic callback
+control flow and creative operations, pawn effects, weapon equip and carry paths.
 Next build/runtime/test batch at3,040 bodies. Fail-closed generation accepts
 2,254 ported entries with no rejected splices. All four product gates remain
 open. Latest source restores day-phase callback/virtual boundaries, the live
