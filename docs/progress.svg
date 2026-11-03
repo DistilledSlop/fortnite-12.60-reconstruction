@@ -14,7 +14,7 @@
 .leaf-label,.leaf-pct,.tm-head{fill:var(--tm-ink);font-family:system-ui,-apple-system,Segoe UI,sans-serif}
 .leaf-pct{font-weight:700}
 .grp-head{fill:var(--tm-group-label);font-weight:600;font-family:system-ui,-apple-system,Segoe UI,sans-serif}
-.grp-pct{fill:var(--tm-group-label);font-weight:400;opacity:.8}</style><rect class="tm-bg" x="0" y="0" width="1000" height="720"/><text x="12" y="28" font-size="20" font-weight="700" class="tm-head">Fortnite 12.60 port progress: overall 20.8% (effort-weighted)</text><text x="12" y="48" font-size="12" class="tm-head" font-weight="400">Commit f24835e | Refresh published dashboard at 53344db1 | 2026-11-03T03:17:36-05:00 | milestones 0/4</text><g transform="translate(0,60)"><rect class="tm-bg" x="0" y="0" width="1000" height="632"/>
+.grp-pct{fill:var(--tm-group-label);font-weight:400;opacity:.8}</style><rect class="tm-bg" x="0" y="0" width="1000" height="720"/><text x="12" y="28" font-size="20" font-weight="700" class="tm-head">Fortnite 12.60 port progress: overall 20.8% (effort-weighted)</text><text x="12" y="48" font-size="12" class="tm-head" font-weight="400">Commit 39089cb | Recover volume selection and emit typed profile entry support | 2026-11-03T03:26:03-05:00 | milestones 0/4</text><g transform="translate(0,60)"><rect class="tm-bg" x="0" y="0" width="1000" height="632"/>
 <g><title>Gameplay classes (/Script/FortniteGame)
 13.5% complete
 effort weight 673 | source: derived
@@ -87,13 +87,13 @@ effort weight 75 | source: derived
 <text class="grp-head" x="755.7" y="555.6" font-size="12">Audio<tspan class="grp-pct"> · 7.4%</tspan></text>
 </g>
 <g><title>Native function bodies ported (behaviour)
-9.0% complete (1852/20574)
+9.0% complete (1856/20574)
 effort weight 150 | source: git
-1852 committed function bodies of 20574 (total 20574 from totals.json native_functions_with_exec); source recovery only; build/runtime validation follows separate batch checkpoints</title>
+1856 committed function bodies of 20574 (total 20574 from totals.json native_functions_with_exec); source recovery only; build/runtime validation follows separate batch checkpoints</title>
 <rect class="tile-body" x="5.0" y="25.0" width="244.5" height="175.7" rx="4"/>
 <clipPath id="stm-c0"><rect x="5.00" y="25.00" width="244.46" height="175.70" rx="4"/></clipPath>
-<g clip-path="url(#stm-c0)"><rect class="tile-fill" x="5.00" y="184.88" width="244.46" height="15.82"/>
-<rect class="tile-edge" x="5.00" y="183.88" width="244.46" height="2"/>
+<g clip-path="url(#stm-c0)"><rect class="tile-fill" x="5.00" y="184.85" width="244.46" height="15.85"/>
+<rect class="tile-edge" x="5.00" y="183.85" width="244.46" height="2"/>
 </g>
 <text class="leaf-label" x="10.0" y="40.0" font-size="11">Native function bodies ported</text>
 <text class="leaf-label" x="10.0" y="53.0" font-size="11">(behaviour)</text>
